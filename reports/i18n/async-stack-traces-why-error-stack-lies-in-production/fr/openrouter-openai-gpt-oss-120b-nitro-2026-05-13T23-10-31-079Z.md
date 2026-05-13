@@ -3,7 +3,7 @@
 - Locale: fr
 - Model: openrouter/openai/gpt-oss-120b:nitro
 - Target: src/content/posts/2025-12-29--async-stack-traces-why-error-stack-lies-in-production/fr/index.mdx
-- Validation: deferred
+- Validation: rejected: direct AI SDK translation failed
 - Runtime seconds: 2.80
 - Input tokens: 4652
 - Output tokens: 961
@@ -12,109 +12,102 @@
 - Cache write tokens: 0
 - Estimated cost: $0.000354
 - Pricing source: local-openrouter-estimate
-- Note: Generated through the direct AI SDK chunked translator.
+- Note: Command failed: git commit --only -m i18n candidate(fr): async-stack-traces-why-error-stack-lies-in-production via openrouter/openai/gpt-oss-120b:nitro -- reports/i18n/async-stack-traces-why-error-stack-lies-in-production/fr reports/i18n/async-stack-traces-why-error-stack-lies-in-production/candidates.jsonl
 ## Raw Output
 
 ````mdx
 ---
-title: 'Traces de pile asynchrones : pourquoi `Error.stack` vous ment'
-subTitle: >-
-  La file d’attente micro‑tâches a englouti mon devoir (et mon contexte de
-  débogage).
-date: '2025-12-29'
-modified: '2025-12-30'
-tags:
-  - javascript
-  - async
-  - debugging
-  - node.js
-  - v8
-  - performance
+title: "Traces de pile asynchrones : pourquoi `Error.stack` vous ment"
+subTitle: "La file de microtâches a mangé mon contexte de débogage."
+date: 2025-12-29
+modified: 2025-12-30
+tags: [javascript, async, debugging, node.js, v8, performance]
 category: Code
 subCategory: Best Practices
-social_image: ../desktop-social.webp
+social_image: desktop-social.webp
 cover_full_width: ../wide.webp
 cover_mobile: ../square.webp
 cover_icon: ../square.webp
 ---
-Il est 2 h du matin. L’alarme PagerDuty hurle.
 
-Vous ouvrez les journaux et voyez ceci :
+Il est 2 heures du matin. L'alarme PagerDuty hurle.
+
+Vous ouvrez les logs et voyez ceci :
 
 ```
 Error: Cannot read properties of undefined (reading 'id')
     at processTicksAndRejections (node:internal/process/task_queues:96:5)
 ```
 
-C’est tout. Aucun nom de fonction. Aucun numéro de ligne. Aucun chemin de fichier. Juste « processTicksAndRejections ».
+C'est tout. Pas de nom de fonction. Pas de numéro de ligne. Pas de chemin de fichier. Juste « processTicksAndRejections ».
 
-Bienvenue dans le JavaScript asynchrone, où les traces de pile sont inventées et les numéros de ligne n’ont aucune importance.
-
----
-
-## Pourquoi les traces de pile se cassent
-
-Dans le code synchrone, la pile d’appels est une généalogie élégante. A a appelé B, B a appelé C. Quand C plante, vous voyez exactement comment vous y êtes arrivé.
-
-Dans le code asynchrone (`async/await`), chaque mot‑clé `await` est un point de suspension.
-
-Lorsque vous `await`, votre fonction est arrachée de la pile. Elle est placée dans un congélateur cryogénique appelé la file d’attente des micro‑tâches. La pile est alors vide (ou occupée ailleurs).
-
-Lorsque la promesse se résout, votre fonction est décongelée et re‑insérée dans la pile. Mais l’historique a disparu.
-
-Le moteur n’a aucune idée de qui a appelé `await` il y a 500 millisecondes. Il sait seulement qu’il a une tâche à exécuter.
+Bienvenue dans le JavaScript asynchrone, où les traces de pile sont inventées et les numéros de ligne ne comptent pas.
 
 ---
 
-## Les tentatives de V8 pour le corriger
+## Pourquoi les traces de pile se brisent
 
-Node.js essaie d’aider. Nous disposons de :
+Dans le code synchrone, la pile d'appels est une belle généalogie. A a appelé B, B a appelé C. Quand C plante, on voit exactement comment on en est arrivé là.
 
-1.  `Error.captureStackTrace()` : capture la pile *à la création*. Inutile si l’erreur est levée plus tard.  
-2.  `--async-stack-traces` : un drapeau qui fait que Node.js conserve une « pile d’ombre » des chaînes de promesses.  
-    *   **Coût :** cela ralentit votre application d’environ 30 %.  
-    *   **Résultat :** cela aide, mais le bruit monte rapidement.
+Dans le code asynchrone (`async/await`), chaque mot-clé `await` est un point de suspension.
+
+Quand vous utilisez `await`, votre fonction est arrachée de la pile. Elle est placée dans un congélateur cryogénique appelé la file de microtâches (*Microtask Queue*). La pile est maintenant vide (ou fait autre chose).
+
+Quand la Promise se résout, votre fonction est décongelée et renvoyée sur la pile. Mais l'historique a disparu.
+
+Le moteur n'a aucune idée de qui a appelé `await` il y a 500 millisecondes. Il sait juste qu'il a une tâche à exécuter.
 
 ---
 
-## La vraie solution : AsyncLocalStorage
+## Les tentatives de V8 pour corriger le problème
 
-Si vous voulez survivre en production, arrêtez de scruter les traces de pile. Concentrez‑vous sur la causalité.
+Node.js essaie d'aider. Nous avons :
 
-Il faut attacher le contexte (ID d’utilisateur, ID de requête) au « fil d’exécution », même lorsqu’il saute entre la pile et la file des micro‑tâches.
+1.  `Error.captureStackTrace()` : Capture la pile *à la création*. Inutile si l'erreur est lancée plus tard.
+2.  `--async-stack-traces` : Un drapeau qui force Node.js à garder une « pile fantôme » des chaînes de promises.
+    *   Le coût : Il rend votre application 30 % plus lente.
+    *   Le résultat : Ça aide, mais ça devient bruyant rapidement.
 
-Node.js propose un outil intégré à cet effet : `AsyncLocalStorage`.
+---
+
+## La vraie solution : AsyncLocalStorage
+
+Si vous voulez survivre en production, arrêtez de regarder les traces de pile. Regardez la causalité.
+
+Nous devons attacher un contexte (ID utilisateur, ID de requête) au « fil » d'exécution, même quand il saute entre la pile et la file de microtâches.
+
+Node.js possède un outil intégré pour ça : `AsyncLocalStorage`.
 
 ```javascript
 import { AsyncLocalStorage } from 'async_hooks';
 
 const context = new AsyncLocalStorage();
 
-// 1. Enveloppez la requête
+// 1. Envelopper la requête
 context.run({ requestId: '123' }, () => {
-  // 2. Appelez du code asynchrone en profondeur
+  // 2. Appeler du code asynchrone profond
   await processOrder();
 });
 
-// 3. Au cœur de processOrder :
+// 3. Au fin fond de processOrder :
 async function processOrder() {
   await db.query();
   
-  // Magie ! On peut toujours accéder à requestId
+  // Magie ! On peut toujours voir le requestId
   const { requestId } = context.getStore();
-  console.log(`[${requestId}] Failed to process order`);
+  console.log(`[${requestId}] Échec du traitement de la commande`);
 }
 ```
 
-Peu importe le nombre d’`await` entre les deux ; le contexte persiste.
+Peu importe le nombre d'`await` qui se produisent entre les deux. Le contexte survit.
 
 ---
 
-## Guide de production
+## Playbook de production
 
-1.  Cessez de faire confiance à `err.stack`. Il est incomplet par conception.  
-2.  Utilisez la journalisation structurée. Ajoutez `requestId` à chaque ligne de log via `AsyncLocalStorage`.  
-3.  Tracez, ne stackez pas. Adoptez OpenTelemetry. Il visualise la chaîne causale entre services, ce qui est réellement utile.
+1.  Arrêtez de faire confiance à `err.stack`. Il est incomplet par conception.
+2.  Utilisez des logs structurés. Attachez un `requestId` à chaque ligne de log avec `AsyncLocalStorage`.
+3.  Tracez, n'empilez pas. Utilisez OpenTelemetry. Il visualise la chaîne causale entre les services, ce qui est ce qui compte vraiment.
 
-Votre code est asynchrone. Votre contexte de débogage ne devrait pas l’être.
+Votre code est asynchrone. Votre contexte de débogage ne devrait pas l'être.
 ````
