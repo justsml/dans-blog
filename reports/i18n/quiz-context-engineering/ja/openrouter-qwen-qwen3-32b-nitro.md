@@ -4,7 +4,7 @@
 - Model: openrouter/qwen/qwen3-32b:nitro
 - Target: src/content/posts/2026-05-09--quiz-context-engineering/ja/index.mdx
 - Validation: rejected: direct AI SDK translation failed
-- Runtime seconds: 4.59
+- Runtime seconds: 5.03
 - Input tokens: unknown
 - Output tokens: unknown
 - Thinking tokens: unknown
@@ -12,7 +12,7 @@
 - Cache write tokens: unknown
 - Estimated cost: unknown
 - Pricing source: unknown
-- Note: Command failed: bun run i18n:translate:chunked -- --slug quiz-context-engineering --locale ja --model openrouter/qwen/qwen3-32b:nitro --chunk 3p --quiz-concurrency 18 --challenge-retries 2
+- Note: Command failed: bun run i18n:translate:chunked -- --slug quiz-context-engineering --locale ja --model openrouter/qwen/qwen3-32b:nitro --chunk 6p --quiz-concurrency 20
 ## Raw Output
 
 ````mdx
@@ -42,8 +42,8 @@ cover_full_width: ../wide.webp
 cover_mobile: ../square.webp
 cover_icon: ../square.webp
 ---
-import Challenge from '../../../../../components/QuizUI/Challenge';
-import QuizUI from '../../../../../components/QuizUI/QuizUI';
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
 
 <p class="inset">プロンプトエンジニアリングがスローガンを集めるなら、コンテキストエンジニアリングはページャを集める。実際に出荷される AI システムのその部分をどれだけ知っているか、測ってみよう。</p>
 
@@ -172,9 +172,9 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   title="チャンク戦略"
   options={[
     {text: 'コンテキストウィンドウが許す最大のチャンクサイズを使用する'},
-    {text: '常に512トークンを使用する — それは'},
+    {text: '常に512トークンを使用する — それが標準だから'},
     {text: 'コンテンツ構造に合わせたサイズのオーバーラップするチャンクを使用する', isAnswer: true},
-    {text: 'チャンクサイズは…'},
+    {text: '埋め込みモデルが良ければチャンクサイズは重要ではない'},
   ]}
 >
   <slot name="question">
@@ -356,7 +356,7 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   options={[
     {text: 'temperature=0 は同じ入力に対して常に同一の出力を生成する'},
     {text: 'temperature=0 は出力をより決定的にするが、必ずしも同一とは限らない', isAnswer: true},
-    {text: 'temperature=0 はモデルを無効化する'},
+    {text: 'temperature=0 はモデルがリクエストを拒否する能力を無効化する'},
     {text: 'temperature は応答の長さにのみ影響する'},
   ]}
 >
@@ -433,8 +433,8 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 
     実際に効果があるのは **grounding** です。モデルに正しく答えるために必要な情報を与え、その情報に限定して回答させます:
     ```
-        Answer only using the provided documents.
-        If the answer isn't in the documents, say: "I don't have enough information to answer that."
+    Answer only using the provided documents.
+    If the answer isn't in the documents, say: "I don't have enough information to answer that."
     ```
     その後、出力を検証します：レスポンス中の主張が取得したコンテキストに存在するか確認します。これが引用グラウンディングチェックです — 実装方法は RAG eval の議論をご参照ください。
 
