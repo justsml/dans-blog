@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: pitfalls-in-promise-docs
+- Locale: hi
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2017-05-10--pitfalls-in-promise-docs/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 1.24
+- Input tokens: 3084
+- Output tokens: 943
+- Thinking tokens: unknown
+- Cached input tokens: 1664
+- Cache write tokens: 0
+- Estimated cost: $0.000290
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: प्रॉमिस दस्तावेज़ों में ग़लतियाँ
@@ -63,3 +81,4 @@ Bottom line: `deferred` पैटर्न एक दर्दनाक anti‑p
 > कृपया इस लेख के साथ जुड़े Github प्रोजेक्ट, **Escape From Callback Mountain** को देखें
 
 > Project Goal: JavaScript में बेहतर functional language पैटर्न का शोध & विकास।
+````
