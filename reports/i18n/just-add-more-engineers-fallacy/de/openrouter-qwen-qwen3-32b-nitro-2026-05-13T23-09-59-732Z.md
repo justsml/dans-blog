@@ -3,7 +3,7 @@
 - Locale: de
 - Model: openrouter/qwen/qwen3-32b:nitro
 - Target: src/content/posts/2025-12-29--just-add-more-engineers-fallacy/de/index.mdx
-- Validation: deferred
+- Validation: rejected: direct AI SDK translation failed
 - Runtime seconds: 19.14
 - Input tokens: 7804
 - Output tokens: 8155
@@ -12,7 +12,7 @@
 - Cache write tokens: 0
 - Estimated cost: $0.002582
 - Pricing source: local-openrouter-estimate
-- Note: Generated through the direct AI SDK chunked translator.
+- Note: Command failed: git commit --only -m i18n candidate(de): just-add-more-engineers-fallacy via openrouter/qwen/qwen3-32b:nitro -- reports/i18n/just-add-more-engineers-fallacy/de reports/i18n/just-add-more-engineers-fallacy/candidates.jsonl
 ## Raw Output
 
 ````mdx
@@ -21,9 +21,7 @@ draft: true
 hidden: true
 publish: false
 title: Der 'Einfach mehr Ingenieure hinzufügen'-Trugschluss
-subTitle: >-
-  Warum das Hinzufügen von Mitarbeitern zu einem verspäteten Projekt es noch
-  weiter verzögert.
+subTitle: ''
 category: Code
 subCategory: Engineering Management
 date: '2025-12-29'
@@ -37,96 +35,94 @@ tags:
 ---
 ## n(n-1)/2
 
-Das ist die Formel, die auf dem Arm jedes Engineering-Managers tätowiert sein sollte. Sie ist keine Lösung für Ihr Deadline-Problem. Sie ist der mathematische Beweis dafür, warum Ihre Lösung nicht funktionieren wird.
+Das ist die Formel, die auf dem Arm jedes Engineering-Managers tätowiert sein sollte. Sie ist keine Lösung für Ihr Deadline-Problem. Sie ist der mathematische Beweis dafür, dass Ihre Lösung nicht funktioniert.
 
-Sie waren schon in diesem Meeting. Dem, in dem jemand unweigerlich vorschlägt, „einfach mehr Entwickler hinzuzufügen“, um die Deadline zu schaffen. Die Tabelle macht es so einfach wie möglich: 2 Ingenieure × 3 Monate = 6 Ingenieurmonate Arbeit, also sollten 6 Ingenieure es in 1 Monat schaffen, oder? Der VP nickt zustimmend. Der PM aktualisiert den Zeitplan. Alle fühlen sich produktiv.
+Sie waren in diesem Meeting. Dem, bei dem jemand unweigerlich vorschlägt, "einfach mehr Entwickler hinzuzufügen", um die Deadline zu erreichen. Die Tabelle macht es so einfach wie möglich: 2 Entwickler × 3 Monate = 6 Entwicklermonate Arbeit, also sollten 6 Entwickler es in 1 Monat erledigen, oder? Der VP nickt zustimmend. Der PM aktualisiert den Zeitplan. Alle fühlen sich produktiv.
 
-Außer die Mathematik funktioniert nicht so, und sie hat es nie getan.
+Außer dass die Mathematik einfach nicht so funktioniert und das nie getan hat.
 
-## Was Ihnen niemand über Kommunikationskanäle sagt
+## Was Ihnen niemand über Kommunikationswege erzählt
 
-Wenn Sie 5 Ingenieure in einem Team haben, können sie sich auf 10 verschiedene Weisen austauschen. Fügen Sie 5 weitere Ingenieure hinzu, und plötzlich müssen Sie 45 verschiedene Kommunikationskanäle verwalten. Das ist die Formel im Einsatz: n(n-1)/2, wobei n die Größe Ihres Teams ist.
+Wenn Sie 5 Entwickler in einem Team haben, können sie sich auf 10 verschiedene Weisen austauschen. Fügen Sie 5 weitere Entwickler hinzu, und plötzlich gibt es 45 verschiedene Kommunikationskanäle zu verwalten. Das ist die Formel im Einsatz: n(n-1)/2, wobei n die Größe Ihres Teams ist.
 
-Das ist keine kleine Unannehmlichkeit. Das ist der Unterschied zwischen „Wir besprechen das beim Mittagessen“ und „Ich buche ein Meeting mit den Stakeholdern.“ Sie haben nicht nur Ihre Teamkapazität verdoppelt. Sie haben die Overhead-Kosten, um alle auf dem gleichen Stand zu halten, mehr als vervierfacht.
+Das ist kein kleines Problem. Das ist der Unterschied zwischen „wir besprechen das beim Mittagessen“ und „lassen Sie mich einen Termin mit den Stakeholdern vereinbaren“. Sie haben nicht nur Ihre Teamkapazität verdoppelt. Sie haben den Overhead, alle auf dem gleichen Stand zu halten, mehr als vervierfacht.  
 
-Wenn Sie 20 Personen erreichen, verwalten Sie 190 verschiedene potenzielle Gespräche. Ihr Standup ist kein schneller Sync mehr. Ihre Architekturentscheidungen erfordern Konsensbildung. Ihre Merge-Konflikte werden zu archäologischen Ausgrabungen konkurrierender Visionen für das gleiche Feature.
+Bereits bei 20 Personen verwalten Sie 190 verschiedene potenzielle Gespräche. Ihr Standup ist kein schneller Sync mehr. Ihre Architekturentscheidungen erfordern Konsensbildung. Ihre Merge-Konflikte werden zu archäologischen Ausgrabungen durch konkurrierende Visionen desselben Features.  
 
-Microsofts DevDiv-Team hat dies bereits 2008 untersucht, und die Erkenntnisse waren unangenehm klar: Koordinierungskosten zeigen sich überall. Wem gehört welches Modul? Wer muss an diesem Anruf teilnehmen? Warum ist dieser Merge-Konflikt in dieser Woche dreimal aufgetreten? Jede dieser Fragen repräsentiert echte Zeit, die Ihre Ingenieure nicht in die eigentliche Deadline investieren, die Sie erreichen wollen.
+Microsofts DevDiv-Team untersuchte dies bereits 2008, und die Erkenntnisse waren unangenehm klar: Koordinationskosten zeigen sich überall. Wer ist für welches Modul verantwortlich? Wer muss an diesem Call teilnehmen? Warum ist dieser Merge-Konflikt diese Woche dreimal aufgetreten? Jede dieser Fragen kostet echte Zeit, die Ihre Entwickler nicht in das Ziel investieren, das Sie eigentlich erreichen wollten.  
 
-Schlimmer noch: Die Forschung in *Accelerate* von Forsgren, Humble und Kim zeigte, dass kleinere, autonomere Teams sich in Geschwindigkeit und Qualität konsequent besser als größere Teams schlagen. Die Koordinierungsteuer ist nicht nur real. Sie ist messbar, und sie ist kostspielig.
+Schlimmer noch: Die Forschung in *Accelerate* von Forsgren, Humble und Kim zeigte, dass kleinere, autonomere Teams größeren Teams in Geschwindigkeit und Qualität konsistent überlegen sind. Die Koordinationssteuer ist nicht nur real. Sie ist messbar – und teuer.  
 
-## Die dreimonatige Investition, die Sie nicht haben  
+## Die dreimonatige Investition, für die Sie keine Zeit haben  
 
-Aber sagen wir, Sie sind bereit, diese Koordinationskosten zu zahlen. Sie haben Budget, Sie haben die Genehmigung für Personal, und Sie sind bereit, Ressourcen an dieses Problem zu verschwenden. Großartig! Jetzt müssen Sie drei bis sechs Monate warten, bis diese Ressourcen Ihnen tatsächlich helfen.  
+Aber sagen wir, Sie sind bereit, diese Koordinationskosten zu tragen. Sie haben Budget, Sie haben Genehmigung für neue Stellen, und Sie sind bereit, Ressourcen an dieses Problem zu verschwenden. Super! Jetzt müssen Sie drei bis sechs Monate warten, bis diese Ressourcen überhaupt helfen.
 
-Ihre neuen Senior-Entwickler (und Sie stellen doch Senior-Entwickler ein, oder? Weil Junior-Entwickler noch mehr Zeit brauchen würden) verbringen ihre erste Woche damit, ihre Entwicklungsumgebung zum Laufen zu bringen. Danach müssen sie Ihre Architektur verstehen. Nicht nur „wir verwenden Microservices“, sondern *warum* Sie die Services so aufgeteilt haben. Nicht nur „wir verwenden Redis hier“, sondern was bei dem Zwischenfall vor zwei Jahren passiert ist, der Sie dazu brachte, Redis gegenüber der offensichtlichen Alternative zu wählen.  
+Ihre neuen Senior-Entwickler (und Sie mieten ja Senior-Entwickler an, oder? Weil Junior-Entwickler sogar noch länger brauchen würden) verbringen ihre erste Woche damit, ihre Entwicklungs-Umgebung zum Laufen zu bringen. Danach müssen sie Ihre Architektur verstehen. Nicht nur „wir verwenden Microservices“, sondern *warum* Sie die Services so aufgeteilt haben. Nicht nur „wir verwenden Redis hier“, sondern was bei dem Zwischenfall vor zwei Jahren passiert ist, der dazu führte, dass Sie Redis gegenüber der offensichtlichen Alternative gewählt haben.  
 
-Währenddessen zahlen Ihr bestehendes Team die Betreuungssteuer. Jede Frage ist legitim und notwendig: „Warum haben wir den Auth-Flow so strukturiert?“ „Wer ist für den Billing-Service zuständig?“ „Ist dieser TODO aus 2019 immer noch relevant?“ Jede dieser Fragen zieht jemanden aus seiner Arbeit heraus. Forschung von Gloria Mark an der UC Irvine zeigte, dass es durchschnittlich 23 Minuten dauert, bis man nach einer Unterbrechung zu einer Aufgabe zurückkehrt. Wenn Ihre fünf neuen Entwickler täglich fünf Fragen stellen, verbrennen Sie Stunden konzentrierten Arbeitszeits der Leute, die eigentlich die Deadline erreichen sollen.  
+Währenddessen zahlt Ihr bestehendes Team die Mentoring-Abgabe. Jede Frage ist berechtigt und notwendig: „Warum haben wir den Authentifizierungs-Fluss so strukturiert?“ „Wer ist für den Billing-Service verantwortlich?“ „Ist dieser TODO aus dem Jahr 2019 immer noch relevant?“ Jede dieser Fragen zieht jemanden aus seiner Arbeit heraus. Forschung von Gloria Mark an der UC Irvine zeigte, dass es durchschnittlich 23 Minuten dauert, bis man zu einer Aufgabe zurückkehrt, nachdem man unterbrochen wurde. Wenn Ihre fünf neuen Entwickler täglich fünf Fragen stellen, verbrennen Sie Stunden an Fokus-Zeit von den Leuten, die eigentlich das Deadline erreichen sollen.  
 
-Camille Fournier schreibt in *The Manager's Path*, dass es einem Senior-Entwickler 3–6 Monate dauert, um in einem komplexen Codebase voll produktiv zu werden. Das gilt, wenn alles gut läuft. Das gilt, wenn Ihre Dokumentation aktuell ist, Ihr tribal knowledge zugänglich ist und Ihr Domain nicht besonders seltsam ist. Die meisten Codebases erfüllen diese Kriterien nicht.  
+Camille Fournier schreibt in *The Manager's Path*, dass es 3–6 Monate dauert, bis ein Senior-Entwickler in einem komplexen Codebase voll produktiv ist. Das gilt, wenn alles gut läuft. Das gilt, wenn Ihre Dokumentation aktuell ist, Ihr Tribal Knowledge zugänglich ist und Ihr Domain nicht besonders seltsam ist. Die meisten Codebases erfüllen diese Kriterien nicht.  
 
-Der dritte Monat ist besonders gefährlich. Ihre neuen Entwickler sind jetzt selbstsicher. Sie schreiben Code! Sie sind produktiv! Außer sie wissen nichts über den seltsamen Edge-Case im Zahlungsfluss, oder den Legacy-Modul, den Sie heimlich migrieren, oder den Zwischenfall, der allen beibrachte, warum wir nie, niemals an Freitagen deployen. Ein Teil ihres Codes wird Refactoring benötigen. Einige Teile könnten Incidents verursachen. Alles braucht eine gründliche Prüfung durch dieselben Leute, die eigentlich die Deadline erreichen sollen.  
+Der dritte Monat ist besonders gefährlich. Ihre neuen Entwickler sind jetzt selbstsicher. Sie schreiben Code! Sie sind produktiv! Außer sie wissen nichts über den seltsamen Edge-Case im Zahlungs-Fluss, oder den Legacy-Modul, den Sie heimlich ersetzen, oder den Zwischenfall, der allen beibrachte, warum wir nie, niemals am Freitag deployen. Ein Teil ihres Codes wird refaktorisiert werden müssen. Einige Teile könnten zu Zwischenfällen führen. Alles braucht eine gründliche Prüfung durch genau die Leute, die eigentlich das Deadline erreichen sollen.  
 
-## Die unbequeme Kontinuität von Brooks' Gesetz  
+## Die unangenehme Kontinuität von Brooks' Gesetz  
 
-Fred Brooks schrieb 1975 darüber. *The Mythical Man-Month* fasste eine einfache Wahrheit zusammen: „Menschen hinzuzufügen, um ein Softwareprojekt zu beschleunigen, macht es später.“ Das Buch basierte auf seiner Erfahrung mit IBMs OS/360-Projekt und enthielt jenes berühmte Gleichnis: Eine Frau kann in neun Monaten ein Baby machen, aber neun Frauen können kein Baby in einem Monat machen.  
+Fred Brooks schrieb bereits 1975 darüber. *The Mythical Man-Month* fasste eine einfache Wahrheit zusammen: „Das Hinzufügen von Personal zu einem verspäteten Software-Projekt macht es noch später.“ Das Buch basierte auf seiner Erfahrung mit IBMs OS/360-Projekt und enthielt jenes prägnante Metapher: Eine Frau kann ein Baby in neun Monaten machen, aber neun Frauen können kein Baby in einem Monat machen.
 
-Fünf Jahrzehnte später haben wir bessere Tools. Unsere CI/CD-Pipelines reduzieren einige Integrationskosten. Moderne Pull-Request-Workflows erkennen Probleme früher. Eine 2019er-Studie in *IEEE Transactions on Software Engineering* fand heraus, dass starke CI/CD-Praktiken die Integrationskosten um bis zu 40 % reduzieren können. Asynchrone Kommunikationswerkzeuge erlauben uns, über Zeitzonen hinweg zu koordinieren. Gut gestaltete Microservices können interne Team-Abhängigkeiten reduzieren.  
+Fünf Jahrzehnte später haben wir bessere Tools. Unsere CI/CD-Pipelines reduzieren einige Integrationskosten. Moderne Pull-Request-Workflows erkennen Probleme früher. Eine Studie aus dem Jahr 2019 in den *IEEE Transactions on Software Engineering* zeigte, dass starke CI/CD-Praktiken die Integrationskosten um bis zu 40 % senken können. Asynchrone Kommunikationswerkzeuge ermöglichen es uns, über Zeitzonen hinweg zu koordinieren. Wohlentworfene Microservices reduzieren interne Team-Abhängigkeiten.  
 
-Aber die Menschen haben sich nicht verbessert. Wir brauchen immer noch Kontext. Wir brauchen immer noch zu verstehen, warum Entscheidungen so getroffen wurden, nicht nur, was. O(n²) ist Mathematik, nicht Meinung. Sie können die Konstanten in dieser Gleichung optimieren, aber nicht die fundamentale Wachstumsrate. Domänenexpertise braucht nach wie vor Zeit, sich aufzubauen, egal, wie gut Ihre Onboarding-Dokumentation ist.
+Aber die Menschen haben sich nicht weiterentwickelt. Wir brauchen immer noch Kontext. Wir brauchen immer noch das Verständnis der Gründe hinter Entscheidungen, nicht nur die Entscheidungen selbst. O(n²) ist Mathematik, nicht Meinung. Sie können die konstanten Faktoren in dieser Gleichung optimieren, aber nicht die fundamentale Wachstumsrate umgehen. Domänenexpertise braucht weiterhin Zeit, um aufzubauen – egal, wie gut Ihre Onboarding-Dokumentation ist.  
 
-Die Technologie ändert sich. Die Mathematik bleibt gleich.
+Die Technologie ändert sich. Die Mathematik bleibt gleich.  
 
-## Amazon wusste das in den frühen 2000er-Jahren
+## Amazon Wusste Das Schon Anfang Der 2000er  
 
-Jeff Bezos etablierte bei Amazon die „two-pizza-Team“-Regel: Wenn ein Team nicht mit zwei Pizzen gefüttert werden kann, ist es zu groß. Das ideale Teamgröße erwies sich als 5-8 Personen. Das ging nicht um Pizza-Budgets oder Quirkiness. Kleinere Teams treffen Entscheidungen schneller, weil es weniger Stakeholder gibt. Sie kommunizieren effizienter, weil es weniger Kommunikationswege gibt. Sie bauen bessere Systeme, weil die Verantwortung klarer ist.
+Jeff Bezos etablierte bei Amazon die „zwei-Pizza-Team“-Regel: Wenn ein Team nicht mit zwei Pizzen gefüttert werden kann, ist es zu groß. Der optimale Größenbereich erwies sich als 5–8 Personen. Dies ging nicht um Pizza-Budgets oder Quirks. Kleinere Teams treffen Entscheidungen schneller, weil es weniger Stakeholder gibt. Sie kommunizieren effizienter, weil es weniger Kommunikationspfade gibt. Sie bauen bessere Systeme, weil die Verantwortung klarer ist.  
 
-In *Team Topologies* zitieren Matthew Skelton und Manuel Pais Forschungsergebnisse, die zeigen, dass Teams mit 7-9 Personen die optimale Balance zwischen Fähigkeiten und Koordination erreichen. Jenseits dieser Schwelle zahlen Sie exponentiell mehr für Koordinationskosten, während die Ausbeute abnimmt. Die Mathematik holt Sie ein, egal ob Sie sie anerkennen oder nicht.
+In *Team Topologies* zitieren Matthew Skelton und Manuel Pais Forschungsergebnisse, die zeigen, dass Teams mit 7–9 Personen die optimale Balance zwischen Fähigkeiten und Koordination erreichen. Jenseits dieser Schwelle zahlen Sie exponentiell mehr für Koordinationskosten, während die Ausbeute abnimmt. Die Mathematik holt Sie ein, egal, ob Sie sie anerkennen oder nicht.
 
 ## Was tatsächlich funktioniert
 
-Also, was tun, wenn ein Projekt wirklich zu spät ist und das Deadline wirklich wichtig ist?
+Was tun Sie also, wenn ein Projekt wirklich zu spät ist und das Deadline wirklich wichtig ist?
 
-Sie reduzieren den Umfang. Ich weiß, dass das Unternehmen es nicht mögen wird. Aber wie Marty Cagan in *Inspired* schreibt: „Die Realität ist, dass mindestens die Hälfte unserer Ideen einfach nicht funktionieren wird.“ Starten Sie das Minimale machbare Produkt. Verschieben Sie die „nice-to-haves“. Launchen Sie ohne das Vanity-Metrics-Dashboard. Sie können in Version 2 iterieren.
+Sie reduzieren den Umfang. Ich weiß, dass das Unternehmen es nicht mögen wird. Aber wie Marty Cagan in *Inspired* schreibt: „Die Realität ist, dass mindestens die Hälfte unserer Ideen einfach nicht funktionieren wird.“ Lassen Sie das MVP laufen. Verzögern Sie die Nice-to-haves. Starten Sie ohne das Vanity-Metrics-Dashboard. Sie können in v2 iterieren.
 
-Unnötige Meetings absagen. Genehmigungsprozesse vereinfachen. Ihrem Team echte, ungestörte Fokussierungszeit geben. Nein zu neuen Feature-Anfragen sagen. Das Toyota Production System hat den Begriff „Verschwendung beseitigen“, und manchmal ist der schnellste Weg voranzukommen, Dinge zu stoppen, die Sie verlangsamen.
+Stellen Sie unnötige Meetings ein. Vereinfachen Sie Genehmigungsprozesse. Geben Sie Ihrem Team tatsächliche ungestörte Fokuszeiten. Sagen Sie neuen Feature-Anfragen Nein. Das Toyota Production System hat einen Begriff namens „Verschwendung entfernen“, und manchmal ist der schnellste Weg voranzukommen, Dinge zu stoppen, die Sie langsamer machen.
 
-Zeitboxen rigoros und schicken Sie das, was Sie haben. Als Facebook gestartet wurde, hieß es „Thefacebook“ und funktionierte nur an der Harvard-Universität. Als AWS S3 startete, hatte es nur wenige API-Aufrufe. Wie Paul Graham in *Hackers & Painters* schreibt: „Es ist besser, einige Nutzer wirklich zu begeistern, als viele Nutzer nur so-so zu beeindrucken.“ Starten Sie das Einfachste, das funktioniert.
+Zeitboxen Sie rücksichtslos und lassen Sie das liegen, was Sie haben. Als Facebook gestartet wurde, hieß es „Thefacebook“ und funktionierte nur an der Harvard-Universität. Als AWS S3 startete, hatte es nur eine Handvoll API-Aufrufe. Wie Paul Graham in *Hackers & Painters* schreibt: „Es ist besser, einige Nutzer wirklich zu begeistern, als viele Nutzer eher zu mögen.“ Lassen Sie das einfachste funktionierende Produkt laufen.
 
-Wenn Sie absolut unbedingt neue Leute einstellen müssen, dann für das nächste Projekt, nicht, um dieses zu retten. Akzeptieren Sie die 3-6-monatige Einarbeitungszeit. Investieren Sie in Paar-Programmierung und Mentoring. Dokumentieren Sie *warum* Entscheidungen getroffen wurden, nicht nur *was* getan wurde. Brooks' Gesetz hat eine Folgerung: Die Hinzufügung von Personen zu einem Projekt *früh* kann helfen, weil Sie die Einarbeitungskosten vor dem Deadline-Druck zahlen.
+Wenn Sie unbedingt einstellen müssen, stellen Sie für das nächste Projekt ein, nicht, um dieses zu retten. Akzeptieren Sie die 3-6-monatige Einarbeitungszeit. Investieren Sie in Paarprogrammierung und Mentoring. Dokumentieren Sie *warum* Entscheidungen getroffen wurden, nicht nur *was* sie waren. Brooks' Law hat eine Folgerung: Das Hinzufügen von Personen zu einem Projekt *früh* kann helfen, weil Sie die Onboarding-Kosten vor dem Deadline-Stress zahlen.
 
-## Warum der Irrtum besteht  
+## Warum der Irrtum Bestand hat
 
-Der "Einfach mehr Ingenieure hinzufügen"-Irrtum überlebt, weil er wie eine Handlung aussieht. Er zeigt Stakeholdern Dringlichkeit. Er wirkt beeindruckend in einer Tabelle. Er ist emotional befriedigend im Moment.  
+Der Irrtum, einfach mehr Ingenieure hinzuzufügen, überlebt, weil er sich wie eine Handlung anfühlt. Er zeigt Dringlichkeit gegenüber Stakeholdern. Er wirkt beeindruckend in Tabellen. Er ist emotional befriedigend im Moment.
 
-Aber Softwareentwicklung ist keine Fließbandarbeit. Wir produzieren nicht Widgets, bei denen Verdopplung der Arbeiter die Ausgabe verdoppelt. Wir lösen vernetzte Probleme, bei denen Kontext, Kommunikation und Koordinationsaufwand reale Kosten sind, die quadratisch mit der Teamgröße skaliert.  
+Aber Softwareentwicklung ist keine Fließbandarbeit. Wir stellen nicht Stücke her, bei denen das Verdoppeln der Arbeiter das Verdoppeln der Ausgabe bedeutet. Wir lösen vernetzte Probleme, bei denen Kontext, Kommunikation und Koordinationsaufwand reale Kosten sind, die quadratisch mit der Teamgröße skaliert.
 
-Die Mathematik ist klar: Fünf Personen haben 10 Kommunikationswege, zehn Personen haben 45, zwanzig Personen haben 190. Einarbeitung dauert Monate, nicht Wochen. Koordinationsaufwand ist eine Abgabe, die Sie für jede zusätzliche Person zahlen. Das sind keine Meinungen, mit denen man in Konferenzräumen diskutieren kann. Sie sind messbare Realitäten, die in Ihren Velocity-Charts auftauchen, egal ob Sie daran glauben oder nicht.  
+Die Mathematik ist klar: Fünf Personen haben 10 Kommunikationswege, zehn Personen haben 45, zwanzig Personen haben 190. Die Einarbeitung dauert Monate, nicht Wochen. Koordinationsaufwand ist eine Abgabe, die Sie für jede zusätzliche Person zahlen. Das sind keine Meinungen, mit denen man in Konferenzräumen diskutieren kann. Sie sind messbare Realitäten, die sich in Ihren Velocity-Charts zeigen, egal ob Sie daran glauben oder nicht.
 
-Das nächste Mal, wenn jemand vorschlägt, mehr Ingenieure zu einem verspäteten Projekt hinzuzufügen, wissen Sie, was zu erwarten ist. Das Projekt wird nicht um Tage oder Wochen verspätet sein.  
+Das nächste Mal, wenn jemand vorschlägt, mehr Ingenieure zu einem verspäteten Projekt hinzuzufügen, wissen Sie, was zu erwarten ist. Das Projekt wird nicht um Tage oder Wochen verspätet sein.
 
-Es wird um Monate verspätet sein. Und im Gegensatz zu den meisten Engineering-Problemen können Sie sich hier nicht durch Refaktorisierung aus der Sackgasse befreien.  
+Es wird um Monate verspätet sein. Und im Gegensatz zu den meisten Engineering-Problemen können Sie sich nicht durch Refaktorisierung aus dieser Situation befreien.
 
----
+## Weitere Lektüre
 
-## Weitere Lektüre  
+**Bücher:**
+- *The Mythical Man-Month* von Fred Brooks (1975)
+- *The Manager's Path* von Camille Fournier (2017)
+- *Accelerate* von Nicole Forsgren, Jez Humble und Gene Kim (2018)
+- *Team Topologies* von Matthew Skelton und Manuel Pais (2019)
+- *Inspired* von Marty Cagan (2017)
+- *Hackers & Painters* von Paul Graham (2004)
 
-**Bücher:**  
-- *The Mythical Man-Month* von Fred Brooks (1975)  
-- *The Manager's Path* von Camille Fournier (2017)  
-- *Accelerate* von Nicole Forsgren, Jez Humble und Gene Kim (2018)  
-- *Team Topologies* von Matthew Skelton und Manuel Pais (2019)  
-- *Inspired* von Marty Cagan (2017)  
-- *Hackers & Painters* von Paul Graham (2004)  
-
-**Artikel & Papers:**  
-- "The Influence of Organizational Structure on Software Quality" (Microsoft Research, 2008)  
-- "No Silver Bullet: Essence and Accidents of Software Engineering" von Fred Brooks (1986)  
-- Gloria Marks Forschung zu Unterbrechungen und Aufmerksamkeit an der UC Irvine  
+**Artikel & Studien:**
+- "Die Auswirkungen der Organisationsstruktur auf die Softwarequalität" (Microsoft Research, 2008)
+- "No Silver Bullet: Wesen und Zufälle der Softwareentwicklung" von Fred Brooks (1986)
+- Forschung von Gloria Mark zu Unterbrechungen und Aufmerksamkeit an der UC Irvine
 - Verschiedene Harvard Business Review Artikel zu Teamdynamik und Produktivität
 
-**Moderne Ansätze:**  
-- Will Larsons *Staff Engineer* Blog und Buch zur Technologie-Führung  
+**Moderne Perspektiven:**
+- Will Larsons *Staff Engineer* Blog und Buch zur Technologie-Führung
 - Charity Majors (Honeycomb) zu Observabilität und Teamstruktur  
-- Die State of DevOps Berichte von DORA
+- Die DevOps-Berichte von DORA
 ````
