@@ -1,0 +1,40 @@
+{
+  "selectedCommit": "ac2d8bbc5949d18eeedd120a4c064697146330eb",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "scores": {
+    "readability": 5,
+    "technicalAccuracy": 5,
+    "coherence": 5,
+    "relevance": 5,
+    "translationQuality": 5,
+    "mdxPreservation": 5
+  },
+  "suggestions": [],
+  "rationale": "The selected commit already contains the fix suggested in the previous judge report ('routage' instead of 'router'). The translation is high quality, captures Dan's informal tone perfectly ('allez donc toucher de l'herbe'), and maintains all MDX structures and relative image paths correctly.",
+  "slug": "llm-connection-strings",
+  "locale": "fr",
+  "candidateCommits": [
+    "ac2d8bbc5949d18eeedd120a4c064697146330eb",
+    "b004138eb9f2422af44633607fea6556a14ec1bb",
+    "d74b5bc630be3c3bfd1be354956fa9f54d7adec5",
+    "348bf9a879a45148afdc5a96f853788bdb53a8b3",
+    "148c4389c07019d305db83edbbcc0601b2a6344e"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "Aucune logique de router complexe requise.",
+      "replacement": "Aucune logique de routage complexe requise.",
+      "reason": "The word 'router' is used as a noun in English; in French, the process is 'routage'.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug llm-connection-strings --locale fr --skip-global",
+    "output": ""
+  }
+}
