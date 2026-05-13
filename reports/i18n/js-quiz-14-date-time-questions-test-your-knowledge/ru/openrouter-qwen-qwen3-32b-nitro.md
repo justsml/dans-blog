@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: js-quiz-14-date-time-questions-test-your-knowledge
+- Locale: ru
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2020-01-02--js-quiz-14-date-time-questions-test-your-knowledge/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 112.56
+- Input tokens: 12460
+- Output tokens: 13077
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.004135
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: 'Тест: 14 вопросов о датах на JavaScript'
@@ -492,3 +510,4 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 </Challenge>
 
 </QuizUI>
+````
