@@ -4,16 +4,16 @@
   "slug": "handling-international-numbers-and-currency",
   "locale": "it",
   "startedAt": "2026-05-13T17:25:32.316Z",
-  "updatedAt": "2026-05-13T17:26:28.291Z",
+  "updatedAt": "2026-05-13T17:30:28.719Z",
   "modelsRequested": [
     "openrouter/openai/gpt-oss-120b:nitro",
     "openrouter/qwen/qwen3-32b:nitro",
     "deepseek/deepseek-v4-flash",
     "qwen/qwen3.6-plus"
   ],
-  "attemptedModels": 2,
+  "attemptedModels": 3,
   "skippedModels": 1,
-  "rejectedModels": 0,
+  "rejectedModels": 1,
   "candidateModels": 2,
   "totals": {
     "inputTokens": 12941,
@@ -22,13 +22,13 @@
     "cachedInputTokens": 2304,
     "cacheWriteTokens": 0,
     "estimatedCostUsd": 0.003083,
-    "hasUnknownInputTokens": false,
-    "hasUnknownOutputTokens": false,
+    "hasUnknownInputTokens": true,
+    "hasUnknownOutputTokens": true,
     "hasUnknownThinkingTokens": true,
-    "hasUnknownCachedInputTokens": false,
-    "hasUnknownCacheWriteTokens": false,
-    "hasUnknownEstimatedCost": false,
-    "runtimeSeconds": "43.71"
+    "hasUnknownCachedInputTokens": true,
+    "hasUnknownCacheWriteTokens": true,
+    "hasUnknownEstimatedCost": true,
+    "runtimeSeconds": "283.73"
   },
   "attempts": [
     {
@@ -71,6 +71,17 @@
         },
         "estimatedCostUsd": 0.0025056752,
         "pricingSource": "local-openrouter-estimate"
+      }
+    },
+    {
+      "model": "qwen/qwen3.6-plus",
+      "status": "rejected",
+      "validationStatus": "rejected: direct AI SDK translation failed",
+      "reportPath": "reports/i18n/handling-international-numbers-and-currency/it/qwen-qwen3.6-plus.md",
+      "note": "Command failed after 240000ms: bun run i18n:translate:chunked -- --slug handling-international-numbers-and-currency --locale it --model qwen/qwen3.6-plus --chunk 6p --quiz-concurrency 24",
+      "telemetry": {
+        "runtimeSeconds": "240.02",
+        "tokens": {}
       }
     }
   ]
