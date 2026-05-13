@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: visualizing-promises
+- Locale: fr
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2018-09-30--visualizing-promises/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 10.42
+- Input tokens: 4506
+- Output tokens: 4047
+- Thinking tokens: unknown
+- Cached input tokens: 1024
+- Cache write tokens: 0
+- Estimated cost: $0.001332
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Visualisation des Promesses
@@ -138,3 +156,4 @@ Promise.all()  |--------------|-------------- > console.log([1000, 2000, 3000])
   <div class="description">Quel est le sens de la vie ?</div>
 
 </div> -->
+````
