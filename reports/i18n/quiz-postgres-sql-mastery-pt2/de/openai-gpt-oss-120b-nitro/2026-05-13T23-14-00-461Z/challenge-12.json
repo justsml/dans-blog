@@ -1,0 +1,47 @@
+{
+  "index": 11,
+  "attempt": 1,
+  "originalTitle": "EXPLAIN ANALYZE Gotcha",
+  "translatedTitle": "EXPLAIN ANALYZE Gotcha",
+  "translation": {
+    "title": "EXPLAIN ANALYZE Gotcha",
+    "group": "Performance",
+    "options": [
+      {
+        "text": "Leichte Plan-Schätzung"
+      },
+      {
+        "text": "Funktioniert nur bei SELECT"
+      },
+      {
+        "text": "Ändert Daten & gibt Plan aus"
+      },
+      {
+        "text": "Simuliert die Ausführung, um einen Plan zu erhalten"
+      }
+    ],
+    "questionProse": [
+      "Was macht `EXPLAIN ANALYZE` bei `UPDATE`‑Anweisungen?"
+    ],
+    "explanationProse": [
+      "`EXPLAIN ANALYZE` führt die Abfrage tatsächlich aus! Seien Sie vorsichtig beim Analysieren einer Schreiboperation, insbesondere bei `UPDATE`‑, `DELETE`‑ und `INSERT`‑Anweisungen. Möglicherweise müssen Sie nach jedem `EXPLAIN ANALYZE` Aufräum‑Operationen durchführen, um reproduzierbare Ergebnisse zu erhalten.\n\n    Best Practices:\n    - Verwenden Sie `EXPLAIN` (ohne ANALYZE) für UPDATE/DELETE/INSERT\n    - Packen Sie Änderungen in Transaktionen:"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"EXPLAIN ANALYZE Gotcha\",\n  \"group\": \"Performance\",\n  \"options\": [\n    {\n      \"text\": \"Leichte Plan-Schätzung\"\n    },\n    {\n      \"text\": \"Funktioniert nur bei SELECT\"\n    },\n    {\n      \"text\": \"Ändert Daten & gibt Plan aus\"\n    },\n    {\n      \"text\": \"Simuliert die Ausführung, um einen Plan zu erhalten\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was macht `EXPLAIN ANALYZE` bei `UPDATE`‑Anweisungen?\"\n  ],\n  \"explanationProse\": [\n    \"`EXPLAIN ANALYZE` führt die Abfrage tatsächlich aus! Seien Sie vorsichtig beim Analysieren einer Schreiboperation, insbesondere bei `UPDATE`‑, `DELETE`‑ und `INSERT`‑Anweisungen. Möglicherweise müssen Sie nach jedem `EXPLAIN ANALYZE` Aufräum‑Operationen durchführen, um reproduzierbare Ergebnisse zu erhalten.\\n\\n    Best Practices:\\n    - Verwenden Sie `EXPLAIN` (ohne ANALYZE) für UPDATE/DELETE/INSERT\\n    - Packen Sie Änderungen in Transaktionen:\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 901,
+    "outputTokens": 688,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 788,
+    "providerCostUsd": 0.00083135,
+    "providerUpstreamCostUsd": 0.00083135,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000035139,
+    "outputUsd": 0.00012384,
+    "totalUsd": 0.000158979,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
