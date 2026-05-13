@@ -1,0 +1,118 @@
+# Translation Candidate
+- Slug: async-stack-traces-why-error-stack-lies-in-production
+- Locale: ja
+- Model: deepseek/deepseek-v4-flash
+- Target: src/content/posts/2025-12-29--async-stack-traces-why-error-stack-lies-in-production/ja/index.mdx
+- Validation: deferred
+- Runtime seconds: 16.25
+- Input tokens: 3458
+- Output tokens: 2837
+- Thinking tokens: unknown
+- Cached input tokens: 384
+- Cache write tokens: 0
+- Estimated cost: $0.001226
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: '非同期スタックトレース: `Error.stack`があなたに嘘をつく理由'
+subTitle: マイクロタスクキューが宿題を食べた（そしてデバッグコンテキストも）
+date: '2025-12-29'
+modified: '2025-12-30'
+tags:
+  - javascript
+  - async
+  - debugging
+  - node.js
+  - v8
+  - performance
+category: Code
+subCategory: Best Practices
+social_image: ../desktop-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+午前2時。PagerDutyのアラートが鳴り響く。
+
+ログを開くと、これが表示される：
+
+```
+Error: Cannot read properties of undefined (reading 'id')
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+```
+
+それだけだ。関数名もない。行番号もない。ファイルパスもない。ただ「processTicksAndRejections」だけ。
+
+ようこそ、非同期JavaScriptの世界へ。ここではスタックトレースはでたらめで、行番号は意味をなさない。
+
+---
+
+## なぜスタックトレースは壊れるのか
+
+同期コードでは、コールスタックは美しい系図だ。AがBを呼び、BがCを呼ぶ。Cがクラッシュしたとき、そこに至る経路が正確にわかる。
+
+非同期コード（`async/await`）では、すべての`await`キーワードが中断ポイントとなる。
+
+`await`すると、関数はスタックから引きはがされる。マイクロタスクキューと呼ばれる冷凍庫に放り込まれる。スタックは空になる（あるいは別のことをしている）。
+
+Promiseが解決されると、関数は解凍されてスタックに戻される。しかし、履歴は消えている。
+
+エンジンは500ミリ秒前に誰が`await`を呼んだか全く知らない。単に実行すべきタスクがあることだけを知っている。
+
+---
+
+## V8による修正の試み
+
+Node.jsは助けようとしている。以下のものがある:
+
+1.  `Error.captureStackTrace()`: スタックを*作成時*にキャプチャする。後でエラーがスローされた場合には役に立たない。
+2.  `--async-stack-traces`: Node.jsにPromiseチェーンの「シャドウスタック」を保持させるフラグ。
+    *   コスト: アプリが30%遅くなる。
+    *   結果: 役には立つが、すぐにノイズが多くなる。
+
+---
+
+## 本当の解決策: AsyncLocalStorage
+
+本番で生き残りたいなら、スタックトレースを見るのをやめろ。因果関係を見ろ。
+
+実行の「スレッド」にコンテキスト（ユーザーID、リクエストID）をアタッチする必要がある。スタックとマイクロタスクキューの間を行き来してもだ。
+
+Node.jsにはこれに組み込みのツールがある: `AsyncLocalStorage`。
+
+```javascript
+import { AsyncLocalStorage } from 'async_hooks';
+
+const context = new AsyncLocalStorage();
+
+// 1. リクエストをラップする
+context.run({ requestId: '123' }, () => {
+  // 2. 深い非同期コードを呼び出す
+  await processOrder();
+});
+
+// 3. processOrderの内部で:
+async function processOrder() {
+  await db.query();
+  
+  // 魔法！requestIdがまだ見える
+  const { requestId } = context.getStore();
+  console.log(`[${requestId}] Failed to process order`);
+}
+```
+
+間にいくつの`await`があっても問題ない。コンテキストは生き残る。
+
+---
+
+## プロダクションプレイブック
+
+1.  `err.stack`を信用するのをやめろ。設計上不完全だ。
+2.  構造化ログを使え。`AsyncLocalStorage`を使ってすべてのログ行に`requestId`を付与せよ。
+3.  スタックではなくトレースせよ。OpenTelemetryを使え。サービス間の因果連鎖を可視化する。それが本当に気にするべきことだ。
+
+あなたのコードは非同期だ。デバッグコンテキストはそうであってはならない。
+````
