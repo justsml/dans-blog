@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: the-last-to-think
+- Locale: it
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2025-05-31--the-last-to-think/it/index.mdx
+- Validation: deferred
+- Runtime seconds: 0.70
+- Input tokens: 1980
+- Output tokens: 872
+- Thinking tokens: unknown
+- Cached input tokens: 896
+- Cache write tokens: 0
+- Estimated cost: $0.000234
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 language: English
 title: Gli ultimi a pensare
@@ -33,3 +51,4 @@ We survived calculators, CliffsNotes,and (so far) TikTok. We'll survive ChatGPT.
 <p> </p>
 
 \* _Supponendo di riuscire a migliorare l'impatto ambientale e a evitare un incubo distopico. Ma questo è un argomento per un altro giorno._
+````
