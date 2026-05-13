@@ -1,0 +1,53 @@
+{
+  "index": 11,
+  "attempt": 1,
+  "originalTitle": "Basic Arithmetic",
+  "translatedTitle": "Базовая арифметика",
+  "translation": {
+    "title": "Базовая арифметика",
+    "group": "Умножение",
+    "options": [
+      {
+        "text": "echo 10 * 0.5"
+      },
+      {
+        "text": "echo (10 * 0.5)"
+      },
+      {
+        "text": "echo ${ 10 * 0.5 }"
+      },
+      {
+        "text": "echo %( 10 * 0.5 )"
+      },
+      {
+        "text": "echo $(( 10 * 0.5 ))"
+      },
+      {
+        "text": "echo '10 * 0.5' | bc"
+      },
+      {
+        "text": "Error"
+      }
+    ],
+    "questionProse": [
+      "Какой из этих вариантов правильно умножает 10 на 0,5, выводя 5?"
+    ],
+    "explanationProse": [
+      "Синтаксис `(( ))` выполняет **только целочисленную** арифметику. То есть, работает с целыми числами, без дробной части!\n\n    Bash (возможно, неожиданно) не имеет **встроенной** поддержки арифметики с плавающей точкой.\n\n    Самое частое решение — использовать GNU-утилиты [`bc`](https://www.gnu.org/software/bc/manual/html_mono/bc.html) или [`awk`](https://www.gnu.org/software/gawk/manual/gawk.html)."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Базовая арифметика\",\n  \"group\": \"Умножение\",\n  \"options\": [\n    { \"text\": \"echo 10 * 0.5\" },\n    { \"text\": \"echo (10 * 0.5)\" },\n    { \"text\": \"echo ${ 10 * 0.5 }\" },\n    { \"text\": \"echo %( 10 * 0.5 )\" },\n    { \"text\": \"echo $(( 10 * 0.5 ))\" },\n    { \"text\": \"echo '10 * 0.5' | bc\" },\n    { \"text\": \"Error\" }\n  ],\n  \"questionProse\": [\n    \"Какой из этих вариантов правильно умножает 10 на 0,5, выводя 5?\"\n  ],\n  \"explanationProse\": [\n    \"Синтаксис `(( ))` выполняет **только целочисленную** арифметику. То есть, работает с целыми числами, без дробной части!\\n\\n    Bash (возможно, неожиданно) не имеет **встроенной** поддержки арифметики с плавающей точкой.\\n\\n    Самое частое решение — использовать GNU-утилиты [`bc`](https://www.gnu.org/software/bc/manual/html_mono/bc.html) или [`awk`](https://www.gnu.org/software/gawk/manual/gawk.html).\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 801,
+    "outputTokens": 852,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2082
+  },
+  "cost": {
+    "inputUsd": 0.00006408,
+    "outputUsd": 0.00020448,
+    "totalUsd": 0.00026856,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

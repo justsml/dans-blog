@@ -1,0 +1,49 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "String Length",
+  "translatedTitle": "Длина строки",
+  "translation": {
+    "title": "Длина строки",
+    "group": "Длина строки",
+    "options": [
+      {
+        "text": "$#username"
+      },
+      {
+        "text": "#$username"
+      },
+      {
+        "text": "${#username}"
+      },
+      {
+        "text": "${username#}"
+      },
+      {
+        "text": "echo $username | wc -c",
+        "hint": "Использует внешнюю утилиту"
+      }
+    ],
+    "questionProse": [
+      "Как можно получить длину переменной в Bash?"
+    ],
+    "explanationProse": [
+      "Синтаксис `${#username}` возвращает длину `username`.\n    \n    Например:",
+      "Хотя `wc` тоже сработает, это не часть самого Bash.\n\n    Утилита `wc` — древняя шутка, связанная с английским \"water closet\" (туалет).\n    Шутка? Кто вообще читает эти примечания?\n\n    На самом деле `wc` — это древняя команда из Posix (и времён AT&T Unix). Это аббревиатура от \"word count\", она подсчитывает строки, слова и символы в файле или потоке."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Длина строки\",\n  \"group\": \"Длина строки\",\n  \"options\": [\n    { \"text\": \"$#username\" },\n    { \"text\": \"#$username\" },\n    { \"text\": \"${#username}\" },\n    { \"text\": \"${username#}\" },\n    { \"text\": \"echo $username | wc -c\", \"hint\": \"Использует внешнюю утилиту\" }\n  ],\n  \"questionProse\": [\n    \"Как можно получить длину переменной в Bash?\"\n  ],\n  \"explanationProse\": [\n    \"Синтаксис `${#username}` возвращает длину `username`.\\n    \\n    Например:\",\n    \"Хотя `wc` тоже сработает, это не часть самого Bash.\\n\\n    Утилита `wc` — древняя шутка, связанная с английским \\\"water closet\\\" (туалет).\\n    Шутка? Кто вообще читает эти примечания?\\n\\n    На самом деле `wc` — это древняя команда из Posix (и времён AT&T Unix). Это аббревиатура от \\\"word count\\\", она подсчитывает строки, слова и символы в файле или потоке.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 781,
+    "outputTokens": 633,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 8925
+  },
+  "cost": {
+    "inputUsd": 0.00006248,
+    "outputUsd": 0.00015192,
+    "totalUsd": 0.0002144,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

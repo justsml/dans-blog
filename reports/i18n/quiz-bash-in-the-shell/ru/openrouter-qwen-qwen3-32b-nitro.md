@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-bash-in-the-shell
+- Locale: ru
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2024-11-20--quiz-bash-in-the-shell/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 136.15
+- Input tokens: 14386
+- Output tokens: 17515
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.005354
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: 'Тест: Bash и Shell мастерство'
@@ -625,3 +643,4 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
     Команда `echo` выводит текст, указанный в кавычках. В данном случае выводится строка `Hello World`. Остальные варианты либо добавляют дополнительные команды (`&&`, `||`, `|`), либо изменяют логику выполнения, что не соответствует оригинальному скрипту.
   </slot>
 </Challenge>
+````
