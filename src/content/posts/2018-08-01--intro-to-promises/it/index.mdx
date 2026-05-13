@@ -1,7 +1,7 @@
 ---
 social_image: ../desktop-social.webp
 title: Introduzione alle Promise
-subTitle: Le promesse JavaScript sono divertenti!
+subTitle: Le Promise di JavaScript sono divertenti!
 date: '2018-08-01'
 modified: '2024-07-31'
 category: Code
@@ -20,13 +20,13 @@ cover: ../joe-yates-480485-unsplash.webp
 cover_mobile: ../w300_joe-yates-480485-unsplash.webp
 cover_icon: ../icon_joe-yates-480485-unsplash.webp
 ---
-## Promises... a che servono?
+## Promises... Qual è il loro ruolo?
 
-Ogni esecuzione di codice comporta due possibili esiti: **successo** o **fallimento**.
+Ogni volta che esegui del codice, ci sono 2 possibili esiti: **successo** o **fallimento**.
 
-Se il codice è asincrono, diventa più complesso garantire un affidamento deterministico sul risultato.
+Se quel codice è di natura asincrona, può essere più difficile fare affidamento sul risultato.
 
-**`Promises`** forniscono un meccanismo pratico per gestire questa dinamica.
+**`Promises`** offrono un modo pratico per gestire questa situazione.
 
 ```
                         +--Promise---+
@@ -40,27 +40,27 @@ Se il codice è asincrono, diventa più complesso garantire un affidamento deter
                 (Rejected)           (Resolved)
 ```
 
-> Nota: Sebbene un Promise debba risolversi o essere rifiutato, potrebbe non fare né l'uno né l'altro. Ciò causa il blocco dell'applicazione e rende il debug estremamente complesso.
+> Nota a margine: sebbene le Promise dovrebbero risolversi o essere rifiutate, potrebbero non fare nessuno dei due. Questo può far bloccare le applicazioni e risultare molto difficile da diagnosticare.
 
-### Da dove provengono i Promises?
+### Da dove provengono le Promise?
 
-Spesso non sarà necessario creare un Promise manualmente. API native come `fetch` e librerie popolari come `axios` restituiscono già Promise.
+Molte volte non sarà necessario creare una promise manualmente. Le API native come `fetch` e le librerie popolari come `axios` restituiscono già delle Promise.
 
-Tuttavia, se devi crearne uno, esistono 2 modi per farlo:
+Tuttavia, se devi creare una promise, ci sono 2 modalità per farlo:
 
-### Creare un Promise #1/2:
+### Creare Promise #1/2:
 
-Il modo più semplice per istanziare un Promise è utilizzare il metodo helper `Promise.resolve()`.
+Il modo più semplice per creare una Promise è utilizzare il metodo di supporto: `Promise.resolve()`.
 
-Puoi incapsulare (o "convertire") qualsiasi valore in un Promise utilizzando `Promise.resolve(value)`.
+Puoi avvolgere (o “convertire”) qualsiasi valore in una Promise usando `Promise.resolve(value)`.
 
 ```js
-// Without Promises:
+// Senza Promise:
 function add10(num) {
   return num + 10
 }
 
-// With Promises:
+// Con Promise:
 function add10Promised(num) {
   return Promise.resolve(num + 10)
 }
@@ -71,38 +71,38 @@ add10Promised(10)
   .then(x => console.log(x)) //=> 20
 ```
 
-### Creare un Promise #2/2:
+### Creare Promise #2/2:
 
-Un altro approccio più flessibile: usa il costruttore `Promise`.
+Un metodo più flessibile: usare il costruttore `Promise`.
 
 `new Promise(callback)` accetta una funzione `callback` con la seguente interfaccia:
 
 ```js
 new Promise(function(resolve, reject) {
-  // The arguments `resolve` and `reject` are both functions.
+  // Gli argomenti `resolve` e `reject` sono entrambi funzioni.
   // typeof resolve === 'function'
   // typeof reject === 'function'
 
-  // `resolve(result)` must get executed when the promise is fulfilled
-  // `reject(Error)` must get executed if the promise is rejected
+  // `resolve(result)` deve essere chiamato quando la promise è soddisfatta
+  // `reject(Error)` deve essere chiamato se la promise viene rifiutata
 })
 ```
 
-### API dei Promise
+### API delle Promise
 
-L'API dei Promise è in realtà composta da un numero limitato di metodi.
+L'API delle Promise è in realtà composta da un numero ridotto di metodi.
 
-2 metodi di istanza e 4 metodi statici/utilità.
+2 funzioni di istanza e 4 funzioni statiche/di utilità.
 
-#### Metodi di istanza di Promise
+#### Metodi di istanza della Promise
 
-Recuperare i valori da una Promise non funziona con approcci diretti (es. `console.log(promise)`).
+Accedere ai valori di una promise non funzionerà con i trucchi abituali (ad es. `console.log(promise)`).
 
-Ogni Promise restituisce un esito di successo (tramite `.then(fn)`) o di fallimento (tramite `.catch(fn)`).
+Tutte le Promise restituiscono o un successo (tramite `.then(fn)`) o un fallimento (tramite `.catch(fn)`).
 
-#### Metodi utility di Promise
+#### Metodi di utilità delle Promise
 
-* `Promise.resolve(value)` - Converte qualsiasi valore in una Promise
-* `Promise.reject(Error)` - Crea un valore Promise di fallimento, attiva il successivo `.catch()`
-* `Promise.all([...promises])` - Attende che TUTTE le Promise dell'array siano completate
-* `Promise.race([...promises])` - Si risolve non appena la prima Promise viene risolta
+* `Promise.resolve(value)` – Converte qualsiasi valore in una Promise  
+* `Promise.reject(Error)` – Crea una Promise di fallimento, attiva i successivi `.catch()`  
+* `Promise.all([...promises])` – Attende che **tutte** le Promise in un array siano completate  
+* `Promise.race([...promises])` – Si risolve non appena la prima Promise si risolve
