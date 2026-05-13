@@ -2,8 +2,10 @@
 unlisted: true
 draft: true
 hidden: true
-title: ''
-subTitle: ''
+title: 'Docker‑Sicherheit: Der verlorene Leitfaden für Entwickler'
+subTitle: >-
+  Erfahren Sie, wie Sie Ihr Netzwerk vor Bedrohungen und gefährlichen
+  Konfigurationen schützen.
 date: '2025-01-04'
 modified: '2025-01-13'
 tags:
@@ -19,135 +21,144 @@ cover_credit: ©️ 2025 Dan Levy
 ---
 import {CodeTabs} from '../../../../../components/CodeTabs';
 
-## In Bearbeitung
+## Work in progress
 
 **Inhaltsverzeichnis**
 
-1. [⚠️ Lokale Netzwerke unter Risiko](#-local-networks-at-risk)
+1. [⚠️ Lokale Netzwerke in Gefahr](#-local-networks-at-risk)
 2. [🛡️ Firewall-Konfiguration](#-firewall-configuration)
-3. [🔐 Geheimnisverwaltung für lokale Entwicklung](#-secrets-management-for-local-development)
-4. [🕵️‍ Anmeldeinformationen-Lecks und Seitenkanalangriffe](#-credential-leaks-and-side-channel-attacks)
-5. [🔍 Überwachung & Canary-Tokens](#-monitoring--canary-tokens)
-6. [❌ Häufige Fehlvorstellungen](#-common-misconceptions)
+3. [🔐 Geheimnisverwaltung für die lokale Entwicklung](#-secrets-management-for-local-development)
+4. [🕵️‍ Credential-Lecks und Side-Channel-Angriffe](#-credential-leaks-and-side-channel-attacks)
+5. [🔍 Monitoring & Canary Tokens](#-monitoring--canary-tokens)
+6. [❌ Häufige Missverständnisse](#-common-misconceptions)
 
 <p class="inset"></p>
 
-## ⚠️ Lokale Netzwerke unter Risiko
+## ⚠️ Lokale Netzwerke in Gefahr
 
-Seien wir ehrlich: Wir haben es alle schon mal getan. Sie haben sich an einem zufälligen Café-WLAN angeschlossen oder jemandem erlaubt, Ihr Heimnetzwerk zu nutzen, ohne groß darüber nachzudenken. Vielleicht vertrauen Sie sogar Ihrem Smart-Kühlschrank, Ihr Netzwerk nicht zu gefährden. Die Realität? Diese scheinbar harmlosen Entscheidungen können Ihr lokales Entwicklungssetup unnötigen Risiken aussetzen. Angreifer zielen nicht nur auf Produktionsumgebungen ab – lokale Umgebungen sind oft weichere Ziele, die sensiblen Projekten Zugriff verschaffen können.
+Seien wir ehrlich, wir haben es alle schon getan. Du hast dich mit dem WLAN eines Coffeeshops verbunden oder jemandem ohne Weiteres Zugriff auf dein Heimnetzwerk gewährt. Vielleicht vertraust du sogar deinem intelligenten Kühlschrank, dass er dein Netzwerk nicht gefährdet. Die Realität? Diese lockeren Entscheidungen können deine lokale Entwicklungsumgebung unnötigen Risiken aussetzen. Angreifer zielen nicht nur auf Produktionssysteme – lokale Umgebungen sind häufig weichere Ziele und bieten einen Weg zu sensiblen Projekten.
 
 ### Angriffsszenarien
 
-1. **Abgefangener Datenverkehr:** Unverschlüsselter Datenverkehr kann leicht abgefangen und ausgelesen werden.
-2. **Unschützte Dienste:** Lokale Datenbanken oder APIs, die auf `0.0.0.0` ausgeliefert werden.
-3. **Netzwerkbetrug:** Datenverkehr wird an ein Gerät des Angreifers weitergeleitet.
+1. **Abgefangener Datenverkehr:** Unverschlüsselter Traffic lässt sich leicht mitlesen.
+2. **Ungeschützte Dienste:** Lokale Datenbanken oder APIs, die auf `0.0.0.0` exponiert sind.
+3. **Netzwerk‑Spoofing:** Umleitung des Datenverkehrs zum Gerät des Angreifers.
 
-### Schnelle Lösungen
+### Schnelllösungen
 
-- Nutzen Sie private Docker-Netzwerke statt Firewalls, um den Netzwerkzugriff zu beschränken.
-- Vermeiden Sie öffentliche oder geteilte WLAN-Netzwerke; bevorzugen Sie stattdessen den Hotspot Ihres Handys.
-- Überwachen Sie Ihr lokales Netzwerk nach unbekannten Geräten mit Tools wie `arp-scan` und `nmap`.
+- Setze private Docker‑Netzwerke statt Firewalls ein, um die Netzwerkexposition zu begrenzen.  
+- Vermeide öffentliches oder geteiltes WLAN; nutze lieber den Hotspot deines Telefons.  
+- Überwache dein lokales Netzwerk auf unbekannte Geräte mit Tools wie `arp-scan` und `nmap`.
 
-## 🛡️ Firewall-Konfiguration
+## 🛡️ Firewall‑Konfiguration
 
 ### UFW mit Docker (Ubuntu)
 
-> ⚠️ **Warnung:** Standardmäßig umgeht Docker auf Ubuntu/Debian UFW/iptables-Regeln, was Ihr System potenziell Angriffen aussetzen kann.  
-> Es ist egal, ob Sie Ports an lokale IP-Adressen binden (z. B. `-p 127.0.0.1:8080:80`).  
+> ⚠️ **Warnung:** Standardmäßig umgeht Docker unter Ubuntu/Debian die UFW/iptables‑Regeln, was das System potenziell Angriffen aussetzt.  
+> Es spielt keine Rolle, ob Sie Ports an lokale IP‑Adressen binden (z. B. `-p 127.0.0.1:8080:80`).
 
-Das überrascht mich jedes Mal, wenn ich es erlerne! [Docker umgeht UFW-Regeln standardmäßig](https://github.com/moby/moby/issues/4737), wodurch Container ungehindert mit dem Host und anderen Containern kommunizieren können.  
+Das überrascht mich jedes Mal, wenn ich davon erfahre! [Docker umgeht UFW‑Regeln standardmäßig](https://github.com/moby/moby/issues/4737) und erlaubt Containern, ohne Einschränkung mit dem Host und anderen Containern zu kommunizieren.
 
-### Best Practices  
+### Best Practice
 
-1. 🥇 **Nutzen Sie Docker-Netzwerke**, um Container oder Netzwerke zu isolieren und zu steuern, was sich mit ihnen verbinden kann.  
+1. 🥇 **Docker‑Netzwerke verwenden**, um zu isolieren und zu steuern, was sich mit jedem Container oder Netzwerk verbinden darf.
 
-2. 🥉 **Aktualisieren Sie iptables**, falls Sie ein `host`-Netzwerk verwenden müssen oder keine benutzerdefinierten Netzwerke einsetzen können. Um das Risiko zu reduzieren, können Sie iptables konfigurieren. Nicht für schwache Nerven geeignet, [siehe untenstehendes Hilfsprogramm.](#uf)
+###
+2. 🥉 **iptables aktualisieren** – wenn Sie ein `host`‑Netzwerk nutzen müssen oder keine benutzerdefinierten Netzwerke einsetzen können, können Sie das Risiko mindern, indem Sie iptables konfigurieren. Nicht für Schwacheherzen, [siehe das untenstehende Hilfsprogramm.](#uf)
 
-#### Docker-Netzwerkisolation
+#### Docker‑Netzwerk‑Isolation
 
 ```bash
-# Erstellen Sie ein neues Docker-Netzwerk
+# Create a new Docker network
 docker network create my-network
 
-# Führen Sie Ihren Container mit dem neuen Netzwerk aus
+# Run your container with the new network
 docker run --network my-network my-container
 ```
 
-#### UFW-Konfiguration (für `host`-Netzwerke)
+#### UFW‑Konfiguration (für `host`‑Netzwerke)
 
-Es gibt viel schlechte Ratschläge, um dies zu beheben. Konfigurieren Sie UFW so, dass es mit Docker zusammenarbeitet, wie Sie es vermutlich erwarten würden.
+Es gibt jede Menge schlechten Rat, wie man das beheben soll. Konfigurieren Sie UFW so, dass es mit Docker zusammenarbeitet – im Grunde so, wie Sie es erwarten würden.
 
-Ich habe `ufw-docker` verwendet, um ein selbst gehostetes System zu konfigurieren, und es scheint gut zu funktionieren.
+Ich habe `ufw-docker` verwendet, um ein selbstgehostetes System zu konfigurieren, und es funktioniert zuverlässig.
 
 ```bash title="install-ufw-docker.sh"
-# Installieren Sie die Binärdatei als Root (benötigt ohnehin Root-Rechte)
+# Install binary as root (needs root permissions anyway)
 sudo wget -O /usr/local/bin/ufw-docker \
    https://github.com/chaifeng/ufw-docker/raw/master/ufw-docker
 sudo chmod +x /usr/local/bin/ufw-docker
-# Installieren und ändern Sie die Datei `after.rules` von `ufw`
+# Install and modify the `after.rules` file of `ufw`
 ufw-docker install
 
 ufw-docker help
 ```
 
-Dieser Befehl führt folgendes aus:
+```
 
-- Erstellt ein Backup der Datei `/etc/ufw/after.rules`.
-- Fügt Docker-spezifische Regeln am Ende der Datei hinzu, um korrekt mit UFW zusammenzuarbeiten.
+Dieser Befehl führt Folgendes aus:
+
+- Sichert die Datei `/etc/ufw/after.rules`.
+- Fügt am Ende der Datei Docker‑bezogene Regeln ein, um sie korrekt mit UFW zu integrieren.
 
 **Quelle:** [ufw-docker GitHub](https://github.com/chaifeng/ufw-docker/tree/master#install)
 
-**Beispielverwendung:**
+**Beispielhafte Verwendung:**
 
 ```bash
-# Erlaubt Docker-Container auf Port 8080
+
+# Docker‑Container auf Port 8080 zulassen
 ufw-docker allow <container_name> 8080/tcp
 
-# Verwalte Regeln sicher neben deiner UFW-Konfiguration
+# Regeln sicher zusammen mit Ihrer UFW‑Konfiguration verwalten
 ufw-docker status
+
 ```
 
-**Hinweis:** Die meisten "Lösungen" für Docker-UFW-Konflikte beinhalten manuelle iptables-Regeln, die fehleranfällig und brüchig bei Updates sein können.
+**Hinweis:** Die meisten „Fixes“ für Docker‑UFW‑Konflikte beruhen auf manuellen iptables‑Regeln, die bei Updates fehleranfällig und fragil sein können.
 
-### macOS-Feuerwall
+### macOS‑Firewall
 
-1. Gehe zu **Systemeinstellungen > Sicherheit und Datenschutz > Firewall**.
-2. Aktiviere die Firewall und klicke auf "Firewall-Optionen".
-3. Blockiere alle eingehenden Verbindungen außer den wesentlichen Diensten.
+1. Öffnen Sie **Systemeinstellungen > Sicherheit & Privatsphäre > Firewall**.
+2. Aktivieren Sie die Firewall und klicken Sie auf „Firewall‑Optionen“.
+3. Blockieren Sie alle eingehenden Verbindungen, außer den unbedingt benötigten Diensten.
 
-**Hinweis:** Du musst möglicherweise die Konfiguration deiner Firewall anpassen, um bestimmte Smart-Home-Geräte zu erlauben, z. B. Google Cast/AirPlay und andere Dienste.
+**Hinweis:** Möglicherweise müssen Sie die Konfiguration Ihrer Firewall anpassen, um bestimmte Smart‑Devices zu erlauben – z. B. Google Cast/AirPlay und andere Dienste.
 
-### Befehle für fortgeschrittene Benutzer (macOS und Linux)
+### Befehle für Fortgeschrittene (macOS und Linux)
 
 #### macOS:
 
 ```bash
+
 sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setblockall on  # Alles blockieren
-sudo /usr/libexec/ApplicationFirewall/socketfilterfw --add /path/to/app  # Spezifische App erlauben
+sudo /usr/libexec/ApplicationFirewall/socketfilterfw --add /path/to/app  # Bestimmte App zulassen
+
 ```
 
 #### Linux (ufw):
 
 ```bash
-ufw default deny incoming  # Alle eingehenden Verbindungen blockieren
-ufw allow ssh  # SSH erlauben
-# 443 und 80 für Webverkehr erlauben
+
+ufw default deny incoming  # Alles eingehend blockieren
+ufw allow ssh  # SSH zulassen
+# 443 und 80 für Web‑Traffic zulassen
 ufw allow 80/tcp
 ufw allow 443/tcp
 ufw enable  # Firewall aktivieren
+
 ```
 
-**Pro-Tipp:** Nutze Tools wie [Little Snitch](https://www.obdev.at/products/littlesnitch/index.html) auf macOS und [ufw](https://help.ubuntu.com/community/UFW) auf Linux für benutzerfreundlichere Konfigurationen.
+**Pro‑Tipp:** Nutzen Sie Werkzeuge wie [Little Snitch](https://www.obdev.at/products/littlesnitch/index.html) unter macOS und [ufw](https://help.ubuntu.com/community/UFW) unter Linux für benutzerfreundlichere Konfigurationen.
 
-## 🔐 Geheimnisse-Verwaltung für lokale Entwicklung
+## 🔐 Secrets Management für die lokale Entwicklung
 
-### Proaktive Platzhalter-Validierung
+### Proaktive Platzhalter‑Validierung
 
-<p>💡 Stelle sicher, dass Geheimnisse vor dem Start deiner Anwendung mit echten Werten konfiguriert sind.</p>
+<p>💡 Stellen Sie sicher, dass Secrets vor dem Start Ihrer Anwendung mit echten Werten befüllt sind.</p>
 
-Wenn du Platzhalter wie `__WARNING_REPLACE_ME__` in deinen Geheimnissen verwendest, gut, vielleicht bemerkt jemand. Falls nicht, kannst du auch eine kleine Validierung hinzufügen, um Sicherheit zur Laufzeit zu gewährleisten.
+Wenn Sie Platzhalter wie `__WARNING_REPLACE_ME__` in Ihren Secrets verwenden, großartig, vielleicht bemerkt es ja jemand. Für den Fall der Fälle können Sie zusätzlich eine kleine Validierung einbauen, die zur Laufzeit Sicherheit bietet.
 
-Du würdest überrascht sein, wie einfach es ist, einen JWT-Token vollständig zu manipulieren (zu ändern und erneut zu signieren), wenn Angreifer den Geheimnis-Schlüssel erraten können!
+Sie würden nicht glauben, wie einfach es ist, ein JWT‑Token vollständig zu hacken (modifizieren & neu zu signieren), wenn Angreifer das Secret erraten können!
 
 <CodeTabs client:load tabs={["JavaScript", "Rust", "Go"]}>
 
@@ -213,17 +224,18 @@ func main() {
 
 </CodeTabs>
 
-### Generieren und Speichern von Geheimnissen
+### Generating and Storing Secrets
 
-<p class="inset">Verwenden Sie niemals Geheimnisse im Quellcode. Verwenden Sie stattdessen Umgebungsvariablen und sichere Safes.</p>
+<p class="inset">Nie Geheimnisse im Quellcode fest codieren. Bevorzuge Umgebungsvariablen und sichere Tresore.</p>
 
-Verwenden Sie stattdessen `.env.generate.sh`, um Benutzern zu ermöglichen, eine `.env`-Datei mit sicheren „Standardwerten“ zu generieren.
+
+Statt `.env.example` sollte `.env.generate.sh` verwendet werden, um es den Nutzern leicht zu machen, eine `.env`‑Datei mit sicheren „Standardwerten“ zu erhalten.
 
 #### Beispiel `.env.generate.sh`
 
 ```bash title=".env.generate.sh" frame="code"
 #!/bin/bash
-# Generiert eine sichere .env-Datei für die lokale Entwicklung
+# Generates a secure .env file for local development
 
 generate_secret() {
     local length=${1:-30}
@@ -231,20 +243,20 @@ generate_secret() {
     local generate_length=$((length + 4))
     openssl rand -base64 "$generate_length" | tr -d '+=/\n' | cut -c1-"$length"
 }
-# Beenden, wenn .env-Datei bereits existiert
-[ -f .env ] && { echo ".env-Datei existiert bereits!"; exit 1; }
+# Bail out if .env file already exists
+[ -f .env ] && { echo ".env file already exists!"; exit 1; }
 
 cat <<EOL > .env
-# Datenbank-Einstellungen & Geheimnisse
+# Database settings & secrets
 DB_USER=app_user
 DB_PASSWORD=$(generate_secret 30)
 REDIS_PASSWORD=$(generate_secret 20)
-# Sitzungsgeheimnisse
+# Session secrets
 SESSION_KEY=$(generate_secret 32)
 JWT_SECRET=$(generate_secret 64)
 EOL
 
-echo "Neue .env-Datei generiert!"
+echo "New .env file generated!"
 ```
 
 {/*
@@ -265,30 +277,32 @@ pub fn main() void {
 }
 ``` */}
 
-## 🕵️‍ Überwachung und Doppelprüfung
+## 🕵️‍ Monitoring & Double-checking
 
-### `nmap`-Beispiele
+### `nmap` Beispiele
 
-#### Innerhalb Ihres Netzwerks testen
+#### Testen im eigenen Netzwerk
 
 ```bash
 
-# Scannen Sie Ihren localhost nach allen offenen Ports
+# Scan your localhost for all open ports
 nmap -sT localhost
 
-# Scannen Sie die private IP Ihres Geräts nach Diensten
+# Scan your machine’s private IP for services
 nmap -sV 192.168.1.10
 
-# Erkennen Sie Geräte in Ihrem Netzwerk
+# Detect devices on your network
 nmap -sn 192.168.0.0/24
 nmap -sn 10.0.0.0/24
 ```
 
-#### Tests außerhalb Ihres Netzwerks
+```
 
-Sie können Ihre aktuelle (öffentliche) IP-Adresse einfach mit Diensten wie `ifconfig.me` ermitteln: `curl https://ifconfig.me`.
+#### Testen außerhalb Ihres Netzwerks
 
-Verwenden Sie ein externes Netzwerk oder einen Remote-Server, um Ihre öffentlichen IPs zu testen:
+Um Ihre aktuelle (öffentliche) IP schnell zu ermitteln, können Sie Dienste wie `ifconfig.me` nutzen: `curl https://ifconfig.me`.
+
+Verwenden Sie ein externes Netzwerk oder einen Remote‑Server, um Ihre öffentliche IP zu testen:
 
 ```bash
 
@@ -299,8 +313,8 @@ print_current_ip() {
 print_current_ip
 # --> 123.456.789.012
 
-# Ändern Sie target_host in Ihre öffentliche IP oder Hostname
-# Überprüfen Sie den Host mit erweiterten Techniken
+# Ändern Sie target_host zu Ihrer öffentlichen IP oder Ihrem Hostnamen
+# Host mit erweiterten Techniken prüfen
 nmap -A --open --reason $target_host
 nmap -A -F --open --reason $target_host
 nmap -A -p1-65535 --open --reason $target_host
@@ -308,13 +322,14 @@ nmap -A -p1-65535 --open --reason $target_host
 ```
 
 **Warum beides testen?**  
-Tests aus dem Inneren zeigen die interne Exposition auf, während externe Tests Dienste identifizieren, die für Angreifer zugänglich sind.
+Ein Test von innen zeigt interne Angriffsflächen, während externe Tests Dienste aufdecken, die Angreifer erreichen können.
 
-## 🛡️ Häufige Fehlvorstellungen
+## 🛡️ Häufige Missverständnisse
 
-1. **Mein lokales Umfeld ist kein Ziel.**  
-   - Tatsache: Angreifer können von Ihrem Rechner zu Ihren Produktionsumgebungen wechseln.  
-2. **Feuerwände sperren alles ab.**  
-   - Tatsache: Sie sperren nur das ab, was Sie konfigurieren.  
+
+1. **Meine lokale Umgebung ist kein Ziel.**  
+   - Fakt: Angreifer können von Ihrem Rechner aus in Ihre Produktionssysteme pivotieren.  
+2. **Firewalls blockieren alles.**  
+   - Fakt: Sie blockieren nur das, was Sie ihnen explizit konfigurieren.  
 3. **Private IPs sind sicher.**  
-   - Tatsache: Ausnutzungen wie NAT-Bypass können weiterhin Ihr Netzwerk beeinflussen.
+   - Fakt: Exploits wie NAT-Umgehungen können Ihr Netzwerk weiterhin beeinträchtigen.
