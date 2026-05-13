@@ -1,0 +1,211 @@
+{
+  "runId": "qwen-qwen3-32b-nitro@2026-05-13T06-36-48-076Z",
+  "slug": "quiz-context-engineering",
+  "locale": "ru",
+  "model": "qwen/qwen3-32b:nitro",
+  "modelPath": "qwen-qwen3-32b-nitro",
+  "createdAt": "2026-05-13T06:37:03.037Z",
+  "sourcePath": "src/content/posts/2026-05-09--quiz-context-engineering/index.mdx",
+  "targetPath": "src/content/posts/2026-05-09--quiz-context-engineering/ru/index.mdx",
+  "candidatePath": "reports/i18n/quiz-context-engineering/ru/qwen-qwen3-32b-nitro/2026-05-13T06-36-48-076Z/candidate.mdx",
+  "sourceHash": "80bb5fc16b497b3b59ea5d61677bbb1d2c11b1569c5926640320b7a8ce3fe3e7",
+  "outputHash": "47c81e3f163a75b8ed1d48620cae5f1d168ff2fb40e96ad691bf9ac600cf5a62",
+  "reasoningEffort": "low",
+  "temperature": 0.3,
+  "maxTokens": 16000,
+  "timeoutMs": 200000,
+  "articleSummary": "This quiz tests intermediate to advanced skills in context engineering, prompt structure, and production AI system management, emphasizing practical challenges beyond basic prompt engineering. It starts with gentle questions but escalates in difficulty, using a challenging yet instructive tone to highlight real-world failure modes and cost optimization strategies.\nTopics: context windows, token budgets, retrieval, prompt structure, failure modes, prompt caching, hybrid search, cost management\nAudience: Developers and AI practitioners transitioning from demo projects to building scalable, production-ready AI systems.",
+  "totalInputTokens": 13833,
+  "totalOutputTokens": 19470,
+  "totalCacheReadTokens": 0,
+  "totalCacheWriteTokens": 0,
+  "totalDurationMs": 46447,
+  "totalCostUsd": 0.00577944,
+  "pricingSource": "local-openrouter-estimate",
+  "telemetry": {
+    "model": "qwen/qwen3-32b:nitro",
+    "chunkSize": "quiz",
+    "totalChunks": 14,
+    "totalInputTokens": 13833,
+    "totalOutputTokens": 19470,
+    "totalCacheReadTokens": 0,
+    "totalCacheWriteTokens": 0,
+    "totalDurationMs": 46447,
+    "totalCostUsd": 0.00577944,
+    "pricingSource": "local-openrouter-estimate",
+    "chunks": [
+      {
+        "index": -1,
+        "label": "quiz-summary",
+        "inputTokens": 311,
+        "outputTokens": 490,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 5905,
+        "costUsd": 0.00014247999999999998
+      },
+      {
+        "index": -2,
+        "label": "intro",
+        "text": "import Challenge from '../../../components/QuizUI/Challenge';\nimport QuizUI from '../../../components/QuizUI/QuizUI';\n\n<p class=\"inset\">Инженерия подсказок получает слоганы. Инженерия контекста получает вызовы с пейджера. Насколько хорошо вы знаете ту часть AI-системы, которая действительно работает в проде?</p>\n\nЭтот тест охватывает окна контекста, бюджеты токенов, поиск, структуру подсказок и режимы сбоев, которые превращают чистые демонстрации в запутанные продукты. Начинается мягко. Не остаётся таковым. Приносите чеки.",
+        "inputTokens": 945,
+        "outputTokens": 578,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 1365,
+        "costUsd": 0.00021431999999999997
+      },
+      {
+        "index": 0,
+        "label": "Context Window Basics",
+        "inputTokens": 755,
+        "outputTokens": 802,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 1801,
+        "costUsd": 0.00025288000000000003
+      },
+      {
+        "index": 9,
+        "label": "XML Tags for Structure",
+        "inputTokens": 849,
+        "outputTokens": 953,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 1962,
+        "costUsd": 0.00029664
+      },
+      {
+        "index": 3,
+        "label": "Lost in the Middle",
+        "inputTokens": 809,
+        "outputTokens": 1105,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 2299,
+        "costUsd": 0.00032992
+      },
+      {
+        "index": 1,
+        "label": "Token Estimation",
+        "inputTokens": 786,
+        "outputTokens": 1040,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 2384,
+        "costUsd": 0.00031248
+      },
+      {
+        "index": 6,
+        "label": "Context Budget",
+        "inputTokens": 845,
+        "outputTokens": 1250,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 2538,
+        "costUsd": 0.0003676
+      },
+      {
+        "index": 8,
+        "label": "Few-Shot Examples",
+        "inputTokens": 808,
+        "outputTokens": 1389,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 2539,
+        "costUsd": 0.000398
+      },
+      {
+        "index": 13,
+        "label": "Context Engineering vs. Fine-Tuning",
+        "inputTokens": 925,
+        "outputTokens": 1118,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 2573,
+        "costUsd": 0.00034232
+      },
+      {
+        "index": 2,
+        "label": "Role of the System Prompt",
+        "inputTokens": 807,
+        "outputTokens": 1386,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 2604,
+        "costUsd": 0.0003972
+      },
+      {
+        "index": 4,
+        "label": "Chunking Strategy",
+        "inputTokens": 803,
+        "outputTokens": 1190,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 2624,
+        "costUsd": 0.00034984
+      },
+      {
+        "index": 5,
+        "label": "Hybrid Search",
+        "inputTokens": 798,
+        "outputTokens": 1419,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 2965,
+        "costUsd": 0.00040439999999999996
+      },
+      {
+        "index": 7,
+        "label": "Conversation History Management",
+        "inputTokens": 846,
+        "outputTokens": 1395,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 3128,
+        "costUsd": 0.00040248
+      },
+      {
+        "index": 11,
+        "label": "Prompt Caching",
+        "inputTokens": 868,
+        "outputTokens": 1348,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 3131,
+        "costUsd": 0.00039296
+      },
+      {
+        "index": 10,
+        "label": "Temperature and Determinism",
+        "inputTokens": 811,
+        "outputTokens": 1399,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 3176,
+        "costUsd": 0.00040064
+      },
+      {
+        "index": 12,
+        "label": "Grounding vs. Hallucination",
+        "inputTokens": 844,
+        "outputTokens": 1713,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 3347,
+        "costUsd": 0.00047863999999999996
+      },
+      {
+        "index": -3,
+        "label": "outro",
+        "text": "Как у вас дела?\n\n- **13–14**: Вы строите производственные системы ИИ, а не просто демонстрируете их. Редкость.\n- **9–12**: Твёрдый практикант. Вы знаете инструменты, но их границы всё ещё размыты.\n- **5–8**: Вы много работали с LLM, но не задумывались глубоко о управлении контекстом. Изучите кэширование промптов и гибридный поиск — они изменят ваше понимание стоимости.\n- **0–4**: Хорошая новость: всё в этом тесте изучаемо и немедленно применимо. Вопрос «потерян в середине» стоит понять перед следующей разработкой RAG.\n\nИнженерия контекста — это дисциплина, направленная на осознанное управление информацией, которую вы помещаете в окно, где её размещаете и как структурируете. Модель — это наименее управляемая часть вашей системы. Всё вокруг неё — ваше.",
+        "inputTokens": 1023,
+        "outputTokens": 895,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 2106,
+        "costUsd": 0.00029664
+      }
+    ]
+  }
+}

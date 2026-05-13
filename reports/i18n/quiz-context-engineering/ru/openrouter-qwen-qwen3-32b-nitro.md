@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-context-engineering
+- Locale: ru
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-05-09--quiz-context-engineering/ru/index.mdx
+- Validation: passed
+- Runtime seconds: 46.45
+- Input tokens: 13833
+- Output tokens: 19470
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.005779
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: 'Тест: 14 вопросов по инженерии контекста'
 subTitle: ''
@@ -469,3 +487,4 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 - **0–4**: Хорошая новость: всё в этом тесте изучаемо и немедленно применимо. Вопрос «потерян в середине» стоит понять перед следующей разработкой RAG.
 
 Инженерия контекста — это дисциплина, направленная на осознанное управление информацией, которую вы помещаете в окно, где её размещаете и как структурируете. Модель — это наименее управляемая часть вашей системы. Всё вокруг неё — ваше.
+````
