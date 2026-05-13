@@ -1,6 +1,6 @@
 ---
-title: 'Notas de Seguridad: RegEx'
-subTitle: ''
+title: 'Notas de seguridad: Expresiones regulares'
+subTitle: ¿Puede ser vulnerable una expresión regular?
 date: '2015-02-24'
 modified: '2018-07-30'
 category: Security
@@ -16,32 +16,31 @@ cover_mobile: ../w300_markus-spiske-666905-unsplash.webp
 cover_icon: ../icon_markus-spiske-666905-unsplash.webp
 social_image: ../desktop-social.webp
 ---
-## Denegación de Servicio con Expresiones Regulares: ReDOS
+## RegEx Denial-of-Service: ReDOS
 
-Una de las vulnerabilidades más sorprendentes, y difíciles de detectar, que he encontrado está relacionada con las expresiones regulares.  
-Ya sea por un diseño deficiente o una implementación inadecuada.
+Una de las vulnerabilidades más sorprendentes, y a la vez más difíciles de detectar, que he encontrado está relacionada con las expresiones regulares.  
+Ya sea por una redacción deficiente o por una implementación inadecuada.
 
-La memoria y el CPU pueden agotarse con entradas de usuario grandes o especialmente elaboradas.
+La memoria/CPU pueden agotarse con entradas de usuario grandes o especialmente manipuladas.
 
-> Esta es una vulnerabilidad de denegación de servicio, no solo un problema de rendimiento. Si una entrada maliciosa puede bloquear el CPU durante tanto tiempo que deje sin recursos a los usuarios legítimos, debe incluirse en su modelo de amenazas de seguridad.
+> Esto es una vulnerabilidad de denegación de servicio, no solo una señal de rendimiento. Si una entrada hostil puede mantener la CPU ocupada el tiempo suficiente como para privar a los usuarios reales de recursos, debe formar parte de su modelo de amenazas de seguridad.
 
-### Indicadores de riesgo
+### Señales de advertencia
 
-1. Cuantificadores anidados, grupos repetidos o alternancia superpuesta  
-2. Motores con retroceso intenso que no tienen límite de tiempo ni límite de longitud de entrada  
-3. La expresión se usa con entradas del usuario no validadas  
-4. La validación mediante expresiones regulares se ejecuta en una ruta de solicitud activa
+1. cuantificadores anidados, grupos repetidos o alternancia superpuesta  
+2. motores con retroceso intensivo sin tiempo de espera ni límite de longitud de entrada  
+3. la expresión se usa con datos de usuario sin validar  
+4. la validación con regex se ejecuta en una ruta de solicitud crítica
 
 ### Mitigación / Resolución
 
-1. Las expresiones regulares son complejas.  
-    1. Por ejemplo, así es cómo los expertos de [OWASP recomiendan validar direcciones IP][owasp]:  
-       `^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$`  
-    2. ¡¡¡Eso es más largo que un tweet de la vieja escuela para una dirección IP de 4 bytes!!!  
-2. Establecer un límite de longitud en la entrada antes de evaluar con expresiones regulares.  
-3. Añadir tiempos de espera, análisis estático o un motor sin retroceso donde la plataforma lo permita.  
-4. Esto afecta casi a todos los lenguajes y plataformas: .NET/Node/Python/PERL/Java.  
+1. Las expresiones regulares son difíciles.  
+    1. Por ejemplo, así es como los muy listos de [OWASP recomiendan manejar la validación de IP][owasp]: `^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$`  
+    2. ¡Eso es más largo que un tweet (a la antigua) para una dirección IP de 4 bytes!
+2. Limite la longitud de la entrada antes de evaluar la expresión regular.  
+3. Añada tiempos de espera, análisis estático o un motor sin retroceso donde la plataforma lo permita.  
+4. Afecta a casi todos los lenguajes y plataformas: .NET/Node/Python/PERL/Java.
 
-### Referencia  
+### Referencia
 
-- [ReDoS de OWASP](https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS)
+- [OWASP ReDoS](https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS)
