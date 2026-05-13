@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: docker-makes-everything-better
+- Locale: hi
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2015-03-12--docker-makes-everything-better/hi/index.mdx
+- Validation: passed
+- Runtime seconds: 0.73
+- Input tokens: 2034
+- Output tokens: 605
+- Thinking tokens: unknown
+- Cached input tokens: 1024
+- Cache write tokens: 0
+- Estimated cost: $0.000188
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Docker === प्यार
@@ -62,3 +80,4 @@ sudo docker run --name nodejs01 -d -p 3300:3300 -p 4433:4433 nodejs:latest
 > Docker आपके पूरे SDLC में काम को आसान बनाता है।
 
 > - काफी करीब।
+````
