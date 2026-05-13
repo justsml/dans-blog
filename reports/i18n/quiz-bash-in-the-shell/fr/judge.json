@@ -1,0 +1,92 @@
+{
+  "selectedCommit": "3fcb2e9089dd78bf5102d45b605de4a49da1bdbb",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 8,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 8,
+    "mdxPreservation": 9
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "options={[\n    { text: \">\" },\n    { text: \">>\" },\n    { text: \"|\", isAnswer: true },\n    { text: \"||\" },\n    { text: \"|>\" },\n    { text: \"Error\" },\n  ]}",
+      "replacement": "options={[\n    { text: \">\" },\n    { text: \">>\" },\n    { text: \"|\", isAnswer: true },\n    { text: \"||\" },\n    { text: \"|>\" },\n    { text: \"Error\" },\n  ]}",
+      "reason": "The translation is missing all options for Challenge index 9 (Piping), making the quiz unplayable."
+    },
+    {
+      "priority": "high",
+      "match": "options={[\n    { text: \"1>&2\" },\n    { text: \"&2>&1\" },\n    { text: \"2>&1\", isAnswer: true },\n    { text: \"2>1\" },\n    { text: \"&2>1\" },\n  ]}",
+      "replacement": "options={[\n    { text: \"1>&2\" },\n    { text: \"&2>&1\" },\n    { text: \"2>&1\", isAnswer: true },\n    { text: \"2>1\" },\n    { text: \"&2>1\" },\n  ]}",
+      "reason": "The translation is missing all options for Challenge index 15 (Standard In/Out), making the quiz unplayable."
+    },
+    {
+      "priority": "medium",
+      "match": "avec toutes ces guillemets",
+      "replacement": "avec tous ces guillemets",
+      "reason": "Grammar: 'guillemet' is a masculine noun in French."
+    }
+  ],
+  "rationale": "The candidate captures the tone well, but unfortunately has critical technical omissions where the 'options' arrays for two challenges (9 and 15) were left empty. These must be restored for the quiz to function. The translation of the 'wc' joke and the informal 'qui vous font chier' are excellent matches for the source style.",
+  "slug": "quiz-bash-in-the-shell",
+  "locale": "fr",
+  "candidateCommits": [
+    "3fcb2e9089dd78bf5102d45b605de4a49da1bdbb",
+    "86cf74c799c8b710515dc3e861d50c00f0e4eee6"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "Quel affichera `It's 🔨 Time!` ?",
+      "replacement": "Lequel affichera `It's 🔨 Time!` ?",
+      "reason": "Grammar: 'Quel' is used as an adjective, 'Lequel' is the correct pronoun for 'Which one'.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "avec toutes ces guillemets",
+      "replacement": "avec tous ces guillemets",
+      "reason": "Gender: 'guillemet' is masculine in French.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "options={[\n  ]}",
+      "replacement": "options={[\n    { text: \">\" },\n    { text: \">>\" },\n    { text: \"|\", isAnswer: true },\n    { text: \"||\" },\n    { text: \"|>\" },\n    { text: \"Error\" },\n  ]}",
+      "reason": "The translation is missing all options for Challenge index 9 (Piping), making the quiz unplayable.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "options={[\n  ]}",
+      "replacement": "options={[\n    { text: \"1>&2\" },\n    { text: \"&2>&1\" },\n    { text: \"2>&1\", isAnswer: true },\n    { text: \"2>1\" },\n    { text: \"&2>1\" },\n  ]}",
+      "reason": "The translation is missing all options for Challenge index 15 (Standard In/Out), making the quiz unplayable.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "avec toutes ces guillemets",
+      "replacement": "avec tous ces guillemets",
+      "reason": "Grammar: 'guillemet' is a masculine noun in French.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug quiz-bash-in-the-shell --locale fr --skip-global",
+    "output": ""
+  }
+}

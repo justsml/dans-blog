@@ -1,7 +1,7 @@
 ---
 unlisted: false
-title: 'Quiz : Maîtrise de Bash et Shell'
-subTitle: Pouvez-vous vraiment bien parler aux ordinateurs ?
+title: 'Quiz : Maîtrise de Bash et du Shell'
+subTitle: 'Vous parlez aux ordinateurs ? Enfin, comment ?'
 label: Bash
 category: Quiz
 subCategory: Bash
@@ -21,14 +21,14 @@ cover_full_width: ../psychedelic-shell-wide.webp
 cover_mobile: ../psychedelic-shell-square-200.webp
 cover_icon: ../psychedelic-shell-square-200.webp
 ---
-import Challenge from '../../../../components/QuizUI/Challenge';
-import QuizUI from '../../../../components/QuizUI/QuizUI';
+import Challenge from '../../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../../components/QuizUI/QuizUI';
 
-<p class="inset">Testez vos compétences en script Bash avec ces 16 questions !</p>
+<p class="inset">Mettez vos compétences en script Bash à l'épreuve avec ces 16 questions !</p>
 
-Couvrant les variables, les boucles, les conditionnels, la manipulation de chaînes, les fonctions et les pièges de syntaxe allant du basique au délicat.
+Couvrant les variables, les boucles, les conditions, la manipulation de chaînes, les fonctions et les pièges syntaxiques du simple au complexe.
 
-Améliorez (ou prouvez) vos compétences en script shell !
+Affûtez (ou prouvez) vos **compétences** en scripting shell !
 
 <QuizUI>
 
@@ -47,24 +47,24 @@ Améliorez (ou prouvez) vos compétences en script shell !
 >
   <slot name="question">
   <div className="question">
-    Comment sont définies les variables en Bash ?
+    Comment les variables sont‑elles définies dans Bash ?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Les variables en Bash sont déclarées sans espaces autour du signe `=`. Par exemple :
+    Les variables dans Bash sont déclarées sans espaces autour du signe `=`. Par exemple :
     ```bash
     name=Alice
     ```
-    Cela attribue la valeur `"Alice"` à la variable `name`.
+    Cette assignation donne la valeur `"Alice"` à la variable `name`.
 
-    Remarque : `$name` est utilisé pour **référencer** ou lire la valeur d'une variable.
+    Note : `$name` est utilisé pour **référencer** ou lire la valeur d’une variable.
 
-    Ajouter des espaces amène le shell à interpréter la commande comme un programme à exécuter, ce qui n'est pas ce que vous souhaitez lors de la définition d'une variable.
+    Ajouter des espaces fait que le shell interprète la commande comme un programme à exécuter, ce qui n’est pas souhaité lors de l’affectation d’une variable.
 
-    Bash est sensible à la casse, donc `name`, `NAME` et `Name` sont des variables différentes.
+    De plus, Bash est sensible à la casse, donc `name`, `NAME` et `Name` sont des variables différentes.
 
-    Les variables ne peuvent pas contenir d'espaces ou de tirets (`-`) dans leurs noms. Utilisez plutôt des underscores (`_`) ou la notation camelCase.
+    Enfin, les noms de variables ne peuvent pas contenir d’espaces ni de tirets (`-`). Utilisez des underscores (`_`) ou le camelCase à la place.
   </div>
   </slot>
 </Challenge>
@@ -72,8 +72,8 @@ Améliorez (ou prouvez) vos compétences en script shell !
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={1}
-  group="Échauffement : Échappement"
-  title="Échappement des guillemets"
+  group="Échauffement : Échappement"
+  title="Échapper les guillemets"
   options={[
     {text: 'echo \'It\'s 🔨 Time!\''},
     {text: 'echo \'It\\\'s 🔨 Time!\''},
@@ -84,18 +84,18 @@ Améliorez (ou prouvez) vos compétences en script shell !
 >
   <slot name="question">
   <div className="question">
-    Quelle commande affichera `It's 🔨 Time!` ?
+    _Quel affichera `It's 🔨 Time!` ?_
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Je sais. C'est fou comme l'échappement rend les chaînes difficiles à lire. Imagine échapper d'autres langages dans des chaînes Bash - avec tous ces guillemets, apostrophes et symboles `$` pour vous embêter. 🫠
+    Je sais. C'est fou à quel point l'échappement rend les chaînes difficiles à analyser. Imaginez devoir échapper d'autres langages dans des chaînes Bash – avec toutes ces guillemets, apostrophes et symboles `$` qui vous font chier. 🫠
 
-    Les apostrophes nécessitent un échappement à l'intérieur des chaînes entre apostrophes. La séquence de fermeture-apostrophe-échappée-reouverture (`'\''`) permet d'afficher :
+    Les guillemets simples doivent être échappés à l'intérieur des chaînes entre guillemets simples. La séquence fermeture‑guillemet, guillemet‑échappé, réouverture (`'\''`) permet d'afficher :
     ```plaintext
     It's 🔨 Time!
     ```
-    Il existe d'autres méthodes pour gérer cela, mais celle-ci est la plus courante.
+    Il existe d'autres façons de faire, mais c'est la plus courante.
   </div>
   </slot>
 </Challenge>
@@ -103,20 +103,20 @@ Améliorez (ou prouvez) vos compétences en script shell !
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={2}
-  group="Échauffement : Expansion"
-  title="Commande echo"
+  group="Échauffement : Expansion"
+  title="Commande Echo"
   options={[
     {text: 'cat cab'},
     {text: 'cat cbt', isAnswer: true},
     {text: 'ca bt'},
     {text: 'cat'},
     {text: 'cbd'},
-    {text: 'Erreur'},
+    {text: 'Error'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Quelle sera la sortie de cette commande ?
+    Quelle sera la sortie de cette commande ?
     ```bash
     echo c{a,b}t
     ```
@@ -124,9 +124,9 @@ Améliorez (ou prouvez) vos compétences en script shell !
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    L'expansion `{}` génère plusieurs versions de son contexte de chaîne, une (ou plus) pour chaque valeur ou motif séparé par une virgule.
+    L'expansion entre accolades `{}` génère plusieurs versions du contexte de chaîne, une (ou plusieurs) pour chaque valeur séparée par des virgules ou chaque motif.
 
-    Ici, `c{a,b}t` s'étend à :
+    Ici, `c{a,b}t` s'étend en :
     ```plaintext
     cat cbt
     ```
@@ -150,7 +150,7 @@ Améliorez (ou prouvez) vos compétences en script shell !
 >
   <slot name="question">
   <div className="question">
-    Qu'affichera-t-il ?
+    Alors, que va-t-il afficher ?
     ```bash
     price="$100"
     echo "Cost: $price"
@@ -159,11 +159,11 @@ Améliorez (ou prouvez) vos compétences en script shell !
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Les variables numérotées ont un sens particulier. Ici, `$1` est une variable spéciale qui contient le premier argument passé au script ou à la fonction.
+    Les variables numérotées ont une signification spéciale. Dans ce cas, `$1` est une variable spéciale qui contient le premier argument passé au script ou à la fonction.
 
-    Puisque nous exécutons le script dans un REPL, il n'y a pas d'arguments, donc `$1` est vide. Le texte restant `00` est affiché tel quel.
+    Comme nous exécutons le script dans un REPL, il n’y a aucun argument, donc `$1` est vide. Le texte restant `00` est affiché tel quel.
 
-    Pour afficher un caractère `$` littéral, utilisez des apostrophes simples, ou échappez-le avec une antislash (`\`) :
+    Pour afficher un caractère `$` littéral, utilisez des guillemets simples ou échappez‑le avec un antislash (`\\`) :
     ```bash
     price="\$100"
     echo "Cost: $price"
@@ -176,18 +176,18 @@ Améliorez (ou prouvez) vos compétences en script shell !
   client:visible={{rootMargin: "150px"}}
   index={4}
   group="Remplacement de sous-chaînes"
-  title="Remplacer un sous-chaîne"
+  title="Remplacer une sous-chaîne"
   options={[
     {text: 'meow meow'},
     {text: 'Meow meow'},
     {text: 'Bark meow', isAnswer: true},
     {text: 'Bark bark'},
-    {text: 'Erreur'},
+    {text: 'Error'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Qu'est-ce qui se passe ici ?
+    Que se passe-t-il ici ?
     ```bash
     str="Bark bark"
     echo ${str/bark/meow}
@@ -196,11 +196,11 @@ Améliorez (ou prouvez) vos compétences en script shell !
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    La syntaxe `${var/pattern/replacement}` remplace la première occurrence de `pattern` par `replacement`. Ici, la sortie est :
+    La syntaxe `${var/pattern/replacement}` remplace la première occurrence de `pattern` par `replacement`. Ici, la sortie est :
     ```plaintext
     Bark meow
     ```
-    Elle est sensible à la casse. Pour gérer à la fois `bark` et `Bark`, utilisez un motif tel que `${var/[Bb]ark/Bark}` ou normalisez la chaîne avant le remplacement.
+    Il est sensible à la casse. Pour gérer à la fois `bark` et `Bark`, utilisez un motif tel que `${var/[Bb]ark/Bark}` ou normalisez la chaîne avant le remplacement.
 
     Pour remplacer toutes les occurrences, utilisez `${var//pattern/replacement}`.
 
@@ -214,8 +214,8 @@ Améliorez (ou prouvez) vos compétences en script shell !
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={5}
-  group="Longueur d'une chaîne"
-  title="Longueur d'une chaîne"
+  group="Longueur de chaîne"
+  title="Longueur de chaîne"
   options={[
     {text: '$#username'},
     {text: '#$username'},
@@ -226,24 +226,24 @@ Améliorez (ou prouvez) vos compétences en script shell !
 >
   <slot name="question">
   <div className="question">
-    Comment obtenir la longueur d'une variable en Bash ?
+    Comment obtenir la longueur d’une variable en Bash ?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
     La syntaxe `${#username}` renvoie la longueur de `username`.
 
-    Par exemple :
+    Par exemple :
     ```bash
     username="@justsml"
     echo ${#username} # => 8
     ```
-    Bien que `wc` fonctionne, il n'est pas techniquement intégré à Bash.
+    Bien que `wc` fonctionnerait, ce n’est techniquement pas une partie de Bash.
 
-    L'utilitaire `wc` est un vieux jeu de mots référant à "water closet", ou toilette.
-    PLATON ! Qui lit encore ces trucs ?
+    L’utilitaire `wc` est une vieille blague interne faisant référence à "water closet", ou toilettes.
+    PLAISANTERIE ! Quelqu’un lit encore ça ?
 
-    En réalité, `wc` est une commande ancienne issue de Posix (et des jours d'Unix AT&T). C'est un raccourci pour "word count" et permet de compter les lignes, mots et caractères dans un fichier ou un flux d'entrée.
+    En réalité, `wc` est une commande ancienne du POSIX (et des jours Unix d’AT&T). Son nom signifie "word count" et il peut compter les lignes, les mots et les caractères dans un fichier ou un flux d’entrée.
   </div>
   </slot>
 </Challenge>
@@ -252,18 +252,18 @@ Améliorez (ou prouvez) vos compétences en script shell !
   client:visible={{rootMargin: "150px"}}
   index={6}
   group="Conditionnels"
-  title="If-Else de base"
+  title="If-Else basique"
   options={[
     {text: 'Le fichier existe'},
     {text: 'Le fichier n\'existe pas, après un diagnostic de test', isAnswer: true},
     {text: 'Erreur uniquement'},
-    {text: 'Manque d\'accolades doubles'},
+    {text: 'Crochets doubles manquants'},
     {text: 'Rien'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Quel est la sortie de ce script si le fichier `cats.txt` EXISTE ?
+    Que produit ce script si le fichier `cats.txt` EXISTE ?
     ```bash
     if [ -e cats.txt]; then
       echo "File exists"
@@ -275,13 +275,13 @@ Améliorez (ou prouvez) vos compétences en script shell !
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Avez-vous repéré l'espace manquant avant l'accolade fermante ?
+    Avez‑vous remarqué l’espace manquant avant la parenthèse fermante ?
 
-    Bash est très exigeant sur ce point : les espaces sont obligatoires à l'intérieur des expressions entre crochets.
+    Bash est assez pointilleux ici : des espaces sont requis à l’intérieur des expressions entre crochets.
 
-    L'espace manquant fait que la commande `[` ne voit pas de `]` de fermeture, Bash affiche un diagnostic, traite le test comme échoué, et passe à la branche `else`.
+    Parce que l’espace manquant fait que la commande `[` ne voit pas de `]` de fermeture, Bash affiche un diagnostic, considère le test comme échoué et passe à la branche `else`.
 
-    La syntaxe correcte est :
+    La syntaxe correcte est :
     ```bash
     if [ -e example.txt ]; then
       echo "File exists"
@@ -289,7 +289,7 @@ Améliorez (ou prouvez) vos compétences en script shell !
       echo "File does not exist"
     fi
     ```
-    Note : Les accolades doubles `[[ ]]` sont **recommandées** pour les expressions conditionnelles. [Voir BashFAQ.](https://mywiki.wooledge.org/BashFAQ/031)
+    Remarque : les doubles crochets `[[ ]]` sont **recommandés** pour les expressions conditionnelles. [Voir BashFAQ.](https://mywiki.wooledge.org/BashFAQ/031)
   </div>
   </slot>
 </Challenge>
@@ -301,14 +301,14 @@ Améliorez (ou prouvez) vos compétences en script shell !
   title="Comparaison de chaînes"
   options={[
     {text: 'Même chat'},
-    {text: 'Chats différents, après une erreur de syntaxe', isAnswer: true},
+    {text: 'Chats différents, après une erreur de syntaxe de test', isAnswer: true},
     {text: 'Zalgo'},
     {text: 'Erreur uniquement'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Comment comparer des chaînes en Bash ?
+    Comment comparer des chaînes en Bash ?
     ```bash
     cat1="Rosie"
     cat2="Sunflower"
@@ -322,13 +322,13 @@ Améliorez (ou prouvez) vos compétences en script shell !
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Une autre erreur de syntaxe !
+    Une autre erreur de syntaxe de test !
 
-    Avez-vous repéré l'opérateur `===` invalide ?
+    Avez‑vous remarqué l’opérateur invalide `===` ?
 
-    Vous pensiez peut-être au JavaScript...
+    Vous pensiez peut‑être à JavaScript…
 
-    Avec `[ ... ]`, Bash affiche un diagnostic et la condition est fausse, donc la branche `else` affiche `Chats différents`. En Bash, utilisez `=` ou `==` pour les comparaisons d'égalité.
+    Avec `[ ... ]`, Bash signale un diagnostic et la condition est fausse, donc la branche `else` affiche `Different cats`. En Bash, utilisez `=` ou `==` pour les comparaisons d’égalité.
   </div>
   </slot>
 </Challenge>
@@ -342,14 +342,14 @@ Améliorez (ou prouvez) vos compétences en script shell !
     {text: 'Salut', isAnswer: true},
     {text: 'Dan'},
     {text: 'Salut Dan'},
-    {text: 'saluer'},
+    {text: 'greet'},
     {text: 'Erreur'},
     {text: 'Erreur de syntaxe'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Quelle sortie produira ce script ?
+    Quelle sera la sortie de ce script ?
     ```bash
     function greet () {
       echo "$1"
@@ -360,9 +360,9 @@ Améliorez (ou prouvez) vos compétences en script shell !
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Les fonctions en Bash peuvent accepter des arguments. La variable `$1` contient le premier argument passé à la fonction.
+    Les fonctions Bash peuvent accepter des arguments. La variable `$1` contient le premier argument passé à la fonction.
 
-    N'oubliez pas : `$0` est le nom du script, `$1` est le premier argument, `$2` le second, etc. **Les espaces séparent les arguments.** Ainsi, `greet Hi Dan` passe `"Hi"` comme premier argument. Pour passer `"Hi Dan"` en tant qu'argument unique, vous devriez l'encadrer de guillemets : `greet "Salut Dan"`.
+    Rappelez‑vous, `$0` est le nom du script, `$1` le premier argument, `$2` le deuxième, etc. **Les espaces séparent les arguments.** Ainsi, `greet Hi Dan` passe `"Hi"` comme premier argument. Pour passer `"Hi Dan"` comme un seul argument, il faut le citer : `greet "Hi Dan"`.
   </div>
   </slot>
 </Challenge>
@@ -371,18 +371,18 @@ Améliorez (ou prouvez) vos compétences en script shell !
   client:visible={{rootMargin: "150px"}}
   index={9}
   group="Composition"
-  title="Utilisation du pipeline"
+  title="Utilisation du pipe"
   options={[
   ]}
 >
   <slot name="question">
   <div className="question">
-    Quel opérateur relie la **sortie** d'une commande à l'**entrée** de la commande suivante ?
+    Quel opérateur relie la **sortie** d'une commande à l'**entrée** de la commande suivante ?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    L'opérateur `|` (tuyau) relie la sortie d'une commande à l'entrée d'une autre. Par exemple :
+    L'opérateur `|` pipe relie la sortie d'une commande à l'entrée d'une autre. Par exemple :
     ```bash
     echo "Mr. Levy 👨🏻‍🔬" | wc -m
     # => 14
@@ -401,30 +401,30 @@ Améliorez (ou prouvez) vos compétences en script shell !
     {text: 'echo ${2 + 2}'},
     {text: 'echo %(2 + 2)'},
     {text: 'echo $(( 2 + 2 ))', isAnswer: true},
-    {text: 'Erreur'},
+    {text: 'Error'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Comment fonctionne l'arithmétique en Bash ?
+    Comment les mathématiques fonctionnent-elles dans Bash ?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    La syntaxe `(( ))` permet d'effectuer des calculs entiers en Bash.
+    La syntaxe `(( ))` effectue des calculs entiers dans Bash.
 
-    Elle peut être utilisée pour des calculs simples :
+    Elle peut être utilisée pour des calculs simples :
     ```bash
     ((result = 2 + 2))
     echo $result # => 4
     ```
-    Ou pour des expressions conditionnelles :
+    Ou pour des expressions conditionnelles :
     ```bash
     if (( 2 > 1 )); then
       echo "2 is greater than 1"
     fi
     ```
-    Pour les calculs à virgule flottante, utilisez [`bc`](https://www.gnu.org/software/bc/manual/html_mono/bc.html) ou [`awk`](https://www.gnu.org/software/gawk/manual/gawk.html).
+    Pour l'arithmétique à virgule flottante, envisagez d'utiliser [`bc`](https://www.gnu.org/software/bc/manual/html_mono/bc.html) ou [`awk`](https://www.gnu.org/software/gawk/manual/gawk.html).
   </div>
   </slot>
 </Challenge>
@@ -446,16 +446,16 @@ Améliorez (ou prouvez) vos compétences en script shell !
 >
   <slot name="question">
   <div className="question">
-    Quelle commande multiplie correctement 10 et 0,5 pour afficher 5 ?
+    Lequel de ces choix multiplie correctement 10 et 0,5 et affiche 5 ?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    La syntaxe `(( ))` effectue **uniquement** des opérations **entières**. Vous savez, les nombres entiers, sans virgule flottante !
+    La syntaxe `(( ))` effectue UNIQUEMENT des opérations arithmétiques **entières**. Vous savez, des nombres entiers, sans virgule flottante !
 
-    Bash (peut-être de façon surprenante) ne possède pas de support **intégré** pour les opérations à virgule flottante.
+    Bash (sans surprise) ne possède pas de support **intégré** pour l'arithmétique à virgule flottante.
 
-    La solution la plus courante est d'utiliser les utilitaires GNU [`bc`](https://www.gnu.org/software/bc/manual/html_mono/bc.html) ou [`awk`](https://www.gnu.org/software/gawk/manual/gawk.html).
+    La solution la plus courante consiste à utiliser les utilitaires GNU [`bc`](https://www.gnu.org/software/bc/manual/html_mono/bc.html) ou [`awk`](https://www.gnu.org/software/gawk/manual/gawk.html).
   </div>
   </slot>
 </Challenge>
@@ -466,15 +466,15 @@ Améliorez (ou prouvez) vos compétences en script shell !
   group="Manipulation de chaînes"
   title="Extraction de sous-chaîne"
   options={[
-    {text: 'Chat méchant'},
-    {text: 'Chat méchant, chat gentil:9'},
-    {text: 'chat gentil', isAnswer: true},
+    {text: 'Mauvais chat'},
+    {text: 'Mauvais chat, bon chat:9'},
+    {text: 'bon chat', isAnswer: true},
     {text: 'Erreur'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Que fait le `:` dans ce script ?
+    Que fait le `:` dans ce script ?
     ```bash
     rosie="Bad cat, good cat"
     echo ${rosie:9}
@@ -483,13 +483,13 @@ Améliorez (ou prouvez) vos compétences en script shell !
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    La syntaxe `${var:offset}` extrait une sous-chaîne commençant à l'`offset`. Ici, la sortie est :
+    La syntaxe `${var:offset}` extrait une sous‑chaîne à partir de `offset`. Ici, la sortie est :
     ```plaintext
     good cat
     ```
-    Pour extraire une sous-chaîne d'une longueur spécifique, utilisez `${var:offset:length}`.
+    Pour extraire une sous‑chaîne d'une longueur spécifique, utilisez `${var:offset:length}`.
 
-    Pour extraire à partir de la fin de la chaîne, utilisez `${var: -offset}`. (Remarquez l'espace avant le `-` !)
+    Pour extraire depuis la fin de la chaîne, utilisez `${var: -offset}`. (Notez l'espace avant le `-` !)
   </div>
   </slot>
 </Challenge>
@@ -509,14 +509,14 @@ Améliorez (ou prouvez) vos compétences en script shell !
 >
   <slot name="question">
   <div className="question">
-    Quel mot-clé n'est PAS ❌ utilisé pour les boucles en Bash ?
+    Quel n'est PAS ❌ un mot‑clé de boucle en Bash ?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `each` n'est pas un mot-clé de boucle en Bash. Les principaux mots-clés de boucle sont `for`, `while` et `until`.
+    `each` n'est pas un mot‑clé de boucle en Bash. Les principaux mots‑clés de boucle sont `for`, `while` et `until`.
 
-    Bien que `do` ne soit pas techniquement un mot-clé de boucle, il fait partie essentielle de la syntaxe des boucles.
+    Bien que `do` ne soit pas techniquement un mot‑clé de boucle, il fait partie intégrante de la syntaxe des boucles.
   </div>
   </slot>
 </Challenge>
@@ -536,23 +536,17 @@ Améliorez (ou prouvez) vos compétences en script shell !
 >
   <slot name="question">
   <div className="question">
-    Quelle option exécutera la commande `ls -l` et renverra la sortie ?
+    Quelle option exécutera la commande `ls -l` et renverra la sortie ?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    La syntaxe `$(ls -l)` exécute la commande entre **parenthèses** et substitue la sortie. Par exemple :
+    La syntaxe `$(ls -l)` exécute la commande à l'intérieur des **parenthèses** et substitue la sortie. Par exemple :
     ```bash
     echo "Today is $(date +%F)"
     # => Today is 2029-12-31
     ```
-    L'option 1 utilise des apostrophes simples `'`, **pas des backticks.** Cela empêche l'expansion, donc `'$(date +%F)'` afficherait simplement la chaîne littérale `$(date +%F)`.
-
-    Bien que l'utilisation des backticks (`` `ls -l` ``) pour l'exécution de commandes soit encore supportée, c'est désormais un anti-modèle (dans certains contextes). La plupart recommandent d'utiliser `$(command)` pour une meilleure lisibilité et compatibilité avec différentes versions de shells.
-
-    Les accolades `${}` sont utilisées pour l'expansion de variables, pas pour la substitution de commandes.
-
-    Le caractère `%` n'est pas utilisé pour la substitution de commandes.
+    La première option utilise des guillemets simples `'`, **pas des backticks**. Cela empêche l'expansion, donc `'$(date +%F)'` afficherait simplement la chaîne littérale `$(date +%F)`.
   </div>
   </slot>
 </Challenge>
@@ -560,45 +554,39 @@ Améliorez (ou prouvez) vos compétences en script shell !
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={15}
-  group="Entrée/Sortie Standard"
+  group="Entrée/Sortie standard"
   title="Valeurs par défaut"
   options={[
   ]}
 >
   <slot name="question">
   <div className="question">
-    Quel opérateur est utilisé pour combiner la sortie d'erreur dans la sortie standard ?
+    Quel opérateur est utilisé pour combiner la sortie d'erreur avec la sortie standard ?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    L'opérateur `2>&1` redirige la sortie d'erreur (descripteur de fichier 2) vers la sortie standard (descripteur de fichier 1). C'est utile pour capturer les messages d'erreur dans le même flux de sortie que la sortie normale.
-
-    L'opérateur `1>&2` redirige la sortie standard vers la sortie d'erreur, mais la question demandait comment rediriger la sortie d'erreur vers la sortie standard.
-
-    Pour en savoir plus sur ce qui se passe en arrière-plan, consultez [la FAQ excellente sur la redirection de Greg](https://mywiki.wooledge.org/BashFAQ/055).
-
-    De plus, merci à l'utilisateur Reddit [u/OneTurnMore](https://www.reddit.com/user/OneTurnMore/) pour les améliorations suggérées du texte.
+    L'opérateur `2>&1` redirige l'erreur standard (descripteur de fichier 2) vers la sortie standard (descripteur de fichier 1). Cela permet de capturer les messages d'erreur dans le même flux de sortie que la sortie normale.
   </div>
   </slot>
 </Challenge>
 
 </QuizUI>
 
-<p className="inset">Mon quiz Bash vous a-t-il laissé(e) dans la panade ?</p>
+<p className="inset">Mon quiz Bash vous a-t-il laissé en miettes ?</p>
 
-Faites-moi savoir en commentaire ci-dessous !
+Faites-le moi savoir dans les commentaires ci‑dessous !
 
-### Pour approfondir
+### Lectures complémentaires
 
-Pour renforcer vos compétences en Bash, consultez les ressources suivantes :
+Rafraîchissez vos compétences Bash avec les ressources suivantes :
 
-- [Guide Bash](https://www.gnu.org/software/bash/manual/bash.html)
-- [FAQ Bash](http://mywiki.wooledge.org/BashFAQ)
+- [Bash Guide](https://www.gnu.org/software/bash/manual/bash.html)
+- [BashFAQ](http://mywiki.wooledge.org/BashFAQ)
 - [ShellCheck](https://www.shellcheck.net/)
-- [Académie Bash](https://guide.bash.academy/)
-- [Tutoriel de script Bash](https://ryanstutorials.net/bash-scripting-tutorial/)
-- [Manuel de référence Bash](https://www.gnu.org/software/bash/manual/bash.html)
-- [Wiki des Hackers Bash](http://wiki.bash-hackers.org/)
-- [Guide Bash pour les débutants](http://tldp.org/LDP/Bash-Beginners-Guide/html/index.html)
-- [Carte de référence Bash](http://www.tldp.org/LDP/Bash-Beginners-Guide/html/Bash-Beginners-Guide.html)
+- [Bash Academy](https://guide.bash.academy/)
+- [Bash Scripting Tutorial](https://ryanstutorials.net/bash-scripting-tutorial/)
+- [Bash Reference Manual](https://www.gnu.org/software/bash/manual/bash.html)
+- [Bash Hackers Wiki](http://wiki.bash-hackers.org/)
+- [Bash Guide for Beginners](http://tldp.org/LDP/Bash-Beginners-Guide/html/index.html)
+- [Bash Reference Card](http://www.tldp.org/LDP/Bash-Beginners-Guide/html/Bash-Beginners-Guide.html)
