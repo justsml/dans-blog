@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: ai-sdk-math-tool
+- Locale: it
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-01-06--ai-sdk-math-tool/it/index.mdx
+- Validation: deferred
+- Runtime seconds: 86.69
+- Input tokens: 6213
+- Output tokens: 5445
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.001804
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Smetti di chiedere alle LLMs di fare matematica
 subTitle: Non ci sanno fare. Ecco come risolverlo.
@@ -134,3 +152,4 @@ Lo strumento matematico è solo un esempio. Lo stesso principio si applica alla 
 - [CortexJS Compute Engine](https://cortexjs.io/compute-engine/)
 - [Guida all'Utilizzo degli Strumenti](https://sdk.vercel.ai/docs/ai-sdk-core/tools-and-tool-calling)
 - [Repository degli Esempi dell'AI SDK](https://github.com/vercel/ai/tree/main/examples)
+````
