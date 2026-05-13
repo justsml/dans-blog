@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: just-add-more-engineers-fallacy
+- Locale: fr
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2025-12-29--just-add-more-engineers-fallacy/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 19.52
+- Input tokens: 6670
+- Output tokens: 8504
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.002575
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 draft: true
 hidden: true
@@ -107,3 +125,4 @@ La prochaine fois qu'on vous suggère d'ajouter plus d'ingénieurs à un projet 
 - Le blog et le livre *Staff Engineer* de Will Larson sur le leadership technique
 - Charity Majors (Honeycomb) sur l'observabilité et la structure d'équipe  
 - Les rapports State of DevOps de DORA
+````
