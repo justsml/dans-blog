@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: postgres-text-search-guide
+- Locale: hi
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-05-02--postgres-text-search-guide/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 6.01
+- Input tokens: 16503
+- Output tokens: 8364
+- Thinking tokens: unknown
+- Cached input tokens: 6400
+- Cache write tokens: 0
+- Estimated cost: $0.002149
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Postgres टेक्स्ट खोज गाइड 2026
 subTitle: 'डेटाबेस में मौजूद खोज उपकरण, और कब‑कब वे उपयोगी साबित होते हैं।'
@@ -476,3 +494,4 @@ LIMIT 10;
 Postgres टेक्स्ट सर्च बहुत कुछ कवर करता है, लेकिन इसकी सीमा है। जब उपयोगकर्ता यह वर्णन करते हैं कि वे क्या चाहते हैं बजाय इसे नाम देने के— “उड़ान में सोने में मदद करने वाला कुछ”, “नए इंजीनियर के रूप में डिबगिंग आत्मविश्वास पर लेख” — तो लेक्सिकल और ट्राइग्राम सर्च दोनों विफल हो जाते हैं।
 
 यह वह क्षेत्र है जहाँ वेक्टर एम्बेडिंग, सेमांटिक सर्च, और हाइब्रिड आर्किटेक्चर काम आते हैं। विस्तृत विवरण के लिए देखें [सेमांटिक वेक्टर सर्च और हाइब्रिड रणनीतियाँ](../semantic-vector-search-landscape)।
+````
