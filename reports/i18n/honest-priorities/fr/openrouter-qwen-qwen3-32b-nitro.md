@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: honest-priorities
+- Locale: fr
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2024-10-23--honest-priorities/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 16.27
+- Input tokens: 7060
+- Output tokens: 5998
+- Thinking tokens: unknown
+- Cached input tokens: 512
+- Cache write tokens: 0
+- Estimated cost: $0.002004
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: ''
@@ -121,3 +139,4 @@ Ou, vous pouvez devenir ***réel*** face à votre backlog.
 - Anecdotiquement, j’ai constaté aucun préjudice en supprimant les tickets plus anciens et incomplets.
 - Ajouter indéfiniment à un backlog en tant que base de données manque l’opportunité de concentrer votre équipe et votre organisation sur ce qui compte vraiment. (Les choses qui nous attendent. Alors que les backlogs regardent naturellement vers le passé.)
 - Un backlog profond ressemble finalement à une Salle des Trophées Bizzaro, célébrant les conneries que vous ne déployerez jamais.
+````
