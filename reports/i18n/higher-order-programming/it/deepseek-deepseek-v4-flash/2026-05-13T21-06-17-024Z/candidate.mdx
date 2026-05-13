@@ -1,0 +1,66 @@
+---
+social_image: ../desktop-social.webp
+title: Programmazione di ordine superiore
+subTitle: Esplorare le tecniche di pipeline basate su array e set
+date: '2015-09-22'
+modified: '2024-07-30'
+category: Code
+subCategory: programming
+tags:
+  - programming
+  - patterns
+  - models
+  - source-code
+  - organization
+cover: ../susan-holt-simpson-799094-unsplash.webp
+cover_mobile: ../w300_susan-holt-simpson-799094-unsplash.webp
+cover_icon: ../icon_susan-holt-simpson-799094-unsplash.webp
+---
+## Esplorare le Tecniche di Pipeline basate su Array e Set
+
+### Un Anti-Pattern?
+
+Questa è un'esplorazione dei vantaggi ottenuti quando **codifichi tutto come un array.** (Usando concetti Jedi da SmallTalk)
+
+Ecco alcuni principi guida:
+
+1.  Tutti gli input sono simili a array. Anche se un array di 1.
+1.  Le funzioni di alto livello dovrebbero generalmente accettare E restituire array. (Tranne i metodi callback per i loop: map/reduce/each/filter)
+1.  99 sviluppatori su 100 soffrono di quella che chiamo sindrome da `acute schema surplusage`.
+1.  Attenzione ai gonfiati `class-backed models` - con tutti i soliti orpelli: fragile `instance state` con così tante leve e manopole da armeggiare, transazioni DB, lock SQL, async/mutex (che funziona sempre al primo colpo), uso idiomatico di `property getter/setters`, e il tuo uso di `public/private/final/etc` è solido, vero?
+
+1.  Quindi prendiamo un problema comune e _forziamo_ ~~~aggiungiamo~~~ alcune riflessioni basate su set.
+1.  Un ipotetico sito Blog ha molti Articoli, e ancora più Post (Commenti).
+1.  Aggiungiamo un metodo `delete` (sotto) - ma con supporto sia per singolo che per array.
+
+```java
+package net.danlevy.why.java___why.you.got.all.the.dots____it.must.be.all.the.factories;
+
+public class Post {
+  public String   title;
+  public Date     created;
+  public String   message;
+
+  public Post(String title, String message) {
+    this.title    = title;
+    this.message  = message;
+    this.created  = new Date();
+  }
+
+  public Date isArchived() {
+    return this.created < new Date(2015, 0, 1);
+  }
+
+  // Post.delete` can be called w/ a singular Post or an array of Post[]
+  public static int delete(Post post) {
+    List<Post> posts = new List<Post>(post);
+    return delete(posts)
+  }
+
+  public static int delete(List<Post> posts) {
+    return posts.map(Dao.remove);
+  }
+}
+```
+
+> Perdonami se il mio Java è un po' arrugginito.
