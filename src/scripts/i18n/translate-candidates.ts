@@ -1,5 +1,7 @@
-import { existsSync, mkdirSync, readFileSync, rmSync } from "node:fs";
+import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync } from "node:fs";
 import { dirname, join } from "node:path";
+import { spawn } from "node:child_process";
+import { ACTIVE_LOCALES, isActiveLocale, type ActiveLocale } from "../../shared/i18n.ts";
 import {
   getPostPaths,
   gitCommit,
@@ -7,8 +9,6 @@ import {
   parseArgs,
   parseList,
   relativeToRepo,
-  requireActiveLocale,
-  requireString,
   run,
   runInherited,
   writeTextFile,
@@ -29,6 +29,12 @@ const DEFAULT_CANDIDATE_MODELS = [
 
 const DEFAULT_TRANSLATION_TIMEOUT_SECONDS = 240;
 const DEFAULT_CHUNK_SIZE = "3p";
+const DEFAULT_TASK_CONCURRENCY = 2;
+
+type CandidateTask = {
+  slug: string;
+  locale: ActiveLocale;
+};
 
 type CandidateTelemetry = {
   runtimeSeconds: string;
@@ -37,96 +43,310 @@ type CandidateTelemetry = {
     output?: number;
     thinking?: number;
     cached?: number;
+    cacheWrite?: number;
   };
   estimatedCostUsd?: number;
+  pricingSource?: string;
+};
+
+type CandidateRunAttempt = {
+  model: string;
+  status: "skipped" | "candidate" | "rejected";
+  validationStatus?: string;
+  reportPath?: string;
+  note?: string;
+  telemetry?: CandidateTelemetry;
+};
+
+type CandidateRunSummary = {
+  runId: string;
+  slug: string;
+  locale: string;
+  startedAt: string;
+  updatedAt: string;
+  modelsRequested: string[];
+  attemptedModels: number;
+  skippedModels: number;
+  rejectedModels: number;
+  candidateModels: number;
+  totals: {
+    runtimeSeconds: string;
+    inputTokens: number;
+    outputTokens: number;
+    thinkingTokens: number;
+    cachedInputTokens: number;
+    cacheWriteTokens: number;
+    estimatedCostUsd: number;
+    hasUnknownInputTokens: boolean;
+    hasUnknownOutputTokens: boolean;
+    hasUnknownThinkingTokens: boolean;
+    hasUnknownCachedInputTokens: boolean;
+    hasUnknownCacheWriteTokens: boolean;
+    hasUnknownEstimatedCost: boolean;
+  };
+  attempts: CandidateRunAttempt[];
 };
 
 const options = parseArgs();
-const slug = requireString(options, "slug");
-const locale = requireActiveLocale(options);
 const models = validateCandidateModels(parseList(optionalString(options, "models"), DEFAULT_CANDIDATE_MODELS));
 const shouldSkipValidation = options["skip-validation"] === true;
 const shouldSkipCommit = options["no-commit"] === true;
 const shouldOverwrite = options["overwrite"] === true;
 const shouldAllowConcurrentWorktree = options["allow-concurrent-worktree"] === true;
+const shouldDryRun = options["dry-run"] === true;
+const isTaskWorker = options["task-worker"] === true;
 const timeoutSeconds = getTimeoutSeconds();
+const taskConcurrency = getTaskConcurrency();
 const chunkSize = optionalString(options, "chunk") ?? DEFAULT_CHUNK_SIZE;
 const quizConcurrency = optionalString(options, "quiz-concurrency");
 const challengeRetries = optionalString(options, "challenge-retries");
-const { sourcePath, targetPath, reportDir } = getPostPaths(slug, locale);
-const targetRelPath = relativeToRepo(targetPath);
-const candidatesPath = join(reportDir, "candidates.jsonl");
+const requestedSlug = optionalString(options, "slug");
+const requestedSlugs = parseList(optionalString(options, "slugs"), requestedSlug == null ? [] : [requestedSlug]);
+const slugs = requestedSlugs.length > 0 ? requestedSlugs : getAllPostSlugs();
+const locales = getRequestedLocales();
 
-mkdirSync(dirname(targetPath), { recursive: true });
+let slug = "";
+let locale: ActiveLocale = "es";
+let sourcePath = "";
+let targetPath = "";
+let reportDir = "";
+let targetRelPath = "";
+let candidatesPath = "";
+let candidateRunStartedAt = new Date();
+let candidateRunId = "";
+let candidateRunSummaryPath = "";
+let candidateRunSummaryRelPath = "";
+let candidateRunAttempts: CandidateRunAttempt[] = [];
 
-for (const model of models) {
-  const reportPath = `${reportDir}/${safeModelName(model)}.md`;
-  if (!shouldOverwrite && existsSync(reportPath) && !isRejectedReport(reportPath)) {
-    console.log(`Skipping existing ${locale}/${model} report at ${relativeToRepo(reportPath)}. Pass --overwrite to rerun.`);
-    continue;
+if (shouldDryRun) {
+  console.log(`Candidate tasks:`);
+  for (const task of getCandidateTasks()) {
+    console.log(`- ${task.locale}/${task.slug}`);
   }
-  if (!shouldOverwrite && existsSync(reportPath)) {
-    console.log(`Retrying rejected ${locale}/${model} report at ${relativeToRepo(reportPath)}.`);
+  console.log(`\nCandidate models:`);
+  for (const model of models) {
+    console.log(`- ${model}`);
+  }
+  process.exit(0);
+}
+
+if (isTaskWorker) {
+  if (locales.length !== 1 || slugs.length !== 1) {
+    throw new Error("--task-worker requires exactly one --slug and one --locale.");
+  }
+  processTask(slugs[0], locales[0]);
+} else {
+  await processTasks(getCandidateTasks());
+}
+
+function processTask(currentSlug: string, currentLocale: ActiveLocale) {
+  slug = currentSlug;
+  locale = currentLocale;
+  const paths = getPostPaths(slug, locale);
+  sourcePath = paths.sourcePath;
+  targetPath = paths.targetPath;
+  reportDir = paths.reportDir;
+  targetRelPath = relativeToRepo(targetPath);
+  candidatesPath = join(reportDir, "candidates.jsonl");
+  candidateRunStartedAt = new Date();
+  candidateRunId = candidateRunStartedAt.toISOString().replace(/[:.]/g, "-");
+  candidateRunSummaryPath = join(reportDir, "candidate-run-summary.json");
+  candidateRunSummaryRelPath = relativeToRepo(candidateRunSummaryPath);
+  candidateRunAttempts = [];
+
+  console.log(`\nGenerating candidates for ${slug} [${locale}]`);
+  mkdirSync(dirname(targetPath), { recursive: true });
+
+  for (const model of models) {
+    const reportPath = `${reportDir}/${safeModelName(model)}.md`;
+    if (!shouldOverwrite && existsSync(reportPath) && !isRejectedReport(reportPath)) {
+      console.log(`Skipping existing ${locale}/${model} report at ${relativeToRepo(reportPath)}. Pass --overwrite to rerun.`);
+      recordRunAttempt({
+        model,
+        status: "skipped",
+        reportPath: relativeToRepo(reportPath),
+        note: "Existing non-rejected report found. Pass --overwrite to rerun.",
+      });
+      continue;
+    }
+    if (!shouldOverwrite && existsSync(reportPath)) {
+      console.log(`Retrying rejected ${locale}/${model} report at ${relativeToRepo(reportPath)}.`);
+    }
+
+    const preRunChangedPaths = getChangedPaths();
+    const preRunCandidatesJsonl = existsSync(candidatesPath) ? readFileSync(candidatesPath, "utf8") : undefined;
+    const startedAt = Date.now();
+    try {
+      runDirectTranslation(model);
+
+      if (!existsSync(targetPath)) {
+        throw new Error(`Direct translator did not create ${targetRelPath}.`);
+      }
+
+      if (!hasGitDiff(targetRelPath)) {
+        throw new Error([
+          `Direct translator did not leave a diff in ${targetRelPath}.`,
+          "This usually means the translation already exists or the provider produced unchanged output.",
+        ].join(" "));
+      }
+
+      let validationStatus = "skipped";
+      if (!shouldSkipValidation) {
+        validationStatus = validateCandidate();
+      }
+
+      writeCandidateReport({
+        reportPath,
+        model,
+        validationStatus,
+        telemetry: getDirectTelemetry(model, startedAt),
+        note: "Generated through the direct AI SDK chunked translator.",
+        rawOutput: existsSync(targetPath) ? readFileSync(targetPath, "utf8") : undefined,
+      });
+      recordRunAttempt({
+        model,
+        status: "candidate",
+        validationStatus,
+        reportPath: relativeToRepo(reportPath),
+        note: "Generated through the direct AI SDK chunked translator.",
+        telemetry: getDirectTelemetry(model, startedAt),
+      });
+
+      if (!shouldSkipCommit) {
+        gitCommit(`i18n candidate(${locale}): ${slug} via ${model}`, [
+          targetRelPath,
+          relativeToRepo(reportDir),
+        ]);
+      }
+    } catch (error) {
+      const telemetry = getDirectTelemetry(model, startedAt);
+      const rawOutput = existsSync(targetPath) ? readFileSync(targetPath, "utf8") : undefined;
+      cleanupRejectedTarget();
+      cleanupNewGeneratedReports(preRunChangedPaths, reportPath);
+      restoreCandidateIndex(preRunCandidatesJsonl);
+      writeCandidateReport({
+        reportPath,
+        model,
+        validationStatus: "rejected: direct AI SDK translation failed",
+        telemetry,
+        note: error instanceof Error ? error.message : String(error),
+        rawOutput,
+      });
+      recordRunAttempt({
+        model,
+        status: "rejected",
+        validationStatus: "rejected: direct AI SDK translation failed",
+        reportPath: relativeToRepo(reportPath),
+        note: error instanceof Error ? error.message : String(error),
+        telemetry,
+      });
+
+      if (!shouldSkipCommit) {
+        gitCommit(`i18n rejected(${locale}): ${slug} via ${model}`, [
+          relativeToRepo(reportPath),
+          candidateRunSummaryRelPath,
+        ]);
+      }
+    }
   }
 
-  const preRunChangedPaths = getChangedPaths();
-  const preRunCandidatesJsonl = existsSync(candidatesPath) ? readFileSync(candidatesPath, "utf8") : undefined;
-  const startedAt = Date.now();
-  try {
-    runDirectTranslation(model);
+  printCandidateRunSummary(buildCandidateRunSummary());
+}
 
-    if (!existsSync(targetPath)) {
-      throw new Error(`Direct translator did not create ${targetRelPath}.`);
+async function processTasks(tasks: CandidateTask[]) {
+  console.log(`Found ${tasks.length} candidate translation task(s).`);
+  console.log(`Processing with concurrency ${taskConcurrency}.`);
+
+  if (tasks.length === 1) {
+    processTask(tasks[0].slug, tasks[0].locale);
+    return;
+  }
+
+  const failures: string[] = [];
+  await mapLimit(tasks, taskConcurrency, async (task, index) => {
+    console.log(`\n[${index + 1}/${tasks.length}] queued ${task.locale}/${task.slug}`);
+    try {
+      await runTaskWorker(task);
+    } catch (error) {
+      failures.push(`${task.locale}/${task.slug}: ${error instanceof Error ? error.message : String(error)}`);
     }
+  });
 
-    if (!hasGitDiff(targetRelPath)) {
-      throw new Error([
-        `Direct translator did not leave a diff in ${targetRelPath}.`,
-        "This usually means the translation already exists or the provider produced unchanged output.",
-      ].join(" "));
-    }
+  if (failures.length > 0) {
+    throw new Error([
+      `${failures.length} candidate task(s) failed:`,
+      ...failures.map((failure) => `- ${failure}`),
+    ].join("\n"));
+  }
+}
 
-    let validationStatus = "skipped";
-    if (!shouldSkipValidation) {
-      validationStatus = validateCandidate();
-    }
+function runTaskWorker(task: CandidateTask) {
+  const args = [
+    "run",
+    "i18n:translate:candidates",
+    "--",
+    "--task-worker",
+    "--slug",
+    task.slug,
+    "--locale",
+    task.locale,
+    "--models",
+    models.join(","),
+    "--timeout-seconds",
+    String(timeoutSeconds),
+    "--chunk",
+    chunkSize,
+    ...optionalFlag("--skip-validation", shouldSkipValidation),
+    ...optionalFlag("--no-commit", shouldSkipCommit),
+    ...optionalFlag("--overwrite", shouldOverwrite),
+    ...optionalFlag("--allow-concurrent-worktree", shouldAllowConcurrentWorktree),
+    ...optionalArg("--quiz-concurrency", quizConcurrency),
+    ...optionalArg("--challenge-retries", challengeRetries),
+  ];
 
-    writeCandidateReport({
-      reportPath,
-      model,
-      validationStatus,
-      telemetry: getDirectTelemetry(model, startedAt),
-      note: "Generated through the direct AI SDK chunked translator.",
-      rawOutput: existsSync(targetPath) ? readFileSync(targetPath, "utf8") : undefined,
+  return new Promise<void>((resolve, reject) => {
+    const child = spawn("bun", args, {
+      cwd: process.cwd(),
+      stdio: "inherit",
     });
 
-    if (!shouldSkipCommit) {
-      gitCommit(`i18n candidate(${locale}): ${slug} via ${model}`, [
-        targetRelPath,
-        relativeToRepo(reportDir),
-      ]);
-    }
-  } catch (error) {
-    const telemetry = getDirectTelemetry(model, startedAt);
-    const rawOutput = existsSync(targetPath) ? readFileSync(targetPath, "utf8") : undefined;
-    cleanupRejectedTarget();
-    cleanupNewGeneratedReports(preRunChangedPaths, reportPath);
-    restoreCandidateIndex(preRunCandidatesJsonl);
-    writeCandidateReport({
-      reportPath,
-      model,
-      validationStatus: "rejected: direct AI SDK translation failed",
-      telemetry,
-      note: error instanceof Error ? error.message : String(error),
-      rawOutput,
+    child.on("error", reject);
+    child.on("exit", (code, signal) => {
+      if (code === 0) {
+        resolve();
+        return;
+      }
+      reject(new Error(`worker exited with ${signal ?? `code ${code}`}`));
     });
+  });
+}
 
-    if (!shouldSkipCommit) {
-      gitCommit(`i18n rejected(${locale}): ${slug} via ${model}`, [
-        relativeToRepo(reportPath),
-      ]);
+async function mapLimit<T>(
+  items: T[],
+  limit: number,
+  worker: (item: T, index: number) => Promise<void>,
+) {
+  let nextIndex = 0;
+
+  async function runWorker() {
+    while (nextIndex < items.length) {
+      const index = nextIndex;
+      nextIndex += 1;
+      await worker(items[index], index);
     }
   }
+
+  await Promise.all(
+    Array.from({ length: Math.min(limit, items.length) }, () => runWorker()),
+  );
+}
+
+function optionalArg(name: string, value: string | undefined) {
+  return value == null ? [] : [name, value];
+}
+
+function optionalFlag(name: string, enabled: boolean) {
+  return enabled ? [name] : [];
 }
 
 function runDirectTranslation(model: string) {
@@ -152,6 +372,42 @@ function runDirectTranslation(model: string) {
   }
 
   runInherited("bun", args, { timeoutMs: timeoutSeconds * 1000 });
+}
+
+function getAllPostSlugs() {
+  const postsDir = join(process.cwd(), "src/content/posts");
+  return readdirSync(postsDir, { withFileTypes: true })
+    .filter((entry) => entry.isDirectory())
+    .map((entry) => entry.name)
+    .filter((directoryName) => (
+      existsSync(join(postsDir, directoryName, "index.mdx"))
+      || existsSync(join(postsDir, directoryName, "index.md"))
+    ))
+    .sort((a, b) => b.localeCompare(a))
+    .map((directoryName) => directoryName.replace(/^\d{4}-\d{2}-\d{2}--/, ""));
+}
+
+function getCandidateTasks(): CandidateTask[] {
+  return slugs.flatMap((currentSlug) =>
+    locales.map((currentLocale) => ({
+      slug: currentSlug,
+      locale: currentLocale,
+    })),
+  );
+}
+
+function getRequestedLocales() {
+  const requestedLocale = optionalString(options, "locale");
+  const values = parseList(optionalString(options, "locales"), requestedLocale == null ? [...ACTIVE_LOCALES] : [requestedLocale]);
+  const invalidLocales = values.filter((value) => !isActiveLocale(value));
+
+  if (invalidLocales.length > 0) {
+    throw new Error(
+      `--locale/--locales must use active locales: ${ACTIVE_LOCALES.join(", ")}. Received: ${invalidLocales.join(", ")}`,
+    );
+  }
+
+  return values as ActiveLocale[];
 }
 
 function validateCandidate() {
@@ -296,7 +552,9 @@ function writeCandidateReport({
       `- Output tokens: ${formatMetric(telemetry.tokens.output)}`,
       `- Thinking tokens: ${formatMetric(telemetry.tokens.thinking)}`,
       `- Cached input tokens: ${formatMetric(telemetry.tokens.cached)}`,
+      `- Cache write tokens: ${formatMetric(telemetry.tokens.cacheWrite)}`,
       `- Estimated cost: ${telemetry.estimatedCostUsd == null ? "unknown" : `$${telemetry.estimatedCostUsd.toFixed(6)}`}`,
+      `- Pricing source: ${telemetry.pricingSource ?? "unknown"}`,
       note ? `- Note: ${note}` : undefined,
       ``,
       formatRawOutput(rawOutput),
@@ -334,8 +592,10 @@ function getDirectTelemetry(model: string, startedAt: number): CandidateTelemetr
         input: numberValue(summary.totalInputTokens),
         output: numberValue(summary.totalOutputTokens),
         cached: numberValue(summary.totalCacheReadTokens),
+        cacheWrite: numberValue(summary.totalCacheWriteTokens),
       },
       estimatedCostUsd: numberValue(summary.totalCostUsd),
+      pricingSource: typeof summary.pricingSource === "string" ? summary.pricingSource : undefined,
     };
   }
 
@@ -404,6 +664,18 @@ function getTimeoutSeconds() {
   return parsedValue;
 }
 
+function getTaskConcurrency() {
+  const rawValue = optionalString(options, "task-concurrency");
+  if (rawValue == null) return DEFAULT_TASK_CONCURRENCY;
+
+  const parsedValue = Number(rawValue);
+  if (!Number.isInteger(parsedValue) || parsedValue <= 0) {
+    throw new Error(`--task-concurrency must be a positive integer. Received "${rawValue}".`);
+  }
+
+  return parsedValue;
+}
+
 function formatSeconds(milliseconds: number | undefined) {
   if (milliseconds == null || !Number.isFinite(milliseconds)) return "unknown";
   return (milliseconds / 1000).toFixed(2);
@@ -415,4 +687,131 @@ function numberValue(value: unknown) {
 
 function formatMetric(value: number | undefined) {
   return value == null ? "unknown" : String(value);
+}
+
+function recordRunAttempt(attempt: CandidateRunAttempt) {
+  candidateRunAttempts.push(attempt);
+  writeCandidateRunSummary(buildCandidateRunSummary());
+}
+
+function buildCandidateRunSummary(): CandidateRunSummary {
+  const totals = createCandidateRunTotals();
+  for (const attempt of candidateRunAttempts) {
+    if (attempt.status === "skipped") continue;
+    addTelemetryToTotals(totals, attempt.telemetry);
+  }
+
+  return {
+    runId: candidateRunId,
+    slug,
+    locale,
+    startedAt: candidateRunStartedAt.toISOString(),
+    updatedAt: new Date().toISOString(),
+    modelsRequested: models,
+    attemptedModels: candidateRunAttempts.filter((attempt) => attempt.status !== "skipped").length,
+    skippedModels: candidateRunAttempts.filter((attempt) => attempt.status === "skipped").length,
+    rejectedModels: candidateRunAttempts.filter((attempt) => attempt.status === "rejected").length,
+    candidateModels: candidateRunAttempts.filter((attempt) => attempt.status === "candidate").length,
+    totals: {
+      ...totals,
+      runtimeSeconds: (totals.runtimeMilliseconds / 1000).toFixed(2),
+      estimatedCostUsd: Number(totals.estimatedCostUsd.toFixed(6)),
+    },
+    attempts: candidateRunAttempts,
+  };
+}
+
+function createCandidateRunTotals() {
+  return {
+    runtimeMilliseconds: 0,
+    inputTokens: 0,
+    outputTokens: 0,
+    thinkingTokens: 0,
+    cachedInputTokens: 0,
+    cacheWriteTokens: 0,
+    estimatedCostUsd: 0,
+    hasUnknownInputTokens: false,
+    hasUnknownOutputTokens: false,
+    hasUnknownThinkingTokens: false,
+    hasUnknownCachedInputTokens: false,
+    hasUnknownCacheWriteTokens: false,
+    hasUnknownEstimatedCost: false,
+  };
+}
+
+function addTelemetryToTotals(
+  totals: ReturnType<typeof createCandidateRunTotals>,
+  telemetry: CandidateTelemetry | undefined,
+) {
+  if (telemetry == null) {
+    totals.hasUnknownInputTokens = true;
+    totals.hasUnknownOutputTokens = true;
+    totals.hasUnknownThinkingTokens = true;
+    totals.hasUnknownCachedInputTokens = true;
+    totals.hasUnknownCacheWriteTokens = true;
+    totals.hasUnknownEstimatedCost = true;
+    return;
+  }
+
+  const runtimeSeconds = Number(telemetry.runtimeSeconds);
+  if (Number.isFinite(runtimeSeconds)) {
+    totals.runtimeMilliseconds += runtimeSeconds * 1000;
+  }
+
+  totals.inputTokens += addKnownMetric(telemetry.tokens.input, () => {
+    totals.hasUnknownInputTokens = true;
+  });
+  totals.outputTokens += addKnownMetric(telemetry.tokens.output, () => {
+    totals.hasUnknownOutputTokens = true;
+  });
+  totals.thinkingTokens += addKnownMetric(telemetry.tokens.thinking, () => {
+    totals.hasUnknownThinkingTokens = true;
+  });
+  totals.cachedInputTokens += addKnownMetric(telemetry.tokens.cached, () => {
+    totals.hasUnknownCachedInputTokens = true;
+  });
+  totals.cacheWriteTokens += addKnownMetric(telemetry.tokens.cacheWrite, () => {
+    totals.hasUnknownCacheWriteTokens = true;
+  });
+
+  if (telemetry.estimatedCostUsd == null) {
+    totals.hasUnknownEstimatedCost = true;
+  } else {
+    totals.estimatedCostUsd += telemetry.estimatedCostUsd;
+  }
+}
+
+function addKnownMetric(value: number | undefined, markUnknown: () => void) {
+  if (value == null) {
+    markUnknown();
+    return 0;
+  }
+  return value;
+}
+
+function writeCandidateRunSummary(summary: CandidateRunSummary) {
+  const { runtimeMilliseconds: _runtimeMilliseconds, ...totals } = summary.totals as CandidateRunSummary["totals"] & {
+    runtimeMilliseconds?: number;
+  };
+  writeTextFile(candidateRunSummaryPath, JSON.stringify({ ...summary, totals }, null, 2));
+}
+
+function printCandidateRunSummary(summary: CandidateRunSummary) {
+  console.log([
+    "",
+    `Candidate run totals for ${slug} [${locale}]:`,
+    `- Models attempted: ${summary.attemptedModels}/${summary.modelsRequested.length} (${summary.skippedModels} skipped, ${summary.rejectedModels} rejected)`,
+    `- Runtime seconds: ${summary.totals.runtimeSeconds}`,
+    `- Input tokens: ${formatTotalMetric(summary.totals.inputTokens, summary.totals.hasUnknownInputTokens)}`,
+    `- Output tokens: ${formatTotalMetric(summary.totals.outputTokens, summary.totals.hasUnknownOutputTokens)}`,
+    `- Thinking tokens: ${formatTotalMetric(summary.totals.thinkingTokens, summary.totals.hasUnknownThinkingTokens)}`,
+    `- Cached input tokens: ${formatTotalMetric(summary.totals.cachedInputTokens, summary.totals.hasUnknownCachedInputTokens)}`,
+    `- Cache write tokens: ${formatTotalMetric(summary.totals.cacheWriteTokens, summary.totals.hasUnknownCacheWriteTokens)}`,
+    `- Estimated cost: $${summary.totals.estimatedCostUsd.toFixed(6)}${summary.totals.hasUnknownEstimatedCost ? " + unknown" : ""}`,
+    `- Summary: ${candidateRunSummaryRelPath}`,
+  ].join("\n"));
+}
+
+function formatTotalMetric(value: number, hasUnknown: boolean) {
+  return `${value}${hasUnknown ? " + unknown" : ""}`;
 }

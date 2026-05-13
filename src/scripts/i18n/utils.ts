@@ -1,4 +1,4 @@
-import { existsSync, mkdirSync, readdirSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { spawnSync } from "node:child_process";
 import { ACTIVE_LOCALES, isActiveLocale, type ActiveLocale } from "../../shared/i18n.ts";
@@ -146,8 +146,10 @@ export function writeTextFile(path: string, contents: string) {
 }
 
 export function gitCommit(message: string, paths: string[]) {
-  runInherited("git", ["add", ...paths]);
-  runInherited("git", ["commit", "-m", message]);
+  withGitCommitLock(() => {
+    runInherited("git", ["add", ...paths]);
+    runInherited("git", ["commit", "-m", message]);
+  });
 }
 
 export function gitShow(commit: string, filePath: string) {
@@ -156,4 +158,32 @@ export function gitShow(commit: string, filePath: string) {
 
 export function relativeToRepo(path: string) {
   return path.replace(`${process.cwd()}/`, "");
+}
+
+function withGitCommitLock(callback: () => void) {
+  const lockDir = join(process.cwd(), ".git/codex-commit.lock");
+  const deadline = Date.now() + 30 * 60 * 1000;
+
+  while (true) {
+    try {
+      mkdirSync(lockDir);
+      break;
+    } catch (error) {
+      if (!existsSync(lockDir)) throw error;
+      if (Date.now() > deadline) {
+        throw new Error(`Timed out waiting for git commit lock at ${relativeToRepo(lockDir)}.`);
+      }
+      sleep(500);
+    }
+  }
+
+  try {
+    callback();
+  } finally {
+    rmSync(lockDir, { recursive: true, force: true });
+  }
+}
+
+function sleep(milliseconds: number) {
+  Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, milliseconds);
 }
