@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: are-promises-broken
+- Locale: fr
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2018-10-06--are-promises-broken/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 8.67
+- Input tokens: 9363
+- Output tokens: 2786
+- Thinking tokens: unknown
+- Cached input tokens: 4352
+- Cache write tokens: 0
+- Estimated cost: $0.000867
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Promesses non tenues ?
@@ -227,3 +245,4 @@ log(result)
 1. Peu lisible pour la plupart des développeurs  
 2. Les diff Git ne révèlent pas facilement qui a changé quoi  
 3. Difficile à déboguer ou à logger au milieu des fonctions imbriquées
+````
