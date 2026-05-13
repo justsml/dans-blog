@@ -3,7 +3,7 @@
 - Locale: de
 - Model: openrouter/qwen/qwen3-32b:nitro
 - Target: src/content/posts/2026-01-02--llm-routing-mastra-ai/de/index.mdx
-- Validation: deferred
+- Validation: rejected: direct AI SDK translation failed
 - Runtime seconds: 11.97
 - Input tokens: 4408
 - Output tokens: 4519
@@ -12,21 +12,16 @@
 - Cache write tokens: 0
 - Estimated cost: $0.001437
 - Pricing source: local-openrouter-estimate
-- Note: Generated through the direct AI SDK chunked translator.
+- Note: Command failed: git commit --only -m i18n candidate(de): llm-routing-mastra-ai via openrouter/qwen/qwen3-32b:nitro -- reports/i18n/llm-routing-mastra-ai/de reports/i18n/llm-routing-mastra-ai/candidates.jsonl
 ## Raw Output
 
 ````mdx
 ---
-title: Verheiraten Sie sich nicht mit Ihrem Modell
-subTitle: 'LLM Routing, so heiß wie nie'
-date: '2026-01-02'
-modified: '2026-01-08'
-tags:
-  - ai
-  - llm
-  - typescript
-  - mastra
-  - agent-orchestration
+title: "Heirate dein Modell nicht"
+subTitle: "LLM-Routing – gerade total angesagt"
+date: 2026-01-02
+modified: 2026-01-08
+tags: [ai, llm, typescript, mastra, agent-orchestration]
 category: AI
 subCategory: Engineering
 social_image: ../mobile-social.webp
@@ -34,21 +29,22 @@ cover_full_width: ../wide.webp
 cover_mobile: ../square.webp
 cover_icon: ../square.webp
 ---
-Die meisten Entwicklerteams wählen einen Sprachmodell und bleiben dabei. Ein Anbieter, ein Modell, alle Aufgaben. Es ist, als würde man eine Person anstellen, um gleichzeitig Codierung, Textverfassung und Steuererklärung zu übernehmen, nur weil sie in einem Vorstellungsgespräch gut war. 
 
-Zu jedem Zeitpunkt ist ein Modell besser für Code geeignet, ein anderes für lange, chaotische Kontexte, und ein weiteres ist die billigste, langweiligste Arbeitspferd für Klassifizierungen. Die Namen ändern sich. Das Problem bleibt gleich. Wenn man ein Modell so behandelt, als wäre es in allem perfekt, zahlt man entweder zu viel für einfache Aufgaben oder bekommt bei spezialisierten Aufgaben minderwertige Ergebnisse. 
+Die meisten Entwicklungsteams suchen sich ein Sprachmodell aus und bleiben dabei. Ein Anbieter, ein Modell, alle Aufgaben. Als würde man eine Person einstellen, die das Coding, die Texte und die Steuererklärung macht, nur weil sie im ersten Vorstellungsgespräch gut war.
 
-Ich habe ein Team beobachtet, das tausende Dollar verbrannte, um Sentimentanalysen über ein Modell durchzuführen, das 30 Dollar pro Million Tokens kostete, obwohl ein Modell für 0,50 Dollar die Arbeit genauso gut erledigt hätte. Einfache JSON-Formatierung, grundlegende Klassifizierungsaufgaben – alles lief über ihren Premium-Anbieter. Die einzige Sache, die heiß wurde, war ihre AWS-Rechnung. 
+Zu jedem Zeitpunkt ist ein Modell besser beim Programmieren, ein anderes besser mit langen, unübersichtlichen Kontexten, und wieder ein anderes ist der billigste, langweilige Arbeitssklave für Klassifikation. Die Namen ändern sich. Die Form des Problems nicht. Ein Modell so zu behandeln, als wäre es in allem exzellent, heißt, entweder für einfache Aufgaben zu viel zu bezahlen oder bei spezialisierten Aufgaben schlechtere Ergebnisse zu kassieren.
 
-Es gibt eine bessere Methode, und sie ist nicht besonders kompliziert. 
+Ich habe ein Team dabei beobachtet, wie es Tausende von Dollar für Sentiment-Analyse durch ein Modell für 30 Dollar pro Million Tokens verbrannt hat – obwohl ein 0,50‑Dollar-Modell die Arbeit genauso gut erledigt hätte. Einfache JSON-Formatierung, grundlegende Klassifikationsaufgaben – alles lief über den Premium-Anbieter. Das Einzige, was wirklich heiß lief, war ihre AWS-Rechnung.
 
-## Delegation statt Devotion 
+Es gibt einen besseren Weg, und der ist nicht besonders kompliziert.
 
-Was, wenn Sie Anfragen an das Modell weiterleiten könnten, das tatsächlich am besten für diese spezifische Aufgabe geeignet ist? Nutzen Sie Ihr teures Hochleistungsmodell für schwierige Aufgaben, aber delegieren Sie einfache Parsen und Formatierung an etwas Billigeres. Nutzen Sie die Vorteile mehrerer Anbieter, ohne sie manuell in Ihrem Code-Stack jonglieren zu müssen. 
+## Delegation statt Hingabe
 
-Mastra ermöglicht Ihnen, genau solch ein System aufzubauen. Sie richten Spezialisten-Agenten für verschiedene Arten von Aufgaben ein und erstellen einen Router-Agenten, der entscheidet, welcher Spezialist jede Anfrage bearbeiten soll. Die unten genannten Modell-IDs sind Beispiele, keine Rangliste. Ersetzen Sie sie durch die aktuellen Modelle, die Ihre Evaluierungen gewinnen und in Ihr Budget passen. 
+Was, wenn du Anfragen zu dem Modell routen könntest, das für genau diese Aufgabe am besten geeignet ist? Setz dein teures Kraftpaket für die harten Nüsse ein, aber lass das einfache Parsen und Formatieren von etwas Günstigerem erledigen. Nutz die Vorteile mehrerer Anbieter, ohne sie manuell in deiner Codebase jonglieren zu müssen.
 
-Stellen Sie es sich so vor: Sie haben drei Spezialisten in Ihrem Team. 
+Mit Mastra kannst du genau so ein System bauen. Du richtest spezialisierte Agents für verschiedene Aufgaben ein und erstellst dann einen Router-Agent, der herausfindet, welcher Spezialist welche Anfrage bearbeiten soll. Die Modell-IDs unten sind Beispiele, keine Rangliste. Tausch sie gegen die aktuellen Modelle aus, die in deinen Evals gewinnen und in dein Budget passen.
+
+Stell es dir so vor: Du hast drei Spezialisten in deinem Team.
 
 ```typescript
 // ./src/mastra/index.ts
@@ -77,21 +73,21 @@ export const gptAgent = new Agent({
 });
 ```
 
-Jeder hat seine Aufgabe. Ihr Code-Agent sollte das Modell sein, das Ihre repository-spezifischen Codierungsevaluierungen besteht. Ihr Langkontext-Agent sollte das Modell sein, das Ihre echten Dokumente überlebt, ohne den Mittelteil in Brei zu verwandeln. Ihr allgemeiner Agent sollte billig, zuverlässig und in der besten Weise langweilig sein. 
+Jeder hat seinen Job. Dein Code-Agent sollte das Modell sein, das deine repo-spezifischen Coding-Evals besteht. Dein Long-Context-Agent sollte das sein, das deine tatsächlichen Dokumente übersteht, ohne die Mitte in Brei zu verwandeln. Dein Allgemein-Agent sollte billig, zuverlässig und im besten Sinne langweilig sein.
 
-Hier wird es interessant. Sie fügen einen Router hinzu, der als intelligenter Proxy agiert:
+Hier wird es interessant. Du fügst einen Router hinzu, der als intelligenter Proxy fungiert:
 
 ```typescript
 export const routerAgent = new Agent({
   id: 'router-agent',
   name: 'The Boss',
-  instructions: `Sie sind ein intelligenter Router.
-  - Codierung -> Claude
-  - Gedichte -> Gemini
-  - Fakten -> GPT
+  instructions: `You are an intelligent router.
+  - Coding -> Claude
+  - Poetry -> Gemini
+  - Facts -> GPT
 
-  Machen Sie die Arbeit nicht selbst. Delegieren Sie.`,
-  model: openai(process.env.ROUTER_MODEL ?? 'gpt-5-mini'), // Verwenden Sie ein günstiges Modell für das Routing!
+  Do not do the work yourself. Delegate.`,
+  model: openai(process.env.ROUTER_MODEL ?? 'gpt-5-mini'), // Use a cheap model for routing!
   agents: {
     claudeAgent,
     geminiAgent,
@@ -104,31 +100,31 @@ export const mastra = new Mastra({
 });
 ```
 
-Der Router selbst läuft auf einem leichtgewichtigen Modell, da er nur Entscheidungen darüber trifft, wohin der Traffic geleitet wird. Sie zahlen keine Premiumgebühren, um herauszufinden, welches andere Premiummodell verwendet werden soll. Messen Sie das ebenfalls; ein schlechter Router verwandelt stillschweigend Einsparungen in Fehlmeldungen.
+Der Router selbst läuft auf einem leichten Modell, weil er nur Entscheidungen darüber trifft, wohin der Traffic geleitet wird. Du zahlst keine Premium-Preise, um herauszufinden, welches andere Premium-Modell verwendet werden soll. Miss auch das: Ein schlechter Router verwandelt Einsparungen leise in Fehlleitungen.
 
-Wenn jemand nach einer Implementierung des Bubblesorts fragt, erkennt der Router dies als Codierungsaufgabe und übergibt sie an Ihren Code-Spezialisten. Kreatives Schreibprompt? Das geht an das Modell, das Sie für Stimme und Bandbreite ausgewählt haben. Faktische Frage zu historischen Ereignissen? Leiten Sie sie an den allgemeinen Agenten weiter, idealerweise mit Retrieval, wenn Frische oder Zitierfähigkeit wichtig sind.
+Wenn jemand nach einer Bubblesort-Implementierung fragt, erkennt der Router das als Code-Aufgabe und übergibt sie an deinen Code-Spezialisten. Kreative Schreibaufgabe? Die geht an das Modell, das du für Stimme und Bandbreite ausgewählt hast. Faktische Frage zu historischen Ereignissen? Leite sie an den Allgemein-Agent weiter, idealerweise mit Retrieval, wenn Aktualität oder Quellenangabe wichtig sind.
 
 ## Die praktischen Vorteile
 
-**Kosteneffizienz ist wichtiger, als Sie denken.** Ein kleines Routing-Modell, das Delegationsentscheidungen trifft, kostet einen Bruchteil dessen, was es kostet, jede Anfrage über Ihren teuersten Anbieter zu laufen zu lassen. Im Laufe der Zeit, besonders in großem Maßstab, summiert sich das zu echtem Geld. Sie zahlen nur für die schwere Intelligenz, wenn Sie sie tatsächlich benötigen.
+**Kosteneffizienz ist wichtiger, als du denkst.** Ein kleines Routing-Modell, das Delegationsentscheidungen trifft, kostet einen Bruchteil dessen, was es ausmachen würde, jede einzelne Anfrage durch deinen teuersten Anbieter zu jagen. Mit der Zeit, besonders in großem Maßstab, summiert sich das zu echtem Geld. Du zahlst nur dann für die schwere intellektuelle Arbeit, wenn du sie wirklich brauchst.
 
-**Die Qualität verbessert sich, wenn Sie Modelle an Aufgaben anpassen.** Der Gewinner ändert sich monatlich, je nach Aufgabentyp und Prompt-Form. Deshalb sollte die Routingschicht von Ihren Evaluierungen abhängen, nicht von dem Modell, das in der Woche, in der Sie die Integration geschrieben haben, auf Twitter gewonnen hat.
+**Die Qualität verbessert sich, wenn du Modelle auf Aufgaben abstimmst.** Der Gewinner wechselt von Monat zu Monat, von Aufgabe zu Aufgabe und je nach Prompt-Form. Deshalb sollte die Routing-Ebene von deinen Evals abhängen – nicht von dem Modell, das in der Woche, als du die Integration geschrieben hast, auf Twitter gevotet wurde.
 
-**Robustheit wird zur Nebenwirkung.** Wenn OpenAI eine seiner periodischen Ausfälle hat (und das tut es), kann Ihr Router den Traffic an andere Anbieter weiterleiten. Sie sind nicht auf ein spezifisches API-Wiederherstellungswarten festgelegt.
+**Resilienz ist ein willkommener Nebeneffekt.** Wenn OpenAI einen seiner regelmäßigen Ausfälle hat (und das kommt vor), kann dein Router den Traffic zu anderen Anbietern umleiten. Du steckst nicht fest und wartest darauf, dass eine bestimmte API wieder online kommt.
 
-Das geht nicht darum, clever zu sein, nur um clever zu sein. Es geht darum, Systeme zu bauen, die finanziell und technisch Sinn machen. Sie würden doch nicht denselben Hammer für jede Baumaßnahme verwenden, und Sie sollten vermutlich auch nicht dasselbe Sprachmodell für jede AI-Aufgabe verwenden.
+Hier geht es nicht darum, um des Klugseins willen klug zu sein. Es geht darum, Systeme zu bauen, die sowohl finanziell als auch technisch Sinn ergeben. Du würdest nicht denselben Hammer für jede Bauaufgabe verwenden, und du solltest wahrscheinlich auch nicht dasselbe Sprachmodell für jede KI-Aufgabe verwenden.
 
-Die Schönheit dieses Ansatzes besteht darin, dass sich Ihr Anwendungscode nicht ändert. Sie rufen weiterhin Ihren Router-Agenten auf. Die Komplexität der Entscheidung, welches Modell für welche Aufgabe verwendet wird, lebt an einem Ort, konfiguriert einmal, anstatt über die gesamte Codebasis verteilt in einer Menge an bedingtem Logikcode.
+Das Schöne an diesem Ansatz ist, dass sich dein Anwendungscode nicht ändert. Du rufst immer noch einfach deinen Router-Agent auf. Die Komplexität der Entscheidung, welches Modell für welche Aufgabe verwendet wird, lebt an einem Ort, einmal konfiguriert, anstatt über deine gesamte Codebase in einer Reihe von bedingten Logiken verstreut zu sein.
 
 ### Ressourcen
 
 - [Mastra.ai Dokumentation](https://mastra.ai/docs)
-- [Mastra GitHub-Repository](https://github.com/mastra-ai/mastra)
+- [Mastra GitHub Repository](https://github.com/mastra-ai/mastra)
 
-## Lesen Sie die Serie
+## Artikel-Serie
 
-1. **LLM Routing** (Dieser Beitrag)
-2. [Sicherheit & Schutzmaßnahmen](../mastra-security-guardrails)
-3. [MCP & Tool-Integrationen](../mastra-mcp-tool-integrations)
-4. [Workflows & Gedächtnis](../mastra-workflows-memory)
+1. **LLM-Routing** (Dieser Artikel)
+2. [Sicherheit & Guardrails](/mastra-security-guardrails)
+3. [MCP & Tool-Integrationen](/mastra-mcp-tool-integrations)
+4. [Workflows & Memory](/mastra-workflows-memory)
 ````
