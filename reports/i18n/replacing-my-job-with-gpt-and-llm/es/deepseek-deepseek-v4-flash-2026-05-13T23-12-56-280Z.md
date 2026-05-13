@@ -3,7 +3,7 @@
 - Locale: es
 - Model: deepseek/deepseek-v4-flash
 - Target: src/content/posts/2024-12-05--replacing-my-job-with-gpt-and-llm/es/index.mdx
-- Validation: deferred
+- Validation: rejected: direct AI SDK translation failed
 - Runtime seconds: 79.28
 - Input tokens: 4462
 - Output tokens: 5124
@@ -12,112 +12,108 @@
 - Cache write tokens: 0
 - Estimated cost: $0.002007
 - Pricing source: local-openrouter-estimate
-- Note: Generated through the direct AI SDK chunked translator.
+- Note: Command failed: git commit --only -m i18n candidate(es): replacing-my-job-with-gpt-and-llm via deepseek/deepseek-v4-flash -- reports/i18n/replacing-my-job-with-gpt-and-llm/es reports/i18n/replacing-my-job-with-gpt-and-llm/candidates.jsonl
 ## Raw Output
 
 ````mdx
 ---
+# hidden: true
 unlisted: false
-title: Reemplazándome con IA
-subTitle: Cómo aprendí a dejar de preocuparme y amar al GPT.
-label: AI
-social_image: ../mobile.webp
+title: "Reemplazarme con IA"
+subTitle: "Cómo aprendí a dejar de preocuparme y amar a GPT."
+label: "IA"
+social_image: mobile.webp
 category: AI
 subCategory: Machine Learning
-date: '2024-12-04'
-modified: '2024-12-08'
-tags:
-  - ai
-  - gpt
-  - llm
-  - machine-learning
-  - nlp
-  - automation
-cover_full_width: ../robot-dude-wide.webp
-cover_mobile: ../robot-dude-square-200-75.webp
-cover_icon: ../robot-dude-square-200-75.webp
+date: 2024-12-04
+modified: 2024-12-08
+tags: [ai, gpt, llm, machine-learning, nlp, automation]
+cover_full_width: robot-dude-wide.webp
+cover_mobile: robot-dude-square-200-75.webp
+cover_icon: robot-dude-square-200-75.webp
 ---
-Supe que el borrador de IA había salido mal cuando estaba de acuerdo con cada frase y no confiaba en ninguna.
 
-Tenía la forma correcta: introducción segura, flujo de trabajo ordenado, conclusión optimista. Usaba todas las palabras respetables. Productividad. Creatividad. Colaboración. Pipeline. Sonaba como si alguien hubiera reemplazado mi experiencia real con un folleto sobre mi experiencia real.
+Supe que el borrador de IA había salido mal cuando estuve de acuerdo con cada frase y no confié en ninguna.
+
+Tenía la forma correcta: introducción segura, flujo de trabajo pulcro, conclusión optimista. Usó todas las palabras respetables. Productividad. Creatividad. Colaboración. Pipeline. Sonaba como si alguien hubiera reemplazado mi experiencia real con un folleto sobre mi experiencia real.
 
 Lo cual, inconvenientemente, era todo el problema.
 
-<p class="inset">El peligro de la escritura con IA no es que siempre sea mala. El peligro es que puede ser plausiblemente fluida antes de haberse ganado un punto de vista.</p>
+<p class="inset">El peligro de la escritura con IA no es que siempre sea mala. El peligro es que puede ser plausiblemente fluida antes de haber ganado un punto de vista.</p>
 
-Esta publicación es un artefacto de esa fase. Usaba GPT para esquemas de lecciones, conceptos de banners, indicaciones de cuestionarios, reescrituras, resúmenes y experimentos de traducción. Algo funcionó. Algo ahorró horas. Algo produjo ese tipo de pasta profesional insípida que hace que cada persona en un párrafo suene como un interesado.
+Esta publicación es un artefacto de esa fase. Usaba GPT para esquemas de lecciones, conceptos de banners, prompts de cuestionarios, reescrituras, resúmenes y experimentos de traducción. Parte funcionó. Parte ahorró horas. Parte produjo ese tipo de pasta profesional insípida que hace que cada persona en un párrafo suene como una parte interesada.
 
 No necesitaba menos IA. Necesitaba más fricción.
 
 ### La Primera Cicatriz
 
-El primer error real fue tratar «parece terminado» como evidencia de pensamiento.
+El primer error real fue tratar "parece terminado" como evidencia de pensamiento.
 
-Pedía un esquema de lección y obtenía algo coherente en diez segundos. Esa coherencia era embriagadora. Una mala página en blanco hace obvia su vacuidad. Un borrador de IA decente oculta las decisiones faltantes bajo una buena gramática.
+Pedía un esquema de lección y obtenía algo coherente en diez segundos. Esa coherencia era embriagadora. Una mala página en blanco hace evidente su vacío. Un borrador de IA decente oculta las decisiones faltantes bajo una buena gramática.
 
 Luego lo revisaba y encontraba los problemas habituales:
 
 - los ejemplos eran técnicamente correctos pero olvidables
-- las preguntas del cuestionario evaluaban vocabulario en lugar de criterio
-- las explicaciones evitaban la única distinción difícil que el alumno necesitaba
-- el tono había derivado hacia un lenguaje corporativo insípido
+- las preguntas del cuestionario probaban vocabulario en lugar de juicio
+- las explicaciones evitaban la distinción difícil que el aprendiz necesitaba
+- el tono se había desviado hacia la luz corporativa
 
-Nada estaba catastróficamente mal. Esa era la parte más aterradora. Todo era demasiado correcto.
+Nada estaba catastróficamente mal. Esa era la parte más aterradora. Todo estaba un poco demasiado bien.
 
-### Para qué se volvió buena la IA
+### Para Qué se Volvió Buena la IA
 
-Una vez que dejé de aceptar los primeros borradores como artefactos terminados, la IA se volvió mucho más útil.
+Una vez que dejé de aceptar los primeros borradores como artefactos, la IA se volvió mucho más útil.
 
 La uso mejor como herramienta de presión:
 
-- **Encuentra la parte vaga**: "¿Qué afirmaciones de esta lección no están respaldadas?"
-- **Genera las respuestas incorrectas**: "¿Qué elegiría un principiante inteligente por la razón equivocada?"
-- **Cambia la audiencia**: "Explícale esto a un desarrollador de React que nunca haya usado Postgres."
-- **Crea contraste**: "Dame tres ejemplos en los que este consejo falle."
-- **Comprime el desorden**: "Convierte estas notas en un esquema sin añadir afirmaciones nuevas."
+- **Encontrar la parte vaga**: "¿Qué afirmaciones en esta lección no tienen respaldo?"
+- **Generar las respuestas incorrectas**: "¿Qué elegiría un principiante inteligente por la razón equivocada?"
+- **Cambiar la audiencia**: "Explica esto a un desarrollador de React que nunca ha usado Postgres."
+- **Crear contraste**: "Dame tres ejemplos donde este consejo falla."
+- **Comprimir el desorden**: "Convierte estas notas en un esquema sin añadir nuevas afirmaciones."
 
-Esas indicaciones no reemplazan el criterio. Hacen que sea más fácil aplicarlo. El modelo es muy bueno produciendo superficies. Mi trabajo es decidir qué superficies merecen convertirse en estructura.
+Esos prompts no reemplazan el juicio. Hacen que el juicio sea más fácil de aplicar. El modelo es muy bueno produciendo superficies. Mi trabajo es decidir qué superficies merecen convertirse en estructura.
 
-### El flujo de trabajo, con barreras de seguridad
+### El Pipeline, Con Barandales
 
 El flujo de trabajo que sobrevivió es menos glamoroso que la versión anterior:
 
 1. **Recopilar material en bruto**
-   Empiezo con notas, código, enlaces, capturas de pantalla y la confusión específica del alumno que intento abordar.
+   Comienzo con notas, código, enlaces, capturas de pantalla y la confusión específica del aprendiz que intento abordar.
 
 2. **Pedirle a la IA que organice, no que decida**
-   Puede agrupar ideas, revelar pasos faltantes y sugerir secciones. No dejo que elija la tesis sin pelear.
+   Puede agrupar ideas, revelar pasos faltantes y sugerir secciones. No le dejo elegir la tesis sin pelea.
 
-3. **Escribir yo mismo las partes afiladas**
-   La apertura, la regla de decisión, los ejemplos y el cierre necesitan gusto humano. Ahí es donde el artículo gana confianza.
+3. **Escribir las partes afiladas yo mismo**
+   La apertura, la regla de decisión, los ejemplos y el final necesitan gusto humano. Ahí es donde el artículo gana confianza.
 
 4. **Usar la IA para interrogar el borrador**
-   Le pregunto qué suena genérico, qué asume demasiado, a qué objetaría un lector escéptico y dónde fallan los ejemplos.
+   Pregunto qué suena genérico, qué asume demasiado, a qué objetaría un lector escéptico y dónde fallan los ejemplos.
 
 5. **Mantener el artefacto honesto**
-   Si un párrafo pudiera vivir en cualquier blog de SaaS, se reescribe o se elimina.
+   Si un párrafo podría vivir en cualquier blog de SaaS, se reescribe o se elimina.
 
-Esa última regla hace mucho trabajo pesado.
+Esa última regla está haciendo mucho trabajo.
 
-### Los cuestionarios me cambiaron la opinión
+### Los Cuestionarios Me Cambiaron la Opinión
 
-Escribir cuestionarios es donde la IA se volvió genuinamente útil para mí.
+La escritura de cuestionarios es donde la IA se volvió genuinamente útil para mí.
 
-No porque pueda redactar preguntas perfectas. No puede. Le encantan los distractores obvios, la ambigüedad accidental y las explicaciones que pasan de largo sobre la idea errónea.
+No porque pueda escribir preguntas perfectas. No puede. Le gustan los distractores obvios, la ambigüedad accidental y las explicaciones que pasan de largo por el concepto erróneo.
 
-Pero puede generar rápidamente un campo de respuestas incorrectas posibles. Luego miro la lista y me pregunto: ¿cuál de estas representa un error real de un alumno?
+Pero puede generar un campo de posibles respuestas incorrectas rápidamente. Luego puedo mirar la lista y preguntar: ¿cuál de estas representa un error real del aprendiz?
 
-Esa es la colaboración útil. El modelo produce arcilla. Yo decido si es un cuenco, un ladrillo o un vertedero.
+Esa es la colaboración útil. El modelo produce arcilla. Yo decido si es un tazón, un ladrillo o relleno sanitario.
 
-### Reemplazarme a mí mismo fue el marco equivocado
+### Reemplazarme Era el Marco Equivocado
 
 El título es una broma, pero el marco está equivocado.
 
-No me estoy reemplazando a mí mismo con IA. Estoy reemplazando las partes de mi proceso que ya eran mecánicas: agrupación de primer paso, redacciones alternativas, andamios de traducción, opciones de borrador de cuestionarios, conceptos de imagen, resúmenes.
+No me estoy reemplazando con IA. Estoy reemplazando las partes de mi proceso que ya eran mecánicas: agrupación de primer paso, frases alternativas, andamios de traducción, opciones de borrador de cuestionarios, conceptos de imagen, pasadas de resumen.
 
-Las partes que no puedo reemplazar son las que los lectores realmente notan cuando faltan: gusto, cicatrices, prioridad, escepticismo y la disposición a decir «esto sonaba bien, pero era falso».
+Las partes que no puedo reemplazar son las que los lectores realmente notan cuando faltan: gusto, cicatrices, prioridad, escepticismo y la voluntad de decir "esto sonaba bien, pero era falso".
 
-La IA me hizo más rápido. Más importante aún, hizo que algunos de mis puntos débiles fueran más fáciles de ver. El costo es que ahora tengo que ser más deliberado en no publicar prosa que simplemente se comporte como prosa.
+La IA me hizo más rápido. Más importante, hizo que algunos de mis puntos débiles fueran más fáciles de ver. El costo es que ahora tengo que ser más deliberado acerca de no publicar prosa que simplemente se comporta como prosa.
 
 Ese es el trato con el que puedo vivir.
 ````
