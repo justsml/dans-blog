@@ -1,0 +1,237 @@
+{
+  "runId": "qwen-qwen3-32b-nitro@2026-05-13T17-11-46-552Z",
+  "slug": "docker-security-tips-for-self-hosting",
+  "locale": "it",
+  "model": "qwen/qwen3-32b:nitro",
+  "modelPath": "qwen-qwen3-32b-nitro",
+  "createdAt": "2026-05-13T17:15:31.502Z",
+  "sourcePath": "src/content/posts/2025-01-05--docker-security-tips-for-self-hosting/index.mdx",
+  "targetPath": "src/content/posts/2025-01-05--docker-security-tips-for-self-hosting/it/index.mdx",
+  "candidatePath": "reports/i18n/docker-security-tips-for-self-hosting/it/qwen-qwen3-32b-nitro/2026-05-13T17-11-46-552Z/candidate.mdx",
+  "sourceHash": "d0d40c2372ed9caec3fbc9d65e18f6d0c48d66e78af877538090c983adc798dc",
+  "outputHash": "c8fb08c061a92994e03551216cf34c37d2b4f786cac7c4f60f91966e5645df41",
+  "reasoningEffort": "low",
+  "temperature": 0.3,
+  "maxTokens": 16000,
+  "timeoutMs": 200000,
+  "articleSummary": "**Summary:**  \nThis article argues that self-hosted Docker users bear full security responsibility, offering practical strategies to mitigate risks from unpatched services, misconfigurations, and exposed secrets. Key topics include version pinning over `:latest`, secure secret management (e.g., avoiding `.env` files), network segmentation, and runtime validation tools like canary tokens. Targeted at home and cloud self-hosters, the tutorial-style guide blends code examples (e.g., Nginx auth proxy setup) with metaphors like \"keeping out the riff-raff\" to frame security as a proactive, hands-on endeavor. It emphasizes balancing effort and security, from hobbyist setups to production-grade hardening.",
+  "totalInputTokens": 26331,
+  "totalOutputTokens": 24261,
+  "totalCacheReadTokens": 2560,
+  "totalCacheWriteTokens": 0,
+  "totalDurationMs": 207861,
+  "totalCostUsd": 0.00792912,
+  "pricingSource": "local-openrouter-estimate",
+  "telemetry": {
+    "model": "qwen/qwen3-32b:nitro",
+    "chunkSize": "6p",
+    "totalChunks": 22,
+    "totalInputTokens": 26331,
+    "totalOutputTokens": 24261,
+    "totalCacheReadTokens": 2560,
+    "totalCacheWriteTokens": 0,
+    "totalDurationMs": 207861,
+    "totalCostUsd": 0.00792912,
+    "pricingSource": "local-openrouter-estimate",
+    "chunks": [
+      {
+        "index": 0,
+        "inputTokens": 1014,
+        "outputTokens": 1380,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 19905,
+        "costUsd": 0.00041232
+      },
+      {
+        "index": 1,
+        "inputTokens": 990,
+        "outputTokens": 839,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 10098,
+        "costUsd": 0.00028056
+      },
+      {
+        "index": 2,
+        "inputTokens": 1169,
+        "outputTokens": 1035,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 13773,
+        "costUsd": 0.00034191999999999995
+      },
+      {
+        "index": 3,
+        "inputTokens": 1080,
+        "outputTokens": 747,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 10774,
+        "costUsd": 0.00026568
+      },
+      {
+        "index": 4,
+        "inputTokens": 1193,
+        "outputTokens": 1269,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 15492,
+        "costUsd": 0.0004
+      },
+      {
+        "index": 5,
+        "inputTokens": 1286,
+        "outputTokens": 1029,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 13071,
+        "costUsd": 0.00034984
+      },
+      {
+        "index": 6,
+        "inputTokens": 1567,
+        "outputTokens": 1708,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 23209,
+        "costUsd": 0.0005352800000000001
+      },
+      {
+        "index": 7,
+        "inputTokens": 962,
+        "outputTokens": 598,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 8498,
+        "costUsd": 0.00022048
+      },
+      {
+        "index": 8,
+        "inputTokens": 1181,
+        "outputTokens": 1084,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 16134,
+        "costUsd": 0.0003546399999999999
+      },
+      {
+        "index": 9,
+        "inputTokens": 1931,
+        "outputTokens": 2040,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 4562,
+        "costUsd": 0.00064408
+      },
+      {
+        "index": 10,
+        "inputTokens": 1058,
+        "outputTokens": 768,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 14341,
+        "costUsd": 0.00026896
+      },
+      {
+        "index": 11,
+        "inputTokens": 1032,
+        "outputTokens": 833,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 2340,
+        "costUsd": 0.00028248
+      },
+      {
+        "index": 12,
+        "inputTokens": 1129,
+        "outputTokens": 1256,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 3523,
+        "costUsd": 0.00039176
+      },
+      {
+        "index": 13,
+        "inputTokens": 1064,
+        "outputTokens": 672,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 1815,
+        "costUsd": 0.00024639999999999997
+      },
+      {
+        "index": 14,
+        "inputTokens": 1138,
+        "outputTokens": 947,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 2781,
+        "costUsd": 0.00031832
+      },
+      {
+        "index": 15,
+        "inputTokens": 1013,
+        "outputTokens": 680,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 1509,
+        "costUsd": 0.00024424
+      },
+      {
+        "index": 16,
+        "inputTokens": 1182,
+        "outputTokens": 1036,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 2582,
+        "costUsd": 0.0003432
+      },
+      {
+        "index": 17,
+        "inputTokens": 1585,
+        "outputTokens": 1498,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 3722,
+        "costUsd": 0.00048632
+      },
+      {
+        "index": 18,
+        "inputTokens": 1091,
+        "outputTokens": 1046,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 17717,
+        "costUsd": 0.00033832
+      },
+      {
+        "index": 19,
+        "inputTokens": 1228,
+        "outputTokens": 1011,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 15289,
+        "costUsd": 0.00034088
+      },
+      {
+        "index": 20,
+        "inputTokens": 1325,
+        "outputTokens": 1581,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 3775,
+        "costUsd": 0.00048543999999999996
+      },
+      {
+        "index": 21,
+        "inputTokens": 1113,
+        "outputTokens": 1204,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 2951,
+        "costUsd": 0.00037799999999999997
+      }
+    ]
+  }
+}
