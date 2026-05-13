@@ -1,0 +1,464 @@
+# Translation Candidate
+- Slug: quiz-master-modern-html5
+- Locale: hi
+- Model: qwen/qwen3.6-35b-a3b
+- Target: src/content/posts/2024-11-01--quiz-master-modern-html5/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 356.48
+- Input tokens: 17944
+- Output tokens: 60286
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.000000
+- Pricing source: unknown
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+unlisted: false
+title: 'क्विज़: क्या HTML अभी भी आपके रिज्यूमे में जगह पाता है?'
+subTitle: अपनी क्षमता साबित करो!
+label: Semantic HTML5
+social_image: ../desktop-social.webp
+category: Quiz
+subCategory: HTML
+date: '2024-10-31'
+modified: '2024-11-06'
+tags:
+  - quiz
+  - web
+  - quiz
+  - semantic
+  - html5
+  - web
+  - beginner
+  - intermediate
+cover_full_width: ../jakob-owens-FBih1nqPi0w-unsplash-wide.webp
+cover_mobile: ../jakob-owens-FBih1nqPi0w-unsplash-square.webp
+cover_icon: ../jakob-owens-FBih1nqPi0w-unsplash-square.webp
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+
+## तो, आपको लगता है कि आपकी HTML5 की पकड़ मज़बूत है?
+
+आखिरकार, आप `<div>` और `<span>` में फर्क तो करते ही होंगे, है ना? लेकिन HTML5 के एडवांस्ड सेमैंटिक एलिमेंट्स को आप कितनी गहराई से जानते हैं? आज के वेब डेवलपमेंट में केवल स्ट्रक्चर टैग्स का इस्तेमाल करना काफी नहीं है; सही मार्कअप का चयन ही एक्सेसिबिलिटी और स्टैंडर्ड्स-कम्प्लायंस को तय करता है।
+
+> नोट: अगर आप इस टेस्ट में पास नहीं हो पाते, तो कानूनी तौर पर आपको अपने रेज़्यूमे से `HTML Skills` हटाना ही पड़ेगा।
+
+### शुरू करें!
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="वार्म-अप"
+  title=""
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    HTML में `<ul>` एलिमेंट का मुख्य काम क्या है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `<ul>` टैग एक अनऑर्डर लिस्ट बनाता है, जहाँ आइटम्स बालेट्स (bullets) से चिह्नित होते हैं। यह टैग डेटा को व्यवस्थित करने और पठकों को सूची को तेज़ी से स्कैन करने में मदद करने के लिए बनाया गया है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="उन्नत सेमांटिक HTML"
+  title=""
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    HTML में `<dd>` एलिमेंट दरअसल क्या दर्शाता है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    [`<dd>` एलिमेंट](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dd) एक description list में विवरण, परिभाषा या मान को परिभाषित करता है। यह `<dl>` टैग के अंदर उपयोग किया जाता है और `<dt>` (_Description Term_) के साथ जोड़ा जाता है。
+
+    यह तब बहुत उपयोगी होता है जब आपको key-value डेटा प्रस्तुत करना हो। प्रोफ़ाइल जानकारी, सेटिंग्स और स्टैट्स इसके आम उदाहरण हैं।
+    ```html
+        <dl>
+        <dt>JS</dt>
+        <dd>Client-side</dd>
+        <dd>Server-side</dd>
+
+        <dt>HTML</dt>
+        <dd>Client-side</dd>
+        </dl>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="उन्नत सेमांटिक HTML"
+  title=""
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    `<figure>` और `<figcaption>` एलिमेंट्स का उपयोग कब किया जाना चाहिए?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    [`<figure>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/figure) टैग का मुख्य काम एक इमेज, चार्ट या डेटा जैसी 'स्वतंत्र' सामग्री को एक पैकेज में बांधना है। इसे [`<figcaption>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/figcaption) के साथ जोड़ने से उस सामग्री का संदर्भ (caption) स्पष्ट होता है, जो एक्सेसिबिलिटी और स्टैंडर्ड्स के हिसाब से जरूरी है।
+
+    इसका इस्तेमाल इमेजेस, डायग्राम, कोड स्निपेट्स और अन्य अलग-थलग मीडिया के लिए बेस्ट प्रैक्टिस है।
+    ```html
+        <figure>
+        <img src="image.jpg" alt="Description of image">
+        <figcaption>Image caption</figcaption>
+        </figure>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="उन्नत सेमान्टिक HTML"
+  title=""
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    HTML में `<article>` एलिमेंट का काम क्या है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    [`<article>` एलिमेंट](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/article) का इस्तेमाल उस कंटेंट को डिफाइन करने के लिए किया जाता है जो पूरी तरह से स्वतंत्र हो और जिसे अलग से डिस्ट्रीब्यूट या रीयूज किया जा सके。
+
+    यह ब्लॉग पोस्ट्स, न्यूज़ आर्टिकल्स, फोरम पोस्ट्स या यूजर कमेंट्स के लिए अक्सर यूज़ होता है。
+
+    आप एक पेज पर कई `<article>` टैग्स यूज़ कर सकते हैं (जैसे इन्फिनिट स्क्रॉल वाले पेज पर)। या फिर, आप उन्हें एक-दूसरे के अंदर नेस्ट करके "स्टैंडअलोन कंटेंट" की एक हियरार्की बना सकते हैं।
+    ```html
+        <article>
+        <h2>Article Title</h2>
+        <p>Article content...</p>
+        <article class="discussion">
+        <h3>Comment by User</h3>
+        <p>Comment content...</p>
+        </article>
+        </article>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="उन्नत सेमैंटिक HTML"
+  title=""
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    फॉर्म में `<fieldset>` और `<legend>` एलिमेंट्स का असली काम क्या है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    [`<fieldset>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/fieldset) का उपयोग संबंधित फॉर्म कंट्रोल्स को ग्रुप करने के लिए किया जाता है, और `<legend>` उस ग्रुप के लिए एक शीर्षक/लेबल प्रदान करता है, जिससे एक्सेसिबिलिटी में सुधार होता है。
+
+    यह संबंधित फॉर्म एलिमेंट्स को ग्रुप करने के लिए उपयोगी है, जैसे कि शिपिंग पता या भुगतान विवरण के लिए एक सेक्शन।
+    ```html
+        <fieldset>
+        <legend>Shipping Address</legend>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name">
+        ...
+        </fieldset>
+        <fieldset>
+        <legend>Payment Details</legend>
+        <label for="card">Card Number:</label>
+        <input type="text" id="card" name="card">
+        ...
+        </fieldset>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="उन्नत सेमान्टिक HTML"
+  title=""
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    `<meter>` एलिमेंट का काम क्या है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    [`<meter>` एलिमेंट](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meter) का उपयोग किसी निर्धारित सीमा के भीतर एक एकल (scalar) माप को दर्शाने के लिए किया जाता है, जैसे तापमान, डिस्क उपयोग या वोट गिनती।
+
+    यह [`<progress>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/progress) बार जैसा लग सकता है, लेकिन प्रोग्रेस बार **हमेशा** शून्य से शुरू होते हैं। इसलिए `<progress>` एलिमेंट एक `percent of completion` दिखाते हैं, जबकि `<meter>` किसी भी परिभाषित सीमा के भीतर किसी भी मान को दर्शाता है।
+    ```html
+        <meter min="-60" max="130" value="75" /> 75°F
+        <meter min="0" max="100" value="75" /> 75%
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="सेमैंटिक HTML"
+  title=""
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    `<source>` एलिमेंट का इस्तेमाल क्यों किया जाता है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    [`<source>` एलिमेंट का काम यह तय करना है कि कौन सा मीडिया फॉर्मेट उपलब्ध है](https://developer.mozilla.org/en-us/docs/web/html/element/source).
+
+    यह [`<video>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video), [`<audio>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/audio), और [`<picture>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/picture) के साथ जोड़कर इस्तेमाल किया जाता है, ताकि ब्राउज़र को पता चले कि कौन सा फॉर्मेट लोड करना सबसे बेहतर रहेगा।
+    ```html
+        <video controls>
+        <source src="movie.mp4" type="video/mp4">
+        <source src="movie.ogg" type="video/ogg">
+        </video>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="उन्नत सेमांटिक HTML"
+  title=""
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    `<hgroup>` एलिमेंट का सही इस्तेमाल कैसे करें?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    [`<hgroup>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/hgroup) एलिमेंट एक हेडिंग को उसके संबंधित सेकेंडरी कंटेंट (आमतौर पर एक या अधिक `<p>` एलिमेंट्स) के साथ ग्रुप करता है।
+
+    यह तब काम आता है जब हेडिंग के साथ कोई सबटाइटल, टैगलाइन या वैकल्पिक शीर्षक जुड़ा हो, जिसे डॉक्यूमेंट आउटलाइन में अलग हेडिंग के रूप में नहीं दिखाना चाहिए।
+    ```html
+        <article>
+        <hgroup>
+        <h1>Frankenstein</h1>
+        <p>Or: The Modern Prometheus</p>
+        </hgroup>
+        <section>
+        <h2>Chapter 1</h2>
+        <p>...</p>
+        </section>
+        </article>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="उन्नत सेमान्टिक HTML"
+  title=""
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    HTML में `<menu>` एलिमेंट का उपयोग किसके लिए किया जाता है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    [`<menu>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/menu) कमांड्स या इंटरैक्टिव कंट्रोल्स की एक सूची को दर्शाता है।
+
+    अगर आपकी सूची नेविगेशन लिंक्स की है, तो `<nav>` के साथ `<ul>` का उपयोग करें। `<menu>` का इस्तेमाल टूलबार जैसी कंट्रोल्स या कमांड लिस्ट के लिए करें।
+    ```html
+        <menu>
+        <li><button type="button">Copy</button></li>
+        <li><button type="button">Paste</button></li>
+        </menu>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="उन्नत सेमैंटिक HTML"
+  title=""
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    HTML में `<details>` और `<summary>` टैग्स का असली काम क्या है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    [`<details>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details) कॉलैप्सिबल कंटेंट के लिए इस्तेमाल होता है, और [`<summary>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/summary) उस कंटेंट के लिए एक दिखने वाला टाइटल सेट करता है।
+
+    यह FAQs, कॉलैप्सिबल सेक्शन्स, या किसी भी ऐसे कंटेंट के लिए बेहतरीन है जिसे टॉगल किया जा सके।
+    ```html
+        <details>
+        <summary>Click to expand 🤯</summary>
+        <p>Hidden content! 💥</p>
+        </details>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="उन्नत सेमैंटिक HTML"
+  title=""
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    आपको `<dialog>` एलिमेंट का उपयोग क्यों करना चाहिए?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    [`<dialog>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog) एलिमेंट पॉप-अप्स या मोडल्स के लिए इस्तेमाल होता है और इन इंटरैक्शन्स के लिए सेमैंटिक मार्कअप, एक्सटेंडेड CSS और एक नेटिव API प्रदान करता है。
+
+    इसे मोडल डायलॉग के लिए `.showModal()` और नॉन-मोडल डायलॉग के लिए `.show()` के साथ खोलने के लिए JavaScript का उपयोग करें। इसे `.close()` के साथ या `method="dialog"` के साथ फॉर्म सबमिशन करके बंद किया जा सकता है।
+    ```html
+        <dialog>
+        <h2>Modal Title</h2>
+        <p>Modal content...</p>
+        <button>Close</button>
+        </dialog>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="उन्नत सेमांटिक HTML"
+  title=""
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    HTML में `<time>` एलिमेंट का इस्तेमाल किस काम के लिए होता है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    यह एलिमेंट तारीखों, समय या अवधि (duration) को दर्शाने के लिए बनाया गया है। इसमें आप मानव-पठनीय कंटेंट लिख सकते हैं और साथ ही एक मशीन-पठनीय `datetime` एट्रिब्यूट भी जोड़ सकते हैं। और हाँ, HTML में कोई `<date>` एलिमेंट ही नहीं है, इसलिए इसी का इस्तेमाल करें।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="उन्नत सेमैंटिक HTML"
+  title="ARIA एट्रिब्यूट्स का उद्देश्य"
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ARIA एट्रिब्यूट्स का असली काम क्या है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    ARIA (Accessible Rich Internet Applications) एट्रिब्यूट्स वेब एक्सेसिबिलिटी को बेहतर बनाते हैं क्योंकि ये स्क्रीन रीडर्स और अन्य सहायक तकनीकों को एलिमेंट्स के बारे में अतिरिक्त संदर्भ (context) प्रदान करते हैं。
+
+    इनमें रोल, स्टेट और प्रॉपर्टीज शामिल हैं, जिनका उपयोग एलिमेंट्स की भूमिका और स्थिति को स्पष्ट करने के लिए किया जा सकता है।
+    ```html
+        <button aria-label="Close" aria-expanded="true">X</button>
+        <main aria-live="polite">...</main>
+        <dialog
+        role="alertdialog"
+        aria-modal="true"
+        aria-labelledby="dialog_label"
+        aria-describedby="dialog_desc"
+        ></dialog>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={13}
+  group="उन्नत सेमैंटिक HTML"
+  title="`role` एट्रिब्यूट का उपयोग"
+  options={[
+    {text: 'कंपोनेंट के व्यवहार को परिभाषित करने के लिए'},
+    {text: 'तत्व के उद्देश्य को बताने के लिए', isAnswer: true},
+    {text: 'तत्वों तक पहुँच को सीमित करना'},
+    {text: 'केवल वेब कंपोनेंट्स के लिए'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    HTML में `role` एट्रिब्यूट का असली काम क्या है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    यह एट्रिब्यूट बताता है
+
+    कि एक तत्व का उद्देश्य क्या है, ताकि सहायक तकनीकें इसे समझ सकें और एक्सेसिबिलिटी बेहतर हो सके।
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+
+तो, नतीजा कैसा रहा? अगले प्रोजेक्ट में सेमैंटिक HTML एलिमेंट्स का ज्यादा इस्तेमाल करने के लिए तैयार? 🚀
+
+या फिर आजीवन `<div>` और `<span>` के सहारे चलने को तैयार? 😅
+
+नीचे कमेंट्स में बताएं! 👇
+````
