@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: the-last-to-think
+- Locale: ja
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2025-05-31--the-last-to-think/ja/index.mdx
+- Validation: deferred
+- Runtime seconds: 2.61
+- Input tokens: 2161
+- Output tokens: 881
+- Thinking tokens: unknown
+- Cached input tokens: 512
+- Cache write tokens: 0
+- Estimated cost: $0.000243
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 language: English
 title: 最後に考える者
@@ -33,3 +51,4 @@ AI も同様のパターンをたどるでしょう。* はい、膨大な情報
 <p> </p>
 
 * _環境への影響を改善し、ディストピア的な悪夢を回避できると仮定した場合です。ただしそれは別の機会に議論すべき話題です。_
+````
