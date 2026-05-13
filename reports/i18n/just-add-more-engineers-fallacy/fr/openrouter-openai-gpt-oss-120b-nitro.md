@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: just-add-more-engineers-fallacy
+- Locale: fr
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2025-12-29--just-add-more-engineers-fallacy/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 4.87
+- Input tokens: 7987
+- Output tokens: 2977
+- Thinking tokens: unknown
+- Cached input tokens: 2944
+- Cache write tokens: 0
+- Estimated cost: $0.000847
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 draft: true
 hidden: true
@@ -107,3 +125,4 @@ Il sera en retard de plusieurs mois. Et, contrairement à la plupart des problè
 - Le blog et le livre *Staff Engineer* de Will Larson sur le leadership technique
 - Charity Majors (Honeycomb) sur l’observabilité et la structure d’équipe  
 - Les rapports *State of DevOps* de DORA
+````
