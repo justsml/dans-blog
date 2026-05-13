@@ -1,0 +1,56 @@
+{
+  "selectedCommit": "2a1989cc43f204b9a9b60af74b94200788fb0689",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "scores": {
+    "readability": 5,
+    "technicalAccuracy": 5,
+    "coherence": 5,
+    "relevance": 5,
+    "translationQuality": 5,
+    "mdxPreservation": 5
+  },
+  "suggestions": [],
+  "rationale": "The current translation already incorporates the image path fixes suggested in the previous judge report (using '../' prefix). It maintains Dan's informal and slightly irreverent tone ('perillas para estropear', 'un poco oxidado'). Technical terms like 'pipeline', 'array', and 'callback' are appropriately handled for a Spanish-speaking developer audience. MDX structure and code blocks are perfectly preserved.",
+  "slug": "higher-order-programming",
+  "locale": "es",
+  "candidateCommits": [
+    "2a1989cc43f204b9a9b60af74b94200788fb0689",
+    "196899915891c6686d221285e273c140a2c10a44",
+    "72480529a514876657a9846c8d703fa1ecb60dd4"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "medium",
+      "match": "cover: susan-holt-simpson-799094-unsplash.webp",
+      "replacement": "cover: ../susan-holt-simpson-799094-unsplash.webp",
+      "reason": "The image path should be relative to the parent directory to match the project structure and other localized posts.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "cover_mobile: w300_susan-holt-simpson-799094-unsplash.webp",
+      "replacement": "cover_mobile: ../w300_susan-holt-simpson-799094-unsplash.webp",
+      "reason": "The image path should be relative to the parent directory.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "cover_icon: icon_susan-holt-simpson-799094-unsplash.webp",
+      "replacement": "cover_icon: ../icon_susan-holt-simpson-799094-unsplash.webp",
+      "reason": "The image path should be relative to the parent directory.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug higher-order-programming --locale es --skip-global",
+    "output": ""
+  }
+}
