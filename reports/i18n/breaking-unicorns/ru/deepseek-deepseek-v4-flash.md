@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: breaking-unicorns
+- Locale: ru
+- Model: deepseek/deepseek-v4-flash
+- Target: src/content/posts/2024-09-01--breaking-unicorns/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 36.14
+- Input tokens: 2646
+- Output tokens: 7339
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.002425
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Как быстро потерять миллиард долларов
@@ -180,3 +198,4 @@ import {Timeline} from '../../../../../components/ui/timeline'
 </section>
 
 {/* <aside class="disclaimer">I love the startup ride! I've had a few startups myself and worked at ~5 companies as they became unicorns. I've consulted with dozens of $100M+ companies.   I have seen some crazy shit In my work as engineer, manager and consultant.</aside> */}
+````
