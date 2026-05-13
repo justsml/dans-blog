@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: just-add-more-engineers-fallacy
+- Locale: hi
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2025-12-29--just-add-more-engineers-fallacy/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 10.14
+- Input tokens: 8264
+- Output tokens: 3340
+- Thinking tokens: unknown
+- Cached input tokens: 2304
+- Cache write tokens: 0
+- Estimated cost: $0.000923
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 draft: true
 hidden: true
@@ -107,4 +125,5 @@ Jeff Bezos ने Amazon में “दो‑पिज़्ज़ा टी�
 **आधुनिक दृष्टिकोण:**  
 - Will Larson का *Staff Engineer* ब्लॉग और तकनीकी नेतृत्व पर पुस्तक  
 - Charity Majors (Honeycomb) का ऑब्ज़र्वेबिलिटी और टीम संरचना पर लेख  
-- DORA द्वारा State of DevOps रिपोर्टें  
+- DORA द्वारा State of DevOps रिपोर्टें
+````
