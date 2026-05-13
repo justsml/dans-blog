@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: developer-workstation-blast-radius
+- Locale: fr
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-05-09--developer-workstation-blast-radius/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 73.14
+- Input tokens: 33756
+- Output tokens: 28433
+- Thinking tokens: unknown
+- Cached input tokens: 9728
+- Cache write tokens: 0
+- Estimated cost: $0.009524
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Réduire le rayon d'impact de votre poste de développement
 subTitle: >-
@@ -414,3 +432,4 @@ Ensemble d'actifs suggéré une fois une direction choisie :
 - [Microsoft : règles du pare-feu Windows](https://learn.microsoft.com/en-us/windows/security/operating-system-security/network-security/windows-firewall/rules)  
 - [Mandiant : UNC5537 cible des instances Snowflake](https://cloud.google.com/blog/topics/threat-intelligence/unc5537-snowflake-data-theft-extortion)  
 - [Microsoft : Lumma Stealer, analyse des techniques de livraison et des capacités d'un logiciel espion prolifique](https://www.microsoft.com/en-us/security/blog/2025/05/21/lumma-stealer-breaking-down-the-delivery-techniques-and-capacities-of-a-prolific-infostealer/)
+````
