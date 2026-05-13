@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: breaking-unicorns
+- Locale: ja
+- Model: deepseek/deepseek-v4-flash
+- Target: src/content/posts/2024-09-01--breaking-unicorns/ja/index.mdx
+- Validation: deferred
+- Runtime seconds: 33.18
+- Input tokens: 2660
+- Output tokens: 7167
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.002379
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: 超速で10億ドルを失う方法
@@ -180,3 +198,4 @@ import {Timeline} from '../../../../../components/ui/timeline'
 </section>
 
 {/* <aside class="disclaimer">私はスタートアップの旅が大好きだ！自分でもいくつかスタートアップを経験し、ユニコーンになる過程の約5社で働いた。1億ドル以上の企業数十社にコンサルティングを行った。エンジニア、マネージャー、コンサルタントとしての仕事で、めちゃくちゃなことをたくさん見てきた。</aside> */}
+````
