@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: mastering-functional-pipelines-passing-state
+- Locale: hi
+- Model: deepseek/deepseek-v4-flash
+- Target: src/content/posts/2023-08-13--mastering-functional-pipelines-passing-state/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 196.31
+- Input tokens: 10477
+- Output tokens: 12529
+- Thinking tokens: unknown
+- Cached input tokens: 1920
+- Cache write tokens: 0
+- Estimated cost: $0.004711
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: 'पाइपलाइनों के मास्टर: स्थिति पारित करना'
@@ -200,3 +218,4 @@ export const checkout = ({ userId, products }) => {
 #### संबंधित पठन
 
 - [कम्पोनेंट-संचालित React दुनिया में भी ऐसी ही चुनौतियाँ मौजूद हैं।](https://kyleshevlin.com/quit-your-yapping)
+````
