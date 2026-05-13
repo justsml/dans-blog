@@ -1,0 +1,50 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "Mutable References",
+  "translatedTitle": "Mutable Referenzen",
+  "translation": {
+    "title": "Mutable Referenzen",
+    "group": "Ausleihe",
+    "options": [
+      {
+        "text": "Kommt erfolgreich zum Kompilieren",
+        "hint": "Können wir gleichzeitig mehrere mutable Referenzen haben?"
+      },
+      {
+        "text": "Fehler: `wisdom` kann nicht mehr als einmal mutabel geborgt werden"
+      },
+      {
+        "text": "Fehler: fehlender Lebenszeit‑Spezifizierer",
+        "hint": "Das Problem hat hier nichts mit Lebenszeiten zu tun"
+      },
+      {
+        "text": "Laufzeit‑Panik",
+        "hint": "Rust erkennt diese Probleme bereits zur Compile‑Zeit"
+      }
+    ],
+    "questionProse": [
+      "Was passiert bei mehreren mutablen Referenzen?",
+      "Denke an Rusts Regeln für mutable Referenzen."
+    ],
+    "explanationProse": [
+      "Dieser Code verletzt Rusts grundlegende Ausleihregeln:\n      - Nur EINE mutable Referenz auf einen Wert zur gleichen Zeit\n      - ODER beliebig viele immutable Referenzen\n      - Referenzen dürfen ihren Referenten nicht überleben\n\n      So kann man den Code korrigieren:\n\n      1. Verwende sequentielles Scoping:",
+      "2. Oder modifiziere den String in einer einzigen Ausleihe:",
+      "Diese Regeln verhindern Datenrennen zur Compile‑Zeit und machen Rust standardmäßig thread‑sicher.\n\n      Häufiger Stolperstein: Der Versuch, mehrere mutable Referenzen zu verwenden, um Klonen zu vermeiden oder verschiedene Teile desselben Wertes gleichzeitig zu modifizieren."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Mutable Referenzen\",\n  \"group\": \"Ausleihe\",\n  \"options\": [\n    {\n      \"text\": \"Kommt erfolgreich zum Kompilieren\",\n      \"hint\": \"Können wir gleichzeitig mehrere mutable Referenzen haben?\"\n    },\n    {\n      \"text\": \"Fehler: `wisdom` kann nicht mehr als einmal mutabel geborgt werden\"\n    },\n    {\n      \"text\": \"Fehler: fehlender Lebenszeit‑Spezifizierer\",\n      \"hint\": \"Das Problem hat hier nichts mit Lebenszeiten zu tun\"\n    },\n    {\n      \"text\": \"Laufzeit‑Panik\",\n      \"hint\": \"Rust erkennt diese Probleme bereits zur Compile‑Zeit\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was passiert bei mehreren mutablen Referenzen?\",\n    \"Denke an Rusts Regeln für mutable Referenzen.\"\n  ],\n  \"explanationProse\": [\n    \"Dieser Code verletzt Rusts grundlegende Ausleihregeln:\\n      - Nur EINE mutable Referenz auf einen Wert zur gleichen Zeit\\n      - ODER beliebig viele immutable Referenzen\\n      - Referenzen dürfen ihren Referenten nicht überleben\\n\\n      So kann man den Code korrigieren:\\n\\n      1. Verwende sequentielles Scoping:\",\n    \"2. Oder modifiziere den String in einer einzigen Ausleihe:\",\n    \"Diese Regeln verhindern Datenrennen zur Compile‑Zeit und machen Rust standardmäßig thread‑sicher.\\n\\n      Häufiger Stolperstein: Der Versuch, mehrere mutable Referenzen zu verwenden, um Klonen zu vermeiden oder verschiedene Teile desselben Wertes gleichzeitig zu modifizieren.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 936,
+    "outputTokens": 956,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2421
+  },
+  "cost": {
+    "inputUsd": 0.000036504,
+    "outputUsd": 0.00017208,
+    "totalUsd": 0.000208584,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

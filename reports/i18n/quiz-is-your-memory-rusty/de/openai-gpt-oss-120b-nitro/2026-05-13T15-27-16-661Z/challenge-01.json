@@ -1,0 +1,58 @@
+{
+  "index": 0,
+  "attempt": 1,
+  "originalTitle": "Basic Move Semantics",
+  "translatedTitle": "Grundlegende Move-Semantik",
+  "translation": {
+    "title": "Grundlegende Move-Semantik",
+    "group": "Besitz",
+    "options": [
+      {
+        "text": "Hallo, !",
+        "hint": "Denke darüber nach, was mit 'philosopher' passiert, nachdem es verschoben wurde"
+      },
+      {
+        "text": "Hallo, Zeno von Citium!",
+        "hint": "Wenn ein Wert verschoben wurde, können wir ihn noch benutzen?"
+      },
+      {
+        "text": "Hallo, Zeno von Elea!",
+        "hint": "Der String enthält 'Citium', nicht 'Elea'"
+      },
+      {
+        "text": "Hallo, Marcus Aurelius",
+        "hint": "Prüfe, ob das zum String-Inhalt passt"
+      },
+      {
+        "text": "Kompilierungsfehler: Wert nach Move ausgeliehen"
+      },
+      {
+        "text": "Laufzeitfehler: Nullzeiger-Ausnahme",
+        "hint": "Rust erkennt diese Probleme bereits zur Compile‑Zeit"
+      }
+    ],
+    "questionProse": [
+      "Was passiert, wenn du diesen Code ausführst? Versuche die Ausgabe oder den Fehler vorherzusagen:"
+    ],
+    "explanationProse": [
+      "Dieser Code lässt sich nicht kompilieren wegen Rusts Besitzregeln. Wenn wir `philosopher` `greeting` zuweisen, wird das Eigentum des Strings nach `greeting` verschoben. Nach diesem Move ist `philosopher` nicht mehr gültig.\n\n      Hier sind drei Möglichkeiten, das zu beheben:\n\n      1. Den String klonen (erstellt eine neue Kopie):",
+      "2. Eine Referenz verwenden (leiht den Wert aus):",
+      "3. Einen String‑Slice verwenden (leiht einen Teil des Strings aus):",
+      "Jede Lösung hat unterschiedliche Anwendungsfälle und Performance‑Auswirkungen. Klonen ist teurer, gibt dir aber Eigentum, während Referenzen günstiger sind, aber Lebensdauer‑Beschränkungen haben."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Grundlegende Move-Semantik\",\n  \"group\": \"Besitz\",\n  \"options\": [\n    {\n      \"text\": \"Hallo, !\",\n      \"hint\": \"Denke darüber nach, was mit 'philosopher' passiert, nachdem es verschoben wurde\"\n    },\n    {\n      \"text\": \"Hallo, Zeno von Citium!\",\n      \"hint\": \"Wenn ein Wert verschoben wurde, können wir ihn noch benutzen?\"\n    },\n    {\n      \"text\": \"Hallo, Zeno von Elea!\",\n      \"hint\": \"Der String enthält 'Citium', nicht 'Elea'\"\n    },\n    {\n      \"text\": \"Hallo, Marcus Aurelius\",\n      \"hint\": \"Prüfe, ob das zum String-Inhalt passt\"\n    },\n    {\n      \"text\": \"Kompilierungsfehler: Wert nach Move ausgeliehen\"\n    },\n    {\n      \"text\": \"Laufzeitfehler: Nullzeiger-Ausnahme\",\n      \"hint\": \"Rust erkennt diese Probleme bereits zur Compile‑Zeit\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was passiert, wenn du diesen Code ausführst? Versuche die Ausgabe oder den Fehler vorherzusagen:\"\n  ],\n  \"explanationProse\": [\n    \"Dieser Code lässt sich nicht kompilieren wegen Rusts Besitzregeln. Wenn wir `philosopher` `greeting` zuweisen, wird das Eigentum des Strings nach `greeting` verschoben. Nach diesem Move ist `philosopher` nicht mehr gültig.\\n\\n      Hier sind drei Möglichkeiten, das zu beheben:\\n\\n      1. Den String klonen (erstellt eine neue Kopie):\",\n    \"2. Eine Referenz verwenden (leiht den Wert aus):\",\n    \"3. Einen String‑Slice verwenden (leiht einen Teil des Strings aus):\",\n    \"Jede Lösung hat unterschiedliche Anwendungsfälle und Performance‑Auswirkungen. Klonen ist teurer, gibt dir aber Eigentum, während Referenzen günstiger sind, aber Lebensdauer‑Beschränkungen haben.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1047,
+    "outputTokens": 1283,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 613
+  },
+  "cost": {
+    "inputUsd": 0.000040833,
+    "outputUsd": 0.00023094,
+    "totalUsd": 0.000271773,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

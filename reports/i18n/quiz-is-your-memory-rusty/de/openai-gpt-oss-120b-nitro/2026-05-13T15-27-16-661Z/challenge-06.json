@@ -1,0 +1,32 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Rc Smart Pointer",
+  "translatedTitle": "Rc Smart-Zeiger",
+  "translation": {
+    "title": "Rc Smart-Zeiger",
+    "group": "Referenzzählung",
+    "options": [],
+    "questionProse": [
+      "Was wird dieser Code ausgeben? Zähle genau!"
+    ],
+    "explanationProse": [
+      "Lass uns aufschlüsseln, wie Rc funktioniert:\n\n      1. Anfangserstellung mit `Rc::new()`: count = 1\n      2. Erster Klon für `marcus`: count = 2\n      3. Zweiter Klon für `aurelius`: count = 3\n\n      Wichtige Rc‑Eigenschaften:",
+      "Wichtige Punkte:\n      - Rc::clone() ist günstig – es erhöht nur einen Zähler\n      - Rc ist nur für Single‑Thread‑Szenarien gedacht\n      - Wenn die letzte Referenz fällt, wird das Datenobjekt bereinigt\n      - Verwende Weak‑Referenzen, um Referenzzyklen zu vermeiden\n\n      Beste Praktiken:\n      - Nutze Rc, wenn du geteiltes Eigentum brauchst\n      - Ziehe Arc für thread‑sichere Szenarien in Betracht\n      - Vermeide das Erzeugen von Referenzzyklen"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Rc Smart-Zeiger\",\n  \"group\": \"Referenzzählung\",\n  \"options\": [],\n  \"questionProse\": [\n    \"Was wird dieser Code ausgeben? Zähle genau!\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"rust\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"explanationProse\": [\n    \"Lass uns aufschlüsseln, wie Rc funktioniert:\\n\\n      1. Anfangserstellung mit `Rc::new()`: count = 1\\n      2. Erster Klon für `marcus`: count = 2\\n      3. Zweiter Klon für `aurelius`: count = 3\\n\\n      Wichtige Rc‑Eigenschaften:\",\n    \"Wichtige Punkte:\\n      - Rc::clone() ist günstig – es erhöht nur einen Zähler\\n      - Rc ist nur für Single‑Thread‑Szenarien gedacht\\n      - Wenn die letzte Referenz fällt, wird das Datenobjekt bereinigt\\n      - Verwende Weak‑Referenzen, um Referenzzyklen zu vermeiden\\n\\n      Beste Praktiken:\\n      - Nutze Rc, wenn du geteiltes Eigentum brauchst\\n      - Ziehe Arc für thread‑sichere Szenarien in Betracht\\n      - Vermeide das Erzeugen von Referenzzyklen\"\n  ],\n  \"explanationCode\": [\n    {\n      \"language\": \"rust\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 829,
+    "outputTokens": 840,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 511
+  },
+  "cost": {
+    "inputUsd": 0.000032331,
+    "outputUsd": 0.0001512,
+    "totalUsd": 0.000183531,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

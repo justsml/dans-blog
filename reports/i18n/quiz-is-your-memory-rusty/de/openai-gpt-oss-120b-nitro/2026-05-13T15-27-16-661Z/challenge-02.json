@@ -1,0 +1,50 @@
+{
+  "index": 1,
+  "attempt": 1,
+  "originalTitle": "Move Semantics with Functions",
+  "translatedTitle": "Move-Semantik mit Funktionen",
+  "translation": {
+    "title": "Move-Semantik mit Funktionen",
+    "group": "Besitz",
+    "options": [
+      {
+        "text": "Gibt beide Zeilen aus",
+        "hint": "Überlege, was mit `wisdom` passiert, nachdem es an die Funktion übergeben wurde"
+      },
+      {
+        "text": "Gibt nur die erste Zeile aus",
+        "hint": "Der Code kompiliert nicht, sodass die Laufzeit nie erreicht wird"
+      },
+      {
+        "text": "Kompilierungsfehler"
+      },
+      {
+        "text": "Laufzeitfehler",
+        "hint": "Rusts Besitzregeln werden zur Compile‑Zeit durchgesetzt"
+      }
+    ],
+    "questionProse": [
+      "Was passiert, wenn du diesen Code ausführst? Denke an die Besitzübertragung:"
+    ],
+    "explanationProse": [
+      "Der Code lässt sich nicht kompilieren, weil das Eigentum von `wisdom` nach `take_knowledge` verschoben wurde und es danach nicht mehr verwendet werden kann.\n\n      Hier sind drei Möglichkeiten, dieses Problem zu beheben:\n\n      1. Per Referenz übergeben (den Wert ausleihen):",
+      "2. Den Wert klonen (eine neue Kopie erstellen):",
+      "3. Das Eigentum aus der Funktion zurückgeben:",
+      "Jeder Ansatz hat unterschiedliche Anwendungsfälle:\n      - Referenzen: Am effizientesten, erfordern jedoch Lebensdauer‑Management\n      - Klonen: Einfach, kann aber teuer sein\n      - Eigentum zurückgeben: Nützlich zum Transformieren von Werten\n\n      Best Practice: Verwende Referenzen, es sei denn, du benötigst eine Eigentumsübertragung."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Move-Semantik mit Funktionen\",\n  \"group\": \"Besitz\",\n  \"options\": [\n    {\n      \"text\": \"Gibt beide Zeilen aus\",\n      \"hint\": \"Überlege, was mit `wisdom` passiert, nachdem es an die Funktion übergeben wurde\"\n    },\n    {\n      \"text\": \"Gibt nur die erste Zeile aus\",\n      \"hint\": \"Der Code kompiliert nicht, sodass die Laufzeit nie erreicht wird\"\n    },\n    {\n      \"text\": \"Kompilierungsfehler\"\n    },\n    {\n      \"text\": \"Laufzeitfehler\",\n      \"hint\": \"Rusts Besitzregeln werden zur Compile‑Zeit durchgesetzt\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was passiert, wenn du diesen Code ausführst? Denke an die Besitzübertragung:\"\n  ],\n  \"explanationProse\": [\n    \"Der Code lässt sich nicht kompilieren, weil das Eigentum von `wisdom` nach `take_knowledge` verschoben wurde und es danach nicht mehr verwendet werden kann.\\n\\n      Hier sind drei Möglichkeiten, dieses Problem zu beheben:\\n\\n      1. Per Referenz übergeben (den Wert ausleihen):\",\n    \"2. Den Wert klonen (eine neue Kopie erstellen):\",\n    \"3. Das Eigentum aus der Funktion zurückgeben:\",\n    \"Jeder Ansatz hat unterschiedliche Anwendungsfälle:\\n      - Referenzen: Am effizientesten, erfordern jedoch Lebensdauer‑Management\\n      - Klonen: Einfach, kann aber teuer sein\\n      - Eigentum zurückgeben: Nützlich zum Transformieren von Werten\\n\\n      Best Practice: Verwende Referenzen, es sei denn, du benötigst eine Eigentumsübertragung.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 964,
+    "outputTokens": 1020,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 3537
+  },
+  "cost": {
+    "inputUsd": 0.000037596,
+    "outputUsd": 0.00018360000000000002,
+    "totalUsd": 0.000221196,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

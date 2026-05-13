@@ -1,0 +1,52 @@
+{
+  "index": 11,
+  "attempt": 1,
+  "originalTitle": "RefCells and Threading",
+  "translatedTitle": "RefCells und Threading",
+  "translation": {
+    "title": "RefCells und Threading",
+    "group": "RefCell",
+    "options": [
+      {
+        "text": "RefCell wird für mutable Borrows verwendet, Rw für immutable",
+        "hint": "Beide Typen unterstützen mutable und immutable Borrows"
+      },
+      {
+        "text": "Rw wird für mutable Borrows verwendet, RefCell für immutable",
+        "hint": "Beide unterstützen beide Arten von Borrows"
+      },
+      {
+        "text": "RefCell und Rw werden für denselben Zweck verwendet",
+        "hint": "Denke an Thread‑Sicherheit"
+      },
+      {
+        "text": "RefCell wird nur in Single‑Thread‑Umgebungen verwendet"
+      },
+      {
+        "text": "Rw wird nur in Multi‑Thread‑Umgebungen verwendet",
+        "hint": "Obwohl typischerweise für Threads verwendet, ist das nicht der Hauptunterschied"
+      }
+    ],
+    "questionProse": [
+      "Was ist der entscheidende Unterschied zwischen RefCell und RwLock in Rust?\n\n      Betrachte diese Beispiele:"
+    ],
+    "explanationProse": [
+      "RefCell und RwLock erfüllen ähnliche Zwecke, aber in unterschiedlichen Kontexten:",
+      "Wichtige Unterschiede:\n      1. RefCell:\n         - Nur Single‑Thread\n         - Kein Synchronisations‑Overhead\n         - Löst Panics bei Verstößen gegen Borrowing aus\n         \n      2. RwLock:\n         - Thread‑sicher\n         - Hat Synchronisations‑Overhead\n         - Kann Threads blockieren anstatt zu panicen\n\n      Empfohlene Vorgehensweise:\n      1. Verwende RefCell für interior mutability in Single‑Thread‑Umgebungen\n      2. Verwende RwLock, wenn Thread‑Sicherheit nötig ist\n      3. Ziehe Mutex für einfachere thread‑sichere Mutabilität in Betracht\n      4. Dokumentiere Thread‑Sicherheitsanforderungen klar"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"RefCells und Threading\",\n  \"group\": \"RefCell\",\n  \"options\": [\n    {\n      \"text\": \"RefCell wird für mutable Borrows verwendet, Rw für immutable\",\n      \"hint\": \"Beide Typen unterstützen mutable und immutable Borrows\"\n    },\n    {\n      \"text\": \"Rw wird für mutable Borrows verwendet, RefCell für immutable\",\n      \"hint\": \"Beide unterstützen beide Arten von Borrows\"\n    },\n    {\n      \"text\": \"RefCell und Rw werden für denselben Zweck verwendet\",\n      \"hint\": \"Denke an Thread‑Sicherheit\"\n    },\n    {\n      \"text\": \"RefCell wird nur in Single‑Thread‑Umgebungen verwendet\"\n    },\n    {\n      \"text\": \"Rw wird nur in Multi‑Thread‑Umgebungen verwendet\",\n      \"hint\": \"Obwohl typischerweise für Threads verwendet, ist das nicht der Hauptunterschied\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was ist der entscheidende Unterschied zwischen RefCell und RwLock in Rust?\\n\\n      Betrachte diese Beispiele:\"\n  ],\n  \"explanationProse\": [\n    \"RefCell und RwLock erfüllen ähnliche Zwecke, aber in unterschiedlichen Kontexten:\",\n    \"Wichtige Unterschiede:\\n      1. RefCell:\\n         - Nur Single‑Thread\\n         - Kein Synchronisations‑Overhead\\n         - Löst Panics bei Verstößen gegen Borrowing aus\\n         \\n      2. RwLock:\\n         - Thread‑sicher\\n         - Hat Synchronisations‑Overhead\\n         - Kann Threads blockieren anstatt zu panicen\\n\\n      Empfohlene Vorgehensweise:\\n      1. Verwende RefCell für interior mutability in Single‑Thread‑Umgebungen\\n      2. Verwende RwLock, wenn Thread‑Sicherheit nötig ist\\n      3. Ziehe Mutex für einfachere thread‑sichere Mutabilität in Betracht\\n      4. Dokumentiere Thread‑Sicherheitsanforderungen klar\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 989,
+    "outputTokens": 1305,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 4008
+  },
+  "cost": {
+    "inputUsd": 0.000038571,
+    "outputUsd": 0.0002349,
+    "totalUsd": 0.000273471,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

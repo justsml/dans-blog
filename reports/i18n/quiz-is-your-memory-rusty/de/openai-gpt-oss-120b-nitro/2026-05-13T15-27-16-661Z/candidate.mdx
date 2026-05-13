@@ -24,8 +24,8 @@ cover_full_width: ../fade-to-clouds-wide.webp
 cover_mobile: ../fade-to-clouds-square-200.webp
 cover_icon: ../fade-to-clouds-square-200.webp
 ---
-import Challenge from '../../../../../components/QuizUI/Challenge';
-import QuizUI from '../../../../../components/QuizUI/QuizUI';
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
 
 <p class="inset">Bereit, deine Rust‑Speicherverwaltungs‑Fähigkeiten zu testen? 🦀</p>
 
@@ -55,13 +55,13 @@ Egal, ob du ein erfahrener Rustacean bist oder gerade erst mit Speicherverwaltun
   <div className="question">
     Was passiert, wenn du diesen Code ausführst? Versuche die Ausgabe oder den Fehler vorherzusagen:
     ```rust
-    fn main() {
-        let philosopher =
-            String::from("Zeno of Citium");
-        let greeting = philosopher;
+          fn main() {
+              let philosopher =
+                  String::from("Zeno of Citium");
+              let greeting = philosopher;
 
-        println!("Hello, {}!", philosopher);
-    }
+              println!("Hello, {}!", philosopher);
+          }
     ```
   </div>
   </slot>
@@ -73,15 +73,15 @@ Egal, ob du ein erfahrener Rustacean bist oder gerade erst mit Speicherverwaltun
 
     1. Den String klonen (erstellt eine neue Kopie):
     ```rust
-    let greeting = philosopher.clone();
+          let greeting = philosopher.clone();
     ```
     2. Eine Referenz verwenden (leiht den Wert aus):
     ```rust
-    let greeting = &philosopher;
+          let greeting = &philosopher;
     ```
     3. Einen String‑Slice verwenden (leiht einen Teil des Strings aus):
     ```rust
-    let greeting = &philosopher[..];
+          let greeting = &philosopher[..];
     ```
     Jede Lösung hat unterschiedliche Anwendungsfälle und Performance‑Auswirkungen. Klonen ist teurer, gibt dir aber Eigentum, während Referenzen günstiger sind, aber Lebensdauer‑Beschränkungen haben.
   </div>
@@ -104,16 +104,16 @@ Egal, ob du ein erfahrener Rustacean bist oder gerade erst mit Speicherverwaltun
   <div className="question">
     Was passiert, wenn du diesen Code ausführst? Denke an die Besitzübertragung:
     ```rust
-    fn take_knowledge(knowledge: String) {
-        println!("Knowledge: {}", knowledge);
-    }
+          fn take_knowledge(knowledge: String) {
+              println!("Knowledge: {}", knowledge);
+          }
 
-    fn main() {
-        let wisdom = String::from("know thyself");
-        take_knowledge(wisdom);
-        // What happens to our wisdom?
-        println!("Do you {}", wisdom);
-    }
+          fn main() {
+              let wisdom = String::from("know thyself");
+              take_knowledge(wisdom);
+              // What happens to our wisdom?
+              println!("Do you {}", wisdom);
+          }
     ```
   </div>
   </slot>
@@ -125,22 +125,22 @@ Egal, ob du ein erfahrener Rustacean bist oder gerade erst mit Speicherverwaltun
 
     1. Per Referenz übergeben (den Wert ausleihen):
     ```rust
-    fn borrow_it(text: &String) {
-        println!("Inside: {}", text);
-    }
-    borrow_it(&wisdom);  // Now wisdom can be used after
+          fn borrow_it(text: &String) {
+              println!("Inside: {}", text);
+          }
+          borrow_it(&wisdom);  // Now wisdom can be used after
     ```
     2. Den Wert klonen (eine neue Kopie erstellen):
     ```rust
-    take_knowledge(wisdom.clone());  // Original wisdom remains valid
+          take_knowledge(wisdom.clone());  // Original wisdom remains valid
     ```
     3. Das Eigentum aus der Funktion zurückgeben:
     ```rust
-    fn take_and_return(text: String) -> String {
-        println!("Inside: {}", text);
-        text  // Return ownership back
-    }
-    let wisdom = take_and_return(wisdom);  // Reassign returned ownership
+          fn take_and_return(text: String) -> String {
+              println!("Inside: {}", text);
+              text  // Return ownership back
+          }
+          let wisdom = take_and_return(wisdom);  // Reassign returned ownership
     ```
     Jeder Ansatz hat unterschiedliche Anwendungsfälle:
     - Referenzen: Am effizientesten, erfordern jedoch Lebensdauer‑Management
@@ -168,13 +168,13 @@ Egal, ob du ein erfahrener Rustacean bist oder gerade erst mit Speicherverwaltun
   <div className="question">
     Was passiert bei mehreren mutablen Referenzen?
     ```rust
-    fn main() {
-        let mut wisdom = String::from("He who laughs at");
-        let ref1 = &mut wisdom;  // First mutable borrow
-        let ref2 = &mut wisdom;  // Second mutable borrow
-        ref1.push_str(" himself never runs");
-        ref2.push_str(" out of things to laugh at.");
-    }
+          fn main() {
+              let mut wisdom = String::from("He who laughs at");
+              let ref1 = &mut wisdom;  // First mutable borrow
+              let ref2 = &mut wisdom;  // Second mutable borrow
+              ref1.push_str(" himself never runs");
+              ref2.push_str(" out of things to laugh at.");
+          }
     ```
     Denke an Rusts Regeln für mutable Referenzen.
   </div>
@@ -190,19 +190,19 @@ Egal, ob du ein erfahrener Rustacean bist oder gerade erst mit Speicherverwaltun
 
     1. Verwende sequentielles Scoping:
     ```rust
-    let mut wisdom = String::from("He who laughs at");
-    {
-        let ref1 = &mut wisdom;
-        ref1.push_str(" himself never runs");
-    }  // ref1 goes out of scope
-    let ref2 = &mut wisdom;  // Now this is valid
-    ref2.push_str(" out of things to laugh at.");
+          let mut wisdom = String::from("He who laughs at");
+          {
+              let ref1 = &mut wisdom;
+              ref1.push_str(" himself never runs");
+          }  // ref1 goes out of scope
+          let ref2 = &mut wisdom;  // Now this is valid
+          ref2.push_str(" out of things to laugh at.");
     ```
     2. Oder modifiziere den String in einer einzigen Ausleihe:
     ```rust
-    let mut wisdom = String::from("He who laughs at");
-    let ref1 = &mut wisdom;
-    ref1.push_str(" himself never runs out of things to laugh at.");
+          let mut wisdom = String::from("He who laughs at");
+          let ref1 = &mut wisdom;
+          ref1.push_str(" himself never runs out of things to laugh at.");
     ```
     Diese Regeln verhindern Datenrennen zur Compile‑Zeit und machen Rust standardmäßig thread‑sicher.
 
@@ -227,18 +227,18 @@ Egal, ob du ein erfahrener Rustacean bist oder gerade erst mit Speicherverwaltun
   <div className="question">
     Wird dieser Code kompilieren? Wenn ja, warum? Wenn nein, was ist falsch?
     ```rust
-    fn first_word(s: &str) -> &str {  // No explicit lifetimes?
-        match s.find(' ') {
-            Some(pos) => &s[0..pos],
-            None => s,
-        }
-    }
+          fn first_word(s: &str) -> &str {  // No explicit lifetimes?
+              match s.find(' ') {
+                  Some(pos) => &s[0..pos],
+                  None => s,
+              }
+          }
 
-    fn main() {
-        let name = String::from("Seneca the Younger");
-        let first = first_word(&name);
-        println!("Hello, {}", first);
-    }
+          fn main() {
+              let name = String::from("Seneca the Younger");
+              let first = first_word(&name);
+              println!("Hello, {}", first);
+          }
     ```
   </div>
   </slot>
@@ -254,20 +254,20 @@ Egal, ob du ein erfahrener Rustacean bist oder gerade erst mit Speicherverwaltun
 
     Diese Funktion ist äquivalent zu:
     ```rust
-    fn first_word<'a>(s: &'a str) -> &'a str {
-        // ... same implementation
-    }
+          fn first_word<'a>(s: &'a str) -> &'a str {
+              // ... same implementation
+          }
     ```
     Übliche Muster, bei denen Elision funktioniert:
     ```rust
-    // These don't need explicit lifetimes
-    fn get_str(s: &str) -> &str { s }
-    fn get_first(s: &str) -> &str { &s[0..1] }
+          // These don't need explicit lifetimes
+          fn get_str(s: &str) -> &str { s }
+          fn get_first(s: &str) -> &str { &s[0..1] }
 
-    // These would need explicit lifetimes
-    fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
-        if x.len() > y.len() { x } else { y }
-    }
+          // These would need explicit lifetimes
+          fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
+              if x.len() > y.len() { x } else { y }
+          }
     ```
     Best Practice: Lass die Elision für dich arbeiten, wenn möglich, aber verstehe, wann explizite Lebenszeiten nötig sind.
   </div>
@@ -286,18 +286,18 @@ Egal, ob du ein erfahrener Rustacean bist oder gerade erst mit Speicherverwaltun
   <div className="question">
     Was ist falsch an dieser rekursiven Typdefinition?
     ```rust
-    #[derive(Debug)]
-    enum CatList {
-        Cons(i32, CatList),  // Recursive without indirection
-        Nil,
-    }
+          #[derive(Debug)]
+          enum CatList {
+              Cons(i32, CatList),  // Recursive without indirection
+              Nil,
+          }
 
-    fn main() {
-        let catlist = CatList::Cons(1,
-            CatList::Cons(2,
-                CatList::Cons(3,
-                    CatList::Nil)));
-    }
+          fn main() {
+              let catlist = CatList::Cons(1,
+                  CatList::Cons(2,
+                      CatList::Cons(3,
+                          CatList::Nil)));
+          }
     ```
   </div>
   </slot>
@@ -307,18 +307,18 @@ Egal, ob du ein erfahrener Rustacean bist oder gerade erst mit Speicherverwaltun
 
     So lässt sich das mit `Box<T>` beheben:
     ```rust
-    #[derive(Debug)]
-    enum CatList {
-        Cons(i32, Box<CatList>),  // Box provides a fixed-size pointer
-        Nil,
-    }
+          #[derive(Debug)]
+          enum CatList {
+              Cons(i32, Box<CatList>),  // Box provides a fixed-size pointer
+              Nil,
+          }
 
-    fn main() {
-        let catlist = CatList::Cons(1,
-            Box::new(CatList::Cons(2,
-                Box::new(CatList::Cons(3,
-                    Box::new(CatList::Nil))))));
-    }
+          fn main() {
+              let catlist = CatList::Cons(1,
+                  Box::new(CatList::Cons(2,
+                      Box::new(CatList::Cons(3,
+                          Box::new(CatList::Nil))))));
+          }
     ```
     Warum `Box<T>` funktioniert:
     1. Box liefert einen Zeiger fester Größe (normalerweise 8 Byte auf 64‑Bit‑Systemen)
@@ -350,17 +350,17 @@ Egal, ob du ein erfahrener Rustacean bist oder gerade erst mit Speicherverwaltun
   <div className="question">
     Was wird dieser Code ausgeben? Zähle genau!
     ```rust
-    use std::rc::Rc;
+          use std::rc::Rc;
 
-    fn main() {
-        let text = Rc::new(String::from("Meditations"));  // Count: 1
-        let marcus = Rc::clone(&text);    // What happens here?
-        let aurelius = Rc::clone(&text);  // And here?
-        println!(
-            "Reference count: {}",
-            Rc::strong_count(&text)
-        );
-    }
+          fn main() {
+              let text = Rc::new(String::from("Meditations"));  // Count: 1
+              let marcus = Rc::clone(&text);    // What happens here?
+              let aurelius = Rc::clone(&text);  // And here?
+              println!(
+                  "Reference count: {}",
+                  Rc::strong_count(&text)
+              );
+          }
     ```
   </div>
   </slot>
@@ -374,19 +374,19 @@ Egal, ob du ein erfahrener Rustacean bist oder gerade erst mit Speicherverwaltun
 
     Wichtige Rc‑Eigenschaften:
     ```rust
-    use std::rc::Rc;
+          use std::rc::Rc;
       
-    fn demonstrate_rc() {
-        let original = Rc::new(String::from("Shared"));
-        println!("Count after creation: {}", Rc::strong_count(&original)); // 1
+          fn demonstrate_rc() {
+              let original = Rc::new(String::from("Shared"));
+              println!("Count after creation: {}", Rc::strong_count(&original)); // 1
           
-        {
-            let copy = Rc::clone(&original);
-            println!("Count inside scope: {}", Rc::strong_count(&original)); // 2
-        } // copy is dropped here
+              {
+                  let copy = Rc::clone(&original);
+                  println!("Count inside scope: {}", Rc::strong_count(&original)); // 2
+              } // copy is dropped here
           
-        println!("Count after scope: {}", Rc::strong_count(&original)); // 1
-    }
+              println!("Count after scope: {}", Rc::strong_count(&original)); // 1
+          }
     ```
     Wichtige Punkte:
     - Rc::clone() ist günstig – es erhöht nur einen Zähler
@@ -418,17 +418,17 @@ Egal, ob du ein erfahrener Rustacean bist oder gerade erst mit Speicherverwaltun
   <div className="question">
     Wird diese Strukturddefinition kompilieren? Warum oder warum nicht?
     ```rust
-    struct Philosopher {
-        name: &str,    // Reference without lifetime
-        quote: &str,   // Another reference without lifetime
-    }
+          struct Philosopher {
+              name: &str,    // Reference without lifetime
+              quote: &str,   // Another reference without lifetime
+          }
 
-    fn main() {
-        let phil = Philosopher {
-            name: "Seneca",
-            quote: "Luck happens when preparation meets opportunity",
-        };
-    }
+          fn main() {
+              let phil = Philosopher {
+                  name: "Seneca",
+                  quote: "Luck happens when preparation meets opportunity",
+              };
+          }
     ```
   </div>
   </slot>
@@ -436,31 +436,31 @@ Egal, ob du ein erfahrener Rustacean bist oder gerade erst mit Speicherverwaltun
   <div className="explanation">
     Der Code schlägt fehl, weil Strukturen, die Referenzen enthalten, Lebensdauern angeben müssen. So geht's:
     ```rust
-    // Single lifetime parameter
-    struct Philosopher<'a> {
-        name: &'a str,
-        quote: &'a str,
-    }
+          // Single lifetime parameter
+          struct Philosopher<'a> {
+              name: &'a str,
+              quote: &'a str,
+          }
 
-    // Or different lifetimes if needed
-    struct PhilosopherFlex<'n, 'q> {
-        name: &'n str,
-        quote: &'q str,
-    }
+          // Or different lifetimes if needed
+          struct PhilosopherFlex<'n, 'q> {
+              name: &'n str,
+              quote: &'q str,
+          }
     ```
     Übliche Muster:
     ```rust
-    // Own the data instead
-    struct PhilosopherOwned {
-        name: String,
-        quote: String,
-    }
+          // Own the data instead
+          struct PhilosopherOwned {
+              name: String,
+              quote: String,
+          }
 
-    // Mixed ownership
-    struct PhilosopherMixed<'a> {
-        name: String,      // Owned
-        quote: &'a str,    // Borrowed
-    }
+          // Mixed ownership
+          struct PhilosopherMixed<'a> {
+              name: String,      // Owned
+              quote: &'a str,    // Borrowed
+          }
     ```
     Best practices:
     1. Verwende besessene Typen (String), wenn du Daten unbegrenzt speichern musst
@@ -487,20 +487,20 @@ Egal, ob du ein erfahrener Rustacean bist oder gerade erst mit Speicherverwaltun
   <div className="question">
     Was passiert bei dieser Funktion, die die längere von zwei String‑Slices zurückgibt?
     ```rust
-    fn longest(text1: &str, text2: &str) -> &str {
-        if text1.len() > text2.len() {
-            text1    // Returning a reference, but which lifetime?
-        } else {
-            text2    // Could be this reference instead
-        }
-    }
+          fn longest(text1: &str, text2: &str) -> &str {
+              if text1.len() > text2.len() {
+                  text1    // Returning a reference, but which lifetime?
+              } else {
+                  text2    // Could be this reference instead
+              }
+          }
 
-    fn main() {
-        println!("{}", longest(
-            "Seneca the Younger",
-            "Marcus Aurelius"
-        ));
-    }
+          fn main() {
+              println!("{}", longest(
+                  "Seneca the Younger",
+                  "Marcus Aurelius"
+              ));
+          }
     ```
   </div>
   </slot>
@@ -508,23 +508,23 @@ Egal, ob du ein erfahrener Rustacean bist oder gerade erst mit Speicherverwaltun
   <div className="explanation">
     Dieser Code schlägt fehl, weil der Compiler die Beziehung zwischen den Eingabe‑ und Ausgabe‑Lebensdauern nicht bestimmen kann. Hier ist warum und wie man es behebt:
     ```rust
-    // Correct version with explicit lifetime annotation
-    fn longest<'a>(text1: &'a str, text2: &'a str) -> &'a str {
-        if text1.len() > text2.len() {
-            text1
-        } else {
-            text2
-        }
-    }
+          // Correct version with explicit lifetime annotation
+          fn longest<'a>(text1: &'a str, text2: &'a str) -> &'a str {
+              if text1.len() > text2.len() {
+                  text1
+              } else {
+                  text2
+              }
+          }
 
-    // Alternative with different lifetimes
-    fn longest_flex<'a, 'b>(text1: &'a str, text2: &'b str) -> &'a str {
-        if text1.len() > text2.len() {
-            text1
-        } else {
-            text2.to_string().as_str() // Won't compile! Shows why we need same lifetime
-        }
-    }
+          // Alternative with different lifetimes
+          fn longest_flex<'a, 'b>(text1: &'a str, text2: &'b str) -> &'a str {
+              if text1.len() > text2.len() {
+                  text1
+              } else {
+                  text2.to_string().as_str() // Won't compile! Shows why we need same lifetime
+              }
+          }
     ```
     Warum hier Lebensdauern nötig sind:
     1. Mehrere Eingabereferenzen können unterschiedliche Lebensdauern haben
@@ -533,14 +533,14 @@ Egal, ob du ein erfahrener Rustacean bist oder gerade erst mit Speicherverwaltun
 
     Übliche Muster:
     ```rust
-    // Single input reference - elision works
-    fn first_word(s: &str) -> &str { /* ... */ }
+          // Single input reference - elision works
+          fn first_word(s: &str) -> &str { /* ... */ }
 
-    // Multiple references, same lifetime needed
-    fn compare_str<'a>(s1: &'a str, s2: &'a str) -> &'a str { /* ... */ }
+          // Multiple references, same lifetime needed
+          fn compare_str<'a>(s1: &'a str, s2: &'a str) -> &'a str { /* ... */ }
 
-    // Different lifetimes possible
-    fn combine<'a, 'b>(s1: &'a str, s2: &'b str) -> String { /* ... */ }
+          // Different lifetimes possible
+          fn combine<'a, 'b>(s1: &'a str, s2: &'b str) -> String { /* ... */ }
     ```
     Best Practices:
     1. Lass die Lebenszeit‑Elision arbeiten, wenn möglich
@@ -567,14 +567,14 @@ Egal, ob du ein erfahrener Rustacean bist oder gerade erst mit Speicherverwaltun
   <div className="question">
     Was passiert, wenn dieser Code ausgeführt wird?
     ```rust
-    use std::cell::RefCell;
+          use std::cell::RefCell;
 
-    fn main() {
-        let data = RefCell::new(42);
-        let _borrow1 = data.borrow_mut();  // First mutable borrow
-        let _borrow2 = data.borrow_mut();  // Second mutable borrow
-        println!("Value: {}", _borrow2);
-    }
+          fn main() {
+              let data = RefCell::new(42);
+              let _borrow1 = data.borrow_mut();  // First mutable borrow
+              let _borrow2 = data.borrow_mut();  // Second mutable borrow
+              println!("Value: {}", _borrow2);
+          }
     ```
   </div>
   </slot>
@@ -582,24 +582,24 @@ Egal, ob du ein erfahrener Rustacean bist oder gerade erst mit Speicherverwaltun
   <div className="explanation">
     RefCell bietet innere Mutabilität, erzwingt aber weiterhin Rusts Borrowing‑Regeln zur Laufzeit:
     ```rust
-    use std::cell::RefCell;
+          use std::cell::RefCell;
 
-    fn demonstrate_refcell() {
-        let data = RefCell::new(42);
+          fn demonstrate_refcell() {
+              let data = RefCell::new(42);
           
-        // Correct way to use RefCell
-        {
-            let mut first = data.borrow_mut();
-            *first += 1;
-        } // first is dropped here
+              // Correct way to use RefCell
+              {
+                  let mut first = data.borrow_mut();
+                  *first += 1;
+              } // first is dropped here
           
-        // Now we can borrow again
-        let second = data.borrow_mut();
+              // Now we can borrow again
+              let second = data.borrow_mut();
           
-        // Or multiple immutable borrows
-        let read1 = data.borrow();
-        let read2 = data.borrow(); // This is OK
-    }
+              // Or multiple immutable borrows
+              let read1 = data.borrow();
+              let read2 = data.borrow(); // This is OK
+          }
     ```
     Wichtige Konzepte:
     1. RefCell verlagert Borrow‑Prüfungen zur Laufzeit
@@ -636,15 +636,15 @@ Egal, ob du ein erfahrener Rustacean bist oder gerade erst mit Speicherverwaltun
   <div className="question">
     Was wird dieser Code ausgeben?
     ```rust
-    use std::cell::Cell;
+          use std::cell::Cell;
 
-    fn main() {
-        let life = Cell::new(42);
-        let meaning = &life;        // Shared reference
-        println!("{}", life.get()); // What prints here?
-        meaning.set(43);            // Mutation through shared ref
-        println!("{}", life.get()); // And here?
-    }
+          fn main() {
+              let life = Cell::new(42);
+              let meaning = &life;        // Shared reference
+              println!("{}", life.get()); // What prints here?
+              meaning.set(43);            // Mutation through shared ref
+              println!("{}", life.get()); // And here?
+          }
     ```
   </div>
   </slot>
@@ -652,29 +652,29 @@ Egal, ob du ein erfahrener Rustacean bist oder gerade erst mit Speicherverwaltun
   <div className="explanation">
     Cell und RefCell dienen unterschiedlichen Zwecken für innere Mutabilität:
     ```rust
-    use std::cell::{Cell, RefCell};
+          use std::cell::{Cell, RefCell};
 
-    // Cell for Copy types
-    struct Counter {
-        count: Cell<i32>,
-    }
+          // Cell for Copy types
+          struct Counter {
+              count: Cell<i32>,
+          }
 
-    impl Counter {
-        fn increment(&self) {
-            self.count.set(self.count.get() + 1);
-        }
-    }
+          impl Counter {
+              fn increment(&self) {
+                  self.count.set(self.count.get() + 1);
+              }
+          }
 
-    // RefCell for non-Copy types
-    struct Logger {
-        messages: RefCell<Vec<String>>,
-    }
+          // RefCell for non-Copy types
+          struct Logger {
+              messages: RefCell<Vec<String>>,
+          }
 
-    impl Logger {
-        fn log(&self, msg: &str) {
-            self.messages.borrow_mut().push(msg.to_string());
-        }
-    }
+          impl Logger {
+              fn log(&self, msg: &str) {
+                  self.messages.borrow_mut().push(msg.to_string());
+              }
+          }
     ```
     Schlüsselunterschiede:
     1. Cell:
@@ -715,22 +715,22 @@ Egal, ob du ein erfahrener Rustacean bist oder gerade erst mit Speicherverwaltun
 
     Betrachte dieses Beispiel:
     ```rust
-    use std::rc::Rc;
+          use std::rc::Rc;
 
-    struct SharedConfig {
-        name: String,
-        value: i32,
-    }
+          struct SharedConfig {
+              name: String,
+              value: i32,
+          }
 
-    fn main() {
-        let config = Rc::new(SharedConfig {
-            name: "settings".to_string(),
-            value: 42,
-        });
+          fn main() {
+              let config = Rc::new(SharedConfig {
+                  name: "settings".to_string(),
+                  value: 42,
+              });
           
-        let config2 = Rc::clone(&config);
-        // Both config and config2 share ownership
-    }
+              let config2 = Rc::clone(&config);
+              // Both config and config2 share ownership
+          }
     ```
   </div>
   </slot>
@@ -740,24 +740,24 @@ Egal, ob du ein erfahrener Rustacean bist oder gerade erst mit Speicherverwaltun
 
     Häufige Anwendungsfälle:
     ```rust
-    use std::rc::Rc;
-    use std::cell::RefCell;
+          use std::rc::Rc;
+          use std::cell::RefCell;
 
-    // Shared ownership in data structures
-    struct Node {
-        next: Option<Rc<Node>>,
-        value: i32,
-    }
+          // Shared ownership in data structures
+          struct Node {
+              next: Option<Rc<Node>>,
+              value: i32,
+          }
 
-    // Combining with interior mutability
-    struct SharedState {
-        data: Rc<RefCell<Vec<String>>>,
-    }
+          // Combining with interior mutability
+          struct SharedState {
+              data: Rc<RefCell<Vec<String>>>,
+          }
 
-    // Multiple owners of same data
-    let original = Rc::new(vec![1, 2, 3]);
-    let clone1 = Rc::clone(&original);
-    let clone2 = Rc::clone(&original);
+          // Multiple owners of same data
+          let original = Rc::new(vec![1, 2, 3]);
+          let clone1 = Rc::clone(&original);
+          let clone2 = Rc::clone(&original);
     ```
     Wichtige Punkte:
     1. Verwende Rc, wenn:
@@ -802,16 +802,16 @@ Egal, ob du ein erfahrener Rustacean bist oder gerade erst mit Speicherverwaltun
 
     Betrachte diese Beispiele:
     ```rust
-    use std::cell::RefCell;
-    use std::sync::RwLock;
+          use std::cell::RefCell;
+          use std::sync::RwLock;
 
-    // Example 1
-    let data = RefCell::new(vec![1, 2, 3]);
-    let borrowed = data.borrow_mut();
+          // Example 1
+          let data = RefCell::new(vec![1, 2, 3]);
+          let borrowed = data.borrow_mut();
 
-    // Example 2
-    let shared = RwLock::new(vec![1, 2, 3]);
-    let locked = shared.write().unwrap();
+          // Example 2
+          let shared = RwLock::new(vec![1, 2, 3]);
+          let locked = shared.write().unwrap();
     ```
   </div>
   </slot>
@@ -819,31 +819,31 @@ Egal, ob du ein erfahrener Rustacean bist oder gerade erst mit Speicherverwaltun
   <div className="explanation">
     RefCell und RwLock erfüllen ähnliche Zwecke, aber in unterschiedlichen Kontexten:
     ```rust
-    // Single-threaded scenario with RefCell
-    use std::cell::RefCell;
+          // Single-threaded scenario with RefCell
+          use std::cell::RefCell;
       
-    struct SingleThreaded {
-        data: RefCell<Vec<i32>>,
-    }
+          struct SingleThreaded {
+              data: RefCell<Vec<i32>>,
+          }
 
-    impl SingleThreaded {
-        fn modify(&self) {
-            self.data.borrow_mut().push(42);
-        }
-    }
+          impl SingleThreaded {
+              fn modify(&self) {
+                  self.data.borrow_mut().push(42);
+              }
+          }
 
-    // Multi-threaded scenario with RwLock
-    use std::sync::RwLock;
+          // Multi-threaded scenario with RwLock
+          use std::sync::RwLock;
       
-    struct ThreadSafe {
-        data: RwLock<Vec<i32>>,
-    }
+          struct ThreadSafe {
+              data: RwLock<Vec<i32>>,
+          }
 
-    impl ThreadSafe {
-        fn modify(&self) {
-            self.data.write().unwrap().push(42);
-        }
-    }
+          impl ThreadSafe {
+              fn modify(&self) {
+                  self.data.write().unwrap().push(42);
+              }
+          }
     ```
     Wichtige Unterschiede:
     1. RefCell:
@@ -882,17 +882,17 @@ Egal, ob du ein erfahrener Rustacean bist oder gerade erst mit Speicherverwaltun
   <div className="question">
     Was passiert, wenn dieser Code ausgeführt wird?
     ```rust
-    use std::sync::{Arc, Mutex};
+          use std::sync::{Arc, Mutex};
 
-    fn main() {
-        let lock = Arc::new(Mutex::new(42));
-        let lock2 = Arc::clone(&lock);
+          fn main() {
+              let lock = Arc::new(Mutex::new(42));
+              let lock2 = Arc::clone(&lock);
           
-        let _guard1 = lock.lock().unwrap();   // First lock
-        let _guard2 = lock2.lock().unwrap();  // Second lock attempt
+              let _guard1 = lock.lock().unwrap();   // First lock
+              let _guard2 = lock2.lock().unwrap();  // Second lock attempt
           
-        println!("Value: {}", _guard2);
-    }
+              println!("Value: {}", _guard2);
+          }
     ```
   </div>
   </slot>
@@ -900,31 +900,31 @@ Egal, ob du ein erfahrener Rustacean bist oder gerade erst mit Speicherverwaltun
   <div className="explanation">
     Dieser Code demonstriert ein klassisches Deadlock‑Szenario. So beheben Sie es:
     ```rust
-    use std::sync::{Arc, Mutex};
+          use std::sync::{Arc, Mutex};
 
-    // Correct way - Release lock before acquiring it again
-    fn safe_mutex() {
-        let lock = Arc::new(Mutex::new(42));
+          // Correct way - Release lock before acquiring it again
+          fn safe_mutex() {
+              let lock = Arc::new(Mutex::new(42));
           
-        {
-            let mut data = lock.lock().unwrap();
-            *data += 1;
-        } // Lock is released here
+              {
+                  let mut data = lock.lock().unwrap();
+                  *data += 1;
+              } // Lock is released here
           
-        // Now we can acquire it again
-        let data2 = lock.lock().unwrap();
-        println!("Value: {}", data2);
-    }
+              // Now we can acquire it again
+              let data2 = lock.lock().unwrap();
+              println!("Value: {}", data2);
+          }
 
-    // Using multiple mutexes safely
-    fn multiple_mutexes() {
-        let lock1 = Arc::new(Mutex::new(42));
-        let lock2 = Arc::new(Mutex::new(43));
+          // Using multiple mutexes safely
+          fn multiple_mutexes() {
+              let lock1 = Arc::new(Mutex::new(42));
+              let lock2 = Arc::new(Mutex::new(43));
           
-        // Always acquire locks in the same order
-        let guard1 = lock1.lock().unwrap();
-        let guard2 = lock2.lock().unwrap();
-    }
+              // Always acquire locks in the same order
+              let guard1 = lock1.lock().unwrap();
+              let guard2 = lock2.lock().unwrap();
+          }
     ```
     Best Practices zur Vermeidung von Deadlocks:
     1. Kritische Abschnitte klein halten
@@ -935,17 +935,17 @@ Egal, ob du ein erfahrener Rustacean bist oder gerade erst mit Speicherverwaltun
 
     Häufige Muster:
     ```rust
-    // Thread-safe counter
-    struct Counter {
-        count: Arc<Mutex<i32>>,
-    }
+          // Thread-safe counter
+          struct Counter {
+              count: Arc<Mutex<i32>>,
+          }
 
-    impl Counter {
-        fn increment(&self) {
-            let mut count = self.count.lock().unwrap();
-            *count += 1;
-        } // Lock automatically released here
-    }
+          impl Counter {
+              fn increment(&self) {
+                  let mut count = self.count.lock().unwrap();
+                  *count += 1;
+              } // Lock automatically released here
+          }
     ```
   </div>
   </slot>
@@ -963,15 +963,15 @@ Egal, ob du ein erfahrener Rustacean bist oder gerade erst mit Speicherverwaltun
   <div className="question">
     Was passiert, wenn du diesen Code mit schwachen Referenzen ausführst?
     ```rust
-    use std::rc::{Rc, Weak};
+          use std::rc::{Rc, Weak};
 
-    fn main() {
-        let data = Rc::new(String::from("Wisdom"));
-        let weak = Rc::downgrade(&data);  // Create weak reference
-        drop(data);                       // Drop strong reference
+          fn main() {
+              let data = Rc::new(String::from("Wisdom"));
+              let weak = Rc::downgrade(&data);  // Create weak reference
+              drop(data);                       // Drop strong reference
           
-        println!("Value: {:?}", weak.upgrade());
-    }
+              println!("Value: {:?}", weak.upgrade());
+          }
     ```
   </div>
   </slot>
@@ -979,33 +979,33 @@ Egal, ob du ein erfahrener Rustacean bist oder gerade erst mit Speicherverwaltun
   <div className="explanation">
     Schwache Referenzen verhindern nicht die Deallokation ihrer Ziele. Hier ein ausführliches Beispiel:
     ```rust
-    use std::rc::{Rc, Weak};
-    use std::cell::RefCell;
+          use std::rc::{Rc, Weak};
+          use std::cell::RefCell;
 
-    // Parent-child tree structure avoiding reference cycles
-    struct Node {
-        next: Option<Rc<Node>>,
-        parent: RefCell<Weak<Node>>,  // Weak to prevent cycles
-        value: i32,
-    }
+          // Parent-child tree structure avoiding reference cycles
+          struct Node {
+              next: Option<Rc<Node>>,
+              parent: RefCell<Weak<Node>>,  // Weak to prevent cycles
+              value: i32,
+          }
 
-    impl Node {
-        fn new(value: i32) -> Rc<Node> {
-            Rc::new(Node {
-                next: None,
-                parent: RefCell::new(Weak::new()),
-                value,
-            })
-        }
+          impl Node {
+              fn new(value: i32) -> Rc<Node> {
+                  Rc::new(Node {
+                      next: None,
+                      parent: RefCell::new(Weak::new()),
+                      value,
+                  })
+              }
 
-        fn set_parent(&self, parent: &Rc<Node>) {
-            *self.parent.borrow_mut() = Rc::downgrade(parent);
-        }
+              fn set_parent(&self, parent: &Rc<Node>) {
+                  *self.parent.borrow_mut() = Rc::downgrade(parent);
+              }
 
-        fn get_parent(&self) -> Option<Rc<Node>> {
-            self.parent.borrow().upgrade()
-        }
-    }
+              fn get_parent(&self) -> Option<Rc<Node>> {
+                  self.parent.borrow().upgrade()
+              }
+          }
     ```
     Typische Anwendungsfälle:
     1. Cache‑ähnliche Strukturen, bei denen Einträge gelöscht werden können
@@ -1038,18 +1038,18 @@ Egal, ob du ein erfahrener Rustacean bist oder gerade erst mit Speicherverwaltun
   <div className="question">
     Was passiert mit dem Dateihandle in diesem RAII‑Beispiel?
     ```rust
-    use std::fs::File;
+          use std::fs::File;
       
-    struct FileWrapper {
-        file: File,
-    }
+          struct FileWrapper {
+              file: File,
+          }
       
-    fn main() {
-        let file = File::create("test.txt").unwrap();
-        let wrapper = FileWrapper { file };
-        // ... use wrapper ...
-        // No Drop implementation
-    }
+          fn main() {
+              let file = File::create("test.txt").unwrap();
+              let wrapper = FileWrapper { file };
+              // ... use wrapper ...
+              // No Drop implementation
+          }
     ```
   </div>
   </slot>
@@ -1059,34 +1059,34 @@ Egal, ob du ein erfahrener Rustacean bist oder gerade erst mit Speicherverwaltun
 
     Man implementiert `Drop` nur, wenn der Wrapper selbst zusätzliches Aufräumverhalten hat, das über das Freigeben seiner Felder hinausgeht:
     ```rust
-    use std::fs::File;
-    use std::io::{self, Write};
+          use std::fs::File;
+          use std::io::{self, Write};
 
-    struct FileWrapper {
-        file: File,
-        path: String,
-    }
+          struct FileWrapper {
+              file: File,
+              path: String,
+          }
 
-    impl FileWrapper {
-        fn new(path: &str) -> io::Result<FileWrapper> {
-            Ok(FileWrapper {
-                file: File::create(path)?,
-                path: path.to_string(),
-            })
-        }
+          impl FileWrapper {
+              fn new(path: &str) -> io::Result<FileWrapper> {
+                  Ok(FileWrapper {
+                      file: File::create(path)?,
+                      path: path.to_string(),
+                  })
+              }
 
-        fn write(&mut self, content: &str) -> io::Result<()> {
-            self.file.write_all(content.as_bytes())
-        }
-    }
+              fn write(&mut self, content: &str) -> io::Result<()> {
+                  self.file.write_all(content.as_bytes())
+              }
+          }
 
-    impl Drop for FileWrapper {
-        fn drop(&mut self) {
-            // Ensure file is properly closed
-            // Could also do cleanup like deletion
-            println!("Closing file: {}", self.path);
-        }
-    }
+          impl Drop for FileWrapper {
+              fn drop(&mut self) {
+                  // Ensure file is properly closed
+                  // Could also do cleanup like deletion
+                  println!("Closing file: {}", self.path);
+              }
+          }
     ```
     RAII‑Muster:
     1. Konstruktor erwirbt Ressourcen
@@ -1121,21 +1121,21 @@ Egal, ob du ein erfahrener Rustacean bist oder gerade erst mit Speicherverwaltun
   <div className="question">
     Was passiert, wenn wir diese Philosophy‑Struktur klonen?
     ```rust
-    #[derive(Clone)]
-    struct Philosophy {
-        school: String,
-        founder: String,
-    }
+          #[derive(Clone)]
+          struct Philosophy {
+              school: String,
+              founder: String,
+          }
 
-    fn main() {
-        let stoicism = Philosophy {
-            school: String::from("Stoicism"),
-            founder: String::from("Zeno of Citium")
-        };
-        let new_school = stoicism.clone();
-        println!("{} - {}", 
-            stoicism.school, new_school.school);
-    }
+          fn main() {
+              let stoicism = Philosophy {
+                  school: String::from("Stoicism"),
+                  founder: String::from("Zeno of Citium")
+              };
+              let new_school = stoicism.clone();
+              println!("{} - {}", 
+                  stoicism.school, new_school.school);
+          }
     ```
   </div>
   </slot>
@@ -1143,35 +1143,35 @@ Egal, ob du ein erfahrener Rustacean bist oder gerade erst mit Speicherverwaltun
   <div className="explanation">
     Lassen Sie uns Copy vs Clone im Detail verstehen:
     ```rust
-    // Types that can be Copy
-    #[derive(Copy, Clone)]
-    struct Point {
-        x: i32,
-        y: i32,
-    }
+          // Types that can be Copy
+          #[derive(Copy, Clone)]
+          struct Point {
+              x: i32,
+              y: i32,
+          }
 
-    // Types that can only be Clone
-    #[derive(Clone)]
-    struct ComplexData {
-        name: String,    // String can't be Copy
-        points: Vec<i32> // Vec can't be Copy
-    }
+          // Types that can only be Clone
+          #[derive(Clone)]
+          struct ComplexData {
+              name: String,    // String can't be Copy
+              points: Vec<i32> // Vec can't be Copy
+          }
 
-    // Manual implementation example
-    #[derive(Debug)]
-    struct Custom {
-        data: Vec<i32>,
-        identifier: u32,
-    }
+          // Manual implementation example
+          #[derive(Debug)]
+          struct Custom {
+              data: Vec<i32>,
+              identifier: u32,
+          }
 
-    impl Clone for Custom {
-        fn clone(&self) -> Self {
-            Custom {
-                data: self.data.clone(),
-                identifier: self.identifier,  // Copy type
-            }
-        }
-    }
+          impl Clone for Custom {
+              fn clone(&self) -> Self {
+                  Custom {
+                      data: self.data.clone(),
+                      identifier: self.identifier,  // Copy type
+                  }
+              }
+          }
     ```
     Key differences:
     1. Copy:
@@ -1210,11 +1210,11 @@ Egal, ob du ein erfahrener Rustacean bist oder gerade erst mit Speicherverwaltun
   <div className="question">
     Auf einem typischen aktuellen 64‑Bit‑Rust‑Ziel, wie groß ist diese Struktur?
     ```rust
-    struct Metadata {
-        id: u32,        // How many bytes?
-        name: String,   // How many bytes?
-        active: bool    // How many bytes + padding?
-    }
+          struct Metadata {
+              id: u32,        // How many bytes?
+              name: String,   // How many bytes?
+              active: bool    // How many bytes + padding?
+          }
     ```
   </div>
   </slot>
@@ -1222,28 +1222,28 @@ Egal, ob du ein erfahrener Rustacean bist oder gerade erst mit Speicherverwaltun
   <div className="explanation">
     Lassen Sie uns das Speicherlayout der Struktur und die Optimierung aufschlüsseln:
     ```rust
-    // Typical current 64-bit Rust layout: 32 bytes
-    struct Metadata {
-        id: u32,       // 4 bytes
-        name: String,  // 24 bytes on 64-bit systems
-        active: bool   // 1 byte + padding/alignment
-    }
+          // Typical current 64-bit Rust layout: 32 bytes
+          struct Metadata {
+              id: u32,       // 4 bytes
+              name: String,  // 24 bytes on 64-bit systems
+              active: bool   // 1 byte + padding/alignment
+          }
 
-    // Reordering fields may reduce padding for repr(C) structs,
-    // but default Rust layout is not a stable ABI guarantee.
-    struct OptimizedMetadata {
-        name: String,   // 24 bytes
-        id: u32,       // 4 bytes
-        active: bool    // 1 byte + 3 padding
-    }
+          // Reordering fields may reduce padding for repr(C) structs,
+          // but default Rust layout is not a stable ABI guarantee.
+          struct OptimizedMetadata {
+              name: String,   // 24 bytes
+              id: u32,       // 4 bytes
+              active: bool    // 1 byte + 3 padding
+          }
 
-    // Further optimization with packing
-    #[repr(packed)]
-    struct PackedMetadata {
-        id: u32,
-        active: bool,
-        name: String,
-    }
+          // Further optimization with packing
+          #[repr(packed)]
+          struct PackedMetadata {
+              id: u32,
+              active: bool,
+              name: String,
+          }
     ```
     Speicherlayout‑Überlegungen:
     1. Ausrichtungsanforderungen:
@@ -1282,19 +1282,19 @@ Egal, ob du ein erfahrener Rustacean bist oder gerade erst mit Speicherverwaltun
   <div className="question">
     Wie vergleicht sich die Performance dieser beiden Implementierungen?
     ```rust
-    // Implementation A: Iterator
-    fn sum_iterator(v: &[i32]) -> i32 {
-        v.iter().fold(0, |acc, &x| acc + x)
-    }
+          // Implementation A: Iterator
+          fn sum_iterator(v: &[i32]) -> i32 {
+              v.iter().fold(0, |acc, &x| acc + x)
+          }
 
-    // Implementation B: Raw loop
-    fn sum_loop(v: &[i32]) -> i32 {
-        let mut sum = 0;
-        for i in 0..v.len() {
-            sum += v[i];
-        }
-        sum
-    }
+          // Implementation B: Raw loop
+          fn sum_loop(v: &[i32]) -> i32 {
+              let mut sum = 0;
+              for i in 0..v.len() {
+                  sum += v[i];
+              }
+              sum
+          }
     ```
   </div>
   </slot>
@@ -1302,38 +1302,38 @@ Egal, ob du ein erfahrener Rustacean bist oder gerade erst mit Speicherverwaltun
   <div className="explanation">
     Rusts Null‑Kosten‑Abstraktionen werden zu äquivalentem, effizientem Code kompiliert:
     ```rust
-    use std::ops::Range;
+          use std::ops::Range;
 
-    // High-level abstraction
-    trait ZeroCost {
-        fn process(&self) -> u32;
-    }
+          // High-level abstraction
+          trait ZeroCost {
+              fn process(&self) -> u32;
+          }
 
-    impl ZeroCost for Range<u32> {
-        fn process(&self) -> u32 {
-            self.fold(0, |acc, x| acc + x)
-        }
-    }
+          impl ZeroCost for Range<u32> {
+              fn process(&self) -> u32 {
+                  self.fold(0, |acc, x| acc + x)
+              }
+          }
 
-    // Compiles to essentially the same code as:
-    fn manual_process(range: Range<u32>) -> u32 {
-        let mut sum = 0;
-        let mut i = range.start;
-        while i < range.end {
-            sum += i;
-            i += 1;
-        }
-        sum
-    }
+          // Compiles to essentially the same code as:
+          fn manual_process(range: Range<u32>) -> u32 {
+              let mut sum = 0;
+              let mut i = range.start;
+              while i < range.end {
+                  sum += i;
+                  i += 1;
+              }
+              sum
+          }
 
-    // Even more abstractions, still zero-cost
-    fn complex_processing<T>(data: &[T]) -> u32 
-    where T: AsRef<str> {
-        data.iter()
-            .map(|s| s.as_ref().len())
-            .filter(|&n| n > 3)
-            .fold(0, |acc, n| acc + n as u32)
-    }
+          // Even more abstractions, still zero-cost
+          fn complex_processing<T>(data: &[T]) -> u32 
+          where T: AsRef<str> {
+              data.iter()
+                  .map(|s| s.as_ref().len())
+                  .filter(|&n| n > 3)
+                  .fold(0, |acc, n| acc + n as u32)
+          }
     ```
     Schlüsselprinzipien:
     1. Was du nicht nutzt, zahlst du nicht

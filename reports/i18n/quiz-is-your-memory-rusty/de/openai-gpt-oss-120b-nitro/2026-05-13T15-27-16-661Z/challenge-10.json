@@ -1,0 +1,48 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Cell vs RefCell",
+  "translatedTitle": "Cell vs RefCell",
+  "translation": {
+    "title": "Cell vs RefCell",
+    "group": "Mutabilität",
+    "options": [
+      {
+        "text": "Gibt aus: 42, 43"
+      },
+      {
+        "text": "Gibt aus: 43, 43",
+        "hint": "Cell::get() gibt den Wert zum Zeitpunkt des Aufrufs zurück"
+      },
+      {
+        "text": "Kompilierungsfehler",
+        "hint": "Cell ist genau für diesen Anwendungsfall konzipiert"
+      },
+      {
+        "text": "Laufzeitpanik",
+        "hint": "Cell-Operationen sind für Copy‑Typen immer sicher"
+      }
+    ],
+    "questionProse": [
+      "Was wird dieser Code ausgeben?"
+    ],
+    "explanationProse": [
+      "Cell und RefCell dienen unterschiedlichen Zwecken für innere Mutabilität:",
+      "Schlüsselunterschiede:\n      1. Cell:\n         - Funktioniert am besten mit Copy‑Typen\n         - Keine Borrowing‑API\n         - Kopiert oder verschiebt immer Werte\n      \n      2. RefCell:\n         - Funktioniert mit jedem Typ\n         - Hat eine Borrowing‑API\n         - Laufzeit‑Borrow‑Prüfung\n\n      Best Practices:\n      1. Verwende Cell für einfache Copy‑Typen (Zahlen, bool, usw.)\n      2. Verwende RefCell, wenn du den Inhalt ausleihen musst\n      3. Halte Mutationen über Cell/RefCell minimal\n      4. Dokumentiere, warum innere Mutabilität nötig ist"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Cell vs RefCell\",\n  \"group\": \"Mutabilität\",\n  \"options\": [\n    {\n      \"text\": \"Gibt aus: 42, 43\"\n    },\n    {\n      \"text\": \"Gibt aus: 43, 43\",\n      \"hint\": \"Cell::get() gibt den Wert zum Zeitpunkt des Aufrufs zurück\"\n    },\n    {\n      \"text\": \"Kompilierungsfehler\",\n      \"hint\": \"Cell ist genau für diesen Anwendungsfall konzipiert\"\n    },\n    {\n      \"text\": \"Laufzeitpanik\",\n      \"hint\": \"Cell-Operationen sind für Copy‑Typen immer sicher\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was wird dieser Code ausgeben?\"\n  ],\n  \"explanationProse\": [\n    \"Cell und RefCell dienen unterschiedlichen Zwecken für innere Mutabilität:\",\n    \"Schlüsselunterschiede:\\n      1. Cell:\\n         - Funktioniert am besten mit Copy‑Typen\\n         - Keine Borrowing‑API\\n         - Kopiert oder verschiebt immer Werte\\n      \\n      2. RefCell:\\n         - Funktioniert mit jedem Typ\\n         - Hat eine Borrowing‑API\\n         - Laufzeit‑Borrow‑Prüfung\\n\\n      Best Practices:\\n      1. Verwende Cell für einfache Copy‑Typen (Zahlen, bool, usw.)\\n      2. Verwende RefCell, wenn du den Inhalt ausleihen musst\\n      3. Halte Mutationen über Cell/RefCell minimal\\n      4. Dokumentiere, warum innere Mutabilität nötig ist\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 922,
+    "outputTokens": 986,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2455
+  },
+  "cost": {
+    "inputUsd": 0.000035958,
+    "outputUsd": 0.00017748,
+    "totalUsd": 0.00021343799999999998,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

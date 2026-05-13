@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-is-your-memory-rusty
+- Locale: de
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2024-12-28--quiz-is-your-memory-rusty/de/index.mdx
+- Validation: passed
+- Runtime seconds: 41.64
+- Input tokens: 19147
+- Output tokens: 18737
+- Thinking tokens: unknown
+- Cached input tokens: 2176
+- Cache write tokens: 0
+- Estimated cost: $0.004119
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 draft: false
@@ -1358,3 +1376,4 @@ Danke, dass du am Quiz teilgenommen hast! Wenn dir das Testen deines Rust‑Wiss
 - [Rust Book – Kapitel 4: Ownership](https://doc.rust-lang.org/book/ch04-00-understanding-ownership.html)
 - [Rust By Example – Speicherverwaltung](https://doc.rust-lang.org/rust-by-example/scope.html)
 - [Rust Reference – Speicher‑Modell](https://doc.rust-lang.org/reference/memory-model.html)
+````

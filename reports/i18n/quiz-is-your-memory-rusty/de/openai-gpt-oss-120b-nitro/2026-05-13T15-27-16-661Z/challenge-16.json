@@ -1,0 +1,48 @@
+{
+  "index": 15,
+  "attempt": 1,
+  "originalTitle": "Copy vs Clone",
+  "translatedTitle": "Kopieren vs Klonen",
+  "translation": {
+    "title": "Kopieren vs Klonen",
+    "group": "Entwurfsmuster",
+    "options": [
+      {
+        "text": "Kompilierungsfehler",
+        "hint": "Das derive-Attribut ist korrekt verwendet"
+      },
+      {
+        "text": "Tiefe Kopie erstellt"
+      },
+      {
+        "text": "Flache Kopie erstellt",
+        "hint": "Clone erstellt eine tiefe Kopie von String-Feldern"
+      },
+      {
+        "text": "Move-Semantik angewendet",
+        "hint": "Clone erstellt explizit eine neue Kopie"
+      }
+    ],
+    "questionProse": [
+      "Was passiert, wenn wir diese Philosophy‑Struktur klonen?"
+    ],
+    "explanationProse": [
+      "Lassen Sie uns Copy vs Clone im Detail verstehen:",
+      "Key differences:\n      1. Copy:\n         - Implizite, bitweise Kopie\n         - Muss Copy‑sicher sein (keine Heap‑Allokationen)\n         - Typischerweise für kleine, nur‑Stack‑Typen\n         \n      2. Clone:\n         - Explizit, potenziell tiefe Kopie\n         - Kann Heap‑Allokationen handhaben\n         - Flexibler, aber potenziell teuer\n\n      Best practices:\n      1. Implementiere Copy für kleine, nur‑Stack‑Typen\n      2. Verwende Clone für Typen mit eigenen Ressourcen\n      3. Dokumentiere die Performance‑Implikationen von Clone\n      4. Ziehe benutzerdefinierte Clone‑Implementierungen zur Optimierung in Betracht\n      5. Sei vorsichtig bei automatischer Derivation"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Kopieren vs Klonen\",\n  \"group\": \"Entwurfsmuster\",\n  \"options\": [\n    {\n      \"text\": \"Kompilierungsfehler\",\n      \"hint\": \"Das derive-Attribut ist korrekt verwendet\"\n    },\n    {\n      \"text\": \"Tiefe Kopie erstellt\"\n    },\n    {\n      \"text\": \"Flache Kopie erstellt\",\n      \"hint\": \"Clone erstellt eine tiefe Kopie von String-Feldern\"\n    },\n    {\n      \"text\": \"Move-Semantik angewendet\",\n      \"hint\": \"Clone erstellt explizit eine neue Kopie\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was passiert, wenn wir diese Philosophy‑Struktur klonen?\"\n  ],\n  \"explanationProse\": [\n    \"Lassen Sie uns Copy vs Clone im Detail verstehen:\",\n    \"Key differences:\\n      1. Copy:\\n         - Implizite, bitweise Kopie\\n         - Muss Copy‑sicher sein (keine Heap‑Allokationen)\\n         - Typischerweise für kleine, nur‑Stack‑Typen\\n         \\n      2. Clone:\\n         - Explizit, potenziell tiefe Kopie\\n         - Kann Heap‑Allokationen handhaben\\n         - Flexibler, aber potenziell teuer\\n\\n      Best practices:\\n      1. Implementiere Copy für kleine, nur‑Stack‑Typen\\n      2. Verwende Clone für Typen mit eigenen Ressourcen\\n      3. Dokumentiere die Performance‑Implikationen von Clone\\n      4. Ziehe benutzerdefinierte Clone‑Implementierungen zur Optimierung in Betracht\\n      5. Sei vorsichtig bei automatischer Derivation\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 914,
+    "outputTokens": 999,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2635
+  },
+  "cost": {
+    "inputUsd": 0.000035646,
+    "outputUsd": 0.00017982000000000002,
+    "totalUsd": 0.00021546600000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

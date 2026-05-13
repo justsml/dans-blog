@@ -1,0 +1,49 @@
+{
+  "index": 14,
+  "attempt": 1,
+  "originalTitle": "RAII Pattern",
+  "translatedTitle": "RAII-Muster",
+  "translation": {
+    "title": "RAII-Muster",
+    "group": "Speichermuster",
+    "options": [
+      {
+        "text": "Ressource wird nach dem Gültigkeitsbereich freigegeben",
+        "hint": "Das `File`-Feld hat seine eigene `Drop`-Implementierung."
+      },
+      {
+        "text": "Ressourcenleck",
+        "hint": "Der Wrapper hat kein benutzerdefiniertes `Drop`, aber seine Felder werden trotzdem freigegeben."
+      },
+      {
+        "text": "Kompilierungsfehler",
+        "hint": "Der Code kompiliert erfolgreich"
+      },
+      {
+        "text": "Laufzeitfehler",
+        "hint": "Das Problem betrifft die Ressourcenbereinigung"
+      }
+    ],
+    "questionProse": [
+      "Was passiert mit dem Dateihandle in diesem RAII‑Beispiel?"
+    ],
+    "explanationProse": [
+      "RAII in Rust sorgt dafür, dass Ressourcen korrekt verwaltet werden. In diesem Beispiel benötigt `FileWrapper` keine benutzerdefinierte `Drop`‑Implementierung, damit das Dateihandle geschlossen wird: sein `File`‑Feld wird automatisch freigegeben, wenn der Wrapper den Gültigkeitsbereich verlässt.\n\n      Man implementiert `Drop` nur, wenn der Wrapper selbst zusätzliches Aufräumverhalten hat, das über das Freigeben seiner Felder hinausgeht:",
+      "RAII‑Muster:\n      1. Konstruktor erwirbt Ressourcen\n      2. Methoden nutzen Ressourcen sicher\n      3. Felder werden automatisch freigegeben, wenn der Besitzer den Gültigkeitsbereich verlässt\n      4. Benutzerdefiniertes `Drop` fügt bei Bedarf zusätzliche Aufräumarbeiten hinzu\n      5. `?` für Fehlerweiterleitung verwenden\n\n      Best practices:\n      1. Auf die `Drop`‑Implementierungen der Standardbibliothek vertrauen, wenn sie die Ressource bereits modellieren\n      2. Ressourcenverwaltung einfach und klar halten\n      3. Standardbibliothek‑Typen verwenden, wann immer möglich\n      4. Aufräumverhalten dokumentieren\n      5. Erwägen, Guard‑Muster für scoped Operationen zu nutzen"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"RAII-Muster\",\n  \"group\": \"Speichermuster\",\n  \"options\": [\n    {\n      \"text\": \"Ressource wird nach dem Gültigkeitsbereich freigegeben\",\n      \"hint\": \"Das `File`-Feld hat seine eigene `Drop`-Implementierung.\"\n    },\n    {\n      \"text\": \"Ressourcenleck\",\n      \"hint\": \"Der Wrapper hat kein benutzerdefiniertes `Drop`, aber seine Felder werden trotzdem freigegeben.\"\n    },\n    {\n      \"text\": \"Kompilierungsfehler\",\n      \"hint\": \"Der Code kompiliert erfolgreich\"\n    },\n    {\n      \"text\": \"Laufzeitfehler\",\n      \"hint\": \"Das Problem betrifft die Ressourcenbereinigung\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was passiert mit dem Dateihandle in diesem RAII‑Beispiel?\"\n  ],\n  \"explanationProse\": [\n    \"RAII in Rust sorgt dafür, dass Ressourcen korrekt verwaltet werden. In diesem Beispiel benötigt `FileWrapper` keine benutzerdefinierte `Drop`‑Implementierung, damit das Dateihandle geschlossen wird: sein `File`‑Feld wird automatisch freigegeben, wenn der Wrapper den Gültigkeitsbereich verlässt.\\n\\n      Man implementiert `Drop` nur, wenn der Wrapper selbst zusätzliches Aufräumverhalten hat, das über das Freigeben seiner Felder hinausgeht:\",\n    \"RAII‑Muster:\\n      1. Konstruktor erwirbt Ressourcen\\n      2. Methoden nutzen Ressourcen sicher\\n      3. Felder werden automatisch freigegeben, wenn der Besitzer den Gültigkeitsbereich verlässt\\n      4. Benutzerdefiniertes `Drop` fügt bei Bedarf zusätzliche Aufräumarbeiten hinzu\\n      5. `?` für Fehlerweiterleitung verwenden\\n\\n      Best practices:\\n      1. Auf die `Drop`‑Implementierungen der Standardbibliothek vertrauen, wenn sie die Ressource bereits modellieren\\n      2. Ressourcenverwaltung einfach und klar halten\\n      3. Standardbibliothek‑Typen verwenden, wann immer möglich\\n      4. Aufräumverhalten dokumentieren\\n      5. Erwägen, Guard‑Muster für scoped Operationen zu nutzen\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 989,
+    "outputTokens": 1392,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 4008
+  },
+  "cost": {
+    "inputUsd": 0.000038571,
+    "outputUsd": 0.00025056,
+    "totalUsd": 0.000289131,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

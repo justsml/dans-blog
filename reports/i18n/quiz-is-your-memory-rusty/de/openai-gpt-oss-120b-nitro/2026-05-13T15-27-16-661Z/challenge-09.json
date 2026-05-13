@@ -1,0 +1,48 @@
+{
+  "index": 8,
+  "attempt": 1,
+  "originalTitle": "RefCell Behavior",
+  "translatedTitle": "RefCell-Verhalten",
+  "translation": {
+    "title": "RefCell-Verhalten",
+    "group": "RefCells",
+    "options": [
+      {
+        "text": "Gibt aus: 42",
+        "hint": "Können wir gleichzeitig zwei mutable Borrows haben?"
+      },
+      {
+        "text": "Laufzeit-Panik: RefCell bereits geborgt"
+      },
+      {
+        "text": "Kompilierungsfehler",
+        "hint": "RefCell verlagert Borrow‑Prüfungen zur Laufzeit"
+      },
+      {
+        "text": "Laufzeit-Panik: andere Meldung",
+        "hint": "Der Fehler erwähnt das Borrowing explizit"
+      }
+    ],
+    "questionProse": [
+      "Was passiert, wenn dieser Code ausgeführt wird?"
+    ],
+    "explanationProse": [
+      "RefCell bietet innere Mutabilität, erzwingt aber weiterhin Rusts Borrowing‑Regeln zur Laufzeit:",
+      "Wichtige Konzepte:\n      1. RefCell verlagert Borrow‑Prüfungen zur Laufzeit\n      2. Kann Panics auslösen, wenn Regeln verletzt werden\n      3. Nützlich für das Muster der inneren Mutabilität\n\n      Übliche Anwendungsfälle:\n      - Mock‑Objekte in Tests\n      - Implementierung selbstreferenzieller Strukturen\n      - Wenn du Daten hinter einer geteilten Referenz mutieren musst\n      \n      Best Practices:\n      1. Bevorzuge Borrowing zur Compile‑Zeit, wenn möglich\n      2. Halte RefCell‑Borrows in engen Geltungsbereichen\n      3. Erwäge den Einsatz von drop(), um Borrows explizit zu beenden\n      4. Verwende RefCell, wenn du innere Mutabilität brauchst"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"RefCell-Verhalten\",\n  \"group\": \"RefCells\",\n  \"options\": [\n    {\n      \"text\": \"Gibt aus: 42\",\n      \"hint\": \"Können wir gleichzeitig zwei mutable Borrows haben?\"\n    },\n    {\n      \"text\": \"Laufzeit-Panik: RefCell bereits geborgt\"\n    },\n    {\n      \"text\": \"Kompilierungsfehler\",\n      \"hint\": \"RefCell verlagert Borrow‑Prüfungen zur Laufzeit\"\n    },\n    {\n      \"text\": \"Laufzeit-Panik: andere Meldung\",\n      \"hint\": \"Der Fehler erwähnt das Borrowing explizit\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was passiert, wenn dieser Code ausgeführt wird?\"\n  ],\n  \"explanationProse\": [\n    \"RefCell bietet innere Mutabilität, erzwingt aber weiterhin Rusts Borrowing‑Regeln zur Laufzeit:\",\n    \"Wichtige Konzepte:\\n      1. RefCell verlagert Borrow‑Prüfungen zur Laufzeit\\n      2. Kann Panics auslösen, wenn Regeln verletzt werden\\n      3. Nützlich für das Muster der inneren Mutabilität\\n\\n      Übliche Anwendungsfälle:\\n      - Mock‑Objekte in Tests\\n      - Implementierung selbstreferenzieller Strukturen\\n      - Wenn du Daten hinter einer geteilten Referenz mutieren musst\\n      \\n      Best Practices:\\n      1. Bevorzuge Borrowing zur Compile‑Zeit, wenn möglich\\n      2. Halte RefCell‑Borrows in engen Geltungsbereichen\\n      3. Erwäge den Einsatz von drop(), um Borrows explizit zu beenden\\n      4. Verwende RefCell, wenn du innere Mutabilität brauchst\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 927,
+    "outputTokens": 1186,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 3585
+  },
+  "cost": {
+    "inputUsd": 0.000036153000000000004,
+    "outputUsd": 0.00021348,
+    "totalUsd": 0.000249633,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
