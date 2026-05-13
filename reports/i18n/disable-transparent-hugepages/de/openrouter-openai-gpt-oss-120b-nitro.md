@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: disable-transparent-hugepages
+- Locale: de
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2015-11-22--disable-transparent-hugepages/de/index.mdx
+- Validation: passed
+- Runtime seconds: 0.90
+- Input tokens: 814
+- Output tokens: 242
+- Thinking tokens: unknown
+- Cached input tokens: 256
+- Cache write tokens: 0
+- Estimated cost: $0.000075
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 draft: true
@@ -32,3 +50,4 @@ sudo update-rc.d disable-transparent-hugepages defaults
 #### References
 
 1.  [https://docs.mongodb.org/v3.0/tutorial/transparent-huge-pages/](https://docs.mongodb.org/v3.0/tutorial/transparent-huge-pages/)
+````
