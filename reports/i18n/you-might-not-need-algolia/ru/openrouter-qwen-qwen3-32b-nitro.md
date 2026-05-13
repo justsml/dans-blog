@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: you-might-not-need-algolia
+- Locale: ru
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2025-03-01--you-might-not-need-algolia/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 21.68
+- Input tokens: 5613
+- Output tokens: 5674
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.001811
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: ''
 social_image: ../desktop-social.webp
@@ -98,3 +116,4 @@ Pagefind — это не миниатюрный Algolia в плаще. Это д
 Если нет — определите, что делает индекс живым: инвентарь, разрешения, персонализация, аналитика, ранжирование или частота записи. Затем выберите базу данных или сервис поиска, который явно отвечает за эту задачу.  
 
 Algolia здесь не злодей. Злодей — это внедрение второй системы до того, как будет доказано, что первый артефакт был недостаточным.
+````
