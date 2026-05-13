@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: love-computer-languages
+- Locale: fr
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2015-06-12--love-computer-languages/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 18.20
+- Input tokens: 7713
+- Output tokens: 7923
+- Thinking tokens: unknown
+- Cached input tokens: 1024
+- Cache write tokens: 0
+- Estimated cost: $0.002519
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: ''
 date: '2015-06-12'
@@ -188,3 +206,4 @@ x, y, r, g, b = pixel(10, 20, 255, 255, 255)
   - Vous n'utiliserez probablement jamais ce langage pour quoi que ce soit. Aucun projet. Cependant, il influencera plus rapidement votre style de codage que d'autres langages fonctionnels... Cela devrait être dans la liste des avantages)
 
 #### _Travail en cours (mis à jour en décembre 2015)_
+````
