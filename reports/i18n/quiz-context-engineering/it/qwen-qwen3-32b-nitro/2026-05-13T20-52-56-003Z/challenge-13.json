@@ -1,0 +1,45 @@
+{
+  "index": 12,
+  "attempt": 1,
+  "originalTitle": "Grounding vs. Hallucination",
+  "translatedTitle": "Grounding vs. Allucinazione",
+  "translation": {
+    "title": "Grounding vs. Allucinazione",
+    "group": "Avanzato",
+    "options": [
+      {
+        "text": "Inserire nel prompt del sistema l'istruzione 'non allucinare'"
+      },
+      {
+        "text": "Utilizzare una temperatura più alta per generare risposte più confidenti"
+      },
+      {
+        "text": "Fornire documenti sorgente recuperati e istruire il modello a citarli"
+      },
+      {
+        "text": "Utilizzare un modello più grande — le allucinazioni avvengono solo nei modelli più piccoli"
+      }
+    ],
+    "questionProse": [
+      "La tecnica più efficace per ridurre le allucinazioni in un sistema AI produttivo è:"
+    ],
+    "explanationProse": [
+      "Istruire un modello a non allucinare non blocca le allucinazioni — il modello non ha un segnale introspettivo affidabile per \"sto inventando qualcosa.\" Significa solo che il modello ti dirà con sicurezza di non inventare mentre in realtà lo fa.\n\n    Cosa funziona davvero: **grounding**. Fornisci al modello le informazioni necessarie per rispondere correttamente e limita l'uso a quelle informazioni:",
+      "Poi valida l'output: verifica che le affermazioni nella risposta appaiano nei documenti recuperati. Questo è il controllo di grounding per citazioni — vedi la discussione sugli strumenti di valutazione RAG per l'implementazione.\n\n    I modelli più grandi allucinano meno in media, ma tutti i modelli allucinano. Il grounding è la strategia di mitigazione, non la dimensione del modello."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Grounding vs. Allucinazione\",\n  \"group\": \"Avanzato\",\n  \"options\": [\n    {\n      \"text\": \"Inserire nel prompt del sistema l'istruzione 'non allucinare'\"\n    },\n    {\n      \"text\": \"Utilizzare una temperatura più alta per generare risposte più confidenti\"\n    },\n    {\n      \"text\": \"Fornire documenti sorgente recuperati e istruire il modello a citarli\"\n    },\n    {\n      \"text\": \"Utilizzare un modello più grande — le allucinazioni avvengono solo nei modelli più piccoli\"\n    }\n  ],\n  \"questionProse\": [\n    \"La tecnica più efficace per ridurre le allucinazioni in un sistema AI produttivo è:\"\n  ],\n  \"explanationProse\": [\n    \"Istruire un modello a non allucinare non blocca le allucinazioni — il modello non ha un segnale introspettivo affidabile per \\\"sto inventando qualcosa.\\\" Significa solo che il modello ti dirà con sicurezza di non inventare mentre in realtà lo fa.\\n\\n    Cosa funziona davvero: **grounding**. Fornisci al modello le informazioni necessarie per rispondere correttamente e limita l'uso a quelle informazioni:\",\n    \"Poi valida l'output: verifica che le affermazioni nella risposta appaiano nei documenti recuperati. Questo è il controllo di grounding per citazioni — vedi la discussione sugli strumenti di valutazione RAG per l'implementazione.\\n\\n    I modelli più grandi allucinano meno in media, ma tutti i modelli allucinano. Il grounding è la strategia di mitigazione, non la dimensione del modello.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 881,
+    "outputTokens": 994,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2007
+  },
+  "cost": {
+    "inputUsd": 0.00007048,
+    "outputUsd": 0.00023856000000000002,
+    "totalUsd": 0.00030904,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

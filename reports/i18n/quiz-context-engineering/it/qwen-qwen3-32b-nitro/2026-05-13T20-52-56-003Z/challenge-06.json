@@ -1,0 +1,44 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Hybrid Search",
+  "translatedTitle": "Ricerca ibrida",
+  "translation": {
+    "title": "Ricerca ibrida",
+    "group": "Recupero",
+    "options": [
+      {
+        "text": "Eseguire la stessa query due volte per ridondanza"
+      },
+      {
+        "text": "Utilizzare due modelli di embedding diversi sullo stesso corpus"
+      },
+      {
+        "text": "Combinare la ricerca vettoriale con la ricerca per parole chiave per un recupero migliore"
+      },
+      {
+        "text": "Cercare su più database vettoriali contemporaneamente"
+      }
+    ],
+    "questionProse": [
+      "Nei sistemi RAG, la \"ricerca ibrida\" si riferisce a:"
+    ],
+    "explanationProse": [
+      "La ricerca ibrida combina **ricerca vettoriale** (similarità semantica tramite embeddings) e **ricerca per parole chiave** (BM25 / ricerca testuale completa) perché falliscono in modi complementari:\n\n    - La ricerca vettoriale ha difficoltà con i termini esatti: nomi di prodotti, codici di errore, numeri di modello, identificatori tecnici\n    - La ricerca per parole chiave ha difficoltà con le parafrasi: \"come annullare\" vs. \"terminare abbonamento\"\n\n    I risultati di entrambi vengono fusi utilizzando l'**Fusione Reciproca del Rango (RRF)** — un algoritmo di ordinamento che combina le posizioni da più liste ordinate senza richiedere punteggi normalizzati.\n\n    Entrambi sono disponibili in Postgres con `pgvector` + `tsvector`. Potresti non aver bisogno di un servizio di ricerca separato."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Ricerca ibrida\",\n  \"group\": \"Recupero\",\n  \"options\": [\n    {\n      \"text\": \"Eseguire la stessa query due volte per ridondanza\"\n    },\n    {\n      \"text\": \"Utilizzare due modelli di embedding diversi sullo stesso corpus\"\n    },\n    {\n      \"text\": \"Combinare la ricerca vettoriale con la ricerca per parole chiave per un recupero migliore\"\n    },\n    {\n      \"text\": \"Cercare su più database vettoriali contemporaneamente\"\n    }\n  ],\n  \"questionProse\": [\n    \"Nei sistemi RAG, la \\\"ricerca ibrida\\\" si riferisce a:\"\n  ],\n  \"explanationProse\": [\n    \"La ricerca ibrida combina **ricerca vettoriale** (similarità semantica tramite embeddings) e **ricerca per parole chiave** (BM25 / ricerca testuale completa) perché falliscono in modi complementari:\\n\\n    - La ricerca vettoriale ha difficoltà con i termini esatti: nomi di prodotti, codici di errore, numeri di modello, identificatori tecnici\\n    - La ricerca per parole chiave ha difficoltà con le parafrasi: \\\"come annullare\\\" vs. \\\"terminare abbonamento\\\"\\n\\n    I risultati di entrambi vengono fusi utilizzando l'**Fusione Reciproca del Rango (RRF)** — un algoritmo di ordinamento che combina le posizioni da più liste ordinate senza richiedere punteggi normalizzati.\\n\\n    Entrambi sono disponibili in Postgres con `pgvector` + `tsvector`. Potresti non aver bisogno di un servizio di ricerca separato.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 835,
+    "outputTokens": 1063,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 2278
+  },
+  "cost": {
+    "inputUsd": 0.0000668,
+    "outputUsd": 0.00025511999999999996,
+    "totalUsd": 0.00032191999999999995,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

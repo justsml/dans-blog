@@ -1,0 +1,44 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Chunking Strategy",
+  "translatedTitle": "Strategia di suddivisione in blocchi",
+  "translation": {
+    "title": "Strategia di suddivisione in blocchi",
+    "group": "Recupero",
+    "options": [
+      {
+        "text": "Utilizza la dimensione di blocco più grande che il tuo contesto permette"
+      },
+      {
+        "text": "Usa sempre 512 token — è una regola"
+      },
+      {
+        "text": "Utilizza blocchi sovrapposti dimensionati in base alla struttura del contenuto"
+      },
+      {
+        "text": "La dimensione del blocco non\""
+      }
+    ],
+    "questionProse": [
+      "Quando si suddividono i documenti per il RAG, qual è il principio più importante?"
+    ],
+    "explanationProse": [
+      "Non esiste una dimensione di blocco universale corretta — dipende dal tuo contenuto. I principi importanti sono:\n\n    1. **Abbinare la struttura del contenuto.** Le pagine FAQ si suddividono bene a livello di domanda e risposta. I documenti legali si suddividono bene a livello di clausola. Il codice si suddivide bene a livello di funzione.\n    2. **Usare l'overlap.** Un blocco da 512 token con 64 token di overlap su entrambi i lati garantisce che le risposte che attraversano un confine vengano comunque recuperate.\n    3. **Misurare.** Crea un insieme di valutazione e testa diverse dimensioni di blocco. La dimensione del blocco è più importante del modello di embedding.\n\n    \"512 token\" è un punto di partenza ragionevole, non una legge."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Strategia di suddivisione in blocchi\",\n  \"group\": \"Recupero\",\n  \"options\": [\n    {\n      \"text\": \"Utilizza la dimensione di blocco più grande che il tuo contesto permette\"\n    },\n    {\n      \"text\": \"Usa sempre 512 token — è una regola\"\n    },\n    {\n      \"text\": \"Utilizza blocchi sovrapposti dimensionati in base alla struttura del contenuto\"\n    },\n    {\n      \"text\": \"La dimensione del blocco non\\\"\"\n    }\n  ],\n  \"questionProse\": [\n    \"Quando si suddividono i documenti per il RAG, qual è il principio più importante?\"\n  ],\n  \"explanationProse\": [\n    \"Non esiste una dimensione di blocco universale corretta — dipende dal tuo contenuto. I principi importanti sono:\\n\\n    1. **Abbinare la struttura del contenuto.** Le pagine FAQ si suddividono bene a livello di domanda e risposta. I documenti legali si suddividono bene a livello di clausola. Il codice si suddivide bene a livello di funzione.\\n    2. **Usare l'overlap.** Un blocco da 512 token con 64 token di overlap su entrambi i lati garantisce che le risposte che attraversano un confine vengano comunque recuperate.\\n    3. **Misurare.** Crea un insieme di valutazione e testa diverse dimensioni di blocco. La dimensione del blocco è più importante del modello di embedding.\\n\\n    \\\"512 token\\\" è un punto di partenza ragionevole, non una legge.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 840,
+    "outputTokens": 1011,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 2313
+  },
+  "cost": {
+    "inputUsd": 0.00006720000000000001,
+    "outputUsd": 0.00024264,
+    "totalUsd": 0.00030984000000000003,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

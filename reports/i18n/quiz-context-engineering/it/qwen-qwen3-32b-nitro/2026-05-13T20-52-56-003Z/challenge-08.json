@@ -1,0 +1,44 @@
+{
+  "index": 7,
+  "attempt": 1,
+  "originalTitle": "Conversation History Management",
+  "translatedTitle": "Gestione della Storia delle Conversazioni",
+  "translation": {
+    "title": "Gestione della Storia delle Conversazioni",
+    "group": "Gestione dei Token",
+    "options": [
+      {
+        "text": "Invia sempre tutta la storia della conversazione"
+      },
+      {
+        "text": "Riassumi i messaggi vecchi quando la storia supera il budget dei token"
+      },
+      {
+        "text": "Elimina i messaggi vecchi — il modello ha una memoria persistente"
+      },
+      {
+        "text": "Archivia la storia in un database vettoriale e recupera i turni rilevanti"
+      }
+    ],
+    "questionProse": [
+      "In un'applicazione di chat a più turni, qual è la strategia corretta quando la storia della conversazione diventa lunga?"
+    ],
+    "explanationProse": [
+      "I modelli LLM non hanno una memoria persistente. Ogni chiamata API è senza stato — devi inviare il contesto completo per ottenere una risposta. La \"memoria\" di una conversazione è interamente la storia dei messaggi che includi in ogni richiesta.\n\n    Quando questa storia supera il tuo budget, le opzioni sono:\n    1. **Riassumi**: Comprimi i turni più vecchi in un riassunto continuo, mantieni i recenti verbatim\n    2. **Finestra scorrevole**: Mantieni gli ultimi N turni, elimina quelli precedenti\n    3. **Recupero selettivo**: Emetti i turni della conversazione e recupera quelli rilevanti per query (complesso ma potente)\n\n    La troncatura semplice — eliminare i messaggi vecchi per farli entrare — è l'opzione peggiore perché rimuove silenziosamente contesto che il modello potrebbe aver bisogno.\n\n    Il recupero da database vettoriale della storia della conversazione è teoricamente attraente ma spesso eccessivo per la maggior parte delle app di chat. Il riassunto è il default pragmatico."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Gestione della Storia delle Conversazioni\",\n  \"group\": \"Gestione dei Token\",\n  \"options\": [\n    {\n      \"text\": \"Invia sempre tutta la storia della conversazione\"\n    },\n    {\n      \"text\": \"Riassumi i messaggi vecchi quando la storia supera il budget dei token\"\n    },\n    {\n      \"text\": \"Elimina i messaggi vecchi — il modello ha una memoria persistente\"\n    },\n    {\n      \"text\": \"Archivia la storia in un database vettoriale e recupera i turni rilevanti\"\n    }\n  ],\n  \"questionProse\": [\n    \"In un'applicazione di chat a più turni, qual è la strategia corretta quando la storia della conversazione diventa lunga?\"\n  ],\n  \"explanationProse\": [\n    \"I modelli LLM non hanno una memoria persistente. Ogni chiamata API è senza stato — devi inviare il contesto completo per ottenere una risposta. La \\\"memoria\\\" di una conversazione è interamente la storia dei messaggi che includi in ogni richiesta.\\n\\n    Quando questa storia supera il tuo budget, le opzioni sono:\\n    1. **Riassumi**: Comprimi i turni più vecchi in un riassunto continuo, mantieni i recenti verbatim\\n    2. **Finestra scorrevole**: Mantieni gli ultimi N turni, elimina quelli precedenti\\n    3. **Recupero selettivo**: Emetti i turni della conversazione e recupera quelli rilevanti per query (complesso ma potente)\\n\\n    La troncatura semplice — eliminare i messaggi vecchi per farli entrare — è l'opzione peggiore perché rimuove silenziosamente contesto che il modello potrebbe aver bisogno.\\n\\n    Il recupero da database vettoriale della storia della conversazione è teoricamente attraente ma spesso eccessivo per la maggior parte delle app di chat. Il riassunto è il default pragmatico.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 883,
+    "outputTokens": 1254,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 2994
+  },
+  "cost": {
+    "inputUsd": 0.00007064,
+    "outputUsd": 0.00030095999999999996,
+    "totalUsd": 0.0003716,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

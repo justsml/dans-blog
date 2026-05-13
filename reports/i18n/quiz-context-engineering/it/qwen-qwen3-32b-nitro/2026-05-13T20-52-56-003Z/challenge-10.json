@@ -1,0 +1,44 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "XML Tags for Structure",
+  "translatedTitle": "Etichette XML per la Struttura",
+  "translation": {
+    "title": "Etichette XML per la Struttura",
+    "group": "Struttura Prompt",
+    "options": [
+      {
+        "text": "Le etichette XML sono valide solo nei modelli Anthropic"
+      },
+      {
+        "text": "Le etichette XML aiutano i modelli a distinguere le istruzioni dai dati e migliorano l'accuratezza del parsing"
+      },
+      {
+        "text": "Le etichette XML rallentano la tokenizzazione e dovrebbero essere evitate"
+      },
+      {
+        "text": "Le etichette XML sono equivalenti agli header markdown"
+      }
+    ],
+    "questionProse": [
+      "Perché molti prompt di produzione utilizzano etichette nello stile XML come `<document>`, `<context>`, `<instructions>`?"
+    ],
+    "explanationProse": [
+      "Le etichette nello stile XML forniscono **confini strutturali espliciti** a cui i modelli sono addestrati a riconoscere e rispettare. Fanno due cose:\n\n    1. **Separazione**: Indicano al modello dove terminano le istruzioni e iniziano i dati — cruciale per il RAG e per ridurre il rischio di iniezione di prompt dai documenti recuperati.\n    2. **Estraiibilità**: Quando chiedi al modello di rispondere in XML (ad esempio, `<answer>...</answer>`), le etichette ti forniscono punti di estrazione puliti senza bisogno di trucchi con le espressioni regolari.\n\n    Questo non è XML come linguaggio di markup. È XML come convenzione di delimitatori su cui i modelli sono addestrati. Funziona perché il modello ha visto ampiamente questo schema durante l'addestramento, non perché sta validando schemi.\n\n    Funziona in modo sufficientemente frequente su molti modelli sintonizzati sulle istruzioni da essere utile — è una convenzione dei dati di addestramento, non una funzionalità del venditore né una garanzia di sicurezza."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Etichette XML per la Struttura\",\n  \"group\": \"Struttura Prompt\",\n  \"options\": [\n    {\n      \"text\": \"Le etichette XML sono valide solo nei modelli Anthropic\"\n    },\n    {\n      \"text\": \"Le etichette XML aiutano i modelli a distinguere le istruzioni dai dati e migliorano l'accuratezza del parsing\"\n    },\n    {\n      \"text\": \"Le etichette XML rallentano la tokenizzazione e dovrebbero essere evitate\"\n    },\n    {\n      \"text\": \"Le etichette XML sono equivalenti agli header markdown\"\n    }\n  ],\n  \"questionProse\": [\n    \"Perché molti prompt di produzione utilizzano etichette nello stile XML come `<document>`, `<context>`, `<instructions>`?\"\n  ],\n  \"explanationProse\": [\n    \"Le etichette nello stile XML forniscono **confini strutturali espliciti** a cui i modelli sono addestrati a riconoscere e rispettare. Fanno due cose:\\n\\n    1. **Separazione**: Indicano al modello dove terminano le istruzioni e iniziano i dati — cruciale per il RAG e per ridurre il rischio di iniezione di prompt dai documenti recuperati.\\n    2. **Estraiibilità**: Quando chiedi al modello di rispondere in XML (ad esempio, `<answer>...</answer>`), le etichette ti forniscono punti di estrazione puliti senza bisogno di trucchi con le espressioni regolari.\\n\\n    Questo non è XML come linguaggio di markup. È XML come convenzione di delimitatori su cui i modelli sono addestrati. Funziona perché il modello ha visto ampiamente questo schema durante l'addestramento, non perché sta validando schemi.\\n\\n    Funziona in modo sufficientemente frequente su molti modelli sintonizzati sulle istruzioni da essere utile — è una convenzione dei dati di addestramento, non una funzionalità del venditore né una garanzia di sicurezza.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 886,
+    "outputTokens": 1379,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 3462
+  },
+  "cost": {
+    "inputUsd": 0.00007088,
+    "outputUsd": 0.00033096,
+    "totalUsd": 0.00040184,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
