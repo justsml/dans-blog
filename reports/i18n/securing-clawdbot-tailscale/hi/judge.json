@@ -1,0 +1,32 @@
+{
+  "selectedCommit": "e8c037cedb58f33b5e79169473d5e483eeeac0af",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "This candidate provides a high-quality, natural-sounding Hindi translation that maintains the technical context and Dan's direct style. It correctly translates the frontmatter title and subtitle, which were missing in the 'current' and 'qwen3-32b' versions. It also preserves all MDX structures, code blocks, and heading levels perfectly. The terminology used (e.g., 'एक्सपोज़', 'बाइंड', 'ऑथेंटिकेशन') is appropriate for a technical audience in Hindi-speaking regions.",
+  "slug": "securing-clawdbot-tailscale",
+  "locale": "hi",
+  "candidateCommits": [
+    "e8c037cedb58f33b5e79169473d5e483eeeac0af",
+    "24bb6a77b41d848fec3153aa6255af43263fa300",
+    "6c3fe6697159665487a8709692f2338b3aa452aa",
+    "9073ad7239878fcc2e66fb23dd1db8d6b3d5b697",
+    "64b48ae86d98fc0919d8733909fe7353822d58be",
+    "85cfe177190cac3087d26ab1ea5fa9caf9143fa9",
+    "c1d0d6dcfad0a8cb77698f350acd4c82b4b0d93a"
+  ],
+  "suggestionLog": [],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug securing-clawdbot-tailscale --locale hi --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug securing-clawdbot-tailscale --locale hi --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug securing-clawdbot-tailscale --locale hi --skip-global\n207 |     ...targetContents.matchAll(/=[\"']\\.\\/(?!\\.)[^\"']+\\.(?:avif|gif|jpe?g|png|svg|webp)[\"']/g),\n208 |   ];\n209 | \n210 |   if (nestedAssetReferences.length === 0) return;\n211 | \n212 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2026-01-26--securing-clawdbot-tailscale/hi/index.mdx uses ./ asset paths inside a locale folder. Use ../ for inherited post assets.\n      at assertNestedAssetPaths (/Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:212:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}
