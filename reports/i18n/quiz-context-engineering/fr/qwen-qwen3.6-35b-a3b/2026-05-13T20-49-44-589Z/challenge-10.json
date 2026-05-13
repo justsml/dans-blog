@@ -1,0 +1,44 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "XML Tags for Structure",
+  "translatedTitle": "Balises XML pour la structure",
+  "translation": {
+    "title": "Balises XML pour la structure",
+    "group": "Structure du prompt",
+    "options": [
+      {
+        "text": "Les balises XML ne sont valides que sur les modèles Anthropic"
+      },
+      {
+        "text": "Les balises XML aident le modèle à distinguer les instructions des données et améliorent la précision du parsing"
+      },
+      {
+        "text": "Les balises XML ralentissent la tokenisation et doivent être évitées"
+      },
+      {
+        "text": "Les balises XML sont équivalentes aux en-têtes Markdown"
+      }
+    ],
+    "questionProse": [
+      "Pourquoi les prompts de production utilisent-ils massivement des balises XML comme `<document>`, `<context>` ou `<instructions>` ?"
+    ],
+    "explanationProse": [
+      "Les balises de type XML offrent des **frontières structurelles explicites** que les modèles sont entraînés à reconnaître et respecter. Elles remplissent deux rôles :\n\n    1. **Séparation** : Elles indiquent au modèle où les instructions se terminent et où les données commencent — crucial pour le RAG et pour réduire les risques d'injection de prompt provenant des documents récupérés.\n    2. **Analyse facilitée** : Lorsque vous demandez au modèle de répondre en XML (par ex. `<answer>...</answer>`), les balises vous offrent des points d'extraction propres, sans avoir à recourir à des hacks regex.\n\n    Il ne s'agit pas d'XML en tant que langage de balisage. C'est une convention de délimitation sur laquelle les modèles ont été entraînés. Ça marche parce que le modèle a massivement croisé ce pattern durant son entraînement, et non parce qu'il valide des schémas.\n\n    Fonctionne sur la plupart des modèles fine-tunés, assez souvent pour être utile : c'est une convention issue des données d'entraînement, pas une fonctionnalité éditeur ou une garantie de sécurité."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Balises XML pour la structure\",\n  \"group\": \"Structure du prompt\",\n  \"options\": [\n    {\n      \"text\": \"Les balises XML ne sont valides que sur les modèles Anthropic\"\n    },\n    {\n      \"text\": \"Les balises XML aident le modèle à distinguer les instructions des données et améliorent la précision du parsing\"\n    },\n    {\n      \"text\": \"Les balises XML ralentissent la tokenisation et doivent être évitées\"\n    },\n    {\n      \"text\": \"Les balises XML sont équivalentes aux en-têtes Markdown\"\n    }\n  ],\n  \"questionProse\": [\n    \"Pourquoi les prompts de production utilisent-ils massivement des balises XML comme `<document>`, `<context>` ou `<instructions>` ?\"\n  ],\n  \"explanationProse\": [\n    \"Les balises de type XML offrent des **frontières structurelles explicites** que les modèles sont entraînés à reconnaître et respecter. Elles remplissent deux rôles :\\n\\n    1. **Séparation** : Elles indiquent au modèle où les instructions se terminent et où les données commencent — crucial pour le RAG et pour réduire les risques d'injection de prompt provenant des documents récupérés.\\n    2. **Analyse facilitée** : Lorsque vous demandez au modèle de répondre en XML (par ex. `<answer>...</answer>`), les balises vous offrent des points d'extraction propres, sans avoir à recourir à des hacks regex.\\n\\n    Il ne s'agit pas d'XML en tant que langage de balisage. C'est une convention de délimitation sur laquelle les modèles ont été entraînés. Ça marche parce que le modèle a massivement croisé ce pattern durant son entraînement, et non parce qu'il valide des schémas.\\n\\n    Fonctionne sur la plupart des modèles fine-tunés, assez souvent pour être utile : c'est une convention issue des données d'entraînement, pas une fonctionnalité éditeur ou une garantie de sécurité.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 937,
+    "outputTokens": 3677,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 19472
+  },
+  "cost": {
+    "inputUsd": 0,
+    "outputUsd": 0,
+    "totalUsd": 0,
+    "pricingSource": "unknown"
+  }
+}

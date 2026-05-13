@@ -1,0 +1,44 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "Role of the System Prompt",
+  "translatedTitle": "Rôle du prompt système",
+  "translation": {
+    "title": "Rôle du prompt système",
+    "group": "Fondamentaux",
+    "options": [
+      {
+        "text": "Il est traité en premier et a plus de poids que les messages utilisateur"
+      },
+      {
+        "text": "Il est identique à un message utilisateur mais affiché différemment"
+      },
+      {
+        "text": "Il est uniquement utilisé pour les appels API, pas pour les interfaces de chat"
+      },
+      {
+        "text": "Il persiste entre les sessions en tant que mémoire à long terme"
+      }
+    ],
+    "questionProse": [
+      "Quel est l'impact réel d'utiliser le rôle `system` plutôt que `user` dans le tableau `messages` ?"
+    ],
+    "explanationProse": [
+      "Le rôle `system` est traité comme des instructions à priorité élevée. Les modèles sont entraînés à lui accorder plus de poids qu'aux messages utilisateur — il marque la frontière architecturale entre « ce que le développeur a défini » et « ce que l'utilisateur saisit ».\n\n    Ce n'est pas de la magie. Cela ne garantit pas que le modèle ignorera les instructions utilisateur contradictoires (voir : injection de prompt). Mais cela augmente significativement la probabilité qu'il suive vos consignes, surtout sur les modèles conçus pour bien respecter les instructions.\n\n    En pratique : placez votre persona, vos règles et vos contraintes comportementales dans `system`. Placez le contexte récupéré et les données utilisateur dans `user`. Ne mettez jamais d'entrée contrôlée par l'utilisateur dans `system`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Rôle du prompt système\",\n  \"group\": \"Fondamentaux\",\n  \"options\": [\n    {\n      \"text\": \"Il est traité en premier et a plus de poids que les messages utilisateur\"\n    },\n    {\n      \"text\": \"Il est identique à un message utilisateur mais affiché différemment\"\n    },\n    {\n      \"text\": \"Il est uniquement utilisé pour les appels API, pas pour les interfaces de chat\"\n    },\n    {\n      \"text\": \"Il persiste entre les sessions en tant que mémoire à long terme\"\n    }\n  ],\n  \"questionProse\": [\n    \"Quel est l'impact réel d'utiliser le rôle `system` plutôt que `user` dans le tableau `messages` ?\"\n  ],\n  \"explanationProse\": [\n    \"Le rôle `system` est traité comme des instructions à priorité élevée. Les modèles sont entraînés à lui accorder plus de poids qu'aux messages utilisateur — il marque la frontière architecturale entre « ce que le développeur a défini » et « ce que l'utilisateur saisit ».\\n\\n    Ce n'est pas de la magie. Cela ne garantit pas que le modèle ignorera les instructions utilisateur contradictoires (voir : injection de prompt). Mais cela augmente significativement la probabilité qu'il suive vos consignes, surtout sur les modèles conçus pour bien respecter les instructions.\\n\\n    En pratique : placez votre persona, vos règles et vos contraintes comportementales dans `system`. Placez le contexte récupéré et les données utilisateur dans `user`. Ne mettez jamais d'entrée contrôlée par l'utilisateur dans `system`.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 895,
+    "outputTokens": 2720,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 15901
+  },
+  "cost": {
+    "inputUsd": 0,
+    "outputUsd": 0,
+    "totalUsd": 0,
+    "pricingSource": "unknown"
+  }
+}

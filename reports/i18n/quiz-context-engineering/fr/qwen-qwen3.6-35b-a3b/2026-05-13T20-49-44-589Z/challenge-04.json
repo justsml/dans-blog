@@ -1,0 +1,44 @@
+{
+  "index": 3,
+  "attempt": 1,
+  "originalTitle": "Lost in the Middle",
+  "translatedTitle": "Perdu au milieu",
+  "translation": {
+    "title": "Perdu au milieu",
+    "group": "Récupération",
+    "options": [
+      {
+        "text": "Les modèles obtiennent des résultats identiques, quel que soit l'emplacement du contexte"
+      },
+      {
+        "text": "Les modèles obtiennent les meilleurs résultats avec le contexte à la toute fin"
+      },
+      {
+        "text": "Les modèles obtiennent les meilleurs résultats avec le contexte au début et à la fin, et les pires au milieu"
+      },
+      {
+        "text": "Les modèles obtiennent les meilleurs résultats avec le contexte au milieu de l'invite"
+      }
+    ],
+    "questionProse": [
+      "Les recherches sur le problème du « Perdu au milieu » montrent que les LLM ont tendance à :"
+    ],
+    "explanationProse": [
+      "L'article [Lost in the Middle (Liu et al., 2023)](https://arxiv.org/abs/2307.03172) a démontré que les LLM peinent systématiquement avec les informations placées au milieu de contextes longs. Les performances sont nettement supérieures lorsque les informations pertinentes apparaissent au **début ou à la fin** de la fenêtre de contexte.\n\n    Implication pratique : lorsque vous insérez des chunks récupérés dans une invite RAG, ne vous contentez pas de les ajouter dans l'ordre de pertinence. Placez votre résultat le mieux classé en premier, le deuxième en dernier, et remplissez le milieu avec les résultats moins pertinents. Contre-intuitif, mais mesurablement plus efficace."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Perdu au milieu\",\n  \"group\": \"Récupération\",\n  \"options\": [\n    {\n      \"text\": \"Les modèles obtiennent des résultats identiques, quel que soit l'emplacement du contexte\"\n    },\n    {\n      \"text\": \"Les modèles obtiennent les meilleurs résultats avec le contexte à la toute fin\"\n    },\n    {\n      \"text\": \"Les modèles obtiennent les meilleurs résultats avec le contexte au début et à la fin, et les pires au milieu\"\n    },\n    {\n      \"text\": \"Les modèles obtiennent les meilleurs résultats avec le contexte au milieu de l'invite\"\n    }\n  ],\n  \"questionProse\": [\n    \"Les recherches sur le problème du « Perdu au milieu » montrent que les LLM ont tendance à :\"\n  ],\n  \"explanationProse\": [\n    \"L'article [Lost in the Middle (Liu et al., 2023)](https://arxiv.org/abs/2307.03172) a démontré que les LLM peinent systématiquement avec les informations placées au milieu de contextes longs. Les performances sont nettement supérieures lorsque les informations pertinentes apparaissent au **début ou à la fin** de la fenêtre de contexte.\\n\\n    Implication pratique : lorsque vous insérez des chunks récupérés dans une invite RAG, ne vous contentez pas de les ajouter dans l'ordre de pertinence. Placez votre résultat le mieux classé en premier, le deuxième en dernier, et remplissez le milieu avec les résultats moins pertinents. Contre-intuitif, mais mesurablement plus efficace.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 897,
+    "outputTokens": 3306,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 14965
+  },
+  "cost": {
+    "inputUsd": 0,
+    "outputUsd": 0,
+    "totalUsd": 0,
+    "pricingSource": "unknown"
+  }
+}

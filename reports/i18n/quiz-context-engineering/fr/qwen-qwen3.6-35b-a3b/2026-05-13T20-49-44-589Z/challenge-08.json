@@ -1,0 +1,44 @@
+{
+  "index": 7,
+  "attempt": 1,
+  "originalTitle": "Conversation History Management",
+  "translatedTitle": "Gestion de l'historique de conversation",
+  "translation": {
+    "title": "Gestion de l'historique de conversation",
+    "group": "Gestion des tokens",
+    "options": [
+      {
+        "text": "Toujours envoyer l'intégralité de l'historique de conversation"
+      },
+      {
+        "text": "Résumer les anciens messages lorsque l'historique dépasse un budget de tokens"
+      },
+      {
+        "text": "Supprimer les anciens messages — le modèle possède une mémoire persistante"
+      },
+      {
+        "text": "Stocker l'historique dans une base de données vectorielle et récupérer les tours pertinents"
+      }
+    ],
+    "questionProse": [
+      "Dans une application de chat multi-tours, quelle est la bonne stratégie lorsque l'historique de conversation devient trop long ?"
+    ],
+    "explanationProse": [
+      "Les LLMs n'ont pas de mémoire persistante. Chaque appel API est sans état : vous envoyez le contexte complet et vous recevez une réponse. La « mémoire » d'une conversation repose entièrement sur l'historique des messages que vous incluez dans chaque requête.\n\n    Lorsque cet historique dépasse votre budget, voici les options :\n    1. **Résumer** : Compressez les tours anciens dans un résumé en cours, gardez les tours récents tels quels\n    2. **Fenêtre glissante** : Conservez les N derniers tours, supprimez les plus anciens\n    3. **Récupération sélective** : Embeddez les tours de conversation et récupérez ceux qui sont pertinents pour chaque requête (complexe mais puissant)\n\n    La simple troncature — couper les anciens messages pour faire de la place — est la pire option, car elle supprime silencieusement du contexte dont le modèle pourrait avoir besoin.\n\n    La récupération via une base de données vectorielle pour l'historique de conversation est théoriquement séduisante, mais généralement excessive pour la plupart des applications de chat. La résumption reste la solution pragmatique par défaut."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Gestion de l'historique de conversation\",\n  \"group\": \"Gestion des tokens\",\n  \"options\": [\n    {\n      \"text\": \"Toujours envoyer l'intégralité de l'historique de conversation\"\n    },\n    {\n      \"text\": \"Résumer les anciens messages lorsque l'historique dépasse un budget de tokens\"\n    },\n    {\n      \"text\": \"Supprimer les anciens messages — le modèle possède une mémoire persistante\"\n    },\n    {\n      \"text\": \"Stocker l'historique dans une base de données vectorielle et récupérer les tours pertinents\"\n    }\n  ],\n  \"questionProse\": [\n    \"Dans une application de chat multi-tours, quelle est la bonne stratégie lorsque l'historique de conversation devient trop long ?\"\n  ],\n  \"explanationProse\": [\n    \"Les LLMs n'ont pas de mémoire persistante. Chaque appel API est sans état : vous envoyez le contexte complet et vous recevez une réponse. La « mémoire » d'une conversation repose entièrement sur l'historique des messages que vous incluez dans chaque requête.\\n\\n    Lorsque cet historique dépasse votre budget, voici les options :\\n    1. **Résumer** : Compressez les tours anciens dans un résumé en cours, gardez les tours récents tels quels\\n    2. **Fenêtre glissante** : Conservez les N derniers tours, supprimez les plus anciens\\n    3. **Récupération sélective** : Embeddez les tours de conversation et récupérez ceux qui sont pertinents pour chaque requête (complexe mais puissant)\\n\\n    La simple troncature — couper les anciens messages pour faire de la place — est la pire option, car elle supprime silencieusement du contexte dont le modèle pourrait avoir besoin.\\n\\n    La récupération via une base de données vectorielle pour l'historique de conversation est théoriquement séduisante, mais généralement excessive pour la plupart des applications de chat. La résumption reste la solution pragmatique par défaut.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 934,
+    "outputTokens": 3333,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 19699
+  },
+  "cost": {
+    "inputUsd": 0,
+    "outputUsd": 0,
+    "totalUsd": 0,
+    "pricingSource": "unknown"
+  }
+}

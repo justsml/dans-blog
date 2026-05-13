@@ -1,0 +1,44 @@
+{
+  "index": 13,
+  "attempt": 1,
+  "originalTitle": "Context Engineering vs. Fine-Tuning",
+  "translatedTitle": "Ingénierie du contexte vs. Fine-tuning",
+  "translation": {
+    "title": "Ingénierie du contexte vs. Fine-tuning",
+    "group": "Expert",
+    "options": [
+      {
+        "text": "Le fine-tuning est toujours meilleur — l'ingénierie du contexte n'est qu'une solution de contournement"
+      },
+      {
+        "text": "L'ingénierie du contexte est gratuite ; le fine-tuning est coûteux ; utilisez toujours l'ingénierie du contexte"
+      },
+      {
+        "text": "L'ingénierie du contexte modifie le comportement par requête ; le fine-tuning modifie définitivement les poids du modèle"
+      },
+      {
+        "text": "Il s'agit de deux noms différents pour la même technique"
+      }
+    ],
+    "questionProse": [
+      "Quelle est la différence fondamentale entre l'ingénierie du contexte et le fine-tuning, et dans quels cas ce dernier est-il vraiment justifié ?"
+    ],
+    "explanationProse": [
+      "**L'ingénierie du contexte** façonne le comportement du modèle via le prompt — instructions système, exemples few-shot, contexte récupéré. C'est spécifique à chaque requête, réversible et ne nécessite aucun entraînement.\n\n    **Le fine-tuning** met à jour les poids du modèle sur vos données. Les modifications sont permanentes (pour ce checkpoint) et s'appliquent à chaque inférence.\n\n    Le fine-tuning est vraiment supérieur quand :\n    - Vous avez besoin d'un style/format cohérent que le modèle ne peut pas suivre de manière fiable avec de simples instructions\n    - Votre tâche exige un comportement reproductible sur des motifs propres à un domaine que le prompting et la récupération ne résolvent pas\n    - Vous devez réduire la longueur du prompt — le comportement appris ne doit pas être réexpliqué à chaque requête\n    - Vous traitez un grand volume de requêtes où des exemples few-shot constants consomment un nombre significatif de tokens\n\n    Le fine-tuning est excessif quand :\n    - Vos instructions tiennent dans un prompt système\n    - Vous avez surtout besoin de faits récents ou propriétaires récupérables à la demande\n    - Les exigences changent souvent (vous devriez alors re-fine-tuner)\n    - Vous n'avez pas d'abord épuisé les possibilités de l'ingénierie du contexte\n\n    La bonne démarche : maîtrisez d'abord l'ingénierie du contexte. Passez au fine-tuning uniquement quand c'est prouvé insuffisant."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Ingénierie du contexte vs. Fine-tuning\",\n  \"group\": \"Expert\",\n  \"options\": [\n    {\n      \"text\": \"Le fine-tuning est toujours meilleur — l'ingénierie du contexte n'est qu'une solution de contournement\"\n    },\n    {\n      \"text\": \"L'ingénierie du contexte est gratuite ; le fine-tuning est coûteux ; utilisez toujours l'ingénierie du contexte\"\n    },\n    {\n      \"text\": \"L'ingénierie du contexte modifie le comportement par requête ; le fine-tuning modifie définitivement les poids du modèle\"\n    },\n    {\n      \"text\": \"Il s'agit de deux noms différents pour la même technique\"\n    }\n  ],\n  \"questionProse\": [\n    \"Quelle est la différence fondamentale entre l'ingénierie du contexte et le fine-tuning, et dans quels cas ce dernier est-il vraiment justifié ?\"\n  ],\n  \"explanationProse\": [\n    \"**L'ingénierie du contexte** façonne le comportement du modèle via le prompt — instructions système, exemples few-shot, contexte récupéré. C'est spécifique à chaque requête, réversible et ne nécessite aucun entraînement.\\n\\n    **Le fine-tuning** met à jour les poids du modèle sur vos données. Les modifications sont permanentes (pour ce checkpoint) et s'appliquent à chaque inférence.\\n\\n    Le fine-tuning est vraiment supérieur quand :\\n    - Vous avez besoin d'un style/format cohérent que le modèle ne peut pas suivre de manière fiable avec de simples instructions\\n    - Votre tâche exige un comportement reproductible sur des motifs propres à un domaine que le prompting et la récupération ne résolvent pas\\n    - Vous devez réduire la longueur du prompt — le comportement appris ne doit pas être réexpliqué à chaque requête\\n    - Vous traitez un grand volume de requêtes où des exemples few-shot constants consomment un nombre significatif de tokens\\n\\n    Le fine-tuning est excessif quand :\\n    - Vos instructions tiennent dans un prompt système\\n    - Vous avez surtout besoin de faits récents ou propriétaires récupérables à la demande\\n    - Les exigences changent souvent (vous devriez alors re-fine-tuner)\\n    - Vous n'avez pas d'abord épuisé les possibilités de l'ingénierie du contexte\\n\\n    La bonne démarche : maîtrisez d'abord l'ingénierie du contexte. Passez au fine-tuning uniquement quand c'est prouvé insuffisant.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1013,
+    "outputTokens": 4151,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 22571
+  },
+  "cost": {
+    "inputUsd": 0,
+    "outputUsd": 0,
+    "totalUsd": 0,
+    "pricingSource": "unknown"
+  }
+}
