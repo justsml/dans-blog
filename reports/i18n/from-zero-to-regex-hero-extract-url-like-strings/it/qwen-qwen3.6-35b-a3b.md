@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: from-zero-to-regex-hero-extract-url-like-strings
+- Locale: it
+- Model: qwen/qwen3.6-35b-a3b
+- Target: src/content/posts/2024-12-29--from-zero-to-regex-hero-extract-url-like-strings/it/index.mdx
+- Validation: deferred
+- Runtime seconds: 154.81
+- Input tokens: 10712
+- Output tokens: 33258
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.000000
+- Pricing source: unknown
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Da zero a Esperto Regex
 subTitle: Estrai e analizza stringhe simili a URL con un'unica regex
@@ -264,3 +282,4 @@ Seguendo questa procedura, puoi estrarre efficacemente qualsiasi dato testuale s
 - [Documentazione MDN sulle Espressioni Regolari](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions)
 - [Tecniche Regex Avanzate](https://www.regular-expressions.info/): Esplora lookahead, lookbehind e pattern avanzati per un matching più preciso.
 - [RFC 3986 - Sintassi Generica URI](https://datatracker.ietf.org/doc/html/rfc3986)
+````
