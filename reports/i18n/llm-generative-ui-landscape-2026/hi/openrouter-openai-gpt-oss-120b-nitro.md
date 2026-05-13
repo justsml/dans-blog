@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: llm-generative-ui-landscape-2026
+- Locale: hi
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-05-10--llm-generative-ui-landscape-2026/hi/index.mdx
+- Validation: passed
+- Runtime seconds: 24.81
+- Input tokens: 61080
+- Output tokens: 14444
+- Thinking tokens: unknown
+- Cached input tokens: 35200
+- Cache write tokens: 0
+- Estimated cost: $0.004982
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: LLMGenUI परिदृश्य v2
 subTitle: >-
@@ -421,3 +439,4 @@ ApprovalGate        — action requiring human confirmation
 वर्तमान में सबसे महत्वपूर्ण इंजीनियरिंग चुनौतियाँ फ़्रेमवर्क चयन नहीं हैं। वे हैं — कैटलॉग डिज़ाइन: यह तय करना कि मॉडल को क्या कहने की अनुमति है, जिसके लिए तकनीकी कौशल से अधिक उत्पाद स्पष्टता की आवश्यकता होती है। — सेमांटिक वैलिडेशन: यह परीक्षण करना कि उत्पन्न UI वास्तव में वह करता है जो वह दावा करता है, न कि केवल स्कीमा वैलिडेशन पास करता है। — और एक्सेसिबिलिटी अंतर: ऐसे कैटलॉग बनाना जहाँ प्रत्येक कंपोनेंट और कंपोनेंट्स का प्रत्येक संयोजन उस एक्सेसिबिलिटी मानक को पूरा करता हो, जिसे आप हाथ‑लिखित UI पर लागू करेंगे।
 
 मॉडल वही करेगा जो आप उसे बताते हैं, वह भी आप द्वारा प्रदान की गई व्याकरण के भीतर। व्याकरण को इरादतन बनाएं।
+````
