@@ -1,0 +1,31 @@
+{
+  "selectedCommit": "a4343c45eb31e810b4d600a64af11ea55f87655a",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "scores": {
+    "readability": 5,
+    "technicalAccuracy": 5,
+    "coherence": 5,
+    "relevance": 5,
+    "translationQuality": 5,
+    "mdxPreservation": 5
+  },
+  "suggestions": [],
+  "rationale": "The candidate a4343c45eb31e810b4d600a64af11ea55f87655a provides the best balance of natural, direct Japanese (using the 'da/dearu' style which fits Dan's tone) and technical accuracy. It correctly translates 'vibe-year' as 'バイブス年' (a creative and fitting choice for the context) and maintains all MDX structures and metadata. The other candidate (glm-5.1) missed the frontmatter metadata (date, tags, etc.), which is a significant preservation failure.",
+  "slug": "llm-connection-strings",
+  "locale": "ja",
+  "candidateCommits": [
+    "a4343c45eb31e810b4d600a64af11ea55f87655a",
+    "6da61a7a83231a7c355a2e9f234d1c218bf62076",
+    "27f1960e7fb5b202d11323b6f2379458878fc213",
+    "56999e102a49461606be74f4ae821c271a9cc740",
+    "84ecc4d8f70a8a7c5eaba9790b4970b48333a4cd",
+    "566e6365ff987f28a46bc17ea8555b6f6ab0ea04"
+  ],
+  "suggestionLog": [],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug llm-connection-strings --locale ja --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug llm-connection-strings --locale ja --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug llm-connection-strings --locale ja --skip-global\n20 |   }\n21 | \n22 |   const minimumLength = Math.floor(sourceLength * minimumRatio);\n23 |   const maximumLength = Math.ceil(sourceLength * maximumRatio);\n24 |   if (targetLength < minimumLength || targetLength > maximumLength) {\n25 |     throw new Error(\n                   ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2026-01-30--llm-connection-strings/ja/index.mdx changed comparable body length from 4678 chars in English to 2935 chars. Expected 3040-6316 chars (within 35%).\n      at assertTranslationLength (/Users/dan/code/oss/dans-blog/src/scripts/i18n/structural-validation.ts:25:15)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:26:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}
