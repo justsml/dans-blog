@@ -1,0 +1,58 @@
+{
+  "selectedCommit": "current",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "scores": {
+    "readability": 5,
+    "technicalAccuracy": 5,
+    "coherence": 5,
+    "relevance": 5,
+    "translationQuality": 5,
+    "mdxPreservation": 5
+  },
+  "suggestions": [],
+  "rationale": "The current translation is already based on the high-quality candidate ce50553948aa737b46a6106590cbcd48f5e41b07 and has already had the high-priority path fixes applied (e.g., '../' prefix for cover images). It correctly translates the ASCII diagram labels which were missing in earlier iterations, maintains Dan's direct style, and preserves MDX structure. No further high-priority fixes are required.",
+  "slug": "intro-to-promises",
+  "locale": "ru",
+  "candidateCommits": [
+    "ce50553948aa737b46a6106590cbcd48f5e41b07",
+    "d867c86ba4454b1630c2fadab51813717251e19d",
+    "387fe9231568f26c2232fe63169050939035b3e9",
+    "52b0c4ade238893a1c013b8a0c5787eada9f9c3a",
+    "b9b422af8eec06b759a9fefc4a7b9e59a195f192"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "cover: joe-yates-480485-unsplash.webp",
+      "replacement": "cover: ../joe-yates-480485-unsplash.webp",
+      "reason": "Broken image path. Local assets in localized subdirectories must use relative parent paths to match the current file structure.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "cover_mobile: w300_joe-yates-480485-unsplash.webp",
+      "replacement": "cover_mobile: ../w300_joe-yates-480485-unsplash.webp",
+      "reason": "Broken image path.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "cover_icon: icon_joe-yates-480485-unsplash.webp",
+      "replacement": "cover_icon: ../icon_joe-yates-480485-unsplash.webp",
+      "reason": "Broken image path.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug intro-to-promises --locale ru --skip-global",
+    "output": ""
+  }
+}
