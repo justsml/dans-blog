@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: llm-connection-strings
+- Locale: hi
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-01-30--llm-connection-strings/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 11.87
+- Input tokens: 6296
+- Output tokens: 1973
+- Thinking tokens: unknown
+- Cached input tokens: 768
+- Cache write tokens: 0
+- Estimated cost: $0.000601
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: LLM कनेक्शन स्ट्रिंग्स का समय आ गया है
 subTitle: '`llm://` URLs के साथ मॉडल और प्रोवाइडर कॉन्फ़िग को सरल बनाएँ'
@@ -115,3 +133,4 @@ bedrock://us-west-2.aws/anthropic/sonnet-4.5?temp=0.8&cacheControl=ephemeral
 ![a messy env var drawer](../hero-concept-8-drawers.webp)
 
 {/* ¹ हाँ, मुझे पता है कि `URI` शब्द `URL` से अधिक सही है। अगर आप इस अंतर की परवाह करने वाले पेडैंटिक हैं, तो कृपया बाहर जाकर घास छुएँ। */}
+````
