@@ -1,0 +1,65 @@
+{
+  "selectedCommit": "2ad5773e0b22bfacdd39bc0c22e6497c11764488",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 9,
+    "relevance": 9,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The current translation already incorporates the high-priority fixes suggested in the previous judge report (image paths are corrected to '../' and tags are accurate). The translation is natural, uses appropriate technical transliteration for a Hindi-speaking developer audience, and maintains Dan's direct, conversational tone.",
+  "slug": "pitfalls-in-promise-docs",
+  "locale": "hi",
+  "candidateCommits": [
+    "2ad5773e0b22bfacdd39bc0c22e6497c11764488",
+    "3579bc38d83915a46fdff35d23ad2ad04059a361",
+    "a16b31bb4f60768d78213979396c7967fd38f041"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "functional river",
+      "replacement": "functional-programming",
+      "reason": "The tag was incorrectly translated/hallucinated as 'functional river' instead of 'functional-programming'.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "cover: craig-whitehead-433328-unsplash.webp",
+      "replacement": "cover: ../craig-whitehead-433328-unsplash.webp",
+      "reason": "Relative paths for images in subdirectories must point to the parent directory (../) to match the English structure and ensure images load.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "cover_mobile: w300_craig-whitehead-433328-unsplash.webp",
+      "replacement": "cover_mobile: ../w300_craig-whitehead-433328-unsplash.webp",
+      "reason": "Relative paths for images in subdirectories must point to the parent directory (../).",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "cover_icon: icon_craig-whitehead-433328-unsplash.webp",
+      "replacement": "cover_icon: ../icon_craig-whitehead-433328-unsplash.webp",
+      "reason": "Relative paths for images in subdirectories must point to the parent directory (../).",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug pitfalls-in-promise-docs --locale hi --skip-global",
+    "output": ""
+  }
+}
