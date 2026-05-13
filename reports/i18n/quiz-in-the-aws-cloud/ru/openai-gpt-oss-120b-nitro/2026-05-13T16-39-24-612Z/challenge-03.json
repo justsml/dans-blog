@@ -1,0 +1,55 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "DynamoDB",
+  "translatedTitle": "DynamoDB",
+  "translation": {
+    "title": "DynamoDB",
+    "group": "Без схемы",
+    "options": [
+      {
+        "text": "PutItem",
+        "hint": "Создаёт новый элемент или заменяет существующий новым элементом."
+      },
+      {
+        "text": "BatchUpdateItem",
+        "hint": "Не существует."
+      },
+      {
+        "text": "BatchWriteItem",
+        "hint": "Вставляет (добавляет) ИЛИ удаляет несколько элементов за один вызов."
+      },
+      {
+        "text": "UpdateItem"
+      },
+      {
+        "text": "BatchUpsertItem",
+        "hint": "В DynamoDB?"
+      },
+      {
+        "text": "TransactWriteItems",
+        "hint": "Объединяет несколько операций PutItem, UpdateItem, DeleteItem и ConditionCheck в один вызов."
+      }
+    ],
+    "questionProse": [
+      "Какой API DynamoDB обновляет атрибуты у одного существующего элемента?"
+    ],
+    "explanationProse": [
+      "Ключ здесь — <b>обновления</b>, а не вставки или PUT‑ы. Если вам нужны вставки, можно использовать `BatchWriteItem` или `TransactWriteItems`.\n\n    Хотя `BatchWriteItem` может выполнять несколько операций, он ограничен только PUT‑ами и DELETE‑ами. `TransactWriteItems` более мощный, но для простых обновлений это как кувалда.\n    Для простых обновлений лучше всего подходит `UpdateItem`. Он позволяет ОБНОВЛЯТЬ, то есть изменять один или несколько атрибутов в существующем элементе.\n\n    Операция `UpdateItem` изменяет один элемент за запрос. Для больших обратных заполнений или массовых обновлений обычно оркестрируют множество вызовов `UpdateItem` или используют более крупный рабочий процесс, например PartiQL batch execution, Step Functions, Glue, EMR или собственный рабочий процесс.\n\n    Операция `UpdateItem`:\n    - Обновляет атрибуты существующего элемента.\n    - Добавляет новые атрибуты к существующему элементу.\n    - Удаляет атрибуты из существующего элемента.\n    - Выполняет обновление условно, если элемент существует или удовлетворяет определённым условиям.\n\n    [DynamoDB UpdateItem](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateItem.html)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"DynamoDB\",\n  \"group\": \"Без схемы\",\n  \"options\": [\n    {\n      \"text\": \"PutItem\",\n      \"hint\": \"Создаёт новый элемент или заменяет существующий новым элементом.\"\n    },\n    {\n      \"text\": \"BatchUpdateItem\",\n      \"hint\": \"Не существует.\"\n    },\n    {\n      \"text\": \"BatchWriteItem\",\n      \"hint\": \"Вставляет (добавляет) ИЛИ удаляет несколько элементов за один вызов.\"\n    },\n    {\n      \"text\": \"UpdateItem\"\n    },\n    {\n      \"text\": \"BatchUpsertItem\",\n      \"hint\": \"В DynamoDB?\"\n    },\n    {\n      \"text\": \"TransactWriteItems\",\n      \"hint\": \"Объединяет несколько операций PutItem, UpdateItem, DeleteItem и ConditionCheck в один вызов.\"\n    }\n  ],\n  \"questionProse\": [\n    \"Какой API DynamoDB обновляет атрибуты у одного существующего элемента?\"\n  ],\n  \"explanationProse\": [\n    \"Ключ здесь — <b>обновления</b>, а не вставки или PUT‑ы. Если вам нужны вставки, можно использовать `BatchWriteItem` или `TransactWriteItems`.\\n\\n    Хотя `BatchWriteItem` может выполнять несколько операций, он ограничен только PUT‑ами и DELETE‑ами. `TransactWriteItems` более мощный, но для простых обновлений это как кувалда.\\n    Для простых обновлений лучше всего подходит `UpdateItem`. Он позволяет ОБНОВЛЯТЬ, то есть изменять один или несколько атрибутов в существующем элементе.\\n\\n    Операция `UpdateItem` изменяет один элемент за запрос. Для больших обратных заполнений или массовых обновлений обычно оркестрируют множество вызовов `UpdateItem` или используют более крупный рабочий процесс, например PartiQL batch execution, Step Functions, Glue, EMR или собственный рабочий процесс.\\n\\n    Операция `UpdateItem`:\\n    - Обновляет атрибуты существующего элемента.\\n    - Добавляет новые атрибуты к существующему элементу.\\n    - Удаляет атрибуты из существующего элемента.\\n    - Выполняет обновление условно, если элемент существует или удовлетворяет определённым условиям.\\n\\n    [DynamoDB UpdateItem](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateItem.html)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1104,
+    "outputTokens": 1428,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 829
+  },
+  "cost": {
+    "inputUsd": 0.000043055999999999996,
+    "outputUsd": 0.00025704,
+    "totalUsd": 0.00030009599999999997,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

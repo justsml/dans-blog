@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-in-the-aws-cloud
+- Locale: ru
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2024-12-28--quiz-in-the-aws-cloud/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 27.76
+- Input tokens: 25130
+- Output tokens: 22238
+- Thinking tokens: unknown
+- Cached input tokens: 10496
+- Cache write tokens: 0
+- Estimated cost: $0.004983
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: 'Тест: Хранилище AWS: 20 вопросов и более'
@@ -911,3 +929,4 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 Смотрите другие задачи от [Дэна](/challenges/)! 🧠  
 
 Юридическое примечание: Этот тест предназначен исключительно для обучения. Все торговые марки и авторские права принадлежат их законным владельцам, особенно крупным игрокам.
+````
