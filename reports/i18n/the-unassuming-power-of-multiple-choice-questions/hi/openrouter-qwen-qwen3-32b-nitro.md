@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: the-unassuming-power-of-multiple-choice-questions
+- Locale: hi
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2025-01-01--the-unassuming-power-of-multiple-choice-questions/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 103.50
+- Input tokens: 6738
+- Output tokens: 9909
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.002917
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: बहुविकल्पी प्रश्नों की अप्रत्याशित शक्ति
 subTitle: शिक्षा में MCQs का अधिकतम लाभ उठाने के तरीके
@@ -85,3 +103,4 @@ cover_icon: ../digital-mcq-hero-square.webp
 इसीलिए मैं इस साइट पर बहुविकल्पीय प्रश्नों का उपयोग करता रहता हूँ। न ही इसलिए कि वे कुशल हैं, हालाँकि वे हैं। बल्कि इसलिए कि वे एक ऐसी शिक्षामूल्य ईमानदारी को बलपूर्वक लागू करते हैं जिसे केवल प्रोज़ द्वारा टाला जा सकता है।
 
 अगली बार जब आप एक प्रश्न बनाएंगे, तो सही उत्तर के साथ शुरू न करें। मिथ्याधारों से शुरू करें। सही उत्तर को बहुत बेहतर जगह मिलेगी।
+````
