@@ -1,28 +1,19 @@
 ---
 social_image: ../desktop-social.webp
-title: ''
-subTitle: ''
-date: '2018-09-26'
-modified: '2024-07-30'
+title: "Errores Comunes con Promesas"
+subTitle: Evitando errores comunes
+date: 2018-09-26
+modified: 2024-07-30
 category: Code
 subCategory: promises
-tags:
-  - promises
-  - async
-  - debugging
-  - errors
-  - javascript
-  - composition
-related:
-  - intro-to-promises
-  - visualizing-promises
-  - are-promises-broken
-  - javascript-promises-quiz
-cover: ../michal-parzuchowski-224092-unsplash.webp
-cover_mobile: ../w300_michal-parzuchowski-224092-unsplash.webp
-cover_icon: ../icon_michal-parzuchowski-224092-unsplash.webp
+tags: [promises, async, debugging, errors, javascript, composition]
+related: [intro-to-promises, visualizing-promises, are-promises-broken, javascript-promises-quiz]
+cover: michal-parzuchowski-224092-unsplash.webp
+cover_mobile: w300_michal-parzuchowski-224092-unsplash.webp
+cover_icon: icon_michal-parzuchowski-224092-unsplash.webp
 ---
-### Las Promesas no funcionan como otros valores
+
+### Las promesas no funcionan como otros valores
 
 No puedes imprimir su valor como la mayoría de los valores:
 
@@ -30,21 +21,21 @@ No puedes imprimir su valor como la mayoría de los valores:
 // Esto no tiene sentido con promesas:
 console.log(Promise.resolve(42));
 
-// Debemos usar la interfaz .then:
+// Debemos usar la interfaz `.then`:
 Promise.resolve(42).then(value => console.log(value));
 ```
 
-### Las Promesas no te advierten cuando cometes un error
+### Las promesas no te advierten cuando cometes un error
 
 Bueno, un error probable.
 
-Por diversas razones, se decidió en TC39 que `.then` y `.catch` pueden recibir `null`. Por ejemplo, `.then(null, null)` es válido y el comportamiento requerido es omitir ese "paso" en la cadena.
+Por diversas razones, TC39 decidió que a `.then` y `.catch` se les puede pasar null. Por ejemplo, `.then(null, null)` es válido y el comportamiento requerido es saltar ese 'paso' en la cadena.
 
-La consecuencia desafortunada de esto es que es muy fácil estropear las cosas.
+La lamentable consecuencia de esto es que es muy fácil cometer errores.
 
-##### Por ejemplo
+##### Por Ejemplo
 
-Veamos un pequeño desafío: ¿cuál de las siguientes opciones imprimirá `console.log` 42?
+Veamos un mini desafío: ¿cuál(es) de las siguientes opciones mostrará 42 en consola?
 
 ```js
 // Opción #1:
@@ -62,9 +53,9 @@ Promise.resolve(42)
   .then(console.log);
 ```
 
-##### La respuesta
+##### La Respuesta
 
-La respuesta es la opción #2, #3 y #4.
+La respuesta es #2, #3 y #4.
 
 ¿Por qué? Veamos los **tipos** de lo que se pasó a `.then()`:
 
@@ -80,11 +71,11 @@ typeof arg3 === "function";
 
 ¿Todavía te preguntas cómo funciona esa cuarta opción?
 
-Esencialmente se ejecuta de esta manera:
+Efectivamente se ejecuta así:
 
 ```js
-// Opción #4 - de forma efectiva
+// Opción #4 - efectivamente
 Promise.resolve(42)
-  .then(undefined) // esto no tiene efecto en el valor, será pasado al siguiente `.then(fn)`
+  .then(undefined) // esto no tiene ningún efecto en el valor, se pasará al siguiente `.then(fn)`
   .then(console.log);
 ```

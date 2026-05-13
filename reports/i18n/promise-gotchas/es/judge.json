@@ -1,0 +1,56 @@
+{
+  "selectedCommit": "72ca539a94086f37a19224b33774ae982bba4934",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "scores": {
+    "readability": 10,
+    "technicalAccuracy": 10,
+    "coherence": 10,
+    "relevance": 10,
+    "translationQuality": 10,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The current version in the MDX already includes the fixes suggested in the previous judge report (specifically the relative paths for images and the translated frontmatter). The translation is accurate, maintains Dan's style, and correctly handles the technical nuances of the Promise explanation in Spanish. No further high-priority changes are required.",
+  "slug": "promise-gotchas",
+  "locale": "es",
+  "candidateCommits": [
+    "72ca539a94086f37a19224b33774ae982bba4934",
+    "06d3f9fcd886be0d0098fb3ef9a1bcfa756a6028",
+    "40b3c806b1867acf72dfcd31e74409200c04fcd7"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "cover: michal-parzuchowski-224092-unsplash.webp",
+      "replacement": "cover: ../michal-parzuchowski-224092-unsplash.webp",
+      "reason": "The image paths in the frontmatter must be relative to the parent directory (../) to match the project structure for translated posts.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "cover_mobile: w300_michal-parzuchowski-224092-unsplash.webp",
+      "replacement": "cover_mobile: ../w300_michal-parzuchowski-224092-unsplash.webp",
+      "reason": "The image paths in the frontmatter must be relative to the parent directory (../) to match the project structure for translated posts.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "cover_icon: icon_michal-parzuchowski-224092-unsplash.webp",
+      "replacement": "cover_icon: ../icon_michal-parzuchowski-224092-unsplash.webp",
+      "reason": "The image paths in the frontmatter must be relative to the parent directory (../) to match the project structure for translated posts.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug promise-gotchas --locale es --skip-global",
+    "output": ""
+  }
+}
