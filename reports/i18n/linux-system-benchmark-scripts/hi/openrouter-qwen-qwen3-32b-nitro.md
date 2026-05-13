@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: linux-system-benchmark-scripts
+- Locale: hi
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2017-05-01--linux-system-benchmark-scripts/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 19.48
+- Input tokens: 2772
+- Output tokens: 3521
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.001067
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: ''
@@ -153,3 +171,4 @@ benchDisk
 1. सिस्टम: iotop
 1. प्रति कमांड: dtrace/ltrace/strace
 -->
+````
