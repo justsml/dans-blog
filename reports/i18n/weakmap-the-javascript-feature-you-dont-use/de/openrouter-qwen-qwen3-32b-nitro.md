@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: weakmap-the-javascript-feature-you-dont-use
+- Locale: de
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2025-12-29--weakmap-the-javascript-feature-you-dont-use/de/index.mdx
+- Validation: passed
+- Runtime seconds: 12.15
+- Input tokens: 5361
+- Output tokens: 5366
+- Thinking tokens: unknown
+- Cached input tokens: 1024
+- Cache write tokens: 0
+- Estimated cost: $0.001717
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Verhindere Speicherlecks mit WeakMap
 subTitle: Schwachen Code mit schwachen Referenzen beheben!
@@ -127,3 +145,4 @@ Manchmal ist das beste Feature das, das einfach funktioniert, ohne dass Sie dar√
 - [MDN: Memory Management](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Memory_management)  
 - [V8 Blog: Weak References and Finalizers](https://v8.dev/features/weak-references)  
 - [JavaScript.info: WeakMap and WeakSet](https://javascript.info/weakmap-weakset)
+````
