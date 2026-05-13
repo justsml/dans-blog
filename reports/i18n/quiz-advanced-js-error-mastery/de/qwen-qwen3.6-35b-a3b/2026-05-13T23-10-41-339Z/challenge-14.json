@@ -1,0 +1,47 @@
+{
+  "index": 13,
+  "attempt": 1,
+  "originalTitle": "Object vs Error Detection",
+  "translatedTitle": "Objekt- vs. Fehlererkennung",
+  "translation": {
+    "title": "Objekt- vs. Fehlererkennung",
+    "group": "Fehlergrenzen",
+    "options": [
+      {
+        "text": "true, true"
+      },
+      {
+        "text": "false, false"
+      },
+      {
+        "text": "true, false"
+      },
+      {
+        "text": "false, true"
+      }
+    ],
+    "questionProse": [
+      "Was liefern diese Checks zurück?"
+    ],
+    "explanationProse": [
+      "`instanceof Error` liefert `false`, weil das Objekt nicht mit dem Error-Konstruktor erstellt wurde. `Object.prototype.toString.call()` gibt ebenfalls `false` zurück (es liefert `'[object Object]'`), da es den internen `[[Class]]`-Slot prüft. Beide Ansätze identifizieren korrekt, dass es sich um ein gefälschtes Fehlerobjekt handelt."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Objekt- vs. Fehlererkennung\",\n  \"group\": \"Fehlergrenzen\",\n  \"options\": [\n    {\n      \"text\": \"true, true\"\n    },\n    {\n      \"text\": \"false, false\"\n    },\n    {\n      \"text\": \"true, false\"\n    },\n    {\n      \"text\": \"false, true\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was liefern diese Checks zurück?\"\n  ],\n  \"explanationProse\": [\n    \"`instanceof Error` liefert `false`, weil das Objekt nicht mit dem Error-Konstruktor erstellt wurde. `Object.prototype.toString.call()` gibt ebenfalls `false` zurück (es liefert `'[object Object]'`), da es den internen `[[Class]]`-Slot prüft. Beide Ansätze identifizieren korrekt, dass es sich um ein gefälschtes Fehlerobjekt handelt.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 797,
+    "outputTokens": 2293,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 13833,
+    "providerCostUsd": 0.00234179465,
+    "providerUpstreamCostUsd": 0.00234179465,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00011954999999999999,
+    "outputUsd": 0.002293,
+    "totalUsd": 0.00241255,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

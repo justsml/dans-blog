@@ -1,0 +1,47 @@
+{
+  "index": 0,
+  "attempt": 1,
+  "originalTitle": "The Empty Object Mystery",
+  "translatedTitle": "Das Rätsel des leeren Objekts",
+  "translation": {
+    "title": "Das Rätsel des leeren Objekts",
+    "group": "Serialisierungs-Überraschungen",
+    "options": [
+      {
+        "text": "{\"message\":\"Oops\",\"name\":\"Error\"}"
+      },
+      {
+        "text": "{}"
+      },
+      {
+        "text": "{\"error\":\"Oops\"}"
+      },
+      {
+        "text": "null"
+      }
+    ],
+    "questionProse": [
+      "Was gibt `JSON.stringify(error)` zurück?"
+    ],
+    "explanationProse": [
+      "Error-Objekte besitzen nicht-auflistbare Eigenschaften (`message`, `name`, `stack`), weshalb `JSON.stringify()` `{}` zurückgibt. Das ist ein häufiger Stolperstein beim Serialisieren von Fehlern in API-Antworten. Verwende stattdessen `JSON.stringify(error, Object.getOwnPropertyNames(error))` oder erstelle ein plain Object."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Das Rätsel des leeren Objekts\",\n  \"group\": \"Serialisierungs-Überraschungen\",\n  \"options\": [\n    {\n      \"text\": \"{\\\"message\\\":\\\"Oops\\\",\\\"name\\\":\\\"Error\\\"}\"\n    },\n    {\n      \"text\": \"{}\"\n    },\n    {\n      \"text\": \"{\\\"error\\\":\\\"Oops\\\"}\"\n    },\n    {\n      \"text\": \"null\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was gibt `JSON.stringify(error)` zurück?\"\n  ],\n  \"explanationProse\": [\n    \"Error-Objekte besitzen nicht-auflistbare Eigenschaften (`message`, `name`, `stack`), weshalb `JSON.stringify()` `{}` zurückgibt. Das ist ein häufiger Stolperstein beim Serialisieren von Fehlern in API-Antworten. Verwende stattdessen `JSON.stringify(error, Object.getOwnPropertyNames(error))` oder erstelle ein plain Object.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 797,
+    "outputTokens": 2232,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 14060,
+    "providerCostUsd": 0.0022829144,
+    "providerUpstreamCostUsd": 0.0022829144,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00011954999999999999,
+    "outputUsd": 0.002232,
+    "totalUsd": 0.00235155,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

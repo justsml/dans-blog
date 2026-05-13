@@ -1,0 +1,47 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "instanceof Inheritance",
+  "translatedTitle": "instanceof-Vererbung",
+  "translation": {
+    "title": "instanceof-Vererbung",
+    "group": "Kniffe beim Typ-Check",
+    "options": [
+      {
+        "text": "true, true, true"
+      },
+      {
+        "text": "true, false, false"
+      },
+      {
+        "text": "false, true, true"
+      },
+      {
+        "text": "true, true, false"
+      }
+    ],
+    "questionProse": [
+      "Welche Ergebnisse liefern diese Checks?"
+    ],
+    "explanationProse": [
+      "Alle drei liefern `true`. `CustomError` erbt von `Error`, das seinerseits von `Object` erbt. Der `instanceof`-Operator durchsucht die gesamte Prototypenkette, daher ist eine `CustomError`-Instanz auch eine Instanz von `Error` und `Object`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"instanceof-Vererbung\",\n  \"group\": \"Kniffe beim Typ-Check\",\n  \"options\": [\n    {\n      \"text\": \"true, true, true\"\n    },\n    {\n      \"text\": \"true, false, false\"\n    },\n    {\n      \"text\": \"false, true, true\"\n    },\n    {\n      \"text\": \"true, true, false\"\n    }\n  ],\n  \"questionProse\": [\n    \"Welche Ergebnisse liefern diese Checks?\"\n  ],\n  \"explanationProse\": [\n    \"Alle drei liefern `true`. `CustomError` erbt von `Error`, das seinerseits von `Object` erbt. Der `instanceof`-Operator durchsucht die gesamte Prototypenkette, daher ist eine `CustomError`-Instanz auch eine Instanz von `Error` und `Object`.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 795,
+    "outputTokens": 2904,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 18079,
+    "providerCostUsd": 0.00293124,
+    "providerUpstreamCostUsd": 0.00293124,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00011925,
+    "outputUsd": 0.002904,
+    "totalUsd": 0.00302325,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

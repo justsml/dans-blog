@@ -1,0 +1,47 @@
+{
+  "index": 12,
+  "attempt": 1,
+  "originalTitle": "Non-Standard Properties",
+  "translatedTitle": "Nicht-Standard-Eigenschaften",
+  "translation": {
+    "title": "Nicht-Standard-Eigenschaften",
+    "group": "Fehler-Eigenschaften",
+    "options": [
+      {
+        "text": "Immer verfügbar"
+      },
+      {
+        "text": "Existiert möglicherweise nicht in allen Umgebungen"
+      },
+      {
+        "text": "Nur in Node.js verfügbar"
+      },
+      {
+        "text": "Veraltet und entfernt"
+      }
+    ],
+    "questionProse": [
+      "Wie verlässlich sind `error.code` und `error.errno` wirklich?"
+    ],
+    "explanationProse": [
+      "Eigenschaften wie `code` und `errno` sind umgebungsspezifisch (hier Node.js) und nicht Teil des standardisierten Error-Objekts. Browser-Fehler besitzen diese Eigenschaften einfach nicht. Prüfe daher immer auf ihre Existenz, bevor du sie auswertest: `if (err.code === 'ENOENT')`. Sonst fliegt dir dein Code um die Ohren, weil du auf Annahmen statt auf Fakten setzt."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Nicht-Standard-Eigenschaften\",\n  \"group\": \"Fehler-Eigenschaften\",\n  \"options\": [\n    {\n      \"text\": \"Immer verfügbar\"\n    },\n    {\n      \"text\": \"Existiert möglicherweise nicht in allen Umgebungen\"\n    },\n    {\n      \"text\": \"Nur in Node.js verfügbar\"\n    },\n    {\n      \"text\": \"Veraltet und entfernt\"\n    }\n  ],\n  \"questionProse\": [\n    \"Wie verlässlich sind `error.code` und `error.errno` wirklich?\"\n  ],\n  \"explanationProse\": [\n    \"Eigenschaften wie `code` und `errno` sind umgebungsspezifisch (hier Node.js) und nicht Teil des standardisierten Error-Objekts. Browser-Fehler besitzen diese Eigenschaften einfach nicht. Prüfe daher immer auf ihre Existenz, bevor du sie auswertest: `if (err.code === 'ENOENT')`. Sonst fliegt dir dein Code um die Ohren, weil du auf Annahmen statt auf Fakten setzt.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 804,
+    "outputTokens": 3357,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 18694,
+    "providerCostUsd": 0.00336994905,
+    "providerUpstreamCostUsd": 0.00336994905,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.0001206,
+    "outputUsd": 0.003357,
+    "totalUsd": 0.0034776,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

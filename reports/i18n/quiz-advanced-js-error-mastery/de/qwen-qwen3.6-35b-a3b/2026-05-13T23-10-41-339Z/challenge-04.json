@@ -1,0 +1,47 @@
+{
+  "index": 3,
+  "attempt": 1,
+  "originalTitle": "Cross-Frame instanceof",
+  "translatedTitle": "iframe-übergreifendes instanceof",
+  "translation": {
+    "title": "iframe-übergreifendes instanceof",
+    "group": "Typ-Check-Tricks",
+    "options": [
+      {
+        "text": "Immer wahr"
+      },
+      {
+        "text": "Immer falsch"
+      },
+      {
+        "text": "Kann rahmenübergreifend falsch sein"
+      },
+      {
+        "text": "Wirft einen Fehler"
+      }
+    ],
+    "questionProse": [
+      "Was passiert, wenn du `instanceof Error` über iframes hinweg testest?"
+    ],
+    "explanationProse": [
+      "`instanceof` kann über verschiedene Ausführungskontexte (iframes, Web Workers) hinweg `false` zurückgeben, da jeder Kontext seinen eigenen `Error`-Konstruktor besitzt. Nutze `Object.prototype.toString.call(obj) === '[object Error]'`, um Fehler kontextübergreifend zuverlässig zu erkennen."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"iframe-übergreifendes instanceof\",\n  \"group\": \"Typ-Check-Tricks\",\n  \"options\": [\n    {\n      \"text\": \"Immer wahr\"\n    },\n    {\n      \"text\": \"Immer falsch\"\n    },\n    {\n      \"text\": \"Kann rahmenübergreifend falsch sein\"\n    },\n    {\n      \"text\": \"Wirft einen Fehler\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was passiert, wenn du `instanceof Error` über iframes hinweg testest?\"\n  ],\n  \"explanationProse\": [\n    \"`instanceof` kann über verschiedene Ausführungskontexte (iframes, Web Workers) hinweg `false` zurückgeben, da jeder Kontext seinen eigenen `Error`-Konstruktor besitzt. Nutze `Object.prototype.toString.call(obj) === '[object Error]'`, um Fehler kontextübergreifend zuverlässig zu erkennen.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 790,
+    "outputTokens": 2719,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 13233,
+    "providerCostUsd": 0.00275186275,
+    "providerUpstreamCostUsd": 0.00275186275,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.0001185,
+    "outputUsd": 0.002719,
+    "totalUsd": 0.0028375,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
