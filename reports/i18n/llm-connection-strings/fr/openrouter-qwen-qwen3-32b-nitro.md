@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: llm-connection-strings
+- Locale: fr
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-01-30--llm-connection-strings/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 12.83
+- Input tokens: 5757
+- Output tokens: 5240
+- Thinking tokens: unknown
+- Cached input tokens: 512
+- Cache write tokens: 0
+- Estimated cost: $0.001718
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Il est temps de passer aux chaînes de connexion LLM
 subTitle: ''
@@ -115,3 +133,4 @@ Arrêtons de réinventer la roue et commençons à traiter nos connexions LLM av
 ![un tiroir rempli de variables d'environnement en désordre](../hero-concept-8-drawers.webp)
 
 {/* ¹ Yes, I know that `URI` is more correct than `URL`. If you are pedantic enough to actually care about that distinction, please go touch grass. */}
+````
