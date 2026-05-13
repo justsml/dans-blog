@@ -200,6 +200,12 @@ Thinking-capable models are run with cheap reasoning variants by default:
 
 `bun run i18n:report:models` regenerates `reports/i18n/model-performance.md`, including aggregate model stats, winner counts, and article/locale winner tables.
 
+For ad hoc accounting over `candidates.jsonl` and `judgements.jsonl`, use the
+[i18n telemetry jq cookbook](i18n-telemetry-jq.md). It includes snippets for
+combining logs, de-duplicating candidate rows, totaling costs and tokens,
+filtering by absolute or relative date ranges, and turning the snippets into
+small shell scripts.
+
 `bun run i18n:coverage` prints a coverage and health report for the translation corpus. Use it before starting a broad batch to see which slug/locale pairs are missing, after promotion to confirm coverage changed as expected, and during review to spot stale fallback redirects or locale folders that look incomplete. It is a reporting pass, not a promotion or validation substitute; still run the build/check commands below before finishing.
 
 ## Candidate Models

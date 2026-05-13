@@ -1,0 +1,115 @@
+---
+title: モデルに依存するな
+subTitle: LLMルーティング：今、最も注目されている
+date: '2026-01-02'
+modified: '2026-01-08'
+tags:
+  - ai
+  - llm
+  - typescript
+  - mastra
+  - agent-orchestration
+category: AI
+subCategory: Engineering
+social_image: ../mobile-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+多くのエンジニアリングチームは、ある言語モデルを選んでそのまま使い続ける。プロバイダー1つ、モデル1つ、タスクはすべて同じ。それは、最初の面接で少し良い印象を与えただけで、コーディング、コピーライティング、税務処理をすべて任せるようなものだ。
+
+常に、あるモデルはコード生成に強く、別のモデルは長くてノイズの多いコンテキスト処理に優れ、さらに別のモデルは分類作業における最も安価で地味な主力だ。モデル名は変わる。問題の構造は変わらない。1つのモデルが何でも得意だと扱えば、単純なタスクには過剰なコストを払うか、専門的なタスクでは劣った結果しか得られない。
+
+以前、あるチームが感情分析に$30/百万トークンのモデルを使っていたが、$0.50のモデルで十分だったケースを直接目撃した。単純なJSONフォーマットや基本的な分類タスクですら、すべてプレミアムプロバイダー経由で処理していた。熱くなっていたのは、ただ彼らのAWSの請求書だけだった。
+
+より良い方法がある。それほど複雑なものではない。
+
+## 献身より委譲
+
+リクエストを、その特定のタスクに実際に最も適したモデルへルーティングできたらどうだろう？高価なパワフルモデルを難しい処理に使い、単純なパースやフォーマットはより安価なモデルに任せる。コードベースで手動で振り分ける手間なしに、複数プロバイダーの恩恵を得られる。
+
+Mastraを使えば、まさにこの種のシステムを構築できる。異なる作業タイプごとに専門エージェントを設定し、どの専門家が各リクエストを処理すべきかを判断するルーターエージェントを作成する。以下のモデルIDは例示であり、ランキングではない。評価で勝つ現在のモデルに、かつ予算に合うモデルに差し替えてほしい。
+
+たとえばこう考えてほしい。チームに3人の専門家がいるとする。
+
+```typescript
+// ./src/mastra/index.ts
+import { Mastra } from '@mastra/core';
+import { Agent } from '@mastra/core/agent';
+import { openai } from '@ai-sdk/openai';
+import { anthropic } from '@ai-sdk/anthropic';
+import { google } from '@ai-sdk/google';
+
+export const claudeAgent = new Agent({
+  id: 'claude-agent',
+  instructions: 'You are an expert engineer. Write bugs? You are fired.',
+  model: anthropic(process.env.CODE_MODEL ?? 'claude-sonnet-4-5'),
+});
+
+export const geminiAgent = new Agent({
+  id: 'gemini-agent',
+  instructions: 'You are a creative writer. Be weird.',
+  model: google(process.env.LONG_CONTEXT_MODEL ?? 'gemini-3-pro-preview'),
+});
+
+export const gptAgent = new Agent({
+  id: 'gpt-agent',
+  instructions: 'You are a helpful assistant. Be boring.',
+  model: openai(process.env.GENERAL_MODEL ?? 'gpt-5.2'),
+});
+```
+
+各モデルには役割がある。コード用エージェントは、リポジトリ固有のコーディング評価をパスするモデルであるべきだ。長文コンテキスト用エージェントは、実際のドキュメントを処理しても中間部がぐちゃぐちゃにならないモデルであるべきだ。汎用エージェントは、最も好ましい形で安価で、信頼性が高く、地味であるべきだ。
+
+ここで面白くなってくる。インテリジェントなプロキシとして機能するルーターを追加する。
+
+```typescript
+export const routerAgent = new Agent({
+  id: 'router-agent',
+  name: 'The Boss',
+  instructions: `You are an intelligent router.
+  - Coding -> Claude
+  - Poetry -> Gemini
+  - Facts -> GPT
+
+  Do not do the work yourself. Delegate.`,
+  model: openai(process.env.ROUTER_MODEL ?? 'gpt-5-mini'), // Use a cheap model for routing!
+  agents: {
+    claudeAgent,
+    geminiAgent,
+    gptAgent,
+  },
+});
+
+export const mastra = new Mastra({
+  agents: { routerAgent, claudeAgent, geminiAgent, gptAgent },
+});
+```
+
+ルーター自体は軽量モデルで動作する。単にリクエストをどのエンドポイントに振り分けるかを決めるだけだからだ。他の高品質モデルを選ぶための判断に、高額なモデル料金を払うのは不合理だ。この指標も計測すべきだ。ルーターの判断が鈍ると、節約分が誤ルーティングによって静かに帳消しになる。
+
+バブルソートの実装を依頼されたら、ルーターはそれをコード作業と認識してコード専門エージェントに渡す。クリエイティブな文章生成のプロンプト？ それはボイスと表現力のために選んだモデルに投げる。歴史的な事実に関する質問？ 汎用エージェントにルーティングし、最新性や出典が重要なら検索機能（RAG）を併用するのが理想だ。
+
+## 実務的な利点
+
+**コスト効率の重要性は、あなたが思っている以上に大きい。** 委譲判断を行う小型のルーティングモデルは、すべてのリクエストを最も高価なプロバイダーに通す場合と比較すれば、コストは桁違いに安い。時間が経つにつれ、特に大規模運用では、これが実額として積み重なる。実際に重い処理が必要なときだけ、高コストな推論に課金すればいい。
+
+**モデルとタスクを適切にマッチさせれば、品質は向上する。** 勝者は月ごと、タスクごと、プロンプトの形状によって変わる。だからこそ、ルーティング層はあなたの評価指標（evals）に依存すべきであり、統合を書いた週にTwitterで話題だったモデルに依存してはならない。
+
+**レジリエンスは副次的な恩恵として得られる。** OpenAIが定期的に起こす障害（実際に起こる）の際、ルーターはトラフィックを他プロバイダーにリダイレクトできる。特定のAPIが復帰するのを待って、システムが完全に足止めを食らう事態は避けられる。
+
+これは自己満足のための小細工ではない。財務的にも技術的にも理にかなったシステムを構築するための設計だ。すべての建設作業に同じハンマーを使うはずがないのと同じで、すべてのAIタスクに同じ言語モデルを使うべきでもない。
+
+このアプローチの優れている点は、アプリケーションコードを変更する必要がないことだ。依然として呼び出すのはルーターエージェントだけでいい。どのモデルをどのタスクに使うかという判断の複雑さは、コードベース全体に散らばった条件分岐の羅列ではなく、一元管理された設定に閉じ込められる。
+
+### リソース
+
+- [Mastra.ai ドキュメント](https://mastra.ai/docs)
+- [Mastra GitHub リポジトリ](https://github.com/mastra-ai/mastra)
+
+## シリーズを読む
+
+1. **LLMルーティング**（本記事）
+2. [セキュリティとガードレール](../mastra-security-guardrails)
+3. [MCPとツール統合](../mastra-mcp-tool-integrations)
+4. [ワークフローとメモリ](../mastra-workflows-memory)

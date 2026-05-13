@@ -1,0 +1,138 @@
+---
+title: LLMに数学を解かせるのはやめよう
+subTitle: 彼らはそれが下手だ。修正方法はここにある。
+date: '2026-01-06'
+modified: '2026-01-07'
+tags:
+  - ai
+  - ai-sdk
+  - typescript
+  - math
+  - tools
+  - patterns
+category: AI
+subCategory: Engineering
+social_image: ../desktop-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+言語モデルの奇妙な点をご存じだろうか？量子力学を説明し、詩を書き、TypeScriptのデバッグまでできるのに、18472×9347を計算させると、数千単位でずれた答えを自信満々に返してくる確率がかなり高い。
+
+以前はこれに困惑していたが、私たちが実際に何を求めているのかに気づいてからは納得した。パターンマッチングエンジンに計算機の役割をさせているのだ。これは、体操選手に「バランス」の概念を理解しているからという理由で家計簿を任せるようなものだ。
+
+要するに、LLMは何も計算していない。GPTやClaudeに「2+2は？」と尋ねても、足し算をしているわけではない。「2+2=」の後に現れるトークンとして「4」が最も確からしいと予測しているだけだ。大抵の場合はうまくいく。なぜならこれらのパターンは訓練データに存在するからだ。しかし、簡単な算術を超えて多段階の計算や、訓練データで一般的でなかった数値を扱うと、本質的にサイコロを振るようなものになる。
+
+最近、トップクラスのモデルを使って住宅ローンの支払額を計算するコードをレビューしていて、この問題に正面からぶつかった。モデルは完全な自信を持って回答した。しかし、月額400ドルも間違っていた。それが問題になる種類のエラーだ。
+
+モデルの推論能力が向上しても（GPT-5は改善が見られるらしい）、依然として高度なパターンマッチングを行っているのであって、記号計算をしているわけではない。創造的な作業や自然言語タスクでは、この確率的な性質こそが魔法を生み出す。しかし数学では？そうはいかない。
+
+## 実際にこれを解決するものは？
+
+答えは、より賢いモデルを待つことではない。モデルに適切なツールを与えることだ。
+
+非AIシステムを構築する場合、どうやってこの問題を解決するか考えてみてほしい。独自の数学ロジックを書くのではなく、ライブラリに頼るだろう。同じ原理がここでも当てはまる。ただし今回は、LLMにそのライブラリをいつどのように使うかを教える必要がある。
+
+最新のAI SDKにおけるツール呼び出しを使えば、モデルに構造化された関数を渡して呼び出させることができる。LLMに数学を知っているふりを強いる代わりに、実際に計算できるもの（記号数学エンジン）を与えるのだ。
+
+私はこれに[AI SDK v5 and v6](https://ai-sdk.vercel.ai/)とCortexJS Compute Engineを組み合わせて使っている。SDKがオーケストレーションとツールルーティングを担当し、CortexJSが基本的な算術から微積分までを処理する。驚くほどきれいな関心事の分離だ。
+
+```bash
+bun add ai @ai-sdk/anthropic @cortex-js/compute-engine zod
+```
+
+## 数学ツールの構築
+
+実装は思ったより簡単だ。構築するのは、LLMの自然言語理解と実際の数学計算の間の橋渡しだ。
+
+```typescript
+import { generateText, stepCountIs, tool } from 'ai';
+import { ComputeEngine } from '@cortex-js/compute-engine';
+import { z } from 'zod';
+
+// Initialize the engine once
+const ce = new ComputeEngine();
+
+const mathTool = tool({
+  description: 'Evaluate mathematical expressions and solve equations with guaranteed accuracy. MUST be used for all mathematical operations to verify correctness - do not attempt mental math. Supports arithmetic, algebra, calculus, and complex operations. Can process multiple expressions at once.',
+  parameters: z.object({
+    expressions: z.array(z.string()).describe(
+      'Array of mathematical expressions in LaTeX or plain notation, e.g. ["2 + 2", "\\frac{x^2 + 1}{x - 1}", "\\int x^2 dx"]'
+    ),
+  }),
+  execute: async ({ expressions }) => {
+    // Process all expressions in parallel (or detailed batch)
+    return expressions.map(expression => {
+      try {
+        const result = ce.parse(expression).evaluate();
+        return {
+          expression,
+          result: result.toString(),
+          latex: result.latex,
+        };
+      } catch (error) {
+        return { 
+          expression,
+          error: (error as Error).message 
+        };
+      }
+    });
+  },
+});
+```
+
+これについて注目すべき点がいくつかある：
+
+descriptionが重要な役割を果たしている。「MUST be used」という表現は攻撃的に見えるかもしれないが、私の経験では、ツールをいつ使うべきかをモデルに明確に伝えることが、時々しか機能しないか確実に機能するかの分かれ目になる。ツールレベルでのプロンプトエンジニアリングと考えてほしい。
+
+`expressions`配列によるバッチ処理は、思っている以上に重要だ。モデル呼び出しにはレイテンシが伴う。連立方程式を解いたり、多段階の計算を行う場合、個別に処理するとユーザー体験が著しく低下する。バッチ処理により、10個の問題を解くのに1往復で済む。
+
+単なる`eval()`（`eval()`は使わないでほしい）ではなく記号エンジンを使うことで、真の数学的理解が得られる。エンジンは意図を解析し、LaTeX形式を処理し、微分や積分も扱える。単なる計算ではなく、数学を実行しているのだ。
+
+エラーハンドリングは式ごとにスコープされている。ある計算が失敗しても、そのエラーを返しつつ残りは続行する。これによりモデルは何が成功し何が失敗したかを把握し、次のステップで自己修正できる可能性がある。
+
+## 実際に使ってみる
+
+生のモデルが幻覚を起こしやすい問題を投げかけてみよう：
+
+```typescript
+import { anthropic } from '@ai-sdk/anthropic';
+
+const { text } = await generateText({
+  model: anthropic('claude-sonnet-4-5'),
+  prompt: 'Calculate 18472 × 9347, divide by 127, then take the square root of the result.',
+  tools: { mathTool },
+  stopWhen: stepCountIs(5), // Allow up to five model/tool steps
+});
+
+console.log(text);
+```
+
+モデルは計算を認識し、精度が必要だと判断してツールを呼び出し、正確な結果を得て、それを自然言語で説明する。各コンポーネントがそれぞれの得意分野を担当している。
+
+## 基本演算を超えて
+
+シンボリックエンジンを使用しているため、このアプローチは単純な計算機ツールでは扱えないものも処理できる。
+
+代数方程式を解きたいか？「次の方程式を解け：3x + 7 = 22、2y - 5 = 13」も問題なく動作する。
+
+微積分が必要か？「x^3 + 2x^2 の導関数を求め、x = 2 で評価せよ」も単なるツール呼び出しである。
+
+LaTeXのサポートは、教育アプリを構築する場合に特に有用である。エンジンはLaTeX入力を本質的に理解し、レンダリング用にフォーマットされた結果を返すことができる。追加のパースは不要である。
+
+## 大局的な視点
+
+このパターンは数学だけに留まらず重要だと考える。我々が実際に行っているのは、LLMの限界を認めつつ、その強みを活用することである。LLMは意図の理解、自然言語の解析、ワークフローのオーケストレーションにおいて非常に優れている。しかし、計算機やデータベース、ファイルシステムではない。
+
+LLMに決定論的なことをさせようとするたびに、その性質に逆らっていることになる。しかし、その自然言語理解と、決定論的な部分を処理する専門ツールを組み合わせるとどうなるか？そこから面白くなる。
+
+数学ツールは一例に過ぎない。同じ原理は、日付操作、財務計算、画像処理、データベースクエリなど、創造性よりも精度が重要なあらゆる場面に適用できる。モデルにユーザーの意図を理解させ、実際の作業はそのために作られたものに任せるのである。
+
+これはAIを用いた構築の考え方の転換である。「モデルはこれができるか？」ではなく「モデルはこれをオーケストレーションできるか？」という問いである。表現の小さな違いだが、信頼性には大きな違いがある。
+
+## リソース
+
+- [Vercel AI SDK ドキュメント](https://sdk.vercel.ai/docs)
+- [CortexJS Compute Engine](https://cortexjs.io/compute-engine/)
+- [ツール呼び出しガイド](https://sdk.vercel.ai/docs/ai-sdk-core/tools-and-tool-calling)
+- [AI SDK サンプルリポジトリ](https://github.com/vercel/ai/tree/main/examples)

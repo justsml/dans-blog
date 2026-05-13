@@ -1,0 +1,102 @@
+{
+  "runId": "openai-gpt-oss-120b-nitro@2026-05-13T22-28-44-214Z",
+  "slug": "beam-search-transformers-js",
+  "locale": "ja",
+  "model": "openai/gpt-oss-120b:nitro",
+  "modelPath": "openai-gpt-oss-120b-nitro",
+  "createdAt": "2026-05-13T22:28:49.884Z",
+  "sourcePath": "src/content/posts/2026-04-16--beam-search-transformers-js/index.mdx",
+  "targetPath": "src/content/posts/2026-04-16--beam-search-transformers-js/ja/index.mdx",
+  "candidatePath": "reports/i18n/beam-search-transformers-js/ja/openai-gpt-oss-120b-nitro/2026-05-13T22-28-44-214Z/candidate.mdx",
+  "sourceHash": "f18620b582f1c2a340c4b7d98da5cb544cd646463534f4076975963727af3149",
+  "outputHash": "25a510d7156a96429068fe2768411f2fcd1a4d08db45bef6f1e07d1c60fa3029",
+  "reasoningEffort": "low",
+  "temperature": 0.3,
+  "maxTokens": 16000,
+  "timeoutMs": 200000,
+  "articleSummary": "The articleargues that `transformers.js` has been silently falling back to greedy decoding because its `num_beams` parameter was never actually supported, and it walks the reader through a full implementation of proper beam search—including standard, diverse, and sampling variants—while exposing the pitfalls of re‑using the existing `BeamSearchSampler` class. It details the core technical challenges: correctly handling the `num_beams × vocab_size` candidate space, reordering the transformer’s key‑value cache after each pruning step, and managing the `BeamHypotheses` priority queue with length penalties and early‑stopping logic. The piece is written as a hands‑on tutorial for JavaScript developers familiar with the Hugging Face transformers ecosystem, using metaphors like “breadth‑first search through token space” and “diversity penalty” to frame the algorithmic choices.",
+  "totalInputTokens": 9959,
+  "totalOutputTokens": 4230,
+  "totalCacheReadTokens": 3584,
+  "totalCacheWriteTokens": 0,
+  "totalDurationMs": 4587,
+  "totalCostUsd": 0.0011498009999999998,
+  "pricingSource": "local-openrouter-estimate",
+  "telemetry": {
+    "model": "openai/gpt-oss-120b:nitro",
+    "chunkSize": "10p",
+    "totalChunks": 7,
+    "totalInputTokens": 9959,
+    "totalOutputTokens": 4230,
+    "totalCacheReadTokens": 3584,
+    "totalCacheWriteTokens": 0,
+    "totalDurationMs": 4587,
+    "totalCostUsd": 0.0011498009999999998,
+    "pricingSource": "local-openrouter-estimate",
+    "chunks": [
+      {
+        "index": 0,
+        "inputTokens": 1101,
+        "outputTokens": 362,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 474,
+        "costUsd": 0.00010809900000000001
+      },
+      {
+        "index": 1,
+        "inputTokens": 1445,
+        "outputTokens": 672,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 675,
+        "costUsd": 0.000177315
+      },
+      {
+        "index": 2,
+        "inputTokens": 1535,
+        "outputTokens": 775,
+        "cacheReadTokens": 768,
+        "cacheWriteTokens": 0,
+        "durationMs": 888,
+        "costUsd": 0.000199365
+      },
+      {
+        "index": 3,
+        "inputTokens": 1531,
+        "outputTokens": 674,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 650,
+        "costUsd": 0.000181029
+      },
+      {
+        "index": 4,
+        "inputTokens": 1480,
+        "outputTokens": 543,
+        "cacheReadTokens": 768,
+        "cacheWriteTokens": 0,
+        "durationMs": 667,
+        "costUsd": 0.00015546
+      },
+      {
+        "index": 5,
+        "inputTokens": 1431,
+        "outputTokens": 636,
+        "cacheReadTokens": 768,
+        "cacheWriteTokens": 0,
+        "durationMs": 661,
+        "costUsd": 0.00017028899999999998
+      },
+      {
+        "index": 6,
+        "inputTokens": 1436,
+        "outputTokens": 568,
+        "cacheReadTokens": 768,
+        "cacheWriteTokens": 0,
+        "durationMs": 572,
+        "costUsd": 0.00015824399999999998
+      }
+    ]
+  }
+}
