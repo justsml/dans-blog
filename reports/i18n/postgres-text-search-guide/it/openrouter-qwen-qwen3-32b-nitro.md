@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: postgres-text-search-guide
+- Locale: it
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-05-02--postgres-text-search-guide/it/index.mdx
+- Validation: deferred
+- Runtime seconds: 36.88
+- Input tokens: 16504
+- Output tokens: 16106
+- Thinking tokens: unknown
+- Cached input tokens: 2560
+- Cache write tokens: 0
+- Estimated cost: $0.005186
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Guida alla ricerca di testo in Postgres 2026
 subTitle: >-
@@ -472,3 +490,4 @@ Il pool di candidati da 60 documenti per ogni ramo (`LIMIT 60`) è un punto di p
 La ricerca testuale in Postgres copre molto terreno, ma ha un limite. Quando gli utenti descrivono ciò che desiderano invece di nominarlo — "qualcosa per aiutarmi a dormire durante un volo", "articoli sulla risoluzione dei problemi di fiducia come nuovo ingegnere" — la ricerca lessicale e a trigrammi entrambi falliscono.
 
 Questo è il territorio degli embedding vettoriali, della ricerca semantica e delle architetture ibride. Approfondito in [Ricerca vettoriale semantica e strategie ibride](../semantic-vector-search-landscape).
+````
