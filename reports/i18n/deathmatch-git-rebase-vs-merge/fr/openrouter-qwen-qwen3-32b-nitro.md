@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: deathmatch-git-rebase-vs-merge
+- Locale: fr
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2023-08-28--deathmatch-git-rebase-vs-merge/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 19.86
+- Input tokens: 7446
+- Output tokens: 7231
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.002331
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: 'Affrontement : Git Rebase contre Merge'
@@ -128,3 +146,4 @@ Au final, **le rebase signifie que vous rencontrerez parfois des anciens commits
 - Vous pouvez utiliser le séparateur spécial "--" avec `git checkout` pour rester sur la branche actuelle tout en copiant les fichiers spécifiés :  
 - `git checkout feature/half-a-feature **--** <folder or file path>`  
 - Assurez-vous d'avoir committé toutes les modifications que vous souhaitez conserver avant d'exécuter cette commande, car cela écrasera toutes les modifications locales.
+````
