@@ -1,0 +1,45 @@
+---
+title: 'Notes de sécurité : RegEx'
+subTitle: Une RegEx peut-elle être vulnérable ?
+date: '2015-02-24'
+modified: '2018-07-30'
+category: Security
+subCategory: RegEx
+tags:
+  - security
+  - regex
+  - dos
+  - remote-exploit
+cover_credit: Photo by Markus Spiske on Unsplash
+cover: ../markus-spiske-666905-unsplash.webp
+cover_mobile: ../w300_markus-spiske-666905-unsplash.webp
+cover_icon: ../icon_markus-spiske-666905-unsplash.webp
+social_image: ../desktop-social.webp
+---
+## Déni de service par expression régulière : ReDoS
+
+L'une des vulnérabilités les plus surprenantes, et pourtant difficiles à repérer, que j'ai rencontrées concerne les expressions régulières. Qu'elles soient mal écrites ou mal implémentées.
+
+La mémoire/le CPU peuvent être épuisés par une entrée utilisateur volumineuse ou spécialement conçue.
+
+> Il s'agit d'une vulnérabilité de déni de service, pas seulement d'un problème de performance. Si une entrée hostile peut monopoliser le CPU assez longtemps pour affamer les utilisateurs légitimes, elle doit figurer dans votre modèle de menace de sécurité.
+
+### Signes avant-coureurs
+
+1. Quantificateurs imbriqués, groupes répétés ou alternance qui se chevauche
+2. Moteurs à forte rétroaction (backtracking) sans limite de temps ou de longueur d'entrée
+3. L'expression est utilisée avec une entrée utilisateur non vérifiée
+4. La validation par regex s'exécute sur un chemin de requête critique
+
+### Atténuation / Résolution
+
+1. Les regex, c'est difficile.
+    1.  Par exemple, voici comment les gens très intelligents de l'[OWASP recommande de gérer la validation IP][owasp] : `^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$`
+    2.  C'est plus long qu'un tweet (à l'ancienne), pour une adresse IP de 4 octets !!!
+2. Limitez la longueur de l'entrée avant l'évaluation de la regex.
+3. Ajoutez des délais d'attente, une analyse statique ou un moteur sans rétroaction (non-backtracking) là où la plateforme le permet.
+4. Cela affecte presque tous les langages et plateformes : .NET/Node/Python/PERL/Java.
+
+### Référence
+
+- [OWASP ReDoS](https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS)
