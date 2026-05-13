@@ -1,0 +1,44 @@
+{
+  "index": 0,
+  "attempt": 1,
+  "originalTitle": "The Empty Object Mystery",
+  "translatedTitle": "Il mistero dell'oggetto vuoto",
+  "translation": {
+    "title": "Il mistero dell'oggetto vuoto",
+    "group": "Sorprese di serializzazione",
+    "options": [
+      {
+        "text": "{\"message\":\"Oops\",\"name\":\"Error\"}"
+      },
+      {
+        "text": "{}"
+      },
+      {
+        "text": "{\"error\":\"Oops\"}"
+      },
+      {
+        "text": "null"
+      }
+    ],
+    "questionProse": [
+      "Cosa restituisce `JSON.stringify(error)`?"
+    ],
+    "explanationProse": [
+      "Gli oggetti Error hanno proprietà non enumerabili (`message`, `name`, `stack`), quindi `JSON.stringify()` restituisce `{}`. Questo è un inconveniente comune quando si inviano errori nelle risposte API. Usa `JSON.stringify(error, Object.getOwnPropertyNames(error))` o crea invece un oggetto semplice."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Il mistero dell'oggetto vuoto\",\n  \"group\": \"Sorprese di serializzazione\",\n  \"options\": [\n    {\n      \"text\": \"{\\\"message\\\":\\\"Oops\\\",\\\"name\\\":\\\"Error\\\"}\"\n    },\n    {\n      \"text\": \"{}\"\n    },\n    {\n      \"text\": \"{\\\"error\\\":\\\"Oops\\\"}\"\n    },\n    {\n      \"text\": \"null\"\n    }\n  ],\n  \"questionProse\": [\n    \"Cosa restituisce `JSON.stringify(error)`?\"\n  ],\n  \"explanationProse\": [\n    \"Gli oggetti Error hanno proprietà non enumerabili (`message`, `name`, `stack`), quindi `JSON.stringify()` restituisce `{}`. Questo è un inconveniente comune quando si inviano errori nelle risposte API. Usa `JSON.stringify(error, Object.getOwnPropertyNames(error))` o crea invece un oggetto semplice.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 774,
+    "outputTokens": 482,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 553
+  },
+  "cost": {
+    "inputUsd": 0.000030186,
+    "outputUsd": 0.00008676,
+    "totalUsd": 0.000116946,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

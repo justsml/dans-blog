@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-advanced-js-error-mastery
+- Locale: it
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2025-11-04--quiz-advanced-js-error-mastery/it/index.mdx
+- Validation: deferred
+- Runtime seconds: 9.32
+- Input tokens: 13024
+- Output tokens: 7707
+- Thinking tokens: unknown
+- Cached input tokens: 3968
+- Cache write tokens: 0
+- Estimated cost: $0.001895
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: 'Quiz: Padronanza Avanzata degli Errori JS'
 subTitle: Le tue eccezioni sono davvero eccezionali?
@@ -493,3 +511,4 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 Dalle trappole della serializzazione ai fallimenti di `instanceof` tra contesti diversi, questi concetti avanzati distinguono i junior dai professionisti davvero provati.
 
 Pronto per altre sfide? Dai un’occhiata alla nostra [raccolta completa di quiz](/challenges/) per altri rompicapi su JavaScript, algoritmi e molto altro!
+````

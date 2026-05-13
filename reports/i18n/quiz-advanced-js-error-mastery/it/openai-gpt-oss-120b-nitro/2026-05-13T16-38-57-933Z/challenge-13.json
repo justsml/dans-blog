@@ -1,0 +1,44 @@
+{
+  "index": 12,
+  "attempt": 1,
+  "originalTitle": "Non-Standard Properties",
+  "translatedTitle": "Proprietà non standard",
+  "translation": {
+    "title": "Proprietà non standard",
+    "group": "Proprietà dell'errore",
+    "options": [
+      {
+        "text": "Sempre disponibile"
+      },
+      {
+        "text": "Potrebbe non esistere in tutti gli ambienti"
+      },
+      {
+        "text": "Solo in Node.js"
+      },
+      {
+        "text": "Deprecata e rimossa"
+      }
+    ],
+    "questionProse": [
+      "Quanto sono affidabili `error.code` e `error.errno`?"
+    ],
+    "explanationProse": [
+      "Proprietà come `code` e `errno` sono specifiche dell'ambiente (Node.js in questo caso) e non fanno parte dell'oggetto Error standard. Gli errori del browser non avranno queste proprietà. Controlla sempre la loro esistenza: `if (err.code === 'ENOENT')` invece di presumere che esistano."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Proprietà non standard\",\n\"group\": \"Proprietà dell'errore\",\n  \"options\": [\n    {\n      \"text\": \"Sempre disponibile\"\n    },\n    {\n      \"text\": \"Potrebbe non esistere in tutti gli ambienti\"\n    },\n    {\n      \"text\": \"Solo in Node.js\"\n    },\n    {\n      \"text\": \"Deprecata e rimossa\"\n    }\n  ],\n  \"questionProse\": [\n    \"Quanto sono affidabili `error.code` e `error.errno`?\"\n  ],\n  \"explanationProse\": [\n    \"Proprietà come `code` e `errno` sono specifiche dell'ambiente (Node.js in questo caso) e non fanno parte dell'oggetto Error standard. Gli errori del browser non avranno queste proprietà. Controlla sempre la loro esistenza: `if (err.code === 'ENOENT')` invece di presumere che esistano.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 777,
+    "outputTokens": 524,
+    "cacheReadTokens": 128,
+    "cacheWriteTokens": 0,
+    "durationMs": 440
+  },
+  "cost": {
+    "inputUsd": 0.000030302999999999998,
+    "outputUsd": 0.00009432,
+    "totalUsd": 0.000124623,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

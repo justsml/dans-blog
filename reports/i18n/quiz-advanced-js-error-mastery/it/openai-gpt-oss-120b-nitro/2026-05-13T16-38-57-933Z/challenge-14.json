@@ -1,0 +1,44 @@
+{
+  "index": 13,
+  "attempt": 1,
+  "originalTitle": "Object vs Error Detection",
+  "translatedTitle": "Rilevamento Oggetto vs Errore",
+  "translation": {
+    "title": "Rilevamento Oggetto vs Errore",
+    "group": "Confini di Errore",
+    "options": [
+      {
+        "text": "true, true"
+      },
+      {
+        "text": "false, false"
+      },
+      {
+        "text": "true, false"
+      },
+      {
+        "text": "false, true"
+      }
+    ],
+    "questionProse": [
+      "Cosa restituiscono questi controlli?"
+    ],
+    "explanationProse": [
+      "`instanceof Error` restituisce `false` perché l'oggetto non è stato creato dal costruttore Error. `Object.prototype.toString.call()` restituisce anch'esso `false` (restituisce `'[object Object]'`) perché controlla lo slot interno `[[Class]]`. Entrambi i metodi identificano correttamente questo come un oggetto errore falsificato."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Rilevamento Oggetto vs Errore\",\n  \"group\": \"Confini di Errore\",\n  \"options\": [\n    {\n      \"text\": \"true, true\"\n    },\n    {\n      \"text\": \"false, false\"\n    },\n    {\n      \"text\": \"true, false\"\n    },\n    {\n      \"text\": \"false, true\"\n    }\n  ],\n  \"questionProse\": [\n    \"Cosa restituiscono questi controlli?\"\n  ],\n  \"explanationProse\": [\n    \"`instanceof Error` restituisce `false` perché l'oggetto non è stato creato dal costruttore Error. `Object.prototype.toString.call()` restituisce anch'esso `false` (restituisce `'[object Object]'`) perché controlla lo slot interno `[[Class]]`. Entrambi i metodi identificano correttamente questo come un oggetto errore falsificato.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 771,
+    "outputTokens": 539,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1431
+  },
+  "cost": {
+    "inputUsd": 0.000030069,
+    "outputUsd": 0.00009701999999999999,
+    "totalUsd": 0.000127089,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
