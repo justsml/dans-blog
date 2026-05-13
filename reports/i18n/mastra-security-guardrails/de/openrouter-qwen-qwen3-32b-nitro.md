@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: mastra-security-guardrails
+- Locale: de
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-01-03--mastra-security-guardrails/de/index.mdx
+- Validation: passed
+- Runtime seconds: 15.38
+- Input tokens: 5747
+- Output tokens: 6903
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.002116
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: ''
 subTitle: ''
@@ -164,3 +182,4 @@ Die meisten Sicherheitsprobleme in Produktions-AI sind keine sophistizierten Ang
 2. **Sicherheit & Sicherheitsvorkehrungen** (Dieser Beitrag)  
 3. [MCP & Tool-Integrationen](../mastra-mcp-tool-integrations)  
 4. [Workflows & Memory](../mastra-workflows-memory)
+````
