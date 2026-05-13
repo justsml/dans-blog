@@ -1,0 +1,42 @@
+{
+  "selectedCommit": "87c627ed2b01a4c19169df4ccd4a92bb1643693e",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The translation is excellent. It captures Dan's conversational yet technical tone perfectly. The choice of 'होम लोन की किश्तें' for mortgage payments is much more natural in Hindi than a literal translation. The technical terms like 'symbolic math engine' and 'pattern-matching' are handled with precision. The MDX structure and code blocks are perfectly preserved. The previous suggestion for 'तारीख हेरफेर' has already been incorporated into the current version.",
+  "slug": "ai-sdk-math-tool",
+  "locale": "hi",
+  "candidateCommits": [
+    "87c627ed2b01a4c19169df4ccd4a92bb1643693e",
+    "57048839ff17f8e9aea5ed59db70355d300392e5",
+    "9aa562139a5d76450d18be887724f559c68cac36",
+    "2b141c093f217a2dc57e4017dd92ffc4a76339aa",
+    "ad5622848049b17e15b00fcc4f11a415fec40fda",
+    "8dd2e86f8a473fac847f855633e67ba104c95574",
+    "e0a19aa8343a48c19b1945ef1e212f2650d0ed89"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "medium",
+      "match": "दिनांतर हेरफेर",
+      "replacement": "तारीख हेरफेर",
+      "reason": "'दिनांतर' is not a standard term for date manipulation; 'तारीख' or 'दिनांक' is more natural.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug ai-sdk-math-tool --locale hi --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug ai-sdk-math-tool --locale hi --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug ai-sdk-math-tool --locale hi --skip-global\n207 |     ...targetContents.matchAll(/=[\"']\\.\\/(?!\\.)[^\"']+\\.(?:avif|gif|jpe?g|png|svg|webp)[\"']/g),\n208 |   ];\n209 | \n210 |   if (nestedAssetReferences.length === 0) return;\n211 | \n212 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2026-01-06--ai-sdk-math-tool/hi/index.mdx uses ./ asset paths inside a locale folder. Use ../ for inherited post assets.\n      at assertNestedAssetPaths (/Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:212:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}
