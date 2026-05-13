@@ -1,0 +1,44 @@
+{
+  "index": 3,
+  "attempt": 1,
+  "originalTitle": "The Dot Metacharacter",
+  "translatedTitle": "Der Dot-Metazeichen",
+  "translation": {
+    "title": "Der Dot-Metazeichen",
+    "group": "Häufige Fallstricke",
+    "options": [
+      {
+        "text": "[\"hello\\nworld\"]"
+      },
+      {
+        "text": "[\"hello\", \"world\"]"
+      },
+      {
+        "text": "[\"hello\\n\", \"world\"]"
+      },
+      {
+        "text": "null"
+      }
+    ],
+    "questionProse": [
+      "Was wird dies zurückgeben?"
+    ],
+    "explanationProse": [
+      "Das Muster `\\w+` passt zu einem oder mehreren Wortzeichen. Obwohl es ein Neuzeilenzeichen in der Zeichenkette gibt, passt `\\w` zu:\n    - Buchstaben (a-z, A-Z)\n    - Zahlen (0-9)\n    - Unterstrich (_)\n\n    Somit wirkt das Neuzeilenzeichen als Wortgrenze, und wir erhalten zwei Treffer. Hätten wir `.*` verwendet, würde es standardmäßig nicht das Neuzeilenzeichen匹配 (dazu bräuchte man das `s`-Flag).\n\n    [Mehr über Metazeichen erfahren](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Character_Classes#types)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Der Dot-Metazeichen\",\n  \"group\": \"Häufige Fallstricke\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"hello\\\\nworld\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"hello\\\", \\\"world\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"hello\\\\n\\\", \\\"world\\\"]\"\n    },\n    {\n      \"text\": \"null\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was wird dies zurückgeben?\"\n  ],\n  \"explanationProse\": [\n    \"Das Muster `\\\\w+` passt zu einem oder mehreren Wortzeichen. Obwohl es ein Neuzeilenzeichen in der Zeichenkette gibt, passt `\\\\w` zu:\\n    - Buchstaben (a-z, A-Z)\\n    - Zahlen (0-9)\\n    - Unterstrich (_)\\n\\n    Somit wirkt das Neuzeilenzeichen als Wortgrenze, und wir erhalten zwei Treffer. Hätten wir `.*` verwendet, würde es standardmäßig nicht das Neuzeilenzeichen匹配 (dazu bräuchte man das `s`-Flag).\\n\\n    [Mehr über Metazeichen erfahren](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Character_Classes#types)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 788,
+    "outputTokens": 768,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 8719
+  },
+  "cost": {
+    "inputUsd": 0.00006303999999999999,
+    "outputUsd": 0.00018432,
+    "totalUsd": 0.00024735999999999996,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

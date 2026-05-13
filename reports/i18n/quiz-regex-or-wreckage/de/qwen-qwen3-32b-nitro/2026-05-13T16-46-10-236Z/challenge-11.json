@@ -1,0 +1,44 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "Look-behind Split",
+  "translatedTitle": "Aufteilung mit Look-behind",
+  "translation": {
+    "title": "Aufteilung mit Look-behind",
+    "group": "Look-behind",
+    "options": [
+      {
+        "text": "[\"a,\", \"b,\", \"c\"]"
+      },
+      {
+        "text": "[\"a,b,c\"]"
+      },
+      {
+        "text": "[\"a\", \",\", \"b\", \",\", \"c\"]"
+      },
+      {
+        "text": "[\"a,b,c\", \"\"]"
+      }
+    ],
+    "questionProse": [
+      "Was wird zurückgegeben?"
+    ],
+    "explanationProse": [
+      "Der Muster `/(?<=,)/` ist ein Look-behind, der nach einem Komma passt:\n    - `a,` (nach Komma)\n    - `b,` (nach Komma)\n    - `c` (kein Komma danach)\n\n    Der Look-behind konsumiert das Komma nicht, daher bleibt das Komma am vorherigen Segment im Aufteilungsergebnis haften.\n\n    Dies ist nützlich, wenn Sie eine Zeichenkette anhand dessen aufteilen möchten, was davor kommt, **ohne die Trennzeichen zu verlieren**.\n\n    [Mehr über Look-behind-Assertions erfahren](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Aufteilung mit Look-behind\",\n  \"group\": \"Look-behind\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"a,\\\", \\\"b,\\\", \\\"c\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"a,b,c\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"a\\\", \\\",\\\", \\\"b\\\", \\\",\\\", \\\"c\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"a,b,c\\\", \\\"\\\"]\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was wird zurückgegeben?\"\n  ],\n  \"explanationProse\": [\n    \"Der Muster `/(?<=,)/` ist ein Look-behind, der nach einem Komma passt:\\n    - `a,` (nach Komma)\\n    - `b,` (nach Komma)\\n    - `c` (kein Komma danach)\\n\\n    Der Look-behind konsumiert das Komma nicht, daher bleibt das Komma am vorherigen Segment im Aufteilungsergebnis haften.\\n\\n    Dies ist nützlich, wenn Sie eine Zeichenkette anhand dessen aufteilen möchten, was davor kommt, **ohne die Trennzeichen zu verlieren**.\\n\\n    [Mehr über Look-behind-Assertions erfahren](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 801,
+    "outputTokens": 947,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2203
+  },
+  "cost": {
+    "inputUsd": 0.00006408,
+    "outputUsd": 0.00022728,
+    "totalUsd": 0.00029136,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

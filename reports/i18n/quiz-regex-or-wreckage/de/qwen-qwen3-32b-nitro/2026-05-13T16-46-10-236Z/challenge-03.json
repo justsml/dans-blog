@@ -1,0 +1,31 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "Greedy vs Non-Greedy",
+  "translatedTitle": "Gierige vs. nicht gierige",
+  "translation": {
+    "title": "Gierige vs. nicht gierige",
+    "group": "Grundlegendes Matching",
+    "options": [],
+    "questionProse": [
+      "Was wird dies übereinstimmen?"
+    ],
+    "explanationProse": [
+      "Der Muster `/<div>.*?<\\/div>/g` verwendet nicht gierige Übereinstimmung mit `*?`, was bedeutet:\n    - `<div>` übereinstimmen\n    - Jedes Zeichen (`.*`) übereinstimmen, aber so wenig wie möglich (`?`)\n    - Bis `</div>` gefunden wird\n    - Die `g`-Flagge sorgt dafür, dass alle Vorkommen übereinstimmen\n\n    Ohne den `?` würde die gierige `.*` alles von dem ersten `<div>` bis zum letzten `</div>` übereinstimmen, was eine große Übereinstimmung ergeben würde. Mit `?` werden jeweils jedes Paar separat übereinstimmen.\n\n    [Mehr erfahren zu gierigen vs. nicht gierigen Übereinstimmungen](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Gierige vs. nicht gierige\",\n  \"group\": \"Grundlegendes Matching\",\n  \"options\": [],\n  \"questionProse\": [\n    \"Was wird dies übereinstimmen?\"\n  ],\n  \"explanationProse\": [\n    \"Der Muster `/<div>.*?<\\\\/div>/g` verwendet nicht gierige Übereinstimmung mit `*?`, was bedeutet:\\n    - `<div>` übereinstimmen\\n    - Jedes Zeichen (`.*`) übereinstimmen, aber so wenig wie möglich (`?`)\\n    - Bis `</div>` gefunden wird\\n    - Die `g`-Flagge sorgt dafür, dass alle Vorkommen übereinstimmen\\n\\n    Ohne den `?` würde die gierige `.*` alles von dem ersten `<div>` bis zum letzten `</div>` übereinstimmen, was eine große Übereinstimmung ergeben würde. Mit `?` werden jeweils jedes Paar separat übereinstimmen.\\n\\n    [Mehr erfahren zu gierigen vs. nicht gierigen Übereinstimmungen](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 749,
+    "outputTokens": 885,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2147
+  },
+  "cost": {
+    "inputUsd": 0.00005992,
+    "outputUsd": 0.0002124,
+    "totalUsd": 0.00027232,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

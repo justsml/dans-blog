@@ -1,0 +1,44 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Word Boundaries",
+  "translatedTitle": "Wortgrenzen",
+  "translation": {
+    "title": "Wortgrenzen",
+    "group": "Grundlegende Übereinstimmung",
+    "options": [
+      {
+        "text": "[\"cat\", \"cats\"]"
+      },
+      {
+        "text": "[\"cat\"]"
+      },
+      {
+        "text": "[\"cats\"]"
+      },
+      {
+        "text": "[]"
+      }
+    ],
+    "questionProse": [
+      "Was wird übereinstimmen?"
+    ],
+    "explanationProse": [
+      "Das `\\b` repräsentiert eine Wortgrenze, die übereinstimmt:\n    - Zwischen einem Wortzeichen und einem Nicht-Wortzeichen\n    - Am Anfang/Ende der Zeichenkette, wenn ein Wortzeichen vorhanden ist\n\n    Also wird `/\\bcat\\b/` nur dann \"cat\" übereinstimmen, wenn es ein vollständiges Wort ist, nicht als Teil eines anderen Wortes.\n    - ✅ \"cat\" (durch Leerzeichen umgeben)\n    - ❌ \"cats\" (keine Grenze nach \"cat\")\n    - ❌ \"category\" (keine Grenze nach \"cat\")\n\n    [Mehr über Wortgrenzen erfahren](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions#other_assertions)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Wortgrenzen\",\n  \"group\": \"Grundlegende Übereinstimmung\",\n  \"options\": [\n    { \"text\": \"[\\\"cat\\\", \\\"cats\\\"]\" },\n    { \"text\": \"[\\\"cat\\\"]\" },\n    { \"text\": \"[\\\"cats\\\"]\" },\n    { \"text\": \"[]\" }\n  ],\n  \"questionProse\": [\n    \"Was wird übereinstimmen?\"\n  ],\n  \"explanationProse\": [\n    \"Das `\\\\b` repräsentiert eine Wortgrenze, die übereinstimmt:\\n    - Zwischen einem Wortzeichen und einem Nicht-Wortzeichen\\n    - Am Anfang/Ende der Zeichenkette, wenn ein Wortzeichen vorhanden ist\\n\\n    Also wird `/\\\\bcat\\\\b/` nur dann \\\"cat\\\" übereinstimmen, wenn es ein vollständiges Wort ist, nicht als Teil eines anderen Wortes.\\n    - ✅ \\\"cat\\\" (durch Leerzeichen umgeben)\\n    - ❌ \\\"cats\\\" (keine Grenze nach \\\"cat\\\")\\n    - ❌ \\\"category\\\" (keine Grenze nach \\\"cat\\\")\\n\\n    [Mehr über Wortgrenzen erfahren](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions#other_assertions)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 786,
+    "outputTokens": 824,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 9398
+  },
+  "cost": {
+    "inputUsd": 0.00006288000000000001,
+    "outputUsd": 0.00019775999999999998,
+    "totalUsd": 0.00026063999999999997,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Positive Look-ahead",
+  "translatedTitle": "Positiver Look-ahead",
+  "translation": {
+    "title": "Positiver Look-ahead",
+    "group": "Look-ahead",
+    "options": [
+      {
+        "text": "[\"$100\", \"€50\"]"
+      },
+      {
+        "text": "[\"10.000\", \"50\"]"
+      },
+      {
+        "text": "[\"$\", \"€\"]"
+      },
+      {
+        "text": "[]"
+      },
+      {
+        "text": "null"
+      }
+    ],
+    "questionProse": [
+      "Was wird das hier finden?"
+    ],
+    "explanationProse": [
+      "Dieser Muster findet nichts, weil der Look-ahead falsch herum ist! Wenn Sie Ziffern haben, die von `$` oder `€` vorangegangen werden, verwenden Sie einen Look-behind: `/(?<=[\\$€])\\d+/g`.\n\n    Look-aheads prüfen, was *nach* der aktuellen Position kommt. Das hier gesuchte Muster:\n    - Eine oder mehrere Ziffern (`\\d+`)\n    - Gefolgt von (`(?=...)`) entweder $ oder € (`[\\$€]`)\n\n    Da es keine Zahlen gibt, die von Währungszeichen gefolgt werden (die Zeichen stehen davor), gibt es keine Treffer.\n\n    [Mehr über Look-ahead-Assertions erfahren](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Positiver Look-ahead\",\n  \"group\": \"Look-ahead\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"$100\\\", \\\"€50\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"10.000\\\", \\\"50\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"$\\\", \\\"€\\\"]\"\n    },\n    {\n      \"text\": \"[]\"\n    },\n    {\n      \"text\": \"null\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was wird das hier finden?\"\n  ],\n  \"explanationProse\": [\n    \"Dieser Muster findet nichts, weil der Look-ahead falsch herum ist! Wenn Sie Ziffern haben, die von `$` oder `€` vorangegangen werden, verwenden Sie einen Look-behind: `/(?<=[\\\\$€])\\\\d+/g`.\\n\\n    Look-aheads prüfen, was *nach* der aktuellen Position kommt. Das hier gesuchte Muster:\\n    - Eine oder mehrere Ziffern (`\\\\d+`)\\n    - Gefolgt von (`(?=...)`) entweder $ oder € (`[\\\\$€]`)\\n\\n    Da es keine Zahlen gibt, die von Währungszeichen gefolgt werden (die Zeichen stehen davor), gibt es keine Treffer.\\n\\n    [Mehr über Look-ahead-Assertions erfahren](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 820,
+    "outputTokens": 1589,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 17789
+  },
+  "cost": {
+    "inputUsd": 0.0000656,
+    "outputUsd": 0.00038135999999999997,
+    "totalUsd": 0.00044695999999999994,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

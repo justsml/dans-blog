@@ -1,0 +1,47 @@
+{
+  "index": 7,
+  "attempt": 1,
+  "originalTitle": "Negative Look-behind",
+  "translatedTitle": "Negativer Rückblick",
+  "translation": {
+    "title": "Negativer Rückblick",
+    "group": "Rückblick",
+    "options": [
+      {
+        "text": "[\"123\"]"
+      },
+      {
+        "text": "[\"123\", \"456\"]"
+      },
+      {
+        "text": "[\"23\", \"456\"]"
+      },
+      {
+        "text": "[\"456\"]"
+      },
+      {
+        "text": "[]"
+      }
+    ],
+    "questionProse": [
+      "Was passt zu diesem Muster?"
+    ],
+    "explanationProse": [
+      "Der negative Rückblick `(?<!abc)` stellt sicher, dass die Ziffern nicht von \"abc\" gefolgt werden:\n    - ❌ \"123\" (von \"abc\" gefolgt)\n    - ✅ \"23\" (von \"abc1\" gefolgt)\n    - ✅ \"456\" (von \"def\" gefolgt)\n\n    Moderne JavaScript-Engines unterstützen Rückblick-Assertions. Dieses Beispiel verwendet einen Rückblick mit fester Länge: `abc` besteht immer aus drei Zeichen. Rückblick mit variabler Länge ist die schwierigere, engine-spezifische Ausnahme.\n\n    Hinweis: Rückblick-Unterstützung ist in JavaScript relativ neu. Prüfen Sie [Browserverträglichkeit](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#browser_compatibility), wenn Sie ältere Browser unterstützen müssen."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Negativer Rückblick\",\n  \"group\": \"Rückblick\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"123\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"123\\\", \\\"456\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"23\\\", \\\"456\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"456\\\"]\"\n    },\n    {\n      \"text\": \"[]\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was passt zu diesem Muster?\"\n  ],\n  \"explanationProse\": [\n    \"Der negative Rückblick `(?<!abc)` stellt sicher, dass die Ziffern nicht von \\\"abc\\\" gefolgt werden:\\n    - ❌ \\\"123\\\" (von \\\"abc\\\" gefolgt)\\n    - ✅ \\\"23\\\" (von \\\"abc1\\\" gefolgt)\\n    - ✅ \\\"456\\\" (von \\\"def\\\" gefolgt)\\n\\n    Moderne JavaScript-Engines unterstützen Rückblick-Assertions. Dieses Beispiel verwendet einen Rückblick mit fester Länge: `abc` besteht immer aus drei Zeichen. Rückblick mit variabler Länge ist die schwierigere, engine-spezifische Ausnahme.\\n\\n    Hinweis: Rückblick-Unterstützung ist in JavaScript relativ neu. Prüfen Sie [Browserverträglichkeit](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#browser_compatibility), wenn Sie ältere Browser unterstützen müssen.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 832,
+    "outputTokens": 931,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2168
+  },
+  "cost": {
+    "inputUsd": 0.00006656,
+    "outputUsd": 0.00022344,
+    "totalUsd": 0.00029,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
