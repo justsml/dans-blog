@@ -1,0 +1,44 @@
+{
+  "index": 1,
+  "attempt": 1,
+  "originalTitle": "Multiple `.catch`'s #2",
+  "translatedTitle": "Múltiples .catch #2",
+  "translation": {
+    "title": "Múltiples .catch #2",
+    "group": "Manejo de Errores",
+    "options": [
+      {
+        "text": "imprimir mensaje una vez"
+      },
+      {
+        "text": "imprimir mensaje dos veces"
+      },
+      {
+        "text": "promesa rechazada no manejada"
+      },
+      {
+        "text": "el proceso termina"
+      }
+    ],
+    "questionProse": [
+      "¿Cuál será la salida del siguiente código?"
+    ],
+    "explanationProse": [
+      "Al usar el constructor Promise, debes invocar `resolve()` o `reject()`. El constructor Promise ignora el valor devuelto por el executor, por lo que la promesa adicional creada con `Promise.reject()` no está encadenada a `p`. Los dos manejadores están adjuntos a `p`, que permanece pendiente, mientras que la promesa rechazada devuelta se reporta como no manejada por el entorno anfitrión."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Múltiples .catch #2\",\n  \"group\": \"Manejo de Errores\",\n  \"options\": [\n    {\n      \"text\": \"imprimir mensaje una vez\"\n    },\n    {\n      \"text\": \"imprimir mensaje dos veces\"\n    },\n    {\n      \"text\": \"promesa rechazada no manejada\"\n    },\n    {\n      \"text\": \"el proceso termina\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Cuál será la salida del siguiente código?\"\n  ],\n  \"explanationProse\": [\n    \"Al usar el constructor Promise, debes invocar `resolve()` o `reject()`. El constructor Promise ignora el valor devuelto por el executor, por lo que la promesa adicional creada con `Promise.reject()` no está encadenada a `p`. Los dos manejadores están adjuntos a `p`, que permanece pendiente, mientras que la promesa rechazada devuelta se reporta como no manejada por el entorno anfitrión.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 711,
+    "outputTokens": 939,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2074
+  },
+  "cost": {
+    "inputUsd": 0.000056880000000000004,
+    "outputUsd": 0.00022535999999999997,
+    "totalUsd": 0.00028223999999999995,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
