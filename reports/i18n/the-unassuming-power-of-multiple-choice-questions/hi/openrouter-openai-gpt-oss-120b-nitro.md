@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: the-unassuming-power-of-multiple-choice-questions
+- Locale: hi
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2025-01-01--the-unassuming-power-of-multiple-choice-questions/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 2.78
+- Input tokens: 5858
+- Output tokens: 1458
+- Thinking tokens: unknown
+- Cached input tokens: 2816
+- Cache write tokens: 0
+- Estimated cost: $0.000491
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: बहुविकल्पीय प्रश्नों की अनदेखी शक्ति
 subTitle: शिक्षा में MCQs की पूरी क्षमता का उपयोग कैसे करें
@@ -89,3 +107,4 @@ Consider thisPostgreSQL question as an example:
 इसी कारण मैं इस साइट पर MCQ का उपयोग जारी रखता हूँ। न कि केवल उनकी दक्षता के कारण, हालांकि वे दक्ष हैं। बल्कि इसलिए क्योंकि वे ऐसी शैक्षिक ईमानदारी को बाध्य करते हैं, जिसे केवल prose से टाला जा सकता है।
 
 अगली बार जब आप कोई प्रश्न बनाएँ, तो सही उत्तर से शुरुआत न करें। पहले उन गलत धारणाओं को रखें। सही उत्तर को तब कहीं अधिक उचित जगह मिलेगी।
+````
