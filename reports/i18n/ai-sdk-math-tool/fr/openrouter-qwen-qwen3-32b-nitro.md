@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: ai-sdk-math-tool
+- Locale: fr
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-01-06--ai-sdk-math-tool/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 14.42
+- Input tokens: 6302
+- Output tokens: 6625
+- Thinking tokens: unknown
+- Cached input tokens: 2048
+- Cache write tokens: 0
+- Estimated cost: $0.002094
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: ''
 subTitle: ''
@@ -136,3 +154,4 @@ C'est un changement dans la façon dont nous concevons les systèmes avec l'IA. 
 - [CortexJS Compute Engine](https://cortexjs.io/compute-engine/)
 - [Guide d'appel des outils](https://sdk.vercel.ai/docs/ai-sdk-core/tools-and-tool-calling)
 - [Dépôt d'exemples de l'AI SDK](https://github.com/vercel/ai/tree/main/examples)
+````
