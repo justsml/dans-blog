@@ -6,7 +6,7 @@
  * giving the model bounded context.
  *
  * Usage:
- *   bun run i18n:translate:chunked -- --slug my-article --locale es --chunk 5s --model openrouter/qwen/qwen3.6-plus
+ *   bun run i18n:translate:chunked -- --slug my-article --locale es --chunk 3p --model openrouter/qwen/qwen3.6-plus
  *
  * Chunk formats:
  *   1p  = 1 paragraph per chunk
@@ -67,6 +67,7 @@ interface LlmConfig {
 
 const DEFAULT_REASONING_EFFORT = "low";
 const DEFAULT_LLM_TIMEOUT_MS = 200_000;
+const DEFAULT_CHUNK_SIZE = "3p";
 const DEFAULT_PARALLEL_CHALLENGE_CALLS = 18;
 const MAX_PARALLEL_CHALLENGE_CALLS = 18;
 const DEFAULT_CHALLENGE_RETRIES = 2;
@@ -496,6 +497,8 @@ async function translateChunk(
   llmConfig: LlmConfig,
   articleSummary: string,
   previousTranslation: string | undefined,
+  previousSourceContext: string | undefined,
+  nextSourceContext: string | undefined,
   isQuiz: boolean,
 ): Promise<{
   text: string;
@@ -512,6 +515,8 @@ async function translateChunk(
     chunkIndex: chunk.index,
     totalChunks: chunk.totalChunks ?? chunk.index + 1,
     previousTranslation,
+    previousSourceContext,
+    nextSourceContext,
     articleSummary,
   }, isQuiz);
 
@@ -889,7 +894,7 @@ async function main() {
   const slug = requireString(options, "slug");
   const locale = requireActiveLocale(options);
   const modelId = requireString(options, "model");
-  const chunkSizeInput = options["chunk"] as string | undefined;
+  const chunkSizeInput = typeof options["chunk"] === "string" ? options["chunk"] : DEFAULT_CHUNK_SIZE;
   const skipSummary = options["skip-summary"] === true;
   const dryRun = options["dry-run"] === true;
   const shouldPublish = options["no-publish"] !== true;
@@ -917,7 +922,6 @@ async function main() {
   if (isQuiz) {
     console.log(`✂️  Strategy: 1 question per API call, ${quizConcurrency} parallel challenge calls, ${challengeRetries} retries`);
   } else {
-    if (!chunkSizeInput) throw new Error(`Missing required --chunk for non-quiz articles`);
     console.log(`✂️  Chunk strategy: ${chunkSizeInput}`);
   }
   console.log(`🤖 Model: ${llmConfig.modelId} (temp=${llmConfig.temperature}, maxTokens=${llmConfig.maxTokens}, effort=${llmConfig.reasoningEffort}, timeout=${llmConfig.timeoutMs}ms)\n`);
@@ -944,7 +948,7 @@ async function main() {
   } else {
     activeRunLabel = `${slug} [${locale}]`;
     // Regular article translation
-    const strategy = parseChunkSize(chunkSizeInput!);
+    const strategy = parseChunkSize(chunkSizeInput);
 
     if (!skipSummary) {
       console.log("📝 Generating article summary...");
@@ -968,7 +972,7 @@ async function main() {
       return;
     }
 
-    const result = await translateArticleChunks(chunks, locale, llmConfig, articleSummary);
+    const result = await translateArticleChunks(chunks, locale, llmConfig, articleSummary, chunkSizeInput);
     translatedBody = reassembleChunks(result.translatedChunks);
     telemetry = result.telemetry;
   }
@@ -982,7 +986,7 @@ async function main() {
 
   const finalOutput = frontmatterYaml + "\n" + normalizedBody;
 
-  const reportName = chunkSizeInput ?? (isQuiz ? "quiz" : "article");
+  const reportName = isQuiz ? "quiz" : chunkSizeInput;
   const chunkReportName = `chunked-${reportName.replace(/[^a-z0-9]/gi, "")}.md`;
   const chunkReport = formatTelemetryReport(telemetry, articleSummary);
   const candidatePaths = writeCandidateRun({
@@ -1027,9 +1031,10 @@ async function translateArticleChunks(
   locale: ActiveLocale,
   llmConfig: LlmConfig,
   articleSummary: string,
+  chunkSize: string,
 ): Promise<{ translatedChunks: Chunk[]; telemetry: Telemetry }> {
   const translatedChunks: Chunk[] = [];
-  const telemetry = createTelemetry(llmConfig, "article", chunks.length);
+  const telemetry = createTelemetry(llmConfig, chunkSize, chunks.length);
   activeTelemetry = telemetry;
 
   let previousTranslation: string | undefined;
@@ -1046,6 +1051,8 @@ async function translateArticleChunks(
       llmConfig,
       articleSummary,
       previousTranslation,
+      previousParagraphContext(chunks, i),
+      nextParagraphContext(chunks, i),
       false,
     );
 
@@ -1072,6 +1079,25 @@ async function translateArticleChunks(
   }
 
   return { translatedChunks, telemetry };
+}
+
+function previousParagraphContext(chunks: Chunk[], index: number) {
+  return edgeParagraphContext(chunks[index - 1], "last");
+}
+
+function nextParagraphContext(chunks: Chunk[], index: number) {
+  return edgeParagraphContext(chunks[index + 1], "first");
+}
+
+function edgeParagraphContext(chunk: Chunk | undefined, edge: "first" | "last") {
+  if (chunk == null) return undefined;
+  const textSegments = chunk.segments
+    .filter((segment) => segment.type === "text")
+    .map((segment) => segment.content.trim())
+    .filter(Boolean);
+  const paragraph = edge === "first" ? textSegments[0] : textSegments.at(-1);
+  if (paragraph == null) return undefined;
+  return paragraph.length > 700 ? `${paragraph.slice(0, 700)}...` : paragraph;
 }
 
 async function translateFrontmatter(

@@ -6,8 +6,12 @@ import Footer from "@/components/Footer.astro";
 import { slugify } from "@/shared/pathHelpers";
 import { PostCollections } from "../../shared/postsCache";
 import socialBanner from "../../assets/social-banner.webp";
+import { DEFAULT_LOCALE, getHtmlLang, getLocalizedPagePath, type Locale } from "../../shared/i18n";
+import { getUiCopy } from "../../shared/uiTranslations";
 
 const categories = PostCollections.getCategoryList();
+const locale = (Astro.props.locale ?? DEFAULT_LOCALE) as Locale;
+const copy = getUiCopy(locale);
 
 const categoryList = Object.entries(categories).sort((a, b) => {
   return a[1] === b[1] ? 0 : a[1] < b[1] ? 1 : -1;
@@ -16,11 +20,12 @@ const catCount = categoryList.length;
 const totalCount = categoryList.reduce((acc, [_, count]) => acc + count, 0);
 ---
 <!doctype html>
-<html lang="en">
+<html lang={getHtmlLang(locale)}>
   <head>
     <BaseHead
-      title={`DanLevy.net by Category`}
-      description={`Featuring ${catCount} categories and ${totalCount} articles`}
+      title={copy.category.title}
+      description={copy.category.description(catCount, totalCount)}
+      canonicalPath={getLocalizedPagePath("/category/", locale)}
       image={socialBanner}
     />
     <style>
@@ -91,15 +96,15 @@ const totalCount = categoryList.reduce((acc, [_, count]) => acc + count, 0);
     </style>
   </head>
   <body>
-    <Header />
+    <Header locale={locale} />
     <main>
       <section>
-        <h1>Articles by Category</h1>
+        <h1>{copy.category.heading}</h1>
         <div class="category-list">
           {
             categoryList.map(async ([category, count]) => (
               <div class="card">
-                <a href={`/category/${slugify(category)}/`}>
+                <a href={getLocalizedPagePath(`/category/${slugify(category)}/`, locale)}>
                   <h4 class="title">{category}</h4>
                   <small class="count">{count}</small>
                 </a>
@@ -109,6 +114,6 @@ const totalCount = categoryList.reduce((acc, [_, count]) => acc + count, 0);
         </div>
       </section>
     </main>
-    <Footer />
+    <Footer locale={locale} />
   </body>
 </html>

@@ -105,6 +105,20 @@ type UiCopy = {
     factTwo: string;
     factThree: string;
   };
+  openSource: {
+    title: string;
+    subTitle: string;
+    heading: string;
+    quote: string;
+  };
+  category: {
+    title: string;
+    description: (catCount: number, totalCount: number) => string;
+    heading: string;
+    breadcrumb: string;
+    pageTitle: (category: string) => string;
+    found: (count: number) => string;
+  };
 };
 
 const en = {
@@ -218,6 +232,22 @@ const en = {
       "Fun fact: Completing all quizzes unlocks a special experience on the site.",
     factThree: "Fun fact: \"Fun facts\" are not necessarily fun, or facts.",
   },
+  openSource: {
+    title: "Dan's Open Source Journal",
+    subTitle: "At least the ones I can remember",
+    heading: "My Contribution Log",
+    quote:
+      "I'd like to believe I contribute to open source out of some noble, altruistic spirit. Chances are, I simply want to fix the issue I'm facing.",
+  },
+  category: {
+    title: "DanLevy.net by Category",
+    description: (catCount, totalCount) =>
+      `Featuring ${catCount} categories and ${totalCount} articles`,
+    heading: "Articles by Category",
+    breadcrumb: "Category /",
+    pageTitle: (category) => `Category: ${category}`,
+    found: (count) => `Found ${count} articles`,
+  },
 } satisfies UiCopy;
 
 const copies: Record<Locale, UiCopy> = {
@@ -231,6 +261,8 @@ const copies: Record<Locale, UiCopy> = {
     about: { ...en.about, title: "Acerca de mí", heading: "Acerca de", summary: "Dan es programador, profesor, mentor y líder. Tiene más de 20 años de experiencia profesional en desarrollo de software, consultoría, equipos ágiles, arquitectura, seguridad, accesibilidad y UI/UX.", reputation: "Tras años trabajando con patrones y arquitectura de software, Dan se ha convertido en un experto buscado por charlas prácticas y motivadoras.", openSource: "Como colaborador activo en numerosos proyectos open source, Dan sigue aprendiendo lenguajes, metodologías, patrones y estilos de código.", resume: "Descargar el currículum de Dan" },
     contact: { ...en.contact, title: "Contacta a Dan", heading: "Contacta a Dan", validationName: "El nombre debe tener al menos 2 caracteres.", validationEmail: "Introduce un correo válido.", validationMessage: "El mensaje debe tener al menos 5 caracteres.", successTitle: "Enviado correctamente", sent: "Enviado", botLabel: "Humanos, dejad este campo en blanco", botPlaceholder: "Para los robots...", name: "Nombre", message: "Mensaje", messagePlaceholder: "Escribe tu mensaje aquí.", thanks: "Gracias por escribir.", error: "Hubo un error al enviar el mensaje. Revisa el formulario e inténtalo de nuevo.", submit: "Enviar mensaje" },
     challenges: { ...en.challenges, title: "Desafíos y cuestionarios técnicos - DanLevy.net", subTitle: (totalQuizzes, totalQuestionCount) => `Una colección de exactamente ${totalQuizzes} cuestionarios y ${totalQuestionCount} preguntas técnicas.`, heading: "Desafíos y cuestionarios técnicos", introOne: "De HTML y CSS a Node.js y SQL, estos cuestionarios reúnen lecciones inspiradas por experiencias reales de carrera.", introTwo: "Están diseñados para ser exigentes y poner a prueba tu conocimiento de rarezas y casos límite.", factOne: "Dato curioso: esta es mi unidad de contención.", factTwo: "Dato curioso: completar todos los cuestionarios desbloquea una experiencia especial en el sitio.", factThree: "Dato curioso: los datos curiosos no siempre son curiosos ni datos." },
+    openSource: { ...en.openSource, title: "Diario open source de Dan", subTitle: "Al menos los que recuerdo", heading: "Mi registro de contribuciones", quote: "Me gustaría creer que contribuyo al open source por un noble espíritu altruista. Lo más probable es que simplemente quiera arreglar el problema que tengo delante." },
+    category: { ...en.category, title: "DanLevy.net por categoría", description: (catCount, totalCount) => `${catCount} categorías y ${totalCount} artículos`, heading: "Artículos por categoría", breadcrumb: "Categoría /", pageTitle: (category) => `Categoría: ${category}`, found: (count) => `${count} artículos encontrados` },
   },
   hi: en,
   ja: en,

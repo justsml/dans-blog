@@ -5,6 +5,8 @@ import Page from "../../layouts/Page.astro";
 import { PostCollections } from "../../shared/postsCache";
 import { getArticleListCtaOccurrence } from "../../shared/articleListCta";
 import type { ArticlePost } from "../../types";
+import { DEFAULT_LOCALE, getLocalizedPagePath, type Locale } from "../../shared/i18n";
+import { getUiCopy } from "../../shared/uiTranslations";
 
 export async function getStaticPaths() {
   return PostCollections.getStaticPathsCategoryList();
@@ -13,9 +15,12 @@ export async function getStaticPaths() {
 type Props = {
   category: string;
   count: number;
+  locale?: Locale;
 };
 
 const { category, count } = Astro.props as Props;
+const locale = (Astro.props.locale ?? DEFAULT_LOCALE) as Locale;
+const copy = getUiCopy(locale);
 const posts: ArticlePost[] = PostCollections.getPostsByCategory(category) as unknown as ArticlePost[];
 
 // console.log("category.astro.props", Astro.props);
@@ -34,14 +39,14 @@ const posts: ArticlePost[] = PostCollections.getPostsByCategory(category) as unk
   }
 </style>
 
-<Page title={`Category: ${category}`}>
+<Page title={copy.category.pageTitle(category)} locale={locale}>
   <div class="path-display">
     <h3>
-      <a style="color: #c4c4c4; font-weight: 100; text-wrap: nowrap;" href="../">Category /</a>
+      <a style="color: #c4c4c4; font-weight: 100; text-wrap: nowrap;" href={getLocalizedPagePath("/category/", locale)}>{copy.category.breadcrumb}</a>
     </h3>
     <h1>{category}</h1>
   </div>
-  <p style="margin: .2rem .75rem">Found {count} articles</p>
+  <p style="margin: .2rem .75rem">{copy.category.found(count)}</p>
   <div class:list={["article-list"]}>
     {
       posts.map((post, index) => {
@@ -49,7 +54,7 @@ const posts: ArticlePost[] = PostCollections.getPostsByCategory(category) as unk
 
         return (
         <>
-          <ArticleCard article={post} />
+          <ArticleCard article={post} locale={locale} />
           {ctaOccurrence !== null && (
             <ArticleListConsultingCTA
               category={ctaOccurrence === 1 ? undefined : category}

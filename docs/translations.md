@@ -121,14 +121,15 @@ bun run i18n:judge -- \
   --timeout-seconds 240
 ```
 
-For quiz posts, generate competing Nitro candidates through the normal candidate wrapper so each model output is committed and available to the judge:
+Article translation chunks default to `3p`: three paragraphs per translated chunk. For non-quiz prose, the prompt also includes one neighboring source paragraph before and after the active chunk when available. That padding is context only; the model is told to translate only the active chunk. Quiz posts ignore chunk padding because they use structured Challenge input/output instead of prose chunking.
+
+Example: For quiz posts, generate competing Nitro candidates through the normal candidate wrapper so each model output is committed and available to the judge:
 
 ```sh
 bun run i18n:translate:candidates -- \
   --slug javascript-promises-quiz \
   --locale ja \
   --models openrouter/openai/gpt-oss-120b:nitro,openrouter/qwen/qwen3-32b:nitro \
-  --chunk 4p \
   --quiz-concurrency 18 \
   --challenge-retries 2 \
   --timeout-seconds 240
@@ -141,7 +142,6 @@ bun run i18n:translate:candidates -- \
   --slug javascript-promises-quiz \
   --locale ja \
   --models openrouter/qwen/qwen3.6-plus,openrouter/deepseek/deepseek-v4-flash,openrouter/openai/gpt-oss-120b:nitro,openrouter/qwen/qwen3-32b:nitro \
-  --chunk 1p \
   --quiz-concurrency 18 \
   --challenge-retries 2 \
   --timeout-seconds 240

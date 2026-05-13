@@ -15,6 +15,10 @@ import serviceCodingSecurityImage from "../assets/consulting/service-coding-secu
 import serviceEnterpriseSecurityImage from "../assets/consulting/service-enterprise-security-v2.webp";
 import serviceRagImage from "../assets/consulting/service-rag-v2.webp";
 import serviceSupabaseImage from "../assets/consulting/service-supabase-v2.webp";
+import { DEFAULT_LOCALE, getLocalizedPagePath, type Locale } from "../shared/i18n";
+
+const locale = (Astro.props.locale ?? DEFAULT_LOCALE) as Locale;
+const pagePath = (path: string) => getLocalizedPagePath(path, locale);
 
 const title = "Senior Software Architecture & Security Consulting";
 const description =
@@ -139,10 +143,10 @@ const fitSignals = [
 ];
 ---
 
-<Layout frontmatter={{ title, subTitle: description }} pagefindBody>
+<Layout frontmatter={{ title, subTitle: description }} locale={locale} pagefindBody>
   <section class="consulting-hero full-section">
     <div class="consulting-shell consulting-practice-bar">
-      <a class="practice-home" href="/">
+      <a class="practice-home" href={pagePath("/")}>
         <span class="practice-mark">DL</span>
         <span class="practice-brand-copy">
           <strong>DanLevy.net</strong>
@@ -244,7 +248,7 @@ const fitSignals = [
         {featuredServices.map((service) => {
           const visual = serviceVisuals[service.slug];
           return (
-            <a class={`featured-card ${visual.accent}`} href={`/consulting/${service.slug}/`}>
+            <a class={`featured-card ${visual.accent}`} href={pagePath(`/consulting/${service.slug}/`)}>
               <div class="card-image" aria-hidden="true">
                 <Image
                   src={visual.image}
@@ -273,7 +277,7 @@ const fitSignals = [
             image: serviceAiConsultingImage,
           };
           return (
-            <a class={`service-card ${visual.accent}`} href={`/consulting/${service.slug}/`}>
+            <a class={`service-card ${visual.accent}`} href={pagePath(`/consulting/${service.slug}/`)}>
               <div class="supporting-image" aria-hidden="true">
                 <Image
                   src={visual.image}
@@ -409,7 +413,7 @@ const fitSignals = [
             <span>Book diagnostic call</span>
             <span class="btn-icon" aria-hidden="true">↗</span>
           </a>
-          <a href="/" class="btn btn-secondary">Read the writing</a>
+          <a href={pagePath("/")} class="btn btn-secondary">Read the writing</a>
         </div>
       </div>
       <div class="cta-art" aria-hidden="true">

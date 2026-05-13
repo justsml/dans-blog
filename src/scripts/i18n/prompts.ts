@@ -17,6 +17,8 @@ export interface ChunkContext {
   chunkIndex: number;
   totalChunks: number;
   previousTranslation?: string;
+  previousSourceContext?: string;
+  nextSourceContext?: string;
   articleSummary: string;
 }
 
@@ -119,6 +121,19 @@ export function buildUserPrompt(
   if (context.previousTranslation) {
     parts.push(`PREVIOUS CHUNK TRANSLATION (end of chunk ${context.chunkIndex}):`);
     parts.push(context.previousTranslation.slice(-400));
+    parts.push("");
+  }
+
+  if (context.previousSourceContext || context.nextSourceContext) {
+    parts.push(`SOURCE CONTEXT PADDING (for continuity only; do not translate this padding in your output):`);
+    if (context.previousSourceContext) {
+      parts.push(`Before this chunk:`);
+      parts.push(context.previousSourceContext);
+    }
+    if (context.nextSourceContext) {
+      parts.push(`After this chunk:`);
+      parts.push(context.nextSourceContext);
+    }
     parts.push("");
   }
 

@@ -28,7 +28,7 @@ const DEFAULT_CANDIDATE_MODELS = [
 ];
 
 const DEFAULT_TRANSLATION_TIMEOUT_SECONDS = 240;
-const DEFAULT_ARTICLE_CHUNK_SIZE = "5s";
+const DEFAULT_CHUNK_SIZE = "3p";
 
 type CandidateTelemetry = {
   runtimeSeconds: string;
@@ -50,7 +50,7 @@ const shouldSkipCommit = options["no-commit"] === true;
 const shouldOverwrite = options["overwrite"] === true;
 const shouldAllowConcurrentWorktree = options["allow-concurrent-worktree"] === true;
 const timeoutSeconds = getTimeoutSeconds();
-const articleChunkSize = optionalString(options, "chunk") ?? DEFAULT_ARTICLE_CHUNK_SIZE;
+const chunkSize = optionalString(options, "chunk") ?? DEFAULT_CHUNK_SIZE;
 const quizConcurrency = optionalString(options, "quiz-concurrency");
 const challengeRetries = optionalString(options, "challenge-retries");
 const { sourcePath, targetPath, reportDir } = getPostPaths(slug, locale);
@@ -134,7 +134,7 @@ function runDirectTranslation(model: string) {
     "--model",
     model,
     "--chunk",
-    articleChunkSize,
+    chunkSize,
   ];
 
   if (quizConcurrency != null) {

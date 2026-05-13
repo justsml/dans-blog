@@ -1,22 +1,27 @@
 ---
 import Page from "../layouts/Page.astro";
 import RepoList from "../components/GitRepoCard/RepoList.astro";
+import { DEFAULT_LOCALE, type Locale } from "../shared/i18n";
+import { getUiCopy } from "../shared/uiTranslations";
+
+const locale = (Astro.props.locale ?? DEFAULT_LOCALE) as Locale;
+const copy = getUiCopy(locale);
 ---
 
 <Page
   frontmatter={{
-    title: "📙 Dan's Open Source Journal",
-    subTitle: "At least the ones I can remember",
+    title: copy.openSource.title,
+    subTitle: copy.openSource.subTitle,
     // cover: "../../previews/open-source-journal/desktop-social.webp",
   }}
+  locale={locale}
   socialImage={"../../previews/open-source-journal/desktop-social.webp"}
   pagefindBody
 >
-  <h1>My Contribution Log</h1>
+  <h1>{copy.openSource.heading}</h1>
 
   <blockquote class="inset">
-    I'd like to believe I contribute to open source out of some noble, altruistic
-    spirit. Chances are, I simply want to fix the issue I'm facing. 😇
+    {copy.openSource.quote}
   </blockquote>
 
   <RepoList className="h-resume" />

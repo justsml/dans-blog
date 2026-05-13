@@ -1,0 +1,19 @@
+---
+import ConsultingServicePage from "../../consulting/[service].astro";
+import { consultingServices } from "../../../data/consultingServices";
+import { ACTIVE_LOCALES, type ActiveLocale } from "../../../shared/i18n";
+
+export function getStaticPaths() {
+  return ACTIVE_LOCALES.flatMap((locale) =>
+    consultingServices.map((service) => ({
+      params: { locale, service: service.slug },
+      props: { locale, service },
+    })),
+  );
+}
+
+const locale = Astro.props.locale as ActiveLocale;
+const service = Astro.props.service;
+---
+
+<ConsultingServicePage locale={locale} service={service} />

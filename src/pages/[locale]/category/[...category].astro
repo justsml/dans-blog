@@ -1,0 +1,18 @@
+---
+import CategoryPage from "../../category/[...category].astro";
+import { PostCollections } from "../../../shared/postsCache";
+import { ACTIVE_LOCALES, type ActiveLocale } from "../../../shared/i18n";
+
+export function getStaticPaths() {
+  return ACTIVE_LOCALES.flatMap((locale) =>
+    PostCollections.getStaticPathsCategoryList().map((path) => ({
+      params: { locale, category: path.params.category },
+      props: { ...path.props, locale },
+    })),
+  );
+}
+
+const locale = Astro.props.locale as ActiveLocale;
+---
+
+<CategoryPage {...Astro.props} locale={locale} />
