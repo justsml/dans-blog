@@ -1,0 +1,44 @@
+{
+  "index": 0,
+  "attempt": 1,
+  "originalTitle": "Context Window Basics",
+  "translatedTitle": "Notions de fenêtre de contexte",
+  "translation": {
+    "title": "Notions de fenêtre de contexte",
+    "group": "Fondations",
+    "options": [
+      {
+        "text": "Le nombre maximal de requêtes par minute"
+      },
+      {
+        "text": "La limite combinée de tokens pour l'entrée et la sortie"
+      },
+      {
+        "text": "Le nombre de messages dans une conversation"
+      },
+      {
+        "text": "La mémoire disponible entre les sessions"
+      }
+    ],
+    "questionProse": [
+      "À quoi fait référence la « fenêtre de contexte » dans un LLM ?"
+    ],
+    "explanationProse": [
+      "La fenêtre de contexte est le nombre total de tokens qu'un modèle peut traiter en un seul appel — **entrée + sortie combinées**. Une fenêtre de contexte de 128 K signifie que votre invite + les documents récupérés + l'historique de la conversation + la réponse du modèle doivent tous tenir dans 128 000 tokens.\n\n    Cela n'a rien à voir avec les sessions, la mémoire ou les limites de débit. Lorsque vous atteignez la limite, le modèle tronque, génère une erreur, ou — pire — supprime silencieusement des tokens que vous n'attendiez pas."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Notions de fenêtre de contexte\",\n  \"group\": \"Fondations\",\n  \"options\": [\n    {\n      \"text\": \"Le nombre maximal de requêtes par minute\"\n    },\n    {\n      \"text\": \"La limite combinée de tokens pour l'entrée et la sortie\"\n    },\n    {\n      \"text\": \"Le nombre de messages dans une conversation\"\n    },\n    {\n      \"text\": \"La mémoire disponible entre les sessions\"\n    }\n  ],\n  \"questionProse\": [\n    \"À quoi fait référence la « fenêtre de contexte » dans un LLM ?\"\n  ],\n  \"explanationProse\": [\n    \"La fenêtre de contexte est le nombre total de tokens qu'un modèle peut traiter en un seul appel — **entrée + sortie combinées**. Une fenêtre de contexte de 128 K signifie que votre invite + les documents récupérés + l'historique de la conversation + la réponse du modèle doivent tous tenir dans 128 000 tokens.\\n\\n    Cela n'a rien à voir avec les sessions, la mémoire ou les limites de débit. Lorsque vous atteignez la limite, le modèle tronque, génère une erreur, ou — pire — supprime silencieusement des tokens que vous n'attendiez pas.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 822,
+    "outputTokens": 697,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1656
+  },
+  "cost": {
+    "inputUsd": 0.000032058000000000004,
+    "outputUsd": 0.00012546,
+    "totalUsd": 0.00015751800000000002,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

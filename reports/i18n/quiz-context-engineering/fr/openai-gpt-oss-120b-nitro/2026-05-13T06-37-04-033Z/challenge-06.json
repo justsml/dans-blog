@@ -1,0 +1,44 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Hybrid Search",
+  "translatedTitle": "Recherche hybride",
+  "translation": {
+    "title": "Recherche hybride",
+    "group": "Récupération",
+    "options": [
+      {
+        "text": "Exécuter la même requête deux fois pour la redondance"
+      },
+      {
+        "text": "Utiliser deux modèles d'embedding différents sur le même corpus"
+      },
+      {
+        "text": "Combiner la recherche vectorielle avec la recherche par mots‑clés pour une meilleure récupération"
+      },
+      {
+        "text": "Rechercher simultanément dans plusieurs bases de données vectorielles"
+      }
+    ],
+    "questionProse": [
+      "Dans les systèmes RAG, la « recherche hybride » désigne :"
+    ],
+    "explanationProse": [
+      "La recherche hybride combine **vector search** (similarité sémantique via les embeddings) et **keyword search** (BM25 / recherche en texte intégral) car elles échouent de manière complémentaire :\n\n    - La recherche vectorielle a du mal avec les termes exacts : noms de produits, codes d’erreur, numéros de modèle, identifiants techniques\n    - La recherche par mots‑clés a du mal avec la paraphrase : « how do I cancel » vs. « terminate subscription »\n\n    Les résultats des deux sont fusionnés à l’aide de **Reciprocal Rank Fusion (RRF)** — un algorithme de classement qui combine les positions de plusieurs listes classées sans nécessiter de scores normalisés.\n\n    Les deux sont disponibles dans Postgres avec `pgvector` + `tsvector`. Vous n’avez peut‑être pas besoin d’un service de recherche séparé."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Recherche hybride\",\n  \"group\": \"Récupération\",\n  \"options\": [\n    {\n      \"text\": \"Exécuter la même requête deux fois pour la redondance\"\n    },\n    {\n      \"text\": \"Utiliser deux modèles d'embedding différents sur le même corpus\"\n    },\n    {\n      \"text\": \"Combiner la recherche vectorielle avec la recherche par mots‑clés pour une meilleure récupération\"\n    },\n    {\n      \"text\": \"Rechercher simultanément dans plusieurs bases de données vectorielles\"\n    }\n  ],\n  \"questionProse\": [\n    \"Dans les systèmes RAG, la « recherche hybride » désigne :\"\n  ],\n  \"explanationProse\": [\n    \"La recherche hybride combine **vector search** (similarité sémantique via les embeddings) et **keyword search** (BM25 / recherche en texte intégral) car elles échouent de manière complémentaire :\\n\\n    - La recherche vectorielle a du mal avec les termes exacts : noms de produits, codes d’erreur, numéros de modèle, identifiants techniques\\n    - La recherche par mots‑clés a du mal avec la paraphrase : « how do I cancel » vs. « terminate subscription »\\n\\n    Les résultats des deux sont fusionnés à l’aide de **Reciprocal Rank Fusion (RRF)** — un algorithme de classement qui combine les positions de plusieurs listes classées sans nécessiter de scores normalisés.\\n\\n    Les deux sont disponibles dans Postgres avec `pgvector` + `tsvector`. Vous n’avez peut‑être pas besoin d’un service de recherche séparé.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 869,
+    "outputTokens": 943,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 2420
+  },
+  "cost": {
+    "inputUsd": 0.000033891000000000005,
+    "outputUsd": 0.00016974,
+    "totalUsd": 0.00020363100000000002,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

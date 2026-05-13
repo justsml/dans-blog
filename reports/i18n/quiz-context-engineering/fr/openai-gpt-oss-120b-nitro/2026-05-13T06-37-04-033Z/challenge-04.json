@@ -1,0 +1,44 @@
+{
+  "index": 3,
+  "attempt": 1,
+  "originalTitle": "Lost in the Middle",
+  "translatedTitle": "Perdu au Milieu",
+  "translation": {
+    "title": "Perdu au Milieu",
+    "group": "Récupération",
+    "options": [
+      {
+        "text": "Les modèles performent de façon égale quel que soit l’endroit où le contexte est placé"
+      },
+      {
+        "text": "Les modèles performent mieux lorsque le contexte est à la toute fin"
+      },
+      {
+        "text": "Les modèles performent mieux avec le contexte au début et à la fin, et le pire au milieu"
+      },
+      {
+        "text": "Les modèles performent mieux avec le contexte au milieu de l’invite"
+      }
+    ],
+    "questionProse": [
+      "Les recherches sur le problème « Lost in the Middle » montrent que les LLM ont tendance à :"
+    ],
+    "explanationProse": [
+      "Le [papier Lost in the Middle (Liu et al., 2023)](https://arxiv.org/abs/2307.03172) a démontré que les LLM peinent systématiquement avec les informations placées au milieu de longs contextes. Les performances sont nettement meilleures lorsque l’information pertinente apparaît au **début ou à la fin** de la fenêtre de contexte.\n\n    Implication pratique : lors de l’insertion de fragments récupérés dans une invite RAG, ne vous contentez pas de les ajouter par ordre de pertinence. Placez votre résultat le mieux classé en premier, le deuxième en dernier, et remplissez le milieu avec du matériel moins bien classé. Contre‑intuitif, mais nettement plus efficace."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Perdu au Milieu\",\n  \"group\": \"Récupération\",\n  \"options\": [\n    {\n      \"text\": \"Les modèles performent de façon égale quel que soit l’endroit où le contexte est placé\"\n    },\n    {\n      \"text\": \"Les modèles performent mieux lorsque le contexte est à la toute fin\"\n    },\n    {\n      \"text\": \"Les modèles performent mieux avec le contexte au début et à la fin, et le pire au milieu\"\n    },\n    {\n      \"text\": \"Les modèles performent mieux avec le contexte au milieu de l’invite\"\n    }\n  ],\n  \"questionProse\": [\n    \"Les recherches sur le problème « Lost in the Middle » montrent que les LLM ont tendance à :\"\n  ],\n  \"explanationProse\": [\n    \"Le [papier Lost in the Middle (Liu et al., 2023)](https://arxiv.org/abs/2307.03172) a démontré que les LLM peinent systématiquement avec les informations placées au milieu de longs contextes. Les performances sont nettement meilleures lorsque l’information pertinente apparaît au **début ou à la fin** de la fenêtre de contexte.\\n\\n    Implication pratique : lors de l’insertion de fragments récupérés dans une invite RAG, ne vous contentez pas de les ajouter par ordre de pertinence. Placez votre résultat le mieux classé en premier, le deuxième en dernier, et remplissez le milieu avec du matériel moins bien classé. Contre‑intuitif, mais nettement plus efficace.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 874,
+    "outputTokens": 904,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2190
+  },
+  "cost": {
+    "inputUsd": 0.000034086,
+    "outputUsd": 0.00016272,
+    "totalUsd": 0.000196806,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

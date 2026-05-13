@@ -1,0 +1,44 @@
+{
+  "index": 8,
+  "attempt": 1,
+  "originalTitle": "Few-Shot Examples",
+  "translatedTitle": "Exemples Few-Shot",
+  "translation": {
+    "title": "Exemples Few-Shot",
+    "group": "Structure d’invite",
+    "options": [
+      {
+        "text": "Plus d'exemples donnent toujours de meilleurs résultats"
+      },
+      {
+        "text": "3 à 5 exemples de haute qualité et divers dans l’invite"
+      },
+      {
+        "text": "Les exemples few-shot n’aident que pour les tâches de classification"
+      },
+      {
+        "text": "Les exemples doivent être placés après la requête de l'utilisateur, pas avant"
+      }
+    ],
+    "questionProse": [
+      "Pour la plupart des cas d’utilisation en production, la stratégie optimale d’exemples few-shot est :"
+    ],
+    "explanationProse": [
+      "Les exemples few-shot améliorent considérablement la cohérence des sorties et le respect du format. Le point idéal pour la plupart des tâches est **3–5 exemples de haute qualité et divers**.\n\n    Pourquoi pas plus ? Chaque exemple consomme des tokens. Au‑delà de 5–10 exemples, le bénéfice marginal diminue tandis que le coût en tokens augmente. Plus d’exemples augmentent aussi le risque que le modèle sur‑apprenne les exemples plutôt que de comprendre le schéma sous‑jacent.\n\n    Pourquoi la diversité est importante : si tous vos exemples sont du même type d’entrée, le modèle ne généralisera pas bien aux cas limites. Incluez des exemples couvrant vos variations les plus importantes.\n\n    Placement : les exemples doivent être placés *avant* la requête de l'utilisateur, comme partie de l’invite système ou sous forme de tours de conversation préremplis — pas après."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Exemples Few-Shot\",\n  \"group\": \"Structure d’invite\",\n  \"options\": [\n    {\n      \"text\": \"Plus d'exemples donnent toujours de meilleurs résultats\"\n    },\n    {\n      \"text\": \"3 à 5 exemples de haute qualité et divers dans l’invite\"\n    },\n    {\n      \"text\": \"Les exemples few-shot n’aident que pour les tâches de classification\"\n    },\n    {\n      \"text\": \"Les exemples doivent être placés après la requête de l'utilisateur, pas avant\"\n    }\n  ],\n  \"questionProse\": [\n    \"Pour la plupart des cas d’utilisation en production, la stratégie optimale d’exemples few-shot est :\"\n  ],\n  \"explanationProse\": [\n    \"Les exemples few-shot améliorent considérablement la cohérence des sorties et le respect du format. Le point idéal pour la plupart des tâches est **3–5 exemples de haute qualité et divers**.\\n\\n    Pourquoi pas plus ? Chaque exemple consomme des tokens. Au‑delà de 5–10 exemples, le bénéfice marginal diminue tandis que le coût en tokens augmente. Plus d’exemples augmentent aussi le risque que le modèle sur‑apprenne les exemples plutôt que de comprendre le schéma sous‑jacent.\\n\\n    Pourquoi la diversité est importante : si tous vos exemples sont du même type d’entrée, le modèle ne généralisera pas bien aux cas limites. Incluez des exemples couvrant vos variations les plus importantes.\\n\\n    Placement : les exemples doivent être placés *avant* la requête de l'utilisateur, comme partie de l’invite système ou sous forme de tours de conversation préremplis — pas après.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 881,
+    "outputTokens": 984,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 2640
+  },
+  "cost": {
+    "inputUsd": 0.000034359,
+    "outputUsd": 0.00017712,
+    "totalUsd": 0.000211479,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

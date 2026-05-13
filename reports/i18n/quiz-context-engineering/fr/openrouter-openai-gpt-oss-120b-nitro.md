@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-context-engineering
+- Locale: fr
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-05-09--quiz-context-engineering/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 34.28
+- Input tokens: 14991
+- Output tokens: 14395
+- Thinking tokens: unknown
+- Cached input tokens: 1024
+- Cache write tokens: 0
+- Estimated cost: $0.003176
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: "Quiz\_: 14 questions d’ingénierie contextuelle"
 subTitle: >-
@@ -470,3 +488,4 @@ Comment avez‑vous fait ?
 - **0–4** : Bonne nouvelle : tout ce qui figure dans ce quiz est assimilable et immédiatement exploitable. La question « perdu au milieu » vaut à elle seule la peine d’être comprise avant votre prochaine implémentation RAG.
 
 L’ingénierie du contexte, c’est la discipline qui consiste à être intentionnel sur les informations que vous placez dans la fenêtre, où vous les placez et comment vous les structurez. Le modèle est la partie la moins contrôlable de votre système. Tout le reste vous appartient.
+````

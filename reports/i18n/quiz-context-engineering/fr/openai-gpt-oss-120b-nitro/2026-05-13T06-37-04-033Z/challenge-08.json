@@ -1,0 +1,44 @@
+{
+  "index": 7,
+  "attempt": 1,
+  "originalTitle": "Conversation History Management",
+  "translatedTitle": "Gestion de l'historique de conversation",
+  "translation": {
+    "title": "Gestion de l'historique de conversation",
+    "group": "Gestion des tokens",
+    "options": [
+      {
+        "text": "Toujours envoyer l'intégralité de l'historique de la conversation"
+      },
+      {
+        "text": "Résumer les anciens messages lorsque l'historique dépasse le budget de tokens"
+      },
+      {
+        "text": "Supprimer les anciens messages — le modèle possède une mémoire persistante"
+      },
+      {
+        "text": "Stocker l'historique dans une base de données vectorielle et récupérer les tours pertinents"
+      }
+    ],
+    "questionProse": [
+      "Dans une application de chat à plusieurs tours, quelle est la bonne stratégie lorsque l'historique de la conversation devient long ?"
+    ],
+    "explanationProse": [
+      "Les LLM n'ont pas de mémoire persistante. Chaque appel d'API est sans état — vous envoyez le contexte complet, vous recevez une réponse. La « mémoire » d'une conversation est entièrement l'historique des messages que vous incluez dans chaque requête.\n\n    Lorsque cet historique dépasse votre budget, les options sont :\n    1. **Summarize** : Compresser les tours plus anciens en un résumé continu, garder les tours récents mot pour mot\n    2. **Sliding window** : Conserver les N derniers tours, supprimer les plus anciens\n    3. **Selective retrieval** : Encoder les tours de conversation et récupérer ceux pertinents pour chaque requête (complexe mais puissant)\n\n    La simple troncature — couper les anciens messages pour tenir — est la pire option car elle supprime silencieusement le contexte dont le modèle pourrait avoir besoin.\n\n    La récupération via une base de données vectorielle de l'historique de la conversation est théoriquement séduisante mais généralement excessive pour la plupart des applications de chat. La summarisation est le choix pragmatique par défaut."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Gestion de l'historique de conversation\",\n  \"group\": \"Gestion des tokens\",\n  \"options\": [\n    {\n      \"text\": \"Toujours envoyer l'intégralité de l'historique de la conversation\"\n    },\n    {\n      \"text\": \"Résumer les anciens messages lorsque l'historique dépasse le budget de tokens\"\n    },\n    {\n      \"text\": \"Supprimer les anciens messages — le modèle possède une mémoire persistante\"\n    },\n    {\n      \"text\": \"Stocker l'historique dans une base de données vectorielle et récupérer les tours pertinents\"\n    }\n  ],\n  \"questionProse\": [\n    \"Dans une application de chat à plusieurs tours, quelle est la bonne stratégie lorsque l'historique de la conversation devient long ?\"\n  ],\n  \"explanationProse\": [\n    \"Les LLM n'ont pas de mémoire persistante. Chaque appel d'API est sans état — vous envoyez le contexte complet, vous recevez une réponse. La « mémoire » d'une conversation est entièrement l'historique des messages que vous incluez dans chaque requête.\\n\\n    Lorsque cet historique dépasse votre budget, les options sont :\\n    1. **Summarize** : Compresser les tours plus anciens en un résumé continu, garder les tours récents mot pour mot\\n    2. **Sliding window** : Conserver les N derniers tours, supprimer les plus anciens\\n    3. **Selective retrieval** : Encoder les tours de conversation et récupérer ceux pertinents pour chaque requête (complexe mais puissant)\\n\\n    La simple troncature — couper les anciens messages pour tenir — est la pire option car elle supprime silencieusement le contexte dont le modèle pourrait avoir besoin.\\n\\n    La récupération via une base de données vectorielle de l'historique de la conversation est théoriquement séduisante mais généralement excessive pour la plupart des applications de chat. La summarisation est le choix pragmatique par défaut.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 919,
+    "outputTokens": 1185,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2800
+  },
+  "cost": {
+    "inputUsd": 0.000035841,
+    "outputUsd": 0.0002133,
+    "totalUsd": 0.00024914100000000003,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

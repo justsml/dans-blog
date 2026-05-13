@@ -1,0 +1,44 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Chunking Strategy",
+  "translatedTitle": "Stratégie de découpage",
+  "translation": {
+    "title": "Stratégie de découpage",
+    "group": "Récupération",
+    "options": [
+      {
+        "text": "Utilisez la plus grande taille de fragment que votre fenêtre de contexte permet"
+      },
+      {
+        "text": "Always use 512 tokens — it\\"
+      },
+      {
+        "text": "Utilisez des fragments qui se chevauchent, dimensionnés pour correspondre à la structure de votre contenu"
+      },
+      {
+        "text": "Chunk size doesn\\"
+      }
+    ],
+    "questionProse": [
+      "Lors du découpage de documents pour le RAG, quel est le principe le plus important ?"
+    ],
+    "explanationProse": [
+      "Il n'existe pas de taille de fragment universelle — cela dépend de votre contenu. Les principes importants sont :\n\n    1. **Correspondre à la structure de votre contenu.** Les pages FAQ se découpent bien au niveau Q + R. Les documents juridiques se découpent bien au niveau des clauses. Le code se découpe bien au niveau des fonctions.\n    2. **Utiliser le chevauchement.** Un fragment de 512 tokens avec 64 tokens de chevauchement de chaque côté signifie que les réponses qui traversent une frontière seront quand même récupérées.\n    3. **Mesurer.** Construisez un jeu d'évaluation et testez plusieurs tailles de fragments. La taille du fragment compte plus que le modèle d'embedding.\n\n    \"512 tokens\" est un point de départ raisonnable, pas une loi."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Stratégie de découpage\",\n  \"group\": \"Récupération\",\n  \"options\": [\n    {\n      \"text\": \"Utilisez la plus grande taille de fragment que votre fenêtre de contexte permet\"\n    },\n    {\n      \"text\": \"Always use 512 tokens — it\\\\\"\n    },\n    {\n      \"text\": \"Utilisez des fragments qui se chevauchent, dimensionnés pour correspondre à la structure de votre contenu\"\n    },\n    {\n      \"text\": \"Chunk size doesn\\\\\"\n    }\n  ],\n  \"questionProse\": [\n    \"Lors du découpage de documents pour le RAG, quel est le principe le plus important ?\"\n  ],\n  \"explanationProse\": [\n    \"Il n'existe pas de taille de fragment universelle — cela dépend de votre contenu. Les principes importants sont :\\n\\n    1. **Correspondre à la structure de votre contenu.** Les pages FAQ se découpent bien au niveau Q + R. Les documents juridiques se découpent bien au niveau des clauses. Le code se découpe bien au niveau des fonctions.\\n    2. **Utiliser le chevauchement.** Un fragment de 512 tokens avec 64 tokens de chevauchement de chaque côté signifie que les réponses qui traversent une frontière seront quand même récupérées.\\n    3. **Mesurer.** Construisez un jeu d'évaluation et testez plusieurs tailles de fragments. La taille du fragment compte plus que le modèle d'embedding.\\n\\n    \\\"512 tokens\\\" est un point de départ raisonnable, pas une loi.\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 867,
+    "outputTokens": 593,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1530
+  },
+  "cost": {
+    "inputUsd": 0.000033813,
+    "outputUsd": 0.00010674,
+    "totalUsd": 0.000140553,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "index": 11,
+  "attempt": 1,
+  "originalTitle": "Prompt Caching",
+  "translatedTitle": "Mise en cache d'invite",
+  "translation": {
+    "title": "Mise en cache d'invite",
+    "group": "Avancé",
+    "options": [
+      {
+        "text": "La mise en cache stocke les réponses et les rejoue pour des requêtes identiques"
+      },
+      {
+        "text": "La mise en cache stocke les paires KV compilées pour les préfixes d'invite statiques, réduisant le coût des tokens d'entrée"
+      },
+      {
+        "text": "La mise en cache n'est disponible que dans les modèles OpenAI"
+      },
+      {
+        "text": "La mise en cache est automatique et ne nécessite aucune configuration développeur"
+      }
+    ],
+    "questionProse": [
+      "Qu'est‑ce que la « mise en cache d'invite » dans le contexte des API LLM (Anthropic, OpenAI) ?\n    <p className=\"text-sm\">Dernière vérification : 8 mai 2026. Les contrôles de cache et la tarification des fournisseurs évoluent rapidement.</p>"
+    ],
+    "explanationProse": [
+      "La mise en cache d'invite réutilise le **cache KV / état du préfixe d'invite** calculé pour les préfixes d'invite statiques lorsque votre fournisseur le prend en charge. Lors de requêtes ultérieures avec le même préfixe, le modèle peut ignorer le re‑traitement de ces tokens — ce qui réduit la latence et peut diminuer considérablement le coût.",
+      "Ce n'est pas une mise en cache de réponse. Le modèle génère toujours une réponse nouvelle à chaque fois. Vous évitez simplement de retokeniser et de recomputer l'attention pour la partie de l'invite qui ne change pas.",
+      "Idéal pour : les invites système volumineuses, les documents statiques, les définitions d'outils, les exemples few‑shot — tout ce qui reste identique sur de nombreuses requêtes. Le préfixe mis en cache doit se trouver au *début* de votre invite.",
+      "Ce n’est pas la même chose que : la déduplication sémantique, la mémoïsation de réponses, ou la mise en cache au niveau de l'application."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Mise en cache d'invite\",\n  \"group\": \"Avancé\",\n  \"options\": [\n    {\n      \"text\": \"La mise en cache stocke les réponses et les rejoue pour des requêtes identiques\"\n    },\n    {\n      \"text\": \"La mise en cache stocke les paires KV compilées pour les préfixes d'invite statiques, réduisant le coût des tokens d'entrée\"\n    },\n    {\n      \"text\": \"La mise en cache n'est disponible que dans les modèles OpenAI\"\n    },\n    {\n      \"text\": \"La mise en cache est automatique et ne nécessite aucune configuration développeur\"\n    }\n  ],\n  \"questionProse\": [\n    \"Qu'est‑ce que la « mise en cache d'invite » dans le contexte des API LLM (Anthropic, OpenAI) ?\\n    <p className=\\\"text-sm\\\">Dernière vérification : 8 mai 2026. Les contrôles de cache et la tarification des fournisseurs évoluent rapidement.</p>\"\n  ],\n  \"explanationProse\": [\n    \"La mise en cache d'invite réutilise le **cache KV / état du préfixe d'invite** calculé pour les préfixes d'invite statiques lorsque votre fournisseur le prend en charge. Lors de requêtes ultérieures avec le même préfixe, le modèle peut ignorer le re‑traitement de ces tokens — ce qui réduit la latence et peut diminuer considérablement le coût.\",\n    \"Ce n'est pas une mise en cache de réponse. Le modèle génère toujours une réponse nouvelle à chaque fois. Vous évitez simplement de retokeniser et de recomputer l'attention pour la partie de l'invite qui ne change pas.\",\n    \"Idéal pour : les invites système volumineuses, les documents statiques, les définitions d'outils, les exemples few‑shot — tout ce qui reste identique sur de nombreuses requêtes. Le préfixe mis en cache doit se trouver au *début* de votre invite.\",\n    \"Ce n’est pas la même chose que : la déduplication sémantique, la mémoïsation de réponses, ou la mise en cache au niveau de l'application.\"\n  ],\n  \"questionCode\": [],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 933,
+    "outputTokens": 1276,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2967
+  },
+  "cost": {
+    "inputUsd": 0.000036387,
+    "outputUsd": 0.00022967999999999998,
+    "totalUsd": 0.000266067,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
