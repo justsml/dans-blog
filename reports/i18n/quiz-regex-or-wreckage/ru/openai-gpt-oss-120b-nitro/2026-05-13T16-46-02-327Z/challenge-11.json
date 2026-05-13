@@ -1,0 +1,44 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "Look-behind Split",
+  "translatedTitle": "Разделение с Look-behind",
+  "translation": {
+    "title": "Разделение с Look-behind",
+    "group": "Обратный просмотр",
+    "options": [
+      {
+        "text": "[\"a,\", \"b,\", \"c\"]"
+      },
+      {
+        "text": "[\"a,b,c\"]"
+      },
+      {
+        "text": "[\"a\", \",\", \"b\", \",\", \"c\"]"
+      },
+      {
+        "text": "[\"a,b,c\", \"\"]"
+      }
+    ],
+    "questionProse": [
+      "Что возвращается?"
+    ],
+    "explanationProse": [
+      "Шаблон `/(?<=,)/` — это look‑behind, который совпадает после запятой:\n    - `a,` (после запятой)\n    - `b,` (после запятой)\n    - `c` (нет запятой после)\n\n    Look‑behind не поглощает запятую, поэтому запятая остаётся прикреплённой к предыдущему сегменту в результате split.\n\n    Это полезно, когда нужно разбить строку по тому, что стоит перед ней **не теряя разделительный символ(ы).**\n\n    [Узнать больше о look-behind утверждениях](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Разделение с Look-behind\",\n  \"group\": \"Обратный просмотр\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"a,\\\", \\\"b,\\\", \\\"c\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"a,b,c\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"a\\\", \\\",\\\", \\\"b\\\", \\\",\\\", \\\"c\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"a,b,c\\\", \\\"\\\"]\"\n    }\n  ],\n  \"questionProse\": [\n    \"Что возвращается?\"\n  ],\n  \"explanationProse\": [\n    \"Шаблон `/(?<=,)/` — это look‑behind, который совпадает после запятой:\\n    - `a,` (после запятой)\\n    - `b,` (после запятой)\\n    - `c` (нет запятой после)\\n\\n    Look‑behind не поглощает запятую, поэтому запятая остаётся прикреплённой к предыдущему сегменту в результате split.\\n\\n    Это полезно, когда нужно разбить строку по тому, что стоит перед ней **не теряя разделительный символ(ы).**\\n\\n    [Узнать больше о look-behind утверждениях](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 891,
+    "outputTokens": 783,
+    "cacheReadTokens": 128,
+    "cacheWriteTokens": 0,
+    "durationMs": 951
+  },
+  "cost": {
+    "inputUsd": 0.000034749,
+    "outputUsd": 0.00014094,
+    "totalUsd": 0.00017568899999999998,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

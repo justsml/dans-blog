@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-regex-or-wreckage
+- Locale: ru
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2024-11-15--quiz-regex-or-wreckage/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 32.09
+- Input tokens: 16272
+- Output tokens: 11749
+- Thinking tokens: unknown
+- Cached input tokens: 4224
+- Cache write tokens: 0
+- Estimated cost: $0.002749
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: 'Тест: Мастерство регулярных выражений'
@@ -596,3 +614,4 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 Регулярные выражения могут быть диким зверем, но они невероятно мощные, как только вы освоите их (и весь новый синтаксис). Продолжайте практиковаться, и вы станете мастером RegEx в кратчайшие сроки! 🧙‍♂️
 
 <p class="inset">Нужен перерыв после всей этой RegEx?<br />Пфф, помните: перерыв *после* навыков! <br /><br />Загляните в [мой зал](/challenges/), чтобы решить ещё несколько задач! 💪</p>
+````

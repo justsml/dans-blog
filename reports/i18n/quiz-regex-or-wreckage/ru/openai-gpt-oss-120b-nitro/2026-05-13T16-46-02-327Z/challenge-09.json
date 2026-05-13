@@ -1,0 +1,44 @@
+{
+  "index": 8,
+  "attempt": 1,
+  "originalTitle": "Capturing Groups",
+  "translatedTitle": "Группы захвата",
+  "translation": {
+    "title": "Группы захвата",
+    "group": "Базовое сопоставление",
+    "options": [
+      {
+        "text": "[\"2029-12-31\"]"
+      },
+      {
+        "text": "[\"2029\", \"12\", \"31\"]"
+      },
+      {
+        "text": "[\"20\", \"29\", \"12\", \"31\"]"
+      },
+      {
+        "text": "null"
+      }
+    ],
+    "questionProse": [
+      "Что это вернёт?"
+    ],
+    "explanationProse": [
+      "Шаблон использует три группы захвата:\n    1. `(\\d{4})` захватывает год\n    2. `(\\d{2})` захватывает месяц\n    3. `(\\d{2})` захватывает день\n\n    `match()` без флага `g` возвращает:\n    - Индекс 0: Полное совпадение\n    - Индекс 1+: Группы захвата\n\n    `slice(1)` — распространённый приём, чтобы получить только группы захвата.\n\n    [Узнайте больше о группах и захвате](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Groups_and_Backreferences)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Группы захвата\",\n  \"group\": \"Базовое сопоставление\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"2029-12-31\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"2029\\\", \\\"12\\\", \\\"31\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"20\\\", \\\"29\\\", \\\"12\\\", \\\"31\\\"]\"\n    },\n    {\n      \"text\": \"null\"\n    }\n  ],\n  \"questionProse\": [\n    \"Что это вернёт?\"\n  ],\n  \"explanationProse\": [\n    \"Шаблон использует три группы захвата:\\n    1. `(\\\\d{4})` захватывает год\\n    2. `(\\\\d{2})` захватывает месяц\\n    3. `(\\\\d{2})` захватывает день\\n\\n    `match()` без флага `g` возвращает:\\n    - Индекс 0: Полное совпадение\\n    - Индекс 1+: Группы захвата\\n\\n    `slice(1)` — распространённый приём, чтобы получить только группы захвата.\\n\\n    [Узнайте больше о группах и захвате](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Groups_and_Backreferences)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 882,
+    "outputTokens": 778,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 2040
+  },
+  "cost": {
+    "inputUsd": 0.000034398,
+    "outputUsd": 0.00014004,
+    "totalUsd": 0.00017443799999999999,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Word Boundaries",
+  "translatedTitle": "Границы слов",
+  "translation": {
+    "title": "Границы слов",
+    "group": "Базовое сопоставление",
+    "options": [
+      {
+        "text": "[\"cat\", \"cats\"]"
+      },
+      {
+        "text": "[\"cat\"]"
+      },
+      {
+        "text": "[\"cats\"]"
+      },
+      {
+        "text": "[]"
+      }
+    ],
+    "questionProse": [
+      "Что будет совпадать?"
+    ],
+    "explanationProse": [
+      "The `\\b` представляет границу слова, которая совпадает:\n    - Между символом слова и не‑символом слова\n    - В начале/конце строки, если есть символ слова\n\n    Поэтому `/\\bcat\\b/` совпадает с \"cat\" только когда это отдельное слово, а не часть другого слова.\n    - ✅ \"cat\" (окружено пробелами)\n    - ❌ \"cats\" (нет границы после \"cat\")\n    - ❌ \"category\" (нет границы после \"cat\")\n\n    [Узнайте больше о границах слов](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions#other_assertions)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Границы слов\",\n  \"group\": \"Базовое сопоставление\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"cat\\\", \\\"cats\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"cat\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"cats\\\"]\"\n    },\n    {\n      \"text\": \"[]\"\n    }\n  ],\n  \"questionProse\": [\n    \"Что будет совпадать?\"\n  ],\n  \"explanationProse\": [\n    \"The `\\\\b` представляет границу слова, которая совпадает:\\n    - Между символом слова и не‑символом слова\\n    - В начале/конце строки, если есть символ слова\\n\\n    Поэтому `/\\\\bcat\\\\b/` совпадает с \\\"cat\\\" только когда это отдельное слово, а не часть другого слова.\\n    - ✅ \\\"cat\\\" (окружено пробелами)\\n    - ❌ \\\"cats\\\" (нет границы после \\\"cat\\\")\\n    - ❌ \\\"category\\\" (нет границы после \\\"cat\\\")\\n\\n    [Узнайте больше о границах слов](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions#other_assertions)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 874,
+    "outputTokens": 685,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 2300
+  },
+  "cost": {
+    "inputUsd": 0.000034086,
+    "outputUsd": 0.0001233,
+    "totalUsd": 0.00015738599999999997,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

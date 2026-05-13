@@ -1,0 +1,31 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "Greedy vs Non-Greedy",
+  "translatedTitle": "Жадный vs Нежадный",
+  "translation": {
+    "title": "Жадный vs Нежадный",
+    "group": "Базовое сопоставление",
+    "options": [],
+    "questionProse": [
+      "Что это будет находить?"
+    ],
+    "explanationProse": [
+      "Шаблон `/<div>.*?<\\/div>/g` использует нежадное сопоставление с `*?`, что означает:\n    - Совпадение `<div>`\n    - Совпадение любого символа (`.*`), но как можно меньше (`?`)\n    - До нахождения `</div>`\n    - Флаг `g` заставляет искать все вхождения\n\n    Без `?` жадный `.*` захватил бы всё от первого `<div>` до последнего `</div>`, получив одно большое совпадение. С `?` он сопоставляет каждую пару отдельно.\n\n    [Узнать больше о жадном и ленивом сопоставлении](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Жадный vs Нежадный\",\n  \"group\": \"Базовое сопоставление\",\n  \"options\": [],\n  \"questionProse\": [\n    \"Что это будет находить?\"\n  ],\n  \"explanationProse\": [\n    \"Шаблон `/<div>.*?<\\\\/div>/g` использует нежадное сопоставление с `*?`, что означает:\\n    - Совпадение `<div>`\\n    - Совпадение любого символа (`.*`), но как можно меньше (`?`)\\n    - До нахождения `</div>`\\n    - Флаг `g` заставляет искать все вхождения\\n\\n    Без `?` жадный `.*` захватил бы всё от первого `<div>` до последнего `</div>`, получив одно большое совпадение. С `?` он сопоставляет каждую пару отдельно.\\n\\n    [Узнать больше о жадном и ленивом сопоставлении](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 842,
+    "outputTokens": 750,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1898
+  },
+  "cost": {
+    "inputUsd": 0.000032838,
+    "outputUsd": 0.000135,
+    "totalUsd": 0.00016783800000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
