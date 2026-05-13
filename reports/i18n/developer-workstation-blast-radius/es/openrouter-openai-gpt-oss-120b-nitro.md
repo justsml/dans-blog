@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: developer-workstation-blast-radius
+- Locale: es
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-05-09--developer-workstation-blast-radius/es/index.mdx
+- Validation: passed
+- Runtime seconds: 21.92
+- Input tokens: 37062
+- Output tokens: 5965
+- Thinking tokens: unknown
+- Cached input tokens: 10496
+- Cache write tokens: 0
+- Estimated cost: $0.002519
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Reduce el radio de explosión de tu estación de desarrollo
 subTitle: >-
@@ -417,3 +435,4 @@ Conjunto de recursos sugerido una vez que se elija una dirección:
 - [Microsoft: reglas del Firewall de Windows](https://learn.microsoft.com/en-us/windows/security/operating-system-security/network-security/windows-firewall/rules)  
 - [Mandiant: UNC5537 apunta a instancias de clientes Snowflake](https://cloud.google.com/blog/topics/threat-intelligence/unc5537-snowflake-data-theft-extortion)  
 - [Microsoft: técnicas y capacidades de entrega de Lumma Stealer](https://www.microsoft.com/en-us/security/blog/2025/05/21/lumma-stealer-breaking-down-the-delivery-techniques-and-capabilities-of-a-prolific-infostealer/)
+````
