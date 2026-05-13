@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: the-unassuming-power-of-multiple-choice-questions
+- Locale: it
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2025-01-01--the-unassuming-power-of-multiple-choice-questions/it/index.mdx
+- Validation: deferred
+- Runtime seconds: 14.06
+- Input tokens: 5001
+- Output tokens: 5564
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.001735
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Il potere sottile delle domande a risposta multipla
 subTitle: Come sfruttare al massimo le DSM nell'educazione
@@ -84,3 +102,4 @@ L'autore deve modellare gli errori probabili dell'apprendente. Questo significa 
 Questo è il motivo per cui continuo a usare le MCQ su questo sito. Non perché siano efficienti, anche se lo sono. Perché impongono un tipo di onestà didattica che il testo scritto da solo può eludere.
 
 La prossima volta che ne scrivi una, non iniziare con la risposta corretta. Inizia con le misconcezioni. La risposta corretta avrà un posto molto migliore in cui stare.
+````
