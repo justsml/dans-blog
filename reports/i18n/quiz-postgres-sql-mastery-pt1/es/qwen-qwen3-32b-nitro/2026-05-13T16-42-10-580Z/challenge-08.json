@@ -1,0 +1,50 @@
+{
+  "index": 7,
+  "attempt": 1,
+  "originalTitle": "Identify Invalid Types",
+  "translatedTitle": "Identificar tipos no válidos",
+  "translation": {
+    "title": "Identificar tipos no válidos",
+    "group": "Tipos de Postgres",
+    "options": [
+      {
+        "text": "cidr"
+      },
+      {
+        "text": "inet"
+      },
+      {
+        "text": "ipv4"
+      },
+      {
+        "text": "macaddr"
+      },
+      {
+        "text": "macaddr8"
+      },
+      {
+        "text": "interval"
+      }
+    ],
+    "questionProse": [
+      "¿Cuál de estos NO es ❌ un tipo válido de PostgreSQL?"
+    ],
+    "explanationProse": [
+      "¿Esto te hizo frustrado, incluso _enfadado_? ¡No estás solo! Citando a un contribuyente \"clave\" de la base de datos (anónimo): \"¿qué diablos, Dan?! ¡Chocué en las preguntas de tipos! ¡Violento, señor! No compartiré mi puntuación, jajaja.\" 😈 Bienvenido al club.\n\n    El conjunto rico de tipos de red en PostgreSQL no incluye `ipv4`. Cada vez que intento usarlo sin googlear, me equivoco. Quizás `macaddr8` me hace pensar que _debe_ existir `ipv4` y `ipv6`. No, `inet` cubre ambos. Además, `cidr` cubre las máscaras de red para ambos.\n\n    Los tipos de red válidos incluyen:\n    - `cidr` (dirección de red IPv4/IPv6)\n    - `inet` (dirección de host IPv4/IPv6)\n    - `macaddr` (dirección MAC)\n    - `macaddr8` (dirección MAC EUI-64)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Identificar tipos no válidos\",\n  \"group\": \"Tipos de Postgres\",\n  \"options\": [\n    { \"text\": \"cidr\" },\n    { \"text\": \"inet\" },\n    { \"text\": \"ipv4\" },\n    { \"text\": \"macaddr\" },\n    { \"text\": \"macaddr8\" },\n    { \"text\": \"interval\" }\n  ],\n  \"questionProse\": [\n    \"¿Cuál de estos NO es ❌ un tipo válido de PostgreSQL?\"\n  ],\n  \"explanationProse\": [\n    \"¿Esto te hizo frustrado, incluso _enfadado_? ¡No estás solo! Citando a un contribuyente \\\"clave\\\" de la base de datos (anónimo): \\\"¿qué diablos, Dan?! ¡Chocué en las preguntas de tipos! ¡Violento, señor! No compartiré mi puntuación, jajaja.\\\" 😈 Bienvenido al club.\\n\\n    El conjunto rico de tipos de red en PostgreSQL no incluye `ipv4`. Cada vez que intento usarlo sin googlear, me equivoco. Quizás `macaddr8` me hace pensar que _debe_ existir `ipv4` y `ipv6`. No, `inet` cubre ambos. Además, `cidr` cubre las máscaras de red para ambos.\\n\\n    Los tipos de red válidos incluyen:\\n    - `cidr` (dirección de red IPv4/IPv6)\\n    - `inet` (dirección de host IPv4/IPv6)\\n    - `macaddr` (dirección MAC)\\n    - `macaddr8` (dirección MAC EUI-64)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 848,
+    "outputTokens": 872,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 8680
+  },
+  "cost": {
+    "inputUsd": 0.00006784,
+    "outputUsd": 0.00020928,
+    "totalUsd": 0.00027712,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

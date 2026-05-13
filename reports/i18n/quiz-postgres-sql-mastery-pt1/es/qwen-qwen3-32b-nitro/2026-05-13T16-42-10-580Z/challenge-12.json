@@ -1,0 +1,44 @@
+{
+  "index": 11,
+  "attempt": 1,
+  "originalTitle": "Timestamp Precision",
+  "translatedTitle": "Precisión de marca de tiempo",
+  "translation": {
+    "title": "Precisión de marca de tiempo",
+    "group": "Fecha/Hora",
+    "options": [
+      {
+        "text": "2024-01-08 13:30:00+00"
+      },
+      {
+        "text": "2024-01-08 13:30:00.123456+00"
+      },
+      {
+        "text": "2024-01-08 13:30:00.123456789+00"
+      },
+      {
+        "text": "2024-01-08 13:30:00.1234567"
+      }
+    ],
+    "questionProse": [
+      "¿Cuál es el literal de `timestamp` más pequeño que excede la precisión máxima de `time` en Postgres?"
+    ],
+    "explanationProse": [
+      "Las marcas de tiempo de PostgreSQL tienen una precisión de microsegundos (6 decimales).\n\n    - Máximo: `.123456` (6 dígitos)\n    - Los nanosegundos (9 dígitos) se redondean o truncan a la precisión soportada\n    - Los desplazamientos de zona horaria se aceptan para `timestamptz`, pero no son obligatorios\n\n    **Inconveniente poco común:** Algunos lenguajes/marcos envían una precisión de nanosegundos, pero PostgreSQL almacena las marcas de tiempo con precisión de microsegundos."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Precisión de marca de tiempo\",\n  \"group\": \"Fecha/Hora\",\n  \"options\": [\n    {\n      \"text\": \"2024-01-08 13:30:00+00\"\n    },\n    {\n      \"text\": \"2024-01-08 13:30:00.123456+00\"\n    },\n    {\n      \"text\": \"2024-01-08 13:30:00.123456789+00\"\n    },\n    {\n      \"text\": \"2024-01-08 13:30:00.1234567\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Cuál es el literal de `timestamp` más pequeño que excede la precisión máxima de `time` en Postgres?\"\n  ],\n  \"explanationProse\": [\n    \"Las marcas de tiempo de PostgreSQL tienen una precisión de microsegundos (6 decimales).\\n\\n    - Máximo: `.123456` (6 dígitos)\\n    - Los nanosegundos (9 dígitos) se redondean o truncan a la precisión soportada\\n    - Los desplazamientos de zona horaria se aceptan para `timestamptz`, pero no son obligatorios\\n\\n    **Inconveniente poco común:** Algunos lenguajes/marcos envían una precisión de nanosegundos, pero PostgreSQL almacena las marcas de tiempo con precisión de microsegundos.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 848,
+    "outputTokens": 1241,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 3294
+  },
+  "cost": {
+    "inputUsd": 0.00006784,
+    "outputUsd": 0.00029783999999999995,
+    "totalUsd": 0.00036567999999999995,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

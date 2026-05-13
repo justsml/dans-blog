@@ -1,0 +1,44 @@
+{
+  "index": 13,
+  "attempt": 1,
+  "originalTitle": "Check Constraint Timing",
+  "translatedTitle": "Momento de verificación de la restricción",
+  "translation": {
+    "title": "Momento de verificación de la restricción",
+    "group": "Restricciones",
+    "options": [
+      {
+        "text": "Inmediatamente para filas nuevas o modificadas"
+      },
+      {
+        "text": "Al confirmar la transacción"
+      },
+      {
+        "text": "En la próxima consulta"
+      },
+      {
+        "text": "Nunca - las restricciones se verifican solo en INSERT"
+      }
+    ],
+    "questionProse": [
+      "¿Cuándo se verifica esta restricción de calificación?"
+    ],
+    "explanationProse": [
+      "Restricciones `NOT VALID`:\n    - Se verifican inmediatamente para nuevos inserts y updates\n    - No validan filas existentes\n    - Pueden validar filas existentes después con `VALIDATE CONSTRAINT`\n    - Útiles para tablas grandes\n    \n    Sin `NOT VALID`:\n    - La restricción se verifica inmediatamente\n    - Todas las filas existentes se validan\n    - Puede ser lento en tablas grandes"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Momento de verificación de la restricción\",\n  \"group\": \"Restricciones\",\n  \"options\": [\n    {\n      \"text\": \"Inmediatamente para filas nuevas o modificadas\"\n    },\n    {\n      \"text\": \"Al confirmar la transacción\"\n    },\n    {\n      \"text\": \"En la próxima consulta\"\n    },\n    {\n      \"text\": \"Nunca - las restricciones se verifican solo en INSERT\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Cuándo se verifica esta restricción de calificación?\"\n  ],\n  \"explanationProse\": [\n    \"Restricciones `NOT VALID`:\\n    - Se verifican inmediatamente para nuevos inserts y updates\\n    - No validan filas existentes\\n    - Pueden validar filas existentes después con `VALIDATE CONSTRAINT`\\n    - Útiles para tablas grandes\\n    \\n    Sin `NOT VALID`:\\n    - La restricción se verifica inmediatamente\\n    - Todas las filas existentes se validan\\n    - Puede ser lento en tablas grandes\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 732,
+    "outputTokens": 700,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 7168
+  },
+  "cost": {
+    "inputUsd": 0.00005856,
+    "outputUsd": 0.000168,
+    "totalUsd": 0.00022656,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

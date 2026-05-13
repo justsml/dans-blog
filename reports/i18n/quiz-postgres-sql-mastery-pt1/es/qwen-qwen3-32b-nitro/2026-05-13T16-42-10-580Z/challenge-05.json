@@ -1,0 +1,47 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "timestamptz vs timestamp",
+  "translatedTitle": "timestamptz vs timestamp en PostgreSQL",
+  "translation": {
+    "title": "timestamptz vs timestamp en PostgreSQL",
+    "group": "Marcas de tiempo",
+    "options": [
+      {
+        "text": "Ambos ocupan 8 bytes, pero representan semánticas de marca de tiempo diferentes"
+      },
+      {
+        "text": "timestamptz preserva cualquier zona horaria de entrada"
+      },
+      {
+        "text": "timestamptz almacena el nombre o desplazamiento de la zona horaria original"
+      },
+      {
+        "text": "timestam. Almacena un valor de 2 bytes para la TZ"
+      },
+      {
+        "text": "timestamptz es el sucesor de timestamp"
+      }
+    ],
+    "questionProse": [
+      "¿Cuál es la **afirmación más precisa** sobre `timestamptz` y `timestamp`?"
+    ],
+    "explanationProse": [
+      "Ambos son de 8 bytes, pero no almacenan el mismo tipo de valor.\n\n    ¿Cuál es la diferencia? Está en el análisis de entrada.\n\n    **`timestamptz`**\n    - Normaliza la entrada a un punto absoluto en el tiempo.\n    - Toma en cuenta la configuración `TimeZone` del servidor/conexión al analizar entradas sin desplazamiento explícito y al mostrar la salida.\n\n    **`timestamp`**\n    - Almacena fecha y hora sin conversión de zona horaria.\n    - No preserva ni normaliza información de zona horaria.\n    \n    \n    **`timestamp`**\n\n    - Almacena fecha y hora sin información de zona horaria.\n    - Útil para almacenar fechas estandarizadas explícitamente, ya sea en UTC o una zona horaria específica."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"timestamptz vs timestamp en PostgreSQL\",\n  \"group\": \"Marcas de tiempo\",\n  \"options\": [\n    {\n      \"text\": \"Ambos ocupan 8 bytes, pero representan semánticas de marca de tiempo diferentes\"\n    },\n    {\n      \"text\": \"timestamptz preserva cualquier zona horaria de entrada\"\n    },\n    {\n      \"text\": \"timestamptz almacena el nombre o desplazamiento de la zona horaria original\"\n    },\n    {\n      \"text\": \"timestam. Almacena un valor de 2 bytes para la TZ\"\n    },\n    {\n      \"text\": \"timestamptz es el sucesor de timestamp\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Cuál es la **afirmación más precisa** sobre `timestamptz` y `timestamp`?\"\n  ],\n  \"explanationProse\": [\n    \"Ambos son de 8 bytes, pero no almacenan el mismo tipo de valor.\\n\\n    ¿Cuál es la diferencia? Está en el análisis de entrada.\\n\\n    **`timestamptz`**\\n    - Normaliza la entrada a un punto absoluto en el tiempo.\\n    - Toma en cuenta la configuración `TimeZone` del servidor/conexión al analizar entradas sin desplazamiento explícito y al mostrar la salida.\\n\\n    **`timestamp`**\\n    - Almacena fecha y hora sin conversión de zona horaria.\\n    - No preserva ni normaliza información de zona horaria.\\n    \\n    \\n    **`timestamp`**\\n\\n    - Almacena fecha y hora sin información de zona horaria.\\n    - Útil para almacenar fechas estandarizadas explícitamente, ya sea en UTC o una zona horaria específica.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 862,
+    "outputTokens": 805,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 8188
+  },
+  "cost": {
+    "inputUsd": 0.00006896,
+    "outputUsd": 0.0001932,
+    "totalUsd": 0.00026216,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
