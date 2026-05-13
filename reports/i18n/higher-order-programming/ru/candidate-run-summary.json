@@ -4,29 +4,29 @@
   "slug": "higher-order-programming",
   "locale": "ru",
   "startedAt": "2026-05-13T16:29:23.815Z",
-  "updatedAt": "2026-05-13T16:30:29.356Z",
+  "updatedAt": "2026-05-13T16:31:44.245Z",
   "modelsRequested": [
     "openrouter/openai/gpt-oss-120b:nitro",
     "openrouter/qwen/qwen3-32b:nitro"
   ],
-  "attemptedModels": 1,
+  "attemptedModels": 3,
   "skippedModels": 0,
-  "rejectedModels": 0,
-  "candidateModels": 1,
+  "rejectedModels": 1,
+  "candidateModels": 2,
   "totals": {
-    "inputTokens": 2128,
-    "outputTokens": 662,
+    "inputTokens": 6014,
+    "outputTokens": 3994,
     "thinkingTokens": 0,
-    "cachedInputTokens": 1024,
+    "cachedInputTokens": 2048,
     "cacheWriteTokens": 0,
-    "estimatedCostUsd": 0.000202,
+    "estimatedCostUsd": 0.001313,
     "hasUnknownInputTokens": false,
     "hasUnknownOutputTokens": false,
     "hasUnknownThinkingTokens": true,
     "hasUnknownCachedInputTokens": false,
     "hasUnknownCacheWriteTokens": false,
     "hasUnknownEstimatedCost": false,
-    "runtimeSeconds": "0.96"
+    "runtimeSeconds": "9.08"
   },
   "attempts": [
     {
@@ -44,6 +44,42 @@
           "cacheWrite": 0
         },
         "estimatedCostUsd": 0.00020215199999999998,
+        "pricingSource": "local-openrouter-estimate"
+      }
+    },
+    {
+      "model": "openrouter/qwen/qwen3-32b:nitro",
+      "status": "candidate",
+      "validationStatus": "passed",
+      "reportPath": "reports/i18n/higher-order-programming/ru/openrouter-qwen-qwen3-32b-nitro.md",
+      "note": "Generated through the direct AI SDK chunked translator.",
+      "telemetry": {
+        "runtimeSeconds": "4.06",
+        "tokens": {
+          "input": 1943,
+          "output": 1666,
+          "cached": 512,
+          "cacheWrite": 0
+        },
+        "estimatedCostUsd": 0.00055528,
+        "pricingSource": "local-openrouter-estimate"
+      }
+    },
+    {
+      "model": "openrouter/qwen/qwen3-32b:nitro",
+      "status": "rejected",
+      "validationStatus": "rejected: direct AI SDK translation failed",
+      "reportPath": "reports/i18n/higher-order-programming/ru/openrouter-qwen-qwen3-32b-nitro.md",
+      "note": "Command failed: git commit -m i18n candidate(ru): higher-order-programming via openrouter/qwen/qwen3-32b:nitro",
+      "telemetry": {
+        "runtimeSeconds": "4.06",
+        "tokens": {
+          "input": 1943,
+          "output": 1666,
+          "cached": 512,
+          "cacheWrite": 0
+        },
+        "estimatedCostUsd": 0.00055528,
         "pricingSource": "local-openrouter-estimate"
       }
     }

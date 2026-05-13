@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: higher-order-programming
+- Locale: ru
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2015-10-05--higher-order-programming/ru/index.mdx
+- Validation: rejected: direct AI SDK translation failed
+- Runtime seconds: 4.06
+- Input tokens: 1943
+- Output tokens: 1666
+- Thinking tokens: unknown
+- Cached input tokens: 512
+- Cache write tokens: 0
+- Estimated cost: $0.000555
+- Pricing source: local-openrouter-estimate
+- Note: Command failed: git commit -m i18n candidate(ru): higher-order-programming via openrouter/qwen/qwen3-32b:nitro
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Программирование высшего порядка
@@ -64,3 +82,4 @@ public class Post {
 ```
 
 > Простите, если мой Java немного ржавый.
+````
