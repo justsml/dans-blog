@@ -3,7 +3,7 @@
 - Locale: ja
 - Model: openrouter/qwen/qwen3-32b:nitro
 - Target: src/content/posts/2026-05-05--rag-pipeline-failures/ja/index.mdx
-- Validation: deferred
+- Validation: rejected: direct AI SDK translation failed
 - Runtime seconds: 104.35
 - Input tokens: 11262
 - Output tokens: 8500
@@ -12,7 +12,7 @@
 - Cache write tokens: 0
 - Estimated cost: $0.002941
 - Pricing source: local-openrouter-estimate
-- Note: Generated through the direct AI SDK chunked translator.
+- Note: Command failed: git commit --only -m i18n candidate(ja): rag-pipeline-failures via openrouter/qwen/qwen3-32b:nitro -- src/content/posts/2026-05-05--rag-pipeline-failures/ja/index.mdx reports/i18n/rag-pipeline-failures/ja
 ## Raw Output
 
 ````mdx
