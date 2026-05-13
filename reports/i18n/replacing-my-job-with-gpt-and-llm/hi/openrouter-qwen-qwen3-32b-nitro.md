@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: replacing-my-job-with-gpt-and-llm
+- Locale: hi
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2024-12-05--replacing-my-job-with-gpt-and-llm/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 47.88
+- Input tokens: 6827
+- Output tokens: 8989
+- Thinking tokens: unknown
+- Cached input tokens: 512
+- Cache write tokens: 0
+- Estimated cost: $0.002704
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: ''
@@ -103,3 +121,4 @@ cover_icon: ../robot-dude-square-200-75.webp
 एआई ने मुझे तेज बना दिया। अधिक महत्वपूर्ण बात यह है कि यह मेरे कुछ कमजोर बिंदुओं को देखने में आसान बना दिया। लागत यह है कि मैं अब उस बारीकी से अधिक ध्यान देने के लिए बाध्य हूँ जो केवल अपने आप के तरीके के रूप में व्यवहार करता है।  
 
 वह सौदा जिसे मैं जी सकता हूँ।
+````
