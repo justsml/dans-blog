@@ -1,0 +1,47 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Partial Indexes",
+  "translatedTitle": "Index partiels",
+  "translation": {
+    "title": "Index partiels",
+    "group": "Indexation",
+    "options": [
+      {
+        "text": "Syntaxe invalide"
+      },
+      {
+        "text": "Crée des index en double"
+      },
+      {
+        "text": "Indexe uniquement les étudiants actifs"
+      },
+      {
+        "text": "Indexe d'abord les étudiants actifs"
+      },
+      {
+        "text": "Fournit un indice au planificateur de requête"
+      }
+    ],
+    "questionProse": [
+      "Quel effet produit cette incantation ?"
+    ],
+    "explanationProse": [
+      "Ce trick s'appelle un `Index partiel`.\n\nIls sont utiles pour réduire l'utilisation du disque et accélérer les requêtes lorsque seules une sous-partie des lignes est généralement interrogée.\n\nPostgreSQL n'utilisera l'index que si la condition `status = 'active'` est présente dans la requête.\n\n**Rappel :** PostgreSQL ne supporte pas les 'indices de requête' comme d'autres SGBD. Le planificateur de requête décidera quand utiliser tout index approprié."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Index partiels\",\n  \"group\": \"Indexation\",\n  \"options\": [\n    {\n      \"text\": \"Syntaxe invalide\"\n    },\n    {\n      \"text\": \"Crée des index en double\"\n    },\n    {\n      \"text\": \"Indexe uniquement les étudiants actifs\"\n    },\n    {\n      \"text\": \"Indexe d'abord les étudiants actifs\"\n    },\n    {\n      \"text\": \"Fournit un indice au planificateur de requête\"\n    }\n  ],\n  \"questionProse\": [\n    \"Quel effet produit cette incantation ?\"\n  ],\n  \"explanationProse\": [\n    \"Ce trick s'appelle un `Index partiel`.\\n\\nIls sont utiles pour réduire l'utilisation du disque et accélérer les requêtes lorsque seules une sous-partie des lignes est généralement interrogée.\\n\\nPostgreSQL n'utilisera l'index que si la condition `status = 'active'` est présente dans la requête.\\n\\n**Rappel :** PostgreSQL ne supporte pas les 'indices de requête' comme d'autres SGBD. Le planificateur de requête décidera quand utiliser tout index approprié.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 767,
+    "outputTokens": 906,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2166
+  },
+  "cost": {
+    "inputUsd": 0.00006136,
+    "outputUsd": 0.00021744,
+    "totalUsd": 0.0002788,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
