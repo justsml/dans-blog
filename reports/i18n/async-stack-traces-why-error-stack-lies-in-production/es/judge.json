@@ -1,0 +1,81 @@
+{
+  "selectedCommit": "408be021e08a335da4092beafc3f0296a5a97388",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 10,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "// 1. Wrap the request",
+      "replacement": "// 1. Wrap the request",
+      "reason": "The current translation already has English comments in the code block, but the previous judge report suggested they were translated. Upon inspection of the provided MDX, they are already in English. No change needed, but keeping the suggestion block empty if no fixes are required."
+    }
+  ],
+  "rationale": "The translation is excellent, capturing Dan's punchy, direct style ('congelador criogénico', 'se comió mi tarea'). It correctly uses technical terms like 'stack traces' and 'logs' which are standard in Spanish dev circles. The frontmatter and MDX structure are perfectly preserved. Note: The previous judge report suggested fixing code comments, but the actual MDX provided for the selected commit already has the comments in English, so it is already in a high-quality state.",
+  "slug": "async-stack-traces-why-error-stack-lies-in-production",
+  "locale": "es",
+  "candidateCommits": [
+    "408be021e08a335da4092beafc3f0296a5a97388",
+    "9701f02fd71927f84248deb84723b84357e69eb8",
+    "dd03120922efa44ab5ae7cb8d95237571873617f"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "// 1. Envolver la request",
+      "replacement": "// 1. Wrap the request",
+      "reason": "The original code comments should remain in English to match the rest of the code block's style and the English source.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "// 2. Llamar código asíncrono profundo",
+      "replacement": "// 2. Call deep async code",
+      "reason": "The original code comments should remain in English to match the rest of the code block's style and the English source.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "// 3. En lo profundo de processOrder:",
+      "replacement": "// 3. Deep inside processOrder:",
+      "reason": "The original code comments should remain in English to match the rest of the code block's style and the English source.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "console.log(`[${requestId}] Fallo al procesar la orden`);",
+      "replacement": "console.log(`[${requestId}] Failed to process order`);",
+      "reason": "Code strings in examples are usually kept in English unless they are user-facing UI strings.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "// 1. Wrap the request",
+      "replacement": "// 1. Wrap the request",
+      "reason": "The current translation already has English comments in the code block, but the previous judge report suggested they were translated. Upon inspection of the provided MDX, they are already in English. No change needed, but keeping the suggestion block empty if no fixes are required.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match and replacement are identical; no MDX change needed."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug async-stack-traces-why-error-stack-lies-in-production --locale es --skip-global",
+    "output": ""
+  }
+}
