@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: handling-international-numbers-and-currency
+- Locale: ru
+- Model: qwen/qwen3.6-35b-a3b
+- Target: src/content/posts/2024-08-29--handling-international-numbers-and-currency/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 91.09
+- Input tokens: 6458
+- Output tokens: 19489
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.000000
+- Pricing source: unknown
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Международные номера и валюты
@@ -126,3 +144,4 @@ console.log('🇫🇷 ' + formatMoney(number, 'EUR', 'fr-FR'));
 
 - [currency](https://github.com/bojanz/currency) — мой текущий выбор для Golang.
  */}
+````
