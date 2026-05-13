@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: higher-order-programming
+- Locale: de
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2015-10-05--higher-order-programming/de/index.mdx
+- Validation: passed
+- Runtime seconds: 4.62
+- Input tokens: 1908
+- Output tokens: 1824
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.000590
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Höhere Ordnung Programmierung
@@ -64,3 +82,4 @@ public class Post {
 ```
 
 > Verzeihen Sie mir, wenn meine Java-Kenntnisse etwas rostig sind.
+````
