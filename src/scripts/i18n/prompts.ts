@@ -112,12 +112,39 @@ export function buildUserPrompt(
   context: ChunkContext,
   isQuiz: boolean = false,
 ): string {
+  return [
+    buildCachedChunkContextPrompt(locale, context),
+    buildDynamicChunkPrompt(chunkText, locale, context, isQuiz),
+  ].filter(Boolean).join("\n\n");
+}
+
+export function buildCachedChunkContextPrompt(
+  locale: ActiveLocale,
+  context: ChunkContext,
+): string {
   const language = LOCALE_LABELS[locale];
   const parts: string[] = [];
+
+  parts.push(`TRANSLATION TARGET: ${language}`);
+  parts.push("");
 
   parts.push(`ARTICLE SUMMARY (for consistency across chunks):`);
   parts.push(context.articleSummary);
   parts.push("");
+
+  parts.push("Remember: preserve all code, MDX components, and imports. For images, CSS, links, or other resources, prefix/prepend ALL relative URL paths with `../`. Translate only reader-facing prose.");
+
+  return parts.join("\n");
+}
+
+export function buildDynamicChunkPrompt(
+  chunkText: string,
+  locale: ActiveLocale,
+  context: ChunkContext,
+  isQuiz: boolean = false,
+): string {
+  const language = LOCALE_LABELS[locale];
+  const parts: string[] = [];
 
   if (context.previousTranslation) {
     parts.push(`PREVIOUS CHUNK TRANSLATION (end of chunk ${context.chunkIndex}):`);
@@ -148,7 +175,6 @@ export function buildUserPrompt(
   parts.push(chunkText);
   parts.push("--- CHUNK END ---");
   parts.push("");
-  parts.push("Remember: preserve all code, MDX components, and imports. For images, CSS, links, or other resources, prefix/prepend ALL relative URL paths with `../`. Translate only reader-facing prose.");
 
   return parts.join("\n");
 }

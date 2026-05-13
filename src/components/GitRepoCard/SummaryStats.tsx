@@ -4,7 +4,7 @@ import { useEffect } from "react"
 // const getRepoCards
 export const SummaryStats = () => {
   useEffect(() => {
-    const repoCards = document.querySelectorAll('.repo-card');
+    document.querySelectorAll('.repo-card');
     console.log('SummaryStats mounted')
   }, []);
 

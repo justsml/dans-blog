@@ -6,7 +6,7 @@
  * giving the model bounded context.
  *
  * Usage:
- *   bun run i18n:translate:chunked -- --slug my-article --locale es --chunk 3p --model openrouter/qwen/qwen3.6-plus
+ *   bun run i18n:translate:chunked -- --slug my-article --locale es --chunk 6p --model openrouter/qwen/qwen3.6-plus
  *
  * Chunk formats:
  *   1p  = 1 paragraph per chunk
@@ -39,7 +39,8 @@ import {
 } from "./chunker.ts";
 import {
   buildSystemPrompt,
-  buildUserPrompt,
+  buildCachedChunkContextPrompt,
+  buildDynamicChunkPrompt,
   buildSummaryPrompt,
 } from "./prompts.ts";
 import type { ActiveLocale } from "../../shared/i18n.ts";
@@ -67,7 +68,7 @@ interface LlmConfig {
 
 const DEFAULT_REASONING_EFFORT = "low";
 const DEFAULT_LLM_TIMEOUT_MS = 200_000;
-const DEFAULT_CHUNK_SIZE = "3p";
+const DEFAULT_CHUNK_SIZE = "6p";
 const DEFAULT_PARALLEL_CHALLENGE_CALLS = 18;
 const MAX_PARALLEL_CHALLENGE_CALLS = 18;
 const DEFAULT_CHALLENGE_RETRIES = 2;
@@ -511,22 +512,39 @@ async function translateChunk(
   const start = performance.now();
 
   const system = buildSystemPrompt(locale, isQuiz);
-  const user = buildUserPrompt(chunk.text, locale, {
+  const context = {
     chunkIndex: chunk.index,
     totalChunks: chunk.totalChunks ?? chunk.index + 1,
     previousTranslation,
     previousSourceContext,
     nextSourceContext,
     articleSummary,
-  }, isQuiz);
+  };
+  const cachedContext = buildCachedChunkContextPrompt(locale, context);
+  const dynamicPrompt = buildDynamicChunkPrompt(chunk.text, locale, context, isQuiz);
 
   const provider = createOpenRouter(llmConfig.providerSettings);
   const model = provider.chat(llmConfig.modelId);
 
   const result = await generateText({
     model,
-    system,
-    prompt: user,
+    allowSystemInMessages: true,
+    messages: [
+      {
+        role: "system",
+        content: system,
+      },
+      {
+        role: "user",
+        content: [
+          cachedText(cachedContext),
+          {
+            type: "text",
+            text: dynamicPrompt,
+          },
+        ],
+      },
+    ],
     temperature: llmConfig.temperature,
     maxOutputTokens: llmConfig.maxTokens,
     timeout: { totalMs: llmConfig.timeoutMs },

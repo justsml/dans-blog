@@ -46,9 +46,9 @@ Jump right in to prove your SQL Query Fundamentals! 👇
 
   <slot name="explanation">
   <div className="explanation">
-In SQL, single equal sign (`=`) is used for equality checks in the `WHERE` clause, not `==` or `===`, which are JavaScript operators.
+    In SQL, single equal sign (`=`) is used for equality checks in the `WHERE` clause, not `==` or `===`, which are JavaScript operators.
 
-The correct syntax is `SELECT * FROM users WHERE name = 'John';`.
+    The correct syntax is `SELECT * FROM users WHERE name = 'John';`.
   </div>
   </slot>
 </Challenge>
@@ -73,9 +73,9 @@ The correct syntax is `SELECT * FROM users WHERE name = 'John';`.
 
   <slot name="explanation">
   <div className="explanation">
-`COUNT(column_name)` counts the number of non-NULL values in a specified column. To count all rows, including NULLs, use `COUNT(*)`.
+    `COUNT(column_name)` counts the number of non-NULL values in a specified column. To count all rows, including NULLs, use `COUNT(*)`.
 
-You can also use `COALESCE` to ensure NULLs default to a non-NULL value. Something like: `COUNT(COALESCE(column_name, 0))`.
+    You can also use `COALESCE` to ensure NULLs default to a non-NULL value. Something like: `COUNT(COALESCE(column_name, 0))`.
   </div>
   </slot>
 </Challenge>
@@ -100,7 +100,7 @@ You can also use `COALESCE` to ensure NULLs default to a non-NULL value. Somethi
 
   <slot name="explanation">
   <div className="explanation">
-A `LEFT JOIN` returns all rows from the left table and matched rows from the right table, with NULL for unmatched rows in the right table.
+    A `LEFT JOIN` returns all rows from the left table and matched rows from the right table, with NULL for unmatched rows in the right table.
   </div>
   </slot>
 </Challenge>
@@ -125,7 +125,7 @@ A `LEFT JOIN` returns all rows from the left table and matched rows from the rig
 
   <slot name="explanation">
   <div className="explanation">
-An `INNER JOIN` returns rows where the join condition matches rows from both tables. Unmatched rows are not included in the result set.
+    An `INNER JOIN` returns rows where the join condition matches rows from both tables. Unmatched rows are not included in the result set.
   </div>
   </slot>
 </Challenge>
@@ -150,7 +150,7 @@ An `INNER JOIN` returns rows where the join condition matches rows from both tab
 
   <slot name="explanation">
   <div className="explanation">
-A correlated subquery is evaluated once per row of the outer query. It references columns from the outer query, making it dependent on each row.
+    A correlated subquery is evaluated once per row of the outer query. It references columns from the outer query, making it dependent on each row.
   </div>
   </slot>
 </Challenge>
@@ -175,19 +175,19 @@ A correlated subquery is evaluated once per row of the outer query. It reference
 
   <slot name="explanation">
   <div className="explanation">
-The `WITH` clause, or Common Table Expression (CTE), is used to define a temporary result set that can be referenced within the main query. In PostgreSQL, `WITH` can be attached to statements such as `SELECT`, `INSERT`, `UPDATE`, `DELETE`, or `MERGE`.
+    The `WITH` clause, or Common Table Expression (CTE), is used to define a temporary result set that can be referenced within the main query. In PostgreSQL, `WITH` can be attached to statements such as `SELECT`, `INSERT`, `UPDATE`, `DELETE`, or `MERGE`.
 
-This can help improve readability and maintainability of complex queries.
+    This can help improve readability and maintainability of complex queries.
 
-The syntax is:
-```sql
-WITH cte_name AS (
-  SELECT column_name
-  FROM table_name
-)
-SELECT *
-FROM cte_name;
-```
+    The syntax is:
+    ```sql
+    WITH cte_name AS (
+    SELECT column_name
+    FROM table_name
+    )
+    SELECT *
+    FROM cte_name;
+    ```
 
   </div>
   </slot>
@@ -213,7 +213,7 @@ FROM cte_name;
 
   <slot name="explanation">
   <div className="explanation">
-`IS NULL` checks if a specified column contains a NULL value. `IS NOT NULL` checks the opposite.
+    `IS NULL` checks if a specified column contains a NULL value. `IS NOT NULL` checks the opposite.
   </div>
   </slot>
 </Challenge>
@@ -238,11 +238,11 @@ FROM cte_name;
 
   <slot name="explanation">
   <div className="explanation">
-The `IN` operator filters rows to match any values in a specified list, often as an alternative to multiple OR conditions.
+    The `IN` operator filters rows to match any values in a specified list, often as an alternative to multiple OR conditions.
 
-While it *might* return "unique rows" (and often does), it's not necessarily the primary purpose. 
+    While it *might* return "unique rows" (and often does), it's not necessarily the primary purpose. 
 
-Indexing is not required here, though it's certainly a best practice to use `IN` on a column with an index, preferably a `UNIQUE` index, as it can improve performance.
+    Indexing is not required here, though it's certainly a best practice to use `IN` on a column with an index, preferably a `UNIQUE` index, as it can improve performance.
 
   </div>
   </slot>
@@ -269,9 +269,9 @@ Indexing is not required here, though it's certainly a best practice to use `IN`
 
   <slot name="explanation">
   <div className="explanation">
-The `COALESCE` function returns the first non-NULL value in a specified list, useful for substituting default values when NULLs are encountered.
+    The `COALESCE` function returns the first non-NULL value in a specified list, useful for substituting default values when NULLs are encountered.
 
-For example, `COALESCE(column_name, 0)` would return `0` if `column_name` is `NULL`.
+    For example, `COALESCE(column_name, 0)` would return `0` if `column_name` is `NULL`.
   </div>
   </slot>
 </Challenge>
@@ -297,7 +297,7 @@ For example, `COALESCE(column_name, 0)` would return `0` if `column_name` is `NU
 
   <slot name="explanation">
   <div className="explanation">
-The `GROUP BY` clause groups rows that have the same values in specified columns, allowing aggregate functions to be applied on each group.
+    The `GROUP BY` clause groups rows that have the same values in specified columns, allowing aggregate functions to be applied on each group.
   </div>
   </slot>
 </Challenge>
@@ -323,9 +323,9 @@ The `GROUP BY` clause groups rows that have the same values in specified columns
 
   <slot name="explanation">
   <div className="explanation">
-A `FULL OUTER JOIN` returns all rows from both tables, filling unmatched rows with NULLs for missing values.
+    A `FULL OUTER JOIN` returns all rows from both tables, filling unmatched rows with NULLs for missing values.
 
-This is useful for comparing two tables and finding differences between them.
+    This is useful for comparing two tables and finding differences between them.
   </div>
   </slot>
 </Challenge>

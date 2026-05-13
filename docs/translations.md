@@ -121,7 +121,7 @@ bun run i18n:judge -- \
   --timeout-seconds 240
 ```
 
-Article translation chunks default to `3p`: three paragraphs per translated chunk. For non-quiz prose, the prompt also includes one neighboring source paragraph before and after the active chunk when available. That padding is context only; the model is told to translate only the active chunk. Quiz posts ignore chunk padding because they use structured Challenge input/output instead of prose chunking.
+Article translation chunks default to `6p`: six paragraphs per translated chunk. For non-quiz prose, the prompt also includes one neighboring source paragraph before and after the active chunk when available. That padding is context only; the model is told to translate only the active chunk. Quiz posts ignore chunk padding because they use structured Challenge input/output instead of prose chunking.
 
 Example: For quiz posts, generate competing Nitro candidates through the normal candidate wrapper so each model output is committed and available to the judge:
 

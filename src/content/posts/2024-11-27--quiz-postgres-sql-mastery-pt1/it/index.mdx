@@ -19,7 +19,6 @@ cover_full_width: ../elephant-synthwave-gym-wide.webp
 cover_mobile: ../elephant-synthwave-gym-square-200.webp
 cover_icon: ../elephant-synthwave-gym-square-200.webp
 ---
----
 import Challenge from '../../../../components/QuizUI/Challenge';
 import QuizUI from '../../../../components/QuizUI/QuizUI';
 
@@ -49,12 +48,12 @@ Buona fortuna! 🍀
   <div className="question">
     Quale NON è una funzione di aggregazione integrata in PostgreSQL?
     ```sql
-        SELECT 
-          MIN(grade) as lowest,
-          MAX(grade) as highest,
-          AVG(grade) as average,
-          MEDIAN(grade) as middle
-        FROM grades;
+    SELECT 
+      MIN(grade) as lowest,
+      MAX(grade) as highest,
+      AVG(grade) as average,
+      MEDIAN(grade) as middle
+    FROM grades;
     ```
   </div>
   </slot>
@@ -192,7 +191,7 @@ Buona fortuna! 🍀
   title="timestamptz vs timestamp"
   options={[
     {text: 'Occupano entrambi 8 byte, ma rappresentano semantiche di timestamp diverse', isAnswer: true},
-    {text: 'Loro\'},
+    {text: 'Loro hanno le stesse semantiche di timestamp'},
     {text: 'timestamptz preserva qualsiasi fuso orario di input'},
     {text: 'timestamptz memorizza il nome o l\'offset del fuso orario originale'},
     {text: 'timestamptz memorizza un valore di 2 byte per TZ'},

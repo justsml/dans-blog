@@ -298,7 +298,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     Das erste Element `24` wird in Basis 0 (automatische Erkennung) als `24` geparst, bleibt also `24`. Das zweite Element `'One'` wird in Basis 1 als `NaN` geparst. Das dritte Element `42` wird mit Basis 2 geparst. In Basis 2 ist `'42'` `NaN`, also ist das Ergebnis `[24, NaN, NaN]`.
 
-  Dies ist eine häufige Falle bei `parseInt` und `map`. Wenn du ein Array von Strings in Zahlen parsen möchtest, ist die einzige sichere "eingebaute" Methode `.map(Number)` oder das Hinzufügen eines Callbacks/Enclosures `.map(x =&gt; parseInt(x, 10))`.
+    Dies ist eine häufige Falle bei `parseInt` und `map`. Wenn du ein Array von Strings in Zahlen parsen möchtest, ist die einzige sichere "eingebaute" Methode `.map(Number)` oder das Hinzufügen eines Callbacks/Enclosures `.map(x =&gt; parseInt(x, 10))`.
   </div>
   </slot>
 </Challenge>

@@ -48,7 +48,7 @@ After all, you know your `<div>` from your `<span>`, right? But how well do you 
 
   <slot name='explanation'>
   <div className="explanation">
-The `<ul>` tag creates an unordered list, with items typically marked by bullets.
+    The `<ul>` tag creates an unordered list, with items typically marked by bullets.
   </div>
   </slot>
 
@@ -74,21 +74,21 @@ The `<ul>` tag creates an unordered list, with items typically marked by bullets
 
   <slot name='explanation'>
   <div className="explanation">
-The [`<dd>` element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dd) defines a description, definition, or value in a description list, used within `<dl>` tags to pair with `<dt>` (_Description Term_).
+    The [`<dd>` element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dd) defines a description, definition, or value in a description list, used within `<dl>` tags to pair with `<dt>` (_Description Term_).
 
-This is useful when showing key-value data. Profile information, Settings, and Stats are a common examples.
+    This is useful when showing key-value data. Profile information, Settings, and Stats are a common examples.
 
-```html
-<dl>
-  <dt>JS</dt>
-  <dd>Client-side</dd>
-  <dd>Server-side</dd>
+    ```html
+    <dl>
+    <dt>JS</dt>
+    <dd>Client-side</dd>
+    <dd>Server-side</dd>
 
-  <dt>HTML</dt>
-  <dd>Client-side</dd>
-</dl>
+    <dt>HTML</dt>
+    <dd>Client-side</dd>
+    </dl>
 
-```
+    ```
   </div>
   </slot>
 
@@ -114,16 +114,16 @@ This is useful when showing key-value data. Profile information, Settings, and S
 
   <slot name='explanation'>
   <div className="explanation">
-The [`<figure>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/figure) tag is typically used to wrap self-contained (media) content, like an image or chart, along with [`<figcaption>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/figcaption) to provide a caption.
+    The [`<figure>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/figure) tag is typically used to wrap self-contained (media) content, like an image or chart, along with [`<figcaption>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/figcaption) to provide a caption.
 
-This is useful for images, diagrams, code snippets, and more.
+    This is useful for images, diagrams, code snippets, and more.
 
-```html
-<figure>
-  <img src="image.jpg" alt="Description of image">
-  <figcaption>Image caption</figcaption>
-</figure>
-```
+    ```html
+    <figure>
+    <img src="image.jpg" alt="Description of image">
+    <figcaption>Image caption</figcaption>
+    </figure>
+    ```
   </div>
   </slot>
 
@@ -149,22 +149,22 @@ This is useful for images, diagrams, code snippets, and more.
 
   <slot name='explanation'>
   <div className="explanation">
-The [`<article>` element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/article) is used to define a standalone piece of content that can be independently distributed or reused.
+    The [`<article>` element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/article) is used to define a standalone piece of content that can be independently distributed or reused.
 
-It is often used for blog posts, news articles, forum posts, or user comments.
+    It is often used for blog posts, news articles, forum posts, or user comments.
 
-You can use multiple articles on a page (for infinitely scrolling pages, for example). Or, you can nest them within each other to create a hierarchy of "standalone content."
+    You can use multiple articles on a page (for infinitely scrolling pages, for example). Or, you can nest them within each other to create a hierarchy of "standalone content."
 
-```html
-<article>
-  <h2>Article Title</h2>
-  <p>Article content...</p>
-  <article class="discussion">
+    ```html
+    <article>
+    <h2>Article Title</h2>
+    <p>Article content...</p>
+    <article class="discussion">
     <h3>Comment by User</h3>
     <p>Comment content...</p>
-  </article>
-</article>
-```
+    </article>
+    </article>
+    ```
 
   </div>
   </slot>
@@ -192,24 +192,24 @@ You can use multiple articles on a page (for infinitely scrolling pages, for exa
 
   <slot name='explanation'>
   <div className="explanation">
-[`<fieldset>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/fieldset) is used to group related form controls, and `<legend>` provides a title/label for the group, improving accessibility.
+    [`<fieldset>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/fieldset) is used to group related form controls, and `<legend>` provides a title/label for the group, improving accessibility.
 
-This is useful for grouping related form elements, like a section for shipping address or payment details.
+    This is useful for grouping related form elements, like a section for shipping address or payment details.
 
-```html
-<fieldset>
-  <legend>Shipping Address</legend>
-  <label for="name">Name:</label>
-  <input type="text" id="name" name="name">
-  ...
-</fieldset>
-<fieldset>
-  <legend>Payment Details</legend>
-  <label for="card">Card Number:</label>
-  <input type="text" id="card" name="card">
-  ...
-</fieldset>
-```
+    ```html
+    <fieldset>
+    <legend>Shipping Address</legend>
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name">
+    ...
+    </fieldset>
+    <fieldset>
+    <legend>Payment Details</legend>
+    <label for="card">Card Number:</label>
+    <input type="text" id="card" name="card">
+    ...
+    </fieldset>
+    ```
 
   </div>
   </slot>
@@ -236,14 +236,14 @@ This is useful for grouping related form elements, like a section for shipping a
 
   <slot name='explanation'>
   <div className="explanation">
-The [`<meter>` element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meter) is used to represent a scalar (single) measurement within a set range, such as temperature, disk usage or a vote tally.
+    The [`<meter>` element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meter) is used to represent a scalar (single) measurement within a set range, such as temperature, disk usage or a vote tally.
 
-It may seem similar to a [`<progress>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/progress) bar, however progress bars **ALWAYS** start at zero. Therefore `<progress>` elements show a `percent of completion`, while a `<meter>` shows any value within a definable range.
+    It may seem similar to a [`<progress>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/progress) bar, however progress bars **ALWAYS** start at zero. Therefore `<progress>` elements show a `percent of completion`, while a `<meter>` shows any value within a definable range.
 
-```html
-<meter min="-60" max="130" value="75" /> 75°F
-<meter min="0" max="100" value="75" /> 75%
-```
+    ```html
+    <meter min="-60" max="130" value="75" /> 75°F
+    <meter min="0" max="100" value="75" /> 75%
+    ```
 
   </div>
   </slot>
@@ -270,16 +270,16 @@ It may seem similar to a [`<progress>`](https://developer.mozilla.org/en-US/docs
 
   <slot name='explanation'>
   <div className="explanation">
-The [`<source>` element is used to specify available media formats](https://developer.mozilla.org/en-us/docs/web/html/element/source).
+    The [`<source>` element is used to specify available media formats](https://developer.mozilla.org/en-us/docs/web/html/element/source).
 
-Specifically used with [`<video>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video), [`<audio>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/audio), and [`<picture>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/picture) elements, allowing the browser to choose the most suitable format.
+    Specifically used with [`<video>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video), [`<audio>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/audio), and [`<picture>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/picture) elements, allowing the browser to choose the most suitable format.
 
-```html
-<video controls>
-  <source src="movie.mp4" type="video/mp4">
-  <source src="movie.ogg" type="video/ogg">
-</video>
-```
+    ```html
+    <video controls>
+    <source src="movie.mp4" type="video/mp4">
+    <source src="movie.ogg" type="video/ogg">
+    </video>
+    ```
 
   </div>
   </slot>
@@ -307,22 +307,22 @@ Specifically used with [`<video>`](https://developer.mozilla.org/en-US/docs/Web/
   <slot name='explanation'>
   <div className="explanation">
 
-The [`<hgroup>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/hgroup) element groups a heading with related secondary content, usually one or more `<p>` elements.
+    The [`<hgroup>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/hgroup) element groups a heading with related secondary content, usually one or more `<p>` elements.
 
-It may be useful when a heading has a subtitle, tagline, or alternative title that should not become another heading in the document outline.
+    It may be useful when a heading has a subtitle, tagline, or alternative title that should not become another heading in the document outline.
 
-```html
-<article>
-  <hgroup>
+    ```html
+    <article>
+    <hgroup>
     <h1>Frankenstein</h1>
     <p>Or: The Modern Prometheus</p>
-  </hgroup>
-  <section>
+    </hgroup>
+    <section>
     <h2>Chapter 1</h2>
     <p>...</p>
-  </section>
-</article>
-```
+    </section>
+    </article>
+    ```
   </div>
   </slot>
 </Challenge>
@@ -347,16 +347,16 @@ It may be useful when a heading has a subtitle, tagline, or alternative title th
 
   <slot name='explanation'>
   <div className="explanation">
-The [`<menu>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/menu) represents a list of commands or interactive controls.
+    The [`<menu>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/menu) represents a list of commands or interactive controls.
 
-If your list is navigation links, use `<nav>` with a `<ul>`. Use `<menu>` for toolbar-like controls or command lists.
+    If your list is navigation links, use `<nav>` with a `<ul>`. Use `<menu>` for toolbar-like controls or command lists.
 
-```html
-<menu>
-  <li><button type="button">Copy</button></li>
-  <li><button type="button">Paste</button></li>
-</menu>
-```
+    ```html
+    <menu>
+    <li><button type="button">Copy</button></li>
+    <li><button type="button">Paste</button></li>
+    </menu>
+    ```
 
   </div>
   </slot>
@@ -384,16 +384,16 @@ If your list is navigation links, use `<nav>` with a `<ul>`. Use `<menu>` for to
 
   <slot name='explanation'>
   <div className="explanation">
-[`<details>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details) allows for collapsible content, and [`<summary>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/summary) specifies a visible title for the content.
+    [`<details>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details) allows for collapsible content, and [`<summary>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/summary) specifies a visible title for the content.
 
-This is useful for FAQs, collapsible sections, or any content that can be toggled.
+    This is useful for FAQs, collapsible sections, or any content that can be toggled.
 
-```html
-<details>
-  <summary>Click to expand 🤯</summary>
-  <p>Hidden content! 💥</p>
-</details>
-```
+    ```html
+    <details>
+    <summary>Click to expand 🤯</summary>
+    <p>Hidden content! 💥</p>
+    </details>
+    ```
 
   </div>
   </slot>
@@ -421,17 +421,17 @@ This is useful for FAQs, collapsible sections, or any content that can be toggle
 
   <slot name='explanation'>
   <div className="explanation">
-The [`<dialog>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog) element is used for pop-ups or modals, and provides semantic markup, extended CSS, and a native API for these interactions.
+    The [`<dialog>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog) element is used for pop-ups or modals, and provides semantic markup, extended CSS, and a native API for these interactions.
 
-Use JavaScript to open it with `.showModal()` for modal dialogs or `.show()` for non-modal dialogs, and close it with `.close()` or a form submission using `method="dialog"`.
+    Use JavaScript to open it with `.showModal()` for modal dialogs or `.show()` for non-modal dialogs, and close it with `.close()` or a form submission using `method="dialog"`.
 
-```html
-<dialog>
-  <h2>Modal Title</h2>
-  <p>Modal content...</p>
-  <button>Close</button>
-</dialog>
-```
+    ```html
+    <dialog>
+    <h2>Modal Title</h2>
+    <p>Modal content...</p>
+    <button>Close</button>
+    </dialog>
+    ```
 
   </div>
   </slot>
@@ -459,7 +459,7 @@ Use JavaScript to open it with `.showModal()` for modal dialogs or `.show()` for
 
   <slot name='explanation'>
   <div className="explanation">
-The `<time>` element is used for dates, times, or durations. It can include human-readable content and a machine-readable `datetime` attribute. HTML does not have a `<date>` element.
+    The `<time>` element is used for dates, times, or durations. It can include human-readable content and a machine-readable `datetime` attribute. HTML does not have a `<date>` element.
   </div>
   </slot>
 
@@ -486,20 +486,20 @@ The `<time>` element is used for dates, times, or durations. It can include huma
 
   <slot name='explanation'>
   <div className="explanation">
-ARIA (Accessible Rich Internet Applications) attributes enhance web accessibility by providing extra context for screen readers and other assistive technologies.
+    ARIA (Accessible Rich Internet Applications) attributes enhance web accessibility by providing extra context for screen readers and other assistive technologies.
 
-There are roles, states, and properties that can be used to describe elements.
+    There are roles, states, and properties that can be used to describe elements.
 
-```html
-<button aria-label="Close" aria-expanded="true">X</button>
-<main aria-live="polite">...</main>
-<dialog
-  role="alertdialog"
-  aria-modal="true"
-  aria-labelledby="dialog_label"
-  aria-describedby="dialog_desc"
-></dialog>
-```
+    ```html
+    <button aria-label="Close" aria-expanded="true">X</button>
+    <main aria-live="polite">...</main>
+    <dialog
+    role="alertdialog"
+    aria-modal="true"
+    aria-labelledby="dialog_label"
+    aria-describedby="dialog_desc"
+    ></dialog>
+    ```
   </div>
   </slot>
 
@@ -526,9 +526,9 @@ There are roles, states, and properties that can be used to describe elements.
 
   <slot name='explanation'>
   <div className="explanation">
-The `role` attribute describes
+    The `role` attribute describes
 
- the purpose of an element to assistive technologies, helping improve accessibility.
+    the purpose of an element to assistive technologies, helping improve accessibility.
   </div>
   </slot>
 

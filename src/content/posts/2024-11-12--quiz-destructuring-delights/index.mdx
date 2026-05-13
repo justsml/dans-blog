@@ -138,16 +138,16 @@ Jump right in to the warmup - prove your Destructuring skills! 👇
 
   <slot name="explanation">
   <div className="explanation">
-  The `birth: { place }` property does not exist on `person`, so it will throw an error.
-  One solution is to provide default values for nested properties.
+    The `birth: { place }` property does not exist on `person`, so it will throw an error.
+    One solution is to provide default values for nested properties.
 
-  When accessing nested properties - be careful - as the errors can be hard to spot. And error messages vary between browsers and other platforms, making it a bit more challenging to debug.
+    When accessing nested properties - be careful - as the errors can be hard to spot. And error messages vary between browsers and other platforms, making it a bit more challenging to debug.
 
-  In modern Chrome: `TypeError: Cannot read properties of undefined (reading 'place')`
+    In modern Chrome: `TypeError: Cannot read properties of undefined (reading 'place')`
 
-  In Node, this is also a `TypeError` because JavaScript tries to destructure `place` from `undefined` before `place` is ever read.
+    In Node, this is also a `TypeError` because JavaScript tries to destructure `place` from `undefined` before `place` is ever read.
 
-  Exact wording varies between browsers and runtimes.
+    Exact wording varies between browsers and runtimes.
   </div>
   </slot>
 </Challenge>
@@ -187,17 +187,17 @@ Jump right in to the warmup - prove your Destructuring skills! 👇
 
   <slot name="explanation">
   <div className="explanation">
-  The `birth` property does not exist on `person`, so the whole object still needs a default, not just the nested property. Basically it's missing a ` = {}` default in there.
+    The `birth` property does not exist on `person`, so the whole object still needs a default, not just the nested property. Basically it's missing a ` = {}` default in there.
 
-  The way this is written, says "if `person.birth` is `undefined`, then `place` is `Unknown`". But `person.birth` is `undefined`, so it's trying to destructure `undefined`, which results in an error.
+    The way this is written, says "if `person.birth` is `undefined`, then `place` is `Unknown`". But `person.birth` is `undefined`, so it's trying to destructure `undefined`, which results in an error.
 
-  ```plaintext
-  In modern Chrome: `TypeError: Cannot read properties of undefined (reading 'place')`
+    ```plaintext
+    In modern Chrome: `TypeError: Cannot read properties of undefined (reading 'place')`
 
-  In Node, this is also a `TypeError` because JavaScript tries to destructure `place` from `undefined`.
+    In Node, this is also a `TypeError` because JavaScript tries to destructure `place` from `undefined`.
 
-  Exact wording varies between browsers and runtimes.
-  ```
+    Exact wording varies between browsers and runtimes.
+    ```
   </div>
   </slot>
 </Challenge>
@@ -239,7 +239,7 @@ Jump right in to the warmup - prove your Destructuring skills! 👇
 
   <slot name="explanation">
   <div className="explanation">
-  The `birth` property does not exist on `person`, so it falls back to an empty object ` = {}`. This allows the default value to be used.
+    The `birth` property does not exist on `person`, so it falls back to an empty object ` = {}`. This allows the default value to be used.
   </div>
   </slot>
 </Challenge>
@@ -276,9 +276,9 @@ Jump right in to the warmup - prove your Destructuring skills! 👇
 
   <slot name="explanation">
   <div className="explanation">
-  This function extracts `name` and `age` properties, using defaults if necessary. In this case, the place key on the default object is just noise, it's not used inside `displayUser()`.
+    This function extracts `name` and `age` properties, using defaults if necessary. In this case, the place key on the default object is just noise, it's not used inside `displayUser()`.
 
-  Strict mode doesn't change this one: reading the undeclared `place` binding throws a `ReferenceError`.
+    Strict mode doesn't change this one: reading the undeclared `place` binding throws a `ReferenceError`.
   
   </div>
   </slot>
@@ -321,17 +321,17 @@ Jump right in to the warmup - prove your Destructuring skills! 👇
 
   <slot name="explanation">
   <div className="explanation">
-  The function `displayPlace` will ONLY use a default object if no object is passed in. So, the only way to get the `{ place: "Unknown" }` default is with zero arguments `displayPlace()`.
+    The function `displayPlace` will ONLY use a default object if no object is passed in. So, the only way to get the `{ place: "Unknown" }` default is with zero arguments `displayPlace()`.
 
-  Another notable behavior here is that passing `undefined` for `place` will cause the default value to be used, a bit similar to `JSON.stringify` behavior (ignoring `undefined`, recognizing `null`).
+    Another notable behavior here is that passing `undefined` for `place` will cause the default value to be used, a bit similar to `JSON.stringify` behavior (ignoring `undefined`, recognizing `null`).
 
-  This results in:
+    This results in:
 
-  ```js
-  displayPlace() // Unknown
-  displayPlace({ name: "Dan" }) // N/A
-  displayPlace({ name: "Dan", place: undefined }) // N/A
-  ```
+    ```js
+    displayPlace() // Unknown
+    displayPlace({ name: "Dan" }) // N/A
+    displayPlace({ name: "Dan", place: undefined }) // N/A
+    ```
   </div>
   </slot>
 </Challenge>
@@ -372,7 +372,7 @@ Jump right in to the warmup - prove your Destructuring skills! 👇
 
   <slot name="explanation">
   <div className="explanation">
-  In this case, the `place` property is set to `null` in the first call, and `undefined` in the second. The default value for `place` is only used if the whole object is missing **or** `undefined`. Nulls will come through as `null`.
+    In this case, the `place` property is set to `null` in the first call, and `undefined` in the second. The default value for `place` is only used if the whole object is missing **or** `undefined`. Nulls will come through as `null`.
   </div>
   </slot>
 </Challenge>
@@ -416,9 +416,9 @@ Jump right in to the warmup - prove your Destructuring skills! 👇
 
   <slot name="explanation">
   <div className="explanation">
-  TypeScript reports an error because `place` is typed as `string`, but the call passes `null`. The call also omits the required `age` property.
+    TypeScript reports an error because `place` is typed as `string`, but the call passes `null`. The call also omits the required `age` property.
 
-  If you ignore type errors, running the code will print `null` to the console.
+    If you ignore type errors, running the code will print `null` to the console.
   </div>
   </slot>
 </Challenge>
@@ -461,7 +461,7 @@ Jump right in to the warmup - prove your Destructuring skills! 👇
 
   <slot name="explanation">
   <div className="explanation">
-  This will print `Denver` to the console. The `place` property is renamed to `location` in the function signature. This is a common pattern (rename properties during destructuring) when adapting 3rd party data structures.
+    This will print `Denver` to the console. The `place` property is renamed to `location` in the function signature. This is a common pattern (rename properties during destructuring) when adapting 3rd party data structures.
   </div>
   </slot>
 </Challenge>
@@ -501,11 +501,11 @@ Jump right in to the warmup - prove your Destructuring skills! 👇
 
   <slot name="explanation">
   <div className="explanation">
-  The error is in the `greet` function signature. The `age` and `birth` properties are missing in the passed object, so they should be optional in the type definition.
+    The error is in the `greet` function signature. The `age` and `birth` properties are missing in the passed object, so they should be optional in the type definition.
 
-  Even though the `birth` property is destructured with a default value, the type definition requires it to be present. In order to mark a property as optional in TypeScript, you should use the `?` operator.
+    Even though the `birth` property is destructured with a default value, the type definition requires it to be present. In order to mark a property as optional in TypeScript, you should use the `?` operator.
   
-  Note `birth?: { place?: string }` isn't the same as `birth: { place?: string } | undefined`.
+    Note `birth?: { place?: string }` isn't the same as `birth: { place?: string } | undefined`.
   </div>
   </slot>
 </Challenge>
@@ -552,16 +552,16 @@ Jump right in to the warmup - prove your Destructuring skills! 👇
 
   <slot name="explanation">
   <div className="explanation">
-  Another Error! You're starting to guess aren't you?!
+    Another Error! You're starting to guess aren't you?!
 
-  It is hard to read layers of destructuring, with defaults, assignment and types!
+    It is hard to read layers of destructuring, with defaults, assignment and types!
 
-  As soon as `place` is reassigned to the `p` variable it is no longer defined in the scope of the `console.log` statement.
-  ```ts
-  console.log(`Hi ${f} ${l} from ${place}`); // ❌
-  // to:
-  console.log(`Hi ${f} ${l} from ${p}`); // ✅
-  ```
+    As soon as `place` is reassigned to the `p` variable it is no longer defined in the scope of the `console.log` statement.
+    ```ts
+    console.log(`Hi ${f} ${l} from ${place}`); // ❌
+    // to:
+    console.log(`Hi ${f} ${l} from ${p}`); // ✅
+    ```
   </div>
   </slot>
 </Challenge>

@@ -2,7 +2,7 @@
  * Document chunking strategies for incremental translation.
  *
  * Supports:
- *   - Paragraph mode:  "1p", "3p"  (groups N paragraphs)
+ *   - Paragraph mode:  "1p", "6p"  (groups N paragraphs)
  *   - Sentence mode:   "1s", "5s"  (groups N sentences)
  *   - Token mode:      "500t", "1000t" (groups by ~N tokens)
  *

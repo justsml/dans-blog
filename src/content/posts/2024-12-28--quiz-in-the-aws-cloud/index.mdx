@@ -51,16 +51,16 @@ Get ready to prove your cloud expertise! 🚀
 
   <slot name="explanation">
   <div className="explanation">
-  S3 stands for **Simple Storage Service**. It's a scalable object storage service designed for large-scale data storage.
+    S3 stands for **Simple Storage Service**. It's a scalable object storage service designed for large-scale data storage.
 
-  AWS S3 offers multiple storage classes:
-  - Standard: For frequently accessed data
-  - Infrequent Access (IA): Lower cost for less frequent access
-  - Glacier: Long-term, low-cost archival storage
+    AWS S3 offers multiple storage classes:
+    - Standard: For frequently accessed data
+    - Infrequent Access (IA): Lower cost for less frequent access
+    - Glacier: Long-term, low-cost archival storage
 
-  Each class offers different pricing and access characteristics, allowing cost optimization based on data usage patterns.
+    Each class offers different pricing and access characteristics, allowing cost optimization based on data usage patterns.
 
-  [Learn more about S3 Storage Classes](https://aws.amazon.com/s3/storage-classes/)
+    [Learn more about S3 Storage Classes](https://aws.amazon.com/s3/storage-classes/)
   </div>
   </slot>
 </Challenge>
@@ -91,9 +91,9 @@ Get ready to prove your cloud expertise! 🚀
 
   <slot name="explanation">
   <div className="explanation">
-  DynamoDB is considered "schema-less" because it allows you to store arbitrary properties in items without a predefined schema.
+    DynamoDB is considered "schema-less" because it allows you to store arbitrary properties in items without a predefined schema.
 
-  [DynamoDB Best Practices](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/best-practices.html)
+    [DynamoDB Best Practices](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/best-practices.html)
   </div>
   </slot>
 </Challenge>
@@ -126,20 +126,20 @@ Get ready to prove your cloud expertise! 🚀
 
   <slot name="explanation">
   <div className="explanation">
-  The key here is <b>updates</b>, not inserts or PUTs. If you're doing inserts, you can use `BatchWriteItem` or `TransactWriteItems`.
+    The key here is <b>updates</b>, not inserts or PUTs. If you're doing inserts, you can use `BatchWriteItem` or `TransactWriteItems`.
 
-  While `BatchWriteItem` can handle multiple operations, it's limited to PUTs and DELETES. `TransactWriteItems` is more powerful, but it's a bit of a sledgehammer for simple updates.
-  For simple updates, `UpdateItem` is the best choice. It allows you to UPDATE, or modify one or more attributes in an existing item.
+    While `BatchWriteItem` can handle multiple operations, it's limited to PUTs and DELETES. `TransactWriteItems` is more powerful, but it's a bit of a sledgehammer for simple updates.
+    For simple updates, `UpdateItem` is the best choice. It allows you to UPDATE, or modify one or more attributes in an existing item.
 
-  The `UpdateItem` operation modifies one item per request. For large backfills or bulk updates, you typically orchestrate many `UpdateItem` calls or use a larger workflow such as PartiQL batch execution, Step Functions, Glue, EMR, or a custom worker process.
+    The `UpdateItem` operation modifies one item per request. For large backfills or bulk updates, you typically orchestrate many `UpdateItem` calls or use a larger workflow such as PartiQL batch execution, Step Functions, Glue, EMR, or a custom worker process.
 
-  The `UpdateItem` operation:
-  - Updates an existing item's attributes.
-  - Adds new attributes to an existing item.
-  - Removes attributes from an existing item.
-  - Conditionally performs the update if the item exists or meets certain conditions.
+    The `UpdateItem` operation:
+    - Updates an existing item's attributes.
+    - Adds new attributes to an existing item.
+    - Removes attributes from an existing item.
+    - Conditionally performs the update if the item exists or meets certain conditions.
 
-  [DynamoDB UpdateItem](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateItem.html)
+    [DynamoDB UpdateItem](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateItem.html)
   </div>
   </slot>
 </Challenge>
@@ -207,17 +207,17 @@ Get ready to prove your cloud expertise! 🚀
 
   <slot name="explanation">
   <div className="explanation">
-  Availability Zones (AZs) are distinct data centers **within a region.** RDS Multi-AZ deployment provides automatic failover to a standby replica in a *nearby* AZ.
+    Availability Zones (AZs) are distinct data centers **within a region.** RDS Multi-AZ deployment provides automatic failover to a standby replica in a *nearby* AZ.
 
-  Multi-AZ deployment:
-  - Provides automatic failover
-  - Increases database availability
-  - Creates a synchronous standby replica
-  - Minimizes downtime during infrastructure failures
+    Multi-AZ deployment:
+    - Provides automatic failover
+    - Increases database availability
+    - Creates a synchronous standby replica
+    - Minimizes downtime during infrastructure failures
 
-  Don't confuse Multi-AZ deployment with Read Replicas, which are used for scaling read operations.
+    Don't confuse Multi-AZ deployment with Read Replicas, which are used for scaling read operations.
 
-  {/* [RDS Multi-AZ Details](https://aws.amazon.com/rds/features/multi-az/) */}
+    {/* [RDS Multi-AZ Details](https://aws.amazon.com/rds/features/multi-az/) */}
   </div>
   </slot>
 </Challenge>
@@ -293,20 +293,20 @@ Get ready to prove your cloud expertise! 🚀
 
   <slot name="explanation">
   <div className="explanation">
-  In virtually ALL systems, embracing a "least privilege" design is a key way to harden & future proof. Trying to lock down an existing system is about as difficult as moving an entire office building to a new foundation.
+    In virtually ALL systems, embracing a "least privilege" design is a key way to harden & future proof. Trying to lock down an existing system is about as difficult as moving an entire office building to a new foundation.
 
-  S3 buckets are no exception. To apply the principle of least privilege, start with no permissions and grant only the necessary access. Use IAM roles and policies to control access and regularly audit bucket permissions.
+    S3 buckets are no exception. To apply the principle of least privilege, start with no permissions and grant only the necessary access. Use IAM roles and policies to control access and regularly audit bucket permissions.
 
-  Security best practices:
-  - Apply least privilege principle
-  - Start with no permissions
-  - Grant only necessary access
-  - Use IAM roles and policies
-  - Regularly audit bucket permissions
+    Security best practices:
+    - Apply least privilege principle
+    - Start with no permissions
+    - Grant only necessary access
+    - Use IAM roles and policies
+    - Regularly audit bucket permissions
 
-  Avoid overly permissive settings that could expose sensitive data.
+    Avoid overly permissive settings that could expose sensitive data.
 
-  [S3 Security Best Practices](https://aws.amazon.com/s3/security/)
+    [S3 Security Best Practices](https://aws.amazon.com/s3/security/)
   </div>
   </slot>
 </Challenge>
@@ -336,15 +336,15 @@ Get ready to prove your cloud expertise! 🚀
 
   <slot name="explanation">
   <div className="explanation">
-  Aurora Serverless:
-  - Automatically scales compute capacity
-  - Adjusts resources based on workload
-  - Ideal for unpredictable workloads
-  - Pay only for used resources
+    Aurora Serverless:
+    - Automatically scales compute capacity
+    - Adjusts resources based on workload
+    - Ideal for unpredictable workloads
+    - Pay only for used resources
 
-  Great for applications with variable traffic patterns.
+    Great for applications with variable traffic patterns.
 
-  [Aurora Serverless Overview](https://aws.amazon.com/rds/aurora/serverless/)
+    [Aurora Serverless Overview](https://aws.amazon.com/rds/aurora/serverless/)
   </div>
   </slot>
 </Challenge>
@@ -416,9 +416,9 @@ Get ready to prove your cloud expertise! 🚀
 
   <slot name="explanation">
   <div className="explanation">
-  The DynamoDB Clients are essentially all wrappers for its HTTP API. The `BatchWriteItem` operation can `PUT` or `DELETE` up to **25** documents per HTTP request, but it cannot `UPDATE` multiple documents.
+    The DynamoDB Clients are essentially all wrappers for its HTTP API. The `BatchWriteItem` operation can `PUT` or `DELETE` up to **25** documents per HTTP request, but it cannot `UPDATE` multiple documents.
 
-  While DynamoDB can `INSERT` up to **25** documents per HTTP request, it can `UPDATE` only **1** document per request using the `UpdateItem` operation.
+    While DynamoDB can `INSERT` up to **25** documents per HTTP request, it can `UPDATE` only **1** document per request using the `UpdateItem` operation.
 
   </div>
   </slot>
@@ -450,18 +450,18 @@ Get ready to prove your cloud expertise! 🚀
 
   <slot name="explanation">
   <div className="explanation">
-  On-Demand Capacity is best for:
-  - Unpredictable workloads
-  - Sporadic traffic
-  - Applications with unknown access patterns
-  - Avoiding over-provisioning
+    On-Demand Capacity is best for:
+    - Unpredictable workloads
+    - Sporadic traffic
+    - Applications with unknown access patterns
+    - Avoiding over-provisioning
 
-  Provisioned capacity is better for:
-  - Predictable, consistent workloads
-  - More control over performance
-  - Potential cost savings
+    Provisioned capacity is better for:
+    - Predictable, consistent workloads
+    - More control over performance
+    - Potential cost savings
 
-  [DynamoDB Capacity Modes](https://aws.amazon.com/dynamodb/pricing/)
+    [DynamoDB Capacity Modes](https://aws.amazon.com/dynamodb/pricing/)
   </div>
   </slot>
 </Challenge>
@@ -492,15 +492,15 @@ Get ready to prove your cloud expertise! 🚀
 
   <slot name="explanation">
   <div className="explanation">
-  S3 Performance Tips:
-  - Modern S3 automatically scales request rates per prefix
-  - You don't need random/hash prefixes for performance
-  - Use logical key names that fit your access patterns
-  - Monitor 503 Slow Down responses if you push very high request rates
+    S3 Performance Tips:
+    - Modern S3 automatically scales request rates per prefix
+    - You don't need random/hash prefixes for performance
+    - Use logical key names that fit your access patterns
+    - Monitor 503 Slow Down responses if you push very high request rates
 
-  Old guidance recommended randomizing prefixes to avoid hot partitions, but AWS no longer recommends that as a default performance requirement.
+    Old guidance recommended randomizing prefixes to avoid hot partitions, but AWS no longer recommends that as a default performance requirement.
 
-  [S3 Performance Guidelines](https://aws.amazon.com/s3/performance/)
+    [S3 Performance Guidelines](https://aws.amazon.com/s3/performance/)
   </div>
   </slot>
 </Challenge>
@@ -530,18 +530,18 @@ Get ready to prove your cloud expertise! 🚀
 
   <slot name="explanation">
   <div className="explanation">
-  Best Backup Practices:
-  - Enable automated backups
-  - Use point-in-time recovery
-  - Retain backups based on compliance needs
-  - Test restoration process regularly
-  - Consider cross-region backup
+    Best Backup Practices:
+    - Enable automated backups
+    - Use point-in-time recovery
+    - Retain backups based on compliance needs
+    - Test restoration process regularly
+    - Consider cross-region backup
 
-  Automated backups provide:
-  - Continuous data protection
-  - Flexible recovery options
+    Automated backups provide:
+    - Continuous data protection
+    - Flexible recovery options
 
-  [RDS Backup Best Practices](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_CommonTasks.BackupRestore.html)
+    [RDS Backup Best Practices](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_CommonTasks.BackupRestore.html)
   </div>
   </slot>
 </Challenge>
@@ -571,18 +571,18 @@ Get ready to prove your cloud expertise! 🚀
 
   <slot name="explanation">
   <div className="explanation">
-  Redis Advantages:
-  - Supports complex data structures
-  - Persistence options
-  - Advanced operations
-  - Pub/Sub messaging
+    Redis Advantages:
+    - Supports complex data structures
+    - Persistence options
+    - Advanced operations
+    - Pub/Sub messaging
 
-  Memcached:
-  - Simple key-value store
-  - Pure caching
-  - High performance for simple use cases
+    Memcached:
+    - Simple key-value store
+    - Pure caching
+    - High performance for simple use cases
 
-  [Redis vs Memcached](https://aws.amazon.com/elasticache/redis-vs-memcached/)
+    [Redis vs Memcached](https://aws.amazon.com/elasticache/redis-vs-memcached/)
   </div>
   </slot>
 </Challenge>
@@ -613,15 +613,15 @@ Get ready to prove your cloud expertise! 🚀
 
   <slot name="explanation">
   <div className="explanation">
-  Global Secondary Index (GSI):
-  - Allows querying on non-primary key attributes
-  - Creates alternative access patterns
-  - Increases query flexibility
-  - Comes with additional write capacity cost
+    Global Secondary Index (GSI):
+    - Allows querying on non-primary key attributes
+    - Creates alternative access patterns
+    - Increases query flexibility
+    - Comes with additional write capacity cost
 
-  Useful for complex query requirements beyond primary key.
+    Useful for complex query requirements beyond primary key.
 
-  [DynamoDB Indexes](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GSI.html)
+    [DynamoDB Indexes](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GSI.html)
   </div>
   </slot>
 </Challenge>
@@ -651,14 +651,14 @@ Get ready to prove your cloud expertise! 🚀
 
   <slot name="explanation">
   <div className="explanation">
-  Lifecycle Management:
-  - Automatically transition objects between storage classes
-  - Move infrequent data to cheaper storage
-  - Set rules for object expiration
-  - Optimize storage costs
-  - Reduce manual management overhead
+    Lifecycle Management:
+    - Automatically transition objects between storage classes
+    - Move infrequent data to cheaper storage
+    - Set rules for object expiration
+    - Optimize storage costs
+    - Reduce manual management overhead
 
-  [S3 Lifecycle Rules](https://docs.aws.amazon.com/AmazonS3/latest/userguide/lifecycle-configuration-examples.html)
+    [S3 Lifecycle Rules](https://docs.aws.amazon.com/AmazonS3/latest/userguide/lifecycle-configuration-examples.html)
   </div>
   </slot>
 </Challenge>
@@ -726,14 +726,14 @@ Get ready to prove your cloud expertise! 🚀
 
   <slot name="explanation">
   <div className="explanation">
-  RDS Encryption Features:
-  - Encrypt data at rest using KMS
-  - Encrypt data in transit using SSL/TLS
-  - Enable encryption during database creation
-  - Protect sensitive information
-  - Compliance with security standards
+    RDS Encryption Features:
+    - Encrypt data at rest using KMS
+    - Encrypt data in transit using SSL/TLS
+    - Enable encryption during database creation
+    - Protect sensitive information
+    - Compliance with security standards
 
-  [RDS Encryption Options](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/encryption-options.html)
+    [RDS Encryption Options](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/encryption-options.html)
   </div>
   </slot>
 </Challenge>
@@ -765,14 +765,14 @@ Get ready to prove your cloud expertise! 🚀
 
   <slot name="explanation">
   <div className="explanation">
-  DynamoDB Streams:
-  - Capture item-level changes
-  - Enable event-driven architectures
-  - Trigger Lambda functions
-  - Support cross-region replication
-  - Provide near real-time data movement
+    DynamoDB Streams:
+    - Capture item-level changes
+    - Enable event-driven architectures
+    - Trigger Lambda functions
+    - Support cross-region replication
+    - Provide near real-time data movement
 
-  [DynamoDB Streams Overview](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Streams.html)
+    [DynamoDB Streams Overview](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Streams.html)
   </div>
   </slot>
 </Challenge>
@@ -802,14 +802,14 @@ Get ready to prove your cloud expertise! 🚀
 
   <slot name="explanation">
   <div className="explanation">
-  Multipart Upload Benefits:
-  - Handle large files efficiently
-  - Resume interrupted uploads
-  - Parallel upload of file parts
-  - Recommended for files > 100MB
-  - Improved network reliability
+    Multipart Upload Benefits:
+    - Handle large files efficiently
+    - Resume interrupted uploads
+    - Parallel upload of file parts
+    - Recommended for files > 100MB
+    - Improved network reliability
 
-  [S3 Multipart Upload](https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html)
+    [S3 Multipart Upload](https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html)
   </div>
   </slot>
 </Challenge>
@@ -840,18 +840,18 @@ Get ready to prove your cloud expertise! 🚀
 
   <slot name="explanation">
   <div className="explanation">
-  Optimal Storage Strategy:
-  - 20% in S3 Standard for daily access
-  - 30% in S3 Standard-IA for monthly access
-  - 50% in Glacier for yearly access
+    Optimal Storage Strategy:
+    - 20% in S3 Standard for daily access
+    - 30% in S3 Standard-IA for monthly access
+    - 50% in Glacier for yearly access
 
-  This approach optimizes costs while maintaining appropriate access patterns.
+    This approach optimizes costs while maintaining appropriate access patterns.
 
-  Cost Considerations:
-  - Storage pricing per GB
-  - Retrieval costs
-  - Access patterns
-  - Transition costs
+    Cost Considerations:
+    - Storage pricing per GB
+    - Retrieval costs
+    - Access patterns
+    - Transition costs
   </div>
   </slot>
 </Challenge>
