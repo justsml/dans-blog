@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: javascript-scope-magic
+- Locale: hi
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2015-06-06--javascript-scope-magic/hi/index.mdx
+- Validation: passed
+- Runtime seconds: 6.40
+- Input tokens: 2331
+- Output tokens: 3010
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.000909
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: जावास्क्रिप्ट जादू
 subTitle: ''
@@ -107,3 +125,4 @@ fs.readFileAsync("./style.less") // promisified readFile() को कॉल क�
 -->
 
 [fuck_this]: https://res.cloudinary.com/ddd/image/upload/panda-rampage__tumblr_nq7srwTXqr1stn6klo1_500_gm2som.gif
+````
