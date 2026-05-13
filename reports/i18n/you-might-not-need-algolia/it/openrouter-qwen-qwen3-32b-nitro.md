@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: you-might-not-need-algolia
+- Locale: it
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2025-03-01--you-might-not-need-algolia/it/index.mdx
+- Validation: deferred
+- Runtime seconds: 32.09
+- Input tokens: 5603
+- Output tokens: 5475
+- Thinking tokens: unknown
+- Cached input tokens: 512
+- Cache write tokens: 0
+- Estimated cost: $0.001762
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: ''
 social_image: ../desktop-social.webp
@@ -98,3 +116,4 @@ Se sì, inizia con Pagefind. Otterrai una ricerca predefinita privata, asset com
 Se no, identifica l'elemento che mantiene l'indice aggiornato: inventario, permessi, personalizzazione, analisi, posizionamento o frequenza di scrittura. Poi scegli il database o il servizio di ricerca che gestisce esplicitamente quel compito.
 
 Algolia non è il cattivo qui. Il cattivo è adottare un secondo sistema prima di dimostrare che il primo artifact non era sufficiente.
+````
