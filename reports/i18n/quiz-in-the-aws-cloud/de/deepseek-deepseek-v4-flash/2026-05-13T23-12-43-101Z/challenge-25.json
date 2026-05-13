@@ -1,0 +1,47 @@
+{
+  "index": 24,
+  "attempt": 1,
+  "originalTitle": "Time To Live (TTL)",
+  "translatedTitle": "Lebensdauer (TTL)",
+  "translation": {
+    "title": "Lebensdauer (TTL)",
+    "group": "DynamoDB-Funktionen",
+    "options": [
+      {
+        "text": "Löscht Elemente sofort bei Ablauf"
+      },
+      {
+        "text": "Erfordert manuellen Löschauslöser"
+      },
+      {
+        "text": "Hintergrundlöschung mit bestmöglicher Zeitplanung"
+      },
+      {
+        "text": "Lässt Elemente ablaufen, behält sie aber gespeichert"
+      }
+    ],
+    "questionProse": [
+      "Wie handhabt die TTL-Funktion von DynamoDB das Löschen von Elementen?"
+    ],
+    "explanationProse": [
+      "Eigenschaften der DynamoDB TTL:\n      - Hintergrundprozess überwacht das TTL-Attribut\n      - Abgelaufene Elemente werden nach bestmöglichem Zeitplan gelöscht, normalerweise innerhalb weniger Tage\n      - Keine zusätzlichen Kosten für TTL\n      - Gelöschte Elemente erscheinen in Streams\n\n      Anwendungsfälle:\n      - Sitzungsverwaltung\n      - Ablauf von Protokollen\n      - Bereinigung temporärer Daten\n      - Einhaltung gesetzlicher Vorschriften"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Lebensdauer (TTL)\",\n  \"group\": \"DynamoDB-Funktionen\",\n  \"options\": [\n    {\n      \"text\": \"Löscht Elemente sofort bei Ablauf\"\n    },\n    {\n      \"text\": \"Erfordert manuellen Löschauslöser\"\n    },\n    {\n      \"text\": \"Hintergrundlöschung mit bestmöglicher Zeitplanung\"\n    },\n    {\n      \"text\": \"Lässt Elemente ablaufen, behält sie aber gespeichert\"\n    }\n  ],\n  \"questionProse\": [\n    \"Wie handhabt die TTL-Funktion von DynamoDB das Löschen von Elementen?\"\n  ],\n  \"explanationProse\": [\n    \"Eigenschaften der DynamoDB TTL:\\n      - Hintergrundprozess überwacht das TTL-Attribut\\n      - Abgelaufene Elemente werden nach bestmöglichem Zeitplan gelöscht, normalerweise innerhalb weniger Tage\\n      - Keine zusätzlichen Kosten für TTL\\n      - Gelöschte Elemente erscheinen in Streams\\n\\n      Anwendungsfälle:\\n      - Sitzungsverwaltung\\n      - Ablauf von Protokollen\\n      - Bereinigung temporärer Daten\\n      - Einhaltung gesetzlicher Vorschriften\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 768,
+    "outputTokens": 1144,
+    "cacheReadTokens": 384,
+    "cacheWriteTokens": 0,
+    "durationMs": 7338,
+    "providerCostUsd": 0.00054976,
+    "providerUpstreamCostUsd": 0.00054976,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000054835200000000007,
+    "outputUsd": 0.00032032,
+    "totalUsd": 0.0003751552,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

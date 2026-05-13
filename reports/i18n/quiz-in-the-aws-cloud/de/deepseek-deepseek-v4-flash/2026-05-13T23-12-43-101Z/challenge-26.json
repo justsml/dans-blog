@@ -1,0 +1,47 @@
+{
+  "index": 25,
+  "attempt": 1,
+  "originalTitle": "Scaling Behavior",
+  "translatedTitle": "Skalierungsverhalten",
+  "translation": {
+    "title": "Skalierungsverhalten",
+    "group": "Aurora Serverless",
+    "options": [
+      {
+        "text": "Skalierungsgeschwindigkeit hängt von der aktuellen und konfigurierten Kapazität ab"
+      },
+      {
+        "text": "Skaliert sofort bei Bedarf"
+      },
+      {
+        "text": "Skaliert nur in voreingestellten Intervallen"
+      },
+      {
+        "text": "Nur manuelle Skalierung"
+      }
+    ],
+    "questionProse": [
+      "Was ist die wichtigste Überlegung, wenn man sich bei plötzlichen Traffic-Spitzen auf Aurora Serverless verlässt?"
+    ],
+    "explanationProse": [
+      "Aurora Serverless Skalierung:\n      - Aurora Serverless v2 skaliert die Kapazität in feingranularen ACU-Schritten\n      - Die Skalierungsgeschwindigkeit hängt von der aktuellen Kapazität und den min/max ACU-Einstellungen ab\n      - Unterstützte Versionen können bei Konfiguration auf 0 ACUs automatisch pausieren\n      - Abrechnung pro Sekunde basierend auf ACUs\n\n      Bewährte Methoden:\n      - Setzen Sie die Mindestkapazität für kritische Workloads hoch genug für plötzliche Spitzen\n      - Überwachen Sie Skalierungsereignisse\n      - Behalten Sie das Verbindungsmanagement im Auge"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Skalierungsverhalten\",\n  \"group\": \"Aurora Serverless\",\n  \"options\": [\n    { \"text\": \"Skalierungsgeschwindigkeit hängt von der aktuellen und konfigurierten Kapazität ab\" },\n    { \"text\": \"Skaliert sofort bei Bedarf\" },\n    { \"text\": \"Skaliert nur in voreingestellten Intervallen\" },\n    { \"text\": \"Nur manuelle Skalierung\" }\n  ],\n  \"questionProse\": [\n    \"Was ist die wichtigste Überlegung, wenn man sich bei plötzlichen Traffic-Spitzen auf Aurora Serverless verlässt?\"\n  ],\n  \"explanationProse\": [\n    \"Aurora Serverless Skalierung:\\n      - Aurora Serverless v2 skaliert die Kapazität in feingranularen ACU-Schritten\\n      - Die Skalierungsgeschwindigkeit hängt von der aktuellen Kapazität und den min/max ACU-Einstellungen ab\\n      - Unterstützte Versionen können bei Konfiguration auf 0 ACUs automatisch pausieren\\n      - Abrechnung pro Sekunde basierend auf ACUs\\n\\n      Bewährte Methoden:\\n      - Setzen Sie die Mindestkapazität für kritische Workloads hoch genug für plötzliche Spitzen\\n      - Überwachen Sie Skalierungsereignisse\\n      - Behalten Sie das Verbindungsmanagement im Auge\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 784,
+    "outputTokens": 1541,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 8091,
+    "providerCostUsd": 0.0007732,
+    "providerUpstreamCostUsd": 0.0007732,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00010976,
+    "outputUsd": 0.00043148000000000004,
+    "totalUsd": 0.00054124,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

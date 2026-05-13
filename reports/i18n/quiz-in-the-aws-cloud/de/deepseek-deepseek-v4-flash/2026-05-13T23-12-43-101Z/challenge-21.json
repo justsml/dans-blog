@@ -1,0 +1,47 @@
+{
+  "index": 20,
+  "attempt": 1,
+  "originalTitle": "Storage Cost Analysis",
+  "translatedTitle": "Speicherkostenanalyse",
+  "translation": {
+    "title": "Speicherkostenanalyse",
+    "group": "Kostenoptimierung",
+    "options": [
+      {
+        "text": "S3 Standard für alle Daten"
+      },
+      {
+        "text": "Immer den günstigsten Speicher verwenden"
+      },
+      {
+        "text": "Speicherklassen basierend auf Zugriffsmustern mischen"
+      },
+      {
+        "text": "Alles in Glacier speichern"
+      }
+    ],
+    "questionProse": [
+      "Was ist der kosteneffizienteste Ansatz für die Speicherung von 1 PB Daten, bei dem 20 % täglich, 30 % monatlich und 50 % jährlich abgerufen werden?"
+    ],
+    "explanationProse": [
+      "Optimale Speicherstrategie:\n    - 20 % in S3 Standard für täglichen Zugriff\n    - 30 % in S3 Standard-IA für monatlichen Zugriff\n    - 50 % in Glacier für jährlichen Zugriff\n\n    Dieser Ansatz optimiert die Kosten und behält gleichzeitig angemessene Zugriffsmuster bei.\n\n    Kostenüberlegungen:\n    - Speicherpreise pro GB\n    - Abrufkosten\n    - Zugriffsmuster\n    - Übergangskosten"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Speicherkostenanalyse\",\n  \"group\": \"Kostenoptimierung\",\n  \"options\": [\n    {\n      \"text\": \"S3 Standard für alle Daten\"\n    },\n    {\n      \"text\": \"Immer den günstigsten Speicher verwenden\"\n    },\n    {\n      \"text\": \"Speicherklassen basierend auf Zugriffsmustern mischen\"\n    },\n    {\n      \"text\": \"Alles in Glacier speichern\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was ist der kosteneffizienteste Ansatz für die Speicherung von 1 PB Daten, bei dem 20 % täglich, 30 % monatlich und 50 % jährlich abgerufen werden?\"\n  ],\n  \"explanationProse\": [\n    \"Optimale Speicherstrategie:\\n    - 20 % in S3 Standard für täglichen Zugriff\\n    - 30 % in S3 Standard-IA für monatlichen Zugriff\\n    - 50 % in Glacier für jährlichen Zugriff\\n\\n    Dieser Ansatz optimiert die Kosten und behält gleichzeitig angemessene Zugriffsmuster bei.\\n\\n    Kostenüberlegungen:\\n    - Speicherpreise pro GB\\n    - Abrufkosten\\n    - Zugriffsmuster\\n    - Übergangskosten\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 783,
+    "outputTokens": 1003,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 6397,
+    "providerCostUsd": 0.0005578,
+    "providerUpstreamCostUsd": 0.0005578,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00010962,
+    "outputUsd": 0.00028084000000000003,
+    "totalUsd": 0.00039046,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
