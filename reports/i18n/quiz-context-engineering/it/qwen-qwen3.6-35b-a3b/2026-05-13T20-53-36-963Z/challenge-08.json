@@ -1,0 +1,44 @@
+{
+  "index": 7,
+  "attempt": 1,
+  "originalTitle": "Conversation History Management",
+  "translatedTitle": "Gestione della cronologia delle conversazioni",
+  "translation": {
+    "title": "Gestione della cronologia delle conversazioni",
+    "group": "Gestione dei token",
+    "options": [
+      {
+        "text": "Inviare sempre la cronologia completa della conversazione"
+      },
+      {
+        "text": "Riassumere i messaggi vecchi quando la cronologia supera il budget di token"
+      },
+      {
+        "text": "Eliminare i messaggi vecchi — il modello ha una memoria persistente"
+      },
+      {
+        "text": "Memorizzare la cronologia in un database vettoriale e recuperare i turni rilevanti"
+      }
+    ],
+    "questionProse": [
+      "In un'app chat multi-turno, qual è la strategia corretta quando la cronologia delle conversazioni si allunga troppo?"
+    ],
+    "explanationProse": [
+      "I LLM non hanno memoria persistente. Ogni chiamata API è stateless: invii il contesto completo, ottieni una risposta. La \"memoria\" di una conversazione è interamente costituita dalla cronologia dei messaggi che includi in ogni richiesta.\n\n    Quando quella cronologia supera il budget a disposizione, le opzioni sono:\n    1. **Riassumere**: comprimi i turni più vecchi in un riassunto cumulativo, mantieni quelli recenti inalterati\n    2. **Finestra scorrevole**: mantieni gli ultimi N turni, scarta i precedenti\n    3. **Recupero selettivo**: embedding dei turni e recupero di quelli rilevanti per query (complesso, ma potente)\n\n    La semplice troncatura — tagliare i messaggi vecchi per farli stare nel budget — è l'opzione peggiore perché rimuove silenziosamente il contesto che il modello potrebbe effettivamente necessitare.\n\n    Recuperare la cronologia da un database vettoriale è teoricamente affascinante, ma nella pratica è quasi sempre overkill per le app chat. Il riassunto rimane la scelta pragmatica di default."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Gestione della cronologia delle conversazioni\",\n  \"group\": \"Gestione dei token\",\n  \"options\": [\n    {\n      \"text\": \"Inviare sempre la cronologia completa della conversazione\"\n    },\n    {\n      \"text\": \"Riassumere i messaggi vecchi quando la cronologia supera il budget di token\"\n    },\n    {\n      \"text\": \"Eliminare i messaggi vecchi — il modello ha una memoria persistente\"\n    },\n    {\n      \"text\": \"Memorizzare la cronologia in un database vettoriale e recuperare i turni rilevanti\"\n    }\n  ],\n  \"questionProse\": [\n    \"In un'app chat multi-turno, qual è la strategia corretta quando la cronologia delle conversazioni si allunga troppo?\"\n  ],\n  \"explanationProse\": [\n    \"I LLM non hanno memoria persistente. Ogni chiamata API è stateless: invii il contesto completo, ottieni una risposta. La \\\"memoria\\\" di una conversazione è interamente costituita dalla cronologia dei messaggi che includi in ogni richiesta.\\n\\n    Quando quella cronologia supera il budget a disposizione, le opzioni sono:\\n    1. **Riassumere**: comprimi i turni più vecchi in un riassunto cumulativo, mantieni quelli recenti inalterati\\n    2. **Finestra scorrevole**: mantieni gli ultimi N turni, scarta i precedenti\\n    3. **Recupero selettivo**: embedding dei turni e recupero di quelli rilevanti per query (complesso, ma potente)\\n\\n    La semplice troncatura — tagliare i messaggi vecchi per farli stare nel budget — è l'opzione peggiore perché rimuove silenziosamente il contesto che il modello potrebbe effettivamente necessitare.\\n\\n    Recuperare la cronologia da un database vettoriale è teoricamente affascinante, ma nella pratica è quasi sempre overkill per le app chat. Il riassunto rimane la scelta pragmatica di default.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 932,
+    "outputTokens": 3517,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 20859
+  },
+  "cost": {
+    "inputUsd": 0,
+    "outputUsd": 0,
+    "totalUsd": 0,
+    "pricingSource": "unknown"
+  }
+}

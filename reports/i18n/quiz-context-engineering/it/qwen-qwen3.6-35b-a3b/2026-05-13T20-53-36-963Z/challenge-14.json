@@ -1,0 +1,44 @@
+{
+  "index": 13,
+  "attempt": 1,
+  "originalTitle": "Context Engineering vs. Fine-Tuning",
+  "translatedTitle": "Context Engineering vs. Fine-tuning",
+  "translation": {
+    "title": "Context Engineering vs. Fine-tuning",
+    "group": "Esperto",
+    "options": [
+      {
+        "text": "Il fine-tuning è sempre migliore: il context engineering è solo una soluzione alternativa"
+      },
+      {
+        "text": "Il context engineering è gratuito; il fine-tuning è costoso: usa sempre il context engineering"
+      },
+      {
+        "text": "Il context engineering modifica il comportamento per richiesta; il fine-tuning cambia i pesi del modello in modo permanente"
+      },
+      {
+        "text": "Sono solo due nomi diversi per la stessa tecnica"
+      }
+    ],
+    "questionProse": [
+      "Qual è la differenza sostanziale tra context engineering e fine-tuning, e quando il fine-tuning ha davvero un senso pratico?"
+    ],
+    "explanationProse": [
+      "**Il context engineering** modella il comportamento del modello tramite il prompt — istruzioni di sistema, esempi few-shot, contesto recuperato. È applicato per richiesta, reversibile e non richiede addestramento.\n\n    **Il fine-tuning** aggiorna i pesi del modello sui tuoi dati. Le modifiche sono permanenti (per quel checkpoint) e si applicano a ogni inferenza.\n\n    Il fine-tuning è davvero superiore quando:\n    - Hai bisogno di uno stile o formato costante che il modello non riesce a seguire in modo affidabile solo con le istruzioni\n    - Il tuo compito richiede un comportamento ripetibile su pattern di dominio specifico che prompting e retrieval non risolvono\n    - Devi ridurre la lunghezza del prompt: il comportamento fine-tuned non deve essere spiegato a ogni richiesta\n    - Gestisci molti request dove esempi few-shot costanti consumano token significativi\n\n    Il fine-tuning è eccessivo quando:\n    - Le tue istruzioni entrano in un system prompt\n    - Ti servono principalmente fatti aggiornati o proprietari che possono essere recuperati al momento della richiesta\n    - I requisiti cambiano spesso (dovresti rifare il fine-tuning)\n    - Non hai ancora esplorato a fondo il context engineering\n\n    L'ordine corretto: padroneggia prima il context engineering. Fai il fine-tuning solo quando è dimostrato che non basta."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Context Engineering vs. Fine-tuning\",\n  \"group\": \"Esperto\",\n  \"options\": [\n    {\n      \"text\": \"Il fine-tuning è sempre migliore: il context engineering è solo una soluzione alternativa\"\n    },\n    {\n      \"text\": \"Il context engineering è gratuito; il fine-tuning è costoso: usa sempre il context engineering\"\n    },\n    {\n      \"text\": \"Il context engineering modifica il comportamento per richiesta; il fine-tuning cambia i pesi del modello in modo permanente\"\n    },\n    {\n      \"text\": \"Sono solo due nomi diversi per la stessa tecnica\"\n    }\n  ],\n  \"questionProse\": [\n    \"Qual è la differenza sostanziale tra context engineering e fine-tuning, e quando il fine-tuning ha davvero un senso pratico?\"\n  ],\n  \"explanationProse\": [\n    \"**Il context engineering** modella il comportamento del modello tramite il prompt — istruzioni di sistema, esempi few-shot, contesto recuperato. È applicato per richiesta, reversibile e non richiede addestramento.\\n\\n    **Il fine-tuning** aggiorna i pesi del modello sui tuoi dati. Le modifiche sono permanenti (per quel checkpoint) e si applicano a ogni inferenza.\\n\\n    Il fine-tuning è davvero superiore quando:\\n    - Hai bisogno di uno stile o formato costante che il modello non riesce a seguire in modo affidabile solo con le istruzioni\\n    - Il tuo compito richiede un comportamento ripetibile su pattern di dominio specifico che prompting e retrieval non risolvono\\n    - Devi ridurre la lunghezza del prompt: il comportamento fine-tuned non deve essere spiegato a ogni richiesta\\n    - Gestisci molti request dove esempi few-shot costanti consumano token significativi\\n\\n    Il fine-tuning è eccessivo quando:\\n    - Le tue istruzioni entrano in un system prompt\\n    - Ti servono principalmente fatti aggiornati o proprietari che possono essere recuperati al momento della richiesta\\n    - I requisiti cambiano spesso (dovresti rifare il fine-tuning)\\n    - Non hai ancora esplorato a fondo il context engineering\\n\\n    L'ordine corretto: padroneggia prima il context engineering. Fai il fine-tuning solo quando è dimostrato che non basta.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1013,
+    "outputTokens": 4417,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 52019
+  },
+  "cost": {
+    "inputUsd": 0,
+    "outputUsd": 0,
+    "totalUsd": 0,
+    "pricingSource": "unknown"
+  }
+}

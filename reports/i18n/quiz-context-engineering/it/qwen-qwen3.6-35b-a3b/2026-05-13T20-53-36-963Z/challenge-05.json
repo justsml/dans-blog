@@ -1,0 +1,44 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Chunking Strategy",
+  "translatedTitle": "Strategia di Chunking",
+  "translation": {
+    "title": "Strategia di Chunking",
+    "group": "Recupero",
+    "options": [
+      {
+        "text": "Usa la dimensione di chunk più grande consentita dal tuo context window"
+      },
+      {
+        "text": "Usa sempre 512 token — è una regola fissa"
+      },
+      {
+        "text": "Usa chunk sovrapposti dimensionati in base alla struttura del tuo contenuto"
+      },
+      {
+        "text": "La dimensione del chunk non conta"
+      }
+    ],
+    "questionProse": [
+      "Quando frammenti i documenti per il RAG, qual è il principio più importante?"
+    ],
+    "explanationProse": [
+      "Non esiste una dimensione di chunk magica: dipende da cosa stai processando. I principi veri sono:\n\n    1. **Segui la struttura del contenuto.** Le FAQ si chunkano bene a livello di domanda+risposta. I contratti a livello di clausola. Il codice a livello di funzione.\n    2. **Usa la sovrapposizione.** Un chunk da 512 token con 64 token di overlap su ogni lato assicura che le risposte tagliate da un confine vengano comunque recuperate.\n    3. **Misura.** Crea un eval set e testa diverse dimensioni. La scelta del chunk size impatta più del modello di embedding.\n\n    \"512 token\" è un punto di partenza ragionevole, non un comandamento."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Strategia di Chunking\",\n  \"group\": \"Recupero\",\n  \"options\": [\n    {\n      \"text\": \"Usa la dimensione di chunk più grande consentita dal tuo context window\"\n    },\n    {\n      \"text\": \"Usa sempre 512 token — è una regola fissa\"\n    },\n    {\n      \"text\": \"Usa chunk sovrapposti dimensionati in base alla struttura del tuo contenuto\"\n    },\n    {\n      \"text\": \"La dimensione del chunk non conta\"\n    }\n  ],\n  \"questionProse\": [\n    \"Quando frammenti i documenti per il RAG, qual è il principio più importante?\"\n  ],\n  \"explanationProse\": [\n    \"Non esiste una dimensione di chunk magica: dipende da cosa stai processando. I principi veri sono:\\n\\n    1. **Segui la struttura del contenuto.** Le FAQ si chunkano bene a livello di domanda+risposta. I contratti a livello di clausola. Il codice a livello di funzione.\\n    2. **Usa la sovrapposizione.** Un chunk da 512 token con 64 token di overlap su ogni lato assicura che le risposte tagliate da un confine vengano comunque recuperate.\\n    3. **Misura.** Crea un eval set e testa diverse dimensioni. La scelta del chunk size impatta più del modello di embedding.\\n\\n    \\\"512 token\\\" è un punto di partenza ragionevole, non un comandamento.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 884,
+    "outputTokens": 3635,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 22227
+  },
+  "cost": {
+    "inputUsd": 0,
+    "outputUsd": 0,
+    "totalUsd": 0,
+    "pricingSource": "unknown"
+  }
+}
