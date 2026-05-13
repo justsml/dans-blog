@@ -4,15 +4,15 @@
 - Model: openrouter/qwen/qwen3-32b:nitro
 - Target: src/content/posts/2023-08-13--mastering-functional-pipelines-passing-state/ja/index.mdx
 - Validation: rejected: direct AI SDK translation failed
-- Runtime seconds: 20.45
-- Input tokens: 10464
-- Output tokens: 7934
+- Runtime seconds: 21.08
+- Input tokens: 10237
+- Output tokens: 7137
 - Thinking tokens: unknown
-- Cached input tokens: 2048
+- Cached input tokens: 3072
 - Cache write tokens: 0
-- Estimated cost: $0.002741
+- Estimated cost: $0.002532
 - Pricing source: local-openrouter-estimate
-- Note: Command failed: bun run i18n:translate:chunked -- --slug mastering-functional-pipelines-passing-state --locale ja --model openrouter/qwen/qwen3-32b:nitro --chunk 6p --run-id 2026-05-13T18-15-57-947Z-61322 --run-lock-path /Users/dan/code/oss/dans-blog/.git/codex-i18n-translation-run.json --quiz-concurrency 24 (code 1)
+- Note: Command failed: bun run i18n:translate:chunked -- --slug mastering-functional-pipelines-passing-state --locale ja --model openrouter/qwen/qwen3-32b:nitro --chunk 6p --run-id 2026-05-13T19-05-13-381Z-80623 --run-lock-path /Users/dan/code/oss/dans-blog/.git/codex-i18n-translation-run.json --quiz-concurrency 24 (code 1)
 ## Raw Output
 
 ````mdx
