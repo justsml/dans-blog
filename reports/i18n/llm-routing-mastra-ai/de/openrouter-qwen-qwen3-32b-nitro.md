@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: llm-routing-mastra-ai
+- Locale: de
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-01-02--llm-routing-mastra-ai/de/index.mdx
+- Validation: passed
+- Runtime seconds: 11.97
+- Input tokens: 4408
+- Output tokens: 4519
+- Thinking tokens: unknown
+- Cached input tokens: 1024
+- Cache write tokens: 0
+- Estimated cost: $0.001437
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: ''
 subTitle: ''
@@ -113,3 +131,4 @@ Die Stärke dieses Ansatzes ist, dass sich Ihr Anwendungscode nicht ändert. Sie
 2. [Sicherheit & Schutzvorrichtungen](../mastra-security-guardrails)
 3. [MCP & Tool-Integrationen](../mastra-mcp-tool-integrations)
 4. [Workflows & Gedächtnis](../mastra-workflows-memory)
+````
