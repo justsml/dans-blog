@@ -1,0 +1,285 @@
+# Translation Candidate
+- Slug: from-zero-to-regex-hero-extract-url-like-strings
+- Locale: ja
+- Model: qwen/qwen3.5-9b
+- Target: src/content/posts/2024-12-29--from-zero-to-regex-hero-extract-url-like-strings/ja/index.mdx
+- Validation: rejected: direct AI SDK translation failed
+- Runtime seconds: 218.40
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Cache write tokens: unknown
+- Estimated cost: unknown
+- Pricing source: unknown
+- Note: Command failed: bun run i18n:translate:chunked -- --slug from-zero-to-regex-hero-extract-url-like-strings --locale ja --model qwen/qwen3.5-9b --chunk 6p --run-id 2026-05-13T18-15-57-947Z-61322 --run-lock-path /Users/dan/code/oss/dans-blog/.git/codex-i18n-translation-run.json --quiz-concurrency 24 (code 1)
+## Raw Output
+
+````mdx
+---
+title: 正規表現：ゼロからエキスパートへ
+subTitle: 正規表現 1 つで URL 風の文字列を抽出・解析する
+category: Regex
+subCategory: Data Extraction
+date: '2024-12-29'
+modified: '2025-01-06'
+tags:
+  - regex
+  - url
+  - data-extraction
+  - data-processing
+social_image: ../desktop-social.webp
+cover_full_width: ../regex-url-parsing-wide.webp
+cover_mobile: ../regex-url-parsing-square-200.webp
+cover_icon: ../regex-url-parsing-square-200.webp
+---
+import { CodeTabs } from '../../../../components/CodeTabs';
+
+**目次**
+
+- 🚀 [はじめに](#-introduction)
+- 🔍 [テキストからのURL抽出](#-extracting-urls-from-text)
+- 🛳️ [120バイト超の正規表現](#️-the-120-byte-regex)
+- 🧩 [ステップごとの分解](#-breaking-it-down-step-by-step)
+- 🛠️ [解析例](#-pa)
+- ☑️ [次のステップ](#-next-steps)
+- 📝 [まとめ](#-summary)
+- 📚 [さらに学ぶ](#-further-learning)
+
+**TL;DR:** [120バイト超の正規表現](#️-the-120-byte-regex)へ直接ジャンプ。
+
+## 🚀 はじめに
+
+生テキストからURLを抽出するのは、時に退屈な「モグラ叩き」のようになりがちだ。句読点、括弧での囲み、あいまいな書式設定が複雑に絡み合い、抽出処理を混乱させる。ウェブスクレイパー、データ分析ツール、チャットアプリケーションの構築を問わず、URLの正確な抽出は必須の要件だ。
+
+この記事では、柔軟な2段階のアプローチでこの課題に直接対処します。目標はまず**すべての潜在的なURL風文字列をキャプチャ**し、後続の処理工程で検証を行います。
+
+> 💡 **注意:** このパターンはURLの**_検証_**を目的としたものではありません。句読点や誤字脱字に対しては意図的に寛容に設計されており、過検出を許容する前提で動作します。
+
+## 🔍 目標：テキストからのURL抽出
+
+生テキストからURLを抽出する際、以下の2段階アプローチが有効です：
+
+1. **URLに類似するものをすべてキャプチャ**: 網を広げて、URL*になり得る*すべての文字列を抽出します。ここで「120バイト超の正規表現」が活躍します。網を広げる段階では、精度よりも網羅性を優先し、後工程でフィルタリングする設計思想が反映されています。
+2. **検証**: 候補を抽出した段階で、DNS解決や既知のドメインリストとの照合などの二次チェックを用い、無効なエントリをフィルタリングします。
+
+### 課題の可視化
+
+`extract`（抽出）と `parse`（構文解析）はしばしば混用されますが、実際には異なる処理を指します。URLの抽出は、広範なテキストからURLになり得る文字列を特定しキャプチャする工程です。一方、構文解析は、これらのURLを構成要素に分解する処理を指します。
+
+以降、構文解析や「URLの構成要素」と言う場合、以下のコンポーネントを指します。
+
+<figure>
+  <figcaption>URLを構成する5つの要素</figcaption>
+![URLの構造、可視化](../WhatUrlsAreMadeOf-ColorMatched.svg "URLの構造、可視化")
+</figure>
+
+<details class="inset breakout">
+  <summary>RegEx101における部分文字列マッチングのスクリーンショットを表示</summary>
+
+  正規表現の詳細に深入りする前に、視覚化ツールでこのパターンがどれだけ多くのマッチを捉えられるか確認します。
+
+  <figure>
+    <figcaption>[RegEx101.com](https://regex101.com/r/jO8bC4/69) を用いた複数行マッチの可視化</figcaption>
+    ![「バルク」複数行マッチのプレビュー](../RegEx101-Matches-Screenshot.webp "「バルク」複数行マッチのプレビュー")
+  </figure>
+</details>
+
+## 120バイト超の正規表現
+
+以下に示すのは、URLの抽出と構文解析を一度に行うために設計されたコンパクトな正規表現です。各種プロトコル、ドメイン、パス、および任意のクエリ・フラグメントセクションに対応しています。
+
+安心しろ。段階的に分解していく。
+
+```js title="120+ Byte URL Regex" frame="code"
+const urlRegex = /([-.a-z0-9]+:\/{1,3})([^-\/\.[\](|)\s?][^`\/\s\]?]+)([-_a-z0-9!@$%^&*()=+;/~\.]*)[?]?([^#\s`?]*)[#]?([^#\s'"`\.,!]*)/gi;
+// Compatibility: ES5+
+
+// Same pattern, split on newlines for readability:
+([-.a-z0-9]+:\/{1,3})
+([^-\/\.[\](|)\s?][^`\/\s\]?]+)
+([-_a-z0-9!@$%^&*()=+;/~\.]*)
+[?]?([^#\s`?]*)
+[#]?([^#\s'"`\.,!]*)
+
+```
+
+<blockquote class="inset">遭遇した（または自作した）最もトリッキーな正規表現を、<a href="#post-comments">以下のコメント欄</a>で共有してください！🚀</blockquote>
+
+## 🧩 段階的に分解する
+
+正規表現を構成要素ごとに分解し、動作原理を確認する。
+
+<h3>1. プロトコル（グループ1）: <code>{`([-.a-z0-9]+:\/{1,3})`}</code></h3>
+
+<ul>
+  <li>**目的:** URLのプロトコル部分（例: `http://`, `ftp://`, `custom-scheme://`）に一致させる。</li>
+  <li>
+    **解説:**
+    <ul>
+      <li><code>[-.a-z0-9]+</code>: 小文字英数字、ハイフン、ピリオドの1文字以上（プロトコルスキームで一般的）に一致。</li>
+      <li><code>{`:\/{1,3}`}</code>: コロンに続き、スラッシュが1〜3個（<code>:/</code>, <code>://</code>, <code>:///</code>）に一致。</li>
+    </ul>
+  </li>
+</ul>
+
+<h3>2. ドメイン（グループ2）: <code>{`([^-\/\.[\](|)\s?][^\`\/\s\]?]+)`}</code></h3>
+
+<ul>
+  <li>**目的:** URLのドメインまたはホスト部分をキャプチャする。</li>
+  <li>
+    **解説:**
+    <ul>
+      <li><code>[^-\/\.[\](|)\s?]</code>: 指定された特殊文字と空白文字以外の任意の1文字に一致。</li>
+      <li><code>[^`\/\s\]?]+</code>: バッククォート、スラッシュ、空白、閉じ角括弧以外の1文字以上に一致。</li>
+    </ul>
+  </li>
+</ul>
+
+<h3>3. パス（グループ3）: <code>{`([-_a-z0-9!@$%^&*()=+;/~\\.]*)`}</code></h3>
+
+<ul>
+  <li>**目的:** URLのパスコンポーネントに一致する。</li>
+  <li>
+    **解説:**
+    <ul>
+      <li><code>[-_a-z0-9!@$%^&*()=+;/~\.]*</code>: パス内で一般的に使用されるURLセーフな文字を0個以上マッチさせる。</li>
+    </ul>
+  </li>
+</ul>
+
+<h3>4. クエリ（グループ4）: <code>[?]?([^#\s`?]*)</code></h3>
+
+<ul>
+  <li>**目的:** 任意の<code>?</code>文字で始まるクエリ文字列をオプションでマッチさせる。</li>
+  <li>
+    **解説:**
+    <ul>
+      <li><code>[?]?</code>: <code>?</code>をオプションでマッチさせる。（角括弧は厳密には必須ではないが、極めて簡潔な二重<code>??</code>よりも明確性が高い。また、後続の類似するマッチンググループ<code>[#]?</code>との視覚的な整合性も取れている。）</li>
+      <li><code>([^#\s`?]*)</code>: ハッシュ、空白、バッククォート、疑問符以外の文字を0個以上マッチさせる。</li>
+    </ul>
+  </li>
+</ul>
+
+<h3>5. フラグメント（グループ5）: <code>[#]?([^#\s'"`\.,!]*)</code></h3>
+
+<ul>
+  <li>**目的:** <code>#</code>で始まるフラグメント識別子をオプションでマッチさせる。</li>
+  <li>
+    **解説:**
+    <ul>
+      <li><code>[#]?</code>: <code>#</code>をオプションでマッチさせる。</li>
+      <li><code>([^#\s'"`\.,!]*)</code>: 除外対象の句読点や空白以外の文字を0個以上マッチさせる。</li>
+    </ul>
+  </li>
+</ul>
+
+## 🛠️ 解析例
+
+実際のJavaScriptコードで、この正規表現を適用する例を示す。
+
+<CodeTabs client:only
+ tabs={[
+    "コード: URLの抽出",
+    "結果: 抽出されたURL",
+    "結果: URLの構成要素",
+  ]} >
+```js title="extract-urls.js" frame="code"
+const text = `
+Check this out: https://example.com/path?query=123#section
+And also (ftp://files.server.org/index).
+Plus a weird one: custom-scheme://host/param;weird^stuff
+`;
+
+const urlRegex =
+  /([-.a-z0-9]+:\/{1,3})([^-\/\.[\](|)\s?][^`\/\s\]?]+)([-_a-z0-9!@$%^&*()=+;/~\.]*)[?]?([^#\s`?]*)[#]?([^#\s'"`\.,!]*)/gi;
+
+const matches = [
+  ...text.matchAll(urlRegex),
+].map((match) => match[0]);
+console.log("Extracted URLs:", matches);
+
+const parts = [
+  ...text.matchAll(urlRegex),
+].map((match) => match.slice(1));
+console.log("Extracted Parts:", parts);
+```
+
+```json title="extracted-urls.json"
+[
+  "https://example.com/path?query=123#section",
+  "ftp://files.server.org/index",
+  "custom-scheme://host/param;weird^stuff"
+]
+```
+
+```json title="urls-parts.json"
+[
+  [
+    "https://",    // プロトコル
+    "example.com", // ドメイン
+    "/path",       // パス
+    "query=123",   // クエリ
+    "section"      // フラグメント
+  ],
+  [
+    "ftp://",           // プロトコル
+    "files.server.org", // ドメイン
+    "/index",           // パス
+    "",                 // クエリ
+    ""                  // フラグメント
+  ],
+  [
+    "custom-scheme://",   // プロトコル
+    "host",               // ドメイン
+    "/param;weird^stuff", // パス
+    "",                   // クエリ
+    ""                    // フラグメント
+  ]
+]
+```
+
+</CodeTabs>
+
+## ☑️ 次のステップ
+
+用途に応じて、正規表現の微調整や、追加の検証・後処理ステップの追加が必要になる場合がある。
+
+### プロジェクトごとに異なる要件
+
+プロジェクトごとに要件やセキュリティ上の懸念は異なる：
+
+1. **Web スクレイピング**: URL の到達性と信頼性を検証する。
+2. **データ処理**: ユーザー生成コンテンツから URL を抽出し、安全性を確保する。
+3. **データ分析**: 調査やマーケティング目的で、重複や無関係なリンクをフィルタリングする。
+4. **ユーザー向けアプリケーション**: チャットアプリやフォーラム上で URL を自動的にハイパーリンク化する。
+
+### 後処理と検証
+
+候補 URL の収集後、追加の検証ステップを適用する：
+
+- **DNS 参照**: ドメインが実際に解決可能か確認する。
+- **安全性チェック**: 悪意のあるサイトやフィッシングの検出サービスを利用する。
+- **カスタムルール**: プロジェクト固有のフィルタを適用する（例：許可 TLD、URL 最大長）。
+
+## 📝 まとめ
+
+準構造化文字列データからの抽出は、正規表現の使いこなしにおいて最も達成感のある部分だろう。
+
+主要なポイントを振り返る：
+
+- **可視化ツールを使って正規表現パターンを記述・テストする**& 理解するために、[正規表現パターン](https://regex101.com/r/jO8bC4/69) を活用せよ。
+- **課題を細分化する**ことで、各部分を個別に処理できる。要するに、キャプチャグループは正規表現に対する比喩的な「道しるべ」として機能する。
+- **緩やかなマッチング式を使用し、厳密な仕様準拠を避ける**のがデータ取り込み時の鉄則だ。
+- **初期抽出後に検証ステップを適用することは必須だ**——プロジェクトのセキュリティと具体的な要件を常に考慮する必要がある。
+
+これらの手順に従うことで、準構造化文字列データから効果的に抽出でき、後続の処理と検証の基盤を構築できる。
+
+## 📚 学習リソース
+
+- [RegEx101.com 上のライブデモ](https://regex101.com/r/jO8bC4/69) で実際に触ってみよう！
+- 元のStackOverflowの質問と、[私の回答へのリンクはこちら](https://stackoverflow.com/a/34669019/369727)。
+- [MDN の正規表現ドキュメント](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions)
+- [高度な正規表現テクニック](https://www.regular-expressions.info/)：より精密なマッチングを実現するための先読み、後読み、その他の高度なパターンを探索せよ。
+- [RFC 3986 - URI 一般構文](https://datatracker.ietf.org/doc/html/rfc3986)
+````
