@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: postgres-fts-vs-pgvector
+- Locale: hi
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-05-08--postgres-fts-vs-pgvector/hi/index.mdx
+- Validation: passed
+- Runtime seconds: 86.19
+- Input tokens: 36527
+- Output tokens: 40318
+- Thinking tokens: unknown
+- Cached input tokens: 9216
+- Cache write tokens: 0
+- Estimated cost: $0.012598
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: 'पोस्टग्रेस खोज: FTS, Trigrams,'
 subTitle: ''
@@ -394,3 +412,4 @@ results = mq.index("products").search(q="lightweight shoes for summer")
 वेक्टर खोज आपके डेटासेट में *सबसे अधिक समान* चीज लौटाती है, यहां तक कि जब कुछ भी प्रासंगिक न हो। यह जानता नहीं है कि कोई अच्छा उत्तर नहीं है। जुड़े हुए दस्तावेजों के लिए यह ठीक है। विशिष्ट रिकॉर्ड खोज के लिए यह आपातकालीन है, जहां गलत निकटता खाली परिणाम से भी खराब है।
 
 प्रत्येक उपकरण के उद्देश्य को जानें। अधिकांश आपकी पोस्टग्रेस स्थापना में पहले से मौजूद हैं। जहां उपयुक्त हो वहां उनका उपयोग करें।
+````
