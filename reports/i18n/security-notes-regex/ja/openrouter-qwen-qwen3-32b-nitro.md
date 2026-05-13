@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: security-notes-regex
+- Locale: ja
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2015-02-24--security-notes-regex/ja/index.mdx
+- Validation: passed
+- Runtime seconds: 4.62
+- Input tokens: 1999
+- Output tokens: 1849
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.000604
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: ''
 subTitle: ''
@@ -43,3 +61,4 @@ social_image: ../desktop-social.webp
 ### 参考資料
 
 - [OWASP ReDoS](https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS)
+````
