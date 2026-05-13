@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-data-structures-algorithms
+- Locale: ja
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2024-10-31--quiz-data-structures-algorithms/ja/index.mdx
+- Validation: deferred
+- Runtime seconds: 111.45
+- Input tokens: 14470
+- Output tokens: 15174
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.004799
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: 'クイズ: データ構造とアルゴリズム'
 subTitle: ''
@@ -525,3 +543,4 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 </Challenge>
 
 </QuizUI>
+````
