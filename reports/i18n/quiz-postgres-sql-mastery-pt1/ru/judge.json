@@ -1,0 +1,46 @@
+{
+  "selectedCommit": "current",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 10,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The current version already incorporates the high-priority fixes identified in the previous pass (the untranslated block in Challenge 7 and the truncated text in Challenge 4). It maintains the correct relative import paths for the components and assets, preserves the MDX structure perfectly, and captures Dan's direct, engaging tone. The technical terms are correctly handled, and the code blocks are properly formatted.",
+  "slug": "quiz-postgres-sql-mastery-pt1",
+  "locale": "ru",
+  "candidateCommits": [
+    "f675e67bf43eb5efc56f64c4d80cf79a5557c2e1",
+    "ee98ea5d99a65ed217c89bdaac5eb058dd8f83c8"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "PostgreSQL's rich set of network types do not include `ipv4`. Every single time I attempt to use it without googling, I get it wrong. Perhaps `macaddr8` makes me feel there _must_ be `ipv4` and `ipv6` types. Nope, `inet` covers both. Also, `cidr` covers network masks for both.\n\n    Valid network types include:\n    - `cidr` (IPv4/IPv6 network address)\n    - `inet` (IPv4/IPv6 host address)\n    - `macaddr` (MAC address)\n    - `macaddr8` (EUI-64 MAC address)",
+      "replacement": "Богатый набор сетевых типов PostgreSQL не включает `ipv4`. Каждый раз, когда я пытаюсь использовать его без поиска в Google, я ошибаюсь. Возможно, наличие `macaddr8` заставляет меня думать, что _должны_ существовать типы `ipv4` и `ipv6`. Но нет, `inet` охватывает оба. Кроме того, `cidr` охватывает сетевые маски для обоих.\n\n    Допустимые сетевые типы включают:\n    - `cidr` (сетевой адрес IPv4/IPv6)\n    - `inet` (адрес хоста IPv4/IPv6)\n    - `macaddr` (MAC-адрес)\n    - `macaddr8` (MAC-адрес EUI-64)",
+      "reason": "The candidate left a large block of explanation text in English in Challenge index 7.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "{text: 'They\"'},",
+      "replacement": "{text: 'Они взаимозаменяемы начиная с версии Pg v10'},",
+      "reason": "The candidate has a broken string/truncated text in the options for Challenge index 4.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug quiz-postgres-sql-mastery-pt1 --locale ru --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug quiz-postgres-sql-mastery-pt1 --locale ru --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug \"quiz-postgres-sql-mastery-pt1\" --locale ru --skip-global\n109 |     })\n110 |     .filter((message): message is string => message != null);\n111 | \n112 |   if (mismatches.length === 0) return;\n113 | \n114 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2024-11-27--quiz-postgres-sql-mastery-pt1/ru/index.mdx changed heading counts. H2: English has 1, translation has 0\n      at assertHeadingCounts (/Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:114:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:27:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}
