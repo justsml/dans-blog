@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: when-ai-fails-and-the-crashing-robot-cars
+- Locale: ja
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2015-12-18--when-ai-fails-and-the-crashing-robot-cars/ja/index.mdx
+- Validation: passed
+- Runtime seconds: 4.40
+- Input tokens: 3570
+- Output tokens: 1163
+- Thinking tokens: unknown
+- Cached input tokens: 1664
+- Cache write tokens: 0
+- Estimated cost: $0.000349
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: AIが失敗したときと衝突するロボット車
@@ -50,3 +68,4 @@ Google の姿勢は理解できる。特に責任を最小化しようとする�
 ### References
 
 1.  [http://nn.cs.utexas.edu/pages/research/neat-warning/](http://nn.cs.utexas.edu/pages/research/neat-warning/)
+````
