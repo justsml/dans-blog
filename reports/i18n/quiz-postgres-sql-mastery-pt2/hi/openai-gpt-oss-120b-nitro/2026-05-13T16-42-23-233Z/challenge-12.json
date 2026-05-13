@@ -1,0 +1,44 @@
+{
+  "index": 11,
+  "attempt": 1,
+  "originalTitle": "EXPLAIN ANALYZE Gotcha",
+  "translatedTitle": "EXPLAIN ANALYZE गोटचा",
+  "translation": {
+    "title": "EXPLAIN ANALYZE गोटचा",
+    "group": "प्रदर्शन",
+    "options": [
+      {
+        "text": "हल्का योजना अनुमान"
+      },
+      {
+        "text": "केवल SELECT पर काम करता है"
+      },
+      {
+        "text": "डेटा बदलता है और योजना देता है"
+      },
+      {
+        "text": "योजना पाने के लिए निष्पादन का अनुकरण करता है"
+      }
+    ],
+    "questionProse": [
+      "`EXPLAIN ANALYZE` `UPDATE` कथनों के लिए क्या करता है?"
+    ],
+    "explanationProse": [
+      "`EXPLAIN ANALYZE` वास्तव में क्वेरी को चलाता है! लिखने वाले ऑपरेशन का विश्लेषण करते समय सावधान रहें, विशेष रूप से `UPDATE`, `DELETE`, और `INSERT` कथनों का। प्रत्येक `EXPLAIN ANALYZE` के बाद दोहराने योग्य परिणाम पाने के लिए आपको सफाई कार्य चलाने पड़ सकते हैं।\n\n    सर्वोत्तम प्रथाएँ:\n    - UPDATE/DELETE/INSERT के लिए `EXPLAIN` (बिना ANALYZE) उपयोग करें\n    - संशोधनों को लेन‑देन में घेरें:"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"EXPLAIN ANALYZE गोटचा\",\n  \"group\": \"प्रदर्शन\",\n  \"options\": [\n    {\n      \"text\": \"हल्का योजना अनुमान\"\n    },\n    {\n      \"text\": \"केवल SELECT पर काम करता है\"\n    },\n    {\n      \"text\": \"डेटा बदलता है और योजना देता है\"\n    },\n    {\n      \"text\": \"योजना पाने के लिए निष्पादन का अनुकरण करता है\"\n    }\n  ],\n  \"questionProse\": [\n    \"`EXPLAIN ANALYZE` `UPDATE` कथनों के लिए क्या करता है?\"\n  ],\n  \"explanationProse\": [\n    \"`EXPLAIN ANALYZE` वास्तव में क्वेरी को चलाता है! लिखने वाले ऑपरेशन का विश्लेषण करते समय सावधान रहें, विशेष रूप से `UPDATE`, `DELETE`, और `INSERT` कथनों का। प्रत्येक `EXPLAIN ANALYZE` के बाद दोहराने योग्य परिणाम पाने के लिए आपको सफाई कार्य चलाने पड़ सकते हैं।\\n\\n    सर्वोत्तम प्रथाएँ:\\n    - UPDATE/DELETE/INSERT के लिए `EXPLAIN` (बिना ANALYZE) उपयोग करें\\n    - संशोधनों को लेन‑देन में घेरें:\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 864,
+    "outputTokens": 730,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 2548
+  },
+  "cost": {
+    "inputUsd": 0.000033696000000000004,
+    "outputUsd": 0.0001314,
+    "totalUsd": 0.000165096,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

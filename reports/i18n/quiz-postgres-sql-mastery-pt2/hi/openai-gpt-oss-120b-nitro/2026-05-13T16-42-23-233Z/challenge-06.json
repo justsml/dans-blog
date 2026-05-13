@@ -1,0 +1,44 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Multi-Column Index Order",
+  "translatedTitle": "बहु-स्तंभ इंडेक्स क्रम",
+  "translation": {
+    "title": "बहु-स्तंभ इंडेक्स क्रम",
+    "group": "इंडेक्सिंग",
+    "options": [
+      {
+        "text": "CREATE INDEX ON students(grade_level, last_name);"
+      },
+      {
+        "text": "CREATE INDEX ON students(grade_level);"
+      },
+      {
+        "text": "CREATE INDEX ON students(last_name, age);"
+      },
+      {
+        "text": "CREATE INDEX ON students(first_name, last_name, grade_level);"
+      }
+    ],
+    "questionProse": [
+      "इस क्वेरी के लिए कौन सा इंडेक्स बेहतर है?"
+    ],
+    "explanationProse": [
+      "मेरे लिए यहाँ आश्चर्यजनक बात यह है कि बहु-स्तंभ इंडेक्स का उपयोग तब भी किया जा सकता है जब क्वेरी टेक्स्ट में कॉलम क्रम इंडेक्स परिभाषा से मेल नहीं खाता।\n\n**नोट:** B‑tree इंडेक्स में अग्रणी कॉलम महत्वपूर्ण होता है। चूँकि यह क्वेरी `grade_level` और `last_name` द्वारा फ़िल्टर करती है, `grade_level` से शुरू होकर फिर `last_name` वाला इंडेक्स उपयुक्त है।\n\nजितनी तेज़ SQL कम पंक्तियों का चयन कर सके, प्रदर्शन उतना ही बेहतर होगा।\n\nउदाहरण के लिए, यदि आपके पास एक `task` टेबल है, और आप जानते हैं कि `status` `created_at` से अधिक चयनात्मक है, तो आप `status = 'done' AND created_at > '2024-01-01'` जैसी क्वेरी के लिए `status` से शुरू होने वाला इंडेक्स चुन सकते हैं। `WHERE` क्लॉज़ टेक्स्ट में शर्तों का क्रम मायने नहीं रखता; महत्वपूर्ण है इंडेक्स कॉलम क्रम और प्रेडिकेट की संरचना।\n\nएक B+Tree इंडेक्स का उपयोग किया जा सकता है:\n- अग्रणी कॉलम, या कॉलमों का बाएँmost उपसर्ग।\n- `=`, `>`, `<`, `BETWEEN`, और `IN` जैसे ऑपरेटर, क्वेरी के रूप पर निर्भर करता है।\n- प्रिफिक्स मिलान, `LIKE 'prefix%'`।\n\nइस व्याख्या में पहले की गलती को इंगित करने के लिए [u/mwdb2](https://www.reddit.com/r/PostgreSQL/comments/1h6kw87/comment/m0fovn0/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button) का धन्यवाद!"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"बहु-स्तंभ इंडेक्स क्रम\",\n  \"group\": \"इंडेक्सिंग\",\n  \"options\": [\n    {\n      \"text\": \"CREATE INDEX ON students(grade_level, last_name);\"\n    },\n    {\n      \"text\": \"CREATE INDEX ON students(grade_level);\"\n    },\n    {\n      \"text\": \"CREATE INDEX ON students(last_name, age);\"\n    },\n    {\n      \"text\": \"CREATE INDEX ON students(first_name, last_name, grade_level);\"\n    }\n  ],\n  \"questionProse\": [\n    \"इस क्वेरी के लिए कौन सा इंडेक्स बेहतर है?\"\n  ],\n  \"explanationProse\": [\n    \"मेरे लिए यहाँ आश्चर्यजनक बात यह है कि बहु-स्तंभ इंडेक्स का उपयोग तब भी किया जा सकता है जब क्वेरी टेक्स्ट में कॉलम क्रम इंडेक्स परिभाषा से मेल नहीं खाता।\\n\\n**नोट:** B‑tree इंडेक्स में अग्रणी कॉलम महत्वपूर्ण होता है। चूँकि यह क्वेरी `grade_level` और `last_name` द्वारा फ़िल्टर करती है, `grade_level` से शुरू होकर फिर `last_name` वाला इंडेक्स उपयुक्त है।\\n\\nजितनी तेज़ SQL कम पंक्तियों का चयन कर सके, प्रदर्शन उतना ही बेहतर होगा।\\n\\nउदाहरण के लिए, यदि आपके पास एक `task` टेबल है, और आप जानते हैं कि `status` `created_at` से अधिक चयनात्मक है, तो आप `status = 'done' AND created_at > '2024-01-01'` जैसी क्वेरी के लिए `status` से शुरू होने वाला इंडेक्स चुन सकते हैं। `WHERE` क्लॉज़ टेक्स्ट में शर्तों का क्रम मायने नहीं रखता; महत्वपूर्ण है इंडेक्स कॉलम क्रम और प्रेडिकेट की संरचना।\\n\\nएक B+Tree इंडेक्स का उपयोग किया जा सकता है:\\n- अग्रणी कॉलम, या कॉलमों का बाएँmost उपसर्ग।\\n- `=`, `>`, `<`, `BETWEEN`, और `IN` जैसे ऑपरेटर, क्वेरी के रूप पर निर्भर करता है।\\n- प्रिफिक्स मिलान, `LIKE 'prefix%'`।\\n\\nइस व्याख्या में पहले की गलती को इंगित करने के लिए [u/mwdb2](https://www.reddit.com/r/PostgreSQL/comments/1h6kw87/comment/m0fovn0/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button) का धन्यवाद!\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1086,
+    "outputTokens": 1476,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 794
+  },
+  "cost": {
+    "inputUsd": 0.000042354,
+    "outputUsd": 0.00026568,
+    "totalUsd": 0.000308034,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
