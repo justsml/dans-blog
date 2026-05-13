@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: docker-makes-everything-better
+- Locale: it
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2015-03-12--docker-makes-everything-better/it/index.mdx
+- Validation: passed
+- Runtime seconds: 5.37
+- Input tokens: 1866
+- Output tokens: 1952
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.000618
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Docker === Amore
@@ -62,3 +80,4 @@ sudo docker run --name nodejs01 -d -p 3300:3300 -p 4433:4433 nodejs:latest
 > Docker semplificherà la tua vita durante l'_intero_ ciclo di vita dello sviluppo del software.  
 
 > - Abbastanza vicino
+````
