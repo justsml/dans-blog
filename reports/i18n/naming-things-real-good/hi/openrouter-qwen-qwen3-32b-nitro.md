@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: naming-things-real-good
+- Locale: hi
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2016-06-01--naming-things-real-good/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 80.81
+- Input tokens: 4598
+- Output tokens: 6005
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.001809
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: अच्छा नामकरण
@@ -115,3 +133,4 @@ User
 3. [https://en.wikipedia.org/wiki/Database_normalization](https://en.wikipedia.org/wiki/Database_normalization)  
 
 [schema_refactor]: https://res.cloudinary.com/ddd/image/upload/bldg-collapse__wsZKhIc_kafcha.gif
+````
