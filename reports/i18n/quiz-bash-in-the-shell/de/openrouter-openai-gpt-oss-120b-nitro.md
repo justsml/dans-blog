@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-bash-in-the-shell
+- Locale: de
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2024-11-20--quiz-bash-in-the-shell/de/index.mdx
+- Validation: passed
+- Runtime seconds: 145.08
+- Input tokens: 15926
+- Output tokens: 10386
+- Thinking tokens: unknown
+- Cached input tokens: 3971
+- Cache write tokens: 0
+- Estimated cost: $0.002491
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: 'Quiz: Bash‑ und Shell‑Meisterschaft'
@@ -596,3 +614,4 @@ Frische deine Bash‑Kenntnisse mit den folgenden Ressourcen auf:
 - [Bash Hackers Wiki](http://wiki.bash-hackers.org/)
 - [Bash Guide for Beginners](http://tldp.org/LDP/Bash-Beginners-Guide/html/index.html)
 - [Bash Reference Card](http://www.tldp.org/LDP/Bash-Beginners-Guide/html/Bash-Beginners-Guide.html)
+````

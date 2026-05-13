@@ -21,8 +21,8 @@ cover_full_width: ../psychedelic-shell-wide.webp
 cover_mobile: ../psychedelic-shell-square-200.webp
 cover_icon: ../psychedelic-shell-square-200.webp
 ---
-import Challenge from '../../../../../components/QuizUI/Challenge';
-import QuizUI from '../../../../../components/QuizUI/QuizUI';
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
 
 <p class="inset">Testen Sie Ihre Bash‑Skript‑Kenntnisse mit diesen 16 Fragen!</p>
 
@@ -54,7 +54,7 @@ Schärfen (oder beweisen) Sie Ihre Shell‑Skript‑**Fähigkeiten**!
   <div className="explanation">
     Variablen in Bash werden ohne Leerzeichen um das `=`‑Zeichen deklariert. Zum Beispiel:
     ```bash
-    name=Alice
+        name=Alice
     ```
     Dies weist der Variable `name` den Wert `"Alice"` zu.
 
@@ -93,7 +93,7 @@ Schärfen (oder beweisen) Sie Ihre Shell‑Skript‑**Fähigkeiten**!
 
     Einzelne Anführungszeichen müssen innerhalb von einfach‑gequoteten Strings escaped werden. Die Sequenz Schließen‑Quote, escaped‑Quote, Wieder‑öffnen‑Quote (`'\''`) ermöglicht die Ausgabe von:
     ```plaintext
-    It's 🔨 Time!
+        It's 🔨 Time!
     ```
     Es gibt andere Wege, das zu lösen, aber das ist der gängigste.
   </div>
@@ -118,7 +118,7 @@ Schärfen (oder beweisen) Sie Ihre Shell‑Skript‑**Fähigkeiten**!
   <div className="question">
     Was gibt dieser Befehl aus?
     ```bash
-    echo c{a,b}t
+        echo c{a,b}t
     ```
   </div>
   </slot>
@@ -128,7 +128,7 @@ Schärfen (oder beweisen) Sie Ihre Shell‑Skript‑**Fähigkeiten**!
 
     Hier expandiert `c{a,b}t` zu:
     ```plaintext
-    cat cbt
+        cat cbt
     ```
   </div>
   </slot>
@@ -152,8 +152,8 @@ Schärfen (oder beweisen) Sie Ihre Shell‑Skript‑**Fähigkeiten**!
   <div className="question">
     Was wird das jetzt ausgeben?
     ```bash
-    price="$100"
-    echo "Cost: $price"
+        price="$100"
+        echo "Cost: $price"
     ```
   </div>
   </slot>
@@ -165,8 +165,8 @@ Schärfen (oder beweisen) Sie Ihre Shell‑Skript‑**Fähigkeiten**!
 
     Um ein wörtliches `$`‑Zeichen auszugeben, verwendet man einfache Anführungszeichen oder escaped es mit einem Backslash (`\\`):
     ```bash
-    price="\$100"
-    echo "Cost: $price"
+        price="\$100"
+        echo "Cost: $price"
     ```
   </div>
   </slot>
@@ -189,8 +189,8 @@ Schärfen (oder beweisen) Sie Ihre Shell‑Skript‑**Fähigkeiten**!
   <div className="question">
     Was passiert hier?
     ```bash
-    str="Bark bark"
-    echo ${str/bark/meow}
+        str="Bark bark"
+        echo ${str/bark/meow}
     ```
   </div>
   </slot>
@@ -198,7 +198,7 @@ Schärfen (oder beweisen) Sie Ihre Shell‑Skript‑**Fähigkeiten**!
   <div className="explanation">
     Die Syntax `${var/pattern/replacement}` ersetzt das erste Vorkommen von `pattern` durch `replacement`. Hier ist die Ausgabe:
     ```plaintext
-    Bark meow
+        Bark meow
     ```
     Sie ist case-sensitive. Um sowohl `bark` als auch `Bark` zu behandeln, verwende ein Muster wie `${var/[Bb]ark/Bark}` oder normalisiere den String vor dem Ersetzen.
 
@@ -235,8 +235,8 @@ Schärfen (oder beweisen) Sie Ihre Shell‑Skript‑**Fähigkeiten**!
 
     Zum Beispiel:
     ```bash
-    username="@justsml"
-    echo ${#username} # => 8
+        username="@justsml"
+        echo ${#username} # => 8
     ```
     Obwohl `wc` funktionieren würde, ist es technisch gesehen kein Teil von Bash.
 
@@ -265,11 +265,11 @@ Schärfen (oder beweisen) Sie Ihre Shell‑Skript‑**Fähigkeiten**!
   <div className="question">
     Was gibt dieses Skript aus, wenn die Datei `cats.txt` EXISTIERT?
     ```bash
-    if [ -e cats.txt]; then
-      echo "File exists"
-    else
-      echo "File does not exist"
-    fi
+        if [ -e cats.txt]; then
+          echo "File exists"
+        else
+          echo "File does not exist"
+        fi
     ```
   </div>
   </slot>
@@ -283,11 +283,11 @@ Schärfen (oder beweisen) Sie Ihre Shell‑Skript‑**Fähigkeiten**!
 
     Die korrekte Syntax ist:
     ```bash
-    if [ -e example.txt ]; then
-      echo "File exists"
-    else
-      echo "File does not exist"
-    fi
+        if [ -e example.txt ]; then
+          echo "File exists"
+        else
+          echo "File does not exist"
+        fi
     ```
     Hinweis: Doppelte eckige Klammern `[[ ]]` sind **empfohlen** für Bedingungsausdrücke. [Siehe BashFAQ.](https://mywiki.wooledge.org/BashFAQ/031)
   </div>
@@ -310,13 +310,13 @@ Schärfen (oder beweisen) Sie Ihre Shell‑Skript‑**Fähigkeiten**!
   <div className="question">
     Wie kann man Strings in Bash vergleichen?
     ```bash
-    cat1="Rosie"
-    cat2="Sunflower"
-    if [ "$cat1" === "$cat2" ]; then
-      echo "Same cat"
-    else
-      echo "Different cats"
-    fi
+        cat1="Rosie"
+        cat2="Sunflower"
+        if [ "$cat1" === "$cat2" ]; then
+          echo "Same cat"
+        else
+          echo "Different cats"
+        fi
     ```
   </div>
   </slot>
@@ -351,10 +351,10 @@ Schärfen (oder beweisen) Sie Ihre Shell‑Skript‑**Fähigkeiten**!
   <div className="question">
     Was gibt dieses Skript aus?
     ```bash
-    function greet () {
-      echo "$1"
-    }
-    greet Hi Dan
+        function greet () {
+          echo "$1"
+        }
+        greet Hi Dan
     ```
   </div>
   </slot>
@@ -384,8 +384,8 @@ Schärfen (oder beweisen) Sie Ihre Shell‑Skript‑**Fähigkeiten**!
   <div className="explanation">
     Der `|` Pipe-Operator verbindet die Ausgabe eines Befehls mit der Eingabe eines anderen. Zum Beispiel:
     ```bash
-    echo "Mr. Levy 👨🏻‍🔬" | wc -m
-    # => 14
+        echo "Mr. Levy 👨🏻‍🔬" | wc -m
+        # => 14
     ```
   </div>
   </slot>
@@ -415,14 +415,14 @@ Schärfen (oder beweisen) Sie Ihre Shell‑Skript‑**Fähigkeiten**!
 
     Sie kann für einfache Berechnungen verwendet werden:
     ```bash
-    ((result = 2 + 2))
-    echo $result # => 4
+        ((result = 2 + 2))
+        echo $result # => 4
     ```
     Oder für bedingte Ausdrücke:
     ```bash
-    if (( 2 > 1 )); then
-      echo "2 is greater than 1"
-    fi
+        if (( 2 > 1 )); then
+          echo "2 is greater than 1"
+        fi
     ```
     Für Fließkomma‑Arithmetik solltest du [`bc`](https://www.gnu.org/software/bc/manual/html_mono/bc.html) oder [`awk`](https://www.gnu.org/software/gawk/manual/gawk.html) verwenden.
   </div>
@@ -476,8 +476,8 @@ Schärfen (oder beweisen) Sie Ihre Shell‑Skript‑**Fähigkeiten**!
   <div className="question">
     Was bewirkt das `:` in diesem Skript?
     ```bash
-    rosie="Bad cat, good cat"
-    echo ${rosie:9}
+        rosie="Bad cat, good cat"
+        echo ${rosie:9}
     ```
   </div>
   </slot>
@@ -485,7 +485,7 @@ Schärfen (oder beweisen) Sie Ihre Shell‑Skript‑**Fähigkeiten**!
   <div className="explanation">
     Die Syntax `${var:offset}` extrahiert einen Teilstring, beginnend bei `offset`. Hier ist die Ausgabe:
     ```plaintext
-    good cat
+        good cat
     ```
     Um einen Teilstring mit einer bestimmten Länge zu extrahieren, verwende `${var:offset:length}`.
 
@@ -543,8 +543,8 @@ Schärfen (oder beweisen) Sie Ihre Shell‑Skript‑**Fähigkeiten**!
   <div className="explanation">
     Die Syntax `$(ls -l)` führt den Befehl innerhalb der **Klammern** aus und ersetzt ihn durch die Ausgabe. Zum Beispiel:
     ```bash
-    echo "Today is $(date +%F)"
-    # => Today is 2029-12-31
+        echo "Today is $(date +%F)"
+        # => Today is 2029-12-31
     ```
     Die erste Option verwendet einfache Anführungszeichen `'`, **keine Backticks**. Das verhindert die Expansion, sodass `'$(date +%F)'` einfach die wörtliche Zeichenkette `$(date +%F)` ausgeben würde.
 
