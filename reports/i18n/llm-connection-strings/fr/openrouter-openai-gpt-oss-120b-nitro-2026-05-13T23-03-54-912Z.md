@@ -3,7 +3,7 @@
 - Locale: fr
 - Model: openrouter/openai/gpt-oss-120b:nitro
 - Target: src/content/posts/2026-01-30--llm-connection-strings/fr/index.mdx
-- Validation: deferred
+- Validation: rejected: direct AI SDK translation failed
 - Runtime seconds: 6.74
 - Input tokens: 6201
 - Output tokens: 1767
@@ -12,60 +12,57 @@
 - Cache write tokens: 0
 - Estimated cost: $0.000560
 - Pricing source: local-openrouter-estimate
-- Note: Generated through the direct AI SDK chunked translator.
+- Note: Command failed: git commit --only -m i18n candidate(fr): llm-connection-strings via openrouter/openai/gpt-oss-120b:nitro -- reports/i18n/llm-connection-strings/fr reports/i18n/llm-connection-strings/candidates.jsonl
 ## Raw Output
 
 ````mdx
 ---
-title: 'Il est temps pour les chaînes de connexion llm://'
-subTitle: 'Simplifiez la configuration du modèle et du fournisseur avec les URL `llm://`'
-date: '2026-01-30'
-modified: '2026-02-26'
-tags:
-  - ai
-  - llm
-  - api
-  - developer-experience
-  - standards
+title: "Il est temps d'adopter les chaînes de connexion LLM"
+subTitle: "Simplifiez la configuration des modèles et fournisseurs avec les URLs `llm://`"
+date: 2026-01-30
+modified: 2026-02-26
+tags: [ai, llm, api, developer-experience, standards]
 category: AI
 draft: false
 popularity: 1
-social_image: ../desktop-social.webp
+social_image: desktop-social.webp
 cover_full_width: ../hero-wide.webp
 cover_mobile: ../square-200.webp
 cover_icon: ../square-200.webp
 ---
+
 <blockquote class="inset">
-**Mise à jour :** Cet article a conduit à un [Internet‑Draft pour le schéma d’URI `llm://`](https://datatracker.ietf.org/doc/draft-levy-llm-uri-scheme/).
+**Mise à jour :** Cet article a conduit à la rédaction d'un [Internet-Draft pour le schéma d'URI `llm://`](https://datatracker.ietf.org/doc/draft-levy-llm-uri-scheme/).
 </blockquote>
 
-Vous vous souvenez de l’époque où se connecter à une base de données signifiait jongler avec un sac hétéroclite de variables d’environnement ?
 
-C’était une tour de configurations délicates. `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASSWORD`, `DB_NAME`… ou attendez, était‑ce `DB_USERNAME` ? Est‑ce `DB_PASS` ou `DB_PWD` ? Dois‑je ajouter les préfixes `PG_*` cette fois ? Et où diable placer le paramètre de timeout ?
+Vous souvenez-vous de cette époque où se connecter à une base de données signifiait jongler avec un fourre-tout de variables d'environnement ?
 
-C’était un château de cartes fragile, prêt à faire s’effondrer votre build de production parce que vous avez oublié de mettre `HOST` en majuscules.
+C'était une tour de configuration délicate. `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASSWORD`, `DB_NAME`... ou attendez, c'était `DB_USERNAME` ? Est-ce `DB_PASS` ou `DB_PWD` ? Dois-je utiliser les préfixes `PG_*` cette fois-ci ? Et où diable passe le paramètre de timeout ?
 
-Puis, quelqu’un a eu la brillante idée d’utiliser simplement une URL¹ :
+C'était un château de cartes fragile, prêt à faire s'effondrer votre build en production parce que vous aviez oublié de mettre `HOST` en majuscules.
+
+Puis, quelqu'un a eu l'idée brillante d'utiliser simplement une URL¹ :
 
 ```bash
 postgres://user:pass@host:5432/dbname
 ```
 
-Une seule chaîne. Tout ce qu’il faut. Universellement analysable. Portable. Oserais‑je dire… magnifique ?
+Une seule chaîne. Tout ce qu'il faut. Universellement analysable. Portable. Oserais-je dire... belle ?
 
-Alors pourquoi traitons‑nous les LLM comme si nous étions en 1999 ?
+Alors pourquoi traitons-nous les LLM comme si nous étions en 1999 ?
 
-## L’explosion des variables d’environnement
+## L'explosion des variables d'environnement
 
-À l’heure actuelle, mon fichier `.env` ressemble à un cimetière de clés API abandonnées. `OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, `MISTRAL_API_KEY`, `GROQ_API_KEY`. Et ne me lancez même pas sur Azure — vous avez besoin d’un endpoint, d’un nom de déploiement, d’une version d’API et d’une clé juste pour dire « bonjour ».
+Actuellement, mon fichier `.env` ressemble à un cimetière de clés API abandonnées. `OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, `MISTRAL_API_KEY`, `GROQ_API_KEY`. Et ne me lancez pas sur Azure — il faut un endpoint, un nom de déploiement, une version d'API et une clé juste pour dire « bonjour ».
 
-Ce n’est pas seulement moche, c’est de la friction. Chaque fois que je veux changer de modèle ou tester un nouveau fournisseur, je réécris le code d’initialisation, je cours après la documentation pour les noms de paramètres spécifiques, et j’ajoute trois lignes de plus à ma configuration d’environnement.
+Ce n'est pas seulement laid ; c'est une friction. Chaque fois que je veux changer de modèle ou tester un nouveau fournisseur, je dois réécrire le code d'initialisation, chercher la documentation pour les noms de paramètres spécifiques, et ajouter trois lignes de configuration supplémentaires.
 
-Et si on… ~~volait~~ empruntait simplement l’idée de l’URL de base de données ?
+Et si on... ~~volait~~ empruntait simplement l'idée des URLs de base de données ?
 
 ## Présentation des chaînes de connexion LLM
 
-Imaginez configurer toute votre interface de modèle avec une seule ligne :
+Imaginez configurer toute votre interface de modèle avec une seule ligne :
 
 ```bash
 llm://api.openai.com/gpt-5.2?reasoning_effort=none&temp=0.7&max_tokens=1500
@@ -73,42 +70,41 @@ llm://api.z.ai/glm-4.7?top_p=0.9&cache=true
 ```
 
 ---
-
 <br />
 
-### Anatomie d’une chaîne de connexion LLM
+### Anatomie d'une chaîne de connexion LLM
 
-![les parties d’une chaîne de connexion LLM](../inline-url-diagram-dark.svg)
+![les parties d'une chaîne de connexion LLM](../inline-url-diagram-dark.svg)
 
-Le schéma est `llm://`. L’hôte est l’URL de base de l’API du fournisseur. Le chemin est le nom du modèle. Et les paramètres de requête gèrent toutes les options d’exécution qui encombrent habituellement votre code.
+Le schéma est `llm://`. L'hôte est l'URL de base de l'API du fournisseur. Le chemin est le nom du modèle. Et les paramètres de requête gèrent toutes les options d'exécution qui encombrent habituellement votre code.
 
-## Besoin d’authentification ? Parfait, ajoutez‑la.
+## Besoin d'authentification ? Parfait, ajoutez-la.
 
-Comme pour `postgres://`, on peut intégrer l’authentification directement :
+Tout comme `postgres://`, nous pouvons intégrer l'authentification directement :
 
 ```bash
 llm://app-name:sk-proj-123456@api.openai.com/gpt-5.2?reasoning_effort=none&temp=0.7
 ```
 
-*Note : Oui, mettre des informations d’identification dans les URL peut représenter un risque de sécurité si vous les collez dans des journaux publics. Mais les services de journalisation modernes sont assez bons pour nettoyer ces motifs, et honnêtement, traitez‑vous votre fichier `.env` beaucoup mieux ? Vérifiez, désinfectez et utilisez avec prudence.*
+*Note : Oui, mettre des identifiants dans des URLs peut présenter un risque de sécurité si vous les collez dans des logs publics. Mais les services de logging modernes sont plutôt bons pour masquer ces motifs, et honnêtement, traitez-vous votre fichier `.env` beaucoup mieux ? Vérifiez, assainissez et utilisez avec précaution.*
 
-## Résilience ? Pourquoi pas.
+## Résilience ? Pourquoi diable pas.
 
-De nombreuses bibliothèques de bases de données supportent le basculement en round‑robin en spécifiant plusieurs hôtes. Pourquoi nos agents IA ne devraient‑ils pas bénéficier de la même fiabilité ?
+De nombreuses bibliothèques de bases de données supportent le basculement round-robin en spécifiant plusieurs hôtes. Pourquoi nos agents IA n'auraient-ils pas la même fiabilité ?
 
 ```bash
 llms://primary.gpt,backup.gpt/gpt-6?temp=0.9
 ```
 
-Ce `s` dans `llms://` n’est pas une faute de frappe. C’est le pluriel. Si `primary.gpt` se bloque, le client réessaie automatiquement `backup.gpt`. Aucun logique de routage complexe requis.
+Ce `s` dans `llms://` n'est pas une typo. C'est un pluriel. Si `primary.gpt` se bloque, le client réessaie automatiquement avec `backup.gpt`. Aucune logique de router complexe requise.
 
-<blockquote class="inset">Une seule chaîne contenant tout, de votre **auth** à votre **endpoint** en passant par vos **hyperparamètres**.</blockquote>
+<blockquote class="inset">Une seule chaîne avec tout, de votre **authentification** à votre **endpoint** en passant par vos **hyperparamètres**.</blockquote>
 
 ## Formats alternatifs
 
-Je ne suis pas marié à `llm://`. Le schéma précis importe moins que la norme elle‑même.
+Je ne suis pas marié à `llm://`. Le schéma exact importe moins que le standard lui-même.
 
-Je pourrais imaginer un monde où l’on utilise des schémas spécifiques au fournisseur pour plus de concision, tout en conservant la structure standard :
+Je pourrais imaginer un monde où nous utilisons des schémas spécifiques au fournisseur pour la brièveté, tout en conservant la structure standard :
 
 ```bash
 ollama://localhost:11434/llama3
@@ -116,21 +112,21 @@ vercel://anthropic/sonnet-4.5?temp=0.8&web_search={"maxUses":3}
 bedrock://us-west-2.aws/anthropic/sonnet-4.5?temp=0.8&cacheControl=ephemeral
 ```
 
-Quel que soit le syntaxe exacte, les avantages fondamentaux sont indéniables :
+Quelle que soit la syntaxe exacte, les avantages fondamentaux sont indéniables :
 
-1.  **Portabilité :** Copiez‑collez votre configuration complète d’un script local à un worker cloud.
-2.  **Convivialité CLI :** Passez un seul argument à vos scripts. `my-agent --model "llm://..."` l’emporte sur `my-agent --model gpt-4 --temp 0.7 --key $KEY --host …`.
-3.  **Indépendance du langage :** Chaque langage de programmation possède un analyseur d’URL robuste. Nous obtenons validation, analyse et désinfection gratuitement.
+1.  **Portabilité :** Copiez et collez toute votre configuration d'un script local à un worker cloud.
+2.  **Ami du CLI :** Passez un seul argument à vos scripts. `my-agent --model "llm://..."` bat `my-agent --model gpt-4 --temp 0.7 --key $KEY --host ...`.
+3.  **Agnostique au langage :** Chaque langage de programmation possède un analyseur d'URL robuste. Nous obtenons la validation, l'analyse et l'assainissement gratuitement.
 
-<blockquote class="ai-response inset">Le monde des bases de données a mis des décennies à résoudre ce problème.<br /><b>Bonne nouvelle, dans les timelines IA, c’est à peine il y a un demi‑vibe‑année.</b></blockquote>
+<blockquote class="ai-response inset">Le monde des bases de données a mis des décennies à comprendre ça.<br /><b>Bonne nouvelle, dans les timelines de l'IA, ça ne fait que la moitié d'une vibe-année.</b></blockquote>
 
-## Le Verdict
+## Le verdict
 
-Nous n’avons pas besoin d’un autre standard de configuration complexe ou d’un nouveau fichier manifeste basé sur YAML. Il suffit d’utiliser l’outil qui fonctionne pour le reste d’Internet depuis 30 ans.
+Nous n'avons pas besoin d'un autre standard de configuration complexe ou d'un nouveau fichier manifeste basé sur YAML. Nous avons juste besoin d'utiliser l'outil qui fonctionne pour le reste d'Internet depuis 30 ans.
 
-Arrêtons de réinventer la roue et traitons nos connexions LLM avec le même respect que nous accordons à nos bases de données. Votre fichier `.env` (et votre santé mentale) vous en seront reconnaissants.
+Cessons de réinventer la roue et commençons à traiter nos connexions LLM avec le même respect que nous accordons à nos bases de données. Votre fichier `.env` (et votre santé mentale) vous remerciera.
 
-![un tiroir d’env variables en désordre](../hero-concept-8-drawers.webp)
+![un tiroir de variables d'environnement en désordre](../hero-concept-8-drawers.webp)
 
-{/* ¹ Oui, je sais que `URI` est plus correct que `URL`. Si vous êtes assez pédant pour vous soucier réellement de cette distinction, allez toucher de l'herbe. */}
+{/* ¹ Oui, je sais que `URI` est plus correct que `URL`. Si vous êtes assez pédant pour vous soucier réellement de cette distinction, allez donc toucher de l'herbe. */}
 ````
