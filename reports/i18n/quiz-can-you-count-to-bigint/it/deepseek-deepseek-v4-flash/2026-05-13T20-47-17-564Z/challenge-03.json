@@ -1,0 +1,42 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "Precision with Floating Points",
+  "translatedTitle": "Precisione con i numeri a virgola mobile",
+  "translation": {
+    "title": "Precisione con i numeri a virgola mobile",
+    "group": "Matematica",
+    "options": [
+      {
+        "text": "0.1 + 0.2 === 0.3"
+      },
+      {
+        "text": "false"
+      },
+      {
+        "text": "true"
+      },
+      {
+        "text": "NaN"
+      }
+    ],
+    "questionProse": [],
+    "explanationProse": [
+      "A causa degli errori di precisione dei numeri a virgola mobile, `0.1 + 0.2` non è esattamente uguale a `0.3`. Per il modo in cui i numeri a virgola mobile sono memorizzati in memoria, il risultato è `0.30000000000000004`. Lo standard IEEE 754 per la gestione dell'aritmetica a virgola mobile è il colpevole: non può rappresentare alcuni numeri in modo esatto. Questo è un problema comune in tutti i linguaggi di programmazione. Prima o poi ti imbatterai in un decimale infinitamente periodico, e indipendentemente dal linguaggio, il computer deve semplicemente smettere di inseguire cifre infinitamente ripetute.\n\n    Alcuni linguaggi come Python e Java hanno `Decimal` o `BigDecimal` per gestire questo, ma non è integrato in JavaScript. Puoi usare librerie come `big.js` o `decimal.js` per gestire questi casi.\n\n    (Nota: Alcuni linguaggi sono progettati per gestire frazioni, numeri immaginari, ecc. a un livello logico più alto, preservando le espressioni letterali. Ma devono comunque affrontare gli stessi problemi di precisione dei numeri a virgola mobile a livello hardware.)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Precisione con i numeri a virgola mobile\",\n  \"group\": \"Matematica\",\n  \"options\": [\n    {\n      \"text\": \"0.1 + 0.2 === 0.3\"\n    },\n    {\n      \"text\": \"false\"\n    },\n    {\n      \"text\": \"true\"\n    },\n    {\n      \"text\": \"NaN\"\n    }\n  ],\n  \"questionProse\": [],\n  \"questionCode\": [\n    {\n      \"language\": \"tsx\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"explanationProse\": [\n    \"A causa degli errori di precisione dei numeri a virgola mobile, `0.1 + 0.2` non è esattamente uguale a `0.3`. Per il modo in cui i numeri a virgola mobile sono memorizzati in memoria, il risultato è `0.30000000000000004`. Lo standard IEEE 754 per la gestione dell'aritmetica a virgola mobile è il colpevole: non può rappresentare alcuni numeri in modo esatto. Questo è un problema comune in tutti i linguaggi di programmazione. Prima o poi ti imbatterai in un decimale infinitamente periodico, e indipendentemente dal linguaggio, il computer deve semplicemente smettere di inseguire cifre infinitamente ripetute.\\n\\n    Alcuni linguaggi come Python e Java hanno `Decimal` o `BigDecimal` per gestire questo, ma non è integrato in JavaScript. Puoi usare librerie come `big.js` o `decimal.js` per gestire questi casi.\\n\\n    (Nota: Alcuni linguaggi sono progettati per gestire frazioni, numeri immaginari, ecc. a un livello logico più alto, preservando le espressioni letterali. Ma devono comunque affrontare gli stessi problemi di precisione dei numeri a virgola mobile a livello hardware.)\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 881,
+    "outputTokens": 786,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 5384
+  },
+  "cost": {
+    "inputUsd": 0.00012334,
+    "outputUsd": 0.00022008000000000002,
+    "totalUsd": 0.00034342,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
