@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: stop-the-angularjs-hate
+- Locale: ru
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2015-03-10--stop-the-angularjs-hate/ru/index.mdx
+- Validation: passed
+- Runtime seconds: 2.04
+- Input tokens: 5244
+- Output tokens: 1549
+- Thinking tokens: unknown
+- Cached input tokens: 2432
+- Cache write tokens: 0
+- Estimated cost: $0.000483
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Трюки AngularJS
@@ -113,3 +131,4 @@ user-widget
   1.  Применять шаблонизацию Mustache для создания HTML‑строк (или напрямую работать с DOM)
   1.  Кешировать отрендеренный контент в `localStorage`, если это возможно
   1.  (Опционально) Добавить обработчик события для повторного рендеринга контента. Я стандартизировал имя события как `refresh.<class-name>`
+````
