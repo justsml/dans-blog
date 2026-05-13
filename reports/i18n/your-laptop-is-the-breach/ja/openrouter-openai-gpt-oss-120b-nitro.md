@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: your-laptop-is-the-breach
+- Locale: ja
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-05-09--your-laptop-is-the-breach/ja/index.mdx
+- Validation: passed
+- Runtime seconds: 18.83
+- Input tokens: 44015
+- Output tokens: 9727
+- Thinking tokens: unknown
+- Cached input tokens: 24960
+- Cache write tokens: 0
+- Estimated cost: $0.003467
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: あなたのラップトップが侵害です
 subTitle: 開発者のワークステーションは認証情報の倉庫です。本番環境と同様に扱いましょう。
@@ -329,3 +347,4 @@ Anthropic の Claude Code ドキュメントは、ツール、ファイル、ド
 - [Little Snitch](https://obdev.at/products/littlesnitch/)
 - [Portmaster](https://safing.io/)
 - [Claude Code 権限](https://code.claude.com/docs/en/permissions)
+````
