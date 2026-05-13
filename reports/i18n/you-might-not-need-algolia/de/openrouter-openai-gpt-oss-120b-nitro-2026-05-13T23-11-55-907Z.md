@@ -3,7 +3,7 @@
 - Locale: de
 - Model: openrouter/openai/gpt-oss-120b:nitro
 - Target: src/content/posts/2025-03-01--you-might-not-need-algolia/de/index.mdx
-- Validation: deferred
+- Validation: rejected: direct AI SDK translation failed
 - Runtime seconds: 3.14
 - Input tokens: 6017
 - Output tokens: 1539
@@ -12,108 +12,105 @@
 - Cache write tokens: 0
 - Estimated cost: $0.000512
 - Pricing source: local-openrouter-estimate
-- Note: Generated through the direct AI SDK chunked translator.
+- Note: Command failed: git commit --only -m i18n candidate(de): you-might-not-need-algolia via openrouter/openai/gpt-oss-120b:nitro -- reports/i18n/you-might-not-need-algolia/de reports/i18n/you-might-not-need-algolia/candidates.jsonl
 ## Raw Output
 
 ````mdx
 ---
-title: Vielleicht benötigen Sie Algolia™ nicht
-social_image: ../desktop-social.webp
-subTitle: Statische Websites benötigen wahrscheinlich keine gehostete Suche
-tags:
-  - search
-  - algolia
-  - pagefind
-  - cdn
-date: '2025-03-01'
-modified: '2025-03-05'
+title: "Sie brauchen Algolia™ vielleicht gar nicht"
+social_image: desktop-social.webp
+subTitle: "Statische Sites benötigen wahrscheinlich keinen gehosteten Suchdienst"
+tags: ["search", "algolia", "pagefind", "cdn"]
+date: 2025-03-01
+modified: 2025-03-05
 category: Search
-cover_full_width: ../synth-wave-city-wide.webp
-cover_mobile: ../synth-wave-city-200-square.webp
-cover_icon: ../synth-wave-city-200-square.webp
+cover_full_width: synth-wave-city-wide.webp
+cover_mobile: synth-wave-city-200-square.webp
+cover_icon: synth-wave-city-200-square.webp
 cover_credit: Image by Dan Levy
 ---
-Die meistenEntscheidungen für die Seitensuche werden zu spät getroffen.
 
-Wenn jemand sagt „Wir sollten Algolia verwenden“, hat das Team meist die entscheidende Frage übersprungen: Welche Art von Inhalt wollen wir durchsuchen?
+Die meisten Entscheidungen zur Sitesuche beginnen zu spät.
 
-Falls die Antwort „HTML‑Seiten, die wir bereits bauen“ lautet, sollte **[Pagefind](https://pagefind.app/)** das Erste sein, das Sie ausprobieren. Nicht weil Algolia schlecht ist – Algolia löst viele schwierige Probleme sehr gut. Aber wenn sich Ihr Suchindex bei jedem Site‑Deploy ändert, kann ein gehosteter Suchdienst nur ein unnötiges Infrastruktur‑Kostüm sein.
+Wenn jemand sagt: „Wir sollten Algolia nutzen", hat das Team meist die eigentliche Frage übersprungen: Welche Art von Inhalten durchsuchen wir überhaupt?
 
-<p class="inset">Verwenden Sie Pagefind, wenn Ihr durchsuchbarer Inhalt zur Build‑Zeit erzeugt wird. Greifen Sie zu Algolia, wenn die Suche Live‑Writes, Geschäftsregeln, benutzerspezifische Ranglisten oder betriebliche Garantien verarbeiten muss, die ein statischer Build nicht bieten kann.</p>
+Wenn die Antwort „HTML-Seiten, die wir bereits generieren" lautet, sollte [Pagefind](https://pagefind.app/) das Erste sein, was du ausprobierst. Nicht, weil Algolia schlecht wäre. Algolia ist bei einer Reihe kniffliger Probleme sehr gut. Aber wenn sich dein Suchindex nur ändert, wenn deine Site deployed wird, ist ein gehosteter Suchdienst vielleicht Infrastruktur-Kosmetik.
 
-Diese Regel gilt für mehr Websites, als man erwarten würde: Blogs, Dokumentation, Marketing‑Seiten, interne Handbücher, Produkt‑Guides, Kurskataloge und überraschend viele „Apps“, die hauptsächlich Seiten veröffentlichen.
+<p class="inset">Nutze Pagefind, wenn dein durchsuchbarer Inhalt zur Build-Zeit generiert wird. Greif zu Algolia, wenn die Suche Live-Schreibvorgänge, Geschäftsregeln, benutzerspezifisches Ranking oder operative Garantien benötigt, die dein statischer Build nicht liefern kann.</p>
+
+Diese Regel trifft auf mehr Sites zu, als die meisten erwarten: Blogs, Dokumentationen, Marketing-Seiten, interne Handbücher, Produktleitfäden, Kurskataloge und eine überraschende Zahl von „Apps", die im Wesentlichen Seiten veröffentlichen.
 
 ## Die Form des Problems
 
-Algolia stellt Ihnen ein externes Suchsystem bereit. Sie erstellen Datensätze, schieben sie in einen Index, konfigurieren das Ranking, binden eine UI ein und halten das System synchron zu Ihrer Quelle der Wahrheit.
+Algolia liefert dir ein externes Suchsystem. Du erstellst Datensätze, pushst sie in einen Index, konfigurierst das Ranking, bindest eine UI ein und hältst das Ganze synchron mit deiner Quellquelle.
 
-Pagefind betrachtet das HTML, das Sie bereits ausgeliefert haben, und erzeugt daneben einen statischen Suchindex.
+Pagefind schaut sich das HTML an, das du bereits ausgeliefert hast, und baut einen statischen Suchindex daneben.
 
-Diese Unterscheidung klingt zunächst unspektakulär – bis Sie die Integration pflegen müssen.
+Dieser Unterschied klingt langweilig, bis du die Integration wartest.
 
-Mit Algolia hat Ihre Site eine zweite Kopie Ihres Inhalts. Jetzt müssen Sie Fragen beantworten wie:
+Mit Algolia hast du eine zweite Kopie deiner Inhalte auf deiner Site. Jetzt musst du Fragen beantworten wie:
 
-- Ist die Bereitstellung abgeschlossen, aber das Index‑Update fehlgeschlagen?
-- Welche Felder sind kanonisch: die CMS‑Felder, die gerenderte Seite oder der Such‑Datensatz?
-- Wer ist für Ranking‑Anpassungen verantwortlich, wenn sie nicht mehr zur Seite passen?
-- Was passiert, wenn sich herausstellt, dass das kostenlose Kontingent nicht dem tatsächlichen Traffic‑Muster entspricht?
+- Ist der Deploy abgeschlossen, aber das Index-Update fehlgeschlagen?
+- Welche Felder sind kanonisch: die CMS-Felder, die gerenderte Seite oder der Suchdatensatz?
+- Wer kümmert sich um Ranking-Anpassungen, wenn sie nicht mehr zur Seite passen?
+- Was passiert, wenn sich das Free-Tier nicht als die tatsächliche Form deines Traffics erweist?
 
-Manchmal sind diese Fragen gerechtfertigt. Für einen Marktplatz, ein Support‑Portal oder einen großen E‑Commerce‑Katalog schon. Für eine statische Dokumentations‑Website hingegen sind sie oft selbstverschuldete Komplexität.
+Manchmal sind diese Fragen es wert. Für einen Marktplatz, ein Support-Portal oder einen großen E-Commerce-Katalog sind sie es wahrscheinlich. Für eine statische Dokumentations-Site sind sie oft selbstverschuldete Komplexität.
 
-## Pagefind funktioniert, weil es das zusätzliche System ablehnt
+## Pagefind funktioniert, weil es das zusätzliche System verweigert
 
-Der Trick von Pagefind ist kein Zauber. Es ist Geschmack.
+Pagefinds Trick ist keine Magie. Es ist Geschmackssache.
 
-Es wartet, bis Ihre Seiten existieren, indexiert das fertige HTML und erzeugt eine Sammlung statischer Assets, die Sie auf demselben CDN wie den Rest Ihrer Site bereitstellen können. Der Browser lädt nur die Teile herunter, die er benötigt. Es gibt keinen Such‑Server, den man warm halten muss, keine Crawling‑Quote, die man überwachen muss, und keine Webhook‑Pipeline, die sich merken muss, was sich geändert hat.
+Es wartet, bis deine Seiten existieren, indexiert das fertige HTML und schreibt eine Sammlung statischer Assets, die du auf demselben CDN wie den Rest deiner Site ablegen kannst. Der Browser lädt nur dieChunks herunter, die er braucht. Es gibt keinen Suchserver, der warmgehalten werden muss, kein Crawler-Quota, das beobachtet werden will, und keine Webhook-Pipeline, die sich merken muss, was sich geändert hat.
 
-Damit ist das Fehlermuster viel leichter zu verstehen:
+Das macht den Fehlerfall viel leichter verständlich:
 
-- Wenn die Seite bereitgestellt wurde, stammt der indizierte Inhalt von dieser Seite.
-- Wenn die Seite nicht bereitgestellt wurde, können Nutzer sie ohnehin nicht sehen.
-- Wenn die Suche falsche Ergebnisse liefert, liegt das Problem meist im gerenderten Markup oder in der Pagefind‑Konfiguration, nicht in einem entfernten Synchronisations‑Job.
+- Wenn die Seite deployed wurde, stammen die indexierten Inhalte von dieser Seite.
+- Wenn die Seite nicht deployed wurde, können Nutzer sie ohnehin nicht sehen.
+- Wenn die Suche falsch funktioniert, liegt das Problem meist in deinem gerenderten Markup oder der Pagefind-Konfiguration, nicht in einem fernen Synchronisierungs-Job.
 
-Genau deshalb mag ich Pagefind für Content‑Sites. Der Index folgt dem Artefakt.
+Deshalb mag ich es für Content-Sites. Der Index folgt dem Artifact.
 
 ## Wie die Einrichtung tatsächlich aussieht
 
-Für eine reine statische Site ist der Workflow angenehm schlicht:
+Für eine einfache statische Site ist der Workflow angenehm unspektakulär:
 
-- **CLI**: Durchsucht die HTML‑Dateien Ihrer Site, erzeugt einen Index und stellt ihn innerhalb weniger Minuten als globale CDN‑Assets bereit.  
-- **Static Site Generators**: Nutzen Sie die PageFind‑Plugins für Astro oder Hugo, um den Indexierungsprozess zu automatisieren.  
-- **Custom Solutions**: Verwenden Sie die PageFind‑API, um maßgeschneiderte Sucherlebnisse zu bauen, die exakt Ihren Anforderungen entsprechen.  
+- **CLI**: Durchsuche die HTML-Dateien deiner Site, generiere einen Index und deploye ihn auf ein globales CDN – alles in wenigen Minuten.
+- **Static Site Generators**: Nutze PageFind-Plugins für Astro oder Hugo, um den Indexierungsprozess zu automatisieren.
+- **Custom Solutions**: Verwende die PageFind-API, um maßgeschneiderte Sucherlebnisse zu bauen, die zu deinen spezifischen Anforderungen passen.
 
 <figure>
-  <figcaption>Indexierung meiner Site mit dem PageFind‑CLI</figcaption>
-  ![Indexing my site with PageFind](../PageFind-Cleaner-better-15fps-720p2.webp "Indexing my site with PageFind")
+  <figcaption>Indexierung meiner Site mit dem PageFind CLI</figcaption>
+  ![Indexierung meiner Site mit PageFind](PageFind-Cleaner-better-15fps-720p2.webp "Indexierung meiner Site mit PageFind")
 </figure>
 
-Der [Getting Started](https://pagefind.app/docs/)‑Leitfaden reicht aus, um loszulegen. Der bessere Test ist operativ: Können Sie den Index im CI neu bauen, das Ergebnis deployen und jedes Suchmissverständnis durch Inspektion des gerenderten HTML erklären?
+Der [Getting Started](https://pagefind.app/docs/)-Guide reicht aus, um loszulegen. Der bessere Test ist operativ: Kannst du den Index in CI neu bauen, das Output deployen und jeden Search-Miss erklären, indem du das gerenderte HTML inspizierst?
 
-## Wo Algolia noch Vorteile hat
+## Wo Algolia immer noch gewinnt
 
-Pagefind ist kein winziger Algolia, der sich als Trenchcoat tarnt. Es ist eine andere Antwort.
+Pagefind ist kein kleines Algolia im Trenchcoat. Es ist eine andere Antwort.
 
-Setzen Sie Algolia, OpenSearch, Postgres‑Suche oder ein anderes Live‑System ein, wenn Ihr Suchindex unabhängig von einem Site‑Deploy geändert werden muss.
+Nutze Algolia, OpenSearch, Postgres-Suche oder ein anderes Live-System, wenn sich dein Suchindex unabhängig von einem Site-Deploy ändern muss.
 
-Dazu gehören:
+Das umfasst:
 
-- Bestandszahlen, die alle paar Minuten wechseln  
-- Benutzer‑spezifische Berechtigungen oder private Ergebnisse  
-- Benutzerdefinierte Ranglisten, gesteuert durch Umsatz, Frische, Beliebtheit oder Experimente  
-- Föderierte Suche über Systeme, die nicht zu einer statischen Site zusammengeführt werden  
-- Analytik‑ und Betriebsunterstützung, die ein Unternehmen von einem verwalteten Anbieter erwartet  
+- Lagerbestände, die sich alle paar Minuten ändern
+- Benutzer-spezifische Berechtigungen oder private Ergebnisse
+- Custom Ranking, getrieben von Umsatz, Aktualität, Popularität oder Experimenten
+- Federated Search über Systeme hinweg, die nicht in eine statische Site gerendert werden
+- Analytics und Operations-Support, den ein Business von einem Managed Vendor erwartet
 
-Das sind reale Anforderungen. Zu behaupten, Pagefind könne sie erledigen, weil es schnell ist, wäre die andere Art von Vendor‑Blog‑Stimme.
+Das sind echte Anforderungen. So zu tun, als könne Pagefind sie bedienen, nur weil es schnell ist, wäre die andere Art von Vendor-Blog-Stimme.
 
-## Die Entscheidung, die ich treffe
+## Die Entscheidung, die ich verwende
 
-Stellen Sie zunächst eine Frage:
+Stell zuerst eine Frage:
 
-> Kann der Suchindex aus derselben statischen Ausgabe, die die Nutzer gerade betrachten, neu aufgebaut werden?
+> Kann der Suchindex aus demselben statischen Output neu gebaut werden, den Nutzer gerade durchsuchen?
 
-Falls ja, beginnen Sie mit Pagefind. Sie erhalten standardmäßig private Suche, CDN‑freundliche Assets und ein Service‑Konto weniger, das konfiguriert werden muss.
+Wenn ja, beginne mit Pagefind. Du bekommst eine standardmäßig private Suche, CDN-freundliche Assets und einen Service-Account weniger, der mitreden will.
 
-Falls nein, benennen Sie den Grund, warum der Index dynamisch sein muss: Inventar, Berechtigungen, Personalisierung, Analytik, Ranking oder Schreib‑Frequenz. Anschließend wählen Sie die Datenbank oder den Suchdienst, der diese Aufgabe explizit übernimmt.
+Wenn nein, benenne das Ding, das den Index live hält: Lagerbestand, Berechtigungen, Personalisierung, Analytics, Ranking oder Schreibfrequenz. Dann wähle die Datenbank oder den Suchdienst, der diesen Job explizit übernimmt.
 
-Algolia ist hier nicht der Bösewicht. Der eigentliche Bösewicht ist das Hinzufügen eines zweiten Systems, bevor nachgewiesen wurde, dass das erste Artefakt nicht ausreicht.
+Algolia ist hier nicht der Bösewicht. Der Bösewicht ist, ein zweites System einzuführen, bevor bewiesen ist, dass das erste Artifact nicht ausreichte.
 ````
