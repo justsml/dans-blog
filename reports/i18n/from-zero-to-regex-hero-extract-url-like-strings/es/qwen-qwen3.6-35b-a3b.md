@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: from-zero-to-regex-hero-extract-url-like-strings
+- Locale: es
+- Model: qwen/qwen3.6-35b-a3b
+- Target: src/content/posts/2024-12-29--from-zero-to-regex-hero-extract-url-like-strings/es/index.mdx
+- Validation: deferred
+- Runtime seconds: 158.72
+- Input tokens: 10804
+- Output tokens: 34263
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.000000
+- Pricing source: unknown
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: De cero a héroe del Regex
 subTitle: Extraer y analizar cadenas tipo URL con una sola expresión regular
@@ -264,3 +282,4 @@ Al seguir estos pasos, podrás extraer de manera efectiva cualquier dato en cade
 - [Documentación de MDN sobre Expresiones Regulares](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions)
 - [Técnicas avanzadas de regex](https://www.regular-expressions.info/): Explora lookahead, lookbehind y otros patrones avanzados para lograr coincidencias más precisas.
 - [RFC 3986 - Sintaxis genérica de URI](https://datatracker.ietf.org/doc/html/rfc3986)
+````
