@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-do-you-really-understand-closures
+- Locale: de
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-05-05--quiz-do-you-really-understand-closures/de/index.mdx
+- Validation: passed
+- Runtime seconds: 14.30
+- Input tokens: 10945
+- Output tokens: 6727
+- Thinking tokens: unknown
+- Cached input tokens: 1152
+- Cache write tokens: 0
+- Estimated cost: $0.001638
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: 'Quiz: Verstehst du JavaScript‑Closures wirklich?'
 subTitle: 'Die meisten Entwickler glauben, sie tun es – liegen aber falsch.'
@@ -460,3 +478,4 @@ Wie hast du abgeschnitten?
 - **0–2**: Du dachtest, du wüsstest etwas über Closures. Jetzt weißt du es wirklich. Genau das ist das Ziel.
 
 Der stale Closure in React (#6) und die `this`‑Falle (#8) sind die, die echte Produktionsbugs auslösen. Wenn dir das unbekannt war, solltest du sie noch einmal anschauen – sie tauchen in Code‑Reviews häufiger auf als jedes andere Closure‑Problem.
+````

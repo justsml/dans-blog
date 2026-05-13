@@ -1,0 +1,44 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Memoization via Closure",
+  "translatedTitle": "Memoisierung mittels Closure",
+  "translation": {
+    "title": "Memoisierung mittels Closure",
+    "group": "Bonus",
+    "options": [
+      {
+        "text": "Ruft expensive() 3 mal auf"
+      },
+      {
+        "text": "Ruft expensive() 1 mal auf"
+      },
+      {
+        "text": "Ruft expensive() 2 mal auf"
+      },
+      {
+        "text": "Wirft: Maximum call stack exceeded"
+      }
+    ],
+    "questionProse": [
+      "Wie oft wird `expensive()` tatsächlich aufgerufen?"
+    ],
+    "explanationProse": [
+      "Die memoisierten Funktion schließt `cache` ein. Der erste Aufruf (`fast(5)`) verfehlt den Cache, ruft `expensive` auf und speichert das Ergebnis. Der zweite und dritte Aufruf treffen den Cache und geben sofort zurück.\n\n    `calls` ist `1`.\n\n    Das ist Closure‑Arbeit. `cache` ist privat (kann von außen `memoize` nicht erreicht werden), persistent (existiert solange `fast` existiert) und wird über alle Aufrufe von `fast` hinweg geteilt."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Memoisierung mittels Closure\",\n\"group\": \"Bonus\",\n  \"options\": [\n    {\n      \"text\": \"Ruft expensive() 3 mal auf\"\n    },\n    {\n      \"text\": \"Ruft expensive() 1 mal auf\"\n    },\n    {\n      \"text\": \"Ruft expensive() 2 mal auf\"\n    },\n    {\n      \"text\": \"Wirft: Maximum call stack exceeded\"\n    }\n  ],\n  \"questionProse\": [\n    \"Wie oft wird `expensive()` tatsächlich aufgerufen?\"\n  ],\n  \"explanationProse\": [\n    \"Die memoisierten Funktion schließt `cache` ein. Der erste Aufruf (`fast(5)`) verfehlt den Cache, ruft `expensive` auf und speichert das Ergebnis. Der zweite und dritte Aufruf treffen den Cache und geben sofort zurück.\\n\\n    `calls` ist `1`.\\n\\n    Das ist Closure‑Arbeit. `cache` ist privat (kann von außen `memoize` nicht erreicht werden), persistent (existiert solange `fast` existiert) und wird über alle Aufrufe von `fast` hinweg geteilt.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 839,
+    "outputTokens": 687,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 481
+  },
+  "cost": {
+    "inputUsd": 0.000032721,
+    "outputUsd": 0.00012366,
+    "totalUsd": 0.00015638099999999998,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

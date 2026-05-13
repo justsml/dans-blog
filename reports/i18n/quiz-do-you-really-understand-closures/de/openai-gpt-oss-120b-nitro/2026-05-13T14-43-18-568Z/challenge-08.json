@@ -1,0 +1,45 @@
+{
+  "index": 7,
+  "attempt": 1,
+  "originalTitle": "Closure Memory Leak",
+  "translatedTitle": "Closure Speicherleck",
+  "translation": {
+    "title": "Closure Speicherleck",
+    "group": "Experte",
+    "options": [
+      {
+        "text": "Es gibt die Länge des Daten-Arrays aus"
+      },
+      {
+        "text": "Es erzeugt ein Speicherleck"
+      },
+      {
+        "text": "Es wirft einen RangeError"
+      },
+      {
+        "text": "Nichts Ungewöhnliches – das ist in Ordnung"
+      }
+    ],
+    "questionProse": [
+      "Was ist das Problem bei diesem Code?"
+    ],
+    "explanationProse": [
+      "Der Event‑Listener schließt `data` ein, sodass das Array so lange erreichbar bleibt, wie der Listener erreichbar ist. Wenn `element` langlebig ist und der Listener nie entfernt wird, bleibt auch dieses große Array erhalten.\n\n    `element` befindet sich im DOM. Der Listener hält `data`. Der GC kann es nicht sammeln.\n\n    Lösung: Erfasse große Daten nicht in langlebigen Listenern, es sei denn, du brauchst sie wirklich, und entferne Listener, wenn die zugehörige UI abgebaut wird:",
+      "Modernes V8 ist dabei besser als früher. Aber in langlebigen SPAs mit vielen Event‑Listenern beißt dieses Muster immer noch Leute."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Closure Speicherleck\",\n  \"group\": \"Experte\",\n  \"options\": [\n    {\n      \"text\": \"Es gibt die Länge des Daten-Arrays aus\"\n    },\n    {\n      \"text\": \"Es erzeugt ein Speicherleck\"\n    },\n    {\n      \"text\": \"Es wirft einen RangeError\"\n    },\n    {\n      \"text\": \"Nichts Ungewöhnliches – das ist in Ordnung\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was ist das Problem bei diesem Code?\"\n  ],\n  \"explanationProse\": [\n    \"Der Event‑Listener schließt `data` ein, sodass das Array so lange erreichbar bleibt, wie der Listener erreichbar ist. Wenn `element` langlebig ist und der Listener nie entfernt wird, bleibt auch dieses große Array erhalten.\\n\\n    `element` befindet sich im DOM. Der Listener hält `data`. Der GC kann es nicht sammeln.\\n\\n    Lösung: Erfasse große Daten nicht in langlebigen Listenern, es sei denn, du brauchst sie wirklich, und entferne Listener, wenn die zugehörige UI abgebaut wird:\",\n    \"Modernes V8 ist dabei besser als früher. Aber in langlebigen SPAs mit vielen Event‑Listenern beißt dieses Muster immer noch Leute.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 885,
+    "outputTokens": 754,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 522
+  },
+  "cost": {
+    "inputUsd": 0.000034515000000000004,
+    "outputUsd": 0.00013572,
+    "totalUsd": 0.00017023500000000003,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
