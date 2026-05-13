@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: docker-server-setup-notes
+- Locale: es
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2015-04-06--docker-server-setup-notes/es/index.mdx
+- Validation: rejected: direct AI SDK translation failed
+- Runtime seconds: 7.58
+- Input tokens: 16324
+- Output tokens: 10337
+- Thinking tokens: unknown
+- Cached input tokens: 4480
+- Cache write tokens: 0
+- Estimated cost: $0.002497
+- Pricing source: local-openrouter-estimate
+- Note: Command failed: git commit -m i18n candidate(es): docker-server-setup-notes via openrouter/openai/gpt-oss-120b:nitro
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Configuración del servidor Docker
@@ -256,4 +274,4 @@ docker rm -f webapp01
 # Por ejemplo, para terminar tus instancias de base de datos anteriores, ejecuta: (comienza con algo como `docker stop {mongo,elastic}`)
 docker rm -f mongo elastic
 ```
-
+````
