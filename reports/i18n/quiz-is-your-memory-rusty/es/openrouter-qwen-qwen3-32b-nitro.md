@@ -4,7 +4,7 @@
 - Model: openrouter/qwen/qwen3-32b:nitro
 - Target: src/content/posts/2024-12-28--quiz-is-your-memory-rusty/es/index.mdx
 - Validation: rejected: direct AI SDK translation failed
-- Runtime seconds: 5.01
+- Runtime seconds: 4.68
 - Input tokens: unknown
 - Output tokens: unknown
 - Thinking tokens: unknown
