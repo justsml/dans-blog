@@ -1,0 +1,65 @@
+---
+social_image: ../desktop-social.webp
+title: Insidie nella documentazione delle Promise
+subTitle: Evitare i problemi della documentazione più diffusa
+date: '2017-05-10'
+modified: '2024-07-30'
+category: Code
+subCategory: promises
+tags:
+  - programming
+  - patterns
+  - promises
+  - functional-programming
+cover: ../craig-whitehead-433328-unsplash.webp
+cover_mobile: ../w300_craig-whitehead-433328-unsplash.webp
+cover_icon: ../icon_craig-whitehead-433328-unsplash.webp
+---
+> Spotting Promise Anti-Patterns in google search results, and popular libraries.
+
+![craig-whitehead-433328-unsplash.webp](../craig-whitehead-433328-unsplash.webp)
+
+Inizio con una confessione: sono colpevole di scrivere gli stessi “anti‑pattern” che critico qui sotto, così come probabilmente molti sviluppatori JS. Nulla di quanto esposto è inteso come attacco personale o diretto agli autori originali. È semplicemente una revisione di codice su pattern comuni – spero di trasmettere le mie priorità e il mio approccio critico.
+
+> Spero che, dopo aver studiato questo progetto, riuscirete a riconoscere i segnali d’allarme dei Promise mal implementati.
+
+1. [CallbackHell.com](#callbackhellcom)  
+2. [StrongLoop](#strongloop)  
+3. [RisingStack](#risingstack)  
+4. [Q Library](#qlibrary)
+
+--------------------------
+### CallbackHell.com
+> **CREDIT:** http://callbackhell.com/
+![CallbackHell.com](../callbackhell.webp)
+
+----------------------
+### StrongLoop
+> **CREDIT:** `https://strongloop.com/strongblog/node-js-callback-hell-promises-generators/`
+![strong loop](../strongloop.webp)
+
+----------------
+### RisingStack
+> **CREDIT:** https://blog.risingstack.com/node-js-async-best-practices-avoiding-callback-hell-node-js-at-scale/
+Questo è un articolo piuttosto solido. Ho solo una osservazione:
+
+![Rising Stack](../risingstack.webp)
+
+------------------------
+### Q Library
+> **CREDIT:** https://github.com/kriskowal/q
+
+La libreria Q è una delle più usate e più vecchie ad essere **associate** a “Promise”. Per questo motivo soffre di esempi datati e della necessità di mantenere la retro‑compatibilità.  
+**Dico “associate a ‘Promise’” perché, a mio avviso, Q riguarda davvero il pattern `deferred`.**
+
+Può somigliare a Promise, ma insisto: non lo è. Ha una superficie di API troppo ampia per tutti i motivi sbagliati. Inoltre la convenzione di denominazione abbrevia i nomi in modo incoerente, rendendo più difficile memorizzare l’interfaccia. Metodi come `when` e `done` sono superflui.
+
+In sintesi: il pattern `deferred` è un anti‑pattern doloroso – non migliora praticamente nulla rispetto al tradizionale approccio basato sui callback.
+
+![q first example](../qlibrary-1.webp)
+
+![q xmlHTTP deferred anti-pattern](../qlibrary-2.webp)
+
+> Dai un’occhiata (e metti una stella) al progetto Github che accompagna questo articolo, **Escape From Callback Mountain** (https://github.com/justsml/escape-from-callback-mountain)
+
+> Obiettivo del progetto: ricercare e sviluppare pattern funzionali più adeguati per JavaScript.
