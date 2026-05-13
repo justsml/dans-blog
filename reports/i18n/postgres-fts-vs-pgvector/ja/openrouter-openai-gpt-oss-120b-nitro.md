@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: postgres-fts-vs-pgvector
+- Locale: ja
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-05-08--postgres-fts-vs-pgvector/ja/index.mdx
+- Validation: passed
+- Runtime seconds: 24.04
+- Input tokens: 36337
+- Output tokens: 10572
+- Thinking tokens: unknown
+- Cached input tokens: 12672
+- Cache write tokens: 0
+- Estimated cost: $0.003320
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Postgres検索：全文検索、トリグラム、pgvector
 subTitle: ツールはすでにあります。クエリに合うものを選択してください。
@@ -405,3 +423,4 @@ _Last verified against public project docs and product pages on May 8 2026. 
 ベクトル検索はデータセット内で *最も類似した* 項目を返します。たとえ関連性のあるものが全く存在しなくても、何かしらの結果を出します。これは関連文書の検索には問題ありませんが、特定レコードの検索では致命的です。誤った近似一致が空結果よりもはるかに悪い結果を招くことがあります。
 
 各ツールの用途を正しく理解してください。ほとんどはすでに Postgres にインストールされています。適材適所で活用しましょう。
+````
