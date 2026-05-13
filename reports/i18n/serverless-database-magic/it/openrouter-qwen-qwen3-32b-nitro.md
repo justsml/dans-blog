@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: serverless-database-magic
+- Locale: it
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2025-09-15--serverless-database-magic/it/index.mdx
+- Validation: deferred
+- Runtime seconds: 46.69
+- Input tokens: 6125
+- Output tokens: 6833
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.002130
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: L'onda dell'innovazione nei database nel 2025
 subTitle: Puoi farci grazie.
@@ -245,3 +263,4 @@ Anche AWS si sta muovendo in questa direzione con la ricerca vettoriale vicina a
 > **Disclaimer:** Ho usato Pagefind per anni e sono diventato contributore nel 2025. Ho sperimentato Orama e Chroma per progetti più piccoli e sto esplorando LanceDB per applicazioni AI più grandi. Nessun legame finanziario con questi progetti—solo interesse per l'evoluzione del panorama dei database.
 
 [1]: https://danlevy.net/you-might-not-need-algolia/
+````
