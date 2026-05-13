@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-sql-query-fundamentals
+- Locale: ja
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2024-11-08--quiz-sql-query-fundamentals/ja/index.mdx
+- Validation: deferred
+- Runtime seconds: 67.39
+- Input tokens: 8808
+- Output tokens: 9071
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.002882
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: 'クイズ: あなたのSQLスキルを証明してみよう！'
@@ -325,3 +343,4 @@ ORMを使うことでスキルがおざなりになっていませんか？
 </Challenge>
 
 </QuizUI>
+````
