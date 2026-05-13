@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: pitfalls-in-promise-docs
+- Locale: it
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2017-05-10--pitfalls-in-promise-docs/it/index.mdx
+- Validation: deferred
+- Runtime seconds: 6.25
+- Input tokens: 2879
+- Output tokens: 2830
+- Thinking tokens: unknown
+- Cached input tokens: 1024
+- Cache write tokens: 0
+- Estimated cost: $0.000910
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Insidie nella Documentazione delle Promise
@@ -62,3 +80,4 @@ In sintesi: il pattern differito è un anti-pattern doloroso - migliora virtualm
 > Guarda (& stellal) il progetto GitHub associato a questo articolo, [Escape From Callback Mountain](https://github.com/justsml/escape-from-callback-mountain)
 
 > Obiettivo del progetto: ricerca e sviluppo di meglio pattern linguistici funzionali in JavaScript.
+````
