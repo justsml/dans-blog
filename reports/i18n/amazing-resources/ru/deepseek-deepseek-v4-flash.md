@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: amazing-resources
+- Locale: ru
+- Model: deepseek/deepseek-v4-flash
+- Target: src/content/posts/2015-02-26--amazing-resources/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 60.81
+- Input tokens: 9274
+- Output tokens: 9542
+- Thinking tokens: unknown
+- Cached input tokens: 384
+- Cache write tokens: 0
+- Estimated cost: $0.003917
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Лучшие бесплатные UI-ресурсы для разработчиков
@@ -189,3 +207,4 @@ cover_icon: ../icon_carl-heyerdahl-181868-unsplash.webp
 
 Список изменений: 2026-04 — Переорганизована страница для людей и SEO, улучшены заголовки и описания, добавлены Assistant UI, AI SDK Elements, Aceternity UI, Shadcnblocks, Tailark, KokonutUI patterns и Tool UI.
 Список изменений: 2025-09 — Обновлены ссылки, освежены старые ресурсы, добавлены современные инструменты для иконок, контрастности и дизайна.
+````
