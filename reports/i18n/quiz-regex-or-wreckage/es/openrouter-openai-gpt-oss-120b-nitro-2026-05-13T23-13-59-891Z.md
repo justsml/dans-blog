@@ -3,7 +3,7 @@
 - Locale: es
 - Model: openrouter/openai/gpt-oss-120b:nitro
 - Target: src/content/posts/2024-11-15--quiz-regex-or-wreckage/es/index.mdx
-- Validation: deferred
+- Validation: rejected: direct AI SDK translation failed
 - Runtime seconds: 36.49
 - Input tokens: 15914
 - Output tokens: 10485
@@ -12,14 +12,14 @@
 - Cache write tokens: 0
 - Estimated cost: $0.002508
 - Pricing source: local-openrouter-estimate
-- Note: Generated through the direct AI SDK chunked translator.
+- Note: Command failed: git commit --only -m i18n candidate(es): quiz-regex-or-wreckage via openrouter/openai/gpt-oss-120b:nitro -- reports/i18n/quiz-regex-or-wreckage/es reports/i18n/quiz-regex-or-wreckage/candidates.jsonl
 ## Raw Output
 
 ````mdx
 ---
 unlisted: false
 title: 'Quiz: Dominio de Expresiones Regulares'
-subTitle: ¿Domarás expresiones regulares salvajes?
+subTitle: ¿Dominas alguna expresión regular salvaje?
 label: RegEx
 social_image: ../desktop-social.webp
 category: Quiz
@@ -36,14 +36,12 @@ cover_full_width: ../dan-lounsbury-uHZ2-nzYuIs-unsplash-wide.webp
 cover_mobile: ../dan-lounsbury-uHZ2-nzYuIs-unsplash-square-200.webp
 cover_icon: ../dan-lounsbury-uHZ2-nzYuIs-unsplash-square-200.webp
 ---
-import Challenge from '../../../../components/QuizUI/Challenge';
-
-importChallenge from '../../../../components/QuizUI/Challenge';
-import QuizUI from '../../../../components/QuizUI/QuizUI';
+import Challenge from '../../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../../components/QuizUI/QuizUI';
 
 <p class="inset">¿Listo para enfrentarte a algunas expresiones regulares? 🤼‍♂️</p>
 
-Pon a prueba tu conocimiento de RegEx con preguntas que cubren patrones básicos, cuantificadores, grupos y esas complicadas aserciones look‑around. Desde coincidencia simple de cadenas hasta validación de patrones complejos, ¿puedes identificar la expresión regular correcta?
+Pon a prueba tu conocimiento de RegEx con preguntas que cubren patrones básicos, cuantificadores, grupos y esas complicadas aserciones de look‑around. Desde la coincidencia de cadenas simples hasta la validación de patrones complejos, ¿puedes identificar la expresión regular correcta?
 
 <QuizUI>
 
@@ -63,7 +61,7 @@ Pon a prueba tu conocimiento de RegEx con preguntas que cubren patrones básicos
   <div className="question">
     ¿Qué coincide?
     ```js
-        'cat CAT Cat'.match(/cat/g)
+    'cat CAT Cat'.match(/cat/g)
     ```
   </div>
   </slot>
@@ -75,7 +73,7 @@ Pon a prueba tu conocimiento de RegEx con preguntas que cubren patrones básicos
 
     Sin la bandera `i`, solo coincide "cat" en minúsculas.
 
-    Esto es particularmente útil al trabajar con entrada de usuario o HTML donde el caso puede variar.
+    Esto es particularmente útil al manejar entrada de usuario o HTML donde el caso puede variar.
 
     [Aprende más sobre las banderas de RegExp](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#advanced_searching_with_flags)
   </div>
@@ -98,8 +96,8 @@ Pon a prueba tu conocimiento de RegEx con preguntas que cubren patrones básicos
   <div className="question">
     ¿Qué devolverá este código?
     ```js
-        const words = ['cat', 'hat', 'what', 'bat'];
-        words.filter(word => word.match(/^[ch]at/))
+    const words = ['cat', 'hat', 'what', 'bat'];
+    words.filter(word => word.match(/^[ch]at/))
     ```
   </div>
   </slot>
@@ -111,7 +109,7 @@ Pon a prueba tu conocimiento de RegEx con preguntas que cubren patrones básicos
 
     Por lo tanto, solo "cat" y "hat" coinciden con este patrón. El método `filter()` conserva solo los elementos que coinciden.
 
-    [Aprende más sobre las clases de caracteres en MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Character_Classes)
+    [Aprende más sobre clases de caracteres en MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Character_Classes)
   </div>
   </slot>
 </Challenge>
@@ -122,13 +120,18 @@ Pon a prueba tu conocimiento de RegEx con preguntas que cubren patrones básicos
   group="Coincidencia básica"
   title="Codicioso vs No codicioso"
   options={[
+    {text: '["<div>Hello</div>"]'},
+    {text: '["<div>", "</div>"]'},
+    {text: '["<div>Hello</div><div>World</div>"]'},
+    {text: '["<div>Hello</div>", "<div>World</div>"]', isAnswer: true},
+    {text: '["Hello", "World"]'}
   ]}
 >
   <slot name="question">
   <div className="question">
     ¿Qué coincidirá esto?
     ```js
-        '<div>Hello</div><div>World</div>'.match(/<div>.*?<\/div>/g)
+    '<div>Hello</div><div>World</div>'.match(/<div>.*?<\/div>/g)
     ```
   </div>
   </slot>
@@ -140,7 +143,7 @@ Pon a prueba tu conocimiento de RegEx con preguntas que cubren patrones básicos
     - Hasta encontrar `</div>`
     - La bandera `g` hace que coincida todas las ocurrencias
 
-    Sin el `?`, el `.*` codicioso coincidiría todo desde el primer `<div>` hasta el último `</div>`, produciendo una coincidencia grande. Con `?`, coincide cada par por separado.
+    Sin el `?`, el `.*` codicioso coincidiría todo desde el primer `<div>` hasta el último `</div>`, produciendo una única coincidencia grande. Con `?`, coincide cada par por separado.
 
     [Aprende más sobre coincidencia codiciosa vs perezosa](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)
   </div>
@@ -163,18 +166,18 @@ Pon a prueba tu conocimiento de RegEx con preguntas que cubren patrones básicos
   <div className="question">
     ¿Qué devolverá esto?
     ```js
-        'hello\nworld'.match(/\w+/g)
+    'hello\nworld'.match(/\w+/g)
     ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    El patrón `\w+` coincide con uno o más caracteres de palabra. Aunque hay un salto de línea en la cadena, `\w` coincide con:
+    El patrón `\w+` coincide con uno o más caracteres de palabra. Aunque la cadena contiene un salto de línea, `\w` coincide con:
     - Letras (a-z, A-Z)
     - Números (0-9)
     - Guion bajo (_)
 
-    Por lo tanto, el salto de línea actúa como un límite de palabra y obtenemos dos coincidencias. Si hubiéramos usado `.*`, no coincidiría con el salto de línea por defecto (necesitarías la bandera `s` para eso).
+    Así, el salto de línea actúa como un límite de palabra y obtenemos dos coincidencias. Si hubiéramos usado `.*`, no coincidiría con el salto de línea por defecto (necesitarías la bandera `s` para eso).
 
     [Aprende más sobre metacaracteres](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Character_Classes#types)
   </div>
@@ -198,21 +201,21 @@ Pon a prueba tu conocimiento de RegEx con preguntas que cubren patrones básicos
   <div className="question">
     ¿Qué coincidirá esto?
     ```js
-        '$100 and €50'.match(/\d+(?=[\$€])/g)
+    '$100 and €50'.match(/\d+(?=[\$€])/g)
     ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Este patrón no coincidirá con nada porque la afirmación look-ahead está invertida! Si deseas dígitos precedidos por `$` o `€`, usa un look-behind: `/(?<=[\$€])\d+/g`.
+    Este patrón no coincidirá con nada porque el look-ahead está al revés. Si quieres dígitos precedidos por `$` o `€`, usa un look-behind: `/(?<=[\$€])\d+/g`.
 
     Los look-aheads verifican lo que viene *después* de la posición actual. El patrón tal como está busca:
     - Uno o más dígitos (`\d+`)
-    - Seguido de (`(?=...)`) ya sea $ o € (`[\$€]`)
+    - Seguidos por (`(?=...)`) ya sea `$` o `€` (`[\$€]`)
 
     Como no hay números seguidos de símbolos de moneda (están precedidos por ellos), no obtenemos coincidencias.
 
-    [Aprende más sobre las afirmaciones look-ahead](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
+    [Aprende más sobre aserciones look-ahead](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
   </div>
   </slot>
 </Challenge>
@@ -233,15 +236,15 @@ Pon a prueba tu conocimiento de RegEx con preguntas que cubren patrones básicos
   <div className="question">
     ¿Qué coincidirá?
     ```js
-        'cat cats category'.match(/\bcat\b/g)
+    'cat cats category'.match(/\bcat\b/g)
     ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
     El `\b` representa un límite de palabra, que coincide:
-    - Entre un carácter de palabra y un carácter que no es de palabra
-    - Al inicio/final de la cadena si hay un carácter de palabra
+    - Entre un carácter de palabra y un carácter no palabra
+    - Al inicio o al final de la cadena si hay un carácter de palabra
 
     Así, `/\bcat\b/` coincide con "cat" solo cuando es una palabra completa, no parte de otra palabra.
     - ✅ "cat" (rodeado de espacios)
@@ -257,7 +260,7 @@ Pon a prueba tu conocimiento de RegEx con preguntas que cubren patrones básicos
   client:visible={{rootMargin: "150px"}}
   index={6}
   group="Errores comunes"
-  title="La bandera global"
+  title="El modificador global"
   options={[
     {text: 'null'},
     {text: '["a"]'},
@@ -270,21 +273,21 @@ Pon a prueba tu conocimiento de RegEx con preguntas que cubren patrones básicos
   <div className="question">
     ¿Cuál es la salida?
     ```js
-        'banana'.match(/a/g)
+    'banana'.match(/a/g)
     ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    La bandera `g` (global) cambia cómo se comporta `match()`:
-    - Sin `g`: Devuelve la primera coincidencia con los grupos de captura
-    - Con `g`: Devuelve un arreglo de todas las cadenas coincidentes
+    El modificador `g` (global) cambia cómo se comporta `match()`:
+    - Sin `g`: devuelve la primera coincidencia con los grupos de captura
+    - Con `g`: devuelve un array con todas las cadenas coincidentes
 
     En este caso, encuentra todas las ocurrencias de "a" en "banana".
 
     Nota: Si necesitas tanto todas las coincidencias COMO los grupos de captura, usa `matchAll()` o el método `exec()` en un bucle.
 
-    [Aprende más sobre la bandera global](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/global)
+    [Aprende más sobre el modificador global](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/global)
   </div>
   </slot>
 </Challenge>
@@ -306,7 +309,7 @@ Pon a prueba tu conocimiento de RegEx con preguntas que cubren patrones básicos
   <div className="question">
     ¿Qué coincide con este patrón?
     ```js
-        'abc123 def456'.match(/(?<!abc)\d+/g)
+    'abc123 def456'.match(/(?<!abc)\d+/g)
     ```
   </div>
   </slot>
@@ -317,9 +320,9 @@ Pon a prueba tu conocimiento de RegEx con preguntas que cubren patrones básicos
     - ✅ "23" (precedido por "abc1")
     - ✅ "456" (precedido por "def")
 
-    JavaScript soporta aserciones de look-behind en motores modernos. Este ejemplo usa un look-behind de longitud fija: `abc` siempre tiene tres caracteres. El look-behind de longitud variable es el caso más complicado y depende del motor.
+    JavaScript admite aserciones de look-behind en motores modernos. Este ejemplo usa un look-behind de longitud fija: `abc` siempre tiene tres caracteres. El look-behind de longitud variable es el caso más complicado y depende del motor.
 
-    Nota: El soporte de look-behind es relativamente reciente en JavaScript. Consulta [compatibilidad de navegadores](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#browser_compatibility) si necesitas soportar navegadores antiguos.
+    Nota: El soporte de look-behind es relativamente reciente en JavaScript. Consulta la [compatibilidad de navegadores](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#browser_compatibility) si necesitas soportar navegadores antiguos.
   </div>
   </slot>
 </Challenge>
@@ -340,7 +343,7 @@ Pon a prueba tu conocimiento de RegEx con preguntas que cubren patrones básicos
   <div className="question">
     ¿Qué devolverá esto?
     ```js
-        '2029-12-31'.match(/(\d{4})-(\d{2})-(\d{2})/).slice(1)
+    '2029-12-31'.match(/(\d{4})-(\d{2})-(\d{2})/).slice(1)
     ```
   </div>
   </slot>
@@ -352,8 +355,8 @@ Pon a prueba tu conocimiento de RegEx con preguntas que cubren patrones básicos
     3. `(\d{2})` captura el día
 
     `match()` sin la bandera `g` devuelve:
-    - Índice 0: coincidencia completa
-    - Índice 1+: grupos de captura
+    - Índice 0: Coincidencia completa
+    - Índice 1+: Grupos de captura
 
     `slice(1)` es un truco común para obtener solo los grupos de captura.
 
@@ -365,8 +368,8 @@ Pon a prueba tu conocimiento de RegEx con preguntas que cubren patrones básicos
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={9}
-  group="Anticipación"
-  title="Anticipación negativa"
+  group="Lookahead"
+  title="Lookahead negativo"
   options={[
     {text: '["password123"]'},
     {text: '["abc123"]'},
@@ -380,15 +383,15 @@ Pon a prueba tu conocimiento de RegEx con preguntas que cubren patrones básicos
   <div className="question">
     ¿Cuál será el resultado de esto?
     ```js
-        "123aBc".match(/^\d+(?![a-z])/ig)
+    "123aBc".match(/^\d+(?![a-z])/ig)
     ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    El look-ahead negativo `(?![a-z])` asegura que no haya letras minúsculas después de los dígitos. Como la parte "3aBc" tiene una letra minúscula después de los dígitos, su porción no coincide. Así que solo coincide el comienzo "12".
+    El lookahead negativo `(?![a-z])` asegura que no haya letras minúsculas después de los dígitos. Como la parte "3aBc" contiene una letra minúscula después de los dígitos, esa porción no coincide. Por lo tanto, solo coincide el comienzo "12".
 
-    [Aprende más sobre la anticipación negativa](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
+    [Aprende más sobre lookahead negativo](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
   </div>
   </slot>
 </Challenge>
@@ -407,9 +410,9 @@ Pon a prueba tu conocimiento de RegEx con preguntas que cubren patrones básicos
 >
   <slot name="question">
   <div className="question">
-    ¿Qué devuelve?
+    ¿Qué se devuelve?
     ```js
-        'a,b,c'.split(/(?<=,)/)
+    'a,b,c'.split(/(?<=,)/)
     ```
   </div>
   </slot>
@@ -420,9 +423,9 @@ Pon a prueba tu conocimiento de RegEx con preguntas que cubren patrones básicos
     - `b,` (después de la coma)
     - `c` (sin coma después)
 
-    El look-behind no consume la coma, por lo que la coma queda adjunta al segmento anterior en el resultado del split.
+    El look-behind no consume la coma, por lo que la coma queda adherida al segmento anterior en el resultado del split.
 
-    Esto es útil cuando quieres dividir una cadena basándote en lo que la precede **sin perder el(los) carácter(es) de división.**
+    Esto es útil cuando quieres dividir una cadena basándote en lo que está antes **sin perder el(los) carácter(es) de división.**
 
     [Aprende más sobre aserciones look-behind](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
   </div>
@@ -433,7 +436,7 @@ Pon a prueba tu conocimiento de RegEx con preguntas que cubren patrones básicos
   client:visible={{rootMargin: "150px"}}
   index={11}
   group="Errores comunes"
-  title="Escapandocaracteres especiales"
+  title="Escapando caracteres especiales"
   options={[
     {text: '["$100"]'},
     {text: '["100"]'},
@@ -446,7 +449,7 @@ Pon a prueba tu conocimiento de RegEx con preguntas que cubren patrones básicos
   <div className="question">
     ¿Qué coincide?
     ```js
-        '$100'.match(/$\d+/)
+    '$100'.match(/$\d+/)
     ```
   </div>
   </slot>
@@ -458,9 +461,9 @@ Pon a prueba tu conocimiento de RegEx con preguntas que cubren patrones básicos
 
     Caracteres comunes que requieren escape:
     ```js
-        . * + ? ^ $ [ ] \ ( ) { } |
+    . * + ? ^ $ [ ] \ ( ) { } |
     ```
-    Sin escapar, muchos caracteres especiales tienen significados en regex que podrían no ser lo que deseas.
+    Sin escapar, muchos caracteres especiales tienen significados de regex que pueden no ser lo que deseas.
 
     [Aprende más sobre cómo escapar caracteres especiales](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#escaping)
   </div>
@@ -471,7 +474,7 @@ Pon a prueba tu conocimiento de RegEx con preguntas que cubren patrones básicos
   client:visible={{rootMargin: "150px"}}
   index={12}
   group="Look-behind"
-  title="Positive Look-behind"
+  title="Look-behind positivo"
   options={[
     {text: '["$100"]'},
     {text: '["100"]', isAnswer: true},
@@ -483,7 +486,7 @@ Pon a prueba tu conocimiento de RegEx con preguntas que cubren patrones básicos
   <div className="question">
     ¿Qué coincide?
     ```js
-        '$100'.match(/(?<=\$)\d+/)
+    '$100'.match(/(?<=\$)\d+/)
     ```
   </div>
   </slot>
@@ -491,12 +494,12 @@ Pon a prueba tu conocimiento de RegEx con preguntas que cubren patrones básicos
   <div className="explanation">
     El look-behind positivo `(?<=\$)` asegura que los dígitos estén precedidos por un signo de dólar:
     - `(?<=\$)`: Look-behind para el signo de dólar
-    - `\d+`: Coincide uno o más dígitos
+    - `\d+`: Coincide con uno o más dígitos
 
-    Las aserciones de look-behind no consumen caracteres; solo verifican lo que está antes.
-    Esto es útil cuando deseas coincidir algo basándote en lo que lo precede sin incluir esa parte.
+    Las aserciones look-behind no consumen caracteres; solo verifican lo que está antes.
+    Esto es útil cuando quieres coincidir algo basándote en lo que lo precede sin incluir esa parte.
 
-    [Aprende más sobre aserciones de look-behind](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
+    [Aprende más sobre aserciones look-behind](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
   </div>
   </slot>
 </Challenge>
@@ -507,25 +510,29 @@ Pon a prueba tu conocimiento de RegEx con preguntas que cubren patrones básicos
   group="Coincidencia básica"
   title="Cuantificadores perezosos vs codiciosos"
   options={[
+    {text: '["<b>bold</b>"]'},
+    {text: '["bold"]', isAnswer: true},
+    {text: '["<b>", "</b>"]'},
+    {text: '[]'}
   ]}
 >
   <slot name="question">
   <div className="question">
     ¿Qué coincide?
     ```js
-        '<b>bold</b>'.match(/<b>(.*?)<\/b>/).slice(1)
+    '<b>bold</b>'.match(/<b>(.*?)<\/b>/).slice(1)
     ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
     El patrón usa coincidencia perezosa con `*?`:
-    - `<b>`: Coincide con la etiqueta de apertura
+    - `<b>`: Coincide la etiqueta de apertura
     - `(.*?)`: Captura cualquier carácter (perezoso)
-    - `</b>`: Coincide con la etiqueta de cierre
+    - `</b>`: Coincide la etiqueta de cierre
 
-    El `?` después de `*` lo hace perezoso, coincidiendo con la menor cantidad de caracteres posible.
-    Sin `?`, sería codicioso y coincidiría con la mayor cantidad posible.
+    El `?` después de `*` la hace perezosa, coincidiendo la menor cantidad de caracteres posible.
+    Sin `?`, sería codicioso y coincidiría la mayor cantidad posible.
 
     `slice(1)` devuelve solo el grupo capturado.
 
@@ -550,18 +557,18 @@ Pon a prueba tu conocimiento de RegEx con preguntas que cubren patrones básicos
   <div className="question">
     ¿Qué coincide?
     ```js
-        '😀 🙂'.match(/\p{Emoji}/gu)
+    '😀 🙂'.match(/\p{Emoji}/gu)
     ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
     El flag `u` habilita:
-    - Escape de propiedades Unicode (`\p{...}`)
-    - Manejo correcto de pares sustitutos
+    - escapes de propiedades Unicode (`\p{...}`)
+    - manejo correcto de pares sustitutos
 
     Sin `u`, los emoji y otros caracteres Unicode podrían no coincidir correctamente.
-    El patrón `\p{Emoji}` coincide con caracteres que tienen la propiedad Unicode `Emoji`. En esta cadena, eso significa los dos pictogramas emoji.
+    El patrón `\p{Emoji}` coincide con los caracteres que tienen la propiedad Unicode `Emoji`. En esta cadena, eso significa los dos pictogramas emoji.
 
     Nota: los escapes de propiedades Unicode requieren el flag `u`.
 
@@ -573,7 +580,7 @@ Pon a prueba tu conocimiento de RegEx con preguntas que cubren patrones básicos
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={15}
-  group="Mira-al-infierno"
+  group="Mirar-al-infierno"
   title="Validación de Contraseña"
   options={[
     {text: '"sassword123"'},
@@ -584,10 +591,10 @@ Pon a prueba tu conocimiento de RegEx con preguntas que cubren patrones básicos
 >
   <slot name="question">
   <div className="question">
-    Disculpas de antemano! 😈<br />
-    ¿Qué contraseña coincide con este patrón?
+    ¡Disculpas de antemano! 😈<br />
+    ¿Cuál contraseña coincide con este patrón?
     ```js
-        /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/
+    /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/
     ```
   </div>
   </slot>
@@ -602,7 +609,7 @@ Pon a prueba tu conocimiento de RegEx con preguntas que cubren patrones básicos
     - Al menos un carácter especial: `(?=.*[!@#$%^&*])`
     - Longitud mínima de 8: `.{8,}`
 
-    Los look‑ahead son perfectos para validar contraseñas porque pueden comprobar varios criterios sin consumir caracteres.
+    Los look‑ahead son perfectos para la validación de contraseñas porque pueden comprobar varios criterios sin consumir caracteres.
 
     [Aprende más sobre patrones de validación de contraseñas](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
   </div>
@@ -615,5 +622,5 @@ Pon a prueba tu conocimiento de RegEx con preguntas que cubren patrones básicos
 
 Las expresiones regulares pueden ser una bestia de domar, pero son increíblemente poderosas una vez que le agarras el truco (y toda la sintaxis nueva). Sigue practicando y serás un maestro del RegEx en nada de tiempo! 🧙‍♂️
 
-<p class="inset">¿Buscas un descanso después de tanto RegEx?<br />Pftt, recuerda: ¡descanso *después* de las habilidades! <br /><br />¡Visita <a href="../challenges/">mi gimnasio</a> para aplastar más desafíos! 💪</p>
+<p class="inset">¿Buscas un descanso después de tanto RegEx?<br />Pftt, recuerda: ¡descanso *después* de las habilidades! <br /><br />Visita [mi gimnasio](/challenges/) para aplastar más desafíos! 💪</p>
 ````
