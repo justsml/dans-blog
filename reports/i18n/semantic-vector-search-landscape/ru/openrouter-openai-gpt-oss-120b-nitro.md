@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: semantic-vector-search-landscape
+- Locale: ru
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-05-01--semantic-vector-search-landscape/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 26.86
+- Input tokens: 19462
+- Output tokens: 8241
+- Thinking tokens: unknown
+- Cached input tokens: 4352
+- Cache write tokens: 0
+- Estimated cost: $0.002242
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: >-
   Семантический векторный поиск и прочие темы для завоевания друзей и
@@ -376,3 +394,4 @@ _Last verified against public project docs and product pages on May 8, 2026. Tre
 Это не конкурирующие инструменты. Они дополняют друг друга. Хорошо построенная система поиска выбирает подходящий слой для каждой формы запроса — и когда формы запросов перекрываются, запускает несколько слоёв и объединяет результаты.
 
 Команды, которые выпускают качественные функции поиска, понимают весь стек. Те, кто не понимает, берут векторную базу, встраивают всё подряд и удивляются, почему точные поиск иногда возвращает неверную запись.
+````
