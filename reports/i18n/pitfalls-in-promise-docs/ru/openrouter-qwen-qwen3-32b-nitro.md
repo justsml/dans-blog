@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: pitfalls-in-promise-docs
+- Locale: ru
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2017-05-10--pitfalls-in-promise-docs/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 7.88
+- Input tokens: 2911
+- Output tokens: 3338
+- Thinking tokens: unknown
+- Cached input tokens: 512
+- Cache write tokens: 0
+- Estimated cost: $0.001034
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Питфолы в документации Promise
@@ -63,3 +81,4 @@ cover_icon: ../icon_craig-whitehead-433328-unsplash.webp
 > Посмотрите (и поставьте звезду) на сопровождающий проект этой статьи на Github: [Escape From Callback Mountain](https://github.com/justsml/escape-from-callback-mountain)
 
 > Цель проекта: исследование и разработка лучшего функциональных языковых паттернов в JavaScript.
+````
