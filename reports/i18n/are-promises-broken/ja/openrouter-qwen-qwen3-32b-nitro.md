@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: are-promises-broken
+- Locale: ja
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2018-10-06--are-promises-broken/ja/index.mdx
+- Validation: passed
+- Runtime seconds: 73.14
+- Input tokens: 9570
+- Output tokens: 6767
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.002390
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: 破られた約束？
@@ -232,3 +250,4 @@ log(result)
 1. 誰にも読みにくい
 2. git diff が変更履歴を明確に示さない
 3. ネストされた関数の中間状態をデバッグやログ出力するのが困難
+````
