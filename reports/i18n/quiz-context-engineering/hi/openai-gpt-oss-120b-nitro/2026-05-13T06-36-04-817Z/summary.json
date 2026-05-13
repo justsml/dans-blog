@@ -1,0 +1,211 @@
+{
+  "runId": "openai-gpt-oss-120b-nitro@2026-05-13T06-36-04-817Z",
+  "slug": "quiz-context-engineering",
+  "locale": "hi",
+  "model": "openai/gpt-oss-120b:nitro",
+  "modelPath": "openai-gpt-oss-120b-nitro",
+  "createdAt": "2026-05-13T06:36:09.675Z",
+  "sourcePath": "src/content/posts/2026-05-09--quiz-context-engineering/index.mdx",
+  "targetPath": "src/content/posts/2026-05-09--quiz-context-engineering/hi/index.mdx",
+  "candidatePath": "reports/i18n/quiz-context-engineering/hi/openai-gpt-oss-120b-nitro/2026-05-13T06-36-04-817Z/candidate.mdx",
+  "sourceHash": "80bb5fc16b497b3b59ea5d61677bbb1d2c11b1569c5926640320b7a8ce3fe3e7",
+  "outputHash": "89996ed2447d2d311d0d05e10ff57eece0477c41bc386eed894514a90eb622e1",
+  "reasoningEffort": "low",
+  "temperature": 0.3,
+  "maxTokens": 16000,
+  "timeoutMs": 200000,
+  "articleSummary": "The quiz evaluates knowledge of AI system context management, covering context windows, token budgets, retrieval, prompt structure, and common failure modes. It gauges skill levels from basic familiarity to production‑grade expertise, using a supportive, instructional tone that escalates in difficulty. The assessment helps learners identify gaps and directs them toward deeper study of prompt caching and hybrid search.\nTopics: Context windows, Token budgets, Retrieval methods, Prompt structure, Failure modes in production AI systems, Prompt caching, Hybrid search\nAudience: Developers, ML engineers, and product teams building or scaling LLM‑based applications, from novices to seasoned production AI practitioners.",
+  "totalInputTokens": 15071,
+  "totalOutputTokens": 15544,
+  "totalCacheReadTokens": 1536,
+  "totalCacheWriteTokens": 0,
+  "totalDurationMs": 30415,
+  "totalCostUsd": 0.0033856890000000003,
+  "pricingSource": "local-openrouter-estimate",
+  "telemetry": {
+    "model": "openai/gpt-oss-120b:nitro",
+    "chunkSize": "quiz",
+    "totalChunks": 14,
+    "totalInputTokens": 15071,
+    "totalOutputTokens": 15544,
+    "totalCacheReadTokens": 1536,
+    "totalCacheWriteTokens": 0,
+    "totalDurationMs": 30415,
+    "totalCostUsd": 0.0033856890000000003,
+    "pricingSource": "local-openrouter-estimate",
+    "chunks": [
+      {
+        "index": -1,
+        "label": "quiz-summary",
+        "inputTokens": 368,
+        "outputTokens": 190,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 410,
+        "costUsd": 0.000048552
+      },
+      {
+        "index": -2,
+        "label": "intro",
+        "text": "import Challenge from '../../../components/QuizUI/Challenge';\nimport QuizUI from '../../../components/QuizUI/QuizUI';\n\n<p class=\"inset\">प्रॉम्प्ट इंजीनियरिंग को स्लोगन मिलते हैं। कॉन्टेक्स्ट इंजीनियरिंग को पेजर मिलता है। आप AI सिस्टम के उस हिस्से को कितनी अच्छी तरह जानते हैं जो वास्तव में प्रोडक्ट में जाता है?</p>\n\nयह क्विज़ कॉन्टेक्स्ट विंडो, टोकन बजट, रिट्रीवल, प्रॉम्प्ट संरचना, और उन फेल्योर मोड्स को कवर करता है जो साफ़ डेमो को गड़बड़ उत्पाद में बदल देते हैं। यह धीरे‑धीरे शुरू होता है। लेकिन वहीं नहीं रुकता।\n\nसबूत लाएँ।",
+        "inputTokens": 1026,
+        "outputTokens": 216,
+        "cacheReadTokens": 256,
+        "cacheWriteTokens": 0,
+        "durationMs": 372,
+        "costUsd": 0.00007889400000000001
+      },
+      {
+        "index": 0,
+        "label": "Context Window Basics",
+        "inputTokens": 827,
+        "outputTokens": 806,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 489,
+        "costUsd": 0.000177333
+      },
+      {
+        "index": 7,
+        "label": "Conversation History Management",
+        "inputTokens": 924,
+        "outputTokens": 926,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 847,
+        "costUsd": 0.000202716
+      },
+      {
+        "index": 13,
+        "label": "Context Engineering vs. Fine-Tuning",
+        "inputTokens": 996,
+        "outputTokens": 1632,
+        "cacheReadTokens": 384,
+        "cacheWriteTokens": 0,
+        "durationMs": 881,
+        "costUsd": 0.000332604
+      },
+      {
+        "index": 10,
+        "label": "Temperature and Determinism",
+        "inputTokens": 888,
+        "outputTokens": 1139,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 1092,
+        "costUsd": 0.00023965200000000003
+      },
+      {
+        "index": 1,
+        "label": "Token Estimation",
+        "inputTokens": 851,
+        "outputTokens": 843,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 2240,
+        "costUsd": 0.00018492900000000002
+      },
+      {
+        "index": 2,
+        "label": "Role of the System Prompt",
+        "inputTokens": 883,
+        "outputTokens": 921,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 2331,
+        "costUsd": 0.000200217
+      },
+      {
+        "index": 9,
+        "label": "XML Tags for Structure",
+        "inputTokens": 926,
+        "outputTokens": 988,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 2367,
+        "costUsd": 0.00021395399999999998
+      },
+      {
+        "index": 3,
+        "label": "Lost in the Middle",
+        "inputTokens": 879,
+        "outputTokens": 965,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 2475,
+        "costUsd": 0.00020798099999999999
+      },
+      {
+        "index": 12,
+        "label": "Grounding vs. Hallucination",
+        "inputTokens": 918,
+        "outputTokens": 995,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 2502,
+        "costUsd": 0.000214902
+      },
+      {
+        "index": 8,
+        "label": "Few-Shot Examples",
+        "inputTokens": 886,
+        "outputTokens": 1017,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 2560,
+        "costUsd": 0.00021761399999999998
+      },
+      {
+        "index": 5,
+        "label": "Hybrid Search",
+        "inputTokens": 874,
+        "outputTokens": 1019,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 2577,
+        "costUsd": 0.00021750599999999996
+      },
+      {
+        "index": 4,
+        "label": "Chunking Strategy",
+        "inputTokens": 872,
+        "outputTokens": 1044,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 2612,
+        "costUsd": 0.000221928
+      },
+      {
+        "index": 6,
+        "label": "Context Budget",
+        "inputTokens": 914,
+        "outputTokens": 1203,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 2978,
+        "costUsd": 0.000252186
+      },
+      {
+        "index": 11,
+        "label": "Prompt Caching",
+        "inputTokens": 938,
+        "outputTokens": 1351,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 3287,
+        "costUsd": 0.00027976199999999997
+      },
+      {
+        "index": -3,
+        "label": "outro",
+        "text": "---\n---\n\nआपका परिणाम क्या है?\n\n- **13–14**: आप प्रोडक्शन AI सिस्टम बना रहे हैं, सिर्फ डेमो नहीं। बहुत कम लोग ऐसा करते हैं।\n- **9–12**: ठोस प्रैक्टिशनर। आप टूल्स जानते हैं; किनारे अभी भी धुंधले हैं।\n- **5–8**: आपने LLM का बहुत उपयोग किया है लेकिन कॉन्टेक्स्ट मैनेजमेंट पर गहराई से नहीं सोचा। प्रॉम्प्ट कैशिंग और हाइब्रिड सर्च पढ़ें — ये लागत के बारे में आपका सोच बदल देंगे।\n- **0–4**: अच्छी खबर: इस क्विज़ का हर हिस्सा सीखने योग्य है और तुरंत लागू किया जा सकता है। “मिडल में खोया” सवाल को समझना आपके अगले RAG डिप्लॉयमेंट से पहले ही जरूरी है।\n\nकॉन्टेक्स्ट इंजीनियरिंग वह अनुशासन है जिसमें आप जानबूझकर तय करते हैं कि कौन‑सी जानकारी विंडो में रखनी है, कहाँ रखनी है, और उसे कैसे संरचित करना है। मॉडल आपके सिस्टम का सबसे कम नियंत्रित भाग है। उसके आसपास की सभी चीज़ें आपके नियंत्रण में हैं।",
+        "inputTokens": 1101,
+        "outputTokens": 289,
+        "cacheReadTokens": 896,
+        "cacheWriteTokens": 0,
+        "durationMs": 395,
+        "costUsd": 0.00009495899999999998
+      }
+    ]
+  }
+}

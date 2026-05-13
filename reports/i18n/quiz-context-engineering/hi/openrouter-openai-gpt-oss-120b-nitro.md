@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-context-engineering
+- Locale: hi
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-05-09--quiz-context-engineering/hi/index.mdx
+- Validation: passed
+- Runtime seconds: 30.41
+- Input tokens: 15071
+- Output tokens: 15544
+- Thinking tokens: unknown
+- Cached input tokens: 1536
+- Cache write tokens: 0
+- Estimated cost: $0.003386
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: 'क्विज़: 14 कॉन्टेक्स्ट इंजीनियरिंग प्रश्न'
 subTitle: प्रॉम्प्ट इंजीनियरिंग आपका काम है। कॉन्टेक्स्ट इंजीनियरिंग आपका डिलीवरी है।
@@ -468,3 +486,4 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 - **0–4**: अच्छी खबर: इस क्विज़ का हर हिस्सा सीखने योग्य है और तुरंत लागू किया जा सकता है। “मिडल में खोया” सवाल को समझना आपके अगले RAG डिप्लॉयमेंट से पहले ही जरूरी है।
 
 कॉन्टेक्स्ट इंजीनियरिंग वह अनुशासन है जिसमें आप जानबूझकर तय करते हैं कि कौन‑सी जानकारी विंडो में रखनी है, कहाँ रखनी है, और उसे कैसे संरचित करना है। मॉडल आपके सिस्टम का सबसे कम नियंत्रित भाग है। उसके आसपास की सभी चीज़ें आपके नियंत्रण में हैं।
+````
