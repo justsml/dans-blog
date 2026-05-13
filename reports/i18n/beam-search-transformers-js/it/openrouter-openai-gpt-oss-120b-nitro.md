@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: beam-search-transformers-js
+- Locale: it
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-04-16--beam-search-transformers-js/it/index.mdx
+- Validation: deferred
+- Runtime seconds: 12.71
+- Input tokens: 12897
+- Output tokens: 3291
+- Thinking tokens: unknown
+- Cached input tokens: 3072
+- Cache write tokens: 0
+- Estimated cost: $0.001095
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Implementare Beam Search in Transformers.js
 subTitle: >-
@@ -184,3 +202,4 @@ Se stai facendo lavoro seq2seq in JavaScript e vuoi un beam search corretto oggi
 ¹ Sì, lo so: `num_beams=1` è semplicemente ricerca greedy. Il caso degenerato è ben definito.  
 
 ² I modelli solo encoder (BERT, ecc.) non generano token, quindi nulla di questo si applica a loro. Sono solo vibrazioni.
+````
