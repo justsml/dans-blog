@@ -1,0 +1,73 @@
+{
+  "selectedCommit": "30b0bf3c0b05c35cf28669009416bd5470a9da0f",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 8,
+    "mdxPreservation": 10
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "मूल लाभ अस्वीकार्य हैं",
+      "replacement": "मूल लाभ निर्विवाद हैं",
+      "reason": "The translation 'अस्वीकार्य' means 'unacceptable', which is the opposite of 'undeniable'. 'निर्विवाद' correctly conveys that the benefits cannot be denied."
+    },
+    {
+      "priority": "medium",
+      "match": "आपकी धन्यवाद देगी",
+      "replacement": "आपका धन्यवाद करेगी",
+      "reason": "Grammatical error: 'फ़ाइल' is feminine but the phrasing for 'thank you' should be 'आपका धन्यवाद करेगी' or 'आपको धन्यवाद देगी'."
+    }
+  ],
+  "rationale": "Candidate 30b0bf3c is the strongest overall, capturing Dan's conversational yet technical tone well. It avoids the awkward phrasing found in the 'current' version (which had issues like 'क्या आपने पुराने दिनों की याद नहीं है'). However, it contains a critical mistranslation of 'undeniable' as 'unacceptable' (अस्वीकार्य), which must be fixed to preserve the author's meaning.",
+  "slug": "llm-connection-strings",
+  "locale": "hi",
+  "candidateCommits": [
+    "30b0bf3c0b05c35cf28669009416bd5470a9da0f",
+    "9de27a1674d14176600c27844f0f84c4efac5931",
+    "7ddc2dcdabf07e4e1878f7c92422ae362ffd78bd",
+    "c1aa7ed3bd9b8fbe5d0f5a117667b2ce7610fd6b",
+    "960723bb1f42fa2d9b6a3ddad19a603ac2a8eb53",
+    "0b57411a672a44f5aa575932f7b3dcb19dfdfbf8",
+    "d5420a149f3a6eb7e398c26c7a0d61f660deb17d"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "केलगबी",
+      "replacement": "लगभग",
+      "reason": "Typo in the word 'लगभग' (approximately).",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "मूल लाभ अस्वीकार्य हैं",
+      "replacement": "मूल लाभ निर्विवाद हैं",
+      "reason": "The translation 'अस्वीकार्य' means 'unacceptable', which is the opposite of 'undeniable'. 'निर्विवाद' correctly conveys that the benefits cannot be denied.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "आपकी धन्यवाद देगी",
+      "replacement": "आपका धन्यवाद करेगी",
+      "reason": "Grammatical error: 'फ़ाइल' is feminine but the phrasing for 'thank you' should be 'आपका धन्यवाद करेगी' or 'आपको धन्यवाद देगी'.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug llm-connection-strings --locale hi --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug llm-connection-strings --locale hi --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug llm-connection-strings --locale hi --skip-global\n207 |     ...targetContents.matchAll(/=[\"']\\.\\/(?!\\.)[^\"']+\\.(?:avif|gif|jpe?g|png|svg|webp)[\"']/g),\n208 |   ];\n209 | \n210 |   if (nestedAssetReferences.length === 0) return;\n211 | \n212 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2026-01-30--llm-connection-strings/hi/index.mdx uses ./ asset paths inside a locale folder. Use ../ for inherited post assets.\n      at assertNestedAssetPaths (/Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:212:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}
