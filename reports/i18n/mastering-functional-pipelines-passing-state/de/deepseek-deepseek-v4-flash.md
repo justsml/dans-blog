@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: mastering-functional-pipelines-passing-state
+- Locale: de
+- Model: deepseek/deepseek-v4-flash
+- Target: src/content/posts/2023-08-13--mastering-functional-pipelines-passing-state/de/index.mdx
+- Validation: deferred
+- Runtime seconds: 129.62
+- Input tokens: 9609
+- Output tokens: 9682
+- Thinking tokens: unknown
+- Cached input tokens: 1152
+- Cache write tokens: 0
+- Estimated cost: $0.003898
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: 'Pipeline-Meister: Zustandsweitergabe'
@@ -200,3 +218,4 @@ Wir werden das Auslagern von Zustand und die Erweiterung der Funktionalität in 
 #### Weiterführende Lektüre
 
 - [Ähnliche Herausforderungen gibt es in der komponentenbasierten React-Welt.](https://kyleshevlin.com/quit-your-yapping)
+````
