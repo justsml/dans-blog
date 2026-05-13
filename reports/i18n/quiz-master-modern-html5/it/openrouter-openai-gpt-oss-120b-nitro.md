@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-master-modern-html5
+- Locale: it
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2024-11-01--quiz-master-modern-html5/it/index.mdx
+- Validation: deferred
+- Runtime seconds: 19.21
+- Input tokens: 12647
+- Output tokens: 6233
+- Thinking tokens: unknown
+- Cached input tokens: 4480
+- Cache write tokens: 0
+- Estimated cost: $0.001615
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: 'Quiz: L''HTML è ancora rilevante nel tuo CV?'
@@ -443,3 +461,4 @@ Allora, come è andata? Sei entusiasta di usare più elementi HTML semantici nel
 Oppure sei rassegnato a `<div>` e `<span>` per sempre? 😅
 
 Fammi sapere nei commenti qui sotto! 👇
+````
