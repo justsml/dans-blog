@@ -1,18 +1,7 @@
-# I18n Judge Report: mastra-mcp-tool-integrations (it)
+# Translation Judge
 
-## Candidates
-- **Qwen 3.6 Plus (7f8f14e)**: Strong natural flow, good technical terminology.
-- **DeepSeek V4 Flash (3fdb695)**: Solid, but slightly more formal/dry. Corrected one social image path.
-- **MiniMax M2.7 (5aa5331)**: Good, but has some "translationese" (e.g., "deal con i loro rate limit").
+- Selected candidate: 3fdb695ce9f020ac8f3c29728b5e06cb565f5d89
+- Selected model: openrouter/deepseek/deepseek-v4-flash
+- Judge model: openrouter/google/gemini-3-flash-preview
 
-## Decision: Qwen 3.6 Plus (7f8f14e)
-
-Qwen captured Dan's direct, slightly punchy style best while maintaining technical accuracy. It used natural Italian developer parlance (e.g., "wrapper API", "endpoint", "rate limit") without sounding forced. 
-
-### Polishing adjustments made to Qwen:
-- Fixed `social_image` path to include `../` prefix to match other assets and maintain consistency in the localized folder.
-- Minor punctuation and flow tweaks to keep the "Dan Levy" voice sharp.
-
-## Metadata
-- **Judge Model**: openrouter/google/gemini-3-flash-preview (via OpenCode)
-- **Selection**: 7f8f14e39a9280de4cc5b3d52f70ad9d6aafc7a6
+The current translation already incorporates the high and medium priority fixes suggested in the previous judge report (changing 'chiami giorno' to 'finisce lì' and fixing the 'Udente' typo). The translation is technically accurate, maintains the MDX structure, and captures Dan's direct style well.

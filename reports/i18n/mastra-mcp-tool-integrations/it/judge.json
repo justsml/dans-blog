@@ -1,0 +1,47 @@
+{
+  "selectedCommit": "3fdb695ce9f020ac8f3c29728b5e06cb565f5d89",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The current translation already incorporates the high and medium priority fixes suggested in the previous judge report (changing 'chiami giorno' to 'finisce lì' and fixing the 'Udente' typo). The translation is technically accurate, maintains the MDX structure, and captures Dan's direct style well.",
+  "slug": "mastra-mcp-tool-integrations",
+  "locale": "it",
+  "candidateCommits": [
+    "7f8f14e39a9280de4cc5b3d52f70ad9d6aafc7a6",
+    "3fdb695ce9f020ac8f3c29728b5e06cb565f5d89",
+    "5aa5331ed68e9d1196fa3ebf76652a94746e1abd"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "e la chiami giorno",
+      "replacement": "e finisce lì",
+      "reason": "The phrase 'call it a day' was translated literally as 'chiami giorno', which is incorrect in Italian. 'E finisce lì' or 'e via così' is more appropriate.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "Autenticazione Per-Udente",
+      "replacement": "Autenticazione Per-Utente",
+      "reason": "Typo: 'Udente' (hearing person) instead of 'Utente' (user).",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug mastra-mcp-tool-integrations --locale it --skip-global",
+    "output": ""
+  }
+}
