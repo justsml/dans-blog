@@ -1,0 +1,44 @@
+{
+  "index": 3,
+  "attempt": 1,
+  "originalTitle": "Cross-Frame instanceof",
+  "translatedTitle": "instanceof entre cadres",
+  "translation": {
+    "title": "instanceof entre cadres",
+    "group": "Astuces de vérification de type",
+    "options": [
+      {
+        "text": "Toujours vrai"
+      },
+      {
+        "text": "Toujours faux"
+      },
+      {
+        "text": "Peut être faux entre cadres"
+      },
+      {
+        "text": "Lance une erreur"
+      }
+    ],
+    "questionProse": [
+      "Que se passe-t-il avec `instanceof Error` entre les iframes ?"
+    ],
+    "explanationProse": [
+      "`instanceof` peut renvoyer `false` entre différents contextes d'exécution (iframes, workers) car chaque contexte possède son propre constructeur `Error`. Utilisez `Object.prototype.toString.call(obj) === '[object Error]'` pour une détection fiable des erreurs entre contextes."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"instanceof entre cadres\",\n  \"group\": \"Astuces de vérification de type\",\n  \"options\": [\n    {\n      \"text\": \"Toujours vrai\"\n    },\n    {\n      \"text\": \"Toujours faux\"\n    },\n    {\n      \"text\": \"Peut être faux entre cadres\"\n    },\n    {\n      \"text\": \"Lance une erreur\"\n    }\n  ],\n  \"questionProse\": [\n    \"Que se passe-t-il avec `instanceof Error` entre les iframes ?\"\n  ],\n  \"explanationProse\": [\n    \"`instanceof` peut renvoyer `false` entre différents contextes d'exécution (iframes, workers) car chaque contexte possède son propre constructeur `Error`. Utilisez `Object.prototype.toString.call(obj) === '[object Error]'` pour une détection fiable des erreurs entre contextes.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 782,
+    "outputTokens": 486,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 1590
+  },
+  "cost": {
+    "inputUsd": 0.000030498,
+    "outputUsd": 0.00008748,
+    "totalUsd": 0.000117978,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

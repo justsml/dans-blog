@@ -22,8 +22,8 @@ cover_credit: >-
   Slimene</a> on <a
   href="https://unsplash.com/photos/a-tall-white-building-with-balconies-on-top-of-it-c09hZthLq_s?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
 ---
-import Challenge from '../../../../../components/QuizUI/Challenge';
-import QuizUI from '../../../../../components/QuizUI/QuizUI';
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
 
 
 ### Vous pensez maîtriser les erreurs JavaScript sur le bout des doigts ?
@@ -50,8 +50,8 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   <div className="question">
     Que renvoie `JSON.stringify(error)` ?
     ```js
-    const error = new Error('Oops');
-    console.log(JSON.stringify(error));
+        const error = new Error('Oops');
+        console.log(JSON.stringify(error));
     ```
   </div>
   </slot>
@@ -78,9 +78,9 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   <div className="question">
     Quelle est la différence entre ces deux ?
     ```js
-    const err = new Error('Test');
-    console.log(err);
-    console.log(JSON.stringify(err));
+        const err = new Error('Test');
+        console.log(err);
+        console.log(JSON.stringify(err));
     ```
   </div>
   </slot>
@@ -107,12 +107,12 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   <div className="question">
     Quels sont les résultats de ces vérifications ?
     ```js
-    class CustomError extends Error {}
-    const err = new CustomError('test');
+        class CustomError extends Error {}
+        const err = new CustomError('test');
     
-    console.log(err instanceof CustomError);
-    console.log(err instanceof Error);
-    console.log(err instanceof Object);
+        console.log(err instanceof CustomError);
+        console.log(err instanceof Error);
+        console.log(err instanceof Object);
     ```
   </div>
   </slot>
@@ -139,10 +139,10 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   <div className="question">
     Que se passe-t-il avec `instanceof Error` entre les iframes ?
     ```js
-    // In iframe:
-    const iframeError = new Error('test');
-    // In parent window:
-    console.log(iframeError instanceof Error);
+        // In iframe:
+        const iframeError = new Error('test');
+        // In parent window:
+        console.log(iframeError instanceof Error);
     ```
   </div>
   </slot>
@@ -169,12 +169,12 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   <div className="question">
     Que se passe-t-il lorsqu’on lance une chaîne ?
     ```js
-    try {
-      throw "Oops!";
-    } catch (e) {
-      console.log(e instanceof Error);
-      console.log(typeof e);
-    }
+        try {
+          throw "Oops!";
+        } catch (e) {
+          console.log(e instanceof Error);
+          console.log(typeof e);
+        }
     ```
   </div>
   </slot>
@@ -201,14 +201,14 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   <div className="question">
     Quelle est la valeur de `err.name` ?
     ```js
-    class CustomError extends Error {
-      constructor(message) {
-        super(message);
-        this.name = this.constructor.name;
-      }
-    }
-    const err = new CustomError('test');
-    console.log(err.name);
+        class CustomError extends Error {
+          constructor(message) {
+            super(message);
+            this.name = this.constructor.name;
+          }
+        }
+        const err = new CustomError('test');
+        console.log(err.name);
     ```
   </div>
   </slot>
@@ -235,11 +235,11 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   <div className="question">
     Quel est le résultat sans définir `name` ?
     ```js
-    class MyError extends Error {
-      // No constructor or name setting
-    }
-    const err = new MyError('test');
-    console.log(err.name);
+        class MyError extends Error {
+          // No constructor or name setting
+        }
+        const err = new MyError('test');
+        console.log(err.name);
     ```
   </div>
   </slot>
@@ -266,11 +266,11 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   <div className="question">
     Que renvoie `wrapper.cause.message` ?
     ```js
-    const original = new Error('Original error');
-    const wrapper = new Error('Wrapper', 
-      { cause: original }
-    );
-    console.log(wrapper.cause.message);
+        const original = new Error('Original error');
+        const wrapper = new Error('Wrapper', 
+          { cause: original }
+        );
+        console.log(wrapper.cause.message);
     ```
   </div>
   </slot>
@@ -297,12 +297,12 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   <div className="question">
     Que fait `Error.captureStackTrace` ?
     ```js
-    function createError(msg) {
-      const err = new Error(msg);
-      Error.captureStackTrace(err, createError);
-      return err;
-    }
-    const error = createError('test');
+        function createError(msg) {
+          const err = new Error(msg);
+          Error.captureStackTrace(err, createError);
+          return err;
+        }
+        const error = createError('test');
     ```
   </div>
   </slot>
@@ -329,18 +329,18 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   <div className="question">
     Quel est le message d’erreur ?
     ```js
-    function validate(value) {
-      if (!value) {
-        throw new Error(
-          `Value ${value} is invalid`
-        );
-      }
-    }
-    try {
-      validate(undefined);
-    } catch (e) {
-      console.log(e.message);
-    }
+        function validate(value) {
+          if (!value) {
+            throw new Error(
+              `Value ${value} is invalid`
+            );
+          }
+        }
+        try {
+          validate(undefined);
+        } catch (e) {
+          console.log(e.message);
+        }
     ```
   </div>
   </slot>
@@ -367,11 +367,11 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   <div className="question">
     Qu'est‑ce qui est envoyé au client ?
     ```js
-    // Express.js route
-    app.get('/api/data', (req, res) => {
-      const error = new Error('Database failed');
-      res.json({ error });
-    });
+        // Express.js route
+        app.get('/api/data', (req, res) => {
+          const error = new Error('Database failed');
+          res.json({ error });
+        });
     ```
   </div>
   </slot>
@@ -398,15 +398,15 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   <div className="question">
     Que peut accepter `Promise.reject()` ?
     ```js
-    Promise.reject('string').catch(e => 
-      console.log(typeof e)
-    );
-    Promise.reject({code: 404}).catch(e => 
-      console.log(e.code)
-    );
-    Promise.reject(42).catch(e => 
-      console.log(e)
-    );
+        Promise.reject('string').catch(e => 
+          console.log(typeof e)
+        );
+        Promise.reject({code: 404}).catch(e => 
+          console.log(e.code)
+        );
+        Promise.reject(42).catch(e => 
+          console.log(e)
+        );
     ```
   </div>
   </slot>
@@ -433,13 +433,13 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   <div className="question">
     À quel point `error.code` et `error.errno` sont-ils fiables ?
     ```js
-    const fs = require('fs');
-    fs.readFile('missing.txt', (err, data) => {
-      if (err) {
-        console.log(err.code);    // 'ENOENT'
-        console.log(err.errno);   // -2
-      }
-    });
+        const fs = require('fs');
+        fs.readFile('missing.txt', (err, data) => {
+          if (err) {
+            console.log(err.code);    // 'ENOENT'
+            console.log(err.errno);   // -2
+          }
+        });
     ```
   </div>
   </slot>
@@ -466,16 +466,16 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   <div className="question">
     Que renvoient ces vérifications ?
     ```js
-    const fakeError = {
-      name: 'Error',
-      message: 'Fake error',
-      stack: 'fake stack'
-    };
+        const fakeError = {
+          name: 'Error',
+          message: 'Fake error',
+          stack: 'fake stack'
+        };
     
-    console.log(fakeError instanceof Error);
-    console.log(Object.prototype.toString.call(
-      fakeError
-    ) === '[object Error]');
+        console.log(fakeError instanceof Error);
+        console.log(Object.prototype.toString.call(
+          fakeError
+        ) === '[object Error]');
     ```
   </div>
   </slot>

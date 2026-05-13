@@ -1,0 +1,44 @@
+{
+  "index": 0,
+  "attempt": 1,
+  "originalTitle": "The Empty Object Mystery",
+  "translatedTitle": "Le Mystèrede l'Objet Vide",
+  "translation": {
+    "title": "Le Mystèrede l'Objet Vide",
+    "group": "Surprises de Sérialisation",
+    "options": [
+      {
+        "text": "{\"message\":\"Oops\",\"name\":\"Error\"}"
+      },
+      {
+        "text": "{}"
+      },
+      {
+        "text": "{\"error\":\"Oops\"}"
+      },
+      {
+        "text": "null"
+      }
+    ],
+    "questionProse": [
+      "Que renvoie `JSON.stringify(error)` ?"
+    ],
+    "explanationProse": [
+      "Les objets Error possèdent des propriétés non‑énumérables (`message`, `name`, `stack`), donc `JSON.stringify()` renvoie `{}`. C’est un piège fréquent lorsqu’on envoie des erreurs dans les réponses d’API. Utilisez `JSON.stringify(error, Object.getOwnPropertyNames(error))` ou créez un objet simple à la place."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Le Mystèrede l'Objet Vide\",\n  \"group\": \"Surprises de Sérialisation\",\n  \"options\": [\n    {\n      \"text\": \"{\\\"message\\\":\\\"Oops\\\",\\\"name\\\":\\\"Error\\\"}\"\n    },\n    {\n      \"text\": \"{}\"\n    },\n    {\n      \"text\": \"{\\\"error\\\":\\\"Oops\\\"}\"\n    },\n    {\n      \"text\": \"null\"\n    }\n  ],\n  \"questionProse\": [\n    \"Que renvoie `JSON.stringify(error)` ?\"\n  ],\n  \"explanationProse\": [\n    \"Les objets Error possèdent des propriétés non‑énumérables (`message`, `name`, `stack`), donc `JSON.stringify()` renvoie `{}`. C’est un piège fréquent lorsqu’on envoie des erreurs dans les réponses d’API. Utilisez `JSON.stringify(error, Object.getOwnPropertyNames(error))` ou créez un objet simple à la place.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 789,
+    "outputTokens": 456,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 397
+  },
+  "cost": {
+    "inputUsd": 0.000030771,
+    "outputUsd": 0.00008208,
+    "totalUsd": 0.000112851,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

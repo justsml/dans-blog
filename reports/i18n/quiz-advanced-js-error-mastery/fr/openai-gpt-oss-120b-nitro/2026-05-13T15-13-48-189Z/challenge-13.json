@@ -1,0 +1,44 @@
+{
+  "index": 12,
+  "attempt": 1,
+  "originalTitle": "Non-Standard Properties",
+  "translatedTitle": "Propriétés non standard",
+  "translation": {
+    "title": "Propriétés non standard",
+    "group": "Propriétés d’erreur",
+    "options": [
+      {
+        "text": "Toujours disponible"
+      },
+      {
+        "text": "Peut ne pas exister dans tous les environnements"
+      },
+      {
+        "text": "Uniquement dans Node.js"
+      },
+      {
+        "text": "Obsolète et supprimé"
+      }
+    ],
+    "questionProse": [
+      "À quel point `error.code` et `error.errno` sont-ils fiables ?"
+    ],
+    "explanationProse": [
+      "Des propriétés comme `code` et `errno` sont spécifiques à l'environnement (Node.js dans ce cas) et ne font pas partie de l'objet Error standard. Les erreurs du navigateur n'auront pas ces propriétés. Vérifiez toujours leur existence : `if (err.code === 'ENOENT')` plutôt que de supposer qu'elles existent."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Propriétés non standard\",\n  \"group\": \"Propriétés d’erreur\",\n  \"options\": [\n    {\n      \"text\": \"Toujours disponible\"\n    },\n    {\n      \"text\": \"Peut ne pas exister dans tous les environnements\"\n    },\n    {\n      \"text\": \"Uniquement dans Node.js\"\n    },\n    {\n      \"text\": \"Obsolète et supprimé\"\n    }\n  ],\n  \"questionProse\": [\n    \"À quel point `error.code` et `error.errno` sont-ils fiables ?\"\n  ],\n  \"explanationProse\": [\n    \"Des propriétés comme `code` et `errno` sont spécifiques à l'environnement (Node.js dans ce cas) et ne font pas partie de l'objet Error standard. Les erreurs du navigateur n'auront pas ces propriétés. Vérifiez toujours leur existence : `if (err.code === 'ENOENT')` plutôt que de supposer qu'elles existent.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 792,
+    "outputTokens": 535,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 458
+  },
+  "cost": {
+    "inputUsd": 0.000030888,
+    "outputUsd": 0.0000963,
+    "totalUsd": 0.000127188,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "index": 6,
+  "attempt": 1,
+  "originalTitle": "Constructor Name Gotcha",
+  "translatedTitle": "Piège du nom du constructeur",
+  "translation": {
+    "title": "Piège du nom du constructeur",
+    "group": "Erreurs personnalisées",
+    "options": [
+      {
+        "text": "\"MyError\""
+      },
+      {
+        "text": "\"Error\""
+      },
+      {
+        "text": "undefined"
+      },
+      {
+        "text": "TypeError"
+      }
+    ],
+    "questionProse": [
+      "Quel est le résultat sans définir `name` ?"
+    ],
+    "explanationProse": [
+      "Sans définir explicitement `this.name`, l’erreur hérite de la propriété `name` par défaut de la classe `Error`, qui est `\"Error\"`. C’est pourquoi les classes d’erreur personnalisées doivent toujours définir `this.name = this.constructor.name` dans leur constructeur."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Piège du nom du constructeur\",\n  \"group\": \"Erreurs personnalisées\",\n  \"options\": [\n    {\n      \"text\": \"\\\"MyError\\\"\"\n    },\n    {\n      \"text\": \"\\\"Error\\\"\"\n    },\n    {\n      \"text\": \"undefined\"\n    },\n    {\n      \"text\": \"TypeError\"\n    }\n  ],\n  \"questionProse\": [\n    \"Quel est le résultat sans définir `name` ?\"\n  ],\n  \"explanationProse\": [\n    \"Sans définir explicitement `this.name`, l’erreur hérite de la propriété `name` par défaut de la classe `Error`, qui est `\\\"Error\\\"`. C’est pourquoi les classes d’erreur personnalisées doivent toujours définir `this.name = this.constructor.name` dans leur constructeur.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 773,
+    "outputTokens": 387,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1238
+  },
+  "cost": {
+    "inputUsd": 0.000030147,
+    "outputUsd": 0.00006966,
+    "totalUsd": 0.00009980699999999999,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "index": 13,
+  "attempt": 1,
+  "originalTitle": "Object vs Error Detection",
+  "translatedTitle": "Objet vs Détection d'erreur",
+  "translation": {
+    "title": "Objet vs Détection d'erreur",
+    "group": "Limites d'erreur",
+    "options": [
+      {
+        "text": "true, true"
+      },
+      {
+        "text": "false, false"
+      },
+      {
+        "text": "true, false"
+      },
+      {
+        "text": "false, true"
+      }
+    ],
+    "questionProse": [
+      "Que renvoient ces vérifications ?"
+    ],
+    "explanationProse": [
+      "`instanceof Error` renvoie `false` parce que l'objet n'a pas été créé par le constructeur Error. `Object.prototype.toString.call()` renvoie également `false` (il renvoie `'[object Object]'`) parce qu'il vérifie le slot interne `[[Class]]`. Les deux méthodes identifient correctement cet objet comme une fausse erreur."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Objet vs Détection d'erreur\",\n  \"group\": \"Limites d'erreur\",\n  \"options\": [\n    {\n      \"text\": \"true, true\"\n    },\n    {\n      \"text\": \"false, false\"\n    },\n    {\n      \"text\": \"true, false\"\n    },\n    {\n      \"text\": \"false, true\"\n    }\n  ],\n  \"questionProse\": [\n    \"Que renvoient ces vérifications ?\"\n  ],\n  \"explanationProse\": [\n    \"`instanceof Error` renvoie `false` parce que l'objet n'a pas été créé par le constructeur Error. `Object.prototype.toString.call()` renvoie également `false` (il renvoie `'[object Object]'`) parce qu'il vérifie le slot interne `[[Class]]`. Les deux méthodes identifient correctement cet objet comme une fausse erreur.\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 786,
+    "outputTokens": 481,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1655
+  },
+  "cost": {
+    "inputUsd": 0.000030654,
+    "outputUsd": 0.00008657999999999999,
+    "totalUsd": 0.000117234,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
