@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: linux-system-benchmark-scripts
+- Locale: it
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2017-05-01--linux-system-benchmark-scripts/it/index.mdx
+- Validation: deferred
+- Runtime seconds: 6.91
+- Input tokens: 2431
+- Output tokens: 2824
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.000872
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Script di Benchmarking per Server Linux
@@ -153,3 +171,4 @@ benchDisk
 1. Sistema: iotop
 1. Per comando: dtrace/ltrace/strace
 -->
+````
