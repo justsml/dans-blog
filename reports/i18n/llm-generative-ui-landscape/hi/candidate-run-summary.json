@@ -1,34 +1,36 @@
 {
-  "runId": "2026-05-13T17-21-39-556Z",
-  "runStatus": "interrupted",
+  "runId": "2026-05-13T18-15-58-238Z",
+  "runStatus": "running",
   "slug": "llm-generative-ui-landscape",
   "locale": "hi",
-  "startedAt": "2026-05-13T17:21:39.556Z",
-  "updatedAt": "2026-05-13T17:30:55.613Z",
+  "startedAt": "2026-05-13T18:15:58.238Z",
+  "updatedAt": "2026-05-13T18:19:58.378Z",
   "modelsRequested": [
     "openrouter/openai/gpt-oss-120b:nitro",
     "openrouter/qwen/qwen3-32b:nitro",
     "deepseek/deepseek-v4-flash",
-    "qwen/qwen3.6-plus"
+    "qwen/qwen3.6-plus",
+    "qwen/qwen3.6-35b-a3b",
+    "qwen/qwen3.5-9b"
   ],
-  "attemptedModels": 2,
-  "skippedModels": 1,
+  "attemptedModels": 1,
+  "skippedModels": 2,
   "rejectedModels": 1,
-  "candidateModels": 1,
+  "candidateModels": 0,
   "totals": {
-    "inputTokens": 25176,
-    "outputTokens": 33997,
+    "inputTokens": 0,
+    "outputTokens": 0,
     "thinkingTokens": 0,
-    "cachedInputTokens": 3072,
+    "cachedInputTokens": 0,
     "cacheWriteTokens": 0,
-    "estimatedCostUsd": 0.010173,
+    "estimatedCostUsd": 0,
     "hasUnknownInputTokens": true,
     "hasUnknownOutputTokens": true,
     "hasUnknownThinkingTokens": true,
     "hasUnknownCachedInputTokens": true,
     "hasUnknownCacheWriteTokens": true,
     "hasUnknownEstimatedCost": true,
-    "runtimeSeconds": "382.40"
+    "runtimeSeconds": "240.03"
   },
   "attempts": [
     {
@@ -39,30 +41,18 @@
     },
     {
       "model": "openrouter/qwen/qwen3-32b:nitro",
-      "status": "candidate",
-      "validationStatus": "deferred",
+      "status": "skipped",
       "reportPath": "reports/i18n/llm-generative-ui-landscape/hi/openrouter-qwen-qwen3-32b-nitro.md",
-      "note": "Generated through the direct AI SDK chunked translator.",
-      "telemetry": {
-        "runtimeSeconds": "142.40",
-        "tokens": {
-          "input": 25176,
-          "output": 33997,
-          "cached": 3072,
-          "cacheWrite": 0
-        },
-        "estimatedCostUsd": 0.010173360000000003,
-        "pricingSource": "local-openrouter-estimate"
-      }
+      "note": "Existing non-rejected report found. Pass --overwrite to rerun."
     },
     {
       "model": "deepseek/deepseek-v4-flash",
       "status": "rejected",
       "validationStatus": "rejected: direct AI SDK translation failed",
       "reportPath": "reports/i18n/llm-generative-ui-landscape/hi/deepseek-deepseek-v4-flash.md",
-      "note": "Command failed after 240000ms: bun run i18n:translate:chunked -- --slug llm-generative-ui-landscape --locale hi --model deepseek/deepseek-v4-flash --chunk 6p --quiz-concurrency 24",
+      "note": "Command failed after 240000ms: bun run i18n:translate:chunked -- --slug llm-generative-ui-landscape --locale hi --model deepseek/deepseek-v4-flash --chunk 6p --run-id 2026-05-13T18-15-57-947Z-61322 --run-lock-path /Users/dan/code/oss/dans-blog/.git/codex-i18n-translation-run.json --quiz-concurrency 24",
       "telemetry": {
-        "runtimeSeconds": "240.00",
+        "runtimeSeconds": "240.03",
         "tokens": {}
       }
     }

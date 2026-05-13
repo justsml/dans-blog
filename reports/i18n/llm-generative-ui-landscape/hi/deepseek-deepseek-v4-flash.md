@@ -4,7 +4,7 @@
 - Model: deepseek/deepseek-v4-flash
 - Target: src/content/posts/2026-05-06--llm-generative-ui-landscape/hi/index.mdx
 - Validation: rejected: direct AI SDK translation failed
-- Runtime seconds: 240.00
+- Runtime seconds: 240.03
 - Input tokens: unknown
 - Output tokens: unknown
 - Thinking tokens: unknown
@@ -12,7 +12,7 @@
 - Cache write tokens: unknown
 - Estimated cost: unknown
 - Pricing source: unknown
-- Note: Command failed after 240000ms: bun run i18n:translate:chunked -- --slug llm-generative-ui-landscape --locale hi --model deepseek/deepseek-v4-flash --chunk 6p --quiz-concurrency 24
+- Note: Command failed after 240000ms: bun run i18n:translate:chunked -- --slug llm-generative-ui-landscape --locale hi --model deepseek/deepseek-v4-flash --chunk 6p --run-id 2026-05-13T18-15-57-947Z-61322 --run-lock-path /Users/dan/code/oss/dans-blog/.git/codex-i18n-translation-run.json --quiz-concurrency 24
 ## Raw Output
 
 ````mdx
