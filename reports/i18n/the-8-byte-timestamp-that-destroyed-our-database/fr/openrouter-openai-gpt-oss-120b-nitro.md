@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: the-8-byte-timestamp-that-destroyed-our-database
+- Locale: fr
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2025-12-29--the-8-byte-timestamp-that-destroyed-our-database/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 9.99
+- Input tokens: 10374
+- Output tokens: 3152
+- Thinking tokens: unknown
+- Cached input tokens: 2688
+- Cache write tokens: 0
+- Estimated cost: $0.000972
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Votre horodatage est un mensonge
 subTitle: >-
@@ -140,3 +158,4 @@ Réfléchissez à ce que vos utilisateurs doivent voir. Puis stockez les donnée
 - [Format de date et d’heure ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 - [Base de données des fuseaux horaires (IANA)](https://www.iana.org/time-zones)
 - [Gestion des timestamps dans les systèmes distribués](https://www.postgresql.org/docs/current/functions-datetime.html)
+````
