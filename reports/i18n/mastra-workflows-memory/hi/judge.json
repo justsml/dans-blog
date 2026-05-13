@@ -1,0 +1,32 @@
+{
+  "selectedCommit": "1e22fa8477a78d447f9e13d1e7f3ac67929387b1",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The candidate 1e22fa8477a78d447f9e13d1e7f3ac67929387b1 provides a high-quality, natural-sounding Hindi translation that correctly handles technical terms (like 'deterministic' as 'नियतात्मक' and 'probabilistic' as 'प्रायिकता'). It maintains the direct, professional tone of the original English text. Unlike the 'current' and '35c40584' candidates, it correctly translates the title and subtitle in the frontmatter. It also preserves all MDX structures and code blocks perfectly.",
+  "slug": "mastra-workflows-memory",
+  "locale": "hi",
+  "candidateCommits": [
+    "1e22fa8477a78d447f9e13d1e7f3ac67929387b1",
+    "8cfc41d76371ab9480e0729a1e1cd55b8daf52af",
+    "f3027a10e41680d48605920297a8c88ca047722a",
+    "e20627596c1b65b7875bc24e64275e0821469ddb",
+    "b27721766c5b29ef3918a73a1e9b1452c42d7475",
+    "cda134e6e4c9ce211988b09828c81c1b1af33f9e",
+    "35c40584e6bb8e302ea26d247fb96f71412f9e6a"
+  ],
+  "suggestionLog": [],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug mastra-workflows-memory --locale hi --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug mastra-workflows-memory --locale hi --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug mastra-workflows-memory --locale hi --skip-global\n207 |     ...targetContents.matchAll(/=[\"']\\.\\/(?!\\.)[^\"']+\\.(?:avif|gif|jpe?g|png|svg|webp)[\"']/g),\n208 |   ];\n209 | \n210 |   if (nestedAssetReferences.length === 0) return;\n211 | \n212 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2026-01-05--mastra-workflows-memory/hi/index.mdx uses ./ asset paths inside a locale folder. Use ../ for inherited post assets.\n      at assertNestedAssetPaths (/Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:212:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}
