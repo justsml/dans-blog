@@ -1,0 +1,44 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Chunking Strategy",
+  "translatedTitle": "Stratégie de découpage",
+  "translation": {
+    "title": "Stratégie de découpage",
+    "group": "Récupération",
+    "options": [
+      {
+        "text": "Utilisez la plus grande taille de segment que permet votre fenêtre de contexte"
+      },
+      {
+        "text": "Utilisez toujours 512 jetons — c'est une bonne valeur par défaut"
+      },
+      {
+        "text": "Utilisez des segments superposés dont la taille correspond à la structure de votre contenu"
+      },
+      {
+        "text": "La taille des segments n'a pas d'importance"
+      }
+    ],
+    "questionProse": [
+      "Lorsque vous découpez des documents pour RAG, quel est le principe le plus important ?"
+    ],
+    "explanationProse": [
+      "Il n'existe pas de taille de segment universellement correcte — cela dépend de votre contenu. Les principes importants sont : \n\n    1. **Correspondre à la structure de votre contenu.** Les pages FAQ s'adaptent bien au niveau Q+A. Les documents juridiques s'adaptent bien au niveau des clauses. Le code s'adapte bien au niveau des fonctions.\n    2. **Utiliser la superposition.** Un segment de 512 jetons avec 64 jetons de superposition de chaque côté permet de récupérer les réponses qui traversent une limite.\n    3. **Mesurer.** Créez un ensemble d'évaluation et testez plusieurs tailles de segments. La taille des segments est plus critique que le modèle d'embedding.\n\n    \"512 jetons\" est un point de départ raisonnable, pas une loi."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Stratégie de découpage\",\n  \"group\": \"Récupération\",\n  \"options\": [\n    {\n      \"text\": \"Utilisez la plus grande taille de segment que permet votre fenêtre de contexte\"\n    },\n    {\n      \"text\": \"Utilisez toujours 512 jetons — c'est une bonne valeur par défaut\"\n    },\n    {\n      \"text\": \"Utilisez des segments superposés dont la taille correspond à la structure de votre contenu\"\n    },\n    {\n      \"text\": \"La taille des segments n'a pas d'importance\"\n    }\n  ],\n  \"questionProse\": [\n    \"Lorsque vous découpez des documents pour RAG, quel est le principe le plus important ?\"\n  ],\n  \"explanationProse\": [\n    \"Il n'existe pas de taille de segment universellement correcte — cela dépend de votre contenu. Les principes importants sont : \\n\\n    1. **Correspondre à la structure de votre contenu.** Les pages FAQ s'adaptent bien au niveau Q+A. Les documents juridiques s'adaptent bien au niveau des clauses. Le code s'adapte bien au niveau des fonctions.\\n    2. **Utiliser la superposition.** Un segment de 512 jetons avec 64 jetons de superposition de chaque côté permet de récupérer les réponses qui traversent une limite.\\n    3. **Mesurer.** Créez un ensemble d'évaluation et testez plusieurs tailles de segments. La taille des segments est plus critique que le modèle d'embedding.\\n\\n    \\\"512 jetons\\\" est un point de départ raisonnable, pas une loi.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 836,
+    "outputTokens": 997,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 2464
+  },
+  "cost": {
+    "inputUsd": 0.00006688000000000001,
+    "outputUsd": 0.00023928,
+    "totalUsd": 0.00030616,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

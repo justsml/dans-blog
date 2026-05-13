@@ -1,0 +1,44 @@
+{
+  "index": 7,
+  "attempt": 1,
+  "originalTitle": "Conversation History Management",
+  "translatedTitle": "Gestion de l'historique des conversations",
+  "translation": {
+    "title": "Gestion de l'historique des conversations",
+    "group": "Gestion des jetons",
+    "options": [
+      {
+        "text": "Toujours envoyer l'historique complet de la conversation"
+      },
+      {
+        "text": "Résumer les anciens messages lorsque l'historique dépasse le budget de jetons"
+      },
+      {
+        "text": "Supprimer les anciens messages — le modèle a une mémoire persistante"
+      },
+      {
+        "text": "Stocker l'historique dans une base de données vectorielle et récupérer les échanges pertinents"
+      }
+    ],
+    "questionProse": [
+      "Dans une application de chat à plusieurs échanges, quelle est la bonne stratégie lorsque l'historique des conversations devient long ?"
+    ],
+    "explanationProse": [
+      "Les LLM n'ont pas de mémoire persistante. Chaque appel d'API est sans état — vous envoyez le contexte complet, vous obtenez une réponse. La \"mémoire\" d'une conversation est entièrement l'historique de messages que vous incluez dans chaque requête.\n\n    Lorsque cet historique dépasse votre budget, les options sont :\n    1. **Résumer** : Compresser les anciens échanges en une synthèse continue, conserver les récents verbatim\n    2. **Fenêtre glissante** : Conserver les N derniers échanges, supprimer les plus anciens\n    3. **Récupération sélective** : Embedder les échanges de conversation et en récupérer les pertinents par requête (complexe mais puissant)\n\n    La simple troncature — supprimer les anciens messages pour s'adapter — est la pire option car elle retire silencieusement du contexte dont le modèle pourrait avoir besoin.\n\n    La récupération d'historique dans une base de données vectorielle est théoriquement séduisante mais souvent surdimensionnée pour la plupart des applications de chat. Le résumé est la solution pragmatique par défaut."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Gestion de l'historique des conversations\",\n  \"group\": \"Gestion des jetons\",\n  \"options\": [\n    {\n      \"text\": \"Toujours envoyer l'historique complet de la conversation\"\n    },\n    {\n      \"text\": \"Résumer les anciens messages lorsque l'historique dépasse le budget de jetons\"\n    },\n    {\n      \"text\": \"Supprimer les anciens messages — le modèle a une mémoire persistante\"\n    },\n    {\n      \"text\": \"Stocker l'historique dans une base de données vectorielle et récupérer les échanges pertinents\"\n    }\n  ],\n  \"questionProse\": [\n    \"Dans une application de chat à plusieurs échanges, quelle est la bonne stratégie lorsque l'historique des conversations devient long ?\"\n  ],\n  \"explanationProse\": [\n    \"Les LLM n'ont pas de mémoire persistante. Chaque appel d'API est sans état — vous envoyez le contexte complet, vous obtenez une réponse. La \\\"mémoire\\\" d'une conversation est entièrement l'historique de messages que vous incluez dans chaque requête.\\n\\n    Lorsque cet historique dépasse votre budget, les options sont :\\n    1. **Résumer** : Compresser les anciens échanges en une synthèse continue, conserver les récents verbatim\\n    2. **Fenêtre glissante** : Conserver les N derniers échanges, supprimer les plus anciens\\n    3. **Récupération sélective** : Embedder les échanges de conversation et en récupérer les pertinents par requête (complexe mais puissant)\\n\\n    La simple troncature — supprimer les anciens messages pour s'adapter — est la pire option car elle retire silencieusement du contexte dont le modèle pourrait avoir besoin.\\n\\n    La récupération d'historique dans une base de données vectorielle est théoriquement séduisante mais souvent surdimensionnée pour la plupart des applications de chat. Le résumé est la solution pragmatique par défaut.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 879,
+    "outputTokens": 1029,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 2480
+  },
+  "cost": {
+    "inputUsd": 0.00007032,
+    "outputUsd": 0.00024696,
+    "totalUsd": 0.00031728,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

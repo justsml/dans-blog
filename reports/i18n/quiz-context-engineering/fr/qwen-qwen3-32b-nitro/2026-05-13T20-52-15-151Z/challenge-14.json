@@ -1,0 +1,44 @@
+{
+  "index": 13,
+  "attempt": 1,
+  "originalTitle": "Context Engineering vs. Fine-Tuning",
+  "translatedTitle": "Ingénierie du contexte vs. Affinage du modèle",
+  "translation": {
+    "title": "Ingénierie du contexte vs. Affinage du modèle",
+    "group": "Expert",
+    "options": [
+      {
+        "text": "L'affinage est toujours meilleur — l'ingénierie du contexte est un contournement"
+      },
+      {
+        "text": "L'ingénierie du contexte est gratuite ; l'affinage est coûteux ; utilisez toujours l'ingénierie du contexte"
+      },
+      {
+        "text": "L'ingénierie du contexte modifie le comportement par requête ; l'affinage modifie les poids du modèle de manière permanente"
+      },
+      {
+        "text": "Ce sont des noms différents pour la même technique"
+      }
+    ],
+    "questionProse": [
+      "Quelle est la distinction clé entre l'ingénierie du contexte et l'affinage, et quand l'affinage est-il vraiment pertinent ?"
+    ],
+    "explanationProse": [
+      "**L'ingénierie du contexte** façonne le comportement du modèle via le prompt — instructions système, exemples few-shot, contexte récupéré. C'est temporaire, réversible et ne nécessite aucune formation.\n\n    **L'affinage** met à jour les poids du modèle sur vos données. Les changements sont permanents (pour ce point de contrôle) et s'appliquent à chaque inférence.\n\n    L'affinage est vraiment meilleur lorsque :\n    - Vous avez besoin d'un style/format cohérent que le modèle ne peut suivre de manière fiable avec des instructions seules\n    - Votre tâche exige un comportement répétable sur des motifs spécifiques à un domaine que le prompting et la récupération ne résolvent pas\n    - Vous devez réduire la longueur des prompts — le comportement affiné n'a pas besoin d'être expliqué à chaque requête\n    - Vous exécutez de nombreuses requêtes où les exemples few-shot consomment de nombreux tokens\n\n    L'affinage est superflu lorsque :\n    - Vos instructions tiennent dans un prompt système\n    - Vous avez besoin de faits récents ou propriétaires récupérables à la volée\n    - Les exigences changent fréquemment (vous devriez ré-affiner)\n    - Vous n'avez pas épuisé l'ingénierie du contexte avant\n\n    L'ordre correct : maîtrisez l'ingénierie du contexte d'abord. Affinez uniquement quand c'est prouvé insuffisant."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Ingénierie du contexte vs. Affinage du modèle\",\n  \"group\": \"Expert\",\n  \"options\": [\n    {\n      \"text\": \"L'affinage est toujours meilleur — l'ingénierie du contexte est un contournement\"\n    },\n    {\n      \"text\": \"L'ingénierie du contexte est gratuite ; l'affinage est coûteux ; utilisez toujours l'ingénierie du contexte\"\n    },\n    {\n      \"text\": \"L'ingénierie du contexte modifie le comportement par requête ; l'affinage modifie les poids du modèle de manière permanente\"\n    },\n    {\n      \"text\": \"Ce sont des noms différents pour la même technique\"\n    }\n  ],\n  \"questionProse\": [\n    \"Quelle est la distinction clé entre l'ingénierie du contexte et l'affinage, et quand l'affinage est-il vraiment pertinent ?\"\n  ],\n  \"explanationProse\": [\n    \"**L'ingénierie du contexte** façonne le comportement du modèle via le prompt — instructions système, exemples few-shot, contexte récupéré. C'est temporaire, réversible et ne nécessite aucune formation.\\n\\n    **L'affinage** met à jour les poids du modèle sur vos données. Les changements sont permanents (pour ce point de contrôle) et s'appliquent à chaque inférence.\\n\\n    L'affinage est vraiment meilleur lorsque :\\n    - Vous avez besoin d'un style/format cohérent que le modèle ne peut suivre de manière fiable avec des instructions seules\\n    - Votre tâche exige un comportement répétable sur des motifs spécifiques à un domaine que le prompting et la récupération ne résolvent pas\\n    - Vous devez réduire la longueur des prompts — le comportement affiné n'a pas besoin d'être expliqué à chaque requête\\n    - Vous exécutez de nombreuses requêtes où les exemples few-shot consomment de nombreux tokens\\n\\n    L'affinage est superflu lorsque :\\n    - Vos instructions tiennent dans un prompt système\\n    - Vous avez besoin de faits récents ou propriétaires récupérables à la volée\\n    - Les exigences changent fréquemment (vous devriez ré-affiner)\\n    - Vous n'avez pas épuisé l'ingénierie du contexte avant\\n\\n    L'ordre correct : maîtrisez l'ingénierie du contexte d'abord. Affinez uniquement quand c'est prouvé insuffisant.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 958,
+    "outputTokens": 1336,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 3997
+  },
+  "cost": {
+    "inputUsd": 0.00007664,
+    "outputUsd": 0.00032063999999999997,
+    "totalUsd": 0.00039727999999999996,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "index": 12,
+  "attempt": 1,
+  "originalTitle": "Grounding vs. Hallucination",
+  "translatedTitle": "Ancre vs. Hallucination",
+  "translation": {
+    "title": "Ancre vs. Hallucination",
+    "group": "Avancé",
+    "options": [
+      {
+        "text": "Indiquer au modèle 'ne pas halluciner' dans le prompt système"
+      },
+      {
+        "text": "Utiliser une température plus élevée pour générer des réponses plus confiantes"
+      },
+      {
+        "text": "Fournir les documents sources récupérés et indiquer au modèle de les citer"
+      },
+      {
+        "text": "Utiliser un modèle plus grand — les hallucinations n'ont lieu que dans les modèles plus petits"
+      }
+    ],
+    "questionProse": [
+      "La technique la plus efficace pour réduire les hallucinations dans un système d'IA de production est :"
+    ],
+    "explanationProse": [
+      "Indiquer à un modèle de ne pas halluciner n'empêche pas les hallucinations — le modèle n'a pas de signal introspectif fiable pour 'je fais des inventions'. Cela signifie simplement que le modèle vous dira avec confiance qu'il ne fait pas d'inventions tout en en faisant.\n\nCe qui fonctionne vraiment : **l'ancre**. Fournissez au modèle les informations dont il a besoin pour répondre correctement, et restreignez-le à ces informations :",
+      "Validez ensuite la sortie : vérifiez que les affirmations dans la réponse apparaissent dans le contexte récupéré. C'est le test d'ancre par citation — voir la discussion sur l'évaluation RAG pour l'implémentation.\n\nLes modèles plus grands hallucinent moins en moyenne, mais tous les modèles hallucinent. L'ancre est la stratégie d'atténuation, pas la taille du modèle."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Ancre vs. Hallucination\",\n  \"group\": \"Avancé\",\n  \"options\": [\n    {\n      \"text\": \"Indiquer au modèle 'ne pas halluciner' dans le prompt système\"\n    },\n    {\n      \"text\": \"Utiliser une température plus élevée pour générer des réponses plus confiantes\"\n    },\n    {\n      \"text\": \"Fournir les documents sources récupérés et indiquer au modèle de les citer\"\n    },\n    {\n      \"text\": \"Utiliser un modèle plus grand — les hallucinations n'ont lieu que dans les modèles plus petits\"\n    }\n  ],\n  \"questionProse\": [\n    \"La technique la plus efficace pour réduire les hallucinations dans un système d'IA de production est :\"\n  ],\n  \"explanationProse\": [\n    \"Indiquer à un modèle de ne pas halluciner n'empêche pas les hallucinations — le modèle n'a pas de signal introspectif fiable pour 'je fais des inventions'. Cela signifie simplement que le modèle vous dira avec confiance qu'il ne fait pas d'inventions tout en en faisant.\\n\\nCe qui fonctionne vraiment : **l'ancre**. Fournissez au modèle les informations dont il a besoin pour répondre correctement, et restreignez-le à ces informations :\",\n    \"Validez ensuite la sortie : vérifiez que les affirmations dans la réponse apparaissent dans le contexte récupéré. C'est le test d'ancre par citation — voir la discussion sur l'évaluation RAG pour l'implémentation.\\n\\nLes modèles plus grands hallucinent moins en moyenne, mais tous les modèles hallucinent. L'ancre est la stratégie d'atténuation, pas la taille du modèle.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 877,
+    "outputTokens": 1093,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 2642
+  },
+  "cost": {
+    "inputUsd": 0.00007015999999999999,
+    "outputUsd": 0.00026231999999999997,
+    "totalUsd": 0.00033247999999999996,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

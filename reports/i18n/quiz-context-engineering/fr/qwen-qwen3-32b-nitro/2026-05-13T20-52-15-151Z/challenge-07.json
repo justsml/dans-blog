@@ -1,0 +1,44 @@
+{
+  "index": 6,
+  "attempt": 1,
+  "originalTitle": "Context Budget",
+  "translatedTitle": "Budget de contexte",
+  "translation": {
+    "title": "Budget de contexte",
+    "group": "Gestion des jetons",
+    "options": [
+      {
+        "text": "Utiliser 95 % ou plus de la fenêtre de contexte pour maximiser l'information"
+      },
+      {
+        "text": "Réserver un espace significatif pour la sortie plutôt que de remplir toute la fenêtre"
+      },
+      {
+        "text": "Le budget de contexte n'a d'importance que pour les modèles inférieurs à 32K jetons"
+      },
+      {
+        "text": "Le modèle tronque automatiquement lorsqu'on dépasse la fenêtre"
+      }
+    ],
+    "questionProse": [
+      "Lors de la création d'un prompt RAG avec un contexte récupéré, une bonne règle d'or concernant le budget de contexte est :"
+    ],
+    "explanationProse": [
+      "La fenêtre de contexte est partagée entre **l'entrée et la sortie**. Si vous utilisez 90 % pour l'entrée, le modèle n'a plus que 10 % de la fenêtre pour générer une réponse — ce qui entraîne souvent des sorties tronquées ou dégradées.\n\nUne heuristique raisonnable : déterminez d'abord la taille de sortie attendue, puis gardez votre entrée bien en dessous du budget restant. Pour de nombreuses tâches RAG, cela signifie utiliser au maximum **60 à 70 % de la fenêtre de contexte totale en entrée** (prompt système + historique + contexte récupéré). Laissez le reste pour la génération et une marge de sécurité.\n\nEn outre, les modèles fonctionnent moins bien aux extrémités de leur fenêtre de contexte — la compréhension et le suivi des instructions se dégradent à mesure que le contexte se remplit. Fonctionner à 95 % est technique possible. Ce n'est pas la même expérience qu'en fonctionnant à 50 %."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Budget de contexte\",\n  \"group\": \"Gestion des jetons\",\n  \"options\": [\n    {\n      \"text\": \"Utiliser 95 % ou plus de la fenêtre de contexte pour maximiser l'information\"\n    },\n    {\n      \"text\": \"Réserver un espace significatif pour la sortie plutôt que de remplir toute la fenêtre\"\n    },\n    {\n      \"text\": \"Le budget de contexte n'a d'importance que pour les modèles inférieurs à 32K jetons\"\n    },\n    {\n      \"text\": \"Le modèle tronque automatiquement lorsqu'on dépasse la fenêtre\"\n    }\n  ],\n  \"questionProse\": [\n    \"Lors de la création d'un prompt RAG avec un contexte récupéré, une bonne règle d'or concernant le budget de contexte est :\"\n  ],\n  \"explanationProse\": [\n    \"La fenêtre de contexte est partagée entre **l'entrée et la sortie**. Si vous utilisez 90 % pour l'entrée, le modèle n'a plus que 10 % de la fenêtre pour générer une réponse — ce qui entraîne souvent des sorties tronquées ou dégradées.\\n\\nUne heuristique raisonnable : déterminez d'abord la taille de sortie attendue, puis gardez votre entrée bien en dessous du budget restant. Pour de nombreuses tâches RAG, cela signifie utiliser au maximum **60 à 70 % de la fenêtre de contexte totale en entrée** (prompt système + historique + contexte récupéré). Laissez le reste pour la génération et une marge de sécurité.\\n\\nEn outre, les modèles fonctionnent moins bien aux extrémités de leur fenêtre de contexte — la compréhension et le suivi des instructions se dégradent à mesure que le contexte se remplit. Fonctionner à 95 % est technique possible. Ce n'est pas la même expérience qu'en fonctionnant à 50 %.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 878,
+    "outputTokens": 1385,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 4872
+  },
+  "cost": {
+    "inputUsd": 0.00007024,
+    "outputUsd": 0.00033239999999999995,
+    "totalUsd": 0.00040263999999999995,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

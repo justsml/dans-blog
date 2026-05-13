@@ -1,0 +1,44 @@
+{
+  "index": 0,
+  "attempt": 1,
+  "originalTitle": "Context Window Basics",
+  "translatedTitle": "Les bases de la fenêtre de contexte",
+  "translation": {
+    "title": "Les bases de la fenêtre de contexte",
+    "group": "Fondamentaux",
+    "options": [
+      {
+        "text": "Le nombre maximum de requêtes par minute"
+      },
+      {
+        "text": "La limite combinée des tokens pour l'entrée et la sortie"
+      },
+      {
+        "text": "Le nombre de messages dans une conversation"
+      },
+      {
+        "text": "La mémoire disponible entre les sessions"
+      }
+    ],
+    "questionProse": [
+      "À quoi fait référence la « fenêtre de contexte » dans un modèle de langage à très grande échelle (LLM) ?"
+    ],
+    "explanationProse": [
+      "La fenêtre de contexte est le nombre total de tokens qu'un modèle peut traiter en une seule fois — **la somme des tokens d'entrée et de sortie**. Une fenêtre de contexte de 128K signifie que votre prompt + les documents récupérés + l'historique de la conversation + la réponse du modèle doivent tous tenir dans 128 000 tokens.\n\nElle n'a rien à voir avec les sessions, la mémoire ou les limites de débit. Quand vous atteignez cette limite, le modèle tronque, génère une erreur, ou — pire encore — supprime silencieusement des tokens que vous ne vous attendiez pas à perdre."
+    ]
+  },
+  "rawText": "```json\n{\n  \"title\": \"Les bases de la fenêtre de contexte\",\n  \"group\": \"Fondamentaux\",\n  \"options\": [\n    {\n      \"text\": \"Le nombre maximum de requêtes par minute\"\n    },\n    {\n      \"text\": \"La limite combinée des tokens pour l'entrée et la sortie\"\n    },\n    {\n      \"text\": \"Le nombre de messages dans une conversation\"\n    },\n    {\n      \"text\": \"La mémoire disponible entre les sessions\"\n    }\n  ],\n  \"questionProse\": [\n    \"À quoi fait référence la « fenêtre de contexte » dans un modèle de langage à très grande échelle (LLM) ?\"\n  ],\n  \"explanationProse\": [\n    \"La fenêtre de contexte est le nombre total de tokens qu'un modèle peut traiter en une seule fois — **la somme des tokens d'entrée et de sortie**. Une fenêtre de contexte de 128K signifie que votre prompt + les documents récupérés + l'historique de la conversation + la réponse du modèle doivent tous tenir dans 128 000 tokens.\\n\\nElle n'a rien à voir avec les sessions, la mémoire ou les limites de débit. Quand vous atteignez cette limite, le modèle tronque, génère une erreur, ou — pire encore — supprime silencieusement des tokens que vous ne vous attendiez pas à perdre.\"\n  ]\n}\n```",
+  "telemetry": {
+    "inputTokens": 788,
+    "outputTokens": 982,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2254
+  },
+  "cost": {
+    "inputUsd": 0.00006303999999999999,
+    "outputUsd": 0.00023568,
+    "totalUsd": 0.00029872,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
