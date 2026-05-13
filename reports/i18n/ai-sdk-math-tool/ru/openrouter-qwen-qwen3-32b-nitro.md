@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: ai-sdk-math-tool
+- Locale: ru
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-01-06--ai-sdk-math-tool/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 88.12
+- Input tokens: 6475
+- Output tokens: 5409
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.001816
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Перестаньте просить LLM делать математику
 subTitle: Они плохо справляются с этим. Вот как это исправить.
@@ -95,3 +113,4 @@ console.log(text);
 - [CortexJS Compute Engine](https://cortexjs.io/compute-engine/)
 - [Руководство по вызову инструментов](https://sdk.vercel.ai/docs/ai-sdk-core/tools-and-tool-calling)
 - [Репозиторий с примерами AI SDK](https://github.com/vercel/ai/tree/main/examples)
+````
