@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: the-unassuming-power-of-multiple-choice-questions
+- Locale: es
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2025-01-01--the-unassuming-power-of-multiple-choice-questions/es/index.mdx
+- Validation: passed
+- Runtime seconds: 11.96
+- Input tokens: 5412
+- Output tokens: 4930
+- Thinking tokens: unknown
+- Cached input tokens: 1536
+- Cache write tokens: 0
+- Estimated cost: $0.001616
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: El poder modesto de las preguntas de opción múltiple
 subTitle: ''
@@ -87,3 +105,4 @@ El autor debe modelar los errores probables del aprendiz. Eso significa que el a
 Por eso sigo usando preguntas de opción múltiple en este sitio. No porque sean eficientes, aunque lo son. Porque obligan a una honestidad instruccional que la prosa sola puede eludir.
 
 La próxima vez que escribas una, no empieces por la respuesta correcta. Empieza por las concepciones erróneas. La respuesta correcta tendrá un lugar mucho mejor en el que estar.
+````
