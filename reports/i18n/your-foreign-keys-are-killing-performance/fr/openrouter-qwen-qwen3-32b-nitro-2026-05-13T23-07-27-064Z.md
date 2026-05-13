@@ -1,0 +1,169 @@
+# Translation Candidate
+- Slug: your-foreign-keys-are-killing-performance
+- Locale: fr
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2025-12-29--your-foreign-keys-are-killing-performance/fr/index.mdx
+- Validation: deferred
+- Runtime seconds: 24.16
+- Input tokens: 10462
+- Output tokens: 10296
+- Thinking tokens: unknown
+- Cached input tokens: 1536
+- Cache write tokens: 0
+- Estimated cost: $0.003308
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: 'Clés étrangères : Arrêtez de demander si elles sont rapides'
+subTitle: Demandez ce pour quoi vous optimisez réellement.
+date: '2025-12-29'
+modified: '2026-01-10'
+tags:
+  - postgres
+  - postgresql
+  - databases
+  - performance
+  - foreign-keys
+  - constraints
+  - indexing
+category: Code
+subCategory: Databases
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+L'optimisation de base de données la plus coûteuse que j'aie jamais vue a commencé par quelqu'un qui a supprimé toutes les clés étrangères.  
+
+Pas parce qu'ils avaient mesuré un goulot d'étranglement. Pas parce que les écritures étaient effectivement lentes. Parce qu'ils avaient lu quelque part que « les clés étrangères ne s'échelonnent pas ». Six mois plus tard, ils avaient 2 milliards d'enregistrements orphelins, un système de facturation qui facturait des utilisateurs supprimés, et des analyses erronées de 40 %.  
+
+Quand ils ont essayé de réajouter les contraintes ? La base de données s'est arrêtée en essayant de valider les données existantes déjà corrompues.  
+
+Il existe une idée répandue dans le développement web selon laquelle les clés étrangères sont intrinsèquement lentes, qu'elles sont des roues de secours que l'on retire une fois qu'on passe à des systèmes « réels ». Mais cela manque tout à fait le point central de ce qu'est une contrainte. Vous ne choisissez pas entre la vitesse et la lenteur. Vous choisissez entre différents modes d'échec.  
+
+Pensez-y comme suit : les vitres de sécurité, les ceintures de sécurité et les airbags ajoutent du poids à votre voiture. Ils ralentissent effectivement votre véhicule et réduisent l'efficacité énergétique. Mais vous ne les retirez pas pour optimiser votre accélération 0-100 km/h, car vous optimisez pour autre chose.  
+
+La question n'est pas de savoir si les clés étrangères vous ralentissent. Bien sûr qu'elles le font. La question est ce que vous obtenez en retour, et si vous en avez vraiment besoin.  
+
+## Ce que vous échangez réellement  
+
+Donnez-moi un exemple concret. Vous construisez un système de surveillance météorologique avec des tables pour les stations météorologiques, les appareils de mesure, les lectures des capteurs et les états des États-Unis.  
+
+Doit-on relier toutes les tables avec des clés étrangères ? Réfléchissons à ce qui change réellement et aux conséquences :  
+
+Les États-Unis ne changent probablement pas. Le Wyoming ne sera pas renommé prochainement. Vous n'avez pas besoin d'une clé étrangère pour valider les codes d'état à chaque insertion si vous savez que les données de référence sont statiques. Cela ajoute un surcoût inutile.
+
+Les stations météorologiques sont ajoutées, déplacées et désactivées. Mais voici une question : voulez-vous que les lectures historiques "perdent" leur station si quelqu'un supprime accidentellement le record de la station ? Peut-être que vous souhaitez que ces données restent intactes même si la station n'existe plus. Cela signifie que vous traitez les lectures comme un instantané historique plutôt qu'une référence en temps réel, ce qui change la pertinence même d'une clé étrangère.  
+
+Les lectures de capteurs sont insérées des milliers de fois par minute. Chaque vérification de clé étrangère implique une recherche. Chaque recherche génère un conflit sur vos tables. Si la validation lente fait en sorte que votre file d'insertion se bloque et que vous perdez des données en temps réel, il s'agit d'une perte de données différente de celle causée par des enregistrements orphelins.  
+
+Vous commencez à comprendre où je veux en venir. Le choix ne porte pas sur la performance contre la correction en tant que concepts abstraits. Il s'agit de déterminer quel échec spécifique vous êtes plus prêt à tolérer compte tenu de vos contraintes réelles et de vos conséquences concrètes.  
+
+Si des références erronées entraînent une corruption des données de facturation ou des violations réglementaires, vous aurez probablement besoin que les clés étrangères vous protègent, quel que soit le coût en performance. Si la validation lente vous fait perdre à jamais des données de capteurs en temps réel parce que votre file déborde, alors peut-être que la validation n'est pas le bon compromis.  
+
+## Quand les écritures rapides comptent vraiment  
+
+Vous avez décidé que vous aviez besoin d'une vitesse d'écriture maximale. Votre file s'accumule, les transactions dépassent leur délai, et les vérifications de clés étrangères causent effectivement des problèmes que vous avez mesurés (pas seulement théorisés).  
+
+Vous avez quelques options. Vous pourriez changer votre niveau d'isolation de transaction de `SERIALIZABLE` à `READ COMMITTED`, ce qui est plus rapide mais qui sacrifie certaines garanties de cohérence. Vous pourriez regrouper vos commits, en insérant 1000 lignes par transaction au lieu d'une à la fois pour amortir le surcoût des clés étrangères. Ou vous pourriez dénormaliser en utilisant une structure de journalisation append-only, où vous ne tentez même plus de valider les références.  
+
+Notez que ce troisième choix n'est pas une astuce. C'est juste un autre design :  
+
+```sql
+CREATE TABLE sensor_log (
+  id BIGSERIAL PRIMARY KEY,
+  recorded_at TIMESTAMPTZ NOT NULL,
+  data JSONB NOT NULL  -- { station_id, sensor_id, temp, humidity, ... }
+);
+
+CREATE INDEX ON sensor_log USING GIN (data);
+CREATE INDEX ON sensor_log (recorded_at);
+```  
+
+Aucune jointure. Aucune vérification de clé étrangère. Juste l'ajout de données et des requêtes par plage de temps ou index GIN sur le blob JSONB. Est-ce "meilleure pratique" ? Probablement pas dans le sens des manuels de base de données. Fonctionne-t-elle lorsqu'on insère 50 000 lignes par minute sur un Raspberry Pi ? Absolument.  
+
+Le décalage apparaît quand les gens traitent la "meilleure pratique" comme une exigence morale plutôt qu'un modèle utile dans des scénarios communs mais qui peut ne pas correspondre à vos besoins.
+
+## Le piège de la normalisation  
+
+Les cours sur les bases de données aiment enseigner la normalisation. Évitez la duplication à tout prix. Troisième forme normale ou rien.  
+
+Vous aboutissez alors à quelque chose comme : `Orders` → `OrderItems` → `Products` → `Variants` → `Colors` → `Sizes`  
+
+Six jointures de tables simplement pour répondre à la question « Est-ce que j’ai commandé le t-shirt rouge ou le bleu l’année dernière ? ». Et pitié, n’essayez même pas d’inclure le nom du produit, car cela nécessiterait trois jointures supplémentaires dans la hiérarchie du catalogue.  
+
+Mais attendez. La justification est généralement : « Que se passe-t-il si la marque change la manière dont elle étiquette le bleu ? » Si cela arrive, voulez-vous vraiment que les commandes historiques modifient rétrospectivement leur couleur ? Bien sûr que non. Quand quelqu’un a passé cette commande, il a acheté un « T-shirt bleu, taille M » tel qu’il existait à ce moment précis, pas comme une référence abstraite à une entrée de catalogue qui pourrait être mise à jour ultérieurement.  
+
+Cela mérite d’être approfondi car c’est subtil. Certaines données sont fondamentalement des instantanés, pas des références. Lorsque vous traitez des données d’instantané comme s’il s’agissait de références dynamiques, vous aboutissez à une prolifération absurde de jointures pour reconstruire quelque chose qui aurait dû être dénormalisé au moment de l’écriture.  
+
+Stockez directement `{"color": "blue", "size": "M"}` sur la commande. C’est terminé.  
+
+### Identifier les données d’instantané  
+
+Comment savoir quand quelque chose doit être un instantané ? Demandez-vous s’il s’agit d’un enregistrement à un moment donné :  
+
+Les commandes capturent les détails du produit tels qu’ils existaient au moment de l’achat. Les journaux d’audit enregistrent l’état de l’utilisateur au moment d’une action. Les tables d’historique conservent l’état d’un enregistrement avant une mise à jour. Les flux d’événements capturent ce qui s’est produit, à quel moment, avec quels données.
+
+Si la réponse est « oui, c’est l’enregistrement d’un moment dans le temps », arrêtez de la normaliser. Commencez à enregistrer des instantanés.
+
+### Objets opaques
+
+Il existe une autre catégorie au-delà des instantanés : les données que vous ne consultez jamais. Vous les stockez et les récupérez entières.
+
+Les configurations de modèles LLM comme `{"model": "gpt-4", "temperature": 0.7, "max_tokens": 2000}` ne sont pas des données que vous interrogez par température. Vous récupérez toute la configuration par ID de requête lorsqu’il vous en faut. Les charges utiles JWT après décodage, les journaux de requêtes/réponses API pour le débogage, les objets de préférences utilisateur avec les paramètres de thème et les indicateurs de notification. Il s’agit tous d’objets opaques. Vous n’avez pas besoin de normalisation. Vous n’avez pas besoin de clés étrangères. Enfoncez-les dans JSONB et continuez votre vie.
+
+La jointure sur six tables pour savoir quelle couleur de chemise a été commandée ? Ce n’est pas une normalisation appropriée. C’est une confusion sur le fait de savoir si vous stockez une référence ou une valeur.
+
+(Mais faites attention : cela peut retomber lourdement si vous devez interroger ces données plus tard. Voir [La tentation de JSONB](../the-jsonb-seduction) pour savoir quand cette approche crée son propre cauchemar.)
+
+## L’évolutivité est un contexte
+
+Vous entendrez dire que « les clés étrangères ne s’échelonnent pas ». Mais l’évolutivité est entièrement relative à votre matériel et à votre architecture.
+
+Un Raspberry Pi enregistrant 10 000 lectures de capteurs par minute sur une carte microSD ? C’est une échelle légitimement élevée pour ce matériel. AWS Aurora avec des IOPS provisionnées gérant des milliards de lignes ? Vous pouvez traverser cela avec des clés étrangères sans même transpirer.
+
+La limite réelle n’a rien à voir avec le nombre de lignes ou le volume d’écritures. C’est le partitionnement.
+
+Lorsque votre table `Users` se trouve sur le serveur A et votre table `Orders` sur le serveur B, les clés étrangères ne peuvent physiquement pas fonctionner. La base de données n’a aucun mécanisme pour appliquer une contrainte à travers des limites réseau. À ce stade, vous exécutez déjà des tâches en arrière-plan pour détecter les orphelins et implémentez des modèles de cohérence éventuelle.
+
+Cela se produit dans les SaaS multi-locataires où chaque client obtient sa propre base de données isolée pour des raisons de conformité, ou dans les déploiements IoT où vous avez 50 000 appareils de bord chacun exécutant SQLite localement. Une fois que vous en êtes là, les clés étrangères sont exclues (littéralement hors de la table), indépendamment des considérations sur les performances.
+
+Mais avant d’atteindre cette limite architecturale, ne vous précipitez pas pour optimiser prématurément les problèmes de Netflix lorsque vous développez un outil interne pour 10 utilisateurs.
+
+## À quoi cela ressemble-t-il concrètement ?
+
+Au lieu de se demander « devrais-je utiliser des clés étrangères ? », posez-vous plutôt ces trois questions :
+
+- Quel est l’impact si cette référence est incorrecte ? Est-ce une poursuite judiciaire, une corruption de facturation, une violation réglementaire ? Ou s’agit-il simplement d’une jointure manquante qui retourne null dans votre tableau de bord analytique ?
+- Quel est l’impact si la validation est lente ? Perdez-vous des données en temps réel irremplaçables ? Ou vos requêtes prennent-elles simplement 50 millisecondes supplémentaires ?
+- Cette donnée est-elle une capture instantanée ou une référence ? Enregistrez-vous l’état d’une chose à un moment donné, ou pointez-vous vers la valeur actuelle autoritative ?
+
+À partir de là, les modèles émergent naturellement :
+
+- Les transactions financières, les sessions d’authentification, tout ce qui implique une responsabilité juridique en cas de corruption de données devrait probablement utiliser des clés étrangères, malgré le surcoût de performance.
+
+Les journaux à haut volume, les séries temporelles en mode append-only, tout ce qui implique d'écrire un million d'événements par minute probablement pas besoin d'un surcoût de validation à chaque écriture.
+
+Les snapshots historiques comme les commandes et les journaux d'audit, les données que vous récupérez toujours en bloc complet comme les préférences utilisateur, les schémas que vous ne contrôlez pas comme les payloads de webhooks provenant d'APIs externes… ces cas fonctionnent souvent mieux en mode dénormalisé.
+
+Mais notez que j'ai dit "probablement" et "souvent". Car le contexte est primordial, et votre contexte est différent du mien.
+
+## Réflexions finales
+
+Les clés étrangères ne sont pas un problème de performance. Elles représentent un compromis entre la vitesse d'écriture et l'intégrité des données, et si ce compromis est pertinent dépend entièrement de vos goulets d'étranglement spécifiques et des conséquences spécifiques que vous acceptez.
+
+Le vrai problème survient lorsque les gens suppriment les clés étrangères en se basant sur ce qu'ils ont lu sur l'"échelle web" sans avoir réellement mesuré s'ils avaient un problème de performance d'écriture ou sans considérer ce qu'ils sacrifient. Vous finissez par imiter aveuglément l'architecture de Netflix sur un projet à partir de zéro qui traite 100 transactions par jour.
+
+Peut-être que le coût de performance en vaut la peine pour votre cas d'utilisation. Peut-être pas. Mais au moins, prenez cette décision en fonction de ce que vous optimisez réellement, et non de ce que vous pensez devriez optimiser.
+
+Pourquoi optimisez-vous ?
+
+## Ressources
+
+- [Documentation des contraintes de clé étrangère PostgreSQL](https://www.postgresql.org/docs/current/ddl-constraints.html#DDL-CONSTRAINTS-FK)
+- [Conseils de performance PostgreSQL](https://www.postgresql.org/docs/current/performance-tips.html)
+- [Use The Index, Luke! - Clés étrangères](https://use-the-index-luke.com/sql/clustering/data-clustering)
+- [Normalisation vs Dénormalisation de base de données](https://www.postgresql.org/docs/current/tutorial-concepts.html)
+````
