@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: stop-the-angularjs-hate
+- Locale: es
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2015-03-10--stop-the-angularjs-hate/es/index.mdx
+- Validation: passed
+- Runtime seconds: 3.05
+- Input tokens: 5164
+- Output tokens: 1622
+- Thinking tokens: unknown
+- Cached input tokens: 1920
+- Cache write tokens: 0
+- Estimated cost: $0.000493
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Trucos de AngularJS
@@ -115,3 +133,4 @@ Si tiene un montón de componentes UI pequeños y reutilizables, ReactJS podría
   1.  Use mustache templating para crear HTML strings (or DOM directly)
   1.  Cache rendered content en localStorage si puede
   1.  (Optional) Now add an event listener para re-renderizar el content. He estandarizado el nombre del evento `refresh.<class-name>`
+````
