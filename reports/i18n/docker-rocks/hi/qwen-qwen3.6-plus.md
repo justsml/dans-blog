@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: docker-rocks
+- Locale: hi
+- Model: qwen/qwen3.6-plus
+- Target: src/content/posts/2015-06-11--docker-rocks/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 137.37
+- Input tokens: 1944
+- Output tokens: 7536
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 1052
+- Estimated cost: $0.015327
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Docker शानदार है और अब OSX पर भी चलता है
@@ -46,3 +64,4 @@ Docker वर्तमान में Linux Kernel v3.4+ पर नेटिव
 
 - Docker Desktop प्रोप्राइटरी है, लेकिन पर्सनल यूज़ के लिए फ्री है। OSX या Windows पर Docker शुरू करने का यह एक ठोस तरीका है।
 - अगर आप ज़्यादा ओपन-सोर्स सॉल्यूशन की तलाश में हैं, तो [Rancher Desktop](https://rancherdesktop.io/) देखें।
+````
