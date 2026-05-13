@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: ai-sdk-math-tool
+- Locale: de
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-01-06--ai-sdk-math-tool/de/index.mdx
+- Validation: passed
+- Runtime seconds: 8.44
+- Input tokens: 6955
+- Output tokens: 2132
+- Thinking tokens: unknown
+- Cached input tokens: 768
+- Cache write tokens: 0
+- Estimated cost: $0.000655
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: 'Hör auf, LLMs Mathe machen zu lassen'
 subTitle: Sie sind schlecht darin. So beheben Sie das.
@@ -136,3 +154,4 @@ Es ist ein Wandel in der Art, wie wir mit KI bauen. Nicht „kann das Modell das
 - [CortexJS Compute Engine](https://cortexjs.io/compute-engine/)
 - [Leitfaden für Tool‑Aufrufe](https://sdk.vercel.ai/docs/ai-sdk-core/tools-and-tool-calling)
 - [AI SDK Beispiel‑Repository](https://github.com/vercel/ai/tree/main/examples)
+````
