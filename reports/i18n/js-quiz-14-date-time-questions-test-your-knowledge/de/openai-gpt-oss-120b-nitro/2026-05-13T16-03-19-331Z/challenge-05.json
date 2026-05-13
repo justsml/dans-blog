@@ -1,0 +1,44 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Date String Parsing",
+  "translatedTitle": "Datumszeichenfolgen-Parsing",
+  "translation": {
+    "title": "Datumszeichenfolgen-Parsing",
+    "group": "Datumsverarbeitung",
+    "options": [
+      {
+        "text": "2019 2020"
+      },
+      {
+        "text": "2020 2021"
+      },
+      {
+        "text": "2020 2020"
+      },
+      {
+        "text": "2020 2019"
+      }
+    ],
+    "questionProse": [
+      "Welcher Wert wird in der Konsole ausgegeben?"
+    ],
+    "explanationProse": [
+      "Der String ohne einen `T`‑Zeitwert könnte wie der 1. Jan 2020 aussehen – aber datums‑nur‑Strings werden als UTC interpretiert, und wenn sie in unsere lokale Zeitzone (GMT‑7) umgerechnet werden, liegen wir noch im Jahr 2019.\n\n      Datums‑Zeit‑Strings ohne explizite Zeitzone werden in lokaler Zeit interpretiert.\n  \n      Die `T00:00`‑Form bewirkt, dass der zweite Wert als lokaler Mitternacht interpretiert wird.\n\n      Das erste Datum wird interpretiert als `Tue Dec 31 2019 17:00:00 GMT-0700 (Mountain Standard Time)`.\n      Das zweite Datum wird interpretiert als `Wed Jan 01 2020 00:00:00 GMT-0700 (Mountain Standard Time)`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Datumszeichenfolgen-Parsing\",\n  \"group\": \"Datumsverarbeitung\",\n  \"options\": [\n    {\n      \"text\": \"2019 2020\"\n    },\n    {\n      \"text\": \"2020 2021\"\n    },\n    {\n      \"text\": \"2020 2020\"\n    },\n    {\n      \"text\": \"2020 2019\"\n    }\n  ],\n  \"questionProse\": [\n    \"Welcher Wert wird in der Konsole ausgegeben?\"\n  ],\n  \"explanationProse\": [\n    \"Der String ohne einen `T`‑Zeitwert könnte wie der 1. Jan 2020 aussehen – aber datums‑nur‑Strings werden als UTC interpretiert, und wenn sie in unsere lokale Zeitzone (GMT‑7) umgerechnet werden, liegen wir noch im Jahr 2019.\\n\\n      Datums‑Zeit‑Strings ohne explizite Zeitzone werden in lokaler Zeit interpretiert.\\n  \\n      Die `T00:00`‑Form bewirkt, dass der zweite Wert als lokaler Mitternacht interpretiert wird.\\n\\n      Das erste Datum wird interpretiert als `Tue Dec 31 2019 17:00:00 GMT-0700 (Mountain Standard Time)`.\\n      Das zweite Datum wird interpretiert als `Wed Jan 01 2020 00:00:00 GMT-0700 (Mountain Standard Time)`.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 891,
+    "outputTokens": 786,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 3618
+  },
+  "cost": {
+    "inputUsd": 0.000034749,
+    "outputUsd": 0.00014148,
+    "totalUsd": 0.00017622900000000002,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

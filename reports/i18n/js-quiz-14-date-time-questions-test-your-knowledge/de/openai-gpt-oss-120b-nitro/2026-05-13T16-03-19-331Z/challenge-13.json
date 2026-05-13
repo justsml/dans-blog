@@ -1,0 +1,47 @@
+{
+  "index": 12,
+  "attempt": 1,
+  "originalTitle": "Date Setters Part 4",
+  "translatedTitle": "Datums-Setter Teil 4",
+  "translation": {
+    "title": "Datums-Setter Teil 4",
+    "group": "Datumsverarbeitung",
+    "options": [
+      {
+        "text": "Jan 01 2020"
+      },
+      {
+        "text": "Feb 01 2020"
+      },
+      {
+        "text": "Jan 01 2021"
+      },
+      {
+        "text": "Feb 01 2021"
+      },
+      {
+        "text": "RangeError: Ungültiges Argument."
+      }
+    ],
+    "questionProse": [
+      "Was wird die Ausgabe enthalten?"
+    ],
+    "explanationProse": [
+      "Die [.setMonth()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) Methode setzt den Monat der angegebenen Date‑Instanz.\n\nDer Monats‑Parameter ist nullbasiert und hat den Wertebereich 0‑11 (nach westlichen Kalendern).\n\nHier wird Monat und Jahr auf Februar 2021 angepasst, weil `setMonth(13)` um 2 größer ist als 11 (Dezember).\n\n<aside class=\"hint\">`setMonth` setzt den Monat per Index, die 12 Monate werden von 0‑11 indiziert. </aside>\n<aside class=\"hint\">\n  Zahlen außerhalb des Bereichs 0‑11 führen zu einem Über‑ oder Unterlauf des Jahres. Zum Beispiel wird `setMonth(13)` das Jahr auf 2021 anpassen (im Februar, weil 13 um 2 größer ist als 11).\n</aside>"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Datums-Setter Teil 4\",\n  \"group\": \"Datumsverarbeitung\",\n  \"options\": [\n    {\n      \"text\": \"Jan 01 2020\"\n    },\n    {\n      \"text\": \"Feb 01 2020\"\n    },\n    {\n      \"text\": \"Jan 01 2021\"\n    },\n    {\n      \"text\": \"Feb 01 2021\"\n    },\n    {\n      \"text\": \"RangeError: Ungültiges Argument.\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was wird die Ausgabe enthalten?\"\n  ],\n  \"explanationProse\": [\n    \"Die [.setMonth()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) Methode setzt den Monat der angegebenen Date‑Instanz.\\n\\nDer Monats‑Parameter ist nullbasiert und hat den Wertebereich 0‑11 (nach westlichen Kalendern).\\n\\nHier wird Monat und Jahr auf Februar 2021 angepasst, weil `setMonth(13)` um 2 größer ist als 11 (Dezember).\\n\\n<aside class=\\\"hint\\\">`setMonth` setzt den Monat per Index, die 12 Monate werden von 0‑11 indiziert. </aside>\\n<aside class=\\\"hint\\\">\\n  Zahlen außerhalb des Bereichs 0‑11 führen zu einem Über‑ oder Unterlauf des Jahres. Zum Beispiel wird `setMonth(13)` das Jahr auf 2021 anpassen (im Februar, weil 13 um 2 größer ist als 11).\\n</aside>\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 954,
+    "outputTokens": 867,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 3669
+  },
+  "cost": {
+    "inputUsd": 0.000037206,
+    "outputUsd": 0.00015606,
+    "totalUsd": 0.000193266,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
