@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: llm-connection-strings
+- Locale: es
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-01-30--llm-connection-strings/es/index.mdx
+- Validation: passed
+- Runtime seconds: 13.16
+- Input tokens: 5323
+- Output tokens: 5461
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.001736
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: ''
 subTitle: ''
@@ -117,3 +135,4 @@ Dejemos de reinventar la rueda y comencemos a tratar nuestras conexiones a model
 ![un cajón desordenado de variables de entorno](../hero-concept-8-drawers.webp)
 
 {/* ¹ Sí, sé que `URI` es más correcto que `URL`. Si eres lo suficientemente pedante como para preocuparte por esa distinción, por favor ve a tocar hierba. */}
+````
