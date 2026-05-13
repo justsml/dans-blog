@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: lancedb-wasm-browser-client
+- Locale: de
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-04-16--lancedb-wasm-browser-client/de/index.mdx
+- Validation: passed
+- Runtime seconds: 16.50
+- Input tokens: 9246
+- Output tokens: 2658
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.000839
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Serverlose Vektorsuche
 subTitle: 'Vector‑Search‑Browser‑Client mit Rust, WASM und TypeScript bauen'
@@ -129,3 +147,4 @@ Was dieses Projekt handhabbar machte, war, dass Lanses interne Architektur berei
 Gute Abstraktionsgrenzen erleichtern nicht nur das Verständnis des internen Codes – sie ermöglichen es jemandem wie mir, von außen zum Projekt zu kommen und eine neue Ausführungsumgebung einzuklinken, ohne den Kern zu berühren. Das ist ein echter Design‑Vorteil und ließ die 14 000 Zeilen eher wie das Ausfüllen einer Form wirken als wie ein Kampf gegen den Code‑Base.
 
 Der PR ist [hier](https://github.com/lancedb/lancedb/pull/3247), falls du die Details sehen willst. Noch in der Review‑Phase. Die Maintainer waren freundlich, und ich bin vorsichtig optimistisch.
+````
