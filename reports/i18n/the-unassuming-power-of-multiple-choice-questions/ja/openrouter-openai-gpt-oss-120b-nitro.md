@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: the-unassuming-power-of-multiple-choice-questions
+- Locale: ja
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2025-01-01--the-unassuming-power-of-multiple-choice-questions/ja/index.mdx
+- Validation: deferred
+- Runtime seconds: 2.17
+- Input tokens: 6286
+- Output tokens: 1504
+- Thinking tokens: unknown
+- Cached input tokens: 2816
+- Cache write tokens: 0
+- Estimated cost: $0.000516
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: 選択式問題のさりげない力
 subTitle: 教育におけるMCQの最大活用法
@@ -89,3 +107,4 @@ The surprise was not that multiple-choice questions scale. Everyone knows that. 
 だからこそ、このサイトで MCQ を使い続けています。効率的だからというだけでなく、文章だけでは回避できる指導上の正直さを強制してくれるからです。
 
 次に問題を作るときは、正解から始めないでください。誤解から着手しましょう。正解は、はるかに適切な位置に置くことができます。
+````
