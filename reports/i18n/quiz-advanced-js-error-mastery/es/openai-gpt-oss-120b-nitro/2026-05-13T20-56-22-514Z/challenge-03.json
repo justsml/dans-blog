@@ -1,0 +1,44 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "instanceof Inheritance",
+  "translatedTitle": "Herencia de instanceof",
+  "translation": {
+    "title": "Herencia de instanceof",
+    "group": "Trucos de verificación de tipos",
+    "options": [
+      {
+        "text": "verdadero, verdadero, verdadero"
+      },
+      {
+        "text": "verdadero, falso, falso"
+      },
+      {
+        "text": "falso, verdadero, verdadero"
+      },
+      {
+        "text": "verdadero, verdadero, falso"
+      }
+    ],
+    "questionProse": [
+      "¿Cuáles son los resultados de estas comprobaciones?"
+    ],
+    "explanationProse": [
+      "Los tres devuelven `true`. `CustomError` extiende `Error`, que a su vez extiende `Object`. El operador `instanceof` recorre toda la cadena de prototipos, por lo que una instancia de `CustomError` también es una instancia de `Error` y de `Object`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Herencia de instanceof\",\n  \"group\": \"Trucos de verificación de tipos\",\n  \"options\": [\n    {\n      \"text\": \"verdadero, verdadero, verdadero\"\n    },\n    {\n      \"text\": \"verdadero, falso, falso\"\n    },\n    {\n      \"text\": \"falso, verdadero, verdadero\"\n    },\n    {\n      \"text\": \"verdadero, verdadero, falso\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Cuáles son los resultados de estas comprobaciones?\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"js\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"explanationProse\": [\n    \"Los tres devuelven `true`. `CustomError` extiende `Error`, que a su vez extiende `Object`. El operador `instanceof` recorre toda la cadena de prototipos, por lo que una instancia de `CustomError` también es una instancia de `Error` y de `Object`.\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 808,
+    "outputTokens": 441,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 626
+  },
+  "cost": {
+    "inputUsd": 0.000031512,
+    "outputUsd": 0.00007937999999999999,
+    "totalUsd": 0.000110892,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
