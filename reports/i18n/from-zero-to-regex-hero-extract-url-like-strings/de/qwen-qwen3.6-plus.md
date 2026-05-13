@@ -4,7 +4,7 @@
 - Model: qwen/qwen3.6-plus
 - Target: src/content/posts/2024-12-29--from-zero-to-regex-hero-extract-url-like-strings/de/index.mdx
 - Validation: rejected: direct AI SDK translation failed
-- Runtime seconds: 240.21
+- Runtime seconds: 240.02
 - Input tokens: unknown
 - Output tokens: unknown
 - Thinking tokens: unknown
@@ -12,7 +12,7 @@
 - Cache write tokens: unknown
 - Estimated cost: unknown
 - Pricing source: unknown
-- Note: Command failed after 240000ms: bun run i18n:translate:chunked -- --slug from-zero-to-regex-hero-extract-url-like-strings --locale de --model qwen/qwen3.6-plus --chunk 6p --quiz-concurrency 24
+- Note: Command failed after 240000ms: bun run i18n:translate:chunked -- --slug from-zero-to-regex-hero-extract-url-like-strings --locale de --model qwen/qwen3.6-plus --chunk 6p --run-id 2026-05-13T18-15-57-947Z-61322 --run-lock-path /Users/dan/code/oss/dans-blog/.git/codex-i18n-translation-run.json --quiz-concurrency 24
 ## Raw Output
 
 ````mdx

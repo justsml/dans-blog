@@ -1,34 +1,36 @@
 {
-  "runId": "2026-05-13T17-24-15-986Z",
-  "runStatus": "completed",
+  "runId": "2026-05-13T18-15-58-216Z",
+  "runStatus": "running",
   "slug": "from-zero-to-regex-hero-extract-url-like-strings",
   "locale": "de",
-  "startedAt": "2026-05-13T17:24:15.986Z",
-  "updatedAt": "2026-05-13T17:30:26.100Z",
+  "startedAt": "2026-05-13T18:15:58.216Z",
+  "updatedAt": "2026-05-13T18:19:58.346Z",
   "modelsRequested": [
     "openrouter/openai/gpt-oss-120b:nitro",
     "openrouter/qwen/qwen3-32b:nitro",
     "deepseek/deepseek-v4-flash",
-    "qwen/qwen3.6-plus"
+    "qwen/qwen3.6-plus",
+    "qwen/qwen3.6-35b-a3b",
+    "qwen/qwen3.5-9b"
   ],
-  "attemptedModels": 2,
-  "skippedModels": 2,
+  "attemptedModels": 1,
+  "skippedModels": 3,
   "rejectedModels": 1,
-  "candidateModels": 1,
+  "candidateModels": 0,
   "totals": {
-    "inputTokens": 10477,
-    "outputTokens": 8489,
+    "inputTokens": 0,
+    "outputTokens": 0,
     "thinkingTokens": 0,
-    "cachedInputTokens": 768,
+    "cachedInputTokens": 0,
     "cacheWriteTokens": 0,
-    "estimatedCostUsd": 0.003738,
+    "estimatedCostUsd": 0,
     "hasUnknownInputTokens": true,
     "hasUnknownOutputTokens": true,
     "hasUnknownThinkingTokens": true,
     "hasUnknownCachedInputTokens": true,
     "hasUnknownCacheWriteTokens": true,
     "hasUnknownEstimatedCost": true,
-    "runtimeSeconds": "340.68"
+    "runtimeSeconds": "240.02"
   },
   "attempts": [
     {
@@ -45,30 +47,18 @@
     },
     {
       "model": "deepseek/deepseek-v4-flash",
-      "status": "candidate",
-      "validationStatus": "deferred",
+      "status": "skipped",
       "reportPath": "reports/i18n/from-zero-to-regex-hero-extract-url-like-strings/de/deepseek-deepseek-v4-flash.md",
-      "note": "Generated through the direct AI SDK chunked translator.",
-      "telemetry": {
-        "runtimeSeconds": "100.47",
-        "tokens": {
-          "input": 10477,
-          "output": 8489,
-          "cached": 768,
-          "cacheWrite": 0
-        },
-        "estimatedCostUsd": 0.0037383304,
-        "pricingSource": "local-openrouter-estimate"
-      }
+      "note": "Existing non-rejected report found. Pass --overwrite to rerun."
     },
     {
       "model": "qwen/qwen3.6-plus",
       "status": "rejected",
       "validationStatus": "rejected: direct AI SDK translation failed",
       "reportPath": "reports/i18n/from-zero-to-regex-hero-extract-url-like-strings/de/qwen-qwen3.6-plus.md",
-      "note": "Command failed after 240000ms: bun run i18n:translate:chunked -- --slug from-zero-to-regex-hero-extract-url-like-strings --locale de --model qwen/qwen3.6-plus --chunk 6p --quiz-concurrency 24",
+      "note": "Command failed after 240000ms: bun run i18n:translate:chunked -- --slug from-zero-to-regex-hero-extract-url-like-strings --locale de --model qwen/qwen3.6-plus --chunk 6p --run-id 2026-05-13T18-15-57-947Z-61322 --run-lock-path /Users/dan/code/oss/dans-blog/.git/codex-i18n-translation-run.json --quiz-concurrency 24",
       "telemetry": {
-        "runtimeSeconds": "240.21",
+        "runtimeSeconds": "240.02",
         "tokens": {}
       }
     }
