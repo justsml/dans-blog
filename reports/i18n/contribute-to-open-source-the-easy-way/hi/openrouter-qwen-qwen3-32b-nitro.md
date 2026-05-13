@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: contribute-to-open-source-the-easy-way
+- Locale: hi
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2024-01-16--contribute-to-open-source-the-easy-way/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 20.63
+- Input tokens: 6818
+- Output tokens: 9482
+- Thinking tokens: unknown
+- Cached input tokens: 1024
+- Cache write tokens: 0
+- Estimated cost: $0.002821
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: ओपन सोर्स करोड़पति बनें*
@@ -88,3 +106,4 @@ _चलो शुरू करते हैं!!!!!!_
 🚀
 
 यदि आपको यह मददगार लगा, तो कृपया टिप्पणियों में अपने योगदान साझा करें या उन्हें [ट्विटर पर मुझे @justsml के रूप में टैग करें](https://x.com/justsml).
+````
