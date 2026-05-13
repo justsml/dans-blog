@@ -1,0 +1,47 @@
+{
+  "index": 3,
+  "attempt": 1,
+  "originalTitle": "Matching Selectors to HTML Elements",
+  "translatedTitle": "Correspondance des sélecteurs à des éléments HTML",
+  "translation": {
+    "title": "Correspondance des sélecteurs à des éléments HTML",
+    "group": "Sélecteur : Fondamentaux",
+    "options": [
+      {
+        "text": "#Home",
+        "hint": "Attention à la casse : CSS est sensible à la casse."
+      },
+      {
+        "text": "a [id='home']",
+        "hint": "Espace non valide : implique un élément enfant."
+      },
+      {
+        "text": "a:contains(home)",
+        "hint": "Pseudo-classe non standard : CSS ne supporte pas `:contains()`."
+      },
+      {
+        "text": "a#home[name='home']"
+      }
+    ],
+    "questionProse": [
+      "Quel sélecteur correspond le mieux au HTML suivant ?"
+    ],
+    "explanationProse": [
+      "La bonne réponse est `a#home[name='home']`, qui correspond aux attributs `id` et `name`. CSS est sensible à la casse, donc `#Home` échouerait. L'espace dans `a [id='home']` implique un élément enfant, ce qui n'est pas applicable ici.\n\nLa pseudo-classe `:contains()` n'est pas standard en CSS, mais existe dans certains frameworks JS."
+    ]
+  },
+  "rawText": "```json\n{\n  \"title\": \"Correspondance des sélecteurs à des éléments HTML\",\n  \"group\": \"Sélecteur : Fondamentaux\",\n  \"options\": [\n    {\n      \"text\": \"#Home\",\n      \"hint\": \"Attention à la casse : CSS est sensible à la casse.\"\n    },\n    {\n      \"text\": \"a [id='home']\",\n      \"hint\": \"Espace non valide : implique un élément enfant.\"\n    },\n    {\n      \"text\": \"a:contains(home)\",\n      \"hint\": \"Pseudo-classe non standard : CSS ne supporte pas `:contains()`.\"\n    },\n    {\n      \"text\": \"a#home[name='home']\"\n    }\n  ],\n  \"questionProse\": [\n    \"Quel sélecteur correspond le mieux au HTML suivant ?\"\n  ],\n  \"explanationProse\": [\n    \"La bonne réponse est `a#home[name='home']`, qui correspond aux attributs `id` et `name`. CSS est sensible à la casse, donc `#Home` échouerait. L'espace dans `a [id='home']` implique un élément enfant, ce qui n'est pas applicable ici.\\n\\nLa pseudo-classe `:contains()` n'est pas standard en CSS, mais existe dans certains frameworks JS.\"\n  ]\n}\n```",
+  "telemetry": {
+    "inputTokens": 734,
+    "outputTokens": 615,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 6636
+  },
+  "cost": {
+    "inputUsd": 0.00005872,
+    "outputUsd": 0.00014759999999999998,
+    "totalUsd": 0.00020632,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
