@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: mastra-workflows-memory
+- Locale: fr
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-01-05--mastra-workflows-memory/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 3.97
+- Input tokens: 8298
+- Output tokens: 3114
+- Thinking tokens: unknown
+- Cached input tokens: 3968
+- Cache write tokens: 0
+- Estimated cost: $0.000884
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: >-
   Arrêtez de créer des agents instables : utilisez les flux de travail et la
@@ -250,3 +268,4 @@ Votre expérience peut varier, mais d’après ce que j’ai constaté, les syst
 2. [Sécurité & garde-fous](../mastra-security-guardrails)
 3. [MCP & intégrations d’outils](../mastra-mcp-tool-integrations)
 4. **Workflows & Mémoire** (Cet article)
+````
