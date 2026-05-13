@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: mastering-functional-pipelines-passing-state
+- Locale: ru
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2023-08-13--mastering-functional-pipelines-passing-state/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 5.68
+- Input tokens: 9519
+- Output tokens: 2491
+- Thinking tokens: unknown
+- Cached input tokens: 4352
+- Cache write tokens: 0
+- Estimated cost: $0.000820
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: 'Мастер конвейеров: передача состояния'
@@ -199,3 +217,4 @@ While there is no single “right answer” to designing modules, it helps to id
 #### Сопутствующая литература
 
 - [Подобные проблемы встречаются в мире компонент‑ориентированного React.](https://kyleshevlin.com/quit-your-yapping)
+````
