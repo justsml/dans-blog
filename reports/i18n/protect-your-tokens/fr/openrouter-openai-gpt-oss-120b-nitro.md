@@ -1,0 +1,143 @@
+# Translation Candidate
+- Slug: protect-your-tokens
+- Locale: fr
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2018-10-27--protect-your-tokens/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 2.22
+- Input tokens: 6903
+- Output tokens: 1623
+- Thinking tokens: unknown
+- Cached input tokens: 3968
+- Cache write tokens: 0
+- Estimated cost: $0.000561
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: 'Protéger vos jetons, clés API et secrets'
+subTitle: Public ? Privé ? Hein ?
+date: '2018-10-27'
+modified: '2024-07-30'
+tags:
+  - tokens
+  - api-keys
+  - secrets
+  - security
+  - nodejs
+  - json-web-tokens
+category: Guides
+subCategory: security
+cover: ../dayne-topkin-78982-unsplash.webp
+cover_mobile: ../w300_dayne-topkin-78982-unsplash.webp
+cover_icon: ../icon_dayne-topkin-78982-unsplash.webp
+---
+## Quand faut‑il protéger vos jetons ?
+
+<!--  For the purpose of this article we'll treat the following terms as related: . **They are not interchangable** despite most documentation and [StackOverflow](https://stackoverflow.com/questions/51698672/how-to-secure-my-api-key) answers using them as such. -->
+
+<!-- (Google Maps Credentials, AWS S3 Keys, Geocoding Service, etc.)  -->
+
+> Sécuriser les clés et jetons d’API est **crucial** !
+
+Une seule erreur peut entraîner la perte de contrôle de votre serveur et de vos données au profit de hackers !
+
+Il ne devrait pas être si difficile de déterminer si un jeton donné doit être caché – même en se basant sur la documentation officielle !
+
+Il est souvent aggravé par le mélange de termes apparentés que vous rencontrerez : _tokens_, _keys_, _credentials_, _secrets_, _private_ et _public_.
+
+Reformulons cela en deux catégories : `secret` et `non‑secret`.
+
+* 🔒 [`Secret keys`](#-secret-keys) DOIVENT rester cachées. En principe, elles ne doivent JAMAIS quitter votre serveur privé (ou service — comme Heroku, Netlify ou Travis‑CI).
+* 🌍 [`Non-secret keys`](#-non-secret-keys) désignent des chaînes qui peuvent être partagées librement et incluses dans les requêtes du navigateur.
+
+<br />
+
+---------------------------------------------
+
+## 🔒 `Secret keys`
+
+** ‼️ Important :** `Secret keys` **DOIVENT** être ignorées par Git _ET_ omises dans tout code côté navigateur. [_Comment utiliser dotenv_](#-how-to-handle-secrets-safely)
+
+<br />
+
+_Comment savoir si vous avez affaire à une `Secret key` ?_
+
+<br />
+
+**👍 Règle empirique :** les serveurs qui renvoient des `CORS errors` ne sont pas supportés par le navigateur. Cela indique fortement que vous **DEVEZ** proxy le service, en le traitant comme s’il était `secret`.
+
+**👍 Règle empirique :** les services coûteux devraient (presque) toujours être proxys ou masqués.
+
+**👍 Règle empirique :** si vous effectuez une opération d’écriture (**téléversement de fichier, insertion d’une ligne en base de données**), il se peut que vous manipuliez des `secret keys`.
+
+<br />
+
+**_Cas d’usage & fonctionnalités :_** `Secret` keys
+
+- Autorisation à long terme (identifiants, jetons d’accès, JSON Web Tokens)
+- Autorisation à court terme (jetons OAuth, stockage de session)
+- Accès à des services payants/coûteux (authentification, géocodage, stockage de fichiers, etc.)
+- Partie privée d’une paire publique/privée (RECAPTCHA, Stripe, Auth0)
+- Identifiants de service (Email/SMTP, LDAP/Services d’annuaire)
+- Chiffrement des données & vérification d’intégrité
+
+### Checklist : Gestion sécurisée des secrets
+
+#### Vue d’ensemble rapide
+
+Complétez les étapes suivantes pour **éliminer les secrets de votre code** :
+
+- [ ] Remplacez les clés codées en dur par des variables d’environnement, par ex. `process.env.API_SECRET`
+- [ ] Utilisez une bibliothèque comme [`dotenv`](https://github.com/motdotla/dotenv#dotenv) avec un fichier `.env`. Ajoutez les secrets précédemment codés en dur dans le fichier `.env`.
+- [ ] Ajoutez une ligne `.env` dans votre fichier `.gitignore` !
+
+> **NE PAS** créer de fichier `.env` sur les serveurs de production. Utilisez l’outil de gestion des variables d’environnement fourni par votre hébergeur (par ex. [Heroku](https://devcenter.heroku.com/articles/config-vars), Netlify, AWS EC2) : par ex. **tableau de bord ou ligne de commande**.
+
+<blockquote><h2 style="margin: 0.125em 0; text-align: center;">Article connexe : <a href="../securely-using-environment-variables-in-nodejs/">Utiliser dotenv en toute sécurité sous NodeJS</a></h2></blockquote>
+
+-----------------------------------
+
+## 🌍 `Non-secret keys`
+
+**👍 Règle empirique :** chaque fois qu’une clé doit être transmise au navigateur dans le code ou en ligne (par ex. via une balise `<script src="https://my-api/?apiKey=123-abc-456">`), **c’est définitivement une `non-secret`**. Un exemple fréquent est Google Maps.
+
+<br />
+
+**_Cas d’usage & fonctionnalités :_** `Non-secret` keys
+
+- Accès à court terme (identifiants de session utilisateur, JSON Web Tokens)
+- Limitation de l’accès à l’API par application/développeur (pour l’authentification, le géocodage, etc.)
+- Partie publique d’une paire public/privé (RECAPTCHA, Stripe, Auth0)
+- Identifiants d’analyse
+
+#### ✅ Gestion des non‑secrets :
+
+> **Il est sûr de coder en dur les clés non‑secrètes (publiques) !**
+
+Facilitez la gestion à long terme en centralisant les paramètres dans un fichier `config.js` partagé pour votre application.
+
+**Exemple :**
+
+```js
+// config.js
+module.exports = {
+  googleMapsKey: '123-abc'
+};
+```
+
+```js
+// load-map.js
+const config = require('./config.js');
+const key = config.googleMapsKey;
+const src = `//maps.googleapis.com/maps/api/js?key=${key}`;
+// ...
+```
+
+-----------------------------------
+
+**Remarque :** Il existe d’autres _cas d’utilisation_ pour les variables d’environnement. Certains que je n’ai pas abordés : CI/CD / tests, drapeaux de fonctionnalités, et configuration d’exécution pour des environnements spéciaux.
+````
