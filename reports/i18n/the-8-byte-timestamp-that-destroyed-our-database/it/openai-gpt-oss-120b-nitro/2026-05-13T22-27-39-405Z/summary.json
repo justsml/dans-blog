@@ -1,0 +1,93 @@
+{
+  "runId": "openai-gpt-oss-120b-nitro@2026-05-13T22-27-39-405Z",
+  "slug": "the-8-byte-timestamp-that-destroyed-our-database",
+  "locale": "it",
+  "model": "openai/gpt-oss-120b:nitro",
+  "modelPath": "openai-gpt-oss-120b-nitro",
+  "createdAt": "2026-05-13T22:27:43.072Z",
+  "sourcePath": "src/content/posts/2025-12-29--the-8-byte-timestamp-that-destroyed-our-database/index.mdx",
+  "targetPath": "src/content/posts/2025-12-29--the-8-byte-timestamp-that-destroyed-our-database/it/index.mdx",
+  "candidatePath": "reports/i18n/the-8-byte-timestamp-that-destroyed-our-database/it/openai-gpt-oss-120b-nitro/2026-05-13T22-27-39-405Z/candidate.mdx",
+  "sourceHash": "4d98d485a209ef83adfb3ec4df7994acdb6c23964910ec139710bf29772952fe",
+  "outputHash": "e760d8c745aa207dd18951330bab5d1e0d865b30c06ac67ae92d03c54a976464",
+  "reasoningEffort": "low",
+  "temperature": 0.3,
+  "maxTokens": 16000,
+  "timeoutMs": 200000,
+  "articleSummary": "Thearticle argues that PostgreSQL’s `TIMESTAMP` and `TIMESTAMPTZ` types serve fundamentally different purposes despite sharing the same 8‑byte storage, and that developers must choose the right representation for each use‑case. It explains that `TIMESTAMPTZ` stores an absolute moment in UTC and only performs timezone conversion on read, making it ideal for event logging, while plain `TIMESTAMP` (or `TIME` with a separate zone field) should be used when the wall‑clock reading at a specific location matters (e.g., train tickets, hotel check‑ins, recurring reminders). The author illustrates these points with real‑world analogies (train schedules, flight trackers, calendars) and offers practical rules—default to `TIMESTAMPTZ`, keep timezone context in separate columns, and avoid exact equality checks due to microsecond precision mismatches. The tone is an instructional analysis, using travel‑ticket metaphors to frame the distinction between absolute moments and local clock times.",
+  "totalInputTokens": 8155,
+  "totalOutputTokens": 2979,
+  "totalCacheReadTokens": 4352,
+  "totalCacheWriteTokens": 0,
+  "totalDurationMs": 2768,
+  "totalCostUsd": 0.0008542650000000001,
+  "pricingSource": "local-openrouter-estimate",
+  "telemetry": {
+    "model": "openai/gpt-oss-120b:nitro",
+    "chunkSize": "10p",
+    "totalChunks": 6,
+    "totalInputTokens": 8155,
+    "totalOutputTokens": 2979,
+    "totalCacheReadTokens": 4352,
+    "totalCacheWriteTokens": 0,
+    "totalDurationMs": 2768,
+    "totalCostUsd": 0.0008542650000000001,
+    "pricingSource": "local-openrouter-estimate",
+    "chunks": [
+      {
+        "index": 0,
+        "inputTokens": 1181,
+        "outputTokens": 414,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 407,
+        "costUsd": 0.000120579
+      },
+      {
+        "index": 1,
+        "inputTokens": 1429,
+        "outputTokens": 581,
+        "cacheReadTokens": 768,
+        "cacheWriteTokens": 0,
+        "durationMs": 425,
+        "costUsd": 0.000160311
+      },
+      {
+        "index": 2,
+        "inputTokens": 1491,
+        "outputTokens": 600,
+        "cacheReadTokens": 768,
+        "cacheWriteTokens": 0,
+        "durationMs": 704,
+        "costUsd": 0.00016614899999999998
+      },
+      {
+        "index": 3,
+        "inputTokens": 1441,
+        "outputTokens": 526,
+        "cacheReadTokens": 768,
+        "cacheWriteTokens": 0,
+        "durationMs": 391,
+        "costUsd": 0.00015087899999999998
+      },
+      {
+        "index": 4,
+        "inputTokens": 1463,
+        "outputTokens": 637,
+        "cacheReadTokens": 768,
+        "cacheWriteTokens": 0,
+        "durationMs": 454,
+        "costUsd": 0.000171717
+      },
+      {
+        "index": 5,
+        "inputTokens": 1150,
+        "outputTokens": 221,
+        "cacheReadTokens": 768,
+        "cacheWriteTokens": 0,
+        "durationMs": 387,
+        "costUsd": 0.00008463000000000001
+      }
+    ]
+  }
+}
