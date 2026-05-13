@@ -3,23 +3,23 @@
 - Locale: ja
 - Model: openrouter/openai/gpt-oss-120b:nitro
 - Target: src/content/posts/2015-06-11--docker-rocks/ja/index.mdx
-- Validation: rejected: direct AI SDK translation failed
-- Runtime seconds: 0.78
-- Input tokens: 1947
-- Output tokens: 535
+- Validation: deferred
+- Runtime seconds: 1.31
+- Input tokens: 2091
+- Output tokens: 600
 - Thinking tokens: unknown
-- Cached input tokens: 1024
+- Cached input tokens: 640
 - Cache write tokens: 0
-- Estimated cost: $0.000172
+- Estimated cost: $0.000190
 - Pricing source: local-openrouter-estimate
-- Note: Command failed: git add src/content/posts/2015-06-11--docker-rocks/ja/index.mdx reports/i18n/docker-rocks/ja
+- Note: Generated through the direct AI SDK chunked translator.
 ## Raw Output
 
 ````mdx
 ---
 social_image: ../desktop-social.webp
-title: Dockerは最高、OSXでも動作
-subTitle: Dockerは驚くほど高速で柔軟です。
+title: Dockerが最高、OSXでも動作する
+subTitle: Dockerは高速で柔軟です
 date: '2015-06-11'
 modified: '2024-08-10'
 category: DevOps
@@ -38,30 +38,30 @@ cover_icon: ../icon_guillaume-bolduc-259596-unsplash.webp
 ---
 ## Docker Rocks
 
-> Updates September 2016, 2018  
+> 2016年9月、2018年の更新  
 > Boot2Docker は Docker for Mac に置き換えられました
 
-> 歴史的注記: 本記事は意図的に 2015 年頃の Docker-for-Mac のスナップショットとして残しています。パフォーマンスに関する助言やツール名はその時点のものです。現在の Docker Desktop と Compose のワークフローはすでに進化しています。
+> 歴史的備考: 本投稿は意図的に 2015 年頃の Docker-for-Mac のスナップショットとして残しています。パフォーマンスに関する助言やツール名は当時のものです。現在の Docker Desktop と Compose のワークフローはすでに進化しています。
 
 1. Docker は驚くほど高速で柔軟です。  
-2. 以前のツール、特に boot2docker は遅く、クラッシュしやすいものでした。
+1. 以前のツール、特に boot2docker は遅く、クラッシュしやすいものでした。
 
-Docker は現在、Linux カーネル v3.4 以上でネイティブに動作できます。実際の boot2docker VM は v4 を実行しています。
+Docker は現在、Linux カーネル v3.4 以上でネイティブに動作します。実際の boot2docker VM は v4 を実行しています。
 
 ハードウェアを最大限に活かすには、Mac/Windows マシンに最新の Debian または Ubuntu をインストールしてください。
 
-... まあ、あのゲームはコードの学習になりませんね...
+… c'mon those games aren't helping your code…
 
-### 設定を確認
+### セットアップを確認
 
-`docker info` コマンドの出力を確認します。
+`docker info` コマンドの出力を確認してください。
 
-1. セキュリティ: リモートネットワークから `nmap` で予期しない開放ポートがないかチェックする  
-2. DNS: ローカルキャッシュまたは低遅延の DNS サーバーを使用する  
-3. ストレージ: 正しいストレージドライバーを使用する（`overlay2` がほとんどの場合に適します）
+1. セキュリティ: リモートネットワークから `nmap` を使い、予期せぬ開放ポートがないかチェックする  
+2. DNS: ローカルキャッシュまたは低遅延 DNS サーバーを利用する  
+3. ストレージ: 正しいストレージドライバーを使用する（`overlay2` がほぼ確実）
 
 2024 年更新:
 
-- Docker Desktop はプロプライエタリですが、個人利用は無料です。OSX または Windows で Docker を始めるには最適な手段です。  
-- もっとオープンソース志向の解決策を求めるなら、[Rancher Desktop](https://rancherdesktop.io/) をチェックしてください。
+- Docker Desktop はプロプライエタリですが、個人利用は無料です。macOS や Windows で Docker を始めるには最適な手段です。  
+- もっとオープンソース志向の代替が欲しい場合は、[Rancher Desktop](https://rancherdesktop.io/) を確認してください。
 ````
