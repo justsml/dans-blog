@@ -1,0 +1,161 @@
+# Translation Candidate
+- Slug: visualizing-promises
+- Locale: ja
+- Model: qwen/qwen3.6-35b-a3b
+- Target: src/content/posts/2018-09-30--visualizing-promises/ja/index.mdx
+- Validation: deferred
+- Runtime seconds: 54.47
+- Input tokens: 3561
+- Output tokens: 12242
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.012776
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: Promise の可視化
+subTitle: 壁を突き破って...
+date: '2018-09-30'
+modified: '2024-07-30'
+category: Guides
+subCategory: promises
+cover: ../junior-ferreira-735237-unsplash.webp
+cover_mobile: ../w300_junior-ferreira-735237-unsplash.webp
+cover_icon: ../icon_junior-ferreira-735237-unsplash.webp
+tags:
+  - promises
+  - async
+  - visualizing
+  - javascript
+  - composition
+related:
+  - intro-to-promises
+  - promise-gotchas
+  - stop-trying-to-make-async-await-happen
+  - javascript-promises-quiz
+---
+Promise の実行フローを可視化するため、`delay(millisecs)` という簡易ユーティリティを定義する。
+
+```js
+function delay(millisecs) {
+  return new Promise(resolve => {
+    setTimeout(() => resolve(millisecs), millisecs);
+  });
+}
+```
+
+タイムアウトが経過すると Promise が解決（resolve）するユーティリティ関数だ。
+
+指定したミリ秒単位の遅延値は、`.then` のコールバックに渡される。
+
+以下の4つのケース（アニメーション付きタイムライン付き）で動作を確認する。
+
+## 例 1/4
+
+`delay(msec)` が `console.log()` の実行タイミングをどのように遅延させるかを示す。
+
+```js
+delay(1000).then(() => console.log("done"));
+```
+
+![1秒後にconsole.logが実行されるdelay(1000)のタイムライン](../N_1000ms_log.webp)
+
+<!-- ```
+delay(1000) --------|.then(fn)
+                    | console.log('done')
+|-------------------|--------------------|--------------------|-----------------
+0msec             1sec                 2sec                 3sec
+``` -->
+
+## 例 2/4
+
+_これはよくある実装ミスを示している。_
+
+`console.log` は `delay(1000)` が**開始された瞬間**に実行される。おそらく意図していたような、遅延**後**ではない。
+
+`console.log` が `undefined` を返すため、`.then()` は無視される。
+
+`typeof console.log === 'function'` と `typeof console.log() === undefined` の違いに注意。
+
+通常、`console.log` を正しく使う方法は例 1 で示した通りだ。`.then` や `.catch` には関数を渡すことを確認しろ。
+
+```js
+delay(1000).then(console.log("done"));
+```
+
+![遅延終了前に console.log が直ちに実行されるタイムライン](../N_1000ms_!log.webp)
+
+<!-- ```
+delay(1000) --------|.then(null)
+console.log('done')
+|-------------------|--------------------|--------------------|-----------------
+0msec             1sec                 2sec                 3sec
+``` -->
+
+## 例 3/4
+
+3 つの Promise が同時に実行される。
+
+```js
+delay(1000).then(console.log);
+delay(2000).then(console.log);
+delay(3000).then(console.log);
+```
+
+![1秒、2秒、3秒後に解決する3つの delay Promise のタイムライン](../N_3000ms.webp)
+
+<!-- ```
+delay(1000) ------|.then(console.log)
+delay(2000) ------|--------------------|.then(console.log)
+delay(3000) ------|--------------------|--------------------|.then(console.log)
+|-----------------|--------------------|--------------------|-------------------
+|                 |                    |                    |
+0msec           1sec                 2sec                 3sec
+``` -->
+
+## 例 4/4
+
+`Promise.all` に `delay` Promise を3つ渡す。これらは同時に実行される。
+
+```js
+Promise.all([delay(1000), delay(2000), delay(3000)]).then(console.log);
+```
+
+![3つのdelay Promiseのすべてが解決されるまで待機するPromise.allのタイムライン](../N_3000ms_PromiseAll.webp)
+
+<!--
+
+```
+delay(1000) ---| [resolved]------------------v
+delay(2000) ---|--------------| [resolved]---v
+delay(3000) ---|--------------|--------------v [resolved]
+Promise.all()  |--------------|-------------- > console.log([1000, 2000, 3000])
+|--------------|--------------|--------------|--------------------------------
+|              |              |              |
+0msec        1sec           2sec           3sec
+```
+
+-->
+
+> クレジット：
+>
+> - アニメーション付き非同期図の作成：[Patrick Biffle](https://github.com/Piglacquer)
+> - 本記事の着想元：https://pouchdb.com/2015/05/18/we-have-a-problem-with-promises.html
+
+<!-- <div class="challenge" title="Question #1: Meaning of life:">
+
+  <ul class="options">
+    <li>1</li>
+    <li>2</li>
+    <li class="answer">42</li>
+    <li>3</li>
+  </ul>
+  <div class="description">What is the meaning of life?</div>
+
+</div> -->
+````
