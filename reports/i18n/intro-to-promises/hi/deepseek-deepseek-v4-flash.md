@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: intro-to-promises
+- Locale: hi
+- Model: deepseek/deepseek-v4-flash
+- Target: src/content/posts/2018-08-01--intro-to-promises/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 29.67
+- Input tokens: 3893
+- Output tokens: 4046
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.001678
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: प्रॉमिसेस का परिचय
@@ -106,3 +124,4 @@ All Promises return either success (via `.then(fn)`) or failure (via `.catch(fn)
 * `Promise.reject(Error)` - एक विफलता प्रॉमिस मान बनाता है, बाद के `.catch()` को ट्रिगर करता है
 * `Promise.all([...promises])` - सभी प्रॉमिस के पूरा होने तक प्रतीक्षा करें
 * `Promise.race([...promises])` - जैसे ही पहला प्रॉमिस हल होता है, हल हो जाता है
+````
