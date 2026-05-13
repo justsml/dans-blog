@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: intro-to-promises
+- Locale: hi
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2018-08-01--intro-to-promises/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 11.43
+- Input tokens: 3892
+- Output tokens: 4598
+- Thinking tokens: unknown
+- Cached input tokens: 512
+- Cache write tokens: 0
+- Estimated cost: $0.001415
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: ''
@@ -106,3 +124,4 @@ new Promise(function(resolve, reject) {
 * `Promise.reject(Error)` - विफलता प्रमिस मान बनाता है, अगले `.catch()` को ट्रिगर करता है  
 * `Promise.all([...promises])` - प्रमिसेज़ के सभी अरे को पूरा होने के लिए इंतजार करें  
 * `Promise.race([...promises])` - जैसे ही पहला प्रमिस सुलझ जाए तत्काल निर्णय लेता है
+````
