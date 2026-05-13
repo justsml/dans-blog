@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: stop-trying-to-make-async-await-happen
+- Locale: ja
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2018-10-03--stop-trying-to-make-async-await-happen/ja/index.mdx
+- Validation: deferred
+- Runtime seconds: 39.02
+- Input tokens: 10482
+- Output tokens: 8110
+- Thinking tokens: unknown
+- Cached input tokens: 512
+- Cache write tokens: 0
+- Estimated cost: $0.002785
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: ''
@@ -208,3 +226,4 @@ function logInOrder(urls) {
 
 * [Daniel Brain](https://medium.com/@bluepnume/even-with-async-await-you-probably-still-need-promises-9b259854c161)
 * [Eric Elliott](https://x.com/_ericelliott?lang=en)
+````
