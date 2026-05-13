@@ -1,0 +1,134 @@
+{
+  "event": "translation_scored",
+  "isoDate": "2026-05-13",
+  "at": "2026-05-13T07:33:21.004Z",
+  "slug": "quiz-master-modern-html5",
+  "locale": "es",
+  "model": "openrouter/google/gemini-3-flash-preview",
+  "sourcePath": "src/content/posts/2024-11-01--quiz-master-modern-html5/index.mdx",
+  "targetPath": "src/content/posts/2024-11-01--quiz-master-modern-html5/es/index.mdx",
+  "reportPath": "reports/i18n/quiz-master-modern-html5/es/score.md",
+  "hash": "c24e437dd2a576f8fcab6952d7a71f9e73b4cfd97353a9931ab31e4203aa0d18",
+  "sourceHash": "fafb3cb39188f9baf3ae1b06668f1c96f93c5eaa7b6ef050a25b5578671de85f",
+  "translationHash": "184ce2055482b849f8f6eec6b9c3cef75ef10c8e835820c5d52492ffe77bd3ca",
+  "scores": {
+    "readability": 92,
+    "technicalAccuracy": 65,
+    "coherence": 80,
+    "relevance": 70,
+    "translationQuality": 75
+  },
+  "overallScore": 76.4,
+  "recommendation": "polish",
+  "stats": {
+    "source": {
+      "bytes": 15297,
+      "chars": 15284,
+      "words": 1871,
+      "paragraphs": 85,
+      "headings": 2,
+      "codeFences": 0,
+      "inlineCodeSpans": 69,
+      "markdownLinks": 16,
+      "images": 0,
+      "imports": 2,
+      "challengeComponents": 14,
+      "frontmatterKeys": [
+        "category",
+        "cover_full_width",
+        "cover_icon",
+        "cover_mobile",
+        "date",
+        "label",
+        "modified",
+        "social_image",
+        "subCategory",
+        "subTitle",
+        "tags",
+        "title",
+        "unlisted"
+      ]
+    },
+    "translation": {
+      "bytes": 13727,
+      "chars": 13593,
+      "words": 1629,
+      "paragraphs": 39,
+      "headings": 2,
+      "codeFences": 0,
+      "inlineCodeSpans": 59,
+      "markdownLinks": 16,
+      "images": 0,
+      "imports": 2,
+      "challengeComponents": 14,
+      "frontmatterKeys": [
+        "category",
+        "cover_full_width",
+        "cover_icon",
+        "cover_mobile",
+        "date",
+        "label",
+        "modified",
+        "social_image",
+        "subCategory",
+        "subTitle",
+        "tags",
+        "title",
+        "unlisted"
+      ]
+    },
+    "ratios": {
+      "chars": 0.889,
+      "words": 0.871,
+      "paragraphs": 0.459,
+      "codeFencesDelta": 0,
+      "challengeComponentsDelta": 0,
+      "markdownLinksDelta": 0,
+      "imagesDelta": 0
+    },
+    "prompt": {
+      "sourceCharsIncluded": 15284,
+      "translationCharsIncluded": 13593,
+      "sourceTruncated": false,
+      "translationTruncated": false
+    }
+  },
+  "costs": {
+    "inputTokens": 9366,
+    "outputTokens": 400,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 3411,
+    "inputUsd": 0.004683,
+    "outputUsd": 0.0012,
+    "totalUsd": 0.005883,
+    "pricingSource": "local-openrouter-estimate"
+  },
+  "analysis": "The translation of the prose is excellent, capturing Dan's direct and slightly humorous tone perfectly. However, there is a major technical failure: almost all `options` arrays within the `<Challenge>` components are empty in the translation, effectively breaking the quiz functionality. Additionally, the `title` props for most challenges were left as empty strings.",
+  "strengths": [
+    "Excellent localization of the 'legal' joke and conversational tone.",
+    "High-quality technical explanations in Spanish that maintain MDN-style clarity.",
+    "Correct preservation of MDX component structure and imports."
+  ],
+  "issues": [
+    {
+      "severity": "high",
+      "category": "technicalAccuracy",
+      "note": "The 'options' array is empty for challenges 0 through 12, meaning the quiz answers and distractors are missing.",
+      "excerpt": "options: [\n  ]"
+    },
+    {
+      "severity": "medium",
+      "category": "relevance",
+      "note": "The 'title' prop for most Challenge components is empty, whereas the source had descriptive titles.",
+      "excerpt": "title=\"\""
+    },
+    {
+      "severity": "low",
+      "category": "readability",
+      "note": "Minor formatting: extra line breaks in the final explanation for the 'role' attribute.",
+      "excerpt": "El atributo `role` describe\n\n    el propósito"
+    }
+  ],
+  "rawText": "{\n  \"scores\": {\n    \"readability\": 92,\n    \"technicalAccuracy\": 65,\n    \"coherence\": 80,\n    \"relevance\": 70,\n    \"translationQuality\": 75\n  },\n  \"analysis\": \"The translation of the prose is excellent, capturing Dan's direct and slightly humorous tone perfectly. However, there is a major technical failure: almost all `options` arrays within the `<Challenge>` components are empty in the translation, effectively breaking the quiz functionality. Additionally, the `title` props for most challenges were left as empty strings.\",\n  \"strengths\": [\n    \"Excellent localization of the 'legal' joke and conversational tone.\",\n    \"High-quality technical explanations in Spanish that maintain MDN-style clarity.\",\n    \"Correct preservation of MDX component structure and imports.\"\n  ],\n  \"issues\": [\n    {\n      \"severity\": \"high\",\n      \"category\": \"technicalAccuracy\",\n      \"note\": \"The 'options' array is empty for challenges 0 through 12, meaning the quiz answers and distractors are missing.\",\n      \"excerpt\": \"options: [\\n  ]\"\n    },\n    {\n      \"severity\": \"medium\",\n      \"category\": \"relevance\",\n      \"note\": \"The 'title' prop for most Challenge components is empty, whereas the source had descriptive titles.\",\n      \"excerpt\": \"title=\\\"\\\"\"\n    },\n    {\n      \"severity\": \"low\",\n      \"category\": \"readability\",\n      \"note\": \"Minor formatting: extra line breaks in the final explanation for the 'role' attribute.\",\n      \"excerpt\": \"El atributo `role` describe\\n\\n    el propósito\"\n    }\n  ],\n  \"recommendation\": \"reject\"\n}"
+}

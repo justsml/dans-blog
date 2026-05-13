@@ -60,6 +60,7 @@ type CandidateRunAttempt = {
 
 type CandidateRunSummary = {
   runId: string;
+  runStatus: "running" | "completed";
   slug: string;
   locale: string;
   startedAt: string;
@@ -119,6 +120,7 @@ let candidateRunSummaryRelPath = "";
 let candidateRunHistoryPath = "";
 let candidateRunHistoryRelPath = "";
 let candidateRunAttempts: CandidateRunAttempt[] = [];
+let candidateRunStatus: CandidateRunSummary["runStatus"] = "running";
 
 if (shouldDryRun) {
   console.log(`Candidate tasks:`);
@@ -157,9 +159,11 @@ function processTask(currentSlug: string, currentLocale: ActiveLocale) {
   candidateRunHistoryPath = join(reportDir, "candidate-run-history.jsonl");
   candidateRunHistoryRelPath = relativeToRepo(candidateRunHistoryPath);
   candidateRunAttempts = [];
+  candidateRunStatus = "running";
 
   console.log(`\nGenerating candidates for ${slug} [${locale}]`);
   mkdirSync(dirname(targetPath), { recursive: true });
+  writeCandidateRunSummary(buildCandidateRunSummary());
 
   for (const model of models) {
     const reportPath = `${reportDir}/${safeModelName(model)}.md`;
@@ -254,6 +258,7 @@ function processTask(currentSlug: string, currentLocale: ActiveLocale) {
     }
   }
 
+  candidateRunStatus = "completed";
   const finalSummary = buildCandidateRunSummary();
   writeCandidateRunSummary(finalSummary);
   appendCandidateRunHistory(finalSummary);
@@ -716,6 +721,7 @@ function buildCandidateRunSummary(): CandidateRunSummary {
 
   return {
     runId: candidateRunId,
+    runStatus: candidateRunStatus,
     slug,
     locale,
     startedAt: candidateRunStartedAt.toISOString(),

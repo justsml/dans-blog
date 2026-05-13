@@ -20,6 +20,7 @@ type CandidateSummary = {
   count: number;
   expected: number;
   reports: number;
+  isInProgress: boolean;
   attemptedModels: number;
   rejectedModels: number;
   accountingSources: string[];
@@ -42,6 +43,9 @@ type Totals = {
   articles: number;
   slots: number;
   completeSlots: number;
+  completeArticles: number;
+  inProgressSlots: number;
+  inProgressArticles: number;
   candidateRows: number;
   attemptedModels: number;
   rejectedModels: number;
@@ -95,7 +99,7 @@ if (shouldUseTui) {
 function getDashboardData() {
   const rows = collectRows();
   const visibleRows = shouldIncompleteOnly
-    ? rows.filter((row) => selectedLocales.some((locale) => row.candidates[locale].count < expectedCandidates))
+    ? rows.filter((row) => articleState(row) !== "complete")
     : rows;
   const totals = summarize(rows);
 
@@ -281,10 +285,11 @@ function drawHeader(
 
 function drawTable(term: any, rows: ArticleRow[], width: number, top: number) {
   const totalWidth = 7;
+  const statusWidth = 11;
   const categoryWidth = 12;
   const dateWidth = 10;
   const localeWidth = 7;
-  const fixedWidth = categoryWidth + dateWidth + totalWidth + selectedLocales.length * localeWidth + 8;
+  const fixedWidth = categoryWidth + dateWidth + totalWidth + statusWidth + selectedLocales.length * localeWidth + 9;
   const articleWidth = Math.max(18, width - fixedWidth);
   const columns = [
     { label: "Article", width: articleWidth },
@@ -292,6 +297,7 @@ function drawTable(term: any, rows: ArticleRow[], width: number, top: number) {
     { label: "Date", width: dateWidth },
     ...selectedLocales.map((locale) => ({ label: locale.toUpperCase(), width: localeWidth })),
     { label: "Total", width: totalWidth },
+    { label: "Status", width: statusWidth },
   ];
 
   let x = 1;
@@ -311,6 +317,7 @@ function drawTable(term: any, rows: ArticleRow[], width: number, top: number) {
       row.date ?? "",
       ...selectedLocales.map((locale) => terminalCandidateCell(row.candidates[locale])),
       `${total}/${selectedLocales.length * expectedCandidates}`,
+      formatArticleState(row),
     ];
 
     let cellX = 1;
@@ -318,6 +325,8 @@ function drawTable(term: any, rows: ArticleRow[], width: number, top: number) {
       const column = columns[cellIndex];
       const style = cellIndex >= 3 && cellIndex < 3 + selectedLocales.length
         ? candidateStyle(row.candidates[selectedLocales[cellIndex - 3]])
+        : cellIndex === values.length - 1
+          ? articleStateStyle(row)
         : undefined;
       writeAt(term, cellX, y, value, column.width, style);
       cellX += column.width + 1;
@@ -337,6 +346,8 @@ function drawSidePanel(
   drawPanel(term, left, top, width, height, "Status");
   const lines = [
     ["Slots", `${totals.completeSlots}/${totals.slots} (${formatPercent(totals.slots === 0 ? 0 : totals.completeSlots / totals.slots)})`],
+    ["Articles", `${totals.completeArticles}/${totals.articles}`],
+    ["In progress", `${totals.inProgressSlots} slots, ${totals.inProgressArticles} articles`],
     ["Candidates", String(totals.candidateRows)],
     ["Attempts", String(totals.attemptedModels)],
     ["Rejected", String(totals.rejectedModels)],
@@ -368,13 +379,14 @@ function drawSidePanel(
 }
 
 function drawBottomPanel(term: any, totals: Totals, rows: ArticleRow[], left: number, top: number, width: number) {
-  drawPanel(term, left, top, width, 8, "Status");
+  drawPanel(term, left, top, width, 9, "Status");
   const coverage = totals.slots === 0 ? 0 : totals.completeSlots / totals.slots;
   writeAt(term, left + 2, top + 2, `Slots ${totals.completeSlots}/${totals.slots} (${formatPercent(coverage)})`, width - 4);
-  writeAt(term, left + 2, top + 3, `Candidates ${totals.candidateRows} | Attempts ${totals.attemptedModels} | Rejected ${totals.rejectedModels}`, width - 4);
-  writeAt(term, left + 2, top + 4, `Cost ${formatUsd(totals.costUsd)}${totals.hasUnknownCost ? " + unknown" : ""} | Source ${formatSources(totals.accountingSources)}`, width - 4);
-  writeAt(term, left + 2, top + 5, `Input ${formatInteger(totals.inputTokens)}${totals.hasUnknownTokens ? " + unknown" : ""} | Output ${formatInteger(totals.outputTokens)}${totals.hasUnknownTokens ? " + unknown" : ""} | Cache ${formatInteger(totals.cachedInputTokens)}`, width - 4);
-  writeAt(term, left + 2, top + 6, `Locales ${selectedLocales.map((locale) => {
+  writeAt(term, left + 2, top + 3, `Articles ${totals.completeArticles}/${totals.articles} | Running ${totals.inProgressSlots} slots`, width - 4);
+  writeAt(term, left + 2, top + 4, `Candidates ${totals.candidateRows} | Attempts ${totals.attemptedModels} | Rejected ${totals.rejectedModels}`, width - 4);
+  writeAt(term, left + 2, top + 5, `Cost ${formatUsd(totals.costUsd)}${totals.hasUnknownCost ? " + unknown" : ""} | Source ${formatSources(totals.accountingSources)}`, width - 4);
+  writeAt(term, left + 2, top + 6, `Input ${formatInteger(totals.inputTokens)}${totals.hasUnknownTokens ? " + unknown" : ""} | Output ${formatInteger(totals.outputTokens)}${totals.hasUnknownTokens ? " + unknown" : ""} | Cache ${formatInteger(totals.cachedInputTokens)}`, width - 4);
+  writeAt(term, left + 2, top + 7, `Locales ${selectedLocales.map((locale) => {
     const summaries = rows.map((row) => row.candidates[locale]);
     return `${locale}:${summaries.filter((summary) => summary.count >= expectedCandidates).length}/${rows.length}`;
   }).join(" ")}`, width - 4);
@@ -394,13 +406,38 @@ function drawFooter(term: any, width: number, height: number, offset: number, ma
 }
 
 function terminalCandidateCell(summary: CandidateSummary) {
-  return `${summary.count}/${summary.expected}`;
+  return summary.isInProgress ? `${summary.count}/${summary.expected}*` : `${summary.count}/${summary.expected}`;
 }
 
 function candidateStyle(summary: CandidateSummary) {
+  if (summary.isInProgress) return "cyan";
   if (summary.count >= summary.expected) return "green";
   if (summary.count === 0) return "gray";
   return "yellow";
+}
+
+function articleState(row: ArticleRow) {
+  const summaries = selectedLocales.map((locale) => row.candidates[locale]);
+  if (summaries.some((summary) => summary.isInProgress)) return "running";
+  if (summaries.every((summary) => summary.count >= summary.expected)) return "complete";
+  if (summaries.some((summary) => summary.count > 0)) return "partial";
+  return "missing";
+}
+
+function formatArticleState(row: ArticleRow) {
+  const state = articleState(row);
+  if (state === "running") return "running";
+  if (state === "complete") return "complete";
+  if (state === "partial") return "partial";
+  return "missing";
+}
+
+function articleStateStyle(row: ArticleRow) {
+  const state = articleState(row);
+  if (state === "running") return "cyan";
+  if (state === "complete") return "green";
+  if (state === "partial") return "yellow";
+  return "gray";
 }
 
 function writeAt(term: any, x: number, y: number, value: string, width: number, style?: string) {
@@ -477,6 +514,7 @@ function readCandidateSummary(slug: string, locale: ActiveLocale): CandidateSumm
     count: rowsOrReports,
     expected: expectedCandidates,
     reports: fallbackReports,
+    isInProgress: isRunInProgress(reportDir),
     attemptedModels: accounting.attemptedModels,
     rejectedModels: accounting.rejectedModels,
     accountingSources: accounting.sources,
@@ -490,6 +528,17 @@ function readCandidateSummary(slug: string, locale: ActiveLocale): CandidateSumm
     hasUnknownTokens: accounting.hasUnknownTokens,
     hasUnknownCost: accounting.hasUnknownCost,
   };
+}
+
+function isRunInProgress(reportDir: string) {
+  const latestSummary = readJsonRecord(join(reportDir, "candidate-run-summary.json"));
+  if (latestSummary?.runStatus !== "running") return false;
+
+  const runId = typeof latestSummary.runId === "string" ? latestSummary.runId : undefined;
+  if (runId == null) return true;
+
+  const history = readCandidateRows(join(reportDir, "candidate-run-history.jsonl"));
+  return !history.some((summary) => summary.runId === runId && summary.runStatus === "completed");
 }
 
 function readAccountingTotals(reportDir: string, candidateRows: Array<Record<string, unknown>>): AccountingTotals {
@@ -760,6 +809,9 @@ function summarize(rows: ArticleRow[]): Totals {
     articles: rows.length,
     slots: summaries.length,
     completeSlots: summaries.filter((summary) => summary.count >= expectedCandidates).length,
+    completeArticles: rows.filter((row) => articleState(row) === "complete").length,
+    inProgressSlots: summaries.filter((summary) => summary.isInProgress).length,
+    inProgressArticles: rows.filter((row) => articleState(row) === "running").length,
     candidateRows: summaries.reduce((sum, summary) => sum + summary.count, 0),
     attemptedModels: summaries.reduce((sum, summary) => sum + summary.attemptedModels, 0),
     rejectedModels: summaries.reduce((sum, summary) => sum + summary.rejectedModels, 0),
@@ -790,8 +842,8 @@ function renderDashboard(rows: ArticleRow[], totals: Totals) {
     "",
     "## Articles",
     "",
-    markdownRow(["Article", "Category", "Date", ...selectedLocales.map((locale) => locale.toUpperCase()), "Total"]),
-    markdownRow(["---", "---", "---", ...selectedLocales.map(() => "---:"), "---:"]),
+    markdownRow(["Article", "Category", "Date", ...selectedLocales.map((locale) => locale.toUpperCase()), "Total", "Status"]),
+    markdownRow(["---", "---", "---", ...selectedLocales.map(() => "---:"), "---:", "---"]),
     ...rows.map((row) =>
       markdownRow([
         `\`${row.slug}\``,
@@ -799,6 +851,7 @@ function renderDashboard(rows: ArticleRow[], totals: Totals) {
         row.date ?? "",
         ...selectedLocales.map((locale) => formatCandidateCell(row.candidates[locale])),
         `${selectedLocales.reduce((sum, locale) => sum + row.candidates[locale].count, 0)}/${selectedLocales.length * expectedCandidates}`,
+        formatArticleState(row),
       ]),
     ),
     "",
@@ -815,6 +868,8 @@ function renderFinalAccounting(totals: Totals, reason: string) {
     `Final i18n candidate accounting (${reason})`,
     `- Articles: ${totals.articles}`,
     `- Locale slots complete: ${totals.completeSlots}/${totals.slots}`,
+    `- Articles complete: ${totals.completeArticles}/${totals.articles}`,
+    `- In progress: ${totals.inProgressSlots} slots, ${totals.inProgressArticles} articles`,
     `- Candidate rows: ${totals.candidateRows}`,
     `- Model attempts: ${totals.attemptedModels} (${totals.rejectedModels} rejected)`,
     `- Input tokens: ${formatInteger(totals.inputTokens)}${totals.hasUnknownTokens ? " + unknown" : ""}`,
@@ -839,6 +894,8 @@ function renderStatusPanel(totals: Totals) {
     markdownRow(["---", "---:"]),
     markdownRow(["Articles", totals.articles]),
     markdownRow(["Locale slots complete", `${totals.completeSlots}/${totals.slots} (${formatPercent(coverage)})`]),
+    markdownRow(["Articles complete", `${totals.completeArticles}/${totals.articles}`]),
+    markdownRow(["In progress", `${totals.inProgressSlots} slots, ${totals.inProgressArticles} articles`]),
     markdownRow(["Candidate rows", totals.candidateRows]),
     markdownRow(["Model attempts", totals.attemptedModels]),
     markdownRow(["Rejected attempts", totals.rejectedModels]),
@@ -857,11 +914,12 @@ function renderLocalePanel(rows: ArticleRow[]) {
   return [
     "## Locale Status",
     "",
-    markdownRow(["Locale", "Complete", "Candidates", "Attempts", "Rejected", "Estimated cost"]),
-    markdownRow(["---", "---:", "---:", "---:", "---:", "---:"]),
+    markdownRow(["Locale", "Complete", "Running", "Candidates", "Attempts", "Rejected", "Estimated cost"]),
+    markdownRow(["---", "---:", "---:", "---:", "---:", "---:", "---:"]),
     ...selectedLocales.map((locale) => {
       const summaries = rows.map((row) => row.candidates[locale]);
       const complete = summaries.filter((summary) => summary.count >= expectedCandidates).length;
+      const running = summaries.filter((summary) => summary.isInProgress).length;
       const candidates = summaries.reduce((sum, summary) => sum + summary.count, 0);
       const attempts = summaries.reduce((sum, summary) => sum + summary.attemptedModels, 0);
       const rejected = summaries.reduce((sum, summary) => sum + summary.rejectedModels, 0);
@@ -871,6 +929,7 @@ function renderLocalePanel(rows: ArticleRow[]) {
       return markdownRow([
         locale,
         `${complete}/${rows.length}`,
+        running,
         candidates,
         attempts,
         rejected,

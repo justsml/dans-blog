@@ -1,0 +1,134 @@
+{
+  "event": "translation_scored",
+  "isoDate": "2026-05-13",
+  "at": "2026-05-13T07:33:23.060Z",
+  "slug": "quiz-master-modern-html5",
+  "locale": "it",
+  "model": "openrouter/google/gemini-3-flash-preview",
+  "sourcePath": "src/content/posts/2024-11-01--quiz-master-modern-html5/index.mdx",
+  "targetPath": "src/content/posts/2024-11-01--quiz-master-modern-html5/it/index.mdx",
+  "reportPath": "reports/i18n/quiz-master-modern-html5/it/score.md",
+  "hash": "4cba59f0a550804a482e1208d5ce40501ec538054e7e4abe7d49518b95ede688",
+  "sourceHash": "fafb3cb39188f9baf3ae1b06668f1c96f93c5eaa7b6ef050a25b5578671de85f",
+  "translationHash": "29716c23acfddc559a6e882b42bee11ff715ec887c35764f5a876300becb3f5a",
+  "scores": {
+    "readability": 90,
+    "technicalAccuracy": 45,
+    "coherence": 60,
+    "relevance": 70,
+    "translationQuality": 50
+  },
+  "overallScore": 63,
+  "recommendation": "polish",
+  "stats": {
+    "source": {
+      "bytes": 15297,
+      "chars": 15284,
+      "words": 1871,
+      "paragraphs": 85,
+      "headings": 2,
+      "codeFences": 0,
+      "inlineCodeSpans": 69,
+      "markdownLinks": 16,
+      "images": 0,
+      "imports": 2,
+      "challengeComponents": 14,
+      "frontmatterKeys": [
+        "category",
+        "cover_full_width",
+        "cover_icon",
+        "cover_mobile",
+        "date",
+        "label",
+        "modified",
+        "social_image",
+        "subCategory",
+        "subTitle",
+        "tags",
+        "title",
+        "unlisted"
+      ]
+    },
+    "translation": {
+      "bytes": 13322,
+      "chars": 13285,
+      "words": 1534,
+      "paragraphs": 38,
+      "headings": 2,
+      "codeFences": 0,
+      "inlineCodeSpans": 57,
+      "markdownLinks": 16,
+      "images": 0,
+      "imports": 2,
+      "challengeComponents": 14,
+      "frontmatterKeys": [
+        "category",
+        "cover_full_width",
+        "cover_icon",
+        "cover_mobile",
+        "date",
+        "label",
+        "modified",
+        "social_image",
+        "subCategory",
+        "subTitle",
+        "tags",
+        "title",
+        "unlisted"
+      ]
+    },
+    "ratios": {
+      "chars": 0.869,
+      "words": 0.82,
+      "paragraphs": 0.447,
+      "codeFencesDelta": 0,
+      "challengeComponentsDelta": 0,
+      "markdownLinksDelta": 0,
+      "imagesDelta": 0
+    },
+    "prompt": {
+      "sourceCharsIncluded": 15284,
+      "translationCharsIncluded": 13285,
+      "sourceTruncated": false,
+      "translationTruncated": false
+    }
+  },
+  "costs": {
+    "inputTokens": 9420,
+    "outputTokens": 406,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 3402,
+    "inputUsd": 0.00471,
+    "outputUsd": 0.001218,
+    "totalUsd": 0.005928,
+    "pricingSource": "local-openrouter-estimate"
+  },
+  "analysis": "The translation of the prose is excellent, capturing Dan's tone perfectly in Italian. However, the technical implementation is severely broken: 13 out of 14 'Challenge' components have had their 'options' arrays and 'title' attributes completely emptied, rendering the quiz non-functional. Only the final challenge contains translated options.",
+  "strengths": [
+    "Natural and engaging Italian prose that preserves the author's direct voice.",
+    "Accurate translation of technical explanations and MDN-style terminology.",
+    "Correct handling of MDX imports and frontmatter structure."
+  ],
+  "issues": [
+    {
+      "severity": "medium",
+      "category": "technicalAccuracy",
+      "note": "Data loss: The 'options' arrays for challenges 0 through 12 are empty in the translation, meaning the quiz answers are missing.",
+      "excerpt": "options: [\n  ]"
+    },
+    {
+      "severity": "high",
+      "category": "relevance",
+      "note": "The 'title' attribute for almost all Challenge components is empty, losing the specific topic header for each question.",
+      "excerpt": "title=\"\""
+    },
+    {
+      "severity": "low",
+      "category": "readability",
+      "note": "Minor punctuation/spacing inconsistency in the 'role' explanation.",
+      "excerpt": "L'attributo `role` descrive\n\n    lo scopo"
+    }
+  ],
+  "rawText": "{\n  \"scores\": {\n    \"readability\": 90,\n    \"technicalAccuracy\": 45,\n    \"coherence\": 60,\n    \"relevance\": 70,\n    \"translationQuality\": 50\n  },\n  \"analysis\": \"The translation of the prose is excellent, capturing Dan's tone perfectly in Italian. However, the technical implementation is severely broken: 13 out of 14 'Challenge' components have had their 'options' arrays and 'title' attributes completely emptied, rendering the quiz non-functional. Only the final challenge contains translated options.\",\n  \"strengths\": [\n    \"Natural and engaging Italian prose that preserves the author's direct voice.\",\n    \"Accurate translation of technical explanations and MDN-style terminology.\",\n    \"Correct handling of MDX imports and frontmatter structure.\"\n  ],\n  \"issues\": [\n    {\n      \"severity\": \"critical\",\n      \"category\": \"technicalAccuracy\",\n      \"note\": \"Data loss: The 'options' arrays for challenges 0 through 12 are empty in the translation, meaning the quiz answers are missing.\",\n      \"excerpt\": \"options: [\\n  ]\"\n    },\n    {\n      \"severity\": \"high\",\n      \"category\": \"relevance\",\n      \"note\": \"The 'title' attribute for almost all Challenge components is empty, losing the specific topic header for each question.\",\n      \"excerpt\": \"title=\\\"\\\"\"\n    },\n    {\n      \"severity\": \"low\",\n      \"category\": \"readability\",\n      \"note\": \"Minor punctuation/spacing inconsistency in the 'role' explanation.\",\n      \"excerpt\": \"L'attributo `role` descrive\\n\\n    lo scopo\"\n    }\n  ],\n  \"recommendation\": \"reject\"\n}"
+}
