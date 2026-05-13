@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: amazing-resources
+- Locale: ja
+- Model: deepseek/deepseek-v4-flash
+- Target: src/content/posts/2015-02-26--amazing-resources/ja/index.mdx
+- Validation: deferred
+- Runtime seconds: 203.78
+- Input tokens: 9772
+- Output tokens: 10065
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.004186
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: 開発者向けの最高の無料UIデザインリソース
@@ -187,3 +205,4 @@ cover_icon: ../icon_carl-heyerdahl-181868-unsplash.webp
 
 更新履歴: 2026-04 — 人間とSEO向けにページを再構成、タイトルと説明文を改善、Assistant UI、AI SDK Elements、Aceternity UI、Shadcnblocks、Tailark、KokonutUIパターン、Tool UIを追加。
 更新履歴: 2025-09 — リンクを更新、古いリソースをリフレッシュ、モダンなアイコン、コントラスト、デザインツールを追加。
+````
