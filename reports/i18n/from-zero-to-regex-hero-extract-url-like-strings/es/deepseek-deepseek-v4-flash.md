@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: from-zero-to-regex-hero-extract-url-like-strings
+- Locale: es
+- Model: deepseek/deepseek-v4-flash
+- Target: src/content/posts/2024-12-29--from-zero-to-regex-hero-extract-url-like-strings/es/index.mdx
+- Validation: deferred
+- Runtime seconds: 79.60
+- Input tokens: 10534
+- Output tokens: 8982
+- Thinking tokens: unknown
+- Cached input tokens: 384
+- Cache write tokens: 0
+- Estimated cost: $0.003937
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: De cero a héroe en regex
 subTitle: Extraer y analizar cadenas tipo URL con una sola regex
@@ -264,3 +282,4 @@ Siguiendo estos pasos, puedes extraer eficazmente cualquier dato de cadena semi-
 - [Documentación de MDN sobre Expresiones Regulares](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions)
 - [Técnicas Avanzadas de Regex](https://www.regular-expressions.info/): Explora lookaheads, lookbehinds y otros patrones avanzados para coincidencias más precisas.
 - [RFC 3986 - Sintaxis Genérica de URI](https://datatracker.ietf.org/doc/html/rfc3986)
+````
