@@ -1,0 +1,108 @@
+---
+social_image: ../desktop-social.webp
+title: Promise 入門
+subTitle: JavaScript の Promiseは楽しい！
+date: '2018-08-01'
+modified: '2024-07-31'
+category: Code
+subCategory: promises
+tags:
+  - promises
+  - async
+  - javascript
+  - composition
+related:
+  - promise-gotchas
+  - visualizing-promises
+  - stop-trying-to-make-async-await-happen
+  - javascript-promises-quiz
+cover: ../joe-yates-480485-unsplash.webp
+cover_mobile: ../w300_joe-yates-480485-unsplash.webp
+cover_icon: ../icon_joe-yates-480485-unsplash.webp
+---
+## Promises... 何が問題か？
+
+コードを実行すると、結果は **成功** か **失敗** の 2 通りしかありません。
+
+そのコードが非同期である場合、結果に確実に依存するのが難しくなります。
+
+**`Promises`** はこの問題を手軽に扱う手段を提供します。
+
+```
+                        +--Promise---+
+                        |            |
+                        | <-either-> |
+                        |            |
+                <-------+            +-------->
+                |Failure?             Success?|
+                |                             |
+                v                             v
+                (Rejected)           (Resolved)
+```
+
+> 補足: Promise は resolve もしくは reject すべきですが、どちらも行わないことがあります。これによりアプリがハングし、デバッグが極めて困難になります。
+
+### Promise はどこから来るのか？
+
+多くの場合、Promise を自分で作成する必要はありません。`fetch` のようなネイティブ API や `axios` といった一般的なライブラリはすでに Promise を返します。
+
+しかし、どうしても自分で Promise を作成しなければならない場合は、次の 2 通りの方法があります。
+
+### Creating Promises #1/2:
+
+Promise を作成する最もシンプルな方法はヘルパーメソッド `Promise.resolve()` を使うことです。
+
+`Promise.resolve(value)` を使えば、任意の値を Promise に「ラップ」(「変換」) できます。
+
+```js
+// Without Promises:
+function add10(num) {
+  return num + 10
+}
+
+// With Promises:
+function add10Promised(num) {
+  return Promise.resolve(num + 10)
+}
+
+console.log(add10(10)) //=> 20
+
+add10Promised(10)
+  .then(x => console.log(x)) //=> 20
+```
+
+### Creating Promises #2/2:
+
+もう少し柔軟な方法として、`Promise` コンストラクタを使う手があります。
+
+`new Promise(callback)` は、以下のインターフェースを持つ `callback` 関数を受け取ります。
+
+```js
+new Promise(function(resolve, reject) {
+  // 引数 `resolve` と `reject` はどちらも関数です。
+  // typeof resolve === 'function'
+  // typeof reject === 'function'
+
+  // `resolve(result)` は Promise が成功したときに呼び出す必要があります
+  // `reject(Error)` は Promise が失敗したときに呼び出す必要があります
+})
+```
+
+### Promises API
+
+Promises API は実際にはごく少数のメソッドだけです。
+
+インスタンス関数が 2 つ、静的/ユーティリティ関数が 4 つです。
+
+#### Promise インスタンスメソッド
+
+Promise から値を取得しようとしても、通常のトリック（例: `console.log(promise)`）では取得できません。
+
+すべての Promise は成功時は `.then(fn)`、失敗時は `.catch(fn)` で結果を返します。
+
+#### Promise ユーティリティメソッド
+
+* `Promise.resolve(value)` — 任意の値を Promise に変換します
+* `Promise.reject(Error)` — 失敗状態の Promise を生成し、以降の `.catch()` をトリガーします
+* `Promise.all([...promises])` — 複数の Promise 配列が **すべて** 完了するまで待ちます
+* `Promise.race([...promises])` — 最初に解決（または拒否）された Promise が結果となります
