@@ -1,0 +1,44 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Memoization via Closure",
+  "translatedTitle": "Memoización mediante Cierre",
+  "translation": {
+    "title": "Memoización mediante Cierre",
+    "group": "Bónus",
+    "options": [
+      {
+        "text": "Llama a expensive() 3 veces"
+      },
+      {
+        "text": "Llama a expensive() 1 vez"
+      },
+      {
+        "text": "Llama a expensive() 2 veces"
+      },
+      {
+        "text": "Lanza: Maximum call stack exceeded"
+      }
+    ],
+    "questionProse": [
+      "¿Cuántas veces se llama realmente a `expensive()`?"
+    ],
+    "explanationProse": [
+      "La función memoizada encierra `cache`. La primera llamada (`fast(5)`) no encuentra el caché, llama a `expensive` y almacena el resultado. Las llamadas segunda y tercera aciertan en el caché y retornan inmediatamente.\n\n`calls` es `1`.\n\nEsto es el trabajo real de los cierres. `cache` es privado (no se puede acceder desde fuera de `memoize`), persistente (existe mientras `fast` exista) y compartido entre todas las llamadas a `fast`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Memoización mediante Cierre\",\n  \"group\": \"Bónus\",\n  \"options\": [\n    {\n      \"text\": \"Llama a expensive() 3 veces\"\n    },\n    {\n      \"text\": \"Llama a expensive() 1 vez\"\n    },\n    {\n      \"text\": \"Llama a expensive() 2 veces\"\n    },\n    {\n      \"text\": \"Lanza: Maximum call stack exceeded\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Cuántas veces se llama realmente a `expensive()`?\"\n  ],\n  \"explanationProse\": [\n    \"La función memoizada encierra `cache`. La primera llamada (`fast(5)`) no encuentra el caché, llama a `expensive` y almacena el resultado. Las llamadas segunda y tercera aciertan en el caché y retornan inmediatamente.\\n\\n`calls` es `1`.\\n\\nEsto es el trabajo real de los cierres. `cache` es privado (no se puede acceder desde fuera de `memoize`), persistente (existe mientras `fast` exista) y compartido entre todas las llamadas a `fast`.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 765,
+    "outputTokens": 778,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2334
+  },
+  "cost": {
+    "inputUsd": 0.0000612,
+    "outputUsd": 0.00018672,
+    "totalUsd": 0.00024792,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

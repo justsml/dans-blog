@@ -1,0 +1,44 @@
+{
+  "index": 8,
+  "attempt": 1,
+  "originalTitle": "The this Trap",
+  "translatedTitle": "La trampa de this",
+  "translation": {
+    "title": "La trampa de this",
+    "group": "Experto",
+    "options": [
+      {
+        "text": "Dan, Dan"
+      },
+      {
+        "text": "Dan, undefined"
+      },
+      {
+        "text": "undefined, Dan"
+      },
+      {
+        "text": "undefined, undefined"
+      }
+    ],
+    "questionProse": [
+      "¿Qué registra esto?"
+    ],
+    "explanationProse": [
+      "Dos trampas sutiles:\n\n    **`greetArrow`**: Las funciones flecha no tienen su propio `this`. Capturan `this` del alcance léxico circundante — aquí es el alcance del módulo/ámbito global, no `user`. Así que `this?.name` es `undefined`.\n\n    **`fn()`**: `greetRegular` se llama sin un receptor (`fn()` no `user.greetRegular()`). En modo estricto, `this` es `undefined`. En modo relajado, es el objeto global. En ambos casos, `this?.name` es `undefined`.\n\n    Si hubieras llamado a `user.greetRegular()` directamente, obtendrías `'Dan'` — porque entonces `this` está vinculado a `user`.\n\n    Resultado: `undefined, undefined`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"La trampa de this\",\n  \"group\": \"Experto\",\n  \"options\": [\n    { \"text\": \"Dan, Dan\" },\n    { \"text\": \"Dan, undefined\" },\n    { \"text\": \"undefined, Dan\" },\n    { \"text\": \"undefined, undefined\" }\n  ],\n  \"questionProse\": [\n    \"¿Qué registra esto?\"\n  ],\n  \"explanationProse\": [\n    \"Dos trampas sutiles:\\n\\n    **`greetArrow`**: Las funciones flecha no tienen su propio `this`. Capturan `this` del alcance léxico circundante — aquí es el alcance del módulo/ámbito global, no `user`. Así que `this?.name` es `undefined`.\\n\\n    **`fn()`**: `greetRegular` se llama sin un receptor (`fn()` no `user.greetRegular()`). En modo estricto, `this` es `undefined`. En modo relajado, es el objeto global. En ambos casos, `this?.name` es `undefined`.\\n\\n    Si hubieras llamado a `user.greetRegular()` directamente, obtendrías `'Dan'` — porque entonces `this` está vinculado a `user`.\\n\\n    Resultado: `undefined, undefined`.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 809,
+    "outputTokens": 1113,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 3248
+  },
+  "cost": {
+    "inputUsd": 0.00006472,
+    "outputUsd": 0.00026712,
+    "totalUsd": 0.00033183999999999997,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Object Mutation",
+  "translatedTitle": "Mutación de objetos",
+  "translation": {
+    "title": "Mutación de objetos",
+    "group": "Cierres y objetos",
+    "options": [
+      {
+        "text": "{ x: 1 }, { x: 1 }"
+      },
+      {
+        "text": "{ x: 1 }, { x: 99 }"
+      },
+      {
+        "text": "{ x: 99 }, { x: 99 }"
+      },
+      {
+        "text": "{ x: 99 }, { x: 1 }"
+      }
+    ],
+    "questionProse": [
+      "¿Qué registra esto?"
+    ],
+    "explanationProse": [
+      "El cierre captura el **enlace** `obj`, no una instantánea del objeto. El objeto mismo se muta después de crear el cierre, pero `obj` aún apunta a la misma referencia. Ambas llamadas devuelven el mismo objeto mutado: `{ x: 99 }`.\n\nEsto pica a quienes asumen que los cierres \"congelan\" valores. No lo hacen. Capturan **referencias**."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Mutación de objetos\",\n  \"group\": \"Cierres y objetos\",\n  \"options\": [\n    {\n      \"text\": \"{ x: 1 }, { x: 1 }\"\n    },\n    {\n      \"text\": \"{ x: 1 }, { x: 99 }\"\n    },\n    {\n      \"text\": \"{ x: 99 }, { x: 99 }\"\n    },\n    {\n      \"text\": \"{ x: 99 }, { x: 1 }\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Qué registra esto?\"\n  ],\n  \"explanationProse\": [\n    \"El cierre captura el **enlace** `obj`, no una instantánea del objeto. El objeto mismo se muta después de crear el cierre, pero `obj` aún apunta a la misma referencia. Ambas llamadas devuelven el mismo objeto mutado: `{ x: 99 }`.\\n\\nEsto pica a quienes asumen que los cierres \\\"congelan\\\" valores. No lo hacen. Capturan **referencias**.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 760,
+    "outputTokens": 845,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2203
+  },
+  "cost": {
+    "inputUsd": 0.00006080000000000001,
+    "outputUsd": 0.0002028,
+    "totalUsd": 0.0002636,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

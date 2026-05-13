@@ -1,0 +1,44 @@
+{
+  "index": 1,
+  "attempt": 1,
+  "originalTitle": "Separate Closures",
+  "translatedTitle": "Cierres Separados",
+  "translation": {
+    "title": "Cierres Separados",
+    "group": "Calentamiento",
+    "options": [
+      {
+        "text": "1, 1"
+      },
+      {
+        "text": "1, 2"
+      },
+      {
+        "text": "2, 2"
+      },
+      {
+        "text": "0, 0"
+      }
+    ],
+    "questionProse": [
+      "¿Qué registra esto?"
+    ],
+    "explanationProse": [
+      "Cada llamada a `makeCounter()` crea un **nuevo contexto de ejecución** con su propio `count` fresco. `a` y `b` cierran sobre *diferentes* enlaces de `count`. No comparten estado.\n\n    Resultado: `1, 1`\n\n    Esta es la razón por la que se usan cierres para construir estado privado: cada \"instancia\" es independiente."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Cierres Separados\",\n  \"group\": \"Calentamiento\",\n  \"options\": [\n    {\n      \"text\": \"1, 1\"\n    },\n    {\n      \"text\": \"1, 2\"\n    },\n    {\n      \"text\": \"2, 2\"\n    },\n    {\n      \"text\": \"0, 0\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Qué registra esto?\"\n  ],\n  \"explanationProse\": [\n    \"Cada llamada a `makeCounter()` crea un **nuevo contexto de ejecución** con su propio `count` fresco. `a` y `b` cierran sobre *diferentes* enlaces de `count`. No comparten estado.\\n\\n    Resultado: `1, 1`\\n\\n    Esta es la razón por la que se usan cierres para construir estado privado: cada \\\"instancia\\\" es independiente.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 724,
+    "outputTokens": 614,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1369
+  },
+  "cost": {
+    "inputUsd": 0.00005792,
+    "outputUsd": 0.00014736,
+    "totalUsd": 0.00020528,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

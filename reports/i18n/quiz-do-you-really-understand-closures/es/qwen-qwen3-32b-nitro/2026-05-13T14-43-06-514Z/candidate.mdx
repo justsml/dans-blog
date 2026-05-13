@@ -22,8 +22,8 @@ cover_full_width: ../wide.webp
 cover_mobile: ../square.webp
 cover_icon: ../square.webp
 ---
-import Challenge from '../../../../../components/QuizUI/Challenge';
-import QuizUI from '../../../../../components/QuizUI/QuizUI';
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
 
 <p class="inset">Las clausuras son uno de esos conceptos que todo desarrollador de JavaScript *piensa* que entiende — hasta el momento en que no lo hace. Este cuestionario encontrará los límites de lo que realmente sabes.</p>
 
@@ -49,12 +49,12 @@ Las preguntas comienzan razonables y luego empiezan a quitar tablas del suelo.
   <div className="question">
     ¿Qué registra esto?
     ```javascript
-    function makeCounter() {
-      let count = 0;
-      return () => ++count;
-    }
-    const tick = makeCounter();
-    console.log(tick(), tick(), tick());
+        function makeCounter() {
+          let count = 0;
+          return () => ++count;
+        }
+        const tick = makeCounter();
+        console.log(tick(), tick(), tick());
     ```
   </div>
   </slot>
@@ -83,13 +83,13 @@ Las preguntas comienzan razonables y luego empiezan a quitar tablas del suelo.
   <div className="question">
     ¿Qué registra esto?
     ```javascript
-    function makeCounter() {
-      let count = 0;
-      return () => ++count;
-    }
-    const a = makeCounter();
-    const b = makeCounter();
-    console.log(a(), b());
+        function makeCounter() {
+          let count = 0;
+          return () => ++count;
+        }
+        const a = makeCounter();
+        const b = makeCounter();
+        console.log(a(), b());
     ```
   </div>
   </slot>
@@ -120,9 +120,9 @@ Las preguntas comienzan razonables y luego empiezan a quitar tablas del suelo.
   <div className="question">
     ¿Qué se registra después de 100ms?
     ```javascript
-    for (var i = 0; i < 5; i++) {
-      setTimeout(() => console.log(i), 100);
-    }
+        for (var i = 0; i < 5; i++) {
+          setTimeout(() => console.log(i), 100);
+        }
     ```
   </div>
   </slot>
@@ -134,9 +134,9 @@ Las preguntas comienzan razonables y luego empiezan a quitar tablas del suelo.
 
     La solución es `let` (de bloque, nueva vinculación en cada iteración) o envolver en una IIFE para capturar el valor actual:
     ```javascript
-    for (let i = 0; i < 5; i++) {
-      setTimeout(() => console.log(i), 100); // 0, 1, 2, 3, 4 ✓
-    }
+        for (let i = 0; i < 5; i++) {
+          setTimeout(() => console.log(i), 100); // 0, 1, 2, 3, 4 ✓
+        }
     ```
   </div>
   </slot>
@@ -158,9 +158,9 @@ Las preguntas comienzan razonables y luego empiezan a quitar tablas del suelo.
   <div className="question">
     Mismo bucle, palabra clave diferente. ¿Qué se registra?
     ```javascript
-    for (let i = 0; i < 5; i++) {
-      setTimeout(() => console.log(i), 100);
-    }
+        for (let i = 0; i < 5; i++) {
+          setTimeout(() => console.log(i), 100);
+        }
     ```
   </div>
   </slot>
@@ -168,9 +168,9 @@ Las preguntas comienzan razonables y luego empiezan a quitar tablas del suelo.
   <div className="explanation">
     `let` en un bucle `for` es especial. La especificación dice: cada iteración obtiene su propio **nuevo enlace** de `i`. Es como si el bucle hiciera esto secretamente:
     ```javascript
-    { let i = 0; setTimeout(() => console.log(i), 100) }
-    { let i = 1; setTimeout(() => console.log(i), 100) }
-    // ...
+        { let i = 0; setTimeout(() => console.log(i), 100) }
+        { let i = 1; setTimeout(() => console.log(i), 100) }
+        // ...
     ```
     Así, los cinco callbacks cierran sobre cinco variables distintas. Resultado: `0, 1, 2, 3, 4`.
   </div>
@@ -193,14 +193,14 @@ Las preguntas comienzan razonables y luego empiezan a quitar tablas del suelo.
   <div className="question">
     ¿Qué registra esto?
     ```javascript
-    function wrap() {
-      const obj = { x: 1 };
-      const getObj = () => obj;
-      obj.x = 99;
-      return getObj;
-    }
-    const get = wrap();
-    console.log(get(), get());
+        function wrap() {
+          const obj = { x: 1 };
+          const getObj = () => obj;
+          obj.x = 99;
+          return getObj;
+        }
+        const get = wrap();
+        console.log(get(), get());
     ```
   </div>
   </slot>
@@ -229,20 +229,20 @@ Las preguntas comienzan razonables y luego empiezan a quitar tablas del suelo.
   <div className="question">
     ¿Qué comportamiento muestra este componente de React cuando el botón se hace clic múltiples veces?
     ```jsx
-    function Counter() {
-      const [count, setCount] = useState(0);
+        function Counter() {
+          const [count, setCount] = useState(0);
 
-      useEffect(() => {
-        const id = setInterval(() => {
-          console.log('count is', count);
-        }, 1000);
-        return () => clearInterval(id);
-      }, []); // empty deps
+          useEffect(() => {
+            const id = setInterval(() => {
+              console.log('count is', count);
+            }, 1000);
+            return () => clearInterval(id);
+          }, []); // empty deps
 
-      return <button onClick={() => setCount(c => c + 1)}>
-        Click ({count})
-      </button>;
-    }
+          return <button onClick={() => setCount(c => c + 1)}>
+            Click ({count})
+          </button>;
+        }
     ```
   </div>
   </slot>
@@ -254,9 +254,9 @@ Las preguntas comienzan razonables y luego empiezan a quitar tablas del suelo.
 
     Para arreglarlo, agrega `count` al array de dependencias (recrea el intervalo) o usa una referencia:
     ```jsx
-    const countRef = useRef(count);
-    useEffect(() => { countRef.current = count; }, [count]);
-    // then use countRef.current inside the interval
+        const countRef = useRef(count);
+        useEffect(() => { countRef.current = count; }, [count]);
+        // then use countRef.current inside the interval
     ```
   </div>
   </slot>
@@ -278,18 +278,18 @@ Las preguntas comienzan razonables y luego empiezan a quitar tablas del suelo.
   <div className="question">
     Espera — léelo cuidadosamente. ¿Qué sucede realmente?
     ```javascript
-    const bank = (() => {
-      let balance = 0;
-      return {
-        deposit: (n) => (balance += n),
-        withdraw: (n) => (balance -= n),
-        getBalance: () => balance,
-      };
-    })();
+        const bank = (() => {
+          let balance = 0;
+          return {
+            deposit: (n) => (balance += n),
+            withdraw: (n) => (balance -= n),
+            getBalance: () => balance,
+          };
+        })();
 
-    bank.deposit(100);
-    bank.withdraw(40);
-    console.log(bank.getBalance());
+        bank.deposit(100);
+        bank.withdraw(40);
+        console.log(bank.getBalance());
     ```
   </div>
   </slot>
@@ -299,7 +299,7 @@ Las preguntas comienzan razonables y luego empiezan a quitar tablas del suelo.
 
     Este es el **Patrón de Módulo** — una IIFE que devuelve un objeto de cierres. Los tres métodos cierran sobre el mismo enlace `balance`. Es genuinamente privado: no puedes acceder a `balance` desde el exterior.
     ```javascript
-    console.log(bank.balance); // undefined
+        console.log(bank.balance); // undefined
     ```
     Antes de las clases, este era *el* método para encapsular el estado en JavaScript. Todavía lo verás en bases de código legadas y bibliotecas de utilidades.
   </div>
@@ -322,12 +322,12 @@ Las preguntas comienzan razonables y luego empiezan a quitar tablas del suelo.
   <div className="question">
     ¿Cuál es el problema con este código?
     ```javascript
-    function attachHandler(element) {
-      const data = new Array(100_000).fill('🔥');
-      element.addEventListener('click', () => {
-        console.log('clicked!', data.length);
-      });
-    }
+        function attachHandler(element) {
+          const data = new Array(100_000).fill('🔥');
+          element.addEventListener('click', () => {
+            console.log('clicked!', data.length);
+          });
+        }
     ```
   </div>
   </slot>
@@ -339,17 +339,17 @@ Las preguntas comienzan razonables y luego empiezan a quitar tablas del suelo.
 
     Solución: no captures grandes datos en oyentes de larga duración a menos que los necesites realmente, y elimina los oyentes cuando la UI correspondiente sea destruida:
     ```javascript
-    function attachHandler(element) {
-      const data = new Array(100_000).fill('🔥');
-      // do something with data...
+        function attachHandler(element) {
+          const data = new Array(100_000).fill('🔥');
+          // do something with data...
 
-      const onClick = () => {
-        console.log('clicked!');
-      };
+          const onClick = () => {
+            console.log('clicked!');
+          };
 
-      element.addEventListener('click', onClick);
-      return () => element.removeEventListener('click', onClick);
-    }
+          element.addEventListener('click', onClick);
+          return () => element.removeEventListener('click', onClick);
+        }
     ```
     V8 moderno es mejor en esto de lo que solía ser. Pero en SPAs de larga duración con muchos oyentes de eventos, este patrón aún causa problemas a las personas.
   </div>
@@ -372,18 +372,18 @@ Las preguntas comienzan razonables y luego empiezan a quitar tablas del suelo.
   <div className="question">
     ¿Qué registra esto?
     ```javascript
-    const user = {
-      name: 'Dan',
-      greetArrow: () => console.log(this?.name),
-      greetRegular() {
-        const inner = () => console.log(this?.name);
-        inner();
-      },
-    };
+        const user = {
+          name: 'Dan',
+          greetArrow: () => console.log(this?.name),
+          greetRegular() {
+            const inner = () => console.log(this?.name);
+            inner();
+          },
+        };
 
-    user.greetArrow();
-    const fn = user.greetRegular;
-    fn();
+        user.greetArrow();
+        const fn = user.greetRegular;
+        fn();
     ```
   </div>
   </slot>
@@ -418,24 +418,24 @@ Las preguntas comienzan razonables y luego empiezan a quitar tablas del suelo.
   <div className="question">
     ¿Cuántas veces se llama realmente a `expensive()`?
     ```javascript
-    function memoize(fn) {
-      const cache = new Map();
-      return (arg) => {
-        if (cache.has(arg)) return cache.get(arg);
-        const result = fn(arg);
-        cache.set(arg, result);
-        return result;
-      };
-    }
+        function memoize(fn) {
+          const cache = new Map();
+          return (arg) => {
+            if (cache.has(arg)) return cache.get(arg);
+            const result = fn(arg);
+            cache.set(arg, result);
+            return result;
+          };
+        }
 
-    let calls = 0;
-    const expensive = (n) => { calls++; return n * 2; };
-    const fast = memoize(expensive);
+        let calls = 0;
+        const expensive = (n) => { calls++; return n * 2; };
+        const fast = memoize(expensive);
 
-    fast(5);
-    fast(5);
-    fast(5);
-    console.log(calls);
+        fast(5);
+        fast(5);
+        fast(5);
+        console.log(calls);
     ```
   </div>
   </slot>

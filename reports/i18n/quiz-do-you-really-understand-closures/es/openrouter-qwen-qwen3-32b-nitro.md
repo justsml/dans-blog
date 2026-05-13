@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-do-you-really-understand-closures
+- Locale: es
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-05-05--quiz-do-you-really-understand-closures/es/index.mdx
+- Validation: passed
+- Runtime seconds: 28.10
+- Input tokens: 10011
+- Output tokens: 10218
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.003253
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: ''
 subTitle: ''
@@ -460,3 +478,4 @@ Las preguntas comienzan razonables y luego empiezan a quitar tablas del suelo.
 - **0-2**: Pensabas que conocías los closures. Ahora sí los conoces. Ese es el punto.
 
 El closure caduco en React (#6) y la trampa de `this` (#8) son los que causan errores reales en producción. Si estos te resultaron familiares, vale la pena revisarlos — aparecen con más frecuencia que cualquier otro problema relacionado con closures en revisiones de código.
+````
