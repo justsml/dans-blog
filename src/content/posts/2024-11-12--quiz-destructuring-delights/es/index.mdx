@@ -1,7 +1,7 @@
 ---
 unlisted: false
-title: Cuestion
-subTitle: ¿Eres un maestro del Destructuring?
+title: 'Quiz: Delicias dedesestructuración'
+subTitle: ¿Dominas la desestructuración?
 label: Destructuring
 social_image: ../desktop-social.webp
 category: Quiz
@@ -20,15 +20,15 @@ cover_full_width: ../boxes-of-nesting-dolls.webp
 cover_mobile: ../boxes-of-nesting-dolls-square.webp
 cover_icon: ../boxes-of-nesting-dolls-square.webp
 ---
-import Challenge from '../../../../components/QuizUI/Challenge';
-import QuizUI from '../../../../components/QuizUI/QuizUI';
+import Challenge from '../../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../../components/QuizUI/QuizUI';
 
-{/* Are you a maestero of Destructuring?<br/> */}
-<p class="inset">¿O es tu <em>Symphony of Destruction?</em></p>
+{/* ¿Eres un maestro del Destructuring?<br/> */}
+<p class="inset">¿O es tu <em>Sinfonía de la Destrucción?</em></p>
 
-Este cuestionario evaluará tu conocimiento sobre desestructuración en JavaScript: desde la sintaxis básica de objetos hasta la desestructuración anidada y valores predeterminados. ¡Y preguntas adicionales sobre TypeScript y tipos en línea!
+Este quiz evaluará tu dominio del Destructuring en JavaScript: desde la sintaxis “básica” de objetos hasta destructuring anidado y valores por defecto. ¡Además, incluye preguntas extra sobre TypeScript y tipos inline!
 
-¡Adelante con el calentamiento - demuestra tus habilidades de desestructuración! 👇
+¡Vamos al calentamiento y demuestra tus habilidades de Destructuring! 👇
 
 <QuizUI>
 
@@ -36,7 +36,7 @@ Este cuestionario evaluará tu conocimiento sobre desestructuración en JavaScri
   client:visible={{rootMargin: "150px"}}
   index={0}
   group="Calentamiento: Objetos"
-  title="Desestructuración básica de objetos"
+  title="Desestructuración Básica de Objetos"
   options={[
     {text: 'Nombre: Dan Levy, Edad: 20'},
     {text: 'Nombre: Dan Levy, Edad: 40'},
@@ -61,7 +61,7 @@ Este cuestionario evaluará tu conocimiento sobre desestructuración en JavaScri
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    La propiedad `age` no existe en `person`, por lo que `age` será `undefined`. Definitivamente no `Infinity` 😅
+    La propiedad `age` no existe en `person`, así que `age` será `undefined`. Definitivamente no es `Infinity` 😅
 
     Esto resulta en:
     ```plaintext
@@ -75,7 +75,7 @@ Este cuestionario evaluará tu conocimiento sobre desestructuración en JavaScri
   client:visible={{rootMargin: "150px"}}
   index={1}
   group="Calentamiento: Arreglos"
-  title="Valor predeterminado en desestructuración de objetos"
+  title="Valor predeterminado en la desestructuración de objetos"
   options={[
     {text: 'Nombre: Dan Levy, Edad: NaN'},
     {text: 'Nombre: Dan Levy, Edad: null'},
@@ -97,7 +97,7 @@ Este cuestionario evaluará tu conocimiento sobre desestructuración en JavaScri
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    La variable `age` no está presente en el arreglo `tuple`, por lo que será `undefined`.
+    La variable `age` no está presente en el arreglo `tuple`, así que será `undefined`.
 
     Esto resulta en:
     ```plaintext
@@ -110,8 +110,8 @@ Este cuestionario evaluará tu conocimiento sobre desestructuración en JavaScri
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={2}
-  group="Desestructuración Anidada"
-  title="Desestructuración Anidada"
+  group="Desestructuración anidada"
+  title="Desestructuración anidada"
   options={[
     {text: 'Primero: Dan, Ciudad: Denver'},
     {text: 'Primero: undefined, Ciudad: Denver'},
@@ -122,7 +122,7 @@ Este cuestionario evaluará tu conocimiento sobre desestructuración en JavaScri
 >
   <slot name="question">
   <div className="question">
-    ¿Qué tal un poco de desestructuración anidada?
+    ¿Qué tal una desestructuración anidada?
     ```js
     'use strict';
     const person = {
@@ -143,13 +143,13 @@ Este cuestionario evaluará tu conocimiento sobre desestructuración en JavaScri
   <slot name='explanation'>
   <div className="explanation">
     La propiedad `birth: { place }` no existe en `person`, por lo que lanzará un error.
-    Una solución es proporcionar valores predeterminados para propiedades anidadas.
+    Una solución es proporcionar valores predeterminados para las propiedades anidadas.
 
-    Cuando accedas a propiedades anidadas, ten cuidado, ya que los errores pueden ser difíciles de detectar. Y los mensajes de error varían entre navegadores y otras plataformas, lo que hace que sea un poco más difícil de depurar.
+    Al acceder a propiedades anidadas, ten cuidado, ya que los errores pueden ser difíciles de detectar. Además, los mensajes de error varían entre navegadores y otras plataformas, lo que complica un poco la depuración.
 
-    En Chrome moderno: `TypeError: No se pueden leer las propiedades de undefined (lectura de 'place')`
+    En Chrome moderno: `TypeError: Cannot read properties of undefined (reading 'place')`
 
-    En Node, también es un `TypeError` porque JavaScript intenta desestructurar `place` desde `undefined` antes de que `place` se lea alguna vez.
+    En Node, también es un `TypeError` porque JavaScript intenta desestructurar `place` de `undefined` antes de que `place` se lea.
 
     La redacción exacta varía entre navegadores y entornos de ejecución.
   </div>
@@ -160,12 +160,12 @@ Este cuestionario evaluará tu conocimiento sobre desestructuración en JavaScri
   client:visible={{rootMargin: "150px"}}
   index={3}
   group="Valores predeterminados"
-  title="Valores predeterminados en el desestructurado de objetos"
+  title="Valores predeterminados en la desestructuración de objetos"
   options={[
-    {text: 'Hola Dan desde Desconocido'},
-    {text: 'Hola Dan desde Denver'},
-    {text: 'Hola Desconocido desde Desconocido'},
-    {text: 'Hola Desconocido desde Denver'},
+    {text: 'Hola Dan de Desconocido'},
+    {text: 'Hola Dan de Denver'},
+    {text: 'Hola Desconocido de Desconocido'},
+    {text: 'Hola Desconocido de Denver'},
     {text: 'Error', isAnswer: true},
   ]}
 >
@@ -190,9 +190,9 @@ Este cuestionario evaluará tu conocimiento sobre desestructuración en JavaScri
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    La propiedad `birth` no existe en `person`, así que TODO el objeto aún necesita un valor predeterminado, no solo la propiedad anidada. Básicamente le falta un ` = {}` predeterminado allí.
+    La propiedad `birth` no existe en `person`, así que todo el objeto aún necesita un valor predeterminado, no solo la propiedad anidada. Básicamente falta un ` = {}` predeterminado allí.
 
-    Como está escrito, dice "si `person.birth` es `undefined`, entonces `place` es `Unknown`". Pero `person.birth` es `undefined`, así que intenta desestructurar `undefined`, lo que genera un error.
+    La forma en que está escrito dice "si `person.birth` es `undefined`, entonces `place` es `Unknown`". Pero `person.birth` es `undefined`, así que está intentando desestructurar `undefined`, lo que produce un error.
     ```plaintext
     In modern Chrome: `TypeError: Cannot read properties of undefined (reading 'place')`
 
@@ -208,7 +208,7 @@ Este cuestionario evaluará tu conocimiento sobre desestructuración en JavaScri
   client:visible={{rootMargin: "150px"}}
   index={4}
   group="Valores predeterminados"
-  title="Valores predeterminados en el desestructurado de objetos"
+  title="Valores predeterminados en la desestructuración de objetos"
   options={[
     {text: 'Hola Dan de Denver'},
     {text: 'Hola Dan de Johannesburgo'},
@@ -239,7 +239,7 @@ Este cuestionario evaluará tu conocimiento sobre desestructuración en JavaScri
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    La propiedad `birth` no existe en `person`, por lo que se recurre a un objeto vacío ` = {}`. Esto permite usar el valor predeterminado.
+    La propiedad `birth` no existe en `person`, así que recurre a un objeto vacío ` = {}`. Esto permite que se use el valor predeterminado.
   </div>
   </slot>
 </Challenge>
@@ -247,20 +247,20 @@ Este cuestionario evaluará tu conocimiento sobre desestructuración en JavaScri
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={5}
-  group="Argumentos de función"
-  title="Parámetros de función con deestructuración y valores predeterminados"
+  group="Argumentos de Función"
+  title="Desestructuración de Parámetros de Función con Valores Predeterminados"
   options={[
-    {text: 'Hola Dan desde undefined'},
-    {text: 'Hola Dan desde Unknown'},
-    {text: 'Hola Dan desde Denver'},
-    {text: 'Hola Unknown desde Unknown'},
-    {text: 'Hola Unknown desde Denver'},
+    {text: 'Hola Dan de undefined'},
+    {text: 'Hola Dan de Unknown'},
+    {text: 'Hola Dan de Denver'},
+    {text: 'Hola Unknown de Unknown'},
+    {text: 'Hola Unknown de Denver'},
     {text: 'Error', isAnswer: true},
   ]}
 >
   <slot name="question">
   <div className="question">
-    ¿Qué ocurrirá ahora al usar parámetros de función?
+    Ahora como parámetros de función, ¿qué hará esto?
     ```js
     'use strict';
     function displayUser({
@@ -275,7 +275,7 @@ Este cuestionario evaluará tu conocimiento sobre desestructuración en JavaScri
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Esta función extrae las propiedades `name` y `age`, usando valores predeterminados si es necesario. En este caso, la clave `place` en el objeto predeterminado es solo ruido, no se utiliza dentro de `displayUser()`.
+    Esta función extrae las propiedades `name` y `age`, usando valores predeterminados si es necesario. En este caso, la clave `place` del objeto por defecto es solo ruido, no se usa dentro de `displayUser()`.
 
     El modo estricto no cambia esto: leer la variable no declarada `place` lanza un `ReferenceError`.
   </div>
@@ -285,16 +285,16 @@ Este cuestionario evaluará tu conocimiento sobre desestructuración en JavaScri
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={6}
-  group="Argumentos de Función"
-  title="Destructuración con Valores Predeterminados Anidados"
+  group="Argumentos de función"
+  title="Desestructuración con valores predeterminados anidados"
   options={[
     {text: 'Desconocido, Desconocido, Joburg'},
     {text: 'Desconocido, Desconocido, Desconocido'},
     {text: 'Desconocido, `undefined`, Joburg'},
-    {text: 'N/A, `undefined`, Joburg'},
-    {text: 'N/A, Desconocido, Joburg'},
-    {text: 'N/A, N/A, Joburg', isAnswer: true},
-    {text: 'Desconocido, N/A, Joburg'},
+    {text: 'N/D, `undefined`, Joburg'},
+    {text: 'N/D, Desconocido, Joburg'},
+    {text: 'N/D, N/D, Joburg', isAnswer: true},
+    {text: 'Desconocido, N/D, Joburg'},
     {text: 'Error'},
   ]}
 >
@@ -318,7 +318,11 @@ Este cuestionario evaluará tu conocimiento sobre desestructuración en JavaScri
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    La función `displayPlace` USARÁ UN OBJETO POR DEFECTO SOLO si no se pasa ningún objeto. Por lo tanto, la única forma de obtener el valor predeterminado `{ place: "Unknown" }` es llamando a la función sin argumentos `displayPlace()`.\n\nOtro comportamiento notable es que pasar `undefined` para `place` hará que se use el valor predeterminado, similar al comportamiento de `JSON.stringify` (ignorando `undefined`, reconociendo `null`).\n\nEsto resulta en:
+    La función `displayPlace` SOLO usará un objeto predeterminado si no se pasa ningún objeto. Así, la única forma de obtener el valor predeterminado `{ place: "Unknown" }` es con cero argumentos `displayPlace()`.
+
+    Otro comportamiento notable aquí es que pasar `undefined` para `place` hará que se use el valor predeterminado, algo similar al comportamiento de `JSON.stringify` (ignora `undefined`, reconoce `null`).
+
+    Esto produce:
     ```js
     displayPlace() // Unknown
     displayPlace({ name: "Dan" }) // N/A
@@ -331,23 +335,23 @@ Este cuestionario evaluará tu conocimiento sobre desestructuración en JavaScri
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={7}
-  group="Argumentos de Función"
-  title="Desestructuración con Valores Predeterminados Anidados"
+  group="Argumentos de función"
+  title="Desestructuración con valores predeterminados anidados"
   options={[
     {text: 'N/A, N/A'},
     {text: 'N/A, undefined'},
-    {text: 'Unknown, N/A'},
-    {text: 'Unknown, Unknown'},
-    {text: 'Unknown, undefined'},
+    {text: 'Desconocido, N/A'},
+    {text: 'Desconocido, Desconocido'},
+    {text: 'Desconocido, undefined'},
     {text: 'null, N/A', isAnswer: true},
-    {text: 'null, Unknown'},
+    {text: 'null, Desconocido'},
     {text: 'null, undefined'},
     {text: 'Error'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Similar a la anterior... ¿cómo se maneja `null`?
+    Similar al anterior... ¿cómo se maneja `null`?_
     ```js
     function displayPlace({
       name = "N/A",
@@ -363,7 +367,7 @@ Este cuestionario evaluará tu conocimiento sobre desestructuración en JavaScri
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    En este caso, la propiedad `place` se establece en `null` en la primera llamada y en `undefined` en la segunda. El valor predeterminado para `place` solo se usa si el objeto completo falta **o** es `undefined`. Los nulos se pasarán como `null`.
+    En este caso, la propiedad `place` se establece en `null` en la primera llamada y en `undefined` en la segunda. El valor predeterminado para `place` solo se usa si el objeto completo falta **o** es `undefined`. Los `null` pasarán como `null`.
   </div>
   </slot>
 </Challenge>
@@ -372,7 +376,7 @@ Este cuestionario evaluará tu conocimiento sobre desestructuración en JavaScri
   client:visible={{rootMargin: "150px"}}
   index={8}
   group="Tipos en línea de TypeScript"
-  title="Destructuración con valores predeterminados anidados"
+  title="Desestructuración con valores predeterminados anidados"
   options={[
     {text: 'N/A'},
     {text: 'undefined'},
@@ -383,7 +387,7 @@ Este cuestionario evaluará tu conocimiento sobre desestructuración en JavaScri
 >
   <slot name="question">
   <div className="question">
-    Ahora en TypeScript... ¿qué ocurrirá?
+    Ahora en TypeScript... _¿qué hará esto?_
     ```ts
     'use strict';
     function displayPlace(
@@ -404,9 +408,9 @@ Este cuestionario evaluará tu conocimiento sobre desestructuración en JavaScri
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    TypeScript reporta un error porque `place` está tipado como `string`, pero se pasa `null`. La llamada también omite la propiedad requerida `age`.
+    TypeScript informa un error porque `place` está tipado como `string`, pero la llamada pasa `null`. Además, la llamada omite la propiedad requerida `age`.
 
-    Si ignoras los errores de tipo, al ejecutar el código se imprimirá `null` en la consola.
+    Si ignoras los errores de tipo, ejecutar el código imprimirá `null` en la consola.
   </div>
   </slot>
 </Challenge>
@@ -414,22 +418,22 @@ Este cuestionario evaluará tu conocimiento sobre desestructuración en JavaScri
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={9}
-  group="TypeScript: Con Asignación"
-  title="Destructuración con Valores Predeterminados Anidados"
+  group="TypeScript: Con asignación"
+  title="Desestructuración con valores predeterminados anidados"
   options={[
     {text: 'undefined'},
     {text: 'null'},
     {text: 'N/A'},
-    {text: 'Desconocido'},
+    {text: 'Unknown'},
     {text: 'Denver', isAnswer: true},
-    {text: 'Error de Sintaxis'},
-    {text: 'Error: Tipo no válido'},
-    {text: 'Error: Argumentos no válidos'},
+    {text: 'SyntaxError'},
+    {text: 'Error: Invalid type'},
+    {text: 'Error: Invalid Arguments'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Probemos con algunos renombrados/asignaciones...
+    Probemos un poco de renombrado/asignación...
     ```ts
     'use strict';
     function displayPlace({
@@ -448,7 +452,7 @@ Este cuestionario evaluará tu conocimiento sobre desestructuración en JavaScri
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Esto imprimirá `Denver` en la consola. La propiedad `place` se renombra a `location` en la firma de la función. Este es un patrón común (renombrar propiedades durante la destructuración) al adaptar estructuras de datos de terceros.
+    Esto imprimirá `Denver` en la consola. La propiedad `place` se renombra a `location` en la firma de la función. Es un patrón común (renombrar propiedades durante la desestructuración) al adaptar estructuras de datos de terceros.
   </div>
   </slot>
 </Challenge>
@@ -456,8 +460,8 @@ Este cuestionario evaluará tu conocimiento sobre desestructuración en JavaScri
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={10}
-  group="Destructuración Anidada en TS"
-  title="Destructuración con Valores Predeterminados Anidados"
+  group="Desestructuración anidada en TS"
+  title="Desestructuración con valores predeterminados anidados"
   options={[
     {text: 'Error: Falta la propiedad \'first\''},
     {text: 'Error: Falta la propiedad \'last\''},
@@ -468,7 +472,7 @@ Este cuestionario evaluará tu conocimiento sobre desestructuración en JavaScri
 >
   <slot name="question">
   <div className="question">
-    Encuentra el error de tipo:
+    Detecta el error de tipo:
     ```ts
     function greet({
       name: {first = "N/A", last = "N/A"},
@@ -487,11 +491,11 @@ Este cuestionario evaluará tu conocimiento sobre desestructuración en JavaScri
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    El error está en la firma de la función `greet`. Las propiedades `age` y `birth` faltan en el objeto pasado, por lo que deberían ser opcionales en la definición de tipo.
+    El error está en la firma de la función `greet`. Las propiedades `age` y `birth` faltan en el objeto pasado, por lo que deberían ser opcionales en la definición del tipo.
 
-    Aunque la propiedad `birth` se desestructura con un valor predeterminado, la definición de tipo requiere que esté presente. Para marcar una propiedad como opcional en TypeScript, debes usar el operador `?`.
+    Aunque la propiedad `birth` se desestructura con un valor predeterminado, la definición del tipo requiere que esté presente. Para marcar una propiedad como opcional en TypeScript, debes usar el operador `?`.
 
-    Nota: `birth?: { place?: string }` no es lo mismo que `birth: { place?: string } | undefined`.
+    Nota que `birth?: { place?: string }` no es lo mismo que `birth: { place?: string } | undefined`.
   </div>
   </slot>
 </Challenge>
@@ -502,16 +506,16 @@ Este cuestionario evaluará tu conocimiento sobre desestructuración en JavaScri
   group="TypeScript + Asignación"
   title="Desestructuración con Valores Anidados, Asignación y Tipos"
   options={[
-    {text: 'Hola Dan Levy desde N/A'},
-    {text: 'Hola Dan Levy desde Ciudad del Cabo'},
-    {text: 'Hola N/A N/A desde N/A'},
-    {text: 'Hola N/A N/A desde Ciudad del Cabo'},
+    {text: 'Hola Dan Levy de N/A'},
+    {text: 'Hola Dan Levy de Ciudad del Cabo'},
+    {text: 'Hola N/A N/A de N/A'},
+    {text: 'Hola N/A N/A de Ciudad del Cabo'},
     {text: 'Error', isAnswer: true},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Ahora con **asignación** (obsérvese las variables `f`, `l` y `p`)
+    Ahora con **asignación** (nota las variables `f`, `l` y `p`)
     ```ts
     'use strict';
     function greet(
@@ -537,11 +541,11 @@ Este cuestionario evaluará tu conocimiento sobre desestructuración en JavaScri
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    ¡Otro error! ¿Ya estás adivinando, no?!
+    ¡Otro error! ¿Estás empezando a adivinar, ¿no?!
 
-    Es difícil leer capas de desestructuración con valores predeterminados, asignación y tipos.
+    Es difícil leer capas de desestructuración, con valores predeterminados, asignación y tipos!
 
-    Tan pronto como `place` se reasigne a la variable `p`, ya no estará definida en el ámbito de la sentencia `console.log`.
+    En cuanto `place` se reasigna a la variable `p`, ya no está definido en el alcance de la sentencia `console.log`.
     ```ts
     console.log(`Hi ${f} ${l} from ${place}`); // ❌
     // to:
