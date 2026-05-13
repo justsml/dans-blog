@@ -1,6 +1,6 @@
 ---
-title: 'Тест: Знаете ли вы современный JavaScript?'
-subTitle: Докажите свои превосходные навыки JavaScript!
+title: 'Тест: Знаетели вы современный JavaScript?'
+subTitle: Продемонстрируйте своё мастерство JavaScript!
 label: ES2019+ Features
 social_image: ../desktop-social.webp
 category: Quiz
@@ -19,15 +19,15 @@ cover_full_width: ../christopher-burns-8KfCR12oeUM-unsplash-wide.webp
 cover_mobile: ../christopher-burns-8KfCR12oeUM-unsplash-square.webp
 cover_icon: ../christopher-burns-8KfCR12oeUM-unsplash-square.webp
 ---
-import Challenge from '../../../../components/QuizUI/Challenge';
-import QuizUI from '../../../../components/QuizUI/QuizUI';
+import Challenge from '../../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../../components/QuizUI/QuizUI';
 
 
-### Знакомы ли вы с ES2015 и ES2022?
+### Знаете разницу между ES2015 и ES2022?
 
-* **Докажите свои навыки JavaScript!** 🚀
-* Не требуется регистрация или вход. ✨
-* Вопросы с множественным выбором. 🤖 ... _Насколько это может быть сложно, а?_
+* **Докажите своё мастерство в JavaScript!** 🚀
+* Регистрация не нужна. ✨
+* Выбор из нескольких вариантов. 🤖 … _Насколько это может быть сложным, а?_
 
 <QuizUI>
 
@@ -45,7 +45,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    Какое значение у `result`?
+    Каково значение `result`?
     ```js
         console.log(null ?? 100);
     ```
@@ -62,7 +62,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={1}
   group="ES2020"
-  title="Оператор объединения с null"
+  title="Оператор нулевого слияния"
   options={[
     {text: 'false', isAnswer: true},
     {text: '42'},
@@ -73,7 +73,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    Каким будет результат выполнения следующего кода?
+    Какой будет вывод следующего кода?
     ```js
         const value = false;
         const defaultVal = 42;
@@ -83,7 +83,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Оператор объединения с null (`??`) считает значения, такие как `false`, допустимыми. Поскольку `value` равно `false`, оно считается допустимым и возвращается.
+    Оператор нулевого слияния (`??`) рассматривает ложные значения, такие как `false`, как допустимые. Поскольку `value` равно `false`, оно считается допустимым значением и возвращается.
   </div>
   </slot>
 </Challenge>
@@ -95,14 +95,14 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   title="Опциональная цепочка"
   options={[
     {text: 'undefined', isAnswer: true},
-    {text: 'Ошибка: Невозможно прочитать свойство неопределенного значения'},
+    {text: 'Error: Cannot read property of undefined'},
     {text: 'null'},
     {text: '100'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Какой будет результат выполнения следующего кода?
+    Какой будет вывод следующего кода?
     ```js
         const obj = { foo: null };
         const result = obj.foo?.bar;
@@ -112,7 +112,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Оператор опциональной цепочки (`?.`) останавливает оценку, если левая часть является `null` или `undefined`. Поскольку `obj.foo` равно `null`, `obj.foo?.bar` оценивается как `undefined`.
+    Оператор опциональной цепочки (`?.`) прекращает вычисление, если левый операнд равен `null` или `undefined`. Поскольку `obj.foo` равно `null`, `obj.foo?.bar` оценивается как `undefined`.
   </div>
   </slot>
 </Challenge>
@@ -123,15 +123,15 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="BigInt"
   title="Использование BigInt"
   options={[
-    {text: 'TypeError: Нельзя смешивать BigInt и число'},
+    {text: 'TypeError: Нельзя смешивать BigInt и number'},
     {text: '42n'},
     {text: '84n', isAnswer: true},
-    {text: 'не определено'},
+    {text: 'undefined'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Какой результат выполнения следующего кода?
+    Какой вывод у следующего кода?
     ```js
         const a = 42n;
         const result = a * 2n;
@@ -141,7 +141,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Значения BigInt создаются приписыванием `n` к числу. Смешивать BigInt с обычными числами в арифметических операциях нельзя. Здесь оба значения являются BigInt, поэтому умножение работает, результат — `84n`.
+    Значения BigInt создаются добавлением `n` к числу. Нельзя смешивать BigInt с обычными числами в арифметических операциях. Здесь оба значения являются BigInt, поэтому умножение работает, в результате получается `84n`.
   </div>
   </slot>
 </Challenge>
@@ -150,18 +150,18 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={4}
   group="Динамический импорт"
-  title="Динамический импорт (синтаксис)"
+  title="Синтаксис динамического импорта"
   options={[
-    {text: 'SyntaxError', hint: 'import() не может быть вызвана в выражении'},
-    {text: 'Promise', hint: 'Динамический импорт возвращает Promise'},
-    {text: 'Module', hint: 'Модуль разрешается через Promise'},
-    {text: 'object', isAnswer: true, hint: 'typeof для Promise возвращает \'object\''},
-    {text: 'undefined', hint: 'Модуль не загружен синхронно'},
+    {text: 'SyntaxError'},
+    {text: 'Promise'},
+    {text: 'Module'},
+    {text: 'object', isAnswer: true},
+    {text: 'undefined'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Что будет выведено этим кодом?
+    Что это выводит?
     ```js
         const modulePromise = import('./myModule.js');
         console.log(typeof modulePromise);
@@ -181,15 +181,15 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="Promise.allSettled"
   title="Promise.allSettled"
   options={[
-    {text: 'fulfilled: успех', isAnswer: true},
-    {text: 'Rejected: ошибка'},
-    {text: 'Pending'},
+    {text: 'выполнено: success', isAnswer: true},
+    {text: 'Отклонено: error'},
+    {text: 'Ожидание'},
     {text: 'null'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Каким будет результат следующего кода?
+    Каков будет результат следующего кода?
     ```js
         const promises = [
           Promise.resolve('success'),
@@ -203,7 +203,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `Promise.allSettled` возвращает массив объектов, описывающих результат каждого промиса. Первый промис `fulfilled` со значением 'success', поэтому оператор лога выведет `fulfilled: success`.
+    `Promise.allSettled` возвращает массив объектов, описывающих результат каждого промиса. Первый промис `fulfilled` со значением `'success'`, поэтому оператор вывода напечатает `fulfilled: success`.
   </div>
   </slot>
 </Challenge>
@@ -216,7 +216,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   options={[
     {text: 'Массив совпадений'},
     {text: 'Итератор совпадений', isAnswer: true},
-    {text: 'Ошибка: Неверный вызов'},
+    {text: 'Ошибка: неверный вызов'},
     {text: 'null'},
   ]}
 >
@@ -231,7 +231,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `String.matchAll` возвращает итератор совпадений, а не массив. Этот итератор можно использовать для получения всех групп совпадений из строки.
+    `String.matchAll` возвращает итератор совпадений, а не массив. Этот итератор можно использовать, чтобы получить все группы совпадений из строки.
   </div>
   </slot>
 </Challenge>
@@ -243,7 +243,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   title="Использование import.meta"
   options={[
     {text: 'URL текущего модуля', isAnswer: true},
-    {text: 'Текущее время'},
+    {text: 'Текущая метка времени'},
     {text: 'undefined'},
     {text: 'SyntaxError'},
   ]}
@@ -258,7 +258,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `import.meta` — это объект, содержащий метаданные о текущем модуле. Свойство `import.meta.url` представляет собой URL текущего модуля, который можно использовать для получения информации о том, где выполняется скрипт.
+    `import.meta` — это объект, содержащий метаданные о текущем модуле. Свойство `import.meta.url` представляет URL текущего модуля, который можно использовать для получения информации о том, где выполняется скрипт.
   </div>
   </slot>
 </Challenge>
@@ -271,13 +271,13 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   options={[
     {text: '5'},
     {text: '10', isAnswer: true},
-    {text: 'не определено'},
+    {text: 'undefined'},
     {text: 'null'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Какое значение у `a` после логического присваивания?
+    Каково значение `a` после логического присваивания?
     ```js
         let a = null;
         a ||= 10;
@@ -287,7 +287,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Логическое ИЛИ-присваивание (`||=`) присваивает значение справа, если левое значение ложно (`null`, `undefined`, `0`, `false` и т.д.). Поскольку `a` равно `null`, ему присваивается значение `10`.
+    Оператор логического ИЛИ присваивания (`||=`) присваивает значение справа, если значение слева ложно (`null`, `undefined`, `0`, `false` и т.д.). Поскольку `a` равно `null`, ему присваивается значение `10`.
   </div>
   </slot>
 </Challenge>
@@ -295,8 +295,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={9}
-  group="Логическое нулевое присвоение"
-  title="Логическое нулевое присвоение"
+  group="Логическое присваивание nullish"
+  title="Логическое присваивание nullish"
   options={[
     {text: '5'},
     {text: '10', isAnswer: true},
@@ -306,7 +306,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    Какое значение переменной `b` после нулевого присвоения?
+    Каково значение `b` после nullish‑присваивания?
     ```js
         let b = null;
         b ??= 10;
@@ -316,7 +316,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Оператор нулевого слияния (`??=`) присваивает значение справа, если значение слева является `null` или `undefined`. Поскольку `b` равно `null`, ему присваивается значение `10`.
+    Оператор присваивания с nullish‑слиянием (`??=`) присваивает значение справа, если значение слева равно `null` или `undefined`. Поскольку `b` равно `null`, ему присваивается значение `10`.
   </div>
   </slot>
 </Challenge>
@@ -345,7 +345,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `WeakRef` предоставляет слабую ссылку на объект, что позволяет объекту быть собраным сборщиком мусора, если других ссылок на него нет. Поскольку `obj` всё ещё имеет сильную ссылку, `deref()` возвращает оригинальный объект. Если бы цель была собрана, `deref()` вернула бы `undefined`.
+    `WeakRef` предоставляет слабую ссылку на объект, что позволяет сборщику мусора удалить объект, если нет других ссылок. Поскольку `obj` здесь всё ещё сильно ссылается, `deref()` возвращает исходный объект. Если цель была бы освобождена, `deref()` вернёт `undefined`.
   </div>
   </slot>
 </Challenge>
