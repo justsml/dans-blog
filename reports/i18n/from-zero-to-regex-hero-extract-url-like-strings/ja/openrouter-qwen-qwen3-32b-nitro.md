@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: from-zero-to-regex-hero-extract-url-like-strings
+- Locale: ja
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2024-12-29--from-zero-to-regex-hero-extract-url-like-strings/ja/index.mdx
+- Validation: passed
+- Runtime seconds: 20.76
+- Input tokens: 10744
+- Output tokens: 8724
+- Thinking tokens: unknown
+- Cached input tokens: 2048
+- Cache write tokens: 0
+- Estimated cost: $0.002953
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: ''
 subTitle: ''
@@ -264,3 +282,4 @@ console.log("Extracted Parts:", parts);
 - [MDNの正規表現ドキュメント](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions)
 - [高度な正規表現テクニック](https://www.regular-expressions.info): 先行一致や後方一致、その他の高度なパターンを学んで、より正確なマッチングを行います。
 - [RFC 3986 - URI汎用構文](https://datatracker.ietf.org/doc/html/rfc3986)
+````
