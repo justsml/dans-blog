@@ -1,0 +1,44 @@
+{
+  "index": 1,
+  "attempt": 1,
+  "originalTitle": "Separate Closures",
+  "translatedTitle": "Closures séparées",
+  "translation": {
+    "title": "Closures séparées",
+    "group": "Échauffement",
+    "options": [
+      {
+        "text": "1, 1"
+      },
+      {
+        "text": "1, 2"
+      },
+      {
+        "text": "2, 2"
+      },
+      {
+        "text": "0, 0"
+      }
+    ],
+    "questionProse": [
+      "Que logge ceci ?"
+    ],
+    "explanationProse": [
+      "Chaque appel à `makeCounter()` crée un **nouveau contexte d'exécution** avec son propre `count` frais. `a` et `b` ferment sur des *liaisons* `count` *différentes*. Elles ne partagent aucun état.\n\n    Résultat : `1, 1`\n\n    C’est pourquoi les closures sont utilisées pour créer un état privé — chaque « instance » est indépendante."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Closures séparées\",\n  \"group\": \"Échauffement\",\n  \"options\": [\n    {\n      \"text\": \"1, 1\"\n    },\n    {\n      \"text\": \"1, 2\"\n    },\n    {\n      \"text\": \"2, 2\"\n    },\n    {\n      \"text\": \"0, 0\"\n    }\n  ],\n  \"questionProse\": [\n    \"Que logge ceci ?\"\n  ],\n  \"explanationProse\": [\n    \"Chaque appel à `makeCounter()` crée un **nouveau contexte d'exécution** avec son propre `count` frais. `a` et `b` ferment sur des *liaisons* `count` *différentes*. Elles ne partagent aucun état.\\n\\n    Résultat : `1, 1`\\n\\n    C’est pourquoi les closures sont utilisées pour créer un état privé — chaque « instance » est indépendante.\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 809,
+    "outputTokens": 493,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1608
+  },
+  "cost": {
+    "inputUsd": 0.000031551,
+    "outputUsd": 0.00008874,
+    "totalUsd": 0.00012029099999999999,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

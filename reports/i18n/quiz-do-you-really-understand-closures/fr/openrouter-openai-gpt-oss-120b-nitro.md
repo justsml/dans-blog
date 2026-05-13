@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-do-you-really-understand-closures
+- Locale: fr
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-05-05--quiz-do-you-really-understand-closures/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 19.77
+- Input tokens: 11111
+- Output tokens: 6795
+- Thinking tokens: unknown
+- Cached input tokens: 640
+- Cache write tokens: 0
+- Estimated cost: $0.001656
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: 'Quiz : Comprenez‑vous vraiment les fermetures JavaScript ?'
 subTitle: La plupart des développeurs pensent le faire. Ils se trompent.
@@ -464,3 +482,4 @@ Comment vous en êtes‑vous sorti ?
 
 Les fermetures obsolètes dans React (#6) et le piège `this` (#8) sont celles qui provoquent de vrais bugs en production. Si elles vous étaient étrangères, il faut les revoir — elles apparaissent en revue de code plus souvent que toute autre problématique liée aux fermetures.  
 ---
+````

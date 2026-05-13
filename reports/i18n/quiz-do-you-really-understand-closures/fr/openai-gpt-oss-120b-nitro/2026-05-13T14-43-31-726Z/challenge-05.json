@@ -1,0 +1,44 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Object Mutation",
+  "translatedTitle": "Mutation d'Objet",
+  "translation": {
+    "title": "Mutation d'Objet",
+    "group": "Closures & Objets",
+    "options": [
+      {
+        "text": "{ x: 1 }, { x: 1 }"
+      },
+      {
+        "text": "{ x: 1 }, { x: 99 }"
+      },
+      {
+        "text": "{ x: 99 }, { x: 99 }"
+      },
+      {
+        "text": "{ x: 99 }, { x: 1 }"
+      }
+    ],
+    "questionProse": [
+      "Que cela affiche-t-il ?"
+    ],
+    "explanationProse": [
+      "La fermeture capture la **liaison** `obj`, pas un instantané de l'objet. L'objet lui‑même est muté après la création de la fermeture — mais `obj` pointe toujours vers la même référence. Les deux appels renvoient le même objet muté : `{ x: 99 }`.\n\n    Cela surprend ceux qui pensent que les fermetures « figent » les valeurs. Ce n’est pas le cas. Elles capturent **des références**."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Mutation d'Objet\",\n  \"group\": \"Closures & Objets\",\n  \"options\": [\n    {\n      \"text\": \"{ x: 1 }, { x: 1 }\"\n    },\n    {\n      \"text\": \"{ x: 1 }, { x: 99 }\"\n    },\n    {\n      \"text\": \"{ x: 99 }, { x: 99 }\"\n    },\n    {\n      \"text\": \"{ x: 99 }, { x: 1 }\"\n    }\n  ],\n  \"questionProse\": [\n    \"Que cela affiche-t-il ?\"\n  ],\n  \"explanationProse\": [\n    \"La fermeture capture la **liaison** `obj`, pas un instantané de l'objet. L'objet lui‑même est muté après la création de la fermeture — mais `obj` pointe toujours vers la même référence. Les deux appels renvoient le même objet muté : `{ x: 99 }`.\\n\\n    Cela surprend ceux qui pensent que les fermetures « figent » les valeurs. Ce n’est pas le cas. Elles capturent **des références**.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 841,
+    "outputTokens": 450,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2032
+  },
+  "cost": {
+    "inputUsd": 0.000032798999999999995,
+    "outputUsd": 0.00008099999999999999,
+    "totalUsd": 0.00011379899999999999,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

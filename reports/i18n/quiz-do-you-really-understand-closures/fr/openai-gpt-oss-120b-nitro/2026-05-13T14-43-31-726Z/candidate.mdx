@@ -22,8 +22,8 @@ cover_full_width: ../wide.webp
 cover_mobile: ../square.webp
 cover_icon: ../square.webp
 ---
-import Challenge from '../../../../../components/QuizUI/Challenge';
-import QuizUI from '../../../../../components/QuizUI/QuizUI';
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
 
 <p class="inset">Les fermetures sont l’un de ces concepts que chaque développeur JavaScript *pense* maîtriser — jusqu’au moment où ce n’est pas le cas. Ce quiz mettra à l’épreuve les limites de ce que vous savez réellement.</p>
 
@@ -49,12 +49,12 @@ Les questions commencent de façon raisonnable, puis commencent à enlever les p
   <div className="question">
     Que cela affiche-t-il ?
     ```javascript
-    function makeCounter() {
-      let count = 0;
-      return () => ++count;
-    }
-    const tick = makeCounter();
-    console.log(tick(), tick(), tick());
+        function makeCounter() {
+          let count = 0;
+          return () => ++count;
+        }
+        const tick = makeCounter();
+        console.log(tick(), tick(), tick());
     ```
   </div>
   </slot>
@@ -83,13 +83,13 @@ Les questions commencent de façon raisonnable, puis commencent à enlever les p
   <div className="question">
     Que logge ceci ?
     ```javascript
-    function makeCounter() {
-      let count = 0;
-      return () => ++count;
-    }
-    const a = makeCounter();
-    const b = makeCounter();
-    console.log(a(), b());
+        function makeCounter() {
+          let count = 0;
+          return () => ++count;
+        }
+        const a = makeCounter();
+        const b = makeCounter();
+        console.log(a(), b());
     ```
   </div>
   </slot>
@@ -120,9 +120,9 @@ Les questions commencent de façon raisonnable, puis commencent à enlever les p
   <div className="question">
     Qu'est-ce qui est affiché après 100 ms ?
     ```javascript
-    for (var i = 0; i < 5; i++) {
-      setTimeout(() => console.log(i), 100);
-    }
+        for (var i = 0; i < 5; i++) {
+          setTimeout(() => console.log(i), 100);
+        }
     ```
   </div>
   </slot>
@@ -134,9 +134,9 @@ Les questions commencent de façon raisonnable, puis commencent à enlever les p
 
     La solution est `let` (portée bloc, nouvelle liaison à chaque itération) ou envelopper dans une IIFE pour capturer la valeur courante :
     ```javascript
-    for (let i = 0; i < 5; i++) {
-      setTimeout(() => console.log(i), 100); // 0, 1, 2, 3, 4 ✓
-    }
+        for (let i = 0; i < 5; i++) {
+          setTimeout(() => console.log(i), 100); // 0, 1, 2, 3, 4 ✓
+        }
     ```
   </div>
   </slot>
@@ -158,9 +158,9 @@ Les questions commencent de façon raisonnable, puis commencent à enlever les p
   <div className="question">
     Même boucle, mot‑clé différent. Qu’est‑ce qui s’affiche ?
     ```javascript
-    for (let i = 0; i < 5; i++) {
-      setTimeout(() => console.log(i), 100);
-    }
+        for (let i = 0; i < 5; i++) {
+          setTimeout(() => console.log(i), 100);
+        }
     ```
   </div>
   </slot>
@@ -168,9 +168,9 @@ Les questions commencent de façon raisonnable, puis commencent à enlever les p
   <div className="explanation">
     `let` dans une boucle `for` est spécial. La spécification indique : chaque itération obtient sa **nouvelle liaison** de `i`. C’est comme si la boucle faisait secrètement ça :
     ```javascript
-    { let i = 0; setTimeout(() => console.log(i), 100) }
-    { let i = 1; setTimeout(() => console.log(i), 100) }
-    // ...
+        { let i = 0; setTimeout(() => console.log(i), 100) }
+        { let i = 1; setTimeout(() => console.log(i), 100) }
+        // ...
     ```
     Ainsi les cinq callbacks ferment sur cinq variables distinctes. Résultat : `0, 1, 2, 3, 4`.
   </div>
@@ -193,14 +193,14 @@ Les questions commencent de façon raisonnable, puis commencent à enlever les p
   <div className="question">
     Que cela affiche-t-il ?
     ```javascript
-    function wrap() {
-      const obj = { x: 1 };
-      const getObj = () => obj;
-      obj.x = 99;
-      return getObj;
-    }
-    const get = wrap();
-    console.log(get(), get());
+        function wrap() {
+          const obj = { x: 1 };
+          const getObj = () => obj;
+          obj.x = 99;
+          return getObj;
+        }
+        const get = wrap();
+        console.log(get(), get());
     ```
   </div>
   </slot>
@@ -229,20 +229,20 @@ Les questions commencent de façon raisonnable, puis commencent à enlever les p
   <div className="question">
     Quel comportement ce composant React montre‑t‑il lorsque le bouton est cliqué plusieurs fois ?
     ```jsx
-    function Counter() {
-      const [count, setCount] = useState(0);
+        function Counter() {
+          const [count, setCount] = useState(0);
 
-      useEffect(() => {
-        const id = setInterval(() => {
-          console.log('count is', count);
-        }, 1000);
-        return () => clearInterval(id);
-      }, []); // empty deps
+          useEffect(() => {
+            const id = setInterval(() => {
+              console.log('count is', count);
+            }, 1000);
+            return () => clearInterval(id);
+          }, []); // empty deps
 
-      return <button onClick={() => setCount(c => c + 1)}>
-        Click ({count})
-      </button>;
-    }
+          return <button onClick={() => setCount(c => c + 1)}>
+            Click ({count})
+          </button>;
+        }
     ```
   </div>
   </slot>
@@ -254,9 +254,9 @@ Les questions commencent de façon raisonnable, puis commencent à enlever les p
 
     Corrigez‑le en ajoutant `count` au tableau de dépendances (recrée l’intervalle) ou en utilisant une ref :
     ```jsx
-    const countRef = useRef(count);
-    useEffect(() => { countRef.current = count; }, [count]);
-    // then use countRef.current inside the interval
+        const countRef = useRef(count);
+        useEffect(() => { countRef.current = count; }, [count]);
+        // then use countRef.current inside the interval
     ```
   </div>
   </slot>
@@ -278,18 +278,18 @@ Les questions commencent de façon raisonnable, puis commencent à enlever les p
   <div className="question">
     Attendez — lisez attentivement. Que se passe-t-il réellement ?
     ```javascript
-    const bank = (() => {
-      let balance = 0;
-      return {
-        deposit: (n) => (balance += n),
-        withdraw: (n) => (balance -= n),
-        getBalance: () => balance,
-      };
-    })();
+        const bank = (() => {
+          let balance = 0;
+          return {
+            deposit: (n) => (balance += n),
+            withdraw: (n) => (balance -= n),
+            getBalance: () => balance,
+          };
+        })();
 
-    bank.deposit(100);
-    bank.withdraw(40);
-    console.log(bank.getBalance());
+        bank.deposit(100);
+        bank.withdraw(40);
+        console.log(bank.getBalance());
     ```
   </div>
   </slot>
@@ -299,7 +299,7 @@ Les questions commencent de façon raisonnable, puis commencent à enlever les p
 
     Il s'agit du **Patron de module** — une IIFE qui renvoie un objet de fermetures. Les trois méthodes ferment sur la même liaison `balance`. C'est réellement privé : vous ne pouvez pas accéder à `balance` depuis l'extérieur.
     ```javascript
-    console.log(bank.balance); // undefined
+        console.log(bank.balance); // undefined
     ```
     Avant les classes, c'était *la* façon d'encapsuler l'état en JavaScript. Vous la verrez encore dans les bases de code héritées et les bibliothèques utilitaires.
   </div>
@@ -322,12 +322,12 @@ Les questions commencent de façon raisonnable, puis commencent à enlever les p
   <div className="question">
     Quel est le problème avec ce code ?
     ```javascript
-    function attachHandler(element) {
-      const data = new Array(100_000).fill('🔥');
-      element.addEventListener('click', () => {
-        console.log('clicked!', data.length);
-      });
-    }
+        function attachHandler(element) {
+          const data = new Array(100_000).fill('🔥');
+          element.addEventListener('click', () => {
+            console.log('clicked!', data.length);
+          });
+        }
     ```
   </div>
   </slot>
@@ -339,17 +339,17 @@ Les questions commencent de façon raisonnable, puis commencent à enlever les p
 
     Solution : ne capturez pas de grandes données dans des gestionnaires de longue durée sauf si c'est vraiment nécessaire, et retirez les gestionnaires lorsque l'interface qui les possède est démontée :
     ```javascript
-    function attachHandler(element) {
-      const data = new Array(100_000).fill('🔥');
-      // do something with data...
+        function attachHandler(element) {
+          const data = new Array(100_000).fill('🔥');
+          // do something with data...
 
-      const onClick = () => {
-        console.log('clicked!');
-      };
+          const onClick = () => {
+            console.log('clicked!');
+          };
 
-      element.addEventListener('click', onClick);
-      return () => element.removeEventListener('click', onClick);
-    }
+          element.addEventListener('click', onClick);
+          return () => element.removeEventListener('click', onClick);
+        }
     ```
     Le V8 moderne gère mieux cela qu'auparavant. Mais dans les SPA de longue durée avec de nombreux gestionnaires d'événements, ce schéma pose encore problème.
   </div>
@@ -372,18 +372,18 @@ Les questions commencent de façon raisonnable, puis commencent à enlever les p
   <div className="question">
     Que logge ceci ?
     ```javascript
-    const user = {
-      name: 'Dan',
-      greetArrow: () => console.log(this?.name),
-      greetRegular() {
-        const inner = () => console.log(this?.name);
-        inner();
-      },
-    };
+        const user = {
+          name: 'Dan',
+          greetArrow: () => console.log(this?.name),
+          greetRegular() {
+            const inner = () => console.log(this?.name);
+            inner();
+          },
+        };
 
-    user.greetArrow();
-    const fn = user.greetRegular;
-    fn();
+        user.greetArrow();
+        const fn = user.greetRegular;
+        fn();
     ```
   </div>
   </slot>
@@ -418,24 +418,24 @@ Les questions commencent de façon raisonnable, puis commencent à enlever les p
   <div className="question">
     Combien de fois `expensive()` est‑il réellement appelé ?
     ```javascript
-    function memoize(fn) {
-      const cache = new Map();
-      return (arg) => {
-        if (cache.has(arg)) return cache.get(arg);
-        const result = fn(arg);
-        cache.set(arg, result);
-        return result;
-      };
-    }
+        function memoize(fn) {
+          const cache = new Map();
+          return (arg) => {
+            if (cache.has(arg)) return cache.get(arg);
+            const result = fn(arg);
+            cache.set(arg, result);
+            return result;
+          };
+        }
 
-    let calls = 0;
-    const expensive = (n) => { calls++; return n * 2; };
-    const fast = memoize(expensive);
+        let calls = 0;
+        const expensive = (n) => { calls++; return n * 2; };
+        const fast = memoize(expensive);
 
-    fast(5);
-    fast(5);
-    fast(5);
-    console.log(calls);
+        fast(5);
+        fast(5);
+        fast(5);
+        console.log(calls);
     ```
   </div>
   </slot>
