@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: ai-sdk-math-tool
+- Locale: es
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-01-06--ai-sdk-math-tool/es/index.mdx
+- Validation: passed
+- Runtime seconds: 10.86
+- Input tokens: 6519
+- Output tokens: 2143
+- Thinking tokens: unknown
+- Cached input tokens: 256
+- Cache write tokens: 0
+- Estimated cost: $0.000640
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Deja de pedir a los LLM que hagan matemáticas
 subTitle: No son buenos en eso. Así se soluciona.
@@ -136,3 +154,4 @@ Es un cambio en la forma de pensar al construir con IA. No “¿puede el modelo 
 - [CortexJS Compute Engine](https://cortexjs.io/compute-engine/)
 - [Guía de Llamada a Herramientas](https://sdk.vercel.ai/docs/ai-sdk-core/tools-and-tool-calling)
 - [Repositorio de Ejemplos del AI SDK](https://github.com/vercel/ai/tree/main/examples)
+````
