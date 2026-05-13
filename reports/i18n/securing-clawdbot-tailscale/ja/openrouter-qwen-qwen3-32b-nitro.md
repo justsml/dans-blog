@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: securing-clawdbot-tailscale
+- Locale: ja
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-01-26--securing-clawdbot-tailscale/ja/index.mdx
+- Validation: deferred
+- Runtime seconds: 162.35
+- Input tokens: 12686
+- Output tokens: 10206
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.003464
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: あなたのAIアシスタントがシェルアクセスをくれた
 subTitle: ローカルまたはVPS環境でのOpenClaw/Moltbotのセキュア化方法
@@ -270,3 +288,4 @@ OpenClaw/Moltbotインスタンスを運用就緒とみなす前に：
 - [UFWでUbuntuサーバーをロックダウンする](https://tailscale.com/docs/how-to/secure-ubuntu-server-with-ufw)  
 - [セキュリティ監査: 512の発見 (GitHub Issue)](https://github.com/moltbot/moltbot/issues/1796)  
 - [Nmapネットワークスキャンガイド](https://nmap.org/book/man.html)
+````
