@@ -1,0 +1,42 @@
+{
+  "selectedCommit": "55f12900b475b600a88dc81d0b1fb5dff6d735df",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The selected candidate (Qwen 3.6 Plus) is excellent. It captures the direct, technical tone of the original English perfectly. It correctly handles technical terminology (lexemes, stemming, trigrams) and maintains the MDX/SVG structure without errors. The previous judge's suggestion to replace 'sophistication' with '洗練度' was already implemented in the provided ja/index.mdx text, so no further high-priority fixes are required.",
+  "slug": "postgres-text-search-guide",
+  "locale": "ja",
+  "candidateCommits": [
+    "55f12900b475b600a88dc81d0b1fb5dff6d735df",
+    "d6c9939b4d5ad1ec7a82c54b6ed9603cac869788",
+    "35aef4d9cc4b17bbb0d77b94c56917c7a4362126",
+    "50f1120bea6153edbd714d61574595991d61faf5",
+    "f26e4065890f99f8ed03f5bdf94ccb8ae1080f53",
+    "9893ab08e7a3f6730994c53d8184db1bf972a8dd",
+    "21bdb4aee438c1f04fe7cd7f512a43cbe2951306"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "sophistication",
+      "replacement": "洗練度",
+      "reason": "The candidate left the English word 'sophistication' untranslated in the text.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug postgres-text-search-guide --locale ja --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug postgres-text-search-guide --locale ja --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug postgres-text-search-guide --locale ja --skip-global\n207 |     ...targetContents.matchAll(/=[\"']\\.\\/(?!\\.)[^\"']+\\.(?:avif|gif|jpe?g|png|svg|webp)[\"']/g),\n208 |   ];\n209 | \n210 |   if (nestedAssetReferences.length === 0) return;\n211 | \n212 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2026-05-02--postgres-text-search-guide/ja/index.mdx uses ./ asset paths inside a locale folder. Use ../ for inherited post assets.\n      at assertNestedAssetPaths (/Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:212:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}
