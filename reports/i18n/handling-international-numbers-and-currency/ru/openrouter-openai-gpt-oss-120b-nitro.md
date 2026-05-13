@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: handling-international-numbers-and-currency
+- Locale: ru
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2024-08-29--handling-international-numbers-and-currency/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 7.82
+- Input tokens: 6211
+- Output tokens: 1628
+- Thinking tokens: unknown
+- Cached input tokens: 1280
+- Cache write tokens: 0
+- Estimated cost: $0.000535
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Понимание международных номеров и валюты
@@ -125,3 +143,4 @@ Some libraries can help with these tasks: */}
 **Go**
 
 - [currency](https://github.com/bojanz/currency) — мой текущий выбор для Golang.
+````
