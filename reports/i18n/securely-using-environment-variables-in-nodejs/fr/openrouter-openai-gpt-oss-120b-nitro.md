@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: securely-using-environment-variables-in-nodejs
+- Locale: fr
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2018-11-14--securely-using-environment-variables-in-nodejs/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 8.62
+- Input tokens: 5078
+- Output tokens: 1370
+- Thinking tokens: unknown
+- Cached input tokens: 2176
+- Cache write tokens: 0
+- Estimated cost: $0.000445
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Utiliser les variables d’environnement dans NodeJS
@@ -136,3 +154,4 @@ Si ce n’est pas possible, manipulez votre `.env` avec une extrême prudence (d
 #### ⚠️ Important : si nécessaire, utilisez toujours un service de messagerie sécurisé (de préférence avec prise en charge de l’expiration des messages).
 
 Bonne chance et n’hésitez pas à me poser des questions ! 🎉
+````
