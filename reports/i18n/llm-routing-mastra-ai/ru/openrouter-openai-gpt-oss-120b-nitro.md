@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: llm-routing-mastra-ai
+- Locale: ru
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-01-02--llm-routing-mastra-ai/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 6.80
+- Input tokens: 4477
+- Output tokens: 1778
+- Thinking tokens: unknown
+- Cached input tokens: 256
+- Cache write tokens: 0
+- Estimated cost: $0.000495
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Не женитесь на своей модели
 subTitle: "Маршрутизация LLM\_— сейчас в центре внимания"
@@ -113,3 +131,4 @@ export const mastra = new Mastra({
 2. [Безопасность и ограничительные меры](../mastra-security-guardrails)
 3. [MCP и интеграции инструментов](../mastra-mcp-tool-integrations)
 4. [Рабочие процессы и память](../mastra-workflows-memory)
+````
