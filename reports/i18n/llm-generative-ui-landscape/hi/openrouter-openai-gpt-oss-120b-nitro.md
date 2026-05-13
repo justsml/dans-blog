@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: llm-generative-ui-landscape
+- Locale: hi
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-05-06--llm-generative-ui-landscape/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 24.50
+- Input tokens: 20949
+- Output tokens: 9312
+- Thinking tokens: unknown
+- Cached input tokens: 7552
+- Cache write tokens: 0
+- Estimated cost: $0.002493
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: LLM जनरेटिव UI परिदृश्य
 subTitle: >-
@@ -334,3 +352,4 @@ LLM टीमें धीरे‑धीरे प्रॉम्प्ट्�
 भविष्य यह नहीं है कि “मॉडल आपका फ्रंटएंड लिखे।”
 
 भविष्य इस तरह के करीब है: **आपका फ्रंटएंड एक ऐसा उपकरण बन जाता है जिसे एजेंट बजा सकता है, लेकिन आप अभी भी तय करते हैं कि वह उपकरण किस तरह की ध्वनि निकाल सकता है।**
+````
