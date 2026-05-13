@@ -4,16 +4,16 @@
   "slug": "llm-generative-ui-landscape",
   "locale": "fr",
   "startedAt": "2026-05-13T17:21:08.484Z",
-  "updatedAt": "2026-05-13T17:25:59.861Z",
+  "updatedAt": "2026-05-13T17:30:02.059Z",
   "modelsRequested": [
     "openrouter/openai/gpt-oss-120b:nitro",
     "openrouter/qwen/qwen3-32b:nitro",
     "deepseek/deepseek-v4-flash",
     "qwen/qwen3.6-plus"
   ],
-  "attemptedModels": 2,
+  "attemptedModels": 3,
   "skippedModels": 1,
-  "rejectedModels": 1,
+  "rejectedModels": 2,
   "candidateModels": 1,
   "totals": {
     "inputTokens": 20859,
@@ -28,7 +28,7 @@
     "hasUnknownCachedInputTokens": true,
     "hasUnknownCacheWriteTokens": true,
     "hasUnknownEstimatedCost": true,
-    "runtimeSeconds": "285.86"
+    "runtimeSeconds": "525.99"
   },
   "attempts": [
     {
@@ -63,6 +63,17 @@
       "note": "Command failed after 240000ms: bun run i18n:translate:chunked -- --slug llm-generative-ui-landscape --locale fr --model deepseek/deepseek-v4-flash --chunk 6p --quiz-concurrency 24",
       "telemetry": {
         "runtimeSeconds": "240.01",
+        "tokens": {}
+      }
+    },
+    {
+      "model": "qwen/qwen3.6-plus",
+      "status": "rejected",
+      "validationStatus": "rejected: direct AI SDK translation failed",
+      "reportPath": "reports/i18n/llm-generative-ui-landscape/fr/qwen-qwen3.6-plus.md",
+      "note": "Command failed after 240000ms: bun run i18n:translate:chunked -- --slug llm-generative-ui-landscape --locale fr --model qwen/qwen3.6-plus --chunk 6p --quiz-concurrency 24",
+      "telemetry": {
+        "runtimeSeconds": "240.13",
         "tokens": {}
       }
     }
