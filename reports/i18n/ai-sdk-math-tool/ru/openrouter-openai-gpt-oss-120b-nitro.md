@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: ai-sdk-math-tool
+- Locale: ru
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-01-06--ai-sdk-math-tool/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 4.36
+- Input tokens: 6539
+- Output tokens: 2289
+- Thinking tokens: unknown
+- Cached input tokens: 2816
+- Cache write tokens: 0
+- Estimated cost: $0.000667
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Хватит проситьLLM решать математику
 subTitle: Они в этом плохи. Вот как это исправить.
@@ -136,3 +154,4 @@ console.log(text);
 - [Вычислительный движок CortexJS](https://cortexjs.io/compute-engine/)
 - [Руководство по вызову инструментов](https://sdk.vercel.ai/docs/ai-sdk-core/tools-and-tool-calling)
 - [Репозиторий примеров AI SDK](https://github.com/vercel/ai/tree/main/examples)
+````
