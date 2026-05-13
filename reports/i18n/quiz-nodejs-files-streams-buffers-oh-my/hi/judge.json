@@ -1,0 +1,53 @@
+{
+  "selectedCommit": "954214058e1da52e1ff15d6a4db01ea829264a3b",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "{text: 'HELLO WORLD', isAnswer: true},",
+      "replacement": "{text: 'HELLO WORLD', isAnswer: true},",
+      "reason": "The suggestion in the previous judge report was actually already correctly implemented in the candidate's code (it uses 'HELLO WORLD' for the answer). No further changes are needed."
+    }
+  ],
+  "rationale": "The candidate 954214058e1da52e1ff15d6a4db01ea829264a3b is the most accurate. It avoids the 'Warmup' translation error found in other versions and maintains the correct MDX structure. It correctly keeps technical strings like 'HELLO WORLD' in English where the code logic (toUpperCase) depends on it.",
+  "slug": "quiz-nodejs-files-streams-buffers-oh-my",
+  "locale": "hi",
+  "candidateCommits": [
+    "954214058e1da52e1ff15d6a4db01ea829264a3b",
+    "da2b31bed0dbdec59689b900df35a5e767cc976b"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "{text: 'हैलो वर्ल्ड', isAnswer: true}",
+      "replacement": "{text: 'HELLO WORLD', isAnswer: true}",
+      "reason": "The question asks for the output of a transformation to uppercase. Translating the answer option to Hindi 'हैलो वर्ल्ड' loses the technical distinction of the uppercase transformation required by the code logic.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "{text: 'HELLO WORLD', isAnswer: true},",
+      "replacement": "{text: 'HELLO WORLD', isAnswer: true},",
+      "reason": "The suggestion in the previous judge report was actually already correctly implemented in the candidate's code (it uses 'HELLO WORLD' for the answer). No further changes are needed.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match and replacement are identical; no MDX change needed."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug quiz-nodejs-files-streams-buffers-oh-my --locale hi --skip-global",
+    "output": ""
+  }
+}
