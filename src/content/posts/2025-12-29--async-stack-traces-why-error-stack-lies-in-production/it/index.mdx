@@ -1,26 +1,18 @@
 ---
-title: 'Tracce dello Stack Asincrone: Perché `Error.stack` Ti Inganna'
-subTitle: ''
-date: '2025-12-29'
-modified: '2025-12-30'
-tags:
-  - javascript
-  - async
-  - debugging
-  - node.js
-  - v8
-  - performance
+title: "Stack Trace Asincroni: Perché `Error.stack` Ti Mente"
+subTitle: "La coda dei microtask ha mangiato i miei compiti (e il mio contesto di debug)."
+date: 2025-12-29
+modified: 2025-12-30
+tags: [javascript, async, debugging, node.js, v8, performance]
 category: Code
 subCategory: Best Practices
-social_image: ../desktop-social.webp
+social_image: desktop-social.webp
 cover_full_width: ../wide.webp
 cover_mobile: ../square.webp
 cover_icon: ../square.webp
 ---
-**Summary:**  
-L'articolo argomenta che `Error.stack` in JavaScript asincrono (soprattutto con `async/await`) è instabile a causa della natura non lineare dell'esecuzione asincrona, dove `await` sospende le funzioni e scarta il contesto dello stack. Spiega come gli sforzi di V8 per migliorare le tracce di stack asincrono (come `--async-stack-traces`) siano costosi in termini di prestazioni o insufficienti, e presenta la coda dei microtask come un "congelatore criogenico" che reimposta lo stack al riprendere i compiti. La soluzione proposta è l'uso di `AsyncLocalStorage` di Node.js per preservare il contesto di esecuzione (es. ID richieste) attraverso i confini asincroni, abbinato a log strutturati e OpenTelemetry per il tracciamento causale in produzione. Il tono è analitico e pratico, rivolto a sviluppatori che risolvono errori asincroni in ambienti Node.js.
 
-Sono le 2 di notte. L'allarme di PagerDuty è in suono.
+Sono le 2 del mattino. L'allarme di PagerDuty sta suonando a pieno volume.
 
 Apri i log e vedi questo:
 
@@ -29,72 +21,74 @@ Error: Cannot read properties of undefined (reading 'id')
     at processTicksAndRejections (node:internal/process/task_queues:96:5)
 ```
 
-Soltanto questo. Nessun nome di funzione. Nessun numero di riga. Nessun percorso file. Solo "processTicksAndRejections".
+Tutto qui. Nessun nome di funzione. Nessun numero di riga. Nessun percorso di file. Solo "processTicksAndRejections".
 
-Benvenuti nel JavaScript asincrono, dove le tracce dello stack sono inventate e i numeri delle righe non contano.
+Benvenuti in JavaScript asincrono, dove gli stack trace sono inventati e i numeri di riga non contano.
 
 ---
 
-## Perché si rompono le tracce dello stack
+## Perché gli Stack Trace Si Rompono
 
-Nel codice sincrono, la Call Stack è una genealogia perfetta. A ha chiamato B, B ha chiamato C. Quando C crasha, puoi vedere esattamente come sei arrivato lì.
+Nel codice sincrono, il Call Stack è una bellissima genealogia. A chiama B, B chiama C. Quando C va in crash, puoi vedere esattamente come ci sei arrivato.
 
 Nel codice asincrono (`async/await`), ogni keyword `await` è un punto di sospensione.
 
-Quando usi `await`, la tua funzione viene strappata dallo stack. Viene messa in un congelatore criogenico chiamato Microtask Queue. La stack ora è vuota (o sta facendo qualcos'altro).
+Quando usi `await`, la tua funzione viene staccata dallo stack. Viene messa in un congelatore criogenico chiamato Microtask Queue. Lo stack ora è vuoto (o sta facendo qualcos'altro).
 
-Quando la Promise si risolve, la tua funzione viene scongelata e rimessa nello stack. Ma la storia è persa.
+Quando la Promise si risolve, la tua funzione viene scongelata e rimessa sullo stack. Ma la storia è andata.
 
 Il motore non ha idea di chi abbia chiamato `await` 500 millisecondi fa. Sa solo che ha un compito da eseguire.
 
-## I tentativi di V8 per risolverlo  
+---
 
-Node.js prova ad aiutare. Abbiamo:  
+## I Tentativi di V8 di Risolvere il Problema
 
-1. `Error.captureStackTrace()`: Cattura lo stack *al momento della creazione*. Inutile se l'errore viene lanciato in seguito.  
-2. `--async-stack-traces`: Una bandiera che fa sì che Node.js mantenga uno "stack shadow" delle catene di promise.  
-   * Il Costo: Rende l'app 30% più lenta.  
-   * Il Risultato: Aiuta, ma diventa rumoroso in fretta.  
+Node.js cerca di aiutare. Abbiamo:
 
----  
+1.  `Error.captureStackTrace()`: Cattura lo stack *alla creazione*. Inutile se l'errore viene lanciato dopo.
+2.  `--async-stack-traces`: Un flag che fa sì che Node.js mantenga uno "stack ombra" delle catene di promise.
+    *   Il Costo: Rende la tua app il 30% più lenta.
+    *   Il Risultato: Aiuta, ma diventa rumoroso in fretta.
 
-## La Soluzione Reale: AsyncLocalStorage  
+---
 
-Se vuoi sopravvivere in produzione, smetti di guardare alle tracce dello stack. Guarda alla causalità.
+## La Vera Soluzione: AsyncLocalStorage
 
-Abbiamo bisogno di associare il contesto (User ID, Request ID) al "flusso" di esecuzione, anche mentre salta tra lo Stack e la Coda delle Microtask.
+Se vuoi sopravvivere in produzione, smetti di guardare gli stack trace. Guarda la causalità.
 
-Node.js ha uno strumento integrato per questo: `AsyncLocalStorage`.
+Dobbiamo attaccare il contesto (User ID, Request ID) al "thread" di esecuzione, anche mentre salta tra lo Stack e la Microtask Queue.
+
+Node.js ha un tool builtin per questo: `AsyncLocalStorage`.
 
 ```javascript
 import { AsyncLocalStorage } from 'async_hooks';
 
 const context = new AsyncLocalStorage();
 
-// 1. Avvolgi la richiesta
+// 1. Wrap the request
 context.run({ requestId: '123' }, () => {
-  // 2. Chiama codice async profondo
+  // 2. Call deep async code
   await processOrder();
 });
 
-// 3. Profondamente all'interno di processOrder:
+// 3. Deep inside processOrder:
 async function processOrder() {
   await db.query();
   
-  // Magia! Possiamo ancora vedere il requestId
+  // Magic! We can still see the requestId
   const { requestId } = context.getStore();
   console.log(`[${requestId}] Failed to process order`);
 }
 ```
 
-Non importa quante `await` avvengano in mezzo. Il contesto sopravvive.
+Non importa quanti `await` avvengono nel mezzo. Il contesto sopravvive.
 
 ---
 
 ## Playbook per la Produzione
 
 1.  Smetti di fidarti di `err.stack`. È incompleto per design.
-2.  Usa la registrazione strutturata. Aggiungi `requestId` a ogni singola riga di log tramite `AsyncLocalStorage`.
-3.  Traccia, non stack. Usa OpenTelemetry. Visualizza la catena causale tra i servizi, che è ciò che ti interessa davvero.
+2.  Usa logging strutturato. Attacca `requestId` a ogni singola riga di log usando `AsyncLocalStorage`.
+3.  Traccia, non impilare. Usa OpenTelemetry. Visualizza la catena causale tra servizi, che è ciò che ti interessa davvero.
 
-Il tuo codice è async. Il contesto di debug non dovrebbe essere.
+Il tuo codice è asincrono. Il tuo contesto di debug non dovrebbe esserlo.
