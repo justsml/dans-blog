@@ -1,0 +1,47 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Positive Look-ahead",
+  "translatedTitle": "Look-ahead positif",
+  "translation": {
+    "title": "Look-ahead positif",
+    "group": "Look-ahead",
+    "options": [
+      {
+        "text": "[\"$100\", \"€50\"]"
+      },
+      {
+        "text": "[\"100\", \"50\"]"
+      },
+      {
+        "text": "[\"$\", \"€\"]"
+      },
+      {
+        "text": "[]"
+      },
+      {
+        "text": "null"
+      }
+    ],
+    "questionProse": [
+      "Que va-t-il correspondre ?"
+    ],
+    "explanationProse": [
+      "Ce motif ne correspondra à rien parce que le look‑ahead est inversé ! Si vous voulez des chiffres précédés de `$` ou `€`, utilisez un look‑behind : `/(?<=[\\$€])\\d+/g`.\n\n    Les look‑aheads vérifient ce qui vient *après* la position courante. Le motif tel qu’il est écrit recherche :\n    - Un ou plusieurs chiffres (`\\d+`)\n    - Suivis de (`(?=…)`) soit $ soit € (`[\\$€]`)\n\n    Comme il n’y a aucun nombre suivi d’un symbole monétaire (ils sont précédés), aucune correspondance n’est trouvée.\n\n    [En savoir plus sur les assertions look‑ahead](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Look-ahead positif\",\n  \"group\": \"Look-ahead\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"$100\\\", \\\"€50\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"100\\\", \\\"50\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"$\\\", \\\"€\\\"]\"\n    },\n    {\n      \"text\": \"[]\"\n    },\n    {\n      \"text\": \"null\"\n    }\n  ],\n  \"questionProse\": [\n    \"Que va-t-il correspondre ?\"\n  ],\n  \"explanationProse\": [\n    \"Ce motif ne correspondra à rien parce que le look‑ahead est inversé ! Si vous voulez des chiffres précédés de `$` ou `€`, utilisez un look‑behind : `/(?<=[\\\\$€])\\\\d+/g`.\\n\\n    Les look‑aheads vérifient ce qui vient *après* la position courante. Le motif tel qu’il est écrit recherche :\\n    - Un ou plusieurs chiffres (`\\\\d+`)\\n    - Suivis de (`(?=…)`) soit $ soit € (`[\\\\$€]`)\\n\\n    Comme il n’y a aucun nombre suivi d’un symbole monétaire (ils sont précédés), aucune correspondance n’est trouvée.\\n\\n    [En savoir plus sur les assertions look‑ahead](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 892,
+    "outputTokens": 812,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 1071
+  },
+  "cost": {
+    "inputUsd": 0.000034788,
+    "outputUsd": 0.00014616,
+    "totalUsd": 0.000180948,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

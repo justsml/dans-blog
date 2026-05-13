@@ -1,0 +1,44 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "Look-behind Split",
+  "translatedTitle": "Division avec look-behind",
+  "translation": {
+    "title": "Division avec look-behind",
+    "group": "Look-behind",
+    "options": [
+      {
+        "text": "[\"a,\", \"b,\", \"c\"]"
+      },
+      {
+        "text": "[\"a,b,c\"]"
+      },
+      {
+        "text": "[\"a\", \",\", \"b\", \",\", \"c\"]"
+      },
+      {
+        "text": "[\"a,b,c\", \"\"]"
+      }
+    ],
+    "questionProse": [
+      "Qu'est‑ce qui est renvoyé ?"
+    ],
+    "explanationProse": [
+      "Le motif `/(?<=,)/` est un look-behind qui correspond après une virgule :\n    - `a,` (après la virgule)\n    - `b,` (après la virgule)\n    - `c` (pas de virgule après)\n\n    Le look-behind ne consomme pas la virgule, ainsi la virgule reste attachée au segment précédent dans le résultat du split.\n\n    C’est pratique quand on veut diviser une chaîne en se basant sur ce qui la précède **sans perdre le(s) caractère(s) de séparation**.\n\n    [En savoir plus sur les assertions look-behind](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Division avec look-behind\",\n  \"group\": \"Look-behind\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"a,\\\", \\\"b,\\\", \\\"c\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"a,b,c\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"a\\\", \\\",\\\", \\\"b\\\", \\\",\\\", \\\"c\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"a,b,c\\\", \\\"\\\"]\"\n    }\n  ],\n  \"questionProse\": [\n    \"Qu'est‑ce qui est renvoyé ?\"\n  ],\n  \"explanationProse\": [\n    \"Le motif `/(?<=,)/` est un look-behind qui correspond après une virgule :\\n    - `a,` (après la virgule)\\n    - `b,` (après la virgule)\\n    - `c` (pas de virgule après)\\n\\n    Le look-behind ne consomme pas la virgule, ainsi la virgule reste attachée au segment précédent dans le résultat du split.\\n\\n    C’est pratique quand on veut diviser une chaîne en se basant sur ce qui la précède **sans perdre le(s) caractère(s) de séparation**.\\n\\n    [En savoir plus sur les assertions look-behind](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 875,
+    "outputTokens": 713,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 4353
+  },
+  "cost": {
+    "inputUsd": 0.000034124999999999996,
+    "outputUsd": 0.00012833999999999998,
+    "totalUsd": 0.00016246499999999998,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

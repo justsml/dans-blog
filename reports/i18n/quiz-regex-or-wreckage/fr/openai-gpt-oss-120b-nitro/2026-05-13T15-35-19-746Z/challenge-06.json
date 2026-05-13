@@ -1,0 +1,44 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Word Boundaries",
+  "translatedTitle": "Délimitations de mots",
+  "translation": {
+    "title": "Délimitations de mots",
+    "group": "Correspondance de base",
+    "options": [
+      {
+        "text": "[\"cat\", \"cats\"]"
+      },
+      {
+        "text": "[\"cat\"]"
+      },
+      {
+        "text": "[\"cats\"]"
+      },
+      {
+        "text": "[]"
+      }
+    ],
+    "questionProse": [
+      "Qu'est-ce qui correspondra ?"
+    ],
+    "explanationProse": [
+      "La `\\b` représente une bordure de mot, qui correspond à :\n    - Entre un caractère de mot et un caractère non‑mot\n    - Au début ou à la fin de la chaîne s'il y a un caractère de mot\n\n    Ainsi `/\\bcat\\b/` ne correspond à \"cat\" que lorsqu'il forme un mot complet, pas lorsqu'il fait partie d'un autre mot.\n    - ✅ \"cat\" (entouré d'espaces)\n    - ❌ \"cats\" (pas de bordure après \"cat\")\n    - ❌ \"category\" (pas de bordure après \"cat\")\n\n    [En savoir plus sur les bordures de mots](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions#other_assertions)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Délimitations de mots\",\n  \"group\": \"Correspondance de base\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"cat\\\", \\\"cats\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"cat\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"cats\\\"]\"\n    },\n    {\n      \"text\": \"[]\"\n    }\n  ],\n  \"questionProse\": [\n    \"Qu'est-ce qui correspondra ?\"\n  ],\n  \"explanationProse\": [\n    \"La `\\\\b` représente une bordure de mot, qui correspond à :\\n    - Entre un caractère de mot et un caractère non‑mot\\n    - Au début ou à la fin de la chaîne s'il y a un caractère de mot\\n\\n    Ainsi `/\\\\bcat\\\\b/` ne correspond à \\\"cat\\\" que lorsqu'il forme un mot complet, pas lorsqu'il fait partie d'un autre mot.\\n    - ✅ \\\"cat\\\" (entouré d'espaces)\\n    - ❌ \\\"cats\\\" (pas de bordure après \\\"cat\\\")\\n    - ❌ \\\"category\\\" (pas de bordure après \\\"cat\\\")\\n\\n    [En savoir plus sur les bordures de mots](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions#other_assertions)\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 863,
+    "outputTokens": 726,
+    "cacheReadTokens": 64,
+    "cacheWriteTokens": 0,
+    "durationMs": 4309
+  },
+  "cost": {
+    "inputUsd": 0.000033657,
+    "outputUsd": 0.00013068,
+    "totalUsd": 0.000164337,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

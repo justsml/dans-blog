@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-regex-or-wreckage
+- Locale: fr
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2024-11-15--quiz-regex-or-wreckage/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 82.64
+- Input tokens: 15987
+- Output tokens: 11615
+- Thinking tokens: unknown
+- Cached input tokens: 4256
+- Cache write tokens: 0
+- Estimated cost: $0.002714
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: 'Quiz : Maîtrise des expressions régulières'
@@ -596,3 +614,4 @@ Testez vos connaissances en RegEx avec des questions portant sur les motifs de b
 Les expressions régulières peuvent être une bête à dompter, mais elles sont incroyablement puissantes une fois que vous avez compris le principe (et toutes les nouvelles syntaxes). Continuez à pratiquer, et vous deviendrez un maître du RegEx en un rien de temps ! 🧙‍♂️
 
 <p class="inset">Vous cherchez une pause après tout ce RegEx ?<br />Pftt, rappelez‑vous : pause *après* les compétences ! <br /><br />Allez à [ma salle](../challenges/) pour enchaîner d'autres défis ! 💪</p>
+````

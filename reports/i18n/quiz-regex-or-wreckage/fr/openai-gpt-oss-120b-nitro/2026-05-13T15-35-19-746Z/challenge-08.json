@@ -1,0 +1,47 @@
+{
+  "index": 7,
+  "attempt": 1,
+  "originalTitle": "Negative Look-behind",
+  "translatedTitle": "Regard arrière négatif",
+  "translation": {
+    "title": "Regard arrière négatif",
+    "group": "Regard arrière",
+    "options": [
+      {
+        "text": "[\"123\"]"
+      },
+      {
+        "text": "[\"123\", \"456\"]"
+      },
+      {
+        "text": "[\"23\", \"456\"]"
+      },
+      {
+        "text": "[\"456\"]"
+      },
+      {
+        "text": "[]"
+      }
+    ],
+    "questionProse": [
+      "Qu'est-ce qui correspond à ce motif ?"
+    ],
+    "explanationProse": [
+      "Le regard arrière négatif `(?<!abc)` garantit que les chiffres ne sont pas précédés de \"abc\" :\n    - ❌ \"123\" (précédé de \"abc\")\n    - ✅ \"23\" (précédé de \"abc1\")\n    - ✅ \"456\" (précédé de \"def\")\n\n    JavaScript prend en charge les assertions de regard arrière dans les moteurs modernes. Cet exemple utilise un regard arrière de longueur fixe : `abc` fait toujours trois caractères. Le regard arrière de longueur variable est l’aspect plus délicat propre à chaque moteur.\n\n    Remarque : la prise en charge du regard arrière est relativement récente en JavaScript. Consultez la [compatibilité des navigateurs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#browser_compatibility) si vous devez supporter d'anciens navigateurs."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Regard arrière négatif\",\n  \"group\": \"Regard arrière\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"123\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"123\\\", \\\"456\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"23\\\", \\\"456\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"456\\\"]\"\n    },\n    {\n      \"text\": \"[]\"\n    }\n  ],\n  \"questionProse\": [\n    \"Qu'est-ce qui correspond à ce motif ?\"\n  ],\n  \"explanationProse\": [\n    \"Le regard arrière négatif `(?<!abc)` garantit que les chiffres ne sont pas précédés de \\\"abc\\\" :\\n    - ❌ \\\"123\\\" (précédé de \\\"abc\\\")\\n    - ✅ \\\"23\\\" (précédé de \\\"abc1\\\")\\n    - ✅ \\\"456\\\" (précédé de \\\"def\\\")\\n\\n    JavaScript prend en charge les assertions de regard arrière dans les moteurs modernes. Cet exemple utilise un regard arrière de longueur fixe : `abc` fait toujours trois caractères. Le regard arrière de longueur variable est l’aspect plus délicat propre à chaque moteur.\\n\\n    Remarque : la prise en charge du regard arrière est relativement récente en JavaScript. Consultez la [compatibilité des navigateurs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#browser_compatibility) si vous devez supporter d'anciens navigateurs.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 893,
+    "outputTokens": 795,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 2430
+  },
+  "cost": {
+    "inputUsd": 0.000034827,
+    "outputUsd": 0.0001431,
+    "totalUsd": 0.000177927,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
