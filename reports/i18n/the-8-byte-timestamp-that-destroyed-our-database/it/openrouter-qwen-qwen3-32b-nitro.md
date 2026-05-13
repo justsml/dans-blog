@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: the-8-byte-timestamp-that-destroyed-our-database
+- Locale: it
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2025-12-29--the-8-byte-timestamp-that-destroyed-our-database/it/index.mdx
+- Validation: deferred
+- Runtime seconds: 79.41
+- Input tokens: 10036
+- Output tokens: 7676
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.002645
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Il tuo timestamp è una menzogna
 subTitle: >-
@@ -139,3 +157,4 @@ Pensa a ciò che i tuoi utenti devono vedere. Poi memorizza i dati che ti permet
 - [Formato data/ora ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 - [Database fusi orari (IANA)](https://www.iana.org/time-zones)
 - [Gestione dei timestamp nei sistemi distribuiti](https://www.postgresql.org/docs/current/functions-datetime.html)
+````
