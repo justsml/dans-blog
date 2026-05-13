@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: should-you-use-named-or-default-exports
+- Locale: de
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2023-08-18--should-you-use-named-or-default-exports/de/index.mdx
+- Validation: passed
+- Runtime seconds: 11.98
+- Input tokens: 4085
+- Output tokens: 3859
+- Thinking tokens: unknown
+- Cached input tokens: 1024
+- Cache write tokens: 0
+- Estimated cost: $0.001253
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: ''
@@ -101,3 +119,4 @@ Es gibt tatsächlich viele Kombinationen, wie wir Dinge exportieren können, jed
 ### Fazit
 
 Wenn Code Kommunikation ist, dann `export` wie du es verdammt nochmal ernst meinst. 💞
+````
