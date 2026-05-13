@@ -1,0 +1,49 @@
+{
+  "selectedCommit": "d70445129f2adc87a3644e9aef62cc70e6035628",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The current translation already incorporates the high and medium priority fixes suggested in the previous judge report (fixing the relative paths for images and using 'agenti' in the title). The translation is technically accurate, maintains the author's direct tone, and preserves the MDX structure perfectly.",
+  "slug": "mastra-workflows-memory",
+  "locale": "it",
+  "candidateCommits": [
+    "d70445129f2adc87a3644e9aef62cc70e6035628",
+    "b738586426e54946c8fbd1267f4b37948d3e5d05",
+    "c54d61ebde955f6ea1a0d688e5262c6325e14e2c",
+    "e42dc68e22984bee303dc52b911c39a398395fe5",
+    "c798b00565ddbc6bbe18f274222472ca6615c4ad"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "Smetti di Costruire Agent Instabili",
+      "replacement": "Smetti di costruire agenti instabili",
+      "reason": "'Agent' should be pluralized/localized as 'agenti' in Italian for better flow, and title case is less common in Italian headings.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "social_image: desktop-social.webp",
+      "replacement": "social_image: ../desktop-social.webp",
+      "reason": "The path needs to be relative to the parent directory to match the English structure and other localized files.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug mastra-workflows-memory --locale it --skip-global",
+    "output": ""
+  }
+}
