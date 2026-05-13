@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: llm-evals-are-broken
+- Locale: de
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-05-06--llm-evals-are-broken/de/index.mdx
+- Validation: passed
+- Runtime seconds: 25.91
+- Input tokens: 10898
+- Output tokens: 11114
+- Thinking tokens: unknown
+- Cached input tokens: 2560
+- Cache write tokens: 0
+- Estimated cost: $0.003539
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: ''
 subTitle: Benchmarks messen nur Benchmarks. Ihr System braucht eigene Maßstäbe.
@@ -263,3 +281,4 @@ Das ist für ein neues AI-Funktion wirklich schwer zu beantworten. Es ist jedoch
 Die Benchmarks lügen nicht. Sie beantworten nur eine andere Frage. Stoppen Sie, sie als Produktroadmaps zu lesen, und beginnen Sie Tests zu schreiben, die Ihr System abbilden.  
 
 Ihre Nutzer werden es früher bemerken als Ihre Dashboards. Bauen Sie zuerst das Testumfeld auf.
+````
