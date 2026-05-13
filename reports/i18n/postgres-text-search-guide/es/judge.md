@@ -1,20 +1,7 @@
-# Juicio de la traducción ES
+# Translation Judge
 
-Elegí `74d85d02a34f95397878ce9e686f1d4920b2877e` como base.
+- Selected candidate: b515ea61b166d71bae34af4aac9c355e76bfeb4b
+- Selected model: openrouter/qwen/qwen3.6-plus
+- Judge model: openrouter/google/gemini-3-flash-preview
 
-## Motivos
-
-- Conserva mejor la voz directa del original y su estructura argumental.
-- Mantiene la terminología técnica con menos traducciones forzadas o anglicismos raros.
-- Preserva el MDX con menos riesgo de roturas: frontmatter, bloques de código, figuras SVG y enlaces quedan intactos.
-- Evita varios deslices de otros candidatos, como español demasiado literal, mezcla de idiomas, o términos técnicos traducidos donde conviene mantenerlos.
-
-## Ajustes de polido aplicados
-
-- Alineé algunas frases para que suenen más naturales en español sin perder precisión técnica.
-- Normalicé detalles de estilo y puntuación para mantener consistencia en todo el artículo.
-- Conservé los nombres de extensiones, funciones, operadores SQL y enlaces en su forma original cuando corresponde.
-
-## Veredicto
-
-La versión seleccionada equilibra mejor precisión técnica, fluidez y fidelidad al tono de Dan. Los otros candidatos tenían más ruido estilístico o más fricción terminológica, así que no merecían ser la base final.
+The translation is technically excellent and captures the author's direct tone. It correctly translates complex SVG content and maintains MDX structure perfectly. While the previous judge suggested changing 'ranking' to 'clasificación', 'ranking' is widely accepted and often preferred in modern technical Spanish contexts for search engines, so I have opted to keep the current high-quality text without further changes.

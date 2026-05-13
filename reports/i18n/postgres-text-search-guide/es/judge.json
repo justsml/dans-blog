@@ -1,0 +1,42 @@
+{
+  "selectedCommit": "b515ea61b166d71bae34af4aac9c355e76bfeb4b",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 10,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The translation is technically excellent and captures the author's direct tone. It correctly translates complex SVG content and maintains MDX structure perfectly. While the previous judge suggested changing 'ranking' to 'clasificación', 'ranking' is widely accepted and often preferred in modern technical Spanish contexts for search engines, so I have opted to keep the current high-quality text without further changes.",
+  "slug": "postgres-text-search-guide",
+  "locale": "es",
+  "candidateCommits": [
+    "b515ea61b166d71bae34af4aac9c355e76bfeb4b",
+    "74d85d02a34f95397878ce9e686f1d4920b2877e",
+    "6271021484ebec235356cfa0d088c667d11f5264",
+    "7e937dcc886b86df28cd6a600918156adb815065",
+    "0b0a34c6fd5d943aa2da5b382fc31e7e56b58e56",
+    "139c754d8a7d1cc9f33514267dd0488209e52652",
+    "0eb4c6390792f31467138c0f18b1df3559e0e5ca"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "medium",
+      "match": "ranking",
+      "replacement": "clasificación",
+      "reason": "While 'ranking' is common in tech, 'clasificación' or 'posicionamiento' is more standard in Spanish documentation for search relevance.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug postgres-text-search-guide --locale es --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug postgres-text-search-guide --locale es --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug postgres-text-search-guide --locale es --skip-global\n207 |     ...targetContents.matchAll(/=[\"']\\.\\/(?!\\.)[^\"']+\\.(?:avif|gif|jpe?g|png|svg|webp)[\"']/g),\n208 |   ];\n209 | \n210 |   if (nestedAssetReferences.length === 0) return;\n211 | \n212 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2026-05-02--postgres-text-search-guide/es/index.mdx uses ./ asset paths inside a locale folder. Use ../ for inherited post assets.\n      at assertNestedAssetPaths (/Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:212:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}
