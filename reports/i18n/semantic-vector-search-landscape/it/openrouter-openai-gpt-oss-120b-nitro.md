@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: semantic-vector-search-landscape
+- Locale: it
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-05-01--semantic-vector-search-landscape/it/index.mdx
+- Validation: deferred
+- Runtime seconds: 8.14
+- Input tokens: 19106
+- Output tokens: 8470
+- Thinking tokens: unknown
+- Cached input tokens: 8704
+- Cache write tokens: 0
+- Estimated cost: $0.002270
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Ricerca Vettoriale Semantica e Altri Argomenti per Conquistare Amici e Amanti
 subTitle: >-
@@ -373,3 +391,4 @@ La maggior parte dei sistemi di ricerca in produzione richiede più di un livell
 Non sono strumenti in competizione. Sono complementari. Un sistema di ricerca ben costruito sceglie il livello giusto per ogni forma di query — e quando le forme di query si sovrappongono, esegue più livelli e fonde i risultati.
 
 I team che rilasciano buone funzionalità di ricerca comprendono l’intero stack. Quelli che non lo fanno si affidano a un database vettoriale, incorporano tutto e si chiedono perché le ricerche esatte a volte restituiscano il record sbagliato.
+````
