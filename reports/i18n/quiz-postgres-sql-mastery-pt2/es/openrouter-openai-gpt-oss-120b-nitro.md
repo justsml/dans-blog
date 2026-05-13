@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-postgres-sql-mastery-pt2
+- Locale: es
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2024-11-28--quiz-postgres-sql-mastery-pt2/es/index.mdx
+- Validation: passed
+- Runtime seconds: 16.91
+- Input tokens: 12958
+- Output tokens: 9583
+- Thinking tokens: unknown
+- Cached input tokens: 4992
+- Cache write tokens: 0
+- Estimated cost: $0.002230
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 social_image: ../mobile.webp
@@ -527,3 +545,4 @@ Este cuestionario combina características conocidas y menos documentadas de Pos
 Espero que hayas aprendido algo nuevo, o al menos que tengas una puntuación de la que presumir. 🏆  
 
 ¿Quieres más emociones en la vida? Consulta mi [Colección de Quiz](/challenges/) para diversión sin fin*.
+````

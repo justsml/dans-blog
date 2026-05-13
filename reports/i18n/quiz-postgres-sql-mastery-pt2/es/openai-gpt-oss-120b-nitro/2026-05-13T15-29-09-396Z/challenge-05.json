@@ -1,0 +1,31 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Hash Join Eligibility",
+  "translatedTitle": "Elegibilidad de Hash Join",
+  "translation": {
+    "title": "Elegibilidad de Hash Join",
+    "group": "Internos de SQL",
+    "options": [],
+    "questionProse": [
+      "¿Qué condición `ON` puede usar PostgreSQL para un `HASH JOIN`?"
+    ],
+    "explanationProse": [
+      "Un hash join es posible con una condición de igualdad (`=`) en la cláusula `ON`.\n\n    - `=` es la forma de predicado clave para los hash joins\n    - `>` y `>=` no son predicados de hash join\n    - `HASH JOIN` no es una sintaxis válida en PostgreSQL\n\n    El planificador aún puede elegir un bucle anidado o un merge join según el tamaño de la tabla, las estadísticas, los índices y la configuración de memoria."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Elegibilidad de Hash Join\",\n  \"group\": \"Internos de SQL\",\n  \"options\": [],\n  \"questionProse\": [\n    \"¿Qué condición `ON` puede usar PostgreSQL para un `HASH JOIN`?\"\n  ],\n  \"explanationProse\": [\n    \"Un hash join es posible con una condición de igualdad (`=`) en la cláusula `ON`.\\n\\n    - `=` es la forma de predicado clave para los hash joins\\n    - `>` y `>=` no son predicados de hash join\\n    - `HASH JOIN` no es una sintaxis válida en PostgreSQL\\n\\n    El planificador aún puede elegir un bucle anidado o un merge join según el tamaño de la tabla, las estadísticas, los índices y la configuración de memoria.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 763,
+    "outputTokens": 526,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 1487
+  },
+  "cost": {
+    "inputUsd": 0.000029757,
+    "outputUsd": 0.00009468,
+    "totalUsd": 0.000124437,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Partial Indexes",
+  "translatedTitle": "Índices parciales",
+  "translation": {
+    "title": "Índices parciales",
+    "group": "Indexación",
+    "options": [
+      {
+        "text": "Sintaxis inválida"
+      },
+      {
+        "text": "Crea índices duplicados"
+      },
+      {
+        "text": "Solo indexa a los estudiantes activos"
+      },
+      {
+        "text": "Indexa primero a los estudiantes activos"
+      },
+      {
+        "text": "Proporciona una pista al planificador de consultas"
+      }
+    ],
+    "questionProse": [
+      "¿Qué hace esta invocación?"
+    ],
+    "explanationProse": [
+      "Este truco se llama `Partial Index`.\n\n    Son útiles para reducir el uso de disco y acelerar consultas cuando solo se consultan un subconjunto de filas.\n\n    Postgres solo usará el índice cuando la condición `status = 'active'` esté presente en la consulta.\n\n    **Recordatorio:** Postgres no soporta 'query hints' como otros SGBD. El planificador de consultas decidirá cuándo usar cualquier índice apropiado."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Índices parciales\",\n  \"group\": \"Indexación\",\n  \"options\": [\n    {\n      \"text\": \"Sintaxis inválida\"\n    },\n    {\n      \"text\": \"Crea índices duplicados\"\n    },\n    {\n      \"text\": \"Solo indexa a los estudiantes activos\"\n    },\n    {\n      \"text\": \"Indexa primero a los estudiantes activos\"\n    },\n    {\n      \"text\": \"Proporciona una pista al planificador de consultas\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Qué hace esta invocación?\"\n  ],\n  \"explanationProse\": [\n    \"Este truco se llama `Partial Index`.\\n\\n    Son útiles para reducir el uso de disco y acelerar consultas cuando solo se consultan un subconjunto de filas.\\n\\n    Postgres solo usará el índice cuando la condición `status = 'active'` esté presente en la consulta.\\n\\n    **Recordatorio:** Postgres no soporta 'query hints' como otros SGBD. El planificador de consultas decidirá cuándo usar cualquier índice apropiado.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 830,
+    "outputTokens": 663,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 421
+  },
+  "cost": {
+    "inputUsd": 0.00003237,
+    "outputUsd": 0.00011933999999999999,
+    "totalUsd": 0.00015171,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

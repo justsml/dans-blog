@@ -1,0 +1,32 @@
+{
+  "index": 8,
+  "attempt": 1,
+  "originalTitle": "TABLESAMPLE Syntax",
+  "translatedTitle": "Sintaxis de TABLESAMPLE",
+  "translation": {
+    "title": "Sintaxis de TABLESAMPLE",
+    "group": "Muestreo de datos",
+    "options": [],
+    "questionProse": [
+      "¿Cuál es la sintaxis válida para **muestrear aleatoriamente el 10%** de los estudiantes?"
+    ],
+    "explanationProse": [
+      "Esta es complicada! Tiene alrededor de 6 trampas, algunas incluyen:\n\n    1. Descripción de alto nivel + fragmentos de sintaxis. Prueba cómo adaptas y ensamblas información incompleta.\n    2. Requiere conocer la sintaxis de `TABLESAMPLE`, ya que ninguna de las opciones de `TABLESAMPLE` usa la sintaxis correcta! (¡Siniestra! Lo sé! Sigue adelante, ¡creo en ti!!! ❤️)\n    3. Los `ROW_NUMBER() OVER (ORDER BY RAND())` y `ORDER BY RANDOM() > 10` son más pistas falsas. Parecen correctos, pero no lo son. `RAND()` no existe. Y `RANDOM() > 10` es una expresión booleana que siempre será falsa porque `RANDOM()` siempre está en el rango `0.0-1.0`.\n    Otro problema, el `ORDER BY RANDOM() > 10` también ordenaría por un valor booleano, no por un número aleatorio. Pero ese `> 10` suena como si fuera un porcentaje, ¿no?\n    4. `BERNOULLI` es válido, sin embargo `SAMPLETABLE` no lo es.\n    5. `WHERE RANDOM() >= 0.1` es una trampa! `RANDOM()` devuelve un valor en el rango `0.0 <= x < 1.0`, así que `>= 0.1` devolvería aproximadamente el 90% de las filas, no el 10%.\n\n    En cuanto al método `TABLESAMPLE`, PostgreSQL soporta dos métodos de muestreo:\n    - `BERNOULLI`: Cada fila tiene igual probabilidad\n    - `SYSTEM`: Muestreo a nivel de bloque (más rápido pero menos aleatorio)\n\n    Para aprender más sobre muestreo, revisa este artículo de [Render](https://render.com/blog/postgresql-random-samples-big-tables).\n\n    Ejemplo:",
+      "También vale mencionar que `TABLESAMPLE` [ha sido reportado](https://stackoverflow.com/questions/8674718/best-way-to-select-random-rows-postgresql) como no muy aleatorio. Si necesitas una muestra fija _más_ aleatoria, considera usar `ORDER BY RANDOM() LIMIT 10`. Pero ten en cuenta que esto devuelve 10 filas, no el 10%, y puede ser lento en tablas grandes.\n\n    Existen también extensiones de terceros que ofrecen mejores métodos de muestreo aleatorio, pero eso está fuera del alcance de este ejercicio! 😅"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Sintaxis de TABLESAMPLE\",\n  \"group\": \"Muestreo de datos\",\n  \"options\": [],\n  \"questionProse\": [\n    \"¿Cuál es la sintaxis válida para **muestrear aleatoriamente el 10%** de los estudiantes?\"\n  ],\n  \"explanationProse\": [\n    \"Esta es complicada! Tiene alrededor de 6 trampas, algunas incluyen:\\n\\n    1. Descripción de alto nivel + fragmentos de sintaxis. Prueba cómo adaptas y ensamblas información incompleta.\\n    2. Requiere conocer la sintaxis de `TABLESAMPLE`, ya que ninguna de las opciones de `TABLESAMPLE` usa la sintaxis correcta! (¡Siniestra! Lo sé! Sigue adelante, ¡creo en ti!!! ❤️)\\n    3. Los `ROW_NUMBER() OVER (ORDER BY RAND())` y `ORDER BY RANDOM() > 10` son más pistas falsas. Parecen correctos, pero no lo son. `RAND()` no existe. Y `RANDOM() > 10` es una expresión booleana que siempre será falsa porque `RANDOM()` siempre está en el rango `0.0-1.0`.\\n    Otro problema, el `ORDER BY RANDOM() > 10` también ordenaría por un valor booleano, no por un número aleatorio. Pero ese `> 10` suena como si fuera un porcentaje, ¿no?\\n    4. `BERNOULLI` es válido, sin embargo `SAMPLETABLE` no lo es.\\n    5. `WHERE RANDOM() >= 0.1` es una trampa! `RANDOM()` devuelve un valor en el rango `0.0 <= x < 1.0`, así que `>= 0.1` devolvería aproximadamente el 90% de las filas, no el 10%.\\n\\n    En cuanto al método `TABLESAMPLE`, PostgreSQL soporta dos métodos de muestreo:\\n    - `BERNOULLI`: Cada fila tiene igual probabilidad\\n    - `SYSTEM`: Muestreo a nivel de bloque (más rápido pero menos aleatorio)\\n\\n    Para aprender más sobre muestreo, revisa este artículo de [Render](https://render.com/blog/postgresql-random-samples-big-tables).\\n\\n    Ejemplo:\",\n    \"También vale mencionar que `TABLESAMPLE` [ha sido reportado](https://stackoverflow.com/questions/8674718/best-way-to-select-random-rows-postgresql) como no muy aleatorio. Si necesitas una muestra fija _más_ aleatoria, considera usar `ORDER BY RANDOM() LIMIT 10`. Pero ten en cuenta que esto devuelve 10 filas, no el 10%, y puede ser lento en tablas grandes.\\n\\n    Existen también extensiones de terceros que ofrecen mejores métodos de muestreo aleatorio, pero eso está fuera del alcance de este ejercicio! 😅\"\n  ],\n  \"explanationCode\": [\n    {\n      \"language\": \"sql\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1187,
+    "outputTokens": 1204,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 1544
+  },
+  "cost": {
+    "inputUsd": 0.000046293,
+    "outputUsd": 0.00021672,
+    "totalUsd": 0.000263013,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
