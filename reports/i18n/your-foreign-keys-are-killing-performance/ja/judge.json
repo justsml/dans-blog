@@ -1,0 +1,85 @@
+{
+  "selectedCommit": "a5f69728163ec7175fe8f648e2b7a1f48f00b01e",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The current translation already incorporates the medium-priority fixes suggested in the previous judge report (e.g., '引き剥がしたりはしない', '認識の乖離', '不条理な', '時期尚早に', 'カーゴ・カルト'). It maintains Dan's direct, punchy style while ensuring technical accuracy and natural Japanese flow. No further high-priority corrections are required.",
+  "slug": "your-foreign-keys-are-killing-performance",
+  "locale": "ja",
+  "candidateCommits": [
+    "a5f69728163ec7175fe8f648e2b7a1f48f00b01e",
+    "8ababeeed2cbfa498e412eae4dcbaa5dcf09df29",
+    "da3ba7242675827764f2896a98ea857b5cd6b59c",
+    "9062bf9e792ef2db7bad95692a68a4cbcd031cc0",
+    "cc6a6dc37be9cec503fcdc793f1ba976d5e2065a"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "medium",
+      "match": "人生を進めよう",
+      "replacement": "作業を進めよう",
+      "reason": "'Move on with your life' in this technical context is a colloquialism meaning 'get on with the task at hand' or 'don't overthink it'. The literal translation 'move on with your life' (人生を進める) sounds overly dramatic in Japanese.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "ripped out したりはしない",
+      "replacement": "引き剥がしたりはしない",
+      "reason": "The English phrase 'ripped out' was left untranslated in the candidate. Translating it to '引き剥がす' or '取り外す' makes the sentence more natural for Japanese readers.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "disconnect が起きるのは",
+      "replacement": "認識の乖離が起きるのは",
+      "reason": "The English word 'disconnect' was left untranslated. In this context, '認識の乖離' (gap in understanding) or '食い違い' is more appropriate.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "absurd なJOINの増殖",
+      "replacement": "不条理なJOINの増殖",
+      "reason": "The English word 'absurd' was left untranslated. '不条理な' or '馬鹿げた' fits the tone better.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "prematurely に最適化するのは",
+      "replacement": "時期尚早に最適化するのは",
+      "reason": "The English word 'prematurely' was left untranslated. '時期尚早に' is the standard technical translation for 'premature optimization'.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "cargo cult することになる",
+      "replacement": "カーゴ・カルト（盲目的追従）することになる",
+      "reason": "While 'cargo cult' is a known term, providing the katakana or a brief explanation helps clarity in a Japanese technical context.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug your-foreign-keys-are-killing-performance --locale ja --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug your-foreign-keys-are-killing-performance --locale ja --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug your-foreign-keys-are-killing-performance --locale ja --skip-global\n20 |   }\n21 | \n22 |   const minimumLength = Math.floor(sourceLength * minimumRatio);\n23 |   const maximumLength = Math.ceil(sourceLength * maximumRatio);\n24 |   if (targetLength < minimumLength || targetLength > maximumLength) {\n25 |     throw new Error(\n                   ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2025-12-29--your-foreign-keys-are-killing-performance/ja/index.mdx changed comparable body length from 10906 chars in English to 5421 chars. Expected 7088-14724 chars (within 35%).\n      at assertTranslationLength (/Users/dan/code/oss/dans-blog/src/scripts/i18n/structural-validation.ts:25:15)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:26:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}

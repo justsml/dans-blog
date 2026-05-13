@@ -1,22 +1,7 @@
-# Judge Report
+# Translation Judge
 
-Selected `openrouter/google/gemini-3-flash-preview` as the base translation.
+- Selected candidate: a5f69728163ec7175fe8f648e2b7a1f48f00b01e
+- Selected model: openrouter/qwen/qwen3.6-plus
+- Judge model: openrouter/google/gemini-3-flash-preview
 
-## Why this candidate
-
-- It had the cleanest overall Japanese and the most natural article flow.
-- Technical terms were handled more consistently than the other candidates, especially around FK/normalization/snapshot language.
-- It preserved the MDX structure well enough to polish with minimal intervention instead of heavy rewrites.
-
-## Why the others lost
-
-- `openrouter/qwen/qwen3.6-plus`: generally solid, but more awkward phrasing and more English leakage than the winner.
-- `openrouter/moonshotai/kimi-k2.6`: readable, but drifted into explanatory wording that flattened some of Dan's direct edge.
-- `openrouter/z-ai/glm-5.1`: the weakest for preservation and language quality; too much code-switching and several unnatural turns.
-- `openrouter/minimax/minimax-m2.7`: strongest attempt at tone, but still had more awkward idioms and less stable technical wording than Gemini.
-
-## Edits made
-
-- Kept the Gemini translation as the base.
-- Lightly normalized wording, punctuation, and code/MDX formatting.
-- Preserved the blunt, argumentative voice without over-softening it.
+The current translation already incorporates the medium-priority fixes suggested in the previous judge report (e.g., '引き剥がしたりはしない', '認識の乖離', '不条理な', '時期尚早に', 'カーゴ・カルト'). It maintains Dan's direct, punchy style while ensuring technical accuracy and natural Japanese flow. No further high-priority corrections are required.
