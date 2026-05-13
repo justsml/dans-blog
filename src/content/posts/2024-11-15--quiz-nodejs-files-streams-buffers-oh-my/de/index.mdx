@@ -1,7 +1,7 @@
 ---
 unlisted: false
-title: ''
-subTitle: ''
+title: 'Quiz: NodeJS‑IO‑Meisterschaft'
+subTitle: 'Testen Sie Ihr Wissen zu Dateien, Streams und Buffern'
 label: NodeJS
 social_image: ../desktop-social.webp
 category: Quiz
@@ -20,22 +20,22 @@ cover_full_width: ../data-streaming-wide.webp
 cover_mobile: ../data-streaming-square.webp
 cover_icon: ../data-streaming-square.webp
 ---
-import Challenge from '../../../../components/QuizUI/Challenge';
-import QuizUI from '../../../../components/QuizUI/QuizUI';
+import Challenge from '../../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../../components/QuizUI/QuizUI';
 
-<p class="inset">Bereit, in die Welt der NodeJS-E/A einzutauchen? 🌊</p>
+<p class="inset">Bereit, in die Welt von NodeJS IO einzutauchen? 🌊</p>
 
-Dieser Test prüft Ihr Verständnis der E/A-Operationen in Node, von grundlegenden Dateisystemoperationen bis hin zu fortgeschrittenen Streaming-Konzepten. Wir behandeln Buffers, Kodierung und bewährte Methoden für die effiziente Datenverarbeitung.
+Dieses Quiz prüft Ihr Verständnis der IO‑Operationen von Node, von einfachen Dateisystem‑Aufrufen bis hin zu fortgeschrittenen Streaming‑Konzepte. Wir behandeln Buffer, Kodierung und bewährte Vorgehensweisen für eine effiziente Datenverarbeitung.
 
-Schauen wir mal, wie gut Sie Ihre Streams von Ihren Buffers unterscheiden können! 🚀
+Mal sehen, wie gut Sie Ihre Streams im Vergleich zu Ihren Buffern kennen! 🚀
 
 <QuizUI>
 
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={0}
-  group="Warmup: Puffer"
-  title="Buffer-Zuweisung"
+  group="Aufwärmen: Puffer"
+  title="Pufferzuweisung"
   options={[
     {text: 'Erstellt einen Puffer der Größe 5 mit Nullen', isAnswer: true},
     {text: 'Erstellt einen Puffer der Größe 5 mit zufälligen Daten'},
@@ -45,7 +45,7 @@ Schauen wir mal, wie gut Sie Ihre Streams von Ihren Buffers unterscheiden könne
 >
   <slot name="question">
   <div className="question">
-    Was tut dieser Code?
+    Was macht dieser Code?
     ```js
     const buf = Buffer.alloc(5);
     console.log(buf);
@@ -54,12 +54,12 @@ Schauen wir mal, wie gut Sie Ihre Streams von Ihren Buffers unterscheiden könne
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `Buffer.alloc(size)` erstellt einen neuen Puffer der angegebenen Größe, gefüllt mit Nullen.
-    Das Ergebnis wird sein: `<Buffer 00 00 00 00 00>`
+    `Buffer.alloc(size)` erstellt einen neuen Buffer mit der angegebenen Größe, gefüllt mit Nullen.
+    Die Ausgabe ist: `<Buffer 00 00 00 00 00>`
 
-    Für einen Puffer mit zufälligen Daten verwende `Buffer.allocUnsafe(5)`.
+    Wenn du einen Buffer mit zufälligen Daten erstellen willst, benutze `Buffer.allocUnsafe(5)`.
 
-    [Mehr über Buffer-Zuweisung erfahren](https://nodejs.org/api/buffer.html#static-method-bufferalloc)
+    [Erfahre mehr über Buffer‑Allocation](https://nodejs.org/api/buffer.html#static-method-bufferalloc)
   </div>
   </slot>
 </Challenge>
@@ -67,8 +67,8 @@ Schauen wir mal, wie gut Sie Ihre Streams von Ihren Buffers unterscheiden könne
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={1}
-  group="Warmup: Buffer"
-  title="Umwandlung von Buffer in String"
+  group="Aufwärmen: Buffers"
+  title="Buffer-zu-String-Konvertierung"
   options={[
     {text: 'A', isAnswer: true},
     {text: '65'},
@@ -79,7 +79,7 @@ Schauen wir mal, wie gut Sie Ihre Streams von Ihren Buffers unterscheiden könne
 >
   <slot name="question">
   <div className="question">
-    Was wird dies ausgeben?
+    Was wird das ausgeben?
     ```js
     const buf = Buffer.from([65]);
     console.log(buf.toString());
@@ -88,13 +88,13 @@ Schauen wir mal, wie gut Sie Ihre Streams von Ihren Buffers unterscheiden könne
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Die Zahlen im Array stellen ASCII-Codes dar:
+    Die Zahlen im Array repräsentieren ASCII‑Codes:
 
     - 65: 'A'
 
-    `toString()` wandelt diese Bytes in ihre Zeichenfolgendarstellung unter Verwendung der Standard-UTF-8-Codierung um.
+    `toString()` wandelt diese Bytes standardmäßig mithilfe der UTF‑8‑Kodierung in ihre String‑Darstellung um.
 
-    [Erfahren Sie mehr über Buffer-Codierung](https://nodejs.org/api/buffer.html#buffers-and-character-encodings)
+    [Erfahren Sie mehr über Buffer‑Kodierung](https://nodejs.org/api/buffer.html#buffers-and-character-encodings)
   </div>
   </slot>
 </Challenge>
@@ -102,18 +102,18 @@ Schauen wir mal, wie gut Sie Ihre Streams von Ihren Buffers unterscheiden könne
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={2}
-  group="Einstiegsübung: Dateisystem"
-  title="Asynchrone Dateivorgänge"
+  group="Aufwärmen: Dateisystem"
+  title="Asynchrone Dateioperationen"
   options={[
-    {text: 'Gibt den Dateiinhalt und dann „Fertig“ aus'},
-    {text: 'Gibt zuerst „Fertig“ und dann den Dateiinhalt aus', isAnswer: true},
-    {text: 'Gibt nur den Dateiinhalt aus'},
-    {text: 'Löst einen Fehler aus'},
+    {text: 'Gibt den Dateinhalt aus, dann "Done"'},
+    {text: 'Gibt "Done" aus, dann den Dateinhalt', isAnswer: true},
+    {text: 'Gibt nur den Dateinhalt aus'},
+    {text: 'Wirft einen Fehler'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Welche Ausgabereihenfolge ergibt sich?
+    Wie lautet die Ausgabereihenfolge?
     ```js
     import fs from 'fs';
     fs.readFile('test.txt', 'utf8', (err, data) => {
@@ -126,9 +126,9 @@ Schauen wir mal, wie gut Sie Ihre Streams von Ihren Buffers unterscheiden könne
   <slot name='explanation'>
   <div className="explanation">
     Da `readFile` asynchron ist, wird der Code weiter ausgeführt, während die Datei gelesen wird.
-    Daher wird „Fertig“ vor dem Dateiinhalt ausgegeben.
+    Deshalb wird "Done" vor dem Dateinhalt ausgegeben.
 
-    Um zuerst die Datei zu lesen, könntest du die Promise-basierte Version verwenden:
+    Um zuerst auf das Lesen der Datei zu warten, könntest du die Promise-basierte Version verwenden:
     ```js
     import { promises as fs } from 'fs';
     
@@ -149,9 +149,9 @@ Schauen wir mal, wie gut Sie Ihre Streams von Ihren Buffers unterscheiden könne
   title="Dateien synchron lesen"
   options={[
     {text: 'Gibt einen Buffer zurück', isAnswer: true},
-    {text: 'Gibt eine Zeichenkette zurück'},
+    {text: 'Gibt einen String zurück'},
     {text: 'Gibt undefined zurück'},
-    {text: 'Gibt eine Promise zurück'},
+    {text: 'Gibt ein Promise zurück'},
   ]}
 >
   <slot name="question">
@@ -165,11 +165,11 @@ Schauen wir mal, wie gut Sie Ihre Streams von Ihren Buffers unterscheiden könne
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `fs.readFileSync()` gibt standardmäßig einen Buffer zurück, wenn keine Kodierung angegeben ist. Wenn Sie eine Zeichenkette möchten, müssen Sie entweder:
+    `fs.readFileSync()` gibt standardmäßig einen Buffer zurück, wenn keine Kodierung angegeben ist. Wenn du einen String möchtest, musst du entweder:
     1. Eine Kodierung angeben: `fs.readFileSync('test.txt', 'utf8')`
     2. Den Buffer konvertieren: `content.toString()`
 
-    [Mehr erfahren zu fs.readFileSync in den Node.js-Dokumentationen](https://nodejs.org/api/fs.html#fsreadfilesyncpath-options)
+    [Mehr erfahren über fs.readFileSync in den Node.js‑Docs](https://nodejs.org/api/fs.html#fsreadfilesyncpath-options)
   </div>
   </slot>
 </Challenge>
@@ -178,7 +178,7 @@ Schauen wir mal, wie gut Sie Ihre Streams von Ihren Buffers unterscheiden könne
   client:visible={{rootMargin: "150px"}}
   index={4}
   group="Streams"
-  title="Stream-Events"
+  title="Stream‑Ereignisse"
   options={[
     {text: '\'data\', \'end\', \'error\', \'close\'', isAnswer: true},
     {text: '\'finish\', \'drain\', \'pipe\''},
@@ -188,14 +188,14 @@ Schauen wir mal, wie gut Sie Ihre Streams von Ihren Buffers unterscheiden könne
 >
   <slot name="question">
   <div className="question">
-    Welche Ereignismenge wird häufig mit Readable Streams verwendet?
+    Welche Menge von Ereignissen wird üblicherweise mit lesbaren Streams verwendet?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Readable Streams emittieren mehrere wichtige Ereignisse:
+    Lesbare Streams geben mehrere wichtige Ereignisse aus:
     - 'data': Wenn Daten zum Lesen verfügbar sind
-    - 'end': Wenn keine weiteren Daten zum Lesen vorhanden sind
+    - 'end': Wenn keine Daten mehr zum Lesen vorhanden sind
     - 'error': Wenn ein Fehler auftritt
     - 'close': Wenn der Stream und die zugrunde liegende Ressource geschlossen wurden
     ```js
@@ -203,7 +203,7 @@ Schauen wir mal, wie gut Sie Ihre Streams von Ihren Buffers unterscheiden könne
     readable.on('data', chunk => console.log(chunk));
     readable.on('end', () => console.log('Done!'));
     ```
-    [Erfahren Sie mehr über Stream-Ereignisse](https://nodejs.org/api/stream.html#class-streamreadable)
+    [Mehr über Stream‑Ereignisse erfahren](https://nodejs.org/api/stream.html#class-streamreadable)
   </div>
   </slot>
 </Challenge>
@@ -214,15 +214,15 @@ Schauen wir mal, wie gut Sie Ihre Streams von Ihren Buffers unterscheiden könne
   group="Streams"
   title="Stream-Piping"
   options={[
-    {text: 'Kopiert die Datei mit Kompression'},
-    {text: 'Kopiert die Datei ohne Memory-Buffering', isAnswer: true},
-    {text: 'Lädt die gesamte Datei in den Arbeitsspeicher'},
+    {text: 'Kopiert Datei mit Kompression'},
+    {text: 'Kopiert Datei ohne Speicherpufferung', isAnswer: true},
+    {text: 'Lädt die gesamte Datei in den Speicher'},
     {text: 'Erstellt einen symbolischen Link'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Was tut dieser Code?
+    Was macht dieser Code?
     ```js
     import fs from 'fs';
     const readable = fs.createReadStream('source.txt');
@@ -233,11 +233,11 @@ Schauen wir mal, wie gut Sie Ihre Streams von Ihren Buffers unterscheiden könne
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `pipe()` verbindet einen lesbaren Stream mit einem schreibbaren Stream, wodurch automatisch Backpressure verwaltet und Daten in Chunk-Größen kopiert werden, ohne die gesamte Datei in den Arbeitsspeicher zu laden.
+    `pipe()` verbindet einen lesbaren Stream mit einem schreibbaren Stream, verwaltet automatisch den Backpressure und kopiert Daten in Stücke, ohne die gesamte Datei in den Speicher zu laden.
 
-    Dies ist speicher-effizient für große Dateien im Vergleich zu `fs.readFile()` gefolgt von `fs.writeFile()`.
+    Das ist speichereffizient für große Dateien im Vergleich zu `fs.readFile()` gefolgt von `fs.writeFile()`.
 
-    [Mehr über pipe() erfahren](https://nodejs.org/api/stream.html#readablepipedestination-options)
+    [Mehr erfahren über pipe()](https://nodejs.org/api/stream.html#readablepipedestination-options)
   </div>
   </slot>
 </Challenge>
@@ -248,7 +248,7 @@ Schauen wir mal, wie gut Sie Ihre Streams von Ihren Buffers unterscheiden könne
   group="Dateisystem"
   title="Verzeichnisoperationen"
   options={[
-    {text: 'Erstellt geschachtelte Verzeichnisse bei Bedarf', isAnswer: true},
+    {text: 'Erstellt bei Bedarf verschachtelte Verzeichnisse', isAnswer: true},
     {text: 'Erstellt nur das letzte Verzeichnis'},
     {text: 'Wirft einen Fehler'},
     {text: 'Erstellt symbolische Links'},
@@ -256,7 +256,7 @@ Schauen wir mal, wie gut Sie Ihre Streams von Ihren Buffers unterscheiden könne
 >
   <slot name="question">
   <div className="question">
-    Was bewirkt die recursive-Option?
+    Was bewirkt die Option `recursive`?
     ```js
     import fs from 'fs';
     fs.mkdirSync('./a/b/c', { recursive: true });
@@ -265,12 +265,12 @@ Schauen wir mal, wie gut Sie Ihre Streams von Ihren Buffers unterscheiden könne
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Die Option `recursive: true` erstellt Elternverzeichnisse, falls sie nicht existieren.
-    Ohne diese Option würde das Erstellen von './a/b/c' einen Fehler werfen, wenn './a' oder './a/b' nicht existieren.
+    Die Option `recursive: true` erstellt übergeordnete Verzeichnisse, falls sie nicht existieren.
+    Ohne diese Option würde der Versuch, './a/b/c' zu erstellen, einen Fehler werfen, wenn './a' oder './a/b' nicht existieren.
 
-    Dies entspricht dem Shell-Befehl `mkdir -p`.
+    Das ist ähnlich dem Shell‑Befehl `mkdir -p`.
 
-    [Mehr zu mkdir erfahren](https://nodejs.org/api/fs.html#fsmkdirsyncpath-options)
+    [Mehr erfahren über mkdir](https://nodejs.org/api/fs.html#fsmkdirsyncpath-options)
   </div>
   </slot>
 </Challenge>
@@ -281,15 +281,15 @@ Schauen wir mal, wie gut Sie Ihre Streams von Ihren Buffers unterscheiden könne
   group="Streams"
   title="Transform-Streams"
   options={[
-    {text: 'hello world'},
-    {text: 'HELLO WORLD', isAnswer: true},
-    {text: 'Error'},
-    {text: 'undefined'},
+    {text: 'hallo welt'},
+    {text: 'HALLO WELT', isAnswer: true},
+    {text: 'Fehler'},
+    {text: 'undefiniert'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Was wird dies ausgeben?
+    Was wird das ausgeben?
     ```js
     import { Transform } from 'stream';
     const upperCase = new Transform({
@@ -306,12 +306,12 @@ Schauen wir mal, wie gut Sie Ihre Streams von Ihren Buffers unterscheiden könne
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Transform-Streams modifizieren Daten während des Durchlaufs. Hier wird jeder Datenblock:
+    Transform-Streams verändern Daten, während sie hindurchfließen. Hier wird jedes Chunk:
     1. In einen String konvertiert
     2. In Großbuchstaben umgewandelt
     3. An stdout weitergeleitet
 
-    Dies erzeugt eine Pipeline, die alle Eingaben in Großbuchstaben konvertiert.
+    Das erzeugt eine Pipeline, die die gesamte Eingabe in Großbuchstaben umwandelt.
 
     [Mehr über Transform-Streams erfahren](https://nodejs.org/api/stream.html#class-streamtransform)
   </div>
@@ -322,11 +322,11 @@ Schauen wir mal, wie gut Sie Ihre Streams von Ihren Buffers unterscheiden könne
   client:visible={{rootMargin: "150px"}}
   index={8}
   group="Dateisystem"
-  title="Dateibeobachtung"
+  title="Dateiüberwachung"
   options={[
-    {text: 'Einmal pro Dateiänderung'},
+    {text: 'Einmal pro Dateiveränderung'},
     {text: 'Nicht garantiert; kann mehrfach ausgelöst werden', isAnswer: true},
-    {text: 'Nie'},
+    {text: 'Niemals'},
     {text: 'Nur bei Dateilöschung'},
   ]}
 >
@@ -344,16 +344,16 @@ Schauen wir mal, wie gut Sie Ihre Streams von Ihren Buffers unterscheiden könne
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `fs.watch()` wird nicht garantiert genau einmal pro logischer Dateiänderung ausgelöst. Es wird oft mehrfach ausgelöst, weil viele Texteditoren:
+    `fs.watch()` ist nicht garantiert, exakt einmal pro logischer Dateiveränderung auszulösen. Es wird häufig mehrfach ausgelöst, weil viele Texteditoren:
     1. In eine temporäre Datei speichern
-    2. Diese in die Ziel-Datei umbenennen
+    2. Sie in die Zieldatei umbenennen
 
-    Für zuverlässige Beobachtung empfehlen sich:
-    - Das `chokidar`-Paket
-    - Debouncing der Callback-Funktion
-    - Verwendung von `fs.watchFile()` (ist aber weniger effizient)
+    Für zuverlässigeres Beobachten solltest du erwägen:
+    - Das `chokidar`‑Paket
+    - Das Debouncen des Callbacks
+    - `fs.watchFile()` zu verwenden (obwohl es weniger effizient ist)
 
-    [Mehr zu fs.watch()](https://nodejs.org/api/fs.html#fswatchfilename-options-listener)
+    [Erfahre mehr über fs.watch()](https://nodejs.org/api/fs.html#fswatchfilename-options-listener)
   </div>
   </slot>
 </Challenge>
@@ -361,13 +361,13 @@ Schauen wir mal, wie gut Sie Ihre Streams von Ihren Buffers unterscheiden könne
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={9}
-  group="Puffer"
-  title="Puffer-Vergleich"
+  group="Buffer"
+  title="Buffer-Vergleich"
   options={[
-    {text: 'wahr'},
-    {text: 'falsch', isAnswer: true},
+    {text: 'true'},
+    {text: 'false', isAnswer: true},
     {text: 'undefined'},
-    {text: 'Fehler'},
+    {text: 'Error'},
   ]}
 >
   <slot name="question">
@@ -382,15 +382,15 @@ Schauen wir mal, wie gut Sie Ihre Streams von Ihren Buffers unterscheiden könne
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Puffer werden nach Referenz und nicht nach Wert verglichen. Selbst wenn sie die gleichen Daten enthalten, sind sie verschiedene Objekte.
+    Buffer werden per Referenz verglichen, nicht nach Wert. Obwohl sie dieselben Daten enthalten, sind sie unterschiedliche Objekte.
 
-    Um den Inhalt von Puffern zu vergleichen, verwenden Sie:
+    Um Buffer-Inhalte zu vergleichen, verwende:
     ```js
     buf1.equals(buf2)  // true
     // or
     Buffer.compare(buf1, buf2) === 0  // true
     ```
-    [Mehr über Puffer-Vergleich erfahren](https://nodejs.org/api/buffer.html#bufequalsotherbuffer)
+    [Erfahren Sie mehr über den Buffer-Vergleich](https://nodejs.org/api/buffer.html#bufequalsotherbuffer)
   </div>
   </slot>
 </Challenge>
@@ -409,12 +409,12 @@ Schauen wir mal, wie gut Sie Ihre Streams von Ihren Buffers unterscheiden könne
 >
   <slot name="question">
   <div className="question">
-    Welches ist das Hauptziel der Stream-Backpressure?
+    Was ist der Hauptzweck von Stream-Backpressure?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Backpressure ist ein Mechanismus, der Speicherüberläufe verhindert, indem er das Lesen pausiert, wenn das Schreiben nicht mitkommt.
+    Backpressure ist ein Mechanismus, der Speicherüberlauf verhindert, indem er das Lesen pausiert, wenn das Schreibende nicht mithalten kann.
 
     Beispiel für manuelle Backpressure:
     ```js
@@ -428,7 +428,7 @@ Schauen wir mal, wie gut Sie Ihre Streams von Ihren Buffers unterscheiden könne
     ```
     `pipe()` erledigt das automatisch!
 
-    [Mehr über Backpressure erfahren](https://nodejs.org/en/learn/modules/backpressuring-in-streams#backpressuring-in-streams)
+    [Mehr erfahren über Backpressure](https://nodejs.org/en/learn/modules/backpressuring-in-streams#backpressuring-in-streams)
   </div>
   </slot>
 </Challenge>
@@ -439,7 +439,7 @@ Schauen wir mal, wie gut Sie Ihre Streams von Ihren Buffers unterscheiden könne
   group="Dateisystem"
   title="Symbolische Links"
   options={[
-    {text: 'Erstellt einen harten Link'},
+    {text: 'Erstellt einen Hardlink'},
     {text: 'Erstellt eine Kopie'},
     {text: 'Erstellt einen symbolischen Link', isAnswer: true},
     {text: 'Verschiebt die Datei'},
@@ -447,7 +447,7 @@ Schauen wir mal, wie gut Sie Ihre Streams von Ihren Buffers unterscheiden könne
 >
   <slot name="question">
   <div className="question">
-    Was tut dieser Code?
+    Was macht dieser Code?
     ```js
     import fs from 'fs';
     fs.symlinkSync('target.txt', 'link.txt');
@@ -456,18 +456,18 @@ Schauen wir mal, wie gut Sie Ihre Streams von Ihren Buffers unterscheiden könne
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `symlinkSync` erstellt einen symbolischen Link (wie einen Verknüpfungspunkt) zum Ziel-Datei.
+    `symlinkSync` erstellt einen symbolischen Link (wie eine Verknüpfung) zur Zieldatei.
 
-    Wichtige Unterschiede zu harten Links:
-    - Verknüpft Verzeichnisse möglich
-    - Funktioniert über Dateisystemgrenzen hinweg
-    - Bricht zusammen, wenn Ziel gelöscht wird
+    Wichtigste Unterschiede zu Hardlinks:
+    - Kann auf Verzeichnisse verlinken
+    - Kann Dateisysteme übergreifen
+    - Bricht, wenn das Ziel gelöscht wird
 
-    Um stattdessen einen harten Link zu erstellen:
+    So erstellst du stattdessen einen Hardlink:
     ```js
     fs.linkSync('target.txt', 'hardlink.txt');
     ```
-    [Mehr zu symbolischen Links erfahren](https://nodejs.org/api/fs.html#fssymlinksync-target-path-type)
+    [Mehr über Symlinks erfahren](https://nodejs.org/api/fs.html#fssymlinksync-target-path-type)
   </div>
   </slot>
 </Challenge>
@@ -475,27 +475,27 @@ Schauen wir mal, wie gut Sie Ihre Streams von Ihren Buffers unterscheiden könne
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={12}
-  group="Streams"
-  title="Stream-Modi"
+  group="Datenströme"
+  title="Stream‑Modi"
   options={[
     {text: 'Nur Binärmodus'},
     {text: 'Nur Objektmodus'},
     {text: 'Beide Modi', isAnswer: true},
-    {text: 'Keiner der Modi'},
-    {text: 'Eingabe- & Ausgabemodi'},
-    {text: 'Lesen & Schreibmodi'},
+    {text: 'Kein Modus'},
+    {text: 'Ein‑ und Ausgabemodi'},
+    {text: 'Lese‑ und Schreibmodi'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    In welchen Modi können Node.js-Streams arbeiten?
+    In welchen Modi können Node.js‑Streams arbeiten?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Streams können in folgenden Modi arbeiten:
-    1. Binärmodus (Standard): Für Buffers und Strings
-    2. Objektmodus: Für beliebige JavaScript-Werte
+    Streams können arbeiten in:
+    1. Binärmodus (Standard): für Buffer und Strings
+    2. Objektmodus: für beliebige JavaScript‑Werte
 
     Beispiel für Objektmodus:
     ```js
@@ -507,7 +507,7 @@ Schauen wir mal, wie gut Sie Ihre Streams von Ihren Buffers unterscheiden könne
       }
     });
     ```
-    [Weitere Informationen zu Stream-Modi](https://nodejs.org/api/stream.html#object-mode)
+    [Mehr über Stream‑Modi erfahren](https://nodejs.org/api/stream.html#object-mode)
   </div>
   </slot>
 </Challenge>
@@ -526,7 +526,7 @@ Schauen wir mal, wie gut Sie Ihre Streams von Ihren Buffers unterscheiden könne
 >
   <slot name="question">
   <div className="question">
-    Welchen Datentyp hat der `fd`-Parameter in diesem Callback?
+    Welchen Typ hat der `fd`‑Parameter in diesem Callback?
     ```js
     import fs from 'fs';
     fs.open('test.txt', 'r', (err, fd) => {
@@ -544,7 +544,7 @@ Schauen wir mal, wie gut Sie Ihre Streams von Ihren Buffers unterscheiden könne
     - 1: stdout
     - 2: stderr
 
-    Denken Sie immer daran, Dateideskriptoren zu schließen:
+    Denk immer daran, Dateideskriptoren zu schließen:
     ```js
     fs.close(fd, (err) => {
       if (err) throw err;
@@ -558,8 +558,8 @@ Schauen wir mal, wie gut Sie Ihre Streams von Ihren Buffers unterscheiden könne
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={14}
-  group="Codierung"
-  title="Puffer-Codierung"
+  group="Kodierung"
+  title="Pufferkodierung"
   options={[
     {text: '3'},
     {text: '4'},
@@ -570,7 +570,7 @@ Schauen wir mal, wie gut Sie Ihre Streams von Ihren Buffers unterscheiden könne
 >
   <slot name="question">
   <div className="question">
-    Wie viele Bytes nimmt dieser String in UTF-8 ein?
+    Wie viele Bytes benötigt dieser String in UTF‑8?
     ```js
     const str = "Hello 🌍";
     const buf = Buffer.from(str);
@@ -580,21 +580,21 @@ Schauen wir mal, wie gut Sie Ihre Streams von Ihren Buffers unterscheiden könne
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    In UTF-8:
-    - ASCII-Zeichen (wie 'Hello ') nehmen jeweils 1 Byte ein
-    - Das Erden-Emoji 🌍 benötigt 4 Bytes
+    In UTF‑8:
+    - ASCII‑Zeichen (wie 'Hello ') benötigen jeweils 1 Byte
+    - Das Erde‑Emoji 🌍 benötigt 4 Bytes
 
     Also: 5 (Hello) + 1 (Leerzeichen) + 4 (🌍) = 10 Bytes
 
-    Um die Bytes anzuzeigen:
+    Um die Bytes zu sehen:
     ```js
     console.log(buf);  // <Buffer 48 65 6c 6c 6f 20 f0 9f 8c 8d>
     ```
-    [Mehr über UTF-8-Codierung erfahren](https://nodejs.org/api/buffer.html#buffers-and-character-encodings)
+    [Mehr über UTF‑8‑Kodierung erfahren](https://nodejs.org/api/buffer.html#buffers-and-character-encodings)
   </div>
   </slot>
 </Challenge>
 
 </QuizUI>
 
-Ich hoffe, es hat Spaß gemacht, Ihr Wissen zu NodeJS-Ein-/Ausgabevorgängen zu testen! Möchten Sie noch mehr? Schauen Sie sich meine [Quiz-Sammlung](../challenges/) an für weitere Herausforderungen!
+Ich hoffe,Ihnen hat das Testen Ihres NodeJS‑IO‑Wissens gefallen! Noch mehr? Schauen Sie sich meine <a href="/challenges/">Quiz‑Sammlung</a> für weitere Aufgaben an!
