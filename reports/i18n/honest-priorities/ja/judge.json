@@ -1,0 +1,38 @@
+{
+  "selectedCommit": "d48b6a4c8bc3a31df12dd7e1b5a790895205677a",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "scores": {
+    "readability": 5,
+    "technicalAccuracy": 5,
+    "coherence": 5,
+    "relevance": 5,
+    "translationQuality": 5,
+    "mdxPreservation": 5
+  },
+  "suggestions": [],
+  "rationale": "The selected candidate (d48b6a4c8bc3a31df12dd7e1b5a790895205677a) is the most complete and accurate. It correctly translates the frontmatter title and subtitle, which the 'current' version failed to do. It captures Dan's informal and punchy style well (e.g., using 'げっ！' for 'Gasp!'). The suggestion from the previous judge regarding the middle dot in 'ビザロ・トロフィールーム' is already present in the candidate's text, so no further high-priority fixes are required.",
+  "slug": "honest-priorities",
+  "locale": "ja",
+  "candidateCommits": [
+    "d48b6a4c8bc3a31df12dd7e1b5a790895205677a",
+    "feb79662e4e109ed81cf648aa3fb048d68770a3d",
+    "2f036179066133293b8e318c14ca4a52d35c5a59"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "ビザロートロフィールーム",
+      "replacement": "ビザロ・トロフィールーム",
+      "reason": "'Bizzaro' is a reference to the DC Comics character/world where everything is the opposite. Adding a middle dot makes it more readable as a loanword phrase in Japanese.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug honest-priorities --locale ja --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug honest-priorities --locale ja --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug honest-priorities --locale ja --skip-global\n20 |   }\n21 | \n22 |   const minimumLength = Math.floor(sourceLength * minimumRatio);\n23 |   const maximumLength = Math.ceil(sourceLength * maximumRatio);\n24 |   if (targetLength < minimumLength || targetLength > maximumLength) {\n25 |     throw new Error(\n                   ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2024-10-23--honest-priorities/ja/index.mdx changed comparable body length from 5527 chars in English to 3122 chars. Expected 3592-7462 chars (within 35%).\n      at assertTranslationLength (/Users/dan/code/oss/dans-blog/src/scripts/i18n/structural-validation.ts:25:15)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:26:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}
