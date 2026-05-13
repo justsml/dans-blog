@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: the-last-to-think
+- Locale: es
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2025-05-31--the-last-to-think/es/index.mdx
+- Validation: passed
+- Runtime seconds: 2.50
+- Input tokens: 1965
+- Output tokens: 745
+- Thinking tokens: unknown
+- Cached input tokens: 896
+- Cache write tokens: 0
+- Estimated cost: $0.000211
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 language: English
 title: Los últimos en pensar
@@ -33,3 +51,4 @@ Sobrevivimos a las calculadoras, a los CliffsNotes y (hasta ahora) a TikTok. Sob
 <p> </p>
 
 * _Suponiendo que podamos mejorar el impacto ambiental y evitar una pesadilla distópica. Pero ese es un tema para otro día._
+````
