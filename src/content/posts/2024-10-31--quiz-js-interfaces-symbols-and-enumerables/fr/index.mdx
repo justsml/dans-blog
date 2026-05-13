@@ -1,7 +1,7 @@
 ---
 unlisted: false
-title: 'Quiz : Symboles & Énumérables'
-subTitle: ''
+title: "Quiz\_: Symboles et énumérables"
+subTitle: Connaissez‑vous les aspects moins connus d’ES2015 ?
 label: Symbols
 social_image: ../desktop-social.webp
 category: Quiz
@@ -18,22 +18,22 @@ cover_full_width: ../logan-weaver-lgnwvr-96ES9AOLRzQ-unsplash.webp
 cover_mobile: ../logan-weaver-lgnwvr-96ES9AOLRzQ-unsplash_w300.webp
 cover_icon: ../logan-weaver-lgnwvr-96ES9AOLRzQ-unsplash_w300.webp
 ---
-## Quiz : Interfaces JavaScript, Symboles et Enumérables
+## Quiz : Interfaces JavaScript, Symboles et Énumérables
 
-> * **Prouvez vos compétences en JavaScript !** 🚀  
-> * Aucune inscription ou connexion requise. ✨  
-> * Questions à choix multiples. 🤖 ... _Ça peut être difficile, hein ?_  
+> * **Prouvez votre maîtrise de JavaScript !** 🚀  
+> * Aucun login ou inscription requis. ✨  
+> * Choix multiples. 🤖 … _À quel point cela peut‑il être difficile, hein ?_  
 
-import Challenge from '../../../../components/QuizUI/Challenge';  
-import QuizUI from '../../../../components/QuizUI/QuizUI';
+import Challenge from '../../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../../components/QuizUI/QuizUI';
 
 <QuizUI>
 
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={0}
-  group="Interfaces avancées"
-  title="Accès par getter vs accès direct"
+  group="Interfaces Avancées"
+  title="Accesseur vs Accès Direct à la Propriété"
   options={[
     {text: 'Utiliser une boucle'},
     {text: 'Appeler une méthode pour accéder à la valeur'},
@@ -43,7 +43,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    Comment accéder à une propriété d'un objet JavaScript qui utilise une méthode getter ?
+    Comment devez‑vous accéder à une propriété d’un objet JavaScript qui utilise un accesseur ?
     ```js
     const obj = {
       get val() {
@@ -56,8 +56,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    En JavaScript, un getter peut être accédé comme une propriété normale. Il n'est pas nécessaire de l'appeler comme une fonction.
-    Dans cet exemple, accéder directement à `obj.val` invoque la méthode getter et affiche `got it!`.
+    En JavaScript, un accesseur peut être accédé comme une propriété normale. Il n’est pas nécessaire de l’appeler comme une fonction.
+    Dans cet exemple, accéder à `obj.val` invoque directement la méthode d’accesseur et affiche `got it!`.
   </div>
   </slot>
 </Challenge>
@@ -65,18 +65,18 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={1}
-  group="Interfaces avancées"
-  title="Utilisation des symboles en clés d'objets"
+  group="Interfaces Avancées"
+  title="Utilisation des Symboles comme Clés d'Objet"
   options={[
-    {text: 'En utilisant un symbole', isAnswer: true},
-    {text: 'En utilisant une chaîne de caractères'},
-    {text: 'En utilisant un nombre'},
-    {text: 'En utilisant un objet en tant que clé'},
+    {text: 'Utiliser un Symbol', isAnswer: true},
+    {text: 'Utiliser une chaîne'},
+    {text: 'Utiliser un nombre'},
+    {text: 'Utiliser un objet comme clé'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Quelle est la bonne méthode pour créer une clé de propriété vraiment unique pour un objet JavaScript ?
+    Quelle est la bonne façon de créer une clé de propriété réellement unique pour un objet JavaScript ?
     ```js
     const uniqueKey = Symbol('myUniqueKey');
     const obj = {
@@ -88,7 +88,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Les symboles sont un type primitif unique et immuable qui peuvent être utilisés comme clés pour les propriétés d'objets. Cela aide à éviter les collisions de noms, notamment dans les grands projets ou lors de l'écriture de bibliothèques réutilisables.
+    Les Symboles sont un type primitif unique et immuable qui peut être utilisé comme clés pour les propriétés d’un objet. Cela permet d’éviter les collisions de noms, notamment dans les grands bases de code ou lors de l’écriture de bibliothèques réutilisables.
   </div>
   </slot>
 </Challenge>
@@ -96,18 +96,18 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={2}
-  group="Interfaces Avancées"
-  title="Propriétés Enumerable"
+  group="Interfaces avancées"
+  title="Propriétés énumérables"
   options={[
-    {text: 'Lève une erreur'},
-    {text: 'Non, il ne sera pas répertorié'},
+    {text: 'Lance une erreur'},
+    {text: 'Non, il ne le fera pas'},
     {text: 'Cela dépend du type de valeur'},
-    {text: 'Oui, il sera répertorié', isAnswer: true},
+    {text: 'Oui, il sera listé', isAnswer: true},
   ]}
 >
   <slot name="question">
   <div className="question">
-    La propriété `age` sera-t-elle répertoriée lors d'une itération `for...in` ?
+    La propriété `age` sera-t-elle listée lors d'une itération `for...in` ?
     ```js
     const person = {};
     Object.defineProperty(person, 'age', {
@@ -122,7 +122,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    La propriété `enumerable` dans `Object.defineProperty()` contrôle si la propriété apparaîtra dans les méthodes d'énumération comme `for...in`. Dans cet exemple, puisque `enumerable: true`, la propriété `age` sera répertoriée lors de l'itération.
+    La propriété `enumerable` dans `Object.defineProperty()` détermine si la propriété apparaîtra dans les méthodes d'énumération comme `for...in`. Dans cet exemple, comme `enumerable: true`, la propriété `age` sera listée lors de l'itération.
   </div>
   </slot>
 </Challenge>
@@ -130,18 +130,18 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={3}
-  group="Travail avec les objets"
-  title="Enumerabilité par défaut avec Object.defineProperty()"
+  group="Travailler avec les objets"
+  title="Énumérabilité par défaut avec Object.defineProperty()"
   options={[
     {text: 'vrai'},
     {text: 'faux', isAnswer: true},
-    {text: 'non défini'},
+    {text: 'indéfini'},
     {text: 'Dépend du contexte'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Quelle est l'enumerabilité par défaut d'une propriété lors de l'utilisation de `Object.defineProperty()` sans spécifier `enumerable`?
+    Quelle est l'énumérabilité par défaut d'une propriété lorsqu'on utilise `Object.defineProperty()` sans spécifier `enumerable` ?
     ```js
     const car = {};
     Object.defineProperty(car, 'make', {
@@ -153,7 +153,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Lorsque vous utilisez `Object.defineProperty()` sans spécifier `enumerable`, sa valeur par défaut est `false`. Cela signifie que la propriété `make` ne s'affichera pas dans `Object.keys()` ou d'autres méthodes d'énumération.
+    Lorsque vous utilisez `Object.defineProperty()` sans spécifier `enumerable`, sa valeur par défaut est `false`. Cela signifie que la propriété `make` n'apparaîtra pas dans `Object.keys()` ni dans d'autres méthodes d'énumération.
   </div>
   </slot>
 </Challenge>
@@ -165,14 +165,14 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   title="Symboles uniques"
   options={[
     {text: 'Dépend de leurs descriptions'},
-    {text: 'vrai'},
-    {text: 'faux', isAnswer: true},
-    {text: 'Lève une erreur'},
+    {text: 'true'},
+    {text: 'false', isAnswer: true},
+    {text: 'Lance une erreur'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Quel sera le résultat de la comparaison suivante ?
+    Quel sera le résultat de la comparaison suivante ?
     ```js
     const sym1 = Symbol('id');
     const sym2 = Symbol('id');
@@ -182,7 +182,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Chaque appel à `Symbol()` crée une valeur unique et immuable, même si la description est la même. Dans ce cas, `sym1` et `sym2` sont des symboles différents, donc la comparaison retourne `false`.
+    Chaque appel à `Symbol()` crée une valeur unique et immuable, même si la description est identique. Dans ce cas, `sym1` et `sym2` sont des symboles différents, donc la comparaison renvoie `false`.
   </div>
   </slot>
 </Challenge>
@@ -191,17 +191,17 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={5}
   group="Interfaces avancées"
-  title="Symboles en tant que clés non énumérables"
+  title="Symboles comme clés non‑énumérables"
   options={[
-    {text: 'Non, il ne sera pas listé', isAnswer: true},
+    {text: 'Non, ça ne le fera pas', isAnswer: true},
     {text: 'Oui, il sera listé'},
-    {text: 'Dépend de la méthode d\'itération'},
-    {text: 'Lève une erreur'},
+    {text: 'Cela dépend de la méthode d\'itération'},
+    {text: 'Lance une erreur'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Le propriété indexée par un Symbole sera-t-elle listée lors d'une itération `for...in` ?
+    La propriété à clé Symbol sera‑t‑elle listée lors d’une itération `for...in` ?
     ```js
     const sym = Symbol('uniqueKey');
     const obj = {
@@ -216,7 +216,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Les propriétés indexées par des Symboles peuvent avoir leur propre drapeau `enumerable`, mais `for...in` et `Object.keys()` ne visitent que les propriétés énumérables indexées par des chaînes. Dans cet exemple, seule la clé `regularKey` sera listée, pas la propriété indexée par le Symbole.
+    Les propriétés à clé Symbol peuvent posséder leur propre drapeau `enumerable`, mais `for...in` et `Object.keys()` ne parcourent que les propriétés énumérables à clé chaîne. Dans cet exemple, seule `regularKey` sera listée, pas la propriété à clé Symbol.
   </div>
   </slot>
 </Challenge>
@@ -224,7 +224,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={6}
-  group="Interfaces Avancées"
+  group="Interfaces avancées"
   title="Récupérer toutes les clés Symbol"
   options={[
     {text: 'Object.keys()'},
@@ -236,7 +236,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    Quelle méthode peut être utilisée pour récupérer toutes les clés Symbol d'un objet ?
+    Quelle méthode peut être utilisée pour récupérer toutes les clés Symbol d'un objet ?
   </div>
   </slot>
   <slot name='explanation'>

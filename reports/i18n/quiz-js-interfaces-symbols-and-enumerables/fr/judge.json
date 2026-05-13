@@ -1,0 +1,53 @@
+{
+  "selectedCommit": "5470d890f807334b297d00192ef70c8a50910e97",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 10,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "subTitle: \"Connaissez-vous les aspects moins connus d'ES2015 ?\"",
+      "replacement": "subTitle: \"Connaissez-vous les aspects moins connus d'ES2015 ?\"",
+      "reason": "The subtitle should be a quoted string in the frontmatter to match the English structure and avoid YAML parsing issues with special characters."
+    }
+  ],
+  "rationale": "Candidate 5470d890f807334b297d00192ef70c8a50910e97 is the best choice because it translates the subTitle which was missing in the current version. It uses natural French technical terminology (e.g., 'Accesseur' for 'Getter') and correctly preserves the MDX structure and heading counts.",
+  "slug": "quiz-js-interfaces-symbols-and-enumerables",
+  "locale": "fr",
+  "candidateCommits": [
+    "5470d890f807334b297d00192ef70c8a50910e97",
+    "5b537eb62813b23e9286e18649c7e83fa4e73069"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "subTitle: Connaissez‑vous les aspects moins connus d’ES2015 ?",
+      "replacement": "subTitle: \"Connaissez-vous les aspects moins connus d'ES2015 ?\"",
+      "reason": "The subtitle should be a quoted string in the frontmatter to match the English structure and avoid YAML parsing issues with special characters.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "subTitle: \"Connaissez-vous les aspects moins connus d'ES2015 ?\"",
+      "replacement": "subTitle: \"Connaissez-vous les aspects moins connus d'ES2015 ?\"",
+      "reason": "The subtitle should be a quoted string in the frontmatter to match the English structure and avoid YAML parsing issues with special characters.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match and replacement are identical; no MDX change needed."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug quiz-js-interfaces-symbols-and-enumerables --locale fr --skip-global",
+    "output": ""
+  }
+}
