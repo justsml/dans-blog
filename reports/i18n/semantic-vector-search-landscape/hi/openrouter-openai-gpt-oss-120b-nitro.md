@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: semantic-vector-search-landscape
+- Locale: hi
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-05-01--semantic-vector-search-landscape/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 13.16
+- Input tokens: 19345
+- Output tokens: 9452
+- Thinking tokens: unknown
+- Cached input tokens: 7424
+- Cache write tokens: 0
+- Estimated cost: $0.002456
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: समानार्थक वेक्टर खोज और दोस्त‑और‑प्रेम जीतने के विषय
 subTitle: >-
@@ -372,3 +390,4 @@ _Last verified against public project docs and product pages on May 8, 2026. Tre
 ये प्रतिस्पर्धी उपकरण नहीं हैं। ये परस्परपूरक हैं। एक अच्छी तरह निर्मित खोज प्रणाली प्रत्येक क्वेरी आकार के लिए सही परत चुनती है — और जब क्वेरी आकार ओवरलैप होते हैं, तो कई परतें चलाकर परिणामों को मिलाती है।
 
 वे टीमें जो अच्छे खोज फीचर शिप करती हैं, पूरे स्टैक को समझती हैं। जो नहीं समझतीं, वे वेक्टर डेटाबेस की ओर झुकती हैं, सब कुछ एम्बेड करती हैं, और आश्चर्य करती हैं कि सटीक लुक‑अप कभी‑कभी गलत रिकॉर्ड क्यों लौटाते हैं।
+````
