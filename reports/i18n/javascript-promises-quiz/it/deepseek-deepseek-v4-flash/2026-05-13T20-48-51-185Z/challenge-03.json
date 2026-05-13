@@ -1,0 +1,44 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "Chaining `.then` and `.catch`'s",
+  "translatedTitle": "Concatenare `.then` e `.catch`",
+  "translation": {
+    "title": "Concatenare `.then` e `.catch`",
+    "group": "Gestione degli errori",
+    "options": [
+      {
+        "text": "stampa errore e `undefined`"
+      },
+      {
+        "text": "stampa errore due volte"
+      },
+      {
+        "text": "UnhandledPromiseRejectionWarning"
+      },
+      {
+        "text": "undefined"
+      }
+    ],
+    "questionProse": [
+      "Quale sarà l'output per il seguente codice?"
+    ],
+    "explanationProse": [
+      "Quando si concatenano `.then` e `.catch`, è utile pensarli come una serie di passaggi. Ogni `.then` riceve il valore restituito dal `.then` precedente (come suo argomento). Tuttavia, se il tuo \"passaggio\" incontra un errore, tutti i `.then` successivi verranno saltati fino a quando non si incontra un `.catch`. Se vuoi sovrascrivere un errore, tutto ciò che devi fare è restituire un valore non di errore. Può essere accessibile tramite qualsiasi `.then` successivo."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Concatenare `.then` e `.catch`\",\n  \"group\": \"Gestione degli errori\",\n  \"options\": [\n    { \"text\": \"stampa errore e `undefined`\" },\n    { \"text\": \"stampa errore due volte\" },\n    { \"text\": \"UnhandledPromiseRejectionWarning\" },\n    { \"text\": \"undefined\" }\n  ],\n  \"questionProse\": [\n    \"Quale sarà l'output per il seguente codice?\"\n  ],\n  \"explanationProse\": [\n    \"Quando si concatenano `.then` e `.catch`, è utile pensarli come una serie di passaggi. Ogni `.then` riceve il valore restituito dal `.then` precedente (come suo argomento). Tuttavia, se il tuo \\\"passaggio\\\" incontra un errore, tutti i `.then` successivi verranno saltati fino a quando non si incontra un `.catch`. Se vuoi sovrascrivere un errore, tutto ciò che devi fare è restituire un valore non di errore. Può essere accessibile tramite qualsiasi `.then` successivo.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 788,
+    "outputTokens": 2092,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 103947
+  },
+  "cost": {
+    "inputUsd": 0.00011032,
+    "outputUsd": 0.0005857600000000001,
+    "totalUsd": 0.0006960800000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
