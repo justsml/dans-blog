@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: contribute-to-open-source-the-easy-way
+- Locale: fr
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2024-01-16--contribute-to-open-source-the-easy-way/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 10.86
+- Input tokens: 5736
+- Output tokens: 1419
+- Thinking tokens: unknown
+- Cached input tokens: 1408
+- Cache write tokens: 0
+- Estimated cost: $0.000479
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Devenir millionnaire de l’Open Source*
@@ -88,3 +106,4 @@ Si vous avez besoin d’encore plus de raisons : `contribute` pour l’apprent
 🚀
 
 Si vous avez trouvé cela utile, partagez vos contributions dans les commentaires ou publiez‑les sur [Twitter et identifiez‑moi @justsml](https://x.com/justsml).
+````
