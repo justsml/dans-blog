@@ -3,7 +3,7 @@
 - Locale: fr
 - Model: deepseek/deepseek-v4-flash
 - Target: src/content/posts/2026-01-02--llm-routing-mastra-ai/fr/index.mdx
-- Validation: deferred
+- Validation: rejected: direct AI SDK translation failed
 - Runtime seconds: 20.62
 - Input tokens: 3714
 - Output tokens: 3784
@@ -12,43 +12,39 @@
 - Cache write tokens: 0
 - Estimated cost: $0.001579
 - Pricing source: local-openrouter-estimate
-- Note: Generated through the direct AI SDK chunked translator.
+- Note: Command failed: git commit --only -m i18n candidate(fr): llm-routing-mastra-ai via deepseek/deepseek-v4-flash -- reports/i18n/llm-routing-mastra-ai/fr reports/i18n/llm-routing-mastra-ai/candidates.jsonl
 ## Raw Output
 
 ````mdx
 ---
-title: N'épousez pas votre modèle
-subTitle: 'Le routage LLM, tellement tendance en ce moment'
-date: '2026-01-02'
-modified: '2026-01-08'
-tags:
-  - ai
-  - llm
-  - typescript
-  - mastra
-  - agent-orchestration
+title: "N'épousez pas votre modèle"
+subTitle: "Le routage LLM, tellement tendance"
+date: 2026-01-02
+modified: 2026-01-08
+tags: [ai, llm, typescript, mastra, agent-orchestration]
 category: AI
 subCategory: Engineering
-social_image: ../mobile-social.webp
+social_image: mobile-social.webp
 cover_full_width: ../wide.webp
 cover_mobile: ../square.webp
 cover_icon: ../square.webp
 ---
-La plupart des équipes d'ingénierie choisissent un modèle de langage et s'y tiennent. Un fournisseur, un modèle, toutes les tâches. C'est comme embaucher une seule personne pour faire votre code, votre rédaction et vos impôts parce qu'elle s'est bien débrouillée lors du premier entretien.
 
-À tout moment, un modèle est meilleur pour le code, un autre pour les contextes longs et désordonnés, et un autre est le cheval de bataille le moins cher et le plus ennuyeux pour la classification. Les noms changent. La forme du problème, non. Traiter un modèle comme s'il excellait dans tout signifie que vous payez trop cher pour des tâches simples ou que vous obtenez des résultats médiocres sur des tâches spécialisées.
+La plupart des équipes techniques choisissent un modèle de langage et s'y tiennent. Un fournisseur, un modèle, toutes les tâches. C'est comme embaucher une seule personne pour coder, rédiger vos textes et faire vos impôts parce qu'elle était bonne lors du premier entretien.
 
-J'ai vu une équipe brûler des milliers de dollars en faisant passer l'analyse de sentiment par un modèle à 30 $ par million de tokens alors qu'un modèle à 0,50 $ aurait fait le travail tout aussi bien. Du simple formatage JSON, des tâches de classification basiques, tout passait par leur fournisseur premium. La seule chose qui chauffait était leur facture AWS.
+À tout moment, un modèle est meilleur pour le code, un autre pour les contextes longs et désordonnés, et un autre est le cheval de bataille le plus économique pour la classification. Les noms changent. La forme du problème, non. Traiter un modèle comme s'il excellait dans tout signifie que vous soit payez trop cher pour des tâches simples, soit obtenez des résultats médiocres sur les tâches spécialisées.
 
-Il y a une meilleure façon, et elle n'est pas particulièrement compliquée.
+J'ai vu une équipe brûler des milliers de dollars en faisant passer de l'analyse de sentiments par un modèle à 30$ le million de tokens alors qu'un modèle à 0,50$ aurait fait le travail tout aussi bien. Du simple formatage JSON, des tâches de classification basiques, tout passait par leur fournisseur premium. La seule chose qui chauffait, c'était leur facture AWS.
+
+Il y a une meilleure façon de faire, et ce n'est pas particulièrement compliqué.
 
 ## Délégation plutôt que dévotion
 
-Et si vous pouviez router les requêtes vers le modèle le mieux adapté à cette tâche spécifique ? Utilisez votre moteur coûteux pour les choses difficiles, mais faites descendre l'analyse et le formatage simples vers quelque chose de moins cher. Obtenez les avantages de plusieurs fournisseurs sans avoir à les jongler manuellement dans votre code.
+Et si vous pouviez router les requêtes vers le modèle réellement le mieux adapté à cette tâche spécifique ? Utilisez votre moteur coûteux pour les choses difficiles, mais déléguez l'analyse syntaxique simple et le formatage vers quelque chose de moins cher. Profitez des avantages de plusieurs fournisseurs sans avoir à les gérer manuellement dans votre codebase.
 
-Mastra vous permet de construire exactement ce genre de système. Vous configurez des agents spécialisés pour différents types de travail, puis créez un agent routeur qui détermine quel spécialiste doit traiter chaque requête. Les identifiants de modèle ci-dessous sont des exemples, pas un classement. Remplacez-les par les modèles actuels qui gagnent vos évaluations et correspondent à votre budget.
+Mastra vous permet de construire exactement ce genre de système. Vous configurez des agents spécialisés pour différents types de travail, puis vous créez un agent routeur qui détermine quel spécialiste doit traiter chaque requête. Les identifiants de modèles ci-dessous sont des exemples, pas un classement. Remplacez-les par les modèles actuels qui gagnent vos évaluations et correspondent à votre budget.
 
-Pensez-y comme ceci : vous avez trois spécialistes dans votre équipe.
+Considérez-le comme une équipe de trois spécialistes.
 
 ```typescript
 // ./src/mastra/index.ts
@@ -77,7 +73,7 @@ export const gptAgent = new Agent({
 });
 ```
 
-Chacun a un travail. Votre agent de code devrait être le modèle qui réussit vos évaluations de codage spécifiques au dépôt. Votre agent à long contexte devrait être celui qui survit à vos documents réels sans transformer le milieu en soupe. Votre agent général devrait être bon marché, fiable et ennuyeux de la meilleure façon possible.
+Chacun a un rôle. Votre agent de code devrait être le modèle qui réussit vos évaluations de codage spécifiques au dépôt. Votre agent long contexte devrait être celui qui survit à vos documents réels sans transformer le milieu en soupe. Votre agent général devrait être peu coûteux, fiable et ennuyeux dans le meilleur sens possible.
 
 C'est là que ça devient intéressant. Vous ajoutez un routeur qui agit comme un proxy intelligent :
 
@@ -104,21 +100,21 @@ export const mastra = new Mastra({
 });
 ```
 
-Le routeur lui-même tourne sur un modèle léger, car il ne fait que décider où envoyer le trafic. Vous ne payez pas un tarif premium pour déterminer quel autre modèle premium utiliser. Mesurez aussi ce point : un mauvais routeur transforme silencieusement les économies en mauvaises orientations.
+Le routeur lui-même tourne sur un modèle léger car il ne fait que décider où envoyer le trafic. Vous ne payez pas des tarifs premium pour déterminer quel autre modèle premium utiliser. Mesurez-le aussi ; un mauvais routeur transforme silencieusement les économies en mauvais aiguillages.
 
-Quand quelqu’un demande une implémentation de tri à bulles, le routeur reconnaît qu’il s’agit de code et le transmet à votre spécialiste code. Une invite d’écriture créative ? Elle part vers le modèle que vous avez choisi pour la voix et la variété. Une question factuelle sur des événements historiques ? Aiguillez-la vers l’agent général, idéalement avec une recherche quand l’actualité ou la citation importe.
+Quand quelqu'un demande une implémentation de tri à bulles, le routeur reconnaît qu'il s'agit de code et le transmet à votre spécialiste du code. Une requête d'écriture créative ? Elle va vers le modèle que vous avez choisi pour la voix et la palette d'expression. Une question factuelle sur un événement historique ? Routez-la vers l'agent général, idéalement avec une récupération d'informations quand la fraîcheur ou la citation importe.
 
-## Les avantages pratiques
+## Les avantages concrets
 
-**L’efficacité des coûts compte plus que vous ne le pensez.** Un petit modèle de routage qui prend des décisions de délégation coûte une fraction de ce que coûterait l’exécution de chaque requête sur votre fournisseur le plus cher. Avec le temps, surtout à l’échelle, cela représente de l’argent réel. Vous ne payez pour l’intelligence lourde que lorsque vous en avez vraiment besoin.
+**L'efficacité des coûts compte plus que vous ne le pensez.** Un petit modèle de routage qui prend des décisions de délégation coûte une fraction du prix qui consisterait à faire passer chaque requête par votre fournisseur le plus cher. Avec le temps, surtout à l'échelle, cela représente de l'argent réel. Vous ne payez pour l'intelligence lourde que lorsque vous en avez vraiment besoin.
 
-**La qualité s’améliore quand on associe les modèles aux tâches.** Le gagnant change chaque mois, selon la tâche et la forme de l’invite. C’est pourquoi la couche de routage doit dépendre de vos évaluations, pas du modèle qui gagnait sur Twitter la semaine où vous avez écrit l’intégration.
+**La qualité s'améliore quand on associe les modèles aux tâches.** Le gagnant change chaque mois, selon la tâche et la forme du prompt. C'est pourquoi la couche de routage doit dépendre de vos évaluations, et non du modèle qui gagnait sur Twitter la semaine où vous avez écrit l'intégration.
 
-**La résilience devient un bénéfice secondaire.** Quand OpenAI subit l’une de ses pannes périodiques (et ça arrive), votre routeur peut rediriger le trafic vers d’autres fournisseurs. Vous n’êtes pas en rade à attendre qu’une API spécifique revienne en ligne.
+**La résilience devient un bénéfice secondaire.** Quand OpenAI subit l'une de ses pannes périodiques (et ça arrive), votre routeur peut rediriger le trafic vers d'autres fournisseurs. Vous n'êtes pas bloqué à attendre qu'une API spécifique revienne en ligne.
 
-Il ne s’agit pas d’être malin pour le plaisir. Il s’agit de construire des systèmes qui ont du sens à la fois financièrement et techniquement. Vous n’utiliseriez pas le même marteau pour chaque tâche de construction, et vous ne devriez probablement pas utiliser le même modèle de langage pour chaque tâche d’IA non plus.
+Il ne s'agit pas d'être malin pour le plaisir. Il s'agit de construire des systèmes qui ont du sens, à la fois financièrement et techniquement. Vous n'utiliseriez pas le même marteau pour toutes les tâches de construction, et vous ne devriez probablement pas utiliser le même modèle de langage pour toutes les tâches d'IA non plus.
 
-La beauté de cette approche, c’est que votre code applicatif ne change pas. Vous appelez toujours votre agent routeur. La complexité de décider quel modèle utiliser pour quelle tâche réside en un seul endroit, configuré une fois, au lieu d’être dispersée dans votre codebase sous forme de logique conditionnelle.
+La beauté de cette approche, c'est que le code de votre application ne change pas. Vous continuez simplement à appeler votre agent routeur. La complexité de décider quel modèle utiliser pour quelle tâche vit à un seul endroit, configurée une fois, plutôt que dispersée dans tout votre codebase dans un tas de logiques conditionnelles.
 
 ### Ressources
 
@@ -128,7 +124,7 @@ La beauté de cette approche, c’est que votre code applicatif ne change pas. V
 ## Lire la série
 
 1. **Routage LLM** (Cet article)
-2. [Sécurité & Garde-fous](../mastra-security-guardrails)
-3. [Intégrations MCP & Outils](../mastra-mcp-tool-integrations)
-4. [Workflows & Mémoire](../mastra-workflows-memory)
+2. [Sécurité & Garde-fous](/mastra-security-guardrails)
+3. [Intégrations MCP & Outils](/mastra-mcp-tool-integrations)
+4. [Workflows & Mémoire](/mastra-workflows-memory)
 ````
