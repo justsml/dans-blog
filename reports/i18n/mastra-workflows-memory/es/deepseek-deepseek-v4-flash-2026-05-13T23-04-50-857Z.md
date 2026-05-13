@@ -1,0 +1,272 @@
+# Translation Candidate
+- Slug: mastra-workflows-memory
+- Locale: es
+- Model: deepseek/deepseek-v4-flash
+- Target: src/content/posts/2026-01-05--mastra-workflows-memory/es/index.mdx
+- Validation: deferred
+- Runtime seconds: 112.17
+- Input tokens: 6559
+- Output tokens: 7272
+- Thinking tokens: unknown
+- Cached input tokens: 768
+- Cache write tokens: 0
+- Estimated cost: $0.002849
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: 'Deja de construir agentes poco fiables: usa workflows y memoria'
+subTitle: Patrones deterministas para modelos no deterministas.
+date: '2026-01-05'
+modified: '2026-01-08'
+tags:
+  - ai
+  - workflows
+  - memory
+  - mastra
+  - agent-networks
+  - orchestration
+category: AI
+subCategory: Architecture
+social_image: ../desktop-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+Los LLM tienen esta extraña propiedad: son brillantes para entender matices, pero terribles para seguir recetas. Dale a GPT-4 un problema vago y razonará entre posibilidades. Dale una secuencia precisa de pasos, y podría saltarse el paso 3 porque el paso 5 "se sintió más relevante".
+
+Esto no es un error del modelo. Es una característica fundamental de los sistemas probabilísticos que intentan resolver problemas deterministas.
+
+He visto equipos luchar con este desajuste. Construyen un agente para manejar reembolsos de clientes, le dan una docena de herramientas y esperan que ejecute de manera confiable un proceso de negocio. A veces funciona perfectamente. A veces alucina aprobaciones que nunca ocurrieron. A veces se queda atascado pidiendo la misma información tres veces.
+
+La solución no son mejores indicaciones. Es saber cuándo dejar de pedirle al LLM que "piense" y empezar a decirle que "obedezca".
+
+---
+
+## Cuando lo Determinista Supera a lo Creativo
+
+Piensa en lo que sucede cuando necesitas procesar un ticket de soporte. La lógica de negocio del mundo real se ve algo así:
+
+1. Obtener los detalles del ticket de la base de datos
+2. Verificar si el usuario es elegible para un reembolso (reglas de política)
+3. Confirmar que la transacción existe y no ha sido reembolsada previamente
+4. Calcular el monto del reembolso
+5. Procesar la reversión del pago
+6. Actualizar el estado del ticket
+7. Enviar correo de confirmación
+
+Podrías entregarle esto a un LLM como un ejercicio de llamada a herramientas. En mi experiencia, eso es buscar problemas. El modelo podría decidir que los pasos 2 y 3 son "básicamente lo mismo" y saltarse uno. O podría procesar el reembolso antes de verificar la elegibilidad porque el usuario parecía molesto.
+
+Los flujos de trabajo existen exactamente para este escenario. No son emocionantes, pero ese es el punto.
+
+### Construyendo un Planificador de Actividades Climáticas
+
+Aquí hay un ejemplo práctico que muestra el patrón. Necesitamos datos meteorológicos duros y objetivos combinados con sugerencias creativas de actividades. La obtención del clima nunca debe ser creativa, pero las sugerencias sí.
+
+```typescript
+// src/mastra/workflows/activity-planner.ts
+import { createWorkflow, createStep } from '@mastra/core/workflows';
+import { Agent } from '@mastra/core/agent';
+import { openai } from '@ai-sdk/openai';
+import { z } from 'zod';
+
+// Step 1: Fetch weather data (Deterministic)
+const fetchWeather = createStep({
+  id: 'fetch-weather',
+  description: 'Fetches weather forecast for a given city',
+  inputSchema: z.object({
+    city: z.string(),
+  }),
+  outputSchema: z.object({
+    location: z.string(),
+    temperature: z.number(),
+    conditions: z.string(),
+    precipitationChance: z.number(),
+  }),
+  execute: async ({ inputData }) => {
+    // ... (fetch logic) ...
+    const weather = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&current=temperature_2m,weather_code&daily=precipitation_probability_mean`).then(r => r.json());
+    
+    return {
+      location: inputData.city,
+      temperature: weather.current.temperature_2m,
+      conditions: getWeatherCondition(weather.current.weather_code),
+      precipitationChance: weather.daily.precipitation_probability_mean[0],
+    };
+  },
+});
+
+// Step 2: Agent suggests activities (Creative)
+const activityPlanner = new Agent({
+  id: 'activity-planner-agent',
+  name: 'Activity Planner',
+  instructions: `You are a local activities expert. Based on weather conditions, suggest 3-5 appropriate activities.
+    - For rain (>50% precipitation), prioritize indoor activities
+    - For extreme temperatures, consider climate-appropriate options
+    - Always include one adventurous and one relaxing option`,
+  model: openai('gpt-5'),
+});
+
+const planActivities = createStep({
+  id: 'plan-activities',
+  description: 'Uses AI to suggest activities based on weather',
+  inputSchema: z.object({
+    location: z.string(),
+    temperature: z.number(),
+    conditions: z.string(),
+    precipitationChance: z.number(),
+  }),
+  outputSchema: z.object({
+    activities: z.string(),
+  }),
+  execute: async ({ inputData }) => {
+    const prompt = `Weather in ${inputData.location}: ${inputData.temperature}°C...`;
+    const response = await activityPlanner.generate(prompt);
+    return { activities: response.text };
+  },
+});
+
+// The Pipeline
+export const activityPlannerWorkflow = createWorkflow({
+  id: 'activity-planner',
+  inputSchema: z.object({ city: z.string() }),
+  outputSchema: z.object({ activities: z.string() }),
+})
+  .then(fetchWeather)
+  .then(planActivities);
+
+activityPlannerWorkflow.commit();
+```
+
+El LLM nunca toca la API meteorológica. Recibe datos de referencia como entrada y luego hace lo que realmente se le da bien: sugerencias contextuales. Si inviertes esto y dejas que el agente obtenga los datos del clima, tarde o temprano obtendrás un pronóstico soleado cuando en realidad está lloviendo.
+
+**Cuándo considerar flujos de trabajo:**
+- Tienes una secuencia conocida de pasos que deben ocurrir en orden
+- Necesitas observabilidad en cada etapa (logs, métricas, tiempos)
+- Necesitas lógica de reintento para APIs externas inestables
+- Las reglas de negocio no pueden ser "interpretadas" — deben seguirse al pie de la letra
+
+---
+
+## El Problema de la Ventana de Contexto del Que Nadie Habla
+
+Hay un patrón que veo una y otra vez. Alguien construye un chatbot. Funciona perfectamente durante las pruebas. Luego, en producción, los usuarios tienen conversaciones más largas y de repente el bot se pierde.
+
+El desarrollador revisa los logs y se da cuenta de que están enviando todo el historial de la conversación con cada solicitud. Los 47 mensajes. Están quemando tokens y espacio de contexto con información que en su mayoría es irrelevante.
+
+Peor aún, existe un fenómeno que los investigadores llaman "perdido en el medio", donde los modelos rinden peor cuando la información relevante está enterrada en un contexto largo. El modelo literalmente no ve el bosque por los árboles.
+
+Enviar el historial completo de la conversación parece seguro. Le estás dando al modelo "toda la información". Pero en realidad le estás dificultando que se concentre en lo que importa.
+
+### Memoria de Trabajo vs. Almacenamiento a Largo Plazo
+
+El sistema de memoria de Mastra te ofrece ambas. La memoria de trabajo mantiene los mensajes recientes en la ventana de contexto. La recuperación semántica busca mensajes históricos cuando la consulta actual parece relacionada.
+
+```typescript
+// src/mastra/agents/memory-agent.ts
+import { Agent } from '@mastra/core/agent';
+import { Memory } from '@mastra/memory';
+import { LibSQLStore } from '@mastra/libsql';
+
+export const memoryAgent = new Agent({
+  id: 'memory-agent',
+  name: 'Memory Agent',
+  instructions: 'You are a helpful assistant with perfect recall of our conversations.',
+  model: openai('gpt-5'),
+  memory: new Memory({
+    storage: new LibSQLStore({
+      id: 'memory-agent-store',
+      url: 'file:../mastra.db',
+    }),
+    options: {
+      lastMessages: 20,  // Keep last 20 messages in context
+      semanticRecall: {
+        enabled: true,  // Use embeddings to find old stuff
+        topK: 5,
+        threshold: 0.7,
+      },
+    },
+  }),
+});
+```
+
+Así es como funciona en la práctica. Un usuario pregunta: "¿Cuál era ese restaurante italiano que recomendaste el mes pasado?"
+
+Sin recuperación semántica, el agente ve los últimos 20 mensajes. La recomendación del restaurante era el mensaje 487 de 506. Ya no está. El agente dice "No tengo esa información."
+
+Con recuperación semántica:
+1. La consulta se incrusta: `[0.234, -0.567, 0.891, ...]`
+2. La incrustación se compara con los mensajes históricos
+3. El mensaje 487 ("Recomendaría Trattoria Bella - su carbonara es increíble") obtiene una similitud de 0.89
+4. Ese mensaje se inyecta en el contexto actual
+5. El agente responde: "Recomendé Trattoria Bella. Su carbonara fue lo que me llamó la atención."
+
+El agente parece tener una memoria perfecta mientras solo usa una fracción de la ventana de contexto. Esto no es solo ingeniería inteligente, es funcionalmente necesario una vez que las conversaciones se extienden más allá de unas pocas docenas de mensajes.
+
+---
+
+## Coordinación a través de Redes de Agentes
+
+A veces necesitas tanto estructura como flexibilidad. Los flujos de trabajo puros son demasiado rígidos. Los agentes puros son demasiado impredecibles.
+
+Las redes de agentes te proporcionan un coordinador que decide qué agente o flujo de trabajo especializado invocar según la tarea. Piensa en ello como un balanceador de carga inteligente para capacidades de IA.
+
+```typescript
+export const coordinatorAgent = new Agent({
+  id: 'coordinator-agent',
+  name: 'Research Coordinator',
+  instructions: `You are a network of researchers and writers.
+    - Use researchAgent for gathering facts
+    - Use writingAgent for producing final content
+    - Use weatherTool for current weather data
+    - Use activityPlannerWorkflow for location-based planning
+    
+    Always produce comprehensive, well-structured responses.`,
+  model: openai('gpt-5'),
+  
+  // Available primitives
+  agents: { researchAgent, writingAgent },
+  workflows: { activityPlannerWorkflow },
+  tools: { weatherTool },
+  
+  // Network requires memory
+  memory: new Memory({
+    storage: new LibSQLStore({ id: 'network-store', url: 'file:../network.db' }),
+  }),
+});
+```
+
+Cuando consultas esta red, el coordinador analiza la solicitud y enruta según corresponda:
+- "Necesito datos sobre X" activa el agente de investigación
+- "Planifica un fin de semana en Seattle" ejecuta el flujo de trabajo del planificador de actividades
+- "Escribe un informe sobre Y" involucra al agente de redacción
+
+Este patrón escala mejor que intentar meter todo en un solo mega-agente. Los agentes especializados desarrollan experiencia enfocada. El coordinador maneja el enrutamiento. Cada pieza hace lo que mejor sabe hacer.
+
+---
+
+## Poniéndolo Todo Junto
+
+Los sistemas de IA de producción real necesitan arquitectura, no solo prompts. Estás construyendo sistemas distribuidos donde algunos nodos resultan ser LLM.
+
+Los flujos de trabajo te brindan garantías cuando necesitas que las cosas sucedan exactamente como deben. La memoria te proporciona contexto sin consumir tu presupuesto de tokens. Las redes de agentes te permiten componer complejidad a partir de partes más simples.
+
+Nada de esto es glamoroso. Pero después de ver suficientes "agentes totalmente autónomos" fallar en producción, he llegado a apreciar la confiabilidad aburrida por encima de la imprevisibilidad emocionante.
+
+Tu experiencia puede variar, pero en mi experiencia, los sistemas que realmente se implementan y se mantienen en funcionamiento son aquellos que tratan a los LLM como componentes en una arquitectura más grande, en lugar de cajas mágicas que lo resuelven todo.
+
+### Recursos
+
+- [Documentación de Flujos de Trabajo de Mastra](https://mastra.ai/docs/workflows/overview)
+- [Documentación de Memoria de Mastra](https://mastra.ai/docs/memory/overview)
+- [Código de Demostración Completo](https://github.com/justsml/mastra-examples)
+
+## Lee la Serie
+
+1. [Enrutamiento de LLM](../llm-routing-mastra-ai)
+2. [Seguridad y Guardarraíles](../mastra-security-guardrails)
+3. [Integraciones MCP y Herramientas](../mastra-mcp-tool-integrations)
+4. **Flujos de Trabajo y Memoria** (Esta Entrada)
+````
