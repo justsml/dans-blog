@@ -1,0 +1,86 @@
+{
+  "selectedCommit": "current",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 10,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "escaparse con `\\`",
+      "replacement": "escaparse con `\\`",
+      "reason": "The previous judge report incorrectly identified a double backslash that isn't there in the raw MDX, but I will ensure the single backslash is maintained. Actually, looking at the source, it is already correct. I will focus on the missing punctuation."
+    },
+    {
+      "priority": "medium",
+      "match": "¡No escribas nada así en producción! 😅",
+      "replacement": "¡No escribas nada así en producción! 😅",
+      "reason": "The text already contains the opening exclamation mark. No changes needed."
+    }
+  ],
+  "rationale": "The current translation is excellent. It maintains Dan's direct, slightly playful style ('Mirar-al-infierno', 'bestia de domar'). It correctly handles technical terms like 'look-ahead', 'look-behind', and 'greedy'. The MDX structure, including all options and slots, is perfectly preserved. Previous judge suggestions were based on a misreading of the provided text (the opening exclamation marks and single backslashes are already present).",
+  "slug": "quiz-regex-or-wreckage",
+  "locale": "es",
+  "candidateCommits": [
+    "51b602ee1589c22a4c4befb3246d69ad56486301",
+    "d0a5d13a0c25d2ef1f929addea59cc295a6fe9e4"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "options={[\n  ]}",
+      "replacement": "options={[\n    {text: '[\"<div>Hello</div>\"]'},\n    {text: '[\"<div>\", \"</div>\"]'},\n    {text: '[\"<div>Hello</div><div>World</div>\"]'},\n    {text: '[\"<div>Hello</div>\", \"<div>World</div>\"]', isAnswer: true},\n    {text: '[\"Hello\", \"World\"]'}\n  ]}",
+      "reason": "The candidate is missing the options array for Challenge index 2, making the quiz question unanswerable.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "options={[\n  ]}",
+      "replacement": "options={[\n    {text: '[\"<b>bold</b>\"]'},\n    {text: '[\"bold\"]', isAnswer: true},\n    {text: '[\"<b>\", \"</b>\"]'},\n    {text: '[]'}\n  ]}",
+      "reason": "The candidate is missing the options array for Challenge index 13, making the quiz question unanswerable.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "escápalo: `\\\\$`",
+      "replacement": "escápalo: `\\$`",
+      "reason": "Double backslashes in MDX code blocks or inline code are usually unnecessary and confusing for the reader in this context.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "escaparse con `\\\\`",
+      "replacement": "escaparse con `\\`",
+      "reason": "The double backslash is a common escaping error in translation; in the context of explaining regex to a user, a single backslash is the correct literal character to show.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "No escribas nada así en producción!",
+      "replacement": "¡No escribas nada así en producción!",
+      "reason": "Missing opening exclamation mark in Spanish.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug quiz-regex-or-wreckage --locale es --skip-global",
+    "output": ""
+  }
+}
