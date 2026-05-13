@@ -1,0 +1,44 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "Temperature and Determinism",
+  "translatedTitle": "Temperatureと決定性",
+  "translation": {
+    "title": "Temperatureと決定性",
+    "group": "上級",
+    "options": [
+      {
+        "text": "`temperature=0`にすると、同じ入力に対して常に同一の出力が生成される"
+      },
+      {
+        "text": "`temperature=0`にすると出力はより決定論的になるが、同一性が保証されるわけではない"
+      },
+      {
+        "text": "`temperature=0`にするとモデルが無効になる"
+      },
+      {
+        "text": "`temperature`は応答の長さにのみ影響する"
+      }
+    ],
+    "questionProse": [
+      "LLM呼び出しで`temperature=0`を設定すると、実際にはどうなる？"
+    ],
+    "explanationProse": [
+      "`temperature=0`に設定すると、モデルは各ステップで確率最大のトークンを選択する（greedy decoding）ため、出力は**より安定**します。ただし、同一性が保証されるわけではありません。\n\n    temperature=0でも出力が変動する理由：\n    - GPU演算における**浮動小数点の非決定性**。特にハードウェアやバッチサイズが異なる環境で顕著\n    - **サーバー側のインフラ変更**（モデルの更新、サービング基盤の変更）\n    - **出力が長い場合**、微小な変動が累積する\n\n    厳密な決定性が必要なテストスイートやevalでは、`temperature=0`が正解です。ただし、バイト単位で完全に一致することを前提としたアサーションは書かないでください。構造、主要なコンテンツ、振る舞いについて検証し、正確な文字列の一致に依存しない設計にしてください。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Temperatureと決定性\",\n  \"group\": \"上級\",\n  \"options\": [\n    {\n      \"text\": \"`temperature=0`にすると、同じ入力に対して常に同一の出力が生成される\"\n    },\n    {\n      \"text\": \"`temperature=0`にすると出力はより決定論的になるが、同一性が保証されるわけではない\"\n    },\n    {\n      \"text\": \"`temperature=0`にするとモデルが無効になる\"\n    },\n    {\n      \"text\": \"`temperature`は応答の長さにのみ影響する\"\n    }\n  ],\n  \"questionProse\": [\n    \"LLM呼び出しで`temperature=0`を設定すると、実際にはどうなる？\"\n  ],\n  \"explanationProse\": [\n    \"`temperature=0`に設定すると、モデルは各ステップで確率最大のトークンを選択する（greedy decoding）ため、出力は**より安定**します。ただし、同一性が保証されるわけではありません。\\n\\n    temperature=0でも出力が変動する理由：\\n    - GPU演算における**浮動小数点の非決定性**。特にハードウェアやバッチサイズが異なる環境で顕著\\n    - **サーバー側のインフラ変更**（モデルの更新、サービング基盤の変更）\\n    - **出力が長い場合**、微小な変動が累積する\\n\\n    厳密な決定性が必要なテストスイートやevalでは、`temperature=0`が正解です。ただし、バイト単位で完全に一致することを前提としたアサーションは書かないでください。構造、主要なコンテンツ、振る舞いについて検証し、正確な文字列の一致に依存しない設計にしてください。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 901,
+    "outputTokens": 3428,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 18859
+  },
+  "cost": {
+    "inputUsd": 0,
+    "outputUsd": 0,
+    "totalUsd": 0,
+    "pricingSource": "unknown"
+  }
+}

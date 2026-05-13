@@ -1,0 +1,44 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "Temperature and Determinism",
+  "translatedTitle": "温度と決定性",
+  "translation": {
+    "title": "温度と決定性",
+    "group": "上級",
+    "options": [
+      {
+        "text": "temperature=0 は常に同じ入力に対して同一の出力を生成する"
+      },
+      {
+        "text": "temperature=0 は出力をより決定論的にするが、同一であることは保証されない"
+      },
+      {
+        "text": "temperature=0 はモデルを無効にする"
+      },
+      {
+        "text": "temperature は応答の長さにのみ影響する"
+      }
+    ],
+    "questionProse": [
+      "LLM 呼び出しで `temperature=0` を設定するということは:"
+    ],
+    "explanationProse": [
+      "`temperature=0` は、各ステップで最も確率の高いトークンを選択する（貪欲デコード）ため、**より一貫性のある**出力を生成しますが、同一であることは保証されません。\n\n    temperature=0 での変動の原因:\n    - **GPU 演算における浮動小数点の非決定性**、特に異なるハードウェアやバッチサイズ間で\n    - **サーバーサイドのインフラ変更**（モデル更新、サービングインフラ）\n    - **長い出力**は小さな変動を蓄積する\n\n    厳密な決定性が必要なテストスイートや評価では、`temperature=0` が適切な選択です。ただし、バイト単位で同一の出力に依存するアサーションは書かないでください。構造、主要な内容、動作をアサートし、正確な文字列ではありません。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"温度と決定性\",\n  \"group\": \"上級\",\n  \"options\": [\n    {\n      \"text\": \"temperature=0 は常に同じ入力に対して同一の出力を生成する\"\n    },\n    {\n      \"text\": \"temperature=0 は出力をより決定論的にするが、同一であることは保証されない\"\n    },\n    {\n      \"text\": \"temperature=0 はモデルを無効にする\"\n    },\n    {\n      \"text\": \"temperature は応答の長さにのみ影響する\"\n    }\n  ],\n  \"questionProse\": [\n    \"LLM 呼び出しで `temperature=0` を設定するということは:\"\n  ],\n  \"explanationProse\": [\n    \"`temperature=0` は、各ステップで最も確率の高いトークンを選択する（貪欲デコード）ため、**より一貫性のある**出力を生成しますが、同一であることは保証されません。\\n\\n    temperature=0 での変動の原因:\\n    - **GPU 演算における浮動小数点の非決定性**、特に異なるハードウェアやバッチサイズ間で\\n    - **サーバーサイドのインフラ変更**（モデル更新、サービングインフラ）\\n    - **長い出力**は小さな変動を蓄積する\\n\\n    厳密な決定性が必要なテストスイートや評価では、`temperature=0` が適切な選択です。ただし、バイト単位で同一の出力に依存するアサーションは書かないでください。構造、主要な内容、動作をアサートし、正確な文字列ではありません。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 840,
+    "outputTokens": 3493,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 17691
+  },
+  "cost": {
+    "inputUsd": 0.00011760000000000001,
+    "outputUsd": 0.0009780400000000001,
+    "totalUsd": 0.0010956400000000002,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
