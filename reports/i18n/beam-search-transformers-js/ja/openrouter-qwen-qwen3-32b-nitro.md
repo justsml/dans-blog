@@ -3,7 +3,7 @@
 - Locale: ja
 - Model: openrouter/qwen/qwen3-32b:nitro
 - Target: src/content/posts/2026-04-16--beam-search-transformers-js/ja/index.mdx
-- Validation: deferred
+- Validation: rejected: direct AI SDK translation failed
 - Runtime seconds: 139.29
 - Input tokens: 13268
 - Output tokens: 9719
@@ -12,7 +12,7 @@
 - Cache write tokens: 0
 - Estimated cost: $0.003394
 - Pricing source: local-openrouter-estimate
-- Note: Generated through the direct AI SDK chunked translator.
+- Note: Command failed: git commit --only -m i18n candidate(ja): beam-search-transformers-js via openrouter/qwen/qwen3-32b:nitro -- src/content/posts/2026-04-16--beam-search-transformers-js/ja/index.mdx reports/i18n/beam-search-transformers-js/ja
 ## Raw Output
 
 ````mdx
