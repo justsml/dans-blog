@@ -1,0 +1,15 @@
+# Translation Candidate
+- Slug: upgrade-from-gatsby-to-astro
+- Locale: ja
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2024-08-22--upgrade-from-gatsby-to-astro/ja/index.mdx
+- Validation: rejected: direct AI SDK translation failed
+- Runtime seconds: 15.50
+- Input tokens: 6972
+- Output tokens: 6496
+- Thinking tokens: unknown
+- Cached input tokens: 512
+- Cache write tokens: 0
+- Estimated cost: $0.002117
+- Pricing source: local-openrouter-estimate
+- Note: Command failed: bun run i18n:translate:chunked -- --slug upgrade-from-gatsby-to-astro --locale ja --model openrouter/qwen/qwen3-32b:nitro --chunk 10p --run-id 2026-05-13T22-14-14-769Z-60050 --run-lock-path /Users/dan/code/oss/dans-blog/.git/codex-i18n-translation-run.json --quiz-concurrency 24 (code 1)
