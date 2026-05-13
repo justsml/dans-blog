@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: replacing-my-job-with-gpt-and-llm
+- Locale: ru
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2024-12-05--replacing-my-job-with-gpt-and-llm/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 5.38
+- Input tokens: 6025
+- Output tokens: 1487
+- Thinking tokens: unknown
+- Cached input tokens: 1792
+- Cache write tokens: 0
+- Estimated cost: $0.000503
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: Заменяю себя ИИ
@@ -102,3 +120,4 @@ cover_icon: ../robot-dude-square-200-75.webp
 ИИ сделал меня быстрее. Что важнее, он позволил легче увидеть мои слабые места. Цена — теперь мне нужно более осознанно избегать публикации текста, который лишь имитирует прозу.
 
 Это то условие, с которым я могу жить.
+````
