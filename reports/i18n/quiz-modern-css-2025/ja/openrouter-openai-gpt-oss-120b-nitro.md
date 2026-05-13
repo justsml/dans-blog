@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-modern-css-2025
+- Locale: ja
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2024-11-07--quiz-modern-css-2025/ja/index.mdx
+- Validation: deferred
+- Runtime seconds: 11.05
+- Input tokens: 10442
+- Output tokens: 7657
+- Thinking tokens: unknown
+- Cached input tokens: 4352
+- Cache write tokens: 0
+- Estimated cost: $0.001785
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: 'クイズ: モダンCSSは知ってる？（2025年版）'
@@ -408,3 +426,4 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 </Challenge>
 
 </QuizUI>
+````
