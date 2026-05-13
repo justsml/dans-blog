@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: mastra-security-guardrails
+- Locale: fr
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-01-03--mastra-security-guardrails/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 2.82
+- Input tokens: 6709
+- Output tokens: 2406
+- Thinking tokens: unknown
+- Cached input tokens: 2944
+- Cache write tokens: 0
+- Estimated cost: $0.000695
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: L'IA de production fait peur (et comment y remédier)
 subTitle: 'Si votre agent n’a pas de garde‑fous, vous n’êtes pas prêt pour la production.'
@@ -171,3 +189,4 @@ La plupart des problèmes de sécurité dans l’IA en production ne sont pas de
 2. **Sécurité & garde‑fous** (Cet article)
 3. [MCP & intégrations d’outils](../mastra-mcp-tool-integrations)
 4. [Flux de travail & mémoire](../mastra-workflows-memory)
+````
