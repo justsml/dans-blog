@@ -1,0 +1,64 @@
+# Translation Candidate
+- Slug: security-notes-regex
+- Locale: hi
+- Model: qwen/qwen3.5-9b
+- Target: src/content/posts/2015-02-24--security-notes-regex/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 85.54
+- Input tokens: 1017
+- Output tokens: 8780
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.001358
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: ''
+subTitle: ''
+date: '2015-02-24'
+modified: '2018-07-30'
+category: Security
+subCategory: RegEx
+tags:
+  - security
+  - regex
+  - dos
+  - remote-exploit
+cover_credit: Photo by Markus Spiske on Unsplash
+cover: ../markus-spiske-666905-unsplash.webp
+cover_mobile: ../w300_markus-spiske-666905-unsplash.webp
+cover_icon: ../icon_markus-spiske-666905-unsplash.webp
+social_image: ../desktop-social.webp
+---
+## RegEx Denial-of-Service: ReDoS
+
+मैंने पाई गई सबसे अधिक आश्चर्यजनक और फिर भी कठिन से पहचानने वाली कमजोरियों में से एक नियमित अभिव्यक्तियों से संबंधित है। यह या तो बुरी तरह लिखी गई है या बुरी तरह लागू की गई है।
+
+बड़े या विशेष रूप से तैयार किए गए उपयोगकर्ता इनपुट के साथ मेमोरी/CPU खत्म हो सकती है।
+
+> यह केवल एक प्रदर्शन की गंध नहीं है, बल्कि एक सेवा-निषेध (denial-of-service) कमजोरी है। यदि हानिकारक इनपुट CPU को इतना समय तक पिन कर सकता है कि वास्तविक उपयोगकर्ताओं को सेवा से वंचित कर दिया जाए, तो इसे आपकी सुरक्षा खतरा मॉडल में शामिल करना चाहिए।
+
+### चेतावनी संकेत
+
+1. लपेटे हुए क्वांटिफायर्स, दोहराए गए समूह, या ओवरलैपिंग एल्टरनेशन
+2. टाइमआउट या इनपुट-लंबाई सीमा के बिना बैकट्रैकिंग-भारी इंजिन
+3. अभिव्यक्ति अनियंत्रित उपयोगकर्ता इनपुट के साथ उपयोग की जाती है
+4. रेगक्स सत्यापन गर्म अनुरोध पथ पर चलता है
+
+### निवारण / समाधान
+
+1. RegEx कठिन है।
+    1.  उदाहरण के लिए, यहाँ है कि [OWASP IP सत्यापन संभालना][owasp]: `^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$`
+    2.  यह एक 4-बाइट IP एड्रेस के लिए एक (पुराने स्कूल) ट्वीटर से लंबा है!!!
+2. रेगक्स मूल्यांकन से पहले इनपुट लंबाई सीमाबद्ध करें।
+3. प्लेटफॉर्म का समर्थन हो तो टाइमआउट, स्थिर विश्लेषण, या नॉन-बैकट्रैकिंग इंजिन जोड़ें।
+4. यह लगभग हर भाषा और प्लेटफॉर्म को प्रभावित करता है .NET/Node/Python/PERL/Java।
+
+### संदर्भ
+
+- [OWASP ReDoS](https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS)
+````
