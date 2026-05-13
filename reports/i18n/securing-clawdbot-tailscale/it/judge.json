@@ -1,0 +1,40 @@
+{
+  "selectedCommit": "dc786ce6f2253514d01b4388940fdde8b84e671c",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 10,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The candidate dc786ce6f2253514d01b4388940fdde8b84e671c provides a high-quality translation that maintains the technical nuances of the original text. The judge report mentioned a grammar suggestion for 'Cosa Stai Effettivamente Espone', but upon inspection of the provided MDX for that commit, the text already correctly reads 'Cosa Stai Effettivamente Esponendo'. Therefore, no further fixes are required.",
+  "slug": "securing-clawdbot-tailscale",
+  "locale": "it",
+  "candidateCommits": [
+    "dc786ce6f2253514d01b4388940fdde8b84e671c",
+    "8a20c9fb12bbbafd67c34df48c9b2443773743b0",
+    "1445753d93173859fd842e3d7d28a685bc0b2fba",
+    "1580c906d77acca40e599807d2f6355bb4457967",
+    "2b4a86f9d21de2bbe6adc904468f42f2c202ee68"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "medium",
+      "match": "Cosa Stai Effettivamente Espone",
+      "replacement": "Cosa Stai Effettivamente Esponendo",
+      "reason": "Grammar: 'Espone' is the third person singular, but the gerund 'Esponendo' is required for 'What you are actually exposing'.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug securing-clawdbot-tailscale --locale it --skip-global",
+    "output": ""
+  }
+}
