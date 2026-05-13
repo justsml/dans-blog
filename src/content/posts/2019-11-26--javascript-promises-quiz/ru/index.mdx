@@ -1,7 +1,7 @@
 ---
 social_image: ../desktop-social.webp
-title: 'Тест: 9 вопросов по JavaScript Promise'
-subTitle: ''
+title: 'Тест: 9 вопросов о JavaScript Promise'
+subTitle: Большене забывайте выполнять обещания!
 label: Promise Gotchas
 date: '2019-11-26'
 modified: '2024-11-28'
@@ -25,21 +25,19 @@ cover: ../olav-ahrens-rotne-jvBXiynINGE-resized.webp
 cover_mobile: ../w300_olav-ahrens-rotne-jvBXiynINGE-resized.webp
 cover_icon: ../icon_olav-ahrens-rotne-jvBXiynINGE-resized.webp
 ---
-```jsx
-import Challenge from '../../../../components/QuizUI/Challenge';
-import QuizUI from '../../../../components/QuizUI/QuizUI';
+import Challenge from '../../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../../components/QuizUI/QuizUI';
 
 
-## Знаете ли вы JavaScript Promises?
+## Вы знаете JavaScript Promises?
 
-> * **Проверьте свои навыки JavaScript!** 🚀
+> * **Докажите своё мастерство в JavaScript!** 🚀
 
-1. **Посмотрите подсказки** (крупная кнопка в углу).
-2. Попробуйте код в консоли браузера (нажмите `F12` или найдите её) или воспользуйтесь [repl.it](https://repl.it)*.
-3. Не стесняйтесь [написать мне в Твиттер @justsml](https://x.com/intent/tweet?text=Привет%2C%20Дэн%2C%20я%20делаю%20ваш%20тест%20по%20промисам…&url=https://danlevy.net/). **Буду рад услышать ваши мысли!**
+1. **Ищите подсказки** (Большая кнопка в нижнем углу).
+2. Запускайте код в консоли браузера (обычно `F12` или найдите её) или используйте [repl.it](https://repl.it)*.
+3. Не стесняйтесь [твитнуть мне @justsml](https://x.com/intent/tweet?text=Hey%20Dan%2C%20I%20was%20taking%20your%20promises%20quiz%2E%2E%2E&url=https://danlevy.net/). **Буду рад услышать ваше мнение!**
 
-### 👇 Завершите 9 вопросов ниже👇
-```
+### 👇 Ответьте на 9 вопросов ниже👇
 
 <QuizUI>
 
@@ -47,7 +45,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={0}
   group="Обработка ошибок"
-  title="Несколько `.catch` #1"
+  title="Несколько `.catch`'ов #1"
   options={[
     {text: 'вывести сообщение один раз'},
     {text: 'вывести сообщение два раза', isAnswer: true},
@@ -57,7 +55,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    Каким будет вывод следующего кода?
+    Какой будет вывод у следующего кода?
     ```js
         var p = new Promise((resolve, reject) => {
           reject(Error('The Fails!'))
@@ -69,9 +67,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Мы создаём Promise с помощью конструктора, сразу вызывая ошибку через callback `reject`.
+    Мы создаём Promise с помощью конструктора, сразу вызывая ошибку через колбэк `reject`.
 
-    Далее `.catch` обработчики работают как `.addEventListener(event, callback)` в DOM или `.on(event, callback)` у Event Emitter, где **можно добавить несколько обработчиков.** Каждый будет вызван с одинаковыми аргументами.
+    Затем обработчики `.catch` работают как `.addEventListener(event, callback)` в DOM или `.on(event, callback)` в Event Emitter, где **можно добавить несколько обработчиков**. Каждый будет вызван с теми же аргументами.
   </div>
   </slot>
 </Challenge>
@@ -80,17 +78,17 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={1}
   group="Обработка ошибок"
-  title="Несколько `.catch` #2"
+  title="Несколько `.catch`'ов #2"
   options={[
     {text: 'вывести сообщение один раз'},
     {text: 'вывести сообщение дважды'},
-    {text: 'незавершенное отклоненное обещание', isAnswer: true},
+    {text: 'необработанный отклонённый промис', isAnswer: true},
     {text: 'процесс завершается'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Каким будет вывод следующего кода?
+    Какой будет вывод у следующего кода?
     ```js
         var p = new Promise((resolve, reject) => {
           return Promise.reject(Error('The Fails!'))
@@ -102,7 +100,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    При использовании конструктора Promise вы должны вызвать либо `resolve()`, либо `reject()`. Конструктор Promise игнорирует возвращаемое значение исполнителя, поэтому дополнительное обещание, созданное с `Promise.reject()`, не связано с `p`. Два обработчика прикреплены к `p`, которое остается в состоянии ожидания, а возвращенное отклоненное обещание отображается как незавершенное окружением хоста.
+    При использовании конструктора Promise необходимо вызвать либо колбэк `resolve()`, либо `reject()`. Конструктор Promise игнорирует возвращаемое исполнителем значение, поэтому дополнительный промис, созданный с помощью `Promise.reject()`, не привязан к `p`. Оба обработчика прикреплены к `p`, который остаётся в состоянии ожидания, а возвращённый отклонённый промис отмечается как необработанный средой выполнения.
   </div>
   </slot>
 </Challenge>
@@ -121,7 +119,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    Каким будет вывод следующего кода?
+    Какой будет вывод у следующего кода?
     ```js
         var p = new Promise((resolve, reject) => {
           reject(Error('The Fails!'))
@@ -133,7 +131,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    При цепочке `.then` и `.catch` полезно думать о них как о ряде шагов. Каждый `.then` получает значение, возвращённое предыдущим `.then` (в виде аргумента). Однако, если "шаг" столкнулся с ошибкой, все последующие `.then` "шаги" будут пропущены до тех пор, пока не будет найдён `.catch`. Если вы хотите переопределить ошибку, просто верните неошибочное значение. Оно будет доступно через любой последующий `.then`.
+    При цепочечном вызове `.then` и `.catch` удобно воспринимать их как последовательность шагов. Каждый `.then` получает значение, возвращённое предыдущим `.then` (в качестве аргумента). Однако если ваш «шаг» столкнулся с ошибкой, все последующие «шаги» `.then` будут пропущены, пока не встретится `.catch`. Чтобы переопределить ошибку, достаточно вернуть значение, не являющееся ошибкой. Его можно получить в любом последующем `.then`.
   </div>
   </slot>
 </Challenge>
@@ -142,17 +140,17 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:only="react"
   index={3}
   group="Обработка ошибок"
-  title="Цепочка .catch"
+  title="Цепочка `.catch`'ов"
   options={[
-    {text: 'Вывести сообщение об ошибке один раз', isAnswer: true},
-    {text: 'Вывести сообщение об ошибке дважды'},
+    {text: 'вывести сообщение об ошибке один раз', isAnswer: true},
+    {text: 'вывести сообщение об ошибке дважды'},
     {text: 'UnhandledPromiseRejectionWarning'},
-    {text: 'Процесс завершается'},
+    {text: 'процесс завершается'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Каким будет вывод следующего кода?
+    Какой будет вывод у следующего кода?
     ```js
         var p = new Promise((resolve, reject) => {
           reject(Error('The Fails!'))
@@ -164,7 +162,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    При цепочке .catch каждый обрабатывает только ошибки, возникшие в предыдущих .then или .catch "шагах". В данном примере первый .catch возвращает console.log, который можно было бы использовать только при добавлении .then() после обоих .catch.
+    При цепочке `.catch`'ов каждый из них обрабатывает только ошибки, возникшие в предыдущих «шагах» `.then` или `.catch`. В этом примере первый `.catch` возвращает `console.log`, к которому можно получить доступ только добавив `.then()` после обоих `.catch`'ов.
   </div>
   </slot>
 </Challenge>
@@ -173,17 +171,17 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={4}
   group="Обработка ошибок"
-  title="Несколько `.catch`"
+  title="Несколько `.catch`'s"
   options={[
     {text: 'вывести сообщение один раз'},
-    {text: 'вывести сообщение дважды'},
+    {text: 'вывести сообщение два раза'},
     {text: 'UnhandledPromiseRejectionWarning'},
-    {text: 'ничего не выведет', isAnswer: true},
+    {text: 'ничего не выводится', isAnswer: true},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Каким будет вывод следующего кода?
+    Какой будет вывод у следующего кода?
     ```js
         new Promise((resolve, reject) => {
             resolve('Success!')
@@ -200,9 +198,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    **Подсказка:** `.catch` можно использовать для игнорирования (или переопределения) ошибок, просто вернув обычное значение.
+    **Подсказка:** `.catch`'s можно использовать, чтобы игнорировать (или переопределять) ошибки, просто возвращая обычное значение.
 
-    Этот трюк работает только в том случае, если есть последующий `.then`, который получит значение.
+    Этот приём работает только когда после него есть `.then`, получающий значение.
   </div>
   </slot>
 </Challenge>
@@ -211,17 +209,17 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={5}
   group="Обработка данных"
-  title="Поток между `.then`"
+  title="Поток между `.then`'s"
   options={[
-    {text: 'вывести \'Success!\' и \'SUCCESS!\''},
-    {text: 'вывести \'Success!\''},
-    {text: 'вывести \'SUCCESS!\'', isAnswer: true},
-    {text: 'ничего не выводит'},
+    {text: 'вывести "Success!" и "SUCCESS!"'},
+    {text: 'вывести "Success!"'},
+    {text: 'вывести "SUCCESS!"', isAnswer: true},
+    {text: 'ничего не выводится'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Какой будет вывод следующего кода?
+    Какой будет вывод для следующего кода?
     ```js
         Promise.resolve('Success!')
           .then(data => {
@@ -235,9 +233,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    **Подсказка:** `.then` последовательно передают данные, от `return value` к следующему `.then(value => /* handle value */)`.
+    **Подсказка:** `.then`'s передают данные последовательно, от `return value` к следующему `.then(value => /* handle value */)`.
 
-    Возвращаемое значение ключево для передачи данных следующему `.then`.
+    `return` является ключевым для передачи значения следующему `.then`.
   </div>
   </slot>
 </Challenge>
@@ -246,17 +244,17 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={6}
   group="Обработка данных"
-  title="Поток между `.then`"
+  title="Поток между `.then`'s"
   options={[
     {text: 'вывести "SUCCESS!"'},
     {text: 'вывести "Success!"'},
     {text: 'вывести "SUCCESS!" и "SUCCESS!"', isAnswer: true},
-    {text: 'ничего не вывести'},
+    {text: 'ничего не выводится'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Каким будет вывод следующего кода?
+    Какой будет вывод у следующего кода?
     ```js
         Promise.resolve('Success!')
           .then(data => {
@@ -272,7 +270,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Есть 2 вызова `console.log`, которые будут выполнены.
+    Будут вызваны 2 вызова `console.log`.
   </div>
   </slot>
 </Challenge>
@@ -281,17 +279,17 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={7}
   group="Обработка данных"
-  title="Поток между `.then`"
+  title="Поток между `.then`'s"
   options={[
     {text: 'вывести "SUCCESS!"'},
     {text: 'вывести "Success!"'},
     {text: 'вывести "SUCCESS!" и "SUCCESS!"'},
-    {text: 'вывести `undefined`', isAnswer: true},
+    {text: 'выводит `undefined`', isAnswer: true},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Какой будет результат выполнения следующего кода?
+    Какой будет вывод у следующего кода?
     ```js
         Promise.resolve('Success!')
           .then(data => {
@@ -305,9 +303,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    **Подсказка:** `.then` последовательно передают данные, от `return value` к следующему `.then(value => /* handle value */)`.
+    **Подсказка:** `.then`'s передают данные последовательно, от `return value` к следующему `.then(value => /* handle value */)`.
 
-    Ключевое значение имеет `return`, чтобы передать значение следующему `.then`.
+    `return` является ключевым, чтобы передать значение следующему `.then`.
   </div>
   </slot>
 </Challenge>
@@ -316,18 +314,18 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={8}
   group="Обработка данных"
-  title="Поток между .then и .catch"
+  title="Поток между `.then` и `.catch`"
   options={[
-    {text: 'выведет \'Oh noes!\' и \'The fails!\''},
-    {text: 'выведет \'Oh noes!\''},
-    {text: 'выведет \'The fails!\'', isAnswer: true},
-    {text: 'выведет \'actually, that worked\''},
-    {text: 'ничего не выведет'},
+    {text: 'вывести "Oh noes!" и "The fails!"'},
+    {text: 'вывести "Oh noes!"'},
+    {text: 'вывести "The fails!"', isAnswer: true},
+    {text: 'вывести "actually, that worked"'},
+    {text: 'ничего не выводится'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Какой будет вывод следующего кода?
+    Какой будет вывод у следующего кода?
     ```js
         Promise.resolve('Success!')
           .then(() => {
