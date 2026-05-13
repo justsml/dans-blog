@@ -1,61 +1,56 @@
 {
-  "runId": "2026-05-13T15-38-54-375Z",
-  "runStatus": "completed",
+  "runId": "2026-05-13T16-39-47-790Z",
+  "runStatus": "running",
   "slug": "quiz-sql-query-fundamentals",
   "locale": "fr",
-  "startedAt": "2026-05-13T15:38:54.375Z",
-  "updatedAt": "2026-05-13T15:39:28.347Z",
+  "startedAt": "2026-05-13T16:39:47.790Z",
+  "updatedAt": "2026-05-13T16:40:11.451Z",
   "modelsRequested": [
     "openrouter/openai/gpt-oss-120b:nitro",
     "openrouter/qwen/qwen3-32b:nitro"
   ],
-  "attemptedModels": 2,
-  "skippedModels": 0,
-  "rejectedModels": 1,
+  "attemptedModels": 1,
+  "skippedModels": 1,
+  "rejectedModels": 0,
   "candidateModels": 1,
   "totals": {
-    "inputTokens": 9753,
-    "outputTokens": 6355,
+    "inputTokens": 8872,
+    "outputTokens": 9302,
     "thinkingTokens": 0,
-    "cachedInputTokens": 3392,
+    "cachedInputTokens": 0,
     "cacheWriteTokens": 0,
-    "estimatedCostUsd": 0.001524,
-    "hasUnknownInputTokens": true,
-    "hasUnknownOutputTokens": true,
+    "estimatedCostUsd": 0.002942,
+    "hasUnknownInputTokens": false,
+    "hasUnknownOutputTokens": false,
     "hasUnknownThinkingTokens": true,
-    "hasUnknownCachedInputTokens": true,
-    "hasUnknownCacheWriteTokens": true,
-    "hasUnknownEstimatedCost": true,
-    "runtimeSeconds": "24.90"
+    "hasUnknownCachedInputTokens": false,
+    "hasUnknownCacheWriteTokens": false,
+    "hasUnknownEstimatedCost": false,
+    "runtimeSeconds": "79.16"
   },
   "attempts": [
     {
       "model": "openrouter/openai/gpt-oss-120b:nitro",
-      "status": "candidate",
-      "validationStatus": "passed",
+      "status": "skipped",
       "reportPath": "reports/i18n/quiz-sql-query-fundamentals/fr/openrouter-openai-gpt-oss-120b-nitro.md",
-      "note": "Generated through the direct AI SDK chunked translator.",
-      "telemetry": {
-        "runtimeSeconds": "19.26",
-        "tokens": {
-          "input": 9753,
-          "output": 6355,
-          "cached": 3392,
-          "cacheWrite": 0
-        },
-        "estimatedCostUsd": 0.001524267,
-        "pricingSource": "local-openrouter-estimate"
-      }
+      "note": "Existing non-rejected report found. Pass --overwrite to rerun."
     },
     {
       "model": "openrouter/qwen/qwen3-32b:nitro",
-      "status": "rejected",
-      "validationStatus": "rejected: direct AI SDK translation failed",
+      "status": "candidate",
+      "validationStatus": "deferred",
       "reportPath": "reports/i18n/quiz-sql-query-fundamentals/fr/openrouter-qwen-qwen3-32b-nitro.md",
-      "note": "Command failed: bun run i18n:translate:chunked -- --slug quiz-sql-query-fundamentals --locale fr --model openrouter/qwen/qwen3-32b:nitro --chunk 6p --quiz-concurrency 20",
+      "note": "Generated through the direct AI SDK chunked translator.",
       "telemetry": {
-        "runtimeSeconds": "5.64",
-        "tokens": {}
+        "runtimeSeconds": "79.16",
+        "tokens": {
+          "input": 8872,
+          "output": 9302,
+          "cached": 0,
+          "cacheWrite": 0
+        },
+        "estimatedCostUsd": 0.0029422400000000005,
+        "pricingSource": "local-openrouter-estimate"
       }
     }
   ]

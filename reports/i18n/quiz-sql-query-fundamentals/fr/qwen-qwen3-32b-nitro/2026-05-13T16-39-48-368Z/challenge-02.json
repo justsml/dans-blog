@@ -1,0 +1,44 @@
+{
+  "index": 1,
+  "attempt": 1,
+  "originalTitle": "Aggregate Function COUNT",
+  "translatedTitle": "Fonction d'agrégation COUNT",
+  "translation": {
+    "title": "Fonction d'agrégation COUNT",
+    "group": "Bases SQL",
+    "options": [
+      {
+        "text": "Compte toutes les lignes, y compris les valeurs NULL"
+      },
+      {
+        "text": "Compte uniquement les valeurs non NULL dans une colonne"
+      },
+      {
+        "text": "Traite chaque valeur NULL comme une valeur unique"
+      },
+      {
+        "text": "Traite chaque valeur NULL comme unique, comme NaN !== NaN"
+      }
+    ],
+    "questionProse": [
+      "Quel est l'effet de `COUNT(column_name)` en SQL ?"
+    ],
+    "explanationProse": [
+      "`COUNT(column_name)` compte le nombre de valeurs non NULL dans une colonne spécifiée. Pour compter toutes les lignes, y compris les NULL, utilisez `COUNT(*)`.\n\n    Vous pouvez aussi utiliser `COALESCE` pour forcer les NULL à une valeur non NULL. Par exemple : `COUNT(COALESCE(column_name, 0))`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Fonction d'agrégation COUNT\",\n  \"group\": \"Bases SQL\",\n  \"options\": [\n    {\n      \"text\": \"Compte toutes les lignes, y compris les valeurs NULL\"\n    },\n    {\n      \"text\": \"Compte uniquement les valeurs non NULL dans une colonne\"\n    },\n    {\n      \"text\": \"Traite chaque valeur NULL comme une valeur unique\"\n    },\n    {\n      \"text\": \"Traite chaque valeur NULL comme unique, comme NaN !== NaN\"\n    }\n  ],\n  \"questionProse\": [\n    \"Quel est l'effet de `COUNT(column_name)` en SQL ?\"\n  ],\n  \"explanationProse\": [\n    \"`COUNT(column_name)` compte le nombre de valeurs non NULL dans une colonne spécifiée. Pour compter toutes les lignes, y compris les NULL, utilisez `COUNT(*)`.\\n\\n    Vous pouvez aussi utiliser `COALESCE` pour forcer les NULL à une valeur non NULL. Par exemple : `COUNT(COALESCE(column_name, 0))`.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 726,
+    "outputTokens": 635,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 8284
+  },
+  "cost": {
+    "inputUsd": 0.00005808,
+    "outputUsd": 0.0001524,
+    "totalUsd": 0.00021047999999999998,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
