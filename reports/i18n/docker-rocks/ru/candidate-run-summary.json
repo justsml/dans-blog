@@ -1,67 +1,51 @@
 {
-  "runId": "2026-05-13T16-27-25-916Z",
+  "runId": "2026-05-13T17-20-58-819Z",
   "runStatus": "running",
   "slug": "docker-rocks",
   "locale": "ru",
-  "startedAt": "2026-05-13T16:27:25.916Z",
-  "updatedAt": "2026-05-13T16:28:29.631Z",
+  "startedAt": "2026-05-13T17:20:58.819Z",
+  "updatedAt": "2026-05-13T17:21:00.964Z",
   "modelsRequested": [
     "openrouter/openai/gpt-oss-120b:nitro",
-    "openrouter/qwen/qwen3-32b:nitro"
+    "openrouter/qwen/qwen3-32b:nitro",
+    "deepseek/deepseek-v4-flash",
+    "qwen/qwen3.6-plus"
   ],
-  "attemptedModels": 2,
+  "attemptedModels": 1,
   "skippedModels": 0,
-  "rejectedModels": 1,
+  "rejectedModels": 0,
   "candidateModels": 1,
   "totals": {
-    "inputTokens": 3588,
-    "outputTokens": 902,
+    "inputTokens": 1991,
+    "outputTokens": 460,
     "thinkingTokens": 0,
-    "cachedInputTokens": 1792,
+    "cachedInputTokens": 640,
     "cacheWriteTokens": 0,
-    "estimatedCostUsd": 0.000302,
+    "estimatedCostUsd": 0.00016,
     "hasUnknownInputTokens": false,
     "hasUnknownOutputTokens": false,
     "hasUnknownThinkingTokens": true,
     "hasUnknownCachedInputTokens": false,
     "hasUnknownCacheWriteTokens": false,
     "hasUnknownEstimatedCost": false,
-    "runtimeSeconds": "4.38"
+    "runtimeSeconds": "0.76"
   },
   "attempts": [
     {
       "model": "openrouter/openai/gpt-oss-120b:nitro",
       "status": "candidate",
-      "validationStatus": "passed",
+      "validationStatus": "deferred",
       "reportPath": "reports/i18n/docker-rocks/ru/openrouter-openai-gpt-oss-120b-nitro.md",
       "note": "Generated through the direct AI SDK chunked translator.",
       "telemetry": {
-        "runtimeSeconds": "2.19",
+        "runtimeSeconds": "0.76",
         "tokens": {
-          "input": 1794,
-          "output": 451,
-          "cached": 896,
+          "input": 1991,
+          "output": 460,
+          "cached": 640,
           "cacheWrite": 0
         },
-        "estimatedCostUsd": 0.00015114599999999998,
-        "pricingSource": "local-openrouter-estimate"
-      }
-    },
-    {
-      "model": "openrouter/openai/gpt-oss-120b:nitro",
-      "status": "rejected",
-      "validationStatus": "rejected: direct AI SDK translation failed",
-      "reportPath": "reports/i18n/docker-rocks/ru/openrouter-openai-gpt-oss-120b-nitro.md",
-      "note": "Command failed: git add src/content/posts/2015-06-11--docker-rocks/ru/index.mdx reports/i18n/docker-rocks/ru",
-      "telemetry": {
-        "runtimeSeconds": "2.19",
-        "tokens": {
-          "input": 1794,
-          "output": 451,
-          "cached": 896,
-          "cacheWrite": 0
-        },
-        "estimatedCostUsd": 0.00015114599999999998,
+        "estimatedCostUsd": 0.000160449,
         "pricingSource": "local-openrouter-estimate"
       }
     }
