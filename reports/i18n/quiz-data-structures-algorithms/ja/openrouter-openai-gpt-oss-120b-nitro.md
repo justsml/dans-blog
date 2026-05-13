@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-data-structures-algorithms
+- Locale: ja
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2024-10-31--quiz-data-structures-algorithms/ja/index.mdx
+- Validation: deferred
+- Runtime seconds: 24.28
+- Input tokens: 15947
+- Output tokens: 8966
+- Thinking tokens: unknown
+- Cached input tokens: 4864
+- Cache write tokens: 0
+- Estimated cost: $0.002236
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: 'クイズ: データ構造とアルゴリズム'
 subTitle: バイナリツリーをBSできるか？
@@ -525,3 +543,4 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 </Challenge>
 
 </QuizUI>
+````
