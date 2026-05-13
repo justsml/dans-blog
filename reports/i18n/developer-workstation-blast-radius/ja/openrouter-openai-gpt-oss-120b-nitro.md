@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: developer-workstation-blast-radius
+- Locale: ja
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-05-09--developer-workstation-blast-radius/ja/index.mdx
+- Validation: passed
+- Runtime seconds: 17.45
+- Input tokens: 37193
+- Output tokens: 8462
+- Thinking tokens: unknown
+- Cached input tokens: 14464
+- Cache write tokens: 0
+- Estimated cost: $0.002974
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: 開発者ワークステーションの影響範囲を縮小
 subTitle: 作業を続ける人向けの Dev Containers、暗号化シークレット、カナリートークン、アウトバウンドファイアウォール。
@@ -415,3 +433,4 @@ shred -u customer-export.sql.gz
 - [Microsoft: Windows Firewall rules](https://learn.microsoft.com/en-us/windows/security/operating-system-security/network-security/windows-firewall/rules)
 - [Mandiant: UNC5537 Targets Snowflake Customer Instances](https://cloud.google.com/blog/topics/threat-intelligence/unc5537-snowflake-data-theft-extortion)
 - [Microsoft: Lumma Stealer delivery techniques and capabilities](https://www.microsoft.com/en-us/security/blog/2025/05/21/lumma-stealer-breaking-down-the-delivery-techniques-and-capabilities-of-a-prolific-infostealer/)
+````
