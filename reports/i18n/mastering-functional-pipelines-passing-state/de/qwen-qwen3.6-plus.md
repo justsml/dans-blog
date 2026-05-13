@@ -1,0 +1,221 @@
+# Translation Candidate
+- Slug: mastering-functional-pipelines-passing-state
+- Locale: de
+- Model: qwen/qwen3.6-plus
+- Target: src/content/posts/2023-08-13--mastering-functional-pipelines-passing-state/de/index.mdx
+- Validation: rejected: direct AI SDK translation failed
+- Runtime seconds: 240.08
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Cache write tokens: unknown
+- Estimated cost: unknown
+- Pricing source: unknown
+- Note: Command failed after 240000ms: bun run i18n:translate:chunked -- --slug mastering-functional-pipelines-passing-state --locale de --model qwen/qwen3.6-plus --chunk 6p --run-id 2026-05-13T19-05-13-381Z-80623 --run-lock-path /Users/dan/code/oss/dans-blog/.git/codex-i18n-translation-run.json --quiz-concurrency 24
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: 'Pipeline-Meister: Zustandsweitergabe'
+subTitle: 'Hallo Closure, mein alter Freund.'
+date: '2023-08-09'
+modified: '2024-07-30'
+tags:
+  - typescript
+  - closure
+  - stateful
+  - scoping
+  - hoisting
+  - functional
+  - pipeline
+category: Guides
+subCategory: JavaScript
+cover: ../sven-kucinic-LxYxC6jdjcA-unsplash-cropped-1200.webp
+cover_mobile: ../w300_sven-kucinic-LxYxC6jdjcA-unsplash-cropped-1200.webp
+cover_icon: ../icon_sven-kucinic-LxYxC6jdjcA-unsplash-cropped-1200.webp
+---
+## Meister der Pipelines: Zustand weitergeben
+
+Bist du schon einmal auf Herausforderungen gestoßen, wenn du Zustand mit funktionalen Pipelines weitergibst?
+
+Die Organisation (oder deren Fehlen) deines Codes wirkt sich direkt darauf aus, wie einfach Zustand weitergegeben werden kann.
+
+In diesem Artikel erkunden wir eine effektive Technik, um Zustand durch eine Pipeline zu leiten. Dabei verbessern wir die Organisation und Lesbarkeit unseres Codes.
+
+Das folgende „echte“ Code-Snippet steht im Mittelpunkt dieses Artikels: Eine Checkout-Funktion, die eine `userId` und ein Array von `products` akzeptiert. Sie gibt eine Promise-Kette zurück, die 4 Funktionen nacheinander ausführt.
+
+```tsx
+const checkout = (userId: number, products: number[]) => {
+  return getProductsSubtotal(userId, products)
+    .then(subTotal => applyTaxes(userId, subTotal))
+    .then(total => purchaseProducts(userId, total))
+    .then(result => sendReceipt(userId, result));
+};
+```
+
+Moment mal, dieser Code ist eigentlich ziemlich gut, was Pipelines in JS angeht!
+
+Es leidet unter einigen subtilen Problemen, die sich zu größeren Schwierigkeiten summieren können.
+
+Ein Problem ist, dass wir `userId` wiederholt an jede (logisch zusammenhängende) Funktion übergeben. Kombinieren Sie das mit einem weiteren Problem, das sowohl von Entwicklern als auch von TypeScript leicht übersehen wird: Das Vertauschen der numerischen Argumente erzeugt leicht einen stillen Fehler. (Siehe `applyTaxes` und `purchaseProducts`. _War es `userId` oder `amount`, das zuerst kommt?_)
+
+Bevor wir entscheiden, wie wir diesen Code verbessern, lassen Sie uns einige Vor- und Nachteile identifizieren.
+
+### Vor- und Nachteile
+
+#### Vorteile
+
+- Gute Nutzung eines Closures! `userId` & `products` nur einmal übergeben!
+- Konsistente Benennung der Argumente.
+- Relativ effektive und prägnante Komposition der 4 Schlüsselfunktionen für den Checkout.
+- „Kostenlose“ Fehlerflusskontrolle. (Fehler steigen aus jeder verschachtelten Funktion auf und lehnen das von `checkout()` zurückgegebene Promise ab.)
+
+#### Nachteile
+
+- Das ständige Herumreichen von `userId` ist mühsam.
+- Funktionen sind nicht einparametrig (auch unär). _Das beeinträchtigt die Komponierbarkeit. Siehe [finales Beispiel](#checkout-with-further-improvements) für den Grund?_
+- Es kann unklar sein, was jede Funktion zurückgibt. (Ist es das E-Mail-Sendeergebnis oder die Variable `result`? Oder?)
+- Nicht offensichtlich, wie man Funktionalität hinzufügt (z.B. wenn wir Kundenrabatt/Guthaben/Punkte/etc. laden müssten).
+- Manchmal fügen „temporäre“ Parameternamen (wie in jedem `.then(param => {})`) Kontext hinzu. Mit der Zeit werden sie jedoch wahrscheinlich zu Nomenklatur-Müll.
+
+### Lösung, Teil 1: Erstelle ein Modul!
+
+Diese Technik besteht darin, zusammengehörige Funktionen in einem einzigen Modul zu organisieren (z.B. `CartHelpers`). Sie verlangt kein bestimmtes Muster. Erkunde [Factory-Funktionen](#carthelpers-factory), [Klassen](#carthelpers-class), Closures, Mixins usw. Finde, was für dein Projekt und Team sinnvoll ist.
+
+#### CartHelpers Factory
+
+Beispiel eines `CartHelpers`-Moduls, bei dem `userId` einmal übergeben wird und alle Methoden ein einziges Argument haben.
+
+```tsx
+const CartHelpers = (userId: number) => {
+  return {
+    getProductsSubtotal: products => getProductsSubtotal(userId, products),
+    applyTaxes: subTotal => applyTaxes(userId, subTotal),
+    purchaseProducts: total => purchaseProducts(userId, total),
+    sendReceipt: invoice => sendReceipt(userId, invoice)
+  };
+};
+```
+
+#### CartHelpers als Klasse
+
+Falls Klassen eher dein Ding sind, lässt sich das leicht anpassen:
+
+```tsx
+class CartHelpers {
+  constructor(userId) {
+    this.userId = userId;
+  }
+  getProductsSubtotal = products => getProductsSubtotal(this.userId, products);
+  applyTaxes = subTotal => applyTaxes(this.userId, subTotal);
+  purchaseProducts = total => purchaseProducts(this.userId, total);
+  sendReceipt = invoice => sendReceipt(this.userId, invoice);
+}
+```
+
+Einige unmittelbare Vorteile:
+
+- Kein wiederholtes Übergeben von Variablen mehr.
+  - DRY: `CartHelpers` kapselt das wiederholte Argument `userId`.
+  - Jede Methode akzeptiert **_nur_** die notwendigen Argumente. Dadurch wird `cart.applyTaxes(subTotal)` völlig überraschungsfrei lesbar.
+- Funktionen mit einem einzigen Argument in `CartHelpers` sind lesbarer und haben einen klareren Zweck.
+
+Durch die Gruppierung verwandter Funktionen entsteht die Möglichkeit, die exponierte Oberfläche zu reduzieren (z. B. `checkout()`, öffentliche Methoden von `CartHelpers`).
+
+> Weniger Oberfläche === weniger kognitive Last, bessere Testbarkeit & Wartbarkeit.
+> _Designsysteme mit Absicht & Fokus gestalten. ✨_
+```
+
+#### Verwendung von Checkout & CartHelpers
+
+Sehen wir uns an, wie die `checkout()`-Funktion jetzt aussieht:
+
+```tsx
+export const checkout = ({ userId, products }) => {
+  const cart = CartHelpers(userId);
+
+  return Promise.resolve(products)
+    .then(products => cart.getProductsSubtotal(products))
+    .then(subTotal => cart.applyTaxes(subTotal))
+    .then(total => cart.purchaseProducts(total))
+    .then(result => cart.sendReceipt(result));
+};
+```
+
+##### Checkout mit weiteren Verbesserungen
+
+> Kann es noch weiter verbessert werden? Ja! Wir müssen Argumente überhaupt nicht wiederholen!
+
+Wenn die Argumente einer Funktion durch die Ausgabe vorheriger Funktionen bereitgestellt werden, kann man den Code noch weiter vereinfachen.
+
+```tsx
+export const checkout = ({ userId, products }) => {
+  const cart = CartHelpers(userId);
+
+  // 🌈 Functions stack like Lego & read like normal "Human Words!" 💅
+  return Promise.resolve(products)
+    .then(cart.getProductsSubtotal)
+    .then(cart.applyTaxes)
+    .then(cart.purchaseProducts)
+    .then(cart.sendReceipt);
+};
+```
+
+**Wenn es sich unnatürlich anfühlt, Parameter in einzelne (Objekt-)Argumente zu kombinieren,** sollten Sie Ihre Funktionen aufteilen **ODER** sie in besser geeignete Module zusammenfassen.
+
+#### Wo anfangen?
+
+Finde zusammenhängende Funktionen und gruppiere sie. (z.B. `CartHelpers`.)
+
+Ein Teil der Herausforderung beim Finden möglicher logischer Module besteht darin, überhaupt erst zusammenhängenden Code zu identifizieren.
+
+##### Was macht Funktionen zusammenhängend?
+
+Ein netter Trick: Finde Wiederholungen in Funktionsparametern. Frage: Gibt es eine zugrundeliegende Beziehung? Oder eine Verantwortlichkeit?
+
+- ✅ Funktionen mit wiederholten, gemeinsamen Argumenten. (z.B. Wenn 4 Methoden `userRewards` akzeptieren, brauchst du wahrscheinlich ein `Rewards`- oder ein anderes Modul.)
+- ✅ Funktionen, deren Argumente direkt von der Ausgabe vorheriger Funktionen bereitgestellt werden. (Abfolgen von Schritten, z.B. `Extract`, `Transform`, `Load`.)
+- ❌ Alles, was vage mit dem Feature-Bereich „Produktkauf“ zu tun hat?
+- ❌ Funktionen mit gemeinsamen Präfix- oder Suffix-Namen?
+- ❌ Funktionen, die große Objekte als Argumente benötigen, obwohl sie nur wenige Werte aus diesen Objekten verwenden. (z.B. `applyTaxes({ user, business, rewards, kitchenSink })` vs `applyTaxes({ subTotal })`)
+
+Auch wenn es keine einzige „richtige Antwort“ für das Entwerfen von Modulen gibt, hilft es, 2-3 Optionen für die Organisation zu identifizieren – eine Skizze zeichnen, „Fantasy“-Code schreiben, fragen: „Macht es Freude?“
+
+<aside>
+📌 Oft braucht es ein paar Versuche bei der Modulorganisation, bis sich Ihr Domänenmodell herauskristallisiert. Quälen Sie sich nicht damit, es perfekt hinzubekommen.
+</aside>
+
+> Sie könnten das Gefühl haben, dass `cart.sendReceipt()` nicht zu den zahlungsbezogenen Methoden gehört. Vielleicht ist `customerNotifications.sendReceipt()` ein besserer Ort für Kundenbenachrichtigungen. Wenn `CartHelper` eine ausreichend hohe Bedeutung hat, kann es als **_Controller_** agieren, der intern alle notwendigen **_Services_** aufruft, wie `customerNotifications`.
+
+#### Woran erkennen Sie, dass Sie helfen?
+
+Wenn die Lesbarkeit nicht leidet, während Sie Ad-hoc-Argumente eliminieren, **HERZLICHEN GLÜCKWUNSCH!!!** Sie haben wahrscheinlich ein Modul mit einem klaren und dauerhaften Aufgabenbereich gebaut!
+
+- Das Entfernen von Zwischenargumenten erzwingt auf natürliche Weise das Entstehen von „Schichten“.
+- Es _sollte_ schwierig sein, Ad-hoc-Code an der falschen Stelle abzuladen!
+
+So, das wirft die Frage auf: Wo fügen wir Funktionalität hinzu?
+
+Meiner Erfahrung nach gibt es zwei primäre Strategien, die man beim Hinzufügen von Funktionalität bewerten sollte:
+
+1.  Vorhandene Methode erweitern/refaktorisieren. (Wenn der neue Code nah genug am bestehenden Code ist.)
+2.  Eine neue (5.) Funktion an der gewünschten Stelle in der Kette erstellen. (Angenommen, der neue Code ist nicht mit den vorhandenen Funktionen verwandt.)
+
+Letztlich macht es das einfacher zu entscheiden, wo neue Funktionalität hingehört. (z. B. `cart.applyDiscounts()`, `cart.applyTaxes()`, `rewards.getBalance()`.)
+
+### Fazit
+
+Das Übergeben von Zustand durch eine komplexe Pipeline kann knifflig sein. Mit ein wenig Übung im Refactoring werden Sie jedoch feststellen, dass Sie lesbareren Code mit geringerer kognitiver Belastung schreiben.
+
+Fragen? Anmerkungen? Bedenken? Melden Sie sich gerne unter [@justsml](https://x.com/justsml) oder per [E-Mail](mailto:dan@danlevy.net).
+
+#### Bleiben Sie dran für den nächsten Teil der Serie
+
+Wir werden das Auslagern von Zustand und die Erweiterung der Funktionalität in unserem Modul untersuchen!
+
+#### Weiterführende Lektüre
+
+- [Ähnliche Herausforderungen gibt es in der komponentenbasierten React-Welt.](https://kyleshevlin.com/quit-your-yapping)
+````
