@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-bash-in-the-shell
+- Locale: es
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2024-11-20--quiz-bash-in-the-shell/es/index.mdx
+- Validation: passed
+- Runtime seconds: 31.70
+- Input tokens: 15972
+- Output tokens: 9694
+- Thinking tokens: unknown
+- Cached input tokens: 4352
+- Cache write tokens: 0
+- Estimated cost: $0.002368
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: 'Quiz: Dominio de Bashy Shell'
@@ -602,3 +620,4 @@ Refuerza tus habilidades en Bash con los siguientes recursos:
 - [Wiki de Bash Hackers](http://wiki.bash-hackers.org/)
 - [Guía de Bash para principiantes](http://tldp.org/LDP/Bash-Beginners-Guide/html/index.html)
 - [Tarjeta de referencia de Bash](http://www.tldp.org/LDP/Bash-Beginners-Guide/html/Bash-Beginners-Guide.html)
+````

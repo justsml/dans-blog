@@ -1,0 +1,48 @@
+{
+  "index": 14,
+  "attempt": 1,
+  "originalTitle": "Command Substitution",
+  "translatedTitle": "Sustitución de comandos",
+  "translation": {
+    "title": "Sustitución de comandos",
+    "group": "Trucos",
+    "options": [
+      {
+        "text": "'ls -l'"
+      },
+      {
+        "text": "% ls -l"
+      },
+      {
+        "text": "$ ls -l"
+      },
+      {
+        "text": "$(ls -l)"
+      },
+      {
+        "text": "${ls -l}"
+      }
+    ],
+    "questionProse": [
+      "¿Qué opción ejecutará el comando `ls -l` y devolverá la salida?"
+    ],
+    "explanationProse": [
+      "La sintaxis `$(ls -l)` ejecuta el comando dentro de los **paréntesis** y sustituye la salida. Por ejemplo:",
+      "La primera opción usa comillas simples `'`, **no acentos graves**. Esto impide la expansión, de modo que `'$(date +%F)'` simplemente imprimirá la cadena literal `$(date +%F)`.\n\n    Aunque todavía se admite usar acentos graves (`` `ls -l` ``) para ejecutar comandos, recientemente se ha convertido en una especie de anti‑patrón (en algunos contextos). La mayoría recomienda usar `$(command)` para mejor legibilidad y consistencia con diferentes shells y versiones.\n\n    Las llaves `${}` se usan para expansión de variables, no para sustitución de comandos.\n\n    El carácter `%` no se usa para sustitución de comandos."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Sustitución de comandos\",\n  \"group\": \"Trucos\",\n  \"options\": [\n    {\n      \"text\": \"'ls -l'\"\n    },\n    {\n      \"text\": \"% ls -l\"\n    },\n    {\n      \"text\": \"$ ls -l\"\n    },\n    {\n      \"text\": \"$(ls -l)\"\n    },\n    {\n      \"text\": \"${ls -l}\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Qué opción ejecutará el comando `ls -l` y devolverá la salida?\"\n  ],\n  \"questionCode\": [],\n  \"explanationProse\": [\n    \"La sintaxis `$(ls -l)` ejecuta el comando dentro de los **paréntesis** y sustituye la salida. Por ejemplo:\",\n    \"La primera opción usa comillas simples `'`, **no acentos graves**. Esto impide la expansión, de modo que `'$(date +%F)'` simplemente imprimirá la cadena literal `$(date +%F)`.\\n\\n    Aunque todavía se admite usar acentos graves (`` `ls -l` ``) para ejecutar comandos, recientemente se ha convertido en una especie de anti‑patrón (en algunos contextos). La mayoría recomienda usar `$(command)` para mejor legibilidad y consistencia con diferentes shells y versiones.\\n\\n    Las llaves `${}` se usan para expansión de variables, no para sustitución de comandos.\\n\\n    El carácter `%` no se usa para sustitución de comandos.\"\n  ],\n  \"explanationCode\": [\n    {\n      \"language\": \"bash\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 908,
+    "outputTokens": 815,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1023
+  },
+  "cost": {
+    "inputUsd": 0.000035412,
+    "outputUsd": 0.0001467,
+    "totalUsd": 0.00018211199999999998,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
