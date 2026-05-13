@@ -69,7 +69,7 @@ Validation checks frontmatter, preserved imports/components, fenced code counts,
 
 Judge runs compare at most three candidate commits per model call, with any pre-existing translated file included as `<current>` context. Runs may return structured `suggestions` in `judge.json`. Medium/high-priority suggestions must include an exact `match`, exact `replacement`, and English `reason`; the judge wrapper applies those exact replacements, re-runs judge scoring, and repeats until no medium/high issues remain or `--fix-pass-limit` is reached. The default fix pass limit is 2. Every suggestion is written to `judge-suggestions.jsonl` when present and summarized in `judge-summary.md`. Every judge call and fix application appends an accounting row to `reports/i18n/{slug}/judgements.jsonl`, next to the article-level `candidates.jsonl`.
 
-Candidate generation validates and commits each model output unless `--no-commit` is passed.
+Candidate generation harvests and commits each model output as an immutable candidate artifact unless `--no-commit` is passed. It should not skip a model just because a previous candidate exists, and it should not leave the translated `src/content` file changed after harvesting. The judge step is responsible for comparing candidates, refining the selected output, and updating the live translated post.
 
 For broad baseline coverage, run the low-confidence Qwen queue directly on `main`:
 
@@ -79,15 +79,16 @@ bun run i18n:qwen:baseline -- --push
 
 That queue is resumable. It skips slug+locale pairs that already have a successful `openrouter/qwen/qwen3.6-plus` report, pulls/rebases before each item, and can be scoped with `--limit`, `--latest-posts`, `--locales`, or `--slugs`.
 
-By default, candidate generation is idempotent per slug, locale, and model: if the model already has a report at `reports/i18n/{slug}/{locale}/{safe-model-name}.md`, the script skips that language+model combo. Pass `--overwrite` to intentionally rerun and replace that model's target-file output:
+Candidate generation is append-only per slug, locale, and model run. Re-running the same model should create a new timestamped candidate and append a new `candidates.jsonl` row instead of overwriting or skipping older candidates:
 
 ```sh
 bun run i18n:translate:candidates -- \
   --slug the-last-to-think \
   --locale es \
-  --models openrouter/qwen/qwen3.6-plus \
-  --overwrite
+  --models openrouter/qwen/qwen3.6-plus
 ```
+
+Keep telemetry reports inside timestamped run directories. Do not write or commit latest-by-model `reports/i18n/{slug}/{locale}/{model}/chunked-*.md` files.
 
 Every future candidate report includes run telemetry:
 
@@ -294,6 +295,8 @@ The judge reads prior candidates from Git history. It should compare only commit
 Candidate generation is a harvesting phase. By default, `i18n:translate:candidates` normalizes obvious locale-folder paths and records `Validation: deferred`, but it does not run `content:check`, `fix-quizzes`, `astro check`, or a full build per model attempt. Use `--validate-candidates` only when you want local structural checks during generation. Use `--full-validation` sparingly; broad concurrent batches should defer global validation to judge, final polish, promotion, or the end-of-batch checklist.
 
 Candidate batch ordering should fill weak slots first. The candidate runner sorts slug/locale tasks by fewest existing candidate rows, then by oldest newest-candidate timestamp, so under-covered or stale translations get new candidates before already-fresh slots.
+
+The candidate TUI should stay lightweight while a batch is running. Refreshes are debounced (`--refresh-debounce-ms`, default 750ms), and token/cost/accounting panels report only the current active run from `candidate-run-events.jsonl`; historical candidate coverage still comes from candidate rows and report files.
 
 Failed or interrupted candidate runs must preserve accounting. Do not roll `candidates.jsonl`, `candidate-run-events.jsonl`, `candidate-run-history.jsonl`, model run JSON, usage JSONL, or generated report directories backward just because a candidate failed. JSONL files are append-only evidence logs across models and runs. Candidate rows append to the article-level `reports/i18n/{slug}/candidates.jsonl`. Candidate run state appends `run_started`, `attempt_recorded`, and `run_finished` rows to the locale-level `candidate-run-events.jsonl`; finalized totals append to `candidate-run-history.jsonl`. Do not commit mutable latest-summary JSON files. Locale directories keep per-run summaries and model artifacts. The candidate runner records failed runs as `failed` or `interrupted` and cleans up active child process groups on exit.
 

@@ -28,7 +28,6 @@ import {
   requireString,
   requireActiveLocale,
   getPostPaths,
-  writeTextFile,
   relativeToRepo,
   normalizeLocaleImportPaths,
 } from "./utils.ts";
@@ -1049,11 +1048,6 @@ async function main() {
     chunkReport,
   });
 
-  // Keep a latest-by-model telemetry report for quick human inspection.
-  const reportPath = join(runPaths.modelDir, chunkReportName);
-  assertActiveRun();
-  writeTextFile(reportPath, chunkReport);
-
   if (shouldPublish) {
     assertActiveRun();
     assertTranslationLength({
@@ -1072,7 +1066,7 @@ async function main() {
   } else {
     console.log(`⏭️  Skipped publishing to ${relativeToRepo(targetPath)} (--no-publish)`);
   }
-  console.log(`📊 Report written to ${relativeToRepo(reportPath)}`);
+  console.log(`📊 Report written to ${relativeToRepo(join(candidatePaths.runDir, chunkReportName))}`);
   console.log(
     `   Total: ${telemetry.totalInputTokens} input tokens, ${telemetry.totalOutputTokens} output tokens, ${telemetry.totalDurationMs}ms, $${telemetry.totalCostUsd.toFixed(6)} estimated`,
   );

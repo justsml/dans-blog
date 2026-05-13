@@ -24,7 +24,6 @@ type CandidateSummary = {
   isInProgress: boolean;
   attemptedModels: number;
   rejectedModels: number;
-  accountingSources: string[];
   inputTokens: number;
   outputTokens: number;
   thinkingTokens: number;
@@ -50,16 +49,6 @@ type Totals = {
   candidateRows: number;
   attemptedModels: number;
   rejectedModels: number;
-  accountingSources: string[];
-  inputTokens: number;
-  outputTokens: number;
-  thinkingTokens: number;
-  cachedInputTokens: number;
-  cacheWriteTokens: number;
-  durationMs: number;
-  costUsd: number;
-  hasUnknownTokens: boolean;
-  hasUnknownCost: boolean;
   activeRun: AccountingTotals;
 };
 
@@ -94,6 +83,7 @@ const REPORT_ROOT = join(process.cwd(), "reports/i18n");
 const POSTS_ROOT = join(process.cwd(), "src/content/posts");
 const DEFAULT_TUI_TASK_CONCURRENCY = "16";
 const DEFAULT_TUI_QUIZ_CONCURRENCY = "8";
+const DEFAULT_REFRESH_DEBOUNCE_MS = 750;
 
 const options = parseArgs();
 const expectedCandidates = parsePositiveInteger(optionalString(options, "expected"), 2);
@@ -104,6 +94,7 @@ const shouldIncludeHidden = options["include-hidden"] === true;
 const shouldIncompleteOnly = options["incomplete-only"] === true;
 const shouldMarkdown = options.markdown === true || options["no-tui"] === true;
 const watchIntervalSeconds = parseOptionalPositiveInteger(optionalString(options, "watch"));
+const refreshDebounceMs = parsePositiveInteger(optionalString(options, "refresh-debounce-ms"), DEFAULT_REFRESH_DEBOUNCE_MS);
 const shouldUseTui = !shouldMarkdown && process.stdout.isTTY && process.stdin.isTTY;
 const shouldRunJudgeWorker = options.judge === true;
 const shouldRunWorker = (options.run === true || shouldRunJudgeWorker) && options["monitor-only"] !== true;
@@ -192,12 +183,33 @@ async function renderTerminalUi() {
   let rows: ArticleRow[] = [];
   let totals: Totals;
   let lastRenderedAt = new Date();
+  let refreshTimer: ReturnType<typeof setTimeout> | undefined;
+  let isRefreshing = false;
 
   const refreshData = () => {
     const data = getDashboardData();
     rows = data.rows;
     totals = data.totals;
     lastRenderedAt = new Date();
+  };
+
+  const refreshAndDraw = () => {
+    if (isRefreshing) return;
+    isRefreshing = true;
+    try {
+      refreshData();
+      draw();
+    } finally {
+      isRefreshing = false;
+    }
+  };
+
+  const requestRefresh = (delayMs = refreshDebounceMs) => {
+    if (refreshTimer != null) clearTimeout(refreshTimer);
+    refreshTimer = setTimeout(() => {
+      refreshTimer = undefined;
+      refreshAndDraw();
+    }, delayMs);
   };
 
   const draw = () => {
@@ -248,8 +260,7 @@ async function renderTerminalUi() {
   process.once("SIGTERM", signalHandlers.SIGTERM);
 
   const interval = setInterval(() => {
-    refreshData();
-    draw();
+    requestRefresh();
   }, (watchIntervalSeconds ?? 10) * 1000);
 
   let didShutdown = false;
@@ -257,6 +268,7 @@ async function renderTerminalUi() {
     if (didShutdown) return;
     didShutdown = true;
     clearInterval(interval);
+    if (refreshTimer != null) clearTimeout(refreshTimer);
     process.off("SIGINT", signalHandlers.SIGINT);
     process.off("SIGTERM", signalHandlers.SIGTERM);
     stopCandidateWorker(reason);
@@ -274,14 +286,12 @@ async function renderTerminalUi() {
     if (name === "q" || name === "Q") shutdown("q");
     if (name === "ESCAPE") shutdown("ESCAPE");
     if (name === "r") {
-      refreshData();
-      draw();
+      requestRefresh(0);
     }
     if (name === "j" || name === "J") {
       if (workerProcess == null || isWorkerFinished()) {
         startWorker("judge");
-        refreshData();
-        draw();
+        requestRefresh(0);
       } else {
         appendWorkerOutput("judge start ignored: worker already running");
         draw();
@@ -413,13 +423,11 @@ function drawSidePanel(
     ["Run cost", `${formatUsd(totals.activeRun.costUsd)}${totals.activeRun.hasUnknownCost ? " + unknown" : ""}`],
     ["Run input", `${formatInteger(totals.activeRun.inputTokens)}${totals.activeRun.hasUnknownTokens ? " + unknown" : ""}`],
     ["Run output", `${formatInteger(totals.activeRun.outputTokens)}${totals.activeRun.hasUnknownTokens ? " + unknown" : ""}`],
-    ["Hist input", `${formatInteger(totals.inputTokens)}${totals.hasUnknownTokens ? " + unknown" : ""}`],
-    ["Hist output", `${formatInteger(totals.outputTokens)}${totals.hasUnknownTokens ? " + unknown" : ""}`],
-    ["Cache read", formatInteger(totals.cachedInputTokens)],
-    ["Cache write", formatInteger(totals.cacheWriteTokens)],
-    ["Duration", formatDuration(totals.durationMs)],
-    ["Hist cost", `${formatUsd(totals.costUsd)}${totals.hasUnknownCost ? " + unknown" : ""}`],
-    ["Source", formatSources(totals.accountingSources)],
+    ["Thinking", `${formatInteger(totals.activeRun.thinkingTokens)}${totals.activeRun.hasUnknownTokens ? " + unknown" : ""}`],
+    ["Cache read", formatInteger(totals.activeRun.cachedInputTokens)],
+    ["Cache write", formatInteger(totals.activeRun.cacheWriteTokens)],
+    ["Duration", formatDuration(totals.activeRun.durationMs)],
+    ["Source", formatSources(totals.activeRun.sources)],
   ];
 
   lines.forEach(([label, value], index) => {
@@ -457,7 +465,7 @@ function drawBottomPanel(term: any, totals: Totals, rows: ArticleRow[], left: nu
   writeAt(term, left + 2, top + 3, `Slots ${totals.completeSlots}/${totals.slots} (${formatPercent(coverage)})`, width - 4);
   writeAt(term, left + 2, top + 4, `Articles ${totals.completeArticles}/${totals.articles} | Running ${totals.inProgressSlots} slots`, width - 4);
   writeAt(term, left + 2, top + 5, `Candidates ${totals.candidateRows} | Attempts ${totals.attemptedModels} | Rejected ${totals.rejectedModels}`, width - 4);
-  writeAt(term, left + 2, top + 6, `Run ${formatUsd(totals.activeRun.costUsd)} | Historical ${formatUsd(totals.costUsd)}${totals.hasUnknownCost ? " + unknown" : ""}`, width - 4);
+  writeAt(term, left + 2, top + 6, `Run ${formatUsd(totals.activeRun.costUsd)} | ${formatInteger(totals.activeRun.inputTokens)} in | ${formatInteger(totals.activeRun.outputTokens)} out`, width - 4);
   writeAt(term, left + 2, top + 7, `Locales ${selectedLocales.map((locale) => {
     const summaries = rows.map((row) => row.candidates[locale]);
     return `${locale}:${summaries.filter((summary) => summary.count >= expectedCandidates).length}/${rows.length}`;
@@ -588,7 +596,7 @@ function readCandidateSummary(slug: string, locale: ActiveLocale): CandidateSumm
   const candidateRows = readCandidateRowsForLocale(slug, locale);
   const fallbackReports = countCandidateReportFiles(reportDir);
   const rowsOrReports = candidateRows.length > 0 ? candidateRows.length : fallbackReports;
-  const accounting = readAccountingTotals(reportDir, candidateRows);
+  const accounting = readAccountingTotals(reportDir);
 
   return {
     locale,
@@ -598,7 +606,6 @@ function readCandidateSummary(slug: string, locale: ActiveLocale): CandidateSumm
     isInProgress: isRunInProgress(reportDir),
     attemptedModels: accounting.attemptedModels,
     rejectedModels: accounting.rejectedModels,
-    accountingSources: accounting.sources,
     inputTokens: accounting.inputTokens,
     outputTokens: accounting.outputTokens,
     thinkingTokens: accounting.thinkingTokens,
@@ -613,45 +620,13 @@ function readCandidateSummary(slug: string, locale: ActiveLocale): CandidateSumm
 
 function isRunInProgress(reportDir: string) {
   const latestSummary = readLatestRunSummary(reportDir);
-  if (latestSummary?.runStatus !== "running") return false;
-
-  const runId = typeof latestSummary.runId === "string" ? latestSummary.runId : undefined;
-  if (runId == null) return true;
-
-  const history = readCandidateRows(join(reportDir, "candidate-run-history.jsonl"));
-  return !history.some((summary) => summary.runId === runId && summary.runStatus !== "running");
+  return latestSummary?.runStatus === "running";
 }
 
-function readAccountingTotals(reportDir: string, candidateRows: Array<Record<string, unknown>>): AccountingTotals {
-  const history = readCandidateRows(join(reportDir, "candidate-run-history.jsonl"));
+function readAccountingTotals(reportDir: string): AccountingTotals {
   const activeSummary = readActiveRunSummary(reportDir);
-  if (history.length > 0) {
-    const totals = createAccountingTotals(["run history"]);
-    for (const summary of history) addRunSummaryToAccounting(totals, summary, { includeCandidates: true });
-    if (activeSummary != null) {
-      addRunSummaryToAccounting(totals, activeSummary, { includeCandidates: true });
-      addSource(totals, "active run events");
-    }
-    return totals;
-  }
-
-  const latestSummary = readLatestRunSummary(reportDir);
-  if (candidateRows.length === 0 && latestSummary != null) {
-    const totals = createAccountingTotals(["latest run events"]);
-    addRunSummaryToAccounting(totals, latestSummary, { includeCandidates: true });
-    return totals;
-  }
-
-  const totals = createAccountingTotals(candidateRows.length > 0 ? ["candidate jsonl"] : []);
-  for (const row of candidateRows) addCandidateRowToAccounting(totals, row);
-
-  if (latestSummary != null) {
-    addRunSummaryToAccounting(totals, latestSummary, { includeCandidates: false });
-    if (summaryHasNonCandidateAttempts(latestSummary)) addSource(totals, "latest rejected run");
-    return totals;
-  }
-
-  addRejectedReportsToAccounting(totals, reportDir);
+  const totals = createAccountingTotals(activeSummary == null ? [] : ["active run events"]);
+  if (activeSummary != null) addRunSummaryToAccounting(totals, activeSummary, { includeCandidates: true });
   return totals;
 }
 
@@ -670,19 +645,6 @@ function createAccountingTotals(sources: string[] = []): AccountingTotals {
     hasUnknownCost: false,
     sources,
   };
-}
-
-function addCandidateRowToAccounting(totals: AccountingTotals, row: Record<string, unknown>) {
-  totals.attemptedModels += 1;
-  totals.inputTokens += numberOrZero(row.totalInputTokens);
-  totals.outputTokens += numberOrZero(row.totalOutputTokens);
-  totals.thinkingTokens += numberOrZero(row.totalThinkingTokens) || sumNestedThinkingTokens([row]);
-  totals.cachedInputTokens += numberOrZero(row.totalCacheReadTokens);
-  totals.cacheWriteTokens += numberOrZero(row.totalCacheWriteTokens);
-  totals.durationMs += numberOrZero(row.totalDurationMs);
-  totals.costUsd += numberOrZero(row.totalCostUsd);
-  totals.hasUnknownTokens = totals.hasUnknownTokens || hasUnknownCandidateTokens(row);
-  totals.hasUnknownCost = totals.hasUnknownCost || typeof row.totalCostUsd !== "number";
 }
 
 function addRunSummaryToAccounting(
@@ -707,13 +669,6 @@ function addRunSummaryToAccounting(
     if (status === "rejected") totals.rejectedModels += 1;
     addTelemetryToAccounting(totals, recordValue(attempt.telemetry));
   }
-}
-
-function addActiveRunSummaryToAccounting(totals: AccountingTotals, slug: string, locale: ActiveLocale) {
-  const reportDir = join(REPORT_ROOT, slug, locale);
-  const latestSummary = readActiveRunSummary(reportDir);
-  if (latestSummary == null || latestSummary.runStatus !== "running") return;
-  addRunSummaryToAccounting(totals, latestSummary, { includeCandidates: true });
 }
 
 function addRunTotalsToAccounting(totals: AccountingTotals, summary: Record<string, unknown>) {
@@ -765,39 +720,6 @@ function addTelemetryToAccounting(totals: AccountingTotals, telemetry: Record<st
   totals.hasUnknownCost = totals.hasUnknownCost || typeof telemetry.estimatedCostUsd !== "number";
 }
 
-function addRejectedReportsToAccounting(totals: AccountingTotals, reportDir: string) {
-  if (!existsSync(reportDir)) return;
-
-  for (const entry of readdirSync(reportDir, { withFileTypes: true })) {
-    if (!entry.isFile() || !entry.name.endsWith(".md")) continue;
-    if (entry.name.startsWith("judge") || entry.name === "candidate-shortfall.md" || entry.name === "judge-summary.md") continue;
-
-    const reportPath = join(reportDir, entry.name);
-    const contents = readFileSync(reportPath, "utf8");
-    if (!contents.includes("- Validation: rejected:")) continue;
-
-    totals.attemptedModels += 1;
-    totals.rejectedModels += 1;
-    totals.durationMs += parseReportSeconds(contents) * 1000;
-    totals.inputTokens += parseReportMetric(contents, "Input tokens").value;
-    totals.outputTokens += parseReportMetric(contents, "Output tokens").value;
-    totals.thinkingTokens += parseReportMetric(contents, "Thinking tokens").value;
-    totals.cachedInputTokens += parseReportMetric(contents, "Cached input tokens").value;
-    totals.cacheWriteTokens += parseReportMetric(contents, "Cache write tokens").value;
-    const cost = parseReportCost(contents);
-    totals.costUsd += cost.value;
-    totals.hasUnknownTokens = totals.hasUnknownTokens || [
-      parseReportMetric(contents, "Input tokens").isUnknown,
-      parseReportMetric(contents, "Output tokens").isUnknown,
-      parseReportMetric(contents, "Thinking tokens").isUnknown,
-      parseReportMetric(contents, "Cached input tokens").isUnknown,
-      parseReportMetric(contents, "Cache write tokens").isUnknown,
-    ].some(Boolean);
-    totals.hasUnknownCost = totals.hasUnknownCost || cost.isUnknown;
-    addSource(totals, "rejected markdown");
-  }
-}
-
 function readCandidateRows(path: string): Array<Record<string, unknown>> {
   if (!existsSync(path)) return [];
 
@@ -844,11 +766,8 @@ function readJsonRecord(path: string): Record<string, unknown> | undefined {
 }
 
 function readLatestRunSummary(reportDir: string): Record<string, unknown> | undefined {
-  const history = readCandidateRows(join(reportDir, "candidate-run-history.jsonl"));
-  const latestHistory = history.at(-1);
   const latestEvent = readLatestRunEventSummary(reportDir);
   if (latestEvent != null) return latestEvent;
-  if (latestHistory != null) return latestHistory;
   return readJsonRecord(join(reportDir, "candidate-run-summary.json"));
 }
 
@@ -866,18 +785,6 @@ function readLatestRunEventSummary(reportDir: string): Record<string, unknown> |
   return undefined;
 }
 
-function summaryHasNonCandidateAttempts(summary: Record<string, unknown>) {
-  const attempts = Array.isArray(summary.attempts) ? summary.attempts : [];
-  return attempts.some((attemptValue) => {
-    const attempt = recordValue(attemptValue);
-    return attempt != null && attempt.status !== "candidate" && attempt.status !== "skipped";
-  });
-}
-
-function addSource(totals: AccountingTotals, source: string) {
-  if (!totals.sources.includes(source)) totals.sources.push(source);
-}
-
 function numberOrZero(value: unknown) {
   if (typeof value === "number" && Number.isFinite(value)) return value;
   if (typeof value === "string" && value.trim() !== "") {
@@ -885,42 +792,6 @@ function numberOrZero(value: unknown) {
     if (Number.isFinite(parsed)) return parsed;
   }
   return 0;
-}
-
-function hasUnknownCandidateTokens(row: Record<string, unknown>) {
-  return [
-    row.totalInputTokens,
-    row.totalOutputTokens,
-    row.totalThinkingTokens,
-    row.totalCacheReadTokens,
-    row.totalCacheWriteTokens,
-  ].some((value) => typeof value !== "number");
-}
-
-function parseReportSeconds(contents: string) {
-  const match = contents.match(/^- Runtime seconds:\s*(.+)$/m);
-  return numberOrZero(match?.[1]);
-}
-
-function parseReportMetric(contents: string, label: string) {
-  const escapedLabel = label.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  const match = contents.match(new RegExp(`^- ${escapedLabel}:\\s*(.+)$`, "m"));
-  const rawValue = match?.[1]?.trim();
-  const value = numberOrZero(rawValue);
-  return {
-    value,
-    isUnknown: rawValue == null || rawValue === "" || rawValue === "unknown",
-  };
-}
-
-function parseReportCost(contents: string) {
-  const match = contents.match(/^- Estimated cost:\s*(.+)$/m);
-  const rawValue = match?.[1]?.trim();
-  const value = numberOrZero(rawValue?.replace(/^\$/, ""));
-  return {
-    value,
-    isUnknown: rawValue == null || rawValue === "" || rawValue === "unknown",
-  };
 }
 
 function countCandidateReportFiles(reportDir: string) {
@@ -939,12 +810,8 @@ function countCandidateReportFiles(reportDir: string) {
 
 function summarize(rows: ArticleRow[]): Totals {
   const summaries = rows.flatMap((row) => selectedLocales.map((locale) => row.candidates[locale]));
-  const activeRun = createAccountingTotals(["active run"]);
-  for (const row of rows) {
-    for (const locale of selectedLocales) {
-      addActiveRunSummaryToAccounting(activeRun, row.slug, locale);
-    }
-  }
+  const activeRun = createAccountingTotals(["active run events"]);
+  for (const summary of summaries) addSummaryToActiveRunTotals(activeRun, summary);
 
   return {
     articles: rows.length,
@@ -956,18 +823,22 @@ function summarize(rows: ArticleRow[]): Totals {
     candidateRows: summaries.reduce((sum, summary) => sum + summary.count, 0),
     attemptedModels: summaries.reduce((sum, summary) => sum + summary.attemptedModels, 0),
     rejectedModels: summaries.reduce((sum, summary) => sum + summary.rejectedModels, 0),
-    accountingSources: [...new Set(summaries.flatMap((summary) => summary.accountingSources))].sort(),
-    inputTokens: summaries.reduce((sum, summary) => sum + summary.inputTokens, 0),
-    outputTokens: summaries.reduce((sum, summary) => sum + summary.outputTokens, 0),
-    thinkingTokens: summaries.reduce((sum, summary) => sum + summary.thinkingTokens, 0),
-    cachedInputTokens: summaries.reduce((sum, summary) => sum + summary.cachedInputTokens, 0),
-    cacheWriteTokens: summaries.reduce((sum, summary) => sum + summary.cacheWriteTokens, 0),
-    durationMs: summaries.reduce((sum, summary) => sum + summary.durationMs, 0),
-    costUsd: summaries.reduce((sum, summary) => sum + summary.costUsd, 0),
-    hasUnknownTokens: summaries.some((summary) => summary.hasUnknownTokens),
-    hasUnknownCost: summaries.some((summary) => summary.hasUnknownCost),
     activeRun,
   };
+}
+
+function addSummaryToActiveRunTotals(totals: AccountingTotals, summary: CandidateSummary) {
+  totals.attemptedModels += summary.attemptedModels;
+  totals.rejectedModels += summary.rejectedModels;
+  totals.inputTokens += summary.inputTokens;
+  totals.outputTokens += summary.outputTokens;
+  totals.thinkingTokens += summary.thinkingTokens;
+  totals.cachedInputTokens += summary.cachedInputTokens;
+  totals.cacheWriteTokens += summary.cacheWriteTokens;
+  totals.durationMs += summary.durationMs;
+  totals.costUsd += summary.costUsd;
+  totals.hasUnknownTokens = totals.hasUnknownTokens || summary.hasUnknownTokens;
+  totals.hasUnknownCost = totals.hasUnknownCost || summary.hasUnknownCost;
 }
 
 function renderDashboard(rows: ArticleRow[], totals: Totals) {
@@ -1031,17 +902,14 @@ function renderFinalAccounting(totals: Totals, reason: string) {
     `- In progress: ${totals.inProgressSlots} slots, ${totals.inProgressArticles} articles`,
     `- Candidate rows: ${totals.candidateRows}`,
     `- Model attempts: ${totals.attemptedModels} (${totals.rejectedModels} rejected)`,
-    `- Active run input tokens: ${formatInteger(totals.activeRun.inputTokens)}${totals.activeRun.hasUnknownTokens ? " + unknown" : ""}`,
-    `- Active run output tokens: ${formatInteger(totals.activeRun.outputTokens)}${totals.activeRun.hasUnknownTokens ? " + unknown" : ""}`,
-    `- Active run estimated cost: ${formatUsd(totals.activeRun.costUsd)}${totals.activeRun.hasUnknownCost ? " + unknown" : ""}`,
-    `- Historical input tokens: ${formatInteger(totals.inputTokens)}${totals.hasUnknownTokens ? " + unknown" : ""}`,
-    `- Historical output tokens: ${formatInteger(totals.outputTokens)}${totals.hasUnknownTokens ? " + unknown" : ""}`,
-    `- Thinking tokens: ${formatInteger(totals.thinkingTokens)}${totals.hasUnknownTokens ? " + unknown" : ""}`,
-    `- Cached input tokens: ${formatInteger(totals.cachedInputTokens)}`,
-    `- Cache write tokens: ${formatInteger(totals.cacheWriteTokens)}`,
-    `- Duration: ${formatDuration(totals.durationMs)}`,
-    `- Historical estimated cost: ${formatUsd(totals.costUsd)}${totals.hasUnknownCost ? " + unknown" : ""}`,
-    `- Accounting source: ${formatSources(totals.accountingSources)}`,
+    `- Run input tokens: ${formatInteger(totals.activeRun.inputTokens)}${totals.activeRun.hasUnknownTokens ? " + unknown" : ""}`,
+    `- Run output tokens: ${formatInteger(totals.activeRun.outputTokens)}${totals.activeRun.hasUnknownTokens ? " + unknown" : ""}`,
+    `- Run thinking tokens: ${formatInteger(totals.activeRun.thinkingTokens)}${totals.activeRun.hasUnknownTokens ? " + unknown" : ""}`,
+    `- Run cached input tokens: ${formatInteger(totals.activeRun.cachedInputTokens)}`,
+    `- Run cache write tokens: ${formatInteger(totals.activeRun.cacheWriteTokens)}`,
+    `- Run duration: ${formatDuration(totals.activeRun.durationMs)}`,
+    `- Run estimated cost: ${formatUsd(totals.activeRun.costUsd)}${totals.activeRun.hasUnknownCost ? " + unknown" : ""}`,
+    `- Accounting source: ${formatSources(totals.activeRun.sources)}`,
     "",
   ].join("\n");
 }
@@ -1062,17 +930,14 @@ function renderStatusPanel(totals: Totals) {
     markdownRow(["Candidate rows", totals.candidateRows]),
     markdownRow(["Model attempts", totals.attemptedModels]),
     markdownRow(["Rejected attempts", totals.rejectedModels]),
-    markdownRow(["Active run input tokens", `${formatInteger(totals.activeRun.inputTokens)}${totals.activeRun.hasUnknownTokens ? " + unknown" : ""}`]),
-    markdownRow(["Active run output tokens", `${formatInteger(totals.activeRun.outputTokens)}${totals.activeRun.hasUnknownTokens ? " + unknown" : ""}`]),
-    markdownRow(["Active run estimated cost", `${formatUsd(totals.activeRun.costUsd)}${totals.activeRun.hasUnknownCost ? " + unknown" : ""}`]),
-    markdownRow(["Historical input tokens", `${formatInteger(totals.inputTokens)}${totals.hasUnknownTokens ? " + unknown" : ""}`]),
-    markdownRow(["Historical output tokens", `${formatInteger(totals.outputTokens)}${totals.hasUnknownTokens ? " + unknown" : ""}`]),
-    markdownRow(["Thinking tokens", `${formatInteger(totals.thinkingTokens)}${totals.hasUnknownTokens ? " + unknown" : ""}`]),
-    markdownRow(["Cached input tokens", formatInteger(totals.cachedInputTokens)]),
-    markdownRow(["Cache write tokens", formatInteger(totals.cacheWriteTokens)]),
-    markdownRow(["Duration", formatDuration(totals.durationMs)]),
-    markdownRow(["Historical estimated cost", `${formatUsd(totals.costUsd)}${totals.hasUnknownCost ? " + unknown" : ""}`]),
-    markdownRow(["Accounting source", formatSources(totals.accountingSources)]),
+    markdownRow(["Run input tokens", `${formatInteger(totals.activeRun.inputTokens)}${totals.activeRun.hasUnknownTokens ? " + unknown" : ""}`]),
+    markdownRow(["Run output tokens", `${formatInteger(totals.activeRun.outputTokens)}${totals.activeRun.hasUnknownTokens ? " + unknown" : ""}`]),
+    markdownRow(["Run thinking tokens", `${formatInteger(totals.activeRun.thinkingTokens)}${totals.activeRun.hasUnknownTokens ? " + unknown" : ""}`]),
+    markdownRow(["Run cached input tokens", formatInteger(totals.activeRun.cachedInputTokens)]),
+    markdownRow(["Run cache write tokens", formatInteger(totals.activeRun.cacheWriteTokens)]),
+    markdownRow(["Run duration", formatDuration(totals.activeRun.durationMs)]),
+    markdownRow(["Run estimated cost", `${formatUsd(totals.activeRun.costUsd)}${totals.activeRun.hasUnknownCost ? " + unknown" : ""}`]),
+    markdownRow(["Accounting source", formatSources(totals.activeRun.sources)]),
   ].join("\n");
 }
 
@@ -1250,7 +1115,7 @@ function buildGeneratorArgs() {
   addGeneratorArgWithDefault(args, "quiz-concurrency", DEFAULT_TUI_QUIZ_CONCURRENCY);
   addOptionalGeneratorArg(args, "challenge-retries");
 
-  for (const name of ["validate", "validate-candidates", "full-validation", "no-commit", "overwrite", "dry-run"]) {
+  for (const name of ["validate", "validate-candidates", "full-validation", "no-commit", "dry-run"]) {
     if (options[name] === true) args.push(`--${name}`);
   }
 
@@ -1443,21 +1308,6 @@ function stringValue(value: unknown) {
   return typeof value === "string" ? value : undefined;
 }
 
-function sumNestedThinkingTokens(rows: Array<Record<string, unknown>>) {
-  return rows.reduce((sum, row) => {
-    const direct = row.totalThinkingTokens;
-    if (typeof direct === "number" && Number.isFinite(direct)) return sum + direct;
-
-    const telemetry = recordValue(row.telemetry);
-    if (telemetry == null) return sum;
-    const chunks = Array.isArray(telemetry.chunks) ? telemetry.chunks : [];
-    return sum + chunks.reduce((chunkSum, chunk) => {
-      const usage = recordValue(recordValue(chunk)?.telemetry);
-      const value = usage?.thinkingTokens;
-      return chunkSum + (typeof value === "number" && Number.isFinite(value) ? value : 0);
-    }, 0);
-  }, 0);
-}
 
 function recordValue(value: unknown): Record<string, unknown> | undefined {
   return value != null && typeof value === "object" && !Array.isArray(value)

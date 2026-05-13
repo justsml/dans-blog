@@ -102,7 +102,6 @@ const models = validateCandidateModels(parseList(optionalString(options, "models
 const shouldValidateCandidates = options.validate === true || options["validate-candidates"] === true;
 const shouldRunFullCandidateValidation = options["full-validation"] === true;
 const shouldSkipCommit = options["no-commit"] === true;
-const shouldOverwrite = options["overwrite"] === true;
 const shouldDryRun = options["dry-run"] === true;
 const isTaskWorker = options["task-worker"] === true;
 const timeoutSeconds = getTimeoutSeconds();
@@ -200,35 +199,16 @@ async function processTask(currentSlug: string, currentLocale: ActiveLocale) {
 
     for (const model of models) {
       assertRunLock(runLockPath, processRunId);
-      const reportPath = `${reportDir}/${safeModelName(model)}.md`;
-      if (!shouldOverwrite && existsSync(reportPath) && !isRejectedReport(reportPath)) {
-        console.log(`Skipping existing ${locale}/${model} report at ${relativeToRepo(reportPath)}. Pass --overwrite to rerun.`);
-        recordRunAttempt({
-          model,
-          status: "skipped",
-          reportPath: relativeToRepo(reportPath),
-          note: "Existing non-rejected report found. Pass --overwrite to rerun.",
-        });
-        continue;
-      }
-      if (!shouldOverwrite && existsSync(reportPath)) {
-        console.log(`Retrying rejected ${locale}/${model} report at ${relativeToRepo(reportPath)}.`);
-      }
+      const reportPath = getAttemptReportPath(model);
 
       const startedAt = Date.now();
       try {
+        restoreTargetFromHead();
         await runDirectTranslation(model);
         assertRunLock(runLockPath, processRunId);
 
         if (!existsSync(targetPath)) {
           throw new Error(`Direct translator did not create ${targetRelPath}.`);
-        }
-
-        if (!hasGitDiff(targetRelPath)) {
-          throw new Error([
-            `Direct translator did not leave a diff in ${targetRelPath}.`,
-            "This usually means the translation already exists or the provider produced unchanged output.",
-          ].join(" "));
         }
 
         let validationStatus = "deferred";
@@ -255,10 +235,10 @@ async function processTask(currentSlug: string, currentLocale: ActiveLocale) {
           note: "Generated through the direct AI SDK chunked translator.",
           telemetry: getDirectTelemetry(model, startedAt),
         });
+        restoreTargetFromHead();
 
         if (!shouldSkipCommit) {
           gitCommit(`i18n candidate(${locale}): ${slug} via ${model}`, [
-            targetRelPath,
             relativeToRepo(reportDir),
             relativeToRepo(candidatesPath),
           ]);
@@ -354,7 +334,6 @@ function runTaskWorker(task: CandidateTask) {
     ...optionalFlag("--validate-candidates", shouldValidateCandidates),
     ...optionalFlag("--full-validation", shouldRunFullCandidateValidation),
     ...optionalFlag("--no-commit", shouldSkipCommit),
-    ...optionalFlag("--overwrite", shouldOverwrite),
     ...optionalArg("--quiz-concurrency", quizConcurrency),
     ...optionalArg("--challenge-retries", challengeRetries),
   ];
@@ -665,12 +644,11 @@ function ensureSourceImports(targetContents: string) {
   return `${targetContents.slice(0, insertAt)}\n${missingImports.join("\n")}${targetContents.slice(insertAt)}`;
 }
 
-function hasGitDiff(path: string) {
-  const status = run("git", ["status", "--porcelain", "--", path]);
-  return status.trim().length > 0;
+function cleanupRejectedTarget() {
+  restoreTargetFromHead();
 }
 
-function cleanupRejectedTarget() {
+function restoreTargetFromHead() {
   if (targetExistsInHead()) {
     writeTextFile(targetPath, run("git", ["show", `HEAD:${targetRelPath}`]));
     return;
@@ -806,8 +784,9 @@ function validateCandidateModels(models: string[]) {
   return models;
 }
 
-function isRejectedReport(reportPath: string) {
-  return readFileSync(reportPath, "utf8").includes("- Validation: rejected:");
+function getAttemptReportPath(model: string) {
+  const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
+  return join(reportDir, `${safeModelName(model)}-${timestamp}.md`);
 }
 
 function getTimeoutSeconds() {

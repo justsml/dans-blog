@@ -8,7 +8,17 @@
 
 Article i18n uses locale subfolders, English slugs, OpenCode/OpenRouter candidate models, and full Git provenance for every candidate, rejection, judge pass, and final polish. Start with [docs/translations.md](docs/translations.md).
 
-Common commands:
+Common TUI commands:
+
+```sh
+bun run i18n:candidates:tui -- \
+  --quiz-concurrency 24 \
+  --task-concurrency 8 \
+  --models openrouter/openai/gpt-oss-120b:nitro,openrouter/qwen/qwen3-32b:nitro,deepseek/deepseek-v4-flash,qwen/qwen3.6-plus,qwen/qwen3.6-35b-a3b,qwen/qwen3.5-9b
+bun run i18n:candidates:tui -- --judge
+```
+
+Manual translation commands:
 
 ```sh
 bun run i18n:translate:candidates -- --slug the-last-to-think --locale es
