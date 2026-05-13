@@ -1,0 +1,142 @@
+# Translation Candidate
+- Slug: honest-priorities
+- Locale: it
+- Model: qwen/qwen3.6-35b-a3b
+- Target: src/content/posts/2024-10-23--honest-priorities/it/index.mdx
+- Validation: deferred
+- Runtime seconds: 96.72
+- Input tokens: 5908
+- Output tokens: 19809
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.020695
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: La trappola delle priorità
+subTitle: Le opzioni multiple sono davvero la scelta migliore?
+category: Thoughts
+subCategory: Agile
+date: '2024-10-23'
+modified: '2024-10-24'
+tags:
+  - agile
+  - leadership
+  - priority
+  - backlog
+  - jira
+cover: ../new-priority-city.webp
+cover_full_width: ../new-priority-city.webp
+cover_mobile: ../new-priority-city-w300.webp
+cover_icon: ../new-priority-city-w200.webp
+cover_credit: >-
+  Photo by <a
+  href="https://unsplash.com/@mroz?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Filip
+  Mroz</a> on <a
+  href="https://unsplash.com/photos/photo-of-tram-beside-waiting-station-during-nighttime-023T4jyCRqA?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
+---
+## La trappola del dropdown `Priority`
+
+<aside className="breakout">
+💡 Man mano che un'organizzazione cresce, finirà inevitabilmente per accumulare un backlog in forte espansione. Col tempo, la sola entità della lista *imporrà* una prioritizzazione.
+</aside>
+
+## Una storia da startup
+
+Senza fallo, i tuoi Jira Admins avranno una soluzione: ecco a voi il dropdown del campo `Priority`! (Consiglio per gli sviluppatori enterprise: probabilmente rinominato in `Priority2` o `P-level`.)
+
+Curiosamente, il 100% delle aziende sceglie tra  `P1, P2, P3, P4` o `Low, Med, High, and Critical` — apparentemente non esistono altre opzioni.
+
+Una lista hard-coded di quattro opzioni? Va bene. Proviamola per qualche settimana...
+
+### 2 giorni dopo
+
+In un evento *che non stupirà nessuno*, l'organizzazione ha scoperto un ticket con una priorità nuova e più alta, rendendo necessario un piccolo workaround: aggiungere `P0`, o `Critical Max+`!
+
+### Altri 3 giorni
+
+*Il nostro audace capo ha partecipato a riunioni entusiasmanti e ha fatto scoperte alla conferenza!*
+
+In qualche modo hanno scoperto una priorità ancora più alta di `P0`!
+
+Da allora, il team è rimasto immerso a cercare un'etichetta per questa nuova Priorità.
+
+Magari `-1`? No, no. Troppo confuso (`P-1` contro `P1`). Ok, e `P0.5`?
+
+<p className="breakout">In un momento di "ispirazione", il team ha inventato una priorità ancora più alta: il doppio zero!<br />Ora nota come Priorità `P00`.</p>
+
+{/* *Finally, we can neatly label everything in the world into our Priorities dropdown! (…evil laugh…)* */}
+
+### Prima dell'Inondazione
+
+Prima che qualcuno se ne accorga, il tuo team si ritrova in qualche modo sommerso da ticket `P00`!
+
+<b>Come possiamo evitare questo sciocco gioco del Teatro dell'Ingegneria?</b>
+
+## E se la Priorità non fosse a scelta multipla?
+
+Come potremmo rappresentare al meglio un concetto umano, fluido e in continua evoluzione, come la `Priority`?
+
+- Nel mondo reale, le priorità cambiano ed evolvono costantemente in base a nuove informazioni, variazioni di mercato e obiettivi organizzativi.
+- Spesso esiste un'interazione complessa tra urgenza, importanza, disponibilità delle risorse e analisi costi/rischi, che un semplice menu a tendina non può catturare, soprattutto nel tempo. (Decadimento dei ticket.)
+- Diversi stakeholder possono avere visioni contrastanti su cosa costituisca una priorità elevata, rendendo inadatto un approccio unico per tutti.
+
+## E ora, che fare?
+
+Esistono diverse alternative da valutare, dalla bassa all'alta complessità di implementazione:
+
+- Per garantire più margine e spazio di manovra, scegli un valore di partenza “neutro”, ad esempio 100 o 1.000. Puoi sempre aumentare o diminuire il numero.
+    - Oppure parti da zero, dove numeri più alti indicano priorità maggiore.
+- Implementa un sistema di prioritizzazione multidimensionale che consideri fattori come valore aziendale, urgenza e sforzo richiesto. (Crea un punteggio `composite` per semplificare ordinamento e filtraggio.)
+- Adotta un metodo di prioritizzazione dinamico, come la [tecnica MoSCoW](https://en.wikipedia.org/wiki/MoSCoW_method) (Must have, Should have, Could have, Won't have), che permetta una rivalutazione periodica. (Vedi anche il [Modello Kano](https://en.wikipedia.org/wiki/Kano_model).)
+
+## Riepilogo
+
+Si carica la `Priority` di aspettative enormi, nonostante il suo rapido tasso di decadimento. I ticket `CRITICAL` di ieri difficilmente saranno `CRITICAL` nel prossimo trimestre.
+
+Col tempo, i ticket ad alta priorità più vecchi diventano resistenti alla pulizia e alla manutenzione. Dopotutto, chi vuole abbassare la `Priority` di qualcosa una volta dichiarato ***essenziale***? Parliamo poi di cancellare quei ticket irrilevanti… (Panico! Pensa al backlog!)
+
+Ho visto diverse aziende confondere `Severity` e `Priority`. `Severity` descrive l'***urgenza*** (o la sensibilità temporale.)
+
+`Priority ≠ Severity`. Ha senso definire 3-5 livelli di severità (spesso utilizzati per mantenere gli SLA.)
+
+I livelli di urgenza aiutano a comunicare un range che va da `zero impatto sul cliente` a `interruzione parziale/completa del servizio`.
+
+## Una nota di cautela
+
+Implementare un campo Priority illimitato richiede un po' di pianificazione e disciplina!
+
+Se hai familiarità con lo sviluppo front-end, potresti aver vissuto una guerra del `z-index`.
+
+In sostanza, `z-index` permette ai designer di impostare *qualsiasi* intero positivo per garantire che i loro widget appaiano “sopra” altri contenuti con un `z-index` inferiore.
+
+Anche un aggiornamento minore di un componente potrebbe introdurre una modifica al z-index del loro `<Dialog />`, rendendolo improvvisamente invisibile.  Queste situazioni potrebbero diventare caotiche quando i nostri componenti di terze parti, le funzionalità e gli altri contributi del team cercano di surclassarsi a vicenda con il `z-index`.
+
+`Z-index` era una volta limitato a ~32.000. Tuttavia, ho visto di recente un frammento con un miliardo di `z-index: 1000000000`!
+
+L'inflazione sta colpendo duramente il `z-index`.
+
+## Discussione
+
+- È un esercizio mentale degno di nota?
+- L'idea di una Priority in continua crescita è agghiacciante? Genera ansia?
+- È inevitabile che questo approccio superi alla fine i limiti degli interi a 64 bit?
+- Altri campi (oltre a `Severity` o `Urgency`) possono contribuire a questa discussione?
+- Quanto biasimo merita Jira? O quanto credito?
+
+Potremmo urlare su internet: “Chi pulirà tutti questi ticket `P00`?”
+
+Oppure, puoi affrontare il backlog con ***realismo***.
+
+- Accetta che il 90% dei tuoi 1.000 ticket non verrà mai completato. Va bene.
+- Archivia i ticket inattivi da mesi. Qualsiasi priorità o urgenza iniziale non è più valida. In ogni caso, i ticket archiviati sono spesso recuperabili.
+- Se un ticket riemerge, non è un problema: ha semplicemente riacquistato priorità.
+- In via aneddotica, non ho mai visto danni nel rimuovere ticket vecchi e incompleti.
+- Aggiungere ticket all'infinito in un backlog trattato come un database fa perdere l'opportunità di focalizzare team e organizzazione su ciò che conta. (Le cose che abbiamo davanti. I backlog, per natura, guardano al passato.)
+- Un backlog troppo profondo diventa una sorta di "Sala dei Trofei Bizzaro", che celebra la merda che non spedirai mai.
+````
