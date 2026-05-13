@@ -1,0 +1,49 @@
+{
+  "index": 14,
+  "attempt": 1,
+  "originalTitle": "RAII Pattern",
+  "translatedTitle": "Patrón RAII",
+  "translation": {
+    "title": "Patrón RAII",
+    "group": "Patrones de Memoria",
+    "options": [
+      {
+        "text": "El recurso se libera después del alcance",
+        "hint": "El campo File tiene su propia implementación de Drop."
+      },
+      {
+        "text": "Fugas de recursos",
+        "hint": "El contenedor no tiene Drop personalizado, pero sus campos aún se liberan."
+      },
+      {
+        "text": "Error de compilación",
+        "hint": "El código compila con éxito"
+      },
+      {
+        "text": "Error en tiempo de ejecución",
+        "hint": "El problema está relacionado con la limpieza de recursos"
+      }
+    ],
+    "questionProse": [
+      "¿Qué ocurre con el descriptor de archivo en este ejemplo de RAII?"
+    ],
+    "explanationProse": [
+      "RAII en Rust garantiza que los recursos se gestionen correctamente. En este ejemplo, `FileWrapper` no necesita una implementación personalizada de `Drop` para cerrar el descriptor de archivo: su campo `File` se libera automáticamente cuando el contenedor sale del alcance.\n\n      Sólo implementas `Drop` cuando el contenedor mismo tiene un comportamiento de limpieza adicional más allá de liberar sus campos:",
+      "Patrones RAII:\n      1. El constructor adquiere recursos\n      2. Los métodos usan los recursos de forma segura\n      3. Los campos se liberan automáticamente cuando el propietario sale del alcance\n      4. Un Drop personalizado agrega limpieza extra cuando es necesario\n      5. Usa `?` para la propagación de errores\n\n      Buenas prácticas:\n      1. Confía en las implementaciones de Drop de la biblioteca estándar cuando ya modelan el recurso\n      2. Mantén la gestión de recursos simple y evidente\n      3. Usa tipos de la biblioteca estándar siempre que sea posible\n      4. Documenta el comportamiento de limpieza\n      5. Considera usar patrones de guardia para operaciones con alcance"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Patrón RAII\",\n  \"group\": \"Patrones de Memoria\",\n  \"options\": [\n    {\n      \"text\": \"El recurso se libera después del alcance\",\n      \"hint\": \"El campo File tiene su propia implementación de Drop.\"\n    },\n    {\n      \"text\": \"Fugas de recursos\",\n      \"hint\": \"El contenedor no tiene Drop personalizado, pero sus campos aún se liberan.\"\n    },\n    {\n      \"text\": \"Error de compilación\",\n      \"hint\": \"El código compila con éxito\"\n    },\n    {\n      \"text\": \"Error en tiempo de ejecución\",\n      \"hint\": \"El problema está relacionado con la limpieza de recursos\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Qué ocurre con el descriptor de archivo en este ejemplo de RAII?\"\n  ],\n  \"explanationProse\": [\n    \"RAII en Rust garantiza que los recursos se gestionen correctamente. En este ejemplo, `FileWrapper` no necesita una implementación personalizada de `Drop` para cerrar el descriptor de archivo: su campo `File` se libera automáticamente cuando el contenedor sale del alcance.\\n\\n      Sólo implementas `Drop` cuando el contenedor mismo tiene un comportamiento de limpieza adicional más allá de liberar sus campos:\",\n    \"Patrones RAII:\\n      1. El constructor adquiere recursos\\n      2. Los métodos usan los recursos de forma segura\\n      3. Los campos se liberan automáticamente cuando el propietario sale del alcance\\n      4. Un Drop personalizado agrega limpieza extra cuando es necesario\\n      5. Usa `?` para la propagación de errores\\n\\n      Buenas prácticas:\\n      1. Confía en las implementaciones de Drop de la biblioteca estándar cuando ya modelan el recurso\\n      2. Mantén la gestión de recursos simple y evidente\\n      3. Usa tipos de la biblioteca estándar siempre que sea posible\\n      4. Documenta el comportamiento de limpieza\\n      5. Considera usar patrones de guardia para operaciones con alcance\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1000,
+    "outputTokens": 1156,
+    "cacheReadTokens": 384,
+    "cacheWriteTokens": 0,
+    "durationMs": 710
+  },
+  "cost": {
+    "inputUsd": 0.000039,
+    "outputUsd": 0.00020807999999999997,
+    "totalUsd": 0.00024708,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

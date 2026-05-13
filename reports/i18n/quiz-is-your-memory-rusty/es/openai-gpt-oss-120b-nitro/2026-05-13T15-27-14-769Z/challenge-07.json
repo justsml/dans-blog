@@ -1,0 +1,49 @@
+{
+  "index": 6,
+  "attempt": 1,
+  "originalTitle": "Struct Lifetimes",
+  "translatedTitle": "Estructuras con lifetimes",
+  "translation": {
+    "title": "Estructuras con lifetimes",
+    "group": "Lifetimes",
+    "options": [
+      {
+        "text": "Compila correctamente",
+        "hint": "Las estructuras con referencias necesitan anotaciones de lifetime"
+      },
+      {
+        "text": "Error: falta especificador de lifetime"
+      },
+      {
+        "text": "Error: incompatibilidad de lifetimes",
+        "hint": "Aún no hemos especificado ningún lifetime"
+      },
+      {
+        "text": "Error: referencia inválida",
+        "hint": "Las referencias son válidas, pero falta otra cosa"
+      }
+    ],
+    "questionProse": [
+      "¿Compilará esta definición de struct? ¿Por qué o por qué no?"
+    ],
+    "explanationProse": [
+      "El código falla porque las estructuras que contienen referencias deben especificar lifetimes. Así es como se soluciona:",
+      "Patrones comunes:",
+      "Mejores prácticas:\n      1. Usa tipos propios (String) cuando necesites almacenar datos indefinidamente\n      2. Usa referencias cuando la lifetime de la estructura sea claramente más corta que los datos\n      3. Considera múltiples parámetros de lifetime cuando las referencias pueden tener lifetimes diferentes\n      4. Documenta las relaciones de lifetimes en estructuras complejas"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Estructuras con lifetimes\",\n  \"group\": \"Lifetimes\",\n  \"options\": [\n    {\n      \"text\": \"Compila correctamente\",\n      \"hint\": \"Las estructuras con referencias necesitan anotaciones de lifetime\"\n    },\n    {\n      \"text\": \"Error: falta especificador de lifetime\"\n    },\n    {\n      \"text\": \"Error: incompatibilidad de lifetimes\",\n      \"hint\": \"Aún no hemos especificado ningún lifetime\"\n    },\n    {\n      \"text\": \"Error: referencia inválida\",\n      \"hint\": \"Las referencias son válidas, pero falta otra cosa\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Compilará esta definición de struct? ¿Por qué o por qué no?\"\n  ],\n  \"explanationProse\": [\n    \"El código falla porque las estructuras que contienen referencias deben especificar lifetimes. Así es como se soluciona:\",\n    \"Patrones comunes:\",\n    \"Mejores prácticas:\\n      1. Usa tipos propios (String) cuando necesites almacenar datos indefinidamente\\n      2. Usa referencias cuando la lifetime de la estructura sea claramente más corta que los datos\\n      3. Considera múltiples parámetros de lifetime cuando las referencias pueden tener lifetimes diferentes\\n      4. Documenta las relaciones de lifetimes en estructuras complejas\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 905,
+    "outputTokens": 778,
+    "cacheReadTokens": 128,
+    "cacheWriteTokens": 0,
+    "durationMs": 642
+  },
+  "cost": {
+    "inputUsd": 0.000035295,
+    "outputUsd": 0.00014004,
+    "totalUsd": 0.000175335,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

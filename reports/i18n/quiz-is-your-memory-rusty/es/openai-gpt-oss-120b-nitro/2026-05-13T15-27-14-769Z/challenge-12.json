@@ -1,0 +1,52 @@
+{
+  "index": 11,
+  "attempt": 1,
+  "originalTitle": "RefCells and Threading",
+  "translatedTitle": "RefCells y Hilos",
+  "translation": {
+    "title": "RefCells y Hilos",
+    "group": "RefCell",
+    "options": [
+      {
+        "text": "RefCell se usa para préstamos mutables, Rw para inmutables",
+        "hint": "Ambos tipos admiten préstamos mutables e inmutables"
+      },
+      {
+        "text": "Rw se usa para préstamos mutables, RefCell para inmutables",
+        "hint": "Ambos soportan ambos tipos de préstamos"
+      },
+      {
+        "text": "RefCell y Rw se usan para el mismo propósito",
+        "hint": "Piensa en la seguridad de hilos"
+      },
+      {
+        "text": "RefCell solo se usa en entornos de un solo hilo"
+      },
+      {
+        "text": "Rw solo se usa en entornos multihilo",
+        "hint": "Aunque típicamente se usa para hilos, no es la diferencia clave"
+      }
+    ],
+    "questionProse": [
+      "¿Cuál es la diferencia clave entre RefCell y RwLock en Rust?\n\n      Considera estos ejemplos:"
+    ],
+    "explanationProse": [
+      "RefCell y RwLock sirven propósitos similares pero en diferentes contextos:",
+      "Diferencias clave:\n      1. RefCell:\n         - Solo un hilo\n         - Sin sobrecarga de sincronización\n         - Produce pánico en violaciones de préstamo\n         \n      2. RwLock:\n         - Seguro para hilos\n         - Tiene sobrecarga de sincronización\n         - Puede bloquear hilos en lugar de pánico\n\n      Buenas prácticas:\n      1. Usa RefCell para mutabilidad interior de un solo hilo\n      2. Usa RwLock cuando se necesita seguridad de hilos\n      3. Considera Mutex para mutabilidad segura de hilos más simple\n      4. Documenta claramente los requisitos de seguridad de hilos"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"RefCells y Hilos\",\n  \"group\": \"RefCell\",\n  \"options\": [\n    {\n      \"text\": \"RefCell se usa para préstamos mutables, Rw para inmutables\",\n      \"hint\": \"Ambos tipos admiten préstamos mutables e inmutables\"\n    },\n    {\n      \"text\": \"Rw se usa para préstamos mutables, RefCell para inmutables\",\n      \"hint\": \"Ambos soportan ambos tipos de préstamos\"\n    },\n    {\n      \"text\": \"RefCell y Rw se usan para el mismo propósito\",\n      \"hint\": \"Piensa en la seguridad de hilos\"\n    },\n    {\n      \"text\": \"RefCell solo se usa en entornos de un solo hilo\"\n    },\n    {\n      \"text\": \"Rw solo se usa en entornos multihilo\",\n      \"hint\": \"Aunque típicamente se usa para hilos, no es la diferencia clave\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Cuál es la diferencia clave entre RefCell y RwLock en Rust?\\n\\n      Considera estos ejemplos:\"\n  ],\n  \"explanationProse\": [\n    \"RefCell y RwLock sirven propósitos similares pero en diferentes contextos:\",\n    \"Diferencias clave:\\n      1. RefCell:\\n         - Solo un hilo\\n         - Sin sobrecarga de sincronización\\n         - Produce pánico en violaciones de préstamo\\n         \\n      2. RwLock:\\n         - Seguro para hilos\\n         - Tiene sobrecarga de sincronización\\n         - Puede bloquear hilos en lugar de pánico\\n\\n      Buenas prácticas:\\n      1. Usa RefCell para mutabilidad interior de un solo hilo\\n      2. Usa RwLock cuando se necesita seguridad de hilos\\n      3. Considera Mutex para mutabilidad segura de hilos más simple\\n      4. Documenta claramente los requisitos de seguridad de hilos\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1000,
+    "outputTokens": 1287,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 3371
+  },
+  "cost": {
+    "inputUsd": 0.000039,
+    "outputUsd": 0.00023166,
+    "totalUsd": 0.00027066,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

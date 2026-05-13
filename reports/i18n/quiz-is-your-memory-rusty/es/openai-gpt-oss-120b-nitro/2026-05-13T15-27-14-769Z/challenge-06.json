@@ -1,0 +1,32 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Rc Smart Pointer",
+  "translatedTitle": "Puntero inteligente Rc",
+  "translation": {
+    "title": "Puntero inteligente Rc",
+    "group": "Conteo de referencias",
+    "options": [],
+    "questionProse": [
+      "¿Qué imprimirá este código? ¡Cuenta con cuidado!"
+    ],
+    "explanationProse": [
+      "Desglosamos cómo funciona Rc:\n\n      1. Creación inicial con `Rc::new()`: contador = 1\n      2. Primera clonación para `marcus`: contador = 2\n      3. Segunda clonación para `aurelius`: contador = 3\n\n      Características importantes de Rc:",
+      "Puntos clave:\n      - `Rc::clone()` es barato - solo incrementa un contador\n      - Rc es solo para escenarios de un solo hilo\n      - Cuando se elimina la última referencia, los datos se limpian\n      - Usa referencias `Weak` para evitar ciclos de referencia\n\n      Buenas prácticas:\n      - Usa Rc cuando necesites propiedad compartida\n      - Considera `Arc` para escenarios seguros en hilos\n      - Evita crear ciclos de referencia"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Puntero inteligente Rc\",\n  \"group\": \"Conteo de referencias\",\n  \"options\": [],\n  \"questionProse\": [\n    \"¿Qué imprimirá este código? ¡Cuenta con cuidado!\"\n  ],\n  \"explanationProse\": [\n    \"Desglosamos cómo funciona Rc:\\n\\n      1. Creación inicial con `Rc::new()`: contador = 1\\n      2. Primera clonación para `marcus`: contador = 2\\n      3. Segunda clonación para `aurelius`: contador = 3\\n\\n      Características importantes de Rc:\",\n    \"Puntos clave:\\n      - `Rc::clone()` es barato - solo incrementa un contador\\n      - Rc es solo para escenarios de un solo hilo\\n      - Cuando se elimina la última referencia, los datos se limpian\\n      - Usa referencias `Weak` para evitar ciclos de referencia\\n\\n      Buenas prácticas:\\n      - Usa Rc cuando necesites propiedad compartida\\n      - Considera `Arc` para escenarios seguros en hilos\\n      - Evita crear ciclos de referencia\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 840,
+    "outputTokens": 708,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2093
+  },
+  "cost": {
+    "inputUsd": 0.00003276,
+    "outputUsd": 0.00012743999999999999,
+    "totalUsd": 0.0001602,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "index": 0,
+  "attempt": 1,
+  "originalTitle": "Basic Move Semantics",
+  "translatedTitle": "Semántica Básica de Movimiento",
+  "translation": {
+    "title": "Semántica Básica de Movimiento",
+    "group": "Propiedad",
+    "options": [
+      {
+        "text": "¡Hola, !",
+        "hint": "Piensa en lo que le ocurre a 'philosopher' después de que se mueva"
+      },
+      {
+        "text": "¡Hola, Zenón de Citio!",
+        "hint": "Una vez que un valor se mueve, ¿podemos seguir usándolo?"
+      },
+      {
+        "text": "¡Hola, Zenón de Elea!",
+        "hint": "La cadena contiene 'Citium', no 'Elea'"
+      },
+      {
+        "text": "¡Hola, Marco Aurelio!",
+        "hint": "Verifica si coincide con el contenido de la cadena"
+      },
+      {
+        "text": "Error de compilación: valor prestado después del movimiento"
+      },
+      {
+        "text": "Error de tiempo de ejecución: excepción de puntero nulo",
+        "hint": "Rust detecta estos problemas en tiempo de compilación"
+      }
+    ],
+    "questionProse": [
+      "¿Qué ocurre cuando ejecutas este código? Intenta predecir la salida o el error:"
+    ],
+    "explanationProse": [
+      "Este código no compila debido a las reglas de propiedad de Rust. Cuando asignamos `philosopher` a `greeting`, la propiedad del String se traslada a `greeting`. Después de este movimiento, `philosopher` ya no es válido para usar.\n\n      Aquí hay tres formas de solucionarlo:\n\n      1. Clonar la cadena (crea una nueva copia):",
+      "2. Usar una referencia (presta el valor):",
+      "3. Usar un slice de cadena (presta parte de la cadena):",
+      "Cada solución tiene diferentes casos de uso e implicaciones de rendimiento. Clonar es más costoso pero te otorga propiedad, mientras que las referencias son más ligeras pero tienen restricciones de tiempo de vida."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Semántica Básica de Movimiento\",\n  \"group\": \"Propiedad\",\n  \"options\": [\n    {\n      \"text\": \"¡Hola, !\",\n      \"hint\": \"Piensa en lo que le ocurre a 'philosopher' después de que se mueva\"\n    },\n    {\n      \"text\": \"¡Hola, Zenón de Citio!\",\n      \"hint\": \"Una vez que un valor se mueve, ¿podemos seguir usándolo?\"\n    },\n    {\n      \"text\": \"¡Hola, Zenón de Elea!\",\n      \"hint\": \"La cadena contiene 'Citium', no 'Elea'\"\n    },\n    {\n      \"text\": \"¡Hola, Marco Aurelio!\",\n      \"hint\": \"Verifica si coincide con el contenido de la cadena\"\n    },\n    {\n      \"text\": \"Error de compilación: valor prestado después del movimiento\"\n    },\n    {\n      \"text\": \"Error de tiempo de ejecución: excepción de puntero nulo\",\n      \"hint\": \"Rust detecta estos problemas en tiempo de compilación\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Qué ocurre cuando ejecutas este código? Intenta predecir la salida o el error:\"\n  ],\n  \"explanationProse\": [\n    \"Este código no compila debido a las reglas de propiedad de Rust. Cuando asignamos `philosopher` a `greeting`, la propiedad del String se traslada a `greeting`. Después de este movimiento, `philosopher` ya no es válido para usar.\\n\\n      Aquí hay tres formas de solucionarlo:\\n\\n      1. Clonar la cadena (crea una nueva copia):\",\n    \"2. Usar una referencia (presta el valor):\",\n    \"3. Usar un slice de cadena (presta parte de la cadena):\",\n    \"Cada solución tiene diferentes casos de uso e implicaciones de rendimiento. Clonar es más costoso pero te otorga propiedad, mientras que las referencias son más ligeras pero tienen restricciones de tiempo de vida.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1058,
+    "outputTokens": 1229,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2192
+  },
+  "cost": {
+    "inputUsd": 0.000041262,
+    "outputUsd": 0.00022122,
+    "totalUsd": 0.00026248199999999997,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "index": 16,
+  "attempt": 1,
+  "originalTitle": "Memory Optimization",
+  "translatedTitle": "Optimización de Memoria",
+  "translation": {
+    "title": "Optimización de Memoria",
+    "group": "Mejores Prácticas",
+    "options": [
+      {
+        "text": "16 bytes",
+        "hint": "Considera los requisitos de alineación"
+      },
+      {
+        "text": "24 bytes"
+      },
+      {
+        "text": "32 bytes",
+        "hint": "String es más grande que un solo puntero."
+      },
+      {
+        "text": "Depends on platform",
+        "hint": "Especificamos un sistema de 64 bits"
+      }
+    ],
+    "questionProse": [
+      "En un objetivo típico de Rust de 64 bits actual, ¿cuál es el tamaño de esta estructura?"
+    ],
+    "explanationProse": [
+      "Desglosemos el diseño de memoria de la struct y su optimización:",
+      "Consideraciones del diseño de memoria:\n      1. Requisitos de alineación:\n         - u32: alineación de 4 bytes\n         - String: alineación de 8 bytes y tamaño de 24 bytes en objetivos comunes de 64 bits\n         - bool: alineación de 1 byte\n\n      2. Estrategias de ordenamiento de campos:\n         - Agrupar campos de tamaño similar\n         - Colocar primero los de mayor alineación\n         - Considerar la optimización de líneas de caché\n\n      Mejores prácticas:\n      1. Para FFI o suposiciones de layout estable, usa un `repr(...)` apropiado\n      2. Usa tamaños de enteros adecuados\n      3. Considera usar Option para campos opcionales\n      4. Mide structs críticos en tamaño con `std::mem::size_of`\n      5. Usa #[repr(packed)] con cuidado - puede afectar el rendimiento"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Optimización de Memoria\",\n  \"group\": \"Mejores Prácticas\",\n  \"options\": [\n    {\n      \"text\": \"16 bytes\",\n      \"hint\": \"Considera los requisitos de alineación\"\n    },\n    {\n      \"text\": \"24 bytes\"\n    },\n    {\n      \"text\": \"32 bytes\",\n      \"hint\": \"String es más grande que un solo puntero.\"\n    },\n    {\n      \"text\": \"Depends on platform\",\n      \"hint\": \"Especificamos un sistema de 64 bits\"\n    }\n  ],\n  \"questionProse\": [\n    \"En un objetivo típico de Rust de 64 bits actual, ¿cuál es el tamaño de esta estructura?\"\n  ],\n  \"explanationProse\": [\n    \"Desglosemos el diseño de memoria de la struct y su optimización:\",\n    \"Consideraciones del diseño de memoria:\\n      1. Requisitos de alineación:\\n         - u32: alineación de 4 bytes\\n         - String: alineación de 8 bytes y tamaño de 24 bytes en objetivos comunes de 64 bits\\n         - bool: alineación de 1 byte\\n\\n      2. Estrategias de ordenamiento de campos:\\n         - Agrupar campos de tamaño similar\\n         - Colocar primero los de mayor alineación\\n         - Considerar la optimización de líneas de caché\\n\\n      Mejores prácticas:\\n      1. Para FFI o suposiciones de layout estable, usa un `repr(...)` apropiado\\n      2. Usa tamaños de enteros adecuados\\n      3. Considera usar Option para campos opcionales\\n      4. Mide structs críticos en tamaño con `std::mem::size_of`\\n      5. Usa #[repr(packed)] con cuidado - puede afectar el rendimiento\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 953,
+    "outputTokens": 1079,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 1109
+  },
+  "cost": {
+    "inputUsd": 0.000037167,
+    "outputUsd": 0.00019422000000000002,
+    "totalUsd": 0.00023138700000000003,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

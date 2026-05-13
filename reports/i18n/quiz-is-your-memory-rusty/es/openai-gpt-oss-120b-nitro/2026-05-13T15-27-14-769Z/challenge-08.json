@@ -1,0 +1,49 @@
+{
+  "index": 7,
+  "attempt": 1,
+  "originalTitle": "Lifetime Annotations",
+  "translatedTitle": "Anotaciones de lifetimes",
+  "translation": {
+    "title": "Anotaciones de lifetimes",
+    "group": "Tiempos de vida",
+    "options": [
+      {
+        "text": "Resultado: Séneca el Joven",
+        "hint": "El código no compilará para producir ninguna salida"
+      },
+      {
+        "text": "Error: falta especificador de lifetime"
+      },
+      {
+        "text": "Error: no se puede devolver referencia a variable local",
+        "hint": "La referencia es a un parámetro de entrada, no a una variable local"
+      },
+      {
+        "text": "Error: incompatibilidad de lifetimes",
+        "hint": "Aún no hemos especificado lifetimes, por lo que hay una incompatibilidad"
+      }
+    ],
+    "questionProse": [
+      "¿Qué pasa con esta función que devuelve la más larga de dos rebanadas de cadena?"
+    ],
+    "explanationProse": [
+      "Este código falla porque el compilador no puede determinar la relación entre los lifetimes de entrada y salida. He aquí por qué y cómo solucionarlo:",
+      "Por qué se necesitan lifetimes aquí:\n      1. Múltiples referencias de entrada pueden tener lifetimes diferentes\n      2. El valor de retorno debe vivir tanto como ambas entradas\n      3. El compilador necesita verificar estas relaciones\n\n      Patrones comunes:",
+      "Mejores prácticas:\n      1. Deja que la elisión de lifetimes funcione cuando sea posible\n      2. Usa lifetimes explícitos cuando las relaciones necesiten ser claras\n      3. Considera devolver tipos propios para evitar la complejidad de lifetimes\n      4. Documenta relaciones de lifetimes complejas"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Anotaciones de lifetimes\",\n  \"group\": \"Tiempos de vida\",\n  \"options\": [\n    {\n      \"text\": \"Resultado: Séneca el Joven\",\n      \"hint\": \"El código no compilará para producir ninguna salida\"\n    },\n    {\n      \"text\": \"Error: falta especificador de lifetime\"\n    },\n    {\n      \"text\": \"Error: no se puede devolver referencia a variable local\",\n      \"hint\": \"La referencia es a un parámetro de entrada, no a una variable local\"\n    },\n    {\n      \"text\": \"Error: incompatibilidad de lifetimes\",\n      \"hint\": \"Aún no hemos especificado lifetimes, por lo que hay una incompatibilidad\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Qué pasa con esta función que devuelve la más larga de dos rebanadas de cadena?\"\n  ],\n  \"explanationProse\": [\n    \"Este código falla porque el compilador no puede determinar la relación entre los lifetimes de entrada y salida. He aquí por qué y cómo solucionarlo:\",\n    \"Por qué se necesitan lifetimes aquí:\\n      1. Múltiples referencias de entrada pueden tener lifetimes diferentes\\n      2. El valor de retorno debe vivir tanto como ambas entradas\\n      3. El compilador necesita verificar estas relaciones\\n\\n      Patrones comunes:\",\n    \"Mejores prácticas:\\n      1. Deja que la elisión de lifetimes funcione cuando sea posible\\n      2. Usa lifetimes explícitos cuando las relaciones necesiten ser claras\\n      3. Considera devolver tipos propios para evitar la complejidad de lifetimes\\n      4. Documenta relaciones de lifetimes complejas\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 965,
+    "outputTokens": 1089,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2616
+  },
+  "cost": {
+    "inputUsd": 0.000037635,
+    "outputUsd": 0.00019601999999999998,
+    "totalUsd": 0.00023365499999999998,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

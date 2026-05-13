@@ -1,0 +1,52 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "Understanding Rc",
+  "translatedTitle": "Entendiendo Rc",
+  "translation": {
+    "title": "Entendiendo Rc",
+    "group": "Conteo de Referencias",
+    "options": [
+      {
+        "text": "Rc se usa en entornos de un solo hilo"
+      },
+      {
+        "text": "Rc se usa en entornos multihilo",
+        "hint": "Piensa en la seguridad de hilos: Rc no tiene sincronización"
+      },
+      {
+        "text": "Rc solo se usa para datos inmutables",
+        "hint": "Rc puede combinarse con mutabilidad interior"
+      },
+      {
+        "text": "Rc solo se usa para datos mutables",
+        "hint": "Rc funciona con datos mutables e inmutables"
+      },
+      {
+        "text": "Rc es para control remoto",
+        "hint": "Aunque ingenioso, ¡no es un concepto de programación!"
+      }
+    ],
+    "questionProse": [
+      "¿Cuándo deberías usar Rc (Conteo de Referencias) en Rust?\n\n      Considera este ejemplo:"
+    ],
+    "explanationProse": [
+      "Rc (Conteo de Referencias) está diseñado para escenarios de un solo hilo donde necesitas propiedad compartida.\n\n      Casos de uso comunes:",
+      "Puntos clave:\n      1. Usa Rc cuando:\n         - Múltiples partes de tu código necesitan propiedad\n         - Sabes que el compartir es de un solo hilo\n         - La vida útil no puede determinarse estáticamente\n\n      2. Usa Arc en su lugar cuando:\n         - Necesitas compartir seguro entre hilos\n         - Múltiples hilos necesitan propiedad\n\n      3. Limitaciones de Rc:\n         - No es seguro para hilos\n         - Pequeña sobrecarga en tiempo de ejecución\n         - No puede romper ciclos de referencias automáticamente\n\n      Buenas prácticas:\n      1. Prefiere la propiedad única cuando sea posible\n      2. Usa Rc para propiedad compartida en un solo hilo\n      3. Usa Arc para escenarios multihilo\n      4. Combínalo con Weak para evitar ciclos de referencias"
+    ]
+  },
+  "rawText": "{\n\"title\": \"Entendiendo Rc\",\n  \"group\": \"Conteo de Referencias\",\n  \"options\": [\n    {\n      \"text\": \"Rc se usa en entornos de un solo hilo\"\n    },\n    {\n      \"text\": \"Rc se usa en entornos multihilo\",\n      \"hint\": \"Piensa en la seguridad de hilos: Rc no tiene sincronización\"\n    },\n    {\n      \"text\": \"Rc solo se usa para datos inmutables\",\n      \"hint\": \"Rc puede combinarse con mutabilidad interior\"\n    },\n    {\n      \"text\": \"Rc solo se usa para datos mutables\",\n      \"hint\": \"Rc funciona con datos mutables e inmutables\"\n    },\n    {\n      \"text\": \"Rc es para control remoto\",\n      \"hint\": \"Aunque ingenioso, ¡no es un concepto de programación!\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Cuándo deberías usar Rc (Conteo de Referencias) en Rust?\\n\\n      Considera este ejemplo:\"\n  ],\n  \"explanationProse\": [\n    \"Rc (Conteo de Referencias) está diseñado para escenarios de un solo hilo donde necesitas propiedad compartida.\\n\\n      Casos de uso comunes:\",\n    \"Puntos clave:\\n      1. Usa Rc cuando:\\n         - Múltiples partes de tu código necesitan propiedad\\n         - Sabes que el compartir es de un solo hilo\\n         - La vida útil no puede determinarse estáticamente\\n\\n      2. Usa Arc en su lugar cuando:\\n         - Necesitas compartir seguro entre hilos\\n         - Múltiples hilos necesitan propiedad\\n\\n      3. Limitaciones de Rc:\\n         - No es seguro para hilos\\n         - Pequeña sobrecarga en tiempo de ejecución\\n         - No puede romper ciclos de referencias automáticamente\\n\\n      Buenas prácticas:\\n      1. Prefiere la propiedad única cuando sea posible\\n      2. Usa Rc para propiedad compartida en un solo hilo\\n      3. Usa Arc para escenarios multihilo\\n      4. Combínalo con Weak para evitar ciclos de referencias\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1017,
+    "outputTokens": 1236,
+    "cacheReadTokens": 384,
+    "cacheWriteTokens": 0,
+    "durationMs": 635
+  },
+  "cost": {
+    "inputUsd": 0.000039663,
+    "outputUsd": 0.00022247999999999997,
+    "totalUsd": 0.00026214299999999995,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
