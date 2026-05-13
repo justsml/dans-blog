@@ -1,0 +1,32 @@
+{
+  "selectedCommit": "3e1478bf960fd904ffcbd28f2d5077de013e8d5b",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "scores": {
+    "readability": 5,
+    "technicalAccuracy": 5,
+    "coherence": 5,
+    "relevance": 5,
+    "translationQuality": 5,
+    "mdxPreservation": 5
+  },
+  "suggestions": [],
+  "rationale": "This candidate provides the most natural and professional translation while maintaining the technical context. It correctly translates 'parsing' and 'evals' in a way that sounds natural to a Spanish-speaking developer. It also correctly handles the relative paths in the 'Read the Series' section, ensuring they point to the correct locations without unnecessary '../' prefixes that might break depending on the routing setup, though it follows the English source's logic. The tone is direct and matches the original author's style.",
+  "slug": "llm-routing-mastra-ai",
+  "locale": "es",
+  "candidateCommits": [
+    "3e1478bf960fd904ffcbd28f2d5077de013e8d5b",
+    "ba548ebd1755e09d399bd6826d5c2e287c562aec",
+    "aab829c8860f02df316795b1fa6542e568a49849",
+    "f0b2dfdb14e35c7eab29b92487f389ad213c45d2",
+    "575e0dcebb70237cfafff227c21c78f76ce9c74d",
+    "81acc624b6c091d3bc750abfdb8b6b02a1dc56af",
+    "5673b16128966a85ac42d041501b08ef59a52d48"
+  ],
+  "suggestionLog": [],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug llm-routing-mastra-ai --locale es --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug llm-routing-mastra-ai --locale es --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug llm-routing-mastra-ai --locale es --skip-global\n207 |     ...targetContents.matchAll(/=[\"']\\.\\/(?!\\.)[^\"']+\\.(?:avif|gif|jpe?g|png|svg|webp)[\"']/g),\n208 |   ];\n209 | \n210 |   if (nestedAssetReferences.length === 0) return;\n211 | \n212 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2026-01-02--llm-routing-mastra-ai/es/index.mdx uses ./ asset paths inside a locale folder. Use ../ for inherited post assets.\n      at assertNestedAssetPaths (/Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:212:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}
