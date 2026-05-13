@@ -3,22 +3,22 @@
 - Locale: es
 - Model: openrouter/qwen/qwen3-32b:nitro
 - Target: src/content/posts/2025-09-15--serverless-database-magic/es/index.mdx
-- Validation: rejected: direct AI SDK translation failed
-- Runtime seconds: 11.99
-- Input tokens: 6007
-- Output tokens: 5738
+- Validation: deferred
+- Runtime seconds: 18.56
+- Input tokens: 5545
+- Output tokens: 7344
 - Thinking tokens: unknown
-- Cached input tokens: 1024
+- Cached input tokens: 0
 - Cache write tokens: 0
-- Estimated cost: $0.001858
+- Estimated cost: $0.002206
 - Pricing source: local-openrouter-estimate
-- Note: Command failed: bun run i18n:validate --slug serverless-database-magic --locale es
+- Note: Generated through the direct AI SDK chunked translator.
 ## Raw Output
 
 ````mdx
 ---
-title: La ola de innovación en bases de datos de 2025
-subTitle: Puedes agradecer a la IA.
+title: Ola de innovación en bases de datos de 2025
+subTitle: Gracias a la IA.
 date: '2025-09-10'
 modified: '2025-09-17'
 tags:
@@ -41,48 +41,48 @@ cover_credit: ©️ 2025 Dan Levy
 ---
 ## No es otro artículo sobre bases de datos vectoriales
 
-Aquí está la regla de decisión que hubiera deseado haber usado antes:
+Aquí está la regla de decisión que desearía haber usado antes:
 
-<p class="inset">Si tus datos pueden reconstruirse desde archivos y los usuarios los leen principalmente, prueba primero con una base de datos de almacenamiento en objetos. Si los usuarios la escriben todo el día, empieza con una base de datos real y deja de intentar que S3 haga de cuenta que es una.</p>
+<p class="inset">Si tus datos pueden reconstruirse desde archivos y los usuarios los leen principalmente, prueba una base de datos de almacenamiento en objetos primero. Si los usuarios la escriben todo el día, empieza con una base de datos real y deja de intentar hacer que S3 haga de cuenta.</p>
 
-Esa es la línea útil. No "el futuro es sin servidor". No "las bases de datos vectoriales cambiaron todo". Ese tipo de frases ya han sido impresas en suficientes cintas de conferencias.
+Esa es la línea útil. No "el sin servidor es el futuro". No "las bases de datos vectoriales cambiaron todo". Esas frases ya han sido impresas en suficientes cintas de conferencia.
 
-La IA sí cambió la forma de muchos problemas de búsqueda. De repente, equipos pequeños querían búsqueda semántica, clasificación híbrida, chat basado en documentos, búsquedas multimodales y análisis sobre archivos almacenados en almacenamiento en objetos. La respuesta antigua era "ejecuta Postgres con pgvector" o "gestiona OpenSearch/Elasticsearch" o "compra un servicio de búsqueda gestionado". Esas siguen siendo buenas respuestas cuando la carga de trabajo lo amerita.
+La IA sí cambió la forma de muchos problemas de búsqueda. De repente, equipos pequeños querían búsqueda semántica, clasificación híbrida, chat de documentos, búsqueda multimodal y análisis sobre archivos almacenados en almacenamiento de objetos. La respuesta anterior era "ejecutar Postgres con pgvector" o "operar OpenSearch/Elasticsearch" o "comprar un servicio de búsqueda gestionado". Esas siguen siendo buenas respuestas cuando la carga de trabajo lo merece.
 
-Pero muchas cargas de trabajo no lo ameritan. Son de lectura intensiva, reconstruibles y tolerantes a un breve retraso entre que el contenido cambia y la búsqueda se actualiza. Documentación. Instantáneas de catálogos. Exportaciones estáticas. Bases de conocimiento internas. Análisis local. Sistemas prototipo de RAG. Para esas, una nueva clase de herramientas ha hecho que la arquitectura aburrida sea inusualmente poderosa: construye un índice, almacénalo como archivos y súbelo a través de HTTP.
+Pero muchas cargas de trabajo no lo hacen. Son de lectura intensiva, reconstruibles y tolerantes a un breve retraso entre el cambio de contenido y la actualización de la búsqueda. Documentación. Instantáneas de catálogos. Exportaciones estáticas. Bases de conocimiento internas. Análisis local. Sistemas prototipo de RAG. Para esas, una nueva clase de herramientas ha hecho que la arquitectura sencilla sea inusualmente poderosa: construye un índice, almacénalo como archivos y súpelo a través de HTTP.
 
-Nota de captura: el ecosistema está cambiando rápidamente. Las estrellas, etiquetas de características y números de rendimiento que aparecen a continuación son una captura de septiembre de 2025, no un ranking eterno. Trátalos como una orientación, y revisa las documentaciones actuales antes de apostar una migración de producción a cualquier celda en concreto.
+Nota de captura: el ecosistema evoluciona rápidamente. Los contadores de estrellas, etiquetas de características y cifras de rendimiento que aparecen a continuación son una captura de septiembre de 2025, no un ranking inmutable. Trátelos como orientación, y consulte la documentación actual antes de apostar por la migración a producción basada en cualquier celda específica.
 
 ## Una base de datos por cualquier otro nombre
 
-Estos almacenes de datos sin servidor y capaces de CDN son útiles para casos de tamaño medio, aproximadamente entre 1 000 y 1 000 000 registros o unos pocos gigabytes, donde la infraestructura tradicional de bases de datos puede ser más ceremonia que valor:
+Estos almacenes de datos sin servidor y capaces de CDN son útiles para casos de tamaño intermedio, aproximadamente entre 1.000 y 1.000.000 de registros o unos pocos gigabytes, donde la infraestructura tradicional de bases de datos puede ser más ceremonia que valor:
 
 - **Pagefind** (2022, ~4.5K ⭐): Enfoque completamente estático - compila una vez, busca para siempre, sin requisitos de backend
-- **Orama** (2023, ~8K ⭐): Solución universal que funciona desde navegadores hasta funciones sin servidor
-- **Chroma** (2022, ~14K ⭐): Nativa de IA, construida específicamente para aplicaciones de RAG
-- **LanceDB** (2023, ~4K ⭐): Capabilidades empresariales multimodales con arquitectura basada en disco
-- **DuckDB-WASM** (2019, ~23K ⭐): Base de datos de análisis SQL completa que funciona en navegadores mediante WebAssembly
+- **Orama** (2023, ~8K ⭐): Solución universal ejecutable en cualquier lugar, desde navegadores hasta funciones sin servidor
+- **Chroma** (2022, ~14K ⭐): Nativa de IA, diseñada específicamente para aplicaciones RAG
+- **LanceDB** (2023, ~4K ⭐): Capabilidades multimodales empresariales con arquitectura basada en disco
+- **DuckDB-WASM** (2019, ~23K ⭐): Base de datos de análisis SQL completa ejecutable en navegadores a través de WebAssembly
 
-El movimiento común es sencillo: mantener los datos duraderos en archivos o almacenamiento de objetos, y luego consultarlos desde un navegador, función de borde, trabajador o servicio ligero. Eso no elimina la complejidad. Mueve la complejidad a las tuberías de construcción, frescura de los índices, invalidación de caché y capacidades del cliente. Que es un intercambio perfectamente válido cuando las lecturas dominan.
+El movimiento común es simple: mantenga los datos persistentes en archivos o almacenamiento de objetos, y consulte desde un navegador, función de borde, trabajador o servicio ligero. Eso no elimina la complejidad. Mueve la complejidad a las tuberías de construcción, frescura de índices, invalidación de caché y capacidades del cliente. Lo cual es un intercambio perfectamente válido cuando las lecturas dominan.
 
-### Batalla de casillas de verificación
+### Batalla de las casillas de verificación
 
-### Batalla de casillas de verificación
+### Batalla de las casillas de verificación
 
 | Característica | [Pagefind](https://pagefind.app) | [Orama](https://orama.com) | [Chroma](https://www.trychroma.com/) | [LanceDB](https://lancedb.com) | [DuckDB-WASM](https://duckdb.org/docs/api/wasm) |
 |---------|----------|--------|---------|----------|----------|
 | **Búsqueda de texto completo** | ✅ Stemming avanzado | ✅ BM25, 30 idiomas | ✅ FTS de SQLite | ✅ Tantivy | ✅ SQL completo |
 | **Búsqueda de vectores** | ❌ | ✅ Similitud coseno | ✅ HNSW | ✅ IVF_PQ, HNSW, GPU | ⚠️ Extensiones |
-| **Integraciones de IA/RAG** | Ninguna | ✅ Pipeline integrado | ✅ LangChain, LlamaIndex | ✅ Reclasificación avanzada | ⚠️ Configuración manual |
+| **Integraciones de IA/RAG** | Ninguna | ✅ Pipeline integrado | ✅ LangChain, LlamaIndex | ✅ Reordenamiento avanzado | ⚠️ Configuración manual |
 | **Almacenamiento** | JSON/WASM estático | Memoria + plugins S3 | Basado en servidor* | Lance compatible con S3 | WASM + S3/HTTP |
 | **Soporte de escritura** | Solo en tiempo de construcción | CRUD completo | CRUD completo | CRUD completo | CRUD SQL completo |
-| **Rendimiento** | Menos de 100ms | 0.0001ms - 100ms | Menos de 100ms | 3-5ms vector, 50ms FTS | 10ms-1s (SQL complejo) |
+| **Rendimiento** | Sub-100ms | 0.0001ms - 100ms | Sub-100ms | 3-5ms vector, 50ms FTS | 10ms-1s (SQL complejo) |
 
-*Instantánea de septiembre de 2025: Chroma requiere un entorno de ejecución de servidor y no soporta almacenamiento directo en S3 de la manera en que lo hacen las herramientas basadas en archivos ([problema #1736](https://github.com/chroma-core/chroma/issues/1736)).
+*Instantánea de septiembre de 2025: Chroma requiere un entorno de ejecución de servidor y no soporta almacenamiento directo en S3 de la manera que lo hacen las herramientas de archivos-objeto ([problema #1736](https://github.com/chroma-core/chroma/issues/1736)).
 
 ### Ejemplos de implementación
 
-Las diferencias sintácticas revelan la división real: la búsqueda en tiempo de construcción, la búsqueda en memoria, el almacenamiento nativo de vectores, las tablas multimodales y el SQL en el navegador no son la misma categoría de producto solo porque todos aparezcan en demostraciones de IA.
+Las diferencias sintácticas revelan la división real: la búsqueda en tiempo de construcción, la búsqueda en memoria, el almacenamiento nativo de vectores, las tablas multimodales y el SQL en el navegador no son la misma categoría de producto solo porque todos aparezcan en demos de IA.
 
 #### Búsqueda en sitio estático con Pagefind
 
@@ -95,9 +95,9 @@ Las diferencias sintácticas revelan la división real: la búsqueda en tiempo d
 <script>new PagefindUI({ element: "#search" });</script>
 ```
 
-#### Multimodal a nivel empresarial con LanceDB
+#### Multimodal empresarial con LanceDB
 
-**Código para crear una tabla LanceDB con incrustaciones automáticas de OpenAI:**
+**Código para crear una tabla LanceDB con embeddings automáticos de OpenAI:**
 ```typescript
 import * as lancedb from "@lancedb/lancedb";
 import "@lancedb/lancedb/embedding/openai";
@@ -109,7 +109,7 @@ const func = getRegistry()
   .get("openai")
   ?.create({ model: "text-embedding-ada-002" });
 
-// Esquema con generación automática de incrustaciones
+// Esquema con generación automática de embeddings
 const documentsSchema = LanceSchema({
   text: func.sourceField(new Utf8()),
   vector: func.vectorField(),
@@ -161,7 +161,7 @@ await insert(db, {
 
 const results = await search(db, { 
   term: 'basics',
-  mode: 'hybrid' // Combina texto + búsqueda vectorial
+  mode: 'hybrid' // Combina búsqueda de texto y vectorial
 })
 ```
 
@@ -179,7 +179,7 @@ await conn.query(`create table t as select * from (values (1,'hybrid search'),(2
 await conn.query(`install fts; load fts; select * from t where match_bm25(txt, 'hybrid');`);
 ```
 
-#### Búsqueda nativa para IA con Chroma  
+#### Búsqueda nativa de IA con Chroma  
 ```typescript
 import { ChromaClient } from "chromadb";
 
@@ -202,27 +202,27 @@ const results = await collection.query({
 ## Guía de casos de uso
 
 **Elige Pagefind cuando:**
-- Estés construyendo documentación, blogs o bases de conocimiento
-- Los contenidos se actualicen semanalmente o menos
+- Construyas documentación, blogs o bases de conocimiento
+- Las actualizaciones sean semanales o menos frecuentes
 - Necesites cero sobrecarga operativa y caché perfecto en CDN
 - *Ejemplo: Documentación corporativa con 10K+ páginas actualizadas mensualmente*
 
 **Elige Orama cuando:**
-- Estés construyendo dashboards, e-commerce o aplicaciones dinámicas
-- Necesites actualizaciones en tiempo real y rendimiento sub-100ms
+- Desarrolles dashboards, e-commerce o aplicaciones dinámicas
+- Requieras actualizaciones en tiempo real y rendimiento <100ms
 - Quieras flexibilidad de despliegue desde navegadores hasta funciones de edge
 - *Ejemplo: SaaS con catálogos de productos dinámicos*
 
 **Elige Chroma cuando:**
-- Estés construyendo aplicaciones RAG o bases de conocimiento de IA
+- Construyas aplicaciones RAG o bases de conocimiento de IA
 - Necesites integraciones con LangChain/LlamaIndex
 - La búsqueda semántica sea funcionalidad clave
 - *Ejemplo: Bot de soporte al cliente de IA*
 
 **Elige LanceDB cuando:**
 - Trabajes con datos multimodales (imágenes, audio, video)
-- Necesites rendimiento empresarial a gran escala
-- Se requieran análisis complejos y reordenamiento
+- Requieras rendimiento empresarial a gran escala
+- Se necesiten análisis complejos y reordenamiento
 - *Ejemplo: Plataforma de medios con búsqueda semántica de video*
 
 **Elige DuckDB-WASM cuando:**
@@ -233,36 +233,36 @@ const results = await collection.query({
 
 ## La regla de decisión
 
-La pregunta práctica no es "¿cuál es la mejor base de datos?"
+La pregunta práctica no es "¿cuál base de datos es mejor?"
 
 La pregunta práctica es: ¿qué tipo de cambio debe absorber el sistema?
 
-- **Contenido reconstruible:** Pagefind, instantáneas de Orama, archivos Lance, DuckDB sobre Parquet. Manténlo estático hasta que duela.
-- **Escrituras frecuentes:** Postgres, servidor Chroma, un servicio de búsqueda gestionado o una tubería de indexación con cola. Necesitas coordinación, no vibes.
+- **Contenido reconstruible:** Pagefind, instantáneas de Orama, archivos de Lance, DuckDB sobre Parquet. Manténlo estático hasta que duela.
+- **Escrituras frecuentes:** Postgres, servidor de Chroma, servicio de búsqueda gestionado o pipeline de indexación con cola. Necesitas coordinación, no sensaciones.
 - **Resultados específicos por usuario:** usa un backend real. El almacenamiento de objetos no es un modelo de autorización.
-- **Análisis sobre archivos:** DuckDB es absurdamente útil. Deja que SQL haga lo que le toca.
-- **Búsqueda multimodal o con vectores pesados:** LanceDB y Chroma merecen probarlos contra tus datos reales, no contra benchmarks de README.
+- **Análisis sobre archivos:** DuckDB es absurdamente útil. Deja que SQL haga lo que le corresponde.
+- **Búsqueda multimodal o vectorial intensiva:** LanceDB y Chroma merecen probarse contra tus datos reales, no contra benchmarks de README.
 
 El camino feliz es barato. Los casos extremos deciden la arquitectura.
 
-## El cuadro general
+## El cuadro más amplio
 
-Estas herramientas reducen la infraestructura mínima viable para una búsqueda útil. Eso importa. En 2020, "búsqueda semántica" a menudo implicaba una pila de servicios, mucho código de pegamento y alguien explicando índices vectoriales en una reunión donde la mitad del equipo quería almorzar. En 2025, un equipo pequeño puede prototipar la misma idea de producto con archivos, incrustaciones y un fin de semana.
+Estas herramientas reducen la infraestructura mínima viable para una búsqueda útil. Eso importa. En 2020, "búsqueda semántica" implicaba a menudo una pila de servicios, mucho código de unión y a alguien explicando índices vectoriales en una reunión donde la mitad quería almorzar. En 2025, un equipo pequeño puede prototipar la misma idea de producto con archivos, embeddings y un fin de semana.
 
-Eso no significa que cada cuadro de búsqueda deba convertirse en un sistema RAG. Significa que la primera versión ya no tiene que heredar infraestructura de producción antes de tener evidencia de producción.
+Eso no significa que cada caja de búsqueda deba convertirse en un sistema RAG. Significa que la primera versión no tiene que heredar infraestructura de producción antes de tener evidencia de producción.
 
-Incluso AWS ha estado moviéndose en esta dirección con su trabajo de búsqueda vectorial asociado a S3, lo cual es una señal útil: el almacenamiento de objetos ya no es solo el sótano donde van los archivos antiguos. Se está convirtiendo en una superficie de consulta.
+Incluso AWS ha estado moviéndose en esta dirección con su trabajo de búsqueda vectorial asociado a S3, lo cual es una señal útil: el almacenamiento de objetos ya no es solo el sótano donde van los archivos viejos. Se está convirtiendo en una superficie de consulta.
 
 ## Comienza a experimentar
 
-1. **Elige primero el patrón de actualización**: construcción, lote horario, escrituras en vivo o resultados por usuario.
-2. **Prototipa con la herramienta más honesta y pequeña**: Pagefind para HTML estático, DuckDB para archivos analíticos, Orama para búsqueda en aplicaciones ligeras, LanceDB o Chroma para trabajo con vectores.
-3. **Mide la parte fea**: tiempo de indexación, frescura, tamaño del paquete, permisos y la primera consulta tras un inicio frío.
+1. **Elige el patrón de actualización primero**: tiempo de construcción, lote horario, escrituras en vivo o resultados por usuario.
+2. **Prototipa con la herramienta más honesta y pequeña**: Pagefind para HTML estático, DuckDB para archivos analíticos, Orama para búsqueda en aplicaciones ligeras, LanceDB o Chroma para cargas vectoriales intensivas.
+3. **Mide la parte fea**: tiempo de indexación, frescura, tamaño de paquete, permisos y la primera consulta tras un inicio frío.
 4. **Promueve solo cuando el dolor sea real**: una base de datos gestionada es más fácil de justificar después de que la versión basada en archivos muestre exactamente dónde se dobla.
 
-*Echa un vistazo a mi [guía práctica de Pagefind][1] para una implementación hands-on, o explora el creciente ecosistema de bases de datos nativas de edge que están redefiniendo el manejo de datos a gran escala.*
+*Consulta mi [guía práctica de Pagefind][1] para implementación concreta, o explora el creciente ecosistema de bases de datos nativas de edge que redefinen el manejo de datos a gran escala.*
 
-> **Aviso:** He utilizado Pagefind durante años y me convertí en colaborador en 2025. He experimentado con Orama y Chroma para proyectos pequeños y estoy explorando LanceDB para aplicaciones de IA más grandes. No tengo intereses financieros en estos proyectos, solo interés en la evolución del paisaje de bases de datos.
+> **Aviso legal:** He utilizado Pagefind durante años y me convertí en colaborador en 2025. He experimentado con Orama y Chroma para proyectos más pequeños y estoy explorando LanceDB para aplicaciones de IA más grandes. No tengo intereses financieros en estos proyectos, solo interés en la evolución del paisaje de bases de datos.
 
 [1]: https://danlevy.net/you-might-not-need-algolia/
 ````
