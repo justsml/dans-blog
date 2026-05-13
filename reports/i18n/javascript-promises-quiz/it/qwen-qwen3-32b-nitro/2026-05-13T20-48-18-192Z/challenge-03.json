@@ -1,0 +1,45 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "Chaining `.then` and `.catch`'s",
+  "translatedTitle": "Catena di `.then` e `.catch`",
+  "translation": {
+    "title": "Catena di `.then` e `.catch`",
+    "group": "Gestione degli errori",
+    "options": [
+      {
+        "text": "stampa l'errore e `undefined`"
+      },
+      {
+        "text": "stampa l'errore due volte",
+        "hint": "L'errore viene catturato e viene restituito `undefined`."
+      },
+      {
+        "text": "UnhandledPromiseRejectionWarning"
+      },
+      {
+        "text": "undefined"
+      }
+    ],
+    "questionProse": [
+      "Qual sarà l'output del seguente codice?"
+    ],
+    "explanationProse": [
+      "Quando si catenano `.then` e `.catch`, è utile pensare a loro come a una serie di passi. Ogni `.then` riceve il valore restituito dal `.then` precedente (come argomento). Tuttavia, se il tuo \"passo\" incontra un errore, tutti i `.then` successivi vengono saltati fino a quando non si incontra un `.catch`. Se desideri sovrascrivere un errore, basta restituire un valore non-errore. Può essere accesso da qualsiasi `.then` successivo."
+    ]
+  },
+  "rawText": "```json\n{\n  \"title\": \"Catena di `.then` e `.catch`\",\n  \"group\": \"Gestione degli errori\",\n  \"options\": [\n    {\n      \"text\": \"stampa l'errore e `undefined`\"\n    },\n    {\n      \"text\": \"stampa l'errore due volte\",\n      \"hint\": \"L'errore viene catturato e viene restituito `undefined`.\"\n    },\n    {\n      \"text\": \"UnhandledPromiseRejectionWarning\"\n    },\n    {\n      \"text\": \"undefined\"\n    }\n  ],\n  \"questionProse\": [\n    \"Qual sarà l'output del seguente codice?\"\n  ],\n  \"explanationProse\": [\n    \"Quando si catenano `.then` e `.catch`, è utile pensare a loro come a una serie di passi. Ogni `.then` riceve il valore restituito dal `.then` precedente (come argomento). Tuttavia, se il tuo \\\"passo\\\" incontra un errore, tutti i `.then` successivi vengono saltati fino a quando non si incontra un `.catch`. Se desideri sovrascrivere un errore, basta restituire un valore non-errore. Può essere accesso da qualsiasi `.then` successivo.\"\n  ]\n}\n```",
+  "telemetry": {
+    "inputTokens": 793,
+    "outputTokens": 818,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 2566
+  },
+  "cost": {
+    "inputUsd": 0.00006344,
+    "outputUsd": 0.00019632,
+    "totalUsd": 0.00025976,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
