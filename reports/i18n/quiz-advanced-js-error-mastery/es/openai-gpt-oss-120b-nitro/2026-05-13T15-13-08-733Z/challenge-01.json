@@ -1,0 +1,44 @@
+{
+  "index": 0,
+  "attempt": 1,
+  "originalTitle": "The Empty Object Mystery",
+  "translatedTitle": "El Misterio del Objeto Vacío",
+  "translation": {
+    "title": "El Misterio del Objeto Vacío",
+    "group": "Sorpresas de Serialización",
+    "options": [
+      {
+        "text": "{\"message\":\"Oops\",\"name\":\"Error\"}"
+      },
+      {
+        "text": "{}"
+      },
+      {
+        "text": "{\"error\":\"Oops\"}"
+      },
+      {
+        "text": "null"
+      }
+    ],
+    "questionProse": [
+      "¿Qué devuelve `JSON.stringify(error)`?"
+    ],
+    "explanationProse": [
+      "Los objetos Error tienen propiedades no enumerables (`message`, `name`, `stack`), por lo que `JSON.stringify()` devuelve `{}`. Esto es una trampa frecuente al enviar errores en respuestas de API. Usa `JSON.stringify(error, Object.getOwnPropertyNames(error))` o crea un objeto plano en su lugar."
+    ]
+  },
+  "rawText": "{\n  \"title\":\"El Misterio del Objeto Vacío\",\n  \"group\": \"Sorpresas de Serialización\",\n  \"options\": [\n    {\n      \"text\": \"{\\\"message\\\":\\\"Oops\\\",\\\"name\\\":\\\"Error\\\"}\"\n    },\n    {\n      \"text\": \"{}\"\n    },\n    {\n      \"text\": \"{\\\"error\\\":\\\"Oops\\\"}\"\n    },\n    {\n      \"text\": \"null\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Qué devuelve `JSON.stringify(error)`?\"\n  ],\n  \"explanationProse\": [\n    \"Los objetos Error tienen propiedades no enumerables (`message`, `name`, `stack`), por lo que `JSON.stringify()` devuelve `{}`. Esto es una trampa frecuente al enviar errores en respuestas de API. Usa `JSON.stringify(error, Object.getOwnPropertyNames(error))` o crea un objeto plano en su lugar.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 796,
+    "outputTokens": 466,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 511
+  },
+  "cost": {
+    "inputUsd": 0.000031044,
+    "outputUsd": 0.00008387999999999999,
+    "totalUsd": 0.000114924,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

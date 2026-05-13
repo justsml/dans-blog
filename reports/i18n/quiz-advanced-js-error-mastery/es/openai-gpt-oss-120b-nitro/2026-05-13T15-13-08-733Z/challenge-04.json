@@ -1,0 +1,44 @@
+{
+  "index": 3,
+  "attempt": 1,
+  "originalTitle": "Cross-Frame instanceof",
+  "translatedTitle": "instanceof entre marcos",
+  "translation": {
+    "title": "instanceof entre marcos",
+    "group": "Trucos de verificación de tipos",
+    "options": [
+      {
+        "text": "Siempre verdadero"
+      },
+      {
+        "text": "Siempre falso"
+      },
+      {
+        "text": "Puede ser falso entre marcos"
+      },
+      {
+        "text": "Lanza un error"
+      }
+    ],
+    "questionProse": [
+      "¿Qué ocurre con `instanceof Error` entre iframes?"
+    ],
+    "explanationProse": [
+      "`instanceof` puede devolver `false` entre diferentes contextos de ejecución (iframes, workers) porque cada contexto tiene su propio constructor `Error`. Usa `Object.prototype.toString.call(obj) === '[object Error]'` para una detección fiable de errores entre contextos."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"instanceof entre marcos\",\n  \"group\": \"Trucos de verificación de tipos\",\n  \"options\": [\n    {\n      \"text\": \"Siempre verdadero\"\n    },\n    {\n      \"text\": \"Siempre falso\"\n    },\n    {\n      \"text\": \"Puede ser falso entre marcos\"\n    },\n    {\n      \"text\": \"Lanza un error\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Qué ocurre con `instanceof Error` entre iframes?\"\n  ],\n  \"explanationProse\": [\n    \"`instanceof` puede devolver `false` entre diferentes contextos de ejecución (iframes, workers) porque cada contexto tiene su propio constructor `Error`. Usa `Object.prototype.toString.call(obj) === '[object Error]'` para una detección fiable de errores entre contextos.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 789,
+    "outputTokens": 476,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1613
+  },
+  "cost": {
+    "inputUsd": 0.000030771,
+    "outputUsd": 0.00008568,
+    "totalUsd": 0.000116451,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
