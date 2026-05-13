@@ -40,8 +40,9 @@ function mdxGuidance(): string {
 MDX & CODE PRESERVATION (critical):
 - Preserve ALL code blocks exactly. Do NOT translate code, variable names, file paths, or shell commands.
 - Preserve ALL MDX component tags and their prop names. Only translate string prop VALUES that are reader-facing text (e.g., question text, labels, alt text).
-- Preserve ALL import statements and relative paths.
-- Preserve ALL markdown link URLs. Only translate the link text.
+- Preserve ALL import statements and their relative module paths.
+- ALL relative URL paths for images, CSS, links, or other resources should prefix/prepend with a \`../\`.
+- Preserve ALL markdown link URLs except relative URLs that need the locale-folder \`../\` prefix. Only translate the link text.
 - Preserve ALL inline code spans (\`...\`).
 - Do not add or remove blank lines around code fences or components unless the original has them.
 `.trim();
@@ -147,7 +148,7 @@ export function buildUserPrompt(
   parts.push(chunkText);
   parts.push("--- CHUNK END ---");
   parts.push("");
-  parts.push("Remember: preserve all code, MDX components, imports, and paths. Translate only reader-facing prose.");
+  parts.push("Remember: preserve all code, MDX components, and imports. For images, CSS, links, or other resources, prefix/prepend ALL relative URL paths with `../`. Translate only reader-facing prose.");
 
   return parts.join("\n");
 }
