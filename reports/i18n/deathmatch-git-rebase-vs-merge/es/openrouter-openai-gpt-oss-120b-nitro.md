@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: deathmatch-git-rebase-vs-merge
+- Locale: es
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2023-08-28--deathmatch-git-rebase-vs-merge/es/index.mdx
+- Validation: passed
+- Runtime seconds: 13.61
+- Input tokens: 8592
+- Output tokens: 2175
+- Thinking tokens: unknown
+- Cached input tokens: 2304
+- Cache write tokens: 0
+- Estimated cost: $0.000727
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: 'Duelo: Git Rebase vs. Merge'
@@ -126,3 +144,4 @@ En última instancia, **rebasing significa que ocasionalmente volverás a encont
 - Puedes usar el separador especial `--` con `git checkout` para permanecer en la rama actual mientras copias los archivos especificados:  
 - `git checkout feature/half-a-feature **--** <ruta del folder o archivo>`  
 - Asegúrate de haber confirmado (commit) cualquier cambio que quieras conservar primero, ya que esto sobrescribirá cualquier modificación local.   -->
+````
