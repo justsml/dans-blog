@@ -4,29 +4,29 @@
   "slug": "rag-pipeline-failures",
   "locale": "ja",
   "startedAt": "2026-05-13T16:51:36.387Z",
-  "updatedAt": "2026-05-13T16:51:44.908Z",
+  "updatedAt": "2026-05-13T16:53:48.098Z",
   "modelsRequested": [
     "openrouter/openai/gpt-oss-120b:nitro",
     "openrouter/qwen/qwen3-32b:nitro"
   ],
-  "attemptedModels": 1,
+  "attemptedModels": 2,
   "skippedModels": 0,
   "rejectedModels": 0,
-  "candidateModels": 1,
+  "candidateModels": 2,
   "totals": {
-    "inputTokens": 11294,
-    "outputTokens": 3747,
+    "inputTokens": 22556,
+    "outputTokens": 12247,
     "thinkingTokens": 0,
     "cachedInputTokens": 4224,
     "cacheWriteTokens": 0,
-    "estimatedCostUsd": 0.001115,
+    "estimatedCostUsd": 0.004056,
     "hasUnknownInputTokens": false,
     "hasUnknownOutputTokens": false,
     "hasUnknownThinkingTokens": true,
     "hasUnknownCachedInputTokens": false,
     "hasUnknownCacheWriteTokens": false,
     "hasUnknownEstimatedCost": false,
-    "runtimeSeconds": "6.76"
+    "runtimeSeconds": "111.11"
   },
   "attempts": [
     {
@@ -44,6 +44,24 @@
           "cacheWrite": 0
         },
         "estimatedCostUsd": 0.001114926,
+        "pricingSource": "local-openrouter-estimate"
+      }
+    },
+    {
+      "model": "openrouter/qwen/qwen3-32b:nitro",
+      "status": "candidate",
+      "validationStatus": "deferred",
+      "reportPath": "reports/i18n/rag-pipeline-failures/ja/openrouter-qwen-qwen3-32b-nitro.md",
+      "note": "Generated through the direct AI SDK chunked translator.",
+      "telemetry": {
+        "runtimeSeconds": "104.35",
+        "tokens": {
+          "input": 11262,
+          "output": 8500,
+          "cached": 0,
+          "cacheWrite": 0
+        },
+        "estimatedCostUsd": 0.0029409600000000003,
         "pricingSource": "local-openrouter-estimate"
       }
     }
