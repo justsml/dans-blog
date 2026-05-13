@@ -4,21 +4,21 @@
 - Model: openrouter/openai/gpt-oss-120b:nitro
 - Target: src/content/posts/2015-06-06--docker-firewall-setup/hi/index.mdx
 - Validation: rejected: direct AI SDK translation failed
-- Runtime seconds: 1.90
-- Input tokens: 4025
-- Output tokens: 925
+- Runtime seconds: 1.15
+- Input tokens: 3954
+- Output tokens: 995
 - Thinking tokens: unknown
-- Cached input tokens: 2176
+- Cached input tokens: 1920
 - Cache write tokens: 0
-- Estimated cost: $0.000323
+- Estimated cost: $0.000333
 - Pricing source: local-openrouter-estimate
-- Note: Command failed: bun run i18n:validate --slug docker-firewall-setup --locale hi
+- Note: Command failed: git commit --only -m i18n candidate(hi): docker-firewall-setup via openrouter/openai/gpt-oss-120b:nitro -- src/content/posts/2015-06-06--docker-firewall-setup/hi/index.mdx reports/i18n/docker-firewall-setup/hi reports/i18n/docker-firewall-setup/candidates.jsonl
 ## Raw Output
 
 ````mdx
 ---
 title: Docker फ़ायरवॉल सेटअप
-subTitle: Docker होस्ट फ़ायरवॉल सेटअप करें
+subTitle: Docker होस्ट का फ़ायरवॉल सेटअप करें
 draft: true
 date: '2015-06-06'
 modified: '2016-07-30'
@@ -34,57 +34,57 @@ cover_icon: ../icon_charles-deluvio-456501-unsplash.webp
 ---
 ## Docker होस्ट फ़ायरवॉल सेटअप करें
 
-1. Debian/Ubuntu सर्वर मान लिया गया है  
-2. Docker होस्ट सर्वर पर चलाने के लिए डिज़ाइन किया गया है  
+1. Debian/Ubuntu सर्वर मान लिया गया है
+1. Docker होस्ट सर्वर पर चलाने के लिए डिज़ाइन किया गया है
 
 ### आवश्यकताओं को इंस्टॉल करें
 
-```sh
-# अल्टिमेट फ़ायरवॉल की ज़रूरत
+~~~sh
+# Ultimate Firewall Needed
 apt-get update && apt-get install -y ufw nmap curl
-```
+~~~
 
-### अपना इंटरनल और एक्सटर्नल IP पता प्राप्त करें
+### अपना आंतरिक और बाहरी IP पता प्राप्त करें
 
-```sh
-# IP पता प्राप्त करें, सरल आउटपुट:
+~~~sh
+# Get your IP Addresses, simple output:
 hostname --all-ip-addresses
 ```
 
-# याip टूल का उपयोग करें, उदाहरण:
+# या ipटूल का उपयोग करें, उदाहरण:
 ip addr
 ~~~
 
 ### फ़ायरवॉल (UFW) सेटअप - उदाहरण कमांड
 
 ~~~sh
-ufw logging on # on=low - medium बेहतर हो सकता है निदान के लिए
+ufw logging on # on=low - medium might be better for diagnostics
 ufw logging medium
-# पहले, सब कुछ ब्लॉक करें
+# First, block all the things
 ufw default deny incoming
 
-# आवश्यक: नीचे दिए गए डिफ़ॉल्ट आउटबाउंड नियमों में से *एक* चुनें:
+# REQUIRED: CHOOSE *ONE* OF THE FOLLOWING DEFAULT OUTBOUND RULES:
 ufw default deny outgoing
 ufw default allow outgoing
 
-# सभी नई SSH कनेक्शन को अनुमति दें और लॉग करें,
+# Allow and log all new ssh connections,
 ufw allow log proto tcp from any to any port 22
-## HTTP ट्रैफ़िक की अनुमति दें (स्पष्ट लॉगिंग नहीं)
+## Allow http traffic (w/o explicit logging)
 ufw allow out on docker0 53/udp to 172.17.0.1/16
 ufw allow out on eth0 to any port 53
 ufw allow out on eth0 from 0.0.0.0/0 to any port 80 proto tcp
 ufw allow out on eth0 from 0.0.0.0/0 to any port 443 proto tcp
 
-# विस्तृत: ufw allow proto tcp from any to any port 80
+# Verbose: ufw allow proto tcp from any to any port 80
 ufw allow 80/tcp
 ufw allow 443/tcp
 ufw allow log 22/tcp
-ufw limit ssh # बेसिक रेट लिमिट – 4 SSH ब्रूट‑फ़ोर्स को कम करता है
+ufw limit ssh # Basic Rate limit 4 SSH brute force mitigation
 ~~~
 
-# अपना बाहरी IP सेट करें
+# Setyour ext IP
 export EXTERNAL_IP=123.123.123.123
-# आवश्यकता पड़ने पर Docker IP अपडेट करें
+# आवश्यक होने पर Docker IP अपडेट करें
 export DOCKER_IP=172.17.42.1
 # tcp 8080 ट्रैफ़िक को Dockerized एप्लिकेशन की ओर फ़ॉरवर्ड करें
 ufw allow proto tcp from $EXTERNAL_IP port 8080 to $DOCKER_IP port 3000
@@ -92,7 +92,7 @@ ufw allow proto tcp from $EXTERNAL_IP port 8080 to $DOCKER_IP port 3000
 
 ## फ़ायरवॉल सक्षम / शुरू करें
 
-> सावधान रहें, अपना SSH पोर्ट लॉक न करें (sshd डिफ़ॉल्ट रूप से 22 पर सुनता है)
+> सावधान रहें, अपने SSH पोर्ट को लॉक न करें (sshd डिफ़ॉल्ट रूप से 22 पर सुनता है)
 
 ~~~sh
 ufw --force enable
@@ -106,21 +106,21 @@ ufw reset
 
 > महत्वपूर्ण: एक रिमोट IP पता/स्थान का उपयोग करें
 
-```sh
-# निर्भरता सत्यापित करें
+~~~sh
+# Verify dependency
 apt-get update && apt-get install -y nmap
 
-# स्कैन लक्ष्य सेट करें
+# Set scan target
 export TARGET_HOST=123.123.123.123
 
-# उदाहरण स्कैन कमांड:
-# तेज़ खुले पोर्ट जांच
+# Example Scan Commands:
+# Fast open port check
 nmap -p 1-10240,27017 -T5 $TARGET_HOST
-# विस्तृत स्कैन
+# Thorough scan
 nmap -p 1-10240,27017 --open -v -APN $TARGET_HOST
-# सेवा निरीक्षण
+# Svc Inspection
 nmap -p 1-10240,27017 -O --osscan-guess $TARGET_HOST
-```
+~~~
 
 > हो गया! अब आपको केवल वही पोर्ट दिखने चाहिए जो आपने कॉन्फ़िगर किए हैं!
 ````
