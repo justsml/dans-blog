@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: mastra-workflows-memory
+- Locale: es
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-01-05--mastra-workflows-memory/es/index.mdx
+- Validation: passed
+- Runtime seconds: 4.44
+- Input tokens: 8275
+- Output tokens: 2906
+- Thinking tokens: unknown
+- Cached input tokens: 4224
+- Cache write tokens: 0
+- Estimated cost: $0.000846
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: 'Deja de crear agentes frágiles: usa flujos de trabajo y memoria'
 subTitle: Patrones determinísticos para modelos no determinísticos.
@@ -251,3 +269,4 @@ Los resultados pueden variar, pero en mi experiencia, los sistemas que realmente
 2. [Seguridad y Guardrails](../mastra-security-guardrails)
 3. [MCP e Integraciones de Herramientas](../mastra-mcp-tool-integrations)
 4. **Workflows y Memory** (Esta publicación)
+````
