@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: amazing-resources
+- Locale: hi
+- Model: qwen/qwen3.6-35b-a3b
+- Target: src/content/posts/2015-02-26--amazing-resources/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 181.96
+- Input tokens: 10239
+- Output tokens: 41169
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.000000
+- Pricing source: unknown
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: डेवलपर्स के लिए सर्वश्रेष्ठ मुफ़्त UI डिज़ाइन संसाधन
@@ -190,3 +208,4 @@ cover_icon: ../icon_carl-heyerdahl-181868-unsplash.webp
 
 Changelog: 2026-04 — पेज को मानव पठनीयता और SEO के लिए पुनर्व्यवस्थित किया, शीर्षक और विवरण सुधारे, और Assistant UI, AI SDK Elements, Aceternity UI, Shadcnblocks, Tailark, KokonutUI पैटर्न, और Tool UI जोड़े।
 Changelog: 2025-09 — लिंक अपडेट किए, पुराने संसाधन ताज़ा किए, और आधुनिक आइकन, कंट्रास्ट और डिज़ाइन टूल्स जोड़े।
+````
