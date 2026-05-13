@@ -1,0 +1,47 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "COUNT and NULL",
+  "translatedTitle": "COUNT e NULL",
+  "translation": {
+    "title": "COUNT e NULL",
+    "group": "Comportamento di NULL",
+    "options": [
+      {
+        "text": "100"
+      },
+      {
+        "text": "90"
+      },
+      {
+        "text": "10"
+      },
+      {
+        "text": "1"
+      },
+      {
+        "text": "0"
+      }
+    ],
+    "questionProse": [
+      "Quante *righe* verranno restituite?"
+    ],
+    "explanationProse": [
+      "Bene, questo era un po' trappola. L'inghippo è che `x = NULL` non corrisponderà mai a righe, e restituirà SEMPRE un'unica riga con un conteggio di `0`.\n\n    Poiché `NULL` è un valore sconosciuto, non può essere confrontato con niente, nemmeno con sé stesso.\n    \n    Il modo corretto per verificare i valori `NULL` è usare `IS NULL`.\n\n    Esempio:"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"COUNT e NULL\",\n  \"group\": \"Comportamento di NULL\",\n  \"options\": [\n    {\"text\": \"100\"},\n    {\"text\": \"90\"},\n    {\"text\": \"10\"},\n    {\"text\": \"1\"},\n    {\"text\": \"0\"}\n  ],\n  \"questionProse\": [\n    \"Quante *righe* verranno restituite?\"\n  ],\n  \"explanationProse\": [\n    \"Bene, questo era un po' trappola. L'inghippo è che `x = NULL` non corrisponderà mai a righe, e restituirà SEMPRE un'unica riga con un conteggio di `0`.\\n\\n    Poiché `NULL` è un valore sconosciuto, non può essere confrontato con niente, nemmeno con sé stesso.\\n    \\n    Il modo corretto per verificare i valori `NULL` è usare `IS NULL`.\\n\\n    Esempio:\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 784,
+    "outputTokens": 535,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 6678
+  },
+  "cost": {
+    "inputUsd": 0.00006272,
+    "outputUsd": 0.0001284,
+    "totalUsd": 0.00019112,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

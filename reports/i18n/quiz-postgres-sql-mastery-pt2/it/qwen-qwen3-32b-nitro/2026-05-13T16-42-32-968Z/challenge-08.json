@@ -1,0 +1,47 @@
+{
+  "index": 7,
+  "attempt": 1,
+  "originalTitle": "Column Name Quoting",
+  "translatedTitle": "Quoting dei nomi delle colonne",
+  "translation": {
+    "title": "Quoting dei nomi delle colonne",
+    "group": "Quoting 2",
+    "options": [
+      {
+        "text": "first.name"
+      },
+      {
+        "text": "\"first.name\""
+      },
+      {
+        "text": "\\"
+      },
+      {
+        "text": "[first.name]"
+      },
+      {
+        "text": "[first].[name]"
+      }
+    ],
+    "questionProse": [
+      "Come si specifica un **nome di colonna che contiene un punto?**"
+    ],
+    "explanationProse": [
+      "PostgreSQL utilizza le virgolette doppie per la quotazione degli identificatori:\n    - Virgolette doppie `\"...\"` per gli identificatori (nomi di colonne, tabelle)\n    - Virgolette singole `'...'` per le stringhe letterali\n    - La forma `first.name` viene interpretata come `nome_tabella.nome_colonna`\n\n    Senza virgolette, un punto in un nome di colonna verrebbe interpretato come separatore schema/tabella! Inoltre, tutti gli identificatori non racchiusi tra virgolette vengono automaticamente convertiti in minuscolo.\n\n    Per ridurre le sorprese, è preferibile usare `snake_case` e evitare caratteri speciali."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Quoting dei nomi delle colonne\",\n  \"group\": \"Quoting 2\",\n  \"options\": [\n    {\n      \"text\": \"first.name\"\n    },\n    {\n      \"text\": \"\\\"first.name\\\"\"\n    },\n    {\n      \"text\": \"\\\\\"\n    },\n    {\n      \"text\": \"[first.name]\"\n    },\n    {\n      \"text\": \"[first].[name]\"\n    }\n  ],\n  \"questionProse\": [\n    \"Come si specifica un **nome di colonna che contiene un punto?**\"\n  ],\n  \"explanationProse\": [\n    \"PostgreSQL utilizza le virgolette doppie per la quotazione degli identificatori:\\n    - Virgolette doppie `\\\"...\\\"` per gli identificatori (nomi di colonne, tabelle)\\n    - Virgolette singole `'...'` per le stringhe letterali\\n    - La forma `first.name` viene interpretata come `nome_tabella.nome_colonna`\\n\\n    Senza virgolette, un punto in un nome di colonna verrebbe interpretato come separatore schema/tabella! Inoltre, tutti gli identificatori non racchiusi tra virgolette vengono automaticamente convertiti in minuscolo.\\n\\n    Per ridurre le sorprese, è preferibile usare `snake_case` e evitare caratteri speciali.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 789,
+    "outputTokens": 809,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2035
+  },
+  "cost": {
+    "inputUsd": 0.00006312,
+    "outputUsd": 0.00019416,
+    "totalUsd": 0.00025728000000000003,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

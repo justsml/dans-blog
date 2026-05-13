@@ -1,0 +1,32 @@
+{
+  "index": 8,
+  "attempt": 1,
+  "originalTitle": "TABLESAMPLE Syntax",
+  "translatedTitle": "Sintassi TABLESAMPLE",
+  "translation": {
+    "title": "Sintassi TABLESAMPLE",
+    "group": "Campionamento dei dati",
+    "options": [],
+    "questionProse": [
+      "Quale è la sintassi valida per **campionare casualmente il 10%** degli studenti?"
+    ],
+    "explanationProse": [
+      "Questa è complicata! Prevede circa 6 trappole, alcune includono:\n\n    1. Descrizione a livello alto + frammenti di sintassi. Testa come adatti e assembli informazioni incomplete.\n    2. Richiede conoscenze consolidate su `TABLESAMPLE`, poiché nessuna delle opzioni `TABLESAMPLE` usa la sintassi corretta! (Sinistro! Lo so! Continua, ti credo! ❤️)\n    3. `ROW_NUMBER() OVER (ORDER BY RAND())` e `ORDER BY RANDOM() > 10` sono distrazioni. Sembra possano essere corretti, ma non lo sono. `RAND()` non esiste. E `RANDOM() > 10` è un'espressione booleana sempre falsa, poiché `RANDOM()` restituisce valori tra `0.0-1.0`.\n    Un altro problema: `ORDER BY RANDOM() > 10` ordinerebbe su un valore booleano, non su un numero casuale. Ma quel `> 10` sembrava potesse essere una percentuale, giusto?\n    4. `BERNOULLI` è valido, ma `SAMPLETABLE` non lo è.\n    5. `WHERE RANDOM() >= 0.1` è una trappola! `RANDOM()` restituisce un valore tra `0.0 <= x < 1.0`, quindi `>= 0.1` restituirà circa il 90% delle righe, non il 10%.\n\n    Per quanto riguarda il metodo `TABLESAMPLE`, PostgreSQL supporta due metodi di campionamento:\n    - `BERNOULLI`: Ogni riga ha la stessa probabilità\n    - `SYSTEM`: Campionamento a livello di blocco (più veloce ma meno casuale)\n\n    Per saperne di più sul campionamento, consulta questo articolo di [Render](https://render.com/blog/postgresql-random-samples-big-tables).\n\n    Esempio:",
+      "Meritano menzione anche i limiti di `TABLESAMPLE` [riportati](https://stackoverflow.com/questions/8674718/best-way-to-select-random-rows-postgresql) come poco casuali. Se hai bisogno di un campione _più casuale_ di dimensione fissa, considera `ORDER BY RANDOM() LIMIT 10`. Tuttavia, tieni presente che restituisce 10 righe, non il 10%, e può essere lento su tabelle grandi.\n\n    Esistono anche alcune estensioni di terze parti che offrono metodi di campionamento più avanzati, ma vanno al di là dello scopo di questo quiz! 😅"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Sintassi TABLESAMPLE\",\n  \"group\": \"Campionamento dei dati\",\n  \"options\": [],\n  \"questionProse\": [\n    \"Quale è la sintassi valida per **campionare casualmente il 10%** degli studenti?\"\n  ],\n  \"explanationProse\": [\n    \"Questa è complicata! Prevede circa 6 trappole, alcune includono:\\n\\n    1. Descrizione a livello alto + frammenti di sintassi. Testa come adatti e assembli informazioni incomplete.\\n    2. Richiede conoscenze consolidate su `TABLESAMPLE`, poiché nessuna delle opzioni `TABLESAMPLE` usa la sintassi corretta! (Sinistro! Lo so! Continua, ti credo! ❤️)\\n    3. `ROW_NUMBER() OVER (ORDER BY RAND())` e `ORDER BY RANDOM() > 10` sono distrazioni. Sembra possano essere corretti, ma non lo sono. `RAND()` non esiste. E `RANDOM() > 10` è un'espressione booleana sempre falsa, poiché `RANDOM()` restituisce valori tra `0.0-1.0`.\\n    Un altro problema: `ORDER BY RANDOM() > 10` ordinerebbe su un valore booleano, non su un numero casuale. Ma quel `> 10` sembrava potesse essere una percentuale, giusto?\\n    4. `BERNOULLI` è valido, ma `SAMPLETABLE` non lo è.\\n    5. `WHERE RANDOM() >= 0.1` è una trappola! `RANDOM()` restituisce un valore tra `0.0 <= x < 1.0`, quindi `>= 0.1` restituirà circa il 90% delle righe, non il 10%.\\n\\n    Per quanto riguarda il metodo `TABLESAMPLE`, PostgreSQL supporta due metodi di campionamento:\\n    - `BERNOULLI`: Ogni riga ha la stessa probabilità\\n    - `SYSTEM`: Campionamento a livello di blocco (più veloce ma meno casuale)\\n\\n    Per saperne di più sul campionamento, consulta questo articolo di [Render](https://render.com/blog/postgresql-random-samples-big-tables).\\n\\n    Esempio:\",\n    \"Meritano menzione anche i limiti di `TABLESAMPLE` [riportati](https://stackoverflow.com/questions/8674718/best-way-to-select-random-rows-postgresql) come poco casuali. Se hai bisogno di un campione _più casuale_ di dimensione fissa, considera `ORDER BY RANDOM() LIMIT 10`. Tuttavia, tieni presente che restituisce 10 righe, non il 10%, e può essere lento su tabelle grandi.\\n\\n    Esistono anche alcune estensioni di terze parti che offrono metodi di campionamento più avanzati, ma vanno al di là dello scopo di questo quiz! 😅\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1131,
+    "outputTokens": 1178,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2535
+  },
+  "cost": {
+    "inputUsd": 0.00009048,
+    "outputUsd": 0.00028272,
+    "totalUsd": 0.00037319999999999996,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

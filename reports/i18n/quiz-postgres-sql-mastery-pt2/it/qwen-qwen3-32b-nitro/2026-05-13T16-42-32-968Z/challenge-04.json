@@ -1,0 +1,48 @@
+{
+  "index": 3,
+  "attempt": 1,
+  "originalTitle": "Automatic Rollback",
+  "translatedTitle": "Ripristino automatico",
+  "translation": {
+    "title": "Ripristino automatico",
+    "group": "Transazioni",
+    "options": [
+      {
+        "text": "Dipende dagli effetti collaterali",
+        "hint": "Le transazioni non sono automatiche per default"
+      },
+      {
+        "text": "Annulla tutte le istruzioni",
+        "hint": "La transazione intera fallisce"
+      },
+      {
+        "text": "Commita solo la prima istruzione",
+        "hint": "Non esiste commit parziale senza savepoint"
+      },
+      {
+        "text": "Commita tutte le istruzioni riuscite",
+        "hint": "PostgreSQL non funziona così senza savepoint"
+      }
+    ],
+    "questionProse": [
+      "Tranne 'Dipende dagli effetti collaterali' \n    Cosa succede dopo un errore?"
+    ],
+    "explanationProse": [
+      "Quando si verifica un errore qui:\n    - La **transazione intera** viene annullata\n    - Nessuna modifica viene commessa\n    - La transazione è contrassegnata come fallita\n\n    Per commitare parzialmente:"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Ripristino automatico\",\n  \"group\": \"Transazioni\",\n  \"options\": [\n    {\n      \"text\": \"Dipende dagli effetti collaterali\",\n      \"hint\": \"Le transazioni non sono automatiche per default\"\n    },\n    {\n      \"text\": \"Annulla tutte le istruzioni\",\n      \"hint\": \"La transazione intera fallisce\"\n    },\n    {\n      \"text\": \"Commita solo la prima istruzione\",\n      \"hint\": \"Non esiste commit parziale senza savepoint\"\n    },\n    {\n      \"text\": \"Commita tutte le istruzioni riuscite\",\n      \"hint\": \"PostgreSQL non funziona così senza savepoint\"\n    }\n  ],\n  \"questionProse\": [\n    \"Tranne 'Dipende dagli effetti collaterali' \\n    Cosa succede dopo un errore?\"\n  ],\n  \"explanationProse\": [\n    \"Quando si verifica un errore qui:\\n    - La **transazione intera** viene annullata\\n    - Nessuna modifica viene commessa\\n    - La transazione è contrassegnata come fallita\\n\\n    Per commitare parzialmente:\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 743,
+    "outputTokens": 775,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 8218
+  },
+  "cost": {
+    "inputUsd": 0.00005944,
+    "outputUsd": 0.000186,
+    "totalUsd": 0.00024544,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
