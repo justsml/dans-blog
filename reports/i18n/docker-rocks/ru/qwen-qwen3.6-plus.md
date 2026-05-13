@@ -1,0 +1,67 @@
+# Translation Candidate
+- Slug: docker-rocks
+- Locale: ru
+- Model: qwen/qwen3.6-plus
+- Target: src/content/posts/2015-06-11--docker-rocks/ru/index.mdx
+- Validation: rejected: direct AI SDK translation failed
+- Runtime seconds: 240.00
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Cache write tokens: unknown
+- Estimated cost: unknown
+- Pricing source: unknown
+- Note: Command failed after 240000ms: bun run i18n:translate:chunked -- --slug docker-rocks --locale ru --model qwen/qwen3.6-plus --chunk 6p --quiz-concurrency 24
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: Docker крут и теперь работает на OSX
+subTitle: Docker — потрясающе быстр и гибок.
+date: '2015-06-11'
+modified: '2024-08-10'
+category: DevOps
+subCategory: docker
+tags:
+  - docker
+  - boot2docker
+  - devops
+related:
+  - docker-makes-everything-better
+  - docker-server-setup-notes
+  - docker-security-tips-for-self-hosting
+cover: ../guillaume-bolduc-259596-unsplash.webp
+cover_mobile: ../w300_guillaume-bolduc-259596-unsplash.webp
+cover_icon: ../icon_guillaume-bolduc-259596-unsplash.webp
+---
+## Docker — это круто
+
+> Обновления: сентябрь 2016, 2018  
+> Boot2Docker заменён на Docker for Mac
+
+> Историческая заметка: этот пост намеренно сохранён как снимок Docker для Mac эпохи 2015 года. Советы по производительности и названия инструментов отражают тот момент; текущие рабочие процессы Docker Desktop и Compose ушли вперёд.
+
+1. Docker — потрясающий, быстрый и гибкий.  
+1. Предыдущие инструменты, особенно boot2docker, были медленными и склонными к падениям.
+
+Docker в настоящее время может работать нативно на ядре Linux v3.4+ — а текущая виртуальная машина boot2docker на самом деле работает на v4.
+
+Лучшее использование вашего железа: установите последнюю версию Debian или Ubuntu на ваш Mac/Windows-компьютер,
+
+... да ладно, эти игры вашему коду не помогают...
+
+### Проверьте свою настройку
+
+Просмотрите вывод команды `docker info`.
+
+1. Безопасность: проверьте сервер на неожиданно открытые порты (с помощью `nmap` из удаленной сети)
+1. DNS: используйте локальный кеш или DNS-сервер с низкой задержкой.
+1. Хранилище: используйте правильный драйвер хранения (скорее всего, `overlay2`)
+
+Обновлено 2024:
+
+- Docker Desktop является проприетарным, но бесплатен для личного использования. Это отличный способ начать работу с Docker на OSX или Windows.
+- Если вы ищете более открытое решение, обратите внимание на [Rancher Desktop](https://rancherdesktop.io/).
+````
