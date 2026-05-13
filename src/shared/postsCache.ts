@@ -14,7 +14,7 @@ const _rawPostsCollection: ArticlePost[] = (
   }));
 
 const _allPosts = buildLocalizedPosts(_rawPostsCollection)
-  .filter(isVisiblePost)
+  .filter(isRoutablePost)
   .sort(
     // @ts-expect-error - data is not always defined
     (a, b) => toDate(a?.data?.date) - toDate(b?.data?.date),
@@ -22,6 +22,7 @@ const _allPosts = buildLocalizedPosts(_rawPostsCollection)
   .reverse() as unknown as ArticlePost[];
 
 const _posts = _allPosts.filter((post) => post.locale === DEFAULT_LOCALE);
+const _visiblePosts = _posts.filter(isVisiblePost);
 
 const ignoredCategories = ["Quiz", "Snippet", "Draft"];
 
@@ -81,7 +82,7 @@ export const PostCollections = {
   ),
 
   _slugs: _posts.map((post) => post.slug),
-  _quizPosts: _posts.filter((post) => post.data.category === "Quiz"),
+  _quizPosts: _visiblePosts.filter((post) => post.data.category === "Quiz"),
 
   _categories: _posts.reduce(
     (acc, post) => {
@@ -94,7 +95,7 @@ export const PostCollections = {
     {} as Record<string, number>,
   ),
 
-  _tags: _posts.reduce(
+  _tags: _visiblePosts.reduce(
     (acc, post) => {
       // const { tags, } = post.data;
       const {
@@ -128,7 +129,7 @@ export const PostCollections = {
   },
 
   getPosts() {
-    const posts = PostCollections._posts;
+    const posts = _visiblePosts;
     return posts;
   },
 
@@ -191,7 +192,7 @@ export const PostCollections = {
   },
 
   getFeedPosts() {
-    return [openSourceJournalPost, ...PostCollections._posts];
+    return [openSourceJournalPost, ..._visiblePosts];
   },
 
   getFeedItems({ includeSubCategory = true } = {}): PostFeedItem[] {

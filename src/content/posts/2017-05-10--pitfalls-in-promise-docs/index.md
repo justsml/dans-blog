@@ -6,7 +6,7 @@ date: 2017-05-10
 modified: 2024-07-30
 category: Code
 subCategory: promises
-tags: [programming, patterns, promises, functional river]
+tags: [programming, patterns, promises, functional-programming]
 cover: craig-whitehead-433328-unsplash.webp
 cover_mobile: w300_craig-whitehead-433328-unsplash.webp
 cover_icon: icon_craig-whitehead-433328-unsplash.webp

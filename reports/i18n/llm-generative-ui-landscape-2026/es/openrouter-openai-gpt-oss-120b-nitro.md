@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: llm-generative-ui-landscape-2026
+- Locale: es
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-05-10--llm-generative-ui-landscape-2026/es/index.mdx
+- Validation: passed
+- Runtime seconds: 17.48
+- Input tokens: 56239
+- Output tokens: 11930
+- Thinking tokens: unknown
+- Cached input tokens: 27136
+- Cache write tokens: 0
+- Estimated cost: $0.004341
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: El panorama GenUI de LLM v2
 subTitle: >-
@@ -419,3 +437,4 @@ Los frameworksestán madurando rápidamente. La convergencia de protocolos (AG�
 Los desafíos de ingeniería que importan más en este momento no son la selección del framework. Son el diseño del catálogo — decidir qué se le permite decir al modelo, lo que requiere claridad de producto más que habilidad técnica. Son la validación semántica — comprobar que la UI generada haga lo que afirma, no solo que pase la validación de esquema. Y es la brecha de accesibilidad — crear catálogos donde cada componente, y cada composición de componentes, cumpla con el nivel de accesibilidad que se exigiría a una UI escrita a mano.
 
 El modelo hará lo que le indiques dentro de la gramática que le proporciones. Haz que la gramática sea deliberada.
+````

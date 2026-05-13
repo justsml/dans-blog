@@ -274,18 +274,13 @@ function checkVisibility(post: PostFile) {
   const publish = flagValue(post.frontmatter.publish);
   const draft = flagValue(post.frontmatter.draft);
   const hidden = flagValue(post.frontmatter.hidden);
-  const unlisted = flagValue(post.frontmatter.unlisted);
 
-  if (publish === true && (draft === true || hidden === true)) {
-    add("warning", post, "publish:true is paired with draft:true or hidden:true");
+  if (publish === true && hidden === true) {
+    add("warning", post, "publish:true is paired with hidden:true");
   }
 
   if (publish === false && draft !== true && hidden !== true) {
     add("warning", post, "publish:false should usually be paired with draft:true or hidden:true");
-  }
-
-  if (draft === true && hidden !== true && unlisted !== true) {
-    add("warning", post, "draft:true should usually also be hidden:true or unlisted:true");
   }
 }
 

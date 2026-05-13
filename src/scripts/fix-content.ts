@@ -102,6 +102,7 @@ function postFileForDir(dir: string) {
 function fixContent(source: string) {
   const parsed = parseFrontmatter(source);
   if (parsed == null) return { contents: source, changes: [] };
+  if (hasBoolean(parsed.frontmatter, "draft", true)) return { contents: source, changes: [] };
 
   const changes: string[] = [];
   const fixedFrontmatter = fixFrontmatter(parsed.frontmatter, changes);
@@ -123,10 +124,6 @@ function fixFrontmatter(frontmatter: string, changes: string[]) {
   const tagFix = fixTags(result);
   result = tagFix.frontmatter;
   changes.push(...tagFix.changes);
-
-  const visibilityFix = fixDraftVisibility(result);
-  result = visibilityFix.frontmatter;
-  changes.push(...visibilityFix.changes);
 
   return result;
 }
@@ -202,68 +199,16 @@ function fixTagValue(value: string, changes: string[]) {
   return fixed;
 }
 
-function kebabCaseTag(value: string) {
-  return value
-    .trim()
-    .toLowerCase()
-    .replace(/\s+/g, "-");
-}
-
-function fixDraftVisibility(frontmatter: string) {
-  const changes: string[] = [];
-  let result = frontmatter;
-
-  const publishTrue = hasBoolean(result, "publish", true);
-  const publishFalse = hasBoolean(result, "publish", false);
-  const draftTrue = hasBoolean(result, "draft", true);
-  const hiddenTrue = hasBoolean(result, "hidden", true);
-
-  if (publishTrue && (draftTrue || hiddenTrue)) {
-    result = replaceBoolean(result, "publish", false);
-    changes.push("publish:true -> publish:false for draft/hidden post");
-  }
-
-  if (publishFalse && !draftTrue && !hiddenTrue && !hasKey(result, "hidden")) {
-    result = insertAfterScalar(result, "publish", "hidden: true");
-    changes.push("added hidden:true for publish:false post");
-  }
-
-  if (draftTrue && !hasBoolean(result, "hidden", true) && !hasKey(result, "hidden")) {
-    result = insertAfterScalar(result, "draft", "hidden: true");
-    changes.push("added hidden:true for draft post");
-  }
-
-  if (draftTrue && !hasBoolean(result, "unlisted", true) && !hasKey(result, "unlisted")) {
-    result = insertAfterScalar(result, "draft", "unlisted: true");
-    changes.push("added unlisted:true for draft post");
-  }
-
-  return { frontmatter: result, changes };
-}
-
 function hasBoolean(frontmatter: string, key: string, value: boolean) {
   const expected = value ? "true" : "false";
   return new RegExp(`^${escapeRegExp(key)}:\\s*${expected}\\s*$`, "m").test(frontmatter);
 }
 
-function hasKey(frontmatter: string, key: string) {
-  return new RegExp(`^${escapeRegExp(key)}:\\s*`, "m").test(frontmatter);
-}
-
-function replaceBoolean(frontmatter: string, key: string, value: boolean) {
-  return frontmatter.replace(
-    new RegExp(`^(${escapeRegExp(key)}:\\s*)(?:true|false)(\\s*)$`, "m"),
-    `$1${value ? "true" : "false"}$2`,
-  );
-}
-
-function insertAfterScalar(frontmatter: string, key: string, lineToInsert: string) {
-  const lines = frontmatter.split("\n");
-  const index = lines.findIndex((line) => new RegExp(`^${escapeRegExp(key)}:\\s*`).test(line));
-  if (index === -1) return frontmatter;
-
-  lines.splice(index + 1, 0, lineToInsert);
-  return lines.join("\n");
+function kebabCaseTag(value: string) {
+  return value
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, "-");
 }
 
 function parseQuotedValue(rawValue: string) {

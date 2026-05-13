@@ -10,7 +10,9 @@ export type PostVisibilityData = {
  *
  * - Published/indexed: omit these flags or set publish:true.
  * - Unlisted: set unlisted:true for URL-accessible posts hidden from lists.
- * - Draft/private: set publish:false, draft:true, hidden:true, unlisted:true.
+ * - Draft: set draft:true. Drafts remain directly routable and render with a
+ *   notice, but are omitted from lists and feeds.
+ * - Private/hidden: set publish:false and/or hidden:true.
  * - Archived/legacy-but-routable: keep publish:true and add historical framing
  *   in the post body instead of using hidden/draft flags.
  */
@@ -31,7 +33,9 @@ export const isVisiblePostData = (
 
 export const isRoutablePostData = (
   data?: PostVisibilityData | null,
-) => isVisiblePostData(data);
+) =>
+  isPublishedPostData(data) &&
+  normalizePostFlag(data?.hidden) !== true;
 
 export const isPublishedPost = <TPost extends PostWithData>(post?: TPost | null) =>
   isPublishedPostData(post?.data);

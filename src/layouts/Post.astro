@@ -50,6 +50,7 @@ type Props = {
     cover_credit?: string;
     category?: string;
     related?: string[];
+    draft?: boolean;
   };
 };
 
@@ -66,6 +67,7 @@ const {
   commentsKeyOverride,
   related,
   social_image,
+  draft,
 } = Astro.props.frontmatter! || Astro.props;
 
 const slug = Astro.props.slug;
@@ -264,6 +266,14 @@ const shouldCropMobileBanner =
       {
         subTitleHtml && (
           <p class="p-summary dek" set:html={subTitleHtml} />
+        )
+      }
+
+      {
+        draft && (
+          <aside class="draft-notice" data-pagefind-ignore="all">
+            <strong>Draft post.</strong> This page is a work in progress and may change.
+          </aside>
         )
       }
 
