@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: from-zero-to-regex-hero-extract-url-like-strings
+- Locale: ja
+- Model: qwen/qwen3.6-35b-a3b
+- Target: src/content/posts/2024-12-29--from-zero-to-regex-hero-extract-url-like-strings/ja/index.mdx
+- Validation: deferred
+- Runtime seconds: 177.04
+- Input tokens: 11519
+- Output tokens: 38113
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.000000
+- Pricing source: unknown
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: 正規表現：ゼロからエキスパートへ
 subTitle: 正規表現 1 つで URL 風の文字列を抽出・解析する
@@ -264,3 +282,4 @@ console.log("Extracted Parts:", parts);
 - [MDN の正規表現ドキュメント](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions)
 - [高度な正規表現テクニック](https://www.regular-expressions.info/)：より精密なマッチングを実現するための先読み、後読み、その他の高度なパターンを探索せよ。
 - [RFC 3986 - URI 一般構文](https://datatracker.ietf.org/doc/html/rfc3986)
+````
