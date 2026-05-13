@@ -1,0 +1,69 @@
+{
+  "selectedCommit": "bea0508e308ece416bf1f92c4d18ae6c0c5efa5d",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 9,
+    "relevance": 9,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "// Combines text + vector search",
+      "replacement": "// Kombiniert Text- + Vektorsuche",
+      "reason": "The comment in the Orama code block was left in English."
+    },
+    {
+      "priority": "medium",
+      "match": "keen interest",
+      "reason": "The phrase 'keen interest' was left in English in the disclaimer at the end of the document.",
+      "replacement": "großem Interesse"
+    }
+  ],
+  "rationale": "The translation captures the author's voice effectively, particularly the idiomatic and slightly cynical tone. It maintains technical accuracy and MDX structure. The suggestions address a missed code comment and an English phrase left in the disclaimer.",
+  "slug": "serverless-database-magic",
+  "locale": "de",
+  "candidateCommits": [
+    "bea0508e308ece416bf1f92c4d18ae6c0c5efa5d",
+    "3a44ef7d83e96f94b85f24e00d1c609ac71fa139",
+    "22e7c69fd19a8f6bb01e204ae71dd5330259986a"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "// \"Connect\" to a URL path",
+      "replacement": "// „Verbindung“ zu einem URL-Pfad",
+      "reason": "The comment in the code block was left in English.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "// SQL + vector search combination",
+      "replacement": "// Kombination aus SQL + Vektorsuche",
+      "reason": "The comment in the LanceDB code block was left in English.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "Klebe code",
+      "replacement": "Glue-Code",
+      "reason": "Incorrect spacing and capitalization for the technical term 'glue code' in German.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug serverless-database-magic --locale de --skip-global",
+    "output": ""
+  }
+}
