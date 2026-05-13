@@ -100,6 +100,8 @@ For higher-risk batches, add a second cheap judge explicitly with `--second-mode
 
    Automatic pre-publish fixes loop until no medium/high-priority issues remain or `--fix-pass-limit` is reached. The default limit is 2.
 
+   The candidate TUI can launch a parallel judge pass with `--judge`, or with `j` while the dashboard is open. It uses `--task-concurrency` to run separate slug/locale eval+fix loops in parallel.
+
 3. If a provider failed or left no target-file diff, make sure it is recorded as `i18n rejected(...)`, not a candidate.
 4. Judge only real candidate commits that changed the translated MDX:
 

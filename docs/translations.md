@@ -295,7 +295,9 @@ Candidate generation is a harvesting phase. By default, `i18n:translate:candidat
 
 Failed or interrupted candidate runs must preserve accounting. Do not roll `candidates.jsonl`, `candidate-run-summary.json`, `candidate-run-history.jsonl`, model run JSON, usage JSONL, or generated report directories backward just because a candidate failed. JSONL files are append-only evidence logs across models and runs. Candidate rows append to the article-level `reports/i18n/{slug}/candidates.jsonl`, while locale directories keep per-run summaries and model artifacts. The candidate runner records failed runs as `failed` or `interrupted` and cleans up active child process groups on exit.
 
-Judge runs are serialized with `.git/codex-i18n-judge.lock`. If a second judge starts, it waits for the active one instead of running concurrently. After waiting more than 6 minutes, the wrapper cleans up a stale or malformed lock when the recorded owner process is gone.
+Judge runs are serialized per slug/locale with `.git/codex-i18n-judge-{slug}-{locale}.lock`, so separate articles/locales can be judged concurrently while duplicate judges for the same target wait. After waiting more than 6 minutes, the wrapper cleans up a stale or malformed lock when the recorded owner process is gone.
+
+Full/global validation is separately serialized with `.git/codex-i18n-global-check.lock` so `content:check`, `fix-quizzes`, and `astro check` do not run concurrently from parallel judge or candidate workflows.
 
 ## Failure Handling
 

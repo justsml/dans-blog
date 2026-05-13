@@ -1,4 +1,5 @@
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { join } from "node:path";
 import {
   getPostPaths,
   requireActiveLocale,
@@ -31,13 +32,18 @@ if (shouldSkipGlobalChecks) {
   process.exit(0);
 }
 
-runInherited("bun", ["run", "content:check"]);
+const releaseGlobalCheckLock = acquireGlobalCheckLock();
+try {
+  runInherited("bun", ["run", "content:check"]);
 
-if (source.includes("<Challenge") || target.includes("<Challenge")) {
-  runInherited("bun", ["run", "fix-quizzes"]);
+  if (source.includes("<Challenge") || target.includes("<Challenge")) {
+    runInherited("bun", ["run", "fix-quizzes"]);
+  }
+
+  runInherited("bun", ["run", "check"]);
+} finally {
+  releaseGlobalCheckLock();
 }
-
-runInherited("bun", ["run", "check"]);
 
 function assertFrontmatter(contents: string) {
   if (!contents.startsWith("---")) {
@@ -210,4 +216,73 @@ function assertNestedAssetPaths(targetContents: string) {
 
 function escapeRegExp(value: string) {
   return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function acquireGlobalCheckLock() {
+  const lockDir = join(process.cwd(), ".git/codex-i18n-global-check.lock");
+  const ownerPath = join(lockDir, "owner.json");
+  const staleCleanupAfterMs = 10 * 60 * 1000;
+  const logEveryMs = 30 * 1000;
+  const startedWaitingAt = Date.now();
+  let lastLogAt = 0;
+  let cleanedStaleLock = false;
+
+  while (true) {
+    try {
+      mkdirSync(lockDir);
+      writeFileSync(ownerPath, JSON.stringify({
+        pid: process.pid,
+        slug,
+        locale,
+        startedAt: new Date().toISOString(),
+      }, null, 2), "utf8");
+      return () => rmSync(lockDir, { recursive: true, force: true });
+    } catch (error) {
+      if (!existsSync(lockDir)) throw error;
+
+      const now = Date.now();
+      if (now - lastLogAt >= logEveryMs) {
+        const owner = readCheckLockOwner(ownerPath);
+        const ownerLabel = owner == null
+          ? "unknown owner"
+          : `pid ${owner.pid ?? "unknown"} (${owner.slug ?? "unknown slug"} ${owner.locale ?? "unknown locale"})`;
+        console.error(`Waiting for i18n global check lock held by ${ownerLabel}.`);
+        lastLogAt = now;
+      }
+
+      if (!cleanedStaleLock && now - startedWaitingAt >= staleCleanupAfterMs) {
+        const owner = readCheckLockOwner(ownerPath);
+        if (owner == null || !isProcessAlive(owner.pid)) {
+          console.error("Cleaning stale i18n global check lock after waiting more than 10 minutes.");
+          rmSync(lockDir, { recursive: true, force: true });
+          cleanedStaleLock = true;
+          continue;
+        }
+      }
+
+      sleep(1000);
+    }
+  }
+}
+
+function readCheckLockOwner(ownerPath: string): Record<string, unknown> | undefined {
+  try {
+    return JSON.parse(readFileSync(ownerPath, "utf8")) as Record<string, unknown>;
+  } catch {
+    return undefined;
+  }
+}
+
+function isProcessAlive(pid: unknown) {
+  if (typeof pid !== "number" || !Number.isInteger(pid) || pid <= 0) return false;
+  try {
+    process.kill(pid, 0);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+function sleep(milliseconds: number) {
+  Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, milliseconds);
 }

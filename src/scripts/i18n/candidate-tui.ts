@@ -80,6 +80,7 @@ type AccountingTotals = {
 
 type WorkerState = {
   enabled: boolean;
+  mode?: "candidates" | "judge";
   status: "disabled" | "starting" | "running" | "completed" | "failed" | "stopped";
   startedAt?: Date;
   finishedAt?: Date;
@@ -104,16 +105,28 @@ const shouldIncompleteOnly = options["incomplete-only"] === true;
 const shouldMarkdown = options.markdown === true || options["no-tui"] === true;
 const watchIntervalSeconds = parseOptionalPositiveInteger(optionalString(options, "watch"));
 const shouldUseTui = !shouldMarkdown && process.stdout.isTTY && process.stdin.isTTY;
-const shouldRunWorker = options.run === true && options["monitor-only"] !== true;
+const shouldRunJudgeWorker = options.judge === true;
+const shouldRunWorker = (options.run === true || shouldRunJudgeWorker) && options["monitor-only"] !== true;
 const workerState: WorkerState = {
   enabled: shouldRunWorker,
+  mode: shouldRunWorker ? (shouldRunJudgeWorker ? "judge" : "candidates") : undefined,
   status: shouldRunWorker ? "starting" : "disabled",
   recentOutput: [],
 };
 let workerProcess: ChildProcess | undefined;
 
+if (options["judge-worker"] === true) {
+  try {
+    await runJudgeWorker();
+  } catch (error) {
+    console.error(error instanceof Error ? error.message : String(error));
+    process.exit(1);
+  }
+  process.exit(0);
+}
+
 if (shouldRunWorker) {
-  startCandidateWorker();
+  startWorker(shouldRunJudgeWorker ? "judge" : "candidates");
 }
 
 if (shouldUseTui) {
@@ -263,6 +276,16 @@ async function renderTerminalUi() {
     if (name === "r") {
       refreshData();
       draw();
+    }
+    if (name === "j" || name === "J") {
+      if (workerProcess == null || isWorkerFinished()) {
+        startWorker("judge");
+        refreshData();
+        draw();
+      } else {
+        appendWorkerOutput("judge start ignored: worker already running");
+        draw();
+      }
     }
     if (name === "UP") {
       scrollBy(-1);
@@ -451,7 +474,7 @@ function drawPanel(term: any, left: number, top: number, width: number, height: 
 }
 
 function drawFooter(term: any, width: number, height: number, offset: number, maxOffset: number) {
-  writeAt(term, 1, height, `q quit + stop worker | r refresh | worker ${formatWorkerStatus()} | ${offset}/${maxOffset}`, width, "gray");
+  writeAt(term, 1, height, `q quit + stop worker | j judge | r refresh | worker ${formatWorkerStatus()} | ${offset}/${maxOffset}`, width, "gray");
 }
 
 function terminalCandidateCell(summary: CandidateSummary) {
@@ -1087,9 +1110,16 @@ function parseLocales() {
   return values as ActiveLocale[];
 }
 
-function startCandidateWorker() {
-  const args = buildGeneratorArgs();
+function startWorker(mode: "candidates" | "judge") {
+  const args = mode === "judge" ? buildJudgeWorkerArgs() : buildGeneratorArgs();
+  workerState.enabled = true;
+  workerState.mode = mode;
   workerState.startedAt = new Date();
+  workerState.finishedAt = undefined;
+  workerState.exitCode = undefined;
+  workerState.signal = undefined;
+  workerState.error = undefined;
+  workerState.recentOutput = [];
   workerState.status = "running";
   appendWorkerOutput(`$ bun ${formatCommandArgs(args)}`);
 
@@ -1163,15 +1193,16 @@ function appendWorkerOutput(value: unknown) {
 
 function formatWorkerStatus() {
   if (!workerState.enabled) return "disabled";
-  if (workerState.status === "running") return `running ${formatDuration(Date.now() - Number(workerState.startedAt ?? new Date()))}`;
+  const label = workerState.mode ?? "worker";
+  if (workerState.status === "running") return `${label} ${formatDuration(Date.now() - Number(workerState.startedAt ?? new Date()))}`;
   if (workerState.status === "failed") {
-    return workerState.error ?? `failed ${workerState.signal ?? `code ${workerState.exitCode ?? "unknown"}`}`;
+    return workerState.error ?? `${label} failed ${workerState.signal ?? `code ${workerState.exitCode ?? "unknown"}`}`;
   }
-  return workerState.status;
+  return `${label} ${workerState.status}`;
 }
 
 function renderScopedGeneratorCommand() {
-  return `bun ${formatCommandArgs(buildGeneratorArgs())}`;
+  return `bun ${formatCommandArgs(shouldRunJudgeWorker ? buildJudgeWorkerArgs() : buildGeneratorArgs())}`;
 }
 
 function buildGeneratorArgs() {
@@ -1198,9 +1229,154 @@ function buildGeneratorArgs() {
   return args;
 }
 
+function buildJudgeWorkerArgs() {
+  const args = ["./src/scripts/i18n/candidate-tui.ts", "--judge-worker"];
+  const slugs = [...selectedSlugs];
+
+  if (slugs.length > 0) {
+    args.push("--slugs", slugs.join(","));
+  }
+
+  args.push("--locales", selectedLocales.join(","));
+  args.push("--expected", String(expectedCandidates));
+
+  addGeneratorArgWithDefault(args, "task-concurrency", DEFAULT_TUI_TASK_CONCURRENCY);
+  addOptionalGeneratorArg(args, "judge-model");
+  addOptionalGeneratorArg(args, "second-model");
+  addOptionalGeneratorArg(args, "escalate-model");
+  addOptionalGeneratorArg(args, "candidate-limit");
+  addOptionalGeneratorArg(args, "candidate-models");
+  addOptionalGeneratorArg(args, "timeout-seconds");
+  addOptionalGeneratorArg(args, "fix-pass-limit");
+  addOptionalGeneratorArg(args, "judge-batch-size");
+
+  for (const name of ["full-validation", "no-commit", "overwrite", "allow-single-candidate"]) {
+    if (options[name] === true) args.push(`--${name}`);
+  }
+
+  return args;
+}
+
+async function runJudgeWorker() {
+  const tasks = collectJudgeTasks();
+  const concurrency = parsePositiveInteger(optionalString(options, "task-concurrency"), Number(DEFAULT_TUI_TASK_CONCURRENCY));
+  const failures: string[] = [];
+
+  console.log(`Found ${tasks.length} judge task(s).`);
+  console.log(`Processing judge tasks with concurrency ${concurrency}.`);
+
+  await mapLimit(tasks, concurrency, async (task, index) => {
+    console.log(`\n[${index + 1}/${tasks.length}] judging ${task.locale}/${task.slug}`);
+    try {
+      await runJudgeTask(task);
+    } catch (error) {
+      failures.push(`${task.locale}/${task.slug}: ${error instanceof Error ? error.message : String(error)}`);
+    }
+  });
+
+  if (failures.length > 0) {
+    throw new Error([
+      `${failures.length} judge task(s) failed:`,
+      ...failures.map((failure) => `- ${failure}`),
+    ].join("\n"));
+  }
+}
+
+function collectJudgeTasks() {
+  const rows = collectRows();
+  const tasks: Array<{ slug: string; locale: ActiveLocale; count: number }> = [];
+
+  for (const row of rows) {
+    for (const locale of selectedLocales) {
+      const summary = row.candidates[locale];
+      if (summary.count <= 0) continue;
+      if (summary.count < expectedCandidates && options["allow-single-candidate"] !== true) continue;
+      if (!options.overwrite && hasJudgeOutput(row.slug, locale)) continue;
+      tasks.push({ slug: row.slug, locale, count: summary.count });
+    }
+  }
+
+  return tasks.sort((a, b) =>
+    b.count - a.count ||
+    a.slug.localeCompare(b.slug) ||
+    a.locale.localeCompare(b.locale),
+  );
+}
+
+function hasJudgeOutput(slug: string, locale: ActiveLocale) {
+  return existsSync(join(REPORT_ROOT, slug, locale, "judge.json"));
+}
+
+function runJudgeTask(task: { slug: string; locale: ActiveLocale }) {
+  const args = [
+    "run",
+    "i18n:judge",
+    "--",
+    "--slug",
+    task.slug,
+    "--locale",
+    task.locale,
+    ...optionalArg("--model", optionalString(options, "judge-model")),
+    ...optionalArg("--second-model", optionalString(options, "second-model")),
+    ...optionalArg("--escalate-model", optionalString(options, "escalate-model")),
+    ...optionalArg("--candidate-limit", optionalString(options, "candidate-limit")),
+    ...optionalArg("--candidate-models", optionalString(options, "candidate-models")),
+    ...optionalArg("--timeout-seconds", optionalString(options, "timeout-seconds")),
+    ...optionalArg("--fix-pass-limit", optionalString(options, "fix-pass-limit")),
+    ...optionalArg("--judge-batch-size", optionalString(options, "judge-batch-size")),
+    ...optionalFlag("--full-validation", options["full-validation"] === true),
+    ...optionalFlag("--no-commit", options["no-commit"] === true),
+    ...optionalFlag("--allow-single-candidate", options["allow-single-candidate"] === true),
+  ];
+
+  return new Promise<void>((resolve, reject) => {
+    const child = spawn("bun", args, {
+      cwd: process.cwd(),
+      stdio: "inherit",
+    });
+
+    child.on("error", reject);
+    child.on("exit", (code, signal) => {
+      if (code === 0) {
+        resolve();
+        return;
+      }
+      reject(new Error(`judge exited with ${signal ?? `code ${code}`}`));
+    });
+  });
+}
+
+async function mapLimit<T>(
+  items: T[],
+  limit: number,
+  worker: (item: T, index: number) => Promise<void>,
+) {
+  let nextIndex = 0;
+
+  async function runWorker() {
+    while (nextIndex < items.length) {
+      const index = nextIndex;
+      nextIndex += 1;
+      await worker(items[index], index);
+    }
+  }
+
+  await Promise.all(
+    Array.from({ length: Math.min(limit, items.length) }, () => runWorker()),
+  );
+}
+
 function addOptionalGeneratorArg(args: string[], name: string) {
   const value = optionalString(options, name);
   if (value != null) args.push(`--${name}`, value);
+}
+
+function optionalArg(name: string, value: string | undefined) {
+  return value == null ? [] : [name, value];
+}
+
+function optionalFlag(name: string, enabled: boolean) {
+  return enabled ? [name] : [];
 }
 
 function addGeneratorArgWithDefault(args: string[], name: string, fallback: string) {

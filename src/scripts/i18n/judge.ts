@@ -525,7 +525,7 @@ function writeJudgeJsonValidation(
 }
 
 function acquireJudgeLock() {
-  const lockDir = join(process.cwd(), ".git/codex-i18n-judge.lock");
+  const lockDir = join(process.cwd(), ".git", `codex-i18n-judge-${slug}-${locale}.lock`);
   const ownerPath = join(lockDir, "owner.json");
   const staleCleanupAfterMs = 6 * 60 * 1000;
   const logEveryMs = 30 * 1000;
