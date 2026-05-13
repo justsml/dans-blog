@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: securing-clawdbot-tailscale
+- Locale: ru
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-01-26--securing-clawdbot-tailscale/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 177.94
+- Input tokens: 12499
+- Output tokens: 10408
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.003498
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Ваш ИИ-ассистент дал мне доступ к оболочке
 subTitle: >-
@@ -274,3 +292,4 @@ Tailscale устраняет самую крупную ошибку: публи�
 - [Использование UFW для блокировки Ubuntu-сервера](https://tailscale.com/docs/how-to/secure-ubuntu-server-with-ufw)  
 - [Аудит безопасности: 512 проблем (GitHub Issue)](https://github.com/moltbot/moltbot/issues/1796)  
 - [Руководство по сканированию сети Nmap](https://nmap.org/book/man.html)
+````
