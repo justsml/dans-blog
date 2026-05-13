@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: mastra-security-guardrails
+- Locale: ja
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-01-03--mastra-security-guardrails/ja/index.mdx
+- Validation: deferred
+- Runtime seconds: 3.17
+- Input tokens: 7423
+- Output tokens: 2867
+- Thinking tokens: unknown
+- Cached input tokens: 3328
+- Cache write tokens: 0
+- Estimated cost: $0.000806
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: 本番AIは恐ろしい（対策方法）
 subTitle: エージェントにガードレールがなければ、実運用はまだ不可です。
@@ -172,3 +190,4 @@ if (result.tripwire) {
 2. **セキュリティ & ガードレール**（本記事）
 3. [MCP とツール統合](../mastra-mcp-tool-integrations)
 4. [ワークフロー & メモリ](../mastra-workflows-memory)
+````
