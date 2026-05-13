@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: developer-workstation-blast-radius
+- Locale: ja
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-05-09--developer-workstation-blast-radius/ja/index.mdx
+- Validation: passed
+- Runtime seconds: 69.35
+- Input tokens: 36424
+- Output tokens: 26665
+- Thinking tokens: unknown
+- Cached input tokens: 10240
+- Cache write tokens: 0
+- Estimated cost: $0.009314
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: ''
 subTitle: ''
@@ -410,3 +428,4 @@ shred -u customer-export.sql.gz
 - [Microsoft: Windows ファイアウォールルール](https://learn.microsoft.com/en-us/windows/security/operating-system-security/network-security/windows-firewall/rules)  
 - [Mandiant: UNC5537 が Snowflake カスタマーインスタンスを狙う](https://cloud.google.com/blog/topics/threat-intelligence/unc5537-snowflake-data-theft-extortion)  
 - [Microsoft: Lumma Stealer の配信技術と機能](https://www.microsoft.com/en-us/security/blog/2025/05/21/lumma-stealer-breaking-down-the-delivery-techniques-and-capabilities-of-a-prolific-infostealer/)
+````
