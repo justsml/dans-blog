@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: ai-sdk-math-tool
+- Locale: hi
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-01-06--ai-sdk-math-tool/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 165.71
+- Input tokens: 7931
+- Output tokens: 8279
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.002621
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: LLMs को गणित करने के लिए मत पूछो
 subTitle: वे इसमें कमजोर हैं। यहां इसे ठीक करने का तरीका है।
@@ -105,3 +123,4 @@ console.log(text);
 - [कॉर्टेक्स जे एस कम्प्यूट इंजन](https://cortexjs.io/compute-engine/)
 - [टूल कॉलिंग गाइड](https://sdk.vercel.ai/docs/ai-sdk-core/tools-and-tool-calling)
 - [एआई एसडीके उदाहरण रिपॉजिटरी](https://github.com/vercel/ai/tree/main/examples)
+````
