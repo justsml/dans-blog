@@ -1,16 +1,7 @@
-## Decision
+# Translation Judge
 
-Selected `c4ea4d56ea6648e50c0119d71a1ab8130255822e` as the best Hindi candidate.
+- Selected candidate: 7072928335c8244fd2b90f90d92de508f85b5f18
+- Selected model: openrouter/qwen/qwen3.6-plus
+- Judge model: openrouter/google/gemini-3-flash-preview
 
-## Why
-
-- It had the strongest balance of technical accuracy and natural Hindi.
-- It preserved the MDX structure cleanly, including code fences, headings, and links.
-- The tone stayed close to Dan's direct style without drifting into overly literal or overly slang-heavy phrasing.
-- The other candidates had more noticeable issues: some were too informal, some were awkwardly transliterated, and some introduced phrasing that felt less natural or less precise.
-
-## Light polish applied
-
-- Kept the selected candidate as the base.
-- Normalized a few English terms and punctuation where it reads more naturally in the final post.
-- Preserved the post's MDX structure and link targets.
+The selected candidate (Qwen 3.6 Plus) provides a high-quality, natural translation that captures Dan's direct and punchy style. It correctly handles technical terms like 'Routing' and 'Delegation' using a mix of transliteration and appropriate Hindi terms. It avoids the literal translation errors found in other versions (e.g., 'so hot right now' is correctly interpreted as 'in trend' rather than 'high temperature'). The MDX structure and code blocks are perfectly preserved. Note: The previous judge report mentioned a suggestion for 'juggling', but the current text already uses 'जुगलबंदी' which is a creative and fitting translation for the context, so no further high-priority fixes are required.
