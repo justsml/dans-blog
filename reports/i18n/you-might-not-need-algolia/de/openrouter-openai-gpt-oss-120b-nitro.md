@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: you-might-not-need-algolia
+- Locale: de
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2025-03-01--you-might-not-need-algolia/de/index.mdx
+- Validation: passed
+- Runtime seconds: 3.14
+- Input tokens: 6017
+- Output tokens: 1539
+- Thinking tokens: unknown
+- Cached input tokens: 3584
+- Cache write tokens: 0
+- Estimated cost: $0.000512
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Vielleicht brauchen Sie Algolia™ nicht
 social_image: ../desktop-social.webp
@@ -98,3 +116,4 @@ Wenn ja, beginnen Sie mit Pagefind. Sie erhalten standardmäßig private Suche, 
 Wenn nein, benennen Sie das Element, das den Index „live“ macht: Inventar, Berechtigungen, Personalisierung, Analytik, Ranking oder Schreibhäufigkeit. Dann wählen Sie die Datenbank oder den Suchdienst, der diese Aufgabe explizit übernimmt.
 
 Algolia ist hier nicht der Bösewicht. Der Bösewicht ist das Einführen eines zweiten Systems, bevor nachgewiesen ist, dass das erste Artefakt nicht ausreicht.
+````
