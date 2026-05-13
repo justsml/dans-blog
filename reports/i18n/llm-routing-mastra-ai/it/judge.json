@@ -1,0 +1,40 @@
+{
+  "selectedCommit": "8cb83b6b6689a2f24b4a049ee1c0f56091893366",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 10,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The candidate 8cb83b6b6689a2f24b4a049ee1c0f56091893366 (DeepSeek) is the best choice. It maintains the technical terminology (engineering, eval, provider) common in Italian dev circles while keeping Dan's punchy, direct style. The 'current' version in the prompt actually already seems to have incorporated the 'molto in voga' suggestion from the previous judge report, making it high quality. The MDX structure and code blocks are perfectly preserved.",
+  "slug": "llm-routing-mastra-ai",
+  "locale": "it",
+  "candidateCommits": [
+    "526442bb4de3493cc6e5fc32314d13423c1733c4",
+    "8cb83b6b6689a2f24b4a049ee1c0f56091893366",
+    "9fa5b4988512ca7d9e104e149ac4c5033af8b029",
+    "623f454ea8f8e7a648e540c6b46053e815f1006b",
+    "c213fed21ec7bbcd79e3d9cf8dfe903fb55de0d3"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "medium",
+      "match": "una figata pazzesca",
+      "replacement": "molto in voga",
+      "reason": "The original 'so hot right now' is a meme/idiom. 'Una figata pazzesca' is a bit too informal/slangy for a technical engineering post, though it captures the spirit. 'Molto in voga' or 'Sulla cresta dell'onda' would be more professional.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug llm-routing-mastra-ai --locale it --skip-global",
+    "output": ""
+  }
+}
