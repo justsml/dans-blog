@@ -1,0 +1,42 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "Precision with Floating Points",
+  "translatedTitle": "浮動小数点の精度",
+  "translation": {
+    "title": "浮動小数点の精度",
+    "group": "数学",
+    "options": [
+      {
+        "text": "0.1 + 0.2 === 0.3"
+      },
+      {
+        "text": "false"
+      },
+      {
+        "text": "true"
+      },
+      {
+        "text": "NaN"
+      }
+    ],
+    "questionProse": [],
+    "explanationProse": [
+      "浮動小数点の精度誤差のため、`0.1 + 0.2` は正確には `0.3` と等しくありません。浮動小数点数がメモリに格納される方式のせいで、結果は `0.30000000000000004` になります。IEEE 754 標準が原因で、いくつかの数値を正確に表現できません。これはすべてのプログラミング言語で共通の問題です。最終的に無限に続く小数に直面し、言語に関係なくコンピュータは無限に続く桁を追いかけるのをやめるしかありません。\n\n    Python や Java などの言語には `Decimal` や `BigDecimal` がありこの問題に対処できますが、JavaScript には組み込まれていません。代わりに `big.js` や `decimal.js` といったライブラリを利用できます。\n\n    （注：一部の言語は分数や虚数などを高レベルの論理で扱うよう設計されていますが、ハードウェアレベルの浮動小数点精度問題は同じです。）"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"浮動小数点の精度\",\n  \"group\": \"数学\",\n  \"options\": [\n    {\n      \"text\": \"0.1 + 0.2 === 0.3\"\n    },\n    {\n      \"text\": \"false\"\n    },\n    {\n      \"text\": \"true\"\n    },\n    {\n      \"text\": \"NaN\"\n    }\n  ],\n  \"questionProse\": [],\n  \"explanationProse\": [\n    \"浮動小数点の精度誤差のため、`0.1 + 0.2` は正確には `0.3` と等しくありません。浮動小数点数がメモリに格納される方式のせいで、結果は `0.30000000000000004` になります。IEEE 754 標準が原因で、いくつかの数値を正確に表現できません。これはすべてのプログラミング言語で共通の問題です。最終的に無限に続く小数に直面し、言語に関係なくコンピュータは無限に続く桁を追いかけるのをやめるしかありません。\\n\\n    Python や Java などの言語には `Decimal` や `BigDecimal` がありこの問題に対処できますが、JavaScript には組み込まれていません。代わりに `big.js` や `decimal.js` といったライブラリを利用できます。\\n\\n    （注：一部の言語は分数や虚数などを高レベルの論理で扱うよう設計されていますが、ハードウェアレベルの浮動小数点精度問題は同じです。）\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 965,
+    "outputTokens": 1134,
+    "cacheReadTokens": 128,
+    "cacheWriteTokens": 0,
+    "durationMs": 1228
+  },
+  "cost": {
+    "inputUsd": 0.000037635,
+    "outputUsd": 0.00020412,
+    "totalUsd": 0.000241755,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

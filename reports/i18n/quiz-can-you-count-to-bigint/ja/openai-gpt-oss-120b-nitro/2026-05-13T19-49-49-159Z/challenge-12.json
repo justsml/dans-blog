@@ -1,0 +1,50 @@
+{
+  "index": 11,
+  "attempt": 1,
+  "originalTitle": "Handling nulls",
+  "translatedTitle": "null の取り扱い",
+  "translation": {
+    "title": "null の取り扱い",
+    "group": "パース",
+    "options": [
+      {
+        "text": "0 NaN"
+      },
+      {
+        "text": "0 0"
+      },
+      {
+        "text": "NaN NaN"
+      },
+      {
+        "text": "NaN 0"
+      },
+      {
+        "text": "null null"
+      },
+      {
+        "text": "TypeError"
+      }
+    ],
+    "questionProse": [
+      "このコードの結果は何ですか？"
+    ],
+    "explanationProse": [
+      "`parseInt` は入力を文字列に変換するので、`null` は `\"null\"` になります。`\"null\"` には有効な10進数文字（普通の数字）がないため、`NaN` を返します。\n\n`Number(null)` は `0` を返します。JS は意外な結果を好むのでね。\nなぜかというと…興味があればさらに掘り下げます。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"null の取り扱い\",\n  \"group\": \"パース\",\n  \"options\": [\n    {\n      \"text\": \"0 NaN\"\n    },\n    {\n      \"text\": \"0 0\"\n    },\n    {\n      \"text\": \"NaN NaN\"\n    },\n    {\n      \"text\": \"NaN 0\"\n    },\n    {\n      \"text\": \"null null\"\n    },\n    {\n      \"text\": \"TypeError\"\n    }\n  ],\n  \"questionProse\": [\n    \"このコードの結果は何ですか？\"\n  ],\n  \"explanationProse\": [\n    \"`parseInt` は入力を文字列に変換するので、`null` は `\\\"null\\\"` になります。`\\\"null\\\"` には有効な10進数文字（普通の数字）がないため、`NaN` を返します。\\n\\n`Number(null)` は `0` を返します。JS は意外な結果を好むのでね。\\nなぜかというと…興味があればさらに掘り下げます。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 877,
+    "outputTokens": 642,
+    "cacheReadTokens": 128,
+    "cacheWriteTokens": 0,
+    "durationMs": 1024
+  },
+  "cost": {
+    "inputUsd": 0.000034203,
+    "outputUsd": 0.00011556,
+    "totalUsd": 0.000149763,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
