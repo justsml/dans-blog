@@ -1,0 +1,67 @@
+# Translation Candidate
+- Slug: docker-rocks
+- Locale: fr
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2015-06-11--docker-rocks/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 0.58
+- Input tokens: 1804
+- Output tokens: 430
+- Thinking tokens: unknown
+- Cached input tokens: 896
+- Cache write tokens: 0
+- Estimated cost: $0.000148
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: Docker est génial et fonctionne maintenant sous macOS
+subTitle: 'Docker est incroyable, rapide et flexible'
+date: '2015-06-11'
+modified: '2024-08-10'
+category: DevOps
+subCategory: docker
+tags:
+  - docker
+  - boot2docker
+  - devops
+related:
+  - docker-makes-everything-better
+  - docker-server-setup-notes
+  - docker-security-tips-for-self-hosting
+cover: ../guillaume-bolduc-259596-unsplash.webp
+cover_mobile: ../w300_guillaume-bolduc-259596-unsplash.webp
+cover_icon: ../icon_guillaume-bolduc-259596-unsplash.webp
+---
+## Docker Rocks
+
+> Mises à jour septembre 2016, 2018  
+> Boot2Docker a été remplacé par Docker for Mac
+
+> Note historique : cet article est conservé intentionnellement comme une capture d’écran de Docker‑for‑Mac de 2015. Les conseils de performance et les noms d’outils reflètent cette époque ; les workflows actuels de Docker Desktop et Compose ont évolué depuis.
+
+1. Docker est impressionnant, rapide et flexible.  
+1. Les outils précédents, boot2docker en particulier, étaient lents et sujets aux plantages.
+
+Docker peut aujourd’hui s’exécuter nativement sur un noyau Linux v3.4 + — et la VM boot2docker actuelle tourne en fait sur la v4.
+
+Meilleure utilisation de votre matériel : installez la dernière version de Debian ou d’Ubuntu sur votre Mac/Windows.
+
+... c’mon ces jeux n’aident pas votre code...
+
+### Vérifiez votre configuration
+
+Examinez la sortie de la commande `docker info`.
+
+1. Sécurité : vérifiez que le serveur n’a pas de ports ouverts inattendus (avec `nmap` depuis un réseau distant)  
+1. DNS : utilisez un cache local ou un serveur DNS à faible latence.  
+1. Stockage : utilisez le pilote de stockage adéquat (`overlay2` est probablement le bon choix)
+
+Mise à jour 2024 :
+
+- Docker Desktop est propriétaire, mais gratuit pour un usage personnel. C’est une façon efficace de commencer avec Docker sur macOS ou Windows.  
+- Si vous préférez une solution entièrement open‑source, jetez un œil à [Rancher Desktop](https://rancherdesktop.io/).
+````
