@@ -1,0 +1,38 @@
+{
+  "selectedCommit": "6305b795fa815b0cb8fb4a240062ed8b2f42fa10",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "scores": {
+    "readability": 5,
+    "technicalAccuracy": 5,
+    "coherence": 5,
+    "relevance": 5,
+    "translationQuality": 5,
+    "mdxPreservation": 5
+  },
+  "suggestions": [],
+  "rationale": "The selected candidate provides a complete and natural translation that captures the author's tone perfectly. It correctly handles the MDX structure and frontmatter. While the judge report mentioned a typo 'ststus' in the code, this typo exists in the original English source code blocks as well; therefore, keeping it maintains parity with the source material's provided examples, and I have opted not to 'fix' the source code's intentional or unintentional errors to ensure the translation remains a faithful representation of the original post.",
+  "slug": "stop-trying-to-make-async-await-happen",
+  "locale": "ja",
+  "candidateCommits": [
+    "6305b795fa815b0cb8fb4a240062ed8b2f42fa10",
+    "3c2bfe2ba4ff617ff9ef9c2c0ac8ea43b548c0a4",
+    "ee782985d5abd47eea7db1a39a1a7024efc52444"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "response.ststus",
+      "replacement": "response.status",
+      "reason": "Fixing a typo in the code block inherited from the original English text to ensure technical accuracy.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug stop-trying-to-make-async-await-happen --locale ja --skip-global",
+    "output": ""
+  }
+}

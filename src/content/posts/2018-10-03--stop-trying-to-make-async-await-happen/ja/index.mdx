@@ -1,86 +1,73 @@
 ---
 social_image: ../desktop-social.webp
-title: ''
-subTitle: ''
-date: '2018-10-03'
-modified: '2024-08-03'
+title: "async/awaitを無理に使おうとするのはやめよう"
+subTitle: Promiseは今まさに旬な存在
+date: 2018-10-03
+modified: 2024-08-03
 category: Guides
 subCategory: promises
-tags:
-  - promises
-  - async
-  - await
-  - async-await
-  - javascript
-  - composition
-related:
-  - intro-to-promises
-  - promise-gotchas
-  - visualizing-promises
-  - you-may-not-need-axios
-cover: ../matt-nelson-414464-unsplash.webp
-cover_mobile: ../w300_matt-nelson-414464-unsplash.webp
-cover_icon: ../icon_matt-nelson-414464-unsplash.webp
+tags: [promises, async, await, async-await, javascript, composition]
+related: [intro-to-promises, promise-gotchas, visualizing-promises, you-may-not-need-axios]
+cover: matt-nelson-414464-unsplash.webp
+cover_mobile: w300_matt-nelson-414464-unsplash.webp
+cover_icon: icon_matt-nelson-414464-unsplash.webp
 ---
-時間の始まりから、開発者は多くの馬鹿げた議論を戦ってきた。タブとスペースの古典的な争いから、MacとPCの無限に続く議論に至るまで、我々は注意をそらす議論を見つけるのが得意だ。  
-<br />  
-<small>_答え：_ Linux とスペース。</small>  
 
-<!-- Promise を使いこなすための2つのルールを見ていく。 -->  
+有史以来、開発者は多くのばかげた論争を繰り広げてきた。古典的な「タブ対スペース」から、永遠の「Mac対PC」論争まで、私たちは気を逸らす議論を見つけるのが得意だ。
+<br />
+<small>_答え：_ Linuxとスペース。</small>
 
-## 争い…？  
+<!-- We're going to look at 2 rules to improve your life with Promises. -->
 
-### Promise と Async/Await の争い！  
+## 論争…？
 
-待って、これは争いなの？ そうだろう？ コールバックについて話すことはもうあまりない気がする。
+### Promise対Async/Await！
 
-いいえ、これは争いではありません。最終的にはあなたのツールボックスに追加される別の可能性のあるツールです。ただし、`async`/`await`はすべてのPromise機能（具体的には`Promise.all`、`.race`）を置き換えないため、**これを置き換えとして提示することは誤解を招きます**。
+待てよ、これは論争なのか？そうに違いないよね？もうコールバックについて話さなくなったようだ？
 
-多くの影響力のある人物がこの誤解を広めています。`async`/`await`がPromiseの[置き換え](https://developers.google.com/web/fundamentals/primers/async-functions) [誰もが](https://hackernoon.com/6-reasons-why-javascripts-async-await-blows-promises-away-tutorial-c7ec10518dd9) [待ち続けてきた](https://x.com/umaar/status/1045655069478334464) [もの](http://2ality.com/2017/08/promise-try.html#why-not-just-use-async-functions) [だ](https://dzone.com/articles/javascript-promises-and-why-asyncawait-wins-the-ba)。
+いや、これは論争ではない。究極的には、あなたのツールボックスにもう一つ追加される潜在的なツールだ。しかし、`async`/`await`はすべてのPromise機能を置き換えるものではない（特に`Promise.all`、`.race`）ため、**それを置き換えとして提示するのは誤解を招く。**
 
-> **ヒント：いいえ、全然いいえ、そして少しもそうではない。**
+`async`/`await`がPromiseの[置き換え](https://developers.google.com/web/fundamentals/primers/async-functions)であると[みんなが](https://hackernoon.com/6-reasons-why-javascripts-async-await-blows-promises-away-tutorial-c7ec10518dd9)[待ち望んでいた](https://x.com/umaar/status/1045655069478334464)[と](http://2ality.com/2017/08/promise-try.html#why-not-just-use-async-functions)[宣伝している](https://dzone.com/articles/javascript-promises-and-why-asyncawait-wins-the-ba)影響力のある人々がたくさんいる。
 
-最近のVS Codeの追加機能がこのバイアスを強化しています。[@umaar](https://x.com/umaar)がツイートしたように：
+> **ヒント：いいえ、とんでもない、全くそんなことはない。**
 
-<blockquote class="twitter-tweet" data-lang="ja"><p lang="ja" dir="ltr">Visual Studio Codeは、今やPromise.then()の長いチェーンをasync/awaitに変換できるようになりました！🎉 JavaScriptとTypeScriptファイルの両方で非常にうまく動作します。.catch()もtry/catchに正しく変換されます✅ <a href="https://t.co/xb39Lsp84V">pic.x.com/xb39Lsp84V</a></p>&mdash; Umar Hansa (@umaar) <a href="https://x.com/umaar/status/1045655069478334464?ref_src=twsrc%5Etfw">2018年9月28日</a></blockquote>
+VS Codeへの最近の追加機能がこの偏見を助長している。[@umaar](https://x.com/umaar)がツイートしたように：
 
-<!-- 確かに、すでに素晴らしい機能リストに素晴らしい追加です。 -->
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Visual Studio Code can now convert your long chains of Promise.then()&#39;s into async/await! 🎊 Works very well in both JavaScript and TypeScript files. .catch() is also correctly converted to try/catch ✅ <a href="https://t.co/xb39Lsp84V">pic.x.com/xb39Lsp84V</a></p>&mdash; Umar Hansa (@umaar) <a href="https://x.com/umaar/status/1045655069478334464?ref_src=twsrc%5Etfw">September 28, 2018</a></blockquote>
 
-Promiseが嫌いでも、このリファクタリング機能を使いたいなら、あなたを責めません。  
+<!-- Sure, it's an impressive addition to an already amazing list of features. -->
 
-<br />  
-
-_共感します。理解しています。_  
-
-<br />  
-
-私も同じ経験があります。🤗  
+Promiseが嫌いで、このリファクタリング機能が欲しいとしても、責めるつもりはない。
+<br />
+_共感する。わかるよ。_
+<br />
+私もそうだった。🤗
 
 <br />
 
-かつてPromiseを嫌っていた。今では完全に立場を変えており、Promiseは素晴らしいと思う。関数合成を活用するための手段として、**関数合成を活かす**ことを奨励する。  
+私も以前はPromiseが嫌いだった。今日では、完全に考えが変わった。**Promiseは素晴らしい。** Promiseを使うことで、**関数合成を活用する**ことができるようになるのだ。
 
-関数合成を活かすためのPromise技術を向上させるには、まず以下の2つの領域に注力することを推奨する。  
+Promiseの技術を向上させるために、まず集中して取り組むべき2つの領域をお勧めする。
 
-1. [名前付き関数（匿名関数は使用しない）](#rule-1)  
-1. [単一目的関数](#rule-2)  
+1. [名前付き関数（無名関数なし）](#rule-1)
+1. [単一目的の関数](#rule-2)
 
-<h2 id="rule-1">#1: 名前付き関数！</h2>  
+<h2 id="rule-1">#1: 名前付き関数！</h2>
 
-匿名メソッドはやめろ。**名前付き関数**を用いることで、コードが要件の詩のように読めるようになる。  
+無名関数を捨てよう。**名前付き関数**を使うことで、コードが要件の詩のように読みやすくなる。
 
-一般的な例を見てみよう：
+よくある例を見てみよう：
 
-HTTP GETリクエストを`fetch`で実行する：
+`fetch`を使ってHTTP GETリクエストを送信する：
 
-<!-- fetchの仕様では、[HTTPステータスコード](https://http.cat/)が400または500を超える場合、**自動的にエラーが発生しない**と定義されています。多くのAJAXライブラリ（jQuery、axios）のデフォルト動作とは異なります。 -->
+<!-- the fetch specification states [HTTP status codes](https://http.cat/) over 400 or 500 **do not automatically trigger an error.** The default in many AJAX libraries (jQuery, axios). -->
 
-<!-- 解決策を見る前に、一般的な「推奨される」実装例を確認してください： -->
+<!-- Before we see the solution, look over a common "recommended" implementation: -->
 
-### 非推奨パターン
+### アンチパターン
 
 ```js
-// ❌ 匿名のインライン関数を使用 💩
+// ❌ 無名のインライン関数を使う 💩
 fetch(url)
   .then(response => response.status < 400
     ? response
@@ -108,46 +95,46 @@ function getText(response) {
 }
 ```
 
-> このアプローチの利点は、コードがDRY（Don't Repeat Yourself）になるにつれてますます明らかになります。
+> このアプローチの利点は、DRYなコードになればなるほど明らかになってくる。
 
-**追加資料:** この手法を使った[基本的なログ出力](https://youtu.be/xR_MZE1SIkk)と[高度なデバッグ](https://youtu.be/P_tghqWj72M)の**1分間の動画**をご覧ください。
+**追加リソース：** このテクニックを使った[基本的なロギング](https://youtu.be/xR_MZE1SIkk)と[高度なデバッグ](https://youtu.be/P_tghqWj72M)の**1分動画**をチェックしてほしい。
 
 <h2 id="rule-2">#2: 単一目的（関数）</h2>
 
-これは_欺瞞的なほど明確に聞こえる_：単一目的。
+_一見すると正確に聞こえる_：単一目的。
 
-しかし実際には主観的で恣意的であり、たしかに時折無意味にさえなる。
+しかしそれは非常に主観的で恣意的であり、確かに時には無意味でさえある。
 
-<!-- ある関数が十分に焦点を持っているかを議論する代わりに -->
+<!-- Instead of arguing if a given function is sufficiently focused.
 
-この概念に対する粗い測定基準を考案しました：`目的コスト`。スコアが高ければ高いほど、何かしら多くのことをやっている可能性が高いです。
+I came up with a rough measure for this: `Purpose Cost`. The higher the score, more likely it's doing too much.
 
 ```js
-// 1ポイント：return と三項演算子は実質的に1行の処理
+// 1 point: the return & ternary are effectively a one-liner
 function checkResponse(response) {
   return response.status < 400
     ? response
     : Promise.reject(new Error('Request Failed: ' + response.ststus))
 }
-// 1ポイント：return と式も実質的に1行の処理
+// 1 point: the return & expression are also effectively a one-liner
 function getText(response) {
   return response.text()
 }
 ```
 
-関数のコードに対して、以下のいずれかを含む行ごとに1ポイント加算します：`if`、`return`、三項演算子、`for`、`const`、`let`、`var`、`switch`、`while`、`[].map/filter/reduce/etc`。各命令ごとに1ポイント加算します（空白行を除く）。連鎖した式やメソッドは1つのポイントとしてカウントされます。
+Given a function's code, add 1 point for every line containing any of: `if`, `return`, ternary, `for`, `const`, `let`, `var`, `switch`, `while`, `[].map/filter/reduce/etc`. Add 1 point for each instruction (ignore extra lines from whitespace). A number of chained expressions or methods only count for 1 point.
 
-うーむ、ちょっと専門用語が多くなりましたね。
+Whew, that was a bit of jargon.
  -->
 
-興味深いことに、多くの開発者は自分が**単一目的**のコードを書くのが「かなりうまい」と主張しています。これは偶然ではありません。彼らは自分たちが優れた運転手であるとも主張しています！
+興味深いことに、ほとんどの開発者は自分が**単一目的**のコードを書くのが_かなり上手だ_と報告している。無関係ではないが、彼らは自分たちが優れたドライバーでもあると報告している！
 
-<!-- これは**Promiseに特有な問題ではありません**。配列メソッドや他のすべての高階関数（Higher Order Function）ベースのAPIも同じようなエラゴノミクス（ergonomics）を持っています。 -->
+<!-- This **isn't a unique issue with Promises**, array methods and all other HoF-based (Higher Order Function) APIs have the same ergonomics. -->
 
-Google Developersサイトのasync/await記事（注：2024年、リンクは削除）で、（非常に才能ある）[Jake Archibald](https://x.com/jaffathecake)が紹介している例を見てみましょう。
+（非常に才能ある）[Jake Archibald](https://x.com/jaffathecake)がGoogle Developersサイト向けのasync/await記事で紹介している例を見てみよう（注：2024年、リンクは削除された）。
 
 <!--
-「❌ 推奨されない」Promiseの例の1つを見てみましょう。（説明は「複数のURLを取得し、可能な限り早く正しい順序でログ出力したい」となっています。） -->
+Let's look at one of the so called "❌ Not recommended" Promise examples. (The description is "say we wanted to fetch a series URLs and log them as soon as possible, in the correct order.") -->
 
 ```js
 // source: https://developers.google.com/web/fundamentals/primers/async-functions
@@ -165,44 +152,45 @@ function logInOrder(urls) {
 }
 ```
 
-### 単一の目的？
+### 単一目的？
 
-いいえ。`logInOrder`は具体的に何を行っていますか？
+私は違うと言う。`logInOrder`は何をしているのか？
 
-1. `urls`リストをループ処理
-1. 各URLにHTTP GETを適用:
-  1. HTTP `fetch`の実行
-  1. 応答テキストボディの返却
-1. `textPromise`内の各Promiseに`.then(text => console.log(text))`を追加
-  1. 結果をシリアルに印刷
+1. `urls`のリストをループする
+1. インラインのHTTP GETに適用する：
+  1. HTTP `fetch`
+  1. レスポンスのテキストボディを返す
+1. `textPromise`の各promiseの後に`.then(text => console.log(text))`を追加する
+  1. 結果を逐次的に出力する
 
-この単一の関数内に5つの無名メソッドが定義されています。Jakeが指摘しているように、`.reduce`は複雑すぎます。コード中にあらゆる場所で個別に複雑なメカニズムを手で書くのは適切ではありません。言い換えると、DOM生成コードを無限に`document.createElement()`、`element.setAttribute()`と手書きする代わりに、ヘルパー/ユーティリティ関数、ライブラリ、またはフレームワークといった複数のオプションの中から最適なツールを選択します。
+この単一の関数の中に5つの無名メソッドが定義されている。Jake自身が指摘しているように、`.reduce`は複雑すぎる。このような微妙なメカニズムをコードの至る所に手書きするのは理にかなっていない。言い換えると、私たちは`document.createElement()`、`element.setAttribute()`などを延々と書いてDOMを作成したりしない。代わりに、多くの選択肢の中から最適なツールを選ぶ：ヘルパー/ユーティリティ関数、ライブラリ、またはフレームワークだ。
 
 <!-- We need to isolate each 'step' that's going on: there's an HTTP request, a transform for a list of URLs into a list of results. Also a `console.log` is needed. -->
 
 <!-- > 🤔 Why do `Promises` cause developers to abandon practices we use elsewhere? -->
 
-<!-- **注意:** 要求を_順次開始_する意図だった場合、単に結果を順番に表示するだけであれば、このコードは実際にそれを実行していません。適切にリファクタリングを行います。 -->
+<!-- **Note:** If the intention was to _initiate requests_ in a sequence, instead of merely printing the results out in order, this code doesn't actually do that. We'll refactor accordingly. -->
 
-#### 解決策: 単一目的関数
 
-### 最初に**メソッドの抽出**を開始します...
 
-![../async-refactor-google-extract-methods-resized-75.webp](async-refactor-google-extract-methods-resized-75.webp "メソッドの抽出")  
-*VS CodeでPromiseコードから非同期メソッドを抽出するリファクタリング*
+#### 解決策：単一目的の関数
 
-### 次に`.reduce()`と`logPromise()`を`Promise.all`と`..map()`で置き換えます...
+### **メソッドの抽出**から始めよう…
 
-![../async-refactor-google-chain-methods-resized-75.webp](async-refactor-google-chain-methods-resized-75.webp "可読性の向上")  
-*Promise.allとmapを使用してPromiseチェーンをリファクタリングし、可読性を改善*
+![VS Code refactor extracting async methods from Promise code](async-refactor-google-extract-methods-resized-75.webp "メソッドの抽出")
+
+### `.reduce()`と`logPromise()`を`Promise.all`と`..map()`に置き換えて続けよう…
+
+![Refactored Promise chain using Promise all and map for readability](async-refactor-google-chain-methods-resized-75.webp "可読性の向上")
+
 
 ### まとめ
 
-これらの技術を自分のコードに試してみてください！その後、[Twitterで私に連絡](https://x.com/justsml)して、結果を教えてください。質問やコメントがあれば、ぜひ連絡してください！
+これらのテクニックを自分のコードに試してみよう！その後、[ツイートで教えてほしい](https://x.com/justsml)。うまくいったかどうか、あるいは質問やコメントがあれば、ぜひ連絡を！
 
-#PromiseTruth を広めて、この記事を共有してもらえると嬉しいです。❤️
+#PromiseTruthを広め、この記事を共有しよう。❤️
 
-![クレジット: ../matt-nelson-414464-unsplash.webp](matt-nelson-414464-unsplash.webp)
+![credit: matt-nelson-414464-unsplash.webp](matt-nelson-414464-unsplash.webp)
 
 #### 関連記事
 
