@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: javascript-promises-quiz
+- Locale: hi
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2019-11-26--javascript-promises-quiz/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 6.73
+- Input tokens: 8921
+- Output tokens: 5595
+- Thinking tokens: unknown
+- Cached input tokens: 3840
+- Cache write tokens: 0
+- Estimated cost: $0.001355
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: 'क्विज़: 9 जावास्क्रिप्ट प्रॉमिस प्रश्न'
@@ -349,3 +367,4 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 </Challenge>
 
 </QuizUI>
+````
