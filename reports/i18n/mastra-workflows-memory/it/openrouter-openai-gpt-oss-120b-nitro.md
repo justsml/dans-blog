@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: mastra-workflows-memory
+- Locale: it
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-01-05--mastra-workflows-memory/it/index.mdx
+- Validation: deferred
+- Runtime seconds: 3.69
+- Input tokens: 8374
+- Output tokens: 3114
+- Thinking tokens: unknown
+- Cached input tokens: 3968
+- Cache write tokens: 0
+- Estimated cost: $0.000887
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: 'Smetti di creare agenti inaffidabili: usa workflow e memoria'
 subTitle: Pattern deterministici per modelli non deterministici.
@@ -249,3 +267,4 @@ Il risultato può variare, ma nella mia esperienza i sistemi che effettivamente 
 2. [Sicurezza & Guardrails](../mastra-security-guardrails)
 3. [MCP & Integrazioni Tool](../mastra-mcp-tool-integrations)
 4. **Workflow & Memoria** (Questo Post)
+````
