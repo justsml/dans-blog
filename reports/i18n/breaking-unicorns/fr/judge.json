@@ -1,0 +1,55 @@
+{
+  "selectedCommit": "312a261a0c50db806d751c2639aad7b2014e8353",
+  "selectedModel": "openrouter/qwen/qwen3-32b:nitro",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 10,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The current translation (from the Qwen candidate) is excellent. It successfully captures the satirical and aggressive tone of the original English text ('plus de coups à foutre', 'pisser dans une bouteille'). It correctly preserved all MDX components, including the complex Timeline data structure and the book list schema. The previous judge's suggestions for 'manants' and 'amateurs' have already been incorporated into the current version of the file.",
+  "slug": "breaking-unicorns",
+  "locale": "fr",
+  "candidateCommits": [
+    "ba1896de90acdef66233bc857897186c5cbecf29",
+    "312a261a0c50db806d751c2639aad7b2014e8353"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "un temps pretentieux",
+      "replacement": "un temps prétentieux",
+      "reason": "Missing accent on 'prétentieux'.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "Des paysans plus rapides !",
+      "replacement": "Plus vite, manants !",
+      "reason": "The translation 'Des paysans plus rapides' is too literal. 'Plus vite, manants !' better captures the satirical, condescending tone of 'Faster peasants!' in a corporate context.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "Montez le niveau, vous fumiers.",
+      "replacement": "Montez le niveau, bande d'amateurs.",
+      "reason": "While 'fumiers' is punchy, 'amateurs' is closer to the source 'amateurs' and fits the corporate satire of the book 'What Got You Here Won't Get You There' better.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug breaking-unicorns --locale fr --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug breaking-unicorns --locale fr --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug breaking-unicorns --locale fr --skip-global\n73 |   const sourceComponents = new Set(\n74 |     [...sourceContents.matchAll(/<\\/?([A-Z][A-Za-z0-9_.]*)\\b/g)].map((match) => match[1]),\n75 |   );\n76 |   for (const component of sourceComponents) {\n77 |     if (!new RegExp(`</?${escapeRegExp(component)}\\\\b`).test(targetContents)) {\n78 |       throw new Error(`Missing preserved MDX component in ${targetPath}: ${component}`);\n                     ^\nerror: Missing preserved MDX component in /Users/dan/code/oss/dans-blog/src/content/posts/2024-09-01--breaking-unicorns/fr/index.mdx: Insert\n      at assertProtectedTokens (/Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:78:17)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:28:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}
