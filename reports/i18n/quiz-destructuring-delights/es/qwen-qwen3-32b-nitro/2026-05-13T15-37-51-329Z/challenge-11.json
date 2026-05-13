@@ -1,0 +1,47 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "Destructuring with Nested Default Values",
+  "translatedTitle": "Destructuración con Valores Predeterminados Anidados",
+  "translation": {
+    "title": "Destructuración con Valores Predeterminados Anidados",
+    "group": "Destructuración Anidada en TS",
+    "options": [
+      {
+        "text": "Error: Falta la propiedad 'first'"
+      },
+      {
+        "text": "Error: Falta la propiedad 'last'"
+      },
+      {
+        "text": "Error: Faltan las propiedades 'birth' y 'age'"
+      },
+      {
+        "text": "Error: Falta la propiedad 'place'"
+      },
+      {
+        "text": "Error: 'string' no tiene propiedades en {...}"
+      }
+    ],
+    "questionProse": [
+      "Encuentra el error de tipo:"
+    ],
+    "explanationProse": [
+      "El error está en la firma de la función `greet`. Las propiedades `age` y `birth` faltan en el objeto pasado, por lo que deberían ser opcionales en la definición de tipo.\n\n    Aunque la propiedad `birth` se desestructura con un valor predeterminado, la definición de tipo requiere que esté presente. Para marcar una propiedad como opcional en TypeScript, debes usar el operador `?`.\n  \n    Nota: `birth?: { place?: string }` no es lo mismo que `birth: { place?: string } | undefined`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Destructuración con Valores Predeterminados Anidados\",\n  \"group\": \"Destructuración Anidada en TS\",\n  \"options\": [\n    {\n      \"text\": \"Error: Falta la propiedad 'first'\"\n    },\n    {\n      \"text\": \"Error: Falta la propiedad 'last'\"\n    },\n    {\n      \"text\": \"Error: Faltan las propiedades 'birth' y 'age'\"\n    },\n    {\n      \"text\": \"Error: Falta la propiedad 'place'\"\n    },\n    {\n      \"text\": \"Error: 'string' no tiene propiedades en {...}\"\n    }\n  ],\n  \"questionProse\": [\n    \"Encuentra el error de tipo:\"\n  ],\n  \"explanationProse\": [\n    \"El error está en la firma de la función `greet`. Las propiedades `age` y `birth` faltan en el objeto pasado, por lo que deberían ser opcionales en la definición de tipo.\\n\\n    Aunque la propiedad `birth` se desestructura con un valor predeterminado, la definición de tipo requiere que esté presente. Para marcar una propiedad como opcional en TypeScript, debes usar el operador `?`.\\n  \\n    Nota: `birth?: { place?: string }` no es lo mismo que `birth: { place?: string } | undefined`.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 811,
+    "outputTokens": 920,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2290
+  },
+  "cost": {
+    "inputUsd": 0.00006488,
+    "outputUsd": 0.0002208,
+    "totalUsd": 0.00028568,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-destructuring-delights
+- Locale: es
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2024-11-12--quiz-destructuring-delights/es/index.mdx
+- Validation: passed
+- Runtime seconds: 43.72
+- Input tokens: 10444
+- Output tokens: 11919
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.003696
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: Cuestion
@@ -552,3 +570,4 @@ Este cuestionario evaluará tu conocimiento sobre desestructuración en JavaScri
 </Challenge>
 
 </QuizUI>
+````

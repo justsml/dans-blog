@@ -20,8 +20,8 @@ cover_full_width: ../boxes-of-nesting-dolls.webp
 cover_mobile: ../boxes-of-nesting-dolls-square.webp
 cover_icon: ../boxes-of-nesting-dolls-square.webp
 ---
-import Challenge from '../../../../../components/QuizUI/Challenge';
-import QuizUI from '../../../../../components/QuizUI/QuizUI';
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
 
 {/* Are you a maestero of Destructuring?<br/> */}
 <p class="inset">¿O es tu <em>Symphony of Destruction?</em></p>
@@ -50,12 +50,12 @@ Este cuestionario evaluará tu conocimiento sobre desestructuración en JavaScri
   <div className="question">
     ¿Qué imprimirá este código?
     ```js
-    const person = {
-      name: 'Dan Levy',
-      location: 'Cape Town',
-    };
-    const { name, age } = person;
-    console.log(`Name: ${name}, Age: ${age}`);
+        const person = {
+          name: 'Dan Levy',
+          location: 'Cape Town',
+        };
+        const { name, age } = person;
+        console.log(`Name: ${name}, Age: ${age}`);
     ```
   </div>
   </slot>
@@ -65,7 +65,7 @@ Este cuestionario evaluará tu conocimiento sobre desestructuración en JavaScri
 
     Esto resulta en:
     ```plaintext
-    Name: Dan Levy, Age: undefined
+        Name: Dan Levy, Age: undefined
     ```
   </div>
   </slot>
@@ -89,9 +89,9 @@ Este cuestionario evaluará tu conocimiento sobre desestructuración en JavaScri
   <div className="question">
     ¿Qué hará este código?
     ```js
-    const person = [ 'Dan Levy', 'Cape Town' ];
-    const [ name, origin, age ] = person;
-    console.log(`Name: ${name}, Age: ${age}`);
+        const person = [ 'Dan Levy', 'Cape Town' ];
+        const [ name, origin, age ] = person;
+        console.log(`Name: ${name}, Age: ${age}`);
     ```
   </div>
   </slot>
@@ -101,7 +101,7 @@ Este cuestionario evaluará tu conocimiento sobre desestructuración en JavaScri
 
     Esto resulta en:
     ```plaintext
-    Name: Dan Levy, Age: undefined
+        Name: Dan Levy, Age: undefined
     ```
   </div>
   </slot>
@@ -124,19 +124,19 @@ Este cuestionario evaluará tu conocimiento sobre desestructuración en JavaScri
   <div className="question">
     ¿Qué tal un poco de desestructuración anidada?
     ```js
-    'use strict';
-    const person = {
-      name: { first: 'Dan' },
-      address: { city: 'Denver' },
-    };
-    const {
-      name: { first },
-      address: { city },
-      birth: { place },
-    } = person;
-    console.log(
-      `First: ${first}, City: ${place}`,
-    );
+        'use strict';
+        const person = {
+          name: { first: 'Dan' },
+          address: { city: 'Denver' },
+        };
+        const {
+          name: { first },
+          address: { city },
+          birth: { place },
+        } = person;
+        console.log(
+          `First: ${first}, City: ${place}`,
+        );
     ```
   </div>
   </slot>
@@ -173,18 +173,18 @@ Este cuestionario evaluará tu conocimiento sobre desestructuración en JavaScri
   <div className="question">
     Ahora con algunos valores predeterminados, ¿qué hará esto?
     ```js
-    'use strict';
-    const person = {
-      name: { first: 'Dan' },
-      address: { city: 'Denver' },
-    };
-    const {
-      name: { first = 'Unknown' },
-      birth: { place = 'Unknown' },
-    } = person;
-    console.log(
-      `Hi ${first} from ${place}`,
-    );
+        'use strict';
+        const person = {
+          name: { first: 'Dan' },
+          address: { city: 'Denver' },
+        };
+        const {
+          name: { first = 'Unknown' },
+          birth: { place = 'Unknown' },
+        } = person;
+        console.log(
+          `Hi ${first} from ${place}`,
+        );
     ```
   </div>
   </slot>
@@ -194,11 +194,11 @@ Este cuestionario evaluará tu conocimiento sobre desestructuración en JavaScri
 
     Como está escrito, dice "si `person.birth` es `undefined`, entonces `place` es `Unknown`". Pero `person.birth` es `undefined`, así que intenta desestructurar `undefined`, lo que genera un error.
     ```plaintext
-    In modern Chrome: `TypeError: Cannot read properties of undefined (reading 'place')`
+        In modern Chrome: `TypeError: Cannot read properties of undefined (reading 'place')`
 
-    In Node, this is also a `TypeError` because JavaScript tries to destructure `place` from `undefined`.
+        In Node, this is also a `TypeError` because JavaScript tries to destructure `place` from `undefined`.
 
-    Exact wording varies between browsers and runtimes.
+        Exact wording varies between browsers and runtimes.
     ```
   </div>
   </slot>
@@ -222,18 +222,18 @@ Este cuestionario evaluará tu conocimiento sobre desestructuración en JavaScri
   <div className="question">
     ¿Qué hará esto?
     ```js
-    const person = {
-      name: { first: 'Dan' },
-      address: { city: 'Denver' },
-    };
-    const {
-      name: { first = 'Unknown' },
-      birth: { place = 'Unknown' } = {},
-    } = person;
+        const person = {
+          name: { first: 'Dan' },
+          address: { city: 'Denver' },
+        };
+        const {
+          name: { first = 'Unknown' },
+          birth: { place = 'Unknown' } = {},
+        } = person;
 
-    console.log(
-      `Hi ${first} from ${place}`,
-    );
+        console.log(
+          `Hi ${first} from ${place}`,
+        );
     ```
   </div>
   </slot>
@@ -262,14 +262,14 @@ Este cuestionario evaluará tu conocimiento sobre desestructuración en JavaScri
   <div className="question">
     ¿Qué ocurrirá ahora al usar parámetros de función?
     ```js
-    'use strict';
-    function displayUser({
-      name = "Unknown",
-      age = -1,
-    } = { place: "Unknown" }) {
-      console.log(`Hi ${name} from ${place}`);
-    }
-    displayUser({ name: "Dan" });
+        'use strict';
+        function displayUser({
+          name = "Unknown",
+          age = -1,
+        } = { place: "Unknown" }) {
+          console.log(`Hi ${name} from ${place}`);
+        }
+        displayUser({ name: "Dan" });
     ```
   </div>
   </slot>
@@ -302,17 +302,17 @@ Este cuestionario evaluará tu conocimiento sobre desestructuración en JavaScri
   <div className="question">
     ¿Cómo se manejan los valores `undefined`?
     ```js
-    'use strict';
-    function displayPlace({
-      name = "N/A",
-      place = "N/A",
-      age = -1,
-    } = { place: "Unknown" }) {
-      console.log(`${place}`);
-    }
-    displayPlace({ name: "Dan" });
-    displayPlace({ name: "Dan", place: undefined });
-    displayPlace({ name: "Dan", place: "Joburg" });
+        'use strict';
+        function displayPlace({
+          name = "N/A",
+          place = "N/A",
+          age = -1,
+        } = { place: "Unknown" }) {
+          console.log(`${place}`);
+        }
+        displayPlace({ name: "Dan" });
+        displayPlace({ name: "Dan", place: undefined });
+        displayPlace({ name: "Dan", place: "Joburg" });
     ```
   </div>
   </slot>
@@ -320,9 +320,9 @@ Este cuestionario evaluará tu conocimiento sobre desestructuración en JavaScri
   <div className="explanation">
     La función `displayPlace` USARÁ UN OBJETO POR DEFECTO SOLO si no se pasa ningún objeto. Por lo tanto, la única forma de obtener el valor predeterminado `{ place: "Unknown" }` es llamando a la función sin argumentos `displayPlace()`.\n\nOtro comportamiento notable es que pasar `undefined` para `place` hará que se use el valor predeterminado, similar al comportamiento de `JSON.stringify` (ignorando `undefined`, reconociendo `null`).\n\nEsto resulta en:
     ```js
-    displayPlace() // Unknown
-    displayPlace({ name: "Dan" }) // N/A
-    displayPlace({ name: "Dan", place: undefined }) // N/A
+        displayPlace() // Unknown
+        displayPlace({ name: "Dan" }) // N/A
+        displayPlace({ name: "Dan", place: undefined }) // N/A
     ```
   </div>
   </slot>
@@ -349,15 +349,15 @@ Este cuestionario evaluará tu conocimiento sobre desestructuración en JavaScri
   <div className="question">
     Similar a la anterior... ¿cómo se maneja `null`?
     ```js
-    function displayPlace({
-      name = "N/A",
-      place = "N/A",
-      age = -1,
-    } = { place: "Unknown" }) {
-      console.log(`${place}`);
-    }
-    displayPlace({ name: "Dan", place: null });
-    displayPlace({ name: "Dan", place: undefined });
+        function displayPlace({
+          name = "N/A",
+          place = "N/A",
+          age = -1,
+        } = { place: "Unknown" }) {
+          console.log(`${place}`);
+        }
+        displayPlace({ name: "Dan", place: null });
+        displayPlace({ name: "Dan", place: undefined });
     ```
   </div>
   </slot>
@@ -385,20 +385,20 @@ Este cuestionario evaluará tu conocimiento sobre desestructuración en JavaScri
   <div className="question">
     Ahora en TypeScript... ¿qué ocurrirá?
     ```ts
-    'use strict';
-    function displayPlace(
-      {
-        name = 'N/A',
-        place = 'N/A',
-      }: {
-        name: string;
-        place: string;
-        age: number;
-      },
-    ) {
-      console.log(`${place}`);
-    }
-    displayPlace({ name: 'Dan', place: null });
+        'use strict';
+        function displayPlace(
+          {
+            name = 'N/A',
+            place = 'N/A',
+          }: {
+            name: string;
+            place: string;
+            age: number;
+          },
+        ) {
+          console.log(`${place}`);
+        }
+        displayPlace({ name: 'Dan', place: null });
     ```
   </div>
   </slot>
@@ -431,18 +431,18 @@ Este cuestionario evaluará tu conocimiento sobre desestructuración en JavaScri
   <div className="question">
     Probemos con algunos renombrados/asignaciones...
     ```ts
-    'use strict';
-    function displayPlace({
-      name = 'N/A',
-      place: location = 'N/A',
-    }: {
-      name: string;
-      place: string;
-      age?: number;
-    }) {
-      console.log(`${location}`);
-    }
-    displayPlace({ name: 'Dan', place: 'Denver' });
+        'use strict';
+        function displayPlace({
+          name = 'N/A',
+          place: location = 'N/A',
+        }: {
+          name: string;
+          place: string;
+          age?: number;
+        }) {
+          console.log(`${location}`);
+        }
+        displayPlace({ name: 'Dan', place: 'Denver' });
     ```
   </div>
   </slot>
@@ -470,18 +470,18 @@ Este cuestionario evaluará tu conocimiento sobre desestructuración en JavaScri
   <div className="question">
     Encuentra el error de tipo:
     ```ts
-    function greet({
-      name: {first = "N/A", last = "N/A"},
-      birth: {place = "N/A"} = {},
-      age = -1,
-    }: {
-      name: {first?: string, last?: string};
-      birth: {place?: string};
-      age: number;
-    }) {
-      console.log(`Hi ${first} ${last} from ${place}`);
-    }
-    greet({ name: {first: 'Dan'} });
+        function greet({
+          name: {first = "N/A", last = "N/A"},
+          birth: {place = "N/A"} = {},
+          age = -1,
+        }: {
+          name: {first?: string, last?: string};
+          birth: {place?: string};
+          age: number;
+        }) {
+          console.log(`Hi ${first} ${last} from ${place}`);
+        }
+        greet({ name: {first: 'Dan'} });
     ```
   </div>
   </slot>
@@ -513,25 +513,25 @@ Este cuestionario evaluará tu conocimiento sobre desestructuración en JavaScri
   <div className="question">
     Ahora con **asignación** (obsérvese las variables `f`, `l` y `p`)
     ```ts
-    'use strict';
-    function greet(
-      {
-        name: {first: f = "N/A", last: l = "N/A"},
-        birth: {place: p = "N/A"} = {},
-        age = -1,
-      }: {
-        name: {first?: string, last?: string};
-        birth?: {place?: string};
-        age?: number;
-      }
-    ) {
-      console.log(`Hi ${f} ${l} from ${place}`);
-      // What will 👆 do?
-    }
-    greet({
-      name: {first: 'Dan', last: 'Levy'},
-      birth: {place: 'Cape Town'},
-    });
+        'use strict';
+        function greet(
+          {
+            name: {first: f = "N/A", last: l = "N/A"},
+            birth: {place: p = "N/A"} = {},
+            age = -1,
+          }: {
+            name: {first?: string, last?: string};
+            birth?: {place?: string};
+            age?: number;
+          }
+        ) {
+          console.log(`Hi ${f} ${l} from ${place}`);
+          // What will 👆 do?
+        }
+        greet({
+          name: {first: 'Dan', last: 'Levy'},
+          birth: {place: 'Cape Town'},
+        });
     ```
   </div>
   </slot>
@@ -543,9 +543,9 @@ Este cuestionario evaluará tu conocimiento sobre desestructuración en JavaScri
 
     Tan pronto como `place` se reasigne a la variable `p`, ya no estará definida en el ámbito de la sentencia `console.log`.
     ```ts
-    console.log(`Hi ${f} ${l} from ${place}`); // ❌
-    // to:
-    console.log(`Hi ${f} ${l} from ${p}`); // ✅
+        console.log(`Hi ${f} ${l} from ${place}`); // ❌
+        // to:
+        console.log(`Hi ${f} ${l} from ${p}`); // ✅
     ```
   </div>
   </slot>
