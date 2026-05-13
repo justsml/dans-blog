@@ -1,0 +1,85 @@
+# Translation Candidate
+- Slug: compare-nvme-ssd-cloud-options
+- Locale: fr
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2017-04-15--compare-nvme-ssd-cloud-options/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 4.70
+- Input tokens: 4174
+- Output tokens: 1129
+- Thinking tokens: unknown
+- Cached input tokens: 1024
+- Cache write tokens: 0
+- Estimated cost: $0.000366
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: Comparer les options de cloud NVMe SSD
+subTitle: 'NVMe SSD Face à Face : AWS, DigitalOcean, Packet.net'
+date: '2017-04-15'
+modified: '2020-01-30'
+category: DevOps
+subCategory: programming
+tags:
+  - cloud
+  - servers
+  - architecture
+  - scaling
+  - digital-ocean
+  - amazon-web-services
+  - google-cloud-engine
+  - azure
+  - packet
+  - ovh
+  - ssd
+  - io
+cover: ../solaiman-hossen-553024-unsplash.webp
+cover_mobile: ../w300_solaiman-hossen-553024-unsplash.webp
+cover_icon: ../icon_solaiman-hossen-553024-unsplash.webp
+---
+## Boost Cloud Performance up to 70%
+
+> Notes générales & sections pour les fournisseurs d’hébergement sélectionnés ci‑dessous (mi‑2017).
+
+- [AWS (Amazon Web Services), EC2 (Elastic Compute Cloud), EBS (Elastic Block Storage), etc.](#aws_tips)
+- [Digital Ocean](#do_tips)
+- [Packet.net](#packet_tips)
+
+<a id='aws_tips'></a>
+
+### Amazon Web Services / EC2 / EBS / S3
+
+> TLDR ; Bien qu’AWS propose généralement du matériel restrictif et des niveaux de tarification intimidants, le **i3.large** (et les plus grands) est le plus efficace en termes de prix vs. performances I/O, ET le plus rapide en performance globale.
+
+> EC2 **i3.large** avec un **SSD NVMe de 475 Go** coûte généralement autour de **110 $/mois !** > <br />
+> Un **i3.2xlarge avec 1,9 To NVMe** coûte environ **450 $/mois** * > <br /> > \_*USA/2018\_
+
+<br />
+<br />
+
+### Comparaison directe
+
+\[[vue plein écran des données](https://docs.google.com/spreadsheets/d/1qQ62m1RFj73YScdS77Q9R2GpRqJOk7JHuTEOFDR4jJE/pubchart?oid=116848524&format=interactive)\]
+
+<iframe style="position: relative; left: -150px; height: 650px; width: 990px; min-width: 100%;" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/1qQ62m1RFj73YScdS77Q9R2GpRqJOk7JHuTEOFDR4jJE/pubchart?oid=116848524&amp;format=interactive"></iframe>
+
+[Voir les prix sur EC2](https://www.ec2instances.info/?filter=nvm&region=us-east-2&cost_duration=monthly&selected=c5d.large,i3.large,i3.xlarge,i3.2xlarge)
+
+![ec2instances.info](../ec2-updated-prices-2018.webp)
+
+Note that **i3.\*xlarge** is the only hardware offering competitively priced NVMe storage (ultra‑rapide + 1 Go/s). The main limiting factor I observed was the actual network speed. Servers advertised as “up to 10 Gb/s” struggled to approach 1 Gb/s (60‑80 Mo/s).
+
+Les tests réseau ont utilisé jusqu’à 9 instances supplémentaires dans la même zone de disponibilité. Tout point de données erroné a été remplacé par 0. Des tests supplémentaires sont nécessaires, car seulement 1‑2 échantillons ont été collectés.
+
+\[[vue plein écran des données](https://docs.google.com/spreadsheets/d/1qQ62m1RFj73YScdS77Q9R2GpRqJOk7JHuTEOFDR4jJE/pubchart?oid=13370750&format=interactive)\]
+
+<iframe style="position: relative; left: -150px; height: 790px; width: 950px; min-width: 100%;" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/1qQ62m1RFj73YScdS77Q9R2GpRqJOk7JHuTEOFDR4jJE/pubchart?oid=13370750&amp;format=interactive"></iframe>
+
+#### Crédits
+
+- [ec2instances.info](https://www.ec2instances.info/?filter=nvm&region=us-east-2&cost_duration=monthly&selected=c5d.large,i3.large,i3.xlarge,i3.2xlarge)
+````
