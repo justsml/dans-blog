@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: you-might-not-need-algolia
+- Locale: es
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2025-03-01--you-might-not-need-algolia/es/index.mdx
+- Validation: passed
+- Runtime seconds: 12.51
+- Input tokens: 5696
+- Output tokens: 5104
+- Thinking tokens: unknown
+- Cached input tokens: 512
+- Cache write tokens: 0
+- Estimated cost: $0.001681
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Tal vez no necesitas Algolia™
 social_image: ../desktop-social.webp
@@ -99,3 +117,4 @@ Si sí, empieza con Pagefind. Obtienes búsqueda privada por defecto, activos co
 Si no, nombra la característica que hace que el índice sea dinámico: inventario, permisos, personalización, análisis, clasificación o frecuencia de escritura. Luego elige la base de datos o servicio de búsqueda que explícitamente se encargue de esa tarea.  
 
 Algolia no es el villano aquí. El villano es adoptar un segundo sistema antes de demostrar que el primer artefacto era insuficiente.
+````
