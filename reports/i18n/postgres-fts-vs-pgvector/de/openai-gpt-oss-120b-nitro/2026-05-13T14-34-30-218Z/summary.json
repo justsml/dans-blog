@@ -1,0 +1,183 @@
+{
+  "runId": "openai-gpt-oss-120b-nitro@2026-05-13T14-34-30-218Z",
+  "slug": "postgres-fts-vs-pgvector",
+  "locale": "de",
+  "model": "openai/gpt-oss-120b:nitro",
+  "modelPath": "openai-gpt-oss-120b-nitro",
+  "createdAt": "2026-05-13T14:34:47.908Z",
+  "sourcePath": "src/content/posts/2026-05-08--postgres-fts-vs-pgvector/index.mdx",
+  "targetPath": "src/content/posts/2026-05-08--postgres-fts-vs-pgvector/de/index.mdx",
+  "candidatePath": "reports/i18n/postgres-fts-vs-pgvector/de/openai-gpt-oss-120b-nitro/2026-05-13T14-34-30-218Z/candidate.mdx",
+  "sourceHash": "ebc41c06ed156789ca35f6c7f1f45b122d5ab93988fd93b091257b8f15de99d3",
+  "outputHash": "0e73c4840c420f6ebf3dcb3366b3d75de3ed5ff63f36f5832411da7f5e7ef9be",
+  "reasoningEffort": "low",
+  "temperature": 0.3,
+  "maxTokens": 16000,
+  "timeoutMs": 200000,
+  "articleSummary": "**Summary**  \nThe article argues that PostgreSQL’s built‑in search tools—full‑text search (FTS), trigram matching (`pg_trgm`), and the newer `pgvector` extension—can often replace a separate vector database for many AI‑enabled applications, and that choosing the right tool depends on the shape of the query rather than on “old vs. new” technology. It explains that FTS (`tsvector` + GIN) is lexical, ideal for exact‑term, keyword‑driven queries, Boolean filtering, and deterministic ranking without extra infrastructure. `pg_trgm` provides fuzzy string matching for short strings, typos, autocomplete, and partial matches where neither pure lexical nor semantic search works well. `pgvector` stores dense embeddings for semantic similarity, useful when the intent is “what does this mean?” rather than “what words appear?” The tone is a practical tutorial aimed at developers and DBAs who are already using PostgreSQL and are considering whether to add an external vector store. The article repeatedly frames the decision as a “search tool map” that matches query shape to the appropriate PostgreSQL extension.",
+  "totalInputTokens": 21345,
+  "totalOutputTokens": 8179,
+  "totalCacheReadTokens": 4736,
+  "totalCacheWriteTokens": 0,
+  "totalDurationMs": 16303,
+  "totalCostUsd": 0.002304675,
+  "pricingSource": "local-openrouter-estimate",
+  "telemetry": {
+    "model": "openai/gpt-oss-120b:nitro",
+    "chunkSize": "6p",
+    "totalChunks": 16,
+    "totalInputTokens": 21345,
+    "totalOutputTokens": 8179,
+    "totalCacheReadTokens": 4736,
+    "totalCacheWriteTokens": 0,
+    "totalDurationMs": 16303,
+    "totalCostUsd": 0.002304675,
+    "pricingSource": "local-openrouter-estimate",
+    "chunks": [
+      {
+        "index": 0,
+        "inputTokens": 908,
+        "outputTokens": 207,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 439,
+        "costUsd": 0.000072672
+      },
+      {
+        "index": 1,
+        "inputTokens": 1114,
+        "outputTokens": 404,
+        "cacheReadTokens": 640,
+        "cacheWriteTokens": 0,
+        "durationMs": 858,
+        "costUsd": 0.000116166
+      },
+      {
+        "index": 2,
+        "inputTokens": 1144,
+        "outputTokens": 303,
+        "cacheReadTokens": 640,
+        "cacheWriteTokens": 0,
+        "durationMs": 572,
+        "costUsd": 0.000099156
+      },
+      {
+        "index": 3,
+        "inputTokens": 1331,
+        "outputTokens": 426,
+        "cacheReadTokens": 640,
+        "cacheWriteTokens": 0,
+        "durationMs": 678,
+        "costUsd": 0.000128589
+      },
+      {
+        "index": 4,
+        "inputTokens": 1637,
+        "outputTokens": 724,
+        "cacheReadTokens": 640,
+        "cacheWriteTokens": 0,
+        "durationMs": 481,
+        "costUsd": 0.00019416300000000002
+      },
+      {
+        "index": 5,
+        "inputTokens": 1214,
+        "outputTokens": 277,
+        "cacheReadTokens": 640,
+        "cacheWriteTokens": 0,
+        "durationMs": 488,
+        "costUsd": 0.000097206
+      },
+      {
+        "index": 6,
+        "inputTokens": 1177,
+        "outputTokens": 359,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 1064,
+        "costUsd": 0.00011052300000000001
+      },
+      {
+        "index": 7,
+        "inputTokens": 1314,
+        "outputTokens": 563,
+        "cacheReadTokens": 640,
+        "cacheWriteTokens": 0,
+        "durationMs": 562,
+        "costUsd": 0.00015258600000000002
+      },
+      {
+        "index": 8,
+        "inputTokens": 1168,
+        "outputTokens": 394,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 1049,
+        "costUsd": 0.00011647199999999999
+      },
+      {
+        "index": 9,
+        "inputTokens": 1304,
+        "outputTokens": 342,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 1046,
+        "costUsd": 0.000112416
+      },
+      {
+        "index": 10,
+        "inputTokens": 1155,
+        "outputTokens": 139,
+        "cacheReadTokens": 256,
+        "cacheWriteTokens": 0,
+        "durationMs": 1019,
+        "costUsd": 0.00007006499999999999
+      },
+      {
+        "index": 11,
+        "inputTokens": 1879,
+        "outputTokens": 1204,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 3029,
+        "costUsd": 0.000290001
+      },
+      {
+        "index": 12,
+        "inputTokens": 2332,
+        "outputTokens": 1608,
+        "cacheReadTokens": 640,
+        "cacheWriteTokens": 0,
+        "durationMs": 841,
+        "costUsd": 0.000380388
+      },
+      {
+        "index": 13,
+        "inputTokens": 1353,
+        "outputTokens": 551,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 1514,
+        "costUsd": 0.000151947
+      },
+      {
+        "index": 14,
+        "inputTokens": 1272,
+        "outputTokens": 415,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 1538,
+        "costUsd": 0.000124308
+      },
+      {
+        "index": 15,
+        "inputTokens": 1043,
+        "outputTokens": 263,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 1125,
+        "costUsd": 0.000088017
+      }
+    ]
+  }
+}

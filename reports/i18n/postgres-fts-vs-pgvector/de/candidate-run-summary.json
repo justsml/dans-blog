@@ -1,48 +1,49 @@
 {
-  "runId": "2026-05-13T06-47-40-506Z",
+  "runId": "2026-05-13T14-34-29-883Z",
+  "runStatus": "running",
   "slug": "postgres-fts-vs-pgvector",
   "locale": "de",
-  "startedAt": "2026-05-13T06:47:40.506Z",
-  "updatedAt": "2026-05-13T06:48:08.611Z",
+  "startedAt": "2026-05-13T14:34:29.883Z",
+  "updatedAt": "2026-05-13T14:34:57.476Z",
   "modelsRequested": [
     "openrouter/openai/gpt-oss-120b:nitro",
     "openrouter/qwen/qwen3-32b:nitro"
   ],
   "attemptedModels": 1,
   "skippedModels": 0,
-  "rejectedModels": 1,
-  "candidateModels": 0,
+  "rejectedModels": 0,
+  "candidateModels": 1,
   "totals": {
-    "inputTokens": 34022,
-    "outputTokens": 8565,
+    "inputTokens": 21345,
+    "outputTokens": 8179,
     "thinkingTokens": 0,
-    "cachedInputTokens": 9984,
+    "cachedInputTokens": 4736,
     "cacheWriteTokens": 0,
-    "estimatedCostUsd": 0.002869,
+    "estimatedCostUsd": 0.002305,
     "hasUnknownInputTokens": false,
     "hasUnknownOutputTokens": false,
     "hasUnknownThinkingTokens": true,
     "hasUnknownCachedInputTokens": false,
     "hasUnknownCacheWriteTokens": false,
     "hasUnknownEstimatedCost": false,
-    "runtimeSeconds": "26.55"
+    "runtimeSeconds": "16.30"
   },
   "attempts": [
     {
       "model": "openrouter/openai/gpt-oss-120b:nitro",
-      "status": "rejected",
-      "validationStatus": "rejected: direct AI SDK translation failed",
+      "status": "candidate",
+      "validationStatus": "passed",
       "reportPath": "reports/i18n/postgres-fts-vs-pgvector/de/openrouter-openai-gpt-oss-120b-nitro.md",
-      "note": "Command failed: bun run i18n:validate --slug postgres-fts-vs-pgvector --locale de",
+      "note": "Generated through the direct AI SDK chunked translator.",
       "telemetry": {
-        "runtimeSeconds": "26.55",
+        "runtimeSeconds": "16.30",
         "tokens": {
-          "input": 34022,
-          "output": 8565,
-          "cached": 9984,
+          "input": 21345,
+          "output": 8179,
+          "cached": 4736,
           "cacheWrite": 0
         },
-        "estimatedCostUsd": 0.002868558,
+        "estimatedCostUsd": 0.002304675,
         "pricingSource": "local-openrouter-estimate"
       }
     }
