@@ -3,7 +3,7 @@
 - Locale: ru
 - Model: openrouter/qwen/qwen3-32b:nitro
 - Target: src/content/posts/2026-01-26--securing-clawdbot-tailscale/ru/index.mdx
-- Validation: deferred
+- Validation: rejected: direct AI SDK translation failed
 - Runtime seconds: 177.94
 - Input tokens: 12499
 - Output tokens: 10408
@@ -12,7 +12,7 @@
 - Cache write tokens: 0
 - Estimated cost: $0.003498
 - Pricing source: local-openrouter-estimate
-- Note: Generated through the direct AI SDK chunked translator.
+- Note: Command failed: git commit --only -m i18n candidate(ru): securing-clawdbot-tailscale via openrouter/qwen/qwen3-32b:nitro -- src/content/posts/2026-01-26--securing-clawdbot-tailscale/ru/index.mdx reports/i18n/securing-clawdbot-tailscale/ru
 ## Raw Output
 
 ````mdx
