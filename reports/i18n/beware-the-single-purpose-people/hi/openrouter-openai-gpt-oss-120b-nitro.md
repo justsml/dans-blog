@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: beware-the-single-purpose-people
+- Locale: hi
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2025-04-03--beware-the-single-purpose-people/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 5.19
+- Input tokens: 7873
+- Output tokens: 3269
+- Thinking tokens: unknown
+- Cached input tokens: 3072
+- Cache write tokens: 0
+- Estimated cost: $0.000895
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 language: English
 title: एक‑उद्देश्य लोगों से सावधान रहें
@@ -122,3 +140,4 @@ Single Responsibility Principle एक उपयोगी उपकरण है
 ¹ विडंबना यह है कि सबसे निचले स्तर पर *वास्तविक* एकल उद्देश्य प्राप्त करने के लिए सतह के ठीक नीचे विशाल जटिलता छिपी होती है।
 
 ² यहाँ हम अवधारणात्मक शुद्धता की बात कर रहे हैं: यह विचार कि एक फ़ंक्शन को केवल “एक ही चीज़” तार्किक रूप से करनी चाहिए। इसे फ़ंक्शनल प्रोग्रामिंग के “शुद्ध फ़ंक्शन” (जिसमें कोई साइड‑इफ़ेक्ट नहीं) से मत मिलाएँ; वह एक अलग, हालांकि कभी‑कभी संबंधित, अवधारणा है।
+````
