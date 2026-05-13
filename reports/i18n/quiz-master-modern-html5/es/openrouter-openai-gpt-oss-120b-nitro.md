@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-master-modern-html5
+- Locale: es
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2024-11-01--quiz-master-modern-html5/es/index.mdx
+- Validation: passed
+- Runtime seconds: 20.57
+- Input tokens: 12620
+- Output tokens: 6633
+- Thinking tokens: unknown
+- Cached input tokens: 4928
+- Cache write tokens: 0
+- Estimated cost: $0.001686
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: 'Quiz: ¿El HTML sigue en tu currículum?'
@@ -443,3 +461,4 @@ Al fin y al cabo, sabes diferenciar un `<div>` de un `<span>`, ¿no? Pero, ¿qu�
 ¿O resignado a `<div>` y `<span>` para siempre? 😅
 
 ¡Déjame tu respuesta en los comentarios! 👇
+````
