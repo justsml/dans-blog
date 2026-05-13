@@ -3,22 +3,22 @@
 - Locale: es
 - Model: openrouter/openai/gpt-oss-120b:nitro
 - Target: src/content/posts/2015-06-06--docker-firewall-setup/es/index.mdx
-- Validation: rejected: direct AI SDK translation failed
-- Runtime seconds: 1.32
-- Input tokens: 3986
-- Output tokens: 1068
+- Validation: deferred
+- Runtime seconds: 2.79
+- Input tokens: 3958
+- Output tokens: 963
 - Thinking tokens: unknown
-- Cached input tokens: 2176
+- Cached input tokens: 1792
 - Cache write tokens: 0
-- Estimated cost: $0.000348
+- Estimated cost: $0.000328
 - Pricing source: local-openrouter-estimate
-- Note: Command failed: git add src/content/posts/2015-06-06--docker-firewall-setup/es/index.mdx reports/i18n/docker-firewall-setup/es
+- Note: Generated through the direct AI SDK chunked translator.
 ## Raw Output
 
 ````mdx
 ---
 title: Configuración del firewall de Docker
-subTitle: Configura el firewall del host Docker
+subTitle: Configurar el firewall del host Docker
 draft: true
 date: '2015-06-06'
 modified: '2016-07-30'
@@ -35,9 +35,9 @@ cover_icon: ../icon_charles-deluvio-456501-unsplash.webp
 ## Configurar el firewall del host Docker
 
 1. Se asume un servidor Debian/Ubuntu
-1. Diseñado para ejecutarse en un servidor host Docker
+1. Diseñado para ejecutarse en el servidor host de Docker
 
-### Instalar los requisitos
+### Instalar requisitos
 
 ~~~sh
 # Ultimate Firewall Needed
@@ -52,7 +52,6 @@ hostname --all-ip-addresses
 
 
 # O use la herramienta ip, ejemplo:
-~~~
 ip addr
 ~~~
 
@@ -87,13 +86,13 @@ ufw limit ssh # Basic Rate limit 4 SSH brute force mitigation
 export EXTERNAL_IP=123.123.123.123
 # Actualiza la IP de Docker si es necesario
 export DOCKER_IP=172.17.42.1
-# Redirige el tráfico TCP 8080 a la aplicación en Docker
+# Reenvía tráfico TCP 8080 a la aplicación en Docker
 ufw allow proto tcp from $EXTERNAL_IP port 8080 to $DOCKER_IP port 3000
 ~~~
 
 ## Habilitar / Iniciar el firewall
 
-> Ten cuidado, no bloquees tu puerto SSH (sshd usa el 22 por defecto)
+> Ten cuidado, no te quedes sin acceso SSH (sshd usa el puerto 22 por defecto)
 
 ~~~sh
 ufw --force enable
@@ -105,7 +104,7 @@ ufw reset
 
 ### Prueba tu firewall
 
-> Importante: USA UNA DIRECCIÓN IP/UBICACIÓN REMOTA
+> Importante: UTILIZA UNA DIRECCIÓN/IP REMOTA
 
 ~~~sh
 # Verificar dependencia
@@ -123,5 +122,5 @@ nmap -p 1-10240,27017 --open -v -APN $TARGET_HOST
 nmap -p 1-10240,27017 -O --osscan-guess $TARGET_HOST
 ~~~
 
-> ¡HECHO! Ahora deberías ver SÓLO los puertos que configuraste!
+> ¡HECHO! Ahora deberías ver SOLO los puertos que configuraste.
 ````
