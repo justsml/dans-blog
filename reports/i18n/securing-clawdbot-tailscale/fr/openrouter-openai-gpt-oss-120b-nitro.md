@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: securing-clawdbot-tailscale
+- Locale: fr
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-01-26--securing-clawdbot-tailscale/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 19.02
+- Input tokens: 12650
+- Output tokens: 4049
+- Thinking tokens: unknown
+- Cached input tokens: 1920
+- Cache write tokens: 0
+- Estimated cost: $0.001222
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Mon assistant IA m’a donné un accès shell
 subTitle: Comment sécuriser votre installation OpenClaw/Moltbot locale ou sur VPS
@@ -267,3 +285,4 @@ Avant de considérer votre instance OpenClaw/Moltbot prête pour la production�
 - [Use UFW to Lock Down an Ubuntu Server](https://tailscale.com/docs/how-to/secure-ubuntu-server-with-ufw)
 - [Security Audit: 512 Findings (GitHub Issue)](https://github.com/moltbot/moltbot/issues/1796)
 - [Nmap Network Scanning Guide](https://nmap.org/book/man.html)
+````

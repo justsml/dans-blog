@@ -1,0 +1,138 @@
+{
+  "runId": "openai-gpt-oss-120b-nitro@2026-05-13T14-55-24-992Z",
+  "slug": "securing-clawdbot-tailscale",
+  "locale": "fr",
+  "model": "openai/gpt-oss-120b:nitro",
+  "modelPath": "openai-gpt-oss-120b-nitro",
+  "createdAt": "2026-05-13T14:55:45.241Z",
+  "sourcePath": "src/content/posts/2026-01-26--securing-clawdbot-tailscale/index.mdx",
+  "targetPath": "src/content/posts/2026-01-26--securing-clawdbot-tailscale/fr/index.mdx",
+  "candidatePath": "reports/i18n/securing-clawdbot-tailscale/fr/openai-gpt-oss-120b-nitro/2026-05-13T14-55-24-992Z/candidate.mdx",
+  "sourceHash": "774feafac3dd3c408584db2b169a365e3f58a8b6a6d0541778aad55f122f5285",
+  "outputHash": "2ad1b4654fb6708f307191ab608b1aa39397459ccb2aa186919cd7f462317201",
+  "reasoningEffort": "low",
+  "temperature": 0.3,
+  "maxTokens": 16000,
+  "timeoutMs": 200000,
+  "articleSummary": "The article warns that exposing OpenClaw’s gateway, node controls, or SSH to the public internet gives attackers direct shell access, and it outlines a “secure‑by‑default” deployment that keeps the gateway bound to 127.0.0.1 and routes traffic only through a Tailscale tailnet. It explains the three attack surfaces (SSH on port 22, the gateway UI/WebSocket on port 18789, and browser‑node control), shows how mis‑configuring Docker ports, reverse proxies, or Tailscale Funnel can unintentionally publish these surfaces, and cites real‑world scans (≈2,800 exposed instances) and a GitHub audit (512 findings) as evidence of the risk. The core recommendation is to use Tailscale Serve (or a tailnet‑only bind with token auth) and avoid Funnel unless public exposure is explicitly required, thereby preventing unauthenticated remote code execution. The guide is written for developers or sysadmins deploying OpenClaw who may not be security experts, using a practical tutorial tone with recurring “gateway‑exposed‑to‑the‑internet = shell access” metaphor.",
+  "totalInputTokens": 12650,
+  "totalOutputTokens": 4049,
+  "totalCacheReadTokens": 1920,
+  "totalCacheWriteTokens": 0,
+  "totalDurationMs": 19016,
+  "totalCostUsd": 0.0012221699999999999,
+  "pricingSource": "local-openrouter-estimate",
+  "telemetry": {
+    "model": "openai/gpt-oss-120b:nitro",
+    "chunkSize": "6p",
+    "totalChunks": 11,
+    "totalInputTokens": 12650,
+    "totalOutputTokens": 4049,
+    "totalCacheReadTokens": 1920,
+    "totalCacheWriteTokens": 0,
+    "totalDurationMs": 19016,
+    "totalCostUsd": 0.0012221699999999999,
+    "pricingSource": "local-openrouter-estimate",
+    "chunks": [
+      {
+        "index": 0,
+        "inputTokens": 1070,
+        "outputTokens": 429,
+        "cacheReadTokens": 384,
+        "cacheWriteTokens": 0,
+        "durationMs": 544,
+        "costUsd": 0.00011894999999999999
+      },
+      {
+        "index": 1,
+        "inputTokens": 1169,
+        "outputTokens": 465,
+        "cacheReadTokens": 640,
+        "cacheWriteTokens": 0,
+        "durationMs": 510,
+        "costUsd": 0.00012929100000000002
+      },
+      {
+        "index": 2,
+        "inputTokens": 1206,
+        "outputTokens": 339,
+        "cacheReadTokens": 256,
+        "cacheWriteTokens": 0,
+        "durationMs": 1042,
+        "costUsd": 0.00010805399999999999
+      },
+      {
+        "index": 3,
+        "inputTokens": 1136,
+        "outputTokens": 258,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 6368,
+        "costUsd": 0.000090744
+      },
+      {
+        "index": 4,
+        "inputTokens": 1119,
+        "outputTokens": 287,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 1494,
+        "costUsd": 0.000095301
+      },
+      {
+        "index": 5,
+        "inputTokens": 1197,
+        "outputTokens": 426,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 2718,
+        "costUsd": 0.00012336299999999998
+      },
+      {
+        "index": 6,
+        "inputTokens": 1229,
+        "outputTokens": 423,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 1140,
+        "costUsd": 0.000124071
+      },
+      {
+        "index": 7,
+        "inputTokens": 1045,
+        "outputTokens": 228,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 1575,
+        "costUsd": 0.000081795
+      },
+      {
+        "index": 8,
+        "inputTokens": 1172,
+        "outputTokens": 356,
+        "cacheReadTokens": 256,
+        "cacheWriteTokens": 0,
+        "durationMs": 1812,
+        "costUsd": 0.00010978799999999999
+      },
+      {
+        "index": 9,
+        "inputTokens": 1063,
+        "outputTokens": 340,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 1436,
+        "costUsd": 0.000102657
+      },
+      {
+        "index": 10,
+        "inputTokens": 1244,
+        "outputTokens": 498,
+        "cacheReadTokens": 384,
+        "cacheWriteTokens": 0,
+        "durationMs": 377,
+        "costUsd": 0.00013815599999999998
+      }
+    ]
+  }
+}
