@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: creating-collaborative-culture
+- Locale: es
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2021-03-03--creating-collaborative-culture/es/index.mdx
+- Validation: passed
+- Runtime seconds: 6.93
+- Input tokens: 2399
+- Output tokens: 3054
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.000925
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: ''
@@ -54,3 +72,4 @@ De forma más personal:
 
 > ¡Síganos!  
 > ¡Mi próximo artículo trata sobre los procesos y hábitos que impulsan la *cultura colaborativa* en su organización!
+````
