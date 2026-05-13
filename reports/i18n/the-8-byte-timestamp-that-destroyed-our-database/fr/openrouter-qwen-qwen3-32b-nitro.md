@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: the-8-byte-timestamp-that-destroyed-our-database
+- Locale: fr
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2025-12-29--the-8-byte-timestamp-that-destroyed-our-database/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 22.64
+- Input tokens: 9632
+- Output tokens: 9399
+- Thinking tokens: unknown
+- Cached input tokens: 512
+- Cache write tokens: 0
+- Estimated cost: $0.003026
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Votre horodatage est un mensonge
 subTitle: >-
@@ -140,3 +158,4 @@ Pensez à ce que vos utilisateurs doivent voir. Ensuite, stockez les données qu
 - [Format de date et d'heure ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 - [Base de données des fuseaux horaires (IANA)](https://www.iana.org/time-zones)
 - [Gestion des horodatages dans les systèmes distribués](https://www.postgresql.org/docs/current/functions-datetime.html)
+````
