@@ -1,34 +1,36 @@
 {
-  "runId": "2026-05-13T17-18-28-487Z",
-  "runStatus": "completed",
+  "runId": "2026-05-13T18-32-20-628Z",
+  "runStatus": "running",
   "slug": "amazing-resources",
   "locale": "it",
-  "startedAt": "2026-05-13T17:18:28.487Z",
-  "updatedAt": "2026-05-13T17:24:25.550Z",
+  "startedAt": "2026-05-13T18:32:20.628Z",
+  "updatedAt": "2026-05-13T18:36:20.848Z",
   "modelsRequested": [
     "openrouter/openai/gpt-oss-120b:nitro",
     "openrouter/qwen/qwen3-32b:nitro",
     "deepseek/deepseek-v4-flash",
-    "qwen/qwen3.6-plus"
+    "qwen/qwen3.6-plus",
+    "qwen/qwen3.6-35b-a3b",
+    "qwen/qwen3.5-9b"
   ],
-  "attemptedModels": 2,
-  "skippedModels": 2,
+  "attemptedModels": 1,
+  "skippedModels": 3,
   "rejectedModels": 1,
-  "candidateModels": 1,
+  "candidateModels": 0,
   "totals": {
-    "inputTokens": 9598,
-    "outputTokens": 9972,
+    "inputTokens": 0,
+    "outputTokens": 0,
     "thinkingTokens": 0,
     "cachedInputTokens": 0,
     "cacheWriteTokens": 0,
-    "estimatedCostUsd": 0.004136,
+    "estimatedCostUsd": 0,
     "hasUnknownInputTokens": true,
     "hasUnknownOutputTokens": true,
     "hasUnknownThinkingTokens": true,
     "hasUnknownCachedInputTokens": true,
     "hasUnknownCacheWriteTokens": true,
     "hasUnknownEstimatedCost": true,
-    "runtimeSeconds": "348.20"
+    "runtimeSeconds": "240.06"
   },
   "attempts": [
     {
@@ -45,30 +47,18 @@
     },
     {
       "model": "deepseek/deepseek-v4-flash",
-      "status": "candidate",
-      "validationStatus": "deferred",
+      "status": "skipped",
       "reportPath": "reports/i18n/amazing-resources/it/deepseek-deepseek-v4-flash.md",
-      "note": "Generated through the direct AI SDK chunked translator.",
-      "telemetry": {
-        "runtimeSeconds": "108.19",
-        "tokens": {
-          "input": 9598,
-          "output": 9972,
-          "cached": 0,
-          "cacheWrite": 0
-        },
-        "estimatedCostUsd": 0.004135880000000001,
-        "pricingSource": "local-openrouter-estimate"
-      }
+      "note": "Existing non-rejected report found. Pass --overwrite to rerun."
     },
     {
       "model": "qwen/qwen3.6-plus",
       "status": "rejected",
       "validationStatus": "rejected: direct AI SDK translation failed",
       "reportPath": "reports/i18n/amazing-resources/it/qwen-qwen3.6-plus.md",
-      "note": "Command failed after 240000ms: bun run i18n:translate:chunked -- --slug amazing-resources --locale it --model qwen/qwen3.6-plus --chunk 6p --quiz-concurrency 24",
+      "note": "Command failed after 240000ms: bun run i18n:translate:chunked -- --slug amazing-resources --locale it --model qwen/qwen3.6-plus --chunk 6p --run-id 2026-05-13T18-15-57-947Z-61322 --run-lock-path /Users/dan/code/oss/dans-blog/.git/codex-i18n-translation-run.json --quiz-concurrency 24",
       "telemetry": {
-        "runtimeSeconds": "240.01",
+        "runtimeSeconds": "240.06",
         "tokens": {}
       }
     }
