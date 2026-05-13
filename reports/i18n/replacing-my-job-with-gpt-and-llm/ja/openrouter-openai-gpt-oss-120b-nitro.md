@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: replacing-my-job-with-gpt-and-llm
+- Locale: ja
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2024-12-05--replacing-my-job-with-gpt-and-llm/ja/index.mdx
+- Validation: deferred
+- Runtime seconds: 7.35
+- Input tokens: 6771
+- Output tokens: 1858
+- Thinking tokens: unknown
+- Cached input tokens: 1536
+- Cache write tokens: 0
+- Estimated cost: $0.000599
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: 自分をAIに置き換える
@@ -102,3 +120,4 @@ AI を減らす必要はなかった。摩擦を増やす必要があった。
 AI は私を速くしました。さらに重要なのは、弱点が見えやすくなったことです。その代償は、単に文章らしく振る舞うだけの prose を公開しないよう、より意識的にチェックしなければならなくなることです。
 
 それが私が受け入れられる取引です。
+````
