@@ -1,0 +1,143 @@
+# Translation Candidate
+- Slug: handling-international-numbers-and-currency
+- Locale: es
+- Model: qwen/qwen3.6-plus
+- Target: src/content/posts/2024-08-29--handling-international-numbers-and-currency/es/index.mdx
+- Validation: rejected: direct AI SDK translation failed
+- Runtime seconds: 240.01
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Cache write tokens: unknown
+- Estimated cost: unknown
+- Pricing source: unknown
+- Note: Command failed after 240000ms: bun run i18n:translate:chunked -- --slug handling-international-numbers-and-currency --locale es --model qwen/qwen3.6-plus --chunk 6p --run-id 2026-05-13T18-15-57-947Z-61322 --run-lock-path /Users/dan/code/oss/dans-blog/.git/codex-i18n-translation-run.json --quiz-concurrency 24
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: Entendiendo los números internacionales y la moneda
+subTitle: ¡Dinero localizado explicado!
+draft: false
+date: '2024-08-28'
+modified: '2024-09-03'
+tags:
+  - engineering
+  - internationalization
+  - localization
+  - currency
+  - numbers
+category: HowTo
+subCategory: Internationalization
+cover_full_width: ../currency-banner-wide.webp
+cover_mobile: ../currency-banner-pic__w200.webp
+cover_icon: ../currency-banner-pic__w200.webp
+---
+- [Dinero: Localización (L10n) e Internacionalización (i18n)](#money-localization-l10n-and-internationalization-i18n)
+- [Conceptos Clave](#critical-concepts)
+  - [Los Números son Locales 🏘️](#numbers-are-local-️)
+  - [La Moneda es Global 🌎](#currency-is-global-️)
+  - [Cuándo Importa la Configuración Regional](#when-locale-matters)
+- [Una Solución](#a-solution)
+- [Próximos Pasos](#next-steps)
+
+## Dinero: Localización (L10n) e Internacionalización (i18n)
+
+No son solo para dominar una partida de Scrabble, _localización_ e _internacionalización_ se refieren al proceso de hacer que un producto **se sienta como en casa en un país diferente.**
+
+<p class="breakout quote">Mostrar una moneda en el formato local incorrecto es una señal inequívoca: no has puesto ningún esfuerzo.<br/>Si no puedes formatear un precio, ¿cómo podrías manejar el envío?</p>
+
+La internacionalización es un tema amplio, que abarca desde la traducción de texto hasta el formato de fechas. En este artículo nos centraremos en un subtema particular: **el formato de números y monedas.**
+
+Exploremos el formato entre 3 países de la Eurozona, EE. UU. e India:
+
+- `€1,234,567.89` Irlanda 🇮🇪
+- `1.234.567,89 €` Alemania 🇩🇪
+- `1 234 567,89 €` Francia 🇫🇷
+- `$1,234,567.89` EE. UU. 🇺🇸
+- `₹12,34,567.89` India 🇮🇳
+
+¡Caos! ¿Verdad? ¡Hay símbolos, espacios y puntuación volando por todos lados! ¡Es increíble que la UE pueda ponerse de acuerdo en algo! 😅
+
+## Conceptos Clave
+
+Antes de sumergirnos en las soluciones, ¿qué queremos decir con «Los números son locales»?
+
+### Los números son locales 🏘️
+
+Cada localidad ([País según ISO 3166](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes)) define reglas para formatear números.
+
+Las reglas de formato numérico incluyen:
+
+- Decimal: coma, punto.
+- Miles: coma, punto, espacio.
+- Posición y espaciado del símbolo de moneda.
+
+### La moneda es global 🌎
+
+Una `currency` se refiere a una unidad específica de dinero. (Consulta la [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217#Active_codes_(list_one)) para la lista.)
+
+- Especifica un símbolo: `$`, `€`, `£`, `¥`. (A menudo reutilizado.)
+- Siempre tiene un código de 3 letras: `USD`, `EUR`, `GBP`, `JPY`.
+- Puede usarse/cambiarse en «cualquier» país. En teoría.
+- Convertir entre monedas requiere datos de tipo de cambio.
+- El valor no cambia según la localidad.
+
+### Cuándo importa la localidad
+
+La mayoría de las APIs REST de comercio electrónico/pagos manejan `price` + `currencyCode`. ¿Por qué sin localidades?
+
+Las localidades se configuran (normalmente) a nivel del SO/dispositivo, y los navegadores las exponen mediante `navigator.language`. Como cada usuario puede tener una localidad distinta, lo lógico es formatear números y monedas en el lado del cliente.
+
+## Una solución
+
+¡Bien, buenas noticias! Los lenguajes de programación modernos tienen soporte nativo para esto. En JavaScript, tenemos la clase [`Intl`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl) y `Intl.NumberFormat`.
+
+Veamos algo de código:
+
+```javascript
+const number = 1_234_567.89;
+
+/**
+ * Formatea un número en la moneda local.
+ * @param {number} amount - El monto a formatear.
+ * @param {string} currency - El código de moneda de 3 letras.
+ * @param {string} [locale] - La cadena de localidad del usuario.
+ */
+const formatMoney = (amount, currency, locale = navigator.language) =>
+  new Intl.NumberFormat(locale, { currency, style: 'currency' })
+    .format(amount);
+
+console.log('🇩🇪 ' + formatMoney(number, 'EUR', 'de-DE'));
+console.log('🇮🇪 ' + formatMoney(number, 'EUR', 'ga-IE'));
+console.log('🇫🇷 ' + formatMoney(number, 'EUR', 'fr-FR'));
+```
+
+Si necesitas hacer cosas más complejas, como calcular impuestos, aplicar descuentos o convertir entre monedas, te convendrá usar una librería como [dinero.js](https://v2.dinerojs.com/).
+
+## Próximos pasos
+
+- Mejores prácticas con la configuración regional del usuario. Detectar + permitir anulaciones. (p. ej., un menú desplegable de país.)
+- Persistir enteros completos (almacenar centavos, no dólares).
+- Matemáticas monetarias. (p. ej., aplicar un cupón de `20% de descuento`, calcular `subTotal + impuestos`, etc.)
+- Tipos de cambio en vivo. (Para compras minoristas, intercambios de divisas/forex.)
+
+<p class="breakout quote">¡Avísame si te gustaría ver un artículo futuro sobre estos temas!</p>
+
+{/* ## Recomendaciones */}
+
+**JavaScript / TypeScript**
+
+- [dinero.js](https://v2.dinerojs.com/) soporta operaciones monetarias, tipos de cambio, formato y análisis.
+
+**Rust**
+
+- [rusty_money](https://crates.io/crates/rusty_money) es mi biblioteca preferida para Rust.
+
+**Go**
+
+- [currency](https://github.com/bojanz/currency) es mi elección actual en Golang.
+ */}
+````
