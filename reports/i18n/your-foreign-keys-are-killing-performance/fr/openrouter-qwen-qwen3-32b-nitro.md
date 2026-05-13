@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: your-foreign-keys-are-killing-performance
+- Locale: fr
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2025-12-29--your-foreign-keys-are-killing-performance/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 24.16
+- Input tokens: 10462
+- Output tokens: 10296
+- Thinking tokens: unknown
+- Cached input tokens: 1536
+- Cache write tokens: 0
+- Estimated cost: $0.003308
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: ''
 subTitle: ''
@@ -150,3 +168,4 @@ Pourquoi optimisez-vous ?
 - [Conseils de performance PostgreSQL](https://www.postgresql.org/docs/current/performance-tips.html)
 - [Use The Index, Luke! - Clés étrangères](https://use-the-index-luke.com/sql/clustering/data-clustering)
 - [Normalisation vs dénormalisation d'une base de données](https://www.postgresql.org/docs/current/tutorial-concepts.html)
+````
