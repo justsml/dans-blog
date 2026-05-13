@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: angularjs-v2-impending-schism
+- Locale: ru
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2015-08-05--angularjs-v2-impending-schism/ru/index.mdx
+- Validation: passed
+- Runtime seconds: 3.43
+- Input tokens: 1691
+- Output tokens: 1221
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.000428
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: ''
@@ -39,3 +57,4 @@ AngularJS v2.0 вносит слишком много изменений. **Не
 <div class="anigif top end">  
   <img alt='всё будет хорошо' src="../https://res.cloudinary.com/ddd/image/upload/v1442175801/system-maint-anon.gif" />  
 </div>
+````
