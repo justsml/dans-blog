@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: your-laptop-is-the-breach
+- Locale: hi
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-05-09--your-laptop-is-the-breach/hi/index.mdx
+- Validation: passed
+- Runtime seconds: 14.63
+- Input tokens: 42197
+- Output tokens: 8647
+- Thinking tokens: unknown
+- Cached input tokens: 25344
+- Cache write tokens: 0
+- Estimated cost: $0.003202
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: आपका लैपटॉप ही उल्लंघन है
 subTitle: डेवलपर वर्कस्टेशन अब क्रेडेंशियल भंडार हैं। इन्हें प्रोडक्शन की तरह संभालें।
@@ -329,3 +347,4 @@ Policy text एकsandbox नहीं है। एक permission prompt भी
 - [Little Snitch](https://obdev.at/products/littlesnitch/)
 - [Portmaster](https://safing.io/)
 - [Claude Code अनुमतियाँ](https://code.claude.com/docs/en/permissions)
+````
