@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: honest-priorities
+- Locale: es
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2024-10-23--honest-priorities/es/index.mdx
+- Validation: passed
+- Runtime seconds: 19.40
+- Input tokens: 6898
+- Output tokens: 7339
+- Thinking tokens: unknown
+- Cached input tokens: 1024
+- Cache write tokens: 0
+- Estimated cost: $0.002313
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: La Trampa de la Prioridad
@@ -121,3 +139,4 @@ O, puedes ser ***real*** con tu lista de tareas pendientes.
 - Anecdóticamente, he notado cero daño al descartar tickets más antiguos e incompletos.
 - Agregar sin fin a una base de datos de tareas pendientes pierde la oportunidad de enfocar a tu equipo y organización en lo que realmente importa. (Las cosas que están por delante de nosotros. Mientras que las listas de tareas inherentemente miran hacia atrás.)
 - Una lista de tareas profunda termina pareciéndose a una Sala de Trofeos de Bizzaro, celebrando la mierda que nunca lanzarás.
+````
