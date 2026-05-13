@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: deathmatch-git-rebase-vs-merge
+- Locale: de
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2023-08-28--deathmatch-git-rebase-vs-merge/de/index.mdx
+- Validation: passed
+- Runtime seconds: 17.51
+- Input tokens: 8173
+- Output tokens: 6846
+- Thinking tokens: unknown
+- Cached input tokens: 1536
+- Cache write tokens: 0
+- Estimated cost: $0.002297
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: ''
@@ -126,3 +144,4 @@ Letztendlich **bedeutet Rebasing, dass Sie sich gelegentlich irrelevante alte Co
 - Sie können das spezielle Trennzeichen "--" mit `git checkout` verwenden, um in der aktuellen Branch zu bleiben, während Sie die angegebenen Dateien kopieren:  
 - `git checkout feature/half-a-feature **--** <Ordner- oder Dateipfad>`  
 - Stellen Sie sicher, dass Sie alle Änderungen, die Sie behalten möchten, zuerst committen, da dies alle lokalen Änderungen überschreiben wird.
+````
