@@ -1,0 +1,149 @@
+---
+title: フィーチャーチームを高速化する驚きの裏技！
+subTitle: スタッフエンジニアはこれを嫌う！
+date: '2024-09-29'
+modified: '2024-09-30'
+tags:
+  - agile
+  - teams
+category: Engineering
+social_image: ../desktop-social.webp
+cover_full_width: ../wide_danny-howe-98KlbUsOO_w-unsplash.webp
+cover_mobile: ../danny-howe-98KlbUsOO_w-unsplash__w200.webp
+cover_icon: ../danny-howe-98KlbUsOO_w-unsplash__w200.webp
+cover_credit: >-
+  Photo by <a
+  href="https://unsplash.com/@dannyhowe?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Danny
+  Howe</a> on <a
+  href="https://unsplash.com/photos/red-and-white-neon-light-signage-98KlbUsOO_w?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
+---
+{/* Add html5 toggle element */}
+
+<details>
+<summary>目次</summary>
+
+- [キーで考える](#thinking-in-keys)
+  - [キーによる設計](#designing-with-keys)
+  - [KVをグラフやツリーとして使う？](#kvs-as-graphs--trees)
+  - [KVパターンを使うべきとき](#when-to-use-kv-patterns)
+  - [KVパターンを避けるべきとき](#when-to-avoid-kv-patterns)
+  - [KVだけでは足りないとき](#when-you-need-more-than-kv)
+- [次のステップ](#next-steps)
+  - [Fact Service - 参考プロジェクト](#fact-service---reference-project)
+- [結論](#conclusion)
+  - [参考文献](#further-reading)
+
+</details>
+
+新しいシステムや機能を設計するとき、スキーマ設計に悩みがちです。本記事では、私のキャリアを通じて効果を発揮してきた便利なトリックを紹介します。
+
+<section class="breakout">
+  _新しいシステムや機能を設計する際は、最もシンプルなデータ永続化を試してみてください。_
+</section>
+
+あまりにも頻繁に、チームがデータストレージの唯一の選択肢としてSQLやMongoDBを選ぶのを目にします。確かに、SQLを選んでクビになる人はいません。しかし、もっとシンプルで、高速で、低コストな始め方があるとしたらどうでしょう？
+
+KV（キーバリューストア）だけで十分かもしれません。RedisやS3のようなものです。
+
+それが常に正しい選択とは限りませんが、おそらく**あなたが思っているよりも頻繁に**当てはまります。
+
+シンプルなストレージ層は、データ層のコードを再利用し、スキーマ設計やマイグレーションの変更に伴うコストを回避することで、*初期*の開発を適度に高速化できます。変更はどうせ発生します。できる限りコードに任せましょう。変更を2か所で扱うのは避けるべきです。
+
+パフォーマンスの向上も期待できます。`key`のルックアップは高度に最適化されており、書き込みはバッチ更新の恩恵を受けられるからです。
+
+{/* JOINやデータセットのプロパティによるクエリが必要な場合、またはデータセットが無制限/無限に増大する場合（`Logs`、`Signups`など）は、KVパターンを避けてください。 */}
+
+## キーで考える
+
+最初にキーバリューパターンで設計するのは奇妙に感じるかもしれません。特に、オブジェクト階層やER図を使ってシステムを設計し、それを直接SQLで実装することに慣れている場合はなおさらです。
+
+おそらく、キーバリューパターンを***使った***ことがあるでしょう！設定ファイルやURL、S3スタイルのオブジェクトストレージなど、至る所に存在します。一意の`ID`値でデータを扱うたびに、どうでしょう？またキーバリューパターンです！（ただし、必ずしもKVストアとは限りません。）
+
+### キーによる設計
+
+事実上、あらゆるデータはKVパターンで表現***できます***。（実際、多くの高次DBは低レベルのKVパターンの上に構築されています。）いくつか例を見てみましょう：
+
+```markdown
+user/123          {id: 123, ...}
+user/123/block    ['user/456', 'user/789']
+user/123/groups   ['admin', 'staff']
+user/420/friends  ['user/456', 'user/789']
+
+group/admin       {user: '*:rw'}
+group/default     {user: '*:r'}
+
+product/42/discount/<UUID>	{percentOff: '10%'}
+product/42/discount/<UUID>	{percentOff: '20%', minTotal: 100.0}
+```
+
+お気づきかもしれませんが、`ID`自体がキーであることがよくあります！これはKVストアでよく見られるパターンです。キーは多くの場合、エンティティタイプと一意識別子の複合です。（例：`user/123`、`user:456`）
+
+### KVをグラフやツリーとして？
+
+グラフやツリーのような複雑なデータ構造をKVパターンで表現すると便利なことがあります。（繰り返しになりますが、REST URLはその良い例です。）
+
+キーの階層構造（`user/420` → `user/420/friends`）は、`user`とその`friends`の間のグラフ関係を自然にエンコードします。
+
+これはグラフデータ構造をシリアライズするための手軽で安価な方法です。特に、グラフデータベース（Neo4jなど）の複雑さが必要ない場合に有効です。
+
+<figure>
+![user/123のグラフ](../../KVsCanBeGraphs.webp)
+<figcaption>user/123のグラフ</figcaption>
+</figure>
+
+### KVパターンを使うべき場合
+
+- 大規模なスケールが必要な場合（数十億、あるいは数兆のKVペア）。
+- 主に一意なキーでデータにアクセスする場合。
+- 単純なデータ構造が必要な場合。
+- 階層、グラフ、またはツリー構造を持つデータがある場合。
+
+### KVパターンを避けるべき場合
+
+ブログコメントのようなものを単一のKVペアに保存しないでください。例えば、`post/666 -> {comments: [...too many...]}` のようなものです。代わりに、`post/666/comments/1` や `post/666/comments/<UUID>` などを使用するか、SQLテーブルを検討してください。
+
+- データセット内のプロパティ（キーやID以外）で検索する必要がある場合。
+- 複数のエンティティにわたってデータをJOINする必要がある場合。
+- 複雑な制約やリレーションシップを強制する必要がある場合。
+
+### KV以上のものが必要な場合
+
+プロジェクトの要件が自然に進化するにつれて、KVストアがサポートする以上のことを行う必要が出てくるかもしれません。その時点で、より複雑なデータストアへの移行を検討する必要があります。
+
+{/* 良いニュースは、多くの場合、KVパターンから始めて、必要に応じてより複雑なシステムに進化させることができることです。S3には単純なストレージ以上の機能があり、ファイル検索のためのAthena、Glacier、有効期限ポリシーなど、多くのことができます。また、Redisは多くの高レベル機能（Pub/Sub、地理空間、ストリーム、ソート済みセットなど）を追加しており、いくつかの要件を満たすのに役立ちます。 */}
+
+良いニュースは、単一のKVストアをSQLに移行する方が、複雑なSQLスキーマをKVストアに移行するよりも比較的簡単であることです。（複数のテーブル、インデックス、制約などがある場合）私はこれを50行のスクリプトで何度もやってきました。
+
+経験的に言うと、最初にKVパターンから始めると、SQL設計の品質が高くなる傾向があります。これにより、データを別の視点で考えることを強いられ、SQLから本当に必要なものを正確に理解できるようになります。
+
+## 次のステップ
+
+学ぶ最良の方法は実際に試してみることです！このパターンをさらに探求したいなら、Redis、DynamoDB、またはS3を使って**何かを作る**ことをお勧めします。これらはすべて、異なるトレードオフを持つ優れたKVストアです。
+
+### Fact Service - 参考プロジェクト
+
+私のオープンソースプロジェクト、[GitHub上の参考プロジェクト「Fact Service」](https://github.com/justsml/fact-service)をチェックしてみてください。これは、KVデータサービスを実装したスタンドアロンのRESTful APIです。
+
+多くのデータアダプターを備えています（[GitHub](https://github.com/justsml/fact-service/tree/main/lib/providers)）。
+Postgres、Redis、DynamoDB、Firestore、Cassandra用のものを含んでいます！（すぐに始められる[Dockerコマンド](https://github.com/justsml/fact-service/tree/main/lib/providers)も完備。）
+
+Fact Serviceはスターター＆学習用プロジェクトです。フォークして、独自のKVデータサービスを構築してください！
+
+## まとめ
+
+この記事がお役に立てば幸いです！ご質問やフィードバックがあれば、コメントまたはTwitterで`@`してください（[Twitter](https://x.com/justsml)）。
+
+### クレジット
+
+- [PostgreSQLにおける階層ツリーデータのモデリング](https://leonardqmarcq.com/posts/modeling-hierarchical-tree-data)
+- [PostgreSQLで大規模ツリーを保存する際の注意点](https://leonardqmarcq.com/posts/dos-and-donts-of-modeling-hierarchical-trees-in-postgres)
+
+### 関連資料
+
+- [Fact Service](https://github.com/justsml/fact-service)
+- [Postgres](https://www.postgresql.org/)
+- [Redis](https://redis.io/)
+- [DynamoDB](https://aws.amazon.com/dynamodb/)
+- [S3](https://aws.amazon.com/s3/)
+- [Cassandra](https://cassandra.apache.org/)
+- [Firestore](https://firebase.google.com/docs/firestore)
