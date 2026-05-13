@@ -1,0 +1,351 @@
+# Translation Candidate
+- Slug: docker-security-for-admins-and-maintainers
+- Locale: hi
+- Model: qwen/qwen3.6-plus
+- Target: src/content/posts/2025-01-04--docker-security-for-admins-and-maintainers/hi/index.mdx
+- Validation: rejected: direct AI SDK translation failed
+- Runtime seconds: 240.01
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Cache write tokens: unknown
+- Estimated cost: unknown
+- Pricing source: unknown
+- Note: Command failed after 240000ms: bun run i18n:translate:chunked -- --slug docker-security-for-admins-and-maintainers --locale hi --model qwen/qwen3.6-plus --chunk 6p --quiz-concurrency 24
+## Raw Output
+
+````mdx
+---
+unlisted: true
+draft: true
+hidden: true
+title: 'डॉकर सुरक्षा: डेवलपर्स के लिए खोई हुई गाइड'
+subTitle: अपने नेटवर्क को खतरों और खतरनाक कॉन्फ़िगरेशन से बचाना सीखें!
+date: '2025-01-04'
+modified: '2025-01-13'
+tags:
+  - local development
+  - security
+  - devops
+  - best-practices
+category: Security
+cover_full_width: ../flame-whale-wide.webp
+cover_mobile: ../flame-whale-head-square-200.webp
+cover_icon: ../flame-whale-head-square-200.webp
+cover_credit: ©️ 2025 Dan Levy
+---
+import {CodeTabs} from '../../../../../components/CodeTabs';
+
+## कार्य प्रगति पर
+
+**विषय सूची**
+
+1. [⚠️ स्थानीय नेटवर्क जोखिम में](#-local-networks-at-risk)
+2. [🛡️ फ़ायरवॉल कॉन्फ़िगरेशन](#-firewall-configuration)
+3. [🔐 स्थानीय विकास के लिए गुप्त प्रबंधन](#-secrets-management-for-local-development)
+4. [🕵️‍ क्रेडेंशियल लीक और साइड-चैनल हमले](#-credential-leaks-and-side-channel-attacks)
+5. [🔍 निगरानी और कैनरी टोकन](#-monitoring--canary-tokens)
+6. [❌ सामान्य ग़लतफ़हमियाँ](#-common-misconceptions)
+
+<p class="inset"></p>
+
+## ⚠️ स्थानीय नेटवर्क जोखिम में
+
+ईमानदारी से कहें तो, हम सबने ऐसा किया है। आप किसी रैंडम कॉफी शॉप के वाई-फाई से जुड़ गए या बिना सोचे-समझे किसी को अपना होम नेटवर्क इस्तेमाल करने दिया। हो सकता है कि आप अपने स्मार्ट फ्रिज पर भी भरोसा करते हों कि वह आपके नेटवर्क से समझौता नहीं करेगा। हकीकत? ये सामान्य फैसले आपके स्थानीय डेवलपमेंट सेटअप को अनावश्यक जोखिमों में डाल सकते हैं। हमलावर सिर्फ प्रोडक्शन सिस्टम को निशाना नहीं बनाते—स्थानीय वातावरण अक्सर नरम लक्ष्य होते हैं, जो संवेदनशील प्रोजेक्ट्स तक पहुँचने का रास्ता देते हैं।
+
+### हमले के परिदृश्य
+
+1. **इंटरसेप्टेड ट्रैफ़िक:** अनएन्क्रिप्टेड ट्रैफ़िक को आसानी से कैप्चर और पढ़ा जा सकता है।
+2. **असुरक्षित सेवाएँ:** `0.0.0.0` पर एक्सपोज़्ड स्थानीय डेटाबेस या API।
+3. **नेटवर्क स्पूफ़िंग:** ट्रैफ़िक को हमलावर के डिवाइस पर रीडायरेक्ट करता है।
+
+### त्वरित सुधार
+
+- नेटवर्क एक्सपोज़र को सीमित करने के लिए फ़ायरवॉल की बजाय प्राइवेट डॉकर नेटवर्क को प्राथमिकता दें।
+- सार्वजनिक या शेयर्ड वाई-फाई से बचें; अपने फ़ोन के हॉटस्पॉट का उपयोग करना बेहतर है।
+- `arp-scan` और `nmap` जैसे टूल्स का उपयोग करके अपने स्थानीय नेटवर्क पर अज्ञात डिवाइसों की निगरानी करें।
+
+## 🛡️ फ़ायरवॉल कॉन्फ़िगरेशन
+
+### UFW और डॉकर (Ubuntu)
+
+> ⚠️ **चेतावनी:** डिफ़ॉल्ट रूप से Ubuntu/Debian पर डॉकर UFW/iptables नियमों को बायपास कर देता है, जिससे आपका सिस्टम हमलों के लिए संभावित रूप से खुल सकता है। इससे कोई फर्क नहीं पड़ता कि आप पोर्ट को स्थानीय IP पतों से बाइंड करते हैं (जैसे `-p 127.0.0.1:8080:80`)।
+
+यह मुझे हर बार जब मैं इसके बारे में सीखता हूँ तो आश्चर्यचकित करता है! [डॉकर डिफ़ॉल्ट रूप से UFW नियमों को बायपास करता है](https://github.com/moby/moby/issues/4737), जिससे कंटेनर होस्ट और अन्य कंटेनरों के साथ बिना किसी प्रतिबंध के संचार कर सकते हैं।
+
+### सर्वोत्तम अभ्यास
+
+1. 🥇 **डॉकर नेटवर्क का उपयोग करें** ताकि प्रत्येक कंटेनर या नेटवर्क से क्या जुड़ सकता है, इसे अलग और नियंत्रित किया जा सके।
+
+###
+2. 🥉 **iptables अपडेट करें** यदि आपको `host` नेटवर्क का उपयोग करना ही है, या कस्टम नेटवर्क का उपयोग नहीं कर सकते, तो आप iptables को कॉन्फ़िगर करके जोखिम को कम कर सकते हैं। कमज़ोर दिल वालों के लिए नहीं, [नीचे दी गई उपयोगिता देखें।](#uf)
+
+#### डॉकर नेटवर्क पृथक्करण
+
+```bash
+# Create a new Docker network
+docker network create my-network
+
+# Run your container with the new network
+docker run --network my-network my-container
+```
+
+#### UFW कॉन्फ़िगरेशन (`host` नेटवर्क के लिए)
+
+इसे ठीक करने के लिए बहुत सारी बुरी सलाह मौजूद है। UFW को Docker के साथ काम करने के लिए कॉन्फ़िगर करें, जैसा कि आप आमतौर पर उम्मीद करेंगे।
+
+मैंने एक स्व-होस्टेड सिस्टम को कॉन्फ़िगर करने के लिए `ufw-docker` का उपयोग किया है और यह अच्छा काम करता प्रतीत होता है।
+
+```bash title="install-ufw-docker.sh"
+# Install binary as root (needs root permissions anyway)
+sudo wget -O /usr/local/bin/ufw-docker \
+   https://github.com/chaifeng/ufw-docker/raw/master/ufw-docker
+sudo chmod +x /usr/local/bin/ufw-docker
+# Install and modify the `after.rules` file of `ufw`
+ufw-docker install
+
+ufw-docker help
+```
+
+```
+
+यह कमांड निम्नलिखित कार्य करता है:
+
+- फ़ाइल `/etc/ufw/after.rules` का बैकअप लेता है।
+- UFW के साथ उचित एकीकरण के लिए फ़ाइल के अंत में Docker-संबंधित नियम जोड़ता है।
+
+**स्रोत:** [ufw-docker GitHub](https://github.com/chaifeng/ufw-docker/tree/master#install)
+
+**उपयोग उदाहरण:**
+
+```bash
+
+# Allow Docker container on port 8080
+ufw-docker allow <container_name> 8080/tcp
+
+# Manage rules safely alongside your UFW configuration
+ufw-docker status
+
+```
+
+**नोट:** Docker-UFW विरोधों के अधिकांश "समाधान" में मैन्युअल iptables नियम शामिल होते हैं, जो अपडेट के दौरान त्रुटि-प्रवण और नाजुक हो सकते हैं।
+
+### macOS फ़ायरवॉल
+
+1. **सिस्टम प्रेफरेंसेज > सिक्योरिटी एंड प्राइवेसी > फ़ायरवॉल** पर जाएं।
+2. फ़ायरवॉल सक्षम करें और "Firewall Options" पर क्लिक करें।
+3. आवश्यक सेवाओं को छोड़कर सभी आने वाले कनेक्शनों को ब्लॉक करें।
+
+**नोट:** आपको अपने फ़ायरवॉल के कॉन्फ़िगरेशन को देखने की आवश्यकता हो सकती है ताकि आपके द्वारा उपयोग किए जाने वाले कुछ स्मार्ट डिवाइसों को अनुमति दी जा सके - जैसे Google Cast/AirPlay और अन्य सेवाएँ।
+
+### उन्नत उपयोगकर्ताओं के लिए कमांड (macOS और Linux)
+
+#### macOS:
+
+```bash
+
+sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setblockall on  # Block all
+sudo /usr/libexec/ApplicationFirewall/socketfilterfw --add /path/to/app  # Allow specific app
+
+```
+
+#### Linux (ufw):
+
+```bash
+
+ufw default deny incoming  # Block all incoming
+ufw allow ssh  # Allow SSH
+# allow 443 and 80 for web traffic
+ufw allow 80/tcp
+ufw allow 443/tcp
+ufw enable  # Enable firewall
+
+```
+
+**प्रो टिप:** अधिक उपयोगकर्ता-अनुकूल कॉन्फ़िगरेशन के लिए macOS पर [Little Snitch](https://www.obdev.at/products/littlesnitch/index.html) और Linux पर [ufw](https://help.ubuntu.com/community/UFW) जैसे टूल का उपयोग करें।
+```
+
+## 🔐 स्थानीय विकास के लिए सीक्रेट्स प्रबंधन
+
+### सक्रिय प्लेसहोल्डर सत्यापन
+
+<p>💡 सुनिश्चित करें कि आपके एप्लिकेशन को चलाने से पहले सीक्रेट्स वास्तविक मानों के साथ सही ढंग से सेटअप किए गए हैं।</p>
+
+यदि आप अपने सीक्रेट्स में `__WARNING_REPLACE_ME__` जैसे प्लेसहोल्डर का उपयोग करते हैं, तो बढ़िया, शायद कोई नोटिस कर लेगा। बस मामले में, आप रनटाइम पर सुरक्षा प्रदान करने के लिए थोड़ा सत्यापन भी जोड़ सकते हैं।
+
+आप विश्वास नहीं करेंगे कि जब हमलावर सीक्रेट का अनुमान लगा सकते हैं तो JWT टोकन को पूरी तरह से हैक करना (संशोधित और पुनः हस्ताक्षरित करना) कितना आसान है!
+
+<CodeTabs client:load tabs={["जावास्क्रिप्ट", "रस्ट", "गो"]}>
+
+```javascript
+// validateSecrets.js
+const validateSecrets = () => {
+  const unsafePlaceholder = /__WARNING_REPLACE_ME__/;
+  const missingSecrets = Object.entries(process.env).filter(
+    ([key, value]) => unsafePlaceholder.test(value)
+  );
+
+  if (missingSecrets.length) {
+    console.error("Unsafe secrets detected:", missingSecrets);
+    process.exit(1);
+  }
+};
+
+validateSecrets();
+```
+
+```rust
+// validate_secrets.rs
+use std::env;
+
+fn validate_secrets() {
+    let unsafe_placeholder = "__WARNING_REPLACE_ME__";
+    for (key, value) in env::vars() {
+        if value.contains(unsafe_placeholder) {
+            panic!("Unsafe secret in {}", key);
+        }
+    }
+}
+
+fn main() {
+    validate_secrets();
+}
+```
+
+```go
+// validate_secrets.go
+package main
+
+import (
+	"fmt"
+	"os"
+	"strings"
+)
+
+func validateSecrets() {
+	placeholder := "__WARNING_REPLACE_ME__"
+	for _, env := range os.Environ() {
+		pair := strings.SplitN(env, "=", 2)
+		if len(pair) == 2 && strings.Contains(pair[1], placeholder) {
+			panic(fmt.Sprintf("Unsafe secret in %s", pair[0]))
+		}
+	}
+}
+
+func main() {
+	validateSecrets()
+}
+```
+
+</CodeTabs>
+
+### सीक्रेट जनरेट करना और संग्रहीत करना
+
+<p class="inset">अपने कोडबेस में सीक्रेट को कभी हार्डकोड न करें। पर्यावरण चर और सुरक्षित वॉल्ट का उपयोग करना बेहतर है।</p>
+
+
+`.env.example` के बजाय, `.env.generate.sh` का उपयोग करें ताकि उपयोगकर्ता सुरक्षित "डिफ़ॉल्ट" के साथ `.env` फ़ाइल आसानी से प्राप्त कर सकें।
+
+#### उदाहरण `.env.generate.sh`
+
+```bash title=".env.generate.sh" frame="code"
+#!/bin/bash
+# Generates a secure .env file for local development
+
+generate_secret() {
+    local length=${1:-30}
+    # add 4 bytes to account for padding
+    local generate_length=$((length + 4))
+    openssl rand -base64 "$generate_length" | tr -d '+=/\n' | cut -c1-"$length"
+}
+# Bail out if .env file already exists
+[ -f .env ] && { echo ".env file already exists!"; exit 1; }
+
+cat <<EOL > .env
+# Database settings & secrets
+DB_USER=app_user
+DB_PASSWORD=$(generate_secret 30)
+REDIS_PASSWORD=$(generate_secret 20)
+# Session secrets
+SESSION_KEY=$(generate_secret 32)
+JWT_SECRET=$(generate_secret 64)
+EOL
+
+echo "New .env file generated!"
+```
+
+{/*
+
+```zig
+// validate_secrets.zig
+const std = @import("std");
+
+pub fn main() void {
+    var env = std.os.getenv_map();
+    const placeholder = "__WARNING_REPLACE_ME__";
+
+    for (env.items()) |entry| {
+        if (std.mem.contains(u8, entry.value, placeholder)) {
+            std.debug.panic("Unsafe secret in {}", .{entry.key});
+        }
+    }
+}
+``` */}
+
+## 🕵️‍ निगरानी और दोबारा जाँच
+
+### `nmap` उदाहरण
+
+#### अपने नेटवर्क के अंदर परीक्षण
+
+```bash
+
+# Scan your localhost for all open ports
+nmap -sT localhost
+
+# Scan your machine’s private IP for services
+nmap -sV 192.168.1.10
+
+# Detect devices on your network
+nmap -sn 192.168.0.0/24
+nmap -sn 10.0.0.0/24
+```
+
+```
+
+#### अपने नेटवर्क के बाहर परीक्षण
+
+अपने वर्तमान (सार्वजनिक) IP को `ifconfig.me` जैसी सेवाओं से आसानी से देखा जा सकता है: `curl https://ifconfig.me`।
+
+अपने सार्वजनिक IP का परीक्षण करने के लिए किसी बाहरी नेटवर्क या रिमोट सर्वर का उपयोग करें:
+
+```bash
+
+print_current_ip() {
+  curl https://ifconfig.me
+}
+
+print_current_ip
+# --> 123.456.789.012
+
+# target_host को अपने सार्वजनिक ip या होस्टनाम से बदलें
+# उन्नत तकनीकों का उपयोग करके होस्ट की जाँच करें
+nmap -A --open --reason $target_host
+nmap -A -F --open --reason $target_host
+nmap -A -p1-65535 --open --reason $target_host
+
+```
+
+**दोनों का परीक्षण क्यों?**
+अंदर से परीक्षण आंतरिक जोखिम को उजागर करता है, जबकि बाहरी परीक्षण उन सेवाओं की पहचान करता है जो हमलावरों के लिए सुलभ हैं।
+
+## 🛡️ सामान्य गलतफहमियाँ
+
+1. **मेरा स्थानीय वातावरण कोई लक्ष्य नहीं है।**
+   - तथ्य: हमलावर आपकी मशीन से आपके प्रोडक्शन सिस्टम तक पहुँच सकते हैं।
+2. **फ़ायरवॉल सब कुछ ब्लॉक कर देते हैं।**
+   - तथ्य: वे केवल वही ब्लॉक करते हैं जो आप उन्हें कॉन्फ़िगर करते हैं।
+3. **प्राइवेट IP सुरक्षित होते हैं।**
+   - तथ्य: NAT बाइपास जैसे एक्सप्लॉइट अभी भी आपके नेटवर्क को प्रभावित कर सकते हैं।
+````
