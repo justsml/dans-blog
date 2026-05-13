@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-bash-in-the-shell
+- Locale: ja
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2024-11-20--quiz-bash-in-the-shell/ja/index.mdx
+- Validation: deferred
+- Runtime seconds: 37.32
+- Input tokens: 15660
+- Output tokens: 12314
+- Thinking tokens: unknown
+- Cached input tokens: 4992
+- Cache write tokens: 0
+- Estimated cost: $0.002827
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: 'クイズ: Bash とシェルの熟練'
@@ -596,3 +614,4 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 - [Bash Hackers Wiki](http://wiki.bash-hackers.org/)
 - [初心者向け Bash ガイド](http://tldp.org/LDP/Bash-Beginners-Guide/html/index.html)
 - [Bash リファレンスカード](http://www.tldp.org/LDP/Bash-Beginners-Guide/html/Bash-Beginners-Guide.html)
+````

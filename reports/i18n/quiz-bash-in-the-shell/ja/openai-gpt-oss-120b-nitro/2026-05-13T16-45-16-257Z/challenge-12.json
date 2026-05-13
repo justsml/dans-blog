@@ -1,0 +1,53 @@
+{
+  "index": 11,
+  "attempt": 1,
+  "originalTitle": "Basic Arithmetic",
+  "translatedTitle": "基本的な算術",
+  "translation": {
+    "title": "基本的な算術",
+    "group": "掛け算",
+    "options": [
+      {
+        "text": "echo 10 * 0.5"
+      },
+      {
+        "text": "echo (10 * 0.5)"
+      },
+      {
+        "text": "echo ${ 10 * 0.5 }"
+      },
+      {
+        "text": "echo %( 10 * 0.5 )"
+      },
+      {
+        "text": "echo $(( 10 * 0.5 ))"
+      },
+      {
+        "text": "echo '10 * 0.5' | bc"
+      },
+      {
+        "text": "Error"
+      }
+    ],
+    "questionProse": [
+      "次のうち、10 と 0.5 を正しく掛け算し、5 を出力するものはどれですか？"
+    ],
+    "explanationProse": [
+      "`(( ))` 構文は**整数**演算しか行いません。つまり、小数点は扱えません！\n\nBash（意外かもしれませんが）**組み込み**で浮動小数点演算のサポートがありません。\n\n最も一般的な解決策は GNU ユーティリティ [`bc`](https://www.gnu.org/software/bc/manual/html_mono/bc.html) または [`awk`](https://www.gnu.org/software/gawk/manual/gawk.html) を使用することです。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"基本的な算術\",\n  \"group\": \"掛け算\",\n  \"options\": [\n    {\n      \"text\": \"echo 10 * 0.5\"\n    },\n    {\n      \"text\": \"echo (10 * 0.5)\"\n    },\n    {\n      \"text\": \"echo ${ 10 * 0.5 }\"\n    },\n    {\n      \"text\": \"echo %( 10 * 0.5 )\"\n    },\n    {\n      \"text\": \"echo $(( 10 * 0.5 ))\"\n    },\n    {\n      \"text\": \"echo '10 * 0.5' | bc\"\n    },\n    {\n      \"text\": \"Error\"\n    }\n  ],\n  \"questionProse\": [\n    \"次のうち、10 と 0.5 を正しく掛け算し、5 を出力するものはどれですか？\"\n  ],\n  \"explanationProse\": [\n    \"`(( ))` 構文は**整数**演算しか行いません。つまり、小数点は扱えません！\\n\\nBash（意外かもしれませんが）**組み込み**で浮動小数点演算のサポートがありません。\\n\\n最も一般的な解決策は GNU ユーティリティ [`bc`](https://www.gnu.org/software/bc/manual/html_mono/bc.html) または [`awk`](https://www.gnu.org/software/gawk/manual/gawk.html) を使用することです。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 866,
+    "outputTokens": 814,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 1614
+  },
+  "cost": {
+    "inputUsd": 0.000033774,
+    "outputUsd": 0.00014652,
+    "totalUsd": 0.000180294,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
