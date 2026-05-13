@@ -1,67 +1,49 @@
 {
-  "runId": "2026-05-13T15-51-49-009Z",
-  "runStatus": "completed",
+  "runId": "2026-05-13T16-39-49-794Z",
+  "runStatus": "running",
   "slug": "upgrade-from-gatsby-to-astro",
   "locale": "de",
-  "startedAt": "2026-05-13T15:51:49.009Z",
-  "updatedAt": "2026-05-13T15:52:42.894Z",
+  "startedAt": "2026-05-13T16:39:49.794Z",
+  "updatedAt": "2026-05-13T16:39:58.570Z",
   "modelsRequested": [
     "openrouter/openai/gpt-oss-120b:nitro",
     "openrouter/qwen/qwen3-32b:nitro"
   ],
-  "attemptedModels": 2,
+  "attemptedModels": 1,
   "skippedModels": 0,
-  "rejectedModels": 1,
+  "rejectedModels": 0,
   "candidateModels": 1,
   "totals": {
-    "inputTokens": 19415,
-    "outputTokens": 12146,
+    "inputTokens": 9718,
+    "outputTokens": 2840,
     "thinkingTokens": 0,
-    "cachedInputTokens": 2304,
+    "cachedInputTokens": 3968,
     "cacheWriteTokens": 0,
-    "estimatedCostUsd": 0.003886,
+    "estimatedCostUsd": 0.00089,
     "hasUnknownInputTokens": false,
     "hasUnknownOutputTokens": false,
     "hasUnknownThinkingTokens": true,
     "hasUnknownCachedInputTokens": false,
     "hasUnknownCacheWriteTokens": false,
     "hasUnknownEstimatedCost": false,
-    "runtimeSeconds": "33.69"
+    "runtimeSeconds": "6.05"
   },
   "attempts": [
     {
       "model": "openrouter/openai/gpt-oss-120b:nitro",
-      "status": "rejected",
-      "validationStatus": "rejected: direct AI SDK translation failed",
-      "reportPath": "reports/i18n/upgrade-from-gatsby-to-astro/de/openrouter-openai-gpt-oss-120b-nitro.md",
-      "note": "Command failed: bun run i18n:validate --slug upgrade-from-gatsby-to-astro --locale de",
-      "telemetry": {
-        "runtimeSeconds": "8.64",
-        "tokens": {
-          "input": 10091,
-          "output": 2801,
-          "cached": 1792,
-          "cacheWrite": 0
-        },
-        "estimatedCostUsd": 0.0008977289999999999,
-        "pricingSource": "local-openrouter-estimate"
-      }
-    },
-    {
-      "model": "openrouter/qwen/qwen3-32b:nitro",
       "status": "candidate",
-      "validationStatus": "passed",
-      "reportPath": "reports/i18n/upgrade-from-gatsby-to-astro/de/openrouter-qwen-qwen3-32b-nitro.md",
+      "validationStatus": "deferred",
+      "reportPath": "reports/i18n/upgrade-from-gatsby-to-astro/de/openrouter-openai-gpt-oss-120b-nitro.md",
       "note": "Generated through the direct AI SDK chunked translator.",
       "telemetry": {
-        "runtimeSeconds": "25.05",
+        "runtimeSeconds": "6.05",
         "tokens": {
-          "input": 9324,
-          "output": 9345,
-          "cached": 512,
+          "input": 9718,
+          "output": 2840,
+          "cached": 3968,
           "cacheWrite": 0
         },
-        "estimatedCostUsd": 0.0029887200000000003,
+        "estimatedCostUsd": 0.000890202,
         "pricingSource": "local-openrouter-estimate"
       }
     }

@@ -3,23 +3,23 @@
 - Locale: de
 - Model: openrouter/openai/gpt-oss-120b:nitro
 - Target: src/content/posts/2024-08-22--upgrade-from-gatsby-to-astro/de/index.mdx
-- Validation: rejected: direct AI SDK translation failed
-- Runtime seconds: 8.64
-- Input tokens: 10091
-- Output tokens: 2801
+- Validation: deferred
+- Runtime seconds: 6.05
+- Input tokens: 9718
+- Output tokens: 2840
 - Thinking tokens: unknown
-- Cached input tokens: 1792
+- Cached input tokens: 3968
 - Cache write tokens: 0
-- Estimated cost: $0.000898
+- Estimated cost: $0.000890
 - Pricing source: local-openrouter-estimate
-- Note: Command failed: bun run i18n:validate --slug upgrade-from-gatsby-to-astro --locale de
+- Note: Generated through the direct AI SDK chunked translator.
 ## Raw Output
 
 ````mdx
 ---
 social_image: ../desktop-social.webp
-title: Erfahrungen beimUpgrade meines Blogs
-subTitle: 'Astro, Tailwind, MDX, Pagefind und mehr!'
+title: Erfahrungen beim Upgrade meines Blogs
+subTitle: 'Astro, Tailwind,MDX, Pagefind und mehr!'
 date: '2024-08-21'
 modified: '2024-08-23'
 category: Guides
@@ -34,14 +34,14 @@ cover_full_width: ../galaxy-contribution-banner.webp
 cover_mobile: ../w300_galaxy-contribution-mode.webp
 cover_icon: ../icon_galaxy-contribution-mode.webp
 ---
-Kürzlich habe ich mich auf die Reise begeben, meine über 8 Jahre alte Gatsby‑v1‑Seite zu aktualisieren.
+Kürzlich habe ich mich daran gemacht, meine über 8 Jahre alte Gatsby‑v1‑Seite zu aktualisieren.
 
 Dieser Blog‑Beitrag teilt einige Erkenntnisse, die ich dabei gewonnen habe, sowie die interessanten Technologien, die ich ausprobiert habe.
 
 ## Inhaltsverzeichnis
 
 - [Projektanforderungen](#project-requirements)
-- [Die richtige Technologie‑Stack wählen](#choosing-my-right-technology-stack)
+- [Auswahl des richtigen Technologie‑Stacks](#choosing-my-right-technology-stack)
 - [Astro: Lernkurve und Kernfeatures](#astro-learning-curve-and-key-features)
 - [Modernes CSS: Wow](#modern-css-wow)
 - [Suche: Pagefind](#search-pagefind)
@@ -51,11 +51,11 @@ Dieser Blog‑Beitrag teilt einige Erkenntnisse, die ich dabei gewonnen habe, so
 
 ## Projektanforderungen
 
-Bevor ich mit dem Upgrade begann, definierte ich eine Reihe von Anforderungen:
+Bevor ich mit dem Upgrade begann, habe ich eine Reihe von Anforderungen definiert:
 
-Da mein Blog täglich stark schwankende Besucherzahlen hat, dachte ich, dass eine statisch vorgerenderte Seite die gewünschte Performance liefert, ohne zusätzliche Komplexität einzuführen.
+Da mein Blog täglich stark schwankende Besucherzahlen hat, wollte ich eine statisch vorgerenderte Seite, die die gewünschte Performance liefert, ohne zusätzliche Komplexität.
 
-Außerdem musste ich die bestehenden Inhalte und Funktionen der Seite erhalten, darunter:
+Außerdem musste ich den bestehenden Inhalt und die Funktionen der Seite erhalten, darunter:
 
 - Code‑Highlighting
 - Kommentare
@@ -63,8 +63,8 @@ Außerdem musste ich die bestehenden Inhalte und Funktionen der Seite erhalten, 
 - Vorhandene React‑Komponenten: Quiz‑UI, Gist‑Einbettungen
 - Kontaktformular
 - Responsive Bilder
-- Ladezeit unter 1 Sekunde
-- Browser‑Kompatibilität: 2018 +
+- Ladezeit unter einer Sekunde
+- Browser‑Kompatibilität: 2018+
 - Automatisierte + PR‑basierte Deployments
 
 ## Auswahl des richtigen Technologie‑Stacks
@@ -73,39 +73,39 @@ Im Laufe der Jahre habe ich mit vielen Static‑Site‑Tools gearbeitet, von Jek
 
 Damit standen mir exakt zu viele Optionen zur Verfügung, die ich letztlich auf **Remix**, **Next.js** und **Astro** eingrenzte.
 
-Ich könnte eine ganze Blog‑Reihe über meinen Evaluationsprozess schreiben, aber hier die Kurzfassung:
+Ich könnte eine ganze Blog‑Serie über meinen Evaluationsprozess schreiben, aber ich fasse es hier zusammen:
 
-<p class="breakout">Ich habe mich für [Astro](https://astro.build) entschieden, weil ich damit _schnell sinnvolle Dinge_ erledigen konnte.</p>
+<p class="breakout">Ich habe [Astro](https://astro.build) gewählt, weil ich damit _schnell sinnvolle Dinge erledigen_ konnte.</p>
 
-Das API‑Design ist erfrischend einfach. Es bietet ein [gutes Gleichgewicht zwischen Flexibilität und durchdachten Design‑Entscheidungen.](https://docs.astro.build/en/concepts/why-astro/)
+Das API‑Design ist erfrischend simpel. Es bietet ein [gutes Gleichgewicht zwischen Flexibilität und durchdachten Design‑Entscheidungen.](https://docs.astro.build/en/concepts/why-astro/)
 
-Es war beruhigend, dass Astro keinerlei offensichtliche Cloud‑Voreingenommenheit oder Framework‑Agenda hat.
+Es war beruhigend, dass Astro keinerlei offensichtliche Cloud‑Voreingenommenheit oder Framework‑Agenda aufweist.
 
-Astro war nicht die einzige Technologie, die ich eingesetzt habe; hier ein kompletter Überblick über den Stack:
+Astro war nicht die einzige Technologie, die ich eingesetzt habe; hier ein vollständiger Überblick über den Stack:
 
-- [Astro](https://astro.build): Ein moderner Static‑Site‑Generator.  
-- [ShadcnUI](https://ui.shadcn.com): Eine Sammlung wiederverwendbarer Komponenten.  
-- [Tailwind CSS](https://tailwindcss.com): Ein Utility‑First‑CSS‑Framework.  
-- [MDX](https://mdxjs.com): Markdown‑Inhalte + inline Komponenten.  
-- [Pagefind](https://pagefind.app): Schnelle, statische & offline Site‑Suche. Keine Algolia nötig!  
-- [Utterances](https://utteranc.es): Kommentarsystem basierend auf GitHub‑Issues.  
+- [Astro](https://astro.build): Ein moderner Static‑Site‑Generator.
+- [ShadcnUI](https://ui.shadcn.com): Eine Sammlung wiederverwendbarer Komponenten.
+- [Tailwind CSS](https://tailwindcss.com): Ein Utility‑First‑CSS‑Framework.
+- [MDX](https://mdxjs.com): Markdown‑Inhalte + inline Komponenten.
+- [Pagefind](https://pagefind.app): Schnelle, statische & offline Site‑Suche. Keine Algolia nötig!
+- [Utterances](https://utteranc.es): Kommentarsystem basierend auf GitHub‑Issues.
 - [Netlify](https://www.netlify.com): Automatisierte Deployments, Kontaktformular mit Captcha.
 
-## Astro: Lernkurve und Hauptfunktionen
+## Astro: Lernkurve und Kernfunktionen
 
 <p class="breakout quote">Astro wurde schnell zum Grundpfeiler meines Upgrades.</p>
 
-Hier einige Kernfeatures, die ich besonders nützlich fand:
+Hier sind einige Schlüssel‑Features, die ich besonders nützlich fand:
 
-- `.astro`‑Dateien: Auf den ersten Blick sehen Astro‑Komponenten aus wie React‑JSX‑Komponenten, sie unterscheiden sich jedoch grundlegend und verfolgen andere Ziele. (Siehe Vergleichstabelle unten.)
-- Angetrieben von eigenen Golang‑[Build‑Tools](https://github.com/withastro/compiler) und Vite: funktioniert einfach. Handhabt nahtlos ESM/CJS, TypeScript, Code‑Bundling, Styles, Bilder usw.
-- [Kein Framework‑Bias](https://docs.astro.build/en/guides/framework-components/#official-ui-framework-integrations) und kein [Cloud‑Bias](https://docs.astro.build/en/guides/deploy/). (*Hust* Next.js, OpenNext)
-- [Statisches vs. hybrides](https://docs.astro.build/en/basics/rendering-modes/) Rendering: Astro bietet [Flexibilität für die meisten Cloud‑Plattformen](https://docs.astro.build/en/guides/deploy/): AWS, GCP, Firebase, Netlify, Vercel, Cloudflare Pages, Azure, Fly.io und viele weitere.
+- `.astro`‑Dateien: Auf den ersten Blick ähneln Astro‑Komponenten React‑JSX‑Komponenten, doch sie unterscheiden sich grundlegend und verfolgen andere Ziele. (Siehe Vergleichstabelle unten.)
+- Angetrieben von eigenen Golang‑[Build‑Tools](https://github.com/withastro/compiler) und Vite: Es funktioniert einfach. Handhabt nahtlos ESM/CJS, TypeScript, Code‑Bundling, Styles, Bilder usw.
+- [Kein Framework‑Bias](https://docs.astro.build/en/guides/framework-components/#official-ui-framework-integrations) und kein [Cloud‑Bias](https://docs.astro.build/en/guides/deploy/) (*Hust* Next.js, OpenNext)
+- [Static vs. hybrid](https://docs.astro.build/en/basics/rendering-modes/) Rendering: Astro bietet [Flexibilität für die meisten Cloud‑Plattformen](https://docs.astro.build/en/guides/deploy/): AWS, GCP, Firebase, Netlify, Vercel, Cloudflare Pages, Azure, Fly.io und viele weitere.
 - Content‑Collections: Die [`getCollection`](https://docs.astro.build/en/reference/api-reference/#getcollection)‑API vereinfacht die Arbeit mit Inhaltsdateien als Datenquelle.
-- Dateibasierte Routings: Astros dateibasiertes Routing‑System in Kombination mit `getStaticPaths` macht das Generieren von Seiten zum Kinderspiel.
-- SEO: [Astro steht nicht im Weg](https://github.com/justsml/dans-blog/blob/010c5cb58bb327adb8c8fff608594daa612ad9d5/src/components/BaseHead.astro#L43-L63) und gibt nur dann minimalen Boiler‑Code (`astro-island`) aus, wenn er wirklich nötig ist.
+- File‑basiertes Routing: Astros dateibasiertes Routing‑System in Kombination mit `getStaticPaths` macht das Generieren von Seiten zum Kinderspiel.
+- SEO: [Astro steht dir nicht im Weg](https://github.com/justsml/dans-blog/blob/010c5cb58bb327adb8c8fff608594daa612ad9d5/src/components/BaseHead.astro#L43-L63) und gibt nur dann minimalen Boiler‑Code (`astro-island`) aus, wenn er wirklich nötig ist.
 
-Einige Dinge überraschten mich leicht, etwa das Styling um Astros injiziertes Markup und die Wirkung von `display:contents`.
+Einige Dinge überraschten mich etwas, etwa das Styling um Astros injiziertes Markup und die Wirkung von `display:contents`.
 
 ```tsx
 ```
@@ -114,69 +114,69 @@ Einige Dinge überraschten mich leicht, etwa das Styling um Astros injiziertes M
 
 ```
 
-### Vergleich von `.astro`‑Komponenten und Client‑Komponenten
+### Vergleich von `.astro`‑Dateien und Client‑Komponenten
 
-Astro‑Komponenten sind im Grunde HTML‑Templates mit einem leistungsstarken Komponenten‑&‑Props‑Muster. Sie können zur Build‑Zeit Daten holen, auf Backend‑Ressourcen zugreifen und bestimmte sensible Informationen verborgen halten.
+Astro‑Komponenten sind im Wesentlichen HTML‑Templates mit einem leistungsstarken Komponenten‑ und Props‑Muster. Sie können Daten zur Build‑Zeit holen, auf Backend‑Ressourcen zugreifen und bestimmte sensible Informationen verborgen halten.
 
 Der einfachste Weg, Astro‑`.astro`‑Komponenten zu verstehen, ist der Vergleich mit client‑seitigen Komponenten (React, Vue, Svelte usw.).
 
 <section className="scroll-x">
 | Was muss erledigt werden?                                                            | `.astro`‑Komponente    | Client‑Komponente    |
 | ------------------------------------------------------------------------------------ | ---------------------- | -------------------- |
-| HTML mit leistungsstarkem Template‑+‑Komponenten‑Muster generieren                  | ✅ | ❌ |
+| HTML mit starkem Template‑+‑Komponenten‑Muster erzeugen                              | ✅ | ❌ |
 | Daten zur Build‑Zeit holen                                                          | ✅ | ❌ |
-| Direkt auf Backend‑Ressourcen zugreifen                                            | ✅ | ❌ |
-| Sensitive Informationen verbergen (Access‑Tokens, API‑Keys usw.)                    | ✅ | ❌ |
-| Client‑seitiges JavaScript reduzieren                                               | ✅ | ❌ |
+| Direkt auf Backend‑Ressourcen zugreifen                                             | ✅ | ❌ |
+| Sensitive Informationen verbergen (Access‑Tokens, API‑Keys usw.)                     | ✅ | ❌ |
+| Client‑seitiges JavaScript reduzieren                                                | ✅ | ❌ |
 | Client‑Komponenten nutzen (React, Vue, Svelte usw.)                                 | ✅ | ✅ |
-| Interaktivität und Event‑Listener hinzufügen (`onClick()`, `onChange()` usw.)      | ❌ | ✅ |
+| Interaktivität und Event‑Listener hinzufügen (`onClick()`, `onChange()` usw.)       | ❌ | ✅ |
 | State‑ und Lifecycle‑Effekte verwenden (`useState()`, `useReducer()`, `useEffect()` usw.) | ❌ | ✅ |
-| Nur‑Browser‑APIs nutzen                                                             | ❌ | ✅ |
-| Eigene Hooks, die von State, Effects oder nur‑Browser‑APIs abhängen, verwenden      | ❌ | ✅ |
+| Nur‑Browser‑APIs verwenden                                                          | ❌ | ✅ |
+| Custom‑Hooks, die von State, Effects oder nur‑Browser‑APIs abhängen                 | ❌ | ✅ |
 </section>
 
 ## Modernes CSS: Wow
 
-Zurück zum Frontend‑Entwickeln: Ich war begeistert von den Fortschritten im nativen CSS:
+Zurück zum Frontend‑Entwickeln war ich von den Fortschritten im nativen CSS begeistert:
 
-- CSS‑Variablen: Gibt es schon seit einer Weile und sie sind seit 202* in den meisten Browsern stabil.
+- CSS‑Variablen: Seit einiger Zeit verfügbar und in den meisten Browsern seit 202* stabil.
 - Nesting: Endlich im Standard und ohne die früher umständliche Syntax. Jetzt ähnelt es Less oder SCSS.
-- Neue Selektoren: [`:is()`, `:where()` und `:has()`](https://www.youtube.com/watch?v=3ncFpP8GP4g) ermöglichen präzisere Zielansprachen von Elementen.
+- Neue Selektoren: [`:is()`, `:where()` und `:has()`](https://www.youtube.com/watch?v=3ncFpP8GP4g) ermöglichen präzisere Zielsetzung von Elementen.
 - Moderne Einheiten wie `ch`, `vw` und Funktionen wie `clamp()` bieten bessere Kontrolle über Layouts und Typografie.
-- Abstand natürlicher setzen mit den Eigenschaften `-inline` und `-block`. Padding oder Margin entlang der horizontalen bzw. vertikalen Achse festlegen. Statt `margin: 0 1rem 0 1rem` → `margin-inline: 1rem`.
-- Fortgeschrittene Layouts: CSS‑Grid neu entdecken. Wow, da steckt eine Menge Zeug drin. Es kann überwältigend sein, weil es scheinbar unendlich viele Anwendungsmöglichkeiten gibt. Wichtig ist, dass man sich mit ein‑ oder zwei Methoden zufriedengeben kann. Diese großartigen Ressourcen haben mir geholfen, Tricks mit Grid zu meistern: [Kevin Powells Video: Learn CSS Grid the easy way](https://www.youtube.com/watch?v=rg7Fvvl3taU), [Responsive w/o media queries](https://ardilamorin.com/responsive-no-media-queries/), [Ten modern layouts in one line of CSS](https://web.dev/articles/one-line-layouts).
+- Abstand natürlicher setzen mit den Attributen `-inline` und `-block`. Padding oder Margin entweder horizontal oder vertikal festlegen. Statt `margin: 0 1rem 0 1rem` → `margin-inline: 1rem`.
+- Fortgeschrittene Layouts: CSS‑Grid neu entdecken. Wow, da steckt eine Menge Kram drin. Es kann überwältigend sein, weil es scheinbar unendlich viele Anwendungsmöglichkeiten gibt. Wichtig ist, dass man sich mit ein‑ oder zwei Methoden zufriedengeben kann. Diese großartigen Ressourcen haben mir geholfen, Tricks mit Grid zu meistern: [Kevin Powells Video: Learn CSS Grid the easy way](https://www.youtube.com/watch?v=rg7Fvvl3taU), [Responsive w/o media queries](https://ardilamorin.com/responsive-no-media-queries/), [Ten modern layouts in one line of CSS](https://web.dev/articles/one-line-layouts).
 
 ## Search: Pagefind
 
-Eine **Seitensuche** zu implementieren, ohne Drittanbieter‑Dienste oder Datenbank‑Hosting, klang nach einer spaßigen Herausforderung. Schließlich habe ich (noch) nicht 10 000 Beiträge zu indexieren.
+Eine **Seitensuche** zu implementieren, ohne Drittanbieter‑Dienste oder Datenbank‑Hosting, schien eine spaßige Herausforderung zu sein. Schließlich habe ich noch nicht 10 000 Beiträge zu indexieren (noch nicht).
 
-Beim Durchstöbern der [Astro‑Community‑Integrationen](https://astro.build/integrations/?search=find) stieß ich auf ein fantastisches Tool, von dem ich wünschte, ich hätte es früher gekannt: [Pagefind](https://pagefind.app/).
+Beim Durchstöbern der [Astro‑Community‑Integrationen](https://astro.build/integrations/?search=find) bin ich auf ein fantastisches Tool gestoßen, das ich gerne früher gekannt hätte: [Pagefind](https://pagefind.app/).
 
 <p class="breakout quote">Nur wenige Werkzeuge lösen ein Problem so gut, wie Pagefind die lokale Seitensuche löst.</p>
 
-Die Implementierung von Pagefind ist überraschend simpel – ein echter Genuss. Es lässt sich in **jedes** statische Seiten‑Setup einbinden, und Sie können entweder die vorgefertigte UI verwenden oder eine komplett eigene Oberfläche bauen, wenn Sie das bevorzugen.
+Die Implementierung von Pagefind ist überraschend einfach – ein echter Genuss. Es lässt sich in **jedem** statischen Seiteninhalt integrieren, und Sie können entscheiden, ob Sie die Standard‑UI verwenden oder eine komplett eigene Oberfläche bauen wollen.
 
-Damit war alles, was ich brauchte, sofort erledigt. Die Integration dauerte nur wenige Minuten; das meiste bestand darin, ein `<div id="search"></div>`‑Element einzufügen und etwas Styling hinzuzufügen.
+Damit war sofort alles abgedeckt, was ich brauchte. Die Integration dauerte nur wenige Minuten, und der meiste Aufwand bestand darin, ein `<div id="search"></div>`‑Tag einzufügen und etwas Styling hinzuzufügen!
 
 ## Kommentare: Utterances
 
-Leider musste ich mich von Disqus und den jahrelang gesammelten Kommentaren verabschieden.
+Leider musste ich mich von Disqus und den über Jahre angesammelten Kommentaren verabschieden.
 
 Ich wollte mehr Kontrolle und Transparenz über die Drittanbieter‑Skripte auf meiner Seite.
 
-Zudem muss das System einfach und wartbar sein.
+Außerdem muss es einfach und wartbar bleiben.
 
-Das brachte mich dazu, den fantastischen Service [Utterances](https://utteranc.es/) zu wählen. Sein GitHub‑basiertes (Issue‑basiertes) Kommentarsystem passt gut zu meinem Publikum. Außerdem ist er leicht einzurichten und kostenlos.
+Das brachte mich dazu, den fantastischen [Utterances](https://utteranc.es/)-Dienst zu wählen. Sein auf GitHub‑Issues basierendes Kommentarsystem passt gut zu meinem Publikum. Außerdem ist er leicht einzurichten und kostenlos.
 
 ## Tailwind: Bedauern
 
-Es gibt nur einen Technologiebereich, den ich zunehmend bereue: Tailwind.
+Es gibt nur ein Stück Technologie, das ich zunehmend bereue zu verwenden: Tailwind.
 
-Im Laufe der Zeit spüre ich den Unterschied in den Kosten zwischen Schreiben und Wartung. Tailwind lässt sich schnell schreiben, doch sobald es komplex genug wird, kann es mühsam zu lesen und zu erweitern sein.
+Im Laufe der Zeit spüre ich den Kostenunterschied zwischen Schreiben und Pflegen. Tailwind lässt sich sehr schnell schreiben, aber sobald es komplex genug wird, kann es mühsam zu lesen und zu erweitern sein.
 
 ## Fazit
 
-Das Upgrade meiner alten Gatsby‑v1‑Seite zu einem modernen Stack rund um Astro war ein spaßiges Erlebnis. 10/10 würde ich es weiterempfehlen.
+Mein altes Gatsby‑v1‑Projekt auf einen modernen Stack rund um Astro zu migrieren war ein spaßiges Erlebnis. 10/10 würde ich es weiterempfehlen.
 
-Wenn Sie ein altes Projekt aktualisieren oder eine neue statische (oder hybride) Website bauen wollen, empfehle ich dringend, einen Blick auf Astro zu werfen. Die Lernkurve kann gelegentlich steil sein, aber die Vorteile in puncto Performance, Entwickler‑Erlebnis und Zukunftssicherheit des Projekts rechtfertigen den Aufwand.
+Wenn Sie ein altes Projekt aktualisieren oder eine neue statische (oder hybride) Website bauen wollen, sollten Sie sich Astro unbedingt ansehen. Der Lernaufwand kann gelegentlich hoch sein, aber die Vorteile in puncto Performance, Entwickler‑Erlebnis und Zukunftssicherheit des Projekts rechtfertigen den Aufwand voll und ganz.
 ````
