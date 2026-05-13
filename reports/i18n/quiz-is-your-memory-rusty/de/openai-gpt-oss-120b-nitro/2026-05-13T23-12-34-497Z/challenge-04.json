@@ -1,0 +1,52 @@
+{
+  "index": 3,
+  "attempt": 1,
+  "originalTitle": "Implicit Lifetimes",
+  "translatedTitle": "Implizite Lebensdauern",
+  "translation": {
+    "title": "Implizite Lebensdauern",
+    "group": "Lebensdauer-Elision",
+    "options": [
+      {
+        "text": "Kompiliert erfolgreich"
+      },
+      {
+        "text": "Fehler: fehlender Lebensdauer‑Spezifizierer",
+        "hint": "Denke an die Regeln zur Lebensdauer‑Elision – sie sollen dir helfen!"
+      },
+      {
+        "text": "Fehler: explizite Lebensdauer erforderlich",
+        "hint": "Der Compiler kann das automatisch herausfinden"
+      },
+      {
+        "text": "Fehler: Lebensdauer‑Mismatch",
+        "hint": "Die Lebensdauern passen hier perfekt"
+      }
+    ],
+    "questionProse": [
+      "Wird dieser Code kompilieren? Wenn ja, warum? Wenn nicht, was ist falsch?"
+    ],
+    "explanationProse": [
+      "Dieser Code kompiliert erfolgreich dank Rusts Regeln zur Lebensdauer‑Elision. \n      Diese Regeln ermöglichen es dem Compiler, Lebensdauern in gängigen Mustern automatisch zu inferieren.\n\n      Die drei Regeln zur Lebensdauer‑Elision sind:\n      1. Jeder Parameter erhält seinen eigenen Lebensdauer‑Parameter\n      2. Gibt es genau einen Eingabe‑Lebensdauer‑Parameter, wird diese Lebensdauer allen Ausgabe‑Lebensdauer‑Parametern zugewiesen\n      3. Gibt es mehrere Eingabe‑Lebensdauer‑Parameter, aber einer davon ist &self oder &mut self, wird die Lebensdauer von self allen Ausgabe‑Lebensdauer‑Parametern zugewiesen\n\n      Diese Funktion ist äquivalent zu:",
+      "Gängige Muster, bei denen Elision funktioniert:",
+      "Best Practice: Lass die Elision für dich arbeiten, wenn möglich, aber verstehe, wann explizite Lebensdauern nötig sind."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Implizite Lebensdauern\",\n  \"group\": \"Lebensdauer-Elision\",\n  \"options\": [\n    {\n      \"text\": \"Kompiliert erfolgreich\"\n    },\n    {\n      \"text\": \"Fehler: fehlender Lebensdauer‑Spezifizierer\",\n      \"hint\": \"Denke an die Regeln zur Lebensdauer‑Elision – sie sollen dir helfen!\"\n    },\n    {\n      \"text\": \"Fehler: explizite Lebensdauer erforderlich\",\n      \"hint\": \"Der Compiler kann das automatisch herausfinden\"\n    },\n    {\n      \"text\": \"Fehler: Lebensdauer‑Mismatch\",\n      \"hint\": \"Die Lebensdauern passen hier perfekt\"\n    }\n  ],\n  \"questionProse\": [\n    \"Wird dieser Code kompilieren? Wenn ja, warum? Wenn nicht, was ist falsch?\"\n  ],\n  \"explanationProse\": [\n    \"Dieser Code kompiliert erfolgreich dank Rusts Regeln zur Lebensdauer‑Elision. \\n      Diese Regeln ermöglichen es dem Compiler, Lebensdauern in gängigen Mustern automatisch zu inferieren.\\n\\n      Die drei Regeln zur Lebensdauer‑Elision sind:\\n      1. Jeder Parameter erhält seinen eigenen Lebensdauer‑Parameter\\n      2. Gibt es genau einen Eingabe‑Lebensdauer‑Parameter, wird diese Lebensdauer allen Ausgabe‑Lebensdauer‑Parametern zugewiesen\\n      3. Gibt es mehrere Eingabe‑Lebensdauer‑Parameter, aber einer davon ist &self oder &mut self, wird die Lebensdauer von self allen Ausgabe‑Lebensdauer‑Parametern zugewiesen\\n\\n      Diese Funktion ist äquivalent zu:\",\n    \"Gängige Muster, bei denen Elision funktioniert:\",\n    \"Best Practice: Lass die Elision für dich arbeiten, wenn möglich, aber verstehe, wann explizite Lebensdauern nötig sind.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1014,
+    "outputTokens": 1117,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 720,
+    "providerCostUsd": 0.00119265,
+    "providerUpstreamCostUsd": 0.00119265,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000039546,
+    "outputUsd": 0.00020105999999999998,
+    "totalUsd": 0.00024060599999999998,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

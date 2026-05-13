@@ -1,0 +1,61 @@
+{
+  "index": 0,
+  "attempt": 1,
+  "originalTitle": "Basic Move Semantics",
+  "translatedTitle": "Grundlegende Move-Semantik",
+  "translation": {
+    "title": "Grundlegende Move-Semantik",
+    "group": "Besitz",
+    "options": [
+      {
+        "text": "Hello, !",
+        "hint": "Denke darüber nach, was mit 'philosopher' passiert, nachdem er verschoben wurde"
+      },
+      {
+        "text": "Hello, Zeno of Citium!",
+        "hint": "Wenn ein Wert verschoben wurde, können wir ihn noch benutzen?"
+      },
+      {
+        "text": "Hello, Zeno of Elea!",
+        "hint": "Der String enthält 'Citium', nicht 'Elea'"
+      },
+      {
+        "text": "Hello, Marcus Aurelius",
+        "hint": "Prüfe, ob das zum String-Inhalt passt"
+      },
+      {
+        "text": "Compilation Error: value borrowed after move"
+      },
+      {
+        "text": "Runtime Error: null pointer exception",
+        "hint": "Rust fängt diese Probleme zur Compile‑Zeit ab"
+      }
+    ],
+    "questionProse": [
+      "Was passiert, wenn du diesen Code ausführst? Versuche, die Ausgabe oder den Fehler vorherzusagen:"
+    ],
+    "explanationProse": [
+      "Dieser Code lässt sich nicht kompilieren wegen Rusts Besitzregeln. Wenn wir `philosopher` `greeting` zuweisen, wird das Eigentum des Strings nach `greeting` verschoben. Nach diesem Move ist `philosopher` nicht mehr gültig.",
+      "2. Verwende eine Referenz (leiht den Wert aus):",
+      "3. Verwende einen String‑Slice (leiht einen Teil des Strings aus):",
+      "Jede Lösung hat unterschiedliche Anwendungsfälle und Performance‑Auswirkungen. Klonen ist teurer, gibt dir aber Eigentum, während Referenzen günstiger sind, aber Lebenszeit‑Beschränkungen haben."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Grundlegende Move-Semantik\",\n  \"group\": \"Besitz\",\n  \"options\": [\n    {\n      \"text\": \"Hello, !\",\n      \"hint\": \"Denke darüber nach, was mit 'philosopher' passiert, nachdem er verschoben wurde\"\n    },\n    {\n      \"text\": \"Hello, Zeno of Citium!\",\n      \"hint\": \"Wenn ein Wert verschoben wurde, können wir ihn noch benutzen?\"\n    },\n    {\n      \"text\": \"Hello, Zeno of Elea!\",\n      \"hint\": \"Der String enthält 'Citium', nicht 'Elea'\"\n    },\n    {\n      \"text\": \"Hello, Marcus Aurelius\",\n      \"hint\": \"Prüfe, ob das zum String-Inhalt passt\"\n    },\n    {\n      \"text\": \"Compilation Error: value borrowed after move\"\n    },\n    {\n      \"text\": \"Runtime Error: null pointer exception\",\n      \"hint\": \"Rust fängt diese Probleme zur Compile‑Zeit ab\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was passiert, wenn du diesen Code ausführst? Versuche, die Ausgabe oder den Fehler vorherzusagen:\"\n  ],\n  \"explanationProse\": [\n    \"Dieser Code lässt sich nicht kompilieren wegen Rusts Besitzregeln. Wenn wir `philosopher` `greeting` zuweisen, wird das Eigentum des Strings nach `greeting` verschoben. Nach diesem Move ist `philosopher` nicht mehr gültig.\",\n    \"2. Verwende eine Referenz (leiht den Wert aus):\",\n    \"3. Verwende einen String‑Slice (leiht einen Teil des Strings aus):\",\n    \"Jede Lösung hat unterschiedliche Anwendungsfälle und Performance‑Auswirkungen. Klonen ist teurer, gibt dir aber Eigentum, während Referenzen günstiger sind, aber Lebenszeit‑Beschränkungen haben.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1099,
+    "outputTokens": 440,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1224,
+    "providerCostUsd": 0.00042885,
+    "providerUpstreamCostUsd": 0.00042885,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000042860999999999995,
+    "outputUsd": 0.0000792,
+    "totalUsd": 0.000122061,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

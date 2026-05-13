@@ -1,0 +1,52 @@
+{
+  "index": 7,
+  "attempt": 1,
+  "originalTitle": "Lifetime Annotations",
+  "translatedTitle": "Lebenszeit-Anmerkungen",
+  "translation": {
+    "title": "Lebenszeit-Anmerkungen",
+    "group": "Lebenszeiten",
+    "options": [
+      {
+        "text": "Ergebnis: Seneca der Jüngere",
+        "hint": "Der Code lässt sich nicht kompilieren, um irgendeine Ausgabe zu erzeugen"
+      },
+      {
+        "text": "Fehler: fehlender Lebenszeit‑Angabe"
+      },
+      {
+        "text": "Fehler: kann Referenz auf lokale Variable nicht zurückgeben",
+        "hint": "Die Referenz bezieht sich auf einen Eingabeparameter, nicht auf eine lokale Variable"
+      },
+      {
+        "text": "Fehler: Lebenszeit‑Mismatch",
+        "hint": "Wir haben noch keine Lebenszeiten angegeben, daher gibt es keinen Konflikt"
+      }
+    ],
+    "questionProse": [
+      "Was passiert bei dieser Funktion, die die längere von zwei String‑Slices zurückgibt?"
+    ],
+    "explanationProse": [
+      "Dieser Code schlägt fehl, weil der Compiler die Beziehung zwischen Eingabe‑ und Ausgabe‑Lebenszeiten nicht bestimmen kann. Hier ist warum und wie man es behebt:",
+      "Warum hier Lebenszeiten nötig sind:\n      1. Mehrere Eingabereferenzen können unterschiedliche Lebenszeiten haben\n      2. Der Rückgabewert muss mindestens so lange leben wie beide Eingaben\n      3. Der Compiler muss diese Beziehungen verifizieren\n\n      Häufige Muster:",
+      "Best Practices:\n      1. Lass die Lebenszeit‑Elision arbeiten, wenn möglich\n      2. Verwende explizite Lebenszeiten, wenn Beziehungen klar sein müssen\n      3. Ziehe in Betracht, besessene Typen zurückzugeben, um Lebenszeit‑Komplexität zu vermeiden\n      4. Dokumentiere komplexe Lebenszeit‑Beziehungen"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Lebenszeit-Anmerkungen\",\n  \"group\": \"Lebenszeiten\",\n  \"options\": [\n    {\n      \"text\": \"Ergebnis: Seneca der Jüngere\",\n      \"hint\": \"Der Code lässt sich nicht kompilieren, um irgendeine Ausgabe zu erzeugen\"\n    },\n    {\n      \"text\": \"Fehler: fehlender Lebenszeit‑Angabe\"\n    },\n    {\n      \"text\": \"Fehler: kann Referenz auf lokale Variable nicht zurückgeben\",\n      \"hint\": \"Die Referenz bezieht sich auf einen Eingabeparameter, nicht auf eine lokale Variable\"\n    },\n    {\n      \"text\": \"Fehler: Lebenszeit‑Mismatch\",\n      \"hint\": \"Wir haben noch keine Lebenszeiten angegeben, daher gibt es keinen Konflikt\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was passiert bei dieser Funktion, die die längere von zwei String‑Slices zurückgibt?\"\n  ],\n  \"explanationProse\": [\n    \"Dieser Code schlägt fehl, weil der Compiler die Beziehung zwischen Eingabe‑ und Ausgabe‑Lebenszeiten nicht bestimmen kann. Hier ist warum und wie man es behebt:\",\n    \"Warum hier Lebenszeiten nötig sind:\\n      1. Mehrere Eingabereferenzen können unterschiedliche Lebenszeiten haben\\n      2. Der Rückgabewert muss mindestens so lange leben wie beide Eingaben\\n      3. Der Compiler muss diese Beziehungen verifizieren\\n\\n      Häufige Muster:\",\n    \"Best Practices:\\n      1. Lass die Lebenszeit‑Elision arbeiten, wenn möglich\\n      2. Verwende explizite Lebenszeiten, wenn Beziehungen klar sein müssen\\n      3. Ziehe in Betracht, besessene Typen zurückzugeben, um Lebenszeit‑Komplexität zu vermeiden\\n      4. Dokumentiere komplexe Lebenszeit‑Beziehungen\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1006,
+    "outputTokens": 1230,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 1033,
+    "providerCostUsd": 0.0012746,
+    "providerUpstreamCostUsd": 0.0012746,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000039234,
+    "outputUsd": 0.0002214,
+    "totalUsd": 0.000260634,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

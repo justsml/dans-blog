@@ -1,0 +1,55 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "Understanding Rc",
+  "translatedTitle": "Verständnis von Rc",
+  "translation": {
+    "title": "Verständnis von Rc",
+    "group": "Referenzzählung",
+    "options": [
+      {
+        "text": "Rc wird in Single‑Thread‑Umgebungen verwendet"
+      },
+      {
+        "text": "Rc wird in Multi‑Thread‑Umgebungen verwendet",
+        "hint": "Denke an Thread‑Sicherheit – Rc hat keine Synchronisation"
+      },
+      {
+        "text": "Rc wird nur für unveränderliche Daten verwendet",
+        "hint": "Rc kann mit interner Mutabilität kombiniert werden"
+      },
+      {
+        "text": "Rc wird nur für veränderliche Daten verwendet",
+        "hint": "Rc funktioniert sowohl mit veränderlichen als auch mit unveränderlichen Daten"
+      },
+      {
+        "text": "Rc ist für Fernsteuerung",
+        "hint": "Klug, aber kein Programmierkonzept!"
+      }
+    ],
+    "questionProse": [
+      "Wann solltest du Rc (Referenzzählung) in Rust verwenden?\n\n      Betrachte dieses Beispiel:"
+    ],
+    "explanationProse": [
+      "Rc (Referenzzählung) ist für Single‑Thread‑Szenarien gedacht, in denen du geteiltes Eigentum brauchst.\n\n      Häufige Anwendungsfälle:",
+      "Schlüsselpunkte:\n      1. Verwende Rc, wenn:\n         - Mehrere Teile deines Codes Eigentum benötigen\n         - Du weißt, dass das Teilen single‑threaded ist\n         - Die Lebensdauer nicht statisch bestimmt werden kann\n\n      2. Verwende stattdessen Arc, wenn:\n         - Du thread‑sichere Teilung brauchst\n         - Mehrere Threads Eigentum benötigen\n\n      3. Rc‑Einschränkungen:\n         - Nicht thread‑sicher\n         - Leichte Laufzeit‑Overhead\n         - Kann Referenzzyklen nicht automatisch auflösen\n\n      Best Practices:\n      1. Bevorzuge eindeutiges Eigentum, wenn möglich\n      2. Nutze Rc für single‑threaded geteiltes Eigentum\n      3. Nutze Arc für Multi‑Thread‑Szenarien\n      4. Kombiniere mit Weak, um Referenzzyklen zu verhindern"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Verständnis von Rc\",\n  \"group\": \"Referenzzählung\",\n  \"options\": [\n    {\n      \"text\": \"Rc wird in Single‑Thread‑Umgebungen verwendet\"\n    },\n    {\n      \"text\": \"Rc wird in Multi‑Thread‑Umgebungen verwendet\",\n      \"hint\": \"Denke an Thread‑Sicherheit – Rc hat keine Synchronisation\"\n    },\n    {\n      \"text\": \"Rc wird nur für unveränderliche Daten verwendet\",\n      \"hint\": \"Rc kann mit interner Mutabilität kombiniert werden\"\n    },\n    {\n      \"text\": \"Rc wird nur für veränderliche Daten verwendet\",\n      \"hint\": \"Rc funktioniert sowohl mit veränderlichen als auch mit unveränderlichen Daten\"\n    },\n    {\n      \"text\": \"Rc ist für Fernsteuerung\",\n      \"hint\": \"Klug, aber kein Programmierkonzept!\"\n    }\n  ],\n  \"questionProse\": [\n    \"Wann solltest du Rc (Referenzzählung) in Rust verwenden?\\n\\n      Betrachte dieses Beispiel:\"\n  ],\n  \"explanationProse\": [\n    \"Rc (Referenzzählung) ist für Single‑Thread‑Szenarien gedacht, in denen du geteiltes Eigentum brauchst.\\n\\n      Häufige Anwendungsfälle:\",\n    \"Schlüsselpunkte:\\n      1. Verwende Rc, wenn:\\n         - Mehrere Teile deines Codes Eigentum benötigen\\n         - Du weißt, dass das Teilen single‑threaded ist\\n         - Die Lebensdauer nicht statisch bestimmt werden kann\\n\\n      2. Verwende stattdessen Arc, wenn:\\n         - Du thread‑sichere Teilung brauchst\\n         - Mehrere Threads Eigentum benötigen\\n\\n      3. Rc‑Einschränkungen:\\n         - Nicht thread‑sicher\\n         - Leichte Laufzeit‑Overhead\\n         - Kann Referenzzyklen nicht automatisch auflösen\\n\\n      Best Practices:\\n      1. Bevorzuge eindeutiges Eigentum, wenn möglich\\n      2. Nutze Rc für single‑threaded geteiltes Eigentum\\n      3. Nutze Arc für Multi‑Thread‑Szenarien\\n      4. Kombiniere mit Weak, um Referenzzyklen zu verhindern\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1058,
+    "outputTokens": 1386,
+    "cacheReadTokens": 128,
+    "cacheWriteTokens": 0,
+    "durationMs": 945,
+    "providerCostUsd": 0.0014098,
+    "providerUpstreamCostUsd": 0.0014098,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000041262000000000006,
+    "outputUsd": 0.00024948,
+    "totalUsd": 0.00029074200000000003,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

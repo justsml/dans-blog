@@ -1,0 +1,35 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Rc Smart Pointer",
+  "translatedTitle": "Rc Smart Pointer",
+  "translation": {
+    "title": "Rc Smart Pointer",
+    "group": "Referenzzählung",
+    "options": [],
+    "questionProse": [
+      "Was wird dieser Code ausgeben? Zähle sorgfältig!"
+    ],
+    "explanationProse": [
+      "Lass uns aufschlüsseln, wie Rc funktioniert:\n\n      1. Anfangserstellung mit `Rc::new()`: Zähler = 1\n      2. Erster Klon für `marcus`: Zähler = 2\n      3. Zweiter Klon für `aurelius`: Zähler = 3\n\n      Wichtige Rc‑Eigenschaften:",
+      "Wichtige Punkte:\n      - Rc::clone() ist günstig – es erhöht nur einen Zähler\n      - Rc ist nur für Single‑Thread‑Szenarien gedacht\n      - Wenn die letzte Referenz fällt, wird das Datenobjekt bereinigt\n      - Verwende Weak‑Referenzen, um Referenzzyklen zu verhindern\n\n      Best Practices:\n      - Nutze Rc, wenn du geteiltes Eigentum brauchst\n      - Ziehe Arc für thread‑sichere Szenarien in Betracht\n      - Vermeide das Erzeugen von Referenzzyklen"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Rc Smart Pointer\",\n  \"group\": \"Referenzzählung\",\n  \"options\": [],\n  \"questionProse\": [\n    \"Was wird dieser Code ausgeben? Zähle sorgfältig!\"\n  ],\n  \"explanationProse\": [\n    \"Lass uns aufschlüsseln, wie Rc funktioniert:\\n\\n      1. Anfangserstellung mit `Rc::new()`: Zähler = 1\\n      2. Erster Klon für `marcus`: Zähler = 2\\n      3. Zweiter Klon für `aurelius`: Zähler = 3\\n\\n      Wichtige Rc‑Eigenschaften:\",\n    \"Wichtige Punkte:\\n      - Rc::clone() ist günstig – es erhöht nur einen Zähler\\n      - Rc ist nur für Single‑Thread‑Szenarien gedacht\\n      - Wenn die letzte Referenz fällt, wird das Datenobjekt bereinigt\\n      - Verwende Weak‑Referenzen, um Referenzzyklen zu verhindern\\n\\n      Best Practices:\\n      - Nutze Rc, wenn du geteiltes Eigentum brauchst\\n      - Ziehe Arc für thread‑sichere Szenarien in Betracht\\n      - Vermeide das Erzeugen von Referenzzyklen\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 881,
+    "outputTokens": 904,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 765,
+    "providerCostUsd": 0.00098635,
+    "providerUpstreamCostUsd": 0.00098635,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000034359,
+    "outputUsd": 0.00016272,
+    "totalUsd": 0.000197079,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "index": 12,
+  "attempt": 1,
+  "originalTitle": "Arc and Mutex",
+  "translatedTitle": "Arc und Mutex",
+  "translation": {
+    "title": "Arc und Mutex",
+    "group": "Smart Pointer",
+    "options": [
+      {
+        "text": "Gibt aus: 42",
+        "hint": "Der Code wird die Print-Anweisung nie erreichen"
+      },
+      {
+        "text": "Gibt aus: 43",
+        "hint": "Der Code bleibt hängen, bevor er ausgibt"
+      },
+      {
+        "text": "Kompilierungsfehler",
+        "hint": "Der Code ist syntaktisch korrekt"
+      },
+      {
+        "text": "Laufzeit-Panik",
+        "hint": "Es ist schlimmer als eine Panic"
+      },
+      {
+        "text": "Deadlock"
+      }
+    ],
+    "questionProse": [
+      "Was passiert, wenn dieser Code ausgeführt wird?"
+    ],
+    "explanationProse": [
+      "Dieser Code demonstriert ein klassisches Deadlock‑Szenario. So beheben Sie es:",
+      "Best Practices zur Vermeidung von Deadlocks:\n      1. Halte kritische Abschnitte klein\n      2. Gib Sperren zügig über Scopes frei\n      3. Erwirb mehrere Sperren in konsistenter Reihenfolge\n      4. Verwende parking_lot::Mutex für bessere Performance\n      5. Ziehe RwLock für leseintensive Workloads in Betracht\n\n      Gemeinsame Muster:"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Arc und Mutex\",\n  \"group\": \"Smart Pointer\",\n  \"options\": [\n    {\n      \"text\": \"Gibt aus: 42\",\n      \"hint\": \"Der Code wird die Print-Anweisung nie erreichen\"\n    },\n    {\n      \"text\": \"Gibt aus: 43\",\n      \"hint\": \"Der Code bleibt hängen, bevor er ausgibt\"\n    },\n    {\n      \"text\": \"Kompilierungsfehler\",\n      \"hint\": \"Der Code ist syntaktisch korrekt\"\n    },\n    {\n      \"text\": \"Laufzeit-Panik\",\n      \"hint\": \"Es ist schlimmer als eine Panic\"\n    },\n    {\n      \"text\": \"Deadlock\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was passiert, wenn dieser Code ausgeführt wird?\"\n  ],\n  \"explanationProse\": [\n    \"Dieser Code demonstriert ein klassisches Deadlock‑Szenario. So beheben Sie es:\",\n    \"Best Practices zur Vermeidung von Deadlocks:\\n      1. Halte kritische Abschnitte klein\\n      2. Gib Sperren zügig über Scopes frei\\n      3. Erwirb mehrere Sperren in konsistenter Reihenfolge\\n      4. Verwende parking_lot::Mutex für bessere Performance\\n      5. Ziehe RwLock für leseintensive Workloads in Betracht\\n\\n      Gemeinsame Muster:\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 957,
+    "outputTokens": 936,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 723,
+    "providerCostUsd": 0.00103695,
+    "providerUpstreamCostUsd": 0.00103695,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000037322999999999995,
+    "outputUsd": 0.00016847999999999999,
+    "totalUsd": 0.00020580299999999998,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

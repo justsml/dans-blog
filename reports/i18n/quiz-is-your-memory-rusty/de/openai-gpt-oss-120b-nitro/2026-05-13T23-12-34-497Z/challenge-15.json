@@ -1,0 +1,52 @@
+{
+  "index": 14,
+  "attempt": 1,
+  "originalTitle": "RAII Pattern",
+  "translatedTitle": "RAII-Muster",
+  "translation": {
+    "title": "RAII-Muster",
+    "group": "Speichermuster",
+    "options": [
+      {
+        "text": "Ressource wird nach dem Gültigkeitsbereich freigegeben",
+        "hint": "Das `File`-Feld hat seine eigene `Drop`-Implementierung."
+      },
+      {
+        "text": "Ressourcenlecks",
+        "hint": "Der Wrapper hat kein benutzerdefiniertes `Drop`, aber seine Felder werden trotzdem freigegeben."
+      },
+      {
+        "text": "Kompilierungsfehler",
+        "hint": "Der Code kompiliert erfolgreich"
+      },
+      {
+        "text": "Laufzeitfehler",
+        "hint": "Das Problem betrifft die Ressourcenbereinigung"
+      }
+    ],
+    "questionProse": [
+      "Was passiert mit dem Dateihandle in diesem RAII‑Beispiel?"
+    ],
+    "explanationProse": [
+      "RAII in Rust stellt sicher, dass Ressourcen korrekt verwaltet werden. In diesem Beispiel muss `FileWrapper` keine eigene `Drop`‑Implementierung für das Schließen des Dateihandles bereitstellen: sein `File`‑Feld wird automatisch freigegeben, wenn der Wrapper aus dem Gültigkeitsbereich verschwindet.\n\n      Du implementierst `Drop` nur, wenn der Wrapper selbst ein zusätzliches Aufräumverhalten benötigt, das über das Freigeben seiner Felder hinausgeht:",
+      "RAII‑Muster:\n      1. Konstruktor erwirbt Ressourcen\n      2. Methoden nutzen Ressourcen sicher\n      3. Felder werden automatisch freigegeben, wenn der Besitzer aus dem Gültigkeitsbereich geht\n      4. Benutzerdefiniertes `Drop` fügt bei Bedarf zusätzliche Aufräumarbeiten hinzu\n      5. Verwende `?` für Fehlerweiterleitung\n\n      Best Practices:\n      1. Verlasse dich auf die `Drop`‑Implementierungen der Standardbibliothek, wenn sie die Ressource bereits modellieren\n      2. Halte das Ressourcenmanagement einfach und klar\n      3. Nutze nach Möglichkeit Standardbibliothekstypen\n      4. Dokumentiere das Aufräumverhalten\n      5. Erwäge Guard‑Muster für operationen mit begrenztem Gültigkeitsbereich"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"RAII-Muster\",\n  \"group\": \"Speichermuster\",\n  \"options\": [\n    {\n      \"text\": \"Ressource wird nach dem Gültigkeitsbereich freigegeben\",\n      \"hint\": \"Das `File`-Feld hat seine eigene `Drop`-Implementierung.\"\n    },\n    {\n      \"text\": \"Ressourcenlecks\",\n      \"hint\": \"Der Wrapper hat kein benutzerdefiniertes `Drop`, aber seine Felder werden trotzdem freigegeben.\"\n    },\n    {\n      \"text\": \"Kompilierungsfehler\",\n      \"hint\": \"Der Code kompiliert erfolgreich\"\n    },\n    {\n      \"text\": \"Laufzeitfehler\",\n      \"hint\": \"Das Problem betrifft die Ressourcenbereinigung\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was passiert mit dem Dateihandle in diesem RAII‑Beispiel?\"\n  ],\n  \"explanationProse\": [\n    \"RAII in Rust stellt sicher, dass Ressourcen korrekt verwaltet werden. In diesem Beispiel muss `FileWrapper` keine eigene `Drop`‑Implementierung für das Schließen des Dateihandles bereitstellen: sein `File`‑Feld wird automatisch freigegeben, wenn der Wrapper aus dem Gültigkeitsbereich verschwindet.\\n\\n      Du implementierst `Drop` nur, wenn der Wrapper selbst ein zusätzliches Aufräumverhalten benötigt, das über das Freigeben seiner Felder hinausgeht:\",\n    \"RAII‑Muster:\\n      1. Konstruktor erwirbt Ressourcen\\n      2. Methoden nutzen Ressourcen sicher\\n      3. Felder werden automatisch freigegeben, wenn der Besitzer aus dem Gültigkeitsbereich geht\\n      4. Benutzerdefiniertes `Drop` fügt bei Bedarf zusätzliche Aufräumarbeiten hinzu\\n      5. Verwende `?` für Fehlerweiterleitung\\n\\n      Best Practices:\\n      1. Verlasse dich auf die `Drop`‑Implementierungen der Standardbibliothek, wenn sie die Ressource bereits modellieren\\n      2. Halte das Ressourcenmanagement einfach und klar\\n      3. Nutze nach Möglichkeit Standardbibliothekstypen\\n      4. Dokumentiere das Aufräumverhalten\\n      5. Erwäge Guard‑Muster für operationen mit begrenztem Gültigkeitsbereich\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1041,
+    "outputTokens": 1335,
+    "cacheReadTokens": 128,
+    "cacheWriteTokens": 0,
+    "durationMs": 792,
+    "providerCostUsd": 0.0013656,
+    "providerUpstreamCostUsd": 0.0013656,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000040599,
+    "outputUsd": 0.00024029999999999999,
+    "totalUsd": 0.000280899,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

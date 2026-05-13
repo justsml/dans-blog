@@ -1,0 +1,52 @@
+{
+  "index": 6,
+  "attempt": 1,
+  "originalTitle": "Struct Lifetimes",
+  "translatedTitle": "Struktur-Lebensdauern",
+  "translation": {
+    "title": "Struktur-Lebensdauern",
+    "group": "Lebensdauern",
+    "options": [
+      {
+        "text": "Kompiliert erfolgreich",
+        "hint": "Strukturen mit Referenzen benötigen Lebenszeitannotationen"
+      },
+      {
+        "text": "Fehler: fehlender Lebenszeit‑Angabe"
+      },
+      {
+        "text": "Fehler: Lebenszeit‑Mismatch",
+        "hint": "Wir haben noch keine Lebenszeiten angegeben"
+      },
+      {
+        "text": "Fehler: ungültige Referenz",
+        "hint": "Die Referenzen sind gültig, aber es fehlt etwas anderes"
+      }
+    ],
+    "questionProse": [
+      "Wird diese Strukturdefinition kompilieren? Warum oder warum nicht?"
+    ],
+    "explanationProse": [
+      "Der Code schlägt fehl, weil Strukturen, die Referenzen enthalten, Lebensdauern angeben müssen. So geht's zur Korrektur:",
+      "Übliche Muster:",
+      "Best Practices:\n      1. Verwende besessene Typen (String), wenn du Daten unbegrenzt speichern musst\n      2. Verwende Referenzen, wenn die Lebensdauer der Struktur eindeutig kürzer ist als die der Daten\n      3. Ziehe mehrere Lebenszeit‑Parameter in Betracht, wenn Referenzen unterschiedliche Lebensdauern haben können\n      4. Dokumentiere Lebenszeit‑Beziehungen in komplexen Strukturen"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Struktur-Lebensdauern\",\n  \"group\": \"Lebensdauern\",\n  \"options\": [\n    {\n      \"text\": \"Kompiliert erfolgreich\",\n      \"hint\": \"Strukturen mit Referenzen benötigen Lebenszeitannotationen\"\n    },\n    {\n      \"text\": \"Fehler: fehlender Lebenszeit‑Angabe\"\n    },\n    {\n      \"text\": \"Fehler: Lebenszeit‑Mismatch\",\n      \"hint\": \"Wir haben noch keine Lebenszeiten angegeben\"\n    },\n    {\n      \"text\": \"Fehler: ungültige Referenz\",\n      \"hint\": \"Die Referenzen sind gültig, aber es fehlt etwas anderes\"\n    }\n  ],\n  \"questionProse\": [\n    \"Wird diese Strukturdefinition kompilieren? Warum oder warum nicht?\"\n  ],\n  \"explanationProse\": [\n    \"Der Code schlägt fehl, weil Strukturen, die Referenzen enthalten, Lebensdauern angeben müssen. So geht's zur Korrektur:\",\n    \"Übliche Muster:\",\n    \"Best Practices:\\n      1. Verwende besessene Typen (String), wenn du Daten unbegrenzt speichern musst\\n      2. Verwende Referenzen, wenn die Lebensdauer der Struktur eindeutig kürzer ist als die der Daten\\n      3. Ziehe mehrere Lebenszeit‑Parameter in Betracht, wenn Referenzen unterschiedliche Lebensdauern haben können\\n      4. Dokumentiere Lebenszeit‑Beziehungen in komplexen Strukturen\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 946,
+    "outputTokens": 1000,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 929,
+    "providerCostUsd": 0.0010811,
+    "providerUpstreamCostUsd": 0.0010811,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000036894,
+    "outputUsd": 0.00017999999999999998,
+    "totalUsd": 0.00021689399999999997,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

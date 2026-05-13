@@ -1,0 +1,51 @@
+{
+  "index": 16,
+  "attempt": 1,
+  "originalTitle": "Memory Optimization",
+  "translatedTitle": "Speicheroptimierung",
+  "translation": {
+    "title": "Speicheroptimierung",
+    "group": "Bewährte Praktiken",
+    "options": [
+      {
+        "text": "16 bytes",
+        "hint": "Beachte Ausrichtungsanforderungen"
+      },
+      {
+        "text": "24 bytes"
+      },
+      {
+        "text": "32 bytes",
+        "hint": "String ist größer als ein einzelner Zeiger."
+      },
+      {
+        "text": "Depends on platform",
+        "hint": "Wir haben ein 64‑Bit‑System angegeben"
+      }
+    ],
+    "questionProse": [
+      "Auf einem typischen aktuellen 64‑Bit‑Rust‑Ziel, wie groß ist diese Struktur?"
+    ],
+    "explanationProse": [
+      "Lassen Sie uns das Speicherlayout der Struktur und die Optimierung aufschlüsseln:",
+      "Speicherlayout‑Überlegungen:\n      1. Ausrichtungsanforderungen:\n         - u32: 4‑Byte‑Ausrichtung\n         - String: 8‑Byte‑Ausrichtung und 24‑Byte‑Größe auf gängigen 64‑Bit‑Zielen\n         - bool: 1‑Byte‑Ausrichtung\n\n      2. Strategien zur Feldreihenfolge:\n         - Ähnliche Feldgrößen gruppieren\n         - Größere Ausrichtungen zuerst platzieren\n         - Cache‑Line‑Optimierung berücksichtigen\n\n      Beste Praktiken:\n      1. Für FFI oder stabile Layout‑Annahmen ein geeignetes `repr(...)` verwenden\n      2. Geeignete Ganzzahlgrößen nutzen\n      3. `Option` für optionale Felder in Betracht ziehen\n      4. Größenkritische Strukturen mit `std::mem::size_of` messen\n      5. #[repr(packed)] vorsichtig einsetzen – es kann die Leistung beeinflussen"
+    ]
+  },
+  "rawText": "{\n \"title\": \"Speicheroptimierung\",\n  \"group\": \"Bewährte Praktiken\",\n  \"options\": [\n    {\n      \"text\": \"16 bytes\",\n      \"hint\": \"Beachte Ausrichtungsanforderungen\"\n    },\n    {\n      \"text\": \"24 bytes\"\n    },\n    {\n      \"text\": \"32 bytes\",\n      \"hint\": \"String ist größer als ein einzelner Zeiger.\"\n    },\n    {\n      \"text\": \"Depends on platform\",\n      \"hint\": \"Wir haben ein 64‑Bit‑System angegeben\"\n    }\n  ],\n  \"questionProse\": [\n    \"Auf einem typischen aktuellen 64‑Bit‑Rust‑Ziel, wie groß ist diese Struktur?\"\n  ],\n  \"explanationProse\": [\n    \"Lassen Sie uns das Speicherlayout der Struktur und die Optimierung aufschlüsseln:\",\n    \"Speicherlayout‑Überlegungen:\\n      1. Ausrichtungsanforderungen:\\n         - u32: 4‑Byte‑Ausrichtung\\n         - String: 8‑Byte‑Ausrichtung und 24‑Byte‑Größe auf gängigen 64‑Bit‑Zielen\\n         - bool: 1‑Byte‑Ausrichtung\\n\\n      2. Strategien zur Feldreihenfolge:\\n         - Ähnliche Feldgrößen gruppieren\\n         - Größere Ausrichtungen zuerst platzieren\\n         - Cache‑Line‑Optimierung berücksichtigen\\n\\n      Beste Praktiken:\\n      1. Für FFI oder stabile Layout‑Annahmen ein geeignetes `repr(...)` verwenden\\n      2. Geeignete Ganzzahlgrößen nutzen\\n      3. `Option` für optionale Felder in Betracht ziehen\\n      4. Größenkritische Strukturen mit `std::mem::size_of` messen\\n      5. #[repr(packed)] vorsichtig einsetzen – es kann die Leistung beeinflussen\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 994,
+    "outputTokens": 1187,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1014,
+    "providerCostUsd": 0.00123815,
+    "providerUpstreamCostUsd": 0.00123815,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000038766,
+    "outputUsd": 0.00021365999999999998,
+    "totalUsd": 0.000252426,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

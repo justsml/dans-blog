@@ -1,0 +1,53 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "Mutable References",
+  "translatedTitle": "Mutable Referenzen",
+  "translation": {
+    "title": "Mutable Referenzen",
+    "group": "Ausleihe",
+    "options": [
+      {
+        "text": "Kompiliert erfolgreich",
+        "hint": "Können wir mehrere mutable Referenzen gleichzeitig haben?"
+      },
+      {
+        "text": "Fehler: `wisdom` kann nicht mehr als einmal mutabel ausgeliehen werden"
+      },
+      {
+        "text": "Fehler: fehlender Lebenszeit‑Spezifizierer",
+        "hint": "Das Problem hat hier nichts mit Lebenszeiten zu tun"
+      },
+      {
+        "text": "Laufzeit‑Panik",
+        "hint": "Rust erkennt diese Probleme bereits zur Compile‑Zeit"
+      }
+    ],
+    "questionProse": [
+      "Was passiert bei mehreren mutable Referenzen?",
+      "Denke an Rusts Regeln für mutable Referenzen."
+    ],
+    "explanationProse": [
+      "Dieser Code verletzt Rusts grundlegende Ausleihregeln:\n      - Nur EIN mutable Referenz auf einen Wert zur gleichen Zeit\n      - ODER beliebig viele immutable Referenzen\n      - Referenzen dürfen ihren Referenten nicht überschreiten\n\n      So kann man den Code korrigieren:\n\n      1. Verwende sequentielles Scoping:",
+      "2. Oder modifiziere den String in einer einzigen Ausleihe:",
+      "Diese Regeln verhindern Datenrennen bereits zur Compile‑Zeit und machen Rust standardmäßig thread‑sicher.\n\n      Häufiges Stolpern: Der Versuch, mehrere mutable Referenzen zu benutzen, um Kopieren zu vermeiden oder verschiedene Teile desselben Wertes gleichzeitig zu ändern."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Mutable Referenzen\",\n\"group\": \"Ausleihe\",\n  \"options\": [\n    {\n      \"text\": \"Kompiliert erfolgreich\",\n      \"hint\": \"Können wir mehrere mutable Referenzen gleichzeitig haben?\"\n    },\n    {\n      \"text\": \"Fehler: `wisdom` kann nicht mehr als einmal mutabel ausgeliehen werden\"\n    },\n    {\n      \"text\": \"Fehler: fehlender Lebenszeit‑Spezifizierer\",\n      \"hint\": \"Das Problem hat hier nichts mit Lebenszeiten zu tun\"\n    },\n    {\n      \"text\": \"Laufzeit‑Panik\",\n      \"hint\": \"Rust erkennt diese Probleme bereits zur Compile‑Zeit\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was passiert bei mehreren mutable Referenzen?\",\n    \"Denke an Rusts Regeln für mutable Referenzen.\"\n  ],\n  \"explanationProse\": [\n    \"Dieser Code verletzt Rusts grundlegende Ausleihregeln:\\n      - Nur EIN mutable Referenz auf einen Wert zur gleichen Zeit\\n      - ODER beliebig viele immutable Referenzen\\n      - Referenzen dürfen ihren Referenten nicht überschreiten\\n\\n      So kann man den Code korrigieren:\\n\\n      1. Verwende sequentielles Scoping:\",\n    \"2. Oder modifiziere den String in einer einzigen Ausleihe:\",\n    \"Diese Regeln verhindern Datenrennen bereits zur Compile‑Zeit und machen Rust standardmäßig thread‑sicher.\\n\\n      Häufiges Stolpern: Der Versuch, mehrere mutable Referenzen zu benutzen, um Kopieren zu vermeiden oder verschiedene Teile desselben Wertes gleichzeitig zu ändern.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 988,
+    "outputTokens": 1045,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1003,
+    "providerCostUsd": 0.00112955,
+    "providerUpstreamCostUsd": 0.00112955,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000038531999999999996,
+    "outputUsd": 0.0001881,
+    "totalUsd": 0.000226632,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

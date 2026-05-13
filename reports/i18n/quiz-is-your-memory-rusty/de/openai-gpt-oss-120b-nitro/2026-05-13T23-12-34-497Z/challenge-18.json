@@ -1,0 +1,51 @@
+{
+  "index": 17,
+  "attempt": 1,
+  "originalTitle": "Zero-Cost Abstractions",
+  "translatedTitle": "Nullkosten-Abstraktionen",
+  "translation": {
+    "title": "Nullkosten-Abstraktionen",
+    "group": "Fortgeschrittene Muster",
+    "options": [
+      {
+        "text": "Laufzeit-Overhead durch Iterator",
+        "hint": "Rust-Iteratoren sind Nullkosten-Abstraktionen"
+      },
+      {
+        "text": "Gleiche Leistung wie rohe Schleife"
+      },
+      {
+        "text": "Langsamer, aber lesbarer",
+        "hint": "Die Abstraktion beeinflusst die Laufzeitleistung nicht"
+      },
+      {
+        "text": "Hängt vom Optimierungslevel ab",
+        "hint": "Die Abstraktion wird zur Compile‑Zeit eliminiert"
+      }
+    ],
+    "questionProse": [
+      "Wie vergleichen sich die Leistungen dieser beiden Implementierungen?"
+    ],
+    "explanationProse": [
+      "Rusts Nullkosten-Abstraktionen werden zu äquivalentem, effizienten Code kompiliert:",
+      "Schlüsselprinzipien:\n      1. Was du nicht nutzt, musst du nicht bezahlen\n      2. Was du nutzt, kannst du nicht besser von Hand schreiben\n\n      Best Practices:\n      1. Verwende hochrangige Abstraktionen frei\n      2. Vertraue den Optimierungen des Compilers\n      3. Profiliere bevor du optimierst\n      4. Setze zuerst auf Lesbarkeit\n      5. Nutze Iteratoren und Closures ohne Angst"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Nullkosten-Abstraktionen\",\n  \"group\": \"Fortgeschrittene Muster\",\n  \"options\": [\n    {\n      \"text\": \"Laufzeit-Overhead durch Iterator\",\n      \"hint\": \"Rust-Iteratoren sind Nullkosten-Abstraktionen\"\n    },\n    {\n      \"text\": \"Gleiche Leistung wie rohe Schleife\"\n    },\n    {\n      \"text\": \"Langsamer, aber lesbarer\",\n      \"hint\": \"Die Abstraktion beeinflusst die Laufzeitleistung nicht\"\n    },\n    {\n      \"text\": \"Hängt vom Optimierungslevel ab\",\n      \"hint\": \"Die Abstraktion wird zur Compile‑Zeit eliminiert\"\n    }\n  ],\n  \"questionProse\": [\n    \"Wie vergleichen sich die Leistungen dieser beiden Implementierungen?\"\n  ],\n  \"explanationProse\": [\n    \"Rusts Nullkosten-Abstraktionen werden zu äquivalentem, effizienten Code kompiliert:\",\n    \"Schlüsselprinzipien:\\n      1. Was du nicht nutzt, musst du nicht bezahlen\\n      2. Was du nutzt, kannst du nicht besser von Hand schreiben\\n\\n      Best Practices:\\n      1. Verwende hochrangige Abstraktionen frei\\n      2. Vertraue den Optimierungen des Compilers\\n      3. Profiliere bevor du optimierst\\n      4. Setze zuerst auf Lesbarkeit\\n      5. Nutze Iteratoren und Closures ohne Angst\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 933,
+    "outputTokens": 928,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 668,
+    "providerCostUsd": 0.00102255,
+    "providerUpstreamCostUsd": 0.00102255,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000036387,
+    "outputUsd": 0.00016704,
+    "totalUsd": 0.000203427,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
