@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: the-jsonb-seduction
+- Locale: it
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2025-12-29--the-jsonb-seduction/it/index.mdx
+- Validation: deferred
+- Runtime seconds: 5.39
+- Input tokens: 11191
+- Output tokens: 3015
+- Thinking tokens: unknown
+- Cached input tokens: 5504
+- Cache write tokens: 0
+- Estimated cost: $0.000979
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: 'JSONB: Il modo migliore per rovinare il tuo database'
 subTitle: >-
@@ -181,3 +199,4 @@ JSONB è ottimo quando il documento è davvero a forma di documento. È pericolo
 - [Strategie di indicizzazione JSONB](https://www.postgresql.org/docs/current/datatype-json.html#JSON-INDEXING)
 - [Quando usare JSONB vs colonne relazionali](https://www.citusdata.com/blog/2016/07/14/choosing-nosql-hstore-json-jsonb/)
 - [Best practice per la progettazione di schemi PostgreSQL](https://www.postgresql.org/docs/current/ddl.html)
+````
