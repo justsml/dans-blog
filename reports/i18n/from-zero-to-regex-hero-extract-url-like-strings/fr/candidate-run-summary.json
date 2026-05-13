@@ -4,16 +4,16 @@
   "slug": "from-zero-to-regex-hero-extract-url-like-strings",
   "locale": "fr",
   "startedAt": "2026-05-13T17:24:25.697Z",
-  "updatedAt": "2026-05-13T17:25:57.006Z",
+  "updatedAt": "2026-05-13T17:29:57.232Z",
   "modelsRequested": [
     "openrouter/openai/gpt-oss-120b:nitro",
     "openrouter/qwen/qwen3-32b:nitro",
     "deepseek/deepseek-v4-flash",
     "qwen/qwen3.6-plus"
   ],
-  "attemptedModels": 1,
+  "attemptedModels": 2,
   "skippedModels": 2,
-  "rejectedModels": 0,
+  "rejectedModels": 1,
   "candidateModels": 1,
   "totals": {
     "inputTokens": 10490,
@@ -22,13 +22,13 @@
     "cachedInputTokens": 1536,
     "cacheWriteTokens": 0,
     "estimatedCostUsd": 0.004822,
-    "hasUnknownInputTokens": false,
-    "hasUnknownOutputTokens": false,
+    "hasUnknownInputTokens": true,
+    "hasUnknownOutputTokens": true,
     "hasUnknownThinkingTokens": true,
-    "hasUnknownCachedInputTokens": false,
-    "hasUnknownCacheWriteTokens": false,
-    "hasUnknownEstimatedCost": false,
-    "runtimeSeconds": "84.38"
+    "hasUnknownCachedInputTokens": true,
+    "hasUnknownCacheWriteTokens": true,
+    "hasUnknownEstimatedCost": true,
+    "runtimeSeconds": "324.39"
   },
   "attempts": [
     {
@@ -59,6 +59,17 @@
         },
         "estimatedCostUsd": 0.0048222608,
         "pricingSource": "local-openrouter-estimate"
+      }
+    },
+    {
+      "model": "qwen/qwen3.6-plus",
+      "status": "rejected",
+      "validationStatus": "rejected: direct AI SDK translation failed",
+      "reportPath": "reports/i18n/from-zero-to-regex-hero-extract-url-like-strings/fr/qwen-qwen3.6-plus.md",
+      "note": "Command failed after 240000ms: bun run i18n:translate:chunked -- --slug from-zero-to-regex-hero-extract-url-like-strings --locale fr --model qwen/qwen3.6-plus --chunk 6p --quiz-concurrency 24",
+      "telemetry": {
+        "runtimeSeconds": "240.01",
+        "tokens": {}
       }
     }
   ]
