@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: docker-firewall-setup
+- Locale: de
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2015-06-06--docker-firewall-setup/de/index.mdx
+- Validation: passed
+- Runtime seconds: 8.15
+- Input tokens: 3732
+- Output tokens: 3202
+- Thinking tokens: unknown
+- Cached input tokens: 512
+- Cache write tokens: 0
+- Estimated cost: $0.001067
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Docker Firewall Einrichtung
 subTitle: ''
@@ -103,3 +121,4 @@ nmap -p 1-10240,27017 -O --osscan-guess $TARGET_HOST
 ~~~
 
 > FERTIG! Jetzt sollten Sie NUR die Ports sehen, die Sie konfiguriert haben!
+````
