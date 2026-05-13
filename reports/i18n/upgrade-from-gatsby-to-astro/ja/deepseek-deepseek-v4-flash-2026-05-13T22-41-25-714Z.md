@@ -1,0 +1,181 @@
+# Translation Candidate
+- Slug: upgrade-from-gatsby-to-astro
+- Locale: ja
+- Model: deepseek/deepseek-v4-flash
+- Target: src/content/posts/2024-08-22--upgrade-from-gatsby-to-astro/ja/index.mdx
+- Validation: deferred
+- Runtime seconds: 77.70
+- Input tokens: 6954
+- Output tokens: 8930
+- Thinking tokens: unknown
+- Cached input tokens: 384
+- Cache write tokens: 0
+- Estimated cost: $0.003421
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: ブログアップグレードで学んだ教訓
+subTitle: Astro、Tailwind、MDX、Pagefind、その他多数！
+date: '2024-08-21'
+modified: '2024-08-23'
+category: Guides
+tags:
+  - astro
+  - tailwind
+  - mdx
+  - pagefind
+  - gatsby
+cover: ../galaxy-contribution-mode.webp
+cover_full_width: ../galaxy-contribution-banner.webp
+cover_mobile: ../w300_galaxy-contribution-mode.webp
+cover_icon: ../icon_galaxy-contribution-mode.webp
+---
+最近、私は8年以上前に構築したGatsby v1サイトのアップグレードに着手しました。
+
+このブログ記事では、その過程で学んだ教訓と、探求した楽しいテクノロジーについて共有します。
+
+## Table of Contents
+
+- [プロジェクト要件](#project-requirements)
+- [適切な技術スタックの選択](#choosing-my-right-technology-stack)
+- [Astro: 学習曲線と主要機能](#astro-learning-curve-and-key-features)
+- [モダンCSS: すごい](#modern-css-wow)
+- [検索: Pagefind](#search-pagefind)
+- [コメント: Utterances](#comments-utterances)
+- [Tailwind: 後悔](#tailwind-regrets)
+- [結論](#conclusion)
+
+## プロジェクト要件
+
+アップグレードに着手する前に、一連の要件を設定しました。
+
+私のブログは日々のページビュー数が大きく変動するため、静的に事前生成されたサイトが、余計な複雑さを伴わずに望むパフォーマンスを提供してくれると感じました。
+
+また、このサイトの既存のコンテンツと機能を維持する必要がありました。具体的には以下の通りです：
+
+- コードハイライト
+- コメント
+- サイト内検索
+- 既存のReactコンポーネント: クイズUI、Gist埋め込み
+- お問い合わせフォーム
+- レスポンシブ画像
+- 1秒未満の読み込み時間
+- ブラウザ互換性: 2018年以降
+- 自動化およびPRベースのデプロイ
+
+## 適切な技術スタックの選択
+
+長年にわたり、私はJekyll、Hugo、Slate、Gatsbyなど数多くの静的サイトツールや、Ember、Knockout、Angular、Vue、そしてもちろんReactといったフロントエンドフレームワークを扱ってきました。
+
+そのため、選択肢は正確に多すぎるほどあり、最終的に**Remix**、**Next.js**、**Astro**に絞り込みました。
+
+評価プロセスだけでブログシリーズが一本書けるほどですが、ここでは要点だけ述べます。
+
+<p class="breakout">私が[Astro](https://astro.build)を選んだのは、いかに迅速に“意味のあることを実現できるか”が決め手でした。</p>
+
+API設計は驚くほどシンプルです。[柔軟性と優れた設計上の意見のバランスが絶妙](https://docs.astro.build/en/concepts/why-astro/)です。
+
+Astroに明白なクラウドバイアスやフレームワークアジェンダがないことも、少し安心できる点でした。
+
+Astroだけが使用した技術ではありません。以下がスタックの全容です。
+
+- [Astro](https://astro.build): モダンな静的サイトジェネレーター。
+- [ShadcnUI](https://ui.shadcn.com): 再利用可能なコンポーネントのコレクション。
+- [Tailwind CSS](https://tailwindcss.com): ユーティリティファーストなCSSフレームワーク。
+- [MDX](https://mdxjs.com): Markdownコンテンツ＋インラインコンポーネント。
+- [Pagefind](https://pagefind.app): 高速、静的、オフライン対応のサイト検索ライブラリ。Algoliaは不要！
+- [Utterances](https://utteranc.es): GitHub Issuesベースのコメントシステム。
+- [Netlify](https://www.netlify.com): 自動デプロイ、キャプチャ付き問い合わせフォーム。
+
+## Astro: 学習曲線と主要機能
+
+<p class="breakout quote">Astroはすぐに私のアップグレードの基盤となりました。</p>
+
+特に役立った主要機能をいくつか紹介する：
+
+- `.astro` ファイル：一見するとReact JSXコンポーネントに見えるが、実際は全く異なり、異なる目的を果たす。（下の比較表を参照。）
+- 独自のGolang製[ビルドツール](https://github.com/withastro/compiler)とViteを採用：そのまま動作する。ESM/CJS、TypeScript、コードバンドル、スタイル、画像などをシームレスに処理。
+- [フレームワークバイアス](https://docs.astro.build/en/guides/framework-components/#official-ui-framework-integrations)も[クラウドバイアス](https://docs.astro.build/en/guides/deploy/)もなし。（*ゴホン* Next.js、OpenNext）
+- [静的レンダリングとハイブリッドレンダリング](https://docs.astro.build/en/basics/rendering-modes/)：Astroは[ほとんどのクラウドプラットフォームをターゲットにする柔軟性](https://docs.astro.build/en/guides/deploy/)を提供：AWS、GCP、Firebase、Netlify、Vercel、Cloudflare Pages、Azure、Fly.ioなど。
+- コンテンツコレクション：[`getCollection`](https://docs.astro.build/en/reference/api-reference/#getcollection) APIを使えば、コンテンツファイルをデータソースとして簡単に扱える。
+- ファイルベースルーティング：Astroのファイルベースルーティングシステムと`getStaticPaths`を組み合わせれば、ページ生成が驚くほど簡単。
+- SEO：[Astroは邪魔をせず](https://github.com/justsml/dans-blog/blob/010c5cb58bb327adb8c8fff608594daa612ad9d5/src/components/BaseHead.astro#L43-L63)、必要なときだけ最小限の~~ゴミ~~ボイラープレート（`astro-island`）を出力する。
+
+少し驚いた点もある。Astroが注入するマークアップ周りのスタイリングや、`display:contents`の影響などだ。
+
+```tsx
+
+<style>astro-island,astro-slot,astro-static-slot{display:contents}</style>
+
+```
+
+### `.astro` コンポーネントとクライアントコンポーネントの比較
+
+Astroコンポーネントは基本的に、強力なコンポーネント＆プロップスパターンを備えたHTMLテンプレートである。ビルド時にデータを取得したり、バックエンドリソースにアクセスしたり、機密情報を隠したりできる。
+
+Astroの`.astro`コンポーネントを理解する最善の方法は、クライアントサイドコンポーネント（React、Vue、Svelteなど）と比較対照することだ。
+
+<section className="scroll-x">
+| 何をする必要があるか？                                                            | `.astro` コンポーネント    | クライアントコンポーネント    |
+| ---------------------------------------------------------------------------------- | ------------------- | ------------------- |
+| 強力なテンプレート＋コンポーネントパターンでHTMLを生成する                         | ✅ | ❌ |
+| ビルド時にデータを取得する                                                         | ✅ | ❌ |
+| バックエンドリソースに（直接）アクセスする                                         | ✅ | ❌ |
+| 機密情報（アクセストークン、APIキーなど）を隠す                                   | ✅ | ❌ |
+| クライアントサイドJavaScriptを減らす                                               | ✅ | ❌ |
+| クライアントコンポーネント（React、Vue、Svelteなど）を使用する                     | ✅ | ✅ |
+| インタラクティビティとイベントリスナー（`onClick()`、`onChange()`など）を追加する  | ❌ | ✅ |
+| 状態とライフサイクルエフェクト（`useState()`、`useReducer()`、`useEffect()`など）を使用する | ❌ | ✅ |
+| ブラウザ専用APIを使用する                                                          | ❌ | ✅ |
+| 状態、エフェクト、ブラウザ専用APIに依存するカスタムフックを使用する                | ❌ | ✅ |
+</section>
+
+## モダンCSS：すごい
+
+フロントエンド開発に戻ってきて、ネイティブCSSの進歩に嬉しい驚きを覚えた。
+
+- CSS変数: しばらく前から利用可能で、202*年以降はブラウザ間でかなり安定している。
+- ネスティング: ついに仕様化され、以前のぎこちない構文はなくなった。今ではLessやSCSSに似ている。
+- 新しいセレクタ: `:is()`、`:where()`、`:has()` により、要素をより正確にターゲットできる。
+- `ch`、`vw` などのモダンな単位や `clamp()` のような関数により、レイアウトやタイポグラフィをより細かく制御できる。
+- `-inline` や `-block` 属性を使って、より自然にスペーシングを設定できる。パディングやマージンを水平軸または垂直軸に設定できる。`margin: 0 1rem 0 1rem` の代わりに `margin-inline: 1rem` と書ける。
+- 高度なレイアウト: CSS Gridを再学習。いやあ、中身がすごい。使い方は無限にあるように思えて圧倒されるかもしれない。でも、1つか2つの方法を覚えれば十分だ。Gridでトリックをやるのに役立った素晴らしいリソースを紹介する: [Kevin Powellの動画: Learn CSS Grid the easy way](https://www.youtube.com/watch?v=rg7Fvvl3taU)、[メディアクエリなしでレスポンシブ](https://ardilamorin.com/responsive-no-media-queries/)、[1行のCSSで実現する10のモダンレイアウト](https://web.dev/articles/one-line-layouts)。
+
+## 検索: Pagefind
+
+サードパーティのサービスやデータベースホスティングを使わずに**サイト内検索**を実装するのは、面白い挑戦に思えた。何しろ、まだ1万件もの投稿をインデックスするわけではないしね。
+
+[Astroのコミュニティ統合](https://astro.build/integrations/?search=find)を眺めているときに、もっと早く知りたかった素晴らしいツールに出会った: [Pagefind](https://pagefind.app/)。
+
+<p class="breakout quote">Pagefindがローカルサイト検索を解決するほど、問題をうまく解決するツールはほとんどない。</p>
+
+Pagefindの実装のシンプルさは喜びだ。あらゆる静的サイトコンテンツと統合でき、デフォルトのUIを使うか、カスタムで何でも構築するかを選べる。
+
+私が望むすべてをきれいに解決してくれた。統合には数分しかかからず、ほとんどの作業は `<div id="search"></div>` タグを追加してスタイリングするだけだった！
+
+## コメント: Utterances
+
+残念ながら、Disqusと長年蓄積してきたコメントに別れを告げなければならなかった。
+
+サイト上のサードパーティスクリプトをより制御・可視化したかった。
+
+また、シンプルで保守しやすいものである必要があった。
+
+そこで、素晴らしい[Utterances](https://utteranc.es/)サービスを選んだ。GitHub（Issuesベース）のコメントシステムは、私の読者層によく合っている。しかも、セットアップが簡単で無料だ。
+
+## Tailwind: 後悔
+
+ただ一つ、使っていることを後悔しつつある技術がある: Tailwindだ。
+
+時間が経つにつれ、記述と保守のコスト差を感じるようになった。Tailwindは記述が非常に速いが、複雑になりすぎると、読み取りや拡張が面倒になる。
+
+## 結論
+
+古いGatsby v1サイトをAstroを中心としたモダンスタックにアップグレードするのは楽しい経験だった。10/10でおすすめする。
+
+古いサイトのアップグレードや新しい静的（またはハイブリッド）サイトの構築を検討しているなら、Astroをぜひ検討してほしい。学習曲線が急なこともあるかもしれないが、パフォーマンス、開発者体験、プロジェクトの将来性という点でのメリットは、その努力に十分値する。
+````
