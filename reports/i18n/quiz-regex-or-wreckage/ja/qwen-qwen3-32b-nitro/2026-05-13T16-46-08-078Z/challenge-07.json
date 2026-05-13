@@ -1,0 +1,47 @@
+{
+  "index": 6,
+  "attempt": 1,
+  "originalTitle": "The Global Flag",
+  "translatedTitle": "グローバルフラグの挙動",
+  "translation": {
+    "title": "グローバルフラグの挙動",
+    "group": "よくある落とし穴",
+    "options": [
+      {
+        "text": "null"
+      },
+      {
+        "text": "[\"a\"]"
+      },
+      {
+        "text": "[\"a\", \"a\", \"a\"]"
+      },
+      {
+        "text": "[\"b\", \"n\", \"n\"]"
+      },
+      {
+        "text": "Error"
+      }
+    ],
+    "questionProse": [
+      "出力結果は？"
+    ],
+    "explanationProse": [
+      "グローバルフラグ（g）は`match()`の挙動を変える：\n    - フラグなし：最初のマッチとキャプチャグループを返す\n    - フラグあり：マッチした文字列の配列を返す\n\n    このケースでは、「banana」内の「a」のすべての出現を検出します。\n\n    注：すべてのマッチとキャプチャグループが必要な場合は、`matchAll()`や`exec()`メソッドのループを使用してください。\n\n    [グローバルフラグの詳細](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/global)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"グローバルフラグの挙動\",\n  \"group\": \"よくある落とし穴\",\n  \"options\": [\n    {\n      \"text\": \"null\"\n    },\n    {\n      \"text\": \"[\\\"a\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"a\\\", \\\"a\\\", \\\"a\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"b\\\", \\\"n\\\", \\\"n\\\"]\"\n    },\n    {\n      \"text\": \"Error\"\n    }\n  ],\n  \"questionProse\": [\n    \"出力結果は？\"\n  ],\n  \"explanationProse\": [\n    \"グローバルフラグ（g）は`match()`の挙動を変える：\\n    - フラグなし：最初のマッチとキャプチャグループを返す\\n    - フラグあり：マッチした文字列の配列を返す\\n\\n    このケースでは、「banana」内の「a」のすべての出現を検出します。\\n\\n    注：すべてのマッチとキャプチャグループが必要な場合は、`matchAll()`や`exec()`メソッドのループを使用してください。\\n\\n    [グローバルフラグの詳細](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/global)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 773,
+    "outputTokens": 926,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2446
+  },
+  "cost": {
+    "inputUsd": 0.00006184,
+    "outputUsd": 0.00022223999999999999,
+    "totalUsd": 0.00028408,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

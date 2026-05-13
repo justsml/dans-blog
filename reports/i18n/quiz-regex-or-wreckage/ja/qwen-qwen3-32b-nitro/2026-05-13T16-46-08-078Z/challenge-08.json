@@ -1,0 +1,47 @@
+{
+  "index": 7,
+  "attempt": 1,
+  "originalTitle": "Negative Look-behind",
+  "translatedTitle": "否定的後方参照",
+  "translation": {
+    "title": "否定的後方参照",
+    "group": "後方参照",
+    "options": [
+      {
+        "text": "[\"123\"]"
+      },
+      {
+        "text": "[\"123\", \"456\"]"
+      },
+      {
+        "text": "[\"23\", \"456\"]"
+      },
+      {
+        "text": "[\"456\"]"
+      },
+      {
+        "text": "[]"
+      }
+    ],
+    "questionProse": [
+      "このパターンに一致するのは？"
+    ],
+    "explanationProse": [
+      "否定的後方参照 `(?<!abc)` は、数字が \"abc\" で終わっていないことを確認します：\n    - ❌ \"123\"（\"abc\" で終わる）\n    - ✅ \"23\"（\"abc1\" で終わる）\n    - ✅ \"456\"（\"def\" で終わる）\n\n    現代のJavaScriptエンジンでは後方参照がサポートされています。この例は固定長の後方参照（`abc` は常に3文字）を使用しています。可変長の後方参照はエンジン依存の複雑なエッジケースです。\n\n    注：後方参照のサポートはJavaScriptで比較的新しく、古いブラウザをサポートする必要がある場合は[ブラウザの互換性](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#browser_compatibility)を確認してください。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"否定的後方参照\",\n  \"group\": \"後方参照\",\n  \"options\": [\n    {\"text\": \"[\\\"123\\\"]\"},\n    {\"text\": \"[\\\"123\\\", \\\"456\\\"]\"},\n    {\"text\": \"[\\\"23\\\", \\\"456\\\"]\"},\n    {\"text\": \"[\\\"456\\\"]\"},\n    {\"text\": \"[]\"}\n  ],\n  \"questionProse\": [\n    \"このパターンに一致するのは？\"\n  ],\n  \"explanationProse\": [\n    \"否定的後方参照 `(?<!abc)` は、数字が \\\"abc\\\" で終わっていないことを確認します：\\n    - ❌ \\\"123\\\"（\\\"abc\\\" で終わる）\\n    - ✅ \\\"23\\\"（\\\"abc1\\\" で終わる）\\n    - ✅ \\\"456\\\"（\\\"def\\\" で終わる）\\n\\n    現代のJavaScriptエンジンでは後方参照がサポートされています。この例は固定長の後方参照（`abc` は常に3文字）を使用しています。可変長の後方参照はエンジン依存の複雑なエッジケースです。\\n\\n    注：後方参照のサポートはJavaScriptで比較的新しく、古いブラウザをサポートする必要がある場合は[ブラウザの互換性](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#browser_compatibility)を確認してください。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 827,
+    "outputTokens": 824,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2238
+  },
+  "cost": {
+    "inputUsd": 0.00006616,
+    "outputUsd": 0.00019775999999999998,
+    "totalUsd": 0.00026391999999999995,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

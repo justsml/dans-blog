@@ -1,0 +1,44 @@
+{
+  "index": 8,
+  "attempt": 1,
+  "originalTitle": "Capturing Groups",
+  "translatedTitle": "キャプチャリンググループ",
+  "translation": {
+    "title": "キャプチャリンググループ",
+    "group": "基本的なマッチング",
+    "options": [
+      {
+        "text": "[\"2029-12-31\"]"
+      },
+      {
+        "text": "[\"2029\", \"12\", \"31\"]"
+      },
+      {
+        "text": "[\"20\", \"29\", \"12\", \"31\"]"
+      },
+      {
+        "text": "null"
+      }
+    ],
+    "questionProse": [
+      "このコードは何を返す？"
+    ],
+    "explanationProse": [
+      "このパターンは3つのキャプチャグループを使用しています：\n    1. `(\\d{4})` は年をキャプチャ\n    2. `(\\d{2})` は月をキャプチャ\n    3. `(\\d{2})` は日をキャプチャ\n\n    `match()` メソッドはグローバルフラグが指定されていない場合：\n    - インデックス0: 完全なマッチ\n    - インデックス1+: キャプチャグループ\n\n    `slice(1)` はキャプチャグループだけを取得するためのよく使われるテクニックです。\n\n    [グループとキャプチャの詳細](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Groups_and_Backreferences)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"キャプチャリンググループ\",\n  \"group\": \"基本的なマッチング\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"2029-12-31\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"2029\\\", \\\"12\\\", \\\"31\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"20\\\", \\\"29\\\", \\\"12\\\", \\\"31\\\"]\"\n    },\n    {\n      \"text\": \"null\"\n    }\n  ],\n  \"questionProse\": [\n    \"このコードは何を返す？\"\n  ],\n  \"explanationProse\": [\n    \"このパターンは3つのキャプチャグループを使用しています：\\n    1. `(\\\\d{4})` は年をキャプチャ\\n    2. `(\\\\d{2})` は月をキャプチャ\\n    3. `(\\\\d{2})` は日をキャプチャ\\n\\n    `match()` メソッドはグローバルフラグが指定されていない場合：\\n    - インデックス0: 完全なマッチ\\n    - インデックス1+: キャプチャグループ\\n\\n    `slice(1)` はキャプチャグループだけを取得するためのよく使われるテクニックです。\\n\\n    [グループとキャプチャの詳細](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Groups_and_Backreferences)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 798,
+    "outputTokens": 1138,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 12824
+  },
+  "cost": {
+    "inputUsd": 0.00006384,
+    "outputUsd": 0.00027311999999999996,
+    "totalUsd": 0.00033695999999999997,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

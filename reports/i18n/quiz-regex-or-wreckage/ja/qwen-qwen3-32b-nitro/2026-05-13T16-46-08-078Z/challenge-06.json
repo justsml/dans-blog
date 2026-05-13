@@ -1,0 +1,44 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Word Boundaries",
+  "translatedTitle": "単語境界",
+  "translation": {
+    "title": "単語境界",
+    "group": "基本的な一致",
+    "options": [
+      {
+        "text": "[\"cat\", \"cats\"]"
+      },
+      {
+        "text": "[\"cat\"]"
+      },
+      {
+        "text": "[\"cats\"]"
+      },
+      {
+        "text": "[]"
+      }
+    ],
+    "questionProse": [
+      "何が一致するか？"
+    ],
+    "explanationProse": [
+      "`\\b` は単語境界を表し、次を一致させます：\n    - 単語文字と非単語文字の間\n    - 文字列の開始/終了位置に単語文字がある場合\n\n    したがって、`/\\bcat\\b/` は \"cat\" が完全な単語として存在する場合のみ一致します。\n    - ✅ \"cat\"（スペースで囲まれた場合）\n    - ❌ \"cats\"（\"cat\" の後ろに境界がない）\n    - ❌ \"category\"（\"cat\" の後ろに境界がない）\n\n    [単語境界についてさらに学ぶ](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions#other_assertions)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"単語境界\",\n  \"group\": \"基本的な一致\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"cat\\\", \\\"cats\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"cat\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"cats\\\"]\"\n    },\n    {\n      \"text\": \"[]\"\n    }\n  ],\n  \"questionProse\": [\n    \"何が一致するか？\"\n  ],\n  \"explanationProse\": [\n    \"`\\\\b` は単語境界を表し、次を一致させます：\\n    - 単語文字と非単語文字の間\\n    - 文字列の開始/終了位置に単語文字がある場合\\n\\n    したがって、`/\\\\bcat\\\\b/` は \\\"cat\\\" が完全な単語として存在する場合のみ一致します。\\n    - ✅ \\\"cat\\\"（スペースで囲まれた場合）\\n    - ❌ \\\"cats\\\"（\\\"cat\\\" の後ろに境界がない）\\n    - ❌ \\\"category\\\"（\\\"cat\\\" の後ろに境界がない）\\n\\n    [単語境界についてさらに学ぶ](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions#other_assertions)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 779,
+    "outputTokens": 791,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1906
+  },
+  "cost": {
+    "inputUsd": 0.00006232,
+    "outputUsd": 0.00018984,
+    "totalUsd": 0.00025216,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

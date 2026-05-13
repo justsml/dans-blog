@@ -1,0 +1,47 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Positive Look-ahead",
+  "translatedTitle": "ポジティブ・ルックアヘッド",
+  "translation": {
+    "title": "ポジティブ・ルックアヘッド",
+    "group": "ルックアヘッド",
+    "options": [
+      {
+        "text": "[\"$100\", \"€50\"]"
+      },
+      {
+        "text": "[\"100\", \"50\"]"
+      },
+      {
+        "text": "[\"$\", \"€\"]"
+      },
+      {
+        "text": "[]"
+      },
+      {
+        "text": "null"
+      }
+    ],
+    "questionProse": [
+      "これは何にマッチしますか？"
+    ],
+    "explanationProse": [
+      "このパターンは何もマッチしません。ルックアヘッドが逆になっているからです！ `$` または `€` で**始まる**数字を検索したいなら、ルックビハインドを使いましょう: `/(?<=[\\$€])\\d+/g`。\n\n    ルックアヘッドは現在位置の**後ろ**をチェックします。このパターンは以下を検索しています:\n    - 1つ以上の数字 (`\\d+`)\n    - その後ろに (`(?=...)`) `$` または `€` (`[\\$€]`)\n\n    数字の後に通貨記号がある文字列は存在しないため、マッチしません。\n\n    [ルックアヘッドのアサーションについて詳しくはこちら](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"ポジティブ・ルックアヘッド\",\n  \"group\": \"ルックアヘッド\",\n  \"options\": [\n    { \"text\": \"[\\\"$100\\\", \\\"€50\\\"]\" },\n    { \"text\": \"[\\\"100\\\", \\\"50\\\"]\" },\n    { \"text\": \"[\\\"$\\\", \\\"€\\\"]\" },\n    { \"text\": \"[]\" },\n    { \"text\": \"null\" }\n  ],\n  \"questionProse\": [\n    \"これは何にマッチしますか？\"\n  ],\n  \"explanationProse\": [\n    \"このパターンは何もマッチしません。ルックアヘッドが逆になっているからです！ `$` または `€` で**始まる**数字を検索したいなら、ルックビハインドを使いましょう: `/(?<=[\\\\$€])\\\\d+/g`。\\n\\n    ルックアヘッドは現在位置の**後ろ**をチェックします。このパターンは以下を検索しています:\\n    - 1つ以上の数字 (`\\\\d+`)\\n    - その後ろに (`(?=...)`) `$` または `€` (`[\\\\$€]`)\\n\\n    数字の後に通貨記号がある文字列は存在しないため、マッチしません。\\n\\n    [ルックアヘッドのアサーションについて詳しくはこちら](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 815,
+    "outputTokens": 788,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 8756
+  },
+  "cost": {
+    "inputUsd": 0.0000652,
+    "outputUsd": 0.00018911999999999998,
+    "totalUsd": 0.00025432,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

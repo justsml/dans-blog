@@ -1,0 +1,31 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "Greedy vs Non-Greedy",
+  "translatedTitle": "貪欲 (Greedy) と非貪欲 (Non-Greedy) の違い",
+  "translation": {
+    "title": "貪欲 (Greedy) と非貪欲 (Non-Greedy) の違い",
+    "group": "基本マッチング",
+    "options": [],
+    "questionProse": [
+      "この正規表現はどの部分とマッチしますか？"
+    ],
+    "explanationProse": [
+      "パターン `/<div>.*?<\\/div>/g` は `*?` による非貪欲マッチを使っています。これは以下を意味します：\n    - `<div>` とマッチ\n    - 任意の文字 (`.*`) を、できるだけ少ない回数 (`?`) でマッチ\n    - `</div>` が見つかるまで\n    - `g` フラグにより、すべての出現をマッチ\n\n    `?` を使わなければ、貪欲な `.*` は最初の `<div>` から最後の `</div>` までを1つの大きなマッチとしてしまう。`?` を使うと、それぞれのペアを個別にマッチします。\n\n    [貪欲と非貪欲マッチの詳細](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"貪欲 (Greedy) と非貪欲 (Non-Greedy) の違い\",\n  \"group\": \"基本マッチング\",\n  \"options\": [],\n  \"questionProse\": [\n    \"この正規表現はどの部分とマッチしますか？\"\n  ],\n  \"explanationProse\": [\n    \"パターン `/<div>.*?<\\\\/div>/g` は `*?` による非貪欲マッチを使っています。これは以下を意味します：\\n    - `<div>` とマッチ\\n    - 任意の文字 (`.*`) を、できるだけ少ない回数 (`?`) でマッチ\\n    - `</div>` が見つかるまで\\n    - `g` フラグにより、すべての出現をマッチ\\n\\n    `?` を使わなければ、貪欲な `.*` は最初の `<div>` から最後の `</div>` までを1つの大きなマッチとしてしまう。`?` を使うと、それぞれのペアを個別にマッチします。\\n\\n    [貪欲と非貪欲マッチの詳細](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 746,
+    "outputTokens": 886,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 10223
+  },
+  "cost": {
+    "inputUsd": 0.000059680000000000005,
+    "outputUsd": 0.00021263999999999997,
+    "totalUsd": 0.00027232,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

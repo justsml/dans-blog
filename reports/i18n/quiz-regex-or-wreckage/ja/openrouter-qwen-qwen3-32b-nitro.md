@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-regex-or-wreckage
+- Locale: ja
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2024-11-15--quiz-regex-or-wreckage/ja/index.mdx
+- Validation: deferred
+- Runtime seconds: 140.83
+- Input tokens: 14564
+- Output tokens: 14925
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.004747
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: 'クイズ: 正規表現マスター'
@@ -596,3 +614,4 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 正規表現は馴染みにくい存在ですが、使いこなせると非常に強力です（特に新しい構文を習得すれば）。継続的に練習していれば、すぐに正規表現のマスターになれますよ！🧙‍♂️
 
 <p class="inset">これだけの正規表現で疲れた？<br />Pftt、スキルを身につけた後に休憩しましょう！<br /><br />[私のジム](/challenges/)に突撃して、さらにチャレンジを倒しましょう！💪</p>
+````
