@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: llm-connection-strings
+- Locale: ru
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-01-30--llm-connection-strings/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 3.65
+- Input tokens: 6392
+- Output tokens: 2076
+- Thinking tokens: unknown
+- Cached input tokens: 3584
+- Cache write tokens: 0
+- Estimated cost: $0.000623
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Пришло время строк подключения LLM
 subTitle: 'Упростите конфигурацию модели и провайдера с помощью URL‑ов `llm://`.'
@@ -116,3 +134,4 @@ bedrock://us-west-2.aws/anthropic/sonnet-4.5?temp=0.8&cacheControl=ephemeral
 ![a messy env var drawer](../hero-concept-8-drawers.webp)
 
 {/* ¹ Да, я знаю, что правильнее говорить `URI`, а не `URL`. Если вам настолько важно различать эти термины, пожалуйста, выйдите на улицу и подышите свежим воздухом. */}
+````
