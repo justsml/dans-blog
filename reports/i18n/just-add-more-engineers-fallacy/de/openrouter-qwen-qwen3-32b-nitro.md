@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: just-add-more-engineers-fallacy
+- Locale: de
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2025-12-29--just-add-more-engineers-fallacy/de/index.mdx
+- Validation: passed
+- Runtime seconds: 19.14
+- Input tokens: 7804
+- Output tokens: 8155
+- Thinking tokens: unknown
+- Cached input tokens: 1024
+- Cache write tokens: 0
+- Estimated cost: $0.002582
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 draft: true
 hidden: true
@@ -107,3 +125,4 @@ Es wird um Monate verspätet sein. Und im Gegensatz zu den meisten Engineering-P
 - Will Larsons *Staff Engineer* Blog und Buch zur Technologie-Führung
 - Charity Majors (Honeycomb) zu Observabilität und Teamstruktur  
 - Die DevOps-Berichte von DORA
+````
