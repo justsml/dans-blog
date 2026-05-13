@@ -1,0 +1,127 @@
+---
+social_image: ../desktop-social.webp
+title: デスマッチ：Git リベース vs マージ
+subTitle: 時代を超える問い…
+date: '2023-08-27'
+modified: '2024-07-28'
+tags:
+  - engineering
+  - git
+  - rebase
+  - merge
+category: Thoughts
+subCategory: Git
+cover: ../casper-johansson-GBHnQXbY2Ts-unsplash-cropped.webp
+cover_mobile: ../w300_casper-johansson-GBHnQXbY2Ts-unsplash-cropped.webp
+cover_icon: ../icon_casper-johansson-GBHnQXbY2Ts-unsplash-cropped.webp
+---
+## デスマッチ: Git Rebase vs. (Squash) Merge!
+
+Rebaseすべきか？それともSquash Mergeか？
+
+- 個人の好みの問題か？
+  - _答え: 複数チームが関わる場合は違う！ **どちらを選んでも相手側の使い勝手に影響する**_  
+
+### なぜこのテーマは宗教的熱狂を呼び起こすのか？
+
+一部のエンジニアは git（とターミナル）の知識を自分の相対的なスキルレベルの指標として使う。自己認識やエゴに結びついたプラクティスは、客観的に分析することすら困難であり、変えることはなおさら難しい。
+
+他にも、慣れや生存者バイアスといった要因が入り混じり、我々自身の評価や前提をさらに曇らせている可能性がある。
+
+<!-- Misplaced belief in the inherent virtue of certain OSS projects' processes. (The Linux Kernel uses rebasing, and if you don't, **_ArE yOu EvEn A rEaL eNgInEeR?!_**) -->
+
+### 重要な質問: git コミットの目的は何ですか？
+
+1.  早く頻繁にコミットしますか？「チェックポイント」やバックアップ的な考え方ですか？
+    - 失敗した試みや実験もすべて記録する？（例: `git commit -am "Updated deps" && git push` を定期的に繰り返す）
+    - コードの方がコミットメッセージより重要だと考えますか？
+2.  それとも、コミットは入念に選別された芸術作品のようにしたいですか？
+    - 各コミットが自己完結した原子的な作業単位ですか？（例: `git add package.json && git commit -m "Updated deps"`）
+    - 「ごちゃごちゃした」コミットログが耐えられないですか？
+    - PR のレビューでコミット単位での確認が頻繁に行われますか？
+
+| 💡 他にどんなメンタルモデルがコミットの捉え方を決めていますか？ @justsml に教えてください！
+
+自分やチーム、組織に **最大の価値** を提供する形で git を考えていますか？
+
+<!-- What makes sense for an Open Source project like Postgres, or the Linux Kernel, may not be the best choice for you or your team. -->
+
+さまざまなコミット戦略に対する考え方が大きく異なるため、git の「正しい」使い方について混乱が生じるのは当然です。
+
+### シナリオ: 修正されたリリースタグを作成する
+
+`main` 上の最近のコミットを除外してタグリリースを作成するプロセスを比較してみましょう。
+
+![Git Tag Releasing from main with 2 feature branches](../git-branching-with-main-simplified.svg)
+
+### リベース方式
+
+メンタルモデル: 「既存の履歴の別バージョンを作りたい。（例: 16 回マージする前にミスをしたので、細かく修正したい。結果として、終わりの見えないコンフリクトと `--continue` のサイクルに陥る可能性がある。）」
+
+1.  最新を取得: `git checkout main` && `git pull`
+2.  新しいブランチを作成: `git checkout -b release/hot-newness-and-stuff`
+3.  インタラクティブリベースを開始し、遡りたい地点の git ref を指定。 `git rebase -i HEAD~6`（注: `HEAD~6` は「6 コミット前」の省略形）
+4.  取り除きたいコミットの行頭を `drop` に変更して削除。エディタを保存して閉じる。
+5.  コンフリクトを解消し、 `git add .` && `git rebase --continue`（`git commit` は実行しない）。
+6.  完了するまで前項を繰り返す。
+7.  現行の手順でタグ付け・プッシュ。例: `git tag -a v1.2.3 -m 'Release v1.2.3'` && `git push --tags`
+
+#### メリット
+
+- 🔌 絶対的な権限。履歴を書き換えられる。
+
+#### デメリット
+
+- 😰 絶対的な権限。履歴を書き換えられる。（メリットでもデメリットでもある…）
+- 🔂 コンフリクトと `--continue` の無限ループに陥りやすい。（`git rerere` を使っても時に失敗することがある）
+- 🙀 共同作業機能が壊れる: PR コメントが失われたり孤立したりする。失礼。
+- 🖇️ パーマリンクが永続的でなくなる可能性がある。
+
+### (Squash) マージ方式
+
+メンタルモデル: 「特定の地点から始まり、任意のブランチを含むカスタムリリースが欲しい」。
+
+1. 最新状態を取得: `git checkout main` && `git pull`
+2. 新しいブランチを作成: `git checkout -b release/hot-newness-and-stuff`
+3. 必要なブランチやコミットをマージ: `git merge --no-ff feature/hot-newness bug/fix-123` （可能な限り `--no-ff` フラグを付ける。）
+4. マージコンフリクトが出たら修正（出た場合。）
+5. 現行プロセスでタグ付け・プッシュ。例: `git tag -a v1.2.3 -m 'Release v1.2.3'` && `git push --tags`
+
+#### メリット
+
+- 💪 手順が少なく、全体的なコンフリクトも減り、既存の git コマンド知識で済む。
+- 🚀 PR/ブランチレベルで考えられ、コミット単位の粒度は必要なときだけ意識すればよい。
+- 🦺 破壊的でない。いつでも戻したり新しいブランチを作ったりできる。
+- 🎥 既存のコミットとメッセージをそのまま残すので、`blame` のノイズが減る。
+
+#### デメリット
+
+- 🔏 コミットメッセージの変更が難しい。
+- 🤐 作業内容を隠すのが難しい。
+
+### 結論
+
+結局のところ、**リスクが少なく、手順がシンプルな方が勝ります。**
+
+<!-- **Squash merge** はここでは明らかな勝者です。**シンプル** で **ミスが起きにくい**。さらに **既存のコミット履歴をそのまま残します**。これは **共同作業** と **コードレビュー** にとって **大きな利点** です。 -->
+
+<!-- Include a diagram of a rebase flow with 2 feature branches -->
+
+_Rebaser_ たちが問題を解決（あるいは回避）する手段を持っているのは事実ですが、**結論は変わりません：結局は git の黒帯が必要になる**（例：ささやかな `git push` でも余計な複雑さに直面することがあります。`git push --force` か `git push --force-with-lease` か？そもそもそれを扱う必要があるのか？）
+
+もう一つの理由として、**履歴を書き換えるためのリベース** は **`git merge ...`** に比べて常に不利です。`git merge` は `git` CLI に高度なアルゴリズムを適用させ、各ブランチの HEAD を解析してコンフリクトを回避します。
+
+この方法は、各マージが対象ブランチの最新状態だけを見ればよいため、より賢くなります。一方、**リベースは指定された順序でコミット履歴を再生（あるいは除外）しなければなりません**。そのため、**`git` が最適化できる余地が制限され**、**一度に比較できるのは 2 つのコミットだけ**になります。
+
+結局のところ、**リベースを行うと、不要になった古いコミットやコンフリクトを再び体験することが時折発生します**。たとえそれらがすでに削除または解決されていると分かっていてもです。
+
+### Summary
+
+- 💃 Answer: **SQUASH MERGE** your PRs onto `main`。
+  - 必要ならブランチの履歴は残りますし、`main` は比較的「クリーン」な状態を保てます。
+- _🔤 Always Be Committing!_
+  - 企業プロジェクトの 95 %以上では、「バックアップ志向」の方が「彫刻的アート志向」より好まれます。時間が経つにつれ、コミットメッセージの意味はコードのロジックやテストに比べてはるかに早く薄れます。
+
+- `git checkout` の特別な `--` 区切り子を使えば、現在のブランチに留まりながら指定したファイルやフォルダをコピーできます。
+- `git checkout feature/half-a-feature **--** <フォルダまたはファイルのパス>`
+- まず、残しておきたい変更はすべてコミットしておいてください。これを実行するとローカルの変更が上書きされます。
