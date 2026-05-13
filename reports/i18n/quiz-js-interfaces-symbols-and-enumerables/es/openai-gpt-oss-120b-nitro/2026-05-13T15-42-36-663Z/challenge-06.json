@@ -1,0 +1,44 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Symbols as Non-Enumerable Keys",
+  "translatedTitle": "Símbolos como claves no enumerables",
+  "translation": {
+    "title": "Símbolos como claves no enumerables",
+    "group": "Interfaces avanzadas",
+    "options": [
+      {
+        "text": "No, no lo hará"
+      },
+      {
+        "text": "Sí, aparecerá en la lista"
+      },
+      {
+        "text": "Depende del método de iteración"
+      },
+      {
+        "text": "Lanza un error"
+      }
+    ],
+    "questionProse": [
+      "¿Se listará la propiedad con clave Symbol durante una iteración `for...in`?"
+    ],
+    "explanationProse": [
+      "Las propiedades con clave Symbol pueden tener su propia bandera `enumerable`, pero `for...in` y `Object.keys()` solo recorren propiedades enumerables con clave de tipo string. En este ejemplo, solo se listará `regularKey`, no la propiedad con clave Symbol."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Símbolos como claves no enumerables\",\n  \"group\": \"Interfaces avanzadas\",\n  \"options\": [\n    {\n      \"text\": \"No, no lo hará\"\n    },\n    {\n      \"text\": \"Sí, aparecerá en la lista\"\n    },\n    {\n      \"text\": \"Depende del método de iteración\"\n    },\n    {\n      \"text\": \"Lanza un error\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Se listará la propiedad con clave Symbol durante una iteración `for...in`?\"\n  ],\n  \"explanationProse\": [\n    \"Las propiedades con clave Symbol pueden tener su propia bandera `enumerable`, pero `for...in` y `Object.keys()` solo recorren propiedades enumerables con clave de tipo string. En este ejemplo, solo se listará `regularKey`, no la propiedad con clave Symbol.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 814,
+    "outputTokens": 451,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 5332
+  },
+  "cost": {
+    "inputUsd": 0.000031746000000000004,
+    "outputUsd": 0.00008118,
+    "totalUsd": 0.00011292600000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
