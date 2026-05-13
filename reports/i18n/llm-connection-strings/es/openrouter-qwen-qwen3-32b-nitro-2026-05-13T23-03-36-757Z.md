@@ -3,7 +3,7 @@
 - Locale: es
 - Model: openrouter/qwen/qwen3-32b:nitro
 - Target: src/content/posts/2026-01-30--llm-connection-strings/es/index.mdx
-- Validation: deferred
+- Validation: rejected: direct AI SDK translation failed
 - Runtime seconds: 13.16
 - Input tokens: 5323
 - Output tokens: 5461
@@ -12,58 +12,45 @@
 - Cache write tokens: 0
 - Estimated cost: $0.001736
 - Pricing source: local-openrouter-estimate
-- Note: Generated through the direct AI SDK chunked translator.
+- Note: Command failed: git commit --only -m i18n candidate(es): llm-connection-strings via openrouter/qwen/qwen3-32b:nitro -- reports/i18n/llm-connection-strings/es reports/i18n/llm-connection-strings/candidates.jsonl
 ## Raw Output
 
 ````mdx
 ---
-title: 'Es hora de las cadenas de conexión llm://'
-subTitle: 'Simplifica la configuración de modelo y proveedor con URLs `llm://`'
-date: '2026-01-30'
-modified: '2026-02-26'
-tags:
-  - ai
-  - llm
-  - api
-  - developer-experience
-  - standards
-category: AI
-draft: false
-popularity: 1
-social_image: ../desktop-social.webp
-cover_full_width: ../hero-wide.webp
-cover_mobile: ../square-200.webp
-cover_icon: ../square-200.webp
+title: "Es Hora de las Cadenas de Conexión para LLM"
+subTitle: "Simplifica la Configuración de Modelos y Proveedores con URLs `llm://`"
 ---
+
 <blockquote class="inset">
-**Actualización:** Este artículo dio lugar a un [borrador de Internet para el esquema de URI `llm://`](https://datatracker.ietf.org/doc/draft-levy-llm-uri-scheme/).
+**Actualización:** Este artículo condujo a un [Borrador de Internet para el esquema de URI `llm://`](https://datatracker.ietf.org/doc/draft-levy-llm-uri-scheme/).
 </blockquote>
 
-¿Recuerdas los malos viejos tiempos en que conectarse a una base de datos significaba manejar un ensamblaje杂乱的 de variables de entorno?
 
-Era una torre de configuración delicada. `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASSWORD`, `DB_NAME`... o espera, ¿era `DB_USERNAME`? ¿Es `DB_PASS` o `DB_PWD`? ¿Necesito los prefijos `PG_*` esta vez? ¿Y dónde demonios va la configuración de tiempo de espera?
+¿Recuerdas los viejos y malos tiempos cuando conectarse a una base de datos significaba malabares con un puñado variado de variables de entorno?
 
-Era una casa de naipes frágil, lista para derrumbar tu compilación de producción porque olvidaste capitalizar `HOST`.
+Era una torre de configuración delicada. `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASSWORD`, `DB_NAME`... o espera, ¿era `DB_USERNAME`? ¿Es `DB_PASS` o `DB_PWD`? ¿Necesito los prefijos `PG_*` esta vez? ¿Y dónde demonios va la configuración del tiempo de espera?
 
-Luego, alguien tuvo la brillante idea de usar simplemente una URL¹:
+Era un frágil castillo de naipes, listo para derrumbar tu build de producción porque olvidaste poner `HOST` en mayúsculas.
+
+Entonces, alguien tuvo la brillante idea de simplemente usar una URL¹:
 
 ```bash
 postgres://user:pass@host:5432/dbname
 ```
 
-Una sola cadena. Todo lo que necesitas. Universalmente analizable. Portátil. ¿Atreverme a decirlo...? Hermosa.
+Una sola cadena. Todo lo que necesitas. Universalmente parseable. Portable. ¿Me atrevo a decir... hermosa?
 
-¿Entonces por qué tratamos a los LLM como si fueran 1999?
+¿Entonces por qué estamos tratando a los LLMs como si fuera 1999?
 
 ## La Explosión de Variables de Entorno
 
-Ahora mismo, mi archivo `.env` se parece a un cementerio de claves de API abandonadas. `OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, `MISTRAL_API_KEY`, `GROQ_API_KEY`. Y ni siquiera me hables de Azure: necesitas un punto final, un nombre de implementación, una versión de API y una clave solo para decir "hola".
+Ahora mismo, mi archivo `.env` parece un cementerio de claves de API abandonadas. `OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, `MISTRAL_API_KEY`, `GROQ_API_KEY`. Y ni me hables de Azure—necesitas un endpoint, un nombre de despliegue, una versión de API y una clave solo para decir "hola".
 
-No es solo feo; es fricción. Cada vez que quiero cambiar un modelo o probar un nuevo proveedor, estoy reescribiendo código de inicialización, buscando documentación para nombres de parámetros específicos y añadiendo tres líneas más a mi configuración de entorno.
+No es solo feo; es fricción. Cada vez que quiero cambiar un modelo o probar un nuevo proveedor, estoy reescribiendo código de inicialización, buscando documentación para nombres de parámetros específicos, y agregando tres líneas más a mi configuración de entorno.
 
-¿Y si simplemente... ~~robamos~~ tomáramos prestada la idea de la URL de base de datos?
+¿Qué tal si simplemente... ~~robamos~~ tomamos prestada la idea de las URLs de base de datos?
 
-## Introduciendo cadenas de conexión LLM
+## Presentando las Cadenas de Conexión para LLM
 
 Imagina configurar toda tu interfaz de modelo con una sola línea:
 
@@ -73,12 +60,11 @@ llm://api.z.ai/glm-4.7?top_p=0.9&cache=true
 ```
 
 ---
-
 <br />
 
-### Anatomía de una cadena de conexión LLM
+### Anatomía de una Cadena de Conexión para LLM
 
-![las partes de una cadena de conexión LLM](../inline-url-diagram-dark.svg)
+![las partes de una cadena de conexión para LLM](./inline-url-diagram-dark.svg)
 
 El esquema es `llm://`. El host es la URL base de la API del proveedor. La ruta es el nombre del modelo. Y los parámetros de consulta manejan todas las opciones de ejecución que normalmente ensucian tu código.
 
@@ -90,25 +76,25 @@ Al igual que `postgres://`, podemos integrar la autenticación directamente:
 llm://app-name:sk-proj-123456@api.openai.com/gpt-5.2?reasoning_effort=none&temp=0.7
 ```
 
-*Nota: Sí, incluir credenciales en URLs puede ser un riesgo de seguridad si las pegas en registros públicos. Pero los servicios modernos de registro son bastante buenos para limpiar estos patrones, y sinceramente, ¿tratas mucho mejor tu archivo `.env`? Verifica, sanea y usa con precaución.*
+*Nota: Sí, poner credenciales en URLs puede ser un riesgo de seguridad si las pegas en logs públicos. Pero los servicios modernos de logging son bastante buenos eliminando estos patrones, y honestamente, ¿tratas tu archivo `.env` mucho mejor? Verifica, sanitiza y usa con precaución.*
 
-## ¿Resiliencia? ¿Por qué no.
+## ¿Resiliencia? ¿Por qué no, demonios?
 
-Muchas bibliotecas de bases de datos soportan el balanceo de carga especificando múltiples hosts. ¿Por qué no deberían nuestros agentes de IA tener la misma confiabilidad?
+Muchas bibliotecas de bases de datos soportan failover round-robin especificando múltiples hosts. ¿Por qué nuestros agentes de IA no deberían tener la misma confiabilidad?
 
 ```bash
 llms://primary.gpt,backup.gpt/gpt-6?temp=0.9
 ```
 
-Ese `s` en `llms://` no es un error. Es plural. Si `primary.gpt` se cuelga, el cliente reintenta automáticamente `backup.gpt`. No se requiere lógica compleja de enrutamiento.
+Esa `s` en `llms://` no es un error tipográfico. Es plural. Si `primary.gpt` se cuelga, el cliente reintentará automáticamente con `backup.gpt`. Sin lógica de enrutador compleja requerida.
 
-<blockquote class="inset">Una sola cadena que incluye todo desde tu **autenticación** hasta tu **punto final** hasta tus **hiperparámetros**.</blockquote>
+<blockquote class="inset">Una sola cadena con todo desde tu **autenticación** hasta tu **endpoint** hasta tus **hiperparámetros**.</blockquote>
 
 ## Formatos Alternativos
 
-No estoy aferrado a `llm://`. Lo que importa menos es el esquema específico que la norma en sí.
+No estoy casado con `llm://`. El esquema específico importa menos que el estándar en sí.
 
-Podría imaginar un mundo donde usamos esquemas específicos por proveedor para la brevedad, manteniendo la estructura estándar:
+Podría imaginar un mundo donde usamos esquemas específicos del proveedor para brevedad, manteniendo la estructura estándar:
 
 ```bash
 ollama://localhost:11434/llama3
@@ -116,21 +102,21 @@ vercel://anthropic/sonnet-4.5?temp=0.8&web_search={"maxUses":3}
 bedrock://us-west-2.aws/anthropic/sonnet-4.5?temp=0.8&cacheControl=ephemeral
 ```
 
-Independientemente de la sintaxis exacta, los beneficios fundamentales son indiscutibles:
+Independientemente de la sintaxis exacta, los beneficios centrales son innegables:
 
-1.  **Portabilidad:** Copia y pega toda tu configuración desde un script local a un trabajador en la nube.
-2.  **Amigable con CLI:** Pasa un solo argumento a tus scripts. `mi-agente --modelo "llm://..."` supera a `mi-agente --modelo gpt-4 --temp 0.7 --clave $CLAVE --host ...`.
-3.  **Agnóstico de lenguaje:** Cada lenguaje de programación tiene un analizador de URLs robusto. Obtenemos validación, análisis y saneamiento de forma gratuita.
+1.  **Portabilidad:** Copia y pega toda tu configuración desde un script local a un worker en la nube.
+2.  **Amigable con CLI:** Pasa un solo argumento a tus scripts. `my-agent --model "llm://..."` le gana a `my-agent --model gpt-4 --temp 0.7 --key $KEY --host ...`.
+3.  **Independiente del Lenguaje:** Cada lenguaje de programación tiene un parser de URLs robusto. Obtenemos validación, parsing y sanitización gratis.
 
-<blockquote class="ai-response inset">El mundo de las bases de datos tardó décadas en descubrir esto.<br /><b>Buenas noticias, en la escala de tiempo de la IA, eso fue solo hace medio año de vibra.</b></blockquote>
+<blockquote class="ai-response inset">El mundo de las bases de datos tardó décadas en resolver esto.<br /><b>Buenas noticias, en las líneas de tiempo de IA, eso es solo aproximadamente la mitad de un año-vibe.</b></blockquote>
 
-## El veredicto
+## El Veredicto
 
-No necesitamos otro estándar de configuración complejo ni un nuevo archivo de manifiesto basado en YAML. Solo necesitamos usar la herramienta que ha funcionado para el resto de internet durante los últimos 30 años.
+No necesitamos otro estándar complejo de configuración o un nuevo archivo manifiesto basado en YAML. Solo necesitamos usar la única herramienta que ha estado funcionando para el resto de internet durante los últimos 30 años.
 
-Dejemos de reinventar la rueda y comencemos a tratar nuestras conexiones LLM con el mismo respeto que damos a nuestras bases de datos. Tu archivo `.env` (y tu salud mental) te lo agradecerán.
+Dejemos de reinventar la rueda y comencemos a tratar nuestras conexiones de LLM con el mismo respeto que le damos a nuestras bases de datos. Tu archivo `.env` (y tu cordura) te lo agradecerán.
 
-![un cajón desordenado de variables de entorno](../hero-concept-8-drawers.webp)
+![un cajón desordenado de variables de entorno](./hero-concept-8-drawers.webp)
 
-{/* ¹ Sí, sé que URI es más correcto que URL. Si eres pedante al punto de preocuparte por esa distinción, por favor ve a tocar hierba. */}
+{/* ¹ Sí, sé que `URI` es más correcto que `URL`. Si eres lo suficientemente pedante como para preocuparte realmente por esa distinción, por favor ve a tocar pasto. */}
 ````
