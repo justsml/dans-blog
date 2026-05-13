@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-bash-in-the-shell
+- Locale: fr
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2024-11-20--quiz-bash-in-the-shell/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 51.83
+- Input tokens: 14298
+- Output tokens: 15580
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.004883
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: 'Quiz : Maîtrise de Bash et Shell'
@@ -602,3 +620,4 @@ Pour renforcer vos compétences en Bash, consultez les ressources suivantes :
 - [Wiki des Hackers Bash](http://wiki.bash-hackers.org/)
 - [Guide Bash pour les débutants](http://tldp.org/LDP/Bash-Beginners-Guide/html/index.html)
 - [Carte de référence Bash](http://www.tldp.org/LDP/Bash-Beginners-Guide/html/Bash-Beginners-Guide.html)
+````

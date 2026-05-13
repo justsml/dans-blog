@@ -1,0 +1,53 @@
+{
+  "index": 11,
+  "attempt": 1,
+  "originalTitle": "Basic Arithmetic",
+  "translatedTitle": "Arithmétique de base",
+  "translation": {
+    "title": "Arithmétique de base",
+    "group": "Multiplication",
+    "options": [
+      {
+        "text": "echo 10 * 0.5"
+      },
+      {
+        "text": "echo (10 * 0.5)"
+      },
+      {
+        "text": "echo ${ 10 * 0.5 }"
+      },
+      {
+        "text": "echo %( 10 * 0.5 )"
+      },
+      {
+        "text": "echo $(( 10 * 0.5 ))"
+      },
+      {
+        "text": "echo '10 * 0.5' | bc"
+      },
+      {
+        "text": "Error"
+      }
+    ],
+    "questionProse": [
+      "Quelle commande multiplie correctement 10 et 0,5 pour afficher 5 ?"
+    ],
+    "explanationProse": [
+      "La syntaxe `(( ))` effectue **uniquement** des opérations **entières**. Vous savez, les nombres entiers, sans virgule flottante !\n\n    Bash (peut-être de façon surprenante) ne possède pas de support **intégré** pour les opérations à virgule flottante.\n\n    La solution la plus courante est d'utiliser les utilitaires GNU [`bc`](https://www.gnu.org/software/bc/manual/html_mono/bc.html) ou [`awk`](https://www.gnu.org/software/gawk/manual/gawk.html)."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Arithmétique de base\",\n  \"group\": \"Multiplication\",\n  \"options\": [\n    { \"text\": \"echo 10 * 0.5\" },\n    { \"text\": \"echo (10 * 0.5)\" },\n    { \"text\": \"echo ${ 10 * 0.5 }\" },\n    { \"text\": \"echo %( 10 * 0.5 )\" },\n    { \"text\": \"echo $(( 10 * 0.5 ))\" },\n    { \"text\": \"echo '10 * 0.5' | bc\" },\n    { \"text\": \"Error\" }\n  ],\n  \"questionProse\": [\n    \"Quelle commande multiplie correctement 10 et 0,5 pour afficher 5 ?\"\n  ],\n  \"explanationProse\": [\n    \"La syntaxe `(( ))` effectue **uniquement** des opérations **entières**. Vous savez, les nombres entiers, sans virgule flottante !\\n\\n    Bash (peut-être de façon surprenante) ne possède pas de support **intégré** pour les opérations à virgule flottante.\\n\\n    La solution la plus courante est d'utiliser les utilitaires GNU [`bc`](https://www.gnu.org/software/bc/manual/html_mono/bc.html) ou [`awk`](https://www.gnu.org/software/gawk/manual/gawk.html).\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 797,
+    "outputTokens": 715,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1955
+  },
+  "cost": {
+    "inputUsd": 0.00006376,
+    "outputUsd": 0.0001716,
+    "totalUsd": 0.00023536,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
