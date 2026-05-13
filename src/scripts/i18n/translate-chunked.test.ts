@@ -1,5 +1,6 @@
 import { describe, expect, test } from "bun:test";
 import { normalizeFrontmatterAssetPaths } from "./translate-chunked.ts";
+import { normalizeLocaleImportPaths } from "./utils.ts";
 
 describe("normalizeFrontmatterAssetPaths", () => {
   test("uses parent-relative inherited image paths for locale frontmatter", () => {
@@ -26,5 +27,21 @@ describe("normalizeFrontmatterAssetPaths", () => {
       remote_image: "https://example.com/image.webp",
       document: "./not-an-image.txt",
     });
+  });
+});
+
+describe("normalizeLocaleImportPaths", () => {
+  test("uses exactly four parent segments for locale imports into src roots", () => {
+    expect(normalizeLocaleImportPaths([
+      "import Challenge from '../../../components/QuizUI/Challenge';",
+      "import QuizUI from '../../../../../components/QuizUI/QuizUI';",
+      'import { Timeline } from "../../../../../../components/ui/timeline";',
+      'import "../../../../../components/QuizUI/index.css";',
+    ].join("\n"))).toBe([
+      "import Challenge from '../../../../components/QuizUI/Challenge';",
+      "import QuizUI from '../../../../components/QuizUI/QuizUI';",
+      'import { Timeline } from "../../../../components/ui/timeline";',
+      'import "../../../../components/QuizUI/index.css";',
+    ].join("\n"));
   });
 });

@@ -11,6 +11,7 @@ import {
   relativeToRepo,
   run,
   writeTextFile,
+  normalizeLocaleImportPaths,
 } from "./utils.ts";
 
 const DEFAULT_CANDIDATE_MODELS = [
@@ -574,14 +575,13 @@ async function validateCandidate() {
 function normalizeCandidateForLocale() {
   if (!existsSync(targetPath)) return;
 
-  const normalized = ensureSourceImports(readFileSync(targetPath, "utf8"))
+  const normalized = normalizeLocaleImportPaths(ensureSourceImports(readFileSync(targetPath, "utf8"))
     .replaceAll("](./", "](../")
     .replaceAll('src="./', 'src="../')
     .replaceAll("src='./", "src='../")
     .replaceAll('="./', '="../')
     .replaceAll("='./", "='../")
-    .replace(/^(\s*[A-Za-z0-9_-]+:\s*)\.\/(?!\.)/gm, "$1../")
-    .replaceAll(" from '../../../", " from '../../../../");
+    .replace(/^(\s*[A-Za-z0-9_-]+:\s*)\.\/(?!\.)/gm, "$1../"));
 
   writeTextFile(targetPath, normalized);
 }
@@ -590,10 +590,10 @@ function ensureSourceImports(targetContents: string) {
   const sourceImports = readFileSync(sourcePath, "utf8").match(/^import\s.+$/gm) ?? [];
   const missingImports = sourceImports
     .filter((importLine) => {
-      const localeImportLine = importLine.replaceAll(" from '../../../", " from '../../../../");
+      const localeImportLine = normalizeLocaleImportPaths(importLine);
       return !targetContents.includes(importLine) && !targetContents.includes(localeImportLine);
     })
-    .map((importLine) => importLine.replaceAll(" from '../../../", " from '../../../../"));
+    .map((importLine) => normalizeLocaleImportPaths(importLine));
 
   if (missingImports.length === 0) return targetContents;
 
