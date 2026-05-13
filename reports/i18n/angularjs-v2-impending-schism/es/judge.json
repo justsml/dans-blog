@@ -1,0 +1,62 @@
+{
+  "selectedCommit": "0ca9fb1f208bcd562211a047969398d423c15f4a",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 5,
+    "technicalAccuracy": 5,
+    "coherence": 5,
+    "relevance": 5,
+    "translationQuality": 5,
+    "mdxPreservation": 4
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "</div",
+      "replacement": "</div>",
+      "reason": "The candidate has a broken HTML tag (missing the closing bracket) at the end of the file."
+    }
+  ],
+  "rationale": "The selected candidate correctly translates the frontmatter title and subtitle. The body translation is natural and captures the author's informal style. A minor MDX syntax error (missing closing bracket on the final div) is corrected via suggestions. Note: The previous suggestion to translate 'Basic Shell Usage' was already applied in the provided MDX text, so only the syntax fix remains.",
+  "slug": "angularjs-v2-impending-schism",
+  "locale": "es",
+  "candidateCommits": [
+    "0ca9fb1f208bcd562211a047969398d423c15f4a",
+    "7261d5e62fcee80bb7858009c0fa9ee758e6cd18"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "</div",
+      "replacement": "</div>",
+      "reason": "The candidate has broken HTML tags (missing the closing bracket) in two places.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "</div",
+      "replacement": "</div>",
+      "reason": "The candidate has a broken HTML tag (missing the closing bracket) at the end of the file.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "`Basic Shell Usage` y `Gulp or Grunt? Godsend+Misery!`",
+      "replacement": "`Uso básico de la terminal` y `¿Gulp o Grunt? ¡Bendición+Miseria!`",
+      "reason": "Translating these terms makes the content more accessible to Spanish speakers while maintaining the technical context.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug angularjs-v2-impending-schism --locale es --skip-global",
+    "output": ""
+  }
+}
