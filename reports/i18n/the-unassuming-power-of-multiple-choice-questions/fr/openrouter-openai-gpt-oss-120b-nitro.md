@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: the-unassuming-power-of-multiple-choice-questions
+- Locale: fr
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2025-01-01--the-unassuming-power-of-multiple-choice-questions/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 2.10
+- Input tokens: 5602
+- Output tokens: 1312
+- Thinking tokens: unknown
+- Cached input tokens: 2816
+- Cache write tokens: 0
+- Estimated cost: $0.000455
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Le pouvoir discret des questions à choix multiples
 subTitle: Exploiter pleinement le potentiel des QCM dans l'éducation
@@ -89,3 +107,4 @@ L’auteur doit modéliser les erreurs probables de l’apprenant. Cela implique
 C’est pourquoi je continue d’utiliser les QCM sur ce site. Pas parce qu’ils sont efficaces, bien qu’ils le soient. Parce qu’ils imposent une forme d’honnêteté pédagogique que la simple prose peut esquiver.
 
 Laprochaine fois que vous en rédigez un, ne commencez pas par la bonne réponse. Commencez par les idées fausses. La bonne réponse trouvera alors une place bien plus solide.
+````
