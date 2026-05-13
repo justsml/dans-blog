@@ -111,6 +111,7 @@ let locale: ActiveLocale = "es";
 let sourcePath = "";
 let targetPath = "";
 let reportDir = "";
+let articleReportDir = "";
 let targetRelPath = "";
 let candidatesPath = "";
 let candidateRunStartedAt = new Date();
@@ -155,8 +156,9 @@ async function processTask(currentSlug: string, currentLocale: ActiveLocale) {
   sourcePath = paths.sourcePath;
   targetPath = paths.targetPath;
   reportDir = paths.reportDir;
+  articleReportDir = dirname(reportDir);
   targetRelPath = relativeToRepo(targetPath);
-  candidatesPath = join(reportDir, "candidates.jsonl");
+  candidatesPath = join(articleReportDir, "candidates.jsonl");
   candidateRunStartedAt = new Date();
   candidateRunId = candidateRunStartedAt.toISOString().replace(/[:.]/g, "-");
   candidateRunSummaryPath = join(reportDir, "candidate-run-summary.json");
@@ -231,6 +233,7 @@ async function processTask(currentSlug: string, currentLocale: ActiveLocale) {
           gitCommit(`i18n candidate(${locale}): ${slug} via ${model}`, [
             targetRelPath,
             relativeToRepo(reportDir),
+            relativeToRepo(candidatesPath),
           ]);
         }
       } catch (error) {
@@ -507,9 +510,13 @@ function getCandidateTasks(): CandidateTask[] {
 }
 
 function countCandidateOutputs(currentSlug: string, currentLocale: ActiveLocale) {
-  const reportDir = join(REPORT_ROOT, currentSlug, currentLocale);
-  const candidateRows = readJsonlRows(join(reportDir, "candidates.jsonl"));
+  const articleReportDir = join(REPORT_ROOT, currentSlug);
+  const reportDir = join(articleReportDir, currentLocale);
+  const candidateRows = readJsonlRows(join(articleReportDir, "candidates.jsonl"))
+    .filter((row) => row.locale === currentLocale);
   if (candidateRows.length > 0) return candidateRows.length;
+  const legacyRows = readJsonlRows(join(reportDir, "candidates.jsonl"));
+  if (legacyRows.length > 0) return legacyRows.length;
   return countCandidateReportFiles(reportDir);
 }
 
@@ -521,8 +528,7 @@ function readJsonlRows(path: string) {
     .filter(Boolean)
     .flatMap((line) => {
       try {
-        JSON.parse(line);
-        return [line];
+        return [JSON.parse(line) as Record<string, unknown>];
       } catch {
         return [];
       }
@@ -707,22 +713,14 @@ function getDirectTelemetry(model: string, startedAt: number): CandidateTelemetr
 }
 
 function readLatestCandidateSummary(model: string) {
-  const candidatesPath = join(reportDir, "candidates.jsonl");
-  if (!existsSync(candidatesPath)) return undefined;
-
   const normalizedModel = model.replace(/^openrouter\//, "");
-  const lines = readFileSync(candidatesPath, "utf8")
-    .split(/\r?\n/)
-    .map((line) => line.trim())
-    .filter(Boolean);
+  const rows = [
+    ...readJsonlRows(candidatesPath),
+    ...readJsonlRows(join(reportDir, "candidates.jsonl")),
+  ].filter((summary) => summary.locale === locale);
 
-  for (const line of lines.toReversed()) {
-    try {
-      const summary = JSON.parse(line) as Record<string, unknown>;
-      if (summary.model === normalizedModel || summary.model === model) return summary;
-    } catch {
-      // Ignore malformed JSONL rows.
-    }
+  for (const summary of rows.toReversed()) {
+    if (summary.model === normalizedModel || summary.model === model) return summary;
   }
 
   return undefined;

@@ -562,7 +562,7 @@ function collectSourcePosts(): SourcePost[] {
 
 function readCandidateSummary(slug: string, locale: ActiveLocale): CandidateSummary {
   const reportDir = join(REPORT_ROOT, slug, locale);
-  const candidateRows = readCandidateRows(join(reportDir, "candidates.jsonl"));
+  const candidateRows = readCandidateRowsForLocale(slug, locale);
   const fallbackReports = countCandidateReportFiles(reportDir);
   const rowsOrReports = candidateRows.length > 0 ? candidateRows.length : fallbackReports;
   const accounting = readAccountingTotals(reportDir, candidateRows);
@@ -596,7 +596,7 @@ function isRunInProgress(reportDir: string) {
   if (runId == null) return true;
 
   const history = readCandidateRows(join(reportDir, "candidate-run-history.jsonl"));
-  return !history.some((summary) => summary.runId === runId && summary.runStatus === "completed");
+  return !history.some((summary) => summary.runId === runId && summary.runStatus !== "running");
 }
 
 function readAccountingTotals(reportDir: string, candidateRows: Array<Record<string, unknown>>): AccountingTotals {
@@ -784,6 +784,25 @@ function readCandidateRows(path: string): Array<Record<string, unknown>> {
         return [];
       }
     });
+}
+
+function readCandidateRowsForLocale(slug: string, locale: ActiveLocale) {
+  const articleRows = readCandidateRows(join(REPORT_ROOT, slug, "candidates.jsonl"))
+    .filter((row) => row.locale === locale);
+  const legacyRows = readCandidateRows(join(REPORT_ROOT, slug, locale, "candidates.jsonl"));
+  const rowsById = new Map<string, Record<string, unknown>>();
+
+  for (const row of [...legacyRows, ...articleRows]) {
+    rowsById.set(candidateRowId(row), row);
+  }
+
+  return [...rowsById.values()];
+}
+
+function candidateRowId(row: Record<string, unknown>) {
+  return typeof row.runId === "string"
+    ? row.runId
+    : JSON.stringify([row.locale, row.model, row.createdAt, row.candidatePath]);
 }
 
 function readJsonRecord(path: string): Record<string, unknown> | undefined {

@@ -100,7 +100,7 @@ try {
 
   const secondJudge = secondJudgeModel == null
     ? undefined
-    : runJudgeCommand(secondJudgeModel, getSecondJudgePrompt(), [
+    : runJudgeCommand(secondJudgeModel, getSecondJudgePrompt(candidateSummary), [
       targetPath,
       `${reportDir}/judge.md`,
     ].filter((path) => existsSync(path)));
@@ -117,7 +117,7 @@ try {
     secondOutput: secondJudge.output,
   });
   const escalationJudge = shouldEscalate && escalationJudgeModel != null
-    ? runJudgeCommand(escalationJudgeModel, getEscalationPrompt())
+    ? runJudgeCommand(escalationJudgeModel, getEscalationPrompt(candidateSummary))
     : undefined;
   if (escalationJudge != null && !escalationJudge.ok) {
     throw new Error(escalationJudge.errorMessage);
@@ -351,7 +351,7 @@ function validateJudgeModels({
   }
 }
 
-function getSecondJudgePrompt() {
+function getSecondJudgePrompt(candidateSummary: string) {
   return [
     `You are a constrained second-pass reviewer for the selected ${locale} translation of ${slug}.`,
     `Do not run shell commands, git commands, package installation, build, or validation commands.`,
@@ -369,7 +369,7 @@ function getSecondJudgePrompt() {
   ].join("\n");
 }
 
-function getEscalationPrompt() {
+function getEscalationPrompt(candidateSummary: string) {
   return [
     `Resolve the judge disagreement for ${locale} translation candidates for ${slug}.`,
     `Candidate commits:`,

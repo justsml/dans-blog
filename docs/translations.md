@@ -65,6 +65,8 @@ bun run i18n:promote -- --slug the-last-to-think --locale es
 bun run i18n:report:models
 ```
 
+Validation checks frontmatter, preserved imports/components, fenced code counts, nested locale asset paths, and per-level heading counts. English and translated files must keep the same number of H1, H2, H3, H4, H5, and H6 headings; translate the heading text, but do not promote, demote, add, or drop headings.
+
 Candidate generation validates and commits each model output unless `--no-commit` is passed.
 
 For broad baseline coverage, run the low-confidence Qwen queue directly on `main`:
@@ -288,7 +290,7 @@ The judge reads prior candidates from Git history. It should compare only commit
 
 Candidate generation is a harvesting phase. By default, `i18n:translate:candidates` normalizes obvious locale-folder paths and records `Validation: deferred`, but it does not run `content:check`, `fix-quizzes`, `astro check`, or a full build per model attempt. Use `--validate-candidates` only when you want local structural checks during generation. Use `--full-validation` sparingly; broad concurrent batches should defer global validation to judge, final polish, promotion, or the end-of-batch checklist.
 
-Failed or interrupted candidate runs must preserve accounting. Do not roll `candidates.jsonl`, `candidate-run-summary.json`, `candidate-run-history.jsonl`, model run JSON, usage JSONL, or generated report directories backward just because a candidate failed. The candidate runner records failed runs as `failed` or `interrupted` and cleans up active child process groups on exit.
+Failed or interrupted candidate runs must preserve accounting. Do not roll `candidates.jsonl`, `candidate-run-summary.json`, `candidate-run-history.jsonl`, model run JSON, usage JSONL, or generated report directories backward just because a candidate failed. JSONL files are append-only evidence logs across models and runs. Candidate rows append to the article-level `reports/i18n/{slug}/candidates.jsonl`, while locale directories keep per-run summaries and model artifacts. The candidate runner records failed runs as `failed` or `interrupted` and cleans up active child process groups on exit.
 
 Judge runs are serialized with `.git/codex-i18n-judge.lock`. If a second judge starts, it waits for the active one instead of running concurrently. After waiting more than 6 minutes, the wrapper cleans up a stale or malformed lock when the recorded owner process is gone.
 

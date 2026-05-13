@@ -303,19 +303,22 @@ function getCandidateRunPaths(
   modelId: string,
   timestamp: string,
 ) {
-  const rootDir = join(process.cwd(), "reports/i18n", slug, locale);
-  const modelDir = join(rootDir, safeModelPathName(modelId));
+  const articleReportDir = join(process.cwd(), "reports/i18n", slug);
+  const localeReportDir = join(articleReportDir, locale);
+  const modelDir = join(localeReportDir, safeModelPathName(modelId));
   const runDir = join(modelDir, timestamp);
 
   return {
-    rootDir,
+    rootDir: localeReportDir,
+    articleReportDir,
+    localeReportDir,
     modelDir,
     runDir,
     candidatePath: join(runDir, "candidate.mdx"),
     summaryPath: join(runDir, "summary.json"),
     runPath: join(runDir, "run.json"),
     usagePath: join(runDir, "usage.jsonl"),
-    candidatesPath: join(rootDir, "candidates.jsonl"),
+    candidatesPath: join(articleReportDir, "candidates.jsonl"),
   };
 }
 

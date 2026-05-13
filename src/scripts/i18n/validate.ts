@@ -21,6 +21,7 @@ const source = readFileSync(sourcePath, "utf8");
 const target = readFileSync(targetPath, "utf8");
 
 assertFrontmatter(target);
+assertHeadingCounts(source, target);
 assertProtectedTokens(source, target);
 assertNestedAssetPaths(target);
 
@@ -85,6 +86,58 @@ function assertProtectedTokens(sourceContents: string, targetContents: string) {
       `${targetPath} changed <pre><code> block count from ${sourcePreCode} to ${targetPreCode}`,
     );
   }
+}
+
+function assertHeadingCounts(sourceContents: string, targetContents: string) {
+  const sourceHeadings = countHeadings(sourceContents);
+  const targetHeadings = countHeadings(targetContents);
+  const mismatches = sourceHeadings
+    .map((sourceCount, index) => {
+      const level = index + 1;
+      const targetCount = targetHeadings[index];
+      return sourceCount === targetCount
+        ? undefined
+        : `H${level}: English has ${sourceCount}, translation has ${targetCount}`;
+    })
+    .filter((message): message is string => message != null);
+
+  if (mismatches.length === 0) return;
+
+  throw new Error(
+    `${targetPath} changed heading counts. ${mismatches.join("; ")}`,
+  );
+}
+
+function countHeadings(contents: string) {
+  const counts = [0, 0, 0, 0, 0, 0];
+  let inFence = false;
+
+  for (const line of stripFrontmatter(contents).split(/\r?\n/)) {
+    if (/^\s*(```|~~~)/.test(line)) {
+      inFence = !inFence;
+      continue;
+    }
+    if (inFence) continue;
+
+    const markdownHeading = line.match(/^\s{0,3}(#{1,6})(?:\s|$)/);
+    if (markdownHeading != null) {
+      counts[markdownHeading[1].length - 1] += 1;
+      continue;
+    }
+
+    for (const htmlHeading of line.matchAll(/<h([1-6])\b/gi)) {
+      counts[Number(htmlHeading[1]) - 1] += 1;
+    }
+  }
+
+  return counts;
+}
+
+function stripFrontmatter(contents: string) {
+  if (!contents.startsWith("---")) return contents;
+  const frontmatterEnd = contents.indexOf("\n---", 3);
+  if (frontmatterEnd === -1) return contents;
+  return contents.slice(frontmatterEnd + 4);
 }
 
 type ImportSignature = {

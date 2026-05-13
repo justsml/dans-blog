@@ -100,15 +100,19 @@ function parseLimit(value: string | boolean | undefined) {
 }
 
 function readCandidates(slug: string, locale: string) {
-  const candidatesPath = join(process.cwd(), "reports/i18n", slug, locale, "candidates.jsonl");
-  if (!existsSync(candidatesPath)) return [];
-
   const byRunId = new Map<string, CandidateRecord>();
-  for (const line of readFileSync(candidatesPath, "utf8").split("\n")) {
-    if (!line.trim()) continue;
-    const record = JSON.parse(line) as CandidateRecord;
-    if (!record.runId || !record.candidatePath) continue;
-    byRunId.set(record.runId, record);
+  for (const candidatesPath of [
+    join(process.cwd(), "reports/i18n", slug, locale, "candidates.jsonl"),
+    join(process.cwd(), "reports/i18n", slug, "candidates.jsonl"),
+  ]) {
+    if (!existsSync(candidatesPath)) continue;
+
+    for (const line of readFileSync(candidatesPath, "utf8").split("\n")) {
+      if (!line.trim()) continue;
+      const record = JSON.parse(line) as CandidateRecord;
+      if (record.locale !== locale || !record.runId || !record.candidatePath) continue;
+      byRunId.set(record.runId, record);
+    }
   }
 
   return [...byRunId.values()].sort((a, b) => a.createdAt.localeCompare(b.createdAt));
