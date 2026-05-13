@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: your-laptop-is-the-breach
+- Locale: hi
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-05-09--your-laptop-is-the-breach/hi/index.mdx
+- Validation: passed
+- Runtime seconds: 104.67
+- Input tokens: 46135
+- Output tokens: 46927
+- Thinking tokens: unknown
+- Cached input tokens: 13312
+- Cache write tokens: 0
+- Estimated cost: $0.014953
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: ''
 subTitle: ''
@@ -324,3 +342,4 @@ AI कोडिंग टूल्स खराब नहीं हैं। म
 - [लिटिल स्निच](https://obdev.at/products/littlesnitch/)
 - [पोर्टमास्टर](https://safing.io/)
 - [क्लॉड कोड अनुमतियां](https://code.claude.com/docs/en/permissions)
+````
