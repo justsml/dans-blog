@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: docker-server-setup-notes
+- Locale: ru
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2015-04-06--docker-server-setup-notes/ru/index.mdx
+- Validation: passed
+- Runtime seconds: 58.88
+- Input tokens: 20684
+- Output tokens: 19612
+- Thinking tokens: unknown
+- Cached input tokens: 2560
+- Cache write tokens: 0
+- Estimated cost: $0.006362
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Настройка сервера Docker
@@ -255,3 +273,4 @@ docker rm -f mongo elastic
 ```
 
 --- CHUNK END ---
+````
