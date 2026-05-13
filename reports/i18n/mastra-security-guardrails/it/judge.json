@@ -1,0 +1,49 @@
+{
+  "selectedCommit": "1548ce08fed5966521be2a8ddba30504579d3dd1",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 10,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The selected candidate (1548ce08fed5966521be2a8ddba30504579d3dd1) is already the 'current' version in the provided text. It correctly translates the frontmatter (which was missing in the original 'current' state before this pass), maintains all MDX structures, and uses professional Italian technical terminology. The suggestions from the previous judge report regarding code comments have already been incorporated into the text provided as the Italian version.",
+  "slug": "mastra-security-guardrails",
+  "locale": "it",
+  "candidateCommits": [
+    "1548ce08fed5966521be2a8ddba30504579d3dd1",
+    "ce8b703aebc7537833eb78907466ddc4f3ec4d13",
+    "5a2fce48aee54c644af14d83b5f857d51ce58415",
+    "15051b1465c33b67f080e22ce2a7e32c2ed1ed0e",
+    "1044a8ad10f78a41221da9b9a1d17e4c08aab8b5"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "medium",
+      "match": "// 1. Scrub invisible characters",
+      "replacement": "// 1. Pulisce i caratteri invisibili",
+      "reason": "The comment inside the code block was left in English.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "// 2. Detect the attempt",
+      "replacement": "// 2. Rileva il tentativo",
+      "reason": "The comment inside the code block was left in English.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug mastra-security-guardrails --locale it --skip-global",
+    "output": ""
+  }
+}
