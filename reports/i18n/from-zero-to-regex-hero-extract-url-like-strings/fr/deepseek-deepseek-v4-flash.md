@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: from-zero-to-regex-hero-extract-url-like-strings
+- Locale: fr
+- Model: deepseek/deepseek-v4-flash
+- Target: src/content/posts/2024-12-29--from-zero-to-regex-hero-extract-url-like-strings/fr/index.mdx
+- Validation: deferred
+- Runtime seconds: 84.38
+- Input tokens: 10490
+- Output tokens: 12730
+- Thinking tokens: unknown
+- Cached input tokens: 1536
+- Cache write tokens: 0
+- Estimated cost: $0.004822
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: De zéro à héros des regex
 subTitle: >-
@@ -266,3 +284,4 @@ En suivant ces étapes, vous pouvez extraire efficacement n'importe quelle donn�
 - [Documentation MDN sur les expressions régulières](https://developer.mozilla.org/fr/docs/Web/JavaScript/Guide/Regular_Expressions)
 - [Techniques avancées de regex](https://www.regular-expressions.info/) : Explorez les lookaheads, lookbehinds et autres motifs avancés pour une correspondance plus précise.
 - [RFC 3986 – Syntaxe générique des URI](https://datatracker.ietf.org/doc/html/rfc3986)
+````
