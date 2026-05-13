@@ -1,0 +1,77 @@
+{
+  "selectedCommit": "f9e2d97f08d4bebae0517d54b2e79cef042a03a3",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 10,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "Sélectionnez le <em class=\"highlight\">UN INVALIDE</em> ❌ `font-size` :",
+      "replacement": "Sélectionnez l'unique `font-size` <em class=\"highlight\">INVALIDE</em> ❌ :",
+      "reason": "The original translation 'le UN INVALIDE' is grammatically incorrect in French. 'L'unique... INVALIDE' is the correct way to express 'the one invalid'."
+    },
+    {
+      "priority": "medium",
+      "match": "Pouvez‑vous repérer le <em class=\"highlight\">UNIQUE</em> code hex valide 👍 ?",
+      "replacement": "Pouvez‑vous repérer l'<em class=\"highlight\">UNIQUE</em> code hex valide 👍 ?",
+      "reason": "Grammar: 'le' should be elided to 'l'' before a word starting with a vowel sound like 'unique'."
+    }
+  ],
+  "rationale": "Candidate f9e2d97f08d4bebae0517d54b2e79cef042a03a3 is the only one that correctly includes the options for Challenge 5 (index 5), which were missing in the current version and other candidates. It maintains technical accuracy and MDX structure. The suggestions fix minor grammatical issues in the highlighted questions.",
+  "slug": "quiz-css-core-fundamentals",
+  "locale": "fr",
+  "candidateCommits": [
+    "f9e2d97f08d4bebae0517d54b2e79cef042a03a3",
+    "288b7515f41d0d81ae8b2a61e8192ca7e35504b2"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "Sélectionnez le UN INVALIDE ❌ `font-size` :",
+      "replacement": "Sélectionnez l'unique `font-size` <em class=\"highlight\">INVALIDE</em> ❌ :",
+      "reason": "The original translation 'le UN INVALIDE' is grammatically awkward in French. Using 'l'unique... INVALIDE' is more natural.",
+      "pass": 1,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "Comment centrer \"shit\" dans une boîte ?",
+      "replacement": "Comment pouvez-vous centrer « shit » dans une boîte ?",
+      "reason": "Consistency with the informal but technical tone, and using standard French guillemets.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "Sélectionnez le <em class=\"highlight\">UN INVALIDE</em> ❌ `font-size` :",
+      "replacement": "Sélectionnez l'unique `font-size` <em class=\"highlight\">INVALIDE</em> ❌ :",
+      "reason": "The original translation 'le UN INVALIDE' is grammatically awkward in French. Using 'l'unique... INVALIDE' is more natural.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "Comment pouvez-vous centrer « shit » dans une boîte ?",
+      "replacement": "Comment pouvez-vous centrer « shit » dans une boîte ?",
+      "reason": "Ensuring consistent use of French guillemets and maintaining the informal tone of the source.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match and replacement are identical; no MDX change needed."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug quiz-css-core-fundamentals --locale fr --skip-global",
+    "output": ""
+  }
+}
