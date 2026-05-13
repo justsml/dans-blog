@@ -1,18 +1,9 @@
 ---
-title: ''
-subTitle: >-
-  Les benchmarks mesurent les benchmarks. Votre système a besoin de mesures
-  adaptées.
-date: '2026-05-01'
-modified: '2026-05-06'
-tags:
-  - ai
-  - llm
-  - evals
-  - testing
-  - production
-  - quality
-  - observability
+title: "Combattez le mal par les evals !"
+subTitle: "Les benchmarks mesurent des benchmarks. Votre système a besoin de ses propres mesures."
+date: 2026-05-01
+modified: 2026-05-06
+tags: [ai, llm, evals, testing, production, quality, observability]
 category: AI
 subCategory: Engineering
 popularity: 0.85
@@ -21,81 +12,87 @@ cover_full_width: ../wide.webp
 cover_mobile: ../square.webp
 cover_icon: ../square.webp
 ---
-Chaque nouveau modèle arrive dans un smoking de benchmarks.  
 
-MMLU : 92,4 %. HumanEval : 87,2 %. LLeMU : 88,7 %. MATH : 73,6 %. AGI : 127 % !  
+Chaque nouveau modèle arrive vêtu d'un smoking de benchmarks.
 
-Pourtant, pour 99 % des entreprises construisant des processus et des produits avec l’IA, **rien de tout cela n’a d’importance**.  
+MMLU : 92,4 %. HumanEval : 87,2 %. LLeMU : 88,7 %. MATH : 73,6 %. AGI : 127 % !
 
-Qu’est-ce qui importe ? Comment se comportent VOS charges de travail ? Amélioration ou détérioration ? La seule façon raisonnable de le savoir est d’écrire des Evals (tests pour les LLM) reflétant les tâches, les données et les modes de défaillance spécifiques à votre système.  
+Pourtant, pour 99 % des entreprises qui construisent des processus et des produits avec l'IA, **rien de tout cela n'a d'importance.**
 
-<blockquote class="breakout">  
-  <p>Les benchmarks ne mentent pas. Ils répondent à une autre question.</p>  
+Ce qui compte ? Comment VOS charges de travail se débrouillent ? En progrès ou en régression ? La seule façon sensée de le savoir est d'écrire des evals (des tests pour les LLM) qui reflètent les tâches, les données et les modes de défaillance spécifiques de votre système.
+
+<blockquote class="breakout">
+  <p>Les benchmarks ne mentent pas. Ils répondent à la question de quelqu'un d'autre.</p>
 </blockquote>
-
-## Ce que coûte vraiment l'évaluation basée sur les "vibes"
-
-L'approche standard : déployer un changement de modèle, surveiller les canaux de signalement, et revenir en arrière si le niveau de bruit augmente.  
-
-Cela manque presque tout ce qui est pertinent :
-
-**Vous ne détectez que les échecs bruyants.** Les utilisateurs qui reçoivent une réponse clairement fausse sans s'en rendre compte ? Silencieux. Les utilisateurs qui obtiennent une réponse pire et abandonnent la fonctionnalité ? Silencieux. Les tickets de support et les taux d'erreur capturent uniquement une fraction des régressions de qualité.  
-
-**Vous ne pouvez pas distinguer les régressions des améliorations.** Si le nouveau modèle est meilleur pour la tâche A et pire pour la tâche B, les plaintes sur B ressemblent à des commentaires génériques du type « l'IA est devenue pire ». Vous ne savez pas quoi corriger.  
-
-**Vous utilisez vos utilisateurs comme infrastructure de test.** Ils n'ont pas signé pour ça.
-
-## Le spectre des évaluations (et où la plupart des équipes se trompent)
-
-Les approches d'évaluation s'inscrivent sur un spectre allant des méthodes « rapides mais fragiles » aux méthodes « coûteuses mais valides ».
-
-<figure class="breakout">
-
-![Un diagramme comparant les vérifications déterministes, LLM-en-tant-que-juge et l'évaluation humaine en fonction de la vitesse, du coût et de la validité.](../eval-spectrum.svg)
-
-<figcaption>Utilisez la méthode d'évaluation la moins coûteuse capable de détecter honnêtement l'échec.</figcaption>
-</figure>
-
-**LLM-en-tant-que-juge** est le chouchou actuel : demandez à un modèle puissant de noter les sorties d'un autre modèle. Rapide, échelonnable, peu coûteux. Le problème : cela intègre les biais du modèle correcteur, peut être manipulé et crée une dépendance circulaire. Si vous utilisez GPT-5 pour noter les sorties de GPT-5, vous mesurez quelque chose comme « dans quelle mesure GPT-5 est d'accord avec GPT-5 ». Ce n'est pas rien, mais ce n'est pas ce que vous croyez.
-
-**L'évaluation humaine** est le standard-or que tout le monde tente d'éviter. Faire évaluer les sorties par des humains est coûteux, lent, incohérent entre les évaluateurs et ennuyeux à organiser. Mais c'est la seule façon de valider si votre système est utile aux vrais humains.
-
-**Vérifications automatisées spécifiques aux tâches** sont là où la plupart des équipes devraient passer plus de temps. Elles ne sont pas glamour, mais elles sont rapides, déterministes et liées à ce qui compte dans votre système.  
 
 ---
 
-## Ce qui fonctionne vraiment  
+## Ce que coûte vraiment l'« évaluation au feeling »
 
-### 1. Définir l'échec avant le déploiement  
+L'approche standard : déployer un changement de modèle, surveiller les canaux de plaintes, revenir en arrière si la salle s'agite.
 
-Avant de modifier un modèle ou un prompt, notez ce à quoi ressemble un mauvais résultat. Spécifiquement.  
-Pas « la sortie doit être précise ». Ce n'est pas un test. Plutôt :
+Cela rate presque tout ce qui compte :
 
-- La sortie au format JSON structuré doit être analysable sans erreur  
-- Toutes les citations dans la réponse doivent apparaître verbatim dans le contexte récupéré  
-- Les réponses ne doivent pas mentionner les noms des produits concurrents  
-- Les requêtes SQL doivent être syntaxiquement valides et ne faire référence qu'aux tables existant dans le schéma  
-- La classification de sentiment ne doit pas passer du positif au négatif plus de 3 % du temps sur l'ensemble de test existant  
+**Vous ne captez que les bruyants.** Les utilisateurs qui reçoivent une réponse fausse mais convaincante et ne s'en rendent pas compte ? Silence. Ceux qui obtiennent une réponse dégradée et abandonnent la fonctionnalité ? Silence. Les tickets support et les taux d'erreur ne capturent qu'une fraction de la régression qualité.
 
-Vous pouvez vérifier ces points de manière programmable. Aucun modèle juge n'est nécessaire.  
+**Vous ne pouvez pas distinguer les régressions des améliorations.** Si le nouveau modèle est meilleur sur la tâche A et pire sur la tâche B, les plaintes concernant B ressemblent exactement au feedback générique « l'IA s'est dégradée ». Vous ne savez pas quoi corriger.
 
-**Harnais d'évaluation : vérifications déterministes**  
+**Vous utilisez vos utilisateurs comme infrastructure de test.** Ils n'ont pas signé pour ça.
+
+---
+
+## Le spectre des evals (et là où la plupart des équipes se trompent)
+
+Les approches d'évaluation s'inscrivent dans un spectre allant du « rapide mais fragile » à « coûteux mais valide ».
+
+<figure class="breakout">
+
+![Un diagramme en spectre comparant les vérifications déterministes, le LLM-as-judge et l'évaluation humaine selon la vitesse, le coût et la validité.](../eval-spectrum.svg)
+
+<figcaption>Utilisez la méthode d'évaluation la moins chère capable de détecter honnêtement la défaillance.</figcaption>
+</figure>
+
+**LLM-as-judge** est la coqueluche du moment : demander à un modèle puissant de noter les sorties d'un autre modèle. Rapide, scalable, bon marché. Le problème : cela intègre les biais du modèle évaluateur, peut être manipulé et crée une dépendance circulaire. Si vous utilisez GPT-5 pour noter les sorties de GPT-5, vous mesurez quelque chose comme « dans quelle mesure GPT-5 est d'accord avec GPT-5 ». Ce n'est pas rien, mais ce n'est pas ce que vous croyez.
+
+**L'évaluation humaine** est le standard d'or que tout le monde essaie de sauter. Faire évaluer les sorties par des humains est coûteux, lent, incohérent entre évaluateurs et pénible à planifier. Mais c'est la seule chose qui valide si votre système est utile à des humains réels.
+
+**Les vérifications automatisées spécifiques à une tâche** sont là où la plupart des équipes devraient passer plus de temps. Elles ne sont pas glamour, mais elles sont rapides, déterministes et liées à ce qui compte dans votre système.
+
+---
+
+## Ce qui fonctionne vraiment
+
+### 1. Définir la défaillance avant de déployer
+
+Avant de changer un modèle ou un prompt, écrivez à quoi ressemble un mauvais résultat. Concrètement.
+
+Pas « la sortie doit être exacte ». Ce n'est pas un test. Plutôt :
+
+- Le JSON structuré doit s'analyser sans erreur
+- Toutes les citations dans la réponse doivent apparaître mot pour mot dans le contexte récupéré
+- Les réponses ne doivent pas mentionner de noms de produits concurrents
+- Les requêtes SQL doivent être syntaxiquement valides et ne référencer que des tables existantes dans le schéma
+- La classification de sentiment ne doit pas basculer de positif à négatif plus de 3 % du temps sur le jeu de test existant
+
+Vous pouvez vérifier cela programmatiquement. Aucun modèle juge nécessaire.
+
+**Harness d'evals : vérifications déterministes**
 
 ```typescript
 type EvalResult = { passed: boolean; reason?: string };
 
 const evals: Record<string, (output: string, context: EvalContext) => EvalResult> = {
-  // JSON must parse
+  // Le JSON doit s'analyser
   validJson: (output) => {
     try {
       JSON.parse(output);
       return { passed: true };
     } catch (e) {
-      return { passed: false, reason: `Invalid JSON: ${e.message}` };
+      return { passed: false, reason: `JSON invalide : ${e.message}` };
     }
   },
 
-  // No hallucinated citations — every claim must appear in context
+  // Pas de citations hallucinées — chaque affirmation doit apparaître dans le contexte
   groundedCitations: (output, { retrievedChunks }) => {
     const claims = extractCitations(output);
     const ungrounded = claims.filter(
@@ -103,32 +100,32 @@ const evals: Record<string, (output: string, context: EvalContext) => EvalResult
     );
     return ungrounded.length === 0
       ? { passed: true }
-      : { passed: false, reason: `Ungrounded claims: ${ungrounded.join(', ')}` };
+      : { passed: false, reason: `Affirmations non fondées : ${ungrounded.join(', ')}` };
   },
 
-  // Response length sanity check — catch truncation or runaway generation
+  // Vérification de longueur de réponse — détecter les troncatures ou les générations incontrôlées
   reasonableLength: (output) => {
     const words = output.split(/\s+/).length;
     return words >= 10 && words <= 2000
       ? { passed: true }
-      : { passed: false, reason: `Word count ${words} out of bounds` };
+      : { passed: false, reason: `Nombre de mots ${words} hors limites` };
   },
 };
 ```
 
-### 2. Créer un ensemble d'or à partir de vos pires jours  
+### 2. Constituer un jeu d'or à partir de vos pires journées
 
-Vos meilleures données d'évaluation sont les situations embarrassantes : les sorties qui ont poussé quelqu'un à ouvrir un ticket, à capturer une hallucination en capture d'écran, ou à arrêter discrètement d'utiliser la fonctionnalité.  
+Vos meilleures données d'évaluation sont les contenus embarrassants : les sorties qui ont poussé quelqu'un à ouvrir un ticket, à faire une capture d'écran d'une hallucination, ou à cesser tranquillement d'utiliser la fonctionnalité.
 
-À chaque fois qu'un utilisateur signale une sortie incorrecte, signale une hallucination, ou que vous remarquez manuellement une échec, ajoutez-le à votre ensemble d'or : l'entrée, le contexte, et le comportement correct. Conservez 50 à 100 cas et exécutez-les à chaque modification de modèle.
+Chaque fois qu'un utilisateur signale une mauvaise sortie, signale une hallucination ou que vous remarquez une défaillance manuellement, ajoutez-la à votre jeu d'or : l'entrée, le contexte et le comportement attendu. Gardez 50 à 100 cas et exécutez-les à chaque changement de modèle.
 
-Cela semble manuel au début. Après six mois, vous disposez d'une série de tests que aucun benchmark public ne peut tricher, car chaque cas provient de votre propre historique d'échecs.
+Cela semble manuel au début. Après six mois, vous avez une suite de tests qu'aucun benchmark public ne peut manipuler, car chaque cas provient de votre propre historique de défaillances.
 
 <figure class="breakout">
 
-![Un diagramme de flux illustrant comment les incidents problématiques en production deviennent des cas d'or, puis des exécutions d'évaluations CI, puis des régressions bloquées ou des versions approuvées.](../golden-set-lifecycle.svg)
+![Un diagramme de flux montrant comment les mauvais incidents de production deviennent des cas d'or, puis des exécutions d'evals en CI, puis des régressions bloquées ou des publications approuvées.](../golden-set-lifecycle.svg)
 
-<figcaption>Un ensemble d'or transforme les situations embarrassantes en un ensemble de tests de régression.</figcaption>
+<figcaption>Un jeu d'or transforme les contenus embarrassants en suite de régression.</figcaption>
 </figure>
 
 **Forme d'un cas d'or**
@@ -144,20 +141,20 @@ interface GoldenCase {
     structureCheck?: (output: string) => boolean;
     minSimilarityToReference?: number; // similarité cosinus avec une réponse de référence
   };
-  sourceIncident?: string; // lien vers le rapport de bogue ou le ticket
+  sourceIncident?: string; // lien vers le rapport de bug ou le ticket
 }
 ```
 
-### 3. Tests de régression, pas seulement de validation
+### 3. Tests de régression, pas seulement tests d'acceptation
 
-La plupart des équipes exécutent des évaluations uniquement lorsqu'elles envisagent un changement de modèle. C'est le test de validation : « est-ce que cette nouvelle chose est suffisamment bonne ? »
+La plupart des équipes exécutent des evals uniquement lorsqu'elles envisagent un changement de modèle. C'est du test d'acceptation : « cette nouvelle chose est-elle assez bonne ? »
 
-Vous avez également besoin de tests de régression : « a-t-elle cassé quelque chose qui fonctionnait auparavant ? »
+Vous avez aussi besoin de tests de régression : « est-ce que cela a cassé quelque chose qui fonctionnait avant ? »
 
-Exécutez votre ensemble d'or à chaque modification de prompt, pas seulement à chaque changement de modèle. Un prompt qui fonctionnait correctement peut se dégrader silencieusement lorsque vous ajoutez un nouvel outil, modifiez une stratégie de récupération RAG ou mettez à jour votre modèle de contexte. Vous ne saurez pas sans une ligne de base. Des outils comme [Langfuse](https://langfuse.com/) associent des scores d'évaluation aux traces de production, de sorte que les régressions apparaissent dans les tableaux de bord, et non seulement dans les rapports d'incidents.
+Exécutez votre jeu d'or à chaque changement de prompt, pas seulement à chaque changement de modèle. Un prompt qui fonctionnait bien peut se dégrader silencieusement quand vous ajoutez un nouvel outil, changez une stratégie de récupération RAG ou mettez à jour votre modèle de contexte. Des outils comme [Langfuse](https://langfuse.com/) attachent des scores d'eval aux traces de production pour que la régression apparaisse dans les tableaux de bord, pas seulement dans les rapports d'incident.
 
 <details>
-<summary>Harness d'évaluation : comparaison entre la version de référence et la candidate</summary>
+<summary>Harness d'evals : comparaison baseline vs candidat</summary>
 
 ```typescript
 async function compareModelVersions(
@@ -176,8 +173,8 @@ async function compareModelVersions(
         id: tc.id,
         baselinePassed: runEvals(baseline, tc.expectedBehavior),
         candidatePassed: runEvals(candidate, tc.expectedBehavior),
-        regression: /* la version de référence a réussi */ && /* la candidate a échoué */,
-        improvement: /* la version de référence a échoué */ && /* la candidate a réussi */,
+        regression: /* baseline passé */ && /* candidat échoué */,
+        improvement: /* baseline échoué */ && /* candidat passé */,
       };
     })
   );
@@ -189,7 +186,7 @@ async function compareModelVersions(
   console.log(`Améliorations : ${improvements.length} / ${goldenCases.length}`);
 
   if (regressions.length > 0) {
-    console.error('Régressions bloquantes détectées :');
+    console.error('Régressions bloquantes trouvées :');
     regressions.forEach((r) => console.error(` - ${r.id}`));
   }
 
@@ -199,15 +196,15 @@ async function compareModelVersions(
 
 </details>
 
-Si une candidate régresse sur des échecs connus, la discussion d'upgrade devient délicatement spécifique : quels cas ont été améliorés, quels cas ont été cassés, et si le compromis vaut la peine d'être fait.
+Si un candidat régresse sur des défaillances connues, la conversation de mise à niveau devient merveilleusement spécifique : quels cas se sont améliorés, quels cas ont cassé, et si le compromis en vaut la peine.
 
-### 4. Utilisez LLM-as-Juge pour Exactement Une Chose
+### 4. Utilisez LLM-as-judge pour exactement une chose
 
-LLM-en-juge est utile pour les sorties non déterministes où il n'existe pas de réponse correcte : « est-ce que cette réponse est utile ? », « cette synthèse préserve-t-elle les points clés ? », « cette explication est-elle adaptée à un débutant ? »
+LLM-as-judge est utile pour les sorties ouvertes où il n'y a pas de réponse déterministe juste : « cette réponse est-elle utile ? », « ce résumé préserve-t-il les points clés ? », « cette explication est-elle adaptée à un débutant ? »
 
-Utilisez-le là. N'utilisez-le pas pour les réponses déterministes. Quand vous l'utilisez, rendez le barème d'évaluation explicite :
+Utilisez-le là. Ne l'utilisez pas pour des réponses déterministes. Quand vous l'utilisez, rendez le barème de notation explicite :
 
-**Juge basé sur une grille d'évaluation**
+**Harness d'evals : juge avec barème**
 
 ```typescript
 async function judgeHelpfulness(
@@ -215,19 +212,19 @@ async function judgeHelpfulness(
   modelResponse: string
 ): Promise<{ score: number; reasoning: string }> {
   const judgePrompt = `
-You are evaluating a customer support response.
+Vous évaluez une réponse de support client.
 
-User question: ${userQuery}
-Response: ${modelResponse}
+Question de l'utilisateur : ${userQuery}
+Réponse : ${modelResponse}
 
-Rate the response on a scale of 1-5:
-5 = Directly answers the question with accurate, actionable information
-4 = Answers the question but could be more specific or actionable
-3 = Partially addresses the question; key information is missing
-2 = Tangentially related but doesn't answer the question
-1 = Off-topic, factually wrong, or harmful
+Notez la réponse sur une échelle de 1 à 5 :
+5 = Répond directement à la question avec des informations exactes et exploitables
+4 = Répond à la question mais pourrait être plus spécifique ou exploitable
+3 = Aborde partiellement la question ; des informations clés manquent
+2 = Lié de manière tangentielle mais ne répond pas à la question
+1 = Hors sujet, factuellement faux ou nuisible
 
-Respond with JSON: {"score": <number>, "reasoning": "<one sentence>"}
+Répondez avec un JSON : {"score": <nombre>, "reasoning": "<une phrase>"}
 `;
 
   const result = await judgeModel.generate(judgePrompt);
@@ -235,32 +232,34 @@ Respond with JSON: {"score": <number>, "reasoning": "<one sentence>"}
 }
 ```
 
-Une grille d'évaluation explicite réduit la variance des évaluateurs, vous donne des résultats interprétables et facilite l'audit lorsque le juge se trompe. Des bibliothèques comme [Autoevals](https://github.com/braintrustdata/autoevals) et [Braintrust](https://www.braintrust.dev/) proposent des grilles d'évaluation prêtes à l'emploi pour des tâches courantes — utiles à recopier avant de les réinventer de zéro.
+Un barème explicite réduit la variance de l'évaluateur, vous donne une sortie interprétable et facilite l'audit quand le juge se trompe. Des bibliothèques comme [Autoevals](https://github.com/braintrustdata/autoevals) et [Braintrust](https://www.braintrust.dev/) fournissent des barèmes préconstruits pour des tâches courantes — à voler avant d'écrire les vôtres à partir de zéro.
 
 ---
 
-## Outils à Connaître
+## Outils qui valent le coup
 
-Vous n'avez pas besoin de tout construire depuis zéro. Plusieurs outils ont fait des progrès significatifs sur le problème de l'infrastructure d'évaluation :
+Vous n'avez pas à construire tout cela à partir de zéro. Plusieurs outils ont fait de sérieux progrès sur le problème de l'infrastructure d'evals :
 
-**[Braintrust](https://www.braintrust.dev/)** — Plateforme d'évaluation complète avec suivi des expériences, gestion des jeux de données et fonctions de notation. Organise les exécutions d'évaluation par invite, modèle et déploiement pour que vous puissiez comparer la qualité dans le temps, pas seulement entre les versions. Fonctionne bien avec leur bibliothèque open-source **[Autoevals](https://github.com/braintrustdata/autoevals)**, qui fournit des fonctions de notation évaluées par modèle pour des tâches courantes (exactitude factuelle, utilité, toxicité, similarité sémantique).
+**[Braintrust](https://www.braintrust.dev/)** — Plateforme d'evals complète avec suivi d'expériences, gestion de jeux de données et fonctions de notation. Organise les exécutions d'evals par prompt, modèle et déploiement pour que vous puissiez comparer la qualité dans le temps, pas seulement entre les versions. Fonctionne bien avec leur bibliothèque open-source **[Autoevals](https://github.com/braintrustdata/autoevals)**, qui fournit des fonctions de notation préconstruites évaluées par modèle pour des tâches courantes (exactitude factuelle, utilité, toxicité, similarité sémantique).
 
-**[Langfuse](https://langfuse.com/)** — Observabilité open-source des modèles LLM située entre votre application et vos modèles. Traque chaque appel, attache des scores d'évaluation (humains ou automatisés) à des spans individuels, et met en évidence les tendances de qualité sur le trafic de production. Bon choix si vous souhaitez une observabilité et des évaluations dans le même outil plutôt qu'un harnais d'évaluation séparé.
+**[Langfuse](https://langfuse.com/)** — Observabilité LLM open-source qui se place entre votre application et vos modèles. Trace chaque appel, attache des scores d'evals (humains ou automatisés) à chaque span, et révèle les tendances qualité sur le trafic de production. Bonne option si vous voulez observabilité et evals dans le même outil plutôt qu'un harness d'evals séparé.
 
-**[Evalite](https://www.evalite.dev/)** — Framework d'évaluation natif TypeScript par Matt Pocock. Peu de cérémonie : définissez une tâche, définissez un évaluateur, exécutez-le dans votre configuration de test existante. Cible les équipes souhaitant des évaluations qui ressemblent à des tests unitaires plutôt qu'à une plateforme d'expériences ML distincte.
+**[Evalite](https://www.evalite.dev/)** — Framework d'evals natif TypeScript par Matt Pocock. Peu de cérémonie : définissez une tâche, définissez un scoreur, exécutez-le dans votre configuration de test existante. Cible les équipes qui veulent des evals qui ressemblent à des tests unitaires plutôt qu'à une plateforme d'expériences ML séparée.
 
-**[promptfoo](https://www.promptfoo.dev/)** — Exécuteur d'évaluations CLI-first axé sur la comparaison de prompts et le red teaming. Facile à configurer via YAML, s'intègre à la plupart des fournisseurs de modèles, et inclut un support intégré pour détecter les injections de prompt et autres entrées adverses.
+**[promptfoo](https://www.promptfoo.dev/)** — Exécuteur d'evals CLI-first axé sur la comparaison de prompts et le red-teaming. Facile à configurer via YAML, s'intègre à la plupart des fournisseurs de modèles et dispose d'un support intégré pour détecter l'injection de prompt et d'autres entrées adverses.
 
-**[deepeval](https://docs.confident-ai.com/)** — Framework d'évaluation Python avec une vaste bibliothèque de métriques intégrées (G-Eval, fidélité RAG, pertinence des réponses, détection des hallucinations). Utile pour les pipelines RAG où vous souhaitez un classement spécifique sur la qualité du recouvrement, pas seulement sur la génération.
+**[deepeval](https://docs.confident-ai.com/)** — Framework d'evals Python avec une grande bibliothèque de métriques intégrées (G-Eval, fidélité RAG, pertinence des réponses, détection d'hallucinations). Utile pour les pipelines RAG où vous voulez une notation spécifique pour la qualité de récupération, pas seulement la qualité de génération.
 
-Le bon outil dépend de votre stack et de votre point de départ. Ce qui compte plus que le choix du framework, c'est la discipline d'exécuter des évaluations de manière cohérente — systématiquement, à chaque changement significatif.
+Le bon outil dépend de votre stack et de votre point de départ. Ce qui compte plus que le choix du framework, c'est la discipline d'exécuter des evals — régulièrement, à chaque changement significatif.
 
-## La Partie Désagréable
+---
 
-La plupart des équipes sautent cette étape car elle pose une question agaçante dès le départ : quel serait le « bon » ici ?
+## La partie inconfortable
 
-C'est vraiment difficile pour une nouvelle fonctionnalité d'IA. C'est aussi non négociable si vous tenez à la fiabilité. Les équipes qui déployent une IA fiable font la même chose qu'elles le feraient pour tout chemin de code critique : définir le comportement attendu, le tester et exécuter ces tests de manière continue.
+La plupart des équipes sautent cela parce que cela pose une question irritante dès le départ : à quoi ressemblerait un « bon » résultat ici ?
 
-Les benchmarks ne mentent pas. Ils répondent à une autre question. Arrêtez de les lire comme des roadmaps produit et commencez à écrire des tests qui correspondent à votre système.
+C'est véritablement difficile pour une nouvelle fonctionnalité IA. C'est aussi non négociable si vous vous souciez de la fiabilité. Les équipes qui livrent une IA digne de confiance font la même chose que pour tout chemin de code critique : définir le comportement attendu, le tester et exécuter ces tests en continu.
 
-Vos utilisateurs s'en apercevront avant que vos tableaux de bord ne le fassent. Construisez d'abord le jeu de tests.
+Les benchmarks ne mentent pas. Ils répondent à la question de quelqu'un d'autre. Cessez de les lire comme des feuilles de route produit et commencez à écrire des tests qui correspondent à votre système.
+
+Vos utilisateurs le remarqueront avant vos tableaux de bord. Construisez d'abord la suite de tests.
