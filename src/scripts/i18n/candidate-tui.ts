@@ -76,7 +76,19 @@ type WorkerState = {
   exitCode?: number | null;
   signal?: string | null;
   error?: string;
+  progress?: WorkerProgress;
   recentOutput: string[];
+};
+
+type WorkerProgress = {
+  total: number;
+  started: number;
+  completed: number;
+  failed: number;
+  running: number;
+  concurrency?: number;
+  activeTasks: string[];
+  failures: string[];
 };
 
 const REPORT_ROOT = join(process.cwd(), "reports/i18n");
@@ -84,6 +96,7 @@ const POSTS_ROOT = join(process.cwd(), "src/content/posts");
 const DEFAULT_TUI_TASK_CONCURRENCY = "16";
 const DEFAULT_TUI_QUIZ_CONCURRENCY = "8";
 const DEFAULT_REFRESH_DEBOUNCE_MS = 750;
+const JUDGE_PROGRESS_PREFIX = "::i18n-judge-progress::";
 
 const options = parseArgs();
 const expectedCandidates = parsePositiveInteger(optionalString(options, "expected"), 2);
@@ -428,6 +441,12 @@ function drawSidePanel(
     ["Cache write", formatInteger(totals.activeRun.cacheWriteTokens)],
     ["Duration", formatDuration(totals.activeRun.durationMs)],
     ["Source", formatSources(totals.activeRun.sources)],
+    ...(workerState.mode === "judge" && workerState.progress != null
+      ? [
+          ["Judge tasks", formatWorkerProgressSummary(workerState.progress)],
+          ["Judge active", formatActiveJudgeTasks(workerState.progress, 2)],
+        ]
+      : []),
   ];
 
   lines.forEach(([label, value], index) => {
@@ -466,10 +485,18 @@ function drawBottomPanel(term: any, totals: Totals, rows: ArticleRow[], left: nu
   writeAt(term, left + 2, top + 4, `Articles ${totals.completeArticles}/${totals.articles} | Running ${totals.inProgressSlots} slots`, width - 4);
   writeAt(term, left + 2, top + 5, `Candidates ${totals.candidateRows} | Attempts ${totals.attemptedModels} | Rejected ${totals.rejectedModels}`, width - 4);
   writeAt(term, left + 2, top + 6, `Run ${formatUsd(totals.activeRun.costUsd)} | ${formatInteger(totals.activeRun.inputTokens)} in | ${formatInteger(totals.activeRun.outputTokens)} out`, width - 4);
-  writeAt(term, left + 2, top + 7, `Locales ${selectedLocales.map((locale) => {
-    const summaries = rows.map((row) => row.candidates[locale]);
-    return `${locale}:${summaries.filter((summary) => summary.count >= expectedCandidates).length}/${rows.length}`;
-  }).join(" ")}`, width - 4);
+  writeAt(
+    term,
+    left + 2,
+    top + 7,
+    workerState.mode === "judge" && workerState.progress != null
+      ? `Judge ${formatWorkerProgressSummary(workerState.progress)} | ${formatActiveJudgeTasks(workerState.progress, 2)}`
+      : `Locales ${selectedLocales.map((locale) => {
+          const summaries = rows.map((row) => row.candidates[locale]);
+          return `${locale}:${summaries.filter((summary) => summary.count >= expectedCandidates).length}/${rows.length}`;
+        }).join(" ")}`,
+    width - 4,
+  );
 }
 
 function drawPanel(term: any, left: number, top: number, width: number, height: number, title: string) {
@@ -885,6 +912,18 @@ function renderDashboard(rows: ArticleRow[], totals: Totals) {
           "",
         ]
       : []),
+    ...(workerState.mode === "judge" && workerState.progress != null
+      ? [
+          "## Judge Progress",
+          "",
+          markdownRow(["Metric", "Value"]),
+          markdownRow(["---", "---:"]),
+          markdownRow(["Tasks", formatWorkerProgressSummary(workerState.progress)]),
+          markdownRow(["Active", formatActiveJudgeTasks(workerState.progress, 6)]),
+          markdownRow(["Failures", workerState.progress.failures.length === 0 ? "none" : workerState.progress.failures.join("; ")]),
+          "",
+        ]
+      : []),
     watchIntervalSeconds == null
       ? "Tip: add `--watch 10` to refresh this terminal view every 10 seconds."
       : `Watching every ${watchIntervalSeconds}s. Press Ctrl-C to stop.`,
@@ -910,6 +949,12 @@ function renderFinalAccounting(totals: Totals, reason: string) {
     `- Run duration: ${formatDuration(totals.activeRun.durationMs)}`,
     `- Run estimated cost: ${formatUsd(totals.activeRun.costUsd)}${totals.activeRun.hasUnknownCost ? " + unknown" : ""}`,
     `- Accounting source: ${formatSources(totals.activeRun.sources)}`,
+    ...(workerState.mode === "judge" && workerState.progress != null
+      ? [
+          `- Judge tasks: ${formatWorkerProgressSummary(workerState.progress)}`,
+          `- Judge failures: ${workerState.progress.failures.length === 0 ? "none" : workerState.progress.failures.join("; ")}`,
+        ]
+      : []),
     "",
   ].join("\n");
 }
@@ -1012,6 +1057,7 @@ function startWorker(mode: "candidates" | "judge") {
   workerState.exitCode = undefined;
   workerState.signal = undefined;
   workerState.error = undefined;
+  workerState.progress = undefined;
   workerState.recentOutput = [];
   workerState.status = "running";
   appendWorkerOutput(`$ bun ${formatCommandArgs(args)}`);
@@ -1080,18 +1126,112 @@ function appendWorkerOutput(value: unknown) {
     .map((line) => line.trim())
     .filter(Boolean);
 
-  workerState.recentOutput.push(...lines);
+  const logLines = lines.filter((line) => {
+    if (!line.startsWith(JUDGE_PROGRESS_PREFIX)) return true;
+    updateJudgeProgress(line.slice(JUDGE_PROGRESS_PREFIX.length));
+    return false;
+  });
+
+  workerState.recentOutput.push(...logLines);
   workerState.recentOutput = workerState.recentOutput.slice(-40);
 }
 
 function formatWorkerStatus() {
   if (!workerState.enabled) return "disabled";
   const label = workerState.mode ?? "worker";
-  if (workerState.status === "running") return `${label} ${formatDuration(Date.now() - Number(workerState.startedAt ?? new Date()))}`;
+  if (workerState.status === "running") {
+    const elapsed = formatDuration(Date.now() - Number(workerState.startedAt ?? new Date()));
+    const progress = workerState.progress == null ? undefined : formatWorkerProgressSummary(workerState.progress);
+    return progress == null ? `${label} ${elapsed}` : `${label} ${progress} ${elapsed}`;
+  }
   if (workerState.status === "failed") {
     return workerState.error ?? `${label} failed ${workerState.signal ?? `code ${workerState.exitCode ?? "unknown"}`}`;
   }
   return `${label} ${workerState.status}`;
+}
+
+function updateJudgeProgress(rawJson: string) {
+  let event: Record<string, unknown>;
+  try {
+    event = JSON.parse(rawJson) as Record<string, unknown>;
+  } catch {
+    return;
+  }
+
+  const progress = workerState.progress ?? createWorkerProgress();
+  const type = typeof event.event === "string" ? event.event : "";
+  const taskLabel = formatProgressTaskLabel(event);
+
+  if (type === "planned") {
+    workerState.progress = {
+      ...createWorkerProgress(),
+      total: numberOrZero(event.total),
+      concurrency: numberOrZero(event.concurrency) || undefined,
+    };
+    return;
+  }
+
+  if (type === "task_started") {
+    progress.total = Math.max(progress.total, numberOrZero(event.total));
+    progress.started += 1;
+    progress.running += 1;
+    if (taskLabel != null && !progress.activeTasks.includes(taskLabel)) {
+      progress.activeTasks.push(taskLabel);
+    }
+  } else if (type === "task_completed" || type === "task_failed") {
+    progress.completed += type === "task_completed" ? 1 : 0;
+    progress.failed += type === "task_failed" ? 1 : 0;
+    progress.running = Math.max(0, progress.running - 1);
+    progress.activeTasks = taskLabel == null
+      ? progress.activeTasks
+      : progress.activeTasks.filter((label) => label !== taskLabel);
+    if (type === "task_failed") {
+      const error = typeof event.error === "string" ? event.error : "unknown error";
+      progress.failures.push(`${taskLabel ?? "unknown"}: ${error}`);
+      progress.failures = progress.failures.slice(-6);
+    }
+  } else if (type === "run_finished") {
+    progress.total = Math.max(progress.total, numberOrZero(event.total));
+    progress.completed = numberOrZero(event.completed);
+    progress.failed = numberOrZero(event.failed);
+    progress.running = 0;
+    progress.activeTasks = [];
+  }
+
+  workerState.progress = progress;
+}
+
+function createWorkerProgress(): WorkerProgress {
+  return {
+    total: 0,
+    started: 0,
+    completed: 0,
+    failed: 0,
+    running: 0,
+    activeTasks: [],
+    failures: [],
+  };
+}
+
+function formatProgressTaskLabel(event: Record<string, unknown>) {
+  const slug = typeof event.slug === "string" ? event.slug : undefined;
+  const locale = typeof event.locale === "string" ? event.locale : undefined;
+  if (slug == null || locale == null) return undefined;
+  return `${locale}/${slug}`;
+}
+
+function formatWorkerProgressSummary(progress: WorkerProgress) {
+  const processed = progress.completed + progress.failed;
+  const failed = progress.failed > 0 ? `, ${progress.failed} failed` : "";
+  const running = progress.running > 0 ? `, ${progress.running} running` : "";
+  return `${processed}/${progress.total} processed${running}${failed}`;
+}
+
+function formatActiveJudgeTasks(progress: WorkerProgress, limit: number) {
+  if (progress.activeTasks.length === 0) return "none";
+  const visible = progress.activeTasks.slice(0, limit);
+  const hiddenCount = progress.activeTasks.length - visible.length;
+  return hiddenCount > 0 ? `${visible.join(", ")} +${hiddenCount}` : visible.join(", ");
 }
 
 function renderScopedGeneratorCommand() {
@@ -1157,14 +1297,26 @@ async function runJudgeWorker() {
 
   console.log(`Found ${tasks.length} judge task(s).`);
   console.log(`Processing judge tasks with concurrency ${concurrency}.`);
+  emitJudgeProgress({ event: "planned", total: tasks.length, concurrency });
 
   await mapLimit(tasks, concurrency, async (task, index) => {
     console.log(`\n[${index + 1}/${tasks.length}] judging ${task.locale}/${task.slug}`);
+    emitJudgeProgress({ event: "task_started", index: index + 1, total: tasks.length, slug: task.slug, locale: task.locale });
     try {
       await runJudgeTask(task);
+      emitJudgeProgress({ event: "task_completed", index: index + 1, total: tasks.length, slug: task.slug, locale: task.locale });
     } catch (error) {
-      failures.push(`${task.locale}/${task.slug}: ${error instanceof Error ? error.message : String(error)}`);
+      const message = error instanceof Error ? error.message : String(error);
+      failures.push(`${task.locale}/${task.slug}: ${message}`);
+      emitJudgeProgress({ event: "task_failed", index: index + 1, total: tasks.length, slug: task.slug, locale: task.locale, error: message });
     }
+  });
+
+  emitJudgeProgress({
+    event: "run_finished",
+    total: tasks.length,
+    completed: tasks.length - failures.length,
+    failed: failures.length,
   });
 
   if (failures.length > 0) {
@@ -1173,6 +1325,10 @@ async function runJudgeWorker() {
       ...failures.map((failure) => `- ${failure}`),
     ].join("\n"));
   }
+}
+
+function emitJudgeProgress(event: Record<string, unknown>) {
+  console.log(`${JUDGE_PROGRESS_PREFIX}${JSON.stringify(event)}`);
 }
 
 function collectJudgeTasks() {
