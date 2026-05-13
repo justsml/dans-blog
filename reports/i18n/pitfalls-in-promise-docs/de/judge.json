@@ -1,0 +1,37 @@
+{
+  "selectedCommit": "cf3b6e453b1e8a4766688a085f1b0acfec04aa54",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 10,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The selected commit is the only one that correctly translated the subTitle and provided a high-quality, natural German translation. The previous judge report mentioned a missing blockquote translation, but upon inspection of the provided MDX, the blockquote is already correctly translated into German ('> Promise-Anti-Muster in Google-Suchergebnissen...'). Therefore, no further high-priority suggestions are required.",
+  "slug": "pitfalls-in-promise-docs",
+  "locale": "de",
+  "candidateCommits": [
+    "cf3b6e453b1e8a4766688a085f1b0acfec04aa54",
+    "4a4d216dabf7ade8df0b3d447ec9fc36699128fc"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "> Spotting Promise Anti-Patterns in google search results, and popular libraries.",
+      "replacement": "> Promise-Anti-Muster in Google-Suchergebnissen und populären Bibliotheken aufspüren.",
+      "reason": "The first blockquote was left in English.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug pitfalls-in-promise-docs --locale de --skip-global",
+    "output": ""
+  }
+}
