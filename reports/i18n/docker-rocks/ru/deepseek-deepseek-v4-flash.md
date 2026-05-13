@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: docker-rocks
+- Locale: ru
+- Model: deepseek/deepseek-v4-flash
+- Target: src/content/posts/2015-06-11--docker-rocks/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 15.11
+- Input tokens: 1815
+- Output tokens: 1384
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.000642
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Docker крут и теперь работает на OSX
@@ -46,3 +64,4 @@ Docker в настоящее время может работать нативн
 
 - Docker Desktop является проприетарным, но бесплатен для личного использования. Это отличный способ начать работу с Docker на OSX или Windows.
 - Если вы ищете более открытое решение, обратите внимание на [Rancher Desktop](https://rancherdesktop.io/).
+````
