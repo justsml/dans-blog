@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: you-might-not-need-algolia
+- Locale: ru
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2025-03-01--you-might-not-need-algolia/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 6.57
+- Input tokens: 6204
+- Output tokens: 1669
+- Thinking tokens: unknown
+- Cached input tokens: 1536
+- Cache write tokens: 0
+- Estimated cost: $0.000542
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Вам может не понадобиться Algolia™
 social_image: ../desktop-social.webp
@@ -98,3 +116,4 @@ Pagefind — это не крошечный Algolia в плаще‑маск
 Если нет, назовите причину, по которой индекс должен быть «живым»: инвентарь, права доступа, персонализация, аналитика, ранжирование или частота записей. Затем выбирайте базу данных или поисковый сервис, который явно решает эту задачу.
 
 Algolia — это не злодей. Злодей — это вводить вторую систему, не убедившись, что первого артефакта недостаточно.
+````
