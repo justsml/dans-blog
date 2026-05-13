@@ -1,0 +1,69 @@
+{
+  "selectedCommit": "current",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "scores": {
+    "readability": 5,
+    "technicalAccuracy": 5,
+    "coherence": 5,
+    "relevance": 5,
+    "translationQuality": 5,
+    "mdxPreservation": 5
+  },
+  "suggestions": [],
+  "rationale": "The current translation already incorporates the fixes suggested in the previous judge report (it uses 'pronto' instead of 'anytime soon' and 'aplicar' instead of 'enforcing'). The translation is technically accurate, maintains Dan's direct style, and correctly preserves all MDX components and heading structures. It uses natural Spanish technical terminology (e.g., 'sobrecarga', 'contención', 'instantánea') that fits the context perfectly.",
+  "slug": "your-foreign-keys-are-killing-performance",
+  "locale": "es",
+  "candidateCommits": [
+    "8999900066992d1d106b8192f5ed8395b7ef0996",
+    "340963e1b7d5e953ad8ea0cbc7b47392ce5321de",
+    "51752f0bd8e7acce5955bc4553e4403ab04c0e6e",
+    "4db3b290e9262abb6b4e05c1c63ee14c7921bcc8",
+    "7539c6c9a5a2e6536c3a9b4393be8e6c3fbb27b4",
+    "b1a42587d091bb88a9f0846325452039321dd0aa",
+    "9c6a65ee8d4ff016b2922c8f401fc361bee59987"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "medium",
+      "match": "Wyoming no va a cambiar de nombre anytime soon.",
+      "replacement": "Wyoming no va a cambiar de nombre pronto.",
+      "reason": "The English phrase 'anytime soon' was left untranslated.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "en el momento de la escritura.",
+      "replacement": "en el momento de escritura.",
+      "reason": "Slightly more natural phrasing for technical context.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "Wyoming no va a cambiar de nombre anytime soon.",
+      "replacement": "Wyoming no va a cambiar de nombre pronto.",
+      "reason": "The English phrase 'anytime soon' was left untranslated in the candidate text.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "La base de datos no tiene mecanismo para enforcing una restricción",
+      "replacement": "La base de datos no tiene mecanismo para aplicar una restricción",
+      "reason": "The word 'enforcing' was left in English; 'aplicar' or 'hacer cumplir' is the correct Spanish term.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug your-foreign-keys-are-killing-performance --locale es --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug your-foreign-keys-are-killing-performance --locale es --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug your-foreign-keys-are-killing-performance --locale es --skip-global\n207 |     ...targetContents.matchAll(/=[\"']\\.\\/(?!\\.)[^\"']+\\.(?:avif|gif|jpe?g|png|svg|webp)[\"']/g),\n208 |   ];\n209 | \n210 |   if (nestedAssetReferences.length === 0) return;\n211 | \n212 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2025-12-29--your-foreign-keys-are-killing-performance/es/index.mdx uses ./ asset paths inside a locale folder. Use ../ for inherited post assets.\n      at assertNestedAssetPaths (/Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:212:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}
