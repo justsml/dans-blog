@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: weakmap-the-javascript-feature-you-dont-use
+- Locale: ja
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2025-12-29--weakmap-the-javascript-feature-you-dont-use/ja/index.mdx
+- Validation: deferred
+- Runtime seconds: 4.87
+- Input tokens: 5944
+- Output tokens: 2072
+- Thinking tokens: unknown
+- Cached input tokens: 768
+- Cache write tokens: 0
+- Estimated cost: $0.000605
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: WeakMapでメモリリークを防ぐ
 subTitle: 弱いコードを弱参照で修正！
@@ -129,3 +147,4 @@ WeakMap は、DOM ノードやコンポーネントインスタンス、ある�
 - [MDN: Memory Management](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Memory_management)
 - [V8 Blog: Weak References and Finalizers](https://v8.dev/features/weak-references)
 - [JavaScript.info: WeakMap and WeakSet](https://javascript.info/weakmap-weakset)
+````
