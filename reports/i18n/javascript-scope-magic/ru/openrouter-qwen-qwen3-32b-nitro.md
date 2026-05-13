@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: javascript-scope-magic
+- Locale: ru
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2015-06-06--javascript-scope-magic/ru/index.mdx
+- Validation: passed
+- Runtime seconds: 5.38
+- Input tokens: 2286
+- Output tokens: 2661
+- Thinking tokens: unknown
+- Cached input tokens: 512
+- Cache write tokens: 0
+- Estimated cost: $0.000822
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: JavaScript Магия
 subTitle: Императивный против Рекурсивного против Функционального
@@ -107,3 +125,4 @@ fs.readFileAsync("./style.less") // Вызов промисифицирован�
 -->
 
 [fuck_this]: https://res.cloudinary.com/ddd/image/upload/panda-rampage__tumblr_nq7srwTXqr1stn6klo1_500_gm2som.gif
+````
