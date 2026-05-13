@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: developer-workstation-blast-radius
+- Locale: es
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-05-09--developer-workstation-blast-radius/es/index.mdx
+- Validation: passed
+- Runtime seconds: 69.19
+- Input tokens: 34013
+- Output tokens: 28466
+- Thinking tokens: unknown
+- Cached input tokens: 12800
+- Cache write tokens: 0
+- Estimated cost: $0.009553
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: ''
 subTitle: >-
@@ -423,3 +441,4 @@ Conjunto de activos sugerido una vez elegida una dirección:
 - [Microsoft: Reglas del firewall de Windows](https://learn.microsoft.com/en-us/windows/security/operating-system-security/network-security/windows-firewall/rules)  
 - [Mandiant: UNC5537: Objetivo de instancias de clientes de Snowflake](https://cloud.google.com/blog/topics/threat-intelligence/unc5537-snowflake-data-theft-extortion)  
 - [Microsoft: Técnicas y capacidades de entrega de Lumma Stealer](https://www.microsoft.com/en-us/security/blog/2025/05/21/lumma-stealer-breaking-down-the-delivery-techniques-and-capabilities-of-a-prolific-infostealer/)
+````
