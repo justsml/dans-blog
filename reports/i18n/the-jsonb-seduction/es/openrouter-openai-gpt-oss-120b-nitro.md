@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: the-jsonb-seduction
+- Locale: es
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2025-12-29--the-jsonb-seduction/es/index.mdx
+- Validation: passed
+- Runtime seconds: 5.24
+- Input tokens: 10613
+- Output tokens: 2811
+- Thinking tokens: unknown
+- Cached input tokens: 5248
+- Cache write tokens: 0
+- Estimated cost: $0.000920
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: 'JSONB: La mejor forma de arruinar tu base de datos'
 subTitle: >-
@@ -181,3 +199,4 @@ JSONB funciona bien cuando el documento es genuinamente de forma documental. Es 
 - [Estrategias de indexación de JSONB](https://www.postgresql.org/docs/current/datatype-json.html#JSON-INDEXING)
 - [Cuándo usar JSONB vs columnas relacionales](https://www.citusdata.com/blog/2016/07/14/choosing-nosql-hstore-json-jsonb/)
 - [Mejores prácticas de diseño de esquemas en PostgreSQL](https://www.postgresql.org/docs/current/ddl.html)
+````
