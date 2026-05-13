@@ -4,7 +4,7 @@
   "slug": "docker-security-tips-for-self-hosting",
   "locale": "de",
   "startedAt": "2026-05-13T18:15:58.235Z",
-  "updatedAt": "2026-05-13T18:28:24.133Z",
+  "updatedAt": "2026-05-13T18:32:41.881Z",
   "modelsRequested": [
     "openrouter/openai/gpt-oss-120b:nitro",
     "openrouter/qwen/qwen3-32b:nitro",
@@ -13,9 +13,9 @@
     "qwen/qwen3.6-35b-a3b",
     "qwen/qwen3.5-9b"
   ],
-  "attemptedModels": 3,
+  "attemptedModels": 4,
   "skippedModels": 2,
-  "rejectedModels": 3,
+  "rejectedModels": 4,
   "candidateModels": 0,
   "totals": {
     "inputTokens": 0,
@@ -30,7 +30,7 @@
     "hasUnknownCachedInputTokens": true,
     "hasUnknownCacheWriteTokens": true,
     "hasUnknownEstimatedCost": true,
-    "runtimeSeconds": "720.12"
+    "runtimeSeconds": "955.00"
   },
   "attempts": [
     {
@@ -75,6 +75,17 @@
       "note": "Command failed after 240000ms: bun run i18n:translate:chunked -- --slug docker-security-tips-for-self-hosting --locale de --model qwen/qwen3.6-35b-a3b --chunk 6p --run-id 2026-05-13T18-15-57-947Z-61322 --run-lock-path /Users/dan/code/oss/dans-blog/.git/codex-i18n-translation-run.json --quiz-concurrency 24",
       "telemetry": {
         "runtimeSeconds": "240.05",
+        "tokens": {}
+      }
+    },
+    {
+      "model": "qwen/qwen3.5-9b",
+      "status": "rejected",
+      "validationStatus": "rejected: direct AI SDK translation failed",
+      "reportPath": "reports/i18n/docker-security-tips-for-self-hosting/de/qwen-qwen3.5-9b.md",
+      "note": "Command failed: bun run i18n:translate:chunked -- --slug docker-security-tips-for-self-hosting --locale de --model qwen/qwen3.5-9b --chunk 6p --run-id 2026-05-13T18-15-57-947Z-61322 --run-lock-path /Users/dan/code/oss/dans-blog/.git/codex-i18n-translation-run.json --quiz-concurrency 24 (code 1)",
+      "telemetry": {
+        "runtimeSeconds": "234.88",
         "tokens": {}
       }
     }
