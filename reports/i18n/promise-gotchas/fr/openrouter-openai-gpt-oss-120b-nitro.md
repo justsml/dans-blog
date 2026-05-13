@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: promise-gotchas
+- Locale: fr
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2018-09-26--promise-gotchas/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 0.87
+- Input tokens: 2712
+- Output tokens: 523
+- Thinking tokens: unknown
+- Cached input tokens: 1536
+- Cache write tokens: 0
+- Estimated cost: $0.000200
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Pièges des Promises
@@ -88,3 +106,4 @@ Promise.resolve(42)
   .then(undefined) // this has no affect on the value, it will be handed to following `.then(fn)`
   .then(console.log);
 ```
+````
