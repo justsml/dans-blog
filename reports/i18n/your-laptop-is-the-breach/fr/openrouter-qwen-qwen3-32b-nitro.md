@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: your-laptop-is-the-breach
+- Locale: fr
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-05-09--your-laptop-is-the-breach/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 76.59
+- Input tokens: 34373
+- Output tokens: 31186
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.010234
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Votre laptop est la faille
 subTitle: ''
@@ -323,3 +341,4 @@ Donnez-lui des limites conçues selon les standards de production.
 - [Little Snitch](https://obdev.at/products/littlesnitch/)
 - [Portmaster](https://safing.io/)
 - [Autorisations de Claude Code](https://code.claude.com/docs/en/permissions)
+````
