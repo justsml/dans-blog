@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: stop-the-angularjs-hate
+- Locale: de
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2015-03-10--stop-the-angularjs-hate/de/index.mdx
+- Validation: passed
+- Runtime seconds: 12.61
+- Input tokens: 4515
+- Output tokens: 4823
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.001519
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: ''
@@ -115,3 +133,4 @@ Wenn Sie viele kleine wiederverwendbare UI-Komponenten haben – ReactJS könnte
   1. Verwenden Sie Mustache-Vorlagen, um HTML-Strings zu erstellen (oder den DOM direkt)
   1. Cachen Sie gerenderten Inhalt im localStorage, falls möglich
   1. (Optional) Fügen Sie nun einen Ereignis-Listener hinzu, um den Inhalt erneut zu rendern. Ich habe mich auf den Ereignisnamen `refresh.<class-name>` standardisiert
+````
