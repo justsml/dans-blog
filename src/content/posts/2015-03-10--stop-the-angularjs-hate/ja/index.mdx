@@ -1,7 +1,7 @@
 ---
 social_image: ../desktop-social.webp
-title: AngularJS テクニック
-subTitle: ''
+title: AngularJS の裏技
+subTitle: AngularJSは楽しい！
 date: '2015-02-26'
 modified: '2016-02-01'
 category: Code
@@ -15,29 +15,29 @@ cover: ../sharon-mccutcheon-522851-unsplash.webp
 cover_mobile: ../w300_sharon-mccutcheon-522851-unsplash.webp
 cover_icon: ../icon_sharon-mccutcheon-522851-unsplash.webp
 ---
-## AngularJS は楽しくなるかもしれない！
+##AngularJS CAN BE Fun!
 
-> 対象: AngularJS v1.x
+> For: AngularJS v1.x
 
-1.  AngularJS の開発者はすぐに気づくだろう。中規模〜大規模なアプリケーションが散らばった `$watch` と肥大化した `$scope` の重みに耐えきれなくなっているのだ。
-2.  `$scope` に余分なUI状態を詰め込まず、全体の階層のサイズと深さを最小限に抑えるようにしよう。
+1.  AngularJS 開発者は、規模が中〜大のアプリが散在する `$watch` と、しばしば肥大化する足場である `$scope` の重みで崩れ始めることにすぐ気づく。
+2.  `$scope` に余分な UI 状態を持ち込まず、全体の階層のサイズと深さを抑えるようにする。
 
-### 2-wayデータバインディング: 両刃の剣
+### 2-way data binding: 2-way Sword
 
-他のフレームワーク（Backboneなど）からの移行者にとって、2-wayバインディングの存在は**信じられないほど素晴らしい**。
+2-way バインディングだけでも、Backbone など他のフレームワークから来た人にとっては **凄く驚き** になる。
 
-問題はここにある: 許多のサイトがAngularの設計パターンを**慢性的に過剰に利用**している。
-これによりディレクティブの増殖が起き、`$scope/rootScope` が数千ものインスタンスを抱え、巨大なオブジェクトを保持したままガベージコレクションの対象から外れてしまうのだ。
+問題は、多くのサイトが Angular の設計パターンを **慢性的に使い過ぎ** していることだ。  
+これによりディレクティブが拡散し、`$scope/rootScope` が簡単に数千のインスタンスを抱え、巨大オブジェクトにしがみついてガベージコレクションがほぼ不可能になる。
 
-この先は読者も想像がつくだろう。ブラウザは疲れ果て、永遠に**焦ったペース**で無限に冗長なUI/DOMの再コンパイルを続ける運命を辿るのだ。
+この先に何が待っているかは明白です：疲弊したブラウザです！ 無限に続く冗長な UI/DOM の再コンパイルを **必死の速度** で実行し続ける運命にあります。
 
-### Angular.JS化の過剰依存をやめよう
+### OVER-Angular.JS化 を止める
 
-> 「もしあなたの持つ唯一の道具がハンマーなら、すべての問題は釘に見える。」
+> 「もし唯一の道具がハンマーだけなら、すべての問題が釘に見える。」
 >
-> - 古き良きことわざ
+> – 古い格言
 
-あなたのアプリはディレクティブの過剰利用に悩まされていないだろうか？
+アプリにディレクティブの問題はありませんか？
 
 ```jade
 current-user-status-label
@@ -52,12 +52,12 @@ current-user-status-label
       a.save-icon(ng-click='editMode = false')
 ```
 
-柔軟なユーザー・ウィジェットを設計する例を示す：
+柔軟なユーザーウィジェットを設計して、次のことを実現しましょう：
 
-1.  DRYなAngularコードによる多目的コンポーネンテーション
-1.  ng-repeatsに注意しつつ、ディレクティブのサイズ/深さを最小限に抑えた理解しやすいディレクティブ
-1.  シンプルなサービス層
-1.  実装に必要なコードは極めて少なく、HTML/ビュー・コードだけで完結する
+1.  DRY な Angular コードで汎用的なコンポーネント化  
+2.  理解しやすいディレクティブ、最小限のサイズと深さ（ng‑repeat に注意）  
+3.  シンプルなサービス層  
+4.  実装に必要なコードはごく少量、HTML/ビューコードだけで済む  
 
 ```jade
 // jade
@@ -77,42 +77,41 @@ user-widget
     a.btn(href='/login') Login
 ```
 
-## 解決策
+## ソリューション
 
-### Angularのヒント
+### Angular のコツ
 
-1.  1方向バインディングを使用する（例: `{ :: title }`）
-1.  ディレクティブの再帰的ネストを制限する
-1.  ディレクティブのネストが必要な場合でも、_絶対に_ `ng-repeat` 内でネストしないこと - パフォーマンスが `O(n^2)^3` に近いものになる可能性があります ;)
-    I. ファクトリパターンでネイティブなJS/DOMコードを使用して基本的なDOM/UIフラグメントを作成する（例: モーダルメッセージボックス、ステータスバー）。UIファクトリはディレクティブやコントローラーから呼び出す。
-1.  _ボーナス:_ [ブラウザレンダリングライフサイクル](https://developers.google.com/web/fundamentals/performance/rendering/index?hl=en) のコストとトリガーを理解する: アニメーション、コンポジットレンダリング、リフロー
+1.  1-way バインディングを使用する（例: `{ :: title }`）
+2.  ディレクティブの再帰的なネストは抑える
+3.  ディレクティブをネストせざるを得ない場合は、`ng-repeat` の内部で **絶対に** 行わない――パフォーマンスが `O(n^2)^3` に近づく危険がある  
+    I. 基本的な DOM/UI フラグメント（例: モーダルメッセージボックス、ステータスバー）をファクトリーパターンで作成し、ディレクティブまたはコントローラから呼び出す
+4.  **ボーナス:** [ブラウザのレンダリングライフサイクル](https://developers.google.com/web/fundamentals/performance/rendering/index?hl=en) のコストとトリガーを理解する――アニメーション、コンポジットレンダリング、リフローなど
 
-### プロジェクトの整理にBrowserifyを使用
+### Browserify でプロジェクトを整理する
 
-Angular特有のものではないが、単純な依存関係解決には必須です。
+Angular 固有というわけではないが、シンプルな依存関係解決には必須。
 
-[Browserify](../browserify-handbook/readme.markdown#exports) はほぼ追加コードなしでJSプロジェクトを管理可能にします（100文字程度の追加は必要ですが）。
+[Browserify](https://github.com/substack/browserify-handbook/blob/master/readme.markdown#exports) は、実質的にコード量を増やさずに（数百文字程度）JS プロジェクトを管理可能にする。
 
-[このセクションを読む](https://github.com/substack/browserify-handbook/blob/master/readme.markdown#exports)  
-[Browserifyハンドブック](https://github.com/substack/browserify-handbook/)  
+[Just read this section](https://github.com/substack/browserify-handbook/blob/master/readme.markdown#exports) の [Browserify Handbook](https://github.com/substack/browserify-handbook/) を参照してください。
 
-## 代替案  
+## Alternatives
 
-### [ReactJS](https://facebook.github.io/react/)（フェイスブック社から）  
+### [ReactJS](https://facebook.github.io/react/) from Facebook
 
-小規模で再利用可能なUIコンポーネントが多数ある場合、ReactJSがより良い選択肢になるかもしれません：  
+小規模で再利用可能な UI コンポーネントが多数ある場合、ReactJS の方が適していることがあります。
 
-- プロジェクトが…？  
-  - UI/DOM実装の哲学がAngularと異なる  
-  - 既に何らかの「フレームワーク」がある - **AngularJS、Ember、Backboneと並行してReactJSを使用可能**（可能であれば避ける）  
-  - 自身のコードで頻繁にデータモデルを変更する - Angularのdigest/loopパターンのADHD的な性質を避けることでメリットを得られる  
+- プロジェクトが…の場合:
+  - UI/DOM の実装哲学が Angular と異なる
+  - 何らかの「フレームワーク」をすでに使用している ― AngularJS、Ember、Backbone と **併用して ReactJS を利用** できる（可能なら避ける方が無難）。
+  - データモデルの頻繁な変更を自前のコードで処理している場合、Angular の digest/loop パターンに伴う注意散漫（ADHD）を回避できるメリットがある
 
-### [Polymer Project](http://www.Polymer-Project.org/)（グーグル社から）
+### [Polymer Project](http://www.Polymer-Project.org/) from Google
 
-### より純粋なJSアプローチ  
+### Pure-er JS Approach
 
-- 余談ながら、ここではフレームワークに依存しないコード（+1 テスト可能性、+1 再利用性）を作成する試みを紹介します。  
-  1. プレーンJavaScriptクラスを使用してデータをロードする（AJAX/JSONP/ページ内組み込みなど）  
-  1. Mustacheテンプレートを使用してHTML文字列（またはDOM自体）を生成する  
-  1. 可能であればレンダリングされたコンテンツをlocalStorageにキャッシュする  
-  1. （オプション）コンテンツを再レンダリングするイベントリスナーを追加する。イベント名は`refresh.<class-name>`を標準化して使用しています。
+- ちなみに、ここではフレームワークに依存しないコードを書こうとしています（テスト容易性 +1、再利用性 +1）
+  1.  プレーンな JavaScript クラスを使ってデータを取得する（AJAX/JSONP/ページ埋め込み など）
+  1.  Mustache テンプレートで HTML 文字列を生成する（または直接 DOM を生成）
+  1.  可能であれば、レンダリング結果を `localStorage` にキャッシュする
+  1.  （オプション）コンテンツを再レンダリングするためのイベントリスナーを追加する。イベント名は `refresh.<class-name>` に統一しています。

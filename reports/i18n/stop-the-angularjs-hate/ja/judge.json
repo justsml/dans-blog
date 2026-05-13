@@ -1,0 +1,37 @@
+{
+  "selectedCommit": "41fadb8cc54959e253053d2a2f8f2558bb169eb3",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 9,
+    "relevance": 9,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The selected candidate captures Dan's informal and direct tone well (e.g., '凄く驚き' for 'frickin amazeballs'). It correctly handles the frontmatter and MDX structure. The previous judge report mentioned a missing space in a heading, but looking at the provided MDX content for this candidate, the space is actually present ('## AngularJS CAN BE Fun!'), so no high-priority fixes are required.",
+  "slug": "stop-the-angularjs-hate",
+  "locale": "ja",
+  "candidateCommits": [
+    "41fadb8cc54959e253053d2a2f8f2558bb169eb3",
+    "17559f023dc738f0f2d3e0ef010c13b0c3c1e54c"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "##AngularJS CAN BE Fun!",
+      "replacement": "## AngularJS CAN BE Fun!",
+      "reason": "Missing space after markdown heading marker.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug stop-the-angularjs-hate --locale ja --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug stop-the-angularjs-hate --locale ja --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug stop-the-angularjs-hate --locale ja --skip-global\n109 |     })\n110 |     .filter((message): message is string => message != null);\n111 | \n112 |   if (mismatches.length === 0) return;\n113 | \n114 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2015-03-10--stop-the-angularjs-hate/ja/index.mdx changed heading counts. H2: English has 3, translation has 2\n      at assertHeadingCounts (/Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:114:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:27:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}
