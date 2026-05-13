@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: angularjs-v2-impending-schism
+- Locale: fr
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2015-08-05--angularjs-v2-impending-schism/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 0.91
+- Input tokens: 1805
+- Output tokens: 671
+- Thinking tokens: unknown
+- Cached input tokens: 768
+- Cache write tokens: 0
+- Estimated cost: $0.000191
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: AngularJS v2.0 et le schisme imminent
@@ -39,3 +57,4 @@ Bon, je le mettrai sur la liste de formation des débutants : quelque part ent
 <div class="anigif top end">
   <img alt='tout ira bien' src="https://res.cloudinary.com/ddd/image/upload/v1442175801/system-maint-anon.gif" />
 </div>
+````
