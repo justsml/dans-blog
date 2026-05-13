@@ -1,0 +1,44 @@
+{
+  "index": 3,
+  "attempt": 1,
+  "originalTitle": "Cross-Frame instanceof",
+  "translatedTitle": "क्रॉस‑फ़्रेम instanceof",
+  "translation": {
+    "title": "क्रॉस‑फ़्रेम instanceof",
+    "group": "टाइप चेकिंग ट्रिक्स",
+    "options": [
+      {
+        "text": "हमेशा सत्य"
+      },
+      {
+        "text": "हमेशा असत्य"
+      },
+      {
+        "text": "फ़्रेमों के बीच में असत्य हो सकता है"
+      },
+      {
+        "text": "एक त्रुटि फेंकता है"
+      }
+    ],
+    "questionProse": [
+      "यदिफ़्रेम्स के बीच `instanceof Error` के साथ क्या होता है?"
+    ],
+    "explanationProse": [
+      "`instanceof` विभिन्न निष्पादन संदर्भों (iframes, workers) के बीच `false` लौटा सकता है क्योंकि प्रत्येक संदर्भ का अपना `Error` कंस्ट्रक्टर होता है। संदर्भों के बीच विश्वसनीय त्रुटि पहचान के लिए `Object.prototype.toString.call(obj) === '[object Error]'` का उपयोग करें।"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"क्रॉस‑फ़्रेम instanceof\",\n  \"group\": \"टाइप चेकिंग ट्रिक्स\",\n  \"options\": [\n    {\n      \"text\": \"हमेशा सत्य\"\n    },\n    {\n      \"text\": \"हमेशा असत्य\"\n    },\n    {\n      \"text\": \"फ़्रेमों के बीच में असत्य हो सकता है\"\n    },\n    {\n      \"text\": \"एक त्रुटि फेंकता है\"\n    }\n  ],\n  \"questionProse\": [\n    \"यदिफ़्रेम्स के बीच `instanceof Error` के साथ क्या होता है?\"\n  ],\n  \"explanationProse\": [\n    \"`instanceof` विभिन्न निष्पादन संदर्भों (iframes, workers) के बीच `false` लौटा सकता है क्योंकि प्रत्येक संदर्भ का अपना `Error` कंस्ट्रक्टर होता है। संदर्भों के बीच विश्वसनीय त्रुटि पहचान के लिए `Object.prototype.toString.call(obj) === '[object Error]'` का उपयोग करें।\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 775,
+    "outputTokens": 559,
+    "cacheReadTokens": 128,
+    "cacheWriteTokens": 0,
+    "durationMs": 1340
+  },
+  "cost": {
+    "inputUsd": 0.000030225,
+    "outputUsd": 0.00010062000000000001,
+    "totalUsd": 0.000130845,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

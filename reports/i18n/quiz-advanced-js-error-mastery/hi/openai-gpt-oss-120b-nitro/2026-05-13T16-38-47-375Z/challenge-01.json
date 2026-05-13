@@ -1,0 +1,44 @@
+{
+  "index": 0,
+  "attempt": 1,
+  "originalTitle": "The Empty Object Mystery",
+  "translatedTitle": "खाली ऑब्जेक्ट रहस्य",
+  "translation": {
+    "title": "खाली ऑब्जेक्ट रहस्य",
+    "group": "सीरियलाइज़ेशन आश्चर्य",
+    "options": [
+      {
+        "text": "{\"message\":\"Oops\",\"name\":\"Error\"}"
+      },
+      {
+        "text": "{}"
+      },
+      {
+        "text": "{\"error\":\"Oops\"}"
+      },
+      {
+        "text": "null"
+      }
+    ],
+    "questionProse": [
+      "`JSON.stringify(error)` क्या लौटाता है?"
+    ],
+    "explanationProse": [
+      "Error ऑब्जेक्ट में गैर‑enumerable प्रॉपर्टी (`message`, `name`, `stack`) होती हैं, इसलिए `JSON.stringify()` `{}` लौटाता है। यह API प्रतिक्रियाओं में एरर भेजते समय अक्सर होने वाला गड़बड़ है। `JSON.stringify(error, Object.getOwnPropertyNames(error))` का उपयोग करें या सीधे एक साधारण ऑब्जेक्ट बनाएं।"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"खाली ऑब्जेक्ट रहस्य\",\n  \"group\": \"सीरियलाइज़ेशन आश्चर्य\",\n  \"options\": [\n    {\n      \"text\": \"{\\\"message\\\":\\\"Oops\\\",\\\"name\\\":\\\"Error\\\"}\"\n    },\n    {\n      \"text\": \"{}\"\n    },\n    {\n      \"text\": \"{\\\"error\\\":\\\"Oops\\\"}\"\n    },\n    {\n      \"text\": \"null\"\n    }\n  ],\n  \"questionProse\": [\n    \"`JSON.stringify(error)` क्या लौटाता है?\"\n  ],\n  \"explanationProse\": [\n    \"Error ऑब्जेक्ट में गैर‑enumerable प्रॉपर्टी (`message`, `name`, `stack`) होती हैं, इसलिए `JSON.stringify()` `{}` लौटाता है। यह API प्रतिक्रियाओं में एरर भेजते समय अक्सर होने वाला गड़बड़ है। `JSON.stringify(error, Object.getOwnPropertyNames(error))` का उपयोग करें या सीधे एक साधारण ऑब्जेक्ट बनाएं।\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 782,
+    "outputTokens": 481,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 444
+  },
+  "cost": {
+    "inputUsd": 0.000030498000000000002,
+    "outputUsd": 0.00008657999999999999,
+    "totalUsd": 0.00011707799999999999,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

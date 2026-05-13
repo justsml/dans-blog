@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-advanced-js-error-mastery
+- Locale: hi
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2025-11-04--quiz-advanced-js-error-mastery/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 13.31
+- Input tokens: 13152
+- Output tokens: 8520
+- Thinking tokens: unknown
+- Cached input tokens: 3584
+- Cache write tokens: 0
+- Estimated cost: $0.002047
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: 'प्रश्नोत्तरी: उन्नत JS त्रुटि महारत'
 subTitle: क्या आपके अपवाद वास्तव में विशिष्ट हैं?
@@ -493,3 +511,4 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 सीरियलाइज़ेशन के फंदों से लेकर क्रॉस‑कॉन्टेक्स्ट `instanceof` विफलताओं तक, ये उन्नत अवधारणाएँ जूनियर डेवलपर्स को ~सीज़नड~ क्षतिग्रस्त पेशेवरों से अलग करती हैं।
 
 और अधिक चुनौतियों के लिए तैयार हैं? हमारे [पूरा क्विज़ संग्रह](/challenges/) में जाएँ और जावास्क्रिप्ट, एल्गोरिदम और अन्य विषयों पर अतिरिक्त दिमागी पहेलियों को देखें!
+````

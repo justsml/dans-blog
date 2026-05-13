@@ -1,0 +1,44 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "Express Response Error",
+  "translatedTitle": "एक्सप्रेस प्रतिक्रियात्रुटि",
+  "translation": {
+    "title": "एक्सप्रेस प्रतिक्रियात्रुटि",
+    "group": "API गड़बड़ियाँ",
+    "options": [
+      {
+        "text": "पूरा त्रुटि ऑब्जेक्ट भेजता है"
+      },
+      {
+        "text": "भेजता है {\"error\":{}}"
+      },
+      {
+        "text": "सर्वर त्रुटि फेंकता है"
+      },
+      {
+        "text": "केवल त्रुटि संदेश भेजता है"
+      }
+    ],
+    "questionProse": [
+      "क्लाइंट को क्या भेजा जाता है?"
+    ],
+    "explanationProse": [
+      "`res.json()` अंदर `JSON.stringify()` का उपयोग करता है, इसलिए Error ऑब्जेक्ट `{}` बन जाता है। क्लाइंट को `{\"error\":{}}` मिलता है। इसे ठीक करने के लिए, `res.json({ error: error.message })` या `res.json({ error: { message: error.message, name: error.name } })` का उपयोग करें।"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"एक्सप्रेस प्रतिक्रियात्रुटि\",\n  \"group\": \"API गड़बड़ियाँ\",\n  \"options\": [\n    {\n      \"text\": \"पूरा त्रुटि ऑब्जेक्ट भेजता है\"\n    },\n    {\n      \"text\": \"भेजता है {\\\"error\\\":{}}\"\n    },\n    {\n      \"text\": \"सर्वर त्रुटि फेंकता है\"\n    },\n    {\n      \"text\": \"केवल त्रुटि संदेश भेजता है\"\n    }\n  ],\n  \"questionProse\": [\n    \"क्लाइंट को क्या भेजा जाता है?\"\n  ],\n  \"explanationProse\": [\n    \"`res.json()` अंदर `JSON.stringify()` का उपयोग करता है, इसलिए Error ऑब्जेक्ट `{}` बन जाता है। क्लाइंट को `{\\\"error\\\":{}}` मिलता है। इसे ठीक करने के लिए, `res.json({ error: error.message })` या `res.json({ error: { message: error.message, name: error.name } })` का उपयोग करें।\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 793,
+    "outputTokens": 626,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1067
+  },
+  "cost": {
+    "inputUsd": 0.000030927,
+    "outputUsd": 0.00011268,
+    "totalUsd": 0.000143607,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

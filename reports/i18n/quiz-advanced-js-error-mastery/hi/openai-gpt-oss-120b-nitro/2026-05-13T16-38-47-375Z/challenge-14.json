@@ -1,0 +1,44 @@
+{
+  "index": 13,
+  "attempt": 1,
+  "originalTitle": "Object vs Error Detection",
+  "translatedTitle": "ऑब्जेक्ट बनाम एरर डिटेक्शन",
+  "translation": {
+    "title": "ऑब्जेक्ट बनाम एरर डिटेक्शन",
+    "group": "एरर बाउंडरीज",
+    "options": [
+      {
+        "text": "true, true"
+      },
+      {
+        "text": "false, false"
+      },
+      {
+        "text": "true, false"
+      },
+      {
+        "text": "false, true"
+      }
+    ],
+    "questionProse": [
+      "इन जाँचों का परिणाम क्या है?"
+    ],
+    "explanationProse": [
+      "`instanceof Error` `false` लौटाता है क्योंकि ऑब्जेक्ट Error कंस्ट्रक्टर से नहीं बनाया गया था। `Object.prototype.toString.call()` भी `false` लौटाता है (यह `'[object Object]'` लौटाता है) क्योंकि यह आंतरिक `[[Class]]` स्लॉट को जांचता है। दोनों मेथड सही तरीके से इसे एक नकली एरर ऑब्जेक्ट के रूप में पहचानते हैं।"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"ऑब्जेक्ट बनाम एरर डिटेक्शन\",\n  \"group\": \"एरर बाउंडरीज\",\n  \"options\": [\n    {\n      \"text\": \"true, true\"\n    },\n    {\n      \"text\": \"false, false\"\n    },\n    {\n      \"text\": \"true, false\"\n    },\n    {\n      \"text\": \"false, true\"\n    }\n  ],\n  \"questionProse\": [\n    \"इन जाँचों का परिणाम क्या है?\"\n  ],\n  \"explanationProse\": [\n    \"`instanceof Error` `false` लौटाता है क्योंकि ऑब्जेक्ट Error कंस्ट्रक्टर से नहीं बनाया गया था। `Object.prototype.toString.call()` भी `false` लौटाता है (यह `'[object Object]'` लौटाता है) क्योंकि यह आंतरिक `[[Class]]` स्लॉट को जांचता है। दोनों मेथड सही तरीके से इसे एक नकली एरर ऑब्जेक्ट के रूप में पहचानते हैं।\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 779,
+    "outputTokens": 531,
+    "cacheReadTokens": 384,
+    "cacheWriteTokens": 0,
+    "durationMs": 620
+  },
+  "cost": {
+    "inputUsd": 0.000030381,
+    "outputUsd": 0.00009558,
+    "totalUsd": 0.000125961,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
