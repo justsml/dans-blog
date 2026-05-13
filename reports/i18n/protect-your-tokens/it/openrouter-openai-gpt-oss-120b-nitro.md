@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: protect-your-tokens
+- Locale: it
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2018-10-27--protect-your-tokens/it/index.mdx
+- Validation: passed
+- Runtime seconds: 2.02
+- Input tokens: 6904
+- Output tokens: 1578
+- Thinking tokens: unknown
+- Cached input tokens: 3584
+- Cache write tokens: 0
+- Estimated cost: $0.000553
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: 'Proteggi token,chiavi API e segreti'
@@ -122,3 +140,4 @@ const src = `//maps.googleapis.com/maps/api/js?key=${key}`;
 -----------------------------------
 
 **Nota:** Esistono altri _Use Cases_ per le variabili d'ambiente. Alcuni che non ho trattato: CI/CD/testing, feature flag e configurazione a runtime per ambienti speciali!
+````
