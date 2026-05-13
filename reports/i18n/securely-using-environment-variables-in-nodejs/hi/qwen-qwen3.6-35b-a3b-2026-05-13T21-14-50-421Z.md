@@ -3,7 +3,7 @@
 - Locale: hi
 - Model: qwen/qwen3.6-35b-a3b
 - Target: src/content/posts/2018-11-14--securely-using-environment-variables-in-nodejs/hi/index.mdx
-- Validation: deferred
+- Validation: rejected: direct AI SDK translation failed
 - Runtime seconds: 60.60
 - Input tokens: 3650
 - Output tokens: 13778
@@ -12,14 +12,14 @@
 - Cache write tokens: 0
 - Estimated cost: $0.014325
 - Pricing source: local-openrouter-estimate
-- Note: Generated through the direct AI SDK chunked translator.
+- Note: Command failed: git commit --only -m i18n candidate(hi): securely-using-environment-variables-in-nodejs via qwen/qwen3.6-35b-a3b -- reports/i18n/securely-using-environment-variables-in-nodejs/hi reports/i18n/securely-using-environment-variables-in-nodejs/candidates.jsonl
 ## Raw Output
 
 ````mdx
 ---
 social_image: ../desktop-social.webp
-title: NodeJS में पर्यावरण चर का उपयोग
-subTitle: '`dotenv` का उपयोग'
+title: ''
+subTitle: ''
 date: '2018-11-13'
 modified: '2020-07-30'
 tags:
@@ -35,32 +35,32 @@ cover: ../john-salvino-417565-unsplash.webp
 cover_mobile: ../w300_john-salvino-417565-unsplash.webp
 cover_icon: ../icon_john-salvino-417565-unsplash.webp
 ---
-## सीक्रेट्स और API टोकन को सुरक्षित रूप से हैंडल करना
+## गोपनीय और API टोकन्स को सुरक्षित रूप से संभालना
 
-### संबंधित लेख: [अपने टोकन की सुरक्षा करें](../protect-your-tokens/)
+### संबंधित लेख: [अपने टोकन्स की रक्षा करें](../protect-your-tokens/)
 
-आइए `secret` और `non-secret` के बीच के अंतर को जल्दी से दोहराते हैं।
+चलिए `secret` और `non-secret` के बीच अंतर को जल्दी से दोहरा लेते हैं।
 
-* 🔒 `Secret keys` को 3rd party API सेवाओं के लिए रिक्वेस्ट को छिपाने (प्रॉक्सी करने) के लिए कस्टम सर्वर (जैसे Node/Express/Heroku) का उपयोग करना **अनिवार्य** है।
-* 🌍 `Non-secret keys` उन कुंजियों को दर्शाती हैं जिन्हें ब्राउज़र में भेजा जा सकता है।
+* 🔒 `Secret keys` को तीसरे पक्ष की API सेवाओं पर अनुरोध छिपाने (प्रॉक्सी) के लिए कस्टम सर्वर (जैसे Node/Express/Heroku) का उपयोग करना चाहिए।
+* 🌍 `Non-secret keys` ब्राउज़र में भेजे जा सकने वाली कुंजियों का वर्णन करता है।
 
 <br />
 
 ---------------------------------------------
 
-> इस लेख में हम **Environment Variables** का उपयोग करके 🔒 `Secret keys` को हैंडल करने पर ध्यान केंद्रित करेंगे।
+> हम इस आर्टिकल में 🔒 `Secret keys` के साथ **पर्यावरण चर** का उपयोग करके कैसे निपटें इस पर ध्यान केंद्रित करेंगे।
 
-[कोड उदाहरण नीचे दिए गए हैं।](#️-code-example)
+[कोड उदाहरण नीचे शामिल हैं।](#️-code-example)
 
-#### अवलोकन
+#### सारांश
 
-आपके NodeJS कोड में सीक्रेट्स को **सुरक्षित रूप से एक्सेस करने के लिए:**
+अपने **NodeJS कोड में रहस्यों को सुरक्षित रूप से एक्सेस करने के लिए:**
 
-1. हार्डकोडेड कुंजियों को एन्वायरमेंट वेरिएबल्स से बदलें। उदाहरण के लिए: `process.env.API_SECRET`
-1. [`dotenv`](https://github.com/motdotla/dotenv) जैसी लाइब्रेरी और एक `.env` फ़ाइल का उपयोग करें। अपनी पहले से हार्डकोडेड सीक्रेट्स को `.env` फ़ाइल में जोड़ें।
+1. हार्डकोड किए गए कुंजियों को पर्यावरण चर से बदलें। उदाहरण के लिए `process.env.API_SECRET`
+1. `dotenv` जैसी पुस्तकालय का उपयोग करें [https://github.com/motdotla/dotenv](https://github.com/motdotla/dotenv) एक `.env` फ़ाइल के साथ। पहले से हार्डकोड किए गए रहस्यों को `.env` फ़ाइल में जोड़ें।
 1. अपने `.gitignore` फ़ाइल में `.env` लाइन की पुष्टि करें!
 
-> **डिप्लॉयड सर्वर पर `.env` फ़ाइल न बनाएं।** अपने होस्टिंग प्रोवाइडर (जैसे [Heroku](https://devcenter.heroku.com/articles/config-vars), Netlify, AWS EC2) द्वारा प्रदान की गई एन्वायरमेंट वेरिएबल मैनेजमेंट टूल का उपयोग करें: उदाहरण के लिए **डैशबोर्ड या कमांड लाइन।**
+> **नहीं बनाएं** डिप्लॉय किए गए सर्वर पर `.env` फ़ाइल। अपने होस्टिंग सेवाओं (जैसे [Heroku](https://devcenter.heroku.com/articles/config-vars), Netlify, AWS EC2) द्वारा प्रदान किए गए पर्यावरण चर प्रबंधन उपकरण का उपयोग करें: उदाहरण के लिए **डैशबोर्ड या कमांड लाइन।**
 
 ### कोड उदाहरण
 
@@ -70,7 +70,7 @@ cover_icon: ../icon_john-salvino-417565-unsplash.webp
 1. `./db/connection.js`
 1. `./api/users.js`
 
-<!-- `process.env.PG*` का उपयोग करने वाला एक उदाहरण कॉन्फ़िग ऑब्जेक्ट -->
+<!-- उदाहरण निर्माण वस्तु जो `process.env.PG*` का उपयोग करती है
 
 ```js
 // ./db/config.js
@@ -85,15 +85,16 @@ module.exports = {
 };
 ```
 
-`db/config.js` फ़ाइल केवल एक उदाहरण है कि आपके सीक्रेट्स को आपके कोड में पुनः उपयोग के लिए कैसे स्टोर किया जाना चाहिए।
+`db/config.js` फ़ाइल एक उदाहरण है कि आप अपने रहस्यों को कोड में पुनः उपयोग के लिए कैसे संग्रहित करें।
+-->
 
-पहले, [`dotenv`](https://www.npmjs.com/package/dotenv) पैकेज इंस्टॉल करें।
+सबसे पहले, [`dotenv`](https://www.npmjs.com/package/dotenv) पैकेज को इंस्टॉल करें।
 
 ```bash
 npm install dotenv
 ```
 
-इसके बाद, अपने प्रोजेक्ट के रूट में एक `.env` फ़ाइल बनाएं।
+अगले, अपने प्रोजेक्ट के रूट में एक `.env` फ़ाइल बनाएं।
 
 ```
 # .env
@@ -104,40 +105,40 @@ PGUSER="postgres"
 PGPASSWORD="password"
 ```
 
-❌ **कभी भी** `.env` फ़ाइल को commit न करें।
+❌ **कभी भी** `.env` फ़ाइल को कमिट न करें।
 
 ❌ सर्वर पर `.env` फ़ाइल बनाने से बचें।
 
-होस्टिंग प्रोवाइडर की दस्तावेज़ीकरण में _environment variables_ सेटअप करने के निर्देश देखें।
+अपने होस्टिंग प्रदाता की दस्तावेज़ में जाकर _पर्यावरण चर_ स्थापित करें।
 
-`.gitignore` में `.env` लाइन होने की पुष्टि करने के लिए आसानी से जाँच करें।
+अपने `.gitignore` में `.env` लाइन है या नहीं, यह आसानी से चेक करने के लिए:
 
 ```bash
-# Automatically update .gitignore
-# Run in terminal:
+# स्वचालित रूप से .gitignore अपडेट करें
+# टर्मिनल में चलाएं:
 [ "$(grep '^.env' .gitignore)" == "" ] && echo '.env' >> .gitignore
-# note: no output will print
+# नोट: कोई आउटपुट प्रिंट नहीं होगा
 ```
 
-`./db/connection.js` एक साझा `pg.Pool` इंस्टेंस प्रदान करता है। डेटाबेस क्वेरी करने के लिए इसका उपयोग किया जाएगा।
+`./db/connection.js` फ़ाइल डेटाबेस को क्वेरी करने के लिए एक साझा `pg.Pool` इंस्टैंस प्रदान करती है।
 
 ```js
 // ./db/connection.js
-require('dotenv').config(); // ✅ Load .env file
+require('dotenv').config(); // ✅ .env फ़ाइल लोड करें
 const pg = require('pg');
 const {PGUSER, PGHOST, PGPORT} = process.env;
 
 if (process.env.NODE_ENV === 'development')
-  console.log(`Connecting to ${PGUSER} @ ${PGHOST}:${PGHOST}`);
-// ^^ only for showing debug connection vars
+  console.log(`जुड़ रहे हैं ${PGUSER} @ ${PGHOST}:${PGHOST}`);
+// ^^ डीबग कनेक्शन वैरिएबल दिखाने के लिए ही
 
-// pg automatically uses PG* env variables
+// pg स्वचालित रूप से PG* पर्यावरण चर का उपयोग करता है
 module.exports = new pg.Pool();
 ```
 
-`./api` फ़ोल्डर में आपकी टेबल्स/व्यूज़ के लिए इंटरफ़ेस परिभाषित हैं।
+`./api` फ़ोल्डर आपकी टेबल/व्यू के इंटरफ़ेस शामिल करता है।
 
-`users` टेबल के लिए एक उदाहरण `./api/users.js` यहाँ दिया गया है।
+यहाँ `./api/users.js` का एक उदाहरण है `users` टेबल के लिए।
 
 ```js
 // ./api/users.js
@@ -150,13 +151,13 @@ module.exports = {
 };
 ```
 
-- कभी भी अपने `.env` सीक्रेट्स को git पर commit न करें!
-- टीम के साथ `.env` फ़ाइलें शेयर न करें। *
+-  कभी भी अपने `.env` सीक्रेट्स को git में कमिट न करें!
+-  टीम में `.env` फ़ाइलें शेयर न करें। *
 
-\* हर नई डेवलपमेंट लैपटॉप या डेस्कटॉप पर **नए एक्सेस कीज़ और टोकन जनरेट किए जाने चाहिए।**
-यदि ऐसा संभव नहीं है, तो अपनी `.env` फ़ाइल शेयर करते समय अत्यधिक सावधानी बरतें (ऐसे मामलों में जहाँ कोई सेवा पुराने सभी कीज़ को अमान्य कर सकती है, या आपके पास एक पेड API का सीमित एक्सेस टोकन हो।)
+\* प्रत्येक नई डेवलॉपमेंट लैपटॉप या डेस्कटॉप पर **नए एक्सेस की और टोकन जनरेट करें।**
+अगर यह संभव न हो तो अपने `.env` के शेयरिंग में बहुत सावधानी बरतें (एक सेवा जो पुराने की को निरस्त कर सकती है या आपके पास भुगतान वाले API के सीमित एक्सेस टोकन हैं।)
 
-#### ⚠️ महत्वपूर्ण: यदि आवश्यक हो, तो हमेशा एक सुरक्षित मैसेजिंग सर्विस का उपयोग करें (प्राथमिकता के साथ expiring message सपोर्ट वाली।)
+#### ⚠️ महत्वपूर्ण: आवश्यकता पड़ने पर हमेशा सुरक्षित मैसेजिंग सेवा का उपयोग करें (समाप्त होने वाले संदेश समर्थन के साथ अधिक अच्छा होगा।)
 
-शुभकामनाएँ, और यदि आपके कोई प्रश्न हों तो मुझे बताएँ! 🎉
+अच्छा लक अउ मुझे बताएं अगर आपके पास कोई सवाल है! 🎉
 ````
