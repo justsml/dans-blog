@@ -1,0 +1,42 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Using `.map(parseInt)`",
+  "translatedTitle": "Utilisation de `.map(parseInt)`",
+  "translation": {
+    "title": "Utilisation de `.map(parseInt)`",
+    "group": "Number[]",
+    "options": [
+      {
+        "text": "[24, NaN, NaN]"
+      },
+      {
+        "text": "[24, NaN, 42]"
+      },
+      {
+        "text": "[24, 42]"
+      },
+      {
+        "text": "NaN"
+      }
+    ],
+    "questionProse": [],
+    "explanationProse": [
+      "Le deuxième argument de `parseInt` (la base) correspond à l'argument `index` des méthodes de tableau. Cela entraîne des résultats inattendus, car `parseInt(\"One\", 1)` renvoie `NaN` à cause de l'entrée invalide.\n\n    Le premier élément, `24`, est analysé comme `24` en base 0 (détection automatique), il reste donc `24`. Le deuxième élément, `'One'`, est analysé comme `NaN` en base 1. Le troisième élément, `42`, est analysé en base 2. En base 2, `'42'` donne `NaN`, donc le résultat est `[24, NaN, NaN]`.\n\n    C’est un piège fréquent avec `parseInt` et `map`. Si vous voulez convertir un tableau de chaînes en nombres, la seule méthode « intégrée » sûre est `.map(Number)` ou en ajoutant une fonction de rappel `.map(x => parseInt(x, 10))`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Utilisation de `.map(parseInt)`\",\n  \"group\": \"Number[]\",\n  \"options\": [\n    {\n      \"text\": \"[24, NaN, NaN]\"\n    },\n    {\n      \"text\": \"[24, NaN, 42]\"\n    },\n    {\n      \"text\": \"[24, 42]\"\n    },\n    {\n      \"text\": \"NaN\"\n    }\n  ],\n  \"questionProse\": [],\n  \"explanationProse\": [\n    \"Le deuxième argument de `parseInt` (la base) correspond à l'argument `index` des méthodes de tableau. Cela entraîne des résultats inattendus, car `parseInt(\\\"One\\\", 1)` renvoie `NaN` à cause de l'entrée invalide.\\n\\n    Le premier élément, `24`, est analysé comme `24` en base 0 (détection automatique), il reste donc `24`. Le deuxième élément, `'One'`, est analysé comme `NaN` en base 1. Le troisième élément, `42`, est analysé en base 2. En base 2, `'42'` donne `NaN`, donc le résultat est `[24, NaN, NaN]`.\\n\\n    C’est un piège fréquent avec `parseInt` et `map`. Si vous voulez convertir un tableau de chaînes en nombres, la seule méthode « intégrée » sûre est `.map(Number)` ou en ajoutant une fonction de rappel `.map(x => parseInt(x, 10))`.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 944,
+    "outputTokens": 852,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 2292
+  },
+  "cost": {
+    "inputUsd": 0.000036816,
+    "outputUsd": 0.00015335999999999998,
+    "totalUsd": 0.000190176,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
