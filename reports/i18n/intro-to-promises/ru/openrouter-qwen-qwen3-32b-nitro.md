@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: intro-to-promises
+- Locale: ru
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2018-08-01--intro-to-promises/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 7.48
+- Input tokens: 3468
+- Output tokens: 2869
+- Thinking tokens: unknown
+- Cached input tokens: 512
+- Cache write tokens: 0
+- Estimated cost: $0.000966
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Введение в промисы
@@ -106,3 +124,4 @@ API промисов на самом деле состоит из небольш
 * `Promise.reject(Ошибка)` - Создаёт промис с ошибкой, вызывает последующий `.catch()`  
 * `Promise.all([...промисы])` - Ждёт завершения всех промисов в массиве  
 * `Promise.race([...промисы])` - Завершается при разрешении первого промиса
+````
