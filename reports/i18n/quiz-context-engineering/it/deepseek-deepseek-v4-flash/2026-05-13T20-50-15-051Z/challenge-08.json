@@ -1,0 +1,44 @@
+{
+  "index": 7,
+  "attempt": 1,
+  "originalTitle": "Conversation History Management",
+  "translatedTitle": "Gestione della cronologia delle conversazioni",
+  "translation": {
+    "title": "Gestione della cronologia delle conversazioni",
+    "group": "Gestione dei token",
+    "options": [
+      {
+        "text": "Inviare sempre la cronologia completa della conversazione"
+      },
+      {
+        "text": "Riassumere i messaggi vecchi quando la cronologia supera un budget di token"
+      },
+      {
+        "text": "Eliminare i messaggi vecchi — il modello ha memoria persistente"
+      },
+      {
+        "text": "Memorizzare la cronologia in un database vettoriale e recuperare i turni pertinenti"
+      }
+    ],
+    "questionProse": [
+      "In un'applicazione di chat multi-turno, qual è la strategia corretta quando la cronologia della conversazione diventa lunga?"
+    ],
+    "explanationProse": [
+      "Gli LLM non hanno memoria persistente. Ogni chiamata API è stateless — invii il contesto completo, ricevi una risposta. La \"memoria\" di una conversazione è interamente la cronologia dei messaggi che includi in ogni richiesta.\n\n    Quando quella cronologia supera il tuo budget, le opzioni sono:\n    1. **Riassumere**: Comprimere i turni più vecchi in un riepilogo continuo, mantenere i turni recenti testuali\n    2. **Finestra scorrevole**: Mantenere gli ultimi N turni, eliminare quelli precedenti\n    3. **Recupero selettivo**: Incorporare i turni della conversazione e recuperare quelli pertinenti per ogni query (complesso ma potente)\n\n    Il troncamento semplice — tagliare i messaggi vecchi per adattarli — è l'opzione peggiore perché rimuove silenziosamente contesto di cui il modello potrebbe aver bisogno.\n\n    Il recupero della cronologia delle conversazioni tramite database vettoriale è teoricamente allettante ma di solito eccessivo per la maggior parte delle app di chat. Il riepilogo è l'impostazione predefinita pragmatica."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Gestione della cronologia delle conversazioni\",\n  \"group\": \"Gestione dei token\",\n  \"options\": [\n    {\n      \"text\": \"Inviare sempre la cronologia completa della conversazione\"\n    },\n    {\n      \"text\": \"Riassumere i messaggi vecchi quando la cronologia supera un budget di token\"\n    },\n    {\n      \"text\": \"Eliminare i messaggi vecchi — il modello ha memoria persistente\"\n    },\n    {\n      \"text\": \"Memorizzare la cronologia in un database vettoriale e recuperare i turni pertinenti\"\n    }\n  ],\n  \"questionProse\": [\n    \"In un'applicazione di chat multi-turno, qual è la strategia corretta quando la cronologia della conversazione diventa lunga?\"\n  ],\n  \"explanationProse\": [\n    \"Gli LLM non hanno memoria persistente. Ogni chiamata API è stateless — invii il contesto completo, ricevi una risposta. La \\\"memoria\\\" di una conversazione è interamente la cronologia dei messaggi che includi in ogni richiesta.\\n\\n    Quando quella cronologia supera il tuo budget, le opzioni sono:\\n    1. **Riassumere**: Comprimere i turni più vecchi in un riepilogo continuo, mantenere i turni recenti testuali\\n    2. **Finestra scorrevole**: Mantenere gli ultimi N turni, eliminare quelli precedenti\\n    3. **Recupero selettivo**: Incorporare i turni della conversazione e recuperare quelli pertinenti per ogni query (complesso ma potente)\\n\\n    Il troncamento semplice — tagliare i messaggi vecchi per adattarli — è l'opzione peggiore perché rimuove silenziosamente contesto di cui il modello potrebbe aver bisogno.\\n\\n    Il recupero della cronologia delle conversazioni tramite database vettoriale è teoricamente allettante ma di solito eccessivo per la maggior parte delle app di chat. Il riepilogo è l'impostazione predefinita pragmatica.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 872,
+    "outputTokens": 1333,
+    "cacheReadTokens": 384,
+    "cacheWriteTokens": 0,
+    "durationMs": 69997
+  },
+  "cost": {
+    "inputUsd": 0.00006939520000000001,
+    "outputUsd": 0.00037324000000000005,
+    "totalUsd": 0.00044263520000000005,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

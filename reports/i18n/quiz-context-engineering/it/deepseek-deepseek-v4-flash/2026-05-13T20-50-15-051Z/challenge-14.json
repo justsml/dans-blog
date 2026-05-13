@@ -1,0 +1,44 @@
+{
+  "index": 13,
+  "attempt": 1,
+  "originalTitle": "Context Engineering vs. Fine-Tuning",
+  "translatedTitle": "Ingegneria del Contesto vs. Fine-Tuning",
+  "translation": {
+    "title": "Ingegneria del Contesto vs. Fine-Tuning",
+    "group": "Esperto",
+    "options": [
+      {
+        "text": "Il fine-tuning è sempre meglio — l'ingegneria del contesto è un ripiego"
+      },
+      {
+        "text": "L'ingegneria del contesto è gratuita; il fine-tuning è costoso; usa sempre l'ingegneria del contesto"
+      },
+      {
+        "text": "L'ingegneria del contesto modifica il comportamento per richiesta; il fine-tuning modifica i pesi del modello in modo permanente"
+      },
+      {
+        "text": "Sono nomi diversi per la stessa tecnica"
+      }
+    ],
+    "questionProse": [
+      "Qual è la differenza fondamentale tra ingegneria del contesto e fine-tuning, e quando ha senso usare il fine-tuning?"
+    ],
+    "explanationProse": [
+      "**L'ingegneria del contesto** modella il comportamento del modello attraverso il prompt — istruzioni di sistema, esempi few-shot, contesto recuperato. È per richiesta, reversibile e non richiede training.\n\n    **Il fine-tuning** aggiorna i pesi del modello sui tuoi dati. Le modifiche sono permanenti (per quel checkpoint) e si applicano a ogni inferenza.\n\n    Il fine-tuning è genuinamente migliore quando:\n    - Hai bisogno di uno stile/formato coerente che il modello non può seguire in modo affidabile solo dalle istruzioni\n    - Il tuo compito richiede un comportamento ripetibile su pattern specifici del dominio che il prompting e il retrieval non risolvono\n    - Devi ridurre la lunghezza del prompt — il comportamento fine-tuned non deve essere spiegato ogni richiesta\n    - Stai eseguendo molte richieste in cui esempi few-shot coerenti consumano token significativi\n\n    Il fine-tuning è eccessivo quando:\n    - Le tue istruzioni rientrano in un system prompt\n    - Hai principalmente bisogno di fatti aggiornati o proprietari che possono essere recuperati al momento della richiesta\n    - I requisiti cambiano frequentemente (dovresti rifare il fine-tuning)\n    - Non hai ancora esaurito l'ingegneria del contesto\n\n    L'ordine giusto: perfeziona prima l'ingegneria del contesto. Fai fine-tuning quando è provatamente insufficiente."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Ingegneria del Contesto vs. Fine-Tuning\",\n  \"group\": \"Esperto\",\n  \"options\": [\n    {\n      \"text\": \"Il fine-tuning è sempre meglio — l'ingegneria del contesto è un ripiego\"\n    },\n    {\n      \"text\": \"L'ingegneria del contesto è gratuita; il fine-tuning è costoso; usa sempre l'ingegneria del contesto\"\n    },\n    {\n      \"text\": \"L'ingegneria del contesto modifica il comportamento per richiesta; il fine-tuning modifica i pesi del modello in modo permanente\"\n    },\n    {\n      \"text\": \"Sono nomi diversi per la stessa tecnica\"\n    }\n  ],\n  \"questionProse\": [\n    \"Qual è la differenza fondamentale tra ingegneria del contesto e fine-tuning, e quando ha senso usare il fine-tuning?\"\n  ],\n  \"explanationProse\": [\n    \"**L'ingegneria del contesto** modella il comportamento del modello attraverso il prompt — istruzioni di sistema, esempi few-shot, contesto recuperato. È per richiesta, reversibile e non richiede training.\\n\\n    **Il fine-tuning** aggiorna i pesi del modello sui tuoi dati. Le modifiche sono permanenti (per quel checkpoint) e si applicano a ogni inferenza.\\n\\n    Il fine-tuning è genuinamente migliore quando:\\n    - Hai bisogno di uno stile/formato coerente che il modello non può seguire in modo affidabile solo dalle istruzioni\\n    - Il tuo compito richiede un comportamento ripetibile su pattern specifici del dominio che il prompting e il retrieval non risolvono\\n    - Devi ridurre la lunghezza del prompt — il comportamento fine-tuned non deve essere spiegato ogni richiesta\\n    - Stai eseguendo molte richieste in cui esempi few-shot coerenti consumano token significativi\\n\\n    Il fine-tuning è eccessivo quando:\\n    - Le tue istruzioni rientrano in un system prompt\\n    - Hai principalmente bisogno di fatti aggiornati o proprietari che possono essere recuperati al momento della richiesta\\n    - I requisiti cambiano frequentemente (dovresti rifare il fine-tuning)\\n    - Non hai ancora esaurito l'ingegneria del contesto\\n\\n    L'ordine giusto: perfeziona prima l'ingegneria del contesto. Fai fine-tuning quando è provatamente insufficiente.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 951,
+    "outputTokens": 2069,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 11569
+  },
+  "cost": {
+    "inputUsd": 0.00013314000000000002,
+    "outputUsd": 0.00057932,
+    "totalUsd": 0.00071246,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

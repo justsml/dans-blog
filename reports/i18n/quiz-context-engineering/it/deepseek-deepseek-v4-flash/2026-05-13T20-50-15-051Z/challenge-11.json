@@ -1,0 +1,44 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "Temperature and Determinism",
+  "translatedTitle": "Temperatura e Determinismo",
+  "translation": {
+    "title": "Temperatura e Determinismo",
+    "group": "Avanzato",
+    "options": [
+      {
+        "text": "temperature=0 produce sempre output identici per lo stesso input"
+      },
+      {
+        "text": "temperature=0 rende gli output più deterministici ma non garantisce l'identicità"
+      },
+      {
+        "text": "temperature=0 disabilita il modello\\"
+      },
+      {
+        "text": "temperature influisce solo sulla lunghezza della risposta"
+      }
+    ],
+    "questionProse": [
+      "Impostare `temperature=0` nella tua chiamata LLM significa:"
+    ],
+    "explanationProse": [
+      "`temperature=0` fa sì che il modello scelga il token con la probabilità più alta ad ogni passo (decodifica greedy), producendo output **più consistenti** — ma non garantiti identici.\n\n    Fonti di variazione con temperature=0:\n    - **Non-determinismo in virgola mobile** nei calcoli GPU, specialmente su hardware diversi o batch size differenti\n    - **Cambiamenti infrastrutturali lato server** (aggiornamenti del modello, infrastruttura di servizio)\n    - **Output lunghi** accumulano piccole variazioni\n\n    Per suite di test e valutazioni che richiedono determinismo rigoroso, `temperature=0` è la scelta giusta — basta non scrivere asserzioni che dipendono da output identici byte per byte. Fai asserzioni su struttura, contenuto chiave e comportamento, non su stringhe esatte."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Temperatura e Determinismo\",\n  \"group\": \"Avanzato\",\n  \"options\": [\n    {\n      \"text\": \"temperature=0 produce sempre output identici per lo stesso input\"\n    },\n    {\n      \"text\": \"temperature=0 rende gli output più deterministici ma non garantisce l'identicità\"\n    },\n    {\n      \"text\": \"temperature=0 disabilita il modello\\\\\"\n    },\n    {\n      \"text\": \"temperature influisce solo sulla lunghezza della risposta\"\n    }\n  ],\n  \"questionProse\": [\n    \"Impostare `temperature=0` nella tua chiamata LLM significa:\"\n  ],\n  \"questionCode\": [],\n  \"explanationProse\": [\n    \"`temperature=0` fa sì che il modello scelga il token con la probabilità più alta ad ogni passo (decodifica greedy), producendo output **più consistenti** — ma non garantiti identici.\\n\\n    Fonti di variazione con temperature=0:\\n    - **Non-determinismo in virgola mobile** nei calcoli GPU, specialmente su hardware diversi o batch size differenti\\n    - **Cambiamenti infrastrutturali lato server** (aggiornamenti del modello, infrastruttura di servizio)\\n    - **Output lunghi** accumulano piccole variazioni\\n\\n    Per suite di test e valutazioni che richiedono determinismo rigoroso, `temperature=0` è la scelta giusta — basta non scrivere asserzioni che dipendono da output identici byte per byte. Fai asserzioni su struttura, contenuto chiave e comportamento, non su stringhe esatte.\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 846,
+    "outputTokens": 1625,
+    "cacheReadTokens": 384,
+    "cacheWriteTokens": 0,
+    "durationMs": 13729
+  },
+  "cost": {
+    "inputUsd": 0.00006575520000000001,
+    "outputUsd": 0.000455,
+    "totalUsd": 0.0005207552,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
