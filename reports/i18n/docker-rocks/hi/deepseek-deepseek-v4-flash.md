@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: docker-rocks
+- Locale: hi
+- Model: deepseek/deepseek-v4-flash
+- Target: src/content/posts/2015-06-11--docker-rocks/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 15.73
+- Input tokens: 1922
+- Output tokens: 3139
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.001148
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Docker कमाल है और अब OSX पर काम करता है
@@ -46,3 +64,4 @@ Docker वर्तमान में Linux Kernel v3.4+ पर मूल र�
 
 - Docker Desktop मालिकाना है, लेकिन व्यक्तिगत उपयोग के लिए मुफ्त है। OSX या Windows पर Docker के साथ शुरुआत करने का यह एक शानदार तरीका है।
 - यदि आप अधिक ओपन-सोर्स समाधान की तलाश में हैं, तो [Rancher Desktop](https://rancherdesktop.io/) देखें।
+````
