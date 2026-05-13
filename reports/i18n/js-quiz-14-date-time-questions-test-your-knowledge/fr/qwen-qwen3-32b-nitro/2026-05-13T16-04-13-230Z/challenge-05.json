@@ -1,0 +1,44 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Date String Parsing",
+  "translatedTitle": "Analyse des chaînes de dates",
+  "translation": {
+    "title": "Analyse des chaînes de dates",
+    "group": "Gestion des dates",
+    "options": [
+      {
+        "text": "2019 2020"
+      },
+      {
+        "text": "2020 2021"
+      },
+      {
+        "text": "2020 2020"
+      },
+      {
+        "text": "2020 2019"
+      }
+    ],
+    "questionProse": [
+      "Quelle valeur s'affichera dans la console ?"
+    ],
+    "explanationProse": [
+      "La chaîne sans la valeur horaire `T` peut sembler être le 1er janvier 2020 - mais les chaînes de date seule sont interprétées en UTC, et une fois ajustées à notre fuseau horaire local (GMT-7), on constate que nous sommes toujours en 2019.\n\nLes chaînes date-heure sans fuseau horaire explicite sont interprétées en temps local.\n\nLa forme `T00:00` fait en sorte que la deuxième valeur soit interprétée comme minuit local.\n\nLa première date est interprétée comme `Tue Dec 31 2019 17:00:00 GMT-0700 (Mountain Standard Time)`.\nLa deuxième date est interprétée comme `Wed Jan 01 2020 00:00:00 GMT-0700 (Mountain Standard Time)`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Analyse des chaînes de dates\",\n  \"group\": \"Gestion des dates\",\n  \"options\": [\n    {\n      \"text\": \"2019 2020\"\n    },\n    {\n      \"text\": \"2020 2021\"\n    },\n    {\n      \"text\": \"2020 2020\"\n    },\n    {\n      \"text\": \"2020 2019\"\n    }\n  ],\n  \"questionProse\": [\n    \"Quelle valeur s'affichera dans la console ?\"\n  ],\n  \"explanationProse\": [\n    \"La chaîne sans la valeur horaire `T` peut sembler être le 1er janvier 2020 - mais les chaînes de date seule sont interprétées en UTC, et une fois ajustées à notre fuseau horaire local (GMT-7), on constate que nous sommes toujours en 2019.\\n\\nLes chaînes date-heure sans fuseau horaire explicite sont interprétées en temps local.\\n\\nLa forme `T00:00` fait en sorte que la deuxième valeur soit interprétée comme minuit local.\\n\\nLa première date est interprétée comme `Tue Dec 31 2019 17:00:00 GMT-0700 (Mountain Standard Time)`.\\nLa deuxième date est interprétée comme `Wed Jan 01 2020 00:00:00 GMT-0700 (Mountain Standard Time)`.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 848,
+    "outputTokens": 1230,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 3147
+  },
+  "cost": {
+    "inputUsd": 0.00006784,
+    "outputUsd": 0.00029519999999999997,
+    "totalUsd": 0.00036303999999999997,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
