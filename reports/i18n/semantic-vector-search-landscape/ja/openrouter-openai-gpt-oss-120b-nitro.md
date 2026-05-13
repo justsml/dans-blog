@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: semantic-vector-search-landscape
+- Locale: ja
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-05-01--semantic-vector-search-landscape/ja/index.mdx
+- Validation: deferred
+- Runtime seconds: 17.32
+- Input tokens: 20859
+- Output tokens: 9631
+- Thinking tokens: unknown
+- Cached input tokens: 6656
+- Cache write tokens: 0
+- Estimated cost: $0.002547
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: セマンティックベクトル検索と友達・恋人を作るその他のテーマ
 subTitle: 検索全体像：完全一致、あいまい、意味、ハイブリッド — それぞれを組み合わせるタイミング。
@@ -369,3 +387,4 @@ _Last verified against public project docs and product pages on May 8, 2026. Tre
 これらは競合するツールではなく、相補的です。適切に構築された検索システムはクエリの形状に応じて最適なレイヤーを選択し、形状が重なる場合は複数レイヤーを同時に走らせて結果を融合します。
 
 優れた検索機能を提供できるチームはスタック全体を把握しています。そうでないチームはベクトルデータベースに手を出し、すべてを埋め込み、正確な検索が時々誤ったレコードを返す理由が分からないままです。
+````
