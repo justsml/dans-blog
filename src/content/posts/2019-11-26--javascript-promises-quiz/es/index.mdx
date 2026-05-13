@@ -1,7 +1,7 @@
 ---
 social_image: ../desktop-social.webp
-title: 'Cuestionario: 9 preguntas sobre Promesas de JavaScript'
-subTitle: ''
+title: 'Quiz: 9 preguntas sobre Promesas de JavaScript'
+subTitle: ¡Nunca vuelvas a romper una promesa!
 label: Promise Gotchas
 date: '2019-11-26'
 modified: '2024-11-28'
@@ -25,31 +25,30 @@ cover: ../olav-ahrens-rotne-jvBXiynINGE-resized.webp
 cover_mobile: ../w300_olav-ahrens-rotne-jvBXiynINGE-resized.webp
 cover_icon: ../icon_olav-ahrens-rotne-jvBXiynINGE-resized.webp
 ---
-import Challenge from '../../../../components/QuizUI/Challenge';
-import QuizUI from '../../../../components/QuizUI/QuizUI';
+import Challenge from '../../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../../components/QuizUI/QuizUI';
 
 
 ## ¿Conoces las Promesas de JavaScript?
 
-> * **¡Demuestra tus habilidades en JavaScript!** 🚀
+> * **¡Demuestra tu dominio de JavaScript!** 🚀
 
-1. **Revisa las pistas** (botón grande, esquina inferior).
-2. Prueba el código en la Consola de tu navegador (usa el atajo `F12` o búscalo) o usa [repl.it](https://repl.it)*.
-3. ¡No dudes en [mandarme un tuit @justsml](https://x.com/intent/tweet?text=Hey%20Dan%2C%20I%20was%20taking%20your%20promises%20quiz%2E%2E%2E&url=https://danlevy.net/). **¡Me encantaría escuchar tus comentarios!**
+1. **Busca Pistas** (Botón grande, esquina inferior).
+2. Prueba el código en la Consola de tu navegador (usa el atajo `F12` o búscalo) o utiliza [repl.it](https://repl.it)*.
+3. Siéntete libre de [twittearme @justsml](https://x.com/intent/tweet?text=Hey%20Dan%2C%20I%20was%20taking%20your%20promises%20quiz%2E%2E%2E&url=https://danlevy.net/). **¡Me encantaría conocer tu opinión!**
 
-### 👇 Completa las 9 Preguntas de Abajo 👇
----
+### 👇 Completa las 9 preguntas abajo 👇
 
 <QuizUI>
 
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={0}
-  group="Manejo de Errores"
-  title="Múltiples `.catch` #1"
+  group="Manejo de errores"
+  title="Múltiples `.catch`'s #1"
   options={[
-    {text: 'imprimir el mensaje una vez'},
-    {text: 'imprimir el mensaje dos veces', isAnswer: true},
+    {text: 'imprimir mensaje una vez'},
+    {text: 'imprimir mensaje dos veces', isAnswer: true},
     {text: 'UnhandledPromiseRejectionWarning'},
     {text: 'el proceso termina'},
   ]}
@@ -68,9 +67,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Creamos una Promise usando el método constructor, disparando un error inmediatamente con el callback `reject`.
+    Creemos una Promise usando el método constructor, provocando un error inmediatamente con el callback `reject`.
 
-    Luego, los manejadores `.catch` funcionan como el DOM's `.addEventListener(event, callback)` o el Event Emitter's `.on(event, callback)` donde **se pueden agregar múltiples callbacks de manejador.** Cada uno será llamado con los mismos argumentos.
+    Luego los manejadores `.catch` funcionan como `.addEventListener(event, callback)` del DOM o `.on(event, callback)` de Event Emitter, donde **se pueden añadir múltiples callbacks de manejador**. Cada uno será llamado con los mismos argumentos.
   </div>
   </slot>
 </Challenge>
@@ -78,12 +77,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={1}
-  group="Manejo de Errores"
-  title="Múltiples .catch #2"
+  group="Manejo de errores"
+  title="Múltiples `.catch`'s #2"
   options={[
     {text: 'imprimir mensaje una vez'},
     {text: 'imprimir mensaje dos veces'},
-    {text: 'promesa rechazada no manejada', isAnswer: true},
+    {text: 'promesa rechazada sin manejar', isAnswer: true},
     {text: 'el proceso termina'},
   ]}
 >
@@ -101,7 +100,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Al usar el constructor Promise, debes invocar `resolve()` o `reject()`. El constructor Promise ignora el valor devuelto por el executor, por lo que la promesa adicional creada con `Promise.reject()` no está encadenada a `p`. Los dos manejadores están adjuntos a `p`, que permanece pendiente, mientras que la promesa rechazada devuelta se reporta como no manejada por el entorno anfitrión.
+    Cuando se usa el constructor Promise debes invocar ya sea los callbacks `resolve()` o `reject()`. El constructor Promise ignora el valor de retorno del ejecutor, por lo que la Promise adicional creada con `Promise.reject()` no se encadena a `p`. Los dos manejadores se adjuntan a `p`, que queda pendiente, mientras que la Promise rechazada devuelta se informa como no manejada por el entorno host.
   </div>
   </slot>
 </Challenge>
@@ -109,11 +108,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:only="react"
   index={2}
-  group="Manejo de Errores"
-  title="Encadenar `.then` y `.catch`"
+  group="Manejo de errores"
+  title="Encadenando `.then` y `.catch`"
   options={[
-    {text: 'imprimir el error y `undefined`', isAnswer: true},
-    {text: 'imprimir el error dos veces'},
+    {text: 'imprimir error y `undefined`', isAnswer: true},
+    {text: 'imprimir error dos veces'},
     {text: 'UnhandledPromiseRejectionWarning'},
     {text: 'undefined'},
   ]}
@@ -132,7 +131,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Al encadenar `.then` y `.catch`, es útil pensar en ellos como una serie de pasos. Cada `.then` recibe el valor devuelto por el `.then` anterior (como argumento). Sin embargo, si un "paso" encuentra un error, se omitirán todos los siguientes `.then` hasta que se encuentre un `.catch`. Si deseas sobrescribir un error, solo necesitas devolver un valor no de error. Este valor será accesible en cualquier `.then` posterior.
+    Al encadenar `.then` y `.catch` es útil pensar en ellos como una serie de pasos. Cada `.then` recibe el valor devuelto por el `.then` anterior (como su argumento). Sin embargo, si tu "paso" encontró un error, cualquier "paso" `.then` posterior se omitirá hasta que se encuentre un `.catch`. Si deseas sobrescribir un error, solo necesitas devolver un valor que no sea un error. Ese valor puede ser accedido en cualquier `.then` posterior.
   </div>
   </slot>
 </Challenge>
@@ -141,10 +140,10 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:only="react"
   index={3}
   group="Manejo de Errores"
-  title="Encadenamiento de `.catch`"
+  title="Encadenando `.catch`'s"
   options={[
-    {text: 'imprimir el mensaje de error una vez', isAnswer: true},
-    {text: 'imprimir el mensaje de error dos veces'},
+    {text: 'imprimir mensaje de error una vez', isAnswer: true},
+    {text: 'imprimir mensaje de error dos veces'},
     {text: 'UnhandledPromiseRejectionWarning'},
     {text: 'el proceso termina'},
   ]}
@@ -163,7 +162,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Al encadenar `.catch`, cada uno solo maneja los errores lanzados en el `.then` o `.catch` anterior. En este ejemplo, el primer `.catch` devuelve el `console.log`, que solo podría ser accesible añadiendo un `.then()` después de ambos `.catch`.
+    Al encadenar `.catch`'s, cada uno solo maneja los errores lanzados en los pasos anteriores de `.then` o `.catch`. En este ejemplo el primer `.catch` devuelve el `console.log`, que solo se puede acceder añadiendo un `.then()` después de ambos `.catch`.
   </div>
   </slot>
 </Challenge>
@@ -171,13 +170,13 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={4}
-  group="Manejo de Errores"
-  title="Múltiples `.catch`"
+  group="Manejo de errores"
+  title="Múltiples `.catch`'s"
   options={[
-    {text: 'imprimir el mensaje una vez'},
-    {text: 'imprimir el mensaje dos veces'},
+    {text: 'imprimir mensaje una vez'},
+    {text: 'imprimir mensaje dos veces'},
     {text: 'UnhandledPromiseRejectionWarning'},
-    {text: 'nada se imprime', isAnswer: true},
+    {text: 'no se imprime nada', isAnswer: true},
   ]}
 >
   <slot name="question">
@@ -199,9 +198,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    **Sugerencia:** Los `.catch` se pueden usar para ignorar (o anular) errores simplemente devolviendo un valor normal.
+    **Hint:** `.catch`'s pueden usarse para ignorar (o sobrescribir) errores simplemente devolviendo un valor regular.
 
-    Este truco funciona solo cuando hay un `.then` posterior para recibir el valor.
+    Este truco funciona solo cuando hay un `.then` posterior que reciba el valor.
   </div>
   </slot>
 </Challenge>
@@ -209,13 +208,13 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={5}
-  group="Manejo de Datos"
-  title="Flujo entre `.then`"
+  group="Manejo de datos"
+  title="Flujo entre `.then`'s"
   options={[
-    {text: 'imprime "¡Éxito!" y "¡ÉXITO!"'},
-    {text: 'imprime "¡Éxito!"'},
-    {text: 'imprime "¡ÉXITO!"', isAnswer: true},
-    {text: 'nada imprime'},
+    {text: 'imprimir "Success!" y "SUCCESS!"'},
+    {text: 'imprimir "Success!"'},
+    {text: 'imprimir "SUCCESS!"', isAnswer: true},
+    {text: 'no se imprime nada'},
   ]}
 >
   <slot name="question">
@@ -234,7 +233,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    **Sugerencia:** los `.then` pasan datos de forma secuencial, desde el `return value` hasta el siguiente `.then(value => /* handle value */)`.
+    **Hint:** `.then`'s pasan datos secuencialmente, desde `return value` al siguiente `.then(value => /* handle value */)`.
 
     Un `return` es clave para pasar un valor al siguiente `.then`.
   </div>
@@ -244,13 +243,13 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={6}
-  group="Manejo de Datos"
-  title="Flujo entre `.then`"
+  group="Manejo de datos"
+  title="Flujo entre `.then`'s"
   options={[
     {text: 'imprimir "SUCCESS!"'},
     {text: 'imprimir "Success!"'},
     {text: 'imprimir "SUCCESS!" y "SUCCESS!"', isAnswer: true},
-    {text: 'nada se imprime'},
+    {text: 'no se imprime nada'},
   ]}
 >
   <slot name="question">
@@ -282,9 +281,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="Manejo de datos"
   title="Flujo entre `.then`'s"
   options={[
-    {text: 'imprime "¡ÉXITO!"'},
-    {text: 'imprime "¡Éxito!"'},
-    {text: 'imprime "¡ÉXITO!" y "¡ÉXITO!"'},
+    {text: 'imprimir "SUCCESS!"'},
+    {text: 'imprimir "Success!"'},
+    {text: 'imprimir "SUCCESS!" y "SUCCESS!"'},
     {text: 'imprime `undefined`', isAnswer: true},
   ]}
 >
@@ -304,7 +303,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    **Sugerencia:** Los `.then` pasan datos secuencialmente, desde el valor devuelto hasta el siguiente `.then(value => /* manejar valor */)`.
+    **Hint:** `.then`'s pasan datos secuencialmente, desde `return value` al siguiente `.then(value => /* handle value */)`.
 
     Un `return` es clave para pasar un valor al siguiente `.then`.
   </div>
@@ -314,14 +313,14 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={8}
-  group="Manejo de Datos"
+  group="Manejo de datos"
   title="Flujo entre `.then` y `.catch`"
   options={[
-    {text: 'imprimir \'Oh noes!\' y \'The fails!\''},
-    {text: 'imprimir \'Oh noes!\''},
-    {text: 'imprimir \'The fails!\'', isAnswer: true},
-    {text: 'imprimir \'actually, that worked\''},
-    {text: 'nada se imprime'},
+    {text: 'imprimir "¡Oh noes!" y "¡The fails!"'},
+    {text: 'imprimir "¡Oh noes!"'},
+    {text: 'imprimir "¡The fails!"', isAnswer: true},
+    {text: 'imprimir "en realidad, eso funcionó"'},
+    {text: 'no se imprime nada'},
   ]}
 >
   <slot name="question">
