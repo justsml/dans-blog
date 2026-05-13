@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: llm-routing-mastra-ai
+- Locale: hi
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-01-02--llm-routing-mastra-ai/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 165.94
+- Input tokens: 5386
+- Output tokens: 7545
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.002242
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: अपने मॉडल से शादी मत करो
 subTitle: 'LLM रूटिंग, जो बहुत गर्म है'
@@ -113,3 +131,4 @@ export const mastra = new Mastra({
 2. [सुरक्षा और गार्डरेल्स](../mastra-security-guardrails)  
 3. [MCP और टूल एकीकरण](../mastra-mcp-tool-integrations)  
 4. [वर्कफ्लो और मेमोरी](../mastra-workflows-memory)
+````
