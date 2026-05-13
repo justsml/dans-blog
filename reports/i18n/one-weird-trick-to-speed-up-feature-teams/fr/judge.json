@@ -1,0 +1,68 @@
+{
+  "selectedCommit": "714afad4b0edfb15a2d1f9ac450161813060fb06",
+  "selectedModel": "openrouter/qwen/qwen3-32b:nitro",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 10,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "subTitle: ''",
+      "replacement": "subTitle: Les Staff Engineers détestent ça !",
+      "reason": "The subtitle was left empty in the translation but contains a classic 'clickbait' trope in the English source that should be preserved for tone consistency."
+    },
+    {
+      "priority": "medium",
+      "match": "fork-le et construis ton propre service de données KV !",
+      "replacement": "forkez-le et construisez votre propre service de données KV !",
+      "reason": "The rest of the article uses 'vous' (formal/plural) to address the reader. Switching to 'tu' in the final call to action is inconsistent."
+    }
+  ],
+  "rationale": "The translation is technically sound and captures the informal, punchy style of the original. The previous judge's suggestions regarding 'encodage' and 'évoluer' were already integrated into the current file version. I am adding a fix for the missing subtitle and an inconsistency in the person (tu vs vous) used in the call to action.",
+  "slug": "one-weird-trick-to-speed-up-feature-teams",
+  "locale": "fr",
+  "candidateCommits": [
+    "09e70ba000b840c88ca3e46b7274dd9bd2829a6c",
+    "714afad4b0edfb15a2d1f9ac450161813060fb06"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "subTitle: ''",
+      "replacement": "subTitle: Les Staff Engineers détestent ça !",
+      "reason": "The subtitle was missing in the candidate but present in the English source.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "La hiérarchie des clés (`user/420` -> `user/420/friends`) encodage naturel d'une relation graphique",
+      "replacement": "La hiérarchie des clés (`user/420` -> `user/420/friends`) encode naturellement une relation de graphe",
+      "reason": "The original sentence 'encodage naturel' is ungrammatical (missing verb). 'Relation de graphe' is more standard than 'relation graphique' in this technical context.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "l'évoluer vers un système plus complexe",
+      "replacement": "le faire évoluer vers un système plus complexe",
+      "reason": "In French, 'évoluer' is intransitive; you cannot 'évoluer' something directly. 'Le faire évoluer' is the correct transitive construction.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug one-weird-trick-to-speed-up-feature-teams --locale fr --skip-global",
+    "output": ""
+  }
+}
