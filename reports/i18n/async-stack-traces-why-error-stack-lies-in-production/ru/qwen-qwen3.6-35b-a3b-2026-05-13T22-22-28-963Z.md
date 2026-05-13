@@ -1,0 +1,118 @@
+# Translation Candidate
+- Slug: async-stack-traces-why-error-stack-lies-in-production
+- Locale: ru
+- Model: qwen/qwen3.6-35b-a3b
+- Target: src/content/posts/2025-12-29--async-stack-traces-why-error-stack-lies-in-production/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 50.98
+- Input tokens: 3233
+- Output tokens: 11466
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.011951
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: 'Асинхронные трассировки стека: почему `Error.stack` врет'
+subTitle: Очередь микрозадач съела мою домашку (и контекст отладки).
+date: '2025-12-29'
+modified: '2025-12-30'
+tags:
+  - javascript
+  - async
+  - debugging
+  - node.js
+  - v8
+  - performance
+category: Code
+subCategory: Best Practices
+social_image: ../desktop-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+Сейчас 2 часа ночи. Сирена PagerDuty воет на полную.
+
+Открываете логи и видите это:
+
+```
+Error: Cannot read properties of undefined (reading 'id')
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+```
+
+Вот и всё. Ни имени функции. Ни номера строки. Ни пути к файлу. Только «processTicksAndRejections».
+
+Добро пожаловать в асинхронный JavaScript, где трассировки стека — фикция, а номера строк не имеют значения.
+
+---
+
+## Почему трассировки стека ломаются
+
+В синхронном коде Call Stack — это аккуратная генеалогия. A вызвала B, B вызвала C. Когда C падает, вы видите точный маршрут, как вы туда добрались.
+
+В асинхронном коде (`async/await`) каждое ключевое слово `await` — это точка приостановки.
+
+При выполнении `await` функция вырывается из стека. Она отправляется в криогенный морозильник под названием Microtask Queue. Стек теперь пуст (или занят чем-то другим).
+
+Когда Promise разрешается, функция оттаивает и возвращается в стек. Но история вызовов утеряна.
+
+Движок не имеет ни малейшего понятия, кто вызвал `await` 500 миллисекунд назад. Он просто знает, что у него есть задача на выполнение.
+
+---
+
+## Попытки V8 исправить ситуацию
+
+Node.js пытается помочь. У нас есть:
+
+1.  `Error.captureStackTrace()`: Фиксирует стек *в момент создания*. Бесполезно, если ошибка выбрасывается позже.
+2.  `--async-stack-traces`: Флаг, заставляющий Node.js вести «теневой стек» цепочек промисов.
+    *   Цена: Замедляет ваше приложение на 30%.
+    *   Итог: Помогает, но быстро создаёт много шума.
+
+---
+
+## Реальное решение: AsyncLocalStorage
+
+Если хотите выжить в продакшене, перестаньте смотреть на стеки вызовов. Смотрите на причинно-следственные связи.
+
+Нам нужно привязать контекст (User ID, Request ID) к «потоку» выполнения, даже когда он прыгает между стеком и очередью микрозадач.
+
+В Node.js для этого есть встроенный инструмент: `AsyncLocalStorage`.
+
+```javascript
+import { AsyncLocalStorage } from 'async_hooks';
+
+const context = new AsyncLocalStorage();
+
+// 1. Wrap the request
+context.run({ requestId: '123' }, () => {
+  // 2. Call deep async code
+  await processOrder();
+});
+
+// 3. Deep inside processOrder:
+async function processOrder() {
+  await db.query();
+  
+  // Magic! We can still see the requestId
+  const { requestId } = context.getStore();
+  console.log(`[${requestId}] Failed to process order`);
+}
+```
+
+Неважно, сколько `await` сработает между тем и другим. Контекст сохраняется.
+
+---
+
+## Playbook для продакшена
+
+1.  Перестаньте доверять `err.stack`. Он неполный по дизайну.
+2.  Используйте структурированное логирование. Привязывайте `requestId` к каждой строке лога через `AsyncLocalStorage`.
+3.  Трейсите, а не смотрите на стек. Используйте OpenTelemetry. Он визуализирует причинно-следственную цепочку между сервисами — то, что вам на самом деле нужно.
+
+Ваш код асинхронный. Контекст отладки должен быть таким же.
+````

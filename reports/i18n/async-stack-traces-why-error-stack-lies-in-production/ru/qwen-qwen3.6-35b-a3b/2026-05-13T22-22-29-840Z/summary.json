@@ -1,0 +1,66 @@
+{
+  "runId": "qwen-qwen3.6-35b-a3b@2026-05-13T22-22-29-840Z",
+  "slug": "async-stack-traces-why-error-stack-lies-in-production",
+  "locale": "ru",
+  "model": "qwen/qwen3.6-35b-a3b",
+  "modelPath": "qwen-qwen3.6-35b-a3b",
+  "createdAt": "2026-05-13T22:23:41.449Z",
+  "sourcePath": "src/content/posts/2025-12-29--async-stack-traces-why-error-stack-lies-in-production/index.mdx",
+  "targetPath": "src/content/posts/2025-12-29--async-stack-traces-why-error-stack-lies-in-production/ru/index.mdx",
+  "candidatePath": "reports/i18n/async-stack-traces-why-error-stack-lies-in-production/ru/qwen-qwen3.6-35b-a3b/2026-05-13T22-22-29-840Z/candidate.mdx",
+  "sourceHash": "bda8adb66cf30fc89c91baea70bf6d81ae97177b838379f1fd437c2da47c9917",
+  "outputHash": "1801413170cfb75a6c1b705c2fd3b6927231a1563f86615823075dab2bc01d4f",
+  "reasoningEffort": "low",
+  "temperature": 0.3,
+  "maxTokens": 16000,
+  "timeoutMs": 200000,
+  "articleSummary": "This article argues that traditional `Error.stack` traces are fundamentally unreliable in async JavaScript because `await` suspends execution, severing the call stack’s historical context. While V8 provides workarounds like `--async-stack-traces`, they incur heavy performance costs and remain incomplete for production debugging. The author advocates shifting from stack-based debugging to causality tracking using Node.js `AsyncLocalStorage` for structured logging and OpenTelemetry for distributed tracing. Targeted at Node.js developers and SREs, the piece adopts a pragmatic, battle-tested tone, framing the problem through metaphors of suspension and thawing to emphasize that async execution requires async-aware observability.",
+  "totalInputTokens": 3233,
+  "totalOutputTokens": 11466,
+  "totalCacheReadTokens": 0,
+  "totalCacheWriteTokens": 0,
+  "totalDurationMs": 50979,
+  "totalCostUsd": 0.01195095,
+  "pricingSource": "local-openrouter-estimate",
+  "telemetry": {
+    "model": "qwen/qwen3.6-35b-a3b",
+    "chunkSize": "10p",
+    "totalChunks": 3,
+    "totalInputTokens": 3233,
+    "totalOutputTokens": 11466,
+    "totalCacheReadTokens": 0,
+    "totalCacheWriteTokens": 0,
+    "totalDurationMs": 50979,
+    "totalCostUsd": 0.01195095,
+    "pricingSource": "local-openrouter-estimate",
+    "chunks": [
+      {
+        "index": 0,
+        "inputTokens": 1001,
+        "outputTokens": 4280,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 19037,
+        "costUsd": 0.00443015
+      },
+      {
+        "index": 1,
+        "inputTokens": 1121,
+        "outputTokens": 3614,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 15643,
+        "costUsd": 0.00378215
+      },
+      {
+        "index": 2,
+        "inputTokens": 1111,
+        "outputTokens": 3572,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 16299,
+        "costUsd": 0.00373865
+      }
+    ]
+  }
+}
