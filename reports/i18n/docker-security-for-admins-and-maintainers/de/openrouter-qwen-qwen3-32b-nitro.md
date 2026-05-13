@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: docker-security-for-admins-and-maintainers
+- Locale: de
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2025-01-04--docker-security-for-admins-and-maintainers/de/index.mdx
+- Validation: passed
+- Runtime seconds: 20.82
+- Input tokens: 9231
+- Output tokens: 8691
+- Thinking tokens: unknown
+- Cached input tokens: 2560
+- Cache write tokens: 0
+- Estimated cost: $0.002824
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: true
 draft: true
@@ -318,3 +336,4 @@ Tests aus dem Inneren zeigen die interne Exposition auf, während externe Tests 
    - Tatsache: Sie sperren nur das ab, was Sie konfigurieren.  
 3. **Private IPs sind sicher.**  
    - Tatsache: Ausnutzungen wie NAT-Bypass können weiterhin Ihr Netzwerk beeinflussen.
+````
