@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-nodejs-files-streams-buffers-oh-my
+- Locale: hi
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2024-11-15--quiz-nodejs-files-streams-buffers-oh-my/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 21.35
+- Input tokens: 14215
+- Output tokens: 9983
+- Thinking tokens: unknown
+- Cached input tokens: 3584
+- Cache write tokens: 0
+- Estimated cost: $0.002351
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: 'क्विज़: NodeJS I/O महारत'
@@ -598,3 +616,4 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 </QuizUI>
 
 आशा है आपको अपना NodeJS I/O ज्ञान परखना मज़ेदार लगा! और चाहिए? अधिक चुनौतियों के लिए मेरी <a href="/challenges/">क्विज़ कलेक्शन</a> देखें!
+````
