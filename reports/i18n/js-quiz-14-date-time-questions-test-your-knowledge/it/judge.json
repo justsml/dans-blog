@@ -1,0 +1,125 @@
+{
+  "selectedCommit": "9e421d1e2248cab24c52d6d23e3f885d5a5cb5e3",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 8,
+    "coherence": 10,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 8
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "{text: 'new Intl.DateTimeFormat(\\',",
+      "replacement": "{text: 'new Intl.DateTimeFormat(\\'en-US\\').format(date)'},",
+      "reason": "The translation truncated the code snippet in the options array, making the quiz question broken."
+    },
+    {
+      "priority": "high",
+      "match": "{text: 'date.toLocaleFormat(\\'en-US\\')', isAnswer: true},",
+      "replacement": "{text: 'date.toLocaleFormat(\\'en-US\\')', isAnswer: true },",
+      "reason": "Restoring original spacing for consistency with the source MDX."
+    },
+    {
+      "priority": "high",
+      "match": "{text: 'date.toLocaleString(\\',",
+      "replacement": "{text: 'date.toLocaleString(\\'en-GB\\', { timeZone: \\'UTC\\' })'},",
+      "reason": "The translation truncated the code snippet in the options array."
+    },
+    {
+      "priority": "high",
+      "match": "{text: 'date.toLocaleDateString(\\',",
+      "replacement": "{text: 'date.toLocaleDateString(\\'en-US\\', { timeZone: \\'UTC\\', timeZoneName: \\'short\\' })'},",
+      "reason": "The translation truncated the code snippet in the options array."
+    }
+  ],
+  "rationale": "The selected candidate has the best linguistic quality but suffered from severe truncation in the code options for Question 5 (index 5), likely due to escaping issues with single quotes and backslashes in the MDX. These high-priority suggestions restore the technical integrity of the quiz while keeping the superior prose of the candidate.",
+  "slug": "js-quiz-14-date-time-questions-test-your-knowledge",
+  "locale": "it",
+  "candidateCommits": [
+    "9e421d1e2248cab24c52d6d23e3f885d5a5cb5e3",
+    "9d7d818d23f8c03d266b1d423c7e001251556b5e"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "{text: 'new Intl.DateTimeFormat(\\',",
+      "replacement": "{text: 'new Intl.DateTimeFormat(\\'en-US\\').format(date)'},",
+      "reason": "The translation truncated the code snippet in the options array, making the quiz question broken.",
+      "pass": 1,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "{text: 'date.toLocaleFormat(\\', isAnswer: true},",
+      "replacement": "{text: 'date.toLocaleFormat(\\'en-US\\')', isAnswer: true},",
+      "reason": "The translation truncated the code snippet in the options array.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "{text: 'date.toLocaleString(\\',",
+      "replacement": "{text: 'date.toLocaleString(\\'en-GB\\', { timeZone: \\'UTC\\' })'},",
+      "reason": "The translation truncated the code snippet in the options array.",
+      "pass": 1,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "{text: 'date.toLocaleDateString(\\',",
+      "replacement": "{text: 'date.toLocaleDateString(\\'en-US\\', { timeZone: \\'UTC\\', timeZoneName: \\'short\\' })'},",
+      "reason": "The translation truncated the code snippet in the options array.",
+      "pass": 1,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "{text: 'new Intl.DateTimeFormat(\\',",
+      "replacement": "{text: 'new Intl.DateTimeFormat(\\'en-US\\').format(date)'},",
+      "reason": "The translation truncated the code snippet in the options array, making the quiz question broken.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "{text: 'date.toLocaleFormat(\\'en-US\\')', isAnswer: true},",
+      "replacement": "{text: 'date.toLocaleFormat(\\'en-US\\')', isAnswer: true },",
+      "reason": "Restoring original spacing for consistency with the source MDX.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "{text: 'date.toLocaleString(\\',",
+      "replacement": "{text: 'date.toLocaleString(\\'en-GB\\', { timeZone: \\'UTC\\' })'},",
+      "reason": "The translation truncated the code snippet in the options array.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "{text: 'date.toLocaleDateString(\\',",
+      "replacement": "{text: 'date.toLocaleDateString(\\'en-US\\', { timeZone: \\'UTC\\', timeZoneName: \\'short\\' })'},",
+      "reason": "The translation truncated the code snippet in the options array.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug js-quiz-14-date-time-questions-test-your-knowledge --locale it --skip-global",
+    "output": ""
+  }
+}
