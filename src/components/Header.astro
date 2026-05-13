@@ -39,14 +39,16 @@ const currentLanguage =
 const currentLanguageCode = currentLanguage?.locale.toUpperCase();
 const { getCategoryCounts, getPopularPosts, getRecentPosts } = PostCollections;
 const categories = getCategoryCounts().slice(0, 6);
-const popularPosts = (getPopularPosts() as MyPost[]).map(getNavPostData);
-const recentPosts = (getRecentPosts() as MyPost[]).map(getNavPostData);
+const popularPosts = (getPopularPosts(locale) as MyPost[]).map(getNavPostData);
+const recentPosts = (getRecentPosts(7, locale) as MyPost[]).map(getNavPostData);
 // const tagCounts = getTagCounts();
 // console.log("popularPosts", popularPosts[0]);
 
 type Post<TData extends Record<string, any> = any> = {
   id: string;
   slug: string;
+  baseSlug?: string;
+  locale?: string;
   collection: string;
   body: string;
   data: TData;
@@ -57,6 +59,8 @@ function getNavPostData(post: MyPost) {
   const { title, subTitle, modified, date } = post.data;
   return {
     slug: post.slug,
+    baseSlug: post.baseSlug,
+    locale: post.locale,
     data: {
       title,
       subTitle,

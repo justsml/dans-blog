@@ -23,7 +23,7 @@ import { getUiCopy } from "../shared/uiTranslations";
 const locale = (Astro.props.locale ?? DEFAULT_LOCALE) as Locale;
 const copy = getUiCopy(locale);
 
-let posts = PostCollections.getPosts().map((p) =>
+let posts = PostCollections.getPostsForLocale(locale).map((p) =>
   omit(p as ArticlePost, [
     "data.body",
     "data.cover",
@@ -32,7 +32,8 @@ let posts = PostCollections.getPosts().map((p) =>
 )
 .filter((p) => !p.data?.unlisted && !p.data?.hidden) as ArticlePost[];
 
-const defaultNextUrl = "/pages/2-date-desc.html";
+const defaultNextUrl =
+  locale === DEFAULT_LOCALE ? "/pages/2-date-desc.html" : `/${locale}/pages/2-date-desc.html`;
 
 const nextPageAttrs = defaultNextUrl
   ? {

@@ -1,5 +1,10 @@
 import { getCollection } from "astro:content";
-import { ACTIVE_LOCALES, DEFAULT_LOCALE, getLocalizedPostSlug } from "./i18n.ts";
+import {
+  ACTIVE_LOCALES,
+  DEFAULT_LOCALE,
+  getLocalizedPostSlug,
+  type Locale,
+} from "./i18n.ts";
 import { fixSlugPrefix, getSlugFromId, parsePostId, slugify } from "./pathHelpers.ts";
 import type { ArticlePost, QuizPost } from "../types.ts";
 import { toDate } from "./dateUtils.ts";
@@ -133,6 +138,17 @@ export const PostCollections = {
     return posts;
   },
 
+  getPostForLocale(post: ArticlePost, locale: Locale = DEFAULT_LOCALE) {
+    if (locale === DEFAULT_LOCALE) return post;
+
+    const baseSlug = post.baseSlug ?? post.slug;
+    return PostCollections._postsBySlug[getLocalizedPostSlug(baseSlug, locale)] ?? post;
+  },
+
+  getPostsForLocale(locale: Locale = DEFAULT_LOCALE) {
+    return _visiblePosts.map((post) => PostCollections.getPostForLocale(post, locale));
+  },
+
   getAllLocalizedPosts() {
     return PostCollections._allPosts;
   },
@@ -232,8 +248,8 @@ export const PostCollections = {
   getCategoryList() {
     return PostCollections._categories;
   },
-  getPostsByCategory(category: string) {
-    return PostCollections._posts.filter(
+  getPostsByCategory(category: string, locale: Locale = DEFAULT_LOCALE) {
+    return PostCollections.getPostsForLocale(locale).filter(
       (post) =>
         post.data.category === category &&
         !post.data.unlisted &&
@@ -242,7 +258,7 @@ export const PostCollections = {
   },
 
   /** Popular posts according to google analytics. 2024/Q2 */
-  getPopularPosts() {
+  getPopularPosts(locale: Locale = DEFAULT_LOCALE) {
     // "one-weird-trick-to-speed-up-feature-teams",
     // "js-quiz-14-date-time-questions-test-your-knowledge",
     // "javascript-promises-quiz",
@@ -250,7 +266,7 @@ export const PostCollections = {
     // "quiz-postgres-sql-mastery-pt2",
     // "breaking-unicorns",
     // "quiz-destructuring-delights",
-    return [
+    const popularPosts = [
       "llm-connection-strings",
       "you-may-not-need-axios",
       "you-might-not-need-algolia",
@@ -265,6 +281,8 @@ export const PostCollections = {
     ]
       .map((slug) => PostCollections._postsBySlug[slug])
       .filter(Boolean);
+
+    return popularPosts.map((post) => PostCollections.getPostForLocale(post, locale));
   },
 
   getPostsBySlugs(slugs: string[]) {
@@ -286,8 +304,8 @@ export const PostCollections = {
   generateCoverImgs() {
     // TODO?
   },
-  getRecentPosts(limit = 7) {
-    return [...PostCollections._posts]
+  getRecentPosts(limit = 7, locale: Locale = DEFAULT_LOCALE) {
+    return [...PostCollections.getPostsForLocale(locale)]
       .sort((a, b) => {
         const aDate = new Date(a.data.date!).getTime();
         const bDate = new Date(b.data.date!).getTime();

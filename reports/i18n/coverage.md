@@ -1,6 +1,6 @@
 # I18n Coverage
 
-Generated at `2026-05-13T07:37:40.797Z`.
+Generated at `2026-05-13T07:50:23.487Z`.
 
 ## Summary
 
@@ -31,7 +31,7 @@ Generated at `2026-05-13T07:37:40.797Z`.
 ## Health Notes
 
 - Missing locale slots with candidate reports waiting: 28
-- Existing translations without judge summaries: 311
+- Existing translations without judge summaries: 305
 
 ### Candidate Reports Without Translation Files
 
@@ -70,14 +70,8 @@ Generated at `2026-05-13T07:37:40.797Z`.
 
 | Post | Locale | Qwen baseline |
 | --- | --- | --- |
-| docker-server-setup-notes | es | yes |
-| amazing-resources | it | yes |
-| security-notes-regex | ja | yes |
-| angularjs-v2-impending-schism | fr | yes |
-| angularjs-v2-impending-schism | it | yes |
 | upgrade-from-gatsby-to-astro | es | yes |
 | upgrade-from-gatsby-to-astro | hi | yes |
-| upgrade-from-gatsby-to-astro | it | yes |
 | contribute-to-open-source-the-easy-way | ja | yes |
 | contribute-to-open-source-the-easy-way | fr | yes |
 | contribute-to-open-source-the-easy-way | it | yes |

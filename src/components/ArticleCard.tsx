@@ -78,10 +78,11 @@ export const ArticleCard = ({
         ? " article-card--popular"
         : "";
   const viewTransitionName = `article-${`${slug}`.replace(/^\/*|\/*$/g, "")}`;
+  const hrefLocale = article.locale === locale ? locale : DEFAULT_LOCALE;
 
   return (
     <a
-      href={getLocalizedPostPath(article.baseSlug ?? slug, locale)}
+      href={getLocalizedPostPath(article.baseSlug ?? slug, hrefLocale)}
       className={
         myClass +
         editorialClass +

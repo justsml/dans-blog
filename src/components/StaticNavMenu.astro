@@ -15,6 +15,7 @@ import "./StaticNavMenu.css";
 type NavPost = {
   slug: string;
   baseSlug?: string;
+  locale?: string;
   data: {
     title: string;
     subTitle?: string;
@@ -36,6 +37,7 @@ const pagePath = (path: string) => getLocalizedPagePath(path, locale);
 
 function getPostPath(post: NavPost) {
   const baseSlug = post.baseSlug ?? post.slug;
+  if (post.locale === locale) return getLocalizedPostPath(baseSlug, locale);
   if (locale === DEFAULT_LOCALE) return getLocalizedPostPath(baseSlug, DEFAULT_LOCALE);
 
   return PostCollections._postsBySlug[`${locale}/${baseSlug}`]

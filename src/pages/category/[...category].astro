@@ -21,7 +21,7 @@ type Props = {
 const { category, count } = Astro.props as Props;
 const locale = (Astro.props.locale ?? DEFAULT_LOCALE) as Locale;
 const copy = getUiCopy(locale);
-const posts: ArticlePost[] = PostCollections.getPostsByCategory(category) as unknown as ArticlePost[];
+const posts: ArticlePost[] = PostCollections.getPostsByCategory(category, locale) as unknown as ArticlePost[];
 
 // console.log("category.astro.props", Astro.props);
 ---

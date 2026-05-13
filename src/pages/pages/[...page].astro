@@ -10,6 +10,7 @@ import {
 import { ArticleCard } from "../../components/ArticleCard";
 import ArticleListConsultingCTA from "../../components/ArticleListConsultingCTA.astro";
 import { PaginateFunction } from "astro";
+import { DEFAULT_LOCALE, type Locale } from "../../shared/i18n";
 // import { RefreshCw } from "lucide-react";
 
 export const partial = true;
@@ -20,6 +21,7 @@ type Props = {
   sortKey: string;
   field: string;
   direction: "asc" | "desc";
+  locale?: Locale;
 };
 
 export async function getStaticPaths({
@@ -35,7 +37,7 @@ export async function getStaticPaths({
   ] as const;
 
   const pages = sortKeys.flatMap(([field, direction]) => {
-    const posts = (PostCollections.getPosts() as ArticlePost[]).filter(
+    const posts = (PostCollections.getPostsForLocale(DEFAULT_LOCALE) as ArticlePost[]).filter(
       (post) => !post.data.unlisted,
     );
     const sortFn = getArticleSortFn(field, direction);
@@ -77,6 +79,7 @@ const {
   page: { data, currentPage, lastPage, url },
   pageUrlSuffix,
 } = Astro.props;
+const locale = (Astro.props.locale ?? DEFAULT_LOCALE) as Locale;
 // console.log("📄 PROPS", Astro.props);
 // console.log("📄 NEXT", `${url.next ? url.next + pageUrlSuffix :url.next}`);
 
@@ -119,10 +122,11 @@ const articleListOffset = (currentPage - 1) * (pageSize - 1);
         <ArticleCard
           article={props as ArticlePost}
           width={200}
+          locale={locale}
           {...nextPageAttrs}
         />
       ) : (
-        <ArticleCard article={props as ArticlePost} width={200} />
+        <ArticleCard article={props as ArticlePost} width={200} locale={locale} />
       )}
       {ctaOccurrence !== null && (
         <ArticleListConsultingCTA
