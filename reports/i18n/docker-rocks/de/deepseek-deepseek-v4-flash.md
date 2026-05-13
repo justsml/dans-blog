@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: docker-rocks
+- Locale: de
+- Model: deepseek/deepseek-v4-flash
+- Target: src/content/posts/2015-06-11--docker-rocks/de/index.mdx
+- Validation: deferred
+- Runtime seconds: 30.28
+- Input tokens: 1812
+- Output tokens: 1946
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.000799
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Docker rockt & funktioniert jetzt auf OSX
@@ -46,3 +64,4 @@ Aktualisiert 2024:
 
 - Docker Desktop ist proprietär, aber für den persönlichen Gebrauch kostenlos. Es ist ein großartiger Einstieg in Docker unter OSX oder Windows.
 - Wenn du nach einer quelloffeneren Lösung suchst, wirf einen Blick auf [Rancher Desktop](https://rancherdesktop.io/).
+````
