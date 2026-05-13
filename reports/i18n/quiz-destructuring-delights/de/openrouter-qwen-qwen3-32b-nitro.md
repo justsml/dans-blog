@@ -4,7 +4,7 @@
 - Model: openrouter/qwen/qwen3-32b:nitro
 - Target: src/content/posts/2024-11-12--quiz-destructuring-delights/de/index.mdx
 - Validation: rejected: direct AI SDK translation failed
-- Runtime seconds: 5.68
+- Runtime seconds: 4.61
 - Input tokens: unknown
 - Output tokens: unknown
 - Thinking tokens: unknown
