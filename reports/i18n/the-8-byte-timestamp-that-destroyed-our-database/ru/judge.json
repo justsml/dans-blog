@@ -1,0 +1,38 @@
+{
+  "selectedCommit": "8b15e2fe29f84add043b62671e15b7e1006c06c9",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "scores": {
+    "readability": 5,
+    "technicalAccuracy": 5,
+    "coherence": 5,
+    "relevance": 5,
+    "translationQuality": 5,
+    "mdxPreservation": 5
+  },
+  "suggestions": [],
+  "rationale": "The selected commit 8b15e2fe29f84add043b62671e15b7e1006c06c9 is already the 'current' version in the provided RU source (it already contains the 'подруга' fix suggested in the previous judge report). The translation is technically sound, maintains Dan's direct style, and correctly handles the nuances of Postgres timestamp types. MDX structure and metadata are perfectly preserved.",
+  "slug": "the-8-byte-timestamp-that-destroyed-our-database",
+  "locale": "ru",
+  "candidateCommits": [
+    "8b15e2fe29f84add043b62671e15b7e1006c06c9",
+    "c7b21e93e6622e521dd8b1ef6be6e4e04d19fd14",
+    "c6f842fc6f89d3733d84d4750443ee208681b231"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "Когда друг забирает меня в Чикаго, ей нужно знать",
+      "replacement": "Когда подруга забирает меня в Чикаго, ей нужно знать",
+      "reason": "The English text uses 'she', and the context implies a female friend. 'Друг' is masculine; 'подруга' matches the pronoun 'ей' better in Russian.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug the-8-byte-timestamp-that-destroyed-our-database --locale ru --skip-global",
+    "output": ""
+  }
+}
