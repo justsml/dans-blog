@@ -6,7 +6,7 @@
  * giving the model bounded context.
  *
  * Usage:
- *   bun run i18n:translate:chunked -- --slug my-article --locale es --chunk 6p --model openrouter/qwen/qwen3.6-plus
+ *   bun run i18n:translate:chunked -- --slug my-article --locale es --chunk 10p --model openrouter/qwen/qwen3.6-plus
  *
  * Chunk formats:
  *   1p  = 1 paragraph per chunk
@@ -70,7 +70,7 @@ interface LlmConfig {
 
 const DEFAULT_REASONING_EFFORT = "low";
 const DEFAULT_LLM_TIMEOUT_MS = 200_000;
-const DEFAULT_CHUNK_SIZE = "6p";
+const DEFAULT_CHUNK_SIZE = "10p";
 const DEFAULT_PARALLEL_CHALLENGE_CALLS = 18;
 const MAX_PARALLEL_CHALLENGE_CALLS = 32;
 const DEFAULT_CHALLENGE_RETRIES = 2;
@@ -516,7 +516,7 @@ async function translateChunk(
 }> {
   const start = performance.now();
 
-  const system = buildSystemPrompt(locale, isQuiz);
+  const system = "You are a technical translator. Follow the stable translation contract in the user message. Output only the requested translated text.";
   const context = {
     chunkIndex: chunk.index,
     totalChunks: chunk.totalChunks ?? chunk.index + 1,
@@ -525,7 +525,7 @@ async function translateChunk(
     nextSourceContext,
     articleSummary,
   };
-  const cachedContext = buildCachedChunkContextPrompt(locale, context);
+  const cachedContext = buildCachedChunkContextPrompt(locale, context, isQuiz);
   const dynamicPrompt = buildDynamicChunkPrompt(chunk.text, locale, context, isQuiz);
 
   const provider = createOpenRouter(llmConfig.providerSettings);
@@ -854,12 +854,18 @@ async function translateProse(
     messages: [
       {
         role: "system",
-        content: buildSystemPrompt(locale, true),
+        content: "You are a technical translator. Follow the stable quiz prose translation contract in the user message. Output only the requested translated text.",
       },
       {
         role: "user",
         content: [
-          cachedText(`QUIZ CONTEXT:\n${context}`),
+          cachedText([
+            `STABLE QUIZ PROSE TRANSLATION CONTRACT (cache this across intro/outro):`,
+            buildSystemPrompt(locale, true),
+            ``,
+            `QUIZ CONTEXT:`,
+            context,
+          ].join("\n")),
           {
             type: "text",
             text: [
@@ -1176,13 +1182,31 @@ async function translateFrontmatter(
     const model = provider.chat(llmConfig.modelId);
     const translation = await generateText({
       model,
-      system: buildSystemPrompt(locale, isQuiz),
-      prompt: `Translate the following ${key} into ${locale}. Keep it concise and natural.\n\n${value}`,
+      allowSystemInMessages: true,
+      messages: [
+        {
+          role: "system",
+          content: "You are a technical translator. Follow the stable frontmatter translation contract in the user message. Output only the requested translated text.",
+        },
+        {
+          role: "user",
+          content: [
+            cachedText([
+              `STABLE FRONTMATTER TRANSLATION CONTRACT (cache this across frontmatter fields):`,
+              buildSystemPrompt(locale, isQuiz),
+            ].join("\n")),
+            {
+              type: "text",
+              text: `Translate the following ${key} into ${LOCALE_LABELS[locale]}. Keep it concise and natural.\n\n${value}`,
+            },
+          ],
+        },
+      ],
       temperature: llmConfig.temperature,
-    maxOutputTokens: 500,
-    timeout: { totalMs: llmConfig.timeoutMs },
-    providerOptions: llmConfig.providerOptions,
-  });
+      maxOutputTokens: 500,
+      timeout: { totalMs: llmConfig.timeoutMs },
+      providerOptions: llmConfig.providerOptions,
+    });
 
     result[key] = translation.text.trim();
   }

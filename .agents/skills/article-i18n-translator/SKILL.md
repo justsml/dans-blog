@@ -63,11 +63,11 @@ For higher-risk batches, add a second cheap judge explicitly with `--second-mode
    bun run i18n:translate:candidates -- --slug the-last-to-think --locale es
    ```
 
-   Candidate generation skips existing slug+locale+model reports by default. Use `--overwrite` only when you intentionally want to rerun that model and replace its target-file output.
+   Candidate generation captures every successful slug+locale+model attempt as a timestamped artifact and appends it to `candidates.jsonl`; judging owns promotion back into `src/content`.
 
    AI SDK translation and judge calls default to a 240 second timeout. Use `--timeout-seconds 240` explicitly for batch work. Thinking-capable models should stay cheap: Qwen, gpt-oss, and GLM run with low reasoning effort; Gemini 3 Flash runs with minimal reasoning effort.
 
-   Article translation chunks default to `6p`: six paragraphs per active chunk, with one neighboring source paragraph before and after as context padding when available. Quiz posts ignore chunk padding because they use structured Challenge input/output.
+   Article translation chunks default to `10p`: ten paragraphs per active chunk, with one neighboring source paragraph before and after as context padding when available. Stable translation instructions, locale guidance, and article/quiz context should live in cacheable prompt blocks; dynamic prompt text should contain only per-chunk or per-question material. Quiz posts ignore chunk padding because they use structured Challenge input/output.
 
    Each model report should include runtime seconds, input tokens, output tokens, thinking/reasoning tokens, cached input tokens, and estimated cost. Token counts are best-effort from provider output; write `unknown` rather than omitting unavailable fields.
 

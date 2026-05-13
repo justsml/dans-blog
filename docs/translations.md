@@ -128,7 +128,7 @@ bun run i18n:judge -- \
 
 Judge comparison calls are capped at three candidate commits by default. `--judge-batch-size` may be set lower, but values above 3 are capped to keep prompts bounded. `--fix-pass-limit` controls the medium/high-priority fix loop and defaults to 2.
 
-Article translation chunks default to `6p`: six paragraphs per translated chunk. For non-quiz prose, the prompt also includes one neighboring source paragraph before and after the active chunk when available. That padding is context only; the model is told to translate only the active chunk. Quiz posts ignore chunk padding because they use structured Challenge input/output instead of prose chunking.
+Article translation chunks default to `10p`: ten paragraphs per translated chunk. For non-quiz prose, the prompt also includes one neighboring source paragraph before and after the active chunk when available. That padding is context only; the model is told to translate only the active chunk. Stable translation instructions, locale guidance, and article/quiz context are sent in cacheable prompt blocks; the dynamic prompt should contain only per-chunk or per-question material. Quiz posts ignore prose chunk padding because they use structured Challenge input/output instead.
 
 Example: For quiz posts, generate competing Nitro candidates through the normal candidate wrapper so each model output is committed and available to the judge:
 
@@ -310,7 +310,7 @@ OpenRouter providers can fail in awkward ways. A provider may print an SSE or JS
 
 Rules:
 
-- A model attempt is a candidate only if it leaves a diff in the translated MDX target file.
+- A model attempt is a candidate when it produces a timestamped candidate artifact and appends a row to `candidates.jsonl`; generation restores the live translated MDX target afterward so judging owns promotion.
 - If the AI SDK/provider call fails, commit a rejection report only.
 - If the model call succeeds but the target file is unchanged, commit a rejection report only.
 - If a later judge, promotion, or final validation pass finds broken MDX, do not silently promote the file. Either fix and commit the fix or keep the attempt out of the final selection.

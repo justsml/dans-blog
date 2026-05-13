@@ -81,11 +81,31 @@ function buildQuizSystemPrompt(locale: ActiveLocale, isQuiz: boolean): string {
   return parts.join("\n");
 }
 
-function buildQuizUserPrompt(
-  challenge: QuizChallenge,
+function buildCachedQuizPromptContext(
   locale: ActiveLocale,
   quizDescription: string,
+  isQuiz: boolean,
 ): string {
+  const contextLines = quizDescription ? [`QUIZ CONTEXT:`, quizDescription, ``] : [];
+
+  return [
+    `STABLE QUIZ TRANSLATION CONTRACT (cache this across all challenges):`,
+    buildQuizSystemPrompt(locale, isQuiz),
+    ``,
+    ...contextLines,
+    `Return a JSON object with these exact fields:`,
+    `- title: translated title`,
+    `- group: translated group name`,
+    `- options: array of {text, hint?} — SAME COUNT as input`,
+    `- questionProse: array of strings — SAME COUNT as input questionProse`,
+    `- explanationProse: array of strings — SAME COUNT as input explanationProse`,
+    ``,
+    `The code blocks are preserved automatically. Only translate the prose fields.`,
+    `Your entire response must be a single valid JSON object. Do not include markdown code fences (\`\`\`json) or any text outside the JSON.`,
+  ].join("\n");
+}
+
+function buildDynamicQuizPrompt(challenge: QuizChallenge): string {
   const { prose: questionProse, codeBlocks: questionCode } = slotToTranslatable(challenge.question);
   const { prose: explanationProse, codeBlocks: explanationCode } = slotToTranslatable(challenge.explanation);
 
@@ -102,25 +122,11 @@ function buildQuizUserPrompt(
     explanationCode: explanationCode.map((c) => ({ language: c.language, code: "[PRESERVED — do not translate]" })),
   };
 
-  const contextLines = quizDescription ? [`QUIZ CONTEXT:`, quizDescription, ``] : [];
-
   return [
-    ...contextLines,
-    `Translate this Challenge (index ${challenge.index}) into ${LOCALE_LABELS[locale]}.`,
+    `Translate this Challenge (index ${challenge.index}).`,
     ``,
     `INPUT JSON:`,
     JSON.stringify(payload, null, 2),
-    ``,
-    `Return a JSON object with these exact fields:`,
-    `- title: translated title`,
-    `- group: translated group name`,
-    `- options: array of {text, hint?} — SAME COUNT as input`,
-    `- questionProse: array of strings — SAME COUNT as input questionProse`,
-    `- explanationProse: array of strings — SAME COUNT as input explanationProse`,
-    ``,
-    `The code blocks are preserved automatically. Only translate the prose fields.`,
-    ``,
-    `Your entire response must be a single valid JSON object. Do not include markdown code fences (\`\`\`json) or any text outside the JSON.`,
   ].join("\n");
 }
 
@@ -147,15 +153,15 @@ export async function translateChallenge(
     messages: [
       {
         role: "system",
-        content: buildQuizSystemPrompt(locale, isQuiz),
+        content: "You are a technical quiz translator. Follow the stable quiz translation contract in the user message. Respond with valid JSON only.",
       },
       {
         role: "user",
         content: [
-          cachedText(`QUIZ CONTEXT:\n${quizDescription}`),
+          cachedText(buildCachedQuizPromptContext(locale, quizDescription, isQuiz)),
           {
             type: "text",
-            text: buildQuizUserPrompt(challenge, locale, ""),
+            text: buildDynamicQuizPrompt(challenge),
           },
         ],
       },

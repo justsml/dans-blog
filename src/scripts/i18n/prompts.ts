@@ -123,9 +123,14 @@ export function buildUserPrompt(
 export function buildCachedChunkContextPrompt(
   locale: ActiveLocale,
   context: ChunkContext,
+  isQuiz: boolean = false,
 ): string {
   const language = LOCALE_LABELS[locale];
   const parts: string[] = [];
+
+  parts.push(`STABLE TRANSLATION CONTRACT (cache this across all chunks):`);
+  parts.push(buildSystemPrompt(locale, isQuiz));
+  parts.push("");
 
   parts.push(`TRANSLATION TARGET: ${language}`);
   parts.push("");

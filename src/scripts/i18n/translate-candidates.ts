@@ -31,7 +31,7 @@ const DEFAULT_CANDIDATE_MODELS = [
 ];
 
 const DEFAULT_TRANSLATION_TIMEOUT_SECONDS = 240;
-const DEFAULT_CHUNK_SIZE = "6p";
+const DEFAULT_CHUNK_SIZE = "10p";
 const DEFAULT_TASK_CONCURRENCY = 16;
 const REPORT_ROOT = join(process.cwd(), "reports/i18n");
 
