@@ -1,0 +1,44 @@
+{
+  "index": 1,
+  "attempt": 1,
+  "originalTitle": "Multiple `.catch`'s #2",
+  "translatedTitle": "Più `.catch` #2",
+  "translation": {
+    "title": "Più `.catch` #2",
+    "group": "Gestione degli errori",
+    "options": [
+      {
+        "text": "stampa il messaggio una volta"
+      },
+      {
+        "text": "stampa il messaggio due volte"
+      },
+      {
+        "text": "promise rifiutata non gestita"
+      },
+      {
+        "text": "il processo termina"
+      }
+    ],
+    "questionProse": [
+      "Cosa produce il codice qui sotto?"
+    ],
+    "explanationProse": [
+      "Quando utilizzi il costruttore `Promise`, devi invocare i callback `resolve()` o `reject()`. Il costruttore `Promise` ignora il valore restituito dall'esecutore, quindi la Promise aggiuntiva creata con `Promise.reject()` non viene concatenata a `p`. I due handler sono agganciati a `p`, che rimane in stato pending, mentre la promise rifiutata restituita viene segnalata come non gestita dall'ambiente host."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Più `.catch` #2\",\n  \"group\": \"Gestione degli errori\",\n  \"options\": [\n    {\n      \"text\": \"stampa il messaggio una volta\"\n    },\n    {\n      \"text\": \"stampa il messaggio due volte\"\n    },\n    {\n      \"text\": \"promise rifiutata non gestita\"\n    },\n    {\n      \"text\": \"il processo termina\"\n    }\n  ],\n  \"questionProse\": [\n    \"Cosa produce il codice qui sotto?\"\n  ],\n  \"explanationProse\": [\n    \"Quando utilizzi il costruttore `Promise`, devi invocare i callback `resolve()` o `reject()`. Il costruttore `Promise` ignora il valore restituito dall'esecutore, quindi la Promise aggiuntiva creata con `Promise.reject()` non viene concatenata a `p`. I due handler sono agganciati a `p`, che rimane in stato pending, mentre la promise rifiutata restituita viene segnalata come non gestita dall'ambiente host.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 814,
+    "outputTokens": 3313,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 17161
+  },
+  "cost": {
+    "inputUsd": 0,
+    "outputUsd": 0,
+    "totalUsd": 0,
+    "pricingSource": "unknown"
+  }
+}
