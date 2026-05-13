@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-nodejs-files-streams-buffers-oh-my
+- Locale: fr
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2024-11-15--quiz-nodejs-files-streams-buffers-oh-my/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 24.59
+- Input tokens: 14303
+- Output tokens: 8830
+- Thinking tokens: unknown
+- Cached input tokens: 5120
+- Cache write tokens: 0
+- Estimated cost: $0.002147
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: "Quiz\_: Maîtrise de l’E/S Node.js"
@@ -598,3 +616,4 @@ Voyons à quel point vous distinguez vos streams de vos buffers ! 🚀
 </QuizUI>
 
 J’espère que vous avez apprécié tester vos connaissances Node JS IO ! Vous en voulez plus ? Consultez ma [Collection de Quiz]../challenges/ pour d’autres défis !
+````
