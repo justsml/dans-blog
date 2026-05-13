@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: serverless-database-magic
+- Locale: ja
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2025-09-15--serverless-database-magic/ja/index.mdx
+- Validation: deferred
+- Runtime seconds: 13.48
+- Input tokens: 6435
+- Output tokens: 6263
+- Thinking tokens: unknown
+- Cached input tokens: 1024
+- Cache write tokens: 0
+- Estimated cost: $0.002018
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: 2025年のデータベースイノベーショントレンド
 subTitle: ''
@@ -242,3 +260,4 @@ AWSでさえ、S3に近いベクトル検索の仕事に進んでおり、これ
 > **免責事項:** 私はPagefindを使い続けており、2025年に貢献者になりました。OramaとChromaは小規模なプロジェクトで試してみましたが、LanceDBは大規模なAIアプリケーションで探求しています。これらのプロジェクトとは財務的なつながりはありません。進化するデータベースランドスケープへの関心だけです。
 
 [1]: https://danlevy.net/you-might-not-need-algolia/
+````
