@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: postgres-fts-vs-pgvector
+- Locale: de
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-05-08--postgres-fts-vs-pgvector/de/index.mdx
+- Validation: passed
+- Runtime seconds: 45.47
+- Input tokens: 18254
+- Output tokens: 20786
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.006449
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: 'Postgres Suche: FTS, Trigramme und pgvector'
 subTitle: ''
@@ -400,3 +418,4 @@ Verwenden Sie Vektorsuche nicht als unscharfe Textsuche für Dinge, bei denen es
 Vektorsuche gibt das *Ähnlichste* in Ihrem Datensatz zurück, selbst wenn nichts relevant ist. Sie weiß nicht, dass es keine gute Antwort gibt. Das ist in Ordnung für verwandte Dokumente. Bei der Suche nach spezifischen Datensätzen ist es katastrophal, wenn ein falsches, fast passendes Ergebnis besser ist als ein leeres Resultat.  
 
 Wissen Sie, wofür jedes Tool gedacht ist. Die meisten davon sind bereits in Ihre Postgres-Installation integriert. Verwenden Sie sie dort, wo sie passen.
+````
