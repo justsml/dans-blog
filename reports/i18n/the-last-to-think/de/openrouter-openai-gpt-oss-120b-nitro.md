@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: the-last-to-think
+- Locale: de
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2025-05-31--the-last-to-think/de/index.mdx
+- Validation: passed
+- Runtime seconds: 1.04
+- Input tokens: 1973
+- Output tokens: 827
+- Thinking tokens: unknown
+- Cached input tokens: 768
+- Cache write tokens: 0
+- Estimated cost: $0.000226
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 language: English
 title: 'Der Letzte, der denkt'
@@ -33,3 +51,4 @@ Wir habenTaschenrechner, CliffsNotes und (bisher) TikTok überlebt. Wir werden C
 <p> </p>
 
 * _Vorausgesetzt, wir können die Umweltbelastung verbessern und einer dystopischen Katastrophe entgehen. Aber das ist ein Thema für ein anderes Mal._
+````
