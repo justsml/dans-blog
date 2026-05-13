@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: llm-generative-ui-landscape
+- Locale: ja
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-05-06--llm-generative-ui-landscape/ja/index.mdx
+- Validation: deferred
+- Runtime seconds: 16.61
+- Input tokens: 22871
+- Output tokens: 9797
+- Thinking tokens: unknown
+- Cached input tokens: 9216
+- Cache write tokens: 0
+- Estimated cost: $0.002655
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: LLM生成UIの全体像
 subTitle: ツール→コンポーネントのレンダリングからオープンエンド生成まで、手法と複雑さが妥当になるタイミングを示すマップ。
@@ -330,3 +348,4 @@ Generative UI は、慎重に設計されたプロダクトインターフェー
 未来は「モデルがフロントエンドを書き換える」ことではありません。
 
 未来に近いのは、**フロントエンドがエージェントの演奏できる楽器になるが、楽器が出す音は自分で許可した範囲に限定する**、という形です。
+````
