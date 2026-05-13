@@ -1,0 +1,44 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "instanceof Inheritance",
+  "translatedTitle": "Herencia de instanceof",
+  "translation": {
+    "title": "Herencia de instanceof",
+    "group": "Trucos de verificación de tipos",
+    "options": [
+      {
+        "text": "true, true, true"
+      },
+      {
+        "text": "true, false, false"
+      },
+      {
+        "text": "false, true, true"
+      },
+      {
+        "text": "true, true, false"
+      }
+    ],
+    "questionProse": [
+      "¿Cuáles son los resultados de estas comprobaciones?"
+    ],
+    "explanationProse": [
+      "Los tres devuelven `true`. `CustomError` extiende a `Error`, que extiende a `Object`. El operador `instanceof` verifica toda la cadena de prototipos, por lo que una instancia de `CustomError` también es una instancia de `Error` y `Object`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Herencia de instanceof\",\n  \"group\": \"Trucos de verificación de tipos\",\n  \"options\": [\n    {\n      \"text\": \"true, true, true\"\n    },\n    {\n      \"text\": \"true, false, false\"\n    },\n    {\n      \"text\": \"false, true, true\"\n    },\n    {\n      \"text\": \"true, true, false\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Cuáles son los resultados de estas comprobaciones?\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"js\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"explanationProse\": [\n    \"Los tres devuelven `true`. `CustomError` extiende a `Error`, que extiende a `Object`. El operador `instanceof` verifica toda la cadena de prototipos, por lo que una instancia de `CustomError` también es una instancia de `Error` y `Object`.\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 723,
+    "outputTokens": 1015,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 5761
+  },
+  "cost": {
+    "inputUsd": 0.00010122000000000001,
+    "outputUsd": 0.0002842,
+    "totalUsd": 0.00038542000000000003,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
