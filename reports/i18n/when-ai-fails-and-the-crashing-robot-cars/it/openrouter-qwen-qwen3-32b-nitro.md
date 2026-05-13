@@ -1,0 +1,72 @@
+# Translation Candidate
+- Slug: when-ai-fails-and-the-crashing-robot-cars
+- Locale: it
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2015-12-18--when-ai-fails-and-the-crashing-robot-cars/it/index.mdx
+- Validation: passed
+- Runtime seconds: 11.23
+- Input tokens: 2831
+- Output tokens: 3588
+- Thinking tokens: unknown
+- Cached input tokens: 512
+- Cache write tokens: 0
+- Estimated cost: $0.001088
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: ''
+subTitle: ''
+date: '2015-12-18'
+modified: '2024-07-30'
+category: AI
+subCategory: machine-learning
+tags:
+  - artificial-intelligence
+  - ai
+  - self-driving-cars
+  - fails
+cover: ../sandy-millar-749381-unsplash.webp
+cover_mobile: ../w300_sandy-millar-749381-unsplash.webp
+cover_icon: ../icon_sandy-millar-749381-unsplash.webp
+---
+## Auto robotiche: più o meno incidenti?
+
+Le auto a guida autonoma di Google sono apparse coinvolte in 2x più incidenti rispetto ai conducenti umani. Se pensi che questo sia solo tecnologia difettosa, troppo complessa fin dall'inizio, beh, hai parzialmente ragione. [Un dettaglio importante da condividere: a dicembre 2015, virtualmente **tutti gli incidenti non erano colpa dei robot**.](http://www.bloomberg.com/news/articles/2015-12-18/humans-are-slamming-into-driverless-cars-and-exposing-a-key-flaw)
+
+Gli incidenti sono **causati da conducenti umani** non abituati ai conducenti robotici. Inoltre, Google ha programmato le auto per rispettare la legge in modo assoluto: mai superare i limiti di velocità, difficoltà a fondere in traffico intenso o veloce.
+Questo apre un mucchio di domande legali ed etiche (questo è noto come [il problema del tram](https://en.wikipedia.org/wiki/Trolley_problem)) -
+
+- È mai accettabile:
+  - evitare un tamponamento andando oltre la strada pedonale con il rosso **assumendo che il percorso sia libero**?
+  - guidare sul marciapiede per evitare una bicicletta che taglia le corsie? - è accettabile per l'IA accettare questa violazione delle "regole della strada"
+
+Capisco l'approccio di Google, soprattutto quando cerca di minimizzare la responsabilità: seguire sempre le regole - logicamente, se **sempre** rispetti la legge, non puoi essere ritenuto responsabile.
+
+Ci sarebbe **una responsabilità massiccia** se un incidente dovesse accadere a causa di una "flessibilità" intenzionalmente progettata attorno alle leggi.
+
+### Non lasciare che il futuro ci sfugga  
+
+Il futuro arriverà comunque, anche se i robot guidano come ottuagenari.  
+
+Forse un semplice rimedio per ora sarebbe l'uso di luci LED rosse lampeggianti (pensate alle scuolabus) per avvisare i conducenti umani che stanno per tamponare un robot innocente.  
+
+Mi sentirei più a mio agio con un'auto che avesse livelli di osservanza e aderenza alle regole. A mio parere, questo sarebbe molto più simile a come guidano gli esseri umani.  
+
+Immaginate un sistema di percezione a tre livelli come segue (omesso per semplicità gli strati decisionali e altri):  
+
+1. **base**: segue le leggi con precisione fastidiosa  
+2. **locale**: aggiustamenti flessibili in base al traffico corrente – ad esempio, permettere il sorpasso in autostrada se necessario a una velocità di almeno 10MPH. Al contrario, se il traffico procede semplicemente troppo velocemente, l'auto dovrebbe essere abbastanza intelligente da fermarsi al bordo della strada per non diventare un fastidio per gli altri conducenti.  
+3. **360**: calcolare **qualsiasi** potenziale rischio di collisione estrema/misure di evitamento – guidare sulle spalle della strada o...
+
+Questo richiederebbe probabilmente un equilibrio intelligente - ad esempio, se il livello 1 rileva un incidente imminente che non può essere evitato seguendo le leggi, sposterebbe tutta la potenza del processore al livello 3 - sperando di trovare un modo creativo per evitare danni.
+
+Le auto robotiche sono sull'orlo di essere tecnicamente più intelligenti e veloci di qualsiasi conducente umano. Accettalo. Benvenuto.
+
+### Riferimenti
+
+1.  [http://nn.cs.utexas.edu/pages/research/neat-warning/](http://nn.cs.utexas.edu/pages/research/neat-warning/)
+````
