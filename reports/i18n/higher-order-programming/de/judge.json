@@ -1,0 +1,37 @@
+{
+  "selectedCommit": "cb9076021c9ca48f9adb42ab34773317c84c4194",
+  "selectedModel": "openrouter/qwen/qwen3-32b:nitro",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 10,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The current translation (which matches the selected commit) is excellent. It correctly captures Dan's informal and slightly sarcastic tone ('shoehorn', 'acute schema surplusage'). It preserves the MDX structure and the code block comments. The previous judge's suggestion to change the title was already implemented in the current version ('Programmierung höherer Ordnung'). No further high-priority changes are required.",
+  "slug": "higher-order-programming",
+  "locale": "de",
+  "candidateCommits": [
+    "5d9ec5c27c0f59794d85dd7a98385f87ab3c0e54",
+    "cb9076021c9ca48f9adb42ab34773317c84c4194"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "medium",
+      "match": "Höhere Ordnung Programmierung",
+      "replacement": "Programmierung höherer Ordnung",
+      "reason": "'Höhere Ordnung Programmierung' is a literal translation; 'Programmierung höherer Ordnung' is the standard German computer science term.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug higher-order-programming --locale de --skip-global",
+    "output": ""
+  }
+}
