@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-context-engineering
+- Locale: ja
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-05-09--quiz-context-engineering/ja/index.mdx
+- Validation: passed
+- Runtime seconds: 37.41
+- Input tokens: 15181
+- Output tokens: 16294
+- Thinking tokens: unknown
+- Cached input tokens: 2944
+- Cache write tokens: 0
+- Estimated cost: $0.003525
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: 'クイズ: コンテキストエンジニアリング質問 14問'
 subTitle: プロンプトエンジニアリングは実践、コンテキストエンジニアリングは提供です。
@@ -478,3 +496,4 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 - **0–4**: 良いニュースです。このクイズのすべては学べるし、すぐに実践できます。「途中で迷子になる」問題だけでも、次の RAG デプロイ前に理解しておく価値があります。
 
 コンテキストエンジニアリングとは、ウィンドウに入れる情報、配置場所、構造化方法を意図的に設計することです。モデルはシステムの中で最も制御しにくい部分です。モデルを取り巻くすべてはあなたの管理下にあります。---
+````

@@ -1,0 +1,44 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Hybrid Search",
+  "translatedTitle": "ハイブリッド検索",
+  "translation": {
+    "title": "ハイブリッド検索",
+    "group": "検索",
+    "options": [
+      {
+        "text": "冗長性のために同じクエリを2回実行する"
+      },
+      {
+        "text": "同じコーパスに対して2つの異なる埋め込みモデルを使用する"
+      },
+      {
+        "text": "ベクトル検索とキーワード検索を組み合わせてより良い検索を行う"
+      },
+      {
+        "text": "複数のベクトルデータベースを同時に検索する"
+      }
+    ],
+    "questionProse": [
+      "RAGシステムにおいて、\"ハイブリッド検索\"は次のことを指す："
+    ],
+    "explanationProse": [
+      "ハイブリッド検索は **ベクトル検索**（埋め込みによる意味的類似性）と **キーワード検索**（BM25／全文検索）を組み合わせます。両者は補完的に失敗するためです：\n\n    - ベクトル検索は正確な語句が苦手：製品名、エラーコード、モデル番号、技術的識別子\n    - キーワード検索は言い換えが苦手：\"how do I cancel\" と \"terminate subscription\"\n\n    両方の結果は **Reciprocal Rank Fusion (RRF)** を用いて融合されます。これはスコアを正規化する必要なく、複数の順位リストの位置を組み合わせるランキングアルゴリズムです。\n\n    これらは `pgvector` と `tsvector` を使った Postgres でも利用可能です。別途検索サービスは不要かもしれません。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"ハイブリッド検索\",\n  \"group\": \"検索\",\n  \"options\": [\n    {\n      \"text\": \"冗長性のために同じクエリを2回実行する\"\n    },\n    {\n      \"text\": \"同じコーパスに対して2つの異なる埋め込みモデルを使用する\"\n    },\n    {\n      \"text\": \"ベクトル検索とキーワード検索を組み合わせてより良い検索を行う\"\n    },\n    {\n      \"text\": \"複数のベクトルデータベースを同時に検索する\"\n    }\n  ],\n  \"questionProse\": [\n    \"RAGシステムにおいて、\\\"ハイブリッド検索\\\"は次のことを指す：\"\n  ],\n  \"explanationProse\": [\n    \"ハイブリッド検索は **ベクトル検索**（埋め込みによる意味的類似性）と **キーワード検索**（BM25／全文検索）を組み合わせます。両者は補完的に失敗するためです：\\n\\n    - ベクトル検索は正確な語句が苦手：製品名、エラーコード、モデル番号、技術的識別子\\n    - キーワード検索は言い換えが苦手：\\\"how do I cancel\\\" と \\\"terminate subscription\\\"\\n\\n    両方の結果は **Reciprocal Rank Fusion (RRF)** を用いて融合されます。これはスコアを正規化する必要なく、複数の順位リストの位置を組み合わせるランキングアルゴリズムです。\\n\\n    これらは `pgvector` と `tsvector` を使った Postgres でも利用可能です。別途検索サービスは不要かもしれません。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 881,
+    "outputTokens": 1051,
+    "cacheReadTokens": 384,
+    "cacheWriteTokens": 0,
+    "durationMs": 2335
+  },
+  "cost": {
+    "inputUsd": 0.000034359,
+    "outputUsd": 0.00018918,
+    "totalUsd": 0.000223539,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
