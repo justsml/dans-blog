@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: stop-the-angularjs-hate
+- Locale: de
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2015-03-10--stop-the-angularjs-hate/de/index.mdx
+- Validation: passed
+- Runtime seconds: 2.13
+- Input tokens: 5363
+- Output tokens: 1520
+- Thinking tokens: unknown
+- Cached input tokens: 2048
+- Cache write tokens: 0
+- Estimated cost: $0.000483
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: AngularJS‑Tricks
@@ -114,4 +132,5 @@ Wenn Sie viele kleine wiederverwendbare UI‑Komponenten besitzen – ReactJS k�
   1.  Verwende eine plain‑JavaScript‑Klasse, um Daten zu laden (AJAX/JSONP/Im Seiteninhalt eingebettet usw.)  
   1.  Nutze Mustache‑Templating, um HTML‑Strings zu erzeugen (oder direkt DOM)  
   1.  Cache den gerenderten Inhalt in `localStorage`, sofern möglich  
-  1.  (Optional) Jetzt einen Event‑Listener hinzufügen, um den Inhalt neu zu rendern. Ich habe mich auf den Event‑Namen `refresh.<class-name>` standardisiert  
+  1.  (Optional) Jetzt einen Event‑Listener hinzufügen, um den Inhalt neu zu rendern. Ich habe mich auf den Event‑Namen `refresh.<class-name>` standardisiert
+````
