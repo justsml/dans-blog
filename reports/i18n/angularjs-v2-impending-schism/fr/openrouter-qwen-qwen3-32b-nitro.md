@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: angularjs-v2-impending-schism
+- Locale: fr
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2015-08-05--angularjs-v2-impending-schism/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 3.75
+- Input tokens: 1684
+- Output tokens: 1403
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.000471
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: ''
@@ -39,3 +57,4 @@ Oh bien, j'ajouterai cela à la liste de formation pour les débutants : quelque
 <div class="anigif top end">
   <img alt='tout va bien se passer' src="https://res.cloudinary.com/ddd/image/upload/v1442175801/system-maint-anon.gif" />
 </div>
+````
