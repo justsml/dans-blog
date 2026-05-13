@@ -1,0 +1,269 @@
+---
+unlisted: true
+draft: true
+hidden: true
+title: 'Безопасность Docker: потерянное руководство для разработчиков'
+subTitle: 'Узнайте, как защитить сеть от угроз и опасных конфигураций.'
+date: '2025-01-04'
+modified: '2025-01-13'
+tags:
+  - local development
+  - security
+  - devops
+  - best-practices
+category: Security
+cover_full_width: ../flame-whale-wide.webp
+cover_mobile: ../flame-whale-head-square-200.webp
+cover_icon: ../flame-whale-head-square-200.webp
+cover_credit: ©️ 2025 Dan Levy
+---
+import {CodeTabs} from '../../../../components/CodeTabs';
+
+## В процессе разработки
+
+**Содержание**
+
+1. [⚠️ Локальные сети под угрозой](#-local-networks-at-risk)
+2. [🛡️ Конфигурация брандмауэра](#-firewall-configuration)
+3. [🔐 Управление секретами для локальной разработки](#-secrets-management-for-local-development)
+4. [🕵️‍ Утечки учётных данных и атаки через боковые каналы](#-credential-leaks-and-side-channel-attacks)
+5. [🔍 Мониторинг и канареечные токены](#-monitoring--canary-tokens)
+6. [❌ Распространённые заблуждения](#-common-misconceptions)
+
+<p class="inset"></p>
+
+## ⚠️ Локальные сети под угрозой
+
+Будем откровенны: все мы так делали. Вы подключались к случайному Wi‑Fi в кафе или позволяли кому‑то пользоваться вашей домашней сетью, не задумываясь ни секунды. Может быть, вы даже доверяете своему умному холодильнику, полагая, что он не скомпрометирует сеть. Реальность? Такие беззаботные решения могут открыть ваш локальный набор для разработки ненужным рискам. Злоумышленники не ограничиваются только продакшн‑системами — локальные окружения часто являются более мягкой мишенью, предоставляя путь к конфиденциальным проектам.
+
+### Сценарии атак
+
+1. **Перехваченный трафик:** Некодированный трафик легко захватить и прочитать.  
+2. **Незащищённые сервисы:** Локальные базы данных или API, открытые на `0.0.0.0`.  
+3. **Подмена сети:** Перенаправление трафика на устройство атакующего.
+
+### Быстрые исправления
+
+- Предпочитайте приватные docker‑сети вместо правил firewall, чтобы ограничить экспозицию сети.  
+- Избегайте публичных или общих Wi‑Fi; лучше использовать точку доступа вашего телефона.  
+- Следите за локальной сетью на предмет неизвестных устройств с помощью таких инструментов, как `arp-scan` и `nmap`.
+
+## 🛡️ Конфигурация firewall
+
+### UFW с Docker (Ubuntu)
+
+> ⚠️ **Внимание:** По умолчанию Docker в Ubuntu/Debian обходит правила UFW/iptables, что может открыть вашу систему для атак.  
+> Не имеет значения, привязываете ли вы порты к локальным IP‑адресам (например, `-p 127.0.0.1:8080:80`).
+
+Это удивляет меня каждый раз, когда я узнаю об этом! [Docker по умолчанию обходит правила UFW](https://github.com/moby/moby/issues/4737), позволяя контейнерам общаться с хостом и другими контейнерами без ограничений.
+
+### Лучшие практики
+
+1. 🥇 **Используйте сети Docker** для изоляции и контроля того, что может подключаться к каждому контейнеру или сети.
+
+###
+2. 🥉 **Обновляйте iptables**: если вам необходимо использовать сеть `host` или вы не можете применять пользовательские сети, риск можно снизить, настроив iptables. Не для слабонервных, [см. утилиту ниже.](#uf)
+
+#### Изоляция сети Docker
+
+```bash
+# Создать новую сеть Docker
+docker network create my-network
+
+# Запустить контейнер в этой сети
+docker run --network my-network my-container
+```
+
+#### Конфигурация UFW (для сетей `host`)
+
+Существует множество плохих рекомендаций по исправлению этой проблемы. Настройте UFW для работы с Docker так, как вы обычно ожидаете.
+
+Я использовал `ufw-docker` для настройки собственного сервера, и он, кажется, работает стабильно.
+
+```bash title="install-ufw-docker.sh"
+# Установить бинарник от имени root (всё равно нужны root‑права)
+sudo wget -O /usr/local/bin/ufw-docker \
+   https://github.com/chaifeng/ufw-docker/raw/master/ufw-docker
+sudo chmod +x /usr/local/bin/ufw-docker
+# Установить и изменить файл `after.rules` для `ufw`
+ufw-docker install
+
+ufw-docker help
+```
+
+```
+
+Эта команда выполняет следующее:
+
+- Делает резервную копию файла `/etc/ufw/after.rules`.
+- Добавляет правила, связанные с Docker, в конец файла, чтобы корректно интегрировать их с UFW.
+
+**Источник:** [ufw-docker GitHub](https://github.com/chaifeng/ufw-docker/tree/master#install)
+
+**Пример использования:**
+
+```bash
+
+# Разрешить Docker‑контейнеру порт 8080
+ufw-docker allow <container_name> 8080/tcp
+
+# Управлять правилами безопасно вместе с конфигурацией UFW
+ufw-docker status
+
+```
+
+**Примечание:** Большинство «исправлений» конфликтов Docker‑UFW подразумевают ручные правила iptables, которые могут быть ошибочными и хрупкими при обновлениях.
+
+### Брандмауэр macOS
+
+1. Откройте **Системные настройки > Безопасность и конфиденциальность > Брандмауэр**.
+2. Включите брандмауэр и нажмите «Параметры брандмауэра».
+3. Блокируйте все входящие соединения, кроме необходимых сервисов.
+
+**Примечание:** Возможно, придётся изучить настройки вашего брандмауэра, чтобы разрешить работу некоторых умных устройств — например Google Cast/AirPlay и других сервисов.
+
+### Команды для продвинутых пользователей (macOS и Linux)
+
+#### macOS:
+
+```bash
+
+sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setblockall on  # Блокировать всё
+sudo /usr/libexec/ApplicationFirewall/socketfilterfw --add /path/to/app  # Разрешить конкретное приложение
+
+```
+
+#### Linux (ufw):
+
+```bash
+
+ufw default deny incoming  # Блокировать все входящие
+ufw allow ssh  # Разрешить SSH
+# разрешить 443 и 80 для веб‑трафика
+ufw allow 80/tcp
+ufw allow 443/tcp
+ufw enable  # Включить брандмауэр
+
+```
+
+**Совет профи:** Используйте такие инструменты, как [Little Snitch](https://www.obdev.at/products/littlesnitch/index.html) на macOS и [ufw](https://help.ubuntu.com/community/UFW) на Linux для более удобных конфигураций.
+
+## 🔐 Управление секретами для локальной разработки
+
+### Проактивная проверка заполнителей
+
+<p>💡 Убедитесь, что секреты заданы реальными значениями до запуска приложения.</p>
+
+Если вы оставляете в секрете заполнители вроде `__WARNING_REPLACE_ME__`, отлично, кто‑то может заметить. На всякий случай можно добавить небольшую проверку, чтобы обеспечить безопасность во время выполнения.
+
+Вы бы не поверили, насколько просто полностью подменить (модифицировать и переподписать) JWT‑токен, когда злоумышленники могут угадать секрет!
+
+### Генерация и хранение секретов
+
+<p class="inset">Никогда не вшивайте секреты в кодовую базу. Предпочитайте переменные окружения и защищённые хранилища.</p>
+
+
+Вместо `.env.example` используйте `.env.generate.sh`, чтобы пользователям было проще получить файл `.env` с безопасными «значениями по умолчанию».
+
+#### Пример `.env.generate.sh`
+
+```bash title=".env.generate.sh" frame="code"
+#!/bin/bash
+# Generates a secure .env file for local development
+
+generate_secret() {
+    local length=${1:-30}
+    # add 4 bytes to account for padding
+    local generate_length=$((length + 4))
+    openssl rand -base64 "$generate_length" | tr -d '+=/\n' | cut -c1-"$length"
+}
+# Bail out if .env file already exists
+[ -f .env ] && { echo ".env file already exists!"; exit 1; }
+
+cat <<EOL > .env
+# Database settings & secrets
+DB_USER=app_user
+DB_PASSWORD=$(generate_secret 30)
+REDIS_PASSWORD=$(generate_secret 20)
+# Session secrets
+SESSION_KEY=$(generate_secret 32)
+JWT_SECRET=$(generate_secret 64)
+EOL
+
+echo "New .env file generated!"
+```
+
+{/*
+
+```zig
+// validate_secrets.zig
+const std = @import("std");
+
+pub fn main() void {
+    var env = std.os.getenv_map();
+    const placeholder = "__WARNING_REPLACE_ME__";
+
+    for (env.items()) |entry| {
+        if (std.mem.contains(u8, entry.value, placeholder)) {
+            std.debug.panic("Unsafe secret in {}", .{entry.key});
+        }
+    }
+}
+``` */}
+
+## 🕵️‍ Monitoring & Double-checking
+
+### Примеры `nmap`
+
+#### Тестирование внутри вашей сети
+
+```bash
+
+# Scan your localhost for all open ports
+nmap -sT localhost
+
+# Scan your machine’s private IP for services
+nmap -sV 192.168.1.10
+
+# Detect devices on your network
+nmap -sn 192.168.0.0/24
+nmap -sn 10.0.0.0/24
+```
+
+```
+
+#### Тестирование из внешней сети
+
+Текущий (публичный) IP легко узнать через сервисы вроде `ifconfig.me`: `curl https://ifconfig.me`.
+
+Для проверки публичных IP используйте внешнюю сеть или удалённый сервер:
+
+```bash
+
+print_current_ip() {
+  curl https://ifconfig.me
+}
+
+print_current_ip
+# --> 123.456.789.012
+
+# Задайте target_host как ваш публичный IP или имя хоста
+# Проверка хоста с помощью продвинутых техник
+nmap -A --open --reason $target_host
+nmap -A -F --open --reason $target_host
+nmap -A -p1-65535 --open --reason $target_host
+
+```
+
+**Зачем тестировать оба направления?**  
+Тестирование изнутри показывает внутреннюю экспозицию, а внешние проверки выявляют сервисы, доступные злоумышленникам.
+
+## 🛡️ Распространённые заблуждения
+
+
+1. **Моя локальная среда не является целью.**  
+   - Факт: Злоумышленники могут использовать ваш компьютер как точку опоры для доступа к продакшн‑системам.  
+2. **Брандмауэры блокируют всё.**  
+   - Факт: Они блокируют только то, что вы явно настроили.  
+3. **Приватные IP‑адреса безопасны.**  
+   - Факт: Эксплойты, такие как обход NAT, всё равно могут затронуть вашу сеть.
