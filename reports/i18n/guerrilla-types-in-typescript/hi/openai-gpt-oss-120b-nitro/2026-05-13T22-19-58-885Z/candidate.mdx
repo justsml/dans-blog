@@ -1,0 +1,285 @@
+---
+social_image: ../desktop-social.webp
+title: टाइपस्क्रिप्ट में गेरिला टाइप्स
+subTitle: बागी टाइपडिज़ाइन
+date: '2023-09-05'
+modified: '2024-07-30'
+tags:
+  - engineering
+  - typescript
+  - composition
+  - types
+category: Guides
+subCategory: TypeScript
+cover: ../gorilla-types_dall-e.webp
+cover_mobile: ../w300_gorilla-types_dall-e.webp
+cover_icon: ../icon_gorilla-types_dall-e.webp
+---
+## Guerrilla Types in TypeScript
+
+इस लेख में हम तीन रोचक (शायद ख़राब?) तकनीकों को देखेंगे जो टाइप डिज़ाइन में मदद कर सकती हैं!
+
+मुख्य लक्ष्य **सुसंगत** और **पूर्वानुमेय** मॉडल/एंटिटी/क्लास इंटरफ़ेस बनाना है।
+
+- [टाइप डिज़ाइन के लिए दृष्टिकोण](#approaches-to-designing-types)
+  - [एक बड़ा ऑब्जेक्ट](#single-large-object)
+  - [कई नामित टाइप्स](#multiple-named-types)
+- [तकनीक #1: क्यों न सभी को एक साथ रखें](#technique-1-why-not-all)
+- [तकनीक #2: मिक्स‑इन्स](#technique-2-mix-ins)
+  - [मिक्स‑इन उदाहरण](#mix-in-examples)
+  - [उदाहरण `User`](#example-user)
+- [तकनीक #3: नेमस्पेसेस के साथ व्यवस्थित करना](#technique-3-organizing-with-namespaces)
+  - [वास्तविक‑दुनिया उपयोग](#real-world-usage)
+- [सारांश](#summary)
+
+<!--
+1.  High-level logical representation of types - in a way meaningful to both devs and business stakeholders.
+2.  Durable way to model combinations of logically related fields.
+    1.  Example: **Object instances** often include common fields `id`, `createdDate`, `createdById`, etc.
+    2.  Model Request & Response fields from your discrete database models. (e.g. `_version`, `_v`)
+    3.  Composable utilities, Paging/Payload wrapper, etc: `pageNumber`, `sortBy`, `impersonateSession`, `token`, `_version`, etc.
+3.  Avoid unintended variances in naming and typing (`id`, `Id`, `ID`, `created_at`, `date_created`, oh noes!)
+4.  Compose higher level types with multiple smaller reusable interfaces & types.
+5.  Utilize [Unions](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes-func.html#discriminated-unions) to 'automatically' match variants of a type. -->
+
+### टाइप डिज़ाइन के लिए दृष्टिकोण
+
+आपने शायद “टाइप इम्प्लीमेंटेशन” के विभिन्न पैटर्न देखे या लिखे हों, ख़ासकर जब थर्ड‑पार्टी API से डेटा उपभोग कर रहे हों।
+
+**नोट:** मैं जानबूझकर “पारंपरिक” प्रक्रियाओं जैसे एंटिटी रिलेशनशिप डायग्राम (ERD) या ऑब्जेक्ट‑ओरिएंटेड प्रोग्रामिंग (OOP) इनहेरिटेंस हायरार्की को नजरअंदाज़ कर रहा हूँ। यहाँ हम टाइप्स को सेमी‑स्ट्रक्चर्ड API डेटा का प्रतिनिधित्व करने के लिए बना रहे हैं।
+
+आइए दो उच्च‑स्तरीय दृष्टिकोण देखें: **एक बड़ा ऑब्जेक्ट** (टॉप‑डाउन) बनाम **कई नामित टाइप्स** (बॉटम‑अप)।
+
+#### एक बड़ा ऑब्जेक्ट
+
+**स्पष्टता को पुन: उपयोगिता और DRY‑नेस से ऊपर प्राथमिकता देता है।**
+
+**बोनस:** IDE/डेव अनुभव शानदार है, क्योंकि टूलटिप्स में अधिक पूर्ण पूर्वावलोकन शामिल होता है — बिना झंझट के।
+
+```tsx
+interface ProductDetails {
+  name: string;
+  seller: { name: string };
+  availability: Array<{ warehouseId: string; quantity: number }>;
+  reviews: Array<{ authorId: number; stars: number }>;
+}
+```
+
+चूंकि हम स्पष्ट पठनीयता को प्राथमिकता दे रहे हैं, इसलिए कुछ हद तक दोहराव (उचित सीमा में) को स्वीकार किया जा सकता है। जब प्रॉपर्टी समूह कई बार दोहराते हैं, तो दोहराए गए फ़ील्ड को एक नामित टाइप में निकालने में संकोच न करें।
+
+#### कई नामित टाइप्स
+
+पुन: उपयोगिता और DRY‑नेस को प्राथमिकता देता है।
+
+<!-- Readability is a funny measure. Since Readability is often good or **great when there are few types/files.** **Inevitably types tend to proliferate,** featuring ever more properties. **Readability suffers.** -->
+
+यह दृष्टिकोण व्यापक रूप से सबसे पसंदीदा माना जाता है।
+
+```ts
+interface ProductDetails {
+  name: string;
+  seller: Seller;
+  reviews: Reviews[];
+  availability: Availability[];
+}
+interface Seller { name: string; }
+interface Availability { warehouseId: string; quantity: number; }
+interface Reviews { authorId: number; stars: number; }
+```
+
+समग्र रूप से, यह दृष्टिकोण शानदार है। लेकिन इसमें कुछ कमियां भी हैं।
+
+- **पठनीयता** शुरू में उत्कृष्ट होती है; हालांकि, टाइप्स के आकार और संख्या बढ़ने पर यह *संकट* में पड़ सकती है।
+- निरंतर DRY, लेकिन किस कीमत पर? (इस पर बाद में चर्चा करेंगे।)
+- डेवलपर अनुभव प्रभावित हो सकता है क्योंकि टूलटिप्स कम जानकारीपूर्ण होते हैं।
+
+> ⚠️ लगभग TypeScript v3 से, लैंग्वेज सर्वर टूलटिप्स को काट देता है, जिससे नेस्टेड प्रॉपर्टीज़ नहीं दिखतीं।  
+> 💡 इसे थोड़ा बेहतर बनाने के लिए ट्रिक्स हैं। `Cmd` या `Ctrl` दबाकर विभिन्न टाइप नामों पर होवर करें — आपको टूलटिप में कम से कम एक अतिरिक्त 'लेयर' की प्रॉपर्टीज़ दिखनी चाहिए।
+
+हमें इन दो तरीकों में से चुनना क्यों पड़ता है? (बड़ी टाइप बनाम नामित सब‑टाइप्स।)
+
+### तकनीक #1: क्यों न सब कुछ
+
+क्या हम सब कुछ पा सकते हैं?
+
+- “बड़ी‑तस्वीर” टाइप की स्पष्टता?
+- साथ में नामित सब‑टाइप्स?
+- बिना दोहराव के?
+
+> ✅ हाँ! 🎉
+
+```tsx
+export interface ProductDetails {
+  name: string;
+  seller: { name: string };
+  reviews: Array<{ authorId: number; stars: number }>;
+  availability: Array<{ warehouseId: string; quantity: number }>;
+}
+export type Seller = ProductDetails["seller"];
+export type Review = ProductDetails["reviews"][number];
+export type Availability = ProductDetails["availability"][number];
+```
+
+1.  बड़े “प्राथमिक” संरचित टाइप बनाएं।  
+2.  प्राथमिक टाइप से व्युत्पन्न सब‑टाइप निर्यात करें।
+
+यह तरीका उन सिस्टमों में खास तौर पर चमकता है जहाँ “उच्च‑स्तरीय” ऑब्जेक्ट्स को एक ही जगह दस्तावेज़ीकरण की आवश्यकता होती है।  
+इसके अलावा, यह तकनीक कई उपयोग‑केसेज़ के बीच पुन: उपयोग को समर्थन देती है: मॉडल, सर्विसेज, क्वेरी परिणाम, आदि।
+
+### तकनीक #2: मिक्स‑इन
+
+यह रणनीति **सही फ़ील्ड्स**, **सही नामों** को मिलाकर **एकल तार्किक ऑब्जेक्ट** को दर्शाने के बारे में है। लक्ष्य टाइपस्क्रिप्ट यूटिलिटीज़ और टाइप यूनियन्स के साथ कई उपयोग‑केसेज़ को कुशलता से संभालना है।
+
+यह पारंपरिक OOP इनहेरिटेंस और हायरार्की से अलग है, जहाँ उद्देश्य वस्तुओं की परतें बनाकर उन्हें कसकर बंधे टैक्सोनॉमी में व्यवस्थित करना होता है। **मिक्स‑इन दृष्टिकोण सपाट और ढीले‑संबंधित टाइप्स** पर केंद्रित है, संबंधित फ़ील्ड्स को समूहित करते हुए दोहराव को कम करता है।
+
+#### मिक्स‑इन उदाहरण
+
+```tsx
+interface TodoModel {
+  text: string;
+  complete: boolean;
+}
+interface InstanceMixin {
+  id: number;
+}
+/** TodoDraft फ़ॉर्म की स्थिति को दर्शाता है, संभवतः सभी फ़ील्ड अनडिफ़ाइंड */
+export type TodoDraft = Partial<TodoModel>;
+/** Todo डेटाबेस से प्राप्त Todo इंस्टेंस रिकॉर्ड को दर्शाता है */
+export type Todo = TodoModel & InstanceMixin;
+```
+
+#### उदाहरण `User`
+
+```tsx
+interface User {
+  id: number;
+  name: string;
+  bio: string;
+  social: Record<"facebook" | "instagram" | "github", URL>;
+}
+```
+
+डेटाबेस में सहेजने से पहले और बाद में `User` को कैसे दर्शाएँ, देखें।
+
+```tsx
+// कोर यूज़र फ़ील्ड्स (जैसे <form> के लिए)
+interface UserBase {
+  name: string;
+  bio: string;
+  social: Record<"facebook" | "instagram" | "github", URL>;
+}
+// डेटाबेस से आने वाले फ़ील्ड्स
+interface InstanceMixin {
+  id: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
+// एक यूज़र **इंस्टेंस** - सभी फ़ील्ड्स के साथ
+type UserInstance = InstanceMixin & UserBase;
+```
+
+अब हम ठीक‑ठीक वही फ़ील्ड्स चुन सकते हैं जो हमें चाहिए (जैसे `password` केवल निर्माण/अपडेट के लिए, लेकिन `UserInstance` क्वेरी में शामिल नहीं)।
+
+```tsx
+interface UserBase {
+  name: string;
+  bio: string;
+  social: Record<"facebook" | "instagram" | "github", URL>;
+}
+interface InstanceMixin {
+  id: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
+/** साइन‑अप के लिए यूज़र पेलोड, जिसमें `password` फ़ील्ड शामिल है */
+export type UserPayload = UserBase & { password: string };
+/** सर्वर से लौटाए गए यूज़र टाइप को दर्शाता है। */
+export type UserInstance = UserBase & InstanceMixin;
+```
+
+1.  “क्या यह एक अच्छा अभ्यास है?”  
+2.  “क्या मुझे इसे आज़माना चाहिए?”
+
+कोईअंदाज़ा नहीं। चलिए आगे बढ़ते हैं!
+
+### तकनीक #3: नेमस्पेसेज़ के साथ व्यवस्थित करना
+
+यहाँ हम एक `ModelMixins` नेमस्पेस घोषित करते हैं। यह कुछ संगठन प्रदान करता है और पुन: उपयोग पैटर्न को स्पष्ट बनाता है।
+
+**मानकीकृत आकार**
+
+- `createdAt` और `updatedAt` साथ में मौजूद होते हैं।
+- `id`, न कि `ID` या `_id`।
+
+```tsx
+// `src/types/mixins.d.ts`
+namespace ModelMixins {
+  interface Identity {
+    id: number;
+  }
+  interface Timestamp {
+    createdAt: Date;
+    updatedAt: Date;
+  }
+  type Instance = ModelMixins.Identity & ModelMixins.Timestamp;
+  interface HashedPassword {
+    passwordHash: string;
+  }
+  interface InputPassword {
+    password: string;
+  }
+}
+```
+
+**टाइप यूनियन्स का उपयोग**
+
+```tsx
+// `src/types/user.d.ts`
+export interface UserBase {
+  name: string;
+  bio: string;
+  social: Record<"facebook" | "instagram" | "github", URL>;
+}
+// एकल `User` टाइप, टाइप यूनियन का उपयोग करके
+// पूर्व‑और‑पश्चात‑सृजन स्थितियों को गतिशील रूप से दर्शाता है।
+export type User =
+  | (UserBase & ModelMixins.Instance & ModelMixins.HashedPassword)
+  | (UserBase & ModelMixins.InputPassword);
+```
+
+यदि चाहें, तो आप व्यक्तिगत नामित टाइप्स भी निर्यात कर सकते हैं:
+
+```tsx
+/** साइन‑अप के लिए यूज़र पेलोड, जिसमें `password` फ़ील्ड शामिल है */
+export type UserPayload = UserBase & ModelMixins.Instance & ModelMixins.HashedPassword;
+/** सर्वर से लौटाए गए यूज़र टाइप को दर्शाता है। */
+export type UserInstance = UserBase & ModelMixins.InputPassword;
+```
+
+#### वास्तविक‑दुनिया उपयोग
+
+यहाँ एक `upsert()` फ़ंक्शन है जो `in` ऑपरेटर का उपयोग करके `UserInstance` और `UserPayload` टाइप्स के बीच अंतर करता है।
+
+```tsx
+function upsert(user: User) {
+  if ("id" in user) {
+    // TypeScript जानता है कि यहाँ `user` में Instance (id, createdAt, आदि) के फ़ील्ड हैं
+    return updateUser(user.id, user);
+  } else {
+    // TypeScript जानता है कि यह `UserBase & ModelMixins.InputPassword` संस्करण का उपयोगकर्ता है।
+    return createUser(user);
+  }
+}
+```
+
+### सारांश
+
+हमने तीन तकनीकों और कुछ संबंधित सहायक विचारों को कवर किया।
+
+आप सोच रहे होंगे, क्या ये पैटर्न अच्छे हैं? क्या मुझे इन विचारों में से कुछ अपनाने चाहिए?
+
+## संसाधन
+
+- [लेगेसी प्रोजेक्ट्स के लिए TypeScript टिप्स: केवल वही टाइप करें जिसकी आपको ज़रूरत है](https://sergiocarracedo.es/typescript-tips/)
+- [मैट पोकोक की उत्कृष्ट नई किताब](https://www.totaltypescript.com/books/total-typescript-essentials)
+- [टोटल TypeScript टिप्स](https://www.totaltypescript.com/tips)

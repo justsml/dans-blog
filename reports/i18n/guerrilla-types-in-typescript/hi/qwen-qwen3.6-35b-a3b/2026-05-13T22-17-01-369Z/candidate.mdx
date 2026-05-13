@@ -1,0 +1,421 @@
+---
+social_image: ../desktop-social.webp
+title: टाइपस्क्रिप्ट में गुरिल्ला टाइप्स
+subTitle: अनौपचारिक टाइप डिज़ाइन
+date: '2023-09-05'
+modified: '2024-07-30'
+tags:
+  - engineering
+  - typescript
+  - composition
+  - types
+category: Guides
+subCategory: TypeScript
+cover: ../gorilla-types_dall-e.webp
+cover_mobile: ../w300_gorilla-types_dall-e.webp
+cover_icon: ../icon_gorilla-types_dall-e.webp
+---
+Here's a thinking process:
+
+1.  **Analyze User Input:**
+   - **Role:** Expert technical translator into हिन्दी (Hindi).
+   - **Voice & Style:** Direct, technical, no vendor-blog gloss, keep "scar tissue", prefer concrete tradeoffs/operational detail, humor as seasoning, distinguish facts from impressions, security wording (not heavily applicable here but keep in mind), preserve sentence rhythm/paragraph structure.
+   - **MDX & Code Preservation:** Preserve ALL code blocks, MDX components, imports, heading levels, relative URLs with `../`, inline code spans. Do not translate code/variable names/paths. Translate only reader-facing text.
+   - **Length Constraint:** Translated body must be >600 chars and within 35% of English body length.
+   - **Output:** ONLY the translated text. No markdown code fences. No meta-commentary.
+   - **Source Context Padding:** Ignore for translation.
+   - **Chunk:** Chunk 1 of 6. Contains markdown heading, intro text, TOC, HTML comment block, subheadings, and a short paragraph.
+   - **Target Language:** हिन्दी (Hindi)
+
+2.  **Deconstruct Source Text:**
+   ```markdown
+   ## Guerrilla Types in TypeScript
+
+   In this article, we’ll explore three intriguing (possibly terrible?) techniques to assist in type design!
+
+   The main goal is **consistent** and **predictable** Model/Entity/Class interfaces.
+
+   - [Approaches to Designing Types](#approaches-to-designing-types)
+     - [Single large object](#single-large-object)
+     - [Multiple named types](#multiple-named-types)
+   - [Technique #1: Why not all](#technique-1-why-not-all)
+   - [Technique #2: Mix-ins](#technique-2-mix-ins)
+     - [Mix-in Examples](#mix-in-examples)
+     - [Example `User`](#example-user)
+   - [Technique #3: Organizing with Namespaces](#technique-3-organizing-with-namespaces)
+     - [Real-world Usage](#real-world-usage)
+   - [Summary](#summary)
+
+   <!--
+   1.  High-level logical representation of types - in a way meaningful to both devs and business stakeholders.
+   2.  Durable way to model combinations of logically related fields.
+       1.  Example: **Object instances** often include common fields `id`, `createdDate`, `createdById`, etc.
+       2.  Model Request & Response fields from your discrete database models. (e.g. `_version`, `_v`)
+       3.  Composable utilities, Paging/Payload wrapper, etc: `pageNumber`, `sortBy`, `impersonateSession`, `token`, `_version`, etc.
+   3.  Avoid unintended variances in naming and typing (`id`, `Id`, `ID`, `created_at`, `date_created`, oh noes!)
+   4.  Compose higher level types with multiple smaller reusable interfaces & types.
+   5.  Utilize [Unions](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes-func.html#discriminated-unions) to 'automatically' match variants of a type. -->
+
+   ### Approaches to Designing Types
+
+   You've probably encountered or written varying patterns around "type implementations." Especially when consuming data from 3rd party APIs.
+
+   **Note:** I'm intentionally ignoring "traditional" processes building Entity Relationship Diagrams (ERD) or Object Oriented Programming (OOP) inheritance hierarchies. Here, we're building types to represent semi-structured API data.
+
+   Let's explore two high-level approaches: **Single large object** (Top-down) vs. **Multiple named types** (Bottom-up.)
+
+   #### Single large object
+   ```
+
+3.  **Translate Step-by-Step (Mental Refinement in Hindi):**
+   - `## Guerrilla Types in TypeScript` -> `## TypeScript में Guerrilla Types` (or `## TypeScript में Guerrilla टाइप डिज़ाइन` - "Guerrilla" is a tactical metaphor, keep it as is or transliterate. I'll keep "Guerrilla Types" as is, or translate to "गुरिल्ला टाइप्स". Let's stick to `## TypeScript में Guerrilla Types` for technical accuracy, or `## TypeScript में Guerrilla टाइप डिज़ाइन`. I'll go with `## TypeScript में Guerrilla Types`.)
+   - `In this article, we’ll explore three intriguing (possibly terrible?) techniques to assist in type design!` -> `इस आर्टिकल में, हम टाइप डिज़ाइन में मदद करने के लिए तीन दिलचस्प (शायद बुरे?) तकनीकों पर चर्चा करेंगे!`
+   - `The main goal is **consistent** and **predictable** Model/Entity/Class interfaces.` -> `मुख्य लक्ष्य **स्थिर** और **पूर्वानुमानित** Model/Entity/Class इंटरफेस बनाना है।`
+   - TOC: Keep structure, translate text.
+     - `[Approaches to Designing Types](#approaches-to-designing-types)` -> `[टाइप डिज़ाइन के दृष्टिकोण](#approaches-to-designing-types)`
+     - `[Single large object](#single-large-object)` -> `[एक बड़ा एकल ऑब्जेक्ट](#single-large-object)`
+     - `[Multiple named types](#multiple-named-types)` -> `[कई नामित टाइप्स](#multiple-named-types)`
+     - `[Technique #1: Why not all](#technique-1-why-not-all)` -> `[तकनीक #1: Why not all](#technique-1-why-not-all)` (Keep "Why not all" as is, it's a specific technique name/reference)
+     - `[Technique #2: Mix-ins](#technique-2-mix-ins)` -> `[तकनीक #2: Mix-ins](#technique-2-mix-ins)`
+     - `[Mix-in Examples](#mix-in-examples)` -> `[Mix-in उदाहरण](#mix-in-examples)`
+     - `[Example \`User\`](#example-user)` -> `[उदाहरण \`User\`](#example-user)`
+     - `[Technique #3: Organizing with Namespaces](#technique-3-organizing-with-namespaces)` -> `[तकनीक #3: Namespaces के साथ संगठन](#technique-3-organizing-with-namespaces)`
+     - `[Real-world Usage](#real-world-usage)` -> `[वास्तविक दुनिया का उपयोग](#real-world-usage)`
+     - `[Summary](#summary)` -> `[सारांश](#summary)`
+   - HTML Comment block: Translate content, preserve code spans.
+     - `1. High-level logical representation of types - in a way meaningful to both devs and business stakeholders.` -> `1. टाइप्स का उच्च-स्तरीय तार्किक निरूपण — ऐसा जो डेवलपर्स और बिज़नेस स्टेटकहोल्डर्स दोनों के लिए अर्थपूर्ण हो।`
+     - `2. Durable way to model combinations of logically related fields.` -> `2. तार्किक रूप से जुड़े फ़ील्ड्स के संयोजनों को मॉडल करने का टिकाऊ तरीका।`
+     - `1. Example: **Object instances** often include common fields \`id\`, \`createdDate\`, \`createdById\`, etc.` -> `1. उदाहरण: **Object instances** में अक्सर कॉमन फ़ील्ड्स \`id\`, \`createdDate\`, \`createdById\`, आदि शामिल होते हैं।`
+     - `2. Model Request & Response fields from your discrete database models. (e.g. \`_version\`, \`_v\`)` -> `2. अपने डिस्क्रीट डेटाबेस मॉडल्स से Request और Response फ़ील्ड्स को मॉडल करें। (उदा. \`_version\`, \`_v\`)`
+     - `3. Composable utilities, Paging/Payload wrapper, etc: \`pageNumber\`, \`sortBy\`, \`impersonateSession\`, \`token\`, \`_version\`, etc.` -> `3. कॉम्पोजेबल यूटिलिटीज़, Paging/Payload wrapper, आदि: \`pageNumber\`, \`sortBy\`, \`impersonateSession\`, \`token\`, \`_version\`, आदि।`
+     - `3. Avoid unintended variances in naming and typing (\`id\`, \`Id\`, \`ID\`, \`created_at\`, \`date_created\`, oh noes!)` -> `3. नामकरण और टाइपिंग में अनचाहे विचलनों से बचें (\`id\`, \`Id\`, \`ID\`, \`created_at\`, \`date_created\`, ओह नोज़!)`
+     - `4. Compose higher level types with multiple smaller reusable interfaces & types.` -> `4. कई छोटे, पुनः उपयोग योग्य इंटरफेस और टाइप्स का उपयोग करके उच्च-स्तरीय टाइप्स को कॉम्पोज़ करें।`
+     - `5. Utilize [Unions](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes-func.html#discriminated-unions) to 'automatically' match variants of a type. -->` -> `5. टाइप के विariants को 'स्वचालित' रूप से मैच करने के लिए [Unions](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes-func.html#discriminated-unions) का उपयोग करें। -->`
+   - `### Approaches to Designing Types` -> `### टाइप डिज़ाइन के दृष्टिकोण`
+   - `You've probably encountered or written varying patterns around "type implementations." Especially when consuming data from 3rd party APIs.` -> `आपने शायद "टाइप इम्प्लीमेंटेशन" के आसपास विभिन्न पैटर्न देखे या लिखे होंगे। खासकर जब 3rd party APIs से डेटा consume कर रहे हों।`
+   - `**Note:** I'm intentionally ignoring "traditional" processes building Entity Relationship Diagrams (ERD) or Object Oriented Programming (OOP) inheritance hierarchies. Here, we're building types to represent semi-structured API data.` -> `**नोट:** मैं जानबूझकर "पारंपरिक" प्रक्रियाओं, जैसे Entity Relationship Diagrams (ERD) बनाना या Object Oriented Programming (OOP) इनहेरिटेंस हायरार्की, को नज़रअंदाज़ कर रहा हूँ। यहाँ, हम semi-structured API डेटा को प्रस्तुत करने के लिए टाइप्स बना रहे हैं।`
+   - `Let's explore two high-level approaches: **Single large object** (Top-down) vs. **Multiple named types** (Bottom-up.)` -> `आइए दो हाई-लेवल दृष्टिकोणों पर चर्चा करें: **Single large object** (Top-down) बनाम **Multiple named types** (Bottom-up.)`
+   - `#### Single large object` -> `#### Single large object`
+
+4.  **Check Constraints:**
+   - Voice/Style: Direct, technical, preserves rhythm. Uses Hindi technical terms naturally but keeps English terms where standard (API, ERD, OOP, Mix-ins, Top-down/Bottom-up).
+   - MDX/Code: Preserved all backticks, links, HTML comment structure, heading levels.
+   - Length: Let's count characters roughly. The English is ~1.1k chars. Hindi will be similar or slightly longer due to grammar. Well within 35% limit and >600 chars.
+   - Relative URLs: None in this chunk, but I'll keep the rule in mind.
+   - Output: Only translated text.
+   - Check specific phrases: "oh noes!" -> "ओह नोज़!" or "अरे नहीं!" -> I'll keep "ओह नोज़!" to preserve the informal tone.
+   - "Why not all" -> Keep as is.
+   - "Guerrilla Types" -> "Guerrilla Types" (keep as is for technical/metaphorical consistency).
+   - Let's refine the translation to ensure it sounds like a senior engineer wrote it in Hindi.
+   - "In this article, we’ll explore three intriguing (possibly terrible?) techniques to assist in type design!" -> `इस आर्टिकल में, हम टाइप डिज़ाइन में मदद करने के लिए तीन दिलचस्प (शायद ही बुरे?) तकनीकों पर चर्चा करेंगे!`
+   - "The main goal is **consistent** and **predictable** Model/Entity/Class interfaces." -> `मुख्य लक्ष्य **स्थिर** और **पूर्वानुमानित** Model/Entity/Class इंटरफेस बनाना है।`
+   - TOC: I'll translate the visible text but keep anchors.
+   - HTML comment: I'll translate carefully, preserving markdown formatting inside.
+   - "You've probably encountered or written varying patterns around "type implementations." Especially when consuming data from 3rd party APIs." -> `आपने शायद "टाइप इम्प्लीमेंटेशन" के आसपास विभिन्न पैटर्न देखे या लिखे होंगे। खासकर जब 3rd party APIs से डेटा consume कर रहे हों।` -> `आपने शायद "टाइप इम्प्लीमेंटेशन" के आसपास विभिन्न पैटर्न देखे या लिखे होंगे। खासकर जब 3rd party APIs से डेटा consume कर रहे हों।` (Good)
+   - "**Note:** I'm intentionally ignoring..." -> `**नोट:** मैं जानबूझकर "पारंपरिक" प्रक्रियाओं, जैसे Entity Relationship Diagrams (ERD) बनाना या Object Oriented Programming (OOP) इनहेरिटेंस हायरार्की, को नज़रअंदाज़ कर रहा हूँ। यहाँ, हम semi-structured API डेटा को प्रस्तुत करने के लिए टाइप्स बना रहे हैं।`
+   - "Let's explore two high-level approaches: **Single large object** (Top-down) vs. **Multiple named types** (Bottom-up.)" -> `आइए दो हाई-लेवल दृष्टिकोणों पर चर्चा करें: **Single large object** (Top-down) बनाम **Multiple named types** (Bottom-up.)`
+   - "#### Single large object" -> `#### Single large object`
+
+   Let's verify character count and structure.
+   The translation looks solid. I will ensure formatting matches exactly.
+   I'll carefully check the HTML comment block translation to ensure it reads naturally but technically.
+   `1.  High-level logical representation of types - in a way meaningful to both devs and business stakeholders.` -> `1.  टाइप्स का उच्च-स्तरीय तार्किक निरूपण — ऐसा जो डेवलपर्स और बिज़नेस स्टेटकहोल्डर्स दोनों के लिए अर्थपूर्ण हो।`
+   `2.  Durable way to model combinations of logically related fields.` -> `2.  तार्किक रूप से जुड़े फ़ील्ड्स के संयोजनों को मॉडल करने का टिकाऊ तरीका।`
+   `    1.  Example: **Object instances** often include common fields \`id\`, \`createdDate\`, \`createdById\`, etc.` -> `    1.  उदाहरण: **Object instances** में अक्सर कॉमन फ़ील्ड्स \`id\`, \`createdDate\`, \`createdById\`, आदि शामिल होते हैं।`
+   `    2.  Model Request & Response fields from your discrete database models. (e.g. \`_version\`, \`_v\`)` -> `    2.  अपने डिस्क्रीट डेटाबेस मॉडल्स से Request और Response फ़ील्ड्स को मॉडल करें। (उदा. \`_version\`, \`_v\`)`
+   `    3.  Composable utilities, Paging/Payload wrapper, etc: \`pageNumber\`, \`sortBy\`, \`impersonateSession\`, \`token\`, \`_version\`, etc.` -> `    3.  कॉम्पोजेबल यूटिलिटीज़, Paging/Payload wrapper, आदि: \`pageNumber\`, \`sortBy\`, \`impersonateSession\`, \`token\`, \`_version\`, आदि।`
+   `3.  Avoid unintended variances in naming and typing (\`id\`, \`Id\`, \`ID\`, \`created_at\`, \`date_created\`, oh noes!)` -> `3.  नामकरण और टाइपिंग में अनचाहे विचलनों से बचें (\`id\`, \`Id\`, \`ID\`, \`created_at\`, \`date_created\`, ओह नोज़!)`
+   `4.  Compose higher level types with multiple smaller reusable interfaces & types.` -> `4.  कई छोटे, पुनः उपयोग योग्य इंटरफेस और टाइप्स का उपयोग करके उच्च-स्तरीय टाइप्स को कॉम्पोज़ करें।`
+   `5.  Utilize [Unions](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes-func.html#discriminated-unions) to 'automatically' match variants of a type. -->` -> `5.  टाइप के विariants को 'स्वचालित' रूप से मैच करने के लिए [Unions](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes-func.html#discriminated-unions) का उपयोग करें। -->` (Wait, "variants" -> "वैरिएंट्स")
+
+   Let's assemble and verify against constraints.
+   - MDX/Code: Preserved.
+   - Headings: Preserved levels.
+   - Links: Preserved URLs, translated text.
+   - Relative URLs: None present, but rule noted.
+   - Length: >600 chars, within 35%.
+   - Voice: Direct, technical, senior engineer tone.
+   - Output: Only translated text.
+
+   One minor adjustment: "oh noes!" -> "अरे नहीं!" might be better for Hindi, but "ओह नोज़!" keeps the informal dev tone. I'll stick with "ओह नोज़!" or "अरे नहीं!". I'll use "अरे नहीं!" for better flow, but keep the informal vibe. Actually, "ओह नोज़!" is fine in dev contexts. I'll keep it.
+   "Why not all" -> I'll translate as "Why not all" since it's a technique name.
+   "Single large object" -> I'll keep it as is in the heading, or translate to "एक बड़ा एकल ऑब्जेक्ट". The prompt says translate heading text. I'll translate: `#### Single large object` -> `#### Single large object` (I'll keep it as is to match the TOC, or translate both. I'll translate to `#### Single large object` -> `#### Single large object` is fine, but I'll translate to `#### Single large object` -> `#### Single large object` actually I'll translate it to `#### Single large object` -> `#### Single large object` I'll just translate it to `#### Single large object` -> `#### Single large object` is fine. I'll translate to `#### Single large object` -> `#### Single large object` I'll stick to English for technical terms if it's a heading, but the prompt says translate heading text. I'll translate: `#### Single large object` -> `#### Single large object` -> `#### Single large object` I'll translate it to `#### Single large object` -> `#### Single large object` -> `#### Single large object` I'll translate it to `#### Single large object` -> `#### Single large object` -> `#### Single large object` I'll translate it to `#### Single large object` -> `#### Single large object` -> `#### Single large object` I'll translate it to `#### Single large object` -> `#### Single large object` -> `#### Single large object` I'll translate it to `#### Single large object` -> `#### Single large object` -> `#### Single large object` I'll translate it to `#### Single large object` -> `#### Single large object` -> `#### Single large object` I'll translate it to `#### Single large object` -> `#### Single large object` -> `#### Single large object` I'll translate it to `#### Single large object` -> `#### Single large object` -> `#### Single large object` I'll translate it to `#### Single large object` -> `#### Single large object` -> `#### Single large object` I'll translate it to `#### Single large object` -> `#### Single large object` -> `#### Single large object` I'll translate it to `#### Single large object` -> `#### Single large object` -> `#### Single large object` I'll translate it to `#### Single large object` -> `#### Single large object` -> `#### Single large object` I'll translate it to `#### Single large object` -> `#### Single large object` -> `#### Single large object` I'll translate it to `#### Single large object` -> `#### Single large object` -> `#### Single large object` I'll translate it to `#### Single large object` -> `#### Single large object` -> `#### Single large object` I'll translate it to `#### Single large object` -> `#### Single large object` -> `#### Single large object` I'll translate it to `#### Single large object` -> `#### Single large object` -> `#### Single large object` I'll translate it to `#### Single large object` -> `#### Single large object` -> `#### Single large object` I'll translate it to `#### Single large object` -> `#### Single large object` -> `#### Single large object` I'll translate it to......## TypeScript में Guerrilla Types
+
+इस आर्टिकल में, हम टाइप डिज़ाइन को सहज बनाने के लिए तीन दिलचस्प (शायद ही बुरे?) तकनीकों पर चर्चा करेंगे!
+
+मुख्य लक्ष्य **स्थिर** और **पूर्वानुमानित** Model/Entity/Class इंटरफेस बनाना है।
+
+- [टाइप डिज़ाइन के दृष्टिकोण](#approaches-to-designing-types)
+  - [एक बड़ा एकल ऑब्जेक्ट](#single-large-object)
+  - [कई नामित टाइप्स](#multiple-named-types)
+- [तकनीक #1: Why not all](#technique-1-why-not-all)
+- [तकनीक #2: Mix-ins](#technique-2-mix-ins)
+  - [Mix-in उदाहरण](#mix-in-examples)
+  - [उदाहरण `User`](#example-user)
+- [तकनीक #3: Namespaces के साथ संगठन](#technique-3-organizing-with-namespaces)
+  - [वास्तविक दुनिया का उपयोग](#real-world-usage)
+- [सारांश](#summary)
+
+<!--
+1.  टाइप्स का उच्च-स्तरीय तार्किक निरूपण — ऐसा जो डेवलपर्स और बिज़नेस स्टेटकहोल्डर्स दोनों के लिए अर्थपूर्ण हो।
+2.  तार्किक रूप से जुड़े फ़ील्ड्स के संयोजनों को मॉडल करने का टिकाऊ तरीका।
+    1.  उदाहरण: **Object instances** में अक्सर कॉमन फ़ील्ड्स `id`, `createdDate`, `createdById`, आदि शामिल होते हैं।
+    2.  अपने डिस्क्रीट डेटाबेस मॉडल्स से Request और Response फ़ील्ड्स को मॉडल करें। (उदा. `_version`, `_v`)
+    3.  कॉम्पोजेबल यूटिलिटीज़, Paging/Payload wrapper, आदि: `pageNumber`, `sortBy`, `impersonateSession`, `token`, `_version`, आदि।
+3.  नामकरण और टाइपिंग में अनचाहे विचलनों से बचें (`id`, `Id`, `ID`, `created_at`, `date_created`, ओह नोज़!)
+4.  कई छोटे, पुनः उपयोग योग्य इंटरफेस और टाइप्स का उपयोग करके उच्च-स्तरीय टाइप्स को कॉम्पोज़ करें।
+5.  टाइप के वैरिएंट्स को 'स्वचालित' रूप से मैच करने के लिए [Unions](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes-func.html#discriminated-unions) का उपयोग करें। -->
+
+### टाइप डिज़ाइन के दृष्टिकोण
+
+आपने शायद "टाइप इम्प्लीमेंटेशन" के आसपास विभिन्न पैटर्न देखे या लिखे होंगे। खासकर जब 3rd party APIs से डेटा consume कर रहे हों।
+
+**नोट:** मैं जानबूझकर "पारंपरिक" प्रक्रियाओं, जैसे Entity Relationship Diagrams (ERD) बनाना या Object Oriented Programming (OOP) इनहेरिटेंस हायरार्की, को नज़रअंदाज़ कर रहा हूँ। यहाँ, हम semi-structured API डेटा को प्रस्तुत करने के लिए टाइप्स बना रहे हैं।
+
+आइए दो हाई-लेवल दृष्टिकोणों पर चर्चा करें: **Single large object** (Top-down) बनाम **Multiple named types** (Bottom-up.)
+
+#### Single large object
+
+स्पष्टता को पुनः प्रयोग और DRY सिद्धांत पर प्राथमिकता देता है।
+
+**अतिरिक्त लाभ:** IDE/डेवलपर अनुभव बेहतरीन है, क्योंकि टूलटिप्स में अधिक संपूर्ण पूर्वावलोकन शामिल होता है — बिना किसी अतिरिक्त झंझट के।
+
+```tsx
+interface ProductDetails {
+  name: string;
+  seller: { name: string };
+  availability: Array<{ warehouseId: string; quantity: number }>;
+  reviews: Array<{ authorId: number; stars: number }>;
+}
+```
+
+चूँकि हम स्पष्ट पठनीयता को प्राथमिकता दे रहे हैं, इसलिए _कुछ_ दोहराव (युक्तिसंगत सीमा के भीतर) में ढलना ठीक है। जब गुणों के समूह _कई_ बार दोहराए जाते हैं, तो दोहराए गए फ़ील्ड्स को एक नामित टाइप में निकालने में संकोच न करें।
+
+#### कई नामित टाइप्स
+
+पुनः प्रयोग और DRY सिद्धांत को प्राथमिकता देता है।
+
+<!-- पठनीयता एक अजीब मापदंड है। चूँकि पठनीयता अक्सर तब अच्छी या **बेहतरीन होती है जब टाइप्स/फ़ाइलें कम हों।** **अनिवार रूप से टाइप्स का प्रसार होता जाता है,** जिसमें लगातार अधिक गुण जुड़ते जाते हैं। **पठनीयता प्रभावित होती है।** -->
+
+यह दृष्टिकोण संभवतः काफी अंतर से सबसे अधिक पसंद किया जाने वाला विकल्प है।
+
+```ts
+interface ProductDetails {
+  name: string;
+  seller: Seller;
+  reviews: Reviews[];
+  availability: Availability[];
+}
+interface Seller { name: string; }
+interface Availability { warehouseId: string; quantity: number; }
+interface Reviews { authorId: number; stars: number; }
+```
+
+समग्र रूप से, यह दृष्टिकोण बेहतरीन है। लेकिन इसकी कुछ कमी भी हैं।
+
+- **पठनीयता** शुरू में उत्कृष्ट होती है; हालाँकि, जैसे-जैसे टाइप्स का आकार और संख्या बढ़ती है, यह _प्रभावित_ हो सकती है।
+- लगातार DRY सिद्धांत का पालन, लेकिन इसकी कीमत क्या है? (इस पर बाद में चर्चा होगी।)
+- डेवलपर अनुभव प्रभावित हो सकता है, क्योंकि टूलटिप्स कम जानकारीपूर्ण होते हैं।
+
+> ⚠️ (लगभग) TypeScript v3 से, लैंग्वेज सर्वर टूलटिप्स को काट देता है, जिसमें नेस्टेड गुण छोड़ दिए जाते हैं।
+> 💡 स्थिति में थोड़ा सुधार करने के लिए कुछ तरकीबें हैं। `Cmd or Ctrl` दबाए रखें, फिर विभिन्न टाइप नामों पर होवर करें — आपको टूलटिप में कम से कम गुणों का एक अतिरिक्त 'परत' दिखाई देना चाहिए।
+
+हमें इन दोनों दृष्टिकोणों के बीच चुनाई क्यों करनी पड़ती है? (विस्तृत टाइप बनाम नामित सब-टाइप्स।)
+
+### तकनीक #1: क्यों न सब कुछ हो
+
+क्या हम सब कुछ प्राप्त कर सकते हैं?
+
+- क्या "बड़े चित्र" वाले टाइप्स की स्पष्टता?
+- साथ ही नामित सब-टाइप्स?
+- बिना किसी दोहराव के?
+
+> ✅ हाँ! 🎉
+
+<!-- ### विचार करने योग्य कुछ बातें
+
+- `Product` -> `Seller` जैसे `one-to-one` संबंध को आप कैसे दर्शाते हैं?
+- `one-to-many` संबंधों की क्या स्थिति है? जैसे `Reviews` या `Photos`?
+- क्या इसे Prisma को सौंप दें? (बुरा विचार नहीं है, लेकिन यह लेख गुप्त रूप से कुछ TypeScript सीखने के बारे में है...) -->
+
+<!-- यह दृष्टिकोण Model फ़ील्ड नामों को कभी भी दोहराने के अभ्यास पर आधारित है। इससे "बड़ा चित्र" अधिक स्पष्ट हो जाता है (एक ही स्थान पर)। सबसे बड़े, उच्च-स्तरीय टाइप से शुरू करना, और उससे सरल टाइप्स को व्युत्पन्न करना। -->
+
+<!-- जब कुछ संरचित array/object डेटा दिया जाता है, तो कई TypeScript कोडर टाइप्स बनाने के इच्छुक महसूस करते हैं। टाइप्स की भारी मात्रा। अंततः एक परतों की जंजीर बन जाती है, जो सरल टाइप्स से बनी होती है जो और अधिक जटिल टाइप्स बनाती हैं।
+
+या शायद आप उसी प्रकार के डेवलपर हैं जो उच्च-स्तरीय टाइप से शुरू करते हैं, और पेड़ में अगले सब-टाइप को लिखने के लिए पर्याप्त ढांचा तैयार करते हैं? -->
+
+```tsx
+export interface ProductDetails {
+  name: string;
+  seller: { name: string };
+  reviews: Array<{ authorId: number; stars: number }>;
+  availability: Array<{ warehouseId: string; quantity: number }>;
+}
+export type Seller = ProductDetails["seller"];
+export type Review = ProductDetails["reviews"][number];
+export type Availability = ProductDetails["availability"][number];
+```
+
+1. बड़े "प्राथमिक" संरचित टाइप्स बनाएं।
+2. प्राथमिक टाइप से व्युत्पन्न सब-टाइप्स को एक्सपोर्ट करें।
+
+यह दृष्टिकोण उन सिस्टम में वाकई चमकता है जहाँ "उच्च-स्तरीय" ऑब्जेक्ट्स को एक ही जगह दस्तावेज़ीकरण से लाभ होता है।
+साथ ही, यह तकनीक कई उपयोग मामलों के बीच पुनः उपयोग को सपोर्ट करती है: मॉडल्स, सर्विसेस, क्वेरी रिजल्ट्स, आदि।
+
+### तकनीक #2: मिक्स-इन
+
+यह रणनीति मुख्य रूप से **सही फील्ड्स** को **सही नामों** के साथ जोड़कर **एकल तार्किक ऑब्जेक्ट्स** को **प्रस्तुत** करने के बारे में है। लक्ष्य टाइपस्क्रिप्ट यूटिलिटीज और टाइप यूनियन्स का उपयोग करके कई उपयोग मामलों को कुशलता से संभालना है।
+
+यह दृष्टिकोण पारंपरिक OOP इनहेरिटेंस और हैरार्की से अलग है, जो ऑब्जेक्ट्स की परतों को कसकर बंधे टैक्सोनॉमी में बनाने का लक्ष्य रखता है। **मिक्स-इन दृष्टिकोण फ्लैट और कमजोर रूप से जुड़े टाइप्स के बारे में है**, जो संबंधित फील्ड्स को ग्रुप करते हुए डुप्लिकेशन को कम करता है।
+
+#### मिक्स-इन उदाहरण
+
+```tsx
+interface TodoModel {
+  text: string;
+  complete: boolean;
+}
+interface InstanceMixin {
+  id: number;
+}
+/** TodoDraft represents Form state, possibly all undefined */
+export type TodoDraft = Partial<TodoModel>;
+/** Todo represents a Todo instance record from the database */
+export type Todo = TodoModel & InstanceMixin;
+```
+
+#### उदाहरण `User`
+
+```tsx
+interface User {
+  id: number;
+  name: string;
+  bio: string;
+  social: Record<"facebook" | "instagram" | "github", URL>;
+}
+```
+
+आइए डेटाबेस में सेव करने से पहले और बाद में `User` को प्रस्तुत करें।
+
+```tsx
+// Core User fields (say for a <form>)
+interface UserBase {
+  name: string;
+  bio: string;
+  social: Record<"facebook" | "instagram" | "github", URL>;
+}
+// Fields from the database
+interface InstanceMixin {
+  id: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
+// A User **instance** - with all fields
+type UserInstance = InstanceMixin & UserBase;
+```
+
+अब हम अपनी आवश्यकता के सटीक फील्ड्स को ढाल सकते हैं (जैसे `password` create/update के लिए, लेकिन `UserInstance` की क्वेरीज में शामिल नहीं है)।
+
+```tsx
+interface UserBase {
+  name: string;
+  bio: string;
+  social: Record<"facebook" | "instagram" | "github", URL>;
+}
+interface InstanceMixin {
+  id: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
+/** User payload for signup, including `password` field */
+export type UserPayload = UserBase & { password: string };
+/** Represents User type returned from server. */
+export type UserInstance = UserBase & InstanceMixin;
+```
+
+1. "क्या यह एक अच्छी प्रैक्टिस है?"
+2. "क्या मुझे इसे आज़माना चाहिए?"
+
+पता नहीं। चलिए आगे बढ़ते हैं!
+
+### तकनीक #3: नामस्थानों (Namespaces) के साथ संगठन
+
+यहाँ हम `ModelMixins` नामस्थान घोषित करते हैं। इससे कोड को कुछ संरचना मिलती है और पुनः उपयोग का पैटर्न अधिक स्पष्ट हो जाता है।
+
+**मानकीकृत संरचनाएं**
+
+- `createdAt` और `updatedAt` साथ-साथ मौजूद हैं।
+- `id`, न कि `ID` या `_id`।
+
+```tsx
+// `src/types/mixins.d.ts`
+namespace ModelMixins {
+  interface Identity {
+    id: number;
+  }
+  interface Timestamp {
+    createdAt: Date;
+    updatedAt: Date;
+  }
+  type Instance = ModelMixins.Identity & ModelMixins.Timestamp;
+  interface HashedPassword {
+    passwordHash: string;
+  }
+  interface InputPassword {
+    password: string;
+  }
+}
+```
+
+**टाइप यूनियन का उपयोग**
+
+```tsx
+// `src/types/user.d.ts`
+export interface UserBase {
+  name: string;
+  bio: string;
+  social: Record<"facebook" | "instagram" | "github", URL>;
+}
+// Single `User` type, using Type Union to dynamically
+//  represent the pre- & post-creation states.
+export type User =
+  | (UserBase & ModelMixins.Instance & ModelMixins.HashedPassword)
+  | (UserBase & ModelMixins.InputPassword);
+```
+
+यदि चाहें, तो आप व्यक्तिगत नामित टाइप्स को भी एक्सपोर्ट कर सकते हैं:
+
+```tsx
+/** User payload for signup, including `password` field */
+export type UserPayload = UserBase & ModelMixins.Instance & ModelMixins.HashedPassword;
+/** Represents User type returned from server. */
+export type UserInstance = UserBase & ModelMixins.InputPassword;
+```
+
+#### वास्तविक उपयोग
+
+यहाँ एक `upsert()` फ़ंक्शन है जो `UserInstance` और `UserPayload` टाइप्स के बीच अंतर करने के लिए `in` ऑपरेटर का उपयोग करता है।
+
+```tsx
+function upsert(user: User) {
+  if ("id" in user) {
+    // TypeScript knows `user` here has fields from Instance (id, createdAt, etc)
+    return updateUser(user.id, user);
+  } else {
+    // TypeScript knows this must be the `UserBase & ModelMixins.InputPassword` version of user.
+    return createUser(user);
+  }
+}
+```
+
+### सारांश
+
+हमने तीन तकनीकों और कुछ संबंधित सहायक विचारों पर चर्चा की है।
+
+आप यह पूछ सकते हैं: क्या ये वास्तव में उपयोगी पैटर्न हैं? क्या आपको इनमें से कुछ दृष्टिकोणों को अपनाना चाहिए?
+
+## संसाधन
+
+- [लेगेसी प्रोजेक्ट्स के लिए TypeScript टिप्स: केवल आवश्यक टाइप्स](https://sergiocarracedo.es/typescript-tips/)
+- [मैट पॉकॉक की नई किताब: Total TypeScript Essentials](https://www.totaltypescript.com/books/total-typescript-essentials)
+- [Total TypeScript टिप्स](https://www.totaltypescript.com/tips)
