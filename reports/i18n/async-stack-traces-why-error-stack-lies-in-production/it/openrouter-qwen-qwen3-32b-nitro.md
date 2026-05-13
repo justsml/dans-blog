@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: async-stack-traces-why-error-stack-lies-in-production
+- Locale: it
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2025-12-29--async-stack-traces-why-error-stack-lies-in-production/it/index.mdx
+- Validation: deferred
+- Runtime seconds: 18.15
+- Input tokens: 4452
+- Output tokens: 3767
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.001260
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: 'Tracce dello Stack Asincrone: Perché `Error.stack` Ti Inganna'
 subTitle: ''
@@ -98,3 +116,4 @@ Non importa quante `await` avvengano in mezzo. Il contesto sopravvive.
 3.  Traccia, non stack. Usa OpenTelemetry. Visualizza la catena causale tra i servizi, che è ciò che ti interessa davvero.
 
 Il tuo codice è async. Il contesto di debug non dovrebbe essere.
+````
