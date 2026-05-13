@@ -1,0 +1,48 @@
+{
+  "index": 14,
+  "attempt": 1,
+  "originalTitle": "Command Substitution",
+  "translatedTitle": "Sostituzione di Comando",
+  "translation": {
+    "title": "Sostituzione di Comando",
+    "group": "Trappole",
+    "options": [
+      {
+        "text": "'ls -l'"
+      },
+      {
+        "text": "% ls -l"
+      },
+      {
+        "text": "$ ls -l"
+      },
+      {
+        "text": "$(ls -l)"
+      },
+      {
+        "text": "${ls -l}"
+      }
+    ],
+    "questionProse": [
+      "Quale opzione eseguirà il comando `ls -l` e restituirà l'output?"
+    ],
+    "explanationProse": [
+      "La sintassi `$(ls -l)` esegue il comando all'interno delle **parentesi** e sostituisce l'output. Per esempio:",
+      "La prima opzione usa gli apici singoli `'`, **non backticks**. Questo impedisce l'espansione, quindi `'$(date +%F)'` stamperebbe semplicemente la stringa letterale `$(date +%F)`.\n\n    Sebbene sia ancora supportato usare i backticks (`` `ls -l` ``) per l'esecuzione di comandi, è recentemente diventato un po' un anti-pattern (in alcuni contesti). La maggior parte raccomanda di usare `$(command)` per una migliore leggibilità e coerenza con diverse shell e versioni.\n\n    Le parentesi graffe `${}` sono usate per l'espansione di variabili, non per la sostituzione di comandi.\n\n    Il carattere `%` non è usato per la sostituzione di comandi."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Sostituzione di Comando\",\n  \"group\": \"Trappole\",\n  \"options\": [\n    {\n      \"text\": \"'ls -l'\"\n    },\n    {\n      \"text\": \"% ls -l\"\n    },\n    {\n      \"text\": \"$ ls -l\"\n    },\n    {\n      \"text\": \"$(ls -l)\"\n    },\n    {\n      \"text\": \"${ls -l}\"\n    }\n  ],\n  \"questionProse\": [\n    \"Quale opzione eseguirà il comando `ls -l` e restituirà l'output?\"\n  ],\n  \"explanationProse\": [\n    \"La sintassi `$(ls -l)` esegue il comando all'interno delle **parentesi** e sostituisce l'output. Per esempio:\",\n    \"La prima opzione usa gli apici singoli `'`, **non backticks**. Questo impedisce l'espansione, quindi `'$(date +%F)'` stamperebbe semplicemente la stringa letterale `$(date +%F)`.\\n\\n    Sebbene sia ancora supportato usare i backticks (`` `ls -l` ``) per l'esecuzione di comandi, è recentemente diventato un po' un anti-pattern (in alcuni contesti). La maggior parte raccomanda di usare `$(command)` per una migliore leggibilità e coerenza con diverse shell e versioni.\\n\\n    Le parentesi graffe `${}` sono usate per l'espansione di variabili, non per la sostituzione di comandi.\\n\\n    Il carattere `%` non è usato per la sostituzione di comandi.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 939,
+    "outputTokens": 887,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 3845
+  },
+  "cost": {
+    "inputUsd": 0.000036621,
+    "outputUsd": 0.00015966,
+    "totalUsd": 0.000196281,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
