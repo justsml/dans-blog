@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: promise-gotchas
+- Locale: de
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2018-09-26--promise-gotchas/de/index.mdx
+- Validation: passed
+- Runtime seconds: 6.60
+- Input tokens: 2489
+- Output tokens: 2705
+- Thinking tokens: unknown
+- Cached input tokens: 512
+- Cache write tokens: 0
+- Estimated cost: $0.000848
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Promise Fallen
@@ -88,3 +106,4 @@ Promise.resolve(42)
   .then(undefined) // dies hat keinen Einfluss auf den Wert, er wird an den folgenden `.then(fn)` weitergegeben
   .then(console.log);
 ```
+````
