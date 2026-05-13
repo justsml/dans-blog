@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: replacing-my-job-with-gpt-and-llm
+- Locale: es
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2024-12-05--replacing-my-job-with-gpt-and-llm/es/index.mdx
+- Validation: passed
+- Runtime seconds: 4.67
+- Input tokens: 5732
+- Output tokens: 1347
+- Thinking tokens: unknown
+- Cached input tokens: 1280
+- Cache write tokens: 0
+- Estimated cost: $0.000466
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: Reemplazándome con IA
@@ -102,3 +120,4 @@ Las partes que no puedo sustituir son las que los lectores realmente notan cuand
 La IA me hizo más rápido. Más importante, hizo que algunos de mis puntos débiles fueran más fáciles de detectar. El costo es que ahora debo ser más deliberado para no publicar prosa que solo se comporte como prosa.
 
 Ese es el trato con el que puedo vivir.
+````
