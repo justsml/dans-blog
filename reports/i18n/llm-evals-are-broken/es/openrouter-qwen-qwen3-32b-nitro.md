@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: llm-evals-are-broken
+- Locale: es
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-05-06--llm-evals-are-broken/es/index.mdx
+- Validation: passed
+- Runtime seconds: 31.15
+- Input tokens: 10963
+- Output tokens: 11589
+- Thinking tokens: unknown
+- Cached input tokens: 2048
+- Cache write tokens: 0
+- Estimated cost: $0.003658
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Combate el Mal con Evals
 subTitle: Los benchmarks miden benchmarks. Tu sistema necesita sus propias métricas.
@@ -263,3 +281,4 @@ Eso es genuinamente difícil para una nueva característica de IA. También es o
 Las referencias no están mintiendo. Están respondiendo a una pregunta de otra persona. Deja de leerlas como mapas de ruta de productos y comienza a escribir pruebas que se ajusten a tu sistema.
 
 Tus usuarios se darán cuenta antes que tus dashboards. Construye el conjunto de pruebas primero.
+````
