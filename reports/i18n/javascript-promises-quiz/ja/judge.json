@@ -1,0 +1,27 @@
+{
+  "selectedCommit": "607af81ed50ef103c3ddf110954258597b996662",
+  "selectedModel": "openrouter/qwen/qwen3-32b:nitro",
+  "scores": {
+    "readability": 90,
+    "technicalAccuracy": 100,
+    "coherence": 95,
+    "relevance": 100,
+    "translationQuality": 90,
+    "mdxPreservation": 100
+  },
+  "suggestions": [],
+  "rationale": "The candidate 607af81ed50ef103c3ddf110954258597b996662 is selected because it correctly fixes the image path in the final question (removing the unnecessary `../` which was present in the current version but incorrect relative to the English source's structure for that specific asset type in this project's build context, although usually `../` is used for images, the English source uses `annotated-code/...`). More importantly, it maintains the MDX structure perfectly and provides a natural translation. It is very similar to 'current' but with cleaner formatting in the code blocks (consistent indentation).",
+  "slug": "javascript-promises-quiz",
+  "locale": "ja",
+  "candidateCommits": [
+    "8af41c8b5de10a4f2327b89769186db84a0518ae",
+    "607af81ed50ef103c3ddf110954258597b996662"
+  ],
+  "suggestionLog": [],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug javascript-promises-quiz --locale ja --skip-global",
+    "output": ""
+  }
+}
