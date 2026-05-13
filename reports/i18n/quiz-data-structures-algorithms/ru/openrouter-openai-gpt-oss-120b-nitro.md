@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-data-structures-algorithms
+- Locale: ru
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2024-10-31--quiz-data-structures-algorithms/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 21.15
+- Input tokens: 16325
+- Output tokens: 8611
+- Thinking tokens: unknown
+- Cached input tokens: 4992
+- Cache write tokens: 0
+- Estimated cost: $0.002187
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: 'Тест: Структуры данных и алгоритмы'
 subTitle: Сможете ли вы выполнить BS над бинарным деревом?
@@ -525,3 +543,4 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 </Challenge>
 
 </QuizUI>
+````
