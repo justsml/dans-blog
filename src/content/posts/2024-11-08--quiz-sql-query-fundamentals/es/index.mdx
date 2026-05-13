@@ -1,7 +1,7 @@
 ---
 unlisted: false
-title: 'Quiz: ¡Demuestra tus habilidades en SQL!'
-subTitle: ¿Eres del equipo SQL o NoSQL?
+title: 'Cuestionario: ¡Demuestra tus habilidades en SQL!'
+subTitle: ¿Eres fanático de SQL o de NoSQL?
 label: SQL 101
 social_image: ../desktop-social.webp
 category: Quiz
@@ -20,24 +20,26 @@ cover_full_width: ../peter-thomas-os14nsuXdI4-unsplash-wide.webp
 cover_mobile: ../peter-thomas-os14nsuXdI4-unsplash-square.webp
 cover_icon: ../peter-thomas-os14nsuXdI4-unsplash-square.webp
 ---
+```
 import Challenge from '../../../../../components/QuizUI/Challenge';
 import QuizUI from '../../../../../components/QuizUI/QuizUI';
 
 
-## Pon a prueba tus fundamentos de consultas SQL
+## Prueba tus fundamentos en consultas SQL
 
-¿Te ha ablandado el uso de un ORM en el departamento de habilidades?  
-No te preocupes, le pasa a un montón de devs.
+¿El uso de un ORM te ha hecho flojo en el departamento de habilidades? 
+No te preocupes, le pasa a montones de desarrolladores. 
 
-¡Sumérgete de una vez y demuestra tus fundamentos de consultas SQL! 👇
+¡Sumérgete de inmediato para demostrar tus fundamentos en consultas SQL! 👇
+```
 
 <QuizUI>
 
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={0}
-  group="Fundamentos de SQL"
-  title="Cláusula WHERE básica"
+  group="Conceptos básicos de SQL"
+  title="Clausula WHERE básica"
   options={[
     {text: 'SELECT * FROM users WHERE name LIKE(John);'},
     {text: 'SELECT * FROM users WHERE name = \', isAnswer: true},
@@ -52,7 +54,7 @@ No te preocupes, le pasa a un montón de devs.
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    En SQL, se usa un solo signo igual (`=`) para las comparaciones de igualdad en la cláusula `WHERE`, no `==` o `===`, que son operadores de JavaScript.
+    En SQL, el signo igual simple (`=`) se usa para comprobar igualdad en la cláusula `WHERE`, no `==` o `===`, que son operadores de JavaScript.
 
     La sintaxis correcta es `SELECT * FROM users WHERE name = 'John';`.
   </div>
@@ -63,9 +65,9 @@ No te preocupes, le pasa a un montón de devs.
   client:visible={{rootMargin: "150px"}}
   index={1}
   group="Conceptos básicos de SQL"
-  title="Función de agregación COUNT"
+  title="Función de agregado COUNT"
   options={[
-    {text: 'Cuenta todas las filas, incluidos los valores NULL'},
+    {text: 'Cuenta todas las filas, incluyendo los valores NULL'},
     {text: 'Cuenta solo los valores no NULL en una columna', isAnswer: true},
     {text: 'Cuenta los valores NULL como un valor único'},
     {text: 'Trata cada valor NULL como único, similar a NaN !== NaN'},
@@ -78,9 +80,9 @@ No te preocupes, le pasa a un montón de devs.
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `COUNT(column_name)` cuenta el número de valores no NULL en una columna especificada. Para contar todas las filas, incluidos los NULL, usa `COUNT(*)`.
+    `COUNT(column_name)` cuenta el número de valores no NULL en una columna especificada. Para contar todas las filas, incluyendo los NULL, use `COUNT(*)`.
 
-    También puedes usar `COALESCE` para asegurar que los NULL tengan un valor no NULL por defecto. Algo así: `COUNT(COALESCE(column_name, 0))`.
+    También puede usar `COALESCE` para asegurarse de que los NULL se conviertan en un valor no NULL. Algo como: `COUNT(COALESCE(column_name, 0))`.
   </div>
   </slot>
 </Challenge>
@@ -89,12 +91,12 @@ No te preocupes, le pasa a un montón de devs.
   client:visible={{rootMargin: "150px"}}
   index={2}
   group="Uniones SQL"
-  title="Conceptos básicos de LEFT JOIN"
+  title="Fundamentos de LEFT JOIN"
   options={[
-    {text: 'Devuelve una fila por cada coincidencia, ignora las filas sin coincidencia'},
-    {text: 'Devuelve todas las filas de la tabla izquierda, más las filas coincidentes de la derecha', isAnswer: true},
-    {text: 'Devuelve todas las filas, coincidentes o no, donde NULL indica que no hay coincidencia'},
-    {text: 'Devuelve todas las filas de la tabla derecha, con las filas coincidentes de la izquierda'},
+    {text: 'Devuelve una fila por cada fila coincidente, ignora las filas no coincidentes'},
+    {text: 'Devuelve todas las filas de la tabla izquierda, más las filas coincidentes de la tabla derecha', isAnswer: true},
+    {text: 'Devuelve todas las filas coincidentes o no coincidentes, donde los valores NULL indican que no hay coincidencia'},
+    {text: 'Devuelve todas las filas de la tabla derecha, con cualquier fila coincidente de la tabla izquierda'},
   ]}
 >
   <slot name="question">
@@ -104,7 +106,7 @@ No te preocupes, le pasa a un montón de devs.
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Un `LEFT JOIN` devuelve todas las filas de la tabla izquierda y las filas coincidentes de la tabla derecha, con NULL para las filas sin coincidencia en la tabla derecha.
+    Un `LEFT JOIN` devuelve todas las filas de la tabla izquierda y las filas coincidentes de la tabla derecha, con NULL para las filas no coincidentes en la tabla derecha.
   </div>
   </slot>
 </Challenge>
@@ -116,8 +118,8 @@ No te preocupes, le pasa a un montón de devs.
   title="Usando INNER JOIN"
   options={[
     {text: 'Devuelve filas no coincidentes de ambas tablas'},
-    {text: 'Devuelve todas las filas de ambas tablas, con NULLs para las filas no coincidentes'},
-    {text: 'Devuelve filas que cumplen la condición de unión en ambas tablas', isAnswer: true},
+    {text: 'Devuelve todas las filas de ambas tablas, con NULL para filas no coincidentes'},
+    {text: 'Devuelve filas que satisfacen la condición de unión en ambas tablas', isAnswer: true},
     {text: 'Devuelve filas no coincidentes de la tabla derecha'},
   ]}
 >
@@ -137,12 +139,12 @@ No te preocupes, le pasa a un montón de devs.
   client:visible={{rootMargin: "150px"}}
   index={4}
   group="Subconsultas SQL"
-  title="Subconsulta Correlacionada"
+  title="Subconsulta correlacionada"
   options={[
-    {text: 'Una subconsulta que se ejecuta una sola vez en total'},
-    {text: 'Una subconsulta usada solo en sentencias JOIN'},
-    {text: 'Una subconsulta que solo devuelve múltiples columnas'},
-    {text: 'Una subconsulta que se ejecuta una vez por cada fila de la consulta externa', isAnswer: true},
+    {text: 'Una subconsulta que se ejecuta una vez en total'},
+    {text: 'Una subconsulta utilizada solo en sentencias JOIN'},
+    {text: 'Una subconsulta que devuelve múltiples columnas solo'},
+    {text: 'Una subconsulta que se ejecuta una vez por cada fila en la consulta externa', isAnswer: true},
   ]}
 >
   <slot name="question">
@@ -152,7 +154,7 @@ No te preocupes, le pasa a un montón de devs.
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Una subconsulta correlacionada se evalúa una vez por cada fila de la consulta externa. Hace referencia a columnas de la consulta externa, lo que la vuelve dependiente de cada fila.
+    Una subconsulta correlacionada se evalúa una vez por cada fila de la consulta externa. Hace referencia a columnas de la consulta externa, lo que la hace dependiente de cada fila.
   </div>
   </slot>
 </Challenge>
@@ -160,13 +162,13 @@ No te preocupes, le pasa a un montón de devs.
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={5}
-  group="CTEs de SQL"
+  group="CTEs en SQL"
   title="Sintaxis de la cláusula WITH"
   options={[
-    {text: 'Solo permitido en sentencias DELETE'},
-    {text: 'Se usa para funciones de agregación'},
-    {text: 'Se usa solo para definir vistas'},
-    {text: 'Definir un conjunto de resultados temporal para usar en una sentencia SQL más grande', isAnswer: true},
+    {text: 'Solo permitido en instrucciones DELETE'},
+    {text: 'Utilizado para funciones de agregación'},
+    {text: 'Utilizado solo para definir vistas'},
+    {text: 'Definir un conjunto de resultados temporal para usarlo en una instrucción SQL más amplia', isAnswer: true},
   ]}
 >
   <slot name="question">
@@ -176,18 +178,18 @@ No te preocupes, le pasa a un montón de devs.
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    La cláusula `WITH`, o Expresión de Tabla Común (CTE), se usa para definir un conjunto de resultados temporal que puede ser referenciado dentro de la consulta principal. En PostgreSQL, `WITH` puede adjuntarse a sentencias como `SELECT`, `INSERT`, `UPDATE`, `DELETE` o `MERGE`.
+    La cláusula `WITH`, o Expresión de Tabla Común (CTE), se usa para definir un conjunto de resultados temporal que puede ser referenciado dentro de la consulta principal. En PostgreSQL, `WITH` puede usarse con instrucciones como `SELECT`, `INSERT`, `UPDATE`, `DELETE` o `MERGE`.
 
     Esto puede ayudar a mejorar la legibilidad y mantenibilidad de consultas complejas.
 
     La sintaxis es:
     ```sql
-    WITH cte_name AS (
-    SELECT column_name
-    FROM table_name
-    )
-    SELECT *
-    FROM cte_name;
+        WITH cte_name AS (
+        SELECT column_name
+        FROM table_name
+        )
+        SELECT *
+        FROM cte_name;
     ```
   </div>
   </slot>
@@ -199,10 +201,10 @@ No te preocupes, le pasa a un montón de devs.
   group="Fundamentos de SQL"
   title="IS NULL vs IS NOT NULL"
   options={[
-    {text: 'Comprueba si un valor es NULL', isAnswer: true},
-    {text: 'Comprueba si un valor está vacío'},
-    {text: 'Comprueba si un valor es una cadena'},
-    {text: 'Comprueba si un valor es numérico'},
+    {text: 'Verifica si un valor es NULL', isAnswer: true},
+    {text: 'Verifica si un valor es vacío'},
+    {text: 'Verifica si un valor es una cadena'},
+    {text: 'Verifica si un valor es numérico'},
   ]}
 >
   <slot name="question">
@@ -226,7 +228,7 @@ No te preocupes, le pasa a un montón de devs.
     {text: 'Devuelve filas únicas'},
     {text: 'Requiere una columna indexada'},
     {text: 'Se aplica solo a columnas numéricas'},
-    {text: 'Devuelve filas que coinciden con los valores de una lista especificada', isAnswer: true},
+    {text: 'Devuelve filas que coincidan con valores en una lista especificada', isAnswer: true},
   ]}
 >
   <slot name="question">
@@ -236,11 +238,11 @@ No te preocupes, le pasa a un montón de devs.
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    El operador `IN` filtra filas para que coincidan con cualquiera de los valores de una lista especificada, a menudo como alternativa a múltiples condiciones OR.
+    El operador `IN` filtra las filas para que coincidan con cualquier valor de una lista especificada, a menudo como alternativa a múltiples condiciones OR.
 
-    Aunque *puede* devolver "filas únicas" (y a menudo lo hace), no es necesariamente su objetivo principal.
+    Aunque *podría* devolver "filas únicas" (y a menudo lo hace), no es necesariamente su propósito principal.
 
-    No se requiere indexación aquí, aunque ciertamente es una buena práctica usar `IN` sobre una columna con índice, preferiblemente un índice `UNIQUE`, ya que puede mejorar el rendimiento.
+    No se requiere indexación aquí, aunque es una buena práctica usar `IN` en una columna con índice, preferiblemente un índice `UNIQUE`, ya que puede mejorar el rendimiento.
   </div>
   </slot>
 </Challenge>
@@ -249,13 +251,13 @@ No te preocupes, le pasa a un montón de devs.
   client:visible={{rootMargin: "150px"}}
   index={8}
   group="Funciones SQL"
-  title="Usando la función COALESCE"
+  title="Uso de la función COALESCE"
   options={[
-    {text: 'Cuenta valores NULL'},
+    {text: 'Cuenta los valores NULL'},
     {text: 'Devuelve el último argumento no NULL'},
     {text: 'Devuelve el primer argumento no NULL', isAnswer: true},
-    {text: 'Limitado a columnas IDENTITY'},
-    {text: 'Originalmente de Printer Coalation'},
+    {text: 'Limitada a columnas IDENTITY'},
+    {text: 'Originariamente de Printer Coalation'},
   ]}
 >
   <slot name="question">
@@ -265,7 +267,7 @@ No te preocupes, le pasa a un montón de devs.
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    La función `COALESCE` devuelve el primer valor no NULL de una lista especificada, útil para sustituir valores predeterminados cuando se encuentran NULLs.
+    La función `COALESCE` devuelve el primer valor no NULL en una lista especificada, útil para sustituir valores predeterminados cuando se encuentran NULL.
 
     Por ejemplo, `COALESCE(column_name, 0)` devolvería `0` si `column_name` es `NULL`.
   </div>
@@ -279,8 +281,8 @@ No te preocupes, le pasa a un montón de devs.
   title="Uso de GROUP BY"
   options={[
     {text: 'Oculta duplicados'},
-    {text: 'Solo se usa en joins'},
-    {text: 'Ordena filas en orden ascendente'},
+    {text: 'Solo se usa en uniones'},
+    {text: 'Ordena las filas en orden ascendente'},
     {text: 'Agrupa filas por la(s) columna(s) especificada(s)', isAnswer: true},
     {text: 'La sintaxis debería ser GROUP WITH/USING'},
   ]}
@@ -292,7 +294,7 @@ No te preocupes, le pasa a un montón de devs.
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    La cláusula `GROUP BY` agrupa filas que tienen los mismos valores en las columnas especificadas, permitiendo que se apliquen funciones de agregación a cada grupo.
+    La cláusula `GROUP BY` agrupa filas que tienen los mismos valores en columnas especificadas, permitiendo aplicar funciones de agregación a cada grupo.
   </div>
   </slot>
 </Challenge>
@@ -301,13 +303,13 @@ No te preocupes, le pasa a un montón de devs.
   client:visible={{rootMargin: "150px"}}
   index={10}
   group="Uniones SQL"
-  title="Conceptos básicos de FULL OUTER JOIN"
+  title="Fundamentos de FULL OUTER JOIN"
   options={[
-    {text: 'Devuelve solo filas coincidentes'},
-    {text: 'Devuelve solo filas con valores no nulos'},
-    {text: 'Devuelve solo filas no coincidentes de la tabla izquierda'},
-    {text: 'Devuelve solo filas no coincidentes de la tabla derecha'},
-    {text: 'Devuelve todas las filas de ambas tablas, con NULLs para las filas no coincidentes', isAnswer: true},
+    {text: 'Devuelve solo las filas coincidentes'},
+    {text: 'Devuelve solo las filas con valores no NULL'},
+    {text: 'Devuelve solo las filas no coincidentes de la tabla izquierda'},
+    {text: 'Devuelve solo las filas no coincidentes de la tabla derecha'},
+    {text: 'Devuelve todas las filas de ambas tablas, con NULL para filas no coincidentes', isAnswer: true},
   ]}
 >
   <slot name="question">
@@ -317,7 +319,7 @@ No te preocupes, le pasa a un montón de devs.
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Un `FULL OUTER JOIN` devuelve todas las filas de ambas tablas, rellenando las filas no coincidentes con NULLs para los valores faltantes.
+    Un `FULL OUTER JOIN` devuelve todas las filas de ambas tablas, rellenando las filas no coincidentes con NULL para valores faltantes.
 
     Esto es útil para comparar dos tablas y encontrar diferencias entre ellas.
   </div>
