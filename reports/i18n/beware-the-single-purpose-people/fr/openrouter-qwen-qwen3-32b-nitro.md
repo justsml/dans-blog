@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: beware-the-single-purpose-people
+- Locale: fr
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2025-04-03--beware-the-single-purpose-people/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 18.27
+- Input tokens: 7373
+- Output tokens: 7850
+- Thinking tokens: unknown
+- Cached input tokens: 1024
+- Cache write tokens: 0
+- Estimated cost: $0.002474
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 language: English
 title: Attention aux individus mono-objectif
@@ -122,3 +140,4 @@ Restez pragmatiques. Focalisez-vous sur les résultats. N'allowez pas la quête 
 ¹ L'ironie est que réaliser une *vraie* unicité au niveau le plus bas exige une complexité immense cachée juste sous la surface.
 
 ² Nous parlons ici de pureté conceptuelle : l'idée qu'une fonction devrait faire uniquement "une seule chose" logiquement. Ne confondez pas cela avec le concept de "fonction pure" de la programmation fonctionnelle, sans effets de bord, qui est une idée différente, bien qu'elle puisse parfois être liée.
+````
