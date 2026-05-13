@@ -1,0 +1,726 @@
+---
+title: Consejos esenciales de seguridad para Docker en auto‑hosting
+subTitle: '¡Asegura tus servicios auto‑alojados, de la defensa al monitoreo!'
+date: '2025-01-04'
+modified: '2025-07-09'
+tags:
+  - docker
+  - security
+  - devops
+  - containers
+  - best-practices
+category: Security
+social_image: ../desktop-social.webp
+cover_full_width: ../docker-ukiyo-e-wide.webp
+cover_mobile: ../docker-ukiyo-e-container-square-200.webp
+cover_icon: ../docker-ukiyo-e-container-square-200.webp
+cover_credit: © 2025 Dan Levy
+---
+import {CodeTabs} from '../../../../components/CodeTabs';
+
+**Table of Contents**
+
+- 🧗‍♀️ [For the brave](#️-for-the-brave)
+- 🔄 [The `:latest` Dance](#-the-latest-dance)
+- 🔐 [Secrets Management: The Right Way](#-secrets-management)
+- 🌐 [Network Hazard](#-network-hazard)
+- 🛡️ [Access Controls](#️-access-controls)
+- 🔍 [Monitoring & Verification](#-monitoring--verification)
+- ⏰ [Often Overlooked Tips](#-often-overlooked-tips)
+- 🚀 [Production Checklist](#-production-checklist)
+- 📚 [Further Reading](#-further-reading)
+
+## 🧗‍♀️ For the brave
+
+If you’re self-hosting Docker services, security is your responsibility from top to bottom—no cloud provider to shield you from port scans or sloppy config. Whether you’re spinning up apps on your home network or renting VPSes from providers like Vultr, DigitalOcean, Linode, AWS, Azure, or Google Cloud, you’ll need to lock things down - and verify you did it right.
+
+In this guide, we’ll walk through Docker security—from some `lesser-known` to other `difficult-to-get-right` techniques; we'll explore canary tokens, read-only volumes, firewall rules, network segmentation & hardening, adding authenticated proxies, and more.
+
+También compararemos redes domésticas con configuraciones en la nube pública y le mostraremos cómo configurar un proxy de autenticación básica con Nginx. Al final, tendrá varias opciones para mantener fuera a los indeseables (amigos, familia y, a veces, incluso usted mismo…).
+
+¡Es mucho material! Pero gran parte está interrelacionado, y puede elegir lo que sea más pertinente para su entorno. 🍀
+
+## 🔄 El baile del `:latest`
+
+Mantener las imágenes actualizadas es fundamental para la seguridad. Sin embargo, depender de `:latest` puede introducir cambios incompatibles o compilaciones vulnerables sin una fase de revisión.
+
+### La forma segura de actualizar
+
+Combine los comandos de actualización con `pull` o `build` para refrescar deliberadamente las imágenes, y luego reinícielas dentro de una ventana en la que pueda detectar cualquier ruptura.
+
+```bash
+#!/bin/bash
+# update-and-run.sh
+docker compose pull && \
+  docker compose up -d
+```
+
+### Pinado de versiones vs Latest
+
+Elegir la versión correcta para fijar es un acto de equilibrio entre estabilidad y seguridad. Aquí hay algunas estrategias habituales:
+
+```yaml
+# docker-compose.yml
+# ...
+  # Pinado de versión exacta, lo mejor para servicios críticos
+  image: postgres:17.2
+
+  # Pinado de versión de parche, adecuado para servicios no críticos
+  image: postgres:17.2
+
+  # Pinado de versión mayor, perfecto para proyectos de hobby
+  image: postgres:17
+
+  # Yolo, evitar si es posible
+  image: postgres:latest
+```
+
+Utiliza [Dependabot](https://github.com/features/security) o [Renovate](https://github.com/renovatebot/renovate) para abrir PRs de actualización revisables. Para cualquier cosa que te molestaría recompilar a las 2 a.m., fija una versión específica o un digest y deja que la automatización te indique cuándo moverla.
+
+_¡Cuéntame cuáles son tus herramientas favoritas para mantener actualizadas las imágenes Docker!_
+
+## 🔐 Gestión de secretos
+
+- [Generar secretos fuertes](#generate-strong-secrets)
+- [Tokens canario](#canary-tokens)
+- [Actualizar de `.env` al llavero de macOS](#upgrade-from-env-to-macos-keychain)
+{/* - [Validación de marcadores de posición](#placeholder-validation) */}
+
+Haymuchas formas de gestionar secretos, pero una de las reglas más importantes a seguir es: **nunca codifiques secretos directamente en tus imágenes Docker ni los comprometas en git**. Es uno de los errores de seguridad más comunes, genera un riesgo a largo plazo y resulta un dolor de cabeza de corregir.
+
+Almacenar secretos de forma segura es un tema amplio con múltiples opciones, desde archivos `.env`, [Docker secrets](https://docs.docker.com/compose/how-tos/use-secrets/), [1Password](https://1password.com/downloads/command-line)/[Bitwarden](https://bitwarden.com/developers/), o un gestor de secretos como [HashiCorp Vault](https://www.vaultproject.io/) o AWS Secrets Manager.
+
+Deberás elegir el nivel “correcto” de esfuerzo y seguridad para tu caso de uso.
+
+{/*
+TODO: Move to Maintainer's Guide
+// TODO: Move to Maintainer's Guide
+
+### Validación de Marcadores de Posición
+
+<blockquote>No creerías lo fácil que es vulnerar un token JWT cuando el secreto no es secreto!</blockquote>
+---}
+
+<p className='inset'>💡 Asegúrate de que los secretos sean siempre únicos. Intenta que sea imposible ejecutar con valores predeterminados inseguros o codificados.</p>
+
+Si utilizas marcadores de posición como `__WARNING_REPLACE_ME__` en tus secretos, genial, ¡tal vez alguien lo note!
+
+Por si acaso, también puedes añadir una pequeña protección en tiempo de ejecución con poco esfuerzo. Así podrías hacerlo en JavaScript, Rust y Go:
+
+<CodeTabs client:load tabs={["JavaScript", "Rust", "Go"]}>
+
+```javascript
+// validateSecrets.js
+const validateSecrets = () => {
+  const unsafePlaceholder = /__WARNING_REPLACE_ME__/;
+  const missingSecrets = Object.entries(process.env).filter(
+    ([key, value]) => unsafePlaceholder.test(value)
+  );
+
+  if (missingSecrets.length) {
+    console.error("Unsafe secrets detected:", missingSecrets);
+    process.exit(1);
+  }
+};
+
+validateSecrets();
+```
+
+```rust
+// validate_secrets.rs
+use std::env;
+
+fn validate_secrets() {
+    let unsafe_placeholder = "__WARNING_REPLACE_ME__";
+    for (key, value) in env::vars() {
+        if value.contains(unsafe_placeholder) {
+            panic!("Unsafe secret in {}", key);
+        }
+    }
+}
+
+fn main() {
+    validate_secrets();
+}
+```
+
+```go
+// validate_secrets.go
+package main
+
+import (
+	"fmt"
+	"os"
+	"strings"
+)
+
+func validateSecrets() {
+	placeholder := "__WARNING_REPLACE_ME__"
+	for _, env := range os.Environ() {
+		pair := strings.SplitN(env, "=", 2)
+		if len(pair) == 2 && strings.Contains(pair[1], placeholder) {
+			panic(fmt.Sprintf("Unsafe secret in %s", pair[0]))
+		}
+	}
+}
+
+func main() {
+	validateSecrets()
+}
+```
+</CodeTabs>
+
+*/}
+
+### Generar Secretos Fuertes
+
+Aquí tienes un pequeño script para generar nuevos secretos para un archivo `.env`:
+
+```bash
+#!/bin/bash
+# generate-secrets.sh
+
+generate_secret() {
+    local length=${1:-30}
+    local generate_length=$((length + 4))
+    openssl rand -base64 "$generate_length" | tr -d '+=/\n' | cut -c1-"$length"
+}
+
+[ -f .env ] && { echo ".env file already exists!"; exit 1; }
+
+cat > .env << EOL
+POSTGRES_PASSWORD=$(generate_secret)
+JWT_SECRET=$(generate_secret 64)
+SESSION_KEY=$(generate_secret 24)
+REDIS_PASSWORD=$(generate_secret 20)
+UNSAFE_PLACEHOLDER=__WARNING_REPLACE_RANDOM_TEXT__
+EOL
+
+echo "New .env file generated with secure random values!"
+```
+
+### Tokens Canary
+
+[**Tokens Canary**](https://canarytokens.org/) son una forma excelente de detectar si tus secretos han sido comprometidos (y utilizados). Funcionan como una trampa que puedes añadir a cualquier archivo sensible, URL o token.
+
+Considera colocarlos junto a los secretos que realmente te preocupan: archivos `.env`, variables de CI, gestores de contraseñas, carpetas de copias de seguridad y credenciales en la nube. No lo conviertas en un espectáculo; coloca las trampas donde un atacante real o un error futuro tuyo los tocaría.
+
+Hay muchos tipos de “tokens” canario para elegir, desde tokens de AWS, [tarjeta de crédito falsa](https://blog.thinkst.com/2024/12/its-baaack-credit-card-canarytokens-are-now-on-your-consoles.html) números, archivos Excel y Word, archivos Kubeconfig, credenciales VPN, incluso los volcados SQL pueden llevar una trampa.
+
+#### Mejores Prácticas para Tokens Canary
+
+- **Colócalo en todas partes**: En cada archivo `.env`, pipeline CI/CD y “gestor de secretos” que se te ocurra.  
+  - Deja un archivo `passwords.xlsx` o `passwords.docx` en tu directorio home.  
+  - Añade un perfil de AWS `billing_prod` con un token canario como secreto.  
+  - Genera un archivo `private.key` para tu directorio `~/.ssh`.  
+  - Crea un volcado SQL canario `all_credit_cards.sql` para tu directorio `~/backups`.  
+- **Monitorea**: Configura reglas o alertas de correo para detectar cuando se active un token canario.  
+
+### Actualiza de `.env` al llavero de macOS  
+
+Para los usuarios de Mac, una de las opciones más simples es usar el Llavero.  
+
+A continuación tienes una forma sencilla de automatizar la carga de secretos desde el llavero de macOS, con soporte para `TouchID` y un nivel de seguridad algo mayor que los archivos `.env`.  
+
+El crédito original corresponde a [Brian Hetfield](https://gist.github.com/bmhatfield/f613c10e360b4f27033761bbee4404fd) y [Jan Schaumann](https://www.netmeister.org/).  
+
+<CodeTabs client:load tabs={[
+  "Helper commands",
+  "Persist secrets in environment",
+  "Use secrets per command"]
+}>
+```bash title="keychain-secrets.sh"
+### Functions for setting and getting environment variables from the OSX keychain ###
+### Adapted from: https://www.netmeister.org/blog/keychain-passwords.html and 
+### https://gist.github.com/bmhatfield/f613c10e360b4f27033761bbee4404fd
+
+# Use: get-keychain-secret SECRET_ENV_VAR
+function get-keychain-secret () {
+    security find-generic-password -w -a ${USER} -D "environment variable" -s "${1}"
+}
+
+# Use: set-keychain-secret SECRET_ENV_VAR
+# You will be prompted to enter the secret value!
+function set-keychain-secret () {
+    [ -n "$1" ] || print "Missing environment variable name"
+    
+    # prompt user for secret
+    echo -n "Enter secret for ${1}"
+    read secret
+    [ -n "$secret" ] || return 1
+
+    ( [ -n "$1" ] || [ -n "$secret" ] ) || return 1
+    security add-generic-password -U -a ${USER} -D "environment variable" -s "${1}" -w "${secret}"
+}
+```
+
+```bash title="~/code/app/.env-secrets.sh"
+source ~/keychain-secrets.sh
+
+# Load Env vars into the current shell
+export AWS_ACCESS_KEY_ID=$(get-keychain-secret AWS_ACCESS_KEY_ID);
+export AWS_SECRET_ACCESS_KEY=$(get-keychain-secret AWS_SECRET_ACCESS_KEY);
+# Note: If an attack can run `env` in your shell, then these secrets could be exposed!
+```
+
+```bash title="~/code/app/scripts/env-run.sh"
+#!/usr/bin/env bash
+source ~/keychain-secrets.sh
+
+# Specify all secrets for this project
+AWS_ACCESS_KEY_ID=$(get-keychain-secret AWS_ACCESS_KEY_ID) \
+AWS_SECRET_ACCESS_KEY=$(get-keychain-secret AWS_SECRET_ACCESS_KEY) \
+  "$@"
+
+# Note: Using a shell wrapper helps prevent secrets from staying
+# around in the environment. And it's safe to commit.
+
+# Usage:
+# ./scripts/env-run.sh docker compose up -d
+# ./scripts/env-run.sh docker run -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS ...
+```
+</CodeTabs>
+
+## 🌐Riesgo de Red
+
+### Redes Personalizadas y Puertos Internos
+
+Aislar correctamente los servicios con redes de Docker es una forma importante de reducir la superficie de ataque.
+
+¡Cuidado al abrir agujeros en tu red! Un solo reenvío de puerto mal configurado puede terminar muy mal.
+
+Por defecto, los servicios en una LAN privada no se exponen a Internet; debes reenviar puertos explícitamente desde tu router.
+
+### Docker en LAN
+
+Ya sea que seas un desarrollador que ejecuta servidores de desarrollo localmente, o que estés autoalojando servicios desde tu red local, **las suposiciones sobre el modelo de red de Docker pueden causar problemas**.
+
+A los devs a menudo les sorprende descubrir que los métodos “tradicionales” para asegurar servidores Linux (`iptables`, restringir opciones tcp/ip sysctl) pueden **fallar silenciosamente** en hosts Docker. ¡Esto es especialmente cierto cuando **autoalojas o trabajas en una red doméstica típica**! (Para los que están al fondo: ¡esto puede permitir el acceso a contenedores de desarrollo en tu MacBook!)
+
+> ⚠️ **Advertencia #1:** Los puertos publicados por Docker pueden eludir las reglas de firewall que creías que protegían el host, especialmente con UFW en Ubuntu/Debian. Eso no hace que cada regla de firewall sea inútil, pero sí significa que “UFW dice deny” no es una prueba. [Ver issue #690: Docker bypasses ufw firewall rules](https://github.com/moby/moby/issues/690).
+
+> ⚠️ **Advertencia #2:** Vincular puertos a direcciones IP locales (p. ej., `-p 127.0.0.1:8080:80`) es la configuración predeterminada correcta, pero versiones del motor Docker anteriores a la 28.0.0 tenían casos en los que hosts en la misma red L2 aún podían alcanzar puertos publicados en localhost. [Docker documenta la advertencia en su guía de publicación de puertos](https://docs.docker.com/engine/network/port-publishing/), y el hábito de verificar con nmap que se muestra a continuación sigue siendo relevante.
+
+<p class="inset">Si te sorprende aprender esto, ¡a mí también!</p>
+
+**Vincular a IP locales sigue siendo una buena práctica** y tiene un impacto significativo en **entornos cloud gestionados y redes especialmente configuradas**. 
+{/* No consideres tu firewall o red privada como tu defensa principal o única, añade Docker Networks a la combinación para una mejor **aislación**, y siempre evalúa si realmente necesitas exponer puertos. */}
+
+### Example Docker Compose
+
+Here's an example `docker-compose.yml` file that binds the `app` service to `127.0.0.1:8080` and connects both containers to the `backend` custom network.
+
+```yaml title="docker-compose.yml" {6-10,14-17}
+networks:
+  backend:
+
+services:
+  app:
+    networks:
+      - backend
+    ports:
+      # Bind to localhost if possible
+      - "127.0.0.1:8080:8080"
+    # ... other settings
+  database:
+    image: postgres:17.1
+    # No ports needed; accessible inside backend network.
+    networks:
+      - backend
+
+```
+
+{/* #### Prueba y Verificación
+
+Al igual que con cualquier medida de seguridad, es crítico que **pruebes y verifiques** tu configuración de red. */}
+
+{/* Mientras la seguridad y auditoría de red es una responsabilidad a tiempo completo en la mayoría de las empresas, la mayoría de los auto‑hosters no dedican NINGÚN tiempo a ello! */}
+
+{/* Mira, lo entiendo, puede ser intimidante. _(Subredes, máscaras de red, CIDR, VLANs y tablas de enrutamiento, ¡ay caramba! Si eso no tiene sentido, está bien, estás en el lugar correcto. Además, por ahora no necesitamos preocuparnos de nada de eso.)_ */}
+
+### Network Best Practices
+
+- 🏆 **No publiques NINGÚN puerto** Recientemente descubrí que esto es más útil de lo que parece. Cuando usas una red nombrada (bridge), los contenedores tienen acceso sin filtrado entre sí. Se comportan como si estuvieran detrás de una red local (gateway NAT).
+  - Aunque no sea posible en todos los casos, puede ser útil para contenedores que ejecutan trabajos por lotes, o que se acceden principalmente vía `attach` o `exec`.
+- 🥇 **Usa Docker Networks** para aislar y controlar qué contenedores pueden comunicarse entre sí.
+- 🥉 **Usa enlace a localhost**: Aunque [imperfeccionado](https://github.com/moby/moby/issues/45610), generalmente es mejor enlazar puertos a una dirección de loopback (p.ej., `127.0.0.1:8080:80`). Solo asegúrate de [verificar tu configuración.](#-monitoring--verification)
+
+## 🛡️ Controles de Acceso
+
+Los controles de acceso son una parte crítica para asegurar tus servicios Docker. Esto incluye limitar capacidades y permisos del contenedor, restringir el acceso al socket Docker, y más.
+
+- [Limitando Capacidades del Contenedor](#limiting-container-capabilities)
+- [Acceso al Socket Docker](#docker-socket-access)
+- [Bloqueo por País!](#blocking-country)
+- [Endurecimiento del Host Proxy de CloudFlare](#hardening-cloudflare-proxy-host)
+
+### Limitando Capacidades del Contenedor
+
+Otra práctica sólida de control de acceso es limitar las capacidades de tus contenedores. Esto reduce el radio de explosión de varias amenazas, desde escalada de privilegios hasta secuestro de tráfico. No es un escudo de fuerza, pero elimina permisos que la mayoría de los contenedores nunca necesitó.
+
+**¿Qué son las capacidades?** Permisos o habilidades nombradas definidas por el kernel de Linux. (La página man [`capabilities`](https://man7.org/linux/man-pages/man7/capabilities.7.html) contiene la lista completa.) Incluyen cosas como `CAP_CHOWN` (cambiar la propiedad de archivos), `CAP_NET_ADMIN` (configurar interfaces de red), `CAP_KILL` (matar cualquier proceso), y muchas más.
+
+Las dos formas de determinar qué capacidades son necesarias son:
+
+1. **Prueba y error**: Este método más lento pero efectivo te hace comenzar sin capacidades y luego ir añadiéndolas una a una hasta que tu aplicación funcione.
+2. **Buscar trabajo previo**: Busca "`project-name` `cap_drop` Dockerfile" o "`project-name` `cap_drop` docker-compose.yml" para ver si otros ya hicieron el trabajo por ti. Un LLM puede sugerir un punto de partida, pero trátalo como una conjetura hasta que pruebes el contenedor y leas la documentación de la imagen.
+
+#### Mejores Prácticas de Capacidades
+
+- **Eliminar todas las capacidades**: Usa `cap_drop: [ ALL ]` para eliminar todas las capacidades de Linux del contenedor.
+- **Sin nuevos privilegios**: Usa `security_opt: [ no-new-privileges=true ]` para impedir que el contenedor adquiera nuevos privilegios.
+
+```yaml title="Example: Drop/Limit Capabilities" {5-14}
+services:
+  database:
+    image: postgres:17.1
+    networks: [ db-network ]
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - DAC_READ_SEARCH
+      - FOWNER
+      - SETGID
+      - SETUID
+  db-admin:
+    image: dpage/pgadmin4:4.1
+    networks: [ db-network ]
+    ports:
+      - "8081:80"
+    # ... other settings
+networks:
+  db-network:
+```
+
+Ahora tus servicios pueden comunicarse entre sí a través de la red `db-network`. Docker Compose creará esa red automáticamente.
+
+Usa la opción `--external`/`external:` para unirte a una **red preexistente**. Omitela para crear una red nueva.
+
+### Acceso al Socket de Docker
+
+#### ⚠️ Advertencia: `docker.sock` es básicamente acceso de administrador del host
+
+<blockquote class="inset">⚠️ La opción `:ro` no afecta la E/S enviada a través del socket!</blockquote>
+
+Simplemente garantiza que la ruta del socket se monte en modo solo‑lectura. Las llamadas a la API enviadas por ese socket aún pueden crear contenedores, montar rutas del host y hacer otras cosas muy emocionantes que probablemente no pretendías delegar.
+
+{/* Cualquier proceso que pueda "abrir" el socket puede (probablemente) obtener acceso root en el host. */}
+
+#### Mejores prácticas para el socket
+
+- 🥇 **Evita montar el socket de Docker**, probablemente exista una alternativa mejor.  
+- 🫣 Si es absolutamente necesario, **coloca un proxy estrecho delante** y permite solo los endpoints de la API que la aplicación realmente necesita. Echa un vistazo al proyecto `docker-socket-proxy` originado por Tecnativa, [docker-socket-proxy](https://github.com/Tecnativa/docker-socket-proxy). Luego verifica que las llamadas denegadas realmente queden bloqueadas.  
+- 🤢 Vale, _quizá_ compartirlo esté bien en un entorno de pruebas **muy de alta confianza** y **bajo riesgo**.
+
+#### ¡Bloqueando países!
+
+A veces útil, pero no constituye una verdadera barrera de seguridad.
+
+_Hablando de la entidad geopolítica, no de la música…_
+
+Si alojas aplicaciones principalmente para tu familia y amigos locales, puedes bloquear el tráfico proveniente de países de los que no esperas recibir visitas. O bien permitir solo el tráfico de los países que sí esperas. Reduce el ruido; no detiene VPNs, proxies, botnets o a cualquier persona paciente.
+
+Echa un vistazo a este script para bloquear todo el tráfico proveniente de China:
+
+```bash title="block-china.sh"
+curl -fsSL https://www.ipdeny.com/ipblocks/data/countries/cn.zone | \
+  while read line; do ufw deny from $line to any; done
+
+```
+
+De forma similar, puedes permitir solo el tráfico proveniente de EE. UU.:
+
+```bash title="allow-usa.sh"
+curl -fsSL https://www.ipdeny.com/ipblocks/data/countries/us.zone | \
+  while read line; do ufw allow from $line to any; done
+```
+
+#### Endurecimiento del host proxy de CloudFlare
+
+Si tu servidor doméstico está protegido detrás de una IP de CloudFlare (proxy), puedes restringir el acceso únicamente a las IPs de CloudFlare y a tu red local.
+
+Esto es algo parecido al [Country blocking](#blocking-country) anterior, pero con un control mucho más estricto.
+
+```bash title="whitelist-ingress-from-cloudflare.sh"
+ufw default deny incoming # ¡Bloquear todo el tráfico entrante!
+ufw default allow outgoing # Permitir todo el tráfico saliente
+ufw allow ssh # Permitir SSH
+
+# Permitir acceso para la subred local (preferiblemente una DMZ/VLAN dedicada para los servicios alojados)
+ufw allow from 10.0.0.0/8 to any port 443
+```
+
+# Permitir IPs de CloudFlare
+curl -fsSL https://www.cloudflare.com/ips-v4 | \
+  while read line; do ufw allow from $line to any port 443; done
+# Añadir soporte IPv6
+# curl -fsSL https://www.cloudflare.com/ips-v6 | \
+#   while read line; do ufw allow from $line to any port 443; done
+
+```
+
+Para probar cambios basados en geolocalización, puede resultar útil una VPN con ubicaciones en el país deseado. Consulte más detalles en la sección [Monitoring & Verification](#-monitoring--verification).
+
+### Seguridad a nivel de aplicación
+
+Una vez que su [red y host estén reforzados contra amenazas,](#-network-hazard) puede que descubra que aún queda trabajo por hacer.
+
+Ahora debemos considerar la capa “aplicación” de los propios servicios.
+
+<p class="inset">¿Esa base de datos tiene una contraseña válida? ¿Este contenedor automatiza HTTPS/certificados? ¿La aplicación incluye autenticación incorporada? ¿Hay límites sobre qué correos electrónicos pueden registrarse? ¿Existen credenciales predeterminadas o variables de entorno que deban modificarse?</p>
+
+
+La única forma de _saberlo_ es inspeccionando. En este caso, comience con el `README` y otros archivos clave como `docker-compose.yml`, `Dockerfile` y `.env.*`. Tanto en el proyecto como, idealmente, en sus servicios de apoyo (p. ej., Postgres, Redis, etc.).
+
+#### Proxy inverso
+
+Otra capa de defensa es la autenticación básica. No la use sin HTTPS. Para servicios heredados, colocar autenticación básica delante de una ruta de administración suele ser suficiente para detener solicitudes casuales y rastreadores no autenticados que intenten acceder directamente al recurso.
+
+```nginx
+
+# /etc/nginx/conf.d/secure-admin.conf
+location /admin {
+    auth_basic "Restricted Access";
+    auth_basic_user_file /etc/nginx/.htpasswd;
+    proxy_pass http://internal_admin:80;
+    proxy_set_header X-Real-IP $remote_addr;
+}
+
+```
+
+Genere credenciales:
+
+```bash
+
+htpasswd -c /etc/nginx/.htpasswd admin
+
+```
+
+Con un proxy de autenticación básica, los atacantes se encuentran con un obstáculo adicional—nombre de usuario y contraseña—antes de llegar a su servicio interno.
+
+Otra opción es usar un servicio como [Traefik](https://traefik.io/) o [Caddy](https://caddyserver.com/) que pueden automatizar HTTPS y autenticación básica por usted.
+
+Si deseas gestionar muchos dominios y servicios mediante una interfaz gráfica, te recomendaría [Nginx Proxy Manager](https://nginxproxymanager.com/).
+
+## 🔍 Monitoreo y Verificación
+
+- [Revisa tus puertos](#check-your-ports)
+- [Ver puertos abiertos](#view-open-ports)
+- [Monitoreo de archivos](#file-monitoring)
+
+Este es el paso **más importante y más pasado por alto**. Puedes contar con el mejor firewall, la mejor red y las mejores prácticas, pero si no lo verificas, no tienes idea de si está funcionando.
+
+Además, conocer solo un puñado de comandos —o saber dónde buscarlos— puede marcar la diferencia entre prevenir o sufrir una brecha. Sentirte como un hacker es solo un extra. (Para detalles y ejemplos, avanza hasta la sección de [Monitoreo y Verificación](#-monitoring--verification).)
+
+<p class="inset">No confíes, verifica dos veces</p>
+
+### Verifica tus puertos
+
+<p class="inset">⚠️ IMPORTANTE: No escanees hosts que no te pertenezcan.</p>
+
+Ya sea que estés en una red doméstica o en un VPS, querrás saber qué puertos están abiertos al mundo.
+
+Hay 2 formas de hacerlo:
+
+- Consultar la red (`nmap`, `masscan`)
+- Preguntar al sistema operativo (`lsof`, `netstat`, `ss`)
+
+#### Probando fuera de tu red
+
+Necesitarás tu IP (pública) actual, que puedes obtener fácilmente con servicios como `ifconfig.me`: `curl https://ifconfig.me`. O buscarla en el panel de control de tu proveedor de hosting.
+
+```bash title="Get Public IP"
+curl -fsSL https://ifconfig.me
+# --> CURRENT PUBLIC IP
+```
+
+Una vez que tengas tu IP pública, ahora necesitas **conectarte a una red externa**. Puedes usar la computadora de un amigo, un teléfono/punto de acceso 5G, o un servidor dedicado.
+
+```bash title="nmap External Scan"
+target_host="$(curl -fsSL https://ifconfig.me)"
+
+# Nota: Asegúrate de que `target_host` sea la IP deseada
+
+# Escanear puertos específicos:
+nmap -A -p 80,443,8080 --open --reason $target_host
+# Los 100 puertos más comunes:
+nmap -A --top-ports 100 --open --reason $target_host
+# Todos los puertos
+nmap -A -p1-65535 --open --reason $target_host
+```
+
+```
+
+#### Prueba dentro de tu red
+
+Practica usando `nmap`, escanea tu red local o uno de tus servidores, revisa tu router, impresora, nevera inteligente.
+
+{/* Aunque los escaneos de puertos son una constante, podrían violar la CFAA (Computer Fraud and Abuse Act) en EE. UU. Así que, solo escanea lo que sea de tu propiedad. */}
+
+#### Comandos de escaneo de ejemplo
+
+```bash
+
+# Escanea tu localhost para todos los puertos abiertos
+nmap -sT localhost
+
+# Escanea la IP privada de tu máquina para servicios
+nmap -sV 192.168.1.10
+
+# Encuentra detalles de servicios en tu red
+nmap -sn 192.168.0.0/24
+nmap -sn 10.0.0.0/24
+# O en un docker 172.18.0.1/16
+nmap -sn 172.18.0.1/16
+
+```
+
+```text title="nmap Scan" frame="terminal"
+% nmap -A --open --reason 192.168.0.87
+
+Starting Nmap 7.95 ( https://nmap.org ) at 2025-01-06 13:51 MST
+Nmap scan report for dev02.local (192.168.0.87)
+Host is up, received syn-ack (0.0067s latency).
+Not shown: 995 closed tcp ports (conn-refused)
+PORT     STATE SERVICE     REASON  VERSION
+22/tcp   open  ssh         syn-ack OpenSSH 9.6p1 Ubuntu 3ubuntu13.5 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey:
+|_  256 {FINGERPRINT} (ED25519)
+80/tcp   open  http        syn-ack Caddy httpd
+|_http-server-header: Caddy
+|_http-title: Dev02.DanLevy.net
+443/tcp  open  ssl/https   syn-ack
+|_http-title: Dev02.DanLevy.net
+1234/tcp open  http        syn-ack Node.js Express framework
+|_http-cors: GET POST PUT DELETE PATCH
+|_http-title: Dev02.DanLevy.net (application/json; charset=utf-8).
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 13.36 seconds
+```
+
+### Ver puertos abiertos
+
+Familiarízate con `lsof` – está disponible en macOS y Linux. Muestra el estado granular de la red y la actividad de disco.
+
+```bash title="lsof Commands"
+# Monitorizar puerto específico
+sudo lsof -i:80 -Pn
+```
+
+# Monitor conexiones ESTABLISHED
+sudo lsof -i -Pn | grep ESTABLISHED
+# Ver LISTEN
+sudo lsof -i -Pn | grep LISTEN
+
+# para ver nombres de red en lugar de direcciones IP (puede ser muy lento hacer búsquedas DNS inversas)
+sudo lsof -i -P | grep LISTEN
+
+# Monitorizar todas las conexiones de red
+sudo watch -n1 "lsof -i -Pn"
+
+```
+
+#### Salida de ejemplo
+
+![escaneo nmap de listeners](../lsof-scan-listen.webp)
+
+### Monitorización de archivos
+
+Para identificar qué **procesos** están consumiendo más **ancho de banda del disco**, puedes usar `iotop`:
+
+```bash
+sudo iotop
+```
+
+Para ver cambios individuales en archivos, puedes usar `inotifywait` en Linux o `fswatch` en macOS:
+
+Esto resulta útil para detectar comportamientos no autorizados o extraños por carpeta o a nivel del sistema.
+
+```bash
+# Monitorizar todos los cambios de archivos en un directorio
+sudo inotifywait -m /path/to/directory
+```
+
+En macOS puedes usar `fswatch`:
+
+Instálalo con `brew install fswatch`
+
+```bash
+fswatch -r /path/to/directory
+```
+
+```
+
+## ⏰ Consejos que a menudo se pasan por alto
+
+1. **Limitación de velocidad** para intentos de autenticación y cualquier otro punto crítico. Ya sea mediante el módulo `limit_req` de Nginx o `fail2ban` para acceso SSH, throttlear ataques de fuerza bruta es _probablemente_ una buena idea. Digo _probablemente_ porque en la era del IPv6 y los botnets baratos, ya no es lo que solía ser.
+
+2. **Usa volúmenes de solo lectura** siempre que sea posible:
+   ```yaml
+
+services:
+     webapp:
+       volumes:
+         - ./config:/config:ro
+
+```
+   Combinado con otras buenas prácticas (usuarios sin privilegios de root, permisos de carpeta mínimos), la opción de montaje de volumen `:ro` brinda salvaguardas adicionales contra cambios accidentales y algunos intentos de escritura desde dentro del contenedor. No protege al host de un proceso que ya posee privilegios más amplios.
+
+3. **Audita el acceso a los contenedores** de forma regular.  
+   Si un contenedor no necesita un secreto, puerto o montaje, ¡elimínalo!
+
+4. **Cuidado con el Wi‑Fi Riff‑Raff**  
+   Seguro que nunca darías tu contraseña de Wi‑Fi, especialmente a desconocidos, ¿verdad? Bueno, salvo algunos amigos… Vale, tal vez también a la familia. Nunca sabes qué aplicaciones tienen y cuáles podrían compartir tu SSID y contraseña con el mundo.
+
+### Red doméstica vs. Proveedor público vs. Túnel
+
+1. **Aislamiento virtual/DMZ**: Para servidores domésticos, colócalos en una VLAN o DMZ separada si es posible. Esto mantiene tus dispositivos internos fuera del alcance de una posible compromisión desde el lado del servidor.  
+   - Usa un router separado o una VLAN para tu servidor doméstico.  
+   - Usa una red Wi‑Fi separada para tu servidor doméstico.  
+   - Usa una subred separada para tu servidor doméstico.
+
+2. **Proveedores de la Nube**: Hetzner, Vultr, DigitalOcean, Linode, AWS, Azure y Google Cloud ofrecen diferentes funcionalidades de firewall.  
+   - Algunos proveedores y servicios bloquean puertos por defecto. Otros ofrecen opciones de activación o complementos. Revisa la documentación de tu proveedor.  
+   - Muchos proveedores brindan servicios avanzados de monitoreo y detección de amenazas.
+
+3. **VPNs y Túneles**: Considera usar una opción tipo VPN o un servicio de túnel para conectar de forma segura servicios a través de Internet sin exponerlos al público.  
+   - TailScale, ngrok, ZeroTier.  
+   - WireGuard, OpenVPN.
+
+{/* 3. **Hardening Against Internal/Lateral Attacks**: One infected device can compromise an entire network. Segmenting Docker services on custom networks, using hardware, UFW rules, and blocking unneeded ports can all help reduce risk (when properly configured.) */}
+
+## 🚀 Lista de Verificación para Producción
+
+- [ ] **Secrets**: Todos los secretos generados aleatoriamente y almacenados de forma segura  
+- [ ] **Updates**: Estrategia de actualización de contenedores documentada y automatizada. (Vale si son solo unos comandos en un archivo de texto.)  
+- [ ] **Network**: Sólo los puertos necesarios expuestos, redes internas configuradas.  
+- [ ] **Firewall Rules**: Denegación por defecto, permitidos explícitos, bloqueos por país si se requieren.  
+- [ ] **Reverse Proxy**: Nginx, Caddy o Traefik pueden añadir una capa de autenticación básica.  
+- [ ] **Canary Tokens**: Colócalos cerca de los archivos y credenciales sensibles que realmente investigarías si se tocaran.  
+- [ ] **Monitoring** Conoce tus sistemas con `nmap`, `lsof`, `inotifywait`, `glances`, etc.  
+- [ ] **Backup Strategy**: Probada, preferiblemente automatizada y fuera del sitio.  
+- [ ] **Least Privilege**: Usuarios no root en los contenedores, volúmenes de solo lectura.
+
+## 📚 Lecturas Adicionales
+
+- [Docker Security Best Practices](https://docs.docker.com/develop/security-best-practices/)
+- [OWASP Docker Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html)
+- [CIS Docker Benchmark](https://www.cisecurity.org/benchmark/docker)
+- [Canarytokens.org for Canary Tokens](https://canarytokens.org/)
+
+## Gracias
+
+Un reconocimiento a algunos Redditors atentos:
+
+- <em className="cite">[u/JCBird1012](https://www.reddit.com/user/JCBird1012/) - [hilo](https://www.reddit.com/r/selfhosted/comments/1hv8jn6/comment/m5rvlzi/).</em>
+- <em className="cite">[u/Salzig](https://www.reddit.com/user/Salzig/)</em>
+- <em className="cite">[u/Myelrond](https://www.reddit.com/user/myelrond/)</em>
+- <em className="cite">[u/shrimpdiddle](https://www.reddit.com/user/shrimpdiddle/)</em>
+- <em className="cite">[u/troeberry](https://www.reddit.com/user/troeberry/)</em>
+
+¡Gracias por leer! Espero que esta guía te haya resultado útil. Si tienes preguntas o sugerencias, contáctame en mis redes sociales abajo, o simplemente haz clic en el enlace `Edit on GitHub` para crear un PR. ❤️

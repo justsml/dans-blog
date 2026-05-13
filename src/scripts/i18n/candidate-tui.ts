@@ -1,5 +1,6 @@
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
+import { spawn, type ChildProcess } from "node:child_process";
 import matter from "gray-matter";
 import { ACTIVE_LOCALES, type ActiveLocale } from "../../shared/i18n.ts";
 import { optionalString, parseArgs, parseList } from "./utils.ts";
@@ -76,8 +77,21 @@ type AccountingTotals = {
   sources: string[];
 };
 
+type WorkerState = {
+  enabled: boolean;
+  status: "disabled" | "starting" | "running" | "completed" | "failed" | "stopped";
+  startedAt?: Date;
+  finishedAt?: Date;
+  exitCode?: number | null;
+  signal?: string | null;
+  error?: string;
+  recentOutput: string[];
+};
+
 const REPORT_ROOT = join(process.cwd(), "reports/i18n");
 const POSTS_ROOT = join(process.cwd(), "src/content/posts");
+const DEFAULT_TUI_TASK_CONCURRENCY = "16";
+const DEFAULT_TUI_QUIZ_CONCURRENCY = "8";
 
 const options = parseArgs();
 const expectedCandidates = parsePositiveInteger(optionalString(options, "expected"), 2);
@@ -89,6 +103,17 @@ const shouldIncompleteOnly = options["incomplete-only"] === true;
 const shouldMarkdown = options.markdown === true || options["no-tui"] === true;
 const watchIntervalSeconds = parseOptionalPositiveInteger(optionalString(options, "watch"));
 const shouldUseTui = !shouldMarkdown && process.stdout.isTTY && process.stdin.isTTY;
+const shouldRunWorker = options.run === true && options["monitor-only"] !== true;
+const workerState: WorkerState = {
+  enabled: shouldRunWorker,
+  status: shouldRunWorker ? "starting" : "disabled",
+  recentOutput: [],
+};
+let workerProcess: ChildProcess | undefined;
+
+if (shouldRunWorker) {
+  startCandidateWorker();
+}
 
 if (shouldUseTui) {
   await renderTerminalUi();
@@ -115,16 +140,23 @@ function renderMarkdownLoop() {
 
   const exitWithFinalTotals = (signal: string) => {
     const { totals } = getDashboardData();
+    stopCandidateWorker(signal);
     console.log(renderFinalAccounting(totals, signal));
     process.exit(0);
   };
 
   render();
-  if (watchIntervalSeconds != null) {
+  if (watchIntervalSeconds != null || shouldRunWorker) {
     const interval = setInterval(() => {
       console.clear();
       render();
-    }, watchIntervalSeconds * 1000);
+      if (shouldRunWorker && isWorkerFinished()) {
+        clearInterval(interval);
+        const { totals } = getDashboardData();
+        console.log(renderFinalAccounting(totals, workerState.status));
+        process.exit(workerState.status === "completed" ? 0 : 1);
+      }
+    }, (watchIntervalSeconds ?? 10) * 1000);
 
     process.once("SIGINT", () => {
       clearInterval(interval);
@@ -213,6 +245,7 @@ async function renderTerminalUi() {
     clearInterval(interval);
     process.off("SIGINT", signalHandlers.SIGINT);
     process.off("SIGTERM", signalHandlers.SIGTERM);
+    stopCandidateWorker(reason);
     refreshData();
     term.grabInput(false);
     term.hideCursor(false);
@@ -275,6 +308,7 @@ function drawHeader(
       `${visibleRows} article${visibleRows === 1 ? "" : "s"}`,
       `${selectedLocales.join(", ")}`,
       `expected ${expectedCandidates}`,
+      `worker ${formatWorkerStatus()}`,
       `updated ${renderedAt.toLocaleTimeString()}`,
     ].join("  |  "),
     width,
@@ -345,6 +379,7 @@ function drawSidePanel(
 ) {
   drawPanel(term, left, top, width, height, "Status");
   const lines = [
+    ["Worker", formatWorkerStatus()],
     ["Slots", `${totals.completeSlots}/${totals.slots} (${formatPercent(totals.slots === 0 ? 0 : totals.completeSlots / totals.slots)})`],
     ["Articles", `${totals.completeArticles}/${totals.articles}`],
     ["In progress", `${totals.inProgressSlots} slots, ${totals.inProgressArticles} articles`],
@@ -376,16 +411,26 @@ function drawSidePanel(
     writeAt(term, left + 7, y, `${complete}/${rows.length}`, 9);
     writeAt(term, left + 17, y, `${candidates} cand`, width - 19, candidates > 0 ? "green" : "gray");
   });
+
+  if (workerState.recentOutput.length > 0) {
+    const logTop = localeTop + selectedLocales.length + 4;
+    if (logTop < top + height - 3) {
+      writeAt(term, left + 2, logTop, "Worker Log", width - 4, "bold");
+      workerState.recentOutput.slice(-Math.max(0, top + height - logTop - 2)).forEach((line, index) => {
+        writeAt(term, left + 2, logTop + 2 + index, line, width - 4, "gray");
+      });
+    }
+  }
 }
 
 function drawBottomPanel(term: any, totals: Totals, rows: ArticleRow[], left: number, top: number, width: number) {
   drawPanel(term, left, top, width, 9, "Status");
   const coverage = totals.slots === 0 ? 0 : totals.completeSlots / totals.slots;
-  writeAt(term, left + 2, top + 2, `Slots ${totals.completeSlots}/${totals.slots} (${formatPercent(coverage)})`, width - 4);
-  writeAt(term, left + 2, top + 3, `Articles ${totals.completeArticles}/${totals.articles} | Running ${totals.inProgressSlots} slots`, width - 4);
-  writeAt(term, left + 2, top + 4, `Candidates ${totals.candidateRows} | Attempts ${totals.attemptedModels} | Rejected ${totals.rejectedModels}`, width - 4);
-  writeAt(term, left + 2, top + 5, `Cost ${formatUsd(totals.costUsd)}${totals.hasUnknownCost ? " + unknown" : ""} | Source ${formatSources(totals.accountingSources)}`, width - 4);
-  writeAt(term, left + 2, top + 6, `Input ${formatInteger(totals.inputTokens)}${totals.hasUnknownTokens ? " + unknown" : ""} | Output ${formatInteger(totals.outputTokens)}${totals.hasUnknownTokens ? " + unknown" : ""} | Cache ${formatInteger(totals.cachedInputTokens)}`, width - 4);
+  writeAt(term, left + 2, top + 2, `Worker ${formatWorkerStatus()}`, width - 4);
+  writeAt(term, left + 2, top + 3, `Slots ${totals.completeSlots}/${totals.slots} (${formatPercent(coverage)})`, width - 4);
+  writeAt(term, left + 2, top + 4, `Articles ${totals.completeArticles}/${totals.articles} | Running ${totals.inProgressSlots} slots`, width - 4);
+  writeAt(term, left + 2, top + 5, `Candidates ${totals.candidateRows} | Attempts ${totals.attemptedModels} | Rejected ${totals.rejectedModels}`, width - 4);
+  writeAt(term, left + 2, top + 6, `Cost ${formatUsd(totals.costUsd)}${totals.hasUnknownCost ? " + unknown" : ""} | Source ${formatSources(totals.accountingSources)}`, width - 4);
   writeAt(term, left + 2, top + 7, `Locales ${selectedLocales.map((locale) => {
     const summaries = rows.map((row) => row.candidates[locale]);
     return `${locale}:${summaries.filter((summary) => summary.count >= expectedCandidates).length}/${rows.length}`;
@@ -402,7 +447,7 @@ function drawPanel(term: any, left: number, top: number, width: number, height: 
 }
 
 function drawFooter(term: any, width: number, height: number, offset: number, maxOffset: number) {
-  writeAt(term, 1, height, `q quit | r refresh | arrows/page/home/end scroll | wheel scroll | ${offset}/${maxOffset}`, width, "gray");
+  writeAt(term, 1, height, `q quit + stop worker | r refresh | worker ${formatWorkerStatus()} | ${offset}/${maxOffset}`, width, "gray");
 }
 
 function terminalCandidateCell(summary: CandidateSummary) {
@@ -839,11 +884,18 @@ function summarize(rows: ArticleRow[]): Totals {
 
 function renderDashboard(rows: ArticleRow[], totals: Totals) {
   const generatedAt = new Date().toISOString();
+  const workerCopy = shouldRunWorker
+    ? `Worker: \`${formatWorkerStatus()}\`. Command:`
+    : "Worker is disabled. To generate candidates for the same scope, run:";
 
   return [
     `# I18n Candidate TUI`,
     "",
     `Generated at \`${generatedAt}\`. Expected candidates per locale: \`${expectedCandidates}\`.`,
+    "",
+    workerCopy,
+    "",
+    `\`${renderScopedGeneratorCommand()}\``,
     "",
     renderStatusPanel(totals),
     "",
@@ -864,6 +916,16 @@ function renderDashboard(rows: ArticleRow[], totals: Totals) {
       ]),
     ),
     "",
+    ...(workerState.recentOutput.length > 0
+      ? [
+          "## Worker Log",
+          "",
+          "```text",
+          ...workerState.recentOutput.slice(-12),
+          "```",
+          "",
+        ]
+      : []),
     watchIntervalSeconds == null
       ? "Tip: add `--watch 10` to refresh this terminal view every 10 seconds."
       : `Watching every ${watchIntervalSeconds}s. Press Ctrl-C to stop.`,
@@ -901,6 +963,7 @@ function renderStatusPanel(totals: Totals) {
     "",
     markdownRow(["Metric", "Value"]),
     markdownRow(["---", "---:"]),
+    markdownRow(["Worker", formatWorkerStatus()]),
     markdownRow(["Articles", totals.articles]),
     markdownRow(["Locale slots complete", `${totals.completeSlots}/${totals.slots} (${formatPercent(coverage)})`]),
     markdownRow(["Articles complete", `${totals.completeArticles}/${totals.articles}`]),
@@ -979,6 +1042,119 @@ function parseLocales() {
   }
 
   return values as ActiveLocale[];
+}
+
+function startCandidateWorker() {
+  const args = buildGeneratorArgs();
+  workerState.startedAt = new Date();
+  workerState.status = "running";
+  appendWorkerOutput(`$ bun ${formatCommandArgs(args)}`);
+
+  const child = spawn("bun", args, {
+    cwd: process.cwd(),
+    stdio: ["ignore", "pipe", "pipe"],
+  });
+  workerProcess = child;
+
+  child.stdout?.on("data", appendWorkerOutput);
+  child.stderr?.on("data", appendWorkerOutput);
+  child.on("error", (error) => {
+    workerState.status = "failed";
+    workerState.error = error.message;
+    workerState.finishedAt = new Date();
+    appendWorkerOutput(error.message);
+  });
+  child.on("exit", (code, signal) => {
+    workerState.exitCode = code;
+    workerState.signal = signal;
+    workerState.finishedAt = new Date();
+    workerState.status = code === 0 ? "completed" : "failed";
+    appendWorkerOutput(`worker exited with ${signal ?? `code ${code}`}`);
+    workerProcess = undefined;
+  });
+}
+
+function stopCandidateWorker(reason: string) {
+  if (workerProcess == null || isWorkerFinished()) return;
+  workerState.status = "stopped";
+  workerState.finishedAt = new Date();
+  appendWorkerOutput(`stopping worker: ${reason}`);
+  workerProcess.kill("SIGTERM");
+}
+
+function isWorkerFinished() {
+  return workerState.status === "completed" || workerState.status === "failed" || workerState.status === "stopped";
+}
+
+function appendWorkerOutput(value: unknown) {
+  const text = stripAnsi(String(value));
+  const lines = text
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .filter(Boolean);
+
+  workerState.recentOutput.push(...lines);
+  workerState.recentOutput = workerState.recentOutput.slice(-40);
+}
+
+function formatWorkerStatus() {
+  if (!workerState.enabled) return "disabled";
+  if (workerState.status === "running") return `running ${formatDuration(Date.now() - Number(workerState.startedAt ?? new Date()))}`;
+  if (workerState.status === "failed") {
+    return workerState.error ?? `failed ${workerState.signal ?? `code ${workerState.exitCode ?? "unknown"}`}`;
+  }
+  return workerState.status;
+}
+
+function renderScopedGeneratorCommand() {
+  return `bun ${formatCommandArgs(buildGeneratorArgs())}`;
+}
+
+function buildGeneratorArgs() {
+  const args = ["run", "i18n:translate:candidates", "--"];
+  const slugs = [...selectedSlugs];
+
+  if (slugs.length > 0) {
+    args.push("--slugs", slugs.join(","));
+  }
+
+  args.push("--locales", selectedLocales.join(","));
+
+  addOptionalGeneratorArg(args, "models");
+  addOptionalGeneratorArg(args, "timeout-seconds");
+  addGeneratorArgWithDefault(args, "task-concurrency", DEFAULT_TUI_TASK_CONCURRENCY);
+  addOptionalGeneratorArg(args, "chunk");
+  addGeneratorArgWithDefault(args, "quiz-concurrency", DEFAULT_TUI_QUIZ_CONCURRENCY);
+  addOptionalGeneratorArg(args, "challenge-retries");
+
+  for (const name of ["skip-validation", "no-commit", "overwrite", "allow-concurrent-worktree", "dry-run"]) {
+    if (options[name] === true) args.push(`--${name}`);
+  }
+
+  return args;
+}
+
+function addOptionalGeneratorArg(args: string[], name: string) {
+  const value = optionalString(options, name);
+  if (value != null) args.push(`--${name}`, value);
+}
+
+function addGeneratorArgWithDefault(args: string[], name: string, fallback: string) {
+  const value = optionalString(options, name) ?? fallback;
+  if (value != null) args.push(`--${name}`, value);
+}
+
+function formatCommandArgs(args: string[]) {
+  return args.map(shellQuote).join(" ");
+}
+
+function shellQuote(value: string) {
+  if (/^[A-Za-z0-9._,/:=-]+$/.test(value)) return value;
+  return `'${value.replaceAll("'", "'\\''")}'`;
+}
+
+function stripAnsi(value: string) {
+  return value.replace(/\x1B\[[0-?]*[ -/]*[@-~]/g, "");
 }
 
 function parsePositiveInteger(rawValue: string | undefined, fallback: number) {

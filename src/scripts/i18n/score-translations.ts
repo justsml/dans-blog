@@ -46,7 +46,7 @@ type ScoreResponse = {
 };
 
 const DEFAULT_MODEL = "openrouter/google/gemini-3-flash-preview";
-const DEFAULT_TASK_CONCURRENCY = 2;
+const DEFAULT_TASK_CONCURRENCY = 16;
 const DEFAULT_TIMEOUT_MS = 200_000;
 const DEFAULT_MAX_SOURCE_CHARS = 120_000;
 const DEFAULT_MAX_TRANSLATION_CHARS = 120_000;

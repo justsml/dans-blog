@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: compare-nvme-ssd-cloud-options
+- Locale: de
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2017-04-15--compare-nvme-ssd-cloud-options/de/index.mdx
+- Validation: passed
+- Runtime seconds: 2.02
+- Input tokens: 4363
+- Output tokens: 1127
+- Thinking tokens: unknown
+- Cached input tokens: 2304
+- Cache write tokens: 0
+- Estimated cost: $0.000373
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: NVMe‑SSD‑Cloud‑Optionen vergleichen
@@ -64,3 +82,4 @@ Bei den Netzwerktests wurden bis zu 9 zusätzliche Instanzen in derselben Verfü
 #### Credits
 
 -[ec2instances.info](https://www.ec2instances.info/?filter=nvm&region=us-east-2&cost_duration=monthly&selected=c5d.large,i3.large,i3.xlarge,i3.2xlarge)
+````

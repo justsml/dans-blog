@@ -29,7 +29,8 @@ const DEFAULT_CANDIDATE_MODELS = [
 
 const DEFAULT_TRANSLATION_TIMEOUT_SECONDS = 240;
 const DEFAULT_CHUNK_SIZE = "6p";
-const DEFAULT_TASK_CONCURRENCY = 2;
+const DEFAULT_TASK_CONCURRENCY = 16;
+const REPORT_ROOT = join(process.cwd(), "reports/i18n");
 
 type CandidateTask = {
   slug: string;
@@ -406,12 +407,66 @@ function getAllPostSlugs() {
 }
 
 function getCandidateTasks(): CandidateTask[] {
-  return slugs.flatMap((currentSlug) =>
-    locales.map((currentLocale) => ({
+  return slugs
+    .map((currentSlug) => ({
       slug: currentSlug,
-      locale: currentLocale,
-    })),
-  );
+      translatedCount: locales.reduce((sum, currentLocale) => sum + countCandidateOutputs(currentSlug, currentLocale), 0),
+    }))
+    .sort((a, b) =>
+      a.translatedCount - b.translatedCount ||
+      a.slug.localeCompare(b.slug),
+    )
+    .flatMap(({ slug: currentSlug }) =>
+      locales
+        .map((currentLocale) => ({
+          locale: currentLocale,
+          translatedCount: countCandidateOutputs(currentSlug, currentLocale),
+        }))
+        .sort((a, b) =>
+          a.translatedCount - b.translatedCount ||
+          a.locale.localeCompare(b.locale),
+        )
+        .map(({ locale: currentLocale }) => ({
+          slug: currentSlug,
+          locale: currentLocale,
+        })),
+    );
+}
+
+function countCandidateOutputs(currentSlug: string, currentLocale: ActiveLocale) {
+  const reportDir = join(REPORT_ROOT, currentSlug, currentLocale);
+  const candidateRows = readJsonlRows(join(reportDir, "candidates.jsonl"));
+  if (candidateRows.length > 0) return candidateRows.length;
+  return countCandidateReportFiles(reportDir);
+}
+
+function readJsonlRows(path: string) {
+  if (!existsSync(path)) return [];
+  return readFileSync(path, "utf8")
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .flatMap((line) => {
+      try {
+        JSON.parse(line);
+        return [line];
+      } catch {
+        return [];
+      }
+    });
+}
+
+function countCandidateReportFiles(reportDir: string) {
+  if (!existsSync(reportDir)) return 0;
+  return readdirSync(reportDir, { withFileTypes: true })
+    .filter((entry) => entry.isFile())
+    .filter((entry) =>
+      entry.name.endsWith(".md") &&
+      !entry.name.startsWith("judge") &&
+      entry.name !== "candidate-shortfall.md" &&
+      entry.name !== "judge-summary.md",
+    )
+    .length;
 }
 
 function getRequestedLocales() {
