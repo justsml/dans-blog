@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: mastering-functional-pipelines-passing-state
+- Locale: ru
+- Model: deepseek/deepseek-v4-flash
+- Target: src/content/posts/2023-08-13--mastering-functional-pipelines-passing-state/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 129.22
+- Input tokens: 9825
+- Output tokens: 9852
+- Thinking tokens: unknown
+- Cached input tokens: 768
+- Cache write tokens: 0
+- Estimated cost: $0.004029
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: 'Мастер конвейеров: передача состояния'
@@ -200,3 +218,4 @@ export const checkout = ({ userId, products }) => {
 #### По теме
 
 - [Похожие проблемы существуют в мире компонентного React.](https://kyleshevlin.com/quit-your-yapping)
+````
