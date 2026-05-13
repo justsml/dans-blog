@@ -1,0 +1,259 @@
+---
+unlisted: false
+title: 'クイズ: シンボルと列挙可能'
+subTitle: ES2015のあまり知られていない部分、知っていますか？
+label: Symbols
+social_image: ../desktop-social.webp
+category: Quiz
+subCategory: JavaScript
+date: '2024-10-31'
+modified: '2024-11-07'
+tags:
+  - quiz
+  - javascript
+  - interfaces
+  - symbols
+  - enumerables
+cover_full_width: ../logan-weaver-lgnwvr-96ES9AOLRzQ-unsplash.webp
+cover_mobile: ../logan-weaver-lgnwvr-96ES9AOLRzQ-unsplash_w300.webp
+cover_icon: ../logan-weaver-lgnwvr-96ES9AOLRzQ-unsplash_w300.webp
+---
+## Quiz: JavaScript Interfaces, Symbols, and Enumerables
+
+> * **JavaScript のスキルを証明しよう！** 🚀  
+> * ログインやサインアップは不要です。 ✨  
+> * 選択式問題です。 🤖 … _どれだけ難しいでしょうか？_
+
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="高度なインターフェース"
+  title="Getter と直接プロパティアクセス"
+  options={[
+    {text: 'ループを使う'},
+    {text: 'メソッドを呼び出して値を取得する'},
+    {text: '直接値にアクセスする', isAnswer: true},
+    {text: 'エラーを投げる'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    getter メソッドを持つ JavaScript オブジェクトのプロパティにはどうアクセスすべきですか？
+    ```js
+        const obj = {
+          get val() {
+            return 'got it!';
+          }
+        };
+        console.log(obj.val);
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    JavaScript では、getter は通常のプロパティと同様にアクセスできます。関数のように呼び出す必要はありません。
+    この例では、`obj.val` に直接アクセスすると getter メソッドが呼び出され、`got it!` と出力されます。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="高度なインターフェース"
+  title="オブジェクトキーにおける Symbol の使用"
+  options={[
+    {text: 'Symbol を使用する', isAnswer: true},
+    {text: '文字列を使用する'},
+    {text: '数値を使用する'},
+    {text: 'オブジェクトをキーとして使用する'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    JavaScript オブジェクトで真にユニークなプロパティキーを作成する正しい方法は何ですか？
+    ```js
+        const uniqueKey = Symbol('myUniqueKey');
+        const obj = {
+          [uniqueKey]: 'unique value'
+        };
+        console.log(obj[uniqueKey]);
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Symbol はユニークで不変なプリミティブ型で、オブジェクトのプロパティキーとして使用できます。これにより、特に大規模なコードベースや再利用可能なライブラリを書く際に、名前の衝突を回避できます。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="高度なインターフェース"
+  title="列挙可能なプロパティ"
+  options={[
+    {text: 'エラーがスローされます'},
+    {text: 'いいえ、列挙されません'},
+    {text: '値の型次第です'},
+    {text: 'はい、列挙されます', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    `for...in` ループ中にプロパティ `age` は列挙されますか？
+    ```js
+        const person = {};
+        Object.defineProperty(person, 'age', {
+          value: 25,
+          enumerable: true
+        });
+        for (let key in person) {
+          console.log(key);
+        }
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `Object.defineProperty()` の `enumerable` プロパティは、`for...in` のような列挙メソッドでプロパティが表示されるかどうかを制御します。この例では `enumerable: true` なので、`age` プロパティはイテレーション中に列挙されます。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="オブジェクトの操作"
+  title="Object.defineProperty() のデフォルト列挙可能性"
+  options={[
+    {text: 'true'},
+    {text: 'false', isAnswer: true},
+    {text: 'undefined'},
+    {text: 'Depends on context'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    `enumerable` を指定せずに `Object.defineProperty()` を使用した場合、プロパティのデフォルトの列挙可能性は何ですか？
+    ```js
+        const car = {};
+        Object.defineProperty(car, 'make', {
+          value: 'Toyota'
+        });
+        console.log(Object.keys(car));
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `Object.defineProperty()` を `enumerable` 指定なしで呼び出すと、デフォルト値は `false` です。つまり、`make` プロパティは `Object.keys()` やその他の列挙メソッドに現れません。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="高度なインターフェース"
+  title="ユニークシンボル"
+  options={[
+    {text: '説明に依存する'},
+    {text: 'true'},
+    {text: 'false', isAnswer: true},
+    {text: 'エラーがスローされる'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    次の比較の結果はどうなるでしょうか？
+    ```js
+        const sym1 = Symbol('id');
+        const sym2 = Symbol('id');
+        console.log(sym1 === sym2);
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `Symbol()` の呼び出しは、たとえ説明が同じでも、ユニークで不変な値を生成します。この場合、`sym1` と `sym2` は異なるシンボルなので、比較は `false` を返します。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="高度なインターフェース"
+  title="シンボルは列挙されないキー"
+  options={[
+    {text: 'いいえ、列挙されません', isAnswer: true},
+    {text: 'はい、列挙されます'},
+    {text: 'イテレーション方法次第です'},
+    {text: 'エラーがスローされます'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    `for...in` ループ中に Symbol キーのプロパティは列挙されますか？
+    ```js
+        const sym = Symbol('uniqueKey');
+        const obj = {
+          [sym]: 'symbol value',
+          regularKey: 'regular value'
+        };
+        for (let key in obj) {
+          console.log(key);
+        }
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Symbol キーのプロパティは独自の `enumerable` フラグを持てますが、`for...in` と `Object.keys()` は文字列キーの列挙可能なプロパティしか訪れません。この例では `regularKey` だけが列挙され、Symbol キーのプロパティは列挙されません。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="高度なインターフェース"
+  title="すべての Symbol キーを取得"
+  options={[
+    {text: 'Object.keys()'},
+    {text: 'Symbol.keys()'},
+    {text: 'Object.symbols()'},
+    {text: 'Object.getOwnPropertySymbols()', isAnswer: true},
+    {text: 'Object.entries()'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    オブジェクトのすべての Symbol キーを取得できるメソッドはどれですか？
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `Object.getOwnPropertySymbols()` メソッドは、オブジェクトの固有の Symbol プロパティキーを取得するために使用されます。
+    ```js
+        const sym1 = Symbol('id');
+        const sym2 = Symbol('name');
+        const obj = {
+          [sym1]: 'symbol value',
+          [sym2]: 'another symbol value'
+        };
+        console.log(Object.getOwnPropertySymbols(obj));
+        // [Symbol(id), Symbol(name)]
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
