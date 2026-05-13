@@ -1,0 +1,47 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "Nested Destructuring",
+  "translatedTitle": "Вложенная деструктуризация",
+  "translation": {
+    "title": "Вложенная деструктуризация",
+    "group": "Вложенная деструктуризация",
+    "options": [
+      {
+        "text": "Имя: Dan, Город: Denver"
+      },
+      {
+        "text": "Имя: undefined, Город: Denver"
+      },
+      {
+        "text": "Ошибка: Cannot read property 'first'"
+      },
+      {
+        "text": "Имя: Dan, Город: undefined"
+      },
+      {
+        "text": "Ошибка"
+      }
+    ],
+    "questionProse": [
+      "Как насчёт вложенной деструктуризации?"
+    ],
+    "explanationProse": [
+      "Свойство `birth: { place }` отсутствует у `person`, поэтому будет выброшена ошибка.\n    Одно из решений — задать значения по умолчанию для вложенных свойств.\n\n    При доступе к вложенным свойствам будьте осторожны — ошибки могут быть трудно заметны. Текст сообщений об ошибках различается в разных браузерах и платформах, что усложняет отладку.\n\n    В современном Chrome: `TypeError: Cannot read properties of undefined (reading 'place')`\n\n    В Node это тоже `TypeError`, потому что JavaScript пытается деструктурировать `place` из `undefined`, прежде чем `place` будет прочитан.\n\n    Точный формулировка зависит от браузера и среды выполнения."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Вложенная деструктуризация\",\n  \"group\": \"Вложенная деструктуризация\",\n  \"options\": [\n    {\n      \"text\": \"Имя: Dan, Город: Denver\"\n    },\n    {\n      \"text\": \"Имя: undefined, Город: Denver\"\n    },\n    {\n      \"text\": \"Ошибка: Cannot read property 'first'\"\n    },\n    {\n      \"text\": \"Имя: Dan, Город: undefined\"\n    },\n    {\n      \"text\": \"Ошибка\"\n    }\n  ],\n  \"questionProse\": [\n    \"Как насчёт вложенной деструктуризации?\"\n  ],\n  \"explanationProse\": [\n    \"Свойство `birth: { place }` отсутствует у `person`, поэтому будет выброшена ошибка.\\n    Одно из решений — задать значения по умолчанию для вложенных свойств.\\n\\n    При доступе к вложенным свойствам будьте осторожны — ошибки могут быть трудно заметны. Текст сообщений об ошибках различается в разных браузерах и платформах, что усложняет отладку.\\n\\n    В современном Chrome: `TypeError: Cannot read properties of undefined (reading 'place')`\\n\\n    В Node это тоже `TypeError`, потому что JavaScript пытается деструктурировать `place` из `undefined`, прежде чем `place` будет прочитан.\\n\\n    Точный формулировка зависит от браузера и среды выполнения.\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 903,
+    "outputTokens": 635,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 2090
+  },
+  "cost": {
+    "inputUsd": 0.000035217,
+    "outputUsd": 0.0001143,
+    "totalUsd": 0.000149517,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

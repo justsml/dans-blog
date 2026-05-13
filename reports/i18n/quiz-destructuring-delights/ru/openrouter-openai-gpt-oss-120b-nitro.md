@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-destructuring-delights
+- Locale: ru
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2024-11-12--quiz-destructuring-delights/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 25.71
+- Input tokens: 11605
+- Output tokens: 8170
+- Thinking tokens: unknown
+- Cached input tokens: 2560
+- Cache write tokens: 0
+- Estimated cost: $0.001923
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: 'Тест: Прелести деструктуризации'
@@ -556,3 +574,4 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 </Challenge>
 
 </QuizUI>
+````
