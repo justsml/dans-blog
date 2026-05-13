@@ -50,12 +50,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     Что выведет этот код?
     ```js
-        const person = {
-          name: 'Dan Levy',
-          location: 'Cape Town',
-        };
-        const { name, age } = person;
-        console.log(`Name: ${name}, Age: ${age}`);
+    const person = {
+      name: 'Dan Levy',
+      location: 'Cape Town',
+    };
+    const { name, age } = person;
+    console.log(`Name: ${name}, Age: ${age}`);
     ```
   </div>
   </slot>
@@ -65,7 +65,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     В результате получаем:
     ```plaintext
-        Name: Dan Levy, Age: undefined
+    Name: Dan Levy, Age: undefined
     ```
   </div>
   </slot>
@@ -89,9 +89,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     Что сделает этот код?
     ```js
-        const person = [ 'Dan Levy', 'Cape Town' ];
-        const [ name, origin, age ] = person;
-        console.log(`Name: ${name}, Age: ${age}`);
+    const person = [ 'Dan Levy', 'Cape Town' ];
+    const [ name, origin, age ] = person;
+    console.log(`Name: ${name}, Age: ${age}`);
     ```
   </div>
   </slot>
@@ -101,7 +101,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     Это приводит к:
     ```plaintext
-        Name: Dan Levy, Age: undefined
+    Name: Dan Levy, Age: undefined
     ```
   </div>
   </slot>
@@ -124,19 +124,19 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     Как насчет вложенной деструктуризации?
     ```js
-        'use strict';
-        const person = {
-          name: { first: 'Dan' },
-          address: { city: 'Denver' },
-        };
-        const {
-          name: { first },
-          address: { city },
-          birth: { place },
-        } = person;
-        console.log(
-          `First: ${first}, City: ${place}`,
-        );
+    'use strict';
+    const person = {
+      name: { first: 'Dan' },
+      address: { city: 'Denver' },
+    };
+    const {
+      name: { first },
+      address: { city },
+      birth: { place },
+    } = person;
+    console.log(
+      `First: ${first}, City: ${place}`,
+    );
     ```
   </div>
   </slot>
@@ -173,18 +173,18 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     Теперь, с некоторыми значениями по умолчанию, что произойдет?
     ```js
-        'use strict';
-        const person = {
-          name: { first: 'Dan' },
-          address: { city: 'Denver' },
-        };
-        const {
-          name: { first = 'Unknown' },
-          birth: { place = 'Unknown' },
-        } = person;
-        console.log(
-          `Hi ${first} from ${place}`,
-        );
+    'use strict';
+    const person = {
+      name: { first: 'Dan' },
+      address: { city: 'Denver' },
+    };
+    const {
+      name: { first = 'Unknown' },
+      birth: { place = 'Unknown' },
+    } = person;
+    console.log(
+      `Hi ${first} from ${place}`,
+    );
     ```
   </div>
   </slot>
@@ -222,18 +222,18 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     Что это сделает?
     ```js
-        const person = {
-          name: { first: 'Dan' },
-          address: { city: 'Denver' },
-        };
-        const {
-          name: { first = 'Unknown' },
-          birth: { place = 'Unknown' } = {},
-        } = person;
+    const person = {
+      name: { first: 'Dan' },
+      address: { city: 'Denver' },
+    };
+    const {
+      name: { first = 'Unknown' },
+      birth: { place = 'Unknown' } = {},
+    } = person;
 
-        console.log(
-          `Hi ${first} from ${place}`,
-        );
+    console.log(
+      `Hi ${first} from ${place}`,
+    );
     ```
   </div>
   </slot>
@@ -262,14 +262,14 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     Теперь, как параметры функции, что это сделает?
     ```js
-        'use strict';
-        function displayUser({
-          name = "Unknown",
-          age = -1,
-        } = { place: "Unknown" }) {
-          console.log(`Hi ${name} from ${place}`);
-        }
-        displayUser({ name: "Dan" });
+    'use strict';
+    function displayUser({
+      name = "Unknown",
+      age = -1,
+    } = { place: "Unknown" }) {
+      console.log(`Hi ${name} from ${place}`);
+    }
+    displayUser({ name: "Dan" });
     ```
   </div>
   </slot>
@@ -302,17 +302,17 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     Как обрабатываются значения `undefined`?
     ```js
-        'use strict';
-        function displayPlace({
-          name = "N/A",
-          place = "N/A",
-          age = -1,
-        } = { place: "Unknown" }) {
-          console.log(`${place}`);
-        }
-        displayPlace({ name: "Dan" });
-        displayPlace({ name: "Dan", place: undefined });
-        displayPlace({ name: "Dan", place: "Joburg" });
+    'use strict';
+    function displayPlace({
+      name = "N/A",
+      place = "N/A",
+      age = -1,
+    } = { place: "Unknown" }) {
+      console.log(`${place}`);
+    }
+    displayPlace({ name: "Dan" });
+    displayPlace({ name: "Dan", place: undefined });
+    displayPlace({ name: "Dan", place: "Joburg" });
     ```
   </div>
   </slot>
@@ -353,15 +353,15 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     Похоже на предыдущий... как обрабатывается `null`?
     ```js
-        function displayPlace({
-          name = "N/A",
-          place = "N/A",
-          age = -1,
-        } = { place: "Unknown" }) {
-          console.log(`${place}`);
-        }
-        displayPlace({ name: "Dan", place: null });
-        displayPlace({ name: "Dan", place: undefined });
+    function displayPlace({
+      name = "N/A",
+      place = "N/A",
+      age = -1,
+    } = { place: "Unknown" }) {
+      console.log(`${place}`);
+    }
+    displayPlace({ name: "Dan", place: null });
+    displayPlace({ name: "Dan", place: undefined });
     ```
   </div>
   </slot>
@@ -389,20 +389,20 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     Теперь в TypeScript... _что это сделает?_
     ```ts
-        'use strict';
-        function displayPlace(
-          {
-            name = 'N/A',
-            place = 'N/A',
-          }: {
-            name: string;
-            place: string;
-            age: number;
-          },
-        ) {
-          console.log(`${place}`);
-        }
-        displayPlace({ name: 'Dan', place: null });
+    'use strict';
+    function displayPlace(
+      {
+        name = 'N/A',
+        place = 'N/A',
+      }: {
+        name: string;
+        place: string;
+        age: number;
+      },
+    ) {
+      console.log(`${place}`);
+    }
+    displayPlace({ name: 'Dan', place: null });
     ```
   </div>
   </slot>
@@ -435,18 +435,18 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     Давайте попробуем переименование/присваивание...
     ```ts
-        'use strict';
-        function displayPlace({
-          name = 'N/A',
-          place: location = 'N/A',
-        }: {
-          name: string;
-          place: string;
-          age?: number;
-        }) {
-          console.log(`${location}`);
-        }
-        displayPlace({ name: 'Dan', place: 'Denver' });
+    'use strict';
+    function displayPlace({
+      name = 'N/A',
+      place: location = 'N/A',
+    }: {
+      name: string;
+      place: string;
+      age?: number;
+    }) {
+      console.log(`${location}`);
+    }
+    displayPlace({ name: 'Dan', place: 'Denver' });
     ```
   </div>
   </slot>
@@ -474,18 +474,18 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     Найдите ошибку в типах:
     ```ts
-        function greet({
-          name: {first = "N/A", last = "N/A"},
-          birth: {place = "N/A"} = {},
-          age = -1,
-        }: {
-          name: {first?: string, last?: string};
-          birth: {place?: string};
-          age: number;
-        }) {
-          console.log(`Hi ${first} ${last} from ${place}`);
-        }
-        greet({ name: {first: 'Dan'} });
+    function greet({
+      name: {first = "N/A", last = "N/A"},
+      birth: {place = "N/A"} = {},
+      age = -1,
+    }: {
+      name: {first?: string, last?: string};
+      birth: {place?: string};
+      age: number;
+    }) {
+      console.log(`Hi ${first} ${last} from ${place}`);
+    }
+    greet({ name: {first: 'Dan'} });
     ```
   </div>
   </slot>
@@ -517,25 +517,25 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     Теперь с **присваиванием** (обратите внимание на переменные `f`, `l` и `p`)
     ```ts
-        'use strict';
-        function greet(
-          {
-            name: {first: f = "N/A", last: l = "N/A"},
-            birth: {place: p = "N/A"} = {},
-            age = -1,
-          }: {
-            name: {first?: string, last?: string};
-            birth?: {place?: string};
-            age?: number;
-          }
-        ) {
-          console.log(`Hi ${f} ${l} from ${place}`);
-          // What will 👆 do?
-        }
-        greet({
-          name: {first: 'Dan', last: 'Levy'},
-          birth: {place: 'Cape Town'},
-        });
+    'use strict';
+    function greet(
+      {
+        name: {first: f = "N/A", last: l = "N/A"},
+        birth: {place: p = "N/A"} = {},
+        age = -1,
+      }: {
+        name: {first?: string, last?: string};
+        birth?: {place?: string};
+        age?: number;
+      }
+    ) {
+      console.log(`Hi ${f} ${l} from ${place}`);
+      // What will 👆 do?
+    }
+    greet({
+      name: {first: 'Dan', last: 'Levy'},
+      birth: {place: 'Cape Town'},
+    });
     ```
   </div>
   </slot>

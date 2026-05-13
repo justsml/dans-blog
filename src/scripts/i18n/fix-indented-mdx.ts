@@ -95,40 +95,58 @@ function fixIndentedMdx(source: string): FixResult {
   if (hasTrailingNewline) lines.pop();
 
   let inTargetDiv = false;
-  let inFence = false;
+  let inTargetFence = false;
   let blockHadChange = false;
   let blockCount = 0;
   let changedLineCount = 0;
+  let targetBlockLines: string[] = [];
+  const output: string[] = [];
 
-  const output = lines.map((line) => {
+  const flushTargetBlock = () => {
+    const fixedLines = fixTargetBlock(targetBlockLines);
+    fixedLines.forEach((fixedLine, index) => {
+      if (fixedLine !== targetBlockLines[index]) {
+        blockHadChange = true;
+        changedLineCount += 1;
+      }
+    });
+    output.push(...fixedLines);
+    targetBlockLines = [];
+  };
+
+  for (const line of lines) {
     if (!inTargetDiv && /^\s*<div className=(["'])(question|explanation)\1>\s*$/.test(line)) {
       inTargetDiv = true;
-      inFence = false;
+      inTargetFence = false;
       blockHadChange = false;
-      return line;
+      output.push(line);
+      continue;
     }
 
-    if (!inTargetDiv) return line;
+    if (!inTargetDiv) {
+      output.push(line);
+      continue;
+    }
 
-    if (!inFence && line.trim() === "</div>") {
+    if (!inTargetFence && line.trim() === "</div>") {
+      flushTargetBlock();
       inTargetDiv = false;
-      inFence = false;
+      inTargetFence = false;
       if (blockHadChange) blockCount += 1;
-      return line;
+      output.push(line);
+      continue;
     }
 
-    const fixedLine = indentContentLine(line);
-    if (fixedLine !== line) {
-      blockHadChange = true;
-      changedLineCount += 1;
+    targetBlockLines.push(line);
+    if (isFenceLine(line)) {
+      inTargetFence = !inTargetFence;
     }
+  }
 
-    if (/^\s*```/.test(fixedLine)) {
-      inFence = !inFence;
-    }
-
-    return fixedLine;
-  });
+  if (inTargetDiv) {
+    flushTargetBlock();
+    if (blockHadChange) blockCount += 1;
+  }
 
   return {
     blockCount,
@@ -137,11 +155,85 @@ function fixIndentedMdx(source: string): FixResult {
   };
 }
 
+function fixTargetBlock(lines: string[]): string[] {
+  const fixedLines: string[] = [];
+
+  for (let index = 0; index < lines.length; index += 1) {
+    const fixedLine = indentContentLine(lines[index]);
+    fixedLines.push(fixedLine);
+
+    if (!isFenceLine(fixedLine)) continue;
+
+    const fenceBody: string[] = [];
+    const fenceIndent = leadingSpaceCount(fixedLine);
+    let closingFence: string | undefined;
+
+    index += 1;
+    for (; index < lines.length; index += 1) {
+      const possibleClosingFence = indentContentLine(lines[index]);
+      if (isFenceLine(possibleClosingFence)) {
+        closingFence = possibleClosingFence;
+        break;
+      }
+
+      fenceBody.push(indentToAtLeast(lines[index], fenceIndent));
+    }
+
+    fixedLines.push(...dedentFenceBody(fenceBody, fenceIndent));
+
+    if (closingFence !== undefined) {
+      fixedLines.push(closingFence);
+    } else {
+      index -= 1;
+    }
+  }
+
+  return fixedLines;
+}
+
 function indentContentLine(line: string): string {
   if (line.trim() === "") return line;
 
-  const leadingSpaces = line.match(/^ */)?.[0].length ?? 0;
+  const leadingSpaces = leadingSpaceCount(line);
   if (leadingSpaces >= 4) return line;
 
   return `${" ".repeat(4 - leadingSpaces)}${line}`;
+}
+
+function dedentFenceBody(lines: string[], fenceIndent: number): string[] {
+  const commonExtraIndent = lines
+    .filter((line) => line.trim() !== "")
+    .map((line) => Math.max(0, leadingSpaceCount(line) - fenceIndent))
+    .reduce<number | undefined>(
+      (common, indent) => common === undefined ? indent : Math.min(common, indent),
+      undefined,
+    ) ?? 0;
+
+  if (commonExtraIndent < 4) return lines;
+
+  return lines.map((line) => {
+    if (line.trim() === "") return line;
+
+    const prefixLength = fenceIndent + commonExtraIndent;
+    if (leadingSpaceCount(line) < prefixLength) return line;
+
+    return `${" ".repeat(fenceIndent)}${line.slice(prefixLength)}`;
+  });
+}
+
+function indentToAtLeast(line: string, leadingSpaces: number): string {
+  if (line.trim() === "") return line;
+
+  const currentLeadingSpaces = leadingSpaceCount(line);
+  if (currentLeadingSpaces >= leadingSpaces) return line;
+
+  return `${" ".repeat(leadingSpaces - currentLeadingSpaces)}${line}`;
+}
+
+function isFenceLine(line: string): boolean {
+  return /^\s*```/.test(line);
+}
+
+function leadingSpaceCount(line: string): number {
+  return line.match(/^ */)?.[0].length ?? 0;
 }

@@ -54,7 +54,7 @@ Affina (o dimostra) le tue **capacità** di scripting shell!
   <div className="explanation">
     In Bash, le variabili vengono dichiarate senza spazi attorno al segno `=`. Per esempio:
     ```bash
-        name=Alice
+    name=Alice
     ```
     Questo assegna il valore `"Alice"` alla variabile `name`.
 
@@ -93,7 +93,7 @@ Affina (o dimostra) le tue **capacità** di scripting shell!
 
     Le virgolette singole necessitano di escape all'interno di stringhe delimitate da virgolette singole. La sequenza chiudi-virgoletta, virgoletta escape, riapri-virgoletta (`'\''`) permette di ottenere:
     ```plaintext
-        It's 🔨 Time!
+    It's 🔨 Time!
     ```
     Ci sono altri modi per gestirlo, ma questo è il più comune.
   </div>
@@ -118,7 +118,7 @@ Affina (o dimostra) le tue **capacità** di scripting shell!
   <div className="question">
     Cosa produrrà questo comando?
     ```bash
-        echo c{a,b}t
+    echo c{a,b}t
     ```
   </div>
   </slot>
@@ -128,7 +128,7 @@ Affina (o dimostra) le tue **capacità** di scripting shell!
 
     Qui, `c{a,b}t` si espande in:
     ```plaintext
-        cat cbt
+    cat cbt
     ```
   </div>
   </slot>
@@ -152,8 +152,8 @@ Affina (o dimostra) le tue **capacità** di scripting shell!
   <div className="question">
     Ora, cosa stamperà questo?
     ```bash
-        price="$100"
-        echo "Cost: $price"
+    price="$100"
+    echo "Cost: $price"
     ```
   </div>
   </slot>
@@ -165,8 +165,8 @@ Affina (o dimostra) le tue **capacità** di scripting shell!
 
     Per stampare un carattere `$` letterale, usa gli apici singoli, oppure esegui l'escape con un backslash (`\`):
     ```bash
-        price="\$100"
-        echo "Cost: $price"
+    price="\$100"
+    echo "Cost: $price"
     ```
   </div>
   </slot>
@@ -189,8 +189,8 @@ Affina (o dimostra) le tue **capacità** di scripting shell!
   <div className="question">
     Cosa sta succedendo qui?
     ```bash
-        str="Bark bark"
-        echo ${str/bark/meow}
+    str="Bark bark"
+    echo ${str/bark/meow}
     ```
   </div>
   </slot>
@@ -198,7 +198,7 @@ Affina (o dimostra) le tue **capacità** di scripting shell!
   <div className="explanation">
     La sintassi `${var/pattern/replacement}` sostituisce la prima occorrenza di `pattern` con `replacement`. Qui, l'output è:
     ```plaintext
-        Bark meow
+    Bark meow
     ```
     È sensibile alle maiuscole/minuscole. Per gestire sia `bark` che `Bark`, usa un pattern come `${var/[Bb]ark/Bark}` o normalizza la stringa prima della sostituzione.
 
@@ -235,8 +235,8 @@ Affina (o dimostra) le tue **capacità** di scripting shell!
 
     Per esempio:
     ```bash
-        username="@justsml"
-        echo ${#username} # => 8
+    username="@justsml"
+    echo ${#username} # => 8
     ```
     Anche se `wc` funzionerebbe, tecnicamente non fa parte di Bash.
 
@@ -265,11 +265,11 @@ Affina (o dimostra) le tue **capacità** di scripting shell!
   <div className="question">
     Cosa produce questo script se il file `cats.txt` ESISTE?
     ```bash
-        if [ -e cats.txt]; then
-          echo "File exists"
-        else
-          echo "File does not exist"
-        fi
+    if [ -e cats.txt]; then
+      echo "File exists"
+    else
+      echo "File does not exist"
+    fi
     ```
   </div>
   </slot>
@@ -283,11 +283,11 @@ Affina (o dimostra) le tue **capacità** di scripting shell!
 
     La sintassi corretta è:
     ```bash
-        if [ -e example.txt ]; then
-          echo "File exists"
-        else
-          echo "File does not exist"
-        fi
+    if [ -e example.txt ]; then
+      echo "File exists"
+    else
+      echo "File does not exist"
+    fi
     ```
     Nota: Le doppie parentesi `[[ ]]` sono **raccomandate** per le espressioni condizionali. [Vedi BashFAQ.](https://mywiki.wooledge.org/BashFAQ/031)
   </div>
@@ -310,13 +310,13 @@ Affina (o dimostra) le tue **capacità** di scripting shell!
   <div className="question">
     Come possiamo confrontare le stringhe in Bash?
     ```bash
-        cat1="Rosie"
-        cat2="Sunflower"
-        if [ "$cat1" === "$cat2" ]; then
-          echo "Same cat"
-        else
-          echo "Different cats"
-        fi
+    cat1="Rosie"
+    cat2="Sunflower"
+    if [ "$cat1" === "$cat2" ]; then
+      echo "Same cat"
+    else
+      echo "Different cats"
+    fi
     ```
   </div>
   </slot>
@@ -384,8 +384,8 @@ Affina (o dimostra) le tue **capacità** di scripting shell!
   <div className="explanation">
     L'operatore pipe `|` collega l'output di un comando all'input di un altro. Per esempio:
     ```bash
-        echo "Mr. Levy 👨🏻‍🔬" | wc -m
-        # => 14
+    echo "Mr. Levy 👨🏻‍🔬" | wc -m
+    # => 14
     ```
   </div>
   </slot>
@@ -415,14 +415,14 @@ Affina (o dimostra) le tue **capacità** di scripting shell!
 
     Può essere usata per calcoli semplici:
     ```bash
-        ((result = 2 + 2))
-        echo $result # => 4
+    ((result = 2 + 2))
+    echo $result # => 4
     ```
     Oppure per espressioni condizionali:
     ```bash
-        if (( 2 > 1 )); then
-          echo "2 is greater than 1"
-        fi
+    if (( 2 > 1 )); then
+      echo "2 is greater than 1"
+    fi
     ```
     Per l'aritmetica in virgola mobile, considera l'uso di [`bc`](https://www.gnu.org/software/bc/manual/html_mono/bc.html) o [`awk`](https://www.gnu.org/software/gawk/manual/gawk.html).
   </div>
@@ -476,8 +476,8 @@ Affina (o dimostra) le tue **capacità** di scripting shell!
   <div className="question">
     Cosa fa il `:` in questo script?
     ```bash
-        rosie="Bad cat, good cat"
-        echo ${rosie:9}
+    rosie="Bad cat, good cat"
+    echo ${rosie:9}
     ```
   </div>
   </slot>
@@ -485,7 +485,7 @@ Affina (o dimostra) le tue **capacità** di scripting shell!
   <div className="explanation">
     La sintassi `${var:offset}` estrae una sottostringa a partire da `offset`. Qui, l'output è:
     ```plaintext
-        good cat
+    good cat
     ```
     Per estrarre una sottostringa di una lunghezza specifica, usa `${var:offset:length}`.
 
@@ -543,8 +543,8 @@ Affina (o dimostra) le tue **capacità** di scripting shell!
   <div className="explanation">
     La sintassi `$(ls -l)` esegue il comando all'interno delle **parentesi** e sostituisce l'output. Per esempio:
     ```bash
-        echo "Today is $(date +%F)"
-        # => Today is 2029-12-31
+    echo "Today is $(date +%F)"
+    # => Today is 2029-12-31
     ```
     La prima opzione usa gli apici singoli `'`, **non i backtick.** Questo impedisce l'espansione, quindi `'$(date +%F)'` stampa semplicemente la stringa letterale `$(date +%F)`.
 

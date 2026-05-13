@@ -54,7 +54,7 @@ Affûtez (ou prouvez) vos **compétences** en script shell !
   <div className="explanation">
     Les variables en Bash sont déclarées sans espaces autour du signe `=`. Par exemple :
     ```bash
-        name=Alice
+    name=Alice
     ```
     Cela assigne la valeur `"Alice"` à la variable `name`.
 
@@ -93,7 +93,7 @@ Affûtez (ou prouvez) vos **compétences** en script shell !
 
     Les guillemets simples doivent être échappés à l'intérieur des chaînes entre guillemets simples. La séquence fermer-guillemet, guillemet échappé, rouvrir-guillemet (`'\''`) permet d'afficher :
     ```plaintext
-        It's 🔨 Time!
+    It's 🔨 Time!
     ```
     Il existe d'autres façons de gérer cela, mais celle-ci est la plus courante.
   </div>
@@ -118,7 +118,7 @@ Affûtez (ou prouvez) vos **compétences** en script shell !
   <div className="question">
     Que va afficher cette commande ?
     ```bash
-        echo c{a,b}t
+    echo c{a,b}t
     ```
   </div>
   </slot>
@@ -128,7 +128,7 @@ Affûtez (ou prouvez) vos **compétences** en script shell !
 
     Ici, `c{a,b}t` se développe en :
     ```plaintext
-        cat cbt
+    cat cbt
     ```
   </div>
   </slot>
@@ -152,8 +152,8 @@ Affûtez (ou prouvez) vos **compétences** en script shell !
   <div className="question">
     Maintenant, qu'est-ce que cela va afficher ?
     ```bash
-        price="$100"
-        echo "Cost: $price"
+    price="$100"
+    echo "Cost: $price"
     ```
   </div>
   </slot>
@@ -165,8 +165,8 @@ Affûtez (ou prouvez) vos **compétences** en script shell !
 
     Pour afficher un caractère `$` littéral, utilisez des guillemets simples, ou échappez-le avec un antislash (`\`) :
     ```bash
-        price="\$100"
-        echo "Cost: $price"
+    price="\$100"
+    echo "Cost: $price"
     ```
   </div>
   </slot>
@@ -189,8 +189,8 @@ Affûtez (ou prouvez) vos **compétences** en script shell !
   <div className="question">
     Que se passe-t-il ici ?
     ```bash
-        str="Bark bark"
-        echo ${str/bark/meow}
+    str="Bark bark"
+    echo ${str/bark/meow}
     ```
   </div>
   </slot>
@@ -198,7 +198,7 @@ Affûtez (ou prouvez) vos **compétences** en script shell !
   <div className="explanation">
     La syntaxe `${var/pattern/replacement}` remplace la première occurrence de `pattern` par `replacement`. Ici, le résultat est :
     ```plaintext
-        Bark meow
+    Bark meow
     ```
     Il est sensible à la casse. Pour gérer à la fois `bark` et `Bark`, utilisez un motif comme `${var/[Bb]ark/Bark}` ou normalisez la chaîne avant le remplacement.
 
@@ -235,8 +235,8 @@ Affûtez (ou prouvez) vos **compétences** en script shell !
 
     Par exemple :
     ```bash
-        username="@justsml"
-        echo ${#username} # => 8
+    username="@justsml"
+    echo ${#username} # => 8
     ```
     Bien que `wc` fonctionne, ce n'est techniquement pas une partie de Bash.
 
@@ -265,11 +265,11 @@ Affûtez (ou prouvez) vos **compétences** en script shell !
   <div className="question">
     Que produit ce script si le fichier `cats.txt` EXISTE ?
     ```bash
-        if [ -e cats.txt]; then
-          echo "File exists"
-        else
-          echo "File does not exist"
-        fi
+    if [ -e cats.txt]; then
+      echo "File exists"
+    else
+      echo "File does not exist"
+    fi
     ```
   </div>
   </slot>
@@ -283,11 +283,11 @@ Affûtez (ou prouvez) vos **compétences** en script shell !
 
     La syntaxe correcte est :
     ```bash
-        if [ -e example.txt ]; then
-          echo "File exists"
-        else
-          echo "File does not exist"
-        fi
+    if [ -e example.txt ]; then
+      echo "File exists"
+    else
+      echo "File does not exist"
+    fi
     ```
     Remarque : Les doubles crochets `[[ ]]` sont **recommandés** pour les expressions conditionnelles. [Voir BashFAQ.](https://mywiki.wooledge.org/BashFAQ/031)
   </div>
@@ -310,13 +310,13 @@ Affûtez (ou prouvez) vos **compétences** en script shell !
   <div className="question">
     Comment comparer des chaînes en Bash ?
     ```bash
-        cat1="Rosie"
-        cat2="Sunflower"
-        if [ "$cat1" === "$cat2" ]; then
-          echo "Same cat"
-        else
-          echo "Different cats"
-        fi
+    cat1="Rosie"
+    cat2="Sunflower"
+    if [ "$cat1" === "$cat2" ]; then
+      echo "Same cat"
+    else
+      echo "Different cats"
+    fi
     ```
   </div>
   </slot>
@@ -384,8 +384,8 @@ Affûtez (ou prouvez) vos **compétences** en script shell !
   <div className="explanation">
     L'opérateur pipe `|` connecte la sortie d'une commande à l'entrée d'une autre. Par exemple :
     ```bash
-        echo "Mr. Levy 👨🏻‍🔬" | wc -m
-        # => 14
+    echo "Mr. Levy 👨🏻‍🔬" | wc -m
+    # => 14
     ```
   </div>
   </slot>
@@ -415,14 +415,14 @@ Affûtez (ou prouvez) vos **compétences** en script shell !
 
     Elle peut être utilisée pour des calculs simples :
     ```bash
-        ((result = 2 + 2))
-        echo $result # => 4
+    ((result = 2 + 2))
+    echo $result # => 4
     ```
     Ou pour des expressions conditionnelles :
     ```bash
-        if (( 2 > 1 )); then
-          echo "2 is greater than 1"
-        fi
+    if (( 2 > 1 )); then
+      echo "2 is greater than 1"
+    fi
     ```
     Pour l'arithmétique à virgule flottante, envisagez d'utiliser [`bc`](https://www.gnu.org/software/bc/manual/html_mono/bc.html) ou [`awk`](https://www.gnu.org/software/gawk/manual/gawk.html).
   </div>
@@ -476,8 +476,8 @@ Affûtez (ou prouvez) vos **compétences** en script shell !
   <div className="question">
     Que fait le `:` dans ce script ?
     ```bash
-        rosie="Bad cat, good cat"
-        echo ${rosie:9}
+    rosie="Bad cat, good cat"
+    echo ${rosie:9}
     ```
   </div>
   </slot>
@@ -485,7 +485,7 @@ Affûtez (ou prouvez) vos **compétences** en script shell !
   <div className="explanation">
     La syntaxe `${var:offset}` extrait une sous-chaîne à partir de `offset`. Ici, la sortie est :
     ```plaintext
-        good cat
+    good cat
     ```
     Pour extraire une sous-chaîne d'une longueur spécifique, utilisez `${var:offset:length}`.
 
@@ -543,8 +543,8 @@ Affûtez (ou prouvez) vos **compétences** en script shell !
   <div className="explanation">
     La syntaxe `$(ls -l)` exécute la commande entre **parenthèses** et substitue la sortie. Par exemple :
     ```bash
-        echo "Today is $(date +%F)"
-        # => Today is 2029-12-31
+    echo "Today is $(date +%F)"
+    # => Today is 2029-12-31
     ```
     La première option utilise des guillemets simples `'`, **pas des backticks.** Cela empêche l'expansion, donc `'$(date +%F)'` afficherait simplement la chaîne littérale `$(date +%F)`.
 

@@ -50,12 +50,12 @@ Plonge directement dans l’échauffement – prouve tes talents en déstructura
   <div className="question">
     Qu'affichera ce code ?
     ```js
-        const person = {
-          name: 'Dan Levy',
-          location: 'Cape Town',
-        };
-        const { name, age } = person;
-        console.log(`Name: ${name}, Age: ${age}`);
+    const person = {
+      name: 'Dan Levy',
+      location: 'Cape Town',
+    };
+    const { name, age } = person;
+    console.log(`Name: ${name}, Age: ${age}`);
     ```
   </div>
   </slot>
@@ -65,7 +65,7 @@ Plonge directement dans l’échauffement – prouve tes talents en déstructura
 
     Cela donne :
     ```plaintext
-        Name: Dan Levy, Age: undefined
+    Name: Dan Levy, Age: undefined
     ```
   </div>
   </slot>
@@ -89,9 +89,9 @@ Plonge directement dans l’échauffement – prouve tes talents en déstructura
   <div className="question">
     Que fera ce code ?
     ```js
-        const person = [ 'Dan Levy', 'Cape Town' ];
-        const [ name, origin, age ] = person;
-        console.log(`Name: ${name}, Age: ${age}`);
+    const person = [ 'Dan Levy', 'Cape Town' ];
+    const [ name, origin, age ] = person;
+    console.log(`Name: ${name}, Age: ${age}`);
     ```
   </div>
   </slot>
@@ -101,7 +101,7 @@ Plonge directement dans l’échauffement – prouve tes talents en déstructura
 
     Cela donne :
     ```plaintext
-        Name: Dan Levy, Age: undefined
+    Name: Dan Levy, Age: undefined
     ```
   </div>
   </slot>
@@ -124,19 +124,19 @@ Plonge directement dans l’échauffement – prouve tes talents en déstructura
   <div className="question">
     Et si on essayait la destructuration imbriquée ?
     ```js
-        'use strict';
-        const person = {
-          name: { first: 'Dan' },
-          address: { city: 'Denver' },
-        };
-        const {
-          name: { first },
-          address: { city },
-          birth: { place },
-        } = person;
-        console.log(
-          `First: ${first}, City: ${place}`,
-        );
+    'use strict';
+    const person = {
+      name: { first: 'Dan' },
+      address: { city: 'Denver' },
+    };
+    const {
+      name: { first },
+      address: { city },
+      birth: { place },
+    } = person;
+    console.log(
+      `First: ${first}, City: ${place}`,
+    );
     ```
   </div>
   </slot>
@@ -173,18 +173,18 @@ Plonge directement dans l’échauffement – prouve tes talents en déstructura
   <div className="question">
     Maintenant avec quelques valeurs par défaut, que va-t-il se passer ?
     ```js
-        'use strict';
-        const person = {
-          name: { first: 'Dan' },
-          address: { city: 'Denver' },
-        };
-        const {
-          name: { first = 'Unknown' },
-          birth: { place = 'Unknown' },
-        } = person;
-        console.log(
-          `Hi ${first} from ${place}`,
-        );
+    'use strict';
+    const person = {
+      name: { first: 'Dan' },
+      address: { city: 'Denver' },
+    };
+    const {
+      name: { first = 'Unknown' },
+      birth: { place = 'Unknown' },
+    } = person;
+    console.log(
+      `Hi ${first} from ${place}`,
+    );
     ```
   </div>
   </slot>
@@ -222,18 +222,18 @@ Plonge directement dans l’échauffement – prouve tes talents en déstructura
   <div className="question">
     Que va-t-il se passer ?
     ```js
-        const person = {
-          name: { first: 'Dan' },
-          address: { city: 'Denver' },
-        };
-        const {
-          name: { first = 'Unknown' },
-          birth: { place = 'Unknown' } = {},
-        } = person;
+    const person = {
+      name: { first: 'Dan' },
+      address: { city: 'Denver' },
+    };
+    const {
+      name: { first = 'Unknown' },
+      birth: { place = 'Unknown' } = {},
+    } = person;
 
-        console.log(
-          `Hi ${first} from ${place}`,
-        );
+    console.log(
+      `Hi ${first} from ${place}`,
+    );
     ```
   </div>
   </slot>
@@ -262,14 +262,14 @@ Plonge directement dans l’échauffement – prouve tes talents en déstructura
   <div className="question">
     Maintenant, en tant que paramètres de fonction, que va-t-il se passer ?
     ```js
-        'use strict';
-        function displayUser({
-          name = "Unknown",
-          age = -1,
-        } = { place: "Unknown" }) {
-          console.log(`Hi ${name} from ${place}`);
-        }
-        displayUser({ name: "Dan" });
+    'use strict';
+    function displayUser({
+      name = "Unknown",
+      age = -1,
+    } = { place: "Unknown" }) {
+      console.log(`Hi ${name} from ${place}`);
+    }
+    displayUser({ name: "Dan" });
     ```
   </div>
   </slot>
@@ -302,17 +302,17 @@ Plonge directement dans l’échauffement – prouve tes talents en déstructura
   <div className="question">
     Comment les valeurs `undefined` sont-elles gérées ?
     ```js
-        'use strict';
-        function displayPlace({
-          name = "N/A",
-          place = "N/A",
-          age = -1,
-        } = { place: "Unknown" }) {
-          console.log(`${place}`);
-        }
-        displayPlace({ name: "Dan" });
-        displayPlace({ name: "Dan", place: undefined });
-        displayPlace({ name: "Dan", place: "Joburg" });
+    'use strict';
+    function displayPlace({
+      name = "N/A",
+      place = "N/A",
+      age = -1,
+    } = { place: "Unknown" }) {
+      console.log(`${place}`);
+    }
+    displayPlace({ name: "Dan" });
+    displayPlace({ name: "Dan", place: undefined });
+    displayPlace({ name: "Dan", place: "Joburg" });
     ```
   </div>
   </slot>
@@ -353,15 +353,15 @@ Plonge directement dans l’échauffement – prouve tes talents en déstructura
   <div className="question">
     Similaire à la précédente... comment `null` est-il géré ?_
     ```js
-        function displayPlace({
-          name = "N/A",
-          place = "N/A",
-          age = -1,
-        } = { place: "Unknown" }) {
-          console.log(`${place}`);
-        }
-        displayPlace({ name: "Dan", place: null });
-        displayPlace({ name: "Dan", place: undefined });
+    function displayPlace({
+      name = "N/A",
+      place = "N/A",
+      age = -1,
+    } = { place: "Unknown" }) {
+      console.log(`${place}`);
+    }
+    displayPlace({ name: "Dan", place: null });
+    displayPlace({ name: "Dan", place: undefined });
     ```
   </div>
   </slot>
@@ -389,20 +389,20 @@ Plonge directement dans l’échauffement – prouve tes talents en déstructura
   <div className="question">
     Maintenant en TypeScript... _que va-t-il se passer ?_
     ```ts
-        'use strict';
-        function displayPlace(
-          {
-            name = 'N/A',
-            place = 'N/A',
-          }: {
-            name: string;
-            place: string;
-            age: number;
-          },
-        ) {
-          console.log(`${place}`);
-        }
-        displayPlace({ name: 'Dan', place: null });
+    'use strict';
+    function displayPlace(
+      {
+        name = 'N/A',
+        place = 'N/A',
+      }: {
+        name: string;
+        place: string;
+        age: number;
+      },
+    ) {
+      console.log(`${place}`);
+    }
+    displayPlace({ name: 'Dan', place: null });
     ```
   </div>
   </slot>
@@ -435,18 +435,18 @@ Plonge directement dans l’échauffement – prouve tes talents en déstructura
   <div className="question">
     Essayons un renommage/affectation...
     ```ts
-        'use strict';
-        function displayPlace({
-          name = 'N/A',
-          place: location = 'N/A',
-        }: {
-          name: string;
-          place: string;
-          age?: number;
-        }) {
-          console.log(`${location}`);
-        }
-        displayPlace({ name: 'Dan', place: 'Denver' });
+    'use strict';
+    function displayPlace({
+      name = 'N/A',
+      place: location = 'N/A',
+    }: {
+      name: string;
+      place: string;
+      age?: number;
+    }) {
+      console.log(`${location}`);
+    }
+    displayPlace({ name: 'Dan', place: 'Denver' });
     ```
   </div>
   </slot>
@@ -474,18 +474,18 @@ Plonge directement dans l’échauffement – prouve tes talents en déstructura
   <div className="question">
     Repérez l'erreur de type :
     ```ts
-        function greet({
-          name: {first = "N/A", last = "N/A"},
-          birth: {place = "N/A"} = {},
-          age = -1,
-        }: {
-          name: {first?: string, last?: string};
-          birth: {place?: string};
-          age: number;
-        }) {
-          console.log(`Hi ${first} ${last} from ${place}`);
-        }
-        greet({ name: {first: 'Dan'} });
+    function greet({
+      name: {first = "N/A", last = "N/A"},
+      birth: {place = "N/A"} = {},
+      age = -1,
+    }: {
+      name: {first?: string, last?: string};
+      birth: {place?: string};
+      age: number;
+    }) {
+      console.log(`Hi ${first} ${last} from ${place}`);
+    }
+    greet({ name: {first: 'Dan'} });
     ```
   </div>
   </slot>
@@ -517,25 +517,25 @@ Plonge directement dans l’échauffement – prouve tes talents en déstructura
   <div className="question">
     Maintenant avec **affectation** (notez les variables `f`, `l` et `p`)
     ```ts
-        'use strict';
-        function greet(
-          {
-            name: {first: f = "N/A", last: l = "N/A"},
-            birth: {place: p = "N/A"} = {},
-            age = -1,
-          }: {
-            name: {first?: string, last?: string};
-            birth?: {place?: string};
-            age?: number;
-          }
-        ) {
-          console.log(`Hi ${f} ${l} from ${place}`);
-          // What will 👆 do?
-        }
-        greet({
-          name: {first: 'Dan', last: 'Levy'},
-          birth: {place: 'Cape Town'},
-        });
+    'use strict';
+    function greet(
+      {
+        name: {first: f = "N/A", last: l = "N/A"},
+        birth: {place: p = "N/A"} = {},
+        age = -1,
+      }: {
+        name: {first?: string, last?: string};
+        birth?: {place?: string};
+        age?: number;
+      }
+    ) {
+      console.log(`Hi ${f} ${l} from ${place}`);
+      // What will 👆 do?
+    }
+    greet({
+      name: {first: 'Dan', last: 'Levy'},
+      birth: {place: 'Cape Town'},
+    });
     ```
   </div>
   </slot>

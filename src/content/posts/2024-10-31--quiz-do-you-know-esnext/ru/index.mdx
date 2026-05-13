@@ -48,7 +48,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     Каково значение `result`?
     ```js
-        console.log(null ?? 100);
+    console.log(null ?? 100);
     ```
   </div>
   </slot>
@@ -76,9 +76,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     Что будет выведено в результате выполнения следующего кода?
     ```js
-        const value = false;
-        const defaultVal = 42;
-        console.log(value ?? defaultVal);
+    const value = false;
+    const defaultVal = 42;
+    console.log(value ?? defaultVal);
     ```
   </div>
   </slot>
@@ -105,9 +105,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     Что выведет следующий код?
     ```js
-        const obj = { foo: null };
-        const result = obj.foo?.bar;
-        console.log(result);
+    const obj = { foo: null };
+    const result = obj.foo?.bar;
+    console.log(result);
     ```
   </div>
   </slot>
@@ -134,9 +134,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     Каков результат выполнения следующего кода?
     ```js
-        const a = 42n;
-        const result = a * 2n;
-        console.log(result);
+    const a = 42n;
+    const result = a * 2n;
+    console.log(result);
     ```
   </div>
   </slot>
@@ -164,8 +164,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     Что выведет этот код?
     ```js
-        const modulePromise = import('./myModule.js');
-        console.log(typeof modulePromise);
+    const modulePromise = import('./myModule.js');
+    console.log(typeof modulePromise);
     ```
   </div>
   </slot>
@@ -192,13 +192,13 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     Каким будет результат следующего кода?
     ```js
-        const promises = [
-          Promise.resolve('success'),
-          Promise.reject('error')
-        ];
-        Promise.allSettled(promises).then(results => {
-          console.log(results[0].status + ': ' + results[0].value);
-        });
+    const promises = [
+      Promise.resolve('success'),
+      Promise.reject('error')
+    ];
+    Promise.allSettled(promises).then(results => {
+      console.log(results[0].status + ': ' + results[0].value);
+    });
     ```
   </div>
   </slot>
@@ -225,8 +225,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     Что возвращает `str.matchAll()`?
     ```js
-        const str = 'foo1bar2baz3';
-        const matches = str.matchAll(/\d/g);
+    const str = 'foo1bar2baz3';
+    const matches = str.matchAll(/\d/g);
     ```
   </div>
   </slot>
@@ -253,7 +253,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     Что представляет собой `import.meta.url`?
     ```js
-        console.log(import.meta.url);
+    console.log(import.meta.url);
     ```
   </div>
   </slot>
@@ -280,9 +280,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     Какое значение будет у `a` после логического присваивания?
     ```js
-        let a = null;
-        a ||= 10;
-        console.log(a);
+    let a = null;
+    a ||= 10;
+    console.log(a);
     ```
   </div>
   </slot>
@@ -309,9 +309,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     Каково значение `b` после присваивания с нулевым значением?
     ```js
-        let b = null;
-        b ??= 10;
-        console.log(b);
+    let b = null;
+    b ??= 10;
+    console.log(b);
     ```
   </div>
   </slot>
@@ -338,9 +338,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     Что предоставляет `WeakRef`?
     ```js
-        const obj = { data: 'important' };
-        const ref = new WeakRef(obj);
-        console.log(ref.deref());
+    const obj = { data: 'important' };
+    const ref = new WeakRef(obj);
+    console.log(ref.deref());
     ```
   </div>
   </slot>
