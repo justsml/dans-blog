@@ -1,0 +1,202 @@
+---
+social_image: ../desktop-social.webp
+title: 'Maestro de pipelines: paso de estado'
+subTitle: 'Hola Closure, mi viejo amigo.'
+date: '2023-08-09'
+modified: '2024-07-30'
+tags:
+  - typescript
+  - closure
+  - stateful
+  - scoping
+  - hoisting
+  - functional
+  - pipeline
+category: Guides
+subCategory: JavaScript
+cover: ../sven-kucinic-LxYxC6jdjcA-unsplash-cropped-1200.webp
+cover_mobile: ../w300_sven-kucinic-LxYxC6jdjcA-unsplash-cropped-1200.webp
+cover_icon: ../icon_sven-kucinic-LxYxC6jdjcA-unsplash-cropped-1200.webp
+---
+## Maestro de los Pipelines: Pasando Estado
+
+¿Te has encontrado con dificultades al pasar estado usando Pipelines Funcionales?
+
+La organización (o la falta de ella) de tu código impacta directamente en la facilidad con la que el estado se propaga.
+
+En este artículo exploraremos una técnica eficaz para pasar estado a través de un pipeline. En el proceso mejoraremos la organización y la legibilidad de nuestro código.
+
+El siguiente fragmento “real” será nuestro foco para este artículo: una función de checkout, que acepta un `userId` y un arreglo de `products`. Devuelve una cadena de Promises que ejecuta 4 funciones en secuencia.
+
+```tsx
+const checkout = (userId: number, products: number[]) => {
+  return getProductsSubtotal(userId, products)
+    .then(subTotal => applyTaxes(userId, subTotal))
+    .then(total => purchaseProducts(userId, total))
+    .then(result => sendReceipt(userId, result));
+};
+```
+
+Espera un momento, ¡este código está bastante decente, considerando los pipelines en JS!
+
+Presenta algunos problemas sutiles que pueden combinarse y convertirse en fallos más graves.
+
+Un inconveniente es que seguimos pasando `userId` a cada función (lógicamente relacionada).  
+A eso se suma otro detalle que los desarrolladores y TypeScript pasan por alto con facilidad: invertir el orden de los argumentos numéricos genera un error silencioso. (Véanse `applyTaxes` y `purchaseProducts`. _¿Era `userId` o `amount` lo que debía ir primero?_)
+
+Antes de decidir cómo mejorar este código, identifiquemos algunos pros y contras.
+
+### Pros & Cons
+
+#### Pros
+
+- Buen uso de un cierre ! ¡Se pasa `userId` y `products` una sola vez!
+- Nomenclatura de argumentos consistente.
+- Composición relativamente eficaz y concisa de las 4 funciones clave para el checkout.
+- Control de errores “gratuito”. (Los errores se propagan desde cualquier función anidada, rechazando la Promise devuelta por `checkout()`.)
+
+#### Contras
+
+- Pasar `userId` repetidamente es tedioso.  
+- Las funciones no son de un solo parámetro (unarias). _Esto afecta la composibilidad. Consulta el [ejemplo final](#checkout-with-further-improvements) para ver por qué._  
+- Puede no ser evidente qué devuelve cada función. (¿Es el resultado del envío de email, o la variable `result`? ¿O qué?)  
+- No está claro cómo añadir funcionalidad (p. ej., si necesitáramos cargar descuento/crédito/puntos del cliente, etc.)  
+- A veces los nombres de parámetros “temporales” (como en cada `.then(param => {})`) aportan contexto. Sin embargo, con el tiempo, suelen convertirse en basura de nombres.
+
+### Solución, Parte 1: ¡Crear un módulo!
+
+Esta técnica consiste en organizar funciones relacionadas en un único módulo (p. ej., `CartHelpers`). No obliga a un patrón específico. Explora [funciones fábrica](#carthelpers-factory), [Clases](#carthelpers-class), cierres, mixins, etc. Encuentra lo que tenga sentido para tu proyecto y tu equipo.
+
+#### Fábrica CartHelpers
+
+Ejemplo de un módulo `CartHelpers`, donde `userId` se pasa una sola vez y todos los métodos son de un solo argumento.
+
+```tsx
+const CartHelpers = (userId: number) => {
+  return {
+    getProductsSubtotal: products => getProductsSubtotal(userId, products),
+    applyTaxes: subTotal => applyTaxes(userId, subTotal),
+    purchaseProducts: total => purchaseProducts(userId, total),
+    sendReceipt: invoice => sendReceipt(userId, invoice)
+  };
+};
+```
+
+#### Clase CartHelpers
+
+Si prefieres clases, es fácil adaptarlo:
+
+```tsx
+class CartHelpers {
+  constructor(userId) {
+    this.userId = userId;
+  }
+  getProductsSubtotal = products => getProductsSubtotal(this.userId, products);
+  applyTaxes = subTotal => applyTaxes(this.userId, subTotal);
+  purchaseProducts = total => purchaseProducts(this.userId, total);
+  sendReceipt = invoice => sendReceipt(this.userId, invoice);
+}
+```
+
+Algunos beneficios inmediatos:
+
+- Elimina la repetición de paso de variables.
+  - DRY: `CartHelpers` abstrae el argumento repetido `userId`.
+  - Cada método acepta **_solo_** los argumentos necesarios. Hacer `cart.applyTaxes(subTotal)` resulta completamente predecible al leerlo.
+- Las funciones de un solo argumento en `CartHelpers` son más legibles y con un propósito más claro.
+
+Al agrupar funciones relacionadas, creamos la oportunidad de reducir la superficie expuesta (p. ej., `checkout()`, métodos “públicos” de `CartHelpers`).
+
+> Menos superficie === menos carga cognitiva, mejores pruebas y mantenibilidad.  
+> _Diseña sistemas con intención y foco. ✨_
+
+#### Checkout y Uso de CartHelpers
+
+Veamos cómo se ve ahora la función `checkout()`:
+
+```tsx
+export const checkout = ({ userId, products }) => {
+  const cart = CartHelpers(userId);
+
+  return Promise.resolve(products)
+    .then(products => cart.getProductsSubtotal(products))
+    .then(subTotal => cart.applyTaxes(subTotal))
+    .then(total => cart.purchaseProducts(total))
+    .then(result => cart.sendReceipt(result));
+};
+```
+
+##### Checkout con mejoras adicionales
+
+> ¿Se puede mejorar más? ¡Sí! No tenemos que repetir argumentos en absoluto.
+
+Cuando los argumentos de una función provienen de la salida de funciones anteriores, puedes simplificar el código aún más.
+
+```tsx
+export const checkout = ({ userId, products }) => {
+  const cart = CartHelpers(userId);
+
+  // 🌈 ¡Las funciones se apilan como Lego y se leen como palabras humanas normales! 💅
+  return Promise.resolve(products)
+    .then(cart.getProductsSubtotal)
+    .then(cart.applyTaxes)
+    .then(cart.purchaseProducts)
+    .then(cart.sendReceipt);
+};
+```
+
+**Si te resulta antinatural combinar parámetros en un solo argumento (objeto),** considera dividir tus funciones **O** agruparlas en módulos con un alcance más apropiado.
+
+#### ¿Por dónde empezar?
+
+Encuentra funciones relacionadas y agrúpalas. (p. ej., `CartHelpers`.)
+
+Parte del reto al buscar posibles módulos lógicos es identificar el código relacionado en primer lugar.
+
+##### ¿Qué hace que las funciones estén relacionadas?
+
+Un truco útil: busca repeticiones en los parámetros de las funciones. Pregúntate si hay una relación subyacente o una responsabilidad compartida.
+
+- ✅ Funciones con argumentos repetidos y comunes. (p. ej., si 4 métodos aceptan `userRewards`, lo más probable es que necesites un módulo `Rewards` u otro similar.)
+- ✅ Funciones cuyos argumentos son provistos directamente por la salida de funciones anteriores. (Secuencias de pasos. p. ej., `Extract`, `Transform`, `Load`.)
+- ❌ Cualquier cosa vagamente vinculada al área de la funcionalidad, “¿compra de producto?”
+- ❌ Funciones que comparten un prefijo o sufijo en el nombre?
+- ❌ Funciones que requieren objetos grandes como argumentos, pese a usar solo unos pocos valores de esos objetos. (p. ej., `applyTaxes({ user, business, rewards, kitchenSink })` vs `applyTaxes({ subTotal })`)
+
+Mientras no exista una única “respuesta correcta” para diseñar módulos, resulta útil identificar de 2 a 3 opciones de organización: dibujar un esquema, escribir código “fantasía”, preguntar “¿esto genera alegría?”.
+
+<aside>
+📌 A menudo se requieren varios intentos de organización de módulos antes de que tu Modelo de Dominio tome forma. No te obsesiones con lograr la perfección a la primera.
+</aside>
+
+> Puede que sientas que `cart.sendReceipt()` no encaja con los métodos relacionados con pagos. Tal vez `customerNotifications.sendReceipt()` sea un mejor lugar para la mensajería al cliente. Si `CartHelper` tiene suficiente importancia, podría actuar como un **_controlador_** interno que invoque a todos los **_servicios_** necesarios, como `customerNotifications`.
+
+#### ¿Cómo saber si estás aportando valor?
+
+Si la legibilidad no se ve afectada al eliminar argumentos ad‑hoc, **¡FELICITACIONES!** Probablemente hayas construido un módulo con un alcance claro y duradero.
+
+- Eliminar argumentos intermedios tiende a forzar la aparición de “capas”.
+- Debería ser difícil arrojar código ad‑hoc en el lugar equivocado.
+
+Así que surge la pregunta: ¿dónde añadimos la funcionalidad?
+
+En mi experiencia hay 2 estrategias principales a evaluar al incorporar nueva funcionalidad:
+
+1.  Extender/refactorizar el método existente. (Cuando el nuevo código está lo suficientemente cerca del código actual.)
+2.  Crear una nueva (quinta) función en el punto deseado de la cadena. (Suponiendo que el nuevo código no está relacionado con las funciones existentes.)
+
+En última instancia, esto facilita decidir a qué lugar pertenece la nueva funcionalidad. (p. ej., `cart.applyDiscounts()`, `cart.applyTaxes()`, `rewards.getBalance()`.)
+
+### Conclusión
+
+Pasar estado a través de una canalización compleja puede ser complicado. Sin embargo, con un poco de práctica de refactorización, terminarás escribiendo código más legible y con menos carga cognitiva.
+
+¿Preguntas? ¿Comentarios? ¿Inquietudes? No dudes en contactar a [@justsml](https://x.com/justsml) o por [correo electrónico](mailto:dan@danlevy.net).
+
+#### Mantente atento a la próxima entrega de la serie
+
+Exploraremos cómo externalizar el estado y ampliar la funcionalidad en nuestro módulo.
+
+#### Lecturas relacionadas
+
+- [Problemas similares aparecen en el mundo de React orientado a componentes.](https://kyleshevlin.com/quit-your-yapping)
