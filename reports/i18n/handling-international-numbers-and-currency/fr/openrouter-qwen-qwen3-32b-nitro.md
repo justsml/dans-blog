@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: handling-international-numbers-and-currency
+- Locale: fr
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2024-08-29--handling-international-numbers-and-currency/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 15.35
+- Input tokens: 5585
+- Output tokens: 6104
+- Thinking tokens: unknown
+- Cached input tokens: 1024
+- Cache write tokens: 0
+- Estimated cost: $0.001912
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: ''
@@ -130,3 +148,4 @@ En fonction de vos besoins spécifiques, vous pourriez explorer des concepts con
 
 - [currency](https://github.com/bojanz/currency) est mon choix actuel en Golang.
 */}
+````
