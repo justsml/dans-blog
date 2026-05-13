@@ -1,0 +1,37 @@
+{
+  "selectedCommit": "ae806cc48703d6ec8e4e6e414227e807b9d60485",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 9,
+    "relevance": 9,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The candidate ae806cc48703d6ec8e4e6e414227e807b9d60485 is already applied as the 'current' content in the provided MDX block (verified by the presence of the Bonus section and specific phrasing like '黒帯'). The previous judge report suggested a title fix, but the current MDX already has a high-quality title 'デスマッチ: Git リベース vs. マージ'. The translation is technically accurate, maintains Dan's direct tone, and correctly handles MDX components and frontmatter.",
+  "slug": "deathmatch-git-rebase-vs-merge",
+  "locale": "ja",
+  "candidateCommits": [
+    "ae806cc48703d6ec8e4e6e414227e807b9d60485",
+    "5396157be2945d2146a1d3b67a54d030f14d17de"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "title: デスマッチ：Git リベース vs マージ",
+      "replacement": "title: 'デスマッチ: Git リベース vs. マージ'",
+      "reason": "The title was missing in the current version and the candidate's title format should ideally match the original's quoted style for consistency in frontmatter.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug deathmatch-git-rebase-vs-merge --locale ja --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug deathmatch-git-rebase-vs-merge --locale ja --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug deathmatch-git-rebase-vs-merge --locale ja --skip-global\n20 |   }\n21 | \n22 |   const minimumLength = Math.floor(sourceLength * minimumRatio);\n23 |   const maximumLength = Math.ceil(sourceLength * maximumRatio);\n24 |   if (targetLength < minimumLength || targetLength > maximumLength) {\n25 |     throw new Error(\n                   ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2023-08-28--deathmatch-git-rebase-vs-merge/ja/index.mdx changed comparable body length from 6705 chars in English to 4049 chars. Expected 4358-9052 chars (within 35%).\n      at assertTranslationLength (/Users/dan/code/oss/dans-blog/src/scripts/i18n/structural-validation.ts:25:15)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:26:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}
