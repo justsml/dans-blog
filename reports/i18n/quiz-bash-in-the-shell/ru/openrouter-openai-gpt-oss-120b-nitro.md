@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-bash-in-the-shell
+- Locale: ru
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2024-11-20--quiz-bash-in-the-shell/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 19.65
+- Input tokens: 16022
+- Output tokens: 10732
+- Thinking tokens: unknown
+- Cached input tokens: 6528
+- Cache write tokens: 0
+- Estimated cost: $0.002557
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: 'Тест: Bash и Shell mastery'
@@ -596,3 +614,4 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 - [Bash Hackers Wiki](http://wiki.bash-hackers.org/)
 - [Bash Guide for Beginners](http://tldp.org/LDP/Bash-Beginners-Guide/html/index.html)
 - [Bash Reference Card](http://www.tldp.org/LDP/Bash-Beginners-Guide/html/Bash-Beginners-Guide.html)
+````
