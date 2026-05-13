@@ -3,7 +3,7 @@
 - Locale: de
 - Model: openrouter/openai/gpt-oss-120b:nitro
 - Target: src/content/posts/2025-12-29--async-stack-traces-why-error-stack-lies-in-production/de/index.mdx
-- Validation: deferred
+- Validation: rejected: direct AI SDK translation failed
 - Runtime seconds: 5.79
 - Input tokens: 4640
 - Output tokens: 938
@@ -12,76 +12,71 @@
 - Cache write tokens: 0
 - Estimated cost: $0.000350
 - Pricing source: local-openrouter-estimate
-- Note: Generated through the direct AI SDK chunked translator.
+- Note: Command failed: git commit --only -m i18n candidate(de): async-stack-traces-why-error-stack-lies-in-production via openrouter/openai/gpt-oss-120b:nitro -- reports/i18n/async-stack-traces-why-error-stack-lies-in-production/de reports/i18n/async-stack-traces-why-error-stack-lies-in-production/candidates.jsonl
 ## Raw Output
 
 ````mdx
 ---
-title: 'Asynchrone Stack‑Traces: Warum `Error.stack` Sie täuscht'
-subTitle: >-
-  Die Microtask‑Warteschlange hat meine Hausaufgaben (und meinen
-  Debugging‑Kontext) gefressen.
-date: '2025-12-29'
-modified: '2025-12-30'
-tags:
-  - javascript
-  - async
-  - debugging
-  - node.js
-  - v8
-  - performance
+title: "Async Stack Traces: Warum `Error.stack` dich anlügt"
+subTitle: "Die Microtask-Queue hat meine Hausaufgaben gefressen (und meinen Debugging-Kontext)."
+date: 2025-12-29
+modified: 2025-12-30
+tags: [javascript, async, debugging, node.js, v8, performance]
 category: Code
 subCategory: Best Practices
-social_image: ../desktop-social.webp
+socialImage: desktop-social.webp
 cover_full_width: ../wide.webp
 cover_mobile: ../square.webp
 cover_icon: ../square.webp
 ---
-Es ist 2 Uhr morgens. Der PagerDuty‑Alarm heult.
 
-Sie öffnen die Logs und sehen Folgendes:
+Es ist 2 Uhr nachts. Der PagerDuty-Alarm heult.
+
+Du öffnest die Logs und siehst das:
 
 ```
 Error: Cannot read properties of undefined (reading 'id')
     at processTicksAndRejections (node:internal/process/task_queues:96:5)
 ```
 
-Das war’s. Kein Funktionsname. Keine Zeilennummer. Kein Dateipfad. Nur „processTicksAndRejections“.
+Das war's. Kein Funktionsname. Keine Zeilennummer. Kein Dateipfad. Nur "processTicksAndRejections".
 
-Willkommen bei async JavaScript, wo Stack‑Traces erfunden sind und Zeilennummern keine Rolle spielen.
-
-## Warum Stack‑Traces versagen
-
-Im synchronen Code ist der Aufruf‑Stack eine schöne Genealogie. A ruft B auf, B ruft C auf. Wenn C abstürzt, sieht man exakt, wie man dort gelandet ist.
-
-Im async‑Code (`async/await`) ist jedes Schlüsselwort `await` ein Suspendierungspunkt.
-
-Wenn Sie `await` verwenden, wird Ihre Funktion vom Stack getrennt. Sie landet in einem kryogenen Gefrierschrank, der Microtask‑Queue. Der Stack ist jetzt leer (oder beschäftigt sich mit etwas anderem).
-
-Wenn das Promise aufgelöst wird, wird Ihre Funktion wieder aufgetaut und zurück auf den Stack geschmissen. Doch die Historie ist verloren.
-
-Der Motor hat keine Ahnung, wer vor 500 Millisekunden `await` aufgerufen hat. Er weiß lediglich, dass er eine Aufgabe zu erledigen hat.
+Willkommen bei async JavaScript, wo die Stack Traces erfunden sind und die Zeilennummern keine Rolle spielen.
 
 ---
 
-## V8‑Versuche, das Problem zu beheben
+## Warum Stack Traces kaputtgehen
 
-Node.js versucht zu unterstützen. Wir haben:
+Bei synchronem Code ist der Call Stack eine schöne Genealogie. A rief B, B rief C. Wenn C abstürzt, siehst du genau, wie du dorthin gekommen bist.
+
+Bei async-Code (`async/await`) ist jedes `await`-Schlüsselwort ein Aussetzungspunkt.
+
+Wenn du `await` verwendest, wird deine Funktion vom Stack gerissen. Sie wird in einen kryogenen Gefrierschrank namens Microtask Queue gesteckt. Der Stack ist jetzt leer (oder macht etwas anderes).
+
+Wenn der Promise aufgelöst wird, wird deine Funktion aufgetaut und zurück auf den Stack geworfen. Aber die Geschichte ist weg.
+
+Die Engine hat keine Ahnung, wer vor 500 Millisekunden `await` aufgerufen hat. Sie weiß nur, dass sie eine Aufgabe auszuführen hat.
+
+---
+
+## V8s Versuche, das zu beheben
+
+Node.js versucht zu helfen. Wir haben:
 
 1.  `Error.captureStackTrace()`: Erfasst den Stack *bei der Erstellung*. Nutzlos, wenn der Fehler später geworfen wird.
-2.  `--async-stack-traces`: Ein Schalter, der Node.js veranlasst, einen „Schatten‑Stack“ von Promise‑Ketten zu führen.
-    *   **Kosten:** Verlangsamt die Anwendung um etwa 30 %.
-    *   **Ergebnis:** Hilft, erzeugt aber schnell viel Rauschen.
+2.  `--async-stack-traces`: Ein Flag, das Node.js veranlasst, einen "Shadow Stack" von Promise-Ketten zu führen.
+    *   Der Preis: Es macht deine App 30 % langsamer.
+    *   Das Ergebnis: Es hilft, aber es wird schnell unübersichtlich.
 
 ---
 
-## Die eigentliche Lösung: AsyncLocalStorage
+## Die echte Lösung: AsyncLocalStorage
 
-Wenn Sie in der Produktion überleben wollen, hören Sie auf, Stack‑Traces zu betrachten. Betrachten Sie die Kausalität.
+Wenn du in Production überleben willst, hör auf, Stack Traces anzusehen. Schau dir die Kausalität an.
 
-Wir müssen Kontext (Benutzer‑ID, Anfragen‑ID) an den „Thread“ der Ausführung anhängen, selbst wenn er zwischen Stack und Microtask‑Queue springt.
+Wir müssen Kontext (User-ID, Request-ID) an den "Thread" der Ausführung anhängen, auch wenn er zwischen Stack und Microtask Queue hin- und herspringt.
 
-Node.js bietet dafür ein eingebautes Werkzeug: `AsyncLocalStorage`.
+Node.js hat dafür ein eingebautes Tool: `AsyncLocalStorage`.
 
 ```javascript
 import { AsyncLocalStorage } from 'async_hooks';
@@ -104,15 +99,15 @@ async function processOrder() {
 }
 ```
 
-Es spielt keine Rolle, wie viele `await`s dazwischen liegen. Der Kontext bleibt erhalten.
+Es ist egal, wie viele `await`s dazwischen passieren. Der Kontext überlebt.
 
 ---
 
-## Produktions‑Playbook
+## Production-Playbook
 
-1.  Vertrauen Sie nicht mehr auf `err.stack`. Er ist per Design unvollständig.  
-2.  Nutzen Sie strukturierte Logs. Hängen Sie `requestId` an jede einzelne Log‑Zeile mittels `AsyncLocalStorage`.  
-3.  Tracen statt stapeln. Setzen Sie OpenTelemetry ein. Es visualisiert die Kausalkette über Services hinweg – genau das, was Sie benötigen.
+1.  Vertrau `err.stack` nicht mehr. Er ist von Natur aus unvollständig.
+2.  Verwende strukturiertes Logging. Hänge `requestId` an jede einzelne Log-Zeile mit `AsyncLocalStorage`.
+3.  Trace, nicht Stack. Verwende OpenTelemetry. Es visualisiert die kausale Kette über Services hinweg – das ist es, worauf es wirklich ankommt.
 
-Ihr Code ist asynchron. Ihr Debug‑Kontext sollte es nicht sein.
+Dein Code ist async. Dein Debugging-Kontext sollte es nicht sein.
 ````
