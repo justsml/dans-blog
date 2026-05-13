@@ -1,0 +1,84 @@
+{
+  "selectedCommit": "f6975d58867e8b14aa3a901957e9ae9c9ca9a21d",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "tags: [engineering, open source, oss]",
+      "replacement": "tags: [engineering, open-source, oss]",
+      "reason": "The tags should match the English source formatting and use the standard 'open-source' slug for consistency in metadata."
+    },
+    {
+      "priority": "medium",
+      "match": "votre _petit cerveau_",
+      "replacement": "votre _cerveau un peu lent_",
+      "reason": "'Petit cerveau' can sound a bit too literal/childish; 'cerveau un peu lent' better captures the self-deprecating 'dumb dumb' humor in a tech context."
+    },
+    {
+      "priority": "medium",
+      "match": "oversight technique",
+      "replacement": "oubli technique",
+      "reason": "'Oversight' is an anglicism in this context; 'oubli' or 'omission' is more natural French."
+    }
+  ],
+  "rationale": "The selected commit (f6975d58) is the most complete and accurately reflects the tone of the original post. It correctly handles the frontmatter and MDX structure. The suggestions aim to refine the informal tone and fix minor metadata formatting to match the source.",
+  "slug": "contribute-to-open-source-the-easy-way",
+  "locale": "fr",
+  "candidateCommits": [
+    "f6975d58867e8b14aa3a901957e9ae9c9ca9a21d",
+    "9989294d1cd25bdcfee29407beffccf5d6f2bf5d",
+    "5b1730b2f26da737d2a912902a6abc7abb4d3fac"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "medium",
+      "match": "votre _cerveau de dumb dumb_",
+      "replacement": "votre _petit cerveau_",
+      "reason": "'Dumb dumb' is not a natural expression in French; 'petit cerveau' or 'cerveau un peu lent' captures the self-deprecating tone better.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "tags: [engineering,open source,oss]",
+      "replacement": "tags: [engineering, open-source, oss]",
+      "reason": "The tags should match the English source formatting and use the standard 'open-source' slug for consistency in metadata.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "votre _petit cerveau_",
+      "replacement": "votre _cerveau un peu lent_",
+      "reason": "'Petit cerveau' can sound a bit too literal/childish; 'cerveau un peu lent' or 'cerveau de débutant' better captures the self-deprecating 'dumb dumb' humor in a tech context.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "oversight technique",
+      "replacement": "oubli technique",
+      "reason": "'Oversight' is an anglicism in this context; 'oubli' or 'omission' is more natural French.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug contribute-to-open-source-the-easy-way --locale fr --skip-global",
+    "output": ""
+  }
+}
