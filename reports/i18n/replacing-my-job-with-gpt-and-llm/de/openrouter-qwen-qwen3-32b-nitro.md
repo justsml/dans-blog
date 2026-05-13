@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: replacing-my-job-with-gpt-and-llm
+- Locale: de
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2024-12-05--replacing-my-job-with-gpt-and-llm/de/index.mdx
+- Validation: passed
+- Runtime seconds: 12.20
+- Input tokens: 5541
+- Output tokens: 4911
+- Thinking tokens: unknown
+- Cached input tokens: 1536
+- Cache write tokens: 0
+- Estimated cost: $0.001622
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: Mich selbst durch KI ersetzen
@@ -102,3 +120,4 @@ Die Teile, die ich nicht ersetzen kann, sind die, die Leser tatsächlich bemerke
 KI hat mich schneller gemacht. Wichtiger noch, sie hat es einfacher gemacht, einige meiner Schwachstellen zu erkennen. Der Preis ist, dass ich jetzt vorsichtiger sein muss, nicht zu veröffentlichen, was nur wie Prosa wirkt.  
 
 Das ist der Kompromiss, mit dem ich leben kann.
+````
