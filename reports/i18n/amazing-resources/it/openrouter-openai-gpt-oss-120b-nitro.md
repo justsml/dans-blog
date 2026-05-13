@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: amazing-resources
+- Locale: it
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2015-02-26--amazing-resources/it/index.mdx
+- Validation: passed
+- Runtime seconds: 11.41
+- Input tokens: 9616
+- Output tokens: 3553
+- Thinking tokens: unknown
+- Cached input tokens: 896
+- Cache write tokens: 0
+- Estimated cost: $0.001015
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Le migliori risorse UI gratuite per sviluppatori
@@ -190,3 +208,4 @@ Strumenti piccoli ma pratici che risolvono rapidamente problemi specifici del fr
 
 Changelog: 2026-04 — Riorganizzata la pagina per utenti e SEO, migliorati titoli e descrizioni, aggiunti Assistant UI, AI SDK Elements, Aceternity UI, Shadcnblocks, Tailark, pattern KokonutUI e Tool UI.  
 Changelog: 2025-09 — Aggiornati i link, rinfrescati i contenuti più vecchi e aggiunti strumenti moderni per icone, contrasto e design.
+````
