@@ -1,0 +1,56 @@
+{
+  "selectedCommit": "295424d9477c2dd97328af7ef1097c6a37d0a0e9",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 10,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The current translation already incorporates the high-priority image path fixes (../ prefix) and provides a high-quality, natural French translation of the technical content. It maintains the informal yet professional tone of the original post while correctly handling technical terms like 'daemon' and 'idempotent'. No further high-priority fixes are required.",
+  "slug": "docker-makes-everything-better",
+  "locale": "fr",
+  "candidateCommits": [
+    "295424d9477c2dd97328af7ef1097c6a37d0a0e9",
+    "74cc2a183a400b07d352213c5df4848d936641dc",
+    "779675426c6be6d754a058dcf68a9a7319db86ed"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "cover: guillaume-bolduc-259596-unsplash.webp",
+      "replacement": "cover: ../guillaume-bolduc-259596-unsplash.webp",
+      "reason": "Fix broken image paths by adding the relative parent directory prefix used in the project structure.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "cover_mobile: w300_guillaume-bolduc-259596-unsplash.webp",
+      "replacement": "cover_mobile: ../w300_guillaume-bolduc-259596-unsplash.webp",
+      "reason": "Fix broken image paths by adding the relative parent directory prefix used in the project structure.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "cover_icon: icon_guillaume-bolduc-259596-unsplash.webp",
+      "replacement": "cover_icon: ../icon_guillaume-bolduc-259596-unsplash.webp",
+      "reason": "Fix broken image paths by adding the relative parent directory prefix used in the project structure.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug docker-makes-everything-better --locale fr --skip-global",
+    "output": ""
+  }
+}
