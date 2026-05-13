@@ -1,0 +1,44 @@
+{
+  "index": 8,
+  "attempt": 1,
+  "originalTitle": "File Watching",
+  "translatedTitle": "Dateibeobachtung",
+  "translation": {
+    "title": "Dateibeobachtung",
+    "group": "Dateisystem",
+    "options": [
+      {
+        "text": "Einmal pro Dateiänderung"
+      },
+      {
+        "text": "Nicht garantiert; kann mehrfach ausgelöst werden"
+      },
+      {
+        "text": "Nie"
+      },
+      {
+        "text": "Nur bei Dateilöschung"
+      }
+    ],
+    "questionProse": [
+      "Wie oft wird `fs.watch()` garantiert ausgelöst, wenn eine Datei geändert wird?"
+    ],
+    "explanationProse": [
+      "`fs.watch()` wird nicht garantiert genau einmal pro logischer Dateiänderung ausgelöst. Es wird oft mehrfach ausgelöst, weil viele Texteditoren:\n    1. In eine temporäre Datei speichern\n    2. Diese in die Ziel-Datei umbenennen\n\n    Für zuverlässige Beobachtung empfehlen sich:\n    - Das `chokidar`-Paket\n    - Debouncing der Callback-Funktion\n    - Verwendung von `fs.watchFile()` (ist aber weniger effizient)\n\n    [Mehr zu fs.watch()](https://nodejs.org/api/fs.html#fswatchfilename-options-listener)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Dateibeobachtung\",\n  \"group\": \"Dateisystem\",\n  \"options\": [\n    {\n      \"text\": \"Einmal pro Dateiänderung\"\n    },\n    {\n      \"text\": \"Nicht garantiert; kann mehrfach ausgelöst werden\"\n    },\n    {\n      \"text\": \"Nie\"\n    },\n    {\n      \"text\": \"Nur bei Dateilöschung\"\n    }\n  ],\n  \"questionProse\": [\n    \"Wie oft wird `fs.watch()` garantiert ausgelöst, wenn eine Datei geändert wird?\"\n  ],\n  \"explanationProse\": [\n    \"`fs.watch()` wird nicht garantiert genau einmal pro logischer Dateiänderung ausgelöst. Es wird oft mehrfach ausgelöst, weil viele Texteditoren:\\n    1. In eine temporäre Datei speichern\\n    2. Diese in die Ziel-Datei umbenennen\\n\\n    Für zuverlässige Beobachtung empfehlen sich:\\n    - Das `chokidar`-Paket\\n    - Debouncing der Callback-Funktion\\n    - Verwendung von `fs.watchFile()` (ist aber weniger effizient)\\n\\n    [Mehr zu fs.watch()](https://nodejs.org/api/fs.html#fswatchfilename-options-listener)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 764,
+    "outputTokens": 833,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2905
+  },
+  "cost": {
+    "inputUsd": 0.00006112,
+    "outputUsd": 0.00019992,
+    "totalUsd": 0.00026104,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

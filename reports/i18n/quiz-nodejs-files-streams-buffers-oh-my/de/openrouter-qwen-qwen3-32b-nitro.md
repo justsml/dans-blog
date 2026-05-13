@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-nodejs-files-streams-buffers-oh-my
+- Locale: de
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2024-11-15--quiz-nodejs-files-streams-buffers-oh-my/de/index.mdx
+- Validation: passed
+- Runtime seconds: 39.27
+- Input tokens: 12947
+- Output tokens: 12754
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.004097
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: ''
@@ -598,3 +616,4 @@ Schauen wir mal, wie gut Sie Ihre Streams von Ihren Buffers unterscheiden könne
 </QuizUI>
 
 Ich hoffe, es hat Spaß gemacht, Ihr Wissen zu NodeJS-Ein-/Ausgabevorgängen zu testen! Möchten Sie noch mehr? Schauen Sie sich meine [Quiz-Sammlung](../challenges/) an für weitere Herausforderungen!
+````

@@ -1,0 +1,44 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Stream Piping",
+  "translatedTitle": "Stream-Piping",
+  "translation": {
+    "title": "Stream-Piping",
+    "group": "Streams",
+    "options": [
+      {
+        "text": "Kopiert die Datei mit Kompression"
+      },
+      {
+        "text": "Kopiert die Datei ohne Memory-Buffering"
+      },
+      {
+        "text": "Lädt die gesamte Datei in den Arbeitsspeicher"
+      },
+      {
+        "text": "Erstellt einen symbolischen Link"
+      }
+    ],
+    "questionProse": [
+      "Was tut dieser Code?"
+    ],
+    "explanationProse": [
+      "`pipe()` verbindet einen lesbaren Stream mit einem schreibbaren Stream, wodurch automatisch Backpressure verwaltet und Daten in Chunk-Größen kopiert werden, ohne die gesamte Datei in den Arbeitsspeicher zu laden.\n\nDies ist speicher-effizient für große Dateien im Vergleich zu `fs.readFile()` gefolgt von `fs.writeFile()`.\n\n[Mehr über pipe() erfahren](https://nodejs.org/api/stream.html#readablepipedestination-options)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Stream-Piping\",\n  \"group\": \"Streams\",\n  \"options\": [\n    {\n      \"text\": \"Kopiert die Datei mit Kompression\"\n    },\n    {\n      \"text\": \"Kopiert die Datei ohne Memory-Buffering\"\n    },\n    {\n      \"text\": \"Lädt die gesamte Datei in den Arbeitsspeicher\"\n    },\n    {\n      \"text\": \"Erstellt einen symbolischen Link\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was tut dieser Code?\"\n  ],\n  \"explanationProse\": [\n    \"`pipe()` verbindet einen lesbaren Stream mit einem schreibbaren Stream, wodurch automatisch Backpressure verwaltet und Daten in Chunk-Größen kopiert werden, ohne die gesamte Datei in den Arbeitsspeicher zu laden.\\n\\nDies ist speicher-effizient für große Dateien im Vergleich zu `fs.readFile()` gefolgt von `fs.writeFile()`.\\n\\n[Mehr über pipe() erfahren](https://nodejs.org/api/stream.html#readablepipedestination-options)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 716,
+    "outputTokens": 867,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2654
+  },
+  "cost": {
+    "inputUsd": 0.000057279999999999994,
+    "outputUsd": 0.00020808,
+    "totalUsd": 0.00026535999999999997,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
