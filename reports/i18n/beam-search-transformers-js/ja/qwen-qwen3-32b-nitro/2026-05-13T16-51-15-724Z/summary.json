@@ -1,0 +1,147 @@
+{
+  "runId": "qwen-qwen3-32b-nitro@2026-05-13T16-51-15-724Z",
+  "slug": "beam-search-transformers-js",
+  "locale": "ja",
+  "model": "qwen/qwen3-32b:nitro",
+  "modelPath": "qwen-qwen3-32b-nitro",
+  "createdAt": "2026-05-13T16:53:53.253Z",
+  "sourcePath": "src/content/posts/2026-04-16--beam-search-transformers-js/index.mdx",
+  "targetPath": "src/content/posts/2026-04-16--beam-search-transformers-js/ja/index.mdx",
+  "candidatePath": "reports/i18n/beam-search-transformers-js/ja/qwen-qwen3-32b-nitro/2026-05-13T16-51-15-724Z/candidate.mdx",
+  "sourceHash": "f18620b582f1c2a340c4b7d98da5cb544cd646463534f4076975963727af3149",
+  "outputHash": "770a28fb9607bac3decc73ed8c01dbaa00e687843a6feaef13bb50a61787c033",
+  "reasoningEffort": "low",
+  "temperature": 0.3,
+  "maxTokens": 16000,
+  "timeoutMs": 200000,
+  "articleSummary": "The article argues that the `transformers.js` library incorrectly implemented beam search for text generation, defaulting to greedy decoding when `num_beams > 1`, and details the author's process of fixing this by correctly handling log-probabilities, cache reordering, and diversity penalties. Key technical challenges include bypassing the flawed `BeamSearchSampler` class to compute global token rankings across all beams, resolving a critical bug in key-value (KV) cache reordering during beam pruning, and implementing diverse beam search with sequential group processing to avoid redundant outputs. The author emphasizes the importance of proper beam search for generating higher-quality text sequences and highlights the trade-offs between computational cost and output diversity. Intended for developers working with JavaScript-based transformer models, the piece blends tutorial-style code explanations with analysis of architectural decisions, using metaphors like \"bounded breadth-first search\" to clarify concepts. The focus is on practical implementation lessons, including handling GPU/CPU tensor operations and prioritizing beam hypotheses with customizable length penalties.",
+  "totalInputTokens": 13268,
+  "totalOutputTokens": 9719,
+  "totalCacheReadTokens": 0,
+  "totalCacheWriteTokens": 0,
+  "totalDurationMs": 139292,
+  "totalCostUsd": 0.003394,
+  "pricingSource": "local-openrouter-estimate",
+  "telemetry": {
+    "model": "qwen/qwen3-32b:nitro",
+    "chunkSize": "6p",
+    "totalChunks": 12,
+    "totalInputTokens": 13268,
+    "totalOutputTokens": 9719,
+    "totalCacheReadTokens": 0,
+    "totalCacheWriteTokens": 0,
+    "totalDurationMs": 139292,
+    "totalCostUsd": 0.003394,
+    "pricingSource": "local-openrouter-estimate",
+    "chunks": [
+      {
+        "index": 0,
+        "inputTokens": 886,
+        "outputTokens": 660,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 21804,
+        "costUsd": 0.00022928
+      },
+      {
+        "index": 1,
+        "inputTokens": 1090,
+        "outputTokens": 703,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 14129,
+        "costUsd": 0.00025592
+      },
+      {
+        "index": 2,
+        "inputTokens": 1094,
+        "outputTokens": 820,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 12176,
+        "costUsd": 0.00028431999999999996
+      },
+      {
+        "index": 3,
+        "inputTokens": 1161,
+        "outputTokens": 849,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 11806,
+        "costUsd": 0.00029664000000000003
+      },
+      {
+        "index": 4,
+        "inputTokens": 1210,
+        "outputTokens": 915,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 11217,
+        "costUsd": 0.0003164
+      },
+      {
+        "index": 5,
+        "inputTokens": 1148,
+        "outputTokens": 1147,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 13683,
+        "costUsd": 0.00036711999999999997
+      },
+      {
+        "index": 6,
+        "inputTokens": 1075,
+        "outputTokens": 810,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 10619,
+        "costUsd": 0.0002804
+      },
+      {
+        "index": 7,
+        "inputTokens": 1157,
+        "outputTokens": 1004,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 11847,
+        "costUsd": 0.00033351999999999996
+      },
+      {
+        "index": 8,
+        "inputTokens": 1143,
+        "outputTokens": 693,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 8193,
+        "costUsd": 0.00025776
+      },
+      {
+        "index": 9,
+        "inputTokens": 1140,
+        "outputTokens": 794,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 8605,
+        "costUsd": 0.00028176
+      },
+      {
+        "index": 10,
+        "inputTokens": 1170,
+        "outputTokens": 857,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 9774,
+        "costUsd": 0.00029927999999999997
+      },
+      {
+        "index": 11,
+        "inputTokens": 994,
+        "outputTokens": 467,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 5439,
+        "costUsd": 0.0001916
+      }
+    ]
+  }
+}
