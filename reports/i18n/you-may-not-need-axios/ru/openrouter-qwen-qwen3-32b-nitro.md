@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: you-may-not-need-axios
+- Locale: ru
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2018-11-15--you-may-not-need-axios/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 39.30
+- Input tokens: 12518
+- Output tokens: 9396
+- Thinking tokens: unknown
+- Cached input tokens: 3072
+- Cache write tokens: 0
+- Estimated cost: $0.003256
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Вам может не понадобиться Axios
@@ -195,3 +213,4 @@ npm install node-fetch
 _После полифил+node-fetch: 99,99% совместимо_ ✅
 
 > Пожалуйста, [напишите мне в Твиттере](https://x.com/justsml), если у вас есть другие _Use Cases_, которые вы хотели бы увидеть. ❤️
+````
