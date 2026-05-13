@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: the-jsonb-seduction
+- Locale: ru
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2025-12-29--the-jsonb-seduction/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 4.57
+- Input tokens: 10884
+- Output tokens: 2996
+- Thinking tokens: unknown
+- Cached input tokens: 5888
+- Cache write tokens: 0
+- Estimated cost: $0.000964
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: 'JSONB: лучший способ испортить вашу базу данных'
 subTitle: >-
@@ -182,3 +200,4 @@ JSONB отлично подходит, когда документ действ�
 - [Стратегии индексирования JSONB](https://www.postgresql.org/docs/current/datatype-json.html#JSON-INDEXING)
 - [Когда использовать JSONB вместо реляционных столбцов](https://www.citusdata.com/blog/2016/07/14/choosing-nosql-hstore-json-jsonb/)
 - [Лучшие практики проектирования схем PostgreSQL](https://www.postgresql.org/docs/current/ddl.html)
+````
