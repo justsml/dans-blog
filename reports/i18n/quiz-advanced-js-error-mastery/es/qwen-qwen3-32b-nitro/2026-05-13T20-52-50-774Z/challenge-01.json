@@ -1,0 +1,44 @@
+{
+  "index": 0,
+  "attempt": 1,
+  "originalTitle": "The Empty Object Mystery",
+  "translatedTitle": "El misterio del objeto vacío",
+  "translation": {
+    "title": "El misterio del objeto vacío",
+    "group": "Sorpresas de serialización",
+    "options": [
+      {
+        "text": "{\"message\":\"Oops\",\"name\":\"Error\"}"
+      },
+      {
+        "text": "{}"
+      },
+      {
+        "text": "{\"error\":\"Oops\"}"
+      },
+      {
+        "text": "null"
+      }
+    ],
+    "questionProse": [
+      "¿Qué devuelve `JSON.stringify(error)`?"
+    ],
+    "explanationProse": [
+      "Los objetos Error tienen propiedades no enumerables (`message`, `name`, `stack`), por lo que `JSON.stringify()` devuelve `{}`. Este es un problema común al enviar errores en respuestas de API. Usa `JSON.stringify(error, Object.getOwnPropertyNames(error))` o crea un objeto plano en su lugar."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"El misterio del objeto vacío\",\n  \"group\": \"Sorpresas de serialización\",\n  \"options\": [\n    {\"text\": \"{\\\"message\\\":\\\"Oops\\\",\\\"name\\\":\\\"Error\\\"}\"},\n    {\"text\": \"{}\"},\n    {\"text\": \"{\\\"error\\\":\\\"Oops\\\"}\"},\n    {\"text\": \"null\"}\n  ],\n  \"questionProse\": [\n    \"¿Qué devuelve `JSON.stringify(error)`?\"\n  ],\n  \"explanationProse\": [\n    \"Los objetos Error tienen propiedades no enumerables (`message`, `name`, `stack`), por lo que `JSON.stringify()` devuelve `{}`. Este es un problema común al enviar errores en respuestas de API. Usa `JSON.stringify(error, Object.getOwnPropertyNames(error))` o crea un objeto plano en su lugar.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 748,
+    "outputTokens": 576,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 7660
+  },
+  "cost": {
+    "inputUsd": 0.000059839999999999996,
+    "outputUsd": 0.00013824,
+    "totalUsd": 0.00019808,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

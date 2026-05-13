@@ -1,0 +1,45 @@
+{
+  "index": 13,
+  "attempt": 1,
+  "originalTitle": "Object vs Error Detection",
+  "translatedTitle": "Detección de objetos frente a errores",
+  "translation": {
+    "title": "Detección de objetos frente a errores",
+    "group": "Límites de errores",
+    "options": [
+      {
+        "text": "true, true"
+      },
+      {
+        "text": "false, false"
+      },
+      {
+        "text": "true, false",
+        "hint": "La respuesta correcta"
+      },
+      {
+        "text": "false, true"
+      }
+    ],
+    "questionProse": [
+      "¿Qué devuelven estos controles?"
+    ],
+    "explanationProse": [
+      "`instanceof Error` devuelve `false` porque el objeto no fue creado por el constructor Error. `Object.prototype.toString.call()` también devuelve `false` (devuelve `'[object Object]'`) porque verifica el slot interno `[[Class]]`. Ambos métodos identifican correctamente este objeto como un error falso."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Detección de objetos frente a errores\",\n  \"group\": \"Límites de errores\",\n  \"options\": [\n    { \"text\": \"true, true\" },\n    { \"text\": \"false, false\" },\n    { \"text\": \"true, false\", \"hint\": \"La respuesta correcta\" },\n    { \"text\": \"false, true\" }\n  ],\n  \"questionProse\": [\n    \"¿Qué devuelven estos controles?\"\n  ],\n  \"explanationProse\": [\n    \"`instanceof Error` devuelve `false` porque el objeto no fue creado por el constructor Error. `Object.prototype.toString.call()` también devuelve `false` (devuelve `'[object Object]'`) porque verifica el slot interno `[[Class]]`. Ambos métodos identifican correctamente este objeto como un error falso.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 748,
+    "outputTokens": 590,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 8058
+  },
+  "cost": {
+    "inputUsd": 0.000059839999999999996,
+    "outputUsd": 0.0001416,
+    "totalUsd": 0.00020144,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

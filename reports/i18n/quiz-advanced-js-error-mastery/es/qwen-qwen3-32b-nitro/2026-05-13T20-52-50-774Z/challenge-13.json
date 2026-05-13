@@ -1,0 +1,44 @@
+{
+  "index": 12,
+  "attempt": 1,
+  "originalTitle": "Non-Standard Properties",
+  "translatedTitle": "Propiedades no estándar",
+  "translation": {
+    "title": "Propiedades no estándar",
+    "group": "Propiedades de Error",
+    "options": [
+      {
+        "text": "Siempre disponibles"
+      },
+      {
+        "text": "Pueden no existir en todos los entornos"
+      },
+      {
+        "text": "Solo en Node.js"
+      },
+      {
+        "text": "Deprecadas y eliminadas"
+      }
+    ],
+    "questionProse": [
+      "¿Qué tan confiables son `error.code` y `error.errno`?"
+    ],
+    "explanationProse": [
+      "Propiedades como `code` y `errno` son específicas del entorno (como Node.js en este caso) y no forman parte del objeto Error estándar. Los errores en navegadores no tendrán estas propiedades. Siempre verifica su existencia: `if (err.code === 'ENOENT')` en lugar de asumir que existen."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Propiedades no estándar\",\n  \"group\": \"Propiedades de Error\",\n  \"options\": [\n    {\n      \"text\": \"Siempre disponibles\"\n    },\n    {\n      \"text\": \"Pueden no existir en todos los entornos\"\n    },\n    {\n      \"text\": \"Solo en Node.js\"\n    },\n    {\n      \"text\": \"Deprecadas y eliminadas\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Qué tan confiables son `error.code` y `error.errno`?\"\n  ],\n  \"explanationProse\": [\n    \"Propiedades como `code` y `errno` son específicas del entorno (como Node.js en este caso) y no forman parte del objeto Error estándar. Los errores en navegadores no tendrán estas propiedades. Siempre verifica su existencia: `if (err.code === 'ENOENT')` en lugar de asumir que existen.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 755,
+    "outputTokens": 636,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 8460
+  },
+  "cost": {
+    "inputUsd": 0.000060400000000000004,
+    "outputUsd": 0.00015263999999999998,
+    "totalUsd": 0.00021303999999999998,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

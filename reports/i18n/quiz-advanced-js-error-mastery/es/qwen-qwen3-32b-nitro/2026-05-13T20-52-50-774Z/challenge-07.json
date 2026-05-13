@@ -1,0 +1,44 @@
+{
+  "index": 6,
+  "attempt": 1,
+  "originalTitle": "Constructor Name Gotcha",
+  "translatedTitle": "Atrapa del nombre del constructor",
+  "translation": {
+    "title": "Atrapa del nombre del constructor",
+    "group": "Errores personalizados",
+    "options": [
+      {
+        "text": "\"MyError\""
+      },
+      {
+        "text": "\"Error\""
+      },
+      {
+        "text": "undefined"
+      },
+      {
+        "text": "TypeError"
+      }
+    ],
+    "questionProse": [
+      "¿Cuál es la salida sin establecer `name`?"
+    ],
+    "explanationProse": [
+      "Sin establecer explícitamente `this.name`, el error hereda la propiedad `name` predeterminada de la clase `Error`, que es `\"Error\"`. Por eso las clases de error personalizadas siempre deben establecer `this.name = this.constructor.name` en su constructor."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Atrapa del nombre del constructor\",\n  \"group\": \"Errores personalizados\",\n  \"options\": [\n    {\n      \"text\": \"\\\"MyError\\\"\"\n    },\n    {\n      \"text\": \"\\\"Error\\\"\"\n    },\n    {\n      \"text\": \"undefined\"\n    },\n    {\n      \"text\": \"TypeError\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Cuál es la salida sin establecer `name`?\"\n  ],\n  \"explanationProse\": [\n    \"Sin establecer explícitamente `this.name`, el error hereda la propiedad `name` predeterminada de la clase `Error`, que es `\\\"Error\\\"`. Por eso las clases de error personalizadas siempre deben establecer `this.name = this.constructor.name` en su constructor.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 732,
+    "outputTokens": 2765,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 6385
+  },
+  "cost": {
+    "inputUsd": 0.00005856,
+    "outputUsd": 0.0006636,
+    "totalUsd": 0.00072216,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
