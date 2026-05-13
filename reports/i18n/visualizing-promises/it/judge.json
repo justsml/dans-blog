@@ -1,0 +1,92 @@
+{
+  "selectedCommit": "35e77bc6d56cce3ec0bb00a33409b67132677432",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "scores": {
+    "readability": 5,
+    "technicalAccuracy": 5,
+    "coherence": 5,
+    "relevance": 5,
+    "translationQuality": 5,
+    "mdxPreservation": 5
+  },
+  "suggestions": [],
+  "rationale": "The selected commit provides a high-quality, complete translation that captures Dan's direct style. The current version in the provided MDX already has the necessary image path fixes (using '../') applied, so no further high-priority suggestions are required. Other candidates either had structural issues (duplicated sections) or left headings untranslated.",
+  "slug": "visualizing-promises",
+  "locale": "it",
+  "candidateCommits": [
+    "35e77bc6d56cce3ec0bb00a33409b67132677432",
+    "60f2acd692008422cfd6eb1704bcfc2a705d68f8",
+    "9fbefa8aab9316c6587ef9358442463a8e23e819"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "cover: junior-ferreira-735237-unsplash.webp",
+      "replacement": "cover: ../junior-ferreira-735237-unsplash.webp",
+      "reason": "The image path must be relative to the parent directory to match the project structure.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "cover_mobile: w300_junior-ferreira-735237-unsplash.webp",
+      "replacement": "cover_mobile: ../w300_junior-ferreira-735237-unsplash.webp",
+      "reason": "The image path must be relative to the parent directory to match the project structure.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "cover_icon: icon_junior-ferreira-735237-unsplash.webp",
+      "replacement": "cover_icon: ../icon_junior-ferreira-735237-unsplash.webp",
+      "reason": "The image path must be relative to the parent directory to match the project structure.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "(N_1000ms_log.webp)",
+      "replacement": "(../N_1000ms_log.webp)",
+      "reason": "The image path must be relative to the parent directory.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "(N_1000ms_!log.webp)",
+      "replacement": "(../N_1000ms_!log.webp)",
+      "reason": "The image path must be relative to the parent directory.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "(N_3000ms.webp)",
+      "replacement": "(../N_3000ms.webp)",
+      "reason": "The image path must be relative to the parent directory.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "(N_3000ms_PromiseAll.webp)",
+      "replacement": "(../N_3000ms_PromiseAll.webp)",
+      "reason": "The image path must be relative to the parent directory.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug visualizing-promises --locale it --skip-global",
+    "output": ""
+  }
+}
