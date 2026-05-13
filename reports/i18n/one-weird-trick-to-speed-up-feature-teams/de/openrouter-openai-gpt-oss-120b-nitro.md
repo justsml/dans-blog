@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: one-weird-trick-to-speed-up-feature-teams
+- Locale: de
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2024-09-29--one-weird-trick-to-speed-up-feature-teams/de/index.mdx
+- Validation: passed
+- Runtime seconds: 13.16
+- Input tokens: 8799
+- Output tokens: 2488
+- Thinking tokens: unknown
+- Cached input tokens: 2304
+- Cache write tokens: 0
+- Estimated cost: $0.000791
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: 'Ein seltsamer Trick, um Feature‑Teams zu beschleunigen!'
 subTitle: Staff‑Ingenieure hassen das!
@@ -149,3 +167,4 @@ Ich hoffe, der Artikel war hilfreich! Bei Fragen oder Feedback einfach kommentie
 - [S3](https://aws.amazon.com/s3/)
 - [Cassandra](https://cassandra.apache.org/)
 - [Firestore](https://firebase.google.com/docs/firestore)
+````
