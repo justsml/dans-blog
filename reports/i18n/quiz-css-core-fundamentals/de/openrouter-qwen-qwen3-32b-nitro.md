@@ -1,0 +1,472 @@
+# Translation Candidate
+- Slug: quiz-css-core-fundamentals
+- Locale: de
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2024-11-08--quiz-css-core-fundamentals/de/index.mdx
+- Validation: rejected: direct AI SDK translation failed
+- Runtime seconds: 5.12
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Cache write tokens: unknown
+- Estimated cost: unknown
+- Pricing source: unknown
+- Note: Command failed: bun run i18n:translate:chunked -- --slug quiz-css-core-fundamentals --locale de --model openrouter/qwen/qwen3-32b:nitro --chunk 6p --quiz-concurrency 20
+## Raw Output
+
+````mdx
+---
+unlisted: false
+title: 'Quiz: Kennst du die CSS‑Grundlagen? (2025)'
+subTitle: Bist du front‑end genug?
+label: CSS Fundamentals
+social_image: ../desktop-social.webp
+category: Quiz
+subCategory: CSS
+date: '2024-11-08'
+modified: '2024-11-10'
+tags:
+  - quiz
+  - intro
+  - css
+  - styles
+  - beginner
+  - intermediate
+cover_full_width: ../yeshi-kangrang-Qq7A85iCzhQ-unsplash-wide.webp
+cover_mobile: ../yeshi-kangrang-Qq7A85iCzhQ-unsplash-square.webp
+cover_icon: ../yeshi-kangrang-Qq7A85iCzhQ-unsplash-square.webp
+---
+import Challenge from '../../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../../components/QuizUI/QuizUI';
+
+
+## Quiz: Kennst du CSS?
+
+* Modernes CSS? 🤔
+* **Soll CSS auf deinem Lebenslauf stehen???** 🚀
+* Multiple‑Choice. 🤖 … _Wie schwer kann das schon sein, oder?_
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="Aufwärmen: Schriften"
+  title="Ungültige CSS-Einheit für Schriftgröße"
+  options={[
+    {text: '10cx', isAnswer: true},
+    {text: '10mm'},
+    {text: '10pt'},
+    {text: '10px'},
+    {text: '10vmin'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Wähle das <em class="highlight">EINEN UNGÜLTIGEN</em> ❌ `font-size`:
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `10cx` ist falsch, weil `cx` keine echte CSS‑Einheit ist. (Zumindest zum Zeitpunkt des Schreibens.)
+
+    Beliebte Einheiten sind die bekannten `px`, `rem`, `em`.
+
+    Neuere Einheiten sind nützlich für dynamische, responsive Layouts.
+
+    - `ch` – Breite des Zeichens `0`
+    - `vmin` – minimale Viewport‑Größe
+    - `vmax` – maximale Viewport‑Größe
+    - `vh` – Viewport‑Höhe
+    - `vw` – Viewport‑Breite
+
+    Es gibt außerdem mehrere Einheiten, die es schon immer gab, aber selten verwendet werden, wie `cm` für Zentimeter, `mm`, `in` für Zoll, `pt` für Punkte
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="Aufwärmen: Farben"
+  title="Hex-Codes"
+  options={[
+    {text: '#A'},
+    {text: '#AB'},
+    {text: '#ABCD', isAnswer: true},
+    {text: '#ABCDE'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Kannst du den <em class="highlight">EINEN</em> gültigen 👍 Hex-Code finden?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Hex-Codes können in CSS verwendet werden, um Farben darzustellen. Sie beginnen mit einem `#` und müssen 3, 4, 6 oder 8 hexadezimale Ziffern enthalten.
+
+    Der 3‑Zeichen‑Hex‑Code ist eine Kurzschreibweise für den 6‑Zeichen‑Code, bei dem jedes Zeichen verdoppelt wird. Der 4‑Zeichen‑Code enthält einen Alpha‑Kanal für Transparenz.
+
+    Zum Beispiel ist `#ABC` dasselbe wie `#AABBCC` und `#ABCD` dasselbe wie `#AABBCCDD`. Um mehr über den Umgang mit Hex‑Werten zu erfahren, sieh dir mein [JavaScript‑Zahlen‑Quiz](/quiz-can-you-count-to-bigint/) an.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="Aufwärmen: Einheiten"
+  title="Ups, alle Einheiten!"
+  options={[
+    {text: 'em'},
+    {text: 'rem'},
+    {text: 'cm'},
+    {text: 'mm'},
+    {text: 'in'},
+    {text: 'pt'},
+    {text: 'pc'},
+    {text: 'px'},
+    {text: 'ex'},
+    {text: 'ch'},
+    {text: 'vmin'},
+    {text: 'vmax'},
+    {text: 'vh'},
+    {text: 'rel', isAnswer: true},
+    {text: 'vw'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Welches dieser Einheiten ist <em class="highlight">NICHT</em> eine gültige ❌ CSS‑Einheit?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Neue Einheiten wie `ch`, `vmin`, `vmax`, `vh`, `vw` sind ziemlich nützlich für dynamische/reaktive Layouts.
+
+    Es gibt außerdem einige Einheiten, die es schon immer gab, aber selten verwendet werden, wie `cm` für Zentimeter, `mm`, `in` für Zoll, `pt` für Punkte, `pc`, `cap` für die Größe von Großbuchstaben und `ex`, das der Höhe des Buchstabens `x` entspricht.
+
+    Beliebte Einheiten sind das bekannte `px` für Pixel, `em` relativ zur Schriftgröße des Elements, und `rem` ist heimlich eine Hommage an die vergessene 90er‑Band R.E.M. (okay, nicht wirklich, es ist einfach eine relative `em`‑Einheit, die das Wurzelelement referenziert).
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="Selektor: Grundlagen"
+  title="Selektoren den HTML-Elementen zuordnen"
+  options={[
+    {text: '#Home'},
+    {text: 'a [id=\'home\']'},
+    {text: 'a:contains(home)'},
+    {text: 'a#home[name=\'home\']', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Welcher Selektor passt am besten zum folgenden HTML?
+    ```html
+    <a id="home" name="home" href="/home">Home</a>
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Die richtige Antwort ist `a#home[name='home']`, da sie sowohl das `id`‑ als auch das `name`‑Attribut trifft. CSS‑Selektoren sind case‑sensitive, daher funktioniert `#Home` nicht, und Leerzeichen bedeuten Kind‑Elemente, was hier nicht zutrifft.
+
+    Der `:contains()`‑Selektor ist kein standardmäßiger CSS‑Selektor, ist aber in einigen JS‑Bibliotheken verfügbar.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="Selektor: Grundlagen"
+  title="Attribut-Selektor für einen Button"
+  options={[
+    {text: 'button:link'},
+    {text: 'button::click'},
+    {text: 'button:focus'},
+    {text: 'button[onclick]', isAnswer: true},
+    {text: 'button[on-click]'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Welcher Selektor passt zu dem folgenden HTML‑Button?
+    ```html
+    <button onclick="openModal()">Contact</button>
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Die richtige Antwort ist `button[onclick]`, die das Vorhandensein des Attributs `onclick` anspricht.
+
+    Hinweis: `:link` greift nur unverbesuchte `href`‑Links, `::click` ist kein gültiges Pseudo‑Element, und `:focus` greift nur das fokussierte Element an.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="Selektor: Grundlagen"
+  title="Ungültiger CSS-Selektor"
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Welcher dieser Selektoren ist ungültig?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Der Selektor `c > > d {}` ist ungültig, weil der Kind‑Kombinator ohne Selektor zwischen den beiden `>`‑Zeichen wiederholt wird.
+
+    Die anderen Selektoren sind gültig. Ein Typ-Selektor wie `c {}` ist syntaktisch gültiges CSS, selbst wenn `c` kein Standard‑HTML‑Element ist.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="Selektor: Grundlagen"
+  title="Auswahl des letzten Links"
+  options={[
+    {text: 'a :nth-child(3)'},
+    {text: 'a:last-item'},
+    {text: 'nav:last-of-type(a)'},
+    {text: 'nav:nth-child(3)'},
+    {text: 'a:last-child', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Welcher Selektor trifft den letzten Link im folgenden HTML?
+    ```html
+    <nav>
+      <a name="home" href="/home">Home</a>
+      <a name="login" href="/login">Login</a>
+      <a name="help" href="/help">Help</a>
+    </nav>
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Der korrekte Selektor ist `a:last-child`, der das letzte `<a>` auswählt, wenn es zugleich das letzte Kind seines Eltern‑Elements ist. `nav:nth-child(3)` würde ein `<nav>`‑Element treffen, das das dritte Kind seines eigenen Eltern‑Elements ist.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="Selektor: Spezifität"
+  title="Selektor-Priorität"
+  options={[
+    {text: 'main article section blockquote a'},
+    {text: 'blockquote a'},
+    {text: 'a#quote', isAnswer: true},
+    {text: 'a.quote'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Welcher Selektor hat Vorrang?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Der `a#quote`‑Selektor hat Vorrang, weil die ID eine höhere Spezifität besitzt als tag‑ oder klassenbasierte Selektoren.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="Layouts: Zentrieren"
+  title="Text in einem Block-Element zentrieren"
+  options={[
+    {text: 'align: center;'},
+    {text: 'margin: 0 auto;'},
+    {text: 'align-content: center;'},
+    {text: 'text-align: center;', isAnswer: true},
+    {text: 'text-content: center;'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Wie kannst du "shit" in einer Box zentrieren?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Die Verwendung von `text-align: center;` ist der richtige Weg, um Text in einem Block-Element zu zentrieren. Die `align`‑Eigenschaften werden für Flexbox‑Layouts verwendet, und `margin: 0 auto;` dient dazu, Block-Elemente horizontal zu zentrieren.
+
+    Die `align-content`‑Eigenschaft wird für Grid‑Layouts genutzt, und `text-content` ist keine gültige CSS‑Eigenschaft.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="Layouts: Zentrieren"
+  title="Vertikales Zentrieren eines Blockelements"
+  options={[
+    {text: 'align-items: center;'},
+    {text: 'justify-content: center;'},
+    {text: 'align-content: center;', isAnswer: true},
+    {text: 'margin: auto;'},
+    {text: 'margin: 0 auto;'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Wie zentrierst du Inhalte vertikal innerhalb eines Blockcontainers im modernen Flow‑Layout?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Die Verwendung von `align-content` ist der moderne Weg, um den Inhalt eines Blockcontainers vertikal im Flow‑Layout zu zentrieren.
+
+    `align-items` und `justify-content` werden für Flexbox‑ und Grid‑Layouts verwendet, nicht jedoch für Flow.
+
+    Sowohl `margin: 0 auto;` als auch `margin: auto;` zentrieren ein Blockelement horizontal, jedoch nicht vertikal.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="Layouts: Einheiten"
+  title="Berechnung der Pixelgröße verschachtelter Schriftgrößen"
+  options={[
+    {text: '!40px'},
+    {text: '5px', isAnswer: true},
+    {text: '20px'},
+    {text: '25px'},
+    {text: '40px'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Wie groß ist die Pixelgröße des Textes des `<a>`‑Links im folgenden HTML?
+    ```html
+    <body style="font-size: 40px !important;">
+      <nav style="font-size: 50%;">
+        <a style="font-size: 25%;">HOME</a>
+      </nav>
+    </body>
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Die `font-size` für `<a>` wird zu 5 px berechnet: 40 px (body) * 50 % (nav) = 20 px, dann 20 px * 25 % = 5 px.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="Einheiten: REM"
+  title="Pixelgröße mit REMs berechnen"
+  options={[
+    {text: '10px'},
+    {text: '12px', isAnswer: true},
+    {text: '14px'},
+    {text: '20px'},
+    {text: '24px'},
+    {text: '34px'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Wie groß wird die Pixelgröße von `1.2rem` für den "HOME"‑Link im folgenden HTML?
+    ```html
+    <html style="font-size: 10px;">
+      <body style="font-size: 20px;">
+        <a style="font-size: 1.2rem;">HOME</a>
+      </body>
+    </html>
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `1.2rem` entspricht 12 px, weil `rem`‑Einheiten die Schriftgröße des Wurzelelements `<html>` referenzieren, das hier auf 10 px gesetzt ist.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="Einheiten: EM"
+  title="Pixelgröße mit EMs berechnen"
+  options={[
+    {text: '10px'},
+    {text: '12px'},
+    {text: '14px'},
+    {text: '20px'},
+    {text: '24px', isAnswer: true},
+    {text: '34px'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Ähnlich wie bei der vorherigen Frage, welche Pixelgröße hat `1.2em` für den „HOME“-Link im folgenden HTML?
+    ```html
+    <html style="font-size: 10px;">
+      <body style="font-size: 20px;">
+        <a style="font-size: 1.2em;">HOME</a>
+      </body>
+    </html>
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `1.2em` entspricht 24px, weil `em`‑Einheiten die vererbte Schriftgröße referenzieren, die hier auf 20px gesetzt ist.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={13}
+  group="Selektor: Spezifität"
+  title="Selektoren mit Null-Spezifität"
+  options={[
+    {text: ':where(.card) .title', isAnswer: true},
+    {text: '.card .title'},
+    {text: ':is(.card) .title'},
+    {text: '#card .title'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Welcher Selektor hat die niedrigste Spezifität?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `:where(.card) .title` hat die niedrigste Spezifität. Die Pseudoklasse `:where()` und alles darin trägt `0-0-0` bei, sodass nur `.title` zählt. `:is(.card) .title` behält die Spezifität von `.card` bei, `.card .title` hat zwei Klassen, und `#card .title` enthält eine ID.
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+````
