@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: llm-connection-strings
+- Locale: hi
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-01-30--llm-connection-strings/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 182.05
+- Input tokens: 7033
+- Output tokens: 8180
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.002526
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: अबकी बार LLM कनेक्शन स्ट्रिंग्स का समय है
 subTitle: 'मॉडल और प्रदाता कॉन्फ़िगरेशन को `llm://` यूआरएल के साथ सरल करें'
@@ -115,3 +133,4 @@ bedrock://us-west-2.aws/anthropic/sonnet-4.5?temp=0.8&cacheControl=ephemeral
 ![एक गंदा env वेरिएबल ड्रॉयर](../hero-concept-8-drawers.webp)
 
 {/* ¹ हां, मुझे पता है कि `URI` `URL` की तुलना में अधिक सही है। यदि आप वास्तव में इस अंतर के बारे में चिंतित हैं, तो कृपया घास छू लें। */}
+````
