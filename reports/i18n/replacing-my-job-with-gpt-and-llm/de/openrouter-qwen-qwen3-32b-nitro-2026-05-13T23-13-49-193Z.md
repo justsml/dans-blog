@@ -3,7 +3,7 @@
 - Locale: de
 - Model: openrouter/qwen/qwen3-32b:nitro
 - Target: src/content/posts/2024-12-05--replacing-my-job-with-gpt-and-llm/de/index.mdx
-- Validation: deferred
+- Validation: rejected: direct AI SDK translation failed
 - Runtime seconds: 12.20
 - Input tokens: 5541
 - Output tokens: 4911
@@ -12,112 +12,100 @@
 - Cache write tokens: 0
 - Estimated cost: $0.001622
 - Pricing source: local-openrouter-estimate
-- Note: Generated through the direct AI SDK chunked translator.
+- Note: Command failed: git commit --only -m i18n candidate(de): replacing-my-job-with-gpt-and-llm via openrouter/qwen/qwen3-32b:nitro -- reports/i18n/replacing-my-job-with-gpt-and-llm/de reports/i18n/replacing-my-job-with-gpt-and-llm/candidates.jsonl
 ## Raw Output
 
 ````mdx
 ---
-unlisted: false
-title: Mich selbst durch KI ersetzen
-subTitle: 'Wie ich lernte, aufzuhören zu sorgen und die GPT zu lieben.'
-label: AI
-social_image: ../mobile.webp
+title: "Mich selbst durch KI ersetzen"
+subTitle: "Wie ich gelernt habe, aufzuhören, mir Sorgen zu machen, und GPT zu lieben."
 category: AI
-subCategory: Machine Learning
-date: '2024-12-04'
-modified: '2024-12-08'
-tags:
-  - ai
-  - gpt
-  - llm
-  - machine-learning
-  - nlp
-  - automation
-cover_full_width: ../robot-dude-wide.webp
-cover_mobile: ../robot-dude-square-200-75.webp
-cover_icon: ../robot-dude-square-200-75.webp
+date: 2024-12-04
+modified: 2024-12-08
+tags: [ai, gpt, llm, machine-learning, nlp, automation]
 ---
-Ich wusste, dass der AI-Entwurf schiefgelaufen war, als ich mit jedem Satz übereinstimmte, ihm aber kein Stück vertraute.  
 
-Es hatte die richtige Form: Selbstsicherer Einleitung, sauberer Workflow, optimistischer Schluss. Es verwendete alle respektablen Wörter. Produktivität. Kreativität. Zusammenarbeit. Pipeline. Es klang, als hätte jemand meine tatsächliche Erfahrung durch ein Prospekt über meine tatsächliche Erfahrung ersetzt.  
+Ich wusste, dass der KI-Entwurf schiefgegangen war, als ich jedem Satz zustimmte und keinem davon traute.
 
-Was unglücklicherweise genau das ganze Problem war.  
+Er hatte die richtige Form: selbstbewusste Einleitung, ordentlicher Workflow, optimistischer Schluss. Er benutzte alle respektablen Wörter. Produktivität. Kreativität. Zusammenarbeit. Pipeline. Er klang, als hätte jemand meine tatsächliche Erfahrung durch eine Broschüre über meine tatsächliche Erfahrung ersetzt.
 
-<p class="inset">Die Gefahr der AI-Schreibweise besteht nicht darin, dass sie immer schlecht ist. Die Gefahr ist, dass sie glaubhaft glatt wirken kann, bevor sie sich eine eigene Haltung erarbeitet hat.</p>  
+Was, wenig praktisch, genau das Problem war.
 
-Dieser Beitrag ist ein Artefakt aus dieser Phase. Ich verwendete GPT für Kurs-Entwürfe, Banner-Konzepte, Quiz-Aufforderungen, Umformulierungen, Zusammenfassungen und Übersetzungsexperimente. Ein Teil davon funktionierte. Ein Teil sparte Stunden. Ein Teil produzierte die Art von blasser, professioneller Paste, die jeden in einem Absatz wie einen Stakeholder klingen lässt.  
+<p class="inset">Die Gefahr beim Schreiben mit KI ist nicht, dass es immer schlecht ist. Die Gefahr ist, dass es plausibel glatt sein kann, bevor es sich einen Standpunkt verdient hat.</p>
 
-Ich brauchte nicht weniger AI. Ich brauchte mehr Reibung.  
+Dieser Beitrag ist ein Artefakt aus dieser Phase. Ich nutzte GPT für Unterrichtsentwürfe, Banner-Konzepte, Quiz-Prompts, Umschreibungen, Zusammenfassungen und Übersetzungsexperimente. Einiges davon funktionierte. Einiges sparte Stunden. Einiges produzierte die Art von blassem professionellem Kleber, der jede Person in einem Absatz wie einen Stakeholder klingen lässt.
 
-### Der erste Riss  
+Ich brauchte nicht weniger KI. Ich brauchte mehr Reibung.
 
-Der erste große Fehler war, „fertig aussieht“ als Beweis für Nachdenken zu betrachten.  
+### Der erste Kratzer
 
-Ich bat um einen Kurs-Entwurf und erhielt etwas Kohärentes innerhalb von zehn Sekunden. Diese Kohärenz war verlockend. Eine schlechte Leere Seite macht ihre Leere offensichtlich. Ein durchschnittlicher AI-Entwurf versteckt die fehlenden Entscheidungen unter guter Grammatik.  
+Der erste echte Fehler war, "sieht fertig aus" als Beweis für Denken zu behandeln.
 
-Dann überprüfte ich ihn und fand die üblichen Probleme:
+Ich bat um einen Unterrichtsentwurf und bekam in zehn Sekunden etwas Kohärentes. Diese Kohärenz war berauschend. Eine schlechte leere Seite macht ihre Leere offensichtlich. Ein anständiger KI-Entwurf verbirgt die fehlenden Entscheidungen unter guter Grammatik.
 
-- Die Beispiele waren technisch korrekt, aber vergesslich  
-- Die Quizfragen testeten Vokabular statt Urteilsvermögen  
-- Die Erklärungen vermieden die eine schwierige Unterscheidung, die der Lernende brauchte  
-- Die Tonlage hatte sich in korporative Mittagszeit verschoben  
+Dann würde ich ihn überprüfen und die üblichen Probleme finden:
 
-Nichts war katastrophal falsch. Das war der beunruhigendere Teil. Es war alles etwas zu fein.  
+- die Beispiele waren technisch korrekt, aber vergesslich
+- die Quizfragen testeten Vokabular statt Urteilsvermögen
+- die Erklärungen vermieden die eine harte Unterscheidung, die der Lernende brauchte
+- der Ton war in korporatives Tageslicht abgedriftet
 
-### Was AI gut wird  
+Nichts war katastrophal falsch. Das war der beängstigendere Teil. Es war alles ein wenig zu fein.
 
-Sobald ich keine Entwürfe mehr als Artefakte akzeptierte, wurde AI viel nützlicher.  
+### Wofür KI gut wurde
 
-Ich nutze sie am besten als Druckmittel:  
+Sobald ich aufhörte, erste Entwürfe als Artefakte zu akzeptieren, wurde KI viel nützlicher.
 
-- **Finde den vagen Teil**: „Welche Behauptungen in dieser Lektion sind nicht untermauert?“  
-- **Erzeuge falsche Antworten**: „Was würde ein cleverer Anfänger aus dem falschen Grund wählen?“  
-- **Ändere das Publikum**: „Erkläre das einem React-Entwickler, der Postgres nie verwendet hat.“  
-- **Erzeuge Kontrast**: „Gib mir drei Beispiele, in denen dieser Rat scheitert.“  
-- **Komprimiere das Chaos**: „Wandle diese Notizen in einen Entwurf ohne neue Behauptungen um.“  
+Ich nutze sie am besten als Druckwerkzeug:
 
-Diese Prompts ersetzen nicht das Urteilsvermögen. Sie machen es einfacher anzuwenden. Das Modell ist sehr gut darin, Oberflächen zu erzeugen. Meine Aufgabe ist es zu entscheiden, welche Oberflächen sich zu Struktur entwickeln sollten.  
+- **Finden des vagen Teils**: "Welche Behauptungen in dieser Lektion sind nicht unterstützt?"
+- **Die falschen Antworten generieren**: "Was würde ein kluger Anfänger aus dem falschen Grund wählen?"
+- **Das Publikum ändern**: "Erkläre dies einem React-Entwickler, der noch nie Postgres verwendet hat."
+- **Kontrast schaffen**: "Gib mir drei Beispiele, wo dieser Rat versagt."
+- **Das Chaos komprimieren**: "Verwandle diese Notizen in einen Umriss, ohne neue Behauptungen hinzuzufügen."
 
-### Der Prozess, mit Schutzmaßnahmen  
+Diese Prompts ersetzen kein Urteilsvermögen. Sie machen es leichter, Urteilsvermögen anzuwenden. Das Modell ist sehr gut darin, Oberflächen zu produzieren. Meine Aufgabe ist es zu entscheiden, welche Oberflächen es verdienen, Struktur zu werden.
 
-Der überlebende Workflow ist weniger glamourös als die alte Version:  
+### Die Pipeline, mit Schutzplanken
 
-1. **Sammle Rohmaterial**  
-   Ich beginne mit Notizen, Code, Links, Screenshots und der spezifischen Verwirrung der Lernenden, die ich adressieren will.
+Der Workflow, der überlebte, ist weniger glamourös als die alte Version:
 
-2. **Fordere die KI dazu auf, zu organisieren, nicht zu entscheiden**  
-   Sie kann Ideen gruppieren, fehlende Schritte aufdecken und Abschnitte vorschlagen. Ich lasse sie die These nicht ohne Widerstand wählen.  
+1. **Rohmaterial sammeln**
+   Ich beginne mit Notizen, Code, Links, Screenshots und der spezifischen Lernenden-Verwirrung, die ich anzusprechen versuche.
 
-3. **Schreibe die prägnanten Teile selbst**  
-   Die Einleitung, die Entscheidungsregel, die Beispiele und die Schlussfolgerung benötigen menschlichen Geschmack. An diesen Stellen verdient der Artikel Vertrauen.  
+2. **KI bitten, zu organisieren, nicht zu entscheiden**
+   Sie kann Ideen gruppieren, fehlende Schritte aufdecken und Abschnitte vorschlagen. Ich lasse sie nicht die These ohne Kampf wählen.
 
-4. **Nutze KI, um den Entwurf zu kritisch prüfen**  
-   Ich frage, was zu generisch klingt, was zu viel voraussetzt, was ein skeptischer Leser kritisieren würde und an welchen Stellen die Beispiele scheitern.  
+3. **Die scharfen Teile selbst schreiben**
+   Die Eröffnung, die Entscheidungsregel, die Beispiele und das Ende brauchen menschlichen Geschmack. Dort verdient der Artikel Vertrauen.
 
-5. **Halte das Artefakt authentisch**  
-   Wenn ein Absatz auf jedem SaaS-Blog zu Hause wäre, wird er umgeschrieben oder gelöscht.  
+4. **KI verwenden, um den Entwurf zu befragen**
+   Ich frage, was generisch klingt, was zu viel annimmt, was ein skeptischer Leser einwenden würde und wo die Beispiele versagen.
 
-Diese letzte Regel übernimmt viel Arbeit.  
+5. **Das Artefakt ehrlich halten**
+   Wenn ein Absatz auf jedem SaaS-Blog leben könnte, wird er umgeschrieben oder gelöscht.
 
-### Quizze haben meine Meinung geändert  
+Diese letzte Regel leistet viel Arbeit.
 
-Quizze sind der Punkt, an dem KI für mich wirklich nützlich wurde.  
+### Quizzes haben meine Meinung geändert
 
-Nicht, weil sie perfekte Fragen schreiben kann. Das kann sie nicht. Sie liebt offensichtliche Falschantworten, ungewollte Mehrdeutigkeit und Erklärungen, die an der Missverständnis-Vorstellung vorbeigleiten.  
+Quiz-Schreiben ist dort, wo KI für mich wirklich nützlich wurde.
 
-Aber sie kann schnell ein Feld möglicher falscher Antworten generieren. Dann kann ich die Liste betrachten und fragen: Welche dieser Antworten repräsentiert einen echten Lernfehler?  
+Nicht weil sie perfekte Fragen schreiben kann. Das kann sie nicht. Sie liebt offensichtliche Ablenkungen, versehentliche Zweideutigkeit und Erklärungen, die am Missverständnis vorbeigleiten.
 
-Das ist die nützliche Zusammenarbeit. Das Modell produziert Ton. Ich entscheide, ob es eine Schüssel, ein Ziegelstein oder Deponie ist.
+Aber sie kann schnell ein Feld möglicher falscher Antworten generieren. Dann kann ich mir die Liste ansehen und fragen: Welche davon repräsentiert einen echten Lernfehler?
 
-### Ersetzen von Mich Selbst War Der Falsche Rahmen  
+Das ist die nützliche Zusammenarbeit. Das Modell produziert Ton. Ich entscheide, ob es eine Schüssel, ein Ziegel oder Deponie ist.
 
-Der Titel ist ein Witz, aber der Rahmen ist falsch.  
+### Mich selbst zu ersetzen war der falsche Rahmen
 
-Ich ersetze mich nicht durch KI. Ich ersetze die Teile meines Prozesses, die bereits mechanisch waren: Erstpass-Gruppierung, alternative Formulierungen, Übersetzungsskelette, Entwurfquiz-Optionen, Bildkonzepte, Zusammenfassungsdurchläufe.  
+Der Titel ist ein Witz, aber der Rahmen ist falsch.
 
-Die Teile, die ich nicht ersetzen kann, sind die, die Leser bemerken, wenn sie fehlen: Geschmack, Narben, Priorität, Skepsis und die Bereitschaft zu sagen „Das klang gut, aber es war falsch“.  
+Ich ersetze mich nicht durch KI. Ich ersetze die Teile meines Prozesses, die bereits mechanisch waren: Erste-Pass-Gruppierung, alternative Formulierungen, Übersetzungsgerüste, Entwurfs-Quiz-Optionen, Bildkonzepte, Zusammenfassungsdurchgänge.
 
-KI hat mich schneller gemacht. Wichtiger noch, sie hat es einfacher gemacht, einige meiner Schwächen zu erkennen. Die Kosten sind, dass ich jetzt bewusster sein muss, nicht zu veröffentlichen, was nur so tut, als wäre es Prosa.  
+Die Teile, die ich nicht ersetzen kann, sind die Teile, die Leser tatsächlich bemerken, wenn sie fehlen: Geschmack, Narben, Priorität, Skepsis und die Bereitschaft zu sagen "das klang gut, aber es war falsch."
 
-Das ist der Kompromiss, mit dem ich leben kann.
+KI machte mich schneller. Wichtiger ist, sie machte einige meiner Schwachstellen leichter sichtbar. Die Kosten sind, dass ich jetzt bewusster damit sein muss, keine Prosa zu veröffentlichen, die sich nur wie Prosa verhält.
+
+Das ist der Deal, mit dem ich leben kann.
 ````
