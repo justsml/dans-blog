@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: honest-priorities
+- Locale: ja
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2024-10-23--honest-priorities/ja/index.mdx
+- Validation: deferred
+- Runtime seconds: 16.42
+- Input tokens: 7550
+- Output tokens: 6216
+- Thinking tokens: unknown
+- Cached input tokens: 1536
+- Cache write tokens: 0
+- Estimated cost: $0.002096
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: ''
@@ -121,3 +139,4 @@ Priority（優先度）に過度な依存を強いられるにもかかわらず
 - 私の経験上、古い未完了のチケットを破棄しても何の害もなかった。  
 - バックログをデータベースのように無限に追加し続けることは、チームや組織が本当に重要なものに集中する機会を失わせる。（未来に向かって進むべきものと、バックログは必然的に過去を振り返る。）  
 - 深いバックログは「バジラーロトリー室」のようになり、決してリリースしないものを称えることになる。
+````
