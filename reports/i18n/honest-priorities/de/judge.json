@@ -1,0 +1,63 @@
+{
+  "selectedCommit": "b0a98d6affc416efd6057a1d9f86d72f710dab5b",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 9,
+    "relevance": 9,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [
+    {
+      "priority": "medium",
+      "match": "Wie können wir dieses alberne Spiel der Engineering-Theaters vermeiden?",
+      "replacement": "Wie können wir dieses alberne Spiel des Engineering-Theaters vermeiden?",
+      "reason": "Grammatical correction: 'des' is the correct masculine genitive article for 'Engineering-Theater'."
+    }
+  ],
+  "rationale": "The selected candidate captures the author's voice effectively, maintaining a balance between technical terminology and a conversational, slightly cynical tone. It preserves MDX components and structure perfectly. One minor grammatical fix is suggested for the genitive case.",
+  "slug": "honest-priorities",
+  "locale": "de",
+  "candidateCommits": [
+    "b0a98d6affc416efd6057a1d9f86d72f710dab5b",
+    "833a1e3f87f6e44f696d2282f1bd79b301b76627",
+    "c791672ec0bb96c689cc3385c31f89da56fd0315"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "Irgend wird der Umfang",
+      "replacement": "Irgendwann wird der Umfang",
+      "reason": "Missing part of the word 'irgendwann' (eventually).",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "Engineering-Theater",
+      "replacement": "Engineering-Theaters",
+      "reason": "Grammatical case correction (genitive).",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "Wie können wir dieses alberne Spiel der Engineering-Theaters vermeiden?",
+      "replacement": "Wie können wir dieses alberne Spiel des Engineering-Theaters vermeiden?",
+      "reason": "Grammatical correction: 'des' is the correct masculine genitive article for 'Engineering-Theater'.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug honest-priorities --locale de --skip-global",
+    "output": ""
+  }
+}
