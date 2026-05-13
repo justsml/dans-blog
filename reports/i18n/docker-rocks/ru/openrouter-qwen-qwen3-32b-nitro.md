@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: docker-rocks
+- Locale: ru
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2015-06-11--docker-rocks/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 3.98
+- Input tokens: 1776
+- Output tokens: 1869
+- Thinking tokens: unknown
+- Cached input tokens: 512
+- Cache write tokens: 0
+- Estimated cost: $0.000591
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: ''
@@ -46,3 +64,4 @@ Docker может запускаться нативно на ядре Linux v3.4
 
 - Docker Desktop — проприетарный, но бесплатный для личного использования. Отличный способ начать работу с Docker на macOS или Windows.  
 - Если вам нужен более открытый вариант, посмотрите [Rancher Desktop](https://rancherdesktop.io/).
+````
