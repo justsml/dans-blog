@@ -1,0 +1,38 @@
+{
+  "selectedCommit": "c0eb2acd7cc03fe5132b4119e8cfa59b6ab939de",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "scores": {
+    "readability": 5,
+    "technicalAccuracy": 5,
+    "coherence": 5,
+    "relevance": 5,
+    "translationQuality": 5,
+    "mdxPreservation": 5
+  },
+  "suggestions": [],
+  "rationale": "The current translation already incorporates the fix for the 'enforcing' issue mentioned in the previous judge report. It maintains Dan's direct style, correctly translates technical terms, and preserves the MDX structure and frontmatter integrity. The translation of 'Trade-offs' as 'Торговля' in the reading list is a bit literal but acceptable in this context, though 'Баланс' or 'Компромиссы' might be better; however, it doesn't rise to the level of a high-priority fix.",
+  "slug": "naming-things-real-good",
+  "locale": "ru",
+  "candidateCommits": [
+    "c0eb2acd7cc03fe5132b4119e8cfa59b6ab939de",
+    "aba22e5ce338ed5d7fbefdcbcd30ced31c34035c",
+    "c85ea566f1e37f1eb8f0012324714a5de02c7aa7"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "enforcing эту «логику»",
+      "replacement": "обеспечения соблюдения этой «логики»",
+      "reason": "The candidate left the English word 'enforcing' in the middle of a Russian sentence. It should be translated.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug naming-things-real-good --locale ru --skip-global",
+    "output": ""
+  }
+}
