@@ -4,21 +4,21 @@
 - Model: openrouter/qwen/qwen3-32b:nitro
 - Target: src/content/posts/2025-11-04--quiz-advanced-js-error-mastery/fr/index.mdx
 - Validation: rejected: direct AI SDK translation failed
-- Runtime seconds: 48.64
-- Input tokens: 11801
-- Output tokens: 12312
+- Runtime seconds: 4.34
+- Input tokens: unknown
+- Output tokens: unknown
 - Thinking tokens: unknown
-- Cached input tokens: 0
-- Cache write tokens: 0
-- Estimated cost: $0.003899
-- Pricing source: local-openrouter-estimate
-- Note: Command failed: bun run i18n:validate --slug quiz-advanced-js-error-mastery --locale fr
+- Cached input tokens: unknown
+- Cache write tokens: unknown
+- Estimated cost: unknown
+- Pricing source: unknown
+- Note: Command failed: bun run i18n:translate:chunked -- --slug quiz-advanced-js-error-mastery --locale fr --model openrouter/qwen/qwen3-32b:nitro --chunk 6p --quiz-concurrency 20
 ## Raw Output
 
 ````mdx
 ---
-title: 'Quiz : Maîtrise avancée des erreurs JS'
-subTitle: Vos exceptions sont-elles vraiment exceptionnelles ?
+title: 'Quiz : Maîtrise avancée des erreurs JavaScript'
+subTitle: Vos exceptions sont-elles vraiment exceptionnelles ?
 label: Errors
 category: Quiz
 subCategory: JavaScript
@@ -40,17 +40,15 @@ cover_credit: >-
   Slimene</a> on <a
   href="https://unsplash.com/photos/a-tall-white-building-with-balconies-on-top-of-it-c09hZthLq_s?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
 ---
-```mdx
 import Challenge from '../../../../../components/QuizUI/Challenge';
 import QuizUI from '../../../../../components/QuizUI/QuizUI';
 
 
-### Pensez-vous connaître les erreurs JavaScript par cœur ?
+### Vous pensez maîtriser les erreurs JavaScript sur le bout des doigts ?
 
-* **Testez vos connaissances en gestion des erreurs !** 💥
-* Aucune inscription ou connexion requise. ✨
-* Choix multiples. 🤖 ... _Ce ne sont pas vos questions classiques sur try-catch !_ 
-```
+* **Mettez à l’épreuve votre expertise en gestion d’erreurs !** 💥
+* Aucun compte requis. ✨
+* Choix multiples. 🤖 … _Ce ne sont pas les questions try‑catch habituelles !_
 
 <QuizUI>
 
@@ -58,7 +56,7 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={0}
   group="Surprises de Sérialisation"
-  title="L'Énigme de l'Objet Vide"
+  title="Le Mystèrede l'Objet Vide"
   options={[
     {text: '{"message":"Oops","name":"Error"}'},
     {text: '{}', isAnswer: true},
@@ -68,7 +66,7 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    Quel est le retour de `JSON.stringify(error)` ?
+    Que renvoie `JSON.stringify(error)` ?
     ```js
     const error = new Error('Oops');
     console.log(JSON.stringify(error));
@@ -77,7 +75,7 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Les objets Error possèdent des propriétés non énumérables (`message`, `name`, `stack`), donc `JSON.stringify()` retourne `{}`. C'est un piège courant lors de l'envoi d'erreurs dans les réponses d'API. Utilisez `JSON.stringify(error, Object.getOwnPropertyNames(error))` ou créez un objet simple à la place.
+    Les objets Error possèdent des propriétés non‑énumérables (`message`, `name`, `stack`), donc `JSON.stringify()` renvoie `{}`. C’est un piège fréquent lorsqu’on envoie des erreurs dans les réponses d’API. Utilisez `JSON.stringify(error, Object.getOwnPropertyNames(error))` ou créez un objet simple à la place.
   </div>
   </slot>
 </Challenge>
@@ -85,18 +83,18 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={1}
-  group="Surprises de sérialisation"
-  title="Console par rapport à JSON"
+  group="Surprises de la sérialisation"
+  title="Console vs JSON"
   options={[
-    {text: 'Les deux affichent la même sortie'},
-    {text: 'console.log affiche plus d\'info', isAnswer: true},
-    {text: 'JSON.stringify affiche plus d\'info'},
+    {text: 'Les deux affichent le même résultat'},
+    {text: '`console.log` affiche plus d\'informations', isAnswer: true},
+    {text: '`JSON.stringify` affiche plus d\'informations'},
     {text: 'Les deux affichent des objets vides'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Quelle est la différence entre ces deux-là ?
+    Quelle est la différence entre ces deux ?
     ```js
     const err = new Error('Test');
     console.log(err);
@@ -106,7 +104,7 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `console.log(err)` affiche l'erreur avec son message et la trace d'empilement car la console traite spécialement les objets Error. `JSON.stringify(err)` renvoie `'{}'` car les propriétés d'Error ne sont pas énumérables. Cette différence piège de nombreux développeurs en débogage d'APIs.
+    `console.log(err)` affiche l'erreur avec son message et sa trace de pile parce que la console a un traitement spécial pour les objets Error. `JSON.stringify(err)` renvoie `'{}'` parce que les propriétés de Error ne sont pas énumérables. Cette différence piège de nombreux développeurs qui déboguent des API.
   </div>
   </slot>
 </Challenge>
@@ -114,18 +112,18 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={2}
-  group="Astuces de vérification des types"
-  title="Héritage instanceof"
+  group="Astuces de vérification de type"
+  title="Héritageinstanceof"
   options={[
-    {text: 'true, true, true', isAnswer: true},
-    {text: 'true, false, false'},
-    {text: 'false, true, true'},
-    {text: 'true, true, false'},
+    {text: 'vrai, vrai, vrai', isAnswer: true},
+    {text: 'vrai, faux, faux'},
+    {text: 'faux, vrai, vrai'},
+    {text: 'vrai, vrai, faux'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Quels sont les résultats de ces vérifications ?
+    Quels sont les résultats de ces vérifications ?
     ```js
     class CustomError extends Error {}
     const err = new CustomError('test');
@@ -138,7 +136,7 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Les trois retournent `true`. `CustomError` étend `Error`, qui étend `Object`. L'opérateur `instanceof` vérifie toute la chaîne de prototype, donc une instance de `CustomError` est aussi une instance de `Error` et `Object`.
+    Les trois renvoient `true`. `CustomError` hérite de `Error`, qui hérite de `Object`. L'opérateur `instanceof` parcourt toute la chaîne de prototypes, donc une instance de `CustomError` est aussi une instance de `Error` et de `Object`.
   </div>
   </slot>
 </Challenge>
@@ -146,18 +144,18 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={3}
-  group="Astuce de vérification de type"
-  title="instanceof transversal entre frames"
+  group="Astuces de vérification de type"
+  title="instanceof entre cadres"
   options={[
     {text: 'Toujours vrai'},
     {text: 'Toujours faux'},
-    {text: 'Peut être faux entre les frames', isAnswer: true},
-    {text: 'Lève une erreur'},
+    {text: 'Peut être faux entre cadres', isAnswer: true},
+    {text: 'Lance une erreur'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Que se passe-t-il avec `instanceof Error` entre les iframes ?
+    Que se passe-t-il avec `instanceof Error` entre les iframes ?
     ```js
     // In iframe:
     const iframeError = new Error('test');
@@ -168,7 +166,7 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `instanceof` peut retourner `false` entre différents contextes d'exécution (iframes, workers) car chaque contexte a son propre constructeur `Error`. Utilisez `Object.prototype.toString.call(obj) === '[object Error]'` pour une détection fiable des erreurs entre contextes.
+    `instanceof` peut renvoyer `false` entre différents contextes d'exécution (iframes, workers) car chaque contexte possède son propre constructeur `Error`. Utilisez `Object.prototype.toString.call(obj) === '[object Error]'` pour une détection fiable des erreurs entre contextes.
   </div>
   </slot>
 </Challenge>
@@ -176,18 +174,18 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={4}
-  group="Lancer des non-erreurs"
-  title="Lancers de chaînes"
+  group="Lancer des non‑erreurs"
+  title="Lancers de chaîne"
   options={[
-    {text: 'TypeError: la chaîne n\'est pas une Erreur'},
+    {text: 'TypeError : la chaîne n’est pas une Erreur'},
     {text: 'false, "string"', isAnswer: true},
-    {text: 'Crée automatiquement un objet Erreur'},
-    {text: 'Comportement non défini'},
+    {text: 'Crée automatiquement un objet Error'},
+    {text: 'comportement indéfini'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Qu'advient-il lorsque vous lancez une chaîne ?
+    Que se passe-t-il lorsqu’on lance une chaîne ?
     ```js
     try {
       throw "Oops!";
@@ -200,7 +198,7 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    JavaScript permet de lancer n'importe quelle valeur. Ici, `e instanceof Error` est `false` et `typeof e` est `"string"`. Cela peut casser le code de gestion des erreurs qui suppose que toutes les exceptions capturées sont des objets Error. Toujours lancer des instances Error pour un débogage plus efficace.
+    JavaScript autorise le lancer de n’importe quelle valeur. Ici, `e instanceof Error` vaut `false` et `typeof e` est `"string"`. Cela peut casser le code de gestion des erreurs qui suppose que toutes les exceptions capturées sont des objets Error. Lancez toujours des instances d’Error pour faciliter le débogage.
   </div>
   </slot>
 </Challenge>
@@ -209,17 +207,17 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={5}
   group="Erreurs personnalisées"
-  title="Propriété de nom d'erreur"
+  title="Propriété name de l'erreur"
   options={[
-    {text: '« Error »'},
-    {text: '« CustomError »', isAnswer: true},
-    {text: 'non défini'},
+    {text: '"Erreur"'},
+    {text: '"CustomError"', isAnswer: true},
+    {text: 'undefined'},
     {text: 'Dépend du navigateur'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Quelle est la valeur de `err.name` ?
+    Quelle est la valeur de `err.name` ?
     ```js
     class CustomError extends Error {
       constructor(message) {
@@ -234,7 +232,7 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `err.name` est `« CustomError »` car `this.constructor.name` retourne le nom de la classe. Affecter `this.name = this.constructor.name` est un modèle courant pour garantir que les classes d'erreur personnalisées affichent le bon nom dans les traces d'empilement et les messages d'erreur.
+    `err.name` est `"CustomError"` parce que `this.constructor.name` renvoie le nom de la classe. Affecter `this.name = this.constructor.name` est un schéma courant pour garantir que les classes d'erreur personnalisées affichent le bon nom dans les traces de pile et les messages d'erreur.
   </div>
   </slot>
 </Challenge>
@@ -253,7 +251,7 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    Quelle est la sortie sans définir `name` ?
+    Quel est le résultat sans définir `name` ?
     ```js
     class MyError extends Error {
       // No constructor or name setting
@@ -265,7 +263,7 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    En ne définissant pas explicitement `this.name`, l'erreur hérite de la propriété `name` par défaut de la classe `Error`, qui est `"Error"`. C'est pourquoi les classes d'erreur personnalisées devraient toujours définir `this.name = this.constructor.name` dans leur constructeur.
+    Sans définir explicitement `this.name`, l’erreur hérite de la propriété `name` par défaut de la classe `Error`, qui est `"Error"`. C’est pourquoi les classes d’erreur personnalisées doivent toujours définir `this.name = this.constructor.name` dans leur constructeur.
   </div>
   </slot>
 </Challenge>
@@ -274,17 +272,17 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={7}
   group="Cause d'erreur"
-  title="Error.cause moderne"
+  title="Erreur moderne .cause"
   options={[
-    {text: '"Original error"', isAnswer: true},
+    {text: 'Erreur d\'origine', isAnswer: true},
     {text: 'undefined'},
-    {text: 'The wrapping error'},
+    {text: 'L\'erreur enveloppante'},
     {text: 'SyntaxError'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Quelle valeur retourne `wrapper.cause.message` ?
+    Que renvoie `wrapper.cause.message` ?
     ```js
     const original = new Error('Original error');
     const wrapper = new Error('Wrapper', 
@@ -296,7 +294,7 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `Error.cause` (ES2022) permet de chaîner les erreurs pour préserver le contexte de l'erreur originale. `wrapper.cause` fait référence à l'erreur originale, donc `wrapper.cause.message` retourne `"Original error"`. Cela est utile pour envelopper des erreurs de bas niveau avec un contexte de haut niveau.
+    `Error.cause` (ES2022) permet de chaîner les erreurs pour conserver le contexte de l'erreur originale. `wrapper.cause` fait référence à l'erreur originale, donc `wrapper.cause.message` renvoie `"Original error"`. C’est utile pour envelopper des erreurs de bas niveau avec un contexte de niveau supérieur.
   </div>
   </slot>
 </Challenge>
@@ -305,17 +303,17 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={8}
   group="Traces de pile"
-  title="Manipulation de la trace de pile"
+  title="Manipulation de la pile"
   options={[
-    {text: 'Supprime createError de la trace de pile', isAnswer: true},
-    {text: 'Efface toute la trace de pile'},
+    {text: 'Supprime createError de la pile', isAnswer: true},
+    {text: 'Efface toute la pile'},
     {text: 'Ne fait rien'},
     {text: 'Lance un TypeError'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Que fait `Error.captureStackTrace` ?
+    Que fait `Error.captureStackTrace` ?
     ```js
     function createError(msg) {
       const err = new Error(msg);
@@ -328,7 +326,7 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `Error.captureStackTrace` (V8/Node.js) supprime la fonction spécifiée (`createError`) de la trace de pile, rendant invisibles pour les utilisateurs finaux les fonctions de création d'erreurs. Cela crée des traces de pile plus propres qui pointent vers l'endroit où la factory a été appelée, et non la factory elle-même.
+    `Error.captureStackTrace` (V8/Node.js) supprime la fonction spécifiée (`createError`) de la trace de pile, rendant les fonctions usine d’erreur invisibles aux utilisateurs finaux. Cela crée des traces de pile plus propres qui pointent vers l’endroit où l’usine a été appelée, pas vers l’usine elle‑même.
   </div>
   </slot>
 </Challenge>
@@ -339,15 +337,15 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   group="Modèles de messages"
   title="Littéraux de gabarit dans les erreurs"
   options={[
-    {text: '"Value ${value} is invalid"'},
-    {text: '"Value undefined is invalid"', isAnswer: true},
-    {text: 'ReferenceError: value is not defined'},
-    {text: '"Value  is invalid"'},
+    {text: '"Valeur ${value} est invalide"'},
+    {text: '"Valeur undefined est invalide"', isAnswer: true},
+    {text: 'ReferenceError : value n\'est pas défini'},
+    {text: '"Valeur  est invalide"'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Quel est le message d'erreur ?
+    Quel est le message d’erreur ?
     ```js
     function validate(value) {
       if (!value) {
@@ -366,7 +364,7 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Les littéraux de gabarit convertissent `undefined` en la chaîne `"undefined"` lors de l'interpolation. Le message d'erreur devient `"Value undefined is invalid"`. Pour des messages plus propres, envisagez d'utiliser `value ?? 'null'` ou des vérifications similaires avant l'interpolation.
+    Les littéraux de gabarit convertissent `undefined` en la chaîne `"undefined"` lors de l’interpolation. Le message d’erreur devient `"Value undefined is invalid"`. Pour des messages plus propres, envisagez d’utiliser `value ?? 'null'` ou des vérifications similaires avant l’interpolation.
   </div>
   </slot>
 </Challenge>
@@ -385,7 +383,7 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    Quel objet est envoyé au client ?
+    Qu'est‑ce qui est envoyé au client ?
     ```js
     // Express.js route
     app.get('/api/data', (req, res) => {
@@ -397,7 +395,7 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `res.json()` utilise `JSON.stringify()` internement, donc l'objet Error devient `{}`. Le client reçoit `{"error":{}}`. Pour corriger cela, utilisez `res.json({ error: error.message })` ou `res.json({ error: { message: error.message, name: error.name } })`.
+    `res.json()` utilise `JSON.stringify()` en interne, donc l'objet Error devient `{}`. Le client reçoit `{"error":{}}`. Pour corriger cela, utilisez `res.json({ error: error.message })` ou `res.json({ error: { message: error.message, name: error.name } })`.
   </div>
   </slot>
 </Challenge>
@@ -406,17 +404,17 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={11}
   group="Erreurs asynchrones"
-  title="Valeurs de rejet des Promesses"
+  title="Valeursde rejet de Promise"
   options={[
     {text: 'Toujours des objets Error'},
-    {text: 'N\'importe quelle valeur peut être un rejet', isAnswer: true},
-    {text: 'Uniquement des chaînes et des objets Error'},
-    {text: 'Automatiquement enveloppés dans Error'},
+    {text: 'Toute valeur peut être un rejet', isAnswer: true},
+    {text: 'Seulement des chaînes et des objets Error'},
+    {text: 'Enveloppé automatiquement dans Error'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Qu'est-ce que `Promise.reject()` peut accepter ?
+    Que peut accepter `Promise.reject()` ?
     ```js
     Promise.reject('string').catch(e => 
       console.log(typeof e)
@@ -432,7 +430,7 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Comme `throw`, `Promise.reject()` accepte n'importe quelle valeur - chaînes, objets, nombres, etc. Cela affiche `"string"`, `404` et `42`. Vérifiez toujours le type des valeurs capturées dans les chaînes de promesses, surtout lorsqu'on travaille avec du code tiers qui pourrait rejeter avec des valeurs non Error.
+    Comme `throw`, `Promise.reject()` accepte n'importe quelle valeur – chaînes, objets, nombres, etc. Cela affiche `"string"`, `404` et `42`. Vérifiez toujours le type des valeurs attrapées dans les chaînes de promesses, surtout lorsqu'un code tiers peut rejeter des valeurs qui ne sont pas des objets Error.
   </div>
   </slot>
 </Challenge>
@@ -440,18 +438,18 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={12}
-  group="Propriétés d'erreur"
+  group="Propriétés d’erreur"
   title="Propriétés non standard"
   options={[
-    {text: 'Toujours disponibles'},
-    {text: 'Peuvent ne pas exister dans tous les environnements', isAnswer: true},
+    {text: 'Toujours disponible'},
+    {text: 'Peut ne pas exister dans tous les environnements', isAnswer: true},
     {text: 'Uniquement dans Node.js'},
-    {text: 'Dépréciées et supprimées'},
+    {text: 'Obsolète et supprimé'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Jusqu'à quel point les propriétés `error.code` et `error.errno` sont fiables ?
+    À quel point `error.code` et `error.errno` sont-ils fiables ?
     ```js
     const fs = require('fs');
     fs.readFile('missing.txt', (err, data) => {
@@ -465,7 +463,7 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Les propriétés `code` et `errno` sont spécifiques à l'environnement (Node.js dans ce cas) et ne font pas partie de l'objet Error standard. Les erreurs dans les navigateurs n'auront pas ces propriétés. Il faut toujours vérifier leur existence : `if (err.code === 'ENOENT')` plutôt que de supposer qu'elles existent.
+    Des propriétés comme `code` et `errno` sont spécifiques à l'environnement (Node.js dans ce cas) et ne font pas partie de l'objet Error standard. Les erreurs du navigateur n'auront pas ces propriétés. Vérifiez toujours leur existence : `if (err.code === 'ENOENT')` plutôt que de supposer qu'elles existent.
   </div>
   </slot>
 </Challenge>
@@ -473,8 +471,8 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={13}
-  group="Limites d'erreurs"
-  title="Détection d'objet vs d'erreur"
+  group="Limites d'erreur"
+  title="Objet vs Détection d'erreur"
   options={[
     {text: 'true, true'},
     {text: 'false, false', isAnswer: true},
@@ -484,7 +482,7 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    Quel est le retour de ces vérifications ?
+    Que renvoient ces vérifications ?
     ```js
     const fakeError = {
       name: 'Error',
@@ -501,16 +499,16 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `instanceof Error` renvoie `false` car l'objet n'a pas été créé par le constructeur Error. `Object.prototype.toString.call()` renvoie aussi `false` (il retourne `'[object Object]'`) car il vérifie la propriété interne `[[Class]]`. Les deux méthodes identifient correctement cet objet comme un faux objet d'erreur.
+    `instanceof Error` renvoie `false` parce que l'objet n'a pas été créé par le constructeur Error. `Object.prototype.toString.call()` renvoie également `false` (il renvoie `'[object Object]'`) parce qu'il vérifie le slot interne `[[Class]]`. Les deux méthodes identifient correctement cet objet comme une fausse erreur.
   </div>
   </slot>
 </Challenge>
 
 </QuizUI>
 
-## Maîtrisez l'art de la gestion des erreurs
+## Maîtriser l’art de la gestion des erreurs
 
-Des pièges liés à la sérialisation aux échecs de instanceof entre contextes, ces concepts avancés séparent les développeurs juniors des professionnels ~expérimentés~ endommagés.
+Des pièges de sérialisation aux échecs d’`instanceof` entre contextes, ces notions avancées distinguent les développeurs juniors des professionnels ~expérimentés~ endommagés.
 
-Prêt pour d'autres défis ? Consultez notre [collection complète de quiz](../challenges/) pour des énigmes supplémentaires sur JavaScript, les algorithmes et plus encore !
+Prêt pour de nouveaux défis ? Consultez notre [collection complète de quiz](/challenges/) pour d’autres casse‑têtes sur JavaScript, les algorithmes et bien plus.
 ````
