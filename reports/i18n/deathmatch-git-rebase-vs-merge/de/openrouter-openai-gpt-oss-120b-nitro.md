@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: deathmatch-git-rebase-vs-merge
+- Locale: de
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2023-08-28--deathmatch-git-rebase-vs-merge/de/index.mdx
+- Validation: passed
+- Runtime seconds: 8.58
+- Input tokens: 8650
+- Output tokens: 2359
+- Thinking tokens: unknown
+- Cached input tokens: 3200
+- Cache write tokens: 0
+- Estimated cost: $0.000762
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: 'Deathmatch: Git Rebase vs. Merge'
@@ -127,3 +145,4 @@ Letztlich bedeutet **Rebasing**, dass man gelegentlich wieder auf irrelevante al
 - `git checkout feature/half-a-feature **--** <folder or file path>`
 - Stellen Sie sicher, dass Sie alle Änderungen, die Sie behalten wollen, vorher committen, da dies lokale Änderungen überschreibt.
 -->
+````
