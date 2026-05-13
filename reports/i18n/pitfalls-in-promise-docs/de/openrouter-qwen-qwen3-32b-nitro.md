@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: pitfalls-in-promise-docs
+- Locale: de
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2017-05-10--pitfalls-in-promise-docs/de/index.mdx
+- Validation: passed
+- Runtime seconds: 7.16
+- Input tokens: 2420
+- Output tokens: 3027
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.000920
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Fallstricke in der Promise-Dokumentation
@@ -62,3 +80,4 @@ Kurzfassung: Das `deferred`-Muster ist ein unangenehmes Anti-Muster – es bring
 > Schauen Sie sich (& star) dieses Artikels Begleitprojekt auf Github an: [Escape From Callback Mountain](https://github.com/justsml/escape-from-callback-mountain)  
 
 > Projektziel: Forschung und Entwicklung besserer funktionaler Sprachmuster in JavaScript.
+````
