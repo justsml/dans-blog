@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: protect-your-tokens
+- Locale: fr
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2018-10-27--protect-your-tokens/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 15.43
+- Input tokens: 6183
+- Output tokens: 5636
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.001847
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: 'Sécuriser vos tokens, clés API et secrets'
@@ -122,3 +140,4 @@ const src = `//maps.googleapis.com/maps/api/js?key=${key}`;
 -----------------------------------
 
 **Remarque :** Il existe d'autres _Cas d'utilisation_ pour les variables d'environnement. Certains que je n'ai pas abordés : CI/CD/tests, drapeaux de fonctionnalité et configuration au runtime pour des environnements spéciaux !
+````
