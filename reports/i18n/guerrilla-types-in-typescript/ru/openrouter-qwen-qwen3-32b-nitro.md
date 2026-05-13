@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: guerrilla-types-in-typescript
+- Locale: ru
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2023-09-06--guerrilla-types-in-typescript/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 54.61
+- Input tokens: 9539
+- Output tokens: 8420
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.002784
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Дикая типизация в TypeScript
@@ -296,3 +314,4 @@ function upsert(user: User) {
 - [Советы по TypeScript для устаревших проектов: Типы, которые вам нужны](https://sergiocarracedo.es/typescript-tips/)
 - [Отличная новая книга Мэтта Покока](https://www.totaltypescript.com/books/total-typescript-essentials)
 - [Советы по Total TypeScript](https://www.totaltypescript.com/tips)
+````
