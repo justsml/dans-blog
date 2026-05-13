@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: the-unassuming-power-of-multiple-choice-questions
+- Locale: es
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2025-01-01--the-unassuming-power-of-multiple-choice-questions/es/index.mdx
+- Validation: passed
+- Runtime seconds: 1.89
+- Input tokens: 5571
+- Output tokens: 1234
+- Thinking tokens: unknown
+- Cached input tokens: 2944
+- Cache write tokens: 0
+- Estimated cost: $0.000439
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: El poder discreto de las preguntas de opción múltiple
 subTitle: >-
@@ -91,3 +109,4 @@ El autor debe modelar los errores probables del alumno. Eso implica que el autor
 Por eso sigo usando preguntas de opción múltiple en este sitio. No porque sean eficientes, aunque lo son. Sino porque obligan a una especie de honestidad instruccional que la prosa sola puede eludir.
 
 La próxima vez que redactes una, no comiences con la respuesta correcta. Empieza por las ideas erróneas. La respuesta correcta tendrá un lugar mucho más sólido desde el cual partir.
+````
