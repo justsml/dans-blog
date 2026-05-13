@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: intro-to-promises
+- Locale: ja
+- Model: deepseek/deepseek-v4-flash
+- Target: src/content/posts/2018-08-01--intro-to-promises/ja/index.mdx
+- Validation: deferred
+- Runtime seconds: 73.36
+- Input tokens: 3838
+- Output tokens: 3841
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.001613
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Promise入門
@@ -106,3 +124,4 @@ Promiseから値を取得するのに、通常の方法（`console.log(promise)`
 * `Promise.reject(Error)` - 失敗のPromise値を作成し、後続の`.catch()`をトリガーする
 * `Promise.all([...promises])` - Promiseの配列がすべて完了するのを待つ
 * `Promise.race([...promises])` - 最初のPromiseが解決した時点で解決する
+````
