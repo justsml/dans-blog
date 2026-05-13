@@ -1,0 +1,45 @@
+{
+  "index": 12,
+  "attempt": 1,
+  "originalTitle": "Grounding vs. Hallucination",
+  "translatedTitle": "Ancrage vs Hallucination",
+  "translation": {
+    "title": "Ancrage vs Hallucination",
+    "group": "Avancé",
+    "options": [
+      {
+        "text": "Dire au modèle « ne pas halluciner » dans le prompt système"
+      },
+      {
+        "text": "Utiliser une température plus élevée pour générer des réponses plus confiantes"
+      },
+      {
+        "text": "Fournir des documents sources récupérés et demander au modèle de les citer"
+      },
+      {
+        "text": "Utiliser un modèle plus grand — l'hallucination ne se produit que dans les petits modèles"
+      }
+    ],
+    "questionProse": [
+      "La technique la plus efficace pour réduire l'hallucination dans un système d'IA en production est :"
+    ],
+    "explanationProse": [
+      "Dire à un modèle de ne pas halluciner n'arrête pas l'hallucination — le modèle n'a pas de signal introspectif fiable pour « je suis en train d'inventer ça ». Cela signifie simplement que le modèle vous dira avec confiance qu'il n'invente rien tout en inventant.\n\n    Ce qui fonctionne vraiment : **l'ancrage**. Donnez au modèle les informations dont il a besoin pour répondre correctement, et contraignez-le à ces informations :",
+      "Ensuite, validez la sortie : vérifiez que les affirmations de la réponse apparaissent dans le contexte récupéré. C'est le contrôle d'ancrage par citation — voir la discussion sur l'évaluation RAG pour l'implémentation.\n\n    Les grands modèles hallucinent moins en moyenne, mais tous les modèles hallucinent. L'ancrage est la stratégie d'atténuation, pas la taille du modèle."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Ancrage vs Hallucination\",\n  \"group\": \"Avancé\",\n  \"options\": [\n    {\n      \"text\": \"Dire au modèle « ne pas halluciner » dans le prompt système\"\n    },\n    {\n      \"text\": \"Utiliser une température plus élevée pour générer des réponses plus confiantes\"\n    },\n    {\n      \"text\": \"Fournir des documents sources récupérés et demander au modèle de les citer\"\n    },\n    {\n      \"text\": \"Utiliser un modèle plus grand — l'hallucination ne se produit que dans les petits modèles\"\n    }\n  ],\n  \"questionProse\": [\n    \"La technique la plus efficace pour réduire l'hallucination dans un système d'IA en production est :\"\n  ],\n  \"explanationProse\": [\n    \"Dire à un modèle de ne pas halluciner n'arrête pas l'hallucination — le modèle n'a pas de signal introspectif fiable pour « je suis en train d'inventer ça ». Cela signifie simplement que le modèle vous dira avec confiance qu'il n'invente rien tout en inventant.\\n\\n    Ce qui fonctionne vraiment : **l'ancrage**. Donnez au modèle les informations dont il a besoin pour répondre correctement, et contraignez-le à ces informations :\",\n    \"Ensuite, validez la sortie : vérifiez que les affirmations de la réponse apparaissent dans le contexte récupéré. C'est le contrôle d'ancrage par citation — voir la discussion sur l'évaluation RAG pour l'implémentation.\\n\\n    Les grands modèles hallucinent moins en moyenne, mais tous les modèles hallucinent. L'ancrage est la stratégie d'atténuation, pas la taille du modèle.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 871,
+    "outputTokens": 1248,
+    "cacheReadTokens": 384,
+    "cacheWriteTokens": 0,
+    "durationMs": 8253
+  },
+  "cost": {
+    "inputUsd": 0.00006925520000000001,
+    "outputUsd": 0.00034944,
+    "totalUsd": 0.00041869520000000003,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

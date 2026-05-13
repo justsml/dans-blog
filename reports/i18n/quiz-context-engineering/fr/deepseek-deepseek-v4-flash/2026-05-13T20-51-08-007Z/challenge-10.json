@@ -1,0 +1,44 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "XML Tags for Structure",
+  "translatedTitle": "Balises XML pour la structure",
+  "translation": {
+    "title": "Balises XML pour la structure",
+    "group": "Structure du prompt",
+    "options": [
+      {
+        "text": "Les balises XML ne sont valides que dans les modèles Anthropic"
+      },
+      {
+        "text": "Les balises XML aident les modèles à distinguer les instructions des données et améliorent la précision du parsing"
+      },
+      {
+        "text": "Les balises XML ralentissent la tokenisation et devraient être évitées"
+      },
+      {
+        "text": "Les balises XML sont équivalentes aux en-têtes Markdown"
+      }
+    ],
+    "questionProse": [
+      "Pourquoi de nombreux prompts de production utilisent-ils des balises de style XML comme `<document>`, `<context>`, `<instructions>` ?"
+    ],
+    "explanationProse": [
+      "Les balises de style XML fournissent des **limites structurelles explicites** que les modèles sont entraînés à reconnaître et à respecter. Elles font deux choses :\n\n    1. **Séparation** : Elles signalent au modèle où les instructions se terminent et où les données commencent — crucial pour le RAG et pour réduire le risque d'injection de prompt à partir de documents récupérés.\n    2. **Parsabilité** : Lorsque vous demandez au modèle de répondre en XML (par exemple, `<answer>...</answer>`), les balises offrent des points d'extraction propres sans bidouilles de regex.\n\n    Ce n'est pas du XML en tant que langage de balisage. C'est du XML en tant que convention de délimiteur sur laquelle les modèles sont entraînés. Cela fonctionne parce que le modèle a vu ce modèle de manière extensive lors de l'entraînement, pas parce qu'il valide des schémas.\n\n    Cela fonctionne sur la plupart des modèles ajustés par instructions assez souvent pour être utile — c'est une convention de données d'entraînement, pas une fonctionnalité de fournisseur ni une garantie de sécurité."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Balises XML pour la structure\",\n  \"group\": \"Structure du prompt\",\n  \"options\": [\n    {\n      \"text\": \"Les balises XML ne sont valides que dans les modèles Anthropic\"\n    },\n    {\n      \"text\": \"Les balises XML aident les modèles à distinguer les instructions des données et améliorent la précision du parsing\"\n    },\n    {\n      \"text\": \"Les balises XML ralentissent la tokenisation et devraient être évitées\"\n    },\n    {\n      \"text\": \"Les balises XML sont équivalentes aux en-têtes Markdown\"\n    }\n  ],\n  \"questionProse\": [\n    \"Pourquoi de nombreux prompts de production utilisent-ils des balises de style XML comme `<document>`, `<context>`, `<instructions>` ?\"\n  ],\n  \"explanationProse\": [\n    \"Les balises de style XML fournissent des **limites structurelles explicites** que les modèles sont entraînés à reconnaître et à respecter. Elles font deux choses :\\n\\n    1. **Séparation** : Elles signalent au modèle où les instructions se terminent et où les données commencent — crucial pour le RAG et pour réduire le risque d'injection de prompt à partir de documents récupérés.\\n    2. **Parsabilité** : Lorsque vous demandez au modèle de répondre en XML (par exemple, `<answer>...</answer>`), les balises offrent des points d'extraction propres sans bidouilles de regex.\\n\\n    Ce n'est pas du XML en tant que langage de balisage. C'est du XML en tant que convention de délimiteur sur laquelle les modèles sont entraînés. Cela fonctionne parce que le modèle a vu ce modèle de manière extensive lors de l'entraînement, pas parce qu'il valide des schémas.\\n\\n    Cela fonctionne sur la plupart des modèles ajustés par instructions assez souvent pour être utile — c'est une convention de données d'entraînement, pas une fonctionnalité de fournisseur ni une garantie de sécurité.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 875,
+    "outputTokens": 1393,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 11710
+  },
+  "cost": {
+    "inputUsd": 0.00012250000000000002,
+    "outputUsd": 0.00039004,
+    "totalUsd": 0.00051254,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

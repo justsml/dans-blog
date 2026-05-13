@@ -1,0 +1,44 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Chunking Strategy",
+  "translatedTitle": "Stratégie de découpage",
+  "translation": {
+    "title": "Stratégie de découpage",
+    "group": "Récupération",
+    "options": [
+      {
+        "text": "Utilisez la plus grande taille de chunk que votre fenêtre de contexte permet"
+      },
+      {
+        "text": "Utilisez toujours 512 tokens — c'est"
+      },
+      {
+        "text": "Utilisez des chunks qui se chevauchent, dimensionnés pour correspondre à la structure de votre contenu"
+      },
+      {
+        "text": "La taille du chunk n'a pas d'importance"
+      }
+    ],
+    "questionProse": [
+      "Quel est le principe le plus important lors du découpage de documents pour le RAG ?"
+    ],
+    "explanationProse": [
+      "Il n'y a pas de taille de chunk universellement correcte — cela dépend de votre contenu. Les principes importants sont :\n\n    1. **Adaptez-vous à la structure de votre contenu.** Les pages FAQ se découpent bien au niveau Q+R. Les documents juridiques se découpent bien au niveau des clauses. Le code se découpe bien au niveau des fonctions.\n    2. **Utilisez le chevauchement.** Un chunk de 512 tokens avec 64 tokens de chevauchement de chaque côté permet de récupérer les réponses qui chevauchent une limite.\n    3. **Mesurez.** Construisez un ensemble d'évaluation et testez plusieurs tailles de chunk. La taille du chunk importe plus que le modèle d'embedding.\n\n    « 512 tokens » est un point de départ raisonnable, pas une loi."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Stratégie de découpage\",\n  \"group\": \"Récupération\",\n  \"options\": [\n    {\n      \"text\": \"Utilisez la plus grande taille de chunk que votre fenêtre de contexte permet\"\n    },\n    {\n      \"text\": \"Utilisez toujours 512 tokens — c'est\"\n    },\n    {\n      \"text\": \"Utilisez des chunks qui se chevauchent, dimensionnés pour correspondre à la structure de votre contenu\"\n    },\n    {\n      \"text\": \"La taille du chunk n'a pas d'importance\"\n    }\n  ],\n  \"questionProse\": [\n    \"Quel est le principe le plus important lors du découpage de documents pour le RAG ?\"\n  ],\n  \"explanationProse\": [\n    \"Il n'y a pas de taille de chunk universellement correcte — cela dépend de votre contenu. Les principes importants sont :\\n\\n    1. **Adaptez-vous à la structure de votre contenu.** Les pages FAQ se découpent bien au niveau Q+R. Les documents juridiques se découpent bien au niveau des clauses. Le code se découpe bien au niveau des fonctions.\\n    2. **Utilisez le chevauchement.** Un chunk de 512 tokens avec 64 tokens de chevauchement de chaque côté permet de récupérer les réponses qui chevauchent une limite.\\n    3. **Mesurez.** Construisez un ensemble d'évaluation et testez plusieurs tailles de chunk. La taille du chunk importe plus que le modèle d'embedding.\\n\\n    « 512 tokens » est un point de départ raisonnable, pas une loi.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 817,
+    "outputTokens": 1747,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 9843
+  },
+  "cost": {
+    "inputUsd": 0.00011438000000000001,
+    "outputUsd": 0.0004891600000000001,
+    "totalUsd": 0.0006035400000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

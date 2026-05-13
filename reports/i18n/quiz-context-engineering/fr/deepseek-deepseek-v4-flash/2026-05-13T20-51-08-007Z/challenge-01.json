@@ -1,0 +1,44 @@
+{
+  "index": 0,
+  "attempt": 1,
+  "originalTitle": "Context Window Basics",
+  "translatedTitle": "Les bases de la fenêtre de contexte",
+  "translation": {
+    "title": "Les bases de la fenêtre de contexte",
+    "group": "Fondamentaux",
+    "options": [
+      {
+        "text": "Le nombre maximum de requêtes par minute"
+      },
+      {
+        "text": "La limite combinée de jetons pour l'entrée et la sortie"
+      },
+      {
+        "text": "Le nombre de messages dans une conversation"
+      },
+      {
+        "text": "La mémoire disponible entre les sessions"
+      }
+    ],
+    "questionProse": [
+      "Que désigne la \"fenêtre de contexte\" dans un LLM ?"
+    ],
+    "explanationProse": [
+      "La fenêtre de contexte est le nombre total de jetons qu'un modèle peut traiter en un seul appel — **entrée + sortie combinées**. Une fenêtre de contexte de 128K signifie que votre prompt + les documents récupérés + l'historique de la conversation + la réponse du modèle doivent tous tenir dans 128 000 jetons.\n\n    Cela n'a rien à voir avec les sessions, la mémoire ou les limites de débit. Lorsque vous atteignez la limite, le modèle soit tronque, génère une erreur, ou — pire — supprime silencieusement des jetons que vous n'attendiez pas."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Les bases de la fenêtre de contexte\",\n  \"group\": \"Fondamentaux\",\n  \"options\": [\n    {\n      \"text\": \"Le nombre maximum de requêtes par minute\"\n    },\n    {\n      \"text\": \"La limite combinée de jetons pour l'entrée et la sortie\"\n    },\n    {\n      \"text\": \"Le nombre de messages dans une conversation\"\n    },\n    {\n      \"text\": \"La mémoire disponible entre les sessions\"\n    }\n  ],\n  \"questionProse\": [\n    \"Que désigne la \\\"fenêtre de contexte\\\" dans un LLM ?\"\n  ],\n  \"explanationProse\": [\n    \"La fenêtre de contexte est le nombre total de jetons qu'un modèle peut traiter en un seul appel — **entrée + sortie combinées**. Une fenêtre de contexte de 128K signifie que votre prompt + les documents récupérés + l'historique de la conversation + la réponse du modèle doivent tous tenir dans 128 000 jetons.\\n\\n    Cela n'a rien à voir avec les sessions, la mémoire ou les limites de débit. Lorsque vous atteignez la limite, le modèle soit tronque, génère une erreur, ou — pire — supprime silencieusement des jetons que vous n'attendiez pas.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 772,
+    "outputTokens": 847,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 5754
+  },
+  "cost": {
+    "inputUsd": 0.00010808000000000001,
+    "outputUsd": 0.00023716,
+    "totalUsd": 0.00034524,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
