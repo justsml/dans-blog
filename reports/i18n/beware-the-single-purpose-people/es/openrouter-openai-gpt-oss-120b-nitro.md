@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: beware-the-single-purpose-people
+- Locale: es
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2025-04-03--beware-the-single-purpose-people/es/index.mdx
+- Validation: passed
+- Runtime seconds: 3.57
+- Input tokens: 7774
+- Output tokens: 2783
+- Thinking tokens: unknown
+- Cached input tokens: 4224
+- Cache write tokens: 0
+- Estimated cost: $0.000804
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 language: English
 title: Cuidado con los de propósito único
@@ -122,3 +140,4 @@ Mantente pragmático. Enfócate en los resultados. No permitas que la búsqueda 
 ¹ La ironía es que lograr un *verdadero* propósito único en los niveles más bajos requiere una complejidad inmensa oculta justo bajo la superficie.
 
 ² Aquí hablamos de pureza conceptual: la idea de que una función debe hacer solo “una cosa” lógicamente. No confundas esto con el concepto de “función pura” de la programación funcional, que no tiene efectos secundarios, una idea diferente, aunque a veces relacionada.
+````
