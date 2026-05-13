@@ -1,0 +1,47 @@
+{
+  "index": 12,
+  "attempt": 1,
+  "originalTitle": "Identify Invalid Types",
+  "translatedTitle": "Ungültige Typen identifizieren",
+  "translation": {
+    "title": "Ungültige Typen identifizieren",
+    "group": "PostgreSQL-Datentypen",
+    "options": [
+      {
+        "text": "lseg"
+      },
+      {
+        "text": "bytea"
+      },
+      {
+        "text": "tsquery"
+      },
+      {
+        "text": "tsvector"
+      },
+      {
+        "text": "tsrank"
+      }
+    ],
+    "questionProse": [
+      "Welcher davon ist ❌ kein gültiger PostgreSQL-Typ?\n\n    (Ernsthaft, diese sind (hauptsächlich) echte Typen.)"
+    ],
+    "explanationProse": [
+      "PostgreSQL hat mehrere geometrische und Volltextsuch-Typen eingebaut, aber `tsrank` gehört nicht dazu.\n\n    Die korrekten geometrischen und Volltextsuch-Typen umfassen:\n    - `lseg` (Liniensegment)\n    - `bytea` (Binärdaten)\n    - `tsquery` (Volltextsuche Abfrage)\n    - `tsvector` (Volltextsuche Dokument)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Ungültige Typen identifizieren\",\n  \"group\": \"PostgreSQL-Datentypen\",\n  \"options\": [\n    { \"text\": \"lseg\" },\n    { \"text\": \"bytea\" },\n    { \"text\": \"tsquery\" },\n    { \"text\": \"tsvector\" },\n    { \"text\": \"tsrank\" }\n  ],\n  \"questionProse\": [\n    \"Welcher davon ist ❌ kein gültiger PostgreSQL-Typ?\\n\\n    (Ernsthaft, diese sind (hauptsächlich) echte Typen.)\"\n  ],\n  \"explanationProse\": [\n    \"PostgreSQL hat mehrere geometrische und Volltextsuch-Typen eingebaut, aber `tsrank` gehört nicht dazu.\\n\\n    Die korrekten geometrischen und Volltextsuch-Typen umfassen:\\n    - `lseg` (Liniensegment)\\n    - `bytea` (Binärdaten)\\n    - `tsquery` (Volltextsuche Abfrage)\\n    - `tsvector` (Volltextsuche Dokument)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 718,
+    "outputTokens": 591,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 7294
+  },
+  "cost": {
+    "inputUsd": 0.00005744,
+    "outputUsd": 0.00014184,
+    "totalUsd": 0.00019928,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

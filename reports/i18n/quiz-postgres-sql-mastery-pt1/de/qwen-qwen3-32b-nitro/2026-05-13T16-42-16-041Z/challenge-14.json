@@ -1,0 +1,44 @@
+{
+  "index": 13,
+  "attempt": 1,
+  "originalTitle": "Check Constraint Timing",
+  "translatedTitle": "Zeitpunkt der Check-Constraint-Überprüfung",
+  "translation": {
+    "title": "Zeitpunkt der Check-Constraint-Überprüfung",
+    "group": "Einschränkungen",
+    "options": [
+      {
+        "text": "Sofort für neue oder geänderte Zeilen"
+      },
+      {
+        "text": "Beim Transaktionscommit"
+      },
+      {
+        "text": "Bei der nächsten Abfrage"
+      },
+      {
+        "text": "Nie - Einschränkungen werden nur bei INSERT überprüft"
+      }
+    ],
+    "questionProse": [
+      "Wann wird diese Einschränkung überprüft?"
+    ],
+    "explanationProse": [
+      "`NOT VALID` Einschränkungen:\n    - Werden sofort für neue Einfügungen und Updates überprüft\n    - Überprüfen nicht bestehende Zeilen nicht\n    - Können bestehende Zeilen später mit `VALIDATE CONSTRAINT` überprüfen\n    - Sind nützlich für große Tabellen\n    \n    Ohne `NOT VALID`:\n    - Einschränkung wird sofort überprüft\n    - Alle bestehenden Zeilen werden überprüft\n    - Kann bei großen Tabellen langsam sein"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Zeitpunkt der Check-Constraint-Überprüfung\",\n  \"group\": \"Einschränkungen\",\n  \"options\": [\n    {\n      \"text\": \"Sofort für neue oder geänderte Zeilen\"\n    },\n    {\n      \"text\": \"Beim Transaktionscommit\"\n    },\n    {\n      \"text\": \"Bei der nächsten Abfrage\"\n    },\n    {\n      \"text\": \"Nie - Einschränkungen werden nur bei INSERT überprüft\"\n    }\n  ],\n  \"questionProse\": [\n    \"Wann wird diese Einschränkung überprüft?\"\n  ],\n  \"explanationProse\": [\n    \"`NOT VALID` Einschränkungen:\\n    - Werden sofort für neue Einfügungen und Updates überprüft\\n    - Überprüfen nicht bestehende Zeilen nicht\\n    - Können bestehende Zeilen später mit `VALIDATE CONSTRAINT` überprüfen\\n    - Sind nützlich für große Tabellen\\n    \\n    Ohne `NOT VALID`:\\n    - Einschränkung wird sofort überprüft\\n    - Alle bestehenden Zeilen werden überprüft\\n    - Kann bei großen Tabellen langsam sein\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 722,
+    "outputTokens": 914,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 10770
+  },
+  "cost": {
+    "inputUsd": 0.00005776,
+    "outputUsd": 0.00021936,
+    "totalUsd": 0.00027712,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

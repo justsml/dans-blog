@@ -3,24 +3,24 @@
 - Locale: de
 - Model: openrouter/qwen/qwen3-32b:nitro
 - Target: src/content/posts/2024-11-27--quiz-postgres-sql-mastery-pt1/de/index.mdx
-- Validation: rejected: direct AI SDK translation failed
-- Runtime seconds: 5.13
-- Input tokens: unknown
-- Output tokens: unknown
+- Validation: deferred
+- Runtime seconds: 124.59
+- Input tokens: 12847
+- Output tokens: 13327
 - Thinking tokens: unknown
-- Cached input tokens: unknown
-- Cache write tokens: unknown
-- Estimated cost: unknown
-- Pricing source: unknown
-- Note: Command failed: bun run i18n:translate:chunked -- --slug quiz-postgres-sql-mastery-pt1 --locale de --model openrouter/qwen/qwen3-32b:nitro --chunk 6p --quiz-concurrency 20
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.004226
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
 ## Raw Output
 
 ````mdx
 ---
 unlisted: false
 social_image: ../mobile.webp
-title: 'Quiz: Deep Postgres: Teil 1'
-subTitle: Lässt SQL Sie kreischen?
+title: 'Quiz: Tiefgang Postgres: Teil 1'
+subTitle: ''
 label: 'Deep PostgreSQL #1'
 category: Quiz
 subCategory: Database
@@ -40,11 +40,11 @@ cover_icon: ../elephant-synthwave-gym-square-200.webp
 import Challenge from '../../../../../components/QuizUI/Challenge';
 import QuizUI from '../../../../../components/QuizUI/QuizUI';
 
-> **Teil 1 von 2.** [Weiter zu Teil 2](/quiz-postgres-sql-mastery-pt2/)
+> **Teil 1 von 2.** [Zu Teil 2 wechseln](../quiz-postgres-sql-mastery-pt2/)
 
-<p class="inset">PostgreSQL 🐘 ist eindeutig meine Lieblingsdatenbank! Ich lerne ständig neue Tricks und Fallstricke, also habe ich sie in einem neuen Quiz zusammengefasst.</p>
+<p class="inset">PostgreSQL 🐘 ist locker meine Lieblings-Datenbank! Ich lerne ständig neue Tricks und Fallstricke, also habe ich beschlossen, sie in ein neues Quiz zu packen!</p>
 
-Dieses Quiz deckt eine Mischung aus bekannten und weniger bekannten PostgreSQL‑Features und Fallstricken ab: von eingebauten Aggregaten über Typumwandlungen, Constraints und mehr.
+Dieser Quiz behandelt eine Mischung aus bekannten und weniger bekannten PostgreSQL-Funktionen und -Fallstricken: von eingebauten Aggregaten über Typumwandlung bis hin zu Constraints und mehr.
 
 Viel Erfolg! 🍀
 
@@ -54,7 +54,7 @@ Viel Erfolg! 🍀
   client:visible={{rootMargin: "150px"}}
   index={0}
   group="Aufwärmen: Funktionen"
-  title="Eingebaute Aggregate"
+  title="Innere Aggregatfunktionen"
   options={[
     {text: 'MIN'},
     {text: 'MAX'},
@@ -64,25 +64,25 @@ Viel Erfolg! 🍀
 >
   <slot name="question">
   <div className="question">
-    Welche ist KEINE eingebaute Aggregatfunktion in PostgreSQL?
+    Welche ist KEINE in PostgreSQL eingebaute Aggregatfunktion?
     ```sql
-    SELECT 
-      MIN(grade) as lowest,
-      MAX(grade) as highest,
-      AVG(grade) as average,
-      MEDIAN(grade) as middle
-    FROM grades;
+        SELECT 
+          MIN(grade) as lowest,
+          MAX(grade) as highest,
+          AVG(grade) as average,
+          MEDIAN(grade) as middle
+        FROM grades;
     ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `MEDIAN` ist nicht eingebaut! Du brauchst:
+    `MEDIAN` ist nicht eingebaut! Sie benötigen:
     ```sql
-    PERCENTILE_CONT(0.5) 
-    WITHIN GROUP (ORDER BY grade)
+        PERCENTILE_CONT(0.5) 
+        WITHIN GROUP (ORDER BY grade)
     ```
-    Übliche eingebaute Aggregate:
+    Gängige eingebaute Aggregatfunktionen:
     - `MIN`, `MAX`, `COUNT`
     - `AVG`, `SUM`
     - `ARRAY_AGG`, `STRING_AGG`
@@ -95,7 +95,7 @@ Viel Erfolg! 🍀
   client:visible={{rootMargin: "150px"}}
   index={1}
   group="Aufwärmen: Typumwandlung"
-  title="Varianten der Cast‑Syntax"
+  title="Castsyntax-Varianten"
   options={[
     {text: '\'95\'::INTEGER'},
     {text: 'INTEGER \'95\''},
@@ -110,16 +110,16 @@ Viel Erfolg! 🍀
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    PostgreSQL unterstützt drei Cast‑Syntaxen:
+    PostgreSQL unterstützt drei Cast-Syntaxen:
 
-    1. ANSI‑SQL: `CAST(expression AS type)`.
-    2. PostgreSQL: `expression::type`.
-    3. Typfunktion: `type 'literal'`.
+    1. ANSI SQL: `CAST(Ausdruck AS Typ)`.
+    2. PostgreSQL: `Ausdruck::Typ`.
+    3. Typfunktion: `Typ 'Literal'`.
 
-    Alle sind funktional äquivalent, aber:
+    Alle sind funktional gleichwertig, aber:
     - `CAST()` ist am portabelsten.
-    - `::` ist PostgreSQL‑spezifisch, wird aber häufig verwendet.
-    - Der infix‑artige `type 'literal'` ist weniger verbreitet, aber dennoch gültig.
+    - `::` ist PostgreSQL-spezifisch, wird aber häufig verwendet.
+    - Die Infix-Form `Typ 'Literal'` ist weniger verbreitet, ist aber gültig.
   </div>
   </slot>
 </Challenge>
@@ -127,40 +127,40 @@ Viel Erfolg! 🍀
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={2}
-  group="Einschränkungen"
-  title="UNIQUE‑Constraints und NULL"
+  group="Constraints"
+  title="UNIQUE-Constraints und NULL"
   options={[
     {text: 'Keine NULLs erlaubt'},
     {text: 'Ein NULL erlaubt'},
     {text: 'Mehrere NULLs erlaubt', isAnswer: true},
-    {text: 'Hängt von der PostgreSQL‑Version ab'},
+    {text: 'Hängt von der PostgreSQL-Version ab'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Wie viele NULL‑Werte sind hier erlaubt?
+    Wie viele NULL-Werte sind hier erlaubt?
     ```sql
-    CREATE TABLE student_emails (
-      student_id INTEGER,
-      email VARCHAR(255),
-      UNIQUE(email)
-    );
+        CREATE TABLE student_emails (
+          student_id INTEGER,
+          email VARCHAR(255),
+          UNIQUE(email)
+        );
     ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    UNIQUE‑Constraints in PostgreSQL:
-    - Erlauben mehrere NULL‑Werte.
-    - `NULL` ≠ `NULL` bei Unique‑Prüfungen.
+    UNIQUE-Constraints in PostgreSQL:
+    - Erlauben mehrere NULL-Werte.
+    - `NULL` ≠ `NULL` bei Eindeutigkeitsprüfung.
 
-    Um `NULL`‑Werte zu verhindern, füge `NOT NULL` hinzu:
+    Um `NULL`-Werte zu verhindern, `NOT NULL` hinzufügen:
     ```sql
-    CREATE TABLE student_emails (
-      student_id INTEGER,
-      email VARCHAR(255) NOT NULL,
-      UNIQUE(email)
-    );
+        CREATE TABLE student_emails (
+          student_id INTEGER,
+          email VARCHAR(255) NOT NULL,
+          UNIQUE(email)
+        );
     ```
   </div>
   </slot>
@@ -176,20 +176,20 @@ Viel Erfolg! 🍀
     {text: '2024-11-27 00:00:00'},
     {text: '2024-11-28'},
     {text: '2024-11-28 00:00:00', isAnswer: true},
-    {text: 'Fehler: ungültige Zeit'},
+    {text: 'Fehler: Ungültige Zeit'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Was gibt das zurück?
+    Was wird hier zurückgegeben?
     ```sql
-    SELECT '2024-11-27'::date + interval '24 hours';
+        SELECT '2024-11-27'::date + interval '24 hours';
     ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Intervalle sind ein mächtiges Werkzeug, um Datumsbereichs‑Operationen zu vereinfachen!
+    Intervalle sind ein leistungsstarkes Tool, um Datumsbereichsoperationen zu vereinfachen!
 
     Datumsarithmetik in PostgreSQL:
     - `+ interval '24 hours'` fügt 24 Stunden hinzu
@@ -206,14 +206,14 @@ Viel Erfolg! 🍀
   client:visible={{rootMargin: "150px"}}
   index={4}
   group="Zeitstempel"
-  title="timestamptz vs timestamp"
+  title="timestamptz vs. timestamp"
   options={[
-    {text: 'Beide belegen 8 Byte, repräsentieren aber unterschiedliche Zeitstempel‑Semantiken', isAnswer: true},
-    {text: 'They"'},
-    {text: '`timestamptz` bewahrt jede eingegebene Zeitzone'},
-    {text: '`timestamptz` speichert den ursprünglichen Zeitzonennamen oder Offset'},
-    {text: '`timestamptz` speichert einen 2‑Byte‑Wert für die Zeitzone'},
-    {text: '`timestamptz` ist der Nachfolger von `timestamp`'},
+    {text: 'Sie belegen beide 8 Bytes, repräsentieren aber unterschiedliche Zeitstempelsemantik', isAnswer: true},
+    {text: 'Sie\'},
+    {text: 'timestamptz bewahrt jede eingegebene Zeitzone erhalten'},
+    {text: 'timestamptz speichert den ursprünglichen Zeitzonennamen oder Offset'},
+    {text: 'timestamptz speichert einen 2-Byte-Wert für TZ'},
+    {text: 'timestamptz ist der Nachfolger von timestamp'},
   ]}
 >
   <slot name="question">
@@ -223,23 +223,23 @@ Viel Erfolg! 🍀
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Sie sind beide 8 Byte groß, aber sie speichern nicht denselben Werttyp.
+    Beide sind 8 Bytes groß, speichern aber nicht denselben Werttyp.
 
-    Also, was ist der Unterschied? Er liegt beim Parsen der Eingabe.
+    Was ist also der Unterschied? Er liegt in der Eingabeparsing.
 
     **`timestamptz`**
     - Normalisiert die Eingabe zu einem absoluten Zeitpunkt.
-    - Berücksichtigt die Server‑/Verbindungseinstellung `TimeZone`, wenn Eingaben ohne expliziten Offset geparst werden und bei der Ausgabe.
+    - Berücksichtigt die Server-/Verbindungseinstellung `TimeZone` beim Parsen von Eingaben ohne expliziten Offset und bei der Ausgabeanzeige.
 
     **`timestamp`**
-    - Speichert Datum und Uhrzeit ohne Zeitzonen‑Konvertierung.
-    - Bewahrt keine Zeitzoneninformationen und normalisiert sie nicht.
+    - Speichert ein Datum und eine Uhrzeit ohne Zeitzonekonvertierung.
+    - Bewahrt oder normalisiert keine Zeitzoneinformationen.
 
 
     **`timestamp`**
 
-    - Speichert Datum & Uhrzeit ohne Zeitzonenangabe.
-    - Praktisch, wenn standardisierte Daten explizit gespeichert werden sollen, sei es in UTC oder einer bestimmten Zeitzone.
+    - Speichert das Datum und die Uhrzeit ohne Zeitzoneinformationen.
+    - Nützlich für das explizite Speichern standardisierter Datumsangaben, entweder in UTC oder einer spezifischen Zeitzone.
   </div>
   </slot>
 </Challenge>
@@ -247,11 +247,11 @@ Viel Erfolg! 🍀
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={5}
-  group="Postgres-Typen"
-  title="Ungültige Typen identifizieren"
+  group="PostgreSQL-Datentypen"
+  title="Identifiziere ungültige Typen"
   options={[
     {text: 'VARCHAR(100)'},
-    {text: 'CHAR(100)'},
+    {text: 'CHAR(1o0)'},
     {text: 'TEXT'},
     {text: 'STRING(100)', isAnswer: true},
     {text: 'CHARACTER VARYING(100)'},
@@ -259,18 +259,18 @@ Viel Erfolg! 🍀
 >
   <slot name="question">
   <div className="question">
-    Welche dieser ist ❌ kein gültiger PostgreSQL‑Typ?
+    Welcher davon ist ❌ kein gültiger PostgreSQL-Datentyp?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    PostgreSQL bietet eine umfangreiche Palette an Datentypen, aber `STRING(100)` gehört nicht dazu.
+    PostgreSQL verfügt über eine reiche Auswahl an Datentypen, aber `STRING(100)` gehört nicht dazu.
 
-    Die korrekten String‑Typen sind:
-    - `VARCHAR(100)` (variable Länge)
-    - `CHAR(100)` (feste Länge)
-    - `TEXT` (unbegrenzte Länge)
-    - `CHARACTER VARYING(100)` (gleichbedeutend mit `VARCHAR(100)`)
+    Gültige Zeichentypen sind:
+    - `VARCHAR(100)` (Variabler Längentyp)
+    - `CHAR(100)` (Fixer Längentyp)
+    - `TEXT` (Unbegrenzte Länge)
+    - `CHARACTER VARYING(100)` (Gleich wie `VARCHAR(100)`)
   </div>
   </slot>
 </Challenge>
@@ -278,8 +278,8 @@ Viel Erfolg! 🍀
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={6}
-  group="Postgres-Typen"
-  title="Ungültige Typen identifizieren"
+  group="PostgreSQL-Datentypen"
+  title="Ungültige Datentypen identifizieren"
   options={[
     {text: 'int'},
     {text: 'real'},
@@ -292,20 +292,20 @@ Viel Erfolg! 🍀
 >
   <slot name="question">
   <div className="question">
-    Welche dieser ist ❌ kein gültiger PostgreSQL‑Typ?
+    Welcher davon ist ❌ kein gültiger PostgreSQL-Datentyp?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Es könnte vertraut wirken, da `decimal128` in vielen Systemen (z. B. Mongo und Java) vorkommt. Es ist kein gültiger PostgreSQL‑Typ, `decimal` ist es.
+    Es sieht vertraut aus, da `decimal128` in vielen Systemen (einschließlich Mongo und Java) ein Datentyp ist. In PostgreSQL ist es aber ungültig – hier ist es `decimal`.
 
-    Die korrekten numerischen Typen sind:
-    - `int` (4‑Byte‑Integer)
-    - `bigint` (8‑Byte‑Integer)
-    - `real` (4‑Byte‑Gleitkomma)
-    - `double precision` (8‑Byte‑Gleitkomma)
-    - `bigserial` (auto‑inkrementierender 8‑Byte‑Integer)
-    - `smallserial` (auto‑inkrementierender 2‑Byte‑Integer)
+    Die korrekten numerischen Datentypen sind:
+    - `int` (4-Byte-Ganzzahl)
+    - `bigint` (8-Byte-Ganzzahl)
+    - `real` (4-Byte-Floating-Point)
+    - `double precision` (8-Byte-Floating-Point)
+    - `bigserial` (autoinkrementierende 8-Byte-Ganzzahl)
+    - `smallserial` (autoinkrementierende 2-Byte-Ganzzahl)
   </div>
   </slot>
 </Challenge>
@@ -313,8 +313,8 @@ Viel Erfolg! 🍀
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={7}
-  group="Postgres-Typen"
-  title="Ungültige Typen identifizieren"
+  group="PostgreSQL-Typen"
+  title="Identifizieren Sie ungültige Typen"
   options={[
     {text: 'cidr'},
     {text: 'inet'},
@@ -326,20 +326,20 @@ Viel Erfolg! 🍀
 >
   <slot name="question">
   <div className="question">
-    Welcher dieser ist ❌ kein gültiger PostgreSQL‑Typ?
+    Welcher davon ist ❌ kein gültiger PostgreSQL-Typ?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Hat dich das frustriert, sogar _wütend_? Du bist nicht allein! Wie ein namenloser "Core"‑Datenbank‑Mitwirkender sagte: "Was zum Teufel, Dan?! Ich bin bei den Typ‑Fragen abgestürzt! Das ist gewalttätig, Sir! Teile meine Punktzahl nicht, haha." 😈 Bitte sehr.
+    Hab das Sie frustriert, sogar _wütend_ gemacht? Sie sind nicht allein! Um es mit einem anonymisierten "Kern"-Datenbank-Entwickler zu zitieren: "Was zum Teufel, Dan?! Ich bin auf den Typ-Fragen abgestürzt! Das ist gewalttätig, Sir! Mein Score teile ich nicht, hah." 😈 Herzlichen Willkommen.
 
-    PostgreSQLs umfangreiche Sammlung von Netzwerk‑Typen enthält kein `ipv4`. Jedes Mal, wenn ich versuche, es ohne zu googeln zu benutzen, liege ich falsch. Vielleicht lässt mich `macaddr8` denken, dass es _muss_ `ipv4`‑ und `ipv6`‑Typen geben muss. Nein, `inet` deckt beides ab. Außerdem deckt `cidr` Netzwerk‑Masken für beide ab.
+    PostgreSQLs umfassende Netzwerk-Typen enthalten _keinen_ `ipv4`-Typ. Jedes Mal, wenn ich versuche, ihn ohne Google zu verwenden, mache ich Fehler. Vielleicht macht `macaddr8` mich denken, es _müsste_ `ipv4` und `ipv6`-Typen geben. Nein, `inet` deckt beides ab. Außerdem deckt `cidr` sowohl IPv4- als auch IPv6-Netzmaske ab.
 
-    Gültige Netzwerk‑Typen sind:
-    - `cidr` (IPv4/IPv6‑Netzwerkadresse)
-    - `inet` (IPv4/IPv6‑Hostadresse)
-    - `macaddr` (MAC‑Adresse)
-    - `macaddr8` (EUI‑64‑MAC‑Adresse)
+    Gültige Netzwerk-Typen sind:
+    - `cidr` (IPv4/IPv6-Netzwerkadresse)
+    - `inet` (IPv4/IPv6-Host-Adresse)
+    - `macaddr` (MAC-Adresse)
+    - `macaddr8` (EUI-64 MAC-Adresse)
   </div>
   </slot>
 </Challenge>
@@ -347,28 +347,28 @@ Viel Erfolg! 🍀
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={8}
-  group="Postgres-Typen"
-  title="Ungültige Typen identifizieren"
+  group="PostgreSQL-Typen"
+  title="Ungültige Typen erkennen"
   options={[
     {text: 'xml'},
     {text: 'uuid'},
     {text: 'money'},
-    {text: 'currency', isAnswer: true},
+    {text: 'currency', isAnswer: true, hint: '❌ Ungültiger Typ'},
     {text: 'interval'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Welche dieser ist ❌ kein gültiger PostgreSQL‑Typ?
+    Welcher davon ist KEIN gültiger PostgreSQL-Typ? ❌
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    PostgreSQL verfügt über eine umfangreiche Menge spezialisierter Typen, aber `currency` gehört nicht dazu!
+    PostgreSQL verfügt über eine reiche Auswahl an spezialisierten Typen, aber `currency` ist keiner davon!
 
-    Die gültigen Typen sind:
-    - `xml` (XML‑Daten)
-    - `uuid` (UUID)
+    Die gültigen Typen umfassen:
+    - `xml` (XML-Daten)
+    - `uuid` (Universally Unique Identifier)
     - `money` (Währungsbetrag)
     - `interval` (Zeitintervall)
   </div>
@@ -391,21 +391,21 @@ Viel Erfolg! 🍀
 >
   <slot name="question">
   <div className="question">
-    Welcher dieser ist ❌ kein gültiger PostgreSQL‑Typ?
+    Welcher davon ist ❌ kein gültiger PostgreSQL-Typ?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    PostgreSQL verfügt über eine umfangreiche Menge spezialisierter Typen, aber `triangle` ist keiner davon.
+    PostgreSQL verfügt über eine reiche Auswahl an spezialisierten Typen, aber `triangle` ist nicht dabei.
 
-    Ich glaube, dass kommende Versionen von [GEOS](https://libgeos.org/) `Triangle`‑Unterstützung für OGC/WKT enthalten werden, was bedeutet, dass es irgendwann in PostGIS aufgenommen werden sollte. (Im Grunde könnte diese Antwort in Zukunft falsch sein.)
+    Ich glaube, zukünftige Versionen von [GEOS](https://libgeos.org/) werden `Triangle` OGC/WKT-Unterstützung beinhalten, was bedeutet, dass es vermutlich in Postgis eingefügt wird. (Grundlegende, diese Antwort könnte in der Zukunft falsch sein.)
 
     Die korrekten spezialisierten Typen umfassen:
-    - `box` (rechteckige Box)
+    - `box` (rechteckiger Box)
     - `line` (unendliche Linie)
-    - `point` (2D‑Punkt)
-    - `circle` (2D‑Kreis)
-    - `polygon` (2D‑Polygon)
+    - `point` (2D-Punkt)
+    - `circle` (2D-Kreis)
+    - `polygon` (2D-Polygon)
   </div>
   </slot>
 </Challenge>
@@ -414,7 +414,7 @@ Viel Erfolg! 🍀
   client:visible={{rootMargin: "150px"}}
   index={10}
   group="Ganzzahlarithmetik"
-  title="Ganzzahlüberlauf"
+  title="Ganzzahl-Überlauf"
   options={[
     {text: '4294967296'},
     {text: 'Fehler: Ganzzahl außerhalb des Bereichs', isAnswer: true},
@@ -424,25 +424,25 @@ Viel Erfolg! 🍀
 >
   <slot name="question">
   <div className="question">
-    Was passiert bei der Berechnung der insgesamt möglichen Student‑IDs?
+    Was passiert beim Berechnen der möglichen Studenten-IDs?
     ```sql
-    SELECT 256 * 256 * 256 * 256;
+        SELECT 256 * 256 * 256 * 256;
     ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Der `integer`‑Typ von PostgreSQL ist 32‑Bit vorzeichenbehaftet und reicht von `-2,147,483,648` bis `2,147,483,647`.
+    Der PostgreSQL-Typ `integer` ist 32-Bit mit Vorzeichen und reicht von `-2.147.483.648` bis `2.147.483.647`.
 
-    Die Berechnung `256^4` = `4,294,967,296` überschreitet diesen Bereich.
+    Die Berechnung `256^4` = `4.294.967.296` überschreitet diesen Bereich.
 
     Um größere Zahlen zu verarbeiten:
     ```sql
-    -- Use BIGINT
-    SELECT 256::bigint * 256 * 256 * 256;
+        -- Use BIGINT
+        SELECT 256::bigint * 256 * 256 * 256;
 
-    -- Or numeric for arbitrary precision
-    SELECT 256::numeric * 256 * 256 * 256;
+        -- Or numeric for arbitrary precision
+        SELECT 256::numeric * 256 * 256 * 256;
     ```
   </div>
   </slot>
@@ -452,7 +452,7 @@ Viel Erfolg! 🍀
   client:visible={{rootMargin: "150px"}}
   index={11}
   group="Datum/Uhrzeit"
-  title="Zeitstempel‑Präzision"
+  title="Zeitstempelpräzision"
   options={[
     {text: '2024-01-08 13:30:00+00'},
     {text: '2024-01-08 13:30:00.123456+00'},
@@ -462,25 +462,25 @@ Viel Erfolg! 🍀
 >
   <slot name="question">
   <div className="question">
-    Welches ist das kleinste `timestamp`‑Literal, das die maximale `time`‑Präzision in Postgres überschreitet?
+    Welches ist das kleinste `timestamp`-Literal, das die maximale `time`-Präzision in Postgres überschreitet?
     ```sql
-    CREATE TABLE class_sessions (
-      id INT GENERATED BY DEFAULT AS IDENTITY,
-      start_time timestamptz,
-      end_time timestamptz
-    );
+        CREATE TABLE class_sessions (
+          id INT GENERATED BY DEFAULT AS IDENTITY,
+          start_time timestamptz,
+          end_time timestamptz
+        );
     ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    PostgreSQL‑Zeitstempel haben eine Mikrosekunden‑Präzision (6 Dezimalstellen).
+    PostgreSQL-Zeitstempel haben Mikrosekundenpräzision (6 Dezimalstellen).
 
-    - Maximum: `.123456` (6 Ziffern)
-    - Nanosekunden (9 Ziffern) werden auf die unterstützte Präzision gerundet oder abgeschnitten
-    - Zeitzonen‑Offsets werden für `timestamptz` akzeptiert, sind aber nicht zwingend erforderlich
+    - Maximum: `.123456` (6 Stellen)
+    - Nanosekunden (9 Stellen) werden auf die unterstützte Präzision gerundet oder abgeschnitten
+    - Zeitzone-Offsets werden für `timestamptz` akzeptiert, sind aber nicht zwingend erforderlich
 
-    **Nicht so häufiges Gotcha:** Einige Sprachen/Frameworks senden Nanosekunden‑Präzision, aber PostgreSQL speichert Zeitstempel mit Mikrosekunden‑Präzision.
+    **Nicht-so-übliches Problem:** Einige Programmiersprachen/Frameworks senden Nanosekundenpräzision, aber PostgreSQL speichert Zeitstempel mit Mikrosekundenpräzision.
   </div>
   </slot>
 </Challenge>
@@ -488,7 +488,7 @@ Viel Erfolg! 🍀
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={12}
-  group="Postgres-Typen"
+  group="PostgreSQL-Datentypen"
   title="Ungültige Typen identifizieren"
   options={[
     {text: 'lseg'},
@@ -500,20 +500,20 @@ Viel Erfolg! 🍀
 >
   <slot name="question">
   <div className="question">
-    Welcher dieser ist ❌ kein gültiger PostgreSQL‑Typ?
+    Welcher davon ist ❌ kein gültiger PostgreSQL-Typ?
 
-    (Im Ernst, das sind (meist) echte Typen.)
+    (Ernsthaft, diese sind (hauptsächlich) echte Typen.)
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    PostgreSQL hat mehrere geometrische und Volltext‑Suchtypen eingebaut, aber `tsrank` gehört nicht dazu.
+    PostgreSQL hat mehrere geometrische und Volltextsuch-Typen eingebaut, aber `tsrank` gehört nicht dazu.
 
-    Die korrekten geometrischen und Volltext‑Suchtypen sind:
+    Die korrekten geometrischen und Volltextsuch-Typen umfassen:
     - `lseg` (Liniensegment)
     - `bytea` (Binärdaten)
-    - `tsquery` (Volltext‑Suchanfrage)
-    - `tsvector` (Volltext‑Dokument)
+    - `tsquery` (Volltextsuche Abfrage)
+    - `tsvector` (Volltextsuche Dokument)
   </div>
   </slot>
 </Challenge>
@@ -522,38 +522,38 @@ Viel Erfolg! 🍀
   client:visible={{rootMargin: "150px"}}
   index={13}
   group="Einschränkungen"
-  title="Zeitpunkt der Check-Constraint"
+  title="Zeitpunkt der Check-Constraint-Überprüfung"
   options={[
     {text: 'Sofort für neue oder geänderte Zeilen', isAnswer: true},
-    {text: 'Beim Transaktionsabschluss'},
+    {text: 'Beim Transaktionscommit'},
     {text: 'Bei der nächsten Abfrage'},
-    {text: 'Niemals – Constraints werden nur bei INSERT geprüft'},
+    {text: 'Nie - Einschränkungen werden nur bei INSERT überprüft'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Wann wird diese Grade-Constraint geprüft?
+    Wann wird diese Einschränkung überprüft?
     ```sql
-    ALTER TABLE students 
-    ADD CONSTRAINT valid_grade 
-    CHECK (
-      (grade >= 0 AND grade <= 100) OR 
-      grade IS NULL
-    ) NOT VALID;
+        ALTER TABLE students 
+        ADD CONSTRAINT valid_grade 
+        CHECK (
+          (grade >= 0 AND grade <= 100) OR 
+          grade IS NULL
+        ) NOT VALID;
     ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `NOT VALID`-Constraints:
-    - Werden sofort für neue Inserts und Updates geprüft
-    - Validieren nicht vorhandene Zeilen
-    - Können vorhandene Zeilen später mit `VALIDATE CONSTRAINT` validieren
+    `NOT VALID` Einschränkungen:
+    - Werden sofort für neue Einfügungen und Updates überprüft
+    - Überprüfen nicht bestehende Zeilen nicht
+    - Können bestehende Zeilen später mit `VALIDATE CONSTRAINT` überprüfen
     - Sind nützlich für große Tabellen
 
     Ohne `NOT VALID`:
-    - Constraint wird sofort geprüft
-    - Alle vorhandenen Zeilen werden validiert
+    - Einschränkung wird sofort überprüft
+    - Alle bestehenden Zeilen werden überprüft
     - Kann bei großen Tabellen langsam sein
   </div>
   </slot>
@@ -561,11 +561,11 @@ Viel Erfolg! 🍀
 
 </QuizUI>
 
-Gut gemacht! Du hast inmehreren Bereichen von PostgreSQL tief gegraben! 🐘
+Gut gemacht! Sie haben sich intensiv in mehrere Bereiche von PostgreSQL eingearbeitet! 🐘
 
-Ich hoffe, du hast etwas Neues gelernt oder zumindest eine Punktzahl, mit der du prahlen kannst! 🏆
+Ich hoffe, Sie haben etwas Neues gelernt, oder zumindest einen Punktestand zum Prahlen erzielt! 🏆
 
-<p class="inset">Sieh dir [Teil 2](../quiz-postgres-sql-mastery-pt2/) für mehr Postgres‑Spaß an! 🚀</p>
+<p class="inset">Weitere Postgres-Freude in [Teil 2](/quiz-postgres-sql-mastery-pt2/) finden! 🚀</p>
 
-Willst du mehr Nervenkitzel im Leben? Schau dir meine [Quiz‑Sammlung](../challenges/) für endlosen* Spaß an!
+Möchten Sie noch mehr Adrenalin im Leben? Schauen Sie in meine [Quiz-Sammlung](/challenges/) für endlose* Freude!
 ````

@@ -1,0 +1,50 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Identify Invalid Types",
+  "translatedTitle": "Ungültige Typen identifizieren",
+  "translation": {
+    "title": "Ungültige Typen identifizieren",
+    "group": "Postgres-Typen",
+    "options": [
+      {
+        "text": "box"
+      },
+      {
+        "text": "line"
+      },
+      {
+        "text": "point"
+      },
+      {
+        "text": "circle"
+      },
+      {
+        "text": "polygon"
+      },
+      {
+        "text": "triangle"
+      }
+    ],
+    "questionProse": [
+      "Welcher davon ist ❌ kein gültiger PostgreSQL-Typ?"
+    ],
+    "explanationProse": [
+      "PostgreSQL verfügt über eine reiche Auswahl an spezialisierten Typen, aber `triangle` ist nicht dabei.\n\n    Ich glaube, zukünftige Versionen von [GEOS](https://libgeos.org/) werden `Triangle` OGC/WKT-Unterstützung beinhalten, was bedeutet, dass es vermutlich in Postgis eingefügt wird. (Grundlegende, diese Antwort könnte in der Zukunft falsch sein.)\n\n    Die korrekten spezialisierten Typen umfassen:\n    - `box` (rechteckiger Box)\n    - `line` (unendliche Linie)\n    - `point` (2D-Punkt)\n    - `circle` (2D-Kreis)\n    - `polygon` (2D-Polygon)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Ungültige Typen identifizieren\",\n  \"group\": \"Postgres-Typen\",\n  \"options\": [\n    { \"text\": \"box\" },\n    { \"text\": \"line\" },\n    { \"text\": \"point\" },\n    { \"text\": \"circle\" },\n    { \"text\": \"polygon\" },\n    { \"text\": \"triangle\" }\n  ],\n  \"questionProse\": [\n    \"Welcher davon ist ❌ kein gültiger PostgreSQL-Typ?\"\n  ],\n  \"explanationProse\": [\n    \"PostgreSQL verfügt über eine reiche Auswahl an spezialisierten Typen, aber `triangle` ist nicht dabei.\\n\\n    Ich glaube, zukünftige Versionen von [GEOS](https://libgeos.org/) werden `Triangle` OGC/WKT-Unterstützung beinhalten, was bedeutet, dass es vermutlich in Postgis eingefügt wird. (Grundlegende, diese Antwort könnte in der Zukunft falsch sein.)\\n\\n    Die korrekten spezialisierten Typen umfassen:\\n    - `box` (rechteckiger Box)\\n    - `line` (unendliche Linie)\\n    - `point` (2D-Punkt)\\n    - `circle` (2D-Kreis)\\n    - `polygon` (2D-Polygon)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 765,
+    "outputTokens": 673,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 7418
+  },
+  "cost": {
+    "inputUsd": 0.0000612,
+    "outputUsd": 0.00016151999999999998,
+    "totalUsd": 0.00022271999999999998,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "index": 1,
+  "attempt": 1,
+  "originalTitle": "Cast Syntax Variations",
+  "translatedTitle": "Castsyntax-Varianten",
+  "translation": {
+    "title": "Castsyntax-Varianten",
+    "group": "Aufwärmen: Typumwandlung",
+    "options": [
+      {
+        "text": "'95'::INTEGER"
+      },
+      {
+        "text": "INTEGER '95'"
+      },
+      {
+        "text": "CAST('95', INTEGER)"
+      },
+      {
+        "text": "CAST('95' AS INTEGER)"
+      }
+    ],
+    "questionProse": [
+      "Welche dieser Typumwandlungen ist **ungültig** ❌?"
+    ],
+    "explanationProse": [
+      "PostgreSQL unterstützt drei Cast-Syntaxen:\n\n    1. ANSI SQL: `CAST(Ausdruck AS Typ)`.\n    2. PostgreSQL: `Ausdruck::Typ`.\n    3. Typfunktion: `Typ 'Literal'`.\n\n    Alle sind funktional gleichwertig, aber:\n    - `CAST()` ist am portabelsten.\n    - `::` ist PostgreSQL-spezifisch, wird aber häufig verwendet.\n    - Die Infix-Form `Typ 'Literal'` ist weniger verbreitet, ist aber gültig."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Castsyntax-Varianten\",\n  \"group\": \"Aufwärmen: Typumwandlung\",\n  \"options\": [\n    {\n      \"text\": \"'95'::INTEGER\"\n    },\n    {\n      \"text\": \"INTEGER '95'\"\n    },\n    {\n      \"text\": \"CAST('95', INTEGER)\"\n    },\n    {\n      \"text\": \"CAST('95' AS INTEGER)\"\n    }\n  ],\n  \"questionProse\": [\n    \"Welche dieser Typumwandlungen ist **ungültig** ❌?\"\n  ],\n  \"explanationProse\": [\n    \"PostgreSQL unterstützt drei Cast-Syntaxen:\\n\\n    1. ANSI SQL: `CAST(Ausdruck AS Typ)`.\\n    2. PostgreSQL: `Ausdruck::Typ`.\\n    3. Typfunktion: `Typ 'Literal'`.\\n\\n    Alle sind funktional gleichwertig, aber:\\n    - `CAST()` ist am portabelsten.\\n    - `::` ist PostgreSQL-spezifisch, wird aber häufig verwendet.\\n    - Die Infix-Form `Typ 'Literal'` ist weniger verbreitet, ist aber gültig.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 728,
+    "outputTokens": 829,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2060
+  },
+  "cost": {
+    "inputUsd": 0.000058240000000000005,
+    "outputUsd": 0.00019895999999999998,
+    "totalUsd": 0.00025719999999999996,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

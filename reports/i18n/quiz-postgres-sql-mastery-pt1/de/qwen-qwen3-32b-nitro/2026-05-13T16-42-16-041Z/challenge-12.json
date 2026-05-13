@@ -1,0 +1,44 @@
+{
+  "index": 11,
+  "attempt": 1,
+  "originalTitle": "Timestamp Precision",
+  "translatedTitle": "Zeitstempelpräzision",
+  "translation": {
+    "title": "Zeitstempelpräzision",
+    "group": "Datum/Uhrzeit",
+    "options": [
+      {
+        "text": "2024-01-08 13:30:00+00"
+      },
+      {
+        "text": "2024-01-08 13:30:00.123456+00"
+      },
+      {
+        "text": "2024-01-08 13:30:00.123456789+00"
+      },
+      {
+        "text": "2024-01-08 13:30:00.1234567"
+      }
+    ],
+    "questionProse": [
+      "Welches ist das kleinste `timestamp`-Literal, das die maximale `time`-Präzision in Postgres überschreitet?"
+    ],
+    "explanationProse": [
+      "PostgreSQL-Zeitstempel haben Mikrosekundenpräzision (6 Dezimalstellen).\n\n    - Maximum: `.123456` (6 Stellen)\n    - Nanosekunden (9 Stellen) werden auf die unterstützte Präzision gerundet oder abgeschnitten\n    - Zeitzone-Offsets werden für `timestamptz` akzeptiert, sind aber nicht zwingend erforderlich\n\n    **Nicht-so-übliches Problem:** Einige Programmiersprachen/Frameworks senden Nanosekundenpräzision, aber PostgreSQL speichert Zeitstempel mit Mikrosekundenpräzision."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Zeitstempelpräzision\",\n  \"group\": \"Datum/Uhrzeit\",\n  \"options\": [\n    {\n      \"text\": \"2024-01-08 13:30:00+00\"\n    },\n    {\n      \"text\": \"2024-01-08 13:30:00.123456+00\"\n    },\n    {\n      \"text\": \"2024-01-08 13:30:00.123456789+00\"\n    },\n    {\n      \"text\": \"2024-01-08 13:30:00.1234567\"\n    }\n  ],\n  \"questionProse\": [\n    \"Welches ist das kleinste `timestamp`-Literal, das die maximale `time`-Präzision in Postgres überschreitet?\"\n  ],\n  \"explanationProse\": [\n    \"PostgreSQL-Zeitstempel haben Mikrosekundenpräzision (6 Dezimalstellen).\\n\\n    - Maximum: `.123456` (6 Stellen)\\n    - Nanosekunden (9 Stellen) werden auf die unterstützte Präzision gerundet oder abgeschnitten\\n    - Zeitzone-Offsets werden für `timestamptz` akzeptiert, sind aber nicht zwingend erforderlich\\n\\n    **Nicht-so-übliches Problem:** Einige Programmiersprachen/Frameworks senden Nanosekundenpräzision, aber PostgreSQL speichert Zeitstempel mit Mikrosekundenpräzision.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 838,
+    "outputTokens": 989,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2756
+  },
+  "cost": {
+    "inputUsd": 0.00006704,
+    "outputUsd": 0.00023736000000000002,
+    "totalUsd": 0.0003044,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

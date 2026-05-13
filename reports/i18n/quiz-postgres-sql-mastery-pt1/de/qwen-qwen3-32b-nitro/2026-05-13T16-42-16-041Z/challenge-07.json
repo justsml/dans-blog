@@ -1,0 +1,53 @@
+{
+  "index": 6,
+  "attempt": 1,
+  "originalTitle": "Identify Invalid Types",
+  "translatedTitle": "Ungültige Datentypen identifizieren",
+  "translation": {
+    "title": "Ungültige Datentypen identifizieren",
+    "group": "PostgreSQL-Datentypen",
+    "options": [
+      {
+        "text": "int"
+      },
+      {
+        "text": "real"
+      },
+      {
+        "text": "bigint"
+      },
+      {
+        "text": "bigserial"
+      },
+      {
+        "text": "smallserial"
+      },
+      {
+        "text": "decimal128"
+      },
+      {
+        "text": "double precision"
+      }
+    ],
+    "questionProse": [
+      "Welcher davon ist ❌ kein gültiger PostgreSQL-Datentyp?"
+    ],
+    "explanationProse": [
+      "Es sieht vertraut aus, da `decimal128` in vielen Systemen (einschließlich Mongo und Java) ein Datentyp ist. In PostgreSQL ist es aber ungültig – hier ist es `decimal`.\n\n    Die korrekten numerischen Datentypen sind:\n    - `int` (4-Byte-Ganzzahl)\n    - `bigint` (8-Byte-Ganzzahl)\n    - `real` (4-Byte-Floating-Point)\n    - `double precision` (8-Byte-Floating-Point)\n    - `bigserial` (autoinkrementierende 8-Byte-Ganzzahl)\n    - `smallserial` (autoinkrementierende 2-Byte-Ganzzahl)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Ungültige Datentypen identifizieren\",\n  \"group\": \"PostgreSQL-Datentypen\",\n  \"options\": [\n    { \"text\": \"int\" },\n    { \"text\": \"real\" },\n    { \"text\": \"bigint\" },\n    { \"text\": \"bigserial\" },\n    { \"text\": \"smallserial\" },\n    { \"text\": \"decimal128\" },\n    { \"text\": \"double precision\" }\n  ],\n  \"questionProse\": [\n    \"Welcher davon ist ❌ kein gültiger PostgreSQL-Datentyp?\"\n  ],\n  \"explanationProse\": [\n    \"Es sieht vertraut aus, da `decimal128` in vielen Systemen (einschließlich Mongo und Java) ein Datentyp ist. In PostgreSQL ist es aber ungültig – hier ist es `decimal`.\\n\\n    Die korrekten numerischen Datentypen sind:\\n    - `int` (4-Byte-Ganzzahl)\\n    - `bigint` (8-Byte-Ganzzahl)\\n    - `real` (4-Byte-Floating-Point)\\n    - `double precision` (8-Byte-Floating-Point)\\n    - `bigserial` (autoinkrementierende 8-Byte-Ganzzahl)\\n    - `smallserial` (autoinkrementierende 2-Byte-Ganzzahl)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 770,
+    "outputTokens": 779,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 8057
+  },
+  "cost": {
+    "inputUsd": 0.00006159999999999999,
+    "outputUsd": 0.00018695999999999999,
+    "totalUsd": 0.00024856,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
