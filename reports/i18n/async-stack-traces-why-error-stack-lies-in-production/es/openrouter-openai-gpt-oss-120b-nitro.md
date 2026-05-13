@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: async-stack-traces-why-error-stack-lies-in-production
+- Locale: es
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2025-12-29--async-stack-traces-why-error-stack-lies-in-production/es/index.mdx
+- Validation: passed
+- Runtime seconds: 5.25
+- Input tokens: 4621
+- Output tokens: 879
+- Thinking tokens: unknown
+- Cached input tokens: 1280
+- Cache write tokens: 0
+- Estimated cost: $0.000338
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: 'Rastros de pila asíncronos: por qué `Error.stack` te miente'
 subTitle: La cola de microtareas se comió mi tarea (y mi contexto de depuración).
@@ -95,3 +113,4 @@ No importa cuántos `await` haya entre medio. El contexto sobrevive.
 3. Traza, no apiles. Usa OpenTelemetry. Visualiza la cadena causal entre servicios, que es lo que realmente te importa.
 
 Tu código es async. Tu contexto de depuración no debería serlo.
+````
