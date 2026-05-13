@@ -4,14 +4,14 @@
   "slug": "quiz-can-you-count-to-bigint",
   "locale": "fr",
   "startedAt": "2026-05-13T15:41:29.359Z",
-  "updatedAt": "2026-05-13T15:41:52.581Z",
+  "updatedAt": "2026-05-13T15:41:59.014Z",
   "modelsRequested": [
     "openrouter/openai/gpt-oss-120b:nitro",
     "openrouter/qwen/qwen3-32b:nitro"
   ],
-  "attemptedModels": 1,
+  "attemptedModels": 2,
   "skippedModels": 0,
-  "rejectedModels": 0,
+  "rejectedModels": 1,
   "candidateModels": 1,
   "totals": {
     "inputTokens": 13248,
@@ -20,13 +20,13 @@
     "cachedInputTokens": 5120,
     "cacheWriteTokens": 0,
     "estimatedCostUsd": 0.001864,
-    "hasUnknownInputTokens": false,
-    "hasUnknownOutputTokens": false,
+    "hasUnknownInputTokens": true,
+    "hasUnknownOutputTokens": true,
     "hasUnknownThinkingTokens": true,
-    "hasUnknownCachedInputTokens": false,
-    "hasUnknownCacheWriteTokens": false,
-    "hasUnknownEstimatedCost": false,
-    "runtimeSeconds": "31.88"
+    "hasUnknownCachedInputTokens": true,
+    "hasUnknownCacheWriteTokens": true,
+    "hasUnknownEstimatedCost": true,
+    "runtimeSeconds": "37.79"
   },
   "attempts": [
     {
@@ -45,6 +45,17 @@
         },
         "estimatedCostUsd": 0.001864152,
         "pricingSource": "local-openrouter-estimate"
+      }
+    },
+    {
+      "model": "openrouter/qwen/qwen3-32b:nitro",
+      "status": "rejected",
+      "validationStatus": "rejected: direct AI SDK translation failed",
+      "reportPath": "reports/i18n/quiz-can-you-count-to-bigint/fr/openrouter-qwen-qwen3-32b-nitro.md",
+      "note": "Command failed: bun run i18n:translate:chunked -- --slug quiz-can-you-count-to-bigint --locale fr --model openrouter/qwen/qwen3-32b:nitro --chunk 6p --quiz-concurrency 20",
+      "telemetry": {
+        "runtimeSeconds": "5.91",
+        "tokens": {}
       }
     }
   ]

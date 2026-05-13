@@ -1,0 +1,436 @@
+# Translation Candidate
+- Slug: quiz-can-you-count-to-bigint
+- Locale: fr
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2024-11-06--quiz-can-you-count-to-bigint/fr/index.mdx
+- Validation: rejected: direct AI SDK translation failed
+- Runtime seconds: 5.91
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Cache write tokens: unknown
+- Estimated cost: unknown
+- Pricing source: unknown
+- Note: Command failed: bun run i18n:translate:chunked -- --slug quiz-can-you-count-to-bigint --locale fr --model openrouter/qwen/qwen3-32b:nitro --chunk 6p --quiz-concurrency 20
+## Raw Output
+
+````mdx
+---
+unlisted: false
+title: 'Quiz : Pouvez‑vous compter sur JavaScript ?'
+subTitle: Vous maîtrisez la différence entre `parseInt` et `parseFloat` ?
+label: Numbers
+date: '2024-10-31'
+modified: '2024-11-09'
+social_image: ../desktop-social.webp
+category: Quiz
+subCategory: JavaScript
+tags:
+  - quiz
+  - data-structures
+  - algorithms
+cover: ../victor-freitas-hOuJYX2K5DA-unsplash-square.webp
+cover_full_width: ../victor-freitas-hOuJYX2K5DA-unsplash-wide.webp
+cover_mobile: ../victor-freitas-hOuJYX2K5DA-unsplash-square.webp
+cover_icon: ../victor-freitas-hOuJYX2K5DA-unsplash-square.webp
+---
+import Challenge from '../../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../../components/QuizUI/QuizUI';
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="Échauffement"
+  title="Analyse avec `parseInt`"
+  options={[
+    {text: '123456', isAnswer: true},
+    {text: '123'},
+    {text: '12345600'},
+    {text: '456.00'},
+    {text: 'Erreur'},
+    {text: 'NaN'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```tsx
+    parseInt(" 123456.00")
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `parseInt` ignore les espaces et analyse la séquence initiale de chiffres comme un entier. Ici, il s’arrête au point décimal, donc seul `123456` est renvoyé.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="Analyse"
+  title="Gestion des virgules"
+  options={[
+    {text: '123', isAnswer: true},
+    {text: '12345600'},
+    {text: '123456.00'},
+    {text: '456.00'},
+    {text: 'Erreur'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```tsx
+    parseInt("123,456.00")
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    En général, `parseInt` s’arrête de parser lorsqu’il rencontre un caractère non numérique. Ici, il s’arrête à la virgule, donc seul `123` est renvoyé.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="Mathématiques"
+  title="Précision avec les nombres à virgule flottante"
+  options={[
+    {text: '0.1 + 0.2 === 0.3'},
+    {text: 'false', isAnswer: true},
+    {text: 'true'},
+    {text: 'NaN'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```tsx
+    0.1 + 0.2 === 0.3
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    En raison des erreurs de précision des nombres à virgule flottante, `0.1 + 0.2` n’est pas exactement égal à `0.3`. À cause de la façon dont les nombres à virgule flottante sont stockés en mémoire, le résultat est `0.30000000000000004`. Le standard IEEE 754 qui gère l’arithmétique en virgule flottante est en cause : il ne peut pas représenter certains nombres exactement. C’est un problème commun à tous les langages de programmation. Au final vous tomberez sur un décimal qui se répète à l’infini, et quel que soit le langage, l’ordinateur doit simplement arrêter de poursuivre des chiffres infiniment répétés.
+
+    Certains langages comme Python et Java disposent de `Decimal` ou `BigDecimal` pour gérer cela, mais ce n’est pas intégré à JavaScript. Vous pouvez utiliser des bibliothèques comme `big.js` ou `decimal.js` pour ces cas.
+
+    (Note : Certains langages sont conçus pour gérer les fractions, les nombres imaginaires, etc., à un niveau logique supérieur, en préservant les expressions littérales. Mais ils doivent tout de même faire face aux mêmes problèmes de précision des nombres à virgule flottante au niveau matériel.)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="Nombres débordants"
+  title="Gestion de l'infini"
+  options={[
+    {text: 'Infinity', isAnswer: true},
+    {text: 'NaN'},
+    {text: 'Error'},
+    {text: 'undefined'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```tsx
+    Number.MAX_VALUE * 2
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Étant donné que `Number.MAX_VALUE` est le plus grand nombre **représentable** ordinaire en JavaScript, dépasser sa limite provoquera rapidement un débordement – vous obtiendrez essentiellement des résultats dénués de sens. Le multiplier par `2` donne `Infinity`.
+
+    *Vous savez, JavaScript, c'est parfois comme ça.*
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="Mise en forme"
+  title="Conversion de chaîne avec `.toFixed()`"
+  options={[
+    {text: 'TypeError'},
+    {text: 'SyntaxError'},
+    {text: '"5"'},
+    {text: '5'},
+    {text: '"5.00"', isAnswer: true},
+    {text: '5.0'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Que pourrait‑il faire ?
+    ```tsx
+    5..toFixed(2)
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `.toFixed(2)` renvoie une représentation sous forme de chaîne de `5` avec deux décimales, donc le résultat est `"5.00"`.
+
+    Le double point (`5..toFixed(2)`) est une « astuce » pour accéder au modèle d'objet des littéraux numériques.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="Comparaison des types"
+  title="Comparaison d'égalité entre `parseInt` et `parseFloat`"
+  options={[
+    {text: 'vrai', isAnswer: true},
+    {text: 'faux'},
+    {text: 'NaN'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```jsx
+    parseInt("42") === parseFloat("42")
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    En JavaScript, `parseInt` et `parseFloat` interprètent tous deux la chaîne `"42"` comme le nombre `42`. Ainsi, la comparaison `parseInt("42") === parseFloat("42")` évalue à `true`. `parseInt` s’arrête dès le premier caractère non numérique, tandis que `parseFloat` continue tant qu’il rencontre des caractères faisant partie d’un nombre à virgule flottante. Cependant, comme il n’y a ni point décimal ni autre caractère non numérique dans `"42"`, les deux fonctions renvoient la même valeur.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="Égalité"
+  title="Comparaison d'égalité avec BigInt"
+  options={[
+    {text: 'TypeError'},
+    {text: 'true'},
+    {text: 'false', isAnswer: true},
+    {text: 'NaN'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```jsx
+    BigInt("42") === parseInt("42")
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    [`BigInt`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt) est un type différent de `number`, donc `parseInt("42")` (un nombre ordinaire) n'est pas strictement égal à `BigInt("42")`. Pour comparer, vous devez convertir les deux au même type : `BigInt(parseInt("42")) === BigInt("42")`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="Basé"
+  title="Analyse hexadécimale"
+  options={[
+    {text: 'vrai', isAnswer: true},
+    {text: 'faux'},
+    {text: 'NaN'},
+    {text: 'Doit être en majuscules : 2A'},
+    {text: 'Erreur'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Quel sera le résultat ?
+    ```jsx
+    parseInt("0x2A") === parseInt("2a", 16)
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Toute chaîne d'entrée qui commence par `0x` est automatiquement traitée comme une valeur hexadécimale (radix `16`).
+    Elle est donc équivalente à passer un radix de 16. Ainsi, `parseInt("0x2A")` est identique à `parseInt("2a", 16)`. (C'est insensible à la casse.)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="Basé"
+  title="Analyse avec base"
+  options={[
+    {text: '255', isAnswer: true},
+    {text: '0'},
+    {text: '16'},
+    {text: '0.16'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    C’est quoi le truc ici ?
+    ```jsx
+    parseInt('0xFF', 16)
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `parseInt` avec une base hexadécimale (`16`) convertit `"FF"` en `255` décimal. Vous avez peut‑être vu cela dans les codes couleur CSS RGB/Hex.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="Number[]"
+  title="Utilisation de `.map(parseInt)`"
+  options={[
+    {text: '[24, NaN, NaN]', isAnswer: true},
+    {text: '[24, NaN, 42]'},
+    {text: '[24, 42]'},
+    {text: 'NaN'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```jsx
+    [24, 'One', 42].map(parseInt)
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Le deuxième argument de `parseInt` (la base) correspond à l'argument `index` des méthodes de tableau. Cela entraîne des résultats inattendus, car `parseInt("One", 1)` renvoie `NaN` à cause de l'entrée invalide.
+
+    Le premier élément, `24`, est analysé comme `24` en base 0 (détection automatique), il reste donc `24`. Le deuxième élément, `'One'`, est analysé comme `NaN` en base 1. Le troisième élément, `42`, est analysé en base 2. En base 2, `'42'` donne `NaN`, donc le résultat est `[24, NaN, NaN]`.
+
+    C’est un piège fréquent avec `parseInt` et `map`. Si vous voulez convertir un tableau de chaînes en nombres, la seule méthode « intégrée » sûre est `.map(Number)` ou en ajoutant une fonction de rappel `.map(x => parseInt(x, 10))`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="Number[]"
+  title="Utiliser `.map(Number)`"
+  options={[
+    {text: '[24, NaN, 34]', isAnswer: true},
+    {text: '[24, NaN, 42]'},
+    {text: '[24, 1, 42]'},
+    {text: '[24, 42]'},
+    {text: 'NaN'},
+    {text: 'TypeError'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```jsx
+    [24, 'Twenty1', 0o42].map(Number)
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `Number` convertit les valeurs en type numérique de façon plus stricte que `parseInt`. Ici, `'Twenty1'` devient `NaN`, tandis que `0o42` est reconnu comme un littéral octal et converti en `34`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="Analyse"
+  title="Gestion des null"
+  options={[
+    {text: '0 NaN'},
+    {text: '0 0'},
+    {text: 'NaN NaN'},
+    {text: 'NaN 0', isAnswer: true},
+    {text: 'null null'},
+    {text: 'TypeError'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Quel sera le résultat de ce code ?
+    ```jsx
+    console.log(parseInt(null), Number(null))
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `parseInt` contraint l’entrée en chaîne, donc `null` devient `"null"`. Comme `"null"` ne contient aucun caractère décimal valide, il renvoie `NaN`.
+
+    `Number(null)` renvoie `0`. parce que JS aime vous surprendre.
+    Pourquoi ? Je pourrais approfondir si cela intéresse.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="Analyse"
+  title="Analyse en base"
+  options={[
+    {text: 'NaN'},
+    {text: 'null'},
+    {text: 'undefined'},
+    {text: '36'},
+    {text: '1112745', isAnswer: true},
+    {text: '01001001'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Quel sera le résultat de ce sort ?
+    ```jsx
+    parseInt(null, 36)
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Comme `parseInt` convertit toujours l'entrée en chaîne, `null` devient la chaîne `"null"`.
+
+    En base 36 (hexatrigesimale, si vous suivez), la chaîne `"null"` représente `1112745`.
+
+    Les valeurs séquentielles de `nulk`, `null` et `nulm` sont respectivement `1112744`, `1112745` et `1112746` en base 36.
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+
+<section className="scroll-x">
+## Tableau comparatif
+
+| Function | `parseInt` | `parseFloat` | `Number` | `BigInt` |
+| --- | --- | --- | --- | --- |
+| Ignores Whitespace | ✅ | ✅ | ✅ | ✅ |
+| `.map(FN)`  | ❌ | ☑️ | ✅ | ✅ |
+| Supports Radix Arg | ✅ | ❌ | ❌ | ❌ |
+| Binary/Octal/Hex literals | ✅ | ❌ | ✅ | ✅ |
+| Invalid chars `42 oh no` | `42` | `42`  | `NaN` | `SyntaxError` |
+</section>
+
+<h2>Comment vous en êtes‑vous sorti ? 🧐</h2>
+
+{/* <h4>Are you ok?</h4> */}
+
+<p class="inset">Vous cherchez une pause après tant de binaire ?<br />Pftt, rappelez‑vous : faites une pause *après* les compétences ! <br /><br />Allez sur [ma salle](/challenges/) pour en décimer d’autres ! 💪</p>
+````
