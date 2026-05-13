@@ -1,21 +1,7 @@
-# I18n Judge Report: llm-connection-strings (de)
+# Translation Judge
 
-## Candidate Comparison
+- Selected candidate: fb200df184e8e238adf97455d50b2234f27951c9
+- Selected model: openrouter/qwen/qwen3.6-plus
+- Judge model: openrouter/google/gemini-3-flash-preview
 
-| Model | Commit | Pros | Cons |
-| :--- | :--- | :--- | :--- |
-| **Qwen 3.6 Plus** | `fb200df` | Good technical flow, natural German. | Slightly formal in some phrasing. |
-| **DeepSeek V4 Flash** | `710471f` | Very direct, punchy, captures Dan's "snark" well. | "Gras anfassen" is a bit literal. |
-| **MiniMax M2.7** | `fbd9f9e` | Solid translation, accurate technical terms. | A bit repetitive in "Das Fazit". |
-
-## Decision
-
-**Winner: DeepSeek V4 Flash (`710471f`)**
-
-DeepSeek captured the tone of the blog best. Phrases like "Warum zum Teufel nicht" and "Gras anfassen" (though literal, it works in this context for "touch grass") fit Dan's direct and slightly aggressive style. It also handled the "Vibe-Jahr" and "CLI-tauglich" concepts very well.
-
-## Polishing Notes
-
-- Minor adjustments to the "Gras anfassen" phrasing for better flow.
-- Ensure the hero image alt text and caption are idiomatic.
-- Verified MDX structure and asset paths (`../`).
+The candidate fb200df184e8e238adf97455d50b2234f27951c9 provides the most natural and direct translation, capturing Dan's informal yet technical style (e.g., using 'du' and 'klauen'). It correctly handles MDX paths and preserves all headings. It also correctly translates the 'touch grass' idiom into a culturally appropriate German equivalent ('berühr etwas Gras').
