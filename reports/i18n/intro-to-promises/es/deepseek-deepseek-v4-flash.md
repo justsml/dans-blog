@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: intro-to-promises
+- Locale: es
+- Model: deepseek/deepseek-v4-flash
+- Target: src/content/posts/2018-08-01--intro-to-promises/es/index.mdx
+- Validation: deferred
+- Runtime seconds: 30.81
+- Input tokens: 3783
+- Output tokens: 2469
+- Thinking tokens: unknown
+- Cached input tokens: 768
+- Cache write tokens: 0
+- Estimated cost: $0.001116
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Introducción a las Promesas
@@ -106,3 +124,4 @@ Todas las promesas devuelven éxito (mediante `.then(fn)`) o fallo (mediante `.c
 * `Promise.reject(Error)` - Crea un valor de Promesa de fallo, que activa el `.catch()` subsiguiente
 * `Promise.all([...promises])` - Espera a que TODAS las promesas de un array se completen
 * `Promise.race([...promises])` - Se resuelve tan pronto como la primera promesa se resuelve
+````
