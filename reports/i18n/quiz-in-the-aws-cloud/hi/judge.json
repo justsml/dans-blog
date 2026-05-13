@@ -1,0 +1,37 @@
+{
+  "selectedCommit": "104995240d48ac83885a804a2e3125a751fe7f63",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The selected candidate 104995240d48ac83885a804a2e3125a751fe7f63 is already the 'current' version in the provided file content (the judge report mentions it was selected and the file content shows the intro is already translated into Hindi). The translation is technically accurate, maintains Dan's direct style, and preserves the MDX structure perfectly. The previous judge's suggestion to translate the intro has already been applied in the 'current' file content provided in the prompt.",
+  "slug": "quiz-in-the-aws-cloud",
+  "locale": "hi",
+  "candidateCommits": [
+    "104995240d48ac83885a804a2e3125a751fe7f63",
+    "93c7db574f3a7474e64ff97eefdd9ba0931fc5bd"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "Dive deep into AWS Storage Services! This quiz will test your knowledge of S3, DynamoDB, Aurora, RDS, ElastiCache, and more. From best practices to tricky gotchas, we'll explore the cloud storage landscape.\n\nGet ready to prove your cloud expertise! 🚀",
+      "replacement": "AWS स्टोरेज सेवाओं की गहराई में उतरें! यह क्विज़ S3, DynamoDB, Aurora, RDS, ElastiCache और बहुत कुछ के बारे में आपके ज्ञान का परीक्षण करेगा। सर्वोत्तम प्रथाओं से लेकर पेचीदा बारीकियों तक, हम क्लाउड स्टोरेज परिदृश्य का पता लगाएंगे।\n\nअपनी क्लाउड विशेषज्ञता साबित करने के लिए तैयार हो जाइए! 🚀",
+      "reason": "The candidate left the introductory paragraph in English.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug quiz-in-the-aws-cloud --locale hi --skip-global",
+    "output": ""
+  }
+}
