@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: visualizing-promises
+- Locale: it
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2018-09-30--visualizing-promises/it/index.mdx
+- Validation: passed
+- Runtime seconds: 2.40
+- Input tokens: 4785
+- Output tokens: 1588
+- Thinking tokens: unknown
+- Cached input tokens: 2432
+- Cache write tokens: 0
+- Estimated cost: $0.000472
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Visualizzare le Promise
@@ -124,3 +142,4 @@ Promise.all()  |--------------|-------------- > console.log([1000, 2000, 3000])
 >
 > - Diagrammi animati di async di [Patrick Biffle](https://github.com/Piglacquer)
 > - Ispirazione per questo articolo: https://pouchdb.com/2015/05/18/we-have-a-problem-with-promises.html
+````
