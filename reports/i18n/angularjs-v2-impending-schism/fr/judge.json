@@ -1,0 +1,56 @@
+{
+  "selectedCommit": "b7cc3fd9a4546cadfb453bc0239eefd763cfa104",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "scores": {
+    "readability": 5,
+    "technicalAccuracy": 5,
+    "coherence": 5,
+    "relevance": 5,
+    "translationQuality": 5,
+    "mdxPreservation": 5
+  },
+  "suggestions": [],
+  "rationale": "The current translation already incorporates the high-priority path fixes suggested in the previous judge report (adding '../' to frontmatter image paths). The translation is technically accurate, maintains Dan's informal yet professional tone, and correctly handles technical terms like 'shell' and 'TypeScript'. MDX structure and heading levels are preserved.",
+  "slug": "angularjs-v2-impending-schism",
+  "locale": "fr",
+  "candidateCommits": [
+    "b7cc3fd9a4546cadfb453bc0239eefd763cfa104",
+    "c736f6793ae121a9dc4ccddd20c521a0ae2cb937",
+    "a0fb540e940e2c82dd8660e5835cda66ac2ead0a"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "cover: alex-perez-753751-unsplash.webp",
+      "replacement": "cover: ../alex-perez-753751-unsplash.webp",
+      "reason": "The image path must be relative to the parent directory to match the project structure and other assets.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "cover_mobile: w300_alex-perez-753751-unsplash.webp",
+      "replacement": "cover_mobile: ../w300_alex-perez-753751-unsplash.webp",
+      "reason": "The image path must be relative to the parent directory.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "cover_icon: icon_alex-perez-753751-unsplash.webp",
+      "replacement": "cover_icon: ../icon_alex-perez-753751-unsplash.webp",
+      "reason": "The image path must be relative to the parent directory.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug angularjs-v2-impending-schism --locale fr --skip-global",
+    "output": ""
+  }
+}
