@@ -1,0 +1,55 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "DynamoDB",
+  "translatedTitle": "DynamoDB",
+  "translation": {
+    "title": "DynamoDB",
+    "group": "स्कीमा‑लेस",
+    "options": [
+      {
+        "text": "PutItem",
+        "hint": "एक नया आइटम बनाता है, या पुराने आइटम को नए आइटम से बदल देता है।"
+      },
+      {
+        "text": "BatchUpdateItem",
+        "hint": "मौजूद नहीं है।"
+      },
+      {
+        "text": "BatchWriteItem",
+        "hint": "एक ही कॉल में कई आइटम को डालता (इन्सर्ट) या हटाता है।"
+      },
+      {
+        "text": "UpdateItem"
+      },
+      {
+        "text": "BatchUpsertItem",
+        "hint": "DynamoDB में?"
+      },
+      {
+        "text": "TransactWriteItems",
+        "hint": "एक ही कॉल में कई PutItem, UpdateItem, DeleteItem और ConditionCheck ऑपरेशन्स को मिलाता है।"
+      }
+    ],
+    "questionProse": [
+      "कौन सा DynamoDB API एक मौजूदा आइटम के गुणों को अपडेट करता है?"
+    ],
+    "explanationProse": [
+      "यहाँ मुख्य बात <b>अपडेट्स</b> है, इंसर्ट्स या PUTs नहीं। यदि आप इंसर्ट कर रहे हैं, तो आप `BatchWriteItem` या `TransactWriteItems` का उपयोग कर सकते हैं।\n\n`BatchWriteItem` कई ऑपरेशन्स संभाल सकता है, लेकिन यह केवल PUTs और DELETES तक सीमित है। `TransactWriteItems` अधिक शक्तिशाली है, लेकिन सरल अपडेट्स के लिए यह थोड़ा भारी हथौड़ा जैसा है।\n\nसरल अपडेट्स के लिए, `UpdateItem` सबसे अच्छा विकल्प है। यह आपको UPDATE करने या मौजूदा आइटम में एक या अधिक गुणों को संशोधित करने की अनुमति देता है।\n\n`UpdateItem` ऑपरेशन प्रत्येक अनुरोध में एक आइटम को संशोधित करता है। बड़े बैकफ़िल्स या बल्क अपडेट्स के लिए, आप आमतौर पर कई `UpdateItem` कॉल्स को व्यवस्थित करते हैं या PartiQL बैच निष्पादन, Step Functions, Glue, EMR, या कस्टम वर्कर प्रोसेस जैसे बड़े वर्कफ़्लो का उपयोग करते हैं।\n\n`UpdateItem` ऑपरेशन:\n- मौजूदा आइटम के गुणों को अपडेट करता है।\n- मौजूदा आइटम में नए गुण जोड़ता है।\n- मौजूदा आइटम से गुण हटाता है।\n- यदि आइटम मौजूद है या कुछ शर्तों को पूरा करता है तो शर्तीय रूप से अपडेट करता है।\n\n[DynamoDB UpdateItem](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateItem.html)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"DynamoDB\",\n  \"group\": \"स्कीमा‑लेस\",\n  \"options\": [\n    {\n      \"text\": \"PutItem\",\n      \"hint\": \"एक नया आइटम बनाता है, या पुराने आइटम को नए आइटम से बदल देता है।\"\n    },\n    {\n      \"text\": \"BatchUpdateItem\",\n      \"hint\": \"मौजूद नहीं है।\"\n    },\n    {\n      \"text\": \"BatchWriteItem\",\n      \"hint\": \"एक ही कॉल में कई आइटम को डालता (इन्सर्ट) या हटाता है।\"\n    },\n    {\n      \"text\": \"UpdateItem\"\n    },\n    {\n      \"text\": \"BatchUpsertItem\",\n      \"hint\": \"DynamoDB में?\"\n    },\n    {\n      \"text\": \"TransactWriteItems\",\n      \"hint\": \"एक ही कॉल में कई PutItem, UpdateItem, DeleteItem और ConditionCheck ऑपरेशन्स को मिलाता है।\"\n    }\n  ],\n  \"questionProse\": [\n    \"कौन सा DynamoDB API एक मौजूदा आइटम के गुणों को अपडेट करता है?\"\n  ],\n  \"explanationProse\": [\n    \"यहाँ मुख्य बात <b>अपडेट्स</b> है, इंसर्ट्स या PUTs नहीं। यदि आप इंसर्ट कर रहे हैं, तो आप `BatchWriteItem` या `TransactWriteItems` का उपयोग कर सकते हैं।\\n\\n`BatchWriteItem` कई ऑपरेशन्स संभाल सकता है, लेकिन यह केवल PUTs और DELETES तक सीमित है। `TransactWriteItems` अधिक शक्तिशाली है, लेकिन सरल अपडेट्स के लिए यह थोड़ा भारी हथौड़ा जैसा है।\\n\\nसरल अपडेट्स के लिए, `UpdateItem` सबसे अच्छा विकल्प है। यह आपको UPDATE करने या मौजूदा आइटम में एक या अधिक गुणों को संशोधित करने की अनुमति देता है।\\n\\n`UpdateItem` ऑपरेशन प्रत्येक अनुरोध में एक आइटम को संशोधित करता है। बड़े बैकफ़िल्स या बल्क अपडेट्स के लिए, आप आमतौर पर कई `UpdateItem` कॉल्स को व्यवस्थित करते हैं या PartiQL बैच निष्पादन, Step Functions, Glue, EMR, या कस्टम वर्कर प्रोसेस जैसे बड़े वर्कफ़्लो का उपयोग करते हैं।\\n\\n`UpdateItem` ऑपरेशन:\\n- मौजूदा आइटम के गुणों को अपडेट करता है।\\n- मौजूदा आइटम में नए गुण जोड़ता है।\\n- मौजूदा आइटम से गुण हटाता है।\\n- यदि आइटम मौजूद है या कुछ शर्तों को पूरा करता है तो शर्तीय रूप से अपडेट करता है।\\n\\n[DynamoDB UpdateItem](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateItem.html)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1098,
+    "outputTokens": 1847,
+    "cacheReadTokens": 384,
+    "cacheWriteTokens": 0,
+    "durationMs": 1230
+  },
+  "cost": {
+    "inputUsd": 0.000042822000000000004,
+    "outputUsd": 0.00033245999999999997,
+    "totalUsd": 0.000375282,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

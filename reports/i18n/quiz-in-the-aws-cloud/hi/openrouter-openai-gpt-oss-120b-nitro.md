@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-in-the-aws-cloud
+- Locale: hi
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2024-12-28--quiz-in-the-aws-cloud/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 48.26
+- Input tokens: 24964
+- Output tokens: 24476
+- Thinking tokens: unknown
+- Cached input tokens: 8192
+- Cache write tokens: 0
+- Estimated cost: $0.005379
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: 'प्रश्नोत्तरी: AWS स्टोरेज: 20+ प्रश्न!'
@@ -912,3 +930,4 @@ Get ready to prove your cloud expertise! 🚀
 और भी चुनौतियों के लिए देखें [डैन की चुनौतियाँ](/challenges/)! 🧠  
 
 क़ानूनी सूचना: यह क्विज़ केवल शैक्षिक उद्देश्यों के लिए है। सभी ट्रेडमार्क और कॉपीराइट उनके संबंधित मालिकों की संपत्ति हैं, विशेषकर बड़े खिलाड़ियों की।
+````
