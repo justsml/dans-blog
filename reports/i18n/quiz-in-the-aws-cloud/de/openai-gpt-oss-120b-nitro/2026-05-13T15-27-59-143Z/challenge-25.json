@@ -1,0 +1,44 @@
+{
+  "index": 24,
+  "attempt": 1,
+  "originalTitle": "Time To Live (TTL)",
+  "translatedTitle": "Time‑to‑Live (TTL)",
+  "translation": {
+    "title": "Time‑to‑Live (TTL)",
+    "group": "DynamoDB‑Funktionen",
+    "options": [
+      {
+        "text": "Löscht Elemente sofort beim Ablauf"
+      },
+      {
+        "text": "Erfordert manuelle Auslöser für das Löschen"
+      },
+      {
+        "text": "Hintergrundlöschung mit Best‑Effort‑Timing"
+      },
+      {
+        "text": "Lässt Elemente ablaufen, speichert sie aber"
+      }
+    ],
+    "questionProse": [
+      "Wie behandelt das TTL‑Feature von DynamoDB das Löschen von Elementen?"
+    ],
+    "explanationProse": [
+      "DynamoDB TTL Eigenschaften:\n      - Hintergrundprozess überwacht TTL‑Attribut\n      - Abgelaufene Elemente werden nach einem Best‑Effort‑Zeitplan gelöscht, typischerweise innerhalb weniger Tage\n      - Keine zusätzlichen Kosten für TTL\n      - Gelöschte Elemente erscheinen in Streams\n\n      Anwendungsfälle:\n      - Sitzungsverwaltung\n      - Log‑Ablauf\n      - Aufräumen temporärer Daten\n      - Regulatorische Compliance"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Time‑to‑Live (TTL)\",\n  \"group\": \"DynamoDB‑Funktionen\",\n  \"options\": [\n    {\n      \"text\": \"Löscht Elemente sofort beim Ablauf\"\n    },\n    {\n      \"text\": \"Erfordert manuelle Auslöser für das Löschen\"\n    },\n    {\n      \"text\": \"Hintergrundlöschung mit Best‑Effort‑Timing\"\n    },\n    {\n      \"text\": \"Lässt Elemente ablaufen, speichert sie aber\"\n    }\n  ],\n  \"questionProse\": [\n    \"Wie behandelt das TTL‑Feature von DynamoDB das Löschen von Elementen?\"\n  ],\n  \"explanationProse\": [\n    \"DynamoDB TTL Eigenschaften:\\n      - Hintergrundprozess überwacht TTL‑Attribut\\n      - Abgelaufene Elemente werden nach einem Best‑Effort‑Zeitplan gelöscht, typischerweise innerhalb weniger Tage\\n      - Keine zusätzlichen Kosten für TTL\\n      - Gelöschte Elemente erscheinen in Streams\\n\\n      Anwendungsfälle:\\n      - Sitzungsverwaltung\\n      - Log‑Ablauf\\n      - Aufräumen temporärer Daten\\n      - Regulatorische Compliance\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 802,
+    "outputTokens": 559,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 1623
+  },
+  "cost": {
+    "inputUsd": 0.000031278,
+    "outputUsd": 0.00010062000000000001,
+    "totalUsd": 0.000131898,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "index": 22,
+  "attempt": 1,
+  "originalTitle": "Aurora Failover Mechanism",
+  "translatedTitle": "Aurora‑Failover‑Mechanismus",
+  "translation": {
+    "title": "Aurora‑Failover‑Mechanismus",
+    "group": "Aurora‑Hohe Verfügbarkeit",
+    "options": [
+      {
+        "text": "Manuelle Intervention erforderlich"
+      },
+      {
+        "text": "Erfordert eine Neukonfiguration der Anwendung"
+      },
+      {
+        "text": "Wechselt immer zur ältesten Replik"
+      },
+      {
+        "text": "Automatische Beförderung basierend auf der Failover‑Prioritätsstufe"
+      }
+    ],
+    "questionProse": [
+      "Was passiert in einem Aurora‑Cluster mit mehreren Read‑Replicas während eines automatischen Failovers, wenn die primäre Instanz ausfällt?"
+    ],
+    "explanationProse": [
+      "Aurora‑Failover‑Prozess:\n      1. Erkennt den Ausfall der primären Instanz\n      2. Wählt eine Aurora‑Replica hauptsächlich nach der Failover‑Prioritätsstufe aus\n      3. Nutzt Instanz‑Merkmale als Entscheidungshilfen, wenn Prioritäten gleich sind\n      4. Aktualisiert den Cluster‑Endpoint automatisch\n\n      Best Practices:\n      - Mehrere Replicas über AZs hinweg bereitstellen\n      - Beförderungs‑Stufen bewusst konfigurieren\n      - Cluster‑Endpoint in Anwendungen verwenden\n      - Failover‑Szenarien regelmäßig testen"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Aurora‑Failover‑Mechanismus\",\n  \"group\": \"Aurora‑Hohe Verfügbarkeit\",\n  \"options\": [\n    {\n      \"text\": \"Manuelle Intervention erforderlich\"\n    },\n    {\n      \"text\": \"Erfordert eine Neukonfiguration der Anwendung\"\n    },\n    {\n      \"text\": \"Wechselt immer zur ältesten Replik\"\n    },\n    {\n      \"text\": \"Automatische Beförderung basierend auf der Failover‑Prioritätsstufe\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was passiert in einem Aurora‑Cluster mit mehreren Read‑Replicas während eines automatischen Failovers, wenn die primäre Instanz ausfällt?\"\n  ],\n  \"explanationProse\": [\n    \"Aurora‑Failover‑Prozess:\\n      1. Erkennt den Ausfall der primären Instanz\\n      2. Wählt eine Aurora‑Replica hauptsächlich nach der Failover‑Prioritätsstufe aus\\n      3. Nutzt Instanz‑Merkmale als Entscheidungshilfen, wenn Prioritäten gleich sind\\n      4. Aktualisiert den Cluster‑Endpoint automatisch\\n\\n      Best Practices:\\n      - Mehrere Replicas über AZs hinweg bereitstellen\\n      - Beförderungs‑Stufen bewusst konfigurieren\\n      - Cluster‑Endpoint in Anwendungen verwenden\\n      - Failover‑Szenarien regelmäßig testen\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 831,
+    "outputTokens": 760,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 2102
+  },
+  "cost": {
+    "inputUsd": 0.000032409,
+    "outputUsd": 0.0001368,
+    "totalUsd": 0.000169209,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

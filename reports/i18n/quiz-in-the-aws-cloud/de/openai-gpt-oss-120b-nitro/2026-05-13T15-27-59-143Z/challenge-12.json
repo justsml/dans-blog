@@ -1,0 +1,44 @@
+{
+  "index": 11,
+  "attempt": 1,
+  "originalTitle": "S3 Performance Optimization",
+  "translatedTitle": "S3‑Performance‑Optimierung",
+  "translation": {
+    "title": "S3‑Performance‑Optimierung",
+    "group": "S3‑Performance",
+    "options": [
+      {
+        "text": "Verwende zufällige/Hash‑Präfixe"
+      },
+      {
+        "text": "Verwende logische Präfixe; Randomisierung ist nicht nötig"
+      },
+      {
+        "text": "Immer die größten Objekte verwenden"
+      },
+      {
+        "text": "Anzahl der Objekte minimieren"
+      }
+    ],
+    "questionProse": [
+      "Wie optimiert man die S3‑Performance bei hohen Anforderungsraten?"
+    ],
+    "explanationProse": [
+      "S3‑Performance‑Tipps:\n    - Modernes S3 skaliert Anforderungsraten automatisch pro Präfix\n    - Für die Performance brauchst du keine zufälligen/Hash‑Präfixe\n    - Verwende logische Schlüssel­namen, die zu deinen Zugriffsmustern passen\n    - Überwache 503‑Slow‑Down‑Antworten, wenn du sehr hohe Anforderungsraten erzeugst\n\n    Früher wurde empfohlen, Präfixe zu randomisieren, um heiße Partitionen zu vermeiden, aber AWS empfiehlt das inzwischen nicht mehr als Standard‑Performance‑Anforderung.\n\n    [S3-Leistungsrichtlinien](https://aws.amazon.com/s3/performance/)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"S3‑Performance‑Optimierung\",\n  \"group\": \"S3‑Performance\",\n  \"options\": [\n    {\n      \"text\": \"Verwende zufällige/Hash‑Präfixe\"\n    },\n    {\n      \"text\": \"Verwende logische Präfixe; Randomisierung ist nicht nötig\"\n    },\n    {\n      \"text\": \"Immer die größten Objekte verwenden\"\n    },\n    {\n      \"text\": \"Anzahl der Objekte minimieren\"\n    }\n  ],\n  \"questionProse\": [\n    \"Wie optimiert man die S3‑Performance bei hohen Anforderungsraten?\"\n  ],\n  \"explanationProse\": [\n    \"S3‑Performance‑Tipps:\\n    - Modernes S3 skaliert Anforderungsraten automatisch pro Präfix\\n    - Für die Performance brauchst du keine zufälligen/Hash‑Präfixe\\n    - Verwende logische Schlüssel­namen, die zu deinen Zugriffsmustern passen\\n    - Überwache 503‑Slow‑Down‑Antworten, wenn du sehr hohe Anforderungsraten erzeugst\\n\\n    Früher wurde empfohlen, Präfixe zu randomisieren, um heiße Partitionen zu vermeiden, aber AWS empfiehlt das inzwischen nicht mehr als Standard‑Performance‑Anforderung.\\n\\n    [S3-Leistungsrichtlinien](https://aws.amazon.com/s3/performance/)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 824,
+    "outputTokens": 759,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 4291
+  },
+  "cost": {
+    "inputUsd": 0.000032136,
+    "outputUsd": 0.00013662,
+    "totalUsd": 0.000168756,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

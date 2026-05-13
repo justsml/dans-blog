@@ -1,0 +1,44 @@
+{
+  "index": 21,
+  "attempt": 1,
+  "originalTitle": "Consistency Models",
+  "translatedTitle": "Konsistenzmodelle",
+  "translation": {
+    "title": "Konsistenzmodelle",
+    "group": "DynamoDB Konsistenz",
+    "options": [
+      {
+        "text": "100 Lesevorgänge pro Sekunde"
+      },
+      {
+        "text": "50 Lesevorgänge pro Sekunde"
+      },
+      {
+        "text": "200 Lesevorgänge pro Sekunde"
+      },
+      {
+        "text": "Unbegrenzte Lesevorgänge pro Sekunde"
+      }
+    ],
+    "questionProse": [
+      "Eine DynamoDB‑Tabelle hat eine bereitgestellte Lese­kapazität von 100 RCUs. Wie viele stark konsistenten Lesevorgänge von 4‑KB‑Elementen können pro Sekunde durchgeführt werden?"
+    ],
+    "explanationProse": [
+      "Das Verständnis der DynamoDB‑Konsistenzmodelle ist entscheidend:\n\n      - 1 RCU = 1 stark konsistenter Lesevorgang pro Sekunde für Elemente bis zu 4 KB\n      - 1 RCU = 2 letztlich konsistente Lesevorgänge pro Sekunde für Elemente bis zu 4 KB\n\n      Daher:\n      - 100 RCUs = 100 stark konsistente 4‑KB‑Lesevorgänge pro Sekunde\n      - 100 RCUs = 200 letztlich konsistente 4‑KB‑Lesevorgänge pro Sekunde\n\n      Wählen Sie Konsistenzmodelle basierend auf:\n      - Anwendungsanforderungen\n      - Kostenüberlegungen\n      - Leistungsbedarf\n      - Anforderungen an Datenfrische"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Konsistenzmodelle\",\n  \"group\": \"DynamoDB Konsistenz\",\n  \"options\": [\n    {\n      \"text\": \"100 Lesevorgänge pro Sekunde\"\n    },\n    {\n      \"text\": \"50 Lesevorgänge pro Sekunde\"\n    },\n    {\n      \"text\": \"200 Lesevorgänge pro Sekunde\"\n    },\n    {\n      \"text\": \"Unbegrenzte Lesevorgänge pro Sekunde\"\n    }\n  ],\n  \"questionProse\": [\n    \"Eine DynamoDB‑Tabelle hat eine bereitgestellte Lese­kapazität von 100 RCUs. Wie viele stark konsistenten Lesevorgänge von 4‑KB‑Elementen können pro Sekunde durchgeführt werden?\"\n  ],\n  \"explanationProse\": [\n    \"Das Verständnis der DynamoDB‑Konsistenzmodelle ist entscheidend:\\n\\n      - 1 RCU = 1 stark konsistenter Lesevorgang pro Sekunde für Elemente bis zu 4 KB\\n      - 1 RCU = 2 letztlich konsistente Lesevorgänge pro Sekunde für Elemente bis zu 4 KB\\n\\n      Daher:\\n      - 100 RCUs = 100 stark konsistente 4‑KB‑Lesevorgänge pro Sekunde\\n      - 100 RCUs = 200 letztlich konsistente 4‑KB‑Lesevorgänge pro Sekunde\\n\\n      Wählen Sie Konsistenzmodelle basierend auf:\\n      - Anwendungsanforderungen\\n      - Kostenüberlegungen\\n      - Leistungsbedarf\\n      - Anforderungen an Datenfrische\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 862,
+    "outputTokens": 969,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 2539
+  },
+  "cost": {
+    "inputUsd": 0.000033618,
+    "outputUsd": 0.00017442,
+    "totalUsd": 0.00020803800000000002,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
