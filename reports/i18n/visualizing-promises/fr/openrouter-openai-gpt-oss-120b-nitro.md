@@ -1,0 +1,145 @@
+# Translation Candidate
+- Slug: visualizing-promises
+- Locale: fr
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2018-09-30--visualizing-promises/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 6.22
+- Input tokens: 4668
+- Output tokens: 1225
+- Thinking tokens: unknown
+- Cached input tokens: 2176
+- Cache write tokens: 0
+- Estimated cost: $0.000403
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: Visualiser les promesses
+subTitle: Passez à travers…
+date: '2018-09-30'
+modified: '2024-07-30'
+category: Guides
+subCategory: promises
+cover: ../junior-ferreira-735237-unsplash.webp
+cover_mobile: ../w300_junior-ferreira-735237-unsplash.webp
+cover_icon: ../icon_junior-ferreira-735237-unsplash.webp
+tags:
+  - promises
+  - async
+  - visualizing
+  - javascript
+  - composition
+related:
+  - intro-to-promises
+  - promise-gotchas
+  - stop-trying-to-make-async-await-happen
+  - javascript-promises-quiz
+---
+Pour visualiser le déroulement des Promises, définissons une nouvelle fonction `delay(millisecs)`.
+
+```js
+function delay(millisecs) {
+  return new Promise(resolve => {
+    setTimeout(() => resolve(millisecs), millisecs);
+  });
+}
+```
+
+Il s'agit d'une fonction utilitaire qui se résout une fois le délai écoulé.
+
+Le délai en millisecondes sera transmis au callback de `.then`.
+
+Examinons 4 exemples (avec des chronologies animées).
+
+## Exemple #1/4
+
+Celui‑ci montre comment l'exécution de `console.log()` est retardée par `delay(msec)`.
+
+```js
+delay(1000).then(() => console.log("done"));
+```
+
+![Timeline showing delay 1000 then console log running after one second](../N_1000ms_log.webp)
+
+<!-- ```
+delay(1000) --------|.then(fn)
+                    | console.log('done')
+|-------------------|--------------------|--------------------|-----------------
+0msec             1sec                 2sec                 3sec
+``` -->
+
+## Exemple #2/4
+
+_Ça montre une erreur fréquente._
+
+Le `console.log` s’exécute dès que le `delay(1000)` **commence**. Pas **après** le délai comme vous l’aviez probablement prévu.
+
+Comme `console.log` renvoie `undefined`, notre `.then()` est silencieusement ignoré.
+
+Notez la différence entre `typeof console.log === 'function'` et `typeof console.log() === undefined`.
+
+En pratique, l’utilisation correcte de `console.log` est illustrée dans l’Exemple #1. Veillez à ne passer que des fonctions à `.then` et `.catch`.
+
+```js
+delay(1000).then(console.log("done"));
+```
+
+![Timeline showing console log running immediately before the delay finishes](../N_1000ms_!log.webp)
+
+<!-- ```
+delay(1000) --------|.then(null)
+console.log('done')
+|-------------------|--------------------|--------------------|-----------------
+0msec             1sec                 2sec                 3sec
+``` -->
+
+## Exemple #3/4
+
+3 Promises s’exécutent simultanément.
+
+```js
+delay(1000).then(console.log);
+delay(2000).then(console.log);
+delay(3000).then(console.log);
+```
+
+![Chronologie montrant trois promesses delay se résolvant après une, deux et trois secondes](../N_3000ms.webp)
+
+<!-- ```
+delay(1000) ------|.then(console.log)
+delay(2000) ------|--------------------|.then(console.log)
+delay(3000) ------|--------------------|--------------------|.then(console.log)
+|-----------------|--------------------|--------------------|-------------------
+|                 |                    |                    |
+0msec           1sec                 2sec                 3sec
+``` -->
+
+## Exemple #4/4
+
+`Promise.all` avec 3 promesses `delay`. Elles s’exécutent simultanément.
+
+```js
+Promise.all([delay(1000), delay(2000), delay(3000)]).then(console.log);
+```
+
+![Chronologie montrant Promise.all en attente de toutes les trois promesses delay](../N_3000ms_PromiseAll.webp)
+
+```
+delay(1000) ---| [resolved]------------------v
+delay(2000) ---|--------------| [resolved]---v
+delay(3000) ---|--------------|--------------v [resolved]
+Promise.all()  |--------------|-------------- > console.log([1000, 2000, 3000])
+|--------------|--------------|--------------|--------------------------------
+|              |              |              |
+0msec        1sec           2sec           3sec
+```
+
+> Crédits :
+> 
+> - Diagrammes animés d’async par [Patrick Biffle](https://github.com/Piglacquer)
+> - Inspiration pour cet article : https://pouchdb.com/2015/05/18/we-have-a-problem-with-promises.html
+````
