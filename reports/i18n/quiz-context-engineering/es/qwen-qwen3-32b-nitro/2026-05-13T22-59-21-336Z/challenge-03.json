@@ -1,0 +1,47 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "Role of the System Prompt",
+  "translatedTitle": "Rol del Prompt del Sistema",
+  "translation": {
+    "title": "Rol del Prompt del Sistema",
+    "group": "Fundamentos",
+    "options": [
+      {
+        "text": "Es procesado primero y tiene mayor peso que los mensajes del usuario"
+      },
+      {
+        "text": "Es idéntico a un mensaje del usuario pero mostrado de manera diferente"
+      },
+      {
+        "text": "Se usa solo para llamadas API, no para interfaces de chat"
+      },
+      {
+        "text": "Permanece en sesiones como memoria a largo plazo"
+      }
+    ],
+    "questionProse": [
+      "¿Cuál es el efecto práctico de usar el rol `system` frente al rol `user` en el array de mensajes?"
+    ],
+    "explanationProse": [
+      "El rol `system` se procesa como instrucciones de mayor prioridad. Los modelos se entrenan para darle más peso que a los mensajes del usuario: es el límite arquitectónico entre lo que el desarrollador dijo y lo que el usuario dijo.\n\nNo es mágico. No garantiza que el modelo ignore instrucciones contradictorias del usuario (véase: inyección de prompt). Pero aumenta significativamente la tendencia del modelo a seguir tus instrucciones, especialmente en modelos con fuerte seguimiento de instrucciones.\n\nEn la práctica: coloca tu personalidad, reglas y restricciones de comportamiento en `system`. Coloca el contexto recuperado y datos del usuario en `user`. Nunca coloques entradas controladas por el usuario en `system`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Rol del Prompt del Sistema\",\n  \"group\": \"Fundamentos\",\n  \"options\": [\n    {\n      \"text\": \"Es procesado primero y tiene mayor peso que los mensajes del usuario\"\n    },\n    {\n      \"text\": \"Es idéntico a un mensaje del usuario pero mostrado de manera diferente\"\n    },\n    {\n      \"text\": \"Se usa solo para llamadas API, no para interfaces de chat\"\n    },\n    {\n      \"text\": \"Permanece en sesiones como memoria a largo plazo\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Cuál es el efecto práctico de usar el rol `system` frente al rol `user` en el array de mensajes?\"\n  ],\n  \"explanationProse\": [\n    \"El rol `system` se procesa como instrucciones de mayor prioridad. Los modelos se entrenan para darle más peso que a los mensajes del usuario: es el límite arquitectónico entre lo que el desarrollador dijo y lo que el usuario dijo.\\n\\nNo es mágico. No garantiza que el modelo ignore instrucciones contradictorias del usuario (véase: inyección de prompt). Pero aumenta significativamente la tendencia del modelo a seguir tus instrucciones, especialmente en modelos con fuerte seguimiento de instrucciones.\\n\\nEn la práctica: coloca tu personalidad, reglas y restricciones de comportamiento en `system`. Coloca el contexto recuperado y datos del usuario en `user`. Nunca coloques entradas controladas por el usuario en `system`.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 833,
+    "outputTokens": 1402,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2940,
+    "providerCostUsd": 0.00106875,
+    "providerUpstreamCostUsd": 0.00106875,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00006664,
+    "outputUsd": 0.00033648,
+    "totalUsd": 0.00040312,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

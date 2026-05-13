@@ -1,0 +1,47 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "Temperature and Determinism",
+  "translatedTitle": "Temperatura y determinismo",
+  "translation": {
+    "title": "Temperatura y determinismo",
+    "group": "Avanzado",
+    "options": [
+      {
+        "text": "temperature=0 siempre produce salidas idénticas para la misma entrada"
+      },
+      {
+        "text": "temperature=0 hace que las salidas sean más deterministas pero no garantizan identidad"
+      },
+      {
+        "text": "temperature=0 desactiva el modelo"
+      },
+      {
+        "text": "temperature solo afecta la longitud de la respuesta"
+      }
+    ],
+    "questionProse": [
+      "Establecer `temperature=0` en su llamada a LLM significa:"
+    ],
+    "explanationProse": [
+      "`temperature=0` hace que el modelo elija el token de mayor probabilidad en cada paso (decodificación codiciosa), lo que produce salidas **más consistentes** — pero no garantiza salidas idénticas.\n\n    Fuentes de variación con temperatura=0:\n    - **No determinismo de punto flotante** en cálculos de GPU, especialmente entre diferentes hardware o tamaños de lote\n    - **Cambios en la infraestructura del servidor** (actualizaciones del modelo, infraestructura de servir)\n    - **Salidas largas** acumulan variaciones pequeñas\n\n    Para suites de pruebas y evaluaciones que requieren determinismo estricto, `temperature=0` es la elección correcta — solo no escriba afirmaciones que dependan de salidas idénticas a nivel de byte. Asegúrese de la estructura, contenido clave y comportamiento, no de cadenas exactas."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Temperatura y determinismo\",\n  \"group\": \"Avanzado\",\n  \"options\": [\n    {\n      \"text\": \"temperature=0 siempre produce salidas idénticas para la misma entrada\"\n    },\n    {\n      \"text\": \"temperature=0 hace que las salidas sean más deterministas pero no garantizan identidad\"\n    },\n    {\n      \"text\": \"temperature=0 desactiva el modelo\"\n    },\n    {\n      \"text\": \"temperature solo afecta la longitud de la respuesta\"\n    }\n  ],\n  \"questionProse\": [\n    \"Establecer `temperature=0` en su llamada a LLM significa:\"\n  ],\n  \"explanationProse\": [\n    \"`temperature=0` hace que el modelo elija el token de mayor probabilidad en cada paso (decodificación codiciosa), lo que produce salidas **más consistentes** — pero no garantiza salidas idénticas.\\n\\n    Fuentes de variación con temperatura=0:\\n    - **No determinismo de punto flotante** en cálculos de GPU, especialmente entre diferentes hardware o tamaños de lote\\n    - **Cambios en la infraestructura del servidor** (actualizaciones del modelo, infraestructura de servir)\\n    - **Salidas largas** acumulan variaciones pequeñas\\n\\n    Para suites de pruebas y evaluaciones que requieren determinismo estricto, `temperature=0` es la elección correcta — solo no escriba afirmaciones que dependan de salidas idénticas a nivel de byte. Asegúrese de la estructura, contenido clave y comportamiento, no de cadenas exactas.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 837,
+    "outputTokens": 1161,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 2393,
+    "providerCostUsd": 0.00085348,
+    "providerUpstreamCostUsd": 0.00085348,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00006696,
+    "outputUsd": 0.00027864,
+    "totalUsd": 0.00034559999999999994,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

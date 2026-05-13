@@ -1,0 +1,47 @@
+{
+  "index": 8,
+  "attempt": 1,
+  "originalTitle": "Few-Shot Examples",
+  "translatedTitle": "Ejemplos de pocos ejemplos",
+  "translation": {
+    "title": "Ejemplos de pocos ejemplos",
+    "group": "Estructura de Prompts",
+    "options": [
+      {
+        "text": "Más ejemplos siempre producen mejores resultados"
+      },
+      {
+        "text": "3–5 ejemplos de alta calidad y diversos en el prompt"
+      },
+      {
+        "text": "Los ejemplos de pocos ejemplos solo ayudan en tareas de clasificación"
+      },
+      {
+        "text": "Los ejemplos deben ir después de la consulta del usuario, no antes"
+      }
+    ],
+    "questionProse": [
+      "Para la mayoría de los casos de uso en producción, la estrategia óptima de ejemplos de pocos ejemplos es:"
+    ],
+    "explanationProse": [
+      "Los ejemplos de pocos ejemplos mejoran drásticamente la consistencia de la salida y el cumplimiento del formato. El punto óptimo para la mayoría de las tareas es **3–5 ejemplos de alta calidad y diversos**.\n\n¿Por qué no más? Cada ejemplo cuesta tokens. Más allá de 5–10 ejemplos, el beneficio marginal disminuye mientras que el costo de tokens sigue aumentando. Más ejemplos también aumentan la probabilidad de que el modelo se ajuste en exceso a los ejemplos en lugar de entender el patrón subyacente.\n\n¿Por qué importa la diversidad?: si todos tus ejemplos son del mismo tipo de entrada, el modelo no generalizará bien a los casos extremos. Incluye ejemplos que cubran tus variaciones más importantes.\n\nUbicación: los ejemplos van *antes* de la consulta del usuario, como parte del sistema prompt o como conversaciones prefijadas — no después."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Ejemplos de pocos ejemplos\",\n  \"group\": \"Estructura de Prompts\",\n  \"options\": [\n    {\n      \"text\": \"Más ejemplos siempre producen mejores resultados\"\n    },\n    {\n      \"text\": \"3–5 ejemplos de alta calidad y diversos en el prompt\"\n    },\n    {\n      \"text\": \"Los ejemplos de pocos ejemplos solo ayudan en tareas de clasificación\"\n    },\n    {\n      \"text\": \"Los ejemplos deben ir después de la consulta del usuario, no antes\"\n    }\n  ],\n  \"questionProse\": [\n    \"Para la mayoría de los casos de uso en producción, la estrategia óptima de ejemplos de pocos ejemplos es:\"\n  ],\n  \"explanationProse\": [\n    \"Los ejemplos de pocos ejemplos mejoran drásticamente la consistencia de la salida y el cumplimiento del formato. El punto óptimo para la mayoría de las tareas es **3–5 ejemplos de alta calidad y diversos**.\\n\\n¿Por qué no más? Cada ejemplo cuesta tokens. Más allá de 5–10 ejemplos, el beneficio marginal disminuye mientras que el costo de tokens sigue aumentando. Más ejemplos también aumentan la probabilidad de que el modelo se ajuste en exceso a los ejemplos en lugar de entender el patrón subyacente.\\n\\n¿Por qué importa la diversidad?: si todos tus ejemplos son del mismo tipo de entrada, el modelo no generalizará bien a los casos extremos. Incluye ejemplos que cubran tus variaciones más importantes.\\n\\nUbicación: los ejemplos van *antes* de la consulta del usuario, como parte del sistema prompt o como conversaciones prefijadas — no después.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 834,
+    "outputTokens": 1638,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 4417,
+    "providerCostUsd": 0.00120828,
+    "providerUpstreamCostUsd": 0.00120828,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00006672,
+    "outputUsd": 0.00039311999999999995,
+    "totalUsd": 0.00045983999999999993,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

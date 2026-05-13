@@ -1,0 +1,48 @@
+{
+  "index": 12,
+  "attempt": 1,
+  "originalTitle": "Grounding vs. Hallucination",
+  "translatedTitle": "Anclaje vs. Alucinación",
+  "translation": {
+    "title": "Anclaje vs. Alucinación",
+    "group": "Avanzado",
+    "options": [
+      {
+        "text": "Indicar al modelo \"no alucines\" en el prompt del sistema"
+      },
+      {
+        "text": "Usar una temperatura más alta para generar respuestas más seguras"
+      },
+      {
+        "text": "Proporcionar documentos de origen recuperados e indicar al modelo que los cite"
+      },
+      {
+        "text": "Usar un modelo más grande: la alucinación solo ocurre en modelos más pequeños"
+      }
+    ],
+    "questionProse": [
+      "La técnica más efectiva para reducir la alucinación en un sistema de IA de producción es:"
+    ],
+    "explanationProse": [
+      "Indicarle al modelo que no alucine no detiene las alucinaciones — el modelo no tiene una señal introspectiva confiable para \"estoy inventando esto\". Solo significa que el modelo te dirá con confianza que no está inventando cosas mientras las inventa.\n\n    Lo que realmente funciona: **anclaje**. Proporciona al modelo la información que necesita para responder correctamente y restringe su uso a esa información:",
+      "Luego valida la salida: verifica que las afirmaciones en la respuesta aparezcan en el contexto recuperado. Esta es la comprobación de anclaje mediante citación — consulta la discusión sobre evaluación de RAG para implementación.\n\n    Los modelos más grandes alucinan menos en promedio, pero todos los modelos alucinan. El anclaje es la estrategia de mitigación, no el tamaño del modelo."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Anclaje vs. Alucinación\",\n  \"group\": \"Avanzado\",\n  \"options\": [\n    {\n      \"text\": \"Indicar al modelo \\\"no alucines\\\" en el prompt del sistema\"\n    },\n    {\n      \"text\": \"Usar una temperatura más alta para generar respuestas más seguras\"\n    },\n    {\n      \"text\": \"Proporcionar documentos de origen recuperados e indicar al modelo que los cite\"\n    },\n    {\n      \"text\": \"Usar un modelo más grande: la alucinación solo ocurre en modelos más pequeños\"\n    }\n  ],\n  \"questionProse\": [\n    \"La técnica más efectiva para reducir la alucinación en un sistema de IA de producción es:\"\n  ],\n  \"explanationProse\": [\n    \"Indicarle al modelo que no alucine no detiene las alucinaciones — el modelo no tiene una señal introspectiva confiable para \\\"estoy inventando esto\\\". Solo significa que el modelo te dirá con confianza que no está inventando cosas mientras las inventa.\\n\\n    Lo que realmente funciona: **anclaje**. Proporciona al modelo la información que necesita para responder correctamente y restringe su uso a esa información:\",\n    \"Luego valida la salida: verifica que las afirmaciones en la respuesta aparezcan en el contexto recuperado. Esta es la comprobación de anclaje mediante citación — consulta la discusión sobre evaluación de RAG para implementación.\\n\\n    Los modelos más grandes alucinan menos en promedio, pero todos los modelos alucinan. El anclaje es la estrategia de mitigación, no el tamaño del modelo.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 870,
+    "outputTokens": 1481,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 3336,
+    "providerCostUsd": 0.00112609,
+    "providerUpstreamCostUsd": 0.00112609,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.0000696,
+    "outputUsd": 0.00035543999999999994,
+    "totalUsd": 0.00042503999999999996,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

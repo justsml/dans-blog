@@ -1,0 +1,47 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Chunking Strategy",
+  "translatedTitle": "Estrategia de segmentación",
+  "translation": {
+    "title": "Estrategia de segmentación",
+    "group": "Recuperación",
+    "options": [
+      {
+        "text": "Usar el tamaño de segmento más grande que permita su ventana de contexto"
+      },
+      {
+        "text": "Siempre usar 512 tokens — es"
+      },
+      {
+        "text": "Usar segmentos superpuestos cuyo tamaño coincida con la estructura de su contenido"
+      },
+      {
+        "text": "El tamaño del segmento no"
+      }
+    ],
+    "questionProse": [
+      "Al segmentar documentos para RAG, ¿cuál es el principio más importante?"
+    ],
+    "explanationProse": [
+      "No existe un tamaño de segmento universalmente correcto — depende de su contenido. Los principios importantes son:\n\n    1. **Coincidir con la estructura de su contenido.** Las páginas de preguntas frecuentes se segmentan bien al nivel de pregunta+respuesta. Los documentos legales se segmentan bien al nivel de cláusula. El código se segmenta bien al nivel de función.\n    2. **Usar superposición.** Un segmento de 512 tokens con 64 tokens de superposición en cada lado significa que las respuestas que cruzan un límite aún se recuperan.\n    3. **Medir.** Construya un conjunto de evaluación y pruebe varios tamaños de segmento. El tamaño del segmento importa más que el modelo de incrustación.\n\n    \"512 tokens\" es un punto de partida razonable, no una regla."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Estrategia de segmentación\",\n  \"group\": \"Recuperación\",\n  \"options\": [\n    {\n      \"text\": \"Usar el tamaño de segmento más grande que permita su ventana de contexto\"\n    },\n    {\n      \"text\": \"Siempre usar 512 tokens — es\"\n    },\n    {\n      \"text\": \"Usar segmentos superpuestos cuyo tamaño coincida con la estructura de su contenido\"\n    },\n    {\n      \"text\": \"El tamaño del segmento no\"\n    }\n  ],\n  \"questionProse\": [\n    \"Al segmentar documentos para RAG, ¿cuál es el principio más importante?\"\n  ],\n  \"explanationProse\": [\n    \"No existe un tamaño de segmento universalmente correcto — depende de su contenido. Los principios importantes son:\\n\\n    1. **Coincidir con la estructura de su contenido.** Las páginas de preguntas frecuentes se segmentan bien al nivel de pregunta+respuesta. Los documentos legales se segmentan bien al nivel de cláusula. El código se segmenta bien al nivel de función.\\n    2. **Usar superposición.** Un segmento de 512 tokens con 64 tokens de superposición en cada lado significa que las respuestas que cruzan un límite aún se recuperan.\\n    3. **Medir.** Construya un conjunto de evaluación y pruebe varios tamaños de segmento. El tamaño del segmento importa más que el modelo de incrustación.\\n\\n    \\\"512 tokens\\\" es un punto de partida razonable, no una regla.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 829,
+    "outputTokens": 877,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2197,
+    "providerCostUsd": 0.00075784,
+    "providerUpstreamCostUsd": 0.00075784,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00006632,
+    "outputUsd": 0.00021047999999999998,
+    "totalUsd": 0.0002768,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
