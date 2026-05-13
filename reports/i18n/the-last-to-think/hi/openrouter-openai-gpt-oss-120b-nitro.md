@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: the-last-to-think
+- Locale: hi
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2025-05-31--the-last-to-think/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 1.29
+- Input tokens: 1916
+- Output tokens: 799
+- Thinking tokens: unknown
+- Cached input tokens: 896
+- Cache write tokens: 0
+- Estimated cost: $0.000219
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 language: English
 title: सोचने वाला आख़िरी
@@ -33,3 +51,4 @@ AI भी निश्चित रूप से इस पैटर्न क�
 <p> </p>
 
 \* _मान लेते हैं कि हम पर्यावरणीय प्रभाव को सुधार सकते हैं, और एक डिस्टोपियन दुष्ट सपना से बच सकते हैं। लेकिन यह विषय किसी और दिन के लिए है।_
+````
