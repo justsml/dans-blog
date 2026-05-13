@@ -1,0 +1,102 @@
+{
+  "runId": "qwen-qwen3.6-35b-a3b@2026-05-13T22-31-04-712Z",
+  "slug": "beam-search-transformers-js",
+  "locale": "ja",
+  "model": "qwen/qwen3.6-35b-a3b",
+  "modelPath": "qwen-qwen3.6-35b-a3b",
+  "createdAt": "2026-05-13T22:34:04.043Z",
+  "sourcePath": "src/content/posts/2026-04-16--beam-search-transformers-js/index.mdx",
+  "targetPath": "src/content/posts/2026-04-16--beam-search-transformers-js/ja/index.mdx",
+  "candidatePath": "reports/i18n/beam-search-transformers-js/ja/qwen-qwen3.6-35b-a3b/2026-05-13T22-31-04-712Z/candidate.mdx",
+  "sourceHash": "f18620b582f1c2a340c4b7d98da5cb544cd646463534f4076975963727af3149",
+  "outputHash": "8d17d3017437e99f9b9170c7ebc01333c1f0e7809b35c345a269fe6b125dd9b1",
+  "reasoningEffort": "low",
+  "temperature": 0.3,
+  "maxTokens": 16000,
+  "timeoutMs": 200000,
+  "articleSummary": "This technical developer log argues that implementing beam search in `transformers.js` required fundamental architectural changes to fix a long-standing bug where `num_beams > 1` silently defaulted to greedy decoding. The author details key implementation challenges, including bypassing an existing sampler, correctly reordering key-value caches across CPU and GPU tensors, and integrating standard, diverse, and sampling variants with a length-penalized priority queue. Written in a conversational yet rigorously technical tutorial tone, the piece targets machine learning engineers and TypeScript developers contributing to or using JavaScript-based transformer libraries. Recurring framing devices like “the lie” of the `num_beams` parameter and the “bounded breadth-first search” metaphor consistently ground the abstract algorithmic concepts in practical debugging and optimization realities.",
+  "totalInputTokens": 9301,
+  "totalOutputTokens": 34338,
+  "totalCacheReadTokens": 0,
+  "totalCacheWriteTokens": 0,
+  "totalDurationMs": 153641,
+  "totalCostUsd": 0.03573315,
+  "pricingSource": "local-openrouter-estimate",
+  "telemetry": {
+    "model": "qwen/qwen3.6-35b-a3b",
+    "chunkSize": "10p",
+    "totalChunks": 7,
+    "totalInputTokens": 9301,
+    "totalOutputTokens": 34338,
+    "totalCacheReadTokens": 0,
+    "totalCacheWriteTokens": 0,
+    "totalDurationMs": 153641,
+    "totalCostUsd": 0.03573315,
+    "pricingSource": "local-openrouter-estimate",
+    "chunks": [
+      {
+        "index": 0,
+        "inputTokens": 1042,
+        "outputTokens": 5888,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 27787,
+        "costUsd": 0.0060443
+      },
+      {
+        "index": 1,
+        "inputTokens": 1348,
+        "outputTokens": 4317,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 20207,
+        "costUsd": 0.004519199999999999
+      },
+      {
+        "index": 2,
+        "inputTokens": 1426,
+        "outputTokens": 4736,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 20724,
+        "costUsd": 0.0049499
+      },
+      {
+        "index": 3,
+        "inputTokens": 1441,
+        "outputTokens": 4855,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 20699,
+        "costUsd": 0.00507115
+      },
+      {
+        "index": 4,
+        "inputTokens": 1392,
+        "outputTokens": 4582,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 20969,
+        "costUsd": 0.0047908000000000004
+      },
+      {
+        "index": 5,
+        "inputTokens": 1341,
+        "outputTokens": 5186,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 22557,
+        "costUsd": 0.005387149999999999
+      },
+      {
+        "index": 6,
+        "inputTokens": 1311,
+        "outputTokens": 4774,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 20698,
+        "costUsd": 0.004970649999999999
+      }
+    ]
+  }
+}
