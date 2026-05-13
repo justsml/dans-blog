@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-is-your-memory-rusty
+- Locale: ru
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2024-12-28--quiz-is-your-memory-rusty/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 220.46
+- Input tokens: 17729
+- Output tokens: 18896
+- Thinking tokens: unknown
+- Cached input tokens: 512
+- Cache write tokens: 0
+- Estimated cost: $0.005953
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 draft: false
@@ -1367,3 +1385,4 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 - [Книга Rust - Глава 4: Владение](https://doc.rust-lang.org/book/ch04-00-understanding-ownership.html)
 - [Rust By Example - Управление памятью](https://doc.rust-lang.org/rust-by-example/scope.html)
 - [Справочник Rust - Модель памяти](https://doc.rust-lang.org/reference/memory-model.html)
+````
