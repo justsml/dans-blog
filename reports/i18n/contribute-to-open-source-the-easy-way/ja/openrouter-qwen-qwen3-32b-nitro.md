@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: contribute-to-open-source-the-easy-way
+- Locale: ja
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2024-01-16--contribute-to-open-source-the-easy-way/ja/index.mdx
+- Validation: deferred
+- Runtime seconds: 10.69
+- Input tokens: 5958
+- Output tokens: 3974
+- Thinking tokens: unknown
+- Cached input tokens: 1024
+- Cache write tokens: 0
+- Estimated cost: $0.001430
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: ''
@@ -89,3 +107,4 @@ _さあ行こう!!!!!_
 🚀
 
 この記事が役に立ちましたら、コメント欄にご自身の貢献内容を共有するか、[Twitterで@justsmlをハッシュタグつけて投稿](https://x.com/justsml)してください。
+````
