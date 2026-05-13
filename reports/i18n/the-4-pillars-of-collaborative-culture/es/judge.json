@@ -1,0 +1,78 @@
+{
+  "selectedCommit": "a80eea76fc6197e1b959046e3307e4fb8bab8ca5",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 10,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [
+    {
+      "priority": "medium",
+      "match": "Los 4 Pilares de la Cultura Colaborativa",
+      "replacement": "Los 4 pilares de la cultura colaborativa",
+      "reason": "In Spanish, sentence case is preferred for headings. Only the first word and proper nouns should be capitalized."
+    },
+    {
+      "priority": "medium",
+      "match": "Los 4 Pilares",
+      "replacement": "Los 4 pilares",
+      "reason": "In Spanish, sentence case is preferred for headings."
+    }
+  ],
+  "rationale": "The translation is technically accurate and preserves the MDX structure perfectly. It captures Dan's direct style. The previous judge's suggestion to use 'e' before 'mejorar' was incorrect, and the current text already uses the correct 'y mejorar', so no fix is needed there. I am suggesting standardizing heading capitalization to sentence case as per Spanish grammar norms.",
+  "slug": "the-4-pillars-of-collaborative-culture",
+  "locale": "es",
+  "candidateCommits": [
+    "a80eea76fc6197e1b959046e3307e4fb8bab8ca5",
+    "f5457de10913900566cd8d4b557cf518ebc1cc22",
+    "983e75ebfb58ceba47ef1b575af7147efd8ab4b0"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "Los 4 Pilares",
+      "replacement": "Los 4 pilares",
+      "reason": "In Spanish, titles usually only capitalize the first word and proper nouns.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "aprender y mejorar",
+      "replacement": "aprender e mejorar",
+      "reason": "Grammar: 'y' becomes 'e' before words starting with 'i' or 'hi'.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "aprender e mejorar",
+      "replacement": "aprender y mejorar",
+      "reason": "The previous judge suggested 'e' before 'mejorar', which is grammatically incorrect in Spanish. 'y' only changes to 'e' before words starting with the 'i' sound (i or hi). 'Mejorar' starts with 'm'.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "Los 4 Pilares",
+      "replacement": "Los 4 pilares",
+      "reason": "In Spanish, sentence case is preferred for headings unless they are proper nouns.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug the-4-pillars-of-collaborative-culture --locale es --skip-global",
+    "output": ""
+  }
+}
