@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: just-add-more-engineers-fallacy
+- Locale: es
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2025-12-29--just-add-more-engineers-fallacy/es/index.mdx
+- Validation: passed
+- Runtime seconds: 18.02
+- Input tokens: 7873
+- Output tokens: 8574
+- Thinking tokens: unknown
+- Cached input tokens: 1024
+- Cache write tokens: 0
+- Estimated cost: $0.002688
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 draft: true
 hidden: true
@@ -107,3 +125,4 @@ Se atrasará por meses. Y a diferencia de la mayoría de los problemas de ingeni
 - El blog y libro de Will Larson sobre liderazgo técnico
 - Charity Majors (Honeycomb) sobre observabilidad y estructura de equipos  
 - Los informes State of DevOps por DORA
+````
