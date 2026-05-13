@@ -1,0 +1,265 @@
+# Translation Candidate
+- Slug: serverless-database-magic
+- Locale: hi
+- Model: qwen/qwen3.6-35b-a3b
+- Target: src/content/posts/2025-09-15--serverless-database-magic/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 96.63
+- Input tokens: 4721
+- Output tokens: 20655
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.021363
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: 2025 की डेटाबेस नवाचार लहर
+subTitle: एआई को धन्यवाद।
+date: '2025-09-10'
+modified: '2025-09-17'
+tags:
+  - serverless
+  - databases
+  - ai
+  - innovation
+  - chroma
+  - lancedb
+  - pagefind
+  - orama
+  - duckdb
+category: Search
+subCategory: Databases
+social_image: ../desktop-social.webp
+cover_full_width: ../data-city-wide.webp
+cover_mobile: ../data-city-square-200.webp
+cover_icon: ../data-city-square-200.webp
+cover_credit: ©️ 2025 Dan Levy
+---
+## वेक्टर डेटाबेस पर कोई और आर्टिकल नहीं
+
+यह वह निर्णय नियम है जो मुझे पहले ही पता होना चाहिए था:
+
+<p class="inset">यदि डेटा फ़ाइलों से रीबिल्ड हो सकता है और यूज़र्स उसे मुख्यतः रीड करते हैं, तो पहले ऑब्जेक्ट-स्टोरेज डेटाबेस आज़माएं। यदि यूज़र्स दिन भर उसमें लिख रहे हैं, तो असली डेटाबेस से शुरुआत करें और S3 को डेटाबेस का नाटक करने की कोशिशें बंद करें।</p>
+
+यही असली बात है। "सर्वरलेस ही भविष्य है" नहीं। "वेक्टर डेटाबेस ने सब बदल दिया" नहीं। ये वाक्य पहले ही काफी सारे कॉन्फ्रेंस लैनिर्ड्स पर छप चुके हैं।
+
+AI ने वाकई कई सर्च प्रॉब्लम्स का स्वरूप बदल दिया है। अचानक छोटी टीमों को सेमैंटिक सर्च, हाइब्रिड रैंकिंग, डॉक्यूमेंट चैट, मल्टीमोडल लुकअप, और ऑब्जेक्ट स्टोरेज फ़ाइलों पर एनालिटिक्स चाहिए था। पुराना जवाब था—"pgvector के साथ Postgres चलाएं", "OpenSearch/Elasticsearch ऑपरेट करें", या "मैनेज्ड सर्च सर्विस खरीदें।" जब वर्कलोड इसके हकदार हो, तो ये अभी भी अच्छे जवाब हैं।
+
+लेकिन कई वर्कलोड ऐसा नहीं होते। वे रीड-हेवी, रीबिल्डेबल होते हैं, और कंटेंट बदलने व सर्च अपडेट होने के बीच के छोटे डिले को सहन कर लेते हैं। डॉक्यूमेंटेशन। कैटलॉग स्नैपशॉट। स्टैटिक एक्सपोर्ट। इंटरनल किबेस। लोकल एनालिटिक्स। प्रोटोटाइप RAG सिस्टम। ऐसे मामलों में उपकरणों की नई कक्षा ने साधारण आर्किटेक्चर को असाधारण रूप से शक्तिशाली बना दिया है: इंडेक्स बनाएं, फ़ाइलों में सेव करें, और HTTP पर सर्व करें।
+
+स्नैपशॉट नोट: इकोसिस्टम तेजी से बदल रहा है। नीचे के स्टार काउंट, फीचर लेबल और परफॉर्मेंस नंबर सितंबर 2025 का स्नैपशॉट हैं, कोई अमर स्कोरबोर्ड नहीं। इन्हें ओरिएंटेशन के लिए देखें, और किसी भी एक टूल पर प्रोडक्शन माइग्रेशन बेट लगाने से पहले वर्तमान डॉक्स जरूर चेक करें।
+
+## किसी भी अन्य नाम से डेटाबेस
+
+ये सर्वरलेस और CDN-सक्षम डेटास्टोर्स मध्यम स्केल केस (लगभग 1,000 से 10 लाख रिकॉर्ड्स या कुछ GB) के लिए उपयोगी हैं, जहां पारंपरिक डेटाबेस इंफ्रास्ट्रक्चर मूल्य से ज़्यादा औपचारिकता बन जाता है:
+
+- **Pagefind** (2022, ~4.5K ⭐): शुद्ध स्टैटिक दृष्टिकोण - एक बार कंपाइल करें, हमेशा सर्च करें, जीरो बैकएंड आवश्यकताएं
+- **Orama** (2023, ~8K ⭐): ब्राउज़र से लेकर सर्वरलेस फंक्शंस तक हर जगह चलने वाला यूनिवर्सल सॉल्यूशन
+- **Chroma** (2022, ~14K ⭐): AI-नेटिव, RAG एप्लिकेशंस के लिए विशेष रूप से बनाया गया
+- **LanceDB** (2023, ~4K ⭐): डिस्क-आधारित आर्किटेक्चर के साथ एंटरप्राइज़ मल्टीमोडल क्षमताएं
+- **DuckDB-WASM** (2019, ~23K ⭐): WebAssembly के जरिए ब्राउज़र में चलने वाला पूरा SQL एनालिटिक्स डेटाबेस
+
+आम रणनीति सरल है: स्थायी डेटा को फ़ाइलों या ऑब्जेक्ट स्टोरेज में रखें, और फिर उसे ब्राउज़र, एज फंक्शन, वर्कर या हल्के सेवा से क्वेरी करें। इससे जटिलता खत्म नहीं होती। यह जटिलता को बिल्ड पाइपलाइनों, इंडेक्स ताज़ापन, कैश इनवैलिडेशन और क्लाइंट क्षमताओं में स्थानांतरित कर देता है। यह एक बिल्कुल ठीक ट्रेडऑफ़ है जब पढ़ने के ऑपरेशन (reads) हावी हों।
+
+### चेकबॉक्स का मुकाबला
+
+| सुविधा | [Pagefind](https://pagefind.app) | [Orama](https://orama.com) | [Chroma](https://www.trychroma.com/) | [LanceDB](https://lancedb.com) | [DuckDB-WASM](https://duckdb.org/docs/api/wasm) |
+|---------|----------|--------|---------|----------|----------|
+| **पूर्ण-पाठ खोज** | ✅ उन्नत स्टेमिंग | ✅ BM25, 30 भाषाएँ | ✅ SQLite FTS | ✅ Tantivy | ✅ पूर्ण SQL |
+| **वेक्टर खोज** | ❌ | ✅ कोसाइन समरूपता | ✅ HNSW | ✅ IVF_PQ, HNSW, GPU | ⚠️ एक्सटेंशन |
+| **AI/RAG एकीकरण** | कोई नहीं | ✅ बिल्ट-इन पाइपलाइन | ✅ LangChain, LlamaIndex | ✅ उन्नत रीरैंकिंग | ⚠️ मैन्युअल सेटअप |
+| **स्टोरेज** | स्टैटिक JSON/WASM | मेमोरी + S3 प्लगइन्स | सर्वर-आधारित* | S3-कम्पैटिबल Lance | WASM + S3/HTTP |
+| **लेखन समर्थन** | केवल बिल्ड-टाइम | पूर्ण CRUD | पूर्ण CRUD | पूर्ण CRUD | पूर्ण SQL CRUD |
+| **प्रदर्शन** | 100ms से कम | 0.0001ms - 100ms | 100ms से कम | 3-5ms वेक्टर, 50ms FTS | 10ms-1s (जटिल SQL) |
+
+*सितंबर 2025 की स्थिति: Chroma को सर्वर रनटाइम की आवश्यकता होती है और यह ऑब्जेक्ट-फ़ाइल टूल्स की तरह सीधे S3 ऑब्जेक्ट स्टोरेज का समर्थन नहीं करता ([issue #1736](https://github.com/chroma-core/chroma/issues/1736)).
+
+### इम्प्लीमेंटेशन उदाहरण
+
+सिंटैक्स के अंतर असली विभाजन को उजागर करते हैं: बिल्ड-टाइम खोज, इन-मेमोरी खोज, वेक्टर-नेटिव स्टोरेज, मल्टीमोडल टेबल्स और ब्राउज़र SQL एक ही प्रोडक्ट कैटेगरी नहीं हैं, बस इसलिए नहीं कि वे सभी AI डेमो में दिखाई देते हैं।
+
+#### Pagefind के साथ स्टैटिक साइट खोज
+
+```html
+
+<link href="/pagefind/pagefind-ui.css" rel="stylesheet">
+<script src="/pagefind/pagefind-ui.js"></script>
+<div id="search"></div>
+<script>new PagefindUI({ element: "#search" });</script>
+```
+
+#### LanceDB के साथ एंटरप्राइज़-ग्रेड मल्टीमोडल
+
+**OpenAI एम्बेडिंग्स के साथ LanceDB टेबल बनाने का कोड:**
+```typescript
+import * as lancedb from "@lancedb/lancedb";
+import "@lancedb/lancedb/embedding/openai";
+import { LanceSchema, getRegistry } from "@lancedb/lancedb/embedding";
+import { Utf8 } from "apache-arrow";
+
+const db = await lancedb.connect("data/multimodal-db");
+const func = getRegistry()
+  .get("openai")
+  ?.create({ model: "text-embedding-ada-002" });
+
+// Schema with automatic embedding generation
+const documentsSchema = LanceSchema({
+  text: func.sourceField(new Utf8()),
+  vector: func.vectorField(),
+  category: new Utf8()
+});
+
+const table = await db.createEmptyTable("documents", documentsSchema);
+await table.add([
+  { text: "machine learning concepts", category: "research" },
+  { text: "deep learning fundamentals", category: "research" }
+]);
+```
+
+**LanceDB टेबल को क्वेरी करने का उदाहरण:**
+```typescript
+import * as lancedb from "@lancedb/lancedb";
+import "@lancedb/lancedb/embedding/openai";
+// "Connect" to a URL path
+const db = await lancedb.connect("data/multimodal-db");
+const table = db.getTable("documents");
+
+// SQL + vector search combination
+const results = await table.search("machine learning concepts")
+  .where("category = 'research'")
+  .limit(10)
+  .toArray();
+
+console.log(results);
+```
+
+
+#### Orama के साथ यूनिवर्सल खोज
+```typescript
+import { create, insert, search } from '@orama/orama'
+
+const db = create({
+  schema: {
+    title: 'string',
+    content: 'string', 
+    embedding: 'vector[1536]'
+  }
+})
+
+await insert(db, { 
+  title: 'Getting Started',
+  content: 'Learn the basics',
+  embedding: await generateEmbedding('Learn the basics')
+})
+
+const results = await search(db, { 
+  term: 'basics',
+  mode: 'hybrid' // Combines text + vector search
+})
+```
+
+**DuckDB-WASM:**
+```typescript
+import * as duckdb from "https://cdn.jsdelivr.net/npm/@duckdb/duckdb-wasm@latest/dist/duckdb-browser.mjs";
+const bundle = await duckdb.selectBundle(duckdb.getJsDelivrBundles());
+const worker = new Worker(bundle.mainWorker);
+const db = new duckdb.AsyncDuckDB(new duckdb.ConsoleLogger(), worker);
+await db.instantiate(bundle.mainModule, bundle.pthreadWorker);
+
+const conn = await db.connect();
+await conn.query(`create table t as select * from (values (1,'hybrid search'),(2,'edge sql')) as v(id,txt);`);
+// Optional full-text:
+await conn.query(`install fts; load fts; select * from t where match_bm25(txt, 'hybrid');`);
+```
+
+#### Chroma के साथ AI-नेटिव खोज  
+```typescript
+import { ChromaClient } from "chromadb";
+
+const client = new ChromaClient();
+const collection = await client.createCollection({ name: "knowledge-base" });
+
+await collection.add({
+  documents: ["AI will transform software development"],
+  metadatas: [{ source: "tech-blog", category: "AI" }],
+  ids: ["doc1"]
+});
+
+const results = await collection.query({
+  queryTexts: ["future of programming"],
+  where: { category: "AI" },
+  nResults: 5
+});
+```
+
+## उपयोग मामलों का गाइड
+
+**Pagefind चुनें जब:**
+- दस्तावेज़, ब्लॉग या ज्ञान भंडार बना रहे हों
+- सामग्री साप्ताहिक या उससे कम अपडेट हो
+- शून्य ऑपरेशनल ओवरहेड और पूर्ण CDN कैशिंग चाहिए
+- *उदाहरण: 10K+ पेजों वाली कंपनी डॉक्स जो मासिक अपडेट होती हैं*
+
+**Orama चुनें जब:**
+- डैशबोर्ड, ई-कॉमर्स या गतिशील एप्लिकेशन बना रहे हों
+- रियल-टाइम अपडेट और 100ms से कम प्रदर्शन चाहिए
+- ब्राउज़र से एज फंक्शंस तक डिप्लॉयमेंट लचीलापन चाहिए
+- *उदाहरण: गतिशील उत्पाद कैटलॉग वाला SaaS*
+
+**Chroma चुनें जब:**
+- RAG एप्लिकेशन या AI ज्ञान भंडार बना रहे हों
+- LangChain/LlamaIndex एकीकरण चाहिए
+- सेमांटिक खोज मुख्य कार्यक्षमता है
+- *उदाहरण: AI कस्टमर सपोर्ट बॉट*
+
+**LanceDB चुनें जब:**
+- मल्टीमोडल डेटा (छवियाँ, ऑडियो, वीडियो) के साथ काम कर रहे हों
+- विशाल स्केल पर एंटरप्राइज़ प्रदर्शन चाहिए
+- जटिल एनालिटिक्स और रीरैंकिंग की आवश्यकता है
+- *उदाहरण: सेमांटिक वीडियो खोज वाला मीडिया प्लेटफ़ॉर्म*
+
+**DuckDB-WASM चुनें जब:**
+- ब्राउज़र या एज फंक्शंस में पूर्ण SQL क्षमता चाहिए
+- एनालिटिकल वर्कलोड और जटिल क्वेरीज़ के साथ काम कर रहे हों
+- CSV/Parquet फ़ाइलों को सीधे S3 से प्रोसेस करना चाहते हैं
+- *उदाहरण: एड-हॉक SQL क्वेरीज़ वाला बिज़नेस इंटेलिजेंस डैशबोर्ड*
+
+## निर्णय नियम
+
+व्यावहारिक सवाल यह नहीं है कि "कौन सा डेटाबेस सबसे अच्छा है?"
+
+व्यावहारिक सवाल यह है: सिस्टम को किस प्रकार के बदलाव को सहना होगा?
+
+- **रीबिल्ड करने योग्य सामग्री:** Pagefind, Orama स्नैपशॉट, Lance फ़ाइलें, Parquet पर DuckDB। इसे तब तक स्टैटिक रखें जब तक यह समस्या न खड़े करे।
+- **अक्सर लिखने वाले ऑपरेशन:** Postgres, Chroma सर्वर, मैनेज्ड सर्च सर्विस, या क्यू-बैक्ड इंडेक्सिंग पाइपलाइन। आपको समन्वय चाहिए, न कि सिर्फ भावनाएं।
+- **यूजर-स्पेसिफिक परिणाम:** एक असली बैकएंड का उपयोग करें। ऑब्जेक्ट स्टोरेज ऑथोराइजेशन मॉडल नहीं है।
+- **फ़ाइलों पर एनालिटिक्स:** DuckDB अद्भुत रूप से उपयोगी है। SQL को SQL काम करने दें।
+- **मल्टीमोडल या वेक्टर-हेवी खोज:** LanceDB और Chroma को अपने वास्तविक डेटा के खिलाफ़ टेस्ट करने लायक हैं, README बेंचमार्क के खिलाफ़ नहीं।
+
+सामान्य परिदृश्य सस्ता है। एज केसेस आर्किटेक्चर तय करते हैं।
+
+## बड़ा चित्र
+
+ये टूल्स उपयोगी खोज के लिए न्यूनतम वैध इंफ्रास्ट्रक्चर को कम करते हैं। यह मायने रखता है। 2020 में, "सेमांटिक खोज" अक्सर सेवाओं के ढेर, बहुत सारे ग्लू कोड, और किसी ऐसे व्यक्ति को दर्शाता था जो मीटिंग में वेक्टर इंडेक्स समझा रहा होता था, जहाँ कमरे के आधे लोग लंच करना चाहते थे। 2025 में, एक छोटी टीम फ़ाइलों, एम्बेडिंग्स और एक सप्ताहांत के साथ उसी प्रोडक्ट आइडिया का प्रोटोटाइप बना सकती है।
+
+इसका मतलब यह नहीं है कि हर सर्च बॉक्स को RAG सिस्टम बनना चाहिए। इसका मतलब है कि पहली वर्जन को अब उत्पादन प्रमाण मिलने से पहले प्रोडक्शन इंफ्रास्ट्रक्चर विरासत में लेने की ज़रूरत नहीं है।
+
+AWS ने भी S3-संबंधित वेक्टर खोज कार्य के साथ इस दिशा में कदम बढ़ाया है, जो एक उपयोगी संकेत है: ऑब्जेक्ट स्टोरेज अब केवल पुरानी फ़ाइलों के लिए अटैक नहीं रहा है। यह एक क्वेरी सतह बन रहा है।
+
+## प्रयोग शुरू करें
+
+1. **सबसे पहले अपडेट पैटर्न चुनें**: बिल्ड-टाइम, घंटे-घंटे के बैच, लाइव राइट्स, या प्रति-यूजर परिणाम।
+2. **सबसे छोटा ईमानदार टूल के साथ प्रोटोटाइप बनाएं**: स्टैटिक HTML के लिए Pagefind, एनालिटिकल फ़ाइलों के लिए DuckDB, हल्की एप खोज के लिए Orama, वेक्टर-हेवी वर्क के लिए LanceDB या Chroma।
+3. **बुरे हिस्से को मापें**: इंडेक्सिंग समय, ताज़ापन, बंडल साइज़, अनुमतियाँ, और कोल्ड स्टार्ट के बाद पहली क्वेरी।
+4. **तभी प्रमोट करें जब दर्द असली हो**: फ़ाइल-आधारित वर्जन यह ठीक से दिखा दे कि वह कहाँ कमज़ोर पड़ता है, उसके बाद मैनेज्ड डेटाबेस को जस्टिफाई करना आसान होता है।
+
+*हैंड्स-ऑन इम्प्लीमेंटेशन के लिए मेरा [प्रैक्टिकल Pagefind गाइड][1] देखें, या स्केल पर डेटा को फिर से आकार देने वाले एज-नेटिव डेटाबेस के बढ़ते इकोसिस्टम का अन्वेषण करें।*
+
+> **अस्वीकरण:** मैंने वर्षों से Pagefind का उपयोग किया है और 2025 में एक योगदानकर्ता बन गया। मैंने छोटे प्रोजेक्ट्स के लिए Orama और Chroma के साथ प्रयोग किया है और बड़ी AI एप्लिकेशंस के लिए LanceDB का अन्वेषण कर रहा हूँ। इन प्रोजेक्ट्स से कोई वित्तीय संबंध नहीं—बस बदलते डेटाबेस परिदृश्य में गहरी रुचि।
+
+[1]: https://danlevy.net/you-might-not-need-algolia/
+````
