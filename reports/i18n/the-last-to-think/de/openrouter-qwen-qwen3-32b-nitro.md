@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: the-last-to-think
+- Locale: de
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2025-05-31--the-last-to-think/de/index.mdx
+- Validation: passed
+- Runtime seconds: 5.86
+- Input tokens: 1875
+- Output tokens: 2494
+- Thinking tokens: unknown
+- Cached input tokens: 512
+- Cache write tokens: 0
+- Estimated cost: $0.000749
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 language: English
 title: 'Die Letzten, die denken'
@@ -33,3 +51,4 @@ Wir haben Taschenrechner, CliffsNotes und (bislang) TikTok überlebt. Wir werden
 <p> </p>
 
 * _Voraussetzung, dass wir den Umweltimpact verbessern können und einen dystopischen Albtraum vermeiden. Aber das ist ein Thema für einen anderen Tag._
+````
