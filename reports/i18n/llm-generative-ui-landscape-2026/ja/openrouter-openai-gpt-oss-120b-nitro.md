@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: llm-generative-ui-landscape-2026
+- Locale: ja
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-05-10--llm-generative-ui-landscape-2026/ja/index.mdx
+- Validation: passed
+- Runtime seconds: 21.20
+- Input tokens: 62185
+- Output tokens: 15161
+- Thinking tokens: unknown
+- Cached input tokens: 26112
+- Cache write tokens: 0
+- Estimated cost: $0.005154
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: LLMGenUI Landscape v2
 subTitle: ツールからコンポーネントへのレンダリングからオープンエンド生成まで、各手法とその複雑さが正当化されるタイミングを示すマップ。
@@ -413,3 +431,4 @@ ApprovalGate        — action requiring human confirmation
 現在最も重要なエンジニアリング課題は、フレームワークの選択ではありません。まずカタログ設計です。モデルに何を言わせるかを決めることは、技術的スキルよりも製品側の明確さが求められます。次に意味的検証です。生成された UI が主張どおりに機能するかをテストする必要があり、単にスキーマ検証を通過すればよいというわけではありません。最後にアクセシビリティのギャップです。各コンポーネント、そしてコンポーネントのすべての組み合わせが、手書き UI に求めるアクセシビリティ基準を満たすようなカタログを構築することが求められます。
 
 モデルは、与えた文法の範囲内で指示したことを実行します。文法は意図的に設計してください。
+````
