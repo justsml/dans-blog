@@ -97,6 +97,7 @@ for (const model of models) {
       validationStatus,
       telemetry: getDirectTelemetry(model, startedAt),
       note: "Generated through the direct AI SDK chunked translator.",
+      rawOutput: existsSync(targetPath) ? readFileSync(targetPath, "utf8") : undefined,
     });
 
     if (!shouldSkipCommit) {
@@ -106,6 +107,8 @@ for (const model of models) {
       ]);
     }
   } catch (error) {
+    const telemetry = getDirectTelemetry(model, startedAt);
+    const rawOutput = existsSync(targetPath) ? readFileSync(targetPath, "utf8") : undefined;
     cleanupRejectedTarget();
     cleanupNewGeneratedReports(preRunChangedPaths, reportPath);
     restoreCandidateIndex(preRunCandidatesJsonl);
@@ -113,8 +116,9 @@ for (const model of models) {
       reportPath,
       model,
       validationStatus: "rejected: direct AI SDK translation failed",
-      telemetry: getDirectTelemetry(model, startedAt),
+      telemetry,
       note: error instanceof Error ? error.message : String(error),
+      rawOutput,
     });
 
     if (!shouldSkipCommit) {
@@ -268,12 +272,14 @@ function writeCandidateReport({
   validationStatus,
   telemetry,
   note,
+  rawOutput,
 }: {
   reportPath: string;
   model: string;
   validationStatus: string;
   telemetry: CandidateTelemetry;
   note?: string;
+  rawOutput?: string;
 }) {
   writeTextFile(
     reportPath,
@@ -293,8 +299,30 @@ function writeCandidateReport({
       `- Estimated cost: ${telemetry.estimatedCostUsd == null ? "unknown" : `$${telemetry.estimatedCostUsd.toFixed(6)}`}`,
       note ? `- Note: ${note}` : undefined,
       ``,
+      formatRawOutput(rawOutput),
     ].filter(Boolean).join("\n"),
   );
+}
+
+function formatRawOutput(rawOutput: string | undefined) {
+  if (rawOutput == null || rawOutput.trim() === "") return undefined;
+
+  const fence = longestBacktickRun(rawOutput) >= 4
+    ? "`".repeat(longestBacktickRun(rawOutput) + 1)
+    : "````";
+
+  return [
+    `## Raw Output`,
+    ``,
+    `${fence}mdx`,
+    rawOutput.trimEnd(),
+    fence,
+    ``,
+  ].join("\n");
+}
+
+function longestBacktickRun(value: string) {
+  return Math.max(0, ...Array.from(value.matchAll(/`+/g), (match) => match[0].length));
 }
 
 function getDirectTelemetry(model: string, startedAt: number): CandidateTelemetry {
