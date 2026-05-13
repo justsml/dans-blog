@@ -1,0 +1,62 @@
+{
+  "selectedCommit": "1f4c701d50299fa90b814367ee24b3abff368161",
+  "selectedModel": "openrouter/qwen/qwen3-32b:nitro",
+  "scores": {
+    "readability": 0,
+    "technicalAccuracy": 0,
+    "coherence": 0,
+    "relevance": 0,
+    "translationQuality": 0,
+    "mdxPreservation": 0
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "exact translated text currently in the selected MDX",
+      "replacement": "exact replacement text to write into the selected MDX",
+      "reason": "English explanation of why this medium/high-priority change is needed"
+    }
+  ],
+  "rationale": "Selected 1f4c701d50299fa90b814367ee24b3abff368161.",
+  "slug": "docker-security-tips-for-self-hosting",
+  "locale": "de",
+  "candidateCommits": [
+    "5f7fcc6153c55cf63abf36594478c66758e76603",
+    "1f4c701d50299fa90b814367ee24b3abff368161"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "<pclassName='inset'>",
+      "replacement": "<p className='inset'>",
+      "reason": "Missing space in JSX tag will cause a build error.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "# CloudFlare‑IPs zulassen",
+      "replacement": "```bash\n# CloudFlare‑IPs zulassen",
+      "reason": "Broken code block fence in the CloudFlare hardening section.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "exact translated text currently in the selected MDX",
+      "replacement": "exact replacement text to write into the selected MDX",
+      "reason": "English explanation of why this medium/high-priority change is needed",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug docker-security-tips-for-self-hosting --locale de --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug docker-security-tips-for-self-hosting --locale de --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug docker-security-tips-for-self-hosting --locale de --skip-global\n109 |     })\n110 |     .filter((message): message is string => message != null);\n111 | \n112 |   if (mismatches.length === 0) return;\n113 | \n114 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2025-01-05--docker-security-tips-for-self-hosting/de/index.mdx changed heading counts. H1: English has 0, translation has 19; H2: English has 10, translation has 5; H3: English has 17, translation has 12; H4: English has 11, translation has 7\n      at assertHeadingCounts (/Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:114:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:27:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}
