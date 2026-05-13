@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: javascript-promises-quiz
+- Locale: fr
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2019-11-26--javascript-promises-quiz/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 12.77
+- Input tokens: 8569
+- Output tokens: 4897
+- Thinking tokens: unknown
+- Cached input tokens: 640
+- Cache write tokens: 0
+- Estimated cost: $0.001216
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: "Quiz\_: 9 questions sur les Promises JavaScript"
@@ -349,3 +367,4 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 </Challenge>
 
 </QuizUI>
+````

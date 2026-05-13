@@ -1,0 +1,44 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "Chaining `.then` and `.catch`'s",
+  "translatedTitle": "Chaînage des `.then` et `.catch`'s",
+  "translation": {
+    "title": "Chaînage des `.then` et `.catch`'s",
+    "group": "Gestion des erreurs",
+    "options": [
+      {
+        "text": "afficher l’erreur et `undefined`"
+      },
+      {
+        "text": "afficher l’erreur deux fois"
+      },
+      {
+        "text": "UnhandledPromiseRejectionWarning"
+      },
+      {
+        "text": "undefined"
+      }
+    ],
+    "questionProse": [
+      "Quel sera le résultat du code suivant ?"
+    ],
+    "explanationProse": [
+      "Lors du chaînage des `.then` et des `.catch`, il est utile de les imaginer comme une série d'étapes. Chaque `.then` reçoit la valeur renvoyée par le `.then` précédent (en tant qu'argument). Cependant, si votre « étape » rencontre une erreur, toutes les « étapes » `.then` suivantes seront sautées jusqu'à ce qu'un `.catch` soit rencontré. Si vous voulez écraser une erreur, il suffit de renvoyer une valeur non‑erreur. Celle‑ci pourra être récupérée dans n'importe quel `.then` suivant."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Chaînage des `.then` et `.catch`'s\",\n  \"group\": \"Gestion des erreurs\",\n  \"options\": [\n    {\n      \"text\": \"afficher l’erreur et `undefined`\"\n    },\n    {\n      \"text\": \"afficher l’erreur deux fois\"\n    },\n    {\n      \"text\": \"UnhandledPromiseRejectionWarning\"\n    },\n    {\n      \"text\": \"undefined\"\n    }\n  ],\n  \"questionProse\": [\n    \"Quel sera le résultat du code suivant ?\"\n  ],\n  \"explanationProse\": [\n    \"Lors du chaînage des `.then` et des `.catch`, il est utile de les imaginer comme une série d'étapes. Chaque `.then` reçoit la valeur renvoyée par le `.then` précédent (en tant qu'argument). Cependant, si votre « étape » rencontre une erreur, toutes les « étapes » `.then` suivantes seront sautées jusqu'à ce qu'un `.catch` soit rencontré. Si vous voulez écraser une erreur, il suffit de renvoyer une valeur non‑erreur. Celle‑ci pourra être récupérée dans n'importe quel `.then` suivant.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 839,
+    "outputTokens": 661,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2020
+  },
+  "cost": {
+    "inputUsd": 0.000032721,
+    "outputUsd": 0.00011898,
+    "totalUsd": 0.00015170100000000002,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
