@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: weakmap-the-javascript-feature-you-dont-use
+- Locale: ja
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2025-12-29--weakmap-the-javascript-feature-you-dont-use/ja/index.mdx
+- Validation: deferred
+- Runtime seconds: 30.25
+- Input tokens: 5642
+- Output tokens: 5561
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.001786
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: WeakMapでメモリリークを防ぐ
 subTitle: 弱いコードを弱参照で修復！
@@ -132,3 +150,4 @@ function expensiveCalc(obj) {
 - [MDN: メモリ管理](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Memory_management)
 - [V8 Blog: ウィーク参照とファイナライザ](https://v8.dev/features/weak-references)
 - [JavaScript.info: WeakMap と WeakSet](https://javascript.info/weakmap-weakset)
+````
