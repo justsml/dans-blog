@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: pitfalls-in-promise-docs
+- Locale: hi
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2017-05-10--pitfalls-in-promise-docs/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 10.86
+- Input tokens: 3240
+- Output tokens: 5179
+- Thinking tokens: unknown
+- Cached input tokens: 512
+- Cache write tokens: 0
+- Estimated cost: $0.001502
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: प्रमिस दस्तावेज़ में सावधानियाँ
@@ -63,3 +81,4 @@ cover_icon: ../icon_craig-whitehead-433328-unsplash.webp
 > कृपया इस लेख के साथी गिटहब परियोजना [Escape From Callback Mountain](https://github.com/justsml/escape-from-callback-mountain) को देखें (& स्टार करें)
 
 > परियोजना लक्ष्य: जावास्क्रिप्ट में बेहतर कार्यात्मक भाषा प्रतिरूपों का अनुसंधान और विकास।
+````
