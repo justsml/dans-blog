@@ -1,0 +1,31 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "Greedy vs Non-Greedy",
+  "translatedTitle": "Codicioso vs No codicioso",
+  "translation": {
+    "title": "Codicioso vs No codicioso",
+    "group": "Coincidencia básica",
+    "options": [],
+    "questionProse": [
+      "¿Qué coincidirá esto?"
+    ],
+    "explanationProse": [
+      "El patrón `/<div>.*?<\\/div>/g` usa coincidencia no codiciosa con `*?`, lo que significa:\n    - Coincidir `<div>`\n    - Coincidir cualquier carácter (`.*`) pero el menor número posible (`?`)\n    - Hasta encontrar `</div>`\n    - La bandera `g` hace que coincida todas las ocurrencias\n\n    Sin el `?`, el `.*` codicioso coincidiría todo desde el primer `<div>` hasta el último `</div>`, produciendo una única coincidencia grande. Con `?`, coincide cada par por separado.\n\n    [Aprende más sobre coincidencia codiciosa vs perezosa](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Codicioso vs No codicioso\",\n  \"group\": \"Coincidencia básica\",\n  \"options\": [],\n  \"questionProse\": [\n    \"¿Qué coincidirá esto?\"\n  ],\n  \"explanationProse\": [\n    \"El patrón `/<div>.*?<\\\\/div>/g` usa coincidencia no codiciosa con `*?`, lo que significa:\\n    - Coincidir `<div>`\\n    - Coincidir cualquier carácter (`.*`) pero el menor número posible (`?`)\\n    - Hasta encontrar `</div>`\\n    - La bandera `g` hace que coincida todas las ocurrencias\\n\\n    Sin el `?`, el `.*` codicioso coincidiría todo desde el primer `<div>` hasta el último `</div>`, produciendo una única coincidencia grande. Con `?`, coincide cada par por separado.\\n\\n    [Aprende más sobre coincidencia codiciosa vs perezosa](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 823,
+    "outputTokens": 735,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 2050
+  },
+  "cost": {
+    "inputUsd": 0.000032097,
+    "outputUsd": 0.0001323,
+    "totalUsd": 0.000164397,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

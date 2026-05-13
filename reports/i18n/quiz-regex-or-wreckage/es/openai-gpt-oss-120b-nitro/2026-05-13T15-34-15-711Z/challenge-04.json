@@ -1,0 +1,44 @@
+{
+  "index": 3,
+  "attempt": 1,
+  "originalTitle": "The Dot Metacharacter",
+  "translatedTitle": "El Metacaracter Punto",
+  "translation": {
+    "title": "El Metacaracter Punto",
+    "group": "Errores Comunes",
+    "options": [
+      {
+        "text": "[\"hello\\nworld\"]"
+      },
+      {
+        "text": "[\"hello\", \"world\"]"
+      },
+      {
+        "text": "[\"hello\\n\", \"world\"]"
+      },
+      {
+        "text": "null"
+      }
+    ],
+    "questionProse": [
+      "¿Qué devolverá esto?"
+    ],
+    "explanationProse": [
+      "El patrón `\\w+` coincide con uno o más caracteres de palabra. Aunque la cadena contiene un salto de línea, `\\w` coincide con:\n    - Letras (a-z, A-Z)\n    - Números (0-9)\n    - Guion bajo (_)\n\n    Así, el salto de línea actúa como un límite de palabra y obtenemos dos coincidencias. Si hubiéramos usado `.*`, no coincidiría con el salto de línea por defecto (necesitarías la bandera `s` para eso).\n\n    [Aprende más sobre metacaracteres](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Character_Classes#types)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"El Metacaracter Punto\",\n  \"group\": \"Errores Comunes\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"hello\\\\nworld\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"hello\\\", \\\"world\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"hello\\\\n\\\", \\\"world\\\"]\"\n    },\n    {\n      \"text\": \"null\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Qué devolverá esto?\"\n  ],\n  \"explanationProse\": [\n    \"El patrón `\\\\w+` coincide con uno o más caracteres de palabra. Aunque la cadena contiene un salto de línea, `\\\\w` coincide con:\\n    - Letras (a-z, A-Z)\\n    - Números (0-9)\\n    - Guion bajo (_)\\n\\n    Así, el salto de línea actúa como un límite de palabra y obtenemos dos coincidencias. Si hubiéramos usado `.*`, no coincidiría con el salto de línea por defecto (necesitarías la bandera `s` para eso).\\n\\n    [Aprende más sobre metacaracteres](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Character_Classes#types)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 856,
+    "outputTokens": 566,
+    "cacheReadTokens": 384,
+    "cacheWriteTokens": 0,
+    "durationMs": 609
+  },
+  "cost": {
+    "inputUsd": 0.000033384000000000004,
+    "outputUsd": 0.00010188,
+    "totalUsd": 0.000135264,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

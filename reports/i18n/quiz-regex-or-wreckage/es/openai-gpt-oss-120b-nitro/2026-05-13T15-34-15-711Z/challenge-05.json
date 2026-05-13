@@ -1,0 +1,47 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Positive Look-ahead",
+  "translatedTitle": "Look-ahead positivo",
+  "translation": {
+    "title": "Look-ahead positivo",
+    "group": "Look-ahead",
+    "options": [
+      {
+        "text": "[\"$100\", \"€50\"]"
+      },
+      {
+        "text": "[\"100\", \"50\"]"
+      },
+      {
+        "text": "[\"$\", \"€\"]"
+      },
+      {
+        "text": "[]"
+      },
+      {
+        "text": "null"
+      }
+    ],
+    "questionProse": [
+      "¿Qué coincidirá esto?"
+    ],
+    "explanationProse": [
+      "Este patrón no coincidirá con nada porque el look-ahead está al revés. Si quieres dígitos precedidos por `$` o `€`, usa un look-behind: `/(?<=[\\$€])\\d+/g`.\n\nLos look-aheads verifican lo que viene *después* de la posición actual. El patrón tal como está busca:\n- Uno o más dígitos (`\\d+`)\n- Seguidos por (`(?=...)`) ya sea `$` o `€` (`[\\$€]`)\n\nComo no hay números seguidos de símbolos de moneda (están precedidos por ellos), no obtenemos coincidencias.\n\n[Aprende más sobre aserciones look-ahead](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Look-ahead positivo\",\n  \"group\": \"Look-ahead\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"$100\\\", \\\"€50\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"100\\\", \\\"50\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"$\\\", \\\"€\\\"]\"\n    },\n    {\n      \"text\": \"[]\"\n    },\n    {\n      \"text\": \"null\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Qué coincidirá esto?\"\n  ],\n  \"explanationProse\": [\n    \"Este patrón no coincidirá con nada porque el look-ahead está al revés. Si quieres dígitos precedidos por `$` o `€`, usa un look-behind: `/(?<=[\\\\$€])\\\\d+/g`.\\n\\nLos look-aheads verifican lo que viene *después* de la posición actual. El patrón tal como está busca:\\n- Uno o más dígitos (`\\\\d+`)\\n- Seguidos por (`(?=...)`) ya sea `$` o `€` (`[\\\\$€]`)\\n\\nComo no hay números seguidos de símbolos de moneda (están precedidos por ellos), no obtenemos coincidencias.\\n\\n[Aprende más sobre aserciones look-ahead](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 889,
+    "outputTokens": 450,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 1600
+  },
+  "cost": {
+    "inputUsd": 0.000034671,
+    "outputUsd": 0.00008099999999999999,
+    "totalUsd": 0.000115671,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

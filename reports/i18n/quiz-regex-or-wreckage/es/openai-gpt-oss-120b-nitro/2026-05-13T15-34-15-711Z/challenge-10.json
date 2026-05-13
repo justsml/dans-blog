@@ -1,0 +1,50 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Negative Look-ahead",
+  "translatedTitle": "Lookahead negativo",
+  "translation": {
+    "title": "Lookahead negativo",
+    "group": "Lookahead",
+    "options": [
+      {
+        "text": "[\"password123\"]"
+      },
+      {
+        "text": "[\"abc123\"]"
+      },
+      {
+        "text": "[\"123aBc\"]"
+      },
+      {
+        "text": "[\"12\"]"
+      },
+      {
+        "text": "[\"abc\"]"
+      },
+      {
+        "text": "Error"
+      }
+    ],
+    "questionProse": [
+      "¿Cuál será el resultado de esto?"
+    ],
+    "explanationProse": [
+      "El lookahead negativo `(?![a-z])` asegura que no haya letras minúsculas después de los dígitos. Como la parte \"3aBc\" contiene una letra minúscula después de los dígitos, esa porción no coincide. Por lo tanto, solo coincide el comienzo \"12\".\n\n    [Aprende más sobre lookahead negativo](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Lookahead negativo\",\n  \"group\": \"Lookahead\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"password123\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"abc123\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"123aBc\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"12\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"abc\\\"]\"\n    },\n    {\n      \"text\": \"Error\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Cuál será el resultado de esto?\"\n  ],\n  \"explanationProse\": [\n    \"El lookahead negativo `(?![a-z])` asegura que no haya letras minúsculas después de los dígitos. Como la parte \\\"3aBc\\\" contiene una letra minúscula después de los dígitos, esa porción no coincide. Por lo tanto, solo coincide el comienzo \\\"12\\\".\\n\\n    [Aprende más sobre lookahead negativo](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 829,
+    "outputTokens": 509,
+    "cacheReadTokens": 64,
+    "cacheWriteTokens": 0,
+    "durationMs": 3452
+  },
+  "cost": {
+    "inputUsd": 0.000032331,
+    "outputUsd": 0.00009162,
+    "totalUsd": 0.000123951,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-regex-or-wreckage
+- Locale: es
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2024-11-15--quiz-regex-or-wreckage/es/index.mdx
+- Validation: passed
+- Runtime seconds: 36.49
+- Input tokens: 15914
+- Output tokens: 10485
+- Thinking tokens: unknown
+- Cached input tokens: 3904
+- Cache write tokens: 0
+- Estimated cost: $0.002508
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: 'Quiz: Dominio de Expresiones Regulares'
@@ -596,3 +614,4 @@ Pon a prueba tu conocimiento de RegEx con preguntas que cubren patrones básicos
 Las expresiones regulares pueden ser una bestia de domar, pero son increíblemente poderosas una vez que le agarras el truco (y toda la sintaxis nueva). Sigue practicando y serás un maestro del RegEx en nada de tiempo! 🧙‍♂️
 
 <p class="inset">¿Buscas un descanso después de tanto RegEx?<br />Pftt, recuerda: ¡descanso *después* de las habilidades! <br /><br />Visita [mi gimnasio](/challenges/) para aplastar más desafíos! 💪</p>
+````
