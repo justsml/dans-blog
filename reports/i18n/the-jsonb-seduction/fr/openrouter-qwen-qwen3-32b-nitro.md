@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: the-jsonb-seduction
+- Locale: fr
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2025-12-29--the-jsonb-seduction/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 20.20
+- Input tokens: 10045
+- Output tokens: 8477
+- Thinking tokens: unknown
+- Cached input tokens: 2048
+- Cache write tokens: 0
+- Estimated cost: $0.002838
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: ''
 subTitle: >-
@@ -186,3 +204,4 @@ JSONB est excellent lorsque le document est vraiment document-formé. Il est dan
 - [Stratégies d'indexation JSONB](https://www.postgresql.org/docs/current/datatype-json.html#JSON-INDEXING)  
 - [Quand utiliser JSONB vs colonnes relationnelles](https://www.citusdata.com/blog/2016/07/14/choosing-nosql-hstore-json-jsonb/)  
 - [Meilleures pratiques de conception de schémas PostgreSQL](https://www.postgresql.org/docs/current/ddl.html)
+````
