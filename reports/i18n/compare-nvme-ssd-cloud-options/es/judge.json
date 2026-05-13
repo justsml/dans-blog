@@ -1,0 +1,37 @@
+{
+  "selectedCommit": "47e4743125c8113fe6c66bbcc2b83e7acd2466d8",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 10,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The selected candidate correctly translated the frontmatter title which was missing in others. The previous judge report mentioned a missing H2 translation, but the current MDX provided in the prompt already contains the translated H2 '## Mejora el rendimiento en la nube hasta un 70%', so no further suggestions are required. The translation uses high-quality localized formatting like non-breaking spaces and decimal commas.",
+  "slug": "compare-nvme-ssd-cloud-options",
+  "locale": "es",
+  "candidateCommits": [
+    "47e4743125c8113fe6c66bbcc2b83e7acd2466d8",
+    "d6f4a4a22783da5a8505c4f31cb57860fa5e66bb"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "## Boost Cloud Performance up to 70%",
+      "replacement": "## Mejora el rendimiento en la nube hasta un 70%",
+      "reason": "The H2 heading was left in English in this candidate.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug compare-nvme-ssd-cloud-options --locale es --skip-global",
+    "output": ""
+  }
+}
