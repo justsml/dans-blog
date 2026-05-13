@@ -1,49 +1,55 @@
 {
-  "runId": "2026-05-13T15-27-16-282Z",
-  "runStatus": "completed",
+  "runId": "2026-05-13T16-39-34-523Z",
+  "runStatus": "running",
   "slug": "quiz-is-your-memory-rusty",
   "locale": "de",
-  "startedAt": "2026-05-13T15:27:16.282Z",
-  "updatedAt": "2026-05-13T15:27:39.714Z",
+  "startedAt": "2026-05-13T16:39:34.523Z",
+  "updatedAt": "2026-05-13T16:40:15.104Z",
   "modelsRequested": [
     "openrouter/openai/gpt-oss-120b:nitro",
     "openrouter/qwen/qwen3-32b:nitro"
   ],
   "attemptedModels": 2,
-  "skippedModels": 0,
+  "skippedModels": 1,
   "rejectedModels": 1,
   "candidateModels": 1,
   "totals": {
-    "inputTokens": 19147,
-    "outputTokens": 18737,
+    "inputTokens": 34828,
+    "outputTokens": 39804,
     "thinkingTokens": 0,
-    "cachedInputTokens": 2176,
+    "cachedInputTokens": 0,
     "cacheWriteTokens": 0,
-    "estimatedCostUsd": 0.004119,
-    "hasUnknownInputTokens": true,
-    "hasUnknownOutputTokens": true,
+    "estimatedCostUsd": 0.012339,
+    "hasUnknownInputTokens": false,
+    "hasUnknownOutputTokens": false,
     "hasUnknownThinkingTokens": true,
-    "hasUnknownCachedInputTokens": true,
-    "hasUnknownCacheWriteTokens": true,
-    "hasUnknownEstimatedCost": true,
-    "runtimeSeconds": "47.82"
+    "hasUnknownCachedInputTokens": false,
+    "hasUnknownCacheWriteTokens": false,
+    "hasUnknownEstimatedCost": false,
+    "runtimeSeconds": "433.14"
   },
   "attempts": [
     {
       "model": "openrouter/openai/gpt-oss-120b:nitro",
-      "status": "candidate",
-      "validationStatus": "passed",
+      "status": "skipped",
       "reportPath": "reports/i18n/quiz-is-your-memory-rusty/de/openrouter-openai-gpt-oss-120b-nitro.md",
+      "note": "Existing non-rejected report found. Pass --overwrite to rerun."
+    },
+    {
+      "model": "openrouter/qwen/qwen3-32b:nitro",
+      "status": "candidate",
+      "validationStatus": "deferred",
+      "reportPath": "reports/i18n/quiz-is-your-memory-rusty/de/openrouter-qwen-qwen3-32b-nitro.md",
       "note": "Generated through the direct AI SDK chunked translator.",
       "telemetry": {
-        "runtimeSeconds": "41.64",
+        "runtimeSeconds": "216.57",
         "tokens": {
-          "input": 19147,
-          "output": 18737,
-          "cached": 2176,
+          "input": 17414,
+          "output": 19902,
+          "cached": 0,
           "cacheWrite": 0
         },
-        "estimatedCostUsd": 0.004119392999999999,
+        "estimatedCostUsd": 0.006169600000000001,
         "pricingSource": "local-openrouter-estimate"
       }
     },
@@ -52,10 +58,17 @@
       "status": "rejected",
       "validationStatus": "rejected: direct AI SDK translation failed",
       "reportPath": "reports/i18n/quiz-is-your-memory-rusty/de/openrouter-qwen-qwen3-32b-nitro.md",
-      "note": "Command failed: bun run i18n:translate:chunked -- --slug quiz-is-your-memory-rusty --locale de --model openrouter/qwen/qwen3-32b:nitro --chunk 6p --quiz-concurrency 20",
+      "note": "Command failed: git add src/content/posts/2024-12-28--quiz-is-your-memory-rusty/de/index.mdx reports/i18n/quiz-is-your-memory-rusty/de",
       "telemetry": {
-        "runtimeSeconds": "6.18",
-        "tokens": {}
+        "runtimeSeconds": "216.57",
+        "tokens": {
+          "input": 17414,
+          "output": 19902,
+          "cached": 0,
+          "cacheWrite": 0
+        },
+        "estimatedCostUsd": 0.006169600000000001,
+        "pricingSource": "local-openrouter-estimate"
       }
     }
   ]
