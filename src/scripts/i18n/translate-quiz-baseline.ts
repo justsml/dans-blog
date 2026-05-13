@@ -3,7 +3,7 @@ import { dirname, join } from "node:path";
 import { spawn, type ChildProcess } from "node:child_process";
 import matter from "gray-matter";
 import { ACTIVE_LOCALES, isActiveLocale, type ActiveLocale } from "../../shared/i18n.ts";
-import { parseArgs, parseList, relativeToRepo } from "./utils.ts";
+import { parseArgs, parseList, randomizeListOrder, relativeToRepo } from "./utils.ts";
 import { safeModelPathName } from "./translation-costs.ts";
 
 const DEFAULT_MODELS = [
@@ -120,7 +120,7 @@ function resolveModels(options: Record<string, string | boolean>) {
         ? options.models
         : undefined;
 
-  return parseList(rawModels, DEFAULT_MODELS).map(normalizeCandidateModel);
+  return randomizeListOrder(parseList(rawModels, DEFAULT_MODELS).map(normalizeCandidateModel));
 }
 
 function normalizeCandidateModel(model: string) {

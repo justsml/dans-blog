@@ -45,6 +45,46 @@ type ScoreResponse = {
   recommendation: "accept" | "polish" | "retranslate";
 };
 
+type ScoredTranslationRecord = {
+  event: string;
+  isoDate: string;
+  at: string;
+  slug: string;
+  locale: ActiveLocale;
+  model: string;
+  sourcePath: string;
+  targetPath: string;
+  reportPath: string;
+  hash: string;
+  sourceHash: string;
+  translationHash: string;
+  scores: ScoreMap;
+  overallScore: number;
+  recommendation: ScoreResponse["recommendation"];
+  stats: {
+    source: ReturnType<typeof collectStats>;
+    translation: ReturnType<typeof collectStats>;
+    ratios: ReturnType<typeof getStatsRatios>;
+    prompt: {
+      sourceCharsIncluded: number;
+      translationCharsIncluded: number;
+      sourceTruncated: boolean;
+      translationTruncated: boolean;
+    };
+  };
+  costs: {
+    inputTokens: number;
+    outputTokens: number;
+    cacheReadTokens: number;
+    cacheWriteTokens: number;
+    durationMs: number;
+    inputUsd: number;
+    outputUsd: number;
+    totalUsd: number;
+    pricingSource: string;
+  };
+};
+
 const DEFAULT_MODEL = "openrouter/google/gemini-3-flash-preview";
 const DEFAULT_TASK_CONCURRENCY = 16;
 const DEFAULT_TIMEOUT_MS = 200_000;
@@ -221,6 +261,7 @@ async function processTask(task: TranslationTask) {
   writeFileSync(archiveJsonPath, json, "utf8");
   writeFileSync(archiveMarkdownPath, markdown, "utf8");
   appendJsonl(outputLogPath, toTranslationLogRecord(recordWithReport));
+  appendJsonl(join(dirname(reportDir), "judgements.jsonl"), toJudgementScoreRecord(recordWithReport, response.parsed));
 
   console.log([
     `Scored ${task.locale}/${task.slug}: ${averageScore(response.parsed.scores).toFixed(1)}/100 (${response.parsed.recommendation})`,
@@ -582,45 +623,7 @@ function getStatsRatios(
   };
 }
 
-function toTranslationLogRecord(record: {
-  event: string;
-  isoDate: string;
-  at: string;
-  slug: string;
-  locale: ActiveLocale;
-  model: string;
-  sourcePath: string;
-  targetPath: string;
-  reportPath: string;
-  hash: string;
-  sourceHash: string;
-  translationHash: string;
-  scores: ScoreMap;
-  overallScore: number;
-  recommendation: ScoreResponse["recommendation"];
-  stats: {
-    source: ReturnType<typeof collectStats>;
-    translation: ReturnType<typeof collectStats>;
-    ratios: ReturnType<typeof getStatsRatios>;
-    prompt: {
-      sourceCharsIncluded: number;
-      translationCharsIncluded: number;
-      sourceTruncated: boolean;
-      translationTruncated: boolean;
-    };
-  };
-  costs: {
-    inputTokens: number;
-    outputTokens: number;
-    cacheReadTokens: number;
-    cacheWriteTokens: number;
-    durationMs: number;
-    inputUsd: number;
-    outputUsd: number;
-    totalUsd: number;
-    pricingSource: string;
-  };
-}) {
+function toTranslationLogRecord(record: ScoredTranslationRecord) {
   return {
     event: record.event,
     isoDate: record.isoDate,
@@ -663,6 +666,32 @@ function toTranslationLogRecord(record: {
     durationMs: record.costs.durationMs,
     totalUsd: record.costs.totalUsd,
     pricingSource: record.costs.pricingSource,
+  };
+}
+
+function toJudgementScoreRecord(record: ScoredTranslationRecord, response: ScoreResponse) {
+  return {
+    event: "score",
+    scoreSource: "scorer",
+    isoDate: record.isoDate,
+    at: record.at,
+    slug: record.slug,
+    locale: record.locale,
+    model: record.model,
+    sourcePath: record.sourcePath,
+    targetPath: record.targetPath,
+    reportPath: record.reportPath,
+    hash: record.hash,
+    sourceHash: record.sourceHash,
+    translationHash: record.translationHash,
+    scores: record.scores,
+    overallScore: record.overallScore,
+    recommendation: record.recommendation,
+    analysis: response.analysis,
+    strengths: response.strengths,
+    issues: response.issues,
+    stats: record.stats,
+    costs: record.costs,
   };
 }
 

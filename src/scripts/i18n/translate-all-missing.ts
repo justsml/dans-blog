@@ -5,6 +5,7 @@ import {
   optionalString,
   parseArgs,
   parseList,
+  randomizeListOrder,
   relativeToRepo,
   run,
   runInherited,
@@ -37,7 +38,7 @@ const options = parseArgs();
 const selectedLocales = parseList(optionalString(options, "locales"), [...ACTIVE_LOCALES])
   .filter((locale): locale is ActiveLocale => ACTIVE_LOCALES.includes(locale as ActiveLocale));
 const selectedSlugs = new Set(parseList(optionalString(options, "slugs"), []));
-const candidateModels = validateCandidateModels(parseList(optionalString(options, "models"), CHEAP_CANDIDATE_MODELS));
+const candidateModels = randomizeListOrder(validateCandidateModels(parseList(optionalString(options, "models"), CHEAP_CANDIDATE_MODELS)));
 const minCandidates = parsePositiveInteger(optionalString(options, "min-candidates"), 2);
 const limit = parseOptionalPositiveInteger(optionalString(options, "limit"));
 const latestPosts = parseOptionalPositiveInteger(optionalString(options, "latest-posts"));

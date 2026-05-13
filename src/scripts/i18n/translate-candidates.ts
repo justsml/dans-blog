@@ -11,6 +11,7 @@ import {
   optionalString,
   parseArgs,
   parseList,
+  randomizeListOrder,
   relativeToRepo,
   run,
   writeTextFile,
@@ -105,7 +106,7 @@ type CandidateRunSummary = {
 };
 
 const options = parseArgs();
-const models = validateCandidateModels(parseList(optionalString(options, "models"), DEFAULT_CANDIDATE_MODELS));
+const models = randomizeListOrder(validateCandidateModels(parseList(optionalString(options, "models"), DEFAULT_CANDIDATE_MODELS)));
 const shouldValidateCandidates = options.validate === true || options["validate-candidates"] === true;
 const shouldRunFullCandidateValidation = options["full-validation"] === true;
 const shouldSkipCommit = options["no-commit"] === true;

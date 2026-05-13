@@ -49,6 +49,14 @@ type CandidateRef = {
 };
 
 type JudgeOperationKind = "candidate-batch" | "final" | "fix-rescore" | "second" | "escalation";
+type JudgeScoreKey =
+  | "readability"
+  | "technicalAccuracy"
+  | "coherence"
+  | "relevance"
+  | "translationQuality"
+  | "mdxPreservation";
+type JudgeScoreMap = Record<JudgeScoreKey, number>;
 
 const options = parseArgs();
 const slug = requireString(options, "slug");
@@ -688,6 +696,8 @@ async function runJudgeOperation(
   extra: Record<string, unknown> = {},
 ) {
   const result = await runJudgeCommand(model, judgePrompt, contextItems);
+  const parsed = result.ok ? parseJudgeOutput(result.output) : {};
+  const selected = parsed.selectedCommit;
   appendJudgement({
     event: kind,
     slug,
@@ -695,11 +705,30 @@ async function runJudgeOperation(
     model,
     ok: result.ok,
     runtimeMs: result.runtimeMs,
-    selected: result.ok ? parseJudgeOutput(result.output).selectedCommit : undefined,
+    selected,
     context: contextItems.map(describeJudgeContextItem),
     errorMessage: result.errorMessage,
     ...extra,
   });
+  const scores = normalizeJudgeScores(parsed.scores);
+  if (result.ok && scores != null) {
+    appendJudgement({
+      event: "score",
+      scoreSource: "judge",
+      operation: kind,
+      slug,
+      locale,
+      model,
+      selected,
+      selectedModel: parsed.selectedModel,
+      scores,
+      overallScore: averageJudgeScore(scores),
+      rationale: typeof parsed.rationale === "string" ? parsed.rationale : undefined,
+      runtimeMs: result.runtimeMs,
+      context: contextItems.map(describeJudgeContextItem),
+      ...extra,
+    });
+  }
   return result;
 }
 
@@ -709,6 +738,43 @@ function appendJudgement(data: Record<string, unknown>) {
     at: new Date().toISOString(),
     ...data,
   })}\n`, "utf8");
+}
+
+function normalizeJudgeScores(value: unknown): JudgeScoreMap | undefined {
+  if (value == null || typeof value !== "object") return undefined;
+  const record = value as Record<string, unknown>;
+  const keys: JudgeScoreKey[] = [
+    "readability",
+    "technicalAccuracy",
+    "coherence",
+    "relevance",
+    "translationQuality",
+    "mdxPreservation",
+  ];
+  const hasAnyScore = keys.some((key) => Number.isFinite(
+    typeof record[key] === "number" ? record[key] : Number(record[key]),
+  ));
+  if (!hasAnyScore) return undefined;
+
+  return {
+    readability: normalizeJudgeScore(record.readability),
+    technicalAccuracy: normalizeJudgeScore(record.technicalAccuracy),
+    coherence: normalizeJudgeScore(record.coherence),
+    relevance: normalizeJudgeScore(record.relevance),
+    translationQuality: normalizeJudgeScore(record.translationQuality),
+    mdxPreservation: normalizeJudgeScore(record.mdxPreservation),
+  };
+}
+
+function normalizeJudgeScore(value: unknown) {
+  const score = typeof value === "number" ? value : Number(value);
+  if (!Number.isFinite(score)) return 0;
+  return Math.max(0, Math.min(100, Math.round(score)));
+}
+
+function averageJudgeScore(scores: JudgeScoreMap) {
+  const values = Object.values(scores);
+  return values.reduce((sum, score) => sum + score, 0) / values.length;
 }
 
 async function runJudgeCommand(
