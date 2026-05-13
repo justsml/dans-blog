@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: llm-generative-ui-landscape-2026
+- Locale: es
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-05-10--llm-generative-ui-landscape-2026/es/index.mdx
+- Validation: passed
+- Runtime seconds: 110.25
+- Input tokens: 44277
+- Output tokens: 44875
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.014312
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: ''
 subTitle: Desde el renderizado de herramienta
@@ -415,3 +433,4 @@ Los marcos están madurando rápidamente. La convergencia de protocolos (AG-UI p
 Los desafíos de ingeniería que más importan ahora no son la selección de marcos. Son el diseño de catálogos — decidir qué se permite que el modelo diga, lo que requiere claridad en el producto más que habilidad técnica. Son la validación semántica — probar que la interfaz generada hace lo que afirma, no solo que pasa la validación de esquema. Y es la brecha de accesibilidad — construir catálogos donde cada componente, y cada combinación de componentes, cumpla con la barra de accesibilidad que exigirías a una interfaz escrita a mano.
 
 El modelo hará lo que le digas que haga dentro de la gramática que le proporciones. Haz que la gramática sea intencionada.
+````
