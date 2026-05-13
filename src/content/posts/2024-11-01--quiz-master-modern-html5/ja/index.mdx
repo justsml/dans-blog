@@ -1,7 +1,7 @@
 ---
 unlisted: false
-title: 'クイズ: HTMLは今も履歴書に載せるべきか？'
-subTitle: 実力を証明せよ！
+title: 'クイズ: HTMLは履歴書にまだ入れるべきか？'
+subTitle: 実力を示せ！
 label: Semantic HTML5
 social_image: ../desktop-social.webp
 category: Quiz
@@ -21,18 +21,17 @@ cover_full_width: ../jakob-owens-FBih1nqPi0w-unsplash-wide.webp
 cover_mobile: ../jakob-owens-FBih1nqPi0w-unsplash-square.webp
 cover_icon: ../jakob-owens-FBih1nqPi0w-unsplash-square.webp
 ---
-import Challenge from '../../../../components/QuizUI/Challenge';
-import QuizUI from '../../../../components/QuizUI/QuizUI';
+import Challenge from '../../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../../components/QuizUI/QuizUI';
 
 
-## HTML5スキル、ちょっと自負している？
+## では、HTML5 のスキルは本物ですか？
 
-<div>と<span>の違いは理解しているかもしれないが、HTML5のより高度なセマンティック要素についてどの程度理解しているか？
+`<div>` と `<span>` の違いはわかっているでしょう？でも、HTML5 の高度なセマンティック要素はどれだけ理解していますか？
 
-> 注：このテストをパスできない場合は、履歴書から「HTMLスキル」を削除する義務があります。
+> Note: If you can't pass this test, you legally have to remove `HTML Skills` from your Resume.
 
-
-### さあ、始めよう！
+### Begin!
 
 <QuizUI>
 
@@ -46,12 +45,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    HTMLで`<ul>`要素の主な役割は何ですか？
+    HTMLにおける `<ul>` 要素の主な役割は何ですか？
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `<ul>`タグは、箇条書きで表示される順序なしリストを作成します。
+    `<ul>` タグは順序なしリストを作成し、項目は通常箇条書きの丸印で示されます。
   </div>
   </slot>
 </Challenge>
@@ -60,20 +59,20 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={1}
   group="高度なセマンティックHTML"
-  title="HTMLの<dd>要素の役割"
+  title=""
   options={[
   ]}
 >
   <slot name="question">
   <div className="question">
-    HTMLで`<dd>`要素は何を表していますか？
+    HTMLで `<dd>` 要素は何を表しますか？
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    [`<dd>`要素](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dd)は、説明リスト内で定義や値を表し、`<dl>`タグ内に`<dt>`（_Description Term_）とペアで使用されます。
+    The [`<dd>` element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dd) defines a description, definition, or value in a description list, used within `<dl>` tags to pair with `<dt>` (_Description Term_).
 
-    これはキー-値データの表示に役立ちます。プロフィール情報、設定、統計データが代表的な例です。
+    This is useful when showing key-value data. Profile information, Settings, and Stats are a common examples.
     ```html
         <dl>
         <dt>JS</dt>
@@ -98,14 +97,14 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    いつ<figure>と<figcaption>要素を使用すべきですか？
+    `<figure>` と `<figcaption>` 要素はいつ使用すべきですか？
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    <figure>タグは、画像やチャートなどのセルコンテナ（メディア）コンテンツをラップするために通常使用され、<figcaption>タグはキャプションを提供するために使用されます。
+    The [`<figure>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/figure) タグは通常、画像やチャートなどの自己完結型（メディア）コンテンツをラップし、[`<figcaption>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/figcaption) を使ってキャプションを提供します。
 
-    これは画像、図表、コードスニペットなどに役立ちます。
+    画像、図、コードスニペットなどに便利です。
     ```html
         <figure>
         <img src="image.jpg" alt="Description of image">
@@ -126,16 +125,16 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    HTMLで`<article>`要素の目的は何ですか？
+    HTMLにおける `<article>` 要素の目的は何ですか？
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    [`<article>`要素](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/article)は、独立して配布または再利用できるコンテンツを定義するためのものです。
+    The [`<article>` element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/article) は、独立して配布または再利用できるスタンドアロンのコンテンツを定義するために使用されます。
 
-    ブログ投稿、ニュース記事、フォーラム投稿、ユーザーのコメントなどに使用されます。
+    ブログ記事、ニュース記事、フォーラム投稿、ユーザーコメントなどによく使われます。
 
-    1つのページに複数のarticle要素を使用できます（無限スクロールページなど）。または、入れ子にすることで"独立コンテンツ"の階層構造を作成できます。
+    ページ上に複数の article を使用できます（例えば無限スクロールのページなど）。また、互いに入れ子にして「スタンドアロンコンテンツ」の階層を作ることもできます。
     ```html
         <article>
         <h2>Article Title</h2>
@@ -160,14 +159,14 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    フォームにおける`<fieldset>`と`<legend>`要素の目的は？
+    フォームにおける `<fieldset>` と `<legend>` 要素の目的は何ですか？
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    [`<fieldset>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/fieldset)は関連するフォームコントロールをグループ化し、`<legend>`はそのグループのタイトル/ラベルを提供してアクセシビリティを向上させます。
+    [`<fieldset>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/fieldset) は関連するフォームコントロールをグループ化するために使用され、`<legend>` はそのグループのタイトル/ラベルを提供し、アクセシビリティを向上させます。
 
-    これにより、配送先住所や支払い詳細などの関連するフォーム要素をセクション化するのに役立ちます。
+    これは、配送先住所や支払い情報など、関連するフォーム要素をまとめるのに便利です。
     ```html
         <fieldset>
         <legend>Shipping Address</legend>
@@ -196,14 +195,14 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    `<meter>` 要素の目的は？
+    `<meter>` 要素の目的は何ですか？
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    [`<meter>` 要素](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meter) は、温度やディスク使用量、投票数などの範囲内での単一測定値を表すために使用されます。
+    `<meter>` 要素は、温度、ディスク使用量、投票数など、設定された範囲内のスカラー（単一）測定値を表すために使用されます。
 
-    [`<progress>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/progress) バーと似ているかもしれませんが、進捗バーは**常に**ゼロから始まります。したがって、`<progress>` 要素は「完了率」を示し、`<meter>` は定義可能な範囲内の任意の値を示します。
+    似たように見えるかもしれませんが、`<progress>` バーは常にゼロから始まります。したがって `<progress>` 要素は**完了率**を示し、`<meter>` は定義可能な範囲内の任意の値を示します。
     ```html
         <meter min="-60" max="130" value="75" /> 75°F
         <meter min="0" max="100" value="75" /> 75%
@@ -216,20 +215,20 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={6}
   group="セマンティックHTML"
-  title="「<source>」要素の目的"
+  title=""
   options={[
   ]}
 >
   <slot name="question">
   <div className="question">
-    「<source>」要素はどのような目的で使用されますか？
+    `<source>` 要素はなぜ使われるのか？
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    「<source>」要素は[利用可能なメディア形式を指定するために使用されます](https://developer.mozilla.org/en-us/docs/web/html/element/source)。
+    [`<source>` 要素は利用可能なメディア形式を指定するために使用されます](https://developer.mozilla.org/en-us/docs/web/html/element/source)。
 
-    特に[<video>](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video)、[<audio>](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/audio)、[<picture>](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/picture)要素と組み合わせて使用され、ブラウザが最適な形式を選択できるようにします。
+    特に `<video>`、`<audio>`、および `<picture>` 要素と組み合わせて使用され、ブラウザが最適な形式を選択できるようにします。
     ```html
         <video controls>
         <source src="movie.mp4" type="video/mp4">
@@ -250,14 +249,14 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    <hgroup>要素はどのように使うべきか？
+    `<hgroup>` 要素はどのように使うべきですか？
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    [`<hgroup>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/hgroup)要素は、見出しと関連する補足コンテンツ（通常は1つ以上の<p>要素）をグループ化するためのものです。
+    この [`<hgroup>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/hgroup) 要素は見出しと関連する二次コンテンツ（通常は1つ以上の `<p>` 要素）をまとめます。
 
-    見出しがサブタイトルやキャッチフレーズ、代替タイトルを持つ場合に役立ちます。これらはドキュメント構成の別の見出しとして扱われてはいけません。
+    見出しにサブタイトル、タグライン、または代替タイトルがあり、文書アウトラインで別の見出しとして扱いたくない場合に便利です。
     ```html
         <article>
         <hgroup>
@@ -278,20 +277,20 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={8}
   group="高度なセマンティックHTML"
-  title="HTMLの`<menu>`要素の用途は？"
+  title=""
   options={[
   ]}
 >
   <slot name="question">
   <div className="question">
-    HTMLで`<menu>`要素はどのような目的に使われますか？
+    HTMLで `<menu>` 要素は何に使われますか？
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    [`<menu>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/menu) 要素は、コマンドやインタラクティブなコントロールのリストを表します。
+    The [`<menu>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/menu) はコマンドやインタラクティブコントロールのリストを表します。
 
-    ナビゲーションリンクのリストには`<nav>`と`<ul>`を使い、ツールバーのようなコントロールやコマンドリストには`<menu>`を使いましょう。
+    リストがナビゲーションリンクの場合は、`<nav>` と `<ul>` を使いましょう。ツールバー的なコントロールやコマンドリストには `<menu>` を使用します。
     ```html
         <menu>
         <li><button type="button">Copy</button></li>
@@ -305,21 +304,21 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={9}
-  group="上級セマンティックHTML"
-  title="HTMLで`<details>`と`<summary>`の役割は？"
+  group="高度なセマンティックHTML"
+  title=""
   options={[
   ]}
 >
   <slot name="question">
   <div className="question">
-    HTMLで`<details>`と`<summary>`の役割は？
+    `<details>` と `<summary>` は HTML でどんな役割を果たしますか？
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `<details>`は折りたたみ可能なコンテンツを可能にし、`<summary>`はコンテンツの表示タイトルを指定します。
+    [`<details>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details) は折りたたみ可能なコンテンツを提供し、[`<summary>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/summary) はコンテンツの表示タイトルを指定します。
 
-    これはFAQや折りたびめ可能なセクション、トグル可能なコンテンツに役立ちます。
+    FAQ や折りたたみセクション、トグルできるあらゆるコンテンツに便利です。
     ```html
         <details>
         <summary>Click to expand 🤯</summary>
@@ -340,14 +339,14 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    ダイアログ要素を活用する主な理由を教えてください。
+    なぜ `<dialog>` 要素を使うべきなのか？
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    [`<dialog>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog)要素はポップアップやモーダルダイアログの構築に使われ、セマンティックなマークアップと拡張CSS、ネイティブAPIを提供します。
+    The [`<dialog>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog) 要素はポップアップやモーダルに使用され、セマンティックなマークアップ、拡張 CSS、そしてこれらのインタラクション用のネイティブ API を提供します。
 
-    `.showModal()`でモーダルダイアログを、`.show()`でノンモーダルダイアログを開き、`.close()`や`method="dialog"`によるフォーム送信で閉じることができます。
+    JavaScript で `.showModal()` を使ってモーダルダイアログを、`.show()` で非モーダルダイアログを開き、`.close()` もしくは `method="dialog"` を使用したフォーム送信で閉じます。
     ```html
         <dialog>
         <h2>Modal Title</h2>
@@ -363,18 +362,18 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={11}
   group="高度なセマンティックHTML"
-  title="HTMLの`<time>`要素の使い方"
+  title=""
   options={[
   ]}
 >
   <slot name="question">
   <div className="question">
-    HTMLで`<time>`要素はどのように使用されますか？
+    HTMLで `<time>` 要素はどのように使用しますか？
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `<time>`要素は日付、時刻、または時間の持続期間を表現するために使われます。人間が読める内容を含めつつ、機械が読み取れる`datetime`属性も持つことができます。HTMLには`<date>`要素は存在しません。
+    `<time>` 要素は日付、時刻、または期間を表すために使用します。人間が読めるコンテンツと、機械が読み取れる `datetime` 属性を含めることができます。HTML には `<date>` 要素はありません。
   </div>
   </slot>
 </Challenge>
@@ -382,21 +381,21 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={12}
-  group="高度なセマンティックHTML"
+  group="上級セマンティックHTML"
   title="ARIA属性の目的"
   options={[
   ]}
 >
   <slot name="question">
   <div className="question">
-    ARIA属性の目的は？
+    ARIA属性の目的は何ですか？
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    ARIA（アクセシブルリッチインターネットアプリケーション）属性は、スクリーンリーダーやその他の補助技術に追加の文脈を提供することで、ウェブのアクセシビリティを向上させます。
+    ARIA（Accessible Rich Internet Applications）属性は、スクリーンリーダーやその他の支援技術に追加のコンテキストを提供することで、ウェブのアクセシビリティを向上させます。
 
-    役割、状態、およびプロパティを使用して要素を記述できます。
+    要素を記述するために使用できるロール、状態、プロパティがあります。
     ```html
         <button aria-label="Close" aria-expanded="true">X</button>
         <main aria-live="polite">...</main>
@@ -415,30 +414,32 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={13}
   group="高度なセマンティックHTML"
-  title="role属性の使用"
+  title="`role`属性の使用"
   options={[
-    {text: 'コンポーネントの動作を定義するため'},
-    {text: '要素の目的を説明するため', isAnswer: true},
-    {text: '要素へのアクセスを制限するため'},
-    {text: 'Webコンポーネント専用のため'},
+    {text: 'コンポーネントの振る舞いを定義するため'},
+    {text: '要素の目的を記述するため', isAnswer: true},
+    {text: '要素へのアクセスを制限する'},
+    {text: 'Webコンポーネント専用'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    HTMLで`role`属性の使用はなにですか？
+    HTMLにおける `role`属性の用途は何ですか？
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `role`属性は、支援技術に要素の目的を説明し、アクセシビリティを向上させるために使用されます。
+    `role`属性は
+
+    要素の目的を支援技術に記述し、アクセシビリティ向上に役立ちます。
   </div>
   </slot>
 </Challenge>
 
 </QuizUI>
 
-では、結果はいかがでしたか？次のプロジェクトでセマンティックHTML要素をもっと活用する準備ができていますか？🚀  
+それで、結果はどうでしたか？ 次のプロジェクトでより多くのセマンティック HTML 要素を使うのが楽しみですか？ 🚀
 
-それとも、一生`<div>`と`<span>`に甘んじることにしましたか？😅  
+それとも、永遠に `<div>` と `<span>` に甘んじるつもりですか？ 😅
 
-下のコメントで教えてください！👇
+コメントで教えてください！ 👇
