@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: should-you-use-named-or-default-exports
+- Locale: ja
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2023-08-18--should-you-use-named-or-default-exports/ja/index.mdx
+- Validation: passed
+- Runtime seconds: 2.88
+- Input tokens: 4683
+- Output tokens: 1686
+- Thinking tokens: unknown
+- Cached input tokens: 2304
+- Cache write tokens: 0
+- Estimated cost: $0.000486
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: 'ESM エクスポート: 名前付き vs デフォルト?'
@@ -100,3 +118,4 @@ import Handle from "./knife.js"; // 🔪
 ### 結論
 
 コードがコミュニケーションなら、`export` は本気でやれ。 💞
+````
