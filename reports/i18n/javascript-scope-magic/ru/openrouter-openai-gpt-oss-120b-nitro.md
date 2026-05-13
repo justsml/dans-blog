@@ -1,0 +1,120 @@
+# Translation Candidate
+- Slug: javascript-scope-magic
+- Locale: ru
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2015-06-06--javascript-scope-magic/ru/index.mdx
+- Validation: passed
+- Runtime seconds: 4.06
+- Input tokens: 2495
+- Output tokens: 1076
+- Thinking tokens: unknown
+- Cached input tokens: 512
+- Cache write tokens: 0
+- Estimated cost: $0.000291
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: Волшебство JavaScript
+subTitle: '[черновик] Императивный vs. Рекурсивный vs. Функциональный'
+date: '2015-06-06'
+modified: '2024-07-30'
+category: Code
+subCategory: javascript
+draft: true
+publish: true
+tags:
+  - javascript
+  - programming
+  - performance
+  - patterns
+cover: ../markus-spiske-197281-unsplash.webp
+cover_mobile: ../w300_markus-spiske-197281-unsplash.webp
+cover_icon: ../icon_markus-spiske-197281-unsplash.webp
+---
+## Императивный vs. Рекурсивный vs. Функциональный
+
+> [ В процессе ]
+
+```javascript
+// Imperative: The Fastest ( + very simple, no new pointers or excess allocs ):
+function fib(n) {
+  var a = 1,
+    b = 1,
+    c = 0;
+  for (var i = 1; i < n - 1; ++i) {
+    c = a + b;
+    a = b;
+    b = c;
+  }
+  return b;
+}
+
+// Recursive: (FIREFOX or BABELJS Only) ES6 function definition with
+//  parameter defaults used to set initial (internal/recursive) values
+function fib(n, current = 0, a = 1, b = 1, c = 0) {
+  current++;
+  c = a + b;
+  a = b;
+  b = c;
+  return current >= n ? b : fib(n, current, a, b, c);
+}
+
+// Text-book-Bad Example - poor function scope w/ multiple mutable external values
+function fib(n) {
+  if (!arr) {
+    var arr = [1, 1];
+    n = n - 2;
+  } // Bad
+  if (n === -1) {
+    return [arr[0]];
+  }
+  if (n === 0) {
+    return arr;
+  }
+  var proc = function() {
+    --n;
+    arr.push(arr[arr.length - 1] + arr[arr.length - 2]);
+    return n === 0 ? arr : proc();
+    // Bad: inner recursive function not needed, hint: variables used are from parent function scope
+  };
+  var ans = proc();
+  return ans[ans.length - 1];
+}
+```
+
+## Промисы: Круто!
+
+```js
+// Example Using bluebird Promises and it's
+var Promise = require("bluebird"),
+  fs = Promise.promisifyAll(require("fs")),
+  less = Promise.promisifyAll(require("less"));
+
+function writeFileData(data) {
+  return fs.writeFileAsync("/tmp/output.css", data);
+}
+// Bluebird makes something like this perhaps uncomfortably simple and succinct:
+fs.readFileAsync("../style.less") // Call promisified readFile()
+  .then(less.renderAsync) // Hand off to less.render
+  .then(writeFileData); // Function to recieve the css contents (1st parameter)
+```
+
+1.  Хотя нативные ES6‑промисы хороши, я предпочитаю проверенную [Библиотеку Promise Bluebird](https://github.com/petkaantonov/bluebird/blob/master/API.md).
+2.  Библиотека или нет, современные браузеры поддерживают Promise уже несколько лет.
+3.  Промисы можно использовать без безумных шаблонов — неявный `deferred` предпочтительнее.
+4.  **$q просто отстой**, используйте bluebird, см. выше.
+5.  Стоит упомянуть: бенчмарки Bluebird – это лучшие‑case тесты, так что будьте осторожны с экзотическими цепочками промисов.
+
+## Java vs JavaScript
+
+### Ограничение скорости / Дебаунс / Троттлинг
+
+1.  В JavaScript [Дэвид Уолш реализовал debounce](http://davidwalsh.name/essential-javascript-functions) менее чем в 20 строках!  
+2.  В Java — JDebounce, библиотека, которая насчитывает около 500 строк кода.  
+3.  _Сравнение_:  
+4.  JavaScript быстрый и использует функции первого класса, достигая блестящей простоты.  
+5.  В то время как в Java гораздо больше движущихся частей: аннотации применяются во время компиляции, а для «веселья» добавляется тонна XML!
+````
