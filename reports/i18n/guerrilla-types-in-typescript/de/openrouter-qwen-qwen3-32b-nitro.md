@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: guerrilla-types-in-typescript
+- Locale: de
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2023-09-06--guerrilla-types-in-typescript/de/index.mdx
+- Validation: passed
+- Runtime seconds: 23.96
+- Input tokens: 9346
+- Output tokens: 9620
+- Thinking tokens: unknown
+- Cached input tokens: 2048
+- Cache write tokens: 0
+- Estimated cost: $0.003056
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Guerilla-Typen in TypeScript
@@ -294,3 +312,4 @@ Sie fragen sich vielleicht: Sind das gute Muster? Sollte ich einige dieser Ideen
 - [TypeScript-Tipps für Legacy-Projekte: Nur die benötigten Typen verwenden](https://sergiocarracedo.es/typescript-tips/)
 - [Hervorragendes neues Buch von Matt Pocock](https://www.totaltypescript.com/books/total-typescript-essentials)
 - [Total TypeScript Tipps](https://www.totaltypescript.com/tips)
+````
