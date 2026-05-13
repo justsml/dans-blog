@@ -1,0 +1,64 @@
+# Translation Candidate
+- Slug: security-notes-regex
+- Locale: hi
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2015-02-24--security-notes-regex/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 5.25
+- Input tokens: 1131
+- Output tokens: 2914
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.000790
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: 'सुरक्षा टिप्पणियाँ: रेगेक्स'
+subTitle: क्या रेगेक्स कमजोर हो सकते हैं?
+date: '2015-02-24'
+modified: '2018-07-30'
+category: Security
+subCategory: RegEx
+tags:
+  - security
+  - regex
+  - dos
+  - remote-exploit
+cover_credit: Photo by Markus Spiske on Unsplash
+cover: ../markus-spiske-666905-unsplash.webp
+cover_mobile: ../w300_markus-spiske-666905-unsplash.webp
+cover_icon: ../icon_markus-spiske-666905-unsplash.webp
+social_image: ../desktop-social.webp
+---
+## रेगेक्स डिनायल-ऑफ-सर्विस: रीडॉस
+
+मैंने जो अधिक सुरक्षा खामियां पाई हैं, उनमें से एक रेगुलर एक्सप्रेशन्स से संबंधित है। या तो बुरी तरह से लिखे गए या बुरी तरह से कार्यान्वित।
+
+मेमोरी/सीपीयू बड़े या विशेष रूप से बनाए गए उपयोगकर्ता इनपुट के साथ खप जा सकता है।
+
+> यह एक डिनायल-ऑफ-सर्विस खामी है, बस एक प्रदर्शन स्मेल नहीं। यदि शत्रु इनपुट वास्तविक उपयोगकर्ताओं को लंबे समय तक निर्वाह करने के लिए सीपीयू को पकड़ सकता है, तो आपके सुरक्षा खतरा मॉडल में इसे शामिल करें।
+
+### चेतावनी चिह्न
+
+1. नेस्टेड क्वांटिफायर, दोहराए गए समूह, या अतिव्यापी वैकल्पिक  
+2. बैकट्रैकिंग-भारी इंजन जिनमें टाइमआउट या इनपुट-लंबाई सीमा नहीं है  
+3. अभिव्यक्ति अपरिवर्तित उपयोगकर्ता इनपुट के साथ उपयोग होती है  
+4. रेगेक्स वैधता गर्म अनुरोध पथ पर चलती है  
+
+### उपाय / समाधान
+
+1. रेगेक्स कठिन है।  
+   1. उदाहरण के लिए, यहां [ओवास्प][ओवास्प] द्वारा आईपी वैधता के लिए कैसे संसाधित करने की सलाह दी जाती है: `^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$`  
+   2. यह एक 4-बाइट आईपी पते के लिए एक पुराने स्कूल के ट्वीट से भी लंबा है!!!  
+2. रेगेक्स मूल्यांकन से पहले इनपुट लंबाई को सीमित करें।  
+3. टाइमआउट, स्थैतिक विश्लेषण, या बैकट्रैकिंग-रहित इंजन जहां संस्कृति समर्थन करता है।  
+4. यह लगभग हर भाषा और प्लेटफॉर्म .नेट/नोड/पायथन/परल/जावा पर प्रभाव डालता है।  
+
+### संदर्भ
+
+- [ओवास्प रीडॉस](https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS)
+````
