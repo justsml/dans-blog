@@ -1,34 +1,36 @@
 {
-  "runId": "2026-05-13T17-11-41-557Z",
-  "runStatus": "completed",
+  "runId": "2026-05-13T18-15-58-234Z",
+  "runStatus": "running",
   "slug": "docker-security-tips-for-self-hosting",
   "locale": "hi",
-  "startedAt": "2026-05-13T17:11:41.557Z",
-  "updatedAt": "2026-05-13T17:23:41.976Z",
+  "startedAt": "2026-05-13T18:15:58.234Z",
+  "updatedAt": "2026-05-13T18:17:53.369Z",
   "modelsRequested": [
     "openrouter/openai/gpt-oss-120b:nitro",
     "openrouter/qwen/qwen3-32b:nitro",
     "deepseek/deepseek-v4-flash",
-    "qwen/qwen3.6-plus"
+    "qwen/qwen3.6-plus",
+    "qwen/qwen3.6-35b-a3b",
+    "qwen/qwen3.5-9b"
   ],
-  "attemptedModels": 3,
+  "attemptedModels": 1,
   "skippedModels": 1,
-  "rejectedModels": 3,
-  "candidateModels": 0,
+  "rejectedModels": 0,
+  "candidateModels": 1,
   "totals": {
-    "inputTokens": 0,
-    "outputTokens": 0,
+    "inputTokens": 31858,
+    "outputTokens": 37482,
     "thinkingTokens": 0,
-    "cachedInputTokens": 0,
+    "cachedInputTokens": 4096,
     "cacheWriteTokens": 0,
-    "estimatedCostUsd": 0,
-    "hasUnknownInputTokens": true,
-    "hasUnknownOutputTokens": true,
+    "estimatedCostUsd": 0.011544,
+    "hasUnknownInputTokens": false,
+    "hasUnknownOutputTokens": false,
     "hasUnknownThinkingTokens": true,
-    "hasUnknownCachedInputTokens": true,
-    "hasUnknownCacheWriteTokens": true,
-    "hasUnknownEstimatedCost": true,
-    "runtimeSeconds": "720.01"
+    "hasUnknownCachedInputTokens": false,
+    "hasUnknownCacheWriteTokens": false,
+    "hasUnknownEstimatedCost": false,
+    "runtimeSeconds": "103.55"
   },
   "attempts": [
     {
@@ -39,35 +41,20 @@
     },
     {
       "model": "openrouter/qwen/qwen3-32b:nitro",
-      "status": "rejected",
-      "validationStatus": "rejected: direct AI SDK translation failed",
+      "status": "candidate",
+      "validationStatus": "deferred",
       "reportPath": "reports/i18n/docker-security-tips-for-self-hosting/hi/openrouter-qwen-qwen3-32b-nitro.md",
-      "note": "Command failed after 240000ms: bun run i18n:translate:chunked -- --slug docker-security-tips-for-self-hosting --locale hi --model openrouter/qwen/qwen3-32b:nitro --chunk 6p --quiz-concurrency 24",
+      "note": "Generated through the direct AI SDK chunked translator.",
       "telemetry": {
-        "runtimeSeconds": "240.01",
-        "tokens": {}
-      }
-    },
-    {
-      "model": "deepseek/deepseek-v4-flash",
-      "status": "rejected",
-      "validationStatus": "rejected: direct AI SDK translation failed",
-      "reportPath": "reports/i18n/docker-security-tips-for-self-hosting/hi/deepseek-deepseek-v4-flash.md",
-      "note": "Command failed after 240000ms: bun run i18n:translate:chunked -- --slug docker-security-tips-for-self-hosting --locale hi --model deepseek/deepseek-v4-flash --chunk 6p --quiz-concurrency 24",
-      "telemetry": {
-        "runtimeSeconds": "240.00",
-        "tokens": {}
-      }
-    },
-    {
-      "model": "qwen/qwen3.6-plus",
-      "status": "rejected",
-      "validationStatus": "rejected: direct AI SDK translation failed",
-      "reportPath": "reports/i18n/docker-security-tips-for-self-hosting/hi/qwen-qwen3.6-plus.md",
-      "note": "Command failed after 240000ms: bun run i18n:translate:chunked -- --slug docker-security-tips-for-self-hosting --locale hi --model qwen/qwen3.6-plus --chunk 6p --quiz-concurrency 24",
-      "telemetry": {
-        "runtimeSeconds": "240.00",
-        "tokens": {}
+        "runtimeSeconds": "103.55",
+        "tokens": {
+          "input": 31858,
+          "output": 37482,
+          "cached": 4096,
+          "cacheWrite": 0
+        },
+        "estimatedCostUsd": 0.011544319999999999,
+        "pricingSource": "local-openrouter-estimate"
       }
     }
   ]
