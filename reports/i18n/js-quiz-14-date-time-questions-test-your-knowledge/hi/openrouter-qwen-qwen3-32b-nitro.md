@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: js-quiz-14-date-time-questions-test-your-knowledge
+- Locale: hi
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2020-01-02--js-quiz-14-date-time-questions-test-your-knowledge/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 110.89
+- Input tokens: 12662
+- Output tokens: 17315
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.005169
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: 'क्विज़: 14 JavaScript डेट प्रश्न'
@@ -496,3 +514,4 @@ Date के साथ काम करने की समस्या से �
 </Challenge>
 
 </QuizUI>
+````
