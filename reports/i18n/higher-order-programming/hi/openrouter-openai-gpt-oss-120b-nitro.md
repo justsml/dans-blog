@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: higher-order-programming
+- Locale: hi
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2015-10-05--higher-order-programming/hi/index.mdx
+- Validation: passed
+- Runtime seconds: 1.04
+- Input tokens: 2050
+- Output tokens: 749
+- Thinking tokens: unknown
+- Cached input tokens: 384
+- Cache write tokens: 0
+- Estimated cost: $0.000215
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: उच्च‑क्रम प्रोग्रामिंग
@@ -64,3 +82,4 @@ public class Post {
 ```
 
 > अगर मेरा जावा थोड़ा पुराना लग रहा है तो माफ़ कीजिए।
+````
