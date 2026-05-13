@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: docker-firewall-setup
+- Locale: hi
+- Model: deepseek/deepseek-v4-flash
+- Target: src/content/posts/2015-06-06--docker-firewall-setup/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 24.03
+- Input tokens: 3693
+- Output tokens: 3756
+- Thinking tokens: unknown
+- Cached input tokens: 384
+- Cache write tokens: 0
+- Estimated cost: $0.001516
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Docker फ़ायरवॉल सेटअप
 subTitle: Docker होस्ट का फ़ायरवॉल सेटअप करें
@@ -101,3 +119,4 @@ nmap -p 1-10240,27017 -O --osscan-guess $TARGET_HOST
 ~~~
 
 > हो गया! अब आपको केवल वे पोर्ट दिखने चाहिए जो आपने कॉन्फ़िगर किए हैं!
+````
