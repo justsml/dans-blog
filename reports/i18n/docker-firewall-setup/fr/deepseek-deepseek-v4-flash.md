@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: docker-firewall-setup
+- Locale: fr
+- Model: deepseek/deepseek-v4-flash
+- Target: src/content/posts/2015-06-06--docker-firewall-setup/fr/index.mdx
+- Validation: deferred
+- Runtime seconds: 29.16
+- Input tokens: 3596
+- Output tokens: 2933
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.001325
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Configuration du pare-feu Docker
 subTitle: Configurer le pare-feu d'un hôte Docker
@@ -106,3 +124,4 @@ nmap -p 1-10240,27017 -O --osscan-guess $TARGET_HOST
 ~~~
 
 > TERMINÉ ! Vous devriez maintenant voir UNIQUEMENT les ports que vous avez configurés !
+````
