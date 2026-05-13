@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: higher-order-programming
+- Locale: ja
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2015-10-05--higher-order-programming/ja/index.mdx
+- Validation: passed
+- Runtime seconds: 5.38
+- Input tokens: 2038
+- Output tokens: 1895
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.000618
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: 高階プログラミング
@@ -64,3 +82,4 @@ public class Post {
 ```
 
 > 私のJavaが少し錆びついていたら、ご容赦ください。
+````
