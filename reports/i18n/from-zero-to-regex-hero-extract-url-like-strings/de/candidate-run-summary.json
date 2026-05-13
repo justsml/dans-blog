@@ -1,32 +1,34 @@
 {
-  "runId": "2026-05-13T16-29-20-384Z",
-  "runStatus": "completed",
+  "runId": "2026-05-13T17-24-15-986Z",
+  "runStatus": "running",
   "slug": "from-zero-to-regex-hero-extract-url-like-strings",
   "locale": "de",
-  "startedAt": "2026-05-13T16:29:20.384Z",
-  "updatedAt": "2026-05-13T16:29:20.386Z",
+  "startedAt": "2026-05-13T17:24:15.986Z",
+  "updatedAt": "2026-05-13T17:26:09.824Z",
   "modelsRequested": [
     "openrouter/openai/gpt-oss-120b:nitro",
-    "openrouter/qwen/qwen3-32b:nitro"
+    "openrouter/qwen/qwen3-32b:nitro",
+    "deepseek/deepseek-v4-flash",
+    "qwen/qwen3.6-plus"
   ],
-  "attemptedModels": 0,
+  "attemptedModels": 1,
   "skippedModels": 2,
   "rejectedModels": 0,
-  "candidateModels": 0,
+  "candidateModels": 1,
   "totals": {
-    "inputTokens": 0,
-    "outputTokens": 0,
+    "inputTokens": 10477,
+    "outputTokens": 8489,
     "thinkingTokens": 0,
-    "cachedInputTokens": 0,
+    "cachedInputTokens": 768,
     "cacheWriteTokens": 0,
-    "estimatedCostUsd": 0,
+    "estimatedCostUsd": 0.003738,
     "hasUnknownInputTokens": false,
     "hasUnknownOutputTokens": false,
-    "hasUnknownThinkingTokens": false,
+    "hasUnknownThinkingTokens": true,
     "hasUnknownCachedInputTokens": false,
     "hasUnknownCacheWriteTokens": false,
     "hasUnknownEstimatedCost": false,
-    "runtimeSeconds": "0.00"
+    "runtimeSeconds": "100.47"
   },
   "attempts": [
     {
@@ -40,6 +42,24 @@
       "status": "skipped",
       "reportPath": "reports/i18n/from-zero-to-regex-hero-extract-url-like-strings/de/openrouter-qwen-qwen3-32b-nitro.md",
       "note": "Existing non-rejected report found. Pass --overwrite to rerun."
+    },
+    {
+      "model": "deepseek/deepseek-v4-flash",
+      "status": "candidate",
+      "validationStatus": "deferred",
+      "reportPath": "reports/i18n/from-zero-to-regex-hero-extract-url-like-strings/de/deepseek-deepseek-v4-flash.md",
+      "note": "Generated through the direct AI SDK chunked translator.",
+      "telemetry": {
+        "runtimeSeconds": "100.47",
+        "tokens": {
+          "input": 10477,
+          "output": 8489,
+          "cached": 768,
+          "cacheWrite": 0
+        },
+        "estimatedCostUsd": 0.0037383304,
+        "pricingSource": "local-openrouter-estimate"
+      }
     }
   ]
 }

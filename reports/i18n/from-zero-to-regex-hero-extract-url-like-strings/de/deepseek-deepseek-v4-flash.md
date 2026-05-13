@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: from-zero-to-regex-hero-extract-url-like-strings
+- Locale: de
+- Model: deepseek/deepseek-v4-flash
+- Target: src/content/posts/2024-12-29--from-zero-to-regex-hero-extract-url-like-strings/de/index.mdx
+- Validation: deferred
+- Runtime seconds: 100.47
+- Input tokens: 10477
+- Output tokens: 8489
+- Thinking tokens: unknown
+- Cached input tokens: 768
+- Cache write tokens: 0
+- Estimated cost: $0.003738
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Von Null auf Regex-Held
 subTitle: URL-ähnliche Strings mit einem Regex extrahieren und parsen
@@ -264,3 +282,4 @@ Wenn du diese Schritte befolgst, kannst du effektiv jede semi-strukturierte Zeic
 - [MDN-Dokumentation zu regulären Ausdrücken](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions)
 - [Fortgeschrittene Regex-Techniken](https://www.regular-expressions.info/): Erkunde Lookaheads, Lookbehinds und andere fortgeschrittene Muster für präzisere Übereinstimmungen.
 - [RFC 3986 – URI Generic Syntax](https://datatracker.ietf.org/doc/html/rfc3986)
+````
