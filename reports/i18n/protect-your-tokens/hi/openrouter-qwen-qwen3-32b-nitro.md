@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: protect-your-tokens
+- Locale: hi
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2018-10-27--protect-your-tokens/hi/index.mdx
+- Validation: passed
+- Runtime seconds: 19.80
+- Input tokens: 7225
+- Output tokens: 8317
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.002574
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: ''
@@ -122,3 +140,4 @@ const src = `//maps.googleapis.com/maps/api/js?key=${key}`;
 -----------------------------------
 
 **टिप्पणी:** पर्यावरण चर के लिए अन्य _उपयोग के मामले_ हैं। कुछ ऐसे हैं जिनका उल्लेख मैंने नहीं किया: CI/CD/परीक्षण, सुविधा फ्लैग, और विशेष पर्यावरणों के लिए रनटाइम निर्माण!
+````
