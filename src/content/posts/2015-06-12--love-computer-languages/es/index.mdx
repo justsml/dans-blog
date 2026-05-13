@@ -1,0 +1,193 @@
+---
+title: Lenguajes de Amor (Informática)
+date: '2015-06-12'
+modified: '2017-02-28'
+category: Code
+subCategory: languages
+draft: true
+hidden: true
+publish: true
+tags:
+  - programming
+  - languages
+  - lua
+  - haskell
+  - scala
+  - rust
+  - smalltalk
+  - go
+  - javascript
+  - python
+cover: ../rawpixel-602144-unsplash.webp
+cover_mobile: ../w300_rawpixel-602144-unsplash.webp
+cover_icon: ../icon_rawpixel-602144-unsplash.webp
+---
+import Gist from '../../../../../components/Gist/index.astro'
+
+## Notas sobre Lenguajes de Programación
+
+#### Seguro que mis Observaciones Misceláneas se han dicho antes, pero aquí está mi lista de los lenguajes más interesantes:
+
+### JavaScript
+
+Mi Único Amor Verdadero, supremamente versátil y ubicuo – el campeón todo‑en‑uno, increíblemente poderoso!  
+Es el lenguaje #1 más activo/popular en GitHub.com durante _años_ consecutivos.
+
+Me cuesta admitirlo, pero durante años tuve nada más que desprecio y desdén por lo que hoy es, **mi lenguaje favorito**.
+
+**ES6** solo ha incrementado mi ~~~adicción~~~ amor. Mientras que el puro ES5 siempre tendrá un lugar especial en mi corazón, cada vez que uso algo de **ES6**, siento esa picadura de araña radiactiva...
+
+Hubo 4 factores que me empujaron al **Campamento ES6**:
+
+1.  Es divertido. En serio. Hay ganancias tangibles en belleza, claridad y productividad.
+
+- ¿Afirmaciones subjetivas, dices? Déjame mostrarte un poco de ES6:
+- `let expired = users.filter(u => Date.now() > u.trialDate)`
+- Ahora no tienes que fingir que sabes cómo usar `Object.create` o `Object.defineProperty`
+- Ver ejemplos más abajo
+
+1.  ¡A partir de julio de 2015, ES6 es un estándar oficialmente finalizado!
+1.  El soporte es efectivamente 100 %*! ... Ok, BabelJS es necesario para parchear tu código y que sea compatible con ES5. Históricamente los transpiladores de JS han sido mal vistos. Sin embargo, últimamente (2014‑15) las cosas han cambiado, ya que BabelJS se ha convertido en un habilitador/líder clave del avance del lenguaje. Un montón de empresas, incluyendo Microsoft y Facebook, lo usan en algunos de los sitios más grandes.
+1.  [Las versiones más recientes de Node](https://nodejs.org/en/blog/release/v4.0.0/) incluyen el mismo motor V8 JS que Chrome v45, es v4.5
+
+#### Ejemplos
+
+> Voy a mostrarte qué fue lo que finalmente me hizo _empezar_ a beber ese Kool‑Aid con sabor a ES6.
+
+En mi experiencia reciente, ES6 te permite escribir código más rápido. Al grano.  
+Como el código es más conciso, se necesita notablemente menos esfuerzo mental para revisar y entender tu código antiguo (o el de un compañero).
+
+He visto ahorros regulares de KLOC en torno al 20‑50 %. ¡Eso es como el recorte de Kate Moss!
+
+**_IMAGEN FALTANTE:_ EcmaScript 5 vs ES 2016 – Demo: Clases, Desestructuración, Slick**  
+{/* ](../images/screenshots/Diff-ES6-vs-ES5-Head-to-Head.png) */}
+
+```js
+// /services/users.js
+class Users {
+  constructor(data) {
+    this.users = data || [];
+  }
+  expired() {
+    return this.users.filter(u => Date.now() > u.trialDate);
+  }
+}
+```
+
+- No más código tedioso para 'extraer' y 'comprobar' campos pasados a una función. Ve al ejemplo `add()`:
+
+```js
+// /services/users.js
+class Users {
+  constructor(data) {
+    this.users = data || [];
+  }
+  add({ name, email, password }) {
+    // Guardar hash de pwd, solo necesitamos definir 1 `var/let` explícito – los demás vars se 'definen' con la magia del `{fields}` arriba ^^^
+    let hash = getSha256(password);
+    return http
+      .post("/users", {
+        name: name,
+        email: email,
+        passwordHash: hash
+      })
+      .then(usr => this.users.push(usr)); // añadir usuario al recibir la respuesta del servicio
+  }
+}
+```
+
+<Gist path='justsml/aaddc9852c1624d61cf3'></Gist>
+
+<p>&#160;</p>
+
+#### Saltar a ES6 puede sentirse como pasar de:
+
+<div class="anigif top">
+  <img alt='huh' title="¿Qué?" src="https://res.cloudinary.com/ddd/image/upload/v1441143891/wtf__tumblr_inline_n7ygqh6Y0C1svcdm1_igeqey.gif" />
+</div>
+<h3>A</h3>
+<div class="anigif">
+  <img alt='wtf' title="¡¿WTF?!?!" src="https://res.cloudinary.com/ddd/image/upload/v1443133148/cat-wtf-trap.gif" />
+</div>
+<h3>A</h3>
+<div class="anigif end">
+  <img alt='#winning' title='#winning' src="https://res.cloudinary.com/ddd/image/upload/v1443133141/full-throttle.gif" />
+</div>
+
+Solo sigue hurgando entre lo nuevo. Echa un vistazo a las plantillas de cadena, el enlace automático de `this`, una herencia más razonable...
+
+##### [Node.JS](http://nodejs.org/)
+
+### Rust
+
+##### [Official Site](http://www.rust-lang.org/)
+
+- **Pros**
+
+- Imagina si existiera un lenguaje tan rápido como C y tan poderoso como Python/C++, pero sin la complejidad/las trampas que normalmente atrapan incluso a los desarrolladores más experimentados.  
+  - De hecho, diría que Rust es aproximadamente tan complejo como la especificación ES6.  
+  - Incluye un montón de extras:  
+    1.  ¡Básicamente Rust transpila de una sintaxis semidinámica a **código C puro**!  
+    1.  Incluyendo \***\*todas las mejores prácticas\*\*** en C que probablemente fallarías, yo ~~eventualmente~~ siempre lo hago.  
+    - Automáticamente obtienes:  
+    - Gestión automática de memoria (¡no necesitas un recolector de basura lento!)  
+    - Propiedad/ bloqueo de objetos perfectamente delimitados (mutexting y conmutación de contexto minimizados)  
+    - Duraciones de objetos (implementadas automáticamente\*, y codificadas como si conocieras cada caso límite)  
+    - Previene prácticamente todos los errores en tiempo de ejecución (en serio, tus rutas de código se vuelven explícitas: simplemente no puedes pasar por alto una ruta).  
+  - Ah, sí, también incluye verdadera extensibilidad del lenguaje con una característica de 'macro' sensata.  
+    - ¿Necesitas comprensiones? [¿Estilo Scala? Hecho](https://gist.github.com/hanny24/5749688), y [¿Como Python? Hecho](https://gist.github.com/JeffBelgum/5e762761cd63c796e803).  
+    1.  ¿Demasiado bueno para ser verdad? No, mejora:  
+    - Indicadores de vanguardia (estadísticas de github.com) revelan que Rust es altamente competitivo o incluso supera a Go (el lenguaje “caliente” de Google)  
+      - Aproximadamente 4 000 estrellas más que Go (actualmente alrededor de 12 200)  
+      - Más contribuidores totales (¡2×! – 1 071 vs. 479 de Go)  
+      - Más forks (¡3×! – 2 343 vs. 765)  
+      - Número de issues abiertos, pierde por poco (2 000 vs. 1 730 de Go)  
+      - Pull Requests (Rust 70+ vs. 1 de Go)  
+    - Yo también tuve que verificar los números tres veces.  
+  - Otras bibliotecas son muy estables gracias a los constructos y reglas de Rust.  
+  - Modelo de hilos utilizable por mortales comunes
+
+- **Cons**  
+  - Los **frameworks web** decentes son relativamente nuevos, no probados y usualmente sin documentación (aunque están **mejorando** mucho – a partir de marzo 2015).  
+  - Muchas rupturas tempranas antes de la versión 1.0
+
+### Python
+
+- **Pros**  
+  - Un conjunto abrumadoramente completo de algoritmos ya está implementado en Python (ver: scilearnkit, numpy, matplotlib, pil/pillow, etc.).  
+  - ¡Muy divertido de escribir! Las comprensiones y la descomposición son excelentes características y hacen que otros lenguajes parezcan inflados.  
+  - Arrays, 'Sequences', Tuples, etc. son relativamente simples
+
+```python
+## dummy code: defines a color + pixel-coord -
+def pixel(x, y, r, g, b): return dict(x=x, y=y, r=r, g=g, b=b)
+## Create a new pixel object and apply to set of vars
+x, y, r, g, b = pixel(10, 20, 255, 255, 255)
+## Now we can call pixel
+```
+
+- **Contras**
+  - Molesto, Python 2.x y 3.x son incompatibles. El Gran Cisma sigue, incluso después de tantos años.
+  - Algunas bibliotecas esenciales no son necesariamente comprendidas por algunos desarrolladores (numpy)
+
+### Haskell
+
+- **Pros**
+  - Muy gratificante cuando finalmente memorizas suficiente sintaxis para crear patrones expresivos basados en comprensiones.
+  - Aprenderás patrones de código que doblan la mente, a menudo aplicables a otros lenguajes.
+- **Contras**
+  - La sintaxis y los patrones pueden ser difíciles de asimilar.
+
+<div class="anigif end">
+  <img alt='bucle infinito' src="https://res.cloudinary.com/ddd/image/upload/v1441143881/endless-loop.gif" />
+</div>
+
+### SmallTalk-80
+
+- **Pros**
+  - Compiladores increíblemente simples (especialmente los originales)
+  - Grandes recursos: [Smalltalk MVC Traducido a JavaScript](http://peter.michaux.ca/articles/smalltalk-mvc-translated-to-javascript)
+- **Contras**
+  - Probablemente nunca usarás este lenguaje para nada. Cero proyectos. Sin embargo, influirá en tu estilo de codificación más rápido que otros lenguajes funcionales... Esto debería estar en la lista de pros)
+
+#### _Trabajo en progreso (actualizado dic. 2015)_
