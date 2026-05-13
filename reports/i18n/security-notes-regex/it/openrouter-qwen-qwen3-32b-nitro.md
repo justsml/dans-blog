@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: security-notes-regex
+- Locale: it
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2015-02-24--security-notes-regex/it/index.mdx
+- Validation: passed
+- Runtime seconds: 6.24
+- Input tokens: 1875
+- Output tokens: 2781
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.000817
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: 'Note sulla Sicurezza: RegEx'
 subTitle: I RegEx possono essere vulnerabili?
@@ -43,3 +61,4 @@ Memoria/CPU possono essere esaurite con input utente di grandi dimensioni o appo
 ### Riferimenti
 
 - [OWASP ReDoS](https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS)
+````
