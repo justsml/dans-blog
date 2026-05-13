@@ -1,0 +1,438 @@
+# Translation Candidate
+- Slug: quiz-can-you-count-to-bigint
+- Locale: es
+- Model: deepseek/deepseek-v4-flash
+- Target: src/content/posts/2024-11-06--quiz-can-you-count-to-bigint/es/index.mdx
+- Validation: deferred
+- Runtime seconds: 235.13
+- Input tokens: 12249
+- Output tokens: 18954
+- Thinking tokens: unknown
+- Cached input tokens: 1280
+- Cache write tokens: 0
+- Estimated cost: $0.006846
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+unlisted: false
+title: 'Cuestionario: ¿Puedes contar con JavaScript?'
+subTitle: ¿Sabes diferenciar `parseInt` de `parseFloat`?
+label: Numbers
+date: '2024-10-31'
+modified: '2024-11-09'
+social_image: ../desktop-social.webp
+category: Quiz
+subCategory: JavaScript
+tags:
+  - quiz
+  - data-structures
+  - algorithms
+cover: ../victor-freitas-hOuJYX2K5DA-unsplash-square.webp
+cover_full_width: ../victor-freitas-hOuJYX2K5DA-unsplash-wide.webp
+cover_mobile: ../victor-freitas-hOuJYX2K5DA-unsplash-square.webp
+cover_icon: ../victor-freitas-hOuJYX2K5DA-unsplash-square.webp
+---
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+---
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="Calentamiento"
+  title="Analizando con `parseInt`"
+  options={[
+    {text: '123456', isAnswer: true},
+    {text: '123'},
+    {text: '12345600'},
+    {text: '456.00'},
+    {text: 'Error'},
+    {text: 'NaN'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```tsx
+        parseInt(" 123456.00")
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    La función `parseInt` ignora los espacios y analiza la secuencia inicial de dígitos como un entero. Aquí, se detiene en el punto decimal, por lo que solo se devuelve `123456`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="Parseo"
+  title="Manejo de comas"
+  options={[
+    {text: '123', isAnswer: true},
+    {text: '12345600'},
+    {text: '123456.00'},
+    {text: '456.00'},
+    {text: 'Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```tsx
+        parseInt("123,456.00")
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    En general, `parseInt` deja de analizar cuando encuentra un carácter no numérico. Aquí, se detiene en la coma, por lo que solo se devuelve `123`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="Matemáticas"
+  title="Precisión con Puntos Flotantes"
+  options={[
+    {text: '0.1 + 0.2 === 0.3'},
+    {text: 'false', isAnswer: true},
+    {text: 'true'},
+    {text: 'NaN'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```tsx
+        0.1 + 0.2 === 0.3
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Debido a errores de precisión de punto flotante, `0.1 + 0.2` no es exactamente igual a `0.3`. Debido a la forma en que los números de punto flotante se almacenan en memoria, el resultado es `0.30000000000000004`. El estándar IEEE 754 para el manejo de aritmética de punto flotante es el culpable, no puede representar algunos números exactamente. Este es un problema común en todos los lenguajes de programación. Eventualmente te encontrarás con un decimal infinitamente repetitivo, y sin importar el lenguaje, la computadora simplemente tiene que dejar de perseguir dígitos infinitamente repetitivos.
+
+    Algunos lenguajes como Python y Java tienen `Decimal` o `BigDecimal` para manejar esto, pero no está integrado en JavaScript. Puedes usar librerías como `big.js` o `decimal.js` para manejar estos casos.
+
+    (Nota: Algunos lenguajes están diseñados para manejar fracciones, números imaginarios, etc., a un nivel lógico más alto, preservando expresiones literales. Pero aún así tienen que lidiar con los mismos problemas de precisión de punto flotante a nivel de hardware.)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="Números que Desbordan"
+  title="Manejando Infinity"
+  options={[
+    {text: 'Infinity', isAnswer: true},
+    {text: 'NaN'},
+    {text: 'Error'},
+    {text: 'undefined'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```tsx
+        Number.MAX_VALUE * 2
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Dado que `Number.MAX_VALUE` es el número regular **representable** más grande en JavaScript, superar su límite provocará un desbordamiento rápidamente; básicamente, podrías ver resultados sin sentido. Multiplicarlo por `2` da como resultado `Infinity`.
+
+    *Ya sabes, JavaScript a veces es así.*
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="Formateo"
+  title="Conversión de cadenas con `.toFixed()`"
+  options={[
+    {text: 'TypeError'},
+    {text: 'SyntaxError'},
+    {text: '"5"'},
+    {text: '5'},
+    {text: '"5.00"', isAnswer: true},
+    {text: '5.0'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ¿Qué podría hacer esto?
+    ```tsx
+        5..toFixed(2)
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    .toFixed(2) devuelve una representación en cadena de `5` con dos decimales, por lo que el resultado es `\"5.00\"`.
+
+    El doble punto (`5..toFixed(2)`) es un 'truco' para acceder al Modelo de Objeto de los Literales Numéricos.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="Comparando tipos"
+  title="Comparación de igualdad entre `parseInt` y `parseFloat`"
+  options={[
+    {text: 'true', isAnswer: true},
+    {text: 'false'},
+    {text: 'NaN'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```jsx
+        parseInt("42") === parseFloat("42")
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    En JavaScript, tanto `parseInt` como `parseFloat` interpretan la cadena `"42"` como el número `42`. Por lo tanto, la comparación `parseInt("42") === parseFloat("42")` evalúa a `true`. Mientras que `parseInt` deja de analizar en el primer carácter no numérico, `parseFloat` continúa analizando hasta que encuentra un carácter que no forma parte de un número de punto flotante. Sin embargo, como no hay puntos decimales ni otros caracteres no numéricos en `"42"`, ambas funciones devuelven el mismo valor.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="Igualdad"
+  title="Comparación de igualdad con BigInt"
+  options={[
+    {text: 'TypeError'},
+    {text: 'true'},
+    {text: 'false', isAnswer: true},
+    {text: 'NaN'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```jsx
+        BigInt("42") === parseInt("42")
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    [`BigInt`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt) es un tipo diferente de `number`, por lo tanto `parseInt("42")` (un número regular) no es estrictamente igual a `BigInt("42")`. Para comparar, debes convertir ambos al mismo tipo: `BigInt(parseInt("42")) === BigInt("42")`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="Base"
+  title="Parseo hexadecimal"
+  options={[
+    {text: 'true', isAnswer: true},
+    {text: 'false'},
+    {text: 'NaN'},
+    {text: 'Debe estar en mayúsculas: 2A'},
+    {text: 'Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ¿Cuál será el resultado?
+    ```jsx
+        parseInt("0x2A") === parseInt("2a", 16)
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Cualquier cadena de entrada que comience con `0x` se trata automágicamente como hexadecimal (radix `16`).
+    Por lo tanto, es equivalente a pasar un radix de 16. Así, `parseInt("0x2A")` es lo mismo que `parseInt("2a", 16)`. (No distingue mayúsculas de minúsculas).
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="Basado"
+  title="Análisis con Radix"
+  options={[
+    {text: '255', isAnswer: true},
+    {text: '0'},
+    {text: '16'},
+    {text: '0.16'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ¿Qué está pasando aquí?
+    ```jsx
+        parseInt('0xFF', 16)
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `parseInt` con una base hexadecimal (`16`) convierte `"FF"` a `255` en decimal. Quizás hayas visto esto en códigos de color RGB/Hex de CSS.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="Number[]"
+  title="Usando `.map(parseInt)`"
+  options={[
+    {text: '[24, NaN, NaN]', isAnswer: true},
+    {text: '[24, NaN, 42]'},
+    {text: '[24, 42]'},
+    {text: 'NaN'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```jsx
+        [24, 'One', 42].map(parseInt)
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    El segundo argumento de `parseInt` (la base) se alinea con el argumento `index` de los métodos de array. Esto lleva a resultados inesperados, ya que `parseInt("One", 1)` devuelve `NaN` debido a la entrada inválida.
+
+    El primer elemento, `24`, se parsea como `24` en base 0 (detección automática), por lo que sigue siendo `24`. El segundo elemento, `'One'`, se parsea como `NaN` en base 1. El tercer elemento, `42`, se parsea usando base 2. En base 2, `'42'` es `NaN`, por lo que el resultado es `[24, NaN, NaN]`.
+
+    Este es un error común con `parseInt` y `map`. Si quieres parsear un array de strings a números, el único método "incorporado" seguro es `.map(Number)` o agregar un callback/cierre `.map(x => parseInt(x, 10))`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="Number[]"
+  title="Usando `.map(Number)`"
+  options={[
+    {text: '[24, NaN, 34]', isAnswer: true},
+    {text: '[24, NaN, 42]'},
+    {text: '[24, 1, 42]'},
+    {text: '[24, 42]'},
+    {text: 'NaN'},
+    {text: 'TypeError'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```jsx
+        [24, 'Twenty1', 0o42].map(Number)
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `Number` convierte valores a un tipo numérico de manera más estricta que `parseInt`. Aquí, `'Twenty1'` se convierte en `NaN`, mientras que `0o42` es reconocido como un literal octal y se convierte en `34`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="Parseo"
+  title="Manejo de nulos"
+  options={[
+    {text: '0 NaN'},
+    {text: '0 0'},
+    {text: 'NaN NaN'},
+    {text: 'NaN 0', isAnswer: true},
+    {text: 'null null'},
+    {text: 'TypeError'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ¿Cuál será el resultado de este código?
+    ```jsx
+        console.log(parseInt(null), Number(null))
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `parseInt` convierte la entrada a una cadena, por lo que `null` se convierte en `"null"`. Dado que `"null"` no tiene caracteres válidos en base 10 (números regulares), devolverá `NaN`.
+
+    `Number(null)` devuelve `0` porque a JS le gusta mantenerte en vilo.
+    ¿Por qué? Bueno, podría profundizar si hay interés.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="Parseo"
+  title="Parseo en base"
+  options={[
+    {text: 'NaN'},
+    {text: 'null'},
+    {text: 'undefined'},
+    {text: '36'},
+    {text: '1112745', isAnswer: true},
+    {text: '01001001'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ¿Cuál será el resultado de este hechizo?
+    ```jsx
+        parseInt(null, 36)
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Dado que `parseInt` siempre convierte la entrada a una cadena, `null` se convierte en la cadena `"null"`.
+
+    En base 36 (hexatrigesimal, por si llevas la cuenta), la cadena `"null"` representa `1112745`.
+
+    Los valores secuenciales de `nulk`, `null` y `nulm` son respectivamente `1112744`, `1112745` y `1112746` en base 36.
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+
+<section className="scroll-x">
+## Tabla comparativa
+
+| Función | `parseInt` | `parseFloat` | `Number` | `BigInt` |
+| --- | --- | --- | --- | --- |
+| Ignora espacios en blanco | ✅ | ✅ | ✅ | ✅ |
+| `.map(FN)`  | ❌ | ☑️ | ✅ | ✅ |
+| Soporta argumento de base | ✅ | ❌ | ❌ | ❌ |
+| Literales binarios/octales/hexadecimales | ✅ | ❌ | ✅ | ✅ |
+| Caracteres inválidos `42 oh no` | `42` | `42`  | `NaN` | `SyntaxError` |
+</section>
+
+<h2>¿Cómo te fue? 🧐</h2>
+
+{/* <h4>Are you ok?</h4> */}
+
+<p class="inset">¿Buscas un descanso después de tanto binario?<br />Pftt, recuerda: descanso *después* de las habilidades! <br /><br />Ve a [mi gimnasio](../challenges/) para aplastar más desafíos! 💪</p>
+````
