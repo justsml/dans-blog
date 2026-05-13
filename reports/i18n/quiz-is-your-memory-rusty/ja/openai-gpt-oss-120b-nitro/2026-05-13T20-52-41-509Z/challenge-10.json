@@ -1,0 +1,48 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Cell vs RefCell",
+  "translatedTitle": "Cell と RefCell",
+  "translation": {
+    "title": "Cell と RefCell",
+    "group": "可変性",
+    "options": [
+      {
+        "text": "出力: 42, 43"
+      },
+      {
+        "text": "出力: 43, 43",
+        "hint": "Cell::get() は呼び出し時点の値を返します"
+      },
+      {
+        "text": "コンパイルエラー",
+        "hint": "Cell はこの正確なユースケースのために設計されています"
+      },
+      {
+        "text": "実行時パニック",
+        "hint": "Cell の操作は Copy 型に対して常に安全です"
+      }
+    ],
+    "questionProse": [
+      "このコードは何を出力しますか？"
+    ],
+    "explanationProse": [
+      "Cell と RefCell は内部可変性のために異なる目的で使われます：",
+      "主な違い：\n      1. Cell:\n         - Copy 型に最適です\n         - 借用 API がない\n         - 常に値をコピーまたはムーブします\n      \n      2. RefCell:\n         - 任意の型で動作します\n         - 借用 API を持ちます\n         - 実行時の借用チェック\n\n      ベストプラクティス：\n      1. シンプルな Copy 型（数値、bool など）には Cell を使う\n      2. 内容を借用する必要があるときは RefCell を使う\n      3. Cell/RefCell を介したミューテーションは最小限に抑える\n      4. なぜ内部可変性が必要かをドキュメントに残す"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Cell と RefCell\",\n  \"group\": \"可変性\",\n  \"options\": [\n    {\n      \"text\": \"出力: 42, 43\"\n    },\n    {\n      \"text\": \"出力: 43, 43\",\n      \"hint\": \"Cell::get() は呼び出し時点の値を返します\"\n    },\n    {\n      \"text\": \"コンパイルエラー\",\n      \"hint\": \"Cell はこの正確なユースケースのために設計されています\"\n    },\n    {\n      \"text\": \"実行時パニック\",\n      \"hint\": \"Cell の操作は Copy 型に対して常に安全です\"\n    }\n  ],\n  \"questionProse\": [\n    \"このコードは何を出力しますか？\"\n  ],\n  \"explanationProse\": [\n    \"Cell と RefCell は内部可変性のために異なる目的で使われます：\",\n    \"主な違い：\\n      1. Cell:\\n         - Copy 型に最適です\\n         - 借用 API がない\\n         - 常に値をコピーまたはムーブします\\n      \\n      2. RefCell:\\n         - 任意の型で動作します\\n         - 借用 API を持ちます\\n         - 実行時の借用チェック\\n\\n      ベストプラクティス：\\n      1. シンプルな Copy 型（数値、bool など）には Cell を使う\\n      2. 内容を借用する必要があるときは RefCell を使う\\n      3. Cell/RefCell を介したミューテーションは最小限に抑える\\n      4. なぜ内部可変性が必要かをドキュメントに残す\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 968,
+    "outputTokens": 1290,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 777
+  },
+  "cost": {
+    "inputUsd": 0.000037752,
+    "outputUsd": 0.00023219999999999998,
+    "totalUsd": 0.00026995199999999995,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

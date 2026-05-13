@@ -1,0 +1,48 @@
+{
+  "index": 8,
+  "attempt": 1,
+  "originalTitle": "RefCell Behavior",
+  "translatedTitle": "RefCell の挙動",
+  "translation": {
+    "title": "RefCell の挙動",
+    "group": "RefCell",
+    "options": [
+      {
+        "text": "出力: 42",
+        "hint": "同時に2つの可変借用は可能か？"
+      },
+      {
+        "text": "実行時パニック: RefCell はすでに借用されています"
+      },
+      {
+        "text": "コンパイルエラー",
+        "hint": "RefCell はチェックを実行時に移動します"
+      },
+      {
+        "text": "実行時パニック: 別のメッセージ",
+        "hint": "エラーは借用に関するものです"
+      }
+    ],
+    "questionProse": [
+      "このコードを実行するとどうなるでしょうか？"
+    ],
+    "explanationProse": [
+      "RefCell は内部可変性を提供しますが、実行時に Rust の借用規則を強制します：",
+      "重要な概念:\n      1. RefCell は借用チェックを実行時に移動する\n      2. ルール違反でパニックが発生する可能性がある\n      3. 内部可変性パターンに有用\n\n      主な使用例:\n      - テストでのモックオブジェクト\n      - 自己参照構造の実装\n      - 共有参照の背後のデータを変更したいとき\n      \n      ベストプラクティス:\n      1. 可能な限りコンパイル時の借用を優先する\n      2. RefCell の借用は狭いスコープに留める\n      3. drop() を使って借用を明示的に終了することを検討する\n      4. 内部可変性が必要なときに RefCell を使用する"
+    ]
+  },
+  "rawText": "{\n \"title\": \"RefCell の挙動\",\n  \"group\": \"RefCell\",\n  \"options\": [\n    {\n      \"text\": \"出力: 42\",\n      \"hint\": \"同時に2つの可変借用は可能か？\"\n    },\n    {\n      \"text\": \"実行時パニック: RefCell はすでに借用されています\"\n    },\n    {\n      \"text\": \"コンパイルエラー\",\n      \"hint\": \"RefCell はチェックを実行時に移動します\"\n    },\n    {\n      \"text\": \"実行時パニック: 別のメッセージ\",\n      \"hint\": \"エラーは借用に関するものです\"\n    }\n  ],\n  \"questionProse\": [\n    \"このコードを実行するとどうなるでしょうか？\"\n  ],\n  \"explanationProse\": [\n    \"RefCell は内部可変性を提供しますが、実行時に Rust の借用規則を強制します：\",\n    \"重要な概念:\\n      1. RefCell は借用チェックを実行時に移動する\\n      2. ルール違反でパニックが発生する可能性がある\\n      3. 内部可変性パターンに有用\\n\\n      主な使用例:\\n      - テストでのモックオブジェクト\\n      - 自己参照構造の実装\\n      - 共有参照の背後のデータを変更したいとき\\n      \\n      ベストプラクティス:\\n      1. 可能な限りコンパイル時の借用を優先する\\n      2. RefCell の借用は狭いスコープに留める\\n      3. drop() を使って借用を明示的に終了することを検討する\\n      4. 内部可変性が必要なときに RefCell を使用する\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 973,
+    "outputTokens": 1201,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 750
+  },
+  "cost": {
+    "inputUsd": 0.000037946999999999994,
+    "outputUsd": 0.00021618,
+    "totalUsd": 0.000254127,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

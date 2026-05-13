@@ -1,0 +1,52 @@
+{
+  "index": 12,
+  "attempt": 1,
+  "originalTitle": "Arc and Mutex",
+  "translatedTitle": "Arc と Mutex",
+  "translation": {
+    "title": "Arc と Mutex",
+    "group": "スマートポインタ",
+    "options": [
+      {
+        "text": "出力: 42",
+        "hint": "コードは印刷文に到達しません"
+      },
+      {
+        "text": "出力: 43",
+        "hint": "コードは印刷前に詰まります"
+      },
+      {
+        "text": "コンパイルエラー",
+        "hint": "コードは構文的に正しいです"
+      },
+      {
+        "text": "実行時パニック",
+        "hint": "パニックよりもひどいです"
+      },
+      {
+        "text": "デッドロック"
+      }
+    ],
+    "questionProse": [
+      "このコードを実行するとどうなる？"
+    ],
+    "explanationProse": [
+      "このコードは典型的なデッドロックシナリオを示しています。修正方法は次の通りです：",
+      "デッドロック防止のベストプラクティス：\n      1. クリティカルセクションは小さく保つ\n      2. スコープを使ってロックをすぐに解放する\n      3. 複数のロックは一貫した順序で取得する\n      4. パフォーマンス向上のために parking_lot::Mutex を使用する\n      5. 読み取りが多い負荷には RwLock の使用を検討する\n\n      共通パターン："
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Arc と Mutex\",\n  \"group\": \"スマートポインタ\",\n  \"options\": [\n    {\n      \"text\": \"出力: 42\",\n      \"hint\": \"コードは印刷文に到達しません\"\n    },\n    {\n      \"text\": \"出力: 43\",\n      \"hint\": \"コードは印刷前に詰まります\"\n    },\n    {\n      \"text\": \"コンパイルエラー\",\n      \"hint\": \"コードは構文的に正しいです\"\n    },\n    {\n      \"text\": \"実行時パニック\",\n      \"hint\": \"パニックよりもひどいです\"\n    },\n    {\n      \"text\": \"デッドロック\"\n    }\n  ],\n  \"questionProse\": [\n    \"このコードを実行するとどうなる？\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"rust\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"explanationProse\": [\n    \"このコードは典型的なデッドロックシナリオを示しています。修正方法は次の通りです：\",\n    \"デッドロック防止のベストプラクティス：\\n      1. クリティカルセクションは小さく保つ\\n      2. スコープを使ってロックをすぐに解放する\\n      3. 複数のロックは一貫した順序で取得する\\n      4. パフォーマンス向上のために parking_lot::Mutex を使用する\\n      5. 読み取りが多い負荷には RwLock の使用を検討する\\n\\n      共通パターン：\"\n  ],\n  \"explanationCode\": [\n    {\n      \"language\": \"rust\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    },\n    {\n      \"language\": \"rust\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 951,
+    "outputTokens": 1143,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 744
+  },
+  "cost": {
+    "inputUsd": 0.000037089,
+    "outputUsd": 0.00020573999999999996,
+    "totalUsd": 0.00024282899999999996,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

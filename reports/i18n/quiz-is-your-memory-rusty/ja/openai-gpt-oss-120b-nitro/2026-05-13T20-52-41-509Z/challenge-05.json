@@ -1,0 +1,32 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Box Smart Pointer",
+  "translatedTitle": "Box スマートポインタ",
+  "translation": {
+    "title": "Box スマートポインタ",
+    "group": "スマートポインタ",
+    "options": [],
+    "questionProse": [
+      "この再帰型定義に何が問題ですか？"
+    ],
+    "explanationProse": [
+      "このコードは、コンパイラが `CatList` のサイズをコンパイル時に決定できないために失敗します。型が再帰的であるため、サイズが無限に大きくなる可能性があります！\n\n      `Box<T>` を使って修正する方法は次の通りです：",
+      "なぜ `Box<T>` が機能するのか:\n      1. Box は固定サイズのポインタを提供する（64ビットシステムでは通常 8 バイト）\n      2. 実際のデータはヒープ上に格納される\n      3. コンパイラは正確に確保すべきサイズが分かる\n\n      `Box<T>` の一般的な使用例:\n      - 再帰データ構造（リンクリスト、ツリー）\n      - ヒープ確保を保証したい大きなデータ\n      - 動的ディスパッチが必要なトレイトオブジェクト\n\n      ベストプラクティス: `Box<T>` を以下のときに使う:\n      - 再帰型\n      - ヒープ確保を保証したいとき\n      - 大きなデータをコピーせずに移動したいとき"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Box スマートポインタ\",\n  \"group\": \"スマートポインタ\",\n  \"options\": [],\n  \"questionProse\": [\n    \"この再帰型定義に何が問題ですか？\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"rust\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"explanationProse\": [\n    \"このコードは、コンパイラが `CatList` のサイズをコンパイル時に決定できないために失敗します。型が再帰的であるため、サイズが無限に大きくなる可能性があります！\\n\\n      `Box<T>` を使って修正する方法は次の通りです：\",\n    \"なぜ `Box<T>` が機能するのか:\\n      1. Box は固定サイズのポインタを提供する（64ビットシステムでは通常 8 バイト）\\n      2. 実際のデータはヒープ上に格納される\\n      3. コンパイラは正確に確保すべきサイズが分かる\\n\\n      `Box<T>` の一般的な使用例:\\n      - 再帰データ構造（リンクリスト、ツリー）\\n      - ヒープ確保を保証したい大きなデータ\\n      - 動的ディスパッチが必要なトレイトオブジェクト\\n\\n      ベストプラクティス: `Box<T>` を以下のときに使う:\\n      - 再帰型\\n      - ヒープ確保を保証したいとき\\n      - 大きなデータをコピーせずに移動したいとき\"\n  ],\n  \"explanationCode\": [\n    {\n      \"language\": \"rust\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 909,
+    "outputTokens": 1087,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 803
+  },
+  "cost": {
+    "inputUsd": 0.000035450999999999997,
+    "outputUsd": 0.00019566,
+    "totalUsd": 0.000231111,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

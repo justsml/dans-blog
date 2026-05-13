@@ -1,0 +1,32 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Rc Smart Pointer",
+  "translatedTitle": "Rc スマートポインタ",
+  "translation": {
+    "title": "Rc スマートポインタ",
+    "group": "参照カウント",
+    "options": [],
+    "questionProse": [
+      "このコードは何を出力しますか？ カウントを注意深く！"
+    ],
+    "explanationProse": [
+      "Rc の動作を分解してみましょう：\n\n      1. `Rc::new()` での初期作成: カウント = 1\n      2. `marcus` の最初のクローン: カウント = 2\n      3. `aurelius` の2番目のクローン: カウント = 3\n\n      重要な Rc の特徴:",
+      "重要なポイント：\n      - `Rc::clone()` は安価です - カウンタをインクリメントするだけです\n      - Rc はシングルスレッドのシナリオ専用です\n      - 最後の参照がドロップされると、データがクリーンアップされます\n      - 参照サイクルを防ぐために Weak 参照を使用します\n\n      ベストプラクティス：\n      - 共有所有権が必要なときは Rc を使用します\n      - スレッド安全なシナリオには Arc を検討します\n      - 参照サイクルの作成は避けましょう"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Rc スマートポインタ\",\n  \"group\": \"参照カウント\",\n  \"options\": [],\n  \"questionProse\": [\n    \"このコードは何を出力しますか？ カウントを注意深く！\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"rust\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"explanationProse\": [\n    \"Rc の動作を分解してみましょう：\\n\\n      1. `Rc::new()` での初期作成: カウント = 1\\n      2. `marcus` の最初のクローン: カウント = 2\\n      3. `aurelius` の2番目のクローン: カウント = 3\\n\\n      重要な Rc の特徴:\",\n    \"重要なポイント：\\n      - `Rc::clone()` は安価です - カウンタをインクリメントするだけです\\n      - Rc はシングルスレッドのシナリオ専用です\\n      - 最後の参照がドロップされると、データがクリーンアップされます\\n      - 参照サイクルを防ぐために Weak 参照を使用します\\n\\n      ベストプラクティス：\\n      - 共有所有権が必要なときは Rc を使用します\\n      - スレッド安全なシナリオには Arc を検討します\\n      - 参照サイクルの作成は避けましょう\"\n  ],\n  \"explanationCode\": [\n    {\n      \"language\": \"rust\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 875,
+    "outputTokens": 1068,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 698
+  },
+  "cost": {
+    "inputUsd": 0.000034125,
+    "outputUsd": 0.00019224,
+    "totalUsd": 0.000226365,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

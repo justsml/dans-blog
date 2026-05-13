@@ -1,0 +1,48 @@
+{
+  "index": 16,
+  "attempt": 1,
+  "originalTitle": "Memory Optimization",
+  "translatedTitle": "メモリ最適化",
+  "translation": {
+    "title": "メモリ最適化",
+    "group": "ベストプラクティス",
+    "options": [
+      {
+        "text": "16 bytes",
+        "hint": "アラインメント要件を考慮してください"
+      },
+      {
+        "text": "24 bytes"
+      },
+      {
+        "text": "32 bytes",
+        "hint": "String は単一ポインタより大きいです。"
+      },
+      {
+        "text": "Depends on platform",
+        "hint": "64 ビットシステムを指定しています"
+      }
+    ],
+    "questionProse": [
+      "典型的な現在の 64 ビット Rust ターゲットで、この構造体のサイズはいくつですか？"
+    ],
+    "explanationProse": [
+      "構造体のメモリレイアウトと最適化を分解してみましょう：",
+      "メモリレイアウトの考慮事項:\n      1. アラインメント要件:\n         - u32: 4 バイトアラインメント\n         - String: 8 バイトアラインメントで、一般的な 64 ビットターゲットでは 24 バイトサイズ\n         - bool: 1 バイトアラインメント\n\n      2. フィールド順序の戦略:\n         - 同サイズのフィールドをまとめる\n         - 大きいアラインメントを先に置く\n         - キャッシュライン最適化を考慮する\n\n      ベストプラクティス:\n      1. FFI や安定したレイアウトが必要な場合は、適切な `repr(...)` を使用する\n      2. 適切な整数サイズを使用する\n      3. オプションフィールドには `Option` の使用を検討する\n      4. サイズが重要な構造体は `std::mem::size_of` で測定する\n      5. `#[repr(packed)]` は慎重に使用する――パフォーマンスに影響する可能性がある"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"メモリ最適化\",\n  \"group\": \"ベストプラクティス\",\n  \"options\": [\n    {\n      \"text\": \"16 bytes\",\n      \"hint\": \"アラインメント要件を考慮してください\"\n    },\n    {\n      \"text\": \"24 bytes\"\n    },\n    {\n      \"text\": \"32 bytes\",\n      \"hint\": \"String は単一ポインタより大きいです。\"\n    },\n    {\n      \"text\": \"Depends on platform\",\n      \"hint\": \"64 ビットシステムを指定しています\"\n    }\n  ],\n  \"questionProse\": [\n    \"典型的な現在の 64 ビット Rust ターゲットで、この構造体のサイズはいくつですか？\"\n  ],\n  \"explanationProse\": [\n    \"構造体のメモリレイアウトと最適化を分解してみましょう：\",\n    \"メモリレイアウトの考慮事項:\\n      1. アラインメント要件:\\n         - u32: 4 バイトアラインメント\\n         - String: 8 バイトアラインメントで、一般的な 64 ビットターゲットでは 24 バイトサイズ\\n         - bool: 1 バイトアラインメント\\n\\n      2. フィールド順序の戦略:\\n         - 同サイズのフィールドをまとめる\\n         - 大きいアラインメントを先に置く\\n         - キャッシュライン最適化を考慮する\\n\\n      ベストプラクティス:\\n      1. FFI や安定したレイアウトが必要な場合は、適切な `repr(...)` を使用する\\n      2. 適切な整数サイズを使用する\\n      3. オプションフィールドには `Option` の使用を検討する\\n      4. サイズが重要な構造体は `std::mem::size_of` で測定する\\n      5. `#[repr(packed)]` は慎重に使用する――パフォーマンスに影響する可能性がある\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 988,
+    "outputTokens": 1224,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 1620
+  },
+  "cost": {
+    "inputUsd": 0.000038532,
+    "outputUsd": 0.00022032,
+    "totalUsd": 0.000258852,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
