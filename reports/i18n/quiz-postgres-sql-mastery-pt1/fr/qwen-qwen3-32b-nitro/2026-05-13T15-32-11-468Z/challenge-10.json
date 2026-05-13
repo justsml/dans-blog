@@ -1,0 +1,50 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Identify Invalid Types",
+  "translatedTitle": "Identifier les types invalides",
+  "translation": {
+    "title": "Identifier les types invalides",
+    "group": "Types Postgres",
+    "options": [
+      {
+        "text": "box"
+      },
+      {
+        "text": "line"
+      },
+      {
+        "text": "point"
+      },
+      {
+        "text": "circle"
+      },
+      {
+        "text": "polygon"
+      },
+      {
+        "text": "triangle"
+      }
+    ],
+    "questionProse": [
+      "Laquelle de ces options n'est pas ❌ un type PostgreSQL valide ?"
+    ],
+    "explanationProse": [
+      "PostgreSQL dispose d'un ensemble riche de types spécialisés, mais `triangle` n'en fait pas partie.\n\nJe crois que les versions futures de [GEOS](https://libgeos.org/) incluront le support `Triangle` OGC/WKT, ce qui signifie qu'il devrait finalement être ajouté à Postgis. (En gros, cette réponse pourrait être fausse à l'avenir.)\n\nLes types spécialisés valides incluent :\n- `box` (rectangle)\n- `line` (ligne infinie)\n- `point` (point 2D)\n- `circle` (cercle 2D)\n- `polygon` (polygone 2D)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Identifier les types invalides\",\n  \"group\": \"Types Postgres\",\n  \"options\": [\n    { \"text\": \"box\" },\n    { \"text\": \"line\" },\n    { \"text\": \"point\" },\n    { \"text\": \"circle\" },\n    { \"text\": \"polygon\" },\n    { \"text\": \"triangle\" }\n  ],\n  \"questionProse\": [\n    \"Laquelle de ces options n'est pas ❌ un type PostgreSQL valide ?\"\n  ],\n  \"explanationProse\": [\n    \"PostgreSQL dispose d'un ensemble riche de types spécialisés, mais `triangle` n'en fait pas partie.\\n\\nJe crois que les versions futures de [GEOS](https://libgeos.org/) incluront le support `Triangle` OGC/WKT, ce qui signifie qu'il devrait finalement être ajouté à Postgis. (En gros, cette réponse pourrait être fausse à l'avenir.)\\n\\nLes types spécialisés valides incluent :\\n- `box` (rectangle)\\n- `line` (ligne infinie)\\n- `point` (point 2D)\\n- `circle` (cercle 2D)\\n- `polygon` (polygone 2D)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 772,
+    "outputTokens": 813,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2241
+  },
+  "cost": {
+    "inputUsd": 0.00006176,
+    "outputUsd": 0.00019512,
+    "totalUsd": 0.00025688,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

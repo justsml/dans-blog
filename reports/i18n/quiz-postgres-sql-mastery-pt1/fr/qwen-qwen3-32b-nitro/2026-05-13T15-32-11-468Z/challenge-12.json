@@ -1,0 +1,44 @@
+{
+  "index": 11,
+  "attempt": 1,
+  "originalTitle": "Timestamp Precision",
+  "translatedTitle": "Précision des timestamps",
+  "translation": {
+    "title": "Précision des timestamps",
+    "group": "Date/Heure",
+    "options": [
+      {
+        "text": "2024-01-08 13:30:00+00"
+      },
+      {
+        "text": "2024-01-08 13:30:00.123456+00"
+      },
+      {
+        "text": "2024-01-08 13:30:00.123456789+00"
+      },
+      {
+        "text": "2024-01-08 13:30:00.1234567"
+      }
+    ],
+    "questionProse": [
+      "Quel est le plus petit littéral `timestamp` dépassant la précision maximale de `time` dans PostgreSQL ?"
+    ],
+    "explanationProse": [
+      "Les timestamps PostgreSQL ont une précision de microseconde (6 chiffres après la virgule).\n\n    - Maximum : `.123456` (6 chiffres)\n    - Les nanosecondes (9 chiffres) sont arrondies ou tronquées selon la précision prise en charge\n    - Les décalages de fuseau horaire sont acceptés pour `timestamptz`, mais non obligatoires\n\n    **Piège peu connu :** Certains langages/frameworks envoient une précision nanoseconde, mais PostgreSQL stocke les timestamps avec une précision microseconde."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Précision des timestamps\",\n  \"group\": \"Date/Heure\",\n  \"options\": [\n    {\n      \"text\": \"2024-01-08 13:30:00+00\"\n    },\n    {\n      \"text\": \"2024-01-08 13:30:00.123456+00\"\n    },\n    {\n      \"text\": \"2024-01-08 13:30:00.123456789+00\"\n    },\n    {\n      \"text\": \"2024-01-08 13:30:00.1234567\"\n    }\n  ],\n  \"questionProse\": [\n    \"Quel est le plus petit littéral `timestamp` dépassant la précision maximale de `time` dans PostgreSQL ?\"\n  ],\n  \"explanationProse\": [\n    \"Les timestamps PostgreSQL ont une précision de microseconde (6 chiffres après la virgule).\\n\\n    - Maximum : `.123456` (6 chiffres)\\n    - Les nanosecondes (9 chiffres) sont arrondies ou tronquées selon la précision prise en charge\\n    - Les décalages de fuseau horaire sont acceptés pour `timestamptz`, mais non obligatoires\\n\\n    **Piège peu connu :** Certains langages/frameworks envoient une précision nanoseconde, mais PostgreSQL stocke les timestamps avec une précision microseconde.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 847,
+    "outputTokens": 963,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2263
+  },
+  "cost": {
+    "inputUsd": 0.00006776,
+    "outputUsd": 0.00023112,
+    "totalUsd": 0.00029888,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

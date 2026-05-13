@@ -1,0 +1,44 @@
+{
+  "index": 13,
+  "attempt": 1,
+  "originalTitle": "Check Constraint Timing",
+  "translatedTitle": "Quand est vérifiée la contrainte de vérification ?",
+  "translation": {
+    "title": "Quand est vérifiée la contrainte de vérification ?",
+    "group": "Contraintes",
+    "options": [
+      {
+        "text": "Immédiatement pour les nouvelles lignes ou les lignes modifiées"
+      },
+      {
+        "text": "À la validation de la transaction"
+      },
+      {
+        "text": "À la prochaine requête"
+      },
+      {
+        "text": "Jamais - les contraintes ne sont vérifiées qu'au INSERT"
+      }
+    ],
+    "questionProse": [
+      "À quel moment cette contrainte de vérification est-elle vérifiée ?"
+    ],
+    "explanationProse": [
+      "`NOT VALID` contraintes :\n    - Sont vérifiées immédiatement pour les nouvelles insertions et mises à jour\n    - Ne valident pas les lignes existantes\n    - Peuvent valider les lignes existantes plus tard avec `VALIDATE CONSTRAINT`\n    - Utiles pour les grandes tables\n    \n    Sans `NOT VALID` :\n    - La contrainte est vérifiée immédiatement\n    - Toutes les lignes existantes sont validées\n    - Peuvent être lentes sur de grandes tables"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Quand est vérifiée la contrainte de vérification ?\",\n  \"group\": \"Contraintes\",\n  \"options\": [\n    {\n      \"text\": \"Immédiatement pour les nouvelles lignes ou les lignes modifiées\"\n    },\n    {\n      \"text\": \"À la validation de la transaction\"\n    },\n    {\n      \"text\": \"À la prochaine requête\"\n    },\n    {\n      \"text\": \"Jamais - les contraintes ne sont vérifiées qu'au INSERT\"\n    }\n  ],\n  \"questionProse\": [\n    \"À quel moment cette contrainte de vérification est-elle vérifiée ?\"\n  ],\n  \"explanationProse\": [\n    \"`NOT VALID` contraintes :\\n    - Sont vérifiées immédiatement pour les nouvelles insertions et mises à jour\\n    - Ne valident pas les lignes existantes\\n    - Peuvent valider les lignes existantes plus tard avec `VALIDATE CONSTRAINT`\\n    - Utiles pour les grandes tables\\n    \\n    Sans `NOT VALID` :\\n    - La contrainte est vérifiée immédiatement\\n    - Toutes les lignes existantes sont validées\\n    - Peuvent être lentes sur de grandes tables\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 729,
+    "outputTokens": 817,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2114
+  },
+  "cost": {
+    "inputUsd": 0.000058320000000000004,
+    "outputUsd": 0.00019608,
+    "totalUsd": 0.0002544,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

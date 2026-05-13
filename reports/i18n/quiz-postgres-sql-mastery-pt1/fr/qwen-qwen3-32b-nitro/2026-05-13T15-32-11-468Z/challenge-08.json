@@ -1,0 +1,50 @@
+{
+  "index": 7,
+  "attempt": 1,
+  "originalTitle": "Identify Invalid Types",
+  "translatedTitle": "Identifier les types invalides",
+  "translation": {
+    "title": "Identifier les types invalides",
+    "group": "Types Postgres",
+    "options": [
+      {
+        "text": "cidr"
+      },
+      {
+        "text": "inet"
+      },
+      {
+        "text": "ipv4"
+      },
+      {
+        "text": "macaddr"
+      },
+      {
+        "text": "macaddr8"
+      },
+      {
+        "text": "interval"
+      }
+    ],
+    "questionProse": [
+      "Laquelle de ces options n'est pas ❌ un type PostgreSQL valide ?"
+    ],
+    "explanationProse": [
+      "Cela vous a-t-il frustré, voire _énervé_ ? Vous n'êtes pas seul ! Pour citer un contributeur \"noyau\" anonyme : \"Qu'est-ce que c'est que ce truc, Dan ?! J'ai explosé sur les questions de types ! C'est violent, monsieur ! Pas question de partager mon score, haha.\" 😈 C'est gentil de votre part.\n\nLes types réseau riches de PostgreSQL n'incluent pas `ipv4`. Chaque fois que j'essaie de l'utiliser sans googler, je me trompe. Peut-être que `macaddr8` me donne l'impression qu'il _doit_ exister des types `ipv4` et `ipv6`. Non, `inet` couvre les deux. De même, `cidr` gère les masques réseau pour les deux.\n\nLes types réseau valides sont : \n- `cidr` (adresse réseau IPv4/IPv6)\n- `inet` (adresse hôte IPv4/IPv6)\n- `macaddr` (adresse MAC)\n- `macaddr8` (adresse MAC EUI-64)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Identifier les types invalides\",\n  \"group\": \"Types Postgres\",\n  \"options\": [\n    { \"text\": \"cidr\" },\n    { \"text\": \"inet\" },\n    { \"text\": \"ipv4\" },\n    { \"text\": \"macaddr\" },\n    { \"text\": \"macaddr8\" },\n    { \"text\": \"interval\" }\n  ],\n  \"questionProse\": [\n    \"Laquelle de ces options n'est pas ❌ un type PostgreSQL valide ?\"\n  ],\n  \"explanationProse\": [\n    \"Cela vous a-t-il frustré, voire _énervé_ ? Vous n'êtes pas seul ! Pour citer un contributeur \\\"noyau\\\" anonyme : \\\"Qu'est-ce que c'est que ce truc, Dan ?! J'ai explosé sur les questions de types ! C'est violent, monsieur ! Pas question de partager mon score, haha.\\\" 😈 C'est gentil de votre part.\\n\\nLes types réseau riches de PostgreSQL n'incluent pas `ipv4`. Chaque fois que j'essaie de l'utiliser sans googler, je me trompe. Peut-être que `macaddr8` me donne l'impression qu'il _doit_ exister des types `ipv4` et `ipv6`. Non, `inet` couvre les deux. De même, `cidr` gère les masques réseau pour les deux.\\n\\nLes types réseau valides sont : \\n- `cidr` (adresse réseau IPv4/IPv6)\\n- `inet` (adresse hôte IPv4/IPv6)\\n- `macaddr` (adresse MAC)\\n- `macaddr8` (adresse MAC EUI-64)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 845,
+    "outputTokens": 845,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2684
+  },
+  "cost": {
+    "inputUsd": 0.0000676,
+    "outputUsd": 0.0002028,
+    "totalUsd": 0.0002704,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
