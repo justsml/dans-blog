@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: amazing-resources
+- Locale: fr
+- Model: qwen/qwen3.6-35b-a3b
+- Target: src/content/posts/2015-02-26--amazing-resources/fr/index.mdx
+- Validation: deferred
+- Runtime seconds: 143.79
+- Input tokens: 9831
+- Output tokens: 31415
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.000000
+- Pricing source: unknown
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Les meilleures ressources UI gratuites pour les développeurs
@@ -188,3 +206,4 @@ Des outils compacts mais pratiques qui résolvent rapidement des problèmes fron
 
 Changelog : 2026-04 — Restructuration de la page pour les humains et le SEO, amélioration des titres et descriptions, et ajout de Assistant UI, AI SDK Elements, Aceternity UI, Shadcnblocks, Tailark, des patterns KokonutUI et Tool UI.
 Changelog : 2025-09 — Mise à jour des liens, actualisation des ressources anciennes, et ajout d’outils modernes pour les icônes, le contraste et le design.
+````
