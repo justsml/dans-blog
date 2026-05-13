@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: lancedb-wasm-browser-client
+- Locale: de
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-04-16--lancedb-wasm-browser-client/de/index.mdx
+- Validation: passed
+- Runtime seconds: 24.57
+- Input tokens: 8504
+- Output tokens: 9062
+- Thinking tokens: unknown
+- Cached input tokens: 2560
+- Cache write tokens: 0
+- Estimated cost: $0.002855
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Serverlose Vektorsuche
 subTitle: ''
@@ -129,3 +147,4 @@ Das, was dieses Projekt machbar gemacht hat, ist, dass die interne Architektur v
 Gute Abstraktionsgrenzen machen nicht nur die interne Codebasis einfacher zu handhaben – sie ermöglichen es, dass jemand wie ich von außen in das Projekt kommt und ein neues Ausführungs-Umgebung einbaut, ohne den Kern zu berühren. Das ist eine echte Design-Qualität, und es machte die 14.000 Zeilen Code eher so fühlen, als würde man eine Form ergänzen, statt gegen das Codebase zu kämpfen.  
 
 Der PR ist [hier](https://github.com/lancedb/lancedb/pull/3247), falls du die Details sehen willst. Noch auf Review warten. Die Maintainer waren freundlich, und ich bin zurückhaltend optimistisch.
+````
