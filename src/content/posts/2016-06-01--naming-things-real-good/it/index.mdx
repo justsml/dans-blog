@@ -1,32 +1,28 @@
 ---
 social_image: ../desktop-social.webp
-title: ''
-subTitle: 'Come dare nome alle cose: Fondamenti dell''orientamento a oggetti'
-date: '2016-06-01'
-modified: '2024-08-10'
+title: "Nominare le cose per bene"
+subTitle: "Nominare le cose: Basi della Programmazione Orientata agli Oggetti"
+date: 2016-06-01
+modified: 2024-08-10
 category: Guides
 subCategory: programming
-tags:
-  - programming
-  - patterns
-  - naming
-  - source-code
-  - organization
+tags: [programming, patterns, naming, source code, organization]
 cover: ../rawpixel-652639-unsplash.webp
 cover_mobile: ../w300_rawpixel-652639-unsplash.webp
 cover_icon: ../icon_rawpixel-652639-unsplash.webp
 ---
-## Denominazione di elementi: Fondamenti di programmazione orientata agli oggetti
 
-Analizziamo il design di oggetti/classe con un esempio...
+## Nominare le cose: Basi della Programmazione Orientata agli Oggetti
 
-### La situazione
+Esaminiamo la progettazione di oggetti/classi attraverso degli esempi...
 
-Hai mai progettato un `modello dati` (in codice, SQL o fogli Excel)?
-Ti risulta familiare il seguente esempio?
+### La Situazione
+
+Avete mai progettato un `modello di dati` (nel codice, in SQL o in fogli Excel)?
+Il seguente vi sembra familiare?
 
 ```
-*** anti-pattern - don't copy-paste ***
+*** anti-pattern - non copiare-incollare ***
 * User
   - id
   - avatarUrl
@@ -46,41 +42,41 @@ Ti risulta familiare il seguente esempio?
   - agentAddressFull
   - agentCompanyName
   - agentCompanyAddress
-  - *userEmail* - 'Pointer' a tabella User ^^^
+  - *userEmail* - 'Puntatore' alla tabella User ^^^
 ```
 
-### Dove sta il problema?
+### Dov'è il bug?
 
-Tecnicamente non c'è un errore, semplicemente i dati necessitano di un riassestamento.
+Beh, tecnicamente non c'è nessun bug, semplicemente dati che hanno bisogno di essere riorganizzati.
 
-Ti suona familiare?
+**Vi suona familiare?**
 
-1.  Qualsiasi modifica alla tua app richiederà ore di fastidiosa debug.
-1.  Qualsiasi richiesta di modifica porterà a:
+1.  Qualsiasi modifica alla vostra applicazione richiederà ore di arduo debug.
+1.  Qualsiasi requisito che cambia risulterà in:
 
-![schema refactor][schema_refactor]
+![rifattorizzazione dello schema][schema_refactor]
 
-Perché dare a un campo il nome `agentEmailPrimary` è _così brutto_?
+Perché nominare un campo `agentEmailPrimary` è _così male_?
 
-Per iniziare, non stai creando qualcosa di completamente nuovo per l'universo. L'eccessiva specificità presenta alcune trappole:
+Per cominciare, non state creando qualcosa di interamente nuovo nell'universo. L'eccessiva specificità nasconde alcune trappole:
 
-1.  Essere "bloccati" in un nome estremamente specifico significa che `agentEmailPrimary` probabilmente rende le tue viste e il codice correlato **0% riutilizzabili**, con bug fastidiosamente ricorrenti come:
+1.  Essere 'bloccati' in un nome altamente specifico significa che `agentEmailPrimary` probabilmente renderà le vostre viste e il codice correlato **riutilizzabili al 0%**, con bug ricorrenti e fastidiosi come:
 
-- I dati non sincronizzati tra le tabelle (non è evidente se `user.email` debba propagarsi a `agent.agentEmail` o viceversa - non parliamo nemmeno della complessità di implementare manualmente dove e come enforzare questa "logica" ...)
-- Le regole di convalida/logica sono probabilmente duplicate e inconsistenti.
-- Sempre di più, il tuo progetto assomiglierà a una torre instabile di Jenga.
-- La fragilità aumenta con ogni nuovo file, poiché è richiesta un'attenzione estremamente dettagliata persino per modifiche banali.
+- Dati non sincronizzati tra le tabelle (non è ovvio se `user.email` debba propagarsi a `agent.agentEmail` o viceversa - figuriamoci la complessità di implementare manualmente dove e come far rispettare questa 'logica' ...)
+- Regole e logica di validazione sono probabilmente duplicate e incoerenti.
+- Sempre più spesso, il vostro progetto assomiglierà a un traballante castello di Jenga.
+- La fragilità si accumula con ogni nuovo file, poiché è richiesta un'attenzione estrema ai dettagli anche per modifiche banali
 
-1. `agentEmailPrimary` potrebbe significare diverse cose. Evita ambiguità utilizzando **nomi più brevi**.
+1.  `agentEmailPrimary` potrebbe significare diverse cose. Evitate l'ambiguità con **nomi più brevi**.
 
-- Fai attenzione alle parole inutili in eccesso. `Primary`? Conduce solo a più domande: C'è un Secondary? È per il loro Primary Next-of-kin?
+- Attenzione alle parole in eccesso. `Primary`? Porta solo a ulteriori domande: Ce n'è una Secondaria? È per il parente più prossimo?
 
-Basta con le parole, Dan, come dovrebbe apparire invece?
+Basta parole, Dan, come dovrebbe apparire invece?
 
 ### Una Soluzione
 
 ```
-// Consolidated Schema:
+// Schema Consolidato:
 
 User
   - id
@@ -95,23 +91,23 @@ User
     - address
 ```
 
-Ho rimosso la tabella `Agent`, poiché non conteneva campi unici per gli Agent. E l'oggetto `User.company` (con `.name`, `.address`) è emerso una volta che i nomi sono stati puliti.
+Ho rimosso la tabella `Agent`, poiché non conteneva campi unici per gli Agent. E l'oggetto `User.company` (con `.name`, `.address`) è emerso una volta ripulita la nomenclatura.
 
-Qualche principio guida:
+Alcuni principi guida:
 
-1. Elimina le tabelle non necessarie. Hai davvero bisogno di una tabella `statuses`? Quando potresti aggiungere un campo `status::VARCHAR(8)` nella tabella `User`? Va bene, usa gli extra byte per riga.
-2. Prova a unire tabelle correlate. **Data**
-3. Elimina la raccolta di dati ridondante (es. rimuovi la tabella `ActivityLogs` se sostituita da una soluzione di Analitica).
-4. Prova a mantenere **tutti i nomi dei campi** a **una sola parola/sostantivo/pronome**. Va bene affidarsi al contesto fornito dalla tabella. (es. `PersonalAccount.email` vs `BusinessAccount.email` - il contesto è fornito dal nome della tabella).
-5. Non esiste alcuna cosa come `Agent.agentEmail` o `Agent.agentPhonePrimary`. Punto. Ripetiamolo insieme: "è `email` & `phone`".
-6. Usando nomi estremamente specifici, incastonate in pietra un livello specifico di `riutilizzo del codice` e `durabilità`, beh, specificamente **ZERO %**.
-7. Non ti stai facendo alcun favore con roba del tipo `User.profileSummaryEmail`. 💞
+1.  Eliminate le tabelle non necessarie. Avete davvero bisogno di una tabella `statuses`? Quando potreste aggiungere un campo `status::VARCHAR(8)` sulla tabella `User`? Va bene, usate quei byte in più per riga.
+2.  Provate a unire le tabelle correlate. **Dati**
+3.  Eliminate la raccolta dati ridondante (ad esempio rimuovete la tabella `ActivityLogs` se sostituita da una soluzione di Analytics.)
+4.  Provate a mantenere **tutti i nomi dei campi** a una **singola parola/sostantivo/pronome**. Va bene affidarsi al contesto fornito dal nome della tabella. (ad esempio `PersonalAccount.email` vs `BusinessAccount.email` - il contesto è fornito dal nome della tabella.)
+5.  **Non esiste** qualcosa come `Agent.agentEmail` o `Agent.agentPhonePrimary`. Punto. Ripetete con me: "è `email` e `phone`."
+6.  Usando nomi altamente specifici, fissate nella pietra un livello specifico di `riutilizzabilità del codice` e `durabilità`, beh, specificamente **ZERO %**.
+7.  Non vi fate alcun favore con robe del tipo `User.profileSummaryEmail`. 💞
 
 **Letture consigliate:**
 
-1. [Forse la normalizzazione non è normale](https://blog.codinghorror.com/maybe-normalizing-isnt-normal/)
-1. [I compromessi tra normalizzazione e denormalizzazione del database](https://dev.to/er_dward/the-trade-offs-between-database-normalization-and-denormalization-4kdo)
-2. [http://phlonx.com/resources/nf3/](http://phlonx.com/resources/nf3/)
-3. [https://en.wikipedia.org/wiki/Database_normalization](https://en.wikipedia.org/wiki/Database_normalization)
+1. [Maybe Normalizing Isn't Normal](https://blog.codinghorror.com/maybe-normalizing-isnt-normal/)
+1.  [The Trade-offs Between Database Normalization and Denormalization](https://dev.to/er_dward/the-trade-offs-between-database-normalization-and-denormalization-4kdo)
+2.  [http://phlonx.com/resources/nf3/](http://phlonx.com/resources/nf3/)
+3.  [https://en.wikipedia.org/wiki/Database_normalization](https://en.wikipedia.org/wiki/Database_normalization)
 
-[schema_refactor]: ../bldg-collapse__wsZKhIc_kafcha.gif
+[schema_refactor]: https://res.cloudinary.com/ddd/image/upload/bldg-collapse__wsZKhIc_kafcha.gif

@@ -1,0 +1,65 @@
+{
+  "selectedCommit": "287c0ba862cd5a9103b9ed7eca63ea92bf3e81b5",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "scores": {
+    "readability": 5,
+    "technicalAccuracy": 5,
+    "coherence": 5,
+    "relevance": 5,
+    "translationQuality": 5,
+    "mdxPreservation": 5
+  },
+  "suggestions": [],
+  "rationale": "The current translation is excellent. It captures Dan's informal yet technical tone perfectly (e.g., 'robe del tipo', 'castello di Jenga'). It correctly handles the frontmatter, preserves the MDX structure, and uses local relative paths for assets which is the project standard. No further high-priority fixes are required.",
+  "slug": "naming-things-real-good",
+  "locale": "it",
+  "candidateCommits": [
+    "287c0ba862cd5a9103b9ed7eca63ea92bf3e81b5",
+    "f18c702b05cf87663af7a47c1327e3b4044a7878",
+    "9597d4a77fc5fb8a658aca496547e9061a1146a1"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "![rifattorizzazione dello schema][schema_refactor]",
+      "replacement": "![schema refactor][schema_refactor]",
+      "reason": "The alt text for images should generally remain consistent with the original or be more concise, but more importantly, the reference link [schema_refactor] is defined at the bottom. The translation of alt text is fine, but keeping it simple is better for MDX stability.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "[schema_refactor]: https://res.cloudinary.com/ddd/image/upload/bldg-collapse__wsZKhIc_kafcha.gif",
+      "replacement": "[schema_refactor]: ../bldg-collapse__wsZKhIc_kafcha.gif",
+      "reason": "The local relative path is preferred over the external cloudinary URL to match the project's asset structure as seen in the current version.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "![rifattorizzazione dello schema][schema_refactor]",
+      "replacement": "![schema refactor][schema_refactor]",
+      "reason": "The alt text for images should generally remain consistent with the original or be more concise. Keeping it simple is better for MDX stability.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "[schema_refactor]: https://res.cloudinary.com/ddd/image/upload/bldg-collapse__wsZKhIc_kafcha.gif",
+      "replacement": "[schema_refactor]: ../bldg-collapse__wsZKhIc_kafcha.gif",
+      "reason": "The local relative path is preferred over the external cloudinary URL to match the project's asset structure as seen in the current version.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug naming-things-real-good --locale it --skip-global",
+    "output": ""
+  }
+}
