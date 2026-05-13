@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: postgres-text-search-guide
+- Locale: ja
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-05-02--postgres-text-search-guide/ja/index.mdx
+- Validation: deferred
+- Runtime seconds: 116.01
+- Input tokens: 17503
+- Output tokens: 15261
+- Thinking tokens: unknown
+- Cached input tokens: 2560
+- Cache write tokens: 0
+- Estimated cost: $0.005063
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: ''
 subTitle: データベースに既にある検索ツールと、それぞれが役立つとき
@@ -477,3 +495,4 @@ LIMIT 10;
 PostgreSQLのテキスト検索は多くのユースケースをカバーしますが、上限があります。ユーザーが「名前ではなく目的を説明する」場合—"飛行機で眠るのを助ける何か"、"新人エンジニア向けのデバッグ自信に関する記事"— 語彙検索とトリグラム検索はどちらも失敗します。
 
 これはベクトル埋め込み、セマンティック検索、ハイブリッドアーキテクチャの領域です。詳しくは[セマンティックベクトル検索とハイブリッド戦略](../semantic-vector-search-landscape)を参照してください。
+````
