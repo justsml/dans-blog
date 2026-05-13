@@ -1,0 +1,66 @@
+{
+  "runId": "deepseek-deepseek-v4-flash@2026-05-13T22-20-38-359Z",
+  "slug": "async-stack-traces-why-error-stack-lies-in-production",
+  "locale": "ru",
+  "model": "deepseek/deepseek-v4-flash",
+  "modelPath": "deepseek-deepseek-v4-flash",
+  "createdAt": "2026-05-13T22:22:06.315Z",
+  "sourcePath": "src/content/posts/2025-12-29--async-stack-traces-why-error-stack-lies-in-production/index.mdx",
+  "targetPath": "src/content/posts/2025-12-29--async-stack-traces-why-error-stack-lies-in-production/ru/index.mdx",
+  "candidatePath": "reports/i18n/async-stack-traces-why-error-stack-lies-in-production/ru/deepseek-deepseek-v4-flash/2026-05-13T22-20-38-359Z/candidate.mdx",
+  "sourceHash": "bda8adb66cf30fc89c91baea70bf6d81ae97177b838379f1fd437c2da47c9917",
+  "outputHash": "2941132712a62617823abda7cf6502ed5a48cd12d5ffe388d27a43c8e670126b",
+  "reasoningEffort": "low",
+  "temperature": 0.3,
+  "maxTokens": 16000,
+  "timeoutMs": 200000,
+  "articleSummary": "The article argues that `Error.stack` is fundamentally unreliable for debugging async JavaScript because `await` suspends execution, clearing the call stack and losing causal history. It critiques V8’s `--async-stack-traces` flag as a costly (30% slowdown) and noisy fix, then promotes `AsyncLocalStorage` as the production-ready solution for preserving request context across async boundaries. Written in a conversational, slightly frustrated tutorial tone for Node.js developers, it uses metaphors like “cryogenic freezer” for the microtask queue and contrasts “stack” (genealogy) with “trace” (causality). The core thesis: stop trusting stack traces; instead, attach structured context (e.g., request IDs) via `AsyncLocalStorage` and use OpenTelemetry for causal chains.",
+  "totalInputTokens": 3295,
+  "totalOutputTokens": 2845,
+  "totalCacheReadTokens": 384,
+  "totalCacheWriteTokens": 0,
+  "totalDurationMs": 30251,
+  "totalCostUsd": 0.0012052152,
+  "pricingSource": "local-openrouter-estimate",
+  "telemetry": {
+    "model": "deepseek/deepseek-v4-flash",
+    "chunkSize": "10p",
+    "totalChunks": 3,
+    "totalInputTokens": 3295,
+    "totalOutputTokens": 2845,
+    "totalCacheReadTokens": 384,
+    "totalCacheWriteTokens": 0,
+    "totalDurationMs": 30251,
+    "totalCostUsd": 0.0012052152,
+    "pricingSource": "local-openrouter-estimate",
+    "chunks": [
+      {
+        "index": 0,
+        "inputTokens": 1014,
+        "outputTokens": 1547,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 7967,
+        "costUsd": 0.00057512
+      },
+      {
+        "index": 1,
+        "inputTokens": 1146,
+        "outputTokens": 552,
+        "cacheReadTokens": 384,
+        "cacheWriteTokens": 0,
+        "durationMs": 3365,
+        "costUsd": 0.0002623152
+      },
+      {
+        "index": 2,
+        "inputTokens": 1135,
+        "outputTokens": 746,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 18919,
+        "costUsd": 0.00036778000000000006
+      }
+    ]
+  }
+}
