@@ -3,7 +3,7 @@
 - Locale: de
 - Model: deepseek/deepseek-v4-flash
 - Target: src/content/posts/2025-12-29--the-8-byte-timestamp-that-destroyed-our-database/de/index.mdx
-- Validation: deferred
+- Validation: rejected: direct AI SDK translation failed
 - Runtime seconds: 57.43
 - Input tokens: 7588
 - Output tokens: 10692
@@ -12,150 +12,142 @@
 - Cache write tokens: 0
 - Estimated cost: $0.003898
 - Pricing source: local-openrouter-estimate
-- Note: Generated through the direct AI SDK chunked translator.
+- Note: Command failed: git commit --only -m i18n candidate(de): the-8-byte-timestamp-that-destroyed-our-database via deepseek/deepseek-v4-flash -- reports/i18n/the-8-byte-timestamp-that-destroyed-our-database/de reports/i18n/the-8-byte-timestamp-that-destroyed-our-database/candidates.jsonl
 ## Raw Output
 
 ````mdx
 ---
-title: Dein Timestamp ist eine Lüge
-subTitle: >-
-  Was mir ein Zugticket über die Speicherung von Zeit in Datenbanken beigebracht
-  hat
-date: '2025-12-29'
-modified: '2026-01-12'
-tags:
-  - postgres
-  - postgresql
-  - databases
-  - timestamps
-  - timezones
-  - microservices
-  - debugging
+title: "Dein Zeitstempel ist eine Lüge"
+subTitle: "Was eine Zugfahrkarte über das Speichern von Zeit in Datenbanken lehrt"
+date: 2025-12-29
+modified: 2026-01-12
+tags: [postgres, postgresql, databases, timestamps, timezones, microservices, debugging]
 category: Code
 subCategory: Databases
-social_image: ../desktop-social.webp
+social_image: desktop-social.webp
 cover_full_width: ../wide.webp
 cover_mobile: ../square.webp
 cover_icon: ../square.webp
 ---
-Ich buchte einen Zug von New York nach Chicago, als mir klar wurde, warum Timestamp-Typen in Postgres so verwirrend sind. Das Ticket zeigte:
+
+Ich war dabei, ein Zugticket von New York nach Chicago zu buchen, als mir plötzlich klar wurde, warum Zeitstempeltypen in Postgres so verwirrend sind. Das Ticket zeigte:
 
 - Abfahrt: 8:00 Uhr EST
-- Ankunft: 19:30 Uhr CST
+- Ankunft: 19:30 Uhr CST  
 - Dauer: 11 Stunden 30 Minuten
 
-Drei verschiedene Arten, über Zeit zu sprechen, alle auf demselben Ticket. Und jede muss in einer Datenbank anders gespeichert werden.
+Drei verschiedene Arten, über Zeit zu sprechen, alle auf demselben Ticket. Und jede davon muss in einer Datenbank anders gespeichert werden.
 
 ## Die Frage, die niemand zuerst stellt
 
-Sowohl `TIMESTAMP` als auch `TIMESTAMPTZ` belegen in Postgres genau 8 Bytes mit derselben Mikrosekunden-Genauigkeit. Warum also überhaupt zwei Typen?
+Sowohl `TIMESTAMP` als auch `TIMESTAMPTZ` in Postgres belegen exakt 8 Byte mit derselben Mikrosekunden-Genauigkeit. Warum also zwei Typen?
 
-Weil „Wie spät ist es?“ vollständig davon abhängt, was man jemandem mitteilen will.
+Weil „Wie spät ist es?" vollständig davon abhängt, was du erzählen möchtest.
 
-Wenn ich in New York in diesen Zug einsteige, muss ich wissen, dass er um 8:00 Uhr Eastern abfährt. Das ist die Zahl auf der Bahnhofsuhr, die ich abgleichen muss. Wenn meine Freundin mich in Chicago abholt, muss sie wissen, dass ich um 19:30 Uhr Central ankomme – das ist die Zahl auf *ihrer* Uhr. Und wenn ich herausfinden will, ob ich Zeit habe, mein Buch zu lesen, muss ich wissen, dass die Reise 11½ Stunden dauert.
+Wenn ich in New York in diesen Zug steige, muss ich wissen, dass er um 8:00 Uhr Eastern abfährt. Das ist die Zahl auf der Bahnhofsuhr, die ich abgleichen muss. Wenn mich mein Freund in Chicago abholt, muss sie wissen, dass ich um 19:30 Uhr Central ankomme – das ist die Zahl auf *ihrer* Uhr. Und wenn ich herausfinden will, ob ich noch Zeit habe, mein Buch zu lesen, muss ich wissen, dass es eine elfeinhalbstündige Reise ist.
 
 Derselbe Zug. Dieselbe Reise. Drei völlig unterschiedliche Darstellungen von Zeit.
 
 ## Was TIMESTAMPTZ tatsächlich tut
 
-Hier ist der Trick bei `TIMESTAMPTZ` – und es ist nicht das, was die meisten denken. Es speichert nicht die Zeitzone. Der Name ist irreführend.
+Hier ist der Trick mit `TIMESTAMPTZ` – und er ist nicht das, was die meisten denken. Er speichert nicht die Zeitzone. Der Name ist irreführend.
 
-Es wandelt jede eingegebene Zeit in UTC um, bevor es sie speichert, und wandelt sie dann beim Lesen in die Zeitzone deiner Sitzung zurück. Der „TZ“-Teil betrifft nicht die Speicherung, sondern die **Unterstützung bei der Umrechnung**.
+Was er tut: Er konvertiert jede eingegebene Zeit in UTC, bevor er sie speichert, und konvertiert sie beim Lesen zurück in die Zeitzone deiner Sitzung. Das „TZ" bezieht sich nicht auf die Speicherung, sondern auf die **Konvertierungsunterstützung**.
 
-Angenommen, du speicherst diese Zugabfahrt. Jemand in Tokio fragt deine Datenbank ab und sieht die Abfahrt in JST. Jemand in London sieht sie in GMT. Alle sehen denselben absoluten Moment, nur ausgedrückt in ihrer konfigurierten Zeitzone. Das ist perfekt zum Aufzeichnen von Ereignissen: „Wann wurde diese Zahlung verarbeitet?“ oder „Wann fand diese API-Anfrage statt?“
+Nehmen wir diese Zugabfahrt. Jemand in Tokio fragt deine Datenbank ab und sieht die Abfahrt in JST. Jemand in London sieht sie in GMT. Alle betrachten denselben absoluten Zeitpunkt, nur ausgedrückt in ihrer konfigurierten Zeitzone. Das ist perfekt für die Aufzeichnung von Ereignissen: „Wann wurde diese Zahlung verarbeitet?" oder „Wann erfolgte diese API-Anfrage?"
 
-Aber was ist mit diesem Zugticket? Du willst nicht, dass sich die Abfahrtszeit ändert, nur weil jemand sie aus einer anderen Zeitzone abfragt. Der Zug fährt um 8:00 Uhr Eastern, Punkt. Das ist kein absoluter Zeitpunkt – es ist ein Versprechen darüber, was die Uhr im Grand Central anzeigen wird.
+Aber was ist mit diesem Zugticket? Du möchtest nicht, dass sich die Abfahrtszeit ändert, nur weil jemand von einer anderen Zeitzone darauf zugreift. Der Zug fährt um 8:00 Uhr Eastern ab, Punkt. Das ist kein absoluter Zeitpunkt – es ist ein Versprechen darüber, was die Uhr in Grand Central anzeigen wird.
 
-## Speichern, was du wirklich meinst
+## Speichere das, was du tatsächlich meinst
 
 Für diese Zugreise musst du verschiedene Dinge für verschiedene Zwecke speichern:
 
-- Die absoluten Momente (`departs_at` und `arrives_at` als `TIMESTAMPTZ`)
+- Die absoluten Zeitpunkte (`departs_at` und `arrives_at` als `TIMESTAMPTZ`)
 - Den Anzeigekontext (`origin_timezone` und `destination_timezone` als Text)
-- Die Dauer (ein `INTERVAL` zwischen den beiden Momenten)
+- Die Dauer (ein `INTERVAL` zwischen den beiden Zeitpunkten)
 
-Jetzt kann deine Anwendung das tun, was das Zugticket tut: zeige „Departs 8:00 AM EST“ an, indem du den absoluten Moment in die Ursprungszeitzone umwandelst, zeige „Arrives 7:30 PM CST“ an, indem du in die Zielzeitzone umwandelst, und zeige „Duration: 11h 30m“ direkt aus dem Intervall an.
+Jetzt kann deine Anwendung das tun, was das Zugticket tut: „Abfahrt 8:00 Uhr EST" anzeigen, indem der absolute Zeitpunkt in die Ursprungszeitzone konvertiert wird, „Ankunft 19:30 Uhr CST" durch Konvertierung in die Zielzeitzone und „Dauer: 11 Std. 30 Min." direkt aus dem Intervall anzeigen.
 
-Die Person, die das Ticket aus Tokio bucht, sieht dieselben Ortszeiten an jedem Bahnhof. Das ist es, was sie wissen muss.
+Die Person, die das Ticket von Tokio aus bucht, sieht dieselben lokalen Zeiten an jedem Bahnhof. Das ist es, was sie wissen muss.
 
-## Warum deine Flugverfolgungs-App es falsch gemacht hat
+## Warum deine Flugtracking-App es falsch gemacht hat
 
-Hast du schon mal bemerkt, wie manche Flugverfolgungs-Apps während des Flugs deine Zeitzone anzeigen? Als ob du über dem Atlantik wärst und es heißt „Current time: 4:32 PM GMT.“ Wen kümmert's? Du bist nicht in Greenwich, du bist auf 38.000 Fuß irgendwo über dem Ozean.
+Schon mal aufgefallen, dass einige Flugtracking-Apps deine Zeitzone während des Fluges anzeigen? Als ob du über dem Atlantik wärst und es heißt „Aktuelle Zeit: 16:32 Uhr GMT." Wen interessiert das? Du bist nicht in Greenwich, du bist irgendwo über dem Ozean in 11.000 Metern Höhe.
 
-Was du eigentlich sehen willst:
-- Vergangene Zeit seit dem Start
-- Verbleibende Zeit bis zur Ankunft
-- Wie spät es *dort* sein wird, wenn du landest
+Was du tatsächlich sehen möchtest:
+- Verstrichene Zeit seit dem Start
+- Verbleibende Zeit bis zur Ankunft  
+- Wie spät es *dort* bei der Landung sein wird
 
-Keine davon sind Zeitzonenumrechnungen. Die ersten beiden sind **Intervalle** – Dauern, keine Zeitpunkte. Die letzte ist eine Zeitzonenumrechnung, aber zu einem bestimmten Ort, nicht zu „deiner aktuellen Zeitzone“.
+Keines davon sind Zeitzonenkonvertierungen. Die ersten zwei sind **Intervalle** – Dauern, keine Zeitpunkte. Das letzte ist eine Zeitzonenkonvertierung, aber an einen bestimmten Ort, nicht in „deine aktuelle Zeitzone."
 
-Siehst du? Zwei Intervallberechnungen (`NOW() - actual_departure` und `estimated_arrival - NOW()`), eine Zeitzonenumrechnung zu einem bestimmten Ort (`AT TIME ZONE destination_timezone`). Deine aktuelle Zeitzone spielt keine Rolle.
+Siehst du? Zwei Intervallberechnungen (`NOW() - actual_departure` und `estimated_arrival - NOW()`), eine Zeitzonenkonvertierung an einen bestimmten Ort (`AT TIME ZONE destination_timezone`). Deine aktuelle Zeitzone spielt dabei keine Rolle.
 
-## Wenn die Ortszeit das ist, was du wirklich brauchst
+## Wenn die Wanduhr-Zeit das ist, was du wirklich brauchst
 
-Hotels interessieren sich nicht für absolute Zeitpunkte. Sie kümmern sich um die Uhrzeit an ihrem Standort.
+Hotels interessieren sich nicht für absolute Zeitpunkte. Sie interessieren sich für Uhrzeit-Anzeigen an ihrem Standort.
 
-„Check-in ist nach 15:00 Uhr“ bedeutet nicht „Check-in ist 15 Stunden nach Mitternacht UTC“. Es bedeutet: „Wenn die Uhr in unserer Lobby 15:00 Uhr anzeigt, kannst du einchecken.“ Wenn deine Server in Virginia stehen, das Hotel aber in Paris ist, soll diese Regel trotzdem um 15:00 Uhr *Pariser Zeit* ausgelöst werden.
+„Check-in nach 15:00 Uhr" bedeutet nicht „Check-in 15 Stunden nach Mitternacht UTC." Es bedeutet: „Wann immer die Uhr in unserer Lobby 15:00 Uhr anzeigt, kannst du einchecken." Wenn deine Server in Virginia stehen, aber das Hotel in Paris ist, möchtest du trotzdem, dass diese Regel um 15:00 Uhr *Pariser Zeit* ausgelöst wird.
 
-Der Typ `TIME` (ohne Datum oder Zeitzone) repräsentiert genau das: „eine Anzeige auf einer Uhr.“ Kombiniere ihn mit einem Textfeld für die Zeitzone (`Europe/Paris`), und du kannst Ortszeitregeln durchsetzen, unabhängig davon, wo deine Server stehen. Aber du wirst auch `TIMESTAMPTZ`-Spalten brauchen, um zu erfassen, wann bestimmte Gäste tatsächlich ein- und auschecken – das sind absolute Zeitpunkte, die dein Backend verfolgen muss.
+Der `TIME`-Typ (ohne Datum oder Zeitzone) repräsentiert genau das: „Eine Anzeige auf einer Uhr." Kombiniere ihn mit einem Textfeld für die Zeitzone („Europe/paris"), und du kannst Wall-Clock-Richtlinien durchsetzen, egal wo deine Server leben. Aber du wirst auch `TIMESTAMPTZ`-Spalten wollen, um zu speichern, wann bestimmte Gäste tatsächlich ein- und ausgecheckt haben – das sind absolute Zeitpunkte, die dein Backend verfolgen muss.
 
 ## Das Kalenderproblem
 
-Ich habe eine wiederkehrende Erinnerung um 9:00 Uhr: „Tägliche Prioritäten überprüfen.“ Ich möchte diese Erinnerung um 9:00 Uhr *wo auch immer ich bin*. Wenn ich unterwegs bin, soll sie trotzdem um 9:00 Uhr Ortszeit ausgelöst werden.
+Ich habe eine wiederkehrende Erinnerung um 9:00 Uhr eingestellt: „Tägliche Prioritäten prüfen." Ich möchte diese Erinnerung um 9:00 Uhr, *egal wo ich bin*. Wenn ich unterwegs bin, sollte sie trotzdem um 9:00 Uhr lokaler Zeit ausgelöst werden.
 
-Aber ich habe auch ein Kalenderereignis: „Team-Standup um 10:00 Uhr EST.“ Mein Teamkollege in Berlin muss für dasselbe Ereignis „16:00 Uhr MEZ“ sehen. Gleiches Meeting, unterschiedliche Anzeigezeiten, weil dieses ein absoluter Zeitpunkt ist, an dem wir alle teilnehmen.
+Aber ich habe auch ein Kalenderereignis: „Team-Standup um 10:00 Uhr EST." Mein Teamkollege in Berlin muss für dasselbe Ereignis „16:00 Uhr CET" sehen. Dasselbe Meeting, unterschiedliche Anzeigezeiten, weil dies ein absoluter Zeitpunkt ist, an dem wir alle teilnehmen.
 
-Zwei verschiedene Ereignistypen, zwei verschiedene Speicherstrategien. Das Meeting bekommt ein `TIMESTAMPTZ`. Die Erinnerung bekommt eine `TIME` plus meine aktuelle Zeitzoneneinstellung. Vermeiden Sie, beide in dasselbe Feld zu zwingen.
+Zwei verschiedene Arten von Ereignissen, zwei verschiedene Speicherstrategien. Das Meeting bekommt ein `TIMESTAMPTZ`. Die Erinnerung bekommt ein `TIME` plus meine aktuelle Zeitzoneneinstellung. Versuche nicht, beides in dasselbe Feld zu zwängen.
 
-## Was in der Produktion schiefgeht
+## Dinge, die in der Produktion kaputtgehen
 
-Selbst mit den richtigen Typen kann die Genauigkeit zuschlagen. Postgres speichert Mikrosekunden: `10:00:00.123456`. Das `Date`-Objekt von JavaScript verwendet Millisekunden: `10:00:00.123`.
+Selbst mit den richtigen Typen kann Präzion dich beißen. Postgres speichert Mikrosekunden: `10:00:00.123456`. JavaScripts `Date`-Objekt verwendet Millisekunden: `10:00:00.123`.
 
-Diese Abfrage könnte also auf mysteriöse Weise keine Zeilen zurückgeben:
+Diese Abfrage könnte also mysteriöserweise keine Zeilen zurückgeben:
 
 ```sql
 SELECT * FROM orders WHERE created_at = '2026-01-15 10:00:00.123';
 ```
 
-Die Datenbank hat `10:00:00.123456` und Ihr Code übergibt `10:00:00.123`. Je nachdem, wie Ihr Treiber damit umgeht, könnten diese nicht übereinstimmen.
+Die Datenbank hat `10:00:00.123456` und dein Code übergibt `10:00:00.123`. Je nachdem, wie dein Treiber damit umgeht, könnten diese nicht übereinstimmen.
 
-Verwenden Sie keine exakte Gleichheit für Zeitstempel. Nutzen Sie Bereichsabfragen oder – besser – schlagen Sie Datensätze gar nicht erst über ihren Erstellungszeitstempel nach. Verwenden Sie eine ordentliche Unique-Constraint oder einen Idempotenzschlüssel.
+Verwende keine exakte Gleichheit für Zeitstempel. Verwende Bereichsabfragen oder – besser – suche nicht nach Datensätzen anhand ihres Erstellungszeitstempels. Verwende eine ordnungsgemäße Unique-Constraint oder einen Idempotenz-Key.
 
 ## Praktische Regeln
 
-**Standardmäßig TIMESTAMPTZ verwenden.** Im Zweifelsfall verwenden Sie `TIMESTAMPTZ`. Es behandelt Multi-Region-Bereitstellungen, Sommerzeit und zukünftige Zeitzonenänderungen automatisch. Es hat die gleiche Speichergröße wie `TIMESTAMP`, also kein Nachteil.
+**Standardmäßig TIMESTAMPTZ verwenden.** Im Zweifelsfall verwende `TIMESTAMPTZ`. Es handhabt Multi-Region-Deployments, Sommerzeit und zukünftige Zeitzonenänderungen automatisch. Es hat dieselbe Speichergröße wie `TIMESTAMP`, also gibt es keinen Nachteil.
 
-**Kontext separat speichern.** Wenn Sie „Abfahrt 8:00 Uhr EST“ zusammen mit dem tatsächlichen Zeitpunkt anzeigen müssen, speichern Sie sowohl das `TIMESTAMPTZ` als auch die `origin_timezone` in separaten Spalten. Versuchen Sie nicht, alles in ein Feld zu kodieren.
+**Kontext separat speichern.** Wenn du „Abfahrt 8:00 Uhr EST" neben dem tatsächlichen Zeitpunkt anzeigen musst, speichere sowohl das `TIMESTAMPTZ` als auch die `origin_timezone` als separate Spalten. Versuche nicht, alles in ein Feld zu kodieren.
 
-**Über Intervalle nachdenken.** Viele zeitbezogene Anforderungen betreffen eigentlich die Dauer, nicht Zeitpunkte. „Wie lange hängt das schon?“ „Wann läuft das ab?“ Verwenden Sie `INTERVAL`-Operationen, keine Zeitzonenkonvertierungen.
+**Denke an Intervalle.** Viele zeibezogene Anforderungen sind tatsächlich Dauern, keine Zeitpunkte. „Wie lange ist dies noch ausstehend?" „Wann läuft dies ab?" Verwende `INTERVAL`-Operationen, keine Zeitzonenkonvertierungen.
 
-**Führen Sie alles in UTC aus.** Ihre Server sollten auf UTC eingestellt sein. Ihre Datenbanksitzungen sollten standardmäßig UTC verwenden. Konvertieren Sie nur dann in lokale Zeitzonen, wenn Sie sie Benutzern anzeigen, und nur, wenn Sie wissen, welche Zeitzone relevant ist.
+**Betreiben alles in UTC.** Deine Server sollten auf UTC eingestellt sein. Deine Datenbanksitzungen sollten standardmäßig UTC verwenden. Konvertiere nur bei der Anzeige für Benutzer in lokale Zeitzonen – und nur wenn du weißt, welche Zeitzone relevant ist.
 
-**Verlangen Sie Zeitzoneninformationen von Clients.** Wenn ein Client `2026-01-15T10:00:00` ohne Offset sendet, lehnen Sie ihn ab. Verlangen Sie das ISO-8601-Format mit entweder `Z` oder einem expliziten Offset wie `-05:00`. Raten Sie nicht.
+**Zeitzone-Info von Clients einfordern.** Wenn ein Client `2026-01-15T10:00:00` ohne Offset sendet, lehne es ab. Erfordere ISO-8601-Format mit entweder `Z` oder einem expliziten Offset wie `-05:00`. Rate nicht.
 
-## Gute Standardwerte erzwingen
+## Gute Standards durchsetzen
 
-Wenn `TIMESTAMPTZ` Ihr Standard ist (und das sollte es sein), sollten Sie in Betracht ziehen, dies auf Datenbankebene zu erzwingen. Ein Trigger, der Spalten vom Typ `TIMESTAMP WITHOUT TIME ZONE` ablehnt, klingt extrem, aber das Abfangen von „Zeitzone vergessen“ zum Zeitpunkt der Schemaerstellung ist besser, als es sechs Monate später zu debuggen, wenn jemand eine neue Tabelle hinzufügt und es vergisst.
+Wenn `TIMESTAMPTZ` dein Standard ist (und das sollte er sein), erwäge, dies auf Datenbankebene durchzusetzen. Ein Trigger, der `TIMESTAMP WITHOUT TIME ZONE`-Spalten ablehnt, klingt extrem, aber „TZ vergessen" schon bei der Schema-Erstellung zu fangen, ist besser, als es sechs Monate später zu debuggen, wenn jemand eine neue Tabelle hinzufügt und es vergisst.
 
-## Was mir dieses Zugticket beigebracht hat
+## Was mich diese Zugfahrkarte gelehrt hat
 
-Zeit in Datenbanken ist nicht schwer, weil Zeitstempel kompliziert sind. Es ist schwer, weil wir normalerweise mehrere Aspekte in einem Feld speichern oder nicht darüber nachdenken, was wir Benutzern eigentlich zeigen wollen.
+Zeit in Datenbanken ist nicht schwer, weil Zeitstempel kompliziert sind. Sie ist schwer, weil wir normalerweise mehrere Anliegen in einem Feld speichern oder nicht darüber nachdenken, was wir den Benutzern tatsächlich zeigen wollen.
 
-Dieses Zugticket hatte es richtig gemacht: Abfahrtszeit in der Ursprungszeitzone, Ankunftszeit in der Zielzeitzone und Dauer als völlig separate Sache. Drei verschiedene Informationen, jede auf ihre Weise bedeutungsvoll.
+Diese Zugfahrkarte hatte es richtig: Abfahrtszeit in der Ursprungszeitzone, Ankunftszeit in der Zielzeitzone und Dauer als separates Element. Drei verschiedene Informationen, jede auf ihre eigene Art bedeutsam.
 
-Ihre Datenbank kann dasselbe tun. Speichern Sie die absoluten Momente als `TIMESTAMPTZ`. Speichern Sie den Anzeigekontext (Zeitzonen, Orte) in separaten Spalten. Verwenden Sie `INTERVAL`-Typen für Dauern. Lassen Sie Postgres die Konvertierungen durchführen, wenn Sie sie benötigen, aber seien Sie explizit, welche Zeitzone für welchen Zweck relevant ist.
+Deine Datenbank kann dasselbe tun. Speichere die absoluten Zeitpunkte als `TIMESTAMPTZ`. Speichere den Anzeigekontext (Zeitzonen, Standorte) als separate Spalten. Verwende `INTERVAL`-Typen für Dauern. Lass Postgres die Konvertierungen durchführen, wenn du sie brauchst, aber sei explizit darüber, welche Zeitzone für welchen Zweck relevant ist.
 
-Meistens bedeutet das `TIMESTAMPTZ` und UTC überall, mit Zeitzonenkonvertierungen nur zur Anzeigezeit. Aber wenn Sie Wanduhrzeiten oder wiederkehrende Zeitpläne benötigen, gibt es die Typen `TIMESTAMP` oder `TIME` genau aus diesem Grund.
+Meistens bedeutet das `TIMESTAMPTZ` und UTC überall, mit Zeitzonenkonvertierungen nur zur Anzeigezeit. Aber wenn du Wanduhr-Zeiten oder wiederkehrende Zeitpläne brauchst, existieren `TIMESTAMP`- oder `TIME`-Typen genau aus diesem Grund.
 
-Der Schlüssel ist zu wissen, welche Frage Sie beantworten wollen: „Wann ist das passiert?“ vs. „Um wie viel Uhr soll ich da sein?“ vs. „Wie lange wird das dauern?“ Das sind alles unterschiedliche Fragen zur Zeit, und sie erfordern oft unterschiedliche Speicherstrategien.
+Der Schlüssel ist zu wissen, welche Frage du beantworten willst: „Wann ist das passiert?" vs. „Um wie viel Uhr soll ich dort sein?" vs. „Wie lange wird das dauern?" Es sind alles verschiedene Fragen über Zeit, und sie brauchen oft unterschiedliche Speicherstrategien.
 
-Denken Sie darüber nach, was Ihre Benutzer sehen müssen. Speichern Sie dann die Daten, mit denen Sie ihnen genau das anzeigen können.
+Denke darüber nach, was deine Benutzer sehen müssen. Dann speichere die Daten, die es dir ermöglichen, ihnen genau das zu zeigen.
 
 ## Ressourcen
 
-- [PostgreSQL Dokumentation zu Datums-/Zeit-Typen](https://www.postgresql.org/docs/current/datatype-datetime.html)
-- [PostgreSQL Best Practices für Zeitstempel](https://wiki.postgresql.org/wiki/Don%27t_Do_This#Date.2FTime_storage)
-- [ISO 8601 Datums- und Zeitformat](https://en.wikipedia.org/wiki/ISO_8601)
-- [Zeitzonendatenbank (IANA)](https://www.iana.org/time-zones)
-- [Umgang mit Zeitstempeln in verteilten Systemen](https://www.postgresql.org/docs/current/functions-datetime.html)
+- [PostgreSQL Date/Time Types Documentation](https://www.postgresql.org/docs/current/datatype-datetime.html)
+- [PostgreSQL Timestamp Best Practices](https://wiki.postgresql.org/wiki/Don%27t_Do_This#Date.2FTime_storage)
+- [ISO 8601 Date and Time Format](https://en.wikipedia.org/wiki/ISO_8601)
+- [Time Zone Database (IANA)](https://www.iana.org/time-zones)
+- [Dealing with Timestamps in Distributed Systems](https://www.postgresql.org/docs/current/functions-datetime.html)
 ````
