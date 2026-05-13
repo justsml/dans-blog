@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-data-structures-algorithms
+- Locale: de
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2024-10-31--quiz-data-structures-algorithms/de/index.mdx
+- Validation: passed
+- Runtime seconds: 24.83
+- Input tokens: 15811
+- Output tokens: 8428
+- Thinking tokens: unknown
+- Cached input tokens: 4608
+- Cache write tokens: 0
+- Estimated cost: $0.002134
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: 'Quiz: Datenstrukturen & Algorithmen'
 subTitle: Kannst du einen Binärbaum durchsuchen?
@@ -525,3 +543,4 @@ Dieses Quiz prüft Ihr Wissen über Datenstrukturen (Stacks, Listen, Bäume usw.
 </Challenge>
 
 </QuizUI>
+````
