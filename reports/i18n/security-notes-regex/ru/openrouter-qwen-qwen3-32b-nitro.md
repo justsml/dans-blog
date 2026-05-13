@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: security-notes-regex
+- Locale: ru
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2015-02-24--security-notes-regex/ru/index.mdx
+- Validation: passed
+- Runtime seconds: 5.62
+- Input tokens: 1870
+- Output tokens: 2292
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.000700
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: ''
 subTitle: Могут ли регулярные выражения быть уязвимыми?
@@ -44,3 +62,4 @@ social_image: ../desktop-social.webp
 ### Ссылки  
 
 - [OWASP ReDoS](https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS)
+````
