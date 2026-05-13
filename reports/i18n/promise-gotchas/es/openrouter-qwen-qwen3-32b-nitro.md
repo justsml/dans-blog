@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: promise-gotchas
+- Locale: es
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2018-09-26--promise-gotchas/es/index.mdx
+- Validation: passed
+- Runtime seconds: 4.65
+- Input tokens: 2557
+- Output tokens: 1920
+- Thinking tokens: unknown
+- Cached input tokens: 512
+- Cache write tokens: 0
+- Estimated cost: $0.000665
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: ''
@@ -88,3 +106,4 @@ Promise.resolve(42)
   .then(undefined) // esto no tiene efecto en el valor, será pasado al siguiente `.then(fn)`
   .then(console.log);
 ```
+````
