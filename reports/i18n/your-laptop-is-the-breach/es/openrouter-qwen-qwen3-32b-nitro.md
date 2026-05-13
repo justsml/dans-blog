@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: your-laptop-is-the-breach
+- Locale: es
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-05-09--your-laptop-is-the-breach/es/index.mdx
+- Validation: passed
+- Runtime seconds: 74.79
+- Input tokens: 36996
+- Output tokens: 29368
+- Thinking tokens: unknown
+- Cached input tokens: 13312
+- Cache write tokens: 0
+- Estimated cost: $0.010008
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: ''
 subTitle: ''
@@ -325,3 +343,4 @@ Dale límites con forma de producción.
 - [Little Snitch](https://obdev.at/products/littlesnitch/)
 - [Portmaster](https://safing.io/)
 - [Permisos de Code de Claude](https://code.claude.com/docs/en/permissions)
+````
