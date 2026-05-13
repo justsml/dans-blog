@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: deathmatch-git-rebase-vs-merge
+- Locale: hi
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2023-08-28--deathmatch-git-rebase-vs-merge/hi/index.mdx
+- Validation: passed
+- Runtime seconds: 26.60
+- Input tokens: 9723
+- Output tokens: 12591
+- Thinking tokens: unknown
+- Cached input tokens: 2560
+- Cache write tokens: 0
+- Estimated cost: $0.003800
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: 'मुकाबला: Git Rebase के खिलाफ Merge'
@@ -132,3 +150,4 @@ cover_icon: ../icon_casper-johansson-GBHnQXbY2Ts-unsplash-cropped.webp
 - आप `git checkout` के साथ विशेष `--` अलगाव का उपयोग कर सकते हैं ताकि निर्दिष्ट फ़ाइलों की प्रतिलिपि बनाते हुए वर्तमान शाखा में रहे।  
 - `git checkout feature/half-a-feature **--** <folder or file path>`  
 - सुनिश्चित करें कि आपने पहले उन सभी परिवर्तनों को कमिट कर दिया है जिन्हें आप बरकरार रखना चाहते हैं, क्योंकि यह कोई भी स्थानीय परिवर्तन ओवरराइट कर देगा।
+````
