@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: docker-security-for-admins-and-maintainers
+- Locale: hi
+- Model: deepseek/deepseek-v4-flash
+- Target: src/content/posts/2025-01-04--docker-security-for-admins-and-maintainers/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 126.67
+- Input tokens: 10104
+- Output tokens: 12628
+- Thinking tokens: unknown
+- Cached input tokens: 768
+- Cache write tokens: 0
+- Estimated cost: $0.004845
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: true
 draft: true
@@ -330,3 +348,4 @@ nmap -A -p1-65535 --open --reason $target_host
    - तथ्य: वे केवल वही ब्लॉक करते हैं जो आप उन्हें कॉन्फ़िगर करते हैं।
 3. **प्राइवेट IP सुरक्षित होते हैं।**
    - तथ्य: NAT बाइपास जैसे एक्सप्लॉइट अभी भी आपके नेटवर्क को प्रभावित कर सकते हैं।
+````
