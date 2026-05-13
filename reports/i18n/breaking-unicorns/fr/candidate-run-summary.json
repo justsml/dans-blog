@@ -4,16 +4,16 @@
   "slug": "breaking-unicorns",
   "locale": "fr",
   "startedAt": "2026-05-13T17:06:29.839Z",
-  "updatedAt": "2026-05-13T17:10:10.202Z",
+  "updatedAt": "2026-05-13T17:14:10.347Z",
   "modelsRequested": [
     "openrouter/openai/gpt-oss-120b:nitro",
     "openrouter/qwen/qwen3-32b:nitro",
     "deepseek/deepseek-v4-flash",
     "qwen/qwen3.6-plus"
   ],
-  "attemptedModels": 2,
+  "attemptedModels": 3,
   "skippedModels": 1,
-  "rejectedModels": 1,
+  "rejectedModels": 2,
   "candidateModels": 1,
   "totals": {
     "inputTokens": 2505,
@@ -28,7 +28,7 @@
     "hasUnknownCachedInputTokens": true,
     "hasUnknownCacheWriteTokens": true,
     "hasUnknownEstimatedCost": true,
-    "runtimeSeconds": "209.08"
+    "runtimeSeconds": "449.09"
   },
   "attempts": [
     {
@@ -63,6 +63,17 @@
       "note": "Command failed: bun run i18n:translate:chunked -- --slug breaking-unicorns --locale fr --model deepseek/deepseek-v4-flash --chunk 6p --quiz-concurrency 24 (code 1)",
       "telemetry": {
         "runtimeSeconds": "202.98",
+        "tokens": {}
+      }
+    },
+    {
+      "model": "qwen/qwen3.6-plus",
+      "status": "rejected",
+      "validationStatus": "rejected: direct AI SDK translation failed",
+      "reportPath": "reports/i18n/breaking-unicorns/fr/qwen-qwen3.6-plus.md",
+      "note": "Command failed after 240000ms: bun run i18n:translate:chunked -- --slug breaking-unicorns --locale fr --model qwen/qwen3.6-plus --chunk 6p --quiz-concurrency 24",
+      "telemetry": {
+        "runtimeSeconds": "240.01",
         "tokens": {}
       }
     }
