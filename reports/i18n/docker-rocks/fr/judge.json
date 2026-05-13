@@ -1,0 +1,38 @@
+{
+  "selectedCommit": "03d42c1f91f9545ccd4e07a508743f4b2b1b2476",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 10,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The current MDX already has the fix applied (the H2 is already '## Docker déchire'). This candidate is the most complete as it includes the humorous line about games that other candidates missed, and it correctly uses French typographic conventions (non-breaking spaces). It perfectly captures Dan's direct and informal style.",
+  "slug": "docker-rocks",
+  "locale": "fr",
+  "candidateCommits": [
+    "03d42c1f91f9545ccd4e07a508743f4b2b1b2476",
+    "7a21478604d9f76a49fac88a40717f48af2fbeee",
+    "a69c196c189a6b33e8b4d5eeea77ed113ea22a5c"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "## Docker Rocks",
+      "replacement": "## Docker déchire",
+      "reason": "The H2 heading was left in English. Translating it to 'Docker déchire' matches the title and the informal tone of the original.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug docker-rocks --locale fr --skip-global",
+    "output": ""
+  }
+}
