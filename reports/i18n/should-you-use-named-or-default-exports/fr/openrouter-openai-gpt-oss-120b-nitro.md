@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: should-you-use-named-or-default-exports
+- Locale: fr
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2023-08-18--should-you-use-named-or-default-exports/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 3.70
+- Input tokens: 4314
+- Output tokens: 1851
+- Thinking tokens: unknown
+- Cached input tokens: 2176
+- Cache write tokens: 0
+- Estimated cost: $0.000501
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: 'Exports ESM : nommés vs. par défaut ?'
@@ -100,3 +118,4 @@ Il existe en réalité de nombreuses combinaisons d’exportation, chacune racon
 ### Conclusion
 
 Si le code est une communication, `export` comme vous le pensez vraiment. 💞
+````
