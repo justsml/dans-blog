@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: mastra-security-guardrails
+- Locale: hi
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-01-03--mastra-security-guardrails/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 25.43
+- Input tokens: 7423
+- Output tokens: 12492
+- Thinking tokens: unknown
+- Cached input tokens: 2560
+- Cache write tokens: 0
+- Estimated cost: $0.003592
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: प्रोडक्शन एआई भयानक है (और इसे कैसे ठीक करें)
 subTitle: ''
@@ -169,3 +187,4 @@ if (result.tripwire) {
 2. **सुरक्षा और गार्डरेल्स** (यह पोस्ट)
 3. [एमसीपी और टूल एकीकरण](../mastra-mcp-tool-integrations)
 4. [वर्कफ्लो और मेमोरी](../mastra-workflows-memory)
+````
