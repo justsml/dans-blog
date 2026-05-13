@@ -1,0 +1,44 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "XML Tags for Structure",
+  "translatedTitle": "Tag XML per la Struttura",
+  "translation": {
+    "title": "Tag XML per la Struttura",
+    "group": "Struttura del Prompt",
+    "options": [
+      {
+        "text": "I tag XML sono validi solo nei modelli Anthropic"
+      },
+      {
+        "text": "I tag XML aiutano i modelli a distinguere le istruzioni dai dati e migliorano l'accuratezza del parsing"
+      },
+      {
+        "text": "I tag XML rallentano la tokenizzazione e dovrebbero essere evitati"
+      },
+      {
+        "text": "I tag XML sono equivalenti ai titoli markdown"
+      }
+    ],
+    "questionProse": [
+      "Perché molti prompt di produzione usano tag in stile XML come `<document>`, `<context>`, `<instructions>`?"
+    ],
+    "explanationProse": [
+      "I tag in stile XML forniscono **confini strutturali espliciti** che i modelli sono addestrati a riconoscere e rispettare. Fanno due cose:\n\n    1. **Separazione**: Segnalano al modello dove finiscono le istruzioni e iniziano i dati — fondamentale per RAG e per ridurre il rischio di injection di prompt dai documenti recuperati.\n    2. **Analizzabilità**: Quando chiedi al modello di rispondere in XML (ad es., `<answer>...</answer>`), i tag ti forniscono punti di estrazione puliti senza trucchi regex.\n\n    Non è XML come linguaggio di markup. È XML come convenzione di delimitazione su cui i modelli sono addestrati. Funziona perché il modello ha visto ampiamente questo schema durante l'addestramento, non perché valida schemi.\n\n    Funziona nella maggior parte dei modelli istruiti sufficientemente da essere utile — è una convenzione dei dati di addestramento, non una caratteristica del fornitore o una garanzia di sicurezza."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Tag XML per la Struttura\",\n  \"group\": \"Struttura del Prompt\",\n  \"options\": [\n    {\n      \"text\": \"I tag XML sono validi solo nei modelli Anthropic\"\n    },\n    {\n      \"text\": \"I tag XML aiutano i modelli a distinguere le istruzioni dai dati e migliorano l'accuratezza del parsing\"\n    },\n    {\n      \"text\": \"I tag XML rallentano la tokenizzazione e dovrebbero essere evitati\"\n    },\n    {\n      \"text\": \"I tag XML sono equivalenti ai titoli markdown\"\n    }\n  ],\n  \"questionProse\": [\n    \"Perché molti prompt di produzione usano tag in stile XML come `<document>`, `<context>`, `<instructions>`?\"\n  ],\n  \"explanationProse\": [\n    \"I tag in stile XML forniscono **confini strutturali espliciti** che i modelli sono addestrati a riconoscere e rispettare. Fanno due cose:\\n\\n    1. **Separazione**: Segnalano al modello dove finiscono le istruzioni e iniziano i dati — fondamentale per RAG e per ridurre il rischio di injection di prompt dai documenti recuperati.\\n    2. **Analizzabilità**: Quando chiedi al modello di rispondere in XML (ad es., `<answer>...</answer>`), i tag ti forniscono punti di estrazione puliti senza trucchi regex.\\n\\n    Non è XML come linguaggio di markup. È XML come convenzione di delimitazione su cui i modelli sono addestrati. Funziona perché il modello ha visto ampiamente questo schema durante l'addestramento, non perché valida schemi.\\n\\n    Funziona nella maggior parte dei modelli istruiti sufficientemente da essere utile — è una convenzione dei dati di addestramento, non una caratteristica del fornitore o una garanzia di sicurezza.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 928,
+    "outputTokens": 1108,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2688
+  },
+  "cost": {
+    "inputUsd": 0.000036192,
+    "outputUsd": 0.00019944,
+    "totalUsd": 0.000235632,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

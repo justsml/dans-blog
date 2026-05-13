@@ -1,0 +1,44 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Chunking Strategy",
+  "translatedTitle": "Strategia di chunking",
+  "translation": {
+    "title": "Strategia di chunking",
+    "group": "Recupero",
+    "options": [
+      {
+        "text": "Usa la dimensione di chunk più grande consentita dalla tua finestra di contesto"
+      },
+      {
+        "text": "Usa sempre 512 token — è"
+      },
+      {
+        "text": "Usa chunk sovrapposti dimensionati per corrispondere alla struttura del tuo contenuto"
+      },
+      {
+        "text": "La dimensione del chunk non"
+      }
+    ],
+    "questionProse": [
+      "Quando suddividi i documenti per RAG, qual è il principio più importante?"
+    ],
+    "explanationProse": [
+      "Non esiste una dimensione di chunk universalmente corretta — dipende dal tuo contenuto. I principi importanti sono:\n\n    1. **Corrispondi alla struttura del contenuto.** Le pagine FAQ si suddividono bene a livello Q+A. I documenti legali si suddividono bene a livello di clausola. I blocchi di codice si suddividono bene a livello di funzione.\n    2. **Usa la sovrapposizione.** Un chunk di 512 token con 64 token di sovrapposizione su ciascun lato significa che le risposte che attraversano un confine vengono comunque recuperate.\n    3. **Misura.** Crea un set di valutazione e testa più dimensioni di chunk. La dimensione del chunk conta più del modello di embedding.\n\n    \"512 token\" è un punto di partenza ragionevole, non una legge."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Strategia di chunking\",\n  \"group\": \"Recupero\",\n  \"options\": [\n    {\n      \"text\": \"Usa la dimensione di chunk più grande consentita dalla tua finestra di contesto\"\n    },\n    {\n      \"text\": \"Usa sempre 512 token — è\"\n    },\n    {\n      \"text\": \"Usa chunk sovrapposti dimensionati per corrispondere alla struttura del tuo contenuto\"\n    },\n    {\n      \"text\": \"La dimensione del chunk non\"\n    }\n  ],\n  \"questionProse\": [\n    \"Quando suddividi i documenti per RAG, qual è il principio più importante?\"\n  ],\n  \"explanationProse\": [\n    \"Non esiste una dimensione di chunk universalmente corretta — dipende dal tuo contenuto. I principi importanti sono:\\n\\n    1. **Corrispondi alla struttura del contenuto.** Le pagine FAQ si suddividono bene a livello Q+A. I documenti legali si suddividono bene a livello di clausola. I blocchi di codice si suddividono bene a livello di funzione.\\n    2. **Usa la sovrapposizione.** Un chunk di 512 token con 64 token di sovrapposizione su ciascun lato significa che le risposte che attraversano un confine vengono comunque recuperate.\\n    3. **Misura.** Crea un set di valutazione e testa più dimensioni di chunk. La dimensione del chunk conta più del modello di embedding.\\n\\n    \\\"512 token\\\" è un punto di partenza ragionevole, non una legge.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 874,
+    "outputTokens": 1194,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2705
+  },
+  "cost": {
+    "inputUsd": 0.000034086,
+    "outputUsd": 0.00021491999999999998,
+    "totalUsd": 0.00024900599999999997,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

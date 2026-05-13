@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-context-engineering
+- Locale: it
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-05-09--quiz-context-engineering/it/index.mdx
+- Validation: passed
+- Runtime seconds: 35.32
+- Input tokens: 15103
+- Output tokens: 13923
+- Thinking tokens: unknown
+- Cached input tokens: 1536
+- Cache write tokens: 0
+- Estimated cost: $0.003095
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: 'Quiz: 14 domande di ingegneria del contesto'
 subTitle: >-
@@ -475,3 +493,4 @@ Come te la sei cavata?
 - **0–4**: Buone notizie: tutto quello presente in questo quiz è apprendibile e subito applicabile. La domanda “lost in the middle” da sola vale la pena di capire prima del prossimo deployment RAG.
 
 L’ingegneria del contesto è la disciplina di essere intenzionali su quali informazioni inserire nella finestra, dove le posizioniamo e come le strutturiamo. Il modello è la parte meno controllabile del tuo sistema. Tutto il resto è sotto il tuo controllo.
+````

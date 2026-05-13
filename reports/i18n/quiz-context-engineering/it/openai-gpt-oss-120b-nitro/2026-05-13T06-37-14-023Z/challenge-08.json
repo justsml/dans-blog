@@ -1,0 +1,44 @@
+{
+  "index": 7,
+  "attempt": 1,
+  "originalTitle": "Conversation History Management",
+  "translatedTitle": "Gestione della Cronologia della Conversazione",
+  "translation": {
+    "title": "Gestione della Cronologia della Conversazione",
+    "group": "Gestione dei Token",
+    "options": [
+      {
+        "text": "Invia sempre l'intera cronologia della conversazione"
+      },
+      {
+        "text": "Riassumi i messaggi vecchi quando la cronologia supera il budget di token"
+      },
+      {
+        "text": "Elimina i messaggi vecchi — il modello ha memoria persistente"
+      },
+      {
+        "text": "Memorizza la cronologia in un database vettoriale e recupera i turni rilevanti"
+      }
+    ],
+    "questionProse": [
+      "In un'applicazione di chat a più turni, qual è la strategia corretta quando la cronologia della conversazione diventa lunga?"
+    ],
+    "explanationProse": [
+      "LLM non hanno memoria persistente. Ogni chiamata API è senza stato — invii il contesto completo, ricevi una risposta. La \"memoria\" di una conversazione è interamente la cronologia dei messaggi che includi in ogni richiesta.\n\n    Quando quella cronologia supera il tuo budget, le opzioni sono:\n    1. **Riassumere**: comprimi i turni più vecchi in un riepilogo continuo, mantieni i turni recenti letteralmente\n    2. **Finestra mobile**: conserva gli ultimi N turni, scarta quelli più vecchi\n    3. **Recupero selettivo**: incorpora i turni della conversazione e recupera quelli rilevanti per ogni query (complesso ma potente)\n\n    La semplice troncatura — tagliare i messaggi vecchi per far entrare — è l'opzione peggiore perché rimuove silenziosamente contesto di cui il modello potrebbe aver bisogno.\n\n    Il recupero da un DB vettoriale della cronologia è teoricamente allettante ma di solito eccessivo per la maggior parte delle app di chat. Il riassunto è la scelta pragmatica di default."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Gestione della Cronologia della Conversazione\",\n  \"group\": \"Gestione dei Token\",\n  \"options\": [\n    {\n      \"text\": \"Invia sempre l'intera cronologia della conversazione\"\n    },\n    {\n      \"text\": \"Riassumi i messaggi vecchi quando la cronologia supera il budget di token\"\n    },\n    {\n      \"text\": \"Elimina i messaggi vecchi — il modello ha memoria persistente\"\n    },\n    {\n      \"text\": \"Memorizza la cronologia in un database vettoriale e recupera i turni rilevanti\"\n    }\n  ],\n  \"questionProse\": [\n    \"In un'applicazione di chat a più turni, qual è la strategia corretta quando la cronologia della conversazione diventa lunga?\"\n  ],\n  \"explanationProse\": [\n    \"LLM non hanno memoria persistente. Ogni chiamata API è senza stato — invii il contesto completo, ricevi una risposta. La \\\"memoria\\\" di una conversazione è interamente la cronologia dei messaggi che includi in ogni richiesta.\\n\\n    Quando quella cronologia supera il tuo budget, le opzioni sono:\\n    1. **Riassumere**: comprimi i turni più vecchi in un riepilogo continuo, mantieni i turni recenti letteralmente\\n    2. **Finestra mobile**: conserva gli ultimi N turni, scarta quelli più vecchi\\n    3. **Recupero selettivo**: incorpora i turni della conversazione e recupera quelli rilevanti per ogni query (complesso ma potente)\\n\\n    La semplice troncatura — tagliare i messaggi vecchi per far entrare — è l'opzione peggiore perché rimuove silenziosamente contesto di cui il modello potrebbe aver bisogno.\\n\\n    Il recupero da un DB vettoriale della cronologia è teoricamente allettante ma di solito eccessivo per la maggior parte delle app di chat. Il riassunto è la scelta pragmatica di default.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 926,
+    "outputTokens": 1160,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 6246
+  },
+  "cost": {
+    "inputUsd": 0.000036114,
+    "outputUsd": 0.0002088,
+    "totalUsd": 0.000244914,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

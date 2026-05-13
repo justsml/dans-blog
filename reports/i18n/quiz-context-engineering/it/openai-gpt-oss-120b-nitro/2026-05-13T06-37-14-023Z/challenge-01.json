@@ -1,0 +1,44 @@
+{
+  "index": 0,
+  "attempt": 1,
+  "originalTitle": "Context Window Basics",
+  "translatedTitle": "Nozionidi base sulla finestra di contesto",
+  "translation": {
+    "title": "Nozionidi base sulla finestra di contesto",
+    "group": "Fondamenti",
+    "options": [
+      {
+        "text": "Il numero massimo di richieste al minuto"
+      },
+      {
+        "text": "Il limite combinato di token per input e output"
+      },
+      {
+        "text": "Il numero di messaggi in una conversazione"
+      },
+      {
+        "text": "La memoria disponibile tra le sessioni"
+      }
+    ],
+    "questionProse": [
+      "A cosa si riferisce la \"finestra di contesto\" in un LLM?"
+    ],
+    "explanationProse": [
+      "La finestra di contesto è il numero totale di token che un modello può elaborare in una singola chiamata — **input + output combinati**. Una finestra di contesto di 128K significa che il tuo prompt + i documenti recuperati + la cronologia della conversazione + la risposta del modello devono tutti stare entro 128.000 token.\n\n    Non ha nulla a che fare con sessioni, memoria o limiti di velocità. Quando raggiungi il limite, il modello o tronca, genera un errore, o — peggio — elimina silenziosamente token che non ti aspettavi."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Nozionidi base sulla finestra di contesto\",\n  \"group\": \"Fondamenti\",\n  \"options\": [\n    {\n      \"text\": \"Il numero massimo di richieste al minuto\"\n    },\n    {\n      \"text\": \"Il limite combinato di token per input e output\"\n    },\n    {\n      \"text\": \"Il numero di messaggi in una conversazione\"\n    },\n    {\n      \"text\": \"La memoria disponibile tra le sessioni\"\n    }\n  ],\n  \"questionProse\": [\n    \"A cosa si riferisce la \\\"finestra di contesto\\\" in un LLM?\"\n  ],\n  \"explanationProse\": [\n    \"La finestra di contesto è il numero totale di token che un modello può elaborare in una singola chiamata — **input + output combinati**. Una finestra di contesto di 128K significa che il tuo prompt + i documenti recuperati + la cronologia della conversazione + la risposta del modello devono tutti stare entro 128.000 token.\\n\\n    Non ha nulla a che fare con sessioni, memoria o limiti di velocità. Quando raggiungi il limite, il modello o tronca, genera un errore, o — peggio — elimina silenziosamente token che non ti aspettavi.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 829,
+    "outputTokens": 620,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 431
+  },
+  "cost": {
+    "inputUsd": 0.000032331,
+    "outputUsd": 0.0001116,
+    "totalUsd": 0.000143931,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "index": 3,
+  "attempt": 1,
+  "originalTitle": "Lost in the Middle",
+  "translatedTitle": "Persi nel Mezzo",
+  "translation": {
+    "title": "Persi nel Mezzo",
+    "group": "Recupero",
+    "options": [
+      {
+        "text": "I modelli funzionano allo stesso modo indipendentemente da dove viene inserito il contesto"
+      },
+      {
+        "text": "I modelli funzionano meglio con il contesto alla fine"
+      },
+      {
+        "text": "I modelli funzionano meglio con il contesto all'inizio e alla fine, peggio al centro"
+      },
+      {
+        "text": "I modelli funzionano meglio con il contesto al centro del prompt"
+      }
+    ],
+    "questionProse": [
+      "La ricerca sul problema \"Lost in the Middle\" mostra che i LLM tendono a:"
+    ],
+    "explanationProse": [
+      "Il [paper Lost in the Middle (Liu et al., 2023)](https://arxiv.org/abs/2307.03172) ha dimostrato che i LLM hanno difficoltà affidabili con le informazioni collocate al centro di contesti lunghi. Le prestazioni sono significativamente più alte quando le informazioni rilevanti appaiono all'**inizio o alla fine** della finestra di contesto.\n\n    Implicazione pratica: quando inserisci blocchi recuperati in un prompt RAG, non limitarti ad aggiungerli in ordine di rilevanza. Metti il risultato più alto in cima, il secondo più alto alla fine, e riempi il centro con materiale di ranking inferiore. Controintuitivo, ma misurabilmente migliore."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Persi nel Mezzo\",\n  \"group\": \"Recupero\",\n  \"options\": [\n    {\n      \"text\": \"I modelli funzionano allo stesso modo indipendentemente da dove viene inserito il contesto\"\n    },\n    {\n      \"text\": \"I modelli funzionano meglio con il contesto alla fine\"\n    },\n    {\n      \"text\": \"I modelli funzionano meglio con il contesto all'inizio e alla fine, peggio al centro\"\n    },\n    {\n      \"text\": \"I modelli funzionano meglio con il contesto al centro del prompt\"\n    }\n  ],\n  \"questionProse\": [\n    \"La ricerca sul problema \\\"Lost in the Middle\\\" mostra che i LLM tendono a:\"\n  ],\n  \"explanationProse\": [\n    \"Il [paper Lost in the Middle (Liu et al., 2023)](https://arxiv.org/abs/2307.03172) ha dimostrato che i LLM hanno difficoltà affidabili con le informazioni collocate al centro di contesti lunghi. Le prestazioni sono significativamente più alte quando le informazioni rilevanti appaiono all'**inizio o alla fine** della finestra di contesto.\\n\\n    Implicazione pratica: quando inserisci blocchi recuperati in un prompt RAG, non limitarti ad aggiungerli in ordine di rilevanza. Metti il risultato più alto in cima, il secondo più alto alla fine, e riempi il centro con materiale di ranking inferiore. Controintuitivo, ma misurabilmente migliore.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 881,
+    "outputTokens": 798,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1972
+  },
+  "cost": {
+    "inputUsd": 0.000034359,
+    "outputUsd": 0.00014364,
+    "totalUsd": 0.000177999,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

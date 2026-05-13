@@ -1,0 +1,46 @@
+{
+  "index": 6,
+  "attempt": 1,
+  "originalTitle": "Context Budget",
+  "translatedTitle": "Budget del Contesto",
+  "translation": {
+    "title": "Budget del Contesto",
+    "group": "Gestione dei Token",
+    "options": [
+      {
+        "text": "Usa più del 95% della finestra di contesto per massimizzare le informazioni"
+      },
+      {
+        "text": "Riserva spazio sufficiente per l'output invece di riempire tutta la finestra"
+      },
+      {
+        "text": "Il budget del contesto conta solo per modelli con meno di 32K token"
+      },
+      {
+        "text": "Il modello tronca automaticamente quando la finestra è superata"
+      }
+    ],
+    "questionProse": [
+      "Quando costruisci un prompt RAG con contesto recuperato, una buona regola empirica per il budget del contesto è:"
+    ],
+    "explanationProse": [
+      "La finestra di contesto è condivisa tra **input e output**. Se usi il 90% per l'input, al modello rimane solo il 10% della finestra per generare una risposta — il che spesso provoca output troncati o degradati.",
+      "Una buona euristica: decidi prima la dimensione dell'output previsto, poi mantieni l'input comodamente al di sotto del budget rimanente. Per molti compiti RAG, ciò significa usare non più del **60–70% della finestra di contesto totale per l'input** (prompt di sistema + cronologia + contesto recuperato). Lascia il resto per la generazione e un margine di sicurezza.",
+      "Inoltre, i modelli funzionano peggio vicino ai limiti della loro finestra di contesto — la comprensione e l'esecuzione delle istruzioni si degradano man mano che il contesto si riempie. Operare al 95% è tecnicamente possibile, ma non è la stessa esperienza di operare al 50%."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Budget del Contesto\",\n  \"group\": \"Gestione dei Token\",\n  \"options\": [\n    {\n      \"text\": \"Usa più del 95% della finestra di contesto per massimizzare le informazioni\"\n    },\n    {\n      \"text\": \"Riserva spazio sufficiente per l'output invece di riempire tutta la finestra\"\n    },\n    {\n      \"text\": \"Il budget del contesto conta solo per modelli con meno di 32K token\"\n    },\n    {\n      \"text\": \"Il modello tronca automaticamente quando la finestra è superata\"\n    }\n  ],\n  \"questionProse\": [\n    \"Quando costruisci un prompt RAG con contesto recuperato, una buona regola empirica per il budget del contesto è:\"\n  ],\n  \"explanationProse\": [\n    \"La finestra di contesto è condivisa tra **input e output**. Se usi il 90% per l'input, al modello rimane solo il 10% della finestra per generare una risposta — il che spesso provoca output troncati o degradati.\",\n    \"Una buona euristica: decidi prima la dimensione dell'output previsto, poi mantieni l'input comodamente al di sotto del budget rimanente. Per molti compiti RAG, ciò significa usare non più del **60–70% della finestra di contesto totale per l'input** (prompt di sistema + cronologia + contesto recuperato). Lascia il resto per la generazione e un margine di sicurezza.\",\n    \"Inoltre, i modelli funzionano peggio vicino ai limiti della loro finestra di contesto — la comprensione e l'esecuzione delle istruzioni si degradano man mano che il contesto si riempie. Operare al 95% è tecnicamente possibile, ma non è la stessa esperienza di operare al 50%.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 916,
+    "outputTokens": 1075,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2581
+  },
+  "cost": {
+    "inputUsd": 0.000035724,
+    "outputUsd": 0.0001935,
+    "totalUsd": 0.00022922399999999999,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
