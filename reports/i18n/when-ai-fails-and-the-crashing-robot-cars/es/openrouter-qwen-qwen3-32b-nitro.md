@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: when-ai-fails-and-the-crashing-robot-cars
+- Locale: es
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2015-12-18--when-ai-fails-and-the-crashing-robot-cars/es/index.mdx
+- Validation: passed
+- Runtime seconds: 6.51
+- Input tokens: 2883
+- Output tokens: 2655
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.000868
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Cuando la IA falla & los coches robóticos que se estrellan
@@ -53,3 +71,4 @@ Los coches robóticos están a punto de ser técnicamente más inteligentes y r�
 ### Referencias  
 
 1.  [http://nn.cs.utexas.edu/pages/research/neat-warning/](http://nn.cs.utexas.edu/pages/research/neat-warning/)
+````
