@@ -3,23 +3,23 @@
 - Locale: fr
 - Model: openrouter/qwen/qwen3-32b:nitro
 - Target: src/content/posts/2024-11-12--quiz-destructuring-delights/fr/index.mdx
-- Validation: rejected: direct AI SDK translation failed
-- Runtime seconds: 5.15
-- Input tokens: unknown
-- Output tokens: unknown
+- Validation: deferred
+- Runtime seconds: 70.10
+- Input tokens: 10619
+- Output tokens: 13041
 - Thinking tokens: unknown
-- Cached input tokens: unknown
-- Cache write tokens: unknown
-- Estimated cost: unknown
-- Pricing source: unknown
-- Note: Command failed: bun run i18n:translate:chunked -- --slug quiz-destructuring-delights --locale fr --model openrouter/qwen/qwen3-32b:nitro --chunk 6p --quiz-concurrency 20
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.003979
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
 ## Raw Output
 
 ````mdx
 ---
 unlisted: false
-title: 'Quiz : Délices de la déstructuration'
-subTitle: Êtes‑vous un maestro du destructuring ?
+title: 'Quiz : Délices de la déstructuration'
+subTitle: ''
 label: Destructuring
 social_image: ../desktop-social.webp
 category: Quiz
@@ -41,49 +41,49 @@ cover_icon: ../boxes-of-nesting-dolls-square.webp
 import Challenge from '../../../../../components/QuizUI/Challenge';
 import QuizUI from '../../../../../components/QuizUI/QuizUI';
 
-{/* Êtes‑vous un maître du destructuring ?<br/> */}
-<p class="inset">Ou bien votre <em>Symphonie de la Destruction ?</em></p>
+{/* Est-ce que vous maîtrisez le destructuring ?<br/> */}
+<p class="inset">Ou est-ce votre <em>Symphonie de Destruction ?</em></p>
 
-Ce quiz évaluera votre maîtrise du destructuring en JavaScript : des syntaxes d’objet « basique » au destructuring imbriqué et aux valeurs par défaut. Bonus : questions sur TypeScript et les types inline !
+Ce quiz évaluera vos connaissances sur la déstructuration en JavaScript : de la syntaxe d'objet "basique" à la déstructuration imbriquée et aux valeurs par défaut. Des questions supplémentaires sur TypeScript et les types en ligne !
 
-Plongez directement dans l’échauffement – prouvez vos compétences en destructuring ! 👇
+Plongez dans l'échauffement - prouvez vos compétences en déstructuration ! 👇
 
 <QuizUI>
 
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={0}
-  group="Échauffement : Objets"
-  title="Destructuration d'objet basique"
+  group="Échauffement : Objets"
+  title="Désérialisation de base d'un objet"
   options={[
-    {text: 'Nom : Dan Levy, Âge : 20'},
-    {text: 'Nom : Dan Levy, Âge : 40'},
-    {text: 'Nom : Dan Levy, Âge : Infinity'},
-    {text: 'Nom : Dan Levy, Âge : undefined', isAnswer: true},
-    {text: 'Erreur : Impossible de lire la propriété \'age\''},
-    {text: 'Nom : undefined, Âge : 40'},
+    {text: 'Nom : Dan Levy, Âge : 20'},
+    {text: 'Nom : Dan Levy, Âge : 40'},
+    {text: 'Nom : Dan Levy, Âge : Infinity'},
+    {text: 'Nom : Dan Levy, Âge : undefined', isAnswer: true},
+    {text: 'Erreur : Impossible de lire la propriété \'age\''},
+    {text: 'Nom : undefined, Âge : 40'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Que affichera ce code ?
+    Qu'affichera ce code ?
     ```js
-    const person = {
-      name: 'Dan Levy',
-      location: 'Cape Town',
-    };
-    const { name, age } = person;
-    console.log(`Name: ${name}, Age: ${age}`);
+        const person = {
+          name: 'Dan Levy',
+          location: 'Cape Town',
+        };
+        const { name, age } = person;
+        console.log(`Name: ${name}, Age: ${age}`);
     ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    La propriété `age` n'existe pas sur `person`, donc `age` sera `undefined`. Ce n'est certainement pas `Infinity` 😅
+    La propriété `age` n'existe pas sur `person`, donc `age` sera `undefined`. Pas question d'`Infinity` 😅
 
-    Cela donne :
+    Cela donne comme résultat :
     ```plaintext
-    Name: Dan Levy, Age: undefined
+        Name: Dan Levy, Age: undefined
     ```
   </div>
   </slot>
@@ -92,24 +92,24 @@ Plongez directement dans l’échauffement – prouvez vos compétences en destr
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={1}
-  group="Échauffement : Tableaux"
+  group="Échauffement : Tableaux"
   title="Valeur par défaut dans la destructuration d'objet"
   options={[
-    {text: 'Nom : Dan Levy, Âge : NaN'},
-    {text: 'Nom : Dan Levy, Âge : null'},
-    {text: 'Nom : Dan Levy, Âge : undefined', isAnswer: true},
-    {text: 'Nom : Dan Levy, Âge : 40'},
-    {text: 'Erreur : Impossible de déstructurer la propriété \'age\''},
-    {text: 'SyntaxError : Jeton inattendu \',\''},
+    {text: 'Nom : Dan Levy, Âge : NaN'},
+    {text: 'Nom : Dan Levy, Âge : null'},
+    {text: 'Nom : Dan Levy, Âge : undefined', isAnswer: true},
+    {text: 'Nom : Dan Levy, Âge : 40'},
+    {text: 'Erreur : Impossible de déstructurer la propriété \'age\''},
+    {text: 'SyntaxError : Jeton \',\' inattendu'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Que fera ce code ?
+    Quel sera le résultat de ce code ?
     ```js
-    const person = [ 'Dan Levy', 'Cape Town' ];
-    const [ name, origin, age ] = person;
-    console.log(`Name: ${name}, Age: ${age}`);
+        const person = [ 'Dan Levy', 'Cape Town' ];
+        const [ name, origin, age ] = person;
+        console.log(`Name: ${name}, Age: ${age}`);
     ```
   </div>
   </slot>
@@ -117,9 +117,9 @@ Plongez directement dans l’échauffement – prouvez vos compétences en destr
   <div className="explanation">
     La variable `age` n'est pas présente dans le tableau `tuple`, donc elle sera `undefined`.
 
-    Cela donne :
+    Cela donne comme résultat :
     ```plaintext
-    Name: Dan Levy, Age: undefined
+        Name: Dan Levy, Age: undefined
     ```
   </div>
   </slot>
@@ -131,45 +131,45 @@ Plongez directement dans l’échauffement – prouvez vos compétences en destr
   group="Destructuration imbriquée"
   title="Destructuration imbriquée"
   options={[
-    {text: 'Prénom : Dan, Ville : Denver'},
-    {text: 'Prénom : undefined, Ville : Denver'},
-    {text: 'Erreur : Impossible de lire la propriété \'first\''},
-    {text: 'Prénom : Dan, Ville : undefined'},
+    {text: 'Prénom : Dan, Ville : Denver'},
+    {text: 'Prénom : undefined, Ville : Denver'},
+    {text: 'Erreur : Cannot read property \'first\''},
+    {text: 'Prénom : Dan, Ville : undefined'},
     {text: 'Erreur', isAnswer: true},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Et si on faisait de la destructuration imbriquée ?
+    Et si on passait à la destructuration imbriquée ?
     ```js
-    'use strict';
-    const person = {
-      name: { first: 'Dan' },
-      address: { city: 'Denver' },
-    };
-    const {
-      name: { first },
-      address: { city },
-      birth: { place },
-    } = person;
-    console.log(
-      `First: ${first}, City: ${place}`,
-    );
+        'use strict';
+        const person = {
+          name: { first: 'Dan' },
+          address: { city: 'Denver' },
+        };
+        const {
+          name: { first },
+          address: { city },
+          birth: { place },
+        } = person;
+        console.log(
+          `First: ${first}, City: ${place}`,
+        );
     ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    La propriété `birth: { place }` n'existe pas sur `person`, donc elle lèvera une erreur.
+    La propriété `birth: { place }` n'existe pas sur `person`, donc cela entraînera une erreur.
     Une solution consiste à fournir des valeurs par défaut pour les propriétés imbriquées.
 
-    Lors de l'accès aux propriétés imbriquées, soyez prudent, car les erreurs peuvent être difficiles à repérer. De plus, les messages d'erreur varient selon les navigateurs et les plateformes, ce qui complique le débogage.
+    Lors de l'accès aux propriétés imbriquées, soyez prudent, car les erreurs peuvent être difficiles à détecter. Les messages d'erreur varient entre les navigateurs et autres plateformes, ce qui rend le débogage un peu plus complexe.
 
-    Dans Chrome moderne : `TypeError: Cannot read properties of undefined (reading 'place')`
+    Dans Chrome moderne : `TypeError: Cannot read properties of undefined (reading 'place')`
 
-    Dans Node, c'est aussi un `TypeError` parce que JavaScript tente de destructurer `place` depuis `undefined` avant même que `place` ne soit lu.
+    Dans Node, c'est aussi une `TypeError` car JavaScript tente de déstructurer `place` à partir de `undefined` avant même que `place` ne soit lu.
 
-    La formulation exacte varie selon les navigateurs et les environnements d'exécution.
+    Le libellé exact varie selon les navigateurs et les environnements d'exécution.
   </div>
   </slot>
 </Challenge>
@@ -180,43 +180,43 @@ Plongez directement dans l’échauffement – prouvez vos compétences en destr
   group="Valeurs par défaut"
   title="Valeurs par défaut dans la déstructuration d'objets"
   options={[
-    {text: 'Salut Dan de Inconnu'},
-    {text: 'Salut Dan de Denver'},
-    {text: 'Salut Inconnu de Inconnu'},
-    {text: 'Salut Inconnu de Denver'},
+    {text: 'Bonjour Dan depuis Inconnu'},
+    {text: 'Bonjour Dan depuis Denver'},
+    {text: 'Bonjour Inconnu depuis Inconnu'},
+    {text: 'Bonjour Inconnu depuis Denver'},
     {text: 'Erreur', isAnswer: true},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Avec quelques valeurs par défaut, que va‑t‑il faire ?
+    Avec quelques valeurs par défaut, que va-t-il se passer ?
     ```js
-    'use strict';
-    const person = {
-      name: { first: 'Dan' },
-      address: { city: 'Denver' },
-    };
-    const {
-      name: { first = 'Unknown' },
-      birth: { place = 'Unknown' },
-    } = person;
-    console.log(
-      `Hi ${first} from ${place}`,
-    );
+        'use strict';
+        const person = {
+          name: { first: 'Dan' },
+          address: { city: 'Denver' },
+        };
+        const {
+          name: { first = 'Unknown' },
+          birth: { place = 'Unknown' },
+        } = person;
+        console.log(
+          `Hi ${first} from ${place}`,
+        );
     ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    La propriété `birth` n'existe pas sur `person`, donc l'ensemble de l'objet a encore besoin d'une valeur par défaut, pas seulement la propriété imbriquée. En gros, il manque un ` = {}` par défaut là‑dedans.
+    La propriété `birth` n'existe pas sur `person`, donc l'ensemble de l'objet a besoin d'une valeur par défaut, pas seulement la propriété imbriquée. En gros, il manque un ` = {}` pour la valeur par défaut.
 
-    La façon dont c'est écrit indique « si `person.birth` est `undefined`, alors `place` vaut `Unknown` ». Mais `person.birth` est `undefined`, donc il essaie de déstructurer `undefined`, ce qui provoque une erreur.
+    Tel que cela est écrit, cela signifie "si `person.birth` est `undefined`, alors `place` est `Inconnu`". Mais `person.birth` est `undefined`, donc on essaie de déstructurer `undefined`, ce qui entraîne une erreur.
     ```plaintext
-    In modern Chrome: `TypeError: Cannot read properties of undefined (reading 'place')`
+        In modern Chrome: `TypeError: Cannot read properties of undefined (reading 'place')`
 
-    In Node, this is also a `TypeError` because JavaScript tries to destructure `place` from `undefined`.
+        In Node, this is also a `TypeError` because JavaScript tries to destructure `place` from `undefined`.
 
-    Exact wording varies between browsers and runtimes.
+        Exact wording varies between browsers and runtimes.
     ```
   </div>
   </slot>
@@ -226,38 +226,38 @@ Plongez directement dans l’échauffement – prouvez vos compétences en destr
   client:visible={{rootMargin: "150px"}}
   index={4}
   group="Valeurs par défaut"
-  title="Valeurs par défaut dans la déstructuration d'objet"
+  title="Valeurs par défaut dans la déstructuration d'objets"
   options={[
-    {text: 'Salut Dan de Denver'},
-    {text: 'Salut Dan de Johannesburg'},
-    {text: 'Salut Dan d\'Inconnu', isAnswer: true},
-    {text: 'Salut Inconnu d\'Inconnu'},
-    {text: 'Salut Inconnu de Denver'},
+    {text: 'Bonjour Dan de Denver'},
+    {text: 'Bonjour Dan de Johannesburg'},
+    {text: 'Bonjour Dan d\'Inconnu', isAnswer: true},
+    {text: 'Bonjour Inconnu d\'Inconnu'},
+    {text: 'Bonjour Inconnu de Denver'},
     {text: 'Erreur'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Que fera ce code ?
+    Quel sera le résultat ?
     ```js
-    const person = {
-      name: { first: 'Dan' },
-      address: { city: 'Denver' },
-    };
-    const {
-      name: { first = 'Unknown' },
-      birth: { place = 'Unknown' } = {},
-    } = person;
+        const person = {
+          name: { first: 'Dan' },
+          address: { city: 'Denver' },
+        };
+        const {
+          name: { first = 'Unknown' },
+          birth: { place = 'Unknown' } = {},
+        } = person;
 
-    console.log(
-      `Hi ${first} from ${place}`,
-    );
+        console.log(
+          `Hi ${first} from ${place}`,
+        );
     ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    La propriété `birth` n'existe pas sur `person`, donc elle retombe sur un objet vide ` = {}`. Cela permet d'utiliser la valeur par défaut.
+    La propriété `birth` n'existe pas sur `person`, donc elle revient à un objet vide ` = {}`. Cela permet d'utiliser la valeur par défaut.
   </div>
   </slot>
 </Challenge>
@@ -266,36 +266,36 @@ Plongez directement dans l’échauffement – prouvez vos compétences en destr
   client:visible={{rootMargin: "150px"}}
   index={5}
   group="Arguments de fonction"
-  title="Déstructuration des paramètres de fonction avec valeurs par défaut"
+  title="Désaffectation de paramètres de fonction avec valeurs par défaut"
   options={[
-    {text: 'Salut Dan de undefined'},
-    {text: 'Salut Dan de Unknown'},
-    {text: 'Salut Dan de Denver'},
-    {text: 'Salut Unknown de Unknown'},
-    {text: 'Salut Unknown de Denver'},
+    {text: 'Salut Dan depuis undefined'},
+    {text: 'Salut Dan depuis Inconnu'},
+    {text: 'Salut Dan depuis Denver'},
+    {text: 'Salut Inconnu depuis Inconnu'},
+    {text: 'Salut Inconnu depuis Denver'},
     {text: 'Erreur', isAnswer: true},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Maintenant, en tant que paramètres de fonction, que fera-t-elle ?
+    Maintenant en tant que paramètres de fonction, que fera-t-il ?
     ```js
-    'use strict';
-    function displayUser({
-      name = "Unknown",
-      age = -1,
-    } = { place: "Unknown" }) {
-      console.log(`Hi ${name} from ${place}`);
-    }
-    displayUser({ name: "Dan" });
+        'use strict';
+        function displayUser({
+          name = "Unknown",
+          age = -1,
+        } = { place: "Unknown" }) {
+          console.log(`Hi ${name} from ${place}`);
+        }
+        displayUser({ name: "Dan" });
     ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Cette fonction extrait les propriétés `name` et `age`, en utilisant des valeurs par défaut si nécessaire. Dans ce cas, la clé `place` de l'objet par défaut n'est qu'un bruit, elle n'est pas utilisée dans `displayUser()`.
+    Cette fonction extrait les propriétés `name` et `age`, en utilisant des valeurs par défaut si nécessaire. Dans ce cas, la clé `place` de l'objet par défaut est inutile : elle n'est pas utilisée à l'intérieur de `displayUser()`.
 
-    Le mode strict ne change rien ici : lire la liaison non déclarée `place` lève une `ReferenceError`.
+    Le mode strict ne modifie pas ce comportement : lire la liaison non déclarée `place` lève une `ReferenceError`.
   </div>
   </slot>
 </Challenge>
@@ -304,47 +304,43 @@ Plongez directement dans l’échauffement – prouvez vos compétences en destr
   client:visible={{rootMargin: "150px"}}
   index={6}
   group="Arguments de fonction"
-  title="Destructuration avec valeurs par défaut imbriquées"
+  title="Déstructuration avec valeurs par défaut imbriquées"
   options={[
     {text: 'Inconnu, Inconnu, Joburg'},
     {text: 'Inconnu, Inconnu, Inconnu'},
     {text: 'Inconnu, `undefined`, Joburg'},
-    {text: 'N/D, `undefined`, Joburg'},
-    {text: 'N/D, Inconnu, Joburg'},
-    {text: 'N/D, N/D, Joburg', isAnswer: true},
-    {text: 'Inconnu, N/D, Joburg'},
+    {text: 'N/A, `undefined`, Joburg'},
+    {text: 'N/A, Inconnu, Joburg'},
+    {text: 'N/A, N/A, Joburg', isAnswer: true},
+    {text: 'Inconnu, N/A, Joburg'},
     {text: 'Erreur'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Comment les valeurs `undefined` sont‑elles gérées ?
+    Comment les valeurs `undefined` sont-elles gérées ?
     ```js
-    'use strict';
-    function displayPlace({
-      name = "N/A",
-      place = "N/A",
-      age = -1,
-    } = { place: "Unknown" }) {
-      console.log(`${place}`);
-    }
-    displayPlace({ name: "Dan" });
-    displayPlace({ name: "Dan", place: undefined });
-    displayPlace({ name: "Dan", place: "Joburg" });
+        'use strict';
+        function displayPlace({
+          name = "N/A",
+          place = "N/A",
+          age = -1,
+        } = { place: "Unknown" }) {
+          console.log(`${place}`);
+        }
+        displayPlace({ name: "Dan" });
+        displayPlace({ name: "Dan", place: undefined });
+        displayPlace({ name: "Dan", place: "Joburg" });
     ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    La fonction `displayPlace` n’utilisera UN OBJET par défaut que si aucun objet n’est fourni. Ainsi, le seul moyen d’obtenir la valeur par défaut `{ place: "Unknown" }` est d’appeler la fonction sans argument : `displayPlace()`.
-
-    Un autre comportement notable est que passer `undefined` pour `place` déclenchera l’utilisation de la valeur par défaut, un peu comme le comportement de `JSON.stringify` (ignore `undefined`, reconnaît `null`).
-
-    Cela donne :
+    La fonction `displayPlace` utilisera UN SEUL ET UNIQUEMENT UN objet par défaut si aucun objet n'est passé. Ainsi, la seule façon d'obtenir l'objet par défaut `{ place: "Inconnu" }` est d'appeler la fonction sans arguments `displayPlace()`.
     ```js
-    displayPlace() // Unknown
-    displayPlace({ name: "Dan" }) // N/A
-    displayPlace({ name: "Dan", place: undefined }) // N/A
+        displayPlace() // Unknown
+        displayPlace({ name: "Dan" }) // N/A
+        displayPlace({ name: "Dan", place: undefined }) // N/A
     ```
   </div>
   </slot>
@@ -354,38 +350,38 @@ Plongez directement dans l’échauffement – prouvez vos compétences en destr
   client:visible={{rootMargin: "150px"}}
   index={7}
   group="Arguments de fonction"
-  title="Destructuration avec valeurs par défaut imbriquées"
+  title="Désintégration avec valeurs par défaut imbriquées"
   options={[
     {text: 'N/A, N/A'},
     {text: 'N/A, undefined'},
-    {text: 'Unknown, N/A'},
-    {text: 'Unknown, Unknown'},
-    {text: 'Unknown, undefined'},
+    {text: 'Inconnu, N/A'},
+    {text: 'Inconnu, Inconnu'},
+    {text: 'Inconnu, undefined'},
     {text: 'null, N/A', isAnswer: true},
-    {text: 'null, Unknown'},
+    {text: 'null, Inconnu'},
     {text: 'null, undefined'},
-    {text: 'Error'},
+    {text: 'Erreur'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Semblable au précédent... comment `null` est‑il géré ?
+    Similaire au précédent... comment est géré `null` ?
     ```js
-    function displayPlace({
-      name = "N/A",
-      place = "N/A",
-      age = -1,
-    } = { place: "Unknown" }) {
-      console.log(`${place}`);
-    }
-    displayPlace({ name: "Dan", place: null });
-    displayPlace({ name: "Dan", place: undefined });
+        function displayPlace({
+          name = "N/A",
+          place = "N/A",
+          age = -1,
+        } = { place: "Unknown" }) {
+          console.log(`${place}`);
+        }
+        displayPlace({ name: "Dan", place: null });
+        displayPlace({ name: "Dan", place: undefined });
     ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Dans ce cas, la propriété `place` est définie sur `null` lors du premier appel, et sur `undefined` lors du second. La valeur par défaut pour `place` n’est utilisée que si l’ensemble de l’objet est absent **ou** `undefined`. Les `null` passeront tels quels, c’est‑à‑dire `null`.
+    Dans ce cas, la propriété `place` est définie sur `null` lors de la première appel, et sur `undefined` lors de la seconde. La valeur par défaut pour `place` n'est utilisée que si l'objet entier est absent **ou** `undefined`. Les `null` seront transmis sous forme de `null`.
   </div>
   </slot>
 </Challenge>
@@ -393,8 +389,8 @@ Plongez directement dans l’échauffement – prouvez vos compétences en destr
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={8}
-  group="Types inline TypeScript"
-  title="Destructuration avec valeurs par défaut imbriquées"
+  group="Types Inline TypeScript"
+  title="Désérialisation avec Valeurs Par Défaut Imbriquées"
   options={[
     {text: 'N/A'},
     {text: 'undefined'},
@@ -407,26 +403,26 @@ Plongez directement dans l’échauffement – prouvez vos compétences en destr
   <div className="question">
     Maintenant en TypeScript... _que fera-t-il ?_
     ```ts
-    'use strict';
-    function displayPlace(
-      {
-        name = 'N/A',
-        place = 'N/A',
-      }: {
-        name: string;
-        place: string;
-        age: number;
-      },
-    ) {
-      console.log(`${place}`);
-    }
-    displayPlace({ name: 'Dan', place: null });
+        'use strict';
+        function displayPlace(
+          {
+            name = 'N/A',
+            place = 'N/A',
+          }: {
+            name: string;
+            place: string;
+            age: number;
+          },
+        ) {
+          console.log(`${place}`);
+        }
+        displayPlace({ name: 'Dan', place: null });
     ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    TypeScript signale une erreur parce que `place` est typé comme `string`, mais l'appel passe `null`. L'appel omet également la propriété requise `age`.
+    TypeScript signale une erreur car `place` est typé comme `string`, mais l'appel passe `null`. L'appel omet également la propriété requise `age`.
 
     Si vous ignorez les erreurs de type, l'exécution du code affichera `null` dans la console.
   </div>
@@ -436,8 +432,8 @@ Plongez directement dans l’échauffement – prouvez vos compétences en destr
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={9}
-  group="TypeScript : avec assignation"
-  title="Destructuration avec valeurs par défaut imbriquées"
+  group="TypeScript : Avec affectation"
+  title="Destructuration avec des valeurs par défaut imbriquées"
   options={[
     {text: 'undefined'},
     {text: 'null'},
@@ -451,26 +447,26 @@ Plongez directement dans l’échauffement – prouvez vos compétences en destr
 >
   <slot name="question">
   <div className="question">
-    Essayons un peu de renommage/assignation...
+    Essayons quelques renommages/affectations...
     ```ts
-    'use strict';
-    function displayPlace({
-      name = 'N/A',
-      place: location = 'N/A',
-    }: {
-      name: string;
-      place: string;
-      age?: number;
-    }) {
-      console.log(`${location}`);
-    }
-    displayPlace({ name: 'Dan', place: 'Denver' });
+        'use strict';
+        function displayPlace({
+          name = 'N/A',
+          place: location = 'N/A',
+        }: {
+          name: string;
+          place: string;
+          age?: number;
+        }) {
+          console.log(`${location}`);
+        }
+        displayPlace({ name: 'Dan', place: 'Denver' });
     ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Cela affichera `Denver` dans la console. La propriété `place` est renommée en `location` dans la signature de la fonction. C’est un schéma courant (renommer des propriétés lors de la destructuration) lorsqu’on adapte des structures de données tierces.
+    Cela affichera `Denver` dans la console. La propriété `place` est renommée en `location` dans la signature de la fonction. C'est un modèle courant (renommer des propriétés pendant la destructuration) lorsqu'on adapte des structures de données tierces.
   </div>
   </slot>
 </Challenge>
@@ -479,41 +475,41 @@ Plongez directement dans l’échauffement – prouvez vos compétences en destr
   client:visible={{rootMargin: "150px"}}
   index={10}
   group="Destructuration imbriquée en TS"
-  title="Destructuration avec valeurs par défaut imbriquées"
+  title="Destructuration avec des valeurs par défaut imbriquées"
   options={[
-    {text: 'Erreur : la propriété \'first\' est manquante'},
-    {text: 'Erreur : la propriété \'last\' est manquante'},
-    {text: 'Erreur : les propriétés \'birth\' et \'age\' sont manquantes', isAnswer: true},
-    {text: 'Erreur : la propriété \'place\' est manquante'},
-    {text: 'Erreur : \'string\' n\'a aucune propriété dans {...}'},
+    {text: 'Erreur : La propriété \'first\' est absente'},
+    {text: 'Erreur : La propriété \'last\' est absente'},
+    {text: 'Erreur : Les propriétés \'birth\' et \'age\' sont absentes', isAnswer: true},
+    {text: 'Erreur : La propriété \'place\' est absente'},
+    {text: 'Erreur : \'string\' n\'a pas de propriétés dans {...}'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Repérez l'erreur de type :
+    Repérez l'erreur de type :
     ```ts
-    function greet({
-      name: {first = "N/A", last = "N/A"},
-      birth: {place = "N/A"} = {},
-      age = -1,
-    }: {
-      name: {first?: string, last?: string};
-      birth: {place?: string};
-      age: number;
-    }) {
-      console.log(`Hi ${first} ${last} from ${place}`);
-    }
-    greet({ name: {first: 'Dan'} });
+        function greet({
+          name: {first = "N/A", last = "N/A"},
+          birth: {place = "N/A"} = {},
+          age = -1,
+        }: {
+          name: {first?: string, last?: string};
+          birth: {place?: string};
+          age: number;
+        }) {
+          console.log(`Hi ${first} ${last} from ${place}`);
+        }
+        greet({ name: {first: 'Dan'} });
     ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    L'erreur se trouve dans la signature de la fonction `greet`. Les propriétés `age` et `birth` sont absentes dans l'objet passé, elles doivent donc être optionnelles dans la définition du type.
+    L'erreur se trouve dans la signature de la fonction `greet`. Les propriétés `age` et `birth` sont absentes dans l'objet passé, donc elles devraient être facultatives dans la définition de type.
 
-    Même si la propriété `birth` est destructurée avec une valeur par défaut, la définition du type exige qu'elle soit présente. Pour marquer une propriété comme optionnelle en TypeScript, il faut utiliser l'opérateur `?`.
+    Même si la propriété `birth` est déstructurée avec une valeur par défaut, la définition de type exige qu'elle soit présente. Pour marquer une propriété comme facultative en TypeScript, vous devez utiliser l'opérateur `?`.
 
-    Notez que `birth?: { place?: string }` n'est pas équivalent à `birth: { place?: string } | undefined`.
+    Notez que `birth?: { place?: string }` n'est pas le même que `birth: { place?: string } | undefined`.
   </div>
   </slot>
 </Challenge>
@@ -522,52 +518,52 @@ Plongez directement dans l’échauffement – prouvez vos compétences en destr
   client:visible={{rootMargin: "150px"}}
   index={11}
   group="TypeScript + Affectation"
-  title="Destructuration avec valeurs imbriquées, affectation et types"
+  title="Destructuration avec des valeurs imbriquées, affectation et types"
   options={[
-    {text: 'Salut Dan Levy de N/A'},
-    {text: 'Salut Dan Levy de Cape Town'},
-    {text: 'Salut N/A N/A de N/A'},
-    {text: 'Salut N/A N/A de Cape Town'},
+    {text: 'Bonjour Dan Levy de N/A'},
+    {text: 'Bonjour Dan Levy de Cape Town'},
+    {text: 'Bonjour N/A N/A de N/A'},
+    {text: 'Bonjour N/A N/A de Cape Town'},
     {text: 'Erreur', isAnswer: true},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Maintenant avec **affectation** (notez les variables `f`, `l` et `p`)
+    Maintenant avec l'affectation (notez les variables f, l et p)
     ```ts
-    'use strict';
-    function greet(
-      {
-        name: {first: f = "N/A", last: l = "N/A"},
-        birth: {place: p = "N/A"} = {},
-        age = -1,
-      }: {
-        name: {first?: string, last?: string};
-        birth?: {place?: string};
-        age?: number;
-      }
-    ) {
-      console.log(`Hi ${f} ${l} from ${place}`);
-      // What will 👆 do?
-    }
-    greet({
-      name: {first: 'Dan', last: 'Levy'},
-      birth: {place: 'Cape Town'},
-    });
+        'use strict';
+        function greet(
+          {
+            name: {first: f = "N/A", last: l = "N/A"},
+            birth: {place: p = "N/A"} = {},
+            age = -1,
+          }: {
+            name: {first?: string, last?: string};
+            birth?: {place?: string};
+            age?: number;
+          }
+        ) {
+          console.log(`Hi ${f} ${l} from ${place}`);
+          // What will 👆 do?
+        }
+        greet({
+          name: {first: 'Dan', last: 'Levy'},
+          birth: {place: 'Cape Town'},
+        });
     ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Une autre erreur ! Vous commencez à deviner, n'est-ce pas ?!
+    Une autre erreur ! Vous commencez à deviner, n'est-ce pas ?
 
-    Il est difficile de lire les couches de destructuration, avec des valeurs par défaut, l'affectation et les types !
+    Il est difficile de lire plusieurs couches de destructuration, avec des valeurs par défaut, des affectations et des types !
 
-    Dès que `place` est réassigné à la variable `p`, il n'est plus défini dans la portée de l'instruction `console.log`.
+    Dès que `place` est réaffecté à la variable `p`, il n'est plus défini dans le contexte de l'instruction `console.log`.
     ```ts
-    console.log(`Hi ${f} ${l} from ${place}`); // ❌
-    // to:
-    console.log(`Hi ${f} ${l} from ${p}`); // ✅
+        console.log(`Hi ${f} ${l} from ${place}`); // ❌
+        // to:
+        console.log(`Hi ${f} ${l} from ${p}`); // ✅
     ```
   </div>
   </slot>

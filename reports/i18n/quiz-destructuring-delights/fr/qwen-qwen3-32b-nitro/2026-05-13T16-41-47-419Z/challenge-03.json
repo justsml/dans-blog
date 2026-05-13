@@ -1,0 +1,47 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "Nested Destructuring",
+  "translatedTitle": "Destructuration imbriquée",
+  "translation": {
+    "title": "Destructuration imbriquée",
+    "group": "Destructuration imbriquée",
+    "options": [
+      {
+        "text": "Prénom : Dan, Ville : Denver"
+      },
+      {
+        "text": "Prénom : undefined, Ville : Denver"
+      },
+      {
+        "text": "Erreur : Cannot read property 'first'"
+      },
+      {
+        "text": "Prénom : Dan, Ville : undefined"
+      },
+      {
+        "text": "Erreur"
+      }
+    ],
+    "questionProse": [
+      "Et si on passait à la destructuration imbriquée ?"
+    ],
+    "explanationProse": [
+      "La propriété `birth: { place }` n'existe pas sur `person`, donc cela entraînera une erreur.\n    Une solution consiste à fournir des valeurs par défaut pour les propriétés imbriquées.\n\n    Lors de l'accès aux propriétés imbriquées, soyez prudent, car les erreurs peuvent être difficiles à détecter. Les messages d'erreur varient entre les navigateurs et autres plateformes, ce qui rend le débogage un peu plus complexe.\n\n    Dans Chrome moderne : `TypeError: Cannot read properties of undefined (reading 'place')`\n\n    Dans Node, c'est aussi une `TypeError` car JavaScript tente de déstructurer `place` à partir de `undefined` avant même que `place` ne soit lu.\n\n    Le libellé exact varie selon les navigateurs et les environnements d'exécution."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Destructuration imbriquée\",\n  \"group\": \"Destructuration imbriquée\",\n  \"options\": [\n    {\n      \"text\": \"Prénom : Dan, Ville : Denver\"\n    },\n    {\n      \"text\": \"Prénom : undefined, Ville : Denver\"\n    },\n    {\n      \"text\": \"Erreur : Cannot read property 'first'\"\n    },\n    {\n      \"text\": \"Prénom : Dan, Ville : undefined\"\n    },\n    {\n      \"text\": \"Erreur\"\n    }\n  ],\n  \"questionProse\": [\n    \"Et si on passait à la destructuration imbriquée ?\"\n  ],\n  \"explanationProse\": [\n    \"La propriété `birth: { place }` n'existe pas sur `person`, donc cela entraînera une erreur.\\n    Une solution consiste à fournir des valeurs par défaut pour les propriétés imbriquées.\\n\\n    Lors de l'accès aux propriétés imbriquées, soyez prudent, car les erreurs peuvent être difficiles à détecter. Les messages d'erreur varient entre les navigateurs et autres plateformes, ce qui rend le débogage un peu plus complexe.\\n\\n    Dans Chrome moderne : `TypeError: Cannot read properties of undefined (reading 'place')`\\n\\n    Dans Node, c'est aussi une `TypeError` car JavaScript tente de déstructurer `place` à partir de `undefined` avant même que `place` ne soit lu.\\n\\n    Le libellé exact varie selon les navigateurs et les environnements d'exécution.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 828,
+    "outputTokens": 1218,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2938
+  },
+  "cost": {
+    "inputUsd": 0.00006624,
+    "outputUsd": 0.00029231999999999994,
+    "totalUsd": 0.00035855999999999996,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
