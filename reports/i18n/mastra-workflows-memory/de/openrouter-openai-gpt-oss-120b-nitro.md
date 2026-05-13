@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: mastra-workflows-memory
+- Locale: de
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-01-05--mastra-workflows-memory/de/index.mdx
+- Validation: passed
+- Runtime seconds: 6.64
+- Input tokens: 8348
+- Output tokens: 2972
+- Thinking tokens: unknown
+- Cached input tokens: 3968
+- Cache write tokens: 0
+- Estimated cost: $0.000861
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: 'Keine fehlerhaften Agenten mehr: Workflows & Speicher einsetzen'
 subTitle: Deterministische Muster für nicht‑deterministische Modelle.
@@ -249,3 +267,4 @@ Ihre Erfahrungen können abweichen, doch nach meiner Erfahrung sind die Systeme,
 2. [Sicherheit & Leitplanken](/mastra-security-guardrails)
 3. [MCP & Tool‑Integrationen](/mastra-mcp-tool-integrations)
 4. **Workflows & Memory** (Dieser Beitrag)
+````
