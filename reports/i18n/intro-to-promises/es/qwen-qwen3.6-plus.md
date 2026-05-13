@@ -1,0 +1,127 @@
+# Translation Candidate
+- Slug: intro-to-promises
+- Locale: es
+- Model: qwen/qwen3.6-plus
+- Target: src/content/posts/2018-08-01--intro-to-promises/es/index.mdx
+- Validation: rejected: direct AI SDK translation failed
+- Runtime seconds: 240.39
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Cache write tokens: unknown
+- Estimated cost: unknown
+- Pricing source: unknown
+- Note: Command failed after 240000ms: bun run i18n:translate:chunked -- --slug intro-to-promises --locale es --model qwen/qwen3.6-plus --chunk 6p --run-id 2026-05-13T18-15-57-947Z-61322 --run-lock-path /Users/dan/code/oss/dans-blog/.git/codex-i18n-translation-run.json --quiz-concurrency 24
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: Introducción a las Promesas
+subTitle: ¡Las Promesas de JavaScript son divertidas!
+date: '2018-08-01'
+modified: '2024-07-31'
+category: Code
+subCategory: promises
+tags:
+  - promises
+  - async
+  - javascript
+  - composition
+related:
+  - promise-gotchas
+  - visualizing-promises
+  - stop-trying-to-make-async-await-happen
+  - javascript-promises-quiz
+cover: ../joe-yates-480485-unsplash.webp
+cover_mobile: ../w300_joe-yates-480485-unsplash.webp
+cover_icon: ../icon_joe-yates-480485-unsplash.webp
+---
+## Promesas... ¿Cuál es su propósito?
+
+Cada vez que ejecutas código, hay dos resultados posibles: **éxito** o **fracaso**.
+
+Si ese código es asíncrono por naturaleza, puede ser más difícil depender de ese resultado de forma fiable.
+
+Las **`Promesas`** ofrecen una forma práctica de manejar esto.
+
+```
+                        +--Promise---+
+                        |            |
+                        | <-o bien-> |
+                        |            |
+                <-------+            +-------->
+                |¿Fracaso?           ¿Éxito? |
+                |                             |
+                v                             v
+                (Rechazada)          (Resuelta)
+```
+
+> Nota al margen: Aunque las Promesas deberían resolverse o rechazarse, pueden fallar en hacer cualquiera de las dos cosas. Esto provoca que las aplicaciones se cuelguen, y puede ser muy difícil de depurar.
+
+### ¿De dónde vienen las Promesas?
+
+Muchas veces no necesitarás crear una promesa tú mismo. APIs nativas como `fetch` y bibliotecas populares como `axios` ya devuelven Promesas.
+
+Sin embargo, si debes crear una promesa, hay 2 formas de hacerlo:
+
+### Creando Promesas #1/2:
+
+La forma más simple de crear una Promesa es con el método auxiliar: `Promise.resolve()`.
+
+Puedes envolver (o "convertir") cualquier valor en una Promesa usando `Promise.resolve(valor)`.
+
+```js
+// Sin Promesas:
+function add10(num) {
+  return num + 10
+}
+
+// Con Promesas:
+function add10Promised(num) {
+  return Promise.resolve(num + 10)
+}
+
+console.log(add10(10)) //=> 20
+
+add10Promised(10)
+  .then(x => console.log(x)) //=> 20
+```
+
+### Creando Promesas #2/2:
+
+Otro método más flexible: usa el constructor `Promise`.
+
+`new Promise(callback)` acepta una función `callback` con la siguiente interfaz:
+
+```js
+new Promise(function(resolve, reject) {
+  // Los argumentos `resolve` y `reject` son ambas funciones.
+  // typeof resolve === 'function'
+  // typeof reject === 'function'
+
+  // `resolve(result)` debe ejecutarse cuando la promesa se cumple
+  // `reject(Error)` debe ejecutarse si la promesa es rechazada
+})
+```
+
+### API de Promesas
+
+La API de Promesas en realidad tiene un número pequeño de métodos.
+
+2 funciones de instancia y 4 funciones estáticas/auxiliares.
+
+#### Métodos de instancia de Promise
+
+Acceder a los valores de una promesa no funcionará con trucos habituales (p. ej., `console.log(promise)`).
+
+Todas las promesas devuelven éxito (mediante `.then(fn)`) o fallo (mediante `.catch(fn)`).
+
+#### Métodos auxiliares de Promise
+
+* `Promise.resolve(value)` - Convierte cualquier valor en una Promesa
+* `Promise.reject(Error)` - Crea un valor de Promesa de fallo, que activa el `.catch()` subsiguiente
+* `Promise.all([...promises])` - Espera a que TODAS las promesas de un array se completen
+* `Promise.race([...promises])` - Se resuelve tan pronto como la primera promesa se resuelve
+````
