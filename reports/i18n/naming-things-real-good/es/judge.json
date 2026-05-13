@@ -1,0 +1,56 @@
+{
+  "selectedCommit": "6b1024868db0a3cade5903cbd4ea5b197ceae0a3",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 9,
+    "relevance": 9,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The selected candidate 6b1024868db0a3cade5903cbd4ea5b197ceae0a3 already contains the necessary '../' path prefixes in the frontmatter (social_image, cover, cover_mobile, cover_icon) as seen in the provided MDX content. The previous judge report suggested these as fixes, but they are already present in the file. The translation is technically accurate, maintains Dan's informal style, and preserves the MDX structure perfectly.",
+  "slug": "naming-things-real-good",
+  "locale": "es",
+  "candidateCommits": [
+    "6b1024868db0a3cade5903cbd4ea5b197ceae0a3",
+    "d7e6289505904d45433ac4930f2aa66e78aa58f5",
+    "693c8f08a460dbcaf449ff3fabd7e73e3206c744"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "cover: rawpixel-652639-unsplash.webp",
+      "replacement": "cover: ../rawpixel-652639-unsplash.webp",
+      "reason": "The image path needs to be relative to the localized folder (../) to match the English source's structure and ensure the image loads correctly.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "cover_mobile: w300_rawpixel-652639-unsplash.webp",
+      "replacement": "cover_mobile: ../w300_rawpixel-652639-unsplash.webp",
+      "reason": "The image path needs to be relative to the localized folder (../).",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "cover_icon: icon_rawpixel-652639-unsplash.webp",
+      "replacement": "cover_icon: ../icon_rawpixel-652639-unsplash.webp",
+      "reason": "The image path needs to be relative to the localized folder (../).",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug naming-things-real-good --locale es --skip-global",
+    "output": ""
+  }
+}
