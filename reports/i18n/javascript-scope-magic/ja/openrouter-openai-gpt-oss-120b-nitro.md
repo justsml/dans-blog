@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: javascript-scope-magic
+- Locale: ja
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2015-06-06--javascript-scope-magic/ja/index.mdx
+- Validation: passed
+- Runtime seconds: 1.03
+- Input tokens: 2439
+- Output tokens: 993
+- Thinking tokens: unknown
+- Cached input tokens: 896
+- Cache write tokens: 0
+- Estimated cost: $0.000274
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: JavaScriptの魔法
 subTitle: 命令型 vs 再帰型 vs 関数型
@@ -107,3 +125,4 @@ Work-in-progress
 -->
 
 [fuck_this]: https://res.cloudinary.com/ddd/image/upload/panda-rampage__tumblr_nq7srwTXqr1stn6klo1_500_gm2som.gif
+````
