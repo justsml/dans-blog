@@ -1,0 +1,347 @@
+# Translation Candidate
+- Slug: quiz-sql-query-fundamentals
+- Locale: it
+- Model: deepseek/deepseek-v4-flash
+- Target: src/content/posts/2024-11-08--quiz-sql-query-fundamentals/it/index.mdx
+- Validation: deferred
+- Runtime seconds: 165.27
+- Input tokens: 8646
+- Output tokens: 9524
+- Thinking tokens: unknown
+- Cached input tokens: 384
+- Cache write tokens: 0
+- Estimated cost: $0.003824
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+unlisted: false
+title: 'Quiz: Metti alla prova le tue competenze SQL!'
+subTitle: Sei del team SQL? O del team noSQL?
+label: SQL 101
+social_image: ../desktop-social.webp
+category: Quiz
+subCategory: Database
+date: '2024-11-08'
+modified: '2024-11-08'
+tags:
+  - quiz
+  - intro
+  - sql
+  - core
+  - fundamentals
+  - beginner
+  - intermediate
+cover_full_width: ../peter-thomas-os14nsuXdI4-unsplash-wide.webp
+cover_mobile: ../peter-thomas-os14nsuXdI4-unsplash-square.webp
+cover_icon: ../peter-thomas-os14nsuXdI4-unsplash-square.webp
+---
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+
+## Metti alla prova le tue basi di SQL
+
+Usare un ORM ti sta rammollendo – a livello di competenze?  
+Non preoccuparti, succede a un sacco di sviluppatori.
+
+Tuffati subito per dimostrare le tue basi di SQL! 👇
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="Fondamenti di SQL"
+  title="Clausola WHERE di base"
+  options={[
+    {text: 'SELECT * FROM users WHERE name LIKE(John);'},
+    {text: 'SELECT * FROM users WHERE name = "', isAnswer: true},
+    {text: 'SELECT * FROM users WHERE name == "John";'},
+    {text: 'SELECT * FROM users WHERE name === "John";'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Quale delle seguenti query SQL recupera correttamente le righe in cui il nome è "John"?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    In SQL, si usa il singolo segno di uguale (`=`) per i controlli di uguaglianza nella clausola `WHERE`, non `==` o `===`, che sono operatori di JavaScript.
+
+    La sintassi corretta è `SELECT * FROM users WHERE name = 'John';`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="Basi di SQL"
+  title="Funzione di Aggregazione COUNT"
+  options={[
+    {text: 'Conta tutte le righe, inclusi i valori NULL'},
+    {text: 'Conta solo i valori non NULL in una colonna', isAnswer: true},
+    {text: 'Conta i valori NULL come un unico valore'},
+    {text: 'Tratta ogni valore NULL come unico, simile a NaN !== NaN'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Cosa fa `COUNT(column_name)` in SQL?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `COUNT(column_name)` conta il numero di valori non NULL in una colonna specificata. Per contare tutte le righe, inclusi i NULL, usa `COUNT(*)`.
+
+    Puoi anche usare `COALESCE` per assicurarti che i NULL vengano impostati su un valore non NULL. Qualcosa come: `COUNT(COALESCE(column_name, 0))`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="Join SQL"
+  title="Nozioni di base su LEFT JOIN"
+  options={[
+    {text: 'Restituisce una riga per ogni riga corrispondente, ignora le righe non corrispondenti'},
+    {text: 'Restituisce tutte le righe della tabella di sinistra, più le righe corrispondenti della tabella di destra', isAnswer: true},
+    {text: 'Restituisce tutte le righe corrispondenti o non corrispondenti, dove i NULL indicano nessuna corrispondenza'},
+    {text: 'Restituisce tutte le righe della tabella di destra, con eventuali righe corrispondenti della tabella di sinistra'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Cosa fa un `LEFT JOIN` in SQL?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Un `LEFT JOIN` restituisce tutte le righe della tabella di sinistra e le righe corrispondenti della tabella di destra, con NULL per le righe non corrispondenti nella tabella di destra.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="Join SQL"
+  title="Usare INNER JOIN"
+  options={[
+    {text: 'Restituisce le righe non corrispondenti da entrambe le tabelle'},
+    {text: 'Restituisce tutte le righe da entrambe le tabelle, con NULL per le righe non corrispondenti'},
+    {text: 'Restituisce le righe che soddisfano la condizione di join in entrambe le tabelle', isAnswer: true},
+    {text: 'Restituisce le righe non corrispondenti dalla tabella di destra'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Cosa fa un `INNER JOIN` in SQL?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Un `INNER JOIN` restituisce le righe in cui la condizione di join corrisponde a righe di entrambe le tabelle. Le righe non corrispondenti non sono incluse nel set di risultati.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="Subquery SQL"
+  title="Subquery Correlata"
+  options={[
+    {text: 'Una subquery che viene eseguita una volta in totale'},
+    {text: 'Una subquery utilizzata solo nelle istruzioni JOIN'},
+    {text: 'Una subquery che restituisce solo più colonne'},
+    {text: 'Una subquery che viene eseguita una volta per ogni riga nella query esterna', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Cos'è una subquery correlata in SQL?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Una subquery correlata viene valutata una volta per ogni riga della query esterna. Fa riferimento alle colonne della query esterna, rendendola dipendente da ogni riga.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="CTE SQL"
+  title="Sintassi della clausola WITH"
+  options={[
+    {text: 'Consentita solo nelle istruzioni DELETE'},
+    {text: 'Utilizzata per funzioni di aggregazione'},
+    {text: 'Utilizzata solo per definire viste'},
+    {text: 'Definisce un insieme di risultati temporaneo da utilizzare in un\'istruzione SQL più grande', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Qual è lo scopo della clausola `WITH` (Common Table Expression) in SQL?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    La clausola `WITH`, o Common Table Expression (CTE), viene utilizzata per definire un insieme di risultati temporaneo che può essere referenziato all'interno della query principale. In PostgreSQL, `WITH` può essere allegato a istruzioni come `SELECT`, `INSERT`, `UPDATE`, `DELETE` o `MERGE`.
+
+    Questo può aiutare a migliorare la leggibilità e la manutenibilità di query complesse.
+
+    La sintassi è:
+    ```sql
+        WITH cte_name AS (
+        SELECT column_name
+        FROM table_name
+        )
+        SELECT *
+        FROM cte_name;
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="Fondamenti di SQL"
+  title="IS NULL vs IS NOT NULL"
+  options={[
+    {text: 'Verifica se un valore è NULL', isAnswer: true},
+    {text: 'Verifica se un valore è vuoto'},
+    {text: 'Verifica se un valore è una stringa'},
+    {text: 'Verifica se un valore è numerico'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Cosa fa l'operatore `IS NULL` in SQL?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `IS NULL` verifica se una colonna specificata contiene un valore NULL. `IS NOT NULL` verifica l'opposto.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="Operatori SQL"
+  title="Utilizzo dell'operatore IN"
+  options={[
+    {text: 'Restituisce righe uniche'},
+    {text: 'Richiede una colonna indicizzata'},
+    {text: 'Si applica solo a colonne numeriche'},
+    {text: 'Restituisce righe che corrispondono a valori in un elenco specificato', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Cosa fa l'operatore `IN` in SQL?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    L'operatore `IN` filtra le righe per corrispondere a qualsiasi valore in un elenco specificato, spesso come alternativa a più condizioni OR.
+
+    Sebbene *possa* restituire "righe uniche" (e spesso lo fa), non è necessariamente lo scopo principale.
+
+    L'indicizzazione non è richiesta qui, anche se è certamente una buona pratica usare `IN` su una colonna con un indice, preferibilmente un indice `UNIQUE`, poiché può migliorare le prestazioni.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="Funzioni SQL"
+  title="Utilizzo della funzione COALESCE"
+  options={[
+    {text: 'Conta i valori NULL'},
+    {text: 'Restituisce l\'ultimo argomento non NULL'},
+    {text: 'Restituisce il primo argomento non NULL', isAnswer: true},
+    {text: 'Limitato alle colonne IDENTITY'},
+    {text: 'Originariamente da Printer Coalation'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Cosa fa la funzione `COALESCE` in SQL?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    La funzione `COALESCE` restituisce il primo valore non NULL in una lista specificata, utile per sostituire valori predefiniti quando si incontrano NULL.
+
+    Ad esempio, `COALESCE(column_name, 0)` restituirebbe `0` se `column_name` è `NULL`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="Funzioni di aggregazione SQL"
+  title="Utilizzo di GROUP BY"
+  options={[
+    {text: 'Nasconde i duplicati'},
+    {text: 'Utilizzato solo nelle JOIN'},
+    {text: 'Ordina le righe in ordine crescente'},
+    {text: 'Raggruppa le righe per la/e colonna/e specificata/e', isAnswer: true},
+    {text: 'La sintassi dovrebbe essere GROUP WITH/USING'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Qual è lo scopo della clausola `GROUP BY` in SQL?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    La clausola `GROUP BY` raggruppa le righe che hanno gli stessi valori nelle colonne specificate, consentendo di applicare funzioni di aggregazione a ciascun gruppo.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="Join SQL"
+  title="Fondamenti di FULL OUTER JOIN"
+  options={[
+    {text: 'Restituisce solo le righe corrispondenti'},
+    {text: 'Restituisce solo le righe con valori non NULL'},
+    {text: 'Restituisce solo le righe non corrispondenti della tabella sinistra'},
+    {text: 'Restituisce solo le righe non corrispondenti della tabella destra'},
+    {text: 'Restituisce tutte le righe di entrambe le tabelle, con NULL per le righe non corrispondenti', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Cosa fa un `FULL OUTER JOIN` in SQL?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Un `FULL OUTER JOIN` restituisce tutte le righe di entrambe le tabelle, riempiendo le righe non corrispondenti con NULL per i valori mancanti.
+
+    È utile per confrontare due tabelle e trovare le differenze tra di esse.
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+````
