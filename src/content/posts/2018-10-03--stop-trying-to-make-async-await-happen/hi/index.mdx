@@ -1,83 +1,75 @@
 ---
+language: Hindi
 social_image: ../desktop-social.webp
-title: अब async/await के लिए कोशिश बंद करें
-subTitle: ''
-date: '2018-10-03'
-modified: '2024-08-03'
+title: "async/await को बनाने की कोशिश बंद करें"
+subTitle: प्रॉमिसेस अभी भी बहुत फ़ेच हैं
+date: 2018-10-03
+modified: 2024-08-03
 category: Guides
 subCategory: promises
-tags:
-  - promises
-  - async
-  - await
-  - async-await
-  - javascript
-  - composition
-related:
-  - intro-to-promises
-  - promise-gotchas
-  - visualizing-promises
-  - you-may-not-need-axios
-cover: ../matt-nelson-414464-unsplash.webp
-cover_mobile: ../w300_matt-nelson-414464-unsplash.webp
-cover_icon: ../icon_matt-nelson-414464-unsplash.webp
+tags: [promises, async, await, async-await, javascript, composition]
+related: [intro-to-promises, promise-gotchas, visualizing-promises, you-may-not-need-axios]
+cover: matt-nelson-414464-unsplash.webp
+cover_mobile: w300_matt-nelson-414464-unsplash.webp
+cover_icon: icon_matt-nelson-414464-unsplash.webp
 ---
-दुनिया भर में, डेवलपर्स ने कई नामुमकिन लड़ाइयाँ लड़ी हैं। क्लासिक _"टैब्स बनाम स्पेसेस"_ से लेकर अमर _"मैक बनाम पीसी"_ बहस तक, हम ध्यान भटकाने वाले तर्कों को ढूंढने में अच्छे हैं।  
 
-<br />  
-<small>_उत्तर:_ लिनक्स और स्पेसेस।</small>  
+समय की शुरुआत से, डेवलपर्स ने कई बेतुकी बहसों से लड़ाई की है। क्लासिक _"Tabs vs. Spaces"_ से लेकर कालजयी _"Mac vs. PC"_ बहस तक, हम भटका देने वाली दलीलें खोजने में माहिर हैं।
+<br />
+<small>_जवाब:_ Linux और Spaces।</small>
 
-<!-- हम प्रमिसेज के साथ अपनी जिंदगी सुधारने के लिए 2 नियम देखने वाले हैं। -->  
+<!-- We're going to look at 2 rules to improve your life with Promises. -->
 
-## लड़ाई...?  
+## लड़ाई...?
 
-### प्रमिसेज बनाम एसिंक/अवेट!  
+### प्रॉमिसेस बनाम async/await!
 
-रुको, यह एक लड़ाई है? यह निश्चित रूप से है ना? हम अब कॉलबैक्स के बारे में बात करते नहीं दिखते हैं?
+रुको, क्या यह लड़ाई है? ज़रूर होगी न? हम अब कॉलबैक्स के बारे में बात भी नहीं करते लगते?
 
-नहीं, यह एक लड़ाई नहीं है। अंततः यह आपके उपकरणों के टूलबॉक्स में एक अन्य संभावित उपकरण है। हालांकि, क्योंकि `async`/`await` सभी प्रमिस फ़ंक्शनलिटी को नहीं बदलता (विशेष रूप से `Promise.all`, `.race`) **इसे प्रतिस्थापन के रूप में प्रस्तुत करना भ्रामक है।**
+नहीं, यह लड़ाई नहीं है। आखिरकार यह आपके टूलबॉक्स में एक और संभावित उपकरण है। हालाँकि, क्योंकि `async`/`await` सभी प्रॉमिस फंक्शनैलिटी (खासकर `Promise.all`, `.race`) को रिप्लेस नहीं करता **इसे रिप्लेसमेंट के रूप में पेश करना भ्रामक है।**
 
-अनेक प्रभावशाली लोग इस भ्रम को बढ़ावा दे रहे हैं कि `async`/`await` प्रमिसेज का [प्रतिस्थापन](https://developers.google.com/web/fundamentals/primers/async-functions) [सभी के](https://hackernoon.com/6-reasons-why-javascripts-async-await-blows-promises-away-tutorial-c7ec10518dd9) [लिए](https://x.com/umaar/status/1045655069478334464) [इंतजार](http://2ality.com/2017/08/promise-try.html#why-not-just-use-async-functions) [किया](https://dzone.com/articles/javascript-promises-and-why-asyncawait-wins-the-ba) [जा रहा है।](https://dzone.com/articles/javascript-promises-and-why-asyncawait-wins-the-ba)
+बहुत सारे प्रभावशाली लोग यह गलत धारणा फैला रहे हैं कि `async`/`await` वह प्रॉमिस [रिप्लेसमेंट](https://developers.google.com/web/fundamentals/primers/async-functions) है जिसका [सबको](https://hackernoon.com/6-reasons-why-javascripts-async-await-blows-promises-away-tutorial-c7ec10518dd9) [इंतज़ार](https://x.com/umaar/status/1045655069478334464) [था](http://2ality.com/2017/08/promise-try.html#why-not-just-use-async-functions) [करना](https://dzone.com/articles/javascript-promises-and-why-asyncawait-wins-the-ba)।
 
-> **संकेत: नहीं, नहीं, और ना थोड़ा भी।**
+> **संकेत: नहीं, बिल्कुल नहीं, और थोड़ा भी नहीं।**
 
-एक हालिया जोड़ाल गया VS Code इस अभिप्राय को आगे बढ़ाता है। जैसा कि [@umaar](https://x.com/umaar) ट्वीट किया:
 
-<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Visual Studio Code अब आपके लंबे श्रृंखला के Promise.then() को async/await में बदल सकता है! 🎊 दोनों JavaScript और TypeScript फ़ाइलों में बहुत अच्छा काम करता है। .catch() को भी सही ढंग से try/catch में बदल जाता है ✅ <a href="https://t.co/xb39Lsp84V">pic.x.com/xb39Lsp84V</a></p>&mdash; Umar Hansa (@umaar) <a href="https://x.com/umaar/status/1045655069478334464?ref_src=twsrc%5Etfw">September 28, 2018</a></blockquote>
+VS Code में हाल ही में जुड़ी एक सुविधा इस पूर्वाग्रह को आगे बढ़ाती है। जैसा कि [@umaar](https://x.com/umaar) ने ट्वीट किया:
 
-<!-- निश्चित रूप से, यह पहले से शानदार उपलब्धियों की सूची में एक शानदार जोड़ है। -->
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Visual Studio Code can now convert your long chains of Promise.then()&#39;s into async/await! 🎊 Works very well in both JavaScript and TypeScript files. .catch() is also correctly converted to try/catch ✅ <a href="https://t.co/xb39Lsp84V">pic.x.com/xb39Lsp84V</a></p>&mdash; Umar Hansa (@umaar) <a href="https://x.com/umaar/status/1045655069478334464?ref_src=twsrc%5Etfw">September 28, 2018</a></blockquote>
 
-यदि आप Promises को नापसंद करते हैं और यह रिफैक्टरिंग फीचर चाहते हैं, तो मैं आपको दोष नहीं देता।
+<!-- Sure, it's an impressive addition to an already amazing list of features. -->
+
+अगर आप प्रॉमिसेस से नफरत करते हैं और इस रिफैक्टरिंग सुविधा को चाहते हैं, तो मैं आपको दोष नहीं देता।
+<br />
+_मैं सहानुभूति रखता हूँ। मैं समझता हूँ।_
+<br />
+मैं वहाँ रहा हूँ। 🤗
 
 <br />
 
-मैं आपके साथ भावनात्मक रूप से जुड़ता हूँ। मैं समझता हूँ।
+मैं प्रॉमिसेस से नफरत करता था। आज, मैं पूरी तरह से वापस आ गया हूँ। **प्रॉमिसेस अद्भुत हैं।** वे आपको **फंक्शन कंपोजिशन का लाभ उठाने** के लिए प्रोत्साहित कर सकते हैं।
 
-<br />
+मैं अपनी तकनीक सुधारने के लिए पहले दो क्षेत्रों पर ध्यान केंद्रित करने की सलाह देता हूँ।
 
-मैंने भी वहाँ से गुजरा है। 🤗
+1. [नेम्ड फंक्शंस (कोई एनॉनिमस नहीं)](#rule-1)
+1. [सिंगल-पर्पस फंक्शंस](#rule-2)
 
-<br />
+<h2 id="rule-1">#1: नेम्ड फंक्शंस!</h2>
 
-मैंने पहले Promises को नापसंद किया था। अब, मैं पूरी तरह से उनके प्रशंसक हो गया हूँ। **Promises शानदार हैं।** वे आपको **फ़ंक्शन संरचना का लाभ उठाने** में सक्षम/प्रोत्साहित कर सकते हैं।
+अपने एनॉनिमस मेथड्स को खत्म करें। **नेम्ड फंक्शंस** का उपयोग करने से कोड आपकी ज़रूरतों की कविता की तरह पढ़ा जाता है।
 
-मैंने अपने Promise तकनीक को आगे बढ़ाने के लिए दो क्षेत्रों पर ध्यान देने की सिफारिश की है:
+आइए एक आम उदाहरण देखें:
 
-1. [नामित फ़ंक्शन (अनाम नहीं)](#rule-1)
-1. [एकल-उद्देश्य वाले फ़ंक्शन](#rule-2)
+`fetch` का उपयोग करके HTTP GET रिक्वेस्ट बनाना:
 
-<h2 id="rule-1">#1: नामित फ़ंक्शन!</h2>
+<!-- the fetch specification states [HTTP status codes](https://http.cat/) over 400 or 500 **do not automatically trigger an error.** The default in many AJAX libraries (jQuery, axios). -->
 
-अपने अनाम विधियों को मार डालो। **नामित फ़ंक्शन** का उपयोग करने से कोड आपकी आवश्यकताओं की कविता की तरह पढ़ता है।
+<!-- Before we see the solution, look over a common "recommended" implementation: -->
 
-चलो एक सामान्य उदाहरण पर नज़र डालते हैं:
-
-एचटीटीपी जीईटी अनुरोध बनाना `fetch` का उपयोग करके:
-
-### अंतर्निहित पैटर्न
+### एंटी-पैटर्न
 
 ```js
-// ❌ अनाम अंतर्निहित फ़ंक्शन का उपयोग 💩
+// ❌ Using anonymous inline functions 💩
 fetch(url)
   .then(response => response.status < 400
     ? response
@@ -85,16 +77,16 @@ fetch(url)
   .then(response => response.text())
 ```
 
-### समाधान: नामित विधियाँ
+### समाधान: नेम्ड मेथड्स
 
 ```js
-// ✅ स्पष्टता उभरती है: नामित फ़ंक्शन
+// ✅ Clarity emerges: named functions
 fetch(url)
   .then(checkResponse)
   .then(getText)
 
 
-// पुनः उपयोग योग्य सामान्य-उद्देश्य वाले फ़ंक्शन
+// Reusable general-purpose functions
 function checkResponse(response) {
   return response.status < 400
     ? response
@@ -105,47 +97,46 @@ function getText(response) {
 }
 ```
 
-> इस दृष्टिकोण के लाभ आपको डीआरवाई-र कोड प्राप्त करने के साथ बढ़ते हैं।
+> इस दृष्टिकोण के फायदे ज़्यादा से ज़्यादा DRY कोड लिखने पर स्पष्ट होते जाते हैं।
 
-**अतिरिक्त संसाधन:** मेरे **1 मिनट के वीडियो** देखें [मूल लॉगिंग](https://youtu.be/xR_MZE1SIkk) और [उन्नत डीबगिंग](https://youtu.be/P_tghqWj72M) इस तकनीक का उपयोग करके।
+**अतिरिक्त संसाधन:** इस तकनीक का उपयोग करके [बेसिक लॉगिंग](https://youtu.be/xR_MZE1SIkk) और [एडवांस्ड डिबगिंग](https://youtu.be/P_tghqWj72M) की मेरी **1 मिनट की वीडियो** देखें।
 
-<h2 id="rule-2">#2: एकल उद्देश्य (फ़ंक्शन)</h2>
+<h2 id="rule-2">#2: सिंगल पर्पस (फंक्शंस)</h2>
 
-यह _गुमराहकर तरीके से सटीक_ लगता है: एकल उद्देश्य।
+यह _काफी सरल_ लगता है: सिंगल पर्पस।
 
-लेकिन यह इतना व्यक्तिगत, आकस्मिक, और निश्चित रूप से, कभी-कभी अर्थहीन होता है।
+फिर भी यह इतना सब्जेक्टिव, मनमाना है, और हाँ, कभी-कभी बेमतलब भी।
 
-<!-- एक दिए गए फ़ंक्शन के बारे में बहस करने के बजाय यह पर्याप्त रूप से ध्यान केंद्रित है।
+<!-- Instead of arguing if a given function is sufficiently focused.
 
-मैंने इसके लिए एक अंदाजी मापदंड निकाला है: `Purpose Cost`। अंक जितने अधिक होंगे, फ़ंक्शन उतना ही अधिक काम कर रहा होगा।
---- CHUNK END ---
+I came up with a rough measure for this: `Purpose Cost`. The higher the score, more likely it's doing too much.
 
 ```js
-// 1 अंक: return और ternary एकल पंक्ति में कार्य कर रहे हैं
+// 1 point: the return & ternary are effectively a one-liner
 function checkResponse(response) {
   return response.status < 400
     ? response
     : Promise.reject(new Error('Request Failed: ' + response.ststus))
 }
-// 1 अंक: return और अभिव्यक्ति भी एकल पंक्ति में कार्य कर रहे हैं
+// 1 point: the return & expression are also effectively a one-liner
 function getText(response) {
   return response.text()
 }
 ```
 
-एक फ़ंक्शन के कोड के लिए, प्रत्येक लाइन में निम्नलिखित में से कोई भी शामिल होने पर 1 अंक जोड़ें: `if`, `return`, ternary, `for`, `const`, `let`, `var`, `switch`, `while`, `[].map/filter/reduce/etc`। प्रत्येक निर्देश के लिए 1 अंक जोड़ें (अतिरिक्त रिक्त लाइनों को नजरअंदाज करें)। चेन किए गए अभिव्यक्तियों या विधियों की संख्या केवल 1 अंक के लिए गिनी जाती है।
+Given a function's code, add 1 point for every line containing any of: `if`, `return`, ternary, `for`, `const`, `let`, `var`, `switch`, `while`, `[].map/filter/reduce/etc`. Add 1 point for each instruction (ignore extra lines from whitespace). A number of chained expressions or methods only count for 1 point.
 
-वाह, यह थोड़ा जार्गन भरा था।
- -->
+Whew, that was a bit of jargon.
+  -->
 
-अजीब तरह से, अधिकांश विकासकर्ता बताते हैं कि वे **एकल उद्देश्य** वाले कोड के लिए _काफी अच्छे_ हैं। असंबंधित नहीं है: वे अपने ड्राइविंग कौशल के बारे में भी अच्छे बताते हैं!
+दिलचस्प बात यह है कि ज़्यादातर डेवलपर्स कहते हैं कि वे अपने कोड का **सिंगल पर्पस** बनाने में _काफ़ी अच्छे_ हैं। असंबद्ध नहीं: वे खुद को अच्छा ड्राइवर भी बताते हैं!
 
-<!-- यह **Promises के साथ एक अद्वितीय समस्या नहीं है**, सरणी विधियाँ और सभी अन्य HoF-आधारित (उच्च क्रम फ़ंक्शन) API के समान अर्थव्यवस्था है। -->
+<!-- This **isn't a unique issue with Promises**, array methods and all other HoF-based (Higher Order Function) APIs have the same ergonomics. -->
 
-चलिए [जेक अर्चिबाल्ड](https://x.com/jaffathecake) (अत्यंत प्रतिभाशाली) द्वारा गूगल विकासकर्ता साइट के अपने async/await लेख में दिए गए एक उदाहरण पर नज़र डालते हैं (नोट: 2024, लिंक हटा दिया गया है)।
+आइए एक उदाहरण देखें जो (अत्यंत प्रतिभाशाली) [Jake Archibald](https://x.com/jaffathecake) ने Google Developers साइट के अपने async/await आर्टिकल में दिखाया है (नोट: 2024, लिंक हटा दिया गया)।
 
 <!--
-चलिए एक ऐसे उदाहरण पर नज़र डालते हैं जिसे "❌ अनिर्माणीय" कहा गया है। (वर्णन है "मान लें कि हम कुछ श्रृंखला के URL फ़ेच करना चाहते हैं और उन्हें सही क्रम में जितनी जल्दी हो सके लॉग करते हैं।") -->
+Let's look at one of the so called "❌ Not recommended" Promise examples. (The description is "say we wanted to fetch a series URLs and log them as soon as possible, in the correct order.") -->
 
 ```js
 // source: https://developers.google.com/web/fundamentals/primers/async-functions
@@ -163,44 +154,47 @@ function logInOrder(urls) {
 }
 ```
 
-### एकल उद्देश्य?
+### सिंगल पर्पस?
 
-मैं कहूंगा नहीं। `logInOrder` क्या कर रहा है?
+मैं कहूँगा नहीं। `logInOrder` क्या कर रहा है?
 
-1. `urls` की सूची के माध्यम से लूप करें  
-1. इन्हें एक इनलाइन HTTP GET पर लागू करें:  
-  1. HTTP `fetch`  
-  1. प्रतिक्रिया पाठ शरीर लौटाएं  
-1. `textPromises` में प्रत्येक प्रमिस के बाद `.then(text => console.log(text))` जोड़ें  
-  1. परिणामों को क्रमिक रूप से प्रिंट करें  
+1. `urls` की लिस्ट को लूप करना
+1. उन्हें इनलाइन HTTP GET पर लागू करना:
+  1. HTTP `fetch`
+  1. रिस्पॉन्स टेक्स्ट बॉडी रिटर्न करना
+1. `textPromise` में हर प्रॉमिस के बाद `.then(text => console.log(text))` जोड़ना
+  1. रिजल्ट्स को सीरियली प्रिंट करना
 
-इस एकल फ़ंक्शन में 5 अज्ञात विधियां परिभाषित की गई हैं। जेक ने भी इस बात पर ध्यान दिया है कि `.reduce` बहुत जटिल है। अपने पूरे कोड में ऐसे नुकसानदायक तंत्रों को हाथ से लिखना बनता नहीं है। अन्य तरीके से कहें तो, हम अंतहीन `document.createElement()`, `element.setAttribute()` आदि के साथ DOM निर्माण कोड नहीं लिखते हैं। बजाय इसके हम विभिन्न विकल्पों में से सबसे अच्छा उपकरण चुनते हैं: सहायक/उपयोगिता फ़ंक्शन, पुस्तकालय या फ्रेमवर्क।
+इस सिंगल फंक्शन में 5 एनॉनिमस मेथड्स परिभाषित हैं। जैसा कि Jake ने भी बताया, `.reduce` बहुत ज़्यादा कॉम्प्लेक्स है। अपने कोड में हर जगह सूक्ष्म मैकेनिज़्म को हाथ से लिखना समझ में नहीं आता। दूसरे शब्दों में, हम `document.createElement()`, `element.setAttribute()` आदि के साथ DOM क्रिएशन कोड नहीं लिखते। इसके बजाय हम कई विकल्पों में से सबसे अच्छा टूल चुनते हैं: हेल्पर/यूटिलिटी फंक्शंस, लाइब्रेरी या फ्रेमवर्क।
 
 <!-- We need to isolate each 'step' that's going on: there's an HTTP request, a transform for a list of URLs into a list of results. Also a `console.log` is needed. -->
 
 <!-- > 🤔 Why do `Promises` cause developers to abandon practices we use elsewhere? -->
 
-<!-- **नोट:** यदि उद्देश्य अनुक्रम में _अनुरोध_ शुरू करना था, बजाय इसके कि केवल परिणामों को क्रम में प्रिंट करना, तो यह कोड वास्तव में ऐसा नहीं करता है। हम इसे अनुकूलित करेंगे। -->
+<!-- **Note:** If the intention was to _initiate requests_ in a sequence, instead of merely printing the results out in order, this code doesn't actually do that. We'll refactor accordingly. -->
 
-#### समाधान: एकल उद्देश्य वाले फ़ंक्शन
 
-### शुरू करें **मेथड्स निकालकर**...
 
-![VS Code में Promise कोड से async मेथड्स निकालकर रिफैक्टर करना](../async-refactor-google-extract-methods-resized-75.webp "मेथड्स निकालना")
+#### समाधान: सिंगल पर्पस फंक्शंस
 
-### आगे बढ़कर `.reduce()` और `logPromise()` को `Promise.all` और `..map()` से बदल दें...
+### **मेथड्स एक्सट्रैक्ट** करके शुरू करें...
 
-![Promise चेन को Promise all और map का उपयोग करके पठनीयता में सुधार](../async-refactor-google-chain-methods-resized-75.webp "पठनीयता में सुधार")
+![VS Code refactor extracting async methods from Promise code](async-refactor-google-extract-methods-resized-75.webp "Extracting methods")
+
+### `.reduce()` और `logPromise()` को `Promise.all` और `..map()` से बदलें...
+
+![Refactored Promise chain using Promise all and map for readability](async-refactor-google-chain-methods-resized-75.webp "Improving readability")
+
 
 ### सारांश
 
-अपने कोड में इन तकनीकों को लागू करने का प्रयास करें! फिर [मुझे ट्वीट करें](https://x.com/justsml) और बताएं कि यह कैसे चला। या अगर आपके पास प्रश्न या टिप्पणियाँ हैं, तो भी संपर्क करें!
+इन तकनीकों को अपने कोड पर लागू करने की कोशिश करें! फिर [मुझे ट्वीट करें](https://x.com/justsml) और बताएं कि कैसा रहा। या अगर आपके कोई सवाल या टिप्पणियाँ हैं, तो भी संपर्क करें!
 
-#प्रमाण-सच्चाई को फैलाने में मदद करें और यह लेख साझा करें। ❤️
+#PromiseTruth फैलाने और इस आर्टिकल को शेयर करने में मदद करें। ❤️
 
-![क्रेडिट: matt-nelson-414464-unsplash.webp](../matt-nelson-414464-unsplash.webp)
+![credit: matt-nelson-414464-unsplash.webp](matt-nelson-414464-unsplash.webp)
 
-#### संबंधित पढ़ाई
+#### संबंधित पठन
 
-* [डैनियल ब्रेन](https://medium.com/@bluepnume/even-with-async-await-you-probably-still-need-promises-9b259854c161)
-* [एरिक एलियट](https://x.com/_ericelliott?lang=en)
+* [Daniel Brain](https://medium.com/@bluepnume/even-with-async-await-you-probably-still-need-promises-9b259854c161)
+* [Eric Elliott](https://x.com/_ericelliott?lang=en)

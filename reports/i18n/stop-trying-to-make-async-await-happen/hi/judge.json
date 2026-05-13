@@ -1,0 +1,54 @@
+{
+  "selectedCommit": "42700be21a9d347533ec7b64b165965dcffcd13e",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 9,
+    "relevance": 9,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "ststus",
+      "replacement": "status",
+      "reason": "Fixing a typo carried over from the original English code snippet in the error message within the checkResponse function."
+    }
+  ],
+  "rationale": "The selected candidate provides a high-quality, natural Hindi translation that maintains the technical context and Dan's conversational tone. It correctly preserves MDX structure and handles technical terminology appropriately for a developer audience. The suggestion fixes a minor typo in the code comments/strings inherited from the source.",
+  "slug": "stop-trying-to-make-async-await-happen",
+  "locale": "hi",
+  "candidateCommits": [
+    "42700be21a9d347533ec7b64b165965dcffcd13e",
+    "2d9290385178ff5e9a4b83fa1175ad72349e7c43",
+    "2c4d14639ea3dfe249c49a84ac17aa7ef453c8dc"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "ststus",
+      "replacement": "status",
+      "reason": "Fixing a typo carried over from the original English code snippet in the error message.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "ststus",
+      "replacement": "status",
+      "reason": "Fixing a typo carried over from the original English code snippet in the error message within the checkResponse function.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug stop-trying-to-make-async-await-happen --locale hi --skip-global",
+    "output": ""
+  }
+}
