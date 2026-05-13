@@ -1,0 +1,46 @@
+---
+title: 'Sicherheitshinweise: RegEx'
+subTitle: Können RegEx-Muster verwundbar sein?
+date: '2015-02-24'
+modified: '2018-07-30'
+category: Security
+subCategory: RegEx
+tags:
+  - security
+  - regex
+  - dos
+  - remote-exploit
+cover_credit: Photo by Markus Spiske on Unsplash
+cover: ../markus-spiske-666905-unsplash.webp
+cover_mobile: ../w300_markus-spiske-666905-unsplash.webp
+cover_icon: ../icon_markus-spiske-666905-unsplash.webp
+social_image: ../desktop-social.webp
+---
+## RegEx Denial-of-Service: ReDOS
+
+Eine der überraschenderen, aber zugleich schwer zu erkennenden Schwachstellen, die ich je gefunden habe, betrifft reguläre Ausdrücke.
+Entweder schlecht geschrieben oder schlecht implementiert.
+
+Speicher und CPU können durch große oder speziell konstruierte Benutzereingaben erschöpft werden.
+
+> Dies ist eine Denial-of-Service-Schwachstelle, kein bloßes Performance-Problem. Wenn bösartige Eingaben die CPU lange genug festnageln können, um legitime Nutzer auszuhungern, gehört sie in Ihr Sicherheitsbedrohungsmodell.
+
+### Warnsignale
+
+1. Verschachtelte Quantifizierer, wiederholte Gruppen oder überlappende Alternativen
+2. Engines mit starkem Backtracking ohne Timeout oder Begrenzung der Eingabelänge
+3. Der Ausdruck wird mit ungeprüften Benutzereingaben verwendet
+4. Die Regex-Validierung läuft auf einem kritischen Anfragepfad
+
+### Abschwächung / Lösung
+
+1. RegEx ist schwierig.
+    1. So empfehlen die wirklich versierten Leute bei [OWASP die Handhabung der IP-Validierung][owasp]: `^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$`
+    2. Das ist länger als ein (Old-School-)Tweet, nur für eine 4-Byte-IP-Adresse!!!
+2. Begrenzen Sie die Eingabelänge vor der Regex-Auswertung.
+3. Fügen Sie Timeouts, statische Analyse oder eine Engine ohne Backtracking hinzu, sofern die Plattform dies unterstützt.
+4. Dies betrifft fast jede Sprache und Plattform: .NET/Node/Python/PERL/Java.
+
+### Referenzen
+
+- [OWASP ReDoS](https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS)
