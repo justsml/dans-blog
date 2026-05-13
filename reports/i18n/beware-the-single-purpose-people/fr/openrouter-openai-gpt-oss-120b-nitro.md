@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: beware-the-single-purpose-people
+- Locale: fr
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2025-04-03--beware-the-single-purpose-people/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 4.39
+- Input tokens: 7510
+- Output tokens: 2907
+- Thinking tokens: unknown
+- Cached input tokens: 2816
+- Cache write tokens: 0
+- Estimated cost: $0.000816
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 language: English
 title: Attention aux spécialistes à usage unique
@@ -122,3 +140,4 @@ Restez pragmatique. Concentrez‑vous sur les résultats. Ne laissez pas la quê
 ¹ L’ironie réside dans le fait que parvenir à un véritable « single purpose » aux niveaux les plus bas nécessite une complexité immense cachée juste sous la surface.  
 
 ² Nous parlons ici de pureté conceptuelle : l’idée qu’une fonction ne doit faire qu’une seule chose logiquement. Ne confondez pas cela avec le concept de « pure function » de la programmation fonctionnelle, qui implique l’absence d’effets de bord, une notion différente, bien que parfois liée.
+````
