@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: securing-clawdbot-tailscale
+- Locale: hi
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-01-26--securing-clawdbot-tailscale/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 7.31
+- Input tokens: 12420
+- Output tokens: 4495
+- Thinking tokens: unknown
+- Cached input tokens: 6272
+- Cache write tokens: 0
+- Estimated cost: $0.001293
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: आपके AI सहायक ने मुझे शेल एक्सेस दिया
 subTitle: अपने स्थानीय या VPS OpenClaw/Moltbot सेटअप को सुरक्षित कैसे करें
@@ -266,3 +284,4 @@ Tailscale सबसे बड़ी गलती को दूर करता �
 - [Use UFW to Lock Down an Ubuntu Server](https://tailscale.com/docs/how-to/secure-ubuntu-server-with-ufw)
 - [Security Audit: 512 Findings (GitHub Issue)](https://github.com/moltbot/moltbot/issues/1796)
 - [Nmap Network Scanning Guide](https://nmap.org/book/man.html)
+````
