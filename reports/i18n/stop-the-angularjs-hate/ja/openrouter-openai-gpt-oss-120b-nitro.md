@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: stop-the-angularjs-hate
+- Locale: ja
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2015-03-10--stop-the-angularjs-hate/ja/index.mdx
+- Validation: passed
+- Runtime seconds: 2.65
+- Input tokens: 5759
+- Output tokens: 1741
+- Thinking tokens: unknown
+- Cached input tokens: 2688
+- Cache write tokens: 0
+- Estimated cost: $0.000538
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: AngularJS の裏技
@@ -115,3 +133,4 @@ Angular 固有というわけではないが、シンプルな依存関係解決
   1.  Mustache テンプレートで HTML 文字列を生成する（または直接 DOM を生成）
   1.  可能であれば、レンダリング結果を `localStorage` にキャッシュする
   1.  （オプション）コンテンツを再レンダリングするためのイベントリスナーを追加する。イベント名は `refresh.<class-name>` に統一しています。
+````
