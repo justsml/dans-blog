@@ -1,0 +1,44 @@
+{
+  "index": 1,
+  "attempt": 1,
+  "originalTitle": "Multiple `.catch`'s #2",
+  "translatedTitle": "Múltiples `.catch`'s #2",
+  "translation": {
+    "title": "Múltiples `.catch`'s #2",
+    "group": "Manejo de errores",
+    "options": [
+      {
+        "text": "imprimir mensaje una vez"
+      },
+      {
+        "text": "imprimir mensaje dos veces"
+      },
+      {
+        "text": "promesa rechazada sin manejar"
+      },
+      {
+        "text": "el proceso termina"
+      }
+    ],
+    "questionProse": [
+      "¿Cuál será la salida del siguiente código?"
+    ],
+    "explanationProse": [
+      "Cuando se usa el constructor Promise debes invocar ya sea los callbacks `resolve()` o `reject()`. El constructor Promise ignora el valor de retorno del ejecutor, por lo que la Promise adicional creada con `Promise.reject()` no se encadena a `p`. Los dos manejadores se adjuntan a `p`, que queda pendiente, mientras que la Promise rechazada devuelta se informa como no manejada por el entorno host."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Múltiples `.catch`'s #2\",\n  \"group\": \"Manejo de errores\",\n  \"options\": [\n    {\n      \"text\": \"imprimir mensaje una vez\"\n    },\n    {\n      \"text\": \"imprimir mensaje dos veces\"\n    },\n    {\n      \"text\": \"promesa rechazada sin manejar\"\n    },\n    {\n      \"text\": \"el proceso termina\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Cuál será la salida del siguiente código?\"\n  ],\n  \"explanationProse\": [\n    \"Cuando se usa el constructor Promise debes invocar ya sea los callbacks `resolve()` o `reject()`. El constructor Promise ignora el valor de retorno del ejecutor, por lo que la Promise adicional creada con `Promise.reject()` no se encadena a `p`. Los dos manejadores se adjuntan a `p`, que queda pendiente, mientras que la Promise rechazada devuelta se informa como no manejada por el entorno host.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 816,
+    "outputTokens": 564,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1153
+  },
+  "cost": {
+    "inputUsd": 0.000031824,
+    "outputUsd": 0.00010152,
+    "totalUsd": 0.000133344,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

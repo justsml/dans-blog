@@ -25,8 +25,8 @@ cover: ../olav-ahrens-rotne-jvBXiynINGE-resized.webp
 cover_mobile: ../w300_olav-ahrens-rotne-jvBXiynINGE-resized.webp
 cover_icon: ../icon_olav-ahrens-rotne-jvBXiynINGE-resized.webp
 ---
-import Challenge from '../../../../../components/QuizUI/Challenge';
-import QuizUI from '../../../../../components/QuizUI/QuizUI';
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
 
 
 ## ¿Conoces las Promesas de JavaScript?
@@ -57,11 +57,11 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   <div className="question">
     ¿Cuál será la salida del siguiente código?
     ```js
-    var p = new Promise((resolve, reject) => {
-      reject(Error('The Fails!'))
-    })
-    p.catch(error => console.log(error.message))
-    p.catch(error => console.log(error.message))
+        var p = new Promise((resolve, reject) => {
+          reject(Error('The Fails!'))
+        })
+        p.catch(error => console.log(error.message))
+        p.catch(error => console.log(error.message))
     ```
   </div>
   </slot>
@@ -90,11 +90,11 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   <div className="question">
     ¿Cuál será la salida del siguiente código?
     ```js
-    var p = new Promise((resolve, reject) => {
-      return Promise.reject(Error('The Fails!'))
-    })
-    p.catch(error => console.log(error.message))
-    p.catch(error => console.log(error.message))
+        var p = new Promise((resolve, reject) => {
+          return Promise.reject(Error('The Fails!'))
+        })
+        p.catch(error => console.log(error.message))
+        p.catch(error => console.log(error.message))
     ```
   </div>
   </slot>
@@ -121,11 +121,11 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   <div className="question">
     ¿Cuál será la salida del siguiente código?
     ```js
-    var p = new Promise((resolve, reject) => {
-      reject(Error('The Fails!'))
-    })
-    .catch(error => console.log(error))
-    .then(error => console.log(error))
+        var p = new Promise((resolve, reject) => {
+          reject(Error('The Fails!'))
+        })
+        .catch(error => console.log(error))
+        .then(error => console.log(error))
     ```
   </div>
   </slot>
@@ -152,11 +152,11 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   <div className="question">
     ¿Cuál será la salida del siguiente código?
     ```js
-    var p = new Promise((resolve, reject) => {
-      reject(Error('The Fails!'))
-    })
-    .catch(error => console.log(error.message))
-    .catch(error => console.log(error.message))
+        var p = new Promise((resolve, reject) => {
+          reject(Error('The Fails!'))
+        })
+        .catch(error => console.log(error.message))
+        .catch(error => console.log(error.message))
     ```
   </div>
   </slot>
@@ -183,16 +183,16 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   <div className="question">
     ¿Cuál será la salida del siguiente código?
     ```js
-    new Promise((resolve, reject) => {
-        resolve('Success!')
-      })
-      .then(() => {
-        throw Error('Oh noes!')
-      })
-      .catch(error => {
-        return "actually, that worked"
-      })
-      .catch(error => console.log(error.message))
+        new Promise((resolve, reject) => {
+            resolve('Success!')
+          })
+          .then(() => {
+            throw Error('Oh noes!')
+          })
+          .catch(error => {
+            return "actually, that worked"
+          })
+          .catch(error => console.log(error.message))
     ```
   </div>
   </slot>
@@ -221,13 +221,13 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   <div className="question">
     ¿Cuál será la salida del siguiente código?
     ```js
-    Promise.resolve('Success!')
-      .then(data => {
-        return data.toUpperCase()
-      })
-      .then(data => {
-        console.log(data)
-      })
+        Promise.resolve('Success!')
+          .then(data => {
+            return data.toUpperCase()
+          })
+          .then(data => {
+            console.log(data)
+          })
     ```
   </div>
   </slot>
@@ -256,15 +256,15 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   <div className="question">
     ¿Cuál será la salida del siguiente código?
     ```js
-    Promise.resolve('Success!')
-      .then(data => {
-        return data.toUpperCase()
-      })
-      .then(data => {
-        console.log(data)
-        return data
-      })
-      .then(console.log)
+        Promise.resolve('Success!')
+          .then(data => {
+            return data.toUpperCase()
+          })
+          .then(data => {
+            console.log(data)
+            return data
+          })
+          .then(console.log)
     ```
   </div>
   </slot>
@@ -291,13 +291,13 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   <div className="question">
     ¿Cuál será la salida del siguiente código?
     ```js
-    Promise.resolve('Success!')
-      .then(data => {
-        data.toUpperCase()
-      })
-      .then(data => {
-        console.log(data)
-      })
+        Promise.resolve('Success!')
+          .then(data => {
+            data.toUpperCase()
+          })
+          .then(data => {
+            console.log(data)
+          })
     ```
   </div>
   </slot>
@@ -327,17 +327,17 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   <div className="question">
     ¿Cuál será la salida del siguiente código?
     ```js
-    Promise.resolve('Success!')
-      .then(() => {
-        throw Error('Oh noes!')
-      })
-      .catch(error => {
-        return 'actually, that worked'
-      })
-      .then(data => {
-        throw Error('The fails!')
-      })
-      .catch(error => console.log(error.message))
+        Promise.resolve('Success!')
+          .then(() => {
+            throw Error('Oh noes!')
+          })
+          .catch(error => {
+            return 'actually, that worked'
+          })
+          .then(data => {
+            throw Error('The fails!')
+          })
+          .catch(error => console.log(error.message))
     ```
   </div>
   </slot>

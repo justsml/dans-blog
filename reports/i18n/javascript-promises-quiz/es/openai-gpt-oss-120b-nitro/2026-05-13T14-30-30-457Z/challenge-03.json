@@ -1,0 +1,44 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "Chaining `.then` and `.catch`'s",
+  "translatedTitle": "Encadenando `.then` y `.catch`",
+  "translation": {
+    "title": "Encadenando `.then` y `.catch`",
+    "group": "Manejo de errores",
+    "options": [
+      {
+        "text": "imprimir error y `undefined`"
+      },
+      {
+        "text": "imprimir error dos veces"
+      },
+      {
+        "text": "UnhandledPromiseRejectionWarning"
+      },
+      {
+        "text": "undefined"
+      }
+    ],
+    "questionProse": [
+      "¿Cuál será la salida del siguiente código?"
+    ],
+    "explanationProse": [
+      "Al encadenar `.then` y `.catch` es útil pensar en ellos como una serie de pasos. Cada `.then` recibe el valor devuelto por el `.then` anterior (como su argumento). Sin embargo, si tu \"paso\" encontró un error, cualquier \"paso\" `.then` posterior se omitirá hasta que se encuentre un `.catch`. Si deseas sobrescribir un error, solo necesitas devolver un valor que no sea un error. Ese valor puede ser accedido en cualquier `.then` posterior."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Encadenando `.then` y `.catch`\",\n  \"group\": \"Manejo de errores\",\n  \"options\": [\n    {\n      \"text\": \"imprimir error y `undefined`\"\n    },\n    {\n      \"text\": \"imprimir error dos veces\"\n    },\n    {\n      \"text\": \"UnhandledPromiseRejectionWarning\"\n    },\n    {\n      \"text\": \"undefined\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Cuál será la salida del siguiente código?\"\n  ],\n  \"explanationProse\": [\n    \"Al encadenar `.then` y `.catch` es útil pensar en ellos como una serie de pasos. Cada `.then` recibe el valor devuelto por el `.then` anterior (como su argumento). Sin embargo, si tu \\\"paso\\\" encontró un error, cualquier \\\"paso\\\" `.then` posterior se omitirá hasta que se encuentre un `.catch`. Si deseas sobrescribir un error, solo necesitas devolver un valor que no sea un error. Ese valor puede ser accedido en cualquier `.then` posterior.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 855,
+    "outputTokens": 597,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 951
+  },
+  "cost": {
+    "inputUsd": 0.000033345,
+    "outputUsd": 0.00010745999999999999,
+    "totalUsd": 0.00014080499999999998,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
