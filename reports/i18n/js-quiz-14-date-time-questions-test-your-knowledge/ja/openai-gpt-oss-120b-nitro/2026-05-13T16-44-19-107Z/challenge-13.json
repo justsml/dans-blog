@@ -1,0 +1,47 @@
+{
+  "index": 12,
+  "attempt": 1,
+  "originalTitle": "Date Setters Part 4",
+  "translatedTitle": "Date セッター パート 4",
+  "translation": {
+    "title": "Date セッター パート 4",
+    "group": "日付の扱い",
+    "options": [
+      {
+        "text": "2020年1月1日"
+      },
+      {
+        "text": "2020年2月1日"
+      },
+      {
+        "text": "2021年1月1日"
+      },
+      {
+        "text": "2021年2月1日"
+      },
+      {
+        "text": "RangeError: Invalid argument."
+      }
+    ],
+    "questionProse": [
+      "出力には何が含まれますか？"
+    ],
+    "explanationProse": [
+      "The [.setMonth()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) メソッドは、指定した Date インスタンスの月を設定します。\n\nThe month argument is zero-based, with a range of 0-11 (using western calendars.)\n\nHere we see the month and year is adjusted to February 2021, because `setMonth(13)` is 2 more than 11 (December).\n\n<aside class=\"hint\">`setMonth` はインデックスで月を設定します。12か月は0〜11でインデックス付けされます。 </aside>\n<aside class=\"hint\">\nNumbers outside the range of 0-11 will cause the year to over- or under-flow. For example, `setMonth(13)` will adjust the year to 2021 (in February because 13 is 2 more than 11).\n</aside>"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Date セッター パート 4\",\n  \"group\": \"日付の扱い\",\n  \"options\": [\n    {\n      \"text\": \"2020年1月1日\"\n    },\n    {\n      \"text\": \"2020年2月1日\"\n    },\n    {\n      \"text\": \"2021年1月1日\"\n    },\n    {\n      \"text\": \"2021年2月1日\"\n    },\n    {\n      \"text\": \"RangeError: Invalid argument.\"\n    }\n  ],\n  \"questionProse\": [\n    \"出力には何が含まれますか？\"\n  ],\n  \"explanationProse\": [\n    \"The [.setMonth()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) メソッドは、指定した Date インスタンスの月を設定します。\\n\\nThe month argument is zero-based, with a range of 0-11 (using western calendars.)\\n\\nHere we see the month and year is adjusted to February 2021, because `setMonth(13)` is 2 more than 11 (December).\\n\\n<aside class=\\\"hint\\\">`setMonth` はインデックスで月を設定します。12か月は0〜11でインデックス付けされます。 </aside>\\n<aside class=\\\"hint\\\">\\nNumbers outside the range of 0-11 will cause the year to over- or under-flow. For example, `setMonth(13)` will adjust the year to 2021 (in February because 13 is 2 more than 11).\\n</aside>\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 961,
+    "outputTokens": 1101,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 3093
+  },
+  "cost": {
+    "inputUsd": 0.000037479,
+    "outputUsd": 0.00019817999999999998,
+    "totalUsd": 0.000235659,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: js-quiz-14-date-time-questions-test-your-knowledge
+- Locale: ja
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2020-01-02--js-quiz-14-date-time-questions-test-your-knowledge/ja/index.mdx
+- Validation: deferred
+- Runtime seconds: 17.06
+- Input tokens: 13443
+- Output tokens: 10663
+- Thinking tokens: unknown
+- Cached input tokens: 4480
+- Cache write tokens: 0
+- Estimated cost: $0.002444
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: 'クイズ: JavaScript Date の14問'
@@ -493,3 +511,4 @@ JavaScript の `Date` クラスは、非常に扱いにくい API で知られ�
 </Challenge>
 
 </QuizUI>
+````

@@ -1,0 +1,44 @@
+{
+  "index": 6,
+  "attempt": 1,
+  "originalTitle": "UTC Dates Part 1",
+  "translatedTitle": "UTC 日付 パート 1",
+  "translation": {
+    "title": "UTC 日付 パート 1",
+    "group": "日付の取り扱い",
+    "options": [
+      {
+        "text": "Wed, 01 Jan 2020 00:00:00 GMT"
+      },
+      {
+        "text": "Thu, 02 Jan 2020 00:00:00 GMT"
+      },
+      {
+        "text": "TypeError"
+      },
+      {
+        "text": "NaN"
+      }
+    ],
+    "questionProse": [
+      "出力には何が含まれますか？"
+    ],
+    "explanationProse": [
+      "`TypeError: date.toUTCString is not a function` が発生します。[`Date.UTC()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/UTC) はミリ秒単位の整数を返し、Date インスタンスではありません。\n\n      {/* [`getFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getFullYear) メソッドはローカルオフセットを使用します（この質問では GMT-07:00 と仮定）。 つまり前年が返ります（NYE -7 時間）。 [`getUTCFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getUTCFullYear) メソッドは `Date.UTC()` に渡した年、2020 を返します。 */}"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"UTC 日付 パート 1\",\n  \"group\": \"日付の取り扱い\",\n  \"options\": [\n    {\n      \"text\": \"Wed, 01 Jan 2020 00:00:00 GMT\"\n    },\n    {\n      \"text\": \"Thu, 02 Jan 2020 00:00:00 GMT\"\n    },\n    {\n      \"text\": \"TypeError\"\n    },\n    {\n      \"text\": \"NaN\"\n    }\n  ],\n  \"questionProse\": [\n    \"出力には何が含まれますか？\"\n  ],\n  \"explanationProse\": [\n    \"`TypeError: date.toUTCString is not a function` が発生します。[`Date.UTC()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/UTC) はミリ秒単位の整数を返し、Date インスタンスではありません。\\n\\n      {/* [`getFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getFullYear) メソッドはローカルオフセットを使用します（この質問では GMT-07:00 と仮定）。 つまり前年が返ります（NYE -7 時間）。 [`getUTCFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getUTCFullYear) メソッドは `Date.UTC()` に渡した年、2020 を返します。 */}\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 937,
+    "outputTokens": 908,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 674
+  },
+  "cost": {
+    "inputUsd": 0.000036543,
+    "outputUsd": 0.00016344,
+    "totalUsd": 0.00019998299999999999,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
