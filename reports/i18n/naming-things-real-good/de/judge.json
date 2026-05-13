@@ -1,0 +1,56 @@
+{
+  "selectedCommit": "7453fb34acbf4cfa4cf22928a73c3d802876a083",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "scores": {
+    "readability": 5,
+    "technicalAccuracy": 5,
+    "coherence": 5,
+    "relevance": 5,
+    "translationQuality": 5,
+    "mdxPreservation": 5
+  },
+  "suggestions": [],
+  "rationale": "The current translation already incorporates the high-priority image path fixes suggested in the previous pass (adding '../' to frontmatter paths). The translation quality is excellent, capturing Dan's informal yet technical tone perfectly. It correctly handles technical terms like 'Anti-Pattern' and 'Lock-in' while maintaining the structural integrity of the MDX file.",
+  "slug": "naming-things-real-good",
+  "locale": "de",
+  "candidateCommits": [
+    "7453fb34acbf4cfa4cf22928a73c3d802876a083",
+    "a6a588da1f19d944a83e097ecef5038e8285d3dd",
+    "9f69e3ff0b674f6e9045dd3f978e6733df71f277"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "cover: rawpixel-652639-unsplash.webp",
+      "replacement": "cover: ../rawpixel-652639-unsplash.webp",
+      "reason": "The image path must be relative to the localized folder to resolve correctly in this project structure.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "cover_mobile: w300_rawpixel-652639-unsplash.webp",
+      "replacement": "cover_mobile: ../w300_rawpixel-652639-unsplash.webp",
+      "reason": "The image path must be relative to the localized folder to resolve correctly in this project structure.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "cover_icon: icon_rawpixel-652639-unsplash.webp",
+      "replacement": "cover_icon: ../icon_rawpixel-652639-unsplash.webp",
+      "reason": "The image path must be relative to the localized folder to resolve correctly in this project structure.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug naming-things-real-good --locale de --skip-global",
+    "output": ""
+  }
+}
