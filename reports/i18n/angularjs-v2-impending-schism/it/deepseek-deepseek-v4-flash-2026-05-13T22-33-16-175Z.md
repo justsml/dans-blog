@@ -1,0 +1,56 @@
+# Translation Candidate
+- Slug: angularjs-v2-impending-schism
+- Locale: it
+- Model: deepseek/deepseek-v4-flash
+- Target: src/content/posts/2015-08-05--angularjs-v2-impending-schism/it/index.mdx
+- Validation: rejected: direct AI SDK translation failed
+- Runtime seconds: 10.48
+- Input tokens: 1041
+- Output tokens: 1126
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.000461
+- Pricing source: local-openrouter-estimate
+- Note: Command failed: git add reports/i18n/angularjs-v2-impending-schism/it reports/i18n/angularjs-v2-impending-schism/candidates.jsonl
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: "AngularJS v2.0 e l'imminente scisma"
+subTitle: "Può essere evitato?"
+date: 2015-08-05
+modified: 2016-11-30
+category: Thoughts
+subCategory: angularjs
+tags: [programming, angularjs, javascript, python, opinion]
+cover: ../alex-perez-753751-unsplash.webp
+cover_mobile: ../w300_alex-perez-753751-unsplash.webp
+cover_icon: ../icon_alex-perez-753751-unsplash.webp
+---
+
+Penso che stiamo assistendo di nuovo alla "conversione" da Python 2 a Python 3.
+AngularJS v2.0 introduce troppe modifiche. **Non ultima TypeScript**, che è una richiesta importante proprio mentre si sta finalizzando l'ultima versione di JS: ES6.
+
+> Sia chiaro: adoro TypeScript. Speravo segretamente che le riunioni del TC-39 lo avessero prodotto... Non è successo.
+> Tuttavia, hanno tirato fuori un'altra specifica (totalmente diversa), altrettanto eccellente...
+
+Anche se TypeScript compila in JavaScript, non significa che tu possa semplicemente copiare e incollare TypeScript "compilato". Diventa di fatto un apprendimento obbligato, poiché per comprendere il TypeScript di AngularJS 2.0 con le annotazioni è necessario conoscerlo.
+
+Ora, i principianti devono scalare il "Monte TypeScript" prima ancora di poter iniziare ad assemblare un'app Angular (con un minimo di cognizione di causa).
+
+Ho come la sensazione di come potrebbe andare...
+
+<div class="anigif end">
+  <img alt='loop infinito' src="https://res.cloudinary.com/ddd/image/upload/timeout-expired.gif" />
+</div>
+
+Beh, lo aggiungerò alla lista di formazione per principianti: da qualche parte tra `Uso base della shell` e `Gulp o Grunt? Salvezza e miseria!`
+
+> Comunque, spero che funzioni...
+
+<div class="anigif top end">
+  <img alt='andrà tutto bene' src="https://res.cloudinary.com/ddd/image/upload/v1442175801/system-maint-anon.gif" />
+</div>
+````
