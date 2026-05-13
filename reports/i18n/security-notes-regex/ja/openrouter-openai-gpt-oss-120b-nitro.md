@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: security-notes-regex
+- Locale: ja
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2015-02-24--security-notes-regex/ja/index.mdx
+- Validation: passed
+- Runtime seconds: 2.31
+- Input tokens: 2129
+- Output tokens: 762
+- Thinking tokens: unknown
+- Cached input tokens: 256
+- Cache write tokens: 0
+- Estimated cost: $0.000220
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: 'セキュリティノート: 正規表現'
 subTitle: 正規表現は脆弱になるか？
@@ -45,3 +63,4 @@ social_image: ../desktop-social.webp
 ### Reference
 
 - [OWASP ReDoS](https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS)
+````
