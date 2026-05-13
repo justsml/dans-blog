@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: you-may-not-need-axios
+- Locale: es
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2018-11-15--you-may-not-need-axios/es/index.mdx
+- Validation: passed
+- Runtime seconds: 26.57
+- Input tokens: 12957
+- Output tokens: 10041
+- Thinking tokens: unknown
+- Cached input tokens: 2048
+- Cache write tokens: 0
+- Estimated cost: $0.003446
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: ''
@@ -200,3 +218,4 @@ npm install node-fetch
 _Después de polyfill+node-fetch: 99,99% compatible_ ✅
 
 > Por favor [envíame un tuit](https://x.com/justsml) si tienes otros _Casos de uso_ que te gustaría ver. ❤️
+````
