@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: rag-pipeline-failures
+- Locale: es
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-05-05--rag-pipeline-failures/es/index.mdx
+- Validation: passed
+- Runtime seconds: 21.92
+- Input tokens: 9975
+- Output tokens: 9564
+- Thinking tokens: unknown
+- Cached input tokens: 4096
+- Cache write tokens: 0
+- Estimated cost: $0.003093
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: ''
 subTitle: La demo funcionó. Los usuarios reales son donde se rompe el pipeline.
@@ -197,3 +215,4 @@ Las demostraciones de RAG funcionan porque las condiciones de la demo están con
 Cada fallo mencionado es detectable, pero solo si estás midiendo. Los equipos de RAG confiables no están haciendo nada exótico. Están tratando la calidad de la recuperación como un subsistema real en lugar de un artefacto de demostración.
 
 Configura primero el bucle de evaluación. Todo lo demás es más fácil una vez que puedes medirlo.
+````
