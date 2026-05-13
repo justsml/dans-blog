@@ -1,0 +1,47 @@
+{
+  "selectedCommit": "d1b1102516663399bde07165f97406617046544c",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 9,
+    "relevance": 9,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The selected candidate d1b1102516663399bde07165f97406617046544c is excellent. It captures the author's direct, slightly provocative tone ('Töte deine anonymen Methoden') and maintains the technical context perfectly. The previous judge's suggestions for 'DRY' and 'einfaches Logging' have already been incorporated into the provided MDX content for this candidate, so no further high-priority fixes are required. The MDX structure, including IDs and image paths, is correctly preserved.",
+  "slug": "stop-trying-to-make-async-await-happen",
+  "locale": "de",
+  "candidateCommits": [
+    "d1b1102516663399bde07165f97406617046544c",
+    "c915532b55c8f4e44160b3da61427f2892df8575",
+    "90d54b5dd6e7e5e5c966cf765b0c21b72970b881"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "je trockener dein Code wird",
+      "replacement": "desto mehr du das DRY-Prinzip (Don't Repeat Yourself) anwendest",
+      "reason": "'Drier' is a pun on the DRY principle which doesn't translate literally into German well; explaining the principle or using the acronym is clearer.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "basis Logging",
+      "replacement": "einfaches Logging",
+      "reason": "'Basis' is used as a noun in German; 'einfaches' or 'Basis-Logging' is grammatically correct.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug stop-trying-to-make-async-await-happen --locale de --skip-global",
+    "output": ""
+  }
+}

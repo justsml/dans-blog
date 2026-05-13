@@ -1,78 +1,74 @@
 ---
 social_image: ../desktop-social.webp
-title: 'Hör auf, async/await zum Laufen zu bringen'
-subTitle: ''
-date: '2018-10-03'
-modified: '2024-08-03'
+title: "Hör auf, async/await erzwingen zu wollen"
+subTitle: Promises sind gerade so angesagt
+date: 2018-10-03
+modified: 2024-08-03
 category: Guides
 subCategory: promises
-tags:
-  - promises
-  - async
-  - await
-  - async-await
-  - javascript
-  - composition
-related:
-  - intro-to-promises
-  - promise-gotchas
-  - visualizing-promises
-  - you-may-not-need-axios
-cover: ../matt-nelson-414464-unsplash.webp
-cover_mobile: ../w300_matt-nelson-414464-unsplash.webp
-cover_icon: ../icon_matt-nelson-414464-unsplash.webp
+tags: [promises, async, await, async-await, javascript, composition]
+related: [intro-to-promises, promise-gotchas, visualizing-promises, you-may-not-need-axios]
+cover: matt-nelson-414464-unsplash.webp
+cover_mobile: w300_matt-nelson-414464-unsplash.webp
+cover_icon: icon_matt-nelson-414464-unsplash.webp
 ---
-Seit Anbeginn der Zeit haben Entwickler viele sinnlose Streitigkeiten ausgetragen. Von der klassischen _"Tabs vs. Spaces"_-Debatte bis hin zum zeitlosen _"Mac vs. PC"_-Streit – wir sind gut darin, ablenkende Argumente zu finden.  
 
+Seit Anbeginn der Zeit führen Entwickler viele alberne Streitereien. Vom klassischen „Tabs vs. Spaces" bis zur zeitlosen „Mac vs. PC"-Debatte – wir sind gut darin, ablenkende Argumente zu finden.
 <br />
-<small>_Antworten:_ Linux & Leerzeichen.</small>
+<small>_Antworten:_ Linux und Spaces.</small>
 
-<!-- Wir werden uns 2 Regeln ansehen, um das Leben mit Promises zu verbessern. -->
+<!-- We're going to look at 2 rules to improve your life with Promises. -->
 
-## Der Streit...?
+## Der Kampf...?
 
 ### Promises vs. Async/Await!
 
-Warte, ist das ein Streit? Muss es sein? Wir sprechen nicht mehr über Callbacks?
+Moment, ist das ein Kampf? Das muss doch ein Kampf sein, oder? Über Callbacks sprechen wir ja gar nicht mehr?
 
-Es ist kein Streit. Letztendlich ist es ein weiteres potenzielles Werkzeug in deinem Werkzeugkasten. Da `async`/`await` nicht alle Funktionalitäten von Promises ersetzt (insbesondere `Promise.all`, `.race`) ist es irreführend, es als Ersatz darzustellen.  
+Nein, es ist kein Kampf. Letztlich ist es einfach ein weiteres potenzielles Werkzeug in deinem Werkzeugkasten. Weil `async`/`await` jedoch nicht die gesamte Promise-Funktionalität ersetzt (insbesondere `Promise.all`, `.race`) **ist es irreführend, es als Ersatz darzustellen.**
 
-Viele einflussreiche Personen fördern diese Fehlvorstellung, dass `async`/`await` die Promises [Ersetzung](https://developers.google.com/web/fundamentals/primers/async-functions) [für alle](https://hackernoon.com/6-reasons-why-javascripts-async-await-blows-promises-away-tutorial-c7ec10518dd9) [gewesen](https://x.com/umaar/status/1045655069478334464) [zu](http://2ality.com/2017/08/promise-try.html#why-not-just-use-async-functions) [warten](https://dzone.com/articles/javascript-promises-and-why-asyncawait-wins-the-ba) [war].  
+Es gibt viele einflussreiche Personen, die diesen Irrglauben fördern, `async`/`await` sei der Promise-[Ersatz](https://developers.google.com/web/fundamentals/primers/async-functions), auf den [alle](https://hackernoon.com/6-reasons-why-javascripts-async-await-blows-promises-away-tutorial-c7ec10518dd9) [gewartet](https://x.com/umaar/status/1045655069478334464) [haben](http://2ality.com/2017/08/promise-try.html#why-not-just-use-async-functions).
 
-> **Hinweis: Nein, nein und nicht im Geringsten.**  
+> **Hinweis: Nein, nope und noch nicht einmal ansatzweise.**
 
-Ein kürzlich hinzugefügtes Feature in VS Code fördert diese Verzerrung. Wie [@umaar](https://x.com/umaar) in einem Tweet schrieb:  
 
-<blockquote class="twitter-tweet" data-lang="de"><p lang="de" dir="ltr">Visual Studio Code kann jetzt deine langen Ketten von Promise.then()-Aufrufen in async/await umwandeln! 🎊 Funktioniert hervorragend in JavaScript- und TypeScript-Dateien. .catch() wird ebenfalls korrekt in try/catch konvertiert ✅ <a href="https://t.co/xb39Lsp84V">pic.x.com/xb39Lsp84V</a></p>&mdash; Umar Hansa (@umaar) <a href="https://x.com/umaar/status/1045655069478334464?ref_src=twsrc%5Etfw">28. September 2018</a></blockquote>
+Eine kürzliche Ergänzung in VS Code treibt diese Voreingenommenheit voran. Wie [@umaar](https://x.com/umaar) tweetete:
 
-Wenn Sie Promises hassen und diese Refaktorierungs-Funktion wünschen, kann ich das verstehen.  
-*Ich kann das nachvollziehen. Ich verstehe.*  
-<br />  
-Ich war schon da. 🤗
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Visual Studio Code can now convert your long chains of Promise.then()&#39;s into async/await! 🎊 Works very well in both JavaScript and TypeScript files. .catch() is also correctly converted to try/catch ✅ <a href="https://t.co/xb39Lsp84V">pic.x.com/xb39Lsp84V</a></p>&mdash; Umar Hansa (@umaar) <a href="https://x.com/umaar/status/1045655069478334464?ref_src=twsrc%5Etfw">September 28, 2018</a></blockquote>
 
-Ich hasste Promises früher. Heute bin ich vollständig umgeschwenkt. **Promises sind großartig.** Sie können Ihnen **ermöglichen, von der Funktionskomposition zu profitieren.**  
+<!-- Sure, it's an impressive addition to an already amazing list of features. -->
 
-Es gibt zwei Bereiche, auf die ich mich zuerst konzentrieren würde, um Ihre Promise-Technik zu verbessern:  
+Wenn du Promises hasst und diese Refactoring-Funktion willst, gebe ich dir keine Schuld.
+<br />
+_Ich empfinde mit. Ich verstehe._
+<br />
+Ich war dort. 🤗
 
-1. [Benannte Funktionen (keine anonymen)](#rule-1)  
-1. [Einzelzweckfunktionen](#rule-2)  
+<br />
 
-<h2 id="rule-1">#1: Benannte Funktionen!</h2>  
+Ich habe Promises früher gehasst. Heute bin ich komplett umgeschwenkt. **Promises sind großartig.** Sie können dich dazu befähigen/ermutigen, **Funktionskomposition auszunutzen.**
 
-Töten Sie Ihre anonymen Methoden. Der Einsatz von **benannten Funktionen** macht den Code zu einem Gedicht Ihrer Anforderungen.  
+Es gibt 2 Bereiche, auf die ich mich zuerst zu konzentrieren empfehle, um deine Promise-Technik zu verbessern.
 
-Schauen wir uns ein häufiges Beispiel an:
+1. [Benannte Funktionen (keine anonymen)](#rule-1)
+1. [Einzelziel-Funktionen](#rule-2)
 
-Ein HTTP GET-Antrag mithilfe von `fetch`:
+<h2 id="rule-1">#1: Benannte Funktionen!</h2>
 
-<!-- Die fetch-Spezifikation besagt, dass [HTTP-Statuscodes](https://http.cat/) über 400 oder 500 **nicht automatisch einen Fehler auslösen.** Der Standard in vielen AJAX-Bibliotheken (jQuery, axios). -->
+Töte deine anonymen Methoden. Die Verwendung **benannter Funktionen** macht, dass Code sich wie Poesie deiner Anforderungen liest.
 
-<!-- Bevor wir die Lösung sehen, werfen wir einen Blick auf eine gängige "empfohlene" Implementierung: -->
+Schauen wir uns ein gängiges Beispiel an:
 
-### Anti-Muster
+Eine HTTP-GET-Anfrage mit `fetch` stellen:
+
+<!-- the fetch specification states [HTTP status codes](https://http.cat/) over 400 or 500 **do not automatically trigger an error.** The default in many AJAX libraries (jQuery, axios). -->
+
+<!-- Before we see the solution, look over a common "recommended" implementation: -->
+
+### Anti-Pattern
 
 ```js
-// ❌ Anonyme Inline-Funktionen verwenden 💩
+// ❌ Using anonymous inline functions 💩
 fetch(url)
   .then(response => response.status < 400
     ? response
@@ -83,13 +79,13 @@ fetch(url)
 ### Lösung: Benannte Methoden
 
 ```js
-// ✅ Klarheit entsteht: benannte Funktionen
+// ✅ Clarity emerges: named functions
 fetch(url)
   .then(checkResponse)
   .then(getText)
 
 
-// Wiederverwendbare allgemeine Funktionen
+// Reusable general-purpose functions
 function checkResponse(response) {
   return response.status < 400
     ? response
@@ -100,49 +96,49 @@ function getText(response) {
 }
 ```
 
-> Die Vorteile dieses Ansatzes werden offensichtlicher, je drierter der Code wird.
+> Die Vorteile dieses Ansatzes werden immer offensichtlicher, je trockener dein Code wird.
 
-**Zusätzliche Ressourcen:** Schauen Sie sich meine **1-minütigen Videos** zu [Grundlagen der Protokollierung](https://youtu.be/xR_MZE1SIkk) und [Erweitertes Debuggen](https://youtu.be/P_tghqWj72M) mit dieser Technik an.
+**Zusätzliche Ressourcen:** Schau dir meine **1-Minuten-Videos** zu [basis Logging](https://youtu.be/xR_MZE1SIkk) und [fortgeschrittenem Debugging](https://youtu.be/P_tghqWj72M) mit dieser Technik an.
 
-<h2 id="rule-2">#2: Eindeutiger Zweck (Funktionen)</h2>
+<h2 id="rule-2">#2: Einzelziel (Funktionen)</h2>
 
-Es klingt _trügerisch präzise_: Eindeutiger Zweck.
+Es klingt _täuschend präzise_: Einzelziel.
 
-Doch es ist so subjektiv, willkürlich und sicher, manchmal sogar sinnlos.
+Und doch ist es so subjektiv, willkürlich und sicher manchmal sogar bedeutungslos.
 
-<!-- Statt zu diskutieren, ob eine gegebene Funktion ausreichend fokussiert ist.
+<!-- Instead of arguing if a given function is sufficiently focused.
 
-Ich habe eine grobe Maßnahme dafür entwickelt: `Purpose Cost`. Je höher die Punktzahl, desto wahrscheinlicher tut sie zu viel. -->
+I came up with a rough measure for this: `Purpose Cost`. The higher the score, more likely it's doing too much.
 
 ```js
-// 1 Punkt: return & ternärer Operator sind effektiv eine Einzeiler
+// 1 point: the return & ternary are effectively a one-liner
 function checkResponse(response) {
   return response.status < 400
     ? response
     : Promise.reject(new Error('Request Failed: ' + response.ststus))
 }
-// 1 Punkt: return & Ausdruck sind effektiv eine Einzeiler
+// 1 point: the return & expression are also effectively a one-liner
 function getText(response) {
   return response.text()
 }
 ```
 
-Bei einer Funktion zählt man 1 Punkt für jede Zeile, die eines der folgenden enthält: `if`, `return`, ternärer Operator, `for`, `const`, `let`, `var`, `switch`, `while`, `[].map/filter/reduce/etc`. Zählt 1 Punkt pro Anweisung (ignoriert zusätzliche Leerzeilen). Eine Kette von Ausdrücken oder Methoden zählt nur zu 1 Punkt.
+Given a function's code, add 1 point for every line containing any of: `if`, `return`, ternary, `for`, `const`, `let`, `var`, `switch`, `while`, `[].map/filter/reduce/etc`. Add 1 point for each instruction (ignore extra lines from whitespace). A number of chained expressions or methods only count for 1 point.
 
-Das war eine Menge Fachbegriffe. 
+Whew, that was a bit of jargon.
+ -->
 
-Interessanterweise behaupten viele Entwickler, sie seien _ziemlich gut_ darin, ihren Code auf **Eindeutigen Zweck** zu reduzieren. Nicht unbedingt überraschend: Sie behaupten auch, hervorragende Fahrer zu sein!
+Interessanterweise berichten die meisten Entwickler, sie seien _verdammt gut_ darin, ihren Code auf **Einzelziel** zu trimmen. Nicht verwunderlich: Sie berichten auch, großartige Fahrer zu sein!
 
-<!-- Dieses Problem ist **nicht einzigartig für Promises**, Array-Methoden und alle anderen HoF-basierten (Higher Order Function) APIs haben dieselben Ergonomie-Probleme. -->
+<!-- This **isn't a unique issue with Promises**, array methods and all other HoF-based (Higher Order Function) APIs have the same ergonomics. -->
 
-Schauen wir uns ein Beispiel an, das (der unglaublich talentierte) [Jake Archibald](https://x.com/jaffathecake) in seinem async/await Artikel für die Google Developers Seite erwähnt (Hinweis: 2024, Link entfernt).
+Schauen wir uns ein Beispiel an, das der (unglaublich talentierte) [Jake Archibald](https://x.com/jaffathecake) in seinem Async/Await-Artikel für die Google Developers-Seite vorstellt (Hinweis: 2024, Link entfernt).
 
-<!-- 
-Schauen wir uns eines der sogenannten "❌ Nicht empfohlen" Promise-Beispiele an. (Die Beschreibung lautet: "Angenommen, wir wollten eine Serie von URLs abrufen und sie so bald wie möglich in der richtigen Reihenfolge protokollieren.") 
--->
+<!--
+Let's look at one of the so called "❌ Not recommended" Promise examples. (The description is "say we wanted to fetch a series URLs and log them as soon as possible, in the correct order.") -->
 
 ```js
-// Quelle: https://developers.google.com/web/fundamentals/primers/async-functions
+// source: https://developers.google.com/web/fundamentals/primers/async-functions
 function logInOrder(urls) {
   // fetch all the URLs
   const textPromises = urls.map(url => {
@@ -157,44 +153,47 @@ function logInOrder(urls) {
 }
 ```
 
-### Einzelner Zweck?
+### Einzelziel?
 
-Ich sage nein. Was tut `logInOrder`?
+Ich würde sagen: Nein. Was macht `logInOrder`?
 
-1. Durchlaufen einer Liste von `urls`
-1. Anwenden auf einen inline HTTP GET:
+1. Durch eine Liste von `urls` loopen
+1. Auf sie einen Inline-HTTP-GET anwenden:
   1. HTTP `fetch`
-  1. Rückgabe des Text-Body der Antwort
-1. Nach jedem Promise in `textPromise` ein `.then(text => console.log(text))` anhängen
-  1. Ergebnisse nacheinander ausgeben
+  1. Response-Text-Body zurückgeben
+1. Ein `.then(text => console.log(text))` nach jedem Promise in `textPromise` anhängen
+  1. Ergebnisse seriell ausgeben
 
-In dieser einzelnen Funktion sind 5 anonyme Methoden definiert. Wie Jake bereits anmerkt, ist die `.reduce`-Implementierung zu komplex. Es macht keinen Sinn, überall im Code manuell nuancierte Mechanismen zu schreiben. Um es anders auszudrücken: Wir schreiben nicht endlos `document.createElement()`, `element.setAttribute()` usw. für DOM-Erstellung. Stattdessen wählen wir das beste Tool aus vielen Optionen: Hilfsfunktionen, Bibliotheken oder Frameworks.
+Es gibt 5 anonyme Methoden, die in dieser einzelnen Funktion definiert sind. Wie Jake sogar selbst anmerkt, ist das `.reduce` zu komplex. Es macht keinen Sinn, nuancierte Mechanismen überall im Code von Hand zu schreiben. Anders ausgedrückt: Wir schreiben keine DOM-Erstellungs-Code mit endlosen `document.createElement()`, `element.setAttribute()` usw. Stattdessen wählen wir das beste Werkzeug aus vielen Optionen: Hilfs-/Utility-Funktionen, Bibliotheken oder Frameworks.
 
-<!-- Wir müssen jeden 'Schritt' isolieren: Es gibt eine HTTP-Anfrage, eine Transformation einer URL-Liste in eine Ergebnisliste. Außerdem ist ein `console.log` erforderlich. -->
+<!-- We need to isolate each 'step' that's going on: there's an HTTP request, a transform for a list of URLs into a list of results. Also a `console.log` is needed. -->
 
-<!-- > 🤔 Warum führen `Promises` dazu, dass Entwickler Praktiken aufgeben, die sie an anderen Stellen anwenden? -->
+<!-- > 🤔 Why do `Promises` cause developers to abandon practices we use elsewhere? -->
 
-**Hinweis:** Wenn das Ziel darin bestand, _Anfragen_ nacheinander zu initiieren, anstatt lediglich die Ergebnisse in Reihenfolge auszugeben, tut dieser Code das tatsächlich nicht. Wir werden entsprechend refaktorisieren.
+<!-- **Note:** If the intention was to _initiate requests_ in a sequence, instead of merely printing the results out in order, this code doesn't actually do that. We'll refactor accordingly. -->
 
-#### Lösung: Funktionen mit eindeutigem Zweck
 
-### Beginnen Sie mit der **Extraktion von Methoden**...
 
-![VS Code Refaktorisierung: Asynchrone Methoden aus Promise-Code extrahieren](../async-refactor-google-extract-methods-resized-75.webp "Methoden extrahieren")
+#### Lösung: Einzelziel-Funktionen
 
-### Setzen Sie fort, indem Sie `.reduce()` und `logPromise()` durch `Promise.all` und `..map()` ersetzen...
+### Beginne mit dem **Extrahieren von Methoden**...
 
-![Refaktorisierte Promise-Kette mit Promise.all und map für bessere Lesbarkeit](../async-refactor-google-chain-methods-resized-75.webp "Lesbarkeit verbessern")
+![VS Code refactor extracting async methods from Promise code](async-refactor-google-extract-methods-resized-75.webp "Extrahieren von Methoden")
+
+### Fahre fort, indem du das `.reduce()` und `logPromise()` durch ein `Promise.all` und ein `..map()` ersetzt...
+
+![Refactored Promise chain using Promise all and map for readability](async-refactor-google-chain-methods-resized-75.webp "Lesbarkeit verbessern")
+
 
 ### Zusammenfassung
 
-Wenden Sie diese Techniken an Ihrem eigenen Code an! Dann [tweeten Sie mir](https://x.com/justsml) und lassen Sie mich wissen, wie es gelaufen ist. Oder wenn Sie Fragen oder Kommentare haben, melden Sie sich ebenfalls! 
+Versuche, diese Techniken auf deinen eigenen Code anzuwenden! Dann [tweete mir](https://x.com/justsml) und lass mich wissen, wie es gelaufen ist. Oder wenn du Fragen oder Kommentare hast, melde dich ebenfalls!
 
-Helfen Sie mit, die #PromiseTruth zu verbreiten & diesen Artikel zu teilen. ❤️
+Hilf mit, die #PromiseTruth zu verbreiten, und teile diesen Artikel. ❤️
 
-![Bildnachweis: matt-nelson-414464-unsplash.webp](../matt-nelson-414464-unsplash.webp)
+![credit: matt-nelson-414464-unsplash.webp](matt-nelson-414464-unsplash.webp)
 
-#### Weitere Leseempfehlungen
+#### Weiterführende Literatur
 
 * [Daniel Brain](https://medium.com/@bluepnume/even-with-async-await-you-probably-still-need-promises-9b259854c161)
 * [Eric Elliott](https://x.com/_ericelliott?lang=en)
