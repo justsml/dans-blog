@@ -1,0 +1,47 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "Destructuring with Nested Default Values",
+  "translatedTitle": "Destructuration avec valeurs par défaut imbriquées",
+  "translation": {
+    "title": "Destructuration avec valeurs par défaut imbriquées",
+    "group": "Destructuration imbriquée en TS",
+    "options": [
+      {
+        "text": "Erreur : la propriété 'first' est manquante"
+      },
+      {
+        "text": "Erreur : la propriété 'last' est manquante"
+      },
+      {
+        "text": "Erreur : les propriétés 'birth' et 'age' sont manquantes"
+      },
+      {
+        "text": "Erreur : la propriété 'place' est manquante"
+      },
+      {
+        "text": "Erreur : 'string' n'a aucune propriété dans {...}"
+      }
+    ],
+    "questionProse": [
+      "Repérez l'erreur de type :"
+    ],
+    "explanationProse": [
+      "L'erreur se trouve dans la signature de la fonction `greet`. Les propriétés `age` et `birth` sont absentes dans l'objet passé, elles doivent donc être optionnelles dans la définition du type.\n\n    Même si la propriété `birth` est destructurée avec une valeur par défaut, la définition du type exige qu'elle soit présente. Pour marquer une propriété comme optionnelle en TypeScript, il faut utiliser l'opérateur `?`.\n  \n    Notez que `birth?: { place?: string }` n'est pas équivalent à `birth: { place?: string } | undefined`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Destructuration avec valeurs par défaut imbriquées\",\n  \"group\": \"Destructuration imbriquée en TS\",\n  \"options\": [\n    {\n      \"text\": \"Erreur : la propriété 'first' est manquante\"\n    },\n    {\n      \"text\": \"Erreur : la propriété 'last' est manquante\"\n    },\n    {\n      \"text\": \"Erreur : les propriétés 'birth' et 'age' sont manquantes\"\n    },\n    {\n      \"text\": \"Erreur : la propriété 'place' est manquante\"\n    },\n    {\n      \"text\": \"Erreur : 'string' n'a aucune propriété dans {...}\"\n    }\n  ],\n  \"questionProse\": [\n    \"Repérez l'erreur de type :\"\n  ],\n  \"explanationProse\": [\n    \"L'erreur se trouve dans la signature de la fonction `greet`. Les propriétés `age` et `birth` sont absentes dans l'objet passé, elles doivent donc être optionnelles dans la définition du type.\\n\\n    Même si la propriété `birth` est destructurée avec une valeur par défaut, la définition du type exige qu'elle soit présente. Pour marquer une propriété comme optionnelle en TypeScript, il faut utiliser l'opérateur `?`.\\n  \\n    Notez que `birth?: { place?: string }` n'est pas équivalent à `birth: { place?: string } | undefined`.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 907,
+    "outputTokens": 810,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 3369
+  },
+  "cost": {
+    "inputUsd": 0.000035373,
+    "outputUsd": 0.0001458,
+    "totalUsd": 0.000181173,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
