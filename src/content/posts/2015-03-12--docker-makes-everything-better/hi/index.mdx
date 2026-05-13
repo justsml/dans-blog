@@ -1,7 +1,7 @@
 ---
 social_image: ../desktop-social.webp
-title: ''
-subTitle: 'डॉकर कर सकता है :सबकुछ!'
+title: Docker === प्यार
+subTitle: 'Docker सब कुछ कर सकता है! :allthethings:'
 date: '2015-02-26'
 modified: '2024-07-30'
 category: DevOps
@@ -18,23 +18,23 @@ cover: ../guillaume-bolduc-259596-unsplash.webp
 cover_mobile: ../w300_guillaume-bolduc-259596-unsplash.webp
 cover_icon: ../icon_guillaume-bolduc-259596-unsplash.webp
 ---
-## डॉकर हर चीज़ कर सकता है!\*
+## Docker सब कुछ कर सकता है!\*
 
-> ऐतिहासिक टिप्पणि: यह 2015 के डॉकर उत्साह और स्थानीय-डेव आदतों का एक अंकन है, जो मुख्य रूप से समय के संग्रहालय के रूप में संरक्षित किया गया है। आधुनिकीकरण के लिए शुरुआती बिंदुओं के रूप में इन आदेशों और सुरक्षा नीतियों को लें, उत्पादन मार्गदर्शन नहीं।
+> ऐतिहासिक नोट: यह Docker के उत्साह और स्थानीय‑डेव आदतों का 2015 का स्नैपशॉट है, जिसे मुख्यतः एक टाइम‑कैप्सूल के रूप में संरक्षित किया गया है। कमांड और सुरक्षा स्थिति को आधुनिकरण के शुरुआती बिंदु के रूप में देखें, न कि उत्पादन‑गाइडलाइन के रूप में।
 
-अपनी प्रक्रिया में सुधार करें:
+अपनी प्रक्रिया को सुधारें:
 
-1.  अपने पीसी पर आश्रितताओं को खराब करे बिना डेव टूल्स और सर्वरों का परीक्षण करने के लिए लगभग शून्य जोखिम के साथ  
-1.  अपने सॉफ्टवेयर का परीक्षण करें  
-1.  आपको अधिक आइडेम्पोटेंट और मॉड्यूलर कोड लिखने के लिए मजबूर करता है... (मैं इसे वास्तविक रूप में कैसे प्राप्त करें इसके बारे में एक अनुसरण लेख में लिखूंगा)  
+1.  डेवलपर टूल्स और सर्वर का परीक्षण **लगभग शून्य जोखिम** के साथ, ताकि आपके PC पर निर्भरताएँ बिगड़ें नहीं
+1.  अपने सॉफ़्टवेयर का परीक्षण
+1.  आपको अधिक आइडेम्पोटेंट, मॉड्यूलर कोड लिखने के लिए प्रेरित करता है... (मैं इसको कैसे लागू करें, इस पर एक फॉलो‑अप में लिखूँगा)
 
-सीखने के लिए नई चीजों की बड़ी मात्रा हो सकती है, **इससे आप निराश न हों** कि शुरुआत करने से बच जाएं।  
+नया सीखने के लिए बहुत कुछ लग सकता है, **इससे शुरू करने से न रुकें**।  
 
-### टिप्पणियाँ
+### नोट्स
 
-- यदि आपको `docker run` कमांड में आप्शन `-d` या `-it` दिखाई देते हैं:  
-  _ `-it` या `-i -t` निर्धारित कमांड को इंटरैक्टिव रूप से चलाएगा  
-  _ `-d` डॉकर कंटेनर को 'डेमन' के रूप में शुरू करेगा, जिसे पृष्ठभूमि सेवा के रूप में भी जाना जाता है।  
+- यदि आप किसी `docker run` कमांड में `-d` या `-it` विकल्प देखते हैं:
+  _ `-it` या `-i -t` कमांड को इंटरैक्टिव मोड में चलाएगा  
+  _ `-d` कंटेनर को ‘डेमन’ (पृष्ठभूमि सेवा) के रूप में शुरू करेगा।
 
 ---
 
@@ -43,22 +43,22 @@ cover_icon: ../icon_guillaume-bolduc-259596-unsplash.webp
 ### nginx
 
 ```bash
-# नोट: होस्ट-आधारित, साझा फोल्डरों का उपयोग कर रहे हैं  
-# (साझा फोल्डरों के साथ VOLUME Dockerfile कमांड के माध्यम से असंभव है)  
-sudo docker run --name web01 -d -p 8181:80 \  
-  -v $(NGINX_DIR)/etc:/etc/nginx \  
-  -v $(NGINX_DIR)/log:/var/log/nginx \  
-  -v $(NGINX_DIR)/www:/var/www/html \  
-  nginx:latest  
+# Note: using host-based, shared folders
+#(shared folders are not possible with the VOLUME Dockerfile cmd)
+sudo docker run --name web01 -d -p 8181:80 \
+  -v $(NGINX_DIR)/etc:/etc/nginx \
+  -v $(NGINX_DIR)/log:/var/log/nginx \
+  -v $(NGINX_DIR)/www:/var/www/html \
+  nginx:latest
 
-## स्थानीय डेटा, इंस्टेंस के भीतर अलग-अलग  
-sudo docker run --name web01 -d -p 8181:80 nginx:latest  
+## Local data, isolated within instance
+sudo docker run --name web01 -d -p 8181:80 nginx:latest
 
-# nodejs  
-sudo docker run --name nodejs01 -d -p 3300:3300 -p 4433:4433 nodejs:latest  
+# nodejs
+sudo docker run --name nodejs01 -d -p 3300:3300 -p 4433:4433 nodejs:latest
 ```
 
-> क्रेडिट्स: [https://dockerfile.github.io/#/nginx](https://dockerfile.github.io/#/nginx)  
-> _पूरे_ SDLC में डॉकर आपके जीवन को आसान बना देगा।  
+> Credits: [https://dockerfile.github.io/#/nginx](https://dockerfile.github.io/#/nginx)  
+> Docker आपके पूरे SDLC में काम को आसान बनाता है।
 
-> - काफी करीब
+> - काफी करीब।

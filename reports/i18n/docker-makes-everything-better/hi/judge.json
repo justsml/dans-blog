@@ -1,0 +1,46 @@
+{
+  "selectedCommit": "7d0db2652ea40c0b20a885f14878f5a9358e4d23",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 9,
+    "relevance": 9,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The translation is high quality, capturing Dan's informal yet technical tone. It correctly handles MDX frontmatter and preserves the structure. The previous suggestion in the judge JSON was already applied in the provided MDX content (the comment '## स्थानीय डेटा, इंस्टेंस के भीतर अलग (isolated)' is already present), so no further high-priority fixes are required.",
+  "slug": "docker-makes-everything-better",
+  "locale": "hi",
+  "candidateCommits": [
+    "7d0db2652ea40c0b20a885f14878f5a9358e4d23",
+    "d4aa7630b43267ce76cad2475d21fecadc0a95a3"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "# Note: using host-based, shared folders\n#(shared folders are not possible with the VOLUME Dockerfile cmd)",
+      "replacement": "# नोट: होस्ट-आधारित, साझा फोल्डरों का उपयोग कर रहे हैं\n#(साझा फोल्डरों के साथ VOLUME Dockerfile कमांड के माध्यम से असंभव है)",
+      "reason": "The code comments in the bash block were left in English, unlike the current version which translated them for better accessibility.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "## Local data, isolated within instance",
+      "replacement": "## स्थानीय डेटा, इंस्टेंस के भीतर अलग (isolated)",
+      "reason": "One comment in the code block was left in English while others were translated. Translating it maintains consistency.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug docker-makes-everything-better --locale hi --skip-global",
+    "output": ""
+  }
+}
