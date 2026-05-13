@@ -24,8 +24,8 @@ cover_full_width: ../wide.webp
 cover_mobile: ../square.webp
 cover_icon: ../square.webp
 ---
-import Challenge from '../../../../../components/QuizUI/Challenge';
-import QuizUI from '../../../../../components/QuizUI/QuizUI';
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
 
 <p class="inset">プロンプトエンジニアリングがスローガンを集めるなら、コンテキストエンジニアリングはページャを集める。実際に出荷される AI システムのその部分をどれだけ知っているか、測ってみよう。</p>
 
@@ -154,9 +154,9 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   title="チャンク戦略"
   options={[
     {text: 'コンテキストウィンドウが許す最大のチャンクサイズを使用する'},
-    {text: '常に512トークンを使用する — それは'},
+    {text: '常に512トークンを使用する — それが標準だから'},
     {text: 'コンテンツ構造に合わせたサイズのオーバーラップするチャンクを使用する', isAnswer: true},
-    {text: 'チャンクサイズは…'},
+    {text: '埋め込みモデルが良ければチャンクサイズは重要ではない'},
   ]}
 >
   <slot name="question">
@@ -338,7 +338,7 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   options={[
     {text: 'temperature=0 は同じ入力に対して常に同一の出力を生成する'},
     {text: 'temperature=0 は出力をより決定的にするが、必ずしも同一とは限らない', isAnswer: true},
-    {text: 'temperature=0 はモデルを無効化する'},
+    {text: 'temperature=0 はモデルがリクエストを拒否する能力を無効化する'},
     {text: 'temperature は応答の長さにのみ影響する'},
   ]}
 >

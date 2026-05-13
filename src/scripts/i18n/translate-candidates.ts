@@ -1,4 +1,4 @@
-import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync } from "node:fs";
+import { appendFileSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { spawn } from "node:child_process";
 import { ACTIVE_LOCALES, isActiveLocale, type ActiveLocale } from "../../shared/i18n.ts";
@@ -116,6 +116,8 @@ let candidateRunStartedAt = new Date();
 let candidateRunId = "";
 let candidateRunSummaryPath = "";
 let candidateRunSummaryRelPath = "";
+let candidateRunHistoryPath = "";
+let candidateRunHistoryRelPath = "";
 let candidateRunAttempts: CandidateRunAttempt[] = [];
 
 if (shouldDryRun) {
@@ -152,6 +154,8 @@ function processTask(currentSlug: string, currentLocale: ActiveLocale) {
   candidateRunId = candidateRunStartedAt.toISOString().replace(/[:.]/g, "-");
   candidateRunSummaryPath = join(reportDir, "candidate-run-summary.json");
   candidateRunSummaryRelPath = relativeToRepo(candidateRunSummaryPath);
+  candidateRunHistoryPath = join(reportDir, "candidate-run-history.jsonl");
+  candidateRunHistoryRelPath = relativeToRepo(candidateRunHistoryPath);
   candidateRunAttempts = [];
 
   console.log(`\nGenerating candidates for ${slug} [${locale}]`);
@@ -250,7 +254,16 @@ function processTask(currentSlug: string, currentLocale: ActiveLocale) {
     }
   }
 
-  printCandidateRunSummary(buildCandidateRunSummary());
+  const finalSummary = buildCandidateRunSummary();
+  writeCandidateRunSummary(finalSummary);
+  appendCandidateRunHistory(finalSummary);
+  if (!shouldSkipCommit) {
+    gitCommit(`i18n accounting(${locale}): ${slug} candidate run totals`, [
+      candidateRunSummaryRelPath,
+      candidateRunHistoryRelPath,
+    ]);
+  }
+  printCandidateRunSummary(finalSummary);
 }
 
 async function processTasks(tasks: CandidateTask[]) {
@@ -796,6 +809,13 @@ function writeCandidateRunSummary(summary: CandidateRunSummary) {
   writeTextFile(candidateRunSummaryPath, JSON.stringify({ ...summary, totals }, null, 2));
 }
 
+function appendCandidateRunHistory(summary: CandidateRunSummary) {
+  const { runtimeMilliseconds: _runtimeMilliseconds, ...totals } = summary.totals as CandidateRunSummary["totals"] & {
+    runtimeMilliseconds?: number;
+  };
+  appendFileSync(candidateRunHistoryPath, `${JSON.stringify({ ...summary, totals })}\n`, "utf8");
+}
+
 function printCandidateRunSummary(summary: CandidateRunSummary) {
   console.log([
     "",
@@ -809,6 +829,7 @@ function printCandidateRunSummary(summary: CandidateRunSummary) {
     `- Cache write tokens: ${formatTotalMetric(summary.totals.cacheWriteTokens, summary.totals.hasUnknownCacheWriteTokens)}`,
     `- Estimated cost: $${summary.totals.estimatedCostUsd.toFixed(6)}${summary.totals.hasUnknownEstimatedCost ? " + unknown" : ""}`,
     `- Summary: ${candidateRunSummaryRelPath}`,
+    `- History: ${candidateRunHistoryRelPath}`,
   ].join("\n"));
 }
 

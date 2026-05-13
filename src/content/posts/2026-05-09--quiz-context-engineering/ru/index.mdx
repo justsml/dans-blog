@@ -24,8 +24,8 @@ cover_full_width: ../wide.webp
 cover_mobile: ../square.webp
 cover_icon: ../square.webp
 ---
-import Challenge from '../../../../../components/QuizUI/Challenge';
-import QuizUI from '../../../../../components/QuizUI/QuizUI';
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
 
 <p class="inset">Инженерия подсказок получает слоганы. Инженерия контекста получает вызовы с пейджера. Насколько хорошо вы знаете ту часть AI-системы, которая действительно работает в проде?</p>
 
@@ -148,9 +148,9 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   title="Стратегия разбиения на фрагменты"
   options={[
     {text: 'Используйте максимально возможный размер фрагмента, который позволяет ваше окно контекста'},
-    {text: 'Всегда используйте 512 токенов — это'},
+    {text: 'Всегда используйте 512 токенов — это стандарт'},
     {text: 'Используйте перекрывающиеся фрагменты, размер которых соответствует структуре вашего контента', isAnswer: true},
-    {text: 'Размер фрагмента не должен'},
+    {text: 'Размер фрагмента не важен, если модель эмбеддингов хорошая'},
   ]}
 >
   <slot name="question">
@@ -332,7 +332,7 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   options={[
     {text: 'temperature=0 всегда производит идентичные выходные данные для одинакового входа'},
     {text: 'temperature=0 делает выходные данные более детерминированными, но не гарантирует их идентичность', isAnswer: true},
-    {text: 'temperature=0 отключает модель'},
+    {text: 'temperature=0 отключает способность модели отказывать в запросах'},
     {text: 'temperature влияет только на длину ответа'},
   ]}
 >

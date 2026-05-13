@@ -18,16 +18,14 @@ cover_full_width: ../logan-weaver-lgnwvr-96ES9AOLRzQ-unsplash.webp
 cover_mobile: ../logan-weaver-lgnwvr-96ES9AOLRzQ-unsplash_w300.webp
 cover_icon: ../logan-weaver-lgnwvr-96ES9AOLRzQ-unsplash_w300.webp
 ---
----
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
 ## Викторина: JavaScript-интерфейсы, символы и перечисляемые свойства
 
 > * **Докажи свои навыки JavaScript!** 🚀
 > * Никакого входа или регистрации не требуется. ✨
 > * Множественный выбор. 🤖 ... _Ну насколько это может быть сложно, а?_
-
-import Challenge from '../../../../components/QuizUI/Challenge';
-import QuizUI from '../../../../components/QuizUI/QuizUI';
----
 
 <QuizUI>
 
@@ -46,14 +44,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <slot name="question">
   <div className="question">
     Как следует обращаться к свойству объекта JavaScript, которое использует метод-геттер?
-    ```js
-    const obj = {
-      get val() {
-        return 'got it!';
-      }
-    };
-    console.log(obj.val);
-    ```
+    <pre><code>{`const obj = {
+  get val() {
+    return 'got it!';
+  }
+};
+console.log(obj.val);`}</code></pre>
   </div>
   </slot>
   <slot name='explanation'>
@@ -79,13 +75,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <slot name="question">
   <div className="question">
     Какой правильный способ создать действительно уникальный ключ свойства для объекта JavaScript?
-    ```js
-    const uniqueKey = Symbol('myUniqueKey');
-    const obj = {
-      [uniqueKey]: 'unique value'
-    };
-    console.log(obj[uniqueKey]);
-    ```
+    <pre><code>{`const uniqueKey = Symbol('myUniqueKey');
+const obj = {
+  [uniqueKey]: 'unique value'
+};
+console.log(obj[uniqueKey]);`}</code></pre>
   </div>
   </slot>
   <slot name='explanation'>
@@ -110,16 +104,14 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <slot name="question">
   <div className="question">
     Будет ли свойство `age` перечислено при итерации `for...in`?
-    ```js
-    const person = {};
-    Object.defineProperty(person, 'age', {
-      value: 25,
-      enumerable: true
-    });
-    for (let key in person) {
-      console.log(key);
-    }
-    ```
+    <pre><code>{`const person = {};
+Object.defineProperty(person, 'age', {
+  value: 25,
+  enumerable: true
+});
+for (let key in person) {
+  console.log(key);
+}`}</code></pre>
   </div>
   </slot>
   <slot name='explanation'>
@@ -144,13 +136,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <slot name="question">
   <div className="question">
     Какова перечисляемость свойства по умолчанию при использовании `Object.defineProperty()` без указания `enumerable`?
-    ```js
-    const car = {};
-    Object.defineProperty(car, 'make', {
-      value: 'Toyota'
-    });
-    console.log(Object.keys(car));
-    ```
+    <pre><code>{`const car = {};
+Object.defineProperty(car, 'make', {
+  value: 'Toyota'
+});
+console.log(Object.keys(car));`}</code></pre>
   </div>
   </slot>
   <slot name='explanation'>
@@ -175,11 +165,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <slot name="question">
   <div className="question">
     Каким будет результат следующего сравнения?
-    ```js
-    const sym1 = Symbol('id');
-    const sym2 = Symbol('id');
-    console.log(sym1 === sym2);
-    ```
+    <pre><code>{`const sym1 = Symbol('id');
+const sym2 = Symbol('id');
+console.log(sym1 === sym2);`}</code></pre>
   </div>
   </slot>
   <slot name='explanation'>
@@ -204,16 +192,14 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <slot name="question">
   <div className="question">
     Будет ли свойство с ключом-символом перечислено при итерации `for...in`?
-    ```js
-    const sym = Symbol('uniqueKey');
-    const obj = {
-      [sym]: 'symbol value',
-      regularKey: 'regular value'
-    };
-    for (let key in obj) {
-      console.log(key);
-    }
-    ```
+    <pre><code>{`const sym = Symbol('uniqueKey');
+const obj = {
+  [sym]: 'symbol value',
+  regularKey: 'regular value'
+};
+for (let key in obj) {
+  console.log(key);
+}`}</code></pre>
   </div>
   </slot>
   <slot name='explanation'>
@@ -244,16 +230,14 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <slot name='explanation'>
   <div className="explanation">
     Метод `Object.getOwnPropertySymbols()` используется для получения собственных ключей-символов объекта.
-    ```js
-    const sym1 = Symbol('id');
-    const sym2 = Symbol('name');
-    const obj = {
-      [sym1]: 'symbol value',
-      [sym2]: 'another symbol value'
-    };
-    console.log(Object.getOwnPropertySymbols(obj));
-    // [Symbol(id), Symbol(name)]
-    ```
+    <pre><code>{`const sym1 = Symbol('id');
+const sym2 = Symbol('name');
+const obj = {
+  [sym1]: 'symbol value',
+  [sym2]: 'another symbol value'
+};
+console.log(Object.getOwnPropertySymbols(obj));
+// [Symbol(id), Symbol(name)]`}</code></pre>
   </div>
   </slot>
 </Challenge>

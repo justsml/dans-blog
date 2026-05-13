@@ -24,8 +24,8 @@ cover_full_width: ../wide.webp
 cover_mobile: ../square.webp
 cover_icon: ../square.webp
 ---
-import Challenge from '../../../../../components/QuizUI/Challenge';
-import QuizUI from '../../../../../components/QuizUI/QuizUI';
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
 
 <p class="inset">El ingeniería de prompts obtiene los eslóganes. La ingeniería de contexto obtiene la alerta. ¿Qué tan bien conoces la parte de un sistema de IA que realmente se implementa?</p>
 
@@ -154,9 +154,9 @@ Trae pruebas.
   title="Estrategia de fragmentación"
   options={[
     {text: 'Use el tamaño de fragmento más grande que permita su ventana de contexto'},
-    {text: 'Siempre use 512 tokens — it\'},
+    {text: 'Siempre use 512 tokens: es el estándar'},
     {text: 'Use fragmentos superpuestos cuyo tamaño coincida con la estructura de su contenido', isAnswer: true},
-    {text: 'El tamaño del fragmento no importa\'},
+    {text: 'El tamaño del fragmento no importa si el modelo de embeddings es bueno'},
   ]}
 >
   <slot name="question">
@@ -338,7 +338,7 @@ Trae pruebas.
   options={[
     {text: 'temperature=0 siempre produce salidas idénticas para la misma entrada'},
     {text: 'temperature=0 hace que las salidas sean más deterministas pero no garantiza que sean idénticas', isAnswer: true},
-    {text: 'temperature=0 deshabilita el modelo'},
+    {text: 'temperature=0 deshabilita la capacidad del modelo para rechazar solicitudes'},
     {text: 'temperature solo afecta la longitud de la respuesta'},
   ]}
 >

@@ -19,7 +19,6 @@ cover_icon: ../victor-freitas-hOuJYX2K5DA-unsplash-square.webp
 ---
 import Challenge from '../../../../components/QuizUI/Challenge';
 import QuizUI from '../../../../components/QuizUI/QuizUI';
----
 
 <QuizUI>
 
@@ -299,7 +298,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     Il primo elemento, `24`, viene interpretato come `24` in base 0 (rilevamento automatico), quindi rimane `24`. Il secondo elemento, `'One'`, viene interpretato come `NaN` in base 1. Il terzo elemento, `42`, viene interpretato usando la base 2. In base 2, `'42'` è `NaN`, quindi il risultato è `[24, NaN, NaN]`.
 
-    Questo è un errore comune con `parseInt` e `map`. Se vuoi convertire un array di stringhe in numeri, l'unico metodo "built-in" sicuro è `.map(Number)` o aggiungere un callback/closure `.map(x => parseInt(x, 10))`.
+    Questo è un errore comune con `parseInt` e `map`. Se vuoi convertire un array di stringhe in numeri, l'unico metodo "built-in" sicuro è `.map(Number)` o aggiungere un callback/closure <code>{`.map(x => parseInt(x, 10))`}</code>.
   </div>
   </slot>
 </Challenge>
@@ -400,19 +399,29 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 </QuizUI>
 
 <section className="scroll-x">
-## Tabella di confronto
-
-| Funzione | `parseInt` | `parseFloat` | `Number` | `BigInt` |
-| --- | --- | --- | --- | --- |
-| Ignora spazi bianchi | ✅ | ✅ | ✅ | ✅ |
-| `.map(FN)`  | ❌ | ☑️ | ✅ | ✅ |
-| Supporta argomento radice | ✅ | ❌ | ❌ | ❌ |
-| Letterali binari/ottali/esadecimali | ✅ | ❌ | ✅ | ✅ |
-| Caratteri non validi `42 oh no` | `42` | `42`  | `NaN` | `SyntaxError` |
+  <h2>Tabella di confronto</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Funzione</th>
+        <th><code>parseInt</code></th>
+        <th><code>parseFloat</code></th>
+        <th><code>Number</code></th>
+        <th><code>BigInt</code></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Ignora spazi bianchi</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td></tr>
+      <tr><td><code>.map(FN)</code></td><td>❌</td><td>☑️</td><td>✅</td><td>✅</td></tr>
+      <tr><td>Supporta argomento radix</td><td>✅</td><td>❌</td><td>❌</td><td>❌</td></tr>
+      <tr><td>Letterali binari/ottali/esadecimali</td><td>✅</td><td>❌</td><td>✅</td><td>✅</td></tr>
+      <tr><td>Caratteri non validi <code>42 oh no</code></td><td><code>42</code></td><td><code>42</code></td><td><code>NaN</code></td><td><code>SyntaxError</code></td></tr>
+    </tbody>
+  </table>
 </section>
 
 <h2>Come te la sei cavata? 🧐</h2>
 
 {/* <h4>Stai bene?</h4> */}
 
-<p class="inset">Cerchi una pausa dopo così tanto binario?<br />Pftt, ricorda: pausa *dopo* le competenze! <br /><br />Vai nella [mia palestra](/challenges/) per affrontare altre sfide! 💪</p>
+<p class="inset">Cerchi una pausa dopo così tanto binario?<br />Pftt, ricorda: pausa <em>dopo</em> le competenze! <br /><br />Vai nella <a href="/challenges/">mia palestra</a> per affrontare altre sfide! 💪</p>
