@@ -1,67 +1,57 @@
 {
-  "runId": "2026-05-13T16-29-10-490Z",
-  "runStatus": "completed",
+  "runId": "2026-05-13T17-23-32-147Z",
+  "runStatus": "running",
   "slug": "from-zero-to-regex-hero-extract-url-like-strings",
   "locale": "it",
-  "startedAt": "2026-05-13T16:29:10.490Z",
-  "updatedAt": "2026-05-13T16:30:52.903Z",
+  "startedAt": "2026-05-13T17:23:32.147Z",
+  "updatedAt": "2026-05-13T17:24:00.794Z",
   "modelsRequested": [
     "openrouter/openai/gpt-oss-120b:nitro",
-    "openrouter/qwen/qwen3-32b:nitro"
+    "openrouter/qwen/qwen3-32b:nitro",
+    "deepseek/deepseek-v4-flash",
+    "qwen/qwen3.6-plus"
   ],
-  "attemptedModels": 2,
-  "skippedModels": 0,
-  "rejectedModels": 1,
+  "attemptedModels": 1,
+  "skippedModels": 1,
+  "rejectedModels": 0,
   "candidateModels": 1,
   "totals": {
-    "inputTokens": 20579,
-    "outputTokens": 13207,
+    "inputTokens": 10529,
+    "outputTokens": 9444,
     "thinkingTokens": 0,
-    "cachedInputTokens": 7808,
+    "cachedInputTokens": 512,
     "cacheWriteTokens": 0,
-    "estimatedCostUsd": 0.004154,
+    "estimatedCostUsd": 0.003109,
     "hasUnknownInputTokens": false,
     "hasUnknownOutputTokens": false,
     "hasUnknownThinkingTokens": true,
     "hasUnknownCachedInputTokens": false,
     "hasUnknownCacheWriteTokens": false,
     "hasUnknownEstimatedCost": false,
-    "runtimeSeconds": "27.71"
+    "runtimeSeconds": "24.53"
   },
   "attempts": [
     {
       "model": "openrouter/openai/gpt-oss-120b:nitro",
-      "status": "candidate",
-      "validationStatus": "passed",
+      "status": "skipped",
       "reportPath": "reports/i18n/from-zero-to-regex-hero-extract-url-like-strings/it/openrouter-openai-gpt-oss-120b-nitro.md",
-      "note": "Generated through the direct AI SDK chunked translator.",
-      "telemetry": {
-        "runtimeSeconds": "4.60",
-        "tokens": {
-          "input": 10671,
-          "output": 3749,
-          "cached": 5248,
-          "cacheWrite": 0
-        },
-        "estimatedCostUsd": 0.0010909889999999999,
-        "pricingSource": "local-openrouter-estimate"
-      }
+      "note": "Existing non-rejected report found. Pass --overwrite to rerun."
     },
     {
       "model": "openrouter/qwen/qwen3-32b:nitro",
-      "status": "rejected",
-      "validationStatus": "rejected: direct AI SDK translation failed",
+      "status": "candidate",
+      "validationStatus": "deferred",
       "reportPath": "reports/i18n/from-zero-to-regex-hero-extract-url-like-strings/it/openrouter-qwen-qwen3-32b-nitro.md",
-      "note": "Command failed: bun run i18n:validate --slug from-zero-to-regex-hero-extract-url-like-strings --locale it",
+      "note": "Generated through the direct AI SDK chunked translator.",
       "telemetry": {
-        "runtimeSeconds": "23.11",
+        "runtimeSeconds": "24.53",
         "tokens": {
-          "input": 9908,
-          "output": 9458,
-          "cached": 2560,
+          "input": 10529,
+          "output": 9444,
+          "cached": 512,
           "cacheWrite": 0
         },
-        "estimatedCostUsd": 0.0030625599999999998,
+        "estimatedCostUsd": 0.0031088799999999996,
         "pricingSource": "local-openrouter-estimate"
       }
     }
