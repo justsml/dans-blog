@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-postgres-sql-mastery-pt1
+- Locale: es
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2024-11-27--quiz-postgres-sql-mastery-pt1/es/index.mdx
+- Validation: passed
+- Runtime seconds: 20.91
+- Input tokens: 14129
+- Output tokens: 9466
+- Thinking tokens: unknown
+- Cached input tokens: 4864
+- Cache write tokens: 0
+- Estimated cost: $0.002255
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 social_image: ../mobile.webp
@@ -550,3 +568,4 @@ Espero que hayas aprendido algo nuevo, o al menos tengas una puntuación de la q
 <p class="inset">Echa un vistazo a <a href="../quiz-postgres-sql-mastery-pt2/">Parte 2</a> para más diversión con Postgres! 🚀</p>  
 
 ¿Quieres más emociones en la vida? Revisa mi <a href="../challenges/">Colección de Quiz</a> para diversión sin fin*.
+````

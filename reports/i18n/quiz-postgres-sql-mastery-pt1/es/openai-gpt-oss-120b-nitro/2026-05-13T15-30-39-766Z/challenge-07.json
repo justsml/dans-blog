@@ -1,0 +1,53 @@
+{
+  "index": 6,
+  "attempt": 1,
+  "originalTitle": "Identify Invalid Types",
+  "translatedTitle": "Identificar tipos inválidos",
+  "translation": {
+    "title": "Identificar tipos inválidos",
+    "group": "Tipos de Postgres",
+    "options": [
+      {
+        "text": "int"
+      },
+      {
+        "text": "real"
+      },
+      {
+        "text": "bigint"
+      },
+      {
+        "text": "bigserial"
+      },
+      {
+        "text": "smallserial"
+      },
+      {
+        "text": "decimal128"
+      },
+      {
+        "text": "double precision"
+      }
+    ],
+    "questionProse": [
+      "¿Cuál de estos no ❌ es un tipo válido de PostgreSQL?"
+    ],
+    "explanationProse": [
+      "Puede parecer familiar ya que `decimal128` es un tipo en muchos lugares (incluyendo Mongo y Java). No es un tipo válido de PostgreSQL, el tipo válido es `decimal`.\n\nLos tipos numéricos correctos son:\n- `int` (entero de 4 bytes)\n- `bigint` (entero de 8 bytes)\n- `real` (punto flotante de 4 bytes)\n- `double precision` (punto flotante de 8 bytes)\n- `bigserial` (entero de 8 bytes autoincremental)\n- `smallserial` (entero de 2 bytes autoincremental)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Identificar tipos inválidos\",\n  \"group\": \"Tipos de Postgres\",\n  \"options\": [\n    {\n      \"text\": \"int\"\n    },\n    {\n      \"text\": \"real\"\n    },\n    {\n      \"text\": \"bigint\"\n    },\n    {\n      \"text\": \"bigserial\"\n    },\n    {\n      \"text\": \"smallserial\"\n    },\n    {\n      \"text\": \"decimal128\"\n    },\n    {\n      \"text\": \"double precision\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Cuál de estos no ❌ es un tipo válido de PostgreSQL?\"\n  ],\n  \"explanationProse\": [\n    \"Puede parecer familiar ya que `decimal128` es un tipo en muchos lugares (incluyendo Mongo y Java). No es un tipo válido de PostgreSQL, el tipo válido es `decimal`.\\n\\nLos tipos numéricos correctos son:\\n- `int` (entero de 4 bytes)\\n- `bigint` (entero de 8 bytes)\\n- `real` (punto flotante de 4 bytes)\\n- `double precision` (punto flotante de 8 bytes)\\n- `bigserial` (entero de 8 bytes autoincremental)\\n- `smallserial` (entero de 2 bytes autoincremental)\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 852,
+    "outputTokens": 687,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 1176
+  },
+  "cost": {
+    "inputUsd": 0.000033228,
+    "outputUsd": 0.00012366,
+    "totalUsd": 0.000156888,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
