@@ -1,0 +1,48 @@
+{
+  "selectedCommit": "378a699f355906103f911bf29335ecabb2fd28ac",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "scores": {
+    "readability": 5,
+    "technicalAccuracy": 5,
+    "coherence": 5,
+    "relevance": 5,
+    "translationQuality": 4,
+    "mdxPreservation": 5
+  },
+  "suggestions": [],
+  "rationale": "The selected commit 378a699f (Qwen 3.6 Plus) was already applied to the 'current' file, including the fix for the Cyrillic hallucination ('абстракт' was replaced with 'एब्स्ट्रैक्ट (abstract)'). The current translation is technically accurate, maintains the MDX structure, and captures Dan's direct, conversational tone well. No further high-priority fixes are required.",
+  "slug": "mastering-functional-pipelines-passing-state",
+  "locale": "hi",
+  "candidateCommits": [
+    "378a699f355906103f911bf29335ecabb2fd28ac",
+    "6a66a1ec97975474d513f859c16da5a2ef09e43a",
+    "6514d445eb9f1cf0d73b9e0c66270058b8b7249f",
+    "f115f0af24605d419bffeaac3a814866fc77c58e"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "`CartHelpers` दोहराए गए आर्गुमेंट `userId` को абстракт करता है।",
+      "replacement": "`CartHelpers` दोहराए गए आर्गुमेंट `userId` को एब्स्ट्रैक्ट (abstract) करता है।",
+      "reason": "The candidate contains a word in Cyrillic script ('абстракт') which is a hallucination/error. It should be translated or transliterated into Hindi/English.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "`CartHelpers` दोहराए गए आर्गुमेंट `userId` को абстракт करता है।",
+      "replacement": "`CartHelpers` दोहराए गए आर्गुमेंट `userId` को एब्स्ट्रैक्ट (abstract) करता है।",
+      "reason": "The candidate contains a word in Cyrillic script ('абстракт') which is a hallucination/error. It should be translated or transliterated into Hindi/English.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug mastering-functional-pipelines-passing-state --locale hi --skip-global",
+    "output": ""
+  }
+}
