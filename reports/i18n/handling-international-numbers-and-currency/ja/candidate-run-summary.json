@@ -1,34 +1,36 @@
 {
-  "runId": "2026-05-13T17-29-57-556Z",
-  "runStatus": "interrupted",
+  "runId": "2026-05-13T18-33-44-450Z",
+  "runStatus": "running",
   "slug": "handling-international-numbers-and-currency",
   "locale": "ja",
-  "startedAt": "2026-05-13T17:29:57.556Z",
-  "updatedAt": "2026-05-13T17:30:55.475Z",
+  "startedAt": "2026-05-13T18:33:44.450Z",
+  "updatedAt": "2026-05-13T18:35:24.875Z",
   "modelsRequested": [
     "openrouter/openai/gpt-oss-120b:nitro",
     "openrouter/qwen/qwen3-32b:nitro",
     "deepseek/deepseek-v4-flash",
-    "qwen/qwen3.6-plus"
+    "qwen/qwen3.6-plus",
+    "qwen/qwen3.6-35b-a3b",
+    "qwen/qwen3.5-9b"
   ],
   "attemptedModels": 1,
-  "skippedModels": 1,
+  "skippedModels": 2,
   "rejectedModels": 0,
   "candidateModels": 1,
   "totals": {
-    "inputTokens": 7197,
-    "outputTokens": 4977,
+    "inputTokens": 6623,
+    "outputTokens": 5317,
     "thinkingTokens": 0,
-    "cachedInputTokens": 1024,
+    "cachedInputTokens": 768,
     "cacheWriteTokens": 0,
-    "estimatedCostUsd": 0.00177,
+    "estimatedCostUsd": 0.002311,
     "hasUnknownInputTokens": false,
     "hasUnknownOutputTokens": false,
     "hasUnknownThinkingTokens": true,
     "hasUnknownCachedInputTokens": false,
     "hasUnknownCacheWriteTokens": false,
     "hasUnknownEstimatedCost": false,
-    "runtimeSeconds": "21.41"
+    "runtimeSeconds": "90.41"
   },
   "attempts": [
     {
@@ -39,19 +41,25 @@
     },
     {
       "model": "openrouter/qwen/qwen3-32b:nitro",
+      "status": "skipped",
+      "reportPath": "reports/i18n/handling-international-numbers-and-currency/ja/openrouter-qwen-qwen3-32b-nitro.md",
+      "note": "Existing non-rejected report found. Pass --overwrite to rerun."
+    },
+    {
+      "model": "deepseek/deepseek-v4-flash",
       "status": "candidate",
       "validationStatus": "deferred",
-      "reportPath": "reports/i18n/handling-international-numbers-and-currency/ja/openrouter-qwen-qwen3-32b-nitro.md",
+      "reportPath": "reports/i18n/handling-international-numbers-and-currency/ja/deepseek-deepseek-v4-flash.md",
       "note": "Generated through the direct AI SDK chunked translator.",
       "telemetry": {
-        "runtimeSeconds": "21.41",
+        "runtimeSeconds": "90.41",
         "tokens": {
-          "input": 7197,
-          "output": 4977,
-          "cached": 1024,
+          "input": 6623,
+          "output": 5317,
+          "cached": 768,
           "cacheWrite": 0
         },
-        "estimatedCostUsd": 0.0017702400000000002,
+        "estimatedCostUsd": 0.0023106104000000004,
         "pricingSource": "local-openrouter-estimate"
       }
     }
