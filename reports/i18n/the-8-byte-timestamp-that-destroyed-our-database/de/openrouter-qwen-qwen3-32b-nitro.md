@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: the-8-byte-timestamp-that-destroyed-our-database
+- Locale: de
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2025-12-29--the-8-byte-timestamp-that-destroyed-our-database/de/index.mdx
+- Validation: passed
+- Runtime seconds: 76.59
+- Input tokens: 9895
+- Output tokens: 7970
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.002704
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Ihr Zeitstempel ist eine Lüge
 subTitle: Was mir ein Zugticket über das Speichern von Zeit in Datenbanken beibrachte
@@ -138,3 +156,4 @@ Denken Sie daran, was Ihre Benutzer sehen müssen. Speichern Sie dann die Daten,
 - [ISO 860:1 Datum- und Zeitformat](https://en.wikipedia.org/wiki/ISO_8601)  
 - [Zeitzonen-Datenbank (IANA)](https://www.iana.org/time-zones)  
 - [Umgang mit Timestamps in verteilten Systemen](https://www.postgresql.org/docs/current/functions-datetime.html)
+````
