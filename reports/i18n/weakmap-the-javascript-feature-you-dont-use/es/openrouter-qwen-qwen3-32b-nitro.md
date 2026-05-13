@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: weakmap-the-javascript-feature-you-dont-use
+- Locale: es
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2025-12-29--weakmap-the-javascript-feature-you-dont-use/es/index.mdx
+- Validation: passed
+- Runtime seconds: 12.40
+- Input tokens: 5076
+- Output tokens: 5292
+- Thinking tokens: unknown
+- Cached input tokens: 1024
+- Cache write tokens: 0
+- Estimated cost: $0.001676
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Evita fugas de memoria con WeakMap
 subTitle: Corrigiendo código débil con referencias débiles
@@ -126,3 +144,4 @@ A veces la mejor característica es una que simplemente funciona sin que tengas 
 - [MDN: Gestión de memoria](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Memory_management)
 - [Blog de V8: Referencias débiles y finalizadores](https://v8.dev/features/weak-references)
 - [JavaScript.info: WeakMap y WeakSet](https://javascript.info/weakmap-weakset)
+````
