@@ -1,7 +1,7 @@
 ---
 social_image: ../desktop-social.webp
-title: 'Quiz : 9 questions sur les promesses JavaScript'
-subTitle: ''
+title: "Quiz\_: 9 questions sur les Promises JavaScript"
+subTitle: Ne laissez plus jamais tomber une promesse.
 label: Promise Gotchas
 date: '2019-11-26'
 modified: '2024-11-28'
@@ -25,20 +25,19 @@ cover: ../olav-ahrens-rotne-jvBXiynINGE-resized.webp
 cover_mobile: ../w300_olav-ahrens-rotne-jvBXiynINGE-resized.webp
 cover_icon: ../icon_olav-ahrens-rotne-jvBXiynINGE-resized.webp
 ---
-import Challenge from '../../../../components/QuizUI/Challenge';
-import QuizUI from '../../../../components/QuizUI/QuizUI';
+import Challenge from '../../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../../components/QuizUI/QuizUI';
 
 
-## Connaissez-vous les Promesses JavaScript ?
+## Connaissez‑vous les Promesses JavaScript ?
 
-> * **Prouvez vos compétences en JavaScript !** 🚀
+> * **Prouvez votre maîtrise du JavaScript !** 🚀
 
-1. **Vérifiez les indices** (bouton en bas à droite).
-2. Essayez le code dans la Console de votre navigateur (raccourci `F12` ou cherchez-la) ou utilisez [repl.it](https://repl.it)*.
-3. N'hésitez pas à [me tweeter @justsml](https://x.com/intent/tweet?text=Salut%20Dan%2C%20j'%C3%A9tais%20en%20train%20de%20faire%20ton%20quiz%20sur%20les%20promesses%2E%2E%2E&url=https://danlevy.net/). **J'aimerais beaucoup avoir votre avis !**
+1. **Vérifiez les indices** (gros bouton, coin inférieur).
+2. Essayez le code dans la console de votre navigateur (raccourci `F12` ou cherchez‑le) ou utilisez [repl.it](https://repl.it)*.
+3. N’hésitez pas à [me tweeter @justsml](https://x.com/intent/tweet?text=Hey%20Dan%2C%20I%20was%20taking%20your%20promises%20quiz%2E%2E%2E&url=https://danlevy.net/). **J’aimerais connaître votre avis !**
 
-### 👇 Répondez aux 9 questions ci-dessous 👇
----
+### 👇 Complétez les 9 questions ci‑dessous👇
 
 <QuizUI>
 
@@ -46,7 +45,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={0}
   group="Gestion des erreurs"
-  title="Plusieurs `.catch` #1"
+  title="Multiples `.catch` #1"
   options={[
     {text: 'afficher le message une fois'},
     {text: 'afficher le message deux fois', isAnswer: true},
@@ -56,7 +55,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    Quelle sera la sortie du code suivant ?
+    Quel sera le résultat du code suivant ?
     ```js
     var p = new Promise((resolve, reject) => {
       reject(Error('The Fails!'))
@@ -68,9 +67,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Nous créons une Promise en utilisant la méthode constructeur, déclenchant immédiatement une erreur avec le callback `reject`.
+    Nous créons une Promise avec le constructeur, déclenchant immédiatement une erreur via le callback `reject`.
 
-    Les gestionnaires `.catch` fonctionnent comme `addEventListener(event, callback)` du DOM ou `.on(event, callback)` des Event Emitters, où **plusieurs callbacks peuvent être ajoutés.** Chacun recevra les mêmes arguments.
+    Ensuite, les gestionnaires `.catch` fonctionnent comme `.addEventListener(event, callback)` du DOM ou `.on(event, callback)` d'Event Emitter, où **plusieurs callbacks de gestionnaire peuvent être ajoutés**. Chaque callback sera appelé avec les mêmes arguments.
   </div>
   </slot>
 </Challenge>
@@ -79,7 +78,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={1}
   group="Gestion des erreurs"
-  title="Plusieurs `.catch` #2"
+  title="Multiples `.catch`'s #2"
   options={[
     {text: 'afficher le message une fois'},
     {text: 'afficher le message deux fois'},
@@ -89,7 +88,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    Quelle sera la sortie du code suivant ?
+    Quel sera le résultat du code suivant ?
     ```js
     var p = new Promise((resolve, reject) => {
       return Promise.reject(Error('The Fails!'))
@@ -101,7 +100,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Lorsqu'on utilise le constructeur Promise, il faut appeler soit `resolve()`, soit `reject()`. Le constructeur Promise ignore la valeur de retour de l'exécuteur, donc la promesse supplémentaire créée avec `Promise.reject()` n'est pas chaînée à `p`. Les deux gestionnaires sont attachés à `p`, qui reste en attente, tandis que la promesse rejetée retournée est signalée comme non gérée par l'environnement hôte.
+    Lors de l'utilisation du constructeur Promise, vous devez appeler l'un des callbacks `resolve()` ou `reject()`. Le constructeur Promise ignore la valeur de retour de l'exécuteur, ainsi la Promise supplémentaire créée avec `Promise.reject()` n'est pas chaînée à `p`. Les deux gestionnaires sont attachés à `p`, qui reste en attente, tandis que la promesse rejetée retournée est signalée comme non gérée par l'environnement d'exécution.
   </div>
   </slot>
 </Challenge>
@@ -110,17 +109,17 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:only="react"
   index={2}
   group="Gestion des erreurs"
-  title="Enchaînement des `.then` et `.catch`"
+  title="Chaînage des `.then` et `.catch`'s"
   options={[
-    {text: 'afficher l\'erreur et `undefined`', isAnswer: true},
-    {text: 'afficher l\'erreur deux fois'},
+    {text: 'afficher l’erreur et `undefined`', isAnswer: true},
+    {text: 'afficher l’erreur deux fois'},
     {text: 'UnhandledPromiseRejectionWarning'},
     {text: 'undefined'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Quelle sera la sortie du code suivant ?
+    Quel sera le résultat du code suivant ?
     ```js
     var p = new Promise((resolve, reject) => {
       reject(Error('The Fails!'))
@@ -132,7 +131,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Lorsqu'on enchaîne des `.then` et des `.catch`, il est utile de les considérer comme une série d'étapes. Chaque `.then` reçoit la valeur renvoyée par le `.then` précédent (en tant qu'argument). Cependant, si votre "étape" rencontre une erreur, toutes les `.then` suivantes seront ignorées jusqu'à ce qu'un `.catch` soit rencontré. Si vous souhaitez écraser une erreur, il vous suffit de renvoyer une valeur non-erreur. Elle pourra être récupérée par tous les `.then` suivants.
+    Lors du chaînage des `.then` et des `.catch`, il est utile de les imaginer comme une série d'étapes. Chaque `.then` reçoit la valeur renvoyée par le `.then` précédent (en tant qu'argument). Cependant, si votre « étape » rencontre une erreur, toutes les « étapes » `.then` suivantes seront sautées jusqu'à ce qu'un `.catch` soit rencontré. Si vous voulez écraser une erreur, il suffit de renvoyer une valeur non‑erreur. Celle‑ci pourra être récupérée dans n'importe quel `.then` suivant.
   </div>
   </slot>
 </Challenge>
@@ -141,17 +140,17 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:only="react"
   index={3}
   group="Gestion des erreurs"
-  title="Chaînage des `.catch`"
+  title="Chaînage des `.catch`'s"
   options={[
-    {text: 'affiche le message d\'erreur une fois', isAnswer: true},
-    {text: 'affiche le message d\'erreur deux fois'},
+    {text: 'afficher le message d\'erreur une fois', isAnswer: true},
+    {text: 'afficher le message d\'erreur deux fois'},
     {text: 'UnhandledPromiseRejectionWarning'},
     {text: 'le processus se termine'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Quelle sera la sortie du code suivant ?
+    Quel sera le résultat du code suivant ?
     ```js
     var p = new Promise((resolve, reject) => {
       reject(Error('The Fails!'))
@@ -163,7 +162,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Lors du chaînage des `.catch`, chacun ne gère que les erreurs levées dans les étapes précédentes `.then` ou `.catch`. Dans cet exemple, le premier `.catch` retourne le `console.log`, ce qui n'aurait pu être accessible qu'en ajoutant un `.then()` après les deux `.catch`.
+    Lors du chaînage des `.catch`'s, chacun ne gère que les erreurs levées dans les étapes précédentes de `.then` ou de `.catch`. Dans cet exemple, le premier `.catch` renvoie le `console.log`, qui ne peut être récupéré qu’en ajoutant un `.then()` après les deux `.catch`'s.
   </div>
   </slot>
 </Challenge>
@@ -172,17 +171,17 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={4}
   group="Gestion des erreurs"
-  title="Plusieurs `.catch`"
+  title="Multiples `.catch`"
   options={[
-    {text: 'afficher le message une fois'},
-    {text: 'afficher le message deux fois'},
+    {text: 'affiche le message une fois'},
+    {text: 'affiche le message deux fois'},
     {text: 'UnhandledPromiseRejectionWarning'},
-    {text: 'rien n\'est affiché', isAnswer: true},
+    {text: 'rien ne s\'affiche', isAnswer: true},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Quelle sera la sortie du code suivant ?
+    Quel sera le résultat du code suivant ?
     ```js
     new Promise((resolve, reject) => {
         resolve('Success!')
@@ -199,9 +198,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    **Indice :** Les `.catch` peuvent être utilisés pour ignorer (ou remplacer) les erreurs en renvoyant simplement une valeur normale.
+    **Hint:** Les `.catch` peuvent être utilisés pour ignorer (ou remplacer) les erreurs simplement en renvoyant une valeur ordinaire.
 
-    Ce trick fonctionne uniquement s'il y a un `.then` ultérieur pour recevoir la valeur.
+    Cette astuce ne fonctionne que s'il y a un `.then` suivant pour recevoir la valeur.
   </div>
   </slot>
 </Challenge>
@@ -212,15 +211,15 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="Gestion des données"
   title="Flux entre les `.then`"
   options={[
-    {text: 'afficher \'Success!\' et \'SUCCESS!\''},
-    {text: 'afficher \'Success!\''},
-    {text: 'afficher \'SUCCESS!\'', isAnswer: true},
-    {text: 'rien n\'est affiché'},
+    {text: 'affiche "Success!" et "SUCCESS!"'},
+    {text: 'affiche "Success!"'},
+    {text: 'affiche "SUCCESS!"', isAnswer: true},
+    {text: 'rien ne s\'affiche'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Quelle sera la sortie du code suivant ?
+    Quel sera le résultat pour le code suivant ?
     ```js
     Promise.resolve('Success!')
       .then(data => {
@@ -234,9 +233,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Astuce : les `.then` transmettent les données de manière séquentielle, de la valeur `return` au `.then(value => /* handle value */)` suivant.
+    **Hint:** les `.then` transmettent les données séquentiellement, du `return value` au prochain `.then(value => /* handle value */)`.
 
-    Un `return` est essentiel pour transmettre une valeur au `.then` suivant.
+    Un `return` est essentiel pour passer une valeur au `.then` suivant.
   </div>
   </slot>
 </Challenge>
@@ -247,15 +246,15 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="Gestion des données"
   title="Flux entre les `.then`"
   options={[
-    {text: 'afficher \'SUCCESS!\''},
-    {text: 'afficher \'Success!\''},
-    {text: 'afficher \'SUCCESS!\' et \'SUCCESS!\'', isAnswer: true},
-    {text: 'rien n\'est affiché'},
+    {text: 'afficher "SUCCESS!"'},
+    {text: 'afficher "Success!"'},
+    {text: 'afficher "SUCCESS!" et "SUCCESS!"', isAnswer: true},
+    {text: 'rien ne s\'affiche'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Quelle sera la sortie du code suivant ?
+    Quel sera le résultat du code suivant ?
     ```js
     Promise.resolve('Success!')
       .then(data => {
@@ -282,15 +281,15 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="Gestion des données"
   title="Flux entre les `.then`"
   options={[
-    {text: 'affiche \'SUCCESS!\''},
-    {text: 'affiche \'Success!\''},
-    {text: 'affiche \'SUCCESS!\' et \'SUCCESS!\''},
-    {text: 'affiche \'undefined\'', isAnswer: true},
+    {text: 'afficher "SUCCESS!"'},
+    {text: 'afficher "Success!"'},
+    {text: 'afficher "SUCCESS!" et "SUCCESS!"'},
+    {text: 'affiche `undefined`', isAnswer: true},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Quelle sera la sortie du code suivant ?
+    Quel sera le résultat du code suivant ?
     ```js
     Promise.resolve('Success!')
       .then(data => {
@@ -304,9 +303,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    **Indice :** Les .then transmettent les données séquentiellement, de la `return value` au prochain `.then(value => /* handle value */)`.
+    **Hint:** les `.then` transmettent les données séquentiellement, du `return value` au prochain `.then(value => /* handle value */)`.
 
-    Un `return` est essentiel pour transmettre une valeur au .then suivant.
+    Un `return` est essentiel pour passer une valeur au `.then` suivant.
   </div>
   </slot>
 </Challenge>
@@ -314,19 +313,19 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={8}
-  group="Gestion des erreurs"
-  title="Débit entre les `.then` et les `.catch`"
+  group="Gestion des données"
+  title="Flux entre les `.then` et les `.catch`"
   options={[
-    {text: 'afficher « Oh noes ! » et « The fails ! »'},
-    {text: 'afficher « Oh noes ! »'},
-    {text: 'afficher « The fails ! »', isAnswer: true},
-    {text: 'afficher « actually, that worked »'},
-    {text: 'rien n\'est affiché'},
+    {text: 'afficher "Oh noes!" et "The fails!"'},
+    {text: 'afficher "Oh noes!"'},
+    {text: 'afficher "The fails!"', isAnswer: true},
+    {text: 'afficher "actually, that worked"'},
+    {text: 'rien ne s\'affiche'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Quelle sera la sortie du code suivant ?
+    Quel sera le résultat du code suivant ?
     ```js
     Promise.resolve('Success!')
       .then(() => {
