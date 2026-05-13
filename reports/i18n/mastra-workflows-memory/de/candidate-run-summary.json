@@ -4,29 +4,29 @@
   "slug": "mastra-workflows-memory",
   "locale": "de",
   "startedAt": "2026-05-13T14:58:04.663Z",
-  "updatedAt": "2026-05-13T14:58:27.283Z",
+  "updatedAt": "2026-05-13T14:58:54.429Z",
   "modelsRequested": [
     "openrouter/openai/gpt-oss-120b:nitro",
     "openrouter/qwen/qwen3-32b:nitro"
   ],
-  "attemptedModels": 1,
+  "attemptedModels": 2,
   "skippedModels": 0,
-  "rejectedModels": 0,
+  "rejectedModels": 1,
   "candidateModels": 1,
   "totals": {
-    "inputTokens": 8348,
-    "outputTokens": 2972,
+    "inputTokens": 16379,
+    "outputTokens": 12957,
     "thinkingTokens": 0,
-    "cachedInputTokens": 3968,
+    "cachedInputTokens": 6016,
     "cacheWriteTokens": 0,
-    "estimatedCostUsd": 0.000861,
+    "estimatedCostUsd": 0.003899,
     "hasUnknownInputTokens": false,
     "hasUnknownOutputTokens": false,
     "hasUnknownThinkingTokens": true,
     "hasUnknownCachedInputTokens": false,
     "hasUnknownCacheWriteTokens": false,
     "hasUnknownEstimatedCost": false,
-    "runtimeSeconds": "6.64"
+    "runtimeSeconds": "28.55"
   },
   "attempts": [
     {
@@ -44,6 +44,24 @@
           "cacheWrite": 0
         },
         "estimatedCostUsd": 0.0008605320000000001,
+        "pricingSource": "local-openrouter-estimate"
+      }
+    },
+    {
+      "model": "openrouter/qwen/qwen3-32b:nitro",
+      "status": "rejected",
+      "validationStatus": "rejected: direct AI SDK translation failed",
+      "reportPath": "reports/i18n/mastra-workflows-memory/de/openrouter-qwen-qwen3-32b-nitro.md",
+      "note": "Command failed: bun run i18n:validate --slug mastra-workflows-memory --locale de",
+      "telemetry": {
+        "runtimeSeconds": "21.91",
+        "tokens": {
+          "input": 8031,
+          "output": 9985,
+          "cached": 2048,
+          "cacheWrite": 0
+        },
+        "estimatedCostUsd": 0.0030388800000000003,
         "pricingSource": "local-openrouter-estimate"
       }
     }
