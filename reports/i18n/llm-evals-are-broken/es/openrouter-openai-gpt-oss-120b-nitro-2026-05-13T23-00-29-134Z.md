@@ -3,7 +3,7 @@
 - Locale: es
 - Model: openrouter/openai/gpt-oss-120b:nitro
 - Target: src/content/posts/2026-05-06--llm-evals-are-broken/es/index.mdx
-- Validation: deferred
+- Validation: rejected: direct AI SDK translation failed
 - Runtime seconds: 8.49
 - Input tokens: 11475
 - Output tokens: 3614
@@ -12,109 +12,105 @@
 - Cache write tokens: 0
 - Estimated cost: $0.001098
 - Pricing source: local-openrouter-estimate
-- Note: Generated through the direct AI SDK chunked translator.
+- Note: Command failed: git commit --only -m i18n candidate(es): llm-evals-are-broken via openrouter/openai/gpt-oss-120b:nitro -- reports/i18n/llm-evals-are-broken/es reports/i18n/llm-evals-are-broken/candidates.jsonl
 ## Raw Output
 
 ````mdx
 ---
-title: ¡Lucha contra elmal con Evals!
-subTitle: Los benchmarks miden benchmarks. Su sistema necesita sus propias métricas.
-date: '2026-05-01'
-modified: '2026-05-06'
-tags:
-  - ai
-  - llm
-  - evals
-  - testing
-  - production
-  - quality
-  - observability
+title: "¡Combate el Caos con Evals!"
+subTitle: "Los benchmarks miden benchmarks. Tu sistema necesita sus propias métricas."
+date: 2026-05-01
+modified: 2026-05-06
+tags: [ai, llm, evals, testing, production, quality, observability]
 category: AI
 subCategory: Engineering
 popularity: 0.85
-social_image: ../desktop-social.webp
-cover_full_width: ../wide.webp
-cover_mobile: ../square.webp
-cover_icon: ../square.webp
+social_image: ./desktop-social.webp
+cover_full_width: ./wide.webp
+cover_mobile: ./square.webp
+cover_icon: ./square.webp
 ---
-Cada nuevo modelo llega vistiendo un esmoquin de benchmarks.
 
-MMLU: 92.4 %. HumanEval: 87.2 %. LLeMU: 88.7 %. MATH: 73.6 %. ¡AGI: 127 %!
+Cada modelo nuevo llega vestido con un esmoquin de benchmarks.
 
-Sin embargo, para el 99 % de las empresas que construyen procesos y productos con IA, **nada de eso importa.**
+MMLU: 92,4 %. HumanEval: 87,2 %. LLeMU: 88,7 %. MATH: 73,6 %. AGI: ¡127 %!
 
-¿Qué importa? ¿Cómo le está yendo a TUS cargas de trabajo? ¿Mejorando o empeorando? La única forma sensata de saberlo es escribir Evals (pruebas para LLMs) que reflejen las tareas específicas, los datos y los modos de falla de tu sistema.
+Sin embargo, para el 99 % de las empresas que construyen procesos y productos con IA, **nada de eso importa.**
+
+¿Qué importa? ¿Cómo le va a TUS cargas de trabajo? ¿Mejorando o empeorando? La única forma sensata de saberlo es escribir Evals (pruebas para LLMs) que reflejen las tareas específicas, los datos y los modos de fallo de tu sistema.
 
 <blockquote class="breakout">
-  <p>Los benchmarks no están mintiendo. Están respondiendo a la pregunta de otra persona.</p>
+  <p>Los benchmarks no mienten. Están respondiendo a la pregunta de otra persona.</p>
 </blockquote>
 
 ---
 
-## Lo que realmente cuesta la “Evaluación basada en Vibes”
+## Lo Que Realmente Cuesta la "Evaluación Basada en Corazonadas"
 
-El enfoque estándar: lanzar un cambio de modelo, observar los canales de quejas, revertir si el ambiente se vuelve ruidoso.
+El enfoque estándar: lanzar un cambio de modelo, vigilar los canales de quejas, hacer rollback si la sala se pone ruidosa.
 
-Eso pasa por alto casi todo lo interesante:
+Eso se pierde casi todo lo interesante:
 
-**Solo capturas fallas ruidosas.** ¿Los usuarios que reciben una respuesta errónea con confianza y no se dan cuenta? Silenciosos. ¿Los usuarios que obtienen una respuesta peor y abandonan la función? Silenciosos. Los tickets de soporte y las tasas de error capturan solo una fracción de la regresión de calidad.
+**Solo capturas fallos ruidosos.** ¿Los usuarios que reciben una respuesta confidentemente incorrecta y no se dan cuenta? Silencio. ¿Los usuarios que reciben una peor respuesta y abandonan la función? Silencio. Los tickets de soporte y las tasas de error capturan solo una fracción de la regresión de calidad.
 
-**No puedesdistinguir regresiones de mejoras.** Si el modelo nuevo es mejor en la tarea A y peor en la tarea B, las quejas sobre B se ven idénticas a los comentarios genéricos de “la IA empeoró”. No sabes qué corregir.
+**No puedes distinguir regresiones de mejoras.** Si el nuevo modelo es mejor en la tarea A y peor en la tarea B, las quejas sobre B se ven idénticas a un genérico "la IA empeoró". No sabes qué arreglar.
 
-**Estás usando a tus usuarios como infraestructura de pruebas.** No se inscribieron para eso.
+**Estás usando a tus usuarios como infraestructura de pruebas.** No se apuntaron para eso.
 
 ---
 
-## El espectro de evaluación (y dónde la mayoría de los equipos se equivocan)
+## El Espectro de Evaluación (y Dónde la Mayoría de los Equipos se Equivoca)
 
-Los enfoques de evaluación se sitúan en un espectro que va de “rápido pero endeble” a “costoso pero válido”.
+Los enfoques de evaluación se sitúan en un espectro que va de "rápido pero frágil" a "costoso pero válido".
 
 <figure class="breakout">
 
-![Un diagrama de espectro que compara verificaciones determinísticas, LLM‑como‑juez y evaluación humana por velocidad, costo y validez.](../eval-spectrum.svg)
+![Un diagrama de espectro que compara verificaciones deterministas, LLM como juez y evaluación humana por velocidad, costo y validez.](./eval-spectrum.svg)
 
-<figcaption>Usa el método de evaluación más barato que pueda detectar honestamente la falla.</figcaption>
+<figcaption>Usa el método de evaluación más barato que pueda detectar honestamente el fallo.</figcaption>
 </figure>
 
-**LLM‑como‑juez** es el favorito actual: pedir a un modelo potente que califique las salidas de otro modelo. Rápido, escalable, barato. El problema: incorpora los sesgos del modelo calificador, puede ser manipulado y crea una dependencia circular. Si usas GPT‑5 para calificar las salidas de GPT‑5, estás midiendo algo como “cuánto está de acuerdo GPT‑5 consigo mismo”. No es nada, pero tampoco es lo que esperas.
+**LLM como juez** es la favorita actual: pedirle a un modelo potente que califique las salidas de otro modelo. Rápido, escalable, barato. El problema: incorpora los sesgos del modelo calificador, puede ser manipulado y crea una dependencia circular. Si usas GPT-5 para calificar las salidas de GPT-5, estás midiendo algo así como "cuánto está de acuerdo GPT-5 consigo mismo". Eso no es nada, pero no es lo que crees.
 
-**Evaluación humana** es el estándar de oro que todos intentan evitar. Conseguir que humanos evalúen salidas es caro, lento, inconsistente entre evaluadores y molesto de programar. Pero es lo único que valida si tu sistema es útil para personas reales.
+**Evaluación humana** es el estándar de oro que todos intentan saltarse. Conseguir que humanos evalúen salidas es caro, lento, inconsistente entre evaluadores y molesto de programar. Pero es lo único que valida si tu sistema es útil para humanos reales.
 
-**Comprobaciones automatizadas específicas de tarea** son donde la mayoría de los equipos deberían invertir más tiempo. No son glamorosas, pero son rápidas, determinísticas y están vinculadas a lo que realmente importa en tu sistema.
+**Verificaciones automatizadas específicas de tarea** es donde la mayoría de los equipos debería dedicar más tiempo. No son glamurosas, pero son rápidas, deterministas y están vinculadas a lo que importa en tu sistema.
 
-## Lo que realmente funciona
+---
 
-### 1. Define el fallo antes de lanzar
+## Lo Que Realmente Funciona
 
-Antes de cambiar un modelo o un prompt, escribe cómo se ve un mal resultado. Específicamente.
+### 1. Define el Fallo Antes de Lanzar
 
-No "la salida debe ser precisa". Eso no es una prueba. Más bien:
+Antes de cambiar un modelo o prompt, escribe cómo se ve lo malo. Específicamente.
 
-- La salida JSON estructurada debe poder parsearse sin errores
-- Todas las citas en la respuesta deben aparecer literalmente en el contexto recuperado
-- Las respuestas no deben mencionar nombres de productos competidores
+No "la salida debe ser precisa". Eso no es una prueba. Más bien algo como:
+
+- La salida JSON estructurada debe parsearse sin errores
+- Todas las citas en la respuesta deben aparecer textualmente en el contexto recuperado
+- Las respuestas no deben mencionar nombres de productos de la competencia
 - Las consultas SQL deben ser sintácticamente válidas y referenciar solo tablas que existan en el esquema
-- La clasificación de sentimiento no debe cambiar de positivo a negativo en más del 3 % de los casos del conjunto de pruebas existente
+- La clasificación de sentimiento no debe cambiar de positivo a negativo más del 3 % de las veces en el conjunto de pruebas existente
 
-Puedes comprobar esto programáticamente. No se necesita un modelo juez.
+Puedes verificar esto programáticamente. Sin modelo juez necesario.
 
-**Arnés de evaluación: comprobaciones determinísticas**
+**Arnés de evaluación: verificaciones deterministas**
 
 ```typescript
 type EvalResult = { passed: boolean; reason?: string };
 
 const evals: Record<string, (output: string, context: EvalContext) => EvalResult> = {
-  // JSON must parse
+  // JSON debe parsearse
   validJson: (output) => {
     try {
       JSON.parse(output);
       return { passed: true };
     } catch (e) {
-      return { passed: false, reason: `Invalid JSON: ${e.message}` };
+      return { passed: false, reason: `JSON inválido: ${e.message}` };
     }
   },
 
-  // No hallucinated citations — every claim must appear in context
+  // Sin citas alucinadas — cada afirmación debe aparecer en el contexto
   groundedCitations: (output, { retrievedChunks }) => {
     const claims = extractCitations(output);
     const ungrounded = claims.filter(
@@ -122,35 +118,35 @@ const evals: Record<string, (output: string, context: EvalContext) => EvalResult
     );
     return ungrounded.length === 0
       ? { passed: true }
-      : { passed: false, reason: `Ungrounded claims: ${ungrounded.join(', ')}` };
+      : { passed: false, reason: `Afirmaciones sin fundamento: ${ungrounded.join(', ')}` };
   },
 
-  // Response length sanity check — catch truncation or runaway generation
+  // Verificación de longitud de respuesta — detectar truncamiento o generación descontrolada
   reasonableLength: (output) => {
     const words = output.split(/\s+/).length;
     return words >= 10 && words <= 2000
       ? { passed: true }
-      : { passed: false, reason: `Word count ${words} out of bounds` };
+      : { passed: false, reason: `Recuento de palabras ${words} fuera de rango` };
   },
 };
 ```
 
-### 2. Construye un conjunto dorado a partir de tus peores días
+### 2. Construye un Conjunto Dorado Desde Tus Peores Días
 
-Tus mejores datos de evaluación son los casos vergonzosos: las salidas que hicieron que alguien abriera un ticket, capturara una pantalla de una alucinación o dejara de usar la función en silencio.
+Tus mejores datos de evaluación son el material vergonzoso: las salidas que hicieron que alguien presentara un ticket, capturar una alucinación en captura de pantalla, o dejara de usar la función en silencio.
 
-Cada vez que un usuario informe una salida mala, marque una alucinación, o detectes una falla manualmente, añádela a tu conjunto dorado: la entrada, el contexto y el comportamiento correcto. Mantén entre 50 y 100 casos y ejecútalos en cada cambio de modelo.
+Cada vez que un usuario reporta una mala salida, marca una alucinación, o notas un fallo manualmente, añádelo a tu conjunto dorado: la entrada, el contexto y el comportamiento correcto. Mantén 50-100 casos y ejecútalos en cada cambio de modelo.
 
-Esto parece manual al principio. Después de seis meses, tendrás una suite de pruebas que ningún benchmark público puede manipular, porque cada caso proviene de tu propio historial de fallos.
+Esto parece manual al principio. Después de seis meses, tienes un conjunto de pruebas que ningún benchmark público puede manipular, porque cada caso vino de tu propia historia de fallos.
 
 <figure class="breakout">
 
-![Un diagrama de flujo que muestra cómo los incidentes de producción malos se convierten en casos dorados, luego se ejecutan evaluaciones en CI, y después se bloquean regresiones o se aprueban lanzamientos.](../golden-set-lifecycle.svg)
+![Un diagrama de flujo que muestra cómo los malos incidentes de producción se convierten en casos dorados, luego se ejecutan evals en CI, luego se bloquean regresiones o se aprueban lanzamientos.](./golden-set-lifecycle.svg)
 
-<figcaption>Un conjunto dorado transforma lo embarazoso en una suite de regresión.</figcaption>
+<figcaption>Un conjunto dorado convierte el material vergonzoso en un conjunto de pruebas de regresión.</figcaption>
 </figure>
 
-**Forma del caso dorado**
+**Forma de un caso dorado**
 
 ```typescript
 interface GoldenCase {
@@ -161,22 +157,22 @@ interface GoldenCase {
     mustContain?: string[];
     mustNotContain?: string[];
     structureCheck?: (output: string) => boolean;
-    minSimilarityToReference?: number; // cosine similarity to a reference answer
+    minSimilarityToReference?: number; // similitud de coseno con una respuesta de referencia
   };
-  sourceIncident?: string; // link back to the bug report or ticket
+  sourceIncident?: string; // enlace al informe de bug o ticket
 }
 ```
 
-### 3. Pruebas de regresión, no solo pruebas de aceptación
+### 3. Pruebas de Regresión, No Solo Pruebas de Aceptación
 
-La mayoría de los equipos ejecutan evaluaciones solo cuando consideran cambiar un modelo. Eso es pruebas de aceptación: “¿es esto suficientemente bueno?”
+La mayoría de los equipos ejecutan evals solo cuando consideran un cambio de modelo. Eso es prueba de aceptación: "¿es esta nueva cosa lo suficientemente buena?"
 
-También necesitas pruebas de regresión: “¿se rompió algo que antes funcionaba?”
+También necesitas pruebas de regresión: "¿rompió esto algo que antes funcionaba?"
 
-Ejecuta tu conjunto dorado en cada cambio de prompt, no solo en cambios de modelo. Un prompt que funcionaba bien puede degradarse silenciosamente al añadir una nueva herramienta, cambiar una estrategia de recuperación RAG o actualizar la plantilla de contexto. No lo sabrás sin una línea base. Herramientas como [Langfuse](https://langfuse.com/) adjuntan puntuaciones de evaluación a los rastros de producción para que la regresión aparezca en los paneles, no solo en los informes de incidentes.
+Ejecuta tu conjunto dorado en cada cambio de prompt, no solo en cambios de modelo. Un prompt que estaba funcionando bien puede degradarse silenciosamente cuando añades una nueva herramienta, cambias una estrategia de recuperación RAG, o actualizas tu plantilla de contexto. No lo sabrás sin una línea base. Herramientas como [Langfuse](https://langfuse.com/) adjuntan puntuaciones de eval a trazas de producción para que la regresión aparezca en dashboards, no solo en informes de incidentes.
 
 <details>
-<summary>Armazón de evaluación: comparación línea base vs candidato</summary>
+<summary>Arnés de evaluación: comparación de línea base vs candidato</summary>
 
 ```typescript
 async function compareModelVersions(
@@ -195,8 +191,8 @@ async function compareModelVersions(
         id: tc.id,
         baselinePassed: runEvals(baseline, tc.expectedBehavior),
         candidatePassed: runEvals(candidate, tc.expectedBehavior),
-        regression: /* baseline passed */ && /* candidate failed */,
-        improvement: /* baseline failed */ && /* candidate passed */,
+        regression: /* línea base pasó */ && /* candidato falló */,
+        improvement: /* línea base falló */ && /* candidato pasó */,
       };
     })
   );
@@ -204,11 +200,11 @@ async function compareModelVersions(
   const regressions = results.filter((r) => r.regression);
   const improvements = results.filter((r) => r.improvement);
 
-  console.log(`Regressions: ${regressions.length} / ${goldenCases.length}`);
-  console.log(`Improvements: ${improvements.length} / ${goldenCases.length}`);
+  console.log(`Regresiones: ${regressions.length} / ${goldenCases.length}`);
+  console.log(`Mejoras: ${improvements.length} / ${goldenCases.length}`);
 
   if (regressions.length > 0) {
-    console.error('Blocking regressions found:');
+    console.error('Regresiones bloqueantes encontradas:');
     regressions.forEach((r) => console.error(` - ${r.id}`));
   }
 
@@ -218,15 +214,15 @@ async function compareModelVersions(
 
 </details>
 
-Si un candidato regresa en fallos conocidos, la conversación sobre la actualización se vuelve maravillosamente específica: qué casos mejoraron, qué casos se rompieron y si el intercambio vale la pena.
+Si un candidato retrocede en fallos conocidos, la conversación de actualización se vuelve maravillosamente específica: qué casos mejoraron, qué casos se rompieron, y si el intercambio vale la pena.
 
-### 4. Usa LLM‑as‑Judge para exactamente una cosa
+### 4. Usa LLM como Juez Para Exactamente Una Cosa
 
-LLM‑as‑judge es útil para salidas abiertas donde no existe una respuesta determinista correcta: “¿es útil esta respuesta?”, “¿este resumen conserva los puntos clave?”, “¿esta explicación es adecuada para un principiante?”
+LLM como juez es útil para salidas abiertas donde no hay una respuesta determinista correcta: "¿es esta respuesta útil?", "¿este resumen preserva los puntos clave?", "¿esta explicación es adecuada para un principiante?"
 
-Úsalo en esos casos. No lo emplees para respuestas determinísticas. Cuando lo hagas, deja la rúbrica de calificación explícita:
+Úsalo ahí. No lo uses para respuestas deterministas. Cuando lo uses, haz explícita la rúbrica de calificación:
 
-**Eval harness: juez basado en rúbrica**
+**Arnés de evaluación: juez basado en rúbrica**
 
 ```typescript
 async function judgeHelpfulness(
@@ -234,19 +230,19 @@ async function judgeHelpfulness(
   modelResponse: string
 ): Promise<{ score: number; reasoning: string }> {
   const judgePrompt = `
-You are evaluating a customer support response.
+Estás evaluando una respuesta de soporte al cliente.
 
-User question: ${userQuery}
-Response: ${modelResponse}
+Pregunta del usuario: ${userQuery}
+Respuesta: ${modelResponse}
 
-Rate the response on a scale of 1-5:
-5 = Directly answers the question with accurate, actionable information
-4 = Answers the question but could be more specific or actionable
-3 = Partially addresses the question; key information is missing
-2 = Tangentially related but doesn't answer the question
-1 = Off-topic, factually wrong, or harmful
+Califica la respuesta en una escala del 1 al 5:
+5 = Responde directamente la pregunta con información precisa y accionable
+4 = Responde la pregunta pero podría ser más específica o accionable
+3 = Aborda parcialmente la pregunta; falta información clave
+2 = Relacionado tangencialmente pero no responde la pregunta
+1 = Fuera de tema, factualmente incorrecto o dañino
 
-Respond with JSON: {"score": <number>, "reasoning": "<one sentence>"}
+Responde con JSON: {"score": <number>, "reasoning": "<una oración>"}
 `;
 
   const result = await judgeModel.generate(judgePrompt);
@@ -254,35 +250,35 @@ Respond with JSON: {"score": <number>, "reasoning": "<one sentence>"}
 }
 ```
 
-Una rúbrica explícita reduce la variabilidad del evaluador, te brinda una salida interpretable y facilita la auditoría cuando el juez se equivoca. Bibliotecas como [Autoevals](https://github.com/braintrustdata/autoevals) y [Braintrust](https://www.braintrust.dev/) ofrecen rúbricas preconstruidas para tareas comunes — vale la pena tomarlas antes de escribir la tuya desde cero.
+Una rúbrica explícita reduce la varianza del evaluador, te da una salida interpretable y facilita auditar cuándo el juez se equivoca. Bibliotecas como [Autoevals](https://github.com/braintrustdata/autoevals) y [Braintrust](https://www.braintrust.dev/) incluyen rúbricas predefinidas para tareas comunes — vale la pena robarlas antes de escribir las tuyas desde cero.
 
 ---
 
-## Herramientas que conviene conocer
+## Herramientas Que Vale la Pena Conocer
 
-No tienes que construir todo desde cero. Varias herramientas han avanzado significativamente en el problema de la infraestructura de evaluación:
+No tienes que construir todo esto desde cero. Varias herramientas han avanzado seriamente en el problema de la infraestructura de evaluación:
 
-**[Braintrust](https://www.braintrust.dev/)** — Plataforma completa de evaluación con seguimiento de experimentos, gestión de conjuntos de datos y funciones de puntuación. Organiza ejecuciones de evaluación por prompt, modelo y despliegue para que puedas comparar la calidad a lo largo del tiempo, no solo entre versiones. Se complementa bien con su biblioteca de código abierto **[Autoevals](https://github.com/braintrustdata/autoevals)**, que incluye funciones de puntuación calificadas por modelo para tareas comunes (precisión factual, utilidad, toxicidad, similitud semántica).
+**[Braintrust](https://www.braintrust.dev/)** — Plataforma completa de evaluación con seguimiento de experimentos, gestión de datasets y funciones de puntuación. Organiza ejecuciones de evaluación por prompt, modelo y despliegue para que puedas comparar la calidad a lo largo del tiempo, no solo entre lanzamientos. Funciona bien con su biblioteca de código abierto **[Autoevals](https://github.com/braintrustdata/autoevals)**, que incluye funciones de puntuación predefinidas calibradas por modelo para tareas comunes (precisión factual, utilidad, toxicidad, similitud semántica).
 
-**[Langfuse](https://langfuse.com/)** — Observabilidad de LLM de código abierto que se sitúa entre tu aplicación y tus modelos. Rastrea cada llamada, adjunta puntuaciones de evaluación (humanas o automáticas) a spans individuales y muestra tendencias de calidad sobre el tráfico de producción. Buena opción si deseas observabilidad y evaluaciones en la misma herramienta en lugar de un harness de evaluación separado.
+**[Langfuse](https://langfuse.com/)** — Observabilidad LLM de código abierto que se sitúa entre tu aplicación y tus modelos. Rastrea cada llamada, adjunta puntuaciones de evaluación (humanas o automatizadas) a spans individuales, y muestra tendencias de calidad sobre el tráfico de producción. Buena opción si quieres observabilidad y evaluación en la misma herramienta en lugar de un arnés de evaluación separado.
 
-**[Evalite](https://www.evalite.dev/)** — Marco de evaluación nativo de TypeScript creado por Matt Pocock. Baja ceremonia: define una tarea, define un puntuador, ejecútalo dentro de tu configuración de pruebas existente. Está dirigido a equipos que quieren evaluaciones que se sientan como pruebas unitarias en lugar de una plataforma de experimentos de ML separada.
+**[Evalite](https://www.evalite.dev/)** — Framework de evaluación nativo de TypeScript creado por Matt Pocock. Baja ceremonia: define una tarea, define un puntuador, ejecútalo en tu configuración de pruebas existente. Apunta a equipos que quieren evaluaciones que se sientan como pruebas unitarias en lugar de una plataforma separada de experimentos de ML.
 
-**[promptfoo](https://www.promptfoo.dev/)** — Ejecutador de evaluaciones orientado a la línea de comandos, centrado en la comparación de prompts y el red‑team. Fácil de configurar mediante YAML, se integra con la mayoría de proveedores de modelos y tiene soporte incorporado para detectar inyección de prompts y otras entradas adversarias.
+**[promptfoo](https://www.promptfoo.dev/)** — Ejecutor de evaluación CLI-first centrado en la comparación de prompts y pruebas de penetración. Fácil de configurar vía YAML, se integra con la mayoría de proveedores de modelos, y tiene soporte integrado para detectar inyección de prompts y otras entradas adversarias.
 
-**[deepeval](https://docs.confident-ai.com/)** — Marco de evaluación en Python con una amplia biblioteca de métricas integradas (G‑Eval, fidelidad RAG, relevancia de respuestas, detección de alucinaciones). Útil para pipelines RAG donde se necesita calificar específicamente la calidad de la recuperación, no solo la calidad de la generación.
+**[deepeval](https://docs.confident-ai.com/)** — Framework de evaluación en Python con una gran biblioteca de métricas integradas (G-Eval, fidelidad RAG, relevancia de respuestas, detección de alucinaciones). Útil para pipelines RAG donde quieres calificación específica para la calidad de recuperación, no solo la calidad de generación.
 
-La herramienta adecuada depende de tu stack y de tu punto de partida. Lo que importa más que la elección del framework es la disciplina de ejecutar evaluaciones en absoluto — de forma constante, en cada cambio significativo.
+La herramienta correcta depende de tu stack y de dónde estás empezando. Lo que importa más que la elección de framework es la disciplina de ejecutar evaluaciones en absoluto — de forma consistente, en cada cambio significativo.
 
 ---
 
-## La parte incómoda
+## La Parte Incómoda
 
-La mayoría de los equipos la omiten porque plantea una pregunta irritante al principio: ¿cómo se vería “bueno” en este caso?
+La mayoría de los equipos saltan esto porque plantea una pregunta irritante pronto: ¿cómo se vería lo "bueno" aquí?
 
-Eso es realmente difícil para una característica de IA nueva. También es ineludible si te importa la fiabilidad. Los equipos que entregan IA confiable hacen lo mismo que harían con cualquier ruta de código crítica: definen el comportamiento esperado, lo prueban y ejecutan esas pruebas de forma continua.
+Eso es genuinamente difícil para una nueva función de IA. También es no negociable si te importa la fiabilidad. Los equipos que lanzan IA confiable están haciendo lo mismo que harían para cualquier ruta de código crítica: definir comportamiento esperado, probarlo, y ejecutar esas pruebas continuamente.
 
-Los benchmarks no mienten. Responden a la pregunta de otra persona. Deja de interpretarlos como hojas de ruta de producto y empieza a escribir pruebas que coincidan con tu sistema.
+Los benchmarks no mienten. Están respondiendo a la pregunta de otra persona. Deja de leerlos como hojas de ruta de producto y empieza a escribir pruebas que coincidan con tu sistema.
 
-Tus usuarios lo notarán antes que tus paneles de control. Construye primero el conjunto de pruebas.
+Tus usuarios lo notarán antes que tus dashboards. Construye el conjunto de pruebas primero.
 ````
