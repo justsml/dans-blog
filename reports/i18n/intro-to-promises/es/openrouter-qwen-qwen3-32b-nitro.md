@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: intro-to-promises
+- Locale: es
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2018-08-01--intro-to-promises/es/index.mdx
+- Validation: passed
+- Runtime seconds: 8.38
+- Input tokens: 3485
+- Output tokens: 3321
+- Thinking tokens: unknown
+- Cached input tokens: 1024
+- Cache write tokens: 0
+- Estimated cost: $0.001076
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Introducción a Promesas
@@ -105,3 +123,4 @@ Todas las Promises devuelven éxito (a través de `.then(fn)`) o fracaso (a trav
 * `Promise.reject(Error)` - Crea un valor Promise de fallo, activa la subsiguiente `.catch()`  
 * `Promise.all([...promises])` - Espera a que un array de Promises se complete TODO  
 * `Promise.race([...promises])` - Se resuelve en cuanto la primera promesa se resuelva
+````
