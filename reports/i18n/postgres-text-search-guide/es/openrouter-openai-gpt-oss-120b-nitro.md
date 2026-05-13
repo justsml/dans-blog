@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: postgres-text-search-guide
+- Locale: es
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-05-02--postgres-text-search-guide/es/index.mdx
+- Validation: passed
+- Runtime seconds: 20.78
+- Input tokens: 16311
+- Output tokens: 7743
+- Thinking tokens: unknown
+- Cached input tokens: 1920
+- Cache write tokens: 0
+- Estimated cost: $0.002030
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Guía de Búsqueda de Texto en Postgres 2026
 subTitle: >-
@@ -479,3 +497,4 @@ El conjunto de candidatos de 60 documentos por rama (`LIMIT 60`) es un punto de 
 La búsqueda de texto en Postgres cubre mucho terreno, pero tiene un techo. Cuando los usuarios describen lo que quieren en lugar de nombrarlo — “algo que me ayude a dormir en un vuelo”, “artículos sobre cómo depurar la confianza como ingeniero nuevo” — la búsqueda léxica y de trigramas fallan.
 
 Ese es el dominio de los embeddings vectoriales, la búsqueda semántica y las arquitecturas híbridas. Cubierto en [Búsqueda Vectorial Semántica y Estrategias Híbridas](../semantic-vector-search-landscape).
+````
