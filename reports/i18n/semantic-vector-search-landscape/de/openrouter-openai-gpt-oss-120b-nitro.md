@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: semantic-vector-search-landscape
+- Locale: de
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-05-01--semantic-vector-search-landscape/de/index.mdx
+- Validation: passed
+- Runtime seconds: 24.52
+- Input tokens: 19031
+- Output tokens: 8068
+- Thinking tokens: unknown
+- Cached input tokens: 4224
+- Cache write tokens: 0
+- Estimated cost: $0.002194
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: >-
   Semantische Vektorsuche und weitere Themen, um Freunde und Liebende zu
@@ -376,3 +394,4 @@ Die meisten produktiven Suchsysteme benötigen mehr als eine Ebene:
 Dies sind keine Konkurrenzwerkzeuge. Sie ergänzen sich. Ein gut gebautes Suchsystem wählt die passende Ebene für jede Abfrageform – und wenn sich Abfrageformen überschneiden, werden mehrere Ebenen parallel ausgeführt und die Ergebnisse zusammengeführt.
 
 Die Teams, die gute Suchfeatures ausliefern, verstehen den gesamten Stack. Die, die es nicht tun, greifen zum Vektor‑Datenbank, betten alles ein und wundern sich, warum exakte Lookups manchmal den falschen Datensatz zurückliefern.
+````
