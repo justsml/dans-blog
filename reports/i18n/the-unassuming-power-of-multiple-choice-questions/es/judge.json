@@ -1,0 +1,38 @@
+{
+  "selectedCommit": "03365a8251272d6f1feedcdaceedd178237c3be3",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "scores": {
+    "readability": 5,
+    "technicalAccuracy": 5,
+    "coherence": 5,
+    "relevance": 5,
+    "translationQuality": 5,
+    "mdxPreservation": 5
+  },
+  "suggestions": [],
+  "rationale": "The selected candidate (03365a8251272d6f1feedcdaceedd178237c3be3) is excellent. It captures Dan's direct tone perfectly. The previous judge suggested changing 'código legacy' to 'código heredado', but looking at the current state of the file, that change has already been applied ('en código heredado' is present in the text). The translation of 'cheap seats' as 'gradas baratas' is idiomatic, and the use of 'POM' for MCQs is consistent and helpful for the Spanish reader. All MDX components and metadata are correctly preserved.",
+  "slug": "the-unassuming-power-of-multiple-choice-questions",
+  "locale": "es",
+  "candidateCommits": [
+    "03365a8251272d6f1feedcdaceedd178237c3be3",
+    "27bebe1297539b71069a5d05156442041fae8c67",
+    "aa638ee3d07635e4b88357f1bfe6993da8b7955b"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "medium",
+      "match": "en código legacy",
+      "replacement": "en código heredado",
+      "reason": "While 'legacy' is used in tech, 'heredado' or 'antiguo' is more natural in a high-quality Spanish translation, and the candidate already used 'antiguo' in the list above.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug the-unassuming-power-of-multiple-choice-questions --locale es --skip-global",
+    "output": ""
+  }
+}
