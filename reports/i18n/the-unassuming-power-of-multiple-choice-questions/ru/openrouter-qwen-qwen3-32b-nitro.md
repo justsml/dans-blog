@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: the-unassuming-power-of-multiple-choice-questions
+- Locale: ru
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2025-01-01--the-unassuming-power-of-multiple-choice-questions/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 15.79
+- Input tokens: 5663
+- Output tokens: 5713
+- Thinking tokens: unknown
+- Cached input tokens: 512
+- Cache write tokens: 0
+- Estimated cost: $0.001824
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Скрытая сила тестовых вопросов
 subTitle: ''
@@ -87,3 +105,4 @@ cover_icon: ../digital-mcq-hero-square.webp
 Поэтому я продолжаю использовать MCQ на этом сайте. Не потому что они эффективны, хотя они и таковыми являются. Потому что они вынуждают быть честным в обучении, чего нельзя избежать, просто написав текст.
 
 В следующий раз, когда вы будете писать одну, не начинайте с правильного ответа. Начните с заблуждений. Правильный ответ получит гораздо более прочную позицию.
+````
