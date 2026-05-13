@@ -1,0 +1,63 @@
+# Translation Candidate
+- Slug: security-notes-regex
+- Locale: fr
+- Model: qwen/qwen3.5-9b
+- Target: src/content/posts/2015-02-24--security-notes-regex/fr/index.mdx
+- Validation: rejected: direct AI SDK translation failed
+- Runtime seconds: 208.70
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Cache write tokens: unknown
+- Estimated cost: unknown
+- Pricing source: unknown
+- Note: Command failed: bun run i18n:translate:chunked -- --slug security-notes-regex --locale fr --model qwen/qwen3.5-9b --chunk 10p --run-id 2026-05-13T20-47-14-617Z-26482 --run-lock-path /Users/dan/code/oss/dans-blog/.git/codex-i18n-translation-run.json --quiz-concurrency 24 (code 1)
+## Raw Output
+
+````mdx
+---
+title: 'Notes de sécurité : RegEx'
+subTitle: Les expressions régulières peuvent‑elles être vulnérables ?
+date: '2015-02-24'
+modified: '2018-07-30'
+category: Security
+subCategory: RegEx
+tags:
+  - security
+  - regex
+  - dos
+  - remote-exploit
+cover_credit: Photo by Markus Spiske on Unsplash
+cover: ../markus-spiske-666905-unsplash.webp
+cover_mobile: ../w300_markus-spiske-666905-unsplash.webp
+cover_icon: ../icon_markus-spiske-666905-unsplash.webp
+social_image: ../desktop-social.webp
+---
+## Rejet de service par expression régulière : ReDOS
+
+L’une des vulnérabilités les plus surprenantes, et pourtant difficiles à repérer, que j’ai rencontrées concerne les expressions régulières.  
+Qu’elles soient mal écrites ou mal implémentées, elles peuvent épuiser la mémoire ou le CPU avec des entrées utilisateur volumineuses ou spécialement conçues.
+
+> Il s’agit d’une vulnérabilité de déni de service, pas seulement d’un indice de performance. Si une entrée hostile peut monopoliser le CPU suffisamment longtemps pour priver les utilisateurs légitimes de ressources, elle doit figurer dans votre modèle de menace de sécurité.
+
+### Signaux d’alerte
+
+1. Quantificateurs imbriqués, groupes répétés ou alternances qui se chevauchent  
+2. Moteurs à forte rétro‑exploration sans délai d’attente ni limite de longueur d’entrée  
+3. L’expression est appliquée à des données utilisateur non validées  
+4. La validation par regex s’exécute sur un chemin de requête critique  
+
+### Atténuation / Résolution
+
+1. Les expressions régulières sont difficiles.  
+    1.  Par exemple, voici comment les experts de [OWASP recommandent la validation d’IP][owasp] : `^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$`  
+    2.  C’est plus long qu’un tweet (à l’ancienne), pour une adresse IP de 4 octets !!!  
+2. Limiter la longueur d’entrée avant l’évaluation de l’expression régulière.  
+3. Ajouter des délais d’attente, de l’analyse statique, ou un moteur non rétro‑explorateur lorsque la plateforme le permet.  
+4. Cela concerne presque tous les langages et plateformes : .NET, Node, Python, PERL, Java.
+
+### Référence
+
+- [OWASP ReDoS](https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS)
+````
