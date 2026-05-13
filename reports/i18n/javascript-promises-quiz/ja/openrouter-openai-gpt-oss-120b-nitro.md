@@ -3,21 +3,21 @@
 - Locale: ja
 - Model: openrouter/openai/gpt-oss-120b:nitro
 - Target: src/content/posts/2019-11-26--javascript-promises-quiz/ja/index.mdx
-- Validation: rejected: direct AI SDK translation failed
-- Runtime seconds: 7.15
-- Input tokens: 8648
-- Output tokens: 5672
+- Validation: passed
+- Runtime seconds: 8.19
+- Input tokens: 8606
+- Output tokens: 5776
 - Thinking tokens: unknown
-- Cached input tokens: 2048
-- Estimated cost: $0.001358
-- Note: Command failed: bun run i18n:validate --slug javascript-promises-quiz --locale ja
+- Cached input tokens: 2176
+- Estimated cost: $0.001375
+- Note: Generated through the direct AI SDK chunked translator.
 ## Raw Output
 
 ````mdx
 ---
 social_image: ../desktop-social.webp
-title: 'クイズ: JavaScript Promise に関する9問'
-subTitle: Promise を落とすことはもうない！
+title: 'クイズ: JavaScript Promise 9問'
+subTitle: Promise を落とさない。
 label: Promise Gotchas
 date: '2019-11-26'
 modified: '2024-11-28'
@@ -50,8 +50,8 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 > * **JavaScript スキルを証明しよう！** 🚀
 
 1. **ヒントを見る**（右下の大きなボタン）。
-2. ブラウザのコンソールでコードを実行してみる（ショートカット `F12` か検索）。または [repl.it](https://repl.it)* を使う。
-3. 気軽に [Tweet で @justsml に連絡してください](https://x.com/intent/tweet?text=Hey%20Dan%2C%20I%20was%20taking%20your%20promises%20quiz%2E%2E%2E&url=https://danlevy.net/)。 **感想をぜひ聞かせてください！**
+2. ブラウザのコンソールでコードを試す（ショートカット `F12` か検索）または [repl.it](https://repl.it)* を使う。
+3. 気軽に [Tweet at me @justsml](https://x.com/intent/tweet?text=Hey%20Dan%2C%20I%20was%20taking%20your%20promises%20quiz%2E%2E%2E&url=https://danlevy.net/) してください。**感想をぜひ聞かせてください！**
 
 ### 👇 以下の 9 問に答えてください 👇
 
@@ -63,10 +63,10 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   group="エラー処理"
   title="複数の `.catch` #1"
   options={[
-    {text: 'メッセージを1回出力'},
-    {text: 'メッセージを2回出力', isAnswer: true},
+    {text: 'メッセージを1回表示'},
+    {text: 'メッセージを2回表示', isAnswer: true},
     {text: 'UnhandledPromiseRejectionWarning'},
-    {text: 'プロセスが終了'},
+    {text: 'プロセスが終了する'},
   ]}
 >
   <slot name="question">
@@ -83,7 +83,7 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    コンストラクタ方式で Promise を作成し、`reject` コールバックで即座にエラーを発生させます。
+    コンストラクタで Promise を作成し、`reject` コールバックで即座にエラーを発生させます。
 
     その後、`.catch` ハンドラは DOM の `.addEventListener(event, callback)` や Event Emitter の `.on(event, callback)` と同様に、**複数のハンドラコールバックを追加でき**ます。各コールバックは同じ引数で呼び出されます。
   </div>
@@ -96,15 +96,15 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   group="エラーの処理"
   title="複数の `.catch` #2"
   options={[
-    {text: 'メッセージを1回出力'},
-    {text: 'メッセージを2回出力'},
+    {text: 'メッセージを1回表示'},
+    {text: 'メッセージを2回表示'},
     {text: '未処理の拒否された Promise', isAnswer: true},
-    {text: 'プロセスが終了'},
+    {text: 'プロセスが終了する'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    次のコードの出力は何ですか？
+    以下のコードの出力は何ですか？
     ```js
         var p = new Promise((resolve, reject) => {
           return Promise.reject(Error('The Fails!'))
@@ -135,7 +135,7 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    次のコードの出力は何になりますか？
+    次のコードの出力は何ですか？
     ```js
       var p = new Promise((resolve, reject) => {
           reject(Error('The Fails!'))
@@ -147,7 +147,7 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `.then` と `.catch` をチェーンするときは、ステップの連続として考えると分かりやすいです。各 `.then` は前の `.then` が返した値を引数として受け取ります。ただし、ある「ステップ」でエラーが発生した場合、次の `.then` の「ステップ」は `.catch` が現れるまでスキップされます。エラーを上書きしたい場合は、エラーでない値を返すだけです。その値は以降の任意の `.then` で取得できます。
+    `.then` と `.catch` をチェーンするときは、ステップの連続として考えると分かりやすいです。各 `.then` は前の `.then` が返した値を引数として受け取ります。ただし、ある「ステップ」でエラーが発生した場合、次の `.then` ステップはすべて `.catch` が現れるまでスキップされます。エラーを上書きしたい場合は、エラーでない値を返すだけです。その値は以降の `.then` で取得できます。
   </div>
   </slot>
 </Challenge>
@@ -156,10 +156,10 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   client:only="react"
   index={3}
   group="エラー処理"
-  title="`.catch` のチェーン"
+  title="`.catch` をチェーンする"
   options={[
-    {text: 'エラーメッセージを1回表示', isAnswer: true},
-    {text: 'エラーメッセージを2回表示'},
+    {text: 'エラーメッセージを1回表示する', isAnswer: true},
+    {text: 'エラーメッセージを2回表示する'},
     {text: 'UnhandledPromiseRejectionWarning'},
     {text: 'プロセスが終了する'},
   ]}
@@ -178,7 +178,7 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `.catch` をチェーンするときは、各 `.catch` は前の `.then` または `.catch` 「ステップ」で投げられたエラーだけを処理します。この例では最初の `.catch` が `console.log` を返しますが、これは両方の `.catch` の後に `.then()` を追加しなければ取得できません。
+    `.catch` をチェーンする場合、各 `.catch` は前の `.then` または `.catch` の「ステップ」で投げられたエラーのみを処理します。この例では最初の `.catch` が `console.log` を返しており、両方の `.catch` の後に `.then()` を追加しないとその結果にアクセスできません。
   </div>
   </slot>
 </Challenge>
@@ -189,10 +189,10 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   group="エラーの処理"
   title="複数の `.catch`'s"
   options={[
-    {text: 'メッセージを1回出力'},
-    {text: 'メッセージを2回出力'},
+    {text: 'メッセージを1回表示'},
+    {text: 'メッセージを2回表示'},
     {text: 'UnhandledPromiseRejectionWarning'},
-    {text: '何も出力されない', isAnswer: true},
+    {text: '何も表示されない', isAnswer: true},
   ]}
 >
   <slot name="question">
@@ -214,7 +214,7 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    **Hint:** `.catch` はエラーを無視（または上書き）するために、通常の値を返すだけで使える。
+    **ヒント:** `.catch` はエラーを無視（または上書き）するために、通常の値を返すだけで使える。
 
     このトリックは、その後に値を受け取る `.then` がある場合にのみ機能します。
   </div>
@@ -225,11 +225,11 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={5}
   group="データ処理"
-  title="`.then` の間のフロー"
+  title="`.then` の流れ"
   options={[
-    {text: '"Success!" と "SUCCESS!" を出力'},
-    {text: '"Success!" を出力'},
-    {text: '"SUCCESS!" を出力', isAnswer: true},
+    {text: '「Success!」と「SUCCESS!」を表示'},
+    {text: '「Success!」を表示'},
+    {text: '「SUCCESS!」を表示', isAnswer: true},
     {text: '何も出力されない'},
   ]}
 >
@@ -249,7 +249,7 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    **Hint:** `.then` はデータを順番に渡します。`return value` から次の `.then(value => /* handle value */)` へ。
+    **Hint:** `.then` はデータを順次渡します。`return value` から次の `.then(value => /* handle value */)` へ。
 
     `return` は次の `.then` に値を渡すための鍵です。
   </div>
@@ -262,9 +262,9 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   group="データ処理"
   title="`.then` の間のフロー"
   options={[
-    {text: '"SUCCESS!" を出力'},
-    {text: '"Success!" を出力'},
-    {text: '"SUCCESS!" と "SUCCESS!" を出力', isAnswer: true},
+    {text: '「SUCCESS!」を出力'},
+    {text: '「Success!」を出力'},
+    {text: '「SUCCESS!」と「SUCCESS!」を出力', isAnswer: true},
     {text: '何も出力されない'},
   ]}
 >
@@ -295,12 +295,12 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={7}
   group="データの処理"
-  title="`.then` のフロー"
+  title="`.then` の間のフロー"
   options={[
-    {text: 'print "SUCCESS!"'},
-    {text: 'print "Success!"'},
-    {text: 'print "SUCCESS!" and "SUCCESS!"'},
-    {text: 'prints `undefined`', isAnswer: true},
+    {text: '「SUCCESS!」を出力'},
+    {text: '「Success!」を出力'},
+    {text: '「SUCCESS!」と「SUCCESS!」を出力'},
+    {text: '`undefined` を出力', isAnswer: true},
   ]}
 >
   <slot name="question">
@@ -329,7 +329,7 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={8}
-  group="データ処理"
+  group="データの取り扱い"
   title="`.then` と `.catch` の間のフロー"
   options={[
     {text: '「Oh noes!」 と 「The fails!」 を出力'},
