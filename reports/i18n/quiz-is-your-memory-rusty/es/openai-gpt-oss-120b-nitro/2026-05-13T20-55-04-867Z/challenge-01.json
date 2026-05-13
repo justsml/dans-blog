@@ -1,0 +1,58 @@
+{
+  "index": 0,
+  "attempt": 1,
+  "originalTitle": "Basic Move Semantics",
+  "translatedTitle": "Semántica Básica de Movimiento",
+  "translation": {
+    "title": "Semántica Básica de Movimiento",
+    "group": "Propiedad",
+    "options": [
+      {
+        "text": "¡Hola, !",
+        "hint": "Piensa en qué ocurre con 'philosopher' después de que se mueve"
+      },
+      {
+        "text": "¡Hola, Zenón de Citio!",
+        "hint": "Una vez que un valor se mueve, ¿podemos seguir usándolo?"
+      },
+      {
+        "text": "¡Hola, Zenón de Elea!",
+        "hint": "La cadena contiene 'Citio', no 'Elea'"
+      },
+      {
+        "text": "¡Hola, Marco Aurelio!",
+        "hint": "Comprueba si coincide con el contenido de la cadena"
+      },
+      {
+        "text": "Error de compilación: valor prestado después de mover"
+      },
+      {
+        "text": "Error de tiempo de ejecución: excepción de puntero nulo",
+        "hint": "Rust detecta estos problemas en tiempo de compilación"
+      }
+    ],
+    "questionProse": [
+      "¿Qué ocurre cuando ejecutas este código? Intenta predecir la salida o el error:"
+    ],
+    "explanationProse": [
+      "Este código no compila porque las reglas de ownership de Rust. Cuando asignamos `philosopher` a `greeting`, la propiedad del String se mueve a `greeting`. Después de este movimiento, `philosopher` ya no es válido para usar.\n\n      Aquí hay tres formas de arreglarlo:\n\n      1. Clonar la cadena (crea una copia nueva):",
+      "2. Usar una referencia (presta el valor):",
+      "3. Usar un slice de cadena (presta parte de la cadena):",
+      "Cada solución tiene diferentes casos de uso e implicaciones de rendimiento. Clonar es más costoso pero te da ownership, mientras que las referencias son más baratas pero tienen restricciones de lifetime."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Semántica Básica de Movimiento\",\n  \"group\": \"Propiedad\",\n  \"options\": [\n    {\n      \"text\": \"¡Hola, !\",\n      \"hint\": \"Piensa en qué ocurre con 'philosopher' después de que se mueve\"\n    },\n    {\n      \"text\": \"¡Hola, Zenón de Citio!\",\n      \"hint\": \"Una vez que un valor se mueve, ¿podemos seguir usándolo?\"\n    },\n    {\n      \"text\": \"¡Hola, Zenón de Elea!\",\n      \"hint\": \"La cadena contiene 'Citio', no 'Elea'\"\n    },\n    {\n      \"text\": \"¡Hola, Marco Aurelio!\",\n      \"hint\": \"Comprueba si coincide con el contenido de la cadena\"\n    },\n    {\n      \"text\": \"Error de compilación: valor prestado después de mover\"\n    },\n    {\n      \"text\": \"Error de tiempo de ejecución: excepción de puntero nulo\",\n      \"hint\": \"Rust detecta estos problemas en tiempo de compilación\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Qué ocurre cuando ejecutas este código? Intenta predecir la salida o el error:\"\n  ],\n  \"explanationProse\": [\n    \"Este código no compila porque las reglas de ownership de Rust. Cuando asignamos `philosopher` a `greeting`, la propiedad del String se mueve a `greeting`. Después de este movimiento, `philosopher` ya no es válido para usar.\\n\\n      Aquí hay tres formas de arreglarlo:\\n\\n      1. Clonar la cadena (crea una copia nueva):\",\n    \"2. Usar una referencia (presta el valor):\",\n    \"3. Usar un slice de cadena (presta parte de la cadena):\",\n    \"Cada solución tiene diferentes casos de uso e implicaciones de rendimiento. Clonar es más costoso pero te da ownership, mientras que las referencias son más baratas pero tienen restricciones de lifetime.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1084,
+    "outputTokens": 859,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 770
+  },
+  "cost": {
+    "inputUsd": 0.00004227599999999999,
+    "outputUsd": 0.00015461999999999998,
+    "totalUsd": 0.00019689599999999998,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
