@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-in-the-aws-cloud
+- Locale: hi
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2024-12-28--quiz-in-the-aws-cloud/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 449.56
+- Input tokens: 22057
+- Output tokens: 39687
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.011289
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: ''
@@ -914,3 +932,4 @@ AWS स्टोरेज सेवाओं में गहराई से �
 [डैन के चुनौतियां](/challenges/) और देखें! 🧠  
 
 कानूनी: यह प्रश्नोत्तरी केवल शिक्षामूलक उद्देश्यों के लिए है। सभी ट्रेडमार्क और प्रतियोगिता उनके संबंधित मालिकों की हैं, खासकर बड़े नामों की।
+````

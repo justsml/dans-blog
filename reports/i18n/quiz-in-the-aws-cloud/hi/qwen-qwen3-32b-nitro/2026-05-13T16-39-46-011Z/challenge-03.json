@@ -1,0 +1,55 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "DynamoDB",
+  "translatedTitle": "DynamoDB",
+  "translation": {
+    "title": "DynamoDB",
+    "group": "स्कीमा रहित",
+    "options": [
+      {
+        "text": "PutItem",
+        "hint": "एक नए आइटम को बनाता है, या एक पुराने आइटम को एक नए आइटम से बदल देता है।"
+      },
+      {
+        "text": "BatchUpdateItem",
+        "hint": "मौजूद नहीं है।"
+      },
+      {
+        "text": "BatchWriteItem",
+        "hint": "एकल कॉल में कई आइटम को पढ़े या हटाए।"
+      },
+      {
+        "text": "UpdateItem"
+      },
+      {
+        "text": "BatchUpsertItem",
+        "hint": "DynamoDB में?"
+      },
+      {
+        "text": "TransactWriteItems",
+        "hint": "एकल कॉल में कई PutItem, UpdateItem, DeleteItem, और ConditionCheck ऑपरेशन्स को जोड़ता है।"
+      }
+    ],
+    "questionProse": [
+      "कौन सा DynamoDB API एक मौजूदा आइटम पर एट्रिब्यूट्स को अपडेट करता है?"
+    ],
+    "explanationProse": [
+      "यहां महत्वपूर्ण बात <b>अपडेट्स</b> है, न कि इंसर्ट या PUTs। अगर आप इंसर्ट कर रहे हो, तो आप `BatchWriteItem` या `TransactWriteItems` का उपयोग कर सकते हैं।\n\n    जबकि `BatchWriteItem` कई ऑपरेशन्स को संभाल सकता है, लेकिन यह केवल PUTs और DELETES तक सीमित है। `TransactWriteItems` अधिक शक्तिशाली है, लेकिन सरल अपडेट के लिए यह थोड़ा बड़ा हथियार है।\n    सरल अपडेट के लिए, `UpdateItem` सबसे अच्छा विकल्प है। यह आपको एक मौजूदा आइटम में एक या अधिक एट्रिब्यूट्स को UPDATE करने की अनुमति देता है।\n\n    `UpdateItem` ऑपरेशन एक अनुरोध प्रति आइटम के साथ काम करता है। बड़े बैकफिल या बुल्क अपडेट के लिए आमतौर पर कई `UpdateItem` कॉल्स का नियंत्रण करना होता है या PartiQL बैच निष्पादन, Step Functions, Glue, EMR, या एक कस्टम वर्कर प्रक्रिया जैसे बड़े वर्कफ़्लो का उपयोग करना होता है।\n\n    `UpdateItem` ऑपरेशन के फायदे हैं:\n    - एक मौजूदा आइटम के एट्रिब्यूट्स को अपडेट करता है।\n    - एक मौजूदा आइटम में नए एट्रिब्यूट्स जोड़ता है।\n    - एक मौजूदा आइटम से एट्रिब्यूट्स हटाता है।\n    - शर्तों के आधार पर अपडेट करता है अगर आइटम मौजूद है या निश्चित शर्तों को पूरा करता है।\n\n    [DynamoDB UpdateItem](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateItem.html)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"DynamoDB\",\n  \"group\": \"स्कीमा रहित\",\n  \"options\": [\n    {\n      \"text\": \"PutItem\",\n      \"hint\": \"एक नए आइटम को बनाता है, या एक पुराने आइटम को एक नए आइटम से बदल देता है।\"\n    },\n    {\n      \"text\": \"BatchUpdateItem\",\n      \"hint\": \"मौजूद नहीं है।\"\n    },\n    {\n      \"text\": \"BatchWriteItem\",\n      \"hint\": \"एकल कॉल में कई आइटम को पढ़े या हटाए।\"\n    },\n    {\n      \"text\": \"UpdateItem\"\n    },\n    {\n      \"text\": \"BatchUpsertItem\",\n      \"hint\": \"DynamoDB में?\"\n    },\n    {\n      \"text\": \"TransactWriteItems\",\n      \"hint\": \"एकल कॉल में कई PutItem, UpdateItem, DeleteItem, और ConditionCheck ऑपरेशन्स को जोड़ता है।\"\n    }\n  ],\n  \"questionProse\": [\n    \"कौन सा DynamoDB API एक मौजूदा आइटम पर एट्रिब्यूट्स को अपडेट करता है?\"\n  ],\n  \"explanationProse\": [\n    \"यहां महत्वपूर्ण बात <b>अपडेट्स</b> है, न कि इंसर्ट या PUTs। अगर आप इंसर्ट कर रहे हो, तो आप `BatchWriteItem` या `TransactWriteItems` का उपयोग कर सकते हैं।\\n\\n    जबकि `BatchWriteItem` कई ऑपरेशन्स को संभाल सकता है, लेकिन यह केवल PUTs और DELETES तक सीमित है। `TransactWriteItems` अधिक शक्तिशाली है, लेकिन सरल अपडेट के लिए यह थोड़ा बड़ा हथियार है।\\n    सरल अपडेट के लिए, `UpdateItem` सबसे अच्छा विकल्प है। यह आपको एक मौजूदा आइटम में एक या अधिक एट्रिब्यूट्स को UPDATE करने की अनुमति देता है।\\n\\n    `UpdateItem` ऑपरेशन एक अनुरोध प्रति आइटम के साथ काम करता है। बड़े बैकफिल या बुल्क अपडेट के लिए आमतौर पर कई `UpdateItem` कॉल्स का नियंत्रण करना होता है या PartiQL बैच निष्पादन, Step Functions, Glue, EMR, या एक कस्टम वर्कर प्रक्रिया जैसे बड़े वर्कफ़्लो का उपयोग करना होता है।\\n\\n    `UpdateItem` ऑपरेशन के फायदे हैं:\\n    - एक मौजूदा आइटम के एट्रिब्यूट्स को अपडेट करता है।\\n    - एक मौजूदा आइटम में नए एट्रिब्यूट्स जोड़ता है।\\n    - एक मौजूदा आइटम से एट्रिब्यूट्स हटाता है।\\n    - शर्तों के आधार पर अपडेट करता है अगर आइटम मौजूद है या निश्चित शर्तों को पूरा करता है।\\n\\n    [DynamoDB UpdateItem](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateItem.html)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 999,
+    "outputTokens": 1991,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 22267
+  },
+  "cost": {
+    "inputUsd": 0.00007992000000000001,
+    "outputUsd": 0.00047784,
+    "totalUsd": 0.00055776,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
