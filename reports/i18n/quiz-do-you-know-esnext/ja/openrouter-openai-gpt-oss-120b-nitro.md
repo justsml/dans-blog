@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-do-you-know-esnext
+- Locale: ja
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2024-10-31--quiz-do-you-know-esnext/ja/index.mdx
+- Validation: deferred
+- Runtime seconds: 13.04
+- Input tokens: 9941
+- Output tokens: 5206
+- Thinking tokens: unknown
+- Cached input tokens: 3712
+- Cache write tokens: 0
+- Estimated cost: $0.001325
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: 'クイズ: モダンJavaScriptは知ってる？'
 subTitle: JavaScript の腕前を証明しよう！
@@ -351,3 +369,4 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 </Challenge>
 
 </QuizUI>
+````
