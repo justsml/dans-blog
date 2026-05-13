@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: rag-pipeline-failures
+- Locale: de
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-05-05--rag-pipeline-failures/de/index.mdx
+- Validation: passed
+- Runtime seconds: 14.62
+- Input tokens: 10642
+- Output tokens: 2901
+- Thinking tokens: unknown
+- Cached input tokens: 5632
+- Cache write tokens: 0
+- Estimated cost: $0.000937
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: 'Fünf Wege, wie RAGin der Produktion scheitert'
 subTitle: Die Demo funktionierte. Bei echten Nutzern bricht die Pipeline.
@@ -202,3 +220,4 @@ RAG‑Demos funktionieren, weil die Demo‑Bedingungen kontrolliert sind: sauber
 Jeder der oben genannten Fehler ist diagnostizierbar – vorausgesetzt, man misst. Zuverlässige RAG‑Teams setzen nichts Besonderes ein. Sie behandeln die Retrieval‑Qualität wie ein echtes Subsystem statt wie ein Demo‑Artefakt.
 
 Richten Sie zuerst die Evaluationsschleife ein. Alles andere wird einfacher, sobald Sie es messen können.
+````
