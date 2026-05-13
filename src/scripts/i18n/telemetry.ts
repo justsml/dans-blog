@@ -16,7 +16,7 @@ export type RunTelemetry = {
     cached?: number;
     cacheWrite?: number;
   };
-  actualCostUsd?: number;
+  openRouterCostCredits?: number;
   estimatedCostUsd?: number;
 };
 
@@ -90,7 +90,7 @@ export function getRunTelemetry(model: string, result: CommandResult): RunTeleme
   return {
     runtimeSeconds: (result.runtimeMs / 1000).toFixed(2),
     tokens: usage.tokens,
-    actualCostUsd: usage.cost,
+    openRouterCostCredits: usage.cost,
     estimatedCostUsd: estimateCost(model, usage.tokens),
   };
 }
@@ -103,7 +103,7 @@ export function renderTelemetryLines(telemetry: RunTelemetry) {
     `- Thinking tokens: ${formatMetric(telemetry.tokens.thinking)}`,
     `- Cached input tokens: ${formatMetric(telemetry.tokens.cached)}`,
     `- Cache write tokens: ${formatMetric(telemetry.tokens.cacheWrite)}`,
-    `- Actual cost: ${telemetry.actualCostUsd == null ? "unknown" : `$${telemetry.actualCostUsd.toFixed(6)}`}`,
+    `- OpenRouter cost credits: ${telemetry.openRouterCostCredits == null ? "unknown" : telemetry.openRouterCostCredits.toFixed(6)}`,
     `- Estimated cost: ${telemetry.estimatedCostUsd == null ? "unknown" : `$${telemetry.estimatedCostUsd.toFixed(6)}`}`,
   ];
 }

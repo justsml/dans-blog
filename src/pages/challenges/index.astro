@@ -8,6 +8,8 @@ import "@/styles/nav.css";
 import "@/styles/global.css";
 import "../../components/QuizUI/challenges.css";
 import "../../components/QuizUI/icons.css";
+import { DEFAULT_LOCALE, type Locale } from "../../shared/i18n";
+import { getUiCopy } from "../../shared/uiTranslations";
 
 // import ArticleFilterLinks from "../../components/ArticleFilterLinks.astro";
 
@@ -17,19 +19,22 @@ const totalQuestionCount = quizList.reduce(
   (sum, quiz) => sum + quiz.data.questionCount,
   0,
 );
+const locale = (Astro.props.locale ?? DEFAULT_LOCALE) as Locale;
+const copy = getUiCopy(locale);
 
 ---
 
 <Page
+  locale={locale}
   frontmatter={{
-    title: "🧠 Tech Challenges & Quizzes - DanLevy.net",
-    subTitle: `A collection of exactly ${totalQuizzes} quizzes and ${totalQuestionCount} tech questions!`,
+    title: copy.challenges.title,
+    subTitle: copy.challenges.subTitle(totalQuizzes, totalQuestionCount),
   }}>
 <section class="full-width">
-  <h1>Tech Challenges & Quizzes</h1>
+  <h1>{copy.challenges.heading}</h1>
 </section>
 <!-- <div class="inset"><div class="top-text">A carefully curated collection of tech questions (+ explainers & notes) I've acquired from around the world.</div></div> -->
-<div class="two-col"><p class="top-text">From HTML & CSS to Node.js & SQL, these quizzes are filled with gems inspired by real <strike>trauma</strike> experiences from my career.</p><p class="top-text">They are designed to be <strike>hurtful</strike> challenging at times, and may indeed test your <strike>sanity</strike> knowledge of the quirks and edge cases of various technologies.</p></div>
+<div class="two-col"><p class="top-text">{copy.challenges.introOne}</p><p class="top-text">{copy.challenges.introTwo}</p></div>
 
 <section class="full-width">
   <!-- Use client:idle for better performance - loads after page is interactive -->
@@ -40,8 +45,8 @@ const totalQuestionCount = quizList.reduce(
 </section>
 
 <section class="fun-facts">
-  <div class="fun-fact"><div class="top-text"><strong>Fun fact:</strong> Remember how the Ghostbusters trapped ghosts in that containment unit? This is my containment unit.</div></div>
-  <div class="fun-fact"><div class="top-text"><strong>Fun fact:</strong> Completing all Quizzes unlocks a special "experience" on the site! (Comic Sans & Papyrus everywhere.)</div></div>
-  <div class="fun-fact"><div class="top-text"><strong>Fun fact:</strong> "Fun facts" not necessarily fun, or facts.</div></div>
+  <div class="fun-fact"><div class="top-text">{copy.challenges.factOne}</div></div>
+  <div class="fun-fact"><div class="top-text">{copy.challenges.factTwo}</div></div>
+  <div class="fun-fact"><div class="top-text">{copy.challenges.factThree}</div></div>
 </section>
 </Page>

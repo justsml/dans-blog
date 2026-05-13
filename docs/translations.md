@@ -96,7 +96,7 @@ Every future candidate report includes run telemetry:
 
 Token fields are best-effort because provider and OpenCode output formats vary. Unknown token counts are still written explicitly so model reports keep a stable shape.
 
-OpenRouter usage metadata is read from the response `usage` object. As of the 2026-05-13 OpenRouter docs check, the useful fields are `usage.prompt_tokens`, `usage.completion_tokens`, `usage.total_tokens`, `usage.cost`, `usage.prompt_tokens_details.cached_tokens`, `usage.prompt_tokens_details.cache_write_tokens`, and `usage.completion_tokens_details.reasoning_tokens`.
+OpenRouter usage metadata is read from the response `usage` object. As of the 2026-05-13 OpenRouter docs check, the useful fields are `usage.prompt_tokens`, `usage.completion_tokens`, `usage.total_tokens`, `usage.cost` in OpenRouter credits, `usage.prompt_tokens_details.cached_tokens`, `usage.prompt_tokens_details.cache_write_tokens`, and `usage.completion_tokens_details.reasoning_tokens`.
 
 To run a subset:
 

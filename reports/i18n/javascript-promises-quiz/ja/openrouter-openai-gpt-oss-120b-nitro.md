@@ -1,0 +1,13 @@
+# Translation Candidate
+- Slug: javascript-promises-quiz
+- Locale: ja
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2019-11-26--javascript-promises-quiz/ja/index.mdx
+- Validation: rejected: direct AI SDK translation failed
+- Runtime seconds: 7.98
+- Input tokens: 8648
+- Output tokens: 5694
+- Thinking tokens: unknown
+- Cached input tokens: 1536
+- Estimated cost: $0.001362
+- Note: Command failed: bun run i18n:validate --slug javascript-promises-quiz --locale ja

@@ -66,7 +66,7 @@ export function getLocalizedPagePath(path: string, locale: Locale = DEFAULT_LOCA
   const normalizedPath = normalizeRoutePath(path);
   if (locale === DEFAULT_LOCALE) return normalizedPath;
   if (normalizedPath === "/") return `/${locale}/`;
-  return normalizeRoutePath(`${locale}/${normalizedPath}`);
+  return normalizeRoutePath(`${locale}/${stripLeadingSlash(normalizedPath)}`);
 }
 
 export function getPageAlternates(path: string, locales: readonly Locale[] = [
