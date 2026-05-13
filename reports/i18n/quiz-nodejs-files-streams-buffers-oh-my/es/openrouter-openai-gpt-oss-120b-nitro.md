@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-nodejs-files-streams-buffers-oh-my
+- Locale: es
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2024-11-15--quiz-nodejs-files-streams-buffers-oh-my/es/index.mdx
+- Validation: passed
+- Runtime seconds: 27.85
+- Input tokens: 14704
+- Output tokens: 8815
+- Thinking tokens: unknown
+- Cached input tokens: 4864
+- Cache write tokens: 0
+- Estimated cost: $0.002160
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: 'Quiz: Dominio de IO en NodeJS'
@@ -598,3 +616,4 @@ Este cuestionario pondrá a prueba tu comprensión de las operaciones de IO de N
 </QuizUI>
 
 ¡Espero que hayas disfrutado poniendo a prueba tus conocimientos de NodeJS IO! ¿Quieres más? Consulta mi <a href="../challenges/">Colección de quizzes</a> para nuevos desafíos.
+````
