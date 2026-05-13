@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: one-weird-trick-to-speed-up-feature-teams
+- Locale: de
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2024-09-29--one-weird-trick-to-speed-up-feature-teams/de/index.mdx
+- Validation: passed
+- Runtime seconds: 20.40
+- Input tokens: 8274
+- Output tokens: 8251
+- Thinking tokens: unknown
+- Cached input tokens: 1536
+- Cache write tokens: 0
+- Estimated cost: $0.002642
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: 'Ein ungew√∂hnlicher Trick, um Feature-Teams zu beschleunigen!'
 subTitle: Senior-Entwickler hassen das!
@@ -148,3 +166,4 @@ Ich hoffe, dieser Artikel war hilfreich! Wenn Sie Fragen oder Feedback haben, z√
 - [S3](https://aws.amazon.com/s3/)
 - [Cassandra](https://cassandra.apache.org/)
 - [Firestore](https://firebase.google.com/docs/firestore)
+````
