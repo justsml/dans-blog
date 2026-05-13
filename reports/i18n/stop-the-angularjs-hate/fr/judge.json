@@ -1,0 +1,62 @@
+{
+  "selectedCommit": "6cd578c50ec53994ff6446062c669cacaad4fcf3",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "h5: i Welcome User",
+      "replacement": "h5: i Bienvenue",
+      "reason": "The greeting inside the code block was left in English, which breaks the localized experience for the UI example."
+    }
+  ],
+  "rationale": "The gpt-oss-120b candidate provides the most natural and technically accurate translation. It correctly identifies 'garbage collection' as 'collecte de déchets' and maintains Dan's direct, slightly informal tone. It also correctly translates the frontmatter subTitle which was missing in other versions. The previous suggestion regarding 'Lisez simplement cette section' is already present in the current file, so I am adding a fix for the untranslated string in the code block.",
+  "slug": "stop-the-angularjs-hate",
+  "locale": "fr",
+  "candidateCommits": [
+    "6cd578c50ec53994ff6446062c669cacaad4fcf3",
+    "71dac93438c3e7605ad716185d76836421a3d38d"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "ADHD",
+      "replacement": "TDAH",
+      "reason": "ADHD is an acronym for Attention Deficit Hyperactivity Disorder, which is TDAH in French. The previous translation used TDA (Traitement, Distribution, Affichage) which is a hallucination/incorrect expansion in this context.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "Welcome User",
+      "replacement": "Bienvenue",
+      "reason": "The jade block was left in English.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "Just read this section",
+      "replacement": "Lisez simplement cette section",
+      "reason": "The sentence was left in English in the middle of the French text.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug stop-the-angularjs-hate --locale fr --skip-global",
+    "output": ""
+  }
+}
