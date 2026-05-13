@@ -1,0 +1,47 @@
+{
+  "index": 8,
+  "attempt": 1,
+  "originalTitle": "File Watching",
+  "translatedTitle": "Observación de archivos",
+  "translation": {
+    "title": "Observación de archivos",
+    "group": "Sistema de archivos",
+    "options": [
+      {
+        "text": "Una vez por cambio en el archivo"
+      },
+      {
+        "text": "No garantizado; puede dispararse múltiples veces"
+      },
+      {
+        "text": "Nunca"
+      },
+      {
+        "text": "Solo al eliminar el archivo"
+      }
+    ],
+    "questionProse": [
+      "¿Cuántas veces se garantiza que se dispare `fs.watch()` cuando se modifica un archivo?"
+    ],
+    "explanationProse": [
+      "`fs.watch()` no está garantizado para dispararse exactamente una vez por cambio lógico en el archivo. A menudo se dispara múltiples veces porque muchos editores de texto:\n    1. Guardan en un archivo temporal\n    2. Renombran al archivo objetivo\n\n    Para una observación más confiable, considera usar:\n    - El paquete `chokidar`\n    - Debouncear la devolución de llamada\n    - Usar `fs.watchFile()` (aunque es menos eficiente)\n\n    [Más información sobre fs.watch()](https://nodejs.org/api/fs.html#fswatchfilename-options-listener)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Observación de archivos\",\n  \"group\": \"Sistema de archivos\",\n  \"options\": [\n    {\n      \"text\": \"Una vez por cambio en el archivo\"\n    },\n    {\n      \"text\": \"No garantizado; puede dispararse múltiples veces\"\n    },\n    {\n      \"text\": \"Nunca\"\n    },\n    {\n      \"text\": \"Solo al eliminar el archivo\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Cuántas veces se garantiza que se dispare `fs.watch()` cuando se modifica un archivo?\"\n  ],\n  \"explanationProse\": [\n    \"`fs.watch()` no está garantizado para dispararse exactamente una vez por cambio lógico en el archivo. A menudo se dispara múltiples veces porque muchos editores de texto:\\n    1. Guardan en un archivo temporal\\n    2. Renombran al archivo objetivo\\n\\n    Para una observación más confiable, considera usar:\\n    - El paquete `chokidar`\\n    - Debouncear la devolución de llamada\\n    - Usar `fs.watchFile()` (aunque es menos eficiente)\\n\\n    [Más información sobre fs.watch()](https://nodejs.org/api/fs.html#fswatchfilename-options-listener)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 802,
+    "outputTokens": 666,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 2123,
+    "providerCostUsd": 0.00055128,
+    "providerUpstreamCostUsd": 0.00055128,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00006416000000000001,
+    "outputUsd": 0.00015984000000000001,
+    "totalUsd": 0.00022400000000000002,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
