@@ -1,0 +1,44 @@
+{
+  "index": 13,
+  "attempt": 1,
+  "originalTitle": "Zero-Specificity Selectors",
+  "translatedTitle": "Selektoren mit Null-Spezifität",
+  "translation": {
+    "title": "Selektoren mit Null-Spezifität",
+    "group": "Selektor: Spezifität",
+    "options": [
+      {
+        "text": ":where(.card) .title"
+      },
+      {
+        "text": ".card .title"
+      },
+      {
+        "text": ":is(.card) .title"
+      },
+      {
+        "text": "#card .title"
+      }
+    ],
+    "questionProse": [
+      "Welcher Selektor hat die niedrigste Spezifität?"
+    ],
+    "explanationProse": [
+      "`:where(.card) .title` hat die niedrigste Spezifität. Die Pseudoklasse `:where()` und alles darin trägt `0-0-0` bei, sodass nur `.title` zählt. `:is(.card) .title` behält die Spezifität von `.card` bei, `.card .title` hat zwei Klassen, und `#card .title` enthält eine ID."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Selektoren mit Null-Spezifität\",\n  \"group\": \"Selektor: Spezifität\",\n  \"options\": [\n    {\n      \"text\": \":where(.card) .title\"\n    },\n    {\n      \"text\": \".card .title\"\n    },\n    {\n      \"text\": \":is(.card) .title\"\n    },\n    {\n      \"text\": \"#card .title\"\n    }\n  ],\n  \"questionProse\": [\n    \"Welcher Selektor hat die niedrigste Spezifität?\"\n  ],\n  \"explanationProse\": [\n    \"`:where(.card) .title` hat die niedrigste Spezifität. Die Pseudoklasse `:where()` und alles darin trägt `0-0-0` bei, sodass nur `.title` zählt. `:is(.card) .title` behält die Spezifität von `.card` bei, `.card .title` hat zwei Klassen, und `#card .title` enthält eine ID.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 751,
+    "outputTokens": 480,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 1539
+  },
+  "cost": {
+    "inputUsd": 0.000029288999999999997,
+    "outputUsd": 0.0000864,
+    "totalUsd": 0.000115689,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
