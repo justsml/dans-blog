@@ -146,7 +146,7 @@ const en = {
     contactMe: "Contact Me",
     ossLog: "OSS Log",
     resume: "Resume",
-    languageLabel: "Article language",
+    languageLabel: "Language",
     languageVersion: "version",
     languageUnavailable: "translation is not available yet",
   },
@@ -255,7 +255,7 @@ const copies: Record<Locale, UiCopy> = {
   es: {
     ...en,
     site: { description: "Programador | Líder | Pensador | Manitas", seoDescription: "Ven por el código, quédate por el oficio." },
-    nav: { ...en.nav, articles: "Artículos", quizzes: "Cuestionarios", quizzesText: "Prueba los desafíos de Dan.", categories: "Categorías", popular: "Popular", recent: "Reciente", projects: "Proyectos", demosTitle: "Demos y ejemplos", demosText: "Una selección de proyectos, experimentos y repositorios.", about: "Acerca de", contactMe: "Contacto", resume: "Currículum", languageLabel: "Idioma del artículo", languageVersion: "versión", languageUnavailable: "traducción aún no disponible" },
+    nav: { ...en.nav, articles: "Artículos", quizzes: "Cuestionarios", quizzesText: "Prueba los desafíos de Dan.", categories: "Categorías", popular: "Popular", recent: "Reciente", projects: "Proyectos", demosTitle: "Demos y ejemplos", demosText: "Una selección de proyectos, experimentos y repositorios.", about: "Acerca de", contactMe: "Contacto", resume: "Currículum", languageLabel: "Idioma", languageVersion: "versión", languageUnavailable: "traducción aún no disponible" },
     footer: { ...en.footer, feeds: "Feeds", rssFeed: "Feed RSS", jsonFeed: "Feed JSON", quotable: "Citable", from: "de", elsewhere: "En otros sitios", follow: "Sígueme por ahí...", share: "Compartir esta página", copied: "Enlace copiado", consulting: "Consultoría", ctaTitle: "¿Problema técnico difícil?", ctaText: "Sistemas de IA, revisiones de seguridad, arquitectura TypeScript y rescates de producción.", bookCall: "Reservar llamada", related: "Artículos relacionados", readMore: "Leer más de Dan Levy", subscribe: "Suscribirse", credits: "Créditos del sitio", rights: "Todos los derechos rebasados.", coverAltSuffix: "imagen de portada del artículo" },
     home: { ...en.home, eyebrow: "Notas de campo", heading: "Notas de donde se acaban los docs.", intro: "Sistemas de IA, JavaScript, seguridad, bases de datos y arreglos que vale la pena recordar.", resourcesEyebrow: "Recursos", resourcesTitle: "Ayúdame a ayudarte", resourcesText: "Consultoría y notas de código abierto.", hireKicker: "Contrátame", hireTitle: "Construye mejores sistemas de IA", ossKicker: "Registro open source", ossTitle: "Sigue los commits", latestEyebrow: "Últimos textos", latestTitle: "Escritura reciente", latestText: "Lee lo último aquí." },
     about: { ...en.about, title: "Acerca de mí", heading: "Acerca de", summary: "Dan es programador, profesor, mentor y líder. Tiene más de 20 años de experiencia profesional en desarrollo de software, consultoría, equipos ágiles, arquitectura, seguridad, accesibilidad y UI/UX.", reputation: "Tras años trabajando con patrones y arquitectura de software, Dan se ha convertido en un experto buscado por charlas prácticas y motivadoras.", openSource: "Como colaborador activo en numerosos proyectos open source, Dan sigue aprendiendo lenguajes, metodologías, patrones y estilos de código.", resume: "Descargar el currículum de Dan" },

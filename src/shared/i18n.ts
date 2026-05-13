@@ -33,6 +33,14 @@ export const LOCALE_DISCLOSURE: Record<ActiveLocale, string> = {
   it: "Tradotto con IA e verificato per accuratezza tecnica.",
 };
 
+export type LanguageOption = {
+  locale: Locale;
+  label: string;
+  href: string;
+  isCurrent: boolean;
+  isTranslated: boolean;
+};
+
 export function isLocale(value: string | undefined): value is Locale {
   return SUPPORTED_LOCALES.includes(value as Locale);
 }
@@ -69,13 +77,42 @@ export function getLocalizedPagePath(path: string, locale: Locale = DEFAULT_LOCA
   return normalizeRoutePath(`${locale}/${stripLeadingSlash(normalizedPath)}`);
 }
 
+export function getUnlocalizedPagePath(path: string) {
+  const normalizedPath = normalizeRoutePath(path);
+  const segments = stripLeadingSlash(normalizedPath).split("/").filter(Boolean);
+
+  if (isLocale(segments[0])) {
+    return normalizeRoutePath(segments.slice(1).join("/"));
+  }
+
+  return normalizedPath;
+}
+
 export function getPageAlternates(path: string, locales: readonly Locale[] = [
   DEFAULT_LOCALE,
   ...ACTIVE_LOCALES,
 ]) {
+  const basePath = getUnlocalizedPagePath(path);
+
   return locales.map((locale) => ({
     locale,
-    href: getLocalizedPagePath(path, locale),
+    href: getLocalizedPagePath(basePath, locale),
+  }));
+}
+
+export function getPageLanguageOptions(
+  path: string,
+  currentLocale: Locale = DEFAULT_LOCALE,
+  locales: readonly Locale[] = [DEFAULT_LOCALE, ...ACTIVE_LOCALES],
+): LanguageOption[] {
+  const basePath = getUnlocalizedPagePath(path);
+
+  return locales.map((locale) => ({
+    locale,
+    label: LOCALE_LABELS[locale],
+    href: getLocalizedPagePath(basePath, locale),
+    isCurrent: locale === currentLocale,
+    isTranslated: true,
   }));
 }
 

@@ -13,6 +13,11 @@ export function getStaticPaths() {
 }
 
 const locale = Astro.props.locale as ActiveLocale;
+const { category, count } = Astro.props as {
+  category: string;
+  count: number;
+  locale: ActiveLocale;
+};
 ---
 
-<CategoryPage {...Astro.props} locale={locale} />
+<CategoryPage category={category} count={count} locale={locale} />

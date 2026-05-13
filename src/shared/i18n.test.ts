@@ -8,6 +8,9 @@ import {
   getLocalizedPagePath,
   getLocalizedPostPath,
   getLocalizedPostSlug,
+  getPageAlternates,
+  getPageLanguageOptions,
+  getUnlocalizedPagePath,
   isActiveLocale,
   isLocale,
   normalizeRoutePath,
@@ -60,6 +63,47 @@ describe("i18n post routing helpers", () => {
     expect(getLocalizedPagePath("/about/")).toBe("/about/");
     expect(getLocalizedPagePath("/about/", "es")).toBe("/es/about/");
     expect(getLocalizedPagePath("contact", "ja")).toBe("/ja/contact/");
+  });
+
+  test("derives localized language options from prefixed page paths", () => {
+    expect(getUnlocalizedPagePath("/es/category/code/")).toBe("/category/code/");
+
+    const options = getPageLanguageOptions("/es/category/code/", "es", [
+      DEFAULT_LOCALE,
+      "es",
+      "ja",
+    ]);
+
+    expect(options).toEqual([
+      {
+        locale: "en",
+        label: "English",
+        href: "/category/code/",
+        isCurrent: false,
+        isTranslated: true,
+      },
+      {
+        locale: "es",
+        label: "Español",
+        href: "/es/category/code/",
+        isCurrent: true,
+        isTranslated: true,
+      },
+      {
+        locale: "ja",
+        label: "日本語",
+        href: "/ja/category/code/",
+        isCurrent: false,
+        isTranslated: true,
+      },
+    ]);
+  });
+
+  test("does not double-prefix page alternates", () => {
+    expect(getPageAlternates("/fr/contact/", [DEFAULT_LOCALE, "fr"])).toEqual([
+      { locale: "en", href: "/contact/" },
+      { locale: "fr", href: "/fr/contact/" },
+    ]);
   });
 
   test("normalizes route paths without duplicating slashes", () => {

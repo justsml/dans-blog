@@ -19,18 +19,19 @@ import { DEFAULT_LOCALE, getLocalizedPagePath, type Locale } from "../../shared/
 export function getStaticPaths() {
   return consultingServices.map((service) => ({
     params: { service: service.slug },
-    props: { service },
+    props: { service, locale: DEFAULT_LOCALE as Locale },
   }));
 }
 
-type Props = {
+interface Props {
   service?: ConsultingService;
   locale?: Locale;
-};
+}
 
-const service = Astro.props.service ??
+const props = Astro.props as Props;
+const service = props.service ??
   consultingServicesBySlug.get(Astro.params.service ?? "");
-const locale = (Astro.props.locale ?? DEFAULT_LOCALE) as Locale;
+const locale = (props.locale ?? DEFAULT_LOCALE) as Locale;
 const pagePath = (path: string) => getLocalizedPagePath(path, locale);
 
 if (!service) {
