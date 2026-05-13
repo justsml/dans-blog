@@ -1,6 +1,6 @@
 ---
 title: 'クイズ: データ構造とアルゴリズム'
-subTitle: ''
+subTitle: バイナリツリーをBSできるか？
 label: Algorithms & DS
 unlisted: true
 date: '2024-10-31'
@@ -19,16 +19,16 @@ cover_full_width: ../redcharlie-mugDbuNnbd0-unsplash-wide.webp
 cover_mobile: ../redcharlie-mugDbuNnbd0-unsplash-square.webp
 cover_icon: ../redcharlie-mugDbuNnbd0-unsplash-square.webp
 ---
-import Challenge from '../../../../components/QuizUI/Challenge';
-import QuizUI from '../../../../components/QuizUI/QuizUI';
+import Challenge from '../../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../../components/QuizUI/QuizUI';
 
 <section class="inset">
   データ構造とアルゴリズムのクイズへようこそ！
 </section>
 
-このクイズでは、データ構造（スタック、リスト、ツリーなど）やアルゴリズム、時間計算量に関する知識をテストします。
+このクイズは、データ構造（スタック、リスト、ツリー等）とアルゴリズム、そして時間計算量に関する知識を評価します。
 
-### 20問... 開始！
+### 20問…開始！
 
 <QuizUI>
 
@@ -36,22 +36,22 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={0}
   group="データ構造"
-  title="スタックとキュー"
+  title="スタック vs キュー"
   options={[
-    {text: 'どちらも'},
+    {text: '両方'},
     {text: 'キュー'},
     {text: 'スタック', isAnswer: true},
-    {text: 'どちらもでない'},
+    {text: 'どちらでもない'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    LIFO（後入れ先出し）のアクセスパターンに最適なデータ構造はどれですか？
+    LIFO（Last In, First Out）アクセスパターンに最適なデータ構造はどれですか？
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    スタックはLIFO（後入れ先出し）のアクセスパターンに最適です。キューはFIFO（先入れ先出し）のアクセスパターンに最適です。
+    スタックはLIFOアクセスパターンに最適です。キューはFIFO（First In, First Out）アクセスパターンに最適です。
   </div>
   </slot>
 </Challenge>
@@ -60,7 +60,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={1}
   group="アルゴリズム"
-  title="ビッグO記法"
+  title="ビッグ O 表記"
   options={[
     {text: 'O(1)', isAnswer: true},
     {text: 'O(n)'},
@@ -70,12 +70,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    入力サイズに関係なく常に同じ時間で実行されるアルゴリズムの時間計算量は何ですか？
+    アルゴリズムが入力サイズに関係なく常に同じ時間で実行される場合、その時間計算量は何ですか？
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    O(1)は定数時間複雑度を表します。これはアルゴリズムが入力サイズに関係なく常に同じ時間で実行されることを意味します。
+    O(1) は定数時間計算量を表します。入力サイズに関係なく、アルゴリズムは常に同じ時間で実行されます。
   </div>
   </slot>
 </Challenge>
@@ -95,12 +95,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    単方向リンクリストの長さを計算するための時間計算量は？
+    単方向リンクリストの長さを計算する際の時間計算量は何ですか？
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    単方向リンクリストの長さを計算するには、先頭から末尾まですべてのノードをトラバースする必要があり、O(n)の時間計算量を生じます。
+    単方向リンクリストの長さを計算するには、ヘッドからテイルまで全てのノードを走査する必要があり、時間計算量は O(n) になります。
   </div>
   </slot>
 </Challenge>
@@ -109,23 +109,23 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={3}
   group="データ構造"
-  title="二分探索木の要素検索"
+  title="二分探索木の検索"
   options={[
-    {text: 'O(1)', hint: '配列のインデックスアクセスに該当します'},
-    {text: 'O(log n)', isAnswer: true, hint: 'バランスの取れた木では検索が半分ずつ狭まります'},
-    {text: 'O(n)', hint: '最悪の場合の非バランス木での検索時間です'},
-    {text: 'O(n^2)', hint: 'ネストされたループアルゴリズムに見られる計算量です'},
-    {text: 'O(n log n)', hint: 'マージソートやクイックソートに見られる計算量です'},
+    {text: 'O(1)'},
+    {text: 'O(log n)', isAnswer: true},
+    {text: 'O(n)'},
+    {text: 'O(n^2)'},
+    {text: 'O(n log n)'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    バランスの取れた二分探索木で要素を検索する際の平均時間計算量は？
+    バランスの取れた二分探索木で要素を検索する際の平均時間計算量は何ですか？
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    O(log n)になるのは、各レベルで検索範囲が半分になるからです。バランスの取れた木では高さがlog nなので、検索は対数時間で完了します。
+    バランスの取れたBSTでは、各レベルで探索空間が半分になるため、検索の平均時間計算量は O(log n) です。
   </div>
   </slot>
 </Challenge>
@@ -133,8 +133,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={4}
-  group="ソーティングアルゴリズム"
-  title="マージソートの複雑性"
+  group="ソートアルゴリズム"
+  title="マージソートの計算量"
   options={[
     {text: 'O(n^2)'},
     {text: 'O(log n)'},
@@ -145,12 +145,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    マージソートアルゴリズムの最悪ケースでの時間計算量は何か？
+    最悪の場合のマージソートアルゴリズムの時間計算量は何ですか？
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    マージソートは配列を繰り返し半分に分割し、ソートされた部分配列をマージするため、最悪ケースの複雑さは常にO(n log n)です。
+    マージソートは常に最悪ケースで O(n log n) の計算量で動作します。配列を半分に分割し、ソート済みの部分配列をマージすることを繰り返すためです。
   </div>
   </slot>
 </Challenge>
@@ -161,21 +161,21 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="グラフ"
   title="DFS vs BFS"
   options={[
-    {text: 'Queue', isAnswer: true},
-    {text: 'Stack'},
-    {text: 'Priority Queue'},
-    {text: 'Hash Map'},
-    {text: 'Set'},
+    {text: 'キュー', isAnswer: true},
+    {text: 'スタック'},
+    {text: '優先キュー'},
+    {text: 'ハッシュマップ'},
+    {text: '集合'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    幅優先探索（BFS）を実装するために一般的に使用されるデータ構造はどれですか？
+    Breadth-First Search (BFS) を実装する際に通常使用されるデータ構造は何ですか？
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    BFSは、ノードをレベルごとに探索するためにキューを使用します。ノードは幅優先の順序（"行"単位）で処理されます。
+    BFS はキューを使用してノードをレベルごとに探索し、幅優先（「行」単位）でノードを処理します。
   </div>
   </slot>
 </Challenge>
@@ -186,21 +186,21 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="グラフ"
   title="グラフにおけるサイクル検出"
   options={[
-    {text: 'クイックソート'},
-    {text: '幅優先探索'},
-    {text: 'マージソート'},
-    {text: '深さ優先探索', isAnswer: true},
-    {text: 'バブルソート'},
+    {text: 'Quick Sort'},
+    {text: 'Breadth-First Search'},
+    {text: 'Merge Sort'},
+    {text: 'Depth-First Search', isAnswer: true},
+    {text: 'Bubble Sort'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    有向グラフにおけるサイクル検出に一般的に使用されるアルゴリズムはどれですか？
+    有向グラフでサイクルを検出する際に一般的に使用されるアルゴリズムはどれですか？
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Depth-First Search (DFS) は、再帰スタックを維持して訪問済みノードを追跡することで、グラフにおけるサイクル検出に通常使用されます。
+    深さ優先探索（DFS）は、訪問したノードを追跡するために再帰スタックを保持することで、グラフ内のサイクルを検出する際に一般的に使用されます。
   </div>
   </slot>
 </Challenge>
@@ -208,8 +208,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={7}
-  group="ソーティングアルゴリズム"
-  title="ヒープソートの複雑さ"
+  group="ソートアルゴリズム"
+  title="ヒープソートの計算量"
   options={[
     {text: 'O(n^2)'},
     {text: 'O(n log n)', isAnswer: true},
@@ -220,12 +220,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    ヒープソートの最悪ケースでの時間計算量は？
+    最悪の場合のヒープソートの時間計算量は何ですか？
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    ヒープソートはヒープ構造を構築し、最大要素を繰り返し抽出するため、最悪でもO(n log n)の時間計算量を維持します。
+    ヒープソートはヒープを構築し、最大要素を繰り返し取り出すことで、最悪ケースでも O(n log n) の時間計算量を保ちます。
   </div>
   </slot>
 </Challenge>
@@ -245,12 +245,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    ハッシュテーブルで要素にアクセスする際の平均時間計算量はどれですか？
+    ハッシュテーブルで要素にアクセスする際の平均時間計算量は何ですか？
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    ハッシュテーブルは、衝突を最小限に抑える良質なハッシュ関数を仮定すると、要素へのアクセスの平均時間計算量はO(1)です。
+    ハッシュテーブルは、衝突を最小限に抑える優れたハッシュ関数を前提とすれば、要素へのアクセスの平均時間計算量は O(1) です。
   </div>
   </slot>
 </Challenge>
@@ -259,22 +259,22 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={9}
   group="データ構造"
-  title="スタックの操作"
+  title="スタック操作"
   options={[
-    {text: 'Push, Pop, Peek', isAnswer: true},
-    {text: 'Enqueue, Dequeue, Peek'},
-    {text: 'Insert, Search, Delete'},
-    {text: 'Traverse, Visit, Sort'},
+    {text: 'Push、Pop、Peek', isAnswer: true},
+    {text: 'Enqueue、Dequeue、Peek'},
+    {text: 'Insert、Search、Delete'},
+    {text: 'Traverse、Visit、Sort'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    スタックで通常行われる操作のセットはどれですか？
+    スタックで実行される典型的な操作はどれですか？
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    スタックの主な操作は、プッシュ（要素を追加）、ポップ（要素を削除）、ピーク（削除せずにトップ要素を表示）です。
+    スタックの主要な操作は Push（要素を追加）、Pop（要素を削除）、そして Peek（要素を削除せずにトップを参照）です。
   </div>
   </slot>
 </Challenge>
@@ -294,12 +294,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    重み付きグラフで非負の辺を持つ場合、最短経路を見つけるために一般的に使用されるアルゴリズムはどれですか？
+    非負の重みを持つグラフで最短経路を求める際に一般的に使用されるアルゴリズムはどれですか？
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Dijkstraのアルゴリズムは、非負の辺の重みを持つグラフで最短経路を見つけるために頻繁に使用されます。このアルゴリズムは、優先度付きキューを使用して効率的に最短距離を決定します。
+    ダイクストラ法は、非負のエッジ重みを持つグラフで最短経路を求める際に頻繁に使用されます。優先度キューを利用して、最短距離を効率的に算出します。
   </div>
   </slot>
 </Challenge>
@@ -307,23 +307,23 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={11}
-  group="木構造データ構造"
+  group="木データ構造"
   title="自己平衡探索木"
   options={[
-    {text: '二分探索木と最小ヒープ'},
-    {text: 'AVL木と赤黒木', isAnswer: true},
-    {text: '最小ヒープと最大ヒープ'},
-    {text: 'スタックとキュー'},
+    {text: '二分探索木 と 最小ヒープ'},
+    {text: 'AVL木 と 赤黒木', isAnswer: true},
+    {text: '最小ヒープ と 最大ヒープ'},
+    {text: 'スタック と キュー'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    自己平衡二分探索木データ構造の例を含むセットはどれですか？
+    自己平衡二分探索木の例が含まれるセットはどれですか？
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    AVL木と赤黒木は、挿入や削除のたびに木がバランスを保つことを保証する自己平衡木の種類です。
+    AVL木 と 赤黒木 は自己平衡木の一種で、挿入や削除のたびに木がバランスを保つようにします。
   </div>
   </slot>
 </Challenge>
@@ -336,19 +336,19 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   options={[
     {text: '無限ループ'},
     {text: 'スタックオーバーフロー'},
-    {text: 'ベースケース', isAnswer: true},
+    {text: '基本ケース', isAnswer: true},
     {text: 'グローバル変数'},
     {text: 'スコープの制限'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    再帰関数で無限再帰を防ぐために定義しなければならないのは？
+    再帰関数で無限再帰を防ぐために何を定義する必要がありますか？
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    再帰関数では、特定の条件が満たされたときに再帰呼び出しを停止させるためにベースケースが必要であり、これにより無限再帰を防ぐことができます。
+    再帰関数では、特定の条件が満たされたときに再帰呼び出しを停止させ、無限再帰を防ぐために基本ケースが必要です。
   </div>
   </slot>
 </Challenge>
@@ -357,22 +357,22 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={13}
   group="データ構造"
-  title="キューの操作"
+  title="キュー操作"
   options={[
-    {text: 'EnqueueとDequeue', isAnswer: true},
-    {text: 'PushとPop'},
-    {text: 'PeekとTop'},
-    {text: 'TraverseとSort'},
+    {text: 'エンキューとデキュー', isAnswer: true},
+    {text: 'プッシュとポップ'},
+    {text: 'ピークとトップ'},
+    {text: 'トラバースとソート'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    キューの2つの主な操作は何ですか？
+    キューの主要な2つの操作は何ですか？
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    キューの2つの主な操作は、Enqueue（要素を末尾に追加）とDequeue（要素を先頭から削除）です。
+    キューの主要な2つの操作はエンキュー（要素を末尾に追加する）とデキュー（要素を先頭から削除する）です。
   </div>
   </slot>
 </Challenge>
@@ -383,20 +383,20 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="グラフアルゴリズム"
   title="トポロジカルソート"
   options={[
-    {text: 'グラフにサイクルが含まれていること'},
-    {text: 'グラフが重み付きで連結であること'},
-    {text: 'グラフが非指向的でサイクルを持たないこと'},
-    {text: 'グラフが指向的でサイクルを持たないこと', isAnswer: true},
+    {text: 'グラフはサイクルを含んでいる必要がある'},
+    {text: 'グラフは重み付きで連結している必要がある'},
+    {text: 'グラフは無向で非循環である必要がある'},
+    {text: 'グラフは有向で非循環である必要がある', isAnswer: true},
   ]}
 >
   <slot name="question">
   <div className="question">
-    トポロジカルソートをグラフに対して実行するための条件は何ですか？
+    グラフでトポロジカルソートを実行する条件は何ですか？
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    トポロジカルソートは、グラフが有向非巡回グラフ（DAG）である場合にのみ実行できます。この順序付けはタスクスケジューリング問題などで役立ちます。
+    グラフが有向非循環（DAG）である場合にトポロジカルソートを実行できます。この順序付けはタスクスケジューリング問題で役立ちます。
   </div>
   </slot>
 </Challenge>
@@ -405,7 +405,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={15}
   group="動的計画法"
-  title="フィボナッチ数列の再帰実装の時間計算量"
+  title="フィボナッチ再帰の計算量"
   options={[
     {text: 'O(1)'},
     {text: 'O(2^n)', isAnswer: true},
@@ -416,12 +416,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    フィボナッチ数列のナイーブな再帰実装の時間計算量はどれですか？
+    フィボナッチ数列の単純な再帰実装の時間計算量は何ですか？
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    フィボナッチ数列のナイーブな再帰実装は、各フィボナッチ数の計算で繰り返し計算が行われるため、時間計算量はO(2^n)になります。
+    フィボナッチ数列の単純な再帰実装は、各フィボナッチ数に対して膨大な繰り返し計算が行われるため、時間計算量は O(2^n) です。
   </div>
   </slot>
 </Challenge>
@@ -430,7 +430,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={16}
   group="データ構造"
-  title="プライオリティキューの実装"
+  title="優先度キューの実装"
   options={[
     {text: '配列'},
     {text: 'スタック'},
@@ -441,12 +441,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    プライオリティキューを実装するためによく使われるデータ構造はどれですか？
+    優先度キューを実装する際に一般的に使用されるデータ構造はどれですか？
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    プライオリティキューは通常、ヒープを使って実装されることが多いです。なぜなら、ヒープは最大または最小の優先度要素を効率的に抽出可能だからです。
+    優先度キューは、最高または最低の優先度の要素を効率的に取り出せるため、通常ヒープを使って実装されます。
   </div>
   </slot>
 </Challenge>
@@ -455,22 +455,22 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={17}
   group="データ構造"
-  title="二分木の走査方法"
+  title="二分木の走査"
   options={[
-    {text: 'In-order, Pre-order, Post-order', isAnswer: true},
-    {text: 'Breadth-First, Depth-First, Heapify'},
-    {text: 'Sort, Search, Rotate'},
-    {text: 'Push, Pop, Peek'},
+    {text: '中順、前順、後順', isAnswer: true},
+    {text: '幅優先、深さ優先、ヒープ化'},
+    {text: 'ソート、検索、回転'},
+    {text: 'プッシュ、ポップ、ピーク'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    二分木の一般的な深さ優先走査順を示すセットはどれですか？
+    二分木の深さ優先走査で一般的な順序を列挙しているのはどれですか？
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    In-order, Pre-order, Post-order は二分木の深さ優先走査の3つの一般的な順序です。それぞれがノードを訪問する順序が異なります。Breadth-first 走査も一般的ですが、別の走査カテゴリに属します。
+    中順、前順、後順は二分木における代表的な深さ優先走査の3つの順序で、ノードの訪問順序がそれぞれ異なります。幅優先走査も一般的ですが、別の走査カテゴリです。
   </div>
   </slot>
 </Challenge>
@@ -478,23 +478,23 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={18}
-  group="木構造データ構造"
+  group="木構造"
   title="ヒープの性質"
   options={[
-    {text: 'すべてのノードが左から右へソートされている'},
-    {text: 'ルートは常に最大の要素である'},
+    {text: 'すべてのノードは左から右へソートされている'},
+    {text: '根は常に最大要素である'},
     {text: 'すべての葉は同じレベルにある'},
-    {text: 'ルートは最小の要素であり、高さはO(log n)である', isAnswer: true},
+    {text: '根は最小要素であり高さは O(log n) である', isAnswer: true},
   ]}
 >
   <slot name="question">
   <div className="question">
-    min-heapに対して、以下のどの性質が正しいですか？
+    次のうち、ミニヒープに当てはまる性質はどれですか？
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    min-heapでは、ルートは常に最小の要素であり、木の高さはO(log n)となるため、挿入と抽出が効率的になります。
+    ミニヒープでは、根は常に最小要素であり、木の高さは O(log n) になるため、挿入と抽出が効率的です。
   </div>
   </slot>
 </Challenge>
@@ -502,24 +502,24 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={19}
-  group="ソーティングアルゴリズム"
+  group="ソートアルゴリズム"
   title="バブルソートの安定性"
   options={[
     {text: '不安定'},
     {text: '安定', isAnswer: true},
-    {text: '実装に依存する'},
+    {text: '実装次第'},
     {text: 'どちらでもない'},
-    {text: '複雑さが安定性を決定する'},
+    {text: '計算量が安定性を決める'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    バブルソートアルゴリズムは安定していますか？
+    バブルソートアルゴリズムは安定ですか？
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    バブルソートは、ソート中に等しい要素の相対的な順序を保持するため、安定したソートアルゴリズムです。
+    バブルソートは安定なソートアルゴリズムで、等しい要素の相対順序を保ったままソートします。
   </div>
   </slot>
 </Challenge>

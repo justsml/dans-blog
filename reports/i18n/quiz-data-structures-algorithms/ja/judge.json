@@ -1,0 +1,59 @@
+{
+  "selectedCommit": "305b6da1d8cefb75a98687ba9a19680a168f4ab1",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 9,
+    "relevance": 9,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "subTitle: \"バイナリツリーをBSできるか？\"",
+      "replacement": "subTitle: \"バイナリツリーをBSできるか？\"",
+      "reason": "The current file actually has double quotes in the subTitle, but the judge report suggested adding them. Upon inspection of the provided ja/index.mdx, it is already quoted. No change needed if already quoted, but I will ensure the frontmatter matches the English structure."
+    },
+    {
+      "priority": "medium",
+      "match": "label: Algorithms & DS",
+      "replacement": "label: \"Algorithms & DS\"",
+      "reason": "The ampersand in YAML values should ideally be quoted to prevent parsing issues."
+    }
+  ],
+  "rationale": "The translation is technically sound and uses appropriate Japanese terminology for CS concepts (e.g., 中順/前順/後順). It preserves the MDX structure perfectly. The subTitle 'BS' is a play on words from the English original which is kept for flavor.",
+  "slug": "quiz-data-structures-algorithms",
+  "locale": "ja",
+  "candidateCommits": [
+    "305b6da1d8cefb75a98687ba9a19680a168f4ab1",
+    "f1afa39b1f1a9f8c673c44cbb31f7d3db1238f11"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "subTitle: バイナリツリーをBSできるか？",
+      "replacement": "subTitle: \"バイナリツリーをBSできるか？\"",
+      "reason": "The subTitle value should be wrapped in quotes for consistency and to avoid potential YAML parsing issues with special characters.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "subTitle: バイナリツリーをBSできるか？",
+      "replacement": "subTitle: \"バイナリツリーをBSできるか？\"",
+      "reason": "The subTitle value should be wrapped in quotes for consistency and to avoid potential YAML parsing issues with special characters like question marks.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug quiz-data-structures-algorithms --locale ja --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug quiz-data-structures-algorithms --locale ja --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug quiz-data-structures-algorithms --locale ja --skip-global\n20 |   }\n21 | \n22 |   const minimumLength = Math.floor(sourceLength * minimumRatio);\n23 |   const maximumLength = Math.ceil(sourceLength * maximumRatio);\n24 |   if (targetLength < minimumLength || targetLength > maximumLength) {\n25 |     throw new Error(\n                   ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2024-10-31--quiz-data-structures-algorithms/ja/index.mdx changed comparable body length from 17373 chars in English to 10567 chars. Expected 11292-23454 chars (within 35%).\n      at assertTranslationLength (/Users/dan/code/oss/dans-blog/src/scripts/i18n/structural-validation.ts:25:15)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:26:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}
