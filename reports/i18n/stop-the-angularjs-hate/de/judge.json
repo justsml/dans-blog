@@ -1,0 +1,64 @@
+{
+  "selectedCommit": "257009bd553849a3766093053a950b90ddd950e0",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The current translation in the provided MDX already incorporates the fixes suggested in the previous judge report (e.g., 'Lesen Sie einfach diesen Abschnitt' and 'Reinerer JS-Ansatz' are already present). The translation is technically accurate, maintains the punchy tone of the original, and correctly handles the frontmatter and MDX structure. No further high-priority changes are required.",
+  "slug": "stop-the-angularjs-hate",
+  "locale": "de",
+  "candidateCommits": [
+    "257009bd553849a3766093053a950b90ddd950e0",
+    "3f141512f193f0bd9f580231a15de8996863dbf3"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "Justread this section",
+      "replacement": "Lesen Sie einfach diesen Abschnitt",
+      "reason": "The candidate failed to translate 'Just read this section' and even merged the words into 'Justread'.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "###Pure-er JS Ansatz",
+      "replacement": "### Reinerer JS-Ansatz",
+      "reason": "Missing space after heading marker and awkward translation of 'Pure-er'.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "Justread this section",
+      "replacement": "Lesen Sie einfach diesen Abschnitt",
+      "reason": "The candidate failed to translate 'Just read this section' and even merged the words into 'Justread'.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "###Pure-er JS Ansatz",
+      "replacement": "### Reinerer JS-Ansatz",
+      "reason": "Missing space after heading marker and awkward translation of 'Pure-er'.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug stop-the-angularjs-hate --locale de --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug stop-the-angularjs-hate --locale de --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug stop-the-angularjs-hate --locale de --skip-global\n109 |     })\n110 |     .filter((message): message is string => message != null);\n111 | \n112 |   if (mismatches.length === 0) return;\n113 | \n114 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2015-03-10--stop-the-angularjs-hate/de/index.mdx changed heading counts. H3: English has 7, translation has 6\n      at assertHeadingCounts (/Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:114:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:27:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}

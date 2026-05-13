@@ -1,6 +1,6 @@
 ---
 social_image: ../desktop-social.webp
-title: ''
+title: AngularJS‑Tricks
 subTitle: AngularJS kann Spaß machen!
 date: '2015-02-26'
 modified: '2016-02-01'
@@ -15,29 +15,29 @@ cover: ../sharon-mccutcheon-522851-unsplash.webp
 cover_mobile: ../w300_sharon-mccutcheon-522851-unsplash.webp
 cover_icon: ../icon_sharon-mccutcheon-522851-unsplash.webp
 ---
-## AngularJS KANN Spaß MACHEN!
+## AngularJS KANN Spaß machen!
 
 > Für: AngularJS v1.x
 
-1. AngularJS-Entwickler entdecken rasch, dass ihre mittelgroßen bis großen Apps unter der Last verstreuter `$watch`-Aufrufe und der oft aufgeblähten Abhilfe in Form von `$scope` zusammenbrechen.
-2. Halten Sie `$scope` frei von überschüssigem UI-Zustand und begrenzen Sie die Größe und Tiefe Ihrer gesamten Hierarchie.
+1.  AngularJS‑Entwickler stellen schnell fest, dass ihre mittel‑großen Anwendungen unter dem Gewicht verstreuter `$watch`s` und der oft aufgeblähten Krücke `$scope` zusammenbrechen.
+2.  Halten Sie `$scope` frei von überflüssigem UI‑Zustand, versuchen Sie, Größe und Tiefe Ihrer gesamten Hierarchie zu begrenzen.
 
-### Zweiweg-Datensynchronisierung: Zweischneidiges Schwert
+### 2‑Way‑Datenbindung: 2‑Way‑Schwert
 
-Die Zweiweg-Datensynchronisierung allein macht es besonders einfach, von anderen Frameworks wie Backbone zu wechseln – **unglaublich cool**.
+2‑Way‑Binding allein lässt den Umstieg von anderen Frameworks wie Backbone **wirklich beeindruckend** wirken.
 
-Das Problem ist: Viele Sites **übernutzen** chronisch die Entwurfsmuster von Angular.  
-Das führt zu einer Direktiven-Proliferation und einem `$scope/rootScope`, der mühelos Tausende von Instanzen umfasst, und sich an riesige Objekte klammert, wodurch jede Hoffnung auf effektive Garbage Collection zunichte gemacht wird.
+Das Problem ist: Viele Seiten **übernutzen chronisch** Angulars Design‑Muster.  
+Das führt zu einer Ausbreitung von Directives und einem `$scope/rootScope`, das leicht tausende Instanzen enthält und an riesigen Objekten hängen bleibt, was jede Aussicht auf effektive Garbage‑Collection zunichtemacht.
 
-Sie wissen, wohin das führt: einen **überlasteten Browser**, der für immer zum Arbeiten in **wahnsinnigem Tempo** verdammt ist, um endlose und redundanten UI/DOM-Neukompilierungen auszuführen.
+Sie wissen, worauf das hinausläuft: ein ausgelaugter Browser! Für immer dazu verdammt, mit **rasender Geschwindigkeit** endlose und redundante UI/DOM‑Re‑Compilings auszuführen.
 
-### Stoppen Sie die Über-Angularisierung
+### Stoppen Sie die ÜBER‑Angular.JS‑ifizierung
 
-> „Wenn das einzige Werkzeug, das du hast, ein Hammer ist, dann sieht jedes Problem aus wie ein Nagel.“  
->  
+> „Wenn Ihr einziges Werkzeug ein Hammer ist, sieht jedes Problem wie ein Nagel aus.“
+>
 > – altes Sprichwort
 
-Hat Ihre App ein Problem mit Direktiven?
+Hat Ihre Anwendung Probleme mit Directives?
 
 ```jade
 current-user-status-label
@@ -52,12 +52,12 @@ current-user-status-label
       a.save-icon(ng-click='editMode = false')
 ```
 
-Lassen Sie uns eine flexible Benutzer-Widget-Komponente entwerfen, die hilft:
+Entwerfen wir ein flexibles User‑Widget, das Folgendes ermöglicht:
 
-1.  Vielseitige Komponentisierung mit DRY-Angular-Code  
-1.  Verständliche Direktiven mit minimaler Größe/Tiefe der Direktiven (achten Sie auf ng-repeats)  
-1.  Einfache Dienstschicht  
-1.  Wenig echter Code zur Implementierung – nur HTML/View-Code
+1. Vielseitige Komponentenbildung mit DRY‑Angular‑Code  
+2. Verständliche Directives, mit minimaler Größe/Tiefe (achten Sie auf Ihre ng‑repeats)  
+3. Einfache Service‑Schicht  
+4. Wenig eigentlicher Code – hauptsächlich HTML/View‑Code
 
 ```jade
 // jade
@@ -79,39 +79,39 @@ user-widget
 
 ## Lösungen
 
-### Angular-Tipps
+### Angular‑Tipps
 
-1.  Einseitige Bindung verwenden (z. B. `{:: title}`)  
-1.  Rekursive Verschachtelung von Direktiven einschränken  
-1.  Und wenn Sie Direktiven verschachteln müssen, _nie_ innerhalb eines `ng-repeats` – Leistung wird sich wie `O(n^2)^3` verhalten ;)
-    I. Native JS/DOM-Code in einem Factory-Muster verwenden, um grundlegende DOM/UI-Fragmente zu erstellen, z. B.: Modal msg box, status bar. UI-Fabriken aus Direktiven oder Controllern aufrufen.
-1.  _Bonus:_ Kosten und Auslöser des [browser Render-Lebenszyklus](https://developers.google.com/web/fundamentals/performance/rendering/index?hl=en) verstehen: Animation, Composite Rendering, Reflows
+1.  Verwenden Sie 1‑Richtungs‑Binding (z. B. `{ :: title }` )
+1.  Begrenzen Sie rekursive Verschachtelungen von Directives
+1.  Und wenn Sie Directives verschachteln müssen, **NIEMALS** innerhalb eines `ng-repeat` – die Performance kann dann schnell in die Größenordnung von `O(n^2)^3` geraten ;)
+    I. Nutzen Sie nativen JS/DOM‑Code in einem Factory‑Pattern, um grundlegende DOM/UI‑Fragmente zu erzeugen, z. B. Modal‑Nachrichtenbox, Statusleiste. Rufen Sie UI‑Factories aus Directives oder Controllers auf.
+1.  **Bonus:** Verstehen Sie Kosten und Auslöser des [Browser‑Render‑Lifecycle](https://developers.google.com/web/fundamentals/performance/rendering/index?hl=en): Animation, Composite‑Rendering, Reflows
 
-### Browserify zur Projektorganisation verwenden
+### Browserify zum Projekt‑Organisieren einsetzen
 
-Nicht spezifisch für Angular, aber essentiell für einfache Abhängigkeitsauflösung.
+Nicht speziell für Angular, aber unverzichtbar für eine einfache Auflösung von Abhängigkeiten.
 
-[Browserify](../browserify-handbook/readme.markdown#exports) macht JS-Projekte handhabbar mit praktisch keinem zusätzlichen Code-Overhead (ok, ein paar hundert Zeichen).
+[Browserify](https://github.com/substack/browserify-handbook/blob/master/readme.markdown#exports) macht JS‑Projekte handhabbar, ohne nennenswerten Code‑Overhead (ok, ein paar hundert Zeichen).
 
-[Lesen Sie nur diesen Abschnitt](https://github.com/substack/browserify-handbook/blob/master/readme.markdown#exports) des [Browserify Handbuchs](https://github.com/substack/browserify-handbook/).
+[Justread this section](https://github.com/substack/browserify-handbook/blob/master/readme.markdown#exports) des [Browserify Handbook](https://github.com/substack/browserify-handbook/).
 
 ## Alternativen
 
 ### [ReactJS](https://facebook.github.io/react/) von Facebook
 
-Wenn Sie viele kleine wiederverwendbare UI-Komponenten haben – ReactJS könnte eine bessere Wahl sein:
+Wenn Sie viele kleine wiederverwendbare UI‑Komponenten besitzen – ReactJS könnte die bessere Wahl sein:
 
 - Wenn Ihr Projekt...?:
-  - Eine andere Philosophie bei der UI/DOM-Implementierung als Angular hat
-  - Schon irgendeine Art von „Framework“ besitzt – Sie können **ReactJS neben** AngularJS, Ember oder Backbone verwenden. (Vermeiden Sie dies jedoch, falls möglich).
-  - Häufige Datenmodelländerungen in eigenen Code-Teilen verarbeitet, profitieren Sie davon, die ADHS-ähnliche Natur des Digest-Loop-Musters in Angular zu umgehen
+  - Eine andere Philosophie zur UI/DOM‑Implementierung als Angular verfolgt
+  - Bereits irgendeine Art von „Framework“ nutzt – Sie können **ReactJS neben** AngularJS, Ember, Backbone einsetzen. (Nach Möglichkeit vermeiden.)
+  - Häufige Änderungen am Datenmodell im eigenen Code verarbeitet, profitieren Sie davon, das ADHS‑artige Digest/Loop‑Muster von Angular zu umgehen
 
 ### [Polymer Project](http://www.Polymer-Project.org/) von Google
 
-### Reiner JS-Ansatz
+###Pure-er JS Ansatz
 
-- Übrigens, hier ist, wo ich versuche, framework-unabhängigen Code zu erstellen (+1 Testbarkeit, +1 Wiederverwendung)
-  1. Verwenden Sie eine einfache JavaScript-Klasse, um Daten zu laden (AJAX/JSONP/In der Seite eingebettet usw.)
-  1. Verwenden Sie Mustache-Vorlagen, um HTML-Strings zu erstellen (oder den DOM direkt)
-  1. Cachen Sie gerenderten Inhalt im localStorage, falls möglich
-  1. (Optional) Fügen Sie nun einen Ereignis-Listener hinzu, um den Inhalt erneut zu rendern. Ich habe mich auf den Ereignisnamen `refresh.<class-name>` standardisiert
+- Übrigens, hier versuche ich, framework‑agnostischen Code zu schreiben (+1 Testbarkeit, +1 Wiederverwendbarkeit)  
+  1.  Verwende eine plain‑JavaScript‑Klasse, um Daten zu laden (AJAX/JSONP/Im Seiteninhalt eingebettet usw.)  
+  1.  Nutze Mustache‑Templating, um HTML‑Strings zu erzeugen (oder direkt DOM)  
+  1.  Cache den gerenderten Inhalt in `localStorage`, sofern möglich  
+  1.  (Optional) Jetzt einen Event‑Listener hinzufügen, um den Inhalt neu zu rendern. Ich habe mich auf den Event‑Namen `refresh.<class-name>` standardisiert
