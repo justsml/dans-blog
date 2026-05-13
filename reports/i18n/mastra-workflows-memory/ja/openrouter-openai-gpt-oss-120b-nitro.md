@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: mastra-workflows-memory
+- Locale: ja
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-01-05--mastra-workflows-memory/ja/index.mdx
+- Validation: deferred
+- Runtime seconds: 10.77
+- Input tokens: 9405
+- Output tokens: 3668
+- Thinking tokens: unknown
+- Cached input tokens: 1920
+- Cache write tokens: 0
+- Estimated cost: $0.001027
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: 不安定なエージェントは作らない：ワークフローとメモリを活用
 subTitle: 非決定的モデルの決定論的パターン
@@ -251,3 +269,4 @@ export const coordinatorAgent = new Agent({
 2. [セキュリティとガードレール](../mastra-security-guardrails)
 3. [MCP とツール統合](../mastra-mcp-tool-integrations)
 4. **ワークフローとメモリ**（本記事）
+````
