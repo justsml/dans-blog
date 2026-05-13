@@ -1,0 +1,55 @@
+{
+  "selectedCommit": "f52f2a4b676f394f554309e65984734be23e1e18",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The current translation (based on the GPT-OSS candidate) is excellent. It correctly translates the frontmatter, handles relative paths for MDX, and maintains Dan's direct style. The high-priority suggestions from the previous judge report have already been applied to the current file, so no further fixes are required.",
+  "slug": "protect-your-tokens",
+  "locale": "ja",
+  "candidateCommits": [
+    "f52f2a4b676f394f554309e65984734be23e1e18",
+    "803b157880eab551ea3346ff40f8897ac9903366"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "** ‼️ Important:** `Secret keys` **MUST** be ignored by Git _AND_ omitted in all browser code. [_How to use dotenv_](../#-how-to-handle-secrets-safely)",
+      "replacement": "** ‼️ 重要:** `シークレットキー`は **Gitで無視し**、かつすべてのブラウザコードから**除外しなければなりません**。 [_dotenvの使用方法_](../#-how-to-handle-secrets-safely)",
+      "reason": "The candidate left a critical warning paragraph in English.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "### Checklist: Handling Secrets Safely",
+      "replacement": "### チェックリスト：シークレットを安全に扱うために",
+      "reason": "Heading was left in English.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "#### Quick Overview",
+      "replacement": "#### クイック概要",
+      "reason": "Heading was left in English.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug protect-your-tokens --locale ja --skip-global",
+    "output": ""
+  }
+}
