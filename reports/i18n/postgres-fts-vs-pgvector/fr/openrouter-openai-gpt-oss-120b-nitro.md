@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: postgres-fts-vs-pgvector
+- Locale: fr
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-05-08--postgres-fts-vs-pgvector/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 20.75
+- Input tokens: 21202
+- Output tokens: 8881
+- Thinking tokens: unknown
+- Cached input tokens: 3456
+- Cache write tokens: 0
+- Estimated cost: $0.002425
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: 'Recherche Postgres : FTS, trigrammes et pgvector'
 subTitle: Vous avez déjà lesoutils. Choisissez celui qui correspond à la requête.
@@ -401,3 +419,4 @@ N’utilisez pas la recherche vectorielle comme recherche textuelle floue pour d
 La recherche vectorielle renvoie l’*élément le plus similaire* de votre jeu de données, même lorsqu’aucun résultat pertinent n’existe. Elle ne sait pas qu’il n’y a pas de bonne réponse. C’est acceptable pour des documents liés. C’est catastrophique pour la recherche d’un enregistrement précis, où une correspondance approximative erronée est pire qu’un résultat vide.
 
 Sachez à quoi sert chaque outil. La plupart sont déjà présents dans votre installation Postgres. Employez‑les là où ils sont adaptés.
+````
