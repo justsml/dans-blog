@@ -1,0 +1,27 @@
+{
+  "selectedCommit": "a19814469b044ae769c5e9360f5a5b0aa47c142d",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 9,
+    "relevance": 9,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The candidate a19814469b044ae769c5e9360f5a5b0aa47c142d is the best choice because it correctly translates the 'title' field in the frontmatter, which was missing in the current version and the other candidate. It also provides a more natural and professional translation of the content while strictly adhering to the MDX structure and heading counts. The use of bolding for the introductory questions matches the English source's emphasis better than the other versions.",
+  "slug": "the-4-pillars-of-collaborative-culture",
+  "locale": "ja",
+  "candidateCommits": [
+    "a19814469b044ae769c5e9360f5a5b0aa47c142d",
+    "d5607d7c691344437e76b57948b5df5f1baf0e1e"
+  ],
+  "suggestionLog": [],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug the-4-pillars-of-collaborative-culture --locale ja --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug the-4-pillars-of-collaborative-culture --locale ja --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug \"the-4-pillars-of-collaborative-culture\" --locale ja --skip-global\n20 |   }\n21 | \n22 |   const minimumLength = Math.floor(sourceLength * minimumRatio);\n23 |   const maximumLength = Math.ceil(sourceLength * maximumRatio);\n24 |   if (targetLength < minimumLength || targetLength > maximumLength) {\n25 |     throw new Error(\n                   ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2021-03-03--the-4-pillars-of-collaborative-culture/ja/index.mdx changed comparable body length from 5134 chars in English to 2902 chars. Expected 3337-6931 chars (within 35%).\n      at assertTranslationLength (/Users/dan/code/oss/dans-blog/src/scripts/i18n/structural-validation.ts:25:15)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:26:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}
