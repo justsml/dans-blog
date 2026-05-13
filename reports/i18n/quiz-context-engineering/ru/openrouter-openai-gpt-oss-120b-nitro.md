@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-context-engineering
+- Locale: ru
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-05-09--quiz-context-engineering/ru/index.mdx
+- Validation: passed
+- Runtime seconds: 29.84
+- Input tokens: 14829
+- Output tokens: 14060
+- Thinking tokens: unknown
+- Cached input tokens: 2048
+- Cache write tokens: 0
+- Estimated cost: $0.003109
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: 'Викторина: 14 вопросов по контекстному инженерию'
 subTitle: >-
@@ -474,3 +492,4 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 - **0–4**: Хорошие новости: всё в этом тесте поддаётся изучению и сразу же применимо. Вопрос «застрял в середине» сам по себе стоит понимания перед следующей RAG‑деплойментом.
 
 Инжиниринг контекста — это дисциплина осознанного выбора того, какую информацию помещать в окно, где её размещать и как её структурировать. Модель — наименее управляемая часть вашей системы. Всё остальное — ваш контроль.
+````
