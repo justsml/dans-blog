@@ -1,0 +1,120 @@
+{
+  "runId": "qwen-qwen3-32b-nitro@2026-05-13T15-08-52-942Z",
+  "slug": "the-8-byte-timestamp-that-destroyed-our-database",
+  "locale": "es",
+  "model": "qwen/qwen3-32b:nitro",
+  "modelPath": "qwen-qwen3-32b-nitro",
+  "createdAt": "2026-05-13T15:09:17.234Z",
+  "sourcePath": "src/content/posts/2025-12-29--the-8-byte-timestamp-that-destroyed-our-database/index.mdx",
+  "targetPath": "src/content/posts/2025-12-29--the-8-byte-timestamp-that-destroyed-our-database/es/index.mdx",
+  "candidatePath": "reports/i18n/the-8-byte-timestamp-that-destroyed-our-database/es/qwen-qwen3-32b-nitro/2026-05-13T15-08-52-942Z/candidate.mdx",
+  "sourceHash": "4d98d485a209ef83adfb3ec4df7994acdb6c23964910ec139710bf29772952fe",
+  "outputHash": "3418a6e26b05723e413fa8e25354218d6bc9674030cbe212bf60a7f6994c7128",
+  "reasoningEffort": "low",
+  "temperature": 0.3,
+  "maxTokens": 16000,
+  "timeoutMs": 200000,
+  "articleSummary": "The article \"Your Timestamp is a Lie\" argues that PostgreSQL's `TIMESTAMP` and `TIMESTAMPTZ` types are often misunderstood due to their nuanced handling of time zones. Core to the thesis is the revelation that `TIMESTAMPTZ` stores times in UTC and converts them to the user's session timezone on retrieval, making it ideal for absolute moments (e.g., event timestamps), while `TIMESTAMP` preserves local time without conversion—critical for fixed wall-clock policies (e.g., hotel check-in rules). The author uses metaphors like train tickets and flight apps to frame time as context-dependent, emphasizing the need to distinguish between absolute moments, durations (`INTERVAL`), and local time contexts. Targeting developers, the tone is analytical and tutorial, offering practical rules (e.g., default to `TIMESTAMPTZ` for global apps) and warnings about precision mismatches between systems like PostgreSQL and JavaScript. The recurring framing device is the \"lie\" in timestamp names, which obscure their true behavior.",
+  "totalInputTokens": 9880,
+  "totalOutputTokens": 8885,
+  "totalCacheReadTokens": 1536,
+  "totalCacheWriteTokens": 0,
+  "totalDurationMs": 20544,
+  "totalCostUsd": 0.0029228,
+  "pricingSource": "local-openrouter-estimate",
+  "telemetry": {
+    "model": "qwen/qwen3-32b:nitro",
+    "chunkSize": "6p",
+    "totalChunks": 9,
+    "totalInputTokens": 9880,
+    "totalOutputTokens": 8885,
+    "totalCacheReadTokens": 1536,
+    "totalCacheWriteTokens": 0,
+    "totalDurationMs": 20544,
+    "totalCostUsd": 0.0029228,
+    "pricingSource": "local-openrouter-estimate",
+    "chunks": [
+      {
+        "index": 0,
+        "inputTokens": 922,
+        "outputTokens": 870,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 2105,
+        "costUsd": 0.00028256
+      },
+      {
+        "index": 1,
+        "inputTokens": 1146,
+        "outputTokens": 871,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 2151,
+        "costUsd": 0.00030072
+      },
+      {
+        "index": 2,
+        "inputTokens": 1102,
+        "outputTokens": 842,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 2044,
+        "costUsd": 0.00029024
+      },
+      {
+        "index": 3,
+        "inputTokens": 1045,
+        "outputTokens": 885,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 2182,
+        "costUsd": 0.00029600000000000004
+      },
+      {
+        "index": 4,
+        "inputTokens": 1143,
+        "outputTokens": 1184,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 2602,
+        "costUsd": 0.00037559999999999997
+      },
+      {
+        "index": 5,
+        "inputTokens": 1117,
+        "outputTokens": 914,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 2079,
+        "costUsd": 0.00030871999999999996
+      },
+      {
+        "index": 6,
+        "inputTokens": 1143,
+        "outputTokens": 1136,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 2354,
+        "costUsd": 0.00036408
+      },
+      {
+        "index": 7,
+        "inputTokens": 1163,
+        "outputTokens": 1157,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 2676,
+        "costUsd": 0.00037072
+      },
+      {
+        "index": 8,
+        "inputTokens": 1099,
+        "outputTokens": 1026,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 2351,
+        "costUsd": 0.00033416
+      }
+    ]
+  }
+}
