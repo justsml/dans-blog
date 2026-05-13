@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: async-stack-traces-why-error-stack-lies-in-production
+- Locale: fr
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2025-12-29--async-stack-traces-why-error-stack-lies-in-production/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 2.80
+- Input tokens: 4652
+- Output tokens: 961
+- Thinking tokens: unknown
+- Cached input tokens: 2432
+- Cache write tokens: 0
+- Estimated cost: $0.000354
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: 'Pistes d’appels asynchrones : pourquoi `Error.stack` vous ment'
 subTitle: La file micro‑tâches a dévoré mon devoir (et mon contexte de débogage).
@@ -96,3 +114,4 @@ Peu importe le nombre d’`await` intermédiaires : le contexte persiste.
 3.  Tracez, ne stackez pas. Employez OpenTelemetry. Il visualise la chaîne causale entre services, ce dont vous avez réellement besoin.
 
 Votre code est asynchrone. Votre contexte de débogage ne devrait pas l’être.
+````
