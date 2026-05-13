@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-destructuring-delights
+- Locale: es
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2024-11-12--quiz-destructuring-delights/es/index.mdx
+- Validation: passed
+- Runtime seconds: 24.18
+- Input tokens: 11617
+- Output tokens: 7684
+- Thinking tokens: unknown
+- Cached input tokens: 3072
+- Cache write tokens: 0
+- Estimated cost: $0.001836
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: 'Quiz: Delicias dedesestructuración'
@@ -556,3 +574,4 @@ Este quiz evaluará tu dominio del Destructuring en JavaScript: desde la sintaxi
 </Challenge>
 
 </QuizUI>
+````

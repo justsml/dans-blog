@@ -20,8 +20,8 @@ cover_full_width: ../boxes-of-nesting-dolls.webp
 cover_mobile: ../boxes-of-nesting-dolls-square.webp
 cover_icon: ../boxes-of-nesting-dolls-square.webp
 ---
-import Challenge from '../../../../../components/QuizUI/Challenge';
-import QuizUI from '../../../../../components/QuizUI/QuizUI';
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
 
 {/* ¿Eres un maestro del Destructuring?<br/> */}
 <p class="inset">¿O es tu <em>Sinfonía de la Destrucción?</em></p>
@@ -50,12 +50,12 @@ Este quiz evaluará tu dominio del Destructuring en JavaScript: desde la sintaxi
   <div className="question">
     ¿Qué imprimirá este código?
     ```js
-    const person = {
-      name: 'Dan Levy',
-      location: 'Cape Town',
-    };
-    const { name, age } = person;
-    console.log(`Name: ${name}, Age: ${age}`);
+        const person = {
+          name: 'Dan Levy',
+          location: 'Cape Town',
+        };
+        const { name, age } = person;
+        console.log(`Name: ${name}, Age: ${age}`);
     ```
   </div>
   </slot>
@@ -65,7 +65,7 @@ Este quiz evaluará tu dominio del Destructuring en JavaScript: desde la sintaxi
 
     Esto resulta en:
     ```plaintext
-    Name: Dan Levy, Age: undefined
+        Name: Dan Levy, Age: undefined
     ```
   </div>
   </slot>
@@ -89,9 +89,9 @@ Este quiz evaluará tu dominio del Destructuring en JavaScript: desde la sintaxi
   <div className="question">
     ¿Qué hará este código?
     ```js
-    const person = [ 'Dan Levy', 'Cape Town' ];
-    const [ name, origin, age ] = person;
-    console.log(`Name: ${name}, Age: ${age}`);
+        const person = [ 'Dan Levy', 'Cape Town' ];
+        const [ name, origin, age ] = person;
+        console.log(`Name: ${name}, Age: ${age}`);
     ```
   </div>
   </slot>
@@ -101,7 +101,7 @@ Este quiz evaluará tu dominio del Destructuring en JavaScript: desde la sintaxi
 
     Esto resulta en:
     ```plaintext
-    Name: Dan Levy, Age: undefined
+        Name: Dan Levy, Age: undefined
     ```
   </div>
   </slot>
@@ -124,19 +124,19 @@ Este quiz evaluará tu dominio del Destructuring en JavaScript: desde la sintaxi
   <div className="question">
     ¿Qué tal una desestructuración anidada?
     ```js
-    'use strict';
-    const person = {
-      name: { first: 'Dan' },
-      address: { city: 'Denver' },
-    };
-    const {
-      name: { first },
-      address: { city },
-      birth: { place },
-    } = person;
-    console.log(
-      `First: ${first}, City: ${place}`,
-    );
+        'use strict';
+        const person = {
+          name: { first: 'Dan' },
+          address: { city: 'Denver' },
+        };
+        const {
+          name: { first },
+          address: { city },
+          birth: { place },
+        } = person;
+        console.log(
+          `First: ${first}, City: ${place}`,
+        );
     ```
   </div>
   </slot>
@@ -173,18 +173,18 @@ Este quiz evaluará tu dominio del Destructuring en JavaScript: desde la sintaxi
   <div className="question">
     Ahora con algunos valores predeterminados, ¿qué hará esto?
     ```js
-    'use strict';
-    const person = {
-      name: { first: 'Dan' },
-      address: { city: 'Denver' },
-    };
-    const {
-      name: { first = 'Unknown' },
-      birth: { place = 'Unknown' },
-    } = person;
-    console.log(
-      `Hi ${first} from ${place}`,
-    );
+        'use strict';
+        const person = {
+          name: { first: 'Dan' },
+          address: { city: 'Denver' },
+        };
+        const {
+          name: { first = 'Unknown' },
+          birth: { place = 'Unknown' },
+        } = person;
+        console.log(
+          `Hi ${first} from ${place}`,
+        );
     ```
   </div>
   </slot>
@@ -194,11 +194,11 @@ Este quiz evaluará tu dominio del Destructuring en JavaScript: desde la sintaxi
 
     La forma en que está escrito dice "si `person.birth` es `undefined`, entonces `place` es `Unknown`". Pero `person.birth` es `undefined`, así que está intentando desestructurar `undefined`, lo que produce un error.
     ```plaintext
-    In modern Chrome: `TypeError: Cannot read properties of undefined (reading 'place')`
+        In modern Chrome: `TypeError: Cannot read properties of undefined (reading 'place')`
 
-    In Node, this is also a `TypeError` because JavaScript tries to destructure `place` from `undefined`.
+        In Node, this is also a `TypeError` because JavaScript tries to destructure `place` from `undefined`.
 
-    Exact wording varies between browsers and runtimes.
+        Exact wording varies between browsers and runtimes.
     ```
   </div>
   </slot>
@@ -222,18 +222,18 @@ Este quiz evaluará tu dominio del Destructuring en JavaScript: desde la sintaxi
   <div className="question">
     ¿Qué hará esto?
     ```js
-    const person = {
-      name: { first: 'Dan' },
-      address: { city: 'Denver' },
-    };
-    const {
-      name: { first = 'Unknown' },
-      birth: { place = 'Unknown' } = {},
-    } = person;
+        const person = {
+          name: { first: 'Dan' },
+          address: { city: 'Denver' },
+        };
+        const {
+          name: { first = 'Unknown' },
+          birth: { place = 'Unknown' } = {},
+        } = person;
 
-    console.log(
-      `Hi ${first} from ${place}`,
-    );
+        console.log(
+          `Hi ${first} from ${place}`,
+        );
     ```
   </div>
   </slot>
@@ -262,14 +262,14 @@ Este quiz evaluará tu dominio del Destructuring en JavaScript: desde la sintaxi
   <div className="question">
     Ahora como parámetros de función, ¿qué hará esto?
     ```js
-    'use strict';
-    function displayUser({
-      name = "Unknown",
-      age = -1,
-    } = { place: "Unknown" }) {
-      console.log(`Hi ${name} from ${place}`);
-    }
-    displayUser({ name: "Dan" });
+        'use strict';
+        function displayUser({
+          name = "Unknown",
+          age = -1,
+        } = { place: "Unknown" }) {
+          console.log(`Hi ${name} from ${place}`);
+        }
+        displayUser({ name: "Dan" });
     ```
   </div>
   </slot>
@@ -302,17 +302,17 @@ Este quiz evaluará tu dominio del Destructuring en JavaScript: desde la sintaxi
   <div className="question">
     ¿Cómo se manejan los valores `undefined`?
     ```js
-    'use strict';
-    function displayPlace({
-      name = "N/A",
-      place = "N/A",
-      age = -1,
-    } = { place: "Unknown" }) {
-      console.log(`${place}`);
-    }
-    displayPlace({ name: "Dan" });
-    displayPlace({ name: "Dan", place: undefined });
-    displayPlace({ name: "Dan", place: "Joburg" });
+        'use strict';
+        function displayPlace({
+          name = "N/A",
+          place = "N/A",
+          age = -1,
+        } = { place: "Unknown" }) {
+          console.log(`${place}`);
+        }
+        displayPlace({ name: "Dan" });
+        displayPlace({ name: "Dan", place: undefined });
+        displayPlace({ name: "Dan", place: "Joburg" });
     ```
   </div>
   </slot>
@@ -324,9 +324,9 @@ Este quiz evaluará tu dominio del Destructuring en JavaScript: desde la sintaxi
 
     Esto produce:
     ```js
-    displayPlace() // Unknown
-    displayPlace({ name: "Dan" }) // N/A
-    displayPlace({ name: "Dan", place: undefined }) // N/A
+        displayPlace() // Unknown
+        displayPlace({ name: "Dan" }) // N/A
+        displayPlace({ name: "Dan", place: undefined }) // N/A
     ```
   </div>
   </slot>
@@ -353,15 +353,15 @@ Este quiz evaluará tu dominio del Destructuring en JavaScript: desde la sintaxi
   <div className="question">
     Similar al anterior... ¿cómo se maneja `null`?_
     ```js
-    function displayPlace({
-      name = "N/A",
-      place = "N/A",
-      age = -1,
-    } = { place: "Unknown" }) {
-      console.log(`${place}`);
-    }
-    displayPlace({ name: "Dan", place: null });
-    displayPlace({ name: "Dan", place: undefined });
+        function displayPlace({
+          name = "N/A",
+          place = "N/A",
+          age = -1,
+        } = { place: "Unknown" }) {
+          console.log(`${place}`);
+        }
+        displayPlace({ name: "Dan", place: null });
+        displayPlace({ name: "Dan", place: undefined });
     ```
   </div>
   </slot>
@@ -389,20 +389,20 @@ Este quiz evaluará tu dominio del Destructuring en JavaScript: desde la sintaxi
   <div className="question">
     Ahora en TypeScript... _¿qué hará esto?_
     ```ts
-    'use strict';
-    function displayPlace(
-      {
-        name = 'N/A',
-        place = 'N/A',
-      }: {
-        name: string;
-        place: string;
-        age: number;
-      },
-    ) {
-      console.log(`${place}`);
-    }
-    displayPlace({ name: 'Dan', place: null });
+        'use strict';
+        function displayPlace(
+          {
+            name = 'N/A',
+            place = 'N/A',
+          }: {
+            name: string;
+            place: string;
+            age: number;
+          },
+        ) {
+          console.log(`${place}`);
+        }
+        displayPlace({ name: 'Dan', place: null });
     ```
   </div>
   </slot>
@@ -435,18 +435,18 @@ Este quiz evaluará tu dominio del Destructuring en JavaScript: desde la sintaxi
   <div className="question">
     Probemos un poco de renombrado/asignación...
     ```ts
-    'use strict';
-    function displayPlace({
-      name = 'N/A',
-      place: location = 'N/A',
-    }: {
-      name: string;
-      place: string;
-      age?: number;
-    }) {
-      console.log(`${location}`);
-    }
-    displayPlace({ name: 'Dan', place: 'Denver' });
+        'use strict';
+        function displayPlace({
+          name = 'N/A',
+          place: location = 'N/A',
+        }: {
+          name: string;
+          place: string;
+          age?: number;
+        }) {
+          console.log(`${location}`);
+        }
+        displayPlace({ name: 'Dan', place: 'Denver' });
     ```
   </div>
   </slot>
@@ -474,18 +474,18 @@ Este quiz evaluará tu dominio del Destructuring en JavaScript: desde la sintaxi
   <div className="question">
     Detecta el error de tipo:
     ```ts
-    function greet({
-      name: {first = "N/A", last = "N/A"},
-      birth: {place = "N/A"} = {},
-      age = -1,
-    }: {
-      name: {first?: string, last?: string};
-      birth: {place?: string};
-      age: number;
-    }) {
-      console.log(`Hi ${first} ${last} from ${place}`);
-    }
-    greet({ name: {first: 'Dan'} });
+        function greet({
+          name: {first = "N/A", last = "N/A"},
+          birth: {place = "N/A"} = {},
+          age = -1,
+        }: {
+          name: {first?: string, last?: string};
+          birth: {place?: string};
+          age: number;
+        }) {
+          console.log(`Hi ${first} ${last} from ${place}`);
+        }
+        greet({ name: {first: 'Dan'} });
     ```
   </div>
   </slot>
@@ -517,25 +517,25 @@ Este quiz evaluará tu dominio del Destructuring en JavaScript: desde la sintaxi
   <div className="question">
     Ahora con **asignación** (nota las variables `f`, `l` y `p`)
     ```ts
-    'use strict';
-    function greet(
-      {
-        name: {first: f = "N/A", last: l = "N/A"},
-        birth: {place: p = "N/A"} = {},
-        age = -1,
-      }: {
-        name: {first?: string, last?: string};
-        birth?: {place?: string};
-        age?: number;
-      }
-    ) {
-      console.log(`Hi ${f} ${l} from ${place}`);
-      // What will 👆 do?
-    }
-    greet({
-      name: {first: 'Dan', last: 'Levy'},
-      birth: {place: 'Cape Town'},
-    });
+        'use strict';
+        function greet(
+          {
+            name: {first: f = "N/A", last: l = "N/A"},
+            birth: {place: p = "N/A"} = {},
+            age = -1,
+          }: {
+            name: {first?: string, last?: string};
+            birth?: {place?: string};
+            age?: number;
+          }
+        ) {
+          console.log(`Hi ${f} ${l} from ${place}`);
+          // What will 👆 do?
+        }
+        greet({
+          name: {first: 'Dan', last: 'Levy'},
+          birth: {place: 'Cape Town'},
+        });
     ```
   </div>
   </slot>
@@ -547,9 +547,9 @@ Este quiz evaluará tu dominio del Destructuring en JavaScript: desde la sintaxi
 
     En cuanto `place` se reasigna a la variable `p`, ya no está definido en el alcance de la sentencia `console.log`.
     ```ts
-    console.log(`Hi ${f} ${l} from ${place}`); // ❌
-    // to:
-    console.log(`Hi ${f} ${l} from ${p}`); // ✅
+        console.log(`Hi ${f} ${l} from ${place}`); // ❌
+        // to:
+        console.log(`Hi ${f} ${l} from ${p}`); // ✅
     ```
   </div>
   </slot>
