@@ -1,0 +1,93 @@
+{
+  "runId": "qwen-qwen3-32b-nitro@2026-05-13T23-09-43-895Z",
+  "slug": "the-8-byte-timestamp-that-destroyed-our-database",
+  "locale": "fr",
+  "model": "qwen/qwen3-32b:nitro",
+  "modelPath": "qwen-qwen3-32b-nitro",
+  "createdAt": "2026-05-13T23:10:12.863Z",
+  "sourcePath": "src/content/posts/2025-12-29--the-8-byte-timestamp-that-destroyed-our-database/index.mdx",
+  "targetPath": "src/content/posts/2025-12-29--the-8-byte-timestamp-that-destroyed-our-database/fr/index.mdx",
+  "candidatePath": "reports/i18n/the-8-byte-timestamp-that-destroyed-our-database/fr/qwen-qwen3-32b-nitro/2026-05-13T23-09-43-895Z/candidate.mdx",
+  "sourceHash": "4d98d485a209ef83adfb3ec4df7994acdb6c23964910ec139710bf29772952fe",
+  "outputHash": "7594d90991d27535a9c00f97ac4c0668960349c69215735fe562ac73384bfd08",
+  "reasoningEffort": "low",
+  "temperature": 0.3,
+  "maxTokens": 16000,
+  "timeoutMs": 200000,
+  "articleSummary": "**Summary:**  \nThe article argues that PostgreSQL's timestamp types (`TIMESTAMP` and `TIMESTAMPTZ`) are often misused due to confusion between absolute moments, local wall-clock times, and durations. It explains that `TIMESTAMPTZ` stores times in UTC and converts them to the session’s timezone, making it ideal for recording absolute events (e.g., API request timestamps), while `TIME` with a separate timezone field is better for fixed local policies (e.g., hotel check-in rules). The author critiques common pitfalls, such as using exact timestamp equality or misapplying `TIMESTAMPTZ` for local display times, and emphasizes pairing `TIMESTAMPTZ` with `INTERVAL` for durations. Framed as an analytical tutorial, the article uses train and flight examples to highlight the need for context-specific storage",
+  "totalInputTokens": 7774,
+  "totalOutputTokens": 6805,
+  "totalCacheReadTokens": 1536,
+  "totalCacheWriteTokens": 0,
+  "totalDurationMs": 15982,
+  "totalCostUsd": 0.00225512,
+  "pricingSource": "local-openrouter-estimate",
+  "telemetry": {
+    "model": "qwen/qwen3-32b:nitro",
+    "chunkSize": "10p",
+    "totalChunks": 6,
+    "totalInputTokens": 7774,
+    "totalOutputTokens": 6805,
+    "totalCacheReadTokens": 1536,
+    "totalCacheWriteTokens": 0,
+    "totalDurationMs": 15982,
+    "totalCostUsd": 0.00225512,
+    "pricingSource": "local-openrouter-estimate",
+    "chunks": [
+      {
+        "index": 0,
+        "inputTokens": 1110,
+        "outputTokens": 953,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 2403,
+        "costUsd": 0.00031752
+      },
+      {
+        "index": 1,
+        "inputTokens": 1372,
+        "outputTokens": 1289,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 2863,
+        "costUsd": 0.00041912
+      },
+      {
+        "index": 2,
+        "inputTokens": 1427,
+        "outputTokens": 1112,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 2558,
+        "costUsd": 0.00038104
+      },
+      {
+        "index": 3,
+        "inputTokens": 1405,
+        "outputTokens": 1303,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 2912,
+        "costUsd": 0.00042511999999999997
+      },
+      {
+        "index": 4,
+        "inputTokens": 1394,
+        "outputTokens": 1464,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 3257,
+        "costUsd": 0.00046288
+      },
+      {
+        "index": 5,
+        "inputTokens": 1066,
+        "outputTokens": 684,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 1989,
+        "costUsd": 0.00024943999999999997
+      }
+    ]
+  }
+}
