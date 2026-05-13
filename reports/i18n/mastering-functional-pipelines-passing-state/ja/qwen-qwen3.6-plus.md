@@ -4,7 +4,7 @@
 - Model: qwen/qwen3.6-plus
 - Target: src/content/posts/2023-08-13--mastering-functional-pipelines-passing-state/ja/index.mdx
 - Validation: rejected: direct AI SDK translation failed
-- Runtime seconds: 240.07
+- Runtime seconds: 240.06
 - Input tokens: unknown
 - Output tokens: unknown
 - Thinking tokens: unknown
@@ -12,14 +12,14 @@
 - Cache write tokens: unknown
 - Estimated cost: unknown
 - Pricing source: unknown
-- Note: Command failed after 240000ms: bun run i18n:translate:chunked -- --slug mastering-functional-pipelines-passing-state --locale ja --model qwen/qwen3.6-plus --chunk 6p --run-id 2026-05-13T18-15-57-947Z-61322 --run-lock-path /Users/dan/code/oss/dans-blog/.git/codex-i18n-translation-run.json --quiz-concurrency 24
+- Note: Command failed after 240000ms: bun run i18n:translate:chunked -- --slug mastering-functional-pipelines-passing-state --locale ja --model qwen/qwen3.6-plus --chunk 6p --run-id 2026-05-13T19-05-13-381Z-80623 --run-lock-path /Users/dan/code/oss/dans-blog/.git/codex-i18n-translation-run.json --quiz-concurrency 24
 ## Raw Output
 
 ````mdx
 ---
 social_image: ../desktop-social.webp
-title: パイプラインの達人：ステートの受け渡し
-subTitle: やあ、Closure、久しぶりだ。
+title: ''
+subTitle: やあ、クロージャ。久しぶりだな。
 date: '2023-08-09'
 modified: '2024-07-30'
 tags:
@@ -36,15 +36,15 @@ cover: ../sven-kucinic-LxYxC6jdjcA-unsplash-cropped-1200.webp
 cover_mobile: ../w300_sven-kucinic-LxYxC6jdjcA-unsplash-cropped-1200.webp
 cover_icon: ../icon_sven-kucinic-LxYxC6jdjcA-unsplash-cropped-1200.webp
 ---
-## パイプラインの達人: 状態の受け渡し
+## パイプラインの達人：状態の受け渡し
 
-関数型パイプラインで状態を渡す際に、困ったことはありませんか？
+関数型パイプラインを使って状態を渡すのに苦労したことはありませんか？
 
-コードの構造（あるいは構造の欠如）は、状態をどれだけ簡単に受け渡せるかに直結します。
+コードの整理（あるいはその欠如）は、状態の受け渡しのしやすさに直接影響します。
 
-この記事では、パイプラインを通して状態を渡す実用的な手法を探ります。途中でコードの整理と可読性も向上させます。
+この記事では、パイプラインを通じて状態を渡す効果的なテクニックを探ります。その過程で、コードの整理と可読性を向上させます。
 
-今回の対象となる「実例」スニペットは次です。`userId` と `products` 配列を受け取り、4 つの関数を順に実行する Promise チェーンを返すチェックアウト関数です。
+この記事で焦点を当てるのは、以下の「実際の」スニペットです。`userId`と`products`の配列を受け取るチェックアウト関数です。この関数は、4つの関数を順次実行するPromiseチェーンを返します。
 
 ```tsx
 const checkout = (userId: number, products: number[]) => {
@@ -55,38 +55,48 @@ const checkout = (userId: number, products: number[]) => {
 };
 ```
 
-ちょっと待ってください。このコード、JS のパイプラインとしては実はかなり良い出来です！
+ちょっと待ってください。このコードは、JSのパイプラインとしてはかなりまともです！
 
-それでも、いくつかの微妙な問題があり、組み合わせるとより大きな課題になる可能性があります。
+このコードにはいくつかの微妙な問題があり、それらが組み合わさってより深刻な問題になる可能性があります。
 
-1 つ目の問題は、（論理的に関連する）各関数に対して `userId` を何度も渡していることです。これに加えて、開発者や TypeScript が見落としがちな別の問題があります。数値引数の順序を入れ替えると、静かにバグが発生します。（`applyTaxes` と `purchaseProducts` を参照してください。_最初に来るべきは `userId` か `amount` か_）
+1つ目の問題は、論理的に関連する各関数に`userId`を繰り返し渡していることです。さらに、開発者やTypeScriptでも見逃しがちな別の問題があります。数値引数の順序を間違えると、簡単にサイレントバグが発生します。（`applyTaxes`と`purchaseProducts`を見てください。_最初に来るのは`userId`ですか、それとも`amount`ですか？_）
 
-このコードをどう改善するか検討する前に、まずは長所と短所を整理しましょう。
+このコードを改善する方法を決める前に、長所と短所を確認しましょう。
 
 ### 長所と短所
 
 #### 長所
 
-- クロージャを上手く利用している！`userId` と `products` を一度だけ渡している。
-- 引数名が一貫している。
-- チェックアウトに必要な 4 つの主要関数を比較的効果的かつ簡潔に合成できている。
-- 「無料」のエラーフロー制御。（ネストされた関数のいずれかでエラーが発生すると、`checkout()` が返す Promise が拒否されてエラーが伝搬する。）
+- クロージャをうまく活用！ `userId`と`products`を一度だけ渡す！
+- 一貫した引数名。
+- チェックアウトの4つの主要関数を比較的効果的かつ簡潔に合成。
+- 「無料」のエラーフロー制御。（エラーはネストされた関数からバブルアップし、`checkout()`が返すPromiseをrejectします。）
 
-####欠点
+#### 短所
 
-- `userId` を何度も渡すのは手間がかかる。
-- 関数が単一パラメータ（ユニary）になっていない。_これが合成性に影響する。なぜかは [最終例](#checkout-with-further-improvements) を参照。_
-- 各関数が何を返すかが分かりにくい。（メール送信結果か、`result` 変数か、あるいは別のものか？）
-- 機能追加が直感的でない（例：顧客の割引・クレジット・ポイント等をロードする必要が出た場合）。
-- 時折 `.then(param => {})` のような「一時」パラメータ名が文脈を提供するが、時間が経つと命名のゴミが溜まりやすい。
+- `userId`をあちこちに繰り返し渡すのが面倒。
+- 関数が単一引数（単項）ではない。_これは合成可能性に影響する。理由は[最終例](#checkout-with-further-improvements)を参照。_
+- 各関数が何を返すのかわかりにくい。（メール送信結果か、それとも`result`変数か？ あるいは？）
+- 機能追加が容易でない（例：顧客の割引・クレジット・ポイントなどを読み込む必要が出た場合）。
+- 一時的なパラメータ名（各`.then(param => {})`内の`param`など）が文脈を補うこともある。しかし時間が経つにつれ、命名のゴミが溜まりやすくなる。
 
-### 解決策、パート 1：モジュール化する！
+### 解決策、その1：モジュール化する！
 
-この手法は、関連する関数を単一のモジュール（例：`CartHelpers`）にまとめることにある。特定のパターンを強制するものではない。[ファクトリ関数](#carthelpers-factory)、[クラス](#carthelpers-class)、クロージャ、ミックスイン等を検討し、プロジェクトやチームに適した形を選べ。
+このテクニックは、関連する関数を単一のモジュール（例：`CartHelpers`）にまとめることです。特定のパターンを強制するものではありません。[ファクトリ関数](#carthelpers-factory)、[クラス](#carthelpers-class)、クロージャ、ミックスインなど、プロジェクトとチームに合った方法を探ってみてください。
 
-#### CartHelpers ファクトリ
+#### CartHelpers Factory
 
-`userId` を一度だけ渡し、すべてのメソッドが単一引数になる `CartHelpers` モジュールの例。
+`CartHelpers`モジュールの例。`userId`は一度だけ渡され、すべてのメソッドは単一引数になります。
+
+```typescript
+// cartHelpers.ts
+export const CartHelpers = (userId: string) => ({
+  applyTaxes: (amount: number) => { /* ... */ },
+  purchaseProducts: (amount: number) => { /* ... */ },
+  sendEmail: (result: PurchaseResult) => { /* ... */ },
+  trackAnalytics: (result: PurchaseResult) => { /* ... */ },
+});
+```
 
 ```tsx
 const CartHelpers = (userId: number) => {
@@ -101,7 +111,7 @@ const CartHelpers = (userId: number) => {
 
 #### CartHelpers クラス
 
-クラス派ならこちらでも簡単に適用できる：
+クラスが好みなら、簡単に適応できる：
 
 ```tsx
 class CartHelpers {
@@ -115,21 +125,21 @@ class CartHelpers {
 }
 ```
 
-すぐに得られるメリット：
+即座に得られる利点：
 
-- 繰り返しの変数受け渡しを排除する。
-  - DRY: `CartHelpers` が `userId` という重複引数を隠蔽する。
-  - 各メソッドは **_必要な引数だけ_** を受け取る。`cart.applyTaxes(subTotal)` が何をしているか直感的に分かる。
+- 繰り返しの変数受け渡しを排除。
+  - DRY：`CartHelpers` が `userId` という繰り返し引数を抽象化する。
+  - 各メソッドは**_必要な引数だけ_**を受け取る。`cart.applyTaxes(subTotal)` と書けば、読んでいて全く驚かない。
 - `CartHelpers` 内の単一引数関数は可読性が高く、目的が明確になる。
 
-関連関数をひとまとめにすることで、公開インターフェース（例：`checkout()`、`CartHelpers` の公開メソッド）の表面積を削減できる機会が生まれる。
+関連関数をグループ化することで、露出する表面積を減らせる（例：`checkout()`、`CartHelpers` のパブリックメソッド）。
 
-> 表面積が小さいほど認知負荷が減り、テストしやすく保守性も向上する。  
-> _意図と焦点を持ってデザインシステムを構築しよう。 ✨_
+> 表面積が小さい === 認知負荷が減り、テストと保守性が向上する。
+> _意図と集中を持ってシステムを設計しよう。✨_
 
-#### Checkout と CartHelpers の使い方
+#### チェックアウトとCartHelpersの使用例
 
-`checkout()` 関数が現在どのようになるか見てみましょう:
+それでは、`checkout()` 関数がどのようになるか見てみましょう。
 
 ```tsx
 export const checkout = ({ userId, products }) => {
@@ -143,17 +153,17 @@ export const checkout = ({ userId, products }) => {
 };
 ```
 
-##### さらに改善した Checkout
+##### さらなる改善を加えたチェックアウト
 
-> もっと改善できるか？ もちろんです！ 引数を全く繰り返す必要はありません。
+> さらに改善できるでしょうか？ できます！ 引数をまったく繰り返す必要はありません。
 
-関数の引数が前の関数の出力で供給される場合、コードはさらにシンプルにできます。
+関数の引数が前の関数の出力によって提供される場合、コードをさらに簡略化できます。
 
 ```tsx
 export const checkout = ({ userId, products }) => {
   const cart = CartHelpers(userId);
 
-  // 🌈 関数はレゴのように積み上げられ、普通の「人間の言葉」みたいに読めます！ 💅
+  // 🌈 関数はレゴのように積み重なり、普通の「人間の言葉」のように読めます！💅
   return Promise.resolve(products)
     .then(cart.getProductsSubtotal)
     .then(cart.applyTaxes)
@@ -162,64 +172,59 @@ export const checkout = ({ userId, products }) => {
 };
 ```
 
-**パラメータを単一（オブジェクト）引数にまとめるのが不自然に感じる場合は、** 関数を分割する **または** より適切なスコープのモジュールにまとめることを検討してください。
+**パラメータを単一の（オブジェクト）引数にまとめるのが不自然に感じる場合は、** 関数を分割するか、より適切なスコープのモジュールにまとめることを検討してください。
 
-#### どこから始める？
+#### どこから始めるべきか？
 
-関連する関数を見つけて、ひとまとめにする。（例：`CartHelpers`）
+関連する関数を見つけ、それらをグループ化します（例：`CartHelpers`）。
 
-論理的なモジュールを見つける際の課題のひとつは、**まずコードが関連しているかどうかを特定すること**です。
+論理的なモジュールを見つける際の難しさのひとつは、そもそも関連するコードを特定することにあります。
 
-##### 関数が関連しているかどうかの判断基準
+##### 関数が「関連している」とはどういうことか？
 
-ひとつの便利な手法：関数のパラメータに繰り返しがないか探す。何らかの関係性や共通の責務が隠れていないか？
+シンプルなコツ：関数のパラメータに繰り返しがないか探すこと。そこに関係性や、根底にある責務が潜んでいないか問いかけてみてください。
 
-- ✅ **共通の引数が繰り返し現れる関数**  
-  （例：4つのメソッドがすべて `userRewards` を受け取るなら、`Rewards` などのモジュールが必要になる可能性が高い。）
-- ✅ **引数が直前の関数の出力として提供される関数**  
-  （ステップの連続。例：`Extract`、`Transform`、`Load`。）
-- ❌ 機能領域と漠然とだけ関係があるもの、たとえば「商品購入？」といった曖昧さ。
-- ❌ 共通のプレフィックスやサフィックスで名前付けされた関数だけを根拠にすること。
-- ❌ 内部でほんの一部の値しか使わない大きなオブジェクトを引数に取る関数  
-  （例：`applyTaxes({ user, business, rewards, kitchenSink })` と `applyTaxes({ subTotal })` を比較した場合）。
+- ✅ 共通の引数が繰り返し現れる関数。（例：4つのメソッドがすべて `userRewards` を受け取るなら、`Rewards` などのモジュールが必要な可能性が高い。）
+- ✅ 引数が直前の関数の出力から直接提供される関数。（一連のステップ。例：`Extract`、`Transform`、`Load`。）
+- ❌ 機能領域に漠然と関連しているもの、「商品購入？」。
+- ❌ 関数名に共通のプレフィックスやサフィックスが付いているもの。
+- ❌ 引数として巨大なオブジェクトを必要とするが、そのオブジェクト内のごく一部の値しか使わない関数。（例：`applyTaxes({ user, business, rewards, kitchenSink })` 対 `applyTaxes({ subTotal })`）
 
-単一の「正解」なるモジュール設計は存在しませんが、整理のために 2〜3 種類の構成案を挙げてみると良いでしょう。概要を描き、**ファンタジーコード**を書き、**「これで楽しいか？」** と自問してください。
+モジュール設計に「唯一の正解」はないが、整理のための選択肢を2～3個挙げてみるのが役立つ。アウトラインを描き、「理想の」コードを書き、「ときめくか？」と自問してみよう。
 
 <aside>
-📌 モジュール構成を試行錯誤するうちに、ドメインモデルが徐々に形を成していきます。完璧を求めて悩む必要はありません。
+📌 ドメインモデルが固まるまでには、モジュール構成を何度か試行錯誤するのが普通だ。完璧を目指して悩みすぎる必要はない。
 </aside>
 
-> `cart.sendReceipt()` が決済系メソッドと合わないと感じるかもしれません。その場合は `customerNotifications.sendReceipt()` に移す方が、顧客向けメッセージングとして自然です。`CartHelper` の重要度が十分高ければ、内部で必要な **_サービス_**（例: `customerNotifications`）を呼び出す **_コントローラ_** として機能させても構いません。
+> `cart.sendReceipt()` は支払い関連のメソッドと一緒にすべきではないと感じるかもしれない。顧客へのメッセージ送信は `customerNotifications.sendReceipt()` の方が適切な居場所だろう。もし `CartHelper` の重要度が十分に高ければ、それは内部で `customerNotifications` のような必要な**_サービス_**をすべて呼び出す**_コントローラー_**として機能してもよい。
 
-#### どのように自分の取り組みが有効か判断するか？
+#### 助けになっているかどうか、どう判断するか？
 
-アドホックな引数を削除しても可読性が損なわれなければ、**おめでとうございます！！！** 明確で長く使えるスコープを持つモジュールができ上がっているはずです。
+アドホックな引数を排除しても可読性が損なわれないなら、**おめでとう!!!** おそらく、明確で耐久性のあるスコープを持つモジュールを構築できている。
 
-- 中間引数を取り除くことで、自然と「層」が浮かび上がってきます。  
-- アドホックなコードを誤った場所に投げ込むのは **難しいはず** です。
+- 中間引数を削除すると、自然と「レイヤー」が浮かび上がってくる。
+- アドホックなコードを間違った場所に放り込むのが**_難しく_**なるはずだ。
 
-それでは、機能はどこに追加すべきか、という問いが出てきます。
+では、機能をどこに追加するかという疑問が生じます。
 
-私の経験上、機能追加を検討する際に評価すべき主な戦略は 2 つあります。
+私の経験では、機能追加を検討する際に評価すべき主要な戦略が2つあります。
 
-1.  既存メソッドを拡張／リファクタリングする。  
-    （新しいコードが既存コードに十分近い場合。）
-2.  チェーン内の適切な位置に新しい（5 番目の）関数を作成する。  
-    （新しいコードが既存関数と無関係であると判断した場合。）
+1.  既存のメソッドを拡張・リファクタリングする。（新しいコードが既存のコードと十分に近い場合。）
+2.  チェーンの適切な場所に新しい（5つ目の）関数を作成する。（新しいコードが既存の関数と無関係な場合。）
 
-この二分法に従うことで、どこに新機能を置くべきかが判断しやすくなります（例: `cart.applyDiscounts()`、`cart.applyTaxes()`、`rewards.getBalance()`）。
+最終的にこれにより、新しい機能の居場所を決めやすくなる。（例：`cart.applyDiscounts()`、`cart.applyTaxes()`、`rewards.getBalance()`。）
 
 ### 結論
 
-複雑なパイプラインを通して状態を渡すのは手間がかかりますが、リファクタリングを少しずつ実践すれば、認知負荷を減らしつつ、より読みやすいコードを書けるようになります。
+複雑なパイプラインを通じて状態を渡すのは厄介になり得る。しかし、少しリファクタリングの練習を積めば、より読みやすく、認知負荷の低いコードを書けるようになるだろう。
 
-質問やコメント、懸念があれば遠慮なく [@justsml](https://x.com/justsml) まで、または [email](mailto:dan@danlevy.net) へお問い合わせください。
+質問やコメント、懸念事項があれば、お気軽に [@justsml](https://x.com/justsml) または [メール](mailto:dan@danlevy.net) までご連絡ください。
 
-#### 次回予告
+#### シリーズ次回予告
 
-次回は状態の外部化と、モジュール内での機能拡張について掘り下げます！
+次回は、状態の外部化とモジュールの機能拡張について掘り下げます。
 
 #### 関連記事
 
-- [Component 主導の React 世界でも同様の課題があります。](https://kyleshevlin.com/quit-your-yapping)
+- [コンポーネント駆動のReact世界にも同様の課題があります。](https://kyleshevlin.com/quit-your-yapping)
 ````
