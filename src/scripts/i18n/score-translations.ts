@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import { appendFileSync, existsSync, mkdirSync, readFileSync, readdirSync } from "node:fs";
+import { appendFileSync, existsSync, mkdirSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { spawn } from "node:child_process";
 import "dotenv/config";
@@ -7,7 +7,11 @@ import matter from "gray-matter";
 import { generateText } from "ai";
 import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 import { jsonrepair } from "jsonrepair";
-import { ACTIVE_LOCALES, LOCALE_LABELS, isActiveLocale, type ActiveLocale } from "../../shared/i18n.ts";
+import { ACTIVE_LOCALES, LOCALE_LABELS, type ActiveLocale } from "../../shared/i18n.ts";
+import {
+  collectSourcePostSlugs,
+  parseActiveLocales,
+} from "./corpus-inventory.ts";
 import {
   getPostPaths,
   optionalString,
@@ -364,28 +368,11 @@ function getScoreTasks() {
 function getRequestedLocales() {
   const requestedLocale = optionalString(options, "locale");
   const values = parseList(optionalString(options, "locales"), requestedLocale == null ? [...ACTIVE_LOCALES] : [requestedLocale]);
-  const invalidLocales = values.filter((value) => !isActiveLocale(value));
-
-  if (invalidLocales.length > 0) {
-    throw new Error(
-      `--locale/--locales must use active locales: ${ACTIVE_LOCALES.join(", ")}. Received: ${invalidLocales.join(", ")}`,
-    );
-  }
-
-  return values as ActiveLocale[];
+  return parseActiveLocales(values, "--locale/--locales");
 }
 
 function getAllPostSlugs() {
-  const postsDir = join(process.cwd(), "src/content/posts");
-  return readdirSync(postsDir, { withFileTypes: true })
-    .filter((entry) => entry.isDirectory())
-    .map((entry) => entry.name)
-    .filter((directoryName) => (
-      existsSync(join(postsDir, directoryName, "index.mdx"))
-      || existsSync(join(postsDir, directoryName, "index.md"))
-    ))
-    .sort((a, b) => b.localeCompare(a))
-    .map((directoryName) => directoryName.replace(/^\d{4}-\d{2}-\d{2}--/, ""));
+  return collectSourcePostSlugs().sort((a, b) => b.localeCompare(a));
 }
 
 function readExistingScore(

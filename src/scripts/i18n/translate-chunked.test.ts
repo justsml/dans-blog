@@ -2,8 +2,14 @@ import { describe, expect, test } from "bun:test";
 import { mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { normalizeFrontmatterAssetPaths } from "./translate-chunked.ts";
-import { assertRunLock, createRunLock, normalizeLocaleImportPaths, releaseRunLock } from "./utils.ts";
+import {
+  assertTranslationLength,
+  normalizeFrontmatterAssetPaths,
+  normalizeLocaleImportPaths,
+  normalizeLocalizedCandidateBody,
+  normalizeLocalizedCandidateFile,
+} from "./localized-mdx.ts";
+import { assertRunLock, createRunLock, releaseRunLock } from "./utils.ts";
 
 describe("normalizeFrontmatterAssetPaths", () => {
   test("uses parent-relative inherited image paths for locale frontmatter", () => {
@@ -46,6 +52,74 @@ describe("normalizeLocaleImportPaths", () => {
       'import { Timeline } from "../../../../components/ui/timeline";',
       'import "../../../../components/QuizUI/index.css";',
     ].join("\n"));
+  });
+});
+
+describe("normalizeLocalizedCandidateBody", () => {
+  test("preserves missing source imports at the top of translated article bodies", () => {
+    expect(normalizeLocalizedCandidateBody(
+      [
+        "import Demo from '../../../components/Demo';",
+        "",
+        "# Source",
+      ].join("\n"),
+      [
+        "![Alt](./image.webp)",
+        "",
+        "Translated body.",
+      ].join("\n"),
+    )).toBe([
+      "import Demo from '../../../../components/Demo';",
+      "",
+      "",
+      "![Alt](../image.webp)",
+      "",
+      "Translated body.",
+    ].join("\n"));
+  });
+});
+
+describe("normalizeLocalizedCandidateFile", () => {
+  test("preserves source imports after frontmatter and normalizes locale asset paths", () => {
+    expect(normalizeLocalizedCandidateFile(
+      [
+        "import Demo from '../../../components/Demo';",
+        'import "../../../../components/AlreadyOk";',
+        "",
+        "# Source",
+      ].join("\n"),
+      [
+        "---",
+        "title: Traducido",
+        "cover: ./cover.webp",
+        "---",
+        "",
+        "![Alt](./image.webp)",
+        "<img src='./inline.webp' />",
+      ].join("\n"),
+    )).toBe([
+      "---",
+      "title: Traducido",
+      "cover: ../cover.webp",
+      "---",
+      "import Demo from '../../../../components/Demo';",
+      'import "../../../../components/AlreadyOk";',
+      "",
+      "![Alt](../image.webp)",
+      "<img src='../inline.webp' />",
+    ].join("\n"));
+  });
+});
+
+describe("assertTranslationLength", () => {
+  test("compares body length without frontmatter or imports", () => {
+    const body = "a".repeat(700);
+
+    expect(() => assertTranslationLength({
+      sourceContents: ["---", "title: Source", "---", "import Demo from './Demo';", body].join("\n"),
+      targetContents: ["---", "title: Target", "---", "import Demo from '../Demo';", body].join("\n"),
+      targetPath: "target.mdx",
+    })).not.toThrow();
   });
 });
 

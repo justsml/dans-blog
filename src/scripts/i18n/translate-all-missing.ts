@@ -1,6 +1,10 @@
-import { existsSync, readdirSync } from "node:fs";
+import { existsSync } from "node:fs";
 import { join } from "node:path";
 import { ACTIVE_LOCALES, type ActiveLocale } from "../../shared/i18n.ts";
+import {
+  filterActiveLocales,
+  getMissingTranslationSlots,
+} from "./corpus-inventory.ts";
 import {
   optionalString,
   parseArgs,
@@ -35,8 +39,7 @@ type Task = {
 };
 
 const options = parseArgs();
-const selectedLocales = parseList(optionalString(options, "locales"), [...ACTIVE_LOCALES])
-  .filter((locale): locale is ActiveLocale => ACTIVE_LOCALES.includes(locale as ActiveLocale));
+const selectedLocales = filterActiveLocales(parseList(optionalString(options, "locales"), [...ACTIVE_LOCALES]));
 const selectedSlugs = new Set(parseList(optionalString(options, "slugs"), []));
 const candidateModels = randomizeListOrder(validateCandidateModels(parseList(optionalString(options, "models"), CHEAP_CANDIDATE_MODELS)));
 const minCandidates = parsePositiveInteger(optionalString(options, "min-candidates"), 2);
@@ -141,40 +144,11 @@ function optionalArg(name: string, value: string | undefined) {
 }
 
 function getMissingTranslationTasks() {
-  const postsDir = join(process.cwd(), "src/content/posts");
-  const tasks: Task[] = [];
-
-  const postEntries = readdirSync(postsDir, { withFileTypes: true })
-    .filter((entry) => entry.isDirectory())
-    .filter((entry) => {
-      const postDir = join(postsDir, entry.name);
-      return existsSync(join(postDir, "index.mdx")) || existsSync(join(postDir, "index.md"));
-    })
-    .sort((a, b) => b.name.localeCompare(a.name));
-
-  const scopedPostEntries = latestPosts == null ? postEntries : postEntries.slice(0, latestPosts);
-
-  for (const entry of scopedPostEntries) {
-    if (!entry.isDirectory()) continue;
-
-    const postDir = join(postsDir, entry.name);
-    if (!existsSync(join(postDir, "index.mdx")) && !existsSync(join(postDir, "index.md"))) continue;
-
-    const slug = stripDatePrefix(entry.name);
-    if (selectedSlugs.size > 0 && !selectedSlugs.has(slug) && !selectedSlugs.has(entry.name)) continue;
-
-    for (const locale of selectedLocales) {
-      const targetPath = join(postDir, locale, "index.mdx");
-      if (!existsSync(targetPath)) {
-        tasks.push({ slug, locale, targetPath });
-      }
-    }
-  }
-
-  return tasks.sort((a, b) => {
-    const byDate = b.targetPath.localeCompare(a.targetPath);
-    return byDate || a.locale.localeCompare(b.locale);
-  });
+  return getMissingTranslationSlots({
+    latestPosts,
+    locales: selectedLocales,
+    selectedSlugs,
+  }).map(({ slug, locale, targetPath }) => ({ slug, locale, targetPath }));
 }
 
 function getCandidateCommits(task: Task) {
@@ -196,10 +170,6 @@ function getCandidateCommits(task: Task) {
       return changedFiles.split(/\r?\n/).includes(targetRelPath);
     })
     .reverse();
-}
-
-function stripDatePrefix(directoryName: string) {
-  return directoryName.replace(/^\d{4}-\d{2}-\d{2}--/, "");
 }
 
 function parsePositiveInteger(rawValue: string | undefined, fallback: number) {

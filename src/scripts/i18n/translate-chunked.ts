@@ -29,8 +29,11 @@ import {
   requireActiveLocale,
   getPostPaths,
   relativeToRepo,
-  normalizeLocaleImportPaths,
 } from "./utils.ts";
+import {
+  normalizeFrontmatterAssetPaths,
+  normalizeLocalizedCandidateBody,
+} from "./localized-mdx.ts";
 import {
   parseChunkSize,
   extractSegments,
@@ -464,27 +467,7 @@ async function mapLimit<T, R>(
 }
 
 function normalizeCandidateForLocale(source: string, translatedBody: string): string {
-  // Adjust asset paths: locale files live one folder deeper
-  let result = normalizeLocaleImportPaths(translatedBody
-    .replace(/]\(\.\//g, "](../")
-    .replace(/src="\.\//g, 'src="../'));
-
-  result = normalizeNestedCodeFences(result);
-
-  // Ensure all source import lines are present (insert at top of body)
-  const sourceImports = (source.match(/^import\s+.*?\s+from\s+['"].*?['"];?\s*$/gm) || [])
-    .map((imp) => normalizeLocaleImportPaths(imp));
-  const translatedImports = result.match(/^import\s+.*?\s+from\s+['"].*?['"];?\s*$/gm) || [];
-
-  const missing = sourceImports.filter(
-    (imp) => !translatedImports.some((t) => t.trim() === imp.trim()),
-  );
-
-  if (missing.length > 0) {
-    result = missing.join("\n") + "\n\n" + result;
-  }
-
-  return result;
+  return normalizeNestedCodeFences(normalizeLocalizedCandidateBody(source, translatedBody));
 }
 
 function normalizeNestedCodeFences(source: string) {
@@ -1241,27 +1224,6 @@ async function translateFrontmatter(
     });
 
     result[key] = translation.text.trim();
-  }
-
-  return result;
-}
-
-export function normalizeFrontmatterAssetPaths(
-  frontmatter: Record<string, unknown>,
-): Record<string, unknown> {
-  const result = { ...frontmatter };
-
-  for (const [key, value] of Object.entries(result)) {
-    if (
-      /(?:image|cover|icon|hero|thumbnail)/i.test(key)
-      && typeof value === "string"
-      && /\.(?:avif|gif|jpe?g|png|svg|webp)$/i.test(value)
-      && !value.startsWith("../")
-      && !value.startsWith("/")
-      && !/^https?:\/\//i.test(value)
-    ) {
-      result[key] = value.startsWith("./") ? `.${value}` : `../${value}`;
-    }
   }
 
   return result;

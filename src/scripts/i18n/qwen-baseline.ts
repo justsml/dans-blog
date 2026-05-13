@@ -1,7 +1,12 @@
-import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { spawnSync } from "node:child_process";
 import { dirname, join } from "node:path";
 import { ACTIVE_LOCALES, type ActiveLocale } from "../../shared/i18n.ts";
+import {
+  collectSourcePosts,
+  filterActiveLocales,
+  getTranslationSlot,
+} from "./corpus-inventory.ts";
 import {
   optionalString,
   parseArgs,
@@ -26,8 +31,7 @@ type Task = {
 };
 
 const options = parseArgs();
-const selectedLocales = parseList(optionalString(options, "locales"), [...ACTIVE_LOCALES])
-  .filter((locale): locale is ActiveLocale => ACTIVE_LOCALES.includes(locale as ActiveLocale));
+const selectedLocales = filterActiveLocales(parseList(optionalString(options, "locales"), [...ACTIVE_LOCALES]));
 const selectedSlugs = new Set(parseList(optionalString(options, "slugs"), []));
 const limit = parseOptionalPositiveInteger(optionalString(options, "limit"));
 const latestPosts = parseOptionalPositiveInteger(optionalString(options, "latest-posts"));
@@ -174,27 +178,22 @@ for (const [index, task] of limitedTasks.entries()) {
 }
 
 function getQwenBaselineTasks() {
-  const postsDir = join(process.cwd(), "src/content/posts");
   const tasks: Task[] = [];
-  const postEntries = readdirSync(postsDir, { withFileTypes: true })
-    .filter((entry) => entry.isDirectory())
-    .filter((entry) => hasSourcePost(join(postsDir, entry.name)))
-    .sort((a, b) => b.name.localeCompare(a.name));
-  const scopedPostEntries = latestPosts == null ? postEntries : postEntries.slice(0, latestPosts);
+  const posts = collectSourcePosts().sort((a, b) => b.directory.localeCompare(a.directory));
+  const scopedPosts = latestPosts == null ? posts : posts.slice(0, latestPosts);
 
-  for (const entry of scopedPostEntries) {
-    const postDir = join(postsDir, entry.name);
-    const slug = stripDatePrefix(entry.name);
-    if (selectedSlugs.size > 0 && !selectedSlugs.has(slug) && !selectedSlugs.has(entry.name)) continue;
-    if (QWEN_DEFERRED_SLUGS.has(slug)) continue;
+  for (const post of scopedPosts) {
+    if (selectedSlugs.size > 0 && !selectedSlugs.has(post.slug) && !selectedSlugs.has(post.directory)) continue;
+    if (QWEN_DEFERRED_SLUGS.has(post.slug)) continue;
 
     for (const locale of selectedLocales) {
-      const targetPath = join(postDir, locale, "index.mdx");
-      const reportPath = join(process.cwd(), "reports/i18n", slug, locale, QWEN_REPORT_FILE);
+      const slot = getTranslationSlot(post, locale);
+      const reportPath = join(slot.reportDir, QWEN_REPORT_FILE);
+      const targetPath = slot.targetPath;
       if (shouldMissingOnly && existsSync(targetPath)) continue;
       if (hasSuccessfulQwenReport(reportPath)) continue;
       if (!shouldRetryRejected && existsSync(reportPath)) continue;
-      tasks.push({ slug, locale, sourcePath: getSourcePostPath(postDir), targetPath, reportPath });
+      tasks.push({ slug: post.slug, locale, sourcePath: slot.sourcePath, targetPath, reportPath });
     }
   }
 
@@ -205,16 +204,6 @@ function getQwenBaselineTasks() {
     const byTarget = b.targetPath.localeCompare(a.targetPath);
     return byTarget || a.locale.localeCompare(b.locale);
   });
-}
-
-function hasSourcePost(postDir: string) {
-  return existsSync(join(postDir, "index.mdx")) || existsSync(join(postDir, "index.md"));
-}
-
-function getSourcePostPath(postDir: string) {
-  const mdxPath = join(postDir, "index.mdx");
-  if (existsSync(mdxPath)) return mdxPath;
-  return join(postDir, "index.md");
 }
 
 function getTaskTimeoutSeconds(task: Task) {
@@ -331,10 +320,6 @@ function pathExistsInHead(relativePath: string) {
   } catch {
     return false;
   }
-}
-
-function stripDatePrefix(directoryName: string) {
-  return directoryName.replace(/^\d{4}-\d{2}-\d{2}--/, "");
 }
 
 function parsePositiveInteger(rawValue: string | undefined, fallback: number) {

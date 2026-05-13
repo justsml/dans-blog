@@ -1,7 +1,12 @@
-import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { spawnSync } from "node:child_process";
 import { ACTIVE_LOCALES, isActiveLocale, type ActiveLocale } from "../../shared/i18n.ts";
+import {
+  findPostDirectory as findInventoryPostDirectory,
+  getPostPaths as getInventoryPostPaths,
+} from "./corpus-inventory.ts";
+export { normalizeLocaleImportPaths } from "./localized-mdx.ts";
 
 export type CliOptions = Record<string, string | boolean>;
 
@@ -70,43 +75,11 @@ export function randomizeListOrder<T>(values: T[]) {
 }
 
 export function findPostDirectory(slug: string) {
-  const postsDir = join(process.cwd(), "src/content/posts");
-  const matches = readdirSync(postsDir, { withFileTypes: true })
-    .filter((entry) => entry.isDirectory())
-    .map((entry) => entry.name)
-    .filter((name) => name === slug || name.endsWith(`--${slug}`));
-
-  if (matches.length === 0) {
-    throw new Error(`No post directory found for slug "${slug}".`);
-  }
-
-  if (matches.length > 1) {
-    throw new Error(`Multiple post directories match slug "${slug}": ${matches.join(", ")}`);
-  }
-
-  return join(postsDir, matches[0]);
+  return findInventoryPostDirectory(slug);
 }
 
 export function getPostPaths(slug: string, locale: ActiveLocale) {
-  const postDir = findPostDirectory(slug);
-  const sourcePath = findSourcePath(postDir);
-  const targetPath = join(postDir, locale, "index.mdx");
-  const reportDir = join(process.cwd(), "reports/i18n", slug, locale);
-
-  return {
-    postDir,
-    sourcePath,
-    targetPath,
-    reportDir,
-  };
-}
-
-function findSourcePath(postDir: string) {
-  const mdxPath = join(postDir, "index.mdx");
-  const mdPath = join(postDir, "index.md");
-  if (existsSync(mdxPath)) return mdxPath;
-  if (existsSync(mdPath)) return mdPath;
-  throw new Error(`No English index.md or index.mdx found in ${postDir}`);
+  return getInventoryPostPaths(slug, locale);
 }
 
 export function run(command: string, args: string[], options: { input?: string } = {}) {
@@ -154,33 +127,6 @@ export function runInherited(
 export function writeTextFile(path: string, contents: string) {
   mkdirSync(dirname(path), { recursive: true });
   writeFileSync(path, contents, "utf8");
-}
-
-const LOCALE_IMPORT_ROOTS = [
-  "assets",
-  "components",
-  "consts",
-  "layouts",
-  "shared",
-  "types",
-  "utils",
-];
-
-const LOCALE_IMPORT_ROOT_PATTERN = LOCALE_IMPORT_ROOTS.join("|");
-const LOCALE_IMPORT_PREFIX_PATTERN = String.raw`(?:\.\.\/){3,}`;
-const LOCALE_IMPORT_FROM_PATTERN = new RegExp(
-  String.raw`(\bfrom\s+["'])${LOCALE_IMPORT_PREFIX_PATTERN}(${LOCALE_IMPORT_ROOT_PATTERN})(?=\/|["'])`,
-  "g",
-);
-const LOCALE_SIDE_EFFECT_IMPORT_PATTERN = new RegExp(
-  String.raw`(^\s*import\s+["'])${LOCALE_IMPORT_PREFIX_PATTERN}(${LOCALE_IMPORT_ROOT_PATTERN})(?=\/|["'])`,
-  "gm",
-);
-
-export function normalizeLocaleImportPaths(contents: string) {
-  return contents
-    .replace(LOCALE_IMPORT_FROM_PATTERN, "$1../../../../$2")
-    .replace(LOCALE_SIDE_EFFECT_IMPORT_PATTERN, "$1../../../../$2");
 }
 
 type RunLockPayload = {

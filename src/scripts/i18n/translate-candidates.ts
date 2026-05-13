@@ -1,7 +1,11 @@
 import { appendFileSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { spawn, type ChildProcess } from "node:child_process";
-import { ACTIVE_LOCALES, isActiveLocale, type ActiveLocale } from "../../shared/i18n.ts";
+import { ACTIVE_LOCALES, type ActiveLocale } from "../../shared/i18n.ts";
+import {
+  collectSourcePostSlugs,
+  parseActiveLocales,
+} from "./corpus-inventory.ts";
 import {
   assertRunLock,
   createRunLock,
@@ -15,8 +19,8 @@ import {
   relativeToRepo,
   run,
   writeTextFile,
-  normalizeLocaleImportPaths,
 } from "./utils.ts";
+import { normalizeLocalizedCandidateFile } from "./localized-mdx.ts";
 import {
   assertNoOutOfCreditMarker,
   hasOutOfCreditMarker,
@@ -545,16 +549,7 @@ async function runDirectTranslation(model: string) {
 }
 
 function getAllPostSlugs() {
-  const postsDir = join(process.cwd(), "src/content/posts");
-  return readdirSync(postsDir, { withFileTypes: true })
-    .filter((entry) => entry.isDirectory())
-    .map((entry) => entry.name)
-    .filter((directoryName) => (
-      existsSync(join(postsDir, directoryName, "index.mdx"))
-      || existsSync(join(postsDir, directoryName, "index.md"))
-    ))
-    .sort((a, b) => b.localeCompare(a))
-    .map((directoryName) => directoryName.replace(/^\d{4}-\d{2}-\d{2}--/, ""));
+  return collectSourcePostSlugs().sort((a, b) => b.localeCompare(a));
 }
 
 function getCandidateTasks(): CandidateTask[] {
@@ -649,15 +644,7 @@ function countCandidateReportFiles(reportDir: string) {
 function getRequestedLocales() {
   const requestedLocale = optionalString(options, "locale");
   const values = parseList(optionalString(options, "locales"), requestedLocale == null ? [...ACTIVE_LOCALES] : [requestedLocale]);
-  const invalidLocales = values.filter((value) => !isActiveLocale(value));
-
-  if (invalidLocales.length > 0) {
-    throw new Error(
-      `--locale/--locales must use active locales: ${ACTIVE_LOCALES.join(", ")}. Received: ${invalidLocales.join(", ")}`,
-    );
-  }
-
-  return values as ActiveLocale[];
+  return parseActiveLocales(values, "--locale/--locales");
 }
 
 async function validateCandidate() {
@@ -672,35 +659,11 @@ async function validateCandidate() {
 function normalizeCandidateForLocale() {
   if (!existsSync(targetPath)) return;
 
-  const normalized = normalizeLocaleImportPaths(ensureSourceImports(readFileSync(targetPath, "utf8"))
-    .replaceAll("](./", "](../")
-    .replaceAll('src="./', 'src="../')
-    .replaceAll("src='./", "src='../")
-    .replaceAll('="./', '="../')
-    .replaceAll("='./", "='../")
-    .replace(/^(\s*[A-Za-z0-9_-]+:\s*)\.\/(?!\.)/gm, "$1../"));
-
+  const normalized = normalizeLocalizedCandidateFile(
+    readFileSync(sourcePath, "utf8"),
+    readFileSync(targetPath, "utf8"),
+  );
   writeTextFile(targetPath, normalized);
-}
-
-function ensureSourceImports(targetContents: string) {
-  const sourceImports = readFileSync(sourcePath, "utf8").match(/^import\s.+$/gm) ?? [];
-  const missingImports = sourceImports
-    .filter((importLine) => {
-      const localeImportLine = normalizeLocaleImportPaths(importLine);
-      return !targetContents.includes(importLine) && !targetContents.includes(localeImportLine);
-    })
-    .map((importLine) => normalizeLocaleImportPaths(importLine));
-
-  if (missingImports.length === 0) return targetContents;
-
-  const frontmatterEnd = targetContents.indexOf("\n---", 3);
-  if (!targetContents.startsWith("---") || frontmatterEnd === -1) {
-    return `${missingImports.join("\n")}\n\n${targetContents}`;
-  }
-
-  const insertAt = frontmatterEnd + "\n---".length;
-  return `${targetContents.slice(0, insertAt)}\n${missingImports.join("\n")}${targetContents.slice(insertAt)}`;
 }
 
 function cleanupRejectedTarget() {

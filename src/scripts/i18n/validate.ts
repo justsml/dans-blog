@@ -8,6 +8,7 @@ import {
   runInherited,
 } from "./utils.ts";
 import { assertTranslationLength } from "./structural-validation.ts";
+import { assertNestedAssetPaths } from "./localized-mdx.ts";
 
 const options = parseArgs();
 const slug = requireString(options, "slug");
@@ -26,7 +27,7 @@ assertFrontmatter(target);
 assertTranslationLength({ sourceContents: source, targetContents: target, targetPath });
 assertHeadingCounts(source, target);
 assertProtectedTokens(source, target);
-assertNestedAssetPaths(target);
+assertNestedAssetPaths(target, targetPath);
 
 if (shouldSkipGlobalChecks) {
   process.exit(0);
@@ -197,21 +198,6 @@ function importsMatch(sourceImport: ImportSignature, targetImport: ImportSignatu
 
 function stripRelativePrefix(moduleSpecifier: string) {
   return moduleSpecifier.replace(/^(\.\.\/)+/, "");
-}
-
-function assertNestedAssetPaths(targetContents: string) {
-  const nestedAssetReferences = [
-    ...targetContents.matchAll(/]\(\.\/(?!\.)[^)]+\)/g),
-    ...targetContents.matchAll(/src=["']\.\/(?!\.)[^"']+["']/g),
-    ...targetContents.matchAll(/:\s*\.\/(?!\.)\S+\.(?:avif|gif|jpe?g|png|svg|webp)\b/g),
-    ...targetContents.matchAll(/=["']\.\/(?!\.)[^"']+\.(?:avif|gif|jpe?g|png|svg|webp)["']/g),
-  ];
-
-  if (nestedAssetReferences.length === 0) return;
-
-  throw new Error(
-    `${targetPath} uses ./ asset paths inside a locale folder. Use ../ for inherited post assets.`,
-  );
 }
 
 function escapeRegExp(value: string) {

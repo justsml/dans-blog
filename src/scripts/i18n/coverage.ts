@@ -1,21 +1,13 @@
-import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
-import { dirname, join } from "node:path";
-import matter from "gray-matter";
+import { existsSync, mkdirSync, readdirSync, writeFileSync } from "node:fs";
+import { join } from "node:path";
 import { ACTIVE_LOCALES, type ActiveLocale } from "../../shared/i18n.ts";
+import {
+  collectSourcePosts,
+  filterActiveLocales,
+  getTranslationSlot,
+  type SourcePost,
+} from "./corpus-inventory.ts";
 import { optionalString, parseArgs, parseList, relativeToRepo } from "./utils.ts";
-
-type SourcePost = {
-  category: string;
-  date?: string;
-  directory: string;
-  isDraft: boolean;
-  isHidden: boolean;
-  isUnlisted: boolean;
-  path: string;
-  popularity: number;
-  slug: string;
-  title: string;
-};
 
 type LocaleCoverage = {
   candidateReports: number;
@@ -47,8 +39,7 @@ const POPULAR_SLUGS = new Set([
 ]);
 
 const options = parseArgs();
-const selectedLocales = parseList(optionalString(options, "locales"), [...ACTIVE_LOCALES])
-  .filter((locale): locale is ActiveLocale => ACTIVE_LOCALES.includes(locale as ActiveLocale));
+const selectedLocales = filterActiveLocales(parseList(optionalString(options, "locales"), [...ACTIVE_LOCALES]));
 const shouldIncludeHidden = options["include-hidden"] === true;
 const shouldMissingOnly = options["missing-only"] === true;
 const shouldJson = options.json === true;
@@ -73,21 +64,7 @@ if (shouldJson) {
 }
 
 function collectCoverage(): PostCoverage[] {
-  const postsDir = join(process.cwd(), "src/content/posts");
-  const postDirs = readdirSync(postsDir, { withFileTypes: true })
-    .filter((entry) => entry.isDirectory())
-    .map((entry) => entry.name)
-    .filter((directory) => findIndexPath(join(postsDir, directory)) != null)
-    .sort();
-
-  return postDirs.map((directory) => {
-    const postDir = join(postsDir, directory);
-    const sourcePath = findIndexPath(postDir);
-    if (sourcePath == null) {
-      throw new Error(`No source index found for ${postDir}`);
-    }
-
-    const sourcePost = readSourcePost(directory, sourcePath);
+  return collectSourcePosts().map((sourcePost) => {
     const coverage = selectedLocales.map((locale) => getLocaleCoverage(sourcePost, locale));
     const missingLocales = coverage
       .filter((item) => !item.hasTranslation)
@@ -104,29 +81,11 @@ function collectCoverage(): PostCoverage[] {
   });
 }
 
-function readSourcePost(directory: string, path: string): SourcePost {
-  const parsed = matter(readFileSync(path, "utf8"));
-  const data = parsed.data as Record<string, unknown>;
-
-  return {
-    category: stringValue(data.category) ?? "Uncategorized",
-    date: stringValue(data.date),
-    directory,
-    isDraft: data.draft === true,
-    isHidden: data.hidden === true,
-    isUnlisted: data.unlisted === true,
-    path,
-    popularity: numberValue(data.popularity) ?? 0,
-    slug: stripDatePrefix(directory),
-    title: stringValue(data.title) ?? stripDatePrefix(directory),
-  };
-}
-
 function getLocaleCoverage(post: SourcePost, locale: ActiveLocale): LocaleCoverage {
-  const postDir = dirname(post.path);
-  const targetPath = join(postDir, locale, "index.mdx");
-  const fallbackTargetPath = join(postDir, locale, "index.md");
-  const reportPath = join(process.cwd(), "reports/i18n", post.slug, locale);
+  const paths = getTranslationSlot(post, locale);
+  const targetPath = paths.targetPath;
+  const fallbackTargetPath = paths.fallbackTargetPath;
+  const reportPath = paths.reportDir;
   const reports = existsSync(reportPath)
     ? readdirSync(reportPath, { withFileTypes: true }).filter((entry) => entry.isFile())
     : [];
@@ -312,27 +271,6 @@ function sortByPriority(a: PostCoverage, b: PostCoverage) {
     b.popularity - a.popularity ||
     b.directory.localeCompare(a.directory)
   );
-}
-
-function findIndexPath(postDir: string) {
-  const mdxPath = join(postDir, "index.mdx");
-  const mdPath = join(postDir, "index.md");
-  if (existsSync(mdxPath)) return mdxPath;
-  if (existsSync(mdPath)) return mdPath;
-  return undefined;
-}
-
-function stripDatePrefix(directoryName: string) {
-  return directoryName.replace(/^\d{4}-\d{2}-\d{2}--/, "");
-}
-
-function stringValue(value: unknown) {
-  if (value instanceof Date) return value.toISOString().slice(0, 10);
-  return typeof value === "string" ? value : undefined;
-}
-
-function numberValue(value: unknown) {
-  return typeof value === "number" && Number.isFinite(value) ? value : undefined;
 }
 
 function formatPercent(value: number) {

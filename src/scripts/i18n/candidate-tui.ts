@@ -1,25 +1,18 @@
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { spawn, type ChildProcess } from "node:child_process";
-import matter from "gray-matter";
 import { ACTIVE_LOCALES, type ActiveLocale } from "../../shared/i18n.ts";
+import {
+  collectSourcePosts as collectInventorySourcePosts,
+  parseActiveLocales,
+  type SourcePost,
+} from "./corpus-inventory.ts";
 import { optionalString, parseArgs, parseList } from "./utils.ts";
 import {
   hasOutOfCreditMarker,
   isOutOfCreditError,
   recordOutOfCreditIssue,
 } from "./out-of-credit.ts";
-
-type SourcePost = {
-  category: string;
-  date?: string;
-  directory: string;
-  isDraft: boolean;
-  isHidden: boolean;
-  isUnlisted: boolean;
-  slug: string;
-  title: string;
-};
 
 type CandidateSummary = {
   locale: ActiveLocale;
@@ -99,7 +92,6 @@ type WorkerProgress = {
 };
 
 const REPORT_ROOT = join(process.cwd(), "reports/i18n");
-const POSTS_ROOT = join(process.cwd(), "src/content/posts");
 const DEFAULT_TUI_TASK_CONCURRENCY = "16";
 const DEFAULT_TUI_QUIZ_CONCURRENCY = "8";
 const DEFAULT_REFRESH_DEBOUNCE_MS = 750;
@@ -633,29 +625,7 @@ function collectRows(): ArticleRow[] {
 }
 
 function collectSourcePosts(): SourcePost[] {
-  return readdirSync(POSTS_ROOT, { withFileTypes: true })
-    .filter((entry) => entry.isDirectory())
-    .map((entry) => entry.name)
-    .filter((directory) => findIndexPath(join(POSTS_ROOT, directory)) != null)
-    .map((directory) => {
-      const path = findIndexPath(join(POSTS_ROOT, directory));
-      if (path == null) throw new Error(`No post index found for ${directory}`);
-
-      const parsed = matter(readFileSync(path, "utf8"));
-      const data = parsed.data as Record<string, unknown>;
-      const slug = stripDatePrefix(directory);
-
-      return {
-        category: stringValue(data.category) ?? "Uncategorized",
-        date: stringValue(data.date),
-        directory,
-        isDraft: data.draft === true,
-        isHidden: data.hidden === true,
-        isUnlisted: data.unlisted === true,
-        slug,
-        title: stringValue(data.title) ?? slug,
-      };
-    });
+  return collectInventorySourcePosts();
 }
 
 function readCandidateSummary(slug: string, locale: ActiveLocale): CandidateSummary {
@@ -1124,23 +1094,9 @@ function formatProgressBar(value: number, width: number) {
   return `[${"#".repeat(filled)}${"-".repeat(Math.max(0, width - filled))}]`;
 }
 
-function findIndexPath(postDir: string) {
-  const mdxPath = join(postDir, "index.mdx");
-  const mdPath = join(postDir, "index.md");
-  if (existsSync(mdxPath)) return mdxPath;
-  if (existsSync(mdPath)) return mdPath;
-  return undefined;
-}
-
 function parseLocales() {
   const values = parseList(optionalString(options, "locales"), [...ACTIVE_LOCALES]);
-  const invalidLocales = values.filter((value) => !ACTIVE_LOCALES.includes(value as ActiveLocale));
-
-  if (invalidLocales.length > 0) {
-    throw new Error(`--locales must be active locales. Received: ${invalidLocales.join(", ")}`);
-  }
-
-  return values as ActiveLocale[];
+  return parseActiveLocales(values, "--locales");
 }
 
 function startWorker(mode: "candidates" | "judge") {
@@ -1590,20 +1546,10 @@ function parseOptionalPositiveInteger(rawValue: string | undefined) {
   return parsePositiveInteger(rawValue, 1);
 }
 
-function stringValue(value: unknown) {
-  if (value instanceof Date) return value.toISOString().slice(0, 10);
-  return typeof value === "string" ? value : undefined;
-}
-
-
 function recordValue(value: unknown): Record<string, unknown> | undefined {
   return value != null && typeof value === "object" && !Array.isArray(value)
     ? value as Record<string, unknown>
     : undefined;
-}
-
-function stripDatePrefix(directoryName: string) {
-  return directoryName.replace(/^\d{4}-\d{2}-\d{2}--/, "");
 }
 
 function formatPercent(value: number) {
