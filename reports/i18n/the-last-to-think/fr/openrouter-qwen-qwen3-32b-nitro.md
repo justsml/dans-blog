@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: the-last-to-think
+- Locale: fr
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2025-05-31--the-last-to-think/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 5.59
+- Input tokens: 1905
+- Output tokens: 2411
+- Thinking tokens: unknown
+- Cached input tokens: 512
+- Cache write tokens: 0
+- Estimated cost: $0.000731
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 language: English
 title: Le Dernier à Penser
@@ -33,3 +51,4 @@ Nous avons survécu aux calculatrices, aux CliffsNotes et (jusqu'à présent) à
 <p> </p>
 
 * À condition d'améliorer l'impact environnemental, et d'éviter un cauchemar dystopique. Mais c'est un sujet pour une autre fois.
+````
