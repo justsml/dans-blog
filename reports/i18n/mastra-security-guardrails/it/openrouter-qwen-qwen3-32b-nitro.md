@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: mastra-security-guardrails
+- Locale: it
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-01-03--mastra-security-guardrails/it/index.mdx
+- Validation: deferred
+- Runtime seconds: 14.94
+- Input tokens: 6510
+- Output tokens: 6377
+- Thinking tokens: unknown
+- Cached input tokens: 1536
+- Cache write tokens: 0
+- Estimated cost: $0.002051
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: ''
 subTitle: ''
@@ -168,3 +186,4 @@ La maggior parte dei problemi di sicurezza in AI in produzione non sono attacchi
 2. **Sicurezza & Guardrails** (Questo Post)  
 3. [MCP & Integrazioni degli Strumenti](../mastra-mcp-tool-integrations)  
 4. [Flussi di Lavoro & Memoria](../mastra-workflows-memory)
+````
