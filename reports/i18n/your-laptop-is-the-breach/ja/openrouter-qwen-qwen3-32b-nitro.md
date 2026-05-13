@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: your-laptop-is-the-breach
+- Locale: ja
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-05-09--your-laptop-is-the-breach/ja/index.mdx
+- Validation: passed
+- Runtime seconds: 73.73
+- Input tokens: 37732
+- Output tokens: 27559
+- Thinking tokens: unknown
+- Cached input tokens: 12288
+- Cache write tokens: 0
+- Estimated cost: $0.009633
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: ''
 subTitle: 開発ワークステーションは資格情報の倉庫になっている。
@@ -332,3 +350,4 @@ AnthropicのClaude Codeドキュメントでは、ツールやファイル、ド
 - [Little Snitch](https://obdev.at/products/littlesnitch/)
 - [Portmaster](https://safing.io/)
 - [Claude Code の権限](https://code.claude.com/docs/en/permissions)
+````
