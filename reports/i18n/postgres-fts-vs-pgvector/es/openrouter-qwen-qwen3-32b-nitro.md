@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: postgres-fts-vs-pgvector
+- Locale: es
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-05-08--postgres-fts-vs-pgvector/es/index.mdx
+- Validation: passed
+- Runtime seconds: 68.00
+- Input tokens: 26835
+- Output tokens: 28520
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.008992
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: ''
 subTitle: Ya tienes las herramientas. Elige la que coincida con la consulta.
@@ -392,3 +410,4 @@ No uses la búsqueda por vectores como búsqueda de texto difusa para cosas que 
 La búsqueda por vectores devuelve lo *más similar* en tu conjunto de datos, incluso cuando nada es relevante. No sabe que no hay una buena respuesta. Eso está bien para documentos relacionados. Es catastrófico para la búsqueda de registros específicos, donde una coincidencia casi correcta es peor que un resultado vacío.
 
 Sé para qué sirve cada herramienta. La mayoría ya está en tu instalación de Postgres. Usa las que se ajusten a tus necesidades.
+````
