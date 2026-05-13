@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: the-unassuming-power-of-multiple-choice-questions
+- Locale: ru
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2025-01-01--the-unassuming-power-of-multiple-choice-questions/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 5.02
+- Input tokens: 5731
+- Output tokens: 1333
+- Thinking tokens: unknown
+- Cached input tokens: 1024
+- Cache write tokens: 0
+- Estimated cost: $0.000463
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Скрытая сила вопросов с множественным выбором
 subTitle: Как полностью раскрыть потенциал MCQ в образовании
@@ -89,3 +107,4 @@ cover_icon: ../digital-mcq-hero-square.webp
 Именно поэтому я продолжаю использовать MCQ‑вопросы на этом сайте. Не потому, что они экономичны, хотя и таковы. А потому, что они заставляют проявлять instructional honesty, которую обычный текст легко обойти.
 
 В следующий раз, когда будете писать такой вопрос, не начинайте с правильного ответа. Начните с ошибочных представлений. Правильный ответ займёт гораздо более уместное место.
+````
