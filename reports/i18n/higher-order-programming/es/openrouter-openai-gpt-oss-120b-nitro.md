@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: higher-order-programming
+- Locale: es
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2015-10-05--higher-order-programming/es/index.mdx
+- Validation: passed
+- Runtime seconds: 4.23
+- Input tokens: 2087
+- Output tokens: 620
+- Thinking tokens: unknown
+- Cached input tokens: 128
+- Cache write tokens: 0
+- Estimated cost: $0.000193
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Programación de orden superior
@@ -64,3 +82,4 @@ public class Post {
 ```
 
 > Disculpen si mi Java está un poco oxidado.
+````
