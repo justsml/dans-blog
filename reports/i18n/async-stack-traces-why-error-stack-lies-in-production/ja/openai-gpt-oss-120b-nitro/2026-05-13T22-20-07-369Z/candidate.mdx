@@ -1,0 +1,99 @@
+---
+title: 非同期スタックトレース：`Error.stack` が嘘をつく理由
+subTitle: マイクロタスクキューが宿題（とデバッグコンテキスト）を食べてしまった。
+date: '2025-12-29'
+modified: '2025-12-30'
+tags:
+  - javascript
+  - async
+  - debugging
+  - node.js
+  - v8
+  - performance
+category: Code
+subCategory: Best Practices
+social_image: ../desktop-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+2 時です。PagerDuty のアラームが鳴り響いています。
+
+ログを開くと次のようになっています:
+
+```
+Error: Cannot read properties of undefined (reading 'id')
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+```
+
+これだけです。関数名も行番号もファイルパスもありません。`processTicksAndRejections` だけが表示されています。
+
+非同期 JavaScript へようこそ。スタックトレースは作り話で、行番号は意味がありません。
+
+---
+
+## なぜスタックトレースが壊れるのか
+
+同期コードでは、コールスタックは美しい系譜です。A が B を呼び、B が C を呼び、C がクラッシュすると、どの経路でそこに至ったかが正確に分かります。
+
+非同期コード（`async/await`）では、`await` キーワードが出現するたびに「中断点」になります。
+
+`await` すると、関数はスタックから切り離されます。マイクロタスクキューという低温のフリーザーに格納され、スタックは空になる（あるいは別の作業をしている）状態になります。
+
+Promise が解決すると、関数は再び解凍されスタックに戻されますが、履歴は失われています。
+
+エンジンは 500 ミリ秒前に `await` を呼び出した主体が誰かを把握できません。タスクを実行すべきことだけを知っているのです。
+
+---
+
+## V8 の修正試み
+
+Node.js は支援しようとします。以下が用意されています。
+
+1. `Error.captureStackTrace()`：**作成時**にスタックを取得します。エラーが後でスローされる場合は役に立ちません。  
+2. `--async-stack-traces`：Node.js が Promise のチェーンの「シャドウスタック」を保持するフラグです。  
+   * **コスト**：アプリの速度が約 30 % 遅くなります。  
+   * **結果**：助けにはなりますが、すぐにノイズが増えていきます。
+
+---
+
+## 本当の解決策：AsyncLocalStorage
+
+本番環境で生き残りたいなら、スタックトレースを見るのをやめて因果関係に注目してください。
+
+実行「スレッド」（スタックとマイクロタスクキューを行き来する）に、コンテキスト（ユーザー ID、リクエスト ID など）を付与する必要があります。
+
+Node.js にはこれ用の組み込みツールがあります：`AsyncLocalStorage`。
+
+```javascript
+import { AsyncLocalStorage } from 'async_hooks';
+
+const context = new AsyncLocalStorage();
+
+// 1. Wrap the request
+context.run({ requestId: '123' }, () => {
+  // 2. Call deep async code
+  await processOrder();
+});
+
+// 3. Deep inside processOrder:
+async function processOrder() {
+  await db.query();
+  
+  // Magic! We can still see the requestId
+  const { requestId } = context.getStore();
+  console.log(`[${requestId}] Failed to process order`);
+}
+```
+
+途中で何回 `await` が入っても構いません。コンテキストは生き残ります。
+
+---
+
+## 本番向けプレイブック
+
+1. `err.stack` を信用しない。設計上不完全です。  
+2. 構造化ロギングを採用する。`AsyncLocalStorage` を使って `requestId` をすべてのログ行に付与する。  
+3. スタックではなくトレースを取る。OpenTelemetry を利用し、サービス間の因果チェーンを可視化する。これこそが実際に必要な情報です。
+
+コードは非同期です。デバッグ用コンテキストも非同期であるべきです。
