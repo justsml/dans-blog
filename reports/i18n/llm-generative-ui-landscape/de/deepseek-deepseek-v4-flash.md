@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: llm-generative-ui-landscape
+- Locale: de
+- Model: deepseek/deepseek-v4-flash
+- Target: src/content/posts/2026-05-06--llm-generative-ui-landscape/de/index.mdx
+- Validation: deferred
+- Runtime seconds: 183.61
+- Input tokens: 21492
+- Output tokens: 27724
+- Thinking tokens: unknown
+- Cached input tokens: 2304
+- Cache write tokens: 0
+- Estimated cost: $0.010455
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Die LLM Generative UI Landschaft
 subTitle: >-
@@ -343,3 +361,4 @@ Die besten Systeme werden dem Modell nicht erlauben, alles frei zu improvisieren
 Die Zukunft ist nicht, dass das Modell Ihr Frontend schreibt – ganz im Gegenteil.
 
 Die Zukunft ist eher: **Ihr Frontend wird zu einem Instrument, das der Agent spielen kann, aber Sie entscheiden weiterhin, wie das Instrument klingen darf.**
+````

@@ -1,32 +1,34 @@
 {
-  "runId": "2026-05-13T16-51-58-082Z",
-  "runStatus": "completed",
+  "runId": "2026-05-13T17-23-12-627Z",
+  "runStatus": "running",
   "slug": "llm-generative-ui-landscape",
   "locale": "de",
-  "startedAt": "2026-05-13T16:51:58.082Z",
-  "updatedAt": "2026-05-13T16:51:58.083Z",
+  "startedAt": "2026-05-13T17:23:12.627Z",
+  "updatedAt": "2026-05-13T17:26:26.575Z",
   "modelsRequested": [
     "openrouter/openai/gpt-oss-120b:nitro",
-    "openrouter/qwen/qwen3-32b:nitro"
+    "openrouter/qwen/qwen3-32b:nitro",
+    "deepseek/deepseek-v4-flash",
+    "qwen/qwen3.6-plus"
   ],
-  "attemptedModels": 0,
+  "attemptedModels": 1,
   "skippedModels": 2,
   "rejectedModels": 0,
-  "candidateModels": 0,
+  "candidateModels": 1,
   "totals": {
-    "inputTokens": 0,
-    "outputTokens": 0,
+    "inputTokens": 21492,
+    "outputTokens": 27724,
     "thinkingTokens": 0,
-    "cachedInputTokens": 0,
+    "cachedInputTokens": 2304,
     "cacheWriteTokens": 0,
-    "estimatedCostUsd": 0,
+    "estimatedCostUsd": 0.010455,
     "hasUnknownInputTokens": false,
     "hasUnknownOutputTokens": false,
-    "hasUnknownThinkingTokens": false,
+    "hasUnknownThinkingTokens": true,
     "hasUnknownCachedInputTokens": false,
     "hasUnknownCacheWriteTokens": false,
     "hasUnknownEstimatedCost": false,
-    "runtimeSeconds": "0.00"
+    "runtimeSeconds": "183.61"
   },
   "attempts": [
     {
@@ -40,6 +42,24 @@
       "status": "skipped",
       "reportPath": "reports/i18n/llm-generative-ui-landscape/de/openrouter-qwen-qwen3-32b-nitro.md",
       "note": "Existing non-rejected report found. Pass --overwrite to rerun."
+    },
+    {
+      "model": "deepseek/deepseek-v4-flash",
+      "status": "candidate",
+      "validationStatus": "deferred",
+      "reportPath": "reports/i18n/llm-generative-ui-landscape/de/deepseek-deepseek-v4-flash.md",
+      "note": "Generated through the direct AI SDK chunked translator.",
+      "telemetry": {
+        "runtimeSeconds": "183.61",
+        "tokens": {
+          "input": 21492,
+          "output": 27724,
+          "cached": 2304,
+          "cacheWrite": 0
+        },
+        "estimatedCostUsd": 0.010455491200000002,
+        "pricingSource": "local-openrouter-estimate"
+      }
     }
   ]
 }
