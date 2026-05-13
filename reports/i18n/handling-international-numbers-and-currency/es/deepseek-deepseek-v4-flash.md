@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: handling-international-numbers-and-currency
+- Locale: es
+- Model: deepseek/deepseek-v4-flash
+- Target: src/content/posts/2024-08-29--handling-international-numbers-and-currency/es/index.mdx
+- Validation: deferred
+- Runtime seconds: 64.25
+- Input tokens: 6263
+- Output tokens: 6962
+- Thinking tokens: unknown
+- Cached input tokens: 384
+- Cache write tokens: 0
+- Estimated cost: $0.002773
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Entendiendo los números internacionales y la moneda
@@ -122,3 +140,4 @@ Si necesitas hacer cosas más complejas, como calcular impuestos, aplicar descue
 
 - [currency](https://github.com/bojanz/currency) es mi elección actual en Golang.
  */}
+````
