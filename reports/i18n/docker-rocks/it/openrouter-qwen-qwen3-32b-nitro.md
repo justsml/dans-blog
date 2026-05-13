@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: docker-rocks
+- Locale: it
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2015-06-11--docker-rocks/it/index.mdx
+- Validation: passed
+- Runtime seconds: 4.53
+- Input tokens: 1653
+- Output tokens: 2074
+- Thinking tokens: unknown
+- Cached input tokens: 512
+- Cache write tokens: 0
+- Estimated cost: $0.000630
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Docker è fantastico e ora funziona su OSX
@@ -46,3 +64,4 @@ Aggiornato 2024:
 
 - Docker Desktop è un software proprietario, ma gratuito per uso personale. È un ottimo modo per iniziare con Docker su macOS o Windows.  
 - Se stai cercando una soluzione più open source, controlla [Rancher Desktop](https://rancherdesktop.io/).
+````
