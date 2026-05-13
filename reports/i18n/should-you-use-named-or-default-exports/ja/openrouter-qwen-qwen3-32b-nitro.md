@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: should-you-use-named-or-default-exports
+- Locale: ja
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2023-08-18--should-you-use-named-or-default-exports/ja/index.mdx
+- Validation: passed
+- Runtime seconds: 43.30
+- Input tokens: 4368
+- Output tokens: 3636
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.001222
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: 'ESMエクスポート: 名前付きとデフォルトの違い？'
@@ -101,3 +119,4 @@ There are actually many combinations of ways we could export things, each tells 
 ### 結論
 
 コードはコミュニケーションであるなら、`export`を真剣にやれ！ 💞
+````
