@@ -1,0 +1,109 @@
+# Translation Candidate
+- Slug: promise-gotchas
+- Locale: it
+- Model: qwen/qwen3.6-35b-a3b
+- Target: src/content/posts/2018-09-26--promise-gotchas/it/index.mdx
+- Validation: deferred
+- Runtime seconds: 40.51
+- Input tokens: 2791
+- Output tokens: 10924
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.000000
+- Pricing source: unknown
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: Trappole delle Promise
+subTitle: Evitare errori comuni
+date: '2018-09-26'
+modified: '2024-07-30'
+category: Code
+subCategory: promises
+tags:
+  - promises
+  - async
+  - debugging
+  - errors
+  - javascript
+  - composition
+related:
+  - intro-to-promises
+  - visualizing-promises
+  - are-promises-broken
+  - javascript-promises-quiz
+cover: ../michal-parzuchowski-224092-unsplash.webp
+cover_mobile: ../w300_michal-parzuchowski-224092-unsplash.webp
+cover_icon: ../icon_michal-parzuchowski-224092-unsplash.webp
+---
+### I Promise non si comportano come gli altri valori
+
+Non puoi stamparne il valore come fai con la maggior parte degli altri tipi:
+
+```js
+// This doesn't make sense w/ promises:
+console.log(Promise.resolve(42));
+
+// We must use the `.then` interface:
+Promise.resolve(42).then(value => console.log(value));
+```
+
+### I Promise non ti avvisano quando commetti un errore
+
+Beh, un errore probabile.
+
+Per una serie di motivi, il TC39 ha deciso che `.then` e `.catch` possono accettare `null`. Ad esempio, `.then(null, null)` è valido e il comportamento richiesto è saltare quel 'passo' nella catena.
+
+La spiacevole conseguenza è che è molto facile combinare un pasticcio.
+
+##### Per Esempio
+
+Analizziamo una mini sfida: quale delle seguenti opzioni stamperà 42 tramite `console.log`?
+
+```js
+// Option #1:
+Promise.resolve(42).then(console.log());
+
+// Option #2:
+Promise.resolve(42).then(console.log);
+
+// Option #3:
+Promise.resolve(42).then(value => console.log(value));
+
+// Option #4:
+Promise.resolve(42)
+  .then(console.log())
+  .then(console.log);
+```
+
+##### La Risposta
+
+La risposta è #2, #3 e #4.
+
+Perché? Analizziamo i **tipi** di ciò che è stato passato a `.then()`:
+
+```js
+var arg1 = console.log();
+var arg2 = console.log;
+var arg3 = value => console.log(value);
+
+typeof arg1 === "undefined";
+typeof arg2 === "function";
+typeof arg3 === "function";
+```
+
+Ti chiedi ancora come funzioni quella quarta opzione?
+
+In pratica, il flusso di esecuzione è il seguente:
+
+```js
+// Opzione #4 - in pratica
+Promise.resolve(42)
+  .then(undefined) // questo non ha alcun effetto sul valore, verrà passato al successivo `.then(fn)`
+  .then(console.log);
+```
+````
