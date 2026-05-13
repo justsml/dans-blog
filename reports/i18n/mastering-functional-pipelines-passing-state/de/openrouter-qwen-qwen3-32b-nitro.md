@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: mastering-functional-pipelines-passing-state
+- Locale: de
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2023-08-13--mastering-functional-pipelines-passing-state/de/index.mdx
+- Validation: passed
+- Runtime seconds: 24.98
+- Input tokens: 8828
+- Output tokens: 9173
+- Thinking tokens: unknown
+- Cached input tokens: 1024
+- Cache write tokens: 0
+- Estimated cost: $0.002908
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: ''
@@ -200,3 +218,4 @@ Wir werden die Externalisierung von Zustand und die Erweiterung der Funktionalit
 #### Weitere Lektüre  
 
 - [Ähnliche Herausforderungen gibt es in der Component-driven React Welt.](https://kyleshevlin.com/quit-your-yapping)
+````
