@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: llm-routing-mastra-ai
+- Locale: ja
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-01-02--llm-routing-mastra-ai/ja/index.mdx
+- Validation: deferred
+- Runtime seconds: 9.87
+- Input tokens: 4989
+- Output tokens: 3954
+- Thinking tokens: unknown
+- Cached input tokens: 512
+- Cache write tokens: 0
+- Estimated cost: $0.001348
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: ''
 subTitle: LLMルーティング、今ホット
@@ -113,3 +131,4 @@ export const mastra = new Mastra({
 2. [セキュリティ & ガイドレール](../mastra-security-guardrails)
 3. [MCP & ツール統合](../mastra-mcp-tool-integrations)
 4. [ワークフロー & メモリ](../mastra-workflows-memory)
+````
