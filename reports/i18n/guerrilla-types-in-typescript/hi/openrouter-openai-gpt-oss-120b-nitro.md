@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: guerrilla-types-in-typescript
+- Locale: hi
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2023-09-06--guerrilla-types-in-typescript/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 3.44
+- Input tokens: 10185
+- Output tokens: 3441
+- Thinking tokens: unknown
+- Cached input tokens: 5248
+- Cache write tokens: 0
+- Estimated cost: $0.001017
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: टाइपस्क्रिप्ट में गेरिला टाइप्स
@@ -284,3 +302,4 @@ function upsert(user: User) {
 - [TypeScript tips for legacy projects: Type only you need](https://sergiocarracedo.es/typescript-tips/)
 - [Matt Pocock's Excellent new book](https://www.totaltypescript.com/books/total-typescript-essentials)
 - [Total TypeScript Tips](https://www.totaltypescript.com/tips)
+````
