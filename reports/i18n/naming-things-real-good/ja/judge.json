@@ -1,0 +1,68 @@
+{
+  "selectedCommit": "5acf6186206483c65c41cc6e0c5599945678a3a0",
+  "selectedModel": "openrouter/qwen/qwen3-32b:nitro",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "**`Agent.agentEmail`や`Agent.agentPhonePrimary`のような名前は存在しない**。です。一緒に言いなさい：「`email`と`phone`です」。",
+      "replacement": "**`Agent.agentEmail`や`Agent.agentPhonePrimary`のような名前は存在しません**。断固として。一緒に言いなさい：「`email`と`phone`です」。",
+      "reason": "The current text has a grammatical glitch ('.です。') and fails to capture the punchy emphasis of 'Period.' in Dan's style."
+    },
+    {
+      "priority": "medium",
+      "match": "これは第一近親者用なのか？",
+      "replacement": "これは緊急連絡先用なのか？",
+      "reason": "While 'Next-of-kin' literally means close relatives, in the context of data fields and forms, '緊急連絡先' (emergency contact) is the more natural and recognizable term for Japanese users."
+    }
+  ],
+  "rationale": "The translation is technically accurate and maintains the MDX structure. It successfully conveys the author's direct and slightly opinionated tone. The suggestions fix a minor grammatical awkwardness in the emphasis section and improve the localization of a specific data field example.",
+  "slug": "naming-things-real-good",
+  "locale": "ja",
+  "candidateCommits": [
+    "85f64d8acf529d8b06919a087e349a8bab8e75f8",
+    "5acf6186206483c65c41cc6e0c5599945678a3a0"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "**`Agent.agentEmail`や`Agent.agentPhonePrimary`のような名前は存在しない**。です。",
+      "replacement": "**`Agent.agentEmail`や`Agent.agentPhonePrimary`のような名前は存在しない**。以上。",
+      "reason": "The original text says 'Period.', which is an emphatic end to a statement. The current translation '。です。' is grammatically awkward and loses the punchy tone.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "**`Agent.agentEmail`や`Agent.agentPhonePrimary`のような名前は存在しない**。以上。",
+      "replacement": "**`Agent.agentEmail`や`Agent.agentPhonePrimary`のような名前は存在しません**。断固として。",
+      "reason": "The original 'Period.' is an emphatic rhetorical device. While '以上' (That's all) is okay, '断固として' or simply ending the sentence strongly captures Dan's punchy style better. However, the current '以上' in the MDX is actually acceptable, but the judge report mentioned a '。です。' which I don't see in the provided MDX. I will provide a fix for the 'Next-of-kin' translation which is currently too literal.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "これは主な相続人用なのか？",
+      "replacement": "これは第一近親者用なのか？",
+      "reason": "The English 'Primary Next-of-kin' in this context is a joke about overly specific database field naming. '相続人' (heir) is a bit too heavy/legalistic for the tone. '緊急連絡先' (emergency contact) or '近親者' is more natural for data fields.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug naming-things-real-good --locale ja --skip-global",
+    "output": ""
+  }
+}
