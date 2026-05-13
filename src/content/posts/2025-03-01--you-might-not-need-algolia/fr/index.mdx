@@ -1,96 +1,97 @@
 ---
-title: Vous n'avez peut-être pas besoin d'Algolia™
-social_image: ../desktop-social.webp
-subTitle: Les sites statiques n'ont probablement pas besoin d'une recherche hébergée.
-tags:
-  - search
-  - algolia
-  - pagefind
-  - cdn
-date: '2025-03-01'
-modified: '2025-03-05'
+title: "Vous n'avez peut-être pas besoin d'Algolia™"
+social_image: desktop-social.webp
+subTitle: "Les sites statiques n'ont probablement pas besoin de recherche hébergée"
+tags: ["search", "algolia", "pagefind", "cdn"]
+date: 2025-03-01
+modified: 2025-03-05
 category: Search
-cover_full_width: ../synth-wave-city-wide.webp
-cover_mobile: ../synth-wave-city-200-square.webp
-cover_icon: ../synth-wave-city-200-square.webp
-cover_credit: Image by Dan Levy
+cover_full_width: synth-wave-city-wide.webp
+cover_mobile: synth-wave-city-200-square.webp
+cover_icon: synth-wave-city-200-square.webp
+cover_credit: Image par Dan Levy
 ---
-La plupart des décisions concernant la recherche sur les sites web interviennent trop tard. Lorsque quelqu'un dit « nous devrions utiliser Algolia », l'équipe a généralement sauté la question utile : de quel type de contenu s'agit-il ? Si la réponse est « des pages HTML que nous construisons déjà », [Pagefind](https://pagefind.app/) devrait être la première solution à essayer. Pas parce qu'Algolia est mauvais. Algolia est très bon pour résoudre un certain nombre de problèmes complexes. Mais si votre index de recherche change lorsque votre site est déployé, un service de recherche hébergé peut être un cosplay d'infrastructure.
 
-<p class="inset">Utilisez Pagefind lorsque le contenu pouvant être recherché est généré lors de la construction. Optez pour Algolia lorsque la recherche doit accepter des écritures en direct, des règles commerciales, un classement spécifique aux utilisateurs, ou des garanties opérationnelles que votre build statique ne peut pas fournir.</p>
+La plupart des décisions concernant la recherche sur un site arrivent trop tard.
 
-Cette règle s'applique à plus de sites qu'on ne le pense : blogs, documentation, sites de marketing, manuels internes, guides produits, catalogues de cours, et un nombre surprenant d'« applications » qui publient principalement des pages. 
+Au moment où quelqu'un dit « on devrait utiliser Algolia », l'équipe a généralement éludé la question utile : quel type de contenu cherchons-nous ?
 
-## La forme du problème
+Si la réponse est « des pages HTML que nous construisons déjà », [Pagefind](https://pagefind.app/) devrait être la première chose à essayer. Pas parce qu'Algolia est mauvais. Algolia est très bon pour résoudre plein de problèmes complexes. Mais si votre index de recherche change au moment du déploiement de votre site, un service de recherche hébergé relève peut-être du cosplay infrastructurel.
 
-Algolia vous fournit un système de recherche hôte. Vous créez des enregistrements, les poussez vers un index, configurez le classement, reliez une interface utilisateur, et maintenez cette synchronisation avec votre source de vérité.
+<p class="inset">Utilisez Pagefind lorsque votre contenu consultable est généré au moment du build. Tournez-vous vers Algolia quand la recherche doit accepter des écritures en temps réel, des règles métier, un classement propre à chaque utilisateur, ou des garanties opérationnelles que votre build statique ne peut pas fournir.</p>
 
-Pagefind examine l'HTML que vous avez déjà déployé et génère un index de recherche statique à côté de celui-ci.
+Cette règle couvre plus de sites qu'on ne le pense : blogs, documentations, sites marketing, manuels internes, guides produits, catalogues de formations, et un nombre surprenant d'« apps » qui publient surtout des pages.
 
-Cette distinction semble banale jusqu'au moment où vous devez maintenir l'intégration.
+## La Forme Du Problème
 
-Avec Algolia, votre site contient une seconde copie de votre contenu. Vous devez désormais répondre à des questions comme :
+Algolia vous fournit un système de recherche externe. Vous créez des enregistrements, les poussez dans un index, configurez le classement, connectez une interface utilisateur, et maintenez le tout synchronisé avec votre source de vérité.
 
-- Le déploiement s'est-il terminé mais la mise à jour de l'index a-t-elle échoué ?
-- Quels champs sont considérés comme canoniques : les champs du CMS, la page rendue, ou l'enregistrement de recherche ?
-- Qui est responsable des ajustements de classement lorsqu'ils ne correspondent plus aux pages ?
-- Que se passe-t-il lorsque le niveau gratuit s'avère ne pas correspondre à la réalité de votre trafic ?
+Pagefind examine le HTML que vous avez déjà livré et construit un index de recherche statique à côté.
 
-Parfois, ces questions valent le coup. Pour un marché, un portail de support ou un catalogue e-commerce important, c'est probablement le cas. Pour un site de documentation statique, il s'agit souvent d'une complexité auto-infligée.
+Cette distinction semble anodine jusqu'à ce que vous mainteniez l'intégration.
 
-## Pagefind fonctionne car il refuse le système supplémentaire
+Avec Algolia, votre site possède une seconde copie de son contenu. Il faut maintenant répondre à des questions comme :
 
-L'astuce de Pagefind n'est pas de la magie. C'est un choix de goût.
+- Le déploiement est-il terminé mais la mise à jour de l'index a-t-elle échoué ?
+- Quels champs font autorité : les champs du CMS, la page rendue, ou l'enregistrement de recherche ?
+- Qui gère les ajustements de classement quand ils ne correspondent plus à la page ?
+- Que se passe-t-il quand le plan gratuit s'avère ne pas correspondre à la réalité de votre trafic ?
 
-Il attend que vos pages existent, indexe le HTML final et génère une collection d'actifs statiques que vous pouvez déployer sur le même CDN que le reste de votre site. Le navigateur télécharge uniquement les morceaux nécessaires. Il n'y a pas de serveur de recherche à garder actif, pas de quota de crawl à surveiller, et pas de pipeline de webhooks tentant de se souvenir des changements.
+Parfois, ces questions en valent la peine. Pour une marketplace, un portail de support ou un catalogue e-commerce de grande taille, c'est probablement le cas. Pour un site de documentation statique, c'est souvent une complexité auto-infligée.
 
-Cela rend les modes de défaillance beaucoup plus simples à comprendre :
+## Pagefind Fonctionne Parce Qu'il Refuse Le Système Supplémentaire
+
+L'astuce de Pagefind n'est pas magique. C'est une question de goût.
+
+Il attend que vos pages existent, indexe le HTML fini, et écrit une collection de ressources statiques que vous pouvez placer sur le même CDN que le reste de votre site. Le navigateur ne télécharge que les morceaux dont il a besoin. Il n'y a pas de serveur de recherche à garder chaud, pas de quota de crawler à surveiller, et pas de pipeline de webhooks qui essaie de se souvenir de ce qui a changé.
+
+Cela rend le mode de défaillance beaucoup plus facile à comprendre :
 
 - Si la page a été déployée, le contenu indexé provient de cette page.
 - Si la page n'a pas été déployée, les utilisateurs ne peuvent pas la voir de toute façon.
-- Si la recherche est erronée, le problème provient généralement de votre balisage rendu ou de la configuration de Pagefind, et non d'une tâche de synchronisation distante.
+- Si la recherche est incorrecte, le problème se situe généralement dans votre balisage rendu ou votre configuration Pagefind, pas dans un job de synchronisation lointain.
 
-C'est pourquoi je l'aime pour les sites de contenus. L'index suit l'artefact.
+C'est pourquoi je l'aime pour les sites de contenu. L'index suit l'artefact.
 
-## Quel aspect a vraiment la configuration
+## À Quoi Ressemble Vraiment La Configuration
 
-Pour un site statique simple, le workflow est assez simple :
+Pour un site statique classique, le flux est agréablement terne :
 
-- **CLI** : Analysez les fichiers HTML de votre site, générez un index et déployez-le sur un CDN mondial — tout cela en quelques minutes.
-- **Générateurs de sites statiques** : Utilisez les plugins de PageFind pour Astro ou Hugo pour automatiser le processus d'indexation.
-- **Solutions personnalisées** : Utilisez l'API de PageFind pour créer des expériences de recherche adaptées à vos besoins spécifiques.
+- **CLI** : Analysez les fichiers HTML de votre site, générez un index et déployez-le sur un CDN mondial — le tout en quelques minutes.
+- **Générateurs de Sites Statiques** : Utilisez les plugins Pagefind pour Astro ou Hugo afin d'automatiser le processus d'indexation.
+- **Solutions Personnalisées** : Utilisez l'API Pagefind pour créer des expériences de recherche sur mesure adaptées à vos besoins uniques.
 
 <figure>
-  <figcaption>Indexation de mon site avec l'interface en ligne de commande de PageFind</figcaption>
-  ![Indexation de mon site avec PageFind](../PageFind-Cleaner-better-15fps-720p2.webp "Indexation de mon site avec PageFind")
+  <figcaption>Indexation de mon site avec la CLI PageFind</figcaption>
+  ![Indexation de mon site avec PageFind](PageFind-Cleaner-better-15fps-720p2.webp "Indexation de mon site avec PageFind")
 </figure>
 
-Le guide [Commencer](https://pagefind.app/docs/) suffit pour démarrer. Le meilleur test est opérationnel : pouvez-vous reconstruire l'index en CI, déployer la sortie, et expliquer chaque échec de recherche en inspectant le HTML rendu ?
+Le guide [Getting Started](https://pagefind.app/docs/) suffit pour se lancer. Le meilleur test est opérationnel : pouvez-vous reconstruire l'index en CI, déployer le résultat, et expliquer chaque absence de résultat en inspectant le HTML rendu ?
 
-## Où Algolia reste compétitive
+## Là Où Algolia Gagne Encore
 
-Pagefind n’est pas une petite Algolia déguisée en manteau de tranchée. C’est une réponse différente.  
+Pagefind n'est pas un petit Algolia déguisé. C'est une réponse différente.
 
-Utilisez Algolia, OpenSearch, Postgres search, ou un autre système en temps réel lorsque votre index de recherche doit changer indépendamment d’un déploiement de site.  
+Utilisez Algolia, OpenSearch, Postgres search, ou un autre système en temps réel quand votre index de recherche doit évoluer indépendamment d'un déploiement de site.
 
-Cela inclut :  
+Cela inclut :
 
-- les quantités de stock qui changent toutes les quelques minutes  
-- les autorisations par utilisateur ou résultats privés  
-- un classement personnalisé basé sur les revenus, la fraîcheur, la popularité ou des expériences  
-- une recherche fédérée à travers des systèmes qui ne s’intègrent pas dans un seul site statique  
-- l’analyse et le support opérationnel qu’une entreprise exige d’un fournisseur géré  
+- des stocks qui changent toutes les quelques minutes
+- des permissions par utilisateur ou des résultats privés
+- un classement piloté par les revenus, la fraîcheur, la popularité, ou des expérimentations
+- une recherche fédérée across des systèmes qui ne se rendent pas dans un seul site statique
+- du support analytique et opérationnel qu'une entreprise attend d'un fournisseur managé
 
-Ce sont des besoins réels. Prétendre que Pagefind les gère parce qu’il est rapide serait le genre de discours de blogue de vendeur que ce texte critique.  
+Ce sont de vrais besoins. Prétendre que Pagefind les gère parce qu'il est rapide serait tomber dans l'autre sorte de voix blog vendor.
 
-## La Décision que j’Utilise
+## La Décision Que J'Utilise
 
-Posez d'abord une question :  
+Posez d'abord une question :
 
-> L'index de recherche peut-il être reconstruit à partir de la même sortie statique que les utilisateurs parcourent ?  
+> L'index de recherche peut-il être reconstruit à partir de la même sortie statique que les utilisateurs consultent ?
 
-Si oui, commencez par Pagefind. Vous obtenez une recherche privée par défaut, des actifs compatibles CDN, et un service de moins avec des opinions propres.  
+Si oui, commencez par Pagefind. Vous obtenez une recherche privée par défaut, des ressources compatibles CDN, et un compte de service en moins avec ses propres opinions.
 
-Si non, identifiez ce qui rend l'index dynamique : inventaire, permissions, personnalisation, analyse, classement ou fréquence d'écriture. Puis choisissez la base de données ou le service de recherche qui assume explicitement ce rôle.  
+Si non, nommez ce qui rend l'index dynamique : stocks, permissions, personnalisation, analytique, classement, ou fréquence d'écriture. Puis choisissez la base de données ou le service de recherche qui prend explicitement ce rôle en charge.
 
-Algolia n'est pas le méchant ici. Le méchant est d'adopter un deuxième système avant de prouver que le premier artefact était insuffisant.
+Algolia n'est pas le méchant ici. Le méchant, c'est d'adopter un second système avant d'avoir prouvé que le premier artefact était insuffisant.

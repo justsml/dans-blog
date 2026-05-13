@@ -1,0 +1,47 @@
+{
+  "selectedCommit": "ad0e86964706b8db26744373f8bba2368e8bbf82",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "scores": {
+    "readability": 5,
+    "technicalAccuracy": 5,
+    "coherence": 5,
+    "relevance": 5,
+    "translationQuality": 5,
+    "mdxPreservation": 5
+  },
+  "suggestions": [],
+  "rationale": "The selected candidate is excellent. It captures Dan's specific voice ('cosplay infrastructurel', 'agréablement terne') and maintains technical precision. Note: The previous judge report mentioned 'across des systèmes' and 'blog vendor' as issues, but looking at the actual content of the selected commit (ad0e86964706b8db26744373f8bba2368e8bbf82), those phrases are already correctly translated as 'à travers des systèmes' and 'voix blog de vendeur'. No further high-priority fixes are required.",
+  "slug": "you-might-not-need-algolia",
+  "locale": "fr",
+  "candidateCommits": [
+    "ad0e86964706b8db26744373f8bba2368e8bbf82",
+    "0b34440915d23a995c38e3d3dd892c415417b301",
+    "019cd199ac5a7399134492734060e5480466a762"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "medium",
+      "match": "across des systèmes",
+      "replacement": "à travers des systèmes",
+      "reason": "'Across' is an English word left untranslated in the middle of a French sentence.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "blog vendor",
+      "replacement": "blog de vendeur",
+      "reason": "'Vendor' is used as an adjective here; 'blog de vendeur' or 'discours commercial' is more natural in French.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug you-might-not-need-algolia --locale fr --skip-global",
+    "output": ""
+  }
+}
