@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-regex-or-wreckage
+- Locale: it
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2024-11-15--quiz-regex-or-wreckage/it/index.mdx
+- Validation: deferred
+- Runtime seconds: 192.09
+- Input tokens: 14738
+- Output tokens: 15668
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.004939
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: 'Quiz: Padronanza delle Espressioni Regolari'
@@ -596,3 +614,4 @@ Metti alla prova le tue conoscenze sulle Espressioni Regolari con domande che co
 Le espressioni regolari possono essere un mostro da domare, ma sono incredibilmente potenti una volta che ci prendi la mano (e tutti i nuovi elementi di sintassi). Continua ad esercitarti e diventerai un maestro delle RegEx in un batter d'occhio! 🧙‍♂️
 
 <p class="inset">Cerchi una pausa dopo tutta questa RegEx?<br />Pf, ricorda: pausa *dopo* le competenze! <br /><br />Vai al [mio gym](/challenges/) per sconfiggere altre sfide! 💪</p>
+````

@@ -1,0 +1,44 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Word Boundaries",
+  "translatedTitle": "Confini delle parole",
+  "translation": {
+    "title": "Confini delle parole",
+    "group": "Corrispondenza di base",
+    "options": [
+      {
+        "text": "[\"cat\", \"cats\"]"
+      },
+      {
+        "text": "[\"cat\"]"
+      },
+      {
+        "text": "[\"cats\"]"
+      },
+      {
+        "text": "[]"
+      }
+    ],
+    "questionProse": [
+      "Cosa verrà corrisposto?"
+    ],
+    "explanationProse": [
+      "L'`\\b` rappresenta un confine di parola, che corrisponde:\n    - Tra un carattere di parola e un non-carattere di parola\n    - All'inizio/fine della stringa se c'è un carattere di parola\n\n    Quindi `/\\bcat\\b/` corrisponde a \"cat\" solo quando è una parola completa, non parte di un'altra parola.\n    - ✅ \"cat\" (circondato da spazi)\n    - ❌ \"cats\" (nessun confine dopo \"cat\")\n    - ❌ \"category\" (nessun confine dopo \"cat\")\n\n    [Scopri di più sui confini di parola](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions#other_assertions)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Confini delle parole\",\n  \"group\": \"Corrispondenza di base\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"cat\\\", \\\"cats\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"cat\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"cats\\\"]\"\n    },\n    {\n      \"text\": \"[]\"\n    }\n  ],\n  \"questionProse\": [\n    \"Cosa verrà corrisposto?\"\n  ],\n  \"explanationProse\": [\n    \"L'`\\\\b` rappresenta un confine di parola, che corrisponde:\\n    - Tra un carattere di parola e un non-carattere di parola\\n    - All'inizio/fine della stringa se c'è un carattere di parola\\n\\n    Quindi `/\\\\bcat\\\\b/` corrisponde a \\\"cat\\\" solo quando è una parola completa, non parte di un'altra parola.\\n    - ✅ \\\"cat\\\" (circondato da spazi)\\n    - ❌ \\\"cats\\\" (nessun confine dopo \\\"cat\\\")\\n    - ❌ \\\"category\\\" (nessun confine dopo \\\"cat\\\")\\n\\n    [Scopri di più sui confini di parola](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions#other_assertions)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 790,
+    "outputTokens": 730,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 10357
+  },
+  "cost": {
+    "inputUsd": 0.0000632,
+    "outputUsd": 0.00017519999999999998,
+    "totalUsd": 0.0002384,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

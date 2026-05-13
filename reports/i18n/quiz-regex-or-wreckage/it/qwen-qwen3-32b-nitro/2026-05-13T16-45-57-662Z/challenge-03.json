@@ -1,0 +1,31 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "Greedy vs Non-Greedy",
+  "translatedTitle": "Goloso vs Non Goloso",
+  "translation": {
+    "title": "Goloso vs Non Goloso",
+    "group": "Corrispondenza di Base",
+    "options": [],
+    "questionProse": [
+      "A cosa corrisponderà questo?"
+    ],
+    "explanationProse": [
+      "Il pattern `/<div>.*?<\\/div>/g` utilizza la corrispondenza non golosa con `*?` che significa:\n    - Corrispondi a `<div>`\n    - Corrispondi a qualsiasi carattere (`.*`) ma nel modo meno possibile (`?`)\n    - Fino a trovare `</div>`\n    - Il flag `g` fa sì che corrisponda a tutte le occorrenze\n\n    Senza il `?`, il goloso `.*` corrisponderebbe a tutto da `<div>` iniziale a `</div>` finale, producendo un'unica corrispondenza. Con `?`, invece, corrisponde a ciascuna coppia separatamente.\n\n    [Scopri di più su goloso vs non goloso](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Goloso vs Non Goloso\",\n  \"group\": \"Corrispondenza di Base\",\n  \"options\": [],\n  \"questionProse\": [\n    \"A cosa corrisponderà questo?\"\n  ],\n  \"explanationProse\": [\n    \"Il pattern `/<div>.*?<\\\\/div>/g` utilizza la corrispondenza non golosa con `*?` che significa:\\n    - Corrispondi a `<div>`\\n    - Corrispondi a qualsiasi carattere (`.*`) ma nel modo meno possibile (`?`)\\n    - Fino a trovare `</div>`\\n    - Il flag `g` fa sì che corrisponda a tutte le occorrenze\\n\\n    Senza il `?`, il goloso `.*` corrisponderebbe a tutto da `<div>` iniziale a `</div>` finale, producendo un'unica corrispondenza. Con `?`, invece, corrisponde a ciascuna coppia separatamente.\\n\\n    [Scopri di più su goloso vs non goloso](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 755,
+    "outputTokens": 870,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 11563
+  },
+  "cost": {
+    "inputUsd": 0.000060400000000000004,
+    "outputUsd": 0.0002088,
+    "totalUsd": 0.00026920000000000004,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

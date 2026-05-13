@@ -1,0 +1,47 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Positive Look-ahead",
+  "translatedTitle": "Look-ahead positivo",
+  "translation": {
+    "title": "Look-ahead positivo",
+    "group": "Look-ahead",
+    "options": [
+      {
+        "text": "[\"$100\", \"€50\"]"
+      },
+      {
+        "text": "[\"100\", \"50\"]"
+      },
+      {
+        "text": "[\"$\", \"€\"]"
+      },
+      {
+        "text": "[]"
+      },
+      {
+        "text": "null"
+      }
+    ],
+    "questionProse": [
+      "Cosa corrisponderà questo?"
+    ],
+    "explanationProse": [
+      "Questo modello non corrisponderà a niente perché il look-ahead è invertito! Se vuoi numeri preceduti da `$` o `€`, usa un look-behind: `/(?<=[\\$€])\\d+/g`.\n\n    I look-ahead controllano ciò che viene *dopo* la posizione corrente. Il modello scritto cerca:\n    - Uno o più numeri (`\\d+`)\n    - Seguiti da (`(?=...)`) `$` o `€` (`[\\$€]`)\n\n    Poiché non ci sono numeri seguiti da simboli di valuta (sono preceduti da loro), non otteniamo corrispondenze.\n\n    [Scopri di più sugli asserti di look-ahead](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Look-ahead positivo\",\n  \"group\": \"Look-ahead\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"$100\\\", \\\"€50\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"100\\\", \\\"50\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"$\\\", \\\"€\\\"]\"\n    },\n    {\n      \"text\": \"[]\"\n    },\n    {\n      \"text\": \"null\"\n    }\n  ],\n  \"questionProse\": [\n    \"Cosa corrisponderà questo?\"\n  ],\n  \"explanationProse\": [\n    \"Questo modello non corrisponderà a niente perché il look-ahead è invertito! Se vuoi numeri preceduti da `$` o `€`, usa un look-behind: `/(?<=[\\\\$€])\\\\d+/g`.\\n\\n    I look-ahead controllano ciò che viene *dopo* la posizione corrente. Il modello scritto cerca:\\n    - Uno o più numeri (`\\\\d+`)\\n    - Seguiti da (`(?=...)`) `$` o `€` (`[\\\\$€]`)\\n\\n    Poiché non ci sono numeri seguiti da simboli di valuta (sono preceduti da loro), non otteniamo corrispondenze.\\n\\n    [Scopri di più sugli asserti di look-ahead](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 824,
+    "outputTokens": 999,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 11431
+  },
+  "cost": {
+    "inputUsd": 0.00006592,
+    "outputUsd": 0.00023976000000000002,
+    "totalUsd": 0.00030568,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
