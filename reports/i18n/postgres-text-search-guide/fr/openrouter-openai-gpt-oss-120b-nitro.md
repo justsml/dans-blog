@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: postgres-text-search-guide
+- Locale: fr
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-05-02--postgres-text-search-guide/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 24.81
+- Input tokens: 16187
+- Output tokens: 7924
+- Thinking tokens: unknown
+- Cached input tokens: 2688
+- Cache write tokens: 0
+- Estimated cost: $0.002058
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: "Guide de recherche textuelle PostgreSQL\_2026"
 subTitle: >-
@@ -479,3 +497,4 @@ Le pool de candidats de 60 documents par branche (`LIMIT 60`) constitue un point
 La recherche textuelle de Postgres couvre un large spectre, mais elle a ses limites. Quand les utilisateurs décrivent ce qu’ils recherchent plutôt que de le nommer — « quelque chose pour m’aider à dormir pendant un vol », « articles sur le débogage de la confiance en tant que nouvel ingénieur » — la recherche lexicale et trigramme échouent toutes deux.
 
 C’est le domaine des embeddings vectoriels, de la recherche sémantique et des architectures hybrides. Voir : [Recherche vectorielle sémantique et stratégies hybrides](../semantic-vector-search-landscape).
+````
