@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: the-4-pillars-of-collaborative-culture
+- Locale: es
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2021-03-03--the-4-pillars-of-collaborative-culture/es/index.mdx
+- Validation: passed
+- Runtime seconds: 12.29
+- Input tokens: 4923
+- Output tokens: 5538
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.001723
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Los 4 Pilares de la Cultura Colaborativa
@@ -110,3 +128,4 @@ Considera cómo surgen y evolucionan las ideas en tu organización:
 - ¿Cuál es el tiempo promedio antes de la primera sugerencia de un empleado? ¿Días? ¿Meses? ¿Años ????
 - ¿Todos en tu equipo comparten ideas regularmente?
 - ¿Las personas se sienten seguras? ¿Pueden ser vulnerables? ¿Incluso cuestionar la misión?
+````
