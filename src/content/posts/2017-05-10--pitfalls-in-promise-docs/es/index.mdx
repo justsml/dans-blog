@@ -1,7 +1,7 @@
 ---
 social_image: ../desktop-social.webp
-title: Trampas en la Documentación de Promesas
-subTitle: Evitando problemas de la documentación común
+title: Trampas en la documentación de Promise
+subTitle: Evitando problemas de la documentación popular
 date: '2017-05-10'
 modified: '2024-07-30'
 category: Code
@@ -15,13 +15,13 @@ cover: ../craig-whitehead-433328-unsplash.webp
 cover_mobile: ../w300_craig-whitehead-433328-unsplash.webp
 cover_icon: ../icon_craig-whitehead-433328-unsplash.webp
 ---
-Identificación de anti patrones de Promesas en resultados de búsqueda de Google y bibliotecas populares.
+> Detectando anti‑patrones de Promesas en resultados de búsqueda de Google y bibliotecas populares.
 
-[craig-whitehead-433328-unsplash.webp](../craig-whitehead-433328-unsplash.webp)
+![craig-whitehead-433328-unsplash.webp](../craig-whitehead-433328-unsplash.webp)
 
-Comienzo con una confesión: soy culpable de haber escrito los mismos 'anti patrones' que critico a continuación, al igual que muchos desarrolladores de JS, estoy seguro. Nada de lo que he expuesto tiene la intención de ser personal ni dirigido hacia los autores originales. Solo estoy realizando una revisión de código sobre patrones comunes; espero transmitir una comprensión de mis prioridades y procesos de pensamiento crítico.
+Comienzo con una confesión: soy culpable de escribir los mismos “anti‑patrones” que critico a continuación, al igual que muchos desarrolladores de JS. Nada de lo expuesto pretende ser personal ni dirigido a los autores originales. Simplemente estoy haciendo una revisión de código sobre patrones comunes; espero transmitir mi forma de priorizar y mi proceso de pensamiento crítico.
 
-> Espero que después de comprender este proyecto, puedas identificar las señales de alerta de las Promesas mal implementadas.
+> Con suerte podrás identificar las señales de alerta de Promesas mal diseñadas después de analizar este proyecto.
 
 1. [CallbackHell.com](#callbackhellcom)
 1. [StrongLoop](#strongloop)
@@ -30,35 +30,36 @@ Comienzo con una confesión: soy culpable de haber escrito los mismos 'anti patr
 
 --------------------------
 ### CallbackHell.com
-> **CREDITO:** http://callbackhell.com/
+> **CREDIT:** http://callbackhell.com/
 ![CallbackHell.com](../callbackhell.webp)
 
-### StrongLoop
-> **CREDITO:** `https://strongloop.com/strongblog/node-js-callback-hell-promises-generators/`
-![StrongLoop](../strongloop.webp)
+---  
+### StrongLoop  
+> **CRÉDITO:** `https://strongloop.com/strongblog/node-js-callback-hell-promises-generators/`  
+![strong loop](../strongloop.webp)  
 
-----------------
-### RisingStack
-> **CREDITO:** https://blog.risingstack.com/node-js-async-best-practices-avoiding-callback-hell-node-js-at-scale/
-Este es un artículo bastante sólido. Solo tengo una preocupación:
+---  
+### RisingStack  
+> **CRÉDITO:** https://blog.risingstack.com/node-js-async-best-practices-avoiding-callback-hell-node-js-at-scale/  
+Este artículo está bastante sólido. Sólo tengo una observación:  
 
-![RisingStack](../risingstack.webp)
+![Rising Stack](../risingstack.webp)  
 
-------------------------
-### Q Library
-> **CREDITO:** https://github.com/kriskowal/q
+---  
+### Q Library  
+> **CRÉDITO:** https://github.com/kriskowal/q  
 
-La biblioteca Q es una de las más utilizadas y antiguas asociadas con "Promises". Por ello sufre de ejemplos obsoletos y de la necesidad de mantener compatibilidad hacia atrás.
-**Digo "asociada con 'Promises'" porque siento que Q realmente se centra en el patrón de diferimiento (`deferred`).**
+La biblioteca Q es una de las más usadas y antiguas asociadas a “Promesas”. Por eso padece ejemplos desactualizados y la necesidad de mantener compatibilidad retroactiva.  
+**Digo “asociada a ‘Promesas’” porque considero que Q trata realmente del patrón `deferred`.**  
 
-Puede parecerse a Promises, pero insisto en que no lo es. Tiene una superficie excesivamente grande por razones equivocadas. Además, la convención de nomenclatura abrevia los nombres de forma inconsistente, lo que dificulta memorizar la interfaz. Métodos como `when` y `done` no son necesarios.
+Puede parecerse a Promesas, sin embargo insisto en que no lo es. Tiene una superficie de API excesivamente grande por todas las razones equivocadas. Además, la convención de nombres abrevia de forma inconsistente, lo que dificulta memorizar la interfaz. Métodos como `when` y `done` son innecesarios.
 
-En resumen: el patrón de `deferred` es un anti-patrón doloroso: prácticamente no mejora nada en comparación con el enfoque típico de callback.
+Conclusión: el patrón `deferred` es un anti‑patrón doloroso; apenas mejora algo respecto al enfoque típico de callbacks.
 
-![primer ejemplo de q](../qlibrary-1.webp)
+![q first example](../qlibrary-1.webp)
 
-![anti-patrón deferred de q xmlHTTP](../qlibrary-2.webp)
+![q xmlHTTP deferred anti-pattern](../qlibrary-2.webp)
 
-> Eche un vistazo (y dé una estrella) al proyecto de GitHub asociado a este artículo, [Escape From Callback Mountain](https://github.com/justsml/escape-from-callback-mountain)
+> Por favor, revisa (& estrella) el proyecto complementario en Github de este artículo, [Escape From Callback Mountain](https://github.com/justsml/escape-from-callback-mountain)
 
-> Objetivo del proyecto: investigar y desarrollar mejores patrones de lenguaje funcional en JavaScript.
+> Objetivo del proyecto: investigar y desarrollar mejores patrones funcionales en JavaScript.
