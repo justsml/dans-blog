@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-bash-in-the-shell
+- Locale: ja
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2024-11-20--quiz-bash-in-the-shell/ja/index.mdx
+- Validation: deferred
+- Runtime seconds: 144.35
+- Input tokens: 14376
+- Output tokens: 13023
+- Thinking tokens: unknown
+- Cached input tokens: 512
+- Cache write tokens: 0
+- Estimated cost: $0.004276
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: 'クイズ: Bash & Shell マスター'
@@ -594,3 +612,4 @@ Bashスキルをブラッシュアップするための以下のリソースを�
 - [Bashハッカーズウィキ](http://wiki.bash-hackers.org/)
 - [Bash初心者向けガイド](http://tldp.org/LDP/Bash-Beginners-Guide/html/index.html)
 - [Bashリファレンスカード](http://www.tldp.org/LDP/Bash-Beginners-Guide/html/Bash-Beginners-Guide.html)
+````

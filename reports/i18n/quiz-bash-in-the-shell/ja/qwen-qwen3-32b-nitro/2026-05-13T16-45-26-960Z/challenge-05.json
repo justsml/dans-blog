@@ -1,0 +1,48 @@
+{
+  "index": 4,
+  "attempt": 2,
+  "originalTitle": "Replace Substring",
+  "translatedTitle": "部分文字列の置換",
+  "translation": {
+    "title": "部分文字列の置換",
+    "group": "部分文字列の置換",
+    "options": [
+      {
+        "text": "meow meow"
+      },
+      {
+        "text": "Meow meow"
+      },
+      {
+        "text": "Bark meow"
+      },
+      {
+        "text": "Bark bark"
+      },
+      {
+        "text": "Error"
+      }
+    ],
+    "questionProse": [
+      "ここでは何が起こっている？"
+    ],
+    "explanationProse": [
+      "`${var/pattern/replacement}` 構文は、`pattern` の最初の出現を `replacement` で置換します。ここでの出力は:",
+      "これは大文字小文字を区別します。`bark` と `Bark` の両方を処理するには、`${var/[Bb]ark/Bark}` のようなパターンを使用するか、置換前に文字列を正規化してください。\n\n    すべての出現を置換するには `${var//pattern/replacement}` を、\n    文字列の先頭から置換するには `${var/#pattern/replacement}` を、\n    文字列の末尾から置換するには `${var/%pattern/replacement}` を使用します。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"部分文字列の置換\",\n  \"group\": \"部分文字列の置換\",\n  \"options\": [\n    { \"text\": \"meow meow\" },\n    { \"text\": \"Meow meow\" },\n    { \"text\": \"Bark meow\" },\n    { \"text\": \"Bark bark\" },\n    { \"text\": \"Error\" }\n  ],\n  \"questionProse\": [\n    \"ここでは何が起こっている？\"\n  ],\n  \"explanationProse\": [\n    \"`${var/pattern/replacement}` 構文は、`pattern` の最初の出現を `replacement` で置換します。ここでの出力は:\",\n    \"これは大文字小文字を区別します。`bark` と `Bark` の両方を処理するには、`${var/[Bb]ark/Bark}` のようなパターンを使用するか、置換前に文字列を正規化してください。\\n\\n    すべての出現を置換するには `${var//pattern/replacement}` を、\\n    文字列の先頭から置換するには `${var/#pattern/replacement}` を、\\n    文字列の末尾から置換するには `${var/%pattern/replacement}` を使用します。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 806,
+    "outputTokens": 607,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 1554
+  },
+  "cost": {
+    "inputUsd": 0.00006448,
+    "outputUsd": 0.00014568,
+    "totalUsd": 0.00021016,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

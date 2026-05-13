@@ -1,0 +1,53 @@
+{
+  "index": 11,
+  "attempt": 1,
+  "originalTitle": "Basic Arithmetic",
+  "translatedTitle": "基本的な算術",
+  "translation": {
+    "title": "基本的な算術",
+    "group": "乗算",
+    "options": [
+      {
+        "text": "echo 10 * 0.5"
+      },
+      {
+        "text": "echo (10 * 0.5)"
+      },
+      {
+        "text": "echo ${ 10 * 0.5 }"
+      },
+      {
+        "text": "echo %( 10 * 0.5 )"
+      },
+      {
+        "text": "echo $(( 10 * 0.5 ))"
+      },
+      {
+        "text": "echo '10 * 0.5' | bc"
+      },
+      {
+        "text": "Error"
+      }
+    ],
+    "questionProse": [
+      "これらのうち、10と0.5を掛けて5を出力するのはどれですか？"
+    ],
+    "explanationProse": [
+      "`(( ))`の構文は**整数**算術のみを実行します。小数点を含む浮動小数点計算はサポートされていません！\n\n    Bashは（驚くべきことに）**組み込みの**浮動小数点算術サポートを持っていません。\n\n    最も一般的な解決策は、GNUユーティリティ[`bc`](https://www.gnu.org/software/bc/manual/html_mono/bc.html)や[`awk`](https://www.gnu.org/software/gawk/manual/gawk.html)を使うことです。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"基本的な算術\",\n  \"group\": \"乗算\",\n  \"options\": [\n    { \"text\": \"echo 10 * 0.5\" },\n    { \"text\": \"echo (10 * 0.5)\" },\n    { \"text\": \"echo ${ 10 * 0.5 }\" },\n    { \"text\": \"echo %( 10 * 0.5 )\" },\n    { \"text\": \"echo $(( 10 * 0.5 ))\" },\n    { \"text\": \"echo '10 * 0.5' | bc\" },\n    { \"text\": \"Error\" }\n  ],\n  \"questionProse\": [\n    \"これらのうち、10と0.5を掛けて5を出力するのはどれですか？\"\n  ],\n  \"explanationProse\": [\n    \"`(( ))`の構文は**整数**算術のみを実行します。小数点を含む浮動小数点計算はサポートされていません！\\n\\n    Bashは（驚くべきことに）**組み込みの**浮動小数点算術サポートを持っていません。\\n\\n    最も一般的な解決策は、GNUユーティリティ[`bc`](https://www.gnu.org/software/bc/manual/html_mono/bc.html)や[`awk`](https://www.gnu.org/software/gawk/manual/gawk.html)を使うことです。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 802,
+    "outputTokens": 819,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 11109
+  },
+  "cost": {
+    "inputUsd": 0.00006416,
+    "outputUsd": 0.00019655999999999997,
+    "totalUsd": 0.00026072,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
