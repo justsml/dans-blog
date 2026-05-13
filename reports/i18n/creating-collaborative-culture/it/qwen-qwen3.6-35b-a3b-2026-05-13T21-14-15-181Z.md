@@ -1,0 +1,76 @@
+# Translation Candidate
+- Slug: creating-collaborative-culture
+- Locale: it
+- Model: qwen/qwen3.6-35b-a3b
+- Target: src/content/posts/2021-03-03--creating-collaborative-culture/it/index.mdx
+- Validation: deferred
+- Runtime seconds: 37.25
+- Input tokens: 2091
+- Output tokens: 8239
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.008553
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: Costruire una cultura collaborativa
+subTitle: Sblocca la creatività del team!
+date: '2021-01-01'
+modified: '2023-01-25'
+tags:
+  - collaborative-culture
+  - culture
+  - teams
+  - growth
+  - personal-development
+category: Leadership
+subCategory: culture
+cover: ../pexels-photo-3184431--cropped.webp
+cover_mobile: ../w300_pexels-photo-3184431--cropped.webp
+cover_icon: ../icon_pexels-photo-3184431--cropped.webp
+---
+## Che cos'è la *Cultura Collaborativa*?
+
+La maggior parte delle organizzazioni si colloca da qualche parte tra le **Api Felici** e lo **Sciame di Vespe Omicide**.
+
+La *Cultura Collaborativa* definisce 2 principi chiave per le **Api Felici**:
+
+1. Le idee vengono celebrate! (Soprattutto quelle ridicole.)
+1. Le idee sono benvenute! (Indipendentemente da titolo o ruolo.)
+
+<!-- > In definitiva, le migliori organizzazioni accolgono tutte le idee, da qualsiasi livello gerarchico e senza pregiudizi. -->
+
+## Perché una *Cultura Collaborativa*?
+
+Il mio caso di riferimento per la *Cultura Collaborativa* è la storia improbabile di un addetto alle pulizie, della sua idea da un miliardo di dollari e del CEO che ha ascoltato.
+
+Quando l'CEO di PepsiCo, Roger Enrico, implorò i dipendenti a "agire come proprietari", pochi lo presero sul serio. Richard Montañez no. Sapeva che esisteva un mercato inesplorato per gli snack piccanti. Chiamò il numero del CEO (preso dall'elenco aziendale) e chiese un incontro. A causa di una confusione fortuita, fissarono l'incontro credendo che fosse con il Direttore dello Stabilimento Regionale. Il Direttore fu comprensibilmente sorpreso di sentire parlare di un prossimo incontro per presentare un'idea, e, dopo qualche parola dura, disse a Montañez che era la sua occasione per andare a fondo o emergere, e che non avrebbe più dovuto permettersi sceneggiate del genere.
+
+Dopo quell'incontro (e molto duro lavoro), Montañez iniziò a scalare la gerarchia, diventando infine Vicepresidente delle Vendite e generando miliardi di dollari per PepsiCo.
+
+Grandi idee e ispirazione possono arrivare da chiunque, ovunque e in qualsiasi momento!
+
+Per il successo nel lungo termine, la cultura aziendale deve abbracciare questo principio.
+
+## Prossimi passi
+
+Iniziamo con un'analisi dello stato attuale. Dedica qualche minuto a riflettere su queste domande:
+
+- Quale % dell'organizzazione condivide idee?
+- Con quale velocità i nuovi assunti propongono idee?
+- Con quale frequenza?
+
+Sul piano più personale:
+
+- Qual è l'ultima idea che un collega ti ha portato?
+- Come hai risposto? Hai dato loro gli strumenti per agire? Hai ascoltato? E riconosciuto il merito?
+- I colleghi si sentono a loro agio nel presentarti la prossima idea?
+
+> Restate sintonizzati!
+> Il prossimo articolo tratterà i processi e le abitudini che alimentano una *Cultura Collaborativa* nella tua organizzazione!
+````
