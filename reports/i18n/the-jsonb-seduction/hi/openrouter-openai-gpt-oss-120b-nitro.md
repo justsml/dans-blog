@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: the-jsonb-seduction
+- Locale: hi
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2025-12-29--the-jsonb-seduction/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 12.04
+- Input tokens: 11003
+- Output tokens: 3460
+- Thinking tokens: unknown
+- Cached input tokens: 3072
+- Cache write tokens: 0
+- Estimated cost: $0.001052
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: 'JSONB: आपके डेटाबेस को बर्बाद करने का सबसे अच्छा तरीका'
 subTitle: >-
@@ -183,3 +201,4 @@ JSONB तब बढ़िया है जब दस्तावेज़ वा
 - [JSONB अनुक्रमण रणनीतियाँ](https://www.postgresql.org/docs/current/datatype-json.html#JSON-INDEXING)  
 - [JSONB बनाम रिलेशनल कॉलम कब उपयोग करें](https://www.citusdata.com/blog/2016/07/14/choosing-nosql-hstore-json-jsonb/)  
 - [PostgreSQL स्कीमा डिज़ाइन सर्वश्रेष्ठ प्रथाएँ](https://www.postgresql.org/docs/current/ddl.html)
+````
