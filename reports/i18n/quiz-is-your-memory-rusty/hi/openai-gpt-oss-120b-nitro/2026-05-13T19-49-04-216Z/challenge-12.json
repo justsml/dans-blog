@@ -1,0 +1,52 @@
+{
+  "index": 11,
+  "attempt": 1,
+  "originalTitle": "RefCells and Threading",
+  "translatedTitle": "RefCell औरथ्रेडिंग",
+  "translation": {
+    "title": "RefCell औरथ्रेडिंग",
+    "group": "RefCell",
+    "options": [
+      {
+        "text": "RefCell का उपयोग mutable borrow के लिए किया जाता है, जबकि Rw का immutable के लिए",
+        "hint": "दोनों प्रकार mutable और immutable borrow को सपोर्ट करते हैं"
+      },
+      {
+        "text": "Rw का उपयोग mutable borrow के लिए किया जाता है, RefCell का immutable के लिए",
+        "hint": "दोनों दोनों प्रकार के borrow को सपोर्ट करते हैं"
+      },
+      {
+        "text": "RefCell और Rw एक ही उद्देश्य के लिए उपयोग होते हैं",
+        "hint": "थ्रेड सुरक्षा के बारे में सोचें"
+      },
+      {
+        "text": "RefCell केवल single-threaded वातावरण में उपयोग होता है"
+      },
+      {
+        "text": "Rw केवल multi-threaded वातावरण में उपयोग होता है",
+        "hint": "हालांकि आमतौर पर थ्रेड्स के लिए उपयोग किया जाता है, यह मुख्य अंतर नहीं है"
+      }
+    ],
+    "questionProse": [
+      "Rust में RefCell और RwLock के बीच मुख्य अंतर क्या है?\n\n      इन उदाहरणों पर विचार करें:"
+    ],
+    "explanationProse": [
+      "RefCell और RwLock समान उद्देश्यों को पूरा करते हैं लेकिन अलग संदर्भों में:",
+      "मुख्य अंतर:\n      1. RefCell:\n         - केवल single-threaded\n         - कोई synchronization ओवरहेड नहीं\n         - borrowing उल्लंघन पर panic करता है\n         \n      2. RwLock:\n         - थ्रेड-सुरक्षित\n         - synchronization ओवरहेड होता है\n         - panic करने के बजाय थ्रेड्स को ब्लॉक कर सकता है\n\n      सर्वोत्तम प्रथाएँ:\n      1. single-threaded इंटीरियर म्यूटेबिलिटी के लिए RefCell का उपयोग करें\n      2. जब थ्रेड सुरक्षा की जरूरत हो तो RwLock का उपयोग करें\n      3. सरल थ्रेड-सुरक्षित म्यूटेबिलिटी के लिए Mutex पर विचार करें\n      4. थ्रेड सुरक्षा आवश्यकताओं को स्पष्ट रूप से दस्तावेज़ करें"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"RefCell औरथ्रेडिंग\",\n  \"group\": \"RefCell\",\n  \"options\": [\n    {\n      \"text\": \"RefCell का उपयोग mutable borrow के लिए किया जाता है, जबकि Rw का immutable के लिए\",\n      \"hint\": \"दोनों प्रकार mutable और immutable borrow को सपोर्ट करते हैं\"\n    },\n    {\n      \"text\": \"Rw का उपयोग mutable borrow के लिए किया जाता है, RefCell का immutable के लिए\",\n      \"hint\": \"दोनों दोनों प्रकार के borrow को सपोर्ट करते हैं\"\n    },\n    {\n      \"text\": \"RefCell और Rw एक ही उद्देश्य के लिए उपयोग होते हैं\",\n      \"hint\": \"थ्रेड सुरक्षा के बारे में सोचें\"\n    },\n    {\n      \"text\": \"RefCell केवल single-threaded वातावरण में उपयोग होता है\"\n    },\n    {\n      \"text\": \"Rw केवल multi-threaded वातावरण में उपयोग होता है\",\n      \"hint\": \"हालांकि आमतौर पर थ्रेड्स के लिए उपयोग किया जाता है, यह मुख्य अंतर नहीं है\"\n    }\n  ],\n  \"questionProse\": [\n    \"Rust में RefCell और RwLock के बीच मुख्य अंतर क्या है?\\n\\n      इन उदाहरणों पर विचार करें:\"\n  ],\n  \"explanationProse\": [\n    \"RefCell और RwLock समान उद्देश्यों को पूरा करते हैं लेकिन अलग संदर्भों में:\",\n    \"मुख्य अंतर:\\n      1. RefCell:\\n         - केवल single-threaded\\n         - कोई synchronization ओवरहेड नहीं\\n         - borrowing उल्लंघन पर panic करता है\\n         \\n      2. RwLock:\\n         - थ्रेड-सुरक्षित\\n         - synchronization ओवरहेड होता है\\n         - panic करने के बजाय थ्रेड्स को ब्लॉक कर सकता है\\n\\n      सर्वोत्तम प्रथाएँ:\\n      1. single-threaded इंटीरियर म्यूटेबिलिटी के लिए RefCell का उपयोग करें\\n      2. जब थ्रेड सुरक्षा की जरूरत हो तो RwLock का उपयोग करें\\n      3. सरल थ्रेड-सुरक्षित म्यूटेबिलिटी के लिए Mutex पर विचार करें\\n      4. थ्रेड सुरक्षा आवश्यकताओं को स्पष्ट रूप से दस्तावेज़ करें\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1032,
+    "outputTokens": 1354,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 857
+  },
+  "cost": {
+    "inputUsd": 0.000040248,
+    "outputUsd": 0.00024371999999999998,
+    "totalUsd": 0.000283968,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
