@@ -1,0 +1,44 @@
+{
+  "index": 1,
+  "attempt": 1,
+  "originalTitle": "Multiple `.catch`'s #2",
+  "translatedTitle": "複数の .catch #2",
+  "translation": {
+    "title": "複数の .catch #2",
+    "group": "エラーのハンドリング",
+    "options": [
+      {
+        "text": "メッセージを1回出力"
+      },
+      {
+        "text": "メッセージを2回出力"
+      },
+      {
+        "text": "未処理の拒否済みプロミス"
+      },
+      {
+        "text": "プロセスが終了"
+      }
+    ],
+    "questionProse": [
+      "次のコードの出力は何ですか？"
+    ],
+    "explanationProse": [
+      "Promiseコンストラクタを使用する際は必ず`resolve()`または`reject()`コールバックを呼び出さなければなりません。Promiseコンストラクタはエグゼキュータの戻り値を無視するため、`Promise.reject()`で作成された追加のPromiseは`p`にチェーンされません。2つのハンドラは`p`にアタッチされますが、`p`は未解決のままになり、戻された拒否済みPromiseはホスト環境によって未処理として報告されます。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"複数の .catch #2\",\n  \"group\": \"エラーのハンドリング\",\n  \"options\": [\n    {\n      \"text\": \"メッセージを1回出力\"\n    },\n    {\n      \"text\": \"メッセージを2回出力\"\n    },\n    {\n      \"text\": \"未処理の拒否済みプロミス\"\n    },\n    {\n      \"text\": \"プロセスが終了\"\n    }\n  ],\n  \"questionProse\": [\n    \"次のコードの出力は何ですか？\"\n  ],\n  \"explanationProse\": [\n    \"Promiseコンストラクタを使用する際は必ず`resolve()`または`reject()`コールバックを呼び出さなければなりません。Promiseコンストラクタはエグゼキュータの戻り値を無視するため、`Promise.reject()`で作成された追加のPromiseは`p`にチェーンされません。2つのハンドラは`p`にアタッチされますが、`p`は未解決のままになり、戻された拒否済みPromiseはホスト環境によって未処理として報告されます。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 740,
+    "outputTokens": 649,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1720
+  },
+  "cost": {
+    "inputUsd": 0.0000592,
+    "outputUsd": 0.00015575999999999999,
+    "totalUsd": 0.00021496,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
