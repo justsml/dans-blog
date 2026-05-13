@@ -4,29 +4,29 @@
   "slug": "docker-server-setup-notes",
   "locale": "ja",
   "startedAt": "2026-05-13T16:23:45.009Z",
-  "updatedAt": "2026-05-13T16:24:44.306Z",
+  "updatedAt": "2026-05-13T16:25:51.396Z",
   "modelsRequested": [
     "openrouter/openai/gpt-oss-120b:nitro",
     "openrouter/qwen/qwen3-32b:nitro"
   ],
-  "attemptedModels": 1,
+  "attemptedModels": 2,
   "skippedModels": 0,
-  "rejectedModels": 0,
+  "rejectedModels": 1,
   "candidateModels": 1,
   "totals": {
-    "inputTokens": 17333,
-    "outputTokens": 10739,
+    "inputTokens": 38408,
+    "outputTokens": 30411,
     "thinkingTokens": 0,
-    "cachedInputTokens": 4224,
+    "cachedInputTokens": 6784,
     "cacheWriteTokens": 0,
-    "estimatedCostUsd": 0.002609,
+    "estimatedCostUsd": 0.009016,
     "hasUnknownInputTokens": false,
     "hasUnknownOutputTokens": false,
     "hasUnknownThinkingTokens": true,
     "hasUnknownCachedInputTokens": false,
     "hasUnknownCacheWriteTokens": false,
     "hasUnknownEstimatedCost": false,
-    "runtimeSeconds": "6.03"
+    "runtimeSeconds": "65.55"
   },
   "attempts": [
     {
@@ -44,6 +44,24 @@
           "cacheWrite": 0
         },
         "estimatedCostUsd": 0.002609007,
+        "pricingSource": "local-openrouter-estimate"
+      }
+    },
+    {
+      "model": "openrouter/qwen/qwen3-32b:nitro",
+      "status": "rejected",
+      "validationStatus": "rejected: direct AI SDK translation failed",
+      "reportPath": "reports/i18n/docker-server-setup-notes/ja/openrouter-qwen-qwen3-32b-nitro.md",
+      "note": "Command failed: bun run i18n:validate --slug docker-server-setup-notes --locale ja",
+      "telemetry": {
+        "runtimeSeconds": "59.52",
+        "tokens": {
+          "input": 21075,
+          "output": 19672,
+          "cached": 2560,
+          "cacheWrite": 0
+        },
+        "estimatedCostUsd": 0.00640728,
         "pricingSource": "local-openrouter-estimate"
       }
     }
