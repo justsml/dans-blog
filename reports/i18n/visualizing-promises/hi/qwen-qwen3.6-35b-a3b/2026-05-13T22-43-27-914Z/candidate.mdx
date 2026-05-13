@@ -1,0 +1,142 @@
+---
+social_image: ../desktop-social.webp
+title: प्रॉमिस का दृश्य निरूपण
+subTitle: अवरोध तोड़कर आगे...
+date: '2018-09-30'
+modified: '2024-07-30'
+category: Guides
+subCategory: promises
+cover: ../junior-ferreira-735237-unsplash.webp
+cover_mobile: ../w300_junior-ferreira-735237-unsplash.webp
+cover_icon: ../icon_junior-ferreira-735237-unsplash.webp
+tags:
+  - promises
+  - async
+  - visualizing
+  - javascript
+  - composition
+related:
+  - intro-to-promises
+  - promise-gotchas
+  - stop-trying-to-make-async-await-happen
+  - javascript-promises-quiz
+---
+Promises के निष्पादन क्रम को समझने के लिए, हम एक सहायक विधि `delay(millisecs)` परिभाषित करेंगे।
+
+```js
+function delay(millisecs) {
+  return new Promise(resolve => {
+    setTimeout(() => resolve(millisecs), millisecs);
+  });
+}
+```
+
+यह एक utility विधि है जो टाइमआउट पूरा होने पर Promise को resolve करेगी।
+
+मिलीसेकंड में बताई गई विलंबता `.then` के callback में पास की जाएगी।
+
+आइए 4 उदाहरणों पर नज़र डालें (एनिमेटेड टाइमलाइन्स के साथ)।
+
+## उदाहरण #1/4
+
+यह दर्शाता है कि `console.log()` का निष्पादन `delay(msec)` कॉल द्वारा कैसे विलंबित होगा।
+
+```js
+delay(1000).then(() => console.log("done"));
+```
+
+![1000ms विलंब के बाद एक सेकंड में console.log चलने की टाइमलाइन](../N_1000ms_log.webp)
+
+<!-- ```
+delay(1000) --------|.then(fn)
+                    | console.log('done')
+|-------------------|--------------------|--------------------|-----------------
+0msec             1sec                 2sec                 3sec
+``` -->
+
+## उदाहरण #2/4
+
+_यह एक सामान्य गलती को दर्शाता है।_
+
+`console.log` तुरंत चलता है जब `delay(1000)` **शुरू** होता है। **विलंब के बाद** नहीं, बल्कि जैसा कि आप शायद चाहते थे।
+
+चूंकि `console.log` `undefined` लौटाता है, हमारा `.then()` चुपचाप अनदेखा कर दिया जाता है।
+
+`typeof console.log === 'function'` बनाम `typeof console.log() === undefined` के अंतर को नोट करें।
+
+सामान्यतः `console.log` का वांछित उपयोग उदाहरण #1 में दिखाया गया है। `.then` और `.catch` में फ़ंक्शन पास करना सुनिश्चित करें।
+
+```js
+delay(1000).then(console.log("done"));
+```
+
+![विलंब समाप्त होने से ठीक पहले console.log चलने की टाइमलाइन](../N_1000ms_!log.webp)
+
+<!-- ```
+delay(1000) --------|.then(null)
+console.log('done')
+|-------------------|--------------------|--------------------|-----------------
+0msec             1sec                 2sec                 3sec
+``` -->
+
+## उदाहरण #3/4
+
+3 Promises एक साथ निष्पादित होते हैं।
+
+```js
+delay(1000).then(console.log);
+delay(2000).then(console.log);
+delay(3000).then(console.log);
+```
+
+![तीन विलंब Promises के क्रमशः एक, दो और तीन सेकंड बाद रिज़ॉल्व होने की टाइमलाइन](../N_3000ms.webp)
+
+<!-- ```
+delay(1000) ------|.then(console.log)
+delay(2000) ------|--------------------|.then(console.log)
+delay(3000) ------|--------------------|--------------------|.then(console.log)
+|-----------------|--------------------|--------------------|-------------------
+|                 |                    |                    |
+0msec           1sec                 2sec                 3sec
+``` -->
+
+## उदाहरण #4/4
+
+`Promise.all` में 3 `delay` Promise हैं। ये समानांतर रूप से निष्पादित होंगे।
+
+```js
+Promise.all([delay(1000), delay(2000), delay(3000)]).then(console.log);
+```
+
+![समयरेखा जो Promise.all को तीनों delay Promise के समाप्त होने का इंतज़ार करते हुए दिखाती है](../N_3000ms_PromiseAll.webp)
+
+<!--
+
+```
+delay(1000) ---| [resolved]------------------v
+delay(2000) ---|--------------| [resolved]---v
+delay(3000) ---|--------------|--------------v [resolved]
+Promise.all()  |--------------|-------------- > console.log([1000, 2000, 3000])
+|--------------|--------------|--------------|--------------------------------
+|              |              |              |
+0msec        1sec           2sec           3sec
+```
+
+-->
+
+> क्रेडिट:
+>
+> - एनिमेटेड async आरेख: [Patrick Biffle](https://github.com/Piglacquer)
+> - इस लेख के लिए प्रेरणा: https://pouchdb.com/2015/05/18/we-have-a-problem-with-promises.html
+
+<!-- <div class="challenge" title="प्रश्न #1: जीवन का अर्थ:">
+
+  <ul class="options">
+    <li>1</li>
+    <li>2</li>
+    <li class="answer">42</li>
+    <li>3</li>
+  </ul>
+  <div class="description">जीवन का अर्थ क्या है?</div>
+
+</div> -->
