@@ -4,7 +4,7 @@
 - Model: openrouter/qwen/qwen3-32b:nitro
 - Target: src/content/posts/2026-05-09--quiz-context-engineering/hi/index.mdx
 - Validation: rejected: direct AI SDK translation failed
-- Runtime seconds: 4.41
+- Runtime seconds: 4.78
 - Input tokens: unknown
 - Output tokens: unknown
 - Thinking tokens: unknown
@@ -12,7 +12,7 @@
 - Cache write tokens: unknown
 - Estimated cost: unknown
 - Pricing source: unknown
-- Note: Command failed: bun run i18n:translate:chunked -- --slug quiz-context-engineering --locale hi --model openrouter/qwen/qwen3-32b:nitro --chunk 3p --quiz-concurrency 18 --challenge-retries 2
+- Note: Command failed: bun run i18n:translate:chunked -- --slug quiz-context-engineering --locale hi --model openrouter/qwen/qwen3-32b:nitro --chunk 6p --quiz-concurrency 20
 ## Raw Output
 
 ````mdx
@@ -42,8 +42,8 @@ cover_full_width: ../wide.webp
 cover_mobile: ../square.webp
 cover_icon: ../square.webp
 ---
-import Challenge from '../../../../../components/QuizUI/Challenge';
-import QuizUI from '../../../../../components/QuizUI/QuizUI';
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
 
 <p class="inset">प्रॉम्प्ट इंजीनियरिंग को स्लोगन मिलते हैं। कॉन्टेक्स्ट इंजीनियरिंग को पेजर मिलता है। आप AI सिस्टम के उस हिस्से को कितनी अच्छी तरह जानते हैं जो वास्तव में प्रोडक्ट में जाता है?</p>
 
@@ -168,9 +168,9 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   title="चंकिंग रणनीति"
   options={[
     {text: 'अपने कॉन्टेक्स्ट विंडो द्वारा अनुमति दी गई सबसे बड़ी चंक साइज का उपयोग करें'},
-    {text: 'हमेशा 512 टोकन उपयोग करें — यह"'},
+    {text: 'हमेशा 512 टोकन उपयोग करें — यही मानक है'},
     {text: 'अपनी सामग्री संरचना से मेल खाने के लिए ओवरलैपिंग चंक्स का आकार उपयोग करें', isAnswer: true},
-    {text: 'चंक साइज नहीं"'},
+    {text: 'अगर एम्बेडिंग मॉडल अच्छा है तो चंक साइज मायने नहीं रखता'},
   ]}
 >
   <slot name="question">
@@ -352,7 +352,7 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   options={[
     {text: 'temperature=0 हमेशा समान इनपुट के लिए समान आउटपुट देता है'},
     {text: 'temperature=0 आउटपुट को अधिक निर्धारणशील बनाता है लेकिन समान होने की गारंटी नहीं देता', isAnswer: true},
-    {text: 'temperature=0 मॉडल को निष्क्रिय करता है'},
+    {text: 'temperature=0 मॉडल की अनुरोधों को अस्वीकार करने की क्षमता को निष्क्रिय करता है'},
     {text: 'temperature केवल प्रतिक्रिया की लंबाई को प्रभावित करता है'},
   ]}
 >
@@ -423,8 +423,8 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 
     वास्तव में जो काम करता है: **grounding**। मॉडल को सही उत्तर देने के लिए आवश्यक जानकारी दें, और उसे उसी जानकारी तक सीमित रखें:
     ```
-        Answer only using the provided documents.
-        If the answer isn't in the documents, say: "I don't have enough information to answer that."
+    Answer only using the provided documents.
+    If the answer isn't in the documents, say: "I don't have enough information to answer that."
     ```
     फिर आउटपुट को मान्य करें: जांचें कि उत्तर में किए गए दावे प्राप्त संदर्भ में मौजूद हैं या नहीं। यही उद्धरण ग्राउंडिंग जाँच है — कार्यान्वयन के लिए RAG eval चर्चा देखें.
 
