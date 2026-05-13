@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-js-interfaces-symbols-and-enumerables
+- Locale: it
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2024-10-31--quiz-js-interfaces-symbols-and-enumerables/it/index.mdx
+- Validation: deferred
+- Runtime seconds: 11.54
+- Input tokens: 6921
+- Output tokens: 3538
+- Thinking tokens: unknown
+- Cached input tokens: 2048
+- Cache write tokens: 0
+- Estimated cost: $0.000907
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: 'Quiz: Simboli e Enumerabili'
@@ -257,3 +275,4 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 </Challenge>
 
 </QuizUI>
+````
