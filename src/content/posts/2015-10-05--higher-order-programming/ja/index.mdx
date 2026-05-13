@@ -1,0 +1,66 @@
+---
+social_image: ../desktop-social.webp
+title: 高階プログラミング
+subTitle: 配列・集合ベースのパイプライン手法を探る
+date: '2015-09-22'
+modified: '2024-07-30'
+category: Code
+subCategory: programming
+tags:
+  - programming
+  - patterns
+  - models
+  - source-code
+  - organization
+cover: ../susan-holt-simpson-799094-unsplash.webp
+cover_mobile: ../w300_susan-holt-simpson-799094-unsplash.webp
+cover_icon: ../icon_susan-holt-simpson-799094-unsplash.webp
+---
+## 配列と集合ベースのパイプライン手法を探る
+
+### アンチパターン？
+
+これは **すべてを配列としてコード化する** ことから得られる利点を探る試みです。（SmallTalk の Jedi コンセプトを流用）
+
+指針は次の通りです：
+
+1.  すべての入力は配列風に扱う。たとえ要素が 1 つの配列でも。
+2.  上位レベルの関数は基本的に **配列を受け取り、配列を返す**（ループ用コールバックメソッド：map / reduce / each / filter を除く）。
+3.  100 人中 99 人の開発者は、私が `急性スキーマ余剰症候群` と呼ぶ問題に悩まされています。
+4.  膨らんだ `クラスベースのモデル` に注意してください。予測可能な落とし穴が多数あります：多くのレバーやノブで操作できる脆弱な `インスタンス状態`、DB トランザクション、SQL ロック、常に最初に成功する非同期/ミューテックス、慣例的な `プロパティ getter/setter`、そして `public/private/final/etc` の使用が堅牢であると自信を持っている、という状況です。
+
+1.  では、一般的な問題を取り上げて **集合志向の考察** を _無理矢理_ でも入れ込んでみましょう。
+2.  仮想のブログサイトには多数の Article があり、さらに多くの Post（コメント）があります。
+3.  `delete` メソッド（下記）を追加しますが、単一オブジェクトと配列の両方をサポートします。
+
+```java
+package net.danlevy.why.java___why.you.got.all.the.dots____it.must.be.all.the.factories;
+
+public class Post {
+  public String   title;
+  public Date     created;
+  public String   message;
+
+  public Post(String title, String message) {
+    this.title    = title;
+    this.message  = message;
+    this.created  = new Date();
+  }
+
+  public Date isArchived() {
+    return this.created < new Date(2015, 0, 1);
+  }
+
+  // Post.delete` can be called w/ a singular Post or an array of Post[]
+  public static int delete(Post post) {
+    List<Post> posts = new List<Post>(post);
+    return delete(posts)
+  }
+
+  public static int delete(List<Post> posts) {
+    return posts.map(Dao.remove);
+  }
+}
+```
+
+> 私の Java が少し錆びているかもしれませんが、ご了承ください。
