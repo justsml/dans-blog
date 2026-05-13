@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: when-ai-fails-and-the-crashing-robot-cars
+- Locale: de
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2015-12-18--when-ai-fails-and-the-crashing-robot-cars/de/index.mdx
+- Validation: passed
+- Runtime seconds: 8.12
+- Input tokens: 2880
+- Output tokens: 2792
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.000900
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Wenn KI versagt & krachende Roboterfahrzeuge
@@ -51,3 +69,4 @@ Roboterfahrzeuge stehen unmittelbar vor dem Punkt, technisch klüger und schnell
 ### Referenzen  
 
 1.  [http://nn.cs.utexas.edu/pages/research/neat-warning/](http://nn.cs.utexas.edu/pages/research/neat-warning/)
+````
