@@ -1,0 +1,107 @@
+{
+  "selectedCommit": "1ca4f7d35b3a2d0db008fa68381115449704a07a",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 10,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "{text: 'new Intl.DateTimeFormat(\"'},\n    {text: 'date.toLocaleFormat(\"', isAnswer: true},\n    {text: 'date.toLocaleString(\"'},\n    {text: 'date.toLocaleDateString(\"'},\n  ]}",
+      "replacement": "{\n      text: \"new Intl.DateTimeFormat('en-US').format(date)\",\n    },\n    {\n      text: \"date.toLocaleFormat('en-US')\",\n      isAnswer: true,\n    },\n    {\n      text: \"date.toLocaleString('en-GB', { timeZone: 'UTC' })\",\n    },\n    {\n      text: \"date.toLocaleDateString('en-US', { timeZone: 'UTC', timeZoneName: 'short' })\",\n    },",
+      "reason": "The candidate truncated the code examples in the options for Question 5, making the quiz unusable. Restoring full code strings."
+    }
+  ],
+  "rationale": "The candidate '1ca4f7d35b3a2d0db008fa68381115449704a07a' is selected because it correctly handles the MDX structure and provides the most natural translation. The 'current' version and other candidates had broken JSX blocks or incorrect escaping. The truncated code strings in Question 5 are fixed via high-priority suggestions.",
+  "slug": "js-quiz-14-date-time-questions-test-your-knowledge",
+  "locale": "ru",
+  "candidateCommits": [
+    "1ca4f7d35b3a2d0db008fa68381115449704a07a",
+    "77f9c12b9e7ee9ad0f71aec2611fa0dc9c6cdaaa"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "{text: 'new Intl.DateTimeFormat(\"'},",
+      "replacement": "{text: 'new Intl.DateTimeFormat(\\'en-US\\').format(date)'},",
+      "reason": "The candidate truncated the code examples in the options for Question 5, making the quiz unusable.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "{text: 'date.toLocaleFormat(\"', isAnswer: true},",
+      "replacement": "{text: 'date.toLocaleFormat(\\'en-US\\')', isAnswer: true },",
+      "reason": "The candidate truncated the code examples in the options for Question 5.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "{text: 'date.toLocaleString(\"'},",
+      "replacement": "{text: 'date.toLocaleString(\\'en-GB\\', { timeZone: \\'UTC\\' })'},",
+      "reason": "The candidate truncated the code examples in the options for Question 5.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "{text: 'date.toLocaleDateString(\"'},",
+      "replacement": "{text: 'date.toLocaleDateString(\\'en-US\\', { timeZone: \\'UTC\\', timeZoneName: \\'short\\' })'},",
+      "reason": "The candidate truncated the code examples in the options for Question 5.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "{text: 'new Intl.DateTimeFormat(\"'},",
+      "replacement": "{text: 'new Intl.DateTimeFormat(\\'en-US\\').format(date)'},",
+      "reason": "The candidate truncated the code examples in the options for Question 5, making the quiz unusable.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "{text: 'date.toLocaleFormat(\"', isAnswer: true},",
+      "replacement": "{text: 'date.toLocaleFormat(\\'en-US\\')', isAnswer: true },",
+      "reason": "The candidate truncated the code examples in the options for Question 5.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "{text: 'date.toLocaleString(\"'},",
+      "replacement": "{text: 'date.toLocaleString(\\'en-GB\\', { timeZone: \\'UTC\\' })'},",
+      "reason": "The candidate truncated the code examples in the options for Question 5.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "{text: 'date.toLocaleDateString(\"'},",
+      "replacement": "{text: 'date.toLocaleDateString(\\'en-US\\', { timeZone: \\'UTC\\', timeZoneName: \\'short\\' })'},",
+      "reason": "The candidate truncated the code examples in the options for Question 5.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug js-quiz-14-date-time-questions-test-your-knowledge --locale ru --skip-global",
+    "output": ""
+  }
+}
