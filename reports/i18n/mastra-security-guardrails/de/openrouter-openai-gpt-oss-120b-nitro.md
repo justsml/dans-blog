@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: mastra-security-guardrails
+- Locale: de
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-01-03--mastra-security-guardrails/de/index.mdx
+- Validation: passed
+- Runtime seconds: 5.00
+- Input tokens: 6728
+- Output tokens: 2378
+- Thinking tokens: unknown
+- Cached input tokens: 3328
+- Cache write tokens: 0
+- Estimated cost: $0.000690
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Produktions‑KI ist beängstigend (und wie mandas behebt)
 subTitle: 'Fehlt Ihrem Agent die Absicherung, sind Sie noch nicht produktionsreif.'
@@ -171,3 +189,4 @@ Die meisten Sicherheitsprobleme in produktiven KI‑Systemen sind keine ausgekl�
 2. **Sicherheit & Guardrails** (Dieser Beitrag)
 3. [MCP & Tool‑Integrationen](../mastra-mcp-tool-integrations)
 4. [Workflows & Memory](../mastra-workflows-memory)
+````
