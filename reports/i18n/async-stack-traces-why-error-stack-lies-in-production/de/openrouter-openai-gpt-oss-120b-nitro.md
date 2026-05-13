@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: async-stack-traces-why-error-stack-lies-in-production
+- Locale: de
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2025-12-29--async-stack-traces-why-error-stack-lies-in-production/de/index.mdx
+- Validation: passed
+- Runtime seconds: 5.79
+- Input tokens: 4640
+- Output tokens: 938
+- Thinking tokens: unknown
+- Cached input tokens: 1536
+- Cache write tokens: 0
+- Estimated cost: $0.000350
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: 'Async‑Stacktraces: Warum `Error.stack` Sie täuscht'
 subTitle: >-
@@ -97,3 +115,4 @@ Es spielt keine Rolle, wie viele `await`s dazwischen liegen. Der Kontext bleibt 
 3.  Verfolge, nicht stapel. Setze OpenTelemetry ein. Es visualisiert die kausale Kette über Dienste hinweg – genau das, worauf du wirklich achten musst.
 
 Dein Code ist async. Dein Debugging‑Kontext sollte es nicht sein.
+````
