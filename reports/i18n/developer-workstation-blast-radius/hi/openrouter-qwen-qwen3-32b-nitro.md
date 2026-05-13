@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: developer-workstation-blast-radius
+- Locale: hi
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-05-09--developer-workstation-blast-radius/hi/index.mdx
+- Validation: passed
+- Runtime seconds: 85.19
+- Input tokens: 40796
+- Output tokens: 39579
+- Thinking tokens: unknown
+- Cached input tokens: 15360
+- Cache write tokens: 0
+- Estimated cost: $0.012763
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: ''
 subTitle: ''
@@ -409,3 +427,4 @@ shred -u customer-export.sql.gz
 - [माइक्रोसॉफ्ट: विंडोज फायरवॉल नियम](https://learn.microsoft.com/en-us/windows/security/operating-system-security/network-security/windows-firewall/rules)  
 - [मैंडिएंट: यूएनसी5537 स्नोफ्लेक ग्राहक इंस्टेंस](https://cloud.google.com/blog/topics/threat-intelligence/unc5537-snowflake-data-theft-extortion)  
 - [माइक्रोसॉफ्ट: लमा स्टीलर डिलिवरी तकनीक और क्षमताएँ](https://www.microsoft.com/en-us/security/blog/2025/05/21/lumma-stealer-breaking-down-the-delivery-techniques-and-capabilities-of-a-prolific-infostealer/)
+````
