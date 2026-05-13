@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: llm-routing-mastra-ai
+- Locale: es
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-01-02--llm-routing-mastra-ai/es/index.mdx
+- Validation: passed
+- Runtime seconds: 2.37
+- Input tokens: 4561
+- Output tokens: 1821
+- Thinking tokens: unknown
+- Cached input tokens: 2176
+- Cache write tokens: 0
+- Estimated cost: $0.000506
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: No te cases con tu modelo
 subTitle: 'Enrutamiento LLM, muy de moda ahora.'
@@ -113,3 +131,4 @@ La ventaja de este enfoque es que tu código de aplicación no cambia. Sigues ll
 2. [Seguridad y Guardrails](../mastra-security-guardrails)
 3. [MCP e Integraciones de Herramientas](../mastra-mcp-tool-integrations)
 4. [Flujos de trabajo y Memoria](../mastra-workflows-memory)
+````
