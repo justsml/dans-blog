@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: pitfalls-in-promise-docs
+- Locale: fr
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2017-05-10--pitfalls-in-promise-docs/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 6.42
+- Input tokens: 2698
+- Output tokens: 2467
+- Thinking tokens: unknown
+- Cached input tokens: 512
+- Cache write tokens: 0
+- Estimated cost: $0.000808
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Pièges dans la documentation des Promesses
@@ -63,3 +81,4 @@ En résumé : le modèle `deferred` est un anti-modèle douloureux — il n'amé
 > Veuillez consulter (& étoiler) le projet Github compagnon de cet article, [Escape From Callback Mountain](../https://github.com/justsml/escape-from-callback-mountain)
 
 > Objectif du projet : recherche et développement de meilleurs modèles de langage fonctionnel en JavaScript.
+````
