@@ -1,0 +1,499 @@
+# Translation Candidate
+- Slug: quiz-context-engineering
+- Locale: ja
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-05-09--quiz-context-engineering/ja/index.mdx
+- Validation: rejected: direct AI SDK translation failed
+- Runtime seconds: 4.59
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Cache write tokens: unknown
+- Estimated cost: unknown
+- Pricing source: unknown
+- Note: Command failed: bun run i18n:translate:chunked -- --slug quiz-context-engineering --locale ja --model openrouter/qwen/qwen3-32b:nitro --chunk 3p --quiz-concurrency 18 --challenge-retries 2
+## Raw Output
+
+````mdx
+---
+title: 'クイズ: コンテキストエンジニアリング質問 14問'
+subTitle: プロンプトエンジニアリングは実践、コンテキストエンジニアリングは提供です。
+date: '2026-05-09'
+modified: '2026-05-09'
+tags:
+  - quiz
+  - ai
+  - llm
+  - context-engineering
+  - prompts
+  - rag
+  - tokens
+  - advanced
+category: Quiz
+subCategory: AI
+draft: true
+unlisted: true
+hidden: true
+publish: false
+popularity: 0.85
+social_image: ../desktop-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+import Challenge from '../../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../../components/QuizUI/QuizUI';
+
+<p class="inset">プロンプトエンジニアリングがスローガンを集めるなら、コンテキストエンジニアリングはページャを集める。実際に出荷される AI システムのその部分をどれだけ知っているか、測ってみよう。</p>
+
+このクイズはコンテキストウィンドウ、トークン予算、検索、プロンプト構造、そしてクリーンなデモを混乱した製品に変える失敗モードを扱う。最初はやさしく始まるが、そこにとどまらない。
+
+根拠を示せ。
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="基礎"
+  title="コンテキストウィンドウの基本"
+  options={[
+    {text: '1分あたりの最大リクエスト数'},
+    {text: '入力と出力を合わせたトークン上限', isAnswer: true},
+    {text: '会話内のメッセージ数'},
+    {text: 'セッション間で利用できるメモリ'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    LLMにおいて「コンテキストウィンドウ」とは何を指すでしょうか？
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    コンテキストウィンドウは、モデルが単一の呼び出しで処理できるトークンの総数です — **入力＋出力を合わせたもの**。128K のコンテキストウィンドウとは、プロンプト＋取得したドキュメント＋会話履歴＋モデルの応答がすべて 128,000 トークン以内に収まることを意味します。
+
+    セッションやメモリ、レート制限とは無関係です。上限に達すると、モデルはトークンを切り詰めるかエラーを返すか、あるいは—さらに悪いことに—予期しないトークンを黙って削除します。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="基礎"
+  title="トークン推定"
+  options={[
+    {text: '約50トークン'},
+    {text: '約130トークン', isAnswer: true},
+    {text: '約300トークン'},
+    {text: '約1,000トークン'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    一般的な最新トークナイザーで、100語の英語段落はおおよそ何トークンになりますか？
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    目安としては、典型的な英語文章で **~1.3 トークン/単語** です。100語の段落は約130トークンです。
+
+    内容の種類によって大きく変わります:
+    - コード: 約1.5–2 トークン/単語（特殊文字、空白）
+    - 識別子が多い技術文書: もっと多くなることがあります
+    - 一般的な英単語: 多くは1トークン
+    - 稀な単語、名前、非英語テキスト: 多くは2–4トークン
+
+    `tiktoken` ライブラリを使えば正確な数が得られます。想定する前に必ず測定しましょう。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="基礎"
+  title="システムプロンプトの役割"
+  options={[
+    {text: '最初に処理され、ユーザーメッセージよりも高い重みが付与されます', isAnswer: true},
+    {text: 'ユーザーメッセージと同一ですが、表示が異なります'},
+    {text: 'API 呼び出しでのみ使用され、チャットインターフェースでは使用されません'},
+    {text: 'セッションを超えて長期メモリとして保持されます'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    メッセージ配列で `system` ロールと `user` ロールを使用する実際の効果は何ですか？
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `system` ロールは優先度の高い指示として処理されます。モデルはユーザーメッセージよりも高い重みを与えるように訓練されており、これは「開発者が言ったこと」と「ユーザーが言ったこと」の構造的境界です。
+
+    魔法ではありません。モデルが矛盾するユーザー指示を無視することを保証するわけではありません（参照: プロンプトインジェクション）。しかし、特に指示遵守力の強いモデルでは、指示に従う傾向を実質的に高めます。
+
+    実務では、ペルソナ、ルール、行動制約は `system` に入れます。取得したコンテキストやユーザーデータは `user` に入れます。ユーザーが制御できる入力を `system` に入れてはいけません。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="検索"
+  title="真ん中で迷子"
+  options={[
+    {text: 'モデルはコンテキストの配置場所に関係なく同等に性能を発揮する'},
+    {text: 'モデルはコンテキストが最後にあるときに最も性能が良い'},
+    {text: 'モデルはコンテキストが冒頭と末尾にあるときに最も性能が良く、真ん中にあるときは最も悪い', isAnswer: true},
+    {text: 'モデルはプロンプトの真ん中にコンテキストがあるときに最も性能が良い'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    「Lost in the Middle」問題に関する研究は、LLM が次のようになることを示している：
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    The [Lost in the Middle paper (Liu et al., 2023)](https://arxiv.org/abs/2307.03172) は、LLM が長いコンテキストの真ん中に置かれた情報に一貫して苦労することを示した。関連情報がコンテキストウィンドウの**冒頭または末尾**にあるとき、性能は大幅に向上する。
+
+    実践的な示唆: 取得したチャンクを RAG プロンプトに挿入する際、単に関連度順に追加するだけにしないでください。最も高ランクの結果を最初に、2番目に高いものを最後に置き、真ん中には低ランクの素材を入れます。直感に反しますが、測定可能に効果があります。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="検索"
+  title="チャンク戦略"
+  options={[
+    {text: 'コンテキストウィンドウが許す最大のチャンクサイズを使用する'},
+    {text: '常に512トークンを使用する — それは'},
+    {text: 'コンテンツ構造に合わせたサイズのオーバーラップするチャンクを使用する', isAnswer: true},
+    {text: 'チャンクサイズは…'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    RAG 用に文書をチャンク化する際、最も重要な原則は何ですか？
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    普遍的に正しいチャンクサイズは存在しません — コンテンツ次第です。重要な原則は以下の通りです：
+
+    1. **コンテンツ構造に合わせる。** FAQ ページは Q&A レベルで、法的文書は条項レベルで、コードは関数レベルでチャンク化すると効果的です。
+    2. **オーバーラップを使用する。** 各側に 64 トークンのオーバーラップがある 512 トークンのチャンクにすれば、境界を跨ぐ回答も取得できます。
+    3. **測定する。** 評価セットを作成し、複数のチャンクサイズでテストします。チャンクサイズは埋め込みモデルよりも重要です。
+
+    「512 トークン」は妥当な出発点であって、絶対ではありません。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="検索"
+  title="ハイブリッド検索"
+  options={[
+    {text: '冗長性のために同じクエリを2回実行する'},
+    {text: '同じコーパスに対して2つの異なる埋め込みモデルを使用する'},
+    {text: 'ベクトル検索とキーワード検索を組み合わせてより良い検索を行う', isAnswer: true},
+    {text: '複数のベクトルデータベースを同時に検索する'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    RAGシステムにおいて、"ハイブリッド検索"は次のことを指す：
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    ハイブリッド検索は **ベクトル検索**（埋め込みによる意味的類似性）と **キーワード検索**（BM25／全文検索）を組み合わせます。両者は補完的に失敗するためです：
+
+    - ベクトル検索は正確な語句が苦手：製品名、エラーコード、モデル番号、技術的識別子
+    - キーワード検索は言い換えが苦手："how do I cancel" と "terminate subscription"
+
+    両方の結果は **Reciprocal Rank Fusion (RRF)** を用いて融合されます。これはスコアを正規化する必要なく、複数の順位リストの位置を組み合わせるランキングアルゴリズムです。
+
+    これらは `pgvector` と `tsvector` を使った Postgres でも利用可能です。別途検索サービスは不要かもしれません。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="トークン管理"
+  title="コンテキスト予算"
+  options={[
+    {text: '情報を最大化するためにコンテキストウィンドウの95%以上を使用する'},
+    {text: 'ウィンドウ全体を埋めるのではなく、出力のために十分な余裕を確保する', isAnswer: true},
+    {text: 'コンテキスト予算は32Kトークン未満のモデルにのみ関係する'},
+    {text: 'ウィンドウを超えるとモデルが自動的に切り詰める'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    取得したコンテキストでRAGプロンプトを作成する際、コンテキスト予算の目安は次の通りです：
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    コンテキストウィンドウは**入力と出力**で共有されます。入力に90%使うと、モデルは応答生成に残りの10%しか使えず、出力が切り詰められたり品質が低下したりしがちです。
+
+    妥当なヒューリスティックとしては、まず期待する出力サイズを決め、残りの予算の下で入力を余裕を持って抑えることです。多くのRAGタスクでは、**入力に総コンテキストウィンドウの60〜70%以下**（システムプロンプト＋履歴＋取得したコンテキスト）を使用することを意味します。残りは生成と安全マージンに残しておきましょう。
+
+    さらに、モデルはコンテキストウィンドウの端近くになると性能が低下します。コンテキストがいっぱいになるほど、理解力や指示遵守が劣化します。95%で動作させることは技術的には可能ですが、50%で動作させるのとは同じ経験にはなりません。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="トークン管理"
+  title="会話履歴管理"
+  options={[
+    {text: '常に会話履歴全体を送信する'},
+    {text: 'トークン予算を超えたら古いメッセージを要約する', isAnswer: true},
+    {text: '古いメッセージを削除する — モデルには永続的な記憶がある'},
+    {text: '履歴をベクトルデータベースに保存し、関連するターンを取得する'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    マルチターンチャットアプリで、会話履歴が長くなったときの正しい戦略は何ですか？
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    LLMには永続的な記憶はありません。すべての API 呼び出しはステートレスです — 完全なコンテキストを送信し、応答を受け取ります。会話の「記憶」は、リクエストに含めるメッセージ履歴そのものです。
+
+    履歴が予算を超えて大きくなると、選択肢は次のとおりです:
+    1. **Summarize**: 古いターンを走査要約に圧縮し、最近のターンはそのまま残す
+    2. **Sliding window**: 最近の N ターンだけを保持し、以前のものは削除する
+    3. **Selective retrieval**: 会話ターンを埋め込み、クエリごとに関連するものを取得する（複雑だが強力）
+
+    単純な切り捨て — 古いメッセージを削って収める — は最悪の選択肢です。モデルが必要とするコンテキストを黙って失うことになるからです。
+
+    会話履歴のベクトル DB からの取得は理論的には魅力的ですが、ほとんどのチャットアプリでは過剰です。要約が実用的なデフォルトです。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="プロンプト構造"
+  title="Few-Shot 例"
+  options={[
+    {text: '例を増やすほど常に結果が良くなる'},
+    {text: 'プロンプトに3〜5個の高品質で多様な例', isAnswer: true},
+    {text: 'Few-shot 例は分類タスクにしか役立たない'},
+    {text: '例はユーザークエリの後に置くべきで、前ではない'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ほとんどの本番ユースケースでは、最適な Few-shot 例の戦略は次のとおりです：
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Few-shot 例は出力の一貫性とフォーマット遵守を劇的に向上させます。ほとんどのタスクにとっての最適ポイントは **3〜5個の高品質で多様な例** です。
+
+    なぜもっと増やさないのか？ 各例はトークンを消費します。5〜10個を超えると、限界利益は減少する一方でトークンコストは上がり続けます。例が多すぎると、モデルが例に過剰適合し、根本的なパターンを理解しにくくなります。
+
+    多様性が重要な理由： すべての例が同じタイプの入力だと、モデルはエッジケースにうまく一般化できません。最も重要なバリエーションをカバーする例を含めましょう。
+
+    配置：例はユーザークエリの *前* に置きます。システムプロンプトの一部として、または事前に埋め込んだ会話ターンとして—後ろではありません。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="プロンプト構造"
+  title="構造のためのXMLタグ"
+  options={[
+    {text: 'XMLタグはAnthropicモデルでのみ有効です'},
+    {text: 'XMLタグはモデルが指示とデータを区別しやすくし、パース精度を向上させます', isAnswer: true},
+    {text: 'XMLタグはトークン化を遅くするので避けるべきです'},
+    {text: 'XMLタグはMarkdownの見出しと同等です'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    なぜ多くの本番プロンプトでは `<document>`、`<context>`、`<instructions>` のようなXMLスタイルのタグが使われるのでしょうか？
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    XMLスタイルのタグは、モデルが認識し尊重するように訓練されている **明示的な構造境界** を提供します。主に二つの役割があります:
+
+    1. **分離**: 指示がどこで終わりデータがどこから始まるかをモデルに示し、RAGや取得した文書からのプロンプトインジェクションリスク低減に重要です。
+    2. **パース可能性**: モデルにXMLで応答させる（例: `<answer>...</answer>`）と、タグが正規表現ハックなしでクリーンな抽出ポイントを提供します。
+
+    これはXMLをマークアップ言語として使うことではなく、モデルが学習したデリミタ慣習としてのXMLです。モデルが訓練データでこのパターンを大量に見たため機能し、スキーマ検証のためではありません。
+
+    多くの指示調整済みモデルで十分に機能し、ベンダー固有の機能やセキュリティ保証ではなく、訓練データの慣習です。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="上級"
+  title="温度と決定性"
+  options={[
+    {text: 'temperature=0 は同じ入力に対して常に同一の出力を生成する'},
+    {text: 'temperature=0 は出力をより決定的にするが、必ずしも同一とは限らない', isAnswer: true},
+    {text: 'temperature=0 はモデルを無効化する'},
+    {text: 'temperature は応答の長さにのみ影響する'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    LLM 呼び出しで `temperature=0` を設定すると意味するのは次のとおりです：
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `temperature=0` は各ステップで最も確率の高いトークンを選択させる（貪欲デコード）ため、**より一貫した**出力になるが、必ずしも完全に同一とは限らない。
+
+    temperature=0 での変動要因:
+    - GPU 演算における **浮動小数点の非決定性**（特にハードウェアやバッチサイズが異なる場合）
+    - **サーバ側インフラの変更**（モデルの更新、サービングインフラ）
+    - **長い出力** は小さな変動を蓄積する
+
+    厳密な決定性が必要なテストスイートや評価では `temperature=0` が適切だが、バイト単位で同一の出力を前提としたアサーションは書かないこと。構造や重要な内容、振る舞いに対してアサートし、文字列そのものには依存しない。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="上級"
+  title="プロンプトキャッシュ"
+  options={[
+    {text: 'キャッシュはレスポンスを保存し、同一クエリに対して再生します'},
+    {text: 'キャッシュは静的なプロンプトプレフィックス用にコンパイルされた KV ペアを保存し、入力トークンコストを削減します', isAnswer: true},
+    {text: 'キャッシュは OpenAI のモデルでのみ利用可能です'},
+    {text: 'キャッシュは自動で、開発者の設定は不要です'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    LLM API（Anthropic、OpenAI）の文脈で「prompt caching」とは何ですか？
+    <p className="text-sm">最終確認日: 2026年5月8日。プロバイダーのキャッシュ制御や価格は急速に変わります。</p>
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    プロンプトキャッシュは、プロバイダーがサポートしている場合、静的なプロンプトプレフィックスに対して計算された **KV cache / prompt prefix state** を再利用します。同じプレフィックスでの後続リクエストでは、モデルはそれらのトークンの再処理をスキップでき、レイテンシが低減し、コストが大幅に削減されます。
+
+    これはレスポンスキャッシュではありません。モデルは毎回新しいレスポンスを生成します。変わらないプロンプト部分のトークン化と注意計算を回避しているだけです。
+
+    最適な使用例: 大規模システムプロンプト、静的ドキュメント、ツール定義、few-shot 例など、複数リクエストで同じになるもの。キャッシュされたプレフィックスはプロンプトの *start* に置く必要があります。
+
+    以下とは異なります: セマンティック重複排除、レスポンスメモ化、アプリケーション層でのキャッシュ。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="上級"
+  title="グラウンディング vs. 幻覚"
+  options={[
+    {text: 'システムプロンプトでモデルに「幻覚を出すな」と指示する'},
+    {text: 'より高い temperature を使って、より自信のある応答を生成する'},
+    {text: '取得したソース文書を提供し、モデルにそれらを引用するよう指示する', isAnswer: true},
+    {text: 'より大きなモデルを使用する — 幻覚は小さなモデルでのみ起こる'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    本番 AI システムで幻覚を減らす最も効果的な手法は次のうちどれか:
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    モデルに幻覚しないよう指示しても幻覚は止まりません — モデルには「今作り話している」という信頼できる内省シグナルがないのです。指示は、モデルが作り話しているのに自信満々に「作り話していません」と言うだけです。
+
+    実際に効果があるのは **grounding** です。モデルに正しく答えるために必要な情報を与え、その情報に限定して回答させます:
+    ```
+        Answer only using the provided documents.
+        If the answer isn't in the documents, say: "I don't have enough information to answer that."
+    ```
+    その後、出力を検証します：レスポンス中の主張が取得したコンテキストに存在するか確認します。これが引用グラウンディングチェックです — 実装方法は RAG eval の議論をご参照ください。
+
+    大規模モデルは平均して幻覚が少ないものの、すべてのモデルは幻覚します。対策はモデルサイズではなく、グラウンディングです。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={13}
+  group="エキスパート"
+  title="コンテキストエンジニアリング vs. ファインチューニング"
+  options={[
+    {text: 'ファインチューニングは常に優れている — コンテキストエンジニアリングは回避策にすぎない'},
+    {text: 'コンテキストエンジニアリングは無料で、ファインチューニングは高価です；常にコンテキストエンジニアリングを使いましょう'},
+    {text: 'コンテキストエンジニアリングはリクエストごとに振る舞いを変え、ファインチューニングはモデルの重みを永続的に変更します', isAnswer: true},
+    {text: 'それらは同じ手法の別名です'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    コンテキストエンジニアリングとファインチューニングの重要な違いは何か、そしてファインチューニングが実際に意味を持つのはどんな時か？
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    **コンテキストエンジニアリング** はプロンプト（システム指示、few‑shot 例、取得したコンテキスト）を通じてモデルの振る舞いを形作ります。リクエストごとに適用でき、可逆的で、学習は不要です。
+
+    **ファインチューニング** は自分のデータでモデルの重みを更新します。変更は永続的（そのチェックポイントに対して）で、すべての推論に適用されます。
+
+    ファインチューニングが本当に有効になるのは次の場合です：
+    - 指示だけではモデルが安定して従えない一貫したスタイルやフォーマットが必要なとき
+    - ドメイン固有のパターンに対して繰り返し同じ振る舞いが求められ、プロンプトや取得だけでは解決できないとき
+    - プロンプト長を削減したいとき — ファインチューニングされた振る舞いは毎回説明する必要がありません
+    - 多数のリクエストで一貫した few‑shot 例がトークンを大量に消費しているとき
+
+    ファインチューニングが過剰になるのは次の場合です：
+    - 指示がシステムプロンプトに収まるとき
+    - 主に最新または専有的な事実が必要で、リクエスト時に取得できるとき
+    - 要件が頻繁に変わる（再度ファインチューニングが必要になる）とき
+    - まずコンテキストエンジニアリングを試し切っていないとき
+
+    正しい順序はまずコンテキストエンジニアリングを徹底し、十分でないと証明されたらファインチューニングを行うことです。
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+
+---
+---
+
+どうでしたか？
+
+- **13–14**: 本番の AI システムを構築しているのであって、デモだけではありません。稀有です。  
+- **9–12**: 安定した実務者です。ツールは使いこなしていますが、まだ曖昧な部分があります。  
+- **5–8**: LLM を多用していますが、コンテキスト管理について深く考えてはいません。プロンプトキャッシュやハイブリッド検索を学んでください。コスト感覚が変わります。  
+- **0–4**: 良いニュースです。このクイズのすべては学べるし、すぐに実践できます。「途中で迷子になる」問題だけでも、次の RAG デプロイ前に理解しておく価値があります。
+
+コンテキストエンジニアリングとは、ウィンドウに入れる情報、配置場所、構造化方法を意図的に設計することです。モデルはシステムの中で最も制御しにくい部分です。モデルを取り巻くすべてはあなたの管理下にあります。---
+````
