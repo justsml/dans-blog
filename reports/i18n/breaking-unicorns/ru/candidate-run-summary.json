@@ -1,40 +1,59 @@
 {
-  "runId": "2026-05-13T16-37-11-040Z",
+  "runId": "2026-05-13T17-06-29-843Z",
   "runStatus": "running",
   "slug": "breaking-unicorns",
   "locale": "ru",
-  "startedAt": "2026-05-13T16:37:11.040Z",
-  "updatedAt": "2026-05-13T16:37:11.055Z",
+  "startedAt": "2026-05-13T17:06:29.843Z",
+  "updatedAt": "2026-05-13T17:06:55.532Z",
   "modelsRequested": [
-    "openrouter/qwen/qwen3.6-plus",
-    "openrouter/deepseek/deepseek-v4-flash",
     "openrouter/openai/gpt-oss-120b:nitro",
     "openrouter/qwen/qwen3-32b:nitro",
-    "openrouter/z-ai/glm-4.7-flash",
-    "openrouter/minimax/minimax-m2.5",
-    "openrouter/minimax/minimax-m2.7",
-    "openrouter/google/gemini-3-flash-preview",
-    "openrouter/deepseek/deepseek-v3.2",
-    "openrouter/z-ai/glm-5-turbo"
+    "deepseek/deepseek-v4-flash",
+    "qwen/qwen3.6-plus"
   ],
-  "attemptedModels": 0,
-  "skippedModels": 0,
+  "attemptedModels": 1,
+  "skippedModels": 1,
   "rejectedModels": 0,
-  "candidateModels": 0,
+  "candidateModels": 1,
   "totals": {
-    "inputTokens": 0,
-    "outputTokens": 0,
+    "inputTokens": 2655,
+    "outputTokens": 3336,
     "thinkingTokens": 0,
     "cachedInputTokens": 0,
     "cacheWriteTokens": 0,
-    "estimatedCostUsd": 0,
+    "estimatedCostUsd": 0.001013,
     "hasUnknownInputTokens": false,
     "hasUnknownOutputTokens": false,
-    "hasUnknownThinkingTokens": false,
+    "hasUnknownThinkingTokens": true,
     "hasUnknownCachedInputTokens": false,
     "hasUnknownCacheWriteTokens": false,
     "hasUnknownEstimatedCost": false,
-    "runtimeSeconds": "0.00"
+    "runtimeSeconds": "7.01"
   },
-  "attempts": []
+  "attempts": [
+    {
+      "model": "openrouter/openai/gpt-oss-120b:nitro",
+      "status": "skipped",
+      "reportPath": "reports/i18n/breaking-unicorns/ru/openrouter-openai-gpt-oss-120b-nitro.md",
+      "note": "Existing non-rejected report found. Pass --overwrite to rerun."
+    },
+    {
+      "model": "openrouter/qwen/qwen3-32b:nitro",
+      "status": "candidate",
+      "validationStatus": "deferred",
+      "reportPath": "reports/i18n/breaking-unicorns/ru/openrouter-qwen-qwen3-32b-nitro.md",
+      "note": "Generated through the direct AI SDK chunked translator.",
+      "telemetry": {
+        "runtimeSeconds": "7.01",
+        "tokens": {
+          "input": 2655,
+          "output": 3336,
+          "cached": 0,
+          "cacheWrite": 0
+        },
+        "estimatedCostUsd": 0.00101304,
+        "pricingSource": "local-openrouter-estimate"
+      }
+    }
+  ]
 }
