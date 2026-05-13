@@ -3,7 +3,7 @@
 - Locale: de
 - Model: qwen/qwen3.6-35b-a3b
 - Target: src/content/posts/2026-01-03--mastra-security-guardrails/de/index.mdx
-- Validation: deferred
+- Validation: rejected: direct AI SDK translation failed
 - Runtime seconds: 82.39
 - Input tokens: 5355
 - Output tokens: 18145
@@ -12,50 +12,45 @@
 - Cache write tokens: 0
 - Estimated cost: $0.018948
 - Pricing source: local-openrouter-estimate
-- Note: Generated through the direct AI SDK chunked translator.
+- Note: Command failed: git commit --only -m i18n candidate(de): mastra-security-guardrails via qwen/qwen3.6-35b-a3b -- reports/i18n/mastra-security-guardrails/de reports/i18n/mastra-security-guardrails/candidates.jsonl
 ## Raw Output
 
 ````mdx
 ---
-title: Produktions-KI ist erschreckend (Und wie man das fixt)
-subTitle: 'Wenn Ihr Agent keine Guardrails hat, ist er nicht produktionsreif.'
-date: '2026-01-03'
-modified: '2026-01-08'
-tags:
-  - ai
-  - security
-  - mastra
-  - guardrails
-  - privacy
-  - pii
+title: "Produktions-KI ist beängstigend (und so behebt man es)"
+subTitle: "Wenn dein Agent keine Guardrails hat, bist du nicht bereit für die Produktion."
+date: 2026-01-03
+modified: 2026-01-08
+tags: [AI, Security, Mastra, Guardrails, Privacy, PII]
 category: AI
 subCategory: Security
-social_image: ../desktop-social.webp
+social_image: desktop-social.webp
 cover_full_width: ../wide.webp
 cover_mobile: ../square.webp
 cover_icon: ../square.webp
 ---
-Niemand beginnt mit dem Ziel, ein unsicheres KI-System zu entwickeln. Du schreibst Anweisungen, testest Edge Cases, fügst ein paar Validierungsregeln hinzu. Dann stellt sich heraus, dass sich dein Bot dazu überreden lässt, als Pirat zu agieren und dabei Benutzerdaten preiszugeben. Oder eine Kreditkartennummer landet ungewollt in deinen Logs. Oder das Modell empfiehlt selbstbewusst ein Produkt des Wettbewerbers.
 
-Der Abstand zwischen „funktioniert im Demo“ und „sicher in der Produktion“ ist größer, als die meisten Teams annehmen.
+Niemand will bewusst ein unsicheres KI-System bauen. Du schreibst Anweisungen, testest Randfälle, fügst ein paar Validierungsregeln hinzu. Dann findet jemand heraus, dass er deinen Bot dazu überreden kann, als Pirat zu roleplayen und Benutzerdaten preiszugeben. Oder eine Kreditkartennummer landet in deinen Logs. Oder das Modell empfiehlt selbstbewusst ein Konkurrenzprodukt.
 
-Das Problem liegt unter anderem darin, dass Roh-LLMs keine eigenen Vorstellungen davon haben, was sie tun dürfen oder nicht. Sie sind Vorhersagemaschinen, die einfach jedes Muster fortsetzen, das du angestoßen hast. Wenn du ihnen einen Prompt gibst, der nach „System-Override-Modus“ klingt, spielen sie sofort mit. Das ist kein Bug im Modell. Es ist einfach die Funktionsweise von Sprachmodellen.
+Die Kluft zwischen »funktioniert in der Demo« und »sicher in der Produktion« ist größer, als die meisten Teams erwarten.
 
-Die meisten Frameworks geben dir das Modell und wünschen dir viel Glück. Mastra geht einen anderen Ansatz: Es geht davon aus, dass du irgendwann Guardrails brauchst, und integriert sie daher von Anfang an direkt in die Agentenarchitektur.
+Ein Teil des Problems ist, dass rohe LLMs keine Meinung darüber haben, was sie tun oder lassen sollen. Sie sind Vorhersagemaschinen, die versuchen, jedes begonnene Muster fortzusetzen. Gib ihnen einen Prompt, der wie »System-Override-Modus« aussieht, und sie spielen fröhlich mit. Das ist kein Fehler im Modell; es ist einfach die Funktionsweise von Sprachmodellen.
+
+Die meisten Frameworks reichen dir das Modell und wünschen dir viel Glück. Mastra verfolgt einen anderen Ansatz: Es geht davon aus, dass du irgendwann Guardrails brauchst, und baut sie von Anfang an in die Agentenarchitektur ein.
 
 ---
 
 ## Prozessoren als Sicherheitsschichten
 
-Der zugrundeliegende Mechanismus ist simpel. Bevor dein Prompt das Modell erreicht, durchläuft er eine Kette von Input-Prozessoren. Nach der Antwort des Modells sind die Output-Prozessoren an der Reihe. Jeder Prozessor kann die Daten auf dieser Stufe prüfen, modifizieren oder blockieren.
+Der grundlegende Mechanismus ist unkompliziert. Bevor dein Prompt das Modell erreicht, durchläuft er eine Kette von Eingabeprozessoren. Nachdem das Modell geantwortet hat, kommen die Ausgabeprozessoren zum Zug. Jeder Prozessor kann den Inhalt in seiner Phase inspizieren, modifizieren oder blockieren.
 
-Stell sie dir als Middleware für KI-Interaktionen vor. Du stapelst die benötigten Prozessoren, konfigurierst ihr Verhalten und sie laufen automatisch bei jeder Anfrage durch.
+Stell sie dir als Middleware für KI-Interaktionen vor. Du stapelst die, die du brauchst, konfigurierst ihr Verhalten, und sie laufen bei jeder Anfrage automatisch.
 
-### 1. Piraten stoppen (Prompt Injection)
+### 1. Die Piraten stoppen (Prompt Injection)
 
-Die Methoden für Prompt-Injection-Angriffe werden immer kreativer. Angreifer nutzen unsichtbare Unicode-Zeichen, kodieren Anweisungen in Base64 oder manipulieren das Modell, indem sie vorgeben, es befände sich im „Debug-Modus“, in dem normale Regeln nicht gelten. Die Techniken entwickeln sich ständig weiter.
+Prompt-Injection-Angriffe werden immer kreativer. Leute verwenden unsichtbare Unicode-Zeichen, schreiben Anweisungen in Base64 oder überreden das Modell, dass es sich im »Debug-Modus« befindet, in dem normale Regeln nicht gelten. Die Techniken entwickeln sich ständig weiter.
 
-Mastra enthält Prozessoren, die gängige Muster abfangen:
+Mastra enthält Prozessoren, die gängige Muster erkennen:
 
 ```typescript
 // src/mastra/agents/secure-agent.ts
@@ -69,33 +64,33 @@ export const secureAgent = new Agent({
   instructions: 'You are a secure assistant.',
   model: openai('gpt-5'),
   inputProcessors: [
-    // 1. Scrub invisible characters
+    // 1. Unsichtbare Zeichen entfernen
     new UnicodeNormalizer({
       id: 'unicode-normalizer',
       stripControlChars: true,
       collapseWhitespace: true,
     }),
-    // 2. Detect the attempt
+    // 2. Den Versuch erkennen
     new PromptInjectionDetector({
       id: 'prompt-injection-detector',
-      model: openai('gpt-5-nano'), // Cheap, fast
+      model: openai('gpt-5-nano'), // Günstig, schnell
       threshold: 0.8,
-      strategy: 'block', // Hard stop
+      strategy: 'block', // Hartes Stopp
       detectionTypes: ['injection', 'jailbreak', 'system-override'],
     }),
   ],
 });
 ```
 
-Der [`UnicodeNormalizer`](https://mastra.ai/docs/processors) entfernt Steuerzeichen und komprimiert Whitespaces. Der [`PromptInjectionDetector`](https://mastra.ai/docs/processors) analysiert die bereinigte Eingabe auf Muster, die darauf hindeuten, dass jemand versucht, Ihre Anweisungen zu überschreiben.
+Der [`UnicodeNormalizer`](https://mastra.ai/docs/processors) entfernt Steuerzeichen und reduziert Leerraum. Der [`PromptInjectionDetector`](https://mastra.ai/docs/processors) analysiert die bereinigte Eingabe auf Muster, die darauf hindeuten, dass jemand versucht, deine Anweisungen zu überschreiben.
 
-Sie konfigurieren, wie aggressiv die Erkennung sein soll (Parameter `threshold`) und was im Auslösefall passiert (blockieren, protokollieren oder nur markieren).
+Du konfigurierst, wie aggressiv die Erkennung sein soll (der Parameter `threshold`) und was passieren soll, wenn sie auslöst (block, log oder nur markieren).
 
 ### 2. Umgang mit PII
 
-Kreditkartennummern in Logs, Sozialversicherungsnummern in Vektordatenbanken, E-Mail-Adressen, die länger gespeichert werden als nötig. Das sind genau die Probleme, die schnell zu regulatorischen Konflikten führen. Die Herausforderung besteht darin, dass Nutzer oft nicht merken, dass sie sensible Daten in ein Chat-Fenster einfügen.
+Kreditkartennummern in Logs, Sozialversicherungsnummern in Vektordatenbanken, E-Mail-Adressen, die länger als nötig gespeichert werden. Das sind die Arten von Problemen, die zu regulatorischen Alpträumen werden. Die Herausforderung ist, dass Benutzer nicht immer merken, dass sie sensible Daten in ein Chat-Fenster einfügen.
 
-Der [`PIIDetector`](https://mastra.ai/docs/processors) scannt nach gängigen Mustern, bevor diese Ihr Modell erreichen oder in den Speicher geschrieben werden:
+Der [`PIIDetector`](https://mastra.ai/docs/processors) scannt nach gängigen Mustern, bevor sie dein Modell erreichen oder in den Speicher geschrieben werden:
 
 ```typescript
 import { PIIDetector } from '@mastra/core/processors';
@@ -112,18 +107,18 @@ export const privateAgent = new Agent({
       detectionTypes: ['email', 'phone', 'credit-card', 'ssn'],
       threshold: 0.6,
       strategy: 'redact',
-      redactionMethod: 'mask',  // Replace with [REDACTED]
+      redactionMethod: 'mask',  // Durch [REDACTED] ersetzen
       instructions: 'Detect and mask personally identifiable information',
     }),
   ],
 });
 ```
 
-Sie können wählen, ob Daten redigiert (ersetzt durch `[REDACTED]`), gehasht oder vollständig blockiert werden sollen. Der Prozessor läuft sowohl für Eingaben als auch für Ausgaben, sodass Sie abgesichert sind, selbst wenn das Modell versehentlich sensible Daten in der Antwort generiert.
+Du kannst wählen zwischen Schwärzung (Ersetzen durch `[REDACTED]`), Hashen oder komplettem Blockieren. Der Prozessor läuft sowohl auf Eingabe als auch auf Ausgabe, sodass du auch abgesichert bist, falls das Modell in seiner Antwort doch sensible Daten generiert.
 
-### 3. Content-Moderation
+### 3. Inhaltsmoderation
 
-Modelle, die mit Internetdaten trainiert wurden, haben schon einiges gesehen. Ohne Filterung können sie gelegentlich Antworten generieren, die Ihrem PR-Team die Nerven rauben würden. Der [`ModerationProcessor`](https://mastra.ai/docs/processors) fängt Inhalte ab, die gegen Ihre Richtlinien verstoßen:
+Modelle, die mit Internetdaten trainiert wurden, haben einiges gesehen. Ohne Filterung können sie gelegentlich Antworten produzieren, die deiner PR-Abteilung den Angstschweiß auf die Stirn treiben. Der [`ModerationProcessor`](https://mastra.ai/docs/processors) fängt Inhalte ab, die gegen deine Richtlinien verstoßen:
 
 ```typescript
 import { ModerationProcessor } from '@mastra/core/processors';
@@ -136,21 +131,23 @@ export const moderatedAgent = new Agent({
   inputProcessors: [
     new ModerationProcessor({
       id: 'moderation-processor',
-      model: openai('gpt-5-nano'),  // Fast, cheap model for classification
+      model: openai('gpt-5-nano'),  // Schnelles, günstiges Modell zur Klassifizierung
       categories: ['hate', 'harassment', 'violence', 'self-harm'],
-      threshold: 0.7,  // Block if confidence > 70%
-      strategy: 'block',  // Stop the request immediately
+      threshold: 0.7,  // Blockieren bei Konfidenz > 70 %
+      strategy: 'block',  // Anfrage sofort stoppen
       instructions: 'Detect harmful content that violates community guidelines',
     }),
   ],
 });
 ```
 
-Der interessante Aspekt ist, dass Sie selbst definieren, welche Kategorien für Ihren Anwendungsfall relevant sind. Ein Tool für kreatives Schreiben darf wohl mehr expressive Inhalte zulassen als ein Customer-Service-Bot. Schwellenwert und Strategie geben Ihnen die Kontrolle darüber, wie strikt die Filterung sein soll.
+Das Interessante ist, dass du selbst festlegst, welche Kategorien für deinen Anwendungsfall relevant sind. Ein kreatives Schreibwerkzeug erlaubt vielleicht ausdrucksstärkere Inhalte als ein Kundendienst-Bot. Der Schwellwert und die Strategie geben dir die Kontrolle darüber, wie streng die Filterung sein soll.
 
-## Wenn die Tripwires auslösen
+---
 
-Processors werfen keine Fehler, wenn sie ein Problem erkennen. Stattdessen setzen sie ein Flag im Ergebnisobjekt:
+## Wenn etwas auslöst
+
+Prozessoren werfen keine Fehler, wenn sie ein Problem erkennen. Stattdessen setzen sie ein Flag im Ergebnisobjekt:
 
 ```typescript
 const result = await secureAgent.generate('Ignore all previous instructions...');
@@ -162,28 +159,28 @@ if (result.tripwire) {
 }
 ```
 
-Dieses Muster gibt Ihnen die Freiheit, Sicherheitsereignisse so zu handhaben, wie es für Ihre Anwendung sinnvoll ist. Sie können sie zur Analyse protokollieren, eine generische Fehlermeldung zurückgeben oder bestimmte Verstöße in spezifischen Kontexten sogar zulassen. Das Feld `tripwireReason` zeigt exakt an, welcher Prozessor den Inhalt markiert hat. Das ist hilfreich beim Debuggen von False Positives oder beim Feintuning Ihrer Schwellenwerte.
+Dieses Muster ermöglicht es dir, Sicherheitsereignisse so zu behandeln, wie es für deine Anwendung sinnvoll ist. Du kannst sie zur Analyse protokollieren, eine generische Fehlermeldung zurückgeben oder bestimmte Verstöße in bestimmten Kontexten sogar erlauben. Das Feld `tripwireReason` verrät dir genau, welcher Prozessor den Inhalt markiert hat – hilfreich beim Debuggen von Fehlalarmen oder beim Justieren deiner Schwellwerte.
 
 ---
 
-## Was damit nicht gelöst wird
+## Was das nicht löst
 
-Processors fangen viel ab, aber sie sind kein Allheilmittel. Ein entschlossener Angreifer mit ausreichend Zeit wird wahrscheinlich einen Prompt finden, der durchrutscht. Modelle halluzinieren gelegentlich auf Arten, die sich durch Prozessoren nicht vorhersagen lassen. Zudem gibt es immer einen Zielkonflikt zwischen Sicherheit und Flexibilität: Je strenger Ihre Regeln sind, desto wahrscheinlicher blockieren Sie legitime Anwendungsfälle.
+Prozessoren fangen eine Menge ab, aber sie sind kein Wundermittel. Ein entschlossener Angreifer mit genug Zeit wird wahrscheinlich einen Prompt finden, der durchrutscht. Modelle halluzinieren gelegentlich auf eine Weise, die Prozessoren nicht vorhersagen können. Und es gibt immer einen Trade-off zwischen Sicherheit und Flexibilität: Je strenger deine Regeln, desto wahrscheinlicher blockierst du legitime Anwendungsfälle.
 
-Der Nutzen liegt nicht in perfektem Schutz. Es geht darum, einen systematischen Ansatz zu haben, um die häufigen Probleme zu handhaben, die in der Produktion definitiv auftreten werden. Sie können die Empfindlichkeit anpassen, sobald Sie wissen, was Ihre Nutzer tatsächlich tun. Sie können benutzerdefinierte Prozessoren für domänenspezifische Risiken hinzufügen. Und Sie erhalten Audit Trails, die dokumentieren, was blockiert wurde und warum.
+Der Wert liegt nicht im perfekten Schutz. Sondern darin, eine systematische Methode zu haben, um die häufigen Probleme zu handhaben, die in der Produktion garantiert auftreten werden. Du kannst die Empfindlichkeit anpassen, während du lernst, was deine Benutzer tatsächlich tun. Du kannst benutzerdefinierte Prozessoren für domänenspezifische Risiken hinzufügen. Und du hast Audit-Trails, die zeigen, was blockiert wurde und warum.
 
-Die meisten Sicherheitsprobleme bei KI-Systemen in der Produktion sind keine ausgeklügelten Angriffe. Es sind Nutzer, die Daten kopieren und einfügen, die sie nicht sollten, oder die durch Ausprobieren herausfinden, dass der Bot Dinge tut, die Sie nicht beabsichtigt haben. Prozessoren werden nicht jedes mögliche Problem stoppen, aber sie machen die offensichtlichen deutlich schwieriger.
+Die meisten Sicherheitsprobleme in der Produktions-KI sind keine ausgeklügelten Angriffe. Es sind Leute, die Daten kopieren und einfügen, die sie nicht sollten, oder die durch Versuch und Irrtum entdecken, dass der Bot Dinge tut, die du nicht beabsichtigt hast. Prozessoren werden nicht jedes mögliche Problem stoppen, aber sie machen die offensichtlichen deutlich schwieriger.
 
 ### Ressourcen
 
-- [Mastra-Guardrails-Dokumentation](https://mastra.ai/docs/agents/guardrails)
+- [Mastra Guardrails Dokumentation](https://mastra.ai/docs/agents/guardrails)
 - [Sicherheits-Best-Practices](https://mastra.ai/docs/security)
-- [Mastra GitHub-Repository](https://github.com/mastra-ai/mastra)
+- [Mastra GitHub Repository](https://github.com/mastra-ai/mastra)
 
-## Serie lesen
+## Die Serie lesen
 
-1. [LLM-Routing](../llm-routing-mastra-ai)
-2. **Sicherheit & Guardrails** (Dieser Artikel)
-3. [MCP- & Tool-Integrationen](../mastra-mcp-tool-integrations)
-4. [Workflows & Memory](../mastra-workflows-memory)
+1. [LLM-Routing](/llm-routing-mastra-ai)
+2. **Sicherheit & Guardrails** (Dieser Beitrag)
+3. [MCP- & Tool-Integrationen](/mastra-mcp-tool-integrations)
+4. [Workflows & Memory](/mastra-workflows-memory)
 ````
