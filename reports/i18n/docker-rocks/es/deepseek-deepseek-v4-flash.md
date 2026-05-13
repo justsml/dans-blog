@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: docker-rocks
+- Locale: es
+- Model: deepseek/deepseek-v4-flash
+- Target: src/content/posts/2015-06-11--docker-rocks/es/index.mdx
+- Validation: deferred
+- Runtime seconds: 12.43
+- Input tokens: 1825
+- Output tokens: 1863
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.000777
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Docker es genial y ahora funciona en OSX
@@ -46,3 +64,4 @@ Actualizado 2024:
 
 - Docker Desktop es propietario, pero gratuito para uso personal. Es una excelente manera de empezar con Docker en OSX o Windows.
 - Si buscas una solución más abierta, echa un vistazo a [Rancher Desktop](https://rancherdesktop.io/).
+````
