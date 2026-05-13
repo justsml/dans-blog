@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: higher-order-programming
+- Locale: hi
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2015-10-05--higher-order-programming/hi/index.mdx
+- Validation: passed
+- Runtime seconds: 5.80
+- Input tokens: 2207
+- Output tokens: 2518
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.000781
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: उच्च क्रम प्रोग्रामिंग
@@ -64,3 +82,4 @@ public class Post {
 ```
 
 > अगर मेरा जावा थोड़ा जंगला हो तो माफ़ कर दीजिए।
+````
