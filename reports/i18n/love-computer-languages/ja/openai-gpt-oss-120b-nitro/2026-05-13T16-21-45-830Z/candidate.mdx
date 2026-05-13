@@ -1,0 +1,193 @@
+---
+title: コンピュータ言語への愛
+date: '2015-06-12'
+modified: '2017-02-28'
+category: Code
+subCategory: languages
+draft: true
+hidden: true
+publish: true
+tags:
+  - programming
+  - languages
+  - lua
+  - haskell
+  - scala
+  - rust
+  - smalltalk
+  - go
+  - javascript
+  - python
+cover: ../rawpixel-602144-unsplash.webp
+cover_mobile: ../w300_rawpixel-602144-unsplash.webp
+cover_icon: ../icon_rawpixel-602144-unsplash.webp
+---
+import Gist from '../../../../components/Gist/index.astro'
+
+## プログラミング言語メモ
+
+#### 以前にも書いたことはあるでしょうが、ここに私が最も興味深いと感じる言語リストを示します。
+
+### JavaScript
+
+私の唯一の真実の愛、圧倒的に汎用性が高く至る所にある – オールラウンドで驚異的に強力なチャンピオンです！  
+GitHub.com で _何年も_ 連続で #1 の最もアクティブ／人気の言語です。
+
+認めたくはありませんが、長年私は今や **私のお気に入りの言語** であることに対して、ただの軽蔑と嘲笑しか抱いていませんでした。
+
+**ES6** は私の ~~~中毒~~~ 愛情をさらに深めました。純粋な ES5 も心の中で特別な位置を占め続けますが、**ES6** を使うたびに放射能スパイダーに噛まれたような感覚になります…
+
+**ES6 Camp** に足を踏み入れさせた要因は 4 つあります。
+
+1.  楽しい。マジです。美しさ・明快さ・生産性に目に見える向上があります。
+
+- 主観的な主張だと言いますか？ では ES6 の例を見せましょう。
+- `let expired = users.filter(u => Date.now() > u.trialDate)`
+- もう `Object.create` や `Object.defineProperty` の使い方を装う必要はありません
+- 以下に例を示します
+
+1.  2015 年 7 月時点で、ES6 は正式に策定された標準です。
+1.  サポートは実質的に 100% です*！…ただし、コードを ES5 互換にするために BabelJS が必要です。歴史的に JavaScript のトランスパイラは敬遠されてきましたが、2014‑15 年頃から BabelJS が言語進化の重要な推進力となり、状況が変わりました。Microsoft や Facebook を含む多数の企業が大規模サイトで利用しています。
+1.  [最新バージョンの Node](https://nodejs.org/en/blog/release/v4.0.0/) は Chrome v45 と同じ V8 エンジンを搭載しており、バージョンは v4.5 です
+
+#### Examples
+
+> ついに ES6 風のクーラッドを飲み始めさせた決定的な要因を見せてやります。
+
+最近の経験では、ES6 はコードをより速く書けるようにします。要点はそこだけです。  
+コードが簡潔になる分、過去の自分やチームメンバーのコードを読み解くのに必要な脳力が大幅に減ります。
+
+KLOC（千行コード）ベースで 20〜50% の削減を目にすることが頻繁にあります。まるでケイト・モスがスリムになったかのようです！
+
+**_MISSING IMAGE:_ EcmaScript 5 vs ES 2016 - Demo: Classes, Destructuring, Slick**  
+{/* ](/../images/screenshots/Diff-ES6-vs-ES5-Head-to-Head.png) */}
+
+```js
+// /services/users.js
+class Users {
+  constructor(data) {
+    this.users = data || [];
+  }
+  expired() {
+    return this.users.filter(u => Date.now() > u.trialDate);
+  }
+}
+```
+
+- 関数に渡すフィールドを「抽出」したり「チェック」したりする面倒なコードはもう不要です。例の `add()` に直行しましょう。
+
+```js
+// /services/users.js
+class Users {
+  constructor(data) {
+    this.users = data || [];
+  }
+  add({ name, email, password }) {
+    // パスワードハッシュを保存。明示的に定義するのは `var/let` が 1 つだけで、残りの変数は上記の `{fields}` マジックで「定義」されています ^^^
+    let hash = getSha256(password);
+    return http
+      .post("/users", {
+        name: name,
+        email: email,
+        passwordHash: hash
+      })
+      .then(usr => this.users.push(usr)); // サービス応答を受け取ったらユーザーを追加
+  }
+}
+```
+
+<Gist path='justsml/aaddc9852c1624d61cf3'></Gist>
+
+<p>&#160;</p>
+
+#### ES6 に飛び込むと、次のような感覚になることがあります：
+
+<div class="anigif top">
+  <img alt='え？' title="え？" src="https://res.cloudinary.com/ddd/image/upload/v1441143891/wtf__tumblr_inline_n7ygqh6Y0C1svcdm1_igeqey.gif" />
+</div>
+<h3>から</h3>
+<div class="anigif">
+  <img alt='何だって！' title="何だって！" src="https://res.cloudinary.com/ddd/image/upload/v1443133148/cat-wtf-trap.gif" />
+</div>
+<h3>へ</h3>
+<div class="anigif end">
+  <img alt='#勝利' title="#勝利" src="https://res.cloudinary.com/ddd/image/upload/v1443133141/full-throttle.gif" />
+</div>
+
+新機能をひたすら試し続けてみてください。文字列テンプレートや自動 `this` バインディング、より理にかなった継承などをチェックしましょう…
+
+##### [Node.JS](http://nodejs.org/)
+
+### Rust
+
+##### [Official Site](../http://www.rust-lang.org/)
+
+- **Pros**
+
+- C ほど高速で、Python/C++ ほど強力なのに、熟練開発者でさえ罠にハマりがちな複雑さや落とし穴がない言語があったらどうなるか想像してみてください。
+  - 実際、Rust の複雑さは ES6 仕様と同程度だと推測します。
+  - 余分な機能が大量にあります:
+    1.  本質的に Rust は半動的構文から **純粋な C コード** へトランスパイルします!
+    1.  C で「ベストプラクティス」すべてを自動的に組み込んでくれるので、失敗しがちな点を常に回避できます。
+    - 自動的に得られるもの:
+    - 自動メモリ管理（遅いガベージコレクタは不要!）
+    - 完全にスコープ化されたオブジェクト所有権/ロック（ミューテックスやコンテキストスイッチが最小化）
+    - オブジェクトのライフタイム（自動実装*、エッジケースをすべて把握しているかのように自動コード生成）
+    - 実質的にすべての実行時エラーを防止（コードパスが明示的になるので、見落としが不可能になります）
+  - さらに、理にかなった「マクロ」機能で真の言語拡張性を提供します。
+    - 内包表記が必要ですか？[Scala スタイル? 完了](../https://gist.github.com/hanny24/5749688)、[Python 風? 完了](../https://gist.github.com/JeffBelgum/5e762761cd63c796e803)。
+    1.  あまりにも良すぎる？いや、さらに良くなります:
+    - GitHub の統計から見ると、Rust は Go（Google の新興言語）を上回るか、競合的です。
+      - Star が約 4,000 多い（現在約 12,200）
+      - コントリビュータ総数が 2 倍以上（1,071 対 Go の 479）
+      - フォーク数が 3 倍以上（2,343 対 765）
+      - 未解決 Issue は僅かに劣る（2,000 対 1,730）
+      - Pull Request は Rust が 70 超、Go は 1 件
+    - 私も数値を三度確認しました。
+  - Rust の構文とルールのおかげで、他のライブラリは非常に安定しています。
+  - スレッドモデルは一般開発者でも扱えるレベルです。
+
+- **Cons**
+  - まずまずの **Web フレームワーク** は比較的新しく、未成熟でドキュメントが不足しています（ただし 2015 年 3 月時点で **急速に** 改善中）。
+  - 1.0 未満の初期バージョンで破壊的変更が多いです。
+
+### Python
+
+- **Pros**
+  - 圧倒的に豊富なアルゴリズム実装が既に Python に揃っています（例: scikit‑learn, numpy, matplotlib, PIL/Pillow など）。
+  - 書くのがとても楽です! 内包表記や分解代入は優れた機能で、他言語を膨らみすぎに感じさせます。
+  - 配列、シーケンス、タプルなどが比較的シンプルです。
+
+```python
+## dummy code: defines a color + pixel-coord -
+def pixel(x, y, r, g, b): return dict(x=x, y=y, r=r, g=g, b=b)
+## Create a new pixel object and apply to set of vars
+x, y, r, g, b = pixel(10, 20, 255, 255, 255)
+## Now we can call pixel
+```
+
+- **Cons**
+  - うっとうしいことに、Python 2 系と 3 系は互換性がありません。大分裂は今でも続いており、何年も経った今でも解決されていません。
+  - 一部の必須ライブラリは、開発者に十分理解されていないことがあります（例: numpy）
+
+### Haskell
+
+- **Pros**
+  - 十分な構文を暗記できたときの達成感は格別で、内包表記を活用した表現力豊かなパターンが作れます
+  - 頭をねじれさせるようなコードパターンを学べます――他言語でも応用できることが多いです
+- **Cons**
+  - 文法やパターンに慣れるのが難しいです
+
+<div class="anigif end">
+  <img alt='endless loop' src="https://res.cloudinary.com/ddd/image/upload/v1441143881/endless-loop.gif" />
+</div>
+
+### SmallTalk-80
+
+- **Pros**
+  - 驚くほどシンプルなコンパイラ（特にオリジナル版）
+  - 優れたリソース: [Smalltalk MVC Translated to JavaScript](http://peter.michaux.ca/articles/smalltalk-mvc-translated-to-javascript)
+- **Cons**
+  - 実務でこの言語を使う機会はほぼありません。プロジェクトがゼロです。ただし、他の関数型言語よりも速くコーディングスタイルに影響を与える可能性があります… こちらはむしろ **Pros** に入れるべきでしょう。
+
+#### _作業中 (2015年12月更新)_
