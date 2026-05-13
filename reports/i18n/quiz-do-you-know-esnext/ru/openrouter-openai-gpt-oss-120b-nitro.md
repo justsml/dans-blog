@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-do-you-know-esnext
+- Locale: ru
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2024-10-31--quiz-do-you-know-esnext/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 16.96
+- Input tokens: 9941
+- Output tokens: 4803
+- Thinking tokens: unknown
+- Cached input tokens: 3200
+- Cache write tokens: 0
+- Estimated cost: $0.001252
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: 'Тест: Знаетели вы современный JavaScript?'
 subTitle: Продемонстрируйте своё мастерство JavaScript!
@@ -351,3 +369,4 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 </Challenge>
 
 </QuizUI>
+````
