@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: mastra-security-guardrails
+- Locale: es
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-01-03--mastra-security-guardrails/es/index.mdx
+- Validation: passed
+- Runtime seconds: 8.09
+- Input tokens: 6822
+- Output tokens: 2331
+- Thinking tokens: unknown
+- Cached input tokens: 1536
+- Cache write tokens: 0
+- Estimated cost: $0.000686
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: IA de producción da miedo (y cómo solucionarlo)
 subTitle: 'Si tu agente no tiene guardrails, no estás listo para producción.'
@@ -170,3 +188,4 @@ La mayoría de los problemas de seguridad en IA en producción no son ataques so
 2. **Security & Guardrails** (Esta publicación)
 3. [MCP & Tool Integrations](../mastra-mcp-tool-integrations)
 4. [Workflows & Memory](../mastra-workflows-memory)
+````
