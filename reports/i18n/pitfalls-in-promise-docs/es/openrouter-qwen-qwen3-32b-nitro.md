@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: pitfalls-in-promise-docs
+- Locale: es
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2017-05-10--pitfalls-in-promise-docs/es/index.mdx
+- Validation: passed
+- Runtime seconds: 7.37
+- Input tokens: 2843
+- Output tokens: 3198
+- Thinking tokens: unknown
+- Cached input tokens: 512
+- Cache write tokens: 0
+- Estimated cost: $0.000995
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Trampas en la Documentación de Promesas
@@ -62,3 +80,4 @@ En resumen: el patrón de `deferred` es un anti-patrón doloroso: prácticamente
 > Eche un vistazo (y dé una estrella) al proyecto de GitHub asociado a este artículo, [Escape From Callback Mountain](https://github.com/justsml/escape-from-callback-mountain)
 
 > Objetivo del proyecto: investigar y desarrollar mejores patrones de lenguaje funcional en JavaScript.
+````
