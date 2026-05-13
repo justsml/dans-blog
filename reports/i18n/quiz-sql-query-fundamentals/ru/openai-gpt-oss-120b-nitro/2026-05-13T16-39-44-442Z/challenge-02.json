@@ -1,0 +1,44 @@
+{
+  "index": 1,
+  "attempt": 1,
+  "originalTitle": "Aggregate Function COUNT",
+  "translatedTitle": "Агрегатная функция COUNT",
+  "translation": {
+    "title": "Агрегатная функция COUNT",
+    "group": "Основы SQL",
+    "options": [
+      {
+        "text": "Считает все строки, включая NULL"
+      },
+      {
+        "text": "Считает только ненулевые значения в столбце"
+      },
+      {
+        "text": "Считает NULL как одно уникальное значение"
+      },
+      {
+        "text": "Считает каждый NULL как уникальный, как NaN !== NaN"
+      }
+    ],
+    "questionProse": [
+      "Что делает `COUNT(column_name)` в SQL?"
+    ],
+    "explanationProse": [
+      "`COUNT(column_name)` считает количество ненулевых значений в указанном столбце. Чтобы посчитать все строки, включая NULL, используйте `COUNT(*)`.\n\n    Вы также можете использовать `COALESCE`, чтобы NULL заменялись на ненулевое значение. Например: `COUNT(COALESCE(column_name, 0))`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Агрегатная функция COUNT\",\n  \"group\": \"Основы SQL\",\n  \"options\": [\n    {\n      \"text\": \"Считает все строки, включая NULL\"\n    },\n    {\n      \"text\": \"Считает только ненулевые значения в столбце\"\n    },\n    {\n      \"text\": \"Считает NULL как одно уникальное значение\"\n    },\n    {\n      \"text\": \"Считает каждый NULL как уникальный, как NaN !== NaN\"\n    }\n  ],\n  \"questionProse\": [\n    \"Что делает `COUNT(column_name)` в SQL?\"\n  ],\n  \"explanationProse\": [\n    \"`COUNT(column_name)` считает количество ненулевых значений в указанном столбце. Чтобы посчитать все строки, включая NULL, используйте `COUNT(*)`.\\n\\n    Вы также можете использовать `COALESCE`, чтобы NULL заменялись на ненулевое значение. Например: `COUNT(COALESCE(column_name, 0))`.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 810,
+    "outputTokens": 489,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2146
+  },
+  "cost": {
+    "inputUsd": 0.00003159,
+    "outputUsd": 0.00008801999999999999,
+    "totalUsd": 0.00011960999999999999,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

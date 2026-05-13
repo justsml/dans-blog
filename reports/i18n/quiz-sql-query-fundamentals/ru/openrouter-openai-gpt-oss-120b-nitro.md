@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-sql-query-fundamentals
+- Locale: ru
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2024-11-08--quiz-sql-query-fundamentals/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 16.22
+- Input tokens: 9939
+- Output tokens: 5996
+- Thinking tokens: unknown
+- Cached input tokens: 3072
+- Cache write tokens: 0
+- Estimated cost: $0.001467
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: 'Тест: докажите свои навыки SQL!'
@@ -325,3 +343,4 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 </Challenge>
 
 </QuizUI>
+````
