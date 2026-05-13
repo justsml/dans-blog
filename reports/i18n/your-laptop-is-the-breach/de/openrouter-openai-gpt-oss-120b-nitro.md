@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: your-laptop-is-the-breach
+- Locale: de
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-05-09--your-laptop-is-the-breach/de/index.mdx
+- Validation: passed
+- Runtime seconds: 13.28
+- Input tokens: 39444
+- Output tokens: 7501
+- Thinking tokens: unknown
+- Cached input tokens: 21120
+- Cache write tokens: 0
+- Estimated cost: $0.002888
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Ihr Laptop ist die Schwachstelle
 subTitle: >-
@@ -331,3 +349,4 @@ Geben Sie ihm produktionsbezogene Grenzen.
 - [Little Snitch](https://obdev.at/products/littlesnitch/)
 - [Portmaster](https://safing.io/)
 - [Claude Code‑Berechtigungen](https://code.claude.com/docs/en/permissions)
+````
