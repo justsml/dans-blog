@@ -1,0 +1,40 @@
+{
+  "selectedCommit": "bd55e7d32bd92d4ca07ae337583bbf923e43d486",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 9,
+    "relevance": 9,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The selected candidate bd55e7d32bd92d4ca07ae337583bbf923e43d486 is already the 'current' version in the provided text. It correctly translates 'non-deterministic' as 'недетерминированных' (unlike the judge's suggestion which mistakenly thought it said 'нестохастических'). It maintains the technical terminology, Dan's direct tone, and perfect MDX structure. No further high-priority fixes are required.",
+  "slug": "mastra-workflows-memory",
+  "locale": "ru",
+  "candidateCommits": [
+    "bd55e7d32bd92d4ca07ae337583bbf923e43d486",
+    "f1b95b23c0881e7d88743fe3344bf787868777c0",
+    "03247a47dede755c762b9c628d7447d008b75712",
+    "11650e477f3bfd6847e0c1ad72288e3565abbaef",
+    "6262987b1c7f9adbfbd56a5f12d7627e520b8b52"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "нестохастических моделей",
+      "replacement": "недетерминированных моделей",
+      "reason": "The English text says 'non-deterministic'. 'Non-stochastic' is a different mathematical concept, and 'non-deterministic' is the standard term in AI for probabilistic models.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug mastra-workflows-memory --locale ru --skip-global",
+    "output": ""
+  }
+}
