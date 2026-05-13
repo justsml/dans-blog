@@ -1,0 +1,50 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Identify Invalid Types",
+  "translatedTitle": "無効な型を識別する",
+  "translation": {
+    "title": "無効な型を識別する",
+    "group": "Postgresの型",
+    "options": [
+      {
+        "text": "box"
+      },
+      {
+        "text": "line"
+      },
+      {
+        "text": "point"
+      },
+      {
+        "text": "circle"
+      },
+      {
+        "text": "polygon"
+      },
+      {
+        "text": "triangle"
+      }
+    ],
+    "questionProse": [
+      "これらの中で❌ PostgreSQLの有効な型でないものはどれ？"
+    ],
+    "explanationProse": [
+      "PostgreSQLには豊富な特殊型が存在しますが、`triangle`はその中にありません。\n\n    [GEOS](https://libgeos.org/)の今後のバージョンで`Triangle` OGC/WKTサポートが追加されると予測されているため、将来的にはPostgisにも含まれる可能性があります。(つまり、この答えは将来的に変更されるかもしれません)\n\n    正しい特殊型には以下が含まれます：\n    - `box` (矩形)\n    - `line` (無限直線)\n    - `point` (2次元点)\n    - `circle` (2次元円)\n    - `polygon` (2次元ポリゴン)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"無効な型を識別する\",\n  \"group\": \"Postgresの型\",\n  \"options\": [\n    {\"text\": \"box\"},\n    {\"text\": \"line\"},\n    {\"text\": \"point\"},\n    {\"text\": \"circle\"},\n    {\"text\": \"polygon\"},\n    {\"text\": \"triangle\"}\n  ],\n  \"questionProse\": [\n    \"これらの中で❌ PostgreSQLの有効な型でないものはどれ？\"\n  ],\n  \"explanationProse\": [\n    \"PostgreSQLには豊富な特殊型が存在しますが、`triangle`はその中にありません。\\n\\n    [GEOS](https://libgeos.org/)の今後のバージョンで`Triangle` OGC/WKTサポートが追加されると予測されているため、将来的にはPostgisにも含まれる可能性があります。(つまり、この答えは将来的に変更されるかもしれません)\\n\\n    正しい特殊型には以下が含まれます：\\n    - `box` (矩形)\\n    - `line` (無限直線)\\n    - `point` (2次元点)\\n    - `circle` (2次元円)\\n    - `polygon` (2次元ポリゴン)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 777,
+    "outputTokens": 630,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 7745
+  },
+  "cost": {
+    "inputUsd": 0.00006216,
+    "outputUsd": 0.0001512,
+    "totalUsd": 0.00021336,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "index": 11,
+  "attempt": 1,
+  "originalTitle": "Timestamp Precision",
+  "translatedTitle": "タイムスタンプの精度",
+  "translation": {
+    "title": "タイムスタンプの精度",
+    "group": "日時",
+    "options": [
+      {
+        "text": "2024-01-08 13:30:00+00"
+      },
+      {
+        "text": "2024-01-08 13:30:00.123456+00"
+      },
+      {
+        "text": "2024-01-08 13:30:00.123456789+00"
+      },
+      {
+        "text": "2024-01-08 13:30:00.1234567"
+      }
+    ],
+    "questionProse": [
+      "PostgreSQLの`time`精度上限を超える最小の`timestamp`リテラルはどれ？"
+    ],
+    "explanationProse": [
+      "PostgreSQLのタイムスタンプはマイクロ秒（6桁）の精度を持ちます。\n\n    - 最大値: `.123456`（6桁）\n    - ナノ秒（9桁）はサポートされた精度に丸められたり切り捨てられたりする\n    - タイムゾーンオフセットは`timestamptz`で受け入れられるが必須ではない\n\n    **あまり知られていない落とし穴:** 一部の言語/フレームワークはナノ秒精度で送信するが、PostgreSQLはマイクロ秒精度でタイムスタンプを保存する。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"タイムスタンプの精度\",\n  \"group\": \"日時\",\n  \"options\": [\n    {\n      \"text\": \"2024-01-08 13:30:00+00\"\n    },\n    {\n      \"text\": \"2024-01-08 13:30:00.123456+00\"\n    },\n    {\n      \"text\": \"2024-01-08 13:30:00.123456789+00\"\n    },\n    {\n      \"text\": \"2024-01-08 13:30:00.1234567\"\n    }\n  ],\n  \"questionProse\": [\n    \"PostgreSQLの`time`精度上限を超える最小の`timestamp`リテラルはどれ？\"\n  ],\n  \"explanationProse\": [\n    \"PostgreSQLのタイムスタンプはマイクロ秒（6桁）の精度を持ちます。\\n\\n    - 最大値: `.123456`（6桁）\\n    - ナノ秒（9桁）はサポートされた精度に丸められたり切り捨てられたりする\\n    - タイムゾーンオフセットは`timestamptz`で受け入れられるが必須ではない\\n\\n    **あまり知られていない落とし穴:** 一部の言語/フレームワークはナノ秒精度で送信するが、PostgreSQLはマイクロ秒精度でタイムスタンプを保存する。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 850,
+    "outputTokens": 881,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2157
+  },
+  "cost": {
+    "inputUsd": 0.000068,
+    "outputUsd": 0.00021143999999999997,
+    "totalUsd": 0.00027943999999999994,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-postgres-sql-mastery-pt1
+- Locale: ja
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2024-11-27--quiz-postgres-sql-mastery-pt1/ja/index.mdx
+- Validation: deferred
+- Runtime seconds: 85.12
+- Input tokens: 13025
+- Output tokens: 12233
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.003978
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 social_image: ../mobile.webp
@@ -549,3 +567,4 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 <p class="inset">Part 2でさらにPostgresの楽しみをチェック！🚀<a href="../quiz-postgres-sql-mastery-pt2/">Part 2</a></p>  
 
 人生にさらにスリルを！私の<a href="../challenges/">クイズコレクション</a>で無限に*楽しんでください！
+````

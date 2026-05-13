@@ -1,0 +1,52 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "timestamptz vs timestamp",
+  "translatedTitle": "timestamptz vs timestamp",
+  "translation": {
+    "title": "timestamptz vs timestamp",
+    "group": "タイムスタンプ",
+    "options": [
+      {
+        "text": "どちらも8バイトだが、タイムスタンプのセマンティクスが異なる",
+        "hint": "バイト数は同じだが、内部表現が異なる"
+      },
+      {
+        "text": "timestamptzは入力されたタイムゾーンをすべて保持する",
+        "hint": "タイムゾーン情報をどう扱うかが重要"
+      },
+      {
+        "text": "timestamptzは元のタイムゾーン名やオフセットを保持する",
+        "hint": "タイムゾーンの保存方法に注目"
+      },
+      {
+        "text": "timestamptzはTZ用の2バイト値を保持する",
+        "hint": "タイムゾーン情報の保存形式を確認"
+      },
+      {
+        "text": "timestamptzはtimestampの後継型である",
+        "hint": "型の進化ではなく仕様の違いに着目"
+      }
+    ],
+    "questionProse": [
+      "「timestamptz」と「timestamp」について**最も正確な**説明はどれ？"
+    ],
+    "explanationProse": [
+      "両方とも8バイトだが、保持する値の種類が異なる。\n\n    では具体的にどう違うか？入力の解析方法に注目。\n\n    **timestamptz**\n    - サーバー/接続のTimeZone設定を考慮して絶対的な時刻に正規化\n    - オフセットなしの入力や出力表示時にタイムゾーンを考慮\n\n    **timestamp**\n    - タイムゾーン変換なしで日時を保持\n    - タイムゾーン情報を保持・正規化しない\n    \n    \n    **timestamp**\n\n    - タイムゾーン情報を含まない日時を保持\n    - UTCや特定のタイムゾーンで標準化された日時を明示的に保存する場合に有用"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"timestamptz vs timestamp\",\n  \"group\": \"タイムスタンプ\",\n  \"options\": [\n    {\n      \"text\": \"どちらも8バイトだが、タイムスタンプのセマンティクスが異なる\",\n      \"hint\": \"バイト数は同じだが、内部表現が異なる\"\n    },\n    {\n      \"text\": \"timestamptzは入力されたタイムゾーンをすべて保持する\",\n      \"hint\": \"タイムゾーン情報をどう扱うかが重要\"\n    },\n    {\n      \"text\": \"timestamptzは元のタイムゾーン名やオフセットを保持する\",\n      \"hint\": \"タイムゾーンの保存方法に注目\"\n    },\n    {\n      \"text\": \"timestamptzはTZ用の2バイト値を保持する\",\n      \"hint\": \"タイムゾーン情報の保存形式を確認\"\n    },\n    {\n      \"text\": \"timestamptzはtimestampの後継型である\",\n      \"hint\": \"型の進化ではなく仕様の違いに着目\"\n    }\n  ],\n  \"questionProse\": [\n    \"「timestamptz」と「timestamp」について**最も正確な**説明はどれ？\"\n  ],\n  \"explanationProse\": [\n    \"両方とも8バイトだが、保持する値の種類が異なる。\\n\\n    では具体的にどう違うか？入力の解析方法に注目。\\n\\n    **timestamptz**\\n    - サーバー/接続のTimeZone設定を考慮して絶対的な時刻に正規化\\n    - オフセットなしの入力や出力表示時にタイムゾーンを考慮\\n\\n    **timestamp**\\n    - タイムゾーン変換なしで日時を保持\\n    - タイムゾーン情報を保持・正規化しない\\n    \\n    \\n    **timestamp**\\n\\n    - タイムゾーン情報を含まない日時を保持\\n    - UTCや特定のタイムゾーンで標準化された日時を明示的に保存する場合に有用\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 864,
+    "outputTokens": 910,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 10376
+  },
+  "cost": {
+    "inputUsd": 0.00006912,
+    "outputUsd": 0.0002184,
+    "totalUsd": 0.00028752,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

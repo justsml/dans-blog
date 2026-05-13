@@ -1,0 +1,53 @@
+{
+  "index": 6,
+  "attempt": 1,
+  "originalTitle": "Identify Invalid Types",
+  "translatedTitle": "無効なデータ型を特定する",
+  "translation": {
+    "title": "無効なデータ型を特定する",
+    "group": "PostgreSQLデータ型",
+    "options": [
+      {
+        "text": "int"
+      },
+      {
+        "text": "real"
+      },
+      {
+        "text": "bigint"
+      },
+      {
+        "text": "bigserial"
+      },
+      {
+        "text": "smallserial"
+      },
+      {
+        "text": "decimal128"
+      },
+      {
+        "text": "double precision"
+      }
+    ],
+    "questionProse": [
+      "これらの中で、❌ PostgreSQLの有効なデータ型ではないものはどれですか？"
+    ],
+    "explanationProse": [
+      "`decimal128`はMongoDBやJavaなど他のシステムで使われる型ですが、PostgreSQLでは無効です。PostgreSQLで有効な数値型は以下です：\n- `int`（4バイト整数）\n- `bigint`（8バイト整数）\n- `real`（4バイト浮動小数点）\n- `double precision`（8バイト浮動小数点）\n- `bigserial`（8バイト自動増分整数）\n- `smallserial`（2バイト自動増分整数）\n`decimal`型はPostgreSQLで使用可能ですが、`decimal128`は存在しません。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"無効なデータ型を特定する\",\n  \"group\": \"PostgreSQLデータ型\",\n  \"options\": [\n    {\"text\": \"int\"},\n    {\"text\": \"real\"},\n    {\"text\": \"bigint\"},\n    {\"text\": \"bigserial\"},\n    {\"text\": \"smallserial\"},\n    {\"text\": \"decimal128\"},\n    {\"text\": \"double precision\"}\n  ],\n  \"questionProse\": [\n    \"これらの中で、❌ PostgreSQLの有効なデータ型ではないものはどれですか？\"\n  ],\n  \"explanationProse\": [\n    \"`decimal128`はMongoDBやJavaなど他のシステムで使われる型ですが、PostgreSQLでは無効です。PostgreSQLで有効な数値型は以下です：\\n- `int`（4バイト整数）\\n- `bigint`（8バイト整数）\\n- `real`（4バイト浮動小数点）\\n- `double precision`（8バイト浮動小数点）\\n- `bigserial`（8バイト自動増分整数）\\n- `smallserial`（2バイト自動増分整数）\\n`decimal`型はPostgreSQLで使用可能ですが、`decimal128`は存在しません。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 782,
+    "outputTokens": 637,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 7878
+  },
+  "cost": {
+    "inputUsd": 0.00006256,
+    "outputUsd": 0.00015287999999999999,
+    "totalUsd": 0.00021543999999999998,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

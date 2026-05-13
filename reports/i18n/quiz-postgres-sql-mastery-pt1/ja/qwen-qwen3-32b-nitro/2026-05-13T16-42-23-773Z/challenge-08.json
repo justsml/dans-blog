@@ -1,0 +1,50 @@
+{
+  "index": 7,
+  "attempt": 1,
+  "originalTitle": "Identify Invalid Types",
+  "translatedTitle": "無効なタイプを特定する",
+  "translation": {
+    "title": "無効なタイプを特定する",
+    "group": "PostgreSQLのデータ型",
+    "options": [
+      {
+        "text": "cidr"
+      },
+      {
+        "text": "inet"
+      },
+      {
+        "text": "ipv4"
+      },
+      {
+        "text": "macaddr"
+      },
+      {
+        "text": "macaddr8"
+      },
+      {
+        "text": "interval"
+      }
+    ],
+    "questionProse": [
+      "これらの中で、❌ 有効でないPostgreSQLのデータ型はどれですか？"
+    ],
+    "explanationProse": [
+      "これが原因で腹を立てたか？文句を言ったか？あなただけではありません！匿名の\"コア\"データベース貢献者が言いました：\"おいダニエル、タイプの問題でクラッシュしちゃったぞ！それは攻撃的だ、先生！スコアは教えませんが、ははは。\" 😈 どういたしまして。\n\nPostgreSQLの豊富なネットワーク型には`ipv4`は含まれていません。毎回、ググらずに試みると間違えます。`macaddr8`があるせいで、`ipv4`や`ipv6`型があると思いがちですが、実際は`inet`が両方をカバーします。`cidr`もネットマスクのIPv4/IPv6両方に対応しています。\n\n有効なネットワーク型は以下の通りです：\n- `cidr`（IPv4/IPv6ネットワークアドレス）\n- `inet`（IPv4/IPv6ホストアドレス）\n- `macaddr`（MACアドレス）\n- `macaddr8`（EUI-64 MACアドレス）"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"無効なタイプを特定する\",\n  \"group\": \"PostgreSQLのデータ型\",\n  \"options\": [\n    {\"text\": \"cidr\"},\n    {\"text\": \"inet\"},\n    {\"text\": \"ipv4\"},\n    {\"text\": \"macaddr\"},\n    {\"text\": \"macaddr8\"},\n    {\"text\": \"interval\"}\n  ],\n  \"questionProse\": [\n    \"これらの中で、❌ 有効でないPostgreSQLのデータ型はどれですか？\"\n  ],\n  \"explanationProse\": [\n    \"これが原因で腹を立てたか？文句を言ったか？あなただけではありません！匿名の\\\"コア\\\"データベース貢献者が言いました：\\\"おいダニエル、タイプの問題でクラッシュしちゃったぞ！それは攻撃的だ、先生！スコアは教えませんが、ははは。\\\" 😈 どういたしまして。\\n\\nPostgreSQLの豊富なネットワーク型には`ipv4`は含まれていません。毎回、ググらずに試みると間違えます。`macaddr8`があるせいで、`ipv4`や`ipv6`型があると思いがちですが、実際は`inet`が両方をカバーします。`cidr`もネットマスクのIPv4/IPv6両方に対応しています。\\n\\n有効なネットワーク型は以下の通りです：\\n- `cidr`（IPv4/IPv6ネットワークアドレス）\\n- `inet`（IPv4/IPv6ホストアドレス）\\n- `macaddr`（MACアドレス）\\n- `macaddr8`（EUI-64 MACアドレス）\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 850,
+    "outputTokens": 787,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 9595
+  },
+  "cost": {
+    "inputUsd": 0.000068,
+    "outputUsd": 0.00018888,
+    "totalUsd": 0.00025688,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

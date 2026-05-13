@@ -1,0 +1,47 @@
+{
+  "index": 12,
+  "attempt": 1,
+  "originalTitle": "Identify Invalid Types",
+  "translatedTitle": "無効なタイプを特定する",
+  "translation": {
+    "title": "無効なタイプを特定する",
+    "group": "PostgreSQLタイプ",
+    "options": [
+      {
+        "text": "lseg"
+      },
+      {
+        "text": "bytea"
+      },
+      {
+        "text": "tsquery"
+      },
+      {
+        "text": "tsvector"
+      },
+      {
+        "text": "tsrank"
+      }
+    ],
+    "questionProse": [
+      "これらの中で❌無効なPostgreSQLタイプはどれですか？\n\n    （真剣に、これらは（主に）実在するタイプです。）"
+    ],
+    "explanationProse": [
+      "PostgreSQLには幾何学的およびテキスト検索用のタイプが組み込まれていますが、`tsrank`はその中に含まれません。\n\n    正しい幾何学的およびテキスト検索タイプは以下の通りです：\n    - `lseg`（線分）\n    - `bytea`（バイトデータ）\n    - `tsquery`（テキスト検索クエリ）\n    - `tsvector`（テキスト検索ドキュメント）"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"無効なタイプを特定する\",\n  \"group\": \"PostgreSQLタイプ\",\n  \"options\": [\n    { \"text\": \"lseg\" },\n    { \"text\": \"bytea\" },\n    { \"text\": \"tsquery\" },\n    { \"text\": \"tsvector\" },\n    { \"text\": \"tsrank\" }\n  ],\n  \"questionProse\": [\n    \"これらの中で❌無効なPostgreSQLタイプはどれですか？\\n\\n    （真剣に、これらは（主に）実在するタイプです。）\"\n  ],\n  \"explanationProse\": [\n    \"PostgreSQLには幾何学的およびテキスト検索用のタイプが組み込まれていますが、`tsrank`はその中に含まれません。\\n\\n    正しい幾何学的およびテキスト検索タイプは以下の通りです：\\n    - `lseg`（線分）\\n    - `bytea`（バイトデータ）\\n    - `tsquery`（テキスト検索クエリ）\\n    - `tsvector`（テキスト検索ドキュメント）\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 728,
+    "outputTokens": 686,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2144
+  },
+  "cost": {
+    "inputUsd": 0.000058240000000000005,
+    "outputUsd": 0.00016464,
+    "totalUsd": 0.00022288,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

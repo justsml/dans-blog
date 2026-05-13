@@ -1,0 +1,44 @@
+{
+  "index": 13,
+  "attempt": 1,
+  "originalTitle": "Check Constraint Timing",
+  "translatedTitle": "チェック制約の検証タイミング",
+  "translation": {
+    "title": "チェック制約の検証タイミング",
+    "group": "制約",
+    "options": [
+      {
+        "text": "新規または変更された行に対して即座に"
+      },
+      {
+        "text": "トランザクションのコミット時"
+      },
+      {
+        "text": "次のクエリ実行時"
+      },
+      {
+        "text": "決してない - 制約はINSERT時のみチェックされる"
+      }
+    ],
+    "questionProse": [
+      "この成績制約はいつ検証されますか？"
+    ],
+    "explanationProse": [
+      "`NOT VALID`制約:\n    - 新規挿入や更新に対して即座に検証される\n    - 既存の行は検証されない\n    - 後で`VALIDATE CONSTRAINT`で既存行を検証可能\n    - 大規模テーブルに便利\n    \n    `NOT VALID`なし:\n    - 制約は即座に検証される\n    - すべての既存行が検証される\n    - 大規模テーブルでは遅くなる可能性がある"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"チェック制約の検証タイミング\",\n  \"group\": \"制約\",\n  \"options\": [\n    {\n      \"text\": \"新規または変更された行に対して即座に\"\n    },\n    {\n      \"text\": \"トランザクションのコミット時\"\n    },\n    {\n      \"text\": \"次のクエリ実行時\"\n    },\n    {\n      \"text\": \"決してない - 制約はINSERT時のみチェックされる\"\n    }\n  ],\n  \"questionProse\": [\n    \"この成績制約はいつ検証されますか？\"\n  ],\n  \"explanationProse\": [\n    \"`NOT VALID`制約:\\n    - 新規挿入や更新に対して即座に検証される\\n    - 既存の行は検証されない\\n    - 後で`VALIDATE CONSTRAINT`で既存行を検証可能\\n    - 大規模テーブルに便利\\n    \\n    `NOT VALID`なし:\\n    - 制約は即座に検証される\\n    - すべての既存行が検証される\\n    - 大規模テーブルでは遅くなる可能性がある\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 732,
+    "outputTokens": 651,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1538
+  },
+  "cost": {
+    "inputUsd": 0.00005856,
+    "outputUsd": 0.00015623999999999998,
+    "totalUsd": 0.0002148,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
