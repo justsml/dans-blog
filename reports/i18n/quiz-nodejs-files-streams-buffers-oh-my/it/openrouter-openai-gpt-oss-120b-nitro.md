@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-nodejs-files-streams-buffers-oh-my
+- Locale: it
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2024-11-15--quiz-nodejs-files-streams-buffers-oh-my/it/index.mdx
+- Validation: deferred
+- Runtime seconds: 21.02
+- Input tokens: 14473
+- Output tokens: 9076
+- Thinking tokens: unknown
+- Cached input tokens: 5248
+- Cache write tokens: 0
+- Estimated cost: $0.002198
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: 'Quiz: Padronanza IO di NodeJS'
@@ -598,3 +616,4 @@ Vediamo quanto conosci i tuoi stream rispetto ai buffer! 🚀
 </QuizUI>
 
 Spero che ti sia divertito a mettere alla prova le tue conoscenze su Node JS I/O! Vuoi continuare? Dai un'occhiata alla mia [Raccolta di Quiz](/challenges/) per altri esercizi!
+````
