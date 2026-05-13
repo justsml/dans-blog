@@ -4,7 +4,7 @@
   "slug": "llm-generative-ui-landscape",
   "locale": "hi",
   "startedAt": "2026-05-13T18:15:58.238Z",
-  "updatedAt": "2026-05-13T18:24:08.093Z",
+  "updatedAt": "2026-05-13T18:28:43.611Z",
   "modelsRequested": [
     "openrouter/openai/gpt-oss-120b:nitro",
     "openrouter/qwen/qwen3-32b:nitro",
@@ -13,9 +13,9 @@
     "qwen/qwen3.6-35b-a3b",
     "qwen/qwen3.5-9b"
   ],
-  "attemptedModels": 2,
+  "attemptedModels": 3,
   "skippedModels": 2,
-  "rejectedModels": 2,
+  "rejectedModels": 3,
   "candidateModels": 0,
   "totals": {
     "inputTokens": 0,
@@ -30,7 +30,7 @@
     "hasUnknownCachedInputTokens": true,
     "hasUnknownCacheWriteTokens": true,
     "hasUnknownEstimatedCost": true,
-    "runtimeSeconds": "480.12"
+    "runtimeSeconds": "720.25"
   },
   "attempts": [
     {
@@ -64,6 +64,17 @@
       "note": "Command failed after 240000ms: bun run i18n:translate:chunked -- --slug llm-generative-ui-landscape --locale hi --model qwen/qwen3.6-plus --chunk 6p --run-id 2026-05-13T18-15-57-947Z-61322 --run-lock-path /Users/dan/code/oss/dans-blog/.git/codex-i18n-translation-run.json --quiz-concurrency 24",
       "telemetry": {
         "runtimeSeconds": "240.09",
+        "tokens": {}
+      }
+    },
+    {
+      "model": "qwen/qwen3.6-35b-a3b",
+      "status": "rejected",
+      "validationStatus": "rejected: direct AI SDK translation failed",
+      "reportPath": "reports/i18n/llm-generative-ui-landscape/hi/qwen-qwen3.6-35b-a3b.md",
+      "note": "Command failed after 240000ms: bun run i18n:translate:chunked -- --slug llm-generative-ui-landscape --locale hi --model qwen/qwen3.6-35b-a3b --chunk 6p --run-id 2026-05-13T18-15-57-947Z-61322 --run-lock-path /Users/dan/code/oss/dans-blog/.git/codex-i18n-translation-run.json --quiz-concurrency 24",
+      "telemetry": {
+        "runtimeSeconds": "240.13",
         "tokens": {}
       }
     }
