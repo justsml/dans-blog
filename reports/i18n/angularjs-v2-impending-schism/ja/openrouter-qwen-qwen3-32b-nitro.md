@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: angularjs-v2-impending-schism
+- Locale: ja
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2015-08-05--angularjs-v2-impending-schism/ja/index.mdx
+- Validation: passed
+- Runtime seconds: 4.03
+- Input tokens: 1790
+- Output tokens: 1406
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.000481
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: AngularJS v2.0 と迫る分裂
@@ -39,3 +57,4 @@ TypeScriptはJavaScriptにコンパイルされますが、それを使っても
 <div class="anigif top end">
   <img alt='すべては大丈夫になる' src="https://res.cloudinary.com/ddd/image/upload/v1442175801/system-maint-anon.gif" />
 </div>
+````
