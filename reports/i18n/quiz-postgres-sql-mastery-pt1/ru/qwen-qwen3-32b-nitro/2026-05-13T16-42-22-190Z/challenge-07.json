@@ -1,0 +1,53 @@
+{
+  "index": 6,
+  "attempt": 1,
+  "originalTitle": "Identify Invalid Types",
+  "translatedTitle": "Определите недопустимые типы",
+  "translation": {
+    "title": "Определите недопустимые типы",
+    "group": "Типы Postgres",
+    "options": [
+      {
+        "text": "int"
+      },
+      {
+        "text": "real"
+      },
+      {
+        "text": "bigint"
+      },
+      {
+        "text": "bigserial"
+      },
+      {
+        "text": "smallserial"
+      },
+      {
+        "text": "decimal128"
+      },
+      {
+        "text": "double precision"
+      }
+    ],
+    "questionProse": [
+      "Какой из этих типов НЕ ❌ является допустимым типом PostgreSQL?"
+    ],
+    "explanationProse": [
+      "decimal128 может показаться знакомым, так как это тип в других системах (например, в MongoDB и Java). Но в PostgreSQL допустимым является только `decimal`.\n\n    Правильные числовые типы:\n    - `int` (4-байтовый integer)\n    - `bigint` (8-байтовый integer)\n    - `real` (4-байтовая floating-point)\n    - `double precision` (8-байтовая floating-point)\n    - `bigserial` (автосчетчик 8-байтовый integer)\n    - `smallserial` (автосчетчик 2-байтовый integer)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Определите недопустимые типы\",\n  \"group\": \"Типы Postgres\",\n  \"options\": [\n    { \"text\": \"int\" },\n    { \"text\": \"real\" },\n    { \"text\": \"bigint\" },\n    { \"text\": \"bigserial\" },\n    { \"text\": \"smallserial\" },\n    { \"text\": \"decimal128\" },\n    { \"text\": \"double precision\" }\n  ],\n  \"questionProse\": [\n    \"Какой из этих типов НЕ ❌ является допустимым типом PostgreSQL?\"\n  ],\n  \"explanationProse\": [\n    \"decimal128 может показаться знакомым, так как это тип в других системах (например, в MongoDB и Java). Но в PostgreSQL допустимым является только `decimal`.\\n\\n    Правильные числовые типы:\\n    - `int` (4-байтовый integer)\\n    - `bigint` (8-байтовый integer)\\n    - `real` (4-байтовая floating-point)\\n    - `double precision` (8-байтовая floating-point)\\n    - `bigserial` (автосчетчик 8-байтовый integer)\\n    - `smallserial` (автосчетчик 2-байтовый integer)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 776,
+    "outputTokens": 778,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 9100
+  },
+  "cost": {
+    "inputUsd": 0.00006208,
+    "outputUsd": 0.00018672,
+    "totalUsd": 0.0002488,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

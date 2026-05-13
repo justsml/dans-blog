@@ -1,0 +1,50 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Identify Invalid Types",
+  "translatedTitle": "Определите недопустимые типы",
+  "translation": {
+    "title": "Определите недопустимые типы",
+    "group": "Типы Postgres",
+    "options": [
+      {
+        "text": "box"
+      },
+      {
+        "text": "line"
+      },
+      {
+        "text": "point"
+      },
+      {
+        "text": "circle"
+      },
+      {
+        "text": "polygon"
+      },
+      {
+        "text": "triangle"
+      }
+    ],
+    "questionProse": [
+      "Какой из этих типов ❌ не является допустимым типом PostgreSQL?"
+    ],
+    "explanationProse": [
+      "PostgreSQL имеет богатый набор специализированных типов, но `triangle` не является одним из них.\n\nВерсии [GEOS](https://libgeos.org/) в будущем могут включить поддержку `Triangle` OGC/WKT, что означает, что он может быть добавлен в Postgis. (Скорее всего, этот ответ может стать неверным в будущем.)\n\nПравильные специализированные типы включают:\n- `box` (прямоугольник)\n- `line` (бесконечная линия)\n- `point` (2D точка)\n- `circle` (2D круг)\n- `polygon` (2D многоугольник)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Определите недопустимые типы\",\n  \"group\": \"Типы Postgres\",\n  \"options\": [\n    { \"text\": \"box\" },\n    { \"text\": \"line\" },\n    { \"text\": \"point\" },\n    { \"text\": \"circle\" },\n    { \"text\": \"polygon\" },\n    { \"text\": \"triangle\" }\n  ],\n  \"questionProse\": [\n    \"Какой из этих типов ❌ не является допустимым типом PostgreSQL?\"\n  ],\n  \"explanationProse\": [\n    \"PostgreSQL имеет богатый набор специализированных типов, но `triangle` не является одним из них.\\n\\nВерсии [GEOS](https://libgeos.org/) в будущем могут включить поддержку `Triangle` OGC/WKT, что означает, что он может быть добавлен в Postgis. (Скорее всего, этот ответ может стать неверным в будущем.)\\n\\nПравильные специализированные типы включают:\\n- `box` (прямоугольник)\\n- `line` (бесконечная линия)\\n- `point` (2D точка)\\n- `circle` (2D круг)\\n- `polygon` (2D многоугольник)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 771,
+    "outputTokens": 1076,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 12420
+  },
+  "cost": {
+    "inputUsd": 0.00006168,
+    "outputUsd": 0.00025823999999999997,
+    "totalUsd": 0.00031991999999999996,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
