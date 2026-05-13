@@ -1,0 +1,289 @@
+# Translation Candidate
+- Slug: securing-clawdbot-tailscale
+- Locale: de
+- Model: deepseek/deepseek-v4-flash
+- Target: src/content/posts/2026-01-26--securing-clawdbot-tailscale/de/index.mdx
+- Validation: deferred
+- Runtime seconds: 66.23
+- Input tokens: 8915
+- Output tokens: 12928
+- Thinking tokens: unknown
+- Cached input tokens: 384
+- Cache write tokens: 0
+- Estimated cost: $0.004815
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: Dein KI-Assistent hat mir Shell-Zugriff gegeben
+subTitle: So sichern Sie Ihre lokale oder VPS-OpenClaw/Moltbot-Einrichtung
+date: '2026-01-15'
+modified: '2026-01-28'
+tags:
+  - security
+  - moltbot
+  - clawdbot
+  - tailscale
+  - ai
+  - vpn
+  - devops
+  - ssh
+category: Security
+subCategory: AI Infrastructure
+draft: false
+cover_full_width: ../hero_wide.webp
+cover_mobile: ../icon_square_200.webp
+cover_icon: ../icon_square_200.webp
+---
+OpenClaw (früher Clawdbot/Moltbot) bietet Ihnen einen persönlichen KI-Assistenten, der über WhatsApp, Slack, Discord, iMessage und andere Kanäle funktioniert. Wenn Sie jedoch dessen Gateway, Node-Steuerung oder SSH ohne starke Authentifizierung ins öffentliche Internet stellen, geben Sie Fremden einen Weg zu Shell-Zugriff auf Ihrem Rechner.
+
+Diese Anleitung zeigt die sicherste Standardkonfiguration: Halten Sie das Gateway von OpenClaw auf Loopback, exponieren Sie es nur gegenüber Ihrem Tailnet mit Tailscale Serve, schotten Sie SSH ab und überprüfen Sie von außen, dass das Gateway nicht öffentlich ist.
+
+Die schnelle Verbreitung des Projekts offenbarte echte Sicherheitsbedenken: [Shodan-Scans fanden 2.847 exponierte Instanzen](https://socradar.io/blog/clawdbot-is-it-safe/) in den ersten Wochen, und ein [GitHub-Sicherheitsaudit-Issue meldete 512 Befunde](https://github.com/moltbot/moltbot/issues/1796) in der Codebasis. Ein Teil davon stammte von automatischen Scannern, und einiges hat sich seit der Umbenennung zu OpenClaw im Januar 2026 geändert. Betrachten Sie die Zahl daher eher als Warnsignal denn als präzise aktuelle Schwachstellenanzahl. Sie müssen kein Sicherheitsexperte sein – Sie müssen nur vermeiden, Betreiberoberflächen vor der Bereitstellung zu veröffentlichen.
+
+---
+
+## Was Sie tatsächlich exponieren
+
+Je nachdem, wie Sie installiert und exponiert haben, gibt es drei zu prüfende Oberflächen:
+
+- **Port 22**: SSH-Zugriff auf einer VPS
+- **Port 18789**: Gateway-Steuerungs-UI und WebSocket-API
+- **Browser-/Node-Steuerung**: Remote-Node-Ausführung und Browser-Automatisierung über das Gateway-Node-Pairing-Modell
+
+Die aktuellen [OpenClaw Remote-Zugriffsdokumente](https://docs.molt.bot/gateway/remote) besagen, dass der Gateway-WebSocket standardmäßig an Loopback bindet, und empfehlen, ihn nur auf Loopback zu belassen, es sei denn, Sie wählen bewusst ein LAN/Tailnet/benutzerdefiniertes Binden. Das ist gut. Das Risiko tritt auf, wenn Sie diese Standardeinstellung überschreiben, Docker-Ports veröffentlichen, einen Reverse Proxy hinzufügen, Funnel aktivieren oder SSH offen zur Welt lassen.
+
+Das Gateway ist das große Problem. Es ist die Betreiberoberfläche für Ihren Assistenten, einschließlich der Tool-Aufrufpfade. Wenn es vom Internet aus erreichbar ist und die Authentifizierung fehlt, schwach, umgangen oder durchgesickert ist, kann ein Angreifer möglicherweise den Agenten steuern oder Tools mit den Berechtigungen Ihres Benutzers aufrufen.
+
+Die Browsersteuerung ist fast genauso sensibel. Die aktuellen OpenClaw-Dokumente empfehlen, die Browsersteuerung über einen gepaarten Node-Host auf dem Browser-Rechner auszuführen und Node-Pairing wie Operator-Zugriff zu behandeln. Wenn ein Gateway `system.run` auf einem gepaarten Node aufrufen kann, handelt es sich um Remote-Code-Ausführung auf diesem Node, vorbehaltlich der Node-Richtlinie des Gateways und der eigenen Ausführungsgenehmigungen des Nodes.
+
+SSH ist SSH. Wenn Sie die Passwortauthentifizierung aktiviert haben, sind Brute-Force-Versuche auf einem öffentlichen VPS unvermeidlich.
+
+## Die Tailscale-Lösung
+
+Für OpenClaw bietet Tailscale Fernzugriff, ohne Operator-Dienste zu veröffentlichen:
+
+1. Ihre OpenClaw-Instanz läuft auf einem VPS oder einem lokalen Rechner
+2. Das Gateway bleibt an Loopback gebunden und wird über Tailscale Serve erreicht, oder es bindet direkt an die Tailnet-IP mit expliziter Authentifizierung
+3. Sie installieren Tailscale sowohl auf dem Server als auch auf Ihren persönlichen Geräten
+4. Sie greifen über die Tailscale-IP oder den MagicDNS-Namen auf OpenClaw zu
+5. Alle anderen im Internet sehen nichts, es sei denn, Sie aktivieren absichtlich Funnel oder einen anderen öffentlichen Proxy
+
+### Sollte OpenClaw Tailscale verwalten?
+
+OpenClaw verfügt über eine [integrierte Tailscale-Integration](https://docs.molt.bot/gateway/tailscale), die `tailscale serve` oder `tailscale funnel` für das Gateway konfigurieren kann.
+
+**Serve-Modus** hält alles nur in Ihrem Tailnet. Das Gateway bleibt an `127.0.0.1` gebunden, während Tailscale Routing und HTTPS übernimmt. Wenn `gateway.auth.allowTailscale` aktiviert ist, kann OpenClaw Control-UI/WebSocket-Datenverkehr mithilfe von Tailscale-Identitäts-Headern authentifizieren und die Quelle mit `tailscale whois` verifizieren. Dies ist der richtige Modus für die meisten persönlichen Bereitstellungen.
+
+**Funnel-Modus** macht das Gateway über die öffentliche Endpunkt-Funktion von Tailscale öffentlich zugänglich. Tailscales eigene Dokumentation beschreibt Funnel als Routing von Datenverkehr aus dem weiteren Internet zu einem lokalen Dienst. OpenClaw weigert sich, Funnel zu starten, es sei denn, der Gateway-Authentifizierungsmodus ist `password`, aber Sie entscheiden sich dennoch für eine öffentliche Exposition einer Operator-Oberfläche.
+
+OpenClaws [Sicherheitsdokumentation](https://docs.molt.bot/gateway/security) stellt klar, dass Prompt-Injection und Tool-Zugriff Kernrisiken für einen persönlichen Assistenten sind. Geben Sie dem Agenten keinen Weg, sich leise öffentlich zu machen. Verwenden Sie Serve bewusst, vermeiden Sie Funnel, es sei denn, Sie benötigen wirklich öffentlichen Zugriff, und verlangen Sie eine Ausführungsgenehmigung für jeden `tailscale`-Befehl.
+
+## OpenClaw sicher einrichten
+
+### Schritt 1: Tailscale installieren
+
+Auf Ihrem VPS oder lokalen Server:
+
+```bash
+# Install Tailscale
+curl -fsSL https://tailscale.com/install.sh | sh
+
+# Authenticate (opens a browser to log in)
+sudo tailscale up
+
+# Get your Tailscale IP
+tailscale ip -4
+# Output: 100.x.x.x
+```
+
+Installieren Sie Tailscale auf Ihrem Client-Rechner von der offiziellen Download-Seite und melden Sie sich im selben Tailnet an.
+
+Jetzt befinden sich beide Maschinen im selben privaten Netzwerk. Sie können Ihren VPS über seine Tailscale-IP anpingen, und der Datenverkehr wird durch den verschlüsselten Tunnel geleitet.
+
+### Schritt 2: OpenClaw für Tailscale konfigurieren
+
+Das derzeit sicherste Muster ist: Das Gateway auf Loopback belassen und es mit Tailscale Serve für Ihr Tailnet freigeben.
+
+In der OpenClaw-Konfiguration:
+
+```js
+{
+  gateway: {
+    bind: "loopback",
+    tailscale: { mode: "serve" },
+  },
+}
+```
+
+Starten Sie dann das Gateway mit Serve:
+
+```bash
+openclaw gateway --tailscale serve
+```
+
+OpenClaws Dokumentation sagt, dass dies das Gateway auf `127.0.0.1` belässt, während Tailscale HTTPS und Tailnet-Routing bereitstellt. Sie öffnen es unter `https://<magicdns-name>/`, nicht unter Ihrer öffentlichen VPS-IP.
+
+Wenn Sie eine direkte Tailnet-Bindung anstelle von Serve bevorzugen, verwenden Sie explizite Gateway-Authentifizierung:
+
+```js
+{
+  gateway: {
+    bind: "tailnet",
+    auth: {
+      mode: "token",
+      token: "replace-with-a-long-random-token",
+    },
+  },
+}
+```
+
+Stellen Sie dann von einem anderen Tailnet-Gerät eine Verbindung her:
+
+```text
+http://<tailscale-ip>:18789/
+ws://<tailscale-ip>:18789
+```
+
+Wenn Sie Docker oder eine andere Container-Laufzeitumgebung verwenden, seien Sie besonders vorsichtig mit der Portveröffentlichung. Ein Befehl wie `-p 18789:18789` bindet normalerweise an allen Host-Schnittstellen. Bevorzugen Sie Loopback plus Tailscale Serve, oder binden Sie die Host-Seite explizit an die Tailscale-IP, nachdem Sie bestätigt haben, dass der Container weiterhin Datenverkehr empfängt:
+
+```bash
+TAILSCALE_IP=$(tailscale ip -4)
+docker run ... -p "$TAILSCALE_IP:18789:18789" ...
+```
+
+Überprüfen Sie nach jeder Docker-Änderung von außen mit `nmap` und lokal mit `ss`. Docker kann Host-Firewall-Annahmen umgehen oder neu ordnen, wenn Sie dies nicht berücksichtigen.
+
+### Schritt 3: SSH absichern
+
+Auch mit Tailscale sollten Sie SSH richtig absichern:
+
+```bash
+# Keep your current SSH session open while doing this.
+# First, from your client machine, confirm you can SSH over Tailscale:
+ssh your-user@SERVER_TAILSCALE_IP
+
+# Put hardening in a drop-in file instead of rewriting sshd_config.
+sudo tee /etc/ssh/sshd_config.d/99-openclaw-hardening.conf >/dev/null <<'EOF'
+PasswordAuthentication no
+PermitRootLogin no
+KbdInteractiveAuthentication no
+EOF
+
+# Validate before reloading. Do not skip this.
+sudo sshd -t
+sudo systemctl reload ssh || sudo systemctl reload sshd
+```
+
+Dies deaktiviert passwortbasiertes Login und Root-Login. Der nächste Schritt verwendet UFW, um öffentliches SSH vollständig zu verhindern, während SSH über `tailscale0` weiterhin erlaubt bleibt.
+
+### Schritt 4: Firewall-Regeln
+
+Richten Sie eine Firewall als zweite Sicherheitsschicht ein:
+
+```bash
+# Using UFW (Ubuntu/Debian)
+sudo ufw allow in on tailscale0
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+sudo ufw enable
+sudo ufw delete allow 22/tcp || true
+sudo ufw reload
+sudo ufw status verbose
+```
+
+Tailscapes eigener Ubuntu-Härtungsleitfaden verwendet dieselbe Form: `tailscale0` erlauben, anderen eingehenden Verkehr ablehnen, dann überprüfen, dass öffentliches SSH eine Zeitüberschreitung erhält, während SSH zur `100.x.y.z`-Adresse noch funktioniert. Wenn Sie auf demselben VPS eine öffentliche Website betreiben, behalten Sie nur die öffentlichen Regeln, die Sie wirklich benötigen, wie `80/tcp` und `443/tcp`.
+
+---
+
+## Überprüfung Ihrer Exposition
+
+### Offene Ports von außen prüfen
+
+Von einem Rechner, der NICHT in Ihrem Tailscale-Netzwerk ist:
+
+```bash
+# Check if common public ports are exposed
+nmap -p 22,80,443,18789 YOUR_PUBLIC_IP
+
+# Expected output for a secured instance:
+# 22/tcp   filtered ssh
+# 18789/tcp filtered unknown
+```
+
+Wenn `22` oder `18789` `open` anstelle von `filtered` oder `closed` anzeigt, haben Sie ein Problem. Wenn `80` oder `443` offen ist, stellen Sie sicher, dass es sich nur um Ihre beabsichtigte öffentliche Website oder den Tailscale-Funnel-Endpunkt handelt, nicht versehentlich um das OpenClaw-Gateway.
+
+### Lokale Listener prüfen
+
+Auf Ihrem OpenClaw-Server:
+
+```bash
+# Show all listening ports and what they're bound to
+sudo ss -tulpn | grep LISTEN
+
+# Look for lines like this (good for Serve):
+# tcp   LISTEN 0   128   127.0.0.1:18789   *:*
+#
+# Or this (acceptable for direct tailnet bind with auth):
+# tcp   LISTEN 0   128   100.x.y.z:18789   *:*
+#
+# NOT like this (bad):
+# tcp   LISTEN 0   128   0.0.0.0:18789     *:*
+```
+
+Wenn Sie `0.0.0.0` oder `:::` (IPv6-Äquivalent) sehen, ist dieser Dienst der Welt ausgesetzt.
+
+### Integrierter Sicherheitsaudit
+
+OpenClaw enthält einen [Sicherheitsaudit-Befehl](https://docs.molt.bot/gateway/security), der Ihre Konfiguration auf Sicherheitsbest Practices überprüft:
+
+```bash
+openclaw security audit --deep
+openclaw security audit --deep --fix
+```
+
+Der Audit prüft Gateway-Exposition, Tailscale-Modus, Authentifizierungseinstellungen, Kanalzugriff, Tool-Richtlinie, Plugin-Inventar und Dateiberechtigungen. Betrachten Sie `--fix` als nützlichen Helfer, nicht als Ersatz für das Lesen der Ergebnisse.
+
+---
+
+## Was dies nicht löst
+
+Tailscale beseitigt den größten Fehler: öffentliche Operator-Exposition. Es löst nicht alles:
+
+**Anmeldeinformationsspeicher**: OpenClaw speichert Sitzungstranskripte, OAuth-Tokens und API-Schlüssel auf der Festplatte. Stellen Sie sicher, dass diese die richtigen Dateiberechtigungen haben (`chmod 600` für Dateien, `chmod 700` für private Konfigurationsverzeichnisse) und nicht in der Versionskontrolle sind. Der integrierte Audit prüft dies.
+
+**Plugin-Sandboxing**: Plugins laufen mit den vollen Berechtigungen Ihres Benutzers. Installieren Sie nur Plugins aus vertrauenswürdigen Quellen und überprüfen Sie, welche Fähigkeiten sie anfordern. Das Audit-Tool inventarisiert installierte Plugins.
+
+**Gerätesicherheit**: Wenn jemand Ihr Tailscale-Konto kompromittiert oder ein Gerät in Ihrem Tailnet stiehlt, kann er auf Ihre OpenClaw-Instanz zugreifen. Aktivieren Sie die [Tailscale-Geräteautorisierung](https://tailscale.com/kb/1099/device-authorization/), um eine Genehmigung für neue Geräte zu verlangen.
+
+---
+
+## Bereitstellungs-Checkliste
+
+Bevor Sie Ihre OpenClaw/Moltbot-Instanz als produktionsreif betrachten:
+
+- [ ] Tailscale installiert und auf Server und Client authentifiziert
+- [ ] Gateway auf Loopback mit Tailscale Serve gehalten oder an `tailnet` mit expliziter Authentifizierung gebunden
+- [ ] SSH so konfiguriert, dass Passwort-Auth und Root-Login deaktiviert sind
+- [ ] Firewall (UFW oder iptables/nftables) so konfiguriert, dass `tailscale0` erlaubt und unnötiger öffentlicher Zugriff verweigert wird
+- [ ] Externer nmap-Scan zeigt alle Ports als `filtered` oder `closed`
+- [ ] Internes `ss -tulpn` zeigt Gateway gebunden an `127.0.0.1`, `::1` oder nur die Tailscale-IP
+- [ ] Berechtigungen für Credential-Dateien auf 600 und für private Konfigurationsverzeichnisse auf 700 gesetzt
+- [ ] `openclaw security audit --deep` ausführen und alle Ergebnisse bearbeiten
+- [ ] Falls OpenClaw Tailscale-Verwaltung verwendet wird, sind Exec-Approvals aktiviert
+- [ ] Regelmäßige Backups konfiguriert (OpenClaw-Daten + Konfigurationen)
+
+---
+
+## Ressourcen
+
+- [OpenClaw Sicherheitsleitfaden](https://docs.molt.bot/gateway/security)
+- [OpenClaw Tailscale-Integration](https://docs.molt.bot/gateway/tailscale)
+- [Tailscale Serve CLI-Referenz](https://tailscale.com/docs/reference/tailscale-cli/serve)
+- [Tailscale Funnel](https://tailscale.com/docs/features/tailscale-funnel)
+- [Ubuntu-Server mit UFW absichern](https://tailscale.com/docs/how-to/secure-ubuntu-server-with-ufw)
+- [Sicherheitsaudit: 512 Funde (GitHub Issue)](https://github.com/moltbot/moltbot/issues/1796)
+- [Nmap Netzwerkscan-Leitfaden](https://nmap.org/book/man.html)
+````
