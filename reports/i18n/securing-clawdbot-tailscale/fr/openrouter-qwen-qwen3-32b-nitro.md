@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: securing-clawdbot-tailscale
+- Locale: fr
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-01-26--securing-clawdbot-tailscale/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 58.26
+- Input tokens: 9689
+- Output tokens: 12286
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.003724
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Votre assistant IA m'a donné l'accès au shell
 subTitle: Comment sécuriser votre configuration OpenClaw/Moltbot locale ou sur VPS
@@ -268,3 +286,4 @@ Avant de considérer votre instance OpenClaw/Moltbot comme prête pour la produc
 - [Utiliser UFW pour sécuriser un serveur Ubuntu](https://tailscale.com/docs/how-to/secure-ubuntu-server-with-ufw)  
 - [Audit de sécurité : 512 découvertes (Problème GitHub)](https://github.com/moltbot/moltbot/issues/1796)  
 - [Guide de balayage réseau Nmap](https://nmap.org/book/man.html)
+````
