@@ -4,7 +4,7 @@
 - Model: deepseek/deepseek-v4-flash
 - Target: src/content/posts/2025-01-05--docker-security-tips-for-self-hosting/es/index.mdx
 - Validation: rejected: direct AI SDK translation failed
-- Runtime seconds: 240.02
+- Runtime seconds: 240.13
 - Input tokens: unknown
 - Output tokens: unknown
 - Thinking tokens: unknown
@@ -12,7 +12,7 @@
 - Cache write tokens: unknown
 - Estimated cost: unknown
 - Pricing source: unknown
-- Note: Command failed after 240000ms: bun run i18n:translate:chunked -- --slug docker-security-tips-for-self-hosting --locale es --model deepseek/deepseek-v4-flash --chunk 6p --run-id 2026-05-13T18-15-57-947Z-61322 --run-lock-path /Users/dan/code/oss/dans-blog/.git/codex-i18n-translation-run.json --quiz-concurrency 24
+- Note: Command failed after 240000ms: bun run i18n:translate:chunked -- --slug docker-security-tips-for-self-hosting --locale es --model deepseek/deepseek-v4-flash --chunk 6p --run-id 2026-05-13T19-05-13-381Z-80623 --run-lock-path /Users/dan/code/oss/dans-blog/.git/codex-i18n-translation-run.json --quiz-concurrency 24
 ## Raw Output
 
 ````mdx
