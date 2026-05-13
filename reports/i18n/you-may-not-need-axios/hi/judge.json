@@ -1,0 +1,53 @@
+{
+  "selectedCommit": "f503b93e42d4bd6bfe4214123317c67b9b86637f",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "[मुझे बताइए ✉️](/contact/)",
+      "replacement": "[मुझे बताइए ✉️](../contact/)",
+      "reason": "The link should be relative to match the project structure and other translations in this directory."
+    }
+  ],
+  "rationale": "Candidate f503b93e42d4bd6bfe4214123317c67b9b86637f is the only one that correctly preserves all Gist components and headings. The 'current' and 'qwen' candidates are missing several Gist components (e.g., under 'Uploading multiple files' and 'Recursive Retry Helper') and have empty titles in the frontmatter. This candidate provides a high-quality, natural Hindi translation while maintaining the technical structure of the MDX file.",
+  "slug": "you-may-not-need-axios",
+  "locale": "hi",
+  "candidateCommits": [
+    "f503b93e42d4bd6bfe4214123317c67b9b86637f",
+    "b8f651adb8ffec03db33736222a8e24b6c18e8aa"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "[मुझे बताइए ✉️](/contact/)",
+      "replacement": "[मुझे बताइए ✉️](../contact/)",
+      "reason": "The link should be relative to match the project structure and other translations.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "[मुझे बताइए ✉️](/contact/)",
+      "replacement": "[मुझे बताइए ✉️](../contact/)",
+      "reason": "The link should be relative to match the project structure and other translations in this directory.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug you-may-not-need-axios --locale hi --skip-global",
+    "output": ""
+  }
+}
