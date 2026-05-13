@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: naming-things-real-good
+- Locale: it
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2016-06-01--naming-things-real-good/it/index.mdx
+- Validation: deferred
+- Runtime seconds: 10.57
+- Input tokens: 4063
+- Output tokens: 4368
+- Thinking tokens: unknown
+- Cached input tokens: 512
+- Cache write tokens: 0
+- Estimated cost: $0.001373
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: ''
@@ -115,3 +133,4 @@ Qualche principio guida:
 3. [https://en.wikipedia.org/wiki/Database_normalization](https://en.wikipedia.org/wiki/Database_normalization)
 
 [schema_refactor]: ../bldg-collapse__wsZKhIc_kafcha.gif
+````
