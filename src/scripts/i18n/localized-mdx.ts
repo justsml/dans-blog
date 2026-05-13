@@ -26,9 +26,7 @@ export function normalizeLocaleImportPaths(contents: string) {
 }
 
 export function normalizeLocalizedCandidateBody(sourceContents: string, translatedBody: string) {
-  let result = normalizeLocaleImportPaths(translatedBody
-    .replace(/]\(\.\//g, "](../")
-    .replace(/src="\.\//g, 'src="../'));
+  let result = normalizeLocaleImportPaths(normalizeLocalizedAssetReferences(translatedBody));
 
   result = preserveSourceImportStatementsInBody(sourceContents, result);
 
@@ -36,13 +34,17 @@ export function normalizeLocalizedCandidateBody(sourceContents: string, translat
 }
 
 export function normalizeLocalizedCandidateFile(sourceContents: string, targetContents: string) {
-  return normalizeLocaleImportPaths(preserveSourceImportStatementsInFile(sourceContents, targetContents)
-    .replaceAll("](./", "](../")
-    .replaceAll('src="./', 'src="../')
-    .replaceAll("src='./", "src='../")
-    .replaceAll('="./', '="../')
-    .replaceAll("='./", "='../")
-    .replace(/^(\s*[A-Za-z0-9_-]+:\s*)\.\/(?!\.)/gm, "$1../"));
+  return normalizeLocaleImportPaths(normalizeLocalizedAssetReferences(
+    preserveSourceImportStatementsInFile(sourceContents, targetContents),
+  ));
+}
+
+export function normalizeLocalizedAssetReferences(contents: string) {
+  return contents
+    .replace(/]\(\.\/(?!\.)/g, "](../")
+    .replace(/(src=["'])\.\/(?!\.)/g, "$1../")
+    .replace(/(=["'])\.\/(?!\.)/g, "$1../")
+    .replace(/^(\s*[A-Za-z0-9_-]+:\s*)\.\/(?!\.)/gm, "$1../");
 }
 
 export function normalizeFrontmatterAssetPaths(

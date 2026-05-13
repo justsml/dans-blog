@@ -1,6 +1,6 @@
 # I18n Coverage
 
-Generated at `2026-05-13T20:05:44.879Z`.
+Generated at `2026-05-13T23:13:27.092Z`.
 
 ## Summary
 
@@ -35,17 +35,17 @@ No zero-coverage posts.
 
 | Post | Locale | Candidate reports | Qwen baseline |
 | --- | --- | ---: | --- |
-| upgrade-from-gatsby-to-astro | ja | 2 | yes |
-| upgrade-from-gatsby-to-astro | fr | 2 | no |
-| visualizing-promises | hi | 2 | no |
-| visualizing-promises | ja | 2 | no |
-| docker-server-setup-notes | hi | 2 | no |
-| docker-server-setup-notes | fr | 2 | no |
+| upgrade-from-gatsby-to-astro | ja | 6 | yes |
+| upgrade-from-gatsby-to-astro | fr | 6 | no |
+| visualizing-promises | hi | 6 | no |
+| visualizing-promises | ja | 6 | no |
+| docker-server-setup-notes | hi | 6 | no |
+| docker-server-setup-notes | fr | 6 | no |
 | one-weird-trick-to-speed-up-feature-teams | ja | 5 | no |
-| contribute-to-open-source-the-easy-way | ru | 2 | yes |
-| the-4-pillars-of-collaborative-culture | ru | 2 | no |
-| creating-collaborative-culture | hi | 2 | no |
-| securely-using-environment-variables-in-nodejs | it | 2 | no |
+| contribute-to-open-source-the-easy-way | ru | 6 | yes |
+| the-4-pillars-of-collaborative-culture | ru | 6 | no |
+| creating-collaborative-culture | hi | 6 | no |
+| securely-using-environment-variables-in-nodejs | it | 6 | no |
 | are-promises-broken | ru | 5 | no |
 | promise-gotchas | it | 7 | no |
 | pitfalls-in-promise-docs | ja | 6 | no |

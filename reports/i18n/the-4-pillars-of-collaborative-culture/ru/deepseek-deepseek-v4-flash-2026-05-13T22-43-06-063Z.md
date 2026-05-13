@@ -1,0 +1,15 @@
+# Translation Candidate
+- Slug: the-4-pillars-of-collaborative-culture
+- Locale: ru
+- Model: deepseek/deepseek-v4-flash
+- Target: src/content/posts/2021-03-03--the-4-pillars-of-collaborative-culture/ru/index.mdx
+- Validation: rejected: direct AI SDK translation failed
+- Runtime seconds: 20.46
+- Input tokens: 3705
+- Output tokens: 2786
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.001299
+- Pricing source: local-openrouter-estimate
+- Note: Command failed: git add reports/i18n/the-4-pillars-of-collaborative-culture/ru reports/i18n/the-4-pillars-of-collaborative-culture/candidates.jsonl

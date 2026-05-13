@@ -5,6 +5,7 @@ import { join } from "node:path";
 import {
   assertTranslationLength,
   normalizeFrontmatterAssetPaths,
+  normalizeLocalizedAssetReferences,
   normalizeLocaleImportPaths,
   normalizeLocalizedCandidateBody,
   normalizeLocalizedCandidateFile,
@@ -56,7 +57,7 @@ describe("normalizeLocaleImportPaths", () => {
 });
 
 describe("normalizeLocalizedCandidateBody", () => {
-  test("preserves missing source imports at the top of translated article bodies", () => {
+  test("preserves missing source imports at the top and normalizes locale asset paths", () => {
     expect(normalizeLocalizedCandidateBody(
       [
         "import Demo from '../../../components/Demo';",
@@ -65,6 +66,7 @@ describe("normalizeLocalizedCandidateBody", () => {
       ].join("\n"),
       [
         "![Alt](./image.webp)",
+        "<img src='./inline.webp' />",
         "",
         "Translated body.",
       ].join("\n"),
@@ -73,8 +75,31 @@ describe("normalizeLocalizedCandidateBody", () => {
       "",
       "",
       "![Alt](../image.webp)",
+      "<img src='../inline.webp' />",
       "",
       "Translated body.",
+    ].join("\n"));
+  });
+});
+
+describe("normalizeLocalizedAssetReferences", () => {
+  test("uses parent-relative asset paths for locale markdown, attributes, and frontmatter", () => {
+    expect(normalizeLocalizedAssetReferences([
+      "cover_full_width: ./wide.webp",
+      "![Alt](./diagram.svg)",
+      '<img src="./double.webp" />',
+      "<img src='./single.webp' />",
+      '<Custom image="./component.png" />',
+      "[External](https://example.com/image.webp)",
+      "already: ../done.webp",
+    ].join("\n"))).toBe([
+      "cover_full_width: ../wide.webp",
+      "![Alt](../diagram.svg)",
+      '<img src="../double.webp" />',
+      "<img src='../single.webp' />",
+      '<Custom image="../component.png" />',
+      "[External](https://example.com/image.webp)",
+      "already: ../done.webp",
     ].join("\n"));
   });
 });
