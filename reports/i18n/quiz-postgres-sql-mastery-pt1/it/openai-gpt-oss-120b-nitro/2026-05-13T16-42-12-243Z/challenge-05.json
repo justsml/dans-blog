@@ -1,0 +1,50 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "timestamptz vs timestamp",
+  "translatedTitle": "timestamptz vs timestamp",
+  "translation": {
+    "title": "timestamptz vs timestamp",
+    "group": "Timestamp",
+    "options": [
+      {
+        "text": "Entrambi occupano 8 byte, ma rappresentano semantiche di timestamp diverse"
+      },
+      {
+        "text": "They\""
+      },
+      {
+        "text": "timestamptz conserva qualsiasi fuso orario di input"
+      },
+      {
+        "text": "timestamptz memorizza il nome o l'offset del fuso orario originale"
+      },
+      {
+        "text": "timestamptz memorizza un valore di 2 byte per il fuso orario"
+      },
+      {
+        "text": "timestamptz è il successore di timestamp"
+      }
+    ],
+    "questionProse": [
+      "Qual è l'affermazione **più accurata** su `timestamptz` e `timestamp`?"
+    ],
+    "explanationProse": [
+      "Entrambi sono 8 byte, ma non memorizzano lo stesso tipo di valore.\n\n    Qual è la differenza? Sta nell'analisi dell'input.\n\n    **`timestamptz`**\n    - Normalizza l'input a un punto assoluto nel tempo.\n    - Tiene conto dell'impostazione `TimeZone` del server/connessione quando analizza input senza offset esplicito e quando visualizza l'output.\n\n    **`timestamp`**\n    - Memorizza data e ora senza conversione di fuso orario.\n    - Non conserva né normalizza le informazioni sul fuso orario.\n    \n    \n    **`timestamp`**\n\n    - Memorizza data e ora senza informazioni sul fuso orario.\n    - Utile per archiviare esplicitamente date standardizzate, sia in UTC che in un fuso orario specifico."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"timestamptz vs timestamp\",\n  \"group\": \"Timestamp\",\n  \"options\": [\n    {\n      \"text\": \"Entrambi occupano 8 byte, ma rappresentano semantiche di timestamp diverse\"\n    },\n    {\n      \"text\": \"They\\\"\"\n    },\n    {\n      \"text\": \"timestamptz conserva qualsiasi fuso orario di input\"\n    },\n    {\n      \"text\": \"timestamptz memorizza il nome o l'offset del fuso orario originale\"\n    },\n    {\n      \"text\": \"timestamptz memorizza un valore di 2 byte per il fuso orario\"\n    },\n    {\n      \"text\": \"timestamptz è il successore di timestamp\"\n    }\n  ],\n  \"questionProse\": [\n    \"Qual è l'affermazione **più accurata** su `timestamptz` e `timestamp`?\"\n  ],\n  \"explanationProse\": [\n    \"Entrambi sono 8 byte, ma non memorizzano lo stesso tipo di valore.\\n\\n    Qual è la differenza? Sta nell'analisi dell'input.\\n\\n    **`timestamptz`**\\n    - Normalizza l'input a un punto assoluto nel tempo.\\n    - Tiene conto dell'impostazione `TimeZone` del server/connessione quando analizza input senza offset esplicito e quando visualizza l'output.\\n\\n    **`timestamp`**\\n    - Memorizza data e ora senza conversione di fuso orario.\\n    - Non conserva né normalizza le informazioni sul fuso orario.\\n    \\n    \\n    **`timestamp`**\\n\\n    - Memorizza data e ora senza informazioni sul fuso orario.\\n    - Utile per archiviare esplicitamente date standardizzate, sia in UTC che in un fuso orario specifico.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 917,
+    "outputTokens": 1102,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 2883
+  },
+  "cost": {
+    "inputUsd": 0.000035763,
+    "outputUsd": 0.00019835999999999996,
+    "totalUsd": 0.00023412299999999998,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

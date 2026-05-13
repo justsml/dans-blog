@@ -1,0 +1,44 @@
+{
+  "index": 13,
+  "attempt": 1,
+  "originalTitle": "Check Constraint Timing",
+  "translatedTitle": "Tempistica del vincolo CHECK",
+  "translation": {
+    "title": "Tempistica del vincolo CHECK",
+    "group": "Vincoli",
+    "options": [
+      {
+        "text": "Immediatamente per le righe nuove o modificate"
+      },
+      {
+        "text": "Al commit della transazione"
+      },
+      {
+        "text": "Alla prossima query"
+      },
+      {
+        "text": "Mai - i vincoli vengono controllati solo su INSERT"
+      }
+    ],
+    "questionProse": [
+      "Quando viene verificato questo vincolo?"
+    ],
+    "explanationProse": [
+      "`NOT VALID` constraints:\n    - Vengono controllati immediatamente per nuovi inserimenti e aggiornamenti\n    - Non convalidano le righe esistenti\n    - È possibile convalidare le righe esistenti in seguito con `VALIDATE CONSTRAINT`\n    - Sono utili per tabelle grandi\n    \n    Without `NOT VALID`:\n    - Il vincolo viene controllato immediatamente\n    - Tutte le righe esistenti sono convalidate\n    - Può essere lento su tabelle grandi"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Tempistica del vincolo CHECK\",\n  \"group\": \"Vincoli\",\n  \"options\": [\n    {\n      \"text\": \"Immediatamente per le righe nuove o modificate\"\n    },\n    {\n      \"text\": \"Al commit della transazione\"\n    },\n    {\n      \"text\": \"Alla prossima query\"\n    },\n    {\n      \"text\": \"Mai - i vincoli vengono controllati solo su INSERT\"\n    }\n  ],\n  \"questionProse\": [\n    \"Quando viene verificato questo vincolo?\"\n  ],\n  \"explanationProse\": [\n    \"`NOT VALID` constraints:\\n    - Vengono controllati immediatamente per nuovi inserimenti e aggiornamenti\\n    - Non convalidano le righe esistenti\\n    - È possibile convalidare le righe esistenti in seguito con `VALIDATE CONSTRAINT`\\n    - Sono utili per tabelle grandi\\n    \\n    Without `NOT VALID`:\\n    - Il vincolo viene controllato immediatamente\\n    - Tutte le righe esistenti sono convalidate\\n    - Può essere lento su tabelle grandi\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 786,
+    "outputTokens": 679,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 795
+  },
+  "cost": {
+    "inputUsd": 0.000030654,
+    "outputUsd": 0.00012222,
+    "totalUsd": 0.000152874,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

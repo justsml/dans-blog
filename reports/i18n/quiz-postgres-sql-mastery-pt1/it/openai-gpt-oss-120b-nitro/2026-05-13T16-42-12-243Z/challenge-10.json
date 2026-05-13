@@ -1,0 +1,50 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Identify Invalid Types",
+  "translatedTitle": "Identifica il tipo non valido",
+  "translation": {
+    "title": "Identifica il tipo non valido",
+    "group": "Tipi Postgres",
+    "options": [
+      {
+        "text": "box"
+      },
+      {
+        "text": "line"
+      },
+      {
+        "text": "point"
+      },
+      {
+        "text": "circle"
+      },
+      {
+        "text": "polygon"
+      },
+      {
+        "text": "triangle"
+      }
+    ],
+    "questionProse": [
+      "Quale di questi ❌ non è un tipo PostgreSQL valido?"
+    ],
+    "explanationProse": [
+      "PostgreSQL ha un ricco insieme di tipi specializzati, ma `triangle` non è tra questi.\n\nCredo che le prossime versioni di [GEOS](https://libgeos.org/) includeranno il supporto `Triangle` OGC/WKT, il che significa che dovrebbe essere eventualmente incluso in PostGIS. (In pratica, questa risposta potrebbe essere sbagliata in futuro.)\n\nI tipi specializzati corretti includono:\n- `box` (scatola rettangolare)\n- `line` (linea infinita)\n- `point` (punto 2D)\n- `circle` (cerchio 2D)\n- `polygon` (poligono 2D)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Identifica il tipo non valido\",\n  \"group\": \"Tipi Postgres\",\n  \"options\": [\n    {\n      \"text\": \"box\"\n    },\n    {\n      \"text\": \"line\"\n    },\n    {\n      \"text\": \"point\"\n    },\n    {\n      \"text\": \"circle\"\n    },\n    {\n      \"text\": \"polygon\"\n    },\n    {\n      \"text\": \"triangle\"\n    }\n  ],\n  \"questionProse\": [\n    \"Quale di questi ❌ non è un tipo PostgreSQL valido?\"\n  ],\n  \"explanationProse\": [\n    \"PostgreSQL ha un ricco insieme di tipi specializzati, ma `triangle` non è tra questi.\\n\\nCredo che le prossime versioni di [GEOS](https://libgeos.org/) includeranno il supporto `Triangle` OGC/WKT, il che significa che dovrebbe essere eventualmente incluso in PostGIS. (In pratica, questa risposta potrebbe essere sbagliata in futuro.)\\n\\nI tipi specializzati corretti includono:\\n- `box` (scatola rettangolare)\\n- `line` (linea infinita)\\n- `point` (punto 2D)\\n- `circle` (cerchio 2D)\\n- `polygon` (poligono 2D)\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 831,
+    "outputTokens": 773,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 2164
+  },
+  "cost": {
+    "inputUsd": 0.000032409,
+    "outputUsd": 0.00013914,
+    "totalUsd": 0.000171549,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
