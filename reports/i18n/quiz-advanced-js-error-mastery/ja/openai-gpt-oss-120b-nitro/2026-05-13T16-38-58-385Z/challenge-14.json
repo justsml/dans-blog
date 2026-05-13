@@ -1,0 +1,44 @@
+{
+  "index": 13,
+  "attempt": 1,
+  "originalTitle": "Object vs Error Detection",
+  "translatedTitle": "オブジェクト vs エラー検出",
+  "translation": {
+    "title": "オブジェクト vs エラー検出",
+    "group": "エラーバウンダリ",
+    "options": [
+      {
+        "text": "true, true"
+      },
+      {
+        "text": "false, false"
+      },
+      {
+        "text": "true, false"
+      },
+      {
+        "text": "false, true"
+      }
+    ],
+    "questionProse": [
+      "これらのチェックは何を返す？"
+    ],
+    "explanationProse": [
+      "`instanceof Error` はオブジェクトが Error コンストラクタで作られていないため `false` を返す。`Object.prototype.toString.call()` も `false` を返す（実際は `'[object Object]'` が返る）ので、内部の `[[Class]]` スロットをチェックしている。両方の手法ともこの偽エラーオブジェクトを正しく判別している。"
+    ]
+  },
+  "rawText": "{\n \"title\": \"オブジェクト vs エラー検出\",\n  \"group\": \"エラーバウンダリ\",\n  \"options\": [\n    {\n      \"text\": \"true, true\"\n    },\n    {\n      \"text\": \"false, false\"\n    },\n    {\n      \"text\": \"true, false\"\n    },\n    {\n      \"text\": \"false, true\"\n    }\n  ],\n  \"questionProse\": [\n    \"これらのチェックは何を返す？\"\n  ],\n  \"explanationProse\": [\n    \"`instanceof Error` はオブジェクトが Error コンストラクタで作られていないため `false` を返す。`Object.prototype.toString.call()` も `false` を返す（実際は `'[object Object]'` が返る）ので、内部の `[[Class]]` スロットをチェックしている。両方の手法ともこの偽エラーオブジェクトを正しく判別している。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 779,
+    "outputTokens": 539,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1718
+  },
+  "cost": {
+    "inputUsd": 0.000030381,
+    "outputUsd": 0.00009701999999999999,
+    "totalUsd": 0.000127401,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

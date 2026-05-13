@@ -1,0 +1,44 @@
+{
+  "index": 11,
+  "attempt": 1,
+  "originalTitle": "Promise Rejection Values",
+  "translatedTitle": "Promise の拒否値",
+  "translation": {
+    "title": "Promise の拒否値",
+    "group": "非同期エラー",
+    "options": [
+      {
+        "text": "常に Error オブジェクト"
+      },
+      {
+        "text": "任意の値を拒否できる"
+      },
+      {
+        "text": "文字列と Error オブジェクトだけ"
+      },
+      {
+        "text": "自動的に Error にラップされる"
+      }
+    ],
+    "questionProse": [
+      "`Promise.reject()` は何を受け取れる？"
+    ],
+    "explanationProse": [
+      "`throw` と同様に、`Promise.reject()` は任意の値（文字列、オブジェクト、数値など）を受け取れます。これにより `\"string\"`、`404`、`42` が出力されます。Promise チェーンで捕捉した値の型は常に確認しましょう。特にサードパーティのコードが Error 以外で拒否する可能性がある場合は注意が必要です。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Promise の拒否値\",\n  \"group\": \"非同期エラー\",\n  \"options\": [\n    {\n      \"text\": \"常に Error オブジェクト\"\n    },\n    {\n      \"text\": \"任意の値を拒否できる\"\n    },\n    {\n      \"text\": \"文字列と Error オブジェクトだけ\"\n    },\n    {\n      \"text\": \"自動的に Error にラップされる\"\n    }\n  ],\n  \"questionProse\": [\n    \"`Promise.reject()` は何を受け取れる？\"\n  ],\n  \"explanationProse\": [\n    \"`throw` と同様に、`Promise.reject()` は任意の値（文字列、オブジェクト、数値など）を受け取れます。これにより `\\\"string\\\"`、`404`、`42` が出力されます。Promise チェーンで捕捉した値の型は常に確認しましょう。特にサードパーティのコードが Error 以外で拒否する可能性がある場合は注意が必要です。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 785,
+    "outputTokens": 633,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 538
+  },
+  "cost": {
+    "inputUsd": 0.000030615,
+    "outputUsd": 0.00011394,
+    "totalUsd": 0.000144555,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

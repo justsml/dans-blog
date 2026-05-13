@@ -1,0 +1,44 @@
+{
+  "index": 3,
+  "attempt": 1,
+  "originalTitle": "Cross-Frame instanceof",
+  "translatedTitle": "クロスフレーム instanceof",
+  "translation": {
+    "title": "クロスフレーム instanceof",
+    "group": "型チェックの裏技",
+    "options": [
+      {
+        "text": "常に true"
+      },
+      {
+        "text": "常に false"
+      },
+      {
+        "text": "フレーム間では false になることがある"
+      },
+      {
+        "text": "エラーがスローされる"
+      }
+    ],
+    "questionProse": [
+      "iframe 間で `instanceof Error` はどうなる？"
+    ],
+    "explanationProse": [
+      "`instanceof` は異なる実行コンテキスト（iframe や worker）間では `false` を返すことがあります。各コンテキストは独自の `Error` コンストラクタを持っているためです。コンテキストを超えて確実にエラーを判定したい場合は `Object.prototype.toString.call(obj) === '[object Error]'` を使いましょう。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"クロスフレーム instanceof\",\n  \"group\": \"型チェックの裏技\",\n  \"options\": [\n    {\n      \"text\": \"常に true\"\n    },\n    {\n      \"text\": \"常に false\"\n    },\n    {\n      \"text\": \"フレーム間では false になることがある\"\n    },\n    {\n      \"text\": \"エラーがスローされる\"\n    }\n  ],\n  \"questionProse\": [\n    \"iframe 間で `instanceof Error` はどうなる？\"\n  ],\n  \"explanationProse\": [\n    \"`instanceof` は異なる実行コンテキスト（iframe や worker）間では `false` を返すことがあります。各コンテキストは独自の `Error` コンストラクタを持っているためです。コンテキストを超えて確実にエラーを判定したい場合は `Object.prototype.toString.call(obj) === '[object Error]'` を使いましょう。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 775,
+    "outputTokens": 575,
+    "cacheReadTokens": 384,
+    "cacheWriteTokens": 0,
+    "durationMs": 496
+  },
+  "cost": {
+    "inputUsd": 0.000030225000000000003,
+    "outputUsd": 0.0001035,
+    "totalUsd": 0.000133725,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

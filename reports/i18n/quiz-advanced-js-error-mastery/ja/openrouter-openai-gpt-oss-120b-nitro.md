@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-advanced-js-error-mastery
+- Locale: ja
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2025-11-04--quiz-advanced-js-error-mastery/ja/index.mdx
+- Validation: deferred
+- Runtime seconds: 10.70
+- Input tokens: 13150
+- Output tokens: 8436
+- Thinking tokens: unknown
+- Cached input tokens: 3456
+- Cache write tokens: 0
+- Estimated cost: $0.002031
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: 'クイズ: 高度なJSエラーマスター'
 subTitle: 例外は本当に例外的ですか？
@@ -493,3 +511,4 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 シリアライズの落とし穴からクロスコンテキストの `instanceof` 失敗まで、こういった高度な概念がジュニア開発者と、​すでに​傷だらけの​ベテラン​を分けます。
 
 もっと挑戦したいですか？ 追加の JavaScript、アルゴリズム、その他の脳トレが揃った [全クイズコレクション](/challenges/) をチェックしてください。
+````

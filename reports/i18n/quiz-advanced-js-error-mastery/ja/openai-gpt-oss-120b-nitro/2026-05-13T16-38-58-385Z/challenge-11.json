@@ -1,0 +1,44 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "Express Response Error",
+  "translatedTitle": "Express レスポンスエラー",
+  "translation": {
+    "title": "Express レスポンスエラー",
+    "group": "API の落とし穴",
+    "options": [
+      {
+        "text": "エラーオブジェクト全体を送信する"
+      },
+      {
+        "text": "`{\"error\":{}}` を送信する"
+      },
+      {
+        "text": "サーバーエラーをスローする"
+      },
+      {
+        "text": "エラーメッセージだけを送信する"
+      }
+    ],
+    "questionProse": [
+      "クライアントに何が送られる？"
+    ],
+    "explanationProse": [
+      "`res.json()` は内部で `JSON.stringify()` を使用するため、Error オブジェクトは `{}` になります。クライアントは `{\"error\":{}}` を受け取ります。これを修正するには、`res.json({ error: error.message })` または `res.json({ error: { message: error.message, name: error.name } })` を使用します。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Express レスポンスエラー\",\n  \"group\": \"API の落とし穴\",\n  \"options\": [\n    {\n      \"text\": \"エラーオブジェクト全体を送信する\"\n    },\n    {\n      \"text\": \"`{\\\"error\\\":{}}` を送信する\"\n    },\n    {\n      \"text\": \"サーバーエラーをスローする\"\n    },\n    {\n      \"text\": \"エラーメッセージだけを送信する\"\n    }\n  ],\n  \"questionProse\": [\n    \"クライアントに何が送られる？\"\n  ],\n  \"explanationProse\": [\n    \"`res.json()` は内部で `JSON.stringify()` を使用するため、Error オブジェクトは `{}` になります。クライアントは `{\\\"error\\\":{}}` を受け取ります。これを修正するには、`res.json({ error: error.message })` または `res.json({ error: { message: error.message, name: error.name } })` を使用します。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 793,
+    "outputTokens": 702,
+    "cacheReadTokens": 384,
+    "cacheWriteTokens": 0,
+    "durationMs": 594
+  },
+  "cost": {
+    "inputUsd": 0.000030927,
+    "outputUsd": 0.00012636,
+    "totalUsd": 0.000157287,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "index": 12,
+  "attempt": 1,
+  "originalTitle": "Non-Standard Properties",
+  "translatedTitle": "非標準プロパティ",
+  "translation": {
+    "title": "非標準プロパティ",
+    "group": "エラー プロパティ",
+    "options": [
+      {
+        "text": "常に利用可能"
+      },
+      {
+        "text": "すべての環境で存在しない可能性がある"
+      },
+      {
+        "text": "Node.js のみ"
+      },
+      {
+        "text": "非推奨で削除された"
+      }
+    ],
+    "questionProse": [
+      "`error.code` と `error.errno` の信頼性はどれくらいですか？"
+    ],
+    "explanationProse": [
+      "`code` や `errno` のようなプロパティは環境固有（この場合は Node.js）で、標準の Error オブジェクトには含まれません。ブラウザのエラーにはこれらのプロパティはありません。常に存在を確認しましょう：`if (err.code === 'ENOENT')` のように、存在すると仮定しないでください。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"非標準プロパティ\",\n  \"group\": \"エラー プロパティ\",\n  \"options\": [\n    {\n      \"text\": \"常に利用可能\"\n    },\n    {\n      \"text\": \"すべての環境で存在しない可能性がある\"\n    },\n    {\n      \"text\": \"Node.js のみ\"\n    },\n    {\n      \"text\": \"非推奨で削除された\"\n    }\n  ],\n  \"questionProse\": [\n    \"`error.code` と `error.errno` の信頼性はどれくらいですか？\"\n  ],\n  \"explanationProse\": [\n    \"`code` や `errno` のようなプロパティは環境固有（この場合は Node.js）で、標準の Error オブジェクトには含まれません。ブラウザのエラーにはこれらのプロパティはありません。常に存在を確認しましょう：`if (err.code === 'ENOENT')` のように、存在すると仮定しないでください。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 785,
+    "outputTokens": 571,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 452
+  },
+  "cost": {
+    "inputUsd": 0.000030615,
+    "outputUsd": 0.00010278,
+    "totalUsd": 0.000133395,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

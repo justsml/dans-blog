@@ -1,0 +1,44 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "instanceof Inheritance",
+  "translatedTitle": "instanceof 継承",
+  "translation": {
+    "title": "instanceof 継承",
+    "group": "型チェックのトリック",
+    "options": [
+      {
+        "text": "true, true, true"
+      },
+      {
+        "text": "true, false, false"
+      },
+      {
+        "text": "false, true, true"
+      },
+      {
+        "text": "true, true, false"
+      }
+    ],
+    "questionProse": [
+      "これらのチェックの結果は？"
+    ],
+    "explanationProse": [
+      "すべてのチェックは `true` を返します。`CustomError` は `Error` を継承し、`Error` は `Object` を継承しています。`instanceof` 演算子はプロトタイプチェーン全体を確認するので、`CustomError` のインスタンスは `Error` と `Object` のインスタンスでもあります。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"instanceof 継承\",\n  \"group\": \"型チェックのトリック\",\n  \"options\": [\n    {\n      \"text\": \"true, true, true\"\n    },\n    {\n      \"text\": \"true, false, false\"\n    },\n    {\n      \"text\": \"false, true, true\"\n    },\n    {\n      \"text\": \"true, true, false\"\n    }\n  ],\n  \"questionProse\": [\n    \"これらのチェックの結果は？\"\n  ],\n  \"explanationProse\": [\n    \"すべてのチェックは `true` を返します。`CustomError` は `Error` を継承し、`Error` は `Object` を継承しています。`instanceof` 演算子はプロトタイプチェーン全体を確認するので、`CustomError` のインスタンスは `Error` と `Object` のインスタンスでもあります。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 778,
+    "outputTokens": 498,
+    "cacheReadTokens": 384,
+    "cacheWriteTokens": 0,
+    "durationMs": 720
+  },
+  "cost": {
+    "inputUsd": 0.000030342,
+    "outputUsd": 0.00008963999999999999,
+    "totalUsd": 0.00011998199999999999,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

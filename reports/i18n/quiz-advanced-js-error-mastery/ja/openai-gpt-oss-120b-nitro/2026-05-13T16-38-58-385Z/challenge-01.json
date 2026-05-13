@@ -1,0 +1,44 @@
+{
+  "index": 0,
+  "attempt": 1,
+  "originalTitle": "The Empty Object Mystery",
+  "translatedTitle": "空オブジェクトの謎",
+  "translation": {
+    "title": "空オブジェクトの謎",
+    "group": "シリアライズの驚き",
+    "options": [
+      {
+        "text": "{\"message\":\"Oops\",\"name\":\"Error\"}"
+      },
+      {
+        "text": "{}"
+      },
+      {
+        "text": "{\"error\":\"Oops\"}"
+      },
+      {
+        "text": "null"
+      }
+    ],
+    "questionProse": [
+      "`JSON.stringify(error)` は何を返す？"
+    ],
+    "explanationProse": [
+      "Error オブジェクトは列挙できないプロパティ（`message`、`name`、`stack`）を持つため、`JSON.stringify()` は `{}` を返します。これは API 応答でエラーを送る際の典型的な落とし穴です。`JSON.stringify(error, Object.getOwnPropertyNames(error))` を使うか、代わりにプレーンオブジェクトを作成してください。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"空オブジェクトの謎\",\n  \"group\": \"シリアライズの驚き\",\n  \"options\": [\n    {\n      \"text\": \"{\\\"message\\\":\\\"Oops\\\",\\\"name\\\":\\\"Error\\\"}\"\n    },\n    {\n      \"text\": \"{}\"\n    },\n    {\n      \"text\": \"{\\\"error\\\":\\\"Oops\\\"}\"\n    },\n    {\n      \"text\": \"null\"\n    }\n  ],\n  \"questionProse\": [\n    \"`JSON.stringify(error)` は何を返す？\"\n  ],\n  \"explanationProse\": [\n    \"Error オブジェクトは列挙できないプロパティ（`message`、`name`、`stack`）を持つため、`JSON.stringify()` は `{}` を返します。これは API 応答でエラーを送る際の典型的な落とし穴です。`JSON.stringify(error, Object.getOwnPropertyNames(error))` を使うか、代わりにプレーンオブジェクトを作成してください。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 782,
+    "outputTokens": 549,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 655
+  },
+  "cost": {
+    "inputUsd": 0.000030498000000000002,
+    "outputUsd": 0.00009881999999999999,
+    "totalUsd": 0.00012931799999999998,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
