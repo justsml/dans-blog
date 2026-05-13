@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: semantic-vector-search-landscape
+- Locale: de
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-05-01--semantic-vector-search-landscape/de/index.mdx
+- Validation: passed
+- Runtime seconds: 43.00
+- Input tokens: 16122
+- Output tokens: 19152
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.005886
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: ''
 subTitle: ''
@@ -372,3 +390,4 @@ Die meisten Produktions-Suchsysteme benötigen mehr als eine Schicht:
 Das sind keine konkurrierenden Tools. Sie sind komplementär. Ein gut gestaltetes Suchsystem wählt die richtige Schicht für jede Abfragestruktur – und wenn sich Abfragestrukturen überschneiden, führt es mehrere Schichten aus und fusioniert die Ergebnisse.  
 
 Die Teams, die gute Suchfunktionen liefern, verstehen die gesamte Stack. Diejenigen, die das nicht tun, greifen zu einer Vektor-Datenbank, embedden alles und fragen sich, warum exakte Suchen manchmal den falschen Datensatz zurückgeben.
+````
