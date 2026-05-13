@@ -440,6 +440,14 @@ function articleStateStyle(row: ArticleRow) {
   return "gray";
 }
 
+function articleStateRank(row: ArticleRow) {
+  const state = articleState(row);
+  if (state === "running") return 0;
+  if (state === "partial") return 1;
+  if (state === "missing") return 2;
+  return 3;
+}
+
 function writeAt(term: any, x: number, y: number, value: string, width: number, style?: string) {
   const text = fitCell(value, width);
   term.moveTo(x, y);
@@ -470,6 +478,7 @@ function collectRows(): ArticleRow[] {
       ) as Record<ActiveLocale, CandidateSummary>,
     }))
     .sort((a, b) =>
+      articleStateRank(a) - articleStateRank(b) ||
       completionRatio(a) - completionRatio(b) ||
       (b.date ?? "").localeCompare(a.date ?? "") ||
       a.slug.localeCompare(b.slug),
@@ -941,6 +950,7 @@ function renderLocalePanel(rows: ArticleRow[]) {
 
 function formatCandidateCell(summary: CandidateSummary) {
   const value = `${summary.count}/${summary.expected}`;
+  if (summary.isInProgress) return `**${value} running**`;
   if (summary.count >= summary.expected) return value;
   if (summary.count === 0) return `_${value}_`;
   return `**${value}**`;
