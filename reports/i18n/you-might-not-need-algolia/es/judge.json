@@ -1,0 +1,38 @@
+{
+  "selectedCommit": "61d32186d7afa41760ec6adf5d041224e5ecadd2",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 10,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The selected candidate (61d3218) is superior to the 'current' version because it avoids the trailing horizontal rule error found in the current file. It captures Dan's voice effectively, using natural Spanish phrasing for metaphors like 'infrastructure cosplay' (teatro de infraestructura) and 'trench coat' (gabardina). It also uses high-quality typographic quotes (« ») which are appropriate for the target language's formal style while maintaining a direct tone.",
+  "slug": "you-might-not-need-algolia",
+  "locale": "es",
+  "candidateCommits": [
+    "61d32186d7afa41760ec6adf5d041224e5ecadd2",
+    "b4bf926d29f4d003e417d9b95ad1e23d05a7575f",
+    "cb10b83f26822ad2858167d5f6cdfcfe3fc10b8e"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "medium",
+      "match": "teatro de infraestructura",
+      "replacement": "infraestructura de fachada",
+      "reason": "'Infrastructure cosplay' is a metaphor for unnecessary complexity that looks like 'real' enterprise infra. 'Teatro de infraestructura' is okay, but 'infraestructura de fachada' or 'postureo de infraestructura' fits the tone better. However, 'teatro' is acceptable.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug you-might-not-need-algolia --locale es --skip-global",
+    "output": ""
+  }
+}
