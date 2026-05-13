@@ -1,0 +1,120 @@
+{
+  "runId": "openai-gpt-oss-120b-nitro@2026-05-13T15-08-41-446Z",
+  "slug": "the-8-byte-timestamp-that-destroyed-our-database",
+  "locale": "de",
+  "model": "openai/gpt-oss-120b:nitro",
+  "modelPath": "openai-gpt-oss-120b-nitro",
+  "createdAt": "2026-05-13T15:08:55.110Z",
+  "sourcePath": "src/content/posts/2025-12-29--the-8-byte-timestamp-that-destroyed-our-database/index.mdx",
+  "targetPath": "src/content/posts/2025-12-29--the-8-byte-timestamp-that-destroyed-our-database/de/index.mdx",
+  "candidatePath": "reports/i18n/the-8-byte-timestamp-that-destroyed-our-database/de/openai-gpt-oss-120b-nitro/2026-05-13T15-08-41-446Z/candidate.mdx",
+  "sourceHash": "4d98d485a209ef83adfb3ec4df7994acdb6c23964910ec139710bf29772952fe",
+  "outputHash": "f7c5435cfd99a7dbd7f3d1a45860df45c1af17d7403f934a2ed05e44898f4680",
+  "reasoningEffort": "low",
+  "temperature": 0.3,
+  "maxTokens": 16000,
+  "timeoutMs": 200000,
+  "articleSummary": "The article argues that PostgreSQL’s `TIMESTAMP` and `TIMESTAMPTZ` types serve fundamentally different purposes: `TIMESTAMPTZ` stores an absolute moment in UTC and only converts to a session’s timezone on read, while plain `TIMESTAMP` (or `TIME` with a separate zone field) represents a wall‑clock reading that must stay fixed to a specific locale. Using the train‑ticket metaphor, the author shows how to model departures, arrivals, and durations with a mix of `TIMESTAMPTZ` for absolute events, text zone identifiers for display context, and `INTERVAL` for elapsed time, and warns against mis‑using a single type for both. The piece is an instructional analysis aimed at backend developers and DBAs building multi‑region applications, peppered with practical rules (default to `TIMESTAMPTZ`, store timezone context separately) and cautionary anecdotes about precision mismatches and equality queries.",
+  "totalInputTokens": 10081,
+  "totalOutputTokens": 2878,
+  "totalCacheReadTokens": 2304,
+  "totalCacheWriteTokens": 0,
+  "totalDurationMs": 11119,
+  "totalCostUsd": 0.0009111990000000001,
+  "pricingSource": "local-openrouter-estimate",
+  "telemetry": {
+    "model": "openai/gpt-oss-120b:nitro",
+    "chunkSize": "6p",
+    "totalChunks": 9,
+    "totalInputTokens": 10081,
+    "totalOutputTokens": 2878,
+    "totalCacheReadTokens": 2304,
+    "totalCacheWriteTokens": 0,
+    "totalDurationMs": 11119,
+    "totalCostUsd": 0.0009111990000000001,
+    "pricingSource": "local-openrouter-estimate",
+    "chunks": [
+      {
+        "index": 0,
+        "inputTokens": 956,
+        "outputTokens": 202,
+        "cacheReadTokens": 256,
+        "cacheWriteTokens": 0,
+        "durationMs": 1096,
+        "costUsd": 0.00007364399999999999
+      },
+      {
+        "index": 1,
+        "inputTokens": 1171,
+        "outputTokens": 389,
+        "cacheReadTokens": 256,
+        "cacheWriteTokens": 0,
+        "durationMs": 1391,
+        "costUsd": 0.000115689
+      },
+      {
+        "index": 2,
+        "inputTokens": 1133,
+        "outputTokens": 308,
+        "cacheReadTokens": 256,
+        "cacheWriteTokens": 0,
+        "durationMs": 1148,
+        "costUsd": 0.000099627
+      },
+      {
+        "index": 3,
+        "inputTokens": 1082,
+        "outputTokens": 308,
+        "cacheReadTokens": 256,
+        "cacheWriteTokens": 0,
+        "durationMs": 1621,
+        "costUsd": 0.00009763799999999999
+      },
+      {
+        "index": 4,
+        "inputTokens": 1172,
+        "outputTokens": 383,
+        "cacheReadTokens": 256,
+        "cacheWriteTokens": 0,
+        "durationMs": 1612,
+        "costUsd": 0.00011464799999999999
+      },
+      {
+        "index": 5,
+        "inputTokens": 1113,
+        "outputTokens": 304,
+        "cacheReadTokens": 256,
+        "cacheWriteTokens": 0,
+        "durationMs": 1014,
+        "costUsd": 0.00009812699999999999
+      },
+      {
+        "index": 6,
+        "inputTokens": 1137,
+        "outputTokens": 332,
+        "cacheReadTokens": 256,
+        "cacheWriteTokens": 0,
+        "durationMs": 1331,
+        "costUsd": 0.000104103
+      },
+      {
+        "index": 7,
+        "inputTokens": 1177,
+        "outputTokens": 335,
+        "cacheReadTokens": 256,
+        "cacheWriteTokens": 0,
+        "durationMs": 1024,
+        "costUsd": 0.000106203
+      },
+      {
+        "index": 8,
+        "inputTokens": 1140,
+        "outputTokens": 317,
+        "cacheReadTokens": 256,
+        "cacheWriteTokens": 0,
+        "durationMs": 882,
+        "costUsd": 0.00010151999999999999
+      }
+    ]
+  }
+}

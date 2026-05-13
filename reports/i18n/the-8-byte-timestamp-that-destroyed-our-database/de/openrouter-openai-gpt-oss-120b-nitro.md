@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: the-8-byte-timestamp-that-destroyed-our-database
+- Locale: de
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2025-12-29--the-8-byte-timestamp-that-destroyed-our-database/de/index.mdx
+- Validation: passed
+- Runtime seconds: 11.12
+- Input tokens: 10081
+- Output tokens: 2878
+- Thinking tokens: unknown
+- Cached input tokens: 2304
+- Cache write tokens: 0
+- Estimated cost: $0.000911
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Ihr Zeitstempel ist eine Lüge
 subTitle: Was mir ein Zugticket über die Speicherung von Zeit in Datenbanken lehrte
@@ -138,3 +156,4 @@ Entscheidend ist, welche Frage Sie beantworten wollen: „Wann ist das passiert?
 - [ISO 8601 Date and Time Format](https://en.wikipedia.org/wiki/ISO_8601)
 - [Time Zone Database (IANA)](https://www.iana.org/time-zones)
 - [Dealing with Timestamps in Distributed Systems](https://www.postgresql.org/docs/current/functions-datetime.html)
+````
