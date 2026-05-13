@@ -4,7 +4,7 @@
   "slug": "mastering-functional-pipelines-passing-state",
   "locale": "ja",
   "startedAt": "2026-05-13T18:44:00.230Z",
-  "updatedAt": "2026-05-13T18:44:30.727Z",
+  "updatedAt": "2026-05-13T18:46:29.157Z",
   "modelsRequested": [
     "openrouter/openai/gpt-oss-120b:nitro",
     "openrouter/qwen/qwen3-32b:nitro",
@@ -13,24 +13,24 @@
     "qwen/qwen3.6-35b-a3b",
     "qwen/qwen3.5-9b"
   ],
-  "attemptedModels": 1,
+  "attemptedModels": 2,
   "skippedModels": 1,
-  "rejectedModels": 1,
+  "rejectedModels": 2,
   "candidateModels": 0,
   "totals": {
-    "inputTokens": 10464,
-    "outputTokens": 7934,
+    "inputTokens": 20833,
+    "outputTokens": 17409,
     "thinkingTokens": 0,
-    "cachedInputTokens": 2048,
+    "cachedInputTokens": 3200,
     "cacheWriteTokens": 0,
-    "estimatedCostUsd": 0.002741,
+    "estimatedCostUsd": 0.006688,
     "hasUnknownInputTokens": false,
     "hasUnknownOutputTokens": false,
     "hasUnknownThinkingTokens": true,
     "hasUnknownCachedInputTokens": false,
     "hasUnknownCacheWriteTokens": false,
     "hasUnknownEstimatedCost": false,
-    "runtimeSeconds": "20.45"
+    "runtimeSeconds": "84.73"
   },
   "attempts": [
     {
@@ -54,6 +54,24 @@
           "cacheWrite": 0
         },
         "estimatedCostUsd": 0.0027412799999999996,
+        "pricingSource": "local-openrouter-estimate"
+      }
+    },
+    {
+      "model": "deepseek/deepseek-v4-flash",
+      "status": "rejected",
+      "validationStatus": "rejected: direct AI SDK translation failed",
+      "reportPath": "reports/i18n/mastering-functional-pipelines-passing-state/ja/deepseek-deepseek-v4-flash.md",
+      "note": "Command failed: bun run i18n:translate:chunked -- --slug mastering-functional-pipelines-passing-state --locale ja --model deepseek/deepseek-v4-flash --chunk 6p --run-id 2026-05-13T18-15-57-947Z-61322 --run-lock-path /Users/dan/code/oss/dans-blog/.git/codex-i18n-translation-run.json --quiz-concurrency 24 (code 1)",
+      "telemetry": {
+        "runtimeSeconds": "64.28",
+        "tokens": {
+          "input": 10369,
+          "output": 9475,
+          "cached": 1152,
+          "cacheWrite": 0
+        },
+        "estimatedCostUsd": 0.003946605600000001,
         "pricingSource": "local-openrouter-estimate"
       }
     }
