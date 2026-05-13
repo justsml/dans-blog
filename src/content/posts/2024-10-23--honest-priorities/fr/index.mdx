@@ -1,7 +1,7 @@
 ---
 social_image: ../desktop-social.webp
-title: ''
-subTitle: Le QCM est-il le meilleur choix ?
+title: Le piège de la priorité
+subTitle: Le choix multiple est‑il le meilleurchoix ?
 category: Thoughts
 subCategory: Agile
 date: '2024-10-23'
@@ -22,102 +22,102 @@ cover_credit: >-
   Mroz</a> on <a
   href="https://unsplash.com/photos/photo-of-tram-beside-waiting-station-during-nighttime-023T4jyCRqA?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
 ---
-## Le piège du menu déroulant `Priority`  
+## Le piège du menu déroulant `Priority`
 
-<aside className="breakout">  
-💡 À mesure qu'une organisation grandit, elle connaîtra inévitablement une surcharge de tâches croissante. Finalement, la taille de la liste *exigera* une priorisation.  
-</aside>  
+<aside className="breakout">
+💡 À mesure qu’une organisation grandit, son backlog gonfle inévitablement. Au bout du compte, la taille de la liste *exige* une priorisation.
+</aside>
 
-## Une histoire de start-up  
+## Une histoire de startup
 
-Sans échec, vos administrateurs Jira proposeront une solution : voici le champ de menu déroulant `Priority` ! (Astuce pour développeurs d'entreprises : il pourrait s'appeler `Priority2` ou `P-level`.)  
+Invariablement, vos administrateurs Jira proposeront une solution : voilà un champ déroulant `Priority` ! (Astuce pro pour les devs d’entreprise : il peut s’appeler `Priority2` ou `P-level`.)
 
-Curieusement, 100 % des entreprises choisissent entre `P1, P2, P3, P4` ou `Low, Med, High, and Critical` — apparemment, il n'existe pas d'autres options.  
+Curieusement, 100 % des entreprises se limitent à `P1, P2, P3, P4` ou `Low, Med, High, and Critical` — apparemment il n’existe pas d’autres options.
 
-Une liste de quatre options codée en dur ? D'accord. Essayons cela pendant quelques semaines...
+Une liste codée en dur de quatre choix ? D’accord. Testons cela pendant quelques semaines…
 
-### 2 Jours Plus Tard  
+### 2 jours plus tard
 
-Dans un tournant *choquant pour personne*, l'organisation a découvert un ticket avec une nouvelle priorité plus élevée, nécessitant une astuce mineure : ajouter `P0`, ou `Critical Max+` !  
+Dans un revirement *choquant pour personne*, l’organisation a découvert un ticket avec une priorité supérieure, obligeant à un petit bricolage : ajouter `P0`, ou `Critical Max+` !
 
-### 3 Jours de Plus  
+### 3 jours de plus
 
-*Notre courageux patron a eu quelques réunions passionnantes et découvertes lors du congrès !*  
+*Notre intrépide patron a eu des réunions et des découvertes passionnantes à la conférence !*
 
-Quelque part, ils ont découvert une priorité encore plus élevée que `P0` !  
+Il a fini par dénicher une priorité encore plus haute que `P0` !
 
-Depuis, l'équipe est la tête dans les livres, recherchant comment étiqueter cette nouvelle Priorité.
+Depuis, l’équipe travaille d’arrache‑pied à déterminer comment nommer cette nouvelle priorité.
 
-Peut-être `-1` ? Non, non. C'est trop confus (`P-1` vs. `P1`). D'accord, et `P0.5` alors, non ?  
+Peut‑être `-1` ? Non, non. C’est trop confus (`P-1` vs. `P1`). D’accord, que diriez‑vous de `P0.5`, non ?
 
-<p className="breakout">Dans un moment d'« inspiration », l'équipe a inventé une priorité supérieure : le double zéro !<br />Maintenant connue sous le nom de priorité `P00`.</p>  
+<p className="breakout">Dans un moment « inspiré », l’équipe a inventé une priorité supérieure : le double zéro !<br />Désormais appelée la priorité `P00`.</p>
 
-{/* *Finally, we can neatly label everything in the world into our Priorities dropdown! (…evil laugh…)* */}  
+{/* *Enfin, nous pouvons classer proprement tout le monde dans notre menu déroulant Priorités ! (…rire diabolique…)* */}
 
-### Avant l'Inondation  
+### Avant la crue
 
-Avant que tout le monde ne s'en rende compte, votre équipe se noie littéralement dans les tickets `P00` !  
+Avant que quiconque ne s’en rende compte, votre équipe se retrouve submergée de tickets `P00` !
 
-<b>Comment éviter ce jeu absurde du Théâtre de l'Ingénierie ?</b>
+<b>Comment éviter ce jeu stupide de théâtre d’ingénierie ?</b>
 
-## Et si la Priorité n'était pas un choix multiple ?
+## Et si la priorité n’était pas un choix multiple ?
 
-Comment pourrions-nous mieux représenter un concept humain en constante évolution comme la `Priorité` ?
+Comment mieux représenter un concept humain en perpétuel changement et fluide comme la `Priority` ?
 
-- Dans le monde réel, les priorités évoluent constamment et changent en fonction de nouvelles informations, des variations du marché et des objectifs organisationnels.
-- Il existe souvent une interaction complexe entre l'urgence, l'importance, la disponibilité des ressources et l'analyse coût/risque qu'un simple menu déroulant ne peut capturer, surtout à long terme. (Ticket rot.)
-- Différentes parties prenantes peuvent avoir des visions contradictoires sur ce qui constitue une priorité élevée, rendant une approche unique inadaptée.
+- Dans le monde réel, les priorités bougent constamment et évoluent en fonction de nouvelles informations, de changements de marché et des objectifs organisationnels.  
+- Il existe souvent une interaction complexe entre l’urgence, l’importance, la disponibilité des ressources et l’analyse coût/risque qu’un simple menu déroulant ne peut saisir, surtout sur le long terme. (Dégradation des tickets.)  
+- Différents acteurs peuvent avoir des avis contradictoires sur ce qui constitue une haute priorité, rendant une approche « taille unique » inadaptée.
 
-## Et maintenant ?
+## Et après ?
 
-Plusieurs approches alternatives méritent d'être explorées, classées du plus simple au plus complexe :
+Plusieurs approches alternatives méritent d’être étudiées, du moindre au plus coûteux :
 
-- Pour offrir plus de marge de manœuvre, choisissez une valeur de départ "neutre", par exemple 100 ou 1 000. Vous pouvez toujours augmenter ou diminuer ce chiffre.
-    - Ou restez à zéro en départ, où les nombres plus élevés correspondent à une priorité plus élevée.
-- Implémentez un système de priorisation multidimensionnel qui prend en compte des facteurs comme la valeur métier, l'urgence et l'effort requis. (Créez un score `composite` pour simplifier le tri et le filtrage.)
-- Adoptez une méthode de priorisation dynamique, comme la [technique MoSCoW](https://en.wikipedia.org/wiki/MoSCoW_method) (Must have, Should have, Could have, Won't have), permettant une réévaluation régulière. (Voir également le [Modèle Kano](https://en.wikipedia.org/wiki/Kano_model).)
+- Pour offrir plus de marge de manœuvre, choisissez une valeur de départ « neutre », par exemple 100 ou 1 000. Vous pourrez toujours augmenter ou diminuer le nombre.  
+    - Ou partez de zéro, où les nombres plus élevés indiquent une priorité plus forte.  
+- Mettez en place un système de priorisation multidimensionnel qui prend en compte des facteurs tels que la valeur métier, l’urgence et l’effort requis. (Créez un score `composite` pour faciliter le tri et le filtrage.)  
+- Adoptez une méthode de priorisation dynamique, comme la [technique MoSCoW](https://en.wikipedia.org/wiki/MoSCoW_method) (Must have, Should have, Could have, Won’t have), permettant une réévaluation régulière. (Voir aussi le [Modèle Kano](https://en.wikipedia.org/wiki/Kano_model).)
 
 ## Résumé
 
-Beaucoup d'importance est accordée à la Priorité, malgré son taux rapide de dégradation. Les tickets `CRITICAL` d'hier ne seront probablement pas les tickets `CRITICAL` du prochain trimestre.
+On accorde beaucoup d’importance à la Priorité alors même qu’elle se dégrade rapidement. Les tickets `CRITICAL` d’hier ne seront probablement pas les tickets `CRITICAL` du trimestre prochain.
 
-Au fil du temps, les anciens tickets à haute priorité deviennent résistants à la nettoyage et à l'entretien. Après tout, qui voudrait réduire la `Priority` de quelque chose déclaré ***essentiel*** ? Sans même parler de supprimer ces tickets désormais irrelevants… (Oh mon Dieu ! Pensez au backlog !)
+Avec le temps, les tickets à haute priorité deviennent récalcitrants au nettoyage et à la maintenance. Après tout, qui veut baisser la `Priority` d’un élément déjà déclaré ***essentiel*** ? Sans parler de supprimer ces tickets soi‑disant inutiles… (Ouf ! Imaginez le backlog !)
 
-J'ai vu plusieurs entreprises confondre `Severity` & `Priority`. La `Severity` décrit l'***urgence*** (ou la sensibilité au temps).
+J’ai constaté que de nombreuses entreprises confondent `Severity` et `Priority`. `Severity` décrit l’***urgence*** (ou la sensibilité au temps).
 
-`Priority ≠ Severity`. Il peut être pertinent de définir 3 à 5 niveaux de sévérité (souvent utilisés pour maintenir les Accords de Niveau de Service).
+`Priority ≠ Severity`. Il peut être judicieux de définir 3 à 5 niveaux de sévérité (souvent utilisés pour respecter les accords de niveau de service).
 
-Les niveaux d'urgence aident à communiquer du `zero impact client` à une `interruption partielle/complète du service`.
+Les niveaux d’urgence aident à communiquer un `impact client nul` à une `panne partielle/compltète du service`.
 
-## Un mot de prudence  
+## Un mot d’avertissement
 
-Déployer un champ de priorité non borné nécessite un peu de planification et de discipline !  
+Déployer un champ **Priority** sans borne nécessite un peu de planification et de discipline !
 
-Si vous connaissez le développement front-end, vous avez peut-être vécu une guerre de `z-index`.  
+Si vous avez déjà fait du développement front‑end, vous avez sans doute vécu une guerre de `z-index`.
 
-En substance, le `z-index` permet aux designers de définir *n'importe quel* entier positif pour s'assurer que leurs widgets s'affichent « au-dessus » du contenu à `z-index` inférieur.  
+En pratique, le `z-index` permet aux designers d’attribuer *n’importe quel* entier positif pour garantir que leurs widgets s’affichent « au‑dessus » du contenu avec un `z-index` inférieur.
 
-Même une mise à jour mineure d'un composant pouvait introduire un changement dans le `z-index` de leur `<Dialog />` - le rendant soudainement invisible. Ces situations pouvaient devenir chaotiques lorsque nos composants tiers, travaux fonctionnels et autres contributions d'équipe essayaient de se surpasser en `z-index` les uns les autres.  
+Même une mise à jour mineure d’un composant peut introduire un changement de `z-index` sur son `<Dialog />` – le rendant soudainement invisible. Ces situations peuvent rapidement devenir désordonnées lorsque nos composants tiers, le travail de nouvelles fonctionnalités et les contributions d’autres équipes tentent de s’out‑`z-index` les uns les autres.
 
-Le `z-index` était autrefois limité à ~32 000. Cependant, j'ai récemment vu un extrait avec un milliard de `z-index: 1000000000` !
+Le `z-index` était autrefois limité à environ 32 000. Cependant, j’ai récemment vu un extrait avec un milliard `z-index: 1000000000` !
 
-L'inflation doit vraiment toucher le `z-index` de plein fouet.
+L’inflation doit frapper durement le `z-index`.
 
-## Discutons
+## Discussion
 
-- Est-ce une expérience de pensée pertinente ?
-- L'idée d'une Priorité en constante augmentation est-elle terrifiante ? Anxiogène ?
-- Est-il inévitable que cette approche dépasse un jour les limites des entiers 64 bits ?
-- D'autres champs (au-delà de `Severity` ou `Urgency`) peuvent-ils enrichir cette discussion ?
-- Combien de responsabilité (ou de crédit) mérite Jira ?
+- Est‑ce une expérience de pensée valable ?
+- L’idée d’une priorité qui ne cesse de croître est‑elle effrayante ? Induisante d’anxiété ?
+- Est‑ce inévitable que cette approche dépasse finalement les limites d’un entier 64 bits ?
+- D’autres champs (au‑delà de `Severity` ou `Urgency`) peuvent‑ils enrichir la discussion ?
+- Quelle part de responsabilité revient à Jira ? Ou au contraire, quel crédit lui attribuer ?
 
-On pourrait hurler dans l'Internet : « Qui va nettoyer tous ces tickets `P00` ? »
+Nous pourrions crier sur Internet : « Qui va nettoyer tous ces tickets `P00` ? »
 
-Ou, vous pouvez devenir ***réel*** face à votre backlog.
+Ou bien, vous pouvez être ***sérieux*** à propos de votre backlog.
 
-- Acceptez que 90 % de vos 1 000 tickets ne seront jamais traités. C’est normal.
-- Archivez les tickets inactifs depuis des mois. Leur priorité/urgence initiale n’a plus de sens. De toute façon, les problèmes archivés peuvent souvent être récupérés.
-- Quand un problème revient, c’est cool ; il vient juste d’augmenter sa priorité.
-- Anecdotiquement, j’ai constaté aucun préjudice en supprimant les tickets plus anciens et incomplets.
-- Ajouter indéfiniment à un backlog en tant que base de données manque l’opportunité de concentrer votre équipe et votre organisation sur ce qui compte vraiment. (Les choses qui nous attendent. Alors que les backlogs regardent naturellement vers le passé.)
-- Un backlog profond ressemble finalement à une Salle des Trophées Bizzaro, célébrant les conneries que vous ne déployerez jamais.
+- Acceptez que 90 % de vos 1 000 tickets ne seront jamais réalisés. C’est correct.
+- Archivez les tickets qui n’ont pas été touchés depuis des mois. Toute priorité/urgence initiale n’est plus pertinente. De toute façon, les tickets archivés sont souvent récupérables.
+- Quand un ticket refait surface, c’est acceptable ; il a simplement vu sa priorité augmenter.
+- Anecdotiquement, je n’ai constaté aucun dommage à supprimer les tickets anciens et incomplets.
+- Empiler indéfiniment un backlog‑comme‑une‑base‑de‑données fait perdre l’opportunité de concentrer votre équipe et votre organisation sur ce qui compte réellement (les choses qui nous attendent). Les backlogs, par nature, regardent en arrière.
+- Un backlog profond finit par ressembler à une salle de trophées Bizzaro, célébrant le bazar que vous n’expédierez jamais.

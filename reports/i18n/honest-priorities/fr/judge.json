@@ -1,0 +1,53 @@
+{
+  "selectedCommit": "89853fcf65dd8a67526d9a710e7c5bebcc1ea7fd",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 5,
+    "technicalAccuracy": 5,
+    "coherence": 5,
+    "relevance": 5,
+    "translationQuality": 5,
+    "mdxPreservation": 5
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "panne partielle/compltète du service",
+      "replacement": "panne partielle/complète du service",
+      "reason": "Fixes a typo in 'complète' (extra 't')."
+    }
+  ],
+  "rationale": "The translation captures Dan's direct and slightly cynical tone perfectly. It maintains all MDX structures and technical terms. I am correcting a typo 'compltète' found in the text which was missed by the previous judge's summary but is present in the source provided.",
+  "slug": "honest-priorities",
+  "locale": "fr",
+  "candidateCommits": [
+    "89853fcf65dd8a67526d9a710e7c5bebcc1ea7fd",
+    "b2fc89416caa649a130be6dd42d7dc097539f3dd"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "panne partielle/compltète du service",
+      "replacement": "panne partielle/complète du service",
+      "reason": "Typo in the word 'complète'.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "meilleurchoix",
+      "replacement": "meilleur choix",
+      "reason": "Missing space between 'meilleur' and 'choix' in the subtitle.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug honest-priorities --locale fr --skip-global",
+    "output": ""
+  }
+}
