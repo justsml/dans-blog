@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-nodejs-files-streams-buffers-oh-my
+- Locale: ru
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2024-11-15--quiz-nodejs-files-streams-buffers-oh-my/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 18.45
+- Input tokens: 14221
+- Output tokens: 9002
+- Thinking tokens: unknown
+- Cached input tokens: 4864
+- Cache write tokens: 0
+- Estimated cost: $0.002175
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: 'Тест: Мастерство ввода‑вывода NodeJS'
@@ -598,3 +616,4 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 </QuizUI>
 
 Надеюсь, вам понравилось проверять свои знания по NodeJS IO! Хотите продолжить? Загляните в мою [Коллекцию викторин](/challenges/) для новых задач!
+````
