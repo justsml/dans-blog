@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: naming-things-real-good
+- Locale: it
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2016-06-01--naming-things-real-good/it/index.mdx
+- Validation: deferred
+- Runtime seconds: 3.96
+- Input tokens: 4181
+- Output tokens: 1433
+- Thinking tokens: unknown
+- Cached input tokens: 1408
+- Cache write tokens: 0
+- Estimated cost: $0.000421
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Nominare bene
@@ -115,3 +133,4 @@ Alcuni principi guida:
 4.  [https://en.wikipedia.org/wiki/Database_normalization](https://en.wikipedia.org/wiki/Database_normalization)  
 
 [schema_refactor]: https://res.cloudinary.com/ddd/image/upload/bldg-collapse__wsZKhIc_kafcha.gif
+````
