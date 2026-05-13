@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: rag-pipeline-failures
+- Locale: de
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-05-05--rag-pipeline-failures/de/index.mdx
+- Validation: passed
+- Runtime seconds: 24.40
+- Input tokens: 9849
+- Output tokens: 10014
+- Thinking tokens: unknown
+- Cached input tokens: 1536
+- Cache write tokens: 0
+- Estimated cost: $0.003191
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: 'Fünf Gründe, warum RAG in der Produktion versagt'
 subTitle: ''
@@ -193,3 +211,4 @@ RAG-Demos funktionieren, weil die Demonstrationsbedingungen kontrolliert sind: s
 Jeder der oben genannte Fehler ist diagnostizierbar, aber nur, wenn Sie messen. Zuverlässige RAG-Teams tun nichts Exotisches. Sie betrachten die Retrieval-Qualität als echtes Unter-system statt als Demonstrationsartefakt.
 
 Richten Sie zuerst die Evaluierungs-Schleife ein. Alles andere ist einfacher, sobald Sie messen können.
+````
