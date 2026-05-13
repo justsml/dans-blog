@@ -1,0 +1,31 @@
+{
+  "selectedCommit": "78f78d067c697d0a7932a6027acf9da472ea048e",
+  "selectedModel": "openrouter/z-ai/glm-5.1",
+  "scores": {
+    "readability": 5,
+    "technicalAccuracy": 5,
+    "coherence": 5,
+    "relevance": 5,
+    "translationQuality": 5,
+    "mdxPreservation": 5
+  },
+  "suggestions": [],
+  "rationale": "The candidate 78f78d067c697d0a7932a6027acf9da472ea048e provides the most natural and professional Japanese translation while strictly adhering to the MDX structure. It avoids the repetitive heading error found in the 'current' version and the minor typos (like '放进去') found in the other candidate. The tone is consistent with Dan's direct and technical style.",
+  "slug": "weakmap-the-javascript-feature-you-dont-use",
+  "locale": "ja",
+  "candidateCommits": [
+    "c1d3df1552e6085207cae4f3a9b4ec1971412ca5",
+    "814a06c082327eee91a893fffb43cb987fbe030b",
+    "3a82ddad4ab9a5a8aa8d99797ec463cb8399818b",
+    "78f78d067c697d0a7932a6027acf9da472ea048e",
+    "0355b839ebadbc2ddccb4d2522b052dd7f047bee",
+    "99d4caea4398b5345b2532cb181b7157ae9e0daf"
+  ],
+  "suggestionLog": [],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug weakmap-the-javascript-feature-you-dont-use --locale ja --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug weakmap-the-javascript-feature-you-dont-use --locale ja --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug weakmap-the-javascript-feature-you-dont-use --locale ja --skip-global\n20 |   }\n21 | \n22 |   const minimumLength = Math.floor(sourceLength * minimumRatio);\n23 |   const maximumLength = Math.ceil(sourceLength * maximumRatio);\n24 |   if (targetLength < minimumLength || targetLength > maximumLength) {\n25 |     throw new Error(\n                   ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2025-12-29--weakmap-the-javascript-feature-you-dont-use/ja/index.mdx changed comparable body length from 6461 chars in English to 3611 chars. Expected 4199-8723 chars (within 35%).\n      at assertTranslationLength (/Users/dan/code/oss/dans-blog/src/scripts/i18n/structural-validation.ts:25:15)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:26:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}
