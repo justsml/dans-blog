@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: replacing-my-job-with-gpt-and-llm
+- Locale: hi
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2024-12-05--replacing-my-job-with-gpt-and-llm/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 5.57
+- Input tokens: 6181
+- Output tokens: 1628
+- Thinking tokens: unknown
+- Cached input tokens: 1536
+- Cache write tokens: 0
+- Estimated cost: $0.000534
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: AI से खुद को बदलना
@@ -102,3 +120,4 @@ cover_icon: ../robot-dude-square-200-75.webp
 AI ने मुझे तेज़ बना दिया। उससे भी महत्वपूर्ण, इसने मेरे कुछ कमजोर पहलुओं को उजागर करना आसान बना दिया। कीमत यह है कि अब मुझे अधिक सावधानी से यह सुनिश्चित करना पड़ेगा कि मैं ऐसा प्रॉज़ नहीं प्रकाशित करूँ जो केवल प्रॉज़ जैसा व्यवहार करे।  
 
 यही वह सौदा है जिसे मैं स्वीकार कर सकता हूँ।
+````
