@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: llm-connection-strings
+- Locale: ja
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-01-30--llm-connection-strings/ja/index.mdx
+- Validation: deferred
+- Runtime seconds: 5.73
+- Input tokens: 6896
+- Output tokens: 2227
+- Thinking tokens: unknown
+- Cached input tokens: 2432
+- Cache write tokens: 0
+- Estimated cost: $0.000670
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: LLM接続文字列の時代が来た
 subTitle: 'llm:// URLでモデルとプロバイダー設定を簡素化'
@@ -115,3 +133,4 @@ bedrock://us-west-2.aws/anthropic/sonnet-4.5?temp=0.8&cacheControl=ephemeral
 ![a messy env var drawer](../hero-concept-8-drawers.webp)
 
 {/* ¹ はい、`URI` の方が正確だということは承知しています。その区別にまでこだわるほどの方は、ぜひ外に出て草を触ってください。 */}
+````
