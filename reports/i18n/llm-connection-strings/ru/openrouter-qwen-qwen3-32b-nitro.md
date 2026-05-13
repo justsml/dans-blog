@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: llm-connection-strings
+- Locale: ru
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-01-30--llm-connection-strings/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 86.35
+- Input tokens: 6100
+- Output tokens: 4951
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.001676
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Пора на строки подключения к LLM
 subTitle: 'Упростите настройку модели и провайдера с URL-адресами `llm://`'
@@ -115,3 +133,4 @@ bedrock://us-west-2.aws/anthropic/sonnet-4.5?temp=0.8&cacheControl=ephemeral
 ![переполненный ящик с переменными окружения](../hero-concept-8-drawers.webp)
 
 {/* ¹ Да, я знаю, что `URI` точнее, чем `URL`. Если вы настолько придирчивы к этой разнице, что действительно заботитесь о ней, пожалуйста, идите на свежий воздух. */}
+````
