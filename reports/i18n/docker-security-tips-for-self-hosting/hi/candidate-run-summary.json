@@ -1,86 +1,51 @@
 {
-  "runId": "2026-05-13T16-43-39-974Z",
-  "runStatus": "completed",
+  "runId": "2026-05-13T17-11-41-557Z",
+  "runStatus": "running",
   "slug": "docker-security-tips-for-self-hosting",
   "locale": "hi",
-  "startedAt": "2026-05-13T16:43:39.974Z",
-  "updatedAt": "2026-05-13T16:46:31.848Z",
+  "startedAt": "2026-05-13T17:11:41.557Z",
+  "updatedAt": "2026-05-13T17:15:41.583Z",
   "modelsRequested": [
     "openrouter/openai/gpt-oss-120b:nitro",
-    "openrouter/qwen/qwen3-32b:nitro"
+    "openrouter/qwen/qwen3-32b:nitro",
+    "deepseek/deepseek-v4-flash",
+    "qwen/qwen3.6-plus"
   ],
-  "attemptedModels": 3,
-  "skippedModels": 0,
+  "attemptedModels": 1,
+  "skippedModels": 1,
   "rejectedModels": 1,
-  "candidateModels": 2,
+  "candidateModels": 0,
   "totals": {
-    "inputTokens": 87623,
-    "outputTokens": 84666,
+    "inputTokens": 0,
+    "outputTokens": 0,
     "thinkingTokens": 0,
-    "cachedInputTokens": 15616,
+    "cachedInputTokens": 0,
     "cacheWriteTokens": 0,
-    "estimatedCostUsd": 0.025538,
-    "hasUnknownInputTokens": false,
-    "hasUnknownOutputTokens": false,
+    "estimatedCostUsd": 0,
+    "hasUnknownInputTokens": true,
+    "hasUnknownOutputTokens": true,
     "hasUnknownThinkingTokens": true,
-    "hasUnknownCachedInputTokens": false,
-    "hasUnknownCacheWriteTokens": false,
-    "hasUnknownEstimatedCost": false,
-    "runtimeSeconds": "287.45"
+    "hasUnknownCachedInputTokens": true,
+    "hasUnknownCacheWriteTokens": true,
+    "hasUnknownEstimatedCost": true,
+    "runtimeSeconds": "240.01"
   },
   "attempts": [
     {
       "model": "openrouter/openai/gpt-oss-120b:nitro",
-      "status": "candidate",
-      "validationStatus": "deferred",
+      "status": "skipped",
       "reportPath": "reports/i18n/docker-security-tips-for-self-hosting/hi/openrouter-openai-gpt-oss-120b-nitro.md",
-      "note": "Generated through the direct AI SDK chunked translator.",
-      "telemetry": {
-        "runtimeSeconds": "29.63",
-        "tokens": {
-          "input": 27561,
-          "output": 11020,
-          "cached": 8448,
-          "cacheWrite": 0
-        },
-        "estimatedCostUsd": 0.003058479,
-        "pricingSource": "local-openrouter-estimate"
-      }
-    },
-    {
-      "model": "openrouter/qwen/qwen3-32b:nitro",
-      "status": "candidate",
-      "validationStatus": "deferred",
-      "reportPath": "reports/i18n/docker-security-tips-for-self-hosting/hi/openrouter-qwen-qwen3-32b-nitro.md",
-      "note": "Generated through the direct AI SDK chunked translator.",
-      "telemetry": {
-        "runtimeSeconds": "128.91",
-        "tokens": {
-          "input": 30031,
-          "output": 36823,
-          "cached": 3584,
-          "cacheWrite": 0
-        },
-        "estimatedCostUsd": 0.011239999999999998,
-        "pricingSource": "local-openrouter-estimate"
-      }
+      "note": "Existing non-rejected report found. Pass --overwrite to rerun."
     },
     {
       "model": "openrouter/qwen/qwen3-32b:nitro",
       "status": "rejected",
       "validationStatus": "rejected: direct AI SDK translation failed",
       "reportPath": "reports/i18n/docker-security-tips-for-self-hosting/hi/openrouter-qwen-qwen3-32b-nitro.md",
-      "note": "Command failed: git add src/content/posts/2025-01-05--docker-security-tips-for-self-hosting/hi/index.mdx reports/i18n/docker-security-tips-for-self-hosting/hi",
+      "note": "Command failed after 240000ms: bun run i18n:translate:chunked -- --slug docker-security-tips-for-self-hosting --locale hi --model openrouter/qwen/qwen3-32b:nitro --chunk 6p --quiz-concurrency 24",
       "telemetry": {
-        "runtimeSeconds": "128.91",
-        "tokens": {
-          "input": 30031,
-          "output": 36823,
-          "cached": 3584,
-          "cacheWrite": 0
-        },
-        "estimatedCostUsd": 0.011239999999999998,
-        "pricingSource": "local-openrouter-estimate"
+        "runtimeSeconds": "240.01",
+        "tokens": {}
       }
     }
   ]
