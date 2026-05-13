@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: llm-generative-ui-landscape
+- Locale: es
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-05-06--llm-generative-ui-landscape/es/index.mdx
+- Validation: passed
+- Runtime seconds: 45.13
+- Input tokens: 19836
+- Output tokens: 20069
+- Thinking tokens: unknown
+- Cached input tokens: 5632
+- Cache write tokens: 0
+- Estimated cost: $0.006403
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: El paisaje de la interfaz generativa de LLM
 subTitle: Desde el render
@@ -330,3 +348,4 @@ Los mejores sistemas no permitirán que el modelo improvise todo. Le darán un c
 El futuro no es "el modelo escribe tu frontend".
 
 El futuro es más cercano a: **tu frontend se convierte en un instrumento que el agente puede tocar, pero tú decides qué sonidos puede emitir.**
+````
