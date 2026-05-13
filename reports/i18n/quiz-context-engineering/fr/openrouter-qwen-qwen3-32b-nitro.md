@@ -4,7 +4,7 @@
 - Model: openrouter/qwen/qwen3-32b:nitro
 - Target: src/content/posts/2026-05-09--quiz-context-engineering/fr/index.mdx
 - Validation: rejected: direct AI SDK translation failed
-- Runtime seconds: 5.58
+- Runtime seconds: 4.95
 - Input tokens: unknown
 - Output tokens: unknown
 - Thinking tokens: unknown
@@ -12,7 +12,7 @@
 - Cache write tokens: unknown
 - Estimated cost: unknown
 - Pricing source: unknown
-- Note: Command failed: bun run i18n:translate:chunked -- --slug quiz-context-engineering --locale fr --model openrouter/qwen/qwen3-32b:nitro --chunk 3p --quiz-concurrency 18 --challenge-retries 2
+- Note: Command failed: bun run i18n:translate:chunked -- --slug quiz-context-engineering --locale fr --model openrouter/qwen/qwen3-32b:nitro --chunk 6p --quiz-concurrency 20
 ## Raw Output
 
 ````mdx
@@ -44,8 +44,8 @@ cover_full_width: ../wide.webp
 cover_mobile: ../square.webp
 cover_icon: ../square.webp
 ---
-import Challenge from '../../../../../components/QuizUI/Challenge';
-import QuizUI from '../../../../../components/QuizUI/QuizUI';
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
 
 <p class="inset">L’ingénierie des prompts, c’est le slogan. L’ingénierie du contexte, c’est le pager. À quel point maîtrisez‑vous la partie d’un système d’IA qui est réellement déployée ?</p>
 
@@ -174,9 +174,9 @@ Apportez les preuves.
   title="Stratégie de découpage"
   options={[
     {text: 'Utilisez la plus grande taille de fragment que votre fenêtre de contexte permet'},
-    {text: 'Always use 512 tokens — it\'},
+    {text: 'Utilisez toujours 512 jetons : c’est le standard'},
     {text: 'Utilisez des fragments qui se chevauchent, dimensionnés pour correspondre à la structure de votre contenu', isAnswer: true},
-    {text: 'Chunk size doesn\'},
+    {text: 'Chunk size doesn\'t matter as long as you have enough fragments', isAnswer: false},
   ]}
 >
   <slot name="question">
@@ -354,7 +354,7 @@ Apportez les preuves.
   options={[
     {text: 'temperature=0 produit toujours des sorties identiques pour la même entrée'},
     {text: 'temperature=0 rend les sorties plus déterministes mais sans garantie d’être identiques', isAnswer: true},
-    {text: 'temperature=0 désactive le modèle\'},
+    {text: 'temperature=0 désactive la capacité du modèle à refuser des requêtes'},
     {text: 'la température n\'affecte que la longueur de la réponse'},
   ]}
 >
@@ -425,8 +425,8 @@ Apportez les preuves.
 
     Ce qui fonctionne réellement : **grounding**. Fournissez au modèle les informations dont il a besoin pour répondre correctement, et limitez‑le à ces informations :
     ```
-        Answer only using the provided documents.
-        If the answer isn't in the documents, say: "I don't have enough information to answer that."
+    Answer only using the provided documents.
+    If the answer isn't in the documents, say: "I don't have enough information to answer that."
     ```
     Ensuite, validez la sortie : vérifiez que les affirmations de la réponse apparaissent dans le contexte récupéré. C’est le contrôle de citation d’ancrage — voir la discussion RAG eval pour l’implémentation.
 
