@@ -1,0 +1,47 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Partial Indexes",
+  "translatedTitle": "Índices parciales",
+  "translation": {
+    "title": "Índices parciales",
+    "group": "Indexación",
+    "options": [
+      {
+        "text": "Sintaxis inválida"
+      },
+      {
+        "text": "Crea índices duplicados"
+      },
+      {
+        "text": "Solo indexa estudiantes activos"
+      },
+      {
+        "text": "Indexa a los estudiantes activos primero"
+      },
+      {
+        "text": "Proporciona una pista al planificador de consultas"
+      }
+    ],
+    "questionProse": [
+      "¿Qué hace esta incantación?"
+    ],
+    "explanationProse": [
+      "Este truco se llama `Índice parcial`.\n\n    Son útiles para reducir el uso del disco y acelerar las consultas cuando solo se suele consultar un subconjunto de filas.\n\n    Postgres solo usará el índice cuando la condición `status = 'active'` esté presente en la consulta.\n\n    **Recordatorio:** Postgres no soporta 'pistas de consulta' como otros RDBMS. El planificador de consultas decidirá cuándo usar cualquier índice apropiado."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Índices parciales\",\n  \"group\": \"Indexación\",\n  \"options\": [\n    {\n      \"text\": \"Sintaxis inválida\"\n    },\n    {\n      \"text\": \"Crea índices duplicados\"\n    },\n    {\n      \"text\": \"Solo indexa estudiantes activos\"\n    },\n    {\n      \"text\": \"Indexa a los estudiantes activos primero\"\n    },\n    {\n      \"text\": \"Proporciona una pista al planificador de consultas\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Qué hace esta incantación?\"\n  ],\n  \"explanationProse\": [\n    \"Este truco se llama `Índice parcial`.\\n\\n    Son útiles para reducir el uso del disco y acelerar las consultas cuando solo se suele consultar un subconjunto de filas.\\n\\n    Postgres solo usará el índice cuando la condición `status = 'active'` esté presente en la consulta.\\n\\n    **Recordatorio:** Postgres no soporta 'pistas de consulta' como otros RDBMS. El planificador de consultas decidirá cuándo usar cualquier índice apropiado.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 772,
+    "outputTokens": 705,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 8140
+  },
+  "cost": {
+    "inputUsd": 0.00006176,
+    "outputUsd": 0.0001692,
+    "totalUsd": 0.00023096,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

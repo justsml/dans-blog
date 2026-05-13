@@ -1,0 +1,47 @@
+{
+  "index": 7,
+  "attempt": 1,
+  "originalTitle": "Column Name Quoting",
+  "translatedTitle": "Cita de nombres de columnas",
+  "translation": {
+    "title": "Cita de nombres de columnas",
+    "group": "Cita 2",
+    "options": [
+      {
+        "text": "first.name"
+      },
+      {
+        "text": "\"first.name\""
+      },
+      {
+        "text": "\\"
+      },
+      {
+        "text": "[first.name]"
+      },
+      {
+        "text": "[first].[name]"
+      }
+    ],
+    "questionProse": [
+      "¿Cómo especificas un **nombre de columna que contiene un punto?**"
+    ],
+    "explanationProse": [
+      "PostgreSQL usa comillas dobles para identificadores:\n    - Comillas dobles `\"...\"` para identificadores (nombres de columnas, nombres de tablas)\n    - Comillas simples `'...'` para literales de cadena\n    - La forma `first.name` se interpreta como `table_name.column_name`\n\n    Sin comillas, un punto en un nombre de columna se interpretaría como un separador de esquema/tabla. Además, todos los identificadores sin comillas se pasan a minúsculas por defecto.\n\n    Para reducir sorpresas, es mejor usar `snake_case` y evitar caracteres especiales."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Cita de nombres de columnas\",\n  \"group\": \"Cita 2\",\n  \"options\": [\n    {\n      \"text\": \"first.name\"\n    },\n    {\n      \"text\": \"\\\"first.name\\\"\"\n    },\n    {\n      \"text\": \"\\\\\"\n    },\n    {\n      \"text\": \"[first.name]\"\n    },\n    {\n      \"text\": \"[first].[name]\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Cómo especificas un **nombre de columna que contiene un punto?**\"\n  ],\n  \"explanationProse\": [\n    \"PostgreSQL usa comillas dobles para identificadores:\\n    - Comillas dobles `\\\"...\\\"` para identificadores (nombres de columnas, nombres de tablas)\\n    - Comillas simples `'...'` para literales de cadena\\n    - La forma `first.name` se interpreta como `table_name.column_name`\\n\\n    Sin comillas, un punto en un nombre de columna se interpretaría como un separador de esquema/tabla. Además, todos los identificadores sin comillas se pasan a minúsculas por defecto.\\n\\n    Para reducir sorpresas, es mejor usar `snake_case` y evitar caracteres especiales.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 791,
+    "outputTokens": 821,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 8865
+  },
+  "cost": {
+    "inputUsd": 0.00006328,
+    "outputUsd": 0.00019704,
+    "totalUsd": 0.00026032,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

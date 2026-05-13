@@ -1,67 +1,55 @@
 {
-  "runId": "2026-05-13T15-29-09-061Z",
-  "runStatus": "completed",
+  "runId": "2026-05-13T16-42-17-187Z",
+  "runStatus": "running",
   "slug": "quiz-postgres-sql-mastery-pt2",
   "locale": "es",
-  "startedAt": "2026-05-13T15:29:09.061Z",
-  "updatedAt": "2026-05-13T15:29:42.120Z",
+  "startedAt": "2026-05-13T16:42:17.187Z",
+  "updatedAt": "2026-05-13T16:42:57.619Z",
   "modelsRequested": [
     "openrouter/openai/gpt-oss-120b:nitro",
     "openrouter/qwen/qwen3-32b:nitro"
   ],
-  "attemptedModels": 2,
-  "skippedModels": 0,
-  "rejectedModels": 1,
+  "attemptedModels": 1,
+  "skippedModels": 1,
+  "rejectedModels": 0,
   "candidateModels": 1,
   "totals": {
-    "inputTokens": 24627,
-    "outputTokens": 21407,
+    "inputTokens": 12071,
+    "outputTokens": 11921,
     "thinkingTokens": 0,
-    "cachedInputTokens": 4992,
+    "cachedInputTokens": 0,
     "cacheWriteTokens": 0,
-    "estimatedCostUsd": 0.006002,
+    "estimatedCostUsd": 0.003827,
     "hasUnknownInputTokens": false,
     "hasUnknownOutputTokens": false,
     "hasUnknownThinkingTokens": true,
     "hasUnknownCachedInputTokens": false,
     "hasUnknownCacheWriteTokens": false,
     "hasUnknownEstimatedCost": false,
-    "runtimeSeconds": "51.47"
+    "runtimeSeconds": "118.57"
   },
   "attempts": [
     {
       "model": "openrouter/openai/gpt-oss-120b:nitro",
-      "status": "candidate",
-      "validationStatus": "passed",
+      "status": "skipped",
       "reportPath": "reports/i18n/quiz-postgres-sql-mastery-pt2/es/openrouter-openai-gpt-oss-120b-nitro.md",
-      "note": "Generated through the direct AI SDK chunked translator.",
-      "telemetry": {
-        "runtimeSeconds": "16.91",
-        "tokens": {
-          "input": 12958,
-          "output": 9583,
-          "cached": 4992,
-          "cacheWrite": 0
-        },
-        "estimatedCostUsd": 0.0022303019999999995,
-        "pricingSource": "local-openrouter-estimate"
-      }
+      "note": "Existing non-rejected report found. Pass --overwrite to rerun."
     },
     {
       "model": "openrouter/qwen/qwen3-32b:nitro",
-      "status": "rejected",
-      "validationStatus": "rejected: direct AI SDK translation failed",
+      "status": "candidate",
+      "validationStatus": "deferred",
       "reportPath": "reports/i18n/quiz-postgres-sql-mastery-pt2/es/openrouter-qwen-qwen3-32b-nitro.md",
-      "note": "Command failed: bun run i18n:validate --slug quiz-postgres-sql-mastery-pt2 --locale es",
+      "note": "Generated through the direct AI SDK chunked translator.",
       "telemetry": {
-        "runtimeSeconds": "34.56",
+        "runtimeSeconds": "118.57",
         "tokens": {
-          "input": 11669,
-          "output": 11824,
+          "input": 12071,
+          "output": 11921,
           "cached": 0,
           "cacheWrite": 0
         },
-        "estimatedCostUsd": 0.00377128,
+        "estimatedCostUsd": 0.0038267200000000005,
         "pricingSource": "local-openrouter-estimate"
       }
     }

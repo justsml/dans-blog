@@ -1,0 +1,44 @@
+{
+  "index": 11,
+  "attempt": 1,
+  "originalTitle": "EXPLAIN ANALYZE Gotcha",
+  "translatedTitle": "Problema con EXPLAIN ANALYZE",
+  "translation": {
+    "title": "Problema con EXPLAIN ANALYZE",
+    "group": "Rendimiento",
+    "options": [
+      {
+        "text": "Estimación de plan ligera"
+      },
+      {
+        "text": "Solo funciona en SELECT"
+      },
+      {
+        "text": "Modifica datos y emite plan"
+      },
+      {
+        "text": "Simula la ejecución para obtener un plan"
+      }
+    ],
+    "questionProse": [
+      "¿Qué hace `EXPLAIN ANALYZE` con las sentencias `UPDATE`?"
+    ],
+    "explanationProse": [
+      "¡`EXPLAIN ANALYZE` ejecuta realmente la consulta! Ten cuidado al analizar operaciones de escritura, específicamente las sentencias `UPDATE`, `DELETE` y `INSERT`. Puede que tengas que ejecutar operaciones de limpieza después de cada `EXPLAIN ANALYZE` para obtener resultados repetibles.\n\n    Mejores prácticas:\n    - Usa `EXPLAIN` (sin ANALYZE) para UPDATE/DELETE/INSERT\n    - Envuelve las modificaciones en transacciones:"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Problema con EXPLAIN ANALYZE\",\n  \"group\": \"Rendimiento\",\n  \"options\": [\n    {\n      \"text\": \"Estimación de plan ligera\"\n    },\n    {\n      \"text\": \"Solo funciona en SELECT\"\n    },\n    {\n      \"text\": \"Modifica datos y emite plan\"\n    },\n    {\n      \"text\": \"Simula la ejecución para obtener un plan\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Qué hace `EXPLAIN ANALYZE` con las sentencias `UPDATE`?\"\n  ],\n  \"explanationProse\": [\n    \"¡`EXPLAIN ANALYZE` ejecuta realmente la consulta! Ten cuidado al analizar operaciones de escritura, específicamente las sentencias `UPDATE`, `DELETE` y `INSERT`. Puede que tengas que ejecutar operaciones de limpieza después de cada `EXPLAIN ANALYZE` para obtener resultados repetibles.\\n\\n    Mejores prácticas:\\n    - Usa `EXPLAIN` (sin ANALYZE) para UPDATE/DELETE/INSERT\\n    - Envuelve las modificaciones en transacciones:\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 792,
+    "outputTokens": 876,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 9936
+  },
+  "cost": {
+    "inputUsd": 0.00006336,
+    "outputUsd": 0.00021024,
+    "totalUsd": 0.0002736,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
