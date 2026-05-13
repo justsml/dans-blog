@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: llm-connection-strings
+- Locale: de
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-01-30--llm-connection-strings/de/index.mdx
+- Validation: passed
+- Runtime seconds: 6.68
+- Input tokens: 6287
+- Output tokens: 1952
+- Thinking tokens: unknown
+- Cached input tokens: 1920
+- Cache write tokens: 0
+- Estimated cost: $0.000597
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Zeit für LLM‑Verbindungszeichenketten
 subTitle: 'Modell‑ und Provider‑Konfiguration mit `llm://`‑URLs vereinfachen'
@@ -115,3 +133,4 @@ Hören wir auf, das Rad neu zu erfinden, und behandeln wir unsere LLM‑Verbindu
 ![a messy env var drawer](../hero-concept-8-drawers.webp)
 
 {/* ¹ Ja, ich weiß, dass `URI` korrekter ist als `URL`. Wenn du pedantisch genug bist, um diesen Unterschied wirklich zu beachten, geh bitte raus und berühre Gras. */}
+````
