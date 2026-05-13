@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: mastering-functional-pipelines-passing-state
+- Locale: fr
+- Model: deepseek/deepseek-v4-flash
+- Target: src/content/posts/2023-08-13--mastering-functional-pipelines-passing-state/fr/index.mdx
+- Validation: deferred
+- Runtime seconds: 60.70
+- Input tokens: 9621
+- Output tokens: 9085
+- Thinking tokens: unknown
+- Cached input tokens: 1536
+- Cache write tokens: 0
+- Estimated cost: $0.003680
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: 'Maître des pipelines : transmission d''état'
@@ -200,3 +218,4 @@ Nous explorerons l'externalisation de l'état et l'extension des fonctionnalité
 #### Lectures complémentaires
 
 - [Des difficultés similaires existent dans le monde des composants React.](https://kyleshevlin.com/quit-your-yapping)
+````
