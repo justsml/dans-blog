@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: compare-nvme-ssd-cloud-options
+- Locale: it
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2017-04-15--compare-nvme-ssd-cloud-options/it/index.mdx
+- Validation: deferred
+- Runtime seconds: 12.27
+- Input tokens: 4199
+- Output tokens: 3847
+- Thinking tokens: unknown
+- Cached input tokens: 512
+- Cache write tokens: 0
+- Estimated cost: $0.001259
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Confronta le opzioni per Cloud NVMe SSD
@@ -65,3 +83,4 @@ I test di rete hanno utilizzato fino a 9 istanze aggiuntive nella stessa zona di
 #### Crediti
 
 - [ec2instances.info](https://www.ec2instances.info/?filter=nvm&region=us-east-2&cost_duration=monthly&selected=c5d.large,i3.large,i3.xlarge,i3.2xlarge)
+````
