@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: from-zero-to-regex-hero-extract-url-like-strings
+- Locale: hi
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2024-12-29--from-zero-to-regex-hero-extract-url-like-strings/hi/index.mdx
+- Validation: passed
+- Runtime seconds: 31.16
+- Input tokens: 10261
+- Output tokens: 12591
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.003843
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: ''
 subTitle: ''
@@ -264,3 +282,4 @@ console.log("अपवाहित भाग:", parts);
 - [रेगुलर एक्सप्रेशन पर MDN दस्तावेज़](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions)  
 - [उन्नत रेगेक्स तकनीकें](https://www.regular-expressions.info): अधिक सटीक मिलान के लिए लुकएहेड्स, लुकबिहिंड्स, और अन्य उन्नत पैटर्न का अन्वेषण करें।  
 - [RFC 3986 - URI जनरल सिंटैक्स](https://datatracker.ietf.org/doc/html/rfc3986)
+````
