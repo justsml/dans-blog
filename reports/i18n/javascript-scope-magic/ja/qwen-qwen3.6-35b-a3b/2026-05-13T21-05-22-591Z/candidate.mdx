@@ -1,0 +1,109 @@
+---
+title: JavaScriptの魔法
+subTitle: '[ドラフト] 命令型 vs. 再帰 vs. 関数型'
+date: '2015-06-06'
+modified: '2024-07-30'
+category: Code
+subCategory: javascript
+draft: true
+publish: true
+tags:
+  - javascript
+  - programming
+  - performance
+  - patterns
+cover: ../markus-spiske-197281-unsplash.webp
+cover_mobile: ../w300_markus-spiske-197281-unsplash.webp
+cover_icon: ../icon_markus-spiske-197281-unsplash.webp
+---
+## 命令型 vs. 再帰型 vs. 関数型
+
+> [ 作業中 ]
+
+```javascript
+// Imperative: The Fastest ( + very simple, no new pointers or excess allocs ):
+function fib(n) {
+  var a = 1,
+    b = 1,
+    c = 0;
+  for (var i = 1; i < n - 1; ++i) {
+    c = a + b;
+    a = b;
+    b = c;
+  }
+  return b;
+}
+
+// Recursive: (FIREFOX or BABELJS Only) ES6 function definition with
+//  parameter defaults used to set initial (internal/recursive) values
+function fib(n, current = 0, a = 1, b = 1, c = 0) {
+  current++;
+  c = a + b;
+  a = b;
+  b = c;
+  return current >= n ? b : fib(n, current, a, b, c);
+}
+
+// Text-book-Bad Example - poor function scope w/ multiple mutable external values
+function fib(n) {
+  if (!arr) {
+    var arr = [1, 1];
+    n = n - 2;
+  } // Bad
+  if (n === -1) {
+    return [arr[0]];
+  }
+  if (n === 0) {
+    return arr;
+  }
+  var proc = function() {
+    --n;
+    arr.push(arr[arr.length - 1] + arr[arr.length - 2]);
+    return n === 0 ? arr : proc();
+    // Bad: inner recursive function not needed, hint: variables used are from parent function scope
+  };
+  var ans = proc();
+  return ans[ans.length - 1];
+}
+```
+
+## Promise: 素晴らしい！
+
+```js
+// Example Using bluebird Promises and it's
+var Promise = require("bluebird"),
+  fs = Promise.promisifyAll(require("fs")),
+  less = Promise.promisifyAll(require("less"));
+
+function writeFileData(data) {
+  return fs.writeFileAsync("/tmp/output.css", data);
+}
+// Bluebird makes something like this perhaps uncomfortably simple and succinct:
+fs.readFileAsync("./style.less") // Call promisified readFile()
+  .then(less.renderAsync) // Hand off to less.render
+  .then(writeFileData); // Function to recieve the css contents (1st parameter)
+```
+
+1. ネイティブのES6 Promiseも素晴らしいが、私は堅牢な[Bluebird Promise Library](https://github.com/petkaantonov/bluebird/blob/master/API.md)を好む。
+1. ライブラリを使うかどうかに関わらず、現代のブラウザはPromiseを長年サポートしている。
+1. Promiseは奇抜なパターンなしで利用できる。明示的なdeferred作成は不要で、暗黙的な処理を好む。
+1. **$qは論外だ**。上記の通りBluebirdを使え。
+1. 一応補足：Bluebirdのベンチマークは最良ケースのテストなので、奇抜で複雑なPromiseチェーンを組む場合は注意が必要。
+
+## Java vs JavaScript
+
+### レートリミッティング / デバウンス / スロットリング
+
+1. JavaScriptでは[David Walshがdebounceを20行未満で実装している](http://davidwalsh.name/essential-javascript-functions)。
+1. Javaでは、JDebounceというライブラリがあるが、はるかに複雑で約500行以上を要する。
+1. _ 比較結果：_
+1. JavaScriptは高速で、ファーストクラス関数を用いて驚くほど簡潔な実装を実現している。
+1. 一方Javaは動作要素が多く、コンパイル時に動作を適用するために注釈（アノテーション）が使われ、おまけにXMLも大量に必要だ！
+
+<!--
+## Inversion of Control Techniques
+
+Work-in-progress
+-->
+
+[fuck_this]: https://res.cloudinary.com/ddd/image/upload/panda-rampage__tumblr_nq7srwTXqr1stn6klo1_500_gm2som.gif
