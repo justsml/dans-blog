@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: amazing-resources
+- Locale: de
+- Model: qwen/qwen3.6-35b-a3b
+- Target: src/content/posts/2015-02-26--amazing-resources/de/index.mdx
+- Validation: deferred
+- Runtime seconds: 148.51
+- Input tokens: 9678
+- Output tokens: 33871
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.000000
+- Pricing source: unknown
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Beste kostenlose UI-Design-Ressourcen für Entwickler
@@ -190,3 +208,4 @@ Kleine, aber praktische Tools, die spezifische Frontend-Probleme schnell lösen.
 
 Changelog: 2026-04 — Seite für Nutzer und SEO neu strukturiert, Titel und Beschreibungen optimiert sowie Assistant UI, AI SDK Elements, Aceternity UI, Shadcnblocks, Tailark, KokonutUI-Patterns und Tool UI hinzugefügt.
 Changelog: 2025-09 — Links aktualisiert, ältere Ressourcen überarbeitet sowie moderne Icon-, Kontrast- und Design-Tools hinzugefügt.
+````
