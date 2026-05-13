@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: llm-generative-ui-landscape-2026
+- Locale: ru
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-05-10--llm-generative-ui-landscape-2026/ru/index.mdx
+- Validation: passed
+- Runtime seconds: 22.48
+- Input tokens: 57771
+- Output tokens: 12538
+- Thinking tokens: unknown
+- Cached input tokens: 27136
+- Cache write tokens: 0
+- Estimated cost: $0.004510
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: "Ландшафт LLM GenUI\_v2"
 subTitle: >-
@@ -415,3 +433,4 @@ ApprovalGate        — action requiring human confirmation
 Самыми важными инженерными задачами сейчас являются не выбор фреймворка. Это проектирование каталога — определение того, что модель может выдавать, что требует большей ясности продукта, чем технической экспертизы. Это семантическая валидация — проверка того, что сгенерированный UI действительно делает то, что заявлено, а не только проходит проверку схемы. И это разрыв в доступности — создание каталогов, где каждый компонент и любая их комбинация соответствуют тем же требованиям доступности, что и вручную написанный UI.
 
 Модель будет выполнять то, что вы ей укажете, в пределах заданной грамматики. Сделайте грамматику преднамеренной.
+````
