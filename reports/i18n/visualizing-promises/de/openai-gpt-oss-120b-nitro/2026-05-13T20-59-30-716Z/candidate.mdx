@@ -1,0 +1,130 @@
+---
+social_image: ../desktop-social.webp
+title: Visualisierung von Promises
+subTitle: Durchbrechen…
+date: '2018-09-30'
+modified: '2024-07-30'
+category: Guides
+subCategory: promises
+cover: ../junior-ferreira-735237-unsplash.webp
+cover_mobile: ../w300_junior-ferreira-735237-unsplash.webp
+cover_icon: ../icon_junior-ferreira-735237-unsplash.webp
+tags:
+  - promises
+  - async
+  - visualizing
+  - javascript
+  - composition
+related:
+  - intro-to-promises
+  - promise-gotchas
+  - stop-trying-to-make-async-await-happen
+  - javascript-promises-quiz
+---
+Um zu veranschaulichen, wie Promises ablaufen, definieren wir eine neue Methode `delay(millisecs)`.
+
+```js
+function delay(millisecs) {
+  return new Promise(resolve => {
+    setTimeout(() => resolve(millisecs), millisecs);
+  });
+}
+```
+
+Dies ist eine Hilfsmethode, die aufgelöst wird, sobald der Timeout verstrichen ist.
+
+Die Verzögerung in Millisekunden wird an den Callback von `.then` übergeben.
+
+Betrachten wir vier Beispiele (mit animierten Zeitlinien).
+
+## Beispiel #1/4
+
+Hier wird gezeigt, wie die Ausführung von `console.log()` durch `delay(msec)` verzögert wird.
+
+```js
+delay(1000).then(() => console.log("done"));
+```
+
+![Timeline showing delay 1000 then console log running after one second](../N_1000ms_log.webp)
+
+<!-- ```
+delay(1000) --------|.then(fn)
+                    | console.log('done')
+|-------------------|--------------------|--------------------|-----------------
+0msec             1sec                 2sec                 3sec
+``` -->
+
+## Beispiel #2/4
+
+_Das zeigt einen häufigen Fehler._
+
+Der Aufruf von `console.log` erfolgt sofort, wenn`delay(1000)` **beginnt**. Nicht **nach** der Verzögerung, wie Sie es vermutlich erwartet haben.
+
+Da `console.log` `undefined` zurückgibt, wird unser `.then()` stillschweigend ignoriert.
+
+Beachten Sie den Unterschied zwischen `typeof console.log === 'function'` und `typeof console.log() === undefined`.
+
+Im Allgemeinen wird die gewünschte Verwendung von `console.log` in Beispiel #1 gezeigt. Stellen Sie sicher, dass Sie Funktionen an `.then` und `.catch` übergeben.
+
+```js
+delay(1000).then(console.log("done"));
+```
+
+![Timeline showing console log running immediately before the delay finishes](../N_1000ms_!log.webp)
+
+<!-- ```
+delay(1000) --------|.then(null)
+console.log('done')
+|-------------------|--------------------|--------------------|-----------------
+0msec             1sec                 2sec                 3sec
+``` -->
+
+## Beispiel #3/4
+
+3 Promises laufen gleichzeitig.
+
+```js
+delay(1000).then(console.log);
+delay(2000).then(console.log);
+delay(3000).then(console.log);
+```
+
+![Timeline showing three delay promises resolving after one two and three seconds](../N_3000ms.webp)
+
+<!-- ```
+delay(1000) ------|.then(console.log)
+delay(2000) ------|--------------------|.then(console.log)
+delay(3000) ------|--------------------|--------------------|.then(console.log)
+|-----------------|--------------------|--------------------|-------------------
+|                 |                    |                    |
+0msec           1sec                 2sec                 3sec
+``` -->
+
+## Beispiel #4/4
+
+`Promise.all` mit 3 `delay`‑Promises. Sie werden gleichzeitig ausgeführt.
+
+```js
+Promise.all([delay(1000), delay(2000), delay(3000)]).then(console.log);
+```
+
+![Zeitstrahl, der zeigt, dass Promise.all auf alle drei Delay‑Promises wartet](../N_3000ms_PromiseAll.webp)
+
+<!--
+
+```
+delay(1000) ---| [resolved]------------------v
+delay(2000) ---|--------------| [resolved]---v
+delay(3000) ---|--------------|--------------v [resolved]
+Promise.all()  |--------------|-------------- > console.log([1000, 2000, 3000])
+|--------------|--------------|--------------|--------------------------------
+|              |              |              |
+0msec        1sec           2sec           3sec
+```
+
+-->
+
+> Credits:
+>
+> - Animierte Async‑Diagramme von [Patrick Biffle](https://github.com/Piglacquer)
+> - Inspiration für diesen Artikel: https://pouchdb.com/2015/05/18/we-have-a-problem-with-promises.html
