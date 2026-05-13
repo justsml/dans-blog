@@ -1,0 +1,59 @@
+{
+  "selectedCommit": "b7f4ac05fbf6aa431f9beaea3ced9a077dbf9500",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "The \\b represents a word boundary, which matches:",
+      "replacement": "\\b एक शब्द सीमा (word boundary) को दर्शाता है, जो मेल खाता है:",
+      "reason": "The explanation for Challenge 5 was left in English in this candidate."
+    },
+    {
+      "priority": "high",
+      "match": "- Between a word character and a non-word character\n    - At the start/end of the string if there's a word character\n\n    So /\\bcat\\b/ matches \"cat\" only when it's a complete word, not part of another word.\n    - ✅ \"cat\" (surrounded by spaces)\n    - ❌ \"cats\" (no boundary after \"cat\")\n    - ❌ \"category\" (no boundary after \"cat\")\n\n    [Learn more about word boundaries](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions#other_assertions)",
+      "replacement": "- एक शब्द वर्ण (word character) और गैर-शब्द वर्ण के बीच\n    - स्ट्रिंग की शुरुआत/अंत में यदि वहां एक शब्द वर्ण है\n\n    इसलिए /\\bcat\\b/ केवल \"cat\" से मेल खाता है जब वह एक पूर्ण शब्द हो, न कि किसी अन्य शब्द का हिस्सा।\n    - ✅ \"cat\" (स्थानों/spaces से घिरा हुआ)\n    - ❌ \"cats\" (\"cat\" के बाद कोई सीमा नहीं)\n    - ❌ \"category\" (\"cat\" के बाद कोई सीमा नहीं)\n\n    [शब्द सीमाओं के बारे में और जानें](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions#other_assertions)",
+      "reason": "The explanation for Challenge 5 was left in English in this candidate."
+    }
+  ],
+  "rationale": "Candidate b7f4ac05fbf6aa431f9beaea3ced9a077dbf9500 provides the most natural and professional Hindi translation. It correctly uses terms like 'केस-सेंसिटिव' and 'क्वांटिफ़ायर' which are standard in technical Hindi contexts, whereas the 'current' and 'qwen' versions use awkward literal translations like 'झाड़-फूंक दावों' for 'look-around assertions'. Although b7f4ac05fbf6aa431f9beaea3ced9a077dbf9500 missed translating one explanation block (Challenge 5), its overall quality and adherence to Dan's style make it the superior choice, provided the missing translation is fixed.",
+  "slug": "quiz-regex-or-wreckage",
+  "locale": "hi",
+  "candidateCommits": [
+    "b7f4ac05fbf6aa431f9beaea3ced9a077dbf9500",
+    "72661a4f13c7ad07c8816d5c46a297b2e3f9ba37"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "The \\b represents a word boundary, which matches:",
+      "replacement": "\\b एक शब्द सीमा (word boundary) को दर्शाता है, जो मेल खाता है:",
+      "reason": "The explanation for Challenge 5 was left in English in this candidate.",
+      "pass": 1,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "- Between a word character and a non-word character\n    - At the start/end of the string if there's a word character\n\n    So /\\bcat\\b/ matches \"cat\" only when it's a complete word, not part of another word.\n    - ✅ \"cat\" (surrounded by spaces)\n    - ❌ \"cats\" (no boundary after \"cat\")\n    - ❌ \"category\" (no boundary after \"cat\")\n\n    [Learn more about word boundaries](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions#other_assertions)",
+      "replacement": "- एक शब्द वर्ण (word character) और गैर-शब्द वर्ण के बीच\n    - स्ट्रिंग की शुरुआत/अंत में यदि वहां एक शब्द वर्ण है\n\n    इसलिए /\\bcat\\b/ केवल \"cat\" से मेल खाता है जब वह एक पूर्ण शब्द हो, न कि किसी अन्य शब्द का हिस्सा।\n    - ✅ \"cat\" (स्थानों/spaces से घिरा हुआ)\n    - ❌ \"cats\" (\"cat\" के बाद कोई सीमा नहीं)\n    - ❌ \"category\" (\"cat\" के बाद कोई सीमा नहीं)\n\n    [शब्द सीमाओं के बारे में और जानें](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions#other_assertions)",
+      "reason": "The explanation for Challenge 5 was left in English in this candidate.",
+      "pass": 1,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug quiz-regex-or-wreckage --locale hi --skip-global",
+    "output": ""
+  }
+}

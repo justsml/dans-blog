@@ -1,7 +1,7 @@
 ---
 unlisted: false
-title: 'क्विज़: रेगुलर एक्सप्रेशन्स की महारत'
-subTitle: ''
+title: 'प्रश्नोत्तरी: रेगुलर एक्सप्रेशन में महारत'
+subTitle: क्या आप जंगली रेगैक्स को काबू कर सकते हैं?
 label: RegEx
 social_image: ../desktop-social.webp
 category: Quiz
@@ -18,20 +18,20 @@ cover_full_width: ../dan-lounsbury-uHZ2-nzYuIs-unsplash-wide.webp
 cover_mobile: ../dan-lounsbury-uHZ2-nzYuIs-unsplash-square-200.webp
 cover_icon: ../dan-lounsbury-uHZ2-nzYuIs-unsplash-square-200.webp
 ---
-import Challenge from '../../../../components/QuizUI/Challenge';
-import QuizUI from '../../../../components/QuizUI/QuizUI';
+import Challenge from '../../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../../components/QuizUI/QuizUI';
 
-<p class="inset">कुछ रेगुलर एक्सप्रेशन के साथ लड़ाई लड़ने के लिए तैयार हैं? 🤼‍♂️</p>
+<p class="inset">कुछ Regular Expressions से जूझने के लिए तैयार हैं? 🤼‍♂️</p>
 
-अपने रेगुलर एक्सप्रेशन ज्ञान का परीक्षण मूल पैटर्न, मात्रात्मक चिह्न, समूह और उन झाड़-फूंक दावों के सवालों से करें। सरल स्ट्रिंग मिलान से जटिल पैटर्न सत्यापन तक - क्या आप सही रेगुलर एक्सप्रेशन पहचान सकते हैं?
+RegEx ज्ञान को परखें उन प्रश्नों से जो बुनियादी पैटर्न, क्वांटिफ़ायर, समूह और उन चतुर लुक‑अराउंड असर्शन को कवर करते हैं। सरल स्ट्रिंग मिलान से लेकर जटिल पैटर्न वैधता तक – क्या आप सही रेगेक्स पहचान सकते हैं?
 
 <QuizUI>
 
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={0}
-  group="तैयारी"
-  title="अक्षर-संवेदनशील मिलान"
+  group="वार्मअप"
+  title="केस‑सेंसिटिव मिलान"
   options={[
     {text: '["Cat"]'},
     {text: '["cat", "CAT", "Cat"]'},
@@ -41,7 +41,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    क्या मेल खाता है?
+    क्या मिलते हैं?
     ```js
         'cat CAT Cat'.match(/cat/g)
     ```
@@ -50,14 +50,14 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <slot name='explanation'>
   <div className="explanation">
     यह पैटर्न `g` का उपयोग करता है, लेकिन `i` नहीं:
-    - `g` सभी मिलान ढूंढता है
-    - `i` न होने पर मिलान अक्षर-संवेदनशील होता है
+    - `g` सभी मिलान खोजता है
+    - `i` के बिना, मिलान केस‑सेंसिटिव होता है
 
-    `i` फ्लैग न होने पर केवल छोटे अक्षरों का "cat" मेल खाता है।
+    `i` फ़्लैग के बिना, केवल लोअरकेस "cat" ही मेल खाता है।
 
-    उपयोगकर्ता इनपुट या HTML के साथ काम करते समय जहां अक्षर केस भिन्न हो सकते हैं, यह विशेष रूप से उपयोगी है।
+    यह विशेष रूप से उपयोगी है जब उपयोगकर्ता इनपुट या HTML से निपटना हो जहाँ केस बदल सकता है।
 
-    [रेगेक्स फ्लैग्स के बारे में अधिक जानें](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#advanced_searching_with_flags)
+    [RegExp फ़्लैग्स के बारे में और जानें](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#advanced_searching_with_flags)
   </div>
   </slot>
 </Challenge>
@@ -65,8 +65,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={1}
-  group="तैयारी"
-  title="सरल वर्ण मिलान"
+  group="वार्म‑अप"
+  title="सरल अक्षर मिलान"
   options={[
     {text: '["cat", "hat"]', isAnswer: true},
     {text: '["cat", "hat", "what"]'},
@@ -85,13 +85,13 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    पैटर्न `/^[ch]at/` वे स्ट्रिंग मिलाता है जो कि:
-    - या तो 'c' या 'h' से शुरू होता है (जिसका अर्थ है `[ch]` - एक वर्ण वर्ग जो एक वर्ण को मिलाता है)
-    - बाद में लीटरल 'at' होता है
+    `/^[ch]at/` पैटर्न उन स्ट्रिंग्स से मेल खाता है जो:
+    - शुरुआत (`^`) में 'c' या 'h' में से कोई एक हो (यह `[ch]` का अर्थ है - एक कैरेक्टर क्लास जो एक अक्षर मिलाता है)
+    - इसके बाद ठीक‑ठाक 'at' हो
 
-    इसलिए, केवल "cat" और "hat" इस पैटर्न के मेल खाते हैं। `filter()` मेथड केवल मिलाने वाले तत्वों को रखता है।
+    इसलिए केवल "cat" और "hat" इस पैटर्न से मेल खाते हैं। `filter()` मेथड केवल मेल खाने वाले तत्वों को रखता है।
 
-    [वर्ण वर्गों के बारे में अधिक जानें MDN पर](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Character_Classes)
+    [MDN पर कैरेक्टर क्लास के बारे में अधिक जानें](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Character_Classes)
   </div>
   </slot>
 </Challenge>
@@ -99,14 +99,14 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={2}
-  group="मूल मिलान"
-  title="लालची बनाम गैर-लालची"
+  group="बेसिक मैचिंग"
+  title="ग्रीडी बनाम नॉन-ग्रीडी"
   options={[
   ]}
 >
   <slot name="question">
   <div className="question">
-    यह क्या मिलाएगा?
+    यह क्या मैच करेगा?
     ```js
         '<div>Hello</div><div>World</div>'.match(/<div>.*?<\/div>/g)
     ```
@@ -114,15 +114,15 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    पैटर्न `/<div>.*?<\/div>/g` में `*?` के साथ गैर-लालची मिलान का उपयोग होता है जिसका अर्थ है:
-    - `<div>` मिलाएं
-    - कोई भी वर्ण (`.*`) मिलाएं लेकिन जितना संभव हो उतना कम (`?`)
-    - जब तक `</div>` नहीं मिल जाता
-    - `g` फ्लैग इसे सभी घटनाओं का मिलान करने के लिए बनाता है
+    `/<div>.*?<\/div>/g` पैटर्न `*?` के साथ नॉन-ग्रीडी मैचिंग का उपयोग करता है, जिसका अर्थ है:
+    - `<div>` से मिलाएँ
+    - किसी भी अक्षर (`.*`) को मिलाएँ लेकिन यथासंभव कम (`?`)
+    - `</div>` मिलने तक
+    - `g` फ़्लैग सभी occurrences को मैच करता है
 
-    `?` के बिना, लालची `.*` पहले `<div>` से अंतिम `</div>` तक सब कुछ मिलाएगा, जो एक बड़ा मिलान देगा। `?` के साथ, यह प्रत्येक जोड़ी को अलग-अलग मिलाएगा।
+    यदि `?` न हो तो ग्रीडी `.*` पहले `<div>` से लेकर आखिरी `</div>` तक सब कुछ मैच करेगा, जिससे एक बड़ा मैच मिलेगा। `?` के साथ यह प्रत्येक जोड़ी को अलग‑अलग मैच करता है।
 
-    [लालची बनाम नॉन-लालची मिलान के बारे में अधिक जानें](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)
+    [greedy vs lazy matching के बारे में और जानें](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)
   </div>
   </slot>
 </Challenge>
@@ -130,8 +130,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={3}
-  group="सामान्य फंसते हुए"
-  title="डॉट मेटाकैरेक्टर"
+  group="आम गड़बड़ियाँ"
+  title="डॉट मेटा‑कैरेक्टर"
   options={[
     {text: '["hello\nworld"]'},
     {text: '["hello", "world"]', isAnswer: true},
@@ -149,14 +149,14 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `\w+` पैटर्न एक या अधिक शब्द वर्णों के मैच को मैच करता है। यदि तार में एक नई पंक्ति है तो भी, `\w` मैच करता है:
-    - अक्षर (a-z, A-Z)
-    - संख्याएँ (0-9)
+    `\w+` पैटर्न एक या अधिक शब्द अक्षरों से मेल खाता है। स्ट्रिंग में नई पंक्ति (`\n`) होने के बावजूद, `\w` मिलाता है:
+    - अक्षर (a‑z, A‑Z)
+    - संख्याएँ (0‑9)
     - अंडरस्कोर (_)
 
-    इसलिए, नई पंक्ति एक शब्द सीमा के रूप में कार्य करती है, और हमें दो मैच मिलते हैं। यदि हमने `.*` का उपयोग किया होता तो डिफ़ॉल्ट रूप से यह नई पंक्ति को मैच नहीं करता (इसके लिए `s` फ्लैग की आवश्यकता होती)।
+    इसलिए नई पंक्ति शब्द सीमा की तरह काम करती है, और हमें दो मिलान मिलते हैं। यदि हम `.*` उपयोग करते तो यह डिफ़ॉल्ट रूप से नई पंक्ति से नहीं मिलता (इसके लिए `s` फ़्लैग चाहिए होता)।
 
-    [मेटाकैरेक्टर्स के बारे में अधिक जानें](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Character_Classes#types)
+    [मेटा‑कैरेक्टर के बारे में और जानें](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Character_Classes#types)
   </div>
   </slot>
 </Challenge>
@@ -164,8 +164,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={4}
-  group="लुक-एहेड"
-  title="पॉजिटिव लुक-एहेड"
+  group="लुक-अहेड"
+  title="सकारात्मक लुक-अहेड"
   options={[
     {text: '["$100", "€50"]'},
     {text: '["100", "50"]'},
@@ -184,15 +184,15 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    यह पैटर्न कुछ भी मैच नहीं करेगा क्योंकि लुक-एहेड उल्टा है! अगर आपको `$` या `€` से पहले अंक चाहिए, तो एक लुक-बिहिंद इस्तेमाल करें: `/(?<=[\$€])\d+/g`।
+    यह पैटर्न कुछ भी मैच नहीं करेगा क्योंकि लुक-अहेड पीछे की ओर है! यदि आप `$` या `€` से पहले वाले अंकों चाहते हैं, तो लुक-बिहाइंड इस्तेमाल करें: `/(?<=[\$€])\d+/g`.
 
-    लुक-एहेड वर्तमान स्थिति के *बाद* की जाँच करता है। लिखा गया पैटर्न इस प्रकार खोजता है:
+    लुक-अहेड यह जांचते हैं कि वर्तमान स्थिति के *बाद* क्या है। लिखा गया पैटर्न खोजता है:
     - एक या अधिक अंक (`\d+`)
-    - फिर (`(?=...)`) $ या € (`[\$€]`)
+    - जिसके बाद (`(?=...)`) `$` या `€` (`[\$€]`)
 
-    क्योंकि कोई भी संख्या करेंसी सिम्बल के बाद नहीं है (वे उनके पहले हैं), हमें कोई मैच नहीं मिलता है।
+    क्योंकि ऐसे कोई नंबर नहीं हैं जिनके बाद मुद्रा चिन्ह हों (वे उनके पहले होते हैं), इसलिए कोई मैच नहीं मिलता।
 
-    [लुक-एहेड एसर्टिवन के बारे में अधिक जानें](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
+    [लुक-अहेड असर्शन के बारे में अधिक जानें](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
   </div>
   </slot>
 </Challenge>
@@ -200,7 +200,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={5}
-  group="मूल जोड़तुक"
+  group="बेसिक मिलान"
   title="शब्द सीमाएँ"
   options={[
     {text: '["cat", "cats"]'},
@@ -211,7 +211,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    क्या मेल खाएगा?
+    क्या मेल करेगा?
     ```js
         'cat cats category'.match(/\bcat\b/g)
     ```
@@ -219,16 +219,16 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `\b` एक शब्द सीमा को दर्शाता है, जो मेल करता है:
-    - शब्द अक्षर और गैर-शब्द अक्षर के बीच
-    - अगर स्ट्रिंग की शुरुआत/अंत में शब्द अक्षर हो तो
+    The `\b` represents a word boundary, which matches:
+    - Between a word character and a non-word character
+    - At the start/end of the string if there's a word character
 
-    इसलिए `/\bcat\b/` केवल "cat" को मैच करेगा जब यह पूर्ण शब्द हो, दूसरे शब्द का हिस्सा न हो।
-    - ✅ "cat" (अंतरिक्षों से घिरा हुआ)
-    - ❌ "cats" ("cat" के बाद सीमा नहीं है)
-    - ❌ "category" ("cat" के बाद सीमा नहीं है)
+    So `/\bcat\b/` matches "cat" only when it's a complete word, not part of another word.
+    - ✅ "cat" (surrounded by spaces)
+    - ❌ "cats" (no boundary after "cat")
+    - ❌ "category" (no boundary after "cat")
 
-    [शब्द सीमाओं के बारे में अधिक जानें](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions#other_assertions)
+    [Learn more about word boundaries](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions#other_assertions)
   </div>
   </slot>
 </Challenge>
@@ -236,8 +236,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={6}
-  group="सामान्य गलतियाँ"
-  title="ग्लोबल फ्लैग"
+  group="आम गड़बड़ियाँ"
+  title="ग्लोबल फ़्लैग"
   options={[
     {text: 'null'},
     {text: '["a"]'},
@@ -248,7 +248,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    आउटपुट क्या होगा?
+    आउटपुट क्या है?
     ```js
         'banana'.match(/a/g)
     ```
@@ -256,15 +256,15 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `g` (ग्लोबल) फ्लैग `match()` के व्यवहार को बदल देता है:
-    - `g` न होने पर: पहले मैच और कैप्चर ग्रुप्स के साथ लौटाता है
-    - `g` होने पर: सभी मैचिंग स्ट्रिंग्स के एरे लौटाता है
+    `g` (ग्लोबल) फ़्लैग `match()` के व्यवहार को बदलता है:
+    - बिना `g` के: पहला मैच और कैप्चर ग्रुप लौटाता है
+    - `g` के साथ: सभी मिलते‑जुलते स्ट्रिंग्स का एरे लौटाता है
 
-    इस मामले में, यह 'banana' में 'a' के सभी घटनाओं को ढूंढता है।
+    इस मामले में, यह "banana" में सभी "a" की घटनाएँ खोजता है।
 
-    नोट: अगर आपको सभी मैच और कैप्चर ग्रुप्स दोनों चाहिए, तो `matchAll()` या लूप में `exec()` विधि का उपयोग करें।
+    नोट: यदि आपको सभी मैच और कैप्चर ग्रुप दोनों चाहिए, तो `matchAll()` या लूप में `exec()` मेथड का उपयोग करें।
 
-    [ग्लोबल फ्लैग के बारे में अधिक जानें](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/global)
+    [ग्लोबल फ़्लैग के बारे में और जानें](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/global)
   </div>
   </slot>
 </Challenge>
@@ -272,8 +272,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={7}
-  group="लुक-बैक"
-  title="नकारात्मक लुक-बैक"
+  group="लुक‑बिहाइंड"
+  title="नकारात्मक लुक‑बिहाइंड"
   options={[
     {text: '["123"]'},
     {text: '["123", "456"]'},
@@ -284,7 +284,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    इस पैटर्न के क्या मेल खाते हैं?
+    इस पैटर्न से क्या मेल खाता है?
     ```js
         'abc123 def456'.match(/(?<!abc)\d+/g)
     ```
@@ -292,14 +292,14 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    नकारात्मक लुक-बैहीन `(?<!abc)` यह सुनिश्चित करता है कि अंकों के पहले "abc" नहीं है:
-    - ❌ "123" ("abc" के बाद आया)
-    - ✅ "23" ("abc1" के बाद आया)
-    - ✅ "456" ("def" के बाद आया)
+    नकारात्मक लुक‑बिहाइंड `(?<!abc)` यह सुनिश्चित करता है कि अंकों के पहले "abc" न हो:
+    - ❌ "123" ("abc" के पहले)
+    - ✅ "23" ("abc1" के पहले)
+    - ✅ "456" ("def" के पहले)
 
-    मॉडर्न जावास्क्रिप्ट इंजन में लुक-बैहीन अभिव्यक्ति समर्थित हैं। यह उदाहरण स्थिर-लंबाई वाले लुक-बैक का उपयोग करता है: `abc` हमेशा तीन अक्षर होते हैं। चल-लंबाई वाले लुक-बैक इंजन-विशिष्ट ट्रिकी अंत होते हैं।
+    जावास्क्रिप्ट आधुनिक इंजन में लुक‑बिहाइंड एसेर्शन को सपोर्ट करता है। यह उदाहरण फिक्स्ड‑लेंथ लुक‑बिहाइंड का उपयोग करता है: `abc` हमेशा तीन अक्षर का होता है। वैरिएबल‑लेंथ लुक‑बिहाइंड अधिक जटिल इंजन‑विशिष्ट मामला है।
 
-    ध्यान दें: लुक-बैक का समर्थन जावास्क्रिप्ट में ताजा है। पुराने ब्राउज़र समर्थन के लिए [ब्राउज़र संगतता जांचें](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#browser_compatibility)।
+    नोट: जावास्क्रिप्ट में लुक‑बिहाइंड सपोर्ट अपेक्षाकृत नया है। यदि आपको पुराने ब्राउज़र सपोर्ट करने हैं तो [ब्राउज़र संगतता](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#browser_compatibility) देखें।
   </div>
   </slot>
 </Challenge>
@@ -307,8 +307,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={8}
-  group="मूल तत्वों का मिलान"
-  title="कैप्चरिंग ग्रुप्स"
+  group="बेसिक मिलान"
+  title="कैप्चरिंग समूह"
   options={[
     {text: '["2029-12-31"]'},
     {text: '["2029", "12", "31"]', isAnswer: true},
@@ -326,18 +326,18 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    पैटर्न तीन कैप्चरिंग ग्रुप्स का उपयोग करता है:
+    पैटर्न में तीन कैप्चरिंग ग्रुप्स हैं:
     1. `(\d{4})` वर्ष को कैप्चर करता है
     2. `(\d{2})` महीने को कैप्चर करता है
     3. `(\d{2})` दिन को कैप्चर करता है
 
-    `match()` में `g` फ्लैग के बिना लौटाता है:
-    - इंडेक्स 0: पूर्ण मिलान
+    `match()` बिना `g` फ़्लैग के लौटाता है:
+    - इंडेक्स 0: पूरा मिलान
     - इंडेक्स 1+: कैप्चर ग्रुप्स
 
-    `slice(1)` केवल कैप्चर ग्रुप्स प्राप्त करने के लिए एक सामान्य ट्रिक है।
+    `slice(1)` एक आम ट्रिक है जिससे केवल कैप्चर ग्रुप्स मिलते हैं।
 
-    [ग्रुप्स और कैप्चरिंग के बारे में अधिक जानें](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Groups_and_Backreferences)
+    [ग्रुप्स और कैप्चरिंग के बारे में और जानें](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Groups_and_Backreferences)
   </div>
   </slot>
 </Challenge>
@@ -366,9 +366,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    नकारात्मक लुक-अहेड `(?![a-z])` यह सुनिश्चित करता है कि अंकों के बाद कोई छोटे अक्षर नहीं होते हैं। क्योंकि "3aBc" में अंकों के बाद छोटा अक्षर 'a' है, इसलिए इसका भाग मैच नहीं होता है। इसलिए केवल प्रारंभिक "12" मैच होता है।
+    नकारात्मक लुक-अहेड `(?![a-z])` सुनिश्चित करता है कि अंकों के बाद कोई लोअरकेस अक्षर न हो। क्योंकि "3aBc" भाग में अंकों के बाद लोअरकेस अक्षर है, उसका भाग मेल नहीं खाता। इसलिए केवल शुरुआती "12" ही मेल खाता है।
 
-    [नकारात्मक लुक-अहेड के बारे में अधिक जानें](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
+    [नकारात्मक लुक-अहेड के बारे में और जानें](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
   </div>
   </slot>
 </Challenge>
@@ -376,8 +376,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={10}
-  group="लुक-बैक"
-  title="लुक-बैक स्प्लिट"
+  group="लुक-बिहाइंड"
+  title="लुक-बिहाइंड स्प्लिट"
   options={[
     {text: '["a,", "b,", "c"]', isAnswer: true},
     {text: '["a,b,c"]'},
@@ -395,16 +395,16 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    पैटर्न `/(?<=,)/` एक लुक-बैक है जो कमा के बाद मैच करता है:
-    - `a,` (कमा के बाद)
-    - `b,` (कमा के बाद)
-    - `c` (कमा नहीं है)
+    पैटर्न `/(?<=,)/` एक लुक-बिहाइंड है जो कॉमा के बाद मैच करता है:
+    - `a,` (कॉमा के बाद)
+    - `b,` (कॉमा के बाद)
+    - `c` (कोई कॉमा नहीं)
 
-    लुक-बैक कमा को खाली नहीं करता, इसलिए स्प्लिट परिणाम में कमा पिछले खंड से जुड़ा रहता है।
+    लुक-बिहाइंड कॉमा को खपत नहीं करता, इसलिए कॉमा स्प्लिट परिणाम में पिछले भाग से जुड़ा रहता है.
 
-    यह तब उपयोगी होता है जब आप एक स्ट्रिंग को कमा के आधार पर स्प्लिट करना चाहते हैं लेकिन स्प्लिट करने वाले वर्ण को खोए बिना।
+    यह तब उपयोगी होता है जब आप किसी स्ट्रिंग को उसके पहले आने वाले हिस्से के आधार पर विभाजित करना चाहते हैं **बिना विभाजन कैरेक्टर(स) को खोए**.
 
-    [लुक-बैक असरों के बारे में अधिक जानें](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
+    [लुक-बिहाइंड एसेर्शन के बारे में और जानें](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
   </div>
   </slot>
 </Challenge>
@@ -412,8 +412,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={11}
-  group="सामान्य चूकें"
-  title="विशेष अक्षरों का पलायन"
+  group="आम गड़बड़ियाँ"
+  title="विशेष अक्षरों को एस्केप करना"
   options={[
     {text: '["$100"]'},
     {text: '["100"]'},
@@ -432,17 +432,17 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    विशेष अक्षरों को अक्षरात्मक रूप से मेल करने के लिए `\` के साथ पलायन करें:
+    विशेष अक्षरों को शाब्दिक रूप से मिलाने के लिए `\\` से एस्केप करना पड़ता है:
     - `$` एक विशेष अक्षर है (स्ट्रिंग का अंत)
-    - एक अक्षरात्मक डॉलर चिह्न मेल करने के लिए इसे पलायन करें: `\$`
+    - वास्तविक डॉलर साइन मिलाने के लिए, इसे एस्केप करें: `\\$`
 
-    सामान्य रूप से पलायन करने की आवश्यकता होती है:
+    एस्केप करने वाले सामान्य अक्षर:
     ```js
         . * + ? ^ $ [ ] \ ( ) { } |
     ```
-    पलायन किए बिना, कई विशेष अक्षर रेगेक्स में अर्थ होते हैं जो आपके इरादे से अलग हो सकते हैं।
+    एस्केप किए बिना, कई विशेष अक्षरों के regex अर्थ होते हैं जो शायद आपकी इच्छा के अनुसार न हों।
 
-    [विशेष अक्षरों के पलायन के बारे में अधिक जानें](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#escaping)
+    [विशेष अक्षरों को एस्केप करने के बारे में और जानें](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#escaping)
   </div>
   </slot>
 </Challenge>
@@ -450,8 +450,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={12}
-  group="लुक-बिहिंद"
-  title="पॉजिटिव लुक-बिहिंद"
+  group="लुक-बिहाइंड"
+  title="सकारात्मक लुक-बिहाइंड"
   options={[
     {text: '["$100"]'},
     {text: '["100"]', isAnswer: true},
@@ -461,7 +461,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    क्या मेल खाता है?
+    क्या मिल रहा है?
     ```js
         '$100'.match(/(?<=\$)\d+/)
     ```
@@ -469,14 +469,14 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    पॉजिटिव लुक-बिहिंद `(?<=$)` नंबरों के डॉलर सिग्न के बाद होने की पुष्टि करता है:
-    - `(?<=$)`: डॉलर सिग्न के लिए लुक-बिहिंद
-    - `\d+`: एक या एक से अधिक अंकों का मेल
+    सकारात्मक लुक-बिहाइंड `(?<=\$)` सुनिश्चित करता है कि अंकों से पहले डॉलर चिह्न हो:
+    - `(?<=\$)`: डॉलर चिह्न के लिए लुक-बिहाइंड
+    - `\d+`: एक या अधिक अंकों से मेल खाता है
 
-    लुक-बिहिंद अभिव्यक्तियाँ चरित्र नहीं खाती; वे केवल इस बात की जाँच करती हैं कि क्या पहले आया है।
-    यह तब उपयोगी होता है जब आप किसी चीज़ का मेल करना चाहते हैं जो इस बात पर निर्भर करता है कि उसके पहले क्या आया है बिना पहले के हिस्से को शामिल किए।
+    लुक-बिहाइंड एसेर्शन अक्षरों को खपत नहीं करते; वे केवल यह जांचते हैं कि पहले क्या आया है।
+    यह तब उपयोगी है जब आप कुछ ऐसा मिलाना चाहते हैं जो उसके पहले की स्थिति पर निर्भर हो, बिना पूर्व भाग को शामिल किए।
 
-    [लुक-बिहिंद अभिव्यक्तियों के बारे में अधिक जानें](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
+    [लुक-बिहाइंड एसेर्शन के बारे में अधिक जानें](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
   </div>
   </slot>
 </Challenge>
@@ -484,14 +484,14 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={13}
-  group="मूल मिलान"
-  title="लेटी बनाम ग्रीडी क्वांटिफायर्स"
+  group="बेसिक मिलान"
+  title="आलसी बनाम लालची क्वांटिफ़ायर"
   options={[
   ]}
 >
   <slot name="question">
   <div className="question">
-    क्या मिलाया जाता है?
+    क्या मिल रहा है?
     ```js
         '<b>bold</b>'.match(/<b>(.*?)<\/b>/).slice(1)
     ```
@@ -499,17 +499,17 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    पैटर्न `*?` के साथ लेटी मिलान का उपयोग करता है:
-    - `<b>`: खुलते टैग का मिलान
-    - `(.*?)`: कोई भी वर्ण (लेटी) पकड़ें
-    - `</b>`: बंद टैग का मिलान
+    पैटर्न `*?` के साथ आलसी मिलान का उपयोग करता है:
+    - `<b>`: खुलने वाला टैग मिलाएँ
+    - `(.*?)`: कोई भी अक्षर कैप्चर करें (आलसी)
+    - `</b>`: बंद करने वाला टैग मिलाएँ
 
-    `*` के बाद का `?` इसे लेटी बनाता है, जो कम से कम वर्ण मिलाता है।
-    `?` के बिना यह ग्रीडी होगा और अधिकतम वर्ण मिलाएगा।
+    `*` के बाद `?` इसे आलसी बनाता है, जिससे जितने कम से कम अक्षर संभव हों उतने ही मिलते हैं।
+    यदि `?` न हो तो यह लालची होगा और जितना संभव हो उतना मिलाएगा।
 
-    `slice(1)` केवल पकड़े गए समूह को लौटाता है।
+    `slice(1)` केवल कैप्चर किए गए समूह को लौटाता है।
 
-    [लग्जरी बनाम लेटी मिलान के बारे में अधिक जानें](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)
+    [greedy vs lazy matching के बारे में और जानें](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)
   </div>
   </slot>
 </Challenge>
@@ -517,8 +517,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={14}
-  group="मूल मैचिंग"
-  title="यूनिकोड फ्लैग"
+  group="बेसिक मैचिंग"
+  title="यूनिकोड फ़्लैग"
   options={[
     {text: '["🙂"]'},
     {text: '["😀", "🙂"]', isAnswer: true},
@@ -528,7 +528,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    क्या मैच होता है?
+    क्या मेल खाता है?
     ```js
         '😀 🙂'.match(/\p{Emoji}/gu)
     ```
@@ -536,16 +536,16 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `u` फ्लैग सक्षम करता है:
+    `u` फ़्लैग सक्षम करता है:
     - यूनिकोड प्रॉपर्टी एस्केप्स (`\p{...}`)
-    - सर्वोत्तम पेयर के सही हेंडलिंग
+    - सरोगेट पेयर्स का सही हैंडलिंग
 
-    `u` के बिना, एमोजी और अन्य यूनिकोड वर्ण ठीक से मैच नहीं हो सकते।
-    पैटर्न `\p{Emoji}` यूनिकोड `Emoji` प्रॉपर्टी वाले वर्णों को मैच करता है। इस स्ट्रिंग में, दो एमोजी पिक्टोग्राफ का अर्थ है।
+    बिना `u` के, इमोजी और अन्य यूनिकोड कैरेक्टर सही ढंग से नहीं मिल सकते।
+    पैटर्न `\p{Emoji}` उन कैरेक्टरों से मेल खाता है जिनकी यूनिकोड `Emoji` प्रॉपर्टी है। इस स्ट्रिंग में, इसका मतलब दो इमोजी पिक्टोग्राफ़ हैं।
 
-    नोट: यूनिकोड प्रॉपर्टी एस्केप्स के लिए `u` फ्लैग आवश्यक है।
+    नोट: यूनिकोड प्रॉपर्टी एस्केप्स के लिए `u` फ़्लैग आवश्यक है।
 
-    [यूनिकोड मोड के बारे में अधिक जानें](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Unicode_Property_Escapes)
+    [Unicode मोड के बारे में अधिक जानें](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Unicode_Property_Escapes)
   </div>
   </slot>
 </Challenge>
@@ -553,8 +553,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={15}
-  group="हेल में देखें"
-  title="पासवर्ड सत्यापन"
+  group="नरक‑में‑देखो"
+  title="पासवर्ड मान्यकरण"
   options={[
     {text: '"sassword123"'},
     {text: '"Sass123!"', isAnswer: true},
@@ -564,8 +564,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    अग्रिम में खेद! 😈<br />
-    कौन-सा पासवर्ड इस पैटर्न के मेल खाता है?
+    पहले से ही माफ़ी! 😈<br />
+    कौन सा पासवर्ड इस पैटर्न से मेल खाता है?
     ```js
         /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/
     ```
@@ -573,26 +573,26 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    उत्पादन में ऐसा कुछ नहीं लिखें! 😅
+    प्रोडक्शन में ऐसा कुछ भी न लिखें! 😅
 
-    यह पैटर्न कई सकारात्मक लुक-एहेड का उपयोग करता है जो नियंत्रित करता है:
-    - कम से कम एक बड़ा अक्षर: `(?=.*[A-Z])`
-    - कम से कम एक छोटा अक्षर: `(?=.*[a-z])`
+    यह पैटर्न कई पॉज़िटिव लुक‑अहेड्स का उपयोग करता है ताकि enforce किया जा सके:
+    - कम से कम एक अपरकेस अक्षर: `(?=.*[A-Z])`
+    - कम से कम एक लोअरकेस अक्षर: `(?=.*[a-z])`
     - कम से कम एक अंक: `(?=.*\d)`
-    - कम से कम एक विशेष चरित्र: `(?=.*[!@#$%^&*])`
-    - न्यूनतम 8 लंबाई: `.{8,}`
+    - कम से कम एक स्पेशल कैरेक्टर: `(?=.*[!@#$%^&*])`
+    - न्यूनतम लंबाई 8: `.{8,}`
 
-    लुक-एहेड पासवर्ड सत्यापन के लिए बेहतर होते हैं क्योंकि वे कई मानदंडों की जाँच कर सकते हैं बिना वर्णों को खपाए।
+    लुक‑अहेड्स पासवर्ड वैलिडेशन के लिए परफेक्ट हैं क्योंकि वे कई मानदंडों को बिना कैरेक्टर खाए चेक कर सकते हैं।
 
-    [पासवर्ड सत्यापन पैटर्न के बारे में अधिक जानें](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
+    [पासवर्ड वैलिडेशन पैटर्न के बारे में और पढ़ें](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
   </div>
   </slot>
 </Challenge>
 
 </QuizUI>
 
-<h2>आप कैसे कर रहे हैं? 🧐</h2>
+<h2>आपका प्रदर्शन कैसा रहा? 🧐</h2>
 
-रेगुलर एक्सप्रेशन्स एक जानवर की तरह हो सकते हैं जिसे नियंत्रित करना होता है, लेकिन जब आपको उनके बारे में पकड़ बन जाती है (और सभी नए सिंटैक्स) तो वे अत्यंत शक्तिशाली हो जाते हैं। अभ्यास करते रहिए और आप जल्द ही एक RegEx मास्टर बन जाएंगे! 🧙‍♂️
+Regular Expressions को काबू में करना मुश्किल हो सकता है, लेकिन एक बार समझ आ जाए (और नई सिंटैक्स सीख लें) तो ये बेहद शक्तिशाली होते हैं। अभ्यास करते रहें, और आप जल्द ही रेगएक्स के माहिर बन जाएंगे! 🧙‍♂️
 
-<p class="inset">सभी उसके बाद RegEx के बाद आराम करने की तलाश में हैं?<br />पफ्ट, याद रखिए: कौशल के बाद आराम करें! <br /><br />[मेरे जिम](/challenges/) में अभ्यास करें कुछ और चुनौतियों को तोड़ने के लिए! 💪</p>
+<p class="inset">सारा रेगएक्स करने के बाद थोड़ा ब्रेक चाहिए?<br />हँ, याद रखें: ब्रेक *स्किल्स के बाद* ही लेना चाहिए! <br /><br />और चुनौतियों को तोड़ने के लिए [मेरे जिम](/challenges/) पर जाएँ! 💪</p>
