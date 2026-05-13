@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: beware-the-single-purpose-people
+- Locale: ru
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2025-04-03--beware-the-single-purpose-people/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 5.42
+- Input tokens: 7969
+- Output tokens: 3101
+- Thinking tokens: unknown
+- Cached input tokens: 4224
+- Cache write tokens: 0
+- Estimated cost: $0.000869
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 language: English
 title: Остерегайтесь однодельных людей
@@ -122,3 +140,4 @@ cover_icon: ../endless-little-boxes-square-200.webp
 ¹ Ирония в том, что достижение *реального* единственного назначения на самых низких уровнях требует огромной сложности, скрытой чуть ниже поверхности.  
 
 ² Здесь речь идёт о концептуальной чистоте: идея, что функция должна выполнять лишь «одну вещь» логически. Не путайте это с понятием «чистой функции» в функциональном программировании, у которой нет побочных эффектов — это другая, хотя иногда и смежная, идея.
+````
