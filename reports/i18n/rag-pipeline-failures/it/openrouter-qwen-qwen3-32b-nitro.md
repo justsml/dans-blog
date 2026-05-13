@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: rag-pipeline-failures
+- Locale: it
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-05-05--rag-pipeline-failures/it/index.mdx
+- Validation: deferred
+- Runtime seconds: 105.57
+- Input tokens: 10321
+- Output tokens: 8637
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.002899
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Cinque modi in cui RAG fallisce in produzione
 subTitle: La demo ha funzionato. Gli utenti veri sono dove la pipeline fallisce.
@@ -195,3 +213,4 @@ Le dimostrazioni RAG funzionano perché le condizioni della demo sono controllat
 Ogni fallimento sopra elencato è diagnosticabile, ma solo se ne stai misurando l'impatto. Le squadre RAG affidabili non stanno facendo nulla di esotico. Trattano la qualità del recupero come un vero sottosistema, non come un artefatto della demo.  
 
 Configura prima il ciclo di valutazione. Tutto il resto sarà più semplice una volta che sarai in grado di misurarlo.
+````
