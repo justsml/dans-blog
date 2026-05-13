@@ -1,0 +1,93 @@
+{
+  "runId": "deepseek-deepseek-v4-flash@2026-05-13T22-25-46-752Z",
+  "slug": "the-8-byte-timestamp-that-destroyed-our-database",
+  "locale": "it",
+  "model": "deepseek/deepseek-v4-flash",
+  "modelPath": "deepseek-deepseek-v4-flash",
+  "createdAt": "2026-05-13T22:27:06.743Z",
+  "sourcePath": "src/content/posts/2025-12-29--the-8-byte-timestamp-that-destroyed-our-database/index.mdx",
+  "targetPath": "src/content/posts/2025-12-29--the-8-byte-timestamp-that-destroyed-our-database/it/index.mdx",
+  "candidatePath": "reports/i18n/the-8-byte-timestamp-that-destroyed-our-database/it/deepseek-deepseek-v4-flash/2026-05-13T22-25-46-752Z/candidate.mdx",
+  "sourceHash": "4d98d485a209ef83adfb3ec4df7994acdb6c23964910ec139710bf29772952fe",
+  "outputHash": "91bff80a75c83b96f2b44565064f217b0b4f49bad87d17dd0febf0ed3447f4be",
+  "reasoningEffort": "low",
+  "temperature": 0.3,
+  "maxTokens": 16000,
+  "timeoutMs": 200000,
+  "articleSummary": "The article argues that PostgreSQL's `TIMESTAMP` and `TIMESTAMPTZ` types are often misused because developers confuse absolute moments (events) with wall-clock times (schedules). Using a train ticket as a recurring metaphor, it explains that `TIMESTAMPTZ` stores UTC and converts to the session timezone on read—it does not store the timezone itself. The author recommends storing absolute moments as `TIMESTAMPTZ`, durations as `INTERVAL`, and wall-clock policies (e.g., hotel check-in times) as `TIME` plus a timezone text field. The tone is a practical tutorial aimed at backend developers, with additional warnings about microsecond precision mismatches and the importance of range queries over exact timestamp equality.",
+  "totalInputTokens": 7775,
+  "totalOutputTokens": 6939,
+  "totalCacheReadTokens": 1536,
+  "totalCacheWriteTokens": 0,
+  "totalDurationMs": 50055,
+  "totalCostUsd": 0.0028206808,
+  "pricingSource": "local-openrouter-estimate",
+  "telemetry": {
+    "model": "deepseek/deepseek-v4-flash",
+    "chunkSize": "10p",
+    "totalChunks": 6,
+    "totalInputTokens": 7775,
+    "totalOutputTokens": 6939,
+    "totalCacheReadTokens": 1536,
+    "totalCacheWriteTokens": 0,
+    "totalDurationMs": 50055,
+    "totalCostUsd": 0.0028206808,
+    "pricingSource": "local-openrouter-estimate",
+    "chunks": [
+      {
+        "index": 0,
+        "inputTokens": 1109,
+        "outputTokens": 818,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 5523,
+        "costUsd": 0.00038430000000000007
+      },
+      {
+        "index": 1,
+        "inputTokens": 1378,
+        "outputTokens": 802,
+        "cacheReadTokens": 384,
+        "cacheWriteTokens": 0,
+        "durationMs": 4176,
+        "costUsd": 0.0003647952
+      },
+      {
+        "index": 2,
+        "inputTokens": 1430,
+        "outputTokens": 1032,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 6023,
+        "costUsd": 0.00048916
+      },
+      {
+        "index": 3,
+        "inputTokens": 1367,
+        "outputTokens": 1797,
+        "cacheReadTokens": 384,
+        "cacheWriteTokens": 0,
+        "durationMs": 21426,
+        "costUsd": 0.0006418552000000001
+      },
+      {
+        "index": 4,
+        "inputTokens": 1403,
+        "outputTokens": 2143,
+        "cacheReadTokens": 384,
+        "cacheWriteTokens": 0,
+        "durationMs": 10553,
+        "costUsd": 0.0007437752
+      },
+      {
+        "index": 5,
+        "inputTokens": 1088,
+        "outputTokens": 347,
+        "cacheReadTokens": 384,
+        "cacheWriteTokens": 0,
+        "durationMs": 2354,
+        "costUsd": 0.0001967952
+      }
+    ]
+  }
+}
