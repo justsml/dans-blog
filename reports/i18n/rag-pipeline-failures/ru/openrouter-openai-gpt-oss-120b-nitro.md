@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: rag-pipeline-failures
+- Locale: ru
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-05-05--rag-pipeline-failures/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 11.28
+- Input tokens: 10424
+- Output tokens: 2983
+- Thinking tokens: unknown
+- Cached input tokens: 2304
+- Cache write tokens: 0
+- Estimated cost: $0.000943
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: 'Пять причин, почему RAG не работает в продакшене'
 subTitle: Демо сработало. Реальные пользователи — где конвейер ломается.
@@ -201,3 +219,4 @@ async function runEval(
 Каждый из перечисленных сбойных сценариев можно диагностировать, но только при наличии измерений. Надёжные команды RAG не используют никаких экзотических приёмов. Они рассматривают качество поиска как реальный подсистемный компонент, а не как артефакт демонстрации.
 
 Сначала настройте цикл оценки. Всё остальное станет проще, как только появятся измеримые данные.
+````
