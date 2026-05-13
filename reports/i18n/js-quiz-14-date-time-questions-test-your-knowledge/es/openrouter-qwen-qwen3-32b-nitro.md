@@ -4,7 +4,7 @@
 - Model: openrouter/qwen/qwen3-32b:nitro
 - Target: src/content/posts/2020-01-02--js-quiz-14-date-time-questions-test-your-knowledge/es/index.mdx
 - Validation: rejected: direct AI SDK translation failed
-- Runtime seconds: 5.28
+- Runtime seconds: 4.72
 - Input tokens: unknown
 - Output tokens: unknown
 - Thinking tokens: unknown
