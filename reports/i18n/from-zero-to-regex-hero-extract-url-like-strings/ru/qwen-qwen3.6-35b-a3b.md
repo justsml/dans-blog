@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: from-zero-to-regex-hero-extract-url-like-strings
+- Locale: ru
+- Model: qwen/qwen3.6-35b-a3b
+- Target: src/content/posts/2024-12-29--from-zero-to-regex-hero-extract-url-like-strings/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 177.53
+- Input tokens: 10943
+- Output tokens: 39369
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.000000
+- Pricing source: unknown
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: 'Regex: от нуля до профи'
 subTitle: Извлечение и парсинг URL-подобных строк одним регулярным выражением
@@ -264,3 +282,4 @@ console.log("Extracted Parts:", parts);
 - [Документация MDN по регулярным выражениям](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions)
 - [Продвинутые техники Regex](https://www.regular-expressions.info/): Изучите lookaheads, lookbehinds и другие продвинутые конструкции для более точного сопоставления.
 - [RFC 3986 — Общий синтаксис URI](https://datatracker.ietf.org/doc/html/rfc3986)
+````
