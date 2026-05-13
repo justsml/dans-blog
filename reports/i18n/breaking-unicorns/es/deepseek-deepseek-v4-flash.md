@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: breaking-unicorns
+- Locale: es
+- Model: deepseek/deepseek-v4-flash
+- Target: src/content/posts/2024-09-01--breaking-unicorns/es/index.mdx
+- Validation: deferred
+- Runtime seconds: 37.22
+- Input tokens: 2652
+- Output tokens: 6700
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.002247
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Cómo perder mil millones de dólares súper rápido
@@ -180,3 +198,4 @@ No te preocupes, ¡el **gran jefe** lo ha resuelto!
 </section>
 
 {/* <aside class="disclaimer">¡Amo el viaje de las startups! He tenido algunas startups yo mismo y trabajé en ~5 empresas mientras se convertían en unicornios. He asesorado a docenas de empresas de $100M+. He visto cosas locas en mi trabajo como ingeniero, gerente y consultor.</aside> */}
+````
