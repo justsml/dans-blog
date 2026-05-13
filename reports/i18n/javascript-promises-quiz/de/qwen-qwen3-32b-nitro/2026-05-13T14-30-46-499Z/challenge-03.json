@@ -1,0 +1,44 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "Chaining `.then` and `.catch`'s",
+  "translatedTitle": "Kettenbildung von `.then` und `.catch`",
+  "translation": {
+    "title": "Kettenbildung von `.then` und `.catch`",
+    "group": "Fehlerbehandlung",
+    "options": [
+      {
+        "text": "Fehler und `undefined` ausgeben"
+      },
+      {
+        "text": "Fehler zweimal ausgeben"
+      },
+      {
+        "text": "UnhandledPromiseRejectionWarning"
+      },
+      {
+        "text": "undefined"
+      }
+    ],
+    "questionProse": [
+      "Was wird die Ausgabe des folgenden Codes sein?"
+    ],
+    "explanationProse": [
+      "Bei der Kettenbildung von `.then` und `.catch` ist es hilfreich, sie als eine Reihe von Schritten zu betrachten. Jeder `.then`-Aufruf erhält den Wert, der vom vorherigen `.then` zurückgegeben wurde (als Argument). Wenn jedoch ein Schritt einen Fehler erzeugt, werden alle nachfolgenden `.then`-Schritte übersprungen, bis ein `.catch` auftritt. Um einen Fehler zu überschreiben, musst du einfach einen nicht-fehlerhaften Wert zurückgeben. Dieser kann dann von jedem nachfolgenden `.then` weiterverarbeitet werden."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Kettenbildung von `.then` und `.catch`\",\n  \"group\": \"Fehlerbehandlung\",\n  \"options\": [\n    {\n      \"text\": \"Fehler und `undefined` ausgeben\"\n    },\n    {\n      \"text\": \"Fehler zweimal ausgeben\"\n    },\n    {\n      \"text\": \"UnhandledPromiseRejectionWarning\"\n    },\n    {\n      \"text\": \"undefined\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was wird die Ausgabe des folgenden Codes sein?\"\n  ],\n  \"explanationProse\": [\n    \"Bei der Kettenbildung von `.then` und `.catch` ist es hilfreich, sie als eine Reihe von Schritten zu betrachten. Jeder `.then`-Aufruf erhält den Wert, der vom vorherigen `.then` zurückgegeben wurde (als Argument). Wenn jedoch ein Schritt einen Fehler erzeugt, werden alle nachfolgenden `.then`-Schritte übersprungen, bis ein `.catch` auftritt. Um einen Fehler zu überschreiben, musst du einfach einen nicht-fehlerhaften Wert zurückgeben. Dieser kann dann von jedem nachfolgenden `.then` weiterverarbeitet werden.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 752,
+    "outputTokens": 867,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2059
+  },
+  "cost": {
+    "inputUsd": 0.00006016,
+    "outputUsd": 0.00020808,
+    "totalUsd": 0.00026824,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
