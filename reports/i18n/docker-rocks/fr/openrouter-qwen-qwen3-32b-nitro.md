@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: docker-rocks
+- Locale: fr
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2015-06-11--docker-rocks/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 4.22
+- Input tokens: 1629
+- Output tokens: 1769
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.000555
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: 'Docker, c’est du costaud et fonctionne maintenant sous macOS'
@@ -46,3 +64,4 @@ Mise à jour 2024 :
 
 - Docker Desktop est propriétaire, mais gratuit pour un usage personnel. C'est une excellente solution pour commencer avec Docker sous OSX ou Windows.  
 - Si vous préférez une solution plus open-source, jetez un œil à [Rancher Desktop](https://rancherdesktop.io/).
+````
