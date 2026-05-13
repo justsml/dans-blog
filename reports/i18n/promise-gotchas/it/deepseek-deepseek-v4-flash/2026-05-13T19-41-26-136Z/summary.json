@@ -1,0 +1,66 @@
+{
+  "runId": "deepseek-deepseek-v4-flash@2026-05-13T19-41-26-136Z",
+  "slug": "promise-gotchas",
+  "locale": "it",
+  "model": "deepseek/deepseek-v4-flash",
+  "modelPath": "deepseek-deepseek-v4-flash",
+  "createdAt": "2026-05-13T19:41:43.940Z",
+  "sourcePath": "src/content/posts/2018-09-26--promise-gotchas/index.md",
+  "targetPath": "src/content/posts/2018-09-26--promise-gotchas/it/index.mdx",
+  "candidatePath": "reports/i18n/promise-gotchas/it/deepseek-deepseek-v4-flash/2026-05-13T19-41-26-136Z/candidate.mdx",
+  "sourceHash": "585ef3acb24711b5dc9644d20cfc4e64a997bcdd11408aaa68156dd3f28e5615",
+  "outputHash": "cb988087af78e369f67c6abc3a57f660f23c745e869b44840f234206ca4c8dd4",
+  "reasoningEffort": "low",
+  "temperature": 0.3,
+  "maxTokens": 16000,
+  "timeoutMs": 200000,
+  "articleSummary": "This article, \"Promise Gotchas,\" is a tutorial aimed at intermediate JavaScript developers, highlighting two common pitfalls with Promises. The core thesis is that Promises behave differently from other values (requiring `.then` to access results) and silently accept non-function arguments like `null` or `undefined`, which can cause unexpected behavior without warnings. Key examples show that `Promise.resolve(42).then(console.log())` fails because `console.log()` returns `undefined`, while passing the function reference `console.log` works. The tone is instructive and example-driven, using a quiz format to illustrate how `.then` skips steps when given non-functions, a design decision by TC39.",
+  "totalInputTokens": 2803,
+  "totalOutputTokens": 2171,
+  "totalCacheReadTokens": 768,
+  "totalCacheWriteTokens": 0,
+  "totalDurationMs": 12536,
+  "totalCostUsd": 0.0008949304000000001,
+  "pricingSource": "local-openrouter-estimate",
+  "telemetry": {
+    "model": "deepseek/deepseek-v4-flash",
+    "chunkSize": "6p",
+    "totalChunks": 3,
+    "totalInputTokens": 2803,
+    "totalOutputTokens": 2171,
+    "totalCacheReadTokens": 768,
+    "totalCacheWriteTokens": 0,
+    "totalDurationMs": 12536,
+    "totalCostUsd": 0.0008949304000000001,
+    "pricingSource": "local-openrouter-estimate",
+    "chunks": [
+      {
+        "index": 0,
+        "inputTokens": 850,
+        "outputTokens": 1023,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 5653,
+        "costUsd": 0.0004054400000000001
+      },
+      {
+        "index": 1,
+        "inputTokens": 1050,
+        "outputTokens": 967,
+        "cacheReadTokens": 384,
+        "cacheWriteTokens": 0,
+        "durationMs": 5369,
+        "costUsd": 0.00036507520000000004
+      },
+      {
+        "index": 2,
+        "inputTokens": 903,
+        "outputTokens": 181,
+        "cacheReadTokens": 384,
+        "cacheWriteTokens": 0,
+        "durationMs": 1514,
+        "costUsd": 0.00012441520000000002
+      }
+    ]
+  }
+}
