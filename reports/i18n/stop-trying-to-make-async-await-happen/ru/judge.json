@@ -1,0 +1,38 @@
+{
+  "selectedCommit": "edc987798fa6eb4d9f557110d73da456eb922608",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "scores": {
+    "readability": 5,
+    "technicalAccuracy": 5,
+    "coherence": 5,
+    "relevance": 5,
+    "translationQuality": 5,
+    "mdxPreservation": 5
+  },
+  "suggestions": [],
+  "rationale": "The current translation already includes the fix for the typo 'Поясняется' (it now correctly says 'Появляется ясность'). The translation is technically accurate, uses standard Russian terminology (e.g., 'Единственная ответственность' for 'Single Purpose'), and preserves the author's direct, conversational tone. MDX structure and image paths are correctly handled.",
+  "slug": "stop-trying-to-make-async-await-happen",
+  "locale": "ru",
+  "candidateCommits": [
+    "edc987798fa6eb4d9f557110d73da456eb922608",
+    "cffd12547bb2eae0af4d76a83d953c664bc239bf",
+    "24eeebf5dfe6089c9d4b646c2f717f1ba94c08bd"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "medium",
+      "match": "Поясняется ясность: именованные функции",
+      "replacement": "Появляется ясность: именованные функции",
+      "reason": "Typo in the candidate: 'Поясняется' (is explained) instead of 'Появляется' (emerges/appears) which matches the English 'Clarity emerges'.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug stop-trying-to-make-async-await-happen --locale ru --skip-global",
+    "output": ""
+  }
+}
