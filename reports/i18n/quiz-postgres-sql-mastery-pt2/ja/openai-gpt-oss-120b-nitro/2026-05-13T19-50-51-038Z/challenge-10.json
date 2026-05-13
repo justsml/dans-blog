@@ -1,0 +1,47 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Partial Indexes",
+  "translatedTitle": "部分インデックス",
+  "translation": {
+    "title": "部分インデックス",
+    "group": "インデックス作成",
+    "options": [
+      {
+        "text": "無効な構文"
+      },
+      {
+        "text": "重複インデックスを作成する"
+      },
+      {
+        "text": "アクティブな学生のみをインデックス化する"
+      },
+      {
+        "text": "アクティブな学生を優先的にインデックス化する"
+      },
+      {
+        "text": "クエリプランナーへのヒントを提供する"
+      }
+    ],
+    "questionProse": [
+      "この呪文は何をするのか？"
+    ],
+    "explanationProse": [
+      "このトリックは `Partial Index` と呼ばれます。\n\n    行のサブセットだけが頻繁に検索される場合、ディスク使用量の削減とクエリ高速化に役立ちます。\n\n    クエリに `status = 'active'` 条件があるときだけ、Postgres はインデックスを使用します。\n\n    **Reminder:** Postgres は他の RDBMS のような 'query hints' をサポートしていません。クエリプランナーが適切なインデックスの使用タイミングを判断します。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"部分インデックス\",\n  \"group\": \"インデックス作成\",\n  \"options\": [\n    {\n      \"text\": \"無効な構文\"\n    },\n    {\n      \"text\": \"重複インデックスを作成する\"\n    },\n    {\n      \"text\": \"アクティブな学生のみをインデックス化する\"\n    },\n    {\n      \"text\": \"アクティブな学生を優先的にインデックス化する\"\n    },\n    {\n      \"text\": \"クエリプランナーへのヒントを提供する\"\n    }\n  ],\n  \"questionProse\": [\n    \"この呪文は何をするのか？\"\n  ],\n  \"explanationProse\": [\n    \"このトリックは `Partial Index` と呼ばれます。\\n\\n    行のサブセットだけが頻繁に検索される場合、ディスク使用量の削減とクエリ高速化に役立ちます。\\n\\n    クエリに `status = 'active'` 条件があるときだけ、Postgres はインデックスを使用します。\\n\\n    **Reminder:** Postgres は他の RDBMS のような 'query hints' をサポートしていません。クエリプランナーが適切なインデックスの使用タイミングを判断します。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 874,
+    "outputTokens": 792,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 707
+  },
+  "cost": {
+    "inputUsd": 0.000034086,
+    "outputUsd": 0.00014256,
+    "totalUsd": 0.00017664599999999998,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "COUNT and NULL",
+  "translatedTitle": "COUNT と NULL",
+  "translation": {
+    "title": "COUNT と NULL",
+    "group": "NULL の挙動",
+    "options": [
+      {
+        "text": "100"
+      },
+      {
+        "text": "90"
+      },
+      {
+        "text": "10"
+      },
+      {
+        "text": "1"
+      },
+      {
+        "text": "0"
+      }
+    ],
+    "questionProse": [
+      "このクエリは何行返しますか？"
+    ],
+    "explanationProse": [
+      "さて、少しトリッキーでしたね。ポイントは `x = NULL` は決して行にマッチせず、常に `0` のカウントで 1 行が返されます。\n\n    `NULL` は未知の値なので、何とも比較できません。自分自身ですら比較できません。\n    \n    `NULL` 値をチェックする正しい方法は `IS NULL` を使うことです。\n\n    例:"
+    ]
+  },
+  "rawText": "{\n\"title\": \"COUNT と NULL\",\n  \"group\": \"NULL の挙動\",\n  \"options\": [\n    {\n      \"text\": \"100\"\n    },\n    {\n      \"text\": \"90\"\n    },\n    {\n      \"text\": \"10\"\n    },\n    {\n      \"text\": \"1\"\n    },\n    {\n      \"text\": \"0\"\n    }\n  ],\n  \"questionProse\": [\n    \"このクエリは何行返しますか？\"\n  ],\n  \"explanationProse\": [\n    \"さて、少しトリッキーでしたね。ポイントは `x = NULL` は決して行にマッチせず、常に `0` のカウントで 1 行が返されます。\\n\\n    `NULL` は未知の値なので、何とも比較できません。自分自身ですら比較できません。\\n    \\n    `NULL` 値をチェックする正しい方法は `IS NULL` を使うことです。\\n\\n    例:\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 881,
+    "outputTokens": 630,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 597
+  },
+  "cost": {
+    "inputUsd": 0.000034359,
+    "outputUsd": 0.0001134,
+    "totalUsd": 0.00014775900000000002,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

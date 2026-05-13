@@ -1,0 +1,47 @@
+{
+  "index": 0,
+  "attempt": 1,
+  "originalTitle": "The Many JOINs of PostgreSQL",
+  "translatedTitle": "PostgreSQL の多様な JOIN",
+  "translation": {
+    "title": "PostgreSQL の多様な JOIN",
+    "group": "ウォームアップ: JOIN",
+    "options": [
+      {
+        "text": "JOIN ALL"
+      },
+      {
+        "text": "INNER JOIN"
+      },
+      {
+        "text": "CROSS JOIN"
+      },
+      {
+        "text": "LEFT OUTER JOIN"
+      },
+      {
+        "text": "FULL OUTER JOIN"
+      }
+    ],
+    "questionProse": [
+      "どれが有効な PostgreSQL JOIN 式ではないか ❌"
+    ],
+    "explanationProse": [
+      "You knew about `CROSS JOIN`, right?\n\n    Did the `JOIN ALL` get you thinking about another operation, `UNION ALL`?\n\n    The answer here is `JOIN ALL` ❌.\n\n    The correct JOIN types are:\n    - `INNER JOIN` (default JOIN)\n    - `LEFT JOIN` (or `LEFT OUTER JOIN`)\n    - `RIGHT JOIN` (or `RIGHT OUTER JOIN`)\n    - `FULL JOIN` (or `FULL OUTER JOIN`)\n    - `CROSS JOIN` (the Cartesian product, unless a later `WHERE` clause filters it)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"PostgreSQL の多様な JOIN\",\n  \"group\": \"ウォームアップ: JOIN\",\n  \"options\": [\n    {\n      \"text\": \"JOIN ALL\"\n    },\n    {\n      \"text\": \"INNER JOIN\"\n    },\n    {\n      \"text\": \"CROSS JOIN\"\n    },\n    {\n      \"text\": \"LEFT OUTER JOIN\"\n    },\n    {\n      \"text\": \"FULL OUTER JOIN\"\n    }\n  ],\n  \"questionProse\": [\n    \"どれが有効な PostgreSQL JOIN 式ではないか ❌\"\n  ],\n  \"explanationProse\": [\n    \"You knew about `CROSS JOIN`, right?\\n\\n    Did the `JOIN ALL` get you thinking about another operation, `UNION ALL`?\\n\\n    The answer here is `JOIN ALL` ❌.\\n\\n    The correct JOIN types are:\\n    - `INNER JOIN` (default JOIN)\\n    - `LEFT JOIN` (or `LEFT OUTER JOIN`)\\n    - `RIGHT JOIN` (or `RIGHT OUTER JOIN`)\\n    - `FULL JOIN` (or `FULL OUTER JOIN`)\\n    - `CROSS JOIN` (the Cartesian product, unless a later `WHERE` clause filters it)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 897,
+    "outputTokens": 794,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 631
+  },
+  "cost": {
+    "inputUsd": 0.000034983,
+    "outputUsd": 0.00014292,
+    "totalUsd": 0.00017790299999999998,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
