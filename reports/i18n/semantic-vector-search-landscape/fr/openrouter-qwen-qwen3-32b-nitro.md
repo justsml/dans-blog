@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: semantic-vector-search-landscape
+- Locale: fr
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-05-01--semantic-vector-search-landscape/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 43.34
+- Input tokens: 15840
+- Output tokens: 19720
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.006000
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: >-
   Recherche vectorielle sémantique et autres sujets pour séduire amis et
@@ -374,3 +392,4 @@ La plupart des systèmes de recherche en production nécessitent plus d'une couc
 Ces outils ne sont pas concurrents. Ils sont complémentaires. Un système de recherche bien construit sélectionne la bonne couche pour chaque forme de requête — et lorsqu'il y a chevauchement entre les formes de requêtes, il exécute plusieurs couches et fusionne les résultats.
 
 Les équipes qui délivrent des fonctionnalités de recherche performantes maîtrisent l'ensemble de la pile. Les autres se tournent vers une base de données vectorielle, encoderont tout et se demanderont pourquoi les recherches exactes renvoient parfois le mauvais enregistrement.
+````
