@@ -1,0 +1,202 @@
+---
+social_image: ../desktop-social.webp
+title: 'パイプラインマスター: ステートのパス'
+subTitle: こんにちはクロージャ、古い友よ。
+date: '2023-08-09'
+modified: '2024-07-30'
+tags:
+  - typescript
+  - closure
+  - stateful
+  - scoping
+  - hoisting
+  - functional
+  - pipeline
+category: Guides
+subCategory: JavaScript
+cover: ../sven-kucinic-LxYxC6jdjcA-unsplash-cropped-1200.webp
+cover_mobile: ../w300_sven-kucinic-LxYxC6jdjcA-unsplash-cropped-1200.webp
+cover_icon: ../icon_sven-kucinic-LxYxC6jdjcA-unsplash-cropped-1200.webp
+---
+## パイプラインの達人：ステートの受け渡し
+
+関数型パイプラインでステートをやり取りする際に課題に遭遇したことはありますか？
+
+コードの構成（またはその欠如）は、ステートをやり取りする際の容易さに直接影響を与えます。
+
+この記事では、パイプラインでステートを受け渡すための効果的なテクニックを探ります。その過程で、コードの構成と読みやすさを改善していきます。
+
+この記事の焦点となる「現実的な」コードスニペットは以下の通りです。`userId`と`products`の配列を受け取り、4つの関数を順番に実行するチェックアウト関数です。
+
+```tsx
+const checkout = (userId: number, products: number[]) => {
+  return getProductsSubtotal(userId, products)
+    .then(subTotal => applyTaxes(userId, subTotal))
+    .then(total => purchaseProducts(userId, total))
+    .then(result => sendReceipt(userId, result));
+};
+```
+
+ちょっと待って、このコードはJSにおけるパイプラインとしては実際にはかなり良いものですね！
+
+このコードにはいくつか微妙な問題があり、これらが組み合わさることでより大きな問題を引き起こす可能性があります。
+
+1つ目の問題は、論理的に関連する各関数に`userId`を繰り返し渡している点です。  
+もう1つの問題は、開発者やTypeScriptにとっても見逃されがちな点：数値型の引数の順序を逆にしやすいという点です。（`applyTaxes`や`purchaseProducts`を参照。_最初に`userId`か`amount`か？_）
+
+このコードを改善する方法を決める前に、まず利点と欠点を整理しましょう。
+
+### 利点と欠点
+
+#### 利点
+
+- クロージャーの活用が良い！`userId`と`products`を1回だけ渡している
+- 引数の命名が一貫している
+- チェックアウトのための4つの関数を比較的効果的かつ簡潔に構成している
+- 「無料」のエラーフロー制御。（エラーはネストされた関数のいずれかからバブルアップし、`checkout()`が返すPromiseで拒否される）
+
+#### 欠点
+
+- `userId`を繰り返し渡すのは面倒
+- 関数が単一引数（つまり一元関数）になっていない。_これは構成可能性に影響する。[最終的な例](#checkout-with-further-improvements)を参照してください。_
+- 各関数が何を返すかが明確でない。（メール送信の結果か、それともその`result`変数か？など）
+- 機能追加の方法が明確でない（例：顧客の割引/クレジット/ポイントなどのロードが必要になった場合）
+- 時折「一時的な」パラメータ名（各`.then(param => {})`内での例）がコンテキストを追加する。しかし時間が経つにつれ、命名の雑多さの温床になる可能性が高い
+
+### 解決策パート1：モジュールを作成する！
+
+この技法は、関連する関数を単一のモジュール（例：`CartHelpers`）にまとめることを指します。特定のパターンを求めるわけではありません。[ファクトリ関数](#carthelpers-factory)や[クラス](#carthelpers-class)、クロージャー、ミックスインなどを探求してください。プロジェクトとチームに最も適したものを選んでください。
+
+#### CartHelpers ファクトリ
+
+`userId`を1回渡し、すべてのメソッドが単一引数で動作する`CartHelpers`モジュールの例。
+
+```tsx
+const CartHelpers = (userId: number) => {
+  return {
+    getProductsSubtotal: products => getProductsSubtotal(userId, products),
+    applyTaxes: subTotal => applyTaxes(userId, subTotal),
+    purchaseProducts: total => purchaseProducts(userId, total),
+    sendReceipt: invoice => sendReceipt(userId, invoice)
+  };
+};
+```
+
+#### CartHelpers クラス
+
+クラスがお好みであれば簡単にアダプトできます：
+
+```tsx
+class CartHelpers {
+  constructor(userId) {
+    this.userId = userId;
+  }
+  getProductsSubtotal = products => getProductsSubtotal(this.userId, products);
+  applyTaxes = subTotal => applyTaxes(this.userId, subTotal);
+  purchaseProducts = total => purchaseProducts(this.userId, total);
+  sendReceipt = invoice => sendReceipt(this.userId, invoice);
+}
+```
+
+即座のメリット：
+
+- 繰り返しの変数渡しを排除
+  - DRY: `CartHelpers` は繰り返される引数 `userId` を抽象化
+  - 各メソッドは**_たった1つの_**必要な引数のみを受け取る。`cart.applyTaxes(subTotal)` を読んだときに驚きがないのは当然
+- `CartHelpers` 内の単一引数関数は、目的が明確で読みやすい
+
+関連する関数をグループ化することで、公開されるインターフェース面積を削減する機会が生まれます（例：`checkout()`、`CartHelpers` の「パブリック」メソッド）。
+
+> 面積が少ない = 認知負荷が少ない、テストとメンテナビリティが向上
+> _意図と焦点をもってデザインシステムを構築しましょう ✨_
+
+#### チェックアウトと CartHelpers の使用例
+
+`checkout()` 関数が現在どのように見えるか見てみましょう：
+
+```tsx
+export const checkout = ({ userId, products }) => {
+  const cart = CartHelpers(userId);
+
+  return Promise.resolve(products)
+    .then(products => cart.getProductsSubtotal(products))
+    .then(subTotal => cart.applyTaxes(subTotal))
+    .then(total => cart.purchaseProducts(total))
+    .then(result => cart.sendReceipt(result));
+};
+```
+
+##### さらに改善されたチェックアウト
+
+> さらに改善できますか？はい！引数を繰り返す必要はありません！
+
+関数の引数が前の関数の出力によって提供される場合、コードをさらに簡略化できます。
+
+```tsx
+export const checkout = ({ userId, products }) => {
+  const cart = CartHelpers(userId);
+
+  // 🌈 関数はレゴのように積み重なり、通常の「人間の言葉」のように読みやすくなります 💅
+  return Promise.resolve(products)
+    .then(cart.getProductsSubtotal)
+    .then(cart.applyTaxes)
+    .then(cart.purchaseProducts)
+    .then(cart.sendReceipt);
+};
+```
+
+**パラメータを単一の（オブジェクト）引数に組み合わせるのが自然に感じられない場合**は、関数を分割する**か**、より適切にスコープされたモジュールに統合するのを検討してください。
+
+#### どこから始めるべきか？
+
+関連する関数を見つけて、グループ化する。(例: `CartHelpers`)
+
+論理的なモジュールの候補を探す際の課題の一部は、最初に関連するコードを特定することです。
+
+##### 関数が関連するとはどういうことか？
+
+1つの便利な方法: 関数の引数における繰り返しを確認する。関係性や潜在的な責任領域があるかを問う。
+
+- ✅ 繰り返し同じ引数を受け取る関数。(例: 4つのメソッドがすべて`userRewards`を受け取る場合、おそらく`Rewards`モジュールや他のモジュールが必要)
+- ✅ 前の関数の出力が直接引数として渡される関数。(ステップの連鎖。例: `Extract`、`Transform`、`Load`)
+- ❌ あいまいに特徴領域に関連するもの。(例: 「製品購入？」)
+- ❌ 同じ接頭辞や接尾辞を持つ関数名？
+- ❌ 引数として大きなオブジェクトを受け取るが、その中からわずかな値しか使用しない関数。(例: `applyTaxes({ user, business, rewards, kitchenSink })` と `applyTaxes({ subTotal })` の比較)
+
+モジュール設計に「唯一の正解」はありませんが、2〜3つの組織化オプションを特定し、アウトラインを描いたり、「ファンタジー」コードを書いたり、「楽しさを引き出すか？」と問うのが役立ちます。
+
+<aside>
+📌 ドメインモデルが明確になるまで、モジュールの構成に数回試行錯誤するのはよくあります。完璧にしようと悩まないでください。
+</aside>
+
+> `cart.sendReceipt()`が支払い関連メソッドとセットになっていないと感じるかもしれません。顧客通知に関しては`customerNotifications.sendReceipt()`がより適切かもしれません。`CartHelper`が十分に重要であれば、**_コントローラー_**として機能し、`customerNotifications`などの必要な**_サービス_**をすべて内部的に呼び出すことができます。
+
+#### 自分が役に立っているかの判断方法
+
+追加引数を排除しても可読性が損なわれなければ、**おめでとうございます！！！** 明確で持続可能なスコープを持つモジュールを構築できた可能性があります。
+
+- 中間引数の削除は、レイヤーの出現を強制する傾向があります。
+- 適切でない場所に即時コードを詰め込むことは**_難しくなるべき_**です！
+
+では、ここに機能を追加する場所はどこになるのでしょうか？
+
+私の経験では、機能追加時に評価すべき主な戦略は2つあります：
+
+1.  既存のメソッドを拡張/リファクタリングする。(新しいコードが既存のコードと十分に近い場合)
+2.  チェーン内で目的の場所に新しい(5番目の)関数を作成する。(新しいコードが既存の関数と関係ない場合を想定して)
+
+最終的に、これにより新しい機能が属する場所を判断するのが簡単になります。(例: `cart.applyDiscounts()`、`cart.applyTaxes()`、`rewards.getBalance()`)
+
+### 結論
+
+複雑なパイプラインでステートを渡すことは難しい場合があります。しかし、少しのリファクタリングの実践によって、より読みやすく、認知負荷が少ないコードを書くようになります。
+
+ご質問やコメント、懸念があれば、[@justsml](https://x.com/justsml) または [メール](mailto:dan@danlevy.net) でご連絡ください。
+
+#### シリーズの次のパートをお楽しみに
+
+次回は、ステートの外部化やモジュールの機能拡張について掘り下げていきます！
+
+#### 関連記事
+
+- [コンポーネント駆動のReact世界でも同様の課題があります。](https://kyleshevlin.com/quit-your-yapping)
