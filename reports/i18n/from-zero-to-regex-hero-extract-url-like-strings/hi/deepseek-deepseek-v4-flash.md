@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: from-zero-to-regex-hero-extract-url-like-strings
+- Locale: hi
+- Model: deepseek/deepseek-v4-flash
+- Target: src/content/posts/2024-12-29--from-zero-to-regex-hero-extract-url-like-strings/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 176.71
+- Input tokens: 11322
+- Output tokens: 10869
+- Thinking tokens: unknown
+- Cached input tokens: 768
+- Cache write tokens: 0
+- Estimated cost: $0.004523
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: शून्य से रेगेक्स हीरो तक
 subTitle: एक ही Regex से URL-जैसे स्ट्रिंग्स निकालें और पार्स करें
@@ -266,3 +284,4 @@ console.log("Extracted Parts:", parts);
 - [MDN Docs on Regular Expressions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions)
 - [Advanced Regex Techniques](https://www.regular-expressions.info/): अधिक सटीक मिलान के लिए लुकअहेड, लुकबिहाइंड और अन्य उन्नत पैटर्न का अन्वेषण करें।
 - [RFC 3986 - URI Generic Syntax](https://datatracker.ietf.org/doc/html/rfc3986)
+````
