@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: the-4-pillars-of-collaborative-culture
+- Locale: it
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2021-03-03--the-4-pillars-of-collaborative-culture/it/index.mdx
+- Validation: deferred
+- Runtime seconds: 1.93
+- Input tokens: 5344
+- Output tokens: 1723
+- Thinking tokens: unknown
+- Cached input tokens: 2304
+- Cache write tokens: 0
+- Estimated cost: $0.000519
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: I 4 pilastri della cultura collaborativa
@@ -110,3 +128,4 @@ Considera come nascono e si evolvono le idee nella tua organizzazione:
 - Qual è il tempo medio prima della prima proposta di un dipendente? Giorni? Mesi? Anni?!?!?
 - Tutti i membri del tuo team condividono regolarmente idee?
 - Le persone si sentono al sicuro? Possono mostrarsi vulnerabili? Possono persino mettere in discussione la missione?
+````
