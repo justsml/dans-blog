@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: developer-workstation-blast-radius
+- Locale: hi
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-05-09--developer-workstation-blast-radius/hi/index.mdx
+- Validation: passed
+- Runtime seconds: 23.97
+- Input tokens: 36721
+- Output tokens: 7073
+- Thinking tokens: unknown
+- Cached input tokens: 9728
+- Cache write tokens: 0
+- Estimated cost: $0.002705
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: अपने डेवलपर वर्कस्टेशन का ब्लास्ट रेडियस घटाएँ
 subTitle: >-
@@ -413,3 +431,4 @@ shred -u customer-export.sql.gz
 - [Microsoft: Windows Firewall rules](https://learn.microsoft.com/en-us/windows/security/operating-system-security/network-security/windows-firewall/rules)  
 - [Mandiant: UNC5537 Targets Snowflake Customer Instances](https://cloud.google.com/blog/topics/threat-intelligence/unc5537-snowflake-data-theft-extortion)  
 - [Microsoft: Lumma Stealer delivery techniques and capabilities](https://www.microsoft.com/en-us/security/blog/2025/05/21/lumma-stealer-breaking-down-the-delivery-techniques-and-capabilities-of-a-prolific-infostealer/)
+````
