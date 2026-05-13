@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: promise-gotchas
+- Locale: ja
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2018-09-26--promise-gotchas/ja/index.mdx
+- Validation: deferred
+- Runtime seconds: 0.95
+- Input tokens: 2604
+- Output tokens: 506
+- Thinking tokens: unknown
+- Cached input tokens: 1408
+- Cache write tokens: 0
+- Estimated cost: $0.000193
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Promise の落とし穴
@@ -88,3 +106,4 @@ Promise.resolve(42)
   .then(undefined) // 値に影響を与えず、次の `.then(fn)` にそのまま渡される
   .then(console.log);
 ```
+````
