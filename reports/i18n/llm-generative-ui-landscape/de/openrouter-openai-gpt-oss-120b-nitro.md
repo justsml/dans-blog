@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: llm-generative-ui-landscape
+- Locale: de
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-05-06--llm-generative-ui-landscape/de/index.mdx
+- Validation: passed
+- Runtime seconds: 28.49
+- Input tokens: 20483
+- Output tokens: 7996
+- Thinking tokens: unknown
+- Cached input tokens: 3328
+- Cache write tokens: 0
+- Estimated cost: $0.002238
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: LLM‑generative UI‑Landschaft
 subTitle: >-
@@ -334,3 +352,4 @@ Die besten Systeme lassen das Modell nicht alles frei improvisieren. Sie geben i
 Die Zukunft ist nicht „das Modell schreibt dein Frontend“.
 
 Die Zukunft nähert sich eher: **Dein Frontend wird zu einem Instrument, das der Agent spielen kann, aber du entscheidest, wie das Instrument klingen darf.**
+````
