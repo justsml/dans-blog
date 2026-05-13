@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: compare-nvme-ssd-cloud-options
+- Locale: ja
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2017-04-15--compare-nvme-ssd-cloud-options/ja/index.mdx
+- Validation: deferred
+- Runtime seconds: 35.49
+- Input tokens: 4234
+- Output tokens: 3234
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.001115
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: NVMe SSD クラウドオプションの比較
@@ -65,3 +83,4 @@ cover_icon: ../icon_solaiman-hossen-553024-unsplash.webp
 #### クレジット
 
 - [ec2instances.info](https://www.ec2instances.info/?filter=nvm&region=us-east-2&cost_duration=monthly&selected=c5d.large,i3.large,i3.xlarge,i3.2xlarge)
+````
