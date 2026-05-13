@@ -1,0 +1,47 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "Destructuring with Nested Default Values",
+  "translatedTitle": "ネストされたデフォルト値を使った分割代入",
+  "translation": {
+    "title": "ネストされたデフォルト値を使った分割代入",
+    "group": "TS におけるネストされた分割代入",
+    "options": [
+      {
+        "text": "エラー: プロパティ 'first' がありません"
+      },
+      {
+        "text": "エラー: プロパティ 'last' がありません"
+      },
+      {
+        "text": "エラー: プロパティ 'birth' と 'age' がありません"
+      },
+      {
+        "text": "エラー: プロパティ 'place' がありません"
+      },
+      {
+        "text": "エラー: 'string' には {...} 内にプロパティがありません"
+      }
+    ],
+    "questionProse": [
+      "型エラーを見つけてください:"
+    ],
+    "explanationProse": [
+      "`greet` 関数のシグネチャにエラーがあります。渡されたオブジェクトに `age` と `birth` プロパティがないので、型定義ではそれらをオプションにすべきです。\n\n    `birth` プロパティはデフォルト値で分割代入されていますが、型定義では存在することが要求されています。TypeScript でプロパティをオプションにするには `?` 演算子を使います。\n  \n    `birth?: { place?: string }` は `birth: { place?: string } | undefined` と同じではないことに注意してください。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"ネストされたデフォルト値を使った分割代入\",\n  \"group\": \"TS におけるネストされた分割代入\",\n  \"options\": [\n    {\n      \"text\": \"エラー: プロパティ 'first' がありません\"\n    },\n    {\n      \"text\": \"エラー: プロパティ 'last' がありません\"\n    },\n    {\n      \"text\": \"エラー: プロパティ 'birth' と 'age' がありません\"\n    },\n    {\n      \"text\": \"エラー: プロパティ 'place' がありません\"\n    },\n    {\n      \"text\": \"エラー: 'string' には {...} 内にプロパティがありません\"\n    }\n  ],\n  \"questionProse\": [\n    \"型エラーを見つけてください:\"\n  ],\n  \"explanationProse\": [\n    \"`greet` 関数のシグネチャにエラーがあります。渡されたオブジェクトに `age` と `birth` プロパティがないので、型定義ではそれらをオプションにすべきです。\\n\\n    `birth` プロパティはデフォルト値で分割代入されていますが、型定義では存在することが要求されています。TypeScript でプロパティをオプションにするには `?` 演算子を使います。\\n  \\n    `birth?: { place?: string }` は `birth: { place?: string } | undefined` と同じではないことに注意してください。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 909,
+    "outputTokens": 956,
+    "cacheReadTokens": 384,
+    "cacheWriteTokens": 0,
+    "durationMs": 827
+  },
+  "cost": {
+    "inputUsd": 0.000035450999999999997,
+    "outputUsd": 0.00017208,
+    "totalUsd": 0.000207531,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

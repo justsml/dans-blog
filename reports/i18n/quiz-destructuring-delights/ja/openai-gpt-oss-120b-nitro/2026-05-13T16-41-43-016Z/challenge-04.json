@@ -1,0 +1,47 @@
+{
+  "index": 3,
+  "attempt": 1,
+  "originalTitle": "Default Values in Object Destructuring",
+  "translatedTitle": "オブジェクトのデストラクチャリングにおけるデフォルト値",
+  "translation": {
+    "title": "オブジェクトのデストラクチャリングにおけるデフォルト値",
+    "group": "デフォルト",
+    "options": [
+      {
+        "text": "こんにちは Dan、出身は Unknown"
+      },
+      {
+        "text": "こんにちは Dan、出身は Denver"
+      },
+      {
+        "text": "こんにちは Unknown、出身は Unknown"
+      },
+      {
+        "text": "こんにちは Unknown、出身は Denver"
+      },
+      {
+        "text": "エラー"
+      }
+    ],
+    "questionProse": [
+      "デフォルトをいくつか入れたら、これどうなる？"
+    ],
+    "explanationProse": [
+      "`birth` プロパティは `person` に存在しないので、ネストされたプロパティだけでなくオブジェクト全体にデフォルトが必要です。実質的に ` = {}` のデフォルトが抜けています。\n\nこの書き方は「`person.birth` が `undefined` の場合、`place` は `Unknown`」という意味になります。しかし `person.birth` は `undefined` なので、`undefined` をデストラクトしようとしてエラーになります。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"オブジェクトのデストラクチャリングにおけるデフォルト値\",\n  \"group\": \"デフォルト\",\n  \"options\": [\n    {\n      \"text\": \"こんにちは Dan、出身は Unknown\"\n    },\n    {\n      \"text\": \"こんにちは Dan、出身は Denver\"\n    },\n    {\n      \"text\": \"こんにちは Unknown、出身は Unknown\"\n    },\n    {\n      \"text\": \"こんにちは Unknown、出身は Denver\"\n    },\n    {\n      \"text\": \"エラー\"\n    }\n  ],\n  \"questionProse\": [\n    \"デフォルトをいくつか入れたら、これどうなる？\"\n  ],\n  \"explanationProse\": [\n    \"`birth` プロパティは `person` に存在しないので、ネストされたプロパティだけでなくオブジェクト全体にデフォルトが必要です。実質的に ` = {}` のデフォルトが抜けています。\\n\\nこの書き方は「`person.birth` が `undefined` の場合、`place` は `Unknown`」という意味になります。しかし `person.birth` は `undefined` なので、`undefined` をデストラクトしようとしてエラーになります。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 882,
+    "outputTokens": 710,
+    "cacheReadTokens": 384,
+    "cacheWriteTokens": 0,
+    "durationMs": 525
+  },
+  "cost": {
+    "inputUsd": 0.000034398,
+    "outputUsd": 0.0001278,
+    "totalUsd": 0.00016219799999999998,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
