@@ -1,0 +1,548 @@
+# Translation Candidate
+- Slug: quiz-data-structures-algorithms
+- Locale: hi
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2024-10-31--quiz-data-structures-algorithms/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 183.51
+- Input tokens: 14491
+- Output tokens: 23433
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.006783
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: 'क्विज़: डेटा संरचनाएँ & एल्गोरिदम'
+subTitle: क्या आप बिटवीज़ बाइनरी ट्री कर सकते हैं?
+label: Algorithms & DS
+unlisted: true
+date: '2024-10-31'
+modified: '2024-11-08'
+social_image: ../desktop-social.webp
+category: Quiz
+subCategory: Data Structures
+tags:
+  - quiz
+  - data-structures
+  - algorithms
+  - intermediate
+  - advanced
+cover: ../redcharlie-mugDbuNnbd0-unsplash-square.webp
+cover_full_width: ../redcharlie-mugDbuNnbd0-unsplash-wide.webp
+cover_mobile: ../redcharlie-mugDbuNnbd0-unsplash-square.webp
+cover_icon: ../redcharlie-mugDbuNnbd0-unsplash-square.webp
+---
+```jsx
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+<section class="inset">
+  मेरे डेटा संरचनाओं और एल्गोरिदम क्विज़ में आपका स्वागत है!
+</section>
+
+यह क्विज़ आपके डेटा संरचनाओं (स्टैक, सूचियाँ, पेड़, आदि) और एल्गोरिदम, और समय जटिलता के ज्ञान का परीक्षण करेगा।
+
+### 20 प्रश्न... शुरू करें!
+```
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="डेटा संरचनाएँ"
+  title="स्टैक्स बनाम कतारें"
+  options={[
+    {text: 'दोनों'},
+    {text: 'कतारें'},
+    {text: 'स्टैक्स', isAnswer: true},
+    {text: 'कोई नहीं'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    कौन सी डेटा संरचना LIFO (अंतिम प्रविष्टि, पहला निकास) एक्सेस पैटर्न के लिए सबसे उपयुक्त है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    स्टैक्स LIFO एक्सेस पैटर्न के लिए सबसे उपयुक्त हैं। कतारें FIFO (पहली प्रविष्टि, पहला निकास) एक्सेस पैटर्न के लिए सबसे उपयुक्त हैं।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="एल्गोरिथम्स"
+  title="बिग ओ नोटेशन"
+  options={[
+    {text: 'O(1)', isAnswer: true},
+    {text: 'O(n)'},
+    {text: 'O(log n)'},
+    {text: 'O(n^2)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    एक एल्गोरिथम की समय जटिलता क्या है जो हमेशा समान समय लेता है, इनपुट आकार के आधार पर नहीं होने पर?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    O(1) स्थिर समय जटिलता का प्रतिनिधित्व करता है। इसका अर्थ है कि एल्गोरिथम हमेशा समान समय लेता है, इनपुट आकार के आधार पर नहीं होने पर।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="डेटा संरचनाएँ"
+  title="लिंक्ड सूची की लंबाई की गणना"
+  options={[
+    {text: 'O(1)'},
+    {text: 'O(log n)'},
+    {text: 'O(n^2)'},
+    {text: 'O(n)', isAnswer: true},
+    {text: 'O(n log n)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    एकल लिंक्ड सूची की लंबाई की गणना करने के लिए समय जटिलता क्या है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    एकल लिंक्ड सूची की लंबाई की गणना करने के लिए, आपको प्रत्येक नोड को सिर से पूंछ तक पार करना होगा, जिससे O(n) समय जटिलता होती है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="डेटा संरचनाएँ"
+  title="बाइनरी सर्च ट्री में खोज"
+  options={[
+    {text: 'O(1)'},
+    {text: 'O(log n)', isAnswer: true},
+    {text: 'O(n)'},
+    {text: 'O(n^2)'},
+    {text: 'O(n log n)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    एक संतुलित बाइनरी सर्च ट्री में एक एलिमेंट की खोज करने की औसत समय जटिलता क्या होती है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    एक संतुलित बीएसटी में, खोज के लिए औसत समय जटिलता O(log n) होती है क्योंकि प्रत्येक स्तर खोज स्पेस को आधा कर देता है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="सॉर्टिंग एल्गोरिदम"
+  title="मर्ज सॉर्ट की समय जटिलता"
+  options={[
+    {text: 'O(n^2)'},
+    {text: 'O(log n)'},
+    {text: 'O(n log n)', isAnswer: true},
+    {text: 'O(n)'},
+    {text: 'O(1)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    मर्ज सॉर्ट एल्गोरिथ्म की खराब स्थिति में समय जटिलता क्या है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    मर्ज सॉर्ट हमेशा O(n log n) की खराब स्थिति की जटिलता के साथ कार्य करता है क्योंकि यह बार-बार सरणी को आधा काटता है और छोटे सॉर्टेड उप-सरणियों को मर्ज करता है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="ग्राफ"
+  title="DFS vs BFS"
+  options={[
+    {text: 'Queue', isAnswer: true},
+    {text: 'Stack'},
+    {text: 'Priority Queue'},
+    {text: 'Hash Map'},
+    {text: 'Set'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ब्रैडथ-फर्स्ट सर्च (BFS) को लागू करने के लिए आमतौर पर कौन-सी डेटा संरचना उपयोग में ली जाती है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    BFS नोड्स के स्तर के अनुसार एक्सप्लोर करने के लिए एक कतार (Queue) का उपयोग करता है, नोड्स को ब्रैडथ-फर्स्ट तरीके से प्रोसेस करता है ("रो" के अनुसार).
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="ग्राफ"
+  title="ग्राफ में साइकिल पहचानना"
+  options={[
+    {text: 'त्वरित सॉर्ट'},
+    {text: 'चौड़ाई-प्रथम खोज'},
+    {text: 'मर्ज सॉर्ट'},
+    {text: 'गहराई-प्रथम खोज', isAnswer: true},
+    {text: 'बुबल सॉर्ट'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    कौन सा एल्गोरिथम एक निर्देशित ग्राफ में साइकिल पहचानने के लिए आमतौर पर उपयोग किया जाता है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    गहराई-प्रथम खोज (DFS) आमतौर पर ग्राफ में साइकिल पहचानने के लिए एक पुनरावृत्ति स्टैक बनाए रखकर उपयोग की जाती है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="क्रमबद्ध करने के एल्गोरिदम"
+  title="हीप सॉर्ट जटिलता"
+  options={[
+    {text: 'O(n^2)'},
+    {text: 'O(n log n)', isAnswer: true},
+    {text: 'O(n)'},
+    {text: 'O(log n)'},
+    {text: 'O(1)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    हीप सॉर्ट की खराब मामला समय जटिलता क्या है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    हीप सॉर्ट O(n log n) की खराब मामला समय जटिलता बनाए रखता है, क्योंकि यह एक हीप बनाता है और बार-बार अधिकतम तत्व को निकालता है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="डेटा संरचनाएँ"
+  title="हैश टेबल समय जटिलता"
+  options={[
+    {text: 'O(n)'},
+    {text: 'O(log n)'},
+    {text: 'O(1)', isAnswer: true},
+    {text: 'O(n^2)'},
+    {text: 'O(n log n)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    हैश टेबल में एक तत्व तक पहुँचने की औसत समय जटिलता क्या है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    हैश टेबल में तत्व तक पहुँचने की औसत समय जटिलता O(1) होती है, बशर्ते टकराव को कम करने वाला अच्छा हैश फ़ंक्शन हो।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="डेटा संरचनाएँ"
+  title="स्टैक संचालन"
+  options={[
+    {text: 'Push, Pop, Peek', isAnswer: true, hint: 'स्टैक के मुख्य संचालन हैं'},
+    {text: 'Enqueue, Dequeue, Peek', hint: 'ये रिकर्स के लिए होते हैं'},
+    {text: 'Insert, Search, Delete', hint: 'ये सामान्य सूचियों में आम हैं'},
+    {text: 'Traverse, Visit, Sort', hint: 'ये वृक्षों के लिए अधिक उपयुक्त हैं'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    स्टैक पर आमतौर पर कौन से संचालन किए जाते हैं?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    स्टैक के मुख्य संचालन Push (तत्व जोड़ें), Pop (तत्व हटाएं), और Peek (ऊपरी तत्व देखें बिना हटाए) हैं।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="ग्राफ एल्गोरिथम"
+  title="सबसे छोटा मार्ग एल्गोरिथम"
+  options={[
+    {text: 'क्रुस्कल का एल्गोरिथम'},
+    {text: 'प्राइम का एल्गोरिथम'},
+    {text: 'बेलमैन-फोर्ड एल्गोरिथम'},
+    {text: 'डिज़कस्ट्रा का एल्गोरिथम', isAnswer: true},
+    {text: 'फ्लॉइड-वॉर्शैल एल्गोरिथम'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    एक भारित ग्राफ में अऋणात्मक किनारों वाले सबसे छोटा मार्ग ढूंढने के लिए कौन सा एल्गोरिथम आमतौर पर उपयोग किया जाता है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    डिज़कस्ट्रा का एल्गोरिथम अऋणात्मक किनारा भार वाले ग्राफ में सबसे छोटा मार्ग ढूंढने के लिए अक्सर उपयोग किया जाता है। यह एक प्राथमिकता कतार का उपयोग करके सबसे छोटी दूरी को कुशलतापूर्वक निर्धारित करता है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="वृक्ष डेटा संरचनाएँ"
+  title="स्व-संतुलित खोज वृक्ष"
+  options={[
+    {text: 'बाइनरी खोज वृक्ष और मिन हीप'},
+    {text: 'एएवीएल वृक्ष और रेड-ब्लैक वृक्ष', isAnswer: true},
+    {text: 'मिन हीप और मैक्स हीप'},
+    {text: 'स्टैक और कताई'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    कौन सा सेट स्व-संतुलित बाइनरी खोज वृक्ष डेटा संरचनाओं के उदाहरण शामिल करता है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    एएवीएल वृक्ष और रेड-ब्लैक वृक्ष स्व-संतुलित वृक्षों के प्रकार हैं, जो प्रत्येक इन्सर्शन या डिलीशन के बाद वृक्ष के संतुलित रहने की गारंटी देते हैं।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="पुनरावृत्ति"
+  title="पुनरावृत्ति आधार मामला"
+  options={[
+    {text: 'अनंत लूप'},
+    {text: 'स्टैक ओवरफ्लो'},
+    {text: 'आधार मामला', isAnswer: true},
+    {text: 'ग्लोबल वेरिएबल'},
+    {text: 'स्कोप सीमा'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    एक पुनरावृत्ति फ़ंक्शन में क्या परिभाषित करना होगा ताकि अनंत पुनरावृत्ति को रोका जा सके?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    एक पुनरावृत्ति फ़ंक्शन में आधार मामला आवश्यक होता है जो एक विशिष्ट स्थिति के मिलने पर पुनरावृत्ति कॉलों को रोकता है, अनंत पुनरावृत्ति को रोकने के लिए।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={13}
+  group="डेटा संरचनाएँ"
+  title="क्यू ऑपरेशन्स"
+  options={[
+    {text: 'Enqueue और Dequeue', isAnswer: true, hint: 'क्यू में एक तत्व जोड़ने और निकालने के लिए उपयोग किया जाता है।'},
+    {text: 'Push और Pop', hint: 'एक स्टैक में तत्व जोड़ने और निकालने के लिए उपयोग किया जाता है।'},
+    {text: 'Peek और Top', hint: 'क्यू में सामने वाले तत्व को देखने के लिए उपयोग किया जाता है, जबकि Top स्टैक में उपयोग किया जाता है।'},
+    {text: 'Traverse और Sort', hint: 'डेटा संरचनाओं में सामान्य ऑपरेशन हैं, लेकिन क्यू के लिए विशिष्ट नहीं हैं।'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    एक क्यू के लिए दो प्राथमिक ऑपरेशन क्या हैं?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    क्यू में दो प्राथमिक ऑपरेशन हैं: Enqueue (पीछे एक तत्व जोड़ें) और Dequeue (सामने से एक तत्व निकालें)। क्यू का आधारभूत नियम FIFO (First In, First Out) होता है, जिसका अर्थ है कि जो तत्व पहले जुड़ता है, वह पहले निकलता है। Push/Pop स्टैक के लिए होते हैं जबकि Peek/Top अक्सर स्टैक या क्यू के सामने वाले तत्व को देखने के लिए उपयोग होते हैं। Traverse/Sort आम डेटा संरचना ऑपरेशन हैं लेकिन क्यू के लिए विशिष्ट नहीं हैं।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={14}
+  group="ग्राफ एल्गोरिदम"
+  title="टॉपोलॉजिकल सॉर्टिंग"
+  options={[
+    {text: 'ग्राफ में चक्र होने चाहिए'},
+    {text: 'ग्राफ भारित और जुड़ा हुआ होना चाहिए'},
+    {text: 'ग्राफ अननिर्देशित और चक्ररहित होना चाहिए'},
+    {text: 'ग्राफ निर्देशित और चक्ररहित होना चाहिए', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    किसी ग्राफ पर टॉपोलॉजिकल सॉर्टिंग करने के लिए क्या शर्तें होती हैं?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    टॉपोलॉजिकल सॉर्टिंग तभी की जा सकती है जब ग्राफ निर्देशित और चक्ररहित (DAG) हो। यह क्रम टास्क स्केड्यूलिंग समस्याओं में उपयोगी होता है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={15}
+  group="डायनैमिक प्रोग्रामिंग"
+  title="फिबोनैकि पुनरावृत्ति जटिलता"
+  options={[
+    {text: 'O(1)'},
+    {text: 'O(2^n)', isAnswer: true},
+    {text: 'O(n)'},
+    {text: 'O(log n)'},
+    {text: 'O(n^2)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    फिबोनैकि श्रृंखला के एक नाइव पुनरावृत्तिमूलक कार्यान्वयन की समय जटिलता क्या है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    फिबोनैकि श्रृंखला के नाइव पुनरावृत्तिमूलक कार्यान्वयन में O(2^n) की समय जटिलता होती है, क्योंकि प्रत्येक फिबोनैकि संख्या के लिए बहुत अधिक पुनरावृत्ति की गणना की जाती है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={16}
+  group="डेटा संरचनाएँ"
+  title="प्राथमिकता कतार कार्यान्वयन"
+  options={[
+    {text: 'सरणी'},
+    {text: 'स्टैक'},
+    {text: 'हीप', isAnswer: true},
+    {text: 'कतार'},
+    {text: 'लिंक्ड सूची'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    कौन सी डेटा संरचना एक प्राथमिकता कतार को कार्यान्वित करने के लिए आमतौर पर उपयोग की जाती है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    एक प्राथमिकता कतार अक्सर एक हीप का उपयोग करके कार्यान्वित की जाती है क्योंकि यह सबसे उच्च या न्यूनतम प्राथमिकता वाले तत्व को कुशलतापूर्वक निकालने की अनुमति देता है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={17}
+  group="डेटा संरचनाएँ"
+  title="बाइनरी ट्री ट्रैवर्सल"
+  options={[
+    {text: 'In-order, Pre-order, Post-order', isAnswer: true},
+    {text: 'Breadth-First, Depth-First, Heapify'},
+    {text: 'Sort, Search, Rotate'},
+    {text: 'Push, Pop, Peek'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    कौन सा समूह एक बाइनरी ट्री के आम डेप्थ-फर्स्ट ट्रैवर्सल क्रमों को सूचीबद्ध करता है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    इन-ऑर्डर, प्री-ऑर्डर और पोस्ट-ऑर्डर बाइनरी ट्री के तीन आम डेप्थ-फर्स्ट ट्रैवर्सल क्रम हैं, जिनमें नोड्स के दौरे का क्रम अलग-अलग होता है। ब्रैड-फर्स्ट ट्रैवर्सल भी आम है, लेकिन यह एक अलग ट्रैवर्सल श्रेणी है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={18}
+  group="ट्री डेटा संरचनाएँ"
+  title="हीप गुणधर्म"
+  options={[
+    {text: 'सभी नोड्स बाएं से दाएं क्रम में होते हैं', hint: 'यह बाइनरी खोज ट्री का गुण है, न कि हीप का'},
+    {text: 'मूल नोड हमेशा सबसे बड़ा तत्व होता है', hint: 'यह मैक्स-हीप के लिए सही है, न कि मिन-हीप के लिए'},
+    {text: 'सभी पत्तियाँ एक ही स्तर पर होती हैं', hint: 'यह पूर्ण बाइनरी ट्री का गुण है, न कि हीप का'},
+    {text: 'मूल नोड सबसे छोटा तत्व होता है और ऊँचाई O(log n) होती है', isAnswer: true, hint: 'मिन-हीप के लिए दोनों गुणधर्म सही हैं'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    मिन-हीप के लिए निम्नलिखित में से कौन-सा गुणधर्म सही है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    मिन-हीप में मूल नोड हमेशा सबसे छोटा तत्व होता है और ट्री की ऊँचाई O(log n) होती है, जिससे इन्सर्शन और एक्सट्रैक्शन दक्ष होते हैं।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={19}
+  group="सॉर्टिंग एल्गोरिदम"
+  title="बुब्बल सॉर्ट की स्थिरता"
+  options={[
+    {text: 'अस्थिर'},
+    {text: 'स्थिर', isAnswer: true},
+    {text: 'कार्यान्वयन पर निर्भर करता है'},
+    {text: 'न तो एक न दूसरा'},
+    {text: 'जटिलता स्थिरता निर्धारित करती है'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    क्या बुब्बल सॉर्ट एल्गोरिदम स्थिर है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    बुब्बल सॉर्ट एक स्थिर सॉर्टिंग एल्गोरिदम है क्योंकि यह सॉर्टिंग के दौरान बराबर तत्वों के सापेक्ष क्रम को बरकरार रखता है।
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+````
