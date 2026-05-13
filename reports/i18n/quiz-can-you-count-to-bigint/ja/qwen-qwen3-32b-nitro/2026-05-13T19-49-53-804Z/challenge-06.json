@@ -1,0 +1,39 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Equality Comparison between `parseInt` and `parseFloat`",
+  "translatedTitle": "parseIntとparseFloatの等価比較",
+  "translation": {
+    "title": "parseIntとparseFloatの等価比較",
+    "group": "型比較",
+    "options": [
+      {
+        "text": "true"
+      },
+      {
+        "text": "false"
+      },
+      {
+        "text": "NaN"
+      }
+    ],
+    "questionProse": [],
+    "explanationProse": [
+      "JavaScriptでは、`parseInt`と`parseFloat`の両方が文字列`\"42\"`を数値`42`として解釈します。そのため、`parseInt(\"42\") === parseFloat(\"42\")`の比較は`true`になります。`parseInt`は最初の非数字文字で解析を停止しますが、`parseFloat`は浮動小数点数の一部でない文字に出会うまでは解析を続けます。しかし`\"42\"`には小数点やその他の非数値文字が含まれていないため、両関数は同じ値を返します。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"parseIntとparseFloatの等価比較\",\n  \"group\": \"型比較\",\n  \"options\": [\n    {\n      \"text\": \"true\"\n    },\n    {\n      \"text\": \"false\"\n    },\n    {\n      \"text\": \"NaN\"\n    }\n  ],\n  \"questionProse\": [],\n  \"explanationProse\": [\n    \"JavaScriptでは、`parseInt`と`parseFloat`の両方が文字列`\\\"42\\\"`を数値`42`として解釈します。そのため、`parseInt(\\\"42\\\") === parseFloat(\\\"42\\\")`の比較は`true`になります。`parseInt`は最初の非数字文字で解析を停止しますが、`parseFloat`は浮動小数点数の一部でない文字に出会うまでは解析を続けます。しかし`\\\"42\\\"`には小数点やその他の非数値文字が含まれていないため、両関数は同じ値を返します。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 773,
+    "outputTokens": 648,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 7821
+  },
+  "cost": {
+    "inputUsd": 0.00006184,
+    "outputUsd": 0.00015552,
+    "totalUsd": 0.00021736,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

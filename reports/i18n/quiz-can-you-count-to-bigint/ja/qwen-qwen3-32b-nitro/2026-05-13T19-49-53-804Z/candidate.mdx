@@ -1,0 +1,418 @@
+---
+unlisted: false
+title: 'Quiz: JavaScriptでカウントできますか？'
+subTitle: '`parseInt`と`parseFloat`を区別できますか？'
+label: Numbers
+date: '2024-10-31'
+modified: '2024-11-09'
+social_image: ../desktop-social.webp
+category: Quiz
+subCategory: JavaScript
+tags:
+  - quiz
+  - data-structures
+  - algorithms
+cover: ../victor-freitas-hOuJYX2K5DA-unsplash-square.webp
+cover_full_width: ../victor-freitas-hOuJYX2K5DA-unsplash-wide.webp
+cover_mobile: ../victor-freitas-hOuJYX2K5DA-unsplash-square.webp
+cover_icon: ../victor-freitas-hOuJYX2K5DA-unsplash-square.webp
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="ウォームアップ"
+  title="「parseInt」による解析"
+  options={[
+    {text: '123456', isAnswer: true},
+    {text: '123'},
+    {text: '12345600'},
+    {text: '456.00'},
+    {text: 'エラー'},
+    {text: 'NaN'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```tsx
+        parseInt(" 123456.00")
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `parseInt`関数はスペースを無視し、最初に現れる数字の連なりを整数として解析します。ここでは小数点で解析を停止するため、`123456`のみが返されます。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="パース"
+  title="カンマの処理"
+  options={[
+    {text: '123', isAnswer: true},
+    {text: '12345600'},
+    {text: '123456.00'},
+    {text: '456.00'},
+    {text: 'Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```tsx
+        parseInt("123,456.00")
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    一般的に、`parseInt` は数値でない文字に遭遇するとパースを停止します。ここではカンマで停止するため、`123` のみが返されます。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="数学"
+  title="浮動小数点の精度"
+  options={[
+    {text: '0.1 + 0.2 === 0.3'},
+    {text: 'false', isAnswer: true},
+    {text: 'true'},
+    {text: 'NaN'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```tsx
+        0.1 + 0.2 === 0.3
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    浮動小数点の精度誤差により、`0.1 + 0.2`は正確に`0.3`になりません。浮動小数点数のメモリ上での保存方法の関係で、結果は`0.30000000000000004`となります。これはIEEE 754浮動小数点演算規格の仕様によるもので、一部の数値を正確に表現できません。これはすべてのプログラミング言語で共通する問題です。最終的に無限小数に直面し、コンピュータは無限に続く数字を追い続けることはできません。
+
+    PythonやJavaなどは`Decimal`や`BigDecimal`のような高精度ライブラリを備えていますが、JavaScriptには組み込みでありません。`big.js`や`decimal.js`などのライブラリを使って対応できます。
+
+    （注：分数や虚数を論理的に扱えるように設計された言語もありますが、ハードウェアレベルでは同じ浮動小数点精度の問題に直面します。）
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="オーバーフローする数値"
+  title="無限の扱い"
+  options={[
+    {text: 'Infinity', isAnswer: true},
+    {text: 'NaN'},
+    {text: 'Error'},
+    {text: 'undefined'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```tsx
+        Number.MAX_VALUE * 2
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Number.MAX_VALUEはJavaScriptで表現可能な最大の通常の数値です。これを超えるとすぐにオーバーフローし、意味のない結果になることがあります。2倍するとInfinityになります。
+
+    JavaScriptってときどきこうなるよね。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="フォーマット"
+  title="`.toFixed()`による文字列変換"
+  options={[
+    {text: 'TypeError'},
+    {text: 'SyntaxError'},
+    {text: '"5"'},
+    {text: '5'},
+    {text: '"5.00"', isAnswer: true},
+    {text: '5.0'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    これは何をする可能性がありますか？
+    ```tsx
+        5..toFixed(2)
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `.toFixed(2)`は、2つの小数点以下の`5`の文字列表現を返すため、結果は`"5.00"`になります。
+
+    二重ドット(`5..toFixed(2)`)は、Number Literalsのオブジェクトモデルにアクセスするための「トリック」です。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="型比較"
+  title="parseIntとparseFloatの等価比較"
+  options={[
+    {text: 'true', isAnswer: true},
+    {text: 'false'},
+    {text: 'NaN'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```jsx
+        parseInt("42") === parseFloat("42")
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    JavaScriptでは、`parseInt`と`parseFloat`の両方が文字列`"42"`を数値`42`として解釈します。そのため、`parseInt("42") === parseFloat("42")`の比較は`true`になります。`parseInt`は最初の非数字文字で解析を停止しますが、`parseFloat`は浮動小数点数の一部でない文字に出会うまでは解析を続けます。しかし`"42"`には小数点やその他の非数値文字が含まれていないため、両関数は同じ値を返します。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="等価性"
+  title="BigIntの等価比較"
+  options={[
+    {text: 'TypeError'},
+    {text: 'true'},
+    {text: 'false', isAnswer: true},
+    {text: 'NaN'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```jsx
+        BigInt("42") === parseInt("42")
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    [`BigInt`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt)は`number`とは異なる型なので、`parseInt("42")`（通常の数値）は`BigInt("42")`と厳密に等しくありません。比較するには両方を同じ型に変換する必要があります：`BigInt(parseInt("42")) === BigInt("42")`。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="ベース"
+  title="16進数の解析"
+  options={[
+    {text: 'true', isAnswer: true},
+    {text: 'false'},
+    {text: 'NaN'},
+    {text: '大文字でなければなりません: 2A'},
+    {text: 'エラー'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    この結果はどのようなものになりますか？
+    ```jsx
+        parseInt("0x2A") === parseInt("2a", 16)
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    入力文字列が`0x`で始まる場合、自動的に16進数（基数`16`）として扱われます。
+    これは基数16を明示的に渡した場合と同じです。つまり、`parseInt("0x2A")`は`parseInt("2a", 16)`と同じです。(大文字小文字を区別しません)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="Based"
+  title="基数を使ったパース"
+  options={[
+    {text: '255', isAnswer: true},
+    {text: '0'},
+    {text: '16'},
+    {text: '0.16'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ここでの問題は何ですか？
+    ```jsx
+        parseInt('0xFF', 16)
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `parseInt`は16進数（`16`）の基数で`"FF"`を10進数の`255`に変換します。CSSのRGB/16進数カラーコードでこの形式を見たことがあるかもしれません。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="Number[]"
+  title=".map(parseInt)の使用"
+  options={[
+    {text: '[24, NaN, NaN]', isAnswer: true},
+    {text: '[24, NaN, 42]'},
+    {text: '[24, 42]'},
+    {text: 'NaN'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```jsx
+        [24, 'One', 42].map(parseInt)
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `parseInt`の第2引数（基数）が配列メソッドの`index`引数と一致してしまうため、予期しない結果が生じます。`parseInt("One", 1)`は基数1での無効な入力により`NaN`を返します。
+
+    最初の要素`24`は基数0（自動検出）で解析されるため`24`のままです。2番目の要素`'One'`は基数1で解析され`NaN`になります。3番目の要素`42`は基数2で解析されますが、基数2の`'42'`は無効なため`NaN`になります。結果として`[24, NaN, NaN]`となります。
+
+    `parseInt`と`map`のこの落とし穴はよく見かけます。文字列の配列を数値に解析したい場合、唯一安全な「組み込み」メソッドは`.map(Number)`またはコールバック/クロージャーの`.map(x => parseInt(x, 10))`です。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="Number[]"
+  title="`.map(Number)`の使用"
+  options={[
+    {text: '[24, NaN, 34]', isAnswer: true},
+    {text: '[24, NaN, 42]'},
+    {text: '[24, 1, 42]'},
+    {text: '[24, 42]'},
+    {text: 'NaN'},
+    {text: 'TypeError'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```jsx
+        [24, 'Twenty1', 0o42].map(Number)
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `Number`は`parseInt`よりも厳密に値を数値型に変換します。ここで、'Twenty1'はNaNとなり、0o42は8進数リテラルとして認識され34に変換されます。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="パース"
+  title="nullの処理"
+  options={[
+    {text: '0 NaN'},
+    {text: '0 0'},
+    {text: 'NaN NaN'},
+    {text: 'NaN 0', isAnswer: true},
+    {text: 'null null'},
+    {text: 'TypeError'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    このコードの結果は？
+    ```jsx
+        console.log(parseInt(null), Number(null))
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `parseInt`は入力を文字列に強制変換するため、`null`は`"null"`になります。`"null"`には有効な10進数の文字が含まれていないため、`NaN`が返されます。
+
+    `Number(null)`は`0`を返します。JavaScriptはあなたの足元を抜かすのが好きです。
+    なぜか？興味があればさらに掘り下げましょう。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="解析"
+  title="基数に基づく解析"
+  options={[
+    {text: 'NaN'},
+    {text: 'null'},
+    {text: 'undefined'},
+    {text: '36'},
+    {text: '1112745', isAnswer: true},
+    {text: '01001001'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    この呪文の結果は何になりますか？
+    ```jsx
+        parseInt(null, 36)
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    parseIntは常に入力を文字列に強制するため、nullは文字列"null"になります。
+
+    基数36（36進法）では、文字列"null"は1112745を表します。
+
+    また、nulk、null、nulmの順番は基数36でそれぞれ1112744、1112745、1112746です。
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+
+<section className="scroll-x">
+## 比較表
+
+| 関数 | `parseInt` | `parseFloat` | `Number` | `BigInt` |
+| --- | --- | --- | --- | --- |
+| ホワイトスペースを無視 | ✅ | ✅ | ✅ | ✅ |
+| `.map(FN)`  | ❌ | ☑️ | ✅ | ✅ |
+| ラジックス引数をサポート | ✅ | ❌ | ❌ | ❌ |
+| 2進数/8進数/16進数リテラル | ✅ | ❌ | ✅ | ✅ |
+| 無効な文字 `42 oh no` | `42` | `42`  | `NaN` | `構文エラー` |
+</section>
+
+<h2>どうだった？🧐</h2>
+
+{/* <h4>Are you ok?</h4> */}
+
+<p class="inset">これだけのバイナリを処理した後で休憩が必要？<br />ふふふ、覚えておけ：スキルを身につけてから休憩だ！<br /><br />[私のジム](/challenges/) でさらに問題を潰してみろ！💪</p>
+---
