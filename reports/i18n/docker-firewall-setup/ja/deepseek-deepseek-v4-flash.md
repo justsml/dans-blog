@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: docker-firewall-setup
+- Locale: ja
+- Model: deepseek/deepseek-v4-flash
+- Target: src/content/posts/2015-06-06--docker-firewall-setup/ja/index.mdx
+- Validation: deferred
+- Runtime seconds: 31.46
+- Input tokens: 3704
+- Output tokens: 4895
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.001889
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Dockerファイアウォール設定
 subTitle: Dockerホストのファイアウォール設定
@@ -105,3 +123,4 @@ nmap -p 1-10240,27017 -O --osscan-guess $TARGET_HOST
 ~~~
 
 > 完了！これで、設定したポートだけが表示されるはずです！
+````
