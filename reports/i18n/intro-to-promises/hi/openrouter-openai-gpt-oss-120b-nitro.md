@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: intro-to-promises
+- Locale: hi
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2018-08-01--intro-to-promises/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 2.08
+- Input tokens: 3990
+- Output tokens: 881
+- Thinking tokens: unknown
+- Cached input tokens: 2304
+- Cache write tokens: 0
+- Estimated cost: $0.000314
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: प्रॉमिस का परिचय
@@ -106,3 +124,4 @@ Promises API वास्तव में कुछ ही मेथड्स �
 * `Promise.reject(Error)` - एक विफलता प्रॉमिस बनाता है, जिससे आगे का `.catch()` ट्रिगर होता है  
 * `Promise.all([...promises])` - प्रॉमिसों की एरे के सभी तत्वों के पूरा होने की प्रतीक्षा करता है  
 * `Promise.race([...promises])` - पहला प्रॉमिस रिजॉल्व होते ही परिणाम देता है
+````
