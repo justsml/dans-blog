@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: async-stack-traces-why-error-stack-lies-in-production
+- Locale: es
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2025-12-29--async-stack-traces-why-error-stack-lies-in-production/es/index.mdx
+- Validation: passed
+- Runtime seconds: 9.61
+- Input tokens: 4456
+- Output tokens: 3655
+- Thinking tokens: unknown
+- Cached input tokens: 1024
+- Cache write tokens: 0
+- Estimated cost: $0.001234
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: ''
 subTitle: La cola de microtareas se comió mi tarea (y mi contexto de depuración).
@@ -95,3 +113,4 @@ No importa cuántos `await`s ocurran entre medias. El contexto sobrevive.
 3.  Rastrea, no apiles. Usa OpenTelemetry. Visualiza la cadena causal entre servicios, lo que realmente te importa.
 
 Tu código es asíncrono. Tu contexto de depuración no debería serlo.
+````
