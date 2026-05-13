@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: async-stack-traces-why-error-stack-lies-in-production
+- Locale: it
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2025-12-29--async-stack-traces-why-error-stack-lies-in-production/it/index.mdx
+- Validation: deferred
+- Runtime seconds: 1.44
+- Input tokens: 4605
+- Output tokens: 957
+- Thinking tokens: unknown
+- Cached input tokens: 2432
+- Cache write tokens: 0
+- Estimated cost: $0.000352
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: 'Tracce di stack asincrone: perché `Error.stack` ti inganna'
 subTitle: La coda dei microtask ha divorato i miei compiti (e il mio contesto di debug).
@@ -96,3 +114,4 @@ Non importa quanti `await` si verifichino nel frattempo. Il contesto sopravvive.
 3.  Traccia, non stack. Usa OpenTelemetry. Visualizza la catena causale tra i servizi, che è ciò di cui hai realmente bisogno.
 
 Il tuo codice è asincrono. Il tuo contesto di debug non dovrebbe esserlo.
+````
