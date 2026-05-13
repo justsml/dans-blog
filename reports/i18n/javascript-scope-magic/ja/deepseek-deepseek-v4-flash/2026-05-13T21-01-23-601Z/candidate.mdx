@@ -1,0 +1,109 @@
+---
+title: JavaScriptの魔法
+subTitle: 命令型対再帰的対関数型
+date: '2015-06-06'
+modified: '2024-07-30'
+category: Code
+subCategory: javascript
+draft: true
+publish: true
+tags:
+  - javascript
+  - programming
+  - performance
+  - patterns
+cover: ../markus-spiske-197281-unsplash.webp
+cover_mobile: ../w300_markus-spiske-197281-unsplash.webp
+cover_icon: ../icon_markus-spiske-197281-unsplash.webp
+---
+## 命令型 vs 再帰型 vs 関数型
+
+> [ 作業中 ]
+
+```javascript
+// 命令型: 最速 ( + 非常にシンプル、新しいポインタや過剰な割り当てなし):
+function fib(n) {
+  var a = 1,
+    b = 1,
+    c = 0;
+  for (var i = 1; i < n - 1; ++i) {
+    c = a + b;
+    a = b;
+    b = c;
+  }
+  return b;
+}
+
+// 再帰型: (FIREFOX または BABELJS のみ) ES6 関数定義で
+//  パラメータデフォルトを使用して初期（内部/再帰）値を設定
+function fib(n, current = 0, a = 1, b = 1, c = 0) {
+  current++;
+  c = a + b;
+  a = b;
+  b = c;
+  return current >= n ? b : fib(n, current, a, b, c);
+}
+
+// 教科書的に悪い例 - 複数の可変外部値を持つ貧弱な関数スコープ
+function fib(n) {
+  if (!arr) {
+    var arr = [1, 1];
+    n = n - 2;
+  } // 悪い
+  if (n === -1) {
+    return [arr[0]];
+  }
+  if (n === 0) {
+    return arr;
+  }
+  var proc = function() {
+    --n;
+    arr.push(arr[arr.length - 1] + arr[arr.length - 2]);
+    return n === 0 ? arr : proc();
+    // 悪い: 内部再帰関数は不要、ヒント: 使用される変数は親関数スコープから
+  };
+  var ans = proc();
+  return ans[ans.length - 1];
+}
+```
+
+## Promises: 素晴らしい！
+
+```js
+// Bluebird Promises を使用した例
+var Promise = require("bluebird"),
+  fs = Promise.promisifyAll(require("fs")),
+  less = Promise.promisifyAll(require("less"));
+
+function writeFileData(data) {
+  return fs.writeFileAsync("/tmp/output.css", data);
+}
+// Bluebird はこのような処理を非常にシンプルかつ簡潔に実現する:
+fs.readFileAsync("./style.less") // Call promisified readFile()
+  .then(less.renderAsync) // Hand off to less.render
+  .then(writeFileData); // Function to recieve the css contents (1st parameter)
+```
+
+1.  ネイティブの ES6 Promises も素晴らしいですが、私は堅牢な [Bluebird Promise ライブラリ](https://github.com/petkaantonov/bluebird/blob/master/API.md) を好みます。
+1.  ライブラリの有無にかかわらず、モダンブラウザは何年も前から Promise をサポートしています。
+1.  Promise はクレイジーなパターンなしで利用できます - 暗黙の `deferred` が推奨されます。
+1.  **$q はただのクソ** なので、上記のように bluebird を使いましょう。
+1.  言及する価値あり: Bluebird のベンチマークは最良ケースのテストなので、凝った Promise チェーンを行う場合は注意してください。
+
+## Java 対 JavaScript
+
+### レート制限 / デバウンス / スロットリング
+
+1.  JavaScript では [David Walsh が debounce を実装](http://davidwalsh.name/essential-javascript-functions) しており、20行未満です！
+1.  Java では、JDebounce というライブラリがあり、はるかに複雑で、約500行以上です。
+1.  _ 両者の比較: _
+1.  JavaScript は高速で、第一級関数を使用して見事なシンプルさを実現しています。
+1.  一方、Java ははるかに多くの可動部品があり、アノテーションを使用してコンパイル時に動作を適用し、さらに大量の XML があります。おまけです！
+
+<!--
+## 制御の反転テクニック
+
+作業中
+-->
+
+[fuck_this]: https://res.cloudinary.com/ddd/image/upload/panda-rampage__tumblr_nq7srwTXqr1stn6klo1_500_gm2som.gif
