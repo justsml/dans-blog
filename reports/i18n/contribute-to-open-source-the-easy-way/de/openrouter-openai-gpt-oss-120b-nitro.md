@@ -1,0 +1,109 @@
+# Translation Candidate
+- Slug: contribute-to-open-source-the-easy-way
+- Locale: de
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2024-01-16--contribute-to-open-source-the-easy-way/de/index.mdx
+- Validation: passed
+- Runtime seconds: 6.06
+- Input tokens: 5856
+- Output tokens: 1429
+- Thinking tokens: unknown
+- Cached input tokens: 2688
+- Cache write tokens: 0
+- Estimated cost: $0.000486
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: Werde ein Open‑Source‑Millionär*
+subTitle: In 3 einfachen Schritten…
+date: '2024-01-16'
+modified: '2024-08-02'
+tags:
+  - engineering
+  - open-source
+  - oss
+category: Guides
+subCategory: Open Source
+cover: ../open-source-high-life-slice.webp
+cover_mobile: ../w300_open-source-high-life.webp
+cover_icon: ../icon_open-source-high-life.webp
+---
+> In nur 3 einfachen Schritten zeige ich dir, wie du deinen _aktuellen_ Code in sinnvolle PRs verwandelst!
+
+- Drippin' in Spenden? 💰
+- Rollin' in Repos? 🏎️
+- Rebasin' [Robb Report](https://robbreport.com/)? 🤯
+
+_Lass uns loslegen!!!!!_
+
+<div style="font-size: .7rem">
+
+> Hinweis: Erfolg kann Jahre an Engagement und Glück erfordern.
+
+</div>
+
+<br />
+
+### Die Realität
+
+Wir haben alle gehört, wie vorteilhaft es ist, **_`contribute`_** zu Open Source beizutragen. Aber es ist nicht immer einfach, den Einstieg zu finden.
+
+> Over my career, I've written many PR's for dozens of 10,000-Star repositories. My modest contributions have landed in Node.js, Docker, Lodash, Bluebird, Gatsby, Rancher, Angular, React Router, Minio, MDN (Mozilla Developer Network) and many more.
+
+Ich gebe euch meine Methode für unkomplizierte Beiträge preis, doch zuerst müssen wir kurz die Probleme mit dem herkömmlichen Rat beleuchten.
+
+### Das ist (nicht) der Weg
+
+Warum ist es schwierig, **_`contribute`_** zu Open Source beizutragen?
+
+Der am häufigsten verbreitete Rat liegt tatsächlich zwischen nutzlos und katastrophal: Suche ein `GFI`‑Issue (`Good First Issue`‑Label) und löse es. Oder trage aus purer Leidenschaft zu einem Projekt bei.
+
+Es istzwar gut gemeint, aber in der Praxis sind `GFI`‑Labels stark subjektiv und erfordern oft überraschend viel Aufwand.
+
+Was wäre, wenn ich dir sage, dass der beste Ort zum Suchen die **Lösungen sind, die du bereits gefunden hast?**
+
+### Ein besserer Ansatz
+
+✅ Durchsuche deine Projekt‑Abhängigkeitsdatei(en). Welche Bibliotheken lösten Ärger aus? Was führte zu einer verpassten Frist? Wie hast du das Problem überwunden?
+
+💪 Wenn du mit etwas beginnst, das du bereits gelöst hast, gibt es **keinen Grund, sich zu fragen, ob du es kannst.** Du bist bereits **flüssig und vertraut** mit dem Kontext!
+
+Da **du das Problem bereits gelöst hast, ist ein Großteil der Arbeit erledigt.** Jetzt musst du herausfinden, wie du **anderen helfen kannst, deine Schwierigkeiten komplett zu vermeiden.**
+
+Vielleicht reichtein Tweet oder eine Stack‑Overflow‑Antwort, aber wenn du **nachhaltige Wirkung** erzielen willst, **_`contribute`_** direkt am Projekt.
+
+### Der Brainstorm
+
+Idealerweise, solange das Erlebnis noch etwas frisch ist, überlege, wie dein _dummes_ Hirn überhaupt so verfahren ist.
+
+Was hast du **zuerst** versucht? Und warum? Was hast du angenommen? Oder missverstanden?
+
+💪 Du musst keine perfekte Lösung aus dem Hut zaubern – oft reichen einfache Aktualisierungen der README oder Dokumentation, um anderen unzählige Stunden Ärger zu ersparen.
+
+- Eine veraltete README? Fehlende oder schlechte Beispiele? Ausgelassene Setup‑Schritte? _Einfaches Fix: Fehlende Infos ergänzen!_
+- Zeigte die API‑Dokumentation nicht die gewünschten Google‑Ergebnisse? _Passe die Formulierung an oder übersetze zu technisch formulierte Texte._
+- Vielleicht ein technisches Versäumnis, und der Dokumentations‑Site fehlen notwendige `<meta/>`‑Tags. _Behebe das, wenn du weißt wie, oder erstelle ein Ticket mit deinen Erkenntnissen._
+- Wenn es ein Skill‑Problem ist… Arbeite an diesen Skills!
+
+Diese Arten von Problemen übersehen Maintainer leicht! Und sie können überraschend großen Einfluss auf das Projekt und seine Nutzer haben.
+
+Wenn du das nächste Mal eine Herausforderung meisterst, _rebase nicht deine verzweifelten Hacks weg!_ **Reflektiere stattdessen über deine Schwierigkeiten und teile deine Lösung öffentlich!**
+
+### Kleingedrucktes
+
+Befolge stets die Projekt‑Richtlinien und sei niemals ein Arschloch. ✨
+
+Alles ist öffentlich. Also sei freundlich, großartig und dankbar.
+
+Falls du noch mehr Überzeugungsarbeit brauchst: `contribute` für das Lernen! Neue Prozesse, Sprachen, Frameworks, Automatisierung!
+
+{/* > Vielleicht noch wichtiger: Du kannst **schnell deine Kommunikationsfähigkeiten verbessern!** Die Fähigkeit, für deine Ideen zu werben, kann dein Leben verändern! */}
+
+🚀
+
+Wenn dir das geholfen hat, teile deine Beiträge in den Kommentaren oder poste sie auf [Twitter und markiere mich @justsml](https://x.com/justsml).
+````
