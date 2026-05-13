@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: mastra-workflows-memory
+- Locale: hi
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-01-05--mastra-workflows-memory/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 28.61
+- Input tokens: 9581
+- Output tokens: 12349
+- Thinking tokens: unknown
+- Cached input tokens: 1536
+- Cache write tokens: 0
+- Estimated cost: $0.003730
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: ''
 subTitle: अनिर्धारित मॉडलों के लिए निर्धारक पैटर्न
@@ -251,3 +269,4 @@ export const coordinatorAgent = new Agent({
 2. [Security & Guardrails](/mastra-security-guardrails)  
 3. [MCP & Tool Integrations](/mastra-mcp-tool-integrations)  
 4. **Workflows & Memory** (इस पोस्ट)
+````
