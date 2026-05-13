@@ -1,0 +1,45 @@
+{
+  "selectedCommit": "1c8b4b40ae0d373a2fe30ea485478b91d37a40ef",
+  "selectedModel": "openrouter/qwen/qwen3-32b:nitro",
+  "scores": {
+    "readability": 0,
+    "technicalAccuracy": 0,
+    "coherence": 0,
+    "relevance": 0,
+    "translationQuality": 0,
+    "mdxPreservation": 0
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "exact translated text currently in the selected MDX",
+      "replacement": "exact replacement text to write into the selected MDX",
+      "reason": "English explanation of why this medium/high-priority change is needed"
+    }
+  ],
+  "rationale": "Selected 1c8b4b40ae0d373a2fe30ea485478b91d37a40ef.",
+  "slug": "upgrade-from-gatsby-to-astro",
+  "locale": "es",
+  "candidateCommits": [
+    "75a32c09fcae75acc48fda832fcbef909041b150",
+    "398f08659e229b7d56e615b4e93093189e034e78",
+    "1c8b4b40ae0d373a2fe30ea485478b91d37a40ef"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "exact translated text currently in the selected MDX",
+      "replacement": "exact replacement text to write into the selected MDX",
+      "reason": "English explanation of why this medium/high-priority change is needed",
+      "pass": 1,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug upgrade-from-gatsby-to-astro --locale es --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug upgrade-from-gatsby-to-astro --locale es --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug upgrade-from-gatsby-to-astro --locale es --skip-global\n109 |     })\n110 |     .filter((message): message is string => message != null);\n111 | \n112 |   if (mismatches.length === 0) return;\n113 | \n114 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2024-08-22--upgrade-from-gatsby-to-astro/es/index.mdx changed heading counts. H2: English has 9, translation has 10\n      at assertHeadingCounts (/Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:114:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:27:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}
