@@ -1,0 +1,53 @@
+{
+  "index": 11,
+  "attempt": 1,
+  "originalTitle": "Handling nulls",
+  "translatedTitle": "Umgang mit nulls",
+  "translation": {
+    "title": "Umgang mit nulls",
+    "group": "Parsing",
+    "options": [
+      {
+        "text": "0 NaN"
+      },
+      {
+        "text": "0 0"
+      },
+      {
+        "text": "NaN NaN"
+      },
+      {
+        "text": "NaN 0"
+      },
+      {
+        "text": "null null"
+      },
+      {
+        "text": "TypeError"
+      }
+    ],
+    "questionProse": [
+      "Wie lautet das Ergebnis dieses Codes?"
+    ],
+    "explanationProse": [
+      "`parseInt` wandelt die Eingabe in einen String um, sodass `null` zu `\"null\"` wird. Da `\"null\"` keine gültigen Dezimalziffern enthält, liefert es `NaN`.\n\n    `Number(null)` liefert `0`. weil JS dich gerne auf Trab hält.\n    Warum? Nun, ich könnte tiefer gehen, falls Interesse besteht."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Umgang mit nulls\",\n  \"group\": \"Parsing\",\n  \"options\": [\n    {\n      \"text\": \"0 NaN\"\n    },\n    {\n      \"text\": \"0 0\"\n    },\n    {\n      \"text\": \"NaN NaN\"\n    },\n    {\n      \"text\": \"NaN 0\"\n    },\n    {\n      \"text\": \"null null\"\n    },\n    {\n      \"text\": \"TypeError\"\n    }\n  ],\n  \"questionProse\": [\n    \"Wie lautet das Ergebnis dieses Codes?\"\n  ],\n  \"explanationProse\": [\n    \"`parseInt` wandelt die Eingabe in einen String um, sodass `null` zu `\\\"null\\\"` wird. Da `\\\"null\\\"` keine gültigen Dezimalziffern enthält, liefert es `NaN`.\\n\\n    `Number(null)` liefert `0`. weil JS dich gerne auf Trab hält.\\n    Warum? Nun, ich könnte tiefer gehen, falls Interesse besteht.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 883,
+    "outputTokens": 682,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 533,
+    "providerCostUsd": 0.00082055,
+    "providerUpstreamCostUsd": 0.00082055,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000034437,
+    "outputUsd": 0.00012276,
+    "totalUsd": 0.000157197,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
