@@ -1,0 +1,63 @@
+{
+  "selectedCommit": "b74e7928da96e2c0ded057852a347e02283d3d4e",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "vermeiden eine dystopischen Albtraum",
+      "replacement": "einen dystopischen Albtraum vermeiden",
+      "reason": "Grammar fix: The verb 'vermeiden' should be at the end of the clause in this construction, and the article 'einen' must match the masculine accusative case."
+    }
+  ],
+  "rationale": "The translation captures Dan's punchy and slightly cynical tone effectively. It handles the cultural references and technical terms well. The suggested fix addresses a minor grammatical word-order issue in the final footnote.",
+  "slug": "the-last-to-think",
+  "locale": "de",
+  "candidateCommits": [
+    "b74e7928da96e2c0ded057852a347e02283d3d4e",
+    "4228fa2af4c134ea4748686160a77c7ee4762127",
+    "ff427335e8f46532a513c06657d9ca056a8e1f56"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "dystopische Nightmare",
+      "replacement": "dystopischen Albtraum",
+      "reason": "'Nightmare' is an English word; the German 'Albtraum' is more appropriate here.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "Literalität darum aufzubauen",
+      "replacement": "Kompetenz im Umgang damit aufzubauen",
+      "reason": "'Literalität' is a technical term for literacy, but 'Kompetenz' or 'Bildung' is more natural in this context. However, 'Literalität' is acceptable in academic/educational contexts.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "vermeiden eine dystopischen Albtraum",
+      "replacement": "einen dystopischen Albtraum vermeiden",
+      "reason": "Grammar fix: The verb 'vermeiden' should be at the end of the clause in this construction, and the article 'einen' must match the masculine accusative case.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug the-last-to-think --locale de --skip-global",
+    "output": ""
+  }
+}
