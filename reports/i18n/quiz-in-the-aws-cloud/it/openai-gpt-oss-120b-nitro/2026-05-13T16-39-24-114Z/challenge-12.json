@@ -1,0 +1,44 @@
+{
+  "index": 11,
+  "attempt": 1,
+  "originalTitle": "S3 Performance Optimization",
+  "translatedTitle": "Ottimizzazione delle prestazioni S3",
+  "translation": {
+    "title": "Ottimizzazione delle prestazioni S3",
+    "group": "Prestazioni S3",
+    "options": [
+      {
+        "text": "Usa prefissi casuali/hash"
+      },
+      {
+        "text": "Usa prefissi logici; la randomizzazione non è necessaria"
+      },
+      {
+        "text": "Usa sempre gli oggetti più grandi"
+      },
+      {
+        "text": "Minimizza il numero di oggetti"
+      }
+    ],
+    "questionProse": [
+      "Come ottimizzare le prestazioni di S3 per alti tassi di richieste?"
+    ],
+    "explanationProse": [
+      "Suggerimenti per le prestazioni S3:\n    - S3 moderno scala automaticamente i tassi di richieste per prefisso\n    - Non servono prefissi casuali/hash per le prestazioni\n    - Usa nomi di chiave logici che si adattano ai tuoi pattern di accesso\n    - Monitora le risposte 503 Slow Down se spingi tassi di richieste molto alti\n\n    Le linee guida precedenti consigliavano di randomizzare i prefissi per evitare partizioni calde, ma AWS non lo raccomanda più come requisito di prestazione predefinito.\n\n    [Linee guida sulle prestazioni S3](https://aws.amazon.com/s3/performance/)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Ottimizzazione delle prestazioni S3\",\n  \"group\": \"Prestazioni S3\",\n  \"options\": [\n    {\n      \"text\": \"Usa prefissi casuali/hash\"\n    },\n    {\n      \"text\": \"Usa prefissi logici; la randomizzazione non è necessaria\"\n    },\n    {\n      \"text\": \"Usa sempre gli oggetti più grandi\"\n    },\n    {\n      \"text\": \"Minimizza il numero di oggetti\"\n    }\n  ],\n  \"questionProse\": [\n    \"Come ottimizzare le prestazioni di S3 per alti tassi di richieste?\"\n  ],\n  \"explanationProse\": [\n    \"Suggerimenti per le prestazioni S3:\\n    - S3 moderno scala automaticamente i tassi di richieste per prefisso\\n    - Non servono prefissi casuali/hash per le prestazioni\\n    - Usa nomi di chiave logici che si adattano ai tuoi pattern di accesso\\n    - Monitora le risposte 503 Slow Down se spingi tassi di richieste molto alti\\n\\n    Le linee guida precedenti consigliavano di randomizzare i prefissi per evitare partizioni calde, ma AWS non lo raccomanda più come requisito di prestazione predefinito.\\n\\n    [Linee guida sulle prestazioni S3](https://aws.amazon.com/s3/performance/)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 841,
+    "outputTokens": 761,
+    "cacheReadTokens": 384,
+    "cacheWriteTokens": 0,
+    "durationMs": 818
+  },
+  "cost": {
+    "inputUsd": 0.000032798999999999995,
+    "outputUsd": 0.00013697999999999998,
+    "totalUsd": 0.00016977899999999997,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

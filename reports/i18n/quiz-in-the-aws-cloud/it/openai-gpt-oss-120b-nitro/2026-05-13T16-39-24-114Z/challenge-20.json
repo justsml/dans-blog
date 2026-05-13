@@ -1,0 +1,44 @@
+{
+  "index": 19,
+  "attempt": 1,
+  "originalTitle": "Large File Transfer",
+  "translatedTitle": "Trasferimento diFile di grandi dimensioni",
+  "translation": {
+    "title": "Trasferimento diFile di grandi dimensioni",
+    "group": "Trasferimento S3",
+    "options": [
+      {
+        "text": "Usa sempre una singola richiesta PUT"
+      },
+      {
+        "text": "Usa Multipart Upload per file di grandi dimensioni"
+      },
+      {
+        "text": "Comprimi prima di caricare"
+      },
+      {
+        "text": "Dividi manualmente prima del caricamento"
+      }
+    ],
+    "questionProse": [
+      "Qual è il metodo migliore per caricare file di grandi dimensioni su S3?"
+    ],
+    "explanationProse": [
+      "Vantaggi di Multipart Upload:\n    - Gestisce file di grandi dimensioni in modo efficiente\n    - Riprende upload interrotti\n    - Upload parallelo delle parti del file\n    - Consigliato per file > 100 MB\n    - Affidabilità di rete migliorata\n\n    [S3 Multipart Upload](https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Trasferimento diFile di grandi dimensioni\",\n  \"group\": \"Trasferimento S3\",\n  \"options\": [\n    {\n      \"text\": \"Usa sempre una singola richiesta PUT\"\n    },\n    {\n      \"text\": \"Usa Multipart Upload per file di grandi dimensioni\"\n    },\n    {\n      \"text\": \"Comprimi prima di caricare\"\n    },\n    {\n      \"text\": \"Dividi manualmente prima del caricamento\"\n    }\n  ],\n  \"questionProse\": [\n    \"Qual è il metodo migliore per caricare file di grandi dimensioni su S3?\"\n  ],\n  \"explanationProse\": [\n    \"Vantaggi di Multipart Upload:\\n    - Gestisce file di grandi dimensioni in modo efficiente\\n    - Riprende upload interrotti\\n    - Upload parallelo delle parti del file\\n    - Consigliato per file > 100 MB\\n    - Affidabilità di rete migliorata\\n\\n    [S3 Multipart Upload](https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 801,
+    "outputTokens": 607,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 576
+  },
+  "cost": {
+    "inputUsd": 0.000031239000000000004,
+    "outputUsd": 0.00010926,
+    "totalUsd": 0.00014049899999999998,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

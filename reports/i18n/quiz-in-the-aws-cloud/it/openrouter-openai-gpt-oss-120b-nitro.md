@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-in-the-aws-cloud
+- Locale: it
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2024-12-28--quiz-in-the-aws-cloud/it/index.mdx
+- Validation: deferred
+- Runtime seconds: 23.08
+- Input tokens: 24964
+- Output tokens: 21295
+- Thinking tokens: unknown
+- Cached input tokens: 9600
+- Cache write tokens: 0
+- Estimated cost: $0.004807
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: 'Quiz:Archiviazione AWS: oltre 20 domande!'
@@ -911,3 +929,4 @@ Spero ti sia piaciuto il percorso e, chissà, magari hai imparato qualcosa sui s
 Dai un’occhiata ad altre [sfide di Dan](../challenges/)! 🧠  
 
 Nota legale: questo quiz è solo a scopo didattico. Tutti i marchi e i diritti d’autore appartengono ai rispettivi proprietari, in particolare ai grandi nomi.
+````

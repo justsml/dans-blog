@@ -1,0 +1,44 @@
+{
+  "index": 25,
+  "attempt": 1,
+  "originalTitle": "Scaling Behavior",
+  "translatedTitle": "Comportamento di scaling",
+  "translation": {
+    "title": "Comportamento di scaling",
+    "group": "Aurora Serverless",
+    "options": [
+      {
+        "text": "La velocità di scaling dipende dalla capacità corrente e configurata"
+      },
+      {
+        "text": "Scala istantaneamente su richiesta"
+      },
+      {
+        "text": "Scala solo a intervalli predefiniti"
+      },
+      {
+        "text": "Solo scaling manuale"
+      }
+    ],
+    "questionProse": [
+      "Qual è il fattore chiave da considerare quando ci si affida ad Aurora Serverless per gestire improvvisi picchi di traffico?"
+    ],
+    "explanationProse": [
+      "Scaling Aurora Serverless:\n      - Aurora Serverless v2 scala la capacità in incrementi ACU a grana fine\n      - La velocità di scaling dipende dalla capacità corrente e dalle impostazioni min/max ACU\n      - Le versioni supportate possono auto-pausare a 0 ACU quando configurate\n      - Fatturazione al secondo basata sugli ACU\n\n      Best Practices:\n      - Imposta una capacità minima sufficientemente alta per i picchi improvvisi su carichi critici\n      - Monitora gli eventi di scaling\n      - Tieni presente la gestione delle connessioni"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Comportamento di scaling\",\n  \"group\": \"Aurora Serverless\",\n  \"options\": [\n    {\n      \"text\": \"La velocità di scaling dipende dalla capacità corrente e configurata\"\n    },\n    {\n      \"text\": \"Scala istantaneamente su richiesta\"\n    },\n    {\n      \"text\": \"Scala solo a intervalli predefiniti\"\n    },\n    {\n      \"text\": \"Solo scaling manuale\"\n    }\n  ],\n  \"questionProse\": [\n    \"Qual è il fattore chiave da considerare quando ci si affida ad Aurora Serverless per gestire improvvisi picchi di traffico?\"\n  ],\n  \"explanationProse\": [\n    \"Scaling Aurora Serverless:\\n      - Aurora Serverless v2 scala la capacità in incrementi ACU a grana fine\\n      - La velocità di scaling dipende dalla capacità corrente e dalle impostazioni min/max ACU\\n      - Le versioni supportate possono auto-pausare a 0 ACU quando configurate\\n      - Fatturazione al secondo basata sugli ACU\\n\\n      Best Practices:\\n      - Imposta una capacità minima sufficientemente alta per i picchi improvvisi su carichi critici\\n      - Monitora gli eventi di scaling\\n      - Tieni presente la gestione delle connessioni\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 841,
+    "outputTokens": 749,
+    "cacheReadTokens": 384,
+    "cacheWriteTokens": 0,
+    "durationMs": 526
+  },
+  "cost": {
+    "inputUsd": 0.000032798999999999995,
+    "outputUsd": 0.00013482,
+    "totalUsd": 0.00016761899999999998,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

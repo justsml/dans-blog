@@ -1,0 +1,44 @@
+{
+  "index": 24,
+  "attempt": 1,
+  "originalTitle": "Time To Live (TTL)",
+  "translatedTitle": "Tempo di vita (TTL)",
+  "translation": {
+    "title": "Tempo di vita (TTL)",
+    "group": "Funzionalità di DynamoDB",
+    "options": [
+      {
+        "text": "Elimina gli elementi immediatamente alla scadenza"
+      },
+      {
+        "text": "Richiede un trigger di cancellazione manuale"
+      },
+      {
+        "text": "Cancellazione in background con tempistica best‑effort"
+      },
+      {
+        "text": "Scade gli elementi ma li mantiene archiviati"
+      }
+    ],
+    "questionProse": [
+      "Come gestisce la cancellazione degli elementi la funzionalità TTL di DynamoDB?"
+    ],
+    "explanationProse": [
+      "Caratteristiche TTL di DynamoDB:\n      - Il processo in background monitora l'attributo TTL\n      - Gli elementi scaduti vengono eliminati con una pianificazione best‑effort, tipicamente entro pochi giorni\n      - Nessun costo aggiuntivo per TTL\n      - Gli elementi eliminati appaiono negli stream\n\n      Casi d'uso:\n      - Gestione delle sessioni\n      - Scadenza dei log\n      - Pulizia dei dati temporanei\n      - Conformità normativa"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Tempo di vita (TTL)\",\n  \"group\": \"Funzionalità di DynamoDB\",\n  \"options\": [\n    {\n      \"text\": \"Elimina gli elementi immediatamente alla scadenza\"\n    },\n    {\n      \"text\": \"Richiede un trigger di cancellazione manuale\"\n    },\n    {\n      \"text\": \"Cancellazione in background con tempistica best‑effort\"\n    },\n    {\n      \"text\": \"Scade gli elementi ma li mantiene archiviati\"\n    }\n  ],\n  \"questionProse\": [\n    \"Come gestisce la cancellazione degli elementi la funzionalità TTL di DynamoDB?\"\n  ],\n  \"explanationProse\": [\n    \"Caratteristiche TTL di DynamoDB:\\n      - Il processo in background monitora l'attributo TTL\\n      - Gli elementi scaduti vengono eliminati con una pianificazione best‑effort, tipicamente entro pochi giorni\\n      - Nessun costo aggiuntivo per TTL\\n      - Gli elementi eliminati appaiono negli stream\\n\\n      Casi d'uso:\\n      - Gestione delle sessioni\\n      - Scadenza dei log\\n      - Pulizia dei dati temporanei\\n      - Conformità normativa\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 819,
+    "outputTokens": 689,
+    "cacheReadTokens": 384,
+    "cacheWriteTokens": 0,
+    "durationMs": 1762
+  },
+  "cost": {
+    "inputUsd": 0.000031941,
+    "outputUsd": 0.00012402,
+    "totalUsd": 0.00015596099999999998,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

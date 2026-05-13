@@ -1,0 +1,44 @@
+{
+  "index": 22,
+  "attempt": 1,
+  "originalTitle": "Aurora Failover Mechanism",
+  "translatedTitle": "Meccanismo di Failover di Aurora",
+  "translation": {
+    "title": "Meccanismo di Failover di Aurora",
+    "group": "Alta Disponibilità Aurora",
+    "options": [
+      {
+        "text": "È necessaria un'intervento manuale"
+      },
+      {
+        "text": "Richiede la riconfigurazione dell'applicazione"
+      },
+      {
+        "text": "Esegue sempre il failover alla replica più vecchia"
+      },
+      {
+        "text": "Promozione automatica basata sul livello di priorità di failover"
+      }
+    ],
+    "questionProse": [
+      "In un cluster Aurora con più repliche di lettura, cosa accade durante un failover automatico quando l'istanza primaria fallisce?"
+    ],
+    "explanationProse": [
+      "Processo di Failover di Aurora:\n      1. Rileva il fallimento dell'istanza primaria\n      2. Sceglie una Replica Aurora basandosi principalmente sul livello di priorità di failover\n      3. Usa le caratteristiche dell'istanza come criteri di spareggio quando le priorità coincidono\n      4. Aggiorna automaticamente l'endpoint del cluster\n\n      Best Practices:\n      - Mantieni più repliche in diverse AZ\n      - Configura intenzionalmente i livelli di promozione\n      - Usa l'endpoint del cluster nelle applicazioni\n      - Testa regolarmente gli scenari di failover"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Meccanismo di Failover di Aurora\",\n  \"group\": \"Alta Disponibilità Aurora\",\n  \"options\": [\n    {\n      \"text\": \"È necessaria un'intervento manuale\"\n    },\n    {\n      \"text\": \"Richiede la riconfigurazione dell'applicazione\"\n    },\n    {\n      \"text\": \"Esegue sempre il failover alla replica più vecchia\"\n    },\n    {\n      \"text\": \"Promozione automatica basata sul livello di priorità di failover\"\n    }\n  ],\n  \"questionProse\": [\n    \"In un cluster Aurora con più repliche di lettura, cosa accade durante un failover automatico quando l'istanza primaria fallisce?\"\n  ],\n  \"explanationProse\": [\n    \"Processo di Failover di Aurora:\\n      1. Rileva il fallimento dell'istanza primaria\\n      2. Sceglie una Replica Aurora basandosi principalmente sul livello di priorità di failover\\n      3. Usa le caratteristiche dell'istanza come criteri di spareggio quando le priorità coincidono\\n      4. Aggiorna automaticamente l'endpoint del cluster\\n\\n      Best Practices:\\n      - Mantieni più repliche in diverse AZ\\n      - Configura intenzionalmente i livelli di promozione\\n      - Usa l'endpoint del cluster nelle applicazioni\\n      - Testa regolarmente gli scenari di failover\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 848,
+    "outputTokens": 791,
+    "cacheReadTokens": 384,
+    "cacheWriteTokens": 0,
+    "durationMs": 841
+  },
+  "cost": {
+    "inputUsd": 0.000033072,
+    "outputUsd": 0.00014238,
+    "totalUsd": 0.00017545199999999999,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
