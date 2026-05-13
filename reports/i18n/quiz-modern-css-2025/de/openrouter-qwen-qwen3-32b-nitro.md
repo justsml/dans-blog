@@ -4,22 +4,22 @@
 - Model: openrouter/qwen/qwen3-32b:nitro
 - Target: src/content/posts/2024-11-07--quiz-modern-css-2025/de/index.mdx
 - Validation: rejected: direct AI SDK translation failed
-- Runtime seconds: 32.36
-- Input tokens: 9416
-- Output tokens: 11047
+- Runtime seconds: 3.92
+- Input tokens: unknown
+- Output tokens: unknown
 - Thinking tokens: unknown
-- Cached input tokens: 0
-- Cache write tokens: 0
-- Estimated cost: $0.003405
-- Pricing source: local-openrouter-estimate
-- Note: Command failed: bun run i18n:validate --slug quiz-modern-css-2025 --locale de
+- Cached input tokens: unknown
+- Cache write tokens: unknown
+- Estimated cost: unknown
+- Pricing source: unknown
+- Note: Command failed: bun run i18n:translate:chunked -- --slug quiz-modern-css-2025 --locale de --model openrouter/qwen/qwen3-32b:nitro --chunk 6p --quiz-concurrency 20
 ## Raw Output
 
 ````mdx
 ---
 unlisted: false
-title: 'Quiz: Kennen Sie Modernes CSS? (für 2025)'
-subTitle: Bist du Frontend genug?
+title: 'Quiz: Kennen Sie modernes CSS? (für 2025)'
+subTitle: Bist du genugFront‑End?
 label: Advanced CSS
 social_image: ../desktop-social.webp
 category: Quiz
@@ -36,17 +36,15 @@ cover_full_width: ../dan-levy-downtown-denver-at-night-wide.webp
 cover_mobile: ../dan-levy-downtown-denver-at-night-square-200.webp
 cover_icon: ../dan-levy-downtown-denver-at-night-square-200.webp
 ---
-```mdx
 import Challenge from '../../../../../components/QuizUI/Challenge';
 import QuizUI from '../../../../../components/QuizUI/QuizUI';
 
 
-## Quiz: Kennen Sie CSS?
+## Quiz: Kennst du CSS?
 
-* Moderne CSS?  🤔
-* **Sollte CSS auf _Ihrem_ Lebenslauf stehen???** 🚀
-* Multiple Choice. 🤖 ... _Wie schwer kann es sein, hm?_
-```
+* Modernes CSS? 🤔
+* **Soll CSS auf deinem Lebenslauf stehen???** 🚀
+* Multiple‑Choice. 🤖 … _Wie schwer kann das schon sein, oder?_
 
 <QuizUI>
 
@@ -54,7 +52,7 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={0}
   group="Aufwärmen"
-  title="CSS-Variablen verwenden"
+  title="Verwendung von CSS-Variablen"
   options={[
     {text: 'background-color: blue;'},
     {text: 'background-color: --main-color;'},
@@ -65,7 +63,7 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    Wie lautet die korrekte Methode, um eine CSS-Variabel namens `--main-color` zu verwenden, um die Hintergrundfarbe eines Elements zu setzen?
+    Wie verwendet man die CSS‑Variable `--main-color` korrekt, um die Hintergrundfarbe eines Elements festzulegen?
     ```css
     :root {
       --main-color: blue;
@@ -78,9 +76,9 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    CSS-Variablen werden mit der `var`-Funktion verwendet, also lautet die korrekte Antwort `background-color: var(--main-color);`. Diese Syntax ruft den Wert von `--main-color` ab und wendet ihn an.
+    CSS‑Variablen werden mit der `var`‑Funktion verwendet, daher ist die richtige Antwort `background-color: var(--main-color);`. Diese Syntax ruft den Wert von `--main-color` ab und wendet ihn an.
 
-    Die anderen Optionen könnten aus anderen Sprachen oder Präprozessorsyntaxen bekannt sein, insbesondere aus Sass oder Less.
+    Die anderen Optionen stammen möglicherweise aus anderen Sprachen oder Präprozessor‑Syntaxen, nämlich Sass oder Less.
   </div>
   </slot>
 </Challenge>
@@ -101,7 +99,7 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    Wenn die Breite des Eltern-/Container-Elements 400px beträgt, welche Breite wird für das folgende Element berechnet?
+    Wenn die Breite des Eltern-/Container-Elements 400 px beträgt, welche berechnete Breite hat das folgende Element?
     ```css
     div {
       width: min(250px, 50%);
@@ -111,18 +109,18 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Die `min()`-Funktion wählt den kleinsten Wert zwischen 250px und 50 % der Breite ihres Eltern-Elements aus.
+    Die `min()`‑Funktion wählt den kleinsten Wert zwischen 250 px und 50 % der Breite des übergeordneten Elements.
 
     Um den berechneten Wert zu verstehen, müssen wir die relativen Einheiten in Pixel umrechnen:
 
-    – 50 % von 400px sind 200px
-    – 250px sind bereits in Pixel angegeben
+    - `50%` von `400px` sind `200px`
+    - `250px` sind bereits Pixel
     ```css
     /* This gets computed to */
     width: min(250px, 200px);
     /* -> 200px wins */
     ```
-    Die `min()`-Funktion ist besonders nützlich für responsives Design, bei dem Sie sicherstellen können, dass ein Komponenten- (oder Schriftgrad-) nicht einen bestimmten Grenzwert überschreitet.
+    Die `min()`‑Funktion ist besonders nützlich für responsives Design, da Sie sicherstellen können, dass ein Komponenten (oder die Schriftgröße) einen bestimmten Grenzwert nicht überschreitet.
   </div>
   </slot>
 </Challenge>
@@ -138,12 +136,12 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
     {text: 'width: 10px;'},
     {text: 'width: 50px;'},
     {text: 'width: 96px;', isAnswer: true},
-    {text: 'Ungültige Syntax'},
+    {text: 'Invalid syntax'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Gegeben ein Container mit einer Breite von 200px, welche Breite würde sich für das `<div>` berechnen?
+    Gegeben ein Container mit einer Breite von 200 px, welche berechnete Breite hätte das `<div>`?
     ```css
     div {
       width: max(50px, 10%, 6rem);
@@ -153,13 +151,13 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Die `max()`-Funktion akzeptiert 2 oder mehr Eingaben und nutzt automatisch den größten Wert. Angenommen, die Schriftgröße der Wurzel entspricht dem Browserstandard `16px`, ergibt sich eine Breite von `96px`.
+    Die `max()`‑Funktion akzeptiert zwei oder mehr Eingaben und verwendet automatisch den größten Wert. Angenommen, die Root‑Schriftgröße ist der Browser‑Standard `16px`, ergibt sich eine Breite von `96px`.
 
     Um den berechneten Wert zu verstehen, müssen wir die relativen Einheiten in Pixel umrechnen:
 
-    - `50px` sind bereits in Pixel
+    - `50px` ist bereits in Pixel
     - `10%` von `200px` sind `20px`
-    - `6rem` sind `6 * 16px` (die Standard-Schriftgröße), also `96px`
+    - `6rem` sind `6 * 16px` (die Standard‑Schriftgröße), also `96px`
     ```css
     /* This gets computed to */
     width: max(50px, 20px, 96px);
@@ -172,18 +170,18 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={3}
-  group="CSS Grid-Funktionen"
+  group="CSS‑Grid‑Funktionen"
   title="CSS minmax()-Funktion"
   options={[
-    {text: 'Alle Spaltenbreiten zwischen 100px und 200px'},
-    {text: 'Spalten auf 100px, Zeilen auf 200px einstellen'},
-    {text: 'Spalte 1 wird zwischen 100px und 200px liegen', isAnswer: true},
-    {text: 'Bereich rekursiv anwenden, einschließlich Untergitter'},
+    {text: 'Alle Spaltenbreiten zwischen 100 px und 200 px'},
+    {text: 'Spalten auf 100 px, Zeilen auf 200 px setzen'},
+    {text: 'Spalte 1 wird zwischen 100 px und 200 px liegen', isAnswer: true},
+    {text: 'Bereich rekursiv anwenden, inkl. Subgrids'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Welcher Effekt entsteht durch die Verwendung von `minmax(100px, 200px)` für eine CSS-Grid-Spur?
+    Welche Wirkung hat die Verwendung von `minmax(100px, 200px)` für einen CSS‑Grid‑Track?
     ```css
     grid-template-columns: minmax(100px, 200px);
     ```
@@ -191,9 +189,9 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Die Verwendung von `minmax(100px, 200px)` ermöglicht es der Grid-Spur, sich zwischen `100px` und `200px` zu skalieren, wobei sie sich an den verfügbaren Platz anpasst, aber nie unter `100px` oder über `200px` geht.
+    Die Verwendung von `minmax(100px, 200px)` ermöglicht es dem Grid‑Track, zwischen `100px` und `200px` zu skalieren, sich dem verfügbaren Platz anzupassen, aber niemals unter `100px` oder über `200px` zu gehen.
 
-    Sie können automatisch anpassende Layouts erstellen, bei denen Container und Kinder jeweils eine Rolle bei der Berechnung der Layouts spielen. Dies ist besonders mächtig, wenn es mit `repeat()` und `auto-fill` oder `auto-fit` kombiniert wird, die so viele Spuren wie möglich innerhalb der Einschränkungen erstellen.
+    Sie können automatisch anpassende Layouts erstellen, bei denen Container und Kinder jeweils eine Rolle bei der Berechnung der Layouts spielen. Das ist besonders kraftvoll in Kombination mit `repeat()` und `auto-fill` oder `auto-fit`, die so viele Tracks wie möglich innerhalb der Vorgaben erzeugen.
   </div>
   </slot>
 </Challenge>
@@ -202,10 +200,10 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={4}
   group="CSS-Variablen"
-  title="CSS-Variablen-Standardwerte"
+  title="CSS-Variablen-Fallbacks"
   options={[
-    {text: 'blau'},
-    {text: 'rot'},
+    {text: 'blue'},
+    {text: 'red'},
     {text: 'Systemstandard'},
     {text: '#6b8e23', isAnswer: true},
     {text: 'var(--secondary-color)'},
@@ -213,7 +211,7 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    Welche Farbe hat der Hintergrund für den folgenden CSS-Code?
+    Welche Farbe hat der Hintergrund für das folgende CSS?
     ```css
     div {
       background: var(--primary, olivedrab);
@@ -223,9 +221,9 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Die `var()`-Funktion ermöglicht es, einen Standardwert festzulegen, wenn die Variable nicht definiert ist. In diesem Fall wird der Hintergrund `olivedrab` (`#6b8e23`) sein, da `--primary` nicht definiert ist.
+    Die `var()`‑Funktion ermöglicht es, einen Fallback‑Wert festzulegen, falls die Variable nicht definiert ist. In diesem Fall wird der Hintergrund `olivedrab` (`#6b8e23`) sein, weil `--primary` nicht definiert ist.
 
-    Das ist eine großartige Methode, um sicherzustellen, dass Ihre Styles nicht zusammenbrechen, wenn eine Variable fehlt oder nicht unterstützt wird.
+    Das ist eine großartige Methode, um sicherzustellen, dass deine Styles nicht brechen, wenn eine Variable fehlt oder nicht unterstützt wird.
   </div>
   </slot>
 </Challenge>
@@ -234,18 +232,18 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={5}
   group="CSS-Funktionen"
-  title="clamp() für responsives Design verwenden"
+  title="Verwendung von clamp() für responsives Design"
   options={[
     {text: 'Fallback für möglicherweise nicht unterstützte Einheiten'},
-    {text: 'Stellen Sie sicher, dass `vw`-Einheiten zwischen 20px und 50px liegen'},
-    {text: 'Lineare Skala zwischen 200px und 500px', isAnswer: true},
-    {text: 'Log₂-Skala zwischen 200px und 500px'},
-    {text: 'Fehlschlag! Keine Unterstützung für IE 11'},
+    {text: 'Sicherstellen, dass `vw`‑Einheiten zwischen 20 px und 50 px liegen'},
+    {text: 'Lineare Skalierung zwischen 200 px und 500 px', isAnswer: true},
+    {text: 'Log₂‑Skalierung zwischen 200 px und 500 px'},
+    {text: 'Fehler! Keine Unterstützung für IE 11'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Was bewirkt die `clamp()`-Funktion?
+    Was macht `clamp()`?
     ```css
     .card {
       width: clamp(200px, 50vw, 500px);
@@ -255,13 +253,13 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Die `clamp()`-Funktion ermöglicht es der Breite, sich anhand von `50vw` zu skalieren, hält sie aber im Bereich von 200px bis 500px.
+    Die `clamp()`‑Funktion lässt die Breite basierend auf `50vw` skalieren, hält sie aber innerhalb eines Bereichs von 200 px bis 500 px.
 
-    Das bedeutet, dass die Breite 200px beträgt, wenn `50vw` weniger als 200px wäre, 500px, wenn `50vw` mehr als 500px wäre, und linear zwischen diesen Grenzen skaliert.
+    Das bedeutet, die Breite ist 200 px, wenn `50vw` weniger als 200 px ergeben würde, 500 px, wenn `50vw` mehr als 500 px ergeben würde, und linear dazwischen.
 
-    Es ermöglicht Ihnen, automatisch responsiv zu sein! Wichtig zu wissen über `clamp` ist, dass sie **feste Einheiten** mit **responsiven oder berechneten Einheiten** kombiniert.
+    Sie macht dein Layout automatisch responsiv! Wichtig bei `clamp` ist, dass es **feste Einheiten** mit **responsiven oder berechneten Einheiten** kombiniert.
 
-    Normalerweise möchte man viewport-basierte Einheiten für Schriftgrößen nicht verwenden, aber mit `clamp()` können wir sicherstellen, dass die Schriftgröße nicht zu klein oder zu groß wird.
+    Normalerweise würde man Viewport‑Einheiten nicht für Schriftgrößen verwenden, aber mit `clamp()` können wir sicherstellen, dass die Schriftgröße nicht zu klein oder zu groß wird.
   </div>
   </slot>
 </Challenge>
@@ -269,8 +267,8 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={6}
-  group="CSS-Verschachtelung"
-  title="Native CSS-Verschachtelung"
+  group="CSS-Nesting"
+  title="Natives CSS-Nesting"
   options={[
     {text: 'Nur mit SCSS'},
     {text: 'Technisch mit PostCSS'},
@@ -280,12 +278,12 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    Unterstützt CSS Verschachtelung native?
+    Unterstützt CSS Nesting nativ?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Ja! Wir haben endlich native CSS-Verschachtelung! CSS hat in den letzten Jahren (2023) eine native Verschachtelungssyntax eingeführt, die eine hierarchische Formatierung direkt in CSS ermöglicht.
+    Ja! Wir haben endlich nativen CSS-Nesting! CSS hat in den letzten Jahren (2023) native Nesting‑Syntax eingeführt, die hierarchisches Styling direkt im CSS ermöglicht.
   </div>
   </slot>
 </Challenge>
@@ -293,18 +291,18 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={7}
-  group="CSS-Verschachtelung"
-  title="CSS-Verschachtelung"
+  group="CSS-Nesting"
+  title="CSS-Nesting"
   options={[
     {text: 'Dateiname muss mit .scss enden'},
-    {text: '`.title` muss Eigenschaften wie `color` vorangehen'},
+    {text: '`.title` muss Eigenschaften wie `color` vorausgehen'},
     {text: 'Nur mit PostCSS'},
-    {text: 'Perfekt. Keine Notizen.', isAnswer: true},
+    {text: 'Perfekt. Keine Anmerkungen.', isAnswer: true},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Ist dies eine korrekte Verwendung der nativen CSS-Verschachtelung?
+    Ist dies eine korrekte Verwendung von nativen CSS-Nesting?
     ```css
     .container {
       color: black;
@@ -318,9 +316,9 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Die `.title`-Klasse ist in der `.container`-Klasse verschachtelt, und die Eigenschaften werden wie erwartet angewandt.
+    Die Klasse `.title` ist innerhalb der Klasse `.container` verschachtelt, und die Eigenschaften werden wie erwartet angewendet.
 
-    Dies ist eine großartige Möglichkeit, verwandte Stile zusammenzuhalten und lange Selektoren zu vermeiden.
+    Das ist eine großartige Methode, um zusammengehörige Styles zu bündeln und lange Selektoren zu vermeiden.
   </div>
   </slot>
 </Challenge>
@@ -329,11 +327,11 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={8}
   group="CSS-Verschachtelung"
-  title="Direkter Kindselektor mit Verschachtelung"
+  title="Direkter Kind-Selektor mit Verschachtelung"
   options={[
-    {text: 'background-color: red'},
-    {text: 'background-color: white', isAnswer: true},
-    {text: 'background-color: blue'},
+    {text: 'background-color: rot'},
+    {text: 'background-color: weiß', isAnswer: true},
+    {text: 'background-color: blau'},
     {text: 'Ungültige Syntax'},
   ]}
 >
@@ -353,9 +351,9 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Der `>`-Selektor in der verschachtelten Regel wendet `background-color: white` nur auf direkte Kind-`div`-Elemente innerhalb von `.container` an.
+    Der `>`‑Selektor in der verschachtelten Regel wendet `background-color: white` nur auf direkte Kind‑`div`‑Elemente innerhalb von `.container` an.
 
-    Die letzte Regel, `background-color: blue !important;`, ist etwas Ablenkung. Sie ist **außerhalb der verschachtelten Regel** und wird auf alle `.container`-Elemente angewendet.
+    Die letzte Regel, `background-color: blue !important;`, ist eine kleine Ablenkung. Sie ist **außerhalb der verschachtelten Regel** und wird auf alle `.container`‑Elemente angewendet.
   </div>
   </slot>
 </Challenge>
@@ -364,31 +362,31 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={9}
   group="CSS-Variablen"
-  title="Ändern von CSS-Variablen zur Laufzeit"
+  title="CSS-Variable zur Laufzeit ändern"
   options={[
     {text: 'CSS-Variablen sind unveränderlich'},
-    {text: 'Mithilfe von JavaScript', isAnswer: true},
+    {text: 'Mit JavaScript', isAnswer: true},
     {text: 'Nur mit SCSS'},
-    {text: 'Nur mit Inline-Stilen'},
-    {text: 'Mithilfe responsiver Einheiten'},
+    {text: 'Nur mit Inline-Styles'},
+    {text: 'Mit responsiven Einheiten'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Wie können Sie den Wert einer CSS-Variablen zur Laufzeit ändern?
+    Wie kann man den Wert einer CSS-Variable zur Laufzeit ändern?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    CSS-Variablen können mithilfe von Klassen & JavaScript festgelegt werden. Sie können sogar 'nach' definiert werden, als wären sie technisch gesehen bereits verwendet worden.
+    CSS-Variablen können über Klassen & JavaScript gesetzt werden. Sie können sogar 'nach' ihrer eigentlichen Verwendung definiert werden.
     ```js
     document.documentElement.style.setProperty('--main-color', 'blue');
     ```
-    Dies ändert den Wert von `--main-color` auf `blue` für das gesamte Dokument.
+    Dies ändert den Wert von `--main-color` zu `blue` für das gesamte Dokument.
 
-    CSS-Variablen sind veränderlich und können zur Laufzeit mithilfe von JavaScript geändert werden.
+    CSS-Variablen sind veränderlich und können zur Laufzeit mit JavaScript geändert werden.
 
-    Sie können auch durch Hinzufügen oder Entfernen von Klassen geändert werden, was ein gängiges Muster für das Theming ist.
+    Sie können auch durch Hinzufügen oder Entfernen von Klassen geändert werden, was ein gängiges Muster für Themen ist.
   </div>
   </slot>
 </Challenge>
@@ -407,7 +405,7 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    Welche berechnete Breite hat das Element?
+    Wie groß wird die berechnete Breite des Elements?
     ```css
     :root {
       --base-width: 100px;
@@ -420,7 +418,7 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Die `calc()`-Funktion kombiniert den Wert von `--base-width` (100px) mit zusätzlichen 10px, was zu einer Breite von 110px führt.
+    Die `calc()`‑Funktion kombiniert den Wert von `--base-width` (100px) mit zusätzlichen 10px und ergibt eine Breite von 110px.
   </div>
   </slot>
 </Challenge>
