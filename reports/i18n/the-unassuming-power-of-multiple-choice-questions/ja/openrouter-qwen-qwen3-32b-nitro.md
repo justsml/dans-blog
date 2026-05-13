@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: the-unassuming-power-of-multiple-choice-questions
+- Locale: ja
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2025-01-01--the-unassuming-power-of-multiple-choice-questions/ja/index.mdx
+- Validation: deferred
+- Runtime seconds: 26.26
+- Input tokens: 5960
+- Output tokens: 4486
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.001553
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: ''
 subTitle: 教育におけるMCQの最大活用法
@@ -86,3 +104,4 @@ cover_icon: ../digital-mcq-hero-square.webp
 それがなぜ私はこのサイトでMCQを使い続ける理由です。効率的であるからではありませんが、実際にはそうなのですが。なぜなら、文章だけでは回避できる指導の正直さを強制するからです。
 
 次に一つ書くときは、正解から始めないでください。誤解から始めてください。正解はるかに良い立場を持つことになります。
+````
