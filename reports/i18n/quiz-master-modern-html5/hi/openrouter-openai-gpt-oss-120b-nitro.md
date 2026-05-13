@@ -3,7 +3,7 @@
 - Locale: hi
 - Model: openrouter/openai/gpt-oss-120b:nitro
 - Target: src/content/posts/2024-11-01--quiz-master-modern-html5/hi/index.mdx
-- Validation: deferred
+- Validation: rejected: direct AI SDK translation failed
 - Runtime seconds: 13.54
 - Input tokens: 12743
 - Output tokens: 7124
@@ -12,7 +12,7 @@
 - Cache write tokens: 0
 - Estimated cost: $0.001779
 - Pricing source: local-openrouter-estimate
-- Note: Generated through the direct AI SDK chunked translator.
+- Note: Command failed: git commit --only -m i18n candidate(hi): quiz-master-modern-html5 via openrouter/openai/gpt-oss-120b:nitro -- src/content/posts/2024-11-01--quiz-master-modern-html5/hi/index.mdx reports/i18n/quiz-master-modern-html5/hi
 ## Raw Output
 
 ````mdx

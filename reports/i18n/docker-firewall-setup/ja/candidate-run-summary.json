@@ -1,69 +1,40 @@
 {
-  "runId": "2026-05-13T16-26-46-753Z",
-  "runStatus": "completed",
+  "runId": "2026-05-13T16-37-11-134Z",
+  "runStatus": "running",
   "slug": "docker-firewall-setup",
   "locale": "ja",
-  "startedAt": "2026-05-13T16:26:46.753Z",
-  "updatedAt": "2026-05-13T16:28:13.645Z",
+  "startedAt": "2026-05-13T16:37:11.134Z",
+  "updatedAt": "2026-05-13T16:37:11.179Z",
   "modelsRequested": [
+    "openrouter/qwen/qwen3.6-plus",
+    "openrouter/deepseek/deepseek-v4-flash",
     "openrouter/openai/gpt-oss-120b:nitro",
-    "openrouter/qwen/qwen3-32b:nitro"
+    "openrouter/qwen/qwen3-32b:nitro",
+    "openrouter/z-ai/glm-4.7-flash",
+    "openrouter/minimax/minimax-m2.5",
+    "openrouter/minimax/minimax-m2.7",
+    "openrouter/google/gemini-3-flash-preview",
+    "openrouter/deepseek/deepseek-v3.2",
+    "openrouter/z-ai/glm-5-turbo"
   ],
-  "attemptedModels": 2,
+  "attemptedModels": 0,
   "skippedModels": 0,
-  "rejectedModels": 1,
-  "candidateModels": 1,
+  "rejectedModels": 0,
+  "candidateModels": 0,
   "totals": {
-    "inputTokens": 7354,
-    "outputTokens": 4326,
+    "inputTokens": 0,
+    "outputTokens": 0,
     "thinkingTokens": 0,
-    "cachedInputTokens": 2048,
+    "cachedInputTokens": 0,
     "cacheWriteTokens": 0,
-    "estimatedCostUsd": 0.001403,
+    "estimatedCostUsd": 0,
     "hasUnknownInputTokens": false,
     "hasUnknownOutputTokens": false,
-    "hasUnknownThinkingTokens": true,
+    "hasUnknownThinkingTokens": false,
     "hasUnknownCachedInputTokens": false,
     "hasUnknownCacheWriteTokens": false,
     "hasUnknownEstimatedCost": false,
-    "runtimeSeconds": "9.93"
+    "runtimeSeconds": "0.00"
   },
-  "attempts": [
-    {
-      "model": "openrouter/openai/gpt-oss-120b:nitro",
-      "status": "rejected",
-      "validationStatus": "rejected: direct AI SDK translation failed",
-      "reportPath": "reports/i18n/docker-firewall-setup/ja/openrouter-openai-gpt-oss-120b-nitro.md",
-      "note": "Command failed: bun run i18n:validate --slug docker-firewall-setup --locale ja",
-      "telemetry": {
-        "runtimeSeconds": "1.32",
-        "tokens": {
-          "input": 4097,
-          "output": 923,
-          "cached": 2048,
-          "cacheWrite": 0
-        },
-        "estimatedCostUsd": 0.000325923,
-        "pricingSource": "local-openrouter-estimate"
-      }
-    },
-    {
-      "model": "openrouter/qwen/qwen3-32b:nitro",
-      "status": "candidate",
-      "validationStatus": "passed",
-      "reportPath": "reports/i18n/docker-firewall-setup/ja/openrouter-qwen-qwen3-32b-nitro.md",
-      "note": "Generated through the direct AI SDK chunked translator.",
-      "telemetry": {
-        "runtimeSeconds": "8.61",
-        "tokens": {
-          "input": 3257,
-          "output": 3403,
-          "cached": 0,
-          "cacheWrite": 0
-        },
-        "estimatedCostUsd": 0.00107728,
-        "pricingSource": "local-openrouter-estimate"
-      }
-    }
-  ]
+  "attempts": []
 }

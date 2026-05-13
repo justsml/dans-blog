@@ -3,7 +3,7 @@
 - Locale: ja
 - Model: openrouter/openai/gpt-oss-120b:nitro
 - Target: src/content/posts/2018-11-15--you-may-not-need-axios/ja/index.mdx
-- Validation: deferred
+- Validation: rejected: direct AI SDK translation failed
 - Runtime seconds: 11.97
 - Input tokens: 14110
 - Output tokens: 3604
@@ -12,7 +12,7 @@
 - Cache write tokens: 0
 - Estimated cost: $0.001199
 - Pricing source: local-openrouter-estimate
-- Note: Generated through the direct AI SDK chunked translator.
+- Note: Command failed: git commit --only -m i18n candidate(ja): you-may-not-need-axios via openrouter/openai/gpt-oss-120b:nitro -- src/content/posts/2018-11-15--you-may-not-need-axios/ja/index.mdx reports/i18n/you-may-not-need-axios/ja
 ## Raw Output
 
 ````mdx

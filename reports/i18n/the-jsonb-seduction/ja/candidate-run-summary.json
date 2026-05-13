@@ -4,29 +4,29 @@
   "slug": "the-jsonb-seduction",
   "locale": "ja",
   "startedAt": "2026-05-13T16:46:14.802Z",
-  "updatedAt": "2026-05-13T16:46:21.749Z",
+  "updatedAt": "2026-05-13T16:48:16.255Z",
   "modelsRequested": [
     "openrouter/openai/gpt-oss-120b:nitro",
     "openrouter/qwen/qwen3-32b:nitro"
   ],
-  "attemptedModels": 1,
+  "attemptedModels": 3,
   "skippedModels": 0,
-  "rejectedModels": 0,
-  "candidateModels": 1,
+  "rejectedModels": 1,
+  "candidateModels": 2,
   "totals": {
-    "inputTokens": 11942,
-    "outputTokens": 3728,
+    "inputTokens": 33684,
+    "outputTokens": 19118,
     "thinkingTokens": 0,
     "cachedInputTokens": 5888,
     "cacheWriteTokens": 0,
-    "estimatedCostUsd": 0.001137,
+    "estimatedCostUsd": 0.00657,
     "hasUnknownInputTokens": false,
     "hasUnknownOutputTokens": false,
     "hasUnknownThinkingTokens": true,
     "hasUnknownCachedInputTokens": false,
     "hasUnknownCacheWriteTokens": false,
     "hasUnknownEstimatedCost": false,
-    "runtimeSeconds": "5.01"
+    "runtimeSeconds": "177.13"
   },
   "attempts": [
     {
@@ -44,6 +44,42 @@
           "cacheWrite": 0
         },
         "estimatedCostUsd": 0.001136778,
+        "pricingSource": "local-openrouter-estimate"
+      }
+    },
+    {
+      "model": "openrouter/qwen/qwen3-32b:nitro",
+      "status": "candidate",
+      "validationStatus": "deferred",
+      "reportPath": "reports/i18n/the-jsonb-seduction/ja/openrouter-qwen-qwen3-32b-nitro.md",
+      "note": "Generated through the direct AI SDK chunked translator.",
+      "telemetry": {
+        "runtimeSeconds": "86.06",
+        "tokens": {
+          "input": 10871,
+          "output": 7695,
+          "cached": 0,
+          "cacheWrite": 0
+        },
+        "estimatedCostUsd": 0.00271648,
+        "pricingSource": "local-openrouter-estimate"
+      }
+    },
+    {
+      "model": "openrouter/qwen/qwen3-32b:nitro",
+      "status": "rejected",
+      "validationStatus": "rejected: direct AI SDK translation failed",
+      "reportPath": "reports/i18n/the-jsonb-seduction/ja/openrouter-qwen-qwen3-32b-nitro.md",
+      "note": "Command failed: git add src/content/posts/2025-12-29--the-jsonb-seduction/ja/index.mdx reports/i18n/the-jsonb-seduction/ja",
+      "telemetry": {
+        "runtimeSeconds": "86.06",
+        "tokens": {
+          "input": 10871,
+          "output": 7695,
+          "cached": 0,
+          "cacheWrite": 0
+        },
+        "estimatedCostUsd": 0.00271648,
         "pricingSource": "local-openrouter-estimate"
       }
     }

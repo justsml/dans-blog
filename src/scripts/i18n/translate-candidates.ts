@@ -91,10 +91,10 @@ type CandidateRunSummary = {
 
 const options = parseArgs();
 const models = validateCandidateModels(parseList(optionalString(options, "models"), DEFAULT_CANDIDATE_MODELS));
-const shouldSkipValidation = options["skip-validation"] === true;
+const shouldValidateCandidates = options.validate === true || options["validate-candidates"] === true;
+const shouldRunFullCandidateValidation = options["full-validation"] === true;
 const shouldSkipCommit = options["no-commit"] === true;
 const shouldOverwrite = options["overwrite"] === true;
-const shouldAllowConcurrentWorktree = options["allow-concurrent-worktree"] === true;
 const shouldDryRun = options["dry-run"] === true;
 const isTaskWorker = options["task-worker"] === true;
 const timeoutSeconds = getTimeoutSeconds();
@@ -199,8 +199,9 @@ function processTask(currentSlug: string, currentLocale: ActiveLocale) {
         ].join(" "));
       }
 
-      let validationStatus = "skipped";
-      if (!shouldSkipValidation) {
+      let validationStatus = "deferred";
+      normalizeCandidateForLocale();
+      if (shouldValidateCandidates) {
         validationStatus = validateCandidate();
       }
 
@@ -315,10 +316,10 @@ function runTaskWorker(task: CandidateTask) {
     String(timeoutSeconds),
     "--chunk",
     chunkSize,
-    ...optionalFlag("--skip-validation", shouldSkipValidation),
+    ...optionalFlag("--validate-candidates", shouldValidateCandidates),
+    ...optionalFlag("--full-validation", shouldRunFullCandidateValidation),
     ...optionalFlag("--no-commit", shouldSkipCommit),
     ...optionalFlag("--overwrite", shouldOverwrite),
-    ...optionalFlag("--allow-concurrent-worktree", shouldAllowConcurrentWorktree),
     ...optionalArg("--quiz-concurrency", quizConcurrency),
     ...optionalArg("--challenge-retries", challengeRetries),
   ];
@@ -484,14 +485,12 @@ function getRequestedLocales() {
 }
 
 function validateCandidate() {
-  normalizeCandidateForLocale();
-  runInherited("bun", ["run", "i18n:fix-mdx-indents", "--write", targetPath]);
   const validateArgs = ["run", "i18n:validate", "--slug", slug, "--locale", locale];
-  if (shouldAllowConcurrentWorktree) {
+  if (!shouldRunFullCandidateValidation) {
     validateArgs.push("--skip-global");
   }
   runInherited("bun", validateArgs);
-  return "passed";
+  return shouldRunFullCandidateValidation ? "passed" : "passed: local checks only";
 }
 
 function normalizeCandidateForLocale() {

@@ -286,6 +286,8 @@ Expected report files include:
 
 The judge reads prior candidates from Git history. It should compare only commits that actually changed the translated MDX target. Report-only commits, provider failures, and unchanged outputs should be treated as rejected attempts.
 
+Candidate generation is a harvesting phase. By default, `i18n:translate:candidates` normalizes obvious locale-folder paths and records `Validation: deferred`, but it does not run `content:check`, `fix-quizzes`, `astro check`, or a full build per model attempt. Use `--validate-candidates` only when you want local structural checks during generation. Use `--full-validation` sparingly; broad concurrent batches should defer global validation to judge, final polish, promotion, or the end-of-batch checklist.
+
 ## Failure Handling
 
 OpenRouter providers can fail in awkward ways. A provider may print an SSE or JSON error but still leave the wrapper process in a state where the previous target file exists.
@@ -295,7 +297,7 @@ Rules:
 - A model attempt is a candidate only if it leaves a diff in the translated MDX target file.
 - If OpenCode exits non-zero, commit a rejection report only.
 - If OpenCode exits zero but the target file is unchanged, commit a rejection report only.
-- If validation fails, do not silently promote the file. Either fix and commit the fix or commit the attempt as rejected with the validation failure.
+- If a later judge, promotion, or final validation pass finds broken MDX, do not silently promote the file. Either fix and commit the fix or keep the attempt out of the final selection.
 
 Example rejected report note:
 

@@ -3,7 +3,7 @@
 - Locale: ja
 - Model: openrouter/openai/gpt-oss-120b:nitro
 - Target: src/content/posts/2024-09-29--one-weird-trick-to-speed-up-feature-teams/ja/index.mdx
-- Validation: deferred
+- Validation: rejected: direct AI SDK translation failed
 - Runtime seconds: 3.41
 - Input tokens: 9780
 - Output tokens: 2931
@@ -12,7 +12,7 @@
 - Cache write tokens: 0
 - Estimated cost: $0.000909
 - Pricing source: local-openrouter-estimate
-- Note: Generated through the direct AI SDK chunked translator.
+- Note: Command failed: git commit --only -m i18n candidate(ja): one-weird-trick-to-speed-up-feature-teams via openrouter/openai/gpt-oss-120b:nitro -- src/content/posts/2024-09-29--one-weird-trick-to-speed-up-feature-teams/ja/index.mdx reports/i18n/one-weird-trick-to-speed-up-feature-teams/ja
 ## Raw Output
 
 ````mdx

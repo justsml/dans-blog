@@ -1,69 +1,40 @@
 {
-  "runId": "2026-05-13T16-26-07-044Z",
-  "runStatus": "completed",
+  "runId": "2026-05-13T16-37-11-149Z",
+  "runStatus": "running",
   "slug": "docker-firewall-setup",
   "locale": "hi",
-  "startedAt": "2026-05-13T16:26:07.044Z",
-  "updatedAt": "2026-05-13T16:27:12.107Z",
+  "startedAt": "2026-05-13T16:37:11.149Z",
+  "updatedAt": "2026-05-13T16:37:11.149Z",
   "modelsRequested": [
+    "openrouter/qwen/qwen3.6-plus",
+    "openrouter/deepseek/deepseek-v4-flash",
     "openrouter/openai/gpt-oss-120b:nitro",
-    "openrouter/qwen/qwen3-32b:nitro"
+    "openrouter/qwen/qwen3-32b:nitro",
+    "openrouter/z-ai/glm-4.7-flash",
+    "openrouter/minimax/minimax-m2.5",
+    "openrouter/minimax/minimax-m2.7",
+    "openrouter/google/gemini-3-flash-preview",
+    "openrouter/deepseek/deepseek-v3.2",
+    "openrouter/z-ai/glm-5-turbo"
   ],
-  "attemptedModels": 2,
+  "attemptedModels": 0,
   "skippedModels": 0,
-  "rejectedModels": 1,
-  "candidateModels": 1,
+  "rejectedModels": 0,
+  "candidateModels": 0,
   "totals": {
-    "inputTokens": 8227,
-    "outputTokens": 5072,
+    "inputTokens": 0,
+    "outputTokens": 0,
     "thinkingTokens": 0,
-    "cachedInputTokens": 3712,
+    "cachedInputTokens": 0,
     "cacheWriteTokens": 0,
-    "estimatedCostUsd": 0.001655,
+    "estimatedCostUsd": 0,
     "hasUnknownInputTokens": false,
     "hasUnknownOutputTokens": false,
-    "hasUnknownThinkingTokens": true,
+    "hasUnknownThinkingTokens": false,
     "hasUnknownCachedInputTokens": false,
     "hasUnknownCacheWriteTokens": false,
     "hasUnknownEstimatedCost": false,
-    "runtimeSeconds": "10.86"
+    "runtimeSeconds": "0.00"
   },
-  "attempts": [
-    {
-      "model": "openrouter/openai/gpt-oss-120b:nitro",
-      "status": "rejected",
-      "validationStatus": "rejected: direct AI SDK translation failed",
-      "reportPath": "reports/i18n/docker-firewall-setup/hi/openrouter-openai-gpt-oss-120b-nitro.md",
-      "note": "Command failed: bun run i18n:validate --slug docker-firewall-setup --locale hi",
-      "telemetry": {
-        "runtimeSeconds": "1.90",
-        "tokens": {
-          "input": 4025,
-          "output": 925,
-          "cached": 2176,
-          "cacheWrite": 0
-        },
-        "estimatedCostUsd": 0.00032347499999999993,
-        "pricingSource": "local-openrouter-estimate"
-      }
-    },
-    {
-      "model": "openrouter/qwen/qwen3-32b:nitro",
-      "status": "candidate",
-      "validationStatus": "passed",
-      "reportPath": "reports/i18n/docker-firewall-setup/hi/openrouter-qwen-qwen3-32b-nitro.md",
-      "note": "Generated through the direct AI SDK chunked translator.",
-      "telemetry": {
-        "runtimeSeconds": "8.96",
-        "tokens": {
-          "input": 4202,
-          "output": 4147,
-          "cached": 1536,
-          "cacheWrite": 0
-        },
-        "estimatedCostUsd": 0.0013314400000000001,
-        "pricingSource": "local-openrouter-estimate"
-      }
-    }
-  ]
+  "attempts": []
 }

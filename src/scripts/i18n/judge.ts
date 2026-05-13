@@ -8,11 +8,10 @@ import {
   requireActiveLocale,
   requireString,
   run,
-  runInherited,
   writeTextFile,
 } from "./utils.ts";
 import { getRunTelemetry, renderTelemetryLines, runMeasuredCommand } from "./telemetry.ts";
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 
 const OPENCODE_COMMAND = existsSync("/Users/dan/.opencode/bin/opencode")
   ? "/Users/dan/.opencode/bin/opencode"
@@ -29,6 +28,8 @@ const selectedCommit = optionalString(options, "select");
 const candidateModels = parseList(optionalString(options, "candidate-models"), []);
 const candidateLimit = parseOptionalPositiveInteger(optionalString(options, "candidate-limit"), "candidate-limit");
 const shouldSkipCommit = options["no-commit"] === true;
+const shouldAllowSingleCandidate = options["allow-single-candidate"] === true;
+const shouldRunFullValidation = options["full-validation"] === true;
 const timeoutSeconds = getTimeoutSeconds();
 const { targetPath, reportDir } = getPostPaths(slug, locale);
 const targetRelPath = relativeToRepo(targetPath);
@@ -36,6 +37,11 @@ const targetRelPath = relativeToRepo(targetPath);
 const candidateCommits = getCandidateCommits();
 if (candidateCommits.length === 0) {
   throw new Error(`No candidate commits found for ${slug} ${locale}.`);
+}
+if (candidateCommits.length < 2 && !shouldAllowSingleCandidate) {
+  throw new Error(
+    `Judge requires at least 2 candidate translations for ${slug} ${locale}. Found ${candidateCommits.length}. Pass --allow-single-candidate to override.`,
+  );
 }
 
 const candidateSummary = candidateCommits
@@ -54,6 +60,30 @@ const prompt = [
   `Use git show <sha>:${targetRelPath} to inspect candidates.`,
   `Write the final selected and lightly polished MDX to ${targetRelPath}.`,
   `Also explain the decision in reports/i18n/${slug}/${locale}/judge.md.`,
+  `Also write strict JSON to reports/i18n/${slug}/${locale}/judge.json with this shape:`,
+  JSON.stringify({
+    selectedCommit: "full candidate commit sha",
+    selectedModel: "model id from commit subject",
+    scores: {
+      readability: 0,
+      technicalAccuracy: 0,
+      coherence: 0,
+      relevance: 0,
+      translationQuality: 0,
+      mdxPreservation: 0,
+    },
+    suggestedChanges: [
+      {
+        severity: "low",
+        category: "terminology",
+        location: "heading or short excerpt",
+        current: "text to improve",
+        suggested: "replacement or action",
+        reason: "why this change helps",
+      },
+    ],
+    rationale: "brief selection rationale",
+  }),
   `Do not run package installation, build, or content validation commands. The wrapper script owns validation.`,
   `Do not create temporary candidate files. Inspect candidates directly from git when needed.`,
 ].join("\n");
@@ -94,7 +124,8 @@ const escalationTelemetry = escalationJudge == null || escalationJudgeModel == n
   ? undefined
   : getRunTelemetry(escalationJudgeModel, escalationJudge);
 
-runInherited("bun", ["run", "i18n:validate", "--slug", slug, "--locale", locale]);
+const validation = runJudgeValidation();
+writeJudgeJsonValidation(validation);
 
 const reportPath = `${reportDir}/judge-summary.md`;
 writeTextFile(
@@ -108,6 +139,9 @@ writeTextFile(
     `- Second judge model: ${secondJudgeModel ?? "not run"}`,
     `- Escalation judge model: ${escalationJudge == null ? "not run" : escalationJudgeModel}`,
     `- Selected commit hint: ${selectedCommit ?? "judge selected"}`,
+    `- Validation: ${validation.ok ? "passed" : "failed"}`,
+    `- Validation scope: ${validation.scope}`,
+    validation.ok ? undefined : `- Validation error: ${validation.error}`,
     ``,
     `## Primary Judge Telemetry`,
     ...renderTelemetryLines(primaryTelemetry),
@@ -126,15 +160,74 @@ writeTextFile(
 
 if (!shouldSkipCommit) {
   const judgeDetailPath = `reports/i18n/${slug}/${locale}/judge.md`;
+  const judgeJsonPath = `reports/i18n/${slug}/${locale}/judge.json`;
   const secondJudgePath = `reports/i18n/${slug}/${locale}/judge-second.md`;
   const escalationJudgePath = `reports/i18n/${slug}/${locale}/judge-escalation.md`;
   gitCommit(`i18n judge(${locale}): select translation for ${slug}`, [
     targetRelPath,
     relativeToRepo(reportPath),
     ...(existsSync(judgeDetailPath) ? [judgeDetailPath] : []),
+    ...(existsSync(judgeJsonPath) ? [judgeJsonPath] : []),
     ...(existsSync(secondJudgePath) ? [secondJudgePath] : []),
     ...(existsSync(escalationJudgePath) ? [escalationJudgePath] : []),
   ]);
+}
+
+function runJudgeValidation() {
+  const args = ["run", "i18n:validate", "--slug", slug, "--locale", locale];
+  if (!shouldRunFullValidation) args.push("--skip-global");
+
+  try {
+    const output = run("bun", args);
+    return {
+      ok: true,
+      scope: shouldRunFullValidation ? "full" : "local",
+      command: `bun ${args.join(" ")}`,
+      output,
+    };
+  } catch (error) {
+    return {
+      ok: false,
+      scope: shouldRunFullValidation ? "full" : "local",
+      command: `bun ${args.join(" ")}`,
+      error: error instanceof Error ? error.message : String(error),
+    };
+  }
+}
+
+function writeJudgeJsonValidation(validation: ReturnType<typeof runJudgeValidation>) {
+  const judgeJsonPath = `${reportDir}/judge.json`;
+  const fallback = {
+    selectedCommit: parseSelectedCommit(primaryJudge.output) ?? selectedCommit ?? null,
+    selectedModel: null,
+    scores: {
+      readability: null,
+      technicalAccuracy: null,
+      coherence: null,
+      relevance: null,
+      translationQuality: null,
+      mdxPreservation: null,
+    },
+    suggestedChanges: [],
+    rationale: "Judge did not leave structured JSON; wrapper recorded validation metadata.",
+  };
+
+  let parsed: Record<string, unknown> = fallback;
+  if (existsSync(judgeJsonPath)) {
+    try {
+      parsed = JSON.parse(readFileSync(judgeJsonPath, "utf8")) as Record<string, unknown>;
+    } catch {
+      parsed = fallback;
+    }
+  }
+
+  writeTextFile(judgeJsonPath, JSON.stringify({
+    ...parsed,
+    slug,
+    locale,
+    candidateCommits,
+    validation,
+  }, null, 2));
 }
 
 function runJudgeCommand(model: string, judgePrompt: string, files: string[] = []) {

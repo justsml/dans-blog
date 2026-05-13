@@ -4,7 +4,7 @@
 - Model: openrouter/qwen/qwen3-32b:nitro
 - Target: src/content/posts/2024-12-28--quiz-in-the-aws-cloud/de/index.mdx
 - Validation: rejected: direct AI SDK translation failed
-- Runtime seconds: 4.19
+- Runtime seconds: 5.00
 - Input tokens: unknown
 - Output tokens: unknown
 - Thinking tokens: unknown

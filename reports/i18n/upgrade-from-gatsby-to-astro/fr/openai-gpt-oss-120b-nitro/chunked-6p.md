@@ -3,26 +3,26 @@
 - **Model**: openai/gpt-oss-120b:nitro
 - **Chunk size**: 6p
 - **Total chunks**: 9
-- **Total input tokens**: 10164
-- **Total output tokens**: 3060
-- **Cache read tokens**: 2304
+- **Total input tokens**: 9972
+- **Total output tokens**: 3065
+- **Cache read tokens**: 2432
 - **Cache write tokens**: 0
-- **Total duration**: 10190ms
-- **Estimated cost**: $0.000947 (local-openrouter-estimate)
+- **Total duration**: 8886ms
+- **Estimated cost**: $0.000941 (local-openrouter-estimate)
 
 ## Article Summary
-The article is a practical, tutorial‑style post aimed at developers who maintain long‑running static blogs and are considering a migration to newer tooling. It argues that Astro is the optimal choice for a statically pre‑generated site because its simple API, framework‑agnostic design, and built‑in Vite/Golang compiler let the author quickly rebuild a feature‑rich Gatsby v1 blog while keeping load times under a second. Key points cover the project’s requirements, a brief evaluation of Remix, Next.js, and Astro, and a deep dive into Astro’s `.astro` components, content collections, file‑based routing, and minimal client‑side JavaScript, supplemented by the supporting stack (Tailwind, MDX, Pagefind, Utterances, Netlify). The tone is a hands‑on “lessons learned” narrative, peppered with occasional metaphors (“cornerstone,” “quickly became”) and a candid “regrets” section on Tailwind, positioning the piece for intermediate web developers seeking a concrete upgrade roadmap.
+The article is a developer‑focused tutorial‑style post aimed at web engineers who maintain or migrate legacy static sites. It argues that Astro is the most pragmatic choice for upgrading an eight‑year‑old Gatsby v1 blog because its simple API, framework‑agnostic design, and strong static‑site tooling let the author meet performance, SEO, and deployment requirements with minimal friction. The author walks through the selection criteria, then details the Astro stack (Astro, MDX, Tailwind, ShadcnUI, Pagefind, Utterances, Netlify) and highlights key features such as `.astro` components, content collections, file‑based routing, and the ability to mix client‑side frameworks without cloud lock‑in. Throughout, the piece uses a “journey” metaphor and a mix of enthusiastic (“Wow”, “fun”) and reflective tones, punctuated by side‑by‑side comparisons of Astro versus traditional client components.
 
 ## Per-Chunk Telemetry
 
 | Chunk | Input Tokens | Cache Read | Cache Write | Output Tokens | Duration (ms) | Est. Cost |
 |-------|-------------:|-----------:|------------:|--------------:|--------------:|----------:|
-| 1 | 929 | 256 | 0 | 261 | 998 | $0.000083 |
-| 2 | 1072 | 256 | 0 | 273 | 1193 | $0.000091 |
-| 3 | 1151 | 256 | 0 | 380 | 1053 | $0.000113 |
-| 4 | 1435 | 256 | 0 | 568 | 1773 | $0.000158 |
-| 5 | 1207 | 256 | 0 | 461 | 1426 | $0.000130 |
-| 6 | 1334 | 512 | 0 | 583 | 1826 | $0.000157 |
-| 7 | 1073 | 256 | 0 | 196 | 783 | $0.000077 |
-| 8 | 1043 | 0 | 0 | 247 | 766 | $0.000085 |
-| 9 | 920 | 256 | 0 | 91 | 372 | $0.000052 |
+| 1 | 908 | 0 | 0 | 219 | 667 | $0.000075 |
+| 2 | 1050 | 640 | 0 | 257 | 482 | $0.000087 |
+| 3 | 1129 | 256 | 0 | 535 | 1451 | $0.000140 |
+| 4 | 1413 | 256 | 0 | 544 | 1691 | $0.000153 |
+| 5 | 1187 | 256 | 0 | 420 | 1238 | $0.000122 |
+| 6 | 1314 | 0 | 0 | 585 | 1559 | $0.000157 |
+| 7 | 1052 | 512 | 0 | 209 | 749 | $0.000079 |
+| 8 | 1021 | 256 | 0 | 202 | 641 | $0.000076 |
+| 9 | 898 | 256 | 0 | 94 | 408 | $0.000052 |

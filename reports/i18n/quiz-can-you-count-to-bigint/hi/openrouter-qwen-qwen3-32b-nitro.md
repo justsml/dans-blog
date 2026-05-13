@@ -1,0 +1,442 @@
+# Translation Candidate
+- Slug: quiz-can-you-count-to-bigint
+- Locale: hi
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2024-11-06--quiz-can-you-count-to-bigint/hi/index.mdx
+- Validation: rejected: direct AI SDK translation failed
+- Runtime seconds: 7.32
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Cache write tokens: unknown
+- Estimated cost: unknown
+- Pricing source: unknown
+- Note: Command failed: bun run i18n:translate:chunked -- --slug quiz-can-you-count-to-bigint --locale hi --model openrouter/qwen/qwen3-32b:nitro --chunk 6p --quiz-concurrency 20
+## Raw Output
+
+````mdx
+---
+unlisted: false
+title: 'क्विज़: क्या आप जावास्क्रिप्ट पर भरोसा कर सकते हैं?'
+subTitle: क्या आप `parseInt` और `parseFloat` में अंतर जानते हैं?
+label: Numbers
+date: '2024-10-31'
+modified: '2024-11-09'
+social_image: ../desktop-social.webp
+category: Quiz
+subCategory: JavaScript
+tags:
+  - quiz
+  - data-structures
+  - algorithms
+cover: ../victor-freitas-hOuJYX2K5DA-unsplash-square.webp
+cover_full_width: ../victor-freitas-hOuJYX2K5DA-unsplash-wide.webp
+cover_mobile: ../victor-freitas-hOuJYX2K5DA-unsplash-square.webp
+cover_icon: ../victor-freitas-hOuJYX2K5DA-unsplash-square.webp
+---
+यह क्विज़ जावास्क्रिप्ट संख्यात्मक रूपांतरण फ़ंक्शनों के ज्ञान का मूल्यांकन करता है, उनके व्यवहार, किनारे के मामलों और उचित उपयोग को अलग‑अलग पहचानने की क्षमता का परीक्षण करता है। यह मध्यम कठिनाई का है, निर्देशात्मक स्वर में प्रस्तुत, जो शिक्षार्थियों को तुलना और सामान्य फंदों के माध्यम से मार्गदर्शन करता है। सामग्री पार्सिंग, प्रकार‑बाध्य (type coercion) और संख्यात्मक लिटरल की व्यावहारिक समझ पर जोर देती है।  
+**विषय:** जावास्क्रिप्ट पार्सिंग फ़ंक्शन (parseInt, parseFloat), Number कंस्ट्रक्टर, BigInt प्रकार, रेडिक्स हैंडलिंग, व्हाइटस्पेस और लिटरल फ़ॉर्मेट, एरर हैंडलिंग और NaN व्यवहार  
+**श्रोतागण:** बुनियादी जावास्क्रिप्ट अनुभव वाले डेवलपर और छात्र जो संख्यात्मक प्रकार रूपांतरण की गहरी समझ हासिल करना चाहते हैं और सामान्य गलतियों से बचना चाहते हैं।  
+
+```javascript
+import Challenge from '../../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../../components/QuizUI/QuizUI';
+```
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="वार्म‑अप"
+  title="`parseInt` के साथ पार्सिंग"
+  options={[
+    {text: '123456', isAnswer: true},
+    {text: '123'},
+    {text: '12345600'},
+    {text: '456.00'},
+    {text: 'त्रुटि'},
+    {text: 'NaN'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```tsx
+        parseInt(" 123456.00")
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `parseInt` फ़ंक्शन स्पेसेज़ को नजरअंदाज़ करता है और प्रारंभिक अंकों की श्रृंखला को पूर्णांक के रूप में पार्स करता है। यहाँ यह दशमलव बिंदु पर रुक जाता है, इसलिए केवल `123456` लौटाया जाता है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="पार्सिंग"
+  title="कॉमा हैंडलिंग"
+  options={[
+    {text: '123', isAnswer: true},
+    {text: '12345600'},
+    {text: '123456.00'},
+    {text: '456.00'},
+    {text: 'त्रुटि'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```tsx
+        parseInt("123,456.00")
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    आम तौर पर, `parseInt` गैर‑संख्यात्मक अक्षर मिलने पर पार्सिंग रोक देता है। यहाँ यह कॉमा पर रुकता है, इसलिए केवल `123` ही लौटाया जाता है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="गणित"
+  title="फ़्लोटिंग पॉइंट्स की सटीकता"
+  options={[
+    {text: '0.1 + 0.2 === 0.3'},
+    {text: 'false', isAnswer: true},
+    {text: 'true'},
+    {text: 'NaN'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```tsx
+        0.1 + 0.2 === 0.3
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    फ़्लोटिंग‑पॉइंट सटीकता त्रुटियों के कारण, `0.1 + 0.2` बिल्कुल `0.3` के बराबर नहीं होता। फ़्लोटिंग‑पॉइंट संख्याएँ मेमोरी में जिस तरह संग्रहीत होती हैं, उसके कारण परिणाम `0.30000000000000004` आता है। फ़्लोटिंग‑पॉइंट अंकगणित को संभालने वाला IEEE 754 मानक ही कारण है, यह कुछ संख्याओं को ठीक‑ठीक दर्शा नहीं सकता। यह सभी प्रोग्रामिंग भाषाओं में आम समस्या है। अंत में आप अनंत दोहराव वाले दशमलव से मिलेंगे, और चाहे भाषा कोई भी हो—कंप्यूटर को अनंत अंकों का पीछा बंद करना पड़ता है।
+
+    Python और Java जैसी कुछ भाषाओं में `Decimal` या `BigDecimal` होते हैं जो इसे संभालते हैं, लेकिन JavaScript में ऐसा अंतर्निहित नहीं है। आप `big.js` या `decimal.js` जैसी लाइब्रेरीज़ का उपयोग करके इन मामलों को हल कर सकते हैं।
+
+    (ध्यान दें: कुछ भाषाएँ अंश, काल्पनिक संख्याएँ आदि को उच्च स्तर पर संभालने के लिए डिज़ाइन की गई हैं, जिससे लिटरल अभिव्यक्तियों को संरक्षित रखा जाता है। लेकिन उन्हें भी हार्डवेयर स्तर पर वही फ़्लोटिंग‑पॉइंट सटीकता समस्याओं का सामना करना पड़ता है।)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="ओवरफ़्लो होने वाली संख्याएँ"
+  title="Infinity को संभालना"
+  options={[
+    {text: 'Infinity', isAnswer: true},
+    {text: 'NaN'},
+    {text: 'Error'},
+    {text: 'undefined'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```tsx
+        Number.MAX_VALUE * 2
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    चूँकि `Number.MAX_VALUE` जावास्क्रिप्ट में सबसे बड़ी **प्रतिनिधित्व योग्य** सामान्य संख्या है, इसकी सीमा से ऊपर जाने पर जल्दी ही ओवरफ़्लो हो जाता है – मूलतः आप बेकार परिणाम देख सकते हैं। इसे `2` से गुणा करने पर `Infinity` मिलता है.
+
+    *याद रखो, जावास्क्रिप्ट कभी‑कभी ऐसा ही होता है.*
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="फ़ॉर्मेटिंग"
+  title="`.toFixed()` के साथ स्ट्रिंग रूपांतरण"
+  options={[
+    {text: 'TypeError'},
+    {text: 'SyntaxError'},
+    {text: '"5"'},
+    {text: '5'},
+    {text: '"5.00"', isAnswer: true},
+    {text: '5.0'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    यह क्या कर सकता है?
+    ```tsx
+        5..toFixed(2)
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `.toFixed(2)` दो दशमलव स्थानों के साथ `5` का स्ट्रिंग प्रतिनिधित्व लौटाता है, इसलिए परिणाम `"5.00"` है।
+
+    डबल डॉट (`5..toFixed(2)`) एक 'ट्रिक' है जिससे Number Literals का ऑब्जेक्ट मॉडल एक्सेस किया जाता है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="प्रकारों की तुलना"
+  title="`parseInt` और `parseFloat` के बीच समानता तुलना"
+  options={[
+    {text: 'true', isAnswer: true},
+    {text: 'false'},
+    {text: 'NaN'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```jsx
+        parseInt("42") === parseFloat("42")
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    JavaScript में, `parseInt` और `parseFloat` दोनों स्ट्रिंग `"42"` को संख्या `42` के रूप में व्याख्या करेंगे। इसलिए तुलना `parseInt("42") === parseFloat("42")` `true` देता है। जबकि `parseInt` पहला गैर-अंकीय अक्षर मिलने पर पार्सिंग रोक देता है, `parseFloat` तब तक जारी रखता है जब तक वह फ्लोटिंग‑पॉइंट संख्या का हिस्सा न हो। लेकिन चूँकि `"42"` में कोई दशमलव बिंदु या अन्य गैर‑संख्यात्मक अक्षर नहीं है, दोनों फ़ंक्शन समान मान लौटाते हैं।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="समानता"
+  title="BigInt के साथ समानता तुलना"
+  options={[
+    {text: 'TypeError'},
+    {text: 'true'},
+    {text: 'false', isAnswer: true},
+    {text: 'NaN'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```jsx
+        BigInt("42") === parseInt("42")
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    [`BigInt`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt) एक अलग प्रकार है `number` से, इसलिए `parseInt("42")` (एक सामान्य संख्या) `BigInt("42")` के बराबर सख्ती से नहीं है। तुलना करने के लिए, दोनों को एक ही प्रकार में बदलें: `BigInt(parseInt("42")) === BigInt("42")`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="आधारित"
+  title="हेक्साडेसिमल पार्सिंग"
+  options={[
+    {text: 'सही', isAnswer: true},
+    {text: 'गलत'},
+    {text: 'NaN'},
+    {text: 'अपर केस होना चाहिए: 2A'},
+    {text: 'त्रुटि'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    यह क्या परिणाम देगा?
+    ```jsx
+        parseInt("0x2A") === parseInt("2a", 16)
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    कोई भी इनपुट स्ट्रिंग जो `0x` से शुरू होती है, स्वचालित रूप से हेक्साडेसिमल (radix `16`) माना जाता है।
+    इसलिए यह radix 16 पास करने के बराबर है। तो, `parseInt("0x2A")` वही है जैसा `parseInt("2a", 16)`। (यह केस-इन्सेंसिटिव है।)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="आधारित"
+  title="रेडिक्स के साथ पार्सिंग"
+  options={[
+    {text: '255', isAnswer: true},
+    {text: '0'},
+    {text: '16'},
+    {text: '0.16'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    यहाँ क्या मामला है?
+    ```jsx
+        parseInt('0xFF', 16)
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `parseInt` एक हेक्साडेसिमल (`16`) बेस के साथ `"FF"` को दशमलव में `255` में बदलता है। आप इसे CSS RGB/Hex रंग कोड में देख सकते हैं।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="Number[]"
+  title="`.map(parseInt)` का उपयोग"
+  options={[
+    {text: '[24, NaN, NaN]', isAnswer: true},
+    {text: '[24, NaN, 42]'},
+    {text: '[24, 42]'},
+    {text: 'NaN'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```jsx
+        [24, 'One', 42].map(parseInt)
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `parseInt` का दूसरा तर्क (radix) एरे मेथड के `index` तर्क के साथ मेल खाता है। इससे अप्रत्याशित परिणाम मिलते हैं, क्योंकि `parseInt("One", 1)` अवैध इनपुट के कारण `NaN` लौटाता है.
+
+    पहला तत्व, `24`, बेस 0 (ऑटो‑डिटेक्ट) में `24` के रूप में पार्स होता है, इसलिए यह `24` ही रहता है। दूसरा तत्व, `'One'`, बेस 1 में `NaN` के रूप में पार्स होता है। तीसरा तत्व, `42`, बेस 2 में पार्स होता है। बेस 2 में `'42'` `NaN` है, इसलिए परिणाम `[24, NaN, NaN]` मिलता है.
+
+    यह `parseInt` और `map` के साथ एक सामान्य गड़बड़ी है। यदि आप स्ट्रिंग्स की एरे को नंबर में बदलना चाहते हैं, तो एकमात्र सुरक्षित “बिल्ट‑इन” तरीका `.map(Number)` है या कॉलबैक/एनक्लोज़र जोड़ें जैसे `.map(x => parseInt(x, 10))`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="Number[]"
+  title="`.map(Number)` का उपयोग"
+  options={[
+    {text: '[24, NaN, 34]', isAnswer: true},
+    {text: '[24, NaN, 42]'},
+    {text: '[24, 1, 42]'},
+    {text: '[24, 42]'},
+    {text: 'NaN'},
+    {text: 'TypeError'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```jsx
+        [24, 'Twenty1', 0o42].map(Number)
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `Number` मानों को एक संख्यात्मक प्रकार में `parseInt` से अधिक कड़ाई से बदलता है। यहाँ, `'Twenty1'` `NaN` बन जाता है, जबकि `0o42` को ऑक्टल लिटरल के रूप में पहचाना जाता है और `34` में बदला जाता है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="पार्सिंग"
+  title="null को संभालना"
+  options={[
+    {text: '0 NaN'},
+    {text: '0 0'},
+    {text: 'NaN NaN'},
+    {text: 'NaN 0', isAnswer: true},
+    {text: 'null null'},
+    {text: 'TypeError'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    इस कोड का परिणाम क्या होगा?
+    ```jsx
+        console.log(parseInt(null), Number(null))
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `parseInt` इनपुट को स्ट्रिंग में बदल देता है, इसलिए `null` "null" बन जाता है। चूँकि "null" में कोई वैध बेस‑10 अंक नहीं होते, यह `NaN` लौटाता है.
+
+    `Number(null)` `0` लौटाता है। क्योंकि JS आपको चकित रखता है.
+    क्यों? अगर रुचि हो तो मैं और गहराई में जा सकता हूँ.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="पार्सिंग"
+  title="बेस पर पार्सिंग"
+  options={[
+    {text: 'NaN'},
+    {text: 'null'},
+    {text: 'undefined'},
+    {text: '36'},
+    {text: '1112745', isAnswer: true},
+    {text: '01001001'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    इस जादू का परिणाम क्या होगा?
+    ```jsx
+        parseInt(null, 36)
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `parseInt` हमेशा इनपुट को स्ट्रिंग में बदल देता है, इसलिए `null` स्ट्रिंग `"null"` बन जाता है।
+
+    बेस 36 (hexatrigesimal, अगर आप गिन रहे हैं) में स्ट्रिंग `"null"` का मान `1112745` है।
+
+    `nulk`, `null`, और `nulm` के क्रमिक मान क्रमशः बेस 36 में `1112744`, `1112745`, और `1112746` हैं।
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+
+<section className="scroll-x">
+## तुलना तालिका
+
+| फ़ंक्शन | `parseInt` | `parseFloat` | `Number` | `BigInt` |
+| --- | --- | --- | --- | --- |
+| खाली जगह को अनदेखा करता है | ✅ | ✅ | ✅ | ✅ |
+| .map(FN)  | ❌ | ☑️ | ✅ | ✅ |
+| रेडिक्स आर्ग का समर्थन | ✅ | ❌ | ❌ | ❌ |
+| बाइनरी/ऑक्टल/हेक्स लिटरल | ✅ | ❌ | ✅ | ✅ |
+| अवैध अक्षर `42 oh no` | `42` | `42`  | `NaN` | `SyntaxError` |
+</section>
+
+<h2>आपका परिणाम क्या रहा? 🧐</h2>
+
+{/* <h4>Are you ok?</h4> */}
+
+<p class="inset">इतने बाइनरी के बाद थोड़ा आराम चाहिए?<br />पफ़्ट, याद रखें: कौशल के बाद *ब्रेक*! <br /><br />और चुनौतियों को तोड़ने के लिए [मेरी जिम](/challenges/) पर जाएँ! 💪</p>
+````

@@ -60,6 +60,7 @@ type Totals = {
   costUsd: number;
   hasUnknownTokens: boolean;
   hasUnknownCost: boolean;
+  activeRun: AccountingTotals;
 };
 
 type AccountingTotals = {
@@ -386,12 +387,15 @@ function drawSidePanel(
     ["Candidates", String(totals.candidateRows)],
     ["Attempts", String(totals.attemptedModels)],
     ["Rejected", String(totals.rejectedModels)],
-    ["Input", `${formatInteger(totals.inputTokens)}${totals.hasUnknownTokens ? " + unknown" : ""}`],
-    ["Output", `${formatInteger(totals.outputTokens)}${totals.hasUnknownTokens ? " + unknown" : ""}`],
+    ["Run cost", `${formatUsd(totals.activeRun.costUsd)}${totals.activeRun.hasUnknownCost ? " + unknown" : ""}`],
+    ["Run input", `${formatInteger(totals.activeRun.inputTokens)}${totals.activeRun.hasUnknownTokens ? " + unknown" : ""}`],
+    ["Run output", `${formatInteger(totals.activeRun.outputTokens)}${totals.activeRun.hasUnknownTokens ? " + unknown" : ""}`],
+    ["Hist input", `${formatInteger(totals.inputTokens)}${totals.hasUnknownTokens ? " + unknown" : ""}`],
+    ["Hist output", `${formatInteger(totals.outputTokens)}${totals.hasUnknownTokens ? " + unknown" : ""}`],
     ["Cache read", formatInteger(totals.cachedInputTokens)],
     ["Cache write", formatInteger(totals.cacheWriteTokens)],
     ["Duration", formatDuration(totals.durationMs)],
-    ["Cost", `${formatUsd(totals.costUsd)}${totals.hasUnknownCost ? " + unknown" : ""}`],
+    ["Hist cost", `${formatUsd(totals.costUsd)}${totals.hasUnknownCost ? " + unknown" : ""}`],
     ["Source", formatSources(totals.accountingSources)],
   ];
 
@@ -430,7 +434,7 @@ function drawBottomPanel(term: any, totals: Totals, rows: ArticleRow[], left: nu
   writeAt(term, left + 2, top + 3, `Slots ${totals.completeSlots}/${totals.slots} (${formatPercent(coverage)})`, width - 4);
   writeAt(term, left + 2, top + 4, `Articles ${totals.completeArticles}/${totals.articles} | Running ${totals.inProgressSlots} slots`, width - 4);
   writeAt(term, left + 2, top + 5, `Candidates ${totals.candidateRows} | Attempts ${totals.attemptedModels} | Rejected ${totals.rejectedModels}`, width - 4);
-  writeAt(term, left + 2, top + 6, `Cost ${formatUsd(totals.costUsd)}${totals.hasUnknownCost ? " + unknown" : ""} | Source ${formatSources(totals.accountingSources)}`, width - 4);
+  writeAt(term, left + 2, top + 6, `Run ${formatUsd(totals.activeRun.costUsd)} | Historical ${formatUsd(totals.costUsd)}${totals.hasUnknownCost ? " + unknown" : ""}`, width - 4);
   writeAt(term, left + 2, top + 7, `Locales ${selectedLocales.map((locale) => {
     const summaries = rows.map((row) => row.candidates[locale]);
     return `${locale}:${summaries.filter((summary) => summary.count >= expectedCandidates).length}/${rows.length}`;
@@ -677,6 +681,13 @@ function addRunSummaryToAccounting(
   }
 }
 
+function addActiveRunSummaryToAccounting(totals: AccountingTotals, slug: string, locale: ActiveLocale) {
+  const reportDir = join(REPORT_ROOT, slug, locale);
+  const latestSummary = readJsonRecord(join(reportDir, "candidate-run-summary.json"));
+  if (latestSummary == null || latestSummary.runStatus !== "running") return;
+  addRunSummaryToAccounting(totals, latestSummary, { includeCandidates: true });
+}
+
 function addRunTotalsToAccounting(totals: AccountingTotals, summary: Record<string, unknown>) {
   const runTotals = recordValue(summary.totals);
   if (runTotals == null) return;
@@ -858,6 +869,12 @@ function countCandidateReportFiles(reportDir: string) {
 
 function summarize(rows: ArticleRow[]): Totals {
   const summaries = rows.flatMap((row) => selectedLocales.map((locale) => row.candidates[locale]));
+  const activeRun = createAccountingTotals(["active run"]);
+  for (const row of rows) {
+    for (const locale of selectedLocales) {
+      addActiveRunSummaryToAccounting(activeRun, row.slug, locale);
+    }
+  }
 
   return {
     articles: rows.length,
@@ -879,6 +896,7 @@ function summarize(rows: ArticleRow[]): Totals {
     costUsd: summaries.reduce((sum, summary) => sum + summary.costUsd, 0),
     hasUnknownTokens: summaries.some((summary) => summary.hasUnknownTokens),
     hasUnknownCost: summaries.some((summary) => summary.hasUnknownCost),
+    activeRun,
   };
 }
 
@@ -943,13 +961,16 @@ function renderFinalAccounting(totals: Totals, reason: string) {
     `- In progress: ${totals.inProgressSlots} slots, ${totals.inProgressArticles} articles`,
     `- Candidate rows: ${totals.candidateRows}`,
     `- Model attempts: ${totals.attemptedModels} (${totals.rejectedModels} rejected)`,
-    `- Input tokens: ${formatInteger(totals.inputTokens)}${totals.hasUnknownTokens ? " + unknown" : ""}`,
-    `- Output tokens: ${formatInteger(totals.outputTokens)}${totals.hasUnknownTokens ? " + unknown" : ""}`,
+    `- Active run input tokens: ${formatInteger(totals.activeRun.inputTokens)}${totals.activeRun.hasUnknownTokens ? " + unknown" : ""}`,
+    `- Active run output tokens: ${formatInteger(totals.activeRun.outputTokens)}${totals.activeRun.hasUnknownTokens ? " + unknown" : ""}`,
+    `- Active run estimated cost: ${formatUsd(totals.activeRun.costUsd)}${totals.activeRun.hasUnknownCost ? " + unknown" : ""}`,
+    `- Historical input tokens: ${formatInteger(totals.inputTokens)}${totals.hasUnknownTokens ? " + unknown" : ""}`,
+    `- Historical output tokens: ${formatInteger(totals.outputTokens)}${totals.hasUnknownTokens ? " + unknown" : ""}`,
     `- Thinking tokens: ${formatInteger(totals.thinkingTokens)}${totals.hasUnknownTokens ? " + unknown" : ""}`,
     `- Cached input tokens: ${formatInteger(totals.cachedInputTokens)}`,
     `- Cache write tokens: ${formatInteger(totals.cacheWriteTokens)}`,
     `- Duration: ${formatDuration(totals.durationMs)}`,
-    `- Estimated cost: ${formatUsd(totals.costUsd)}${totals.hasUnknownCost ? " + unknown" : ""}`,
+    `- Historical estimated cost: ${formatUsd(totals.costUsd)}${totals.hasUnknownCost ? " + unknown" : ""}`,
     `- Accounting source: ${formatSources(totals.accountingSources)}`,
     "",
   ].join("\n");
@@ -971,13 +992,16 @@ function renderStatusPanel(totals: Totals) {
     markdownRow(["Candidate rows", totals.candidateRows]),
     markdownRow(["Model attempts", totals.attemptedModels]),
     markdownRow(["Rejected attempts", totals.rejectedModels]),
-    markdownRow(["Input tokens", `${formatInteger(totals.inputTokens)}${totals.hasUnknownTokens ? " + unknown" : ""}`]),
-    markdownRow(["Output tokens", `${formatInteger(totals.outputTokens)}${totals.hasUnknownTokens ? " + unknown" : ""}`]),
+    markdownRow(["Active run input tokens", `${formatInteger(totals.activeRun.inputTokens)}${totals.activeRun.hasUnknownTokens ? " + unknown" : ""}`]),
+    markdownRow(["Active run output tokens", `${formatInteger(totals.activeRun.outputTokens)}${totals.activeRun.hasUnknownTokens ? " + unknown" : ""}`]),
+    markdownRow(["Active run estimated cost", `${formatUsd(totals.activeRun.costUsd)}${totals.activeRun.hasUnknownCost ? " + unknown" : ""}`]),
+    markdownRow(["Historical input tokens", `${formatInteger(totals.inputTokens)}${totals.hasUnknownTokens ? " + unknown" : ""}`]),
+    markdownRow(["Historical output tokens", `${formatInteger(totals.outputTokens)}${totals.hasUnknownTokens ? " + unknown" : ""}`]),
     markdownRow(["Thinking tokens", `${formatInteger(totals.thinkingTokens)}${totals.hasUnknownTokens ? " + unknown" : ""}`]),
     markdownRow(["Cached input tokens", formatInteger(totals.cachedInputTokens)]),
     markdownRow(["Cache write tokens", formatInteger(totals.cacheWriteTokens)]),
     markdownRow(["Duration", formatDuration(totals.durationMs)]),
-    markdownRow(["Estimated cost", `${formatUsd(totals.costUsd)}${totals.hasUnknownCost ? " + unknown" : ""}`]),
+    markdownRow(["Historical estimated cost", `${formatUsd(totals.costUsd)}${totals.hasUnknownCost ? " + unknown" : ""}`]),
     markdownRow(["Accounting source", formatSources(totals.accountingSources)]),
   ].join("\n");
 }
@@ -1127,7 +1151,7 @@ function buildGeneratorArgs() {
   addGeneratorArgWithDefault(args, "quiz-concurrency", DEFAULT_TUI_QUIZ_CONCURRENCY);
   addOptionalGeneratorArg(args, "challenge-retries");
 
-  for (const name of ["skip-validation", "no-commit", "overwrite", "allow-concurrent-worktree", "dry-run"]) {
+  for (const name of ["validate", "validate-candidates", "full-validation", "no-commit", "overwrite", "dry-run"]) {
     if (options[name] === true) args.push(`--${name}`);
   }
 

@@ -1,51 +1,39 @@
 {
-  "runId": "2026-05-13T15-41-29-359Z",
-  "runStatus": "completed",
+  "runId": "2026-05-13T16-39-21-706Z",
+  "runStatus": "running",
   "slug": "quiz-can-you-count-to-bigint",
   "locale": "fr",
-  "startedAt": "2026-05-13T15:41:29.359Z",
-  "updatedAt": "2026-05-13T15:41:59.085Z",
+  "startedAt": "2026-05-13T16:39:21.706Z",
+  "updatedAt": "2026-05-13T16:39:27.405Z",
   "modelsRequested": [
     "openrouter/openai/gpt-oss-120b:nitro",
     "openrouter/qwen/qwen3-32b:nitro"
   ],
-  "attemptedModels": 2,
-  "skippedModels": 0,
+  "attemptedModels": 1,
+  "skippedModels": 1,
   "rejectedModels": 1,
-  "candidateModels": 1,
+  "candidateModels": 0,
   "totals": {
-    "inputTokens": 13248,
-    "outputTokens": 7486,
+    "inputTokens": 0,
+    "outputTokens": 0,
     "thinkingTokens": 0,
-    "cachedInputTokens": 5120,
+    "cachedInputTokens": 0,
     "cacheWriteTokens": 0,
-    "estimatedCostUsd": 0.001864,
+    "estimatedCostUsd": 0,
     "hasUnknownInputTokens": true,
     "hasUnknownOutputTokens": true,
     "hasUnknownThinkingTokens": true,
     "hasUnknownCachedInputTokens": true,
     "hasUnknownCacheWriteTokens": true,
     "hasUnknownEstimatedCost": true,
-    "runtimeSeconds": "37.79"
+    "runtimeSeconds": "5.09"
   },
   "attempts": [
     {
       "model": "openrouter/openai/gpt-oss-120b:nitro",
-      "status": "candidate",
-      "validationStatus": "passed",
+      "status": "skipped",
       "reportPath": "reports/i18n/quiz-can-you-count-to-bigint/fr/openrouter-openai-gpt-oss-120b-nitro.md",
-      "note": "Generated through the direct AI SDK chunked translator.",
-      "telemetry": {
-        "runtimeSeconds": "31.88",
-        "tokens": {
-          "input": 13248,
-          "output": 7486,
-          "cached": 5120,
-          "cacheWrite": 0
-        },
-        "estimatedCostUsd": 0.001864152,
-        "pricingSource": "local-openrouter-estimate"
-      }
+      "note": "Existing non-rejected report found. Pass --overwrite to rerun."
     },
     {
       "model": "openrouter/qwen/qwen3-32b:nitro",
@@ -54,7 +42,7 @@
       "reportPath": "reports/i18n/quiz-can-you-count-to-bigint/fr/openrouter-qwen-qwen3-32b-nitro.md",
       "note": "Command failed: bun run i18n:translate:chunked -- --slug quiz-can-you-count-to-bigint --locale fr --model openrouter/qwen/qwen3-32b:nitro --chunk 6p --quiz-concurrency 20",
       "telemetry": {
-        "runtimeSeconds": "5.91",
+        "runtimeSeconds": "5.09",
         "tokens": {}
       }
     }

@@ -1,69 +1,47 @@
 {
-  "runId": "2026-05-13T16-26-41-914Z",
-  "runStatus": "completed",
+  "runId": "2026-05-13T16-37-11-310Z",
+  "runStatus": "running",
   "slug": "docker-firewall-setup",
   "locale": "de",
-  "startedAt": "2026-05-13T16:26:41.914Z",
-  "updatedAt": "2026-05-13T16:28:02.599Z",
+  "startedAt": "2026-05-13T16:37:11.310Z",
+  "updatedAt": "2026-05-13T16:37:11.311Z",
   "modelsRequested": [
+    "openrouter/qwen/qwen3.6-plus",
+    "openrouter/deepseek/deepseek-v4-flash",
     "openrouter/openai/gpt-oss-120b:nitro",
-    "openrouter/qwen/qwen3-32b:nitro"
+    "openrouter/qwen/qwen3-32b:nitro",
+    "openrouter/z-ai/glm-4.7-flash",
+    "openrouter/minimax/minimax-m2.5",
+    "openrouter/minimax/minimax-m2.7",
+    "openrouter/google/gemini-3-flash-preview",
+    "openrouter/deepseek/deepseek-v3.2",
+    "openrouter/z-ai/glm-5-turbo"
   ],
-  "attemptedModels": 2,
-  "skippedModels": 0,
-  "rejectedModels": 1,
-  "candidateModels": 1,
+  "attemptedModels": 0,
+  "skippedModels": 1,
+  "rejectedModels": 0,
+  "candidateModels": 0,
   "totals": {
-    "inputTokens": 7695,
-    "outputTokens": 4077,
+    "inputTokens": 0,
+    "outputTokens": 0,
     "thinkingTokens": 0,
-    "cachedInputTokens": 2688,
+    "cachedInputTokens": 0,
     "cacheWriteTokens": 0,
-    "estimatedCostUsd": 0.001379,
+    "estimatedCostUsd": 0,
     "hasUnknownInputTokens": false,
     "hasUnknownOutputTokens": false,
-    "hasUnknownThinkingTokens": true,
+    "hasUnknownThinkingTokens": false,
     "hasUnknownCachedInputTokens": false,
     "hasUnknownCacheWriteTokens": false,
     "hasUnknownEstimatedCost": false,
-    "runtimeSeconds": "9.69"
+    "runtimeSeconds": "0.00"
   },
   "attempts": [
     {
-      "model": "openrouter/openai/gpt-oss-120b:nitro",
-      "status": "rejected",
-      "validationStatus": "rejected: direct AI SDK translation failed",
-      "reportPath": "reports/i18n/docker-firewall-setup/de/openrouter-openai-gpt-oss-120b-nitro.md",
-      "note": "Command failed: bun run i18n:validate --slug docker-firewall-setup --locale de",
-      "telemetry": {
-        "runtimeSeconds": "1.54",
-        "tokens": {
-          "input": 3963,
-          "output": 875,
-          "cached": 2176,
-          "cacheWrite": 0
-        },
-        "estimatedCostUsd": 0.000312057,
-        "pricingSource": "local-openrouter-estimate"
-      }
-    },
-    {
-      "model": "openrouter/qwen/qwen3-32b:nitro",
-      "status": "candidate",
-      "validationStatus": "passed",
-      "reportPath": "reports/i18n/docker-firewall-setup/de/openrouter-qwen-qwen3-32b-nitro.md",
-      "note": "Generated through the direct AI SDK chunked translator.",
-      "telemetry": {
-        "runtimeSeconds": "8.15",
-        "tokens": {
-          "input": 3732,
-          "output": 3202,
-          "cached": 512,
-          "cacheWrite": 0
-        },
-        "estimatedCostUsd": 0.00106704,
-        "pricingSource": "local-openrouter-estimate"
-      }
+      "model": "openrouter/qwen/qwen3.6-plus",
+      "status": "skipped",
+      "reportPath": "reports/i18n/docker-firewall-setup/de/openrouter-qwen-qwen3.6-plus.md",
+      "note": "Existing non-rejected report found. Pass --overwrite to rerun."
     }
   ]
 }
