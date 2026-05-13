@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: postgres-text-search-guide
+- Locale: es
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-05-02--postgres-text-search-guide/es/index.mdx
+- Validation: passed
+- Runtime seconds: 32.15
+- Input tokens: 16355
+- Output tokens: 14812
+- Thinking tokens: unknown
+- Cached input tokens: 3584
+- Cache write tokens: 0
+- Estimated cost: $0.004863
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Guía de búsqueda de texto en Postgres 2026
 subTitle: >-
@@ -479,3 +497,4 @@ La piscina de 60 documentos por rama (`LIMIT 60`) es un punto de partida común.
 La búsqueda de texto en Postgres cubre mucho terreno, pero tiene un techo. Cuando los usuarios describen lo que quieren en lugar de nombrarlo explícitamente — "algo para ayudarme a dormir en un vuelo", "artículos sobre depuración de confianza como ingeniero nuevo" —, tanto la búsqueda léxica como por trigramas fallan.
 
 Ese es el territorio de las incrustaciones vectoriales, la búsqueda semántica y las arquitecturas híbridas. Cubierto en [Búsqueda Vectorial Semántica y Estrategias Híbridas](../semantic-vector-search-landscape).
+````
