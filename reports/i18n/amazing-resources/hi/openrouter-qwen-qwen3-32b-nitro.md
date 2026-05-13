@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: amazing-resources
+- Locale: hi
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2015-02-26--amazing-resources/hi/index.mdx
+- Validation: passed
+- Runtime seconds: 30.41
+- Input tokens: 9681
+- Output tokens: 14957
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.004364
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: ''
@@ -186,3 +204,4 @@ cover_icon: ../icon_carl-heyerdahl-181868-unsplash.webp
 ---  
 **परिवर्तन लॉग:** 2026-04 — मानवों और एसईओ के लिए पृष्ठ को पुनर्गठित किया, शीर्षक और विवरणों को सुधारा, और एसिस्टेंट यूआई, एआई एसडीके तत्व, एसेटरनिटी यूआई, शैडसीब्लॉक्स, टेलर्क, कोकोनटयूआई पैटर्न, और टूल यूआई जोड़े।  
 **परिवर्तन लॉग:** 2025-09 — लिंक अपडेट किए, पुराने संसाधनों को ताजा किया, और आधुनिक आइकन, तुलना, और डिज़ाइन उपकरण जोड़े।
+````
