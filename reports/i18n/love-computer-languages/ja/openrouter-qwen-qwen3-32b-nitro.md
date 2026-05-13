@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: love-computer-languages
+- Locale: ja
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2015-06-12--love-computer-languages/ja/index.mdx
+- Validation: passed
+- Runtime seconds: 16.02
+- Input tokens: 6972
+- Output tokens: 6045
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.002009
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: コンピュータ言語への愛
 date: '2015-06-12'
@@ -188,3 +206,4 @@ x, y, r, g, b = pixel(10, 20, 255, 255, 255)
   - この言語を何かに使うことはおそらくありません。プロジェクト数はゼロです。ただし、他の関数型言語よりも早くコーディングスタイルに大きな影響を与えるでしょう…。これはメリットリストに含めるべきです。
 
 #### 進行中の作業（2015年12月更新）
+````
