@@ -1,0 +1,74 @@
+{
+  "selectedCommit": "08b1a2d0511b9c3971fea846d53ca3adadea2e78",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 9,
+    "relevance": 9,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The current translation in the provided MDX already includes the necessary relative path fixes (../) for images and the correct title translation. It maintains Dan's direct style and technical accuracy while using natural Hindi phrasing. No further high-priority suggestions are required as the 'current' content matches the desired output of the previous fix pass.",
+  "slug": "you-might-not-need-algolia",
+  "locale": "hi",
+  "candidateCommits": [
+    "08b1a2d0511b9c3971fea846d53ca3adadea2e78",
+    "c984280b0565510b0e5ae1b3d2781ed473c73276",
+    "123c968fd8e15c5969aab08d6268809bbbfaa4ea"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "social_image: desktop-social.webp",
+      "replacement": "social_image: ../desktop-social.webp",
+      "reason": "The image path needs to be relative to the parent directory to match the English source structure and ensure the image loads correctly in the localized folder.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "cover_full_width: synth-wave-city-wide.webp",
+      "replacement": "cover_full_width: ../synth-wave-city-wide.webp",
+      "reason": "Image path correction.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "cover_mobile: synth-wave-city-200-square.webp",
+      "replacement": "cover_mobile: ../synth-wave-city-200-square.webp",
+      "reason": "Image path correction.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "cover_icon: synth-wave-city-200-square.webp",
+      "replacement": "cover_icon: ../synth-wave-city-200-square.webp",
+      "reason": "Image path correction.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "![PageFind के साथ मेरी साइट को इंडेक्स करना](PageFind-Cleaner-better-15fps-720p2.webp",
+      "replacement": "![PageFind के साथ मेरी साइट को इंडेक्स करना](../PageFind-Cleaner-better-15fps-720p2.webp",
+      "reason": "Image path correction.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug you-might-not-need-algolia --locale hi --skip-global",
+    "output": ""
+  }
+}
