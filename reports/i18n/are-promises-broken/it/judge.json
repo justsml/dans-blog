@@ -1,0 +1,37 @@
+{
+  "selectedCommit": "02fea76c7f7d266310a5ea6f5276f16df84150a2",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The current translation in the provided MDX already contains the fix 'Regole per restare fuori dai guai' (Rules to stay OUT of trouble), which was the only high-priority issue identified in the previous judge report. The translation is technically sound, uses natural Italian tech terminology (e.g., 'Le Promise'), and preserves the author's direct style and the MDX structure perfectly.",
+  "slug": "are-promises-broken",
+  "locale": "it",
+  "candidateCommits": [
+    "02fea76c7f7d266310a5ea6f5276f16df84150a2",
+    "ada33f01fcff58c504b097d2f1cee3617df5b5e0"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "## Regole per restare nei guai",
+      "replacement": "## Regole per restare fuori dai guai",
+      "reason": "The translation says 'Rules to stay IN trouble' instead of 'Rules to stay OUT of trouble'.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug are-promises-broken --locale it --skip-global",
+    "output": ""
+  }
+}
