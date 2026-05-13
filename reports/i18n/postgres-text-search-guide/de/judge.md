@@ -1,22 +1,7 @@
-# I18n Judge Report: postgres-text-search-guide (de)
+# Translation Judge
 
-## Candidates
-- **DeepSeek (9ca379d)**: `openrouter/deepseek/deepseek-v4-flash`
-- **Qwen (28c65f2)**: `openrouter/qwen/qwen3.5-flash-02-23`
-- **Gemini (aed9d64)**: `openrouter/google/gemini-3-flash-preview`
+- Selected candidate: 9ca379dfd9e5362906790b4df9f71acfb5d515fd
+- Selected model: openrouter/deepseek/deepseek-v4-flash
+- Judge model: openrouter/google/gemini-3-flash-preview
 
-## Decision: DeepSeek (9ca379d) with light polishing
-
-### Reasoning
-- **DeepSeek** provided the most natural and direct German translation. It successfully captured Dan's direct, technical voice (e.g., using "kostspieligen Umweg" for "costly detour"). It also correctly handled the technical nuances like "Lexeme" and "Wortstamm".
-- **Gemini** used "Sie"-form ("bereits in Ihrer Datenbank"), which is too formal for Dan's blog. It also used "Stammformenbildung" which is correct but slightly more clunky than "Wortstamm".
-- **Qwen** used some awkward phrasing like "Rangierfunktion" for "ranking function" (which usually refers to shunting in rail transport) and "Trigramme ... Schnipsel".
-
-### Polishing
-- Replaced Gemini-style formal address if any remained.
-- Ensured "Postgres" is used consistently (DeepSeek used it, Qwen used "PostgreSQL").
-- Verified all asset paths are parent-relative (e.g., `../desktop-social.webp`).
-- Maintained MDX component structure and SVG content perfectly.
-
-## Final Result
-DeepSeek (9ca379d) selected and polished.
+The candidate 9ca379dfd9e5362906790b4df9f71acfb5d515fd provides the most natural and technically accurate German translation. It correctly translates technical terms like 'fuzzy' to 'unscharf' and 'lexical' to 'lexikalisch' while maintaining the direct, punchy style of the original. It also correctly handles the SVG text elements and MDX structure. The 'current' translation was already quite good, but this candidate improves on some phrasing (e.g., using 'Werkzeuge' instead of 'Suchtools' and better flow in the decision table).
