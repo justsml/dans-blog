@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: llm-generative-ui-landscape
+- Locale: hi
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-05-06--llm-generative-ui-landscape/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 142.40
+- Input tokens: 25176
+- Output tokens: 33997
+- Thinking tokens: unknown
+- Cached input tokens: 3072
+- Cache write tokens: 0
+- Estimated cost: $0.010173
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: LLM उत्पादक UI परिदृश्य
 subTitle: ''
@@ -332,3 +350,4 @@ LLM टीमें धीरे-धीरे प्रम्प्ट और �
 भविष्य "मॉडल आपके फ्रंटएंड को लिखता है" नहीं होगा।  
 
 भविष्य इसके करीब है: **आपका फ्रंटएंड एक ऐसा यंत्र बन जाएगा जिसे एजेंट खेल सकता है, लेकिन आप अभी भी निर्णय लेंगे कि यंत्र को कैसे ध्वनि बनाने की अनुमति है।**
+````
