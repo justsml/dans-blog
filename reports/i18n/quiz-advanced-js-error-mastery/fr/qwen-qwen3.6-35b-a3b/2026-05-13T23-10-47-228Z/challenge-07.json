@@ -1,0 +1,47 @@
+{
+  "index": 6,
+  "attempt": 1,
+  "originalTitle": "Constructor Name Gotcha",
+  "translatedTitle": "Le piège du nom du constructeur",
+  "translation": {
+    "title": "Le piège du nom du constructeur",
+    "group": "Erreurs personnalisées",
+    "options": [
+      {
+        "text": "\"MyError\""
+      },
+      {
+        "text": "\"Error\""
+      },
+      {
+        "text": "undefined"
+      },
+      {
+        "text": "TypeError"
+      }
+    ],
+    "questionProse": [
+      "Quel est le résultat sans définir `name` ?"
+    ],
+    "explanationProse": [
+      "Sans définir explicitement `this.name`, l'erreur hérite de la propriété `name` par défaut de la classe `Error`, qui est `\"Error\"`. C'est pourquoi les classes d'erreurs personnalisées doivent toujours définir `this.name = this.constructor.name` dans leur constructeur."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Le piège du nom du constructeur\",\n  \"group\": \"Erreurs personnalisées\",\n  \"options\": [\n    {\n      \"text\": \"\\\"MyError\\\"\"\n    },\n    {\n      \"text\": \"\\\"Error\\\"\"\n    },\n    {\n      \"text\": \"undefined\"\n    },\n    {\n      \"text\": \"TypeError\"\n    }\n  ],\n  \"questionProse\": [\n    \"Quel est le résultat sans définir `name` ?\"\n  ],\n  \"explanationProse\": [\n    \"Sans définir explicitement `this.name`, l'erreur hérite de la propriété `name` par défaut de la classe `Error`, qui est `\\\"Error\\\"`. C'est pourquoi les classes d'erreurs personnalisées doivent toujours définir `this.name = this.constructor.name` dans leur constructeur.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 782,
+    "outputTokens": 2088,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 14045,
+    "providerCostUsd": 0.0021415004,
+    "providerUpstreamCostUsd": 0.0021415004,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.0001173,
+    "outputUsd": 0.002088,
+    "totalUsd": 0.0022053,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

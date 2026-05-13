@@ -1,0 +1,47 @@
+{
+  "index": 0,
+  "attempt": 1,
+  "originalTitle": "The Empty Object Mystery",
+  "translatedTitle": "Le mystère de l'objet vide",
+  "translation": {
+    "title": "Le mystère de l'objet vide",
+    "group": "Surprises de la sérialisation",
+    "options": [
+      {
+        "text": "{\"message\":\"Oops\",\"name\":\"Error\"}"
+      },
+      {
+        "text": "{}"
+      },
+      {
+        "text": "{\"error\":\"Oops\"}"
+      },
+      {
+        "text": "null"
+      }
+    ],
+    "questionProse": [
+      "Que retourne `JSON.stringify(error)` ?"
+    ],
+    "explanationProse": [
+      "Les objets `Error` possèdent des propriétés non énumérables (`message`, `name`, `stack`), ce qui fait que `JSON.stringify()` retourne `{}`. C'est un piège classique lorsqu'on renvoie des erreurs dans des réponses API. Utilisez plutôt `JSON.stringify(error, Object.getOwnPropertyNames(error))` ou créez un objet simple à la place."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Le mystère de l'objet vide\",\n  \"group\": \"Surprises de la sérialisation\",\n  \"options\": [\n    {\n      \"text\": \"{\\\"message\\\":\\\"Oops\\\",\\\"name\\\":\\\"Error\\\"}\"\n    },\n    {\n      \"text\": \"{}\"\n    },\n    {\n      \"text\": \"{\\\"error\\\":\\\"Oops\\\"}\"\n    },\n    {\n      \"text\": \"null\"\n    }\n  ],\n  \"questionProse\": [\n    \"Que retourne `JSON.stringify(error)` ?\"\n  ],\n  \"explanationProse\": [\n    \"Les objets `Error` possèdent des propriétés non énumérables (`message`, `name`, `stack`), ce qui fait que `JSON.stringify()` retourne `{}`. C'est un piège classique lorsqu'on renvoie des erreurs dans des réponses API. Utilisez plutôt `JSON.stringify(error, Object.getOwnPropertyNames(error))` ou créez un objet simple à la place.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 798,
+    "outputTokens": 2230,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 14988,
+    "providerCostUsd": 0.0022811451,
+    "providerUpstreamCostUsd": 0.0022811451,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.0001197,
+    "outputUsd": 0.00223,
+    "totalUsd": 0.0023497,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

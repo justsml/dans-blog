@@ -1,0 +1,47 @@
+{
+  "index": 13,
+  "attempt": 1,
+  "originalTitle": "Object vs Error Detection",
+  "translatedTitle": "Objet vs Détection d'Erreur",
+  "translation": {
+    "title": "Objet vs Détection d'Erreur",
+    "group": "Limites d'erreur",
+    "options": [
+      {
+        "text": "true, true"
+      },
+      {
+        "text": "false, false"
+      },
+      {
+        "text": "true, false"
+      },
+      {
+        "text": "false, true"
+      }
+    ],
+    "questionProse": [
+      "Que retournent ces vérifications ?"
+    ],
+    "explanationProse": [
+      "`instanceof Error` retourne `false` car l'objet n'a pas été instancié via le constructeur `Error`. `Object.prototype.toString.call()` renvoie aussi `false` (il retourne `'[object Object]'`) car il inspecte le slot interne `[[Class]]`. Les deux méthodes identifient correctement qu'il s'agit d'un objet d'erreur factice."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Objet vs Détection d'Erreur\",\n  \"group\": \"Limites d'erreur\",\n  \"options\": [\n    {\n      \"text\": \"true, true\"\n    },\n    {\n      \"text\": \"false, false\"\n    },\n    {\n      \"text\": \"true, false\"\n    },\n    {\n      \"text\": \"false, true\"\n    }\n  ],\n  \"questionProse\": [\n    \"Que retournent ces vérifications ?\"\n  ],\n  \"explanationProse\": [\n    \"`instanceof Error` retourne `false` car l'objet n'a pas été instancié via le constructeur `Error`. `Object.prototype.toString.call()` renvoie aussi `false` (il retourne `'[object Object]'`) car il inspecte le slot interne `[[Class]]`. Les deux méthodes identifient correctement qu'il s'agit d'un objet d'erreur factice.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 798,
+    "outputTokens": 2422,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 16179,
+    "providerCostUsd": 0.0024664731,
+    "providerUpstreamCostUsd": 0.0024664731,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.0001197,
+    "outputUsd": 0.002422,
+    "totalUsd": 0.0025417,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

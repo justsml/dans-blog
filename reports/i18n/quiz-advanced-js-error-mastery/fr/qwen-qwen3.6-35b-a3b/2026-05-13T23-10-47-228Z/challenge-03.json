@@ -1,0 +1,47 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "instanceof Inheritance",
+  "translatedTitle": "Héritage instanceof",
+  "translation": {
+    "title": "Héritage instanceof",
+    "group": "Astuces de vérification de type",
+    "options": [
+      {
+        "text": "true, true, true"
+      },
+      {
+        "text": "true, false, false"
+      },
+      {
+        "text": "false, true, true"
+      },
+      {
+        "text": "true, true, false"
+      }
+    ],
+    "questionProse": [
+      "Quels sont les résultats de ces vérifications ?"
+    ],
+    "explanationProse": [
+      "Les trois retournent `true`. `CustomError` hérite de `Error`, qui hérite lui-même de `Object`. L'opérateur `instanceof` vérifie toute la chaîne de prototypes, donc une instance de `CustomError` est également une instance de `Error` et de `Object`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Héritage instanceof\",\n  \"group\": \"Astuces de vérification de type\",\n  \"options\": [\n    {\n      \"text\": \"true, true, true\"\n    },\n    {\n      \"text\": \"true, false, false\"\n    },\n    {\n      \"text\": \"false, true, true\"\n    },\n    {\n      \"text\": \"true, true, false\"\n    }\n  ],\n  \"questionProse\": [\n    \"Quels sont les résultats de ces vérifications ?\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"js\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"explanationProse\": [\n    \"Les trois retournent `true`. `CustomError` hérite de `Error`, qui hérite lui-même de `Object`. L'opérateur `instanceof` vérifie toute la chaîne de prototypes, donc une instance de `CustomError` est également une instance de `Error` et de `Object`.\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 796,
+    "outputTokens": 2790,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 18223,
+    "providerCostUsd": 0.0028213627,
+    "providerUpstreamCostUsd": 0.0028213627,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.0001194,
+    "outputUsd": 0.00279,
+    "totalUsd": 0.0029094,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

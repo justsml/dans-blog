@@ -1,0 +1,47 @@
+{
+  "index": 12,
+  "attempt": 1,
+  "originalTitle": "Non-Standard Properties",
+  "translatedTitle": "Propriétés non standard",
+  "translation": {
+    "title": "Propriétés non standard",
+    "group": "Propriétés des erreurs",
+    "options": [
+      {
+        "text": "Toujours disponibles"
+      },
+      {
+        "text": "Peuvent ne pas exister dans tous les environnements"
+      },
+      {
+        "text": "Uniquement dans Node.js"
+      },
+      {
+        "text": "Dépréciées et supprimées"
+      }
+    ],
+    "questionProse": [
+      "Quelle fiabilité accorder à `error.code` et `error.errno` ?"
+    ],
+    "explanationProse": [
+      "Les propriétés comme `code` et `errno` sont spécifiques à l'environnement d'exécution (Node.js ici) et ne font pas partie du standard `Error`. C'est pourquoi les navigateurs ne les incluent tout simplement pas. Ne partez jamais du principe qu'elles existent : vérifiez toujours leur présence avec `if (err.code === 'ENOENT')` avant de les manipuler."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Propriétés non standard\",\n  \"group\": \"Propriétés des erreurs\",\n  \"options\": [\n    {\n      \"text\": \"Toujours disponibles\"\n    },\n    {\n      \"text\": \"Peuvent ne pas exister dans tous les environnements\"\n    },\n    {\n      \"text\": \"Uniquement dans Node.js\"\n    },\n    {\n      \"text\": \"Dépréciées et supprimées\"\n    }\n  ],\n  \"questionProse\": [\n    \"Quelle fiabilité accorder à `error.code` et `error.errno` ?\"\n  ],\n  \"explanationProse\": [\n    \"Les propriétés comme `code` et `errno` sont spécifiques à l'environnement d'exécution (Node.js ici) et ne font pas partie du standard `Error`. C'est pourquoi les navigateurs ne les incluent tout simplement pas. Ne partez jamais du principe qu'elles existent : vérifiez toujours leur présence avec `if (err.code === 'ENOENT')` avant de les manipuler.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 805,
+    "outputTokens": 2917,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 17831,
+    "providerCostUsd": 0.00294540025,
+    "providerUpstreamCostUsd": 0.00294540025,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00012075000000000001,
+    "outputUsd": 0.002917,
+    "totalUsd": 0.00303775,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

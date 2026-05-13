@@ -1,0 +1,47 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "Express Response Error",
+  "translatedTitle": "Erreur de réponse Express",
+  "translation": {
+    "title": "Erreur de réponse Express",
+    "group": "Pièges de l'API",
+    "options": [
+      {
+        "text": "Envoie l'objet d'erreur complet"
+      },
+      {
+        "text": "Envoie {\"error\":{}}"
+      },
+      {
+        "text": "Lève une erreur serveur"
+      },
+      {
+        "text": "Envoie uniquement le message d'erreur"
+      }
+    ],
+    "questionProse": [
+      "Qu'est-ce qui est envoyé au client ?"
+    ],
+    "explanationProse": [
+      "`res.json()` utilise `JSON.stringify()` en interne, ce qui transforme l'objet Error en `{}`. Le client reçoit donc `{\"error\":{}}`. Pour corriger le tir, utilisez `res.json({ error: error.message })` ou `res.json({ error: { message: error.message, name: error.name } })`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Erreur de réponse Express\",\n  \"group\": \"Pièges de l'API\",\n  \"options\": [\n    {\n      \"text\": \"Envoie l'objet d'erreur complet\"\n    },\n    {\n      \"text\": \"Envoie {\\\"error\\\":{}}\"\n    },\n    {\n      \"text\": \"Lève une erreur serveur\"\n    },\n    {\n      \"text\": \"Envoie uniquement le message d'erreur\"\n    }\n  ],\n  \"questionProse\": [\n    \"Qu'est-ce qui est envoyé au client ?\"\n  ],\n  \"explanationProse\": [\n    \"`res.json()` utilise `JSON.stringify()` en interne, ce qui transforme l'objet Error en `{}`. Le client reçoit donc `{\\\"error\\\":{}}`. Pour corriger le tir, utilisez `res.json({ error: error.message })` ou `res.json({ error: { message: error.message, name: error.name } })`.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 811,
+    "outputTokens": 2163,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 14299,
+    "providerCostUsd": 0.00221856895,
+    "providerUpstreamCostUsd": 0.00221856895,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00012164999999999999,
+    "outputUsd": 0.002163,
+    "totalUsd": 0.00228465,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
