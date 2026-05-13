@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: the-unassuming-power-of-multiple-choice-questions
+- Locale: de
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2025-01-01--the-unassuming-power-of-multiple-choice-questions/de/index.mdx
+- Validation: passed
+- Runtime seconds: 6.09
+- Input tokens: 5718
+- Output tokens: 1273
+- Thinking tokens: unknown
+- Cached input tokens: 1280
+- Cache write tokens: 0
+- Estimated cost: $0.000452
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Die unscheinbare Macht von Multiple‑Choice‑Fragen
 subTitle: Wie man das volle Potenzial von MCQs im Bildungsbereich nutzt
@@ -89,3 +107,4 @@ Der Autor muss die wahrscheinlichen Fehler des Lernenden modellieren. Das bedeut
 Deshalb verwende ich auf dieser Seite weiterhin MCQs. Nicht, weil sie effizient sind – obwohl sie das sind – sondern weil sie eine Art instruktive Ehrlichkeit erzwingen, der reiner Fließtext allein ausweichen kann.
 
 Das nächste Mal, wenn Sie eine solche Frage formulieren, beginnen Sie nicht mit der richtigen Antwort. Beginnen Sie mit den Fehlvorstellungen. Die korrekte Antwort findet dann einen deutlich besseren Platz.
+````
