@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-css-core-fundamentals
+- Locale: it
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2024-11-08--quiz-css-core-fundamentals/it/index.mdx
+- Validation: deferred
+- Runtime seconds: 20.12
+- Input tokens: 12613
+- Output tokens: 7751
+- Thinking tokens: unknown
+- Cached input tokens: 3328
+- Cache write tokens: 0
+- Estimated cost: $0.001887
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: 'Quiz: Conosci i fondamenti CSS? (2025)'
@@ -451,3 +469,4 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 </Challenge>
 
 </QuizUI>
+````

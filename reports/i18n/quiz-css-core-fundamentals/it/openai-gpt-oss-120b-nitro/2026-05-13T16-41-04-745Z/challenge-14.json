@@ -1,0 +1,44 @@
+{
+  "index": 13,
+  "attempt": 1,
+  "originalTitle": "Zero-Specificity Selectors",
+  "translatedTitle": "Selettori a Specificità Zero",
+  "translation": {
+    "title": "Selettori a Specificità Zero",
+    "group": "Selettore: Specificità",
+    "options": [
+      {
+        "text": ":where(.card) .title"
+      },
+      {
+        "text": ".card .title"
+      },
+      {
+        "text": ":is(.card) .title"
+      },
+      {
+        "text": "#card .title"
+      }
+    ],
+    "questionProse": [
+      "Quale selettore ha la specificità più bassa?"
+    ],
+    "explanationProse": [
+      "`:where(.card) .title` ha la specificità più bassa. La pseudo‑classe `:where()` e tutto ciò che contiene contribuisce `0-0-0`, quindi conta solo `.title`. `:is(.card) .title` mantiene la specificità di `.card`, `.card .title` ha due classi, e `#card .title` include un ID."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Selettori a Specificità Zero\",\n  \"group\": \"Selettore: Specificità\",\n  \"options\": [\n    {\n      \"text\": \":where(.card) .title\"\n    },\n    {\n      \"text\": \".card .title\"\n    },\n    {\n      \"text\": \":is(.card) .title\"\n    },\n    {\n      \"text\": \"#card .title\"\n    }\n  ],\n  \"questionProse\": [\n    \"Quale selettore ha la specificità più bassa?\"\n  ],\n  \"explanationProse\": [\n    \"`:where(.card) .title` ha la specificità più bassa. La pseudo‑classe `:where()` e tutto ciò che contiene contribuisce `0-0-0`, quindi conta solo `.title`. `:is(.card) .title` mantiene la specificità di `.card`, `.card .title` ha due classi, e `#card .title` include un ID.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 786,
+    "outputTokens": 478,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1686
+  },
+  "cost": {
+    "inputUsd": 0.000030654,
+    "outputUsd": 0.00008604,
+    "totalUsd": 0.000116694,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
