@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: handling-international-numbers-and-currency
+- Locale: it
+- Model: qwen/qwen3.6-35b-a3b
+- Target: src/content/posts/2024-08-29--handling-international-numbers-and-currency/it/index.mdx
+- Validation: deferred
+- Runtime seconds: 93.14
+- Input tokens: 6441
+- Output tokens: 19375
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.000000
+- Pricing source: unknown
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Numeri e valute internazionali
@@ -126,3 +144,4 @@ Some libraries can help with these tasks:
 
 - [currency](https://github.com/bojanz/currency) è la mia scelta attuale per Golang.
 */}
+````
