@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: mastra-mcp-tool-integrations
+- Locale: fr
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-01-04--mastra-mcp-tool-integrations/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 8.34
+- Input tokens: 8177
+- Output tokens: 2458
+- Thinking tokens: unknown
+- Cached input tokens: 3200
+- Cache write tokens: 0
+- Estimated cost: $0.000761
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Votre agent IA est inutile sans cela
 subTitle: Pourquoi le MCP est le USB‑C de l’intelligence artificielle.
@@ -218,3 +236,4 @@ Si vous concevez un système IA qui doit interagir avec des services externes, c
 2. [Security & Guardrails](../mastra-security-guardrails)  
 3. **MCP & Intégrations d’Outils** (Ce post)  
 4. [Workflows & Mémoire](../mastra-workflows-memory)
+````
