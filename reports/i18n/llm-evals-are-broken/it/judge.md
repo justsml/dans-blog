@@ -1,16 +1,7 @@
-# Judge Report: it translation for llm-evals-are-broken
+# Translation Judge
 
-## Decision
-**Winner**: `ba8d0323533a8092df267c552731a70b3d054148` (DeepSeek V4 Flash)
+- Selected candidate: e864bc89481bfcb6513235dbe650797085a5c1e9
+- Selected model: openrouter/qwen/qwen3.6-plus
+- Judge model: openrouter/google/gemini-3-flash-preview
 
-## Analysis
-- **Technical Accuracy**: DeepSeek correctly preserved code blocks, component structures (`<blockquote class="breakout">`, `<figure>`, `<Challenge>`), and asset paths (`../`).
-- **Natural Language Quality**: DeepSeek captured Dan's direct, slightly punchy style better than the competitors.
-    - DeepSeek: "Ogni nuovo modello arriva vestito con uno smoking di benchmark." (Smoking for tuxedo) vs Qwen: "completo" (suit). "Smoking" is more specific and punchy in Italian tech context.
-    - DeepSeek: "Combatti i Mali con le Eval!" is a strong literal/stylistic match for "Fight Evils with Evals!".
-    - Qwen Plus used "Combatti il Caos", which is fine but loses the wordplay.
-- **MDX Preservation**: All candidates did well, but DeepSeek's phrasing felt more natural while maintaining strict MDX constraints.
-
-## Polishing Notes
-- Ensured "Evals" / "Eval" consistency (preferred "Eval" as a collective noun or plural in Italian tech speak, but followed DeepSeek's "Eval" mostly).
-- Verified parent-relative asset paths `../` are correct for the `it/` subdirectory.
+This candidate provides the most natural and professional Italian translation while maintaining Dan's direct and slightly informal tone. It correctly handles technical terminology (e.g., 'harness', 'baseline', 'golden set') and preserves all MDX structures and heading levels. It avoids the literal but awkward 'vibrazioni' (vibes) used by other models, opting for 'sensazione' which is more idiomatic in this context.
