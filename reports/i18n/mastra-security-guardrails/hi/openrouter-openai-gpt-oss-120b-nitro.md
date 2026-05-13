@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: mastra-security-guardrails
+- Locale: hi
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-01-03--mastra-security-guardrails/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 6.45
+- Input tokens: 6886
+- Output tokens: 2588
+- Thinking tokens: unknown
+- Cached input tokens: 2048
+- Cache write tokens: 0
+- Estimated cost: $0.000734
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: 'उत्पादन AI: डरावना सच और समाधान'
 subTitle: 'यदि आपके एजेंट में सुरक्षा उपाय नहीं हैं, तो वह उत्पादन के लिए तैयार नहीं है।'
@@ -171,3 +189,4 @@ if (result.tripwire) {
 2. **Security & Guardrails** (यह पोस्ट)
 3. [MCP & Tool Integrations](../mastra-mcp-tool-integrations)
 4. [Workflows & Memory](../mastra-workflows-memory)
+````
