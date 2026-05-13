@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: mastering-functional-pipelines-passing-state
+- Locale: hi
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2023-08-13--mastering-functional-pipelines-passing-state/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 4.29
+- Input tokens: 9738
+- Output tokens: 2960
+- Thinking tokens: unknown
+- Cached input tokens: 5120
+- Cache write tokens: 0
+- Estimated cost: $0.000913
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: 'पाइपलाइन विशेषज्ञ: स्टेटपास करना'
@@ -200,3 +218,4 @@ export const checkout = ({ userId, products }) => {
 #### संबंधित पढ़ाई
 
 - [Component‑driven React दुनिया में भी समान समस्याएँ मौजूद हैं।](https://kyleshevlin.com/quit-your-yapping)
+````
