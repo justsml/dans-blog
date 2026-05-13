@@ -1,0 +1,68 @@
+{
+  "selectedCommit": "08267f3e6345146245ce8910cf532bf1a8b4710f",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "特殊文字は文字通りマッチさせるために `\\\\` でエスケープする必要があります",
+      "replacement": "特殊文字は文字通りマッチさせるために `\\` でエスケープする必要があります",
+      "reason": "The candidate used double backslashes in the text description which is unnecessary and confusing in this context compared to the single backslash used in the code block below it."
+    },
+    {
+      "priority": "high",
+      "match": "リテラルのドル記号にマッチさせるにはエスケープします: `\\\\$`",
+      "replacement": "リテラルのドル記号にマッチさせるにはエスケープします: `\\$`",
+      "reason": "The candidate used double backslashes in the text description which is unnecessary and confusing in this context compared to the single backslash used in the code block below it."
+    }
+  ],
+  "rationale": "The candidate 08267f3e6345146245ce8910cf532bf1a8b4710f provides a more natural and complete translation compared to the 'current' version, which had empty 'options' arrays in several challenges (e.g., index 2 and 13). It also translates the subTitle which was empty in the current version. The terminology used (e.g., '先読み' for look-ahead) is standard in Japanese technical contexts.",
+  "slug": "quiz-regex-or-wreckage",
+  "locale": "ja",
+  "candidateCommits": [
+    "08267f3e6345146245ce8910cf532bf1a8b4710f",
+    "95cba6d5da4edc9d7c40646316865a93dc7b6c7a"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "リテラルのドル記号にマッチさせるにはエスケープします: `\\\\$`",
+      "replacement": "リテラルのドル記号にマッチさせるにはエスケープします: `\\$`",
+      "reason": "The candidate used double backslashes in the text description which is unnecessary and confusing in this context compared to the single backslash used in the code block below it.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "特殊文字は文字通りマッチさせるために `\\\\` でエスケープする必要があります",
+      "replacement": "特殊文字は文字通りマッチさせるために `\\` でエスケープする必要があります",
+      "reason": "The candidate used double backslashes in the text description which is unnecessary and confusing in this context compared to the single backslash used in the code block below it.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "リテラルのドル記号にマッチさせるにはエスケープします: `\\\\$`",
+      "replacement": "リテラルのドル記号にマッチさせるにはエスケープします: `\\$`",
+      "reason": "The candidate used double backslashes in the text description which is unnecessary and confusing in this context compared to the single backslash used in the code block below it.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug quiz-regex-or-wreckage --locale ja --skip-global",
+    "output": ""
+  }
+}

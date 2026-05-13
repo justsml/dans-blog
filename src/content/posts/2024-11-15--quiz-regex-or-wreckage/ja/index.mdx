@@ -1,7 +1,7 @@
 ---
 unlisted: false
 title: 'クイズ: 正規表現マスター'
-subTitle: ''
+subTitle: 野生の正規表現を手懐けろ。
 label: RegEx
 social_image: ../desktop-social.webp
 category: Quiz
@@ -18,12 +18,12 @@ cover_full_width: ../dan-lounsbury-uHZ2-nzYuIs-unsplash-wide.webp
 cover_mobile: ../dan-lounsbury-uHZ2-nzYuIs-unsplash-square-200.webp
 cover_icon: ../dan-lounsbury-uHZ2-nzYuIs-unsplash-square-200.webp
 ---
-import Challenge from '../../../../components/QuizUI/Challenge';
-import QuizUI from '../../../../components/QuizUI/QuizUI';
+import Challenge from '../../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../../components/QuizUI/QuizUI';
 
-<p class="inset">正規表現の腕試し、準備はできましたか？🤼‍♂️</p>
+<p class="inset">正規表現で格闘する準備はできましたか？ 🤼‍♂️</p>
 
-基本パターン、数量子、グループ、そして厄介な前後検査アサーションに関する問題で、あなたのRegEx知識をテストしましょう。単純な文字列マッチングから複雑なパターン検証まで - 正しい正規表現が見つけられますか？
+RegEx の知識をテストしましょう。基本パターン、量指定子、グループ、そして厄介な先読み・後読みアサーションに関する問題があります。単純な文字列マッチから複雑なパターン検証まで、正しい正規表現を見つけられますか？
 
 <QuizUI>
 
@@ -31,7 +31,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={0}
   group="ウォームアップ"
-  title="大文字小文字を区別したマッチング"
+  title="大文字小文字の区別マッチング"
   options={[
     {text: '["Cat"]'},
     {text: '["cat", "CAT", "Cat"]'},
@@ -49,15 +49,15 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    このパターンは`g`は使用していますが`i`は使っていません：
-    - `g`はすべてのマッチを検索
-    - `i`がないと、大文字小文字を区別してマッチ
+    このパターンは `g` を使用していますが、`i` は使用していません:
+    - `g` はすべての一致を見つけます
+    - `i` がないと、大文字小文字が区別されます
 
-    `i`フラグがなければ、小文字の"cat"だけがマッチします。
+    `i` フラグがない場合、小文字の "cat" のみが一致します。
 
-    ユーザー入力やHTMLで大文字小文字が変化する場合に特に役立ちます。
+    ユーザー入力や HTML など、ケースが変わり得る場面で特に有用です。
 
-    [RegExpフラグについてさらに学ぶ](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#advanced_searching_with_flags)
+    [RegExp フラグの詳細はこちら](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#advanced_searching_with_flags)
   </div>
   </slot>
 </Challenge>
@@ -66,7 +66,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={1}
   group="ウォームアップ"
-  title="単純な文字のマッチング"
+  title="シンプルな文字マッチング"
   options={[
     {text: '["cat", "hat"]', isAnswer: true},
     {text: '["cat", "hat", "what"]'},
@@ -76,7 +76,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    このコードは何を返すか？
+    このコードは何を返しますか？
     ```js
         const words = ['cat', 'hat', 'what', 'bat'];
         words.filter(word => word.match(/^[ch]at/))
@@ -85,13 +85,13 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    パターン`/^[ch]at/`は以下の条件を満たす文字列をマッチします：
-    - 開始文字(^)が'c'または'h'（[ch]は文字クラスを表し、1文字をマッチします）
-    - 後ろに'at'が続く
+    パターン `/^[ch]at/` は次の文字列にマッチします:
+    - 先頭 (`^`) が 'c' または 'h' のいずれかであること（`[ch]` は1文字の文字クラスを意味します）
+    - その後に文字通り 'at' が続くこと
 
-    したがって'cat'と'hat'のみがマッチします。`filter()`メソッドはマッチした要素のみを保持します。
+    したがって、"cat" と "hat" だけがこのパターンにマッチします。`filter()` メソッドはマッチした要素だけを残します。
 
-    [MDNで文字クラスについてさらに学ぶ](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Character_Classes)
+    [MDNで文字クラスの詳細を見る](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Character_Classes)
   </div>
   </slot>
 </Challenge>
@@ -100,13 +100,13 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={2}
   group="基本マッチング"
-  title="貪欲 (Greedy) と非貪欲 (Non-Greedy) の違い"
+  title="貪欲 vs 非貪欲"
   options={[
   ]}
 >
   <slot name="question">
   <div className="question">
-    この正規表現はどの部分とマッチしますか？
+    これは何にマッチしますか？
     ```js
         '<div>Hello</div><div>World</div>'.match(/<div>.*?<\/div>/g)
     ```
@@ -114,15 +114,15 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    パターン `/<div>.*?<\/div>/g` は `*?` による非貪欲マッチを使っています。これは以下を意味します：
-    - `<div>` とマッチ
-    - 任意の文字 (`.*`) を、できるだけ少ない回数 (`?`) でマッチ
-    - `</div>` が見つかるまで
-    - `g` フラグにより、すべての出現をマッチ
+    パターン `/<div>.*?<\/div>/g` は `*?` による非貪欲マッチングを使用しています。意味は次の通りです:
+    - `<div>` にマッチ
+    - 任意の文字列 (`.*`) をできるだけ少なく (`?`) マッチ
+    - `</div>` が見つかるまで続ける
+    - `g` フラグで全ての出現箇所をマッチ
 
-    `?` を使わなければ、貪欲な `.*` は最初の `<div>` から最後の `</div>` までを1つの大きなマッチとしてしまう。`?` を使うと、それぞれのペアを個別にマッチします。
+    `?` が無ければ、貪欲な `.*` は最初の `<div>` から最後の `</div>` まで全てをマッチさせ、1つの大きなマッチになります。`?` を付けると、各ペアを個別にマッチします。
 
-    [貪欲と非貪欲マッチの詳細](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)
+    [貪欲 vs ラジーマッチングの詳細](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)
   </div>
   </slot>
 </Challenge>
@@ -130,7 +130,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={3}
-  group="一般的な落とし穴"
+  group="よくある落とし穴"
   title="ドットメタ文字"
   options={[
     {text: '["hello\nworld"]'},
@@ -141,7 +141,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    このコードは何を返すか？
+    これの戻り値は何ですか？
     ```js
         'hello\nworld'.match(/\w+/g)
     ```
@@ -149,14 +149,14 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `\w+` パターンは1つ以上の単語文字にマッチします。文字列内に改行があったとしても、`\w` は以下にマッチします：
-    - アルファベット (a-z, A-Z)
+    `\w+` パターンは1つ以上の単語文字にマッチします。文字列に改行が含まれていても、`\w` は以下にマッチします:
+    - 文字 (a-z, A-Z)
     - 数字 (0-9)
     - アンダースコア (_)
 
-    よって改行は単語境界として機能し、2つのマッチが得られます。`.*` を使っていたらデフォルトでは改行にマッチしなかったでしょう（`s` フラグが必要です）。
+    つまり、改行は単語境界として扱われ、2つのマッチが得られます。`.*` を使った場合、デフォルトでは改行にマッチしません（そのためには `s` フラグが必要です）。
 
-    [メタ文字についてもっと学ぶ](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Character_Classes#types)
+    [メタ文字の詳細はこちら](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Character_Classes#types)
   </div>
   </slot>
 </Challenge>
@@ -164,8 +164,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={4}
-  group="ルックアヘッド"
-  title="ポジティブ・ルックアヘッド"
+  group="先読み"
+  title="前方肯定的先読み"
   options={[
     {text: '["$100", "€50"]'},
     {text: '["100", "50"]'},
@@ -184,15 +184,15 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    このパターンは何もマッチしません。ルックアヘッドが逆になっているからです！ `$` または `€` で**始まる**数字を検索したいなら、ルックビハインドを使いましょう: `/(?<=[\$€])\d+/g`。
+    このパターンは何もマッチしません。先読みが逆向きだからです！`$` または `€` の前に数字が欲しいなら、先行参照を使ってください: `/(?<=[\$€])\d+/g`。
 
-    ルックアヘッドは現在位置の**後ろ**をチェックします。このパターンは以下を検索しています:
+    先読みは現在位置の*後ろ*に何があるかをチェックします。現在のパターンは以下を探します:
     - 1つ以上の数字 (`\d+`)
-    - その後ろに (`(?=...)`) `$` または `€` (`[\$€]`)
+    - それに続く (`(?=...)`) `$` または `€` のいずれか (`[\$€]`)
 
-    数字の後に通貨記号がある文字列は存在しないため、マッチしません。
+    通貨記号の後に数字がない（数字は記号の前にある）ので、マッチは得られません。
 
-    [ルックアヘッドのアサーションについて詳しくはこちら](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
+    [Look-ahead アサーションについて詳しく読む](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
   </div>
   </slot>
 </Challenge>
@@ -200,7 +200,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={5}
-  group="基本的な一致"
+  group="基本マッチング"
   title="単語境界"
   options={[
     {text: '["cat", "cats"]'},
@@ -211,7 +211,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    何が一致するか？
+    何がマッチしますか？
     ```js
         'cat cats category'.match(/\bcat\b/g)
     ```
@@ -219,16 +219,16 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `\b` は単語境界を表し、次を一致させます：
+    `\b` は単語境界を表し、次にマッチします：
     - 単語文字と非単語文字の間
-    - 文字列の開始/終了位置に単語文字がある場合
+    - 文字列の先頭または末尾で、そこに単語文字がある場合
 
-    したがって、`/\bcat\b/` は "cat" が完全な単語として存在する場合のみ一致します。
-    - ✅ "cat"（スペースで囲まれた場合）
-    - ❌ "cats"（"cat" の後ろに境界がない）
-    - ❌ "category"（"cat" の後ろに境界がない）
+    つまり `/\bcat\b/` は「cat」が完全な単語として存在する時だけマッチし、他の単語の一部ではマッチしません。
+    - ✅ "cat"（スペースで囲まれている）
+    - ❌ "cats"（"cat" の後に境界がない）
+    - ❌ "category"（"cat" の後に境界がない）
 
-    [単語境界についてさらに学ぶ](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions#other_assertions)
+    [単語境界の詳細はこちら](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions#other_assertions)
   </div>
   </slot>
 </Challenge>
@@ -237,7 +237,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={6}
   group="よくある落とし穴"
-  title="グローバルフラグの挙動"
+  title="グローバルフラグ"
   options={[
     {text: 'null'},
     {text: '["a"]'},
@@ -248,7 +248,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    出力結果は？
+    出力は何ですか？
     ```js
         'banana'.match(/a/g)
     ```
@@ -256,15 +256,15 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    グローバルフラグ（g）は`match()`の挙動を変える：
-    - フラグなし：最初のマッチとキャプチャグループを返す
-    - フラグあり：マッチした文字列の配列を返す
+    `g` (global) フラグは `match()` の動作を変えます:
+    - `g` がない場合: キャプチャグループ付きで最初の一致を返す
+    - `g` がある場合: すべての一致文字列の配列を返す
 
-    このケースでは、「banana」内の「a」のすべての出現を検出します。
+    このケースでは、"banana" 中の "a" のすべての出現を見つけます。
 
-    注：すべてのマッチとキャプチャグループが必要な場合は、`matchAll()`や`exec()`メソッドのループを使用してください。
+    注意: すべての一致とキャプチャグループの両方が必要な場合は、`matchAll()` またはループ内で `exec()` メソッドを使用してください。
 
-    [グローバルフラグの詳細](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/global)
+    [グローバルフラグの詳細はこちら](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/global)
   </div>
   </slot>
 </Challenge>
@@ -284,7 +284,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    このパターンに一致するのは？
+    このパターンにマッチするのはどれですか？
     ```js
         'abc123 def456'.match(/(?<!abc)\d+/g)
     ```
@@ -292,14 +292,14 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    否定的後方参照 `(?<!abc)` は、数字が "abc" で終わっていないことを確認します：
-    - ❌ "123"（"abc" で終わる）
-    - ✅ "23"（"abc1" で終わる）
-    - ✅ "456"（"def" で終わる）
+    否定的後方参照 `(?<!abc)` は、数字の前に "abc" がないことを保証します:
+    - ❌ "123" (前に "abc" がある)
+    - ✅ "23" (前に "abc1" がある)
+    - ✅ "456" (前に "def" がある)
 
-    現代のJavaScriptエンジンでは後方参照がサポートされています。この例は固定長の後方参照（`abc` は常に3文字）を使用しています。可変長の後方参照はエンジン依存の複雑なエッジケースです。
+    JavaScript はモダンエンジンで後方参照アサーションをサポートしています。この例は固定長の後方参照を使用しています: `abc` は常に3文字です。可変長の後方参照はエンジン依存でやや難しいです。
 
-    注：後方参照のサポートはJavaScriptで比較的新しく、古いブラウザをサポートする必要がある場合は[ブラウザの互換性](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#browser_compatibility)を確認してください。
+    注意: 後方参照のサポートは JavaScript では比較的新しい機能です。古いブラウザをサポートする必要がある場合は、[ブラウザ互換性](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#browser_compatibility) を確認してください。
   </div>
   </slot>
 </Challenge>
@@ -307,8 +307,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={8}
-  group="基本的なマッチング"
-  title="キャプチャリンググループ"
+  group="基本マッチング"
+  title="キャプチャグループ"
   options={[
     {text: '["2029-12-31"]'},
     {text: '["2029", "12", "31"]', isAnswer: true},
@@ -318,7 +318,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    このコードは何を返す？
+    このコードは何を返しますか？
     ```js
         '2029-12-31'.match(/(\d{4})-(\d{2})-(\d{2})/).slice(1)
     ```
@@ -326,18 +326,18 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    このパターンは3つのキャプチャグループを使用しています：
+    このパターンは3つのキャプチャグループを使用します:
     1. `(\d{4})` は年をキャプチャ
     2. `(\d{2})` は月をキャプチャ
     3. `(\d{2})` は日をキャプチャ
 
-    `match()` メソッドはグローバルフラグが指定されていない場合：
-    - インデックス0: 完全なマッチ
-    - インデックス1+: キャプチャグループ
+    `g` フラグなしの `match()` は次を返します:
+    - インデックス0: 完全一致
+    - インデックス1以降: キャプチャグループ
 
-    `slice(1)` はキャプチャグループだけを取得するためのよく使われるテクニックです。
+    `slice(1)` はキャプチャグループだけを取得する一般的なテクニックです。
 
-    [グループとキャプチャの詳細](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Groups_and_Backreferences)
+    [グループとキャプチャの詳細はこちら](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Groups_and_Backreferences)
   </div>
   </slot>
 </Challenge>
@@ -345,8 +345,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={9}
-  group="先行検査"
-  title="否定の先行検査"
+  group="先読み"
+  title="否定的先読み"
   options={[
     {text: '["password123"]'},
     {text: '["abc123"]'},
@@ -358,7 +358,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    この結果はどれになるでしょうか？
+    これの結果はどれですか？
     ```js
         "123aBc".match(/^\d+(?![a-z])/ig)
     ```
@@ -366,9 +366,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    否定の先行検査`(?![a-z])`は、数字の後に小文字アルファベットが含まれていないことを確認します。`"3aBc"`部分には数字の後に小文字が含まれているためマッチしません。そのため先頭の`"12"`のみがマッチします。
+    否定的先読み `(?![a-z])` は、数字の後に小文字がないことを保証します。"3aBc" の部分は数字の後に小文字があるためマッチしません。したがって、先頭の "12" のみがマッチします。
 
-    [否定の先行検査について詳しく学ぶ](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
+    [否定的先読みの詳細はこちら](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
   </div>
   </slot>
 </Challenge>
@@ -376,8 +376,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={10}
-  group="Look-behind"
-  title="Look-behind（後方検索）による分割"
+  group="後方参照"
+  title="後方参照で分割"
   options={[
     {text: '["a,", "b,", "c"]', isAnswer: true},
     {text: '["a,b,c"]'},
@@ -387,7 +387,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    返される値は？
+    返されるのは何ですか？
     ```js
         'a,b,c'.split(/(?<=,)/)
     ```
@@ -395,16 +395,16 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    パターン `/(?<=,)/` はコンマの後にマッチする後方検索です：
-    - `a,`（コンマの直後）
-    - `b,`（コンマの直後）
-    - `c`（コンマがない）
+    パターン `/(?<=,)/` は、カンマの後にマッチする後方参照です:
+    - `a,`（カンマの後）
+    - `b,`（カンマの後）
+    - `c`（カンマが後ろにない）
 
-    後方検索はコンマを消費しないため、`split` の結果にコンマが含まれた状態で保持されます。
+    後方参照はカンマを消費しないため、分割結果ではカンマが前のセグメントに残ります。
 
-    これは**分割文字自体を保持したまま文字列を分割**したい場合に役立ちます。
+    文字列を前にある文字で分割したいが、**分割文字を失わずに**したい場合に便利です。
 
-    [後方検索アサーションの詳細はこちら](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
+    [後方参照アサーションについて詳しく読む](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
   </div>
   </slot>
 </Challenge>
@@ -415,7 +415,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="よくある落とし穴"
   title="特殊文字のエスケープ"
   options={[
-    {text: '["$100"]', hint: '特殊文字をエスケープしていないパターンです'},
+    {text: '["$100"]'},
     {text: '["100"]'},
     {text: '[]'},
     {text: 'null', isAnswer: true},
@@ -432,17 +432,17 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    特殊文字をリテラルとしてマッチさせるには`\`でエスケープする必要があります:
-    - `$`は特殊文字（文字列の終わりを表す）
-    - リテラルのドル記号をマッチさせるにはエスケープ: `\$`
+    特殊文字は文字通りマッチさせるために `\\` でエスケープする必要があります:
+    - `$` は特殊文字（文字列の終端）です
+    - リテラルのドル記号にマッチさせるにはエスケープします: `\\$`
 
-    エスケープが必要なよくある特殊文字:
+    エスケープが必要な一般的な文字:
     ```js
         . * + ? ^ $ [ ] \ ( ) { } |
     ```
-    エスケープしないと、多くの特殊文字が正規表現での特殊な意味を持つため、意図しないマッチが起こることがあります。
+    エスケープしないと、多くの特殊文字は正規表現上の意味を持ち、期待通りに動かないことがあります。
 
-    [特殊文字のエスケープについて詳しくは](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#escaping)
+    [特殊文字のエスケープについて詳しく読む](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#escaping)
   </div>
   </slot>
 </Challenge>
@@ -450,8 +450,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={12}
-  group="後方参照"
-  title="肯定的な後方参照"
+  group="後読み"
+  title="正の後読み"
   options={[
     {text: '["$100"]'},
     {text: '["100"]', isAnswer: true},
@@ -469,14 +469,14 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    肯定的な後方参照`(?<=\$)`により、ドル記号の後に続く数字がマッチします：
-    - `(?<=\$)`: ドル記号の後方参照
-    - `\d+`: 1つ以上の数字をマッチ
+    正の後読み `(?<=\$)` は、数字の前にドル記号があることを保証します:
+    - `(?<=\$)`: ドル記号の後読み
+    - `\d+`: 1つ以上の数字にマッチ
 
-    後方参照のアサーションは文字を消費しません。単に文字の前が何であるかをチェックするだけです。
-    これは、文字列の前部分を含めずに特定のパターンをマッチさせたいときに役立ちます。
+    後読みアサーションは文字を消費せず、前方の文字だけをチェックします。
+    前の部分を含めずに、直前の文字に基づいて何かをマッチさせたいときに便利です。
 
-    [後方参照のアサーションについてさらに学ぶ](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
+    [後読みアサーションの詳細はこちら](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
   </div>
   </slot>
 </Challenge>
@@ -484,8 +484,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={13}
-  group="基本的なマッチング"
-  title="遅延と貪欲な量指定子"
+  group="基本マッチング"
+  title="遅延 vs 貪欲量指定子"
   options={[
   ]}
 >
@@ -499,17 +499,17 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    このパターンは`*?`を使用した遅延マッチングを行います：
-    - `<b>`: 開始タグをマッチ
+    パターンは `*?` を使った遅延マッチングです:
+    - `<b>`: 開始タグにマッチ
     - `(.*?)`: 任意の文字をキャプチャ（遅延）
-    - `</b>`: 終了タグをマッチ
+    - `</b>`: 終了タグにマッチ
 
-    `*`の後に`?`がつくことで遅延マッチングとなり、できるだけ少ない文字数をマッチします。
-    `?`がなければ貪欲マッチングとなり、できるだけ多くの文字をマッチします。
+    `*` の後の `?` が遅延にし、できるだけ少ない文字にマッチします。
+    `?` がなければ貪欲になり、可能な限り多くの文字にマッチします。
 
-    `slice(1)`はキャプチャされたグループのみを返します。
+    `slice(1)` はキャプチャされたグループだけを返します。
 
-    [貪欲と非貪欲（遅延）マッチングについて詳しく](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)
+    [貪欲と遅延マッチングの詳細](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)
   </div>
   </slot>
 </Challenge>
@@ -517,8 +517,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={14}
-  group="基本的な一致"
-  title="ユニコードフラグ"
+  group="基本マッチング"
+  title="Unicode フラグ"
   options={[
     {text: '["🙂"]'},
     {text: '["😀", "🙂"]', isAnswer: true},
@@ -528,7 +528,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    何が一致する？
+    何がマッチしますか？
     ```js
         '😀 🙂'.match(/\p{Emoji}/gu)
     ```
@@ -536,16 +536,16 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `u`フラグは次を有効化します：
-    - ユニコードプロパティエスケープ(`\p{...}`)
+    `u` フラグは以下を有効にします：
+    - Unicode プロパティエスケープ（`\p{...}`）
     - サロゲートペアの正しい処理
 
-    `u`フラグがないと、絵文字や他のユニコード文字が正しく一致しない可能性があります。
-    パターン`\p{Emoji}`はユニコード`Emoji`プロパティを持つ文字に一致します。この文字列では、2つの絵文字絵文字が該当します。
+    `u` がないと、絵文字やその他の Unicode 文字が正しくマッチしない可能性があります。
+    パターン `\p{Emoji}` は Unicode の `Emoji` プロパティを持つ文字にマッチします。この文字列では、2つの絵文字ピクトグラムを指します。
 
-    注：ユニコードプロパティエスケープは`u`フラグが必要です。
+    注意: Unicode プロパティエスケープは `u` フラグが必要です。
 
-    [ユニコードモードの詳細はこちら](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Unicode_Property_Escapes)
+    [Unicode モードの詳細はこちら](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Unicode_Property_Escapes)
   </div>
   </slot>
 </Challenge>
@@ -553,8 +553,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={15}
-  group="地獄を見よ"
-  title="パスワードの検証"
+  group="地獄を覗く"
+  title="パスワード検証"
   options={[
     {text: '"sassword123"'},
     {text: '"Sass123!"', isAnswer: true},
@@ -564,8 +564,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    ごめんね！😈<br />
-    どのパスワードがこのパターンに一致しますか？
+    事前に謝ります！ 😈<br />
+    このパターンにマッチするパスワードはどれですか？
     ```js
         /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/
     ```
@@ -573,26 +573,26 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    本番環境でこんな書き方をしないでね！😅
+    本番環境でこんなことは絶対書かないでね！ 😅
 
-    このパターンは複数の肯定の先行断定を使って以下を強制しています：
-    - 大文字を1文字以上含む：`(?=.*[A-Z])`
-    - 小文字を1文字以上含む：`(?=.*[a-z])`
-    - 数字を1文字以上含む：`(?=.*\d)`
-    - 特殊文字を1文字以上含む：`(?=.*[!@#$%^&*])`
-    - 最小文字数8文字：`.{8,}`
+    このパターンは複数のポジティブ・ルックアヘッドを使って以下を強制します:
+    - 少なくとも1つの大文字: `(?=.*[A-Z])`
+    - 少なくとも1つの小文字: `(?=.*[a-z])`
+    - 少なくとも1つの数字: `(?=.*\d)`
+    - 少なくとも1つの特殊文字: `(?=.*[!@#$%^&*])`
+    - 最低8文字: `.{8,}`
 
-    パスワード検証には先行断定が最適です。複数の条件を文字を消費することなくチェックできるからです。
+    ルックアヘッドは文字を消費せずに複数条件をチェックできるので、パスワード検証に最適です。
 
-    [パスワード検証パターンについてもっと学ぶ](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
+    [パスワード検証パターンの詳細はこちら](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
   </div>
   </slot>
 </Challenge>
 
 </QuizUI>
 
-<h2>どうでしたか？🧐</h2>
+<h2>結果はどうでしたか？ 🧐</h2>
 
-正規表現は馴染みにくい存在ですが、使いこなせると非常に強力です（特に新しい構文を習得すれば）。継続的に練習していれば、すぐに正規表現のマスターになれますよ！🧙‍♂️
+正規表現は手ごわい相手ですが、使いこなせば（特に最新構文を覚えれば）非常に強力です。練習を続ければ、すぐに正規表現の達人になれます！ 🧙‍♂️
 
-<p class="inset">これだけの正規表現で疲れた？<br />Pftt、スキルを身につけた後に休憩しましょう！<br /><br />[私のジム](/challenges/)に突撃して、さらにチャレンジを倒しましょう！💪</p>
+<p class="inset">正規表現で頭がいっぱいになったら、一息入れませんか？<br />でも覚えておいてください：スキルの後に休憩です！ <br /><br />もっと挑戦したいなら、[my gym](/challenges/) へ行ってさらなる課題をクリアしましょう！ 💪</p>
