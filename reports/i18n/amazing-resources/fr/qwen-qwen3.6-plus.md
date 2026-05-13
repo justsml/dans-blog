@@ -1,0 +1,211 @@
+# Translation Candidate
+- Slug: amazing-resources
+- Locale: fr
+- Model: qwen/qwen3.6-plus
+- Target: src/content/posts/2015-02-26--amazing-resources/fr/index.mdx
+- Validation: rejected: direct AI SDK translation failed
+- Runtime seconds: 240.01
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Cache write tokens: unknown
+- Estimated cost: unknown
+- Pricing source: unknown
+- Note: Command failed after 240000ms: bun run i18n:translate:chunked -- --slug amazing-resources --locale fr --model qwen/qwen3.6-plus --chunk 6p --quiz-concurrency 24
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: Meilleures ressources UI gratuites pour développeurs
+subTitle: >-
+  Une sélection 2026 de kits UI, blocs Tailwind, icônes, polices, illustrations,
+  animations et outils de design pour créer des sites web soignés plus
+  rapidement.
+date: '2015-02-26'
+modified: '2026-04-29'
+category: Code
+subCategory: design
+tags:
+  - development
+  - design
+  - resources
+  - ui
+  - tailwind
+  - icons
+  - patterns
+cover_full_width: ../carl-heyerdahl-181868-unsplash.webp
+cover_mobile: ../w300_carl-heyerdahl-181868-unsplash.webp
+cover_icon: ../icon_carl-heyerdahl-181868-unsplash.webp
+---
+Si vous créez des sites web ou des applications et souhaitez qu'ils aient un aspect plus soigné sans passer des jours à réinventer des motifs courants, voici la liste que je vous remettrais.
+
+Elle se concentre sur les ressources de conception d'interface utilisateur gratuites pour les développeurs : bibliothèques de composants, blocs Tailwind, icônes, illustrations, outils de couleur, sources de polices, bibliothèques d'animation et utilitaires pratiques qui vous aident à livrer plus rapidement.
+
+La plupart des liens ici sont gratuits, open source, ou disposent d'un niveau gratuit réellement utile.
+
+> Dernière mise à jour : 2026-04-29
+
+## Sommaire
+
+1. [Commencer ici](#start-here)
+2. [Composants d'interface, blocs et modèles](#ui-components-blocks-and-templates)
+3. [Outils de conception et d'édition d'images](#design-and-image-editing-tools)
+4. [Polices et outils de couleur](#fonts-and-color-tools)
+5. [Animation et interaction](#animation-and-interaction)
+6. [Icônes et illustrations](#icons-and-illustrations)
+7. [Photos et hébergement de sites web](#photos-and-website-hosting)
+8. [Ressources CSS, UX et workflow utiles](#helpful-css-ux-and-workflow-resources)
+9. [Conseils de licence et d'utilisation](#licensing-and-usage-tips)
+
+## Commencez ici
+
+Si vous n'avez besoin que de quelques choix fiables, commencez par ceux-ci :
+
+- Pour des blocs React ou Tailwind UI soignés : [Aceternity UI](https://ui.aceternity.com/components), [Shadcnblocks](https://www.shadcnblocks.com/blocks) et [Tailark](https://tailark.com/blocks?licences=free).
+- Pour les interfaces de produits IA et les motifs de chat : [Assistant UI](https://www.assistant-ui.com/) et [AI SDK Elements: Chain of Thought](https://elements.ai-sdk.dev/components/chain-of-thought).
+- Pour les icônes : [Lucide](https://lucide.dev/), [Iconoir](https://iconoir.com) et [Simple Icons](https://simpleicons.org/).
+- Pour les illustrations : [ManyPixels](https://www.manypixels.co/gallery/), [DrawKit Free](https://www.drawkit.io/free) et [Humaaans](https://www.humaaans.com/).
+- Pour les polices : [Fontsource](https://fontsource.org) et [Google Fonts](https://fonts.google.com/).
+- Pour la couleur et l'accessibilité : [Coolors](https://coolors.co/), [Adobe Color](https://color.adobe.com/create/color-wheel/) et [WebAIM Contrast Checker](https://webaim.org/resources/contrastchecker/).
+
+## Composants UI, blocs et modèles
+
+Voici la section que la plupart des gens recherchent vraiment : modèles de sites web, sections hero, squelettes d'application, blocs Tailwind et composants UI que vous pouvez adapter au lieu de concevoir à partir d'une toile vierge.
+
+### IA et UI de chat
+
+- [Assistant UI](https://www.assistant-ui.com/) — Composants d'interface de chat IA open source pour les applications React.
+- [AI SDK Elements: Chain of Thought](https://elements.ai-sdk.dev/components/chain-of-thought) — Un motif d'interface de chat de type raisonnement propre pour les produits IA.
+
+### Blocs, sections et composants
+
+- [Aceternity UI](https://ui.aceternity.com/components) — Composants React et Tailwind haut de gamme avec une forte personnalité visuelle.
+- [reui Collapsible](https://reui.io/components/collapsible) — Motifs d'interface pliables et accordéon propres pour les interfaces React.
+- [Shadcnblocks](https://www.shadcnblocks.com/blocks) — Sections et blocs prêts à l'emploi construits autour de l'écosystème shadcn.
+- [Tailark](https://tailark.com/blocks?licences=free) — Blocs Tailwind gratuits pour les sites marketing et les pages produit.
+- [Tool UI](https://www.tool-ui.com/) — Blocs et composants d'interface modernes pour applications et pages d'atterrissage.
+- [CSS Layout](https://csslayout.io/patterns) — Motifs de mise en page copier-coller pour les structures de sites courantes.
+
+### Modèles complets et inspiration
+
+- [HTML5 UP](https://html5up.net) — Superbes modèles HTML responsives.
+- [Creative Tim Free React Templates](https://www.creative-tim.com/templates/react-free) — Tableaux de bord, kits et modèles de type admin React gratuits.
+- [Awesome Landing Page](https://github.com/nordicgiant2/awesome-landing-page) — Modèles et exemples de pages d'atterrissage organisés.
+
+## Outils de conception et d'édition d'images
+
+Pour les maquettes, graphismes, captures d'écran, retouche d'image légère ou travail de conception rapide dans le navigateur.
+
+- [Photopea](https://www.photopea.com/) — Édition de type Photoshop directement dans le navigateur.
+- [Penpot](https://penpot.app/) — Conception et prototypage open-source.
+- [Corel Vector / Gravit Designer](https://designer.gravit.io/) — Conception vectorielle dans le navigateur avec un niveau gratuit.
+- [Boxy SVG](https://boxy-svg.com/) — Éditeur SVG spécialisé pour les navigateurs Chromium et WebKit.
+- [VectorInk](https://vectorink.io/app/) — Dessin vectoriel et illustration dans le navigateur.
+- [SVGOMG](https://jakearchibald.github.io/svgomg/) — Optimisez et nettoyez les fichiers SVG avant de les livrer.
+- [Pixlr X](https://pixlr.com/x/) — Retouche d'image en ligne rapide quand vous n'avez pas besoin d'une application de conception complète.
+
+## Polices et outils de couleur
+
+Les choix typographiques et de couleur ont un impact démesuré sur le fait qu'une UI semble délibérée ou générique.
+
+### Polices
+
+- [Fontsource](https://fontsource.org) — Hébergez vous-même des polices open-source avec des installations basées sur des paquets.
+- [Google Fonts](https://fonts.google.com/) — Le catalogue de polices classique.
+- [Fontpair](https://fontpair.co/fonts/) — Inspiration pour l'association de polices quand vous voulez une décision plus rapide.
+- [The Stocks](http://thestocks.im/) — Agrège polices, icônes, photos et autres ressources créatives.
+
+### Couleur et contraste
+
+- [Adobe Color](https://color.adobe.com/create/color-wheel/) — Roue chromatique classique et outils d'harmonie.
+- [Coolors](https://coolors.co/) — Générez, verrouillez et ajustez des palettes rapidement.
+- [Color Hunt](https://colorhunt.co/) — Inspiration de palettes organisées.
+- [Paletton](https://paletton.com/) — Générateur de schémas de couleurs avec aperçus.
+- [WebAIM Contrast Checker](https://webaim.org/resources/contrastchecker/) — Vérifiez les ratios de contraste WCAG.
+- [Contrast Ratio](https://contrast-ratio.com/) — Test de contraste rapide avec une interface plus propre.
+
+## Animation et interaction
+
+Utilisez-les lorsque les mises en page statiques semblent plates et que vous avez besoin de meilleurs mouvements, d'états de survol ou d'une navigation plus vivante.
+
+- [GSAP](https://greensock.com/gsap) — Le cheval de bataille de l'industrie pour les animations UI complexes.
+- [Anime.js](https://animejs.com/) — Moteur d'animation JavaScript puissant avec une courbe d'apprentissage plus douce.
+- [Animate.css](https://animate.style/) — Animations prédéfinies rapides pour des entrées et retours simples.
+- [Hover.css](https://ianlunn.github.io/Hover/) — Interactions de survol prêtes à l'emploi et micro-effets.
+- [Magic Animations](https://www.minimamente.com/project/magic/) — Animations CSS prédéfinies.
+- [Bounce.js](https://bouncejs.com/) — Génération d'images clés de type ressort. Archivé, mais toujours utile pour l'inspiration.
+- [Hamburgers](https://github.com/jonsuh/hamburgers) — Animations de menu hamburger accessibles.
+- [Best Snip SVG Animator](https://bestsnip.com/svg_animation/) — Outil web simple pour animer des SVG.
+- [KokonutUI: Flow Field](https://kokonutui.com/docs/backgrounds/flow-field) — Recette d'arrière-plan animé avec un fort rendu visuel.
+- [KokonutUI: Smooth Tab](https://kokonutui.com/docs/navigation/smooth-tab) — Modèle de navigation par onglets fluide que vous pouvez adapter pour l'UI d'application.
+
+## Icônes et illustrations
+
+Ce sont les ressources les plus faciles à mal utiliser. Privilégiez une famille visuelle cohérente plutôt que de mélanger cinq styles dans une même interface.
+
+### Icônes
+
+- [Lucide](https://lucide.dev/) — Icônes propres et open-source, un excellent choix par défaut.
+- [Iconoir](https://iconoir.com) — Grand ensemble d'icônes SVG gratuites au rendu légèrement plus doux.
+- [Simple Icons](https://simpleicons.org/) — Icônes de marques pour produits et liens sociaux.
+- [Phosphor Icons](https://phosphoricons.com/) — Famille d'icônes flexible pour interfaces et applications.
+- [IcoMoon App](https://icomoon.io/app/#/select) — Créez un jeu d'icônes personnalisé et exportez des bundles SVG ou PNG.
+- [Font Awesome Free Search](https://fontawesome.com/v6/search?o=r&m=free) — Utile quand vous avez besoin de variété plus que de personnalité.
+- [The Noun Project](https://thenounproject.com) — Bibliothèque d'icônes massive avec de nombreux objets et concepts de niche.
+- [SVG Repo](https://www.svgrepo.com/) — Énorme bibliothèque SVG communautaire. La qualité varie, donc à trier avec soin.
+
+### Illustrations et personnages
+
+- [Humaaans](https://www.humaaans.com/) — Illustrations modulaires de personnages pour pages produit et marketing.
+- [ManyPixels](https://www.manypixels.co/gallery/) — Bibliothèque d'illustrations fréquemment mise à jour.
+- [DrawKit Free](https://www.drawkit.io/free) — Packs d'illustrations gratuits de haute qualité.
+- [Open Doodles Generator](https://generator.opendoodles.com/) — Doodles génératifs au style dessiné à la main et ludique.
+- [Illlustrations](https://illlustrations.co/) — Style d'illustration dessiné à la main avec une ambiance décontractée.
+- [Icons8 Illustrations](https://icons8.com/illustrations) — Packs d'illustrations gratuits dans plusieurs styles.
+- [Isometric](https://isometric.online/) — Illustrations et assets isométriques.
+- [React Kawaii](https://react-kawaii.vercel.app/#/Components) — Composants SVG mignons de personnages.
+
+## Photos et hébergement de sites web
+
+Ces ressources sont moins centrées sur les systèmes d’UI et plus sur le fait de mener un projet à son terme.
+
+### Photos
+
+- [Unsplash](https://unsplash.com/) — Photos libres de droits de haute qualité, sous licence permissive.
+- [Pexels](https://www.pexels.com/) — Photos et vidéos gratuites.
+- [Women of Color in Tech](https://www.flickr.com/photos/wocintechchat/) — Imagerie plus authentique du milieu professionnel et technologique.
+- [The Stocks](http://thestocks.im/) — Toujours pratique comme agrégateur quand on veut des options rapidement.
+
+### Hébergement de sites web
+
+- [Netlify](https://www.netlify.com/) — Excellente DX pour les sites statiques et les projets lourds en front-end.
+- [Vercel](https://vercel.com/) — Bon choix par défaut pour les apps front-end, les aperçus et les fonctionnalités edge.
+- [GitHub Pages](https://pages.github.com/) — Hébergement statique simple et gratuit.
+- [Render](https://render.com/) — Utile quand on a besoin d’hébergement statique plus de services ou de tâches cron.
+- [Surge](https://surge.sh/) — Hébergement statique extrêmement simple depuis la CLI.
+
+## Ressources utiles pour CSS, UX et le workflow
+
+Des outils petits mais pratiques qui résolvent rapidement des problèmes front-end spécifiques.
+
+- [Shadow Designer](https://brumm.af/shadows) — Génère des ombres superposées qui rendent mieux que l'approche par défaut « flouter et prier ».
+- [Clippy](https://bennettfeely.com/clippy/) — Générateur de `clip-path` CSS.
+- [UX Design Glossary](https://www.qualtrics.com/blog/ux-design-glossary/) — Utile quand on veut un meilleur vocabulaire pour expliquer des décisions de conception.
+- [Coding Heroes Resources](http://codingheroes.io/resources/) — Une sélection plus large de ressources créatives.
+
+## Conseils de licence et d'utilisation
+
+- Ne supposez pas que « gratuit » signifie « pas d'attribution ». Vérifiez chaque licence avant de livrer un projet client.
+- Attention aux restrictions de marque déposée lors de l'utilisation de logos, marques ou icônes d'applications dans des templates.
+- Exportez en SVG quand c'est possible pour que les icônes et illustrations restent nettes et soient plus faciles à thématiser.
+- Gardez des familles d'icônes cohérentes. Une icône Lucide propre à côté d'un SVG de marketplace cartoonish a généralement l'air accidentel.
+- Testez toujours le contraste du texte. Beaucoup de palettes « magnifiques » s'effondrent sur du corps de texte réel.
+- Considérez les illustrations stock comme de la matière première. Un peu d'édition va loin pour éviter ce sentiment de template copié.
+
+---
+
+Changelog : 2026-04 — Réorganisation de la page pour les humains et le SEO, amélioration des titres et descriptions, ajout d'Assistant UI, AI SDK Elements, Aceternity UI, Shadcnblocks, Tailark, KokonutUI patterns et Tool UI.
+Changelog : 2025-09 — Mise à jour des liens, rafraîchissement des ressources plus anciennes, ajout d'outils modernes d'icônes, de contraste et de conception.
+````
