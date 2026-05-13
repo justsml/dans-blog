@@ -1,0 +1,44 @@
+{
+  "index": 8,
+  "attempt": 1,
+  "originalTitle": "File Watching",
+  "translatedTitle": "ファイルの監視",
+  "translation": {
+    "title": "ファイルの監視",
+    "group": "ファイルシステム",
+    "options": [
+      {
+        "text": "ファイル変更ごとに1回"
+      },
+      {
+        "text": "保証されていない；複数回発生する可能性あり"
+      },
+      {
+        "text": "決してない"
+      },
+      {
+        "text": "ファイル削除時のみ"
+      }
+    ],
+    "questionProse": [
+      "ファイルが変更されたときに`fs.watch()`が保証された回数はどのくらいですか？"
+    ],
+    "explanationProse": [
+      "`fs.watch()`は論理的なファイル変更ごとに正確に1回発生することを保証されていません。多くのテキストエディタが以下のように動作するため、通常は複数回発生します：\n    1. 一時ファイルに保存\n    2. そのファイルをターゲットファイルにリネーム\n\n    より信頼性の高い監視には以下を検討してください：\n    - `chokidar`パッケージ\n    - コールバックのデバウンス処理\n    - `fs.watchFile()`の使用（ただし効率が悪い）\n\n    [fs.watch()の詳細はこちら](https://nodejs.org/api/fs.html#fswatchfilename-options-listener)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"ファイルの監視\",\n  \"group\": \"ファイルシステム\",\n  \"options\": [\n    {\n      \"text\": \"ファイル変更ごとに1回\"\n    },\n    {\n      \"text\": \"保証されていない；複数回発生する可能性あり\"\n    },\n    {\n      \"text\": \"決してない\"\n    },\n    {\n      \"text\": \"ファイル削除時のみ\"\n    }\n  ],\n  \"questionProse\": [\n    \"ファイルが変更されたときに`fs.watch()`が保証された回数はどのくらいですか？\"\n  ],\n  \"explanationProse\": [\n    \"`fs.watch()`は論理的なファイル変更ごとに正確に1回発生することを保証されていません。多くのテキストエディタが以下のように動作するため、通常は複数回発生します：\\n    1. 一時ファイルに保存\\n    2. そのファイルをターゲットファイルにリネーム\\n\\n    より信頼性の高い監視には以下を検討してください：\\n    - `chokidar`パッケージ\\n    - コールバックのデバウンス処理\\n    - `fs.watchFile()`の使用（ただし効率が悪い）\\n\\n    [fs.watch()の詳細はこちら](https://nodejs.org/api/fs.html#fswatchfilename-options-listener)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 774,
+    "outputTokens": 704,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 7791
+  },
+  "cost": {
+    "inputUsd": 0.00006192,
+    "outputUsd": 0.00016895999999999998,
+    "totalUsd": 0.00023087999999999998,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

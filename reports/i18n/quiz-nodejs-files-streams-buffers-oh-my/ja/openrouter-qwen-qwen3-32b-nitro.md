@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-nodejs-files-streams-buffers-oh-my
+- Locale: ja
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2024-11-15--quiz-nodejs-files-streams-buffers-oh-my/ja/index.mdx
+- Validation: deferred
+- Runtime seconds: 124.53
+- Input tokens: 13105
+- Output tokens: 14619
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.004557
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: 'クイズ: NodeJS I/O マスター'
@@ -596,3 +614,4 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 </QuizUI>
 
 Node.jsのIOに関する知識を試すことに楽しんでいただけたでしょうか？もっと挑戦したい方は、私の[クイズコレクション](../challenges/)をご覧ください。
+````
