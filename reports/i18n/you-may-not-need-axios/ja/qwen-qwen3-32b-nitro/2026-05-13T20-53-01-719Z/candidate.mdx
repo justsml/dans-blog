@@ -1,0 +1,206 @@
+---
+social_image: ../desktop-social.webp
+title: Axiosは必要ないかもしれない
+subTitle: Fetch APIが助っ人登場！
+date: '2018-11-14'
+modified: '2024-08-21'
+tags:
+  - programming
+  - patterns
+  - examples
+  - nodejs
+  - javascript
+  - promises
+  - axios
+  - fetch
+category: Guides
+subCategory: fetch
+cover: ../brock-dupont-575648-unsplash.webp
+cover_mobile: ../w300_brock-dupont-575648-unsplash.webp
+cover_icon: ../icon_brock-dupont-575648-unsplash.webp
+---
+import Gist from '../../../../components/Gist/index.astro'
+
+## Axiosは必要ないかもしれません
+
+<p class="breakout call-to-action">これは[Axios](https://www.npmjs.com/package/axios)への**攻撃ではありません**。<br />
+
+むしろ、**十分に機能的な`fetch` APIを活用する提案**です。🦄</p>
+
+### 概要
+
+本記事は、`fetch`で実現可能な「見逃しやすい」コードスニペットやよくあるユースケースを集めたものです。
+
+- [概要](#overview)
+- [機能比較](#feature-comparison)
+- [Fetchレシピ](#fetch-recipes)
+  - [URLからのJSON取得](#get-json-from-a-url)
+  - [カスタムヘッダー](#custom-headers)
+  - [HTTPエラーハンドリング](#http-error-handling)
+  - [CORS例](#cors-example)
+  - [JSONの投稿](#posting-json)
+  - [HTML `<form>`の投稿](#posting-an-html-form)
+  - [フォームエンコードデータ](#form-encoded-data)
+  - [ファイルのアップロード](#uploading-a-file)
+  - [複数ファイルのアップロード](#uploading-multiple-files)
+  - [タイムアウト](#timeouts)
+  - [ダウンロード進捗ヘルパー](#download-progress-helper)
+  - [再試行用リカバリーヘルパー](#recursive-retry-helper)
+  - [HTTPリダイレクトの処理](#handling-http-redirects)
+  - [Fetchリクエストのキャンセル](#canceling-a-fetch-request) ✨新機能✨
+- [互換性](#compatibility)
+
+> ご自分のユースケースがリストにない場合は[/contact/](/contact/)より教えてください✉️
+
+<br />
+
+### 機能比較
+
+|                                                 | fetch    | axios    | request |
+|-------------------------------------------------|:--------:|:--------:|:-------:|
+| リクエストとレスポンスのインターセプト        |✅        |✅         |✅       |
+| リクエストとレスポンスデータの変換             |✅        |✅         |✅       |
+| リクエストのキャンセル                          |✅        |✅         |❌       |
+| JSONデータの自動変換                            |手動ヘルパー |✅         |✅       |
+| XSRF対策のクライアント側サポート              |✅        |✅         |✅       |
+| 進捗状況                                        |✅        |✅         |✅       |
+| ストリーミング                                  |✅        |✅         |✅       |
+| リダイレクトの処理                              |✅        |✅         |✅       |
+
+<br /><br />
+
+この記事を始めた当初（2018年末、2024年更新）は、最終的にチェックボックスが混在した表になるだろうと考えていました。確かに[`axios`](https://www.npmjs.com/package/axios)、[`request`](https://www.npmjs.com/package/request)、[`r2`](https://www.npmjs.com/package/r2)、[`superagent`](https://www.npmjs.com/package/superagent)、[`got`](https://www.npmjs.com/package/got)などの特別なユースケースが存在するだろうと。
+
+しかし結論として、**第三者HTTPライブラリの必要性を過大評価していた**ことがわかりました。
+
+`fetch`を数年間使用してきました（非自明なタスク：ファイルアップロードやエラーリトライのサポートを含む）にもかかわらず、`fetch`の能力や制限について誤解がありました。
+
+ネイティブの`fetch`はJSONレスポンスを自動的にパースしたり、JSONリクエストボディを文字列化したりしません。戻り際に`response.json()`を呼び出し、送信時に`JSON.stringify()`を使用します。Axiosはこの点でエラゴノミクスに勝っていますが、`fetch`の利点は小さなヘルパーでこのギャップをカバーできることです。
+
+では、`fetch`が何ができるか見てみましょう...
+
+## Fetchレシピ
+
+### URLからJSONを取得
+
+<Gist path='justsml/de941bd61cc86e30beedbb8a3a646f81'></Gist>
+
+### カスタムヘッダー
+
+<Gist path='justsml/fca7cd72ec1ebc07d994eac13a665ddf' />
+
+### HTTPエラーハンドリング
+
+<Gist path='justsml/81919a72897ebc503c6b34a556a9bde2' />
+
+### CORSの例
+
+CORSは主にサーバー側でチェックされますので、サーバー側の設定が正しいことを確認してください。
+
+`credentials`オプションはクッキーが自動的に含まれるかどうかを制御します。
+
+<Gist path='justsml/3ddd9ed8705f48cdf45d313d1e57aa2a' />
+
+### JSONの投稿
+
+<Gist path='justsml/13915347d6c8413c73f4bd7240c68e51' />
+
+### HTML `<form>` の投稿
+
+<Gist path='justsml/ef2e356bec0ef7c6e528d84a5f75ba7e' />
+
+### フォームエンコードデータ
+
+`Content-Type` が `application/x-www-form-urlencoded` となるデータを投稿するには、`URLSearchParams` を使用してクエリ文字列のようにデータをエンコードします。
+
+たとえば、`new URLSearchParams({a: 1, b: 2})` は `a=1&b=2` となります。
+
+<Gist path='justsml/716c4534ef4afb22f65d4fc4367c7136' />
+
+### ファイルのアップロード
+
+<Gist path='justsml/301f22aa37df565ba3051bd5f95b4df1' />
+
+### 複数ファイルのアップロード
+
+`multiple` 属性を使用してファイルアップロード要素を設定します：
+
+<Gist path='justsml/37836357041d8ca4d1b32e12638cb0ba' />
+
+次のように使用します：
+
+<Gist path='justsml/d17f50c36a5ddb70f584c0aa6de94237' />
+
+### タイムアウト
+
+以下は「部分適用（Partial Application）」パターンを使用した汎用的なPromiseタイムアウトです。任意のPromiseインターフェースで動作します。供給されたプロミスチェーンで多くの作業を行わないでください - 実行を継続するため、失敗が長期的なメモリリークを引き起こす可能性があります。
+
+<Gist path='justsml/f93b2ef6457b3e52eb995831b67cab85' />
+
+より複雑な例を以下に示します。追跡フラグ`__timeout`が含まれており、**コストのかかる作業をインターセプト**できます。
+
+<Gist path='justsml/5e492db8997a4f7e22e61b7486cbf273' />
+
+### ダウンロード進捗ヘルパー
+
+アップロード進捗は現在、Chrome以外で多少バグがあります。
+
+### 進捗ハンドラ
+
+以下に示すテクニックは、`fetch`呼び出しをクロージャでラップすることを回避します。👍
+
+`progressHelper`のインターフェースは以下の通りです（ソースは下記に掲載）。
+
+<Gist path='justsml/db5ccc55ffb93c75e04e014d1f553cfb' />
+
+使用例を見てみましょう：
+
+<Gist path='justsml/9bec219590ff50688972c1caff67c14b' />
+
+再利用可能な画像ダウンローダーは`getBlob()`のような形になるかもしれません：
+
+<Gist path='justsml/bef2dd7e630eb7642beb3e2be29489b2' />
+
+ちなみに、`Blob`とはバイナリ大規模オブジェクトです。
+
+以下の2つの使用パターンのいずれかを選びます（機能的には等価です）：
+
+<Gist path='justsml/6ad9e37a96ad1f3a75ca509038510a5b' />
+
+私の好みは`オプション#1`です。ただし、スコープ設計によっては`オプション#2`の使用を余儀なくされる場合があります。
+
+最後に、このレシピの最後の部分、私たちの`progressHelper`を紹介します：
+
+##### ソース: Progress Helper
+
+<Gist path='justsml/a8ffd810fc7e5a5295dfc898302ddbfc' />
+
+_クレジット:_ 特にAnthum Chris氏と彼の[素晴らしいProgress+FetchのPoC（こちらに掲載）](https://github.com/AnthumChris/fetch-progress-indicators)に感謝します。
+
+### 再帰的なリトライヘルパー
+
+<Gist path='justsml/7e52521a0af50fa590be57d5b4593120' />
+
+### HTTPリダイレクトの処理
+
+<Gist path='justsml/3dd0a799ada8da7cd15943ff254266de' />
+
+### fetchリクエストのキャンセル
+
+<Gist path='justsml/7f257ac3de3c7792db8485588c54e938' />
+
+### 互換性
+
+2022年現在、`fetch` APIは[すべての現代ブラウザ](https://caniuse.com/#feat=fetch)およびNodeJS v18+の最新バージョンで広くサポートされています。
+
+IEをサポートしなければならない場合は、GitHubの素晴らしいチームがメンテナンスする[`github/fetch`](https://github.com/github/fetch#browser-support)パッケージで`fetch`をポリフィルできます。[IE8](https://github.com/camsong/fetch-ie8)まで遡って使用することも可能です - _環境によって結果は異なります_。
+
+古いNodeJSバージョンでは、[`node-fetch`](https://www.npmjs.com/package/node-fetch)パッケージを使って`fetch` APIを利用できます：
+
+```sh
+npm install node-fetch
+```
+
+_ポリフィル+node-fetch後：99.99%互換性あり_ ✅
+
+> 他の_ユースケース_があれば、[私にツイート](https://x.com/justsml)してください。❤️
