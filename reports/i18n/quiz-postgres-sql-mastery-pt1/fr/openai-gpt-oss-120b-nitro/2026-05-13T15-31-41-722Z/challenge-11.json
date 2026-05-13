@@ -1,0 +1,44 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "Integer Overflow",
+  "translatedTitle": "Débordement d'entier",
+  "translation": {
+    "title": "Débordement d'entier",
+    "group": "Arithmétique des entiers",
+    "options": [
+      {
+        "text": "4294967296"
+      },
+      {
+        "text": "Error: integer out of range"
+      },
+      {
+        "text": "0"
+      },
+      {
+        "text": "2147483647"
+      }
+    ],
+    "questionProse": [
+      "Que se passe-t-il lors du calcul du nombre total d'ID étudiants ?"
+    ],
+    "explanationProse": [
+      "Le type `integer` de PostgreSQL est signé sur 32 bits, allant de `-2,147,483,648` à `2,147,483,647`.\n\nLe calcul `256^4` = `4,294,967,296` dépasse cette plage.\n\nPour gérer des nombres plus grands :"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Débordement d'entier\",\n  \"group\": \"Arithmétique des entiers\",\n  \"options\": [\n    {\n      \"text\": \"4294967296\"\n    },\n    {\n      \"text\": \"Error: integer out of range\"\n    },\n    {\n      \"text\": \"0\"\n    },\n    {\n      \"text\": \"2147483647\"\n    }\n  ],\n  \"questionProse\": [\n    \"Que se passe-t-il lors du calcul du nombre total d'ID étudiants ?\"\n  ],\n  \"explanationProse\": [\n    \"Le type `integer` de PostgreSQL est signé sur 32 bits, allant de `-2,147,483,648` à `2,147,483,647`.\\n\\nLe calcul `256^4` = `4,294,967,296` dépasse cette plage.\\n\\nPour gérer des nombres plus grands :\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 805,
+    "outputTokens": 510,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 2447
+  },
+  "cost": {
+    "inputUsd": 0.000031395,
+    "outputUsd": 0.00009180000000000001,
+    "totalUsd": 0.00012319500000000002,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

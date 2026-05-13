@@ -1,0 +1,50 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "timestamptz vs timestamp",
+  "translatedTitle": "timestamptz vs timestamp",
+  "translation": {
+    "title": "timestamptz vs timestamp",
+    "group": "Horodatages",
+    "options": [
+      {
+        "text": "Ils occupent tous les deux 8 octets, mais représentent des sémantiques d'horodatage différentes"
+      },
+      {
+        "text": "They\""
+      },
+      {
+        "text": "timestamptz conserve n'importe quel fuseau horaire d'entrée"
+      },
+      {
+        "text": "timestamptz stocke le nom ou le décalage du fuseau horaire d'origine"
+      },
+      {
+        "text": "timestamptz stocke une valeur de 2 octets pour le fuseau horaire"
+      },
+      {
+        "text": "timestamptz est le successeur de timestamp"
+      }
+    ],
+    "questionProse": [
+      "Quelle est l'affirmation **la plus précise** concernant `timestamptz` et `timestamp` ?"
+    ],
+    "explanationProse": [
+      "Ils sont tous les deux de 8 octets, mais ils ne stockent pas le même type de valeur.\n\n    Alors, quelle est la différence ? Elle se situe au niveau de l'analyse de l'entrée.\n\n    **`timestamptz`**\n    - Normalise l'entrée vers un point absolu dans le temps.\n    - Prend en compte le paramètre `TimeZone` du serveur/connexion lors de l'analyse d'une entrée sans décalage explicite et lors de l'affichage du résultat.\n\n    **`timestamp`**\n    - Stocke une date et une heure sans conversion de fuseau horaire.\n    - Ne préserve ni ne normalise les informations de fuseau horaire.\n    \n    \n    **`timestamp`**\n\n    - Stocke la date & l'heure sans information de fuseau horaire.\n    - Utile pour enregistrer explicitement des dates standardisées, soit en UTC soit dans un fuseau horaire spécifique."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"timestamptz vs timestamp\",\n  \"group\": \"Horodatages\",\n  \"options\": [\n    {\n      \"text\": \"Ils occupent tous les deux 8 octets, mais représentent des sémantiques d'horodatage différentes\"\n    },\n    {\n      \"text\": \"They\\\"\"\n    },\n    {\n      \"text\": \"timestamptz conserve n'importe quel fuseau horaire d'entrée\"\n    },\n    {\n      \"text\": \"timestamptz stocke le nom ou le décalage du fuseau horaire d'origine\"\n    },\n    {\n      \"text\": \"timestamptz stocke une valeur de 2 octets pour le fuseau horaire\"\n    },\n    {\n      \"text\": \"timestamptz est le successeur de timestamp\"\n    }\n  ],\n  \"questionProse\": [\n    \"Quelle est l'affirmation **la plus précise** concernant `timestamptz` et `timestamp` ?\"\n  ],\n  \"explanationProse\": [\n    \"Ils sont tous les deux de 8 octets, mais ils ne stockent pas le même type de valeur.\\n\\n    Alors, quelle est la différence ? Elle se situe au niveau de l'analyse de l'entrée.\\n\\n    **`timestamptz`**\\n    - Normalise l'entrée vers un point absolu dans le temps.\\n    - Prend en compte le paramètre `TimeZone` du serveur/connexion lors de l'analyse d'une entrée sans décalage explicite et lors de l'affichage du résultat.\\n\\n    **`timestamp`**\\n    - Stocke une date et une heure sans conversion de fuseau horaire.\\n    - Ne préserve ni ne normalise les informations de fuseau horaire.\\n    \\n    \\n    **`timestamp`**\\n\\n    - Stocke la date & l'heure sans information de fuseau horaire.\\n    - Utile pour enregistrer explicitement des dates standardisées, soit en UTC soit dans un fuseau horaire spécifique.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 926,
+    "outputTokens": 852,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 751
+  },
+  "cost": {
+    "inputUsd": 0.000036114,
+    "outputUsd": 0.00015335999999999998,
+    "totalUsd": 0.00018947399999999997,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

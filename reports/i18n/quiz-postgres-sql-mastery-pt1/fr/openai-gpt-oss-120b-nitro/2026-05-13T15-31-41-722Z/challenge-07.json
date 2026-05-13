@@ -1,0 +1,53 @@
+{
+  "index": 6,
+  "attempt": 1,
+  "originalTitle": "Identify Invalid Types",
+  "translatedTitle": "Identifier les types invalides",
+  "translation": {
+    "title": "Identifier les types invalides",
+    "group": "Types Postgres",
+    "options": [
+      {
+        "text": "int"
+      },
+      {
+        "text": "real"
+      },
+      {
+        "text": "bigint"
+      },
+      {
+        "text": "bigserial"
+      },
+      {
+        "text": "smallserial"
+      },
+      {
+        "text": "decimal128"
+      },
+      {
+        "text": "double precision"
+      }
+    ],
+    "questionProse": [
+      "Lequel de ceux‑ci n’est pas ❌ un type PostgreSQL valide ?"
+    ],
+    "explanationProse": [
+      "Il peut sembler familier car `decimal128` est un type dans de nombreux environnements (y compris Mongo et Java). Ce n’est pas un type PostgreSQL valide, c’est `decimal` qui l’est.\n\n    Les types numériques corrects sont :\n    - `int` (entier sur 4 octets)\n    - `bigint` (entier sur 8 octets)\n    - `real` (virgule flottante sur 4 octets)\n    - `double precision` (virgule flottante sur 8 octets)\n    - `bigserial` (entier auto‑incrémenté sur 8 octets)\n    - `smallserial` (entier auto‑incrémenté sur 2 octets)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Identifier les types invalides\",\n  \"group\": \"Types Postgres\",\n  \"options\": [\n    {\n      \"text\": \"int\"\n    },\n    {\n      \"text\": \"real\"\n    },\n    {\n      \"text\": \"bigint\"\n    },\n    {\n      \"text\": \"bigserial\"\n    },\n    {\n      \"text\": \"smallserial\"\n    },\n    {\n      \"text\": \"decimal128\"\n    },\n    {\n      \"text\": \"double precision\"\n    }\n  ],\n  \"questionProse\": [\n    \"Lequel de ceux‑ci n’est pas ❌ un type PostgreSQL valide ?\"\n  ],\n  \"explanationProse\": [\n    \"Il peut sembler familier car `decimal128` est un type dans de nombreux environnements (y compris Mongo et Java). Ce n’est pas un type PostgreSQL valide, c’est `decimal` qui l’est.\\n\\n    Les types numériques corrects sont :\\n    - `int` (entier sur 4 octets)\\n    - `bigint` (entier sur 8 octets)\\n    - `real` (virgule flottante sur 4 octets)\\n    - `double precision` (virgule flottante sur 8 octets)\\n    - `bigserial` (entier auto‑incrémenté sur 8 octets)\\n    - `smallserial` (entier auto‑incrémenté sur 2 octets)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 830,
+    "outputTokens": 735,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 4448
+  },
+  "cost": {
+    "inputUsd": 0.000032370000000000003,
+    "outputUsd": 0.0001323,
+    "totalUsd": 0.00016467,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

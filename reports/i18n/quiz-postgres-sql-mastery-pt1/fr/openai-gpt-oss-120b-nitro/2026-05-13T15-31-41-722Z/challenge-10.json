@@ -1,0 +1,50 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Identify Invalid Types",
+  "translatedTitle": "Identifier les types invalides",
+  "translation": {
+    "title": "Identifier les types invalides",
+    "group": "Types Postgres",
+    "options": [
+      {
+        "text": "box"
+      },
+      {
+        "text": "line"
+      },
+      {
+        "text": "point"
+      },
+      {
+        "text": "circle"
+      },
+      {
+        "text": "polygon"
+      },
+      {
+        "text": "triangle"
+      }
+    ],
+    "questionProse": [
+      "Lequel de ceux‑ci n’est pas ❌ un type PostgreSQL valide ?"
+    ],
+    "explanationProse": [
+      "PostgreSQL possède un ensemble riche de types spécialisés, mais `triangle` n’en fait pas partie.\n\nJe pense que les versions à venir de [GEOS](https://libgeos.org/) incluront le support `Triangle` OGC/WKT, ce qui signifie qu’il devrait éventuellement être intégré à PostGIS. (En gros, cette réponse pourrait être erronée à l’avenir.)\n\nLes types spécialisés corrects incluent :\n- `box` (boîte rectangulaire)\n- `line` (ligne infinie)\n- `point` (point 2D)\n- `circle` (cercle 2D)\n- `polygon` (polygone 2D)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Identifier les types invalides\",\n  \"group\": \"Types Postgres\",\n  \"options\": [\n    {\n      \"text\": \"box\"\n    },\n    {\n      \"text\": \"line\"\n    },\n    {\n      \"text\": \"point\"\n    },\n    {\n      \"text\": \"circle\"\n    },\n    {\n      \"text\": \"polygon\"\n    },\n    {\n      \"text\": \"triangle\"\n    }\n  ],\n  \"questionProse\": [\n    \"Lequel de ceux‑ci n’est pas ❌ un type PostgreSQL valide ?\"\n  ],\n  \"explanationProse\": [\n    \"PostgreSQL possède un ensemble riche de types spécialisés, mais `triangle` n’en fait pas partie.\\n\\nJe pense que les versions à venir de [GEOS](https://libgeos.org/) incluront le support `Triangle` OGC/WKT, ce qui signifie qu’il devrait éventuellement être intégré à PostGIS. (En gros, cette réponse pourrait être erronée à l’avenir.)\\n\\nLes types spécialisés corrects incluent :\\n- `box` (boîte rectangulaire)\\n- `line` (ligne infinie)\\n- `point` (point 2D)\\n- `circle` (cercle 2D)\\n- `polygon` (polygone 2D)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 838,
+    "outputTokens": 714,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 5225
+  },
+  "cost": {
+    "inputUsd": 0.000032681999999999996,
+    "outputUsd": 0.00012852,
+    "totalUsd": 0.000161202,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
