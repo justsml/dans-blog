@@ -4,13 +4,13 @@
 - Model: openrouter/qwen/qwen3-32b:nitro
 - Target: src/content/posts/2024-09-01--breaking-unicorns/de/index.mdx
 - Validation: rejected: direct AI SDK translation failed
-- Runtime seconds: 6.17
-- Input tokens: 2647
-- Output tokens: 2952
+- Runtime seconds: 6.63
+- Input tokens: 2665
+- Output tokens: 3184
 - Thinking tokens: unknown
 - Cached input tokens: 0
 - Cache write tokens: 0
-- Estimated cost: $0.000920
+- Estimated cost: $0.000977
 - Pricing source: local-openrouter-estimate
 - Note: Command failed: bun run i18n:validate --slug breaking-unicorns --locale de
 ## Raw Output
@@ -18,8 +18,8 @@
 ````mdx
 ---
 social_image: ../desktop-social.webp
-title: Wie man Milliarden in Rekordzeit verliert
-subTitle: Einhörner entzaubern
+title: Wie man in Rekordzeit eine Milliarde Dollar verliert
+subTitle: ''
 date: '2024-09-25'
 modified: '2024-09-25'
 tags:
@@ -34,16 +34,15 @@ cover_full_width: ../your-score-zero.webp
 cover_mobile: ../square-icon-w200.webp
 cover_icon: ../square-icon-w200.webp
 ---
-```jsx
 import {Timeline} from '../../../../../components/ui/timeline'
 
-<p class="inset">Beobachtungen von Einhörnern in der Wildbahn. 🦄</p>
+<p class="inset">Beobachtungen zu Unicorns in der freien Wildbahn. 🦄</p>
 
 <h3>Featuring...</h3>
 <ul>
-  <li>[Unternehmens-Theater 🎭](#unternehmens-theater-)</li>
-  <li>[Die Stange höher legen 💪](#die-stange-höher-legen-)</li>
-  <li>[Seid ihr disruptiv? 🚀](#seid-ihr-disruptiv-)</li>
+  <li>[Unternehmenstheater 🎭](#unternehmens-theater-)</li>
+  <li>[Die Schwelle heben 💪](#die-schwelle-heben-)</li>
+  <li>[Bist du disruptiv? 🚀](#bist-du-disruptiv-)</li>
   <li>[Zu Tode gebookclubbt 📚](#zu-tode-gebookclubbt-)</li>
 </ul>
 
@@ -53,7 +52,7 @@ import {Timeline} from '../../../../../components/ui/timeline'
   
     data={[
       {
-        title: "Unternehmens-Theater 🎭",
+        title: "Unternehmenstheater 🎭",
         slot: "slotEnterpriseTheater",
       },
       /*{
@@ -61,7 +60,7 @@ import {Timeline} from '../../../../../components/ui/timeline'
         slot: "slotTheSavior",
       },*/
       {
-        title: "Die Stange höher legen 💪",
+        title: "Die Schwelle heben 💪",
         slot: "slotRaisingTheBar",
       },
       /* {
@@ -69,7 +68,7 @@ import {Timeline} from '../../../../../components/ui/timeline'
         slot: "slotBiznoBabble",
       },
       {
-        title: "Der große Raise & oops, wir haben alles ausgegeben",
+        title: "Der große Runde & oops wir haben alles ausgegeben",
         slot: "slotTheBigRaise",
       }, */
       /*{
@@ -77,7 +76,7 @@ import {Timeline} from '../../../../../components/ui/timeline'
         slot: "slotHowToBigBoiCEO",
       },*/
       {
-        title: "Seid ihr disruptiv? 🚀",
+        title: "Bist du disruptiv? 🚀",
         slot: "slotAreYouARealDisruptor",
       },
       {
@@ -91,53 +90,53 @@ Leidet Ihr Unternehmen unter `low-H`? (_Hustle_, nicht Heroin.)
 
 Oder `low-F`? (Wie _keine Scheißdreck mehr._)
 
-Keine Sorge, der **Chef** hat's kapiert!
+Keine Sorge, der **Chef** hat es kapiert!
 
-- Es ist die Kultur! Wir müssen ein Buch lesen! Oder einen Consultant einstellen! Firmenausflug? Hawaii? _So kultiviert!_
+- Es ist die Kultur! Wir müssen ein Buch lesen! Oder einen Berater anheuern! Firmenausflug? Hawaii? _So kultiviert!_
 - Es sind die Werte! _Embrace your new mandated values!_
-- Tatsächlich ist es die _Wahrnehmung_ der Leute. Dumme Leute. _Zeit für eine Neupositionierung!_
-- Wir haben vergessen, einen Erwachsenen einzustellen. Einen `Retter`! Jemanden, der alles repariert. Jemanden aus einem echten Unternehmen, respektiert von Freunden und Feinden. Jemanden, der offensichtlich eine [pretentious amount of time on their website.](https://danlevy.net) verbracht hat.
-- Der Retter sagte, wir müssten datengetrieben sein. Duh, Dummies. Jetzt _drive data!_ Lass die Charts nach rechts und nach oben gehen, brrr!
-- Komische Geschichte, es ist das Personal. `Entlass wichtige/zufällige Leute.` _Zeig den Leuten, dass wir es ernst meinen._
+- Tatsächlich ist es die _Wahrnehmung_ der Leute. Idioten. _Zeit für eine Neupositionierung!_
+- Wir haben vergessen, einen Erwachsenen einzustellen. Einen `Retter`! Jemanden, der alles repariert. Jemanden aus einem echten Unternehmen, respektiert von Freunden und Feinden gleichermaßen. Jemanden, der offensichtlich eine [übertrieben langsame Website hat.](https://danlevy.net).
+- Der Retter sagte, wir müssten datengetrieben sein. Duh, Dummies. Jetzt _treiben wir Daten!_ Lass die Diagramme nach rechts und oben steigen, brrr!
+- Komische Geschichte, es ist das Personal. `Entlasse Schlüssel-/Zufallsleute.` _Zeig den Leuten, dass wir es ernst meinen._
 
-<blockquote style="margin-block: 2rem; width: 60%;">**Anzeige:** Wenn Ihr Engineering-Team einen `Retter` einstellt, kontaktiert bitte [hier](../docs/resume.pdf), um die neueste SaaS (Savior as a Service) von Dan kennenzulernen!</blockquote>
+<blockquote style="margin-block: 2rem; width: 60%;">**Anzeige:** Wenn Ihr Engineering-Team einen `Retter` einstellt, kontaktiert bitte [Dan](/docs/resume.pdf), um mehr über das neueste SaaS (Savior as a Service) zu erfahren!</blockquote>
 
 </section>
 
 <section slot="slotTheSavior">
-  <p>Steckt Ihr `<Insert Dept. Name>` im Chaos?</p>
+  <p>Steckt Ihr `<Abteilungsname>` im Chaos?</p>
 
-  <p>War es die Entlassungswelle? (Err, _strategische Anpassung._) Nein, nein, das kann nicht sein...</p>
+  <p>War es die Entlassungen? (Err, _strategische Anpassung._) Nein, nein, das kann nicht sein...</p>
 
   <p>Sorgen Sie nicht für Ursachen, das Unternehmen hat eine Lösung!</p>
   <p>Enter: Ein `Retter`! Jemand, der alles repariert!</p>
   
-  <p><b>Spoiler:</b> Es ist immer "Daten". Die "Lösung" ist (ungläubig) immer Jira.</p>
+  <p><b>Spoiler:</b> Es ist immer "Daten". Die "Lösung" ist (ohne Ironie) immer Jira.</p>
 </section>
 
 <section slot="slotRaisingTheBar">
-  <p>Also, habt ihr einen großen Raise gemacht? Zeit, alles auszugeben!</p>
+  <p>Also, Sie haben eine große Finanzierungsrunde abgeschlossen? Zeit, alles auszugeben!</p>
   <p>_Wir können uns neue Leute, bessere Leute, **intelligentere Leute** leisten._ 🍷</p>
 
-  <p>Unabhängig davon: Einführung von 360 Reviews! (Benannt nach der Anzahl der Reviews, die man bekommt.)</p>
+  <p>Unabhängig davon: Einführung von 360-Reviews! (Benannt nach der Anzahl der Reviews, die Sie zugewiesen bekommen.)</p>
 
-  <p>Jetzt ist es Zeit, die Stange höher zu legen! (Euphemismus für _Leute einstellen und feuern!_)</p>
+  <p>Jetzt ist es an der Zeit, die Schwelle zu heben! (Euphemismus für _Leute einstellen und feuern!_)</p>
 
 <figure>
-![Team Falcon Gedenkstätte für die Satire "Die Stange höher legen"](../TeamFalcon.webp "RIP Team Falcon: Verloren in tragischem 'Die Stange höher legen'-Vorfall.")
-  <figcaption>RIP Team Falcon: Verloren in tragischem "Die Stange höher legen"-Vorfall.</figcaption>
+![Team Falcon Gedenkstätte für den Raising the Bar-Spot](../TeamFalcon.webp "RIP Team Falcon: Verloren in tragischem 'Die Schwelle heben'-Vorfall.")
+  <figcaption>RIP Team Falcon: Verloren in tragischem "Die Schwelle heben"-Vorfall.</figcaption>
 </figure>
 </section>
 
 <figure slot="slotHowToBigBoiCEO">
-![Produktteam-Lifecycle-Satire für "Wie man Big Boi CEO wird"](../HowToBeBigBoiCEO.webp "Produkt (Team) Lifecycle")
+![Satire zum Produkt-Team-Lebenszyklus für "Wie man Big Boi CEO wird"](../HowToBeBigBoiCEO.webp "Produkt (Team) Lebenszyklus")
 <figcaption>Wie man Big Boi CEO wird</figcaption>
 </figure>
 
 <section slot="slotAreYouARealDisruptor">
-  <p>Seid ihr ein `echter Disruptor`? Dreh das auf 11! Kocht den Blue Ocean aus!</p>
+  <p>Bist du ein `echter Disruptor`? Dreh die Lautstärke auf 11! Kippe den Blue Ocean!</p>
   <figure>
-![Wie es angefangen hat vs. wie es läuft - Startup-Disruption-Satire](../HowItStartedHowItsGoing.webp "Wie es läuft.")
+![Startup-Disruption-Satire: Wie es begann versus wie es läuft](../HowItStartedHowItsGoing.webp "Wie es läuft.")
     <figcaption>Sei die Disruption</figcaption>
   </figure>
 </section>
@@ -145,21 +144,21 @@ Keine Sorge, der **Chef** hat's kapiert!
 <section slot="slotBookClubbing">
 
 <figure>
-![Wie man im Buchclub gewinnt - Satire](../HowToWinAtBookClub.webp "Wie man im Buchclub gewinnt")
+![Wie man im Buchclub gewinnt](../HowToWinAtBookClub.webp "Wie man im Buchclub gewinnt")
   <figcaption>Wie man im Buchclub gewinnt</figcaption>
 </figure>
 
   <h3>Buch-Decoder-Ring</h3>
 
-  {/* Die Auswahl eines Buchclub-Buches sagt viel über die Richtung eines Unternehmens aus. Es kann eine Möglichkeit sein, die Tonlage für das nächste Quartal zu setzen, oder bevorstehende Entlassungen anzukündigen. */}
+  {/* Die Auswahl eines Buchclub-Buches sagt viel über die Richtung aus, in die ein Unternehmen geht. Es kann eine Möglichkeit sein, die Stimmung für das nächste Quartal zu setzen oder bevorstehende Entlassungen zu signalisieren. */}
 
-  Während viele dieser Bücher großartig und hoch zu empfehlen sind, muss das **nicht daran hindern, sie falsch anzuwenden, falsch zu verstehen und falsch anzuwenden!**
+  Während viele dieser Bücher großartig und dringend zu empfehlen sind, **muss das nicht daran hindern, sie falsch zu nutzen, zu missverstehen und falsch anzuwenden!**
 
   <section class="books-list">
     <div class="book" itemscope itemtype="http://schema.org/Book">
       <h3 itemprop="name" itemscope itemtype="http://schema.org/Book">Crucial Conversations: Tools for Talking When Stakes are High</h3>
       <h5 itemprop="author" itemscope itemtype="http://schema.org/Person">Joseph Grenny, Kerry Patterson, Ron McMillan, Al Switzle</h5>
-      <div class="review" itemscope itemtype="http://schema.org/Review">Mit aller Höflichkeit: Scheiße, du.</div>
+      <div class="review" itemscope itemtype="http://schema.org/Review">Mit aller Respekt, fick dich.</div>
     </div>
 
     <div class="book" itemscope itemtype="http://schema.org/Book">
@@ -171,7 +170,7 @@ Keine Sorge, der **Chef** hat's kapiert!
     <div class="book" itemscope itemtype="http://schema.org/Book">
       <h3 itemprop="name" itemscope itemtype="http://schema.org/Book">What Got You Here Won't Get You There</h3>
       <h5 itemprop="author" itemscope itemtype="http://schema.org/Person">Marshall Goldsmith</h5>
-      <div class="review" itemscope itemtype="http://schema.org/Review">Level-up, du verdammter Amateur.</div>
+      <div class="review" itemscope itemtype="http://schema.org/Review">Level-up, du verdammte Amateur.</div>
     </div>
 
     <div class="book" itemscope itemtype="http://schema.org/Book">
@@ -198,6 +197,5 @@ Keine Sorge, der **Chef** hat's kapiert!
 
 </section>
 
-{/* <aside class="disclaimer">I love the startup ride! I've had a few startups myself and worked at ~5 companies as they became unicorns. I've consulted with dozens of $100M+ companies.   I have seen some crazy shit In my work as engineer, manager and consultant.</aside> */}
-```
+{/* <aside class="disclaimer">Ich liebe das Startup-Abenteuer! Ich hatte selbst ein paar Startups und arbeite bei ~5 Unternehmen, als sie zu Unicorns wurden. Ich habe als Berater für Dutzende von $100M+-Unternehmen gearbeitet. Ich habe in meiner Arbeit als Ingenieur, Manager und Berater einiges an seltsamen Dingen gesehen.</aside> */}
 ````
