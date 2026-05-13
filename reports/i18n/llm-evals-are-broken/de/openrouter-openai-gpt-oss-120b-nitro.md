@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: llm-evals-are-broken
+- Locale: de
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-05-06--llm-evals-are-broken/de/index.mdx
+- Validation: passed
+- Runtime seconds: 18.55
+- Input tokens: 10939
+- Output tokens: 3672
+- Thinking tokens: unknown
+- Cached input tokens: 2176
+- Cache write tokens: 0
+- Estimated cost: $0.001088
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Bekämpfedas Böse mit Evals!
 subTitle: Benchmarks messen Benchmarks. Ihr System braucht eigene Messungen.
@@ -265,3 +283,4 @@ Das ist für ein neues KI‑Feature wirklich schwer zu beantworten. Gleichzeitig
 Die Benchmarks lügen nicht. Sie beantworten die Frage eines anderen. Hören Sie auf, sie als Produkt‑Roadmaps zu interpretieren, und schreiben Sie Tests, die zu Ihrem System passen.
 
 Ihre Nutzer werden es bemerken, bevor es Ihre Dashboards tun. Erstellen Sie zuerst die Testsuite.
+````
