@@ -1,0 +1,49 @@
+{
+  "index": 14,
+  "attempt": 1,
+  "originalTitle": "RAII Pattern",
+  "translatedTitle": "Pattern RAII",
+  "translation": {
+    "title": "Pattern RAII",
+    "group": "Pattern di Memoria",
+    "options": [
+      {
+        "text": "La risorsa viene liberata dopo lo scope",
+        "hint": "Il campo File ha la sua implementazione Drop."
+      },
+      {
+        "text": "La risorsa perde",
+        "hint": "Il wrapper non ha un Drop personalizzato, ma i suoi campi vengono comunque droppati."
+      },
+      {
+        "text": "Errore di compilazione",
+        "hint": "Il codice compila con successo"
+      },
+      {
+        "text": "Errore di runtime",
+        "hint": "Il problema riguarda la pulizia delle risorse"
+      }
+    ],
+    "questionProse": [
+      "Cosa accade al handle del file in questo esempio RAII?"
+    ],
+    "explanationProse": [
+      "RAII in Rust garantisce che le risorse siano gestite correttamente. In questo esempio, `FileWrapper` non ha bisogno di un'implementazione personalizzata di `Drop` per chiudere il file handle: il suo campo `File` viene droppato automaticamente quando il wrapper esce dallo scope.\n\n      Implementi `Drop` solo quando il wrapper stesso ha un comportamento di pulizia aggiuntivo oltre a droppare i suoi campi:",
+      "Pattern RAII:\n      1. Il costruttore acquisisce le risorse\n      2. I metodi usano le risorse in modo sicuro\n      3. I campi vengono droppati automaticamente quando il proprietario esce dallo scope\n      4. Un Drop personalizzato aggiunge pulizia extra quando necessario\n      5. Usa `?` per la propagazione degli errori\n\n      Buone pratiche:\n      1. Affidati alle implementazioni Drop della libreria standard quando modellano già la risorsa\n      2. Mantieni la gestione delle risorse semplice e evidente\n      3. Usa i tipi della libreria standard quando possibile\n      4. Documenta il comportamento di pulizia\n      5. Considera l'uso di pattern guard per operazioni a scope limitato"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Pattern RAII\",\n  \"group\": \"Pattern di Memoria\",\n  \"options\": [\n    {\n      \"text\": \"La risorsa viene liberata dopo lo scope\",\n      \"hint\": \"Il campo File ha la sua implementazione Drop.\"\n    },\n    {\n      \"text\": \"La risorsa perde\",\n      \"hint\": \"Il wrapper non ha un Drop personalizzato, ma i suoi campi vengono comunque droppati.\"\n    },\n    {\n      \"text\": \"Errore di compilazione\",\n      \"hint\": \"Il codice compila con successo\"\n    },\n    {\n      \"text\": \"Errore di runtime\",\n      \"hint\": \"Il problema riguarda la pulizia delle risorse\"\n    }\n  ],\n  \"questionProse\": [\n    \"Cosa accade al handle del file in questo esempio RAII?\"\n  ],\n  \"explanationProse\": [\n    \"RAII in Rust garantisce che le risorse siano gestite correttamente. In questo esempio, `FileWrapper` non ha bisogno di un'implementazione personalizzata di `Drop` per chiudere il file handle: il suo campo `File` viene droppato automaticamente quando il wrapper esce dallo scope.\\n\\n      Implementi `Drop` solo quando il wrapper stesso ha un comportamento di pulizia aggiuntivo oltre a droppare i suoi campi:\",\n    \"Pattern RAII:\\n      1. Il costruttore acquisisce le risorse\\n      2. I metodi usano le risorse in modo sicuro\\n      3. I campi vengono droppati automaticamente quando il proprietario esce dallo scope\\n      4. Un Drop personalizzato aggiunge pulizia extra quando necessario\\n      5. Usa `?` per la propagazione degli errori\\n\\n      Buone pratiche:\\n      1. Affidati alle implementazioni Drop della libreria standard quando modellano già la risorsa\\n      2. Mantieni la gestione delle risorse semplice e evidente\\n      3. Usa i tipi della libreria standard quando possibile\\n      4. Documenta il comportamento di pulizia\\n      5. Considera l'uso di pattern guard per operazioni a scope limitato\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 996,
+    "outputTokens": 1328,
+    "cacheReadTokens": 384,
+    "cacheWriteTokens": 0,
+    "durationMs": 1127
+  },
+  "cost": {
+    "inputUsd": 0.000038843999999999996,
+    "outputUsd": 0.00023904,
+    "totalUsd": 0.000277884,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

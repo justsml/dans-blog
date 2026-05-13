@@ -1,0 +1,52 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "Understanding Rc",
+  "translatedTitle": "Comprendere Rc",
+  "translation": {
+    "title": "Comprendere Rc",
+    "group": "Conteggio dei Riferimenti",
+    "options": [
+      {
+        "text": "Rc è usato per ambienti single‑thread"
+      },
+      {
+        "text": "Rc è usato per ambienti multi‑thread",
+        "hint": "Pensa alla sicurezza dei thread: Rc non ha sincronizzazione"
+      },
+      {
+        "text": "Rc è usato solo per dati immutabili",
+        "hint": "Rc può essere combinato con mutabilità interna"
+      },
+      {
+        "text": "Rc è usato solo per dati mutabili",
+        "hint": "Rc funziona sia con dati mutabili che immutabili"
+      },
+      {
+        "text": "Rc è per il telecomando",
+        "hint": "Per quanto ingegnoso, non è un concetto di programmazione!"
+      }
+    ],
+    "questionProse": [
+      "Quando dovresti usare Rc (Reference Counting) in Rust?\n\n      Considera questo esempio:"
+    ],
+    "explanationProse": [
+      "Rc (Reference Counting) è progettato per scenari single‑thread in cui è necessario possedere condiviso.\n\n      Casi d'uso comuni:",
+      "Punti chiave:\n      1. Usa Rc quando:\n         - Più parti del tuo codice hanno bisogno di possedere\n         - Sai che la condivisione è single‑thread\n         - La durata non può essere determinata staticamente\n\n      2. Usa Arc invece quando:\n         - Hai bisogno di condivisione thread‑safe\n         - Più thread hanno bisogno di possedere\n\n      3. Limiti di Rc:\n         - Non è thread‑safe\n         - Leggero overhead a runtime\n         - Non può rompere automaticamente i cicli di riferimento\n\n      Buone pratiche:\n      1. Preferisci la proprietà unica quando possibile\n      2. Usa Rc per proprietà condivisa single‑thread\n      3. Usa Arc per scenari multi‑thread\n      4. Combinalo con Weak per prevenire cicli di riferimento"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Comprendere Rc\",\n  \"group\": \"Conteggio dei Riferimenti\",\n  \"options\": [\n    {\n      \"text\": \"Rc è usato per ambienti single‑thread\"\n    },\n    {\n      \"text\": \"Rc è usato per ambienti multi‑thread\",\n      \"hint\": \"Pensa alla sicurezza dei thread: Rc non ha sincronizzazione\"\n    },\n    {\n      \"text\": \"Rc è usato solo per dati immutabili\",\n      \"hint\": \"Rc può essere combinato con mutabilità interna\"\n    },\n    {\n      \"text\": \"Rc è usato solo per dati mutabili\",\n      \"hint\": \"Rc funziona sia con dati mutabili che immutabili\"\n    },\n    {\n      \"text\": \"Rc è per il telecomando\",\n      \"hint\": \"Per quanto ingegnoso, non è un concetto di programmazione!\"\n    }\n  ],\n  \"questionProse\": [\n    \"Quando dovresti usare Rc (Reference Counting) in Rust?\\n\\n      Considera questo esempio:\"\n  ],\n  \"explanationProse\": [\n    \"Rc (Reference Counting) è progettato per scenari single‑thread in cui è necessario possedere condiviso.\\n\\n      Casi d'uso comuni:\",\n    \"Punti chiave:\\n      1. Usa Rc quando:\\n         - Più parti del tuo codice hanno bisogno di possedere\\n         - Sai che la condivisione è single‑thread\\n         - La durata non può essere determinata staticamente\\n\\n      2. Usa Arc invece quando:\\n         - Hai bisogno di condivisione thread‑safe\\n         - Più thread hanno bisogno di possedere\\n\\n      3. Limiti di Rc:\\n         - Non è thread‑safe\\n         - Leggero overhead a runtime\\n         - Non può rompere automaticamente i cicli di riferimento\\n\\n      Buone pratiche:\\n      1. Preferisci la proprietà unica quando possibile\\n      2. Usa Rc per proprietà condivisa single‑thread\\n      3. Usa Arc per scenari multi‑thread\\n      4. Combinalo con Weak per prevenire cicli di riferimento\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1013,
+    "outputTokens": 1070,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2828
+  },
+  "cost": {
+    "inputUsd": 0.000039507,
+    "outputUsd": 0.0001926,
+    "totalUsd": 0.000232107,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

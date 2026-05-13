@@ -1,0 +1,49 @@
+{
+  "index": 7,
+  "attempt": 1,
+  "originalTitle": "Lifetime Annotations",
+  "translatedTitle": "Annotazioni di Lifetime",
+  "translation": {
+    "title": "Annotazioni di Lifetime",
+    "group": "Lifetime",
+    "options": [
+      {
+        "text": "Risultato: Seneca il Giovane",
+        "hint": "Il codice non compila per produrre alcun output"
+      },
+      {
+        "text": "Errore: specificatore di lifetime mancante"
+      },
+      {
+        "text": "Errore: impossibile restituire un riferimento a una variabile locale",
+        "hint": "Il riferimento è a un parametro di input, non a una variabile locale"
+      },
+      {
+        "text": "Errore: mismatch di lifetime",
+        "hint": "Non abbiamo ancora specificato i lifetime, quindi si verifica un mismatch"
+      }
+    ],
+    "questionProse": [
+      "Cosa succede con questa funzione che restituisce la più lunga tra due slice di stringa?"
+    ],
+    "explanationProse": [
+      "Questo codice fallisce perché il compilatore non riesce a determinare la relazione tra i lifetime di input e output. Ecco perché e come risolverlo:",
+      "Perché i lifetime sono necessari qui:\n      1. Riferimenti di input multipli potrebbero avere lifetimes diversi\n      2. Il valore di ritorno deve vivere almeno quanto entrambi gli input\n      3. Il compilatore deve verificare queste relazioni\n\n      Schemi comuni:",
+      "Migliori pratiche:\n      1. Lasciare che l'elisione dei lifetime funzioni quando possibile\n      2. Usare lifetimes espliciti quando le relazioni devono essere chiare\n      3. Considerare di restituire tipi posseduti per evitare la complessità dei lifetime\n      4. Documentare le relazioni di lifetime complesse"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Annotazioni di Lifetime\",\n  \"group\": \"Lifetime\",\n  \"options\": [\n    {\n      \"text\": \"Risultato: Seneca il Giovane\",\n      \"hint\": \"Il codice non compila per produrre alcun output\"\n    },\n    {\n      \"text\": \"Errore: specificatore di lifetime mancante\"\n    },\n    {\n      \"text\": \"Errore: impossibile restituire un riferimento a una variabile locale\",\n      \"hint\": \"Il riferimento è a un parametro di input, non a una variabile locale\"\n    },\n    {\n      \"text\": \"Errore: mismatch di lifetime\",\n      \"hint\": \"Non abbiamo ancora specificato i lifetime, quindi si verifica un mismatch\"\n    }\n  ],\n  \"questionProse\": [\n    \"Cosa succede con questa funzione che restituisce la più lunga tra due slice di stringa?\"\n  ],\n  \"explanationProse\": [\n    \"Questo codice fallisce perché il compilatore non riesce a determinare la relazione tra i lifetime di input e output. Ecco perché e come risolverlo:\",\n    \"Perché i lifetime sono necessari qui:\\n      1. Riferimenti di input multipli potrebbero avere lifetimes diversi\\n      2. Il valore di ritorno deve vivere almeno quanto entrambi gli input\\n      3. Il compilatore deve verificare queste relazioni\\n\\n      Schemi comuni:\",\n    \"Migliori pratiche:\\n      1. Lasciare che l'elisione dei lifetime funzioni quando possibile\\n      2. Usare lifetimes espliciti quando le relazioni devono essere chiare\\n      3. Considerare di restituire tipi posseduti per evitare la complessità dei lifetime\\n      4. Documentare le relazioni di lifetime complesse\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 961,
+    "outputTokens": 1058,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 603
+  },
+  "cost": {
+    "inputUsd": 0.000037479,
+    "outputUsd": 0.00019043999999999997,
+    "totalUsd": 0.00022791899999999998,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

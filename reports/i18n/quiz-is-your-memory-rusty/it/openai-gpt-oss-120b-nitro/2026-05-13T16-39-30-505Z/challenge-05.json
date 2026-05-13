@@ -1,0 +1,32 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Box Smart Pointer",
+  "translatedTitle": "Puntatore Smart Box",
+  "translation": {
+    "title": "Puntatore Smart Box",
+    "group": "Puntatori Smart",
+    "options": [],
+    "questionProse": [
+      "Cosa c'è di sbagliato in questa definizione di tipo ricorsivo?"
+    ],
+    "explanationProse": [
+      "Questo codice fallisce perché il compilatore non riesce a determinare la dimensione di `CatList` a tempo di compilazione. La natura ricorsiva del tipo significa che potrebbe essere infinitamente grande!\n\n      Ecco come correggerlo usando `Box<T>`:",
+      "Perché `Box<T>` funziona:\n      1. Box fornisce un puntatore a dimensione fissa (di solito 8 byte su sistemi a 64 bit)\n      2. I dati reali sono memorizzati sull'heap\n      3. Il compilatore ora sa esattamente quanta memoria allocare\n\n      Casi d'uso comuni per `Box<T>`:\n      - Strutture dati ricorsive (liste collegate, alberi)\n      - Dati di grandi dimensioni che vuoi garantire siano allocati sull'heap\n      - Oggetti trait quando serve dispatch dinamico\n\n      Buona pratica: Usa `Box<T>` quando ti serve:\n      - Tipi ricorsivi\n      - Per garantire l'allocazione su heap\n      - Per spostare grandi dati senza copiarli"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Puntatore Smart Box\",\n  \"group\": \"Puntatori Smart\",\n  \"options\": [],\n  \"questionProse\": [\n    \"Cosa c'è di sbagliato in questa definizione di tipo ricorsivo?\"\n  ],\n  \"explanationProse\": [\n    \"Questo codice fallisce perché il compilatore non riesce a determinare la dimensione di `CatList` a tempo di compilazione. La natura ricorsiva del tipo significa che potrebbe essere infinitamente grande!\\n\\n      Ecco come correggerlo usando `Box<T>`:\",\n    \"Perché `Box<T>` funziona:\\n      1. Box fornisce un puntatore a dimensione fissa (di solito 8 byte su sistemi a 64 bit)\\n      2. I dati reali sono memorizzati sull'heap\\n      3. Il compilatore ora sa esattamente quanta memoria allocare\\n\\n      Casi d'uso comuni per `Box<T>`:\\n      - Strutture dati ricorsive (liste collegate, alberi)\\n      - Dati di grandi dimensioni che vuoi garantire siano allocati sull'heap\\n      - Oggetti trait quando serve dispatch dinamico\\n\\n      Buona pratica: Usa `Box<T>` quando ti serve:\\n      - Tipi ricorsivi\\n      - Per garantire l'allocazione su heap\\n      - Per spostare grandi dati senza copiarli\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 870,
+    "outputTokens": 889,
+    "cacheReadTokens": 384,
+    "cacheWriteTokens": 0,
+    "durationMs": 670
+  },
+  "cost": {
+    "inputUsd": 0.000033929999999999995,
+    "outputUsd": 0.00016002,
+    "totalUsd": 0.00019395,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

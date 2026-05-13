@@ -1,0 +1,52 @@
+{
+  "index": 12,
+  "attempt": 1,
+  "originalTitle": "Arc and Mutex",
+  "translatedTitle": "Arc e Mutex",
+  "translation": {
+    "title": "Arc e Mutex",
+    "group": "Puntatori Intelligenti",
+    "options": [
+      {
+        "text": "Stampa: 42",
+        "hint": "Il codice non arriverà mai alla stampa"
+      },
+      {
+        "text": "Stampa: 43",
+        "hint": "Il codice si bloccherà prima della stampa"
+      },
+      {
+        "text": "Errore di compilazione",
+        "hint": "Il codice è sintatticamente corretto"
+      },
+      {
+        "text": "Panico a runtime",
+        "hint": "È peggio di un panico"
+      },
+      {
+        "text": "Deadlock"
+      }
+    ],
+    "questionProse": [
+      "Cosa succede quando questo codice viene eseguito?"
+    ],
+    "explanationProse": [
+      "Questo codice dimostra uno scenario classico di deadlock. Ecco come risolverlo:",
+      "Le migliori pratiche per prevenire deadlock:\n      1. Mantieni le sezioni critiche piccole\n      2. Rilascia i lock tempestivamente usando gli scope\n      3. Acquisisci più lock in un ordine coerente\n      4. Usa parking_lot::Mutex per migliori prestazioni\n      5. Considera l'uso di RwLock per carichi di lavoro con molte letture\n\n      Pattern comuni:"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Arc e Mutex\",\n  \"group\": \"Puntatori Intelligenti\",\n  \"options\": [\n    {\n      \"text\": \"Stampa: 42\",\n      \"hint\": \"Il codice non arriverà mai alla stampa\"\n    },\n    {\n      \"text\": \"Stampa: 43\",\n      \"hint\": \"Il codice si bloccherà prima della stampa\"\n    },\n    {\n      \"text\": \"Errore di compilazione\",\n      \"hint\": \"Il codice è sintatticamente corretto\"\n    },\n    {\n      \"text\": \"Panico a runtime\",\n      \"hint\": \"È peggio di un panico\"\n    },\n    {\n      \"text\": \"Deadlock\"\n    }\n  ],\n  \"questionProse\": [\n    \"Cosa succede quando questo codice viene eseguito?\"\n  ],\n  \"explanationProse\": [\n    \"Questo codice dimostra uno scenario classico di deadlock. Ecco come risolverlo:\",\n    \"Le migliori pratiche per prevenire deadlock:\\n      1. Mantieni le sezioni critiche piccole\\n      2. Rilascia i lock tempestivamente usando gli scope\\n      3. Acquisisci più lock in un ordine coerente\\n      4. Usa parking_lot::Mutex per migliori prestazioni\\n      5. Considera l'uso di RwLock per carichi di lavoro con molte letture\\n\\n      Pattern comuni:\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 912,
+    "outputTokens": 958,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 647
+  },
+  "cost": {
+    "inputUsd": 0.000035568,
+    "outputUsd": 0.00017244,
+    "totalUsd": 0.000208008,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "index": 6,
+  "attempt": 1,
+  "originalTitle": "Struct Lifetimes",
+  "translatedTitle": "Durata delle struct",
+  "translation": {
+    "title": "Durata delle struct",
+    "group": "Durata",
+    "options": [
+      {
+        "text": "Compila correttamente",
+        "hint": "Le struct con riferimenti necessitano di annotazioni di lifetime"
+      },
+      {
+        "text": "Errore: specificatore di lifetime mancante"
+      },
+      {
+        "text": "Errore: mismatch di lifetime",
+        "hint": "Non abbiamo ancora specificato alcun lifetime"
+      },
+      {
+        "text": "Errore: riferimento non valido",
+        "hint": "I riferimenti sono validi, ma manca qualcos'altro"
+      }
+    ],
+    "questionProse": [
+      "Questa definizione di struct compila? Perché o perché no?"
+    ],
+    "explanationProse": [
+      "Il codice fallisce perché le struct che contengono riferimenti devono specificare i lifetimes. Ecco come correggerlo:",
+      "Pattern comuni:",
+      "Buone pratiche:\n      1. Usa tipi posseduti (String) quando devi memorizzare dati indefinitamente\n      2. Usa riferimenti quando la durata della struct è chiaramente più breve dei dati\n      3. Considera più parametri di lifetime quando i riferimenti possono avere durate diverse\n      4. Documenta le relazioni di lifetime nelle strutture complesse"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Durata delle struct\",\n  \"group\": \"Durata\",\n  \"options\": [\n    {\n      \"text\": \"Compila correttamente\",\n      \"hint\": \"Le struct con riferimenti necessitano di annotazioni di lifetime\"\n    },\n    {\n      \"text\": \"Errore: specificatore di lifetime mancante\"\n    },\n    {\n      \"text\": \"Errore: mismatch di lifetime\",\n      \"hint\": \"Non abbiamo ancora specificato alcun lifetime\"\n    },\n    {\n      \"text\": \"Errore: riferimento non valido\",\n      \"hint\": \"I riferimenti sono validi, ma manca qualcos'altro\"\n    }\n  ],\n  \"questionProse\": [\n    \"Questa definizione di struct compila? Perché o perché no?\"\n  ],\n  \"explanationProse\": [\n    \"Il codice fallisce perché le struct che contengono riferimenti devono specificare i lifetimes. Ecco come correggerlo:\",\n    \"Pattern comuni:\",\n    \"Buone pratiche:\\n      1. Usa tipi posseduti (String) quando devi memorizzare dati indefinitamente\\n      2. Usa riferimenti quando la durata della struct è chiaramente più breve dei dati\\n      3. Considera più parametri di lifetime quando i riferimenti possono avere durate diverse\\n      4. Documenta le relazioni di lifetime nelle strutture complesse\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 901,
+    "outputTokens": 877,
+    "cacheReadTokens": 384,
+    "cacheWriteTokens": 0,
+    "durationMs": 1117
+  },
+  "cost": {
+    "inputUsd": 0.000035139000000000004,
+    "outputUsd": 0.00015785999999999998,
+    "totalUsd": 0.00019299899999999999,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

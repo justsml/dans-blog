@@ -1,0 +1,50 @@
+{
+  "index": 1,
+  "attempt": 1,
+  "originalTitle": "Move Semantics with Functions",
+  "translatedTitle": "Semantica di Move con le Funzioni",
+  "translation": {
+    "title": "Semantica di Move con le Funzioni",
+    "group": "Proprietà",
+    "options": [
+      {
+        "text": "Stampa entrambe le righe",
+        "hint": "Considera cosa succede a 'wisdom' dopo che è passato alla funzione"
+      },
+      {
+        "text": "Stampa solo la prima riga",
+        "hint": "Il codice non compila nemmeno per arrivare al runtime"
+      },
+      {
+        "text": "Errore di compilazione"
+      },
+      {
+        "text": "Errore di runtime",
+        "hint": "Le regole di proprietà di Rust sono applicate a tempo di compilazione"
+      }
+    ],
+    "questionProse": [
+      "Cosa succede quando esegui questo codice? Pensa al trasferimento di proprietà:"
+    ],
+    "explanationProse": [
+      "Il codice non compila perché la proprietà di `wisdom` è stata spostata a `take_knowledge` e quindi non può più essere usata dopo.\n\n      Ecco tre modi per risolvere il problema:\n\n      1. Passare per riferimento (prendere in prestito il valore):",
+      "2. Clonare il valore (creare una nuova copia):",
+      "3. Restituire la proprietà dalla funzione:",
+      "Ogni approccio ha casi d'uso diversi:\n      - Riferimenti: i più efficienti, ma richiedono la gestione dei lifetimes\n      - Clonazione: semplice ma potenzialmente costosa\n      - Restituire la proprietà: utile per trasformare valori\n\n      Best practice: Usa i riferimenti a meno che non ti serva trasferire la proprietà."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Semantica di Move con le Funzioni\",\n  \"group\": \"Proprietà\",\n  \"options\": [\n    {\n      \"text\": \"Stampa entrambe le righe\",\n      \"hint\": \"Considera cosa succede a 'wisdom' dopo che è passato alla funzione\"\n    },\n    {\n      \"text\": \"Stampa solo la prima riga\",\n      \"hint\": \"Il codice non compila nemmeno per arrivare al runtime\"\n    },\n    {\n      \"text\": \"Errore di compilazione\"\n    },\n    {\n      \"text\": \"Errore di runtime\",\n      \"hint\": \"Le regole di proprietà di Rust sono applicate a tempo di compilazione\"\n    }\n  ],\n  \"questionProse\": [\n    \"Cosa succede quando esegui questo codice? Pensa al trasferimento di proprietà:\"\n  ],\n  \"explanationProse\": [\n    \"Il codice non compila perché la proprietà di `wisdom` è stata spostata a `take_knowledge` e quindi non può più essere usata dopo.\\n\\n      Ecco tre modi per risolvere il problema:\\n\\n      1. Passare per riferimento (prendere in prestito il valore):\",\n    \"2. Clonare il valore (creare una nuova copia):\",\n    \"3. Restituire la proprietà dalla funzione:\",\n    \"Ogni approccio ha casi d'uso diversi:\\n      - Riferimenti: i più efficienti, ma richiedono la gestione dei lifetimes\\n      - Clonazione: semplice ma potenzialmente costosa\\n      - Restituire la proprietà: utile per trasformare valori\\n\\n      Best practice: Usa i riferimenti a meno che non ti serva trasferire la proprietà.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 971,
+    "outputTokens": 1009,
+    "cacheReadTokens": 384,
+    "cacheWriteTokens": 0,
+    "durationMs": 639
+  },
+  "cost": {
+    "inputUsd": 0.000037869,
+    "outputUsd": 0.00018161999999999999,
+    "totalUsd": 0.00021948899999999999,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

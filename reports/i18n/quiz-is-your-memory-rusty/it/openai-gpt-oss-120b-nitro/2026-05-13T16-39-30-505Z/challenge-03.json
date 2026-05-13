@@ -1,0 +1,50 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "Mutable References",
+  "translatedTitle": "Riferimenti Mutabili",
+  "translation": {
+    "title": "Riferimenti Mutabili",
+    "group": "Prestito",
+    "options": [
+      {
+        "text": "Compila correttamente",
+        "hint": "Possiamo avere più riferimenti mutabili contemporaneamente?"
+      },
+      {
+        "text": "Errore: impossibile prendere in prestito `wisdom` come mutabile più di una volta"
+      },
+      {
+        "text": "Errore: specificatore di lifetime mancante",
+        "hint": "Il problema non riguarda i lifetimes qui"
+      },
+      {
+        "text": "Panico a runtime",
+        "hint": "Rust intercetta questi problemi al momento della compilazione"
+      }
+    ],
+    "questionProse": [
+      "Cosa succede con più riferimenti mutabili?",
+      "Rifletti sulle regole di Rust per i riferimenti mutabili."
+    ],
+    "explanationProse": [
+      "Questo codice viola le regole fondamentali di borrowing di Rust:\n      - Solo UN riferimento mutabile a un valore alla volta\n      - OPPURE un numero qualsiasi di riferimenti immutabili\n      - I riferimenti non possono superare la durata del loro referent\n\n      Ecco come correggere il codice:\n\n      1. Usa uno scoping sequenziale:",
+      "2. Oppure modifica la stringa in un unico prestito:",
+      "Queste regole impediscono le data race al momento della compilazione, rendendo Rust thread-safe per impostazione predefinita.\n\n      Insidia comune: Tentare di usare più riferimenti mutabili per evitare il cloning o\n      per modificare parti diverse dello stesso valore simultaneamente."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Riferimenti Mutabili\",\n  \"group\": \"Prestito\",\n  \"options\": [\n    {\n      \"text\": \"Compila correttamente\",\n      \"hint\": \"Possiamo avere più riferimenti mutabili contemporaneamente?\"\n    },\n    {\n      \"text\": \"Errore: impossibile prendere in prestito `wisdom` come mutabile più di una volta\"\n    },\n    {\n      \"text\": \"Errore: specificatore di lifetime mancante\",\n      \"hint\": \"Il problema non riguarda i lifetimes qui\"\n    },\n    {\n      \"text\": \"Panico a runtime\",\n      \"hint\": \"Rust intercetta questi problemi al momento della compilazione\"\n    }\n  ],\n  \"questionProse\": [\n    \"Cosa succede con più riferimenti mutabili?\",\n    \"Rifletti sulle regole di Rust per i riferimenti mutabili.\"\n  ],\n  \"explanationProse\": [\n    \"Questo codice viola le regole fondamentali di borrowing di Rust:\\n      - Solo UN riferimento mutabile a un valore alla volta\\n      - OPPURE un numero qualsiasi di riferimenti immutabili\\n      - I riferimenti non possono superare la durata del loro referent\\n\\n      Ecco come correggere il codice:\\n\\n      1. Usa uno scoping sequenziale:\",\n    \"2. Oppure modifica la stringa in un unico prestito:\",\n    \"Queste regole impediscono le data race al momento della compilazione, rendendo Rust thread-safe per impostazione predefinita.\\n\\n      Insidia comune: Tentare di usare più riferimenti mutabili per evitare il cloning o\\n      per modificare parti diverse dello stesso valore simultaneamente.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 943,
+    "outputTokens": 954,
+    "cacheReadTokens": 384,
+    "cacheWriteTokens": 0,
+    "durationMs": 1073
+  },
+  "cost": {
+    "inputUsd": 0.000036777000000000004,
+    "outputUsd": 0.00017172,
+    "totalUsd": 0.00020849699999999998,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
