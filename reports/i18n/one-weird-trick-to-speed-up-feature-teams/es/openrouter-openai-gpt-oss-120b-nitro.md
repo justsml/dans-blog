@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: one-weird-trick-to-speed-up-feature-teams
+- Locale: es
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2024-09-29--one-weird-trick-to-speed-up-feature-teams/es/index.mdx
+- Validation: passed
+- Runtime seconds: 6.65
+- Input tokens: 8783
+- Output tokens: 2389
+- Thinking tokens: unknown
+- Cached input tokens: 2048
+- Cache write tokens: 0
+- Estimated cost: $0.000773
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: ¡Un truco raro para acelerar a los equipos de funciones!
 subTitle: ¡Los ingenieros senior odian esto!
@@ -149,3 +167,4 @@ Fact Service está pensado como un proyecto de inicio y aprendizaje; ¡forkéalo
 - [S3](https://aws.amazon.com/s3/)
 - [Cassandra](https://cassandra.apache.org/)
 - [Firestore](https://firebase.google.com/docs/firestore)
+````
