@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: security-notes-regex
+- Locale: es
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2015-02-24--security-notes-regex/es/index.mdx
+- Validation: passed
+- Runtime seconds: 5.21
+- Input tokens: 1823
+- Output tokens: 1922
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.000607
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: 'Notas de Seguridad: RegEx'
 subTitle: ''
@@ -45,3 +63,4 @@ La memoria y el CPU pueden agotarse con entradas de usuario grandes o especialme
 ### Referencia  
 
 - [ReDoS de OWASP](https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS)
+````
