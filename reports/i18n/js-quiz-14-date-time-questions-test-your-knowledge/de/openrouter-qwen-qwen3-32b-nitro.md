@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: js-quiz-14-date-time-questions-test-your-knowledge
+- Locale: de
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2020-01-02--js-quiz-14-date-time-questions-test-your-knowledge/de/index.mdx
+- Validation: passed
+- Runtime seconds: 40.92
+- Input tokens: 12308
+- Output tokens: 14696
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.004512
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: ''
@@ -493,3 +511,4 @@ Dieser Quiz soll Ihr Wissen über die native `Date`-API testen (und vertiefen). 
 </Challenge>
 
 </QuizUI>
+````

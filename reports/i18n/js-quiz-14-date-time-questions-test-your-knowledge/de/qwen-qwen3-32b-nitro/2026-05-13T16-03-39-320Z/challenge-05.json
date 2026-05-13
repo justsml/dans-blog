@@ -1,0 +1,44 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Date String Parsing",
+  "translatedTitle": "Datumszeichenkettenanalyse",
+  "translation": {
+    "title": "Datumszeichenkettenanalyse",
+    "group": "Datumsverwaltung",
+    "options": [
+      {
+        "text": "2019 2020"
+      },
+      {
+        "text": "2020 2021"
+      },
+      {
+        "text": "2020 2020"
+      },
+      {
+        "text": "2020 2019"
+      }
+    ],
+    "questionProse": [
+      "Welcher Wert wird in die Konsole gedruckt?"
+    ],
+    "explanationProse": [
+      "Der Zeichenkettenwert ohne `T`-Zeitangabe könnte auf den ersten Blick als 1. Januar 2020 interpretiert werden – Datumszeichenketten ohne Uhrzeit werden jedoch als UTC interpretiert. Bei Anpassung an unsere lokale Zeitzone (GMT-7) stellen wir fest, dass wir immer noch im Jahr 2019 sind.\n\n      Datumszeitzeichenketten ohne explizite Zeitzone werden in lokaler Zeit interpretiert.\n  \n      Die `T00:00`-Form führt dazu, dass der zweite Wert als lokale Mitternacht interpretiert wird.\n\n      Der erste Datumsstring wird als `Tue Dec 31 2019 17:00:00 GMT-0700 (Mountain Standard Time)` interpretiert.\n      Der zweite Datumsstring wird als `Wed Jan 01 2020 00:00:00 GMT-0700 (Mountain Standard Time)` interpretiert."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Datumszeichenkettenanalyse\",\n  \"group\": \"Datumsverwaltung\",\n  \"options\": [\n    {\n      \"text\": \"2019 2020\"\n    },\n    {\n      \"text\": \"2020 2021\"\n    },\n    {\n      \"text\": \"2020 2020\"\n    },\n    {\n      \"text\": \"2020 2019\"\n    }\n  ],\n  \"questionProse\": [\n    \"Welcher Wert wird in die Konsole gedruckt?\"\n  ],\n  \"explanationProse\": [\n    \"Der Zeichenkettenwert ohne `T`-Zeitangabe könnte auf den ersten Blick als 1. Januar 2020 interpretiert werden – Datumszeichenketten ohne Uhrzeit werden jedoch als UTC interpretiert. Bei Anpassung an unsere lokale Zeitzone (GMT-7) stellen wir fest, dass wir immer noch im Jahr 2019 sind.\\n\\n      Datumszeitzeichenketten ohne explizite Zeitzone werden in lokaler Zeit interpretiert.\\n  \\n      Die `T00:00`-Form führt dazu, dass der zweite Wert als lokale Mitternacht interpretiert wird.\\n\\n      Der erste Datumsstring wird als `Tue Dec 31 2019 17:00:00 GMT-0700 (Mountain Standard Time)` interpretiert.\\n      Der zweite Datumsstring wird als `Wed Jan 01 2020 00:00:00 GMT-0700 (Mountain Standard Time)` interpretiert.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 855,
+    "outputTokens": 967,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2388
+  },
+  "cost": {
+    "inputUsd": 0.0000684,
+    "outputUsd": 0.00023208,
+    "totalUsd": 0.00030048,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
