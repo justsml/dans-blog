@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: contribute-to-open-source-the-easy-way
+- Locale: es
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2024-01-16--contribute-to-open-source-the-easy-way/es/index.mdx
+- Validation: passed
+- Runtime seconds: 71.50
+- Input tokens: 5739
+- Output tokens: 7172
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.002180
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Conviértete en millonario de Código Abierto*
@@ -84,3 +102,4 @@ Todo es público. Así que sé amable, excelente y agradecido.
 Si necesitas más convencimiento: `contribute` para el aprendizaje. ¡Procesos nuevos, lenguajes, frameworks, automatización!
 
 Si te resultó útil, por favor comparte tus contribuciones en los comentarios o publica en Twitter y menciona a @justsml.
+````
