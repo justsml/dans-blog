@@ -1,0 +1,46 @@
+---
+title: 'Notes de sécurité : RegEx'
+subTitle: Peut-on rendre RegEx vulnérable ?
+date: '2015-02-24'
+modified: '2018-07-30'
+category: Security
+subCategory: RegEx
+tags:
+  - security
+  - regex
+  - dos
+  - remote-exploit
+cover_credit: Photo by Markus Spiske on Unsplash
+cover: ../markus-spiske-666905-unsplash.webp
+cover_mobile: ../w300_markus-spiske-666905-unsplash.webp
+cover_icon: ../icon_markus-spiske-666905-unsplash.webp
+social_image: ../desktop-social.webp
+---
+## Refus de service par expression régulière : ReDOS
+
+L'une des vulnérabilités plus surprenantes, mais difficiles à détecter que j'ai trouvées, est liée aux expressions régulières.  
+Soit mal écrites, soit mal implémentées.
+
+La mémoire ou le processeur peuvent être épuisés par des entrées utilisateur volumineuses ou spécialement conçues.
+
+> Il s'agit d'une vulnérabilité de refus de service, pas seulement d'un problème de performance. Si une entrée hostile peut bloquer le processeur suffisamment longtemps pour priver les utilisateurs réels, cela doit figurer dans votre modèle de risques de sécurité.
+
+### Signes d'alerte
+
+1. Quantificateurs imbriqués, groupes répétés ou alternations superposées  
+2. Moteurs basés sur le backtracking lourd sans délai d'attente ou sans limite de longueur d'entrée  
+3. L'expression est utilisée avec des entrées utilisateur non vérifiées  
+4. La validation par expression régulière s'exécute sur une route de requête critique
+
+### Mitigation / Résolution
+
+1. Les expressions régulières sont difficiles.  
+    1. Par exemple, voici comment les personnes très compétentes d'[OWASP recommandent de gérer la validation des adresses IP][owasp] : `^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$`  
+    2. Cela fait plus long qu'un tweet (au sens ancien), pour une adresse IP de 4 octets !!!  
+2. Limiter la longueur de l'entrée avant l'évaluation par l'expression régulière.  
+3. Ajouter des délais d'attente, une analyse statique, ou un moteur sans backtracking si la plateforme le permet.  
+4. Cela affecte presque toutes les langues et plateformes .NET/Node/Python/PERL/Java.
+
+### Références
+
+- [OWASP ReDoS](https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS)
