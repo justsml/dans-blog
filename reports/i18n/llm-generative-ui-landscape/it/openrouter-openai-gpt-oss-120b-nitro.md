@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: llm-generative-ui-landscape
+- Locale: it
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-05-06--llm-generative-ui-landscape/it/index.mdx
+- Validation: deferred
+- Runtime seconds: 25.66
+- Input tokens: 21057
+- Output tokens: 7821
+- Thinking tokens: unknown
+- Cached input tokens: 5632
+- Cache write tokens: 0
+- Estimated cost: $0.002229
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Il panorama UI generativo LLM
 subTitle: >-
@@ -335,3 +353,4 @@ I migliori sistemi non lasceranno il modello improvvisare tutto. Gli forniranno 
 Il futuro non è “il modello scrive il tuo frontend”.
 
 Il futuro è più vicino a: **il tuo frontend diventa uno strumento che l’agente può suonare, ma sei tu a decidere cosa lo strumento è autorizzato a produrre.**
+````
