@@ -1,6 +1,6 @@
 ---
-title: ''
-subTitle: Beweise deine hervorragenden JavaScript-Fähigkeiten!
+title: 'Quiz: Kennst du modernes JavaScript?'
+subTitle: Beweise deine JavaScript‑Skills!
 label: ES2019+ Features
 social_image: ../desktop-social.webp
 category: Quiz
@@ -19,15 +19,15 @@ cover_full_width: ../christopher-burns-8KfCR12oeUM-unsplash-wide.webp
 cover_mobile: ../christopher-burns-8KfCR12oeUM-unsplash-square.webp
 cover_icon: ../christopher-burns-8KfCR12oeUM-unsplash-square.webp
 ---
-import Challenge from '../../../../components/QuizUI/Challenge';
-import QuizUI from '../../../../components/QuizUI/QuizUI';
+import Challenge from '../../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../../components/QuizUI/QuizUI';
 
 
-### Kennen Sie sich mit ES2015 bis ES2022 aus?
+### Kennst du den Unterschied zwischen ES2015 und ES2022?
 
-* **Beweisen Sie Ihre JavaScript-Kenntnisse!** 🚀
-* Kein Login oder Anmeldung erforderlich. ✨
-* Multiple-Choice. 🤖 ... _Wie schwer kann das schon sein, oder?_
+* **Zeig, was du in JavaScript drauf hast!** 🚀
+* Kein Login oder Registrierung nötig. ✨
+* Multiple‑Choice. 🤖 … _Wie schwer kann das schon sein, oder?_
 
 <QuizUI>
 
@@ -35,7 +35,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={0}
   group="ES2020"
-  title="Null-Koaleszenz"
+  title="Null‑Koaleszenz"
   options={[
     {text: '42'},
     {text: 'null'},
@@ -45,7 +45,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    Welchen Wert hat `result`?
+    Wie lautet der Wert von `result`?
     ```js
     console.log(null ?? 100);
     ```
@@ -53,7 +53,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Der Null-Koaleszenz-Operator (`??`) gibt das rechte Operand (`b`) zurück, wenn das linke Operand (`a`) `null` oder `undefined` ist. In diesem Fall ist `a` `null`, also ist `result` `100`.
+    Der Null‑Koaleszenz‑Operator (`??`) gibt den rechten Operanden (`b`) zurück, wenn der linke Operanden (`a`) `null` oder `undefined` ist. In diesem Fall ist `a` `null`, also ist `result` `100`.
   </div>
   </slot>
 </Challenge>
@@ -73,7 +73,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    Welches Ergebnis liefert der folgende Code?
+    Was wird die Ausgabe des folgenden Codes sein?
     ```js
     const value = false;
     const defaultVal = 42;
@@ -83,7 +83,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Der Null-Koaleszenz-Operator (`??`) betrachtet falsche Werte wie `false` als gültige Werte. Da `value` `false` ist, wird dieser als gültiger Wert betrachtet und zurückgegeben.
+    Der Null‑Koaleszenz‑Operator (`??`) behandelt falsy‑Werte wie `false` als gültige Werte. Da `value` `false` ist, wird er als gültiger Wert angesehen und zurückgegeben.
   </div>
   </slot>
 </Challenge>
@@ -91,18 +91,18 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={2}
-  group="Optionale Chaining"
-  title="Optionale Chaining"
+  group="Optionale Verkettung"
+  title="Optionale Verkettung"
   options={[
     {text: 'undefined', isAnswer: true},
-    {text: 'Fehler: Cannot read property of undefined'},
+    {text: 'Error: Cannot read property of undefined'},
     {text: 'null'},
     {text: '100'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Was ist die Ausgabe des folgenden Codes?
+    Was gibt der folgende Code aus?
     ```js
     const obj = { foo: null };
     const result = obj.foo?.bar;
@@ -112,7 +112,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Der optionale Chaining-Operator (`?.`) beendet die Auswertung, wenn die linke Seite `null` oder `undefined` ist. Da `obj.foo` `null` ist, ergibt `obj.foo?.bar` `undefined`.
+    Der optionale Verkettungsoperator (`?.`) stoppt die Auswertung, wenn die linke Seite `null` oder `undefined` ist. Da `obj.foo` `null` ist, evaluiert `obj.foo?.bar` zu `undefined`.
   </div>
   </slot>
 </Challenge>
@@ -121,9 +121,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={3}
   group="BigInt"
-  title="Verwendung von BigInt"
+  title="BigInt-Verwendung"
   options={[
-    {text: 'TypeError: Cannot mix BigInt and number'},
+    {text: 'TypeError: BigInt und number dürfen nicht gemischt werden'},
     {text: '42n'},
     {text: '84n', isAnswer: true},
     {text: 'undefined'},
@@ -141,7 +141,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    BigInt-Werte werden erstellt, indem `n` an eine Zahl angehängt wird. BigInt-Werte können nicht mit regulären Zahlen in arithmetischen Operationen gemischt werden. Hier sind beide Werte BigInt, also funktioniert die Multiplikation, wodurch `84n` entsteht.
+    BigInt‑Werte werden erzeugt, indem man an eine Zahl `n` anhängt. Man kann BigInt nicht mit normalen Zahlen in arithmetischen Operationen mischen. Hier sind beide Werte BigInt, sodass die Multiplikation funktioniert und `84n` ergibt.
   </div>
   </slot>
 </Challenge>
@@ -150,18 +150,18 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={4}
   group="Dynamischer Import"
-  title="Dynamischer Import-Syntax"
+  title="Dynamische Import‑Syntax"
   options={[
     {text: 'SyntaxError'},
     {text: 'Promise'},
     {text: 'Module'},
-    {text: 'object', isAnswer: true},
+    {text: 'Objekt', isAnswer: true},
     {text: 'undefined'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Was wird hier geloggt?
+    Was wird hier ausgegeben?
     ```js
     const modulePromise = import('./myModule.js');
     console.log(typeof modulePromise);
@@ -170,7 +170,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Die `import()`-Funktion gibt eine `Promise` zurück, die sich auf das Modulobjekt auflöst. Da `Promise`-Instanzen Objekte sind, wird `typeof modulePromise` `'object'` ausgeben.
+    Die `import()`‑Funktion gibt ein `Promise` zurück, das zum Modul‑Objekt aufgelöst wird. Da `Promise`‑Instanzen Objekte sind, gibt `typeof modulePromise` `'object'` aus.
   </div>
   </slot>
 </Challenge>
@@ -181,8 +181,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="Promise.allSettled"
   title="Promise.allSettled"
   options={[
-    {text: 'erfüllt: Erfolg', isAnswer: true},
-    {text: 'Abgelehnt: Fehler'},
+    {text: 'erfüllt: success', isAnswer: true},
+    {text: 'Abgelehnt: error'},
     {text: 'Ausstehend'},
     {text: 'null'},
   ]}
@@ -203,7 +203,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `Promise.allSettled` gibt ein Array von Objekten zurück, die das Ergebnis jedes Versprechens beschreiben. Das erste Versprechen ist `erfüllt` mit dem Wert `'success'`, also wird die Log-Anweisung `erfüllt: Erfolg` ausgeben.
+    `Promise.allSettled` gibt ein Array von Objekten zurück, die das Ergebnis jeder Promise beschreiben. Die erste Promise ist `fulfilled` mit dem Wert `'success'`, daher wird die Log‑Anweisung `fulfilled: success` ausgeben.
   </div>
   </slot>
 </Challenge>
@@ -212,10 +212,10 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={6}
   group="String.matchAll"
-  title="String.matchAll-Nutzung"
+  title="String.matchAll Verwendung"
   options={[
-    {text: 'Array mit Übereinstimmungen'},
-    {text: 'Iterator mit Übereinstimmungen', isAnswer: true},
+    {text: 'Array von Treffern'},
+    {text: 'Iterator von Treffern', isAnswer: true},
     {text: 'Fehler: Ungültiger Aufruf'},
     {text: 'null'},
   ]}
@@ -231,7 +231,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `String.matchAll` gibt einen Iterator mit Übereinstimmungen zurück, nicht ein Array. Dieser Iterator kann verwendet werden, um alle übereinstimmenden Gruppen aus einer Zeichenkette zu erhalten.
+    `String.matchAll` gibt einen Iterator von Treffern zurück, nicht ein Array. Dieser Iterator kann verwendet werden, um alle passenden Gruppen aus einem String zu erhalten.
   </div>
   </slot>
 </Challenge>
@@ -240,7 +240,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={7}
   group="Import-Meta"
-  title="Verwendung von import.meta"
+  title="Import-Meta-Verwendung"
   options={[
     {text: 'URL des aktuellen Moduls', isAnswer: true},
     {text: 'Aktueller Zeitstempel'},
@@ -258,7 +258,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `import.meta` ist ein Objekt, das Metadaten zum aktuellen Modul enthält. Die Eigenschaft `import.meta.url` stellt die URL des aktuellen Moduls dar, die verwendet werden kann, um Informationen darüber zu erhalten, wo das Skript ausgeführt wird.
+    `import.meta` ist ein Objekt, das Metadaten über das aktuelle Modul enthält. Die Eigenschaft `import.meta.url` stellt die URL des aktuellen Moduls dar und kann verwendet werden, um Informationen darüber zu erhalten, wo das Skript ausgeführt wird.
   </div>
   </slot>
 </Challenge>
@@ -277,7 +277,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    Welchen Wert hat `a` nach der logischen Zuweisung?
+    Wie lautet der Wert von `a` nach der logischen Zuweisung?
     ```js
     let a = null;
     a ||= 10;
@@ -287,7 +287,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Die logische ODER-Zuweisung (`||=`) weist den rechten Wert zu, wenn der linke Wert falschwertig ist (`null`, `undefined`, `0`, `false` usw.). Da `a` `null` ist, wird ihm der Wert `10` zugewiesen.
+    Die logische ODER‑Zuweisung (`||=`) weist den rechten Wert zu, wenn der linke Wert falsy ist (`null`, `undefined`, `0`, `false` usw.). Da `a` `null` ist, wird ihr der Wert `10` zugewiesen.
   </div>
   </slot>
 </Challenge>
@@ -306,7 +306,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    Welchen Wert hat `b` nach der Nullish-Zuweisung?
+    Wie lautet der Wert von `b` nach der Nullish‑Zuweisung?
     ```js
     let b = null;
     b ??= 10;
@@ -316,7 +316,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Die Nullish-Coalescing-Zuweisung (`??=`) weist den rechten Wert zu, wenn der linke Wert `null` oder `undefined` ist. Da `b` `null` ist, wird ihm der Wert `10` zugewiesen.
+    Die Nullish‑Coalescing‑Zuweisung (`??=`) weist den rechten Wert zu, wenn der linke Wert `null` oder `undefined` ist. Da `b` `null` ist, wird ihr der Wert `10` zugewiesen.
   </div>
   </slot>
 </Challenge>
@@ -325,7 +325,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={10}
   group="WeakRef"
-  title="Verwendung von WeakRef"
+  title="WeakRef-Verwendung"
   options={[
     {text: 'ReferenceError'},
     {text: '{ data: \'important\' }', isAnswer: true},
@@ -345,7 +345,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `WeakRef` stellt eine schwache Referenz auf ein Objekt bereit, die es ermöglicht, dass das Objekt gesammelt wird, wenn keine weiteren starken Referenzen bestehen. Da `obj` hier immer noch stark referenziert wird, gibt `deref()` das ursprüngliche Objekt zurück. Wenn das Ziel bereits freigegeben worden wäre, würde `deref()` `undefined` zurückgeben.
+    `WeakRef` liefert eine schwache Referenz auf ein Objekt, wodurch das Objekt vom Garbage Collector freigegeben werden kann, wenn keine anderen Referenzen mehr existieren. Da `obj` hier noch stark referenziert wird, gibt `deref()` das ursprüngliche Objekt zurück. Wäre das Ziel bereits freigegeben, würde `deref()` `undefined` zurückgeben.
   </div>
   </slot>
 </Challenge>
