@@ -1,0 +1,66 @@
+{
+  "runId": "deepseek-deepseek-v4-flash@2026-05-13T23-07-53-631Z",
+  "slug": "weakmap-the-javascript-feature-you-dont-use",
+  "locale": "es",
+  "model": "deepseek/deepseek-v4-flash",
+  "modelPath": "deepseek-deepseek-v4-flash",
+  "createdAt": "2026-05-13T23:08:25.483Z",
+  "sourcePath": "src/content/posts/2025-12-29--weakmap-the-javascript-feature-you-dont-use/index.mdx",
+  "targetPath": "src/content/posts/2025-12-29--weakmap-the-javascript-feature-you-dont-use/es/index.mdx",
+  "candidatePath": "reports/i18n/weakmap-the-javascript-feature-you-dont-use/es/deepseek-deepseek-v4-flash/2026-05-13T23-07-53-631Z/candidate.mdx",
+  "sourceHash": "c757bb10827d0c5cfc47243d3ee9cb0d87b0232477fe589f26ec38cd0cf876c2",
+  "outputHash": "f11a9e1b664abe62ec22d0aa98f6781ba1f1927ef4c165e2dec66a281160f4cb",
+  "reasoningEffort": "low",
+  "temperature": 0.3,
+  "maxTokens": 16000,
+  "timeoutMs": 200000,
+  "articleSummary": "The article argues that replacing `new Map()` with `new WeakMap()` can eliminate memory leaks in JavaScript by using weak references, which allow garbage collection of key objects when they are no longer referenced elsewhere. It contrasts Map’s “strong reference” (which prevents cleanup of temporary objects like DOM nodes or component instances) with WeakMap’s automatic entry removal, citing a benchmark where memory dropped from 150–200 MB to 70–80 MB. The tone is a practical tutorial, using metaphors like “iron grip” versus “temporary citizens.” It notes WeakMap’s constraints (no iteration, no size, object-only keys) and recommends it for attaching metadata to objects with unknown lifetimes, targeting developers building long-running single-page apps.",
+  "totalInputTokens": 4042,
+  "totalOutputTokens": 3571,
+  "totalCacheReadTokens": 0,
+  "totalCacheWriteTokens": 0,
+  "totalDurationMs": 22675,
+  "totalCostUsd": 0.0015657600000000002,
+  "pricingSource": "local-openrouter-estimate",
+  "telemetry": {
+    "model": "deepseek/deepseek-v4-flash",
+    "chunkSize": "10p",
+    "totalChunks": 3,
+    "totalInputTokens": 4042,
+    "totalOutputTokens": 3571,
+    "totalCacheReadTokens": 0,
+    "totalCacheWriteTokens": 0,
+    "totalDurationMs": 22675,
+    "totalCostUsd": 0.0015657600000000002,
+    "pricingSource": "local-openrouter-estimate",
+    "chunks": [
+      {
+        "index": 0,
+        "inputTokens": 1246,
+        "outputTokens": 969,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 5197,
+        "costUsd": 0.00044576
+      },
+      {
+        "index": 1,
+        "inputTokens": 1419,
+        "outputTokens": 927,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 8514,
+        "costUsd": 0.00045822000000000007
+      },
+      {
+        "index": 2,
+        "inputTokens": 1377,
+        "outputTokens": 1675,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 8964,
+        "costUsd": 0.00066178
+      }
+    ]
+  }
+}
