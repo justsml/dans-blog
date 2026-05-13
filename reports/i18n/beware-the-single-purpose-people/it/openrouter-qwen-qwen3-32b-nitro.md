@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: beware-the-single-purpose-people
+- Locale: it
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2025-04-03--beware-the-single-purpose-people/it/index.mdx
+- Validation: deferred
+- Runtime seconds: 53.10
+- Input tokens: 7304
+- Output tokens: 10103
+- Thinking tokens: unknown
+- Cached input tokens: 1024
+- Cache write tokens: 0
+- Estimated cost: $0.003009
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 language: English
 title: Fai attenzione alle persone monofunzionali
@@ -122,3 +140,4 @@ Resta pragmatico. Focalizzati sui risultati. Non permettere che la ricerca della
 ¹ L'ironia è che raggiungere un unico scopo reale ai livelli più bassi richiede una complessità immensa nascosta appena sotto la superficie.  
 
 ² Parliamo di purezza concettuale: l'idea che una funzione dovrebbe fare solo "una cosa" logicamente. Non confonderla con il concetto di "funzione pura" della programmazione funzionale, priva di effetti collaterali, che è diverso, anche se a volte correlato.
+````
