@@ -1,0 +1,53 @@
+{
+  "selectedCommit": "36d6e5ef52312f4fcad9823b52426fe466e1d4a1",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "src=\"../@justsml/throwing-errors-in-javascript?lite=true\"",
+      "replacement": "src=\"https://repl.it/@justsml/throwing-errors-in-javascript?lite=true\"",
+      "reason": "The previous fix incorrectly changed an external URL to a relative path. This is an external iframe and must remain a full URL to function."
+    }
+  ],
+  "rationale": "Candidate 36d6e5ef provides a natural and professional German translation. It correctly handles technical terminology like 'erfüllt & abgelehnt' and maintains Dan's direct style. The suggestion reverts an incorrect path change to an external iframe URL introduced in a previous pass.",
+  "slug": "are-promises-broken",
+  "locale": "de",
+  "candidateCommits": [
+    "36d6e5ef52312f4fcad9823b52426fe466e1d4a1",
+    "23765761dc45db837d19d4d6d39fee27d17c9962"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "src=\"https://repl.it/@justsml/throwing-errors-in-javascript?lite=true\"",
+      "replacement": "src=\"../@justsml/throwing-errors-in-javascript?lite=true\"",
+      "reason": "The iframe source path needs to be relative to match the project structure and other assets, ensuring it loads correctly in the localized context.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "src=\"../@justsml/throwing-errors-in-javascript?lite=true\"",
+      "replacement": "src=\"https://repl.it/@justsml/throwing-errors-in-javascript?lite=true\"",
+      "reason": "The previous fix incorrectly changed an external URL to a relative path. This is an external iframe and must remain a full URL to function.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug are-promises-broken --locale de --skip-global",
+    "output": ""
+  }
+}
