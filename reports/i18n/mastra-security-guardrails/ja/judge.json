@@ -1,0 +1,32 @@
+{
+  "selectedCommit": "fb1628238f1d15cd8265ba1e597647c7c0a99f2c",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "scores": {
+    "readability": 5,
+    "technicalAccuracy": 5,
+    "coherence": 5,
+    "relevance": 5,
+    "translationQuality": 5,
+    "mdxPreservation": 5
+  },
+  "suggestions": [],
+  "rationale": "This candidate provided a complete translation including the frontmatter (title and subTitle), which were missing in the 'current' and some other versions. It maintains the technical terminology correctly while adopting a natural, professional tone. It also correctly handles the internal links and MDX structure.",
+  "slug": "mastra-security-guardrails",
+  "locale": "ja",
+  "candidateCommits": [
+    "fb1628238f1d15cd8265ba1e597647c7c0a99f2c",
+    "c05809c009d2f35fc936d6b70014bb90638f08ff",
+    "42db8649c160e66e33e7afd2c4bf5ecf1d175b2d",
+    "5f3ecf42ad58c4d8a5de0e64ca17b5b4f6914cb5",
+    "91b28248dbb0a2a78f35e41244a034900ba20f3f",
+    "89060ae2bc24af5ef9a31f8fb43d78ec44a98e47",
+    "84e73f502d0a2e0a443dc9dfc6acb6b09a0d810d"
+  ],
+  "suggestionLog": [],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug mastra-security-guardrails --locale ja --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug mastra-security-guardrails --locale ja --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug mastra-security-guardrails --locale ja --skip-global\n207 |     ...targetContents.matchAll(/=[\"']\\.\\/(?!\\.)[^\"']+\\.(?:avif|gif|jpe?g|png|svg|webp)[\"']/g),\n208 |   ];\n209 | \n210 |   if (nestedAssetReferences.length === 0) return;\n211 | \n212 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2026-01-03--mastra-security-guardrails/ja/index.mdx uses ./ asset paths inside a locale folder. Use ../ for inherited post assets.\n      at assertNestedAssetPaths (/Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:212:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}
