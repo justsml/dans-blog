@@ -3,16 +3,16 @@
 - Locale: ru
 - Model: openrouter/openai/gpt-oss-120b:nitro
 - Target: src/content/posts/2015-06-06--docker-firewall-setup/ru/index.mdx
-- Validation: rejected: direct AI SDK translation failed
-- Runtime seconds: 1.67
-- Input tokens: 3975
-- Output tokens: 1040
+- Validation: deferred
+- Runtime seconds: 1.51
+- Input tokens: 3977
+- Output tokens: 1053
 - Thinking tokens: unknown
-- Cached input tokens: 1152
+- Cached input tokens: 1792
 - Cache write tokens: 0
-- Estimated cost: $0.000342
+- Estimated cost: $0.000345
 - Pricing source: local-openrouter-estimate
-- Note: Command failed: bun run i18n:validate --slug docker-firewall-setup --locale ru
+- Note: Generated through the direct AI SDK chunked translator.
 ## Raw Output
 
 ````mdx
@@ -34,8 +34,8 @@ cover_icon: ../icon_charles-deluvio-456501-unsplash.webp
 ---
 ## Настройка брандмауэра Docker‑хоста
 
-1. Предполагается Debian/Ubuntu Server
-1. Предназначено для работы на сервере Docker‑хоста
+1. Предполагается сервер Debian/Ubuntu  
+2. Предназначено для работы на сервере Docker‑хоста  
 
 ### Установка требований
 
@@ -44,14 +44,14 @@ cover_icon: ../icon_charles-deluvio-456501-unsplash.webp
 apt-get update && apt-get install -y ufw nmap curl
 ~~~
 
-### Получите свои внутренние и внешние IP‑адреса
+### Получение внутренних и внешних IP‑адресов
 
 ~~~sh
 # Get your IP Addresses, simple output:
 hostname --all-ip-addresses
 ```
 
-# ИЛИ используйте ip, пример:
+# ИЛИ используйте утилиту ip, пример:
 ip addr
 ~~~
 
@@ -86,11 +86,11 @@ ufw limit ssh # Basic Rate limit 4 SSH brute force mitigation
 export EXTERNAL_IP=123.123.123.123
 # При необходимости обновите IP Docker‑сети
 export DOCKER_IP=172.17.42.1
-# Перенаправьте TCP‑трафик 8080 к приложению в Docker
+# Перенаправьте TCP‑трафик 8080 к контейнеру
 ufw allow proto tcp from $EXTERNAL_IP port 8080 to $DOCKER_IP port 3000
 ~~~
 
-## Включить / Запустить брандмауэр
+## Включить / Запустить firewall
 
 > Будьте осторожны, не заблокируйте свой SSH‑порт (по умолчанию sshd слушает 22)
 
@@ -102,11 +102,11 @@ ufw reset
 
 -----------------
 
-### Протестировать брандмауэр
+### Проверьте ваш firewall
 
-> Важно: ИСПОЛЬЗУЙТЕ УДАЛЁННЫЙ IP‑АДРЕС/ЛОКАЦИЮ
+> Важно: ИСПОЛЬЗУЙТЕ ДИСТАНЦИОННЫЙ IP‑АДРЕС/ЛОКАЦИЮ
 
-```sh
+~~~sh
 # Проверяем зависимости
 apt-get update && apt-get install -y nmap
 
@@ -120,7 +120,7 @@ nmap -p 1-10240,27017 -T5 $TARGET_HOST
 nmap -p 1-10240,27017 --open -v -APN $TARGET_HOST
 # Инспекция сервисов
 nmap -p 1-10240,27017 -O --osscan-guess $TARGET_HOST
-```
+~~~
 
-> Готово! Теперь вы должны видеть ТОЛЬКО те порты, которые настроили!
+> Готово! Теперь вы должны видеть ТОЛЬКО те порты, которые вы настроили!
 ````
