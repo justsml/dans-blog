@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: beam-search-transformers-js
+- Locale: ru
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-04-16--beam-search-transformers-js/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 27.43
+- Input tokens: 10859
+- Output tokens: 11783
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.003697
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Реализация лучевого поиска в Transformers.js
 subTitle: 'Тысяча строк, месяцы ожидания и глубокий взгляд в работу генерации текста'
@@ -172,3 +190,4 @@ score = sum_logprobs / (length ^ length_penalty)
 
 ¹Да, я знаю, что num_beams=1 — это жадный поиск. Вырожденный случай определён.  
 ²Модели только с энкодером (BERT и т. д.) вообще не генерируют токены, поэтому это к ним не относится. Они просто вайбы.
+````
