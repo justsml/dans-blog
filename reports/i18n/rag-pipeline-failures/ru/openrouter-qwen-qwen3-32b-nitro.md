@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: rag-pipeline-failures
+- Locale: ru
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-05-05--rag-pipeline-failures/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 113.91
+- Input tokens: 10522
+- Output tokens: 9635
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.003154
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: 'Пять причин, почему RAG загибает в продакшене'
 subTitle: Демонстрация сработала. Настоящие пользователи — это где трубопровод ломается.
@@ -194,3 +212,4 @@ async function runEval(
 Каждый из вышеуказанных сбоев можно диагностировать, но только если вы измеряете. Надежные команды RAG не делают ничего экзотического. Они рассматривают качество извлечения как реальную подсистему, а не как артефакт демонстрации.
 
 Установите цикл оценки первым делом. Все остальное становится проще, когда вы можете измерить это.
+````
