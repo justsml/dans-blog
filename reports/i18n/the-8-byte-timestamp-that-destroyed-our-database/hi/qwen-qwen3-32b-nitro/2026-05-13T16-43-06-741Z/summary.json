@@ -1,0 +1,120 @@
+{
+  "runId": "qwen-qwen3-32b-nitro@2026-05-13T16-43-06-741Z",
+  "slug": "the-8-byte-timestamp-that-destroyed-our-database",
+  "locale": "hi",
+  "model": "qwen/qwen3-32b:nitro",
+  "modelPath": "qwen-qwen3-32b-nitro",
+  "createdAt": "2026-05-13T16:45:08.798Z",
+  "sourcePath": "src/content/posts/2025-12-29--the-8-byte-timestamp-that-destroyed-our-database/index.mdx",
+  "targetPath": "src/content/posts/2025-12-29--the-8-byte-timestamp-that-destroyed-our-database/hi/index.mdx",
+  "candidatePath": "reports/i18n/the-8-byte-timestamp-that-destroyed-our-database/hi/qwen-qwen3-32b-nitro/2026-05-13T16-43-06-741Z/candidate.mdx",
+  "sourceHash": "4d98d485a209ef83adfb3ec4df7994acdb6c23964910ec139710bf29772952fe",
+  "outputHash": "83b48d81b67f893fbb9bd23e5c79036bcb1c412ad8398574b16ccc43eeea2560",
+  "reasoningEffort": "low",
+  "temperature": 0.3,
+  "maxTokens": 16000,
+  "timeoutMs": 200000,
+  "articleSummary": "**Summary:**  \nThe article argues that PostgreSQL's `TIMESTAMP` and `TIMESTAMPTZ` types are often misused due to confusion between absolute time (UTC-based) and local time (timezone-bound), leading to errors in applications. It explains that `TIMESTAMPTZ` stores times in UTC and converts them to the user's session timezone upon retrieval, making it ideal for recording events like train departures or API requests. In contrast, local times (e.g., hotel check-in hours) should use the `TIME` type paired with explicit timezone metadata, while durations require `INTERVAL`. The author uses metaphors like train tickets and flight tracking to highlight how different time representations (e.g., \"8:00 AM EST\" vs. UTC conversion) demand distinct storage strategies. The tone is analytical and practical, targeting developers and database designers to clarify Postgres time semantics and avoid pitfalls like precision mismatches or incorrect timezone assumptions.",
+  "totalInputTokens": 11705,
+  "totalOutputTokens": 14015,
+  "totalCacheReadTokens": 0,
+  "totalCacheWriteTokens": 0,
+  "totalDurationMs": 100455,
+  "totalCostUsd": 0.004300000000000001,
+  "pricingSource": "local-openrouter-estimate",
+  "telemetry": {
+    "model": "qwen/qwen3-32b:nitro",
+    "chunkSize": "6p",
+    "totalChunks": 9,
+    "totalInputTokens": 11705,
+    "totalOutputTokens": 14015,
+    "totalCacheReadTokens": 0,
+    "totalCacheWriteTokens": 0,
+    "totalDurationMs": 100455,
+    "totalCostUsd": 0.004300000000000001,
+    "pricingSource": "local-openrouter-estimate",
+    "chunks": [
+      {
+        "index": 0,
+        "inputTokens": 921,
+        "outputTokens": 1351,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 2667,
+        "costUsd": 0.00039792
+      },
+      {
+        "index": 1,
+        "inputTokens": 1375,
+        "outputTokens": 1467,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 18444,
+        "costUsd": 0.00046208
+      },
+      {
+        "index": 2,
+        "inputTokens": 1345,
+        "outputTokens": 1292,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 13489,
+        "costUsd": 0.00041767999999999997
+      },
+      {
+        "index": 3,
+        "inputTokens": 1273,
+        "outputTokens": 1358,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 3240,
+        "costUsd": 0.00042776
+      },
+      {
+        "index": 4,
+        "inputTokens": 1340,
+        "outputTokens": 2065,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 19914,
+        "costUsd": 0.0006028
+      },
+      {
+        "index": 5,
+        "inputTokens": 1357,
+        "outputTokens": 1242,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 2825,
+        "costUsd": 0.00040664
+      },
+      {
+        "index": 6,
+        "inputTokens": 1360,
+        "outputTokens": 1629,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 16668,
+        "costUsd": 0.00049976
+      },
+      {
+        "index": 7,
+        "inputTokens": 1392,
+        "outputTokens": 1799,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 4198,
+        "costUsd": 0.00054312
+      },
+      {
+        "index": 8,
+        "inputTokens": 1342,
+        "outputTokens": 1812,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 19010,
+        "costUsd": 0.00054224
+      }
+    ]
+  }
+}

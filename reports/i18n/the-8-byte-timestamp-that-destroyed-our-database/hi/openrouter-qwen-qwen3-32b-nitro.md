@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: the-8-byte-timestamp-that-destroyed-our-database
+- Locale: hi
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2025-12-29--the-8-byte-timestamp-that-destroyed-our-database/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 100.45
+- Input tokens: 11705
+- Output tokens: 14015
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.004300
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: आपका टाइमस्टैम्प मिथ्या है।
 subTitle: एक ट्रेन टिकट ने मुझे डेटाबेस में समय के भंडारण के बारे में सिखाया
@@ -140,3 +158,4 @@ SELECT * FROM orders WHERE created_at = '2026-01-15 10:00:00.123';
 - [आईएसओ 8601 तारीख और समय प्रारूप](https://en.wikipedia.org/wiki/ISO_8601)
 - [समय क्षेत्र डेटाबेस (आईएएएनए)](https://www.iana.org/time-zones)
 - [वितरित प्रणालियों में टाइमस्टैम्प के साथ निपटना](https://www.postgresql.org/docs/current/functions-datetime.html)
+````
