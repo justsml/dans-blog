@@ -1,0 +1,102 @@
+{
+  "runId": "openai-gpt-oss-120b-nitro@2026-05-13T23-03-35-836Z",
+  "slug": "beam-search-transformers-js",
+  "locale": "de",
+  "model": "openai/gpt-oss-120b:nitro",
+  "modelPath": "openai-gpt-oss-120b-nitro",
+  "createdAt": "2026-05-13T23:03:41.407Z",
+  "sourcePath": "src/content/posts/2026-04-16--beam-search-transformers-js/index.mdx",
+  "targetPath": "src/content/posts/2026-04-16--beam-search-transformers-js/de/index.mdx",
+  "candidatePath": "reports/i18n/beam-search-transformers-js/de/openai-gpt-oss-120b-nitro/2026-05-13T23-03-35-836Z/candidate.mdx",
+  "sourceHash": "f18620b582f1c2a340c4b7d98da5cb544cd646463534f4076975963727af3149",
+  "outputHash": "63cbf4178d5f5328816aabb66539bf14a217d7d95a3212e54211ed6bc9c3404b",
+  "reasoningEffort": "low",
+  "temperature": 0.3,
+  "maxTokens": 16000,
+  "timeoutMs": 200000,
+  "articleSummary": "The article argues that `transformers.js` has been silently falling back to greedy decoding because its `num_beams` parameter was never actually supported, and it walks the reader through a full implementation of true beam search—including standard, diverse, and sampling variants—to bring the library in line with the Python reference. It explains key technical hurdles such as handling the full `num_beams × vocab_size` candidate space, correctly reordering the transformer’s key‑value cache after each pruning step, and managing completed hypotheses with a priority‑queue‑based `BeamHypotheses` structure. The piece is written as a hands‑on tutorial, peppered with informal metaphors (“bounded breadth‑first search,” “the most annoying bug”) and a light‑hearted tone that assumes the audience is developers familiar with JavaScript, transformer internals, and decoding algorithms.",
+  "totalInputTokens": 8939,
+  "totalOutputTokens": 3138,
+  "totalCacheReadTokens": 4992,
+  "totalCacheWriteTokens": 0,
+  "totalDurationMs": 3324,
+  "totalCostUsd": 0.000913461,
+  "pricingSource": "local-openrouter-estimate",
+  "telemetry": {
+    "model": "openai/gpt-oss-120b:nitro",
+    "chunkSize": "10p",
+    "totalChunks": 7,
+    "totalInputTokens": 8939,
+    "totalOutputTokens": 3138,
+    "totalCacheReadTokens": 4992,
+    "totalCacheWriteTokens": 0,
+    "totalDurationMs": 3324,
+    "totalCostUsd": 0.000913461,
+    "pricingSource": "local-openrouter-estimate",
+    "chunks": [
+      {
+        "index": 0,
+        "inputTokens": 1087,
+        "outputTokens": 281,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 338,
+        "costUsd": 0.00009297299999999999
+      },
+      {
+        "index": 1,
+        "inputTokens": 1283,
+        "outputTokens": 452,
+        "cacheReadTokens": 640,
+        "cacheWriteTokens": 0,
+        "durationMs": 439,
+        "costUsd": 0.000131397
+      },
+      {
+        "index": 2,
+        "inputTokens": 1363,
+        "outputTokens": 536,
+        "cacheReadTokens": 768,
+        "cacheWriteTokens": 0,
+        "durationMs": 524,
+        "costUsd": 0.000149637
+      },
+      {
+        "index": 3,
+        "inputTokens": 1366,
+        "outputTokens": 504,
+        "cacheReadTokens": 768,
+        "cacheWriteTokens": 0,
+        "durationMs": 469,
+        "costUsd": 0.000143994
+      },
+      {
+        "index": 4,
+        "inputTokens": 1340,
+        "outputTokens": 436,
+        "cacheReadTokens": 768,
+        "cacheWriteTokens": 0,
+        "durationMs": 390,
+        "costUsd": 0.00013074
+      },
+      {
+        "index": 5,
+        "inputTokens": 1267,
+        "outputTokens": 440,
+        "cacheReadTokens": 768,
+        "cacheWriteTokens": 0,
+        "durationMs": 427,
+        "costUsd": 0.000128613
+      },
+      {
+        "index": 6,
+        "inputTokens": 1233,
+        "outputTokens": 489,
+        "cacheReadTokens": 768,
+        "cacheWriteTokens": 0,
+        "durationMs": 737,
+        "costUsd": 0.000136107
+      }
+    ]
+  }
+}
