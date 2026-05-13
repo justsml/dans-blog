@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: stop-hardcoding-your-prompts
+- Locale: es
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-05-07--stop-hardcoding-your-prompts/es/index.mdx
+- Validation: passed
+- Runtime seconds: 18.61
+- Input tokens: 8031
+- Output tokens: 7821
+- Thinking tokens: unknown
+- Cached input tokens: 1024
+- Cache write tokens: 0
+- Estimated cost: $0.002520
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: ''
 subTitle: ''
@@ -319,3 +337,4 @@ Ninguno de estos patrones es impresionante por sí solo. Ese es el punto. Juntos
 Un prompt con las cinco propiedades no se parece en nada a la cadena con la que empezaste. Toma más tiempo escribirlo una vez, pero requiere mucha menos ansiedad para modificarlo después. Puedes entregarlo a alguien nuevo sin una historia oral de 30 minutos sobre qué oración es sagrada.  
 
 Tu modelo no es la parte difícil de la ingeniería de IA. Tu infraestructura de prompts sí lo es.
+````
