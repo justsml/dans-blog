@@ -18,8 +18,8 @@ cover_full_width: ../dan-levy-downtown-denver-at-night-wide.webp
 cover_mobile: ../dan-levy-downtown-denver-at-night-square-200.webp
 cover_icon: ../dan-levy-downtown-denver-at-night-square-200.webp
 ---
-import Challenge from '../../../../../components/QuizUI/Challenge';
-import QuizUI from '../../../../../components/QuizUI/QuizUI';
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
 
 
 ## Quiz: ¿Conoces CSS?
@@ -47,12 +47,12 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   <div className="question">
     ¿Cuál es la forma correcta de usar una variable CSS llamada `--main-color` para establecer el color de fondo de un elemento?
     ```css
-    :root {
-      --main-color: blue;
-    }
-    div {
-      /* How do we use --main-color here? */
-    }
+        :root {
+          --main-color: blue;
+        }
+        div {
+          /* How do we use --main-color here? */
+        }
     ```
   </div>
   </slot>
@@ -83,9 +83,9 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   <div className="question">
     Si el ancho del contenedor/padre es 400 px, ¿cuál será el ancho calculado del siguiente elemento?
     ```css
-    div {
-      width: min(250px, 50%);
-    }
+        div {
+          width: min(250px, 50%);
+        }
     ```
   </div>
   </slot>
@@ -98,9 +98,9 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
     - `50%` de `400px` es `200px`
     - `250px` ya está en píxeles
     ```css
-    /* This gets computed to */
-    width: min(250px, 200px);
-    /* -> 200px wins */
+        /* This gets computed to */
+        width: min(250px, 200px);
+        /* -> 200px wins */
     ```
     La función `min()` es especialmente útil para el diseño responsivo, donde puedes garantizar que un componente (o tamaño de fuente) no supere un límite determinado.
   </div>
@@ -125,9 +125,9 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   <div className="question">
     Dado un contenedor con un ancho de 200px, ¿cuál sería el ancho calculado del `<div>`?
     ```css
-    div {
-      width: max(50px, 10%, 6rem);
-    }
+        div {
+          width: max(50px, 10%, 6rem);
+        }
     ```
   </div>
   </slot>
@@ -141,9 +141,9 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
     - `10%` de `200px` es `20px`
     - `6rem` son `6 * 16px` (el tamaño de fuente predeterminado) que equivale a `96px`
     ```css
-    /* This gets computed to */
-    width: max(50px, 20px, 96px);
-    /* -> 96px wins */
+        /* This gets computed to */
+        width: max(50px, 20px, 96px);
+        /* -> 96px wins */
     ```
   </div>
   </slot>
@@ -165,7 +165,7 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   <div className="question">
     ¿Cuál es el efecto de usar `minmax(100px, 200px)` en una pista de cuadrícula CSS?
     ```css
-    grid-template-columns: minmax(100px, 200px);
+        grid-template-columns: minmax(100px, 200px);
     ```
   </div>
   </slot>
@@ -195,9 +195,9 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   <div className="question">
     ¿Qué color tendrá el fondo con el siguiente CSS?
     ```css
-    div {
-      background: var(--primary, olivedrab);
-    }
+        div {
+          background: var(--primary, olivedrab);
+        }
     ```
   </div>
   </slot>
@@ -227,9 +227,9 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   <div className="question">
     ¿Qué hace `clamp()`?
     ```css
-    .card {
-      width: clamp(200px, 50vw, 500px);
-    }
+        .card {
+          width: clamp(200px, 50vw, 500px);
+        }
     ```
   </div>
   </slot>
@@ -286,13 +286,13 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   <div className="question">
     ¿Es este un uso correcto del nesting nativo de CSS?
     ```css
-    .container {
-      color: black;
-      .title {
-        color: white;
-        background: black;
-      }
-    }
+        .container {
+          color: black;
+          .title {
+            color: white;
+            background: black;
+          }
+        }
     ```
   </div>
   </slot>
@@ -321,13 +321,13 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   <div className="question">
     ¿Qué color de fondo se aplicará a los `div` hijos directos de `.container`?
     ```css
-    .container {
-      background-color: red;
-      > div {
-        background-color: white;
-      }
-      background-color: blue !important;
-    }
+        .container {
+          background-color: red;
+          > div {
+            background-color: white;
+          }
+          background-color: blue !important;
+        }
     ```
   </div>
   </slot>
@@ -362,7 +362,7 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     Las variables CSS pueden establecerse usando clases y JavaScript. Incluso pueden definirse 'después' de que técnicamente se usen.
     ```js
-    document.documentElement.style.setProperty('--main-color', 'blue');
+        document.documentElement.style.setProperty('--main-color', 'blue');
     ```
     Esto cambiará el valor de `--main-color` a `blue` para todo el documento.
 
@@ -389,12 +389,12 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   <div className="question">
     ¿Cuál será el ancho calculado del elemento?
     ```css
-    :root {
-      --base-width: 100px;
-    }
-    div {
-      width: calc(var(--base-width) + 10px);
-    }
+        :root {
+          --base-width: 100px;
+        }
+        div {
+          width: calc(var(--base-width) + 10px);
+        }
     ```
   </div>
   </slot>

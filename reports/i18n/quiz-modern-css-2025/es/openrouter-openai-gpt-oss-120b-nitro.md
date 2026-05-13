@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-modern-css-2025
+- Locale: es
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2024-11-07--quiz-modern-css-2025/es/index.mdx
+- Validation: passed
+- Runtime seconds: 21.10
+- Input tokens: 10215
+- Output tokens: 6688
+- Thinking tokens: unknown
+- Cached input tokens: 2048
+- Cache write tokens: 0
+- Estimated cost: $0.001602
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: 'Quiz: ¿Conoces CSS moderno? (para 2025)'
@@ -406,3 +424,4 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 </Challenge>
 
 </QuizUI>
+````
