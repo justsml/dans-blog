@@ -1,0 +1,66 @@
+---
+social_image: ../desktop-social.webp
+title: ''
+subTitle: ''
+date: '2015-09-22'
+modified: '2024-07-30'
+category: Code
+subCategory: programming
+tags:
+  - programming
+  - patterns
+  - models
+  - source-code
+  - organization
+cover: ../susan-holt-simpson-799094-unsplash.webp
+cover_mobile: ../w300_susan-holt-simpson-799094-unsplash.webp
+cover_icon: ../icon_susan-holt-simpson-799094-unsplash.webp
+---
+## Исследование техник конвейерной обработки на основе массивов и множеств
+
+### Антипаттерн?
+
+Это исследование преимуществ, которые вы получаете, когда **кодируете всё как массив.** (Используя концепции джедаев из SmallTalk)
+
+Вот несколько руководящих принципов:
+
+1.  Все входные данные похожи на массив. Даже если это массив из 1.
+1.  Функции высшего порядка должны принимать и возвращать массивы. (За исключением методов-колбэков для циклов: map/reduce/each/filter)
+1.  Код 99 из 100 разработчиков страдает от того, что я называю синдромом `острого избытка схемы`.
+1.  Остерегайтесь раздутых `модели на базе классов` - со всеми предсказуемыми атрибутами: хрупкое `состояние экземпляра` с множеством рычагов и ручек для поломки, транзакции БД, sql-блокировки, async/mutexing (которое всегда работает в первый раз), использование идиоматичных `property getter/setters`, и ваше использование `public/private/final/etc` надёжное, верно?
+
+1.  Так что давайте возьмём обычную проблему и _втиснем_ ~~~добавим~~~ несколько размышлений о множественных операциях.
+1.  Гипотетический сайт Блога имеет много Статьи, и ещё больше Постов (Комментариев).
+1.  Давайте добавим метод `delete` (ниже) - но с поддержкой как одиночного элемента, так и массивов.
+
+```java
+package net.danlevy.why.java___why.you.got.all.the.dots____it.must.be.all.the.factories;
+
+public class Post {
+  public String   title;
+  public Date     created;
+  public String   message;
+
+  public Post(String title, String message) {
+    this.title    = title;
+    this.message  = message;
+    this.created  = new Date();
+  }
+
+  public Date isArchived() {
+    return this.created < new Date(2015, 0, 1);
+  }
+
+  // Post.delete` can be called w/ a singular Post or an array of Post[]
+  public static int delete(Post post) {
+    List<Post> posts = new List<Post>(post);
+    return delete(posts)
+  }
+
+  public static int delete(List<Post> posts) {
+    return posts.map(Dao.remove);
+  }
+}
+```
+
+> Простите, если мой Java немного ржавый.
