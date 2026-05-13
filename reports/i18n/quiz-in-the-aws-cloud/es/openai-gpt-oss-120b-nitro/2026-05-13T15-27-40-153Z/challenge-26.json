@@ -1,0 +1,44 @@
+{
+  "index": 25,
+  "attempt": 1,
+  "originalTitle": "Scaling Behavior",
+  "translatedTitle": "Comportamiento de Escalado",
+  "translation": {
+    "title": "Comportamiento de Escalado",
+    "group": "Aurora Serverless",
+    "options": [
+      {
+        "text": "La velocidad de escalado depende de la capacidad actual y la configurada"
+      },
+      {
+        "text": "Escala instantáneamente bajo demanda"
+      },
+      {
+        "text": "Solo escala en intervalos predefinidos"
+      },
+      {
+        "text": "Escalado manual únicamente"
+      }
+    ],
+    "questionProse": [
+      "¿Cuál es la consideración clave al confiar en Aurora Serverless para manejar picos de tráfico repentinos?"
+    ],
+    "explanationProse": [
+      "Escalado de Aurora Serverless:\n      - Aurora Serverless v2 escala la capacidad en incrementos granulares de ACU\n      - La velocidad de escalado depende de la capacidad actual y de la configuración min/max de ACU\n      - Las versiones compatibles pueden auto‑pausar a 0 ACU cuando se configuran\n      - Facturación por segundo basada en ACU\n\n      Mejores prácticas:\n      - Establezca la capacidad mínima lo suficientemente alta para picos repentinos en cargas críticas\n      - Supervise los eventos de escalado\n      - Tenga en cuenta la gestión de conexiones"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Comportamiento de Escalado\",\n  \"group\": \"Aurora Serverless\",\n  \"options\": [\n    {\n      \"text\": \"La velocidad de escalado depende de la capacidad actual y la configurada\"\n    },\n    {\n      \"text\": \"Escala instantáneamente bajo demanda\"\n    },\n    {\n      \"text\": \"Solo escala en intervalos predefinidos\"\n    },\n    {\n      \"text\": \"Escalado manual únicamente\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Cuál es la consideración clave al confiar en Aurora Serverless para manejar picos de tráfico repentinos?\"\n  ],\n  \"explanationProse\": [\n    \"Escalado de Aurora Serverless:\\n      - Aurora Serverless v2 escala la capacidad en incrementos granulares de ACU\\n      - La velocidad de escalado depende de la capacidad actual y de la configuración min/max de ACU\\n      - Las versiones compatibles pueden auto‑pausar a 0 ACU cuando se configuran\\n      - Facturación por segundo basada en ACU\\n\\n      Mejores prácticas:\\n      - Establezca la capacidad mínima lo suficientemente alta para picos repentinos en cargas críticas\\n      - Supervise los eventos de escalado\\n      - Tenga en cuenta la gestión de conexiones\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 838,
+    "outputTokens": 629,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1482
+  },
+  "cost": {
+    "inputUsd": 0.000032681999999999996,
+    "outputUsd": 0.00011321999999999999,
+    "totalUsd": 0.000145902,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

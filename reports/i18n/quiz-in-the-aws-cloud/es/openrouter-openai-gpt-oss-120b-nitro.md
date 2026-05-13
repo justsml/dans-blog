@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-in-the-aws-cloud
+- Locale: es
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2024-12-28--quiz-in-the-aws-cloud/es/index.mdx
+- Validation: passed
+- Runtime seconds: 46.52
+- Input tokens: 24880
+- Output tokens: 19453
+- Thinking tokens: unknown
+- Cached input tokens: 6016
+- Cache write tokens: 0
+- Estimated cost: $0.004472
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: 'Quiz: Almacenamiento en AWS: ¡más de 20 preguntas!'
@@ -911,3 +929,4 @@ Espero que hayas disfrutado el recorrido y, de paso, aprendido algo sobre los se
 Descubre más de los [retos de Dan](/../challenges/)! 🧠  
 
 Legal: Este cuestionario es solo para fines educativos. Todas las marcas registradas y derechos de autor pertenecen a sus respectivos propietarios, especialmente a los grandes.
+````

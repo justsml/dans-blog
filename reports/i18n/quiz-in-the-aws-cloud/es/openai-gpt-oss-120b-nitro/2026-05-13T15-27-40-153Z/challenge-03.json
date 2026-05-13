@@ -1,0 +1,55 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "DynamoDB",
+  "translatedTitle": "DynamoDB",
+  "translation": {
+    "title": "DynamoDB",
+    "group": "Sin esquema",
+    "options": [
+      {
+        "text": "PutItem",
+        "hint": "Crea un nuevo elemento, o reemplaza un elemento existente con uno nuevo."
+      },
+      {
+        "text": "BatchUpdateItem",
+        "hint": "No existe."
+      },
+      {
+        "text": "BatchWriteItem",
+        "hint": "Inserta (PUT) O elimina varios elementos en una sola llamada."
+      },
+      {
+        "text": "UpdateItem"
+      },
+      {
+        "text": "BatchUpsertItem",
+        "hint": "¿En DynamoDB?"
+      },
+      {
+        "text": "TransactWriteItems",
+        "hint": "Combina múltiples operaciones PutItem, UpdateItem, DeleteItem y ConditionCheck en una sola llamada."
+      }
+    ],
+    "questionProse": [
+      "¿Qué API de DynamoDB actualiza atributos en un solo elemento existente?"
+    ],
+    "explanationProse": [
+      "La clave aquí son las <b>actualizaciones</b>, no inserciones o PUTs. Si estás haciendo inserciones, puedes usar `BatchWriteItem` o `TransactWriteItems`.\n\n    Mientras `BatchWriteItem` puede manejar múltiples operaciones, está limitado a PUTs y DELETEs. `TransactWriteItems` es más potente, pero es como usar un martillo neumático para actualizaciones simples.\n    Para actualizaciones simples, `UpdateItem` es la mejor opción. Permite ACTUALIZAR, o modificar uno o más atributos en un elemento existente.\n\n    La operación `UpdateItem` modifica un elemento por solicitud. Para grandes retroalimentaciones o actualizaciones masivas, normalmente orquestas muchas llamadas a `UpdateItem` o utilizas un flujo de trabajo mayor como ejecución por lotes de PartiQL, Step Functions, Glue, EMR, o un proceso de trabajador personalizado.\n\n    La operación `UpdateItem`:\n    - Actualiza los atributos de un elemento existente.\n    - Añade nuevos atributos a un elemento existente.\n    - Elimina atributos de un elemento existente.\n    - Realiza la actualización condicionalmente si el elemento existe o cumple ciertas condiciones.\n\n    [DynamoDB UpdateItem](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateItem.html)"
+    ]
+  },
+  "rawText": "{\n  \"title\":\"DynamoDB\",\n  \"group\": \"Sin esquema\",\n  \"options\": [\n    {\n      \"text\": \"PutItem\",\n      \"hint\": \"Crea un nuevo elemento, o reemplaza un elemento existente con uno nuevo.\"\n    },\n    {\n      \"text\": \"BatchUpdateItem\",\n      \"hint\": \"No existe.\"\n    },\n    {\n      \"text\": \"BatchWriteItem\",\n      \"hint\": \"Inserta (PUT) O elimina varios elementos en una sola llamada.\"\n    },\n    {\n      \"text\": \"UpdateItem\"\n    },\n    {\n      \"text\": \"BatchUpsertItem\",\n      \"hint\": \"¿En DynamoDB?\"\n    },\n    {\n      \"text\": \"TransactWriteItems\",\n      \"hint\": \"Combina múltiples operaciones PutItem, UpdateItem, DeleteItem y ConditionCheck en una sola llamada.\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Qué API de DynamoDB actualiza atributos en un solo elemento existente?\"\n  ],\n  \"explanationProse\": [\n    \"La clave aquí son las <b>actualizaciones</b>, no inserciones o PUTs. Si estás haciendo inserciones, puedes usar `BatchWriteItem` o `TransactWriteItems`.\\n\\n    Mientras `BatchWriteItem` puede manejar múltiples operaciones, está limitado a PUTs y DELETEs. `TransactWriteItems` es más potente, pero es como usar un martillo neumático para actualizaciones simples.\\n    Para actualizaciones simples, `UpdateItem` es la mejor opción. Permite ACTUALIZAR, o modificar uno o más atributos en un elemento existente.\\n\\n    La operación `UpdateItem` modifica un elemento por solicitud. Para grandes retroalimentaciones o actualizaciones masivas, normalmente orquestas muchas llamadas a `UpdateItem` o utilizas un flujo de trabajo mayor como ejecución por lotes de PartiQL, Step Functions, Glue, EMR, o un proceso de trabajador personalizado.\\n\\n    La operación `UpdateItem`:\\n    - Actualiza los atributos de un elemento existente.\\n    - Añade nuevos atributos a un elemento existente.\\n    - Elimina atributos de un elemento existente.\\n    - Realiza la actualización condicionalmente si el elemento existe o cumple ciertas condiciones.\\n\\n    [DynamoDB UpdateItem](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateItem.html)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1095,
+    "outputTokens": 1340,
+    "cacheReadTokens": 384,
+    "cacheWriteTokens": 0,
+    "durationMs": 731
+  },
+  "cost": {
+    "inputUsd": 0.000042705000000000005,
+    "outputUsd": 0.0002412,
+    "totalUsd": 0.000283905,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
