@@ -1,0 +1,44 @@
+{
+  "index": 7,
+  "attempt": 1,
+  "originalTitle": "Conversation History Management",
+  "translatedTitle": "Gestión del historial de conversación",
+  "translation": {
+    "title": "Gestión del historial de conversación",
+    "group": "Gestión de tokens",
+    "options": [
+      {
+        "text": "Siempre enviar el historial completo de la conversación"
+      },
+      {
+        "text": "Resumir los mensajes antiguos cuando el historial supere el presupuesto de tokens"
+      },
+      {
+        "text": "Eliminar mensajes antiguos — el modelo tiene memoria persistente"
+      },
+      {
+        "text": "Almacenar el historial en una base de datos vectorial y recuperar los turnos relevantes"
+      }
+    ],
+    "questionProse": [
+      "En una aplicación de chat de múltiples turnos, ¿cuál es la estrategia correcta cuando el historial de conversación se alarga?"
+    ],
+    "explanationProse": [
+      "Los LLM no tienen memoria persistente. Cada llamada a la API es sin estado — envías el contexto completo y recibes una respuesta. La \"memoria\" de una conversación es exclusivamente el historial de mensajes que incluyes en cada solicitud.\n\n    Cuando ese historial crece más allá de tu presupuesto, las opciones son:\n    1. **Resumir**: comprimir los turnos antiguos en un resumen continuo, mantener los turnos recientes al pie de la letra\n    2. **Ventana deslizante**: mantener los últimos N turnos, eliminar los anteriores\n    3. **Recuperación selectiva**: incrustar los turnos de conversación y recuperar los relevantes por consulta (complejo pero poderoso)\n\n    La truncación simple — cortar mensajes antiguos para ajustarlos — es la peor opción porque elimina silenciosamente el contexto que el modelo podría necesitar.\n\n    La recuperación de historial de conversación mediante una base de datos vectorial es teóricamente atractiva pero, en la mayoría de los casos, excesiva para aplicaciones de chat. El resumen es la opción pragmática por defecto."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Gestión del historial de conversación\",\n  \"group\": \"Gestión de tokens\",\n  \"options\": [\n    {\n      \"text\": \"Siempre enviar el historial completo de la conversación\"\n    },\n    {\n      \"text\": \"Resumir los mensajes antiguos cuando el historial supere el presupuesto de tokens\"\n    },\n    {\n      \"text\": \"Eliminar mensajes antiguos — el modelo tiene memoria persistente\"\n    },\n    {\n      \"text\": \"Almacenar el historial en una base de datos vectorial y recuperar los turnos relevantes\"\n    }\n  ],\n  \"questionProse\": [\n    \"En una aplicación de chat de múltiples turnos, ¿cuál es la estrategia correcta cuando el historial de conversación se alarga?\"\n  ],\n  \"explanationProse\": [\n    \"Los LLM no tienen memoria persistente. Cada llamada a la API es sin estado — envías el contexto completo y recibes una respuesta. La \\\"memoria\\\" de una conversación es exclusivamente el historial de mensajes que incluyes en cada solicitud.\\n\\n    Cuando ese historial crece más allá de tu presupuesto, las opciones son:\\n    1. **Resumir**: comprimir los turnos antiguos en un resumen continuo, mantener los turnos recientes al pie de la letra\\n    2. **Ventana deslizante**: mantener los últimos N turnos, eliminar los anteriores\\n    3. **Recuperación selectiva**: incrustar los turnos de conversación y recuperar los relevantes por consulta (complejo pero poderoso)\\n\\n    La truncación simple — cortar mensajes antiguos para ajustarlos — es la peor opción porque elimina silenciosamente el contexto que el modelo podría necesitar.\\n\\n    La recuperación de historial de conversación mediante una base de datos vectorial es teóricamente atractiva pero, en la mayoría de los casos, excesiva para aplicaciones de chat. El resumen es la opción pragmática por defecto.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 862,
+    "outputTokens": 1460,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 3011
+  },
+  "cost": {
+    "inputUsd": 0.00006896,
+    "outputUsd": 0.00035039999999999995,
+    "totalUsd": 0.00041935999999999997,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

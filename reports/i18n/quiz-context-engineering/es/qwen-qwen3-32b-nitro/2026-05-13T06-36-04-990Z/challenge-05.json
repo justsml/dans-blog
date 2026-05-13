@@ -1,0 +1,44 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Chunking Strategy",
+  "translatedTitle": "Estrategia de fragmentación",
+  "translation": {
+    "title": "Estrategia de fragmentación",
+    "group": "Recuperación",
+    "options": [
+      {
+        "text": "Use el tamaño de fragmento más grande que permita su ventana de contexto"
+      },
+      {
+        "text": "Siempre use 512 tokens — it\\"
+      },
+      {
+        "text": "Use fragmentos superpuestos cuyo tamaño coincida con la estructura de su contenido"
+      },
+      {
+        "text": "El tamaño del fragmento no importa\\"
+      }
+    ],
+    "questionProse": [
+      "Al fragmentar documentos para RAG, ¿cuál es el principio más importante?"
+    ],
+    "explanationProse": [
+      "No hay un tamaño de fragmento universalmente correcto — depende de su contenido. Los principios clave son:\n\n    1. **Ajuste su estructura de contenido.** Las páginas de P+F se fragmentan bien al nivel de pregunta y respuesta. Los documentos legales se fragmentan bien al nivel de cláusula. El código se fragmenta bien al nivel de función.\n    2. **Use solapamiento.** Un fragmento de 512 tokens con 64 tokens de solapamiento en cada lado significa que las respuestas que cruzan un límite aún se recuperan.\n    3. **Mida.** Cree un conjunto de evaluación y pruebe varios tamaños de fragmento. El tamaño del fragmento es más importante que el modelo de incrustación.\n\n    \"512 tokens\" es un punto de partida razonable, no una regla."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Estrategia de fragmentación\",\n  \"group\": \"Recuperación\",\n  \"options\": [\n    {\n      \"text\": \"Use el tamaño de fragmento más grande que permita su ventana de contexto\"\n    },\n    {\n      \"text\": \"Siempre use 512 tokens — it\\\\\"\n    },\n    {\n      \"text\": \"Use fragmentos superpuestos cuyo tamaño coincida con la estructura de su contenido\"\n    },\n    {\n      \"text\": \"El tamaño del fragmento no importa\\\\\"\n    }\n  ],\n  \"questionProse\": [\n    \"Al fragmentar documentos para RAG, ¿cuál es el principio más importante?\"\n  ],\n  \"explanationProse\": [\n    \"No hay un tamaño de fragmento universalmente correcto — depende de su contenido. Los principios clave son:\\n\\n    1. **Ajuste su estructura de contenido.** Las páginas de P+F se fragmentan bien al nivel de pregunta y respuesta. Los documentos legales se fragmentan bien al nivel de cláusula. El código se fragmenta bien al nivel de función.\\n    2. **Use solapamiento.** Un fragmento de 512 tokens con 64 tokens de solapamiento en cada lado significa que las respuestas que cruzan un límite aún se recuperan.\\n    3. **Mida.** Cree un conjunto de evaluación y pruebe varios tamaños de fragmento. El tamaño del fragmento es más importante que el modelo de incrustación.\\n\\n    \\\"512 tokens\\\" es un punto de partida razonable, no una regla.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 819,
+    "outputTokens": 1091,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2382
+  },
+  "cost": {
+    "inputUsd": 0.00006552,
+    "outputUsd": 0.00026184,
+    "totalUsd": 0.00032736,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

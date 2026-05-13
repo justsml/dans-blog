@@ -1,0 +1,44 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "XML Tags for Structure",
+  "translatedTitle": "Etiquetas XML para estructura",
+  "translation": {
+    "title": "Etiquetas XML para estructura",
+    "group": "Estructura de prompts",
+    "options": [
+      {
+        "text": "Las etiquetas XML son válidas solo en modelos de Anthropic"
+      },
+      {
+        "text": "Las etiquetas XML ayudan a los modelos a distinguir instrucciones de datos y mejorar la precisión del análisis"
+      },
+      {
+        "text": "Las etiquetas XML ralentizan la tokenización y deben evitarse"
+      },
+      {
+        "text": "Las etiquetas XML son equivalentes a encabezados de markdown"
+      }
+    ],
+    "questionProse": [
+      "¿Por qué muchos prompts de producción usan etiquetas de estilo XML como `<document>`, `<context>`, `<instructions>`?"
+    ],
+    "explanationProse": [
+      "Las etiquetas de estilo XML proporcionan **límites estructurales explícitos** que los modelos están entrenados para reconocer y respetar. Hacen dos cosas:\n\n    1. **Separación**: Indican al modelo dónde terminan las instrucciones y comienza los datos —crítico para RAG y para reducir el riesgo de inyección de prompt desde documentos recuperados.\n    2. **Parseabilidad**: Cuando pides al modelo que responda en XML (ej. `<answer>...</answer>`), las etiquetas te dan puntos de extracción limpios sin necesidad de hacks con expresiones regulares.\n\n    Esto no es XML como lenguaje de marcado. Es XML como una convención de delimitadores que los modelos están entrenados para usar. Funciona porque el modelo ha visto este patrón extensamente en su entrenamiento, no porque esté validando esquemas.\n\n    Funciona en la mayoría de los modelos ajustados para tareas de instrucción con suficiente frecuencia como para ser útil —es una convención en los datos de entrenamiento, no una característica del proveedor ni una garantía de seguridad."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Etiquetas XML para estructura\",\n  \"group\": \"Estructura de prompts\",\n  \"options\": [\n    {\n      \"text\": \"Las etiquetas XML son válidas solo en modelos de Anthropic\"\n    },\n    {\n      \"text\": \"Las etiquetas XML ayudan a los modelos a distinguir instrucciones de datos y mejorar la precisión del análisis\"\n    },\n    {\n      \"text\": \"Las etiquetas XML ralentizan la tokenización y deben evitarse\"\n    },\n    {\n      \"text\": \"Las etiquetas XML son equivalentes a encabezados de markdown\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Por qué muchos prompts de producción usan etiquetas de estilo XML como `<document>`, `<context>`, `<instructions>`?\"\n  ],\n  \"explanationProse\": [\n    \"Las etiquetas de estilo XML proporcionan **límites estructurales explícitos** que los modelos están entrenados para reconocer y respetar. Hacen dos cosas:\\n\\n    1. **Separación**: Indican al modelo dónde terminan las instrucciones y comienza los datos —crítico para RAG y para reducir el riesgo de inyección de prompt desde documentos recuperados.\\n    2. **Parseabilidad**: Cuando pides al modelo que responda en XML (ej. `<answer>...</answer>`), las etiquetas te dan puntos de extracción limpios sin necesidad de hacks con expresiones regulares.\\n\\n    Esto no es XML como lenguaje de marcado. Es XML como una convención de delimitadores que los modelos están entrenados para usar. Funciona porque el modelo ha visto este patrón extensamente en su entrenamiento, no porque esté validando esquemas.\\n\\n    Funciona en la mayoría de los modelos ajustados para tareas de instrucción con suficiente frecuencia como para ser útil —es una convención en los datos de entrenamiento, no una característica del proveedor ni una garantía de seguridad.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 865,
+    "outputTokens": 1259,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2881
+  },
+  "cost": {
+    "inputUsd": 0.0000692,
+    "outputUsd": 0.00030216,
+    "totalUsd": 0.00037136,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "index": 13,
+  "attempt": 1,
+  "originalTitle": "Context Engineering vs. Fine-Tuning",
+  "translatedTitle": "Ingeniería del contexto vs. Ajuste fino",
+  "translation": {
+    "title": "Ingeniería del contexto vs. Ajuste fino",
+    "group": "Experto",
+    "options": [
+      {
+        "text": "El ajuste fino es siempre mejor; la ingeniería del contexto es un recurso temporal"
+      },
+      {
+        "text": "La ingeniería del contexto es gratuita; el ajuste fino es costoso; siempre use ingeniería del contexto"
+      },
+      {
+        "text": "La ingeniería del contexto cambia el comportamiento por solicitud; el ajuste fino cambia los pesos del modelo permanentemente"
+      },
+      {
+        "text": "Son nombres diferentes para la misma técnica"
+      }
+    ],
+    "questionProse": [
+      "¿Cuál es la distinción clave entre la ingeniería del contexto y el ajuste fino, y cuándo el ajuste fino realmente tiene sentido?"
+    ],
+    "explanationProse": [
+      "**La ingeniería del contexto** moldea el comportamiento del modelo a través del prompt — instrucciones del sistema, ejemplos de pocos pasos, contexto recuperado. Es por solicitud, reversible y no requiere entrenamiento.\n\n    **El ajuste fino** actualiza los pesos del modelo con tus datos. Los cambios son permanentes (para ese checkpoint) y se aplican a cada inferencia.\n\n    El ajuste fino es realmente mejor cuando:\n    - Necesitas un estilo/formato consistente que el modelo no pueda seguir confiablemente solo con instrucciones\n    - Tu tarea requiere comportamiento repetible en patrones específicos del dominio que no resuelven los prompts ni la recuperación\n    - Debes reducir la longitud del prompt — el comportamiento ajustado no necesita explicarse en cada solicitud\n    - Estás ejecutando muchas solicitudes donde los ejemplos de pocos pasos consumen tokens significativos\n\n    El ajuste fino es excesivo cuando:\n    - Tus instrucciones caben en un prompt del sistema\n    - Principalmente necesitas hechos actuales o propiedad que se puedan recuperar en tiempo de solicitud\n    - Los requisitos cambian con frecuencia (tendrías que rehacer el ajuste fino)\n    - No has agotado la ingeniería del contexto primero\n\n    El orden correcto: primero domina la ingeniería del contexto. Ajusta fino solo cuando esté probado que no es suficiente."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Ingeniería del contexto vs. Ajuste fino\",\n  \"group\": \"Experto\",\n  \"options\": [\n    {\n      \"text\": \"El ajuste fino es siempre mejor; la ingeniería del contexto es un recurso temporal\"\n    },\n    {\n      \"text\": \"La ingeniería del contexto es gratuita; el ajuste fino es costoso; siempre use ingeniería del contexto\"\n    },\n    {\n      \"text\": \"La ingeniería del contexto cambia el comportamiento por solicitud; el ajuste fino cambia los pesos del modelo permanentemente\"\n    },\n    {\n      \"text\": \"Son nombres diferentes para la misma técnica\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Cuál es la distinción clave entre la ingeniería del contexto y el ajuste fino, y cuándo el ajuste fino realmente tiene sentido?\"\n  ],\n  \"explanationProse\": [\n    \"**La ingeniería del contexto** moldea el comportamiento del modelo a través del prompt — instrucciones del sistema, ejemplos de pocos pasos, contexto recuperado. Es por solicitud, reversible y no requiere entrenamiento.\\n\\n    **El ajuste fino** actualiza los pesos del modelo con tus datos. Los cambios son permanentes (para ese checkpoint) y se aplican a cada inferencia.\\n\\n    El ajuste fino es realmente mejor cuando:\\n    - Necesitas un estilo/formato consistente que el modelo no pueda seguir confiablemente solo con instrucciones\\n    - Tu tarea requiere comportamiento repetible en patrones específicos del dominio que no resuelven los prompts ni la recuperación\\n    - Debes reducir la longitud del prompt — el comportamiento ajustado no necesita explicarse en cada solicitud\\n    - Estás ejecutando muchas solicitudes donde los ejemplos de pocos pasos consumen tokens significativos\\n\\n    El ajuste fino es excesivo cuando:\\n    - Tus instrucciones caben en un prompt del sistema\\n    - Principalmente necesitas hechos actuales o propiedad que se puedan recuperar en tiempo de solicitud\\n    - Los requisitos cambian con frecuencia (tendrías que rehacer el ajuste fino)\\n    - No has agotado la ingeniería del contexto primero\\n\\n    El orden correcto: primero domina la ingeniería del contexto. Ajusta fino solo cuando esté probado que no es suficiente.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 941,
+    "outputTokens": 1255,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2569
+  },
+  "cost": {
+    "inputUsd": 0.00007528,
+    "outputUsd": 0.0003012,
+    "totalUsd": 0.00037648,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

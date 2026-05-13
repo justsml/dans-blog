@@ -1,0 +1,44 @@
+{
+  "index": 6,
+  "attempt": 1,
+  "originalTitle": "Context Budget",
+  "translatedTitle": "Presupuesto de contexto",
+  "translation": {
+    "title": "Presupuesto de contexto",
+    "group": "Gestión de tokens",
+    "options": [
+      {
+        "text": "Usar el 95%+ del espacio de contexto para maximizar la información"
+      },
+      {
+        "text": "Reservar espacio significativo para la salida en lugar de llenar todo el espacio"
+      },
+      {
+        "text": "El presupuesto de contexto solo importa para modelos de menos de 32K tokens"
+      },
+      {
+        "text": "El modelo trunca automáticamente cuando se excede el espacio"
+      }
+    ],
+    "questionProse": [
+      "Al construir un prompt de RAG con contexto recuperado, una regla práctica para el presupuesto de contexto es:"
+    ],
+    "explanationProse": [
+      "El espacio de contexto se comparte entre **entrada y salida**. Si usas el 90% para entrada, al modelo solo le queda el 10% del espacio para generar una respuesta — lo que suele causar salidas truncadas o degradadas.\n\n    Una heurística razonable: decide primero el tamaño esperado de la salida, luego mantén la entrada claramente por debajo del presupuesto restante. Para muchas tareas de RAG, eso significa usar no más del **60-70% del espacio total de contexto** (prompt del sistema + historial + contexto recuperado). Guarda el resto para la generación y un margen de seguridad.\n\n    Además, los modelos funcionan peor cerca de los bordes de su espacio de contexto — la comprensión y seguimiento de instrucciones se degradan a medida que el contexto se llena. Ejecutar a un 95% es técnicamente posible. No ofrece la misma experiencia que funcionar al 50%."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Presupuesto de contexto\",\n  \"group\": \"Gestión de tokens\",\n  \"options\": [\n    {\n      \"text\": \"Usar el 95%+ del espacio de contexto para maximizar la información\"\n    },\n    {\n      \"text\": \"Reservar espacio significativo para la salida en lugar de llenar todo el espacio\"\n    },\n    {\n      \"text\": \"El presupuesto de contexto solo importa para modelos de menos de 32K tokens\"\n    },\n    {\n      \"text\": \"El modelo trunca automáticamente cuando se excede el espacio\"\n    }\n  ],\n  \"questionProse\": [\n    \"Al construir un prompt de RAG con contexto recuperado, una regla práctica para el presupuesto de contexto es:\"\n  ],\n  \"explanationProse\": [\n    \"El espacio de contexto se comparte entre **entrada y salida**. Si usas el 90% para entrada, al modelo solo le queda el 10% del espacio para generar una respuesta — lo que suele causar salidas truncadas o degradadas.\\n\\n    Una heurística razonable: decide primero el tamaño esperado de la salida, luego mantén la entrada claramente por debajo del presupuesto restante. Para muchas tareas de RAG, eso significa usar no más del **60-70% del espacio total de contexto** (prompt del sistema + historial + contexto recuperado). Guarda el resto para la generación y un margen de seguridad.\\n\\n    Además, los modelos funcionan peor cerca de los bordes de su espacio de contexto — la comprensión y seguimiento de instrucciones se degradan a medida que el contexto se llena. Ejecutar a un 95% es técnicamente posible. No ofrece la misma experiencia que funcionar al 50%.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 861,
+    "outputTokens": 855,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2077
+  },
+  "cost": {
+    "inputUsd": 0.00006888,
+    "outputUsd": 0.00020519999999999997,
+    "totalUsd": 0.00027408,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

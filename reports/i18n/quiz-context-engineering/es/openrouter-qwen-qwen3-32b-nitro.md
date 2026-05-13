@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-context-engineering
+- Locale: es
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-05-09--quiz-context-engineering/es/index.mdx
+- Validation: passed
+- Runtime seconds: 46.61
+- Input tokens: 14091
+- Output tokens: 18692
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.005613
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: 'Cuestionario: 14 preguntas sobre ingeniería de contexto'
 subTitle: ''
@@ -475,3 +493,4 @@ Trae pruebas.
 - **0-4**: Buena noticia: todo en este cuestionario es aprendible y aplicable inmediatamente. Solo la pregunta "perdido en el medio" vale la pena entender antes de tu próximo despliegue de RAG.
 
 La ingeniería del contexto es la disciplina de ser intencional sobre la información que pones en la ventana, dónde la pones y cómo la estructuras. El modelo es la parte menos controlable de tu sistema. Todo lo que rodea al modelo es tuyo.
+````

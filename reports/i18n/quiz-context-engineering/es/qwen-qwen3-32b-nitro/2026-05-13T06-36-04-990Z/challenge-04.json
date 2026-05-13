@@ -1,0 +1,44 @@
+{
+  "index": 3,
+  "attempt": 1,
+  "originalTitle": "Lost in the Middle",
+  "translatedTitle": "Perdido en el Medio",
+  "translation": {
+    "title": "Perdido en el Medio",
+    "group": "Recuperación",
+    "options": [
+      {
+        "text": "Los modelos funcionan igual de bien independientemente de dónde se coloque el contexto"
+      },
+      {
+        "text": "Los modelos funcionan mejor con el contexto al final"
+      },
+      {
+        "text": "Los modelos funcionan mejor con el contexto al principio y al final, peor en el medio"
+      },
+      {
+        "text": "Los modelos funcionan mejor con el contexto en el medio del prompt"
+      }
+    ],
+    "questionProse": [
+      "La investigación sobre el problema 'Perdido en el Medio' muestra que los LLM tienden a:"
+    ],
+    "explanationProse": [
+      "El [artículo 'Perdido en el Medio' (Liu et al., 2023)](https://arxiv.org/abs/2307.03172) demostró que los LLM tienen dificultades consistentes con la información colocada en el medio de contextos largos. El rendimiento es significativamente mayor cuando la información relevante aparece al **principio o al final** de la ventana de contexto.\n\n    Implicación práctica: cuando insertes fragmentos recuperados en un prompt de RAG, no solo los agregues en orden de relevancia. Pon el resultado más clasificado primero, el segundo más clasificado al final y llena el medio con material menos clasificado. Contraintuitivo, pero mediblemente mejor."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Perdido en el Medio\",\n  \"group\": \"Recuperación\",\n  \"options\": [\n    {\n      \"text\": \"Los modelos funcionan igual de bien independientemente de dónde se coloque el contexto\"\n    },\n    {\n      \"text\": \"Los modelos funcionan mejor con el contexto al final\"\n    },\n    {\n      \"text\": \"Los modelos funcionan mejor con el contexto al principio y al final, peor en el medio\"\n    },\n    {\n      \"text\": \"Los modelos funcionan mejor con el contexto en el medio del prompt\"\n    }\n  ],\n  \"questionProse\": [\n    \"La investigación sobre el problema 'Perdido en el Medio' muestra que los LLM tienden a:\"\n  ],\n  \"explanationProse\": [\n    \"El [artículo 'Perdido en el Medio' (Liu et al., 2023)](https://arxiv.org/abs/2307.03172) demostró que los LLM tienen dificultades consistentes con la información colocada en el medio de contextos largos. El rendimiento es significativamente mayor cuando la información relevante aparece al **principio o al final** de la ventana de contexto.\\n\\n    Implicación práctica: cuando insertes fragmentos recuperados en un prompt de RAG, no solo los agregues en orden de relevancia. Pon el resultado más clasificado primero, el segundo más clasificado al final y llena el medio con material menos clasificado. Contraintuitivo, pero mediblemente mejor.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 825,
+    "outputTokens": 1420,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 3211
+  },
+  "cost": {
+    "inputUsd": 0.000066,
+    "outputUsd": 0.0003408,
+    "totalUsd": 0.0004068,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
