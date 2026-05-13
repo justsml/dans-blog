@@ -148,7 +148,7 @@ export function writeTextFile(path: string, contents: string) {
 export function gitCommit(message: string, paths: string[]) {
   withGitCommitLock(() => {
     runInherited("git", ["add", ...paths]);
-    runInherited("git", ["commit", "-m", message]);
+    runInherited("git", ["commit", "--only", "-m", message, "--", ...paths]);
   });
 }
 
