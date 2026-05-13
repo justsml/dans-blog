@@ -1,0 +1,50 @@
+{
+  "index": 7,
+  "attempt": 1,
+  "originalTitle": "Identify Invalid Types",
+  "translatedTitle": "無効な型を特定",
+  "translation": {
+    "title": "無効な型を特定",
+    "group": "Postgres 型",
+    "options": [
+      {
+        "text": "cidr"
+      },
+      {
+        "text": "inet"
+      },
+      {
+        "text": "ipv4"
+      },
+      {
+        "text": "macaddr"
+      },
+      {
+        "text": "macaddr8"
+      },
+      {
+        "text": "interval"
+      }
+    ],
+    "questionProse": [
+      "これらのうち、❌ 有効な PostgreSQL 型でないものはどれですか？"
+    ],
+    "explanationProse": [
+      "これでイライラしたり、_怒り_ を感じましたか？ あなたは一人ではありません！ 匿名の「core」データベース貢献者の言葉を引用すると、\"what the hell, Dan?! I crashed on the type questions! Thats violent sir! Not sharing my score, hah.\" 😈 どういたしまして。\n\nPostgreSQL の豊富なネットワーク型には `ipv4` が含まれていません。調べずに使おうとすると毎回間違えます。`macaddr8` があるので `ipv4` と `ipv6` 型があるはずだと感じるかもしれませんが、実際は `inet` が両方をカバーしています。`cidr` もネットマスクをカバーします。\n\n有効なネットワーク型は次の通りです:\n- `cidr` (IPv4/IPv6 ネットワークアドレス)\n- `inet` (IPv4/IPv6 ホストアドレス)\n- `macaddr` (MAC アドレス)\n- `macaddr8` (EUI-64 MAC アドレス)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"無効な型を特定\",\n  \"group\": \"Postgres 型\",\n  \"options\": [\n    {\n      \"text\": \"cidr\"\n    },\n    {\n      \"text\": \"inet\"\n    },\n    {\n      \"text\": \"ipv4\"\n    },\n    {\n      \"text\": \"macaddr\"\n    },\n    {\n      \"text\": \"macaddr8\"\n    },\n    {\n      \"text\": \"interval\"\n    }\n  ],\n  \"questionProse\": [\n    \"これらのうち、❌ 有効な PostgreSQL 型でないものはどれですか？\"\n  ],\n  \"explanationProse\": [\n    \"これでイライラしたり、_怒り_ を感じましたか？ あなたは一人ではありません！ 匿名の「core」データベース貢献者の言葉を引用すると、\\\"what the hell, Dan?! I crashed on the type questions! Thats violent sir! Not sharing my score, hah.\\\" 😈 どういたしまして。\\n\\nPostgreSQL の豊富なネットワーク型には `ipv4` が含まれていません。調べずに使おうとすると毎回間違えます。`macaddr8` があるので `ipv4` と `ipv6` 型があるはずだと感じるかもしれませんが、実際は `inet` が両方をカバーしています。`cidr` もネットマスクをカバーします。\\n\\n有効なネットワーク型は次の通りです:\\n- `cidr` (IPv4/IPv6 ネットワークアドレス)\\n- `inet` (IPv4/IPv6 ホストアドレス)\\n- `macaddr` (MAC アドレス)\\n- `macaddr8` (EUI-64 MAC アドレス)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 929,
+    "outputTokens": 1035,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 1937
+  },
+  "cost": {
+    "inputUsd": 0.000036231,
+    "outputUsd": 0.00018629999999999997,
+    "totalUsd": 0.000222531,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

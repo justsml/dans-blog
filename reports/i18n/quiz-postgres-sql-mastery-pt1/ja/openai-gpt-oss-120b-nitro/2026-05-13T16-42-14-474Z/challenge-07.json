@@ -1,0 +1,53 @@
+{
+  "index": 6,
+  "attempt": 1,
+  "originalTitle": "Identify Invalid Types",
+  "translatedTitle": "無効な型を特定",
+  "translation": {
+    "title": "無効な型を特定",
+    "group": "Postgres 型",
+    "options": [
+      {
+        "text": "int"
+      },
+      {
+        "text": "real"
+      },
+      {
+        "text": "bigint"
+      },
+      {
+        "text": "bigserial"
+      },
+      {
+        "text": "smallserial"
+      },
+      {
+        "text": "decimal128"
+      },
+      {
+        "text": "double precision"
+      }
+    ],
+    "questionProse": [
+      "これらのうち、❌ 有効な PostgreSQL 型でないものはどれですか？"
+    ],
+    "explanationProse": [
+      "多くの場所（MongoやJavaを含む）で `decimal128` が型として存在するため馴染みがあるかもしれませんが、PostgreSQL の有効な型ではなく、`decimal` が正しい型です。\n\n    正しい数値型は次のとおりです:\n    - `int` (4 バイト整数)\n    - `bigint` (8 バイト整数)\n    - `real` (4 バイト浮動小数点)\n    - `double precision` (8 バイト浮動小数点)\n    - `bigserial` (自動インクリメント 8 バイト整数)\n    - `smallserial` (自動インクリメント 2 バイト整数)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"無効な型を特定\",\n  \"group\": \"Postgres 型\",\n  \"options\": [\n    {\n      \"text\": \"int\"\n    },\n    {\n      \"text\": \"real\"\n    },\n    {\n      \"text\": \"bigint\"\n    },\n    {\n      \"text\": \"bigserial\"\n    },\n    {\n      \"text\": \"smallserial\"\n    },\n    {\n      \"text\": \"decimal128\"\n    },\n    {\n      \"text\": \"double precision\"\n    }\n  ],\n  \"questionProse\": [\n    \"これらのうち、❌ 有効な PostgreSQL 型でないものはどれですか？\"\n  ],\n  \"explanationProse\": [\n    \"多くの場所（MongoやJavaを含む）で `decimal128` が型として存在するため馴染みがあるかもしれませんが、PostgreSQL の有効な型ではなく、`decimal` が正しい型です。\\n\\n    正しい数値型は次のとおりです:\\n    - `int` (4 バイト整数)\\n    - `bigint` (8 バイト整数)\\n    - `real` (4 バイト浮動小数点)\\n    - `double precision` (8 バイト浮動小数点)\\n    - `bigserial` (自動インクリメント 8 バイト整数)\\n    - `smallserial` (自動インクリメント 2 バイト整数)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 863,
+    "outputTokens": 747,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1938
+  },
+  "cost": {
+    "inputUsd": 0.000033657,
+    "outputUsd": 0.00013446,
+    "totalUsd": 0.00016811700000000002,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

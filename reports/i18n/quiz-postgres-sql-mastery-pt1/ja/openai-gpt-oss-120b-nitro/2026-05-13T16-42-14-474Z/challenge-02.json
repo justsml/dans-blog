@@ -1,0 +1,44 @@
+{
+  "index": 1,
+  "attempt": 1,
+  "originalTitle": "Cast Syntax Variations",
+  "translatedTitle": "キャスト構文のバリエーション",
+  "translation": {
+    "title": "キャスト構文のバリエーション",
+    "group": "ウォームアップ: 型キャスト",
+    "options": [
+      {
+        "text": "'95'::INTEGER"
+      },
+      {
+        "text": "INTEGER '95'"
+      },
+      {
+        "text": "CAST('95', INTEGER)"
+      },
+      {
+        "text": "CAST('95' AS INTEGER)"
+      }
+    ],
+    "questionProse": [
+      "これらの型変換のうち、**無効**なものはどれですか ❌"
+    ],
+    "explanationProse": [
+      "PostgreSQL は 3 つのキャスト構文をサポートしています:\n\n    1. ANSI SQL: `CAST(expression AS type)`。\n    2. PostgreSQL: `expression::type`。\n    3. 型関数: `type 'literal'`。\n\n    すべて機能的には同等ですが、\n    - `CAST()` は最も移植性が高い。\n    - `::` は PostgreSQL 固有だが一般的に使われる。\n    - 中置スタイルの `type 'literal'` はあまり一般的でないが有効です。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"キャスト構文のバリエーション\",\n  \"group\": \"ウォームアップ: 型キャスト\",\n  \"options\": [\n    {\n      \"text\": \"'95'::INTEGER\"\n    },\n    {\n      \"text\": \"INTEGER '95'\"\n    },\n    {\n      \"text\": \"CAST('95', INTEGER)\"\n    },\n    {\n      \"text\": \"CAST('95' AS INTEGER)\"\n    }\n  ],\n  \"questionProse\": [\n    \"これらの型変換のうち、**無効**なものはどれですか ❌\"\n  ],\n  \"explanationProse\": [\n    \"PostgreSQL は 3 つのキャスト構文をサポートしています:\\n\\n    1. ANSI SQL: `CAST(expression AS type)`。\\n    2. PostgreSQL: `expression::type`。\\n    3. 型関数: `type 'literal'`。\\n\\n    すべて機能的には同等ですが、\\n    - `CAST()` は最も移植性が高い。\\n    - `::` は PostgreSQL 固有だが一般的に使われる。\\n    - 中置スタイルの `type 'literal'` はあまり一般的でないが有効です。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 824,
+    "outputTokens": 680,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 4135
+  },
+  "cost": {
+    "inputUsd": 0.000032136,
+    "outputUsd": 0.0001224,
+    "totalUsd": 0.00015453599999999999,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

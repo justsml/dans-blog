@@ -1,0 +1,44 @@
+{
+  "index": 13,
+  "attempt": 1,
+  "originalTitle": "Check Constraint Timing",
+  "translatedTitle": "チェック制約のタイミング",
+  "translation": {
+    "title": "チェック制約のタイミング",
+    "group": "制約",
+    "options": [
+      {
+        "text": "新規または変更された行に対して即座に"
+      },
+      {
+        "text": "トランザクションのコミット時"
+      },
+      {
+        "text": "次のクエリ時"
+      },
+      {
+        "text": "決してチェックされない - 制約は INSERT 時のみチェックされる"
+      }
+    ],
+    "questionProse": [
+      "このグレード制約はいつチェックされますか？"
+    ],
+    "explanationProse": [
+      "`NOT VALID` 制約:\n    - 新しい INSERT と UPDATE に対して即座にチェックされる\n    - 既存行は検証されない\n    - 後で `VALIDATE CONSTRAINT` で既存行を検証できる\n    - 大規模テーブルで有用\n\n`NOT VALID` なしの場合:\n    - 制約は即座にチェックされる\n    - すべての既存行が検証される\n    - 大規模テーブルでは遅くなる可能性がある"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"チェック制約のタイミング\",\n  \"group\": \"制約\",\n  \"options\": [\n    {\n      \"text\": \"新規または変更された行に対して即座に\"\n    },\n    {\n      \"text\": \"トランザクションのコミット時\"\n    },\n    {\n      \"text\": \"次のクエリ時\"\n    },\n    {\n      \"text\": \"決してチェックされない - 制約は INSERT 時のみチェックされる\"\n    }\n  ],\n  \"questionProse\": [\n    \"このグレード制約はいつチェックされますか？\"\n  ],\n  \"explanationProse\": [\n    \"`NOT VALID` 制約:\\n    - 新しい INSERT と UPDATE に対して即座にチェックされる\\n    - 既存行は検証されない\\n    - 後で `VALIDATE CONSTRAINT` で既存行を検証できる\\n    - 大規模テーブルで有用\\n\\n`NOT VALID` なしの場合:\\n    - 制約は即座にチェックされる\\n    - すべての既存行が検証される\\n    - 大規模テーブルでは遅くなる可能性がある\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 816,
+    "outputTokens": 664,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 1782
+  },
+  "cost": {
+    "inputUsd": 0.000031824,
+    "outputUsd": 0.00011952,
+    "totalUsd": 0.00015134399999999998,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

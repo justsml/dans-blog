@@ -1,0 +1,44 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "Integer Overflow",
+  "translatedTitle": "整数オーバーフロー",
+  "translation": {
+    "title": "整数オーバーフロー",
+    "group": "整数演算",
+    "options": [
+      {
+        "text": "4294967296"
+      },
+      {
+        "text": "エラー: 整数が範囲外です"
+      },
+      {
+        "text": "0"
+      },
+      {
+        "text": "2147483647"
+      }
+    ],
+    "questionProse": [
+      "学生IDの総数を計算するとどうなる？"
+    ],
+    "explanationProse": [
+      "PostgreSQL の `integer` 型は 32 ビット符号付きで、範囲は `-2,147,483,648` から `2,147,483,647` です。\n\n    計算 `256^4` = `4,294,967,296` はこの範囲を超えています。\n\n    より大きな数を扱うには:"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"整数オーバーフロー\",\n  \"group\": \"整数演算\",\n  \"options\": [\n    {\n      \"text\": \"4294967296\"\n    },\n    {\n      \"text\": \"エラー: 整数が範囲外です\"\n    },\n    {\n      \"text\": \"0\"\n    },\n    {\n      \"text\": \"2147483647\"\n    }\n  ],\n  \"questionProse\": [\n    \"学生IDの総数を計算するとどうなる？\"\n  ],\n  \"explanationProse\": [\n    \"PostgreSQL の `integer` 型は 32 ビット符号付きで、範囲は `-2,147,483,648` から `2,147,483,647` です。\\n\\n    計算 `256^4` = `4,294,967,296` はこの範囲を超えています。\\n\\n    より大きな数を扱うには:\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 826,
+    "outputTokens": 523,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 3640
+  },
+  "cost": {
+    "inputUsd": 0.000032214,
+    "outputUsd": 0.00009414,
+    "totalUsd": 0.00012635400000000002,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
