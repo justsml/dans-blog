@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: securing-clawdbot-tailscale
+- Locale: it
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-01-26--securing-clawdbot-tailscale/it/index.mdx
+- Validation: deferred
+- Runtime seconds: 61.74
+- Input tokens: 12131
+- Output tokens: 11768
+- Thinking tokens: unknown
+- Cached input tokens: 2048
+- Cache write tokens: 0
+- Estimated cost: $0.003795
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Il tuo assistente AI mi ha dato l'accesso alla shell.
 subTitle: >-
@@ -272,3 +290,4 @@ Prima di considerare pronta per la produzione la tua istanza di OpenClaw/Moltbot
 - [Utilizzo di UFW per proteggere un server Ubuntu](https://tailscale.com/docs/how-to/secure-ubuntu-server-with-ufw)
 - [Audit di sicurezza: 512 problematiche (Issue GitHub)](https://github.com/moltbot/moltbot/issues/1796)
 - [Guida alla scansione di rete con Nmap](https://nmap.org/book/man.html)
+````
