@@ -1,0 +1,87 @@
+{
+  "selectedCommit": "d55041139cc6b8c0dd5f8f0de27ddd3db9a89b68",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 9,
+    "relevance": 9,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "die Beispiele waren technisch korrekt, aber vergesslich",
+      "replacement": "die Beispiele waren technisch korrekt, aber belanglos",
+      "reason": "In German, 'vergesslich' describes a person who forgets things (forgetful). For content that is easily forgotten (forgettable), 'belanglos' or 'leicht zu vergessen' is the correct term."
+    },
+    {
+      "priority": "high",
+      "match": "der Ton war in korporatives Tageslicht abgedriftet",
+      "replacement": "der Ton war in Konzern-Einerlei abgedriftet",
+      "reason": "'Corporate daylight' is a metaphor for a bland, safe, corporate tone. A literal translation like 'korporatives Tageslicht' makes no sense in German. 'Konzern-Einerlei' or 'Business-Sprech' captures the intended meaning."
+    }
+  ],
+  "rationale": "The selected candidate (d55041139cc6b8c0dd5f8f0de27ddd3db9a89b68) is significantly better than the current version, which contains grammatical errors in the first few paragraphs (e.g., 'Selbstsicherer Einleitung' instead of 'Selbstbewusste Einleitung'). It also correctly translates the subtitle, which the current version left in English. The suggestions address two instances where the translation was too literal to the point of being incorrect in German.",
+  "slug": "replacing-my-job-with-gpt-and-llm",
+  "locale": "de",
+  "candidateCommits": [
+    "d55041139cc6b8c0dd5f8f0de27ddd3db9a89b68",
+    "95494999e96f3575ce7d74d704fc3970158920b3",
+    "c3a99e192f276b6c7ba4e0224a4c286f4568b651"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "selbstbewusste Einleitung",
+      "replacement": "selbstbewusste Einleitung",
+      "reason": "Grammar fix: 'Einleitung' is feminine, so it should be 'selbstbewusste' (already correct in this candidate, but checking against others).",
+      "pass": 1,
+      "applied": false,
+      "note": "Exact match and replacement are identical; no MDX change needed."
+    },
+    {
+      "priority": "medium",
+      "match": "vergesslich",
+      "replacement": "belanglos",
+      "reason": "'Vergesslich' means a person is forgetful; 'forgettable' (the intended meaning for examples) is 'belanglos' or 'leicht zu vergessen'.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "korporatives Tageslicht",
+      "replacement": "Konzern-Einerlei",
+      "reason": "'Corporate daylight' is a metaphor for bland corporate tone; 'korporatives Tageslicht' is too literal in German.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "vergesslich",
+      "replacement": "belanglos",
+      "reason": "'Vergesslich' means a person is forgetful; 'forgettable' (the intended meaning for examples) is 'belanglos' or 'leicht zu vergessen'.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "korporatives Tageslicht",
+      "replacement": "Konzern-Einerlei",
+      "reason": "'Corporate daylight' is a metaphor for bland corporate tone; 'korporatives Tageslicht' is too literal in German.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug replacing-my-job-with-gpt-and-llm --locale de --skip-global",
+    "output": ""
+  }
+}
