@@ -1,0 +1,38 @@
+{
+  "selectedCommit": "85e0456a510f349405c47dea85d67655d20d1777",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "scores": {
+    "readability": 5,
+    "technicalAccuracy": 5,
+    "coherence": 5,
+    "relevance": 5,
+    "translationQuality": 5,
+    "mdxPreservation": 5
+  },
+  "suggestions": [],
+  "rationale": "The selected commit 85e0456a510f349405c47dea85d67655d20d1777 is already applied as the 'current' content in the provided MDX. The judge report mentioned a Spanish word 'adoptar', but upon inspection of the provided MDX, that word is not present; it has already been correctly translated to 'перенять'. The translation is high quality, preserves MDX structure, and captures Dan's direct style well.",
+  "slug": "guerrilla-types-in-typescript",
+  "locale": "ru",
+  "candidateCommits": [
+    "85e0456a510f349405c47dea85d67655d20d1777",
+    "5f67db15ba6a6282f11ef051d37bba85670812f3",
+    "b889bc2aa0133c5d87dae263595e21717c654967"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "medium",
+      "match": "adoptar",
+      "replacement": "перенять",
+      "reason": "The word 'adoptar' is Spanish, not Russian. It should be translated to Russian.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug guerrilla-types-in-typescript --locale ru --skip-global",
+    "output": ""
+  }
+}
