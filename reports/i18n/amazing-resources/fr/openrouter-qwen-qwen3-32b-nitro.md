@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: amazing-resources
+- Locale: fr
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2015-02-26--amazing-resources/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 22.97
+- Input tokens: 8979
+- Output tokens: 10474
+- Thinking tokens: unknown
+- Cached input tokens: 2048
+- Cache write tokens: 0
+- Estimated cost: $0.003232
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Meilleures ressources gratuites de conception UI pour les développeurs
@@ -192,3 +210,4 @@ Petits mais pratiques, ces outils résolvent rapidement des problèmes spécifiq
 
 Journal des modifications : 2026-04 — Réorganisé la page pour les humains et le référencement, amélioré les titres et descriptions, et ajouté Assistant UI, AI SDK Elements, Aceternity UI, Shadcnblocks, Tailark, KokonutUI patterns et Tool UI.
 Journal des modifications : 2025-09 — Mises à jour des liens, rafraîchissement des ressources plus anciennes, et ajout d'outils modernes d'icônes, de contraste et de design.
+````
