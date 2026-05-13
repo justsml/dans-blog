@@ -1,0 +1,38 @@
+{
+  "selectedCommit": "05ce900a37936f38ac2b0117c39766d83dce9dc8",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "scores": {
+    "readability": 5,
+    "technicalAccuracy": 5,
+    "coherence": 5,
+    "relevance": 5,
+    "translationQuality": 5,
+    "mdxPreservation": 5
+  },
+  "suggestions": [],
+  "rationale": "The selected candidate provides a high-quality translation that captures Dan's direct style. It correctly translates the subtitle which was missing in other versions, uses appropriate technical Italian terms like 'Regola pratica' for 'Rule-of-thumb', and maintains all MDX formatting and links correctly. The high-priority suggestion from the previous judge report ('È sicuro inserire direttamente nel codice...') is already present in the provided MDX content, so no further suggestions are required.",
+  "slug": "protect-your-tokens",
+  "locale": "it",
+  "candidateCommits": [
+    "05ce900a37936f38ac2b0117c39766d83dce9dc8",
+    "7e8a24c7164c409bc5f60a125b20099888c252b9",
+    "abd5f43d702ca3f8da6745472175b1dd6d1348b6"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "È sicuro hardcoded le chiavi non segrete (pubbliche)!",
+      "replacement": "È sicuro inserire direttamente nel codice le chiavi non segrete (pubbliche)!",
+      "reason": "'Hardcoded' is used as a verb incorrectly here; 'inserire direttamente nel codice' is the correct Italian technical expression.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug protect-your-tokens --locale it --skip-global",
+    "output": ""
+  }
+}
