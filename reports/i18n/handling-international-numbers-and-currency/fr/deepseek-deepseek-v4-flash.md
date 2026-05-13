@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: handling-international-numbers-and-currency
+- Locale: fr
+- Model: deepseek/deepseek-v4-flash
+- Target: src/content/posts/2024-08-29--handling-international-numbers-and-currency/fr/index.mdx
+- Validation: deferred
+- Runtime seconds: 76.56
+- Input tokens: 6097
+- Output tokens: 6274
+- Thinking tokens: unknown
+- Cached input tokens: 1152
+- Cache write tokens: 0
+- Estimated cost: $0.002452
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Comprendre les nombres et les devises internationaux
@@ -126,3 +144,4 @@ Certaines bibliothèques peuvent aider avec ces tâches : */}
 
 - [currency](https://github.com/bojanz/currency) est mon choix actuel en Golang.
  */
+````
