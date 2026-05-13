@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: semantic-vector-search-landscape
+- Locale: es
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-05-01--semantic-vector-search-landscape/es/index.mdx
+- Validation: passed
+- Runtime seconds: 21.51
+- Input tokens: 19044
+- Output tokens: 7728
+- Thinking tokens: unknown
+- Cached input tokens: 3072
+- Cache write tokens: 0
+- Estimated cost: $0.002134
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Búsqueda semántica vectorial y otros temas para conquistar amigos y amantes
 subTitle: >-
@@ -372,3 +390,4 @@ Most production search systems need more than one layer:
 These are not competing tools. They're complementary. A well-built search system picks the right layer for each query shape — and when query shapes overlap, it runs multiple layers and fuses the results.
 
 The teams that ship good search features understand the whole stack. The ones that don't reach for a vector database, embed everything, and wonder why exact lookups sometimes return the wrong record.
+````
