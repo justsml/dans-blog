@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: beware-the-single-purpose-people
+- Locale: de
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2025-04-03--beware-the-single-purpose-people/de/index.mdx
+- Validation: passed
+- Runtime seconds: 5.82
+- Input tokens: 7687
+- Output tokens: 2876
+- Thinking tokens: unknown
+- Cached input tokens: 2944
+- Cache write tokens: 0
+- Estimated cost: $0.000817
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 language: English
 title: Vorsichtvor den Einzweck‑Menschen
@@ -122,3 +140,4 @@ Bleiben Sie pragmatisch. Konzentrieren Sie sich auf Ergebnisse. Lassen Sie nicht
 ¹ Die Ironie dabei ist, dass das Erreichen *tatsächlicher* Einzelaufgaben auf den tiefsten Ebenen enorme Komplexität erfordert, die knapp unter der Oberfläche verborgen bleibt.
 
 ² Hier geht es um konzeptuelle Reinheit: die Vorstellung, dass eine Funktion logisch nur „eine Sache“ tun sollte. Verwechseln Sie das nicht mit dem Konzept einer „reinen Funktion“ aus der funktionalen Programmierung, die keine Seiteneffekte hat – das ist ein anderer, wenn auch manchmal verwandter Gedanke.
+````
