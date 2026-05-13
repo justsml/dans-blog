@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: mastering-functional-pipelines-passing-state
+- Locale: fr
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2023-08-13--mastering-functional-pipelines-passing-state/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 19.11
+- Input tokens: 9498
+- Output tokens: 2586
+- Thinking tokens: unknown
+- Cached input tokens: 2112
+- Cache write tokens: 0
+- Estimated cost: $0.000836
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: 'Maître des pipelines : transmission d’état'
@@ -200,3 +218,4 @@ Nous aborderons l’externalisation de l’état et l’extension des fonctionna
 #### Lectures associées
 
 - [Des difficultés similaires existent dans le monde React piloté par les composants.](https://kyleshevlin.com/quit-your-yapping)
+````
