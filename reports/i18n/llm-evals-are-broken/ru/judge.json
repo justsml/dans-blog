@@ -1,0 +1,38 @@
+{
+  "selectedCommit": "048aa8b8a78a69e4f961fd502772359d52aa6ab5",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "scores": {
+    "readability": 5,
+    "technicalAccuracy": 5,
+    "coherence": 5,
+    "relevance": 5,
+    "translationQuality": 5,
+    "mdxPreservation": 5
+  },
+  "suggestions": [],
+  "rationale": "The translation is excellent and captures the author's voice perfectly. The previous judge report mentioned a typo 'смолинге', but upon inspection of the current file content, it is already correctly written as 'смокинге'. No further high-priority fixes are required.",
+  "slug": "llm-evals-are-broken",
+  "locale": "ru",
+  "candidateCommits": [
+    "048aa8b8a78a69e4f961fd502772359d52aa6ab5",
+    "b0c4efd20c21aa63fb6d4e42f0e40db814ff4dfd",
+    "9bc2dbf610fa289a990e7ca957ab94df9eeb0c0d"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "смолинге",
+      "replacement": "смокинге",
+      "reason": "Typo: 'смолинг' is not a word; it should be 'смокинг' (tuxedo) as in the original text.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug llm-evals-are-broken --locale ru --skip-global",
+    "output": ""
+  }
+}
