@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: postgres-fts-vs-pgvector
+- Locale: fr
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-05-08--postgres-fts-vs-pgvector/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 44.07
+- Input tokens: 19612
+- Output tokens: 20115
+- Thinking tokens: unknown
+- Cached input tokens: 4096
+- Cache write tokens: 0
+- Estimated cost: $0.006397
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: 'Recherche Postgres : FTS,'
 subTitle: ''
@@ -400,3 +418,4 @@ N'utilisez pas la recherche vectorielle comme méthode de recherche floue pour d
 La recherche vectorielle retourne l'élément *le plus similaire* de votre ensemble de données, même si rien n'est pertinent. Elle ignore qu'il n'existe pas de bonne réponse. Cela fonctionne bien pour des documents liés. Cela devient catastrophique pour la recherche de dossiers spécifiques, où une correspondance proche erronée est pire qu'un résultat vide.
 
 Sachez à quoi chaque outil sert. La plupart d'entre eux sont déjà intégrés à votre installation Postgres. Utilisez-les là où ils s'appliquent.
+````
