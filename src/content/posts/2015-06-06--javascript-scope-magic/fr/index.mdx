@@ -1,0 +1,103 @@
+---
+title: Magie JavaScript
+subTitle: '[draft] Impératif vs. Récursif vs. Fonctionnel'
+date: '2015-06-06'
+modified: '2024-07-30'
+category: Code
+subCategory: javascript
+draft: true
+publish: true
+tags:
+  - javascript
+  - programming
+  - performance
+  - patterns
+cover: ../markus-spiske-197281-unsplash.webp
+cover_mobile: ../w300_markus-spiske-197281-unsplash.webp
+cover_icon: ../icon_markus-spiske-197281-unsplash.webp
+---
+## Impératif vs. Récursif vs. Fonctionnel
+
+> [ En cours de rédaction ]
+
+```javascript
+// Impératif : Le plus rapide ( + très simple, pas de nouveaux pointeurs ni d’allocation superflue ):
+function fib(n) {
+  var a = 1,
+    b = 1,
+    c = 0;
+  for (var i = 1; i < n - 1; ++i) {
+    c = a + b;
+    a = b;
+    b = c;
+  }
+  return b;
+}
+
+// Récursif : (FIREFOX ou BABELJS uniquement) définition de fonction ES6 avec
+//  des valeurs par défaut de paramètres pour initialiser les valeurs (internes/récursives)
+function fib(n, current = 0, a = 1, b = 1, c = 0) {
+  current++;
+  c = a + b;
+  a = b;
+  b = c;
+  return current >= n ? b : fib(n, current, a, b, c);
+}
+
+// Exemple « Text‑book‑Bad » – portée de fonction médiocre avec plusieurs valeurs externes mutables
+function fib(n) {
+  if (!arr) {
+    var arr = [1, 1];
+    n = n - 2;
+  } // Mauvais
+  if (n === -1) {
+    return [arr[0]];
+  }
+  if (n === 0) {
+    return arr;
+  }
+  var proc = function() {
+    --n;
+    arr.push(arr[arr.length - 1] + arr[arr.length - 2]);
+    return n === 0 ? arr : proc();
+    // Mauvais : fonction récursive interne inutile, indice : les variables proviennent de la portée de la fonction parente
+  };
+  var ans = proc();
+  return ans[ans.length - 1];
+}
+```
+
+## Promesses : Génial !
+
+```js
+// Exemple utilisant les promesses bluebird et son
+var Promise = require("bluebird"),
+  fs = Promise.promisifyAll(require("fs")),
+  less = Promise.promisifyAll(require("less"));
+
+function writeFileData(data) {
+  return fs.writeFileAsync("/tmp/output.css", data);
+}
+// Bluebird rend quelque chose comme ça peut‑être inconfortablement simple et concis :
+fs.readFileAsync("../style.less") // Appel du readFile() promisifié
+  .then(less.renderAsync) // Transmission à less.render
+  .then(writeFileData); // Fonction qui reçoit le CSS (premier paramètre)
+```
+
+1.  Bien que les promesses natives ES6 soient excellentes, je préfère la bibliothèque robuste [Bluebird Promise Library](https://github.com/petkaantonov/bluebird/blob/master/API.md).
+2.  Bibliothèque ou pas, les navigateurs modernes supportent les promesses depuis des années.
+3.  Les promesses peuvent être utilisées sans schémas extravagants — un `deferred` implicite est préférable.
+4.  **$q c’est nul** ; utilisez simplement bluebird, comme indiqué ci‑dessus.
+5.  À noter : les benchmarks de Bluebird sont des tests en meilleur cas, donc méfiez‑vous des chaînes de promesses trop sophistiquées.
+
+## Java vs JavaScript
+
+### Limitation de débit / Débouncing / Throttling
+
+1.  En JavaScript, [David Walsh a implémenté le debounce](http://davidwalsh.name/essential-javascript-functions) en moins de 20 lignes !
+2.  En Java, JDebounce, une bibliothèque beaucoup plus compliquée, d’environ 500 + lignes.
+3.  _ Comparaison des deux : _
+4.  Le JavaScript est rapide et utilise des fonctions de première classe pour atteindre une simplicité brillante.  
+5.  Le Java comporte beaucoup plus d’éléments mobiles : les annotations sont utilisées pour appliquer un comportement à la compilation, et il y a une tonne de XML, juste pour le plaisir !
+
+[fuck_this]: https://res.cloudinary.com/ddd/image/upload/panda-rampage__tumblr_nq7srwTXqr1stn6klo1_500_gm2som.gif
