@@ -1,0 +1,37 @@
+{
+  "selectedCommit": "fef02f6956ceeb63441691efd662a8602ca32747",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 10,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The selected candidate (fef02f) is technically accurate and maintains the playful tone of the original. It correctly uses French typographic conventions (non-breaking spaces before colons). The high-priority suggestion from the previous judge report ('Qu'affichera' vs 'Que affichera') is already present in the provided MDX content for this commit, so no further suggestions are needed.",
+  "slug": "quiz-destructuring-delights",
+  "locale": "fr",
+  "candidateCommits": [
+    "fef02f6956ceeb63441691efd662a8602ca32747",
+    "6fc4193e99eda7b7adb26287585eb3da8e379963"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "Que affichera ce code ?",
+      "replacement": "Qu'affichera ce code ?",
+      "reason": "Grammar: 'Que' should be elided to 'Qu'' before a vowel.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug quiz-destructuring-delights --locale fr --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug quiz-destructuring-delights --locale fr --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug quiz-destructuring-delights --locale fr --skip-global\n109 |     })\n110 |     .filter((message): message is string => message != null);\n111 | \n112 |   if (mismatches.length === 0) return;\n113 | \n114 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2024-11-12--quiz-destructuring-delights/fr/index.mdx changed heading counts. H2: English has 1, translation has 0\n      at assertHeadingCounts (/Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:114:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:27:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}
