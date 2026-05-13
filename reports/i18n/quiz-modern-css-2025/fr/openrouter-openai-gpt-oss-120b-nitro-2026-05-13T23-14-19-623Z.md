@@ -3,7 +3,7 @@
 - Locale: fr
 - Model: openrouter/openai/gpt-oss-120b:nitro
 - Target: src/content/posts/2024-11-07--quiz-modern-css-2025/fr/index.mdx
-- Validation: deferred
+- Validation: rejected: direct AI SDK translation failed
 - Runtime seconds: 20.82
 - Input tokens: 10437
 - Output tokens: 6894
@@ -12,14 +12,14 @@
 - Cache write tokens: 0
 - Estimated cost: $0.001648
 - Pricing source: local-openrouter-estimate
-- Note: Generated through the direct AI SDK chunked translator.
+- Note: Command failed: git commit --only -m i18n candidate(fr): quiz-modern-css-2025 via openrouter/openai/gpt-oss-120b:nitro -- reports/i18n/quiz-modern-css-2025/fr reports/i18n/quiz-modern-css-2025/candidates.jsonl
 ## Raw Output
 
 ````mdx
 ---
 unlisted: false
-title: 'Quiz : Connaissez‑vous le CSS moderne ? (pour 2025)'
-subTitle: Êtes-vous assez front‑end ?
+title: 'Quiz : Connaissez‑vous le CSS moderne ? (2025)'
+subTitle: Êtes‑vous assez front‑end ?
 label: Advanced CSS
 social_image: ../desktop-social.webp
 category: Quiz
@@ -40,11 +40,11 @@ import Challenge from '../../../../components/QuizUI/Challenge';
 import QuizUI from '../../../../components/QuizUI/QuizUI';
 
 
-## Quiz : Connaissez‑vous le CSS ?
+## Quiz : Connaissez‑vous le CSS ?
 
 * CSS moderne ?  🤔  
-* **Le CSS mérite‑t‑il une place sur *votre* CV ???** 🚀  
-* Choix multiples. 🤖 … _À quel point cela peut‑il être difficile, hein ?_
+* **Le CSS doit-il figurer sur _votre_ CV ???** 🚀  
+* Choix multiples. 🤖 … _À quel point ça peut être difficile, hein ?_
 
 <QuizUI>
 
@@ -63,22 +63,22 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    Quelle est la façon correcte d’utiliser une variable CSS nommée `--main-color` pour définir la couleur d’arrière‑plan d’un élément ?
+    Quelle est la bonne façon d'utiliser une variable CSS nommée `--main-color` pour définir la couleur de fond d'un élément ?
     ```css
-        :root {
-          --main-color: blue;
-        }
-        div {
-          /* How do we use --main-color here? */
-        }
+    :root {
+      --main-color: blue;
+    }
+    div {
+      /* How do we use --main-color here? */
+    }
     ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Les variables CSS s’utilisent avec la fonction `var`, donc la bonne réponse est `background-color: var(--main-color);`. Cette syntaxe récupère la valeur de `--main-color` et l’applique.
+    Les variables CSS s'utilisent avec la fonction `var`, donc la bonne réponse est `background-color: var(--main-color);`. Cette syntaxe récupère la valeur de `--main-color` et l'applique.
 
-    Les autres options peuvent rappeler d’autres langages ou syntaxes de préprocesseurs, comme Sass ou Less.
+    Les autres options peuvent rappeler d'autres langages ou syntaxes de préprocesseurs, comme Sass ou Less.
   </div>
   </slot>
 </Challenge>
@@ -89,21 +89,21 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="Fonctions CSS"
   title="Fonction CSS min()"
   options={[
-    {text: 'width: 50%;'},
-    {text: 'width: 200px;', isAnswer: true},
-    {text: 'width: 250px;'},
-    {text: 'width: 500px;'},
-    {text: 'width: max(50%, 200px);'},
-    {text: 'Invalid syntax'},
+    {text: 'largeur: 50%;'},
+    {text: 'largeur: 200px;', isAnswer: true},
+    {text: 'largeur: 250px;'},
+    {text: 'largeur: 500px;'},
+    {text: 'largeur: max(50%, 200px);'},
+    {text: 'Syntaxe invalide'},
   ]}
 >
   <slot name="question">
   <div className="question">
     Si la largeur du parent/conteneur est de 400 px, quelle sera la largeur calculée de l’élément suivant ?
     ```css
-        div {
-          width: min(250px, 50%);
-        }
+    div {
+      width: min(250px, 50%);
+    }
     ```
   </div>
   </slot>
@@ -116,9 +116,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     - `50%` de `400px` vaut `200px`
     - `250px` est déjà en pixels
     ```css
-        /* This gets computed to */
-        width: min(250px, 200px);
-        /* -> 200px wins */
+    /* This gets computed to */
+    width: min(250px, 200px);
+    /* -> 200px wins */
     ```
     La fonction `min()` est particulièrement utile en conception réactive, où vous pouvez garantir qu’un composant (ou une taille de police) ne dépasse pas une certaine limite.
   </div>
@@ -141,17 +141,17 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    Étant donné un conteneur d’une largeur de 200 px, quelle serait la largeur calculée du `<div>` ?
+    Étant donné un conteneur de 200 px de largeur, quelle serait la largeur calculée du `<div>` ?
     ```css
-        div {
-          width: max(50px, 10%, 6rem);
-        }
+    div {
+      width: max(50px, 10%, 6rem);
+    }
     ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    La fonction `max()` accepte 2 ou plus d’entrées et utilise automatiquement la plus grande valeur. En supposant que la taille de police racine soit la valeur par défaut du navigateur `16px`, la largeur s’élève à `96px`.
+    La fonction `max()` accepte 2 entrées ou plus et utilise automatiquement la plus grande valeur. En supposant que la taille de police racine soit la valeur par défaut du navigateur `16px`, la largeur donne `96px`.
 
     Pour comprendre la valeur calculée, il faut convertir les unités relatives en pixels :
 
@@ -159,9 +159,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     - `10%` de `200px` vaut `20px`
     - `6rem` correspond à `6 * 16px` (la taille de police par défaut), soit `96px`
     ```css
-        /* This gets computed to */
-        width: max(50px, 20px, 96px);
-        /* -> 96px wins */
+    /* This gets computed to */
+    width: max(50px, 20px, 96px);
+    /* -> 96px wins */
     ```
   </div>
   </slot>
@@ -173,7 +173,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="Fonctions de grille CSS"
   title="Fonction CSS minmax()"
   options={[
-    {text: 'Toutes les largeurs de colonne entre 100 px et 200 px'},
+    {text: 'Toutes les largeurs de colonnes entre 100 px et 200 px'},
     {text: 'Définir les colonnes à 100 px, les lignes à 200 px'},
     {text: 'La première colonne sera entre 100 px et 200 px', isAnswer: true},
     {text: 'Appliquer la plage de façon récursive, y compris les sous‑grilles'},
@@ -183,15 +183,15 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     Quel est l’effet d’utiliser `minmax(100px, 200px)` pour une piste de grille CSS ?
     ```css
-        grid-template-columns: minmax(100px, 200px);
+    grid-template-columns: minmax(100px, 200px);
     ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Utiliser `minmax(100px, 200px)` permet à la piste de grille de redimensionner entre `100px` et `200px`, en s’adaptant à l’espace disponible mais sans jamais descendre en dessous de `100px` ni dépasser `200px`.
+    Utiliser `minmax(100px, 200px)` permet à la piste de grille de redimensionner entre `100px` et `200px`, s’adaptant à l’espace disponible sans jamais descendre en dessous de `100px` ni dépasser `200px`.
 
-    Vous pouvez créer des mises en page auto‑ajustées où le conteneur et les enfants jouent chacun un rôle dans le calcul des dispositions. C’est puissant lorsqu’on le combine avec `repeat()` et `auto-fill` ou `auto-fit`, qui créeront autant de pistes que possible dans les contraintes.
+    Vous pouvez créer des mises en page auto‑ajustées où le conteneur et les enfants jouent chacun un rôle dans le calcul des dispositions. C’est puissant lorsqu’on le combine avec `repeat()` et `auto-fill` ou `auto-fit`, qui créeront autant de pistes que possible dans les limites.
   </div>
   </slot>
 </Challenge>
@@ -202,28 +202,28 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="Variables CSS"
   title="Valeurs de secours des variables CSS"
   options={[
-    {text: 'bleu'},
-    {text: 'rouge'},
-    {text: 'défaut du système'},
+    {text: 'blue'},
+    {text: 'red'},
+    {text: 'system default'},
     {text: '#6b8e23', isAnswer: true},
     {text: 'var(--secondary-color)'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Quelle couleur aura l'arrière‑plan pour le CSS suivant ?
+    Quelle couleur aura le fond pour le CSS suivant ?
     ```css
-        div {
-          background: var(--primary, olivedrab);
-        }
+    div {
+      background: var(--primary, olivedrab);
+    }
     ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    La fonction `var()` vous permet de définir une valeur de secours si la variable n'est pas définie. Dans ce cas, l'arrière‑plan sera `olivedrab` (`#6b8e23`) parce que `--primary` n'est pas défini.
+    La fonction `var()` vous permet de définir une valeur de secours si la variable n'est pas définie. Dans ce cas, le fond sera `olivedrab` (`#6b8e23`) parce que `--primary` n'est pas défini.
 
-    C'est un excellent moyen de garantir que vos styles ne se cassent pas si une variable manque ou n'est pas prise en charge.
+    C’est une excellente façon de garantir que vos styles ne se cassent pas si une variable manque ou n’est pas prise en charge.
   </div>
   </slot>
 </Challenge>
@@ -232,34 +232,34 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={5}
   group="Fonctions CSS"
-  title="Utiliser clamp() pour la conception réactive"
+  title="Utiliser clamp() pour la conception responsive"
   options={[
-    {text: 'Solution de repli pour des unités éventuellement non prises en charge'},
-    {text: 'Garantir que les unités `vw` soient entre 20 px et 50 px'},
+    {text: 'Solution de repli pour les unités éventuellement non prises en charge'},
+    {text: 'Garantir que les unités `vw` restent entre 20 px et 50 px'},
     {text: 'Échelle linéaire entre 200 px et 500 px', isAnswer: true},
     {text: 'Échelle log₂ entre 200 px et 500 px'},
-    {text: 'Échec ! Pas de prise en charge dans IE 11'},
+    {text: 'Échec ! Pas de prise en charge sous IE 11'},
   ]}
 >
   <slot name="question">
   <div className="question">
     Que fait la fonction `clamp()` ?
     ```css
-        .card {
-          width: clamp(200px, 50vw, 500px);
-        }
+    .card {
+      width: clamp(200px, 50vw, 500px);
+    }
     ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    La fonction `clamp()` permet à la largeur de s’ajuster en fonction de `50vw`, tout en la maintenant dans une plage de 200 px à 500 px.
+    La fonction `clamp()` permet à la largeur de s’ajuster en fonction de `50vw`, tout en la maintenant dans une fourchette de 200 px à 500 px.
 
     Cela signifie que la largeur sera de 200 px lorsque `50vw` serait inférieur à 200 px, de 500 px lorsque `50vw` serait supérieur à 500 px, et linéaire entre ces limites.
 
-    Elle vous rend automatiquement réactif ! Ce qu’il faut retenir sur `clamp`, c’est qu’elle combine **unités fixes** avec **unités réactives ou calculées**.
+    Elle rend votre mise en page auto‑magiquement responsive ! Ce qu’il faut retenir sur `clamp`, c’est qu’elle combine **des unités fixes** avec **des unités réactives ou calculées**.
 
-    En principe, on évite d’utiliser des unités de viewport pour les tailles de police, mais avec `clamp()` on peut garantir que la taille de police ne devienne ni trop petite ni trop grande.
+    En général, on évite d’utiliser des unités de viewport pour les tailles de police, mais avec `clamp()` on peut garantir que la taille de police ne devienne ni trop petite ni trop grande.
   </div>
   </slot>
 </Challenge>
@@ -283,7 +283,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Oui ! Nous avons enfin le nesting natif en CSS ! Le CSS a introduit une syntaxe de nesting native ces dernières années (2023), permettant un style hiérarchique directement dans le CSS.
+    Oui ! Nous avons enfin le nesting CSS natif ! Le CSS a introduit la syntaxe de nesting native ces dernières années (2023), permettant un style hiérarchique directement dans le CSS.
   </div>
   </slot>
 </Challenge>
@@ -291,8 +291,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={7}
-  group="CSS Nesting"
-  title="Nesting CSS"
+  group="Imbrication CSS"
+  title="Imbrication CSS"
   options={[
     {text: 'Le nom de fichier doit se terminer par .scss'},
     {text: '`.title` doit précéder les propriétés comme `color`'},
@@ -302,15 +302,15 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    Cette utilisation du nesting CSS natif est‑elle correcte ?
+    Est-ce une utilisation correcte de l'imbrication CSS native ?
     ```css
-        .container {
-          color: black;
-          .title {
-            color: white;
-            background: black;
-          }
-        }
+    .container {
+      color: black;
+      .title {
+        color: white;
+        background: black;
+      }
+    }
     ```
   </div>
   </slot>
@@ -318,7 +318,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     La classe `.title` est imbriquée dans la classe `.container`, et les propriétés sont appliquées comme prévu.
 
-    C’est une excellente façon de regrouper les styles liés et d’éviter les sélecteurs trop longs.
+    C’est une excellente façon de garder les styles liés ensemble et d’éviter les sélecteurs trop longs.
   </div>
   </slot>
 </Challenge>
@@ -327,7 +327,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={8}
   group="Imbrication CSS"
-  title="Sélecteur d'enfant direct avec imbriquation"
+  title="Sélecteur d'enfant direct avec imbriquement"
   options={[
     {text: 'background-color: red'},
     {text: 'background-color: white', isAnswer: true},
@@ -339,13 +339,13 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     Quelle couleur de fond sera appliquée aux `div` enfants directs de `.container` ?
     ```css
-        .container {
-          background-color: red;
-          > div {
-            background-color: white;
-          }
-          background-color: blue !important;
-        }
+    .container {
+      background-color: red;
+      > div {
+        background-color: white;
+      }
+      background-color: blue !important;
+    }
     ```
   </div>
   </slot>
@@ -373,20 +373,20 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    Comment modifier la valeur d'une variable CSS à l'exécution ?
+    Comment modifier la valeur d’une variable CSS à l’exécution ?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Les variables CSS peuvent être définies via des classes et JavaScript. Elles peuvent même être définies « après » qu'elles soient techniquement utilisées.
+    Les variables CSS peuvent être définies via des classes et JavaScript. Elles peuvent même être définies « après » leur utilisation technique.
     ```js
-        document.documentElement.style.setProperty('--main-color', 'blue');
+    document.documentElement.style.setProperty('--main-color', 'blue');
     ```
-    Cela changera la valeur de `--main-color` en `blue` pour l'ensemble du document.
+    Cela changera la valeur de `--main-color` en `blue` pour tout le document.
 
-    Les variables CSS sont mutables et peuvent être modifiées à l'exécution avec JavaScript.
+    Les variables CSS sont mutables et peuvent être modifiées à l’exécution via JavaScript.
 
-    Elles peuvent également être modifiées en ajoutant ou en retirant des classes, ce qui est un schéma courant pour le thématisation.
+    Elles peuvent également être modifiées en ajoutant ou en retirant des classes, ce qui est un schéma courant pour le thémage.
   </div>
   </slot>
 </Challenge>
@@ -395,24 +395,24 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={10}
   group="Variables CSS"
-  title="Utilisation de calc() avec les variables CSS"
+  title="Utiliser calc() avecdes variables CSS"
   options={[
-    {text: 'Largeur : 50 px'},
-    {text: 'Largeur : 100 px'},
-    {text: 'Largeur : 110 px', isAnswer: true},
-    {text: 'Largeur : 120 px'},
+    {text: 'Largeur : 50px'},
+    {text: 'Largeur : 100px'},
+    {text: 'Largeur : 110px', isAnswer: true},
+    {text: 'Largeur : 120px'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Quelle sera la largeur calculée de l’élément ?
+    Quelle sera la largeur calculée de l'élément ?
     ```css
-        :root {
-          --base-width: 100px;
-        }
-        div {
-          width: calc(var(--base-width) + 10px);
-        }
+    :root {
+      --base-width: 100px;
+    }
+    div {
+      width: calc(var(--base-width) + 10px);
+    }
     ```
   </div>
   </slot>
