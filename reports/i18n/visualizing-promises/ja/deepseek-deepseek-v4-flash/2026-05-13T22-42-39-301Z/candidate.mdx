@@ -1,0 +1,142 @@
+---
+social_image: ../desktop-social.webp
+title: Promiseの可視化
+subTitle: 突破せよ...
+date: '2018-09-30'
+modified: '2024-07-30'
+category: Guides
+subCategory: promises
+cover: ../junior-ferreira-735237-unsplash.webp
+cover_mobile: ../w300_junior-ferreira-735237-unsplash.webp
+cover_icon: ../icon_junior-ferreira-735237-unsplash.webp
+tags:
+  - promises
+  - async
+  - visualizing
+  - javascript
+  - composition
+related:
+  - intro-to-promises
+  - promise-gotchas
+  - stop-trying-to-make-async-await-happen
+  - javascript-promises-quiz
+---
+Promiseの実行を可視化するために、まず新しいメソッド`delay(millisecs)`を定義しましょう。
+
+```js
+function delay(millisecs) {
+  return new Promise(resolve => {
+    setTimeout(() => resolve(millisecs), millisecs);
+  });
+}
+```
+
+これは、指定されたタイムアウトが経過した後に解決されるユーティリティメソッドです。
+
+ミリ秒単位の遅延値は、`.then`のコールバック関数にそのまま渡されます。
+
+それでは、4つの例をアニメーション付きタイムラインで見ていきましょう。
+
+## 例1/4
+
+この例は、`delay(msec)`によって`console.log()`の実行がどのように遅延されるかを示しています。
+
+```js
+delay(1000).then(() => console.log("done"));
+```
+
+![delay 1000の後、1秒後にconsole.logが実行されるタイムライン](../N_1000ms_log.webp)
+
+<!-- ```
+delay(1000) --------|.then(fn)
+                    | console.log('done')
+|-------------------|--------------------|--------------------|-----------------
+0msec             1sec                 2sec                 3sec
+``` -->
+
+## 例2/4
+
+_これは初心者がよく犯す間違いを示しています。_
+
+`console.log`は`delay(1000)`が**開始**された瞬間に実行されます。おそらく期待していたような、遅延の**後**ではありません。
+
+`console.log`は`undefined`を返すため、`.then()`は静かに無視されます。
+
+`typeof console.log === 'function'`と`typeof console.log() === undefined`の違いに注意してください。
+
+一般的に、`console.log`の望ましい使い方は例1に示されています。`.then`や`.catch`には関数を渡すようにしてください。
+
+```js
+delay(1000).then(console.log("done"));
+```
+
+![console.logが遅延完了前に即座に実行されるタイムライン](../N_1000ms_!log.webp)
+
+<!-- ```
+delay(1000) --------|.then(null)
+console.log('done')
+|-------------------|--------------------|--------------------|-----------------
+0msec             1sec                 2sec                 3sec
+``` -->
+
+## 例3/4
+
+3つのPromiseが同時に実行されます。
+
+```js
+delay(1000).then(console.log);
+delay(2000).then(console.log);
+delay(3000).then(console.log);
+```
+
+![3つのdelay Promiseが1秒、2秒、3秒後に解決されるタイムライン](../N_3000ms.webp)
+
+<!-- ```
+delay(1000) ------|.then(console.log)
+delay(2000) ------|--------------------|.then(console.log)
+delay(3000) ------|--------------------|--------------------|.then(console.log)
+|-----------------|--------------------|--------------------|-------------------
+|                 |                    |                    |
+0msec           1sec                 2sec                 3sec
+``` -->
+
+## 例 #4/4
+
+`Promise.all` を 3 つの `delay` Promise で使用。これらは同時に実行される。
+
+```js
+Promise.all([delay(1000), delay(2000), delay(3000)]).then(console.log);
+```
+
+![3つのdelay PromiseすべてをPromise.allが待つタイムライン](../N_3000ms_PromiseAll.webp)
+
+<!--
+
+```
+delay(1000) ---| [resolved]------------------v
+delay(2000) ---|--------------| [resolved]---v
+delay(3000) ---|--------------|--------------v [resolved]
+Promise.all()  |--------------|-------------- > console.log([1000, 2000, 3000])
+|--------------|--------------|--------------|--------------------------------
+|              |              |              |
+0msec        1sec           2sec           3sec
+```
+
+-->
+
+> クレジット:
+>
+> - アニメーション付き非同期図解: [Patrick Biffle](https://github.com/Piglacquer)
+> - 本記事の着想元: https://pouchdb.com/2015/05/18/we-have-a-problem-with-promises.html
+
+<!-- <div class="challenge" title="質問 #1: 人生の意味とは？">
+
+  <ul class="options">
+    <li>1</li>
+    <li>2</li>
+    <li class="answer">42</li>
+    <li>3</li>
+  </ul>
+  <div class="description">人生の意味は何ですか？</div>
+
+</div> -->
