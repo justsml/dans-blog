@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: from-zero-to-regex-hero-extract-url-like-strings
+- Locale: fr
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2024-12-29--from-zero-to-regex-hero-extract-url-like-strings/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 24.01
+- Input tokens: 8567
+- Output tokens: 9493
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.002964
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: ''
 subTitle: Extraire et analyser des chaînes ressemblant
@@ -264,3 +282,4 @@ En suivant ces étapes, vous pouvez extraire efficacement toute donnée sous for
 - [Documentation MDN sur les expressions rationnelles](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions)
 - [Techniques avancées d'expressions rationnelles](https://www.regular-expressions.info) : Découvrez les lookaheads, lookbehinds et autres modèles avancés pour des correspondances plus précises.
 - [RFC 3986 - URI Generic Syntax](https://datatracker.ietf.org/doc/html/rfc3986)
+````
