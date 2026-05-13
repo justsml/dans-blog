@@ -1,0 +1,46 @@
+{
+  "selectedCommit": "092f6b299f5d0cb8ea82166eb93bfeee38bdff80",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 5,
+    "technicalAccuracy": 5,
+    "coherence": 5,
+    "relevance": 5,
+    "translationQuality": 5,
+    "mdxPreservation": 5
+  },
+  "suggestions": [],
+  "rationale": "The current translation (based on 092f6b299f5d0cb8ea82166eb93bfeee38bdff80) is excellent. It correctly translates technical terms like 'enumerable' to '列挙可能' and maintains the MDX structure perfectly. The suggestions from the previous judge report regarding the colon and the untranslated 'Depends on context' string have already been applied in the current file, so no further high-priority fixes are required.",
+  "slug": "quiz-js-interfaces-symbols-and-enumerables",
+  "locale": "ja",
+  "candidateCommits": [
+    "092f6b299f5d0cb8ea82166eb93bfeee38bdff80",
+    "f79f805afdb910f8c5251c5dcd643331947c03db"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "title: 'クイズ: シンボルと列挙可能'",
+      "replacement": "title: 'クイズ：シンボルと列挙可能'",
+      "reason": "Using full-width colon is more consistent with Japanese typography in titles.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "{text: 'Depends on context'},",
+      "replacement": "{text: 'コンテキストに依存する'},",
+      "reason": "This option was left in English.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug quiz-js-interfaces-symbols-and-enumerables --locale ja --skip-global",
+    "output": ""
+  }
+}
