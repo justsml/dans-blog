@@ -1,0 +1,623 @@
+# Translation Candidate
+- Slug: quiz-bash-in-the-shell
+- Locale: es
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2024-11-20--quiz-bash-in-the-shell/es/index.mdx
+- Validation: rejected: direct AI SDK translation failed
+- Runtime seconds: 4.20
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Cache write tokens: unknown
+- Estimated cost: unknown
+- Pricing source: unknown
+- Note: Command failed: bun run i18n:translate:chunked -- --slug quiz-bash-in-the-shell --locale es --model openrouter/qwen/qwen3-32b:nitro --chunk 6p --quiz-concurrency 20
+## Raw Output
+
+````mdx
+---
+unlisted: false
+title: 'Quiz: Dominio de Bashy Shell'
+subTitle: '¿Puedes hablar con las computadoras? ¿Así, bien?'
+label: Bash
+category: Quiz
+subCategory: Bash
+date: '2024-11-20'
+modified: '2024-11-21'
+tags:
+  - quiz
+  - bash
+  - scripting
+  - shell
+  - linux
+  - beginner
+  - intermediate
+  - advanced
+social_image: ../desktop-social.webp
+cover_full_width: ../psychedelic-shell-wide.webp
+cover_mobile: ../psychedelic-shell-square-200.webp
+cover_icon: ../psychedelic-shell-square-200.webp
+---
+import Challenge from '../../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../../components/QuizUI/QuizUI';
+
+<p class="inset">¡Pon a prueba tus habilidades de scripting en Bash con estas 16 preguntas!</p>
+
+Cubre variables, bucles, condicionales, manipulación de cadenas, funciones y los trucos de sintaxis, desde lo básico hasta lo más engorroso.
+
+Afila (o demuestra) tus **habilidades** de scripting en shell!
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="Calentamiento"
+  title="Declaración de Variables"
+  options={[
+    {text: '$name=Dan'},
+    {text: 'name=Dan', isAnswer: true},
+    {text: 'name =Dan'},
+    {text: 'name == Dan'},
+    {text: 'name : Dan'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ¿Cómo se definen las variables en Bash?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    En Bash, las variables se declaran sin espacios alrededor del signo `=`. Por ejemplo:
+    ```bash
+    name=Alice
+    ```
+    Esto asigna el valor `"Alice"` a la variable `name`.
+
+    Nota: `$name` se usa para **referenciar** o leer el valor de una variable.
+
+    Añadir espacios hace que el shell interprete el comando como un programa a ejecutar, lo que no deseas al establecer una variable.
+
+    Además, Bash distingue mayúsculas y minúsculas, así que `name`, `NAME` y `Name` son variables diferentes.
+
+    Finalmente, las variables no pueden contener espacios ni guiones (`-`) en sus nombres. Usa guiones bajos (`_`) o camelCase en su lugar.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="Calentamiento: Escapado"
+  title="Escapando comillas"
+  options={[
+    {text: 'echo \'It\'s 🔨 Time!\''},
+    {text: 'echo \'It\\\'s 🔨 Time!\''},
+    {text: 'echo \'It\'\\\'\'s 🔨 Time!\'', isAnswer: true},
+    {text: 'echo \'It\'\'s 🔨 Time!\''},
+    {text: 'Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    _¿Qué imprimirá `It's 🔨 Time!`?_
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Lo sé. Es una locura lo rápido que el escape complica el análisis de cadenas. Imagina escapar otros lenguajes dentro de strings de Bash, con todas esas comillas, apóstrofes y símbolos `$` que te joden. 🫠
+
+    Las comillas simples necesitan escaparse dentro de cadenas entre comillas simples. La secuencia de cerrar‑comilla, escapar‑comilla, volver‑a‑abrir (`'\''`) permite la salida de:
+    ```plaintext
+    It's 🔨 Time!
+    ```
+    Hay otras formas de manejar esto, pero esta es la más común.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="Calentamiento: Expansión"
+  title="Comando echo"
+  options={[
+    {text: 'cat cab'},
+    {text: 'cat cbt', isAnswer: true},
+    {text: 'ca bt'},
+    {text: 'cat'},
+    {text: 'cbd'},
+    {text: 'Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ¿Qué imprimirá este comando?
+    ```bash
+    echo c{a,b}t
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    La expansión con llaves `{}` genera múltiples versiones del contexto de su cadena, una (o más) para cada valor separado por comas o patrón.
+
+    Aquí, `c{a,b}t` se expande a:
+    ```plaintext
+    cat cbt
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="Variables"
+  title="Escapando Caracteres"
+  options={[
+    {text: 'Costo: $$100'},
+    {text: 'Costo: $100'},
+    {text: 'Costo: 100'},
+    {text: 'Costo: 00', isAnswer: true},
+    {text: 'Costo:'},
+    {text: 'Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Ahora, ¿qué imprimirá esto?
+    ```bash
+    price="$100"
+    echo "Cost: $price"
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Las variables numeradas tienen un significado especial. En este caso, `$1` es una variable especial que contiene el primer argumento pasado al script o función.
+
+    Como estamos ejecutando el script en un REPL, no hay argumentos, así que `$1` está vacío. El texto restante `00` se imprime tal cual.
+
+    Para imprimir un carácter literal `$`, usa comillas simples o escápalo con una barra invertida (`\\`):
+    ```bash
+    price="\$100"
+    echo "Cost: $price"
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="Reemplazando Subcadenas"
+  title="Reemplazar Subcadena"
+  options={[
+    {text: 'meow meow'},
+    {text: 'Meow meow'},
+    {text: 'Bark meow', isAnswer: true},
+    {text: 'Bark bark'},
+    {text: 'Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ¿Qué está pasando aquí?
+    ```bash
+    str="Bark bark"
+    echo ${str/bark/meow}
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    La sintaxis `${var/pattern/replacement}` reemplaza la primera aparición de `pattern` con `replacement`. Aquí, la salida es:
+    ```plaintext
+    Bark meow
+    ```
+    Es sensible a mayúsculas y minúsculas. Para manejar tanto `bark` como `Bark`, usa un patrón como `${var/[Bb]ark/Bark}` o normaliza la cadena antes de la sustitución.
+
+    Para reemplazar todas las apariciones, usa `${var//pattern/replacement}`.
+
+    Para reemplazar desde el comienzo de la cadena, usa `${var/#pattern/replacement}`.
+
+    Para reemplazar desde el final de la cadena, usa `${var/%pattern/replacement}`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="Longitud de cadena"
+  title="Longitud de cadena"
+  options={[
+    {text: '$#username'},
+    {text: '#$username'},
+    {text: '${#username}', isAnswer: true},
+    {text: '${username#}'},
+    {text: 'echo $username | wc -c'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ¿Cómo puedes obtener la longitud de una variable en Bash?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    La sintaxis `${#username}` devuelve la longitud de `username`.
+
+    Por ejemplo:
+    ```bash
+    username="@justsml"
+    echo ${#username} # => 8
+    ```
+    Aunque `wc` funcionaría, técnicamente no forma parte de Bash.
+
+    La utilidad `wc` es una vieja broma interna que se refiere a "water closet", o baño.
+    ¡BROMA! ¿Alguien lee esto?
+
+    En realidad `wc` es un comando antiguo de POSIX (y de los días de AT&T Unix). Es la abreviatura de "word count" y puede contar líneas, palabras y caracteres en un archivo o flujo de entrada.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="Condicionales"
+  title="If-Else Básico"
+  options={[
+    {text: 'El archivo existe'},
+    {text: 'El archivo no existe, después de un diagnóstico de prueba', isAnswer: true},
+    {text: 'Solo error'},
+    {text: 'Faltan corchetes dobles'},
+    {text: 'Nada'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ¿Qué imprime este script si el archivo `cats.txt` EXISTE?
+    ```bash
+    if [ -e cats.txt]; then
+      echo "File exists"
+    else
+      echo "File does not exist"
+    fi
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    ¿Notaste el espacio faltante antes del corchete de cierre?
+
+    Bash es bastante quisquilloso aquí: se requieren espacios dentro de las expresiones entre corchetes.
+
+    Como el espacio faltante hace que el comando `[` no vea el `]` de cierre, Bash muestra un diagnóstico, trata la prueba como fallida y continúa al bloque `else`.
+
+    La sintaxis correcta es:
+    ```bash
+    if [ -e example.txt ]; then
+      echo "File exists"
+    else
+      echo "File does not exist"
+    fi
+    ```
+    Nota: Los corchetes dobles `[[ ]]` están **recomendados** para expresiones condicionales. [Ver BashFAQ.](https://mywiki.wooledge.org/BashFAQ/031)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="Condicionales"
+  title="Comparación de Cadenas"
+  options={[
+    {text: 'Mismo gato'},
+    {text: 'Gatos diferentes, después de un error de sintaxis de prueba', isAnswer: true},
+    {text: 'Zalgo'},
+    {text: 'Solo error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ¿Cómo podemos comparar cadenas en Bash?
+    ```bash
+    cat1="Rosie"
+    cat2="Sunflower"
+    if [ "$cat1" === "$cat2" ]; then
+      echo "Same cat"
+    else
+      echo "Different cats"
+    fi
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    ¡Otro error de sintaxis de prueba!
+
+    ¿Capturaste el operador `===` inválido?
+
+    Quizás estabas pensando en JavaScript...
+
+    Con `[ ... ]`, Bash informa un diagnóstico y la condición es falsa, por lo que la rama `else` imprime `Different cats`. En Bash, usa `=` o `==` para comparaciones de igualdad.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="Funciones"
+  title="Declaración de Función"
+  options={[
+    {text: 'Hola', isAnswer: true},
+    {text: 'Dan'},
+    {text: 'Hola Dan'},
+    {text: 'greet'},
+    {text: 'Error'},
+    {text: 'Error de sintaxis'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ¿Qué imprimirá este script?
+    ```bash
+    function greet () {
+      echo "$1"
+    }
+    greet Hi Dan
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Las funciones en Bash pueden aceptar argumentos. La variable `$1` contiene el primer argumento pasado a la función.
+
+    Recuerda, `$0` es el nombre del script, `$1` es el primer argumento, `$2` es el segundo, y así sucesivamente. **Los espacios separan los argumentos.** Así, `greet Hi Dan` pasa `"Hi"` como primer argumento. Para pasar `"Hi Dan"` como un solo argumento, deberías citarlo: `greet "Hi Dan"`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="Composición"
+  title="Usando tuberías"
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ¿Qué operador conecta la **salida** de un comando con la **entrada** del siguiente comando?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    El operador `|` conecta la salida de un comando con la entrada de otro. Por ejemplo:
+    ```bash
+    echo "Mr. Levy 👨🏻‍🔬" | wc -m
+    # => 14
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="Aritmética"
+  title="Aritmética Básica"
+  options={[
+    {text: 'echo 2 + 2'},
+    {text: 'echo ${2 + 2}'},
+    {text: 'echo %(2 + 2)'},
+    {text: 'echo $(( 2 + 2 ))', isAnswer: true},
+    {text: 'Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ¿Cómo funciona la aritmética en Bash?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    La sintaxis `(( ))` realiza cálculos enteros en Bash.
+
+    Puede usarse para cálculos simples:
+    ```bash
+    ((result = 2 + 2))
+    echo $result # => 4
+    ```
+    O para expresiones condicionales:
+    ```bash
+    if (( 2 > 1 )); then
+      echo "2 is greater than 1"
+    fi
+    ```
+    Para aritmética de punto flotante, considera usar [`bc`](https://www.gnu.org/software/bc/manual/html_mono/bc.html) o [`awk`](https://www.gnu.org/software/gawk/manual/gawk.html).
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="Multiplicación"
+  title="Aritmética Básica"
+  options={[
+    {text: 'echo 10 * 0.5'},
+    {text: 'echo (10 * 0.5)'},
+    {text: 'echo ${ 10 * 0.5 }'},
+    {text: 'echo %( 10 * 0.5 )'},
+    {text: 'echo $(( 10 * 0.5 ))'},
+    {text: 'echo \'10 * 0.5\' | bc', isAnswer: true},
+    {text: 'Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ¿Cuál de estos multiplica correctamente 10 y 0.5, imprimiendo 5?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    La sintaxis `(( ))` SÓLO realiza aritmética **entera**. Ya sabes, números sin decimales, ¡sin punto flotante!
+
+    Bash (quizá sorprendentemente) no tiene soporte **integrado** para aritmética de punto flotante.
+
+    La solución más común es usar las utilidades GNU [`bc`](https://www.gnu.org/software/bc/manual/html_mono/bc.html) o [`awk`](https://www.gnu.org/software/gawk/manual/gawk.html).
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="Manipulación de Cadenas"
+  title="Extracción de Subcadenas"
+  options={[
+    {text: 'Gato malo'},
+    {text: 'Gato malo, gato bueno:9'},
+    {text: 'gato bueno', isAnswer: true},
+    {text: 'Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ¿Qué hace el `:` en este script?
+    ```bash
+    rosie="Bad cat, good cat"
+    echo ${rosie:9}
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    La sintaxis `${var:offset}` extrae una subcadena que comienza en `offset`. Aquí, la salida es:
+    ```plaintext
+    good cat
+    ```
+    Para extraer una subcadena de longitud específica, usa `${var:offset:length}`.
+
+    Para extraer desde el final de la cadena, usa `${var: -offset}`. (¡Nota el espacio antes del `-`!)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={13}
+  group="Bucles"
+  title="Bucles en Bash"
+  options={[
+    {text: 'do'},
+    {text: 'each', isAnswer: true},
+    {text: 'for'},
+    {text: 'until'},
+    {text: 'while'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ¿Qué NO ❌ es una palabra clave de bucle en Bash?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `each` no es una palabra clave de bucle en Bash. Las principales palabras clave de bucle son `for`, `while` y `until`.
+
+    Mientras `do` no es técnicamente una palabra clave de bucle, es una parte clave de la sintaxis del bucle.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={14}
+  group="Trucos"
+  title="Sustitución de comandos"
+  options={[
+    {text: '\'ls -l\''},
+    {text: '% ls -l'},
+    {text: '$ ls -l'},
+    {text: '$(ls -l)', isAnswer: true},
+    {text: '${ls -l}'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ¿Qué opción ejecutará el comando `ls -l` y devolverá la salida?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    La sintaxis `$(ls -l)` ejecuta el comando dentro de los **paréntesis** y sustituye la salida. Por ejemplo:
+    ```bash
+    echo "Today is $(date +%F)"
+    # => Today is 2029-12-31
+    ```
+    La primera opción usa comillas simples `'`, **no acentos graves**. Esto impide la expansión, de modo que `'$(date +%F)'` simplemente imprimirá la cadena literal `$(date +%F)`.
+
+    Aunque todavía se admite usar acentos graves (`` `ls -l` ``) para ejecutar comandos, recientemente se ha convertido en una especie de anti‑patrón (en algunos contextos). La mayoría recomienda usar `$(command)` para mejor legibilidad y consistencia con diferentes shells y versiones.
+
+    Las llaves `${}` se usan para expansión de variables, no para sustitución de comandos.
+
+    El carácter `%` no se usa para sustitución de comandos.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={15}
+  group="Entrada/Salida estándar"
+  title="Valores predeterminados"
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ¿Qué operador se usa para combinar la salida de error con la salida estándar?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    El operador `2>&1` redirige la salida de error estándar (descriptor de archivo 2) a la salida estándar (descriptor de archivo 1). Esto es útil para capturar los mensajes de error en el mismo flujo de salida que la salida normal.
+
+    El operador `1>&2` redirige la salida estándar a la salida de error, sin embargo, la pregunta pedía cómo redirigir la salida de error a la salida estándar.
+
+    Para aprender más sobre lo que ocurre bajo el capó, consulta la excelente [FAQ de redirección de Greg](https://mywiki.wooledge.org/BashFAQ/055).
+
+    Además, gracias al usuario de Reddit [u/OneTurnMore](https://www.reddit.com/user/OneTurnMore/) por sugerir mejoras en el texto.
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+
+<p className="inset">¿Te dejó el Quiz de Bash hecho polvo?</p>
+
+¡Déjame tu comentario abajo!
+
+### Lecturas adicionales
+
+Refuerza tus habilidades en Bash con los siguientes recursos:
+
+- [Guía de Bash](https://www.gnu.org/software/bash/manual/bash.html)
+- [BashFAQ](http://mywiki.wooledge.org/BashFAQ)
+- [ShellCheck](https://www.shellcheck.net/)
+- [Academia Bash](https://guide.bash.academy/)
+- [Tutorial de Scripting Bash](https://ryanstutorials.net/bash-scripting-tutorial/)
+- [Manual de referencia de Bash](https://www.gnu.org/software/bash/manual/bash.html)
+- [Wiki de Bash Hackers](http://wiki.bash-hackers.org/)
+- [Guía de Bash para principiantes](http://tldp.org/LDP/Bash-Beginners-Guide/html/index.html)
+- [Tarjeta de referencia de Bash](http://www.tldp.org/LDP/Bash-Beginners-Guide/html/Bash-Beginners-Guide.html)
+````
