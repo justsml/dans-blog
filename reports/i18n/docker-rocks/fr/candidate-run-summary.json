@@ -1,67 +1,63 @@
 {
-  "runId": "2026-05-13T16-27-03-166Z",
-  "runStatus": "completed",
+  "runId": "2026-05-13T17-19-50-926Z",
+  "runStatus": "running",
   "slug": "docker-rocks",
   "locale": "fr",
-  "startedAt": "2026-05-13T16:27:03.166Z",
-  "updatedAt": "2026-05-13T16:28:58.282Z",
+  "startedAt": "2026-05-13T17:19:50.926Z",
+  "updatedAt": "2026-05-13T17:20:25.399Z",
   "modelsRequested": [
     "openrouter/openai/gpt-oss-120b:nitro",
-    "openrouter/qwen/qwen3-32b:nitro"
+    "openrouter/qwen/qwen3-32b:nitro",
+    "deepseek/deepseek-v4-flash",
+    "qwen/qwen3.6-plus"
   ],
-  "attemptedModels": 2,
-  "skippedModels": 0,
+  "attemptedModels": 1,
+  "skippedModels": 2,
   "rejectedModels": 0,
-  "candidateModels": 2,
+  "candidateModels": 1,
   "totals": {
-    "inputTokens": 3433,
-    "outputTokens": 2199,
+    "inputTokens": 1797,
+    "outputTokens": 1267,
     "thinkingTokens": 0,
-    "cachedInputTokens": 896,
+    "cachedInputTokens": 0,
     "cacheWriteTokens": 0,
-    "estimatedCostUsd": 0.000703,
+    "estimatedCostUsd": 0.000606,
     "hasUnknownInputTokens": false,
     "hasUnknownOutputTokens": false,
     "hasUnknownThinkingTokens": true,
     "hasUnknownCachedInputTokens": false,
     "hasUnknownCacheWriteTokens": false,
     "hasUnknownEstimatedCost": false,
-    "runtimeSeconds": "4.80"
+    "runtimeSeconds": "13.04"
   },
   "attempts": [
     {
       "model": "openrouter/openai/gpt-oss-120b:nitro",
-      "status": "candidate",
-      "validationStatus": "passed",
+      "status": "skipped",
       "reportPath": "reports/i18n/docker-rocks/fr/openrouter-openai-gpt-oss-120b-nitro.md",
-      "note": "Generated through the direct AI SDK chunked translator.",
-      "telemetry": {
-        "runtimeSeconds": "0.58",
-        "tokens": {
-          "input": 1804,
-          "output": 430,
-          "cached": 896,
-          "cacheWrite": 0
-        },
-        "estimatedCostUsd": 0.000147756,
-        "pricingSource": "local-openrouter-estimate"
-      }
+      "note": "Existing non-rejected report found. Pass --overwrite to rerun."
     },
     {
       "model": "openrouter/qwen/qwen3-32b:nitro",
-      "status": "candidate",
-      "validationStatus": "passed",
+      "status": "skipped",
       "reportPath": "reports/i18n/docker-rocks/fr/openrouter-qwen-qwen3-32b-nitro.md",
+      "note": "Existing non-rejected report found. Pass --overwrite to rerun."
+    },
+    {
+      "model": "deepseek/deepseek-v4-flash",
+      "status": "candidate",
+      "validationStatus": "deferred",
+      "reportPath": "reports/i18n/docker-rocks/fr/deepseek-deepseek-v4-flash.md",
       "note": "Generated through the direct AI SDK chunked translator.",
       "telemetry": {
-        "runtimeSeconds": "4.22",
+        "runtimeSeconds": "13.04",
         "tokens": {
-          "input": 1629,
-          "output": 1769,
+          "input": 1797,
+          "output": 1267,
           "cached": 0,
           "cacheWrite": 0
         },
-        "estimatedCostUsd": 0.00055488,
+        "estimatedCostUsd": 0.0006063400000000001,
         "pricingSource": "local-openrouter-estimate"
       }
     }
