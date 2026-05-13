@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: mastering-functional-pipelines-passing-state
+- Locale: es
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2023-08-13--mastering-functional-pipelines-passing-state/es/index.mdx
+- Validation: passed
+- Runtime seconds: 21.50
+- Input tokens: 8894
+- Output tokens: 7768
+- Thinking tokens: unknown
+- Cached input tokens: 2560
+- Cache write tokens: 0
+- Estimated cost: $0.002576
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: 'Maestro de Pipelines: Paso del Estado'
@@ -200,3 +218,4 @@ Exploraremos la externalización del estado y la extensión de la funcionalidad 
 #### Lectura relacionada  
 
 - [Problemas similares existen en el mundo de React centrado en componentes.](https://kyleshevlin.com/quit-your-yapping)
+````
