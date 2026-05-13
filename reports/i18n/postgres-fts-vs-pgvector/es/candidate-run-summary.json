@@ -1,66 +1,49 @@
 {
-  "runId": "2026-05-13T06-43-45-810Z",
+  "runId": "2026-05-13T14-34-25-405Z",
+  "runStatus": "running",
   "slug": "postgres-fts-vs-pgvector",
   "locale": "es",
-  "startedAt": "2026-05-13T06:43:45.810Z",
-  "updatedAt": "2026-05-13T06:45:35.903Z",
+  "startedAt": "2026-05-13T14:34:25.405Z",
+  "updatedAt": "2026-05-13T14:34:43.337Z",
   "modelsRequested": [
     "openrouter/openai/gpt-oss-120b:nitro",
     "openrouter/qwen/qwen3-32b:nitro"
   ],
-  "attemptedModels": 2,
+  "attemptedModels": 1,
   "skippedModels": 0,
-  "rejectedModels": 1,
+  "rejectedModels": 0,
   "candidateModels": 1,
   "totals": {
-    "inputTokens": 60356,
-    "outputTokens": 36845,
+    "inputTokens": 20707,
+    "outputTokens": 7989,
     "thinkingTokens": 0,
-    "cachedInputTokens": 9472,
+    "cachedInputTokens": 9216,
     "cacheWriteTokens": 0,
-    "estimatedCostUsd": 0.011797,
+    "estimatedCostUsd": 0.002246,
     "hasUnknownInputTokens": false,
     "hasUnknownOutputTokens": false,
     "hasUnknownThinkingTokens": true,
     "hasUnknownCachedInputTokens": false,
     "hasUnknownCacheWriteTokens": false,
     "hasUnknownEstimatedCost": false,
-    "runtimeSeconds": "94.55"
+    "runtimeSeconds": "7.09"
   },
   "attempts": [
     {
       "model": "openrouter/openai/gpt-oss-120b:nitro",
-      "status": "rejected",
-      "validationStatus": "rejected: direct AI SDK translation failed",
-      "reportPath": "reports/i18n/postgres-fts-vs-pgvector/es/openrouter-openai-gpt-oss-120b-nitro.md",
-      "note": "Command failed: bun run i18n:validate --slug postgres-fts-vs-pgvector --locale es",
-      "telemetry": {
-        "runtimeSeconds": "26.55",
-        "tokens": {
-          "input": 33521,
-          "output": 8325,
-          "cached": 9472,
-          "cacheWrite": 0
-        },
-        "estimatedCostUsd": 0.002805819,
-        "pricingSource": "local-openrouter-estimate"
-      }
-    },
-    {
-      "model": "openrouter/qwen/qwen3-32b:nitro",
       "status": "candidate",
       "validationStatus": "passed",
-      "reportPath": "reports/i18n/postgres-fts-vs-pgvector/es/openrouter-qwen-qwen3-32b-nitro.md",
+      "reportPath": "reports/i18n/postgres-fts-vs-pgvector/es/openrouter-openai-gpt-oss-120b-nitro.md",
       "note": "Generated through the direct AI SDK chunked translator.",
       "telemetry": {
-        "runtimeSeconds": "68.00",
+        "runtimeSeconds": "7.09",
         "tokens": {
-          "input": 26835,
-          "output": 28520,
-          "cached": 0,
+          "input": 20707,
+          "output": 7989,
+          "cached": 9216,
           "cacheWrite": 0
         },
-        "estimatedCostUsd": 0.0089916,
+        "estimatedCostUsd": 0.0022455929999999997,
         "pricingSource": "local-openrouter-estimate"
       }
     }
