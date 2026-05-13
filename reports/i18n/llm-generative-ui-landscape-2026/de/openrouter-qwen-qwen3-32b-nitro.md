@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: llm-generative-ui-landscape-2026
+- Locale: de
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-05-10--llm-generative-ui-landscape-2026/de/index.mdx
+- Validation: passed
+- Runtime seconds: 112.97
+- Input tokens: 48181
+- Output tokens: 47217
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.015187
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: ''
 subTitle: ''
@@ -411,3 +429,4 @@ Die Frameworks entwickeln sich schnell weiter. Die Protokollkonvergenz (AG-UI f�
 Die wichtigsten ingenieurstechnischen Herausforderungen derzeit sind nicht die Auswahl des Frameworks. Sie sind Katalogdesign – Entscheidung, was das Modell sagen darf, was Produktklarheit mehr als technisches Können erfordert. Sie sind semantische Validierung – Testen, ob die generierte UI das tut, was sie behauptet, und nicht nur, dass sie die Schema-Validierung besteht. Und sie sind die Barrierefreiheitslücke – Kataloge erstellen, bei denen jede Komponente und jede Kombination von Komponenten die gleichen Barrierefreiheitsanforderungen erfüllt, wie man sie von manuell geschriebener UI erwarten würde.
 
 Das Modell wird tun, was Sie ihm befehlen, innerhalb der Grammatik, die Sie ihm geben. Gestalten Sie die Grammatik absichtlich.
+````
