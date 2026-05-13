@@ -1,0 +1,51 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "WebSocket Wizardry",
+  "translatedTitle": "Мастерство WebSocket",
+  "translation": {
+    "title": "Мастерство WebSocket",
+    "group": "WebSockets",
+    "options": [
+      {
+        "text": "API Gateway"
+      },
+      {
+        "text": "EKS",
+        "hint": "EKS может запускать собственные долгоживущие службы WebSocket."
+      },
+      {
+        "text": "Lightsail",
+        "hint": "Экземпляры Lightsail могут запускать собственный сервер WebSocket."
+      },
+      {
+        "text": "AppSync",
+        "hint": "AppSync предлагает управляемые в реальном времени подписки GraphQL через WebSockets, а не произвольные сырые сокеты."
+      },
+      {
+        "text": "EC2",
+        "hint": "EC2 может запускать собственный долгоживущий процесс сервера WebSocket."
+      }
+    ],
+    "questionProse": [
+      "👋 Надеюсь, вам было весело до сих пор!\n\nПора на сложный вопрос...\n\nКакой сервис AWS предоставляет управляемые API WebSocket, где AWS владеет клиентским соединением и маршрутизирует сообщения к интеграциям?"
+    ],
+    "explanationProse": [
+      "API Gateway поддерживает двусторонние API WebSocket, но реализация управляется API Gateway, а не является прямым сокетом в вашем собственном процессе сервера. API Gateway поддерживает клиентское соединение и маршрутизирует сообщения к Lambda, HTTP-эндпоинтам или другим интеграциям. Сообщения могут отправляться обратно клиентам через API Gateway Management API.\n\nДругие варианты более дружелюбны к WebSocket:\n- Lightsail: Отличный выбор для простых настроек WebSocket 👌\n- AppSync: Использует WebSockets для управляемых подписок GraphQL\n- EC2: Классический вариант \"делайте что угодно\" для WebSockets\n- EKS: Отличный выбор для запуска масштабируемых кластеров WebSocket\n\nПрофи-совет: Если вам нужны сырые возможности WebSocket, остановитесь на вычислительных сервисах!"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Мастерство WebSocket\",\n  \"group\": \"WebSockets\",\n  \"options\": [\n    {\n      \"text\": \"API Gateway\"\n    },\n    {\n      \"text\": \"EKS\",\n      \"hint\": \"EKS может запускать собственные долгоживущие службы WebSocket.\"\n    },\n    {\n      \"text\": \"Lightsail\",\n      \"hint\": \"Экземпляры Lightsail могут запускать собственный сервер WebSocket.\"\n    },\n    {\n      \"text\": \"AppSync\",\n      \"hint\": \"AppSync предлагает управляемые в реальном времени подписки GraphQL через WebSockets, а не произвольные сырые сокеты.\"\n    },\n    {\n      \"text\": \"EC2\",\n      \"hint\": \"EC2 может запускать собственный долгоживущий процесс сервера WebSocket.\"\n    }\n  ],\n  \"questionProse\": [\n    \"👋 Надеюсь, вам было весело до сих пор!\\n\\nПора на сложный вопрос...\\n\\nКакой сервис AWS предоставляет управляемые API WebSocket, где AWS владеет клиентским соединением и маршрутизирует сообщения к интеграциям?\"\n  ],\n  \"explanationProse\": [\n    \"API Gateway поддерживает двусторонние API WebSocket, но реализация управляется API Gateway, а не является прямым сокетом в вашем собственном процессе сервера. API Gateway поддерживает клиентское соединение и маршрутизирует сообщения к Lambda, HTTP-эндпоинтам или другим интеграциям. Сообщения могут отправляться обратно клиентам через API Gateway Management API.\\n\\nДругие варианты более дружелюбны к WebSocket:\\n- Lightsail: Отличный выбор для простых настроек WebSocket 👌\\n- AppSync: Использует WebSockets для управляемых подписок GraphQL\\n- EC2: Классический вариант \\\"делайте что угодно\\\" для WebSockets\\n- EKS: Отличный выбор для запуска масштабируемых кластеров WebSocket\\n\\nПрофи-совет: Если вам нужны сырые возможности WebSocket, остановитесь на вычислительных сервисах!\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 881,
+    "outputTokens": 1153,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 14703
+  },
+  "cost": {
+    "inputUsd": 0.00007048,
+    "outputUsd": 0.00027672,
+    "totalUsd": 0.0003472,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
