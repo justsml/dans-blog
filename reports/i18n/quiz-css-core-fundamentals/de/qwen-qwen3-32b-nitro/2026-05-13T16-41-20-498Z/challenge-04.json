@@ -1,0 +1,48 @@
+{
+  "index": 3,
+  "attempt": 1,
+  "originalTitle": "Matching Selectors to HTML Elements",
+  "translatedTitle": "Auswahl von Selektoren für HTML-Elemente",
+  "translation": {
+    "title": "Auswahl von Selektoren für HTML-Elemente",
+    "group": "Selektor: Grundlagen",
+    "options": [
+      {
+        "text": "#Home",
+        "hint": "CSS ist fallsempfindlich – 'Home' ≠ 'home'"
+      },
+      {
+        "text": "a [id='home']",
+        "hint": "Der Leerraum impliziert ein Kind-Element, passt nicht zur HTML-Struktur"
+      },
+      {
+        "text": "a:contains(home)",
+        "hint": "`:contains()` ist kein standardmäßiger CSS-Selektor"
+      },
+      {
+        "text": "a#home[name='home']",
+        "hint": "Richtig: Sucht nach 'id' UND 'name' Attributen"
+      }
+    ],
+    "questionProse": [
+      "Welcher Selektor passt am besten zum folgenden HTML?"
+    ],
+    "explanationProse": [
+      "Die korrekte Antwort ist `a#home[name='home']`, der sowohl das `id` als auch das `name`-Attribut abfragt. CSS-Selektoren sind fallsempfindlich, weshalb `#Home` nicht funktionieren würde. Leerzeichen in Selektoren bedeuten Kind-Elemente, was hier nicht zutrifft.\n\nDer `:contains()`-Selektor ist kein standardmäßiger CSS-Selektor, wird aber in einigen JS-Bibliotheken wie jQuery verwendet."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Auswahl von Selektoren für HTML-Elemente\",\n  \"group\": \"Selektor: Grundlagen\",\n  \"options\": [\n    {\n      \"text\": \"#Home\",\n      \"hint\": \"CSS ist fallsempfindlich – 'Home' ≠ 'home'\"\n    },\n    {\n      \"text\": \"a [id='home']\",\n      \"hint\": \"Der Leerraum impliziert ein Kind-Element, passt nicht zur HTML-Struktur\"\n    },\n    {\n      \"text\": \"a:contains(home)\",\n      \"hint\": \"`:contains()` ist kein standardmäßiger CSS-Selektor\"\n    },\n    {\n      \"text\": \"a#home[name='home']\",\n      \"hint\": \"Richtig: Sucht nach 'id' UND 'name' Attributen\"\n    }\n  ],\n  \"questionProse\": [\n    \"Welcher Selektor passt am besten zum folgenden HTML?\"\n  ],\n  \"explanationProse\": [\n    \"Die korrekte Antwort ist `a#home[name='home']`, der sowohl das `id` als auch das `name`-Attribut abfragt. CSS-Selektoren sind fallsempfindlich, weshalb `#Home` nicht funktionieren würde. Leerzeichen in Selektoren bedeuten Kind-Elemente, was hier nicht zutrifft.\\n\\nDer `:contains()`-Selektor ist kein standardmäßiger CSS-Selektor, wird aber in einigen JS-Bibliotheken wie jQuery verwendet.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 733,
+    "outputTokens": 816,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 11061
+  },
+  "cost": {
+    "inputUsd": 0.00005864,
+    "outputUsd": 0.00019584,
+    "totalUsd": 0.00025448,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
