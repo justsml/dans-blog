@@ -1,0 +1,32 @@
+{
+  "selectedCommit": "cbb0b09b978da92519cbc1eb0f1360fedbb7ecfa",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 9,
+    "relevance": 9,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "This candidate provides the most natural and idiomatic translation while maintaining Dan's direct, punchy style. It correctly handles technical terms (like 'rollback', 'baseline', 'harness') and preserves all MDX structures and heading counts perfectly. It also translates the content within the code blocks (like the judge prompt) which is helpful for the target audience, whereas some other candidates left them in English.",
+  "slug": "llm-evals-are-broken",
+  "locale": "es",
+  "candidateCommits": [
+    "cbb0b09b978da92519cbc1eb0f1360fedbb7ecfa",
+    "a197e3299dbc01109730a46786e0b2fcd5bdef6a",
+    "dc6d8d46bbcfe3f2333d6b8c4cd7f4b06bbc3f9b",
+    "0036187a47ad6fcab80e36d6e6732b7da3c6b68d",
+    "964e5a3283106a0dd10e52057f49d263f40e5319",
+    "4841e451944bb0e362341ab975612e959d279464",
+    "6e26e2ed87e31c66a2e9632125bc84431ba8e51d"
+  ],
+  "suggestionLog": [],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug llm-evals-are-broken --locale es --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug llm-evals-are-broken --locale es --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug llm-evals-are-broken --locale es --skip-global\n207 |     ...targetContents.matchAll(/=[\"']\\.\\/(?!\\.)[^\"']+\\.(?:avif|gif|jpe?g|png|svg|webp)[\"']/g),\n208 |   ];\n209 | \n210 |   if (nestedAssetReferences.length === 0) return;\n211 | \n212 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2026-05-06--llm-evals-are-broken/es/index.mdx uses ./ asset paths inside a locale folder. Use ../ for inherited post assets.\n      at assertNestedAssetPaths (/Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:212:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}
