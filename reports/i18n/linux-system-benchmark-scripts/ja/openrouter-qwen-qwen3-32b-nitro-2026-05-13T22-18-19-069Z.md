@@ -1,0 +1,174 @@
+# Translation Candidate
+- Slug: linux-system-benchmark-scripts
+- Locale: ja
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2017-05-01--linux-system-benchmark-scripts/ja/index.mdx
+- Validation: deferred
+- Runtime seconds: 6.33
+- Input tokens: 2773
+- Output tokens: 2969
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.000934
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: リナックスサーバーベンチマークスクリプト
+subTitle: CPU & HDD ベンチマーク
+date: '2017-05-01'
+modified: '2019-07-03'
+category: DevOps
+draft: true
+publish: true
+subCategory: servers
+tags:
+  - benchmarks
+  - servers
+  - performance
+cover: ../rod-long-1052613-unsplash.webp
+cover_mobile: ../w300_rod-long-1052613-unsplash.webp
+cover_icon: ../icon_rod-long-1052613-unsplash.webp
+---
+## Linux ベンチマークシェルスクリプト
+
+現在のテストは、`sysbench`を使用したCPUとHDDのベンチマーク（Debian/Ubuntu系では自動でインストールされます）。
+
+> 目標: パフォーマンスツールの引数を覚える必要をなくす。bashで書かれています。
+
+**手順 1:** ベンチマークの設定:
+
+```sh
+# 結果とスクリプトのためのフォルダを作成
+export BENCH_DIR=$HOME/benchmarks
+mkdir -p $BENCH_DIR/results
+```
+
+**手順 2:** ショートカットスクリプトの作成: `$HOME/benchmarks/bench-library.sh`
+
+```sh
+#!/bin/bash
+set -e
+
+# いくつかの依存関係をインストール
+if [ "$(which sysbench)" == "" -o "$(which inxi)" == "" -o "$(which tcpdump)" == "" ]; then
+  sudo apt-get update && apt-get install -y sysbench inxi htop iotop tcpdump hddtemp
+fi
+# 変数
+export DATE_TAG=`date +%F` #YYYY-MM-DD
+export CPU_CORES="$([ -e /proc/cpuinfo ] && grep -sc ^processor /proc/cpuinfo || sysctl -n hw.ncpu)"
+export BENCH_DIR=$HOME/benchmarks/
+
+mkdir -p $BENCH_DIR
+
+function benchCpu() {
+  thread_limit=${1:$CPU_CORES}
+  prime_limit=${2:-20000}
+
+  if [ $CPU_CORES -lt `expr 1 + $thread_limit` ]; then
+    printf "\n\n${yellow}警告: \"${thread_limit}スレッドテスト\"によるテストのスキップ\n${cyan}CPUコア数が不足しています ($CPU_CORES)  ${reset}\n\n"
+  else
+    printf "\n\n${yellow}警告: \"${thread_limit}スレッドテスト\"によるテストのスキップ\n${reset}"
+
+    sudo sysbench --test=cpu \
+      --cpu-max-prime=${prime_limit} \
+      --num-threads=${CPU_CORES} \
+      run | tee -a $BENCH_DIR/results/cpu-test.log
+  fi
+}
+
+# benchSingleDisk seqrd 120G 8K 300
+function benchSingleDisk () {
+  sudo sysbench --test=fileio --init-rng=on  --file-test-mode=${1:-seqrd} --file-block-size=${3:-64K} \
+    --num-threads=${CPU_CORES} --max-time=${4:-180} --file-total-size=${2:-60G} \
+    --max-requests=0 run | tee -a $BENCH_DIR/results/sysbench-fileio.log
+}
+
+
+# benchDisk - ランダムリード/ライトとシーケンシャルリード/ライトをテストし、最後にクリーンアップします。
+function benchDisk() {
+  # テストファイルを最大75%の空きスペースでローカルディレクトリに生成し、3つのテストを実行（最大20分ずつ）
+  freeSpace=`df -k . | tail -1 | awk '{print $4}'`
+  freeSpace="${freeSpace//G|T/}"
+  testSize=$(awk "BEGIN {print ($freeSpace / 1024 / 1024) * 0.75; exit}")
+  testSize=${testSize}G
+  printf "####>>> \n${testSize}のテストデータを${PWD}に書き込み中...\n"
+
+  benchSingleDisk seqrd ${testSize} 8K 300
+  benchSingleDisk seqwr ${testSize} 8K 300
+  benchSingleDisk seqrw ${testSize} 8K 300
+  benchSingleDisk rndrd ${testSize} 8K 300
+  benchSingleDisk rndwr ${testSize} 8K 300
+  benchSingleDisk rndrw ${testSize} 8K 300
+
+  benchSingleDisk seqrd ${testSize} 64K 300
+  benchSingleDisk seqwr ${testSize} 64K 300
+  benchSingleDisk seqrw ${testSize} 64K 300
+  benchSingleDisk rndrd ${testSize} 64K 300
+  benchSingleDisk rndwr ${testSize} 64K 300
+  benchSingleDisk rndrw ${testSize} 64K 300
+
+  printf "\n\n####>>> \nテスト完了！大成功です!!! \n\n\n"
+}
+```
+
+**手順 3:** スクリプトの実行権限を設定
+
+```sh
+chmod +x $BENCH_DIR/*.sh
+source $HOME/benchmarks/bench-library.sh
+```
+
+**手順 4:** バッチランナーの作成（オプション）
+
+`$HOME/benchmarks/run-bench.sh`
+
+```sh
+#!/bin/bash
+set -e
+
+source ./bench-library.sh
+
+# HDD速度のベンチマーク（現在のディレクトリで）
+###########
+benchDisk
+
+# CPUのベンチマーク - 異なるスレッド数と作業サイズでテスト
+# スレッド数が十分でない場合は自動的にスキップされます（影響を与えるため）
+# 注: 異なるハードウェア間で比較可能な結果が得られます（同じCPUコア数まで）
+###########
+benchCpu 1
+benchCpu 4
+benchCpu 8  50000
+benchCpu 12 100000
+benchCpu 16 100000
+benchCpu 32 250000
+benchCpu 48 500000
+benchCpu 64 2000000
+```
+
+そして実行権限を追加:
+
+```sh
+chmod +x $BENCH_DIR/*.sh
+```
+
+### 使用方法
+
+`~/benchmarks/bench-library.sh` を `source` し、`benchCpu` または `benchDisk` を実行してください。
+
+```sh
+benchCpu 8   250000
+benchCpu 16  250000
+benchDisk
+```
+
+<!--# I/O - リアルタイム監視
+1. システム全体: iotop
+1. コマンド単位: dtrace/ltrace/strace
+-->
+````
