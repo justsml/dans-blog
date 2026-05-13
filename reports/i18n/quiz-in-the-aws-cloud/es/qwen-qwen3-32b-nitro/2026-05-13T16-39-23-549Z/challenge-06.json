@@ -1,0 +1,51 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "WebSocket Wizardry",
+  "translatedTitle": "Magia WebSocket",
+  "translation": {
+    "title": "Magia WebSocket",
+    "group": "WebSockets",
+    "options": [
+      {
+        "text": "API Gateway"
+      },
+      {
+        "text": "EKS",
+        "hint": "EKS puede ejecutar tus propios servicios WebSocket de larga duración."
+      },
+      {
+        "text": "Lightsail",
+        "hint": "Las instancias de Lightsail pueden ejecutar tu propio servidor WebSocket."
+      },
+      {
+        "text": "AppSync",
+        "hint": "AppSync ofrece suscripciones GraphQL en tiempo real gestionadas a través de WebSockets, no sockets crudos arbitrarios."
+      },
+      {
+        "text": "EC2",
+        "hint": "EC2 puede ejecutar tu propio proceso de servidor WebSocket de larga duración."
+      }
+    ],
+    "questionProse": [
+      "👋 ¡Espero que hasta ahora te esté gustando!\n\n      ¡Hora de una pregunta difícil...\n\n      ¿Qué servicio de AWS proporciona APIs WebSocket gestionadas donde AWS mantiene la conexión del cliente y enruta los mensajes a integraciones?"
+    ],
+    "explanationProse": [
+      "API Gateway soporta APIs WebSocket bidireccionales, pero la implementación está gestionada por API Gateway, no es un socket directo a tu proceso de servidor. API Gateway mantiene la conexión del cliente y enruta mensajes a Lambda, endpoints HTTP u otras integraciones. Los mensajes pueden enviarse de vuelta a los clientes conectados a través de la API de gestión de API Gateway.\n\n      Los demás son más amigables con WebSockets:\n      - Lightsail: Perfecto para configuraciones simples de WebSocket 👌\n      - AppSync: Usa WebSockets para suscripciones GraphQL gestionadas\n      - EC2: Tu opción clásica de 'haz lo que quieras' para WebSockets\n      - EKS: Ideal para ejecutar clústeres escalables de WebSocket\n\n      Consejo profesional: Si necesitas poder WebSocket puro, usa los servicios de computación."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Magia WebSocket\",\n  \"group\": \"WebSockets\",\n  \"options\": [\n    {\n      \"text\": \"API Gateway\"\n    },\n    {\n      \"text\": \"EKS\",\n      \"hint\": \"EKS puede ejecutar tus propios servicios WebSocket de larga duración.\"\n    },\n    {\n      \"text\": \"Lightsail\",\n      \"hint\": \"Las instancias de Lightsail pueden ejecutar tu propio servidor WebSocket.\"\n    },\n    {\n      \"text\": \"AppSync\",\n      \"hint\": \"AppSync ofrece suscripciones GraphQL en tiempo real gestionadas a través de WebSockets, no sockets crudos arbitrarios.\"\n    },\n    {\n      \"text\": \"EC2\",\n      \"hint\": \"EC2 puede ejecutar tu propio proceso de servidor WebSocket de larga duración.\"\n    }\n  ],\n  \"questionProse\": [\n    \"👋 ¡Espero que hasta ahora te esté gustando!\\n\\n      ¡Hora de una pregunta difícil...\\n\\n      ¿Qué servicio de AWS proporciona APIs WebSocket gestionadas donde AWS mantiene la conexión del cliente y enruta los mensajes a integraciones?\"\n  ],\n  \"explanationProse\": [\n    \"API Gateway soporta APIs WebSocket bidireccionales, pero la implementación está gestionada por API Gateway, no es un socket directo a tu proceso de servidor. API Gateway mantiene la conexión del cliente y enruta mensajes a Lambda, endpoints HTTP u otras integraciones. Los mensajes pueden enviarse de vuelta a los clientes conectados a través de la API de gestión de API Gateway.\\n\\n      Los demás son más amigables con WebSockets:\\n      - Lightsail: Perfecto para configuraciones simples de WebSocket 👌\\n      - AppSync: Usa WebSockets para suscripciones GraphQL gestionadas\\n      - EC2: Tu opción clásica de 'haz lo que quieras' para WebSockets\\n      - EKS: Ideal para ejecutar clústeres escalables de WebSocket\\n\\n      Consejo profesional: Si necesitas poder WebSocket puro, usa los servicios de computación.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 878,
+    "outputTokens": 1013,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 11847
+  },
+  "cost": {
+    "inputUsd": 0.00007024,
+    "outputUsd": 0.00024312,
+    "totalUsd": 0.00031336,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

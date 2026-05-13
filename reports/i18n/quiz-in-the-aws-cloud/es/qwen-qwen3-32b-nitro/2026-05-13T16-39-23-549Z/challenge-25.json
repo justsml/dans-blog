@@ -1,0 +1,44 @@
+{
+  "index": 24,
+  "attempt": 1,
+  "originalTitle": "Time To Live (TTL)",
+  "translatedTitle": "Tiempo de Vida (TTL)",
+  "translation": {
+    "title": "Tiempo de Vida (TTL)",
+    "group": "Características de DynamoDB",
+    "options": [
+      {
+        "text": "Elimina los elementos inmediatamente al vencimiento"
+      },
+      {
+        "text": "Requiere un desencadenador manual de eliminación"
+      },
+      {
+        "text": "Eliminación en segundo plano con horario de esfuerzo máximo"
+      },
+      {
+        "text": "Vence los elementos pero los mantiene almacenados"
+      }
+    ],
+    "questionProse": [
+      "¿Cómo maneja la característica TTL de DynamoDB la eliminación de elementos?"
+    ],
+    "explanationProse": [
+      "Características del TTL de DynamoDB:\n      - Proceso en segundo plano que monitorea el atributo TTL\n      - Los elementos vencidos se eliminan según una programación de esfuerzo máximo, generalmente dentro de unos días\n      - No hay costo adicional por TTL\n      - Los elementos eliminados aparecen en los streams\n\n      Casos de uso:\n      - Gestión de sesiones\n      - Expiración de registros\n      - Limpieza de datos temporales\n      - Cumplimiento normativo"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Tiempo de Vida (TTL)\",\n  \"group\": \"Características de DynamoDB\",\n  \"options\": [\n    {\n      \"text\": \"Elimina los elementos inmediatamente al vencimiento\"\n    },\n    {\n      \"text\": \"Requiere un desencadenador manual de eliminación\"\n    },\n    {\n      \"text\": \"Eliminación en segundo plano con horario de esfuerzo máximo\"\n    },\n    {\n      \"text\": \"Vence los elementos pero los mantiene almacenados\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Cómo maneja la característica TTL de DynamoDB la eliminación de elementos?\"\n  ],\n  \"explanationProse\": [\n    \"Características del TTL de DynamoDB:\\n      - Proceso en segundo plano que monitorea el atributo TTL\\n      - Los elementos vencidos se eliminan según una programación de esfuerzo máximo, generalmente dentro de unos días\\n      - No hay costo adicional por TTL\\n      - Los elementos eliminados aparecen en los streams\\n\\n      Casos de uso:\\n      - Gestión de sesiones\\n      - Expiración de registros\\n      - Limpieza de datos temporales\\n      - Cumplimiento normativo\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 705,
+    "outputTokens": 829,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1875
+  },
+  "cost": {
+    "inputUsd": 0.0000564,
+    "outputUsd": 0.00019895999999999998,
+    "totalUsd": 0.00025536,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

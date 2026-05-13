@@ -1,0 +1,44 @@
+{
+  "index": 11,
+  "attempt": 1,
+  "originalTitle": "S3 Performance Optimization",
+  "translatedTitle": "Optimización del rendimiento de S3",
+  "translation": {
+    "title": "Optimización del rendimiento de S3",
+    "group": "Rendimiento de S3",
+    "options": [
+      {
+        "text": "Usar prefijos aleatorios/hash"
+      },
+      {
+        "text": "Usar prefijos lógicos; la aleatorización no es necesaria"
+      },
+      {
+        "text": "Siempre usar objetos más grandes"
+      },
+      {
+        "text": "Minimizar el número de objetos"
+      }
+    ],
+    "questionProse": [
+      "¿Cómo optimizar el rendimiento de S3 para altas tasas de solicitudes?"
+    ],
+    "explanationProse": [
+      "Consejos de rendimiento de S3:\n    - El S3 moderno escala automáticamente las tasas de solicitud por prefijo\n    - No necesitas prefijos aleatorios/hash para el rendimiento\n    - Usa nombres de clave lógicos que se adapten a tus patrones de acceso\n    - Monitorea las respuestas 503 Slow Down si envías tasas de solicitud muy altas\n\n    La guía antigua recomendaba aleatorizar los prefijos para evitar particiones calientes, pero AWS ya no lo recomienda como requisito de rendimiento por defecto.\n\n    [Guías de rendimiento de S3](https://aws.amazon.com/s3/performance/)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Optimización del rendimiento de S3\",\n  \"group\": \"Rendimiento de S3\",\n  \"options\": [\n    {\n      \"text\": \"Usar prefijos aleatorios/hash\"\n    },\n    {\n      \"text\": \"Usar prefijos lógicos; la aleatorización no es necesaria\"\n    },\n    {\n      \"text\": \"Siempre usar objetos más grandes\"\n    },\n    {\n      \"text\": \"Minimizar el número de objetos\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Cómo optimizar el rendimiento de S3 para altas tasas de solicitudes?\"\n  ],\n  \"explanationProse\": [\n    \"Consejos de rendimiento de S3:\\n    - El S3 moderno escala automáticamente las tasas de solicitud por prefijo\\n    - No necesitas prefijos aleatorios/hash para el rendimiento\\n    - Usa nombres de clave lógicos que se adapten a tus patrones de acceso\\n    - Monitorea las respuestas 503 Slow Down si envías tasas de solicitud muy altas\\n\\n    La guía antigua recomendaba aleatorizar los prefijos para evitar particiones calientes, pero AWS ya no lo recomienda como requisito de rendimiento por defecto.\\n\\n    [Guías de rendimiento de S3](https://aws.amazon.com/s3/performance/)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 731,
+    "outputTokens": 875,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 10640
+  },
+  "cost": {
+    "inputUsd": 0.00005848,
+    "outputUsd": 0.00021,
+    "totalUsd": 0.00026848000000000003,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "index": 22,
+  "attempt": 1,
+  "originalTitle": "Aurora Failover Mechanism",
+  "translatedTitle": "Mecanismo de conmutación por error de Aurora",
+  "translation": {
+    "title": "Mecanismo de conmutación por error de Aurora",
+    "group": "Alta disponibilidad de Aurora",
+    "options": [
+      {
+        "text": "Se requiere intervención manual"
+      },
+      {
+        "text": "Requiere reconfiguración de la aplicación"
+      },
+      {
+        "text": "Siempre se conmuta al réplica más antigua"
+      },
+      {
+        "text": "Promoción automática basada en el nivel de prioridad de conmutación por error"
+      }
+    ],
+    "questionProse": [
+      "En un clúster de Aurora con múltiples réplicas de lectura, ¿qué sucede durante una conmutación por error automática cuando la instancia principal falla?"
+    ],
+    "explanationProse": [
+      "Proceso de conmutación por error de Aurora:\n      1. Detecta el fallo de la instancia principal\n      2. Elige una réplica de Aurora basándose principalmente en el nivel de prioridad de conmutación\n      3. Usa características de la instancia como criterios de desempate cuando las prioridades coinciden\n      4. Actualiza automáticamente el punto de conexión del clúster\n\n      Mejores prácticas:\n      - Mantener múltiples réplicas en Zonas de disponibilidad diferentes\n      - Configurar intencionalmente los niveles de promoción\n      - Usar el punto de conexión del clúster en las aplicaciones\n      - Probar escenarios de conmutación por error regularmente"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Mecanismo de conmutación por error de Aurora\",\n  \"group\": \"Alta disponibilidad de Aurora\",\n  \"options\": [\n    {\n      \"text\": \"Se requiere intervención manual\"\n    },\n    {\n      \"text\": \"Requiere reconfiguración de la aplicación\"\n    },\n    {\n      \"text\": \"Siempre se conmuta al réplica más antigua\"\n    },\n    {\n      \"text\": \"Promoción automática basada en el nivel de prioridad de conmutación por error\"\n    }\n  ],\n  \"questionProse\": [\n    \"En un clúster de Aurora con múltiples réplicas de lectura, ¿qué sucede durante una conmutación por error automática cuando la instancia principal falla?\"\n  ],\n  \"explanationProse\": [\n    \"Proceso de conmutación por error de Aurora:\\n      1. Detecta el fallo de la instancia principal\\n      2. Elige una réplica de Aurora basándose principalmente en el nivel de prioridad de conmutación\\n      3. Usa características de la instancia como criterios de desempate cuando las prioridades coinciden\\n      4. Actualiza automáticamente el punto de conexión del clúster\\n\\n      Mejores prácticas:\\n      - Mantener múltiples réplicas en Zonas de disponibilidad diferentes\\n      - Configurar intencionalmente los niveles de promoción\\n      - Usar el punto de conexión del clúster en las aplicaciones\\n      - Probar escenarios de conmutación por error regularmente\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 738,
+    "outputTokens": 812,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 9760
+  },
+  "cost": {
+    "inputUsd": 0.000059040000000000004,
+    "outputUsd": 0.00019488,
+    "totalUsd": 0.00025392000000000004,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "index": 21,
+  "attempt": 1,
+  "originalTitle": "Consistency Models",
+  "translatedTitle": "Modelos de consistencia",
+  "translation": {
+    "title": "Modelos de consistencia",
+    "group": "Consistencia en DynamoDB",
+    "options": [
+      {
+        "text": "100 lecturas por segundo"
+      },
+      {
+        "text": "50 lecturas por segundo"
+      },
+      {
+        "text": "200 lecturas por segundo"
+      },
+      {
+        "text": "Lecturas ilimitadas por segundo"
+      }
+    ],
+    "questionProse": [
+      "Una tabla de DynamoDB tiene una capacidad de lectura provisionada de 100 RCUs. ¿Cuántas lecturas fuertemente consistentes de elementos de 4KB se pueden realizar por segundo?"
+    ],
+    "explanationProse": [
+      "Entender los modelos de consistencia de DynamoDB es crucial:\n\n      - 1 RCU = 1 lectura fuertemente consistente/segundo para elementos de hasta 4KB\n      - 1 RCU = 2 lecturas eventualmente consistentes/segundo para elementos de hasta 4KB\n\n      Por lo tanto:\n      - 100 RCUs = 100 lecturas fuertemente consistentes de 4KB/segundo\n      - 100 RCUs = 200 lecturas eventualmente consistentes de 4KB/segundo\n\n      Elija modelos de consistencia según:\n      - Requisitos de la aplicación\n      - Consideraciones de costo\n      - Necesidades de rendimiento\n      - Requisitos de frescura de los datos"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Modelos de consistencia\",\n  \"group\": \"Consistencia en DynamoDB\",\n  \"options\": [\n    {\n      \"text\": \"100 lecturas por segundo\"\n    },\n    {\n      \"text\": \"50 lecturas por segundo\"\n    },\n    {\n      \"text\": \"200 lecturas por segundo\"\n    },\n    {\n      \"text\": \"Lecturas ilimitadas por segundo\"\n    }\n  ],\n  \"questionProse\": [\n    \"Una tabla de DynamoDB tiene una capacidad de lectura provisionada de 100 RCUs. ¿Cuántas lecturas fuertemente consistentes de elementos de 4KB se pueden realizar por segundo?\"\n  ],\n  \"explanationProse\": [\n    \"Entender los modelos de consistencia de DynamoDB es crucial:\\n\\n      - 1 RCU = 1 lectura fuertemente consistente/segundo para elementos de hasta 4KB\\n      - 1 RCU = 2 lecturas eventualmente consistentes/segundo para elementos de hasta 4KB\\n\\n      Por lo tanto:\\n      - 100 RCUs = 100 lecturas fuertemente consistentes de 4KB/segundo\\n      - 100 RCUs = 200 lecturas eventualmente consistentes de 4KB/segundo\\n\\n      Elija modelos de consistencia según:\\n      - Requisitos de la aplicación\\n      - Consideraciones de costo\\n      - Necesidades de rendimiento\\n      - Requisitos de frescura de los datos\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 781,
+    "outputTokens": 1011,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2756
+  },
+  "cost": {
+    "inputUsd": 0.00006248,
+    "outputUsd": 0.00024264,
+    "totalUsd": 0.00030512,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

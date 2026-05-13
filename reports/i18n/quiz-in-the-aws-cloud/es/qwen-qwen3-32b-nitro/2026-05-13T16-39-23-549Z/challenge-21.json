@@ -1,0 +1,44 @@
+{
+  "index": 20,
+  "attempt": 1,
+  "originalTitle": "Storage Cost Analysis",
+  "translatedTitle": "Análisis de Costos de Almacenamiento",
+  "translation": {
+    "title": "Análisis de Costos de Almacenamiento",
+    "group": "Optimización de Costos",
+    "options": [
+      {
+        "text": "S3 Standard para todos los datos"
+      },
+      {
+        "text": "Siempre usar el almacenamiento más barato"
+      },
+      {
+        "text": "Mezclar clases de almacenamiento según patrones de acceso"
+      },
+      {
+        "text": "Almacenar todo en Glacier"
+      }
+    ],
+    "questionProse": [
+      "¿Cuál es el enfoque más eficaz en costos para almacenar 1PB de datos con el 20% accedido diariamente, el 30% mensualmente y el 50% anualmente?"
+    ],
+    "explanationProse": [
+      "Estrategia óptima de almacenamiento:\n    - 20% en S3 Standard para acceso diario\n    - 30% en S3 Standard-IA para acceso mensual\n    - 50% en Glacier para acceso anual\n\n    Este enfoque optimiza los costos manteniendo patrones de acceso adecuados.\n\n    Consideraciones de costo:\n    - Precio de almacenamiento por GB\n    - Costos de recuperación\n    - Patrones de acceso\n    - Costos de transición"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Análisis de Costos de Almacenamiento\",\n  \"group\": \"Optimización de Costos\",\n  \"options\": [\n    {\n      \"text\": \"S3 Standard para todos los datos\"\n    },\n    {\n      \"text\": \"Siempre usar el almacenamiento más barato\"\n    },\n    {\n      \"text\": \"Mezclar clases de almacenamiento según patrones de acceso\"\n    },\n    {\n      \"text\": \"Almacenar todo en Glacier\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Cuál es el enfoque más eficaz en costos para almacenar 1PB de datos con el 20% accedido diariamente, el 30% mensualmente y el 50% anualmente?\"\n  ],\n  \"explanationProse\": [\n    \"Estrategia óptima de almacenamiento:\\n    - 20% en S3 Standard para acceso diario\\n    - 30% en S3 Standard-IA para acceso mensual\\n    - 50% en Glacier para acceso anual\\n\\n    Este enfoque optimiza los costos manteniendo patrones de acceso adecuados.\\n\\n    Consideraciones de costo:\\n    - Precio de almacenamiento por GB\\n    - Costos de recuperación\\n    - Patrones de acceso\\n    - Costos de transición\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 738,
+    "outputTokens": 635,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1519
+  },
+  "cost": {
+    "inputUsd": 0.000059040000000000004,
+    "outputUsd": 0.0001524,
+    "totalUsd": 0.00021144,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
