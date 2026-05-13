@@ -1,0 +1,38 @@
+{
+  "selectedCommit": "d0b7ec04079f1c6c5f83619c9ed8c92e8dc7e5c1",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 10,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The selected candidate (d0b7ec04079f1c6c5f83619c9ed8c92e8dc7e5c1) is the highest quality translation. It maintains Dan's direct, punchy style while using correct German technical terminology (e.g., 'halbstrukturierte Daten', 'Schema-on-Read'). It avoids the typos present in the current version ('Irgwo', 'Anwendungscomplexität') and correctly handles the MDX frontmatter and code blocks. The translation of 'document-shaped' as 'dokumenten-shaped' is a bit clunky but acceptable in a technical context; overall, it is the most professional option.",
+  "slug": "the-jsonb-seduction",
+  "locale": "de",
+  "candidateCommits": [
+    "3968f0633dcf1b23369f02215701ce711bfbba6c",
+    "d0b7ec04079f1c6c5f83619c9ed8c92e8dc7e5c1",
+    "71c8eaa0f9540f4da5cc1da2be22356b94708880"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "medium",
+      "match": "Postgres führt einen vollständigen Tabellenscan durch – jede einzelne Zeile.",
+      "replacement": "Postgres führt einen vollständigen Tabellenscan durch. Jede einzelne Zeile.",
+      "reason": "Better flow and closer to the original punchy sentence structure.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug the-jsonb-seduction --locale de --skip-global",
+    "output": ""
+  }
+}
