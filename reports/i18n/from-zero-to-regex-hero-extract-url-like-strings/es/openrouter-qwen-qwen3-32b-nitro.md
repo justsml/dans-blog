@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: from-zero-to-regex-hero-extract-url-like-strings
+- Locale: es
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2024-12-29--from-zero-to-regex-hero-extract-url-like-strings/es/index.mdx
+- Validation: passed
+- Runtime seconds: 23.93
+- Input tokens: 9195
+- Output tokens: 10187
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.003180
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: De cero a héroe de Regex
 subTitle: >-
@@ -266,3 +284,4 @@ Siguiendo estos pasos, podrás extraer eficazmente cualquier tipo de datos de ca
 - [Documentación de MDN sobre Expresiones Regulares](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions)
 - [Técnicas avanzadas de expresiones regulares](https://www.regular-expressions.info/): Explora lookaheads, lookbehinds y otros patrones avanzados para coincidencias más precisas.
 - [RFC 3986 - Sintaxis genérica de URI](https://datatracker.ietf.org/doc/html/rfc3986)
+````
