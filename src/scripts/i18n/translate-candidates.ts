@@ -1,6 +1,6 @@
 import { appendFileSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync } from "node:fs";
 import { dirname, join } from "node:path";
-import { spawn } from "node:child_process";
+import { spawn, type ChildProcess } from "node:child_process";
 import { ACTIVE_LOCALES, isActiveLocale, type ActiveLocale } from "../../shared/i18n.ts";
 import {
   getPostPaths,
@@ -10,7 +10,6 @@ import {
   parseList,
   relativeToRepo,
   run,
-  runInherited,
   writeTextFile,
 } from "./utils.ts";
 
@@ -61,7 +60,7 @@ type CandidateRunAttempt = {
 
 type CandidateRunSummary = {
   runId: string;
-  runStatus: "running" | "completed";
+  runStatus: "running" | "completed" | "failed" | "interrupted";
   slug: string;
   locale: string;
   startedAt: string;
@@ -122,6 +121,11 @@ let candidateRunHistoryPath = "";
 let candidateRunHistoryRelPath = "";
 let candidateRunAttempts: CandidateRunAttempt[] = [];
 let candidateRunStatus: CandidateRunSummary["runStatus"] = "running";
+let candidateRunFinalized = false;
+let isProcessingTask = false;
+const activeChildren = new Set<ChildProcess>();
+
+registerProcessCleanup();
 
 if (shouldDryRun) {
   console.log(`Candidate tasks:`);
@@ -139,12 +143,12 @@ if (isTaskWorker) {
   if (locales.length !== 1 || slugs.length !== 1) {
     throw new Error("--task-worker requires exactly one --slug and one --locale.");
   }
-  processTask(slugs[0], locales[0]);
+  await processTask(slugs[0], locales[0]);
 } else {
   await processTasks(getCandidateTasks());
 }
 
-function processTask(currentSlug: string, currentLocale: ActiveLocale) {
+async function processTask(currentSlug: string, currentLocale: ActiveLocale) {
   slug = currentSlug;
   locale = currentLocale;
   const paths = getPostPaths(slug, locale);
@@ -161,116 +165,111 @@ function processTask(currentSlug: string, currentLocale: ActiveLocale) {
   candidateRunHistoryRelPath = relativeToRepo(candidateRunHistoryPath);
   candidateRunAttempts = [];
   candidateRunStatus = "running";
+  candidateRunFinalized = false;
+  isProcessingTask = true;
 
-  console.log(`\nGenerating candidates for ${slug} [${locale}]`);
-  mkdirSync(dirname(targetPath), { recursive: true });
-  writeCandidateRunSummary(buildCandidateRunSummary());
+  try {
+    console.log(`\nGenerating candidates for ${slug} [${locale}]`);
+    mkdirSync(dirname(targetPath), { recursive: true });
+    writeCandidateRunSummary(buildCandidateRunSummary());
 
-  for (const model of models) {
-    const reportPath = `${reportDir}/${safeModelName(model)}.md`;
-    if (!shouldOverwrite && existsSync(reportPath) && !isRejectedReport(reportPath)) {
-      console.log(`Skipping existing ${locale}/${model} report at ${relativeToRepo(reportPath)}. Pass --overwrite to rerun.`);
-      recordRunAttempt({
-        model,
-        status: "skipped",
-        reportPath: relativeToRepo(reportPath),
-        note: "Existing non-rejected report found. Pass --overwrite to rerun.",
-      });
-      continue;
+    for (const model of models) {
+      const reportPath = `${reportDir}/${safeModelName(model)}.md`;
+      if (!shouldOverwrite && existsSync(reportPath) && !isRejectedReport(reportPath)) {
+        console.log(`Skipping existing ${locale}/${model} report at ${relativeToRepo(reportPath)}. Pass --overwrite to rerun.`);
+        recordRunAttempt({
+          model,
+          status: "skipped",
+          reportPath: relativeToRepo(reportPath),
+          note: "Existing non-rejected report found. Pass --overwrite to rerun.",
+        });
+        continue;
+      }
+      if (!shouldOverwrite && existsSync(reportPath)) {
+        console.log(`Retrying rejected ${locale}/${model} report at ${relativeToRepo(reportPath)}.`);
+      }
+
+      const startedAt = Date.now();
+      try {
+        await runDirectTranslation(model);
+
+        if (!existsSync(targetPath)) {
+          throw new Error(`Direct translator did not create ${targetRelPath}.`);
+        }
+
+        if (!hasGitDiff(targetRelPath)) {
+          throw new Error([
+            `Direct translator did not leave a diff in ${targetRelPath}.`,
+            "This usually means the translation already exists or the provider produced unchanged output.",
+          ].join(" "));
+        }
+
+        let validationStatus = "deferred";
+        normalizeCandidateForLocale();
+        if (shouldValidateCandidates) {
+          validationStatus = await validateCandidate();
+        }
+
+        writeCandidateReport({
+          reportPath,
+          model,
+          validationStatus,
+          telemetry: getDirectTelemetry(model, startedAt),
+          note: "Generated through the direct AI SDK chunked translator.",
+          rawOutput: existsSync(targetPath) ? readFileSync(targetPath, "utf8") : undefined,
+        });
+        recordRunAttempt({
+          model,
+          status: "candidate",
+          validationStatus,
+          reportPath: relativeToRepo(reportPath),
+          note: "Generated through the direct AI SDK chunked translator.",
+          telemetry: getDirectTelemetry(model, startedAt),
+        });
+
+        if (!shouldSkipCommit) {
+          gitCommit(`i18n candidate(${locale}): ${slug} via ${model}`, [
+            targetRelPath,
+            relativeToRepo(reportDir),
+          ]);
+        }
+      } catch (error) {
+        const telemetry = getDirectTelemetry(model, startedAt);
+        const rawOutput = existsSync(targetPath) ? readFileSync(targetPath, "utf8") : undefined;
+        cleanupRejectedTarget();
+        writeCandidateReport({
+          reportPath,
+          model,
+          validationStatus: "rejected: direct AI SDK translation failed",
+          telemetry,
+          note: error instanceof Error ? error.message : String(error),
+          rawOutput,
+        });
+        recordRunAttempt({
+          model,
+          status: "rejected",
+          validationStatus: "rejected: direct AI SDK translation failed",
+          reportPath: relativeToRepo(reportPath),
+          note: error instanceof Error ? error.message : String(error),
+          telemetry,
+        });
+
+        if (!shouldSkipCommit) {
+          gitCommit(`i18n rejected(${locale}): ${slug} via ${model}`, [
+            relativeToRepo(reportPath),
+            candidateRunSummaryRelPath,
+          ]);
+        }
+      }
     }
-    if (!shouldOverwrite && existsSync(reportPath)) {
-      console.log(`Retrying rejected ${locale}/${model} report at ${relativeToRepo(reportPath)}.`);
-    }
 
-    const preRunChangedPaths = getChangedPaths();
-    const preRunCandidatesJsonl = existsSync(candidatesPath) ? readFileSync(candidatesPath, "utf8") : undefined;
-    const startedAt = Date.now();
-    try {
-      runDirectTranslation(model);
-
-      if (!existsSync(targetPath)) {
-        throw new Error(`Direct translator did not create ${targetRelPath}.`);
-      }
-
-      if (!hasGitDiff(targetRelPath)) {
-        throw new Error([
-          `Direct translator did not leave a diff in ${targetRelPath}.`,
-          "This usually means the translation already exists or the provider produced unchanged output.",
-        ].join(" "));
-      }
-
-      let validationStatus = "deferred";
-      normalizeCandidateForLocale();
-      if (shouldValidateCandidates) {
-        validationStatus = validateCandidate();
-      }
-
-      writeCandidateReport({
-        reportPath,
-        model,
-        validationStatus,
-        telemetry: getDirectTelemetry(model, startedAt),
-        note: "Generated through the direct AI SDK chunked translator.",
-        rawOutput: existsSync(targetPath) ? readFileSync(targetPath, "utf8") : undefined,
-      });
-      recordRunAttempt({
-        model,
-        status: "candidate",
-        validationStatus,
-        reportPath: relativeToRepo(reportPath),
-        note: "Generated through the direct AI SDK chunked translator.",
-        telemetry: getDirectTelemetry(model, startedAt),
-      });
-
-      if (!shouldSkipCommit) {
-        gitCommit(`i18n candidate(${locale}): ${slug} via ${model}`, [
-          targetRelPath,
-          relativeToRepo(reportDir),
-        ]);
-      }
-    } catch (error) {
-      const telemetry = getDirectTelemetry(model, startedAt);
-      const rawOutput = existsSync(targetPath) ? readFileSync(targetPath, "utf8") : undefined;
-      cleanupRejectedTarget();
-      cleanupNewGeneratedReports(preRunChangedPaths, reportPath);
-      restoreCandidateIndex(preRunCandidatesJsonl);
-      writeCandidateReport({
-        reportPath,
-        model,
-        validationStatus: "rejected: direct AI SDK translation failed",
-        telemetry,
-        note: error instanceof Error ? error.message : String(error),
-        rawOutput,
-      });
-      recordRunAttempt({
-        model,
-        status: "rejected",
-        validationStatus: "rejected: direct AI SDK translation failed",
-        reportPath: relativeToRepo(reportPath),
-        note: error instanceof Error ? error.message : String(error),
-        telemetry,
-      });
-
-      if (!shouldSkipCommit) {
-        gitCommit(`i18n rejected(${locale}): ${slug} via ${model}`, [
-          relativeToRepo(reportPath),
-          candidateRunSummaryRelPath,
-        ]);
-      }
-    }
+    finalizeCandidateRun("completed", { commit: true, print: true });
+  } catch (error) {
+    finalizeCandidateRun("failed", { commit: !shouldSkipCommit, print: true });
+    throw error;
+  } finally {
+    isProcessingTask = false;
   }
-
-  candidateRunStatus = "completed";
-  const finalSummary = buildCandidateRunSummary();
-  writeCandidateRunSummary(finalSummary);
-  appendCandidateRunHistory(finalSummary);
-  if (!shouldSkipCommit) {
-    gitCommit(`i18n accounting(${locale}): ${slug} candidate run totals`, [
-      candidateRunSummaryRelPath,
-      candidateRunHistoryRelPath,
-    ]);
-  }
-  printCandidateRunSummary(finalSummary);
 }
 
 async function processTasks(tasks: CandidateTask[]) {
@@ -278,7 +277,7 @@ async function processTasks(tasks: CandidateTask[]) {
   console.log(`Processing with concurrency ${taskConcurrency}.`);
 
   if (tasks.length === 1) {
-    processTask(tasks[0].slug, tasks[0].locale);
+    await processTask(tasks[0].slug, tasks[0].locale);
     return;
   }
 
@@ -328,10 +327,16 @@ function runTaskWorker(task: CandidateTask) {
     const child = spawn("bun", args, {
       cwd: process.cwd(),
       stdio: "inherit",
+      detached: true,
     });
+    trackChild(child);
 
-    child.on("error", reject);
+    child.on("error", (error) => {
+      activeChildren.delete(child);
+      reject(error);
+    });
     child.on("exit", (code, signal) => {
+      activeChildren.delete(child);
       if (code === 0) {
         resolve();
         return;
@@ -369,7 +374,74 @@ function optionalFlag(name: string, enabled: boolean) {
   return enabled ? [name] : [];
 }
 
-function runDirectTranslation(model: string) {
+function runTrackedInherited(
+  command: string,
+  args: string[],
+  options: { timeoutMs?: number } = {},
+) {
+  return new Promise<void>((resolve, reject) => {
+    const child = spawn(command, args, {
+      cwd: process.cwd(),
+      stdio: "inherit",
+      detached: true,
+    });
+    const timeout = options.timeoutMs == null
+      ? undefined
+      : setTimeout(() => {
+        killChildTree(child);
+        reject(new Error(`Command failed after ${options.timeoutMs}ms: ${command} ${args.join(" ")}`));
+      }, options.timeoutMs);
+
+    trackChild(child);
+    child.on("error", (error) => {
+      if (timeout != null) clearTimeout(timeout);
+      activeChildren.delete(child);
+      reject(error);
+    });
+    child.on("exit", (code, signal) => {
+      if (timeout != null) clearTimeout(timeout);
+      activeChildren.delete(child);
+      if (code === 0) {
+        resolve();
+        return;
+      }
+      reject(new Error(`Command failed: ${command} ${args.join(" ")} (${signal ?? `code ${code}`})`));
+    });
+  });
+}
+
+function trackChild(child: ChildProcess) {
+  activeChildren.add(child);
+}
+
+function killActiveChildren() {
+  for (const child of activeChildren) {
+    killChildTree(child);
+  }
+  activeChildren.clear();
+}
+
+function killChildTree(child: ChildProcess) {
+  if (child.pid == null) return;
+  try {
+    process.kill(-child.pid, "SIGTERM");
+    setTimeout(() => {
+      try {
+        if (child.pid != null) process.kill(-child.pid, "SIGKILL");
+      } catch {
+        // Child group already exited.
+      }
+    }, 5000).unref();
+  } catch {
+    try {
+      child.kill("SIGTERM");
+    } catch {
+      // Child already exited.
+    }
+  }
+}
+
+async function runDirectTranslation(model: string) {
   const args = [
     "run",
     "i18n:translate:chunked",
@@ -391,7 +463,7 @@ function runDirectTranslation(model: string) {
     args.push("--challenge-retries", challengeRetries);
   }
 
-  runInherited("bun", args, { timeoutMs: timeoutSeconds * 1000 });
+  await runTrackedInherited("bun", args, { timeoutMs: timeoutSeconds * 1000 });
 }
 
 function getAllPostSlugs() {
@@ -484,12 +556,12 @@ function getRequestedLocales() {
   return values as ActiveLocale[];
 }
 
-function validateCandidate() {
+async function validateCandidate() {
   const validateArgs = ["run", "i18n:validate", "--slug", slug, "--locale", locale];
   if (!shouldRunFullCandidateValidation) {
     validateArgs.push("--skip-global");
   }
-  runInherited("bun", validateArgs);
+  await runTrackedInherited("bun", validateArgs);
   return shouldRunFullCandidateValidation ? "passed" : "passed: local checks only";
 }
 
@@ -545,49 +617,6 @@ function cleanupRejectedTarget() {
 function targetExistsInHead() {
   try {
     run("git", ["cat-file", "-e", `HEAD:${targetRelPath}`]);
-    return true;
-  } catch {
-    return false;
-  }
-}
-
-function cleanupNewGeneratedReports(preRunChangedPaths: Set<string>, reportPath: string) {
-  const legacyReportRelPath = relativeToRepo(reportPath);
-  const reportDirRelPath = relativeToRepo(reportDir);
-
-  for (const path of getChangedPaths()) {
-    if (preRunChangedPaths.has(path)) continue;
-    if (path === legacyReportRelPath) continue;
-    if (!path.startsWith(`${reportDirRelPath}/`)) continue;
-    if (pathExistsInHead(path)) continue;
-    rmSync(join(process.cwd(), path), { recursive: true, force: true });
-  }
-}
-
-function restoreCandidateIndex(previousContents: string | undefined) {
-  if (previousContents == null) {
-    rmSync(candidatesPath, { force: true });
-    return;
-  }
-
-  writeTextFile(candidatesPath, previousContents);
-}
-
-function getChangedPaths() {
-  const output = run("git", ["status", "--porcelain"]);
-  return new Set(
-    output
-      .split(/\r?\n/)
-      .filter(Boolean)
-      .map((line) => line.match(/^.. ?(.+)$/)?.[1] ?? line.slice(3))
-      .map((path) => path.split(" -> ").at(-1))
-      .filter((path): path is string => path != null && path.trim() !== ""),
-  );
-}
-
-function pathExistsInHead(path: string) {
-  try {
-    run("git", ["cat-file", "-e", `HEAD:${path}`]);
     return true;
   } catch {
     return false;
@@ -761,9 +790,51 @@ function formatMetric(value: number | undefined) {
   return value == null ? "unknown" : String(value);
 }
 
+function registerProcessCleanup() {
+  for (const signal of ["SIGINT", "SIGTERM", "SIGHUP"] as const) {
+    process.once(signal, () => {
+      console.error(`Received ${signal}; stopping active translation children and preserving run accounting.`);
+      killActiveChildren();
+      finalizeCandidateRun("interrupted", { commit: false, print: true });
+      process.exit(signal === "SIGINT" ? 130 : 143);
+    });
+  }
+
+  process.once("exit", () => {
+    killActiveChildren();
+    if (isProcessingTask && !candidateRunFinalized) {
+      finalizeCandidateRun("interrupted", { commit: false, print: false });
+    }
+  });
+}
+
 function recordRunAttempt(attempt: CandidateRunAttempt) {
   candidateRunAttempts.push(attempt);
   writeCandidateRunSummary(buildCandidateRunSummary());
+}
+
+function finalizeCandidateRun(
+  status: CandidateRunSummary["runStatus"],
+  options: { commit: boolean; print: boolean },
+) {
+  if (candidateRunFinalized || candidateRunSummaryPath === "") return;
+
+  candidateRunStatus = status;
+  const finalSummary = buildCandidateRunSummary();
+  writeCandidateRunSummary(finalSummary);
+  appendCandidateRunHistory(finalSummary);
+  candidateRunFinalized = true;
+
+  if (options.commit && !shouldSkipCommit) {
+    gitCommit(`i18n accounting(${locale}): ${slug} candidate run totals`, [
+      candidateRunSummaryRelPath,
+      candidateRunHistoryRelPath,
+    ]);
+  }
+
+  if (options.print) {
+    printCandidateRunSummary(finalSummary);
+  }
 }
 
 function buildCandidateRunSummary(): CandidateRunSummary {

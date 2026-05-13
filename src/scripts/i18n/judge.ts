@@ -11,7 +11,8 @@ import {
   writeTextFile,
 } from "./utils.ts";
 import { getRunTelemetry, renderTelemetryLines, runMeasuredCommand } from "./telemetry.ts";
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { join } from "node:path";
 
 const OPENCODE_COMMAND = existsSync("/Users/dan/.opencode/bin/opencode")
   ? "/Users/dan/.opencode/bin/opencode"
@@ -34,143 +35,148 @@ const timeoutSeconds = getTimeoutSeconds();
 const { targetPath, reportDir } = getPostPaths(slug, locale);
 const targetRelPath = relativeToRepo(targetPath);
 
-const candidateCommits = getCandidateCommits();
-if (candidateCommits.length === 0) {
-  throw new Error(`No candidate commits found for ${slug} ${locale}.`);
-}
-if (candidateCommits.length < 2 && !shouldAllowSingleCandidate) {
-  throw new Error(
-    `Judge requires at least 2 candidate translations for ${slug} ${locale}. Found ${candidateCommits.length}. Pass --allow-single-candidate to override.`,
-  );
-}
+const releaseJudgeLock = acquireJudgeLock();
+try {
+  const candidateCommits = getCandidateCommits();
+  if (candidateCommits.length === 0) {
+    throw new Error(`No candidate commits found for ${slug} ${locale}.`);
+  }
+  if (candidateCommits.length < 2 && !shouldAllowSingleCandidate) {
+    throw new Error(
+      `Judge requires at least 2 candidate translations for ${slug} ${locale}. Found ${candidateCommits.length}. Pass --allow-single-candidate to override.`,
+    );
+  }
 
-const candidateSummary = candidateCommits
-  .map((commit) => `- ${commit} ${run("git", ["show", "-s", "--format=%s", commit])}`)
-  .join("\n");
+  const candidateSummary = candidateCommits
+    .map((commit) => `- ${commit} ${run("git", ["show", "-s", "--format=%s", commit])}`)
+    .join("\n");
 
-const prompt = [
-  "You are a constrained translation judge.",
-  `Judge the ${locale} translation candidates for ${slug}.`,
-  `Candidate commits:`,
-  candidateSummary,
-  ``,
-  selectedCommit
-    ? `Use ${selectedCommit} as the selected candidate unless it is structurally broken.`
-    : "Choose the best candidate by technical accuracy, natural language quality, Dan's direct style, and MDX preservation.",
-  `Use git show <sha>:${targetRelPath} to inspect candidates.`,
-  `Write the final selected and lightly polished MDX to ${targetRelPath}.`,
-  `Also explain the decision in reports/i18n/${slug}/${locale}/judge.md.`,
-  `Also write strict JSON to reports/i18n/${slug}/${locale}/judge.json with this shape:`,
-  JSON.stringify({
-    selectedCommit: "full candidate commit sha",
-    selectedModel: "model id from commit subject",
-    scores: {
-      readability: 0,
-      technicalAccuracy: 0,
-      coherence: 0,
-      relevance: 0,
-      translationQuality: 0,
-      mdxPreservation: 0,
-    },
-    suggestedChanges: [
-      {
-        severity: "low",
-        category: "terminology",
-        location: "heading or short excerpt",
-        current: "text to improve",
-        suggested: "replacement or action",
-        reason: "why this change helps",
-      },
-    ],
-    rationale: "brief selection rationale",
-  }),
-  `Do not run package installation, build, or content validation commands. The wrapper script owns validation.`,
-  `Do not create temporary candidate files. Inspect candidates directly from git when needed.`,
-].join("\n");
-
-const primaryJudge = runJudgeCommand(judgeModel, prompt);
-if (!primaryJudge.ok) {
-  throw new Error(primaryJudge.errorMessage);
-}
-
-const primaryTelemetry = getRunTelemetry(judgeModel, primaryJudge);
-
-const secondJudge = secondJudgeModel == null
-  ? undefined
-  : runJudgeCommand(secondJudgeModel, getSecondJudgePrompt(), [
-    targetPath,
-    `${reportDir}/judge.md`,
-  ].filter((path) => existsSync(path)));
-if (secondJudge != null && !secondJudge.ok) {
-  throw new Error(secondJudge.errorMessage);
-}
-
-const secondTelemetry = secondJudge == null || secondJudgeModel == null
-  ? undefined
-  : getRunTelemetry(secondJudgeModel, secondJudge);
-
-const shouldEscalate = secondJudge != null && shouldEscalateSecondJudge({
-  primaryOutput: primaryJudge.output,
-  secondOutput: secondJudge.output,
-});
-const escalationJudge = shouldEscalate && escalationJudgeModel != null
-  ? runJudgeCommand(escalationJudgeModel, getEscalationPrompt())
-  : undefined;
-if (escalationJudge != null && !escalationJudge.ok) {
-  throw new Error(escalationJudge.errorMessage);
-}
-
-const escalationTelemetry = escalationJudge == null || escalationJudgeModel == null
-  ? undefined
-  : getRunTelemetry(escalationJudgeModel, escalationJudge);
-
-const validation = runJudgeValidation();
-writeJudgeJsonValidation(validation);
-
-const reportPath = `${reportDir}/judge-summary.md`;
-writeTextFile(
-  reportPath,
-  [
-    `# Translation Judge Summary`,
-    ``,
-    `- Slug: ${slug}`,
-    `- Locale: ${locale}`,
-    `- Judge model: ${judgeModel}`,
-    `- Second judge model: ${secondJudgeModel ?? "not run"}`,
-    `- Escalation judge model: ${escalationJudge == null ? "not run" : escalationJudgeModel}`,
-    `- Selected commit hint: ${selectedCommit ?? "judge selected"}`,
-    `- Validation: ${validation.ok ? "passed" : "failed"}`,
-    `- Validation scope: ${validation.scope}`,
-    validation.ok ? undefined : `- Validation error: ${validation.error}`,
-    ``,
-    `## Primary Judge Telemetry`,
-    ...renderTelemetryLines(primaryTelemetry),
-    ``,
-    secondTelemetry == null ? undefined : `## Second Judge Telemetry`,
-    ...(secondTelemetry == null ? [] : renderTelemetryLines(secondTelemetry)),
-    secondTelemetry == null ? undefined : ``,
-    escalationTelemetry == null ? undefined : `## Escalation Judge Telemetry`,
-    ...(escalationTelemetry == null ? [] : renderTelemetryLines(escalationTelemetry)),
-    escalationTelemetry == null ? undefined : ``,
-    `## Candidates`,
+  const prompt = [
+    "You are a constrained translation judge.",
+    `Judge the ${locale} translation candidates for ${slug}.`,
+    `Candidate commits:`,
     candidateSummary,
     ``,
-  ].filter((line) => line != null).join("\n"),
-);
+    selectedCommit
+      ? `Use ${selectedCommit} as the selected candidate unless it is structurally broken.`
+      : "Choose the best candidate by technical accuracy, natural language quality, Dan's direct style, and MDX preservation.",
+    `Use git show <sha>:${targetRelPath} to inspect candidates.`,
+    `Write the final selected and lightly polished MDX to ${targetRelPath}.`,
+    `Also explain the decision in reports/i18n/${slug}/${locale}/judge.md.`,
+    `Also write strict JSON to reports/i18n/${slug}/${locale}/judge.json with this shape:`,
+    JSON.stringify({
+      selectedCommit: "full candidate commit sha",
+      selectedModel: "model id from commit subject",
+      scores: {
+        readability: 0,
+        technicalAccuracy: 0,
+        coherence: 0,
+        relevance: 0,
+        translationQuality: 0,
+        mdxPreservation: 0,
+      },
+      suggestedChanges: [
+        {
+          severity: "low",
+          category: "terminology",
+          location: "heading or short excerpt",
+          current: "text to improve",
+          suggested: "replacement or action",
+          reason: "why this change helps",
+        },
+      ],
+      rationale: "brief selection rationale",
+    }),
+    `Do not run package installation, build, or content validation commands. The wrapper script owns validation.`,
+    `Do not create temporary candidate files. Inspect candidates directly from git when needed.`,
+  ].join("\n");
 
-if (!shouldSkipCommit) {
-  const judgeDetailPath = `reports/i18n/${slug}/${locale}/judge.md`;
-  const judgeJsonPath = `reports/i18n/${slug}/${locale}/judge.json`;
-  const secondJudgePath = `reports/i18n/${slug}/${locale}/judge-second.md`;
-  const escalationJudgePath = `reports/i18n/${slug}/${locale}/judge-escalation.md`;
-  gitCommit(`i18n judge(${locale}): select translation for ${slug}`, [
-    targetRelPath,
-    relativeToRepo(reportPath),
-    ...(existsSync(judgeDetailPath) ? [judgeDetailPath] : []),
-    ...(existsSync(judgeJsonPath) ? [judgeJsonPath] : []),
-    ...(existsSync(secondJudgePath) ? [secondJudgePath] : []),
-    ...(existsSync(escalationJudgePath) ? [escalationJudgePath] : []),
-  ]);
+  const primaryJudge = runJudgeCommand(judgeModel, prompt);
+  if (!primaryJudge.ok) {
+    throw new Error(primaryJudge.errorMessage);
+  }
+
+  const primaryTelemetry = getRunTelemetry(judgeModel, primaryJudge);
+
+  const secondJudge = secondJudgeModel == null
+    ? undefined
+    : runJudgeCommand(secondJudgeModel, getSecondJudgePrompt(), [
+      targetPath,
+      `${reportDir}/judge.md`,
+    ].filter((path) => existsSync(path)));
+  if (secondJudge != null && !secondJudge.ok) {
+    throw new Error(secondJudge.errorMessage);
+  }
+
+  const secondTelemetry = secondJudge == null || secondJudgeModel == null
+    ? undefined
+    : getRunTelemetry(secondJudgeModel, secondJudge);
+
+  const shouldEscalate = secondJudge != null && shouldEscalateSecondJudge({
+    primaryOutput: primaryJudge.output,
+    secondOutput: secondJudge.output,
+  });
+  const escalationJudge = shouldEscalate && escalationJudgeModel != null
+    ? runJudgeCommand(escalationJudgeModel, getEscalationPrompt())
+    : undefined;
+  if (escalationJudge != null && !escalationJudge.ok) {
+    throw new Error(escalationJudge.errorMessage);
+  }
+
+  const escalationTelemetry = escalationJudge == null || escalationJudgeModel == null
+    ? undefined
+    : getRunTelemetry(escalationJudgeModel, escalationJudge);
+
+  const validation = runJudgeValidation();
+  writeJudgeJsonValidation(validation, primaryJudge, candidateCommits);
+
+  const reportPath = `${reportDir}/judge-summary.md`;
+  writeTextFile(
+    reportPath,
+    [
+      `# Translation Judge Summary`,
+      ``,
+      `- Slug: ${slug}`,
+      `- Locale: ${locale}`,
+      `- Judge model: ${judgeModel}`,
+      `- Second judge model: ${secondJudgeModel ?? "not run"}`,
+      `- Escalation judge model: ${escalationJudge == null ? "not run" : escalationJudgeModel}`,
+      `- Selected commit hint: ${selectedCommit ?? "judge selected"}`,
+      `- Validation: ${validation.ok ? "passed" : "failed"}`,
+      `- Validation scope: ${validation.scope}`,
+      validation.ok ? undefined : `- Validation error: ${validation.error}`,
+      ``,
+      `## Primary Judge Telemetry`,
+      ...renderTelemetryLines(primaryTelemetry),
+      ``,
+      secondTelemetry == null ? undefined : `## Second Judge Telemetry`,
+      ...(secondTelemetry == null ? [] : renderTelemetryLines(secondTelemetry)),
+      secondTelemetry == null ? undefined : ``,
+      escalationTelemetry == null ? undefined : `## Escalation Judge Telemetry`,
+      ...(escalationTelemetry == null ? [] : renderTelemetryLines(escalationTelemetry)),
+      escalationTelemetry == null ? undefined : ``,
+      `## Candidates`,
+      candidateSummary,
+      ``,
+    ].filter((line) => line != null).join("\n"),
+  );
+
+  if (!shouldSkipCommit) {
+    const judgeDetailPath = `reports/i18n/${slug}/${locale}/judge.md`;
+    const judgeJsonPath = `reports/i18n/${slug}/${locale}/judge.json`;
+    const secondJudgePath = `reports/i18n/${slug}/${locale}/judge-second.md`;
+    const escalationJudgePath = `reports/i18n/${slug}/${locale}/judge-escalation.md`;
+    gitCommit(`i18n judge(${locale}): select translation for ${slug}`, [
+      targetRelPath,
+      relativeToRepo(reportPath),
+      ...(existsSync(judgeDetailPath) ? [judgeDetailPath] : []),
+      ...(existsSync(judgeJsonPath) ? [judgeJsonPath] : []),
+      ...(existsSync(secondJudgePath) ? [secondJudgePath] : []),
+      ...(existsSync(escalationJudgePath) ? [escalationJudgePath] : []),
+    ]);
+  }
+} finally {
+  releaseJudgeLock();
 }
 
 function runJudgeValidation() {
@@ -195,7 +201,11 @@ function runJudgeValidation() {
   }
 }
 
-function writeJudgeJsonValidation(validation: ReturnType<typeof runJudgeValidation>) {
+function writeJudgeJsonValidation(
+  validation: ReturnType<typeof runJudgeValidation>,
+  primaryJudge: ReturnType<typeof runJudgeCommand>,
+  candidateCommits: string[],
+) {
   const judgeJsonPath = `${reportDir}/judge.json`;
   const fallback = {
     selectedCommit: parseSelectedCommit(primaryJudge.output) ?? selectedCommit ?? null,
@@ -228,6 +238,75 @@ function writeJudgeJsonValidation(validation: ReturnType<typeof runJudgeValidati
     candidateCommits,
     validation,
   }, null, 2));
+}
+
+function acquireJudgeLock() {
+  const lockDir = join(process.cwd(), ".git/codex-i18n-judge.lock");
+  const ownerPath = join(lockDir, "owner.json");
+  const staleCleanupAfterMs = 6 * 60 * 1000;
+  const logEveryMs = 30 * 1000;
+  const startedWaitingAt = Date.now();
+  let lastLogAt = 0;
+  let cleanedStaleLock = false;
+
+  while (true) {
+    try {
+      mkdirSync(lockDir);
+      writeFileSync(ownerPath, JSON.stringify({
+        pid: process.pid,
+        slug,
+        locale,
+        startedAt: new Date().toISOString(),
+      }, null, 2), "utf8");
+      return () => rmSync(lockDir, { recursive: true, force: true });
+    } catch (error) {
+      if (!existsSync(lockDir)) throw error;
+
+      const now = Date.now();
+      if (now - lastLogAt >= logEveryMs) {
+        const owner = readJudgeLockOwner(ownerPath);
+        const ownerLabel = owner == null
+          ? "unknown owner"
+          : `pid ${owner.pid ?? "unknown"} (${owner.slug ?? "unknown slug"} ${owner.locale ?? "unknown locale"})`;
+        console.error(`Waiting for i18n judge lock held by ${ownerLabel}.`);
+        lastLogAt = now;
+      }
+
+      if (!cleanedStaleLock && now - startedWaitingAt >= staleCleanupAfterMs) {
+        const owner = readJudgeLockOwner(ownerPath);
+        if (owner == null || !isProcessAlive(owner.pid)) {
+          console.error("Cleaning stale i18n judge lock after waiting more than 6 minutes.");
+          rmSync(lockDir, { recursive: true, force: true });
+          cleanedStaleLock = true;
+          continue;
+        }
+      }
+
+      sleep(1000);
+    }
+  }
+}
+
+function readJudgeLockOwner(ownerPath: string): Record<string, unknown> | undefined {
+  try {
+    return JSON.parse(readFileSync(ownerPath, "utf8")) as Record<string, unknown>;
+  } catch {
+    return undefined;
+  }
+}
+
+function isProcessAlive(pid: unknown) {
+  if (typeof pid !== "number" || !Number.isInteger(pid) || pid <= 0) return false;
+  try {
+    process.kill(pid, 0);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+function sleep(milliseconds: number) {
+  Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, milliseconds);
 }
 
 function runJudgeCommand(model: string, judgePrompt: string, files: string[] = []) {
