@@ -1,0 +1,53 @@
+# Translation Candidate
+- Slug: disable-transparent-hugepages
+- Locale: ja
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2015-11-22--disable-transparent-hugepages/ja/index.mdx
+- Validation: deferred
+- Runtime seconds: 2.08
+- Input tokens: 871
+- Output tokens: 797
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.000261
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+draft: true
+title: 'MongoDB: 透過的大ページの無効化'
+subTitle: Debian/Ubuntu 用の修正
+date: '2015-12-22'
+modified: '2016-01-20'
+category: DevOps
+subCategory: mongodb
+tags:
+  - devops
+  - mongodb
+  - performance
+  - tuning
+cover: ../victor-garcia-645096-unsplash.webp
+cover_mobile: ../w300_victor-garcia-645096-unsplash.webp
+cover_icon: ../icon_victor-garcia-645096-unsplash.webp
+---
+### Debian/Ubuntu向けのdisable-transparent-hugepages修正
+
+> "/sys/kernel/mm/transparent_hugepage/defrag が 'always' に設定されています" という警告が表示されますか？
+
+MongoDBが[公式ドキュメント](https://docs.mongodb.org/v3.0/tutorial/transparent-huge-pages/)で詳細に記述している内容を、以下のコマンドで簡潔に実行できます。
+
+```sh
+## 現時点ではDebianのみ対応
+sudo curl -sSL -o /etc/init.d/disable-transparent-hugepages https://gist.githubusercontent.com/justsml/5e8f10892070072c4ffb/raw/disable-transparent-hugepages
+sudo chmod 755 /etc/init.d/disable-transparent-hugepages
+sudo update-rc.d disable-transparent-hugepages defaults
+```
+
+#### 参考資料
+
+1.  [https://docs.mongodb.org/v3.0/tutorial/transparent-huge-pages/](https://docs.mongodb.org/v3.0/tutorial/transparent-huge-pages/)
+````
