@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: are-promises-broken
+- Locale: es
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2018-10-06--are-promises-broken/es/index.mdx
+- Validation: passed
+- Runtime seconds: 23.87
+- Input tokens: 8759
+- Output tokens: 9136
+- Thinking tokens: unknown
+- Cached input tokens: 2560
+- Cache write tokens: 0
+- Estimated cost: $0.002893
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: ¿Promesas incumplidas?
@@ -226,3 +244,4 @@ log(result)
 1. No es legible para tantas personas
 2. Los cambios en git diffs no revelan fácilmente quién modificó qué
 3. Es difícil depurar o registrar valores del medio de las funciones anidadas
+````
