@@ -1,0 +1,27 @@
+{
+  "selectedCommit": "4fd17cca9c8ca612008ab4c9b35dbff866425157",
+  "selectedModel": "openrouter/moonshotai/kimi-k2.6",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 9,
+    "relevance": 9,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The moonshotai/kimi-k2.6 candidate is the best choice because it provides a complete and natural translation of the entire document, including the complex comparison table and technical explanations. The 'current' translation and the other candidate (gpt-oss-120b) both contain a significant error: they leave a paragraph in Korean ('이 쿼리는 퍼지 이름 매치...') in the middle of the Japanese translation. Kimi-k2.6 correctly translates this section into Japanese. It also maintains Dan's direct, punchy style and preserves all MDX formatting and heading counts perfectly.",
+  "slug": "semantic-vector-search-landscape",
+  "locale": "ja",
+  "candidateCommits": [
+    "4fd17cca9c8ca612008ab4c9b35dbff866425157",
+    "409f05574b8e0ed839a8ac5aadde5eba2f7deb9e"
+  ],
+  "suggestionLog": [],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug semantic-vector-search-landscape --locale ja --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug semantic-vector-search-landscape --locale ja --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug semantic-vector-search-landscape --locale ja --skip-global\n20 |   }\n21 | \n22 |   const minimumLength = Math.floor(sourceLength * minimumRatio);\n23 |   const maximumLength = Math.ceil(sourceLength * maximumRatio);\n24 |   if (targetLength < minimumLength || targetLength > maximumLength) {\n25 |     throw new Error(\n                   ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2026-05-01--semantic-vector-search-landscape/ja/index.mdx changed comparable body length from 25549 chars in English to 16408 chars. Expected 16606-34492 chars (within 35%).\n      at assertTranslationLength (/Users/dan/code/oss/dans-blog/src/scripts/i18n/structural-validation.ts:25:15)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:26:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}

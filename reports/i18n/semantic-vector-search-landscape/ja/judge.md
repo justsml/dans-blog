@@ -1,7 +1,7 @@
-# Judge decision: semantic-vector-search-landscape / ja
+# Translation Judge
 
-Selected candidate: `4fd17cca9c8ca612008ab4c9b35dbff866425157` (`openrouter/moonshotai/kimi-k2.6`).
+- Selected candidate: 4fd17cca9c8ca612008ab4c9b35dbff866425157
+- Selected model: openrouter/moonshotai/kimi-k2.6
+- Judge model: openrouter/google/gemini-3-flash-preview
 
-This was the only valid Japanese candidate. Qwen, Gemini, z-ai, and MiniMax were all recorded as rejected because they failed before producing a valid candidate or could not run under the available OpenRouter credit limit.
-
-The selected Kimi candidate passed validation and preserves the article structure, code fences, tables, links, and frontmatter. The judge model ran out of OpenRouter credits before writing a full report, so this follow-up records the decision captured in `judge-summary.md`.
+The moonshotai/kimi-k2.6 candidate is the best choice because it provides a complete and natural translation of the entire document, including the complex comparison table and technical explanations. The 'current' translation and the other candidate (gpt-oss-120b) both contain a significant error: they leave a paragraph in Korean ('이 쿼리는 퍼지 이름 매치...') in the middle of the Japanese translation. Kimi-k2.6 correctly translates this section into Japanese. It also maintains Dan's direct, punchy style and preserves all MDX formatting and heading counts perfectly.
