@@ -1,0 +1,123 @@
+# Translation Candidate
+- Slug: docker-firewall-setup
+- Locale: ru
+- Model: qwen/qwen3.6-plus
+- Target: src/content/posts/2015-06-06--docker-firewall-setup/ru/index.mdx
+- Validation: rejected: direct AI SDK translation failed
+- Runtime seconds: 240.01
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Cache write tokens: unknown
+- Estimated cost: unknown
+- Pricing source: unknown
+- Note: Command failed after 240000ms: bun run i18n:translate:chunked -- --slug docker-firewall-setup --locale ru --model qwen/qwen3.6-plus --chunk 6p --quiz-concurrency 24
+## Raw Output
+
+````mdx
+---
+title: Настройка брандмауэра Docker
+subTitle: Настройка брандмауэра хоста Docker
+draft: true
+date: '2015-06-06'
+modified: '2016-07-30'
+category: DevOps
+subCategory: docker
+tags:
+  - docker
+  - security
+  - devops
+cover: ../charles-deluvio-456501-unsplash.webp
+cover_mobile: ../w300_charles-deluvio-456501-unsplash.webp
+cover_icon: ../icon_charles-deluvio-456501-unsplash.webp
+---
+## Настройка брандмауэра Docker-хоста
+
+1. Предполагается сервер Debian/Ubuntu
+1. Предназначен для запуска на сервере Docker-хоста
+
+### Установка необходимых компонентов
+
+~~~sh
+# Ultimate Firewall Needed
+apt-get update && apt-get install -y ufw nmap curl
+~~~
+
+### Получение внутреннего и внешнего IP-адресов
+
+~~~sh
+# Get your IP Addresses, simple output:
+hostname --all-ip-addresses
+
+# Или используйте утилиту ip, пример:
+ip addr
+~~~
+
+### Настройка брандмауэра (UFW) — примеры команд
+
+~~~sh
+ufw logging on # on=low — medium может быть лучше для диагностики
+ufw logging medium
+# Сначала блокируем всё
+ufw default deny incoming
+
+# ОБЯЗАТЕЛЬНО: ВЫБЕРИТЕ ОДНО ИЗ СЛЕДУЮЩИХ ПРАВИЛ ПО УМОЛЧАНИЮ ДЛЯ ИСХОДЯЩЕГО ТРАФИКА:
+ufw default deny outgoing
+ufw default allow outgoing
+
+# Разрешаем и логируем все новые SSH-подключения,
+ufw allow log proto tcp from any to any port 22
+## Разрешаем HTTP-трафик (без явного логирования)
+ufw allow out on docker0 53/udp to 172.17.0.1/16
+ufw allow out on eth0 to any port 53
+ufw allow out on eth0 from 0.0.0.0/0 to any port 80 proto tcp
+ufw allow out on eth0 from 0.0.0.0/0 to any port 443 proto tcp
+
+# Подробно: ufw allow proto tcp from any to any port 80
+ufw allow 80/tcp
+ufw allow 443/tcp
+ufw allow log 22/tcp
+ufw limit ssh # Базовая защита от перебора паролей SSH (лимит 4 попытки)
+~~~
+
+# Укажите ваш внешний IP
+export EXTERNAL_IP=123.123.123.123
+# При необходимости обновите IP Docker
+export DOCKER_IP=172.17.42.1
+# Перенаправление tcp 8080 трафика в контейнеризованное приложение
+ufw allow proto tcp from $EXTERNAL_IP port 8080 to $DOCKER_IP port 3000
+~~~
+
+## Включение / Запуск брандмауэра
+
+> Будьте осторожны, не заблокируйте свой SSH-порт (sshd по умолчанию использует порт 22)
+
+~~~sh
+ufw --force enable
+
+ufw reset
+~~~
+
+### Проверьте ваш брандмауэр
+
+> Важно: ИСПОЛЬЗУЙТЕ УДАЛЕННЫЙ IP-АДРЕС/МЕСТОПОЛОЖЕНИЕ
+
+~~~sh
+# Проверка зависимостей
+apt-get update && apt-get install -y nmap
+
+# Установите цель сканирования
+export TARGET_HOST=123.123.123.123
+
+# Примеры команд сканирования:
+# Быстрая проверка открытых портов
+nmap -p 1-10240,27017 -T5 $TARGET_HOST
+# Тщательное сканирование
+nmap -p 1-10240,27017 --open -v -APN $TARGET_HOST
+# Проверка служб
+nmap -p 1-10240,27017 -O --osscan-guess $TARGET_HOST
+~~~
+
+> ГОТОВО! Теперь вы должны видеть ТОЛЬКО те порты, которые настроили!
+````
