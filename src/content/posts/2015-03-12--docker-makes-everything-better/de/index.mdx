@@ -1,7 +1,7 @@
 ---
 social_image: ../desktop-social.webp
-title: Docker === Liebe
-subTitle: Docker kann alles tun!
+title: Docker === Liebe
+subTitle: 'Docker kann alles :allthethings:!'
 date: '2015-02-26'
 modified: '2024-07-30'
 category: DevOps
@@ -18,23 +18,23 @@ cover: ../guillaume-bolduc-259596-unsplash.webp
 cover_mobile: ../w300_guillaume-bolduc-259596-unsplash.webp
 cover_icon: ../icon_guillaume-bolduc-259596-unsplash.webp
 ---
-## Docker kann alles tun!\*  
+## Docker kann alles!\*
 
-> Historische Anmerkung: Dies ist ein 2015er Schnappschuss der Docker-Begeisterung und lokalen Entwicklungspraxis, hauptsächlich als Zeitkapsel erhalten geblieben. Behandeln Sie Befehle und Sicherheitsstandards als Ausgangspunkt für Modernisierungen, nicht als Produktivumgebungsempfehlung.  
+> Historischer Hinweis: Dies ist ein Schnappschuss aus dem Jahr 2015, der die damalige Docker‑Begeisterung und lokale Entwicklungsgewohnheiten festhält. Betrachte die Befehle und die Sicherheitslage als Ausgangspunkt für eine Modernisierung, nicht als Produktionsanleitung.
 
-Verbessern Sie Ihren Prozess für:  
+Verbessere deinen Prozess für:
 
-1. Testen von Entwicklungs-Tools & Servern MIT FAST NULL Risiko, Abhängigkeiten auf Ihrem PC zu zerstören  
-1. Testen Ihrer Software  
-1. Erzwingt, dass Sie idempotenteren, modularen Code schreiben... (Ich werde schreiben, wie man das tatsächlich umsetzt, in einem Folgebeitrag)  
+1.  Testen von Entwicklungs‑Tools & Servern MIT PRAKTISCH NULL Risiko, Abhängigkeiten auf deinem PC zu verfälschen
+1.  Testen deiner Software
+1.  Es zwingt dich, idempotenten, modularen Code zu schreiben … (wie das konkret aussieht, folgt in einem späteren Beitrag)
 
-Es mag wie eine große Menge an neuem Material erscheinen, das zu lernen – **lassen Sie sich davon nicht abhalten**, loszulegen.  
+Es mag nach einer riesigen Menge neuer Dinge aussehen, **lass dich davon nicht abhalten**, einfach loszulegen.
 
-### Notizen
+### Hinweise
 
-- Wenn Sie einen `docker run`-Befehl mit den Optionen `-d` oder `-it` sehen:  
-  _ `-it` oder `-i -t` führt den konfigurierten Befehl interaktiv aus  
-  _ `-d` startet den Docker-Container als 'Daemon' bzw. Hintergrunddienst.  
+- Wenn du einen `docker run`‑Befehl siehst, der die Optionen `-d` oder `-it` verwendet:
+  _ `-it` bzw. `-i -t` führt den konfigurierten Befehl interaktiv aus  
+  _ `-d` startet den Docker‑Container als „Daemon“, also im Hintergrund.
 
 ---
 
@@ -43,22 +43,22 @@ Es mag wie eine große Menge an neuem Material erscheinen, das zu lernen – **l
 ### nginx
 
 ```bash
-# Hinweis: Host-basierte, geteilte Ordner verwenden  
-# (geteilte Ordner sind mit dem Dockerfile-Befehl VOLUME nicht möglich)  
-sudo docker run --name web01 -d -p 8181:80 \  
-  -v $(NGINX_DIR)/etc:/etc/nginx \  
-  -v $(NGINX_DIR)/log:/var/log/nginx \  
-  -v $(NGINX_DIR)/www:/var/www/html \  
-  nginx:latest  
+# Hinweis: Verwendung von hostbasierten, geteilten Ordnern
+#(geteilte Ordner sind mit dem VOLUME‑Befehl im Dockerfile nicht möglich)
+sudo docker run --name web01 -d -p 8181:80 \
+  -v $(NGINX_DIR)/etc:/etc/nginx \
+  -v $(NGINX_DIR)/log:/var/log/nginx \
+  -v $(NGINX_DIR)/www:/var/www/html \
+  nginx:latest
 
-## Lokale Daten, isoliert innerhalb der Instanz  
-sudo docker run --name web01 -d -p 8181:80 nginx:latest  
+## Lokale Daten, isoliert innerhalb der Instanz
+sudo docker run --name web01 -d -p 8181:80 nginx:latest
 
-# nodejs  
-sudo docker run --name nodejs01 -d -p 3300:3300 -p 4433:4433 nodejs:latest  
+# nodejs
+sudo docker run --name nodejs01 -d -p 3300:3300 -p 4433:4433 nodejs:latest
 ```
 
-> Quelle: [https://dockerfile.github.io/#/nginx](https://dockerfile.github.io/#/nginx)  
-> Docker wird Ihr Leben während der _gesamten_ SDLC vereinfachen.  
+> Credits: [https://dockerfile.github.io/#/nginx](https://dockerfile.github.io/#/nginx)  
+> Docker erleichtert dein Arbeiten über den _gesamten_ SDLC hinweg.
 
-> - Ziemlich nahe dran
+> – Ziemlich nah dran
