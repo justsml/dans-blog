@@ -1,0 +1,56 @@
+{
+  "selectedCommit": "7064caafbe1d4f4b0c0ff8bf41c61fe332faa61f",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "scores": {
+    "readability": 5,
+    "technicalAccuracy": 5,
+    "coherence": 5,
+    "relevance": 5,
+    "translationQuality": 5,
+    "mdxPreservation": 5
+  },
+  "suggestions": [],
+  "rationale": "The current translation already incorporates the necessary path fixes (../) and provides a high-quality, natural Japanese translation of both the frontmatter and the technical content. It correctly handles technical terminology like 'backtracking' and 'quantifiers' while maintaining Dan's direct style.",
+  "slug": "security-notes-regex",
+  "locale": "ja",
+  "candidateCommits": [
+    "7064caafbe1d4f4b0c0ff8bf41c61fe332faa61f",
+    "f06b27ae102a268174561a663b405e1ffa227b88",
+    "3c8fd30eb60c4ed31c733530433606b9662cf305"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "cover: markus-spiske-666905-unsplash.webp",
+      "replacement": "cover: ../markus-spiske-666905-unsplash.webp",
+      "reason": "The image path needs the relative parent directory prefix to match the project structure, as seen in the current version.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "cover_mobile: w300_markus-spiske-666905-unsplash.webp",
+      "replacement": "cover_mobile: ../w300_markus-spiske-666905-unsplash.webp",
+      "reason": "The image path needs the relative parent directory prefix.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "cover_icon: icon_markus-spiske-666905-unsplash.webp",
+      "replacement": "cover_icon: ../icon_markus-spiske-666905-unsplash.webp",
+      "reason": "The image path needs the relative parent directory prefix.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug security-notes-regex --locale ja --skip-global",
+    "output": ""
+  }
+}
