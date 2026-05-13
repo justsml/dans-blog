@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: developer-workstation-blast-radius
+- Locale: de
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-05-09--developer-workstation-blast-radius/de/index.mdx
+- Validation: passed
+- Runtime seconds: 77.46
+- Input tokens: 33968
+- Output tokens: 31258
+- Thinking tokens: unknown
+- Cached input tokens: 14848
+- Cache write tokens: 0
+- Estimated cost: $0.010219
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Reduzieren Sie den Auswirkungsbereich Ihrer Entwicklerarbeitsstation
 subTitle: >-
@@ -416,3 +434,4 @@ Vorgeschlagenes Asset-Set nach Auswahl einer Richtung:
 - [Microsoft: Windows Firewall-Regeln](https://learn.microsoft.com/en-us/windows/security/operating-system-security/network-security/windows-firewall/rules)
 - [Mandiant: UNC5537 zielt auf Snowflake-Kundeninstanzen ab](https://cloud.google.com/blog/topics/threat-intelligence/unc5537-snowflake-data-theft-extortion)
 - [Microsoft: Lumma Stealer – Analyse der Auslieferungstechniken und Fähigkeiten](https://www.microsoft.com/en-us/security/blog/2025/05/21/lumma-stealer-breaking-down-the-delivery-techniques-and-capabilities-of-a-prolific-infostealer/)
+````
