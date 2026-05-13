@@ -3,7 +3,7 @@
 - Locale: fr
 - Model: openrouter/openai/gpt-oss-120b:nitro
 - Target: src/content/posts/2025-04-03--beware-the-single-purpose-people/fr/index.mdx
-- Validation: deferred
+- Validation: rejected: direct AI SDK translation failed
 - Runtime seconds: 4.39
 - Input tokens: 7510
 - Output tokens: 2907
@@ -12,132 +12,129 @@
 - Cache write tokens: 0
 - Estimated cost: $0.000816
 - Pricing source: local-openrouter-estimate
-- Note: Generated through the direct AI SDK chunked translator.
+- Note: Command failed: git commit --only -m i18n candidate(fr): beware-the-single-purpose-people via openrouter/openai/gpt-oss-120b:nitro -- reports/i18n/beware-the-single-purpose-people/fr reports/i18n/beware-the-single-purpose-people/candidates.jsonl
 ## Raw Output
 
 ````mdx
 ---
-language: English
-title: Méfiez‑vous des personnes à vocation unique
-subTitle: Tellementpur que ça fait mal
+language: French
+title: "Méfiez-vous des gens à objectif unique"
+subTitle: "Si pur que ça en fait mal"
 category: Code
 subCategory: Best Practices
-date: '2025-04-14'
-modified: '2025-04-15'
-tags:
-  - software-development
-  - code-organization
-  - maintainability
-  - testing
-  - dogma
-  - pragmatism
-social_image: ../desktop-social.webp
-cover_full_width: ../endless-little-boxes.webp
-cover_mobile: ../endless-little-boxes-square-200.webp
-cover_icon: ../endless-little-boxes-square-200.webp
+date: 2025-04-14
+modified: 2025-04-15
+tags: [développement logiciel, organisation du code, maintenabilité, tests, dogmatisme, pragmatisme]
+
+social_image: desktop-social.webp
+cover_full_width: endless-little-boxes.webp
+cover_mobile: endless-little-boxes-square-200.webp
+cover_icon: endless-little-boxes-square-200.webp
 ---
-Le `Single Responsibility Principle` est l’une de ces idées qui paraît tellement sensée qu’elle peut passer inaperçue à votre jugement.
 
-Faire une chose. Bien la faire. Garder les modules ciblés. Donner au code une raison de changer. Bon conseil.
+Le `Single Responsibility Principle` (Principe de Responsabilité Unique) est l'une de ces idées qui semblent si sensées qu'elles peuvent passer inaperçues auprès de votre jugement.
 
-Puis quelqu’un transforme ce conseil en règle de mesure et commence à déclarer que toute fonction de plus de cinq lignes est une mauvaise odeur de code.
+Faire une seule chose. Bien la faire. Garder les modules focalisés. Donner au code une raison de changer. De bons conseils.
 
-<p class="inset">Le problème n’est pas le SRP. Le problème, c’est de traiter « petit » comme un substitut à « cohésif ».</p>
+Ensuite, quelqu'un transforme ce conseil en mètre étalon et commence à déclarer que toute fonction de plus de cinq lignes est une odeur de code.
 
-À ce moment‑là, vous avez rencontré les « Single‑Purpose People » : des développeurs qui ne se trompent pas sur la modularité, mais qui ont confondu des limites utiles avec une fragmentation maximale.
+<p class="inset">Le problème n'est pas le SRP. Le problème est de traiter le « petit » comme un substitut au « cohérent ».</p>
+
+À ce stade, vous avez rencontré les gens à objectif unique : des développeurs qui n'ont pas tout à fait tort sur la modularité, exactement, mais qui ont confondu les limites utiles avec la fragmentation maximale.
 
 <figure class="inset-right">
-  <figcaption>Violence dans l’architecture logicielle</figcaption>
-![Components, components everywhere](../software-patterns__the-dismembered-architecture.webp "Components, components everywhere")
+  <figcaption>Violence en architecture logicielle</figcaption>
+![Des composants, des composants partout](software-patterns__the-dismembered-architecture.webp "Des composants, des composants partout")
 </figure>
 
-## I. L’idée utile sous‑jacente
+## I. L'idée utile en dessous
 
-> Ajouter une case à cocher à un formulaire ne devrait idéalement affecter qu’un seul fichier. Pas 8 fichiers répartis sur 5 répertoires… Je vous regarde, React/Redux.
+> Ajouter une seule case à cocher à un formulaire ne devrait idéalement affecter qu'un seul fichier. Pas 8 fichiers répartis dans 5 répertoires... Je vous regarde, React/Redux.
 
-Lorsque le SRP est appliqué avec discernement, il aide. Les unités de code centrées sur une tâche conceptuelle unique sont plus faciles à comprendre. Les tests peuvent cibler le comportement à une frontière raisonnable. Des modules clairs facilitent la modification d’une partie du système sans entraîner le reste de l’application dans la même pièce.
+Lorsque le SRP est appliqué avec discernement, il aide. Les unités de code concentrées sur une seule tâche conceptuelle sont plus faciles à comprendre. Les tests peuvent cibler le comportement à une limite raisonnable. Des modules clairs facilitent la modification d'une partie du système sans entraîner le reste de l'application dans la pièce.
 
-Même les exemples classiques d’Unix sont plus pragmatiques que le slogan ne le laisse croire. `ls` liste les fichiers, oui, mais il orchestre aussi des appels comme `opendir`, `readdir`, `closedir` et `stat`. L’unité utile n’est pas l’opération la plus petite possible. L’unité utile est la plus petite chose cohérente qui résout la tâche.
+Même les exemples classiques d'Unix sont plus pragmatiques que le slogan ne le laisse entendre. `ls` liste les fichiers, oui, mais il coordonne également des appels comme `opendir`, `readdir`, `closedir` et `stat`. L'unité utile n'est pas la plus petite opération possible. L'unité utile est la plus petite chose cohérente qui résout la tâche.
 
-<p class="inset">La philosophie Unix originelle portait sur la *composition* et la *simplicité*, **pas sur la réduction de tout** à une fonction ou un fichier unique.</p>
+<p class="inset">La philosophie Unix originale portait sur la *composition* et la *simplicité*, **pas sur la réduction de tout** à une seule fonction ou un seul fichier.</p>
 
-Cette distinction compte. « Une responsabilité » n’est pas synonyme de « une ligne de comportement ».
+Cette distinction est importante. « Une seule responsabilité » n'est pas la même chose qu'« une seule ligne de comportement ».
 
-## II. Sur‑abstraction : Quand la simplicité vire au chaos
+## II. Sur-abstraction : quand la simplicité vire au chaos
 
-> Notre architecte affirme que toute fonction de plus de 5 lignes est une « mauvaise odeur de code ». Notre base de code sent désormais légèrement le désespoir sans repères.
+> Notre architecte insiste sur le fait que toute fonction de plus de 5 lignes est une « odeur de code ». Notre base de code sent maintenant vaguement le désespoir clueless.
 
-Le mode d’échec est facile à repérer une fois qu’il a déjà rendu votre semaine pire.
+Le mode d'échec est facile à repérer après qu'il a déjà rendu votre semaine pire.
 
-La base de code possède plus de fichiers, mais moins de forme. Chaque helper a son helper. Chaque concept a été découpé dans des dossiers nommés d’après des rôles techniques plutôt que le sens produit. Ajouter une case à cocher oblige à toucher un composant, un hook, un sélecteur, une action, un reducer, une constante, un fixture de test, et une exportation « barrel » qui n’existe que pour que les chemins d’importation ne paraissent pas coupables.
+La base de code a plus de fichiers, mais moins de forme. Chaque assistant a un assistant. Chaque concept a été divisé en dossiers nommés d'après des rôles techniques au lieu du sens métier. Ajouter une case à cocher nécessite de toucher un composant, un hook, un sélecteur, une action, un réducteur, une constante, un fixture de test et un export en baril qui existe surtout pour empêcher les chemins d'importation d'avoir l'air coupables.
 
 <figure class="inset-left">
-  <figcaption>Pas d’échappatoire à ce schéma de travail infini</figcaption>
-![Components, components everywhere](../software-patterns__the-mc-escher-stack.webp "The MC Escher Pattern")
+  <figcaption>Pas d'échappatoire à ce modèle de travail infini</figcaption>
+![Des composants, des composants partout](software-patterns__the-mc-escher-stack.webp "Le motif MC Escher")
 </figure>
 
-Qu’est‑ce que toute cette pureté a acheté ?
+Qu'est-ce que toute cette pureté a acheté ?
 
--   **Éclats du système de fichiers :** Les répertoires source se transforment en paysages cauchemardesques de fichiers minuscules, souvent contenant une unique fonction tristement solitaire. La navigation devient un exercice de spéléologie.
--   **Enchevêtrements de dépendances :** Un réseau d’imports et d’exports si dense que tracer l’exécution nécessite un grand tableau blanc et plus de patience que la fonctionnalité ne le mérite. Des fichiers importés une seule fois restent là, faisant semblant d’être réutilisables.
--   **Traîtrise des tests :** Les tests deviennent fragiles, des sentinelles hyper‑spécifiques protégeant des détails d’implémentation minuscules. Modifier la signature d’une fonction ? Regardez des dizaines de tests s’effondrer comme de la poterie ancienne. La suite de tests passe d’un filet de sécurité à un champ de mines.
--   **Vélocité disparue :** De simples changements se métastasent en sagas de modifications multi‑fichiers. L’onboarding de nouveaux développeurs implique des semaines à leur remettre cartes et boussoles juste pour localiser où le composant `UserProfile` *vit réellement* cette semaine. Le progrès avance à pas de tortue géologique sous le poids écrasant de cette « organisation ».
+-   **Fragmentation du système de fichiers :** Les répertoires sources gonflent en paysages cauchemardesques d'innombrables petits fichiers, contenant souvent une seule fonction, tragiquement solitaire. La navigation devient un exercice de spéléologie.
+-   **Enchevêtrements de dépendances :** Un réseau d'imports et d'exports si dense que tracer l'exécution nécessite un grand tableau blanc et plus de patience que la fonctionnalité n'en mérite. Les fichiers importés exactement une fois sont là, prétendant être réutilisables.
+-   **Trahison des tests :** Les tests deviennent fragiles, des sentinelles hyper-spécifiques gardant des détails d'implémentation minuscules. Changez une signature de fonction ? Regardez des dizaines de tests s'effondrer comme de l'argile ancienne. La suite de tests se transforme d'un filet de sécurité en un champ de mines.
+-   **Disparition de la vélocité :** Les modifications simples se métastasent en sagas de modifications multi-fichiers. L'intégration de nouveaux développeurs implique de leur remettre des cartes et des boussoles pendant des semaines juste pour trouver où le composant `UserProfile` *vit réellement* cette semaine. Les avancées ralentissent jusqu'à une allure géologique sous le poids écrasant de cette « organisation ».
 
-J’ai contemplé l’abîme de bases de code où une fonctionnalité simple de 100 lignes était vivisée en plus de 15 fichiers, chacun un petit « ange pur » contenant peut‑être une ou deux fonctions. Le rayon d’impact cognitif de devoir garder ce désordre en tête annulait totalement tout gain théorique de la séparation. Ce n’était pas plus simple ; c’était juste éparpillé.
+J'ai fixé l'abysse de bases de code où une fonctionnalité simple de 100 lignes a été disséquée à travers plus de 15 fichiers, chacun étant un petit ange « pur » contenant peut-être une ou deux fonctions. Le rayon d'explosion cognitif d'essayer de garder ce désordre dans votre tête a complètement annulé tout gain théorique de la séparation. Ce n'était pas plus simple ; c'était juste dispersé.
 
-## III. Le coût de la perfection : impact sur les développeurs
+## III. Le coût de la perfection : impact sur les développeurs
 
-> Nous passons plus de temps à débattre de la structure des fichiers et des conventions de nommage qu’à livrer réellement des fonctionnalités. Est‑ce de l’Agile ?
+> Nous passons plus de temps à débattre de la structure des fichiers et des conventions de nommage qu'à livrer réellement des fonctionnalités. Est-ce de l'Agile ?
 
 <figure class="inset-left">
-  <figcaption>Tellement désordonné que ça frôle l’art</figcaption>
-![Tellement désordonné que ça frôle l’art](../software-patterns__the-rube-goldberg-architecture.webp "Le motif Rube Goldberg")
+  <figcaption>Tellement désordonné que ça frôle l'art</figcaption>
+![Tellement désordonné que ça frôle l'art](software-patterns__the-rube-goldberg-architecture.webp "Le motif Rube Goldberg")
 </figure>
 
-Cette fragmentation pathologique n’est pas qu’un problème esthétique. Elle modifie la façon dont les développeurs allouent leur attention :
+Cette fragmentation pathologique n'est pas seulement un problème esthétique. Elle change la façon dont les développeurs consacrent leur attention :
 
-**Le drain de productivité :** Oubliez la dette technique ; il s’agit d’une dette organisationnelle accumulée par une obsession du nesting de répertoires. Chaque petite modification devient une fouille archéologique à travers des couches d’abstraction. Le temps disparaît dans le trou noir de `cd ..` et `grep`.
+**La perte de productivité :** Oubliez la dette technique ; c'est une dette organisationnelle accumulée par un nesting obsessionnel-compulsif de couches d'abstraction. Chaque ajustement mineur devient une fouille archéologique à travers des couches d'abstraction. Le temps disparaît dans le trou noir de `cd ..` et `grep`.
 
-**La taxe de test :** Au lieu d’apporter de la confiance, la suite de tests devient une source de friction. Des heures s’évaporent à réparer des tests cassés par des refactorisations triviales, des tests trop étroitement couplés aux détails microscopiques qu’ils étaient censés vérifier.
+**La taxe de test :** Au lieu de fournir de la confiance, la suite de tests devient une source de friction. Des heures fondent en réparant des tests cassés par des refactorisations triviales, des tests qui étaient trop étroitement couplés aux détails microscopiques qu'ils étaient censés vérifier.
 
-**La charge cognitive :** Il existe une limite stricte au nombre de fragments d’information déconnectés qu’un cerveau humain peut gérer. Obliger les développeurs à reconstituer le flux du programme à partir d’une douzaine de fichiers dispersés entrave activement la compréhension et rend les changements confiants plus difficiles.
+**La charge cognitive :** Il y a une limite stricte au nombre d'informations déconnectées qu'un cerveau humain peut jongler. Forcer les développeurs à reconstituer le flux du programme à partir d'une douzaine de fichiers dispersés entrave activement la compréhension et rend les modifications confiantes plus difficiles.
 
-## IV. Adopter le pragmatisme : une alternative concrète
+## IV. Embrasser le pragmatisme : une alternative pratique
 
-> J’ai suggéré de mettre deux fonctions liées dans le même fichier. La salle a réagi comme si j’avais proposé de supprimer le staging.  
+> J'ai suggéré de mettre deux fonctions liées dans le même fichier. La pièce a réagi comme si j'avais proposé de supprimer la mise en scène.
 > — Un lecteur puriste en convalescence
 
-La porte de sortie n’est pas d’abandonner le SRP. La réponse consiste à l’appliquer au niveau de signification approprié.
+La porte de sortie n'est pas d'abandonner le SRP. La réponse est de l'appliquer au bon niveau de signification.
 
 Voici à quoi cela ressemble en pratique :
 
--   **Se concentrer sur la cohésion, pas sur les atomes** : regroupez les éléments qui *évoluent ensemble* et qui *appartiennent conceptuellement* les uns aux autres. Un module peut gérer plusieurs aspects liés à l’authentification des utilisateurs. C’est acceptable. C’est probablement *mieux* que six fichiers séparés contenant chacun une fonction relative à l’état de connexion.
--   **Garder les proches ensemble** : ne séparez pas le code lié sauf s’il existe un bénéfice tangible et clairement évident – comme une réutilisabilité réelle *en pratique*, et non dans un futur hypothétique qui n’arrivera jamais. La proximité facilite la compréhension.
--   **Laisser la réalité guider** : organisez‑vous en fonction des fonctionnalités et des flux de travail réels de votre application, pas d’un idéal abstrait de pureté fonctionnelle³. Cette structure rend‑elle plus facile ou plus difficile la compréhension et la modification de `Feature X` ?
--   **Penser aux humains** : souvenez‑vous du développeur débordé. Quelle organisation minimise le jonglage mental nécessaire pour travailler sur le code ? Optimisez pour la compréhension humaine.
--   **Tester ce qui compte** : écrivez des tests qui vérifient le comportement à une frontière sensée, pas des tests collés intimement à l’implémentation interne de chaque petite fonction. Visez la confiance, pas seulement le théâtre du pourcentage de couverture.
+-   **Concentrez-vous sur la cohésion, pas sur les atomes :** Regroupez les choses qui *changent ensemble* et *appartiennent ensemble* conceptuellement. Un module peut gérer plusieurs aspects liés de l'authentification des utilisateurs. C'est bien. C'est probablement *mieux* que six fichiers séparés contenant chacun une fonction liée à l'état de connexion.
+-   **Gardez le kin ensemble :** Ne divisez pas le code lié sauf s'il y a un avantage tangible et criant – comme une véritable réutilisabilité *en pratique*, pas dans un futur hypothétique qui n'arrive jamais. La proximité compte pour la compréhension.
+-   **Laissez la réalité conduire :** Organisez en fonction des fonctionnalités et des flux de travail réels de votre application, pas d'un idéal abstrait de pureté fonctionnelle³. Cette structure facilite-t-elle ou rend-elle plus difficile pour quelqu'un de comprendre et de modifier `Feature X` ?
+-   **Pensez au Meatware :** N'oubliez pas le pauvre développeur. Quelle organisation minimise le jonglage mental requis pour travailler sur le code ? Optimisez pour la compréhension humaine.
+-   **Testez ce qui compte :** Écrivez des tests qui vérifient le comportement à une limite raisonnable, pas des tests intimement soudés au câblage interne de chaque petite fonction. Visez la confiance, pas seulement le théâtre du pourcentage de couverture.
 
-<p class="inset">L’objectif n’est pas une perfection théorique digne d’une thèse de doctorat ; il s’agit de créer du code que vos collègues (et votre futur vous) puissent parcourir, comprendre et modifier sans avoir envie de mettre le bâtiment le feu.</p>
+<p class="inset">L'objectif n'est pas la perfection théorique digne d'une thèse de doctorat ; c'est de créer du code que vos collègues (et votre futur vous) peuvent naviguer, comprendre et modifier sans avoir envie de mettre le feu au bâtiment.</p>
 
-Parfois cela signifie qu’un fichier fait 200 lignes au lieu de 50. Parfois une fonction gère la récupération des données *et* leur transformation légère. Parfois une classe possède deux responsabilités si étroitement couplées qu’elles devraient rester ensemble. Si cela rend le système globalement plus facile à manipuler, c’est probablement le bon choix.
+Parfois, cela signifie qu'un fichier fait 200 lignes au lieu de 50. Parfois, une fonction gère la récupération des données *et* les transforme légèrement. Parfois, une classe a deux responsabilités si étroitement couplées qu'elles devraient vivre ensemble. Si cela rend le système plus facile à travailler globalement, c'est probablement la bonne décision.
 
-Restez inlassablement focalisé sur les questions pratiques :
-- Un nouveau venu peut‑il s’y retrouver ?
-- Pouvons‑nous modifier `X` sans casser le `Y` non lié ?
-- Ce test indique‑t‑il réellement si la fonctionnalité fonctionne ?
-- Livrons‑nous de la valeur, ou ne faisons‑nous que réarranger des dossiers ?
+Restez résolument concentré sur les questions pratiques :
+- Quelqu'un de nouveau peut-il s'y retrouver ?
+- Pouvons-nous changer `X` sans casser `Y` sans rapport ?
+- Ce test me dit-il réellement si la fonctionnalité fonctionne ?
+- Livrons-nous de la valeur, ou ne faisons-nous que réorganiser des dossiers ?
 
-## V. Conclusion : Favoriser un code cohésif et maintenable
+## V. Conclusion : Favoriser un code cohérent et maintenable
 
-Le principe de responsabilité unique est un outil utile. Ce n’est pas un mandat de pulvériser votre base de code en poussière atomique. Comme tout outil, sa valeur dépend du jugement de celui qui l’utilise.
+Le Principe de Responsabilité Unique est un outil utile. Ce n'est pas un mandat pour pulvériser votre base de code en poussière atomique. Comme tout outil, sa valeur dépend du jugement de la personne qui l'utilise.
 
-Alors, quand vous tombez sur les « Single‑Purpose People », prêts à mener une guerre contre toute fonction osant dépasser trois lignes, prenez une respiration. Souvenez‑vous de la case à cocher des 12 fichiers.
+Alors, lorsque vous rencontrez les gens à objectif unique, prêts à faire la guerre à toute fonction osant dépasser trois lignes, prenez une respiration. Rappelez-vous de la case à cocher en 12 fichiers.
 
-Notre travail n’est pas de construire des fonctions théoriquement immaculées comme des flocons de neige. Notre travail est de bâtir un logiciel qui fonctionne, résout des problèmes et ne punit pas la prochaine personne qui devra le toucher.
+Notre travail n'est pas de construire des flocons de neige fonctionnels théoriquement immaculés. Notre travail est de construire des logiciels qui fonctionnent, résolvent des problèmes et ne punissent pas la prochaine personne qui doit les toucher.
 
-Restez pragmatique. Concentrez‑vous sur les résultats. Ne laissez pas la quête de la pureté parfaite devenir l’ennemi d’un code maintenable. Votre santé mentale, et la vélocité de votre équipe, en dépendent.
+Restez pragmatique. Concentrez-vous sur les résultats. Ne laissez pas la poursuite de la pureté parfaite devenir l'ennemi du code maintenable. Votre santé mentale, et la vélocité de votre équipe, en dépendent.
 
-¹ L'ironie, c’est que parvenir à un véritable « single purpose » aux niveaux les plus bas implique une complexité immense cachée juste sous la surface.
 
-² Nous parlons ici de pureté conceptuelle : l’idée qu’une fonction ne doit accomplir qu’une seule « chose » sur le plan logique. Ne confondez pas cela avec la notion de « pure function » en programmation fonctionnelle, qui exclut les effets de bord ; c’est une idée différente, bien que parfois liée.
+¹ L'ironie étant qu'atteindre un *véritable* objectif unique aux niveaux les plus bas nécessite une immense complexité cachée juste sous la surface.
+
+² Nous parlons ici de pureté conceptuelle : l'idée qu'une fonction ne devrait faire qu'« une seule chose » logiquement. Ne confondez pas cela avec le concept de « fonction pure » de la programmation fonctionnelle sans effets secondaires, qui est une idée différente, bien que parfois liée.
 ````
