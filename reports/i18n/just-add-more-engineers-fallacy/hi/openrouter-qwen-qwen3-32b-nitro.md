@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: just-add-more-engineers-fallacy
+- Locale: hi
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2025-12-29--just-add-more-engineers-fallacy/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 145.17
+- Input tokens: 9587
+- Output tokens: 13571
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.004024
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 draft: true
 hidden: true
@@ -107,3 +125,4 @@ tags:
 - विल लार्सन का *स्टॉफ इंजीनियर* ब्लॉग और पुस्तक टेक लीडरशिप पर
 - चैरिटी मेजर्स (हनीकॉम्ब) का ऑब्जर्वेबिलिटी और टीम संरचना पर
 - डीओआरए द्वारा डेवओप्स रिपोर्ट्स की स्थिति
+````
