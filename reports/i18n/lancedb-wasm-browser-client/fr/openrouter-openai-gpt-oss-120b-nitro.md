@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: lancedb-wasm-browser-client
+- Locale: fr
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-04-16--lancedb-wasm-browser-client/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 10.15
+- Input tokens: 9054
+- Output tokens: 2725
+- Thinking tokens: unknown
+- Cached input tokens: 3584
+- Cache write tokens: 0
+- Estimated cost: $0.000844
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Recherche vectorielle sans serveur
 subTitle: 'Créer un client de recherche vectorielle avec Rust, WASM et TypeScript'
@@ -125,3 +143,4 @@ Ce qui a rendu ce projet viable, c’est que l’architecture interne de Lance �
 Des limites d’abstraction solides ne facilitent pas seulement la compréhension du code interne — elles permettent à quelqu’un comme moi d’arriver de l’extérieur du projet et d’y brancher un nouvel environnement d’exécution sans toucher au cœur. C’est une vraie vertu de conception, et cela a fait que les 14 000 lignes ressemblaient plus à un remplissage de forme qu’à une lutte contre la base de code.
 
 Le PR est [ici](https://github.com/lancedb/lancedb/pull/3247) si vous voulez voir les détails. Toujours en attente de revue. Les mainteneurs ont été accueillants et je reste prudemment optimiste.
+````
