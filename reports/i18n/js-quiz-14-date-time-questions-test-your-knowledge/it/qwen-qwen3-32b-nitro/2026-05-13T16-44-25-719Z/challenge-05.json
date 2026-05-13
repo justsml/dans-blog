@@ -1,0 +1,44 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Date String Parsing",
+  "translatedTitle": "Analisi delle stringhe di data",
+  "translation": {
+    "title": "Analisi delle stringhe di data",
+    "group": "Gestione delle date",
+    "options": [
+      {
+        "text": "2019 2020"
+      },
+      {
+        "text": "2020 2021"
+      },
+      {
+        "text": "2020 2020"
+      },
+      {
+        "text": "2020 2019"
+      }
+    ],
+    "questionProse": [
+      "Qual è il valore che verrà stampato sulla console?"
+    ],
+    "explanationProse": [
+      "Le stringhe con data ma senza valore `T` potrebbero sembrare il 1° gennaio 2020 - ma le stringhe con solo data vengono interpretate come UTC. Quando vengono convertite nel nostro fuso orario locale (GMT-7), ci accorgiamo di essere ancora nel 2019.\n\nLe stringhe data-ora senza fuso orario esplicito vengono interpretate in orario locale.\n\nLa forma `T00:00` fa sì che il secondo valore venga interpretato come mezzanotte locale.\n\nLa prima data viene interpretata come `Tue Dec 31 2019 17:00:00 GMT-0700 (Mountain Standard Time)`.\nLa seconda data viene interpretata come `Wed Jan 01 2020 00:00:00 GMT-0700 (Mountain Standard Time)`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Analisi delle stringhe di data\",\n  \"group\": \"Gestione delle date\",\n  \"options\": [\n    {\n      \"text\": \"2019 2020\"\n    },\n    {\n      \"text\": \"2020 2021\"\n    },\n    {\n      \"text\": \"2020 2020\"\n    },\n    {\n      \"text\": \"2020 2019\"\n    }\n  ],\n  \"questionProse\": [\n    \"Qual è il valore che verrà stampato sulla console?\"\n  ],\n  \"explanationProse\": [\n    \"Le stringhe con data ma senza valore `T` potrebbero sembrare il 1° gennaio 2020 - ma le stringhe con solo data vengono interpretate come UTC. Quando vengono convertite nel nostro fuso orario locale (GMT-7), ci accorgiamo di essere ancora nel 2019.\\n\\nLe stringhe data-ora senza fuso orario esplicito vengono interpretate in orario locale.\\n\\nLa forma `T00:00` fa sì che il secondo valore venga interpretato come mezzanotte locale.\\n\\nLa prima data viene interpretata come `Tue Dec 31 2019 17:00:00 GMT-0700 (Mountain Standard Time)`.\\nLa seconda data viene interpretata come `Wed Jan 01 2020 00:00:00 GMT-0700 (Mountain Standard Time)`.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 856,
+    "outputTokens": 851,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 9165
+  },
+  "cost": {
+    "inputUsd": 0.00006848,
+    "outputUsd": 0.00020423999999999998,
+    "totalUsd": 0.00027271999999999995,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

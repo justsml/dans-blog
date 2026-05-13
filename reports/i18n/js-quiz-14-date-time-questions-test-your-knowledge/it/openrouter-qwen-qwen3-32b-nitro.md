@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: js-quiz-14-date-time-questions-test-your-knowledge
+- Locale: it
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2020-01-02--js-quiz-14-date-time-questions-test-your-knowledge/it/index.mdx
+- Validation: deferred
+- Runtime seconds: 163.40
+- Input tokens: 12312
+- Output tokens: 16783
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.005013
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: 'Quiz: 14 domande JavaScript Date'
@@ -496,3 +514,4 @@ Questo quiz è progettato per testare (e approfondire) le tue conoscenze sull'AP
 </Challenge>
 
 </QuizUI>
+````
