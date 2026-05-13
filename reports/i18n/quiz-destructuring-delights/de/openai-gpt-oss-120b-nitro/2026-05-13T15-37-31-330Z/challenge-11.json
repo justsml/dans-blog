@@ -1,0 +1,47 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "Destructuring with Nested Default Values",
+  "translatedTitle": "Destrukturierung mit verschachtelten Standardwerten",
+  "translation": {
+    "title": "Destrukturierung mit verschachtelten Standardwerten",
+    "group": "Verschachtelte Destrukturierung in TS",
+    "options": [
+      {
+        "text": "Fehler: Eigenschaft 'first' fehlt"
+      },
+      {
+        "text": "Fehler: Eigenschaft 'last' fehlt"
+      },
+      {
+        "text": "Fehler: Eigenschaften 'birth' und 'age' fehlen"
+      },
+      {
+        "text": "Fehler: Eigenschaft 'place' fehlt"
+      },
+      {
+        "text": "Fehler: 'string' hat keine Eigenschaften in {...}"
+      }
+    ],
+    "questionProse": [
+      "Finde den Typfehler:"
+    ],
+    "explanationProse": [
+      "Der Fehler liegt in der Signatur der `greet`‑Funktion. Die Eigenschaften `age` und `birth` fehlen im übergebenen Objekt, also sollten sie im Typdefinition optional sein.\n\n    Auch wenn die Eigenschaft `birth` mit einem Standardwert destrukturiert wird, verlangt die Typdefinition, dass sie vorhanden ist. Um eine Eigenschaft in TypeScript optional zu machen, sollte man den `?`‑Operator verwenden.\n  \n    Hinweis: `birth?: { place?: string }` ist nicht dasselbe wie `birth: { place?: string } | undefined`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Destrukturierung mit verschachtelten Standardwerten\",\n  \"group\": \"Verschachtelte Destrukturierung in TS\",\n  \"options\": [\n    {\n      \"text\": \"Fehler: Eigenschaft 'first' fehlt\"\n    },\n    {\n      \"text\": \"Fehler: Eigenschaft 'last' fehlt\"\n    },\n    {\n      \"text\": \"Fehler: Eigenschaften 'birth' und 'age' fehlen\"\n    },\n    {\n      \"text\": \"Fehler: Eigenschaft 'place' fehlt\"\n    },\n    {\n      \"text\": \"Fehler: 'string' hat keine Eigenschaften in {...}\"\n    }\n  ],\n  \"questionProse\": [\n    \"Finde den Typfehler:\"\n  ],\n  \"explanationProse\": [\n    \"Der Fehler liegt in der Signatur der `greet`‑Funktion. Die Eigenschaften `age` und `birth` fehlen im übergebenen Objekt, also sollten sie im Typdefinition optional sein.\\n\\n    Auch wenn die Eigenschaft `birth` mit einem Standardwert destrukturiert wird, verlangt die Typdefinition, dass sie vorhanden ist. Um eine Eigenschaft in TypeScript optional zu machen, sollte man den `?`‑Operator verwenden.\\n  \\n    Hinweis: `birth?: { place?: string }` ist nicht dasselbe wie `birth: { place?: string } | undefined`.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 904,
+    "outputTokens": 875,
+    "cacheReadTokens": 384,
+    "cacheWriteTokens": 0,
+    "durationMs": 696
+  },
+  "cost": {
+    "inputUsd": 0.000035256,
+    "outputUsd": 0.0001575,
+    "totalUsd": 0.000192756,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-destructuring-delights
+- Locale: de
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2024-11-12--quiz-destructuring-delights/de/index.mdx
+- Validation: passed
+- Runtime seconds: 28.81
+- Input tokens: 11716
+- Output tokens: 8087
+- Thinking tokens: unknown
+- Cached input tokens: 3520
+- Cache write tokens: 0
+- Estimated cost: $0.001913
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: 'Quiz: Destrukturierungsfreude'
@@ -556,3 +574,4 @@ Leg gleich mit dem Aufwärmen los – zeig, dass du Destructuring beherrschst! �
 </Challenge>
 
 </QuizUI>
+````
