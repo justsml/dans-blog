@@ -1,0 +1,109 @@
+# Translation Candidate
+- Slug: promise-gotchas
+- Locale: hi
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2018-09-26--promise-gotchas/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 11.13
+- Input tokens: 2168
+- Output tokens: 2050
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.000665
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: प्रमिस में गड़बड़ियाँ
+subTitle: सामान्य गलतियों से बचें
+date: '2018-09-26'
+modified: '2024-07-30'
+category: Code
+subCategory: promises
+tags:
+  - promises
+  - async
+  - debugging
+  - errors
+  - javascript
+  - composition
+related:
+  - intro-to-promises
+  - visualizing-promises
+  - are-promises-broken
+  - javascript-promises-quiz
+cover: ../michal-parzuchowski-224092-unsplash.webp
+cover_mobile: ../w300_michal-parzuchowski-224092-unsplash.webp
+cover_icon: ../icon_michal-parzuchowski-224092-unsplash.webp
+---
+### प्रमिस (Promises) अन्य मानों की तरह काम नहीं करते
+
+आप उनके मान को अधिकांश मानों की तरह प्रिंट नहीं कर सकते:
+
+```js
+// यह प्रमिस के साथ अर्थहीन है:
+console.log(Promise.resolve(42));
+
+// हमें अवश्यपर `.then` इंटरफ़ेस का उपयोग करना होगा:
+Promise.resolve(42).then(value => console.log(value));
+```
+
+### प्रमिस आपको गलती करने पर चेतावनी नहीं देते
+
+ठीक है, एक संभावित गलती।
+
+विभिन्न कारणों से, TC39 द्वारा यह निर्णय लिया गया कि `.then` और `.catch` को `null` पास करना वैध है। उदाहरण के लिए, `.then(null, null)` वैध है और श्रृंखला में उस 'चरण' को छोड़ना आवश्यक है।
+
+इसका दुर्भाग्यपूर्ण परिणाम यह है कि बहुत आसानी से चीजें बिगड़ सकती हैं।
+
+##### उदाहरण के साथ
+
+एक छोटी चुनौती देखें: निम्नलिखित में से कौन-सा विकल्प `console.log` 42 करेगा?
+
+```js
+// विकल्प #1:
+Promise.resolve(42).then(console.log());
+
+// विकल्प #2:
+Promise.resolve(42).then(console.log);
+
+// विकल्प #3:
+Promise.resolve(42).then(value => console.log(value));
+
+// विकल्प #4:
+Promise.resolve(42)
+  .then(console.log())
+  .then(console.log);
+```
+
+##### उत्तर
+
+उत्तर #2, #3 और #4 है।
+
+क्यों? आइए देखें कि `.then()` में पास किए गए मूल्यों के **प्रकार** क्या हैं:
+
+```js
+var arg1 = console.log();
+var arg2 = console.log;
+var arg3 = value => console.log(value);
+
+typeof arg1 === "undefined";
+typeof arg2 === "function";
+typeof arg3 === "function";
+```
+
+अभी भी विकल्प #4 के काम के तरीके पर संदेह में हैं?
+
+यह लगभग इस तरह काम कर रहा है:
+
+```js
+// विकल्प #4 - लगभग
+Promise.resolve(42)
+  .then(undefined) // यह मूल्य पर कोई प्रभाव नहीं डालता है, इसे अगले `.then(fn)` में पास कर दिया जाएगा
+  .then(console.log);
+```
+````
