@@ -1,10 +1,10 @@
 {
   "runId": "2026-05-13T18-27-02-007Z",
-  "runStatus": "running",
+  "runStatus": "failed",
   "slug": "from-zero-to-regex-hero-extract-url-like-strings",
   "locale": "hi",
   "startedAt": "2026-05-13T18:27:02.007Z",
-  "updatedAt": "2026-05-13T18:31:02.641Z",
+  "updatedAt": "2026-05-13T18:35:10.621Z",
   "modelsRequested": [
     "openrouter/openai/gpt-oss-120b:nitro",
     "openrouter/qwen/qwen3-32b:nitro",
@@ -13,13 +13,13 @@
     "qwen/qwen3.6-35b-a3b",
     "qwen/qwen3.5-9b"
   ],
-  "attemptedModels": 1,
+  "attemptedModels": 2,
   "skippedModels": 3,
-  "rejectedModels": 1,
+  "rejectedModels": 2,
   "candidateModels": 0,
   "totals": {
-    "inputTokens": 0,
-    "outputTokens": 0,
+    "inputTokens": 11321,
+    "outputTokens": 43320,
     "thinkingTokens": 0,
     "cachedInputTokens": 0,
     "cacheWriteTokens": 0,
@@ -30,7 +30,7 @@
     "hasUnknownCachedInputTokens": true,
     "hasUnknownCacheWriteTokens": true,
     "hasUnknownEstimatedCost": true,
-    "runtimeSeconds": "240.02"
+    "runtimeSeconds": "442.87"
   },
   "attempts": [
     {
@@ -60,6 +60,24 @@
       "telemetry": {
         "runtimeSeconds": "240.02",
         "tokens": {}
+      }
+    },
+    {
+      "model": "qwen/qwen3.6-35b-a3b",
+      "status": "rejected",
+      "validationStatus": "rejected: direct AI SDK translation failed",
+      "reportPath": "reports/i18n/from-zero-to-regex-hero-extract-url-like-strings/hi/qwen-qwen3.6-35b-a3b.md",
+      "note": "Command failed after 240000ms: bun run i18n:translate:chunked -- --slug from-zero-to-regex-hero-extract-url-like-strings --locale hi --model qwen/qwen3.6-35b-a3b --chunk 6p --run-id 2026-05-13T18-15-57-947Z-61322 --run-lock-path /Users/dan/code/oss/dans-blog/.git/codex-i18n-translation-run.json --quiz-concurrency 24",
+      "telemetry": {
+        "runtimeSeconds": "202.85",
+        "tokens": {
+          "input": 11321,
+          "output": 43320,
+          "cached": 0,
+          "cacheWrite": 0
+        },
+        "estimatedCostUsd": 0,
+        "pricingSource": "unknown"
       }
     }
   ]
