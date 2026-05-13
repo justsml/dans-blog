@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: handling-international-numbers-and-currency
+- Locale: hi
+- Model: deepseek/deepseek-v4-flash
+- Target: src/content/posts/2024-08-29--handling-international-numbers-and-currency/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 47.30
+- Input tokens: 6618
+- Output tokens: 6245
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.002675
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: अंतर्राष्ट्रीय संख्याएँ और मुद्रा की समझ
@@ -125,3 +143,4 @@ Some libraries can help with these tasks:
 **गो**
 
 - [currency](https://github.com/bojanz/currency) मेरी वर्तमान गोलैंग पसंद है।
+````
