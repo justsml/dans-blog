@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: mastra-workflows-memory
+- Locale: ru
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-01-05--mastra-workflows-memory/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 3.62
+- Input tokens: 8453
+- Output tokens: 3120
+- Thinking tokens: unknown
+- Cached input tokens: 3968
+- Cache write tokens: 0
+- Estimated cost: $0.000891
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: 'Прекратите создаватьненадёжных агентов: используйте рабочие процессы и память'
 subTitle: Детерминированные шаблоны для недетерминированных моделей.
@@ -247,3 +265,4 @@ export const coordinatorAgent = new Agent({
 2. [Security & Guardrails](../mastra-security-guardrails)
 3. [MCP & Tool Integrations](../mastra-mcp-tool-integrations)
 4. **Workflows & Memory** (Этот пост)
+````
