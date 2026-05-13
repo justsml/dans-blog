@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: amazing-resources
+- Locale: ja
+- Model: qwen/qwen3.6-35b-a3b
+- Target: src/content/posts/2015-02-26--amazing-resources/ja/index.mdx
+- Validation: deferred
+- Runtime seconds: 152.58
+- Input tokens: 10070
+- Output tokens: 32442
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.000000
+- Pricing source: unknown
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: 開発者向け 無料 UI デザインリソース厳選
@@ -188,3 +206,4 @@ Webサイトやネイティブアプリを構築しており、一般的なUIパ
 
 Changelog: 2026-04 — 人間とSEOの両方に見やすい構成に再編し、タイトルと説明文を改善。Assistant UI、AI SDK Elements、Aceternity UI、Shadcnblocks、Tailark、KokonutUI パターン、Tool UI を追加。
 Changelog: 2025-09 — リンクを更新し、古いリソースを刷新。モダンなアイコン、コントラスト、デザインツールを追加。
+````
