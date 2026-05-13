@@ -1,0 +1,147 @@
+# Translation Candidate
+- Slug: handling-international-numbers-and-currency
+- Locale: es
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2024-08-29--handling-international-numbers-and-currency/es/index.mdx
+- Validation: passed
+- Runtime seconds: 7.35
+- Input tokens: 6214
+- Output tokens: 1753
+- Thinking tokens: unknown
+- Cached input tokens: 1152
+- Cache write tokens: 0
+- Estimated cost: $0.000558
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: Entendiendo números y monedas internacionales
+subTitle: ¡Dinero localizado explicado!
+draft: false
+date: '2024-08-28'
+modified: '2024-09-03'
+tags:
+  - engineering
+  - internationalization
+  - localization
+  - currency
+  - numbers
+category: HowTo
+subCategory: Internationalization
+cover_full_width: ../currency-banner-wide.webp
+cover_mobile: ../currency-banner-pic__w200.webp
+cover_icon: ../currency-banner-pic__w200.webp
+---
+- [Money: Localization (L10n) and Internationalization (i18n)](#money-localization-l10n-and-internationalization-i18n)
+- [Critical Concepts](#critical-concepts)
+  - [Numbers are Local 🏘️](#numbers-are-local-️)
+  - [Currency is Global 🌎](#currency-is-global-️)
+  - [When Locale Matters](#when-locale-matters)
+- [A Solution](#a-solution)
+- [Next Steps](#next-steps)
+
+## Money: Localization (L10n) and Internationalization (i18n)
+
+No se trata solo de dominar una partida de Scrabble; la _localización_ y la _internacionalización_ se refieren al proceso de hacer que un producto **se sienta en casa en otro país**.
+
+<p class="breakout quote">Mostrar una moneda con el formato local incorrecto es una señal inequívoca: no has puesto ningún esfuerzo.<br/>Si no puedes formatear un precio, ¿cómo vas a gestionar el envío?</p>
+
+La internacionalización es un tema amplio, que abarca desde la traducción de textos hasta el formateo de fechas. En este artículo nos centraremos en un subtema concreto: **formatear números y monedas**.
+
+Veamos el formateo en tres países de la zona euro, EE. UU. e India:
+
+- `€1,234,567.89` Irlanda 🇮🇪  
+- `1.234.567,89 €` Alemania 🇩🇪  
+- `1 234 567,89 €` Francia 🇫🇷  
+- `$1,234,567.89` EE. UU. 🇺🇸  
+- `₹12,34,567.89` India 🇮🇳  
+
+¡Caos! ¿Verdad? ¡Símbolos, espacios y puntuación por todas partes! Es increíble que la UE pueda ponerse de acuerdo en algo. 😅  
+
+## Conceptos críticos  
+
+Antes de sumergirnos en soluciones, ¿qué queremos decir con “Los números son locales”?
+
+### Los números son locales 🏘️  
+
+Cada locale ([Country per ISO 3166](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes)) define reglas para formatear números.
+
+Reglas de formateo de números incluyen:
+
+- Decimal: coma, punto.
+- Miles: coma, punto, espacio.
+- Posición del símbolo de moneda y espaciado.
+
+### La moneda es global 🌎
+
+Una `currency` se refiere a una unidad específica de dinero. (Véase [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217#Active_codes_(list_one)) para la lista.)
+
+- Define un símbolo: `$`, `€`, `£`, `¥`. (A menudo reutilizado.)
+- Siempre tiene un código de 3 letras: `USD`, `EUR`, `GBP`, `JPY`.
+- Puede usarse/intercambiarse en “cualquier” país. En teoría.
+- Convertir entre monedas requiere datos de tipo de cambio.
+- Su valor no varía según la configuración regional.
+
+### Cuando la configuración regional importa
+
+La mayoría de las API REST de comercio electrónico/pagos manejan `price` + `currencyCode`. ¿Por qué no se incluyen locales?
+
+Los locales se establecen (normalmente) a nivel del SO/dispositivo, y los navegadores los exponen mediante `navigator.language`. Dado que cada uno de tus usuarios puede tener un locale distinto, tiene sentido formatear números y monedas del lado del cliente.
+
+## Una solución
+
+¡Bien, hay buenas noticias! Los lenguajes de programación modernos incluyen soporte nativo para esto. En JavaScript disponemos de la clase [`Intl`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl) y de `Intl.NumberFormat`.
+
+Veamos un fragmento de código:
+
+```javascript
+const number = 1_234_567.89;
+
+/**
+ * Formatea un número en la moneda local.
+ * @param {number} amount - La cantidad a formatear.
+ * @param {string} currency - El código de moneda de 3 letras.
+ * @param {string} [locale] - La cadena de locale del usuario.
+ */
+const formatMoney = (amount, currency, locale = navigator.language) =>
+  new Intl.NumberFormat(locale, { currency, style: 'currency' })
+    .format(amount);
+
+console.log('🇩🇪 ' + formatMoney(number, 'EUR', 'de-DE'));
+console.log('🇮🇪 ' + formatMoney(number, 'EUR', 'ga-IE'));
+console.log('🇫🇷 ' + formatMoney(number, 'EUR', 'fr-FR'));
+```
+
+Si necesitas hacer cosas más elaboradas, como calcular impuestos, aplicar descuentos o convertir entre monedas, conviene usar una biblioteca como [dinero.js](https://v2.dinerojs.com/).
+
+## Próximos pasos
+
+Según tus necesidades específicas, quizá quieras profundizar en conceptos relacionados:
+
+- Mejores prácticas con la configuración regional del usuario. Detectar + permitir sobrescrituras (p. ej., un menú desplegable de países).
+- Persistir enteros completos (almacenar centavos, no dólares).
+- Cálculo de dinero (p. ej., aplicar un cupón de `20 % de descuento`, calcular `subTotal + impuestos`, etc.).
+- Tasas de cambio en tiempo real (para compras al por menor, cambios de divisas/forex).
+
+<p class="breakout quote">¡Avísame si te gustaría ver un artículo futuro sobre estos temas!</p>
+
+{/* ## Recomendaciones
+
+Algunas bibliotecas pueden ayudar con estas tareas: */}
+
+**JavaScript / TypeScript**
+
+-[dinero.js](https://v2.dinerojs.com/) soporta operaciones monetarias, tipos de cambio, formateo y análisis!
+
+**Rust**
+
+- [rusty_money](https://crates.io/crates/rusty_money) es mi biblioteca Rust preferida.
+
+**Go**
+
+- [currency](https://github.com/bojanz/currency) es mi opción actual para Golang.
+ */}
+````
