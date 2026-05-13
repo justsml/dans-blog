@@ -1,0 +1,44 @@
+{
+  "index": 1,
+  "attempt": 1,
+  "originalTitle": "Cast Syntax Variations",
+  "translatedTitle": "Varianten der Cast‑Syntax",
+  "translation": {
+    "title": "Varianten der Cast‑Syntax",
+    "group": "Aufwärmen: Typumwandlung",
+    "options": [
+      {
+        "text": "'95'::INTEGER"
+      },
+      {
+        "text": "INTEGER '95'"
+      },
+      {
+        "text": "CAST('95', INTEGER)"
+      },
+      {
+        "text": "CAST('95' AS INTEGER)"
+      }
+    ],
+    "questionProse": [
+      "Welche dieser Typumwandlungen ist **ungültig** ❌?"
+    ],
+    "explanationProse": [
+      "PostgreSQL unterstützt drei Cast‑Syntaxen:\n\n    1. ANSI‑SQL: `CAST(expression AS type)`.\n    2. PostgreSQL: `expression::type`.\n    3. Typfunktion: `type 'literal'`.\n\n    Alle sind funktional äquivalent, aber:\n    - `CAST()` ist am portabelsten.\n    - `::` ist PostgreSQL‑spezifisch, wird aber häufig verwendet.\n    - Der infix‑artige `type 'literal'` ist weniger verbreitet, aber dennoch gültig."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Varianten der Cast‑Syntax\",\n  \"group\": \"Aufwärmen: Typumwandlung\",\n  \"options\": [\n    {\n      \"text\": \"'95'::INTEGER\"\n    },\n    {\n      \"text\": \"INTEGER '95'\"\n    },\n    {\n      \"text\": \"CAST('95', INTEGER)\"\n    },\n    {\n      \"text\": \"CAST('95' AS INTEGER)\"\n    }\n  ],\n  \"questionProse\": [\n    \"Welche dieser Typumwandlungen ist **ungültig** ❌?\"\n  ],\n  \"explanationProse\": [\n    \"PostgreSQL unterstützt drei Cast‑Syntaxen:\\n\\n    1. ANSI‑SQL: `CAST(expression AS type)`.\\n    2. PostgreSQL: `expression::type`.\\n    3. Typfunktion: `type 'literal'`.\\n\\n    Alle sind funktional äquivalent, aber:\\n    - `CAST()` ist am portabelsten.\\n    - `::` ist PostgreSQL‑spezifisch, wird aber häufig verwendet.\\n    - Der infix‑artige `type 'literal'` ist weniger verbreitet, aber dennoch gültig.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 806,
+    "outputTokens": 606,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1677
+  },
+  "cost": {
+    "inputUsd": 0.000031434,
+    "outputUsd": 0.00010907999999999999,
+    "totalUsd": 0.000140514,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

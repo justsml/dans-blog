@@ -1,0 +1,44 @@
+{
+  "index": 13,
+  "attempt": 1,
+  "originalTitle": "Check Constraint Timing",
+  "translatedTitle": "Zeitpunkt der Check-Constraint",
+  "translation": {
+    "title": "Zeitpunkt der Check-Constraint",
+    "group": "Einschränkungen",
+    "options": [
+      {
+        "text": "Sofort für neue oder geänderte Zeilen"
+      },
+      {
+        "text": "Beim Transaktionsabschluss"
+      },
+      {
+        "text": "Bei der nächsten Abfrage"
+      },
+      {
+        "text": "Niemals – Constraints werden nur bei INSERT geprüft"
+      }
+    ],
+    "questionProse": [
+      "Wann wird diese Grade-Constraint geprüft?"
+    ],
+    "explanationProse": [
+      "`NOT VALID`-Constraints:\n    - Werden sofort für neue Inserts und Updates geprüft\n    - Validieren nicht vorhandene Zeilen\n    - Können vorhandene Zeilen später mit `VALIDATE CONSTRAINT` validieren\n    - Sind nützlich für große Tabellen\n\nOhne `NOT VALID`:\n    - Constraint wird sofort geprüft\n    - Alle vorhandenen Zeilen werden validiert\n    - Kann bei großen Tabellen langsam sein"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Zeitpunkt der Check-Constraint\",\n  \"group\": \"Einschränkungen\",\n  \"options\": [\n    {\n      \"text\": \"Sofort für neue oder geänderte Zeilen\"\n    },\n    {\n      \"text\": \"Beim Transaktionsabschluss\"\n    },\n    {\n      \"text\": \"Bei der nächsten Abfrage\"\n    },\n    {\n      \"text\": \"Niemals – Constraints werden nur bei INSERT geprüft\"\n    }\n  ],\n  \"questionProse\": [\n    \"Wann wird diese Grade-Constraint geprüft?\"\n  ],\n  \"explanationProse\": [\n    \"`NOT VALID`-Constraints:\\n    - Werden sofort für neue Inserts und Updates geprüft\\n    - Validieren nicht vorhandene Zeilen\\n    - Können vorhandene Zeilen später mit `VALIDATE CONSTRAINT` validieren\\n    - Sind nützlich für große Tabellen\\n\\nOhne `NOT VALID`:\\n    - Constraint wird sofort geprüft\\n    - Alle vorhandenen Zeilen werden validiert\\n    - Kann bei großen Tabellen langsam sein\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 798,
+    "outputTokens": 617,
+    "cacheReadTokens": 384,
+    "cacheWriteTokens": 0,
+    "durationMs": 776
+  },
+  "cost": {
+    "inputUsd": 0.000031122,
+    "outputUsd": 0.00011106,
+    "totalUsd": 0.000142182,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

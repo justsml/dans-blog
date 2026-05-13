@@ -1,0 +1,44 @@
+{
+  "index": 11,
+  "attempt": 1,
+  "originalTitle": "Timestamp Precision",
+  "translatedTitle": "Zeitstempel‑Präzision",
+  "translation": {
+    "title": "Zeitstempel‑Präzision",
+    "group": "Datum/Uhrzeit",
+    "options": [
+      {
+        "text": "2024-01-08 13:30:00+00"
+      },
+      {
+        "text": "2024-01-08 13:30:00.123456+00"
+      },
+      {
+        "text": "2024-01-08 13:30:00.123456789+00"
+      },
+      {
+        "text": "2024-01-08 13:30:00.1234567"
+      }
+    ],
+    "questionProse": [
+      "Welches ist das kleinste `timestamp`‑Literal, das die maximale `time`‑Präzision in Postgres überschreitet?"
+    ],
+    "explanationProse": [
+      "PostgreSQL‑Zeitstempel haben eine Mikrosekunden‑Präzision (6 Dezimalstellen).\n\n    - Maximum: `.123456` (6 Ziffern)\n    - Nanosekunden (9 Ziffern) werden auf die unterstützte Präzision gerundet oder abgeschnitten\n    - Zeitzonen‑Offsets werden für `timestamptz` akzeptiert, sind aber nicht zwingend erforderlich\n\n    **Nicht so häufiges Gotcha:** Einige Sprachen/Frameworks senden Nanosekunden‑Präzision, aber PostgreSQL speichert Zeitstempel mit Mikrosekunden‑Präzision."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Zeitstempel‑Präzision\",\n  \"group\": \"Datum/Uhrzeit\",\n  \"options\": [\n    {\n      \"text\": \"2024-01-08 13:30:00+00\"\n    },\n    {\n      \"text\": \"2024-01-08 13:30:00.123456+00\"\n    },\n    {\n      \"text\": \"2024-01-08 13:30:00.123456789+00\"\n    },\n    {\n      \"text\": \"2024-01-08 13:30:00.1234567\"\n    }\n  ],\n  \"questionProse\": [\n    \"Welches ist das kleinste `timestamp`‑Literal, das die maximale `time`‑Präzision in Postgres überschreitet?\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"sql\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"explanationProse\": [\n    \"PostgreSQL‑Zeitstempel haben eine Mikrosekunden‑Präzision (6 Dezimalstellen).\\n\\n    - Maximum: `.123456` (6 Ziffern)\\n    - Nanosekunden (9 Ziffern) werden auf die unterstützte Präzision gerundet oder abgeschnitten\\n    - Zeitzonen‑Offsets werden für `timestamptz` akzeptiert, sind aber nicht zwingend erforderlich\\n\\n    **Nicht so häufiges Gotcha:** Einige Sprachen/Frameworks senden Nanosekunden‑Präzision, aber PostgreSQL speichert Zeitstempel mit Mikrosekunden‑Präzision.\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 869,
+    "outputTokens": 737,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 692
+  },
+  "cost": {
+    "inputUsd": 0.000033891000000000005,
+    "outputUsd": 0.00013266,
+    "totalUsd": 0.000166551,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

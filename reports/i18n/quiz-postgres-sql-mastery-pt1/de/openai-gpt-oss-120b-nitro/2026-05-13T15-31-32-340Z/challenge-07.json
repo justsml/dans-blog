@@ -1,0 +1,53 @@
+{
+  "index": 6,
+  "attempt": 1,
+  "originalTitle": "Identify Invalid Types",
+  "translatedTitle": "Ungültige Typen identifizieren",
+  "translation": {
+    "title": "Ungültige Typen identifizieren",
+    "group": "Postgres-Typen",
+    "options": [
+      {
+        "text": "int"
+      },
+      {
+        "text": "real"
+      },
+      {
+        "text": "bigint"
+      },
+      {
+        "text": "bigserial"
+      },
+      {
+        "text": "smallserial"
+      },
+      {
+        "text": "decimal128"
+      },
+      {
+        "text": "double precision"
+      }
+    ],
+    "questionProse": [
+      "Welche dieser ist ❌ kein gültiger PostgreSQL‑Typ?"
+    ],
+    "explanationProse": [
+      "Es könnte vertraut wirken, da `decimal128` in vielen Systemen (z. B. Mongo und Java) vorkommt. Es ist kein gültiger PostgreSQL‑Typ, `decimal` ist es.\n\n    Die korrekten numerischen Typen sind:\n    - `int` (4‑Byte‑Integer)\n    - `bigint` (8‑Byte‑Integer)\n    - `real` (4‑Byte‑Gleitkomma)\n    - `double precision` (8‑Byte‑Gleitkomma)\n    - `bigserial` (auto‑inkrementierender 8‑Byte‑Integer)\n    - `smallserial` (auto‑inkrementierender 2‑Byte‑Integer)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Ungültige Typen identifizieren\",\n  \"group\": \"Postgres-Typen\",\n  \"options\": [\n    {\n      \"text\": \"int\"\n    },\n    {\n      \"text\": \"real\"\n    },\n    {\n      \"text\": \"bigint\"\n    },\n    {\n      \"text\": \"bigserial\"\n    },\n    {\n      \"text\": \"smallserial\"\n    },\n    {\n      \"text\": \"decimal128\"\n    },\n    {\n      \"text\": \"double precision\"\n    }\n  ],\n  \"questionProse\": [\n    \"Welche dieser ist ❌ kein gültiger PostgreSQL‑Typ?\"\n  ],\n  \"explanationProse\": [\n    \"Es könnte vertraut wirken, da `decimal128` in vielen Systemen (z. B. Mongo und Java) vorkommt. Es ist kein gültiger PostgreSQL‑Typ, `decimal` ist es.\\n\\n    Die korrekten numerischen Typen sind:\\n    - `int` (4‑Byte‑Integer)\\n    - `bigint` (8‑Byte‑Integer)\\n    - `real` (4‑Byte‑Gleitkomma)\\n    - `double precision` (8‑Byte‑Gleitkomma)\\n    - `bigserial` (auto‑inkrementierender 8‑Byte‑Integer)\\n    - `smallserial` (auto‑inkrementierender 2‑Byte‑Integer)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 845,
+    "outputTokens": 729,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 666
+  },
+  "cost": {
+    "inputUsd": 0.000032955,
+    "outputUsd": 0.00013122,
+    "totalUsd": 0.00016417500000000002,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

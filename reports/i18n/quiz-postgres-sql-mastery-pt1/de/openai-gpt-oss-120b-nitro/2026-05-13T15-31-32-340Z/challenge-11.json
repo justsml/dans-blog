@@ -1,0 +1,44 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "Integer Overflow",
+  "translatedTitle": "Ganzzahlüberlauf",
+  "translation": {
+    "title": "Ganzzahlüberlauf",
+    "group": "Ganzzahlarithmetik",
+    "options": [
+      {
+        "text": "4294967296"
+      },
+      {
+        "text": "Fehler: Ganzzahl außerhalb des Bereichs"
+      },
+      {
+        "text": "0"
+      },
+      {
+        "text": "2147483647"
+      }
+    ],
+    "questionProse": [
+      "Was passiert bei der Berechnung der insgesamt möglichen Student‑IDs?"
+    ],
+    "explanationProse": [
+      "Der `integer`‑Typ von PostgreSQL ist 32‑Bit vorzeichenbehaftet und reicht von `-2,147,483,648` bis `2,147,483,647`.\n\n    Die Berechnung `256^4` = `4,294,967,296` überschreitet diesen Bereich.\n\n    Um größere Zahlen zu verarbeiten:"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Ganzzahlüberlauf\",\n  \"group\": \"Ganzzahlarithmetik\",\n  \"options\": [\n    {\n      \"text\": \"4294967296\"\n    },\n    {\n      \"text\": \"Fehler: Ganzzahl außerhalb des Bereichs\"\n    },\n    {\n      \"text\": \"0\"\n    },\n    {\n      \"text\": \"2147483647\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was passiert bei der Berechnung der insgesamt möglichen Student‑IDs?\"\n  ],\n  \"explanationProse\": [\n    \"Der `integer`‑Typ von PostgreSQL ist 32‑Bit vorzeichenbehaftet und reicht von `-2,147,483,648` bis `2,147,483,647`.\\n\\n    Die Berechnung `256^4` = `4,294,967,296` überschreitet diesen Bereich.\\n\\n    Um größere Zahlen zu verarbeiten:\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 808,
+    "outputTokens": 506,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 2439
+  },
+  "cost": {
+    "inputUsd": 0.000031512,
+    "outputUsd": 0.00009108,
+    "totalUsd": 0.000122592,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
