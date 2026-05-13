@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: should-you-use-named-or-default-exports
+- Locale: ru
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2023-08-18--should-you-use-named-or-default-exports/ru/index.mdx
+- Validation: passed
+- Runtime seconds: 33.88
+- Input tokens: 4263
+- Output tokens: 3983
+- Thinking tokens: unknown
+- Cached input tokens: 512
+- Cache write tokens: 0
+- Estimated cost: $0.001297
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: ''
@@ -99,3 +117,4 @@ import Handle from "./knife.js"; // 🔪
 ### Заключение
 
 Если код — это коммуникация, то `export` делайте по-настоящему серьезно. 💞
+````
