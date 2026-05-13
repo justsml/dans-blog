@@ -1,0 +1,44 @@
+{
+  "index": 13,
+  "attempt": 1,
+  "originalTitle": "Zero-Specificity Selectors",
+  "translatedTitle": "ゼロ特異性セレクタ",
+  "translation": {
+    "title": "ゼロ特異性セレクタ",
+    "group": "セレクタ: 特異性",
+    "options": [
+      {
+        "text": ":where(.card) .title"
+      },
+      {
+        "text": ".card .title"
+      },
+      {
+        "text": ":is(.card) .title"
+      },
+      {
+        "text": "#card .title"
+      }
+    ],
+    "questionProse": [
+      "どのセレクタが最も特異性が低いですか？"
+    ],
+    "explanationProse": [
+      "`:where(.card) .title` が最も特異性が低いです。`:where()` 疑似クラスとその中身はすべて `0-0-0` とみなされるので、`.title` だけがカウントされます。`:is(.card) .title` は `.card` の特異性を保持し、`.card .title` はクラスが2つ、`#card .title` は ID を含みます。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"ゼロ特異性セレクタ\",\n  \"group\": \"セレクタ: 特異性\",\n  \"options\": [\n    {\n      \"text\": \":where(.card) .title\"\n    },\n    {\n      \"text\": \".card .title\"\n    },\n    {\n      \"text\": \":is(.card) .title\"\n    },\n    {\n      \"text\": \"#card .title\"\n    }\n  ],\n  \"questionProse\": [\n    \"どのセレクタが最も特異性が低いですか？\"\n  ],\n  \"explanationProse\": [\n    \"`:where(.card) .title` が最も特異性が低いです。`:where()` 疑似クラスとその中身はすべて `0-0-0` とみなされるので、`.title` だけがカウントされます。`:is(.card) .title` は `.card` の特異性を保持し、`.card .title` はクラスが2つ、`#card .title` は ID を含みます。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 764,
+    "outputTokens": 566,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 613
+  },
+  "cost": {
+    "inputUsd": 0.000029795999999999997,
+    "outputUsd": 0.00010188,
+    "totalUsd": 0.000131676,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
