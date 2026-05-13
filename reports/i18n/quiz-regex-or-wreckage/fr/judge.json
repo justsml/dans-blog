@@ -1,0 +1,89 @@
+{
+  "selectedCommit": "974c80e330df1cfc613f00e6f2db274eaa5dc7db",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 10,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "options={[\n  ]}",
+      "replacement": "options={[\n    {text: '[\"<div>Hello</div>\"]'},\n    {text: '[\"<div>\", \"</div>\"]'},\n    {text: '[\"<div>Hello</div><div>World</div>\"]'},\n    {text: '[\"<div>Hello</div>\", \"<div>World</div>\"]', isAnswer: true},\n    {text: '[\"Hello\", \"World\"]'}\n  ]}",
+      "reason": "Challenge 2 is missing its options array in the current translation, making the quiz unplayable."
+    },
+    {
+      "priority": "high",
+      "match": "index={13}\n  group=\"Correspondance de base\"\n  title=\"Quantificateurs paresseux vs gourmands\"\n  options={[\n  ]}",
+      "replacement": "index={13}\n  group=\"Correspondance de base\"\n  title=\"Quantificateurs paresseux vs gourmands\"\n  options={[\n    {text: '[\"<b>bold</b>\"]'},\n    {text: '[\"bold\"]', isAnswer: true},\n    {text: '[\"<b>\", \"</b>\"]'},\n    {text: '[]'}\n  ]}",
+      "reason": "Challenge 13 is missing its options array in the current translation."
+    },
+    {
+      "priority": "high",
+      "match": "Comment ças'est passé ? 🧐",
+      "replacement": "Comment ça s'est passé ? 🧐",
+      "reason": "Fixing a typo/spacing issue in the heading."
+    },
+    {
+      "priority": "medium",
+      "match": "Allez à [ma salle](/challenges/)",
+      "replacement": "Allez à [ma salle](/challenges/)",
+      "reason": "Ensuring the link path is absolute as per the source."
+    }
+  ],
+  "rationale": "The current translation has critical bugs where the 'options' arrays for challenges 2 and 13 are empty, rendering the quiz broken. Candidate 974c80e330df1cfc613f00e6f2db274eaa5dc7db is the best base but still contains these empty arrays in the provided text (likely a copy-paste error in the prompt's 'current' view). I am providing high-priority suggestions to restore the missing technical content and fix a typo in the final heading.",
+  "slug": "quiz-regex-or-wreckage",
+  "locale": "fr",
+  "candidateCommits": [
+    "974c80e330df1cfc613f00e6f2db274eaa5dc7db",
+    "9482117e1443fcb607d22e47f89a956dabed066c"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "medium",
+      "match": "Comment ças'est passé ?",
+      "replacement": "Comment ça s'est passé ?",
+      "reason": "Missing space in the heading.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "Allez à [ma salle](../challenges/)",
+      "replacement": "Allez à [ma salle](/challenges/)",
+      "reason": "The link path should be absolute or match the English structure; the candidate added an extra '../' which might break the link depending on the routing.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "Comment ça s'est passé ?",
+      "replacement": "Comment ça s'est passé ? 🧐",
+      "reason": "Restoring the emoji from the original heading for stylistic consistency.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "Allez à [ma salle](../challenges/)",
+      "replacement": "Allez à [ma salle](/challenges/)",
+      "reason": "The link path should be absolute to match the English source and ensure it works across different URL depths.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug quiz-regex-or-wreckage --locale fr --skip-global",
+    "output": ""
+  }
+}
