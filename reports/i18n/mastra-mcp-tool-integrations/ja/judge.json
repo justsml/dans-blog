@@ -1,0 +1,30 @@
+{
+  "selectedCommit": "61ec25db5bf86941ed7b0df024975e40c39d9d14",
+  "selectedModel": "openrouter/z-ai/glm-5.1",
+  "scores": {
+    "readability": 5,
+    "technicalAccuracy": 5,
+    "coherence": 5,
+    "relevance": 5,
+    "translationQuality": 5,
+    "mdxPreservation": 5
+  },
+  "suggestions": [],
+  "rationale": "Candidate 61ec25db5bf86941ed7b0df024975e40c39d9d14 (GLM-5.1) provides the most natural and technically accurate translation. It maintains Dan's direct, slightly informal but professional tone ('だ/である' style) consistently. It correctly translates technical terms like 'process spawning' as 'プロセススパンニング' (or similar) and handles the MDX structure perfectly. Compared to 'current', it improves the flow of the text and ensures all headings and links are correctly preserved. Candidate 9edf09426d8334dde91e6ae07dbf9794849bbb7f uses 'です/ます' style which is less consistent with the desired direct tone for this technical blog series.",
+  "slug": "mastra-mcp-tool-integrations",
+  "locale": "ja",
+  "candidateCommits": [
+    "9edf09426d8334dde91e6ae07dbf9794849bbb7f",
+    "96ccb81545eae49616344b042c77aaf08c6ccdf2",
+    "da9df04d6b80a81fb9a47c1cc6c4941115be16c0",
+    "61ec25db5bf86941ed7b0df024975e40c39d9d14",
+    "914852cba7c4d33426cffcd3b7c73ee82af54eb4"
+  ],
+  "suggestionLog": [],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug mastra-mcp-tool-integrations --locale ja --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug mastra-mcp-tool-integrations --locale ja --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug mastra-mcp-tool-integrations --locale ja --skip-global\n207 |     ...targetContents.matchAll(/=[\"']\\.\\/(?!\\.)[^\"']+\\.(?:avif|gif|jpe?g|png|svg|webp)[\"']/g),\n208 |   ];\n209 | \n210 |   if (nestedAssetReferences.length === 0) return;\n211 | \n212 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2026-01-04--mastra-mcp-tool-integrations/ja/index.mdx uses ./ asset paths inside a locale folder. Use ../ for inherited post assets.\n      at assertNestedAssetPaths (/Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:212:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}
