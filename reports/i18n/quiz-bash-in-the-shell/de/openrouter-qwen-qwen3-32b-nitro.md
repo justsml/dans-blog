@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-bash-in-the-shell
+- Locale: de
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2024-11-20--quiz-bash-in-the-shell/de/index.mdx
+- Validation: passed
+- Runtime seconds: 54.15
+- Input tokens: 14136
+- Output tokens: 19458
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.005801
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: ''
@@ -602,3 +620,4 @@ Vertiefen Sie Ihr Bash-Wissen mit diesen Ressourcen:
 - [Bash Hackers Wiki](http://wiki.bash-hackers.org/)
 - [Bash-Leitfaden für Einsteiger](http://tldp.org/LDP/Bash-Beginners-Guide/html/index.html)
 - [Bash-Referenzkarte](http://www.tldp.org/LDP/Bash-Beginners-Guide/html/Bash-Beginners-Guide.html)
+````

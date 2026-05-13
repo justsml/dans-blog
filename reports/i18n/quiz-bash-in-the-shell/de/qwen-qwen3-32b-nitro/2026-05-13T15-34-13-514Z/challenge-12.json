@@ -1,0 +1,53 @@
+{
+  "index": 11,
+  "attempt": 1,
+  "originalTitle": "Basic Arithmetic",
+  "translatedTitle": "Grundlegende Arithmetik",
+  "translation": {
+    "title": "Grundlegende Arithmetik",
+    "group": "Multiplikation",
+    "options": [
+      {
+        "text": "echo 10 * 0.5"
+      },
+      {
+        "text": "echo (10 * 0.5)"
+      },
+      {
+        "text": "echo ${ 10 * 0.5 }"
+      },
+      {
+        "text": "echo %( 10 * 0.5 )"
+      },
+      {
+        "text": "echo $(( 10 * 0.5 ))"
+      },
+      {
+        "text": "echo '10 * 0.5' | bc"
+      },
+      {
+        "text": "Error"
+      }
+    ],
+    "questionProse": [
+      "Welcher der folgenden Befehle multipliziert 10 und 0,5 korrekt und gibt 5 aus?"
+    ],
+    "explanationProse": [
+      "Die Syntax `(( ))` führt **nur** **ganzzahlige** Arithmetik durch. Ganze Zahlen, keine Fließkommazahlen!\n\n    Bash (vielleicht überraschend) verfügt **nicht über eingebaute** Unterstützung für Fließkomma-Arithmetik.\n\n    Die gängigste Lösung ist die Verwendung der GNU-Utils [`bc`](https://www.gnu.org/software/bc/manual/html_mono/bc.html) oder [`awk`](https://www.gnu.org/software/gawk/manual/gawk.html)."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Grundlegende Arithmetik\",\n  \"group\": \"Multiplikation\",\n  \"options\": [\n    { \"text\": \"echo 10 * 0.5\" },\n    { \"text\": \"echo (10 * 0.5)\" },\n    { \"text\": \"echo ${ 10 * 0.5 }\" },\n    { \"text\": \"echo %( 10 * 0.5 )\" },\n    { \"text\": \"echo $(( 10 * 0.5 ))\" },\n    { \"text\": \"echo '10 * 0.5' | bc\" },\n    { \"text\": \"Error\" }\n  ],\n  \"questionProse\": [\n    \"Welcher der folgenden Befehle multipliziert 10 und 0,5 korrekt und gibt 5 aus?\"\n  ],\n  \"explanationProse\": [\n    \"Die Syntax `(( ))` führt **nur** **ganzzahlige** Arithmetik durch. Ganze Zahlen, keine Fließkommazahlen!\\n\\n    Bash (vielleicht überraschend) verfügt **nicht über eingebaute** Unterstützung für Fließkomma-Arithmetik.\\n\\n    Die gängigste Lösung ist die Verwendung der GNU-Utils [`bc`](https://www.gnu.org/software/bc/manual/html_mono/bc.html) oder [`awk`](https://www.gnu.org/software/gawk/manual/gawk.html).\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 788,
+    "outputTokens": 2127,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 5097
+  },
+  "cost": {
+    "inputUsd": 0.00006303999999999999,
+    "outputUsd": 0.00051048,
+    "totalUsd": 0.00057352,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

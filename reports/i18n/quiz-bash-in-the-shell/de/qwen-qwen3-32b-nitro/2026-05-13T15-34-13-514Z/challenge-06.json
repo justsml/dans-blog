@@ -1,0 +1,53 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "String Length",
+  "translatedTitle": "Zeichenkettenlänge",
+  "translation": {
+    "title": "Zeichenkettenlänge",
+    "group": "Zeichenkettenlänge",
+    "options": [
+      {
+        "text": "$#username",
+        "hint": "$# zählt Argumente, nicht Zeichen"
+      },
+      {
+        "text": "#$username",
+        "hint": "Ungültige Syntax in Bash"
+      },
+      {
+        "text": "${#username}",
+        "hint": "Korrekte Bash-Parameterexpansion"
+      },
+      {
+        "text": "${username#}",
+        "hint": "Entfernt Präfixe, nicht Länge"
+      },
+      {
+        "text": "echo $username | wc -c",
+        "hint": "Externer Befehl, nicht reiner Bash"
+      }
+    ],
+    "questionProse": [
+      "Wie können Sie die Länge einer Variablen in Bash ermitteln?"
+    ],
+    "explanationProse": [
+      "Die Syntax `${#username}` gibt die Länge von `username` zurück.\n    \n    Beispiel:",
+      "Obwohl `wc` funktionieren würde, gehört es technisch gesehen nicht zu Bash.\n\n    Das Utility `wc` ist ein alter Insider-Witz, der sich auf \"water closet\" (Toilette) bezieht.\n    WIRLICH? Wer liest diese Erklärungen überhaupt?\n\n    Tatsächlich stammt `wc` aus der alten Posix-Zeit (und den AT&T Unix-Tagen). Es steht für \"word count\" und zählt Zeilen, Wörter und Zeichen in Dateien oder Streams."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Zeichenkettenlänge\",\n  \"group\": \"Zeichenkettenlänge\",\n  \"options\": [\n    {\n      \"text\": \"$#username\",\n      \"hint\": \"$# zählt Argumente, nicht Zeichen\"\n    },\n    {\n      \"text\": \"#$username\",\n      \"hint\": \"Ungültige Syntax in Bash\"\n    },\n    {\n      \"text\": \"${#username}\",\n      \"hint\": \"Korrekte Bash-Parameterexpansion\"\n    },\n    {\n      \"text\": \"${username#}\",\n      \"hint\": \"Entfernt Präfixe, nicht Länge\"\n    },\n    {\n      \"text\": \"echo $username | wc -c\",\n      \"hint\": \"Externer Befehl, nicht reiner Bash\"\n    }\n  ],\n  \"questionProse\": [\n    \"Wie können Sie die Länge einer Variablen in Bash ermitteln?\"\n  ],\n  \"explanationProse\": [\n    \"Die Syntax `${#username}` gibt die Länge von `username` zurück.\\n    \\n    Beispiel:\",\n    \"Obwohl `wc` funktionieren würde, gehört es technisch gesehen nicht zu Bash.\\n\\n    Das Utility `wc` ist ein alter Insider-Witz, der sich auf \\\"water closet\\\" (Toilette) bezieht.\\n    WIRLICH? Wer liest diese Erklärungen überhaupt?\\n\\n    Tatsächlich stammt `wc` aus der alten Posix-Zeit (und den AT&T Unix-Tagen). Es steht für \\\"word count\\\" und zählt Zeilen, Wörter und Zeichen in Dateien oder Streams.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 766,
+    "outputTokens": 826,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2114
+  },
+  "cost": {
+    "inputUsd": 0.00006128,
+    "outputUsd": 0.00019824,
+    "totalUsd": 0.00025952,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
