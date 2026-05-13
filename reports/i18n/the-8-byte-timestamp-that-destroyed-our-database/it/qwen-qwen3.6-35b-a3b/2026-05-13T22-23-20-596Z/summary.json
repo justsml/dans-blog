@@ -1,0 +1,93 @@
+{
+  "runId": "qwen-qwen3.6-35b-a3b@2026-05-13T22-23-20-596Z",
+  "slug": "the-8-byte-timestamp-that-destroyed-our-database",
+  "locale": "it",
+  "model": "qwen/qwen3.6-35b-a3b",
+  "modelPath": "qwen-qwen3.6-35b-a3b",
+  "createdAt": "2026-05-13T22:25:46.020Z",
+  "sourcePath": "src/content/posts/2025-12-29--the-8-byte-timestamp-that-destroyed-our-database/index.mdx",
+  "targetPath": "src/content/posts/2025-12-29--the-8-byte-timestamp-that-destroyed-our-database/it/index.mdx",
+  "candidatePath": "reports/i18n/the-8-byte-timestamp-that-destroyed-our-database/it/qwen-qwen3.6-35b-a3b/2026-05-13T22-23-20-596Z/candidate.mdx",
+  "sourceHash": "4d98d485a209ef83adfb3ec4df7994acdb6c23964910ec139710bf29772952fe",
+  "outputHash": "3422f0144f6d037dcd702846e57d9a93fa4d016c59f3aa4099bc70e0f223b2d1",
+  "reasoningEffort": "low",
+  "temperature": 0.3,
+  "maxTokens": 16000,
+  "timeoutMs": 200000,
+  "articleSummary": "This article argues that PostgreSQL’s `TIMESTAMP` and `TIMESTAMPTZ` types exist to distinguish between three fundamentally different temporal concepts: absolute moments, wall-clock times, and durations. Using a train ticket as a recurring framing device, the author demonstrates that `TIMESTAMPTZ` stores absolute UTC moments for automatic timezone conversion, while `TIME` paired with a context string handles location-specific clock readings, and `INTERVAL` tracks elapsed time. Written as a practical analytical guide, the piece targets backend and database developers, offering concrete modeling rules and warning against precision mismatches between PostgreSQL (microseconds) and JavaScript (milliseconds). Ultimately, it advocates storing temporal context separately from raw timestamps to prevent logical errors in scheduling, logging, and multi-region applications.",
+  "totalInputTokens": 7827,
+  "totalOutputTokens": 29746,
+  "totalCacheReadTokens": 0,
+  "totalCacheWriteTokens": 0,
+  "totalDurationMs": 130209,
+  "totalCostUsd": 0.030920049999999998,
+  "pricingSource": "local-openrouter-estimate",
+  "telemetry": {
+    "model": "qwen/qwen3.6-35b-a3b",
+    "chunkSize": "10p",
+    "totalChunks": 6,
+    "totalInputTokens": 7827,
+    "totalOutputTokens": 29746,
+    "totalCacheReadTokens": 0,
+    "totalCacheWriteTokens": 0,
+    "totalDurationMs": 130209,
+    "totalCostUsd": 0.030920049999999998,
+    "pricingSource": "local-openrouter-estimate",
+    "chunks": [
+      {
+        "index": 0,
+        "inputTokens": 1126,
+        "outputTokens": 5201,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 22752,
+        "costUsd": 0.0053698999999999995
+      },
+      {
+        "index": 1,
+        "inputTokens": 1382,
+        "outputTokens": 4788,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 20958,
+        "costUsd": 0.004995299999999999
+      },
+      {
+        "index": 2,
+        "inputTokens": 1437,
+        "outputTokens": 5450,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 24249,
+        "costUsd": 0.00566555
+      },
+      {
+        "index": 3,
+        "inputTokens": 1407,
+        "outputTokens": 6144,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 25998,
+        "costUsd": 0.00635505
+      },
+      {
+        "index": 4,
+        "inputTokens": 1401,
+        "outputTokens": 5564,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 23857,
+        "costUsd": 0.0057741500000000005
+      },
+      {
+        "index": 5,
+        "inputTokens": 1074,
+        "outputTokens": 2599,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 12395,
+        "costUsd": 0.0027601
+      }
+    ]
+  }
+}
