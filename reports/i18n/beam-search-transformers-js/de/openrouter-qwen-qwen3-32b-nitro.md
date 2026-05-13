@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: beam-search-transformers-js
+- Locale: de
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-04-16--beam-search-transformers-js/de/index.mdx
+- Validation: passed
+- Runtime seconds: 34.11
+- Input tokens: 11527
+- Output tokens: 10893
+- Thinking tokens: unknown
+- Cached input tokens: 1536
+- Cache write tokens: 0
+- Estimated cost: $0.003536
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Implementierung von Beam Search in Transformers.js
 subTitle: ''
@@ -172,3 +190,4 @@ Wenn Sie an seq2seq-Arbeiten in JavaScript tätigen und heute eine ordentliche B
 
 ¹ Ja, ich weiß, dass `num_beams=1` einfach der Greedy-Suche entspricht. Der entartete Fall ist gut definiert.  
 ² Encoder-only-Modelle (BERT usw.) generieren überhaupt keine Token, also gilt all das hier nicht für sie. Sie sind einfach nur Stimmung.
+````
