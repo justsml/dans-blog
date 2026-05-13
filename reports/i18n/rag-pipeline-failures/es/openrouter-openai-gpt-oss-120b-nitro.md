@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: rag-pipeline-failures
+- Locale: es
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-05-05--rag-pipeline-failures/es/index.mdx
+- Validation: passed
+- Runtime seconds: 10.14
+- Input tokens: 10820
+- Output tokens: 2745
+- Thinking tokens: unknown
+- Cached input tokens: 1280
+- Cache write tokens: 0
+- Estimated cost: $0.000916
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Cinco formas en que RAG falla en producción
 subTitle: La demo funcionó. Los usuarios reales son donde la canalización falla.
@@ -202,3 +220,4 @@ Las demos de RAG funcionan porque las condiciones de la demo están controladas:
 Cada falla descrita es diagnosticable, pero solo si se está midiendo. Los equipos de RAG confiables no hacen nada exótico. Tratan la calidad de la recuperación como un subsistema real, no como un artefacto de demo.
 
 Configure primero el bucle de evaluación. Todo lo demás será más sencillo una vez que pueda medirlo.
+````
