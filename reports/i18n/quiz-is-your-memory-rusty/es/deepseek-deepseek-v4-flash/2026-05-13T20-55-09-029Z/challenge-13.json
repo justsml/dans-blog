@@ -1,0 +1,52 @@
+{
+  "index": 12,
+  "attempt": 1,
+  "originalTitle": "Arc and Mutex",
+  "translatedTitle": "Arc y Mutex",
+  "translation": {
+    "title": "Arc y Mutex",
+    "group": "Punteros Inteligentes",
+    "options": [
+      {
+        "text": "Imprime: 42",
+        "hint": "El código nunca llegará a la declaración de impresión"
+      },
+      {
+        "text": "Imprime: 43",
+        "hint": "El código se atascará antes de imprimir"
+      },
+      {
+        "text": "Error de compilación",
+        "hint": "El código es sintácticamente correcto"
+      },
+      {
+        "text": "Pánico en tiempo de ejecución",
+        "hint": "Es peor que un pánico"
+      },
+      {
+        "text": "Bloqueo mutuo"
+      }
+    ],
+    "questionProse": [
+      "¿Qué sucede cuando se ejecuta este código?"
+    ],
+    "explanationProse": [
+      "Este código demuestra un escenario clásico de bloqueo mutuo. Así es como solucionarlo:",
+      "Mejores prácticas para prevenir bloqueos mutuos:\n      1. Mantén las secciones críticas pequeñas\n      2. Libera los bloqueos rápidamente usando ámbitos\n      3. Adquiere múltiples bloqueos en un orden consistente\n      4. Usa parking_lot::Mutex para mejor rendimiento\n      5. Considera usar RwLock para cargas de trabajo con muchas lecturas\n\n      Patrones comunes:"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Arc y Mutex\",\n  \"group\": \"Punteros Inteligentes\",\n  \"options\": [\n    {\n      \"text\": \"Imprime: 42\",\n      \"hint\": \"El código nunca llegará a la declaración de impresión\"\n    },\n    {\n      \"text\": \"Imprime: 43\",\n      \"hint\": \"El código se atascará antes de imprimir\"\n    },\n    {\n      \"text\": \"Error de compilación\",\n      \"hint\": \"El código es sintácticamente correcto\"\n    },\n    {\n      \"text\": \"Pánico en tiempo de ejecución\",\n      \"hint\": \"Es peor que un pánico\"\n    },\n    {\n      \"text\": \"Bloqueo mutuo\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Qué sucede cuando se ejecuta este código?\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"rust\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"explanationProse\": [\n    \"Este código demuestra un escenario clásico de bloqueo mutuo. Así es como solucionarlo:\",\n    \"Mejores prácticas para prevenir bloqueos mutuos:\\n      1. Mantén las secciones críticas pequeñas\\n      2. Libera los bloqueos rápidamente usando ámbitos\\n      3. Adquiere múltiples bloqueos en un orden consistente\\n      4. Usa parking_lot::Mutex para mejor rendimiento\\n      5. Considera usar RwLock para cargas de trabajo con muchas lecturas\\n\\n      Patrones comunes:\"\n  ],\n  \"explanationCode\": [\n    {\n      \"language\": \"rust\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    },\n    {\n      \"language\": \"rust\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 876,
+    "outputTokens": 1316,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 7240
+  },
+  "cost": {
+    "inputUsd": 0.00012264,
+    "outputUsd": 0.00036848,
+    "totalUsd": 0.0004911200000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

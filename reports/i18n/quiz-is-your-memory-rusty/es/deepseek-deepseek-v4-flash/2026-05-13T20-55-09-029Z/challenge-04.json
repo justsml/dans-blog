@@ -1,0 +1,49 @@
+{
+  "index": 3,
+  "attempt": 1,
+  "originalTitle": "Implicit Lifetimes",
+  "translatedTitle": "Vidas implícitas",
+  "translation": {
+    "title": "Vidas implícitas",
+    "group": "Elisión de tiempos de vida",
+    "options": [
+      {
+        "text": "Compila correctamente"
+      },
+      {
+        "text": "Error: falta el especificador de tiempo de vida",
+        "hint": "Recuerda las reglas de elisión de tiempos de vida: ¡están aquí para ayudarte!"
+      },
+      {
+        "text": "Error: se requiere un tiempo de vida explícito",
+        "hint": "El compilador puede resolver esto automáticamente"
+      },
+      {
+        "text": "Error: discrepancia de tiempos de vida",
+        "hint": "Los tiempos de vida coinciden perfectamente aquí"
+      }
+    ],
+    "questionProse": [
+      "¿Compilará este código? Si es así, ¿por qué? Si no, ¿qué está mal?"
+    ],
+    "explanationProse": [
+      "Este código compila correctamente gracias a las reglas de elisión de tiempos de vida de Rust. \n      Estas reglas permiten al compilador inferir automáticamente los tiempos de vida en patrones comunes.\n\n      Las tres reglas de elisión de tiempos de vida son:\n      1. Cada parámetro obtiene su propio parámetro de tiempo de vida\n      2. Si hay exactamente un parámetro de tiempo de vida de entrada, ese tiempo de vida se asigna a todos los parámetros de tiempo de vida de salida\n      3. Si hay múltiples parámetros de tiempo de vida de entrada, pero uno de ellos es &self o &mut self, el tiempo de vida de self se asigna a todos los parámetros de tiempo de vida de salida\n\n      Esta función es equivalente a:",
+      "Patrones comunes donde funciona la elisión:",
+      "Mejor práctica: Deja que la elisión trabaje para ti cuando sea posible, pero entiende cuándo se necesitan tiempos de vida explícitos."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Vidas implícitas\",\n  \"group\": \"Elisión de tiempos de vida\",\n  \"options\": [\n    {\n      \"text\": \"Compila correctamente\"\n    },\n    {\n      \"text\": \"Error: falta el especificador de tiempo de vida\",\n      \"hint\": \"Recuerda las reglas de elisión de tiempos de vida: ¡están aquí para ayudarte!\"\n    },\n    {\n      \"text\": \"Error: se requiere un tiempo de vida explícito\",\n      \"hint\": \"El compilador puede resolver esto automáticamente\"\n    },\n    {\n      \"text\": \"Error: discrepancia de tiempos de vida\",\n      \"hint\": \"Los tiempos de vida coinciden perfectamente aquí\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Compilará este código? Si es así, ¿por qué? Si no, ¿qué está mal?\"\n  ],\n  \"explanationProse\": [\n    \"Este código compila correctamente gracias a las reglas de elisión de tiempos de vida de Rust. \\n      Estas reglas permiten al compilador inferir automáticamente los tiempos de vida en patrones comunes.\\n\\n      Las tres reglas de elisión de tiempos de vida son:\\n      1. Cada parámetro obtiene su propio parámetro de tiempo de vida\\n      2. Si hay exactamente un parámetro de tiempo de vida de entrada, ese tiempo de vida se asigna a todos los parámetros de tiempo de vida de salida\\n      3. Si hay múltiples parámetros de tiempo de vida de entrada, pero uno de ellos es &self o &mut self, el tiempo de vida de self se asigna a todos los parámetros de tiempo de vida de salida\\n\\n      Esta función es equivalente a:\",\n    \"Patrones comunes donde funciona la elisión:\",\n    \"Mejor práctica: Deja que la elisión trabaje para ti cuando sea posible, pero entiende cuándo se necesitan tiempos de vida explícitos.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 928,
+    "outputTokens": 2184,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 12805
+  },
+  "cost": {
+    "inputUsd": 0.00012992,
+    "outputUsd": 0.00061152,
+    "totalUsd": 0.0007414400000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

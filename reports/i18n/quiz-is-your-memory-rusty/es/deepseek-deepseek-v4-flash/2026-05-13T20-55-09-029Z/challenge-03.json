@@ -1,0 +1,49 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "Mutable References",
+  "translatedTitle": "Referencias Mutables",
+  "translation": {
+    "title": "Referencias Mutables",
+    "group": "Préstamo",
+    "options": [
+      {
+        "text": "Compila exitosamente",
+        "hint": "¿Podemos tener múltiples referencias mutables al mismo tiempo?"
+      },
+      {
+        "text": "Error: no se puede tomar prestado `wisdom` como mutable más de una vez"
+      },
+      {
+        "text": "Error: falta el especificador de vida útil",
+        "hint": "El problema aquí no es sobre los lifetimes"
+      },
+      {
+        "text": "Pánico en tiempo de ejecución",
+        "hint": "Rust detecta estos problemas en tiempo de compilación"
+      }
+    ],
+    "questionProse": [
+      "¿Qué sucede con múltiples referencias mutables?",
+      "Piensa en las reglas de Rust para referencias mutables."
+    ],
+    "explanationProse": [
+      "Este código viola las reglas fundamentales de préstamo de Rust:\n      - Solo UNA referencia mutable a un valor a la vez\n      - O cualquier número de referencias inmutables\n      - Las referencias no pueden sobrevivir a su referente\n\n      Así es como se corrige el código:\n\n      1. Usa ámbito secuencial:",
+      "2. O modifica el string en un solo préstamo:"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Referencias Mutables\",\n  \"group\": \"Préstamo\",\n  \"options\": [\n    {\n      \"text\": \"Compila exitosamente\",\n      \"hint\": \"¿Podemos tener múltiples referencias mutables al mismo tiempo?\"\n    },\n    {\n      \"text\": \"Error: no se puede tomar prestado `wisdom` como mutable más de una vez\"\n    },\n    {\n      \"text\": \"Error: falta el especificador de vida útil\",\n      \"hint\": \"El problema aquí no es sobre los lifetimes\"\n    },\n    {\n      \"text\": \"Pánico en tiempo de ejecución\",\n      \"hint\": \"Rust detecta estos problemas en tiempo de compilación\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Qué sucede con múltiples referencias mutables?\",\n    \"Piensa en las reglas de Rust para referencias mutables.\"\n  ],\n  \"explanationProse\": [\n    \"Este código viola las reglas fundamentales de préstamo de Rust:\\n      - Solo UNA referencia mutable a un valor a la vez\\n      - O cualquier número de referencias inmutables\\n      - Las referencias no pueden sobrevivir a su referente\\n\\n      Así es como se corrige el código:\\n\\n      1. Usa ámbito secuencial:\",\n    \"2. O modifica el string en un solo préstamo:\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 906,
+    "outputTokens": 1226,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 7144
+  },
+  "cost": {
+    "inputUsd": 0.00012684000000000003,
+    "outputUsd": 0.00034328000000000006,
+    "totalUsd": 0.0004701200000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
