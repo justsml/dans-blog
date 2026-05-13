@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: guerrilla-types-in-typescript
+- Locale: de
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2023-09-06--guerrilla-types-in-typescript/de/index.mdx
+- Validation: passed
+- Runtime seconds: 17.61
+- Input tokens: 10059
+- Output tokens: 3243
+- Thinking tokens: unknown
+- Cached input tokens: 2816
+- Cache write tokens: 0
+- Estimated cost: $0.000976
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Guerrilla‑Typen in TypeScript
@@ -297,3 +315,4 @@ Sie fragen sich vielleicht: Sind das gute Muster? Soll ich einige dieser Ideen �
 - [TypeScript‑Tipps für Legacy‑Projekte: Nur das, was Sie brauchen](https://sergiocarracedo.es/typescript-tips/)
 - [Matt Pococks exzellentes neues Buch](https://www.totaltypescript.com/books/total-typescript-essentials)
 - [Total TypeScript Tipps](https://www.totaltypescript.com/tips)
+````
