@@ -4,10 +4,10 @@
 - Model: openrouter/openai/gpt-oss-120b:nitro
 - Target: src/content/posts/2019-11-26--javascript-promises-quiz/ja/index.mdx
 - Validation: rejected: direct AI SDK translation failed
-- Runtime seconds: 7.98
-- Input tokens: 8648
-- Output tokens: 5694
+- Runtime seconds: 14.36
+- Input tokens: 8448
+- Output tokens: 5519
 - Thinking tokens: unknown
-- Cached input tokens: 1536
-- Estimated cost: $0.001362
+- Cached input tokens: 0
+- Estimated cost: $0.001323
 - Note: Command failed: bun run i18n:validate --slug javascript-promises-quiz --locale ja
