@@ -1,0 +1,30 @@
+{
+  "selectedCommit": "d8f2f28ac8fa38473647f4477b7dbb1dd7e6b9c5",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The candidate d8f2f28ac8fa38473647f4477b7dbb1dd7e6b9c5 provides the most natural and professional Hindi translation. It avoids the awkward Hinglish phrasing found in the 'current' version (e.g., 'jaise saved locations' or 'work done मान लेते हैं') and uses appropriate technical terminology while maintaining readability. It also correctly preserves all MDX structures and heading counts.",
+  "slug": "mastra-mcp-tool-integrations",
+  "locale": "hi",
+  "candidateCommits": [
+    "d8f2f28ac8fa38473647f4477b7dbb1dd7e6b9c5",
+    "5d47c4b7618819a4b84218476a2125113beecfb5",
+    "40e031e429539adb39f0015a0d3f1f9fa096e39c",
+    "ddda3b80731db5927eb4b9065c4b5203e7acfd5e",
+    "a95fb8f753baa5d4cbe663fca581444d5ff5bf93"
+  ],
+  "suggestionLog": [],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug mastra-mcp-tool-integrations --locale hi --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug mastra-mcp-tool-integrations --locale hi --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug mastra-mcp-tool-integrations --locale hi --skip-global\n207 |     ...targetContents.matchAll(/=[\"']\\.\\/(?!\\.)[^\"']+\\.(?:avif|gif|jpe?g|png|svg|webp)[\"']/g),\n208 |   ];\n209 | \n210 |   if (nestedAssetReferences.length === 0) return;\n211 | \n212 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2026-01-04--mastra-mcp-tool-integrations/hi/index.mdx uses ./ asset paths inside a locale folder. Use ../ for inherited post assets.\n      at assertNestedAssetPaths (/Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:212:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}
