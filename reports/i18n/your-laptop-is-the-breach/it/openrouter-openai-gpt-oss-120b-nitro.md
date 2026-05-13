@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: your-laptop-is-the-breach
+- Locale: it
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-05-09--your-laptop-is-the-breach/it/index.mdx
+- Validation: passed
+- Runtime seconds: 12.85
+- Input tokens: 38595
+- Output tokens: 7211
+- Thinking tokens: unknown
+- Cached input tokens: 20736
+- Cache write tokens: 0
+- Estimated cost: $0.002803
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Il tuo laptop è la falla
 subTitle: >-
@@ -332,3 +350,4 @@ Dagli limiti in linea con la produzione.
 - [Little Snitch](https://obdev.at/products/littlesnitch/)
 - [Portmaster](https://safing.io/)
 - [Permessi di Claude Code](https://code.claude.com/docs/en/permissions)
+````
