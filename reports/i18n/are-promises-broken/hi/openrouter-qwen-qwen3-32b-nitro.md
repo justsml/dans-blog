@@ -1,0 +1,247 @@
+# Translation Candidate
+- Slug: are-promises-broken
+- Locale: hi
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2018-10-06--are-promises-broken/hi/index.mdx
+- Validation: passed
+- Runtime seconds: 24.54
+- Input tokens: 10144
+- Output tokens: 11032
+- Thinking tokens: unknown
+- Cached input tokens: 1024
+- Cache write tokens: 0
+- Estimated cost: $0.003459
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: वचन तोड़े गए?
+unlisted: true
+subTitle: 'त्रुटियाँ अनदेखी कर दी गई हैं, परिणाम खो देना...'
+date: '2018-10-06'
+modified: '2024-12-11'
+tags:
+  - promises
+  - javascript
+  - errors
+  - programming
+category: Code
+subCategory: promises
+cover: ../lennart-heim-766366-unsplash.webp
+cover_mobile: ../w300_lennart-heim-766366-unsplash.webp
+cover_icon: ../icon_lennart-heim-766366-unsplash.webp
+---
+## जावास्क्रिप्ट प्रमिस टूटे हुए हैं?
+
+### पहले के दिनों में
+
+प्रमिस के बारे में सबसे आम मिथक यह है कि इनके **त्रुटि के कमजोर पक्ष** का आरोप है।
+
+**कई साल पहले** प्रमिस वास्तव में त्रुटियों के साथ खराब थे। **इन्हें ठीक करने में बहुत मेहनत की गई।**
+
+> और फिर, **इसे ठीक कर दिया गया**, यहां तक कि **व्यापक रूप से तैनात कर दिया गया।
+
+#### लोग खुश हुए
+
+और दुर्भाग्य से, कुछ लोग ध्यान नहीं दे पाए।
+
+### अब के दौर
+
+मिथक अभी भी बरकरार है, मैंने इसे हर जगह देखा है: [मीडियम पर लोकप्रिय लेख](https://hackernoon.com/6-reasons-why-javascripts-async-await-blows-promises-away-tutorial-c7ec10518dd9), [dzone पर](#redacted), और [कई](https://medium.com/@avaq/broken-promises-2ae92780f33) अन्य स्रोतों पर।
+
+मैं स्वीकार करता हूं, यहां तक कि "अधिकारियों" द्वारा दिए गए संसाधनों और दस्तावेज़न भी अधिकांश [कमजोर उदाहरणों और बुरी आदतों](/promise-gotchas/) के साथ हैं। इनका उपयोग अक्सर प्रमिस के खिलाफ तर्क को साबित करने के लिए किया जाता है। कुछ लोग तो ऐसे "उपाय" भी सुझाते हैं जो चीजें बहुत खराब कर देते हैं। (नोट: लिंक हटा दिया गया है)
+
+<!-- मैंने कई बार एक ऐसा सुझाव देखा है: कभी भी `.catch` का उपयोग न करें, बल्कि `"unhandledRejection"` ग्लोबल ईवेंट का उपयोग करें। **कभी भी** ऐसा न करें। unhandledRejection का उपयोग आवश्यक बंद होने से पहले डेटाबेस कनेक्शन जैसे ग्लोबल रेफरेंस की सफाई के लिए डिज़ाइन किया गया है।) -->
+
+<br />
+<br />
+
+## नियम: समस्याओं से दूर रहने के लिए  
+
+1. [प्रमिस को कुछ ऐसा चाहिए जिस पर टिका रहे](#1-promises-need-something-to-hang-on-to)  
+    * **हमेशा** अपने फ़ंक्शन से `return` करें।  
+1. [वास्तविक `Error` इंस्टेंस का उपयोग करें](#2-use-real-error-instances)  
+    * **हमेशा** `Error` इंस्टेंस का उपयोग करें।  
+1. [उस जगह त्रुटियाँ संभालें जहाँ यह बनता है](#3-handle-errors-where-it-makes-sense)  
+    * **हमेशा** `.catch()` का उपयोग करें, कम से कम एक बार।  
+1. [नामित फ़ंक्शन के साथ स्पष्टता जोड़ें 🦄✨](#4-add-clarity-with-named-functions-)  
+    * __प्राथमिकता दें__ नामित फ़ंक्शन को।  
+
+-------------------------------------------  
+
+#### #1 प्रमिस को कुछ ऐसा चाहिए जिस पर टिका रहे  
+
+यह आवश्यक है कि आप **हमेशा `return`** करें अपने फ़ंक्शन से।  
+
+`.then(callback)` और `.catch(callback)` में प्रमिस कॉलबैक फ़ंक्शन एक निश्चित पैटर्न के अनुसार काम करते हैं।
+
+प्रत्येक वापसी मूल्य अगले `.then()` के कॉलबैक में पास हो जाता है।
+
+```js
+function addTen(number) {
+  return number + 10;
+}
+
+Promise.resolve(10)  // 10
+  .then(addTen)      // 20
+  .then(addTen)      // 30
+  .then(addTen)      // 40
+  .then(console.log) // logs "40"
+```
+
+> "हमेशा वापसी करने" का लाभ: यूनिट टेस्ट करना बहुत आसान हो जाता है।
+
+**प्रश्न:** कितने अलग-अलग प्रमिस स्थितियाँ (सुलझाए गए & अस्वीकृत) बनाई गईं?
+
+**प्रश्न:** पिछले उदाहरण में कितने प्रमिस बनाए गए थे?
+
+#### #2 वास्तविक `Error` उदाहरणों का उपयोग करें
+
+जावास्क्रिप्ट में त्रुटियों के आसपास एक रोचक व्यवहार है (जो असिंक्रोनस और सिंक्रोनस दोनों कोड में लागू होता है।)
+
+[<i>repl.it में उदाहरण देखें: `throwing errors in javascript`</i>](https://repl.it/@justsml/throwing-errors-in-javascript)
+<img alt="throwing errors in javascript" src="../throwing-errors-in-javascript.webp" />
+
+कॉल स्टैक और लाइन नंबर के बारे में **उपयोगी विवरण प्राप्त करने** के लिए, आपको `Error` इंस्टेंस का उपयोग करना होगा। स्ट्रिंग फेंकने काम नहीं करते हैं जैसे कि पायथन या रूबी में।
+
+जावास्क्रिप्ट **सीधा तौर पर** `throw "string"` को संभालता है, आप अपने `catch` हैंडलर में स्ट्रिंग देखेंगे। हालांकि, डेटा ही आपको दिखाई देगा। कोई पूर्व [स्टैक फ्रेम](https://en.wikipedia.org/wiki/Call_stack#Stack_and_frame_pointers) शामिल नहीं होगा।
+
+सही `new Error` उदाहरण:
+
+```js
+throw new Error('message')           // ✅
+Promise.reject(new Error('message')) // ✅
+throw Error('message')               // ✅
+Promise.reject(Error('message'))     // ✅
+```
+
+निम्नलिखित आम अनुचित पैटर्न हैं:
+
+```js
+throw 'error message'  // ❌
+Promise.reject(-42)    // ❌
+```
+
+<iframe height="400px" width="100%" src="https://repl.it/@justsml/throwing-errors-in-javascript?lite=true" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals"></iframe>
+
+#### #3 त्रुटियों का उपयोग जहां बनता है वहां करें
+
+प्रमिस त्रुटियों के उपयोग के लिए एक सुंदर तरीका प्रदान करते हैं, `.catch()` का उपयोग करके। यह आधार रूप से `.then()` का एक विशेष प्रकार है - जहां पूर्ववर्ती `.then()` की कोई भी त्रुटियां नियंत्रित की जाती हैं। एक उदाहरण देखते हैं...
+
+```js
+Promise.resolve(42)
+  .then(() => 'hello')
+  .catch(() => console.log('will not get hit'))
+  .then(() => throw new Error('totes fail'))
+  .catch(() => console.log('WILL get hit'))
+```
+
+हालांकि `.catch()` एक डोम घटना हैंडलर (जैसे `click`, `keypress`) की तरह लग सकता है। इसकी स्थिति महत्वपूर्ण है, क्योंकि यह केवल 'पकड़' सकता है जो ऊपर फेंका गया हो।
+
+**त्रुटियों का अतिलेखन अपेक्षाकृत सरल है** अपने `.catch()` कॉलबैक में एक गैर-त्रुटि मान लौटाएं, प्रमिस श्रृंखला अगले `.then()` कॉलबैक के क्रम में चलना शुरू कर देती है। (सक्रिय रूप से।)
+
+निम्न उदाहरण के क्रम का अनुसरण करने की कोशिश करें:
+
+```js
+Promise.resolve(42)
+  .then(() => 'hello')
+  .then(() => throw new Error('totes fail'))
+  .catch(() => {
+    return 99
+  })
+  .then(num => num + 1)
+  .then(console.log) // अपेक्षित आउटपुट: 100
+```
+
+**क्रम को समझना महत्वपूर्ण है।**
+
+हालांकि यह एक हास्यास्पद उदाहरण है, लेकिन इसका उद्देश्य **त्रुटियों और डेटा के प्रवाह को कैसे दर्शाना है**।
+
+यहां अनुक्रम का एक आउटलाइन है:
+
+1. 42 प्रारंभिक मान है।  
+1. `hello` अगली विधि द्वारा हमेशा लौटाया जाता है।  
+1. हम पिछले मान को अनदेखा करते हैं, और `'totes fail'` संदेश के साथ एक त्रुटि फेंक देते हैं।  
+1. `.catch()` त्रुटि को अवरुद्ध करता है, बजाय `99` को लौटाता है जो कि किसी भी अगले `.then()` द्वारा संसाधित होगा।  
+1. `num` को बढ़ाएं, `100` लौटाते हैं  
+1. विधि `console.log` `100` प्राप्त करती है और इसे प्रिंट करती है! :tada:  
+
+**प्रश्न:** जब 2 `.catch()` क्रम में हों तो क्या होता है? क्या दूसरा कभी चल सकता है? क्या आप एक उपयोग के मामले की कल्पना कर सकते हैं?  
+
+**प्रश्न:** `.catch()` कैसे त्रुटियों को अनदेखा कर सकता है? आप कैसे त्रुटियों को `Promise.all` के अग्रिम निकास से रोकेंगे?  
+
+#### #4 नामित फ़ंक्शनों के साथ स्पष्टता जोड़ें 🦄✨
+
+निम्नलिखित 2 उदाहरणों की पठनीयता की तुलना करें:  
+
+**अनामित:** ❌  
+
+```js
+Promise.resolve(10)          // 10
+  .then(x => x * 2)          // 20
+  .then(x => x / 4)          // 5
+  .then(x => x * x)          // 25
+  .then(x => x.toFixed(2))   // "25.00"
+  .then(x => console.log(x)) // expected output: "25.00"
+```  
+
+**नामित:** ✅  
+
+```js
+Promise.resolve(10) // 10
+  .then(double)     // 20
+  .then(quarter)    // 5
+  .then(square)     // 25
+  .then(format)     // "25.00"
+  .then(log)        // expected output: "25.00"
+
+const double = x => x * 2
+const quarter = x => x / 4
+const square = x => x * x
+const format = x => x.toFixed(2)
+const log = x => console.log(x)
+```  
+
+**बोनस:** ✅  
+
+> सरणी विधि संगत!!!  
+
+आप अपने नामित फ़ंक्शन को `Array.prototype.` से हमारे दोस्तों के साथ पुनः उपयोग कर सकते हैं। शामिल `.map()`, `.filter()`, `.every()`, `.some()`, `.find()`!
+
+कलेक्शन पाइपलाइन्स #FTW:
+
+```js
+// यह वही चीज़ है :mindblown:
+
+[10, 20]           // [ 10, 20 ]
+  .map(double)     // [ 20, 40 ]
+  .map(quarter)    // [ 5, 10 ]
+  .map(square)     // [ 25, 100 ]
+  .map(format)     // [ "25.00", "100.00" ]
+  .map(log)        // अपेक्षित 2 पंक्तियाँ आउटपुट: "25.00", "100.00"
+
+```
+
+अगर आप ऐसा रैखिक-शैली कोडिंग नहीं करना चाहते हैं... तो आपके पास सरल फ़ंक्शन हैं!
+
+आप जैसा चाहें उनका उपयोग कर सकते हैं:
+
+```js
+// नेस्टिंग पैटर्न
+// ❌ कृपया ऐसा न करें, हालाँकि
+
+const result = format(square(quarter(double(10))))
+
+log(result)
+// अपेक्षित आउटपुट: "25.00"
+```
+
+**क्यों फ़ंक्शन नेस्टिंग एक एंटी-पैटर्न है?**
+
+1. कम लोगों के लिए समझने में आसान नहीं होता है
+2. git डिफ़्स आसानी से यह नहीं दिखाते कि कौन क्या बदला
+3. नेस्टेड फ़ंक्शन्स के मध्य डीबग करना या लॉग करना कठिन होता है
+````
