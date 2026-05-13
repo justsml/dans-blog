@@ -3,7 +3,7 @@
 - Locale: es
 - Model: openrouter/openai/gpt-oss-120b:nitro
 - Target: src/content/posts/2025-12-29--the-8-byte-timestamp-that-destroyed-our-database/es/index.mdx
-- Validation: deferred
+- Validation: rejected: direct AI SDK translation failed
 - Runtime seconds: 10.52
 - Input tokens: 10230
 - Output tokens: 2839
@@ -12,148 +12,142 @@
 - Cache write tokens: 0
 - Estimated cost: $0.000910
 - Pricing source: local-openrouter-estimate
-- Note: Generated through the direct AI SDK chunked translator.
+- Note: Command failed: git commit --only -m i18n candidate(es): the-8-byte-timestamp-that-destroyed-our-database via openrouter/openai/gpt-oss-120b:nitro -- reports/i18n/the-8-byte-timestamp-that-destroyed-our-database/es reports/i18n/the-8-byte-timestamp-that-destroyed-our-database/candidates.jsonl
 ## Raw Output
 
 ````mdx
 ---
-title: Tu marca de tiempo es una mentira
-subTitle: Lo que un billete de tren me enseñó sobre almacenar tiempo en bases de datos
-date: '2025-12-29'
-modified: '2026-01-12'
-tags:
-  - postgres
-  - postgresql
-  - databases
-  - timestamps
-  - timezones
-  - microservices
-  - debugging
+title: "Tu Marca de Tiempo es una Mentira"
+subTitle: "Lo que un billete de tren me enseñó sobre almacenar tiempo en bases de datos"
+date: 2025-12-29
+modified: 2026-01-12
+tags: [postgres, postgresql, databases, timestamps, timezones, microservices, debugging]
 category: Code
 subCategory: Databases
-social_image: ../desktop-social.webp
+social_image: desktop-social.webp
 cover_full_width: ../wide.webp
 cover_mobile: ../square.webp
 cover_icon: ../square.webp
 ---
+
 Estaba reservando un tren de Nueva York a Chicago cuando me di cuenta de por qué los tipos de marca de tiempo en Postgres son tan confusos. El billete mostraba:
 
-- Salida: 8:00 AM EST
-- Llegada: 7:30 PM CST  
-- Duración: 11 horas 30 minutos
+- Salida: 8:00 AM EST
+- Llegada: 7:30 PM CST  
+- Duración: 11 horas 30 minutos
 
-Tres formas diferentes de hablar del tiempo, todas en el mismo billete. Y cada una debe almacenarse de manera distinta en una base de datos.
+Tres formas diferentes de hablar sobre el tiempo, todas en el mismo billete. Y cada una necesita almacenarse de forma distinta en una base de datos.
 
-## La Pregunta que Nadie Se Hace Primero
+## La Pregunta que Nadie Hace Primero
 
-Tanto `TIMESTAMP` como `TIMESTAMPTZ` en Postgres ocupan exactamente 8 bytes con la misma precisión de microsegundos. Entonces, ¿por qué existen dos tipos?
+Tanto `TIMESTAMP` como `TIMESTAMPTZ` en Postgres ocupan exactamente 8 bytes con la misma precisión de microsegundos. ¿Entonces por qué existen dos tipos?
 
-Porque “¿qué hora es?” depende totalmente de lo que estés intentando comunicar.
+Porque "¿qué hora es?" depende completamente de lo que intentes comunicar.
 
-Cuando abordo ese tren en Nueva York, necesito saber que sale a las 8:00 AM hora del Este. Ese es el número que muestra el reloj de la estación y al que debo ajustarme. Cuando mi amiga me recoge en Chicago, ella necesita saber que llego a las 7:30 PM hora Central—ese es el número que marca *su* reloj. Y si estoy tratando de averiguar si tendré tiempo para leer mi libro, necesito saber que se trata de un viaje de once horas y media.
+Cuando subo a ese tren en Nueva York, necesito saber que sale a las 8:00 AM del Este. Ese es el número en el reloj de la estación que necesito coincidir. Cuando mi amiga me recoge en Chicago, ella necesita saber que llego a las 7:30 PM del Centro—ese es el número en *su* reloj. Y si intento averiguar si tendré tiempo para leer mi libro, necesito saber que es un viaje de once horas y media.
 
-Mismo tren. Mismo trayecto. Tres representaciones del tiempo completamente distintas.
+El mismo tren. El mismo viaje. Tres representaciones completamente diferentes del tiempo.
 
-## Qué Hace Realmente `TIMESTAMPTZ`
+## Lo que TIMESTAMPTZ Hace Realmente
 
-El truco con `TIMESTAMPTZ`—y no es lo que la mayoría piensa. No almacena la zona horaria. El nombre es engañoso.
+Aquí está el truco con `TIMESTAMPTZ`—y no es lo que la mayoría piensa. No almacena la zona horaria. El nombre es engañoso.
 
-Lo que hace es convertir cualquier hora que le pases a UTC antes de almacenarla, y luego la vuelve a convertir a la zona horaria de tu sesión al leerla. La parte “TZ” no se refiere al almacenamiento, sino al **soporte de conversión**.
+Lo que hace es convertir cualquier hora que le des a UTC antes de almacenarla, luego la convierte de vuelta a la zona horaria de tu sesión cuando la lees. La parte "TZ" no es sobre almacenamiento, es sobre **soporte de conversión**.
 
-Supongamos que guardas la salida de ese tren. Alguien en Tokio consulta tu base de datos y ve la salida en JST. Alguien en Londres la ve en GMT. Todos están mirando el mismo instante absoluto, solo expresado en su zona horaria configurada. Esto es ideal para registrar eventos: “¿cuándo se procesó este pago?” o “¿cuándo ocurrió esta solicitud API?”
+Digamos que estás almacenando esa salida del tren. Alguien en Tokio consulta tu base de datos y ve la salida en JST. Alguien en Londres la ve en GMT. Todos están mirando el mismo momento absoluto, solo expresado en su zona horaria configurada. Esto es perfecto para registrar eventos: "¿cuándo se procesó este pago?" o "¿cuándo ocurrió esta solicitud de API?"
 
-Pero, ¿qué pasa con el billete de tren? No quieres que la hora de salida cambie solo porque alguien lo consulta desde otra zona horaria. El tren parte a las 8:00 a.m. EST, punto. Eso no es un instante absoluto; es una promesa sobre lo que marcará el reloj en Grand Central.
+¿Pero qué hay de ese billete de tren? No quieres que la hora de salida cambie solo porque alguien la consulta desde una zona horaria diferente. El tren sale a las 8:00 AM del Este, punto. Eso no es un momento absoluto en el tiempo—es una promesa sobre qué dirá el reloj en Grand Central.
 
-## Almacenar lo que Realmente Significa
+## Almacenar lo que Realmente Necesitas
 
-Para ese viaje en tren, necesitas guardar cosas distintas según el propósito:
+Para ese viaje en tren, necesitas almacenar cosas diferentes para propósitos diferentes:
 
-- Los instantes absolutos (`departs_at` y `arrives_at` como `TIMESTAMPTZ`)
+- Los momentos absolutos (`departs_at` y `arrives_at` como `TIMESTAMPTZ`)
 - El contexto de visualización (`origin_timezone` y `destination_timezone` como texto)
-- La duración (un `INTERVAL` entre los dos instantes)
+- La duración (un `INTERVAL` entre los dos momentos)
 
-Así tu aplicación puede hacer lo que hace el billete de tren: mostrar “Sale a las 8:00 a.m. EST” convirtiendo el instante absoluto a la zona de origen, mostrar “Llega a las 7:30 p.m. CST” convirtiendo a la zona de destino, y mostrar “Duración: 11 h 30 m” directamente desde el intervalo.
+Ahora tu aplicación puede hacer lo que hace el billete de tren: mostrar "Sale 8:00 AM EST" convirtiendo el momento absoluto a la zona horaria de origen, mostrar "Llega 7:30 PM CST" convirtiendo a la zona horaria de destino, y mostrar "Duración: 11h 30m" directamente del intervalo.
 
-La persona que reserva el billete desde Tokio ve las mismas horas locales en cada estación. Eso es lo que necesita saber.
+La persona que reserva el billete desde Tokio ve las mismas horas locales en cada estación. Eso es lo que necesitan saber.
 
-## Por Qué tu Aplicación de Seguimiento de Vuelos se Equivocó
+## Por Qué tu App de Seguimiento de Vuelos se Equivocó
 
-¿Alguna vez notaste que algunas apps de seguimiento de vuelos muestran tu zona horaria durante el vuelo? Como si estuvieras sobre el Atlántico y dice “Hora actual: 4:32 p.m. GMT.” ¿A quién le importa? No estás en Greenwich, estás a 38 000 pies sobre el océano.
+¿Has notado cómo algunas apps de seguimiento de vuelos muestran tu zona horaria durante el vuelo? Como si estuvieras sobre el Atlántico y dijera "Hora actual: 4:32 PM GMT." ¿A quién le importa? No estás en Greenwich, estás a 38,000 pies en algún lugar sobre el océano.
 
 Lo que realmente quieres ver:
 - Tiempo transcurrido desde el despegue
 - Tiempo restante hasta el destino  
 - Qué hora será *allí* cuando aterrices
 
-Ninguno de esos es una conversión de zona horaria. Los dos primeros son **intervalos**—duraciones, no momentos. El último es una conversión de zona horaria, pero a un lugar específico, no a "tu zona horaria actual."
+Ninguno de esos son conversiones de zona horaria. Los dos primeros son **intervalos**—duraciones, no momentos. El último es una conversión de zona horaria, pero a un lugar específico, no a "tu zona horaria actual."
 
-¿Lo ves? Dos cálculos de intervalo (`NOW() - actual_departure` y `estimated_arrival - NOW()`), una conversión de zona horaria a un sitio concreto (`AT TIME ZONE destination_timezone`). Tu zona horaria actual no interviene.
+¿Lo ves? Dos cálculos de intervalo (`NOW() - actual_departure` y `estimated_arrival - NOW()`), una conversión de zona horaria a un lugar específico (`AT TIME ZONE destination_timezone`). Tu zona horaria actual no entra en eso.
 
-## Cuando la Hora del Reloj es lo que Realmente Necesitas
+## Cuando la Hora de Relocal es lo que Realmente Necesitas
 
-A los hoteles no les importan los momentos absolutos en el tiempo. Les importan las lecturas del reloj en su ubicación.
+Los hoteles no se preocupan por momentos absolutos en el tiempo. Les importan las lecturas del reloj en su ubicación.
 
-"El check‑in es después de las 3:00 p.m." no significa "el check‑in es 15 horas después de la medianoche UTC." Significa "cuando el reloj de nuestro vestíbulo marque las 3:00 p.m., puedes registrarte." Si tus servidores están en Virginia pero el hotel está en París, aún quieres que esa regla se dispare a las 3:00 p.m. *hora de París*.
+"Check-in después de las 3:00 PM" no significa "check-in 15 horas después de medianoche UTC." Significa "cuando el reloj en nuestro lobby diga 3:00 PM, puedes hacer check-in." Si tus servidores están en Virginia pero el hotel está en París, aún quieres que esa regla se dispare a las 3:00 PM *hora de París*.
 
-El tipo `TIME` (sin fecha ni zona horaria) representa exactamente eso: "una lectura en un reloj." Combínalo con un campo de texto de zona horaria ("Europe/Paris") y puedes aplicar políticas basadas en el reloj sin importar dónde vivan tus servidores. Pero también querrás columnas `TIMESTAMPTZ` para cuando los huéspedes realmente hagan check‑in y check‑out—esos son momentos absolutos que tu backend necesita rastrear.
+El tipo `TIME` (sin fecha ni zona horaria) representa exactamente esto: "una lectura en un reloj." Combínalo con un campo de texto de zona horaria ("Europe/paris"), y puedes aplicar políticas de hora de reloj independientemente de dónde vivan tus servidores. Pero también querrás columnas `TIMESTAMPTZ` para cuándo los huéspedes específicos realmente hacen check-in y check-out—esos son momentos absolutos que tu backend necesita rastrear.
 
 ## El Problema del Calendario
 
-Tengo un recordatorio recurrente para las 9:00 a.m.: "Revisar prioridades diarias." Quiero ese recordatorio a las 9:00 a.m. *dondequiera que esté*. Si viajo, debe seguir disparándose a las 9:00 a.m. hora local.
+Tengo un recordatorio recurrente configurado para las 9:00 AM: "Revisar prioridades diarias." Quiero ese recordatorio a las 9:00 AM *dondequiera que esté*. Si estoy viajando, debería dispararse igualmente a las 9:00 AM hora local.
 
-Pero también tengo un evento de calendario: "Reunión de equipo a las 10:00 a.m. EST." Mi compañero en Berlín necesita ver "4:00 p.m. CET" para ese mismo evento. La misma reunión, diferentes horas mostradas, porque este es un momento absoluto al que todos nos unimos.
+Pero también tengo un evento de calendario: "Reunión de equipo a las 10:00 AM EST." Mi compañero en Berlín necesita ver "4:00 PM CET" para ese mismo evento. La misma reunión, diferentes horas de visualización, porque este es un momento absoluto al que todos nos unimos.
 
-Dos tipos diferentesde eventos, dos estrategias de almacenamiento distintas. La reunión obtiene un `TIMESTAMPTZ`. El recordatorio usa un `TIME` más mi zona horaria actual. Evita intentar forzar ambos en el mismo campo.
+Dos tipos diferentes de eventos, dos estrategias de almacenamiento diferentes. La reunión obtiene un `TIMESTAMPTZ`. El recordatorio obtiene un `TIME` más mi configuración actual de zona horaria. Evita intentar forzar ambos en el mismo campo.
 
-## Lo que se rompe en producción
+## Lo que se Rompe en Producción
 
 Incluso con los tipos correctos, la precisión puede morderte. Postgres almacena microsegundos: `10:00:00.123456`. El objeto `Date` de JavaScript usa milisegundos: `10:00:00.123`.
 
-Así que esta consulta podría devolver misteriosamente cero filas:
+Así que esta consulta misteriosamente podría no devolver filas:
 
 ```sql
 SELECT * FROM orders WHERE created_at = '2026-01-15 10:00:00.123';
 ```
 
-La base de datos tiene `10:00:00.123456` y tu código pasa `10:00:00.123`. Dependiendo de cómo lo maneje el driver, esos valores pueden no coincidir.
+La base de datos tiene `10:00:00.123456` y tu código pasa `10:00:00.123`. Dependiendo de cómo tu driver lo maneje, esos podrían no coincidir.
 
-No uses igualdad exacta para timestamps. Usa consultas por rangos, o—mejor—no busques registros por su marca de tiempo de creación en absoluto. Emplea una restricción única adecuada o una clave de idempotencia.
+No uses igualdad exacta para marcas de tiempo. Usa consultas de rango, o—mejor—aún—no busques registros por su marca de tiempo de creación. Usa una restricción única adecuada o clave de idempotencia.
 
-## Reglas prácticas
+## Reglas Prácticas
 
-**Predetermina TIMESTAMPTZ.** Cuando tengas dudas, usa `TIMESTAMPTZ`. Gestiona despliegues multirregión, cambios de horario de verano y futuras variaciones de zona horaria de forma automática. Tiene el mismo tamaño de almacenamiento que `TIMESTAMP`, así que no hay penalización.
+**Usa TIMESTAMPTZ por defecto.** Cuando dudes, usa `TIMESTAMPTZ`. Maneja despliegues multi-región, horario de verano, y cambios futuros de zona horaria automáticamente. Es el mismo tamaño de almacenamiento que `TIMESTAMP`, así que no hay penalización.
 
-**Almacena el contexto por separado.** Si necesitas mostrar “Sale a las 8:00 AM EST” junto al momento real, guarda tanto el `TIMESTAMPTZ` como la `origin_timezone` en columnas distintas. No intentes codificar todo en un solo campo.
+**Almacena contexto por separado.** Si necesitas mostrar "Sale 8:00 AM EST" junto con el momento actual, almacena tanto el `TIMESTAMPTZ` como el `origin_timezone` como columnas separadas. No intentes codificar todo en un solo campo.
 
-**Piensa en intervalos.** Muchos requisitos de tiempo en realidad tratan sobre duraciones, no momentos. “¿Cuánto tiempo lleva pendiente?” “¿Cuándo expirará?” Usa operaciones `INTERVAL`, no conversiones de zona horaria.
+**Piensa en intervalos.** Muchos requisitos relacionados con el tiempo son realmente sobre duración, no momentos. "¿Cuánto tiempo ha estado esto pendiente?" "¿Cuándo expirará esto?" Usa operaciones `INTERVAL`, no conversiones de zona horaria.
 
-**Ejecuta todo en UTC.** Tus servidores deben estar configurados en UTC. Las sesiones de tu base de datos deben usar UTC por defecto. Sólo convierte a zonas horarias locales al mostrarlas a los usuarios, y solo cuando sabes cuál zona horaria es relevante.
+**Ejecuta todo en UTC.** Tus servidores deberían estar configurados en UTC. Tus sesiones de base de datos deberían usar UTC por defecto. Solo convierte a zonas horarias locales al mostrar a usuarios, y solo cuando sepas qué zona horaria importa.
 
-**Exige información de zona horaria de los clientes.** Si un cliente envía `2026-01-15T10:00:00` sin un desplazamiento, recházalo. Exige el formato ISO‑8601 con `Z` o con un desplazamiento explícito como `-05:00`. No adivines.
+**Requiere información de zona horaria de los clientes.** Si un cliente envía `2026-01-15T10:00:00` sin un offset, recházalo. Requiere formato ISO-8601 con `Z` o un offset explícito como `-05:00`. No adivines.
 
-## Enforcing Good Defaults
+## Forzar Buenos Valores por Defecto
 
-Si `TIMESTAMPTZ` es tu valor por defecto (y debería serlo), considera reforzarlo a nivel de base de datos. Un disparador que rechace columnas `TIMESTAMP WITHOUT TIME ZONE` suena extremo, pero atrapar el “olvidé agregar TZ” en el momento de crear el esquema es mejor que depurarlo seis meses después cuando alguien añade una tabla nueva y se olvida.
+Si `TIMESTAMPTZ` es tu valor por defecto (y debería serlo), considera forzarlo a nivel de base de datos. Un trigger que rechace columnas `TIMESTAMP WITHOUT TIME ZONE` suena extremo, pero detectar "olvidé agregar TZ" en la creación del esquema es mejor que depurarlo seis meses después cuando alguien agrega una nueva tabla y se olvida.
 
-## What That Train Ticket Taught Me
+## Lo que ese Billete de Tren me Enseñó
 
-El tiempo en las bases de datos no es difícil porque los timestamps son complicados. Es difícil porque normalmente almacenamos múltiples preocupaciones en un solo campo, o no pensamos en lo que realmente queremos mostrar a los usuarios.
+El tiempo en bases de datos no es difícil porque las marcas de tiempo sean complicadas. Es difícil porque usualmente estamos almacenando múltiples preocupaciones en un solo campo, o no pensamos en lo que realmente intentamos mostrar a los usuarios.
 
-Ese boleto de tren lo tenía claro: hora de salida en la zona horaria de origen, hora de llegada en la zona horaria de destino, y duración como un elemento totalmente separado. Tres piezas de información diferentes, cada una con su propio significado.
+Ese billete de tren lo tenía correcto: hora de salida en la zona horaria de origen, hora de llegada en la zona horaria de destino, y duración como algo completamente separado. Tres piezas diferentes de información, cada una significativa a su manera.
 
-Tu base de datos puede hacer lo mismo. Almacena los momentos absolutos como `TIMESTAMPTZ`. Almacena el contexto de visualización (zonas horarias, ubicaciones) en columnas separadas. Usa tipos `INTERVAL` para duraciones. Deja que Postgres haga las conversiones cuando las necesites, pero sé explícito sobre qué zona horaria importa para cada propósito.
+Tu base de datos puede hacer lo mismo. Almacena los momentos absolutos como `TIMESTAMPTZ`. Almacena el contexto de visualización (zonas horarias, ubicaciones) como columnas separadas. Usa tipos `INTERVAL` para duraciones. Deja que Postgres haga las conversiones cuando las necesites, pero sé explícito sobre qué zona horaria importa para qué propósito.
 
-La mayor parte del tiempo, eso implica `TIMESTAMPTZ` y UTC en todas partes, con conversiones de zona horaria solo en el momento de la presentación. Pero cuando necesitas tiempos de reloj de pared o programaciones recurrentes, existen los tipos `TIMESTAMP` o `TIME` precisamente por esa razón.
+La mayoría del tiempo, eso significa `TIMESTAMPTZ` y UTC en todas partes, con conversiones de zona horaria solo en el momento de visualización. Pero cuando necesitas horas de reloj o calendarios recurrentes, los tipos `TIMESTAMP` o `TIME` existen exactamente por esa razón.
 
-La clave es saber qué pregunta intentas responder: “¿Cuándo ocurrió esto?” vs. “¿A qué hora debo estar allí?” vs. “¿Cuánto tiempo tomará?” Son preguntas distintas sobre el tiempo, y a menudo requieren estrategias de almacenamiento diferentes.
+La clave es saber qué pregunta intentas responder: "¿Cuándo ocurrió esto?" vs. "¿A qué hora debería estar allí?" vs. "¿Cuánto tiempo tomará esto?" Son todas preguntas diferentes sobre el tiempo, y a menudo necesitan estrategias de almacenamiento diferentes.
 
-Piensa en lo que tus usuarios necesitan ver. Entonces almacena los datos que te permitan mostrárselos exactamente.
+Piensa en qué necesitan ver tus usuarios. Luego almacena los datos que te permitan mostrarles exactamente eso.
 
 ## Recursos
 
-- [Documentación de tipos de fecha/hora de PostgreSQL](https://www.postgresql.org/docs/current/datatype-datetime.html)
-- [Mejores prácticas para timestamps en PostgreSQL](https://wiki.postgresql.org/wiki/Don%27t_Do_This#Date.2FTime_storage)
-- [Formato de fecha y hora ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
-- [Base de datos de zonas horarias (IANA)](https://www.iana.org/time-zones)
-- [Manejo de timestamps en sistemas distribuidos](https://www.postgresql.org/docs/current/functions-datetime.html)
+- [Documentación de Tipos Fecha/Hora de PostgreSQL](https://www.postgresql.org/docs/current/datatype-datetime.html)
+- [Mejores Prácticas de Marca de Tiempo en PostgreSQL](https://wiki.postgresql.org/wiki/Don%27t_Do_This#Date.2FTime_storage)
+- [Formato de Fecha y Hora ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+- [Base de Datos de Zona Horaria (IANA)](https://www.iana.org/time-zones)
+- [Manejo de Marcas de Tiempo en Sistemas Distribuidos](https://www.postgresql.org/docs/current/functions-datetime.html)
 ````
