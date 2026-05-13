@@ -1,0 +1,50 @@
+{
+  "index": 11,
+  "attempt": 1,
+  "originalTitle": "Handling nulls",
+  "translatedTitle": "Обработка null",
+  "translation": {
+    "title": "Обработка null",
+    "group": "Парсинг",
+    "options": [
+      {
+        "text": "0 NaN"
+      },
+      {
+        "text": "0 0"
+      },
+      {
+        "text": "NaN NaN"
+      },
+      {
+        "text": "NaN 0"
+      },
+      {
+        "text": "null null"
+      },
+      {
+        "text": "TypeError"
+      }
+    ],
+    "questionProse": [
+      "Каков будет результат этого кода?"
+    ],
+    "explanationProse": [
+      "`parseInt` приводит ввод к строке, поэтому `null` становится `\"null\"`. Поскольку у `\"null\"` нет валидных десятичных символов (обычных цифр), он вернёт `NaN`.\n\n    `Number(null)` возвращает `0`. потому что JS любит держать вас в напряжении.\n    Почему? Ну, могу углубиться, если есть интерес."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Обработка null\",\n  \"group\": \"Парсинг\",\n  \"options\": [\n    {\n      \"text\": \"0 NaN\"\n    },\n    {\n      \"text\": \"0 0\"\n    },\n    {\n      \"text\": \"NaN NaN\"\n    },\n    {\n      \"text\": \"NaN 0\"\n    },\n    {\n      \"text\": \"null null\"\n    },\n    {\n      \"text\": \"TypeError\"\n    }\n  ],\n  \"questionProse\": [\n    \"Каков будет результат этого кода?\"\n  ],\n  \"explanationProse\": [\n    \"`parseInt` приводит ввод к строке, поэтому `null` становится `\\\"null\\\"`. Поскольку у `\\\"null\\\"` нет валидных десятичных символов (обычных цифр), он вернёт `NaN`.\\n\\n    `Number(null)` возвращает `0`. потому что JS любит держать вас в напряжении.\\n    Почему? Ну, могу углубиться, если есть интерес.\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 857,
+    "outputTokens": 567,
+    "cacheReadTokens": 384,
+    "cacheWriteTokens": 0,
+    "durationMs": 818
+  },
+  "cost": {
+    "inputUsd": 0.000033423,
+    "outputUsd": 0.00010206,
+    "totalUsd": 0.000135483,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

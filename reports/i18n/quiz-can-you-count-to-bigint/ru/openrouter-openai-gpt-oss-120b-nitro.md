@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-can-you-count-to-bigint
+- Locale: ru
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2024-11-06--quiz-can-you-count-to-bigint/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 9.84
+- Input tokens: 13381
+- Output tokens: 7830
+- Thinking tokens: unknown
+- Cached input tokens: 5760
+- Cache write tokens: 0
+- Estimated cost: $0.001931
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: 'Тест: Можно ли доверять JavaScript?'
@@ -415,3 +433,4 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 {/* <h4>Вы в порядке?</h4> */}
 
 <p class="inset">Нужен перерыв после такой дозы бинарных данных?<br />Пфф, помните: делайте перерыв *после* навыков! <br /><br />Загляните [в мой зал](/challenges/) и разберите ещё несколько задач! 💪</p>
+````
