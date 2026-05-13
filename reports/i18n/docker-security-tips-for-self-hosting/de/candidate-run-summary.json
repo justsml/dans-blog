@@ -4,16 +4,16 @@
   "slug": "docker-security-tips-for-self-hosting",
   "locale": "de",
   "startedAt": "2026-05-13T17:11:38.974Z",
-  "updatedAt": "2026-05-13T17:15:11.992Z",
+  "updatedAt": "2026-05-13T17:19:12.163Z",
   "modelsRequested": [
     "openrouter/openai/gpt-oss-120b:nitro",
     "openrouter/qwen/qwen3-32b:nitro",
     "deepseek/deepseek-v4-flash",
     "qwen/qwen3.6-plus"
   ],
-  "attemptedModels": 1,
+  "attemptedModels": 2,
   "skippedModels": 1,
-  "rejectedModels": 0,
+  "rejectedModels": 1,
   "candidateModels": 1,
   "totals": {
     "inputTokens": 25481,
@@ -22,13 +22,13 @@
     "cachedInputTokens": 512,
     "cacheWriteTokens": 0,
     "estimatedCostUsd": 0.007838,
-    "hasUnknownInputTokens": false,
-    "hasUnknownOutputTokens": false,
+    "hasUnknownInputTokens": true,
+    "hasUnknownOutputTokens": true,
     "hasUnknownThinkingTokens": true,
-    "hasUnknownCachedInputTokens": false,
-    "hasUnknownCacheWriteTokens": false,
-    "hasUnknownEstimatedCost": false,
-    "runtimeSeconds": "203.32"
+    "hasUnknownCachedInputTokens": true,
+    "hasUnknownCacheWriteTokens": true,
+    "hasUnknownEstimatedCost": true,
+    "runtimeSeconds": "443.33"
   },
   "attempts": [
     {
@@ -53,6 +53,17 @@
         },
         "estimatedCostUsd": 0.007837599999999998,
         "pricingSource": "local-openrouter-estimate"
+      }
+    },
+    {
+      "model": "deepseek/deepseek-v4-flash",
+      "status": "rejected",
+      "validationStatus": "rejected: direct AI SDK translation failed",
+      "reportPath": "reports/i18n/docker-security-tips-for-self-hosting/de/deepseek-deepseek-v4-flash.md",
+      "note": "Command failed after 240000ms: bun run i18n:translate:chunked -- --slug docker-security-tips-for-self-hosting --locale de --model deepseek/deepseek-v4-flash --chunk 6p --quiz-concurrency 24",
+      "telemetry": {
+        "runtimeSeconds": "240.01",
+        "tokens": {}
       }
     }
   ]
