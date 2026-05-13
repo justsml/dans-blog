@@ -1,6 +1,6 @@
 ---
-title: 'प्रश्नोत्तरी: आप आधुनिक जावास्क्रिप्ट जानते हैं?'
-subTitle: ''
+title: 'क्विज़: क्या आप आधुनिक जावास्क्रिप्ट जानते हैं?'
+subTitle: अपनीउत्कृष्ट जावास्क्रिप्ट कौशल साबित करें!
 label: ES2019+ Features
 social_image: ../desktop-social.webp
 category: Quiz
@@ -19,15 +19,15 @@ cover_full_width: ../christopher-burns-8KfCR12oeUM-unsplash-wide.webp
 cover_mobile: ../christopher-burns-8KfCR12oeUM-unsplash-square.webp
 cover_icon: ../christopher-burns-8KfCR12oeUM-unsplash-square.webp
 ---
-import Challenge from '../../../../components/QuizUI/Challenge';
-import QuizUI from '../../../../components/QuizUI/QuizUI';
+import Challenge from '../../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../../components/QuizUI/QuizUI';
 
 
-### क्या आप ES2015 से ES2022 तक जानते हैं?
+### क्या आप ES2015 और ES2022 में अंतर जानते हैं?
 
-* **अपने JavaScript कौशल साबित करें!** 🚀  
-* कोई लॉगिन या साइनअप आवश्यक नहीं है। ✨  
-* बहुविकल्पीय। 🤖 ... _कितना मुश्किल हो सकता है, ना?_
+* **अपनी JavaScript कौशल साबित करें!** 🚀
+* कोई लॉगिन या साइन‑अप नहीं चाहिए। ✨
+* बहुविकल्पीय प्रश्न। 🤖 … _कितना मुश्किल हो सकता है, है ना?_
 
 <QuizUI>
 
@@ -35,17 +35,17 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={0}
   group="ES2020"
-  title="न्यूल कोलेसिंग ऑपरेटर"
+  title="नल कोएलसिंग"
   options={[
     {text: '42'},
-    {text: 'न्यूल'},
-    {text: 'अपरिभाषित'},
+    {text: 'null'},
+    {text: 'undefined'},
     {text: '100', isAnswer: true},
   ]}
 >
   <slot name="question">
   <div className="question">
-    परिणाम का मान क्या है?
+    `result` का मान क्या है?
     ```js
         console.log(null ?? 100);
     ```
@@ -53,7 +53,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    न्यूल कोलेसिंग ऑपरेटर (`??`) दायां ओपरेंड (`b`) लौटाता है अगर बायां ओपरेंड (`a`) `न्यूल` या `अपरिभाषित` है। इस मामले में, `a` `न्यूल` है, इसलिए `परिणाम` `100` है।
+    नल कोएलसिंग ऑपरेटर (`??`) बाएँ हाथ के ऑपरेण्ड (`a`) यदि `null` या `undefined` हो तो दाएँ हाथ के ऑपरेण्ड (`b`) को लौटाता है। इस मामले में, `a` `null` है, इसलिए `result` `100` है।
   </div>
   </slot>
 </Challenge>
@@ -62,7 +62,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={1}
   group="ES2020"
-  title="Null Coalescing (शून्य संयोजन)"
+  title="नल कोएलसिंग"
   options={[
     {text: 'false', isAnswer: true},
     {text: '42'},
@@ -83,7 +83,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    शून्य संयोजन ऑपरेटर (`??`) झूठे मानों को जैसे `false` को वैध मान के रूप में देखता है। चूकि `value` `false` है, इसे वैध मान माना जाता है और वापस कर दिया जाता है।
+    नल कोएलसिंग ऑपरेटर (`??`) `false` जैसे फॉल्सी मानों को वैध मानता है। चूँकि `value` `false` है, इसे वैध मान माना जाता है और वापस किया जाता है।
   </div>
   </slot>
 </Challenge>
@@ -91,11 +91,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={2}
-  group="वैकल्पिक श्रृंखला"
-  title="वैकल्पिक श्रृंखला"
+  group="वैकल्पिक चेनिंग"
+  title="वैकल्पिक चेनिंग"
   options={[
     {text: 'undefined', isAnswer: true},
-    {text: 'त्रुटि: अपरिभाषित के संपत्ति पढ़ना असंभव है'},
+    {text: 'Error: Cannot read property of undefined'},
     {text: 'null'},
     {text: '100'},
   ]}
@@ -112,7 +112,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    वैकल्पिक श्रृंखला ऑपरेटर (`?.`) एवल्यूएशन को रोक देता है अगर बाएं हाथ की ओर `null` या `undefined` हो। चूंकि `obj.foo` `null` है, इसलिए `obj.foo?.bar` `undefined` के बराबर होता है।
+    वैकल्पिक चेनिंग ऑपरेटर (`?.`) बाएँ पक्ष `null` या `undefined` होने पर मूल्यांकन रोक देता है। चूँकि `obj.foo` `null` है, `obj.foo?.bar` `undefined` में मूल्यांकित होता है।
   </div>
   </slot>
 </Challenge>
@@ -121,12 +121,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={3}
   group="BigInt"
-  title="बिगइंट का उपयोग"
+  title="BigInt उपयोग"
   options={[
-    {text: 'TypeError: बिगइंट और संख्या को मिला नहीं सकते'},
+    {text: 'TypeError: BigInt और number को मिलाया नहीं जा सकता'},
     {text: '42n'},
     {text: '84n', isAnswer: true},
-    {text: 'अपरिभाषित'},
+    {text: 'undefined'},
   ]}
 >
   <slot name="question">
@@ -141,7 +141,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    बिगइंट मानों को एक संख्या में `n` जोड़कर बनाया जाता है। आप बिगइंट को सामान्य संख्याओं के साथ गणितीय संचालन में मिला नहीं सकते। यहाँ, दोनों मूल्य बिगइंट हैं, इसलिए गुणन काम करता है, जिससे `84n` प्राप्त होता है।
+    BigInt मान `n` को संख्या के अंत में जोड़कर बनाए जाते हैं। आप अंकगणितीय संचालन में BigInt को सामान्य संख्याओं के साथ मिला नहीं सकते। यहाँ, दोनों मान BigInt हैं, इसलिए गुणा काम करता है और परिणाम `84n` मिलता है।
   </div>
   </slot>
 </Challenge>
@@ -149,13 +149,13 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={4}
-  group="डाइनेमिक आयात"
-  title="डाइनेमिक आयात सिंटैक्स"
+  group="डायनामिक इम्पोर्ट"
+  title="डायनामिक इम्पोर्ट सिंटैक्स"
   options={[
     {text: 'SyntaxError'},
     {text: 'Promise'},
     {text: 'Module'},
-    {text: 'object', isAnswer: true},
+    {text: 'ऑब्जेक्ट', isAnswer: true},
     {text: 'undefined'},
   ]}
 >
@@ -170,7 +170,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `import()` फ़ंक्शन एक `Promise` लौटाता है जो मॉड्यूल ऑब्जेक्ट पर हल होता है। क्योंकि `Promise` ऑब्जेक्ट ऑब्जेक्ट होते हैं, `typeof modulePromise` `'object'` लॉग करता है।
+    `import()` फ़ंक्शन एक `Promise` लौटाता है जो मॉड्यूल ऑब्जेक्ट को रिजॉल्व करता है। क्योंकि `Promise` इंस्टेंस ऑब्जेक्ट होते हैं, `typeof modulePromise` `'object'` लॉग करता है।
   </div>
   </slot>
 </Challenge>
@@ -181,10 +181,10 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="Promise.allSettled"
   title="Promise.allSettled"
   options={[
-    {text: 'fulfilled: success', isAnswer: true, hint: 'सभी प्रमिस सफल हो जाते हैं'},
-    {text: 'Rejected: error', hint: 'एक प्रमिस अस्वीकृत हो जाता है'},
-    {text: 'Pending', hint: 'प्रमिस अभी तक पूरा नहीं हुआ है'},
-    {text: 'null', hint: 'कोई भी प्रमिस नहीं होता है'},
+    {text: 'पूरा हुआ: success', isAnswer: true},
+    {text: 'अस्वीकृत: error'},
+    {text: 'लंबित'},
+    {text: 'null'},
   ]}
 >
   <slot name="question">
@@ -203,7 +203,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `Promise.allSettled` प्रत्येक प्रमिस के परिणाम का वर्णन करने वाले वस्तुओं के एक ऐरे को लौटाता है। पहला प्रमिस `fulfilled` होता है और मान `'success'` होता है, इसलिए लॉग स्टेटमेंट `fulfilled: success` प्रिंट करेगा।
+    `Promise.allSettled` एक एरे लौटाता है जिसमें प्रत्येक प्रॉमिस के परिणाम का विवरण होता है। पहला प्रॉमिस `fulfilled` है और उसका मान `'success'` है, इसलिए लॉग स्टेटमेंट `fulfilled: success` प्रिंट करेगा।
   </div>
   </slot>
 </Challenge>
@@ -214,15 +214,15 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="String.matchAll"
   title="String.matchAll उपयोग"
   options={[
-    {text: 'मैचों की सरणी'},
-    {text: 'मैचों का आइटरेटर', isAnswer: true},
+    {text: 'मैचों की एरे'},
+    {text: 'मैचों का इटेरेटर', isAnswer: true},
     {text: 'त्रुटि: अमान्य कॉल'},
-    {text: 'नल'},
+    {text: 'null'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    str.matchAll() क्या लौटाता है?
+    `str.matchAll()` क्या लौटाता है?
     ```js
         const str = 'foo1bar2baz3';
         const matches = str.matchAll(/\d/g);
@@ -231,7 +231,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    String.matchAll एक मैच आइटरेटर लौटाता है, न कि एक सरणी। यह आइटरेटर एक स्ट्रिंग से सभी मैचिंग ग्रुप प्राप्त करने के लिए उपयोग किया जा सकता है।
+    `String.matchAll` एक एरे नहीं, बल्कि मैचों का इटेरेटर लौटाता है। इस इटेरेटर का उपयोग स्ट्रिंग से सभी मिलते‑जुलते समूह प्राप्त करने के लिए किया जा सकता है।
   </div>
   </slot>
 </Challenge>
@@ -239,8 +239,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={7}
-  group="इम्पोर्ट मेटा"
-  title="इम्पोर्ट मेटा उपयोग"
+  group="Import Meta"
+  title="Import Meta उपयोग"
   options={[
     {text: 'वर्तमान मॉड्यूल का URL', isAnswer: true},
     {text: 'वर्तमान टाइमस्टैम्प'},
@@ -250,7 +250,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    `import.meta.url` क्या प्रतिनिधित्व करता है?
+    `import.meta.url` क्या दर्शाता है?
     ```js
         console.log(import.meta.url);
     ```
@@ -258,7 +258,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `import.meta` एक ऑब्जेक्ट है जिसमें वर्तमान मॉड्यूल के बारे में मेटाडेटा होता है। `import.meta.url` प्रॉपर्टी वर्तमान मॉड्यूल के URL का प्रतिनिधित्व करती है, जिसका उपयोग स्क्रिप्ट कहाँ चल रही है उसकी जानकाना प्राप्त करने के लिए किया जा सकता है।
+    `import.meta` एक ऑब्जेक्ट है जो वर्तमान मॉड्यूल के मेटाडाटा को रखता है। `import.meta.url` प्रॉपर्टी वर्तमान मॉड्यूल का URL दर्शाती है, जिसका उपयोग स्क्रिप्ट कहाँ चल रही है, इसकी जानकारी पाने के लिए किया जा सकता है।
   </div>
   </slot>
 </Challenge>
@@ -266,8 +266,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={8}
-  group="तार्किक सौपना"
-  title="तार्किक सौपना"
+  group="तार्किक असाइनमेंट"
+  title="तार्किक असाइनमेंट"
   options={[
     {text: '5'},
     {text: '10', isAnswer: true},
@@ -277,7 +277,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    तार्किक सौपने के बाद `a` का मान क्या है?
+    तार्किक असाइनमेंट के बाद `a` का मान क्या होगा?
     ```js
         let a = null;
         a ||= 10;
@@ -287,7 +287,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    तार्किक OR सौपना (`||=`) तब दाहिने हाथ का मान निर्धारित करता है जब बाईं ओर का मान झूठा होता है (`null`, `undefined`, `0`, `false`, आदि)। चूँकि `a` `null` है, इसलिए इसे मान `10` निर्धारित किया जाता है।
+    तार्किक OR असाइनमेंट (`||=`) बाएँ वाले मान को तभी दाएँ वाले मान से बदलता है जब बाएँ वाला मान falsy हो (`null`, `undefined`, `0`, `false`, आदि)। चूँकि `a` `null` है, इसे मान `10` सौंपा जाता है।
   </div>
   </slot>
 </Challenge>
@@ -295,13 +295,13 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={9}
-  group="लॉजिकल नलिश असाइनमेंट"
-  title="लॉजिकल नलिश असाइनमेंट"
+  group="तार्किक नलिश असाइनमेंट"
+  title="तार्किक नलिश असाइनमेंट"
   options={[
     {text: '5'},
     {text: '10', isAnswer: true},
-    {text: 'undefined'},
-    {text: 'null'},
+    {text: 'अपरिभाषित'},
+    {text: 'नल'},
   ]}
 >
   <slot name="question">
@@ -316,7 +316,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    नलिश कोलेसिंग असाइनमेंट (`??=`) तब दाहिने हाथ का मान असाइन करता है जब बाएं हाथ का मान `null` या `undefined` हो। चूंकि `b` `null` है, इसलिए इसे मान `10` असाइन किया जाता है।
+    नलिश कोलेसिंग असाइनमेंट (`??=`) दाएँ‑हाथ का मान तब असाइन करता है जब बाएँ‑हाथ का मान `null` या `undefined` हो। चूँकि `b` `null` है, इसे मान `10` असाइन किया गया।
   </div>
   </slot>
 </Challenge>
@@ -325,7 +325,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={10}
   group="WeakRef"
-  title="WeakRef का उपयोग"
+  title="WeakRef उपयोग"
   options={[
     {text: 'ReferenceError'},
     {text: '{ data: \'important\' }', isAnswer: true},
@@ -345,7 +345,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `WeakRef` एक वस्तु का कमजोर संदर्भ प्रदान करता है, जिससे वस्तु को गैर-संदर्भित होने पर गार्बेज कलेक्शन किया जा सकता है। चूंकि यहाँ `obj` अभी भी मजबूत रूप से संदर्भित है, `deref()` मूल वस्तु लौटाता है। यदि लक्ष्य के द्वारा अधिक नियंत्रण होता, तो `deref()` `undefined` लौटाता।
+    `WeakRef` एक ऑब्जेक्ट का कमजोर संदर्भ प्रदान करता है, जिससे यदि अन्य कोई संदर्भ न हो तो ऑब्जेक्ट को गार्बेज कलेक्ट किया जा सकता है। चूँकि यहाँ `obj` अभी भी मजबूत रूप से संदर्भित है, `deref()` मूल ऑब्जेक्ट लौटाता है। यदि लक्ष्य को पुनः प्राप्त कर लिया गया होता, तो `deref()` `undefined` लौटाता।
   </div>
   </slot>
 </Challenge>
