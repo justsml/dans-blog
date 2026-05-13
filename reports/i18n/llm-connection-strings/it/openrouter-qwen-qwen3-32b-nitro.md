@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: llm-connection-strings
+- Locale: it
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-01-30--llm-connection-strings/it/index.mdx
+- Validation: deferred
+- Runtime seconds: 112.02
+- Input tokens: 6797
+- Output tokens: 5320
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.001821
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Ora è il momento delle stringhe di connessione per LLM
 subTitle: 'Semplifica la Configurazione del Modello e del Provider con URL `llm://`'
@@ -115,3 +133,4 @@ Smattiamo di riscoprire la ruota e iniziamo a trattare le nostre connessioni LLM
 ![un cassetto pieno di variabili d'ambiente disordinate](../hero-concept-8-drawers.webp)
 
 {/* ¹ Sì, so che `URI` è più corretto di `URL`. Se sei abbastanza pedante da curare davvero questa distinzione, vai a toccare l'erba. */}
+````
