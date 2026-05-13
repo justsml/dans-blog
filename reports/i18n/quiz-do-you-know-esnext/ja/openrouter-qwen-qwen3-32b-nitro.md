@@ -1,0 +1,372 @@
+# Translation Candidate
+- Slug: quiz-do-you-know-esnext
+- Locale: ja
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2024-10-31--quiz-do-you-know-esnext/ja/index.mdx
+- Validation: rejected: direct AI SDK translation failed
+- Runtime seconds: 6.67
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Cache write tokens: unknown
+- Estimated cost: unknown
+- Pricing source: unknown
+- Note: Command failed: bun run i18n:translate:chunked -- --slug quiz-do-you-know-esnext --locale ja --model openrouter/qwen/qwen3-32b:nitro --chunk 6p --quiz-concurrency 20
+## Raw Output
+
+````mdx
+---
+title: 'クイズ: モダンJavaScriptは知ってる？'
+subTitle: JavaScript の腕前を証明しよう！
+label: ES2019+ Features
+social_image: ../desktop-social.webp
+category: Quiz
+subCategory: JavaScript
+unlisted: false
+date: '2024-10-31'
+modified: '2024-11-08'
+tags:
+  - quiz
+  - javascript
+  - intro
+  - esnext
+  - features
+  - intermediate
+cover_full_width: ../christopher-burns-8KfCR12oeUM-unsplash-wide.webp
+cover_mobile: ../christopher-burns-8KfCR12oeUM-unsplash-square.webp
+cover_icon: ../christopher-burns-8KfCR12oeUM-unsplash-square.webp
+---
+import Challenge from '../../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../../components/QuizUI/QuizUI';
+
+
+### ES2015 と ES2022、どっちが分かりますか？
+
+* **JavaScript スキルを証明しよう！** 🚀  
+* ログインやサインアップは不要です。 ✨  
+* 選択式クイズです。 🤖 … _どれだけ簡単だと思いますか？_
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="ES2020"
+  title="Null 合体演算子"
+  options={[
+    {text: '42'},
+    {text: 'null'},
+    {text: 'undefined'},
+    {text: '100', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    `result` の値は何ですか？
+    ```js
+        console.log(null ?? 100);
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    null 合体演算子（`??`）は、左側のオペランド（`a`）が `null` または `undefined` の場合、右側のオペランド（`b`）を返します。このケースでは `a` が `null` なので、`result` は `100` です。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="ES2020"
+  title="Null 合体演算子"
+  options={[
+    {text: 'false', isAnswer: true},
+    {text: '42'},
+    {text: 'null'},
+    {text: 'undefined'},
+    {text: '100'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    次のコードの出力は何ですか？
+    ```js
+        const value = false;
+        const defaultVal = 42;
+        console.log(value ?? defaultVal);
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    null 合体演算子 (`??`) は `false` のような falsy 値を有効な値として扱います。`value` が `false` なので、有効な値とみなされそのまま返されます。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="オプショナルチェイニング"
+  title="オプショナルチェイニング"
+  options={[
+    {text: 'undefined', isAnswer: true},
+    {text: 'Error: Cannot read property of undefined'},
+    {text: 'null'},
+    {text: '100'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    次のコードの出力は何ですか？
+    ```js
+        const obj = { foo: null };
+        const result = obj.foo?.bar;
+        console.log(result);
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    オプショナルチェイニング演算子（`?.`）は、左側が `null` または `undefined` の場合に評価を停止します。`obj.foo` が `null` なので、`obj.foo?.bar` は `undefined` となります。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="BigInt"
+  title="BigInt の使用"
+  options={[
+    {text: 'TypeError: BigInt と number を混在させることはできません'},
+    {text: '42n'},
+    {text: '84n', isAnswer: true},
+    {text: 'undefined'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    次のコードの出力は何ですか？
+    ```js
+        const a = 42n;
+        const result = a * 2n;
+        console.log(result);
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    BigInt の値は数値の後ろに `n` を付けて作成します。算術演算では BigInt と通常の数値を混在させることはできません。ここでは両方の値が BigInt なので掛け算が可能で、結果は `84n` になります。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="動的インポート"
+  title="動的インポート構文"
+  options={[
+    {text: 'SyntaxError'},
+    {text: 'Promise'},
+    {text: 'Module'},
+    {text: 'object', isAnswer: true},
+    {text: 'undefined'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    このコードは何をログに出しますか？
+    ```js
+        const modulePromise = import('./myModule.js');
+        console.log(typeof modulePromise);
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `import()` 関数はモジュールオブジェクトに解決する `Promise` を返します。`Promise` インスタンスはオブジェクトなので、`typeof modulePromise` は `'object'` とログに出します。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="Promise.allSettled"
+  title="Promise.allSettled"
+  options={[
+    {text: 'fulfilled: success', isAnswer: true},
+    {text: 'Rejected: error'},
+    {text: 'Pending'},
+    {text: 'null'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    次のコードの結果は何ですか？
+    ```js
+        const promises = [
+          Promise.resolve('success'),
+          Promise.reject('error')
+        ];
+        Promise.allSettled(promises).then(results => {
+          console.log(results[0].status + ': ' + results[0].value);
+        });
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `Promise.allSettled` は各 Promise の結果を記述したオブジェクトの配列を返します。最初の Promise は `fulfilled` で値 `'success'` を持つので、ログは `fulfilled: success` と出力します。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="String.matchAll"
+  title="String.matchAll の使い方"
+  options={[
+    {text: 'マッチの配列'},
+    {text: 'マッチのイテレータ', isAnswer: true},
+    {text: 'エラー: 無効な呼び出し'},
+    {text: 'null'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    `str.matchAll()` は何を返しますか？
+    ```js
+        const str = 'foo1bar2baz3';
+        const matches = str.matchAll(/\d/g);
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `String.matchAll` は配列ではなくマッチのイテレータを返します。このイテレータを使って文字列からすべてのマッチンググループを取得できます。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="Import Meta"
+  title="Import Meta の使用"
+  options={[
+    {text: '現在のモジュールの URL', isAnswer: true},
+    {text: '現在のタイムスタンプ'},
+    {text: 'undefined'},
+    {text: 'SyntaxError'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    `import.meta.url` は何を表しますか？
+    ```js
+        console.log(import.meta.url);
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `import.meta` は現在のモジュールに関するメタデータを含むオブジェクトです。`import.meta.url` プロパティは現在のモジュールの URL を表し、スクリプトが実行されている場所の情報を取得するのに使えます。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="論理代入"
+  title="論理代入"
+  options={[
+    {text: '5'},
+    {text: '10', isAnswer: true},
+    {text: 'undefined'},
+    {text: 'null'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    論理代入の後、`a` の値は何ですか？
+    ```js
+        let a = null;
+        a ||= 10;
+        console.log(a);
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    論理 OR 代入（`||=`）は、左側の値が falsy（`null`、`undefined`、`0`、`false` など）の場合に右側の値を代入します。`a` は `null` なので、値 `10` が代入されます。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="論理 Nullish 代入"
+  title="論理 Nullish 代入"
+  options={[
+    {text: '5'},
+    {text: '10', isAnswer: true},
+    {text: 'undefined'},
+    {text: 'null'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    nullish 代入の後、`b` の値は何ですか？
+    ```js
+        let b = null;
+        b ??= 10;
+        console.log(b);
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    nullish 合体代入 (`??=`) は左側の値が `null` または `undefined` の場合に右側の値を代入します。`b` は `null` なので、値 `10` が代入されます。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="WeakRef"
+  title="WeakRef の使用"
+  options={[
+    {text: 'ReferenceError'},
+    {text: '{ data: \'important\' }', isAnswer: true},
+    {text: 'null'},
+    {text: 'undefined'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    `WeakRef` は何を提供しますか？
+    ```js
+        const obj = { data: 'important' };
+        const ref = new WeakRef(obj);
+        console.log(ref.deref());
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `WeakRef` はオブジェクトへの弱参照を提供し、他に参照が無ければガベージコレクションの対象になります。ここでは `obj` がまだ強く参照されているので、`deref()` は元のオブジェクトを返します。対象が回収されていれば、`deref()` は `undefined` を返します。
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+````
