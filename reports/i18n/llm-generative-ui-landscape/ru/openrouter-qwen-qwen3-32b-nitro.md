@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: llm-generative-ui-landscape
+- Locale: ru
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-05-06--llm-generative-ui-landscape/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 49.80
+- Input tokens: 17232
+- Output tokens: 19683
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.006102
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: ''
 subTitle: >-
@@ -334,3 +352,4 @@ CheckoutReview
 Будущее не в том, что модель пишет ваш фронтенд.
 
 Будущее ближе к тому, что **ваш фронтенд становится инструментом, который агент может использовать, но вы всё ещё решаете, каким звучать инструменту.**
+````
