@@ -1,0 +1,148 @@
+# Translation Candidate
+- Slug: deathmatch-git-rebase-vs-merge
+- Locale: hi
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2023-08-28--deathmatch-git-rebase-vs-merge/hi/index.mdx
+- Validation: passed
+- Runtime seconds: 3.69
+- Input tokens: 9178
+- Output tokens: 2714
+- Thinking tokens: unknown
+- Cached input tokens: 4864
+- Cache write tokens: 0
+- Estimated cost: $0.000846
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: 'डैथमैच: Git रीबेस बनाम मर्ज'
+subTitle: एक शाश्वत प्रश्न…
+date: '2023-08-27'
+modified: '2024-07-28'
+tags:
+  - engineering
+  - git
+  - rebase
+  - merge
+category: Thoughts
+subCategory: Git
+cover: ../casper-johansson-GBHnQXbY2Ts-unsplash-cropped.webp
+cover_mobile: ../w300_casper-johansson-GBHnQXbY2Ts-unsplash-cropped.webp
+cover_icon: ../icon_casper-johansson-GBHnQXbY2Ts-unsplash-cropped.webp
+---
+## Deathmatch: Git Rebase vs. (Squash) Merge!
+
+Should I Rebase? Or Squash Merge?
+
+- क्या यह व्यक्तिगत पसंद है?
+  - _Answer: जब एक या अधिक टीमें शामिल हों तो नहीं! **किसी भी विकल्प से दूसरे की उपयोगिता पर असर पड़ेगा**!_
+
+### यह विषय धार्मिक उन्माद क्यों उत्पन्न करता है?
+
+कुछ इंजीनियर git (& टर्मिनल) के ज्ञान को अपनी सापेक्ष कौशल स्तर का संकेत मानते हैं। और कोई भी प्रथा जो हमारी पहचान/अहंकार से जुड़ी हो, उसे निष्पक्ष रूप से विश्लेषण करना लगभग असंभव हो जाता है, परिवर्तन की बात तो छोड़ ही दें।  
+
+अन्य कारकों में परिचितता और सर्वाइवरशिप बायस शामिल हैं, जो हमारी स्वयं की मूल्यांकन और धारणाओं को और अधिक धुंधला कर देते हैं।
+
+<!-- Misplaced belief in the inherent virtue of certain OSS projects' processes. (The Linux Kernel uses rebasing, and if you don't, **_ArE yOu EvEn A rEaL eNgInEeR?!_**) -->
+
+### मुख्य प्रश्न: git कमिट का उद्देश्य क्या है?
+
+1.  क्या आप जल्दी‑जल्दी कमिट करते हैं? “चेक‑पॉइंट” या बैकअप की सोच से?
+    - जहाँ सब कुछ रिकॉर्ड हो, यहाँ‑तक कि गलत शुरुआत और प्रयोग भी? (उदा. `git commit -am "Updated deps" && git push`, नियमित रूप से दोहराएँ)
+    - शायद आपके लिए कमिट संदेश कोड से कम महत्वपूर्ण हैं?
+2.  या, आपके कमिट एक सावधानीपूर्वक तैयार, नक्काशी‑जैसे कला के टुकड़े हैं?
+    - शायद प्रत्येक कमिट एक स्व-निहित, एटॉमिक कार्य इकाई है? (उदा. `git add package.json && git commit -m "Updated deps"`)
+    - या, आप “गंदे” कमिट लॉग बर्दाश्त नहीं कर सकते?
+    - क्या आपके PR रिव्यू अक्सर कमिट‑बाय‑कमिट समीक्षा शामिल करते हैं?
+
+| 💡 आपके कमिट को आप किस अन्य मानसिक मॉडल से देखते हैं? कृपया बताएँ @justsml!
+
+क्या आप git को ऐसे तरीके से देख रहे हैं जो **आपको, आपकी टीम को, और आपके संगठन को अधिकतम मूल्य प्रदान करता** हो?
+
+<!-- What makes sense for an Open Source project like Postgres, or the Linux Kernel, may not be the best choice for you or your team. -->
+
+Given that there are very different mindsets around commit strategy, it's no wonder there's so much confusion about the "right" way to use git.
+
+### Scenario: Create a revised release tag
+
+Let us compare the process of creating a tag release excluding some recent commits on `main`.
+
+![मुख्य शाखा से 2 फीचर ब्रांचों के साथ Git टैग रिलीज़](../git-branching-with-main-simplified.svg)
+
+### The Rebase Way
+
+Mental model: "I want to create an alternate version of an existing history. (e.g. I made an oopsie 16 merges ago, and may need fine-grained control to correct it. Also, might get stuck in a seemingly endless cycle of conflict & `--continue`.)"
+
+1.  नवीनतम प्राप्त करें: `git checkout main` && `git pull`  
+2.  नई शाखा बनाएँ: `git checkout -b release/hot-newness-and-stuff`  
+3.  इंटरैक्टिव रीबेस शुरू करें और वह git रेफ़रेंस दें जहाँ आप समय‑पीछे जाना चाहते हैं। `git rebase -i HEAD~6` (ध्यान दें: `HEAD~6` का अर्थ है `6 कमिट पहले` का शॉर्टहैंड)  
+4.  इच्छित कमिट(s) को उनके प्रीफ़िक्स को `drop` में बदलकर हटाएँ। एडिटर को सेव करके बंद करें।  
+5.  मर्ज कॉन्फ्लिक्ट ठीक करें, `git add .` && `git rebase --continue` (`git commit` न करें)।  
+6.  पूर्ण होने तक पिछले चरण को दोहराएँ।  
+7.  वर्तमान प्रक्रिया से टैग/पुश करें। उदाहरण `git tag -a v1.2.3 -m 'Release v1.2.3'` && `git push --tags`  
+
+#### Pros  
+
+- 🔌 पूर्ण नियंत्रण। आप इतिहास को बदल सकते हैं।  
+  <!-- - 🎭 Practice your Engineering Theater skills. -->  
+
+#### Cons  
+
+- 😰 पूर्ण नियंत्रण। आप इतिहास को बदल सकते हैं। (ठीक है, एक प्रॉ और एक कॉन…)  
+- 🔂 आप एक लगते‑लगते अनंत कॉन्फ्लिक्ट चक्र में फँस सकते हैं & `—-continue`। (कभी‑कभी `git rerere` के साथ भी)  
+- 🙀 मुख्य सहयोग सुविधाओं को तोड़ता है: खोए/अनाथ PR टिप्पणियाँ। असभ्य।  
+- 🖇️ परमानेंट लिंक स्थायी नहीं रह सकते।  
+
+### The (Squash) Merge Way
+
+मानसिक मॉडल: “मैं एक कस्टम रिलीज़ चाहता हूँ, जो किसी निश्चित बिंदु से शुरू हो और इच्छित शाखा(ओं) को शामिल करे।”
+
+1.  नवीनतम प्राप्त करें: `git checkout main` && `git pull`
+2.  नई शाखा बनाएँ: `git checkout -b release/hot-newness-and-stuff`
+3.  इच्छित शाखाओं और/या कमिट्स को मर्ज करें: `git merge --no-ff feature/hot-newness bug/fix-123` (जहाँ संभव हो `--no-ff` फ़्लैग का उपयोग करें।)
+4.  किसी भी मर्ज कॉन्फ्लिक्ट को ठीक करें (यदि उत्पन्न हो)।  
+5.  वर्तमान प्रक्रिया का उपयोग करके टैग/पुश करें। उदाहरण `git tag -a v1.2.3 -m 'Release v1.2.3'` && `git push --tags`
+
+#### Pros
+
+- 💪 कम प्रक्रिया, कुल मिलाकर कम कॉन्फ्लिक्ट, और मौजूदा git कमांड ज्ञान का उपयोग करता है।  
+- 🚀 आपको उच्च‑स्तर के PR/ब्रांच पर सोचने देता है, कमिट‑स्तर की बारीकी को अनदेखा करता है (जब तक आवश्यक न हो)।  
+- 🦺 नॉन‑डिस्ट्रक्टिव। आप कभी भी वापस जा सकते हैं और/या नई शाखाएँ बना सकते हैं।  
+- 🎥 मौजूदा कमिट्स और संदेशों को संपूर्ण रूप में रखता है, जिससे ‘ब्लेम’ शोर कम होता है।
+
+#### Cons
+
+- 🔏 कमिट संदेश बदलना कठिन होता है।  
+- 🤐 अपने काम को छुपाना कठिन होता है।
+
+### निष्कर्ष
+
+अंत में, **कम जोखिम वाला सरल प्रक्रिया ही जीतना चाहिए**।
+
+<!-- Even though _Rebasers_ indeed have ways to solve (or avoid) their problems, the **fact remains: you'll eventually need a black belt in git fu.** (e.g. Even a humble `git push` can face extra complexity: was it `git push --force` or `git push --force-with-lease`? Why deal with that at all?) -->
+
+<!-- Include a diagram of a rebase flow with 2 feature branches -->
+
+हालाँकि _Rebasers_ के पास अपने मुद्दों को हल (या टाल)ने के तरीके होते हैं, **वास्तव यह है कि अंततः आपको git fu में ब्लैक बेल्ट की जरूरत पड़ेगी**। (उदाहरण के लिए, एक साधारण `git push` भी अतिरिक्त जटिलता पैदा कर सकता है: क्या वह `git push --force` था या `git push --force-with-lease`? इसे क्यों संभालें?)
+
+एक और कारण **रीबेस** करके संशोधित इतिहास बनाना **`git merge …`** की तुलना में हमेशा एक नुकसान रहेगा। `git merge` `git` CLI को उन्नत एल्गोरिदम लागू करने देता है जो प्रत्येक शाखा के HEAD का विश्लेषण करके टकरावों से बचता है।
+
+यह अधिक समझदारी से काम कर सकता है क्योंकि प्रत्येक मर्ज केवल प्रत्येक इच्छित शाखा की नवीनतम स्थिति की परवाह करता है, जबकि **रीबेस को क्रम में कमिट इतिहास को पुनः‑चलाना (या हटाना) पड़ता है**। यह **`git` की मर्ज को अनुकूलित करने की क्षमता को सीमित करता है** क्योंकि यह **एक समय में केवल 2 कमिट की तुलना करता है**।
+
+आखिरकार **रीबेस का मतलब है कि आप कभी‑कभी अप्रासंगिक पुराने कमिट और टकरावों का फिर से सामना करेंगे** — भले ही आपको पता हो कि वे अब हटा दिए गए हैं या हल हो चुके हैं।
+
+### सारांश
+
+- 💃 उत्तर: **SQUASH MERGE** अपने PR को `main` पर मर्ज करें।  
+  - यदि आवश्यकता हो तो आपकी शाखा का इतिहास उपलब्ध रहेगा, और `main` अपेक्षाकृत “साफ” रहेगा।  
+- _🔤 हमेशा कमिट करते रहें!_  
+  - >95 % कॉरपोरेट प्रोजेक्ट्स में “बैकअप माइंडसेट” “स्कल्प्टेड आर्ट” माइंडसेट से अधिक पसंद किया जाता है। समय के साथ, आपके कमिट संदेशों का अर्थ जल्दी ही फीका पड़ जाएगा, जबकि कोड की लॉजिक और टेस्ट अपना महत्व बनाए रखेंगे।
+
+- आप `git checkout` के साथ विशेष “--” सेपरेटर का उपयोग कर सकते हैं ताकि वर्तमान शाखा में बने रहें और निर्दिष्ट फ़ाइलें या फ़ोल्डर कॉपी कर सकें:  
+- `git checkout feature/half-a-feature **--** <folder or file path>`  
+- पहले उन सभी बदलावों को कमिट कर लें जिन्हें आप रखना चाहते हैं, क्योंकि यह स्थानीय बदलावों को ओवरराइट कर देगा।  
+-->
+````
