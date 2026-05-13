@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: replacing-my-job-with-gpt-and-llm
+- Locale: ru
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2024-12-05--replacing-my-job-with-gpt-and-llm/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 12.74
+- Input tokens: 5284
+- Output tokens: 4849
+- Thinking tokens: unknown
+- Cached input tokens: 1024
+- Cache write tokens: 0
+- Estimated cost: $0.001586
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: Замена себя на ИИ
@@ -102,3 +120,4 @@ cover_icon: ../robot-dude-square-200-75.webp
 ИИ сделал меня быстрее. Что более важно, он сделал некоторые мои слабые места более заметными. Стоимость в том, что теперь мне нужно быть более внимательным, чтобы не публиковать тексты, которые просто ведут себя как тексты.
 
 Это соглашение, с которым я могу жить.
+````
