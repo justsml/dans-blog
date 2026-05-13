@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: mastering-functional-pipelines-passing-state
+- Locale: de
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2023-08-13--mastering-functional-pipelines-passing-state/de/index.mdx
+- Validation: passed
+- Runtime seconds: 5.73
+- Input tokens: 9492
+- Output tokens: 2551
+- Thinking tokens: unknown
+- Cached input tokens: 5120
+- Cache write tokens: 0
+- Estimated cost: $0.000829
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: 'Meister der Pipelines: Zustandsübergabe'
@@ -197,3 +215,4 @@ Wir werden das Auslagern von Zustand untersuchen und die Funktionalität in unse
 #### Weiterführende Lektüre
 
 - [Ähnliche Probleme gibt es in der komponenten‑getriebenen React‑Welt.](https://kyleshevlin.com/quit-your-yapping)
+````
