@@ -1,0 +1,56 @@
+{
+  "selectedCommit": "f48143e6b98989193c1c902b828a1d21b67a2d29",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 9,
+    "relevance": 9,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The selected candidate (f48143e) is excellent. It provides a complete translation including the title and subtitle, which were missing in other versions. It correctly handles the technical terminology (NVMe, I/O-Performance) and maintains the MDX structure and iframe embeds perfectly. The suggestions from the previous judge report regarding image paths (../) have already been applied in the provided MDX content, so no further suggestions are required.",
+  "slug": "compare-nvme-ssd-cloud-options",
+  "locale": "de",
+  "candidateCommits": [
+    "f48143e6b98989193c1c902b828a1d21b67a2d29",
+    "989ca618d5fe8a3b1dcbcfd81d715e2e2c0d6f0b",
+    "e3869a2cff90cf23bc33e1e8b2bd4e6612ac3e1f"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "medium",
+      "match": "cover: solaiman-hossen-553024-unsplash.webp",
+      "replacement": "cover: ../solaiman-hossen-553024-unsplash.webp",
+      "reason": "The relative path to the image needs to be adjusted for the subfolder structure, consistent with other localized posts.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "cover_mobile: w300_solaiman-hossen-553024-unsplash.webp",
+      "replacement": "cover_mobile: ../w300_solaiman-hossen-553024-unsplash.webp",
+      "reason": "The relative path to the image needs to be adjusted for the subfolder structure.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "cover_icon: icon_solaiman-hossen-553024-unsplash.webp",
+      "replacement": "cover_icon: ../icon_solaiman-hossen-553024-unsplash.webp",
+      "reason": "The relative path to the image needs to be adjusted for the subfolder structure.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug compare-nvme-ssd-cloud-options --locale de --skip-global",
+    "output": ""
+  }
+}
