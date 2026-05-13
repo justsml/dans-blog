@@ -1,0 +1,53 @@
+{
+  "selectedCommit": "06a30977802d2fdda701d4b629b6a14efde246ab",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 9,
+    "relevance": 9,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "路肩を走行するなど（意思決定やその他のレイヤーは簡略化のため省略）",
+      "replacement": "路肩を走行するなど――",
+      "reason": "The previous judge's suggestion accidentally duplicated a parenthetical note from the header into the list item. The original English text 'driving on a shoulder or' is an open-ended list item. The current Japanese text has a redundant note that wasn't in the source for that specific line."
+    }
+  ],
+  "rationale": "The selected candidate 06a30977 (qwen3.6-plus) captures Dan's direct and slightly provocative tone well. It correctly handles the frontmatter and MDX structure. One high-priority fix is needed because the current version contains a duplicated parenthetical explanation in the 3rd tier list item that was not in the source and disrupts the flow.",
+  "slug": "when-ai-fails-and-the-crashing-robot-cars",
+  "locale": "ja",
+  "candidateCommits": [
+    "06a30977802d2fdda701d4b629b6a14efde246ab",
+    "1b755871c467f78742b74479f5ca44b808eae48b"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "medium",
+      "match": "路肩を走行するなど",
+      "replacement": "路肩を走行するなど（意思決定やその他のレイヤーは簡略化のため省略）",
+      "reason": "The original text ends with 'driving on a shoulder or', implying an unfinished thought or list. While the candidate translates it naturally, ensuring the flow matches Dan's style is important.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "路肩を走行するなど（意思決定やその他のレイヤーは簡略化のため省略）",
+      "replacement": "路肩を走行するなど――",
+      "reason": "The previous judge's suggestion accidentally duplicated a parenthetical note from the header into the list item. The original English text 'driving on a shoulder or' is an open-ended list item. The current Japanese text has a redundant note that wasn't in the source for that specific line.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug when-ai-fails-and-the-crashing-robot-cars --locale ja --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug when-ai-fails-and-the-crashing-robot-cars --locale ja --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug when-ai-fails-and-the-crashing-robot-cars --locale ja --skip-global\n20 |   }\n21 | \n22 |   const minimumLength = Math.floor(sourceLength * minimumRatio);\n23 |   const maximumLength = Math.ceil(sourceLength * maximumRatio);\n24 |   if (targetLength < minimumLength || targetLength > maximumLength) {\n25 |     throw new Error(\n                   ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2015-12-18--when-ai-fails-and-the-crashing-robot-cars/ja/index.mdx changed comparable body length from 2820 chars in English to 1451 chars. Expected 1833-3808 chars (within 35%).\n      at assertTranslationLength (/Users/dan/code/oss/dans-blog/src/scripts/i18n/structural-validation.ts:25:15)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:26:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}
