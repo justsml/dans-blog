@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: lancedb-wasm-browser-client
+- Locale: fr
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-04-16--lancedb-wasm-browser-client/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 19.35
+- Input tokens: 8356
+- Output tokens: 8312
+- Thinking tokens: unknown
+- Cached input tokens: 2048
+- Cache write tokens: 0
+- Estimated cost: $0.002663
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: ''
 subTitle: >-
@@ -131,3 +149,4 @@ Ce qui a rendu ce projet abordable, c'est que l'architecture interne de Lance é
 Des limites d'abstraction bien définies ne facilitent pas seulement la compréhension du code interne — elles permettent à quelqu'un comme moi d'arriver depuis l'extérieur et d'intégrer un nouvel environnement d'exécution sans toucher au cœur du projet. C'est une véritable vertu de conception, et cela a fait que les 14 000 lignes ressemblaient davantage à un remplissage d'espace qu'à une lutte contre le codebase.
 
 Le PR est [ici](https://github.com/lancedb/lancedb/pull/3247) si vous souhaitez voir les détails. J'attends toujours les retours. Les mainteneurs ont été chaleureux, et j'ai un optimisme prudent.
+````
