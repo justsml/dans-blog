@@ -1,0 +1,47 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Object Mutation",
+  "translatedTitle": "Mutation d'objet",
+  "translation": {
+    "title": "Mutation d'objet",
+    "group": "Closures et Objets",
+    "options": [
+      {
+        "text": "{ x: 1 }, { x: 1 }"
+      },
+      {
+        "text": "{ x: 1 }, { x: 99 }"
+      },
+      {
+        "text": "{ x: 99 }, { x: 99 }"
+      },
+      {
+        "text": "{ x: 99 }, { x: 1 }"
+      }
+    ],
+    "questionProse": [
+      "Que cela affiche-t-il ?"
+    ],
+    "explanationProse": [
+      "La fermeture capture la **liaison** `obj`, pas un instantané de l'objet. L'objet lui‑même est muté après la création de la fermeture — mais `obj` pointe toujours vers la même référence. Les deux appels renvoient le même objet muté : `{ x: 99 }`.\n\n    Cela surprend ceux qui pensent que les fermetures « gèlent » les valeurs. Ce n’est pas le cas. Elles capturent des **références**."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Mutation d'objet\",\n  \"group\": \"Closures et Objets\",\n  \"options\": [\n    {\n      \"text\": \"{ x: 1 }, { x: 1 }\"\n    },\n    {\n      \"text\": \"{ x: 1 }, { x: 99 }\"\n    },\n    {\n      \"text\": \"{ x: 99 }, { x: 99 }\"\n    },\n    {\n      \"text\": \"{ x: 99 }, { x: 1 }\"\n    }\n  ],\n  \"questionProse\": [\n    \"Que cela affiche-t-il ?\"\n  ],\n  \"explanationProse\": [\n    \"La fermeture capture la **liaison** `obj`, pas un instantané de l'objet. L'objet lui‑même est muté après la création de la fermeture — mais `obj` pointe toujours vers la même référence. Les deux appels renvoient le même objet muté : `{ x: 99 }`.\\n\\n    Cela surprend ceux qui pensent que les fermetures « gèlent » les valeurs. Ce n’est pas le cas. Elles capturent des **références**.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 876,
+    "outputTokens": 678,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 1053,
+    "providerCostUsd": 0.0008151,
+    "providerUpstreamCostUsd": 0.0008151,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000034164,
+    "outputUsd": 0.00012203999999999999,
+    "totalUsd": 0.00015620399999999998,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

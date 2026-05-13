@@ -1,0 +1,47 @@
+{
+  "index": 1,
+  "attempt": 1,
+  "originalTitle": "Separate Closures",
+  "translatedTitle": "Closures séparées",
+  "translation": {
+    "title": "Closures séparées",
+    "group": "Échauffement",
+    "options": [
+      {
+        "text": "1, 1"
+      },
+      {
+        "text": "1, 2"
+      },
+      {
+        "text": "2, 2"
+      },
+      {
+        "text": "0, 0"
+      }
+    ],
+    "questionProse": [
+      "Que cela affiche-t-il ?"
+    ],
+    "explanationProse": [
+      "Chaque appel à `makeCounter()` crée un **nouveau contexte d'exécution** avec son propre `count` frais. `a` et `b` ferment sur des *différents* liens `count`. Ils ne partagent pas d'état.\n\n    Résultat : `1, 1`\n\n    C’est pourquoi les closures sont utilisées pour construire un état privé — chaque « instance » est indépendante."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Closures séparées\",\n  \"group\": \"Échauffement\",\n  \"options\": [\n    {\n      \"text\": \"1, 1\"\n    },\n    {\n      \"text\": \"1, 2\"\n    },\n    {\n      \"text\": \"2, 2\"\n    },\n    {\n      \"text\": \"0, 0\"\n    }\n  ],\n  \"questionProse\": [\n    \"Que cela affiche-t-il ?\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"javascript\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"explanationProse\": [\n    \"Chaque appel à `makeCounter()` crée un **nouveau contexte d'exécution** avec son propre `count` frais. `a` et `b` ferment sur des *différents* liens `count`. Ils ne partagent pas d'état.\\n\\n    Résultat : `1, 1`\\n\\n    C’est pourquoi les closures sont utilisées pour construire un état privé — chaque « instance » est indépendante.\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 844,
+    "outputTokens": 538,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 832,
+    "providerCostUsd": 0.0006989,
+    "providerUpstreamCostUsd": 0.0006989,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000032916,
+    "outputUsd": 0.00009683999999999999,
+    "totalUsd": 0.000129756,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

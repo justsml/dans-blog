@@ -1,0 +1,481 @@
+# Translation Candidate
+- Slug: quiz-do-you-really-understand-closures
+- Locale: fr
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-05-05--quiz-do-you-really-understand-closures/fr/index.mdx
+- Validation: deferred
+- Runtime seconds: 19.77
+- Input tokens: 11111
+- Output tokens: 6795
+- Thinking tokens: unknown
+- Cached input tokens: 640
+- Cache write tokens: 0
+- Estimated cost: $0.001656
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: 'Quiz : Comprenez‑vous vraiment les fermetures JavaScript ?'
+subTitle: La plupart des développeurs pensent le faire. Ils ont tort.
+date: '2026-05-01'
+modified: '2026-05-05'
+tags:
+  - javascript
+  - closures
+  - quiz
+  - fundamentals
+  - scope
+  - advanced
+category: Quiz
+subCategory: JavaScript
+draft: true
+unlisted: true
+hidden: true
+publish: false
+popularity: 0.85
+social_image: ../desktop-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+<p class="inset">Les fermetures (closures) sont l’un de ces concepts que chaque développeur JavaScript *pense* maîtriser — jusqu’au moment où ce n’est plus le cas. Ce quiz va sonder les limites de ce que vous savez réellement.</p>
+
+Les closures apparaissent dans les gestionnaires d’événements, les fonctions-factories, les hooks React, les patterns de modules, et pratiquement partout ailleurs. Elles ne sont pas exotiques. Elles constituent le tissu même du JavaScript.
+
+Les questions commencent de façon raisonnable, puis commencent à enlever les planchers.
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="Échauffement"
+  title="Compteur Classique"
+  options={[
+    {text: '0, 0, 0'},
+    {text: '0, 1, 2'},
+    {text: '1, 2, 3', isAnswer: true},
+    {text: 'ReferenceError'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Que ce code affiche-t-il ?
+    ```javascript
+        function makeCounter() {
+          let count = 0;
+          return () => ++count;
+        }
+        const tick = makeCounter();
+        console.log(tick(), tick(), tick());
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `tick` ferme sur `count`. Chaque appel incrémente et renvoie la même variable `count`. Les trois appels produisent `1, 2, 3`.
+
+    Le mot clé : *même*. `count` n'est pas copié dans la fermeture. La fermeture détient une **référence vivante** au binding de la variable. C’est tout.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="Échauffement"
+  title="Closures séparées"
+  options={[
+    {text: '1, 1', isAnswer: true},
+    {text: '1, 2'},
+    {text: '2, 2'},
+    {text: '0, 0'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Que cela affiche-t-il ?
+    ```javascript
+        function makeCounter() {
+          let count = 0;
+          return () => ++count;
+        }
+        const a = makeCounter();
+        const b = makeCounter();
+        console.log(a(), b());
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Chaque appel à `makeCounter()` crée un **nouveau contexte d'exécution** avec son propre `count` frais. `a` et `b` ferment sur des *différents* liens `count`. Ils ne partagent pas d'état.
+
+    Résultat : `1, 1`
+
+    C’est pourquoi les closures sont utilisées pour construire un état privé — chaque « instance » est indépendante.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="Le piège classique"
+  title="var dans une boucle"
+  options={[
+    {text: '0, 1, 2, 3, 4'},
+    {text: '5, 5, 5, 5, 5', isAnswer: true},
+    {text: '1, 2, 3, 4, 5'},
+    {text: 'undefined x5'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Qu'est-ce qui est affiché après 100 ms ?
+    ```javascript
+        for (var i = 0; i < 5; i++) {
+          setTimeout(() => console.log(i), 100);
+        }
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `var` est portée fonction. Il n'existe qu'**un** `i` — les cinq callbacks ferment sur la même liaison. Au moment où les timeouts s'exécutent, la boucle est terminée et `i` vaut `5`.
+
+    Cinq callbacks. Un `i`. Valeur : `5`. Affiché cinq fois.
+
+    La solution est `let` (portée bloc, nouvelle liaison à chaque itération) ou envelopper dans une IIFE pour capturer la valeur actuelle :
+    ```javascript
+        for (let i = 0; i < 5; i++) {
+          setTimeout(() => console.log(i), 100); // 0, 1, 2, 3, 4 ✓
+        }
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="Le piège classique"
+  title="let résout le problème (ou pas ?)"
+  options={[
+    {text: '0, 1, 2, 3, 4', isAnswer: true},
+    {text: '5, 5, 5, 5, 5'},
+    {text: '4, 4, 4, 4, 4'},
+    {text: 'ReferenceError : i n’est pas défini'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Même boucle, mot‑clé différent. Qu’est‑ce qui s’affiche ?
+    ```javascript
+        for (let i = 0; i < 5; i++) {
+          setTimeout(() => console.log(i), 100);
+        }
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `let` dans une boucle `for` est spécial. La spécification indique : chaque itération obtient sa **nouvelle liaison** de `i`. C’est comme si la boucle faisait secrètement cela :
+    ```javascript
+        { let i = 0; setTimeout(() => console.log(i), 100) }
+        { let i = 1; setTimeout(() => console.log(i), 100) }
+        // ...
+    ```
+    Ainsi les cinq callbacks ferment sur cinq variables distinctes. Résultat : `0, 1, 2, 3, 4`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="Closures et Objets"
+  title="Mutation d'objet"
+  options={[
+    {text: '{ x: 1 }, { x: 1 }'},
+    {text: '{ x: 1 }, { x: 99 }'},
+    {text: '{ x: 99 }, { x: 99 }', isAnswer: true},
+    {text: '{ x: 99 }, { x: 1 }'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Que cela affiche-t-il ?
+    ```javascript
+        function wrap() {
+          const obj = { x: 1 };
+          const getObj = () => obj;
+          obj.x = 99;
+          return getObj;
+        }
+        const get = wrap();
+        console.log(get(), get());
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    La fermeture capture la **liaison** `obj`, pas un instantané de l'objet. L'objet lui‑même est muté après la création de la fermeture — mais `obj` pointe toujours vers la même référence. Les deux appels renvoient le même objet muté : `{ x: 99 }`.
+
+    Cela surprend ceux qui pensent que les fermetures « gèlent » les valeurs. Ce n’est pas le cas. Elles capturent des **références**.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="Avancé"
+  title="Fermeture obsolète dans React"
+  options={[
+    {text: 'Enregistre le compteur actuel à chaque clic'},
+    {text: 'Enregistre toujours 0', isAnswer: true},
+    {text: 'Enregistre NaN'},
+    {text: 'Cela ne compilera pas'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Quel comportement ce composant React affiche-t-il lorsque le bouton est cliqué plusieurs fois ?
+    ```jsx
+        function Counter() {
+          const [count, setCount] = useState(0);
+
+          useEffect(() => {
+            const id = setInterval(() => {
+              console.log('count is', count);
+            }, 1000);
+            return () => clearInterval(id);
+          }, []); // empty deps
+
+          return <button onClick={() => setCount(c => c + 1)}>
+            Click ({count})
+          </button>;
+        }
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Fermeture obsolète classique. Le `useEffect` s'exécute une fois (tableau de dépendances vide) et crée un intervalle qui capture `count` tel qu'il était au montage : `0`. Peu importe le nombre de clics, la fermeture de l'intervalle ne voit jamais la valeur mise à jour.
+
+    Le libellé du bouton se met à jour correctement — c'est un rendu frais. Mais `console.log` reste bloqué à `0`.
+
+    Corrigez‑le en ajoutant `count` au tableau de dépendances (recrée l'intervalle) ou en utilisant une ref :
+    ```jsx
+        const countRef = useRef(count);
+        useEffect(() => { countRef.current = count; }, [count]);
+        // then use countRef.current inside the interval
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="Avancé"
+  title="Patron demodule"
+  options={[
+    {text: '60', isAnswer: true},
+    {text: 'TypeError: balance is not defined'},
+    {text: '-40'},
+    {text: '100'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Attendez — lisez attentivement. Que se passe-t-il réellement ?
+    ```javascript
+        const bank = (() => {
+          let balance = 0;
+          return {
+            deposit: (n) => (balance += n),
+            withdraw: (n) => (balance -= n),
+            getBalance: () => balance,
+          };
+        })();
+
+        bank.deposit(100);
+        bank.withdraw(40);
+        console.log(bank.getBalance());
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    La réponse est `60`.
+
+    Il s'agit du **Patron de module** — une IIFE qui renvoie un objet de fermetures. Les trois méthodes ferment sur la même liaison `balance`. C'est réellement privé : vous ne pouvez pas accéder à `balance` depuis l'extérieur.
+    ```javascript
+        console.log(bank.balance); // undefined
+    ```
+    Avant les classes, c'était *la* façon d'encapsuler l'état en JavaScript. Vous la rencontrerez encore dans les bases de code legacy et les bibliothèques utilitaires.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="Expert"
+  title="Fuite de mémoire due à la fermeture"
+  options={[
+    {text: 'Il affiche la longueur du tableau data'},
+    {text: 'Il crée une fuite de mémoire', isAnswer: true},
+    {text: 'Il lève une RangeError'},
+    {text: 'Rien d\'inhabituel — c’est correct'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Quel est le problème avec ce code ?
+    ```javascript
+        function attachHandler(element) {
+          const data = new Array(100_000).fill('🔥');
+          element.addEventListener('click', () => {
+            console.log('clicked!', data.length);
+          });
+        }
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Le gestionnaire d'événement ferme sur `data`, donc le tableau reste accessible tant que le gestionnaire est accessible. Si `element` est long‑vivant et que le gestionnaire n'est jamais retiré, ce gros tableau est également retenu.
+
+    `element` est dans le DOM. Le gestionnaire conserve `data`. Le GC ne peut pas le collecter.
+
+    Solution : ne capturez pas de grandes données dans des gestionnaires long‑vivants à moins que ce ne soit vraiment nécessaire, et retirez les gestionnaires lorsque l'interface propriétaire est démontée :
+    ```javascript
+        function attachHandler(element) {
+          const data = new Array(100_000).fill('🔥');
+          // do something with data...
+
+          const onClick = () => {
+            console.log('clicked!');
+          };
+
+          element.addEventListener('click', onClick);
+          return () => element.removeEventListener('click', onClick);
+        }
+    ```
+    Modern V8 gère mieux cela qu'auparavant. Mais dans les SPA long‑vivants avec de nombreux gestionnaires d'événements, ce schéma pose encore problème.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="Expert"
+  title="Le piège du this"
+  options={[
+    {text: 'Dan, Dan'},
+    {text: 'Dan, undefined'},
+    {text: 'undefined, Dan'},
+    {text: 'undefined, undefined', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Que cela affiche-t-il ?
+    ```javascript
+        const user = {
+          name: 'Dan',
+          greetArrow: () => console.log(this?.name),
+          greetRegular() {
+            const inner = () => console.log(this?.name);
+            inner();
+          },
+        };
+
+        user.greetArrow();
+        const fn = user.greetRegular;
+        fn();
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Deux pièges subtils :
+
+    **`greetArrow`** : Les fonctions fléchées n’ont pas leur propre `this`. Elles capturent le `this` du scope lexical englobant — qui ici est le scope du module/global, pas `user`. Donc `this?.name` vaut `undefined`.
+
+    **`fn()`** : `greetRegular` est appelé sans récepteur (`fn()` et non `user.greetRegular()`). En mode strict, `this` vaut `undefined`. En mode non strict, c’est l’objet global. Dans les deux cas, `this?.name` vaut `undefined`.
+
+    Si vous aviez appelé `user.greetRegular()` directement, vous auriez obtenu `'Dan'` — parce que `this` serait alors lié à `user`.
+
+    Résultat : `undefined, undefined`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="Bonus"
+  title="Mémoïsation via fermeture"
+  options={[
+    {text: 'Appelle expensive() 3 fois'},
+    {text: 'Appelle expensive() 1 fois', isAnswer: true},
+    {text: 'Appelle expensive() 2 fois'},
+    {text: 'Lance une exception : dépassement de la pile d\'appels maximale'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Combien de fois `expensive()` est‑il réellement appelé ?
+    ```javascript
+        function memoize(fn) {
+          const cache = new Map();
+          return (arg) => {
+            if (cache.has(arg)) return cache.get(arg);
+            const result = fn(arg);
+            cache.set(arg, result);
+            return result;
+          };
+        }
+
+        let calls = 0;
+        const expensive = (n) => { calls++; return n * 2; };
+        const fast = memoize(expensive);
+
+        fast(5);
+        fast(5);
+        fast(5);
+        console.log(calls);
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    La fonction mémoïsée ferme sur `cache`. Le premier appel (`fast(5)`) ne trouve pas `cache`, appelle `expensive` et stocke le résultat. Les deuxième et troisième appels trouvent `cache` et retournent immédiatement.
+
+    `calls` vaut `1`.
+
+    Voilà les fermetures qui font du vrai travail. `cache` est privé (impossible d’y accéder depuis l’extérieur de `memoize`), persistant (il vit tant que `fast` existe) et partagé entre tous les appels à `fast`.
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+
+Comment avez‑vous fait ?
+
+- **9‑10** : Vous maîtrisez réellement les fermetures. Ça fait un peu peur de faire du pair‑programming avec vous.
+- **6‑8** : Solide. Les questions sur la fermeture périmée / le piège du `this` vous ont fait trébucher, ce qui est honnête.
+- **3‑5** : Vous connaissez le concept mais les bords restent flous. Allez lire la documentation MDN sur la chaîne de portée.
+- **0‑2** : Vous pensiez connaître les fermetures. Maintenant vous les connaissez vraiment. C’est le but.
+
+Les fermetures périmées dans React (#6) et le piège du `this` (#8) sont celles qui provoquent de vrais bugs en production. Si elles vous semblaient inconnues, il vaut le coup de les revoir — elles apparaissent en revue de code plus souvent que tout autre problème lié aux fermetures.
+````

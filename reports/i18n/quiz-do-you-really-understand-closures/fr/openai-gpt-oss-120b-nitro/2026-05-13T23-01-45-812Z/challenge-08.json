@@ -1,0 +1,48 @@
+{
+  "index": 7,
+  "attempt": 1,
+  "originalTitle": "Closure Memory Leak",
+  "translatedTitle": "Fuite de mémoire due à la fermeture",
+  "translation": {
+    "title": "Fuite de mémoire due à la fermeture",
+    "group": "Expert",
+    "options": [
+      {
+        "text": "Il affiche la longueur du tableau data"
+      },
+      {
+        "text": "Il crée une fuite de mémoire"
+      },
+      {
+        "text": "Il lève une RangeError"
+      },
+      {
+        "text": "Rien d'inhabituel — c’est correct"
+      }
+    ],
+    "questionProse": [
+      "Quel est le problème avec ce code ?"
+    ],
+    "explanationProse": [
+      "Le gestionnaire d'événement ferme sur `data`, donc le tableau reste accessible tant que le gestionnaire est accessible. Si `element` est long‑vivant et que le gestionnaire n'est jamais retiré, ce gros tableau est également retenu.\n\n    `element` est dans le DOM. Le gestionnaire conserve `data`. Le GC ne peut pas le collecter.\n\n    Solution : ne capturez pas de grandes données dans des gestionnaires long‑vivants à moins que ce ne soit vraiment nécessaire, et retirez les gestionnaires lorsque l'interface propriétaire est démontée :",
+      "Modern V8 gère mieux cela qu'auparavant. Mais dans les SPA long‑vivants avec de nombreux gestionnaires d'événements, ce schéma pose encore problème."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Fuite de mémoire due à la fermeture\",\n  \"group\": \"Expert\",\n  \"options\": [\n    {\n      \"text\": \"Il affiche la longueur du tableau data\"\n    },\n    {\n      \"text\": \"Il crée une fuite de mémoire\"\n    },\n    {\n      \"text\": \"Il lève une RangeError\"\n    },\n    {\n      \"text\": \"Rien d'inhabituel — c’est correct\"\n    }\n  ],\n  \"questionProse\": [\n    \"Quel est le problème avec ce code ?\"\n  ],\n  \"explanationProse\": [\n    \"Le gestionnaire d'événement ferme sur `data`, donc le tableau reste accessible tant que le gestionnaire est accessible. Si `element` est long‑vivant et que le gestionnaire n'est jamais retiré, ce gros tableau est également retenu.\\n\\n    `element` est dans le DOM. Le gestionnaire conserve `data`. Le GC ne peut pas le collecter.\\n\\n    Solution : ne capturez pas de grandes données dans des gestionnaires long‑vivants à moins que ce ne soit vraiment nécessaire, et retirez les gestionnaires lorsque l'interface propriétaire est démontée :\",\n    \"Modern V8 gère mieux cela qu'auparavant. Mais dans les SPA long‑vivants avec de nombreux gestionnaires d'événements, ce schéma pose encore problème.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 932,
+    "outputTokens": 819,
+    "cacheReadTokens": 128,
+    "cacheWriteTokens": 0,
+    "durationMs": 834,
+    "providerCostUsd": 0.00094045,
+    "providerUpstreamCostUsd": 0.00094045,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000036348000000000005,
+    "outputUsd": 0.00014742,
+    "totalUsd": 0.000183768,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "var in a Loop",
+  "translatedTitle": "var dans une boucle",
+  "translation": {
+    "title": "var dans une boucle",
+    "group": "Le piège classique",
+    "options": [
+      {
+        "text": "0, 1, 2, 3, 4"
+      },
+      {
+        "text": "5, 5, 5, 5, 5"
+      },
+      {
+        "text": "1, 2, 3, 4, 5"
+      },
+      {
+        "text": "undefined x5"
+      }
+    ],
+    "questionProse": [
+      "Qu'est-ce qui est affiché après 100 ms ?"
+    ],
+    "explanationProse": [
+      "`var` est portée fonction. Il n'existe qu'**un** `i` — les cinq callbacks ferment sur la même liaison. Au moment où les timeouts s'exécutent, la boucle est terminée et `i` vaut `5`.\n\n    Cinq callbacks. Un `i`. Valeur : `5`. Affiché cinq fois.\n\n    La solution est `let` (portée bloc, nouvelle liaison à chaque itération) ou envelopper dans une IIFE pour capturer la valeur actuelle :"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"var dans une boucle\",\n  \"group\": \"Le piège classique\",\n  \"options\": [\n    {\n      \"text\": \"0, 1, 2, 3, 4\"\n    },\n    {\n      \"text\": \"5, 5, 5, 5, 5\"\n    },\n    {\n      \"text\": \"1, 2, 3, 4, 5\"\n    },\n    {\n      \"text\": \"undefined x5\"\n    }\n  ],\n  \"questionProse\": [\n    \"Qu'est-ce qui est affiché après 100 ms ?\"\n  ],\n  \"explanationProse\": [\n    \"`var` est portée fonction. Il n'existe qu'**un** `i` — les cinq callbacks ferment sur la même liaison. Au moment où les timeouts s'exécutent, la boucle est terminée et `i` vaut `5`.\\n\\n    Cinq callbacks. Un `i`. Valeur : `5`. Affiché cinq fois.\\n\\n    La solution est `let` (portée bloc, nouvelle liaison à chaque itération) ou envelopper dans une IIFE pour capturer la valeur actuelle :\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 923,
+    "outputTokens": 693,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1583,
+    "providerCostUsd": 0.0008428,
+    "providerUpstreamCostUsd": 0.0008428,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000035997,
+    "outputUsd": 0.00012474,
+    "totalUsd": 0.000160737,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
