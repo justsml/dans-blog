@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-master-modern-html5
+- Locale: es
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2024-11-01--quiz-master-modern-html5/es/index.mdx
+- Validation: passed
+- Runtime seconds: 37.38
+- Input tokens: 11039
+- Output tokens: 10871
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.003492
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: 'Cuestionario: ¿HTML sigue siendo relevante en tu currículum?'
@@ -441,3 +459,4 @@ Después de todo, sabes diferenciar un `<div>` de un `<span>`, ¿verdad? ¿Pero 
 ¿O estás resignado a `<div>` y `<span>` para siempre? 😅
 
 ¡Házmelo saber en los comentarios de abajo! 👇
+````
