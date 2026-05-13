@@ -1,0 +1,44 @@
+{
+  "index": 8,
+  "attempt": 1,
+  "originalTitle": "File Watching",
+  "translatedTitle": "Surveillance des fichiers",
+  "translation": {
+    "title": "Surveillance des fichiers",
+    "group": "Système de fichiers",
+    "options": [
+      {
+        "text": "Une fois par modification de fichier"
+      },
+      {
+        "text": "Pas garanti ; peut se déclencher plusieurs fois"
+      },
+      {
+        "text": "Jamais"
+      },
+      {
+        "text": "Uniquement lors de la suppression d'un fichier"
+      }
+    ],
+    "questionProse": [
+      "Combien de fois `fs.watch()` est-il garanti de se déclencher lorsqu'un fichier est modifié ?"
+    ],
+    "explanationProse": [
+      "`fs.watch()` n'est pas garanti de se déclencher exactement une fois par modification logique d'un fichier. Il se déclenche souvent plusieurs fois car de nombreux éditeurs de texte : \n    1. Sauvegardent dans un fichier temporaire\n    2. Le renomment vers le fichier cible\n\n    Pour une surveillance plus fiable, envisagez d'utiliser : \n    - Le package `chokidar`\n    - Le débouncing du callback\n    - `fs.watchFile()` (bien qu'il soit moins efficace)\n\n    [En savoir plus sur fs.watch()](https://nodejs.org/api/fs.html#fswatchfilename-options-listener)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Surveillance des fichiers\",\n  \"group\": \"Système de fichiers\",\n  \"options\": [\n    {\n      \"text\": \"Une fois par modification de fichier\"\n    },\n    {\n      \"text\": \"Pas garanti ; peut se déclencher plusieurs fois\"\n    },\n    {\n      \"text\": \"Jamais\"\n    },\n    {\n      \"text\": \"Uniquement lors de la suppression d'un fichier\"\n    }\n  ],\n  \"questionProse\": [\n    \"Combien de fois `fs.watch()` est-il garanti de se déclencher lorsqu'un fichier est modifié ?\"\n  ],\n  \"explanationProse\": [\n    \"`fs.watch()` n'est pas garanti de se déclencher exactement une fois par modification logique d'un fichier. Il se déclenche souvent plusieurs fois car de nombreux éditeurs de texte : \\n    1. Sauvegardent dans un fichier temporaire\\n    2. Le renomment vers le fichier cible\\n\\n    Pour une surveillance plus fiable, envisagez d'utiliser : \\n    - Le package `chokidar`\\n    - Le débouncing du callback\\n    - `fs.watchFile()` (bien qu'il soit moins efficace)\\n\\n    [En savoir plus sur fs.watch()](https://nodejs.org/api/fs.html#fswatchfilename-options-listener)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 774,
+    "outputTokens": 986,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2951
+  },
+  "cost": {
+    "inputUsd": 0.00006192,
+    "outputUsd": 0.00023663999999999996,
+    "totalUsd": 0.00029855999999999996,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

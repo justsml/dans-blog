@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-nodejs-files-streams-buffers-oh-my
+- Locale: fr
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2024-11-15--quiz-nodejs-files-streams-buffers-oh-my/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 40.85
+- Input tokens: 13117
+- Output tokens: 11873
+- Thinking tokens: unknown
+- Cached input tokens: 512
+- Cache write tokens: 0
+- Estimated cost: $0.003899
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: 'Quiz : Maîtrise des E/S NodeJS'
@@ -592,3 +610,4 @@ Voyons à quel point vous maîtrisez les flux et les tampons ! 🚀
 </QuizUI>
 
 J'espère que vous avez apprécié tester vos connaissances sur les opérations d'entrée/sortie NodeJS ! Envie d'en savoir plus ? Consultez ma [collection de quiz](../challenges/) pour plus de défis !
+````
