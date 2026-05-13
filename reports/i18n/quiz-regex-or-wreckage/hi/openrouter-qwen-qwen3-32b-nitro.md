@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-regex-or-wreckage
+- Locale: hi
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2024-11-15--quiz-regex-or-wreckage/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 183.33
+- Input tokens: 14918
+- Output tokens: 19229
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.005808
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: 'क्विज़: रेगुलर एक्सप्रेशन्स की महारत'
@@ -596,3 +614,4 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 रेगुलर एक्सप्रेशन्स एक जानवर की तरह हो सकते हैं जिसे नियंत्रित करना होता है, लेकिन जब आपको उनके बारे में पकड़ बन जाती है (और सभी नए सिंटैक्स) तो वे अत्यंत शक्तिशाली हो जाते हैं। अभ्यास करते रहिए और आप जल्द ही एक RegEx मास्टर बन जाएंगे! 🧙‍♂️
 
 <p class="inset">सभी उसके बाद RegEx के बाद आराम करने की तलाश में हैं?<br />पफ्ट, याद रखिए: कौशल के बाद आराम करें! <br /><br />[मेरे जिम](/challenges/) में अभ्यास करें कुछ और चुनौतियों को तोड़ने के लिए! 💪</p>
+````
