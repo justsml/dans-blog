@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: beware-the-single-purpose-people
+- Locale: de
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2025-04-03--beware-the-single-purpose-people/de/index.mdx
+- Validation: passed
+- Runtime seconds: 18.39
+- Input tokens: 7541
+- Output tokens: 7695
+- Thinking tokens: unknown
+- Cached input tokens: 1536
+- Cache write tokens: 0
+- Estimated cost: $0.002450
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 language: English
 title: Vorsicht vor Einzelzweck-Menschen
@@ -122,3 +140,4 @@ Bleiben Sie pragmatisch. Fokussieren Sie sich auf Ergebnisse. Lassen Sie die Jag
 ¹ Die Ironie besteht darin, dass die Erreichung einer tatsächlichen Einzelaufgabe auf der tiefsten Ebene eine enorme Komplexität erfordert, die direkt darunter versteckt ist.  
 
 ² Wir sprechen hier von konzeptioneller Reinheit: der Idee, dass eine Funktion logisch nur „eine Sache“ tun sollte. Verwechseln Sie dies nicht mit dem Konzept der „reinen Funktion“ aus der funktionalen Programmierung, das keine Nebenwirkungen hat – ein anderes, wenn auch manchmal verwandtes Konzept.
+````
