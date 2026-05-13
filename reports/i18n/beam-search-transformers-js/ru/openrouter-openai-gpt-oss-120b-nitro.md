@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: beam-search-transformers-js
+- Locale: ru
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-04-16--beam-search-transformers-js/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 12.72
+- Input tokens: 12801
+- Output tokens: 3324
+- Thinking tokens: unknown
+- Cached input tokens: 3328
+- Cache write tokens: 0
+- Estimated cost: $0.001098
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Реализация Beam Search в Transformers.js
 subTitle: >-
@@ -185,3 +203,4 @@ TODO‑комментарий, который всё это и запустил,
 ¹ Да, я понимаю, что `num_beams=1` — это просто жадный поиск. Дегеративный случай чётко определён.  
 
 ² Модели только‑энкодера (BERT и т.п.) не генерируют токены, так что к ним это не относится. Они просто «вайб».
+````
