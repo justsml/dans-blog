@@ -1,0 +1,44 @@
+{
+  "index": 21,
+  "attempt": 1,
+  "originalTitle": "Consistency Models",
+  "translatedTitle": "Modèles de cohérence",
+  "translation": {
+    "title": "Modèles de cohérence",
+    "group": "Cohérence DynamoDB",
+    "options": [
+      {
+        "text": "100 reads per second"
+      },
+      {
+        "text": "50 reads per second"
+      },
+      {
+        "text": "200 reads per second"
+      },
+      {
+        "text": "Unlimited reads per second"
+      }
+    ],
+    "questionProse": [
+      "Une table DynamoDB a une capacité de lecture provisionnée de 100 RCUs. Combien de lectures fortement cohérentes d'éléments de 4 KB peuvent être effectuées par seconde ?"
+    ],
+    "explanationProse": [
+      "Comprendre les modèles de cohérence de DynamoDB est essentiel :\n\n      - 1 RCU = 1 lecture fortement cohérente/seconde pour des éléments jusqu'à 4 KB\n      - 1 RCU = 2 lectures éventuellement cohérentes/seconde pour des éléments jusqu'à 4 KB\n\n      Donc :\n      - 100 RCUs = 100 lectures fortement cohérentes de 4 KB/seconde\n      - 100 RCUs = 200 lectures éventuellement cohérentes de 4 KB/seconde\n\n      Choisissez le modèle de cohérence en fonction de :\n      - Les exigences de l'application\n      - Les considérations de coût\n      - Les besoins de performance\n      - Les exigences de fraîcheur des données"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Modèles de cohérence\",\n  \"group\": \"Cohérence DynamoDB\",\n  \"options\": [\n    {\n      \"text\": \"100 reads per second\"\n    },\n    {\n      \"text\": \"50 reads per second\"\n    },\n    {\n      \"text\": \"200 reads per second\"\n    },\n    {\n      \"text\": \"Unlimited reads per second\"\n    }\n  ],\n  \"questionProse\": [\n    \"Une table DynamoDB a une capacité de lecture provisionnée de 100 RCUs. Combien de lectures fortement cohérentes d'éléments de 4 KB peuvent être effectuées par seconde ?\"\n  ],\n  \"explanationProse\": [\n    \"Comprendre les modèles de cohérence de DynamoDB est essentiel :\\n\\n      - 1 RCU = 1 lecture fortement cohérente/seconde pour des éléments jusqu'à 4 KB\\n      - 1 RCU = 2 lectures éventuellement cohérentes/seconde pour des éléments jusqu'à 4 KB\\n\\n      Donc :\\n      - 100 RCUs = 100 lectures fortement cohérentes de 4 KB/seconde\\n      - 100 RCUs = 200 lectures éventuellement cohérentes de 4 KB/seconde\\n\\n      Choisissez le modèle de cohérence en fonction de :\\n      - Les exigences de l'application\\n      - Les considérations de coût\\n      - Les besoins de performance\\n      - Les exigences de fraîcheur des données\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 859,
+    "outputTokens": 467,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 1297
+  },
+  "cost": {
+    "inputUsd": 0.000033501,
+    "outputUsd": 0.00008406,
+    "totalUsd": 0.00011756100000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

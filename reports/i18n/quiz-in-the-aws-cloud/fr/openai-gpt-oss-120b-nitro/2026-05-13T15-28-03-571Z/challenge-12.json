@@ -1,0 +1,44 @@
+{
+  "index": 11,
+  "attempt": 1,
+  "originalTitle": "S3 Performance Optimization",
+  "translatedTitle": "Optimisation des performances S3",
+  "translation": {
+    "title": "Optimisation des performances S3",
+    "group": "Performance S3",
+    "options": [
+      {
+        "text": "Utiliser des préfixes aléatoires ou de hachage"
+      },
+      {
+        "text": "Utiliser des préfixes logiques ; la randomisation n’est pas nécessaire"
+      },
+      {
+        "text": "Toujours utiliser les plus gros objets"
+      },
+      {
+        "text": "Minimiser le nombre d’objets"
+      }
+    ],
+    "questionProse": [
+      "Comment optimiser les performances de S3 pour des taux de requêtes élevés ?"
+    ],
+    "explanationProse": [
+      "Astuces de performance S3 :\n    - S3 moderne ajuste automatiquement les taux de requêtes par préfixe\n    - Vous n’avez pas besoin de préfixes aléatoires ou de hachage pour les performances\n    - Utilisez des noms de clés logiques adaptés à vos modèles d’accès\n    - Surveillez les réponses 503 Slow Down si vous poussez des taux de requêtes très élevés\n\n    Les anciennes recommandations préconisaient de randomiser les préfixes pour éviter les partitions chaudes, mais AWS ne recommande plus cela comme exigence de performance par défaut.\n\n    [S3 Performance Guidelines](https://aws.amazon.com/s3/performance/)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Optimisation des performances S3\",\n  \"group\": \"Performance S3\",\n  \"options\": [\n    {\n      \"text\": \"Utiliser des préfixes aléatoires ou de hachage\"\n    },\n    {\n      \"text\": \"Utiliser des préfixes logiques ; la randomisation n’est pas nécessaire\"\n    },\n    {\n      \"text\": \"Toujours utiliser les plus gros objets\"\n    },\n    {\n      \"text\": \"Minimiser le nombre d’objets\"\n    }\n  ],\n  \"questionProse\": [\n    \"Comment optimiser les performances de S3 pour des taux de requêtes élevés ?\"\n  ],\n  \"explanationProse\": [\n    \"Astuces de performance S3 :\\n    - S3 moderne ajuste automatiquement les taux de requêtes par préfixe\\n    - Vous n’avez pas besoin de préfixes aléatoires ou de hachage pour les performances\\n    - Utilisez des noms de clés logiques adaptés à vos modèles d’accès\\n    - Surveillez les réponses 503 Slow Down si vous poussez des taux de requêtes très élevés\\n\\n    Les anciennes recommandations préconisaient de randomiser les préfixes pour éviter les partitions chaudes, mais AWS ne recommande plus cela comme exigence de performance par défaut.\\n\\n    [S3 Performance Guidelines](https://aws.amazon.com/s3/performance/)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 821,
+    "outputTokens": 755,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 2443
+  },
+  "cost": {
+    "inputUsd": 0.000032019,
+    "outputUsd": 0.0001359,
+    "totalUsd": 0.000167919,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "index": 24,
+  "attempt": 1,
+  "originalTitle": "Time To Live (TTL)",
+  "translatedTitle": "Durée de vie (TTL)",
+  "translation": {
+    "title": "Durée de vie (TTL)",
+    "group": "Fonctionnalités DynamoDB",
+    "options": [
+      {
+        "text": "Supprime les éléments immédiatement à l'expiration"
+      },
+      {
+        "text": "Nécessite un déclencheur de suppression manuel"
+      },
+      {
+        "text": "Suppression en arrière-plan avec un timing au meilleur effort"
+      },
+      {
+        "text": "Les éléments expirent mais restent stockés"
+      }
+    ],
+    "questionProse": [
+      "Comment la fonction TTL de DynamoDB gère-t-elle la suppression des éléments ?"
+    ],
+    "explanationProse": [
+      "Caractéristiques du TTL DynamoDB :\n      - Un processus en arrière-plan surveille l'attribut TTL\n      - Les éléments expirés sont supprimés selon un planning au meilleur effort, généralement en quelques jours\n      - Aucun coût supplémentaire pour le TTL\n      - Les éléments supprimés apparaissent dans les flux\n\n      Cas d'utilisation :\n      - Gestion de sessions\n      - Expiration de journaux\n      - Nettoyage de données temporaires\n      - Conformité réglementaire"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Durée de vie (TTL)\",\n  \"group\": \"Fonctionnalités DynamoDB\",\n  \"options\": [\n    {\n      \"text\": \"Supprime les éléments immédiatement à l'expiration\"\n    },\n    {\n      \"text\": \"Nécessite un déclencheur de suppression manuel\"\n    },\n    {\n      \"text\": \"Suppression en arrière-plan avec un timing au meilleur effort\"\n    },\n    {\n      \"text\": \"Les éléments expirent mais restent stockés\"\n    }\n  ],\n  \"questionProse\": [\n    \"Comment la fonction TTL de DynamoDB gère-t-elle la suppression des éléments ?\"\n  ],\n  \"explanationProse\": [\n    \"Caractéristiques du TTL DynamoDB :\\n      - Un processus en arrière-plan surveille l'attribut TTL\\n      - Les éléments expirés sont supprimés selon un planning au meilleur effort, généralement en quelques jours\\n      - Aucun coût supplémentaire pour le TTL\\n      - Les éléments supprimés apparaissent dans les flux\\n\\n      Cas d'utilisation :\\n      - Gestion de sessions\\n      - Expiration de journaux\\n      - Nettoyage de données temporaires\\n      - Conformité réglementaire\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 799,
+    "outputTokens": 409,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1050
+  },
+  "cost": {
+    "inputUsd": 0.000031161,
+    "outputUsd": 0.00007362,
+    "totalUsd": 0.000104781,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

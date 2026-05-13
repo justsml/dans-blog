@@ -1,0 +1,44 @@
+{
+  "index": 20,
+  "attempt": 1,
+  "originalTitle": "Storage Cost Analysis",
+  "translatedTitle": "Analyse des coûts de stockage",
+  "translation": {
+    "title": "Analyse des coûts de stockage",
+    "group": "Optimisation des coûts",
+    "options": [
+      {
+        "text": "S3 Standard pour toutes les données"
+      },
+      {
+        "text": "Utiliser toujours le stockage le moins cher"
+      },
+      {
+        "text": "Mélanger les classes de stockage selon les modèles d'accès"
+      },
+      {
+        "text": "Tout stocker dans Glacier"
+      }
+    ],
+    "questionProse": [
+      "Quelle est l'approche la plus économique pour stocker 1 Po de données avec 20 % accédées quotidiennement, 30 % mensuellement et 50 % annuellement ?"
+    ],
+    "explanationProse": [
+      "Stratégie de stockage optimale:\n    - 20 % en S3 Standard pour un accès quotidien\n    - 30 % en S3 Standard‑IA pour un accès mensuel\n    - 50 % en Glacier pour un accès annuel\n\n    Cette approche optimise les coûts tout en respectant les modèles d'accès appropriés.\n\n    Considérations de coût:\n    - Tarification du stockage par Go\n    - Coûts de récupération\n    - Modèles d'accès\n    - Coûts de transition"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Analyse des coûts de stockage\",\n  \"group\": \"Optimisation des coûts\",\n  \"options\": [\n    {\n      \"text\": \"S3 Standard pour toutes les données\"\n    },\n    {\n      \"text\": \"Utiliser toujours le stockage le moins cher\"\n    },\n    {\n      \"text\": \"Mélanger les classes de stockage selon les modèles d'accès\"\n    },\n    {\n      \"text\": \"Tout stocker dans Glacier\"\n    }\n  ],\n  \"questionProse\": [\n    \"Quelle est l'approche la plus économique pour stocker 1 Po de données avec 20 % accédées quotidiennement, 30 % mensuellement et 50 % annuellement ?\"\n  ],\n  \"explanationProse\": [\n    \"Stratégie de stockage optimale:\\n    - 20 % en S3 Standard pour un accès quotidien\\n    - 30 % en S3 Standard‑IA pour un accès mensuel\\n    - 50 % en Glacier pour un accès annuel\\n\\n    Cette approche optimise les coûts tout en respectant les modèles d'accès appropriés.\\n\\n    Considérations de coût:\\n    - Tarification du stockage par Go\\n    - Coûts de récupération\\n    - Modèles d'accès\\n    - Coûts de transition\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 824,
+    "outputTokens": 733,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 783
+  },
+  "cost": {
+    "inputUsd": 0.000032136,
+    "outputUsd": 0.00013194000000000001,
+    "totalUsd": 0.000164076,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
