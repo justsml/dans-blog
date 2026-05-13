@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: deathmatch-git-rebase-vs-merge
+- Locale: ru
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2023-08-28--deathmatch-git-rebase-vs-merge/ru/index.mdx
+- Validation: passed
+- Runtime seconds: 17.18
+- Input tokens: 8363
+- Output tokens: 7227
+- Thinking tokens: unknown
+- Cached input tokens: 1536
+- Cache write tokens: 0
+- Estimated cost: $0.002404
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: 'Схватка: Git Rebase против Merge'
@@ -132,3 +150,4 @@ cover_icon: ../icon_casper-johansson-GBHnQXbY2Ts-unsplash-cropped.webp
 - Вы можете использовать специальный разделитель `--` с `git checkout`, чтобы оставаться в текущей ветке при копировании указанных файлов:  
 - `git checkout feature/half-a-feature **--** <путь_к_файлу_или_папке>`  
 - Убедитесь, что вы сначала зафиксировали все изменения, которые хотите сохранить, так как это перезапишет любые локальные изменения.
+````
