@@ -1,0 +1,66 @@
+{
+  "runId": "openai-gpt-oss-120b-nitro@2026-05-13T16-12-36-004Z",
+  "slug": "promise-gotchas",
+  "locale": "de",
+  "model": "openai/gpt-oss-120b:nitro",
+  "modelPath": "openai-gpt-oss-120b-nitro",
+  "createdAt": "2026-05-13T16:12:41.608Z",
+  "sourcePath": "src/content/posts/2018-09-26--promise-gotchas/index.md",
+  "targetPath": "src/content/posts/2018-09-26--promise-gotchas/de/index.mdx",
+  "candidatePath": "reports/i18n/promise-gotchas/de/openai-gpt-oss-120b-nitro/2026-05-13T16-12-36-004Z/candidate.mdx",
+  "sourceHash": "585ef3acb24711b5dc9644d20cfc4e64a997bcdd11408aaa68156dd3f28e5615",
+  "outputHash": "e38fd02273f0020cb4e2c785d2446b6056af320026eed5921933aa841471bca6",
+  "reasoningEffort": "low",
+  "temperature": 0.3,
+  "maxTokens": 16000,
+  "timeoutMs": 200000,
+  "articleSummary": "**Summary:**  \nThe article explains that JavaScript promises behave unlike ordinary values: you cannot log a promise directly and must use `.then` to access its resolved value. It warns that the TC39 design allowing `.then` and `.catch` to accept `null` or undefined can lead to subtle bugs, especially when developers mistakenly invoke callbacks instead of passing them. Through a series of examples, the piece shows which forms of `.then` calls correctly log the resolved value (e.g., passing `console.log` as a function versus calling `console.log()` which returns `undefined`). The tone is instructional with a tutorial‑style focus, using concrete code snippets as the primary metaphor for “passing” versus “invoking” callbacks. The intended audience is JavaScript developers familiar with promises who need to avoid common pitfalls.",
+  "totalInputTokens": 2746,
+  "totalOutputTokens": 490,
+  "totalCacheReadTokens": 768,
+  "totalCacheWriteTokens": 0,
+  "totalDurationMs": 3655,
+  "totalCostUsd": 0.000195294,
+  "pricingSource": "local-openrouter-estimate",
+  "telemetry": {
+    "model": "openai/gpt-oss-120b:nitro",
+    "chunkSize": "6p",
+    "totalChunks": 3,
+    "totalInputTokens": 2746,
+    "totalOutputTokens": 490,
+    "totalCacheReadTokens": 768,
+    "totalCacheWriteTokens": 0,
+    "totalDurationMs": 3655,
+    "totalCostUsd": 0.000195294,
+    "pricingSource": "local-openrouter-estimate",
+    "chunks": [
+      {
+        "index": 0,
+        "inputTokens": 843,
+        "outputTokens": 189,
+        "cacheReadTokens": 256,
+        "cacheWriteTokens": 0,
+        "durationMs": 983,
+        "costUsd": 0.00006689700000000001
+      },
+      {
+        "index": 1,
+        "inputTokens": 1022,
+        "outputTokens": 222,
+        "cacheReadTokens": 256,
+        "cacheWriteTokens": 0,
+        "durationMs": 2047,
+        "costUsd": 0.000079818
+      },
+      {
+        "index": 2,
+        "inputTokens": 881,
+        "outputTokens": 79,
+        "cacheReadTokens": 256,
+        "cacheWriteTokens": 0,
+        "durationMs": 625,
+        "costUsd": 0.000048579
+      }
+    ]
+  }
+}
