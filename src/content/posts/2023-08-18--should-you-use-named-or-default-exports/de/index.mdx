@@ -1,7 +1,7 @@
 ---
 social_image: ../desktop-social.webp
-title: ''
-subTitle: Nennen oder nicht nennen?
+title: 'ESM‑Exporte: benannt vs. default?'
+subTitle: Benennen oder nicht benennen?
 date: '2023-08-10'
 modified: '2024-08-01'
 tags:
@@ -14,90 +14,89 @@ cover: ../austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp
 cover_mobile: ../w300_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp
 cover_icon: ../icon_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp
 ---
-## Solltest du `named` oder `default` Exports in JavaScript verwenden?
+## Sollten Sie `named` oder `default` Exports in JavaScript verwenden?
 
-Es mangelt es nicht an stark formulierten Artikeln zu diesem Thema.
+Es gibt keinen Mangel an stark formulierten Artikeln zu diesem Thema.
 
-Die Mehrheit beurteilt `default export` als „schreckbar“. Andere behaupten, dass `default` gewinnen sollte (z. B. der AirBnb-Stilguide).
+Die Mehrheit beurteilt `default export` als „schrecklich“. Andere vertreten die Ansicht, dass `default` gewinnen sollte (z. B. der AirBnb‑Style‑Guide).
 
-Sie werfen oft **völlig vorübergehenden** Dingen die Schuld zu: IDE-Auto-Import-Bugs, die Tree-Shaking-Fähigkeiten eines bestimmten Bundlers oder bloß die Möglichkeit von Tippfehlern beim Benennen eines Imports.
+Sie schieben die Schuld häufig auf **völlig temporäre** Dinge: IDE‑Auto‑Import‑Fehler, die Tree‑Shaking‑Fähigkeiten eines bestimmten Bundlers oder die bloße Möglichkeit von Tippfehlern beim Benennen eines Imports.
 
-Haben wir den eigentlichen Zweck des `export`ierens übersehen?
+Haben wir den eigentlichen Sinn des `export`‑Mechanismus verfehlt?
 
 **Code ist Kommunikation. ✨**
 
-> Wir senden importierenden Modulen ein Signal, wie sie etwas verwenden sollen.
+> Wir senden ein Signal an `import`‑Aufrufer, _wie ein Objekt zu benutzen ist_.
 
-### Also, was sagen wir?
+### Was sagen wir damit?
 
-Im Wesentlichen gibt es zwei Arten, Dinge in modernem JavaScript zu exportieren:
+Im Groben gibt es in modernem JavaScript zwei Arten, Dinge zu exportieren:
 
-- Ein `export default` erklärt klar und deutlich: „Das ist **DER EINZIGE WICHTIGSTE** Punkt.“ Gleichzeitig: „Nebenexports spielen nur eine unterstützende Rolle.“
-- Ein `named export` sagt klipp und klar: „Das ist definitiv **EINE SACHA!**“ Und fragt gleich mit: „Hast du noch andere Freunde dabei?“ Nachfrage: „Sind die eingeladen oder verpflichtend?“
+- Ein `export default` erklärt kühn: „Das ist **_DAS EINZIGE WICHTIGSTE_**.“ Gleichzeitig bedeutet das, „alle benannten Exporte spielen nur eine unterstützende Rolle.“
+- Ein `named export` sagt: „Das ist **_EIN DING!_**“ und wirft gleichzeitig Fragen auf wie „Gibt es noch weitere Kumpels dort?“ bzw. „Sind sie eingeladen oder verpflichtend?“
 
-Natürlich kannst du beides kombinieren oder unterschiedliche Ansätze für verschiedene Teile deines Codebases verwenden. [Weitere Beispiele findest du am Ende des Artikels.](#summary)
+Natürlich kann man beides kombinieren oder unterschiedliche Strategien für verschiedene Bereiche des Code‑Bases verwenden. [Siehe weitere Beispiele am Ende des Artikels.](../#summary)
 
-### Schwache Argumente, Alter
+### Schwache Argumente, Mann
 
-Schwache Argumente, Alter
+Lassen Sie uns einige der häufigen „temporären Probleme“ angehen, auf die Entwickler stoßen.
 
-Lassen Sie uns einige der gängigen „vorübergehenden Probleme“ ansprechen, mit denen Leute aufstoßen.
-
-- Arg #1: Named Exports gewährleisten Namenskonsistenz. [Quelle](https://blog.neufund.org/why-we-have-banned-default-exports-and-you-should-do-the-same-d51fdc2cf2ad)  
-  - Nein, tun sie nicht. Suchst du vielleicht eine Linter-Regel?  
-  - (Ich hasse es, dir das sagen zu müssen, aber warte, bis du erfährst, was Variablen alles können!)  
+- Argument #1: Benannte Exporte gewährleisten Namenskonsistenz. [Quelle](https://blog.neufund.org/why-we-have-banned-default-exports-and-you-should-do-the-same-d51fdc2cf2ad)
+  - Nein, tun sie nicht. Vielleicht suchen Sie nach einer Lint‑Regel?
+  - (Ich muss es Ihnen leider sagen, aber warten Sie, bis Sie lernen, was Variablen leisten können!)
 
 ```tsx
-// Du kannst beides aliassen!  
-import { Knife as Handle } from "./knife.js"; // 🔪  
-import { default as Handle } from "./knife.js"; // 🔪  
-import Handle from "./knife.js"; // 🔪  
+// Sie können beides aliasen!
+import { Knife as Handle } from "./knife.js"; // 🔪
+import { default as Handle } from "./knife.js"; // 🔪
+import Handle from "./knife.js"; // 🔪
 ```
 
-- Arg #2: Verwende `import * as soManyKnives from './kinves.js'`, um named Exports zu kombinieren. (Nicht verlinkt, Autor zurückgezogen.)  
-  - Nette Funktion. Nicht der Punkt.  
-  - Sag mir jetzt, wie halt ich deinen Kram wieder fest? Kein Autorabsicht.  
-- Arg #3: Named Exports haben besseren IDE-Import- oder -Umbenennungs-Unterstützung. [Quelle](https://www.bundleapps.io/blog/use-named-exports-over-default-exports-in-javascript)  
+- Argument #2: `import * as soManyKnives from './kinves.js'` verwenden, um benannte Exporte zu kombinieren. (Kein Link, Autor hat es zurückgezogen.)
+  - Praktisches Feature. Nicht der Kernpunkt.
+  - Und nun: Wie soll ich Ihr Gerät wieder halten? Keine klare Autorenintention.
 
-- Falsch (heute nicht mehr). Konfiguriere/deine Tools aktualisieren.  
-  - Unterstützung existiert seit 3+ Jahren in [VS Code](https://github.com/microsoft/vscode/pull/94480), IntelliJ, etc.  
-  - Dennoch gibt es einige „Best Practices“, um mit `default exports` die beste IDE- und Refaktoriererfahrung zu erzielen.  
-  - ✅ `export default function UserService() {}` - immer benannte Funktionen bevorzugen.  
-  - ❌ `export default function() { }` - anonyme Funktionen sind nicht implizit mit ihrem Dateinamen verknüpft. Wenn du die Sache nicht benennst, ist es schwer, den Computer bitten zu können, sie zu ändern.  
-  - **Hinweis:** Aus historischen Gründen kann man `export default` nicht mit einem `const`-Ausdruck verknüpfen.  
+- Argument #3: Benannte Exporte bieten besseren IDE‑Import‑ oder Umbenennungs‑Support. [Quelle](https://www.bundleapps.io/blog/use-named-exports-over-default-exports-in-javascript)
 
-```tsx
-export default const Knife = () => {...blade, ...handle}  
-// ^ ❌ Nicht unterstützt ❌ ^  
-// Export default const ... nicht möglich  
-// ==========================  
+- Falsch (und weitere). Passen Sie Ihre Werkzeuge an bzw. aktualisieren Sie sie.
+  - Unterstützung gibt es seit über drei Jahren in [VS Code](https://github.com/microsoft/vscode/pull/94480), IntelliJ usw.
+  - Dennoch gibt es einige „Best Practices“ für `default exports`, um das beste IDE‑ und Refactoring‑Erlebnis zu erzielen.
+  - ✅ `export default function UserService() {}` – immer benannte Funktionen bevorzugen.
+  - ❌ `export default function() { }` – anonyme Funktionen sind nicht implizit an ihren Dateinamen gebunden. Ohne Namen ist es schwer, dem Computer mitzuteilen, dass er sie ändern soll.
+  - **Hinweis:** Aus historischen Gründen können Sie `export default` nicht mit einem `const`‑Ausdruck kombinieren.
 
-// Sobald deklariert, kannst du eine const-Variabel als default exportieren.  
-const Knife = () => {...blade, ...handle}  
-export default Knife;  
-// ^ ✅ Gültig  
+    ```tsx
+    export default const Knife = () => {...blade, ...handle}
+    // ^ ❌ Nicht unterstützt ❌ ^
+    // Cannot export default const ....
+    // ==========================
 
-// Für Vollständigkeit:  
-export default class anyoneStillUseThese {}  
-// ^ ✅ Auch gültig, um eine Klasse als default zu exportieren  
-```
+    // Sobald die Variable deklariert ist, können Sie sie als Default exportieren.
+    const Knife = () => {...blade, ...handle}
+    export default Knife;
+    // ^ ✅ Gültig
+
+    // Zur Vollständigkeit:
+    export default class anyoneStillUseThese {}
+    // ^ ✅ Auch gültig, eine Klasse als Default zu exportieren
+    ```
 
 <section className="scroll-x">
-## Zusammenfassung  
+## Zusammenfassung
 
-Es gibt tatsächlich viele Kombinationen, wie wir Dinge exportieren können, jede erzählt eine andere Geschichte:  
+Es gibt tatsächlich zahlreiche Kombinationen, wie wir Dinge exportieren können – jede erzählt eine andere Geschichte:
 
-| Default (Exports) | Named (Exports) | Private Fns | Pattern                                                   | Meaning                                                       |  
-| ----------------- | --------------- | ----------- | --------------------------------------------------------- | ------------------------------------------------------------- |  
-| ✅                | ❌              | ❌          | Ein default Export.                                       | „Hier ist EINE Funktion mit Einem Zweck!“                   |  
-| ❌                | ✅              | ❌          | Ein named Export.                                         | „Bitte benenne mich nicht um.“                              |  
-| ✅                | ✅              | ✅          | Default Export + mehrere 'private' nicht-exportierte Funktionen | „Hier ist einige verwandte Logik. Erwarte auch Klassen-artiges Verhalten.“ |  
-| ❌                | ❌              | ✅          | Mehrere named Exports, generischer Dateiname.             | „Ein Sammelsurium lose verbundener Dinge, keine Hierarchie impliziert.“ |  
-| ✅                | ✅              | ❌          | Ein named Export, der auch als default exportiert wird.   | „Du kannst nicht falsch importieren.“                         |  
-</section>  
+| Default (Exports) | Named (Exports) | Private Fns | Pattern                                                   | Bedeutung                                                       |
+| ----------------- | --------------- | ----------- | --------------------------------------------------------- | --------------------------------------------------------------- |
+| ✅                | ❌              | ❌          | Ein Default‑Export.                                       | „Präsentiere EINE Funktion mit einem einzigen Zweck!“          |
+| ❌                | ✅              | ❌          | Ein benannter Export.                                     | „Bitte nicht umbenennen.“                                       |
+| ✅                | ✅              | ✅          | Default‑Export + mehrere „private“ nicht exportierte Funktionen | „Hier ist etwas zusammengehörige Logik. Außerdem erwartete Klassen‑ähnliche Verhaltensweisen.“ |
+| ❌                | ❌              | ✅          | Mehrere benannte Exporte, generischer Dateiname.          | „Ein Sammelsurium lose zusammenhängender Dinge, ohne implizite Hierarchie.“ |
+| ✅                | ✅              | ❌          | Ein benannter Export, zusätzlich als Default exportiert.  | „Sie können mich nicht falsch importieren.“                     |
+</section>
 
-**Etwas zum Nachdenken:** Was sagen wir, wenn der Dateiname mit einem seiner Exports übereinstimmt oder nicht? (Zum Beispiel eine `utils.js` mit vielen Funktionen.)
+**Etwas zum Nachdenken:** Was sagen wir, wenn der Dateiname mit einem seiner Exporte übereinstimmt oder nicht? (Zum Beispiel eine `utils.js` mit vielen Funktionen.)
 
 ### Fazit
 
-Wenn Code Kommunikation ist, dann `export` wie du es verdammt nochmal ernst meinst. 💞
+Wenn Code Kommunikation ist, dann `export` Sie bitte, als meinen Sie es verdammt ernst. 💞
