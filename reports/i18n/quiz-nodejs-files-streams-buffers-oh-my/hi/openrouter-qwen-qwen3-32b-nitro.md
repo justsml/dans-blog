@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-nodejs-files-streams-buffers-oh-my
+- Locale: hi
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2024-11-15--quiz-nodejs-files-streams-buffers-oh-my/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 134.31
+- Input tokens: 13193
+- Output tokens: 18799
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.005567
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: 'क्विज़: NodeJS I/O महारत'
@@ -599,3 +617,4 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 </QuizUI>
 
 मुझे आशा है कि आपने अपने NodeJS IO ज्ञान का परीक्षण करके आनंद लिया होगा! अधिक चाहते हैं? अपने [क्विज़ संग्रह](/challenges/) को देखें अधिक चुनौतियों के लिए!
+````
