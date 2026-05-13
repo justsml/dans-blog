@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: llm-routing-mastra-ai
+- Locale: it
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-01-02--llm-routing-mastra-ai/it/index.mdx
+- Validation: deferred
+- Runtime seconds: 10.45
+- Input tokens: 4500
+- Output tokens: 4654
+- Thinking tokens: unknown
+- Cached input tokens: 1024
+- Cache write tokens: 0
+- Estimated cost: $0.001477
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Non sposare il tuo modello
 subTitle: 'LLM Routing, trend del momento'
@@ -113,3 +131,4 @@ La bellezza di questo approccio è che il codice dell'applicazione non cambia. C
 2. [Sicurezza e guardrails](../mastra-security-guardrails)
 3. [MCP e integrazioni degli strumenti](../mastra-mcp-tool-integrations)
 4. [Flussi di lavoro e memoria](../mastra-workflows-memory)
+````
