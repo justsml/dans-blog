@@ -1,0 +1,67 @@
+# Translation Candidate
+- Slug: docker-rocks
+- Locale: it
+- Model: qwen/qwen3.6-plus
+- Target: src/content/posts/2015-06-11--docker-rocks/it/index.mdx
+- Validation: rejected: direct AI SDK translation failed
+- Runtime seconds: 240.01
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Cache write tokens: unknown
+- Estimated cost: unknown
+- Pricing source: unknown
+- Note: Command failed after 240000ms: bun run i18n:translate:chunked -- --slug docker-rocks --locale it --model qwen/qwen3.6-plus --chunk 6p --quiz-concurrency 24
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: Docker spacca e ora funziona su OSX
+subTitle: 'Docker è fantastico, veloce e flessibile'
+date: '2015-06-11'
+modified: '2024-08-10'
+category: DevOps
+subCategory: docker
+tags:
+  - docker
+  - boot2docker
+  - devops
+related:
+  - docker-makes-everything-better
+  - docker-server-setup-notes
+  - docker-security-tips-for-self-hosting
+cover: ../guillaume-bolduc-259596-unsplash.webp
+cover_mobile: ../w300_guillaume-bolduc-259596-unsplash.webp
+cover_icon: ../icon_guillaume-bolduc-259596-unsplash.webp
+---
+## Docker è fantastico
+
+> Aggiornamenti settembre 2016, 2018  
+> Boot2Docker è stato sostituito da Docker per Mac
+
+> Nota storica: questo post è conservato intenzionalmente come istantanea di Docker per Mac dell'epoca 2015. I consigli sulle prestazioni e i nomi degli strumenti riflettono quel momento; i flussi di lavoro attuali con Docker Desktop e Compose si sono evoluti.
+
+1. Docker è incredibile, veloce e flessibile.  
+1. Gli strumenti precedenti, in particolare boot2docker, erano lenti e soggetti a crash.
+
+Docker può attualmente essere eseguito nativamente su un kernel Linux v3.4+ – e l'attuale macchina virtuale boot2docker esegue effettivamente la v4.
+
+Il miglior uso del tuo hardware: installa l'ultima versione di Debian o Ubuntu sul tuo Mac/Windows,
+
+... dai, quei giochi non aiutano il tuo codice...
+
+### Verifica la tua configurazione
+
+Esamina l'output del comando `docker info`.
+
+1. Sicurezza: verifica che il server non abbia porte aperte inaspettate (con `nmap` da una rete remota)
+1. DNS: utilizza una cache locale o un server DNS a bassa latenza.
+1. Storage: usa il driver di storage corretto (`overlay2` è probabile)
+
+Aggiornato 2024:
+
+- Docker Desktop è proprietario, ma gratuito per uso personale. È un ottimo modo per iniziare con Docker su OSX o Windows.
+- Se cerchi una soluzione più open-source, dai un'occhiata a [Rancher Desktop](https://rancherdesktop.io/).
+````
