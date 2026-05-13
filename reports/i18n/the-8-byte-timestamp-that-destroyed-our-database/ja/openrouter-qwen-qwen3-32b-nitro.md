@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: the-8-byte-timestamp-that-destroyed-our-database
+- Locale: ja
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2025-12-29--the-8-byte-timestamp-that-destroyed-our-database/ja/index.mdx
+- Validation: deferred
+- Runtime seconds: 69.37
+- Input tokens: 10761
+- Output tokens: 6793
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.002491
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: あなたのタイムスタンプは嘘だ
 subTitle: 列車の切符から学んだデータベースでの時刻保存の教訓
@@ -140,3 +158,4 @@ SELECT * FROM orders WHERE created_at = '2026-01-15 10:00:00.123';
 - [ISO 860: 日付と時刻のフォーマット](https://en.wikipedia.org/wiki/ISO_8601)
 - [タイムゾーンデータベース（IANA）](https://www.iana.org/time-zones)
 - [分散システムにおけるタイムスタンプの扱い](https://www.postgresql.org/docs/current/functions-datetime.html)
+````
