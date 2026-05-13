@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: docker-firewall-setup
+- Locale: ru
+- Model: deepseek/deepseek-v4-flash
+- Target: src/content/posts/2015-06-06--docker-firewall-setup/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 27.21
+- Input tokens: 3853
+- Output tokens: 4824
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.001890
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Настройка брандмауэра Docker
 subTitle: Настройка брандмауэра хоста Docker
@@ -102,3 +120,4 @@ nmap -p 1-10240,27017 -O --osscan-guess $TARGET_HOST
 ~~~
 
 > ГОТОВО! Теперь вы должны видеть ТОЛЬКО те порты, которые настроили!
+````
