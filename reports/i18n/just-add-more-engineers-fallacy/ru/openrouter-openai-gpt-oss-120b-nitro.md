@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: just-add-more-engineers-fallacy
+- Locale: ru
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2025-12-29--just-add-more-engineers-fallacy/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 6.50
+- Input tokens: 8094
+- Output tokens: 2995
+- Thinking tokens: unknown
+- Cached input tokens: 2688
+- Cache write tokens: 0
+- Estimated cost: $0.000855
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 draft: true
 hidden: true
@@ -109,3 +127,4 @@ tags:
 - Блог и книга Уилла Ларсона *Staff Engineer* о технологическом лидерстве
 - Чарити Мейджорс (Honeycomb) о наблюдаемости и структуре команд  
 - Отчёты State of DevOps от DORA
+````
