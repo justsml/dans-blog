@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: llm-evals-are-broken
+- Locale: fr
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-05-06--llm-evals-are-broken/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 27.08
+- Input tokens: 11235
+- Output tokens: 10226
+- Thinking tokens: unknown
+- Cached input tokens: 1536
+- Cache write tokens: 0
+- Estimated cost: $0.003353
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: ''
 subTitle: >-
@@ -264,3 +282,4 @@ C'est vraiment difficile pour une nouvelle fonctionnalité d'IA. C'est aussi non
 Les benchmarks ne mentent pas. Ils répondent à une autre question. Arrêtez de les lire comme des roadmaps produit et commencez à écrire des tests qui correspondent à votre système.
 
 Vos utilisateurs s'en apercevront avant que vos tableaux de bord ne le fassent. Construisez d'abord le jeu de tests.
+````
