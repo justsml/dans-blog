@@ -1,67 +1,63 @@
 {
-  "runId": "2026-05-13T16-21-43-769Z",
-  "runStatus": "completed",
+  "runId": "2026-05-13T17-18-28-487Z",
+  "runStatus": "running",
   "slug": "amazing-resources",
   "locale": "it",
-  "startedAt": "2026-05-13T16:21:43.769Z",
-  "updatedAt": "2026-05-13T16:24:21.632Z",
+  "startedAt": "2026-05-13T17:18:28.487Z",
+  "updatedAt": "2026-05-13T17:20:25.161Z",
   "modelsRequested": [
     "openrouter/openai/gpt-oss-120b:nitro",
-    "openrouter/qwen/qwen3-32b:nitro"
+    "openrouter/qwen/qwen3-32b:nitro",
+    "deepseek/deepseek-v4-flash",
+    "qwen/qwen3.6-plus"
   ],
-  "attemptedModels": 2,
-  "skippedModels": 0,
+  "attemptedModels": 1,
+  "skippedModels": 2,
   "rejectedModels": 0,
-  "candidateModels": 2,
+  "candidateModels": 1,
   "totals": {
-    "inputTokens": 18668,
-    "outputTokens": 14641,
+    "inputTokens": 9598,
+    "outputTokens": 9972,
     "thinkingTokens": 0,
-    "cachedInputTokens": 1920,
+    "cachedInputTokens": 0,
     "cacheWriteTokens": 0,
-    "estimatedCostUsd": 0.0044,
+    "estimatedCostUsd": 0.004136,
     "hasUnknownInputTokens": false,
     "hasUnknownOutputTokens": false,
     "hasUnknownThinkingTokens": true,
     "hasUnknownCachedInputTokens": false,
     "hasUnknownCacheWriteTokens": false,
     "hasUnknownEstimatedCost": false,
-    "runtimeSeconds": "35.00"
+    "runtimeSeconds": "108.19"
   },
   "attempts": [
     {
       "model": "openrouter/openai/gpt-oss-120b:nitro",
-      "status": "candidate",
-      "validationStatus": "passed",
+      "status": "skipped",
       "reportPath": "reports/i18n/amazing-resources/it/openrouter-openai-gpt-oss-120b-nitro.md",
-      "note": "Generated through the direct AI SDK chunked translator.",
-      "telemetry": {
-        "runtimeSeconds": "11.41",
-        "tokens": {
-          "input": 9616,
-          "output": 3553,
-          "cached": 896,
-          "cacheWrite": 0
-        },
-        "estimatedCostUsd": 0.001014564,
-        "pricingSource": "local-openrouter-estimate"
-      }
+      "note": "Existing non-rejected report found. Pass --overwrite to rerun."
     },
     {
       "model": "openrouter/qwen/qwen3-32b:nitro",
-      "status": "candidate",
-      "validationStatus": "passed",
+      "status": "skipped",
       "reportPath": "reports/i18n/amazing-resources/it/openrouter-qwen-qwen3-32b-nitro.md",
+      "note": "Existing non-rejected report found. Pass --overwrite to rerun."
+    },
+    {
+      "model": "deepseek/deepseek-v4-flash",
+      "status": "candidate",
+      "validationStatus": "deferred",
+      "reportPath": "reports/i18n/amazing-resources/it/deepseek-deepseek-v4-flash.md",
       "note": "Generated through the direct AI SDK chunked translator.",
       "telemetry": {
-        "runtimeSeconds": "23.59",
+        "runtimeSeconds": "108.19",
         "tokens": {
-          "input": 9052,
-          "output": 11088,
-          "cached": 1024,
+          "input": 9598,
+          "output": 9972,
+          "cached": 0,
           "cacheWrite": 0
         },
-        "estimatedCostUsd": 0.00338528,
+        "estimatedCostUsd": 0.004135880000000001,
         "pricingSource": "local-openrouter-estimate"
       }
     }

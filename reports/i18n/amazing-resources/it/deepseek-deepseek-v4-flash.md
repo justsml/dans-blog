@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: amazing-resources
+- Locale: it
+- Model: deepseek/deepseek-v4-flash
+- Target: src/content/posts/2015-02-26--amazing-resources/it/index.mdx
+- Validation: deferred
+- Runtime seconds: 108.19
+- Input tokens: 9598
+- Output tokens: 9972
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.004136
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Migliori risorse gratuite di UI design per sviluppatori
@@ -187,3 +205,4 @@ Strumenti piccoli ma pratici che risolvono rapidamente problemi front-end specif
 
 Changelog: 2026-04 — Riorganizzata la pagina per umani e SEO, migliorati titoli e descrizioni, aggiunti Assistant UI, AI SDK Elements, Aceternity UI, Shadcnblocks, Tailark, pattern KokonutUI e Tool UI.
 Changelog: 2025-09 — Aggiornati i link, rinfrescate le risorse più vecchie, aggiunti strumenti moderni per icone, contrasto e design.
+````
