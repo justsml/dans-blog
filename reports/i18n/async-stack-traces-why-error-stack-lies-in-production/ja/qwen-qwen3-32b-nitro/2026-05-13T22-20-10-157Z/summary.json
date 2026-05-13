@@ -1,0 +1,66 @@
+{
+  "runId": "qwen-qwen3-32b-nitro@2026-05-13T22-20-10-157Z",
+  "slug": "async-stack-traces-why-error-stack-lies-in-production",
+  "locale": "ja",
+  "model": "qwen/qwen3-32b:nitro",
+  "modelPath": "qwen-qwen3-32b-nitro",
+  "createdAt": "2026-05-13T22:20:31.619Z",
+  "sourcePath": "src/content/posts/2025-12-29--async-stack-traces-why-error-stack-lies-in-production/index.mdx",
+  "targetPath": "src/content/posts/2025-12-29--async-stack-traces-why-error-stack-lies-in-production/ja/index.mdx",
+  "candidatePath": "reports/i18n/async-stack-traces-why-error-stack-lies-in-production/ja/qwen-qwen3-32b-nitro/2026-05-13T22-20-10-157Z/candidate.mdx",
+  "sourceHash": "bda8adb66cf30fc89c91baea70bf6d81ae97177b838379f1fd437c2da47c9917",
+  "outputHash": "5e15d0105bfa535947dc287ff452f7a0c18353153999bce08a8e60a5a8b3a570",
+  "reasoningEffort": "low",
+  "temperature": 0.3,
+  "maxTokens": 16000,
+  "timeoutMs": 200000,
+  "articleSummary": "The article argues that JavaScript's `Error.stack` is unreliable in async code due to the async nature of `async/await`, which breaks traditional stack traces by suspending execution into the microtask queue. It explains how V8's attempts to improve async stack traces (e.g., `--async-stack-traces`) are costly and incomplete, while `AsyncLocalStorage` offers a better solution for tracking execution context across async boundaries. Targeting developers debugging production JavaScript apps, the piece blends technical analysis with pragmatic advice, using metaphors like \"cryogenic freezer\" to explain async execution. It advocates for structured logging and distributed tracing (e.g., OpenTelemetry) over brittle stack traces, framing async debugging as a causality problem rather than a stack-trace one.",
+  "totalInputTokens": 3396,
+  "totalOutputTokens": 2719,
+  "totalCacheReadTokens": 512,
+  "totalCacheWriteTokens": 0,
+  "totalDurationMs": 6861,
+  "totalCostUsd": 0.00092424,
+  "pricingSource": "local-openrouter-estimate",
+  "telemetry": {
+    "model": "qwen/qwen3-32b:nitro",
+    "chunkSize": "10p",
+    "totalChunks": 3,
+    "totalInputTokens": 3396,
+    "totalOutputTokens": 2719,
+    "totalCacheReadTokens": 512,
+    "totalCacheWriteTokens": 0,
+    "totalDurationMs": 6861,
+    "totalCostUsd": 0.00092424,
+    "pricingSource": "local-openrouter-estimate",
+    "chunks": [
+      {
+        "index": 0,
+        "inputTokens": 987,
+        "outputTokens": 1088,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 2689,
+        "costUsd": 0.00034008
+      },
+      {
+        "index": 1,
+        "inputTokens": 1219,
+        "outputTokens": 890,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 2374,
+        "costUsd": 0.00031112
+      },
+      {
+        "index": 2,
+        "inputTokens": 1190,
+        "outputTokens": 741,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 1798,
+        "costUsd": 0.00027304
+      }
+    ]
+  }
+}
