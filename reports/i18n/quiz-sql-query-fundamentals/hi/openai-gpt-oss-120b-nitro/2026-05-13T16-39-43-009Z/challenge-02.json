@@ -1,0 +1,44 @@
+{
+  "index": 1,
+  "attempt": 1,
+  "originalTitle": "Aggregate Function COUNT",
+  "translatedTitle": "एग्रीगेट फ़ंक्शन COUNT",
+  "translation": {
+    "title": "एग्रीगेट फ़ंक्शन COUNT",
+    "group": "SQL मूल बातें",
+    "options": [
+      {
+        "text": "सभी पंक्तियों को गिनता है, जिसमें NULL मान भी शामिल हैं"
+      },
+      {
+        "text": "कॉलम में केवल गैर-NULL मानों को गिनता है"
+      },
+      {
+        "text": "NULL मानों को एक अद्वितीय मान के रूप में गिनता है"
+      },
+      {
+        "text": "प्रत्येक NULL मान को अद्वितीय मानता है, जैसे NaN !== NaN"
+      }
+    ],
+    "questionProse": [
+      "SQL में `COUNT(column_name)` क्या करता है?"
+    ],
+    "explanationProse": [
+      "`COUNT(column_name)` निर्दिष्ट कॉलम में गैर-NULL मानों की संख्या गिनता है। सभी पंक्तियों को, जिसमें NULL भी शामिल हैं, गिनने के लिए `COUNT(*)` का उपयोग करें।\n\n    आप `COALESCE` का भी उपयोग कर सकते हैं ताकि NULL को डिफ़ॉल्ट रूप से गैर-NULL मान मिल सके। उदाहरण के लिए: `COUNT(COALESCE(column_name, 0))`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"एग्रीगेट फ़ंक्शन COUNT\",\n  \"group\": \"SQL मूल बातें\",\n  \"options\": [\n    {\n      \"text\": \"सभी पंक्तियों को गिनता है, जिसमें NULL मान भी शामिल हैं\"\n    },\n    {\n      \"text\": \"कॉलम में केवल गैर-NULL मानों को गिनता है\"\n    },\n    {\n      \"text\": \"NULL मानों को एक अद्वितीय मान के रूप में गिनता है\"\n    },\n    {\n      \"text\": \"प्रत्येक NULL मान को अद्वितीय मानता है, जैसे NaN !== NaN\"\n    }\n  ],\n  \"questionProse\": [\n    \"SQL में `COUNT(column_name)` क्या करता है?\"\n  ],\n  \"explanationProse\": [\n    \"`COUNT(column_name)` निर्दिष्ट कॉलम में गैर-NULL मानों की संख्या गिनता है। सभी पंक्तियों को, जिसमें NULL भी शामिल हैं, गिनने के लिए `COUNT(*)` का उपयोग करें।\\n\\n    आप `COALESCE` का भी उपयोग कर सकते हैं ताकि NULL को डिफ़ॉल्ट रूप से गैर-NULL मान मिल सके। उदाहरण के लिए: `COUNT(COALESCE(column_name, 0))`.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 803,
+    "outputTokens": 702,
+    "cacheReadTokens": 384,
+    "cacheWriteTokens": 0,
+    "durationMs": 457
+  },
+  "cost": {
+    "inputUsd": 0.000031317,
+    "outputUsd": 0.00012636,
+    "totalUsd": 0.000157677,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
