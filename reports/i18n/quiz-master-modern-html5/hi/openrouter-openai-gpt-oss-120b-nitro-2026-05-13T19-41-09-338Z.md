@@ -1,0 +1,458 @@
+# Translation Candidate
+- Slug: quiz-master-modern-html5
+- Locale: hi
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2024-11-01--quiz-master-modern-html5/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 15.58
+- Input tokens: 12689
+- Output tokens: 7700
+- Thinking tokens: unknown
+- Cached input tokens: 6016
+- Cache write tokens: 0
+- Estimated cost: $0.001881
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+unlisted: false
+title: 'प्रश्न: क्या आपका रिज़्यूमे मेंअभी भी HTML होना चाहिए?'
+subTitle: अपना प्रमाण दिखाएँ!
+label: Semantic HTML5
+social_image: ../desktop-social.webp
+category: Quiz
+subCategory: HTML
+date: '2024-10-31'
+modified: '2024-11-06'
+tags:
+  - quiz
+  - web
+  - quiz
+  - semantic
+  - html5
+  - web
+  - beginner
+  - intermediate
+cover_full_width: ../jakob-owens-FBih1nqPi0w-unsplash-wide.webp
+cover_mobile: ../jakob-owens-FBih1nqPi0w-unsplash-square.webp
+cover_icon: ../jakob-owens-FBih1nqPi0w-unsplash-square.webp
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+
+## तो, आपको लगता है कि आपके पास HTML5 कौशल हैं?
+
+आख़िरकार, आप `<div>` और `<span>` में अंतर जानते हैं, है ना? लेकिन HTML5 के अधिक उन्नत, अर्थपूर्ण टैग्स को आप कितनी अच्छी तरह जानते हैं?
+
+> नोट: अगर आप इस टेस्ट में पास नहीं होते, तो आपको कानूनी तौर पर अपने रिज़्यूमे से `HTML Skills` हटाना पड़ेगा।
+
+### शुरू करें!
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="वार्मअप"
+  title=""
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    HTML में `<ul>` तत्व की मुख्य भूमिका क्या है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `<ul>` टैग एक अनऑर्डर्ड सूची बनाता है, जिसमें आइटम आमतौर पर बुलेट द्वारा चिह्नित होते हैं।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="उन्नत सेमेंटिक HTML"
+  title=""
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    `<dd>` तत्व HTML में क्या दर्शाता है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `<dd>` तत्व विवरण सूची में एक विवरण, परिभाषा या मान को परिभाषित करता है, `<dl>` टैग के भीतर उपयोग होता है और `<dt>` (वर्णन शब्द) के साथ जोड़ा जाता है। यह कुंजी‑मान डेटा दिखाते समय उपयोगी है। प्रोफ़ाइल जानकारी, सेटिंग्स, और आँकड़े सामान्य उदाहरण हैं.
+    ```html
+        <dl>
+        <dt>JS</dt>
+        <dd>Client-side</dd>
+        <dd>Server-side</dd>
+
+        <dt>HTML</dt>
+        <dd>Client-side</dd>
+        </dl>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="उन्नत सेमेंटिक HTML"
+  title=""
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    किस समय `<figure>` और `<figcaption>` तत्वों का उपयोग किया जाना चाहिए?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    The [`<figure>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/figure) टैग आमतौर पर स्व-निहित (मीडिया) सामग्री, जैसे छवि या चार्ट, को [`<figcaption>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/figcaption) के साथ कैप्शन प्रदान करने के लिए घेरता है।
+
+    यह छवियों, आरेखों, कोड स्निपेट्स, और अधिक के लिए उपयोगी है।
+    ```html
+        <figure>
+        <img src="image.jpg" alt="Description of image">
+        <figcaption>Image caption</figcaption>
+        </figure>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="उन्नत सेमांटिक HTML"
+  title=""
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    HTML में `<article>` तत्व का उद्देश्य क्या है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    The [`<article>` element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/article) का उपयोग एक स्वतंत्र सामग्री के टुकड़े को परिभाषित करने के लिए किया जाता है जिसे अलग‑अलग वितरित या पुन: उपयोग किया जा सकता है.
+
+    यह अक्सर ब्लॉग पोस्ट, समाचार लेख, फ़ोरम पोस्ट, या उपयोगकर्ता टिप्पणी के लिए उपयोग किया जाता है.
+
+    आप एक पृष्ठ पर कई articles का उपयोग कर सकते हैं (उदाहरण के लिए अनंत स्क्रॉलिंग पेजों के लिए). या, आप उन्हें एक‑दूसरे के भीतर नेस्ट करके "स्वतंत्र सामग्री" की पदानुक्रम बना सकते हैं.
+    ```html
+        <article>
+        <h2>Article Title</h2>
+        <p>Article content...</p>
+        <article class="discussion">
+        <h3>Comment by User</h3>
+        <p>Comment content...</p>
+        </article>
+        </article>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="उन्नत सिमैंटिक HTML"
+  title=""
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    फ़ॉर्म में `<fieldset>` और `<legend>` तत्वों का उद्देश्य क्या है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    [`<fieldset>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/fieldset) का उपयोग संबंधित फ़ॉर्म नियंत्रणों को समूहित करने के लिए किया जाता है, और `<legend>` समूह के लिए शीर्षक/लेबल प्रदान करता है, जिससे पहुँचयोग्यता बेहतर होती है.
+
+    यह संबंधित फ़ॉर्म तत्वों को समूहित करने में उपयोगी है, जैसे शिपिंग पता या भुगतान विवरण के लिए एक सेक्शन.
+    ```html
+        <fieldset>
+        <legend>Shipping Address</legend>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name">
+        ...
+        </fieldset>
+        <fieldset>
+        <legend>Payment Details</legend>
+        <label for="card">Card Number:</label>
+        <input type="text" id="card" name="card">
+        ...
+        </fieldset>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="उन्नत सेमेंटिक HTML"
+  title=""
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    `<meter>` तत्व का उद्देश्य क्या है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    The [`<meter>` तत्व](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meter) का उपयोग एक स्केलर (एकल) माप को एक निर्धारित सीमा के भीतर दर्शाने के लिए किया जाता है, जैसे तापमान, डिस्क उपयोग या वोट गिनती।
+    ```html
+        <meter min="-60" max="130" value="75" /> 75°F
+        <meter min="0" max="100" value="75" /> 75%
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="सेमांटिक HTML"
+  title=""
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    `<source>` तत्व का उपयोग क्यों किया जाता है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    [`<source>` तत्व उपलब्ध मीडिया फ़ॉर्मैट निर्दिष्ट करने के लिए उपयोग किया जाता है](https://developer.mozilla.org/en-us/docs/web/html/element/source).
+    ```html
+        <video controls>
+        <source src="movie.mp4" type="video/mp4">
+        <source src="movie.ogg" type="video/ogg">
+        </video>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="उन्नत सेमांटिक HTML"
+  title=""
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    `<hgroup>` तत्व का उपयोग कैसे करना चाहिए?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    The [`<hgroup>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/hgroup) तत्व एक शीर्षक को संबंधित द्वितीयक सामग्री के साथ समूहित करता है, आमतौर पर एक या अधिक `<p>` तत्वों के साथ.
+
+    यह तब उपयोगी हो सकता है जब किसी शीर्षक में उपशीर्षक, टैगलाइन, या वैकल्पिक शीर्षक हो जिसे दस्तावेज़ रूपरेखा में एक अतिरिक्त शीर्षक नहीं बनना चाहिए.
+    ```html
+        <article>
+        <hgroup>
+        <h1>Frankenstein</h1>
+        <p>Or: The Modern Prometheus</p>
+        </hgroup>
+        <section>
+        <h2>Chapter 1</h2>
+        <p>...</p>
+        </section>
+        </article>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="उन्नत सेमान्टिक HTML"
+  title=""
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    HTML में `<menu>` तत्व का उपयोग किस लिए किया जाता है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    The [`<menu>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/menu) कमांड या इंटरैक्टिव नियंत्रणों की सूची का प्रतिनिधित्व करता है।
+
+    यदि आपकी सूची नेविगेशन लिंक है, तो `<nav>` के साथ `<ul>` का उपयोग करें। टूलबार‑जैसे नियंत्रणों या कमांड सूचियों के लिए `<menu>` का उपयोग करें।
+    ```html
+        <menu>
+        <li><button type="button">Copy</button></li>
+        <li><button type="button">Paste</button></li>
+        </menu>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="उन्नत सेमेंटिक HTML"
+  title=""
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    `<details>` और `<summary>` HTML में क्या भूमिका निभाते हैं?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    [`<details>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details) collapsible सामग्री प्रदान करता है, और [`<summary>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/summary) सामग्री के लिए एक दिखाई देने वाला शीर्षक निर्दिष्ट करता है.
+
+    यह FAQs, collapsible सेक्शन, या किसी भी टॉगल की जा सकने वाली सामग्री के लिए उपयोगी है.
+    ```html
+        <details>
+        <summary>Click to expand 🤯</summary>
+        <p>Hidden content! 💥</p>
+        </details>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="उन्नत सेमांटिक HTML"
+  title=""
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    आपको `<dialog>` तत्व का उपयोग क्यों करना चाहिए?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    The [`<dialog>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog) तत्व पॉप‑अप या मोडल के लिए उपयोग किया जाता है, और यह सेमांटिक मार्कअप, विस्तारित CSS, और इन इंटरैक्शन के लिए एक नेटिव API प्रदान करता है।
+
+    जावास्क्रिप्ट का उपयोग करके इसे `.showModal()` से मोडल डायलॉग या `.show()` से नॉन‑मोडल डायलॉग खोलें, और इसे `.close()` या `method="dialog"` वाले फ़ॉर्म सबमिशन से बंद करें।
+    ```html
+        <dialog>
+        <h2>Modal Title</h2>
+        <p>Modal content...</p>
+        <button>Close</button>
+        </dialog>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="उन्नत सेमांटिक HTML"
+  title=""
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    HTML में `<time>` तत्व का उपयोग कैसे किया जाता है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `<time>` तत्व का उपयोग तिथियों, समय या अवधि के लिए किया जाता है। इसमें मानव-पठनीय सामग्री और मशीन-पठनीय `datetime` एट्रिब्यूट शामिल हो सकता है। HTML में `<date>` तत्व नहीं होता।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="उन्नत सेमांटिक HTML"
+  title="ARIA गुणों का उद्देश्य"
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ARIA गुणों का उद्देश्य क्या है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    ARIA (Accessible Rich Internet Applications) गुण वेब पहुँच को बढ़ाते हैं, स्क्रीन रीडर्स और अन्य सहायक तकनीकों के लिए अतिरिक्त संदर्भ प्रदान करके।
+
+    तत्वों का वर्णन करने के लिए रोल्स, स्टेट्स और प्रॉपर्टीज़ का उपयोग किया जा सकता है।
+    ```html
+        <button aria-label="Close" aria-expanded="true">X</button>
+        <main aria-live="polite">...</main>
+        <dialog
+        role="alertdialog"
+        aria-modal="true"
+        aria-labelledby="dialog_label"
+        aria-describedby="dialog_desc"
+        ></dialog>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={13}
+  group="उन्नत सेमेंटिक HTML"
+  title="`role` एट्रिब्यूट का उपयोग"
+  options={[
+    {text: 'घटक व्यवहार को परिभाषित करने के लिए'},
+    {text: 'तत्व के उद्देश्य का वर्णन करने के लिए', isAnswer: true},
+    {text: 'तत्वों तक पहुँच को प्रतिबंधित करने के लिए'},
+    {text: 'केवल वेब कॉम्पोनेंट्स के लिए'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    HTML में `role` एट्रिब्यूट का उपयोग क्या है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `role` एट्रिब्यूट वर्णन करता है
+
+    तत्व के उद्देश्य को सहायक तकनीकों को, जिससे पहुँचयोग्यता में सुधार होता है।
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+
+तो, आपका प्रदर्शन कैसा रहा? अगले प्रोजेक्ट में अधिक सेमांटिक HTML एलिमेंट्स इस्तेमाल करने के लिए उत्साहित हैं? 🚀
+
+या फिर हमेशा के लिए `<div>` और `<span>` ही अपनाने को तैयार? 😅
+
+नीचे कमेंट्स में बताइए! 👇
+````
