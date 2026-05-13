@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: your-foreign-keys-are-killing-performance
+- Locale: fr
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2025-12-29--your-foreign-keys-are-killing-performance/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 5.20
+- Input tokens: 10719
+- Output tokens: 3437
+- Thinking tokens: unknown
+- Cached input tokens: 5632
+- Cache write tokens: 0
+- Estimated cost: $0.001037
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: 'Clés étrangères : arrêtez de vous demander si elles sont rapides'
 subTitle: Demandez ce que vous optimisez réellement.
@@ -151,3 +169,4 @@ Qu’est‑ce que vous cherchez à optimiser ?
 - [Conseils de performance PostgreSQL](https://www.postgresql.org/docs/current/performance-tips.html)
 - [Use The Index, Luke ! – Clés étrangères](https://use-the-index-luke.com/sql/clustering/data-clustering)
 - [Normalisation vs dénormalisation des bases de données](https://www.postgresql.org/docs/current/tutorial-concepts.html)
+````
