@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: your-laptop-is-the-breach
+- Locale: fr
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-05-09--your-laptop-is-the-breach/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 11.13
+- Input tokens: 38272
+- Output tokens: 7358
+- Thinking tokens: unknown
+- Cached input tokens: 21248
+- Cache write tokens: 0
+- Estimated cost: $0.002817
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Votre portable estla faille
 subTitle: >-
@@ -332,3 +350,4 @@ Donnez‑lui des limites conçues pour la production.
 - [Little Snitch](https://obdev.at/products/littlesnitch/)
 - [Portmaster](https://safing.io/)
 - [Claude Code permissions](https://code.claude.com/docs/en/permissions)
+````
