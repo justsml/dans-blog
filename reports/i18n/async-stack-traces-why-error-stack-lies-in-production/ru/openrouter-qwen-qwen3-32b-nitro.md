@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: async-stack-traces-why-error-stack-lies-in-production
+- Locale: ru
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2025-12-29--async-stack-traces-why-error-stack-lies-in-production/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 39.09
+- Input tokens: 4576
+- Output tokens: 3100
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.001110
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: 'Асинхронные стек-трейсы: почему `Error.stack` обманывает вас'
 subTitle: Микротаск-очередь поглотила мои домашние задания (и контекст отладки).
@@ -99,3 +117,4 @@ async function processOrder() {
 3.  Следите, а не анализируйте стек. Используйте OpenTelemetry. Он визуализирует причинно-следственную цепочку между сервисами — именно это вам нужно.
 
 Ваш код асинхронный. Ваш контекст отладки не должен быть асинхронным.
+````
