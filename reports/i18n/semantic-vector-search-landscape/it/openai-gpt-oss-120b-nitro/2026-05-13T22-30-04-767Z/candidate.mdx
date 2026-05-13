@@ -1,0 +1,380 @@
+---
+title: Ricerca Vettoriale Semantica e Altri Argomenti per Conquistare Amici e Amanti
+subTitle: >-
+  Il panorama completo della ricerca: esatta, fuzzy, semantica, ibrida — e
+  quando combinarle.
+date: '2026-05-01'
+modified: '2026-05-04'
+tags:
+  - postgres
+  - postgresql
+  - pgvector
+  - vector-search
+  - semantic-search
+  - hybrid-search
+  - rag
+  - ai
+  - databases
+  - search
+  - embeddings
+category: Code
+subCategory: Databases
+popularity: 0.8
+social_image: ../desktop-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+La ricerca non è un’unica cosa, e la ricerca semantica non è un sostituto per il resto.
+
+“Trova l’utente con email `dan@example.com`” e “trova articoli sul debugging per un nuovo ingegnere” sono entrambi descritti come ricerca, ma hanno praticamente nulla in comune come problemi ingegneristici. Il primo ha una risposta corretta e richiede una ricerca indice `O(log n)`. Il secondo non ha una risposta corretta — solo rilevanza — e richiede la comprensione del linguaggio, dell’intento e del significato.
+
+Gli ingegneri più persuasivi nelle decisioni di ricerca — quelli che vincono gli argomenti e consegnano il sistema giusto — comprendono l’intero panorama. Sanno quale strumento usare e perché, e riescono a spiegarlo chiaramente.
+
+Questo articolo tratta lo strato semantico: cosa fa realmente la ricerca vettoriale, quando è vantaggiosa e dove dovrebbe stare a distanza. La versione utile non è “incorpora tutto”. È sapere quando i vettori vanno accanto alla ricerca lessicale, fuzzy e di corrispondenza esatta in un’architettura ibrida.
+
+La parte lessicale e fuzzy del quadro — `tsvector`, `pg_trgm`, `pg_search` — è nella [Guida alla ricerca testuale di Postgres 2026](../postgres-text-search-guide).
+
+## Termini in sintesi
+
+**Embedding** — Un elenco denso di numeri a virgola mobile prodotto da un modello, che rappresenta un frammento di testo (o immagine, audio, ecc.) come un punto in uno spazio ad alta dimensione. I contenuti semanticamente correlati si posizionano vicini; i contenuti non correlati si trovano lontani.
+
+**Ricerca lessicale** — Ricerca basata sulla corrispondenza esatta di parole e token. Veloce, deterministica e corretta per termini noti. Non comprende sinonimi, parafrasi o equivalenti multilingue.
+
+**Ricerca semantica** — Ricerca basata sul significato piuttosto che sui token. Una query per “come gestisco i timeout” può corrispondere a un documento intitolato “configurare le politiche di retry” senza parole condivise, perché i loro embedding sono geometricamente vicini.
+
+**Vector** — Una lista di numeri. Nei contesti di ricerca, l'output di un modello di embedding. La “ricerca vettoriale” trova i vettori più vicini a un vettore di query tramite distanza geometrica.
+
+**FTS (Full-Text Search)** — La ricerca lessicale integrata di Postgres, alimentata da `tsvector` / `tsquery`. Tokenizza, effettua lo stemming e indicizza il testo per query basate su parole chiave. Ottima per prosa e ricerche di termini esatti; ignora il significato.
+
+**BM25** — Un algoritmo di ranking per la ricerca lessicale (usato da Elasticsearch, Qdrant e altri). Assegna punteggi ai risultati in base alla frequenza del termine ponderata rispetto a quanto il termine sia raro nel corpus. Migliore del semplice matching di parole chiave; resta comunque lessicale.
+
+**HNSW (Hierarchical Navigable Small World)** — L'indice approssimato standard per la ricerca di vicini più prossimi nei vettori. Costruisce un grafo di prossimità a più livelli per query di similarità ad alta recall e velocità. pgvector, Qdrant, Weaviate e la maggior parte degli altri lo utilizzano.
+
+**RRF (Reciprocal Rank Fusion)** — Un algoritmo per fondere liste di risultati ordinate provenienti da più sistemi di recupero. Usa solo la posizione di ranking — non è necessaria alcuna normalizzazione dei punteggi. Un risultato che si posiziona in alto sia nelle liste FTS sia in quelle vettoriali ottiene un punteggio combinato più forte rispetto a uno che domina solo una delle due.
+
+---
+
+## Cosa Fa Davvero la Ricerca Semantica
+
+Gli embedding vettoriali trasformano testo (o immagini, audio, ecc.) in una lista di numeri — un punto in uno spazio ad alta dimensionalità. Un modello di embedding è addestrato in modo che testi semanticamente correlati finiscano vicini in quello spazio. “Dog” e “canine” finiscono vicini. “Running a marathon” e “running a Python script” finiscono lontani nonostante condividano una parola.
+
+La ricerca di similarità in quello spazio trova documenti il cui *significato* è più vicino a quello della query, indipendentemente dalla sovrapposizione di parole esatte.
+
+Questo significa:
+- “How do I configure request timeouts?” può corrispondere a un articolo intitolato “Setting connection limits and retry policies” — nessuna parola chiave in comune, alta rilevanza concettuale
+- “Something light for a summer evening” può corrispondere a una raccomandazione di vino senza che parole chiave compaiano nella descrizione del prodotto
+- Una query in inglese può corrispondere a documenti rilevanti in francese, spagnolo o giapponese se il modello di embedding è stato addestrato in modo multilingue
+
+Lexical search (`tsvector`, `pg_trgm`) non può fare nulla di tutto ciò. Funziona su parole e caratteri, non sul significato. Gli strumenti non sono intercambiabili — risolvono problemi diversi.
+
+---
+
+## Quando pgvector Vince
+
+**Costruire RAG.** Il Retrieval‑Augmented Generation recupera i frammenti di documento il cui significato è più vicino alla domanda dell'utente, poi li passa a un modello di linguaggio come contesto. Questo passo di recupero è un'operazione vettoriale. Il FTS perderà parafrasi, sinonimi e corrispondenze concettuali che un frammento rilevante potrebbe esprimere in modo diverso. Il vantaggio di pgvector rispetto a un archivio vettoriale autonomo: gira all'interno della tua istanza Postgres esistente — nessun servizio separato da distribuire, gestire o sincronizzare i dati.
+
+**Gli utenti descrivono ciò che vogliono, non cosa cercare.** “Articoli su come costruire fiducia come nuovo manager” non contiene parole chiave che compaiono in modo affidabile nei post pertinenti. “Un framework leggero per gestire gli effetti collaterali” potrebbe non usare quelle esatte parole nella documentazione. La ricerca vettoriale corrisponde all'intento, non all'ortografia.
+
+**Trovare elementi simili.** Prodotti correlati, ticket di supporto simili, segnalazioni di bug duplicate, articoli che potresti anche apprezzare. “Trova problemi simili a questo” è una ricerca nearest‑neighbor — incorpora l'elemento, trova i suoi vicini geometrici. Un avvertimento importante: la ricerca vettoriale restituisce sempre risultati, anche quando nulla è realmente simile. Per casi d'uso di deduplica e raccomandazione, filtra con una soglia minima di similarità (ad es., similarità coseno ≥ 0.80) per evitare di mostrare corrispondenze a bassa confidenza come se fossero significative.
+
+**Deduplica semantica.** Prima di indicizzare contenuti per RAG o ricerca, è spesso necessario identificare quasi‑duplicati nel corpus — articoli revisionati più volte, ticket di supporto inseriti due volte, voci della knowledge base che si sovrappongono in modo significativo. Incorpora i documenti e applica un filtro di soglia sulla similarità coseno per segnalare o unire quasi‑duplicati prima che inquinino l'indice. Questo impedisce al recupero di restituire più frammenti quasi identici e di diluire la finestra di contesto.
+
+**Ricerca multilingue.** I modelli di embedding multilingue mappano contenuti semanticamente equivalenti tra lingue in vettori vicini. Una query in spagnolo per “perder peso” può corrispondere a un articolo inglese su “sustainable weight loss habits” — nessun token condiviso, stesso significato di base. Il FTS richiede configurazioni di dizionario per lingua e gestisce male le query cross‑language. `pg_trgm` è indipendente dalla lingua ma ortografico, non semantico.
+
+### Configurare pgvector
+
+Dall'installazione dell'estensione alla query di similarità, la configurazione è costituita da poche istruzioni SQL:
+
+```sql
+CREATE EXTENSION IF NOT EXISTS vector;
+
+ALTER TABLE documents ADD COLUMN embedding vector(1536);
+
+-- HNSW is usually the first index to try for moderate-size datasets
+CREATE INDEX documents_embedding_idx
+  ON documents USING hnsw (embedding vector_cosine_ops);
+
+-- Semantic search query
+SELECT id, title, 1 - (embedding <=> $1::vector) AS similarity
+FROM documents
+ORDER BY embedding <=> $1::vector
+LIMIT 10;
+```
+
+`<=>` è la distanza coseno. `1 - cosine_distance` restituisce la similarità coseno (1,0 = identico, 0,0 = ortogonale). Per `ivfflat` (l’alternativa più vecchia, più veloce da costruire), usa `lists = sqrt(row_count)` come punto di partenza.
+
+### Cosa pgvector non gestisce bene
+
+- Corrispondenza esatta di token — SKU di prodotto, codici di errore, nomi di funzioni. `ORD-12345` non è semanticamente simile a nulla. Una ricerca basata su embedding può restituire `ORD-12344` o nulla di rilevante. Usa FTS o un indice B‑tree.
+- Nomi e nomi propri. Lo spazio di embedding organizza per significato, non per ortografia. Il record utente “Micheal Jordan” non finisce necessariamente vicino a “Michael Jordan” nello spazio vettoriale.
+- Stringhe brevi dove la similarità a livello di carattere conta più del significato. `pg_trgm` gestisce questo caso.
+- Query in cui il termine esatto deve comparire. BM25 e FTS sono più affidabili per il matching di termini noti.
+
+---
+
+## Ricerca ibrida: il caso per entrambi
+
+La documentazione tecnica è l’esempio più chiaro in cui nessuno dei due strumenti è sufficiente da solo.
+
+Gli utenti che cercano “how to configure timeouts” hanno bisogno di un matching concettuale: un articolo intitolato “Setting retry policies and connection limits” non condivide parole chiave, ma è esattamente ciò che serve loro.
+
+Gli stessi utenti cercano anche `withRetry()`, `ECONNRESET` e `ERR_SOCKET_TIMEOUT`. Queste stringhe esatte devono comparire — il matching semantico potrebbe non trovarle in modo affidabile, e un falso positivo (concettualmente simile ma non l’API giusta) è attivamente fuorviante.
+
+La ricerca vettoriale gestisce le query concettuali. FTS gestisce i termini esatti. Nessuno dei due gestisce entrambi i casi da solo.
+
+La soluzione è la ricerca ibrida: esegui entrambe le ricerche e combina i risultati.
+
+### Reciprocal Rank Fusion
+
+**Reciprocal Rank Fusion (RRF)** è l'algoritmo di riferimento per combinare liste ordinate provenienti da diversi sistemi di recupero. Non richiede la normalizzazione dei punteggi tra i sistemi — utilizza solo le posizioni di ranking. Un risultato che compare in alto *in entrambe* le liste ottiene un punteggio combinato più forte rispetto a uno che domina solo una delle due.
+
+```sql
+WITH fts_results AS (
+  SELECT id,
+    ROW_NUMBER() OVER (ORDER BY ts_rank(search_vector, query) DESC) AS rank
+  FROM documents, to_tsquery('english', $1) query
+  WHERE search_vector @@ query
+  LIMIT 50
+),
+vector_results AS (
+  SELECT id,
+    ROW_NUMBER() OVER (ORDER BY embedding <=> $2::vector) AS rank
+  FROM documents
+  ORDER BY embedding <=> $2::vector
+  LIMIT 50
+),
+rrf AS (
+  SELECT
+    COALESCE(f.id, v.id) AS id,
+    COALESCE(1.0 / (60 + f.rank), 0) +
+    COALESCE(1.0 / (60 + v.rank), 0) AS rrf_score
+  FROM fts_results f
+  FULL OUTER JOIN vector_results v ON f.id = v.id
+)
+SELECT d.id, d.title, rrf.rrf_score
+FROM rrf
+JOIN documents d ON d.id = rrf.id
+ORDER BY rrf_score DESC
+LIMIT 10;
+```
+
+Il valore `60` nel denominatore è la costante di RRF. Valori più alti smorzano le differenze di posizione; valori più bassi le amplificano. Il valore predefinito di 60 funziona bene nella maggior parte dei tipi di contenuto.
+
+RRF evita il problema più complesso di normalizzare `ts_rank` (un punteggio basato sulla frequenza logaritmica) rispetto alla distanza coseno (una misura geometrica). I due non sono comparabili. RRF si limita a chiedersi: “quanto in alto è comparso questo risultato in ciascuna lista?”
+
+### Ricerca Ibrida con Trigrammi Anche
+
+Per la ricerca rivolta agli utenti su contenuti misti — dove gli utenti possono cercare un nome di persona, un concetto o un termine esatto nella stessa sessione — una fusione a tre vie gestisce tutti i casi:
+
+```sql
+WITH trgm_results AS (
+  SELECT id,
+    ROW_NUMBER() OVER (ORDER BY similarity(title, $1) DESC) AS rank
+  FROM documents
+  WHERE title % $1
+  LIMIT 50
+),
+fts_results AS (
+  SELECT id,
+    ROW_NUMBER() OVER (ORDER BY ts_rank(search_vector, to_tsquery('english', $1)) DESC) AS rank
+  FROM documents
+  WHERE search_vector @@ to_tsquery('english', $1)
+  LIMIT 50
+),
+vector_results AS (
+  SELECT id,
+    ROW_NUMBER() OVER (ORDER BY embedding <=> $2::vector) AS rank
+  FROM documents
+  ORDER BY embedding <=> $2::vector
+  LIMIT 50
+),
+rrf AS (
+  SELECT
+    COALESCE(t.id, f.id, v.id) AS id,
+    COALESCE(1.0 / (60 + t.rank), 0) +
+    COALESCE(1.0 / (60 + f.rank), 0) +
+    COALESCE(1.0 / (60 + v.rank), 0) AS rrf_score
+  FROM trgm_results t
+  FULL OUTER JOIN fts_results f ON t.id = f.id
+  FULL OUTER JOIN vector_results v ON COALESCE(t.id, f.id) = v.id
+)
+SELECT d.id, d.title, rrf.rrf_score
+FROM rrf
+JOIN documents d ON d.id = rrf.id
+ORDER BY rrf_score DESC
+LIMIT 10;
+```
+
+Questo gestisce: corrispondenze fuzzy di nomi (trigrammi), corrispondenze esatte di parole chiave (FTS) e query concettuali (vettoriale). Un unico campo di ricerca può soddisfare tutte e tre le intenzioni dell'utente.
+
+---
+
+## Architetture Ibride a Più Livelli
+
+Le applicazioni reali raramente hanno una sola superficie di ricerca. Ne hanno diverse, ognuna con esigenze differenti:
+
+| Surface | What users query | Recommended layers |
+|---|---|---|
+| Blog / documentation search | Keywords + concepts | FTS + pgvector (RRF) |
+| User/customer name lookup | Names with typos | `pg_trgm` |
+| Product search | Names, descriptions, "similar to" | `pg_trgm` + FTS + pgvector |
+| Support ticket dedup | "Issues similar to this one" | pgvector only |
+| Internal SKU/order search | Exact identifiers | B-tree index |
+| RAG over large knowledge base | Natural language questions | pgvector (chunked docs) |
+| E-commerce "you might also like" | Behavioral + semantic similarity | pgvector |
+| Autocomplete | Prefix, spelling-tolerant | `pg_trgm` |
+
+Questi casi non sono ipotetici. La maggior parte delle applicazioni ricche di contenuti richiede almeno due superfici di ricerca distinte con forme di query diverse. È facile cadere nella tentazione di scegliere un unico approccio e usarlo ovunque — tipicamente la ricerca vettoriale, perché è la scelta di moda. Questo porta a generare embedding costosi per problemi in cui un indice trigramma sarebbe stato più veloce, più economico e più corretto.
+
+### Regola pratica
+
+Aggiungi un livello quando appare un caso di fallimento che lo strato attuale non può risolvere:
+
+- Gli utenti lamentano che i typo non trovano corrispondenze → aggiungi `pg_trgm`
+- Gli utenti cercano per concetto e non trovano risultati pertinenti → aggiungi pgvector
+- Gli utenti cercano simboli o codici esatti e ottengono risultati concettuali invece → aggiungi FTS o verifica se ti stai affidando troppo alla ricerca vettoriale
+- La latenza diventa un problema → valuta pre‑filtraggio, indici approssimativi o uno store dedicato
+
+---
+
+## Se hai davvero bisogno di un vector store dedicato
+
+pgvector gestisce gran parte della ricerca applicativa prima di dover ricorrere a un altro database. Il limite approssimativo dipende dal numero di vettori, dalle impostazioni dell’indice, dal tasso di scrittura, dai filtri, dall’hardware e dalla concorrenza, quindi considera qualsiasi regola tipo “sotto i 10 M di vettori” solo come punto di partenza per il benchmark, non come un vincolo di prodotto. Quando superi davvero questi limiti — altissima concorrenza, requisiti di latenza p99 molto bassi, miliardi di vettori, o esigenze serie di isolamento multi‑tenant — il panorama dei database vettoriali dedicati è ampio e vale la pena comprenderlo.
+
+### Cosa significano realmente le colonne della matrice
+
+**Ricerca ibrida** indica che la ricerca BM25 per parole chiave e la similarità vettoriale vengono eseguite in una singola query, fuse tramite RRF. Senza questo meccanismo, devi scegliere una modalità di ricerca o fondere manualmente due query.
+
+**Vettori sparsi** vanno oltre il BM25. Un vettore sparso SPLADE ha ~30.000 dimensioni (una per ogni termine del vocabolario), ~98 % di zeri. Le posizioni non nulle indicano quali termini contano e quanto. Una query per “dogs” pesa anche “canine” e “pet” — precisione a livello BM25 più espansione dei termini all’interno di un indice vettoriale. Se questa colonna è falsa, serve un livello FTS separato per query a termine esatto.
+
+```python
+# SPLADE: ~30,000 dims, ~60 non-zero — only relevant vocabulary positions fire
+def encode_splade(text: str) -> dict:
+    tokens = tokenizer(text, return_tensors="pt", truncation=True, max_length=512)
+    with torch.no_grad():
+        output = model(**tokens)
+    vec = torch.log1p(torch.relu(output.logits)).max(dim=1).values.squeeze()
+    return {"indices": vec.nonzero().squeeze().tolist(), "values": vec[vec != 0].tolist()}
+```
+
+**SQL / SQL‑like** è davvero questione di filtraggio. La ricerca vettoriale senza filtri è una demo. Hai comunque bisogno di scoping per tenant, intervalli temporali, permessi e filtri di categoria. SQL completo (pgvector, LanceDB) esprime tutto questo accanto ai join esistenti. I database costruiti appositamente usano oggetti filtro JSON (Qdrant, Pinecone), un DSL di query (Elasticsearch, Milvus) o GraphQL (Weaviate). Funzionano; SQL diventa più attraente man mano che la logica di filtro si complica.
+
+```sql
+-- pgvector: vector similarity is just another expression
+SELECT id, title, 1 - (embedding <=> $1) AS score
+FROM documents
+WHERE tenant_id = $2
+  AND category = ANY($3::text[])
+  AND created_at > NOW() - INTERVAL '90 days'
+ORDER BY embedding <=> $1
+LIMIT 10;
+```
+
+```python
+# Qdrant: equivalent filter as a Python object — same result, more ceremony
+results = client.query_points(
+    collection_name="documents", query=query_embedding,
+    query_filter=models.Filter(must=[
+        models.FieldCondition(key="tenant_id", match=models.MatchValue(value=tenant_id)),
+        models.FieldCondition(key="category",  match=models.MatchAny(any=categories)),
+        models.FieldCondition(key="created_at", range=models.DatetimeRange(gte=cutoff)),
+    ]),
+    limit=10,
+)
+```
+
+**Multimodale nativa** significa che il database fornisce modelli di embedding per contenuti non testuali. Gli passi un URL di immagine grezzo; il database si occupa della vettorizzazione. La maggior parte dei database è agnostica rispetto agli embedding — la pipeline di embedding è tua. Marqo e Weaviate (via moduli CLIP/ImageBind) chiudono questo ciclo.
+
+```python
+# Marqo: POST raw images, query with text — no external embedding step
+mq.index("products").add_documents(
+    [{"id": "shoe-001", "image": "https://cdn.example.com/shoes/001.jpg"}],
+    tensor_fields=["image"]
+)
+results = mq.index("products").search(q="lightweight shoes for summer")
+# Returns shoe-001 despite zero keyword overlap — CLIP handles the cross-modal match
+```
+
+**Indice basato su disco** è una leva di costo. Gli indici HNSW residenti in RAM possono richiedere diversi GB per milione di vettori a 1536 dimensioni, una volta conteggiati vettori grezzi, overhead del grafo e metadati. Alternative native su disco (Milvus DiskANN, Elasticsearch DiskBBQ, formato Lance di LanceDB, tier di storage a oggetti di Turbopuffer) spesso scambiano un po’ di latenza di query per un minore costo infrastrutturale. Per carichi RAG dove la latenza del modello domina già, questo trade‑off vale spesso la pena di benchmark.
+
+**Dimensioni massime** è una migrazione nascosta nella tua architettura. `text-embedding-3-large` usa 3072 dimensioni, Jina v3 può emettere embedding più grandi, e i modelli di ricerca spingono continuamente verso valori più alti. Alcuni servizi gestiti pubblicano limiti rigidi; altri documentano limiti alti o nessun limite pratico per i modelli di embedding tipici. Controlla la documentazione corrente prima di impegnarti. Scegli qualcosa con margine di crescita; migrare un indice vettoriale perché hai raggiunto il tetto di dimensioni è una sprint dolorosa.
+
+_Last verified against public project docs and product pages on May 8, 2026. Treat the table below as a decision aid, not a substitute for checking current limits, pricing, and managed-service feature flags._
+
+### Il panorama
+
+| Database | Deployment | License | Hybrid Search | Sparse Vectors | SQL / SQL-like | Multimodal | Disk Index | Max Dims | Sweet Spot |
+|---|---|---|---|---|---|---|---|---|---|
+| **[pgvector](https://github.com/pgvector/pgvector)** | Self-host / managed (Supabase, Neon, RDS) | OSS (PostgreSQL) | Manual (RRF via SQL) | ❌ | ✅ Full SQL | ❌ | ✅ HNSW on disk | 16,000 storage; 2,000 indexed `vector` | Already on Postgres; moderate vector counts |
+| **[Qdrant](https://github.com/qdrant/qdrant)** | Self-host / Cloud | Apache 2.0 | ✅ Native BM25 | ✅ Mature support | ❌ (REST/gRPC) | ❌ | ✅ | 65,535 | Filtered queries at scale; complex metadata |
+| **[Weaviate](https://github.com/weaviate/weaviate)** | Self-host / Cloud | BSD 3 | ✅ Native BM25 + RRF | ✅ | ❌ (GraphQL / gRPC) | ✅ via modules | ✅ | 65,535 | GraphQL access patterns; built-in vectorization |
+| **[Pinecone](https://www.pinecone.io/)** | Cloud only | Proprietary | ✅ (added 2024) | ✅ | ❌ | ❌ | ✅ (serverless) | 20,000 | Managed simplicity; no ops team |
+| **[Milvus](https://github.com/milvus-io/milvus) / [Zilliz](https://zilliz.com/)** | Self-host / Cloud (Zilliz) | Apache 2.0 | ✅ Native | ✅ | ✅ SQL-like (Milvus Query Language) | ✅ | ✅ DiskANN | 32,768 | Billion-scale; enterprise on-prem |
+| **[Chroma](https://github.com/chroma-core/chroma)** | Embedded / self-host | Apache 2.0 | ❌ | ❌ | ❌ | ❌ | ❌ | 65,535 | Local dev and prototyping only |
+| **[LanceDB](https://github.com/lancedb/lancedb)** | Embedded / Cloud | Apache 2.0 | ✅ | ❌ | ✅ SQL via DataFusion | ✅ Native | ✅ (Lance format) | Unlimited | Edge / serverless; multimodal lakehouse |
+| **[Orama](https://github.com/oramasearch/orama)** | Embedded / Cloud | Apache 2.0 | ✅ Full-text + vector | ❌ | ❌ | ❌ | ❌ | Varies | JS/edge apps; lightweight site/app search |
+| **[Turbopuffer](https://turbopuffer.com/)** | Cloud only (serverless) | Proprietary | ✅ BM25 + vector | ❌ | ❌ | ❌ | ✅ (object storage) | 16,000 | Multi-tenant SaaS; millions of namespaces |
+| **[Elasticsearch](https://github.com/elastic/elasticsearch)** | Self-host / Elastic Cloud | SSPL / AGPLv3 | ✅ RRF + ELSER sparse | ✅ (ELSER) | ✅ Query DSL | ❌ | ✅ DiskBBQ | 4,096 | Already on Elastic stack; hybrid enterprise search |
+| **[OpenSearch](https://github.com/opensearch-project/OpenSearch)** | Self-host / AWS managed | Apache 2.0 | ✅ RRF + Neural Search | ✅ | ✅ Query DSL | ❌ | ✅ FAISS + HNSW | 16,000 | AWS-native; open-source Elastic alternative |
+| **[Vespa](https://github.com/vespa-engine/vespa)** | Self-host / Cloud | Apache 2.0 | ✅ Native | ✅ Tensors / lexical ranking | ✅ YQL | ✅ Tensors | ✅ | Effectively unbounded | Search + ranking + recommendation systems |
+| **[ClickHouse](https://github.com/ClickHouse/ClickHouse)** | Self-host / Cloud | Apache 2.0 | Manual | ❌ | ✅ Full SQL | ❌ | ✅ Columnar + HNSW | Varies | Analytics/logs with vector search beside OLAP |
+| **[MongoDB Atlas](https://github.com/mongodb/mongo)** | Cloud / self-host | SSPL | ✅ Built-in | ❌ | ✅ MQL + aggregation | ❌ | ✅ HNSW | 8,192 | Already on MongoDB; document + vector in one |
+| **[Redis (VSS)](https://github.com/redis/redis)** | Self-host / Redis Cloud | RSALv2 / SSPL | ✅ (RediSearch) | ✅ | ❌ | ❌ | ❌ RAM-only | 32,768 | Ultra-low latency; cache-layer vector search |
+| **[Marqo](https://github.com/marqo-ai/marqo)** | Cloud / self-host | Apache 2.0 | ✅ | ❌ | ❌ | ✅ Native focus | ✅ | Varies | End-to-end multimodal: image + text + video |
+
+### Alcune cose che non rientrano nella tabella
+
+**Il multi‑tenant di Turbopuffer** è costruito attorno a conteggi di namespace molto alti. Il suo posizionamento pubblico e le storie dei clienti enfatizzano carichi di lavoro come il grande corpus di Notion, ricco di namespace. Se ogni utente o organizzazione richiede una ricerca vettoriale isolata, quell’architettura può cambiare l’economia, ma è comunque necessario benchmarkare la propria forma di tenant.
+
+**LanceDB modalità embedded** è la cosa più vicina a “SQLite per la ricerca vettoriale”. Funziona in‑processo, non richiede server e opera in Lambda, Cloudflare Workers e ambienti edge. Il formato colonnare di Lance rende pratica l’esecuzione embedded su scala reale.
+
+**Chroma è più forte in sviluppo/test e in piccoli deployment di app.** Se punti a corpora molto grandi, alta disponibilità, operazioni pesanti su disco o a una ricerca ibrida di prima classe, valuta un archivio orientato alla produzione prima di promuovere il prototipo nell’infrastruttura.
+
+**Vespa è ciò a cui ricorri quando il recupero è solo metà del prodotto.** Combina recupero lessicale, ricerca nearest‑neighbor, tensori, espressioni di ranking, raggruppamento e serving online. Quel potere è reale, ma lo è anche la complessità operativa e di modellazione. Si adatta meglio a team di ricerca/raccomandazione piuttosto che a “aggiungere ricerca semantica alla mia app CRUD”.
+
+**ClickHouse entra in gioco quando la ricerca è collegata all’analisi.** Se la tua fonte di verità sono eventi, log, trace o metriche, ClickHouse mantiene la distanza vettoriale, il filtraggio, l’aggregazione e un serio indicizzatore full‑text in un unico motore SQL. Non è un database vettoriale costruito appositamente, ma spesso è la risposta “noiosa‑ma‑giusta” per il recupero analitico.
+
+**I vettori sparsi sono il modo per ottenere corrispondenze di parole chiave di qualità BM25 all’interno di un indice vettoriale** — senza eseguire un motore full‑text separato. Qdrant ed Elasticsearch hanno implementazioni particolarmente mature in questo ambito. Se la ricerca ibrida è critica e un’architettura a due sistemi è un ostacolo, il supporto ai vettori sparsi è ciò da cercare.
+
+### Scegliere quando hai superato pgvector
+
+- **Prodotto SaaS con isolamento per tenant** → Turbopuffer  
+- **Filtraggio metadata complesso su larga scala** → Qdrant  
+- **Già su stack Elastic/ELK** → Elasticsearch con DiskBBQ  
+- **Ambiente AWS che vuole open‑source** → OpenSearch  
+- **Piattaforma di ricerca/raccomandazione con esigenze di ranking serie** → Vespa  
+- **Analitica, osservabilità, ricerca log/eventi** → ClickHouse  
+- **Scala miliardi on‑prem / self‑hosted** → Milvus  
+- **Edge / serverless / multimodale** → LanceDB  
+- **Piccola app JS, sito di documentazione o UX di ricerca nativa edge** → Orama  
+- **Zero operazioni, il costo è secondario** → Pinecone  
+- **Primariamente multimodale (immagini, video, audio)** → Marqo  
+- **Già su MongoDB** → Atlas Vector Search  
+- **Già su Postgres, serve più spazio** → Supabase Vector o Neon (entrambi pgvector gestiti, con strumenti migliori)
+
+---
+
+## L’unica cosa da non fare
+
+Non usare la ricerca vettoriale come ricerca fuzzy di testo per cose che hanno risposte corrette.
+
+"Find me theuser with email `dan@example.com`" non è un problema di ricerca vettoriale. "Find the order with ID `ORD-12345`" non lo è nemmeno. Incorporare `ORD-12345` in un embedding e cercare per similarità coseno restituirà *qualcosa* — ma potrebbe essere sbagliato. Un identificatore ha una risposta corretta. Un match approssimativo su un identificatore è un bug.
+
+La ricerca vettoriale restituisce l'elemento *più simile* nel tuo dataset, anche quando nulla è realmente rilevante. Non sa quando non esiste una buona risposta. Questo va bene per documenti correlati. È un problema serio per il recupero esatto di record, dove una risposta errata ma sicura è peggiore di un risultato vuoto.
+
+Lo stesso vale nella direzione opposta: non usare la ricerca full‑text (FTS) per query in cui l'utente descrive un concetto. "articoli su come prendere decisioni difficili in condizioni di incertezza" non contiene parole chiave affidabili. FTS restituirà o rumore o niente. Usa lo strumento giusto per la forma della query.
+
+## Il quadro completo
+
+La maggior parte dei sistemi di ricerca in produzione richiede più di un livello:
+
+- **`pg_trgm`** per nomi, errori di battitura, autocomplete  
+- **FTS / `pg_search`** per la ricerca basata su parole chiave in testi liberi  
+- **pgvector** per query semantiche e concettuali  
+- **fusione RRF** per le superfici in cui gli utenti mescolano tipologie di query  
+- **Indici regolari** per identificatori esatti, filtri e liste ordinate  
+
+Questi strumenti non sono in competizione. Sono complementari. Un sistema di ricerca ben costruito sceglie il livello giusto per ogni forma di query — e quando le forme di query si sovrappongono, esegue più livelli e fonde i risultati.
+
+I team che rilasciano buone funzionalità di ricerca comprendono l'intero stack. Quelli che non lo fanno afferrano un database vettoriale, embed tutto, e si chiedono perché le ricerche esatte a volte restituiscano il record sbagliato.
