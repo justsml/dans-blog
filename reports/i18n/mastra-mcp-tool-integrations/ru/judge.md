@@ -1,13 +1,7 @@
 # Translation Judge
 
-- Slug: mastra-mcp-tool-integrations
-- Locale: ru
-- Requested judges: openrouter/google/gemini-3-flash-preview, openrouter/deepseek/deepseek-v4-flash
-- Escalation attempted: openrouter/anthropic/claude-sonnet-4.6
-- Result: provider-limited model judge fallback
+- Selected candidate: 1b359da190258a2539eb0f7a91b80f8aade33d91
+- Selected model: openrouter/deepseek/deepseek-v3.2
+- Judge model: openrouter/google/gemini-3-flash-preview
 
-The standard judge script was run with the requested two cheap judges. Gemini failed before judging because the OpenRouter key could only afford fewer output tokens than requested. DeepSeek V4 Flash also failed before producing a usable review because the prompt token total exceeded the provider/key limit. Because the cheap judge output was structurally broken, Sonnet escalation was attempted, but OpenRouter reported only enough remaining credit for 204 output tokens.
-
-Selected candidate: `df480b79d4a9844250895fb1551902053b7db4fd`.
-
-Reason: this DeepSeek V4 Flash candidate preserved the MDX/code structure, kept parent-relative asset paths, translated the complete article, and read naturally in Russian while preserving the article's direct technical voice. A final polish pass localized the series links to `/ru/...`.
+The current translation already includes the localized paths (/ru/...) in the 'Read the Series' section, which was the only concern raised in the previous judge report. The translation is technically sound, preserves MDX structure, and correctly translates the instructions within the code blocks to make them accessible to Russian speakers while keeping the logic intact.

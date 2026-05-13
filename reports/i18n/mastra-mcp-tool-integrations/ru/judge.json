@@ -1,0 +1,56 @@
+{
+  "selectedCommit": "1b359da190258a2539eb0f7a91b80f8aade33d91",
+  "selectedModel": "openrouter/deepseek/deepseek-v3.2",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The current translation already includes the localized paths (/ru/...) in the 'Read the Series' section, which was the only concern raised in the previous judge report. The translation is technically sound, preserves MDX structure, and correctly translates the instructions within the code blocks to make them accessible to Russian speakers while keeping the logic intact.",
+  "slug": "mastra-mcp-tool-integrations",
+  "locale": "ru",
+  "candidateCommits": [
+    "24d02096037e02b02e0b355d74fc7c1106e65e63",
+    "1b359da190258a2539eb0f7a91b80f8aade33d91",
+    "df480b79d4a9844250895fb1551902053b7db4fd"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "medium",
+      "match": "/llm-routing-mastra-ai",
+      "replacement": "/ru/llm-routing-mastra-ai",
+      "reason": "The link should point to the Russian version of the post for consistency with the series navigation.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "/mastra-security-guardrails",
+      "replacement": "/ru/mastra-security-guardrails",
+      "reason": "The link should point to the Russian version of the post for consistency with the series navigation.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "/mastra-workflows-memory",
+      "replacement": "/ru/mastra-workflows-memory",
+      "reason": "The link should point to the Russian version of the post for consistency with the series navigation.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug mastra-mcp-tool-integrations --locale ru --skip-global",
+    "output": ""
+  }
+}
