@@ -1,0 +1,93 @@
+{
+  "selectedCommit": "2b671ba952f8561d60c6066131dee002bba121df",
+  "selectedModel": "openrouter/qwen/qwen3-32b:nitro",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 9,
+    "relevance": 9,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "Alza la Sfida 💪",
+      "replacement": "Alzare l'asticella 💪",
+      "reason": "'Alzare l'asticella' is the standard Italian idiom for 'Raising the bar', matching the context of corporate performance."
+    },
+    {
+      "priority": "medium",
+      "match": "Alza la Posta",
+      "replacement": "Alzare l'asticella",
+      "reason": "Consistency with the section heading and the specific 'Raising the Bar' satire theme."
+    },
+    {
+      "priority": "medium",
+      "match": "Con ogni rispetto, cazzo.",
+      "replacement": "Con tutto il dovuto rispetto, vaffanculo.",
+      "reason": "The original 'With all due respect, fuck you' is a specific dismissive phrase; 'vaffanculo' is the direct equivalent for 'fuck you' in this context, and 'tutto il dovuto rispetto' is the standard formula."
+    }
+  ],
+  "rationale": "The Qwen translation is excellent, capturing the snarky, satirical tone of the original. It handles the 'low-F' joke well. The suggestions align the 'Raising the Bar' idiom with the standard Italian corporate equivalent and refine the punchline of the first book review to better match the English intensity.",
+  "slug": "breaking-unicorns",
+  "locale": "it",
+  "candidateCommits": [
+    "fcef44ff038431676950fee06e809f5c9edb2234",
+    "2b671ba952f8561d60c6066131dee002bba121df",
+    "47fc30b83dbaedb41bba94c3522092057230c954"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "Alza la Sfida 💪",
+      "replacement": "Alzare l'asticella 💪",
+      "reason": "'Alzare l'asticella' is the standard Italian idiom for 'Raising the bar', matching the context of corporate performance.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "Alza la posta",
+      "replacement": "Alzare l'asticella",
+      "reason": "Consistency with the section heading and the specific 'Raising the Bar' satire theme.",
+      "pass": 1,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "Alza la Sfida 💪",
+      "replacement": "Alzare l'asticella 💪",
+      "reason": "'Alzare l'asticella' is the standard Italian idiom for 'Raising the bar', matching the context of corporate performance.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "alzare la posta",
+      "replacement": "alzare l'asticella",
+      "reason": "Consistency with the section heading and the specific 'Raising the Bar' satire theme.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "Alza la Posta",
+      "replacement": "Alzare l'asticella",
+      "reason": "Consistency with the section heading and the specific 'Raising the Bar' satire theme.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug breaking-unicorns --locale it --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug breaking-unicorns --locale it --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug breaking-unicorns --locale it --skip-global\n73 |   const sourceComponents = new Set(\n74 |     [...sourceContents.matchAll(/<\\/?([A-Z][A-Za-z0-9_.]*)\\b/g)].map((match) => match[1]),\n75 |   );\n76 |   for (const component of sourceComponents) {\n77 |     if (!new RegExp(`</?${escapeRegExp(component)}\\\\b`).test(targetContents)) {\n78 |       throw new Error(`Missing preserved MDX component in ${targetPath}: ${component}`);\n                     ^\nerror: Missing preserved MDX component in /Users/dan/code/oss/dans-blog/src/content/posts/2024-09-01--breaking-unicorns/it/index.mdx: Insert\n      at assertProtectedTokens (/Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:78:17)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:28:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}
