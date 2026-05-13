@@ -1,0 +1,90 @@
+---
+social_image: ../desktop-social.webp
+title: Promiseの落とし穴
+subTitle: 一般的なミスの回避
+date: '2018-09-26'
+modified: '2024-07-30'
+category: Code
+subCategory: promises
+tags:
+  - promises
+  - async
+  - debugging
+  - errors
+  - javascript
+  - composition
+related:
+  - intro-to-promises
+  - visualizing-promises
+  - are-promises-broken
+  - javascript-promises-quiz
+cover: ../michal-parzuchowski-224092-unsplash.webp
+cover_mobile: ../w300_michal-parzuchowski-224092-unsplash.webp
+cover_icon: ../icon_michal-parzuchowski-224092-unsplash.webp
+---
+### プロミスは他の値のように動作しない
+
+他のほとんどの値のように値を出力することはできません：
+
+```js
+// プロミスに対してはこの書き方は意味を持たない：
+console.log(Promise.resolve(42));
+
+// `.then`インターフェースを使用しなければならない：
+Promise.resolve(42).then(value => console.log(value));
+```
+
+### プロミスはミスを指摘しない
+
+よくあるミスですが、プロミスは警告しません。
+
+さまざまな理由から、TC39は`.then`や`.catch`に`null`を渡すことを許容することにしました。例えば、`.then(null, null)`は有効であり、チェーン内のその「ステップ」をスキップする動作が求められています。
+
+この設計の不幸な結果として、間違えやすくなっています。
+
+##### 例で見る
+
+ミニチャレンジを試してみましょう：以下のどのオプションが`console.log`で42を出力するでしょうか？
+
+```js
+// オプション #1：
+Promise.resolve(42).then(console.log());
+
+// オプション #2：
+Promise.resolve(42).then(console.log);
+
+// オプション #3：
+Promise.resolve(42).then(value => console.log(value));
+
+// オプション #4：
+Promise.resolve(42)
+  .then(console.log())
+  .then(console.log);
+```
+
+##### 正解
+
+正解は#2、#3、#4です。
+
+なぜでしょうか？`.then()`に渡された値の**型**を確認してみましょう：
+
+```js
+var arg1 = console.log();
+var arg2 = console.log;
+var arg3 = value => console.log(value);
+
+typeof arg1 === "undefined";
+typeof arg2 === "function";
+typeof arg3 === "function";
+```
+
+4番目のオプションの動作がまだよく分からない場合は？
+
+これは実質的に次のように動作しています：
+
+```js
+// オプション #4 - 実質的に
+Promise.resolve(42)
+  .then(undefined) // これは値に影響を与えず、次の`.then(fn)`に処理が渡されます
+  .then(console.log);
+```
