@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-regex-or-wreckage
+- Locale: de
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2024-11-15--quiz-regex-or-wreckage/de/index.mdx
+- Validation: passed
+- Runtime seconds: 46.85
+- Input tokens: 16002
+- Output tokens: 11309
+- Thinking tokens: unknown
+- Cached input tokens: 5632
+- Cache write tokens: 0
+- Estimated cost: $0.002660
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: 'Quiz: Reguläre Ausdrücke – Meisterkurs'
@@ -596,3 +614,4 @@ Testen Sie Ihr RegEx‑Wissen mit Fragen zu Grundmustern, Quantifizierern, Grupp
 Reguläre Ausdrücke können ein Biest sein, aber sie sind unglaublich mächtig, sobald man sie (und die neueren Syntax‑Erweiterungen) beherrscht. Weiter üben und du bist im Handumdrehen ein RegEx‑Meister! 🧙‍♂️
 
 <p class="inset">Braucht du nach all dem RegEx eine Pause?<br />Pftt, denk dran: Pause *nach* den Skills! <br /><br />Schau bei [meinem Gym](/challenges/) vorbei, um noch mehr Challenges zu meistern! 💪</p>
+````
