@@ -1,0 +1,92 @@
+{
+  "selectedCommit": "1937d5aeb052526fdc64b519e0152db5ca6b93f4",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 10,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "title: 'Quiz: Symbole & Aufzählbare'",
+      "replacement": "title: \"Quiz: Symbols & Enumerables\"",
+      "reason": "The title should use the standard technical terms 'Symbols & Enumerables' to match the label and common JavaScript terminology, and use double quotes for consistency."
+    },
+    {
+      "priority": "medium",
+      "match": "subTitle: Kennst du die weniger bekanntenDetails von ES2015?",
+      "replacement": "subTitle: \"Kennst du die weniger bekannten Details von ES2015?\"",
+      "reason": "Fixes a missing space between 'bekannten' and 'Details' and adds quotes for frontmatter consistency."
+    },
+    {
+      "priority": "medium",
+      "match": "{text: 'Depends on context'}",
+      "replacement": "{text: 'Hängt vom Kontext ab'}",
+      "reason": "This option was left in English in the selected candidate."
+    }
+  ],
+  "rationale": "Candidate 1937d5aeb052526fdc64b519e0152db5ca6b93f4 provides a high-quality translation of the technical explanations. The suggestions fix a typo in the subtitle, translate a missed option in question 3, and revert the title to use standard technical terminology.",
+  "slug": "quiz-js-interfaces-symbols-and-enumerables",
+  "locale": "de",
+  "candidateCommits": [
+    "1937d5aeb052526fdc64b519e0152db5ca6b93f4",
+    "2c4af8f5baa66be54e44d847917e75b0e715ef74"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "title: 'Quiz: Symbole & Aufzählbare'",
+      "replacement": "title: 'Quiz: Symbole & Enumerables'",
+      "reason": "'Enumerables' is the standard technical term in JavaScript; 'Aufzählbare' sounds awkward as a standalone noun in a title.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "{text: 'Nein, es wird nicht'},",
+      "replacement": "{text: 'Nein, wird sie nicht'},",
+      "reason": "The sentence is incomplete and lacks the subject 'sie' (referring to the property).",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "{text: 'Depends on context'},",
+      "replacement": "{text: 'Hängt vom Kontext ab'},",
+      "reason": "This option was left in English.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "title: 'Quiz: Symbole & Aufzählbare'",
+      "replacement": "title: 'Quiz: Symbols & Enumerables'",
+      "reason": "The title should match the English technical terms 'Symbols & Enumerables' as used in the label and common JS discourse, or at least use the English 'Enumerables' which is standard.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "subTitle: Kennst du die weniger bekanntenDetails von ES2015?",
+      "replacement": "subTitle: \"Kennst du die weniger bekannten Details von ES2015?\"",
+      "reason": "Fixes a missing space between 'bekannten' and 'Details' and adds quotes for consistency with frontmatter style.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug quiz-js-interfaces-symbols-and-enumerables --locale de --skip-global",
+    "output": ""
+  }
+}

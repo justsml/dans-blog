@@ -1,7 +1,7 @@
 ---
 unlisted: false
-title: ''
-subTitle: Kennst du die weniger bekannten Aspekte von ES2015?
+title: 'Quiz: Symbole & Aufzählbare'
+subTitle: Kennst du die weniger bekanntenDetails von ES2015?
 label: Symbols
 social_image: ../desktop-social.webp
 category: Quiz
@@ -18,14 +18,14 @@ cover_full_width: ../logan-weaver-lgnwvr-96ES9AOLRzQ-unsplash.webp
 cover_mobile: ../logan-weaver-lgnwvr-96ES9AOLRzQ-unsplash_w300.webp
 cover_icon: ../logan-weaver-lgnwvr-96ES9AOLRzQ-unsplash_w300.webp
 ---
-## Quiz: JavaScript-Interfaces, Symbole und Enumerables
+## Quiz: JavaScript‑Interfaces, Symbole und Enumerierbare Eigenschaften
 
-> * **Beweise deine JavaScript-Skills!** 🚀  
-> * Kein Login oder Anmeldung erforderlich. ✨  
-> * Multiple-Choice. 🤖 ... _Wie schwer kann das schon sein, hmm?_  
+> * **Beweise deine JavaScript‑Fähigkeiten!** 🚀  
+> * Kein Login oder Registrierung nötig. ✨  
+> * Multiple‑Choice. 🤖 … _Wie schwer kann das schon sein, oder?_  
 
-import Challenge from '../../../../components/QuizUI/Challenge';  
-import QuizUI from '../../../../components/QuizUI/QuizUI';
+import Challenge from '../../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../../components/QuizUI/QuizUI';
 
 <QuizUI>
 
@@ -33,17 +33,17 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={0}
   group="Fortgeschrittene Schnittstellen"
-  title="Getter vs. Direkter Eigenschaftszugriff"
+  title="Getter vs Direkter Property-Zugriff"
   options={[
-    {text: 'Einen Schleifen verwenden'},
-    {text: 'Eine Methode aufrufen, um den Wert zuzugreifen'},
-    {text: 'Den Wert direkt zugreifen', isAnswer: true},
-    {text: 'Einen Fehler werfen'},
+    {text: 'Verwende eine Schleife'},
+    {text: 'Rufe eine Methode auf, um den Wert zu erhalten'},
+    {text: 'Greife direkt auf den Wert zu', isAnswer: true},
+    {text: 'Wirf einen Fehler'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Wie greifen Sie auf eine JavaScript-Objekteigenschaft zu, die eine Getter-Methode verwendet?
+    Wie greifst du auf ein JavaScript‑Objekt‑Property zu, das einen Getter‑Methode verwendet?
     ```js
     const obj = {
       get val() {
@@ -56,8 +56,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    In JavaScript kann ein Getter wie eine normale Eigenschaft zugegriffen werden. Es ist nicht notwendig, ihn wie eine Funktion aufzurufen.
-    In diesem Beispiel greift der direkte Zugriff auf `obj.val` die Getter-Methode und gibt `got it!` aus.
+    In JavaScript kann ein Getter wie ein normales Property verwendet werden. Es muss nicht wie eine Funktion aufgerufen werden.
+    In diesem Beispiel ruft das direkte Zugreifen auf `obj.val` die Getter‑Methode auf und gibt `got it!` aus.
   </div>
   </slot>
 </Challenge>
@@ -65,18 +65,18 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={1}
-  group="Erweiterte Schnittstellen"
-  title="Symbolverwendung in Objekt-Schlüsseln"
+  group="Fortgeschrittene Schnittstellen"
+  title="Verwendung von Symbolen in Objektschlüsseln"
   options={[
-    {text: 'Durch die Verwendung eines Symbols', isAnswer: true},
-    {text: 'Durch die Verwendung einer Zeichenkette'},
-    {text: 'Durch die Verwendung einer Zahl'},
-    {text: 'Durch die Verwendung eines Objekts als Schlüssel'},
+    {text: 'Verwendung eines Symbols', isAnswer: true},
+    {text: 'Verwendung eines Strings'},
+    {text: 'Verwendung einer Zahl'},
+    {text: 'Verwendung eines Objekts als Schlüssel'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Welche Methode ist die richtige, um einen wirklich eindeutigen Eigenschaftsschlüssel für ein JavaScript-Objekt zu erstellen?
+    Wie erstellt man korrekt einen wirklich eindeutigen Eigenschaftsschlüssel für ein JavaScript‑Objekt?
     ```js
     const uniqueKey = Symbol('myUniqueKey');
     const obj = {
@@ -88,7 +88,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Symbols sind eindeutige und unveränderliche primitive Datentypen, die als Schlüssel für Objekteigenschaften verwendet werden können. Dies hilft dabei, Namenskonflikte zu vermeiden, insbesondere in großen Codebasen oder bei der Erstellung wiederverwendbarer Bibliotheken.
+    Symbole sind ein eindeutiger und unveränderlicher primitiver Typ, der als Schlüssel für Objekteigenschaften verwendet werden kann. Das verhindert Namenskollisionen, besonders in großen Codebasen oder beim Schreiben wiederverwendbarer Bibliotheken.
   </div>
   </slot>
 </Challenge>
@@ -96,18 +96,18 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={2}
-  group="Erweiterte Schnittstellen"
-  title="Enumerable-Eigenschaften"
+  group="Fortgeschrittene Schnittstellen"
+  title="Aufzählbare Eigenschaften"
   options={[
     {text: 'Wirft einen Fehler'},
-    {text: 'Nein, es wird nicht aufgelistet'},
+    {text: 'Nein, es wird nicht'},
     {text: 'Es hängt vom Werttyp ab'},
     {text: 'Ja, es wird aufgelistet', isAnswer: true},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Wird die Eigenschaft `age` bei einer `for...in`-Iteration aufgelistet werden?
+    Wird die Eigenschaft `age` bei einer `for...in`-Iteration aufgelistet?
     ```js
     const person = {};
     Object.defineProperty(person, 'age', {
@@ -122,7 +122,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Die `enumerable`-Eigenschaft in `Object.defineProperty()` steuert, ob die Eigenschaft in Enumerationsmethoden wie `for...in` angezeigt wird. In diesem Beispiel, da `enumerable: true` gesetzt ist, wird die `age`-Eigenschaft bei der Iteration aufgelistet.
+    Die `enumerable`‑Eigenschaft in `Object.defineProperty()` bestimmt, ob die Eigenschaft in Aufzählungsmethoden wie `for...in` erscheint. In diesem Beispiel wird, weil `enumerable: true`, die Eigenschaft `age` während der Iteration aufgelistet.
   </div>
   </slot>
 </Challenge>
@@ -131,17 +131,17 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={3}
   group="Arbeiten mit Objekten"
-  title="Standard-Enumerierbarkeit mit Object.defineProperty()"
+  title="Standard‑Enumerierbarkeit mit Object.defineProperty()"
   options={[
-    {text: 'wahr'},
-    {text: 'falsch', isAnswer: true},
+    {text: 'true'},
+    {text: 'false', isAnswer: true},
     {text: 'undefined'},
-    {text: 'Hängt vom Kontext ab'},
+    {text: 'Depends on context'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Was ist die Standard-Enumerierbarkeit einer Eigenschaft, wenn `Object.defineProperty()` ohne Angabe von `enumerable` verwendet wird?
+    Wie ist die Standard‑Enumerierbarkeit einer Eigenschaft, wenn man `Object.defineProperty()` verwendet, ohne `enumerable` anzugeben?
     ```js
     const car = {};
     Object.defineProperty(car, 'make', {
@@ -153,7 +153,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Wenn Sie `Object.defineProperty()` ohne Angabe von `enumerable` verwenden, ist der Standardwert `false`. Das bedeutet, die `make`-Eigenschaft wird nicht in `Object.keys()` oder anderen Enumerationsmethoden angezeigt.
+    Wenn Sie `Object.defineProperty()` ohne Angabe von `enumerable` verwenden, ist der Standardwert `false`. Das bedeutet, dass die Eigenschaft `make` nicht in `Object.keys()` oder anderen Enumerationsmethoden erscheint.
   </div>
   </slot>
 </Challenge>
@@ -161,18 +161,18 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={4}
-  group="Erweiterte Schnittstellen"
-  title="Einmalige Symbole"
+  group="Fortgeschrittene Schnittstellen"
+  title="Einzigartige Symbole"
   options={[
     {text: 'Hängt von ihren Beschreibungen ab'},
-    {text: 'wahr'},
-    {text: 'falsch', isAnswer: true},
-    {text: 'Gibt einen Fehler aus'},
+    {text: 'true'},
+    {text: 'false', isAnswer: true},
+    {text: 'Wirft einen Fehler'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Was wird das Ergebnis der folgenden Vergleichsoperation sein?
+    Was ist das Ergebnis des folgenden Vergleichs?
     ```js
     const sym1 = Symbol('id');
     const sym2 = Symbol('id');
@@ -182,7 +182,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Jeder Aufruf von `Symbol()` erzeugt einen eindeutigen und unveränderlichen Wert, selbst wenn die Beschreibung identisch ist. In diesem Fall sind `sym1` und `sym2` unterschiedliche Symbole, daher gibt der Vergleich `false` zurück.
+    Jeder Aufruf von `Symbol()` erzeugt einen eindeutigen und unveränderlichen Wert, selbst wenn die Beschreibung gleich ist. In diesem Fall sind `sym1` und `sym2` unterschiedliche Symbole, sodass der Vergleich `false` zurückgibt.
   </div>
   </slot>
 </Challenge>
@@ -190,18 +190,18 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={5}
-  group="Erweiterte Schnittstellen"
-  title="Symbole als nicht-auflistbare Schlüssel"
+  group="Fortgeschrittene Schnittstellen"
+  title="Symbole als nicht aufzählbare Schlüssel"
   options={[
     {text: 'Nein, es wird nicht aufgelistet', isAnswer: true},
     {text: 'Ja, es wird aufgelistet'},
-    {text: 'Hängt vom Iterationsverfahren ab'},
+    {text: 'Hängt von der Iterationsmethode ab'},
     {text: 'Wirft einen Fehler'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Wird die Eigenschaft mit Symbol-Schlüssel während einer `for...in`-Iteration aufgelistet?
+    Wird die Symbol‑gekennzeichnete Eigenschaft bei einer `for...in`‑Iteration aufgelistet?
     ```js
     const sym = Symbol('uniqueKey');
     const obj = {
@@ -216,7 +216,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Symbol-schlüsselbasierte Eigenschaften können ihr eigenes `enumerable`-Flag haben, aber `for...in` und `Object.keys()` besuchen nur die string-schlüsselbasierten auflistbaren Eigenschaften. In diesem Beispiel wird nur `regularKey` aufgelistet, nicht die Symbol-schlüsselbasierte Eigenschaft.
+    Symbol‑gekennzeichnete Eigenschaften können ihr eigenes `enumerable`‑Flag besitzen, aber `for...in` und `Object.keys()` besuchen nur string‑gekennzeichnete aufzählbare Eigenschaften. In diesem Beispiel wird nur `regularKey` aufgelistet, nicht die Symbol‑gekennzeichnete Eigenschaft.
   </div>
   </slot>
 </Challenge>
@@ -236,12 +236,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    Welche Methode kann verwendet werden, um alle Symbol-Schlüssel eines Objekts abzurufen?
+    Welche Methode kann verwendet werden, um alle Symbol‑Schlüssel eines Objekts abzurufen?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Die Methode `Object.getOwnPropertySymbols()` wird verwendet, um die eigenen Symbol-Eigenschaftsschlüssel eines Objekts abzurufen.
+    Die Methode `Object.getOwnPropertySymbols()` wird verwendet, um die eigenen Symbol‑Eigenschaftsschlüssel eines Objekts abzurufen.
     ```js
     const sym1 = Symbol('id');
     const sym2 = Symbol('name');
