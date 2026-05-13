@@ -1,0 +1,51 @@
+{
+  "runId": "2026-05-13T15-51-49-009Z",
+  "runStatus": "running",
+  "slug": "upgrade-from-gatsby-to-astro",
+  "locale": "de",
+  "startedAt": "2026-05-13T15:51:49.009Z",
+  "updatedAt": "2026-05-13T15:51:59.295Z",
+  "modelsRequested": [
+    "openrouter/openai/gpt-oss-120b:nitro",
+    "openrouter/qwen/qwen3-32b:nitro"
+  ],
+  "attemptedModels": 1,
+  "skippedModels": 0,
+  "rejectedModels": 1,
+  "candidateModels": 0,
+  "totals": {
+    "inputTokens": 10091,
+    "outputTokens": 2801,
+    "thinkingTokens": 0,
+    "cachedInputTokens": 1792,
+    "cacheWriteTokens": 0,
+    "estimatedCostUsd": 0.000898,
+    "hasUnknownInputTokens": false,
+    "hasUnknownOutputTokens": false,
+    "hasUnknownThinkingTokens": true,
+    "hasUnknownCachedInputTokens": false,
+    "hasUnknownCacheWriteTokens": false,
+    "hasUnknownEstimatedCost": false,
+    "runtimeSeconds": "8.64"
+  },
+  "attempts": [
+    {
+      "model": "openrouter/openai/gpt-oss-120b:nitro",
+      "status": "rejected",
+      "validationStatus": "rejected: direct AI SDK translation failed",
+      "reportPath": "reports/i18n/upgrade-from-gatsby-to-astro/de/openrouter-openai-gpt-oss-120b-nitro.md",
+      "note": "Command failed: bun run i18n:validate --slug upgrade-from-gatsby-to-astro --locale de",
+      "telemetry": {
+        "runtimeSeconds": "8.64",
+        "tokens": {
+          "input": 10091,
+          "output": 2801,
+          "cached": 1792,
+          "cacheWrite": 0
+        },
+        "estimatedCostUsd": 0.0008977289999999999,
+        "pricingSource": "local-openrouter-estimate"
+      }
+    }
+  ]
+}
