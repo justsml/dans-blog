@@ -1,0 +1,53 @@
+{
+  "selectedCommit": "028b7a2edaf3484e6ef1799d82eed3c4df036fc0",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 10,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "title: \"IS NULLvs IS NOT NULL\"",
+      "replacement": "title: \"IS NULL vs IS NOT NULL\"",
+      "reason": "Missing space between operators in the title of challenge 6."
+    }
+  ],
+  "rationale": "The translation is high quality and maintains Dan's direct, slightly informal style ('ramolli les compétences'). It correctly handles technical terminology and MDX structure. I've corrected a minor spacing typo in one of the challenge titles.",
+  "slug": "quiz-sql-query-fundamentals",
+  "locale": "fr",
+  "candidateCommits": [
+    "028b7a2edaf3484e6ef1799d82eed3c4df036fc0",
+    "fd41c6bfdfe51abb09b91c6849702572ab64c583"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "{text: 'SELECT * FROM users WHERE name = \\', isAnswer: true},",
+      "replacement": "{text: \"SELECT * FROM users WHERE name = 'John';\", isAnswer: true},",
+      "reason": "The SQL string in the second option is truncated/broken in the source and all candidates, making the quiz question invalid.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "title: \"IS NULLvs IS NOT NULL\"",
+      "replacement": "title: \"IS NULL vs IS NOT NULL\"",
+      "reason": "Missing space between operators in the title of challenge 6.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug quiz-sql-query-fundamentals --locale fr --skip-global",
+    "output": ""
+  }
+}
