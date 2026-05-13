@@ -1,0 +1,37 @@
+{
+  "selectedCommit": "4c47e58a435006b8bf7f1b470555d4516b057891",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 5,
+    "technicalAccuracy": 5,
+    "coherence": 5,
+    "relevance": 5,
+    "translationQuality": 5,
+    "mdxPreservation": 5
+  },
+  "suggestions": [],
+  "rationale": "The current translation already incorporates the high-priority fix mentioned in the previous judge report (the truncated string in Challenge 4). The translation is technically accurate, maintains Dan's direct style, and uses correct French typography (non-breaking spaces). All MDX structures and heading counts are preserved.",
+  "slug": "quiz-postgres-sql-mastery-pt1",
+  "locale": "fr",
+  "candidateCommits": [
+    "4c47e58a435006b8bf7f1b470555d4516b057891",
+    "9fd7bc6112501f42f858504c5370b61f5b1f7ab8"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "{text: 'They\"'},",
+      "replacement": "{text: 'Ils sont interchangeables depuis Pg v10'},",
+      "reason": "The candidate has a broken string/truncated text in one of the options for the timestamptz question.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug quiz-postgres-sql-mastery-pt1 --locale fr --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug quiz-postgres-sql-mastery-pt1 --locale fr --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug \"quiz-postgres-sql-mastery-pt1\" --locale fr --skip-global\n109 |     })\n110 |     .filter((message): message is string => message != null);\n111 | \n112 |   if (mismatches.length === 0) return;\n113 | \n114 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2024-11-27--quiz-postgres-sql-mastery-pt1/fr/index.mdx changed heading counts. H2: English has 1, translation has 0\n      at assertHeadingCounts (/Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:114:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:27:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}

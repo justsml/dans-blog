@@ -1,8 +1,8 @@
 ---
 unlisted: false
 social_image: ../mobile.webp
-title: 'Quiz : PostgreSQL en profondeur : Partie 1'
-subTitle: ''
+title: 'Quiz : Deep Postgres : Pt. 1'
+subTitle: SQL vous fait-il pousserun cri ?
 label: 'Deep PostgreSQL #1'
 category: Quiz
 subCategory: Database
@@ -19,23 +19,23 @@ cover_full_width: ../elephant-synthwave-gym-wide.webp
 cover_mobile: ../elephant-synthwave-gym-square-200.webp
 cover_icon: ../elephant-synthwave-gym-square-200.webp
 ---
-import Challenge from '../../../../components/QuizUI/Challenge';
-import QuizUI from '../../../../components/QuizUI/QuizUI';
+import Challenge from '../../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../../components/QuizUI/QuizUI';
 
-> **Partie 1 sur 2.** [Aller à la Partie 2](../quiz-postgres-sql-mastery-pt2/)
+> **Partie 1 sur 2.** [Passer à la partie 2](../quiz-postgres-sql-mastery-pt2/)
 
-<p class="inset">PostgreSQL 🐘 C'est facilement ma base de données préférée ! Je découvre toujours de nouveaux trucs et pièges, donc j'ai décidé de les intégrer dans un nouveau Quiz !</p>
+<p class="inset">PostgreSQL 🐘 est sans conteste ma base de données préférée ! J’apprends constamment de nouvelles astuces et pièges, alors j’ai décidé d’en faire le sujet d’un nouveau quiz !</p>
 
-Ce quiz couvre un mélange de fonctionnalités PostgreSQL bien connues et moins connues, ainsi que des points délicats : des agrégats intégrés à la conversion de types, aux contraintes, et bien plus encore.
+Ce quiz mélange des fonctionnalités PostgreSQL bien connues et des subtilités moins répandues : agrégats intégrés, cast de types, contraintes, et bien plus encore.
 
-Bonne chance ! 🍀
+Bonne chance ! 🍀
 
 <QuizUI>
 
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={0}
-  group="Échauffement : Fonctions"
+  group="Échauffement : Fonctions"
   title="Agrégats intégrés"
   options={[
     {text: 'MIN'},
@@ -46,7 +46,7 @@ Bonne chance ! 🍀
 >
   <slot name="question">
   <div className="question">
-    Laquelle n'est PAS une fonction d'agrégation intégrée dans PostgreSQL ?
+    Quel n’est PAS une fonction d’agrégat intégrée dans PostgreSQL ?
     ```sql
     SELECT 
       MIN(grade) as lowest,
@@ -59,12 +59,16 @@ Bonne chance ! 🍀
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `MEDIAN` n'est pas intégré ! Vous avez besoin de :
+    `MEDIAN` n’est pas intégré ! Vous avez besoin :
     ```sql
     PERCENTILE_CONT(0.5) 
     WITHIN GROUP (ORDER BY grade)
     ```
-    Agrégats intégrés courants :\n    - `MIN`, `MAX`, `COUNT`\n    - `AVG`, `SUM`\n    - `ARRAY_AGG`, `STRING_AGG`\n    - Diverses fonctions statistiques
+    Agrégats intégrés courants :
+    - `MIN`, `MAX`, `COUNT`
+    - `AVG`, `SUM`
+    - `ARRAY_AGG`, `STRING_AGG`
+    - Diverses fonctions statistiques
   </div>
   </slot>
 </Challenge>
@@ -72,7 +76,7 @@ Bonne chance ! 🍀
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={1}
-  group="Échauffement : Conversion de type"
+  group="Échauffement : Conversion de type"
   title="Variations de la syntaxe de cast"
   options={[
     {text: '\'95\'::INTEGER'},
@@ -83,21 +87,21 @@ Bonne chance ! 🍀
 >
   <slot name="question">
   <div className="question">
-    Laquelle de ces conversions de type est **invalid** ❌?
+    Laquelle de ces conversions de type est **non valide** ❌ ?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    PostgreSQL supporte trois syntaxes de cast :
+    PostgreSQL prend en charge trois syntaxes de cast :
 
-    1. ANSI SQL : `CAST(expression AS type)`.
-    2. PostgreSQL : `expression::type`.
-    3. Fonction de type : `type 'literal'`.
+    1. ANSI SQL : `CAST(expression AS type)`.
+    2. PostgreSQL : `expression::type`.
+    3. Fonction de type : `type 'literal'`.
 
-    Toutes sont fonctionnellement équivalentes, mais :
+    Toutes sont fonctionnellement équivalentes, mais :
     - `CAST()` est la plus portable.
     - `::` est spécifique à PostgreSQL mais couramment utilisé.
-    - La syntaxe `type 'literal'` en style infixe est moins courante mais valide.
+    - Le style infixe `type 'literal'` est moins répandu mais reste valide.
   </div>
   </slot>
 </Challenge>
@@ -116,7 +120,7 @@ Bonne chance ! 🍀
 >
   <slot name="question">
   <div className="question">
-    Combien de valeurs NULL sont autorisées ici ?
+    Combien de valeurs NULL sont autorisées ici ?
     ```sql
     CREATE TABLE student_emails (
       student_id INTEGER,
@@ -128,11 +132,11 @@ Bonne chance ! 🍀
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Les contraintes UNIQUE dans PostgreSQL :
-    - Permettent plusieurs valeurs NULL.
+    Contraintes UNIQUE dans PostgreSQL :
+    - Autorisent plusieurs valeurs NULL.
     - `NULL` ≠ `NULL` dans les vérifications d'unicité.
 
-    Pour empêcher les valeurs `NULL`, ajoutez `NOT NULL` :
+    Pour empêcher les valeurs `NULL`, ajoutez `NOT NULL` :
     ```sql
     CREATE TABLE student_emails (
       student_id INTEGER,
@@ -148,18 +152,18 @@ Bonne chance ! 🍀
   client:visible={{rootMargin: "150px"}}
   index={3}
   group="Date/Heure"
-  title="Arithmétique des dates"
+  title="Arithmétique de dates"
   options={[
     {text: '2024-11-27'},
     {text: '2024-11-27 00:00:00'},
     {text: '2024-11-28'},
     {text: '2024-11-28 00:00:00', isAnswer: true},
-    {text: 'Erreur : heure invalide'},
+    {text: 'Erreur : heure invalide'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Quel résultat retourne-t-il ?
+    Que renvoie-t‑il ?
     ```sql
     SELECT '2024-11-27'::date + interval '24 hours';
     ```
@@ -167,13 +171,13 @@ Bonne chance ! 🍀
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Les intervalles sont un outil puissant pour simplifier les opérations sur les plages de dates !
+    Les intervalles sont un outil puissant pour simplifier les opérations sur les plages de dates !
 
-    L'arithmétique des dates en PostgreSQL :
-    - `+ intervalle '24 heures'` ajoute 24 heures
-    - `+ intervalle '1 jour'` ajoute 1 jour
-    - `+ intervalle '1 mois'` ajoute 1 mois
-    - `+ intervalle '1 an'` ajoute 1 an
+    Arithmétique de dates dans PostgreSQL :
+    - `+ interval '24 hours'` ajoute 24 heures
+    - `+ interval '1 day'` ajoute 1 jour
+    - `+ interval '1 month'` ajoute 1 mois
+    - `+ interval '1 year'` ajoute 1 an
 
     Le résultat est `2024-11-28 00:00:00`.
   </div>
@@ -186,38 +190,38 @@ Bonne chance ! 🍀
   group="Horodatages"
   title="timestamptz vs timestamp"
   options={[
-    {text: 'Ils occupent tous les deux 8 octets, mais représentent des sémantiques de timestamp différentes', isAnswer: true},
-    {text: 'Ils\'},
-    {text: 'timestamptz conserve n\'importe quelle zone horaire d\'entrée'},
-    {text: 'timestamptz stocke le nom ou le décalage d\'origine de la zone horaire'},
-    {text: 'timestamptz stocke une valeur de 2 octets pour la TZ'},
+    {text: 'Ils occupent tous les deux 8 octets, mais représentent des sémantiques d\'horodatage différentes', isAnswer: true},
+    {text: 'They"'},
+    {text: 'timestamptz conserve n\'importe quel fuseau horaire d\'entrée'},
+    {text: 'timestamptz stocke le nom ou le décalage du fuseau horaire d\'origine'},
+    {text: 'timestamptz stocke une valeur de 2 octets pour le fuseau horaire'},
     {text: 'timestamptz est le successeur de timestamp'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Quelle est l'affirmation **la plus précise** concernant `timestamptz` et `timestamp` ?
+    Quelle est l'affirmation **la plus précise** concernant `timestamptz` et `timestamp` ?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Ils sont tous deux de 8 octets, mais ils ne stockent pas le même type de valeur.
+    Ils sont tous les deux de 8 octets, mais ils ne stockent pas le même type de valeur.
 
-    Alors, quelle est la différence ? Elle réside dans l'analyse des entrées.
+    Alors, quelle est la différence ? Elle se situe au niveau de l'analyse de l'entrée.
 
     **`timestamptz`**
-    - Normalise l'entrée en un point absolu dans le temps.
-    - Tient compte du paramètre `TimeZone` du serveur/connexion lors de l'analyse des entrées sans décalage explicite et lors de l'affichage de la sortie.
+    - Normalise l'entrée vers un point absolu dans le temps.
+    - Prend en compte le paramètre `TimeZone` du serveur/connexion lors de l'analyse d'une entrée sans décalage explicite et lors de l'affichage du résultat.
 
     **`timestamp`**
     - Stocke une date et une heure sans conversion de fuseau horaire.
-    - Ne conserve ni ne normalise pas les informations de fuseau horaire.
+    - Ne préserve ni ne normalise les informations de fuseau horaire.
 
 
     **`timestamp`**
 
-    - Stocke la date et l'heure sans informations de fuseau horaire.
-    - Utile pour stocker explicitement des dates standardisées, soit en UTC, soit dans un fuseau horaire spécifique.
+    - Stocke la date & l'heure sans information de fuseau horaire.
+    - Utile pour enregistrer explicitement des dates standardisées, soit en UTC soit dans un fuseau horaire spécifique.
   </div>
   </slot>
 </Challenge>
@@ -225,7 +229,7 @@ Bonne chance ! 🍀
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={5}
-  group="Types PostgreSQL"
+  group="Types Postgres"
   title="Identifier les types invalides"
   options={[
     {text: 'VARCHAR(100)'},
@@ -237,18 +241,18 @@ Bonne chance ! 🍀
 >
   <slot name="question">
   <div className="question">
-    Laquelle de ces options n'est pas ❌ un type PostgreSQL valide ?
+    Lequel de ceux‑ci n’est pas ❌ un type PostgreSQL valide ?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    PostgreSQL propose un ensemble riche de types de données, mais `STRING(100)` n'en fait pas partie.
+    PostgreSQL possède un ensemble riche de types de données, mais `STRING(100)` n’en fait pas partie.
 
-    Les types de chaîne valides incluent :
+    Les types de chaîne corrects sont :
     - `VARCHAR(100)` (chaîne de longueur variable)
     - `CHAR(100)` (chaîne de longueur fixe)
     - `TEXT` (longueur illimitée)
-    - `CHARACTER VARYING(100)` (équivalent à `VARCHAR(100)`)
+    - `CHARACTER VARYING(100)` (identique à `VARCHAR(100)`)
   </div>
   </slot>
 </Challenge>
@@ -256,7 +260,7 @@ Bonne chance ! 🍀
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={6}
-  group="Types PostgreSQL"
+  group="Types Postgres"
   title="Identifier les types invalides"
   options={[
     {text: 'int'},
@@ -270,20 +274,20 @@ Bonne chance ! 🍀
 >
   <slot name="question">
   <div className="question">
-    Laquelle de ces options n'est pas ❌ un type PostgreSQL valide ?
+    Lequel de ceux‑ci n’est pas ❌ un type PostgreSQL valide ?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Il peut sembler familier puisque `decimal128` existe dans d'autres systèmes (MongoDB, Java). Ce n'est pas un type valide en PostgreSQL, `decimal` l'est.
+    Il peut sembler familier car `decimal128` est un type dans de nombreux environnements (y compris Mongo et Java). Ce n’est pas un type PostgreSQL valide, c’est `decimal` qui l’est.
 
-    Les types numériques valides incluent :
-    - `int` (entier de 4 octets)
-    - `bigint` (entier de 8 octets)
-    - `real` (virgule flottante de 4 octets)
-    - `double precision` (virgule flottante de 8 octets)
-    - `bigserial` (entier incrémenté automatiquement sur 8 octets)
-    - `smallserial` (entier incrémenté automatiquement sur 2 octets)
+    Les types numériques corrects sont :
+    - `int` (entier sur 4 octets)
+    - `bigint` (entier sur 8 octets)
+    - `real` (virgule flottante sur 4 octets)
+    - `double precision` (virgule flottante sur 8 octets)
+    - `bigserial` (entier auto‑incrémenté sur 8 octets)
+    - `smallserial` (entier auto‑incrémenté sur 2 octets)
   </div>
   </slot>
 </Challenge>
@@ -304,20 +308,20 @@ Bonne chance ! 🍀
 >
   <slot name="question">
   <div className="question">
-    Laquelle de ces options n'est pas ❌ un type PostgreSQL valide ?
+    Lequel de ceux‑ci n’est pas ❌ un type PostgreSQL valide ?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Cela vous a-t-il frustré, voire _énervé_ ? Vous n'êtes pas seul ! Pour citer un contributeur "noyau" anonyme : "Qu'est-ce que c'est que ce truc, Dan ?! J'ai explosé sur les questions de types ! C'est violent, monsieur ! Pas question de partager mon score, haha." 😈 C'est gentil de votre part.
+    Cela vous a-t-il frustré, voire _en colère_ ? Vous n’êtes pas seul ! Pour citer un contributeur « core » anonyme de la base de données, « what the hell, Dan?! I crashed on the type questions! Thats violent sir! Not sharing my score, hah. » 😈 De rien.
 
-    Les types réseau riches de PostgreSQL n'incluent pas `ipv4`. Chaque fois que j'essaie de l'utiliser sans googler, je me trompe. Peut-être que `macaddr8` me donne l'impression qu'il _doit_ exister des types `ipv4` et `ipv6`. Non, `inet` couvre les deux. De même, `cidr` gère les masques réseau pour les deux.
+    L’ensemble riche de types réseau de PostgreSQL n’inclut pas `ipv4`. Chaque fois que j’essaie de l’utiliser sans chercher, je me trompe. Peut‑être que `macaddr8` me fait penser qu’il _doit_ exister les types `ipv4` et `ipv6`. Non, `inet` couvre les deux. De plus, `cidr` couvre les masques réseau pour les deux.
 
-    Les types réseau valides sont :
+    Les types réseau valides incluent :
     - `cidr` (adresse réseau IPv4/IPv6)
     - `inet` (adresse hôte IPv4/IPv6)
     - `macaddr` (adresse MAC)
-    - `macaddr8` (adresse MAC EUI-64)
+    - `macaddr8` (adresse MAC EUI‑64)
   </div>
   </slot>
 </Challenge>
@@ -325,7 +329,7 @@ Bonne chance ! 🍀
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={8}
-  group="Types PostgreSQL"
+  group="Types Postgres"
   title="Identifier les types invalides"
   options={[
     {text: 'xml'},
@@ -337,17 +341,17 @@ Bonne chance ! 🍀
 >
   <slot name="question">
   <div className="question">
-    Laquelle de ces options n'est pas ❌ un type PostgreSQL valide ?
+    Lequel de ceux‑ci n’est pas ❌ un type PostgreSQL valide ?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    PostgreSQL dispose d'un ensemble riche de types spécialisés, mais `currency` n'en fait pas partie !
+    PostgreSQL possède un ensemble riche de types spécialisés, mais `currency` n’en fait pas partie !
 
-    Les types valides incluent :
+    Les types valides sont :
     - `xml` (données XML)
     - `uuid` (UUID)
-    - `money` (montant en devise)
+    - `money` (montant monétaire)
     - `interval` (intervalle de temps)
   </div>
   </slot>
@@ -369,17 +373,17 @@ Bonne chance ! 🍀
 >
   <slot name="question">
   <div className="question">
-    Laquelle de ces options n'est pas ❌ un type PostgreSQL valide ?
+    Lequel de ceux‑ci n’est pas ❌ un type PostgreSQL valide ?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    PostgreSQL dispose d'un ensemble riche de types spécialisés, mais `triangle` n'en fait pas partie.
+    PostgreSQL possède un ensemble riche de types spécialisés, mais `triangle` n’en fait pas partie.
 
-    Je crois que les versions futures de [GEOS](https://libgeos.org/) incluront le support `Triangle` OGC/WKT, ce qui signifie qu'il devrait finalement être ajouté à Postgis. (En gros, cette réponse pourrait être fausse à l'avenir.)
+    Je pense que les versions à venir de [GEOS](https://libgeos.org/) incluront le support `Triangle` OGC/WKT, ce qui signifie qu’il devrait éventuellement être intégré à PostGIS. (En gros, cette réponse pourrait être erronée à l’avenir.)
 
-    Les types spécialisés valides incluent :
-    - `box` (rectangle)
+    Les types spécialisés corrects incluent :
+    - `box` (boîte rectangulaire)
     - `line` (ligne infinie)
     - `point` (point 2D)
     - `circle` (cercle 2D)
@@ -395,14 +399,14 @@ Bonne chance ! 🍀
   title="Débordement d'entier"
   options={[
     {text: '4294967296'},
-    {text: 'Erreur : entier hors de la plage', isAnswer: true},
+    {text: 'Error: integer out of range', isAnswer: true},
     {text: '0'},
     {text: '2147483647'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Quel est le résultat du calcul du nombre total d'IDs d'étudiants possibles ?
+    Que se passe-t-il lors du calcul du nombre total d'ID étudiants ?
     ```sql
     SELECT 256 * 256 * 256 * 256;
     ```
@@ -410,11 +414,11 @@ Bonne chance ! 🍀
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Le type `integer` de PostgreSQL est un entier signé sur 32 bits, allant de `-2 147 483 648` à `2 147 483 647`.
+    Le type `integer` de PostgreSQL est signé sur 32 bits, allant de `-2,147,483,648` à `2,147,483,647`.
 
-    Le calcul `256^4` = `4 294 967 296` dépasse cette plage.
+    Le calcul `256^4` = `4,294,967,296` dépasse cette plage.
 
-    Pour gérer des nombres plus grands :
+    Pour gérer des nombres plus grands :
     ```sql
     -- Use BIGINT
     SELECT 256::bigint * 256 * 256 * 256;
@@ -430,7 +434,7 @@ Bonne chance ! 🍀
   client:visible={{rootMargin: "150px"}}
   index={11}
   group="Date/Heure"
-  title="Précision des timestamps"
+  title="Précision du timestamp"
   options={[
     {text: '2024-01-08 13:30:00+00'},
     {text: '2024-01-08 13:30:00.123456+00'},
@@ -440,7 +444,7 @@ Bonne chance ! 🍀
 >
   <slot name="question">
   <div className="question">
-    Quel est le plus petit littéral `timestamp` dépassant la précision maximale de `time` dans PostgreSQL ?
+    Quel est le plus petit littéral `timestamp` qui dépasse la précision maximale du `time` dans Postgres ?
     ```sql
     CREATE TABLE class_sessions (
       id INT GENERATED BY DEFAULT AS IDENTITY,
@@ -452,13 +456,13 @@ Bonne chance ! 🍀
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Les timestamps PostgreSQL ont une précision de microseconde (6 chiffres après la virgule).
+    Les timestamps PostgreSQL ont une précision microseconde (6 décimales).
 
-    - Maximum : `.123456` (6 chiffres)
-    - Les nanosecondes (9 chiffres) sont arrondies ou tronquées selon la précision prise en charge
-    - Les décalages de fuseau horaire sont acceptés pour `timestamptz`, mais non obligatoires
+    - Maximum : `.123456` (6 chiffres)
+    - Les nanosecondes (9 chiffres) sont arrondies ou tronquées à la précision prise en charge
+    - Les décalages de fuseau horaire sont acceptés pour `timestamptz`, mais ne sont pas obligatoires
 
-    **Piège peu connu :** Certains langages/frameworks envoient une précision nanoseconde, mais PostgreSQL stocke les timestamps avec une précision microseconde.
+    **Astuce peu courante :** Certaines langues/cadres envoient une précision en nanosecondes, mais PostgreSQL stocke les timestamps avec une précision microseconde.
   </div>
   </slot>
 </Challenge>
@@ -478,20 +482,20 @@ Bonne chance ! 🍀
 >
   <slot name="question">
   <div className="question">
-    Laquelle de ces options n'est pas ❌ un type PostgreSQL valide ?
+    Lequel de ceux‑ci n’est pas ❌ un type PostgreSQL valide ?
 
-    (Sérieusement, ces types sont (pour la plupart) réels.)
+    (Sérieusement, ce sont (pour la plupart) de vrais types.)
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    PostgreSQL possède plusieurs types géométriques et de recherche de texte intégrés, mais `tsrank` n'en fait pas partie.
+    PostgreSQL possède plusieurs types géométriques et de recherche texte intégrés, mais `tsrank` n’en fait pas partie.
 
-    Les types géométriques et de recherche de texte corrects incluent :
+    Les types géométriques et de recherche texte corrects sont :
     - `lseg` (segment de ligne)
     - `bytea` (données binaires)
-    - `tsquery` (requête de recherche de texte)
-    - `tsvector` (document de recherche de texte)
+    - `tsquery` (requête de recherche texte)
+    - `tsvector` (document de recherche texte)
   </div>
   </slot>
 </Challenge>
@@ -500,17 +504,17 @@ Bonne chance ! 🍀
   client:visible={{rootMargin: "150px"}}
   index={13}
   group="Contraintes"
-  title="Quand est vérifiée la contrainte de vérification ?"
+  title="Moment de la vérification de contrainte"
   options={[
     {text: 'Immédiatement pour les nouvelles lignes ou les lignes modifiées', isAnswer: true},
-    {text: 'À la validation de la transaction'},
-    {text: 'À la prochaine requête'},
-    {text: 'Jamais - les contraintes ne sont vérifiées qu\'au INSERT'},
+    {text: 'Lors du commit de la transaction'},
+    {text: 'Lors de la prochaine requête'},
+    {text: 'Jamais - les contraintes ne sont vérifiées qu\'à l\'INSERT'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    À quel moment cette contrainte de vérification est-elle vérifiée ?
+    Quand cette contrainte de note est‑elle vérifiée ?
     ```sql
     ALTER TABLE students 
     ADD CONSTRAINT valid_grade 
@@ -523,26 +527,26 @@ Bonne chance ! 🍀
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `NOT VALID` contraintes :
+    `NOT VALID` contraintes :
     - Sont vérifiées immédiatement pour les nouvelles insertions et mises à jour
     - Ne valident pas les lignes existantes
     - Peuvent valider les lignes existantes plus tard avec `VALIDATE CONSTRAINT`
-    - Utiles pour les grandes tables
+    - Sont utiles pour les grandes tables
 
-    Sans `NOT VALID` :
+    Sans `NOT VALID` :
     - La contrainte est vérifiée immédiatement
     - Toutes les lignes existantes sont validées
-    - Peuvent être lentes sur de grandes tables
+    - Peut être lent sur les grandes tables
   </div>
   </slot>
 </Challenge>
 
 </QuizUI>
 
-Bien joué ! Vous avez exploré en profondeur plusieurs aspects de PostgreSQL ! 🐘  
+Bien joué ! Vous avez creusé plusieurs aspects de PostgreSQL ! 🐘  
 
-J'espère que vous avez appris quelque chose de nouveau, ou au moins obtenu un score à vanter ! 🏆  
+J’espère que vous avez appris quelque chose de nouveau, ou au moins obtenu un score dont vous pouvez vous vanter ! 🏆  
 
-<p class="inset">Découvrez [Partie 2](/quiz-postgres-sql-mastery-pt2/) pour plus de fun avec Postgres ! 🚀</p>  
+<p class="inset">Découvrez la <a href="../quiz-postgres-sql-mastery-pt2/">Partie 2</a> pour plus de fun PostgreSQL ! 🚀</p>  
 
-Envie de plus d'adrénaline dans la vie ? Vérifiez ma [Collection de quiz](/challenges/) pour un fun infini* !
+Envie de plus d’adrénaline dans la vie ? Consultez ma <a href="../challenges/">Collection de Quiz</a> pour un plaisir sans fin* !
