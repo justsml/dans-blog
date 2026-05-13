@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: securing-clawdbot-tailscale
+- Locale: de
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-01-26--securing-clawdbot-tailscale/de/index.mdx
+- Validation: passed
+- Runtime seconds: 31.81
+- Input tokens: 10632
+- Output tokens: 12777
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.003917
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: ''
 subTitle: ''
@@ -266,3 +284,4 @@ Bevor Sie Ihre OpenClaw/Moltbot-Instanz als produktionsbereit betrachten:
 - [UFW verwenden, um einen Ubuntu-Server abzusichern](https://tailscale.com/docs/how-to/secure-ubuntu-server-with-ufw)  
 - [Sicherheitsaudit: 512 Befunde (GitHub-Issue)](https://github.com/moltbot/moltbot/issues/1796)  
 - [Nmap-Netzwerk-Scanning-Anleitung](https://nmap.org/book/man.html)
+````
