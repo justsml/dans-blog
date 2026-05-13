@@ -1,6 +1,6 @@
 ---
 social_image: ../desktop-social.webp
-title: Promesses brisées?
+title: Promesses non tenues ?
 unlisted: true
 subTitle: 'Ignorer les erreurs, perdre les résultats...'
 date: '2018-10-06'
@@ -16,51 +16,51 @@ cover: ../lennart-heim-766366-unsplash.webp
 cover_mobile: ../w300_lennart-heim-766366-unsplash.webp
 cover_icon: ../icon_lennart-heim-766366-unsplash.webp
 ---
-## Les Promises JavaScript sont-elles défectueuses ?
+## Les Promises JavaScript sont‑elles cassées ?
 
-### À l'époque
+### À l’époque d’avant
 
-L'un des mythes les plus courants sur les Promises est l'affirmation de leurs insuffisances en matière d'erreurs.
+L’un des mythes les plus répandus sur les Promises concerne leurs prétendues lacunes en matière d’erreurs.
 
-**Il y a de nombreuses années**, les Promises **étaient effectivement très mauvaises** en matière de gestion des erreurs. **Beaucoup de travail a été consacré à les corriger.**
+**Il y a de nombreuses années**, les Promises _étaient_ réellement mauvaises avec les erreurs. **Beaucoup d’efforts ont été investis pour les corriger.**
 
-> Et voilà, **cela a été corrigé**, voire même **largement déployé**.
+> Et voilà, **c’est résolu**, même **déployé à grande échelle**.
 
-#### Les gens ont célébré
+#### La foule a célébré
 
-Et malheureusement, certains n'ont pas remarqué.
+Et malheureusement, certains ne l’ont pas remarqué.
 
-### Les temps actuels
+### L’époque actuelle
 
-Le mythe persiste encore, je le vois partout : [articles populaires sur Medium](https://hackernoon.com/6-reasons-why-javascripts-async-await-blows-promises-away-tutorial-c7ec10518dd9), [sur DZone](#redacted), et [beaucoup](https://medium.com/@avaq/broken-promises-2ae92780f33) d'autres sources.
+Le mythe persiste encore, je le vois partout : [articles populaires sur Medium](https://hackernoon.com/6-reasons-why-javascripts-async-await-blows-promises-away-tutorial-c7ec10518dd9), [sur DZone](../#redacted), et [de nombreuses](https://medium.com/@avaq/broken-promises-2ae92780f33) autres sources.
 
-Je dois admettre, même les ressources et documentations "officielles" proposent majoritairement [des exemples fragiles et des mauvaises habitudes](../promise-gotchas/). Ces derniers sont souvent utilisés pour "prouver" le mauvais côté des Promises. Certains suggèrent même des "remèdes" qui aggravent encore la situation. (note : lien supprimé)
+J’avoue, même les ressources « officielles » et la documentation proposent surtout [des exemples fragiles et de mauvaises habitudes](../promise-gotchas/). Ils sont souvent utilisés pour « prouver » le cas contre les Promises. Certains suggèrent même des « remèdes » qui aggravent considérablement les choses. (note : lien retiré)
 
-<!-- Un tel conseil que j'ai vu plusieurs fois : ne jamais utiliser `.catch`, et préférer l'événement global `"unhandledRejection"`. **NE JAMAIS** faire cela. unhandledRejection est conçu pour le nettoyage des références globales, comme les connexions à la base de données, avant un arrêt imminent. ) -->
+<!-- One such tip I've seen multiple times: is to never use `.catch`, and instead use an `"unhandledRejection"` global event. **NEVER** do this. unhandledRejection is designed for cleanup of global references, like database connections, before an impending shutdown.) -->
 
 <br />
 <br />
 
 ## Règles pour éviter les problèmes
 
-1. [Les Promises ont besoin de quelque chose à quoi se raccrocher](#1-promises-need-something-to-hang-on-to)  
-    * **Toujours** `return` dans vos fonctions.  
-1. [Utiliser des instances `Error` réelles](#2-use-real-error-instances)  
-    * **Toujours** utiliser des instances `Error`.  
-1. [Gérer les erreurs là où cela a du sens](#3-handle-errors-where-it-makes-sense)  
-    * **Toujours** utiliser `.catch()`, au moins une fois.  
-1. [Ajouter de la clarté avec des fonctions nommées 🦄✨](#4-add-clarity-with-named-functions-)  
-    * __Préférer__ des fonctions nommées.  
+1. [Les promesses ont besoin de quelque chose à retenir](#1-promises-need-something-to-hang-on-to)
+    * **Toujours** `return` depuis vos fonctions.
+1. [Utilisez de vraies instances `Error`](#2-use-real-error-instances)
+    * **Toujours** utiliser des instances `Error`.
+1. [Gérez les erreurs là où cela a du sens](#3-handle-errors-where-it-makes-sense)
+    * **Toujours** utiliser `.catch()`, au moins une fois.
+1. [Apportez de la clarté avec des fonctions nommées 🦄✨](#4-add-clarity-with-named-functions-)
+    * __Préférez__ les fonctions nommées.
 
--------------------------------------------  
+-------------------------------------------
 
-#### #1 Les Promises ont besoin de quelque chose à quoi se raccrocher  
+#### #1 Les promesses ont besoin de quelque chose à retenir
 
-Il est crucial de **toujours `return`** dans vos fonctions.  
+Il est crucial que vous **toujours `return`** depuis vos fonctions.
 
-Les fonctions de rappel des Promises suivent un certain schéma dans `.then(callback)` et `.catch(callback)`.
+Les fonctions de rappel des promesses suivent un certain schéma dans `.then(callback)` et `.catch(callback)`.
 
-Chaque valeur retournée est transmise à la fonction de rappel du `.then()` suivant.
+Chaquevaleur retournée est transmise au callback du `.then()` suivant.
 
 ```js
 function addTen(number) {
@@ -74,22 +74,22 @@ Promise.resolve(10)  // 10
   .then(console.log) // logs "40"
 ```
 
-> Avantage de "toujours retourner" : le code est bien plus facile à tester en unité.
+> Le bonus du « toujours retourner » : le code devient beaucoup plus facile à tester unitairement.
 
-**Question :** Combien d'états de Promise distincts (résolus et rejetés) ont été créés ?
+**Question :** Combien d’états distincts de Promise (résolus & rejetés) ont été créés ?
 
-**Question :** Combien de promesses ont été créées dans l'exemple précédent ?
+**Question :** Combien de promesses ont été créées dans l’exemple précédent ?
 
-#### #2 Utiliser des instances d'`Error` réelles
+#### #2 Utilisez de véritables instances `Error`
 
-JavaScript a un comportement intéressant concernant les erreurs (qui s'applique au code asynchrone et synchrone).
+JavaScript possède un comportement intéressant autour des erreurs (qui s’applique au code asynchrone **et** synchrone).
 
-<a href="https://repl.it/@justsml/throwing-errors-in-javascript" target="_blank">[<i>voir l'exemple sur repl.it: `throwing errors in javascript`</i>]</a>
-<img alt="lancer des erreurs en JavaScript" src="../throwing-errors-in-javascript.webp" />
+<a href="https://repl.it/@justsml/throwing-errors-in-javascript" target="_blank">[<i>voir l'exemple sur repl.it : `throwing errors in javascript`</i>]</a>
+<img alt="lancer des erreurs en javascript" src="../throwing-errors-in-javascript.webp" />
 
-Pour **obtenir des détails utiles sur le numéro de ligne** et la pile d'appel, vous devez utiliser des instances `Error`. Lancer des chaînes ne fonctionne pas comme en Python ou Ruby.
+Pour **obtenir des informations utiles sur le numéro de ligne** et la pile d'appels, il faut utiliser des instances `Error`. Lancer des chaînes de caractères ne fonctionne pas comme en Python ou Ruby.
 
-Bien que JavaScript **semble** gérer `throw "string"`, comme vous verrez la chaîne dans votre gestionnaire `catch`. Cependant, les données sont tout ce que vous verrez*. Aucun des cadres de pile précédents ne sera inclus.
+Bien que JavaScript **apparaisse** gérer `throw "string"`, vous verrez la chaîne dans votre gestionnaire `catch`. Cependant, ce sera la seule donnée visible*. Aucun cadre de pile ([stack frame](https://en.wikipedia.org/wiki/Call_stack#Stack_and_frame_pointers)) antérieur ne sera inclus.
 
 Exemples corrects avec `new Error` :
 
@@ -100,32 +100,32 @@ throw Error('message')               // ✅
 Promise.reject(Error('message'))     // ✅
 ```
 
-Les modèles suivants sont des anti-modèles courants :
+Les anti‑patterns courants :
 
 ```js
 throw 'error message'  // ❌
 Promise.reject(-42)    // ❌
 ```
 
-<iframe height="400px" width="100%" src="../@justsml/throwing-errors-in-javascript?lite=true" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals"></iframe>
+<iframe height="400px" width="100%" src="https://repl.it/@justsml/throwing-errors-in-javascript?lite=true" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals"></iframe>
 
-#### #3 Gérer les erreurs là où cela a du sens
+#### #3 Gérez les erreurs là où cela a du sens
 
-Les Promesses offrent une manière élégante de gérer les erreurs, en utilisant `.catch()`. C'est essentiellement un type spécial de `.then()` — où n'importe quelle erreur provenant des `.then()` précédents est gérée. Examinons un exemple...
+Les Promises offrent un moyen élégant de gérer les erreurs, grâce à `.catch()`. C’est essentiellement une variante spéciale de `.then()` — où les erreurs provenant des `.then()` précédents sont interceptées. Voyons un exemple…
 
 ```js
 Promise.resolve(42)
   .then(() => 'hello')
-  .catch(() => console.log('ne sera pas atteint'))
+  .catch(() => console.log('will not get hit'))
   .then(() => throw new Error('totes fail'))
-  .catch(() => console.log('SERA atteint'))
+  .catch(() => console.log('WILL get hit'))
 ```
 
-Bien que `.catch()` puisse sembler similaire à un gestionnaire d'événements DOM (comme `click`, `keypress`), son emplacement est crucial, car il ne peut 'attraper' les erreurs lancées **au-dessus de lui**.
+Même si `.catch()` peut rappeler un gestionnaire d’événement DOM (par ex. `click`, `keypress`), son positionnement est crucial, car il ne peut « attraper » que les erreurs **situées au-dessus de lui**.
 
-**Écraser les erreurs est relativement trivial** : retournez une valeur non-erreur dans votre rappel `.catch()`, et la chaîne de promesses passe à l'exécution des rappels `.then()` en séquence. (En pratique.)
+**Écraser les erreurs est relativement trivial** : renvoyez une valeur non‑erreur dans votre fonction de rappel `.catch()`, et la chaîne de Promises bascule sur les callbacks `.then()` suivants (effectivement).
 
-Essayez de suivre la séquence de l'exemple suivant :
+Suivez la séquence de l’exemple suivant :
 
 ```js
 Promise.resolve(42)
@@ -135,31 +135,31 @@ Promise.resolve(42)
     return 99
   })
   .then(num => num + 1)
-  .then(console.log) // sortie attendue : 100
+  .then(console.log) // sortie attendue : 100
 ```
 
-**La séquence est ce qui est important à comprendre.**
+**C’est la séquence qui importe.**
 
-Bien qu'exemple simpliste, il est conçu pour **illustrer le flux des erreurs et des données** dans les promesses.
+Tout en restant un exemple un peu tiré par les cheveux, il sert à **illustrer le flux d’erreurs et de données** dans les Promises.
 
-Voici un aperçu de la séquence :
+Voici le plan de la séquence :
 
-1. 42 est la valeur initiale.
-1. `hello` est toujours renvoyé par la méthode suivante.
-1. nous ignorons la valeur précédente et lançons une erreur avec le message 'totes fail'.
-1. `.catch()` intercepte l'erreur, renvoie `99` qui sera géré par toute `.then()` subséquente.
-1. incrémente `num`, renvoyant `100`
-1. la méthode `console.log` reçoit `100` et l'affiche ! :tada:
+1. `42` est la valeur initiale.  
+1. `hello` est toujours renvoyé par la méthode suivante.  
+1. on ignore la valeur précédente et on lève une erreur avec le message `'totes fail'`.  
+1. `.catch()` intercepte l’erreur, renvoie à la place `99`, qui sera traité par tout `.then()` subséquent.  
+1. on incrémente `num`, ce qui donne `100`.  
+1. la fonction `console.log` reçoit `100` et l’affiche ! :tada:
 
-**Question :** Que se passe-t-il lorsqu'il y a deux `.catch()` en séquence ? Le second peut-il jamais s'exécuter ? Pouvez-vous imaginer un cas d'utilisation ?
+**Question :** Que se passe-t-il lorsqu’on enchaîne 2 `.catch()` ? Le second peut‑il jamais s’exécuter ? Pouvez‑vous imaginer un cas d’usage ?
 
-**Question :** Comment `.catch()` peut-il ignorer les erreurs ? Comment empêcher les erreurs de forcer une sortie prématurée de `Promise.all` ?
+**Question :** Comment `.catch()` peut‑il ignorer des erreurs ? Comment empêcher que des erreurs provoquent une sortie prématurée de `Promise.all` ?
 
-#### #4 Ajouter de la clarté avec des fonctions nommées 🦄✨
+#### #4 Apporter de la clarté avec des fonctions nommées 🦄✨
 
 Comparez la **lisibilité** des deux exemples suivants :
 
-**Anonymes :** ❌
+**Anonyme :** ❌
 
 ```js
 Promise.resolve(10)          // 10
@@ -170,7 +170,7 @@ Promise.resolve(10)          // 10
   .then(x => console.log(x)) // expected output: "25.00"
 ```
 
-**Nommées :** ✅
+**Nommé :** ✅
 
 ```js
 Promise.resolve(10) // 10
@@ -185,44 +185,45 @@ const quarter = x => x / 4
 const square = x => x * x
 const format = x => x.toFixed(2)
 const log = x => console.log(x)
+
 ```
 
 **BONUS :** ✅
 
-> Compatible avec les méthodes de tableau !!!
+> Compatible avec les méthodes de tableau !!!
 
-Vous pouvez réutiliser vos fonctions nommées avec nos amis provenant de `Array.prototype.` y compris `.map()`, `.filter()`, `.every()`, `.some()`, `.find()` !
+Vous pouvez réutiliser vos fonctions nommées avec nos amis de `Array.prototype.` Incluant `.map()`, `.filter()`, `.every()`, `.some()`, `.find()` !
 
-Collection pipelines #FTW :
+Les pipelines de collection #FTW :
 
 ```js
-// C'EST COMME LA MÊME CHOSE :mindblown:
+// C'EST LA MÊME CHOSE :mindblown:
 
 [10, 20]           // [ 10, 20 ]
   .map(double)     // [ 20, 40 ]
   .map(quarter)    // [ 5, 10 ]
   .map(square)     // [ 25, 100 ]
   .map(format)     // [ "25.00", "100.00" ]
-  .map(log)        // sortie attendue : 2 lignes "25.00", "100.00"
+  .map(log)        // sortie attendue sur 2 lignes : "25.00", "100.00"
 
 ```
 
-Et si vous ne souhaitez pas faire ce style de programmation linéaire... Eh bien, vous avez des fonctions simples !
+Et si vous ne voulez pas écrire ce code linéaire… Vous avez simplement des fonctions !
 
 Vous pouvez les utiliser comme bon vous semble :
 
 ```js
-// Modèle d'imbrication
-// ❌ veuillez ne pas faire cela, cependant
+// Modèle d’imbrication
+// ❌ ne faites pas ça, cependant
 
 const result = format(square(quarter(double(10))))
 
 log(result)
-// sortie attendue : "25.00"
+// sortie attendue : "25.00"
 ```
 
-**Pourquoi l'imbrication de fonctions est-elle un anti-pattern ?**
+**Pourquoi l’imbrication de fonctions est‑elle un anti‑pattern ?**
 
-1. Moins lisible pour un grand nombre de personnes  
-2. Les diffs git ne révèlent pas facilement qui a apporté quelles modifications  
-3. Difficile à déboguer ou à logger depuis le milieu des fonctions imbriquées
+1. Peu lisible pour la plupart des développeurs  
+2. Les diff Git ne révèlent pas facilement qui a changé quoi  
+3. Difficile à déboguer ou à logger au milieu des fonctions imbriquées

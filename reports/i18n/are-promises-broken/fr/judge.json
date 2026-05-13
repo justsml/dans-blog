@@ -1,0 +1,63 @@
+{
+  "selectedCommit": "7a1c18d9204345cd2140fc0f7d8cb4638663bd43",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "Il est crucial que vous **toujours `return`** depuis vos fonctions.",
+      "replacement": "Il est crucial de **toujours `return`** depuis vos fonctions.",
+      "reason": "The original French phrasing 'que vous toujours return' is grammatically incorrect. 'Il est crucial de toujours return' is more natural and correct."
+    }
+  ],
+  "rationale": "The translation is high quality and maintains Dan's direct, conversational tone. It correctly uses technical terms like 'pile d'appels'. The suggestions from the previous judge regarding 'Chaquevaleur' and the iframe URL were already addressed or not present in the current MDX text provided, but I found a grammatical awkwardness in the first rule's description that needs fixing for better readability.",
+  "slug": "are-promises-broken",
+  "locale": "fr",
+  "candidateCommits": [
+    "5ecd9b32f69afc7389bc1cc320634f8a0d290ddf",
+    "7a1c18d9204345cd2140fc0f7d8cb4638663bd43",
+    "0b4218118e03564be4ff612cf7580dfa6f5451b4"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "src=\"https://repl.it/@justsml/throwing-errors-in-javascript?lite=true\"",
+      "replacement": "src=\"../@justsml/throwing-errors-in-javascript?lite=true\"",
+      "reason": "The iframe source needs to use the relative path consistent with other assets in the project structure to avoid potential loading issues or external dependency inconsistencies.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "Chaquevaleur retournée",
+      "replacement": "Chaque valeur retournée",
+      "reason": "Missing space between words 'Chaque' and 'valeur'.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "src=\"../@justsml/throwing-errors-in-javascript?lite=true\"",
+      "replacement": "src=\"https://repl.it/@justsml/throwing-errors-in-javascript?lite=true\"",
+      "reason": "The previous fix incorrectly changed an external iframe URL to a relative path. This is an external tool (repl.it), not a local asset, so it must remain a full URL.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug are-promises-broken --locale fr --skip-global",
+    "output": ""
+  }
+}
