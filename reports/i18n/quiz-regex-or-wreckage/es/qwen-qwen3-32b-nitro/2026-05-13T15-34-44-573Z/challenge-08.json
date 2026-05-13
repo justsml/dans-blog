@@ -1,0 +1,47 @@
+{
+  "index": 7,
+  "attempt": 1,
+  "originalTitle": "Negative Look-behind",
+  "translatedTitle": "Mirada hacia atrás negativa",
+  "translation": {
+    "title": "Mirada hacia atrás negativa",
+    "group": "Mirada hacia atrás",
+    "options": [
+      {
+        "text": "[\"123\"]"
+      },
+      {
+        "text": "[\"123\", \"456\"]"
+      },
+      {
+        "text": "[\"23\", \"456\"]"
+      },
+      {
+        "text": "[\"456\"]"
+      },
+      {
+        "text": "[]"
+      }
+    ],
+    "questionProse": [
+      "¿Qué coincide con este patrón?"
+    ],
+    "explanationProse": [
+      "La mirada hacia atrás negativa `(?<!abc)` asegura que los dígitos no estén precedidos por \"abc\":\n    - ❌ \"123\" (precedido por \"abc\")\n    - ✅ \"23\" (precedido por \"abc1\")\n    - ✅ \"456\" (precedido por \"def\")\n\n    JavaScript soporta aserciones de mirada hacia atrás en motores modernos. Este ejemplo usa mirada hacia atrás de longitud fija: `abc` siempre tiene tres caracteres. La mirada hacia atrás de longitud variable es el caso más complejo y dependiente del motor.\n\n    Nota: El soporte para mirada hacia atrás es relativamente reciente en JavaScript. Revisa la [compatibilidad con navegadores](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#browser_compatibility) si necesitas soportar navegadores antiguos."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Mirada hacia atrás negativa\",\n  \"group\": \"Mirada hacia atrás\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"123\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"123\\\", \\\"456\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"23\\\", \\\"456\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"456\\\"]\"\n    },\n    {\n      \"text\": \"[]\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Qué coincide con este patrón?\"\n  ],\n  \"explanationProse\": [\n    \"La mirada hacia atrás negativa `(?<!abc)` asegura que los dígitos no estén precedidos por \\\"abc\\\":\\n    - ❌ \\\"123\\\" (precedido por \\\"abc\\\")\\n    - ✅ \\\"23\\\" (precedido por \\\"abc1\\\")\\n    - ✅ \\\"456\\\" (precedido por \\\"def\\\")\\n\\n    JavaScript soporta aserciones de mirada hacia atrás en motores modernos. Este ejemplo usa mirada hacia atrás de longitud fija: `abc` siempre tiene tres caracteres. La mirada hacia atrás de longitud variable es el caso más complejo y dependiente del motor.\\n\\n    Nota: El soporte para mirada hacia atrás es relativamente reciente en JavaScript. Revisa la [compatibilidad con navegadores](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#browser_compatibility) si necesitas soportar navegadores antiguos.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 830,
+    "outputTokens": 938,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2229
+  },
+  "cost": {
+    "inputUsd": 0.0000664,
+    "outputUsd": 0.00022511999999999999,
+    "totalUsd": 0.00029152,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Negative Look-ahead",
+  "translatedTitle": "Aserción de lookahead negativo",
+  "translation": {
+    "title": "Aserción de lookahead negativo",
+    "group": "Aserciones de lookahead",
+    "options": [
+      {
+        "text": "[\"password123\"]"
+      },
+      {
+        "text": "[\"abc123\"]"
+      },
+      {
+        "text": "[\"123aBc\"]"
+      },
+      {
+        "text": "[\"12\"]"
+      },
+      {
+        "text": "[\"abc\"]"
+      },
+      {
+        "text": "Error"
+      }
+    ],
+    "questionProse": [
+      "¿Cuál será el resultado de esto?"
+    ],
+    "explanationProse": [
+      "La aserción de lookahead negativo `(?![a-z])` asegura que no haya letras minúsculas después de los dígitos. Debido a que la parte \"3aBc\" tiene una letra minúscula después de los dígitos, su porción no coincide. Así que solo el comienzo \"12\" coincide.\n\n    [Aprende más sobre aserciones de lookahead negativo](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Aserción de lookahead negativo\",\n  \"group\": \"Aserciones de lookahead\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"password123\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"abc123\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"123aBc\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"12\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"abc\\\"]\"\n    },\n    {\n      \"text\": \"Error\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Cuál será el resultado de esto?\"\n  ],\n  \"explanationProse\": [\n    \"La aserción de lookahead negativo `(?![a-z])` asegura que no haya letras minúsculas después de los dígitos. Debido a que la parte \\\"3aBc\\\" tiene una letra minúscula después de los dígitos, su porción no coincide. Así que solo el comienzo \\\"12\\\" coincide.\\n\\n    [Aprende más sobre aserciones de lookahead negativo](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 755,
+    "outputTokens": 3537,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 7149
+  },
+  "cost": {
+    "inputUsd": 0.000060400000000000004,
+    "outputUsd": 0.00084888,
+    "totalUsd": 0.0009092799999999999,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

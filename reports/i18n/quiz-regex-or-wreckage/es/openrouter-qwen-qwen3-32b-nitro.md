@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-regex-or-wreckage
+- Locale: es
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2024-11-15--quiz-regex-or-wreckage/es/index.mdx
+- Validation: passed
+- Runtime seconds: 50.51
+- Input tokens: 14596
+- Output tokens: 17710
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.005418
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: 'Cuestionario: Dominio de expresiones regulares'
@@ -596,3 +614,4 @@ Pon a prueba tus conocimientos de RegEx con preguntas sobre patrones básicos, c
 Las expresiones regulares pueden ser una bestia difícil de domar, pero son increíblemente poderosas una vez que las domas (y toda la nueva sintaxis). Sigue practicando, y serás un maestro de RegEx en cuestión de tiempo! 🧙‍♂️
 
 <p class="inset">¿Buscas un descanso después de todo ese RegEx?<br />¡Pftt, recuerda: descansa *después* de adquirir habilidades! <br /><br />¡Ve a [mi gimnasio](/challenges/) para aplastar más desafíos! 💪</p>
+````

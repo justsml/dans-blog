@@ -1,0 +1,44 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Word Boundaries",
+  "translatedTitle": "Límites de palabra",
+  "translation": {
+    "title": "Límites de palabra",
+    "group": "Coincidencia básica",
+    "options": [
+      {
+        "text": "[\"cat\", \"cats\"]"
+      },
+      {
+        "text": "[\"cat\"]"
+      },
+      {
+        "text": "[\"cats\"]"
+      },
+      {
+        "text": "[]"
+      }
+    ],
+    "questionProse": [
+      "¿Qué coincidirá?"
+    ],
+    "explanationProse": [
+      "El `\\b` representa un límite de palabra, que coincide:\n    - Entre un carácter de palabra y un carácter no palabra\n    - Al inicio/fin de la cadena si hay un carácter de palabra\n\n    Así, `/\\bcat\\b/` coincide con \"cat\" solo cuando es una palabra completa, no parte de otra palabra.\n    - ✅ \"cat\" (rodeado de espacios)\n    - ❌ \"cats\" (no hay límite después de \"cat\")\n    - ❌ \"category\" (no hay límite después de \"cat\")\n\n    [Aprende más sobre límites de palabra](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions#other_assertions)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Límites de palabra\",\n  \"group\": \"Coincidencia básica\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"cat\\\", \\\"cats\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"cat\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"cats\\\"]\"\n    },\n    {\n      \"text\": \"[]\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Qué coincidirá?\"\n  ],\n  \"explanationProse\": [\n    \"El `\\\\b` representa un límite de palabra, que coincide:\\n    - Entre un carácter de palabra y un carácter no palabra\\n    - Al inicio/fin de la cadena si hay un carácter de palabra\\n\\n    Así, `/\\\\bcat\\\\b/` coincide con \\\"cat\\\" solo cuando es una palabra completa, no parte de otra palabra.\\n    - ✅ \\\"cat\\\" (rodeado de espacios)\\n    - ❌ \\\"cats\\\" (no hay límite después de \\\"cat\\\")\\n    - ❌ \\\"category\\\" (no hay límite después de \\\"cat\\\")\\n\\n    [Aprende más sobre límites de palabra](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions#other_assertions)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 782,
+    "outputTokens": 922,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2298
+  },
+  "cost": {
+    "inputUsd": 0.00006256,
+    "outputUsd": 0.00022128,
+    "totalUsd": 0.00028384,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

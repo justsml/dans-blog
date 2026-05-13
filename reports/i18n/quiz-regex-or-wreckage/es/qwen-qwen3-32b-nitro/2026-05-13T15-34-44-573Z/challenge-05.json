@@ -1,0 +1,47 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Positive Look-ahead",
+  "translatedTitle": "Adelanto positivo",
+  "translation": {
+    "title": "Adelanto positivo",
+    "group": "Adelantos",
+    "options": [
+      {
+        "text": "[\"$100\", \"€50\"]"
+      },
+      {
+        "text": "[\"100\", \"50\"]"
+      },
+      {
+        "text": "[\"$\", \"€\"]"
+      },
+      {
+        "text": "[]"
+      },
+      {
+        "text": "null"
+      }
+    ],
+    "questionProse": [
+      "¿Qué coincidirá con esto?"
+    ],
+    "explanationProse": [
+      "Este patrón no coincidirá con nada porque el adelanto está al revés. Si quieres dígitos precedidos por `$` o `€`, usa un retroceso: `/(?<=[\\$€])\\d+/g`.\n\n    Los adelantos verifican lo que viene *después* de la posición actual. El patrón escrito busca:\n    - Uno o más dígitos (`\\d+`)\n    - Seguidos por (`(?=...)`) `$` o `€` (`[\\$€]`)\n\n    Como no hay números seguidos de símbolos de moneda (están precedidos por ellos), no hay coincidencias.\n\n    [Aprende más sobre afirmaciones de adelanto](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Adelanto positivo\",\n  \"group\": \"Adelantos\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"$100\\\", \\\"€50\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"100\\\", \\\"50\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"$\\\", \\\"€\\\"]\"\n    },\n    {\n      \"text\": \"[]\"\n    },\n    {\n      \"text\": \"null\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Qué coincidirá con esto?\"\n  ],\n  \"explanationProse\": [\n    \"Este patrón no coincidirá con nada porque el adelanto está al revés. Si quieres dígitos precedidos por `$` o `€`, usa un retroceso: `/(?<=[\\\\$€])\\\\d+/g`.\\n\\n    Los adelantos verifican lo que viene *después* de la posición actual. El patrón escrito busca:\\n    - Uno o más dígitos (`\\\\d+`)\\n    - Seguidos por (`(?=...)`) `$` o `€` (`[\\\\$€]`)\\n\\n    Como no hay números seguidos de símbolos de moneda (están precedidos por ellos), no hay coincidencias.\\n\\n    [Aprende más sobre afirmaciones de adelanto](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 816,
+    "outputTokens": 911,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2276
+  },
+  "cost": {
+    "inputUsd": 0.00006528,
+    "outputUsd": 0.00021864,
+    "totalUsd": 0.00028392,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

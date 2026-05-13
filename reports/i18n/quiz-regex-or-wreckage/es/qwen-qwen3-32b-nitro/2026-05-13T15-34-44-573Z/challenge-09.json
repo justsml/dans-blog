@@ -1,0 +1,44 @@
+{
+  "index": 8,
+  "attempt": 1,
+  "originalTitle": "Capturing Groups",
+  "translatedTitle": "Grupos de captura",
+  "translation": {
+    "title": "Grupos de captura",
+    "group": "Coincidencia básica",
+    "options": [
+      {
+        "text": "[\"2029-12-31\"]"
+      },
+      {
+        "text": "[\"2029\", \"12\", \"31\"]"
+      },
+      {
+        "text": "[\"20\", \"29\", \"12\", \"31\"]"
+      },
+      {
+        "text": "null"
+      }
+    ],
+    "questionProse": [
+      "¿Qué devolverá esto?"
+    ],
+    "explanationProse": [
+      "El patrón utiliza tres grupos de captura:\n    1. `(\\d{4})` captura el año\n    2. `(\\d{2})` captura el mes\n    3. `(\\d{2})` captura el día\n\n    `match()` sin la bandera `g` devuelve:\n    - Índice 0: Coincidencia completa\n    - Índices 1+: Grupos de captura\n\n    `slice(1)` es un truco común para obtener solo los grupos de captura.\n\n    [Aprende más sobre grupos y captura](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Groups_and_Backreferences)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Grupos de captura\",\n  \"group\": \"Coincidencia básica\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"2029-12-31\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"2029\\\", \\\"12\\\", \\\"31\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"20\\\", \\\"29\\\", \\\"12\\\", \\\"31\\\"]\"\n    },\n    {\n      \"text\": \"null\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Qué devolverá esto?\"\n  ],\n  \"explanationProse\": [\n    \"El patrón utiliza tres grupos de captura:\\n    1. `(\\\\d{4})` captura el año\\n    2. `(\\\\d{2})` captura el mes\\n    3. `(\\\\d{2})` captura el día\\n\\n    `match()` sin la bandera `g` devuelve:\\n    - Índice 0: Coincidencia completa\\n    - Índices 1+: Grupos de captura\\n\\n    `slice(1)` es un truco común para obtener solo los grupos de captura.\\n\\n    [Aprende más sobre grupos y captura](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Groups_and_Backreferences)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 799,
+    "outputTokens": 953,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2312
+  },
+  "cost": {
+    "inputUsd": 0.00006392,
+    "outputUsd": 0.00022872,
+    "totalUsd": 0.00029264,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "Look-behind Split",
+  "translatedTitle": "División con mirada atrás",
+  "translation": {
+    "title": "División con mirada atrás",
+    "group": "Mirada atrás",
+    "options": [
+      {
+        "text": "[\"a,\", \"b,\", \"c\"]"
+      },
+      {
+        "text": "[\"a,b,c\"]"
+      },
+      {
+        "text": "[\"a\", \",\", \"b\", \",\", \"c\"]"
+      },
+      {
+        "text": "[\"a,b,c\", \"\"]"
+      }
+    ],
+    "questionProse": [
+      "¿Qué se devuelve?"
+    ],
+    "explanationProse": [
+      "El patrón `/(?<=,)/` es una mirada atrás que coincide después de una coma:\n    - `a,` (después de la coma)\n    - `b,` (después de la coma)\n    - `c` (no hay coma después)\n\n    La mirada atrás no consume la coma, por lo que la coma permanece unida al segmento anterior en el resultado de la división.\n\n    Esto es útil cuando deseas dividir una cadena basándote en lo que viene antes **sin perder el carácter de división**.\n\n    [Aprende más sobre aserciones de mirada atrás](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"División con mirada atrás\",\n  \"group\": \"Mirada atrás\",\n  \"options\": [\n    { \"text\": \"[\\\"a,\\\", \\\"b,\\\", \\\"c\\\"]\" },\n    { \"text\": \"[\\\"a,b,c\\\"]\" },\n    { \"text\": \"[\\\"a\\\", \\\",\\\", \\\"b\\\", \\\",\\\", \\\"c\\\"]\" },\n    { \"text\": \"[\\\"a,b,c\\\", \\\"\\\"]\" }\n  ],\n  \"questionProse\": [\n    \"¿Qué se devuelve?\"\n  ],\n  \"explanationProse\": [\n    \"El patrón `/(?<=,)/` es una mirada atrás que coincide después de una coma:\\n    - `a,` (después de la coma)\\n    - `b,` (después de la coma)\\n    - `c` (no hay coma después)\\n\\n    La mirada atrás no consume la coma, por lo que la coma permanece unida al segmento anterior en el resultado de la división.\\n\\n    Esto es útil cuando deseas dividir una cadena basándote en lo que viene antes **sin perder el carácter de división**.\\n\\n    [Aprende más sobre aserciones de mirada atrás](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 799,
+    "outputTokens": 864,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2133
+  },
+  "cost": {
+    "inputUsd": 0.00006392,
+    "outputUsd": 0.00020736,
+    "totalUsd": 0.00027128,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

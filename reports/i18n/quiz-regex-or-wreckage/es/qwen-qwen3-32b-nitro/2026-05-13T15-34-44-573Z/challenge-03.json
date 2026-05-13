@@ -1,0 +1,31 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "Greedy vs Non-Greedy",
+  "translatedTitle": "Codicioso vs No codicioso",
+  "translation": {
+    "title": "Codicioso vs No codicioso",
+    "group": "Coincidencia básica",
+    "options": [],
+    "questionProse": [
+      "¿Qué coincidirá esto?"
+    ],
+    "explanationProse": [
+      "El patrón `/<div>.*?<\\/div>/g` usa coincidencia no codiciosa con `*?` que significa:\n    - Coincidir `<div>`\n    - Coincidir cualquier carácter (`.*`) pero lo menos posible (`?`)\n    - Hasta encontrar `</div>`\n    - El modificador `g` hace que coincida todas las ocurrencias\n\n    Sin el `?`, el codicioso `.*` coincidiría todo desde la primera `<div>` hasta la última `</div>`, dando una única coincidencia grande. Con `?`, coincide cada par por separado.\n\n    [Aprende más sobre coincidencia codiciosa vs perezosa](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Codicioso vs No codicioso\",\n  \"group\": \"Coincidencia básica\",\n  \"options\": [],\n  \"questionProse\": [\n    \"¿Qué coincidirá esto?\"\n  ],\n  \"explanationProse\": [\n    \"El patrón `/<div>.*?<\\\\/div>/g` usa coincidencia no codiciosa con `*?` que significa:\\n    - Coincidir `<div>`\\n    - Coincidir cualquier carácter (`.*`) pero lo menos posible (`?`)\\n    - Hasta encontrar `</div>`\\n    - El modificador `g` hace que coincida todas las ocurrencias\\n\\n    Sin el `?`, el codicioso `.*` coincidiría todo desde la primera `<div>` hasta la última `</div>`, dando una única coincidencia grande. Con `?`, coincide cada par por separado.\\n\\n    [Aprende más sobre coincidencia codiciosa vs perezosa](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 747,
+    "outputTokens": 654,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1948
+  },
+  "cost": {
+    "inputUsd": 0.000059760000000000004,
+    "outputUsd": 0.00015696,
+    "totalUsd": 0.00021672,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
