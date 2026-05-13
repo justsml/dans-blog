@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: ai-sdk-math-tool
+- Locale: fr
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-01-06--ai-sdk-math-tool/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 4.29
+- Input tokens: 6912
+- Output tokens: 2331
+- Thinking tokens: unknown
+- Cached input tokens: 2176
+- Cache write tokens: 0
+- Estimated cost: $0.000689
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Ne demandez plus aux LLM de faire des maths
 subTitle: Ils sont mauvais à ça. Voici comment y remédier.
@@ -137,3 +155,4 @@ C’est un changement de perspective dans la construction avec l’IA. Pas « 
 - [Moteur de calcul CortexJS](https://cortexjs.io/compute-engine/)
 - [Guide d’appel d’outils](https://sdk.vercel.ai/docs/ai-sdk-core/tools-and-tool-calling)
 - [Référentiel d’exemples AI SDK](https://github.com/vercel/ai/tree/main/examples)
+````
