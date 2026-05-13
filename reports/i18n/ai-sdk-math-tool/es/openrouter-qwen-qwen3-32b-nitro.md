@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: ai-sdk-math-tool
+- Locale: es
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-01-06--ai-sdk-math-tool/es/index.mdx
+- Validation: passed
+- Runtime seconds: 13.60
+- Input tokens: 6293
+- Output tokens: 5975
+- Thinking tokens: unknown
+- Cached input tokens: 2048
+- Cache write tokens: 0
+- Estimated cost: $0.001937
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Deja de pedir a
 subTitle: No lo hacen bien. Aquí está cómo solucionarlo.
@@ -134,3 +152,4 @@ Es un cambio en cómo pensamos al construir con IA. No se trata de "¿puede el m
 - [Motor de Cálculo de CortexJS](https://cortexjs.io/compute-engine/)
 - [Guía de Llamada a Herramientas](https://sdk.vercel.ai/docs/ai-sdk-core/tools-and-tool-calling)
 - [Repositorio de Ejemplos del SDK de IA](https://github.com/vercel/ai/tree/main/examples)
+````
