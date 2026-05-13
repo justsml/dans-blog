@@ -1,0 +1,38 @@
+{
+  "selectedCommit": "cfc27fa469f4f845c2128a64cb83785bf6948ff1",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 5,
+    "technicalAccuracy": 5,
+    "coherence": 5,
+    "relevance": 5,
+    "translationQuality": 5,
+    "mdxPreservation": 5
+  },
+  "suggestions": [],
+  "rationale": "The deepseek-v4-flash candidate is excellent. It captures Dan's direct tone perfectly, uses correct technical terminology (e.g., '退行' for regression, '黄金セット' for golden set), and avoids the bizarre hallucinations found in other candidates (like 'maid outfit' for tuxedo). The MDX structure and image paths are correctly handled. The previous suggestion in the judge report was already incorporated into the provided text or was minor enough that the current version is highly readable and accurate.",
+  "slug": "llm-evals-are-broken",
+  "locale": "ja",
+  "candidateCommits": [
+    "cfc27fa469f4f845c2128a64cb83785bf6948ff1",
+    "200749ff77df00a184f960a73d8d335afb07c900",
+    "cd999209b0d859ea1b9ba81ac96000f09387ab44"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "感情分類が既存のテストセットで肯定から否定に3%以上反転してはならない",
+      "replacement": "感情分類が既存のテストセットで、肯定的から否定的へと3%を超えて反転してはならない",
+      "reason": "The original English says 'not flip... more than 3% of the time'. The candidate translation is slightly ambiguous about whether 3% is the threshold for the flip itself or the frequency.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug llm-evals-are-broken --locale ja --skip-global",
+    "output": ""
+  }
+}
