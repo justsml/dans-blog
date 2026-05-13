@@ -1,0 +1,38 @@
+{
+  "selectedCommit": "ad16d8dad371b2a054cad8ecbde1c727282cc5ae",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "scores": {
+    "readability": 5,
+    "technicalAccuracy": 5,
+    "coherence": 5,
+    "relevance": 5,
+    "translationQuality": 5,
+    "mdxPreservation": 5
+  },
+  "suggestions": [],
+  "rationale": "The selected candidate provides a high-quality, natural translation that captures Dan's direct tone. It correctly handles technical terminology (payloads, feature flags, table scan) and maintains perfect MDX structure. The suggestion from the previous judge regarding 'bigote postizo' was already incorporated into the current version of the file being reviewed, so no further high-priority suggestions are needed.",
+  "slug": "the-jsonb-seduction",
+  "locale": "es",
+  "candidateCommits": [
+    "ad16d8dad371b2a054cad8ecbde1c727282cc5ae",
+    "48202e2233bb34410206a6b867072504de27d903",
+    "5d8dee40c3ed7a7ba0d4266ee3d7e6ffdc6f309e"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "medium",
+      "match": "Es peligroso cuando es un esquema relacional con un bigote falso.",
+      "replacement": "Es peligroso cuando es un esquema relacional con un bigote postizo.",
+      "reason": "'Bigote postizo' is a more natural idiomatic expression in Spanish for 'fake mustache' in this context.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug the-jsonb-seduction --locale es --skip-global",
+    "output": ""
+  }
+}
