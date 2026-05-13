@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: upgrade-from-gatsby-to-astro
+- Locale: it
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2024-08-22--upgrade-from-gatsby-to-astro/it/index.mdx
+- Validation: deferred
+- Runtime seconds: 30.60
+- Input tokens: 9138
+- Output tokens: 9156
+- Thinking tokens: unknown
+- Cached input tokens: 512
+- Cache write tokens: 0
+- Estimated cost: $0.002928
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Lezioni apprese aggiornando il mio blog
@@ -159,3 +177,4 @@ Nel tempo, posso percepire la differenza di costo tra scriverlo e mantenerlo. Ta
 Aggiornare il mio vecchio sito Gatsby v1 a uno stack moderno costruito intorno ad Astro è stata un'esperienza divertente. 10/10 lo consiglierei.
 
 Se stai valutando di aggiornare un sito vecchio o di costruire un nuovo sito statico (o ibrido), ti consiglio vivamente di considerare Astro. La curva di apprendimento potrebbe essere ripida in alcuni momenti, ma i benefici in termini di prestazioni, esperienza dello sviluppatore e protezione del tuo progetto per il futuro ne valgono sicuramente la pena.
+````
