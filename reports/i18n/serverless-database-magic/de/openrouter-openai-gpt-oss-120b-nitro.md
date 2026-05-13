@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: serverless-database-magic
+- Locale: de
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2025-09-15--serverless-database-magic/de/index.mdx
+- Validation: passed
+- Runtime seconds: 9.30
+- Input tokens: 6090
+- Output tokens: 3252
+- Thinking tokens: unknown
+- Cached input tokens: 1024
+- Cache write tokens: 0
+- Estimated cost: $0.000823
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Die Welle der Datenbankinnovation 2025
 subTitle: Sie können KI danken.
@@ -244,3 +262,4 @@ Selbst AWS bewegt sich in diese Richtung mit S3‑adjazenter Vektor‑Suche – 
 > **Haftungsausschluss:** Ich nutze Pagefind seit Jahren und wurde 2025 Mitwirkender. Ich habe mit Orama und Chroma kleinere Projekte ausprobiert und erkunde LanceDB für größere KI‑Anwendungen. Keine finanziellen Verbindungen zu diesen Projekten – nur ein starkes Interesse an der sich entwickelnden Datenbank‑Landschaft.
 
 [1]: https://danlevy.net/you-might-not-need-algolia/
+````
