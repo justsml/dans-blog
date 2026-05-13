@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: intro-to-promises
+- Locale: fr
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2018-08-01--intro-to-promises/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 1.80
+- Input tokens: 3905
+- Output tokens: 829
+- Thinking tokens: unknown
+- Cached input tokens: 2048
+- Cache write tokens: 0
+- Estimated cost: $0.000302
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Introduction aux Promesses
@@ -105,4 +123,5 @@ Toutes les Promises renvoient soit le succès (via `.then(fn)`) soit l’échec 
 * `Promise.resolve(value)` – Convertit n’importe quelle valeur en une Promise  
 * `Promise.reject(Error)` – Crée une Promise d’échec, déclenche les `.catch()` subséquents  
 * `Promise.all([...promises])` – Attend que **toutes** les Promises d’un tableau soient terminées  
-* `Promise.race([...promises])` – Se résout dès que la première promesse se résout  
+* `Promise.race([...promises])` – Se résout dès que la première promesse se résout
+````
