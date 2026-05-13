@@ -1,0 +1,59 @@
+{
+  "index": 8,
+  "attempt": 1,
+  "originalTitle": "BatchGetItem Limits",
+  "translatedTitle": "BatchGetItemの制限",
+  "translation": {
+    "title": "BatchGetItemの制限",
+    "group": "バッチ処理、第1部！",
+    "options": [
+      {
+        "text": "1",
+        "hint": "... バッチ処理を強調しています。"
+      },
+      {
+        "text": "25",
+        "hint": "`BatchWriteItem`の制限はこれです。"
+      },
+      {
+        "text": "100"
+      },
+      {
+        "text": "75",
+        "hint": "近いけど、丸い数字があります。"
+      },
+      {
+        "text": "50",
+        "hint": "`BatchGetItem`の場合はもう少し高めです。"
+      },
+      {
+        "text": "200",
+        "hint": "少し高すぎます..."
+      },
+      {
+        "text": "Unlimited",
+        "hint": "`BatchGetItem`には固定制限があります。"
+      }
+    ],
+    "questionProse": [
+      "もう1つのDynamoDBバッチ処理の質問！<br />\n      DynamoDBの`BatchGetItem`リクエストで一度に取得できる最大アイテム数はいくつか？"
+    ],
+    "explanationProse": [
+      "DynamoDB SDKでは、単一の`BatchGetItem`リクエストで最大**100**アイテムを取得できます。これは`BatchWriteItem`の25アイテムの制限よりも高くなっています。\n      また、総ペイロードサイズ、ドキュメントサイズ、リクエストレートにも制限があります。\n\n      これらの制限を理解することは、アプリケーションのパフォーマンス最適化と効率的なデータ操作の保証に不可欠です。\n\n      **注：** 一部の制限は、AWSアカウントマネージャーに交渉すれば突破可能です。😎"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"BatchGetItemの制限\",\n  \"group\": \"バッチ処理、第1部！\",\n  \"options\": [\n    {\n      \"text\": \"1\",\n      \"hint\": \"... バッチ処理を強調しています。\"\n    },\n    {\n      \"text\": \"25\",\n      \"hint\": \"`BatchWriteItem`の制限はこれです。\"\n    },\n    {\n      \"text\": \"100\"\n    },\n    {\n      \"text\": \"75\",\n      \"hint\": \"近いけど、丸い数字があります。\"\n    },\n    {\n      \"text\": \"50\",\n      \"hint\": \"`BatchGetItem`の場合はもう少し高めです。\"\n    },\n    {\n      \"text\": \"200\",\n      \"hint\": \"少し高すぎます...\"\n    },\n    {\n      \"text\": \"Unlimited\",\n      \"hint\": \"`BatchGetItem`には固定制限があります。\"\n    }\n  ],\n  \"questionProse\": [\n    \"もう1つのDynamoDBバッチ処理の質問！<br />\\n      DynamoDBの`BatchGetItem`リクエストで一度に取得できる最大アイテム数はいくつか？\"\n  ],\n  \"explanationProse\": [\n    \"DynamoDB SDKでは、単一の`BatchGetItem`リクエストで最大**100**アイテムを取得できます。これは`BatchWriteItem`の25アイテムの制限よりも高くなっています。\\n      また、総ペイロードサイズ、ドキュメントサイズ、リクエストレートにも制限があります。\\n\\n      これらの制限を理解することは、アプリケーションのパフォーマンス最適化と効率的なデータ操作の保証に不可欠です。\\n\\n      **注：** 一部の制限は、AWSアカウントマネージャーに交渉すれば突破可能です。😎\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 876,
+    "outputTokens": 876,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 13283
+  },
+  "cost": {
+    "inputUsd": 0.00007008,
+    "outputUsd": 0.00021024,
+    "totalUsd": 0.00028032,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

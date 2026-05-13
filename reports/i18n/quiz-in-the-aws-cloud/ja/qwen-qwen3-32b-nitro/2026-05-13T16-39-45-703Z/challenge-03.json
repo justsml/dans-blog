@@ -1,0 +1,55 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "DynamoDB",
+  "translatedTitle": "DynamoDB",
+  "translation": {
+    "title": "DynamoDB",
+    "group": "スキーマレス",
+    "options": [
+      {
+        "text": "PutItem",
+        "hint": "新しいアイテムを作成する、または古いアイテムを新しいアイテムで置き換える。"
+      },
+      {
+        "text": "BatchUpdateItem",
+        "hint": "存在しない。"
+      },
+      {
+        "text": "BatchWriteItem",
+        "hint": "複数のアイテムを1回の呼び出しで挿入または削除する。"
+      },
+      {
+        "text": "UpdateItem"
+      },
+      {
+        "text": "BatchUpsertItem",
+        "hint": "DynamoDBでは？"
+      },
+      {
+        "text": "TransactWriteItems",
+        "hint": "複数のPutItem、UpdateItem、DeleteItem、ConditionCheck操作を1回の呼び出しに組み合わせる。"
+      }
+    ],
+    "questionProse": [
+      "既存の1つのアイテムの属性を更新するDynamoDB APIはどれですか？"
+    ],
+    "explanationProse": [
+      "ここでのキーワードは<b>更新</b>で、挿入やPUTではない点です。挿入を行う場合は`BatchWriteItem`や`TransactWriteItems`を使用できます。\n\n`BatchWriteItem`は複数の操作を処理できますが、PUTやDELETEに限定されます。`TransactWriteItems`はより強力ですが、単純な更新には少し過剰な力になる可能性があります。\n単純な更新には`UpdateItem`が最適です。これは、既存のアイテムの1つ以上の属性を更新、追加、削除できます。\n\n`UpdateItem`操作は:\n- 既存アイテムの属性を更新\n- 新しい属性を追加\n- 属性を削除\n- アイテムが存在するか、特定の条件を満たす場合に条件付きで更新\n\n[DynamoDB UpdateItem](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateItem.html)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"DynamoDB\",\n  \"group\": \"スキーマレス\",\n  \"options\": [\n    {\n      \"text\": \"PutItem\",\n      \"hint\": \"新しいアイテムを作成する、または古いアイテムを新しいアイテムで置き換える。\"\n    },\n    {\n      \"text\": \"BatchUpdateItem\",\n      \"hint\": \"存在しない。\"\n    },\n    {\n      \"text\": \"BatchWriteItem\",\n      \"hint\": \"複数のアイテムを1回の呼び出しで挿入または削除する。\"\n    },\n    {\n      \"text\": \"UpdateItem\"\n    },\n    {\n      \"text\": \"BatchUpsertItem\",\n      \"hint\": \"DynamoDBでは？\"\n    },\n    {\n      \"text\": \"TransactWriteItems\",\n      \"hint\": \"複数のPutItem、UpdateItem、DeleteItem、ConditionCheck操作を1回の呼び出しに組み合わせる。\"\n    }\n  ],\n  \"questionProse\": [\n    \"既存の1つのアイテムの属性を更新するDynamoDB APIはどれですか？\"\n  ],\n  \"explanationProse\": [\n    \"ここでのキーワードは<b>更新</b>で、挿入やPUTではない点です。挿入を行う場合は`BatchWriteItem`や`TransactWriteItems`を使用できます。\\n\\n`BatchWriteItem`は複数の操作を処理できますが、PUTやDELETEに限定されます。`TransactWriteItems`はより強力ですが、単純な更新には少し過剰な力になる可能性があります。\\n単純な更新には`UpdateItem`が最適です。これは、既存のアイテムの1つ以上の属性を更新、追加、削除できます。\\n\\n`UpdateItem`操作は:\\n- 既存アイテムの属性を更新\\n- 新しい属性を追加\\n- 属性を削除\\n- アイテムが存在するか、特定の条件を満たす場合に条件付きで更新\\n\\n[DynamoDB UpdateItem](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateItem.html)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 995,
+    "outputTokens": 910,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 14063
+  },
+  "cost": {
+    "inputUsd": 0.0000796,
+    "outputUsd": 0.0002184,
+    "totalUsd": 0.000298,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

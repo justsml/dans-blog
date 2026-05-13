@@ -1,0 +1,48 @@
+{
+  "index": 19,
+  "attempt": 1,
+  "originalTitle": "Large File Transfer",
+  "translatedTitle": "大規模なファイル転送",
+  "translation": {
+    "title": "大規模なファイル転送",
+    "group": "S3転送",
+    "options": [
+      {
+        "text": "常に単一のPUTリクエストを使用する",
+        "hint": "大規模なファイルには非効率的です"
+      },
+      {
+        "text": "大規模なファイルにはマルチパートアップロードを使用する",
+        "hint": "再開可能で並列処理が可能"
+      },
+      {
+        "text": "アップロード前に圧縮する",
+        "hint": "サイズ削減には効果的だが転送問題は解決しない"
+      },
+      {
+        "text": "アップロード前に手動で分割する",
+        "hint": "エラー発生リスクが高く非推奨"
+      }
+    ],
+    "questionProse": [
+      "S3への大規模ファイルアップロードで最適な方法は？"
+    ],
+    "explanationProse": [
+      "マルチパートアップロードの利点:\n    - 大規模ファイルを効率的に処理\n    - 中断したアップロードを再開可能\n    - ファイルパーツの並列アップロード\n    - 100MBを超えるファイル向け推奨\n    - ネットワーク信頼性向上\n\n    [S3マルチパートアップロード](https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"大規模なファイル転送\",\n  \"group\": \"S3転送\",\n  \"options\": [\n    {\n      \"text\": \"常に単一のPUTリクエストを使用する\",\n      \"hint\": \"大規模なファイルには非効率的です\"\n    },\n    {\n      \"text\": \"大規模なファイルにはマルチパートアップロードを使用する\",\n      \"hint\": \"再開可能で並列処理が可能\"\n    },\n    {\n      \"text\": \"アップロード前に圧縮する\",\n      \"hint\": \"サイズ削減には効果的だが転送問題は解決しない\"\n    },\n    {\n      \"text\": \"アップロード前に手動で分割する\",\n      \"hint\": \"エラー発生リスクが高く非推奨\"\n    }\n  ],\n  \"questionProse\": [\n    \"S3への大規模ファイルアップロードで最適な方法は？\"\n  ],\n  \"explanationProse\": [\n    \"マルチパートアップロードの利点:\\n    - 大規模ファイルを効率的に処理\\n    - 中断したアップロードを再開可能\\n    - ファイルパーツの並列アップロード\\n    - 100MBを超えるファイル向け推奨\\n    - ネットワーク信頼性向上\\n\\n    [S3マルチパートアップロード](https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 697,
+    "outputTokens": 838,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2210
+  },
+  "cost": {
+    "inputUsd": 0.00005576,
+    "outputUsd": 0.00020112,
+    "totalUsd": 0.00025688,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

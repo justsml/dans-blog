@@ -1,0 +1,56 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Batch Operations",
+  "translatedTitle": "バッチ操作",
+  "translation": {
+    "title": "バッチ操作",
+    "group": "バッチ操作、パート2！",
+    "options": [
+      {
+        "text": "1"
+      },
+      {
+        "text": "10"
+      },
+      {
+        "text": "25",
+        "hint": "良い推測ですが..."
+      },
+      {
+        "text": "50"
+      },
+      {
+        "text": "100",
+        "hint": "GetItemの制限を考えてますか？"
+      },
+      {
+        "text": "100 when streaming"
+      },
+      {
+        "text": "上記以外",
+        "hint": "少しトリッキーです..."
+      }
+    ],
+    "questionProse": [
+      "DynamoDBが1回のバッチで`UPDATE`できるドキュメントの最大数はいくつですか？"
+    ],
+    "explanationProse": [
+      "DynamoDBクライアントは基本的にそのHTTP APIのラッパーです。`BatchWriteItem`操作は1回のHTTPリクエストで最大**25**ドキュメントを`PUT`または`DELETE`できますが、複数ドキュメントの`UPDATE`はできません。\n\n    DynamoDBは1回のHTTPリクエストで最大**25**ドキュメントを`INSERT`できますが、`UpdateItem`操作を使って1回のリクエストで`UPDATE`できるのは**1**ドキュメントだけです。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"バッチ操作\",\n  \"group\": \"バッチ操作、パート2！\",\n  \"options\": [\n    {\"text\": \"1\"},\n    {\"text\": \"10\"},\n    {\"text\": \"25\", \"hint\": \"良い推測ですが...\"},\n    {\"text\": \"50\"},\n    {\"text\": \"100\", \"hint\": \"GetItemの制限を考えてますか？\"},\n    {\"text\": \"100 when streaming\"},\n    {\"text\": \"上記以外\", \"hint\": \"少しトリッキーです...\"}\n  ],\n  \"questionProse\": [\n    \"DynamoDBが1回のバッチで`UPDATE`できるドキュメントの最大数はいくつですか？\"\n  ],\n  \"explanationProse\": [\n    \"DynamoDBクライアントは基本的にそのHTTP APIのラッパーです。`BatchWriteItem`操作は1回のHTTPリクエストで最大**25**ドキュメントを`PUT`または`DELETE`できますが、複数ドキュメントの`UPDATE`はできません。\\n\\n    DynamoDBは1回のHTTPリクエストで最大**25**ドキュメントを`INSERT`できますが、`UpdateItem`操作を使って1回のリクエストで`UPDATE`できるのは**1**ドキュメントだけです。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 782,
+    "outputTokens": 782,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 9193
+  },
+  "cost": {
+    "inputUsd": 0.00006256,
+    "outputUsd": 0.00018768,
+    "totalUsd": 0.00025024,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
