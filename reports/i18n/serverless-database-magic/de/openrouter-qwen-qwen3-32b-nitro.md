@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: serverless-database-magic
+- Locale: de
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2025-09-15--serverless-database-magic/de/index.mdx
+- Validation: passed
+- Runtime seconds: 14.10
+- Input tokens: 6000
+- Output tokens: 6213
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.001971
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Die Welle der Datenbank-Innovation 2025
 subTitle: Danke an die KI.
@@ -243,3 +261,4 @@ Selbst AWS bewegt sich in diese Richtung mit S3-adjazenter Vektorsuche, was ein 
 > **Haftungsausschluss:** Ich habe Pagefind seit Jahren genutzt und wurde 2025 zum Contributor. Ich habe Orama und Chroma für kleinere Projekte ausprobiert und untersuche LanceDB für größere AI-Anwendungen. Keine finanziellen Verbindungen zu diesen Projekten – nur großes Interesse am sich entwickelnden Datenbank-Landschaft. 
 
 [1]: ../you-might-not-need-algolia/
+````
