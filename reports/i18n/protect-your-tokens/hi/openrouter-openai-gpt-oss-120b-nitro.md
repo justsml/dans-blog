@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: protect-your-tokens
+- Locale: hi
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2018-10-27--protect-your-tokens/hi/index.mdx
+- Validation: passed
+- Runtime seconds: 3.95
+- Input tokens: 6991
+- Output tokens: 1693
+- Thinking tokens: unknown
+- Cached input tokens: 4096
+- Cache write tokens: 0
+- Estimated cost: $0.000577
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: 'टोकन, API कुंजियों और सीक्रेट्स की सुरक्षा'
@@ -122,3 +140,4 @@ const src = `//maps.googleapis.com/maps/api/js?key=${key}`;
 -----------------------------------
 
 **ध्यान दें:** पर्यावरण वेरिएबल्स के अन्य _उपयोग केस_ भी हैं। कुछ जिन्हें मैंने नहीं बताया: CI/CD/टेस्टिंग, फीचर फ़्लैग, और विशेष वातावरणों के लिए रन‑टाइम कॉन्फ़िगरेशन!
+````
