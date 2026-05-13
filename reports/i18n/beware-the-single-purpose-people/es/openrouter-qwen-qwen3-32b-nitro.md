@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: beware-the-single-purpose-people
+- Locale: es
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2025-04-03--beware-the-single-purpose-people/es/index.mdx
+- Validation: passed
+- Runtime seconds: 19.55
+- Input tokens: 7278
+- Output tokens: 8644
+- Thinking tokens: unknown
+- Cached input tokens: 512
+- Cache write tokens: 0
+- Estimated cost: $0.002657
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 language: English
 title: Cuidado con las personas monofuncionales
@@ -122,3 +140,4 @@ Mantente pragmático. Enfócate en los resultados. No dejes que la búsqueda de 
 ¹ La ironía es que lograr un propósito único *real* a los niveles más bajos requiere una complejidad enorme oculta justo debajo de la superficie.
 
 ² Nos referimos a la pureza conceptual aquí: la idea de que una función solo debe hacer "una cosa" lógicamente. No lo confundas con el concepto de "función pura" en programación funcional, que no tiene efectos secundarios, lo cual es un concepto diferente, aunque a veces relacionado.
+````
