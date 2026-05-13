@@ -1,0 +1,102 @@
+{
+  "runId": "deepseek-deepseek-v4-flash@2026-05-13T22-28-50-914Z",
+  "slug": "beam-search-transformers-js",
+  "locale": "ja",
+  "model": "deepseek/deepseek-v4-flash",
+  "modelPath": "deepseek-deepseek-v4-flash",
+  "createdAt": "2026-05-13T22:31:02.332Z",
+  "sourcePath": "src/content/posts/2026-04-16--beam-search-transformers-js/index.mdx",
+  "targetPath": "src/content/posts/2026-04-16--beam-search-transformers-js/ja/index.mdx",
+  "candidatePath": "reports/i18n/beam-search-transformers-js/ja/deepseek-deepseek-v4-flash/2026-05-13T22-28-50-914Z/candidate.mdx",
+  "sourceHash": "f18620b582f1c2a340c4b7d98da5cb544cd646463534f4076975963727af3149",
+  "outputHash": "bf6a375f615c72eb7fb6411f70aba29c0326449e52611d50f7c37180004c69f9",
+  "reasoningEffort": "low",
+  "temperature": 0.3,
+  "maxTokens": 16000,
+  "timeoutMs": 200000,
+  "articleSummary": "The article details the author's discovery and fix of a bug in Transformers.js where `num_beams > 1` silently defaulted to greedy decoding due to an incomplete TODO. It explains the implementation of proper beam search (standard, diverse, and beam sampling), focusing on key technical challenges: bypassing the existing `BeamSearchSampler` to correctly rank all `num_beams × vocab_size` candidates, reordering the KV cache when beams are pruned, and handling the sequential dependency in diverse beam search. The tone is a technical tutorial with self-deprecating humor (e.g., the CW about jargon). The intended audience is developers working with Transformers.js who need accurate sequence generation for models like T5, BART, or Whisper.",
+  "totalInputTokens": 9442,
+  "totalOutputTokens": 9577,
+  "totalCacheReadTokens": 1536,
+  "totalCacheWriteTokens": 0,
+  "totalDurationMs": 124227,
+  "totalCostUsd": 0.0037927008000000007,
+  "pricingSource": "local-openrouter-estimate",
+  "telemetry": {
+    "model": "deepseek/deepseek-v4-flash",
+    "chunkSize": "10p",
+    "totalChunks": 7,
+    "totalInputTokens": 9442,
+    "totalOutputTokens": 9577,
+    "totalCacheReadTokens": 1536,
+    "totalCacheWriteTokens": 0,
+    "totalDurationMs": 124227,
+    "totalCostUsd": 0.0037927008000000007,
+    "pricingSource": "local-openrouter-estimate",
+    "chunks": [
+      {
+        "index": 0,
+        "inputTokens": 1027,
+        "outputTokens": 858,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 5326,
+        "costUsd": 0.00038402000000000005
+      },
+      {
+        "index": 1,
+        "inputTokens": 1364,
+        "outputTokens": 1565,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 74289,
+        "costUsd": 0.00062916
+      },
+      {
+        "index": 2,
+        "inputTokens": 1467,
+        "outputTokens": 1391,
+        "cacheReadTokens": 384,
+        "cacheWriteTokens": 0,
+        "durationMs": 11130,
+        "costUsd": 0.0005421752000000001
+      },
+      {
+        "index": 3,
+        "inputTokens": 1478,
+        "outputTokens": 2035,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 12984,
+        "costUsd": 0.0007767200000000001
+      },
+      {
+        "index": 4,
+        "inputTokens": 1413,
+        "outputTokens": 1575,
+        "cacheReadTokens": 384,
+        "cacheWriteTokens": 0,
+        "durationMs": 7293,
+        "costUsd": 0.0005861352000000001
+      },
+      {
+        "index": 5,
+        "inputTokens": 1356,
+        "outputTokens": 1598,
+        "cacheReadTokens": 384,
+        "cacheWriteTokens": 0,
+        "durationMs": 7626,
+        "costUsd": 0.0005845952000000001
+      },
+      {
+        "index": 6,
+        "inputTokens": 1337,
+        "outputTokens": 555,
+        "cacheReadTokens": 384,
+        "cacheWriteTokens": 0,
+        "durationMs": 5579,
+        "costUsd": 0.00028989520000000004
+      }
+    ]
+  }
+}
