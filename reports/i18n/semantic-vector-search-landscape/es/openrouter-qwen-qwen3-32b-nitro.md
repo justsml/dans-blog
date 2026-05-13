@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: semantic-vector-search-landscape
+- Locale: es
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-05-01--semantic-vector-search-landscape/es/index.mdx
+- Validation: passed
+- Runtime seconds: 49.11
+- Input tokens: 17894
+- Output tokens: 19676
+- Thinking tokens: unknown
+- Cached input tokens: 2560
+- Cache write tokens: 0
+- Estimated cost: $0.006154
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: ''
 subTitle: >-
@@ -374,3 +392,4 @@ La mayoría de los sistemas de búsqueda en producción necesitan más de una ca
 Estas no son herramientas competidoras. Son complementarias. Un sistema de búsqueda bien construido elige la capa adecuada para cada forma de consulta, y cuando las formas de consulta se superponen, ejecuta múltiples capas y fusiona los resultados.
 
 Los equipos que implementan buenas funciones de búsqueda comprenden toda la pila. Los que no lo hacen recurren a una base de datos vectorial, incrustan todo y se preguntan por qué a veces las búsquedas exactas devuelven el registro incorrecto.
+````
