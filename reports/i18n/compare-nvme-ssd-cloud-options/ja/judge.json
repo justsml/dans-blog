@@ -1,0 +1,38 @@
+{
+  "selectedCommit": "8fe897146e658eadc43409ad815f39cc1131833a",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The selected candidate correctly preserves the MDX structure, specifically the H2 heading which was lost in other versions. It maintains the technical terminology and the author's direct tone while providing a natural Japanese translation. The tags and frontmatter are correctly handled.",
+  "slug": "compare-nvme-ssd-cloud-options",
+  "locale": "ja",
+  "candidateCommits": [
+    "8fe897146e658eadc43409ad815f39cc1131833a",
+    "7d14e1f1bc75a88f02aee786365c690c85689843",
+    "a08a6bd02c77901325bd6036a5881fbea2f56976"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "## クラウドパフォーマンスを最大70%向上",
+      "replacement": "## クラウドパフォーマンスを最大70%向上させる",
+      "reason": "The original English is a call to action/benefit statement. Adding 'させる' or keeping it as a heading is fine, but the current candidate is missing the H2 heading level in the 'current' version (it used plain text). This candidate correctly uses H2.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug compare-nvme-ssd-cloud-options --locale ja --skip-global",
+    "output": ""
+  }
+}
