@@ -52,6 +52,8 @@ type Totals = {
   inProgressSlots: number;
   inProgressArticles: number;
   candidateRows: number;
+  expectedCandidateRows: number;
+  candidateProgressRows: number;
   attemptedModels: number;
   rejectedModels: number;
   activeRun: AccountingTotals;
@@ -102,15 +104,15 @@ const DEFAULT_TUI_TASK_CONCURRENCY = "16";
 const DEFAULT_TUI_QUIZ_CONCURRENCY = "8";
 const DEFAULT_REFRESH_DEBOUNCE_MS = 750;
 const DEFAULT_CANDIDATE_MODELS = [
-  "openrouter/qwen/qwen3.6-plus",
+  "openrouter/deepseek/deepseek-v3.2",
   "openrouter/deepseek/deepseek-v4-flash",
-  "openrouter/openai/gpt-oss-120b:nitro",
-  "openrouter/qwen/qwen3-32b:nitro",
-  "openrouter/z-ai/glm-4.7-flash",
+  "openrouter/google/gemini-3-flash-preview",
   "openrouter/minimax/minimax-m2.5",
   "openrouter/minimax/minimax-m2.7",
-  "openrouter/google/gemini-3-flash-preview",
-  "openrouter/deepseek/deepseek-v3.2",
+  "openrouter/openai/gpt-oss-120b:nitro",
+  "openrouter/qwen/qwen3-32b:nitro",
+  "openrouter/qwen/qwen3.6-plus",
+  "openrouter/z-ai/glm-4.7-flash",
   "openrouter/z-ai/glm-5-turbo",
 ];
 const JUDGE_PROGRESS_PREFIX = "::i18n-judge-progress::";
@@ -456,12 +458,14 @@ function drawSidePanel(
   height: number,
 ) {
   drawPanel(term, left, top, width, height, "Status");
+  const candidateProgress = candidateProgressRatio(totals);
   const lines = [
     ["Worker", formatWorkerStatus()],
+    ["Progress", `${formatProgressBar(candidateProgress, 12)} ${formatPercent(candidateProgress)}`],
+    ["Candidates", `${totals.candidateProgressRows}/${totals.expectedCandidateRows}`],
     ["Slots", `${totals.completeSlots}/${totals.slots} (${formatPercent(totals.slots === 0 ? 0 : totals.completeSlots / totals.slots)})`],
     ["Articles", `${totals.completeArticles}/${totals.articles}`],
     ["In progress", `${totals.inProgressSlots} slots, ${totals.inProgressArticles} articles`],
-    ["Candidates", String(totals.candidateRows)],
     ["Attempts", String(totals.attemptedModels)],
     ["Rejected", String(totals.rejectedModels)],
     ["Run cost", `${formatUsd(totals.activeRun.costUsd)}${totals.activeRun.hasUnknownCost ? " + unknown" : ""}`],
@@ -491,10 +495,14 @@ function drawSidePanel(
     const summaries = rows.map((row) => row.candidates[locale]);
     const complete = summaries.filter((summary) => summary.count >= summary.expected).length;
     const candidates = summaries.reduce((sum, summary) => sum + summary.count, 0);
+    const expected = summaries.reduce((sum, summary) => sum + summary.expected, 0);
+    const progress = expected === 0
+      ? 1
+      : summaries.reduce((sum, summary) => sum + Math.min(summary.count, summary.expected), 0) / expected;
     const y = localeTop + 2 + index;
     writeAt(term, left + 2, y, locale, 4, "bold");
     writeAt(term, left + 7, y, `${complete}/${rows.length}`, 9);
-    writeAt(term, left + 17, y, `${candidates} cand`, width - 19, candidates > 0 ? "green" : "gray");
+    writeAt(term, left + 17, y, `${formatProgressBar(progress, 8)} ${candidates}/${expected}`, width - 19, candidates > 0 ? "green" : "gray");
   });
 
   if (workerState.recentOutput.length > 0) {
@@ -511,10 +519,11 @@ function drawSidePanel(
 function drawBottomPanel(term: any, totals: Totals, rows: ArticleRow[], left: number, top: number, width: number) {
   drawPanel(term, left, top, width, 9, "Status");
   const coverage = totals.slots === 0 ? 0 : totals.completeSlots / totals.slots;
+  const candidateProgress = candidateProgressRatio(totals);
   writeAt(term, left + 2, top + 2, `Worker ${formatWorkerStatus()}`, width - 4);
-  writeAt(term, left + 2, top + 3, `Slots ${totals.completeSlots}/${totals.slots} (${formatPercent(coverage)})`, width - 4);
-  writeAt(term, left + 2, top + 4, `Articles ${totals.completeArticles}/${totals.articles} | Running ${totals.inProgressSlots} slots`, width - 4);
-  writeAt(term, left + 2, top + 5, `Candidates ${totals.candidateRows} | Attempts ${totals.attemptedModels} | Rejected ${totals.rejectedModels}`, width - 4);
+  writeAt(term, left + 2, top + 3, `Progress ${formatProgressBar(candidateProgress, 18)} ${formatPercent(candidateProgress)} (${totals.candidateProgressRows}/${totals.expectedCandidateRows})`, width - 4);
+  writeAt(term, left + 2, top + 4, `Slots ${totals.completeSlots}/${totals.slots} (${formatPercent(coverage)}) | Articles ${totals.completeArticles}/${totals.articles}`, width - 4);
+  writeAt(term, left + 2, top + 5, `Running ${totals.inProgressSlots} slots | Attempts ${totals.attemptedModels} | Rejected ${totals.rejectedModels}`, width - 4);
   writeAt(term, left + 2, top + 6, `Run ${formatUsd(totals.activeRun.costUsd)} | ${formatInteger(totals.activeRun.inputTokens)} in | ${formatInteger(totals.activeRun.outputTokens)} out`, width - 4);
   writeAt(
     term,
@@ -902,6 +911,8 @@ function summarize(rows: ArticleRow[]): Totals {
   const summaries = rows.flatMap((row) => selectedLocales.map((locale) => row.candidates[locale]));
   const activeRun = createAccountingTotals(["active run events"]);
   for (const summary of summaries) addSummaryToActiveRunTotals(activeRun, summary);
+  const expectedCandidateRows = summaries.reduce((sum, summary) => sum + summary.expected, 0);
+  const candidateProgressRows = summaries.reduce((sum, summary) => sum + Math.min(summary.count, summary.expected), 0);
 
   return {
     articles: rows.length,
@@ -911,6 +922,8 @@ function summarize(rows: ArticleRow[]): Totals {
     inProgressSlots: summaries.filter((summary) => summary.isInProgress).length,
     inProgressArticles: rows.filter((row) => articleState(row) === "running").length,
     candidateRows: summaries.reduce((sum, summary) => sum + summary.count, 0),
+    expectedCandidateRows,
+    candidateProgressRows,
     attemptedModels: summaries.reduce((sum, summary) => sum + summary.attemptedModels, 0),
     rejectedModels: summaries.reduce((sum, summary) => sum + summary.rejectedModels, 0),
     activeRun,
@@ -995,10 +1008,12 @@ function renderDashboard(rows: ArticleRow[], totals: Totals) {
 }
 
 function renderFinalAccounting(totals: Totals, reason: string) {
+  const progress = candidateProgressRatio(totals);
   return [
     "",
     `Final i18n candidate accounting (${reason})`,
     `- Articles: ${totals.articles}`,
+    `- Candidate progress: ${totals.candidateProgressRows}/${totals.expectedCandidateRows} (${formatPercent(progress)})`,
     `- Locale slots complete: ${totals.completeSlots}/${totals.slots}`,
     `- Articles complete: ${totals.completeArticles}/${totals.articles}`,
     `- In progress: ${totals.inProgressSlots} slots, ${totals.inProgressArticles} articles`,
@@ -1024,6 +1039,7 @@ function renderFinalAccounting(totals: Totals, reason: string) {
 
 function renderStatusPanel(totals: Totals) {
   const coverage = totals.slots === 0 ? 0 : totals.completeSlots / totals.slots;
+  const progress = candidateProgressRatio(totals);
 
   return [
     "## Status",
@@ -1031,6 +1047,7 @@ function renderStatusPanel(totals: Totals) {
     markdownRow(["Metric", "Value"]),
     markdownRow(["---", "---:"]),
     markdownRow(["Worker", formatWorkerStatus()]),
+    markdownRow(["Candidate progress", `${totals.candidateProgressRows}/${totals.expectedCandidateRows} (${formatPercent(progress)}) ${formatProgressBar(progress, 16)}`]),
     markdownRow(["Articles", totals.articles]),
     markdownRow(["Locale slots complete", `${totals.completeSlots}/${totals.slots} (${formatPercent(coverage)})`]),
     markdownRow(["Articles complete", `${totals.completeArticles}/${totals.articles}`]),
@@ -1093,6 +1110,18 @@ function completionRatio(row: ArticleRow) {
     return sum + Math.min(summary.count, summary.expected);
   }, 0);
   return expected === 0 ? 1 : actual / expected;
+}
+
+function candidateProgressRatio(totals: Totals) {
+  return totals.expectedCandidateRows === 0
+    ? 1
+    : totals.candidateProgressRows / totals.expectedCandidateRows;
+}
+
+function formatProgressBar(value: number, width: number) {
+  const ratio = Math.max(0, Math.min(1, Number.isFinite(value) ? value : 0));
+  const filled = Math.round(ratio * width);
+  return `[${"#".repeat(filled)}${"-".repeat(Math.max(0, width - filled))}]`;
 }
 
 function findIndexPath(postDir: string) {
