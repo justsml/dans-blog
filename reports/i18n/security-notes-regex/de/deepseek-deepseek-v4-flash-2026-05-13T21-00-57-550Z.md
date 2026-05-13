@@ -1,0 +1,64 @@
+# Translation Candidate
+- Slug: security-notes-regex
+- Locale: de
+- Model: deepseek/deepseek-v4-flash
+- Target: src/content/posts/2015-02-24--security-notes-regex/de/index.mdx
+- Validation: deferred
+- Runtime seconds: 35.71
+- Input tokens: 1144
+- Output tokens: 2444
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.000844
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: 'Sicherheitshinweise: RegEx'
+subTitle: Ist RegEx anfällig?
+date: '2015-02-24'
+modified: '2018-07-30'
+category: Security
+subCategory: RegEx
+tags:
+  - security
+  - regex
+  - dos
+  - remote-exploit
+cover_credit: Photo by Markus Spiske on Unsplash
+cover: ../markus-spiske-666905-unsplash.webp
+cover_mobile: ../w300_markus-spiske-666905-unsplash.webp
+cover_icon: ../icon_markus-spiske-666905-unsplash.webp
+social_image: ../desktop-social.webp
+---
+## RegEx-Diensteverweigerung: ReDOS
+
+Eine der überraschenderen und dennoch schwer zu erkennenden Sicherheitslücken, die ich gefunden habe, betrifft reguläre Ausdrücke. Entweder schlecht geschrieben oder schlecht implementiert.
+
+Speicher/CPU können durch große oder speziell präparierte Benutzereingaben erschöpft werden.
+
+> Dies ist eine Diensteverweigerung-Sicherheitslücke, nicht nur ein Performance-Geruch. Wenn feindliche Eingaben die CPU lange genug blockieren können, um echte Benutzer auszuhungern, gehört dies in Ihr Sicherheitsbedrohungsmodell.
+
+### Warnsignale
+
+1. Verschachtelte Quantoren, wiederholte Gruppen oder überlappende Alternativen
+2. Rückverfolgungsintensive Engines ohne Timeout oder Eingabelängenbegrenzung
+3. Ausdruck wird mit ungeprüften Benutzereingaben verwendet
+4. Regex-Validierung läuft auf einem heißen Anforderungspfad
+
+### Abschwächung / Lösung
+
+1. RegEx ist schwer.
+    1.  Zum Beispiel, hier ist, wie die wirklich klugen Leute bei [OWASP die IP-Validierung empfehlen][owasp]: `^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$`
+    2.  Das ist länger als ein (altmodischer) Tweet, für eine 4-Byte-IP-Adresse!!!
+2. Eingabelänge vor der Regex-Auswertung begrenzen.
+3. Timeouts, statische Analyse oder eine nicht rückverfolgende Engine hinzufügen, wo die Plattform dies unterstützt.
+4. Dies betrifft fast jede Sprache und Plattform: .NET/Node/Python/PERL/Java.
+
+### Referenz
+
+- [OWASP ReDoS](https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS)
+````
