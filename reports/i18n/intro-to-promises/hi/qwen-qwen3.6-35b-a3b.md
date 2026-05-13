@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: intro-to-promises
+- Locale: hi
+- Model: qwen/qwen3.6-35b-a3b
+- Target: src/content/posts/2018-08-01--intro-to-promises/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 74.94
+- Input tokens: 3978
+- Output tokens: 14727
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.000000
+- Pricing source: unknown
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Promises का परिचय
@@ -106,3 +124,4 @@ Promise से मान निकालने के लिए सामान�
 * `Promise.reject(Error)` - एक विफल Promise मान बनाता है, जो अगले `.catch()` को ट्रिगर करता है
 * `Promise.all([...promises])` - Promise सरणी के सभी तत्वों के पूरा होने का प्रतीक्षा करता है
 * `Promise.race([...promises])` - जैसे ही पहला Promise resolve होता है, यह तुरंत resolve हो जाता है
+````
