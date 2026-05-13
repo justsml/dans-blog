@@ -1,0 +1,49 @@
+{
+  "index": 3,
+  "attempt": 1,
+  "originalTitle": "Implicit Lifetimes",
+  "translatedTitle": "Lifetime implícitos",
+  "translation": {
+    "title": "Lifetime implícitos",
+    "group": "Elisión de lifetime",
+    "options": [
+      {
+        "text": "Se compila correctamente"
+      },
+      {
+        "text": "Error: falta el especificador de lifetime",
+        "hint": "¡Recuerda las reglas de elisión de lifetime, están aquí para ayudarte!"
+      },
+      {
+        "text": "Error: se requiere un lifetime explícito",
+        "hint": "El compilador puede resolverlo automáticamente"
+      },
+      {
+        "text": "Error: incompatibilidad de lifetime",
+        "hint": "Los lifetime coinciden perfectamente aquí"
+      }
+    ],
+    "questionProse": [
+      "¿Se compilará este código? Si sí, ¿por qué? Si no, ¿qué falla?"
+    ],
+    "explanationProse": [
+      "Este código se compila correctamente gracias a las reglas de elisión de lifetime de Rust. \n      Estas reglas permiten que el compilador infiera automáticamente los lifetime en patrones comunes.\n\n      Las tres reglas de elisión de lifetime son:\n      1. Cada parámetro recibe su propio parámetro de lifetime\n      2. Si hay exactamente un parámetro de lifetime de entrada, ese lifetime se asigna a todos los parámetros de lifetime de salida\n      3. Si hay múltiples parámetros de lifetime de entrada, pero uno de ellos es &self o &mut self, el lifetime de self se asigna a todos los parámetros de lifetime de salida\n\n      Esta función es equivalente a:",
+      "Patrones comunes donde funciona la elisión:",
+      "Mejor práctica: Deja que la elisión trabaje por ti cuando sea posible, pero entiende cuándo se necesitan lifetime explícitos."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Lifetime implícitos\",\n  \"group\": \"Elisión de lifetime\",\n  \"options\": [\n    {\n      \"text\": \"Se compila correctamente\"\n    },\n    {\n      \"text\": \"Error: falta el especificador de lifetime\",\n      \"hint\": \"¡Recuerda las reglas de elisión de lifetime, están aquí para ayudarte!\"\n    },\n    {\n      \"text\": \"Error: se requiere un lifetime explícito\",\n      \"hint\": \"El compilador puede resolverlo automáticamente\"\n    },\n    {\n      \"text\": \"Error: incompatibilidad de lifetime\",\n      \"hint\": \"Los lifetime coinciden perfectamente aquí\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Se compilará este código? Si sí, ¿por qué? Si no, ¿qué falla?\"\n  ],\n  \"explanationProse\": [\n    \"Este código se compila correctamente gracias a las reglas de elisión de lifetime de Rust. \\n      Estas reglas permiten que el compilador infiera automáticamente los lifetime en patrones comunes.\\n\\n      Las tres reglas de elisión de lifetime son:\\n      1. Cada parámetro recibe su propio parámetro de lifetime\\n      2. Si hay exactamente un parámetro de lifetime de entrada, ese lifetime se asigna a todos los parámetros de lifetime de salida\\n      3. Si hay múltiples parámetros de lifetime de entrada, pero uno de ellos es &self o &mut self, el lifetime de self se asigna a todos los parámetros de lifetime de salida\\n\\n      Esta función es equivalente a:\",\n    \"Patrones comunes donde funciona la elisión:\",\n    \"Mejor práctica: Deja que la elisión trabaje por ti cuando sea posible, pero entiende cuándo se necesitan lifetime explícitos.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1008,
+    "outputTokens": 3669,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 20585
+  },
+  "cost": {
+    "inputUsd": 0,
+    "outputUsd": 0,
+    "totalUsd": 0,
+    "pricingSource": "unknown"
+  }
+}

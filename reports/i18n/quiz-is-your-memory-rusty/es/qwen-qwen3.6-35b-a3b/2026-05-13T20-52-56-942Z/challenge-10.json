@@ -1,0 +1,47 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Cell vs RefCell",
+  "translatedTitle": "Cell vs RefCell",
+  "translation": {
+    "title": "Cell vs RefCell",
+    "group": "Mutabilidad",
+    "options": [
+      {
+        "text": "Imprime: 42, 43"
+      },
+      {
+        "text": "Imprime: 43, 43",
+        "hint": "Cell::get() devuelve el valor en el momento de la llamada"
+      },
+      {
+        "text": "Error de compilación",
+        "hint": "Cell está diseñado precisamente para este caso de uso"
+      },
+      {
+        "text": "Panic en tiempo de ejecución",
+        "hint": "Las operaciones de Cell son siempre seguras para tipos Copy"
+      }
+    ],
+    "questionProse": [
+      "¿Qué imprimirá este código?"
+    ],
+    "explanationProse": [
+      "Cell y RefCell cumplen propósitos distintos para la mutabilidad interior:\n      Diferencias clave:\n      1. Cell:\n         - Funciona mejor con tipos Copy\n         - No tiene API de préstamo\n         - Siempre copia o mueve valores\n      \n      2. RefCell:\n         - Funciona con cualquier tipo\n         - Tiene API de préstamo\n         - Comprobación de préstamos en tiempo de ejecución\n\n      Buenas prácticas:\n      1. Usa Cell para tipos Copy simples (números, bool, etc.)\n      2. Usa RefCell cuando necesites prestar el contenido\n      3. Mantén las mutaciones a través de Cell/RefCell al mínimo\n      4. Documenta por qué se necesita la mutabilidad interior"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Cell vs RefCell\",\n  \"group\": \"Mutabilidad\",\n  \"options\": [\n    {\n      \"text\": \"Imprime: 42, 43\"\n    },\n    {\n      \"text\": \"Imprime: 43, 43\",\n      \"hint\": \"Cell::get() devuelve el valor en el momento de la llamada\"\n    },\n    {\n      \"text\": \"Error de compilación\",\n      \"hint\": \"Cell está diseñado precisamente para este caso de uso\"\n    },\n    {\n      \"text\": \"Panic en tiempo de ejecución\",\n      \"hint\": \"Las operaciones de Cell son siempre seguras para tipos Copy\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Qué imprimirá este código?\"\n  ],\n  \"explanationProse\": [\n    \"Cell y RefCell cumplen propósitos distintos para la mutabilidad interior:\\n      Diferencias clave:\\n      1. Cell:\\n         - Funciona mejor con tipos Copy\\n         - No tiene API de préstamo\\n         - Siempre copia o mueve valores\\n      \\n      2. RefCell:\\n         - Funciona con cualquier tipo\\n         - Tiene API de préstamo\\n         - Comprobación de préstamos en tiempo de ejecución\\n\\n      Buenas prácticas:\\n      1. Usa Cell para tipos Copy simples (números, bool, etc.)\\n      2. Usa RefCell cuando necesites prestar el contenido\\n      3. Mantén las mutaciones a través de Cell/RefCell al mínimo\\n      4. Documenta por qué se necesita la mutabilidad interior\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 966,
+    "outputTokens": 3562,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 20822
+  },
+  "cost": {
+    "inputUsd": 0,
+    "outputUsd": 0,
+    "totalUsd": 0,
+    "pricingSource": "unknown"
+  }
+}

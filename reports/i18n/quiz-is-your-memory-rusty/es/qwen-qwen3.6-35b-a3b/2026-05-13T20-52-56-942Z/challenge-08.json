@@ -1,0 +1,49 @@
+{
+  "index": 7,
+  "attempt": 1,
+  "originalTitle": "Lifetime Annotations",
+  "translatedTitle": "Anotaciones de lifetime",
+  "translation": {
+    "title": "Anotaciones de lifetime",
+    "group": "Lifetimes",
+    "options": [
+      {
+        "text": "Resultado: Séneca el Joven",
+        "hint": "El código no compilará para generar ninguna salida"
+      },
+      {
+        "text": "Error: falta el especificador de lifetime"
+      },
+      {
+        "text": "Error: no se puede devolver una referencia a una variable local",
+        "hint": "La referencia es a un parámetro de entrada, no a una variable local"
+      },
+      {
+        "text": "Error: incompatibilidad de lifetime",
+        "hint": "Aún no hemos especificado lifetimes para que haya un desajuste"
+      }
+    ],
+    "questionProse": [
+      "¿Qué ocurre con esta función que devuelve la porción de cadena más larga de dos?"
+    ],
+    "explanationProse": [
+      "Este código falla porque el compilador no puede determinar la relación entre los lifetimes de entrada y de salida. Aquí te explico por qué y cómo solucionarlo:",
+      "Por qué se necesitan lifetimes aquí:\n      1. Las múltiples referencias de entrada podrían tener diferentes lifetimes\n      2. El valor devuelto debe vivir tanto como ambas entradas\n      3. El compilador necesita verificar estas relaciones\n\n      Patrones comunes:",
+      "Buenas prácticas:\n      1. Deja que la elisión de lifetime funcione cuando sea posible\n      2. Usa lifetimes explícitos cuando las relaciones deban quedar claras\n      3. Considera devolver tipos propietarios para evitar la complejidad de los lifetimes\n      4. Documenta las relaciones complejas de lifetimes"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Anotaciones de lifetime\",\n  \"group\": \"Lifetimes\",\n  \"options\": [\n    {\n      \"text\": \"Resultado: Séneca el Joven\",\n      \"hint\": \"El código no compilará para generar ninguna salida\"\n    },\n    {\n      \"text\": \"Error: falta el especificador de lifetime\"\n    },\n    {\n      \"text\": \"Error: no se puede devolver una referencia a una variable local\",\n      \"hint\": \"La referencia es a un parámetro de entrada, no a una variable local\"\n    },\n    {\n      \"text\": \"Error: incompatibilidad de lifetime\",\n      \"hint\": \"Aún no hemos especificado lifetimes para que haya un desajuste\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Qué ocurre con esta función que devuelve la porción de cadena más larga de dos?\"\n  ],\n  \"explanationProse\": [\n    \"Este código falla porque el compilador no puede determinar la relación entre los lifetimes de entrada y de salida. Aquí te explico por qué y cómo solucionarlo:\",\n    \"Por qué se necesitan lifetimes aquí:\\n      1. Las múltiples referencias de entrada podrían tener diferentes lifetimes\\n      2. El valor devuelto debe vivir tanto como ambas entradas\\n      3. El compilador necesita verificar estas relaciones\\n\\n      Patrones comunes:\",\n    \"Buenas prácticas:\\n      1. Deja que la elisión de lifetime funcione cuando sea posible\\n      2. Usa lifetimes explícitos cuando las relaciones deban quedar claras\\n      3. Considera devolver tipos propietarios para evitar la complejidad de los lifetimes\\n      4. Documenta las relaciones complejas de lifetimes\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1003,
+    "outputTokens": 3579,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 50043
+  },
+  "cost": {
+    "inputUsd": 0,
+    "outputUsd": 0,
+    "totalUsd": 0,
+    "pricingSource": "unknown"
+  }
+}

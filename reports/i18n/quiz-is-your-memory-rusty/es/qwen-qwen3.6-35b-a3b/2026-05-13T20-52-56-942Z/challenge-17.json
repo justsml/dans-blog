@@ -1,0 +1,48 @@
+{
+  "index": 16,
+  "attempt": 1,
+  "originalTitle": "Memory Optimization",
+  "translatedTitle": "Optimización de memoria",
+  "translation": {
+    "title": "Optimización de memoria",
+    "group": "Mejores prácticas",
+    "options": [
+      {
+        "text": "16 bytes",
+        "hint": "Considera los requisitos de alineación"
+      },
+      {
+        "text": "24 bytes"
+      },
+      {
+        "text": "32 bytes",
+        "hint": "String es más grande que un solo puntero."
+      },
+      {
+        "text": "Depende de la plataforma",
+        "hint": "Especificamos un sistema de 64 bits"
+      }
+    ],
+    "questionProse": [
+      "En una plataforma Rust 64-bit típica y actual, ¿cuál es el tamaño de esta estructura?"
+    ],
+    "explanationProse": [
+      "Analicemos la distribución de memoria y la optimización de las estructuras:",
+      "Consideraciones sobre la distribución de memoria:\n      1. Requisitos de alineación:\n         - u32: alineación de 4 bytes\n         - String: alineación de 8 bytes y tamaño de 24 bytes en objetivos 64-bit comunes\n         - bool: alineación de 1 byte\n\n      2. Estrategias de ordenamiento de campos:\n         - Agrupa campos de tamaño similar\n         - Coloca primero los de mayor alineación\n         - Considera la optimización de líneas de caché\n\n      Mejores prácticas:\n      1. Para FFI o suposiciones de layout estable, usa un `repr(...)` adecuado\n      2. Usa tamaños de entero apropiados\n      3. Considera usar `Option` para campos opcionales\n      4. Mide el tamaño de estructuras críticas con `std::mem::size_of`\n      5. Usa `#[repr(packed)]` con cuidado: puede afectar al rendimiento"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Optimización de memoria\",\n  \"group\": \"Mejores prácticas\",\n  \"options\": [\n    {\n      \"text\": \"16 bytes\",\n      \"hint\": \"Considera los requisitos de alineación\"\n    },\n    {\n      \"text\": \"24 bytes\"\n    },\n    {\n      \"text\": \"32 bytes\",\n      \"hint\": \"String es más grande que un solo puntero.\"\n    },\n    {\n      \"text\": \"Depende de la plataforma\",\n      \"hint\": \"Especificamos un sistema de 64 bits\"\n    }\n  ],\n  \"questionProse\": [\n    \"En una plataforma Rust 64-bit típica y actual, ¿cuál es el tamaño de esta estructura?\"\n  ],\n  \"explanationProse\": [\n    \"Analicemos la distribución de memoria y la optimización de las estructuras:\",\n    \"Consideraciones sobre la distribución de memoria:\\n      1. Requisitos de alineación:\\n         - u32: alineación de 4 bytes\\n         - String: alineación de 8 bytes y tamaño de 24 bytes en objetivos 64-bit comunes\\n         - bool: alineación de 1 byte\\n\\n      2. Estrategias de ordenamiento de campos:\\n         - Agrupa campos de tamaño similar\\n         - Coloca primero los de mayor alineación\\n         - Considera la optimización de líneas de caché\\n\\n      Mejores prácticas:\\n      1. Para FFI o suposiciones de layout estable, usa un `repr(...)` adecuado\\n      2. Usa tamaños de entero apropiados\\n      3. Considera usar `Option` para campos opcionales\\n      4. Mide el tamaño de estructuras críticas con `std::mem::size_of`\\n      5. Usa `#[repr(packed)]` con cuidado: puede afectar al rendimiento\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 995,
+    "outputTokens": 3269,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 18970
+  },
+  "cost": {
+    "inputUsd": 0,
+    "outputUsd": 0,
+    "totalUsd": 0,
+    "pricingSource": "unknown"
+  }
+}

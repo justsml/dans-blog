@@ -1,0 +1,49 @@
+{
+  "index": 6,
+  "attempt": 1,
+  "originalTitle": "Struct Lifetimes",
+  "translatedTitle": "Duraciones de las estructuras",
+  "translation": {
+    "title": "Duraciones de las estructuras",
+    "group": "Duraciones",
+    "options": [
+      {
+        "text": "Se compila correctamente",
+        "hint": "Las estructuras con referencias requieren anotaciones de duración"
+      },
+      {
+        "text": "Error: falta el especificador de duración"
+      },
+      {
+        "text": "Error: incompatibilidad de duraciones",
+        "hint": "Aún no hemos especificado ninguna duración"
+      },
+      {
+        "text": "Error: referencia no válida",
+        "hint": "Las referencias son válidas, pero falta algo más"
+      }
+    ],
+    "questionProse": [
+      "¿Compilará esta definición de estructura? ¿Por qué sí o por qué no?"
+    ],
+    "explanationProse": [
+      "El código falla porque las estructuras que contienen referencias deben especificar duraciones. Así es cómo solucionarlo:",
+      "Patrones comunes:",
+      "Mejores prácticas:\n      1. Usa tipos propios (String) cuando necesites almacenar datos de forma indefinida\n      2. Usa referencias cuando la duración de la estructura sea claramente menor que la de los datos\n      3. Considera múltiples parámetros de duración cuando las referencias puedan tener vidas distintas\n      4. Documenta las relaciones de duración en estructuras complejas"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Duraciones de las estructuras\",\n  \"group\": \"Duraciones\",\n  \"options\": [\n    {\n      \"text\": \"Se compila correctamente\",\n      \"hint\": \"Las estructuras con referencias requieren anotaciones de duración\"\n    },\n    {\n      \"text\": \"Error: falta el especificador de duración\"\n    },\n    {\n      \"text\": \"Error: incompatibilidad de duraciones\",\n      \"hint\": \"Aún no hemos especificado ninguna duración\"\n    },\n    {\n      \"text\": \"Error: referencia no válida\",\n      \"hint\": \"Las referencias son válidas, pero falta algo más\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Compilará esta definición de estructura? ¿Por qué sí o por qué no?\"\n  ],\n  \"explanationProse\": [\n    \"El código falla porque las estructuras que contienen referencias deben especificar duraciones. Así es cómo solucionarlo:\",\n    \"Patrones comunes:\",\n    \"Mejores prácticas:\\n      1. Usa tipos propios (String) cuando necesites almacenar datos de forma indefinida\\n      2. Usa referencias cuando la duración de la estructura sea claramente menor que la de los datos\\n      3. Considera múltiples parámetros de duración cuando las referencias puedan tener vidas distintas\\n      4. Documenta las relaciones de duración en estructuras complejas\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 939,
+    "outputTokens": 3146,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 19603
+  },
+  "cost": {
+    "inputUsd": 0,
+    "outputUsd": 0,
+    "totalUsd": 0,
+    "pricingSource": "unknown"
+  }
+}

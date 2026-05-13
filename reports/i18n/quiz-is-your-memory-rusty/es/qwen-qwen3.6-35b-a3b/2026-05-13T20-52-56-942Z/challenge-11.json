@@ -1,0 +1,52 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "Understanding Rc",
+  "translatedTitle": "Entendiendo Rc",
+  "translation": {
+    "title": "Entendiendo Rc",
+    "group": "Recuento de Referencias",
+    "options": [
+      {
+        "text": "Rc se utiliza en entornos de un solo hilo"
+      },
+      {
+        "text": "Rc se utiliza en entornos multihilo",
+        "hint": "Piensa en la seguridad de hilos: Rc no tiene sincronización"
+      },
+      {
+        "text": "Rc solo se usa para datos inmutables",
+        "hint": "Rc puede combinarse con mutabilidad interior"
+      },
+      {
+        "text": "Rc solo se usa para datos mutables",
+        "hint": "Rc funciona tanto con datos mutables como inmutables"
+      },
+      {
+        "text": "Rc es para control remoto",
+        "hint": "Aunque es ingenioso, ¡no es un concepto de programación!"
+      }
+    ],
+    "questionProse": [
+      "¿Cuándo deberías usar Rc (Recuento de Referencias) en Rust?\n\n      Considera este ejemplo:"
+    ],
+    "explanationProse": [
+      "Rc (Recuento de Referencias) está diseñado específicamente para escenarios de un solo hilo donde necesitas propiedad compartida.\n\n      Casos de uso comunes:",
+      "Puntos clave:\n      1. Usa Rc cuando:\n         - Varias partes de tu código necesiten propiedad\n         - Estés seguro de que el intercambio es de un solo hilo\n         - La duración no pueda determinarse de forma estática\n\n      2. Usa Arc en su lugar cuando:\n         - Necesites intercambio seguro para hilos\n         - Múltiples hilos necesiten propiedad\n\n      3. Limitaciones de Rc:\n         - No es seguro para hilos\n         - Ligera sobrecarga en tiempo de ejecución\n         - No puede romper ciclos de referencia automáticamente\n\n      Mejores prácticas:\n      1. Prefiere la propiedad única siempre que puedas\n      2. Usa Rc para propiedad compartida en un solo hilo\n      3. Usa Arc para escenarios multihilo\n      4. Combínalo con Weak para evitar ciclos de referencia"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Entendiendo Rc\",\n  \"group\": \"Recuento de Referencias\",\n  \"options\": [\n    {\n      \"text\": \"Rc se utiliza en entornos de un solo hilo\"\n    },\n    {\n      \"text\": \"Rc se utiliza en entornos multihilo\",\n      \"hint\": \"Piensa en la seguridad de hilos: Rc no tiene sincronización\"\n    },\n    {\n      \"text\": \"Rc solo se usa para datos inmutables\",\n      \"hint\": \"Rc puede combinarse con mutabilidad interior\"\n    },\n    {\n      \"text\": \"Rc solo se usa para datos mutables\",\n      \"hint\": \"Rc funciona tanto con datos mutables como inmutables\"\n    },\n    {\n      \"text\": \"Rc es para control remoto\",\n      \"hint\": \"Aunque es ingenioso, ¡no es un concepto de programación!\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Cuándo deberías usar Rc (Recuento de Referencias) en Rust?\\n\\n      Considera este ejemplo:\"\n  ],\n  \"explanationProse\": [\n    \"Rc (Recuento de Referencias) está diseñado específicamente para escenarios de un solo hilo donde necesitas propiedad compartida.\\n\\n      Casos de uso comunes:\",\n    \"Puntos clave:\\n      1. Usa Rc cuando:\\n         - Varias partes de tu código necesiten propiedad\\n         - Estés seguro de que el intercambio es de un solo hilo\\n         - La duración no pueda determinarse de forma estática\\n\\n      2. Usa Arc en su lugar cuando:\\n         - Necesites intercambio seguro para hilos\\n         - Múltiples hilos necesiten propiedad\\n\\n      3. Limitaciones de Rc:\\n         - No es seguro para hilos\\n         - Ligera sobrecarga en tiempo de ejecución\\n         - No puede romper ciclos de referencia automáticamente\\n\\n      Mejores prácticas:\\n      1. Prefiere la propiedad única siempre que puedas\\n      2. Usa Rc para propiedad compartida en un solo hilo\\n      3. Usa Arc para escenarios multihilo\\n      4. Combínalo con Weak para evitar ciclos de referencia\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1067,
+    "outputTokens": 5032,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 65863
+  },
+  "cost": {
+    "inputUsd": 0,
+    "outputUsd": 0,
+    "totalUsd": 0,
+    "pricingSource": "unknown"
+  }
+}
