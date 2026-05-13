@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: stop-the-angularjs-hate
+- Locale: hi
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2015-03-10--stop-the-angularjs-hate/hi/index.mdx
+- Validation: passed
+- Runtime seconds: 2.28
+- Input tokens: 5471
+- Output tokens: 1676
+- Thinking tokens: unknown
+- Cached input tokens: 2048
+- Cache write tokens: 0
+- Estimated cost: $0.000515
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: AngularJS ट्रिक्स
@@ -115,3 +133,4 @@ user-widget
   1.  Mustache टेम्प्लेटिंग से HTML स्ट्रिंग बनाएं (या सीधे DOM)
   1.  यदि संभव हो तो रेंडर किया गया कंटेंट `localStorage` में कैश करें
   1.  (वैकल्पिक) अब कंटेंट को फिर से रेंडर करने के लिए एक इवेंट लिस्नर जोड़ें। मैंने इवेंट नाम `refresh.<class-name>` को मानकीकृत किया है।
+````
