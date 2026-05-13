@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: amazing-resources
+- Locale: hi
+- Model: deepseek/deepseek-v4-flash
+- Target: src/content/posts/2015-02-26--amazing-resources/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 105.44
+- Input tokens: 9808
+- Output tokens: 16100
+- Thinking tokens: unknown
+- Cached input tokens: 1152
+- Cache write tokens: 0
+- Estimated cost: $0.005723
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: डेवलपर्स के लिए बेहतरीन मुफ्त UI डिज़ाइन संसाधन
@@ -189,3 +207,4 @@ For mockups, graphics, screenshots, lightweight image editing, or fast browser-b
 
 Changelog: 2026-04 — पेज को मनुष्यों और SEO के लिए पुनर्व्यवस्थित किया, शीर्षक और विवरण बेहतर किए, और Assistant UI, AI SDK Elements, Aceternity UI, Shadcnblocks, Tailark, KokonutUI पैटर्न और Tool UI जोड़े।
 Changelog: 2025-09 — लिंक अपडेट किए, पुराने संसाधनों को ताज़ा किया, और आधुनिक आइकन, कंट्रास्ट और डिज़ाइन टूल जोड़े।
+````
