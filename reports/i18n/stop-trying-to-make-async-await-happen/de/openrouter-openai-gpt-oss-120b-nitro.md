@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: stop-trying-to-make-async-await-happen
+- Locale: de
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2018-10-03--stop-trying-to-make-async-await-happen/de/index.mdx
+- Validation: passed
+- Runtime seconds: 6.95
+- Input tokens: 10747
+- Output tokens: 3010
+- Thinking tokens: unknown
+- Cached input tokens: 5888
+- Cache write tokens: 0
+- Estimated cost: $0.000961
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Async/await nicht erzwingen
@@ -195,3 +213,4 @@ Helfen Sie, die #PromiseTruth zu verbreiten, und teilen Sie diesen Artikel. ‚ù§Ô
 
 * [Daniel Brain](https://medium.com/@bluepnume/even-with-async-await-you-probably-still-need-promises-9b259854c161)
 * [Eric Elliott](https://x.com/_ericelliott?lang=en)
+````
