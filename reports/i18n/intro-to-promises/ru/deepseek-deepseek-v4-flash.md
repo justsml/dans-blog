@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: intro-to-promises
+- Locale: ru
+- Model: deepseek/deepseek-v4-flash
+- Target: src/content/posts/2018-08-01--intro-to-promises/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 61.61
+- Input tokens: 3961
+- Output tokens: 3746
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.001603
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Введение в промисы
@@ -104,3 +122,4 @@ API промисов на самом деле состоит из небольш
 * `Promise.reject(Error)` — Создаёт промис с ошибкой, запускает последующий `.catch()`
 * `Promise.all([...promises])` — Ожидает завершения ВСЕХ промисов из массива
 * `Promise.race([...promises])` — Разрешается, как только первый промис разрешится
+````
