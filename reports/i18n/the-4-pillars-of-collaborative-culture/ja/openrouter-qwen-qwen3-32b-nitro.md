@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: the-4-pillars-of-collaborative-culture
+- Locale: ja
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2021-03-03--the-4-pillars-of-collaborative-culture/ja/index.mdx
+- Validation: deferred
+- Runtime seconds: 12.92
+- Input tokens: 5265
+- Output tokens: 5348
+- Thinking tokens: unknown
+- Cached input tokens: 512
+- Cache write tokens: 0
+- Estimated cost: $0.001705
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: ''
@@ -110,3 +128,4 @@ credit: Photo by fauxels from Pexels
 - 社員の最初の提案までの平均時間はどれくらいですか？数日？数か月？数年？？？？！
 - チームの全員が定期的にアイデアを共有していますか？
 - 人々は安全を感じていますか？脆弱性を示すことができますか？使命を疑問視できますか？
+````
