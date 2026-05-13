@@ -3,16 +3,16 @@
 - Locale: fr
 - Model: openrouter/openai/gpt-oss-120b:nitro
 - Target: src/content/posts/2025-09-15--serverless-database-magic/fr/index.mdx
-- Validation: rejected: direct AI SDK translation failed
-- Runtime seconds: 2.71
-- Input tokens: 6139
-- Output tokens: 3633
+- Validation: deferred
+- Runtime seconds: 5.26
+- Input tokens: 6013
+- Output tokens: 3365
 - Thinking tokens: unknown
-- Cached input tokens: 2048
+- Cached input tokens: 1792
 - Cache write tokens: 0
-- Estimated cost: $0.000893
+- Estimated cost: $0.000840
 - Pricing source: local-openrouter-estimate
-- Note: Command failed: bun run i18n:validate --slug serverless-database-magic --locale fr
+- Note: Generated through the direct AI SDK chunked translator.
 ## Raw Output
 
 ````mdx
@@ -43,7 +43,7 @@ cover_credit: ©️ 2025 Dan Levy
 
 Here is the decision rule I wish I had used earlier:
 
-<p class="inset">Si vos données peuvent être reconstruites à partir de fichiers et que les utilisateurs les lisent principalement, essayez d’abord une base de données sur stockage d’objets. Si les utilisateurs écrivent constamment, commencez avec une vraie base de données et arrêtez d’essayer de faire passer S3 pour une base de données.</p>
+<p class="inset">Si vos données peuvent être reconstruites à partir de fichiers et que les utilisateurs les lisent principalement, essayez d’abord une base de données sur stockage d’objets. Si les utilisateurs écrivent en continu, commencez avec une vraie base de données et arrêtez d’essayer de faire passer S3 pour une base de données.</p>
 
 That is the useful line. Not "serverless is the future." Not "vector databases changed everything." Those sentences have already been printed on enough conference lanyards.
 
@@ -51,11 +51,11 @@ AI did change the shape of a lot of search problems. Suddenly small teams wanted
 
 But many workloads do not. They are read-heavy, rebuildable, and tolerant of a short delay between content changing and search catching up. Documentation. Catalog snapshots. Static exports. Internal knowledge bases. Local analytics. Prototype RAG systems. For those, a new class of tools has made the boring architecture unusually powerful: build an index, store it as files, serve it over HTTP.
 
-Snapshot note : l’écosystème évolue rapidement. Le nombre d’étoiles, les libellés de fonctionnalités et les chiffres de performance ci‑dessous sont une capture de septembre 2025, pas un tableau de scores intemporel. Considérez‑les comme une indication, puis vérifiez la documentation actuelle avant de baser une migration en production sur une case quelconque.
+Note de mise à jour : l’écosystème évolue rapidement. Les compteurs d’étoiles, les libellés de fonctionnalités et les chiffres de performance ci‑dessous sont un instantané de septembre 2025, pas un tableau de bord intemporel. Considérez‑les comme une orientation, puis vérifiez la documentation actuelle avant de baser une migration en production sur une case quelconque.
 
-## Un base de données sous un autre nom
+## Une base de données sous un autre nom
 
-Ces magasins de données sans serveur et compatibles CDN sont utiles pour des cas de taille moyenne, approximativement 1 000 à 1 000 000 d’enregistrements ou quelques Go, où l’infrastructure de base de données traditionnelle peut représenter plus de cérémonial que de valeur :
+Ces magasins de données sans serveur et compatibles CDN sont utiles pour des cas de taille moyenne, environ 1 000 à 1 000 000 d’enregistrements ou quelques gigaoctets, où l’infrastructure de bases de données traditionnelles peut représenter plus de cérémonial que de valeur :
 
 - **Pagefind** (2022, ~4,5 K ⭐) : approche purement statique – compilez une fois, recherchez indéfiniment, aucune exigence backend
 - **Orama** (2023, ~8 K ⭐) : solution universelle fonctionnant partout, des navigateurs aux fonctions serverless
@@ -63,9 +63,9 @@ Ces magasins de données sans serveur et compatibles CDN sont utiles pour des ca
 - **LanceDB** (2023, ~4 K ⭐) : capacités multimodales d’entreprise avec une architecture basée sur disque
 - **DuckDB-WASM** (2019, ~23 K ⭐) : base de données analytique SQL complète fonctionnant dans les navigateurs via WebAssembly
 
-Le point commun est simple : conserver les données durables dans des fichiers ou un stockage d’objets, puis les interroger depuis un navigateur, une fonction edge, un worker ou un service léger. Cela n’élimine pas la complexité. Elle est déplacée vers les pipelines de construction, la fraîcheur de l’index, l’invalidation du cache et les capacités du client. Ce qui constitue un compromis tout à fait raisonnable lorsque les lectures dominent.
+Le mouvement commun est simple : conserver les données durables dans des fichiers ou du stockage d’objets, puis les interroger depuis un navigateur, une fonction edge, un worker ou un service léger. Cela n’élimine pas la complexité. Elle est déplacée vers les pipelines de construction, la fraîcheur des index, l’invalidation du cache et les capacités du client. Ce qui constitue un compromis tout à fait valable lorsque les lectures dominent.
 
-### Battle of the Checkboxes
+### Bataille des cases à cocher
 
 | Feature | [Pagefind](https://pagefind.app) | [Orama](https://orama.com) | [Chroma](https://www.trychroma.com/) | [LanceDB](https://lancedb.com) | [DuckDB-WASM](https://duckdb.org/docs/api/wasm) |
 |---------|----------|--------|---------|----------|----------|
@@ -76,18 +76,20 @@ Le point commun est simple : conserver les données durables dans des fichiers
 | **Write Support** | Build-time only | Full CRUD | Full CRUD | Full CRUD | Full SQL CRUD |
 | **Performance** | Sub-100ms | 0.0001ms - 100ms | Sub-100ms | 3-5ms vector, 50ms FTS | 10ms-1s (complex SQL) |
 
-*Snapshot de septembre 2025 : Chroma nécessite un environnement serveur et ne supporte pas le stockage direct d’objets S3 comme le font les outils basés sur des fichiers d’objet ([issue #1736](https://github.com/chroma-core/chroma/issues/1736)).
+*Snapshot de septembre 2025 : Chroma nécessite un runtime serveur et ne supporte pas le stockage direct d’objets S3 comme le font les outils basés sur des fichiers ([issue #1736](https://github.com/chroma-core/chroma/issues/1736)).
 
 ### Exemples d’implémentation
 
-Les différences de syntaxe révèlent la vraie rupture : la recherche au moment de la construction, la recherche en mémoire, le stockage vectoriel natif, les tables multimodales et le SQL dans le navigateur ne constituent pas la même catégorie de produit simplement parce qu’ils apparaissent tous dans des démonstrations d’IA.
+Les différences de syntaxe révèlent la vraie fracture : recherche à la compilation, recherche en mémoire, stockage vectoriel natif, tables multimodales et SQL côté navigateur ne constituent pas la même catégorie de produit simplement parce qu’ils apparaissent tous dans des démos IA.
 
-#### Recherche de site statique avec Pagefind
+#### Recherche statique de site avec Pagefind
 
 ```html
+--- CHUNK END ---
+```
 
-<link href="/pagefind/pagefind-ui.css" rel="stylesheet">
-<script src="/pagefind/pagefind-ui.js"></script>
+<link href="../pagefind/pagefind-ui.css" rel="stylesheet">
+<script src="../pagefind/pagefind-ui.js"></script>
 <div id="search"></div>
 <script>new PagefindUI({ element: "#search" });</script>
 
@@ -105,7 +107,7 @@ const func = getRegistry()
   .get("openai")
   ?.create({ model: "text-embedding-ada-002" });
 
-// Schéma avec génération automatique d’embeddings
+// Schéma avec génération automatique d'embeddings
 const documentsSchema = LanceSchema({
   text: func.sourceField(new Utf8()),
   vector: func.vectorField(),
@@ -114,8 +116,8 @@ const documentsSchema = LanceSchema({
 
 const table = await db.createEmptyTable("documents", documentsSchema);
 await table.add([
-  { text: "machine learning concepts", category: "research" },
-  { text: "deep learning fundamentals", category: "research" }
+  { text: "concepts d'apprentissage automatique", category: "research" },
+  { text: "fondamentaux du deep learning", category: "research" }
 ]);
 ```
 
@@ -128,7 +130,7 @@ const db = await lancedb.connect("data/multimodal-db");
 const table = db.getTable("documents");
 
 // Combinaison SQL + recherche vectorielle
-const results = await table.search("machine learning concepts")
+const results = await table.search("concepts d'apprentissage automatique")
   .where("category = 'research'")
   .limit(10)
   .toArray();
@@ -205,9 +207,9 @@ const results = await collection.query({
 
 **Choisir Orama quand :**
 - Vous construisez des tableaux de bord, du e‑commerce ou des applications dynamiques
-- Vous avez besoin de mises à jour en temps réel et de performances < 100 ms
+- Vous avez besoin de mises à jour en temps réel et de performances sous 100 ms
 - Vous voulez une flexibilité de déploiement du navigateur aux fonctions edge
-- *Exemple : SaaS avec catalogues de produits dynamiques*
+- *Exemple : SaaS avec catalogues produits dynamiques*
 
 **Choisir Chroma quand :**
 - Vous construisez des applications RAG ou des bases de connaissances IA
@@ -224,41 +226,41 @@ const results = await collection.query({
 **Choisir DuckDB-WASM quand :**
 - Vous avez besoin de capacités SQL complètes dans les navigateurs ou fonctions edge
 - Vous traitez des charges de travail analytiques et des requêtes complexes
-- Vous voulez traiter directement des fichiers CSV/Parquet depuis S3
+- Vous voulez consommer directement des fichiers CSV/Parquet depuis S3
 - *Exemple : tableau de bord BI avec requêtes SQL ad‑hoc*
 
 ## La règle de décision
 
-La question pratique n’est pas « quel base de données est la meilleure ? »
+La question pratique n’est pas « quel base de données est la meilleure ? »
 
-La question pratique est : quel type de changement le système doit‑il absorber ?
+La question pratique est : quel type de changement le système doit‑il absorber ?
 
-- **Contenu reconstruit :** Pagefind, instantanés Orama, fichiers Lance, DuckDB sur Parquet. Gardez‑le statique tant que cela ne devient pas un problème.
-- **Écritures fréquentes :** Postgres, serveur Chroma, service de recherche géré, ou pipeline d’indexation basé sur une file d’attente. Vous avez besoin de coordination, pas de bonnes vibrations.
-- **Résultats spécifiques à l’utilisateur :** utilisez un vrai backend. Le stockage d’objets n’est pas un modèle d’autorisation.
-- **Analytique sur fichiers :** DuckDB est incroyablement utile. Laissez SQL faire les choses SQL.
-- **Recherche multimodale ou vectorielle lourde :** LanceDB et Chroma méritent d’être testés sur vos données réelles, pas sur un benchmark README.
+- **Contenu reconstruit** : Pagefind, instantanés Orama, fichiers Lance, DuckDB sur Parquet. Gardez‑le statique tant que cela ne pose pas problème.
+- **Écritures fréquentes** : Postgres, serveur Chroma, service de recherche géré, ou pipeline d’indexation basé sur une file d’attente. Vous avez besoin de coordination, pas de bonnes vibrations.
+- **Résultats spécifiques à l’utilisateur** : utilisez un vrai backend. Le stockage d’objets n’est pas un modèle d’autorisation.
+- **Analytique sur fichiers** : DuckDB est incroyablement utile. Laissez SQL faire ce que SQL sait faire.
+- **Recherche multimodale ou vectorielle lourde** : LanceDB et Chroma méritent d’être testés sur vos données réelles, pas sur un benchmark README.
 
 Le chemin heureux est bon marché. Ce sont les cas limites qui décident de l’architecture.
 
-## Le tableau plus large
+## Le tableau d’ensemble
 
-Ces outils réduisent l’infrastructure minimale viable pour une recherche utile. Cela compte. En 2020, « recherche sémantique » impliquait souvent une pile de services, beaucoup de code d’accroche, et quelqu’un expliquant les index vectoriels lors d’une réunion où la moitié de l’audience voulait déjeuner. En 2025, une petite équipe peut prototyper la même idée produit avec des fichiers, des embeddings et un week‑end.
+Ces outils réduisent l’infrastructure minimale viable pour une recherche utile. C’est important. En 2020, « recherche sémantique » impliquait souvent une pile de services, beaucoup de code d’accroche, et quelqu’un expliquant les index vectoriels lors d’une réunion où la moitié de l’audience voulait déjeuner. En 2025, une petite équipe peut prototyper la même idée produit avec des fichiers, des embeddings et un week‑end.
 
 Cela ne signifie pas que chaque champ de recherche doit devenir un système RAG. Cela signifie que la première version n’a plus besoin d’hériter d’une infrastructure de production avant d’avoir des preuves de production.
 
-Même AWS se dirige dans cette direction avec son travail de recherche vectorielle adjacente à S3, ce qui est un signal utile : le stockage d’objets n’est plus seulement le grenier où les vieux fichiers finissent. Il devient une surface de requête.
+Même AWS avance dans cette direction avec son travail de recherche vectorielle adjacent à S3, ce qui est un signal utile : le stockage d’objets n’est plus seulement le grenier où vont les vieux fichiers. Il devient une surface de requête.
 
 ## Commencez à expérimenter
 
-1. **Choisissez d’abord le schéma de mise à jour** : construction, lot horaire, écritures en direct, ou résultats par utilisateur.
-2. **Prototypiez avec l’outil le plus simple et honnête** : Pagefind pour du HTML statique, DuckDB pour les fichiers analytiques, Orama pour la recherche d’application légère, LanceDB ou Chroma pour le travail vectoriel lourd.
+1. **Choisissez d’abord le modèle de mise à jour** : construction, lot horaire, écritures en direct, ou résultats par utilisateur.
+2. **Prototypiez avec l’outil le plus simple et honnête** : Pagefind pour du HTML statique, DuckDB pour des fichiers analytiques, Orama pour une recherche d’application légère, LanceDB ou Chroma pour du travail vectoriel lourd.
 3. **Mesurez la partie laide** : temps d’indexation, fraîcheur, taille du bundle, permissions, et la première requête après un démarrage à froid.
-4. **Promouvez uniquement quand la douleur est réelle** : une base de données gérée devient plus facile à justifier après que la version basée sur fichiers a montré exactement où elle fléchit.
+4. **Promouvez uniquement quand la douleur est réelle** : une base de données gérée devient plus justifiable après que la version fichier a montré exactement où elle fléchit.
 
-*Consultez mon [guide pratique Pagefind][1] pour une implémentation concrète, ou explorez l’écosystème croissant des bases de données natives edge qui redéfinissent la donnée à grande échelle.*
+*Consultez mon [guide pratique Pagefind][1] pour une implémentation concrète, ou explorez l’écosystème croissant des bases de données natives edge qui reconfigurent les données à grande échelle.*
 
-> **Avertissement :** J’utilise Pagefind depuis des années et suis devenu contributeur en 2025. J’ai expérimenté Orama et Chroma pour des projets plus modestes et j’explore LanceDB pour des applications IA plus importantes. Aucun lien financier avec ces projets — seulement un vif intérêt pour l’évolution du paysage des bases de données.
+> **Avertissement :** J’utilise Pagefind depuis des années et suis devenu contributeur en 2025. J’ai expérimenté Orama et Chroma pour de plus petits projets et j’explore LanceDB pour de plus grandes applications IA. Aucun lien financier avec ces projets — juste un vif intérêt pour l’évolution du paysage des bases de données.
 
 [1]: https://danlevy.net/you-might-not-need-algolia/
 ````
