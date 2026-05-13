@@ -1,106 +1,101 @@
 ---
-social_image: ../desktop-social.webp
-title: ''
-subTitle: ¿Público? ¿Privado
-date: '2018-10-27'
-modified: '2024-07-30'
-tags:
-  - tokens
-  - api-keys
-  - secrets
-  - security
-  - nodejs
-  - json-web-tokens
-category: Guides
-subCategory: security
-cover: ../dayne-topkin-78982-unsplash.webp
-cover_mobile: ../w300_dayne-topkin-78982-unsplash.webp
-cover_icon: ../icon_dayne-topkin-78982-unsplash.webp
+title: "Protegiendo tus Tokens, Claves de API y Secretos"
+subTitle: ¿Público? ¿Privado? ¿Qué?
 ---
-## ¿Cuándo debes proteger tus tokens?
 
-<!--  Para el propósito de este artículo trataremos los siguientes términos como relacionados: . **No son intercambiables** a pesar de que la mayoría de la documentación y [StackOverflow](https://stackoverflow.com/questions/51698672/how-to-secure-my-api-key) los utilice como tal. -->
+## ¿Cuándo proteger tus tokens?
+
+<!--  For the purpose of this article we'll treat the following terms as related: . **They are not interchangable** despite most documentation and [StackOverflow](https://stackoverflow.com/questions/51698672/how-to-secure-my-api-key) answers using them as such. -->
+
 
 <!-- (Google Maps Credentials, AWS S3 Keys, Geocoding Service, etc.)  -->
 
-> ¡La protección de claves y tokens de API es **crucial**!
 
-Un solo error puede llevar a la pérdida de control de tu servidor y datos ante los hackers.
+> ¡Asegurar las claves de API y tokens es **criticamente importante**!
 
-No debería ser tan difícil determinar si un token específico debe ocultarse, incluso basándose en la documentación oficial.
+¡Un solo error puede llevar a perder el control de tu servidor y datos ante hackers!
 
-Es aún peor por la sopa de términos relacionados que encontrarás: _tokens_, _keys_, _credentials_, _secrets_, _private_ y _public_.  
+No debería ser tan difícil determinar si un token en particular debe ocultarse, ¡incluso basándose en documentación oficial!
 
-Reframemos esto como una distinción entre `secrets` y `non-secrets`:  
+A menudo empeora con la sopa de términos relacionados que encontrarás: _tokens_, _claves_, _credenciales_, _secretos_, _privado_ y _público_.
 
-* 🔒 [`Claves secretas`](#-claves-secretas) **DEBEN** mantenerse ocultas. Generalmente **NUNCA** deben salir de tu servidor privado (o servicio - como Heroku, Netlify o Travis-CI).  
-* 🌍 [`Claves no secretas`](#-claves-no-secretas) describen cadenas que pueden compartirse libremente e incluirse en solicitudes desde el navegador.  
+Reformulemos esto como entre `secreto` y `no-secreto`.
 
-<br />  
+* 🔒 [`Claves secretas`](#-claves-secretas) DEBEN mantenerse ocultas. En general, NUNCA deberían salir de tu servidor privado (o servicio — como Heroku, Netlify o Travis-CI).
+* 🌍 [`Claves no secretas`](#-claves-no-secretas) describe cadenas que podrían compartirse libremente e incluirse en solicitudes del navegador.
 
----------------------------------------------  
+
+<br />
+
+---------------------------------------------
+
 
 ## 🔒 `Claves secretas`
 
-** ‼️ Importante:** Las `claves secretas` **DEBEN** ignorarse en Git _Y_ omitirse en todo el código del navegador. [Cómo usar dotenv](#-cómo-manage-secrets-safely)
+** ‼️ Importante:** Las `claves secretas` **DEBEN** ser ignoradas por Git _Y_ omitirse en todo código del navegador. [_Cómo usar dotenv_](#-como-manejar-los-secretos-de-forma-segura)
 
 <br />
 
-_¿Cómo sabes cuándo estás trabajando con una `clave secreta`?_
+_¿Cómo sabes cuándo estás lidiando con una `clave secreta`?_
 
 <br />
 
-**👍 Regla general:** los servidores que devuelven `errores de CORS` no tienen soporte en el navegador. Esto indica claramente que **DEBES** usar un proxy para el servicio, tratándolo como si fuera secreto.
+**👍 Regla general:** los servidores que devuelven `errores de CORS` carecen de soporte para navegador. Esto indica fuertemente que **DEBES** usar un proxy para el servicio, tratándolo como si fuera `secreto`.
 
-**👍 Regla general:** los servicios costosos deberían (casi) siempre usarse con proxy u ocultarse.
+**👍 Regla general:** los servicios costosos deberían (casi) siempre usar proxy u ocultarse.
 
-**👍 Regla general:** si realizas una operación de escritura (**subida de archivos, inserción de fila en la base de datos**), es posible que estés trabajando con `claves secretas`.
+**👍 Regla general:** si realizas una operación de escritura (**subida de archivos, inserción en base de datos**), podrías estar lidiando con `claves secretas`.
+
 
 <br />
 
-**_Casos de uso y características:_** `Claves secretas`
 
-- Autenticación a largo plazo (credenciales, tokens de acceso, JSON Web Tokens)
-- Autenticación temporal (tokens de OAuth, almacenamiento de sesiones)
-- Acceso a servicios pagados/costosos (para autenticación, geocodificación, almacenamiento de archivos, etc.)
+**_Casos de uso y características:_** Claves `secretas`
+
+- Autorización a largo plazo (credenciales, tokens de acceso, JSON Web Tokens)
+- Autorización a corto plazo (tokens OAuth, almacenamiento de sesiones)
+- Acceso a servicios costosos/de pago (para autenticación, geocodificación, almacenamiento de archivos, etc.)
 - Parte privada de un par público/privado (RECAPTCHA, Stripe, Auth0)
-- Credenciales de servicio (Email/SMTP, LDAP/Servicios de directorio)
+- Credenciales de servicio (Email/SMTP, LDAP/Servicios de Directorio)
 - Cifrado de datos y verificación de integridad
 
-### Lista de verificación: Manejo seguro de claves secretas
+### Lista de verificación: Manejo de Secretos de Forma Segura
 
-#### Resumen rápido
+#### Resumen Rápido
 
-Complete los siguientes pasos para **eliminar claves secretas de su código**:
+Completa los siguientes pasos para **eliminar secretos de tu código:**
 
-- [ ] Reemplace claves codificadas en el código con variables de entorno. Por ejemplo: `process.env.API_SECRET`  
-- [ ] Use una biblioteca como [`dotenv`](https://github.com/motdotla/dotenv#dotenv) junto con un archivo `.env`. Agregue sus claves secretas previamente codificadas al archivo `.env`.  
-- [ ] ¡Agregue una línea `.env` en su archivo `.gitignore`!  
+- [ ] Reemplaza claves hardcodeadas con variables de entorno. Ej: `process.env.API_SECRET`
+- [ ] Usa una biblioteca como [`dotenv`](https://github.com/motdotla/dotenv#dotenv) junto con un archivo `.env`. Agrega tus secretos previamente hardcodeados al archivo `.env`.
+- [ ] ¡Agrega una línea `.env` en tu archivo `.gitignore`!
 
-> **NO** cree un archivo `.env` en servidores implementados. Use las herramientas de gestión de variables de entorno proporcionadas por sus servicios de alojamiento (por ejemplo, [Heroku](https://devcenter.heroku.com/articles/config-vars), Netlify, AWS EC2): por ejemplo, **panel de control o línea de comandos**.  
+> **NO** crees un archivo `.env` en servidores desplegados. Usa la herramienta de gestión de variables de entorno proporcionada por tu servicio de alojamiento (por ejemplo, [Heroku](https://devcenter.heroku.com/articles/config-vars), Netlify, AWS EC2): **panel de control o línea de comandos.**
 
-<blockquote><h2 style="margin: 0.125em 0; text-align: center;">Artículo relacionado: <a href="../securely-using-environment-variables-in-nodejs/">Usar dotenv de forma segura en NodeJS</a></h2></blockquote>  
 
------------------------------------  
+<blockquote><h2 style="margin: 0.125em 0; text-align: center;">Artículo Relacionado: <a href="/securely-using-environment-variables-in-nodejs/">Usando dotenv de forma segura en NodeJS</a></h2></blockquote>
+
+-----------------------------------
+
 
 ## 🌍 `Claves no secretas`
 
-**👍 Regla práctica:** siempre que una clave deba enviarse al navegador en código o de forma inline (por ejemplo, mediante una etiqueta `<script src="https://my-api/?apiKey=123-abc-456">`), **es definitivamente una clave `no secreta`**. Un ejemplo común es Google Maps.  
+**👍 Regla general:** siempre que una clave deba enviarse al navegador en código o en línea (por ejemplo, a través de una etiqueta `<script src="https://my-api/?apiKey=123-abc-456">`), **definitivamente es `no-secreta`**. Un ejemplo común es Google Maps.
 
-<br />  
+<br />
 
-**_Casos de uso y características:_** claves `no secretas`  
 
-- Acceso a corto plazo (identificadores de sesión de usuario, JSON Web Tokens)  
-- Limitar el acceso a la API por aplicación/desarrollador (para autenticación, geocodificación, etc.)  
-- Parte pública de un par público/privado (RECAPTCHA, Stripe, Auth0)  
-- Identificadores de análisis  
+**_Casos de uso y características:_** Claves `no secretas`
 
-#### ✅ Manejo de claves no secretas:  
+- Acceso a corto plazo (IDs de sesión de usuario, JSON Web Tokens)
+- Limitar acceso a API por aplicación/desarrollador (para autenticación, geocodificación, etc.)
+- Parte pública de un par público/privado (RECAPTCHA, Stripe, Auth0)
+- IDs de análisis
 
-> **¡Es seguro codificar directamente las claves no secretas (públicas)!**
+#### ✅ Manejo de no secretos:
 
-Facilita el manejo a largo plazo con un archivo compartido `config.js` para tu aplicación.
+> **¡Es seguro hardcodear claves no secretas (públicas)!**
+
+Gestiona esto más fácilmente a largo plazo con un `config.js` compartido para tu aplicación.
 
 **Ejemplo:**
 
@@ -121,4 +116,5 @@ const src = `//maps.googleapis.com/maps/api/js?key=${key}`;
 
 -----------------------------------
 
-**Nota:** Hay otros _Casos de uso_ para las variables de entorno. Algunos que no cubrí: CI/CD/pruebas, indicadores de características y configuración en tiempo de ejecución para entornos especiales!
+
+**Nota:** Hay otros _casos de uso_ para variables de entorno. Algunos que no cubrí: CI/CD/pruebas, feature flags y configuración de runtime para entornos especiales.

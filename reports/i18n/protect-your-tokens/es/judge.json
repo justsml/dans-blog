@@ -1,0 +1,38 @@
+{
+  "selectedCommit": "215f9126f49f4d71a2d25be7dbcf6a5070968bc5",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "scores": {
+    "readability": 5,
+    "technicalAccuracy": 5,
+    "coherence": 5,
+    "relevance": 5,
+    "translationQuality": 5,
+    "mdxPreservation": 5
+  },
+  "suggestions": [],
+  "rationale": "The selected commit provides a high-quality translation that captures Dan's direct style and maintains all technical nuances. It correctly translates the frontmatter and preserves the MDX structure. The previous suggestion regarding the anchor link has already been applied in the current version of the file (the link now correctly points to '#checklist-manejo-de-secretos-de-forma-segura'), so no further high-priority fixes are required.",
+  "slug": "protect-your-tokens",
+  "locale": "es",
+  "candidateCommits": [
+    "215f9126f49f4d71a2d25be7dbcf6a5070968bc5",
+    "c321baa20c00cca54bc4f76a678c6adf7a347dcb",
+    "54d13bc03bd0455dea7cbebf9af82e5f6c90769f"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "[_Cómo usar dotenv_](#-como-manejar-los-secretos-de-forma-segura)",
+      "replacement": "[_Cómo usar dotenv_](#checklist-manejo-de-secretos-de-forma-segura)",
+      "reason": "The anchor link must match the generated ID of the heading it points to for the link to work.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug protect-your-tokens --locale es --skip-global",
+    "output": ""
+  }
+}
