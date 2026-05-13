@@ -1,0 +1,123 @@
+# Translation Candidate
+- Slug: replacing-my-job-with-gpt-and-llm
+- Locale: de
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2024-12-05--replacing-my-job-with-gpt-and-llm/de/index.mdx
+- Validation: deferred
+- Runtime seconds: 12.20
+- Input tokens: 5541
+- Output tokens: 4911
+- Thinking tokens: unknown
+- Cached input tokens: 1536
+- Cache write tokens: 0
+- Estimated cost: $0.001622
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+unlisted: false
+title: Mich selbst durch KI ersetzen
+subTitle: 'Wie ich lernte, aufzuhören zu sorgen und die GPT zu lieben.'
+label: AI
+social_image: ../mobile.webp
+category: AI
+subCategory: Machine Learning
+date: '2024-12-04'
+modified: '2024-12-08'
+tags:
+  - ai
+  - gpt
+  - llm
+  - machine-learning
+  - nlp
+  - automation
+cover_full_width: ../robot-dude-wide.webp
+cover_mobile: ../robot-dude-square-200-75.webp
+cover_icon: ../robot-dude-square-200-75.webp
+---
+Ich wusste, dass der AI-Entwurf schiefgelaufen war, als ich mit jedem Satz übereinstimmte, ihm aber kein Stück vertraute.  
+
+Es hatte die richtige Form: Selbstsicherer Einleitung, sauberer Workflow, optimistischer Schluss. Es verwendete alle respektablen Wörter. Produktivität. Kreativität. Zusammenarbeit. Pipeline. Es klang, als hätte jemand meine tatsächliche Erfahrung durch ein Prospekt über meine tatsächliche Erfahrung ersetzt.  
+
+Was unglücklicherweise genau das ganze Problem war.  
+
+<p class="inset">Die Gefahr der AI-Schreibweise besteht nicht darin, dass sie immer schlecht ist. Die Gefahr ist, dass sie glaubhaft glatt wirken kann, bevor sie sich eine eigene Haltung erarbeitet hat.</p>  
+
+Dieser Beitrag ist ein Artefakt aus dieser Phase. Ich verwendete GPT für Kurs-Entwürfe, Banner-Konzepte, Quiz-Aufforderungen, Umformulierungen, Zusammenfassungen und Übersetzungsexperimente. Ein Teil davon funktionierte. Ein Teil sparte Stunden. Ein Teil produzierte die Art von blasser, professioneller Paste, die jeden in einem Absatz wie einen Stakeholder klingen lässt.  
+
+Ich brauchte nicht weniger AI. Ich brauchte mehr Reibung.  
+
+### Der erste Riss  
+
+Der erste große Fehler war, „fertig aussieht“ als Beweis für Nachdenken zu betrachten.  
+
+Ich bat um einen Kurs-Entwurf und erhielt etwas Kohärentes innerhalb von zehn Sekunden. Diese Kohärenz war verlockend. Eine schlechte Leere Seite macht ihre Leere offensichtlich. Ein durchschnittlicher AI-Entwurf versteckt die fehlenden Entscheidungen unter guter Grammatik.  
+
+Dann überprüfte ich ihn und fand die üblichen Probleme:
+
+- Die Beispiele waren technisch korrekt, aber vergesslich  
+- Die Quizfragen testeten Vokabular statt Urteilsvermögen  
+- Die Erklärungen vermieden die eine schwierige Unterscheidung, die der Lernende brauchte  
+- Die Tonlage hatte sich in korporative Mittagszeit verschoben  
+
+Nichts war katastrophal falsch. Das war der beunruhigendere Teil. Es war alles etwas zu fein.  
+
+### Was AI gut wird  
+
+Sobald ich keine Entwürfe mehr als Artefakte akzeptierte, wurde AI viel nützlicher.  
+
+Ich nutze sie am besten als Druckmittel:  
+
+- **Finde den vagen Teil**: „Welche Behauptungen in dieser Lektion sind nicht untermauert?“  
+- **Erzeuge falsche Antworten**: „Was würde ein cleverer Anfänger aus dem falschen Grund wählen?“  
+- **Ändere das Publikum**: „Erkläre das einem React-Entwickler, der Postgres nie verwendet hat.“  
+- **Erzeuge Kontrast**: „Gib mir drei Beispiele, in denen dieser Rat scheitert.“  
+- **Komprimiere das Chaos**: „Wandle diese Notizen in einen Entwurf ohne neue Behauptungen um.“  
+
+Diese Prompts ersetzen nicht das Urteilsvermögen. Sie machen es einfacher anzuwenden. Das Modell ist sehr gut darin, Oberflächen zu erzeugen. Meine Aufgabe ist es zu entscheiden, welche Oberflächen sich zu Struktur entwickeln sollten.  
+
+### Der Prozess, mit Schutzmaßnahmen  
+
+Der überlebende Workflow ist weniger glamourös als die alte Version:  
+
+1. **Sammle Rohmaterial**  
+   Ich beginne mit Notizen, Code, Links, Screenshots und der spezifischen Verwirrung der Lernenden, die ich adressieren will.
+
+2. **Fordere die KI dazu auf, zu organisieren, nicht zu entscheiden**  
+   Sie kann Ideen gruppieren, fehlende Schritte aufdecken und Abschnitte vorschlagen. Ich lasse sie die These nicht ohne Widerstand wählen.  
+
+3. **Schreibe die prägnanten Teile selbst**  
+   Die Einleitung, die Entscheidungsregel, die Beispiele und die Schlussfolgerung benötigen menschlichen Geschmack. An diesen Stellen verdient der Artikel Vertrauen.  
+
+4. **Nutze KI, um den Entwurf zu kritisch prüfen**  
+   Ich frage, was zu generisch klingt, was zu viel voraussetzt, was ein skeptischer Leser kritisieren würde und an welchen Stellen die Beispiele scheitern.  
+
+5. **Halte das Artefakt authentisch**  
+   Wenn ein Absatz auf jedem SaaS-Blog zu Hause wäre, wird er umgeschrieben oder gelöscht.  
+
+Diese letzte Regel übernimmt viel Arbeit.  
+
+### Quizze haben meine Meinung geändert  
+
+Quizze sind der Punkt, an dem KI für mich wirklich nützlich wurde.  
+
+Nicht, weil sie perfekte Fragen schreiben kann. Das kann sie nicht. Sie liebt offensichtliche Falschantworten, ungewollte Mehrdeutigkeit und Erklärungen, die an der Missverständnis-Vorstellung vorbeigleiten.  
+
+Aber sie kann schnell ein Feld möglicher falscher Antworten generieren. Dann kann ich die Liste betrachten und fragen: Welche dieser Antworten repräsentiert einen echten Lernfehler?  
+
+Das ist die nützliche Zusammenarbeit. Das Modell produziert Ton. Ich entscheide, ob es eine Schüssel, ein Ziegelstein oder Deponie ist.
+
+### Ersetzen von Mich Selbst War Der Falsche Rahmen  
+
+Der Titel ist ein Witz, aber der Rahmen ist falsch.  
+
+Ich ersetze mich nicht durch KI. Ich ersetze die Teile meines Prozesses, die bereits mechanisch waren: Erstpass-Gruppierung, alternative Formulierungen, Übersetzungsskelette, Entwurfquiz-Optionen, Bildkonzepte, Zusammenfassungsdurchläufe.  
+
+Die Teile, die ich nicht ersetzen kann, sind die, die Leser bemerken, wenn sie fehlen: Geschmack, Narben, Priorität, Skepsis und die Bereitschaft zu sagen „Das klang gut, aber es war falsch“.  
+
+KI hat mich schneller gemacht. Wichtiger noch, sie hat es einfacher gemacht, einige meiner Schwächen zu erkennen. Die Kosten sind, dass ich jetzt bewusster sein muss, nicht zu veröffentlichen, was nur so tut, als wäre es Prosa.  
+
+Das ist der Kompromiss, mit dem ich leben kann.
+````
