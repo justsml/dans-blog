@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: disable-transparent-hugepages
+- Locale: ru
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2015-11-22--disable-transparent-hugepages/ru/index.mdx
+- Validation: passed
+- Runtime seconds: 2.25
+- Input tokens: 754
+- Output tokens: 802
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.000253
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 draft: true
@@ -32,3 +50,4 @@ sudo update-rc.d disable-transparent-hugepages defaults
 #### Ссылки
 
 1.  [https://docs.mongodb.org/v3.0/tutorial/transparent-huge-pages/](https://docs.mongodb.org/v3.0/tutorial/transparent-huge-pages/)
+````
