@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: llm-evals-are-broken
+- Locale: fr
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-05-06--llm-evals-are-broken/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 12.24
+- Input tokens: 11595
+- Output tokens: 3787
+- Thinking tokens: unknown
+- Cached input tokens: 1536
+- Cache write tokens: 0
+- Estimated cost: $0.001134
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Combattez le mal avec Evals!
 subTitle: >-
@@ -267,3 +285,4 @@ C’est réellement difficile à définir pour une nouvelle fonctionnalité IA. 
 Les benchmarks ne mentent pas. Ils répondent à la question de quelqu’un d’autre. Cessez de les lire comme des feuilles de route produit et commencez à écrire des tests qui correspondent à votre système.
 
 Vos utilisateurs le remarqueront avant que vos tableaux de bord ne le fassent. Construisez d’abord la suite de tests.
+````
