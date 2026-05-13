@@ -1,0 +1,184 @@
+# Translation Candidate
+- Slug: upgrade-from-gatsby-to-astro
+- Locale: hi
+- Model: qwen/qwen3.6-35b-a3b
+- Target: src/content/posts/2024-08-22--upgrade-from-gatsby-to-astro/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 165.08
+- Input tokens: 6791
+- Output tokens: 34241
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.035260
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: मेरे ब्लॉग के अपग्रेड से मिली सीख
+subTitle: 'Astro, Tailwind, MDX, Pagefind, और भी कई तकनीकें!'
+date: '2024-08-21'
+modified: '2024-08-23'
+category: Guides
+tags:
+  - astro
+  - tailwind
+  - mdx
+  - pagefind
+  - gatsby
+cover: ../galaxy-contribution-mode.webp
+cover_full_width: ../galaxy-contribution-banner.webp
+cover_mobile: ../w300_galaxy-contribution-mode.webp
+cover_icon: ../icon_galaxy-contribution-mode.webp
+---
+हाल ही में, मैंने अपने 8+ वर्ष पुराने Gatsby v1 साइट को अपग्रेड करने का काम शुरू किया।
+
+इस पोस्ट में मैं इस प्रक्रिया के दौरान सीखे गए कुछ सबक और उन तकनीकों को साझा करूँगा जिनका मैंने परीक्षण किया।
+
+## विषय-सूची
+
+- [परियोजना की आवश्यकताएँ](#project-requirements)
+- [सही तकनीकी स्टैक का चयन](#choosing-my-right-technology-stack)
+- [Astro: सीखने का वक्र और मुख्य विशेषताएँ](#astro-learning-curve-and-key-features)
+- [आधुनिक CSS: कमाल](#modern-css-wow)
+- [खोज: Pagefind](#search-pagefind)
+- [टिप्पणियाँ: Utterances](#comments-utterances)
+- [Tailwind: पछतावा](#tailwind-regrets)
+- [निष्कर्ष](#conclusion)
+
+## परियोजना की आवश्यकताएँ
+
+अपग्रेड शुरू करने से पहले, मैंने निम्नलिखित आवश्यकताएँ तय कीं:
+
+चूंकि मेरे ब्लॉग पर दैनिक पेज व्यू की संख्या काफी उतार-चढ़ाव वाली रहती है, मुझे लगा कि एक स्टैटिकली जनरेटेड साइट बिना अतिरिक्त जटिलता के वह प्रदर्शन देगी जो मुझे चाहिए।
+
+इसके अलावा, मुझे इस साइट के मौजूदा कंटेंट और फीचर्स को बनाए रखना था, जिनमें शामिल हैं:
+
+- कोड हाइलाइटिंग
+- टिप्पणियाँ
+- साइट खोज
+- पूर्व-मौजूद React कंपोनेंट्स: Quiz UI, Gist एम्बेड्स
+- संपर्क फॉर्म
+- रिस्पॉन्सिव इमेजेस
+- 1 सेकंड से कम लोड टाइम
+- ब्राउज़र संगतता: 2018+
+- स्वचालित + PR-आधारित डिप्लॉयमेंट
+
+## सही तकनीकी स्टैक का चयन
+
+पिछले कई वर्षों में मैंने Jekyll, Hugo, Slate और Gatsby जैसे कई स्टैटिक साइट टूल्स के साथ काम किया है। इसके अलावा Ember, Knockout, Angular, Vue और बेशक React जैसे कई फ्रंट-एंड फ्रेमवर्क्स भी इस्तेमाल किए हैं।
+
+तो, मेरे पास विकल्पों की बिल्कुल ज़्यादा ही कमी नहीं थी, बल्कि बिल्कुल ज़्यादा ही थे, जिन्हें मैंने अंततः **Remix**, **Next.js** और **Astro** तक सीमित कर लिया।
+
+मैं अपनी मूल्यांकन प्रक्रिया पर एक पूरी ब्लॉग श्रृंखला लिख सकता था, लेकिन इसे यहाँ संक्षेप में ही रखूँगा:
+
+<p class="breakout">मैंने [Astro](https://astro.build) इसलिए चुना क्योंकि इसमें _महत्वपूर्ण काम_ कितनी तेज़ी से किया जा सकता था।</p>
+
+उनकी API डिज़ाइन सरल है, जो ताज़गी महसूस कराती है। यह [लचीलेपन और ठोस डिज़ाइन विचारों के बीच एक बेहतरीन संतुलन है।](https://docs.astro.build/en/concepts/why-astro/)
+
+यह एक राहत देने वाली बात थी कि Astro में किसी स्पष्ट क्लाउड प्रोवाइडर का पक्षपात या किसी खास फ्रेमवर्क को बढ़ावा देने का एजेंडा नहीं है।
+
+Astro वह एकमात्र तकनीक नहीं थी जिसका मैंने उपयोग किया। यहाँ मेरे उपयोग किए गए स्टैक का पूरा विवरण है:
+
+- [Astro](https://astro.build): एक आधुनिक स्टैटिक साइट जनरेटर।
+- [ShadcnUI](https://ui.shadcn.com): पुनः उपयोग योग्य कंपोनेंट्स का संग्रह।
+- [Tailwind CSS](https://tailwindcss.com): एक यूटिलिटी-फर्स्ट CSS फ्रेमवर्क।
+- [MDX](https://mdxjs.com): मार्कडाउन कंटेंट + इनलाइन कंपोनेंट्स।
+- [Pagefind](https://pagefind.app): तेज़, स्टैटिक और ऑफ़लाइन साइट खोज लाइब्रेरी। Algolia की ज़रूरत नहीं!
+- [Utterances](https://utteranc.es): GitHub issues पर आधारित टिप्पणी प्रणाली।
+- [Netlify](https://www.netlify.com): स्वचालित डिप्लॉयमेंट, कैप्चा सहित संपर्क फॉर्म।
+
+## Astro: लर्निंग कर्व और मुख्य विशेषताएँ
+
+<p class="breakout quote">Astro जल्द ही मेरे अपग्रेड की आधारशिला बन गया।</p>
+
+कुछ मुख्य विशेषताएँ हैं जिनमें मुझे विशेष रूप से उपयोगिता मिली:
+
+- `.astro` फ़ाइलें: शुरुआत में Astro कंपोनेंट्स React JSX कंपोनेंट्स जैसे दिख सकते हैं, लेकिन वे काफी अलग हैं और अलग उद्देश्यों की पूर्ति करती हैं। (नीचे दी गई तुलना तालिका देखें।)
+- अपने Golang [बिल्ड टूल्स](https://github.com/withastro/compiler) और Vite पर आधारित: यह बस काम करता है। ESM/CJS, TypeScript, कोड बंडलिंग, स्टाइल्स, इमेजेस आदि को सहजता से संभालता है।
+- [कोई फ्रेमवर्क पक्षपात नहीं](https://docs.astro.build/en/guides/framework-components/#official-ui-framework-integrations) या [क्लाउड पक्षपात।](https://docs.astro.build/en/guides/deploy/) (*खंखार* Next.js, OpenNext)
+- [स्टैटिक बनाम हाइब्रिड](https://docs.astro.build/en/basics/rendering-modes/) रेंडरिंग: Astro [अधिकांश क्लाउड प्लेटफॉर्म को टारगेट करने की लचीलापन](https://docs.astro.build/en/guides/deploy/) प्रदान करता है: AWS, GCP, Firebase, Netlify, Vercel, Cloudflare Pages, Azure, Fly.io, और कई अन्य।
+- कंटेंट कलेक्शन: [`getCollection`](https://docs.astro.build/en/reference/api-reference/#getcollection) API डेटा स्रोत के रूप में कंटेंट फ़ाइलों के साथ काम करना सरल बनाती है।
+- फ़ाइल-आधारित राउटिंग: Astro की फ़ाइल-आधारित राउटिंग सिस्टम, `getStaticPaths` के साथ मिलकर, पेज जनरेट करना आसान बना देती है।
+- SEO: [Astro आपके रास्ते में नहीं आता](https://github.com/justsml/dans-blog/blob/010c5cb58bb327adb8c8fff608594daa612ad9d5/src/components/BaseHead.astro#L43-L63), और केवल तभी आवश्यक होने पर न्यूनतम मात्रा में ~~कचरा~~ बॉयलरप्लेट (`astro-island`) उत्पन्न करता है।
+
+कुछ चीज़ें थोड़ी हैरान करने वाली थीं, जैसे Astro के इंजेक्टेड मार्कअप के आसपास स्टाइलिंग, और `display:contents` का प्रभाव।
+
+```tsx
+<style>astro-island,astro-slot,astro-static-slot{display:contents}</style>
+```
+
+### `.astro` बनाम क्लाइंट कंपोनेंट्स की तुलना
+
+Astro कंपोनेंट्स मूल रूप से एक शक्तिशाली कंपोनेंट और props पैटर्न के साथ HTML टेम्पलेट्स हैं। वे बिल्ड-टाइम पर डेटा फ़ेच कर सकते हैं, बैकएंड रिसोर्सेस तक पहुँच सकते हैं, और कुछ संवेदनशील जानकारी को छिपा रख सकते हैं।
+
+Astro के `.astro` कंपोनेंट्स को समझने का सबसे अच्छा तरीका क्लाइंट-साइड कंपोनेंट्स (React, Vue, Svelte, आदि) के साथ तुलना करना है।
+
+<section className="scroll-x">
+| आपको क्या करना है?                                                            | `.astro` कंपोनेंट    | क्लाइंट कंपोनेंट    |
+| ---------------------------------------------------------------------------------- | ------------------- | ------------------- |
+| शक्तिशाली टेम्पलेट+कंपोनेंट पैटर्न के साथ HTML जनरेट करें                             | ✅ | ❌ |
+| बिल्ड-टाइम पर डेटा फ़ेच करें                                                           | ✅ | ❌ |
+| बैकएंड रिसोर्सेस तक पहुँचें (सीधे)                                                | ✅ | ❌ |
+| संवेदनशील जानकारी को छिपा रखें (एक्सेस टोकन, API कीज़, आदि)                   | ✅ | ❌ |
+| क्लाइंट-साइड JavaScript कम करें                                                      | ✅ | ❌ |
+| क्लाइंट कंपोनेंट्स का उपयोग करें (React, Vue, Svelte, आदि)                                    | ✅ | ✅ |
+| इंटरैक्टिविटी और इवेंट लिस्टनर्स जोड़ें (`onClick()`, `onChange()`, आदि)             | ❌ | ✅ |
+| स्टेट और लाइफसाइकिल इफेक्ट्स का उपयोग करें (`useState()`, `useReducer()`, `useEffect()`, आदि) | ❌ | ✅ |
+| केवल ब्राउज़र APIs का उपयोग करें                                                              | ❌ | ✅ |
+| स्टेट, इफेक्ट्स, या केवल ब्राउज़र APIs पर निर्भर कस्टम हुक्स का उपयोग करें               | ❌ | ✅ |
+</section>
+
+## आधुनिक CSS: वाह
+
+फ्रंटएंड डेवलपमेंट की ओर लौटते हुए, नेटिव CSS में हुए विकास ने मुझे काफी प्रभावित किया:
+
+- CSS Variables: कुछ समय से उपलब्ध, और 202\* से ब्राउज़रों के बीच काफी स्थिर।
+- Nesting: आखिरकार स्पेक में शामिल हुई, और बिना पहले की असहज सिंटैक्स के। अब यह Less या SCSS जैसी ही है।
+- New selectors: [`:is()`, `:where()`, और `:has()`](https://www.youtube.com/watch?v=3ncFpP8GP4g) एलिमेंट्स को अधिक सटीक तरीके से टारगेट करने की सुविधा देते हैं।
+- Modern units like `ch`, `vw`, and functions like `clamp()` provide better control over layouts and typography. -> `ch`, `vw` जैसे आधुनिक यूनिट्स और `clamp()` जैसे फंक्शन्स लेआउट और टाइपोग्राफी पर बेहतर नियंत्रण प्रदान करते हैं।
+- Set spacing more naturally with `-inline` and `-block` attributes. -> `-inline` और `-block` सफिक्स के साथ स्पेसिंग को अधिक सहज तरीके से सेट करें।
+- Set padding or margin on either the horizontal or vertical axis. -> होराइजॉन्टल या वर्टिकल एक्सिस पर पैडिंग या मार्जिन निर्धारित करें।
+- Instead of `margin: 0 1rem 0 1rem` → `margin-inline: 1rem`. -> `margin: 0 1rem 0 1rem` की जगह → `margin-inline: 1rem`।
+- Advanced layouts: Re-learning CSS Grid. Wow, there's a lot of shit in there. -> एडवांस्ड लेआउट्स: CSS Grid को फिर से सीखना। वाह, इसमें काफी मसला छिपा है।
+- It can be daunting with seemingly endless ways of using it. -> इसका उपयोग करने के अनंत लगने वाले तरीके देखकर यह भारी लग सकता है।
+- Keep in mind, you can get away with figuring out 1 or 2 ways. -> याद रखें, आपको बस 1 या 2 तरीके समझने होंगे।
+- Check out these great resources that helped me do tricks with grid: -> ग्रिड के साथ ट्रिक्स करने में जो शानदार संसाधन मददगार साबित हुए, वे देखें: [केविन पॉवेल का वीडियो: CSS Grid आसानी से सीखें](https://www.youtube.com/watch?v=rg7Fvvl3taU), [मीडिया क्वेरीज के बिना रिस्पॉन्सिव](https://ardilamorin.com/responsive-no-media-queries/), [CSS की एक लाइन में दस आधुनिक लेआउट](https://web.dev/articles/one-line-layouts).
+
+## Search: Pagefind
+
+3rd पार्टी सर्विसेज या डेटाबेस होस्टिंग के बिना **साइट सर्च** इम्प्लीमेंट करना एक मजेदार चुनौती लग रहा था। वैसे भी, मेरे पास अभी तक 10,000 पोस्ट इंडेक्स करने को नहीं हैं।
+
+[Astro के कम्युनिटी इंटीग्रेशन](https://astro.build/integrations/?search=find) ब्राउज़ करते समय मुझे एक शानदार टूल मिला जिसके बारे में मुझे पहले पता होना चाहिए था: [Pagefind](https://pagefind.app/)।
+
+<p class="breakout quote">Pagefind जितनी अच्छी तरह लोकल साइट सर्च को हल करता है, उतनी ही अच्छी तरह कोई अन्य टूल किसी समस्या को हल नहीं करता।</p>
+
+Pagefind को इम्प्लीमेंट करने की सरलता एक खुशी है। इसे किसी भी **static site** कंटेंट के साथ इंटीग्रेट किया जा सकता है, और आप डिफॉल्ट UI चुन सकते हैं, या फिर अपनी पसंद के अनुसार कुछ भी कस्टम बना सकते हैं।
+
+इसने मेरी हर ज़रूरत को साफ-सुथरा हल कर दिया। इंटीग्रेशन में सिर्फ मिनटों का समय लगा, और ज्यादातर काम `<div id="search"></div>` टैग जोड़ने और कुछ स्टाइलिंग करने में ही बीत गया!
+
+## Comments: Utterances
+
+दुर्भाग्यवश, मुझे Disqus और उन कमेंट्स को अलविदा कहना पड़ा जो मैंने कई सालों में जमा किए थे।
+
+मुझे साइट पर चल रहे थर्ड-पार्टी स्क्रिप्ट्स पर बेहतर कंट्रोल और विज़िबिलिटी चाहिए थी।
+
+साथ ही, यह सिंपल और मेंटेनेबल होना चाहिए था।
+
+इसने मुझे [उटरेंसेस](https://utteranc.es/) सर्विस चुनने के लिए प्रेरित किया। इसका GitHub (issues-आधारित) कमेंट सिस्टम मेरे ऑडियंस की जरूरतों से अच्छी तरह फिट बैठता है। प्लस, सेटअप आसान है और यह फ्री भी है।
+
+## Tailwind: पछतावा
+
+ऐसी सिर्फ एक टेक्नोलॉजी है जिसका इस्तेमाल करते-करते मुझे अब लगातार पछतावा होने लगा है: Tailwind.
+
+समय के साथ, कोड लिखने और मेंटेन करने के बीच के ओवरहेड का फर्क साफ़ महसूस होने लगता है। Tailwind लिखने में तेज़ है, लेकिन जटिलता बढ़ने पर इसे पढ़ना और एक्सटेंड करना मुश्किल और थकाऊ हो जाता है।
+
+## निष्कर्ष
+
+पुराने Gatsby v1 साइट को Astro-आधारित मॉडर्न स्टैक में अपग्रेड करना एक अच्छा अनुभव रहा। 10/10 रिकमेंड करूँगा।
+
+अगर आप पुरानी साइट अपग्रेड करने या नई स्टैटिक (या हाइब्रिड) साइट बनाने पर विचार कर रहे हैं, तो Astro को जरूर देखें। लर्निंग कर्व कभी-कभी तेज़ हो सकता है, लेकिन परफॉर्मेंस, डेवलपर एक्सपीरियंस और प्रोजेक्ट को फ्यूचर-प्रूफ करने के फायदे इस मेहनत के लायक हैं।
+````
