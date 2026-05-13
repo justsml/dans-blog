@@ -1,0 +1,56 @@
+{
+  "selectedCommit": "e753a15eacaee3d7b4e984e01d523122a31ca061",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "scores": {
+    "readability": 5,
+    "technicalAccuracy": 5,
+    "coherence": 5,
+    "relevance": 5,
+    "translationQuality": 5,
+    "mdxPreservation": 5
+  },
+  "suggestions": [],
+  "rationale": "The selected candidate (e753a15eacaee3d7b4e984e01d523122a31ca061) is excellent. It correctly translates the title and subtitle, maintains the MDX structure, and translates the comments within the code blocks which aids comprehension. The previous judge's suggestions regarding image paths have already been applied to the version I am reviewing (the paths in the provided MDX already contain the '../' prefix), so no further high-priority fixes are required.",
+  "slug": "promise-gotchas",
+  "locale": "fr",
+  "candidateCommits": [
+    "e753a15eacaee3d7b4e984e01d523122a31ca061",
+    "4c3374aeace7cf50a7b3ddabc28b28f8fe401324",
+    "01ef48e73921192711296380dbc090ab46276be1"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "cover: michal-parzuchowski-224092-unsplash.webp",
+      "replacement": "cover: ../michal-parzuchowski-224092-unsplash.webp",
+      "reason": "Fixing relative path to match the directory structure of the localized post.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "cover_mobile: w300_michal-parzuchowski-224092-unsplash.webp",
+      "replacement": "cover_mobile: ../w300_michal-parzuchowski-224092-unsplash.webp",
+      "reason": "Fixing relative path to match the directory structure of the localized post.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "cover_icon: icon_michal-parzuchowski-224092-unsplash.webp",
+      "replacement": "cover_icon: ../icon_michal-parzuchowski-224092-unsplash.webp",
+      "reason": "Fixing relative path to match the directory structure of the localized post.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug promise-gotchas --locale fr --skip-global",
+    "output": ""
+  }
+}

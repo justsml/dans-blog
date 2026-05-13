@@ -1,50 +1,41 @@
 ---
 social_image: ../desktop-social.webp
-title: ''
+title: "Les pièges des Promesses"
 subTitle: Éviter les erreurs courantes
-date: '2018-09-26'
-modified: '2024-07-30'
+date: 2018-09-26
+modified: 2024-07-30
 category: Code
 subCategory: promises
-tags:
-  - promises
-  - async
-  - debugging
-  - errors
-  - javascript
-  - composition
-related:
-  - intro-to-promises
-  - visualizing-promises
-  - are-promises-broken
-  - javascript-promises-quiz
-cover: ../michal-parzuchowski-224092-unsplash.webp
-cover_mobile: ../w300_michal-parzuchowski-224092-unsplash.webp
-cover_icon: ../icon_michal-parzuchowski-224092-unsplash.webp
+tags: [promises, async, debugging, errors, javascript, composition]
+related: [intro-to-promises, visualizing-promises, are-promises-broken, javascript-promises-quiz]
+cover: michal-parzuchowski-224092-unsplash.webp
+cover_mobile: w300_michal-parzuchowski-224092-unsplash.webp
+cover_icon: icon_michal-parzuchowski-224092-unsplash.webp
 ---
-### Les Promesses ne fonctionnent pas comme d'autres valeurs
+
+### Les promesses ne fonctionnent pas comme les autres valeurs
 
 Vous ne pouvez pas afficher leur valeur comme la plupart des valeurs :
 
 ```js
-// Cela n'a pas de sens avec les promesses :
+// Ça n'a pas de sens avec les promesses :
 console.log(Promise.resolve(42));
 
 // Nous devons utiliser l'interface `.then` :
 Promise.resolve(42).then(value => console.log(value));
 ```
 
-### Les Promesses ne vous avertissent pas quand vous commettez une erreur
+### Les promesses ne vous préviennent pas quand vous faites une erreur
 
-Une erreur probable.
+Enfin, une erreur probable.
 
-Pour diverses raisons, TC39 a décidé que `.then` et `.catch` pouvaient accepter `null`. Par exemple, `.then(null, null)` est valide et le comportement requis est de sauter cette « étape » dans la chaîne.
+Pour diverses raisons, TC39 a décidé que `.then` et `.catch` pouvaient recevoir `null`. Par exemple, `.then(null, null)` est valide et le comportement requis est de sauter cette « étape » dans la chaîne.
 
-La conséquence malheureuse de cela est qu'il est très facile de se tromper.
+La conséquence malheureuse de cela est qu'il est très facile de faire des erreurs.
 
-##### Par exemple
+##### Par l'exemple
 
-Examinons un petit défi : laquelle(s) des options suivantes affichera(nt) `console.log` 42 ?
+Regardons un mini challenge : laquelle (ou lesquelles) des options suivantes affichera `console.log` 42 ?
 
 ```js
 // Option #1 :
@@ -66,7 +57,7 @@ Promise.resolve(42)
 
 La réponse est #2, #3 et #4.
 
-Pourquoi ? Examinons les **types** des arguments passés à `.then()` :
+Pourquoi ? Regardons les **types** de ce qui a été passé à `.then()` :
 
 ```js
 var arg1 = console.log();
@@ -78,15 +69,13 @@ typeof arg2 === "function";
 typeof arg3 === "function";
 ```
 
-Toujours se demander comment fonctionne cette 4e option ?
+Vous vous demandez encore comment fonctionne cette 4e option ?
 
-Cela fonctionne en fait comme suit :
+Elle s'exécute effectivement comme ceci :
 
 ```js
-// Option #4 - effectively
+// Option #4 - effectivement
 Promise.resolve(42)
-  .then(undefined) // this has no affect on the value, it will be handed to following `.then(fn)`
+  .then(undefined) // cela n'a aucun effet sur la valeur, elle sera transmise au `.then(fn)` suivant
   .then(console.log);
 ```
-
-Le `undefined` passé à `.then(undefined)` n'affecte pas la valeur, qui est donc transmise au `.then(console.log)` suivant.
