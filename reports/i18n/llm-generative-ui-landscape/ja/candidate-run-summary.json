@@ -4,16 +4,16 @@
   "slug": "llm-generative-ui-landscape",
   "locale": "ja",
   "startedAt": "2026-05-13T17:22:17.002Z",
-  "updatedAt": "2026-05-13T17:23:04.092Z",
+  "updatedAt": "2026-05-13T17:27:04.221Z",
   "modelsRequested": [
     "openrouter/openai/gpt-oss-120b:nitro",
     "openrouter/qwen/qwen3-32b:nitro",
     "deepseek/deepseek-v4-flash",
     "qwen/qwen3.6-plus"
   ],
-  "attemptedModels": 1,
+  "attemptedModels": 2,
   "skippedModels": 1,
-  "rejectedModels": 1,
+  "rejectedModels": 2,
   "candidateModels": 0,
   "totals": {
     "inputTokens": 23095,
@@ -22,13 +22,13 @@
     "cachedInputTokens": 5632,
     "cacheWriteTokens": 0,
     "estimatedCostUsd": 0.006346,
-    "hasUnknownInputTokens": false,
-    "hasUnknownOutputTokens": false,
+    "hasUnknownInputTokens": true,
+    "hasUnknownOutputTokens": true,
     "hasUnknownThinkingTokens": true,
-    "hasUnknownCachedInputTokens": false,
-    "hasUnknownCacheWriteTokens": false,
-    "hasUnknownEstimatedCost": false,
-    "runtimeSeconds": "42.70"
+    "hasUnknownCachedInputTokens": true,
+    "hasUnknownCacheWriteTokens": true,
+    "hasUnknownEstimatedCost": true,
+    "runtimeSeconds": "282.71"
   },
   "attempts": [
     {
@@ -53,6 +53,17 @@
         },
         "estimatedCostUsd": 0.006345679999999999,
         "pricingSource": "local-openrouter-estimate"
+      }
+    },
+    {
+      "model": "deepseek/deepseek-v4-flash",
+      "status": "rejected",
+      "validationStatus": "rejected: direct AI SDK translation failed",
+      "reportPath": "reports/i18n/llm-generative-ui-landscape/ja/deepseek-deepseek-v4-flash.md",
+      "note": "Command failed after 240000ms: bun run i18n:translate:chunked -- --slug llm-generative-ui-landscape --locale ja --model deepseek/deepseek-v4-flash --chunk 6p --quiz-concurrency 24",
+      "telemetry": {
+        "runtimeSeconds": "240.01",
+        "tokens": {}
       }
     }
   ]
