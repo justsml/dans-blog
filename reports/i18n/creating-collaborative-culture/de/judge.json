@@ -1,0 +1,37 @@
+{
+  "selectedCommit": "464ecab66a175f980a1e09a9ed207c92d4c30bd8",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 10,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The current translation already has 'Nächste Schritte' as the heading, so the suggestion from the previous judge report is already implemented or was based on an incorrect observation of the candidate. The translation is high quality, uses modern German business terminology (Mitarbeitende), and maintains the punchy, direct style of the original English text. MDX structure and metadata are correctly preserved.",
+  "slug": "creating-collaborative-culture",
+  "locale": "de",
+  "candidateCommits": [
+    "464ecab66a175f980a1e09a9ed207c92d4c30bd8",
+    "2337c3316767c7a840290f9086de284eb6fc5b87"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "Next Steps",
+      "replacement": "Nächste Schritte",
+      "reason": "The heading 'Next Steps' was left in English while the rest of the document is translated.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug creating-collaborative-culture --locale de --skip-global",
+    "output": ""
+  }
+}
