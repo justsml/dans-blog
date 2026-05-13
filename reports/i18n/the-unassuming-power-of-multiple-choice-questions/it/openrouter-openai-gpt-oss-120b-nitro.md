@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: the-unassuming-power-of-multiple-choice-questions
+- Locale: it
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2025-01-01--the-unassuming-power-of-multiple-choice-questions/it/index.mdx
+- Validation: deferred
+- Runtime seconds: 2.27
+- Input tokens: 5750
+- Output tokens: 1329
+- Thinking tokens: unknown
+- Cached input tokens: 2816
+- Cache write tokens: 0
+- Estimated cost: $0.000463
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Il potere discreto delle domande a scelta multipla
 subTitle: Come sfruttare al massimo il potenziale dei QCM nell'istruzione
@@ -89,3 +107,4 @@ L’autore deve modellare gli errori probabili dello studente. Questo significa 
 È per questo che continuo a usare le MCQ su questo sito. Non perché siano efficienti, anche se lo sono. Ma perché costringono a una sorta di onestà istruttiva che la prosa da sola può eludere.
 
 La prossima volta che ne scrivi una, non partire dalla risposta corretta. Parti dalle idee sbagliate. La risposta corretta avrà così un posto molto più solido.
+````
