@@ -1,0 +1,60 @@
+# Translation Candidate
+- Slug: angularjs-v2-impending-schism
+- Locale: it
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2015-08-05--angularjs-v2-impending-schism/it/index.mdx
+- Validation: deferred
+- Runtime seconds: 0.41
+- Input tokens: 1076
+- Output tokens: 445
+- Thinking tokens: unknown
+- Cached input tokens: 512
+- Cache write tokens: 0
+- Estimated cost: $0.000122
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: AngularJS v2.0 e lo Scisma Imminente
+subTitle: Può essere evitato?
+date: '2015-08-05'
+modified: '2016-11-30'
+category: Thoughts
+subCategory: angularjs
+tags:
+  - programming
+  - angularjs
+  - javascript
+  - python
+  - opinion
+cover: ../alex-perez-753751-unsplash.webp
+cover_mobile: ../w300_alex-perez-753751-unsplash.webp
+cover_icon: ../icon_alex-perez-753751-unsplash.webp
+---
+Credo che stiamoassistendo di nuovo a una “Conversione” simile a quella da Python 2 a 3.  
+AngularJS v2.0 introduce troppe novità. **Tra queste, non da ultimo, c’è TypeScript**, che rappresenta una richiesta impegnativa proprio mentre la versione più recente di JavaScript (ES6) si sta consolidando.
+
+> Dico le cose in modo chiaro: adoro TypeScript. Vorrei segretamente che gli incontri TC‑39 lo avessero prodotto… Non è stato così.  
+> Tuttavia, hanno tirato fuori un’altra specifica (completamente diversa), altrettanto interessante…
+
+Anche se TypeScript si compila in JavaScript, non significa che tu possa semplicemente copiare‑incollare il TypeScript “compilato”. Diventa, di fatto, un requisito di apprendimento necessario per comprendere il TypeScript annotato di AngularJS 2.0.
+
+Ora i principianti devono scalare il “Mount TypeScript” prima di poter persino cominciare a montare un’app Angular (con un minimo di comprensione).
+
+Ho la sensazione che la cosa possa andare così…
+
+<div class="anigif end">
+  <img alt='endless loop' src="https://res.cloudinary.com/ddd/image/upload/timeout-expired.gif" />
+</div>
+
+Beh, lo inserirò nella lista di formazione per i nuovi arrivati: da qualche parte tra `Basic Shell Usage` e `Gulp or Grunt? Godsend+Misery!`
+
+> Comunque, spero che tutto si risolva…
+
+<div class="anigif top end">
+  <img alt='everything is going to be ok' src="https://res.cloudinary.com/ddd/image/upload/v1442175801/system-maint-anon.gif" />
+</div>
+````
