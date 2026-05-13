@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: stop-the-angularjs-hate
+- Locale: fr
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2015-03-10--stop-the-angularjs-hate/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 3.74
+- Input tokens: 5351
+- Output tokens: 1553
+- Thinking tokens: unknown
+- Cached input tokens: 2944
+- Cache write tokens: 0
+- Estimated cost: $0.000488
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Astuces AngularJS
@@ -115,3 +133,4 @@ Si vous avez des dizaines de petits composants UI réutilisables, ReactJS peut �
   1.  Utiliser le templating Mustache pour générer des chaînes HTML (ou le DOM directement)  
   1.  Mettre en cache le contenu rendu dans `localStorage` si possible  
   1.  (Optionnel) Ajouter maintenant un écouteur d’événement pour re‑rendre le contenu. J’ai standardisé le nom d’événement `refresh.<class-name>`
+````
