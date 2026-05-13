@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: mastra-workflows-memory
+- Locale: es
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-01-05--mastra-workflows-memory/es/index.mdx
+- Validation: passed
+- Runtime seconds: 18.53
+- Input tokens: 8078
+- Output tokens: 7732
+- Thinking tokens: unknown
+- Cached input tokens: 1024
+- Cache write tokens: 0
+- Estimated cost: $0.002502
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: 'Deja de construir agentes inestables: Usa flujos de trabajo & memoria'
 subTitle: Patrones determinísticos para modelos no determinísticos.
@@ -249,3 +267,4 @@ Tu experiencia puede variar, pero en mi experiencia, los sistemas que realmente 
 2. [Seguridad & Guardarreles](../mastra-security-guardrails)
 3. [MCP & Integraciones de Herramientas](../mastra-mcp-tool-integrations)
 4. **Flujos de Trabajo & Memoria** (Este Post)
+````
