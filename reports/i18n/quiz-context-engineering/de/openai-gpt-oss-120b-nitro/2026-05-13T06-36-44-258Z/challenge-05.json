@@ -1,0 +1,44 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Chunking Strategy",
+  "translatedTitle": "Chunking-Strategie",
+  "translation": {
+    "title": "Chunking-Strategie",
+    "group": "Abruf",
+    "options": [
+      {
+        "text": "Verwende die größte Chunk-Größe, die dein Kontextfenster zulässt"
+      },
+      {
+        "text": "Verwende immer 512 Tokens — es"
+      },
+      {
+        "text": "Verwende überlappende Chunks, die zu deiner Inhaltsstruktur passen"
+      },
+      {
+        "text": "Chunk-Größe tut nicht"
+      }
+    ],
+    "questionProse": [
+      "Wenn du Dokumente für RAG chunkst, was ist das wichtigste Prinzip?"
+    ],
+    "explanationProse": [
+      "Es gibt keine universell richtige Chunk-Größe – sie hängt von deinem Inhalt ab. Die wichtigen Prinzipien sind:\n\n    1. **Passe dich deiner Inhaltsstruktur an.** FAQ-Seiten chunken gut auf Q+A‑Ebene. Rechtsdokumente chunken gut auf Klausel‑Ebene. Code chunkt gut auf Funktions‑Ebene.\n    2. **Verwende Überlappungen.** Ein 512‑Token‑Chunk mit 64 Tokens Überlappung auf jeder Seite sorgt dafür, dass Antworten, die über eine Grenze hinweggehen, trotzdem abgerufen werden.\n    3. **Messe.** Baue ein Evaluations‑Set auf und teste mehrere Chunk‑Größen. Die Chunk‑Größe ist wichtiger als das Embedding‑Modell.\n\n    „512 Tokens“ ist ein vernünftiger Ausgangspunkt, kein Gesetz."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Chunking-Strategie\",\n  \"group\": \"Abruf\",\n  \"options\": [\n    {\n      \"text\": \"Verwende die größte Chunk-Größe, die dein Kontextfenster zulässt\"\n    },\n    {\n      \"text\": \"Verwende immer 512 Tokens — es\"\n    },\n    {\n      \"text\": \"Verwende überlappende Chunks, die zu deiner Inhaltsstruktur passen\"\n    },\n    {\n      \"text\": \"Chunk-Größe tut nicht\"\n    }\n  ],\n  \"questionProse\": [\n    \"Wenn du Dokumente für RAG chunkst, was ist das wichtigste Prinzip?\"\n  ],\n  \"explanationProse\": [\n    \"Es gibt keine universell richtige Chunk-Größe – sie hängt von deinem Inhalt ab. Die wichtigen Prinzipien sind:\\n\\n    1. **Passe dich deiner Inhaltsstruktur an.** FAQ-Seiten chunken gut auf Q+A‑Ebene. Rechtsdokumente chunken gut auf Klausel‑Ebene. Code chunkt gut auf Funktions‑Ebene.\\n    2. **Verwende Überlappungen.** Ein 512‑Token‑Chunk mit 64 Tokens Überlappung auf jeder Seite sorgt dafür, dass Antworten, die über eine Grenze hinweggehen, trotzdem abgerufen werden.\\n    3. **Messe.** Baue ein Evaluations‑Set auf und teste mehrere Chunk‑Größen. Die Chunk‑Größe ist wichtiger als das Embedding‑Modell.\\n\\n    „512 Tokens“ ist ein vernünftiger Ausgangspunkt, kein Gesetz.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 856,
+    "outputTokens": 491,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1424
+  },
+  "cost": {
+    "inputUsd": 0.000033384,
+    "outputUsd": 0.00008838,
+    "totalUsd": 0.00012176400000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "index": 0,
+  "attempt": 1,
+  "originalTitle": "Context Window Basics",
+  "translatedTitle": "Grundlagen des Kontextfensters",
+  "translation": {
+    "title": "Grundlagen des Kontextfensters",
+    "group": "Grundlagen",
+    "options": [
+      {
+        "text": "Die maximale Anzahl von Anfragen pro Minute"
+      },
+      {
+        "text": "Das kombinierte Token-Limit für Eingabe und Ausgabe"
+      },
+      {
+        "text": "Die Anzahl der Nachrichten in einer Unterhaltung"
+      },
+      {
+        "text": "Der verfügbare Speicher zwischen Sitzungen"
+      }
+    ],
+    "questionProse": [
+      "Worauf bezieht sich das „Kontextfenster“ in einem LLM?"
+    ],
+    "explanationProse": [
+      "Das Kontextfenster ist die Gesamtzahl an Tokens, die ein Modell in einem einzelnen Aufruf verarbeiten kann — **Eingabe + Ausgabe kombiniert**. Ein 128K‑Kontextfenster bedeutet, dass dein Prompt + abgerufene Dokumente + Unterhaltungshistorie + die Antwort des Modells alle innerhalb von 128.000 Tokens passen müssen.\n\n    Es hat nichts mit Sitzungen, Speicher oder Rate‑Limits zu tun. Wenn du das Limit erreichst, schneidet das Modell entweder zu, wirft einen Fehler oder – schlimmer – lässt stillschweigend Tokens weg, die du nicht erwartet hast."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Grundlagen des Kontextfensters\",\n  \"group\": \"Grundlagen\",\n  \"options\": [\n    {\n      \"text\": \"Die maximale Anzahl von Anfragen pro Minute\"\n    },\n    {\n      \"text\": \"Das kombinierte Token-Limit für Eingabe und Ausgabe\"\n    },\n    {\n      \"text\": \"Die Anzahl der Nachrichten in einer Unterhaltung\"\n    },\n    {\n      \"text\": \"Der verfügbare Speicher zwischen Sitzungen\"\n    }\n  ],\n  \"questionProse\": [\n    \"Worauf bezieht sich das „Kontextfenster“ in einem LLM?\"\n  ],\n  \"explanationProse\": [\n    \"Das Kontextfenster ist die Gesamtzahl an Tokens, die ein Modell in einem einzelnen Aufruf verarbeiten kann — **Eingabe + Ausgabe kombiniert**. Ein 128K‑Kontextfenster bedeutet, dass dein Prompt + abgerufene Dokumente + Unterhaltungshistorie + die Antwort des Modells alle innerhalb von 128.000 Tokens passen müssen.\\n\\n    Es hat nichts mit Sitzungen, Speicher oder Rate‑Limits zu tun. Wenn du das Limit erreichst, schneidet das Modell entweder zu, wirft einen Fehler oder – schlimmer – lässt stillschweigend Tokens weg, die du nicht erwartet hast.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 811,
+    "outputTokens": 750,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 523
+  },
+  "cost": {
+    "inputUsd": 0.000031629,
+    "outputUsd": 0.000135,
+    "totalUsd": 0.000166629,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

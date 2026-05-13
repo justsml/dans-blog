@@ -1,0 +1,45 @@
+{
+  "index": 12,
+  "attempt": 1,
+  "originalTitle": "Grounding vs. Hallucination",
+  "translatedTitle": "Verankerung vs. Halluzination",
+  "translation": {
+    "title": "Verankerung vs. Halluzination",
+    "group": "Fortgeschritten",
+    "options": [
+      {
+        "text": "Sag dem Modell im System‑Prompt \"do not hallucinate\""
+      },
+      {
+        "text": "Verwende eine höhere Temperatur, um selbstbewusstere Antworten zu erzeugen."
+      },
+      {
+        "text": "Stelle die abgerufenen Quelldokumente bereit und weise das Modell an, sie zu zitieren."
+      },
+      {
+        "text": "Verwende ein größeres Modell — Halluzinationen treten nur bei kleineren Modellen auf."
+      }
+    ],
+    "questionProse": [
+      "Die effektivste Methode, um Halluzinationen in einem produktiven KI‑System zu reduzieren, ist:"
+    ],
+    "explanationProse": [
+      "Dem Modell zu sagen, es solle nicht halluzinieren, verhindert Halluzinationen nicht — das Modell hat kein zuverlässiges introspektives Signal für „Ich erfinde das gerade.“ Es bedeutet nur, dass das Modell dir selbstbewusst sagt, es mache nichts erfunden, während es doch Dinge erfindet.\n\nWas tatsächlich funktioniert: **grounding**. Gib dem Modell die Informationen, die es braucht, um korrekt zu antworten, und beschränke es auf diese Informationen:",
+      "Dann validiere die Ausgabe: prüfe, ob Behauptungen in der Antwort im abgerufenen Kontext vorkommen. Das ist die Zitations‑Grounding‑Prüfung — siehe die RAG‑Eval‑Diskussion zur Implementierung.\n\nGrößere Modelle halluzinieren im Durchschnitt weniger, aber alle Modelle halluzinieren. Grounding ist die Gegenmaßnahme, nicht die Modellgröße."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Verankerung vs. Halluzination\",\n  \"group\": \"Fortgeschritten\",\n  \"options\": [\n    {\n      \"text\": \"Sag dem Modell im System‑Prompt \\\"do not hallucinate\\\"\"\n    },\n    {\n      \"text\": \"Verwende eine höhere Temperatur, um selbstbewusstere Antworten zu erzeugen.\"\n    },\n    {\n      \"text\": \"Stelle die abgerufenen Quelldokumente bereit und weise das Modell an, sie zu zitieren.\"\n    },\n    {\n      \"text\": \"Verwende ein größeres Modell — Halluzinationen treten nur bei kleineren Modellen auf.\"\n    }\n  ],\n  \"questionProse\": [\n    \"Die effektivste Methode, um Halluzinationen in einem produktiven KI‑System zu reduzieren, ist:\"\n  ],\n  \"explanationProse\": [\n    \"Dem Modell zu sagen, es solle nicht halluzinieren, verhindert Halluzinationen nicht — das Modell hat kein zuverlässiges introspektives Signal für „Ich erfinde das gerade.“ Es bedeutet nur, dass das Modell dir selbstbewusst sagt, es mache nichts erfunden, während es doch Dinge erfindet.\\n\\nWas tatsächlich funktioniert: **grounding**. Gib dem Modell die Informationen, die es braucht, um korrekt zu antworten, und beschränke es auf diese Informationen:\",\n    \"Dann validiere die Ausgabe: prüfe, ob Behauptungen in der Antwort im abgerufenen Kontext vorkommen. Das ist die Zitations‑Grounding‑Prüfung — siehe die RAG‑Eval‑Diskussion zur Implementierung.\\n\\nGrößere Modelle halluzinieren im Durchschnitt weniger, aber alle Modelle halluzinieren. Grounding ist die Gegenmaßnahme, nicht die Modellgröße.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 902,
+    "outputTokens": 914,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 3321
+  },
+  "cost": {
+    "inputUsd": 0.000035178,
+    "outputUsd": 0.00016452,
+    "totalUsd": 0.000199698,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

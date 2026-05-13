@@ -1,0 +1,44 @@
+{
+  "index": 7,
+  "attempt": 1,
+  "originalTitle": "Conversation History Management",
+  "translatedTitle": "Verwaltung des Gesprächsverlaufs",
+  "translation": {
+    "title": "Verwaltung des Gesprächsverlaufs",
+    "group": "Token-Verwaltung",
+    "options": [
+      {
+        "text": "Immer den gesamten Gesprächsverlauf senden"
+      },
+      {
+        "text": "Alte Nachrichten zusammenfassen, wenn der Verlauf das Token‑Budget überschreitet"
+      },
+      {
+        "text": "Alte Nachrichten löschen — das Modell hat persistentes Gedächtnis"
+      },
+      {
+        "text": "Verlauf in einer Vektor‑Datenbank speichern und relevante Turns abrufen"
+      }
+    ],
+    "questionProse": [
+      "Wie sollte man in einer Multi‑Turn‑Chat‑Anwendung vorgehen, wenn der Gesprächsverlauf sehr lang wird?"
+    ],
+    "explanationProse": [
+      "LLMs haben kein persistentes Gedächtnis. Jeder API‑Aufruf ist zustandslos — du sendest den gesamten Kontext und bekommst eine Antwort. Das „Gedächtnis“ einer Unterhaltung besteht ausschließlich aus der Nachrichtenhistorie, die du in jeder Anfrage übermittelst.\n\nWenn diese Historie dein Budget überschreitet, stehen dir folgende Optionen zur Verfügung:\n1. **Zusammenfassen**: Ältere Turns zu einer laufenden Zusammenfassung komprimieren, aktuelle Turns unverändert beibehalten\n2. **Gleitendes Fenster**: Die letzten N Turns behalten, ältere verwerfen\n3. **Selektiver Abruf**: Gesprächs‑Turns einbetten und pro Anfrage relevante auswählen (komplex, aber mächtig)\n\nEin einfaches Abschneiden — alte Nachrichten entfernen, um zu passen — ist die schlechteste Wahl, weil es stillschweigend Kontext entfernt, den das Modell benötigen könnte.\n\nDer Abruf aus einer Vektor‑DB ist theoretisch verlockend, aber für die meisten Chat‑Apps meist übertrieben. Zusammenfassen ist der pragmatische Standard."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Verwaltung des Gesprächsverlaufs\",\n  \"group\": \"Token-Verwaltung\",\n  \"options\": [\n    {\n      \"text\": \"Immer den gesamten Gesprächsverlauf senden\"\n    },\n    {\n      \"text\": \"Alte Nachrichten zusammenfassen, wenn der Verlauf das Token‑Budget überschreitet\"\n    },\n    {\n      \"text\": \"Alte Nachrichten löschen — das Modell hat persistentes Gedächtnis\"\n    },\n    {\n      \"text\": \"Verlauf in einer Vektor‑Datenbank speichern und relevante Turns abrufen\"\n    }\n  ],\n  \"questionProse\": [\n    \"Wie sollte man in einer Multi‑Turn‑Chat‑Anwendung vorgehen, wenn der Gesprächsverlauf sehr lang wird?\"\n  ],\n  \"explanationProse\": [\n    \"LLMs haben kein persistentes Gedächtnis. Jeder API‑Aufruf ist zustandslos — du sendest den gesamten Kontext und bekommst eine Antwort. Das „Gedächtnis“ einer Unterhaltung besteht ausschließlich aus der Nachrichtenhistorie, die du in jeder Anfrage übermittelst.\\n\\nWenn diese Historie dein Budget überschreitet, stehen dir folgende Optionen zur Verfügung:\\n1. **Zusammenfassen**: Ältere Turns zu einer laufenden Zusammenfassung komprimieren, aktuelle Turns unverändert beibehalten\\n2. **Gleitendes Fenster**: Die letzten N Turns behalten, ältere verwerfen\\n3. **Selektiver Abruf**: Gesprächs‑Turns einbetten und pro Anfrage relevante auswählen (komplex, aber mächtig)\\n\\nEin einfaches Abschneiden — alte Nachrichten entfernen, um zu passen — ist die schlechteste Wahl, weil es stillschweigend Kontext entfernt, den das Modell benötigen könnte.\\n\\nDer Abruf aus einer Vektor‑DB ist theoretisch verlockend, aber für die meisten Chat‑Apps meist übertrieben. Zusammenfassen ist der pragmatische Standard.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 908,
+    "outputTokens": 912,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2178
+  },
+  "cost": {
+    "inputUsd": 0.000035412,
+    "outputUsd": 0.00016416,
+    "totalUsd": 0.000199572,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-context-engineering
+- Locale: de
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-05-09--quiz-context-engineering/de/index.mdx
+- Validation: passed
+- Runtime seconds: 32.70
+- Input tokens: 14815
+- Output tokens: 13479
+- Thinking tokens: unknown
+- Cached input tokens: 1920
+- Cache write tokens: 0
+- Estimated cost: $0.003004
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: 'Quiz:14 Fragen zum Kontext‑Engineering'
 subTitle: >-
@@ -473,3 +491,4 @@ Wie hastdu abgeschnitten?
 - **0–4**: Gute Nachricht: Alles in diesem Quiz ist erlernbar und sofort anwendbar. Die „verloren‑im‑Mittelteil“-Frage allein lohnt sich, bevor du dein nächstes RAG‑Deployment startest.
 
 Context‑Engineering bedeutet, bewusst zu entscheiden, welche Informationen du ins Fenster legst, wo du sie platzierst und wie du sie strukturierst. Das Modell ist der am wenigsten steuerbare Teil deines Systems. Alles drumherum liegt in deiner Hand.
+````
