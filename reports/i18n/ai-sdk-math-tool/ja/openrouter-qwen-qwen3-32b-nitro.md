@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: ai-sdk-math-tool
+- Locale: ja
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-01-06--ai-sdk-math-tool/ja/index.mdx
+- Validation: deferred
+- Runtime seconds: 88.43
+- Input tokens: 6862
+- Output tokens: 5399
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.001845
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: LLMに数学をやらせるのをやめよう
 subTitle: 彼らはこれに苦手です。以下の方法で修正できます。
@@ -136,3 +154,4 @@ AIを活用した構築の考え方を変える必要があります。重要な
 - [CortexJS Compute Engine](https://cortexjs.io/compute-engine/)
 - [ツール呼び出しガイド](https://sdk.vercel.ai/docs/ai-sdk-core/tools-and-tool-calling)
 - [AI SDK サンプルリポジトリ](https://github.com/vercel/ai/tree/main/examples)
+````
