@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: docker-security-for-admins-and-maintainers
+- Locale: es
+- Model: deepseek/deepseek-v4-flash
+- Target: src/content/posts/2025-01-04--docker-security-for-admins-and-maintainers/es/index.mdx
+- Validation: deferred
+- Runtime seconds: 137.25
+- Input tokens: 9296
+- Output tokens: 10112
+- Thinking tokens: unknown
+- Cached input tokens: 768
+- Cache write tokens: 0
+- Estimated cost: $0.004027
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: true
 draft: true
@@ -330,3 +348,4 @@ Las pruebas desde dentro revelan la exposición interna, mientras que las prueba
    - Hecho: Solo bloquean lo que configuras para que bloqueen.
 3. **Las IPs privadas son seguras.**
    - Hecho: Exploits como las evasiones de NAT aún pueden afectar tu red.
+````
