@@ -1,0 +1,59 @@
+{
+  "selectedCommit": "804311c045fa879946fc99f7439fc5a95fbe9512",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 10,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "{text: 'new Intl.DateTimeFormat(\\',",
+      "replacement": "{text: 'new Intl.DateTimeFormat(\\'en-US\\').format(date)'},",
+      "reason": "The candidate truncated the code examples in the options for Challenge index 5, making the quiz unusable."
+    },
+    {
+      "priority": "high",
+      "match": "{text: 'date.toLocaleFormat(\\', isAnswer: true},",
+      "replacement": "{text: 'date.toLocaleFormat(\\'en-US\\')', isAnswer: true },"
+    },
+    {
+      "priority": "high",
+      "match": "{text: 'date.toLocaleString(\\',",
+      "replacement": "{text: 'date.toLocaleString(\\'en-GB\\', { timeZone: \\'UTC\\' })'},"
+    },
+    {
+      "priority": "high",
+      "match": "{text: 'date.toLocaleDateString(\\',",
+      "replacement": "{text: 'date.toLocaleDateString(\\'en-US\\', { timeZone: \\'UTC\\', timeZoneName: \\'short\\' })'},"
+    }
+  ],
+  "rationale": "The candidate 804311c045fa879946fc99f7439fc5a95fbe9512 provides the most natural and professional translation, capturing Dan's direct style well. However, like all candidates (including 'current'), it suffered from a truncation error in the code options for Challenge 5, likely due to a regex or parsing issue with escaped quotes in the source. I have provided high-priority suggestions to restore these code snippets. It also correctly translated the subtitle which was missing in 'current'.",
+  "slug": "js-quiz-14-date-time-questions-test-your-knowledge",
+  "locale": "fr",
+  "candidateCommits": [
+    "804311c045fa879946fc99f7439fc5a95fbe9512",
+    "106a227c7d39ec548b2643569ba7faf9d0e549ee"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "{text: 'new Intl.DateTimeFormat(\\',",
+      "replacement": "{text: 'new Intl.DateTimeFormat(\\'en-US\\').format(date)'},",
+      "reason": "The candidate truncated the code examples in the options for Challenge index 5, making the quiz unusable.",
+      "pass": 1,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug js-quiz-14-date-time-questions-test-your-knowledge --locale fr --skip-global",
+    "output": ""
+  }
+}
