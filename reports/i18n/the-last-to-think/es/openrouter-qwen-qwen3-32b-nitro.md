@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: the-last-to-think
+- Locale: es
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2025-05-31--the-last-to-think/es/index.mdx
+- Validation: passed
+- Runtime seconds: 6.30
+- Input tokens: 1854
+- Output tokens: 1934
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.000612
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 language: English
 title: El Último en Pensar
@@ -31,3 +49,4 @@ Simplemente no podemos esperar que los métodos antiguos funcionen en este nuevo
 Sobrevivimos a las calculadoras, a CliffsNotes y (por ahora) a TikTok. Sobreviviremos al ChatGPT. Los chicos se adaptarán. Espero que los adultos no se demoren demasiado en alcanzarlos.  
 
 Asumiendo que podemos mejorar el impacto ambiental y evitar una pesadilla distópica. Pero ese es un tema para otro día.
+````
