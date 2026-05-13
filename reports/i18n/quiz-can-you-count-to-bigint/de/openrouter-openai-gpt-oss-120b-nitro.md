@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-can-you-count-to-bigint
+- Locale: de
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2024-11-06--quiz-can-you-count-to-bigint/de/index.mdx
+- Validation: passed
+- Runtime seconds: 28.07
+- Input tokens: 13178
+- Output tokens: 7659
+- Thinking tokens: unknown
+- Cached input tokens: 3392
+- Cache write tokens: 0
+- Estimated cost: $0.001893
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: 'Quiz: Können Sie auf JavaScript zählen?'
@@ -415,3 +433,4 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 {/* <h4>Are you ok?</h4> */}
 
 <p class="inset">Brauchst du nach all dem Binärcode eine Pause?<br />Pftt, denk dran: Pause *nach* den Skills! <br /><br />Geh zu [my gym](/challenges/) und knack noch ein paar Challenges! 💪</p>
+````

@@ -1,0 +1,50 @@
+{
+  "index": 11,
+  "attempt": 1,
+  "originalTitle": "Handling nulls",
+  "translatedTitle": "Umgang mit null",
+  "translation": {
+    "title": "Umgang mit null",
+    "group": "Parsing",
+    "options": [
+      {
+        "text": "0 NaN"
+      },
+      {
+        "text": "0 0"
+      },
+      {
+        "text": "NaN NaN"
+      },
+      {
+        "text": "NaN 0"
+      },
+      {
+        "text": "null null"
+      },
+      {
+        "text": "TypeError"
+      }
+    ],
+    "questionProse": [
+      "Was wird das Ergebnis dieses Codes sein?"
+    ],
+    "explanationProse": [
+      "`parseInt` wandelt die Eingabe in einen String um, sodass `null` zu `\"null\"` wird. Da `\"null\"` keine gültigen dezimalen Zeichen enthält, liefert es `NaN`.\n\n    `Number(null)` liefert `0`. weil JS dich gerne auf Trab hält.\n    Warum? Nun, ich könnte tiefer gehen, falls Interesse besteht."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Umgang mit null\",\n  \"group\": \"Parsing\",\n  \"options\": [\n    {\n      \"text\": \"0 NaN\"\n    },\n    {\n      \"text\": \"0 0\"\n    },\n    {\n      \"text\": \"NaN NaN\"\n    },\n    {\n      \"text\": \"NaN 0\"\n    },\n    {\n      \"text\": \"null null\"\n    },\n    {\n      \"text\": \"TypeError\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was wird das Ergebnis dieses Codes sein?\"\n  ],\n  \"explanationProse\": [\n    \"`parseInt` wandelt die Eingabe in einen String um, sodass `null` zu `\\\"null\\\"` wird. Da `\\\"null\\\"` keine gültigen dezimalen Zeichen enthält, liefert es `NaN`.\\n\\n    `Number(null)` liefert `0`. weil JS dich gerne auf Trab hält.\\n    Warum? Nun, ich könnte tiefer gehen, falls Interesse besteht.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 843,
+    "outputTokens": 502,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 395
+  },
+  "cost": {
+    "inputUsd": 0.000032877,
+    "outputUsd": 0.00009035999999999998,
+    "totalUsd": 0.00012323699999999997,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
