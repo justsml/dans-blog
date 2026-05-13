@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-css-core-fundamentals
+- Locale: hi
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2024-11-08--quiz-css-core-fundamentals/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 20.69
+- Input tokens: 12313
+- Output tokens: 8461
+- Thinking tokens: unknown
+- Cached input tokens: 2560
+- Cache write tokens: 0
+- Estimated cost: $0.002003
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: 'प्रश्नोत्तरी: क्या आप CSS मूल बातें जानते हैं? (2025)'
@@ -449,3 +467,4 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 </Challenge>
 
 </QuizUI>
+````

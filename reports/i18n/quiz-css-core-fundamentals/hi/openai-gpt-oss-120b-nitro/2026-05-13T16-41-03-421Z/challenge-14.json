@@ -1,0 +1,44 @@
+{
+  "index": 13,
+  "attempt": 1,
+  "originalTitle": "Zero-Specificity Selectors",
+  "translatedTitle": "शून्य-विशिष्टता चयनकर्ता",
+  "translation": {
+    "title": "शून्य-विशिष्टता चयनकर्ता",
+    "group": "चयनकर्ता: विशिष्टता",
+    "options": [
+      {
+        "text": ":where(.card) .title"
+      },
+      {
+        "text": ".card .title"
+      },
+      {
+        "text": ":is(.card) .title"
+      },
+      {
+        "text": "#card .title"
+      }
+    ],
+    "questionProse": [
+      "कौन सा चयनकर्ता सबसे कम विशिष्टता रखता है?"
+    ],
+    "explanationProse": [
+      "`:where(.card) .title` सबसे कम विशिष्टता रखता है। `:where()` प्स्यूडो‑क्लास और उसके अंदर सब कुछ `0-0-0` योगदान देता है, इसलिए केवल `.title` गिना जाता है। `:is(.card) .title` `.card` की विशिष्टता रखता है, `.card .title` में दो क्लास हैं, और `#card .title` में एक ID शामिल है।"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"शून्य-विशिष्टता चयनकर्ता\",\n  \"group\": \"चयनकर्ता: विशिष्टता\",\n  \"options\": [\n    {\n      \"text\": \":where(.card) .title\"\n    },\n    {\n      \"text\": \".card .title\"\n    },\n    {\n      \"text\": \":is(.card) .title\"\n    },\n    {\n      \"text\": \"#card .title\"\n    }\n  ],\n  \"questionProse\": [\n    \"कौन सा चयनकर्ता सबसे कम विशिष्टता रखता है?\"\n  ],\n  \"explanationProse\": [\n    \"`:where(.card) .title` सबसे कम विशिष्टता रखता है। `:where()` प्स्यूडो‑क्लास और उसके अंदर सब कुछ `0-0-0` योगदान देता है, इसलिए केवल `.title` गिना जाता है। `:is(.card) .title` `.card` की विशिष्टता रखता है, `.card .title` में दो क्लास हैं, और `#card .title` में एक ID शामिल है।\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 766,
+    "outputTokens": 550,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1514
+  },
+  "cost": {
+    "inputUsd": 0.000029874,
+    "outputUsd": 0.00009900000000000001,
+    "totalUsd": 0.000128874,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
