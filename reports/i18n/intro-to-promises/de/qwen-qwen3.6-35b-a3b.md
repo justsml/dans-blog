@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: intro-to-promises
+- Locale: de
+- Model: qwen/qwen3.6-35b-a3b
+- Target: src/content/posts/2018-08-01--intro-to-promises/de/index.mdx
+- Validation: deferred
+- Runtime seconds: 59.28
+- Input tokens: 3853
+- Output tokens: 12617
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.000000
+- Pricing source: unknown
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Einführung in Promises
@@ -106,3 +124,4 @@ Alle Promises liefern entweder Erfolg (via `.then(fn)`) oder Fehler (via `.catch
 * `Promise.reject(Error)` - Erzeugt einen Promise mit Fehlerstatus, löst nachfolgendes `.catch()` aus
 * `Promise.all([...promises])` - Wartet, bis alle Promises im Array abgeschlossen sind
 * `Promise.race([...promises])` - Löst aus, sobald das erste Promise im Array aufgelöst ist
+````
