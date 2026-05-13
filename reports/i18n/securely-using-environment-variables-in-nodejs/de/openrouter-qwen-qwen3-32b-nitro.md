@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: securely-using-environment-variables-in-nodejs
+- Locale: de
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2018-11-14--securely-using-environment-variables-in-nodejs/de/index.mdx
+- Validation: passed
+- Runtime seconds: 11.72
+- Input tokens: 4844
+- Output tokens: 4549
+- Thinking tokens: unknown
+- Cached input tokens: 1024
+- Cache write tokens: 0
+- Estimated cost: $0.001479
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Verwenden von Umgebungsvariablen in NodeJS
@@ -142,3 +160,4 @@ Wenn dies nicht möglich ist, teilen Sie Ihre `.env`-Datei mit äußerster Vorsi
 #### ⚠️ Wichtig: Falls notwendig, verwenden Sie immer einen sicheren Messaging-Dienst (am besten mit Unterstützung für ablaufende Nachrichten.)
 
 Viel Erfolg und lassen Sie mich wissen, wenn Sie Fragen haben! 🎉
+````
