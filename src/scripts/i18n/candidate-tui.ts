@@ -4,6 +4,11 @@ import { spawn, type ChildProcess } from "node:child_process";
 import matter from "gray-matter";
 import { ACTIVE_LOCALES, type ActiveLocale } from "../../shared/i18n.ts";
 import { optionalString, parseArgs, parseList } from "./utils.ts";
+import {
+  hasOutOfCreditMarker,
+  isOutOfCreditError,
+  recordOutOfCreditIssue,
+} from "./out-of-credit.ts";
 
 type SourcePost = {
   category: string;
@@ -97,6 +102,7 @@ const DEFAULT_TUI_TASK_CONCURRENCY = "16";
 const DEFAULT_TUI_QUIZ_CONCURRENCY = "8";
 const DEFAULT_REFRESH_DEBOUNCE_MS = 750;
 const JUDGE_PROGRESS_PREFIX = "::i18n-judge-progress::";
+const OUT_OF_CREDIT_SETTLE_MS = 60_000;
 
 const options = parseArgs();
 const expectedCandidates = parsePositiveInteger(optionalString(options, "expected"), 2);
@@ -118,6 +124,8 @@ const workerState: WorkerState = {
   recentOutput: [],
 };
 let workerProcess: ChildProcess | undefined;
+const activeJudgeChildren = new Set<ChildProcess>();
+let outOfCreditJudgeShutdownPromise: Promise<void> | undefined;
 
 if (options["judge-worker"] === true) {
   try {
@@ -1300,6 +1308,7 @@ async function runJudgeWorker() {
   emitJudgeProgress({ event: "planned", total: tasks.length, concurrency });
 
   await mapLimit(tasks, concurrency, async (task, index) => {
+    if (hasOutOfCreditMarker()) return;
     console.log(`\n[${index + 1}/${tasks.length}] judging ${task.locale}/${task.slug}`);
     emitJudgeProgress({ event: "task_started", index: index + 1, total: tasks.length, slug: task.slug, locale: task.locale });
     try {
@@ -1307,6 +1316,17 @@ async function runJudgeWorker() {
       emitJudgeProgress({ event: "task_completed", index: index + 1, total: tasks.length, slug: task.slug, locale: task.locale });
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
+      if (hasOutOfCreditMarker() || isOutOfCreditError(error)) {
+        recordOutOfCreditIssue(error, {
+          script: "candidate-tui",
+          phase: "judge-worker",
+          slug: task.slug,
+          locale: task.locale,
+        });
+        await settleThenKillActiveJudgeChildren("OpenRouter out of credits");
+        emitJudgeProgress({ event: "task_failed", index: index + 1, total: tasks.length, slug: task.slug, locale: task.locale, error: message });
+        return;
+      }
       failures.push(`${task.locale}/${task.slug}: ${message}`);
       emitJudgeProgress({ event: "task_failed", index: index + 1, total: tasks.length, slug: task.slug, locale: task.locale, error: message });
     }
@@ -1318,6 +1338,10 @@ async function runJudgeWorker() {
     completed: tasks.length - failures.length,
     failed: failures.length,
   });
+
+  if (hasOutOfCreditMarker()) {
+    throw new Error("OpenRouter appears to be out of credits; stopped scheduling judge tasks.");
+  }
 
   if (failures.length > 0) {
     throw new Error([
@@ -1383,9 +1407,14 @@ function runJudgeTask(task: { slug: string; locale: ActiveLocale }) {
       cwd: process.cwd(),
       stdio: "inherit",
     });
+    activeJudgeChildren.add(child);
 
-    child.on("error", reject);
+    child.on("error", (error) => {
+      activeJudgeChildren.delete(child);
+      reject(error);
+    });
     child.on("exit", (code, signal) => {
+      activeJudgeChildren.delete(child);
       if (code === 0) {
         resolve();
         return;
@@ -1404,6 +1433,7 @@ async function mapLimit<T>(
 
   async function runWorker() {
     while (nextIndex < items.length) {
+      if (hasOutOfCreditMarker()) return;
       const index = nextIndex;
       nextIndex += 1;
       await worker(items[index], index);
@@ -1413,6 +1443,20 @@ async function mapLimit<T>(
   await Promise.all(
     Array.from({ length: Math.min(limit, items.length) }, () => runWorker()),
   );
+}
+
+async function settleThenKillActiveJudgeChildren(reason: string) {
+  if (outOfCreditJudgeShutdownPromise != null) return outOfCreditJudgeShutdownPromise;
+  outOfCreditJudgeShutdownPromise = (async () => {
+    if (activeJudgeChildren.size === 0) return;
+    console.error(`${reason}; waiting ${OUT_OF_CREDIT_SETTLE_MS / 1000}s before terminating ${activeJudgeChildren.size} active judge worker(s).`);
+    await new Promise((resolve) => setTimeout(resolve, OUT_OF_CREDIT_SETTLE_MS));
+    for (const child of activeJudgeChildren) {
+      killWorkerTree(child);
+    }
+    activeJudgeChildren.clear();
+  })();
+  return outOfCreditJudgeShutdownPromise;
 }
 
 function addOptionalGeneratorArg(args: string[], name: string) {

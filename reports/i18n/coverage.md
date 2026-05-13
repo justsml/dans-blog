@@ -1,180 +1,87 @@
 # I18n Coverage
 
-Generated at `2026-05-13T07:50:23.487Z`.
+Generated at `2026-05-13T20:05:44.879Z`.
 
 ## Summary
 
 - English posts: 75
-- Translation slots: 399/525 filled (76.0%)
-- Missing slots: 126
-- Fully translated posts: 44/75
+- Translation slots: 511/525 filled (97.3%)
+- Missing slots: 14
+- Fully translated posts: 64/75
 - Locales: es, hi, ja, ru, de, fr, it
 
 ## Locale Coverage
 
 | Locale | Filled | Missing | Coverage |
 | --- | ---: | ---: | ---: |
-| es | 57 | 18 | 76.0% |
-| hi | 58 | 17 | 77.3% |
-| ja | 55 | 20 | 73.3% |
-| ru | 57 | 18 | 76.0% |
-| de | 57 | 18 | 76.0% |
-| fr | 56 | 19 | 74.7% |
-| it | 59 | 16 | 78.7% |
+| es | 75 | 0 | 100.0% |
+| hi | 72 | 3 | 96.0% |
+| ja | 71 | 4 | 94.7% |
+| ru | 72 | 3 | 96.0% |
+| de | 75 | 0 | 100.0% |
+| fr | 73 | 2 | 97.3% |
+| it | 73 | 2 | 97.3% |
 
 ## Zero Coverage Posts
 
-- `docker-security-tips-for-self-hosting` (Security, 2025-01-04)
-- `from-zero-to-regex-hero-extract-url-like-strings` (Regex, 2024-12-29)
-- `breaking-unicorns` (Lulz, 2024-09-25)
+No zero-coverage posts.
 
 ## Health Notes
 
-- Missing locale slots with candidate reports waiting: 28
-- Existing translations without judge summaries: 305
+- Missing locale slots with candidate reports waiting: 14
+- Existing translations without judge summaries: 134
 
 ### Candidate Reports Without Translation Files
 
 | Post | Locale | Candidate reports | Qwen baseline |
 | --- | --- | ---: | --- |
-| docker-security-tips-for-self-hosting | hi | 1 | yes |
-| docker-security-tips-for-self-hosting | ja | 1 | yes |
-| docker-security-tips-for-self-hosting | ru | 1 | yes |
-| docker-security-tips-for-self-hosting | fr | 1 | yes |
-| docker-security-tips-for-self-hosting | it | 1 | yes |
-| from-zero-to-regex-hero-extract-url-like-strings | hi | 1 | yes |
-| breaking-unicorns | es | 1 | yes |
-| breaking-unicorns | hi | 1 | yes |
-| docker-server-setup-notes | ja | 1 | yes |
-| amazing-resources | ru | 1 | yes |
-| security-notes-regex | ru | 1 | yes |
-| angularjs-v2-impending-schism | de | 1 | yes |
-| upgrade-from-gatsby-to-astro | ja | 1 | yes |
-| contribute-to-open-source-the-easy-way | ru | 1 | yes |
-| contribute-to-open-source-the-easy-way | de | 1 | yes |
-| creating-collaborative-culture | ru | 1 | yes |
-| protect-your-tokens | fr | 1 | yes |
-| promise-gotchas | ru | 1 | yes |
-| when-ai-fails-and-the-crashing-robot-cars | de | 1 | yes |
-| higher-order-programming | fr | 1 | yes |
-| honest-priorities | es | 1 | yes |
-| one-weird-trick-to-speed-up-feature-teams | fr | 1 | yes |
-| handling-international-numbers-and-currency | it | 1 | yes |
-| guerrilla-types-in-typescript | es | 1 | yes |
-| deathmatch-git-rebase-vs-merge | fr | 1 | yes |
-| mastering-functional-pipelines-passing-state | it | 1 | yes |
-| stop-trying-to-make-async-await-happen | it | 1 | yes |
-| intro-to-promises | es | 1 | yes |
+| upgrade-from-gatsby-to-astro | ja | 2 | yes |
+| upgrade-from-gatsby-to-astro | fr | 2 | no |
+| visualizing-promises | hi | 2 | no |
+| visualizing-promises | ja | 2 | no |
+| docker-server-setup-notes | hi | 2 | no |
+| docker-server-setup-notes | fr | 2 | no |
+| one-weird-trick-to-speed-up-feature-teams | ja | 5 | no |
+| contribute-to-open-source-the-easy-way | ru | 2 | yes |
+| the-4-pillars-of-collaborative-culture | ru | 2 | no |
+| creating-collaborative-culture | hi | 2 | no |
+| securely-using-environment-variables-in-nodejs | it | 2 | no |
+| are-promises-broken | ru | 5 | no |
+| promise-gotchas | it | 7 | no |
+| pitfalls-in-promise-docs | ja | 6 | no |
 
 ### Translations Without Judge Summaries
 
 | Post | Locale | Qwen baseline |
 | --- | --- | --- |
-| upgrade-from-gatsby-to-astro | es | yes |
 | upgrade-from-gatsby-to-astro | hi | yes |
-| contribute-to-open-source-the-easy-way | ja | yes |
-| contribute-to-open-source-the-easy-way | fr | yes |
-| contribute-to-open-source-the-easy-way | it | yes |
-| should-you-use-named-or-default-exports | es | yes |
-| should-you-use-named-or-default-exports | ja | yes |
-| should-you-use-named-or-default-exports | fr | yes |
-| the-4-pillars-of-collaborative-culture | es | yes |
-| the-4-pillars-of-collaborative-culture | hi | yes |
-| the-4-pillars-of-collaborative-culture | it | yes |
-| creating-collaborative-culture | ja | yes |
-| creating-collaborative-culture | fr | yes |
-| creating-collaborative-culture | it | yes |
-| protect-your-tokens | es | yes |
-| protect-your-tokens | hi | yes |
-| protect-your-tokens | it | yes |
-| are-promises-broken | ja | yes |
-| are-promises-broken | fr | yes |
-| are-promises-broken | it | yes |
-| promise-gotchas | es | yes |
-| promise-gotchas | ja | yes |
-| promise-gotchas | fr | yes |
-| pitfalls-in-promise-docs | es | yes |
-| pitfalls-in-promise-docs | hi | yes |
-| pitfalls-in-promise-docs | it | yes |
-| when-ai-fails-and-the-crashing-robot-cars | es | yes |
-| when-ai-fails-and-the-crashing-robot-cars | ja | yes |
-| when-ai-fails-and-the-crashing-robot-cars | fr | yes |
-| higher-order-programming | es | yes |
-| higher-order-programming | hi | yes |
-| higher-order-programming | it | yes |
-| docker-rocks | ru | yes |
-| docker-rocks | de | yes |
-| docker-rocks | it | yes |
-| quiz-js-interfaces-symbols-and-enumerables | es | no |
-| quiz-js-interfaces-symbols-and-enumerables | hi | no |
-| quiz-js-interfaces-symbols-and-enumerables | ru | no |
-| quiz-js-interfaces-symbols-and-enumerables | de | no |
-| quiz-js-interfaces-symbols-and-enumerables | fr | no |
-| quiz-js-interfaces-symbols-and-enumerables | it | yes |
-| honest-priorities | hi | yes |
-| honest-priorities | ja | yes |
-| honest-priorities | ru | yes |
-| honest-priorities | de | yes |
-| one-weird-trick-to-speed-up-feature-teams | es | yes |
-| one-weird-trick-to-speed-up-feature-teams | ru | yes |
-| one-weird-trick-to-speed-up-feature-teams | de | yes |
-| one-weird-trick-to-speed-up-feature-teams | it | yes |
-| handling-international-numbers-and-currency | hi | yes |
-| handling-international-numbers-and-currency | ru | yes |
-| handling-international-numbers-and-currency | de | yes |
-| handling-international-numbers-and-currency | fr | yes |
-| guerrilla-types-in-typescript | hi | yes |
-| guerrilla-types-in-typescript | ja | yes |
-| guerrilla-types-in-typescript | ru | yes |
-| guerrilla-types-in-typescript | de | yes |
-| deathmatch-git-rebase-vs-merge | es | yes |
-| deathmatch-git-rebase-vs-merge | ru | yes |
-| deathmatch-git-rebase-vs-merge | de | yes |
-| deathmatch-git-rebase-vs-merge | it | yes |
-| mastering-functional-pipelines-passing-state | hi | yes |
-| mastering-functional-pipelines-passing-state | ru | yes |
-| mastering-functional-pipelines-passing-state | de | yes |
-| mastering-functional-pipelines-passing-state | fr | yes |
-| securely-using-environment-variables-in-nodejs | hi | yes |
-| securely-using-environment-variables-in-nodejs | ru | yes |
-| securely-using-environment-variables-in-nodejs | de | yes |
-| securely-using-environment-variables-in-nodejs | fr | yes |
-| stop-trying-to-make-async-await-happen | hi | yes |
-| stop-trying-to-make-async-await-happen | ja | yes |
-| stop-trying-to-make-async-await-happen | ru | yes |
-| stop-trying-to-make-async-await-happen | de | yes |
+| upgrade-from-gatsby-to-astro | ru | no |
 | visualizing-promises | es | yes |
 | visualizing-promises | ru | yes |
 | visualizing-promises | de | yes |
-| visualizing-promises | it | yes |
-| intro-to-promises | hi | yes |
-| intro-to-promises | ru | yes |
-| intro-to-promises | de | yes |
-| intro-to-promises | fr | yes |
-| compare-nvme-ssd-cloud-options | hi | yes |
-| compare-nvme-ssd-cloud-options | ja | yes |
-| compare-nvme-ssd-cloud-options | ru | yes |
-| compare-nvme-ssd-cloud-options | de | yes |
-| the-jsonb-seduction | es | yes |
+| docker-server-setup-notes | ja | yes |
+| docker-server-setup-notes | de | no |
+| docker-server-setup-notes | it | no |
+| one-weird-trick-to-speed-up-feature-teams | hi | no |
+| one-weird-trick-to-speed-up-feature-teams | ru | yes |
+| one-weird-trick-to-speed-up-feature-teams | it | yes |
+| contribute-to-open-source-the-easy-way | ja | yes |
+| the-4-pillars-of-collaborative-culture | hi | yes |
+| creating-collaborative-culture | ja | yes |
+| creating-collaborative-culture | ru | yes |
+| creating-collaborative-culture | it | yes |
+| securely-using-environment-variables-in-nodejs | hi | yes |
+| securely-using-environment-variables-in-nodejs | ru | yes |
+| are-promises-broken | hi | no |
+| promise-gotchas | hi | no |
+| promise-gotchas | ja | yes |
+| pitfalls-in-promise-docs | it | yes |
 | the-jsonb-seduction | hi | yes |
 | the-jsonb-seduction | ja | yes |
-| the-jsonb-seduction | de | yes |
-| the-jsonb-seduction | fr | yes |
-| the-jsonb-seduction | it | yes |
-| the-8-byte-timestamp-that-destroyed-our-database | es | yes |
-| the-8-byte-timestamp-that-destroyed-our-database | hi | yes |
-| the-8-byte-timestamp-that-destroyed-our-database | ja | yes |
-| the-8-byte-timestamp-that-destroyed-our-database | ru | yes |
-| the-8-byte-timestamp-that-destroyed-our-database | de | yes |
-| the-8-byte-timestamp-that-destroyed-our-database | fr | yes |
 | the-8-byte-timestamp-that-destroyed-our-database | it | yes |
-| async-stack-traces-why-error-stack-lies-in-production | es | yes |
 | async-stack-traces-why-error-stack-lies-in-production | hi | yes |
 | async-stack-traces-why-error-stack-lies-in-production | ja | yes |
 | async-stack-traces-why-error-stack-lies-in-production | ru | yes |
-| async-stack-traces-why-error-stack-lies-in-production | de | yes |
-| async-stack-traces-why-error-stack-lies-in-production | fr | yes |
-| async-stack-traces-why-error-stack-lies-in-production | it | yes |
 | quiz-advanced-js-error-mastery | es | yes |
 | quiz-advanced-js-error-mastery | hi | no |
 | quiz-advanced-js-error-mastery | ja | yes |
@@ -184,43 +91,12 @@ Generated at `2026-05-13T07:50:23.487Z`.
 | quiz-advanced-js-error-mastery | it | yes |
 | serverless-database-magic | es | yes |
 | serverless-database-magic | hi | yes |
-| serverless-database-magic | ja | yes |
-| serverless-database-magic | ru | yes |
-| serverless-database-magic | de | yes |
-| serverless-database-magic | fr | yes |
-| serverless-database-magic | it | yes |
-| patchy-with-a-chance-of-vulnerability | es | yes |
 | patchy-with-a-chance-of-vulnerability | hi | yes |
-| patchy-with-a-chance-of-vulnerability | ja | yes |
-| patchy-with-a-chance-of-vulnerability | ru | yes |
-| patchy-with-a-chance-of-vulnerability | de | yes |
-| patchy-with-a-chance-of-vulnerability | fr | yes |
-| patchy-with-a-chance-of-vulnerability | it | yes |
-| the-last-to-think | ru | yes |
-| the-last-to-think | de | yes |
-| the-last-to-think | fr | yes |
 | the-last-to-think | it | yes |
-| beware-the-single-purpose-people | es | yes |
 | beware-the-single-purpose-people | hi | yes |
 | beware-the-single-purpose-people | ja | yes |
 | beware-the-single-purpose-people | ru | yes |
-| beware-the-single-purpose-people | de | yes |
-| beware-the-single-purpose-people | fr | yes |
 | beware-the-single-purpose-people | it | yes |
-| you-might-not-need-algolia | es | yes |
-| you-might-not-need-algolia | hi | yes |
-| you-might-not-need-algolia | ja | yes |
-| you-might-not-need-algolia | ru | yes |
-| you-might-not-need-algolia | de | yes |
-| you-might-not-need-algolia | fr | yes |
-| you-might-not-need-algolia | it | yes |
-| the-unassuming-power-of-multiple-choice-questions | es | yes |
-| the-unassuming-power-of-multiple-choice-questions | hi | yes |
-| the-unassuming-power-of-multiple-choice-questions | ja | yes |
-| the-unassuming-power-of-multiple-choice-questions | ru | yes |
-| the-unassuming-power-of-multiple-choice-questions | de | yes |
-| the-unassuming-power-of-multiple-choice-questions | fr | yes |
-| the-unassuming-power-of-multiple-choice-questions | it | yes |
 | quiz-is-your-memory-rusty | es | no |
 | quiz-is-your-memory-rusty | hi | no |
 | quiz-is-your-memory-rusty | ja | no |
@@ -228,79 +104,38 @@ Generated at `2026-05-13T07:50:23.487Z`.
 | quiz-is-your-memory-rusty | de | no |
 | quiz-is-your-memory-rusty | fr | no |
 | quiz-is-your-memory-rusty | it | no |
-| quiz-in-the-aws-cloud | es | no |
-| quiz-in-the-aws-cloud | hi | no |
 | quiz-in-the-aws-cloud | ja | no |
-| quiz-in-the-aws-cloud | ru | no |
 | quiz-in-the-aws-cloud | de | no |
 | quiz-in-the-aws-cloud | fr | no |
 | quiz-in-the-aws-cloud | it | yes |
-| replacing-my-job-with-gpt-and-llm | es | yes |
-| replacing-my-job-with-gpt-and-llm | hi | yes |
 | replacing-my-job-with-gpt-and-llm | ja | yes |
-| replacing-my-job-with-gpt-and-llm | ru | yes |
-| replacing-my-job-with-gpt-and-llm | de | yes |
-| replacing-my-job-with-gpt-and-llm | fr | yes |
 | replacing-my-job-with-gpt-and-llm | it | yes |
-| quiz-postgres-sql-mastery-pt2 | es | no |
-| quiz-postgres-sql-mastery-pt2 | hi | no |
 | quiz-postgres-sql-mastery-pt2 | ja | yes |
 | quiz-postgres-sql-mastery-pt2 | ru | no |
 | quiz-postgres-sql-mastery-pt2 | de | no |
-| quiz-postgres-sql-mastery-pt2 | fr | no |
 | quiz-postgres-sql-mastery-pt2 | it | no |
-| quiz-postgres-sql-mastery-pt1 | es | no |
 | quiz-postgres-sql-mastery-pt1 | hi | no |
-| quiz-postgres-sql-mastery-pt1 | ja | no |
-| quiz-postgres-sql-mastery-pt1 | ru | yes |
-| quiz-postgres-sql-mastery-pt1 | de | yes |
-| quiz-postgres-sql-mastery-pt1 | fr | no |
 | quiz-postgres-sql-mastery-pt1 | it | no |
 | quiz-bash-in-the-shell | es | yes |
 | quiz-bash-in-the-shell | hi | no |
-| quiz-bash-in-the-shell | ja | no |
-| quiz-bash-in-the-shell | ru | no |
-| quiz-bash-in-the-shell | de | no |
-| quiz-bash-in-the-shell | fr | no |
 | quiz-bash-in-the-shell | it | no |
-| quiz-regex-or-wreckage | es | no |
-| quiz-regex-or-wreckage | hi | no |
-| quiz-regex-or-wreckage | ja | no |
 | quiz-regex-or-wreckage | ru | no |
-| quiz-regex-or-wreckage | de | no |
-| quiz-regex-or-wreckage | fr | yes |
-| quiz-regex-or-wreckage | it | no |
-| quiz-nodejs-files-streams-buffers-oh-my | es | no |
-| quiz-nodejs-files-streams-buffers-oh-my | hi | yes |
 | quiz-nodejs-files-streams-buffers-oh-my | ja | no |
-| quiz-nodejs-files-streams-buffers-oh-my | ru | no |
-| quiz-nodejs-files-streams-buffers-oh-my | de | no |
-| quiz-nodejs-files-streams-buffers-oh-my | fr | no |
 | quiz-nodejs-files-streams-buffers-oh-my | it | no |
-| quiz-destructuring-delights | es | no |
 | quiz-destructuring-delights | hi | no |
 | quiz-destructuring-delights | ja | no |
 | quiz-destructuring-delights | ru | no |
 | quiz-destructuring-delights | de | no |
-| quiz-destructuring-delights | fr | no |
 | quiz-destructuring-delights | it | yes |
-| quiz-sql-query-fundamentals | es | no |
 | quiz-sql-query-fundamentals | hi | no |
-| quiz-sql-query-fundamentals | ja | yes |
 | quiz-sql-query-fundamentals | ru | no |
-| quiz-sql-query-fundamentals | de | no |
-| quiz-sql-query-fundamentals | fr | no |
 | quiz-sql-query-fundamentals | it | no |
-| quiz-css-core-fundamentals | es | no |
 | quiz-css-core-fundamentals | hi | no |
 | quiz-css-core-fundamentals | ja | no |
 | quiz-css-core-fundamentals | ru | yes |
-| quiz-css-core-fundamentals | de | yes |
-| quiz-css-core-fundamentals | fr | no |
 | quiz-css-core-fundamentals | it | no |
 | quiz-modern-css-2025 | es | yes |
 | quiz-modern-css-2025 | hi | no |
-| quiz-modern-css-2025 | ja | no |
 | quiz-modern-css-2025 | ru | no |
 | quiz-modern-css-2025 | de | no |
 | quiz-modern-css-2025 | fr | no |
@@ -312,105 +147,63 @@ Generated at `2026-05-13T07:50:23.487Z`.
 | quiz-can-you-count-to-bigint | de | no |
 | quiz-can-you-count-to-bigint | fr | yes |
 | quiz-can-you-count-to-bigint | it | no |
-| quiz-master-modern-html5 | es | no |
 | quiz-master-modern-html5 | hi | yes |
-| quiz-master-modern-html5 | ja | no |
 | quiz-master-modern-html5 | ru | no |
 | quiz-master-modern-html5 | de | no |
 | quiz-master-modern-html5 | fr | no |
 | quiz-master-modern-html5 | it | no |
-| quiz-do-you-know-esnext | es | no |
-| quiz-do-you-know-esnext | hi | no |
+| quiz-js-interfaces-symbols-and-enumerables | es | no |
+| quiz-js-interfaces-symbols-and-enumerables | hi | no |
+| quiz-js-interfaces-symbols-and-enumerables | it | yes |
 | quiz-do-you-know-esnext | ja | yes |
-| quiz-do-you-know-esnext | ru | no |
-| quiz-do-you-know-esnext | de | no |
-| quiz-do-you-know-esnext | fr | no |
 | quiz-do-you-know-esnext | it | no |
 | quiz-data-structures-algorithms | es | no |
 | quiz-data-structures-algorithms | hi | no |
-| quiz-data-structures-algorithms | ja | no |
 | quiz-data-structures-algorithms | ru | yes |
-| quiz-data-structures-algorithms | de | yes |
-| quiz-data-structures-algorithms | fr | no |
 | quiz-data-structures-algorithms | it | no |
+| honest-priorities | hi | yes |
+| honest-priorities | ru | yes |
+| honest-priorities | it | no |
+| guerrilla-types-in-typescript | hi | yes |
+| guerrilla-types-in-typescript | it | no |
+| deathmatch-git-rebase-vs-merge | it | yes |
+| should-you-use-named-or-default-exports | it | no |
 | js-quiz-14-date-time-questions-test-your-knowledge | es | no |
-| js-quiz-14-date-time-questions-test-your-knowledge | hi | no |
 | js-quiz-14-date-time-questions-test-your-knowledge | ja | no |
-| js-quiz-14-date-time-questions-test-your-knowledge | ru | no |
-| js-quiz-14-date-time-questions-test-your-knowledge | de | no |
-| js-quiz-14-date-time-questions-test-your-knowledge | fr | no |
-| js-quiz-14-date-time-questions-test-your-knowledge | it | yes |
-| javascript-promises-quiz | es | no |
 | javascript-promises-quiz | hi | no |
-| javascript-promises-quiz | ja | yes |
-| javascript-promises-quiz | ru | no |
-| javascript-promises-quiz | de | no |
-| javascript-promises-quiz | fr | no |
 | javascript-promises-quiz | it | no |
-| you-may-not-need-axios | es | no |
-| you-may-not-need-axios | hi | no |
 | you-may-not-need-axios | ja | no |
-| you-may-not-need-axios | ru | yes |
-| you-may-not-need-axios | de | yes |
-| you-may-not-need-axios | fr | no |
 | you-may-not-need-axios | it | no |
-| naming-things-real-good | es | yes |
-| naming-things-real-good | hi | no |
-| naming-things-real-good | ja | yes |
-| naming-things-real-good | ru | yes |
-| naming-things-real-good | de | yes |
-| naming-things-real-good | fr | no |
-| naming-things-real-good | it | yes |
-| docker-makes-everything-better | es | no |
-| docker-makes-everything-better | hi | no |
+| protect-your-tokens | ru | no |
+| compare-nvme-ssd-cloud-options | hi | yes |
+| compare-nvme-ssd-cloud-options | ru | yes |
+| when-ai-fails-and-the-crashing-robot-cars | hi | no |
+| when-ai-fails-and-the-crashing-robot-cars | ru | no |
+| when-ai-fails-and-the-crashing-robot-cars | it | no |
+| higher-order-programming | ru | no |
+| higher-order-programming | it | yes |
 | docker-makes-everything-better | ja | yes |
-| docker-makes-everything-better | ru | no |
-| docker-makes-everything-better | de | no |
-| docker-makes-everything-better | fr | yes |
-| docker-makes-everything-better | it | no |
-| stop-the-angularjs-hate | es | no |
 | stop-the-angularjs-hate | hi | no |
-| stop-the-angularjs-hate | ja | yes |
-| stop-the-angularjs-hate | ru | no |
-| stop-the-angularjs-hate | de | no |
-| stop-the-angularjs-hate | fr | no |
 | stop-the-angularjs-hate | it | no |
+| security-notes-regex | hi | no |
+| security-notes-regex | de | no |
+| security-notes-regex | fr | no |
 
 ## Prioritized Gaps
 
 | Priority | Post | Category | Date | Filled | Missing locales | Reports waiting |
 | --- | --- | --- | --- | ---: | --- | ---: |
-| high | docker-security-tips-for-self-hosting | Security | 2025-01-04 | 0/7 | es, hi, ja, ru, de, fr, it | 5 |
-| medium | from-zero-to-regex-hero-extract-url-like-strings | Regex | 2024-12-29 | 0/7 | es, hi, ja, ru, de, fr, it | 1 |
-| medium | breaking-unicorns | Lulz | 2024-09-25 | 0/7 | es, hi, ja, ru, de, fr, it | 2 |
-| medium | docker-server-setup-notes | DevOps | 2015-04-06 | 1/7 | hi, ja, ru, de, fr, it | 1 |
-| medium | amazing-resources | Code | 2015-02-26 | 1/7 | es, hi, ja, ru, de, fr | 1 |
-| medium | security-notes-regex | Security | 2015-02-24 | 1/7 | es, hi, ru, de, fr, it | 1 |
-| medium | angularjs-v2-impending-schism | Thoughts | 2015-08-05 | 2/7 | es, hi, ja, ru, de | 1 |
-| medium | upgrade-from-gatsby-to-astro | Guides | 2024-08-21 | 3/7 | ja, ru, de, fr | 1 |
-| medium | contribute-to-open-source-the-easy-way | Guides | 2024-01-16 | 3/7 | es, hi, ru, de | 2 |
-| medium | should-you-use-named-or-default-exports | Guides | 2023-08-10 | 3/7 | hi, ru, de, it | 0 |
-| medium | the-4-pillars-of-collaborative-culture | Leadership | 2021-04-03 | 3/7 | ja, ru, de, fr | 0 |
-| medium | creating-collaborative-culture | Leadership | 2021-01-01 | 3/7 | es, hi, ru, de | 1 |
-| medium | protect-your-tokens | Guides | 2018-10-27 | 3/7 | ja, ru, de, fr | 1 |
-| medium | are-promises-broken | Code | 2018-10-06 | 3/7 | es, hi, ru, de | 0 |
-| medium | promise-gotchas | Code | 2018-09-26 | 3/7 | hi, ru, de, it | 1 |
-| medium | pitfalls-in-promise-docs | Code | 2017-05-10 | 3/7 | ja, ru, de, fr | 0 |
-| medium | when-ai-fails-and-the-crashing-robot-cars | AI | 2015-12-18 | 3/7 | hi, ru, de, it | 1 |
-| medium | higher-order-programming | Code | 2015-09-22 | 3/7 | ja, ru, de, fr | 1 |
-| medium | docker-rocks | DevOps | 2015-06-11 | 3/7 | es, hi, ja, fr | 0 |
-| medium | quiz-js-interfaces-symbols-and-enumerables | Quiz | 2024-10-31 | 6/7 | ja | 0 |
-| low | honest-priorities | Thoughts | 2024-10-23 | 4/7 | es, fr, it | 1 |
-| low | one-weird-trick-to-speed-up-feature-teams | Engineering | 2024-09-29 | 4/7 | hi, ja, fr | 1 |
-| low | handling-international-numbers-and-currency | HowTo | 2024-08-28 | 4/7 | es, ja, it | 1 |
-| low | guerrilla-types-in-typescript | Guides | 2023-09-05 | 4/7 | es, fr, it | 1 |
-| low | deathmatch-git-rebase-vs-merge | Thoughts | 2023-08-27 | 4/7 | hi, ja, fr | 1 |
-| low | mastering-functional-pipelines-passing-state | Guides | 2023-08-09 | 4/7 | es, ja, it | 1 |
-| low | securely-using-environment-variables-in-nodejs | Code | 2018-11-13 | 4/7 | es, ja, it | 0 |
-| low | stop-trying-to-make-async-await-happen | Guides | 2018-10-03 | 4/7 | es, fr, it | 1 |
-| low | visualizing-promises | Guides | 2018-09-30 | 4/7 | hi, ja, fr | 0 |
-| low | intro-to-promises | Code | 2018-08-01 | 4/7 | es, ja, it | 1 |
-| low | compare-nvme-ssd-cloud-options | DevOps | 2017-04-15 | 4/7 | es, fr, it | 0 |
+| low | upgrade-from-gatsby-to-astro | Guides | 2024-08-21 | 5/7 | ja, fr | 2 |
+| low | visualizing-promises | Guides | 2018-09-30 | 5/7 | hi, ja | 2 |
+| low | docker-server-setup-notes | DevOps | 2015-04-06 | 5/7 | hi, fr | 2 |
+| low | one-weird-trick-to-speed-up-feature-teams | Engineering | 2024-09-29 | 6/7 | ja | 1 |
+| low | contribute-to-open-source-the-easy-way | Guides | 2024-01-16 | 6/7 | ru | 1 |
+| low | the-4-pillars-of-collaborative-culture | Leadership | 2021-04-03 | 6/7 | ru | 1 |
+| low | creating-collaborative-culture | Leadership | 2021-01-01 | 6/7 | hi | 1 |
+| low | securely-using-environment-variables-in-nodejs | Code | 2018-11-13 | 6/7 | it | 1 |
+| low | are-promises-broken | Code | 2018-10-06 | 6/7 | ru | 1 |
+| low | promise-gotchas | Code | 2018-09-26 | 6/7 | it | 1 |
+| low | pitfalls-in-promise-docs | Code | 2017-05-10 | 6/7 | ja | 1 |
 
 ## Translation Queue Commands
 

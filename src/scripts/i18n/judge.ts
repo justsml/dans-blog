@@ -15,6 +15,11 @@ import { generateText } from "ai";
 import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 import { appendFileSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
+import {
+  assertNoOutOfCreditMarker,
+  isOutOfCreditError,
+  recordOutOfCreditIssue,
+} from "./out-of-credit.ts";
 
 type JudgeSuggestion = {
   priority: "low" | "medium" | "high";
@@ -60,6 +65,7 @@ const shouldAllowSingleCandidate = options["allow-single-candidate"] === true;
 const shouldRunFullValidation = options["full-validation"] === true;
 const timeoutSeconds = getTimeoutSeconds();
 const { sourcePath, targetPath, reportDir } = getPostPaths(slug, locale);
+assertNoOutOfCreditMarker();
 const sourceRelPath = relativeToRepo(sourcePath);
 const targetRelPath = relativeToRepo(targetPath);
 const articleReportDir = join(process.cwd(), "reports/i18n", slug);
@@ -715,6 +721,7 @@ async function runJudgeCommand(
   const modelId = model.replace(/^openrouter\//, "");
 
   try {
+    assertNoOutOfCreditMarker();
     const result = await generateText({
       model: provider.chat(modelId),
       system: [
@@ -760,6 +767,15 @@ async function runJudgeCommand(
       output: `${result.text.trim()}\n${usageLine}`,
     };
   } catch (error) {
+    if (isOutOfCreditError(error)) {
+      recordOutOfCreditIssue(error, {
+        script: "judge",
+        slug,
+        locale,
+        model,
+        operation: "judge",
+      });
+    }
     return {
       ok: false,
       runtimeMs: Date.now() - startedAt,

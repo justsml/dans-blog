@@ -18,6 +18,7 @@ import { normalizeMarkdownIndentation, slotToTranslatable, slotFromTranslatable 
 import type { ActiveLocale } from "../../shared/i18n.ts";
 import { LOCALE_LABELS } from "../../shared/i18n.ts";
 import { cachedText, usageFromResult, type TranslationTelemetry } from "./llm-telemetry.ts";
+import { assertNoOutOfCreditMarker } from "./out-of-credit.ts";
 
 const TranslationSchema = z.object({
   title: z.string().describe("Translated question title"),
@@ -146,6 +147,7 @@ export async function translateChallenge(
 
   const provider = createOpenRouter(llmConfig.providerSettings);
   const model = provider.chat(llmConfig.modelId);
+  assertNoOutOfCreditMarker();
 
   const result = await generateText({
     model,
@@ -241,6 +243,7 @@ export async function generateQuizDescription(
 
   const provider = createOpenRouter(llmConfig.providerSettings);
   const model = provider.chat(llmConfig.modelId);
+  assertNoOutOfCreditMarker();
 
   const result = await generateText({
     model,

@@ -51,6 +51,11 @@ import { parseQuiz, assembleQuiz } from "./quiz-parser.ts";
 import { translateChallenge, generateQuizDescription } from "./quiz-translator.ts";
 import { estimateTokenCost, safeModelPathName } from "./translation-costs.ts";
 import { cachedText, usageFromResult } from "./llm-telemetry.ts";
+import {
+  assertNoOutOfCreditMarker,
+  isOutOfCreditError,
+  recordOutOfCreditIssue,
+} from "./out-of-credit.ts";
 
 interface LlmConfig {
   modelId: string;
@@ -530,6 +535,7 @@ async function translateChunk(
 
   const provider = createOpenRouter(llmConfig.providerSettings);
   const model = provider.chat(llmConfig.modelId);
+  assertNoOutOfCreditMarker();
 
   const result = await generateText({
     model,
@@ -573,6 +579,7 @@ async function generateSummary(
 ): Promise<string> {
   const provider = createOpenRouter(llmConfig.providerSettings);
   const model = provider.chat(llmConfig.modelId);
+  assertNoOutOfCreditMarker();
   const result = await generateText({
     model,
     system:
@@ -847,6 +854,7 @@ async function translateProse(
   const start = performance.now();
   const provider = createOpenRouter(llmConfig.providerSettings);
   const model = provider.chat(llmConfig.modelId);
+  assertNoOutOfCreditMarker();
 
   const result = await generateText({
     model,
@@ -941,6 +949,7 @@ async function main() {
   const expectedRunId = typeof options["run-id"] === "string" ? options["run-id"] : undefined;
   const assertActiveRun = () => assertRunLock(runLockPath, expectedRunId);
   assertActiveRun();
+  assertNoOutOfCreditMarker();
 
   const llmConfig = resolveLlmConfig(modelId);
   const { sourcePath, targetPath } = getPostPaths(slug, locale);
@@ -1180,6 +1189,7 @@ async function translateFrontmatter(
 
     const provider = createOpenRouter(llmConfig.providerSettings);
     const model = provider.chat(llmConfig.modelId);
+    assertNoOutOfCreditMarker();
     const translation = await generateText({
       model,
       allowSystemInMessages: true,
@@ -1266,6 +1276,15 @@ function formatTelemetryReport(telemetry: Telemetry, summary: string): string {
 
 if (import.meta.main) {
   main().catch((err) => {
+    if (isOutOfCreditError(err)) {
+      const options = parseArgs();
+      recordOutOfCreditIssue(err, {
+        script: "translate-chunked",
+        slug: typeof options.slug === "string" ? options.slug : undefined,
+        locale: typeof options.locale === "string" ? options.locale : undefined,
+        model: typeof options.model === "string" ? options.model : undefined,
+      });
+    }
     console.error("\n❌ Translation failed:", err.message);
     process.exit(1);
   });

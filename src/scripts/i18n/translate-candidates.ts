@@ -16,6 +16,12 @@ import {
   writeTextFile,
   normalizeLocaleImportPaths,
 } from "./utils.ts";
+import {
+  assertNoOutOfCreditMarker,
+  hasOutOfCreditMarker,
+  isOutOfCreditError,
+  recordOutOfCreditIssue,
+} from "./out-of-credit.ts";
 
 const DEFAULT_CANDIDATE_MODELS = [
   "openrouter/qwen/qwen3.6-plus",
@@ -33,6 +39,7 @@ const DEFAULT_CANDIDATE_MODELS = [
 const DEFAULT_TRANSLATION_TIMEOUT_SECONDS = 240;
 const DEFAULT_CHUNK_SIZE = "10p";
 const DEFAULT_TASK_CONCURRENCY = 16;
+const OUT_OF_CREDIT_SETTLE_MS = 60_000;
 const REPORT_ROOT = join(process.cwd(), "reports/i18n");
 
 type CandidateTask = {
@@ -137,6 +144,7 @@ let candidateRunStatus: CandidateRunSummary["runStatus"] = "running";
 let candidateRunFinalized = false;
 let isProcessingTask = false;
 const activeChildren = new Set<ChildProcess>();
+let outOfCreditShutdownPromise: Promise<void> | undefined;
 
 registerProcessCleanup();
 
@@ -146,6 +154,7 @@ if (ownsRunLock) {
 
 if (!shouldDryRun) {
   assertRunLock(runLockPath, processRunId);
+  assertNoOutOfCreditMarker();
 }
 
 if (shouldDryRun) {
@@ -199,6 +208,7 @@ async function processTask(currentSlug: string, currentLocale: ActiveLocale) {
 
     for (const model of models) {
       assertRunLock(runLockPath, processRunId);
+      assertNoOutOfCreditMarker();
       const reportPath = getAttemptReportPath(model);
 
       const startedAt = Date.now();
@@ -245,13 +255,24 @@ async function processTask(currentSlug: string, currentLocale: ActiveLocale) {
         }
       } catch (error) {
         assertRunLock(runLockPath, processRunId);
+        const isCreditFailure = hasOutOfCreditMarker() || isOutOfCreditError(error);
+        if (isCreditFailure) {
+          recordOutOfCreditIssue(error, {
+            script: "translate-candidates",
+            slug,
+            locale,
+            model,
+          });
+        }
         const telemetry = getDirectTelemetry(model, startedAt);
         const rawOutput = existsSync(targetPath) ? readFileSync(targetPath, "utf8") : undefined;
         cleanupRejectedTarget();
         writeCandidateReport({
           reportPath,
           model,
-          validationStatus: "rejected: direct AI SDK translation failed",
+          validationStatus: isCreditFailure
+            ? "rejected: OpenRouter out of credits"
+            : "rejected: direct AI SDK translation failed",
           telemetry,
           note: error instanceof Error ? error.message : String(error),
           rawOutput,
@@ -259,7 +280,9 @@ async function processTask(currentSlug: string, currentLocale: ActiveLocale) {
         recordRunAttempt({
           model,
           status: "rejected",
-          validationStatus: "rejected: direct AI SDK translation failed",
+          validationStatus: isCreditFailure
+            ? "rejected: OpenRouter out of credits"
+            : "rejected: direct AI SDK translation failed",
           reportPath: relativeToRepo(reportPath),
           note: error instanceof Error ? error.message : String(error),
           telemetry,
@@ -270,6 +293,11 @@ async function processTask(currentSlug: string, currentLocale: ActiveLocale) {
             relativeToRepo(reportPath),
             candidateRunEventsRelPath,
           ]);
+        }
+
+        if (isCreditFailure) {
+          await settleThenKillActiveChildren("OpenRouter out of credits");
+          throw new Error("OpenRouter appears to be out of credits; stopped candidate generation.");
         }
       }
     }
@@ -295,13 +323,28 @@ async function processTasks(tasks: CandidateTask[]) {
 
   const failures: string[] = [];
   await mapLimit(tasks, taskConcurrency, async (task, index) => {
+    if (hasOutOfCreditMarker()) return;
     console.log(`\n[${index + 1}/${tasks.length}] queued ${task.locale}/${task.slug}`);
     try {
       await runTaskWorker(task);
     } catch (error) {
+      if (hasOutOfCreditMarker() || isOutOfCreditError(error)) {
+        recordOutOfCreditIssue(error, {
+          script: "translate-candidates",
+          phase: "task-worker",
+          slug: task.slug,
+          locale: task.locale,
+        });
+        await settleThenKillActiveChildren("OpenRouter out of credits");
+        return;
+      }
       failures.push(`${task.locale}/${task.slug}: ${error instanceof Error ? error.message : String(error)}`);
     }
   });
+
+  if (hasOutOfCreditMarker()) {
+    throw new Error("OpenRouter appears to be out of credits; stopped scheduling candidate tasks.");
+  }
 
   if (failures.length > 0) {
     throw new Error([
@@ -370,6 +413,7 @@ async function mapLimit<T>(
 
   async function runWorker() {
     while (nextIndex < items.length) {
+      if (hasOutOfCreditMarker()) return;
       const index = nextIndex;
       nextIndex += 1;
       await worker(items[index], index);
@@ -434,6 +478,20 @@ function killActiveChildren() {
     killChildTree(child);
   }
   activeChildren.clear();
+}
+
+async function settleThenKillActiveChildren(reason: string) {
+  if (outOfCreditShutdownPromise != null) return outOfCreditShutdownPromise;
+  outOfCreditShutdownPromise = (async () => {
+    if (activeChildren.size === 0) return;
+    console.error(`${reason}; waiting ${OUT_OF_CREDIT_SETTLE_MS / 1000}s before terminating ${activeChildren.size} active translation worker(s).`);
+    await new Promise((resolve) => setTimeout(resolve, OUT_OF_CREDIT_SETTLE_MS));
+    if (activeChildren.size > 0) {
+      console.error(`Terminating ${activeChildren.size} active translation worker(s) after out-of-credit settle delay.`);
+      killActiveChildren();
+    }
+  })();
+  return outOfCreditShutdownPromise;
 }
 
 function killChildTree(child: ChildProcess) {
