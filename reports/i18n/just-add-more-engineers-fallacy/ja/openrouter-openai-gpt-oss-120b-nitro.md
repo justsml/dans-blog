@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: just-add-more-engineers-fallacy
+- Locale: ja
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2025-12-29--just-add-more-engineers-fallacy/ja/index.mdx
+- Validation: deferred
+- Runtime seconds: 4.79
+- Input tokens: 9193
+- Output tokens: 3697
+- Thinking tokens: unknown
+- Cached input tokens: 4096
+- Cache write tokens: 0
+- Estimated cost: $0.001024
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 draft: true
 hidden: true
@@ -109,3 +127,4 @@ Jeff Bezos は Amazon で「two‑pizza team」ルールを導入しました。
 - ウィル・ラーソンの *Staff Engineer* ブログとテックリーダーシップに関する書籍
 - チャリティ・メイジャーズ（Honeycomb）による可観測性とチーム構造の考察  
 - DORA が発行する *State of DevOps* レポート
+````
