@@ -1,0 +1,31 @@
+{
+  "selectedCommit": "b70c847c384b31d9f234453c6da26cfd8fb7790a",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 9,
+    "relevance": 9,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "This candidate provides the most natural and technically accurate translation. It correctly uses 'गद्य' for 'prose' and 'त्रिकोण' or 'ट्राइग्राम' appropriately. It maintains the direct, professional tone of the original English text while ensuring all MDX components and code blocks are preserved correctly. The current translation had some awkward phrasing and a typo ('लेकिní').",
+  "slug": "postgres-text-search-guide",
+  "locale": "hi",
+  "candidateCommits": [
+    "b70c847c384b31d9f234453c6da26cfd8fb7790a",
+    "6a520356b74eea0f1f69e159d52073a22813944c",
+    "19fed039f86d86cb2f006b6a8edcc65dce347a65",
+    "d2106d27de2bdfd00327cc3c66782baa46dc8ad4",
+    "fb2399c0660e17f549fcd146c9bf029b562a014a",
+    "83100c8bdc5564915a55e91c3bd861d13222ba3d"
+  ],
+  "suggestionLog": [],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug postgres-text-search-guide --locale hi --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug postgres-text-search-guide --locale hi --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug postgres-text-search-guide --locale hi --skip-global\n207 |     ...targetContents.matchAll(/=[\"']\\.\\/(?!\\.)[^\"']+\\.(?:avif|gif|jpe?g|png|svg|webp)[\"']/g),\n208 |   ];\n209 | \n210 |   if (nestedAssetReferences.length === 0) return;\n211 | \n212 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2026-05-02--postgres-text-search-guide/hi/index.mdx uses ./ asset paths inside a locale folder. Use ../ for inherited post assets.\n      at assertNestedAssetPaths (/Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:212:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}
