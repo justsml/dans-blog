@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: llm-generative-ui-landscape
+- Locale: ru
+- Model: deepseek/deepseek-v4-flash
+- Target: src/content/posts/2026-05-06--llm-generative-ui-landscape/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 163.86
+- Input tokens: 20977
+- Output tokens: 21818
+- Thinking tokens: unknown
+- Cached input tokens: 1536
+- Cache write tokens: 0
+- Estimated cost: $0.008835
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Ландшафт генеративных UI на основе LLM
 subTitle: >-
@@ -334,3 +352,4 @@ User intent
 Будущее — это не «модель пишет ваш фронтенд».
 
 Будущее ближе к: **ваш фронтенд становится инструментом, на котором агент может играть, но вы всё ещё решаете, как этот инструмент может звучать.**
+````
