@@ -1,19 +1,7 @@
-# I18n Judgment: securing-clawdbot-tailscale (de)
+# Translation Judge
 
-## Candidates
-- **Qwen 3.6 Plus** (91c1fb3): Solid technical translation, good MDX preservation.
-- **DeepSeek V4 Flash** (287314a): Very natural German, good balance of technical accuracy and readability.
-- **MiniMax M2.7** (6112d38): Slightly more literal, decent but less "Dan-like" punch.
+- Selected candidate: 91c1fb30927ab417835bc31bb12d5da2d460adec
+- Selected model: openrouter/qwen/qwen3.6-plus
+- Judge model: openrouter/google/gemini-3-flash-preview
 
-## Decision
-**Winner: DeepSeek V4 Flash (287314a)**
-
-### Reasoning
-- **Technical Accuracy**: Correctly handles Tailscale terminology (Serve, Funnel, tailnet) and security concepts.
-- **Natural Language**: Best flow in German. Uses "schotte SSH ab" and "schenkst du Fremden einen Pfad", which matches the direct, slightly informal but authoritative tone of the original.
-- **MDX Preservation**: Maintained all components, code blocks, and frontmatter correctly.
-- **Asset Paths**: All candidates correctly used parent-relative paths (`../`) for images.
-
-## Polish Applied
-- Minor consistency check on "Gateway" and "Node" capitalization.
-- Verified link syntax and code block formatting.
+This candidate provides the most natural and technically accurate translation. It correctly handles technical terms like 'loopback', 'tailnet', and 'binding' while maintaining Dan's direct, instructional style. It also perfectly preserves the MDX structure and heading counts. The 'current' translation was incomplete (missing title/subtitle) and slightly more clunky in its phrasing.
