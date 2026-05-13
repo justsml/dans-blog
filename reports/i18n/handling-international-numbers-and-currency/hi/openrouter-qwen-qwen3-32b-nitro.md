@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: handling-international-numbers-and-currency
+- Locale: hi
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2024-08-29--handling-international-numbers-and-currency/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 17.28
+- Input tokens: 7282
+- Output tokens: 7769
+- Thinking tokens: unknown
+- Cached input tokens: 1536
+- Cache write tokens: 0
+- Estimated cost: $0.002447
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: अंतरराष्ट्रीय संख्याओं और मुद्रा को समझना
@@ -126,3 +144,4 @@ console.log('🇫🇷 ' + formatMoney(number, 'EUR', 'fr-FR'));
 
 - [currency](https://github.com/bojanz/currency) मेरा वर्तमान गोलैंग चुनाव है।
  */}
+````

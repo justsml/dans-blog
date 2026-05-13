@@ -1,51 +1,59 @@
 {
-  "runId": "2026-05-13T17-30-21-813Z",
+  "runId": "2026-05-13T18-35-14-206Z",
   "runStatus": "running",
   "slug": "handling-international-numbers-and-currency",
   "locale": "hi",
-  "startedAt": "2026-05-13T17:30:21.813Z",
-  "updatedAt": "2026-05-13T17:30:44.465Z",
+  "startedAt": "2026-05-13T18:35:14.206Z",
+  "updatedAt": "2026-05-13T18:35:40.575Z",
   "modelsRequested": [
     "openrouter/openai/gpt-oss-120b:nitro",
     "openrouter/qwen/qwen3-32b:nitro",
     "deepseek/deepseek-v4-flash",
-    "qwen/qwen3.6-plus"
+    "qwen/qwen3.6-plus",
+    "qwen/qwen3.6-35b-a3b",
+    "qwen/qwen3.5-9b"
   ],
   "attemptedModels": 1,
-  "skippedModels": 0,
+  "skippedModels": 1,
   "rejectedModels": 0,
   "candidateModels": 1,
   "totals": {
-    "inputTokens": 6881,
-    "outputTokens": 1810,
+    "inputTokens": 7282,
+    "outputTokens": 7769,
     "thinkingTokens": 0,
-    "cachedInputTokens": 2304,
+    "cachedInputTokens": 1536,
     "cacheWriteTokens": 0,
-    "estimatedCostUsd": 0.000594,
+    "estimatedCostUsd": 0.002447,
     "hasUnknownInputTokens": false,
     "hasUnknownOutputTokens": false,
     "hasUnknownThinkingTokens": true,
     "hasUnknownCachedInputTokens": false,
     "hasUnknownCacheWriteTokens": false,
     "hasUnknownEstimatedCost": false,
-    "runtimeSeconds": "3.49"
+    "runtimeSeconds": "17.28"
   },
   "attempts": [
     {
       "model": "openrouter/openai/gpt-oss-120b:nitro",
+      "status": "skipped",
+      "reportPath": "reports/i18n/handling-international-numbers-and-currency/hi/openrouter-openai-gpt-oss-120b-nitro.md",
+      "note": "Existing non-rejected report found. Pass --overwrite to rerun."
+    },
+    {
+      "model": "openrouter/qwen/qwen3-32b:nitro",
       "status": "candidate",
       "validationStatus": "deferred",
-      "reportPath": "reports/i18n/handling-international-numbers-and-currency/hi/openrouter-openai-gpt-oss-120b-nitro.md",
+      "reportPath": "reports/i18n/handling-international-numbers-and-currency/hi/openrouter-qwen-qwen3-32b-nitro.md",
       "note": "Generated through the direct AI SDK chunked translator.",
       "telemetry": {
-        "runtimeSeconds": "3.49",
+        "runtimeSeconds": "17.28",
         "tokens": {
-          "input": 6881,
-          "output": 1810,
-          "cached": 2304,
+          "input": 7282,
+          "output": 7769,
+          "cached": 1536,
           "cacheWrite": 0
         },
-        "estimatedCostUsd": 0.0005941589999999999,
+        "estimatedCostUsd": 0.0024471199999999997,
         "pricingSource": "local-openrouter-estimate"
       }
     }
