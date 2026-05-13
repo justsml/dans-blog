@@ -1,0 +1,99 @@
+---
+title: 非同期スタックトレース：なぜ `Error.stack` は嘘をつくのか
+subTitle: マイクロタスクキューが宿題を食らった（デバッグのコンテキストもろとも）
+date: '2025-12-29'
+modified: '2025-12-30'
+tags:
+  - javascript
+  - async
+  - debugging
+  - node.js
+  - v8
+  - performance
+category: Code
+subCategory: Best Practices
+social_image: ../desktop-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+午前2時。PagerDutyのアラートが鳴り響いている。
+
+監視ログを開くと、こんな出力が目に飛び込んでくる。
+
+```
+Error: Cannot read properties of undefined (reading 'id')
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+```
+
+得られる情報はこれだけだ。関数名もない。行番号もない。ファイルパスもない。ただの `processTicksAndRejections` だ。
+
+アシンクJavaScriptの世界へようこそ。ここではスタックトレースは実態を反映しておらず、行番号はデバッグに役立たない。
+
+---
+
+## スタックトレースが壊れる理由
+
+同期コードにおけるCall Stackは、明確な系譜だ。AがBを呼び、BがCを呼ぶ。Cがクラッシュすれば、呼び出し経路を正確に追跡できる。
+
+一方、非同期コード（`async/await`）では、`await` キーワード一つ一つが実行の中断ポイントとなる。
+
+`await` すると、関数の実行コンテキストはスタックから切り離される。マイクロタスクキュー（Microtask Queue）という名の冷凍庫に一時保管されるのだ。この瞬間、スタックは空になる（あるいは別のタスクで埋まる）。
+
+Promise が解決されると、関数は解凍されてスタックに再び割り当てられる。だが、中断前の実行履歴はすでに消去されている。
+
+エンジンは500ミリ秒前に誰が `await` を呼び出したか全く把握していない。ただ、「実行すべきタスクがある」ことだけを認識している。
+
+---
+
+## V8 が試みた修正
+
+Node.js も対策を試みている。提供されているのは：
+
+1.  `Error.captureStackTrace()`: 作成時にスタックをキャプチャする。エラーが後から投げられた場合、この手法は無意味だ。
+2.  `--async-stack-traces`: Promise チェーンの「シャドウスタック」を保持させるフラグ。
+    *   コスト: アプリのパフォーマンスが30%低下する。
+    *   結果: 一応役に立つが、すぐにノイズだらけになる。
+
+---
+
+## 真の解決策：AsyncLocalStorage
+
+本番環境で生き残りたいなら、スタックトレースを見るのをやめろ。因果関係を見ろ。
+
+Stack と Microtask Queue 間を飛び交う実行スレッドに、コンテキスト（User ID、Request ID）を付与する必要がある。
+
+Node.js にはこのための組み込みツールがある：`AsyncLocalStorage`。
+
+```javascript
+import { AsyncLocalStorage } from 'async_hooks';
+
+const context = new AsyncLocalStorage();
+
+// 1. Wrap the request
+context.run({ requestId: '123' }, () => {
+  // 2. Call deep async code
+  await processOrder();
+});
+
+// 3. Deep inside processOrder:
+async function processOrder() {
+  await db.query();
+  
+  // Magic! We can still see the requestId
+  const { requestId } = context.getStore();
+  console.log(`[${requestId}] Failed to process order`);
+}
+```
+
+間にいくつ `await` が挟まろうと関係ない。`AsyncLocalStorage` が管理する実行コンテキストは、非同期の境界を越えて維持される。これにより、深いネストや複雑な Promise チェーンが存在しても、デバッグに必要な文脈は失われない。
+
+---
+
+## 本番環境向けプレイブック
+
+1. `err.stack` を信用するのをやめろ。設計上、そもそも不完全なものだ。
+2. 構造化ログを採用しろ。`AsyncLocalStorage` を使って、すべてのログ行に `requestId` を付与する。これにより、分散環境でのログ収集時にコンテキストが破綻するのを防げる。
+3. スタックトレースではなくトレースを使え。OpenTelemetry を導入しろ。これはサービス横断的な因果関係を可視化し、エンジニアが本当に注目すべき部分を明確にする。
+
+コードは非同期だ。デバッグのコンテキストまで同期にする必要はない。
