@@ -1,0 +1,47 @@
+{
+  "selectedCommit": "6d68add10621fc47d631391138729ce9ca8bd6dc",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The current translation already incorporates the high and medium priority fixes suggested in the previous pass (using 'observez' and 'accotement'). It is technically accurate, maintains Dan's direct style, and correctly preserves the MDX structure and frontmatter. The translation of 'octogenarians' and the technical tiers is handled naturally in French.",
+  "slug": "when-ai-fails-and-the-crashing-robot-cars",
+  "locale": "fr",
+  "candidateCommits": [
+    "6d68add10621fc47d631391138729ce9ca8bd6dc",
+    "4a86e91d9e9ed341bdce22bfedb711ab7921bfca",
+    "9a01770456a5c5a6db46817e091b20801a348dce"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "si vous respectez **toujours** la loi.",
+      "replacement": "si vous observez **toujours** la loi.",
+      "reason": "'Observer la loi' is more idiomatic in a legal/formal context than 'respecter' in this specific sentence structure.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "rouler sur une bande d'arrêt d'urgence ou",
+      "replacement": "rouler sur l'accotement ou...",
+      "reason": "'Accotement' is a better general translation for 'shoulder' in this context, and the ellipsis was missing.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug when-ai-fails-and-the-crashing-robot-cars --locale fr --skip-global",
+    "output": ""
+  }
+}
