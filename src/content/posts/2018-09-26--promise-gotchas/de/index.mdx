@@ -1,7 +1,7 @@
 ---
 social_image: ../desktop-social.webp
-title: Promise Fallen
-subTitle: Häufige Fehler vermeiden
+title: Promise‑Fallen
+subTitle: Vermeidung häufiger Fehler
 date: '2018-09-26'
 modified: '2024-07-30'
 category: Code
@@ -24,27 +24,27 @@ cover_icon: ../icon_michal-parzuchowski-224092-unsplash.webp
 ---
 ### Promises funktionieren nicht wie andere Werte
 
-Sie können ihren Wert nicht wie die meisten anderen Werte ausgeben:
+Man kann ihren Wert nicht wie die meisten Werte ausgeben:
 
 ```js
-// Das ergibt mit Promises keinen Sinn:
+// Das ergibt keinen Sinn bei Promises:
 console.log(Promise.resolve(42));
 
-// Wir müssen die `.then`-Schnittstelle verwenden:
+// Wir müssen die `.then`‑Schnittstelle benutzen:
 Promise.resolve(42).then(value => console.log(value));
 ```
 
-### Promises warnen Sie nicht, wenn Sie einen Fehler machen
+### Promises warnen nicht, wenn man einen Fehler macht
 
-Nun, ein häufiger Fehler.
+Nun, ein typischer Fehler.
 
-Aus verschiedenen Gründen wurde von TC39 entschieden, dass `.then` und `.catch` mit `null` übergeben werden dürfen. Zum Beispiel ist `.then(null, null)` gültig, und das erforderliche Verhalten besteht darin, diesen „Schritt“ in der Kette zu überspringen.
+Aus verschiedenen Gründen hat TC39 beschlossen, dass `.then` und `.catch` `null` akzeptieren dürfen. Zum Beispiel ist `.then(null, null)` gültig, und das erwartete Verhalten ist, diesen „Schritt“ in der Kette zu überspringen.
 
-Die unerwünschte Folge hiervon ist, dass es sehr einfach ist, Fehler zu machen.
+Die unglückliche Konsequenz daraus ist, dass man leicht Fehler einbauen kann.
 
-##### Beispielsweise
+##### Nach Beispiel
 
-Betrachten wir ein kleines Rätsel: Welche der folgenden Optionen wird `console.log` 42 ausgeben?
+Betrachten wir eine Mini‑Aufgabe: Welche der folgenden Optionen gibt `console.log` 42 aus?
 
 ```js
 // Option #1:
@@ -64,9 +64,9 @@ Promise.resolve(42)
 
 ##### Die Antwort
 
-Die Antwort ist Option #2, #3 und #4.
+Die Antwort lautet #2, #3 und #4.
 
-Warum? Schauen wir uns die **Typen** an, die an `.then()` übergeben wurden:
+Warum? Schauen wir uns die **Typen** der an `.then()` übergebenen Werte an:
 
 ```js
 var arg1 = console.log();
@@ -78,13 +78,13 @@ typeof arg2 === "function";
 typeof arg3 === "function";
 ```
 
-Noch immer unsicher, wie die vierte Option funktioniert?
+Noch Fragen, wie die vierte Option funktioniert?
 
-Es verhält sich effektiv so:
+Es läuft im Wesentlichen so:
 
 ```js
-// Option #4 - effektiv
+// Option #4 - im Kern
 Promise.resolve(42)
-  .then(undefined) // dies hat keinen Einfluss auf den Wert, er wird an den folgenden `.then(fn)` weitergegeben
+  .then(undefined) // hat keinen Einfluss auf den Wert, er wird an das nachfolgende `.then(fn)` weitergereicht
   .then(console.log);
 ```
