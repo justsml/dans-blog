@@ -4,29 +4,29 @@
   "slug": "disable-transparent-hugepages",
   "locale": "ja",
   "startedAt": "2026-05-13T16:35:31.666Z",
-  "updatedAt": "2026-05-13T16:36:38.084Z",
+  "updatedAt": "2026-05-13T16:37:57.757Z",
   "modelsRequested": [
     "openrouter/openai/gpt-oss-120b:nitro",
     "openrouter/qwen/qwen3-32b:nitro"
   ],
-  "attemptedModels": 1,
+  "attemptedModels": 3,
   "skippedModels": 0,
-  "rejectedModels": 0,
-  "candidateModels": 1,
+  "rejectedModels": 1,
+  "candidateModels": 2,
   "totals": {
-    "inputTokens": 834,
-    "outputTokens": 253,
+    "inputTokens": 2352,
+    "outputTokens": 1755,
     "thinkingTokens": 0,
     "cachedInputTokens": 384,
     "cacheWriteTokens": 0,
-    "estimatedCostUsd": 0.000078,
+    "estimatedCostUsd": 0.00056,
     "hasUnknownInputTokens": false,
     "hasUnknownOutputTokens": false,
     "hasUnknownThinkingTokens": true,
     "hasUnknownCachedInputTokens": false,
     "hasUnknownCacheWriteTokens": false,
     "hasUnknownEstimatedCost": false,
-    "runtimeSeconds": "0.29"
+    "runtimeSeconds": "4.67"
   },
   "attempts": [
     {
@@ -44,6 +44,42 @@
           "cacheWrite": 0
         },
         "estimatedCostUsd": 0.00007806600000000001,
+        "pricingSource": "local-openrouter-estimate"
+      }
+    },
+    {
+      "model": "openrouter/qwen/qwen3-32b:nitro",
+      "status": "candidate",
+      "validationStatus": "passed",
+      "reportPath": "reports/i18n/disable-transparent-hugepages/ja/openrouter-qwen-qwen3-32b-nitro.md",
+      "note": "Generated through the direct AI SDK chunked translator.",
+      "telemetry": {
+        "runtimeSeconds": "2.19",
+        "tokens": {
+          "input": 759,
+          "output": 751,
+          "cached": 0,
+          "cacheWrite": 0
+        },
+        "estimatedCostUsd": 0.00024096,
+        "pricingSource": "local-openrouter-estimate"
+      }
+    },
+    {
+      "model": "openrouter/qwen/qwen3-32b:nitro",
+      "status": "rejected",
+      "validationStatus": "rejected: direct AI SDK translation failed",
+      "reportPath": "reports/i18n/disable-transparent-hugepages/ja/openrouter-qwen-qwen3-32b-nitro.md",
+      "note": "Command failed: git add src/content/posts/2015-11-22--disable-transparent-hugepages/ja/index.mdx reports/i18n/disable-transparent-hugepages/ja",
+      "telemetry": {
+        "runtimeSeconds": "2.19",
+        "tokens": {
+          "input": 759,
+          "output": 751,
+          "cached": 0,
+          "cacheWrite": 0
+        },
+        "estimatedCostUsd": 0.00024096,
         "pricingSource": "local-openrouter-estimate"
       }
     }
