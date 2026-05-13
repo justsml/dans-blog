@@ -1,0 +1,32 @@
+{
+  "selectedCommit": "3eb5577b15b0abdfba658e8d82a1a204a3e55c66",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The candidate provides a high-quality translation that balances technical terminology with natural Hindi phrasing. It correctly translates the subtitle (which was missing in the current version) and maintains all MDX structures and links. It uses 'गार्डरेल' (Guardrails) and 'प्रोसेसर' (Processor) which are standard in technical Hindi contexts, while keeping the prose engaging and direct, matching the original author's style.",
+  "slug": "mastra-security-guardrails",
+  "locale": "hi",
+  "candidateCommits": [
+    "3eb5577b15b0abdfba658e8d82a1a204a3e55c66",
+    "7c13f90a10f83728e7e442206ba9c0be55315bdf",
+    "dfe316a3290cdbe32728d6874c0a34cfd9253bc9",
+    "de686f45fd0b3842f45d122848e85b861936e0c2",
+    "f3f290dbff0b912169b7c6cc3a2977865186b0c6",
+    "ff907776c0ca41a77c6853dd6aa208db00914e1d",
+    "ee03ed849a8824942d9d9e55e152714283527395"
+  ],
+  "suggestionLog": [],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug mastra-security-guardrails --locale hi --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug mastra-security-guardrails --locale hi --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug mastra-security-guardrails --locale hi --skip-global\n207 |     ...targetContents.matchAll(/=[\"']\\.\\/(?!\\.)[^\"']+\\.(?:avif|gif|jpe?g|png|svg|webp)[\"']/g),\n208 |   ];\n209 | \n210 |   if (nestedAssetReferences.length === 0) return;\n211 | \n212 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2026-01-03--mastra-security-guardrails/hi/index.mdx uses ./ asset paths inside a locale folder. Use ../ for inherited post assets.\n      at assertNestedAssetPaths (/Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:212:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}
