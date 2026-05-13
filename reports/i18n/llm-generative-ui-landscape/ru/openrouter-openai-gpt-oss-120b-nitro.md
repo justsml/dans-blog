@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: llm-generative-ui-landscape
+- Locale: ru
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-05-06--llm-generative-ui-landscape/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 24.20
+- Input tokens: 21145
+- Output tokens: 7595
+- Thinking tokens: unknown
+- Cached input tokens: 5248
+- Cache write tokens: 0
+- Estimated cost: $0.002192
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Ландшафт генеративного UI на базе LLM
 subTitle: >-
@@ -334,3 +352,4 @@ Generative UI не заменит тщательно продуманные пр
 Будущее — это не «модель пишет ваш фронтенд».
 
 Будущее ближе к такому: **ваш фронтенд становится инструментом, которым агент может управлять, но вы всё равно решаете, каким звуком этот инструмент может издавать.**
+````
