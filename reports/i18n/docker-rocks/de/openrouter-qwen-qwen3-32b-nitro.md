@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: docker-rocks
+- Locale: de
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2015-06-11--docker-rocks/de/index.mdx
+- Validation: passed
+- Runtime seconds: 3.88
+- Input tokens: 1553
+- Output tokens: 1667
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.000524
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: ''
@@ -46,3 +64,4 @@ Aktualisiert 2024:
 
 - Docker Desktop ist zwar proprietär, aber für private Nutzung kostenlos. Es ist eine hervorragende Möglichkeit, mit Docker auf OSX oder Windows zu starten.  
 - Wenn Sie eine offeneren Lösung suchen, schauen Sie sich [Rancher Desktop](https://rancherdesktop.io/) an.
+````
