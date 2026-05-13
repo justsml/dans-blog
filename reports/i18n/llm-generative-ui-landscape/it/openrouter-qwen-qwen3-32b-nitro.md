@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: llm-generative-ui-landscape
+- Locale: it
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-05-06--llm-generative-ui-landscape/it/index.mdx
+- Validation: deferred
+- Runtime seconds: 84.81
+- Input tokens: 21243
+- Output tokens: 21026
+- Thinking tokens: unknown
+- Cached input tokens: 4096
+- Cache write tokens: 0
+- Estimated cost: $0.006746
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: ''
 subTitle: ''
@@ -330,3 +348,4 @@ I migliori sistemi non lasceranno al modello di improvvisare tutto. Gli daranno 
 Il futuro non è "il modello scrive il tuo frontend".  
 
 Il futuro è più vicino a: **il tuo frontend diventa uno strumento che l'agente può suonare, ma decidi comunque cosa lo strumento può suonare**.
+````
