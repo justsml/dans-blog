@@ -4,31 +4,31 @@
   "slug": "docker-rocks",
   "locale": "ja",
   "startedAt": "2026-05-13T17:19:29.082Z",
-  "updatedAt": "2026-05-13T17:19:33.117Z",
+  "updatedAt": "2026-05-13T17:21:02.106Z",
   "modelsRequested": [
     "openrouter/openai/gpt-oss-120b:nitro",
     "openrouter/qwen/qwen3-32b:nitro",
     "deepseek/deepseek-v4-flash",
     "qwen/qwen3.6-plus"
   ],
-  "attemptedModels": 1,
-  "skippedModels": 0,
+  "attemptedModels": 2,
+  "skippedModels": 1,
   "rejectedModels": 0,
-  "candidateModels": 1,
+  "candidateModels": 2,
   "totals": {
-    "inputTokens": 2091,
-    "outputTokens": 600,
+    "inputTokens": 4032,
+    "outputTokens": 1543,
     "thinkingTokens": 0,
     "cachedInputTokens": 640,
     "cacheWriteTokens": 0,
-    "estimatedCostUsd": 0.00019,
+    "estimatedCostUsd": 0.000725,
     "hasUnknownInputTokens": false,
     "hasUnknownOutputTokens": false,
     "hasUnknownThinkingTokens": true,
     "hasUnknownCachedInputTokens": false,
     "hasUnknownCacheWriteTokens": false,
     "hasUnknownEstimatedCost": false,
-    "runtimeSeconds": "1.31"
+    "runtimeSeconds": "39.24"
   },
   "attempts": [
     {
@@ -46,6 +46,30 @@
           "cacheWrite": 0
         },
         "estimatedCostUsd": 0.000189549,
+        "pricingSource": "local-openrouter-estimate"
+      }
+    },
+    {
+      "model": "openrouter/qwen/qwen3-32b:nitro",
+      "status": "skipped",
+      "reportPath": "reports/i18n/docker-rocks/ja/openrouter-qwen-qwen3-32b-nitro.md",
+      "note": "Existing non-rejected report found. Pass --overwrite to rerun."
+    },
+    {
+      "model": "deepseek/deepseek-v4-flash",
+      "status": "candidate",
+      "validationStatus": "deferred",
+      "reportPath": "reports/i18n/docker-rocks/ja/deepseek-deepseek-v4-flash.md",
+      "note": "Generated through the direct AI SDK chunked translator.",
+      "telemetry": {
+        "runtimeSeconds": "37.93",
+        "tokens": {
+          "input": 1941,
+          "output": 943,
+          "cached": 0,
+          "cacheWrite": 0
+        },
+        "estimatedCostUsd": 0.00053578,
         "pricingSource": "local-openrouter-estimate"
       }
     }
