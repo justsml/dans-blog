@@ -13,6 +13,7 @@ import {
   requireString,
 } from "./utils.ts";
 import { safeModelPathName } from "./translation-costs.ts";
+import { assertTranslationLength } from "./structural-validation.ts";
 
 interface CandidateRecord {
   runId: string;
@@ -68,6 +69,11 @@ async function main() {
     throw new Error(`Selected candidate hash mismatch for ${selected.runId}. Expected ${selected.outputHash}, got ${outputHash}.`);
   }
 
+  assertTranslationLength({
+    sourceContents: readFileSync(sourcePath, "utf8"),
+    targetContents: output,
+    targetPath,
+  });
   mkdirSync(dirname(targetPath), { recursive: true });
   writeFileSync(targetPath, output, "utf8");
 
@@ -173,7 +179,7 @@ async function judgeCandidates({
   const prompt = [
     "You are a constrained translation judge for DanLevy.net.",
     `Choose the best ${locale} translation candidate for ${slug}.`,
-    "Prioritize technical accuracy, natural language quality, preserved MDX/frontmatter/imports, preserved code, and Dan's direct technical style.",
+    "Prioritize technical accuracy, natural language quality, preserved MDX/frontmatter/imports, preserved code, matching per-level heading counts, and Dan's direct technical style.",
     "Return JSON only with this shape: {\"selectedRunId\":\"...\",\"reason\":\"...\",\"risks\":[\"...\"]}.",
     "",
     "# English Source",

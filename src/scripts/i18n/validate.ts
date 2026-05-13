@@ -6,6 +6,7 @@ import {
   requireString,
   runInherited,
 } from "./utils.ts";
+import { assertTranslationLength } from "./structural-validation.ts";
 
 const options = parseArgs();
 const slug = requireString(options, "slug");
@@ -21,6 +22,7 @@ const source = readFileSync(sourcePath, "utf8");
 const target = readFileSync(targetPath, "utf8");
 
 assertFrontmatter(target);
+assertTranslationLength({ sourceContents: source, targetContents: target, targetPath });
 assertHeadingCounts(source, target);
 assertProtectedTokens(source, target);
 assertNestedAssetPaths(target);

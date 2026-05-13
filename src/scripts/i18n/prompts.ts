@@ -41,6 +41,8 @@ MDX & CODE PRESERVATION (critical):
 - Preserve ALL code blocks exactly. Do NOT translate code, variable names, file paths, or shell commands.
 - Preserve ALL MDX component tags and their prop names. Only translate string prop VALUES that are reader-facing text (e.g., question text, labels, alt text).
 - Preserve ALL import statements and their relative module paths.
+- Preserve the exact markdown heading level structure. Translate heading text, but keep the same number of H1, H2, H3, H4, H5, and H6 headings.
+- Preserve roughly the same amount of content. The translated body must be longer than 600 characters and within 35% of the English body length.
 - ALL relative URL paths for images, CSS, links, or other resources should prefix/prepend with a \`../\`.
 - Preserve ALL markdown link URLs except relative URLs that need the locale-folder \`../\` prefix. Only translate the link text.
 - Preserve ALL inline code spans (\`...\`).
@@ -132,7 +134,7 @@ export function buildCachedChunkContextPrompt(
   parts.push(context.articleSummary);
   parts.push("");
 
-  parts.push("Remember: preserve all code, MDX components, and imports. For images, CSS, links, or other resources, prefix/prepend ALL relative URL paths with `../`. Translate only reader-facing prose.");
+  parts.push("Remember: preserve all code, MDX components, imports, markdown heading levels, and roughly the same content length. For images, CSS, links, or other resources, prefix/prepend ALL relative URL paths with `../`. Translate only reader-facing prose.");
 
   return parts.join("\n");
 }

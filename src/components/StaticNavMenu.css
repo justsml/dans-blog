@@ -39,7 +39,7 @@
   align-items: stretch;
   display: grid;
   gap: 0;
-  grid-template-columns: 2.75rem repeat(3, minmax(0, 1fr));
+  grid-template-columns: 2.75rem 4.25rem repeat(3, minmax(0, 1fr));
   list-style: none;
   margin: 0;
   padding: 0;
@@ -47,6 +47,10 @@
 }
 
 .NavigationMenuList > li {
+  min-width: 0;
+}
+
+.languageToggle {
   min-width: 0;
 }
 
@@ -573,7 +577,7 @@ body.search-panel-open .searchToggle button::before {
 
 @media (min-width: 580px) {
   .NavigationMenuList {
-    grid-template-columns: 3.5rem repeat(3, minmax(5rem, 1fr));
+    grid-template-columns: 3.5rem 4.75rem repeat(3, minmax(5rem, 1fr));
   }
 
   .NavigationMenuTrigger {

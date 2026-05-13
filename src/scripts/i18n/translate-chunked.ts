@@ -29,6 +29,7 @@ import {
   getPostPaths,
   writeTextFile,
   relativeToRepo,
+  normalizeLocaleImportPaths,
 } from "./utils.ts";
 import {
   parseChunkSize,
@@ -37,6 +38,7 @@ import {
   reassembleChunks,
   type Chunk,
 } from "./chunker.ts";
+import { assertTranslationLength } from "./structural-validation.ts";
 import {
   buildSystemPrompt,
   buildCachedChunkContextPrompt,
@@ -436,19 +438,15 @@ async function mapLimit<T, R>(
 
 function normalizeCandidateForLocale(source: string, translatedBody: string): string {
   // Adjust asset paths: locale files live one folder deeper
-  let result = translatedBody
+  let result = normalizeLocaleImportPaths(translatedBody
     .replace(/]\(\.\//g, "](../")
-    .replace(/src="\.\//g, 'src="../')
-    .replace(/from '\.\.\/..\/..\//g, "from '../../../../")
-    .replace(/from "\.\.\/..\/..\//g, 'from "../../../../');
+    .replace(/src="\.\//g, 'src="../'));
 
   result = normalizeNestedCodeFences(result);
 
   // Ensure all source import lines are present (insert at top of body)
   const sourceImports = (source.match(/^import\s+.*?\s+from\s+['"].*?['"];?\s*$/gm) || [])
-    .map((imp) => imp
-      .replace(/from '\.\.\/..\/..\//g, "from '../../../../")
-      .replace(/from "\.\.\/..\/..\//g, 'from "../../../../'));
+    .map((imp) => normalizeLocaleImportPaths(imp));
   const translatedImports = result.match(/^import\s+.*?\s+from\s+['"].*?['"];?\s*$/gm) || [];
 
   const missing = sourceImports.filter(
@@ -1030,6 +1028,11 @@ async function main() {
   writeTextFile(reportPath, chunkReport);
 
   if (shouldPublish) {
+    assertTranslationLength({
+      sourceContents: sourceRaw,
+      targetContents: finalOutput,
+      targetPath,
+    });
     mkdirSync(dirname(targetPath), { recursive: true });
     writeFileSync(targetPath, finalOutput, "utf8");
   }

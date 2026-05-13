@@ -85,43 +85,46 @@ function getNavPostData(post: MyPost) {
         popularPosts={popularPosts}
         recentPosts={recentPosts}
         locale={locale}
-      />
-      {
-        languageOptions.length > 0 && currentLanguage && (
-          <details class="header-language-menu">
-            <summary
-              class="header-language-trigger"
-              aria-label={`${copy.nav.languageLabel}: ${currentLanguage.label}`}
-            >
-              <span class="header-language-current">{currentLanguageCode}</span>
-              <span class="CaretDown" aria-hidden="true">⌄</span>
-            </summary>
-            <nav class="header-language-panel" aria-label={copy.nav.languageLabel}>
-              {languageOptions.map((option) => (
-                <a
-                  href={option.href}
-                  aria-current={option.isCurrent ? "page" : undefined}
-                  data-language-locale={option.locale}
-                  data-missing={!option.isTranslated ? "true" : undefined}
-                  title={
-                    option.isTranslated
-                      ? `${option.label} ${copy.nav.languageVersion}`
-                      : `${option.label} ${copy.nav.languageUnavailable}`
-                  }
+      >
+        {
+          languageOptions.length > 0 && currentLanguage && (
+            <li slot="after-search" class="languageToggle">
+              <details class="header-language-menu">
+                <summary
+                  class="header-language-trigger"
+                  aria-label={`${copy.nav.languageLabel}: ${currentLanguage.label}`}
                 >
-                  <span class="header-language-name">{option.label}</span>
-                  <span class="header-language-code">{option.locale}</span>
-                  {
-                    !option.isTranslated && (
-                      <span class="header-language-status">{copy.nav.languageUnavailable}</span>
-                    )
-                  }
-                </a>
-              ))}
-            </nav>
-          </details>
-        )
-      }
+                  <span class="header-language-current">{currentLanguageCode}</span>
+                  <span class="CaretDown" aria-hidden="true">⌄</span>
+                </summary>
+                <nav class="header-language-panel" aria-label={copy.nav.languageLabel}>
+                  {languageOptions.map((option) => (
+                    <a
+                      href={option.href}
+                      aria-current={option.isCurrent ? "page" : undefined}
+                      data-language-locale={option.locale}
+                      data-missing={!option.isTranslated ? "true" : undefined}
+                      title={
+                        option.isTranslated
+                          ? `${option.label} ${copy.nav.languageVersion}`
+                          : `${option.label} ${copy.nav.languageUnavailable}`
+                      }
+                    >
+                      <span class="header-language-name">{option.label}</span>
+                      <span class="header-language-code">{option.locale}</span>
+                      {
+                        !option.isTranslated && (
+                          <span class="header-language-status">{copy.nav.languageUnavailable}</span>
+                        )
+                      }
+                    </a>
+                  ))}
+                </nav>
+              </details>
+            </li>
+          )
+        }
+      </StaticNavMenu>
     </div>
   </div>
 </header>

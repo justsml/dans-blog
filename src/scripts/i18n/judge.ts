@@ -14,6 +14,19 @@ import { getRunTelemetry, renderTelemetryLines, runMeasuredCommand } from "./tel
 import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
+type JudgeSuggestion = {
+  priority: "low" | "medium" | "high";
+  match: string;
+  replacement: string;
+  reason: string;
+};
+
+type SuggestionLogEntry = JudgeSuggestion & {
+  pass: number;
+  applied: boolean;
+  note: string;
+};
+
 const OPENCODE_COMMAND = existsSync("/Users/dan/.opencode/bin/opencode")
   ? "/Users/dan/.opencode/bin/opencode"
   : "opencode";
@@ -32,8 +45,10 @@ const shouldSkipCommit = options["no-commit"] === true;
 const shouldAllowSingleCandidate = options["allow-single-candidate"] === true;
 const shouldRunFullValidation = options["full-validation"] === true;
 const timeoutSeconds = getTimeoutSeconds();
-const { targetPath, reportDir } = getPostPaths(slug, locale);
+const { sourcePath, targetPath, reportDir } = getPostPaths(slug, locale);
+const sourceRelPath = relativeToRepo(sourcePath);
 const targetRelPath = relativeToRepo(targetPath);
+const maxPrePublishFixPasses = 2;
 
 const releaseJudgeLock = acquireJudgeLock();
 try {
@@ -60,43 +75,31 @@ try {
     selectedCommit
       ? `Use ${selectedCommit} as the selected candidate unless it is structurally broken.`
       : "Choose the best candidate by technical accuracy, natural language quality, Dan's direct style, and MDX preservation.",
+    `The final MDX must preserve the English file's per-level heading counts: same number of H1, H2, H3, H4, H5, and H6 headings. Translate heading text, but do not add, remove, promote, or demote headings.`,
+    `The final translated body must be longer than 600 characters and within 35% of the English body length.`,
     `Use git show <sha>:${targetRelPath} to inspect candidates.`,
     `Write the final selected and lightly polished MDX to ${targetRelPath}.`,
     `Also explain the decision in reports/i18n/${slug}/${locale}/judge.md.`,
     `Also write strict JSON to reports/i18n/${slug}/${locale}/judge.json with this shape:`,
-    JSON.stringify({
-      selectedCommit: "full candidate commit sha",
-      selectedModel: "model id from commit subject",
-      scores: {
-        readability: 0,
-        technicalAccuracy: 0,
-        coherence: 0,
-        relevance: 0,
-        translationQuality: 0,
-        mdxPreservation: 0,
-      },
-      suggestedChanges: [
-        {
-          severity: "low",
-          category: "terminology",
-          location: "heading or short excerpt",
-          current: "text to improve",
-          suggested: "replacement or action",
-          reason: "why this change helps",
-        },
-      ],
-      rationale: "brief selection rationale",
-    }),
+    JSON.stringify(getJudgeJsonShape()),
+    `Use suggestions only for concrete pre-publish fixes. Each high-priority suggestion must include an exact match string and exact replacement string from ${targetRelPath}.`,
     `Do not run package installation, build, or content validation commands. The wrapper script owns validation.`,
     `Do not create temporary candidate files. Inspect candidates directly from git when needed.`,
   ].join("\n");
 
-  const primaryJudge = runJudgeCommand(judgeModel, prompt);
+  let primaryJudge = runJudgeCommand(judgeModel, prompt);
   if (!primaryJudge.ok) {
     throw new Error(primaryJudge.errorMessage);
   }
 
   const primaryTelemetry = getRunTelemetry(judgeModel, primaryJudge);
+  const prePublishRescoreTelemetries: Array<{ pass: number; telemetry: ReturnType<typeof getRunTelemetry> }> = [];
+  const suggestionLog = applyHighPrioritySuggestionsAndRescore({
+    initialJudge: primaryJudge,
+    candidateSummary,
+    telemetrySink: prePublishRescoreTelemetries,
+  });
+  primaryJudge = suggestionLog.latestJudge;
 
   const secondJudge = secondJudgeModel == null
     ? undefined
@@ -128,7 +131,15 @@ try {
     : getRunTelemetry(escalationJudgeModel, escalationJudge);
 
   const validation = runJudgeValidation();
-  writeJudgeJsonValidation(validation, primaryJudge, candidateCommits);
+  writeJudgeJsonValidation(validation, primaryJudge, candidateCommits, suggestionLog.entries);
+
+  const suggestionLogPath = `${reportDir}/judge-suggestions.jsonl`;
+  if (suggestionLog.entries.length > 0) {
+    writeTextFile(
+      suggestionLogPath,
+      suggestionLog.entries.map((entry) => JSON.stringify(entry)).join("\n") + "\n",
+    );
+  }
 
   const reportPath = `${reportDir}/judge-summary.md`;
   writeTextFile(
@@ -149,6 +160,15 @@ try {
       `## Primary Judge Telemetry`,
       ...renderTelemetryLines(primaryTelemetry),
       ``,
+      prePublishRescoreTelemetries.length === 0 ? undefined : `## Pre-Publish Rescore Telemetry`,
+      ...prePublishRescoreTelemetries.flatMap(({ pass, telemetry }) => [
+        `### Pass ${pass}`,
+        ...renderTelemetryLines(telemetry),
+        ``,
+      ]),
+      suggestionLog.entries.length === 0 ? undefined : `## Judge Suggestions`,
+      ...renderSuggestionLogLines(suggestionLog.entries),
+      suggestionLog.entries.length === 0 ? undefined : ``,
       secondTelemetry == null ? undefined : `## Second Judge Telemetry`,
       ...(secondTelemetry == null ? [] : renderTelemetryLines(secondTelemetry)),
       secondTelemetry == null ? undefined : ``,
@@ -166,6 +186,7 @@ try {
     const judgeJsonPath = `reports/i18n/${slug}/${locale}/judge.json`;
     const secondJudgePath = `reports/i18n/${slug}/${locale}/judge-second.md`;
     const escalationJudgePath = `reports/i18n/${slug}/${locale}/judge-escalation.md`;
+    const suggestionRelPath = `reports/i18n/${slug}/${locale}/judge-suggestions.jsonl`;
     gitCommit(`i18n judge(${locale}): select translation for ${slug}`, [
       targetRelPath,
       relativeToRepo(reportPath),
@@ -173,10 +194,229 @@ try {
       ...(existsSync(judgeJsonPath) ? [judgeJsonPath] : []),
       ...(existsSync(secondJudgePath) ? [secondJudgePath] : []),
       ...(existsSync(escalationJudgePath) ? [escalationJudgePath] : []),
+      ...(suggestionLog.entries.length > 0 ? [suggestionRelPath] : []),
     ]);
   }
 } finally {
   releaseJudgeLock();
+}
+
+function getJudgeJsonShape() {
+  return {
+    selectedCommit: "full candidate commit sha",
+    selectedModel: "model id from commit subject",
+    scores: {
+      readability: 0,
+      technicalAccuracy: 0,
+      coherence: 0,
+      relevance: 0,
+      translationQuality: 0,
+      mdxPreservation: 0,
+    },
+    suggestions: [
+      {
+        priority: "high",
+        match: "exact translated text currently in the selected MDX",
+        replacement: "exact replacement text to write into the selected MDX",
+        reason: "English explanation of why this change is needed",
+      },
+    ],
+    rationale: "brief selection rationale",
+  };
+}
+
+function applyHighPrioritySuggestionsAndRescore({
+  initialJudge,
+  candidateSummary,
+  telemetrySink,
+}: {
+  initialJudge: ReturnType<typeof runJudgeCommand>;
+  candidateSummary: string;
+  telemetrySink: Array<{ pass: number; telemetry: ReturnType<typeof getRunTelemetry> }>;
+}) {
+  let latestJudge = initialJudge;
+  const entries: SuggestionLogEntry[] = [];
+
+  for (let pass = 1; pass <= maxPrePublishFixPasses; pass += 1) {
+    const suggestions = readJudgeSuggestions();
+    if (suggestions.length === 0) {
+      console.log(`[i18n judge] pre-publish suggestion pass ${pass}: no suggestions.`);
+      break;
+    }
+
+    let appliedCount = 0;
+    for (const suggestion of suggestions) {
+      const entry = applyJudgeSuggestion(suggestion, pass);
+      entries.push(entry);
+      if (entry.applied) appliedCount += 1;
+      console.log([
+        `[i18n judge] pre-publish suggestion pass ${pass}:`,
+        entry.applied ? "applied" : "logged",
+        `${entry.priority} priority`,
+        `match=${JSON.stringify(entry.match)}`,
+        `replacement=${JSON.stringify(entry.replacement)}`,
+        `reason=${entry.reason}`,
+        `note=${entry.note}`,
+      ].join(" "));
+    }
+
+    if (appliedCount === 0) break;
+
+    const rescoreJudge = runJudgeCommand(judgeModel, getPrePublishRescorePrompt(pass, candidateSummary), [
+      sourcePath,
+      targetPath,
+      `${reportDir}/judge.md`,
+      `${reportDir}/judge.json`,
+    ].filter((path) => existsSync(path)));
+    if (!rescoreJudge.ok) {
+      throw new Error(rescoreJudge.errorMessage);
+    }
+
+    telemetrySink.push({
+      pass,
+      telemetry: getRunTelemetry(judgeModel, rescoreJudge),
+    });
+    latestJudge = rescoreJudge;
+  }
+
+  if (entries.some((entry) => entry.priority === "high" && !entry.applied)) {
+    console.warn("[i18n judge] Some high-priority suggestions were not auto-applied; see judge-suggestions.jsonl and judge-summary.md.");
+  }
+
+  return { latestJudge, entries };
+}
+
+function applyJudgeSuggestion(suggestion: JudgeSuggestion, pass: number): SuggestionLogEntry {
+  if (suggestion.priority !== "high") {
+    return {
+      ...suggestion,
+      pass,
+      applied: false,
+      note: "Not high priority; recorded for manual review.",
+    };
+  }
+
+  if (suggestion.match.trim() === "" || suggestion.replacement.trim() === "") {
+    return {
+      ...suggestion,
+      pass,
+      applied: false,
+      note: "High-priority suggestion did not include a non-empty exact match and replacement.",
+    };
+  }
+
+  if (suggestion.match === suggestion.replacement) {
+    return {
+      ...suggestion,
+      pass,
+      applied: false,
+      note: "Exact match and replacement are identical; no MDX change needed.",
+    };
+  }
+
+  const contents = readFileSync(targetPath, "utf8");
+  const matchIndex = contents.indexOf(suggestion.match);
+  if (matchIndex === -1) {
+    return {
+      ...suggestion,
+      pass,
+      applied: false,
+      note: "Exact match not found in selected MDX.",
+    };
+  }
+
+  writeFileSync(
+    targetPath,
+    `${contents.slice(0, matchIndex)}${suggestion.replacement}${contents.slice(matchIndex + suggestion.match.length)}`,
+    "utf8",
+  );
+
+  return {
+    ...suggestion,
+    pass,
+    applied: true,
+    note: "Applied exact replacement to selected MDX.",
+  };
+}
+
+function readJudgeSuggestions() {
+  const judgeJsonPath = `${reportDir}/judge.json`;
+  if (!existsSync(judgeJsonPath)) return [];
+
+  try {
+    const parsed = JSON.parse(readFileSync(judgeJsonPath, "utf8")) as Record<string, unknown>;
+    const suggestions = normalizeSuggestions(parsed.suggestions);
+    if (suggestions.length > 0) return suggestions;
+
+    return normalizeLegacySuggestedChanges(parsed.suggestedChanges);
+  } catch {
+    return [];
+  }
+}
+
+function normalizeSuggestions(value: unknown): JudgeSuggestion[] {
+  if (!Array.isArray(value)) return [];
+
+  return value
+    .map((item) => {
+      if (item == null || typeof item !== "object") return undefined;
+      const record = item as Record<string, unknown>;
+      const priority = normalizePriority(record.priority);
+      const match = normalizeSuggestionString(record.match);
+      const replacement = normalizeSuggestionString(record.replacement);
+      const reason = normalizeSuggestionString(record.reason);
+      if (priority == null || match == null || replacement == null || reason == null) return undefined;
+      return { priority, match, replacement, reason };
+    })
+    .filter((suggestion): suggestion is JudgeSuggestion => suggestion != null);
+}
+
+function normalizeLegacySuggestedChanges(value: unknown): JudgeSuggestion[] {
+  if (!Array.isArray(value)) return [];
+
+  return value
+    .map((item) => {
+      if (item == null || typeof item !== "object") return undefined;
+      const record = item as Record<string, unknown>;
+      const priority = normalizePriority(record.severity);
+      const match = normalizeSuggestionString(record.current);
+      const replacement = normalizeSuggestionString(record.suggested);
+      const reason = normalizeSuggestionString(record.reason);
+      if (priority == null || match == null || replacement == null || reason == null) return undefined;
+      return { priority, match, replacement, reason };
+    })
+    .filter((suggestion): suggestion is JudgeSuggestion => suggestion != null);
+}
+
+function normalizePriority(value: unknown): JudgeSuggestion["priority"] | undefined {
+  if (typeof value !== "string") return undefined;
+  const normalized = value.toLowerCase();
+  if (normalized === "critical") return "high";
+  if (normalized === "high" || normalized === "medium" || normalized === "low") return normalized;
+  return undefined;
+}
+
+function normalizeSuggestionString(value: unknown) {
+  return typeof value === "string" ? value : undefined;
+}
+
+function renderSuggestionLogLines(entries: SuggestionLogEntry[]) {
+  if (entries.length === 0) return [];
+
+  return entries.map((entry, index) =>
+    [
+      `${index + 1}. Pass ${entry.pass}: ${entry.applied ? "applied" : "logged"} ${entry.priority} priority suggestion.`,
+      `Match: ${truncateForReport(entry.match)}`,
+      `Replacement: ${truncateForReport(entry.replacement)}`,
+      `Reason: ${entry.reason}`,
+      `Note: ${entry.note}`,
+    ].join(" "),
+  );
+}
+
+function truncateForReport(value: string) {
+  const normalized = value.replace(/\s+/g, " ").trim();
+  return normalized.length <= 180 ? JSON.stringify(normalized) : JSON.stringify(`${normalized.slice(0, 177)}...`);
 }
 
 function runJudgeValidation() {
@@ -205,6 +445,7 @@ function writeJudgeJsonValidation(
   validation: ReturnType<typeof runJudgeValidation>,
   primaryJudge: ReturnType<typeof runJudgeCommand>,
   candidateCommits: string[],
+  suggestionLogEntries: SuggestionLogEntry[],
 ) {
   const judgeJsonPath = `${reportDir}/judge.json`;
   const fallback = {
@@ -218,7 +459,7 @@ function writeJudgeJsonValidation(
       translationQuality: null,
       mdxPreservation: null,
     },
-    suggestedChanges: [],
+    suggestions: [],
     rationale: "Judge did not leave structured JSON; wrapper recorded validation metadata.",
   };
 
@@ -236,6 +477,7 @@ function writeJudgeJsonValidation(
     slug,
     locale,
     candidateCommits,
+    suggestionLog: suggestionLogEntries,
     validation,
   }, null, 2));
 }
@@ -311,13 +553,13 @@ function sleep(milliseconds: number) {
 
 function runJudgeCommand(model: string, judgePrompt: string, files: string[] = []) {
   return runMeasuredCommand(OPENCODE_COMMAND, [
-  "run",
-  "--model",
-  model,
-  ...getVariantArgs(model),
-  ...files.flatMap((file) => ["--file", file]),
-  "--dangerously-skip-permissions",
-  judgePrompt,
+    "run",
+    "--model",
+    model,
+    ...getVariantArgs(model),
+    ...files.flatMap((file) => ["--file", file]),
+    "--dangerously-skip-permissions",
+    judgePrompt,
   ], timeoutSeconds * 1000);
 }
 
@@ -351,6 +593,24 @@ function validateJudgeModels({
   }
 }
 
+function getPrePublishRescorePrompt(pass: number, candidateSummary: string) {
+  return [
+    `You are re-scoring the current selected ${locale} translation for ${slug} after pre-publish fixes pass ${pass}.`,
+    `Do not run shell commands, git commands, package installation, build, or validation commands.`,
+    `Read the attached English source, selected translation, judge report, and judge JSON.`,
+    `Candidate commits for context:`,
+    candidateSummary,
+    ``,
+    `Check ${targetRelPath} against ${sourceRelPath} for technical accuracy, natural language quality, Dan's direct style, MDX preservation, per-level heading count preservation, and comparable body length.`,
+    `Do not edit ${targetRelPath}. The wrapper script applies exact high-priority replacements after you write JSON.`,
+    `Update reports/i18n/${slug}/${locale}/judge.md with the refreshed scoring and pre-publish status.`,
+    `Update reports/i18n/${slug}/${locale}/judge.json as strict JSON with this shape:`,
+    JSON.stringify(getJudgeJsonShape()),
+    `Use suggestions only for concrete pre-publish fixes. Each high-priority suggestion must include an exact match string currently present in ${targetRelPath}, an exact replacement string, and an English reason.`,
+    `If no high-priority fixes remain, return "suggestions": [].`,
+  ].join("\n");
+}
+
 function getSecondJudgePrompt(candidateSummary: string) {
   return [
     `You are a constrained second-pass reviewer for the selected ${locale} translation of ${slug}.`,
@@ -362,7 +622,7 @@ function getSecondJudgePrompt(candidateSummary: string) {
     `Candidate commits:`,
     candidateSummary,
     ``,
-    `Check for MDX/frontmatter breakage, untranslated reader-facing prose, major terminology errors, and obvious tone regressions.`,
+    `Check for MDX/frontmatter breakage, heading count mismatches by level, untranslated reader-facing prose, major terminology errors, and obvious tone regressions.`,
     `Write your agreement or disagreement in reports/i18n/${slug}/${locale}/judge-second.md.`,
     `Keep the report concise. If acceptable, include the exact phrase "No escalation required".`,
     `Do not edit ${targetRelPath}. If you disagree, state the exact candidate SHA or issue that requires escalation.`,
@@ -377,6 +637,7 @@ function getEscalationPrompt(candidateSummary: string) {
     ``,
     `Read reports/i18n/${slug}/${locale}/judge.md and reports/i18n/${slug}/${locale}/judge-second.md.`,
     `Use git show <sha>:${targetRelPath} to inspect candidates.`,
+    `The final MDX must preserve the English file's per-level heading counts: same number of H1, H2, H3, H4, H5, and H6 headings.`,
     `Write the final selected and lightly polished MDX to ${targetRelPath}.`,
     `Explain the escalation decision in reports/i18n/${slug}/${locale}/judge-escalation.md.`,
   ].join("\n");

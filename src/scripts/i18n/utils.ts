@@ -145,6 +145,33 @@ export function writeTextFile(path: string, contents: string) {
   writeFileSync(path, contents, "utf8");
 }
 
+const LOCALE_IMPORT_ROOTS = [
+  "assets",
+  "components",
+  "consts",
+  "layouts",
+  "shared",
+  "types",
+  "utils",
+];
+
+const LOCALE_IMPORT_ROOT_PATTERN = LOCALE_IMPORT_ROOTS.join("|");
+const LOCALE_IMPORT_PREFIX_PATTERN = String.raw`(?:\.\.\/){3,}`;
+const LOCALE_IMPORT_FROM_PATTERN = new RegExp(
+  String.raw`(\bfrom\s+["'])${LOCALE_IMPORT_PREFIX_PATTERN}(${LOCALE_IMPORT_ROOT_PATTERN})(?=\/|["'])`,
+  "g",
+);
+const LOCALE_SIDE_EFFECT_IMPORT_PATTERN = new RegExp(
+  String.raw`(^\s*import\s+["'])${LOCALE_IMPORT_PREFIX_PATTERN}(${LOCALE_IMPORT_ROOT_PATTERN})(?=\/|["'])`,
+  "gm",
+);
+
+export function normalizeLocaleImportPaths(contents: string) {
+  return contents
+    .replace(LOCALE_IMPORT_FROM_PATTERN, "$1../../../../$2")
+    .replace(LOCALE_SIDE_EFFECT_IMPORT_PATTERN, "$1../../../../$2");
+}
+
 export function gitCommit(message: string, paths: string[]) {
   withGitCommitLock(() => {
     runInherited("git", ["add", ...paths]);

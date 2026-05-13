@@ -65,7 +65,9 @@ bun run i18n:promote -- --slug the-last-to-think --locale es
 bun run i18n:report:models
 ```
 
-Validation checks frontmatter, preserved imports/components, fenced code counts, nested locale asset paths, and per-level heading counts. English and translated files must keep the same number of H1, H2, H3, H4, H5, and H6 headings; translate the heading text, but do not promote, demote, add, or drop headings.
+Validation checks frontmatter, preserved imports/components, fenced code counts, nested locale asset paths, per-level heading counts, and comparable body length. English and translated files must keep the same number of H1, H2, H3, H4, H5, and H6 headings; translate the heading text, but do not promote, demote, add, or drop headings. Translated bodies must be longer than 600 characters and stay within 35% of the English body length.
+
+Judge runs may return structured `suggestions` in `judge.json`. High-priority suggestions must include an exact `match`, exact `replacement`, and English `reason`; the judge wrapper applies those exact replacements, re-runs judge scoring, and repeats once more if another high-priority fix appears. Every suggestion is written to `judge-suggestions.jsonl` when present and summarized in `judge-summary.md`.
 
 Candidate generation validates and commits each model output unless `--no-commit` is passed.
 
