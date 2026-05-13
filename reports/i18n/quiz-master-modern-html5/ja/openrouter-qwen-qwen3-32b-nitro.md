@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-master-modern-html5
+- Locale: ja
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2024-11-01--quiz-master-modern-html5/ja/index.mdx
+- Validation: deferred
+- Runtime seconds: 78.36
+- Input tokens: 11405
+- Output tokens: 10275
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.003378
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: 'クイズ: HTMLは今も履歴書に載せるべきか？'
@@ -442,3 +460,4 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 それとも、一生`<div>`と`<span>`に甘んじることにしましたか？😅  
 
 下のコメントで教えてください！👇
+````
