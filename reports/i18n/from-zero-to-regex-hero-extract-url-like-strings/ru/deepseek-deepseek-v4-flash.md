@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: from-zero-to-regex-hero-extract-url-like-strings
+- Locale: ru
+- Model: deepseek/deepseek-v4-flash
+- Target: src/content/posts/2024-12-29--from-zero-to-regex-hero-extract-url-like-strings/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 181.67
+- Input tokens: 10541
+- Output tokens: 20012
+- Thinking tokens: unknown
+- Cached input tokens: 768
+- Cache write tokens: 0
+- Estimated cost: $0.006974
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: От нуля до героя регекса
 subTitle: Извлечение и разбор URL-подобных строк одним регулярным выражением
@@ -264,3 +282,4 @@ console.log("Extracted Parts:", parts);
 - [Документация MDN по регулярным выражениям](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions)
 - [Продвинутые техники регулярных выражений](https://www.regular-expressions.info/): Изучите опережающие и ретроспективные проверки, а также другие продвинутые шаблоны для более точного сопоставления.
 - [RFC 3986 — Общий синтаксис URI](https://datatracker.ietf.org/doc/html/rfc3986)
+````
