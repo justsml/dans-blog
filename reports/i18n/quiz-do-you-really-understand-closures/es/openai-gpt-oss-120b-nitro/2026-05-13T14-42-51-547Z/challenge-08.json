@@ -1,0 +1,45 @@
+{
+  "index": 7,
+  "attempt": 1,
+  "originalTitle": "Closure Memory Leak",
+  "translatedTitle": "Fuga de Memoria por Cierre",
+  "translation": {
+    "title": "Fuga de Memoria por Cierre",
+    "group": "Experto",
+    "options": [
+      {
+        "text": "Registra la longitud del arreglo data"
+      },
+      {
+        "text": "Crea una fuga de memoria"
+      },
+      {
+        "text": "Lanza un RangeError"
+      },
+      {
+        "text": "Nada inusual — esto está bien"
+      }
+    ],
+    "questionProse": [
+      "¿Cuál es el problema con este código?"
+    ],
+    "explanationProse": [
+      "El listener del evento cierra sobre `data`, por lo que el arreglo sigue siendo accesible mientras el listener lo sea. Si `element` tiene una vida larga y el listener nunca se elimina, ese gran arreglo también se retiene.\n\n    `element` está en el DOM. El listener mantiene `data`. El GC no puede recolectarlo.\n\n    Solución: no captures datos grandes en listeners de larga vida a menos que realmente lo necesites, y elimina los listeners cuando la UI propietaria se desmonte:",
+      "Modern V8 es mejor en esto que antes. Pero en SPA de larga duración con muchos listeners de eventos, este patrón todavía atrapa a la gente."
+    ]
+  },
+  "rawText": "{\n  \"title\":\"Fuga de Memoria por Cierre\",\n  \"group\": \"Experto\",\n  \"options\": [\n    {\n      \"text\": \"Registra la longitud del arreglo data\"\n    },\n    {\n      \"text\": \"Crea una fuga de memoria\"\n    },\n    {\n      \"text\": \"Lanza un RangeError\"\n    },\n    {\n      \"text\": \"Nada inusual — esto está bien\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Cuál es el problema con este código?\"\n  ],\n  \"explanationProse\": [\n    \"El listener del evento cierra sobre `data`, por lo que el arreglo sigue siendo accesible mientras el listener lo sea. Si `element` tiene una vida larga y el listener nunca se elimina, ese gran arreglo también se retiene.\\n\\n    `element` está en el DOM. El listener mantiene `data`. El GC no puede recolectarlo.\\n\\n    Solución: no captures datos grandes en listeners de larga vida a menos que realmente lo necesites, y elimina los listeners cuando la UI propietaria se desmonte:\",\n    \"Modern V8 es mejor en esto que antes. Pero en SPA de larga duración con muchos listeners de eventos, este patrón todavía atrapa a la gente.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 916,
+    "outputTokens": 747,
+    "cacheReadTokens": 128,
+    "cacheWriteTokens": 0,
+    "durationMs": 568
+  },
+  "cost": {
+    "inputUsd": 0.000035724,
+    "outputUsd": 0.00013446,
+    "totalUsd": 0.000170184,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

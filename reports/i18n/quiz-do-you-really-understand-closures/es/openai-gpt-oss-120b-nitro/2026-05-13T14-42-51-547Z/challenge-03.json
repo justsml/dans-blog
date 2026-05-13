@@ -1,0 +1,44 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "var in a Loop",
+  "translatedTitle": "var en unBucle",
+  "translation": {
+    "title": "var en unBucle",
+    "group": "La Trampa Clásica",
+    "options": [
+      {
+        "text": "0, 1, 2, 3, 4"
+      },
+      {
+        "text": "5, 5, 5, 5, 5"
+      },
+      {
+        "text": "1, 2, 3, 4, 5"
+      },
+      {
+        "text": "undefined x5"
+      }
+    ],
+    "questionProse": [
+      "¿Qué se registra después de 100 ms?"
+    ],
+    "explanationProse": [
+      "`var` es de alcance de función. Hay exactamente **uno** `i` — los cinco callbacks cierran sobre la misma referencia. Cuando los timeouts se disparan, el bucle ya terminó y `i` vale `5`.\n\n    Cinco callbacks. Un `i`. Valor: `5`. Registrado cinco veces.\n\n    La solución es `let` (de alcance de bloque, nueva referencia en cada iteración) o envolver en un IIFE para capturar el valor actual:"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"var en unBucle\",\n  \"group\": \"La Trampa Clásica\",\n  \"options\": [\n    {\n      \"text\": \"0, 1, 2, 3, 4\"\n    },\n    {\n      \"text\": \"5, 5, 5, 5, 5\"\n    },\n    {\n      \"text\": \"1, 2, 3, 4, 5\"\n    },\n    {\n      \"text\": \"undefined x5\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Qué se registra después de 100 ms?\"\n  ],\n  \"explanationProse\": [\n    \"`var` es de alcance de función. Hay exactamente **uno** `i` — los cinco callbacks cierran sobre la misma referencia. Cuando los timeouts se disparan, el bucle ya terminó y `i` vale `5`.\\n\\n    Cinco callbacks. Un `i`. Valor: `5`. Registrado cinco veces.\\n\\n    La solución es `let` (de alcance de bloque, nueva referencia en cada iteración) o envolver en un IIFE para capturar el valor actual:\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 907,
+    "outputTokens": 588,
+    "cacheReadTokens": 128,
+    "cacheWriteTokens": 0,
+    "durationMs": 536
+  },
+  "cost": {
+    "inputUsd": 0.000035373,
+    "outputUsd": 0.00010583999999999999,
+    "totalUsd": 0.000141213,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

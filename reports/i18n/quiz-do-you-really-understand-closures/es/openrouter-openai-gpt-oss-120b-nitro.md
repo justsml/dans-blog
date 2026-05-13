@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-do-you-really-understand-closures
+- Locale: es
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-05-05--quiz-do-you-really-understand-closures/es/index.mdx
+- Validation: passed
+- Runtime seconds: 12.73
+- Input tokens: 11323
+- Output tokens: 6532
+- Thinking tokens: unknown
+- Cached input tokens: 1280
+- Cache write tokens: 0
+- Estimated cost: $0.001617
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: 'Quiz: ¿Realmente entiendes los closures de JavaScript?'
 subTitle: La mayoría de los desarrolladores creen que lo hacen. Se equivocan.
@@ -463,3 +481,4 @@ Las preguntas empiezan razonables y luego empiezan a arrancar tablas del piso.
 - **0‑2**: Creías que sabías de closures. Ahora sí los sabes. Ese es el objetivo.
 
 Los closures obsoletos en React (#6) y la trampa de `this` (#8) son los que generan errores reales en producción. Si esos temas te resultaron desconocidos, vale la pena revisarlos — aparecen en revisiones de código más que cualquier otro problema relacionado con closures.
+````

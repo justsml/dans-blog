@@ -1,0 +1,44 @@
+{
+  "index": 8,
+  "attempt": 1,
+  "originalTitle": "The this Trap",
+  "translatedTitle": "La trampa de this",
+  "translation": {
+    "title": "La trampa de this",
+    "group": "Experto",
+    "options": [
+      {
+        "text": "Dan, Dan"
+      },
+      {
+        "text": "Dan, undefined"
+      },
+      {
+        "text": "undefined, Dan"
+      },
+      {
+        "text": "undefined, undefined"
+      }
+    ],
+    "questionProse": [
+      "¿Qué muestra este registro?"
+    ],
+    "explanationProse": [
+      "Dos trampas sutiles:\n\n    **`greetArrow`**: Las funciones arrow no tienen su propio `this`. Capturan `this` del ámbito léxico circundante — que aquí es el ámbito del módulo/global, no `user`. Así que `this?.name` es `undefined`.\n\n    **`fn()`**: `greetRegular` se llama sin un receptor (`fn()` no `user.greetRegular()`). En modo estricto, `this` es `undefined`. En modo no estricto, es el objeto global. De cualquier forma, `this?.name` es `undefined`.\n\n    Si hubieras llamado `user.greetRegular()` directamente, obtendrías `'Dan'` — porque entonces `this` está ligado a `user`.\n\n    Resultado: `undefined, undefined`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"La trampa de this\",\n  \"group\": \"Experto\",\n  \"options\": [\n    {\n      \"text\": \"Dan, Dan\"\n    },\n    {\n      \"text\": \"Dan, undefined\"\n    },\n    {\n      \"text\": \"undefined, Dan\"\n    },\n    {\n      \"text\": \"undefined, undefined\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Qué muestra este registro?\"\n  ],\n  \"explanationProse\": [\n    \"Dos trampas sutiles:\\n\\n    **`greetArrow`**: Las funciones arrow no tienen su propio `this`. Capturan `this` del ámbito léxico circundante — que aquí es el ámbito del módulo/global, no `user`. Así que `this?.name` es `undefined`.\\n\\n    **`fn()`**: `greetRegular` se llama sin un receptor (`fn()` no `user.greetRegular()`). En modo estricto, `this` es `undefined`. En modo no estricto, es el objeto global. De cualquier forma, `this?.name` es `undefined`.\\n\\n    Si hubieras llamado `user.greetRegular()` directamente, obtendrías `'Dan'` — porque entonces `this` está ligado a `user`.\\n\\n    Resultado: `undefined, undefined`.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 913,
+    "outputTokens": 752,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 2565
+  },
+  "cost": {
+    "inputUsd": 0.000035607,
+    "outputUsd": 0.00013535999999999998,
+    "totalUsd": 0.00017096699999999998,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

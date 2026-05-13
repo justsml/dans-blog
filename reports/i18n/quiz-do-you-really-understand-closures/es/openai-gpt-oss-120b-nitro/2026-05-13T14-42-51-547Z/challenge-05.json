@@ -1,0 +1,44 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Object Mutation",
+  "translatedTitle": "Mutación de Objetos",
+  "translation": {
+    "title": "Mutación de Objetos",
+    "group": "Clausuras y Objetos",
+    "options": [
+      {
+        "text": "{ x: 1 }, { x: 1 }"
+      },
+      {
+        "text": "{ x: 1 }, { x: 99 }"
+      },
+      {
+        "text": "{ x: 99 }, { x: 99 }"
+      },
+      {
+        "text": "{ x: 99 }, { x: 1 }"
+      }
+    ],
+    "questionProse": [
+      "¿Qué imprime esto?"
+    ],
+    "explanationProse": [
+      "La clausura captura el **enlace** `obj`, no una instantánea del objeto. El objeto mismo se muta después de crear la clausura — pero `obj` sigue apuntando a la misma referencia. Ambas llamadas devuelven el mismo objeto mutado: `{ x: 99 }`.\n\n    Esto atrapa a la gente que asume que las clausuras \"congelan\" valores. No lo hacen. Capturan **referencias**."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Mutación de Objetos\",\n  \"group\": \"Clausuras y Objetos\",\n  \"options\": [\n    {\n      \"text\": \"{ x: 1 }, { x: 1 }\"\n    },\n    {\n      \"text\": \"{ x: 1 }, { x: 99 }\"\n    },\n    {\n      \"text\": \"{ x: 99 }, { x: 99 }\"\n    },\n    {\n      \"text\": \"{ x: 99 }, { x: 1 }\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Qué imprime esto?\"\n  ],\n  \"explanationProse\": [\n    \"La clausura captura el **enlace** `obj`, no una instantánea del objeto. El objeto mismo se muta después de crear la clausura — pero `obj` sigue apuntando a la misma referencia. Ambas llamadas devuelven el mismo objeto mutado: `{ x: 99 }`.\\n\\n    Esto atrapa a la gente que asume que las clausuras \\\"congelan\\\" valores. No lo hacen. Capturan **referencias**.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 860,
+    "outputTokens": 503,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 517
+  },
+  "cost": {
+    "inputUsd": 0.00003354,
+    "outputUsd": 0.00009054,
+    "totalUsd": 0.00012408,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
