@@ -1,51 +1,39 @@
 {
-  "runId": "2026-05-13T15-49-00-576Z",
-  "runStatus": "completed",
+  "runId": "2026-05-13T16-27-55-656Z",
+  "runStatus": "running",
   "slug": "breaking-unicorns",
   "locale": "es",
-  "startedAt": "2026-05-13T15:49:00.576Z",
-  "updatedAt": "2026-05-13T15:49:27.116Z",
+  "startedAt": "2026-05-13T16:27:55.656Z",
+  "updatedAt": "2026-05-13T16:28:10.620Z",
   "modelsRequested": [
     "openrouter/openai/gpt-oss-120b:nitro",
     "openrouter/qwen/qwen3-32b:nitro"
   ],
-  "attemptedModels": 2,
-  "skippedModels": 0,
+  "attemptedModels": 1,
+  "skippedModels": 1,
   "rejectedModels": 1,
-  "candidateModels": 1,
+  "candidateModels": 0,
   "totals": {
-    "inputTokens": 5383,
-    "outputTokens": 5654,
+    "inputTokens": 2549,
+    "outputTokens": 2996,
     "thinkingTokens": 0,
-    "cachedInputTokens": 384,
+    "cachedInputTokens": 0,
     "cacheWriteTokens": 0,
-    "estimatedCostUsd": 0.001534,
+    "estimatedCostUsd": 0.000923,
     "hasUnknownInputTokens": false,
     "hasUnknownOutputTokens": false,
     "hasUnknownThinkingTokens": true,
     "hasUnknownCachedInputTokens": false,
     "hasUnknownCacheWriteTokens": false,
     "hasUnknownEstimatedCost": false,
-    "runtimeSeconds": "7.94"
+    "runtimeSeconds": "6.13"
   },
   "attempts": [
     {
       "model": "openrouter/openai/gpt-oss-120b:nitro",
-      "status": "candidate",
-      "validationStatus": "passed",
+      "status": "skipped",
       "reportPath": "reports/i18n/breaking-unicorns/es/openrouter-openai-gpt-oss-120b-nitro.md",
-      "note": "Generated through the direct AI SDK chunked translator.",
-      "telemetry": {
-        "runtimeSeconds": "1.18",
-        "tokens": {
-          "input": 2737,
-          "output": 2355,
-          "cached": 384,
-          "cacheWrite": 0
-        },
-        "estimatedCostUsd": 0.0005306429999999999,
-        "pricingSource": "local-openrouter-estimate"
-      }
+      "note": "Existing non-rejected report found. Pass --overwrite to rerun."
     },
     {
       "model": "openrouter/qwen/qwen3-32b:nitro",
@@ -54,14 +42,14 @@
       "reportPath": "reports/i18n/breaking-unicorns/es/openrouter-qwen-qwen3-32b-nitro.md",
       "note": "Command failed: bun run i18n:validate --slug breaking-unicorns --locale es",
       "telemetry": {
-        "runtimeSeconds": "6.76",
+        "runtimeSeconds": "6.13",
         "tokens": {
-          "input": 2646,
-          "output": 3299,
+          "input": 2549,
+          "output": 2996,
           "cached": 0,
           "cacheWrite": 0
         },
-        "estimatedCostUsd": 0.00100344,
+        "estimatedCostUsd": 0.00092296,
         "pricingSource": "local-openrouter-estimate"
       }
     }
