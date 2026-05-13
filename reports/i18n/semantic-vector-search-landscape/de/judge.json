@@ -1,0 +1,40 @@
+{
+  "selectedCommit": "a5cf7f8adb1445ea58058f19f2bc9d3376375f9e",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "scores": {
+    "readability": 5,
+    "technicalAccuracy": 5,
+    "coherence": 5,
+    "relevance": 5,
+    "translationQuality": 5,
+    "mdxPreservation": 5
+  },
+  "suggestions": [],
+  "rationale": "The selected candidate provides a high-quality, technically accurate translation that captures Dan's direct style. It correctly translates the title and subtitle (which the 'current' version failed to do) and maintains the MDX structure perfectly. The suggestion from the previous judge regarding the relative link was already incorporated into the candidate's text (using `../postgres-text-search-guide`), so no further high-priority fixes are required.",
+  "slug": "semantic-vector-search-landscape",
+  "locale": "de",
+  "candidateCommits": [
+    "a5cf7f8adb1445ea58058f19f2bc9d3376375f9e",
+    "f8a778a73a55c1a4c383c678b39f1fabe74293d0",
+    "f0e3ede494b18e839c2fc7ea796fcd0720b5a653",
+    "2adaa459cc578989ac1f13dcb372aeda95c6d4a3",
+    "6162ecc133c6aa9a5055aa027275d47e080feecb"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "medium",
+      "match": "[Postgres Text Searching Guide 2026](/postgres-text-search-guide)",
+      "replacement": "[Postgres Text Searching Guide 2026](../postgres-text-search-guide)",
+      "reason": "The relative link should point to the parent directory to match the structure of other localized posts, ensuring the link works correctly in the subfolder.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug semantic-vector-search-landscape --locale de --skip-global",
+    "output": ""
+  }
+}
