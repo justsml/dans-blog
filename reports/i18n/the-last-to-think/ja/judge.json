@@ -1,0 +1,49 @@
+{
+  "selectedCommit": "eacee4b12dfee3597f6e6b9935caea05ead60cd6",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "scores": {
+    "readability": 5,
+    "technicalAccuracy": 5,
+    "coherence": 5,
+    "relevance": 5,
+    "translationQuality": 5,
+    "mdxPreservation": 5
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "language: Japanese",
+      "replacement": "language: Japanese",
+      "reason": "The language field should reflect the target language."
+    }
+  ],
+  "rationale": "Candidate eacee4b12dfee3597f6e6b9935caea05ead60cd6 provides the most natural and professional Japanese translation. It correctly handles the tone of the original text, particularly the 'historical receipts' metaphor (translated as historical records) and the 'bogeyman' concept. It also maintains the MDX structure and formatting perfectly. Other candidates either had awkward phrasing (like 'historical receipts' translated literally as 'historical receipts' or 'leceipts') or used less natural sentence structures.",
+  "slug": "the-last-to-think",
+  "locale": "ja",
+  "candidateCommits": [
+    "eacee4b12dfee3597f6e6b9935caea05ead60cd6",
+    "a4f896f2619f065a17310df02ca427b605ad09d2",
+    "e62ad20beb78ea569312de2519dd1ff7b07071b1",
+    "d9039af9c97af058bd0da546eb3cc5306873eb1a",
+    "b136771800b72e0181226a10261ddf04593c078f",
+    "e50a868222da0e2e4829a055f7cef1a2851a85ce",
+    "b2290feeea7a8da56956107ded9b2f5e8b8764f4"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "language: Japanese",
+      "replacement": "language: Japanese",
+      "reason": "The language field should reflect the target language.",
+      "pass": 1,
+      "applied": false,
+      "note": "Exact match and replacement are identical; no MDX change needed."
+    }
+  ],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug the-last-to-think --locale ja --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug the-last-to-think --locale ja --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug the-last-to-think --locale ja --skip-global\n20 |   }\n21 | \n22 |   const minimumLength = Math.floor(sourceLength * minimumRatio);\n23 |   const maximumLength = Math.ceil(sourceLength * maximumRatio);\n24 |   if (targetLength < minimumLength || targetLength > maximumLength) {\n25 |     throw new Error(\n                   ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2025-05-31--the-last-to-think/ja/index.mdx changed comparable body length from 2182 chars in English to 1046 chars. Expected 1418-2946 chars (within 35%).\n      at assertTranslationLength (/Users/dan/code/oss/dans-blog/src/scripts/i18n/structural-validation.ts:25:15)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:26:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}
