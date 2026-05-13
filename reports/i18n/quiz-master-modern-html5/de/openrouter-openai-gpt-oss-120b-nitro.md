@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-master-modern-html5
+- Locale: de
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2024-11-01--quiz-master-modern-html5/de/index.mdx
+- Validation: passed
+- Runtime seconds: 23.11
+- Input tokens: 12844
+- Output tokens: 6712
+- Thinking tokens: unknown
+- Cached input tokens: 4160
+- Cache write tokens: 0
+- Estimated cost: $0.001709
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: 'Quiz: Gehört HTML noch inIhren Lebenslauf?'
@@ -443,3 +461,4 @@ Also, wie lief’s? Bist du gespannt, in deinem nächsten Projekt mehr semantisc
 Oder bist du für immer mit `<div>` und `<span>` zufrieden? 😅
 
 Schreib mir deine Meinung in die Kommentare unten! 👇
+````
