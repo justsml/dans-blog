@@ -1,0 +1,15 @@
+# Translation Candidate
+- Slug: one-weird-trick-to-speed-up-feature-teams
+- Locale: ja
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2024-09-29--one-weird-trick-to-speed-up-feature-teams/ja/index.mdx
+- Validation: rejected: direct AI SDK translation failed
+- Runtime seconds: 27.26
+- Input tokens: 9445
+- Output tokens: 5993
+- Thinking tokens: unknown
+- Cached input tokens: 1024
+- Cache write tokens: 0
+- Estimated cost: $0.002194
+- Pricing source: local-openrouter-estimate
+- Note: Command failed: bun run i18n:translate:chunked -- --slug one-weird-trick-to-speed-up-feature-teams --locale ja --model openrouter/qwen/qwen3-32b:nitro --chunk 6p --run-id 2026-05-13T19-41-09-135Z-92162 --run-lock-path /Users/dan/code/oss/dans-blog/.git/codex-i18n-translation-run.json --quiz-concurrency 24 (code 1)
