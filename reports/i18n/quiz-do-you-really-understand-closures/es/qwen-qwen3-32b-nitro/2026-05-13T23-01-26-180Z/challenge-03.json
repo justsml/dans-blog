@@ -1,0 +1,47 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "var in a Loop",
+  "translatedTitle": "var en un bucle",
+  "translation": {
+    "title": "var en un bucle",
+    "group": "La trampa clásica",
+    "options": [
+      {
+        "text": "0, 1, 2, 3, 4"
+      },
+      {
+        "text": "5, 5, 5, 5, 5"
+      },
+      {
+        "text": "1, 2, 3, 4, 5"
+      },
+      {
+        "text": "undefined x5"
+      }
+    ],
+    "questionProse": [
+      "¿Qué se registra después de 100ms?"
+    ],
+    "explanationProse": [
+      "`var` es de alcance de función. Hay exactamente **uno** `i` — los cinco callbacks cierran sobre la misma vinculación. Para el momento en que se disparan los timeouts, el bucle ya terminó y `i` es `5`.\n\n    Cinco callbacks. Una sola `i`. Valor: `5`. Registrado cinco veces.\n\n    La solución es `let` (de alcance de bloque, nueva vinculación en cada iteración) o envolver en una IIFE para capturar el valor actual:"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"var en un bucle\",\n  \"group\": \"La trampa clásica\",\n  \"options\": [\n    {\n      \"text\": \"0, 1, 2, 3, 4\"\n    },\n    {\n      \"text\": \"5, 5, 5, 5, 5\"\n    },\n    {\n      \"text\": \"1, 2, 3, 4, 5\"\n    },\n    {\n      \"text\": \"undefined x5\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Qué se registra después de 100ms?\"\n  ],\n  \"explanationProse\": [\n    \"`var` es de alcance de función. Hay exactamente **uno** `i` — los cinco callbacks cierran sobre la misma vinculación. Para el momento en que se disparan los timeouts, el bucle ya terminó y `i` es `5`.\\n\\n    Cinco callbacks. Una sola `i`. Valor: `5`. Registrado cinco veces.\\n\\n    La solución es `let` (de alcance de bloque, nueva vinculación en cada iteración) o envolver en una IIFE para capturar el valor actual:\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 847,
+    "outputTokens": 884,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 2045,
+    "providerCostUsd": 0.00069295,
+    "providerUpstreamCostUsd": 0.00069295,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00006776,
+    "outputUsd": 0.00021216,
+    "totalUsd": 0.00027992,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Memoization via Closure",
+  "translatedTitle": "Memoización mediante cierre",
+  "translation": {
+    "title": "Memoización mediante cierre",
+    "group": "Bono",
+    "options": [
+      {
+        "text": "Llama a expensive() 3 veces"
+      },
+      {
+        "text": "Llama a expensive() 1 vez",
+        "hint": "Solo la primera llamada activa la función costosa"
+      },
+      {
+        "text": "Llama a expensive() 2 veces"
+      },
+      {
+        "text": "Lanza: Excedido el máximo de llamadas recursivas"
+      }
+    ],
+    "questionProse": [
+      "¿Cuántas veces se llama realmente a `expensive()`?"
+    ],
+    "explanationProse": [
+      "La función memoizada cierra sobre `cache`. La primera llamada (`fast(5)`) no encuentra coincidencia en la caché, llama a `expensive` y almacena el resultado. Las llamadas segunda y tercera encuentran la caché y retornan inmediatamente.\n\n    `calls` es `1`.\n\n    Este es un ejemplo de cierres realizando trabajo real. `cache` es privada (no se puede acceder desde fuera de `memoize`), persistente (existe mientras `fast` exista) y compartida entre todas las llamadas a `fast`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Memoización mediante cierre\",\n  \"group\": \"Bono\",\n  \"options\": [\n    {\n      \"text\": \"Llama a expensive() 3 veces\"\n    },\n    {\n      \"text\": \"Llama a expensive() 1 vez\",\n      \"hint\": \"Solo la primera llamada activa la función costosa\"\n    },\n    {\n      \"text\": \"Llama a expensive() 2 veces\"\n    },\n    {\n      \"text\": \"Lanza: Excedido el máximo de llamadas recursivas\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Cuántas veces se llama realmente a `expensive()`?\"\n  ],\n  \"explanationProse\": [\n    \"La función memoizada cierra sobre `cache`. La primera llamada (`fast(5)`) no encuentra coincidencia en la caché, llama a `expensive` y almacena el resultado. Las llamadas segunda y tercera encuentran la caché y retornan inmediatamente.\\n\\n    `calls` es `1`.\\n\\n    Este es un ejemplo de cierres realizando trabajo real. `cache` es privada (no se puede acceder desde fuera de `memoize`), persistente (existe mientras `fast` exista) y compartida entre todas las llamadas a `fast`.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 810,
+    "outputTokens": 739,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1727,
+    "providerCostUsd": 0.00067091,
+    "providerUpstreamCostUsd": 0.00067091,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.0000648,
+    "outputUsd": 0.00017736,
+    "totalUsd": 0.00024216,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

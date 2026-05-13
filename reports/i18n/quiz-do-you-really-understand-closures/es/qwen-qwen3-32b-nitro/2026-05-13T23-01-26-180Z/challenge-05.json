@@ -1,0 +1,47 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Object Mutation",
+  "translatedTitle": "Mutación de objetos",
+  "translation": {
+    "title": "Mutación de objetos",
+    "group": "Clausuras & Objetos",
+    "options": [
+      {
+        "text": "{ x: 1 }, { x: 1 }"
+      },
+      {
+        "text": "{ x: 1 }, { x: 99 }"
+      },
+      {
+        "text": "{ x: 99 }, { x: 99 }"
+      },
+      {
+        "text": "{ x: 99 }, { x: 1 }"
+      }
+    ],
+    "questionProse": [
+      "¿Qué registra esto?"
+    ],
+    "explanationProse": [
+      "La clausura captura el **enlace** `obj`, no una instantánea del objeto. El objeto mismo se muta después de crear la clausura, pero `obj` aún apunta a la misma referencia. Ambas llamadas devuelven el mismo objeto mutado: `{ x: 99 }`.\n\nEsto pica a quienes asumen que las clausuras \"congelan\" valores. No lo hacen. Capturan **referencias**."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Mutación de objetos\",\n  \"group\": \"Clausuras & Objetos\",\n  \"options\": [\n    {\n      \"text\": \"{ x: 1 }, { x: 1 }\"\n    },\n    {\n      \"text\": \"{ x: 1 }, { x: 99 }\"\n    },\n    {\n      \"text\": \"{ x: 99 }, { x: 99 }\"\n    },\n    {\n      \"text\": \"{ x: 99 }, { x: 1 }\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Qué registra esto?\"\n  ],\n  \"explanationProse\": [\n    \"La clausura captura el **enlace** `obj`, no una instantánea del objeto. El objeto mismo se muta después de crear la clausura, pero `obj` aún apunta a la misma referencia. Ambas llamadas devuelven el mismo objeto mutado: `{ x: 99 }`.\\n\\nEsto pica a quienes asumen que las clausuras \\\"congelan\\\" valores. No lo hacen. Capturan **referencias**.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 805,
+    "outputTokens": 713,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2097,
+    "providerCostUsd": 0.00065412,
+    "providerUpstreamCostUsd": 0.00065412,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00006440000000000001,
+    "outputUsd": 0.00017112,
+    "totalUsd": 0.00023552000000000002,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

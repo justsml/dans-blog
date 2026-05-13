@@ -1,0 +1,48 @@
+{
+  "index": 7,
+  "attempt": 1,
+  "originalTitle": "Closure Memory Leak",
+  "translatedTitle": "Fuga de Memoria por Cierre",
+  "translation": {
+    "title": "Fuga de Memoria por Cierre",
+    "group": "Experto",
+    "options": [
+      {
+        "text": "Registra la longitud del array de datos"
+      },
+      {
+        "text": "Crea una fuga de memoria"
+      },
+      {
+        "text": "Lanza un RangeError"
+      },
+      {
+        "text": "Nada inusual — esto está bien"
+      }
+    ],
+    "questionProse": [
+      "¿Cuál es el problema con este código?"
+    ],
+    "explanationProse": [
+      "El escucha de eventos cierra sobre `data`, por lo que el array permanece accesible mientras el escucha lo esté. Si `element` es de larga duración y el escucha nunca se elimina, ese gran array también se retiene.\n\n    `element` está en el DOM. El escucha mantiene `data`. El GC no puede recolectarlo.\n\n    Solución: no capturar grandes datos en escuchas largos a menos que sea necesario, y eliminar escuchas cuando la UI se destruya:",
+      "El V8 moderno es mejor en esto de lo que solía ser. Pero en SPAs largos con muchos escuchas de eventos, este patrón aún muerde a la gente."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Fuga de Memoria por Cierre\",\n  \"group\": \"Experto\",\n  \"options\": [\n    {\n      \"text\": \"Registra la longitud del array de datos\"\n    },\n    {\n      \"text\": \"Crea una fuga de memoria\"\n    },\n    {\n      \"text\": \"Lanza un RangeError\"\n    },\n    {\n      \"text\": \"Nada inusual — esto está bien\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Cuál es el problema con este código?\"\n  ],\n  \"explanationProse\": [\n    \"El escucha de eventos cierra sobre `data`, por lo que el array permanece accesible mientras el escucha lo esté. Si `element` es de larga duración y el escucha nunca se elimina, ese gran array también se retiene.\\n\\n    `element` está en el DOM. El escucha mantiene `data`. El GC no puede recolectarlo.\\n\\n    Solución: no capturar grandes datos en escuchas largos a menos que sea necesario, y eliminar escuchas cuando la UI se destruya:\",\n    \"El V8 moderno es mejor en esto de lo que solía ser. Pero en SPAs largos con muchos escuchas de eventos, este patrón aún muerde a la gente.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 857,
+    "outputTokens": 824,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2529,
+    "providerCostUsd": 0.00073469,
+    "providerUpstreamCostUsd": 0.00073469,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00006856000000000001,
+    "outputUsd": 0.00019775999999999998,
+    "totalUsd": 0.00026632,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

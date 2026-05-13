@@ -1,0 +1,48 @@
+{
+  "index": 3,
+  "attempt": 1,
+  "originalTitle": "let Fixes It (Or Does It?)",
+  "translatedTitle": "¿Arregla let (o no?)",
+  "translation": {
+    "title": "¿Arregla let (o no?)",
+    "group": "La Trampa Clásica",
+    "options": [
+      {
+        "text": "0, 1, 2, 3, 4"
+      },
+      {
+        "text": "5, 5, 5, 5, 5"
+      },
+      {
+        "text": "4, 4, 4, 4, 4"
+      },
+      {
+        "text": "ReferenceError: i is not defined"
+      }
+    ],
+    "questionProse": [
+      "Mismo bucle, palabra clave diferente. ¿Qué se registra?"
+    ],
+    "explanationProse": [
+      "`let` en un bucle `for` es especial. La especificación dice: cada iteración obtiene su **nuevo enlace** de `i`. Es como si el bucle hiciera esto de forma oculta:",
+      "Entonces, los cinco callbacks cierran sobre cinco variables distintas. Resultado: `0, 1, 2, 3, 4`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"¿Arregla let (o no?)\",\n  \"group\": \"La Trampa Clásica\",\n  \"options\": [\n    {\n      \"text\": \"0, 1, 2, 3, 4\"\n    },\n    {\n      \"text\": \"5, 5, 5, 5, 5\"\n    },\n    {\n      \"text\": \"4, 4, 4, 4, 4\"\n    },\n    {\n      \"text\": \"ReferenceError: i is not defined\"\n    }\n  ],\n  \"questionProse\": [\n    \"Mismo bucle, palabra clave diferente. ¿Qué se registra?\"\n  ],\n  \"explanationProse\": [\n    \"`let` en un bucle `for` es especial. La especificación dice: cada iteración obtiene su **nuevo enlace** de `i`. Es como si el bucle hiciera esto de forma oculta:\",\n    \"Entonces, los cinco callbacks cierran sobre cinco variables distintas. Resultado: `0, 1, 2, 3, 4`.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 826,
+    "outputTokens": 596,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1667,
+    "providerCostUsd": 0.00059118,
+    "providerUpstreamCostUsd": 0.00059118,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00006608,
+    "outputUsd": 0.00014303999999999999,
+    "totalUsd": 0.00020911999999999998,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
