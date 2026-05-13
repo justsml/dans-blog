@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: mastra-workflows-memory
+- Locale: fr
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-01-05--mastra-workflows-memory/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 17.45
+- Input tokens: 7687
+- Output tokens: 7541
+- Thinking tokens: unknown
+- Cached input tokens: 1024
+- Cache write tokens: 0
+- Estimated cost: $0.002425
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: >-
   Cessez de créer des agents instables : utilisez des flux de travail et de la
@@ -253,3 +271,4 @@ Vos résultats peuvent varier, mais selon mon expérience, les systèmes qui son
 2. [Sécurité et Garde-fous](/mastra-security-guardrails)  
 3. [MCP et Intégrations d’outils](/mastra-mcp-tool-integrations)  
 4. **Workflows et Mémoire** (Cet article)
+````
