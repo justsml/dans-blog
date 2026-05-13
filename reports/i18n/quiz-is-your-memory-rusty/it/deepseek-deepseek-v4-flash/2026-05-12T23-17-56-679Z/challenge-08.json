@@ -1,0 +1,49 @@
+{
+  "index": 7,
+  "attempt": 1,
+  "originalTitle": "Lifetime Annotations",
+  "translatedTitle": "Annotazioni di durata",
+  "translation": {
+    "title": "Annotazioni di durata",
+    "group": "Durata",
+    "options": [
+      {
+        "text": "Risultato: Seneca il Giovane",
+        "hint": "Il codice non compilerà per produrre alcun output"
+      },
+      {
+        "text": "Errore: specificatore di durata mancante"
+      },
+      {
+        "text": "Errore: impossibile restituire un riferimento a una variabile locale",
+        "hint": "Il riferimento è a un parametro di input, non a una variabile locale"
+      },
+      {
+        "text": "Errore: disallineamento di durata",
+        "hint": "Non abbiamo ancora specificato le durate per avere un disallineamento"
+      }
+    ],
+    "questionProse": [
+      "Cosa succede con questa funzione che restituisce la più lunga tra due slice di stringhe?"
+    ],
+    "explanationProse": [
+      "Questo codice fallisce perché il compilatore non può determinare la relazione tra le durate di input e output. Ecco perché e come risolverlo:",
+      "Perché sono necessarie le durate qui:\n      1. Riferimenti multipli in input potrebbero avere durate diverse\n      2. Il valore restituito deve vivere tanto quanto entrambi gli input\n      3. Il compilatore deve verificare queste relazioni\n\n      Pattern comuni:",
+      "Buone pratiche:\n      1. Lascia che l'elisione delle durate funzioni quando possibile\n      2. Usa durate esplicite quando le relazioni devono essere chiare\n      3. Considera di restituire tipi posseduti per evitare la complessità delle durate\n      4. Documenta relazioni di durata complesse"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Annotazioni di durata\",\n  \"group\": \"Durata\",\n  \"options\": [\n    {\n      \"text\": \"Risultato: Seneca il Giovane\",\n      \"hint\": \"Il codice non compilerà per produrre alcun output\"\n    },\n    {\n      \"text\": \"Errore: specificatore di durata mancante\"\n    },\n    {\n      \"text\": \"Errore: impossibile restituire un riferimento a una variabile locale\",\n      \"hint\": \"Il riferimento è a un parametro di input, non a una variabile locale\"\n    },\n    {\n      \"text\": \"Errore: disallineamento di durata\",\n      \"hint\": \"Non abbiamo ancora specificato le durate per avere un disallineamento\"\n    }\n  ],\n  \"questionProse\": [\n    \"Cosa succede con questa funzione che restituisce la più lunga tra due slice di stringhe?\"\n  ],\n  \"explanationProse\": [\n    \"Questo codice fallisce perché il compilatore non può determinare la relazione tra le durate di input e output. Ecco perché e come risolverlo:\",\n    \"Perché sono necessarie le durate qui:\\n      1. Riferimenti multipli in input potrebbero avere durate diverse\\n      2. Il valore restituito deve vivere tanto quanto entrambi gli input\\n      3. Il compilatore deve verificare queste relazioni\\n\\n      Pattern comuni:\",\n    \"Buone pratiche:\\n      1. Lascia che l'elisione delle durate funzioni quando possibile\\n      2. Usa durate esplicite quando le relazioni devono essere chiare\\n      3. Considera di restituire tipi posseduti per evitare la complessità delle durate\\n      4. Documenta relazioni di durata complesse\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 879,
+    "outputTokens": 1345,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 7980
+  },
+  "cost": {
+    "inputUsd": 0.00012306,
+    "outputUsd": 0.00037660000000000005,
+    "totalUsd": 0.0004996600000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

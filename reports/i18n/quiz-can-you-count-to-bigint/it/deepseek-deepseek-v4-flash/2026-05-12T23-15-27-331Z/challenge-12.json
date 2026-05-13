@@ -1,0 +1,50 @@
+{
+  "index": 11,
+  "attempt": 1,
+  "originalTitle": "Handling nulls",
+  "translatedTitle": "Gestione dei null",
+  "translation": {
+    "title": "Gestione dei null",
+    "group": "Parsing",
+    "options": [
+      {
+        "text": "0 NaN"
+      },
+      {
+        "text": "0 0"
+      },
+      {
+        "text": "NaN NaN"
+      },
+      {
+        "text": "NaN 0"
+      },
+      {
+        "text": "null null"
+      },
+      {
+        "text": "TypeError"
+      }
+    ],
+    "questionProse": [
+      "Quale sarà il risultato di questo codice?"
+    ],
+    "explanationProse": [
+      "`parseInt` converte l'input in una stringa, quindi `null` diventa `\"null\"`. Poiché `\"null\"` non ha caratteri validi in base 10 (numeri regolari), restituirà `NaN`.\n  \n  `Number(null)` restituisce `0`, perché a JS piace tenerti sulle spine.\n  Perché? Beh, potrei approfondire se c'è interesse."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Gestione dei null\",\n  \"group\": \"Parsing\",\n  \"options\": [\n    {\n      \"text\": \"0 NaN\"\n    },\n    {\n      \"text\": \"0 0\"\n    },\n    {\n      \"text\": \"NaN NaN\"\n    },\n    {\n      \"text\": \"NaN 0\"\n    },\n    {\n      \"text\": \"null null\"\n    },\n    {\n      \"text\": \"TypeError\"\n    }\n  ],\n  \"questionProse\": [\n    \"Quale sarà il risultato di questo codice?\"\n  ],\n  \"explanationProse\": [\n    \"`parseInt` converte l'input in una stringa, quindi `null` diventa `\\\"null\\\"`. Poiché `\\\"null\\\"` non ha caratteri validi in base 10 (numeri regolari), restituirà `NaN`.\\n  \\n  `Number(null)` restituisce `0`, perché a JS piace tenerti sulle spine.\\n  Perché? Beh, potrei approfondire se c'è interesse.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 755,
+    "outputTokens": 774,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 5305
+  },
+  "cost": {
+    "inputUsd": 0.00010570000000000001,
+    "outputUsd": 0.00021672,
+    "totalUsd": 0.00032242,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

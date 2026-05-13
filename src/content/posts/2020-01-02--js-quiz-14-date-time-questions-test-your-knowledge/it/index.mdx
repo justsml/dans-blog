@@ -1,0 +1,498 @@
+---
+unlisted: false
+title: 'Quiz: 14 domande sulle Date JavaScript'
+subTitle: Impara a fare colpo alle feste con curiosità su JS! ✨
+label: Dates & Times
+date: '2020-01-02'
+modified: '2024-11-27'
+tags:
+  - quiz
+  - javascript
+  - date
+  - date class
+  - gotchas
+  - challenge
+  - intermediate
+social_image: ../desktop-social.webp
+category: Quiz
+subCategory: JavaScript
+cover: ../pocket-watch.webp
+cover_mobile: ../w300_pocket-watch.webp
+cover_icon: ../icon_pocket-watch.webp
+---
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+## Quanto conosci la classe `Date`?
+
+> * **Dimostra le tue abilità JavaScript!** 🚀
+> * Nessun login o registrazione richiesta. ✨
+> * Scelta multipla. 🤖 ... _Quanto difficile può essere, eh?_
+
+### Schema
+
+La classe `Date` in JavaScript ha un'API notoriamente difficile. È stata ereditata da Java, e posso solo supporre che sia stata ispirata da antichi metodi neolitici di misurazione del tempo.
+
+La difficoltà nel gestire `Date` porta molti sviluppatori a usare librerie di terze parti senza pensarci. Sebbene spesso siano una scelta sicura e affidabile, queste librerie sono raramente necessarie per formattare date o per la localizzazione!
+
+Questo quiz è progettato per testare (e approfondire) la tua conoscenza dell'API nativa `Date`. Usa i pulsanti verdi per suggerimenti e spiegazioni! Speriamo che alla fine della sfida tu abbia consolidato la tua comprensione di `Date` in JavaScript.
+
+#### **NOTA:** Si assume che tutti gli esempi utilizzino il fuso orario locale GMT-7.
+
+### 👇 14 Domande Qui Sotto 👇
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="Gestione delle Date"
+  title="Costruttore Date Parte 1"
+  options={[
+    {text: '01 Gen 2020'},
+    {text: '01 Feb 2020', isAnswer: true},
+    {text: 'RangeError: argomento non valido.'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Cosa includerà l'output?
+    ```js
+        const d1 = new Date(2020, 1, 1)
+        console.log(d1)
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    L'argomento del mese è a base zero. Con un intervallo da 0 a 11 (usando i calendari occidentali.)
+
+    'Febbraio' ha un valore di indice pari a uno. (Pensalo come una ricerca in un array.)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="Gestione delle Date"
+  title="Costruttore Date Parte 2"
+  options={[
+    {text: 'Gen 01 2020', isAnswer: true},
+    {text: 'Feb 01 2020'},
+    {text: 'RangeError: argomento non valido.'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Cosa includerà l'output?
+    ```js
+        const d2 = new Date(2020, 0, 1)
+        console.log(d2)
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    L'argomento Month è a base zero. Con un intervallo da 0 a 11 (usando calendari occidentali.)
+
+    'Gennaio' ha un valore indice di zero. (Pensalo come una ricerca in un array.)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="Gestione delle Date"
+  title="Costruttore Date Parte 3"
+  options={[
+    {text: '01 Gen 1970'},
+    {text: 'Epoca Unix di 0'},
+    {text: 'Data corrente, in UTC/GMT'},
+    {text: 'Data corrente', isAnswer: true},
+    {text: 'NaN'},
+    {text: 'RangeError: Argomento non valido.'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Cosa includerà l'output?
+    ```js
+        const d3 = Date('Thu, 01 Jan 1970 00:00:00 GMT')
+        console.log(d3)
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Non dimenticare la parola chiave `new`! `Date` è una classe e dovrebbe essere chiamata con `new`.
+
+    `Date('...')` senza `new` ignora ciò che gli passi. Sembra produrre sempre la data e l'ora correnti come `new Date()` (senza argomenti).
+
+    Questo è un **errore comune** che è **facile trascurare**, anche durante la revisione del codice.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="Gestione delle date"
+  title="Costruttore Date Parte 4"
+  options={[
+    {text: '1969', isAnswer: true},
+    {text: '1970'},
+    {text: '2019'},
+    {text: '2020'},
+    {text: '2021'},
+    {text: 'RangeError: argomento non valido.'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Cosa includerà l'output?
+    ```js
+          const date = new Date(2020)
+          console.log(date.getFullYear())
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Un'istanza Date creata con un singolo argomento intero viene interpretata come un valore Unix `Epoch`. `Epoch` è un conteggio di millisecondi dal 1° gennaio 1970.
+
+    Un valore di `2020` (millisecondi) corrisponde a 2 secondi dopo il 1° gennaio 1970.
+
+    Poi, poiché il nostro fuso orario locale ha un offset negativo di -7 ore, otteniamo `Wed Dec 31 1969 17:00:02 GMT-0700 (Mountain Standard Time)`.
+
+    Puoi aggirare l'offset del fuso orario locale usando [`.getUTCFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getUTCFullYear).
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="Gestione delle date"
+  title="Parsing di stringhe di data"
+  options={[
+    {text: '2019 2020', isAnswer: true},
+    {text: '2020 2021'},
+    {text: '2020 2020'},
+    {text: '2020 2019'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Quale valore verrà stampato nella console?
+    ```js
+          const d1 = new Date('2020-01-01')
+          const d2 = new Date('2020-01-01T00:00')
+          console.log(d1.getFullYear(), d2.getFullYear())
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    La stringa senza un valore di tempo `T` potrebbe sembrare il 1° gennaio 2020, ma le stringhe con solo data vengono interpretate come UTC, e quando vengono adattate al nostro fuso orario locale (GMT-7) scopriamo che siamo ancora nel 2019.
+
+    Le stringhe data-ora senza un fuso orario esplicito vengono interpretate nell'ora locale.
+
+    La forma `T00:00` fa sì che il secondo valore venga interpretato come mezzanotte locale.
+
+    La prima data viene interpretata come `Tue Dec 31 2019 17:00:00 GMT-0700 (Mountain Standard Time)`.
+    La seconda data viene interpretata come `Wed Jan 01 2020 00:00:00 GMT-0700 (Mountain Standard Time)`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="Gestione delle Date"
+  title="Formattazione Parte 1"
+  options={[
+    {text: 'new Intl.DateTimeFormat("'},
+    {text: 'date.toLocaleFormat("', isAnswer: true},
+    {text: 'date.toLocaleString("'},
+    {text: 'date.toLocaleDateString("'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Seleziona un metodo di formattazione _errato_:
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Il metodo `toLocaleFormat()` non è standard! Potrebbe sembrare familiare perché proviene da una vecchia libreria di terze parti.
+
+    Dai un'occhiata al metodo [`toLocaleDateString` docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleDateString). Il suo comportamento è documentato sotto [`Intl.DateTimeFormat`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat).
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="Gestione delle Date"
+  title="Date UTC Parte 1"
+  options={[
+    {text: 'Wed, 01 Jan 2020 00:00:00 GMT'},
+    {text: 'Thu, 02 Jan 2020 00:00:00 GMT'},
+    {text: 'TypeError', isAnswer: true},
+    {text: 'NaN'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Cosa includerà l'output?
+    ```js
+          var date = Date.UTC('2020-01-02T00:00')
+          console.log(date.toUTCString())
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Otterrai `TypeError: date.toUTCString is not a function`, poiché [`Date.UTC()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/UTC) restituisce un intero in millisecondi, non un'istanza di Date.
+
+    {/* Il metodo [`getFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getFullYear) utilizza il tuo offset locale (assumi GMT-07:00 per queste domande).
+    Il che significa che restituirà l'anno precedente (Capodanno -7 ore).
+    Il metodo [`getUTCFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getUTCFullYear) restituirà l'anno come fornito a `Date.UTC()`, 2020.
+    */}
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="Gestione delle Date"
+  title="Date UTC Parte 2"
+  options={[
+    {text: 'Un\'istanza di data basata su UTC'},
+    {text: 'Un\'istanza di data regolata per il fuso orario locale'},
+    {text: 'Millisecondi dal 1° gennaio 1970 GMT', isAnswer: true},
+    {text: 'Un errore'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Cosa includerà l'output?
+    ```js
+          const d = Date.UTC(2020, 0, 1)
+          console.log(d)
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Il metodo helper [`Date.UTC`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/UTC) non restituisce un'istanza di data. Restituisce un intero in millisecondi.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="Gestione delle Date"
+  title="Date UTC - Parte 3"
+  options={[
+    {text: '0'},
+    {text: '420', isAnswer: true},
+    {text: '700'},
+    {text: '1400'},
+    {text: 'null'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Cosa includerà l'output?
+    ```js
+          // Assume local TZ is -07:00
+          const d = new Date(Date.UTC(2020, 0, 1))
+          console.log(d.getTimezoneOffset())
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Le date verranno presentate implicitamente nell'ora locale, con un [`.getTimezoneOffset()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getTimezoneOffset) (effettivamente) invariabile.
+
+    Le istanze di `Date` non memorizzano dati sul fuso orario. Memorizzano il numero di millisecondi dall'Epoca Unix (1 gennaio 1970). Il fuso orario viene considerato durante l'analisi e la visualizzazione delle stringhe di data. Il comportamento di visualizzazione predefinito è determinato automaticamente in base alle impostazioni locali del sistema o del browser.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="Gestione delle Date"
+  title="Metodi Setter di Date Parte 1"
+  options={[
+    {text: '01 Gen 2020', isAnswer: true},
+    {text: '01 Feb 2020'},
+    {text: 'RangeError: argomento non valido.'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Cosa includerà l'output?
+    ```js
+          const d = new Date(2020, 0, 1)
+          d.setDate(1)
+          console.log(d)
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Il metodo [`.setDate()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setDate) imposta il giorno del mese, basandosi sul mese corrente dell'istanza.
+
+    Se viene fornito un valore al di fuori del numero di giorni disponibili, il valore del mese dell'istanza della data verrà regolato (ad esempio, un `setDate(32)` a gennaio calcolerà come 1 febbraio).
+
+    <aside class="hint">`setDate` imposta il giorno del mese, tipicamente nell'intervallo 1-31.</aside>
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="Gestione delle Date"
+  title="Metodi Setter delle Date - Parte 2"
+  options={[
+    {text: 'Gen 01 2020'},
+    {text: 'Feb 01 2020', isAnswer: true},
+    {text: 'RangeError: argomento non valido.'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Cosa includerà l'output?
+    ```js
+          const d = new Date(2020, 0, 1)
+          d.setMonth(1)
+          console.log(d)
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Il metodo [`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) imposta il mese dell'istanza di data specificata.
+
+    L'argomento del mese è a base zero, con un intervallo di 0-11 (usando calendari occidentali.)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="Gestione delle Date"
+  title="Metodi Setter di Date Parte 3"
+  options={[
+    {text: 'Gen 01 2020'},
+    {text: 'Gen 01 2021', isAnswer: true},
+    {text: 'Feb 01 2020'},
+    {text: 'RangeError: argomento non valido.'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Cosa includerà l'output?
+    ```js
+          const d = new Date(2020, 0, 1)
+          d.setMonth(12)
+          console.log(d)
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Il metodo [`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) imposta il mese dell'istanza di data specificata.
+
+    L'argomento `month` è a base zero, con 12 valori nell'intervallo 0-11 (usando i calendari occidentali).
+
+    Qui vediamo che l'anno viene regolato al 2021, perché `setMonth(12)` è 1 in più di 11 (Dicembre).
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="Gestione delle Date"
+  title="Setter di Date Parte 4"
+  options={[
+    {text: 'Gen 01 2020'},
+    {text: 'Feb 01 2020'},
+    {text: 'Gen 01 2021'},
+    {text: 'Feb 01 2021', isAnswer: true},
+    {text: 'RangeError: argomento non valido.'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Cosa includerà l'output?
+    ```js
+          const d = new Date(2020, 0, 1)
+          d.setMonth(13)
+          console.log(d)
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Il metodo [`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) imposta il mese dell'istanza di data specificata.
+
+    L'argomento del mese è a base zero, con un intervallo di 0-11 (usando i calendari occidentali).
+
+    Qui vediamo che il mese e l'anno vengono regolati a Febbraio 2021, perché `setMonth(13)` è 2 in più di 11 (Dicembre).
+
+    <aside class="hint">`setMonth` imposta il mese per indice, 12 mesi sono indicizzati da 0 a 11. </aside>
+    <aside class="hint">
+    I numeri al di fuori dell'intervallo 0-11 causeranno un overflow o underflow dell'anno. Ad esempio, `setMonth(13)` regolerà l'anno a 2021 (a Febbraio perché 13 è 2 in più di 11).
+    </aside>
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={13}
+  group="Gestione delle Date"
+  title="Metodi Setter di Date Parte 5"
+  options={[
+    {text: 'Jan 01 2020'},
+    {text: 'Feb 01 2020'},
+    {text: 'Jan 01 2019'},
+    {text: 'Dec 01 2019', isAnswer: true},
+    {text: 'RangeError: Invalid argument.'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Cosa includerà l'output?
+    ```js
+          const d = new Date(2020, 0, 1)
+          d.setMonth(-1)
+          console.log(d)
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Il metodo [`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) imposta il mese dell'istanza di data specificata.
+
+    L'argomento del mese è a base zero, con un intervallo da 0 a 11 (usando i calendari occidentali).
+
+    Qui vediamo che il mese e l'anno arretrano a Dicembre 2019, perché `setMonth(-1)` è minore di 0 (Gennaio).
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>

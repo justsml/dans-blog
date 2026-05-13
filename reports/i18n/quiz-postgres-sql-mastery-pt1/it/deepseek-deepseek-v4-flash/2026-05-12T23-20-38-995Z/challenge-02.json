@@ -1,0 +1,44 @@
+{
+  "index": 1,
+  "attempt": 1,
+  "originalTitle": "Cast Syntax Variations",
+  "translatedTitle": "Variazioni della sintassi di CAST",
+  "translation": {
+    "title": "Variazioni della sintassi di CAST",
+    "group": "Riscaldamento: Cast dei tipi",
+    "options": [
+      {
+        "text": "'95'::INTEGER"
+      },
+      {
+        "text": "INTEGER '95'"
+      },
+      {
+        "text": "CAST('95', INTEGER)"
+      },
+      {
+        "text": "CAST('95' AS INTEGER)"
+      }
+    ],
+    "questionProse": [
+      "Quale di queste conversioni di tipo è **invalida** ❌?"
+    ],
+    "explanationProse": [
+      "PostgreSQL supporta tre sintassi di cast:\n\n    1. ANSI SQL: `CAST(expression AS type)`.\n    2. PostgreSQL: `expression::type`.\n    3. Funzione tipo: `type 'literal'`.\n\n    Sono tutte funzionalmente equivalenti, ma:\n    - `CAST()` è il più portabile.\n    - `::` è specifico di PostgreSQL ma comunemente usato.\n    - Lo stile infisso `type 'literal'` è meno comune ma ancora valido."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Variazioni della sintassi di CAST\",\n  \"group\": \"Riscaldamento: Cast dei tipi\",\n  \"options\": [\n    {\n      \"text\": \"'95'::INTEGER\"\n    },\n    {\n      \"text\": \"INTEGER '95'\"\n    },\n    {\n      \"text\": \"CAST('95', INTEGER)\"\n    },\n    {\n      \"text\": \"CAST('95' AS INTEGER)\"\n    }\n  ],\n  \"questionProse\": [\n    \"Quale di queste conversioni di tipo è **invalida** ❌?\"\n  ],\n  \"explanationProse\": [\n    \"PostgreSQL supporta tre sintassi di cast:\\n\\n    1. ANSI SQL: `CAST(expression AS type)`.\\n    2. PostgreSQL: `expression::type`.\\n    3. Funzione tipo: `type 'literal'`.\\n\\n    Sono tutte funzionalmente equivalenti, ma:\\n    - `CAST()` è il più portabile.\\n    - `::` è specifico di PostgreSQL ma comunemente usato.\\n    - Lo stile infisso `type 'literal'` è meno comune ma ancora valido.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 732,
+    "outputTokens": 1114,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 6850
+  },
+  "cost": {
+    "inputUsd": 0.00010248000000000001,
+    "outputUsd": 0.00031192000000000004,
+    "totalUsd": 0.00041440000000000004,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "index": 13,
+  "attempt": 1,
+  "originalTitle": "Check Constraint Timing",
+  "translatedTitle": "Tempistica del vincolo CHECK",
+  "translation": {
+    "title": "Tempistica del vincolo CHECK",
+    "group": "Vincoli",
+    "options": [
+      {
+        "text": "Immediatamente per righe nuove o modificate"
+      },
+      {
+        "text": "Al commit della transazione"
+      },
+      {
+        "text": "Alla prossima query"
+      },
+      {
+        "text": "Mai - i vincoli vengono controllati solo su INSERT"
+      }
+    ],
+    "questionProse": [
+      "Quando viene controllato questo vincolo di voto?"
+    ],
+    "explanationProse": [
+      "Vincoli `NOT VALID`:\n    - Vengono controllati immediatamente per nuovi inserimenti e aggiornamenti\n    - Non convalidano le righe esistenti\n    - Possono convalidare le righe esistenti in seguito con `VALIDATE CONSTRAINT`\n    - Sono utili per tabelle grandi\n    \n    Senza `NOT VALID`:\n    - Il vincolo viene controllato immediatamente\n    - Tutte le righe esistenti vengono convalidate\n    - Può essere lento su tabelle grandi"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Tempistica del vincolo CHECK\",\n  \"group\": \"Vincoli\",\n  \"options\": [\n    {\n      \"text\": \"Immediatamente per righe nuove o modificate\"\n    },\n    {\n      \"text\": \"Al commit della transazione\"\n    },\n    {\n      \"text\": \"Alla prossima query\"\n    },\n    {\n      \"text\": \"Mai - i vincoli vengono controllati solo su INSERT\"\n    }\n  ],\n  \"questionProse\": [\n    \"Quando viene controllato questo vincolo di voto?\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"sql\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"explanationProse\": [\n    \"Vincoli `NOT VALID`:\\n    - Vengono controllati immediatamente per nuovi inserimenti e aggiornamenti\\n    - Non convalidano le righe esistenti\\n    - Possono convalidare le righe esistenti in seguito con `VALIDATE CONSTRAINT`\\n    - Sono utili per tabelle grandi\\n    \\n    Senza `NOT VALID`:\\n    - Il vincolo viene controllato immediatamente\\n    - Tutte le righe esistenti vengono convalidate\\n    - Può essere lento su tabelle grandi\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 734,
+    "outputTokens": 2238,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 14029
+  },
+  "cost": {
+    "inputUsd": 0.00010276,
+    "outputUsd": 0.00062664,
+    "totalUsd": 0.0007294000000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

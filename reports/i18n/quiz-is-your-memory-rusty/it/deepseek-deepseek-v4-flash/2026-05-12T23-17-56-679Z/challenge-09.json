@@ -1,0 +1,48 @@
+{
+  "index": 8,
+  "attempt": 1,
+  "originalTitle": "RefCell Behavior",
+  "translatedTitle": "Comportamento di RefCell",
+  "translation": {
+    "title": "Comportamento di RefCell",
+    "group": "RefCell",
+    "options": [
+      {
+        "text": "Stampa: 42",
+        "hint": "Possiamo avere due prestiti mutabili contemporaneamente?"
+      },
+      {
+        "text": "Panico a runtime: RefCell già preso in prestito"
+      },
+      {
+        "text": "Errore di compilazione",
+        "hint": "RefCell sposta i controlli a runtime"
+      },
+      {
+        "text": "Panico a runtime: messaggio diverso",
+        "hint": "L'errore menziona specificamente il prestito"
+      }
+    ],
+    "questionProse": [
+      "Cosa succede quando questo codice viene eseguito?"
+    ],
+    "explanationProse": [
+      "RefCell fornisce mutabilità interna ma applica comunque le regole di prestito di Rust a runtime:",
+      "Concetti chiave:\n      1. RefCell sposta i controlli di prestito a runtime\n      2. Può causare panici se le regole vengono violate\n      3. Utile per il pattern di mutabilità interna\n\n      Casi d'uso comuni:\n      - Oggetti mock nei test\n      - Implementazione di strutture auto-referenziali\n      - Quando hai bisogno di mutare dati dietro un riferimento condiviso\n      \n      Buone pratiche:\n      1. Preferisci il prestito a tempo di compilazione quando possibile\n      2. Mantieni i prestiti di RefCell in ambiti ristretti\n      3. Considera l'uso di drop() per terminare esplicitamente i prestiti\n      4. Usa RefCell quando hai bisogno di mutabilità interna"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Comportamento di RefCell\",\n  \"group\": \"RefCell\",\n  \"options\": [\n    {\n      \"text\": \"Stampa: 42\",\n      \"hint\": \"Possiamo avere due prestiti mutabili contemporaneamente?\"\n    },\n    {\n      \"text\": \"Panico a runtime: RefCell già preso in prestito\"\n    },\n    {\n      \"text\": \"Errore di compilazione\",\n      \"hint\": \"RefCell sposta i controlli a runtime\"\n    },\n    {\n      \"text\": \"Panico a runtime: messaggio diverso\",\n      \"hint\": \"L'errore menziona specificamente il prestito\"\n    }\n  ],\n  \"questionProse\": [\n    \"Cosa succede quando questo codice viene eseguito?\"\n  ],\n  \"explanationProse\": [\n    \"RefCell fornisce mutabilità interna ma applica comunque le regole di prestito di Rust a runtime:\",\n    \"Concetti chiave:\\n      1. RefCell sposta i controlli di prestito a runtime\\n      2. Può causare panici se le regole vengono violate\\n      3. Utile per il pattern di mutabilità interna\\n\\n      Casi d'uso comuni:\\n      - Oggetti mock nei test\\n      - Implementazione di strutture auto-referenziali\\n      - Quando hai bisogno di mutare dati dietro un riferimento condiviso\\n      \\n      Buone pratiche:\\n      1. Preferisci il prestito a tempo di compilazione quando possibile\\n      2. Mantieni i prestiti di RefCell in ambiti ristretti\\n      3. Considera l'uso di drop() per terminare esplicitamente i prestiti\\n      4. Usa RefCell quando hai bisogno di mutabilità interna\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 852,
+    "outputTokens": 1612,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 137371
+  },
+  "cost": {
+    "inputUsd": 0.00011928000000000001,
+    "outputUsd": 0.00045136000000000004,
+    "totalUsd": 0.0005706400000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Rc Smart Pointer",
+  "translatedTitle": "Puntatore intelligente Rc",
+  "translation": {
+    "title": "Puntatore intelligente Rc",
+    "group": "Conteggio dei riferimenti",
+    "options": [],
+    "questionProse": [
+      "Cosa stamperà questo codice? Conta attentamente!"
+    ],
+    "explanationProse": [
+      "Analizziamo come funziona Rc:\n\n      1. Creazione iniziale con `Rc::new()`: conteggio = 1\n      2. Prima clonazione per `marcus`: conteggio = 2\n      3. Seconda clonazione per `aurelius`: conteggio = 3\n\n      Caratteristiche importanti di Rc:",
+      "Punti chiave:\n      - Rc::clone() è economico - incrementa solo un contatore\n      - Rc è solo per scenari single-threaded\n      - Quando l'ultimo riferimento viene rilasciato, i dati vengono puliti\n      - Usa riferimenti Weak per prevenire cicli di riferimenti\n\n      Buone pratiche:\n      - Usa Rc quando hai bisogno di proprietà condivisa\n      - Considera Arc per scenari thread-safe\n      - Evita di creare cicli di riferimenti"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Puntatore intelligente Rc\",\n  \"group\": \"Conteggio dei riferimenti\",\n  \"options\": [],\n  \"questionProse\": [\n    \"Cosa stamperà questo codice? Conta attentamente!\"\n  ],\n  \"explanationProse\": [\n    \"Analizziamo come funziona Rc:\\n\\n      1. Creazione iniziale con `Rc::new()`: conteggio = 1\\n      2. Prima clonazione per `marcus`: conteggio = 2\\n      3. Seconda clonazione per `aurelius`: conteggio = 3\\n\\n      Caratteristiche importanti di Rc:\",\n    \"Punti chiave:\\n      - Rc::clone() è economico - incrementa solo un contatore\\n      - Rc è solo per scenari single-threaded\\n      - Quando l'ultimo riferimento viene rilasciato, i dati vengono puliti\\n      - Usa riferimenti Weak per prevenire cicli di riferimenti\\n\\n      Buone pratiche:\\n      - Usa Rc quando hai bisogno di proprietà condivisa\\n      - Considera Arc per scenari thread-safe\\n      - Evita di creare cicli di riferimenti\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 763,
+    "outputTokens": 1087,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 8135
+  },
+  "cost": {
+    "inputUsd": 0.00010682000000000001,
+    "outputUsd": 0.00030436000000000005,
+    "totalUsd": 0.00041118000000000003,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

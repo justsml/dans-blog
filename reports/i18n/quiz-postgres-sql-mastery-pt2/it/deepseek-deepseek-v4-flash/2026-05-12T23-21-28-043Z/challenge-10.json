@@ -1,0 +1,47 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Partial Indexes",
+  "translatedTitle": "Indici Parziali",
+  "translation": {
+    "title": "Indici Parziali",
+    "group": "Indicizzazione",
+    "options": [
+      {
+        "text": "Sintassi non valida"
+      },
+      {
+        "text": "Crea indici duplicati"
+      },
+      {
+        "text": "Indicizza solo gli studenti attivi"
+      },
+      {
+        "text": "Indicizza prima gli studenti attivi"
+      },
+      {
+        "text": "Fornisce un suggerimento al planner delle query"
+      }
+    ],
+    "questionProse": [
+      "Cosa fa questa incantazione?"
+    ],
+    "explanationProse": [
+      "Questa tecnica si chiama `Indice Parziale`.\n\nSono utili per ridurre l'uso del disco e velocizzare le query quando solo un sottoinsieme di righe viene tipicamente interrogato.\n\nPostgres userà l'indice solo quando la condizione `status = 'active'` è presente nella query.\n\n**Promemoria:** Postgres non supporta 'suggerimenti di query' come altri RDBMS. Il planner delle query deciderà quando usare qualsiasi indice appropriato."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Indici Parziali\",\n  \"group\": \"Indicizzazione\",\n  \"options\": [\n    {\n      \"text\": \"Sintassi non valida\"\n    },\n    {\n      \"text\": \"Crea indici duplicati\"\n    },\n    {\n      \"text\": \"Indicizza solo gli studenti attivi\"\n    },\n    {\n      \"text\": \"Indicizza prima gli studenti attivi\"\n    },\n    {\n      \"text\": \"Fornisce un suggerimento al planner delle query\"\n    }\n  ],\n  \"questionProse\": [\n    \"Cosa fa questa incantazione?\"\n  ],\n  \"explanationProse\": [\n    \"Questa tecnica si chiama `Indice Parziale`.\\n\\nSono utili per ridurre l'uso del disco e velocizzare le query quando solo un sottoinsieme di righe viene tipicamente interrogato.\\n\\nPostgres userà l'indice solo quando la condizione `status = 'active'` è presente nella query.\\n\\n**Promemoria:** Postgres non supporta 'suggerimenti di query' come altri RDBMS. Il planner delle query deciderà quando usare qualsiasi indice appropriato.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 786,
+    "outputTokens": 739,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 7103
+  },
+  "cost": {
+    "inputUsd": 0.00011004000000000001,
+    "outputUsd": 0.00020692,
+    "totalUsd": 0.00031696000000000003,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

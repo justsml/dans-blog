@@ -1,0 +1,44 @@
+{
+  "index": 15,
+  "attempt": 1,
+  "originalTitle": "Password Validation",
+  "translatedTitle": "Validation de mot de passe",
+  "translation": {
+    "title": "Validation de mot de passe",
+    "group": "Regard-en-enfer",
+    "options": [
+      {
+        "text": "\"sassword123\""
+      },
+      {
+        "text": "\"Sass123!\""
+      },
+      {
+        "text": "\"SASSWORD123\""
+      },
+      {
+        "text": "\"Sass word123\""
+      }
+    ],
+    "questionProse": [
+      "Désolé d'avance ! 😈<br />\n    Quel mot de passe correspond à ce motif ?"
+    ],
+    "explanationProse": [
+      "N'écrivez jamais ça en production ! 😅\n\n    Ce motif utilise plusieurs anticipations positives (look-aheads) pour imposer :\n    - Au moins une lettre majuscule : `(?=.*[A-Z])`\n    - Au moins une lettre minuscule : `(?=.*[a-z])`\n    - Au moins un chiffre : `(?=.*\\d)`\n    - Au moins un caractère spécial : `(?=.*[!@#$%^&*])`\n    - Longueur minimale de 8 : `.{8,}`\n\n    Les anticipations sont parfaites pour la validation de mots de passe car elles permettent de vérifier plusieurs critères sans consommer de caractères.\n\n    [En savoir plus sur les motifs de validation de mot de passe](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Validation de mot de passe\",\n  \"group\": \"Regard-en-enfer\",\n  \"options\": [\n    {\n      \"text\": \"\\\"sassword123\\\"\"\n    },\n    {\n      \"text\": \"\\\"Sass123!\\\"\"\n    },\n    {\n      \"text\": \"\\\"SASSWORD123\\\"\"\n    },\n    {\n      \"text\": \"\\\"Sass word123\\\"\"\n    }\n  ],\n  \"questionProse\": [\n    \"Désolé d'avance ! 😈<br />\\n    Quel mot de passe correspond à ce motif ?\"\n  ],\n  \"explanationProse\": [\n    \"N'écrivez jamais ça en production ! 😅\\n\\n    Ce motif utilise plusieurs anticipations positives (look-aheads) pour imposer :\\n    - Au moins une lettre majuscule : `(?=.*[A-Z])`\\n    - Au moins une lettre minuscule : `(?=.*[a-z])`\\n    - Au moins un chiffre : `(?=.*\\\\d)`\\n    - Au moins un caractère spécial : `(?=.*[!@#$%^&*])`\\n    - Longueur minimale de 8 : `.{8,}`\\n\\n    Les anticipations sont parfaites pour la validation de mots de passe car elles permettent de vérifier plusieurs critères sans consommer de caractères.\\n\\n    [En savoir plus sur les motifs de validation de mot de passe](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 834,
+    "outputTokens": 1162,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 75237
+  },
+  "cost": {
+    "inputUsd": 0.00011676000000000001,
+    "outputUsd": 0.00032536000000000007,
+    "totalUsd": 0.00044212000000000006,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "index": 11,
+  "attempt": 1,
+  "originalTitle": "Timestamp Precision",
+  "translatedTitle": "Precisione dei Timestamp",
+  "translation": {
+    "title": "Precisione dei Timestamp",
+    "group": "Data/Ora",
+    "options": [
+      {
+        "text": "2024-01-08 13:30:00+00"
+      },
+      {
+        "text": "2024-01-08 13:30:00.123456+00"
+      },
+      {
+        "text": "2024-01-08 13:30:00.123456789+00"
+      },
+      {
+        "text": "2024-01-08 13:30:00.1234567"
+      }
+    ],
+    "questionProse": [
+      "Qual è il più piccolo letterale `timestamp` che supera la massima precisione di `time` in Postgres?"
+    ],
+    "explanationProse": [
+      "I timestamp di PostgreSQL hanno precisione al microsecondo (6 cifre decimali).\n\n    - Massimo: `.123456` (6 cifre)\n    - Nanosecondi (9 cifre) vengono arrotondati o troncati alla precisione supportata\n    - Offset del fuso orario sono accettati per `timestamptz`, ma non richiesti\n\n    **Insidia poco comune:** Alcuni linguaggi/framework inviano precisione al nanosecondo, ma PostgreSQL memorizza i timestamp con precisione al microsecondo."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Precisione dei Timestamp\",\n  \"group\": \"Data/Ora\",\n  \"options\": [\n    {\n      \"text\": \"2024-01-08 13:30:00+00\"\n    },\n    {\n      \"text\": \"2024-01-08 13:30:00.123456+00\"\n    },\n    {\n      \"text\": \"2024-01-08 13:30:00.123456789+00\"\n    },\n    {\n      \"text\": \"2024-01-08 13:30:00.1234567\"\n    }\n  ],\n  \"questionProse\": [\n    \"Qual è il più piccolo letterale `timestamp` che supera la massima precisione di `time` in Postgres?\"\n  ],\n  \"explanationProse\": [\n    \"I timestamp di PostgreSQL hanno precisione al microsecondo (6 cifre decimali).\\n\\n    - Massimo: `.123456` (6 cifre)\\n    - Nanosecondi (9 cifre) vengono arrotondati o troncati alla precisione supportata\\n    - Offset del fuso orario sono accettati per `timestamptz`, ma non richiesti\\n\\n    **Insidia poco comune:** Alcuni linguaggi/framework inviano precisione al nanosecondo, ma PostgreSQL memorizza i timestamp con precisione al microsecondo.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 799,
+    "outputTokens": 968,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 81446
+  },
+  "cost": {
+    "inputUsd": 0.00011186000000000002,
+    "outputUsd": 0.00027104,
+    "totalUsd": 0.00038290000000000004,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

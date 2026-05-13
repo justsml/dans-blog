@@ -1,0 +1,44 @@
+{
+  "index": 20,
+  "attempt": 1,
+  "originalTitle": "Storage Cost Analysis",
+  "translatedTitle": "Analisi dei costi di archiviazione",
+  "translation": {
+    "title": "Analisi dei costi di archiviazione",
+    "group": "Ottimizzazione dei costi",
+    "options": [
+      {
+        "text": "S3 Standard per tutti i dati"
+      },
+      {
+        "text": "Usa sempre lo storage più economico"
+      },
+      {
+        "text": "Combina classi di storage in base ai pattern di accesso"
+      },
+      {
+        "text": "Archivia tutto in Glacier"
+      }
+    ],
+    "questionProse": [
+      "Qual è l'approccio più conveniente per archiviare 1 PB di dati con il 20% accesso giornaliero, il 30% mensile e il 50% annuale?"
+    ],
+    "explanationProse": [
+      "Strategia di archiviazione ottimale:\n  - 20% in S3 Standard per accesso giornaliero\n  - 30% in S3 Standard-IA per accesso mensile\n  - 50% in Glacier per accesso annuale\n\n  Questo approccio ottimizza i costi mantenendo pattern di accesso appropriati.\n\n  Considerazioni sui costi:\n  - Prezzi di archiviazione per GB\n  - Costi di recupero\n  - Pattern di accesso\n  - Costi di transizione"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Analisi dei costi di archiviazione\",\n  \"group\": \"Ottimizzazione dei costi\",\n  \"options\": [\n    {\n      \"text\": \"S3 Standard per tutti i dati\"\n    },\n    {\n      \"text\": \"Usa sempre lo storage più economico\"\n    },\n    {\n      \"text\": \"Combina classi di storage in base ai pattern di accesso\"\n    },\n    {\n      \"text\": \"Archivia tutto in Glacier\"\n    }\n  ],\n  \"questionProse\": [\n    \"Qual è l'approccio più conveniente per archiviare 1 PB di dati con il 20% accesso giornaliero, il 30% mensile e il 50% annuale?\"\n  ],\n  \"explanationProse\": [\n    \"Strategia di archiviazione ottimale:\\n  - 20% in S3 Standard per accesso giornaliero\\n  - 30% in S3 Standard-IA per accesso mensile\\n  - 50% in Glacier per accesso annuale\\n\\n  Questo approccio ottimizza i costi mantenendo pattern di accesso appropriati.\\n\\n  Considerazioni sui costi:\\n  - Prezzi di archiviazione per GB\\n  - Costi di recupero\\n  - Pattern di accesso\\n  - Costi di transizione\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 757,
+    "outputTokens": 802,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 5729
+  },
+  "cost": {
+    "inputUsd": 0.00010598000000000001,
+    "outputUsd": 0.00022456,
+    "totalUsd": 0.00033054000000000004,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

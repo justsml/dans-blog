@@ -1,0 +1,44 @@
+{
+  "index": 8,
+  "attempt": 1,
+  "originalTitle": "File Watching",
+  "translatedTitle": "Monitoraggio dei file",
+  "translation": {
+    "title": "Monitoraggio dei file",
+    "group": "File System",
+    "options": [
+      {
+        "text": "Una volta per modifica del file"
+      },
+      {
+        "text": "Non garantito; potrebbe attivarsi più volte"
+      },
+      {
+        "text": "Mai"
+      },
+      {
+        "text": "Solo in caso di eliminazione del file"
+      }
+    ],
+    "questionProse": [
+      "Quante volte è garantito che `fs.watch()` si attivi quando un file viene modificato?"
+    ],
+    "explanationProse": [
+      "`fs.watch()` non è garantito che si attivi esattamente una volta per ogni modifica logica del file. Spesso si attiva più volte perché molti editor di testo:\n    1. Salvano in un file temporaneo\n    2. Lo rinominano nel file di destinazione\n\n    Per un monitoraggio più affidabile, considera l'utilizzo di:\n    - Il pacchetto `chokidar`\n    - Debouncing della callback\n    - Usare `fs.watchFile()` (anche se è meno efficiente)\n\n    [Scopri di più su fs.watch()](https://nodejs.org/api/fs.html#fswatchfilename-options-listener)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Monitoraggio dei file\",\n  \"group\": \"File System\",\n  \"options\": [\n    { \"text\": \"Una volta per modifica del file\" },\n    { \"text\": \"Non garantito; potrebbe attivarsi più volte\" },\n    { \"text\": \"Mai\" },\n    { \"text\": \"Solo in caso di eliminazione del file\" }\n  ],\n  \"questionProse\": [\n    \"Quante volte è garantito che `fs.watch()` si attivi quando un file viene modificato?\"\n  ],\n  \"explanationProse\": [\n    \"`fs.watch()` non è garantito che si attivi esattamente una volta per ogni modifica logica del file. Spesso si attiva più volte perché molti editor di testo:\\n    1. Salvano in un file temporaneo\\n    2. Lo rinominano nel file di destinazione\\n\\n    Per un monitoraggio più affidabile, considera l'utilizzo di:\\n    - Il pacchetto `chokidar`\\n    - Debouncing della callback\\n    - Usare `fs.watchFile()` (anche se è meno efficiente)\\n\\n    [Scopri di più su fs.watch()](https://nodejs.org/api/fs.html#fswatchfilename-options-listener)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 771,
+    "outputTokens": 1436,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 106632
+  },
+  "cost": {
+    "inputUsd": 0.00010794000000000001,
+    "outputUsd": 0.00040208,
+    "totalUsd": 0.00051002,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

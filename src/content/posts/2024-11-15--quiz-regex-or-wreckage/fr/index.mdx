@@ -1,0 +1,598 @@
+---
+unlisted: false
+title: 'Quiz : Maîtrise des expressions régulières'
+subTitle: Pouvez-vous dompter quelques regex sauvages ?
+label: RegEx
+social_image: ../desktop-social.webp
+category: Quiz
+subCategory: RegEx
+date: '2024-11-15'
+modified: '2024-11-16'
+tags:
+  - quiz
+  - regex
+  - javascript
+  - intermediate
+  - patterns
+cover_full_width: ../dan-lounsbury-uHZ2-nzYuIs-unsplash-wide.webp
+cover_mobile: ../dan-lounsbury-uHZ2-nzYuIs-unsplash-square-200.webp
+cover_icon: ../dan-lounsbury-uHZ2-nzYuIs-unsplash-square-200.webp
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+<p class="inset">Prêt à en découdre avec les expressions régulières ? 🤼‍♂️</p>
+
+Testez vos connaissances en RegEx avec des questions couvrant les motifs de base, les quantificateurs, les groupes et ces délicates assertions de look-around. De la simple correspondance de chaînes à la validation de motifs complexes – saurez-vous repérer la bonne regex ?
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="Échauffement"
+  title="Correspondance sensible à la casse"
+  options={[
+    {text: '["Cat"]'},
+    {text: '["cat", "CAT", "Cat"]'},
+    {text: '["cat"]', isAnswer: true},
+    {text: '[]'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Qu'est-ce qui correspond ?
+    ```js
+        'cat CAT Cat'.match(/cat/g)
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Ce motif utilise `g`, mais pas `i` :
+    - `g` trouve toutes les correspondances
+    - Sans `i`, la correspondance est sensible à la casse
+
+    Sans le drapeau `i`, seul le "cat" en minuscules correspond.
+
+    Ceci est particulièrement utile lorsqu'on traite des entrées utilisateur ou du HTML où la casse peut varier.
+
+    [En savoir plus sur les drapeaux RegExp](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#advanced_searching_with_flags)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="Échauffement"
+  title="Correspondance simple de caractères"
+  options={[
+    {text: '["cat", "hat"]', isAnswer: true},
+    {text: '["cat", "hat", "what"]'},
+    {text: '["cat"]'},
+    {text: '[]'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Que retournera ce code ?
+    ```js
+        const words = ['cat', 'hat', 'what', 'bat'];
+        words.filter(word => word.match(/^[ch]at/))
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Le motif `/^[ch]at/` correspond aux chaînes qui :
+    - Commencent (`^`) par 'c' ou 'h' (c'est ce que signifie `[ch]` - une classe de caractères correspondant à un seul caractère)
+    - Suivies littéralement de 'at'
+
+    Par conséquent, seuls "cat" et "hat" correspondent à ce motif. La méthode `filter()` ne conserve que les éléments correspondants.
+
+    [En savoir plus sur les classes de caractères sur MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Character_Classes)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="Correspondance de base"
+  title="Glouton vs Non-Glouton"
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Que va-t-il correspondre ?
+    ```js
+        '<div>Hello</div><div>World</div>'.match(/<div>.*?<\/div>/g)
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Le motif `/<div>.*?<\/div>/g` utilise la correspondance non gloutonne avec `*?`, ce qui signifie :
+    - Correspondre à `<div>`
+    - Correspondre à n'importe quel caractère (`.*`) mais le moins possible (`?`)
+    - Jusqu'à trouver `</div>`
+    - Le drapeau `g` permet de trouver toutes les occurrences
+
+    Sans le `?`, le `.*` glouton correspondrait à tout depuis le premier `<div>` jusqu'au dernier `</div>`, donnant une seule grande correspondance. Avec `?`, il correspond à chaque paire séparément.
+
+    [En savoir plus sur la correspondance gloutonne vs paresseuse](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="Pièges courants"
+  title="Le métacaractère point"
+  options={[
+    {text: '["hello\nworld"]'},
+    {text: '["hello", "world"]', isAnswer: true},
+    {text: '["hello\n", "world"]'},
+    {text: 'null'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Que retournera ceci ?
+    ```js
+        'hello\nworld'.match(/\w+/g)
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Le motif `\w+` correspond à un ou plusieurs caractères de mot. Même s'il y a un saut de ligne dans la chaîne, `\w` correspond à :
+    - Lettres (a-z, A-Z)
+    - Chiffres (0-9)
+    - Tiret bas (_)
+
+    Ainsi, le saut de ligne agit comme une limite de mot, et nous obtenons deux correspondances. Si nous avions utilisé `.*`, il n'aurait pas correspondu au saut de ligne par défaut (il faudrait le drapeau `s` pour cela).
+
+    [En savoir plus sur les métacaractères](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Character_Classes#types)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="Anticipation"
+  title="Anticipation positive"
+  options={[
+    {text: '["$100", "€50"]'},
+    {text: '["100", "50"]'},
+    {text: '["$", "€"]'},
+    {text: '[]'},
+    {text: 'null', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Que va-t-il correspondre ?
+    ```js
+        '$100 and €50'.match(/\d+(?=[\$€])/g)
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Ce motif ne correspondra à rien car l'anticipation est à l'envers ! Si vous voulez des chiffres précédés de `$` ou `€`, utilisez une rétrospection : `/(?<=[\$€])\d+/g`.
+
+    Les anticipations vérifient ce qui vient *après* la position actuelle. Le motif tel qu'écrit cherche :
+    - Un ou plusieurs chiffres (`\d+`)
+    - Suivis de (`(?=...)`) soit $ soit € (`[\$€]`)
+
+    Comme il n'y a pas de nombres suivis de symboles monétaires (ils sont précédés par eux), nous n'obtenons aucune correspondance.
+
+    [En savoir plus sur les assertions d'anticipation](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="Correspondance de base"
+  title="Limites de mots"
+  options={[
+    {text: '["cat", "cats"]'},
+    {text: '["cat"]', isAnswer: true},
+    {text: '["cats"]'},
+    {text: '[]'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Qu'est-ce qui correspond ?
+    ```js
+        'cat cats category'.match(/\bcat\b/g)
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Le `\b` représente une limite de mot, qui correspond :
+    - Entre un caractère de mot et un caractère non-mot
+    - Au début/à la fin de la chaîne s'il y a un caractère de mot
+
+    Donc `/\bcat\b/` correspond à \"cat\" uniquement lorsqu'il s'agit d'un mot complet, pas d'une partie d'un autre mot.
+    - ✅ \"cat\" (entouré d'espaces)
+    - ❌ \"cats\" (pas de limite après \"cat\")
+    - ❌ \"category\" (pas de limite après \"cat\")
+
+    [En savoir plus sur les limites de mots](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions#other_assertions)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="Pièges courants"
+  title="Le drapeau global"
+  options={[
+    {text: 'null'},
+    {text: '["a"]'},
+    {text: '["a", "a", "a"]', isAnswer: true},
+    {text: '["b", "n", "n"]'},
+    {text: 'Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Quel est le résultat ?
+    ```js
+        'banana'.match(/a/g)
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Le drapeau `g` (global) change le comportement de `match()` :
+    - Sans `g` : Retourne la première correspondance avec les groupes de capture
+    - Avec `g` : Retourne un tableau de toutes les chaînes correspondantes
+
+    Dans ce cas, il trouve toutes les occurrences de "a" dans "banana".
+
+    Remarque : Si vous avez besoin à la fois de toutes les correspondances ET des groupes de capture, utilisez `matchAll()` ou la méthode `exec()` dans une boucle.
+
+    [En savoir plus sur le drapeau global](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/global)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="Regard en arrière"
+  title="Regard en arrière négatif"
+  options={[
+    {text: '["123"]'},
+    {text: '["123", "456"]'},
+    {text: '["23", "456"]', isAnswer: true},
+    {text: '["456"]'},
+    {text: '[]'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Qu'est-ce qui correspond à ce motif ?
+    ```js
+        'abc123 def456'.match(/(?<!abc)\d+/g)
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Le look-behind négatif `(?<!abc)` garantit que les chiffres ne sont pas précédés de "abc" :
+    - ❌ "123" (précédé de "abc")
+    - ✅ "23" (précédé de "abc1")
+    - ✅ "456" (précédé de "def")
+
+    JavaScript prend en charge les assertions look-behind dans les moteurs modernes. Cet exemple utilise un look-behind de longueur fixe : `abc` fait toujours trois caractères. Le look-behind de longueur variable est le cas particulier plus délicat selon le moteur.
+
+    Remarque : le support du look-behind est relativement récent en JavaScript. Vérifiez la [compatibilité des navigateurs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#browser_compatibility) si vous devez prendre en charge des navigateurs plus anciens.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="Correspondance de base"
+  title="Groupes de capture"
+  options={[
+    {text: '["2029-12-31"]'},
+    {text: '["2029", "12", "31"]', isAnswer: true},
+    {text: '["20", "29", "12", "31"]'},
+    {text: 'null'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Que retournera ce code ?
+    ```js
+        '2029-12-31'.match(/(\d{4})-(\d{2})-(\d{2})/).slice(1)
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Le motif utilise trois groupes de capture :
+    1. `(\d{4})` capture l'année
+    2. `(\d{2})` capture le mois
+    3. `(\d{2})` capture le jour
+
+    `match()` sans le drapeau `g` retourne :
+    - Index 0 : Correspondance complète
+    - Index 1+ : Groupes de capture
+
+    `slice(1)` est une astuce courante pour obtenir uniquement les groupes de capture.
+
+    [En savoir plus sur les groupes et la capture](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Groups_and_Backreferences)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="Anticipation"
+  title="Anticipation négative"
+  options={[
+    {text: '["password123"]'},
+    {text: '["abc123"]'},
+    {text: '["123aBc"]'},
+    {text: '["12"]', isAnswer: true},
+    {text: '["abc"]'},
+    {text: 'Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Quel sera le résultat de ceci ?
+    ```js
+        "123aBc".match(/^\d+(?![a-z])/ig)
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    L'anticipation négative `(?![a-z])` garantit qu'il n'y a pas de lettres minuscules après les chiffres. Comme la partie "3aBc" contient une lettre minuscule après les chiffres, sa portion ne correspond pas. Seul le début "12" correspond donc.
+
+    [En savoir plus sur l'anticipation négative](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="Look-behind"
+  title="Division par look-behind"
+  options={[
+    {text: '["a,", "b,", "c"]', isAnswer: true},
+    {text: '["a,b,c"]'},
+    {text: '["a", ",", "b", ",", "c"]'},
+    {text: '["a,b,c", ""]'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Qu'est-ce qui est retourné ?
+    ```js
+        'a,b,c'.split(/(?<=,)/)
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Le motif `/(?<=,)/` est un look-behind qui correspond après une virgule :
+    - `a,` (après la virgule)
+    - `b,` (après la virgule)
+    - `c` (pas de virgule après)
+
+    Le look-behind ne consomme pas la virgule, donc la virgule reste attachée au segment précédent dans le résultat du split.
+
+    C'est utile lorsque vous voulez diviser une chaîne en fonction de ce qui la précède **sans perdre le(s) caractère(s) de séparation.**
+
+    [En savoir plus sur les assertions look-behind](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="Pièges courants"
+  title="Échappement des caractères spéciaux"
+  options={[
+    {text: '["$100"]'},
+    {text: '["100"]'},
+    {text: '[]'},
+    {text: 'null', isAnswer: true},
+    {text: 'Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Qu'est-ce qui correspond ?
+    ```js
+        '$100'.match(/$\d+/)
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Les caractères spéciaux doivent être échappés avec `\` pour correspondre littéralement :
+    - `$` est un caractère spécial (fin de chaîne)
+    - Pour correspondre à un signe dollar littéral, échappez-le : `\$`
+
+    Caractères courants nécessitant un échappement :
+    ```js
+        . * + ? ^ $ [ ] \ ( ) { } |
+    ```
+    Sans échappement, de nombreux caractères spéciaux ont des significations regex qui pourraient ne pas être ce que vous voulez.
+
+    [En savoir plus sur l'échappement des caractères spéciaux](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#escaping)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="Anticipation arrière"
+  title="Anticipation arrière positive"
+  options={[
+    {text: '["$100"]'},
+    {text: '["100"]', isAnswer: true},
+    {text: '["$"]'},
+    {text: '[]'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Qu'est-ce qui correspond ?
+    ```js
+        '$100'.match(/(?<=\$)\d+/)
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    L'anticipation arrière positive `(?<=\$)` garantit que les chiffres sont précédés d'un signe dollar :
+    - `(?<=\$)`: Anticipation arrière pour le signe dollar
+    - `\d+`: Correspond à un ou plusieurs chiffres
+
+    Les assertions d'anticipation arrière ne consomment pas de caractères ; elles vérifient seulement ce qui précède.
+    C'est utile lorsque vous voulez faire correspondre quelque chose en fonction de ce qui le précède sans inclure la partie précédente.
+
+    [En savoir plus sur les assertions d'anticipation arrière](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={13}
+  group="Correspondance de base"
+  title="Quantificateurs paresseux vs gourmands"
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Qu'est-ce qui est mis en correspondance ?
+    ```js
+        '<b>bold</b>'.match(/<b>(.*?)<\/b>/).slice(1)
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Le motif utilise la correspondance paresseuse avec `*?` :
+    - `<b>` : Correspond à la balise d'ouverture
+    - `(.*?)` : Capture tous les caractères (paresseux)
+    - `</b>` : Correspond à la balise de fermeture
+
+    Le `?` après `*` le rend paresseux, correspondant au minimum de caractères possible.
+    Sans `?`, il serait gourmand et correspondrait au maximum possible.
+
+    `slice(1)` renvoie uniquement le groupe capturé.
+
+    [En savoir plus sur la correspondance gourmande vs paresseuse](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={14}
+  group="Correspondance de base"
+  title="Drapeau Unicode"
+  options={[
+    {text: '["🙂"]'},
+    {text: '["😀", "🙂"]', isAnswer: true},
+    {text: 'null'},
+    {text: 'Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Qu'est-ce qui correspond ?
+    ```js
+        '😀 🙂'.match(/\p{Emoji}/gu)
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Le drapeau `u` active :
+    - Les échappements de propriété Unicode (`\p{...}`)
+    - La gestion correcte des paires de substitution
+
+    Sans `u`, les emoji et autres caractères Unicode pourraient ne pas correspondre correctement.
+    Le motif `\p{Emoji}` correspond aux caractères possédant la propriété Unicode `Emoji`. Dans cette chaîne, cela signifie les deux pictogrammes emoji.
+
+    Remarque : Les échappements de propriété Unicode nécessitent le drapeau `u`.
+
+    [En savoir plus sur le mode Unicode](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Unicode_Property_Escapes)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={15}
+  group="Regard-en-enfer"
+  title="Validation de mot de passe"
+  options={[
+    {text: '"sassword123"'},
+    {text: '"Sass123!"', isAnswer: true},
+    {text: '"SASSWORD123"'},
+    {text: '"Sass word123"'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Désolé d'avance ! 😈<br />
+    Quel mot de passe correspond à ce motif ?
+    ```js
+        /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    N'écrivez jamais ça en production ! 😅
+
+    Ce motif utilise plusieurs anticipations positives (look-aheads) pour imposer :
+    - Au moins une lettre majuscule : `(?=.*[A-Z])`
+    - Au moins une lettre minuscule : `(?=.*[a-z])`
+    - Au moins un chiffre : `(?=.*\d)`
+    - Au moins un caractère spécial : `(?=.*[!@#$%^&*])`
+    - Longueur minimale de 8 : `.{8,}`
+
+    Les anticipations sont parfaites pour la validation de mots de passe car elles permettent de vérifier plusieurs critères sans consommer de caractères.
+
+    [En savoir plus sur les motifs de validation de mot de passe](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+
+<h2>Alors, comment ça s'est passé ? 🧐</h2>
+
+Les expressions régulières peuvent être une bête à dompter, mais elles sont incroyablement puissantes une fois que vous les maîtrisez (ainsi que toute la syntaxe plus récente). Continuez à vous entraîner, et vous deviendrez un maître des RegEx en un rien de temps ! 🧙‍♂️
+
+<p class="inset">Vous cherchez une pause après tout ce RegEx ?<br />Pftt, souvenez-vous : pause *après* les compétences ! <br /><br />Allez à [mon gymnase](/challenges/) pour écraser d'autres défis ! 💪</p>

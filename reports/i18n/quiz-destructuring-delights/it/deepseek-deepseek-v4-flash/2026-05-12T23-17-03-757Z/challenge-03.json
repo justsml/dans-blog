@@ -1,0 +1,47 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "Nested Destructuring",
+  "translatedTitle": "Destrutturazione Annidata",
+  "translation": {
+    "title": "Destrutturazione Annidata",
+    "group": "Destrutturazione Annidata",
+    "options": [
+      {
+        "text": "First: Dan, City: Denver"
+      },
+      {
+        "text": "First: undefined, City: Denver"
+      },
+      {
+        "text": "Error: Cannot read property 'first'"
+      },
+      {
+        "text": "First: Dan, City: undefined"
+      },
+      {
+        "text": "Error"
+      }
+    ],
+    "questionProse": [
+      "Che ne dici di un po' di destrutturazione annidata?"
+    ],
+    "explanationProse": [
+      "La proprietà `birth: { place }` non esiste su `person`, quindi genererà un errore.\n  Una soluzione è fornire valori predefiniti per le proprietà annidate.\n\n  Quando si accede a proprietà annidate - fai attenzione - perché gli errori possono essere difficili da individuare. E i messaggi di errore variano tra browser e altre piattaforme, rendendo il debug un po' più impegnativo.\n\n  In Chrome moderno: `TypeError: Cannot read properties of undefined (reading 'place')`\n\n  In Node, anche questo è un `TypeError` perché JavaScript cerca di destrutturare `place` da `undefined` prima che `place` venga mai letto.\n\n  La formulazione esatta varia tra browser e runtime."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Destrutturazione Annidata\",\n  \"group\": \"Destrutturazione Annidata\",\n  \"options\": [\n    {\n      \"text\": \"First: Dan, City: Denver\"\n    },\n    {\n      \"text\": \"First: undefined, City: Denver\"\n    },\n    {\n      \"text\": \"Error: Cannot read property 'first'\"\n    },\n    {\n      \"text\": \"First: Dan, City: undefined\"\n    },\n    {\n      \"text\": \"Error\"\n    }\n  ],\n  \"questionProse\": [\n    \"Che ne dici di un po' di destrutturazione annidata?\"\n  ],\n  \"explanationProse\": [\n    \"La proprietà `birth: { place }` non esiste su `person`, quindi genererà un errore.\\n  Una soluzione è fornire valori predefiniti per le proprietà annidate.\\n\\n  Quando si accede a proprietà annidate - fai attenzione - perché gli errori possono essere difficili da individuare. E i messaggi di errore variano tra browser e altre piattaforme, rendendo il debug un po' più impegnativo.\\n\\n  In Chrome moderno: `TypeError: Cannot read properties of undefined (reading 'place')`\\n\\n  In Node, anche questo è un `TypeError` perché JavaScript cerca di destrutturare `place` da `undefined` prima che `place` venga mai letto.\\n\\n  La formulazione esatta varia tra browser e runtime.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 818,
+    "outputTokens": 1770,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 9753
+  },
+  "cost": {
+    "inputUsd": 0.00011452000000000002,
+    "outputUsd": 0.0004956000000000001,
+    "totalUsd": 0.0006101200000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

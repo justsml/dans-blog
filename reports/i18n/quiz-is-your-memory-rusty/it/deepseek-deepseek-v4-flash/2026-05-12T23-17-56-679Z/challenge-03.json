@@ -1,0 +1,50 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "Mutable References",
+  "translatedTitle": "Riferimenti Mutabili",
+  "translation": {
+    "title": "Riferimenti Mutabili",
+    "group": "Prestito",
+    "options": [
+      {
+        "text": "Compila con successo",
+        "hint": "Possiamo avere più riferimenti mutabili contemporaneamente?"
+      },
+      {
+        "text": "Errore: non è possibile prendere in prestito `wisdom` come mutabile più di una volta"
+      },
+      {
+        "text": "Errore: specificatore di durata mancante",
+        "hint": "Il problema non riguarda le durate qui"
+      },
+      {
+        "text": "Panico a runtime",
+        "hint": "Rust cattura questi problemi in fase di compilazione"
+      }
+    ],
+    "questionProse": [
+      "Cosa succede con più riferimenti mutabili?",
+      "Pensa alle regole di Rust per i riferimenti mutabili."
+    ],
+    "explanationProse": [
+      "Questo codice viola le regole fondamentali del prestito di Rust:\n      - Solo UN riferimento mutabile a un valore alla volta\n      - OPPURE un numero qualsiasi di riferimenti immutabili\n      - I riferimenti non possono sopravvivere al loro referente\n\n      Ecco come correggere il codice:\n\n      1. Usa l'ambito sequenziale:",
+      "2. Oppure modifica la stringa in un unico prestito:",
+      "Queste regole prevengono le race condition in fase di compilazione, rendendo Rust thread-safe per impostazione predefinita.\n\n      Insidia comune: Tentare di usare più riferimenti mutabili per evitare la clonazione o\n      per modificare parti diverse dello stesso valore contemporaneamente."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Riferimenti Mutabili\",\n  \"group\": \"Prestito\",\n  \"options\": [\n    {\n      \"text\": \"Compila con successo\",\n      \"hint\": \"Possiamo avere più riferimenti mutabili contemporaneamente?\"\n    },\n    {\n      \"text\": \"Errore: non è possibile prendere in prestito `wisdom` come mutabile più di una volta\"\n    },\n    {\n      \"text\": \"Errore: specificatore di durata mancante\",\n      \"hint\": \"Il problema non riguarda le durate qui\"\n    },\n    {\n      \"text\": \"Panico a runtime\",\n      \"hint\": \"Rust cattura questi problemi in fase di compilazione\"\n    }\n  ],\n  \"questionProse\": [\n    \"Cosa succede con più riferimenti mutabili?\",\n    \"Pensa alle regole di Rust per i riferimenti mutabili.\"\n  ],\n  \"explanationProse\": [\n    \"Questo codice viola le regole fondamentali del prestito di Rust:\\n      - Solo UN riferimento mutabile a un valore alla volta\\n      - OPPURE un numero qualsiasi di riferimenti immutabili\\n      - I riferimenti non possono sopravvivere al loro referente\\n\\n      Ecco come correggere il codice:\\n\\n      1. Usa l'ambito sequenziale:\",\n    \"2. Oppure modifica la stringa in un unico prestito:\",\n    \"Queste regole prevengono le race condition in fase di compilazione, rendendo Rust thread-safe per impostazione predefinita.\\n\\n      Insidia comune: Tentare di usare più riferimenti mutabili per evitare la clonazione o\\n      per modificare parti diverse dello stesso valore contemporaneamente.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 872,
+    "outputTokens": 2621,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 15832
+  },
+  "cost": {
+    "inputUsd": 0.00012208000000000002,
+    "outputUsd": 0.0007338800000000001,
+    "totalUsd": 0.0008559600000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

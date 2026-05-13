@@ -1,0 +1,44 @@
+{
+  "index": 8,
+  "attempt": 1,
+  "originalTitle": "Capturing Groups",
+  "translatedTitle": "Gruppi di Cattura",
+  "translation": {
+    "title": "Gruppi di Cattura",
+    "group": "Corrispondenza di Base",
+    "options": [
+      {
+        "text": "[\"2029-12-31\"]"
+      },
+      {
+        "text": "[\"2029\", \"12\", \"31\"]"
+      },
+      {
+        "text": "[\"20\", \"29\", \"12\", \"31\"]"
+      },
+      {
+        "text": "null"
+      }
+    ],
+    "questionProse": [
+      "Cosa restituirà questo?"
+    ],
+    "explanationProse": [
+      "Il pattern utilizza tre gruppi di cattura:\n    1. `(\\d{4})` cattura l'anno\n    2. `(\\d{2})` cattura il mese\n    3. `(\\d{2})` cattura il giorno\n\n    `match()` senza il flag `g` restituisce:\n    - Indice 0: Corrispondenza completa\n    - Indice 1+: Gruppi di cattura\n\n    `slice(1)` è un trucco comune per ottenere solo i gruppi di cattura.\n\n    [Scopri di più sui gruppi e le catture](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Groups_and_Backreferences)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Gruppi di Cattura\",\n  \"group\": \"Corrispondenza di Base\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"2029-12-31\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"2029\\\", \\\"12\\\", \\\"31\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"20\\\", \\\"29\\\", \\\"12\\\", \\\"31\\\"]\"\n    },\n    {\n      \"text\": \"null\"\n    }\n  ],\n  \"questionProse\": [\n    \"Cosa restituirà questo?\"\n  ],\n  \"explanationProse\": [\n    \"Il pattern utilizza tre gruppi di cattura:\\n    1. `(\\\\d{4})` cattura l'anno\\n    2. `(\\\\d{2})` cattura il mese\\n    3. `(\\\\d{2})` cattura il giorno\\n\\n    `match()` senza il flag `g` restituisce:\\n    - Indice 0: Corrispondenza completa\\n    - Indice 1+: Gruppi di cattura\\n\\n    `slice(1)` è un trucco comune per ottenere solo i gruppi di cattura.\\n\\n    [Scopri di più sui gruppi e le catture](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Groups_and_Backreferences)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 808,
+    "outputTokens": 1140,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 9121
+  },
+  "cost": {
+    "inputUsd": 0.00011312000000000001,
+    "outputUsd": 0.0003192,
+    "totalUsd": 0.00043232000000000003,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

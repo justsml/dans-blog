@@ -1,0 +1,31 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "Greedy vs Non-Greedy",
+  "translatedTitle": "Avido vs Non Avido",
+  "translation": {
+    "title": "Avido vs Non Avido",
+    "group": "Corrispondenza di Base",
+    "options": [],
+    "questionProse": [
+      "Cosa corrisponderà?"
+    ],
+    "explanationProse": [
+      "Il pattern `/<div>.*?<\\/div>/g` utilizza il matching non avido con `*?` che significa:\n    - Trova `<div>`\n    - Trova qualsiasi carattere (`.*`) ma il minor numero possibile (`?`)\n    - Fino a trovare `</div>`\n    - Il flag `g` fa sì che trovi tutte le occorrenze\n\n    Senza `?`, il `.*` avido troverebbe tutto dal primo `<div>` all'ultimo `</div>`, dando un unico grande match. Con `?`, trova ogni coppia separatamente.\n\n    [Scopri di più sul matching avido vs pigro](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Avido vs Non Avido\",\n  \"group\": \"Corrispondenza di Base\",\n  \"options\": [],\n  \"questionProse\": [\"Cosa corrisponderà?\"],\n  \"questionCode\": [\n    {\n      \"language\": \"js\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"explanationProse\": [\n    \"Il pattern `/<div>.*?<\\\\/div>/g` utilizza il matching non avido con `*?` che significa:\\n    - Trova `<div>`\\n    - Trova qualsiasi carattere (`.*`) ma il minor numero possibile (`?`)\\n    - Fino a trovare `</div>`\\n    - Il flag `g` fa sì che trovi tutte le occorrenze\\n\\n    Senza `?`, il `.*` avido troverebbe tutto dal primo `<div>` all'ultimo `</div>`, dando un unico grande match. Con `?`, trova ogni coppia separatamente.\\n\\n    [Scopri di più sul matching avido vs pigro](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 767,
+    "outputTokens": 2603,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 14067
+  },
+  "cost": {
+    "inputUsd": 0.00010738,
+    "outputUsd": 0.00072884,
+    "totalUsd": 0.00083622,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

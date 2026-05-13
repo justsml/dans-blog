@@ -1,0 +1,44 @@
+{
+  "index": 25,
+  "attempt": 1,
+  "originalTitle": "Scaling Behavior",
+  "translatedTitle": "Comportamento di Scaling",
+  "translation": {
+    "title": "Comportamento di Scaling",
+    "group": "Aurora Serverless",
+    "options": [
+      {
+        "text": "La velocità di scaling dipende dalla capacità attuale e da quella configurata"
+      },
+      {
+        "text": "Si ridimensiona istantaneamente su richiesta"
+      },
+      {
+        "text": "Si ridimensiona solo a intervalli preimpostati"
+      },
+      {
+        "text": "Solo scaling manuale"
+      }
+    ],
+    "questionProse": [
+      "Qual è la considerazione chiave quando si fa affidamento su Aurora Serverless per gestire picchi improvvisi di traffico?"
+    ],
+    "explanationProse": [
+      "Scaling di Aurora Serverless:\n      - Aurora Serverless v2 scala la capacità in incrementi granulari di ACU\n      - La velocità di scaling dipende dalla capacità attuale e dalle impostazioni min/max ACU\n      - Le versioni supportate possono auto-pausarsi a 0 ACU quando configurate\n      - Fatturazione al secondo basata su ACU\n\n      Migliori Pratiche:\n      - Imposta la capacità minima sufficientemente alta per picchi improvvisi su carichi di lavoro critici\n      - Monitora gli eventi di scaling\n      - Tieni a mente la gestione delle connessioni"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Comportamento di Scaling\",\n  \"group\": \"Aurora Serverless\",\n  \"options\": [\n    {\n      \"text\": \"La velocità di scaling dipende dalla capacità attuale e da quella configurata\"\n    },\n    {\n      \"text\": \"Si ridimensiona istantaneamente su richiesta\"\n    },\n    {\n      \"text\": \"Si ridimensiona solo a intervalli preimpostati\"\n    },\n    {\n      \"text\": \"Solo scaling manuale\"\n    }\n  ],\n  \"questionProse\": [\n    \"Qual è la considerazione chiave quando si fa affidamento su Aurora Serverless per gestire picchi improvvisi di traffico?\"\n  ],\n  \"explanationProse\": [\n    \"Scaling di Aurora Serverless:\\n      - Aurora Serverless v2 scala la capacità in incrementi granulari di ACU\\n      - La velocità di scaling dipende dalla capacità attuale e dalle impostazioni min/max ACU\\n      - Le versioni supportate possono auto-pausarsi a 0 ACU quando configurate\\n      - Fatturazione al secondo basata su ACU\\n\\n      Migliori Pratiche:\\n      - Imposta la capacità minima sufficientemente alta per picchi improvvisi su carichi di lavoro critici\\n      - Monitora gli eventi di scaling\\n      - Tieni a mente la gestione delle connessioni\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 758,
+    "outputTokens": 942,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 5603
+  },
+  "cost": {
+    "inputUsd": 0.00010612000000000001,
+    "outputUsd": 0.00026376000000000004,
+    "totalUsd": 0.00036988000000000006,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

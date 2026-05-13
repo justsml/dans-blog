@@ -1,0 +1,454 @@
+---
+unlisted: false
+title: 'Quiz: Conosci i fondamenti di CSS? (2025)'
+subTitle: Sei abbastanza front-end?
+label: CSS Fundamentals
+social_image: ../desktop-social.webp
+category: Quiz
+subCategory: CSS
+date: '2024-11-08'
+modified: '2024-11-10'
+tags:
+  - quiz
+  - intro
+  - css
+  - styles
+  - beginner
+  - intermediate
+cover_full_width: ../yeshi-kangrang-Qq7A85iCzhQ-unsplash-wide.webp
+cover_mobile: ../yeshi-kangrang-Qq7A85iCzhQ-unsplash-square.webp
+cover_icon: ../yeshi-kangrang-Qq7A85iCzhQ-unsplash-square.webp
+---
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+
+## Quiz: Conosci il CSS?
+
+* CSS moderno?  🤔
+* **Il CSS ha un posto sul _tuo_ curriculum???** 🚀
+* Scelta multipla. 🤖 ... _Quanto può essere difficile, eh?_
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="Riscaldamento: Font"
+  title="Unità CSS non valida per la dimensione del font"
+  options={[
+    {text: '10cx', isAnswer: true},
+    {text: '10mm'},
+    {text: '10pt'},
+    {text: '10px'},
+    {text: '10vmin'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Seleziona l'<em class="highlight">UNICO NON VALIDO</em> ❌ `font-size`:
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `10cx` non è corretto poiché `cx` non è un'unità CSS reale. (Almeno al momento in cui scrivo.)
+
+    Le unità popolari includono le familiari `px`, `rem`, `em`.
+
+    Le unità più recenti sono utili per layout dinamici e reattivi.
+
+    - `ch` - larghezza del carattere `0`
+    - `vmin` - minimo del viewport
+    - `vmax` - massimo del viewport
+    - `vh` - altezza del viewport
+    - `vw` - larghezza del viewport
+
+    Ci sono anche diverse unità che sono sempre esistite ma raramente utilizzate, come `cm` per centimetri, `mm`, `in` per pollici, `pt` per punti
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="Riscaldamento: Colori"
+  title="Codici esadecimali"
+  options={[
+    {text: '#A'},
+    {text: '#AB'},
+    {text: '#ABCD', isAnswer: true},
+    {text: '#ABCDE'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Riesci a individuare l'<em class="highlight">UNICO</em> codice hex valido 👍?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    I codici esadecimali possono essere usati per rappresentare i colori in CSS. Sono preceduti da un `#` e devono contenere 3, 4, 6 o 8 cifre esadecimali.
+
+    Il codice esadecimale a 3 caratteri è un'abbreviazione del codice a 6 caratteri, dove ogni carattere viene ripetuto. Il codice a 4 caratteri include un canale alfa per la trasparenza.
+
+    Per esempio `#ABC` equivale a `#AABBCC`, e `#ABCD` equivale a `#AABBCCDD`. Per saperne di più sulla gestione dei valori esadecimali, dai un'occhiata al mio [quiz sui numeri JavaScript.](/quiz-can-you-count-to-bigint/)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="Riscaldamento: Unità"
+  title="Oops, tutte unità!"
+  options={[
+    {text: 'em'},
+    {text: 'rem'},
+    {text: 'cm'},
+    {text: 'mm'},
+    {text: 'in'},
+    {text: 'pt'},
+    {text: 'pc'},
+    {text: 'px'},
+    {text: 'ex'},
+    {text: 'ch'},
+    {text: 'vmin'},
+    {text: 'vmax'},
+    {text: 'vh'},
+    {text: 'rel', isAnswer: true},
+    {text: 'vw'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Quale di queste unità <em class="highlight">NON</em> è una ❌ unità CSS valida?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Nuove unità come `ch`, `vmin`, `vmax`, `vh`, `vw` sono molto utili per layout dinamici/responsive.
+
+    Ci sono anche diverse unità che esistono da sempre ma sono usate raramente, come `cm` per centimetri, `mm`, `in` per pollici, `pt` per punti, `pc`, `cap` per la dimensione delle lettere maiuscole, e `ex` che è uguale all'altezza della lettera `x`.
+
+    Unità popolari includono la familiare `px` per pixel, `em` relativa alla dimensione del font dell'elemento, e `rem` è segretamente un omaggio alla dimenticata band degli anni '90 R.E.M. (ok, non è vero, è solo un'unità `em` relativa che fa riferimento all'elemento radice).
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="Selettori: Fondamentali"
+  title="Selettori corrispondenti agli elementi HTML"
+  options={[
+    {text: '#Home'},
+    {text: 'a [id=\'home\']'},
+    {text: 'a:contains(home)'},
+    {text: 'a#home[name=\'home\']', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Quale selettore corrisponde meglio al seguente HTML?
+    ```html
+          <a id="home" name="home" href="/home">Home</a>
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    La risposta corretta è `a#home[name='home']`, che corrisponde sia all'attributo `id` che a `name`. I selettori CSS sono sensibili alle maiuscole/minuscole, quindi `#Home` non funzionerebbe, e gli spazi implicano elementi figli, che non si applicano qui.
+
+    Il selettore `:contains()` non è un selettore CSS standard, ma è disponibile in alcune librerie JS.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="Selettore: Fondamenti"
+  title="Selettore di attributo per un pulsante"
+  options={[
+    {text: 'button:link'},
+    {text: 'button::click'},
+    {text: 'button:focus'},
+    {text: 'button[onclick]', isAnswer: true},
+    {text: 'button[on-click]'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Quale selettore corrisponde al seguente pulsante HTML?
+    ```html
+          <button onclick="openModal()">Contact</button>
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    La risposta corretta è `button[onclick]`, che seleziona l'esistenza dell'attributo `onclick`.
+
+    Nota che `:link` seleziona solo i link `href` non visitati, `::click` non è un pseudo-elemento valido, e `:focus` seleziona solo l'elemento focalizzato.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="Selettore: Fondamenti"
+  title="Selettore CSS non valido"
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Quale di questi selettori non è valido?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Il selettore `c > > d {}` non è valido perché il combinatore figlio viene ripetuto senza un selettore tra i due caratteri `>`.
+
+    Gli altri selettori sono validi. Un selettore di tipo come `c {}` è sintatticamente valido in CSS anche se `c` non è un elemento HTML standard.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="Selettori: Fondamenti"
+  title="Selezionare l'ultimo link"
+  options={[
+    {text: 'a :nth-child(3)'},
+    {text: 'a:last-item'},
+    {text: 'nav:last-of-type(a)'},
+    {text: 'nav:nth-child(3)'},
+    {text: 'a:last-child', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Quale selettore corrisponde all'ultimo link nel seguente HTML?
+    ```html
+          <nav>
+            <a name="home" href="/home">Home</a>
+            <a name="login" href="/login">Login</a>
+            <a name="help" href="/help">Help</a>
+          </nav>
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Il selettore corretto è `a:last-child`, che corrisponde all'ultimo `<a>` quando è anche l'ultimo figlio del suo genitore. `nav:nth-child(3)` corrisponderebbe a un elemento `<nav>` che è il terzo figlio del suo genitore.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="Selettore: Specificità"
+  title="Priorità del selettore"
+  options={[
+    {text: 'main article section blockquote a'},
+    {text: 'blockquote a'},
+    {text: 'a#quote', isAnswer: true},
+    {text: 'a.quote'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Quale selettore avrà la priorità?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Il selettore `a#quote` ha la priorità grazie all'ID, che ha una specificità maggiore rispetto ai selettori basati su tag o classi.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="Layout: Centratura"
+  title="Centrare il testo in un elemento a blocco"
+  options={[
+    {text: 'align: center;'},
+    {text: 'margin: 0 auto;'},
+    {text: 'align-content: center;'},
+    {text: 'text-align: center;', isAnswer: true},
+    {text: 'text-content: center;'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Come puoi centrare "shit" in un box?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Usare `text-align: center;` è il modo corretto per centrare il testo in un elemento a blocco. Le proprietà `align` sono usate per i layout flexbox, e `margin: 0 auto;` viene usato per centrare orizzontalmente gli elementi a blocco.
+
+    La proprietà `align-content` è usata per i layout grid, e `text-content` non è una proprietà CSS valida.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="Layout: Centratura"
+  title="Centrare verticalmente un elemento blocco"
+  options={[
+    {text: 'align-items: center;'},
+    {text: 'justify-content: center;'},
+    {text: 'align-content: center;', isAnswer: true},
+    {text: 'margin: auto;'},
+    {text: 'margin: 0 auto;'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Come si centra verticalmente il contenuto all'interno di un contenitore a blocco nel moderno layout di flusso?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Usare `align-content` è il modo moderno per centrare verticalmente il contenuto di un contenitore a blocco nel layout di flusso.
+
+    Le proprietà `align-items` e `justify-content` sono usate per i layout flexbox e grid, ma non per il flusso.
+
+    Sia `margin: 0 auto;` che `margin: auto;` centrano orizzontalmente un elemento blocco, ma non verticalmente.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="Layout: Unità"
+  title="Calcolo della dimensione in pixel dei font-size annidati"
+  options={[
+    {text: '!40px'},
+    {text: '5px', isAnswer: true},
+    {text: '20px'},
+    {text: '25px'},
+    {text: '40px'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Qual è la dimensione in pixel del testo del link `<a>` nel seguente HTML?
+    ```html
+          <body style="font-size: 40px !important;">
+            <nav style="font-size: 50%;">
+              <a style="font-size: 25%;">HOME</a>
+            </nav>
+          </body>
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Il `font-size` per `<a>` viene calcolato come 5px: 40px (body) * 50% (nav) = 20px, poi 20px * 25% = 5px.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="Unità: REM"
+  title="Calcolo della dimensione in pixel con i REM"
+  options={[
+    {text: '10px'},
+    {text: '12px', isAnswer: true},
+    {text: '14px'},
+    {text: '20px'},
+    {text: '24px'},
+    {text: '34px'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Quale sarà la dimensione in pixel di `1.2rem` per il link "HOME" nel seguente HTML?
+    ```html
+          <html style="font-size: 10px;">
+            <body style="font-size: 20px;">
+              <a style="font-size: 1.2rem;">HOME</a>
+            </body>
+          </html>
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `1.2rem` equivale a 12px poiché le unità `rem` si riferiscono alla dimensione del font dell'elemento radice `<html>`, qui impostata a 10px.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="Unità: EM"
+  title="Calcolo della dimensione in pixel con gli EM"
+  options={[
+    {text: '10px'},
+    {text: '12px'},
+    {text: '14px'},
+    {text: '20px'},
+    {text: '24px', isAnswer: true},
+    {text: '34px'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Simile alla domanda precedente, quale sarà la dimensione in pixel di `1.2em` per il link "HOME" nel seguente HTML?
+    ```html
+          <html style="font-size: 10px;">
+            <body style="font-size: 20px;">
+              <a style="font-size: 1.2em;">HOME</a>
+            </body>
+          </html>
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `1.2em` corrisponde a 24px perché le unità `em` fanno riferimento alla dimensione del carattere ereditata, qui impostata a 20px.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={13}
+  group="Selettore: Specificità"
+  title="Selettori a Specificità Zero"
+  options={[
+    {text: ':where(.card) .title', isAnswer: true},
+    {text: '.card .title'},
+    {text: ':is(.card) .title'},
+    {text: '#card .title'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Quale selettore ha la specificità più bassa?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    :where(.card) .title ha la specificità più bassa. La pseudo-classe :where() e tutto ciò che contiene contribuisce con 0-0-0, quindi conta solo .title. :is(.card) .title mantiene la specificità di .card, .card .title ha due classi, e #card .title include un ID.
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>

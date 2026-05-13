@@ -1,0 +1,559 @@
+---
+unlisted: false
+title: 'Quiz: Le delizie della destrutturazione'
+subTitle: Sei un maestro del destructuring?
+label: Destructuring
+social_image: ../desktop-social.webp
+category: Quiz
+subCategory: JavaScript
+date: '2024-11-12'
+modified: '2024-11-16'
+tags:
+  - quiz
+  - intro
+  - javascript
+  - es2015
+  - destructuring
+  - beginner
+  - intermediate
+cover_full_width: ../boxes-of-nesting-dolls.webp
+cover_mobile: ../boxes-of-nesting-dolls-square.webp
+cover_icon: ../boxes-of-nesting-dolls-square.webp
+---
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+{/* Sei un maestro del Destructuring?<br/> */}
+<p class="inset">O è la tua <em>Sinfonia della Distruzione?</em></p>
+
+Questo quiz metterà alla prova la tua conoscenza del Destructuring in JavaScript: dalla sintassi "base" degli oggetti al destructuring annidato e ai valori predefiniti. In più, domande bonus su TypeScript e tipi inline!
+
+Tuffati subito nel riscaldamento – dimostra le tue abilità di Destructuring! 👇
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="Riscaldamento: Oggetti"
+  title="Destrutturazione Base degli Oggetti"
+  options={[
+    {text: 'Nome: Dan Levy, Età: 20'},
+    {text: 'Nome: Dan Levy, Età: 40'},
+    {text: 'Nome: Dan Levy, Età: Infinity'},
+    {text: 'Nome: Dan Levy, Età: undefined', isAnswer: true},
+    {text: 'Errore: Impossibile leggere la proprietà \'age\''},
+    {text: 'Nome: undefined, Età: 40'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Cosa stamperà questo codice?
+    ```js
+        const person = {
+          name: 'Dan Levy',
+          location: 'Cape Town',
+        };
+        const { name, age } = person;
+        console.log(`Name: ${name}, Age: ${age}`);
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    La proprietà `age` non esiste su `person`, quindi `age` sarà `undefined`. Di certo non `Infinity` 😅
+
+    Questo risulta in:
+    ```plaintext
+        Name: Dan Levy, Age: undefined
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="Riscaldamento: Array"
+  title="Valore predefinito nella destrutturazione degli oggetti"
+  options={[
+    {text: 'Nome: Dan Levy, Età: NaN'},
+    {text: 'Nome: Dan Levy, Età: null'},
+    {text: 'Nome: Dan Levy, Età: undefined', isAnswer: true},
+    {text: 'Nome: Dan Levy, Età: 40'},
+    {text: 'Errore: Impossibile destrutturare la proprietà \'age\''},
+    {text: 'SyntaxError: token \',\' inaspettato'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Cosa farà questo codice?
+    ```js
+        const person = [ 'Dan Levy', 'Cape Town' ];
+        const [ name, origin, age ] = person;
+        console.log(`Name: ${name}, Age: ${age}`);
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    La variabile `age` non è presente nell'array `tuple`, quindi sarà `undefined`.
+
+    Questo risulta in:
+    ```plaintext
+        Name: Dan Levy, Age: undefined
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="Destrutturazione Annidata"
+  title="Destrutturazione Annidata"
+  options={[
+    {text: 'First: Dan, City: Denver'},
+    {text: 'First: undefined, City: Denver'},
+    {text: 'Error: Cannot read property \'first\''},
+    {text: 'First: Dan, City: undefined'},
+    {text: 'Error', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Che ne dici di un po' di destrutturazione annidata?
+    ```js
+        'use strict';
+        const person = {
+          name: { first: 'Dan' },
+          address: { city: 'Denver' },
+        };
+        const {
+          name: { first },
+          address: { city },
+          birth: { place },
+        } = person;
+        console.log(
+          `First: ${first}, City: ${place}`,
+        );
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    La proprietà `birth: { place }` non esiste su `person`, quindi genererà un errore.
+    Una soluzione è fornire valori predefiniti per le proprietà annidate.
+
+    Quando si accede a proprietà annidate - fai attenzione - perché gli errori possono essere difficili da individuare. E i messaggi di errore variano tra browser e altre piattaforme, rendendo il debug un po' più impegnativo.
+
+    In Chrome moderno: `TypeError: Cannot read properties of undefined (reading 'place')`
+
+    In Node, anche questo è un `TypeError` perché JavaScript cerca di destrutturare `place` da `undefined` prima che `place` venga mai letto.
+
+    La formulazione esatta varia tra browser e runtime.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="Predefiniti"
+  title="Valori predefiniti nella destrutturazione degli oggetti"
+  options={[
+    {text: 'Ciao Dan da Sconosciuto'},
+    {text: 'Ciao Dan da Denver'},
+    {text: 'Ciao Sconosciuto da Sconosciuto'},
+    {text: 'Ciao Sconosciuto da Denver'},
+    {text: 'Errore', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Ora con alcuni valori predefiniti, cosa farà questo?
+    ```js
+        'use strict';
+        const person = {
+          name: { first: 'Dan' },
+          address: { city: 'Denver' },
+        };
+        const {
+          name: { first = 'Unknown' },
+          birth: { place = 'Unknown' },
+        } = person;
+        console.log(
+          `Hi ${first} from ${place}`,
+        );
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    La proprietà `birth` non esiste su `person`, quindi l'intero oggetto ha ancora bisogno di un valore predefinito, non solo la proprietà annidata. Fondamentalmente manca un ` = {}` predefinito.
+
+    Il modo in cui è scritto dice "se `person.birth` è `undefined`, allora `place` è `Unknown`". Ma `person.birth` è `undefined`, quindi sta cercando di destrutturare `undefined`, il che provoca un errore.
+    ```plaintext
+      In modern Chrome: `TypeError: Cannot read properties of undefined (reading 'place')`
+
+      In Node, this is also a `TypeError` because JavaScript tries to destructure `place` from `undefined`.
+
+      Exact wording varies between browsers and runtimes.
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="Predefiniti"
+  title="Valori Predefiniti nella Destrutturazione degli Oggetti"
+  options={[
+    {text: 'Ciao Dan da Denver'},
+    {text: 'Ciao Dan da Johannesburg'},
+    {text: 'Ciao Dan da Sconosciuto', isAnswer: true},
+    {text: 'Ciao Sconosciuto da Sconosciuto'},
+    {text: 'Ciao Sconosciuto da Denver'},
+    {text: 'Errore'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Cosa farà questo?
+    ```js
+        const person = {
+          name: { first: 'Dan' },
+          address: { city: 'Denver' },
+        };
+        const {
+          name: { first = 'Unknown' },
+          birth: { place = 'Unknown' } = {},
+        } = person;
+
+        console.log(
+          `Hi ${first} from ${place}`,
+        );
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    La proprietà `birth` non esiste su `person`, quindi si ripiega su un oggetto vuoto ` = {}`. Questo permette di utilizzare il valore predefinito.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="Argomenti di funzione"
+  title="Destrutturazione dei parametri di funzione con valori predefiniti"
+  options={[
+    {text: 'Ciao Dan da undefined'},
+    {text: 'Ciao Dan da Unknown'},
+    {text: 'Ciao Dan da Denver'},
+    {text: 'Ciao Unknown da Unknown'},
+    {text: 'Ciao Unknown da Denver'},
+    {text: 'Errore', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Ora come parametri di funzione, cosa farà questo?
+    ```js
+        'use strict';
+        function displayUser({
+          name = "Unknown",
+          age = -1,
+        } = { place: "Unknown" }) {
+          console.log(`Hi ${name} from ${place}`);
+        }
+        displayUser({ name: "Dan" });
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Questa funzione estrae le proprietà `name` e `age`, usando i valori predefiniti se necessario. In questo caso, la chiave `place` nell'oggetto predefinito è solo rumore, non viene utilizzata all'interno di `displayUser()`.
+
+    La modalità strict non cambia questo: leggere il binding `place` non dichiarato genera un `ReferenceError`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="Argomenti di funzione"
+  title="Destrutturazione con valori predefiniti annidati"
+  options={[
+    {text: 'Sconosciuto, Sconosciuto, Joburg'},
+    {text: 'Sconosciuto, Sconosciuto, Sconosciuto'},
+    {text: 'Sconosciuto, `undefined`, Joburg'},
+    {text: 'N/D, `undefined`, Joburg'},
+    {text: 'N/D, Sconosciuto, Joburg'},
+    {text: 'N/D, N/D, Joburg', isAnswer: true},
+    {text: 'Sconosciuto, N/D, Joburg'},
+    {text: 'Errore'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Come vengono gestiti i valori `undefined`?
+    ```js
+        'use strict';
+        function displayPlace({
+          name = "N/A",
+          place = "N/A",
+          age = -1,
+        } = { place: "Unknown" }) {
+          console.log(`${place}`);
+        }
+        displayPlace({ name: "Dan" });
+        displayPlace({ name: "Dan", place: undefined });
+        displayPlace({ name: "Dan", place: "Joburg" });
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    La funzione `displayPlace` userà un oggetto predefinito SOLO se non viene passato alcun oggetto. Quindi, l'unico modo per ottenere il valore predefinito `{ place: "Sconosciuto" }` è con zero argomenti: `displayPlace()`.
+
+    Un altro comportamento notevole è che passare `undefined` per `place` farà sì che venga usato il valore predefinito, un po' simile al comportamento di `JSON.stringify` (ignora `undefined`, riconosce `null`).
+
+    Il risultato è:
+    ```js
+      displayPlace() // Unknown
+      displayPlace({ name: "Dan" }) // N/A
+      displayPlace({ name: "Dan", place: undefined }) // N/A
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="Parametri di Funzione"
+  title="Destrutturazione con Valori Predefiniti Annidati"
+  options={[
+    {text: 'N/A, N/A'},
+    {text: 'N/A, undefined'},
+    {text: 'Sconosciuto, N/A'},
+    {text: 'Sconosciuto, Sconosciuto'},
+    {text: 'Sconosciuto, undefined'},
+    {text: 'null, N/A', isAnswer: true},
+    {text: 'null, Sconosciuto'},
+    {text: 'null, undefined'},
+    {text: 'Errore'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Simile al precedente... come viene gestito `null`?
+    ```js
+        function displayPlace({
+          name = "N/A",
+          place = "N/A",
+          age = -1,
+        } = { place: "Unknown" }) {
+          console.log(`${place}`);
+        }
+        displayPlace({ name: "Dan", place: null });
+        displayPlace({ name: "Dan", place: undefined });
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    In questo caso, la proprietà `place` è impostata a `null` nella prima chiamata, e a `undefined` nella seconda. Il valore predefinito per `place` viene utilizzato solo se l'intero oggetto manca **o** è `undefined`. I valori null passano come `null`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="Tipi inline di TypeScript"
+  title="Destrutturazione con valori predefiniti annidati"
+  options={[
+    {text: 'N/D'},
+    {text: 'undefined'},
+    {text: 'Sconosciuto'},
+    {text: '\'null\''},
+    {text: 'Errore di TypeScript', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Ora in TypeScript... _cosa farà?_
+    ```ts
+        'use strict';
+        function displayPlace(
+          {
+            name = 'N/A',
+            place = 'N/A',
+          }: {
+            name: string;
+            place: string;
+            age: number;
+          },
+        ) {
+          console.log(`${place}`);
+        }
+        displayPlace({ name: 'Dan', place: null });
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    TypeScript segnala un errore perché `place` è tipizzato come `string`, ma la chiamata passa `null`. La chiamata omette anche la proprietà obbligatoria `age`.
+
+    Se ignori gli errori di tipo, eseguendo il codice verrà stampato `null` nella console.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="TypeScript: Con assegnazione"
+  title="Destrutturazione con valori predefiniti annidati"
+  options={[
+    {text: 'undefined'},
+    {text: 'null'},
+    {text: 'N/A'},
+    {text: 'Sconosciuto'},
+    {text: 'Denver', isAnswer: true},
+    {text: 'SyntaxError'},
+    {text: 'Errore: Tipo non valido'},
+    {text: 'Errore: Argomenti non validi'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Proviamo un po' di ridenominazione/assegnazione...
+    ```ts
+        'use strict';
+        function displayPlace({
+          name = 'N/A',
+          place: location = 'N/A',
+        }: {
+          name: string;
+          place: string;
+          age?: number;
+        }) {
+          console.log(`${location}`);
+        }
+        displayPlace({ name: 'Dan', place: 'Denver' });
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Questo stamperà `Denver` nella console. La proprietà `place` viene rinominata in `location` nella firma della funzione. Questo è un pattern comune (rinominare le proprietà durante la destrutturazione) quando si adattano strutture dati di terze parti.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="Destrutturazione annidata in TS"
+  title="Destrutturazione con valori predefiniti annidati"
+  options={[
+    {text: 'Errore: Proprietà \'first\' mancante'},
+    {text: 'Errore: Proprietà \'last\' mancante'},
+    {text: 'Errore: Proprietà \'birth\' e \'age\' mancanti', isAnswer: true},
+    {text: 'Errore: Proprietà \'place\' mancante'},
+    {text: 'Errore: \'string\' non ha proprietà in {...}'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Individua l'errore di tipo:
+    ```ts
+        function greet({
+          name: {first = "N/A", last = "N/A"},
+          birth: {place = "N/A"} = {},
+          age = -1,
+        }: {
+          name: {first?: string, last?: string};
+          birth: {place?: string};
+          age: number;
+        }) {
+          console.log(`Hi ${first} ${last} from ${place}`);
+        }
+        greet({ name: {first: 'Dan'} });
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    L'errore si trova nella firma della funzione `greet`. Le proprietà `age` e `birth` mancano nell'oggetto passato, quindi dovrebbero essere opzionali nella definizione del tipo.
+
+    Anche se la proprietà `birth` viene destrutturata con un valore predefinito, la definizione del tipo richiede che sia presente. Per contrassegnare una proprietà come opzionale in TypeScript, devi usare l'operatore `?`.
+
+    Nota che `birth?: { place?: string }` non è la stessa cosa di `birth: { place?: string } | undefined`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="TypeScript + Assegnazione"
+  title="Destructuring con valori annidati, assegnazione e tipi"
+  options={[
+    {text: 'Ciao Dan Levy da N/D'},
+    {text: 'Ciao Dan Levy da Cape Town'},
+    {text: 'Ciao N/D N/D da N/D'},
+    {text: 'Ciao N/D N/D da Cape Town'},
+    {text: 'Errore', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Ora con **assegnazione** (nota le variabili `f`, `l` e `p`)
+    ```ts
+        'use strict';
+        function greet(
+          {
+            name: {first: f = "N/A", last: l = "N/A"},
+            birth: {place: p = "N/A"} = {},
+            age = -1,
+          }: {
+            name: {first?: string, last?: string};
+            birth?: {place?: string};
+            age?: number;
+          }
+        ) {
+          console.log(`Hi ${f} ${l} from ${place}`);
+          // What will 👆 do?
+        }
+        greet({
+          name: {first: 'Dan', last: 'Levy'},
+          birth: {place: 'Cape Town'},
+        });
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Un altro Errore! Stai iniziando a indovinare, vero?!
+
+    È difficile leggere livelli di destructuring, con valori predefiniti, assegnazione e tipi!
+
+    Non appena `place` viene riassegnato alla variabile `p`, non è più definito nell'ambito dell'istruzione `console.log`.
+    ```ts
+      console.log(`Hi ${f} ${l} from ${place}`); // ❌
+      // to:
+      console.log(`Hi ${f} ${l} from ${p}`); // ✅
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>

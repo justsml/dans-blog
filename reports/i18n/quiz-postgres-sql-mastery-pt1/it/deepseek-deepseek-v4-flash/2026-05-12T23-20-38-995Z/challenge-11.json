@@ -1,0 +1,44 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "Integer Overflow",
+  "translatedTitle": "Overflow di interi",
+  "translation": {
+    "title": "Overflow di interi",
+    "group": "Aritmetica degli interi",
+    "options": [
+      {
+        "text": "4294967296"
+      },
+      {
+        "text": "Errore: intero fuori dal range"
+      },
+      {
+        "text": "0"
+      },
+      {
+        "text": "2147483647"
+      }
+    ],
+    "questionProse": [
+      "Cosa succede quando si calcola il totale degli ID studente possibili?"
+    ],
+    "explanationProse": [
+      "Il tipo `integer` di PostgreSQL è un intero con segno a 32 bit, con intervallo da `-2,147,483,648` a `2,147,483,647`.\n\n    Il calcolo `256^4` = `4,294,967,296` supera questo intervallo.\n\n    Per gestire numeri più grandi:"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Overflow di interi\",\n  \"group\": \"Aritmetica degli interi\",\n  \"options\": [\n    {\"text\": \"4294967296\"},\n    {\"text\": \"Errore: intero fuori dal range\"},\n    {\"text\": \"0\"},\n    {\"text\": \"2147483647\"}\n  ],\n  \"questionProse\": [\"Cosa succede quando si calcola il totale degli ID studente possibili?\"],\n  \"explanationProse\": [\"Il tipo `integer` di PostgreSQL è un intero con segno a 32 bit, con intervallo da `-2,147,483,648` a `2,147,483,647`.\\n\\n    Il calcolo `256^4` = `4,294,967,296` supera questo intervallo.\\n\\n    Per gestire numeri più grandi:\"]\n}",
+  "telemetry": {
+    "inputTokens": 739,
+    "outputTokens": 1560,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 99272
+  },
+  "cost": {
+    "inputUsd": 0.00010346,
+    "outputUsd": 0.00043680000000000005,
+    "totalUsd": 0.0005402600000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

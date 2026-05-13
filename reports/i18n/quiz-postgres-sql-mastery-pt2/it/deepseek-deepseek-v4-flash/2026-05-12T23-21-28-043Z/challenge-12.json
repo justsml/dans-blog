@@ -1,0 +1,44 @@
+{
+  "index": 11,
+  "attempt": 1,
+  "originalTitle": "EXPLAIN ANALYZE Gotcha",
+  "translatedTitle": "Il tranello di EXPLAIN ANALYZE",
+  "translation": {
+    "title": "Il tranello di EXPLAIN ANALYZE",
+    "group": "Prestazioni",
+    "options": [
+      {
+        "text": "Stima leggera del piano"
+      },
+      {
+        "text": "Funziona solo su SELECT"
+      },
+      {
+        "text": "Modifica i dati e mostra il piano"
+      },
+      {
+        "text": "Simula l'esecuzione per ottenere un piano"
+      }
+    ],
+    "questionProse": [
+      "Cosa fa `EXPLAIN ANALYZE` per le istruzioni `UPDATE`?"
+    ],
+    "explanationProse": [
+      "`EXPLAIN ANALYZE` esegue effettivamente la query! Fai attenzione quando analizzi un'operazione di scrittura, in particolare le istruzioni `UPDATE`, `DELETE` e `INSERT`. Potresti dover eseguire operazioni di pulizia dopo ogni `EXPLAIN ANALYZE` per ottenere risultati ripetibili.\n\n    Buone pratiche:\n    - Usa `EXPLAIN` (senza ANALYZE) per UPDATE/DELETE/INSERT\n    - Avvolgi le modifiche in transazioni:"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Il tranello di EXPLAIN ANALYZE\",\n  \"group\": \"Prestazioni\",\n  \"options\": [\n    {\n      \"text\": \"Stima leggera del piano\"\n    },\n    {\n      \"text\": \"Funziona solo su SELECT\"\n    },\n    {\n      \"text\": \"Modifica i dati e mostra il piano\"\n    },\n    {\n      \"text\": \"Simula l'esecuzione per ottenere un piano\"\n    }\n  ],\n  \"questionProse\": [\n    \"Cosa fa `EXPLAIN ANALYZE` per le istruzioni `UPDATE`?\"\n  ],\n  \"explanationProse\": [\n    \"`EXPLAIN ANALYZE` esegue effettivamente la query! Fai attenzione quando analizzi un'operazione di scrittura, in particolare le istruzioni `UPDATE`, `DELETE` e `INSERT`. Potresti dover eseguire operazioni di pulizia dopo ogni `EXPLAIN ANALYZE` per ottenere risultati ripetibili.\\n\\n    Buone pratiche:\\n    - Usa `EXPLAIN` (senza ANALYZE) per UPDATE/DELETE/INSERT\\n    - Avvolgi le modifiche in transazioni:\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 811,
+    "outputTokens": 1140,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 7850
+  },
+  "cost": {
+    "inputUsd": 0.00011354000000000001,
+    "outputUsd": 0.0003192,
+    "totalUsd": 0.00043274000000000003,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "index": 13,
+  "attempt": 1,
+  "originalTitle": "Lazy vs Greedy Quantifiers",
+  "translatedTitle": "Quantificatori Pigri vs Avidi",
+  "translation": {
+    "title": "Quantificatori Pigri vs Avidi",
+    "group": "Corrispondenza di Base",
+    "options": [],
+    "questionProse": [
+      "Cosa viene trovato?"
+    ],
+    "explanationProse": [
+      "Il pattern utilizza il matching lazy con `*?`:\n    - `<b>`: Abbina il tag di apertura\n    - `(.*?)`: Cattura qualsiasi carattere (lazy)\n    - `</b>`: Abbina il tag di chiusura\n\n    Il `?` dopo `*` lo rende lazy, abbinando il minor numero possibile di caratteri.\n    Senza `?`, sarebbe greedy e abbinerebbe il maggior numero possibile.\n\n    `slice(1)` restituisce solo il gruppo catturato.\n\n    [Scopri di più sul matching greedy vs lazy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Quantificatori Pigri vs Avidi\",\n  \"group\": \"Corrispondenza di Base\",\n  \"options\": [],\n  \"questionProse\": [\n    \"Cosa viene trovato?\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"js\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"explanationProse\": [\n    \"Il pattern utilizza il matching lazy con `*?`:\\n    - `<b>`: Abbina il tag di apertura\\n    - `(.*?)`: Cattura qualsiasi carattere (lazy)\\n    - `</b>`: Abbina il tag di chiusura\\n\\n    Il `?` dopo `*` lo rende lazy, abbinando il minor numero possibile di caratteri.\\n    Senza `?`, sarebbe greedy e abbinerebbe il maggior numero possibile.\\n\\n    `slice(1)` restituisce solo il gruppo catturato.\\n\\n    [Scopri di più sul matching greedy vs lazy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 743,
+    "outputTokens": 1192,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 7353
+  },
+  "cost": {
+    "inputUsd": 0.00010402,
+    "outputUsd": 0.00033376,
+    "totalUsd": 0.00043778,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

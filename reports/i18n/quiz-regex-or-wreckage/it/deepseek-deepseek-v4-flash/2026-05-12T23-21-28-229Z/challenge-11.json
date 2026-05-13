@@ -1,0 +1,44 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "Look-behind Split",
+  "translatedTitle": "Divisione con look-behind",
+  "translation": {
+    "title": "Divisione con look-behind",
+    "group": "Look-behind",
+    "options": [
+      {
+        "text": "[\"a,\", \"b,\", \"c\"]"
+      },
+      {
+        "text": "[\"a,b,c\"]"
+      },
+      {
+        "text": "[\"a\", \",\", \"b\", \",\", \"c\"]"
+      },
+      {
+        "text": "[\"a,b,c\", \"\"]"
+      }
+    ],
+    "questionProse": [
+      "Cosa viene restituito?"
+    ],
+    "explanationProse": [
+      "Il pattern `/(?<=,)/` è un look-behind che trova una corrispondenza dopo una virgola:\n    - `a,` (dopo la virgola)\n    - `b,` (dopo la virgola)\n    - `c` (nessuna virgola dopo)\n\n    Il look-behind non consuma la virgola, quindi la virgola rimane attaccata al segmento precedente nel risultato della divisione.\n\n    Questo è utile quando vuoi dividere una stringa in base a ciò che viene prima **senza perdere il carattere di separazione.**\n\n    [Scopri di più sulle asserzioni look-behind](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Divisione con look-behind\",\n  \"group\": \"Look-behind\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"a,\\\", \\\"b,\\\", \\\"c\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"a,b,c\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"a\\\", \\\",\\\", \\\"b\\\", \\\",\\\", \\\"c\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"a,b,c\\\", \\\"\\\"]\"\n    }\n  ],\n  \"questionProse\": [\n    \"Cosa viene restituito?\"\n  ],\n  \"explanationProse\": [\n    \"Il pattern `/(?<=,)/` è un look-behind che trova una corrispondenza dopo una virgola:\\n    - `a,` (dopo la virgola)\\n    - `b,` (dopo la virgola)\\n    - `c` (nessuna virgola dopo)\\n\\n    Il look-behind non consuma la virgola, quindi la virgola rimane attaccata al segmento precedente nel risultato della divisione.\\n\\n    Questo è utile quando vuoi dividere una stringa in base a ciò che viene prima **senza perdere il carattere di separazione.**\\n\\n    [Scopri di più sulle asserzioni look-behind](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 822,
+    "outputTokens": 862,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 6230
+  },
+  "cost": {
+    "inputUsd": 0.00011508000000000002,
+    "outputUsd": 0.00024136000000000003,
+    "totalUsd": 0.0003564400000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

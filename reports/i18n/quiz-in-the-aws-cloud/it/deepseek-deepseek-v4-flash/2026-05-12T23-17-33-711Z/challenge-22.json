@@ -1,0 +1,44 @@
+{
+  "index": 21,
+  "attempt": 1,
+  "originalTitle": "Consistency Models",
+  "translatedTitle": "Modelli di Coerenza",
+  "translation": {
+    "title": "Modelli di Coerenza",
+    "group": "Coerenza DynamoDB",
+    "options": [
+      {
+        "text": "100 letture al secondo"
+      },
+      {
+        "text": "50 letture al secondo"
+      },
+      {
+        "text": "200 letture al secondo"
+      },
+      {
+        "text": "Letture illimitate al secondo"
+      }
+    ],
+    "questionProse": [
+      "Una tabella DynamoDB ha una capacità di lettura provisionata di 100 RCU. Quante letture fortemente coerenti di elementi da 4KB possono essere eseguite al secondo?"
+    ],
+    "explanationProse": [
+      "Comprendere i modelli di coerenza di DynamoDB è fondamentale:\n\n      - 1 RCU = 1 lettura fortemente coerente al secondo per elementi fino a 4KB\n      - 1 RCU = 2 letture eventualmente coerenti al secondo per elementi fino a 4KB\n\n      Pertanto:\n      - 100 RCU = 100 letture fortemente coerenti da 4KB al secondo\n      - 100 RCU = 200 letture eventualmente coerenti da 4KB al secondo\n\n      Scegli i modelli di coerenza in base a:\n      - Requisiti dell'applicazione\n      - Considerazioni sui costi\n      - Esigenze di prestazioni\n      - Requisiti di freschezza dei dati"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Modelli di Coerenza\",\n  \"group\": \"Coerenza DynamoDB\",\n  \"options\": [\n    {\n      \"text\": \"100 letture al secondo\"\n    },\n    {\n      \"text\": \"50 letture al secondo\"\n    },\n    {\n      \"text\": \"200 letture al secondo\"\n    },\n    {\n      \"text\": \"Letture illimitate al secondo\"\n    }\n  ],\n  \"questionProse\": [\n    \"Una tabella DynamoDB ha una capacità di lettura provisionata di 100 RCU. Quante letture fortemente coerenti di elementi da 4KB possono essere eseguite al secondo?\"\n  ],\n  \"explanationProse\": [\n    \"Comprendere i modelli di coerenza di DynamoDB è fondamentale:\\n\\n      - 1 RCU = 1 lettura fortemente coerente al secondo per elementi fino a 4KB\\n      - 1 RCU = 2 letture eventualmente coerenti al secondo per elementi fino a 4KB\\n\\n      Pertanto:\\n      - 100 RCU = 100 letture fortemente coerenti da 4KB al secondo\\n      - 100 RCU = 200 letture eventualmente coerenti da 4KB al secondo\\n\\n      Scegli i modelli di coerenza in base a:\\n      - Requisiti dell'applicazione\\n      - Considerazioni sui costi\\n      - Esigenze di prestazioni\\n      - Requisiti di freschezza dei dati\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 790,
+    "outputTokens": 842,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 19616
+  },
+  "cost": {
+    "inputUsd": 0.00011060000000000002,
+    "outputUsd": 0.00023576,
+    "totalUsd": 0.00034636000000000004,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

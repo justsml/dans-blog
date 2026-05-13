@@ -1,0 +1,601 @@
+---
+unlisted: false
+title: 'Quiz: Padronanza di NodeJS IO'
+subTitle: 'Metti alla prova le tue conoscenze su file, stream e buffer'
+label: NodeJS
+social_image: ../desktop-social.webp
+category: Quiz
+subCategory: NodeJS
+date: '2024-11-15'
+modified: '2024-11-15'
+tags:
+  - quiz
+  - nodejs
+  - io
+  - streams
+  - buffers
+  - filesystem
+  - intermediate
+cover_full_width: ../data-streaming-wide.webp
+cover_mobile: ../data-streaming-square.webp
+cover_icon: ../data-streaming-square.webp
+---
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+<p class="inset">Pronto a tuffarti nel mondo dell'IO di NodeJS? 🌊</p>
+
+Questo quiz metterà alla prova la tua comprensione delle operazioni IO di Node, dalle operazioni di base del file system ai concetti avanzati di streaming. Tratteremo buffer, codifica e best practice per gestire i dati in modo efficiente.
+
+Vediamo se sai distinguere gli stream dai buffer! 🚀
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="Riscaldamento: Buffer"
+  title="Allocazione del Buffer"
+  options={[
+    {text: 'Crea un Buffer di dimensione 5 con zeri', isAnswer: true},
+    {text: 'Crea un Buffer di dimensione 5 con dati casuali'},
+    {text: 'Genera un errore'},
+    {text: 'Crea un Buffer vuoto'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Cosa fa questo codice?
+    ```js
+        const buf = Buffer.alloc(5);
+        console.log(buf);
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `Buffer.alloc(size)` crea un nuovo Buffer della dimensione specificata riempito con zeri.
+    L'output sarà: `<Buffer 00 00 00 00 00>`
+
+    Se vuoi creare un Buffer con dati casuali, usa `Buffer.allocUnsafe(5)`.
+
+    [Scopri di più sull'allocazione del Buffer](https://nodejs.org/api/buffer.html#static-method-bufferalloc)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="Riscaldamento: Buffer"
+  title="Conversione da Buffer a Stringa"
+  options={[
+    {text: 'A', isAnswer: true},
+    {text: '65'},
+    {text: '[Object object]'},
+    {text: 'Undefined'},
+    {text: 'Binary data'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Cosa verrà stampato?
+    ```js
+        const buf = Buffer.from([65]);
+        console.log(buf.toString());
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    I numeri nell'array rappresentano codici ASCII:
+
+    - 65: 'A'
+
+    `toString()` converte questi byte nella loro rappresentazione stringa usando la codifica UTF-8 di default.
+
+    [Scopri di più sulla codifica dei Buffer](https://nodejs.org/api/buffer.html#buffers-and-character-encodings)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="Riscaldamento: File System"
+  title="Operazioni di File Asincrone"
+  options={[
+    {text: 'Stampa il contenuto del file e poi "Fatto"'},
+    {text: 'Stampa "Fatto" e poi il contenuto del file', isAnswer: true},
+    {text: 'Stampa solo il contenuto del file'},
+    {text: 'Genera un errore'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Qual è l'ordine di output?
+    ```js
+        import fs from 'fs';
+        fs.readFile('test.txt', 'utf8', (err, data) => {
+          console.log(data);
+        });
+        console.log('Done');
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Poiché `readFile` è asincrono, il codice continua a essere eseguito mentre il file viene letto.
+    Pertanto, "Fatto" verrà stampato prima del contenuto del file.
+
+    Per attendere che il file venga letto per primo, potresti usare la versione basata su Promise:
+    ```js
+        import { promises as fs } from 'fs';
+    
+        async function read() {
+          const data = await fs.readFile('test.txt', 'utf8');
+          console.log(data);
+          console.log('Done');
+        }
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="Nozioni di Base sul File System"
+  title="Leggere File in Modo Sincrono"
+  options={[
+    {text: 'Restituisce un Buffer', isAnswer: true},
+    {text: 'Restituisce una stringa'},
+    {text: 'Restituisce undefined'},
+    {text: 'Restituisce una Promise'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Cosa restituisce `fs.readFileSync()` di default?
+    ```js
+        import fs from 'fs';
+        const content = fs.readFileSync('test.txt');
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `fs.readFileSync()` restituisce un Buffer di default quando non viene specificata una codifica. Se vuoi una stringa, devi:
+    1. Specificare una codifica: `fs.readFileSync('test.txt', 'utf8')`
+    2. Convertire il Buffer: `content.toString()`
+
+    [Scopri di più su fs.readFileSync nella documentazione Node.js](https://nodejs.org/api/fs.html#fsreadfilesyncpath-options)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="Flussi"
+  title="Eventi dei flussi"
+  options={[
+    {text: '\'data\', \'end\', \'error\', \'close\'', isAnswer: true},
+    {text: '\'finish\', \'drain\', \'pipe\''},
+    {text: '\'read\', \'write\', \'end\''},
+    {text: '\'open\', \'close\', \'data\''},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Quale insieme di eventi è comunemente usato con i flussi Readable?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    I flussi Readable emettono diversi eventi importanti:
+    - 'data': Quando i dati sono disponibili per essere letti
+    - 'end': Quando non ci sono più dati da leggere
+    - 'error': Quando si verifica un errore
+    - 'close': Quando il flusso e la risorsa sottostante sono stati chiusi
+    ```js
+        const readable = fs.createReadStream('file.txt');
+        readable.on('data', chunk => console.log(chunk));
+        readable.on('end', () => console.log('Done!'));
+    ```
+    [Scopri di più sugli eventi dei flussi](https://nodejs.org/api/stream.html#class-streamreadable)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="Stream"
+  title="Piping di Stream"
+  options={[
+    {text: 'Copia il file con compressione'},
+    {text: 'Copia il file senza bufferizzazione in memoria', isAnswer: true},
+    {text: 'Carica l\'intero file in memoria'},
+    {text: 'Crea un collegamento simbolico'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Cosa fa questo codice?
+    ```js
+        import fs from 'fs';
+        const readable = fs.createReadStream('source.txt');
+        const writable = fs.createWriteStream('dest.txt');
+        readable.pipe(writable);
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `pipe()` collega uno stream leggibile a uno stream scrivibile, gestendo automaticamente il backpressure e copiando i dati in blocchi senza caricare l'intero file in memoria.
+
+    Questo è efficiente in termini di memoria per file grandi rispetto a `fs.readFile()` seguito da `fs.writeFile()`.
+
+    [Scopri di più su pipe()](https://nodejs.org/api/stream.html#readablepipedestination-options)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="File System"
+  title="Operazioni sulle directory"
+  options={[
+    {text: 'Crea directory annidate se necessario', isAnswer: true},
+    {text: 'Crea solo l\'ultima directory'},
+    {text: 'Lancia un errore'},
+    {text: 'Crea collegamenti simbolici'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Cosa fa l'opzione recursive?
+    ```js
+        import fs from 'fs';
+        fs.mkdirSync('./a/b/c', { recursive: true });
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    L'opzione `recursive: true` crea le directory genitori se non esistono.
+    Senza questa opzione, provare a creare './a/b/c' lancerebbe un errore se './a' o './a/b' non esistono.
+
+    È simile al comando shell `mkdir -p`.
+
+    [Scopri di più su mkdir](https://nodejs.org/api/fs.html#fsmkdirsyncpath-options)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="Stream"
+  title="Stream di Trasformazione"
+  options={[
+    {text: 'hello world'},
+    {text: 'HELLO WORLD', isAnswer: true},
+    {text: 'Error'},
+    {text: 'undefined'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Cosa produrrà questo codice?
+    ```js
+        import { Transform } from 'stream';
+        const upperCase = new Transform({
+          transform(chunk, encoding, callback) {
+            callback(null, chunk.toString().toUpperCase());
+          }
+        });
+        process.stdin
+          .pipe(upperCase)
+          .pipe(process.stdout);
+        // Input: "hello world"
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Gli stream di trasformazione modificano i dati mentre passano attraverso. Qui, ogni chunk viene:
+    1. Convertito in una stringa
+    2. Trasformato in maiuscolo
+    3. Passato a stdout
+
+    Questo crea una pipeline che converte tutto l'input in maiuscolo.
+
+    [Scopri di più sugli stream di trasformazione](https://nodejs.org/api/stream.html#class-streamtransform)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="File System"
+  title="Monitoraggio dei file"
+  options={[
+    {text: 'Una volta per modifica del file'},
+    {text: 'Non garantito; potrebbe attivarsi più volte', isAnswer: true},
+    {text: 'Mai'},
+    {text: 'Solo in caso di eliminazione del file'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Quante volte è garantito che `fs.watch()` si attivi quando un file viene modificato?
+    ```js
+        import fs from 'fs';
+        fs.watch('test.txt', (eventType, filename) => {
+          console.log(`${filename} was changed`);
+        });
+        // Then modify test.txt once
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `fs.watch()` non è garantito che si attivi esattamente una volta per ogni modifica logica del file. Spesso si attiva più volte perché molti editor di testo:
+    1. Salvano in un file temporaneo
+    2. Lo rinominano nel file di destinazione
+
+    Per un monitoraggio più affidabile, considera l'utilizzo di:
+    - Il pacchetto `chokidar`
+    - Debouncing della callback
+    - Usare `fs.watchFile()` (anche se è meno efficiente)
+
+    [Scopri di più su fs.watch()](https://nodejs.org/api/fs.html#fswatchfilename-options-listener)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="Buffer"
+  title="Confronto tra Buffer"
+  options={[
+    {text: 'true'},
+    {text: 'false', isAnswer: true},
+    {text: 'undefined'},
+    {text: 'Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Qual è l'output?
+    ```js
+        const buf1 = Buffer.from('Hello');
+        const buf2 = Buffer.from('Hello');
+        console.log(buf1 === buf2);
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    I Buffer vengono confrontati per riferimento, non per valore. Anche se contengono gli stessi dati, sono oggetti diversi.
+
+    Per confrontare i contenuti di un Buffer, usa:
+    ```js
+        buf1.equals(buf2)  // true
+        // or
+        Buffer.compare(buf1, buf2) === 0  // true
+    ```
+    [Scopri di più sul confronto dei Buffer](https://nodejs.org/api/buffer.html#bufequalsotherbuffer)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="Stream"
+  title="Backpressure negli Stream"
+  options={[
+    {text: 'Previene l\'overflow di memoria', isAnswer: true},
+    {text: 'Aumenta la velocità di lettura'},
+    {text: 'Comprime i dati'},
+    {text: 'Cripta i dati'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Qual è lo scopo principale del backpressure negli stream?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Il backpressure è un meccanismo che previene l'overflow di memoria mettendo in pausa la lettura quando la parte di scrittura non riesce a tenere il passo.
+
+    Esempio di backpressure manuale:
+    ```js
+        readable.on('data', (chunk) => {
+          const canContinue = writable.write(chunk);
+          if (!canContinue) {
+            readable.pause();
+            writable.once('drain', () => readable.resume());
+          }
+        });
+    ```
+    `pipe()` gestisce questo automaticamente!
+
+    [Scopri di più sul backpressure](https://nodejs.org/en/learn/modules/backpressuring-in-streams#backpressuring-in-streams)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="File System"
+  title="Collegamenti simbolici"
+  options={[
+    {text: 'Crea un collegamento fisico (hard link)'},
+    {text: 'Crea una copia'},
+    {text: 'Crea un collegamento simbolico', isAnswer: true},
+    {text: 'Sposta il file'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Cosa fa questo codice?
+    ```js
+        import fs from 'fs';
+        fs.symlinkSync('target.txt', 'link.txt');
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `symlinkSync` crea un collegamento simbolico (come un collegamento) al file di destinazione.
+
+    Differenze chiave rispetto ai collegamenti fisici:
+    - Può collegare a directory
+    - Può attraversare file system
+    - Si rompe se il target viene eliminato
+
+    Per creare invece un collegamento fisico:
+    ```js
+        fs.linkSync('target.txt', 'hardlink.txt');
+    ```
+    [Scopri di più sui collegamenti simbolici](https://nodejs.org/api/fs.html#fssymlinksync-target-path-type)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="Stream"
+  title="Modalità degli Stream"
+  options={[
+    {text: 'Solo modalità binaria'},
+    {text: 'Solo modalità oggetto'},
+    {text: 'Entrambe le modalità', isAnswer: true},
+    {text: 'Nessuna modalità'},
+    {text: 'Modalità input e output'},
+    {text: 'Modalità lettura e scrittura'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    In quali modalità possono operare gli stream di Node.js?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Gli stream possono operare in:
+    1. Modalità binaria (predefinita): per buffer e stringhe
+    2. Modalità oggetto: per qualsiasi valore JavaScript
+
+    Esempio di modalità oggetto:
+    ```js
+        import { Transform } from 'stream';
+        const objectStream = new Transform({
+          objectMode: true,
+          transform(chunk, encoding, callback) {
+            callback(null, { value: chunk });
+          }
+        });
+    ```
+    [Scopri di più sulle modalità degli stream](https://nodejs.org/api/stream.html#object-mode)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={13}
+  group="File System"
+  title="Descrittori di file"
+  options={[
+    {text: 'Un numero', isAnswer: true},
+    {text: 'Una stringa'},
+    {text: 'Un oggetto'},
+    {text: 'Un buffer'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Che tipo è il parametro `fd` in questa callback?
+    ```js
+        import fs from 'fs';
+        fs.open('test.txt', 'r', (err, fd) => {
+          console.log(typeof fd);
+        });
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    I descrittori di file sono numeri che identificano in modo univoco i file aperti nel sistema operativo.
+
+    I primi tre descrittori di file sono riservati:
+    - 0: stdin
+    - 1: stdout
+    - 2: stderr
+
+    Ricorda sempre di chiudere i descrittori di file:
+    ```js
+        fs.close(fd, (err) => {
+          if (err) throw err;
+        });
+    ```
+    [Scopri di più sui descrittori di file](https://nodejs.org/api/fs.html#file-descriptors)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={14}
+  group="Codifica"
+  title="Codifica dei Buffer"
+  options={[
+    {text: '3'},
+    {text: '4'},
+    {text: '6'},
+    {text: '8'},
+    {text: '10', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Quanti byte occuperà questa stringa in UTF-8?
+    ```js
+        const str = "Hello 🌍";
+        const buf = Buffer.from(str);
+        console.log(buf.length);
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    In UTF-8:
+    - I caratteri ASCII (come 'Hello ') occupano 1 byte ciascuno
+    - L'emoji della terra 🌍 occupa 4 byte
+
+    Quindi: 5 (Hello) + 1 (spazio) + 4 (🌍) = 10 byte
+
+    Per vedere i byte:
+    ```js
+        console.log(buf);  // <Buffer 48 65 6c 6c 6f 20 f0 9f 8c 8d>
+    ```
+    [Scopri di più sulla codifica UTF-8](https://nodejs.org/api/buffer.html#buffers-and-character-encodings)
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+
+Spero che ti sia divertito a testare le tue conoscenze su NodeJS IO! Vuoi altro? Dai un'occhiata alla mia [Raccolta di Quiz](/challenges/) per altre sfide!

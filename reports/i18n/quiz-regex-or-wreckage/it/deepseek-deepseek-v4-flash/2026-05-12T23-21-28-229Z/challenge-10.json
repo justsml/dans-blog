@@ -1,0 +1,50 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Negative Look-ahead",
+  "translatedTitle": "Look-ahead negativo",
+  "translation": {
+    "title": "Look-ahead negativo",
+    "group": "Look-ahead",
+    "options": [
+      {
+        "text": "[\"password123\"]"
+      },
+      {
+        "text": "[\"abc123\"]"
+      },
+      {
+        "text": "[\"123aBc\"]"
+      },
+      {
+        "text": "[\"12\"]"
+      },
+      {
+        "text": "[\"abc\"]"
+      },
+      {
+        "text": "Error"
+      }
+    ],
+    "questionProse": [
+      "Quale sarà il risultato?"
+    ],
+    "explanationProse": [
+      "Il look-ahead negativo `(?![a-z])` garantisce che non ci siano lettere minuscole dopo le cifre. Poiché la parte \"3aBc\" ha una lettera minuscola dopo le cifre, la sua porzione non corrisponde. Quindi solo l'inizio \"12\" corrisponde.\n\n    [Scopri di più sul look-ahead negativo](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Look-ahead negativo\",\n  \"group\": \"Look-ahead\",\n  \"options\": [\n    {\"text\": \"[\\\"password123\\\"]\"},\n    {\"text\": \"[\\\"abc123\\\"]\"},\n    {\"text\": \"[\\\"123aBc\\\"]\"},\n    {\"text\": \"[\\\"12\\\"]\"},\n    {\"text\": \"[\\\"abc\\\"]\"},\n    {\"text\": \"Error\"}\n  ],\n  \"questionProse\": [\"Quale sarà il risultato?\"],\n  \"explanationProse\": [\"Il look-ahead negativo `(?![a-z])` garantisce che non ci siano lettere minuscole dopo le cifre. Poiché la parte \\\"3aBc\\\" ha una lettera minuscola dopo le cifre, la sua porzione non corrisponde. Quindi solo l'inizio \\\"12\\\" corrisponde.\\n\\n    [Scopri di più sul look-ahead negativo](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)\"]\n}",
+  "telemetry": {
+    "inputTokens": 776,
+    "outputTokens": 1312,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 8403
+  },
+  "cost": {
+    "inputUsd": 0.00010864,
+    "outputUsd": 0.00036736000000000006,
+    "totalUsd": 0.0004760000000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "index": 1,
+  "attempt": 1,
+  "originalTitle": "Aggregate Function COUNT",
+  "translatedTitle": "Funzione di Aggregazione COUNT",
+  "translation": {
+    "title": "Funzione di Aggregazione COUNT",
+    "group": "Basi di SQL",
+    "options": [
+      {
+        "text": "Conta tutte le righe, inclusi i valori NULL"
+      },
+      {
+        "text": "Conta solo i valori non NULL in una colonna"
+      },
+      {
+        "text": "Conta i valori NULL come un unico valore"
+      },
+      {
+        "text": "Tratta ogni valore NULL come unico, simile a NaN !== NaN"
+      }
+    ],
+    "questionProse": [
+      "Cosa fa `COUNT(column_name)` in SQL?"
+    ],
+    "explanationProse": [
+      "`COUNT(column_name)` conta il numero di valori non NULL in una colonna specificata. Per contare tutte le righe, inclusi i NULL, usa `COUNT(*)`.\n\nPuoi anche usare `COALESCE` per assicurarti che i NULL vengano sostituiti con un valore non NULL. Qualcosa come: `COUNT(COALESCE(column_name, 0))`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Funzione di Aggregazione COUNT\",\n  \"group\": \"Basi di SQL\",\n  \"options\": [\n    {\n      \"text\": \"Conta tutte le righe, inclusi i valori NULL\"\n    },\n    {\n      \"text\": \"Conta solo i valori non NULL in una colonna\"\n    },\n    {\n      \"text\": \"Conta i valori NULL come un unico valore\"\n    },\n    {\n      \"text\": \"Tratta ogni valore NULL come unico, simile a NaN !== NaN\"\n    }\n  ],\n  \"questionProse\": [\n    \"Cosa fa `COUNT(column_name)` in SQL?\"\n  ],\n  \"explanationProse\": [\n    \"`COUNT(column_name)` conta il numero di valori non NULL in una colonna specificata. Per contare tutte le righe, inclusi i NULL, usa `COUNT(*)`.\\n\\nPuoi anche usare `COALESCE` per assicurarti che i NULL vengano sostituiti con un valore non NULL. Qualcosa come: `COUNT(COALESCE(column_name, 0))`.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 713,
+    "outputTokens": 1088,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 5947
+  },
+  "cost": {
+    "inputUsd": 0.00009982,
+    "outputUsd": 0.00030464,
+    "totalUsd": 0.00040446000000000004,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

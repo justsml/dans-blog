@@ -1,0 +1,58 @@
+{
+  "index": 0,
+  "attempt": 1,
+  "originalTitle": "Basic Move Semantics",
+  "translatedTitle": "Semantica di Spostamento di Base",
+  "translation": {
+    "title": "Semantica di Spostamento di Base",
+    "group": "Proprietà",
+    "options": [
+      {
+        "text": "Hello, !",
+        "hint": "Pensa a cosa succede a 'philosopher' dopo che è stato spostato"
+      },
+      {
+        "text": "Ciao, Zenone di Cizio!",
+        "hint": "Una volta che un valore è stato spostato, possiamo ancora usarlo?"
+      },
+      {
+        "text": "Ciao, Zenone di Elea!",
+        "hint": "La stringa contiene 'Citium', non 'Elea'"
+      },
+      {
+        "text": "Ciao, Marco Aurelio",
+        "hint": "Controlla se corrisponde al contenuto della stringa"
+      },
+      {
+        "text": "Errore di compilazione: valore preso in prestito dopo lo spostamento"
+      },
+      {
+        "text": "Errore a runtime: eccezione puntatore nullo",
+        "hint": "Rust rileva questi problemi in fase di compilazione"
+      }
+    ],
+    "questionProse": [
+      "Cosa succede quando esegui questo codice? Prova a prevedere l'output o l'errore:"
+    ],
+    "explanationProse": [
+      "Questo codice non compila a causa delle regole di proprietà di Rust. Quando assegniamo `philosopher` a `greeting`, la proprietà della stringa viene spostata su `greeting`. Dopo questo spostamento, `philosopher` non è più valido per l'uso.\n\n      Ecco tre modi per risolvere:\n\n      1. Clonare la stringa (crea una nuova copia):",
+      "2. Usare un riferimento (prende in prestito il valore):",
+      "3. Usare una slice di stringa (prende in prestito parte della stringa):",
+      "Ogni soluzione ha diversi casi d'uso e implicazioni sulle prestazioni. La clonazione è più costosa ma ti dà la proprietà, mentre i riferimenti sono più economici ma hanno vincoli di durata."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Semantica di Spostamento di Base\",\n  \"group\": \"Proprietà\",\n  \"options\": [\n    {\n      \"text\": \"Hello, !\",\n      \"hint\": \"Pensa a cosa succede a 'philosopher' dopo che è stato spostato\"\n    },\n    {\n      \"text\": \"Ciao, Zenone di Cizio!\",\n      \"hint\": \"Una volta che un valore è stato spostato, possiamo ancora usarlo?\"\n    },\n    {\n      \"text\": \"Ciao, Zenone di Elea!\",\n      \"hint\": \"La stringa contiene 'Citium', non 'Elea'\"\n    },\n    {\n      \"text\": \"Ciao, Marco Aurelio\",\n      \"hint\": \"Controlla se corrisponde al contenuto della stringa\"\n    },\n    {\n      \"text\": \"Errore di compilazione: valore preso in prestito dopo lo spostamento\"\n    },\n    {\n      \"text\": \"Errore a runtime: eccezione puntatore nullo\",\n      \"hint\": \"Rust rileva questi problemi in fase di compilazione\"\n    }\n  ],\n  \"questionProse\": [\n    \"Cosa succede quando esegui questo codice? Prova a prevedere l'output o l'errore:\"\n  ],\n  \"explanationProse\": [\n    \"Questo codice non compila a causa delle regole di proprietà di Rust. Quando assegniamo `philosopher` a `greeting`, la proprietà della stringa viene spostata su `greeting`. Dopo questo spostamento, `philosopher` non è più valido per l'uso.\\n\\n      Ecco tre modi per risolvere:\\n\\n      1. Clonare la stringa (crea una nuova copia):\",\n    \"2. Usare un riferimento (prende in prestito il valore):\",\n    \"3. Usare una slice di stringa (prende in prestito parte della stringa):\",\n    \"Ogni soluzione ha diversi casi d'uso e implicazioni sulle prestazioni. La clonazione è più costosa ma ti dà la proprietà, mentre i riferimenti sono più economici ma hanno vincoli di durata.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 990,
+    "outputTokens": 1701,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 10887
+  },
+  "cost": {
+    "inputUsd": 0.0001386,
+    "outputUsd": 0.00047628000000000004,
+    "totalUsd": 0.00061488,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

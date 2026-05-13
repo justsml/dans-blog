@@ -1,0 +1,47 @@
+{
+  "index": 0,
+  "attempt": 1,
+  "originalTitle": "Using CSS Variables",
+  "translatedTitle": "Usare le variabili CSS",
+  "translation": {
+    "title": "Usare le variabili CSS",
+    "group": "Riscaldamento",
+    "options": [
+      {
+        "text": "background-color: blue;"
+      },
+      {
+        "text": "background-color: --main-color;"
+      },
+      {
+        "text": "background-color: var(--main-color);"
+      },
+      {
+        "text": "background-color: $main-color;"
+      },
+      {
+        "text": "background-color: @main-color;"
+      }
+    ],
+    "questionProse": [
+      "Qual è il modo **più accurato** per usare una variabile CSS chiamata `--main-color` per impostare il colore di sfondo di un elemento?"
+    ],
+    "explanationProse": [
+      "Sono entrambi di 8 byte, ma non memorizzano lo stesso tipo di valore.\n\n    Allora qual è la differenza? Sta nell'analisi dell'input.\n\n    **`timestamptz`**\n    - Normalizza l'input a un punto assoluto nel tempo.\n    - Tiene conto dell'impostazione `TimeZone` del server/connessione quando analizza un input senza un offset esplicito e quando visualizza l'output.\n\n    **`timestamp`**\n    - Memorizza una data e un'ora senza conversione di fuso orario.\n    - Non preserva né normalizza le informazioni sul fuso orario.\n    \n    \n    **`timestamp`**\n\n    - Memorizza la data e l'ora senza informazioni sul fuso orario.\n    - Utile per memorizzare esplicitamente date standardizzate, sia in UTC che in un fuso orario specifico.\n\n    Le variabili CSS si usano con la funzione `var`, quindi la risposta corretta è `background-color: var(--main-color);`. Questa sintassi recupera il valore di `--main-color` e lo applica.\n\n    Le altre opzioni potrebbero essere familiari da altri linguaggi o sintassi di preprocessori, cioè Sass o Less."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Usare le variabili CSS\",\n  \"group\": \"Riscaldamento\",\n  \"options\": [\n    {\n      \"text\": \"background-color: blue;\"\n    },\n    {\n      \"text\": \"background-color: --main-color;\"\n    },\n    {\n      \"text\": \"background-color: var(--main-color);\"\n    },\n    {\n      \"text\": \"background-color: $main-color;\"\n    },\n    {\n      \"text\": \"background-color: @main-color;\"\n    }\n  ],\n  \"questionProse\": [\n    \"Qual è il modo **più accurato** per usare una variabile CSS chiamata `--main-color` per impostare il colore di sfondo di un elemento?\"\n  ],\n  \"explanationProse\": [\n    \"Sono entrambi di 8 byte, ma non memorizzano lo stesso tipo di valore.\\n\\n    Allora qual è la differenza? Sta nell'analisi dell'input.\\n\\n    **`timestamptz`**\\n    - Normalizza l'input a un punto assoluto nel tempo.\\n    - Tiene conto dell'impostazione `TimeZone` del server/connessione quando analizza un input senza un offset esplicito e quando visualizza l'output.\\n\\n    **`timestamp`**\\n    - Memorizza una data e un'ora senza conversione di fuso orario.\\n    - Non preserva né normalizza le informazioni sul fuso orario.\\n    \\n    \\n    **`timestamp`**\\n\\n    - Memorizza la data e l'ora senza informazioni sul fuso orario.\\n    - Utile per memorizzare esplicitamente date standardizzate, sia in UTC che in un fuso orario specifico.\\n\\n    Le variabili CSS si usano con la funzione `var`, quindi la risposta corretta è `background-color: var(--main-color);`. Questa sintassi recupera il valore di `--main-color` e lo applica.\\n\\n    Le altre opzioni potrebbero essere familiari da altri linguaggi o sintassi di preprocessori, cioè Sass o Less.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 737,
+    "outputTokens": 1297,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 101989
+  },
+  "cost": {
+    "inputUsd": 0.00010318000000000001,
+    "outputUsd": 0.00036316,
+    "totalUsd": 0.00046634000000000004,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

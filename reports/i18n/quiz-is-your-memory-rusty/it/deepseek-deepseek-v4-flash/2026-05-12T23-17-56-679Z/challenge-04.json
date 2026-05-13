@@ -1,0 +1,49 @@
+{
+  "index": 3,
+  "attempt": 1,
+  "originalTitle": "Implicit Lifetimes",
+  "translatedTitle": "Vite implicite",
+  "translation": {
+    "title": "Vite implicite",
+    "group": "Elisione della durata",
+    "options": [
+      {
+        "text": "Compila con successo"
+      },
+      {
+        "text": "Errore: specificatore di durata mancante",
+        "hint": "Ricorda le regole di elisione della durata - sono qui per aiutarti!"
+      },
+      {
+        "text": "Errore: durata esplicita richiesta",
+        "hint": "Il compilatore può risolvere questo automaticamente"
+      },
+      {
+        "text": "Errore: disallineamento della durata",
+        "hint": "Le durate si allineano perfettamente qui"
+      }
+    ],
+    "questionProse": [
+      "Questo codice compilerà? Se sì, perché? Se no, cosa c'è che non va?"
+    ],
+    "explanationProse": [
+      "Questo codice compila con successo grazie alle regole di elisione della durata di Rust. \n      Queste regole permettono al compilatore di dedurre automaticamente le durate nei pattern comuni.\n\n      Le tre regole di elisione della durata sono:\n      1. Ogni parametro ottiene il proprio parametro di durata\n      2. Se c'è esattamente un parametro di durata in input, quella durata viene assegnata a tutti i parametri di durata in output\n      3. Se ci sono più parametri di durata in input, ma uno di essi è &self o &mut self, la durata di self viene assegnata a tutti i parametri di durata in output\n\n      Questa funzione è equivalente a:",
+      "Pattern comuni dove l'elisione funziona:",
+      "Buona pratica: lascia che l'elisione lavori per te quando possibile, ma capisci quando sono necessarie durate esplicite."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Vite implicite\",\n  \"group\": \"Elisione della durata\",\n  \"options\": [\n    {\n      \"text\": \"Compila con successo\"\n    },\n    {\n      \"text\": \"Errore: specificatore di durata mancante\",\n      \"hint\": \"Ricorda le regole di elisione della durata - sono qui per aiutarti!\"\n    },\n    {\n      \"text\": \"Errore: durata esplicita richiesta\",\n      \"hint\": \"Il compilatore può risolvere questo automaticamente\"\n    },\n    {\n      \"text\": \"Errore: disallineamento della durata\",\n      \"hint\": \"Le durate si allineano perfettamente qui\"\n    }\n  ],\n  \"questionProse\": [\n    \"Questo codice compilerà? Se sì, perché? Se no, cosa c'è che non va?\"\n  ],\n  \"explanationProse\": [\n    \"Questo codice compila con successo grazie alle regole di elisione della durata di Rust. \\n      Queste regole permettono al compilatore di dedurre automaticamente le durate nei pattern comuni.\\n\\n      Le tre regole di elisione della durata sono:\\n      1. Ogni parametro ottiene il proprio parametro di durata\\n      2. Se c'è esattamente un parametro di durata in input, quella durata viene assegnata a tutti i parametri di durata in output\\n      3. Se ci sono più parametri di durata in input, ma uno di essi è &self o &mut self, la durata di self viene assegnata a tutti i parametri di durata in output\\n\\n      Questa funzione è equivalente a:\",\n    \"Pattern comuni dove l'elisione funziona:\",\n    \"Buona pratica: lascia che l'elisione lavori per te quando possibile, ma capisci quando sono necessarie durate esplicite.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 894,
+    "outputTokens": 2047,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 117367
+  },
+  "cost": {
+    "inputUsd": 0.00012516000000000003,
+    "outputUsd": 0.0005731600000000001,
+    "totalUsd": 0.0006983200000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

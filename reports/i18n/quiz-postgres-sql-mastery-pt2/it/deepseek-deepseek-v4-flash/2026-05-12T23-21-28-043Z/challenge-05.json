@@ -1,0 +1,31 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Hash Join Eligibility",
+  "translatedTitle": "Idoneità per Hash Join",
+  "translation": {
+    "title": "Idoneità per Hash Join",
+    "group": "Meccanismi Interni di SQL",
+    "options": [],
+    "questionProse": [
+      "Quale condizione `ON` può usare PostgreSQL per un `HASH JOIN`?"
+    ],
+    "explanationProse": [
+      "Un hash join è possibile con una condizione di uguaglianza (`=`) nella clausola `ON`.\n\n    - `=` è la forma del predicato chiave per gli hash join\n    - `>` e `>=` non sono predicati per hash join\n    - `HASH JOIN` non è una sintassi valida in PostgreSQL\n\n    Il planner può comunque scegliere un nested loop o un merge join in base alla dimensione delle tabelle, alle statistiche, agli indici e alle impostazioni di memoria."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Idoneità per Hash Join\",\n  \"group\": \"Meccanismi Interni di SQL\",\n  \"options\": [],\n  \"questionProse\": [\n    \"Quale condizione `ON` può usare PostgreSQL per un `HASH JOIN`?\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"sql\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"explanationProse\": [\n    \"Un hash join è possibile con una condizione di uguaglianza (`=`) nella clausola `ON`.\\n\\n    - `=` è la forma del predicato chiave per gli hash join\\n    - `>` e `>=` non sono predicati per hash join\\n    - `HASH JOIN` non è una sintassi valida in PostgreSQL\\n\\n    Il planner può comunque scegliere un nested loop o un merge join in base alla dimensione delle tabelle, alle statistiche, agli indici e alle impostazioni di memoria.\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 713,
+    "outputTokens": 808,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 4815
+  },
+  "cost": {
+    "inputUsd": 0.00009982,
+    "outputUsd": 0.00022624000000000003,
+    "totalUsd": 0.00032606000000000003,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
