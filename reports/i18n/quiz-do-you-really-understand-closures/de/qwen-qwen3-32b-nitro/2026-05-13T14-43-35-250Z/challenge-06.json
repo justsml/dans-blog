@@ -1,0 +1,44 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Stale Closure in React",
+  "translatedTitle": "Veraltete Closure in React",
+  "translation": {
+    "title": "Veraltete Closure in React",
+    "group": "Fortgeschritten",
+    "options": [
+      {
+        "text": "Gibt den aktuellen Zählerstand bei jedem Klick aus"
+      },
+      {
+        "text": "Gibt immer 0 aus"
+      },
+      {
+        "text": "Gibt NaN aus"
+      },
+      {
+        "text": "Dieser Code wird nicht kompilieren"
+      }
+    ],
+    "questionProse": [
+      "Welches Verhalten zeigt dieser React-Component, wenn die Schaltfläche mehrmals angeklickt wird?"
+    ],
+    "explanationProse": [
+      "Klassische veraltete Closure. Der `useEffect` läuft einmal (leeres Abhängigkeitsarray) und erstellt ein Intervall, das den `count` in dem Zustand einfängt, wie er beim Mounten war: `0`. Egal, wie oft Sie klicken, die Closure des Intervalls sieht den aktualisierten Wert nie.\n\nDie Schaltflächenbezeichnung wird korrekt aktualisiert – das ist ein neuer Rendern. Aber `console.log` bleibt für immer bei `0` gefangen.\n\nBeheben Sie das Problem, indem Sie `count` in das Abhängigkeitsarray aufnehmen (erstellt das Intervall neu) oder einen Ref verwenden:"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Veraltete Closure in React\",\n  \"group\": \"Fortgeschritten\",\n  \"options\": [\n    {\n      \"text\": \"Gibt den aktuellen Zählerstand bei jedem Klick aus\"\n    },\n    {\n      \"text\": \"Gibt immer 0 aus\"\n    },\n    {\n      \"text\": \"Gibt NaN aus\"\n    },\n    {\n      \"text\": \"Dieser Code wird nicht kompilieren\"\n    }\n  ],\n  \"questionProse\": [\n    \"Welches Verhalten zeigt dieser React-Component, wenn die Schaltfläche mehrmals angeklickt wird?\"\n  ],\n  \"explanationProse\": [\n    \"Klassische veraltete Closure. Der `useEffect` läuft einmal (leeres Abhängigkeitsarray) und erstellt ein Intervall, das den `count` in dem Zustand einfängt, wie er beim Mounten war: `0`. Egal, wie oft Sie klicken, die Closure des Intervalls sieht den aktualisierten Wert nie.\\n\\nDie Schaltflächenbezeichnung wird korrekt aktualisiert – das ist ein neuer Rendern. Aber `console.log` bleibt für immer bei `0` gefangen.\\n\\nBeheben Sie das Problem, indem Sie `count` in das Abhängigkeitsarray aufnehmen (erstellt das Intervall neu) oder einen Ref verwenden:\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 807,
+    "outputTokens": 1178,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2633
+  },
+  "cost": {
+    "inputUsd": 0.00006456,
+    "outputUsd": 0.00028272,
+    "totalUsd": 0.00034728,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

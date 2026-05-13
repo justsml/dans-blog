@@ -1,0 +1,44 @@
+{
+  "index": 1,
+  "attempt": 1,
+  "originalTitle": "Separate Closures",
+  "translatedTitle": "Getrennte Closures",
+  "translation": {
+    "title": "Getrennte Closures",
+    "group": "Aufwärmen",
+    "options": [
+      {
+        "text": "1, 1"
+      },
+      {
+        "text": "1, 2"
+      },
+      {
+        "text": "2, 2"
+      },
+      {
+        "text": "0, 0"
+      }
+    ],
+    "questionProse": [
+      "Was gibt dies aus?"
+    ],
+    "explanationProse": [
+      "Jeder Aufruf von `makeCounter()` erstellt einen **neuen Ausführungskontext** mit einem eigenen frischen `count`. `a` und `b` greifen auf *unterschiedliche* `count`-Zuweisungen zu. Sie teilen sich keinen Zustand.\n\n    Ergebnis: `1, 1`\n\n    Aus diesem Grund werden Closures verwendet, um privaten Zustand zu erstellen — jede \"Instanz\" ist unabhängig."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Getrennte Closures\",\n  \"group\": \"Aufwärmen\",\n  \"options\": [\n    {\n      \"text\": \"1, 1\"\n    },\n    {\n      \"text\": \"1, 2\"\n    },\n    {\n      \"text\": \"2, 2\"\n    },\n    {\n      \"text\": \"0, 0\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was gibt dies aus?\"\n  ],\n  \"explanationProse\": [\n    \"Jeder Aufruf von `makeCounter()` erstellt einen **neuen Ausführungskontext** mit einem eigenen frischen `count`. `a` und `b` greifen auf *unterschiedliche* `count`-Zuweisungen zu. Sie teilen sich keinen Zustand.\\n\\n    Ergebnis: `1, 1`\\n\\n    Aus diesem Grund werden Closures verwendet, um privaten Zustand zu erstellen — jede \\\"Instanz\\\" ist unabhängig.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 739,
+    "outputTokens": 899,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2147
+  },
+  "cost": {
+    "inputUsd": 0.000059119999999999996,
+    "outputUsd": 0.00021575999999999998,
+    "totalUsd": 0.00027487999999999997,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

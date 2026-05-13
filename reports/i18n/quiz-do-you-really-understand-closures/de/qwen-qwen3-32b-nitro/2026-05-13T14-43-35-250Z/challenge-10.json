@@ -1,0 +1,44 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Memoization via Closure",
+  "translatedTitle": "Memoisierung über Closure",
+  "translation": {
+    "title": "Memoisierung über Closure",
+    "group": "Bonus",
+    "options": [
+      {
+        "text": "Ruft expensive() 3-mal auf"
+      },
+      {
+        "text": "Ruft expensive() 1-mal auf"
+      },
+      {
+        "text": "Ruft expensive() 2-mal auf"
+      },
+      {
+        "text": "Wirft: Maximale Aufrufstacktiefe überschritten"
+      }
+    ],
+    "questionProse": [
+      "Wie oft wird `expensive()` tatsächlich aufgerufen?"
+    ],
+    "explanationProse": [
+      "Die gememoisierte Funktion schließt über `cache`. Der erste Aufruf (`fast(5)`) verfehlt den Cache, ruft `expensive` auf und speichert das Ergebnis. Die zweiten und dritten Aufrufe treffen den Cache und geben sofort zurück.\n\n`calls` ist `1`.\n\nDas sind Closures, die echte Arbeit leisten. `cache` ist privat (nicht von außen auf `memoize` zugreifbar), persistent (so lange wie `fast` existiert) und wird über alle Aufrufe von `fast` geteilt."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Memoisierung über Closure\",\n  \"group\": \"Bonus\",\n  \"options\": [\n    {\n      \"text\": \"Ruft expensive() 3-mal auf\"\n    },\n    {\n      \"text\": \"Ruft expensive() 1-mal auf\"\n    },\n    {\n      \"text\": \"Ruft expensive() 2-mal auf\"\n    },\n    {\n      \"text\": \"Wirft: Maximale Aufrufstacktiefe überschritten\"\n    }\n  ],\n  \"questionProse\": [\n    \"Wie oft wird `expensive()` tatsächlich aufgerufen?\"\n  ],\n  \"explanationProse\": [\n    \"Die gememoisierte Funktion schließt über `cache`. Der erste Aufruf (`fast(5)`) verfehlt den Cache, ruft `expensive` auf und speichert das Ergebnis. Die zweiten und dritten Aufrufe treffen den Cache und geben sofort zurück.\\n\\n`calls` ist `1`.\\n\\nDas sind Closures, die echte Arbeit leisten. `cache` ist privat (nicht von außen auf `memoize` zugreifbar), persistent (so lange wie `fast` existiert) und wird über alle Aufrufe von `fast` geteilt.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 780,
+    "outputTokens": 758,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1915
+  },
+  "cost": {
+    "inputUsd": 0.0000624,
+    "outputUsd": 0.00018192,
+    "totalUsd": 0.00024432,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

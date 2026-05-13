@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-do-you-really-understand-closures
+- Locale: de
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-05-05--quiz-do-you-really-understand-closures/de/index.mdx
+- Validation: passed
+- Runtime seconds: 33.15
+- Input tokens: 10191
+- Output tokens: 10697
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.003383
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: 'Quiz: Kennen Sie JavaScript-Closures?'
 subTitle: ''
@@ -460,3 +478,4 @@ Wie hast du dich geschlagen?
 - **0-2**: Sie dachten, Sie würden Closures verstehen. Jetzt tun Sie es. Das ist der Punkt.
 
 Die veraltete Closure in React (#6) und die `this`-Falle (#8) sind diejenigen, die echte Produktionsfehler verursachen. Wenn Ihnen diese unvertraut waren, lohnt es sich, sie nochmals zu betrachten – sie tauchen in Code-Reviews häufiger auf als jede andere Closure-bezogene Problematik.
+````

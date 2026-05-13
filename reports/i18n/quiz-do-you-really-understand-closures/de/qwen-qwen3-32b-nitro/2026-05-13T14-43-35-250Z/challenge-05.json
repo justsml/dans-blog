@@ -1,0 +1,44 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Object Mutation",
+  "translatedTitle": "Objektmutation",
+  "translation": {
+    "title": "Objektmutation",
+    "group": "Closures & Objekte",
+    "options": [
+      {
+        "text": "{ x: 1 }, { x: 1 }"
+      },
+      {
+        "text": "{ x: 1 }, { x: 99 }"
+      },
+      {
+        "text": "{ x: 99 }, { x: 99 }"
+      },
+      {
+        "text": "{ x: 99 }, { x: 1 }"
+      }
+    ],
+    "questionProse": [
+      "Was wird hier geloggt?"
+    ],
+    "explanationProse": [
+      "Der Closure fängt die **Bindung** `obj` ein, nicht einen Snapshot des Objekts. Das Objekt selbst wird nach Erstellung des Closures mutiert – `obj` zeigt aber weiterhin auf dieselbe Referenz. Beide Aufrufe geben dasselbe mutierte Objekt zurück: `{ x: 99 }`.\n\nDiese Fallstrick trifft Entwickler, die annehmen, Closures \"frören\" Werte ein. Das tun sie nicht. Sie fangen **Referenzen** ein."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Objektmutation\",\n  \"group\": \"Closures & Objekte\",\n  \"options\": [\n    {\n      \"text\": \"{ x: 1 }, { x: 1 }\"\n    },\n    {\n      \"text\": \"{ x: 1 }, { x: 99 }\"\n    },\n    {\n      \"text\": \"{ x: 99 }, { x: 99 }\"\n    },\n    {\n      \"text\": \"{ x: 99 }, { x: 1 }\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was wird hier geloggt?\"\n  ],\n  \"explanationProse\": [\n    \"Der Closure fängt die **Bindung** `obj` ein, nicht einen Snapshot des Objekts. Das Objekt selbst wird nach Erstellung des Closures mutiert – `obj` zeigt aber weiterhin auf dieselbe Referenz. Beide Aufrufe geben dasselbe mutierte Objekt zurück: `{ x: 99 }`.\\n\\nDiese Fallstrick trifft Entwickler, die annehmen, Closures \\\"frören\\\" Werte ein. Das tun sie nicht. Sie fangen **Referenzen** ein.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 775,
+    "outputTokens": 704,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1849
+  },
+  "cost": {
+    "inputUsd": 0.000062,
+    "outputUsd": 0.00016895999999999998,
+    "totalUsd": 0.00023096,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
