@@ -1,0 +1,44 @@
+{
+  "index": 13,
+  "attempt": 1,
+  "originalTitle": "Zero-Specificity Selectors",
+  "translatedTitle": "Селекторы с нулевой специфичностью",
+  "translation": {
+    "title": "Селекторы с нулевой специфичностью",
+    "group": "Селектор: Специфичность",
+    "options": [
+      {
+        "text": ":where(.card) .title"
+      },
+      {
+        "text": ".card .title"
+      },
+      {
+        "text": ":is(.card) .title"
+      },
+      {
+        "text": "#card .title"
+      }
+    ],
+    "questionProse": [
+      "Какой селектор имеет наименьшую специфичность?"
+    ],
+    "explanationProse": [
+      "`:where(.card) .title` имеет наименьшую специфичность. Псевдокласс `:where()` и всё его содержимое вносят `0-0-0`, поэтому учитывается только `.title`. `:is(.card) .title` сохраняет специфичность `.card`, `.card .title` содержит два класса, а `#card .title` включает ID."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Селекторы с нулевой специфичностью\",\n  \"group\": \"Селектор: Специфичность\",\n  \"options\": [\n    {\n      \"text\": \":where(.card) .title\"\n    },\n    {\n      \"text\": \".card .title\"\n    },\n    {\n      \"text\": \":is(.card) .title\"\n    },\n    {\n      \"text\": \"#card .title\"\n    }\n  ],\n  \"questionProse\": [\n    \"Какой селектор имеет наименьшую специфичность?\"\n  ],\n  \"explanationProse\": [\n    \"`:where(.card) .title` имеет наименьшую специфичность. Псевдокласс `:where()` и всё его содержимое вносят `0-0-0`, поэтому учитывается только `.title`. `:is(.card) .title` сохраняет специфичность `.card`, `.card .title` содержит два класса, а `#card .title` включает ID.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 673,
+    "outputTokens": 690,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1732
+  },
+  "cost": {
+    "inputUsd": 0.00005384,
+    "outputUsd": 0.0001656,
+    "totalUsd": 0.00021944,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
