@@ -1,0 +1,37 @@
+{
+  "selectedCommit": "284eaf59ac788c35bdffb6de177f5888c1461917",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 10,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The selected candidate provides a high-quality translation that respects technical terminology (using 'container' instead of 'contenitore') and maintains the author's informal yet direct style. It correctly handles the MDX frontmatter and preserves the specific ':allthethings:' placeholder. The previous suggestion to change 'in un seguito' to 'in un post successivo' has already been incorporated into the current MDX content provided in the prompt, so no further high-priority suggestions are required.",
+  "slug": "docker-makes-everything-better",
+  "locale": "it",
+  "candidateCommits": [
+    "284eaf59ac788c35bdffb6de177f5888c1461917",
+    "0992ba656e87b83ed497bc628e2edc1e068936f1"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "scriverò come realizzarlo concretamente in un seguito",
+      "replacement": "scriverò come realizzarlo concretamente in un post successivo",
+      "reason": "'In un seguito' is a bit literal; 'in un post successivo' or 'in seguito' is more natural for a blog context.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug docker-makes-everything-better --locale it --skip-global",
+    "output": ""
+  }
+}

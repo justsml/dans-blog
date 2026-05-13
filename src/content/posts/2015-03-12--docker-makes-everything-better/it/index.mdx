@@ -1,7 +1,7 @@
 ---
 social_image: ../desktop-social.webp
 title: Docker === Amore
-subTitle: Docker può fare di tutto!
+subTitle: 'Docker può fare di tutto :allthethings:!'
 date: '2015-02-26'
 modified: '2024-07-30'
 category: DevOps
@@ -18,47 +18,47 @@ cover: ../guillaume-bolduc-259596-unsplash.webp
 cover_mobile: ../w300_guillaume-bolduc-259596-unsplash.webp
 cover_icon: ../icon_guillaume-bolduc-259596-unsplash.webp
 ---
-## Docker Può Fare Tutto!\*
+## Docker può fare tutto!\*
 
-> Nota storica: questo è uno snapshot del 2015 sull'entusiasmo per Docker e sugli abiti di sviluppo locale, conservato principalmente come capsula del tempo. Tratta i comandi e la postura di sicurezza come punti di partenza da modernizzare, non come guida per ambienti di produzione.
+> Nota storica: questo è uno snapshot del 2015 sull’entusiasmo per Docker e le abitudini di sviluppo locale, conservato principalmente come capsula del tempo. Tratta i comandi e la postura di sicurezza come punti di partenza da modernizzare, non come linee guida per la produzione.
 
 Migliora il tuo processo per:
 
-1.  Testare strumenti e server di sviluppo CON UN RISCHIO QUASI NULLA di rompere le dipendenze sul tuo PC  
-1.  Testare il tuo software  
-1.  Ti costringe a scrivere codice più idempotente e modulare... (scrivereò come realizzarlo effettivamente in un follow-up)
+1.  Testare strumenti di sviluppo e server CON PRATICAMENTE ZERO rischio di compromettere le dipendenze sul tuo PC
+1.  Testare il tuo software
+1.  Ti spinge a scrivere codice più idempotente e modulare… (scriverò come realizzarlo concretamente in un seguito)
 
-Potrebbe sembrare un'enorme quantità di nuove cose da imparare, **non permettere che questo ti fermi** dal cominciare.
+Potrebbe sembrare un’enorme quantità di novità da apprendere, **non lasciarti fermare** dal voler iniziare.
 
 ### Note
 
-- Se vedi un comando `docker run` con le opzioni `-d` o `-it`:  
-  _ `-it` o `-i -t` eseguirà il comando configurato in modo interattivo  
-  _ `-d` avvierà il contenitore Docker come 'demone' ovvero servizio in background.  
+- Se trovi un comando `docker run` con le opzioni `-d` o `-it`:
+  _ `-it` o `-i -t` eseguirà il comando configurato in modalità interattiva  
+  _ `-d` avvierà il container Docker come “daemon”, cioè servizio in background.
 
 ---
 
-### ESEMPI  
+### ESEMPI
 
-### nginx  
+### nginx
 
 ```bash
-# Nota: utilizzo di cartelle condivise con l'host  
-# (le cartelle condivise non sono possibili con il comando VOLUME del Dockerfile)  
-sudo docker run --name web01 -d -p 8181:80 \  
-  -v $(NGINX_DIR)/etc:/etc/nginx \  
-  -v $(NGINX_DIR)/log:/var/log/nginx \  
-  -v $(NGINX_DIR)/www:/var/www/html \  
-  nginx:latest  
+# Nota: utilizzo di cartelle condivise basate sull'host
+#(le cartelle condivise non sono possibili con il comando VOLUME nel Dockerfile)
+sudo docker run --name web01 -d -p 8181:80 \
+  -v $(NGINX_DIR)/etc:/etc/nginx \
+  -v $(NGINX_DIR)/log:/var/log/nginx \
+  -v $(NGINX_DIR)/www:/var/www/html \
+  nginx:latest
 
-## Dati locali, isolati all'interno dell'istanza  
-sudo docker run --name web01 -d -p 8181:80 nginx:latest  
+## Dati locali, isolati all'interno dell'istanza
+sudo docker run --name web01 -d -p 8181:80 nginx:latest
 
-# nodejs  
-sudo docker run --name nodejs01 -d -p 3300:3300 -p 4433:4433 nodejs:latest  
-```  
+# nodejs
+sudo docker run --name nodejs01 -d -p 3300:3300 -p 4433:4433 nodejs:latest
+```
 
-> Credits: [https://dockerfile.github.io/#/nginx](https://dockerfile.github.io/#/nginx)  
-> Docker semplificherà la tua vita durante l'_intero_ ciclo di vita dello sviluppo del software.  
+> Crediti: [https://dockerfile.github.io/#/nginx](https://dockerfile.github.io/#/nginx)  
+> Docker renderà la tua vita più semplice lungo l'intero ciclo di vita del software.
 
 > - Abbastanza vicino
