@@ -1,0 +1,32 @@
+{
+  "selectedCommit": "243137a001634c1ea459c8d9ae516f576772f319",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 10,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "This candidate provides the most natural and technically accurate translation. It correctly translates 'shell access' as 'acceso a la terminal' (or shell) consistently, and maintains the direct, instructional tone of the original. It preserves all MDX structures and heading levels perfectly. Other candidates had minor issues with consistency or used slightly more robotic phrasing in the technical sections.",
+  "slug": "securing-clawdbot-tailscale",
+  "locale": "es",
+  "candidateCommits": [
+    "243137a001634c1ea459c8d9ae516f576772f319",
+    "9555d8364fda5150e079a9abb883663b9039a2d8",
+    "b0cf226a026a588458c2ce732e2575fc42e452ae",
+    "4e65eada9ae0ca646bdc518ba8f58ed53906dc31",
+    "c2d5682749a2d74571d339c6b304ada152526ddd",
+    "0833a7dbfc66380bbef4073f6001340e549b7b35",
+    "3a87e7577db256583fb21a238574651464a06e4a"
+  ],
+  "suggestionLog": [],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug securing-clawdbot-tailscale --locale es --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug securing-clawdbot-tailscale --locale es --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug securing-clawdbot-tailscale --locale es --skip-global\n207 |     ...targetContents.matchAll(/=[\"']\\.\\/(?!\\.)[^\"']+\\.(?:avif|gif|jpe?g|png|svg|webp)[\"']/g),\n208 |   ];\n209 | \n210 |   if (nestedAssetReferences.length === 0) return;\n211 | \n212 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2026-01-26--securing-clawdbot-tailscale/es/index.mdx uses ./ asset paths inside a locale folder. Use ../ for inherited post assets.\n      at assertNestedAssetPaths (/Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:212:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}
