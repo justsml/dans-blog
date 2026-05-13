@@ -1,0 +1,138 @@
+# Translation Candidate
+- Slug: visualizing-promises
+- Locale: ja
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2018-09-30--visualizing-promises/ja/index.mdx
+- Validation: rejected: direct AI SDK translation failed
+- Runtime seconds: 2.86
+- Input tokens: 4902
+- Output tokens: 1482
+- Thinking tokens: unknown
+- Cached input tokens: 1536
+- Cache write tokens: 0
+- Estimated cost: $0.000458
+- Pricing source: local-openrouter-estimate
+- Note: Command failed: bun run i18n:validate --slug visualizing-promises --locale ja
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: Promise の可視化
+subTitle: 突き抜けろ…
+date: '2018-09-30'
+modified: '2024-07-30'
+category: Guides
+subCategory: promises
+cover: ../junior-ferreira-735237-unsplash.webp
+cover_mobile: ../w300_junior-ferreira-735237-unsplash.webp
+cover_icon: ../icon_junior-ferreira-735237-unsplash.webp
+tags:
+  - promises
+  - async
+  - visualizing
+  - javascript
+  - composition
+related:
+  - intro-to-promises
+  - promise-gotchas
+  - stop-trying-to-make-async-await-happen
+  - javascript-promises-quiz
+---
+Promise の実行タイミングを可視化するために、`delay(millisecs)` という新しいメソッドを定義しましょう。
+
+```js
+function delay(millisecs) {
+  return new Promise(resolve => {
+    setTimeout(() => resolve(millisecs), millisecs);
+  });
+}
+```
+
+このユーティリティは、タイムアウトが経過した時点で解決されます。
+
+`delay` に渡したミリ秒数は、`.then` のコールバックへ引数として渡されます。
+
+4 つの例（アニメーション付きタイムライン）を見てみます。
+
+## Example #1/4
+
+`console.log()` の実行が `delay(msec)` によって遅延される様子を示します。
+
+```js
+delay(1000).then(() => console.log("done"));
+```
+
+![1秒後に delay 1000 が完了し、console.log が実行されるタイムライン](../N_1000ms_log.webp)
+
+<!-- ```
+delay(1000) --------|.then(fn)
+                    | console.log('done')
+|-------------------|--------------------|--------------------|-----------------
+0msec             1sec                 2sec                 3sec
+``` -->
+
+## Example #2/4
+
+_これはよくある間違いです。_
+
+`console.log` は `delay(1000)` が **開始** した瞬間に実行されます。遅延 **後** に実行されるはずだったのとは逆です。
+
+`console.log` が `undefined` を返すため、`.then()` は黙って無視されます。
+
+`typeof console.log === 'function'` と `typeof console.log() === undefined` の違いに注意してください。
+
+`console.log` の推奨される使い方は例 #1に示した通りです。`.then` と `.catch` には必ず関数を渡すようにします。
+
+```js
+delay(1000).then(console.log("done"));
+```
+
+![Timeline showing console log running immediately before the delay finishes](../N_1000ms_!log.webp)
+
+## Example #3/4
+
+3 つの Promise が同時に実行されます。
+
+```js
+delay(1000).then(console.log);
+delay(2000).then(console.log);
+delay(3000).then(console.log);
+```
+
+![3 つの delay Promise が 1 秒、2 秒、3 秒後に解決するタイムライン](../N_3000ms.webp)
+
+<!-- ```
+delay(1000) ------|.then(console.log)
+delay(2000) ------|--------------------|.then(console.log)
+delay(3000) ------|--------------------|--------------------|.then(console.log)
+|-----------------|--------------------|--------------------|-------------------
+|                 |                    |                    |
+0msec           1sec                 2sec                 3sec
+``` -->
+
+## Example #4/4
+
+3 つの `delay` Promise を `Promise.all` でまとめます。すべて同時に実行されます。
+
+```js
+Promise.all([delay(1000), delay(2000), delay(3000)]).then(console.log);
+```
+
+![Promise.all が 3 つの delay Promise の完了を待つタイムライン](../N_3000ms_PromiseAll.webp)
+
+```
+delay(1000) ---| [resolved]------------------v
+delay(2000) ---|--------------| [resolved]---v
+delay(3000) ---|--------------|--------------v [resolved]
+Promise.all()  |--------------|-------------- > console.log([1000, 2000, 3000])
+|--------------|--------------|--------------|--------------------------------
+|              |              |              |
+0msec        1sec           2sec           3sec
+```
+
+> クレジット:
+> 
+> - アニメーション非同期ダイアグラム作成者: [Patrick Biffle](https://github.com/Piglacquer)
+> - 本記事のインスピレーション: https://pouchdb.com/2015/05/18/we-have-a-problem-with-promises.html
+````
