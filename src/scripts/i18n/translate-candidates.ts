@@ -55,6 +55,7 @@ const quizConcurrency = optionalString(options, "quiz-concurrency");
 const challengeRetries = optionalString(options, "challenge-retries");
 const { sourcePath, targetPath, reportDir } = getPostPaths(slug, locale);
 const targetRelPath = relativeToRepo(targetPath);
+const candidatesPath = join(reportDir, "candidates.jsonl");
 
 mkdirSync(dirname(targetPath), { recursive: true });
 
@@ -69,6 +70,7 @@ for (const model of models) {
   }
 
   const preRunChangedPaths = getChangedPaths();
+  const preRunCandidatesJsonl = existsSync(candidatesPath) ? readFileSync(candidatesPath, "utf8") : undefined;
   const startedAt = Date.now();
   try {
     runDirectTranslation(model);
@@ -106,6 +108,7 @@ for (const model of models) {
   } catch (error) {
     cleanupRejectedTarget();
     cleanupNewGeneratedReports(preRunChangedPaths, reportPath);
+    restoreCandidateIndex(preRunCandidatesJsonl);
     writeCandidateReport({
       reportPath,
       model,
@@ -227,6 +230,15 @@ function cleanupNewGeneratedReports(preRunChangedPaths: Set<string>, reportPath:
     if (pathExistsInHead(path)) continue;
     rmSync(join(process.cwd(), path), { recursive: true, force: true });
   }
+}
+
+function restoreCandidateIndex(previousContents: string | undefined) {
+  if (previousContents == null) {
+    rmSync(candidatesPath, { force: true });
+    return;
+  }
+
+  writeTextFile(candidatesPath, previousContents);
 }
 
 function getChangedPaths() {
