@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: llm-connection-strings
+- Locale: ja
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-01-30--llm-connection-strings/ja/index.mdx
+- Validation: deferred
+- Runtime seconds: 31.85
+- Input tokens: 6078
+- Output tokens: 4840
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.001648
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: LLM接続文字列の時代です
 subTitle: ''
@@ -113,3 +131,4 @@ bedrock://us-west-2.aws/anthropic/sonnet-4.5?temp=0.8&cacheControl=ephemeral
 ![散らかったenv変数の引き出しが](../hero-concept-8-drawers.webp)
 
 {/* ¹ はい、`URI`が`URL`より正確なことは承知しています。この区別に神経質になるほど気を遣える方は、ぜひ草を踏んでください。 */}
+````
