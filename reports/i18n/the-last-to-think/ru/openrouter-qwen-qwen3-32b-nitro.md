@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: the-last-to-think
+- Locale: ru
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2025-05-31--the-last-to-think/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 4.28
+- Input tokens: 1896
+- Output tokens: 2008
+- Thinking tokens: unknown
+- Cached input tokens: 512
+- Cache write tokens: 0
+- Estimated cost: $0.000634
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 language: English
 title: 'Последние, кто думает'
@@ -33,3 +51,4 @@ cover_icon: ../banner-thinking-decay-square-200.webp
 <p> </p>
 
 * _Предполагая, что мы улучшим экологическое воздействие и избежим антиутопического кошмара. Но это тема для другого разговора._
+````
