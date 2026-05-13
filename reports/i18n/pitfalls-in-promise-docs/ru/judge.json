@@ -1,0 +1,62 @@
+{
+  "selectedCommit": "4091fae596da82326b690438c8c6a92a106fd271",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 9,
+    "relevance": 9,
+    "translationQuality": 9,
+    "mdxPreservation": 9
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "![q first example](qlibrary-1.webp)",
+      "replacement": "![q first example](../qlibrary-1.webp)",
+      "reason": "Image path is missing the '../' prefix required for localized content in the ru/ subfolder to correctly reference assets in the parent folder."
+    }
+  ],
+  "rationale": "The selected candidate provides a high-quality, natural translation of technical terms (e.g., 'Подводные камни' for 'Pitfalls'). It correctly identifies that images in the localized directory need the '../' prefix. One image path was missed in the candidate, which is addressed in the suggestions.",
+  "slug": "pitfalls-in-promise-docs",
+  "locale": "ru",
+  "candidateCommits": [
+    "4091fae596da82326b690438c8c6a92a106fd271",
+    "5b157f4d5de18eab56b6696766a312f7611f9825"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "![q first example](../qlibrary-1.webp)",
+      "replacement": "![q first example](qlibrary-1.webp)",
+      "reason": "The current directory structure for images in the Q Library section should match the relative pathing used in the original or be consistent with the other images. However, looking at the current file, the images qlibrary-1.webp and qlibrary-2.webp are missing the '../' prefix compared to others. They should likely be consistent.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "Bottom line:",
+      "replacement": "В итоге:",
+      "reason": "Translate 'Bottom line' to maintain the Russian flow of the text.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "![q first example](qlibrary-1.webp)",
+      "replacement": "![q first example](../qlibrary-1.webp)",
+      "reason": "Image path is missing the '../' prefix required for localized content in the ru/ subfolder to correctly reference assets in the parent folder.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug pitfalls-in-promise-docs --locale ru --skip-global",
+    "output": ""
+  }
+}
