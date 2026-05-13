@@ -1,0 +1,42 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Using `.map(parseInt)`",
+  "translatedTitle": "Usar `.map(parseInt)`",
+  "translation": {
+    "title": "Usar `.map(parseInt)`",
+    "group": "Number[]",
+    "options": [
+      {
+        "text": "[24, NaN, NaN]"
+      },
+      {
+        "text": "[24, NaN, 42]"
+      },
+      {
+        "text": "[24, 42]"
+      },
+      {
+        "text": "NaN"
+      }
+    ],
+    "questionProse": [],
+    "explanationProse": [
+      "El segundo argumento de `parseInt` (la base numérica) se alinea con el argumento `index` de los métodos de array. Esto genera resultados inesperados, ya que `parseInt(\"One\", 1)` devuelve `NaN` debido a una entrada inválida.\n\n    El primer elemento, `24`, se analiza como `24` en base 0 (detección automática), por lo que se mantiene igual. El segundo elemento, `'One'`, se analiza como `NaN` en base 1. El tercer elemento, `42`, se analiza usando base 2. En base 2, `'42'` es `NaN`, así que el resultado es `[24, NaN, NaN]`.\n\n    Esta es una trampa clásica al usar `parseInt` con `map`. Si deseas convertir un array de strings a números, el único método \"integrado\" seguro es `.map(Number)` o agregar un callback como `.map(x => parseInt(x, 10))`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Usar `.map(parseInt)`\",\n  \"group\": \"Number[]\",\n  \"options\": [\n    {\n      \"text\": \"[24, NaN, NaN]\"\n    },\n    {\n      \"text\": \"[24, NaN, 42]\"\n    },\n    {\n      \"text\": \"[24, 42]\"\n    },\n    {\n      \"text\": \"NaN\"\n    }\n  ],\n  \"questionProse\": [],\n  \"explanationProse\": [\n    \"El segundo argumento de `parseInt` (la base numérica) se alinea con el argumento `index` de los métodos de array. Esto genera resultados inesperados, ya que `parseInt(\\\"One\\\", 1)` devuelve `NaN` debido a una entrada inválida.\\n\\n    El primer elemento, `24`, se analiza como `24` en base 0 (detección automática), por lo que se mantiene igual. El segundo elemento, `'One'`, se analiza como `NaN` en base 1. El tercer elemento, `42`, se analiza usando base 2. En base 2, `'42'` es `NaN`, así que el resultado es `[24, NaN, NaN]`.\\n\\n    Esta es una trampa clásica al usar `parseInt` con `map`. Si deseas convertir un array de strings a números, el único método \\\"integrado\\\" seguro es `.map(Number)` o agregar un callback como `.map(x => parseInt(x, 10))`.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 941,
+    "outputTokens": 4162,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 21472
+  },
+  "cost": {
+    "inputUsd": 0,
+    "outputUsd": 0,
+    "totalUsd": 0,
+    "pricingSource": "unknown"
+  }
+}
