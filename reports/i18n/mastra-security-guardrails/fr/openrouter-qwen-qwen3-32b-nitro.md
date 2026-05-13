@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: mastra-security-guardrails
+- Locale: fr
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-01-03--mastra-security-guardrails/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 17.32
+- Input tokens: 6054
+- Output tokens: 5948
+- Thinking tokens: unknown
+- Cached input tokens: 1024
+- Cache write tokens: 0
+- Estimated cost: $0.001912
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: L'IA en production est terrifiante (et comment y remédier)
 subTitle: ''
@@ -171,3 +189,4 @@ La plupart des problèmes de sécurité dans les systèmes d'IA en production ne
 2. **Sécurité & Contrôles** (Cet article)  
 3. [Intégrations MCP & Outils](/mastra-mcp-tool-integrations)  
 4. [Flux de travail & Mémoire](/mastra-workflows-memory)
+````
