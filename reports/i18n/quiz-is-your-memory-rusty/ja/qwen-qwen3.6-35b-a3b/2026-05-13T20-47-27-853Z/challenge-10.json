@@ -1,0 +1,47 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Cell vs RefCell",
+  "translatedTitle": "CellとRefCell",
+  "translation": {
+    "title": "CellとRefCell",
+    "group": "可変性",
+    "options": [
+      {
+        "text": "出力: 42, 43"
+      },
+      {
+        "text": "出力: 43, 43",
+        "hint": "Cell::get()は呼び出し時の値を返します"
+      },
+      {
+        "text": "コンパイルエラー",
+        "hint": "Cellはこの用途のために設計されています"
+      },
+      {
+        "text": "ランタイムパニック",
+        "hint": "Cellの操作はCopy型に対して常に安全です"
+      }
+    ],
+    "questionProse": [
+      "このコードはどのように出力されますか？"
+    ],
+    "explanationProse": [
+      "CellとRefCellは、内部可変性を実現するための異なる目的を持っています：\n      主な違い：\n        1. Cell:\n           - Copy型との相性が最良\n           - 借用APIが存在しない\n           - 値を常にコピーまたはムーブする\n        \n        2. RefCell:\n           - 任意の型で動作\n           - 借用APIを提供\n           - 実行時の借用チェックを行う\n\n      ベストプラクティス：\n      1. 単純なCopy型（数値、boolなど）にはCellを使用する\n      2. 中身を借用する必要がある場合はRefCellを使用する\n      3. Cell/RefCellを通じた変更は最小限に留める\n      4. なぜ内部可変性が必要なのかをドキュメント化する"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"CellとRefCell\",\n  \"group\": \"可変性\",\n  \"options\": [\n    {\n      \"text\": \"出力: 42, 43\"\n    },\n    {\n      \"text\": \"出力: 43, 43\",\n      \"hint\": \"Cell::get()は呼び出し時の値を返します\"\n    },\n    {\n      \"text\": \"コンパイルエラー\",\n      \"hint\": \"Cellはこの用途のために設計されています\"\n    },\n    {\n      \"text\": \"ランタイムパニック\",\n      \"hint\": \"Cellの操作はCopy型に対して常に安全です\"\n    }\n  ],\n  \"questionProse\": [\n    \"このコードはどのように出力されますか？\"\n  ],\n  \"explanationProse\": [\n    \"CellとRefCellは、内部可変性を実現するための異なる目的を持っています：\\n      主な違い：\\n        1. Cell:\\n           - Copy型との相性が最良\\n           - 借用APIが存在しない\\n           - 値を常にコピーまたはムーブする\\n        \\n        2. RefCell:\\n           - 任意の型で動作\\n           - 借用APIを提供\\n           - 実行時の借用チェックを行う\\n\\n      ベストプラクティス：\\n      1. 単純なCopy型（数値、boolなど）にはCellを使用する\\n      2. 中身を借用する必要がある場合はRefCellを使用する\\n      3. Cell/RefCellを通じた変更は最小限に留める\\n      4. なぜ内部可変性が必要なのかをドキュメント化する\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 967,
+    "outputTokens": 4391,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 19097
+  },
+  "cost": {
+    "inputUsd": 0,
+    "outputUsd": 0,
+    "totalUsd": 0,
+    "pricingSource": "unknown"
+  }
+}

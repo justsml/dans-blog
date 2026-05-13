@@ -1,0 +1,52 @@
+{
+  "index": 12,
+  "attempt": 1,
+  "originalTitle": "Arc and Mutex",
+  "translatedTitle": "ArcとMutex",
+  "translation": {
+    "title": "ArcとMutex",
+    "group": "スマートポインタ",
+    "options": [
+      {
+        "text": "出力: 42",
+        "hint": "このコードはprint文に到達しません"
+      },
+      {
+        "text": "出力: 43",
+        "hint": "出力する前にコードが停止します"
+      },
+      {
+        "text": "コンパイルエラー",
+        "hint": "コードは構文エラーではありません"
+      },
+      {
+        "text": "ランタイムパニック",
+        "hint": "パニックよりも深刻な状況です"
+      },
+      {
+        "text": "デッドロック"
+      }
+    ],
+    "questionProse": [
+      "このコードを実行するとどうなりますか？"
+    ],
+    "explanationProse": [
+      "このコードは古典的なデッドロックの例を示しています。修正方法は以下の通りです：",
+      "デッドロックを防ぐベストプラクティス：\n      1. クリティカルセクションを小さく保つ\n      2. スコープを使ってロックをすぐに解放する\n      3. 複数のロックを取得する際は、常に同じ順序で行う\n      4. 性能向上には parking_lot::Mutex を使用する\n      5. 読み取りが中心のワークロードには RwLock の検討も\n\n      一般的なパターン："
+    ]
+  },
+  "rawText": "{\n  \"title\": \"ArcとMutex\",\n  \"group\": \"スマートポインタ\",\n  \"options\": [\n    {\n      \"text\": \"出力: 42\",\n      \"hint\": \"このコードはprint文に到達しません\"\n    },\n    {\n      \"text\": \"出力: 43\",\n      \"hint\": \"出力する前にコードが停止します\"\n    },\n    {\n      \"text\": \"コンパイルエラー\",\n      \"hint\": \"コードは構文エラーではありません\"\n    },\n    {\n      \"text\": \"ランタイムパニック\",\n      \"hint\": \"パニックよりも深刻な状況です\"\n    },\n    {\n      \"text\": \"デッドロック\"\n    }\n  ],\n  \"questionProse\": [\n    \"このコードを実行するとどうなりますか？\"\n  ],\n  \"explanationProse\": [\n    \"このコードは古典的なデッドロックの例を示しています。修正方法は以下の通りです：\",\n    \"デッドロックを防ぐベストプラクティス：\\n      1. クリティカルセクションを小さく保つ\\n      2. スコープを使ってロックをすぐに解放する\\n      3. 複数のロックを取得する際は、常に同じ順序で行う\\n      4. 性能向上には parking_lot::Mutex を使用する\\n      5. 読み取りが中心のワークロードには RwLock の検討も\\n\\n      一般的なパターン：\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 957,
+    "outputTokens": 3585,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 22557
+  },
+  "cost": {
+    "inputUsd": 0,
+    "outputUsd": 0,
+    "totalUsd": 0,
+    "pricingSource": "unknown"
+  }
+}

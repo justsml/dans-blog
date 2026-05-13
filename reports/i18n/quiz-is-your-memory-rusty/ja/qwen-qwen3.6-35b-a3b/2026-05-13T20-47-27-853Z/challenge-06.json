@@ -1,0 +1,32 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Rc Smart Pointer",
+  "translatedTitle": "Rcスマートポインタ",
+  "translation": {
+    "title": "Rcスマートポインタ",
+    "group": "参照カウント",
+    "options": [],
+    "questionProse": [
+      "このコードは何を出力するでしょうか？慎重に数えてみてください！"
+    ],
+    "explanationProse": [
+      "Rcの仕組みを分解してみましょう：\n\n      1. `Rc::new()` による初期作成：カウント = 1\n      2. `marcus` 用の最初の clone：カウント = 2\n      3. `aurelius` 用の2回目の clone：カウント = 3\n\n      Rcの重要な特徴：",
+      "重要なポイント：\n      - Rc::clone() は軽量です - カウンターをインクリメントするだけです\n      - Rc はシングルスレッドのシナリオ専用です\n      - 最後の参照がドロップされると、データはクリーンアップされます\n      - 参照サイクルを防ぐには Weak 参照を使用してください\n\n      ベストプラクティス：\n      - 共有所有権が必要な場合は Rc を使用してください\n      - スレッドセーフなシナリオには Arc を検討してください\n      - 参照サイクルの作成を避けてください"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Rcスマートポインタ\",\n  \"group\": \"参照カウント\",\n  \"options\": [],\n  \"questionProse\": [\n    \"このコードは何を出力するでしょうか？慎重に数えてみてください！\"\n  ],\n  \"explanationProse\": [\n    \"Rcの仕組みを分解してみましょう：\\n\\n      1. `Rc::new()` による初期作成：カウント = 1\\n      2. `marcus` 用の最初の clone：カウント = 2\\n      3. `aurelius` 用の2回目の clone：カウント = 3\\n\\n      Rcの重要な特徴：\",\n    \"重要なポイント：\\n      - Rc::clone() は軽量です - カウンターをインクリメントするだけです\\n      - Rc はシングルスレッドのシナリオ専用です\\n      - 最後の参照がドロップされると、データはクリーンアップされます\\n      - 参照サイクルを防ぐには Weak 参照を使用してください\\n\\n      ベストプラクティス：\\n      - 共有所有権が必要な場合は Rc を使用してください\\n      - スレッドセーフなシナリオには Arc を検討してください\\n      - 参照サイクルの作成を避けてください\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 858,
+    "outputTokens": 3467,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 23475
+  },
+  "cost": {
+    "inputUsd": 0,
+    "outputUsd": 0,
+    "totalUsd": 0,
+    "pricingSource": "unknown"
+  }
+}
