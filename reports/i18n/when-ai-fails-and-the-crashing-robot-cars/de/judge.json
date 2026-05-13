@@ -1,0 +1,46 @@
+{
+  "selectedCommit": "0d29bac3761e22b92828c7d48e44646d2bd985f9",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 10,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The current translation is excellent and already incorporates the fixes suggested in the previous judge report (the title spacing and the H2 translation are already correct in the provided MDX). It maintains Dan's direct style, uses the correct terminology for the 'trolley problem', and preserves all MDX structures and frontmatter correctly. The prose is natural and technically accurate.",
+  "slug": "when-ai-fails-and-the-crashing-robot-cars",
+  "locale": "de",
+  "candidateCommits": [
+    "0d29bac3761e22b92828c7d48e44646d2bd985f9",
+    "ce20d1cbdc14fbd166afd7caeed8665dbb2bf667"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "WennKI versagt",
+      "replacement": "Wenn KI versagt",
+      "reason": "Missing space between 'Wenn' and 'KI' in the title.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "## Robotic Cars: More or Less Crashes?",
+      "replacement": "## Roboterautos: Mehr oder weniger Unfälle?",
+      "reason": "The heading was left in English.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug when-ai-fails-and-the-crashing-robot-cars --locale de --skip-global",
+    "output": ""
+  }
+}
