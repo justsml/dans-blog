@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: protect-your-tokens
+- Locale: ja
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2018-10-27--protect-your-tokens/ja/index.mdx
+- Validation: passed
+- Runtime seconds: 11.96
+- Input tokens: 6848
+- Output tokens: 4514
+- Thinking tokens: unknown
+- Cached input tokens: 1024
+- Cache write tokens: 0
+- Estimated cost: $0.001631
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: ''
@@ -122,3 +140,4 @@ const src = `//maps.googleapis.com/maps/api/js?key=${key}`;
 -----------------------------------
 
 **注意:** 環境変数の_使用ケース_は他にもあります。今回は取り上げていないケースがいくつかあります: CI/CD/テスト、機能フラグ、特殊環境用のランタイム設定！
+````
