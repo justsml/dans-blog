@@ -4,7 +4,7 @@
 - Model: openrouter/qwen/qwen3-32b:nitro
 - Target: src/content/posts/2024-11-07--quiz-modern-css-2025/es/index.mdx
 - Validation: rejected: direct AI SDK translation failed
-- Runtime seconds: 5.08
+- Runtime seconds: 6.62
 - Input tokens: unknown
 - Output tokens: unknown
 - Thinking tokens: unknown
