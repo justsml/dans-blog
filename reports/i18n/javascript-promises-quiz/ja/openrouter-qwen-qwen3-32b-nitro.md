@@ -4,10 +4,10 @@
 - Model: openrouter/qwen/qwen3-32b:nitro
 - Target: src/content/posts/2019-11-26--javascript-promises-quiz/ja/index.mdx
 - Validation: rejected: direct AI SDK translation failed
-- Runtime seconds: 7.78
-- Input tokens: unknown
-- Output tokens: unknown
+- Runtime seconds: 22.53
+- Input tokens: 7630
+- Output tokens: 6652
 - Thinking tokens: unknown
-- Cached input tokens: unknown
-- Estimated cost: unknown
-- Note: Command failed: bun run i18n:translate:chunked -- --slug javascript-promises-quiz --locale ja --model openrouter/qwen/qwen3-32b:nitro --chunk 3p --quiz-concurrency 18 --challenge-retries 2
+- Cached input tokens: 0
+- Estimated cost: $0.002207
+- Note: Command failed: bun run i18n:validate --slug javascript-promises-quiz --locale ja
