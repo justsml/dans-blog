@@ -1,0 +1,102 @@
+{
+  "runId": "qwen-qwen3.6-35b-a3b@2026-05-13T22-27-45-039Z",
+  "slug": "beam-search-transformers-js",
+  "locale": "hi",
+  "model": "qwen/qwen3.6-35b-a3b",
+  "modelPath": "qwen-qwen3.6-35b-a3b",
+  "createdAt": "2026-05-13T22:31:14.666Z",
+  "sourcePath": "src/content/posts/2026-04-16--beam-search-transformers-js/index.mdx",
+  "targetPath": "src/content/posts/2026-04-16--beam-search-transformers-js/hi/index.mdx",
+  "candidatePath": "reports/i18n/beam-search-transformers-js/hi/qwen-qwen3.6-35b-a3b/2026-05-13T22-27-45-039Z/candidate.mdx",
+  "sourceHash": "f18620b582f1c2a340c4b7d98da5cb544cd646463534f4076975963727af3149",
+  "outputHash": "9c7b53c85c8451f8167b8ff839da4a0d9ba18a73f468f67f1fd93161af4f65f1",
+  "reasoningEffort": "low",
+  "temperature": 0.3,
+  "maxTokens": 16000,
+  "timeoutMs": 200000,
+  "articleSummary": "This technical developer log details the implementation of beam search in `transformers.js`, arguing that replacing a silently broken greedy decoding fallback required careful architectural refactoring rather than straightforward code addition. The author outlines key technical hurdles, including bypassing an existing sampler to correctly rank across all `num_beams × vocab_size` candidates, synchronizing KV cache reordering across CPU and GPU backends, and implementing sequential processing for diverse beam search and early-stopping priority queues. Targeted at machine learning engineers and web-based AI developers, the piece maintains a pragmatic, problem-solving tone while framing the algorithm as a bounded breadth-first search through token space. The article functions as both a technical tutorial and a cautionary guide against naive code reuse in transformer generation pipelines.",
+  "totalInputTokens": 9108,
+  "totalOutputTokens": 42289,
+  "totalCacheReadTokens": 0,
+  "totalCacheWriteTokens": 0,
+  "totalDurationMs": 186637,
+  "totalCostUsd": 0.043655200000000005,
+  "pricingSource": "local-openrouter-estimate",
+  "telemetry": {
+    "model": "qwen/qwen3.6-35b-a3b",
+    "chunkSize": "10p",
+    "totalChunks": 7,
+    "totalInputTokens": 9108,
+    "totalOutputTokens": 42289,
+    "totalCacheReadTokens": 0,
+    "totalCacheWriteTokens": 0,
+    "totalDurationMs": 186637,
+    "totalCostUsd": 0.043655200000000005,
+    "pricingSource": "local-openrouter-estimate",
+    "chunks": [
+      {
+        "index": 0,
+        "inputTokens": 1040,
+        "outputTokens": 5107,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 22775,
+        "costUsd": 0.005263
+      },
+      {
+        "index": 1,
+        "inputTokens": 1324,
+        "outputTokens": 5933,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 25711,
+        "costUsd": 0.0061316
+      },
+      {
+        "index": 2,
+        "inputTokens": 1387,
+        "outputTokens": 7576,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 33883,
+        "costUsd": 0.007784050000000001
+      },
+      {
+        "index": 3,
+        "inputTokens": 1416,
+        "outputTokens": 5620,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 24832,
+        "costUsd": 0.0058324
+      },
+      {
+        "index": 4,
+        "inputTokens": 1356,
+        "outputTokens": 5718,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 24525,
+        "costUsd": 0.0059214
+      },
+      {
+        "index": 5,
+        "inputTokens": 1314,
+        "outputTokens": 7177,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 30502,
+        "costUsd": 0.007374100000000001
+      },
+      {
+        "index": 6,
+        "inputTokens": 1271,
+        "outputTokens": 5158,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 24409,
+        "costUsd": 0.00534865
+      }
+    ]
+  }
+}
