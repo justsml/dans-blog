@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: js-quiz-14-date-time-questions-test-your-knowledge
+- Locale: hi
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2020-01-02--js-quiz-14-date-time-questions-test-your-knowledge/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 15.41
+- Input tokens: 13238
+- Output tokens: 10213
+- Thinking tokens: unknown
+- Cached input tokens: 4352
+- Cache write tokens: 0
+- Estimated cost: $0.002355
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: 'क्विज़: 14 जावास्क्रिप्ट डेट प्रश्न'
@@ -492,3 +510,4 @@ JavaScript में `Date` क्लास का API कुख्यात र
 </Challenge>
 
 </QuizUI>
+````
