@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: docker-security-tips-for-self-hosting
+- Locale: ru
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2025-01-05--docker-security-tips-for-self-hosting/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 59.36
+- Input tokens: 25713
+- Output tokens: 24860
+- Thinking tokens: unknown
+- Cached input tokens: 3072
+- Cache write tokens: 0
+- Estimated cost: $0.008023
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Важ
 subTitle: 'Защищайте свои самохостиные сервисы, от обороны до мониторинга!'
@@ -718,3 +736,4 @@ services:
 - <em className="cite">[u/troeberry](https://www.reddit.com/user/troeberry/)</em>  
 
 Спасибо за прочтение! Надеюсь, эта инструкция оказалась полезной. Если у вас есть вопросы или предложения, не стесняйтесь, обращайтесь в моих соцсетях ниже или нажмите ссылку `Edit on GitHub`, чтобы создать pull request! ❤️
+````
