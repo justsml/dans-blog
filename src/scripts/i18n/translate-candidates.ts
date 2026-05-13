@@ -40,6 +40,11 @@ type CandidateTask = {
   locale: ActiveLocale;
 };
 
+type CandidateTaskStats = CandidateTask & {
+  candidateCount: number;
+  newestCandidateMs: number;
+};
+
 type CandidateTelemetry = {
   runtimeSeconds: string;
   tokens: {
@@ -124,8 +129,8 @@ let targetRelPath = "";
 let candidatesPath = "";
 let candidateRunStartedAt = new Date();
 let candidateRunId = "";
-let candidateRunSummaryPath = "";
-let candidateRunSummaryRelPath = "";
+let candidateRunEventsPath = "";
+let candidateRunEventsRelPath = "";
 let candidateRunHistoryPath = "";
 let candidateRunHistoryRelPath = "";
 let candidateRunAttempts: CandidateRunAttempt[] = [];
@@ -178,8 +183,8 @@ async function processTask(currentSlug: string, currentLocale: ActiveLocale) {
   candidatesPath = join(articleReportDir, "candidates.jsonl");
   candidateRunStartedAt = new Date();
   candidateRunId = candidateRunStartedAt.toISOString().replace(/[:.]/g, "-");
-  candidateRunSummaryPath = join(reportDir, "candidate-run-summary.json");
-  candidateRunSummaryRelPath = relativeToRepo(candidateRunSummaryPath);
+  candidateRunEventsPath = join(reportDir, "candidate-run-events.jsonl");
+  candidateRunEventsRelPath = relativeToRepo(candidateRunEventsPath);
   candidateRunHistoryPath = join(reportDir, "candidate-run-history.jsonl");
   candidateRunHistoryRelPath = relativeToRepo(candidateRunHistoryPath);
   candidateRunAttempts = [];
@@ -190,7 +195,8 @@ async function processTask(currentSlug: string, currentLocale: ActiveLocale) {
   try {
     console.log(`\nGenerating candidates for ${slug} [${locale}]`);
     mkdirSync(dirname(targetPath), { recursive: true });
-    writeCandidateRunSummary(buildCandidateRunSummary());
+    mkdirSync(reportDir, { recursive: true });
+    appendCandidateRunEvent("run_started", buildCandidateRunSummary());
 
     for (const model of models) {
       assertRunLock(runLockPath, processRunId);
@@ -282,7 +288,7 @@ async function processTask(currentSlug: string, currentLocale: ActiveLocale) {
         if (!shouldSkipCommit) {
           gitCommit(`i18n rejected(${locale}): ${slug} via ${model}`, [
             relativeToRepo(reportPath),
-            candidateRunSummaryRelPath,
+            candidateRunEventsRelPath,
           ]);
         }
       }
@@ -515,40 +521,63 @@ function getAllPostSlugs() {
 
 function getCandidateTasks(): CandidateTask[] {
   return slugs
-    .map((currentSlug) => ({
-      slug: currentSlug,
-      translatedCount: locales.reduce((sum, currentLocale) => sum + countCandidateOutputs(currentSlug, currentLocale), 0),
-    }))
-    .sort((a, b) =>
-      a.translatedCount - b.translatedCount ||
-      a.slug.localeCompare(b.slug),
+    .flatMap((currentSlug) =>
+      locales.map((currentLocale) => getCandidateTaskStats(currentSlug, currentLocale)),
     )
-    .flatMap(({ slug: currentSlug }) =>
-      locales
-        .map((currentLocale) => ({
-          locale: currentLocale,
-          translatedCount: countCandidateOutputs(currentSlug, currentLocale),
-        }))
-        .sort((a, b) =>
-          a.translatedCount - b.translatedCount ||
-          a.locale.localeCompare(b.locale),
-        )
-        .map(({ locale: currentLocale }) => ({
-          slug: currentSlug,
-          locale: currentLocale,
-        })),
-    );
+    .sort((a, b) =>
+      a.candidateCount - b.candidateCount ||
+      a.newestCandidateMs - b.newestCandidateMs ||
+      a.slug.localeCompare(b.slug) ||
+      a.locale.localeCompare(b.locale),
+    )
+    .map(({ slug: currentSlug, locale: currentLocale }) => ({
+      slug: currentSlug,
+      locale: currentLocale,
+    }));
 }
 
-function countCandidateOutputs(currentSlug: string, currentLocale: ActiveLocale) {
+function getCandidateTaskStats(currentSlug: string, currentLocale: ActiveLocale): CandidateTaskStats {
+  const rows = readCandidateOutputRows(currentSlug, currentLocale);
+  return {
+    slug: currentSlug,
+    locale: currentLocale,
+    candidateCount: rows.length > 0 ? rows.length : countCandidateReportFiles(join(REPORT_ROOT, currentSlug, currentLocale)),
+    newestCandidateMs: getNewestCandidateMs(rows),
+  };
+}
+
+function readCandidateOutputRows(currentSlug: string, currentLocale: ActiveLocale) {
   const articleReportDir = join(REPORT_ROOT, currentSlug);
   const reportDir = join(articleReportDir, currentLocale);
   const candidateRows = readJsonlRows(join(articleReportDir, "candidates.jsonl"))
     .filter((row) => row.locale === currentLocale);
-  if (candidateRows.length > 0) return candidateRows.length;
   const legacyRows = readJsonlRows(join(reportDir, "candidates.jsonl"));
-  if (legacyRows.length > 0) return legacyRows.length;
-  return countCandidateReportFiles(reportDir);
+  const rowsById = new Map<string, Record<string, unknown>>();
+  for (const row of [...legacyRows, ...candidateRows]) {
+    rowsById.set(candidateRowId(row), row);
+  }
+  return [...rowsById.values()];
+}
+
+function getNewestCandidateMs(rows: Array<Record<string, unknown>>) {
+  if (rows.length === 0) return 0;
+  return Math.max(...rows.map(candidateCreatedMs));
+}
+
+function candidateCreatedMs(row: Record<string, unknown>) {
+  const timestamp = typeof row.createdAt === "string"
+    ? row.createdAt
+    : typeof row.at === "string"
+      ? row.at
+      : "";
+  const parsed = Date.parse(timestamp);
+  return Number.isFinite(parsed) ? parsed : 0;
+}
+
+function candidateRowId(row: Record<string, unknown>) {
+  return typeof row.runId === "string"
+    ? row.runId
+    : JSON.stringify([row.locale, row.model, row.createdAt, row.candidatePath]);
 }
 
 function readJsonlRows(path: string) {
@@ -840,24 +869,24 @@ function registerProcessCleanup() {
 
 function recordRunAttempt(attempt: CandidateRunAttempt) {
   candidateRunAttempts.push(attempt);
-  writeCandidateRunSummary(buildCandidateRunSummary());
+  appendCandidateRunEvent("attempt_recorded", buildCandidateRunSummary(), { attempt });
 }
 
 function finalizeCandidateRun(
   status: CandidateRunSummary["runStatus"],
   options: { commit: boolean; print: boolean },
 ) {
-  if (candidateRunFinalized || candidateRunSummaryPath === "") return;
+  if (candidateRunFinalized || candidateRunEventsPath === "") return;
 
   candidateRunStatus = status;
   const finalSummary = buildCandidateRunSummary();
-  writeCandidateRunSummary(finalSummary);
+  appendCandidateRunEvent("run_finished", finalSummary);
   appendCandidateRunHistory(finalSummary);
   candidateRunFinalized = true;
 
   if (options.commit && !shouldSkipCommit) {
     gitCommit(`i18n accounting(${locale}): ${slug} candidate run totals`, [
-      candidateRunSummaryRelPath,
+      candidateRunEventsRelPath,
       candidateRunHistoryRelPath,
     ]);
   }
@@ -963,11 +992,24 @@ function addKnownMetric(value: number | undefined, markUnknown: () => void) {
   return value;
 }
 
-function writeCandidateRunSummary(summary: CandidateRunSummary) {
+function appendCandidateRunEvent(
+  event: "run_started" | "attempt_recorded" | "run_finished",
+  summary: CandidateRunSummary,
+  extra: Record<string, unknown> = {},
+) {
   const { runtimeMilliseconds: _runtimeMilliseconds, ...totals } = summary.totals as CandidateRunSummary["totals"] & {
     runtimeMilliseconds?: number;
   };
-  writeTextFile(candidateRunSummaryPath, JSON.stringify({ ...summary, totals }, null, 2));
+  appendFileSync(candidateRunEventsPath, `${JSON.stringify({
+    event,
+    at: new Date().toISOString(),
+    runId: summary.runId,
+    slug: summary.slug,
+    locale: summary.locale,
+    runStatus: summary.runStatus,
+    summary: { ...summary, totals },
+    ...extra,
+  })}\n`, "utf8");
 }
 
 function appendCandidateRunHistory(summary: CandidateRunSummary) {
@@ -989,7 +1031,7 @@ function printCandidateRunSummary(summary: CandidateRunSummary) {
     `- Cached input tokens: ${formatTotalMetric(summary.totals.cachedInputTokens, summary.totals.hasUnknownCachedInputTokens)}`,
     `- Cache write tokens: ${formatTotalMetric(summary.totals.cacheWriteTokens, summary.totals.hasUnknownCacheWriteTokens)}`,
     `- Estimated cost: $${summary.totals.estimatedCostUsd.toFixed(6)}${summary.totals.hasUnknownEstimatedCost ? " + unknown" : ""}`,
-    `- Summary: ${candidateRunSummaryRelPath}`,
+    `- Events: ${candidateRunEventsRelPath}`,
     `- History: ${candidateRunHistoryRelPath}`,
   ].join("\n"));
 }

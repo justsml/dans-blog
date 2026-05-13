@@ -1,0 +1,147 @@
+# Translation Candidate
+- Slug: handling-international-numbers-and-currency
+- Locale: ru
+- Model: qwen/qwen3.5-9b
+- Target: src/content/posts/2024-08-29--handling-international-numbers-and-currency/ru/index.mdx
+- Validation: rejected: direct AI SDK translation failed
+- Runtime seconds: 240.03
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Cache write tokens: unknown
+- Estimated cost: unknown
+- Pricing source: unknown
+- Note: Command failed after 240000ms: bun run i18n:translate:chunked -- --slug handling-international-numbers-and-currency --locale ru --model qwen/qwen3.5-9b --chunk 6p --run-id 2026-05-13T18-15-57-947Z-61322 --run-lock-path /Users/dan/code/oss/dans-blog/.git/codex-i18n-translation-run.json --quiz-concurrency 24
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: Международные номера и валюты
+subTitle: 'Локализованная валюта: разбор!'
+draft: false
+date: '2024-08-28'
+modified: '2024-09-03'
+tags:
+  - engineering
+  - internationalization
+  - localization
+  - currency
+  - numbers
+category: HowTo
+subCategory: Internationalization
+cover_full_width: ../currency-banner-wide.webp
+cover_mobile: ../currency-banner-pic__w200.webp
+cover_icon: ../currency-banner-pic__w200.webp
+---
+- [Деньги: Локализация (L10n) и интернационализация (i18n)](#money-localization-l10n-and-internationalization-i18n)
+- [Ключевые понятия](#critical-concepts)
+  - [Числа локальны 🏘️](#numbers-are-local-️)
+  - [Валюта глобальна 🌎](#currency-is-global-️)
+  - [Когда локаль имеет значение](#when-locale-matters)
+- [Решение](#a-solution)
+- [Дальнейшие шаги](#next-steps)
+
+## Деньги: Локализация (L10n) и интернационализация (i18n)
+
+Они нужны не только для победы в Scrabble: _локализация_ и _интернационализация_ описывают процесс адаптации продукта так, чтобы он **чувствовался родным в другой стране.**
+
+<p class="breakout quote">Валюта в неверном локальном формате — явный признак того, что вы не приложили усилий.<br/>Если вы не умеете форматировать цены, как вы будете разбираться с доставкой?</p>
+
+Интернационализация — обширная тема, охватывающая всё: от перевода текстов до форматирования дат. В этой статье мы сосредоточимся на конкретном подпункте — **форматировании чисел и валют.**
+
+Разберём форматирование на примерах трёх стран еврозоны, США и Индии:
+
+- `€1,234,567.89` Ирландия 🇮🇪
+- `1.234.567,89 €` Германия 🇩🇪
+- `1 234 567,89 €` Франция 🇫🇷
+- `$1,234,567.89` США 🇺🇸
+- `₹12,34,567.89` Индия 🇮🇳
+
+Хаос! Согласны? Символы, пробелы и знаки препинания летают по всем направлениям! Удивительно, как ЕС вообще может договориться о чём-то! 😅
+
+## Ключевые понятия
+
+Прежде чем переходить к решениям, разберёмся, что именно подразумевается под «Числа локальны»?
+
+### Числа локальны 🏘️
+
+Каждая локаль ([страна по стандарту ISO 3166](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes)) определяет собственные правила форматирования чисел.
+
+Правила форматирования чисел включают:
+
+- Дробная часть: запятая, точка.
+- Разделитель тысяч: запятая, точка, пробел.
+- Позиция и отступы символа валюты.
+
+### Валюта глобальна 🌎
+
+`currency` обозначает конкретную денежную единицу. (Список см. в [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217#Active_codes_(list_one)).)
+
+- Определяет символ: `$`, `€`, `£`, `¥`. (Часто переиспользуется.)
+- Всегда имеет трёхбуквенный код: `USD`, `EUR`, `GBP`, `JPY`.
+- Может использоваться и обмениваться в «любой» стране. В теории.
+- Конвертация между валютами требует данных о курсах обмена.
+- Числовое значение не зависит от локали.
+
+### Когда важна локаль
+
+Большинство REST API для e-commerce и платёжных систем оперируют парой `price` + `currencyCode`. Почему нет локалей?
+
+Локали обычно задаются на уровне ОС/устройства, а браузеры предоставляют к ним доступ через `navigator.language`. Поскольку у каждого пользователя может быть своя локаль, логичнее всего форматировать числа и валюты на клиенте.
+
+## Решение
+
+Хорошая новость: современные языки программирования поддерживают это из коробки. В JavaScript это класс [`Intl`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl) и `Intl.NumberFormat`.
+
+Разберём пример:
+
+```javascript
+const number = 1_234_567.89;
+
+/**
+ * Format a number in local currency.
+ * @param {number} amount - The amount to format.
+ * @param {string} currency - The 3-letter currency code.
+ * @param {string} [locale] - The users locale string.
+ */
+const formatMoney = (amount, currency, locale = navigator.language) =>
+  new Intl.NumberFormat(locale, { currency, style: 'currency' })
+    .format(amount);
+
+console.log('🇩🇪 ' + formatMoney(number, 'EUR', 'de-DE'));
+console.log('🇮🇪 ' + formatMoney(number, 'EUR', 'ga-IE'));
+console.log('🇫🇷 ' + formatMoney(number, 'EUR', 'fr-FR'));
+```
+
+Если потребуются более сложные операции — расчёт налогов, применение скидок или конвертация между валютами, стоит использовать специализированную библиотеку вроде [dinero.js](https://v2.dinerojs.com/).
+
+## Дальнейшие шаги
+
+В зависимости от ваших конкретных задач, может потребоваться изучить смежные темы:
+
+- Работа с локалью пользователя. Автоопределение + возможность переопределения. (например, выпадающий список стран.)
+- Хранение целых чисел. (сохраняйте значения в центах, а не в долларах.)
+- Арифметика с деньгами. (например, применение купона `скидка 20%`, расчёт `subTotal + налоги` и т. д.)
+- Курсы валют в реальном времени. (для розничных покупок, форекс-обменников.)
+
+<p class="breakout quote">Дайте знать, если хотите увидеть будущую статью по этим темам!</p>
+
+{/* ## Рекомендации
+
+Некоторые библиотеки могут помочь с этими задачами:
+
+**JavaScript / TypeScript**
+
+- [dinero.js](https://v2.dinerojs.com/) поддерживает арифметику с деньгами, курсы валют, форматирование и парсинг!
+
+**Rust**
+
+- [rusty_money](https://crates.io/crates/rusty_money) — моя предпочтительная библиотека для Rust.
+
+**Go**
+
+- [currency](https://github.com/bojanz/currency) — мой текущий выбор для Golang.
+ */}
+````

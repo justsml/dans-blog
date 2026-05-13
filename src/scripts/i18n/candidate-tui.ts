@@ -612,7 +612,7 @@ function readCandidateSummary(slug: string, locale: ActiveLocale): CandidateSumm
 }
 
 function isRunInProgress(reportDir: string) {
-  const latestSummary = readJsonRecord(join(reportDir, "candidate-run-summary.json"));
+  const latestSummary = readLatestRunSummary(reportDir);
   if (latestSummary?.runStatus !== "running") return false;
 
   const runId = typeof latestSummary.runId === "string" ? latestSummary.runId : undefined;
@@ -624,15 +624,20 @@ function isRunInProgress(reportDir: string) {
 
 function readAccountingTotals(reportDir: string, candidateRows: Array<Record<string, unknown>>): AccountingTotals {
   const history = readCandidateRows(join(reportDir, "candidate-run-history.jsonl"));
+  const activeSummary = readActiveRunSummary(reportDir);
   if (history.length > 0) {
     const totals = createAccountingTotals(["run history"]);
     for (const summary of history) addRunSummaryToAccounting(totals, summary, { includeCandidates: true });
+    if (activeSummary != null) {
+      addRunSummaryToAccounting(totals, activeSummary, { includeCandidates: true });
+      addSource(totals, "active run events");
+    }
     return totals;
   }
 
-  const latestSummary = readJsonRecord(join(reportDir, "candidate-run-summary.json"));
+  const latestSummary = readLatestRunSummary(reportDir);
   if (candidateRows.length === 0 && latestSummary != null) {
-    const totals = createAccountingTotals(["latest run summary"]);
+    const totals = createAccountingTotals(["latest run events"]);
     addRunSummaryToAccounting(totals, latestSummary, { includeCandidates: true });
     return totals;
   }
@@ -706,7 +711,7 @@ function addRunSummaryToAccounting(
 
 function addActiveRunSummaryToAccounting(totals: AccountingTotals, slug: string, locale: ActiveLocale) {
   const reportDir = join(REPORT_ROOT, slug, locale);
-  const latestSummary = readJsonRecord(join(reportDir, "candidate-run-summary.json"));
+  const latestSummary = readActiveRunSummary(reportDir);
   if (latestSummary == null || latestSummary.runStatus !== "running") return;
   addRunSummaryToAccounting(totals, latestSummary, { includeCandidates: true });
 }
@@ -836,6 +841,29 @@ function readJsonRecord(path: string): Record<string, unknown> | undefined {
   } catch {
     return undefined;
   }
+}
+
+function readLatestRunSummary(reportDir: string): Record<string, unknown> | undefined {
+  const history = readCandidateRows(join(reportDir, "candidate-run-history.jsonl"));
+  const latestHistory = history.at(-1);
+  const latestEvent = readLatestRunEventSummary(reportDir);
+  if (latestEvent != null) return latestEvent;
+  if (latestHistory != null) return latestHistory;
+  return readJsonRecord(join(reportDir, "candidate-run-summary.json"));
+}
+
+function readActiveRunSummary(reportDir: string): Record<string, unknown> | undefined {
+  const latestSummary = readLatestRunSummary(reportDir);
+  return latestSummary?.runStatus === "running" ? latestSummary : undefined;
+}
+
+function readLatestRunEventSummary(reportDir: string): Record<string, unknown> | undefined {
+  const events = readCandidateRows(join(reportDir, "candidate-run-events.jsonl"));
+  for (let index = events.length - 1; index >= 0; index -= 1) {
+    const summary = recordValue(events[index]?.summary);
+    if (summary != null) return summary;
+  }
+  return undefined;
 }
 
 function summaryHasNonCandidateAttempts(summary: Record<string, unknown>) {

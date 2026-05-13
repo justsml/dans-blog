@@ -128,14 +128,12 @@ async function processTask(task: TranslationTask) {
 
   const reportDir = paths.reportDir;
   const scoreDir = join(reportDir, "scores", safeModelPathName(model));
-  const latestJsonPath = join(reportDir, "score.json");
-  const latestMarkdownPath = join(reportDir, "score.md");
   const sourceText = readFileSync(paths.sourcePath, "utf8");
   const translationText = readFileSync(paths.targetPath, "utf8");
   const sourceHash = hashText(sourceText);
   const translationHash = hashText(translationText);
   const combinedHash = hashText(`${sourceHash}:${translationHash}:${model}`);
-  const existingScore = readExistingScore(latestJsonPath);
+  const existingScore = readExistingScore(outputLogPath, task, model, combinedHash);
   if (existingScore?.hash === combinedHash && !shouldOverwrite) {
     console.log(`Skipping current score for ${task.locale}/${task.slug}. Pass --overwrite to rescore.`);
     return;
@@ -168,7 +166,6 @@ async function processTask(task: TranslationTask) {
     model,
     sourcePath: relativeToRepo(paths.sourcePath),
     targetPath: relativeToRepo(paths.targetPath),
-    reportPath: relativeToRepo(latestMarkdownPath),
     hash: combinedHash,
     sourceHash,
     translationHash,
@@ -201,8 +198,12 @@ async function processTask(task: TranslationTask) {
 
   const archiveJsonPath = join(scoreDir, `${timestamp}.json`);
   const archiveMarkdownPath = join(scoreDir, `${timestamp}.md`);
-  const json = JSON.stringify({
+  const recordWithReport = {
     ...record,
+    reportPath: relativeToRepo(archiveMarkdownPath),
+  };
+  const json = JSON.stringify({
+    ...recordWithReport,
     analysis: response.parsed.analysis,
     strengths: response.parsed.strengths,
     issues: response.parsed.issues,
@@ -210,7 +211,7 @@ async function processTask(task: TranslationTask) {
   }, null, 2);
   const markdown = renderMarkdownReport({
     task,
-    record,
+    record: recordWithReport,
     analysis: response.parsed.analysis,
     strengths: response.parsed.strengths,
     issues: response.parsed.issues,
@@ -219,13 +220,11 @@ async function processTask(task: TranslationTask) {
 
   writeFileSync(archiveJsonPath, json, "utf8");
   writeFileSync(archiveMarkdownPath, markdown, "utf8");
-  writeFileSync(latestJsonPath, json, "utf8");
-  writeFileSync(latestMarkdownPath, markdown, "utf8");
-  appendJsonl(outputLogPath, toTranslationLogRecord(record));
+  appendJsonl(outputLogPath, toTranslationLogRecord(recordWithReport));
 
   console.log([
     `Scored ${task.locale}/${task.slug}: ${averageScore(response.parsed.scores).toFixed(1)}/100 (${response.parsed.recommendation})`,
-    `- Report: ${relativeToRepo(latestMarkdownPath)}`,
+    `- Report: ${relativeToRepo(archiveMarkdownPath)}`,
     `- Log: ${relativeToRepo(outputLogPath)}`,
   ].join("\n"));
 }
@@ -368,12 +367,33 @@ function getAllPostSlugs() {
     .map((directoryName) => directoryName.replace(/^\d{4}-\d{2}-\d{2}--/, ""));
 }
 
-function readExistingScore(path: string): { hash?: string } | undefined {
+function readExistingScore(
+  path: string,
+  task: TranslationTask,
+  scoringModel: string,
+  hash: string,
+): { hash?: string } | undefined {
   if (!existsSync(path)) return undefined;
 
   try {
-    const parsed = JSON.parse(readFileSync(path, "utf8")) as Record<string, unknown>;
-    return typeof parsed.hash === "string" ? { hash: parsed.hash } : {};
+    const matchingRow = readFileSync(path, "utf8")
+      .split(/\r?\n/)
+      .map((line) => line.trim())
+      .filter(Boolean)
+      .reverse()
+      .find((line) => {
+        try {
+          const parsed = JSON.parse(line) as Record<string, unknown>;
+          return parsed.event === "translation_scored"
+            && parsed.slug === task.slug
+            && parsed.locale === task.locale
+            && parsed.model === scoringModel
+            && parsed.hash === hash;
+        } catch {
+          return false;
+        }
+      });
+    return matchingRow == null ? undefined : { hash };
   } catch {
     return {};
   }
