@@ -1,0 +1,44 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Multi-Column Index Order",
+  "translatedTitle": "बहु-स्तंभ सूचक ऑर्डर",
+  "translation": {
+    "title": "बहु-स्तंभ सूचक ऑर्डर",
+    "group": "सूचक",
+    "options": [
+      {
+        "text": "CREATE INDEX ON students(grade_level, last_name);"
+      },
+      {
+        "text": "CREATE INDEX ON students(grade_level);"
+      },
+      {
+        "text": "CREATE INDEX ON students(last_name, age);"
+      },
+      {
+        "text": "CREATE INDEX ON students(first_name, last_name, grade_level);"
+      }
+    ],
+    "questionProse": [
+      "इस प्रश्न के लिए कौन-सा सूचक बेहतर है?"
+    ],
+    "explanationProse": [
+      "मुझे लगता है कि यहाँ आश्चर्य की बात यह है कि बहु-स्तंभ सूचक तब भी उपयोग किया जा सकता है जब प्रश्न में स्तंभ क्रम सूचक परिभाषा के मेल में न हो।\n\n    **नोट:** B-tree सूचकों के साथ अग्रणी स्तंभ महत्वपूर्ण होता है। चूंकि यह प्रश्न `grade_level` और `last_name` द्वारा फ़िल्टर करता है, इसलिए `grade_level` से शुरू होने वाला एक सूचक और फिर `last_name` एक अच्छा मेल है।\n\n    जितनी तेज़ SQL कम से कम पंक्तियों का चयन कर सके, उतना ही बेहतर प्रदर्शन होगा।\n\n    उदाहरण के लिए, यदि आपके पास एक `task` तालिका है, और आप जानते हैं कि `status` `created_at` की तुलना में अधिक चयनात्मक है, तो आप एक प्रश्न जैसे `status = 'done' AND created_at > '2024-01-01'` के लिए `status` से शुरू होने वाला एक सूचक चुन सकते हैं। `WHERE` क्लॉज़ में स्थिति का क्रम जो भी हो, वह मामले में नहीं होता; सूचक स्तंभ क्रम और प्रतिबंध आकार पर ध्यान देना महत्वपूर्ण होता है।\n\n    एक B+Tree सूचक का उपयोग इस प्रकार किया जा सकता है:\n    - अग्रणी स्तंभ, या बाएँ छोर के स्तंभों के पूर्वानुमान।\n    - ऑपरेटर जैसे `=`, `>`, `<`, `BETWEEN`, और `IN`, प्रश्न के आकार पर निर्भर करते हैं।\n    - प्रीफ़िक्स मिलान, `LIKE 'prefix%'`।\n\n    [u/mwdb2](https://www.reddit.com/r/PostgreSQL/comments/1h6kw87/comment/m0fovn0/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button) के धन्यवाद इस स्पष्टीकरण में एक पूर्व गलती को सुधारने के लिए!"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"बहु-स्तंभ सूचक ऑर्डर\",\n  \"group\": \"सूचक\",\n  \"options\": [\n    {\n      \"text\": \"CREATE INDEX ON students(grade_level, last_name);\"\n    },\n    {\n      \"text\": \"CREATE INDEX ON students(grade_level);\"\n    },\n    {\n      \"text\": \"CREATE INDEX ON students(last_name, age);\"\n    },\n    {\n      \"text\": \"CREATE INDEX ON students(first_name, last_name, grade_level);\"\n    }\n  ],\n  \"questionProse\": [\n    \"इस प्रश्न के लिए कौन-सा सूचक बेहतर है?\"\n  ],\n  \"explanationProse\": [\n    \"मुझे लगता है कि यहाँ आश्चर्य की बात यह है कि बहु-स्तंभ सूचक तब भी उपयोग किया जा सकता है जब प्रश्न में स्तंभ क्रम सूचक परिभाषा के मेल में न हो।\\n\\n    **नोट:** B-tree सूचकों के साथ अग्रणी स्तंभ महत्वपूर्ण होता है। चूंकि यह प्रश्न `grade_level` और `last_name` द्वारा फ़िल्टर करता है, इसलिए `grade_level` से शुरू होने वाला एक सूचक और फिर `last_name` एक अच्छा मेल है।\\n\\n    जितनी तेज़ SQL कम से कम पंक्तियों का चयन कर सके, उतना ही बेहतर प्रदर्शन होगा।\\n\\n    उदाहरण के लिए, यदि आपके पास एक `task` तालिका है, और आप जानते हैं कि `status` `created_at` की तुलना में अधिक चयनात्मक है, तो आप एक प्रश्न जैसे `status = 'done' AND created_at > '2024-01-01'` के लिए `status` से शुरू होने वाला एक सूचक चुन सकते हैं। `WHERE` क्लॉज़ में स्थिति का क्रम जो भी हो, वह मामले में नहीं होता; सूचक स्तंभ क्रम और प्रतिबंध आकार पर ध्यान देना महत्वपूर्ण होता है।\\n\\n    एक B+Tree सूचक का उपयोग इस प्रकार किया जा सकता है:\\n    - अग्रणी स्तंभ, या बाएँ छोर के स्तंभों के पूर्वानुमान।\\n    - ऑपरेटर जैसे `=`, `>`, `<`, `BETWEEN`, और `IN`, प्रश्न के आकार पर निर्भर करते हैं।\\n    - प्रीफ़िक्स मिलान, `LIKE 'prefix%'`।\\n\\n    [u/mwdb2](https://www.reddit.com/r/PostgreSQL/comments/1h6kw87/comment/m0fovn0/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button) के धन्यवाद इस स्पष्टीकरण में एक पूर्व गलती को सुधारने के लिए!\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1026,
+    "outputTokens": 1655,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 17822
+  },
+  "cost": {
+    "inputUsd": 0.00008208,
+    "outputUsd": 0.0003972,
+    "totalUsd": 0.00047928,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

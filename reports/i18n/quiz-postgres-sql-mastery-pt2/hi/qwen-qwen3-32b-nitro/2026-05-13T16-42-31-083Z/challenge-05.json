@@ -1,0 +1,31 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Hash Join Eligibility",
+  "translatedTitle": "हैश जॉइन योग्यता",
+  "translation": {
+    "title": "हैश जॉइन योग्यता",
+    "group": "SQL आंतरिक",
+    "options": [],
+    "questionProse": [
+      "PostgreSQL किस `ON` शर्त के लिए एक `HASH JOIN` का उपयोग कर सकता है?"
+    ],
+    "explanationProse": [
+      "एक हैश जॉइन `ON` क्लॉज में एक समानता (`=`) शर्त के साथ संभव है।\n\n    - `=` हैश जॉइन के लिए मुख्य भाव है\n    - `>` और `>=` हैश-जॉइन भाव नहीं हैं\n    - `HASH JOIN` PostgreSQL में वैध सिंटैक्स नहीं है\n\n    योजना तालिका के आकार, सांख्यिकी, इंडेक्स और स्मृति सेटिंग्स पर निर्भर करके अभी भी एक नेस्टेड लूप या मर्ज जॉइन चुन सकती है।"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"हैश जॉइन योग्यता\",\n  \"group\": \"SQL आंतरिक\",\n  \"options\": [],\n  \"questionProse\": [\n    \"PostgreSQL किस `ON` शर्त के लिए एक `HASH JOIN` का उपयोग कर सकता है?\"\n  ],\n  \"explanationProse\": [\n    \"एक हैश जॉइन `ON` क्लॉज में एक समानता (`=`) शर्त के साथ संभव है।\\n\\n    - `=` हैश जॉइन के लिए मुख्य भाव है\\n    - `>` और `>=` हैश-जॉइन भाव नहीं हैं\\n    - `HASH JOIN` PostgreSQL में वैध सिंटैक्स नहीं है\\n\\n    योजना तालिका के आकार, सांख्यिकी, इंडेक्स और स्मृति सेटिंग्स पर निर्भर करके अभी भी एक नेस्टेड लूप या मर्ज जॉइन चुन सकती है।\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 705,
+    "outputTokens": 1052,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 12069
+  },
+  "cost": {
+    "inputUsd": 0.0000564,
+    "outputUsd": 0.00025247999999999997,
+    "totalUsd": 0.00030888,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

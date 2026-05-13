@@ -1,0 +1,44 @@
+{
+  "index": 11,
+  "attempt": 1,
+  "originalTitle": "EXPLAIN ANALYZE Gotcha",
+  "translatedTitle": "EXPLAIN ANALYZE की फंसती",
+  "translation": {
+    "title": "EXPLAIN ANALYZE की फंसती",
+    "group": "प्रदर्शन",
+    "options": [
+      {
+        "text": "लाइट प्लान अनुमान"
+      },
+      {
+        "text": "केवल SELECT पर काम करता है"
+      },
+      {
+        "text": "डेटा को संशोधित करता है और प्लान उत्सर्जित करता है"
+      },
+      {
+        "text": "एक प्लान प्राप्त करने के लिए निष्पादन का सिमुलेशन करता है"
+      }
+    ],
+    "questionProse": [
+      "`EXPLAIN ANALYZE` `UPDATE` कथनों के लिए क्या करता है?"
+    ],
+    "explanationProse": [
+      "`EXPLAIN ANALYZE` वास्तव में प्रश्न के निष्पादन को निष्पादित करता है! `UPDATE`, `DELETE`, और `INSERT` जैसे लेखन ऑपरेशन के विश्लेषण में सावधान रहें। आपको प्रत्येक `EXPLAIN ANALYZE` के बाद सफाई ऑपरेशन चलाने पड़ सकते हैं ताकि परिणाम दोहराए जा सकें।\n\n    बेहतर अभ्यास:\n    - `EXPLAIN` (ANALYZE के बिना) का उपयोग UPDATE/DELETE/INSERT के लिए करें\n    - संशोधन को लेने के लिए लेन-डालेन में रखें:"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"EXPLAIN ANALYZE की फंसती\",\n  \"group\": \"प्रदर्शन\",\n  \"options\": [\n    {\n      \"text\": \"लाइट प्लान अनुमान\"\n    },\n    {\n      \"text\": \"केवल SELECT पर काम करता है\"\n    },\n    {\n      \"text\": \"डेटा को संशोधित करता है और प्लान उत्सर्जित करता है\"\n    },\n    {\n      \"text\": \"एक प्लान प्राप्त करने के लिए निष्पादन का सिमुलेशन करता है\"\n    }\n  ],\n  \"questionProse\": [\n    \"`EXPLAIN ANALYZE` `UPDATE` कथनों के लिए क्या करता है?\"\n  ],\n  \"explanationProse\": [\n    \"`EXPLAIN ANALYZE` वास्तव में प्रश्न के निष्पादन को निष्पादित करता है! `UPDATE`, `DELETE`, और `INSERT` जैसे लेखन ऑपरेशन के विश्लेषण में सावधान रहें। आपको प्रत्येक `EXPLAIN ANALYZE` के बाद सफाई ऑपरेशन चलाने पड़ सकते हैं ताकि परिणाम दोहराए जा सकें।\\n\\n    बेहतर अभ्यास:\\n    - `EXPLAIN` (ANALYZE के बिना) का उपयोग UPDATE/DELETE/INSERT के लिए करें\\n    - संशोधन को लेने के लिए लेन-डालेन में रखें:\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 794,
+    "outputTokens": 1523,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 17066
+  },
+  "cost": {
+    "inputUsd": 0.00006352,
+    "outputUsd": 0.00036552,
+    "totalUsd": 0.00042904,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-postgres-sql-mastery-pt2
+- Locale: hi
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2024-11-28--quiz-postgres-sql-mastery-pt2/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 175.68
+- Input tokens: 12087
+- Output tokens: 17612
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.005194
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 social_image: ../mobile.webp
@@ -527,3 +545,4 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 मुझे उम्मीद है कि आपने कुछ नया सीखा, या कम से कम अपने स्कोर पर गर्व करने का मौका मिला! 🏆  
 
 जीवन में अधिक उत्तेजना चाहते हैं? मेरी [प्रश्नोत्तरी संग्रह](/challenges/) की जांच करें अनंत* मनोरंजन के लिए!
+````
