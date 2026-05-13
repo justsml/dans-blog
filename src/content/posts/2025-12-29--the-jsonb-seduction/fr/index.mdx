@@ -1,38 +1,21 @@
 ---
-title: ''
-subTitle: >-
-  JSONB est puissant, utile et très facile à mal utiliser lorsque vous laissez
-  un blob devenir votre schéma réel.
-date: '2025-12-29'
-modified: '2025-12-30'
-tags:
-  - postgres
-  - postgresql
-  - databases
-  - jsonb
-  - json
-  - schema-design
-  - technical-debt
-category: Code
-subCategory: Databases
-social_image: ../desktop-social.webp
-cover_full_width: ../wide.webp
-cover_mobile: ../square.webp
-cover_icon: ../square.webp
+title: "JSONB : La meilleure façon de ruiner votre base de données"
+subTitle: "JSONB est puissant, utile, et très facile à mal utiliser quand on laisse un blob devenir son vrai schéma."
 ---
-PostgreSQL a introduit JSONB pour vous permettre de stocker des données semi-structurées sans définir des schémas rigides à l'avance. L'idée était pertinente : parfois, on ne connaît vraiment pas la forme des données, ou celles-ci changent trop fréquemment pour que les colonnes traditionnelles soient pertinentes.
 
-Cela importe car JSONB n'est pas une erreur. Dans de nombreux systèmes, il constitue la représentation la plus claire de l'espace de problème. Si vous stockez des charges utiles de webhooks tiers, des corps d'événements versionnés, des drapeaux de fonctionnalité ou des objets de configuration pour des modèles de LLM (Large Language Models), où chaque fournisseur et modèle expose un ensemble d'options légèrement différent et en constante évolution, forcer tout cela dans des colonnes de premier plan peut être plus gênant qu'utile.
+PostgreSQL a ajouté JSONB pour vous permettre de stocker des données semi-structurées sans définir de schémas rigides au préalable. L'idée était solide : parfois, vous ne savez vraiment pas à quoi ressembleront les données, ou elles changent trop fréquemment pour que les colonnes traditionnelles aient un sens.
 
-Le problème, c'est que JSONB est aussi le moyen le plus facile de reporter les décisions sur le schéma sans admettre que l'on les reporte. Entre l'intention et la mise en œuvre, il est devenu l'équivalent de base de données de « je nettoierai ma chambre plus tard ». Cette solution temporaire que vous avez utilisée il y a six mois ? Elle est toujours là, et maintenant la production en dépend.
+Cela compte parce que JSONB n'est pas une erreur. Dans de nombreux systèmes, c'est la représentation la plus propre de l'espace problème. Si vous stockez des payloads de webhooks tiers, des corps d'événements versionnés, des feature flags ou des objets de configuration LLM où chaque fournisseur et modèle expose un ensemble d'options légèrement différent et en constante évolution, forcer tout dans des colonnes de première classe peut être plus gênant qu'autre chose.
 
-Je continue à observer le même schéma. Une équipe ajoute une colonne JSONB car elle n'est pas certaine des exigences. Elle se promet de la normaliser une fois que les choses se stabiliseront. Trois ans plus tard, cette colonne contient quarante versions différentes de ce qui était censé être un profil utilisateur, consultée par quinze services qui font chacun des hypothèses différentes sur son contenu.
+Le problème, c'est que JSONB est aussi la façon la plus simple de reporter les décisions de schéma sans admettre qu'on les reporte. Quelque part entre l'intention et l'implémentation, c'est devenu l'équivalent base de données de « je rangerai ma chambre plus tard ». Cette solution temporaire que vous avez adoptée il y a six mois ? Elle est toujours là, et la production en dépend maintenant.
 
-La dette technique ne vient pas de JSONB lui-même. Elle provient de l'écart entre ce que vous croyiez construire et ce que vous avez réellement construit : un système de schéma à la lecture non documenté.
+Je continue de voir le même schéma. Une équipe ajoute une colonne JSONB parce qu'elle n'est pas sûre des exigences. Elle se promet de normaliser une fois que les choses se seront stabilisées. Trois ans plus tard, cette colonne contient quarante versions différentes de ce qui était censé être un profil utilisateur, interrogée par quinze services qui font chacun des hypothèses différentes sur ce qui se trouve à l'intérieur.
+
+La dette technique, ce n'est pas le JSONB lui-même. C'est l'écart entre ce que vous vous êtes dit que vous construisiez et ce que vous avez réellement construit : un schéma-on-read non documenté.
 
 ## Ce qui se passe généralement
 
-Vous ajoutez une fonctionnalité et vous n'êtes pas certain que les utilisateurs aient besoin d'un `twitter_handle`, d'un `bluesky_handle` ou d'autre chose. Plutôt que de réfléchir au schéma, vous faites ceci :
+Vous ajoutez une fonctionnalité et vous ne savez pas si les utilisateurs ont besoin d'un `twitter_handle` ou d'un `bluesky_handle` ou d'autre chose entièrement. Plutôt que de réfléchir au schéma, vous faites ceci :
 
 ```sql
 CREATE TABLE users (
@@ -41,74 +24,71 @@ CREATE TABLE users (
 );
 ```
 
-Ça fonctionne. Vous déployez la fonctionnalité, passez à la suivante, puis à la suivante. La colonne JSONB grandit discrètement en arrière-plan.
+Ça marche. Vous livrez la fonctionnalité, vous passez à la suivante, puis à la suivante encore. La colonne JSONB grossit tranquillement en arrière-plan.
 
-C'est le point de bifurcation. Si `profile` reste un blob opaque récupéré via `user.id`, vous êtes probablement en sécurité. Si elle commence à devenir le principal lieu de stockage des données métier, les compromis changent rapidement.
+C'est la fourche sur le chemin. Si `profile` reste un blob opaque récupéré par `user.id`, vous vous en sortez probablement. Si ça commence à devenir le lieu principal où vivent les données métier, les compromis changent vite.
 
-Le produit demande : *"Combien d'utilisateurs sont à New York ?"*
+Le produit demande : *« Combien d'utilisateurs sont à New York ? »*
 
 Vous écrivez :
-
 ```sql
 SELECT count(*) FROM users WHERE profile->>'location' = 'New York';
 ```
 
-PostgreSQL effectue une lecture complète de la table. Chaque ligne.
+PostgreSQL effectue un scan complet de la table. Chaque ligne.
 
-Vous ajoutez alors un index GIN. Peut-être que c’est encore acceptable. Parfois, oui. Mais maintenant, vous payez en complexité réelle et en coût de stockage parce qu’un champ qui se comporte comme des données relationnelles de premier ordre n’est jamais devenu une colonne de premier ordre.
+Vous ajoutez donc un index GIN. Peut-être que c'est encore acceptable. Parfois oui. Mais maintenant vous payez un vrai coût en complexité et en stockage parce qu'un champ qui se comporte comme une donnée relationnelle de première classe n'est jamais devenu une colonne de première classe.
 
 ### Année 1 : Dérive du schéma
 
-Vous avez trois versions des données dans la même colonne.
+Vous avez trois versions de données dans la même colonne.
 
 *   Ligne 1 : `{"city": "NYC"}`
 *   Ligne 1000 : `{"location": "NYC"}`
 *   Ligne 5000 : `{"address": {"city": "New York"}}`
 
-Votre code applicatif ressemble désormais à ceci :
+Votre code applicatif ressemble maintenant à ça :
 
 ```javascript
 const city = user.location || user.city || user.address?.city || "Unknown";
 ```
 
-Vous n’avez pas supprimé le schéma. Vous avez simplement déplacé les vérifications de validation et de cohérence du base de données vers du code applicatif dispersé.
+Vous n'avez pas supprimé le schéma. Vous avez juste déplacé la validation et la cohérence de la base de données vers du code applicatif dispersé.
 
 ---
 
-## Quand Utiliser Réellement JSONB
+## Quand utiliser réellement JSONB
 
-Le type JSONB possède des cas d'utilisation valides. Beaucoup de fois, c’est parfaitement acceptable, et parfois c’est même le meilleur choix disponible.
+JSONB a des cas d'utilisation valides. Souvent, c'est parfaitement correct, et parfois c'est le meilleur choix disponible.
 
-La distinction cruciale n’est pas « structuré = bon, JSON = mauvais ». Elle est plutôt proche de ceci :
+La distinction critique n'est pas « structuré bien, JSON mal ». C'est plutôt ceci :
 
-- Les données sont-elles principalement récupérées en entier via une clé primaire stable ?  
-- Les clés varient-elles de manière significative selon les fournisseurs, les versions, les clients ou le temps ?  
-- Interrogez-vous quelques champs connus, ou inventez-vous régulièrement de nouvelles requêtes sur des chemins complexes ?  
-- L’application gère-t-elle intentionnellement la gestion des versions et la validation, ou improvise-t-elle ?
+- Les données sont-elles principalement récupérées en bloc par une clé primaire stable ?
+- Les clés varient-elles matériellement selon les fournisseurs, versions, locataires ou le temps ?
+- Interrogez-vous quelques champs connus, ou inventez-vous de nouvelles requêtes de chemin à chaque sprint ?
+- L'application possède-t-elle le versionnage et la validation intentionnellement, ou est-ce du bricolage ?
 
-### Cas d'Usage Justifiés pour JSONB
+### Cas d'utilisation légitimes de JSONB
 
-### Cas d'Usage Justifiés pour JSONB
+1.  **Payloads de webhooks** : Vous recevez des données de Stripe, Slack ou GitHub. Vous n'avez aucun contrôle sur le schéma. Vous ne les interrogerez peut-être jamais. Vous avez juste besoin de les stocker pour le débogage ou le replay. **Parfait pour JSONB.**
 
-1.  **Charges utiles de webhooks** : Vous recevez des données de Stripe, Slack ou GitHub. Vous n'avez aucun contrôle sur le schéma. Vous n'interrogez jamais les champs spécifiques. Vous devez simplement les stocker pour le débogage ou la répétition. **Idéal pour JSONB.**
+2.  **Logs et flux d'événements** : Logs applicatifs, traces d'audit, contextes d'erreur. Ce sont des écritures massives, rarement interrogées par des champs spécifiques, et souvent analysées en bloc ou exportées vers des plateformes d'analytique. **JSONB convient ici.**
 
-2.  **Journalisation et flux d'événements** : Logs d'application, traces d'audit, contextes d'erreurs. Ces données sont écrites intensivement, rarement interrogées par des champs spécifiques, et analysées en masse ou exportées vers des plateformes d'analyse. **JSONB convient ici.**
+3.  **Préférences et paramètres utilisateur** : Objets de paramètres où vous avez 100+ booléens, la plupart sont faux, et vous récupérez toujours le blob entier par ID utilisateur. Vous ne faites pas de `WHERE preferences->>'theme' = 'dark'`. **JSONB fonctionne.**
 
-3.  **Préférences et paramètres utilisateur** : Objets de configuration avec 100+ indicateurs booléens, la plupart à faux, et toujours récupérés intégralement par ID utilisateur. Vous n'exécutez pas de requêtes comme `WHERE preferences->>'theme' = 'dark'`. **JSONB fonctionne.**
+4.  **Configuration fournisseur / modèle LLM** : C'est l'un des exemples modernes les plus clairs. OpenAI, Anthropic, Gemini, modèles open-weight locaux et gateways spécifiques aux fournisseurs exposent tous des paramètres qui se chevauchent mais diffèrent. Même au sein d'un seul fournisseur, les capacités des modèles et les noms d'options évoluent. Un blob de configuration JSONB est souvent bien plus honnête que de prétendre que `temperature`, `top_p`, `reasoning_effort`, `json_schema`, `tool_choice` et vingt autres boutons devraient tous être des colonnes universelles. **JSONB est souvent la bonne abstraction ici.**
 
-4.  **Configuration de fournisseurs / modèles LLM** : Cet exemple est l'un des plus clairs en contexte moderne. OpenAI, Anthropic, Gemini, les modèles locaux à poids ouverts et les passerelles spécifiques aux fournisseurs exposent des paramètres partiellement redondants mais distincts. Même chez un seul fournisseur, les capacités des modèles et les noms d'options évoluent. Un blob JSONB est souvent plus honnête que de prétendre que `temperature`, `top_p`, `reasoning_effort`, `json_schema`, `tool_choice` et vingt autres paramètres devraient être des colonnes universelles. **JSONB est souvent l'abstraction appropriée ici.**
+5.  **Cache de réponses API** : Vous mettez en cache des réponses API entières. La base de données n'est qu'un Redis plus rapide. Vous récupérez par clé de cache, jamais par propriétés imbriquées. **JSONB est approprié.**
 
-5.  **Mise en cache des réponses d'API** : Vous cachez des réponses d'API entières. La base de données est juste un Redis plus rapide. Vous récupérez par clé de cache, jamais par propriétés imbriquées. **JSONB est pertinent.**
+6.  **Event Sourcing** : Vous stockez des payloads d'événements immuables. Vos requêtes sont toujours « donne-moi tous les événements pour l'agrégat X » ordonnés par temps. Vous ne faites jamais de clauses `WHERE` sur les propriétés d'événement. **JSONB convient.**
 
-6.  **Journalisation d'événements** : Vous stockez des charges utiles d'événements immuables. Vos requêtes sont toujours "donnez-moi tous les événements pour l'agrégat X" ordonnés par temps. Vous n'effectuez jamais de clauses `WHERE` sur les propriétés d'événements. **JSONB s'adapte.**
+7.  **Surfaces d'extensibilité** : Intégrations, paramètres de plugins, overrides par locataire, métadonnées de marketplace, capacités de fournisseur ou champs « extras » où vous vous attendez explicitement à ce que la forme varie par sous-type. **JSONB peut être le bon contrat, pas un compromis.**
 
-7.  **Surfaces d'extensibilité** : Intégrations, paramètres de plugins, remplacements par locataire, métadonnées de marketplace, capacités de fournisseurs, ou champs "extras" où vous anticipez explicitement que la structure variera selon le sous-type. **JSONB peut être le contrat approprié, pas un compromis.**
+Règle générale : si l'application récupère le document par une clé connue et sait comment le valider/versionner, JSONB peut être excellent. Si le business continue de poser des questions relationnelles sur des clés imbriquées, ces champs essaient de devenir des colonnes.
 
-Règle empirique : si l'application récupère le document par une clé connue et sait comment le valider/le versionner, JSONB peut être excellent. Si l'entreprise continue à poser des questions relationnelles sur des clés imbriquées, ces champs cherchent à devenir des colonnes.
+## Le meilleur schéma est souvent hybride
 
-## Le Meilleur Modèle Est Souvent Hybride
-
-Beaucoup de systèmes matures adoptent cette approche :
+Beaucoup de systèmes matures arrivent ici :
 
 ```sql
 CREATE TABLE llm_requests (
@@ -121,18 +101,18 @@ CREATE TABLE llm_requests (
 );
 ```
 
-Cela est généralement meilleur que les extrêmes.
+C'est généralement mieux que les deux extrêmes.
 
-- `provider`, `model`, `status` et `created_at` sont des colonnes de premier ordre car vous les filtrerez, les joindrez, les agrégierez et les indexerez.
-- `config` reste JSONB car la surface exacte des options dépend du modèle, du fournisseur, et évoluera probablement.
+- `provider`, `model`, `status` et `created_at` sont des colonnes de première classe parce que vous les filtrerez, rejoindrez, agrégerez et indexerez.
+- `config` reste JSONB parce que la surface d'options exacte est spécifique au modèle, au fournisseur, et susceptible d'évoluer.
 
-Ce n'est pas « ne pas normaliser ». C'est tracer la bonne limite.
+Ce n'est pas « échouer à normaliser ». C'est tracer la ligne au bon endroit.
 
-### À grande échelle : le versionnage des objets > la normalisation
+### À grande échelle : le versionnage d'objets > la normalisation
 
-Voici où cela devient intéressant. À une échelle suffisamment grande, la solution « juste » n'est pas la normalisation, c'est le versionnage des objets.
+Voilà où ça devient intéressant. À une échelle suffisamment grande, la « bonne » solution n'est pas la normalisation — c'est le versionnage d'objets.
 
-Si vous avez des milliards de lignes et une évolution fréquente du schéma, la migration des colonnes devient coûteuse. Des entreprises comme Stripe, GitHub et Netflix ne normalisent pas tout. Elles utilisent plutôt :
+Si vous avez des milliards de lignes et une évolution fréquente du schéma, migrer des colonnes devient coûteux. Des entreprises comme Stripe, GitHub et Netflix ne normalisent pas tout. À la place :
 
 ```sql
 CREATE TABLE entities (
@@ -142,47 +122,44 @@ CREATE TABLE entities (
 );
 ```
 
-Votre application sait lire `version: 1`, `version: 2`, `version: 3`. Aucune migration de base de données pour de nouveaux champs. Le code gère la compatibilité descendante.
+Votre application sait comment lire `version: 1`, `version: 2`, `version: 3`. Pas de migrations de base de données pour les nouveaux champs. Le code gère la compatibilité ascendante.
 
-C'est une décision architecturale, et non de la paresse. Cela échange la complexité de la base de données contre celle de l'application. Parfois, c'est exactement le bon compromis, surtout lorsque le document est naturellement versionné et que l'application est l'interprète canonique.
+C'est une décision architecturale, pas de la paresse. Ça échange la complexité de la base de données contre la complexité applicative. Parfois, c'est exactement le bon compromis, surtout quand le document est naturellement versionné et que l'app en est l'interprète canonique.
 
-Le mode d'échec n'est pas "utiliser JSONB". Le mode d'échec est d'utiliser JSONB sans versionnage, validation, règles de promotion, ou une frontière claire entre les données documentaires et les données relationnelles.
+Le mode d'échec n'est pas « utiliser JSONB ». Le mode d'échec, c'est utiliser JSONB sans versionnage, sans validation, sans règles de promotion, sans frontière claire entre données document et données relationnelles.
 
 ## Les questions qui comptent vraiment
 
-Avant d'ajouter une colonne JSONB, posez-vous :
+Avant d'ajouter une colonne JSONB, demandez-vous :
 
-1.  Allons-nous fréquemment interroger des champs imbriqués dans `WHERE`, `JOIN`, `GROUP BY` ou `ORDER BY` ?
-2.  Contrôlons-nous ce schéma, ou est-il défini externement et volatile ?
+1.  Interrogerons-nous des champs imbriqués dans `WHERE`, `JOIN`, `GROUP BY` ou `ORDER BY` régulièrement ?
+2.  Contrôlons-nous ce schéma, ou est-il défini en externe et volatile ?
 3.  La forme est-elle intentionnellement hétérogène entre les enregistrements ?
-4.  Disposons-nous de validations et de versionnage au niveau de l'application ?
-5.  Quels champs deviendront probablement des dimensions opérationnelles plus tard ?
+4.  Avons-nous une validation et un versionnage au niveau de l'application ?
+5.  Quels champs sont susceptibles de devenir des dimensions opérationnelles plus tard ?
 
-Si la réponse à la question 1 est "oui, constamment", c'est un signal fort en faveur des colonnes.
+Si la réponse à la question 1 est « oui, constamment », c'est un signal fort pour des colonnes.
 
-Si les réponses aux questions 2 et 3 sont "oui", JSONB effectue probablement un travail réel pour vous.
+Si les réponses aux questions 2 et 3 sont « oui », JSONB fait probablement du vrai travail pour vous.
 
-## Échapper au piège  
+---
+## Sortir du piège
 
-Si vous êtes déjà dans ce trou, arrêtez de creuser.  
+Si vous êtes déjà dans ce trou, arrêtez de creuser.
 
-1. **Audit** : Exécutez `jsonb_object_keys` et inspectez le dérive réel de la forme, pas celle que vous supposez exister.  
-2. **Promouvoir** : Identifiez les champs sur lesquels vous filtrez, joignez, trie ou générez des rapports le plus souvent. Transformez-les en colonnes réelles.  
-3. **Valider** : Ajoutez une validation au niveau de l'application ou de la base de données pour tout ce qui reste dans JSONB.  
-4. **Versionner** : Si le blob contient des données réelles de domaine, versionnez-le explicitement.  
-5. **Raccourcir** : Supprimez les clés dupliquées du blob une fois que les colonnes promues sont établies.  
+1.  Audit : Exécutez `jsonb_object_keys` et inspectez la dérive réelle des formes, pas la forme que vous supposez exister.
+2.  Promotion : Identifiez les champs que vous filtrez, rejoignez, triez ou rapportez le plus souvent. Faites-en de vraies colonnes.
+3.  Validation : Ajoutez une validation au niveau applicatif ou base de données pour ce qui reste dans JSONB.
+4.  Versionnage : Si le blob est une vraie donnée de domaine, versionnez-le explicitement.
+5.  Nettoyage : Supprimez les clés dupliquées du blob une fois les colonnes promues établies.
 
-Ne vous dites pas que chaque blob doit être normalisé. Ne vous dites pas non plus qu'un blob avec des sémantiques métier permanentes est "temporaire".  
+Ne vous dites pas que chaque blob doit être normalisé. Ne vous dites pas non plus qu'un blob avec une sémantique métier permanente est « temporaire ».
 
-JSONB est excellent lorsque le document est vraiment document-formé. Il est dangereux lorsqu'il s'agit d'un schéma relationnel portant une moustache factice.  
+JSONB est excellent quand le document a vraiment une forme de document. Il est dangereux quand c'est un schéma relationnel avec une fausse moustache.
 
-## Ressources  
-- [Documentation JSONB PostgreSQL](https://www.postgresql.org/docs/current/datatype-json.html)  
-- [Stratégies d'indexation JSONB](https://www.postgresql.org/docs/current/datatype-json.html#JSON-INDEXING)  
-- [Quand utiliser JSONB vs colonnes relationnelles](https://www.citusdata.com/blog/2016/07/14/choosing-nosql-hstore-json-jsonb/)  
-- [Meilleures pratiques de conception de schémas PostgreSQL](https://www.postgresql.org/docs/current/ddl.html)
+## Ressources
 
-- [Documentation JSONB de PostgreSQL](https://www.postgresql.org/docs/current/datatype-json.html)  
-- [Stratégies d'indexation JSONB](https://www.postgresql.org/docs/current/datatype-json.html#JSON-INDEXING)  
-- [Quand utiliser JSONB vs colonnes relationnelles](https://www.citusdata.com/blog/2016/07/14/choosing-nosql-hstore-json-jsonb/)  
-- [Meilleures pratiques de conception de schémas PostgreSQL](https://www.postgresql.org/docs/current/ddl.html)
+- [Documentation PostgreSQL JSONB](https://www.postgresql.org/docs/current/datatype-json.html)
+- [Stratégies d'indexation JSONB](https://www.postgresql.org/docs/current/datatype-json.html#JSON-INDEXING)
+- [Quand utiliser JSONB vs colonnes relationnelles](https://www.citusdata.com/blog/2016/07/14/choosing-nosql-hstore-json-jsonb/)
+- [Bonnes pratiques de conception de schéma PostgreSQL](https://www.postgresql.org/docs/current/ddl.html)
