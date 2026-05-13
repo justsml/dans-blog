@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: weakmap-the-javascript-feature-you-dont-use
+- Locale: it
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2025-12-29--weakmap-the-javascript-feature-you-dont-use/it/index.mdx
+- Validation: deferred
+- Runtime seconds: 1.96
+- Input tokens: 5534
+- Output tokens: 1918
+- Thinking tokens: unknown
+- Cached input tokens: 2816
+- Cache write tokens: 0
+- Estimated cost: $0.000561
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Blocca le perdite di memoria con WeakMap
 subTitle: Correggere il codicedebole con riferimenti deboli!
@@ -127,3 +145,4 @@ A volte la migliore caratteristica è proprio quella che funziona senza che tu d
 - [MDN: Memory Management](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Memory_management)
 - [V8 Blog: Weak References and Finalizers](https://v8.dev/features/weak-references)
 - [JavaScript.info: WeakMap and WeakSet](https://javascript.info/weakmap-weakset)
+````
