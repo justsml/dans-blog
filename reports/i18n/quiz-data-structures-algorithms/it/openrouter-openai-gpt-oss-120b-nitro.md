@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-data-structures-algorithms
+- Locale: it
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2024-10-31--quiz-data-structures-algorithms/it/index.mdx
+- Validation: deferred
+- Runtime seconds: 22.28
+- Input tokens: 16074
+- Output tokens: 8864
+- Thinking tokens: unknown
+- Cached input tokens: 4992
+- Cache write tokens: 0
+- Estimated cost: $0.002222
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: 'Quiz: Strutture Dati e Algoritmi'
 subTitle: Puoi fare il BS su un albero binario?
@@ -525,3 +543,4 @@ Questo quiz valuterà la tua conoscenza di strutture dati (Stack, Liste, Alberi,
 </Challenge>
 
 </QuizUI>
+````
