@@ -3,21 +3,21 @@
 - Locale: de
 - Model: openrouter/openai/gpt-oss-120b:nitro
 - Target: src/content/posts/2015-06-06--docker-firewall-setup/de/index.mdx
-- Validation: rejected: direct AI SDK translation failed
-- Runtime seconds: 1.54
-- Input tokens: 3963
-- Output tokens: 875
+- Validation: deferred
+- Runtime seconds: 1.51
+- Input tokens: 4024
+- Output tokens: 891
 - Thinking tokens: unknown
-- Cached input tokens: 2176
+- Cached input tokens: 1280
 - Cache write tokens: 0
-- Estimated cost: $0.000312
+- Estimated cost: $0.000317
 - Pricing source: local-openrouter-estimate
-- Note: Command failed: bun run i18n:validate --slug docker-firewall-setup --locale de
+- Note: Generated through the direct AI SDK chunked translator.
 ## Raw Output
 
 ````mdx
 ---
-title: Docker‑Firewalleinrichten
+title: Docker‑Firewall‑Konfiguration
 subTitle: Firewall für Docker‑Host einrichten
 draft: true
 date: '2015-06-06'
@@ -34,8 +34,8 @@ cover_icon: ../icon_charles-deluvio-456501-unsplash.webp
 ---
 ## Setup Docker Host's Firewall
 
-1. Debian/Ubuntu Server wird vorausgesetzt  
-1. Für den Einsatz auf einem Docker‑Host‑Server konzipiert  
+1. Debian/Ubuntu Server wird vorausgesetzt
+1. Für den Einsatz auf einem Docker‑Host‑Server konzipiert
 
 ### Install Requirements
 
@@ -63,7 +63,7 @@ ufw logging medium
 # Zuerst alles blockieren
 ufw default deny incoming
 
-# ERFORDERLICH: WÄHLEN SIE *EINE* DER FOLGENDEN DEFAULT OUTBOUND‑REGELN:
+# ERFORDERLICH: WÄHLEN SIE *EINE* DER FOLGENDEN DEFAULT‑AUSGANGSREGELN:
 ufw default deny outgoing
 ufw default allow outgoing
 
@@ -79,12 +79,12 @@ ufw allow out on eth0 from 0.0.0.0/0 to any port 443 proto tcp
 ufw allow 80/tcp
 ufw allow 443/tcp
 ufw allow log 22/tcp
-ufw limit ssh # Basis‑Rate‑Limit, reduziert SSH‑Brute‑Force‑Angriffe
+ufw limit ssh # Basis‑Rate‑Limit, reduziert SSH‑Brute‑Force‑Versuche
 
 
 # Setze deine externe IP
 export EXTERNAL_IP=123.123.123.123
-# Aktualisiere die Docker‑IP falls nötig
+# Aktualisiere Docker‑IP falls nötig
 export DOCKER_IP=172.17.42.1
 # Leite TCP‑Port 8080 zum Docker‑Container weiter
 ufw allow proto tcp from $EXTERNAL_IP port 8080 to $DOCKER_IP port 3000
@@ -92,7 +92,7 @@ ufw allow proto tcp from $EXTERNAL_IP port 8080 to $DOCKER_IP port 3000
 
 ## Firewall aktivieren / starten
 
-> Vorsicht: Nicht den SSH‑Port sperren (sshd verwendet standardmäßig 22)
+> Vorsicht, nicht den SSH‑Port aussperren (sshd nutzt standardmäßig 22)
 
 ~~~sh
 ufw --force enable
@@ -122,5 +122,5 @@ nmap -p 1-10240,27017 --open -v -APN $TARGET_HOST
 nmap -p 1-10240,27017 -O --osscan-guess $TARGET_HOST
 ```
 
-> ERLEDIGT! Jetzt sollten Sie NUR die Ports sehen, die Sie konfiguriert haben!
+> FERTIG! Jetzt sollten Sie NUR die Ports sehen, die Sie konfiguriert haben!
 ````
