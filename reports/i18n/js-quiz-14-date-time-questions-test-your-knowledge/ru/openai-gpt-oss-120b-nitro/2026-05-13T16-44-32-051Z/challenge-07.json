@@ -1,0 +1,44 @@
+{
+  "index": 6,
+  "attempt": 1,
+  "originalTitle": "UTC Dates Part 1",
+  "translatedTitle": "UTC‑даты Часть 1",
+  "translation": {
+    "title": "UTC‑даты Часть 1",
+    "group": "Работа с датами",
+    "options": [
+      {
+        "text": "Wed, 01 Jan 2020 00:00:00 GMT"
+      },
+      {
+        "text": "Thu, 02 Jan 2020 00:00:00 GMT"
+      },
+      {
+        "text": "TypeError"
+      },
+      {
+        "text": "NaN"
+      }
+    ],
+    "questionProse": [
+      "Что будет включено в вывод?"
+    ],
+    "explanationProse": [
+      "Вы получите `TypeError: date.toUTCString is not a function`, поскольку [`Date.UTC()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/UTC) возвращает целое число в миллисекундах, а не экземпляр даты.\n\n      {/* Метод `getFullYear()` использует ваш локальный смещение (предположим GMT-07:00 для этих вопросов). Это значит, что он вернёт предыдущий год (NYE -7 часов). Метод `getUTCFullYear()` вернёт год, который мы передали в `Date.UTC()`, 2020. */}"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"UTC‑даты Часть 1\",\n  \"group\": \"Работа с датами\",\n  \"options\": [\n    {\n      \"text\": \"Wed, 01 Jan 2020 00:00:00 GMT\"\n    },\n    {\n      \"text\": \"Thu, 02 Jan 2020 00:00:00 GMT\"\n    },\n    {\n      \"text\": \"TypeError\"\n    },\n    {\n      \"text\": \"NaN\"\n    }\n  ],\n  \"questionProse\": [\n    \"Что будет включено в вывод?\"\n  ],\n  \"explanationProse\": [\n    \"Вы получите `TypeError: date.toUTCString is not a function`, поскольку [`Date.UTC()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/UTC) возвращает целое число в миллисекундах, а не экземпляр даты.\\n\\n      {/* Метод `getFullYear()` использует ваш локальный смещение (предположим GMT-07:00 для этих вопросов). Это значит, что он вернёт предыдущий год (NYE -7 часов). Метод `getUTCFullYear()` вернёт год, который мы передали в `Date.UTC()`, 2020. */}\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 936,
+    "outputTokens": 794,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 2607
+  },
+  "cost": {
+    "inputUsd": 0.000036504,
+    "outputUsd": 0.00014292,
+    "totalUsd": 0.000179424,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
