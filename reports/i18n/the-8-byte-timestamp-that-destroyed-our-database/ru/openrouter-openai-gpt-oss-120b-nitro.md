@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: the-8-byte-timestamp-that-destroyed-our-database
+- Locale: ru
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2025-12-29--the-8-byte-timestamp-that-destroyed-our-database/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 5.56
+- Input tokens: 10375
+- Output tokens: 3059
+- Thinking tokens: unknown
+- Cached input tokens: 5120
+- Cache write tokens: 0
+- Estimated cost: $0.000955
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Ваш таймстамп — ложь
 subTitle: Как билет на поезд научил меня хранить время в базах данных
@@ -139,3 +157,4 @@ SELECT * FROM orders WHERE created_at = '2026-01-15 10:00:00.123';
 - [Формат даты и времени ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
 - [База данных часовых поясов (IANA)](https://www.iana.org/time-zones)
 - [Работа с метками времени в распределённых системах](https://www.postgresql.org/docs/current/functions-datetime.html)
+````
