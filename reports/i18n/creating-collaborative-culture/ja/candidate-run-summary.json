@@ -4,29 +4,29 @@
   "slug": "creating-collaborative-culture",
   "locale": "ja",
   "startedAt": "2026-05-13T16:38:21.202Z",
-  "updatedAt": "2026-05-13T16:38:25.277Z",
+  "updatedAt": "2026-05-13T16:38:41.364Z",
   "modelsRequested": [
     "openrouter/openai/gpt-oss-120b:nitro",
     "openrouter/qwen/qwen3-32b:nitro"
   ],
-  "attemptedModels": 2,
+  "attemptedModels": 4,
   "skippedModels": 0,
-  "rejectedModels": 1,
-  "candidateModels": 1,
+  "rejectedModels": 2,
+  "candidateModels": 2,
   "totals": {
-    "inputTokens": 6068,
-    "outputTokens": 1710,
+    "inputTokens": 11686,
+    "outputTokens": 7758,
     "thinkingTokens": 0,
-    "cachedInputTokens": 3072,
+    "cachedInputTokens": 4096,
     "cacheWriteTokens": 0,
-    "estimatedCostUsd": 0.000544,
+    "estimatedCostUsd": 0.002445,
     "hasUnknownInputTokens": false,
     "hasUnknownOutputTokens": false,
     "hasUnknownThinkingTokens": true,
     "hasUnknownCachedInputTokens": false,
     "hasUnknownCacheWriteTokens": false,
     "hasUnknownEstimatedCost": false,
-    "runtimeSeconds": "3.16"
+    "runtimeSeconds": "23.32"
   },
   "attempts": [
     {
@@ -62,6 +62,42 @@
           "cacheWrite": 0
         },
         "estimatedCostUsd": 0.000272226,
+        "pricingSource": "local-openrouter-estimate"
+      }
+    },
+    {
+      "model": "openrouter/qwen/qwen3-32b:nitro",
+      "status": "candidate",
+      "validationStatus": "deferred",
+      "reportPath": "reports/i18n/creating-collaborative-culture/ja/openrouter-qwen-qwen3-32b-nitro.md",
+      "note": "Generated through the direct AI SDK chunked translator.",
+      "telemetry": {
+        "runtimeSeconds": "10.08",
+        "tokens": {
+          "input": 2809,
+          "output": 3024,
+          "cached": 512,
+          "cacheWrite": 0
+        },
+        "estimatedCostUsd": 0.0009504800000000001,
+        "pricingSource": "local-openrouter-estimate"
+      }
+    },
+    {
+      "model": "openrouter/qwen/qwen3-32b:nitro",
+      "status": "rejected",
+      "validationStatus": "rejected: direct AI SDK translation failed",
+      "reportPath": "reports/i18n/creating-collaborative-culture/ja/openrouter-qwen-qwen3-32b-nitro.md",
+      "note": "Command failed: git commit --only -m i18n candidate(ja): creating-collaborative-culture via openrouter/qwen/qwen3-32b:nitro -- src/content/posts/2021-03-03--creating-collaborative-culture/ja/index.mdx reports/i18n/creating-collaborative-culture/ja",
+      "telemetry": {
+        "runtimeSeconds": "10.08",
+        "tokens": {
+          "input": 2809,
+          "output": 3024,
+          "cached": 512,
+          "cacheWrite": 0
+        },
+        "estimatedCostUsd": 0.0009504800000000001,
         "pricingSource": "local-openrouter-estimate"
       }
     }
