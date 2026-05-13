@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: llm-generative-ui-landscape-2026
+- Locale: ja
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-05-10--llm-generative-ui-landscape-2026/ja/index.mdx
+- Validation: passed
+- Runtime seconds: 107.92
+- Input tokens: 59296
+- Output tokens: 44402
+- Thinking tokens: unknown
+- Cached input tokens: 18944
+- Cache write tokens: 0
+- Estimated cost: $0.015400
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: ''
 subTitle: ツールからコンポーネントへのレンダリングからオープンエンド生成まで——各アプローチのマップと、それぞれの複雑さが正当化される場面。
@@ -421,3 +439,4 @@ ApprovalGate        — action requiring human confirmation
 現在最も重要となるエンジニアリング上の課題はフレームワーク選定ではありません。それはカタログ設計であり、モデルが何を表示可能かを決定するプロダクトの明確さが技術スキルより重要です。セマンティック検証も同様で、生成されたUIが主張通りに動作することをテストする必要があります。スキーマ検証を通過するだけでは不十分です。また、アクセシビリティギャップも重要で、各コンポーネントおよびその組み合わせが、手書きUIと同じアクセシビリティ基準を満たすカタログを構築する必要があります。
 
 モデルは、あなたが与えた文法の枠内で、あなたが指示した通りに動作します。文法は意図的であるようにしてください。
+````
