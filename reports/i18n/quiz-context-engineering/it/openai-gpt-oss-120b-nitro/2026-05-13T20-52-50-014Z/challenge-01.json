@@ -1,0 +1,44 @@
+{
+  "index": 0,
+  "attempt": 1,
+  "originalTitle": "Context Window Basics",
+  "translatedTitle": "Nozioni di base sulla finestra di contesto",
+  "translation": {
+    "title": "Nozioni di base sulla finestra di contesto",
+    "group": "Fondamenti",
+    "options": [
+      {
+        "text": "Il numero massimo di richieste al minuto"
+      },
+      {
+        "text": "Il limite combinato di token per input e output"
+      },
+      {
+        "text": "Il numero di messaggi in una conversazione"
+      },
+      {
+        "text": "La memoria disponibile tra le sessioni"
+      }
+    ],
+    "questionProse": [
+      "Cosa indica il termine \"finestra di contesto\" in un LLM?"
+    ],
+    "explanationProse": [
+      "La finestra di contesto è il numero totale di token che un modello può elaborare in una singola chiamata — **input + output combinati**. Una finestra di contesto da 128K significa che il tuo prompt + i documenti recuperati + la cronologia della conversazione + la risposta del modello devono tutti stare entro 128.000 token.\n\n    Non ha nulla a che fare con le sessioni, la memoria o i limiti di velocità. Quando raggiungi il limite, il modello o tronca, genera un errore, o — peggio — elimina silenziosamente token che non ti aspettavi."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Nozioni di base sulla finestra di contesto\",\n  \"group\": \"Fondamenti\",\n  \"options\": [\n    {\n      \"text\": \"Il numero massimo di richieste al minuto\"\n    },\n    {\n      \"text\": \"Il limite combinato di token per input e output\"\n    },\n    {\n      \"text\": \"Il numero di messaggi in una conversazione\"\n    },\n    {\n      \"text\": \"La memoria disponibile tra le sessioni\"\n    }\n  ],\n  \"questionProse\": [\n    \"Cosa indica il termine \\\"finestra di contesto\\\" in un LLM?\"\n  ],\n  \"questionCode\": [],\n  \"explanationProse\": [\n    \"La finestra di contesto è il numero totale di token che un modello può elaborare in una singola chiamata — **input + output combinati**. Una finestra di contesto da 128K significa che il tuo prompt + i documenti recuperati + la cronologia della conversazione + la risposta del modello devono tutti stare entro 128.000 token.\\n\\n    Non ha nulla a che fare con le sessioni, la memoria o i limiti di velocità. Quando raggiungi il limite, il modello o tronca, genera un errore, o — peggio — elimina silenziosamente token che non ti aspettavi.\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 855,
+    "outputTokens": 336,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1021
+  },
+  "cost": {
+    "inputUsd": 0.000033345,
+    "outputUsd": 0.00006048,
+    "totalUsd": 0.00009382499999999999,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

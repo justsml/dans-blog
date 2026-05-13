@@ -1,0 +1,44 @@
+{
+  "index": 11,
+  "attempt": 1,
+  "originalTitle": "Prompt Caching",
+  "translatedTitle": "Cache dei Prompt",
+  "translation": {
+    "title": "Cache dei Prompt",
+    "group": "Avanzato",
+    "options": [
+      {
+        "text": "La cache memorizza le risposte e le riproduce per query identiche"
+      },
+      {
+        "text": "La cache memorizza le coppie KV compilate per prefissi di prompt statici, riducendo il costo dei token di input"
+      },
+      {
+        "text": "La cache è disponibile solo nei modelli OpenAI"
+      },
+      {
+        "text": "La cache è automatica e non richiede configurazione da parte dello sviluppatore"
+      }
+    ],
+    "questionProse": [
+      "Che cos'è il \"prompt caching\" nel contesto delle API LLM (Anthropic, OpenAI)?\n    <p className=\"text-sm\">Ultima verifica: 8 maggio 2026. I controlli della cache del provider e i prezzi cambiano rapidamente.</p>"
+    ],
+    "explanationProse": [
+      "Il prompt caching riutilizza la **KV cache / stato del prefisso del prompt** calcolati per prefissi di prompt statici quando il provider lo supporta. Nelle richieste successive con lo stesso prefisso, il modello può saltare il rielaborare quei token — riducendo la latenza e potenzialmente il costo in modo significativo.\n\n    Non si tratta di cache delle risposte. Il modello genera comunque una risposta nuova ogni volta. Si evita solo di ritokenizzare e ricalcolare l'attenzione per la parte del prompt che non cambia.\n\n    Ideale per: prompt di sistema grandi, documenti statici, definizioni di tool, esempi few‑shot — qualsiasi cosa che rimanga identica in molte richieste. Il prefisso cacheato deve trovarsi all*inizio* del tuo prompt.\n\n    Non è la stessa cosa di: deduplicazione semantica, memorizzazione delle risposte, o caching a livello di applicazione."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Cache dei Prompt\",\n  \"group\": \"Avanzato\",\n  \"options\": [\n    {\n      \"text\": \"La cache memorizza le risposte e le riproduce per query identiche\"\n    },\n    {\n      \"text\": \"La cache memorizza le coppie KV compilate per prefissi di prompt statici, riducendo il costo dei token di input\"\n    },\n    {\n      \"text\": \"La cache è disponibile solo nei modelli OpenAI\"\n    },\n    {\n      \"text\": \"La cache è automatica e non richiede configurazione da parte dello sviluppatore\"\n    }\n  ],\n  \"questionProse\": [\n    \"Che cos'è il \\\"prompt caching\\\" nel contesto delle API LLM (Anthropic, OpenAI)?\\n    <p className=\\\"text-sm\\\">Ultima verifica: 8 maggio 2026. I controlli della cache del provider e i prezzi cambiano rapidamente.</p>\"\n  ],\n  \"explanationProse\": [\n    \"Il prompt caching riutilizza la **KV cache / stato del prefisso del prompt** calcolati per prefissi di prompt statici quando il provider lo supporta. Nelle richieste successive con lo stesso prefisso, il modello può saltare il rielaborare quei token — riducendo la latenza e potenzialmente il costo in modo significativo.\\n\\n    Non si tratta di cache delle risposte. Il modello genera comunque una risposta nuova ogni volta. Si evita solo di ritokenizzare e ricalcolare l'attenzione per la parte del prompt che non cambia.\\n\\n    Ideale per: prompt di sistema grandi, documenti statici, definizioni di tool, esempi few‑shot — qualsiasi cosa che rimanga identica in molte richieste. Il prefisso cacheato deve trovarsi all*inizio* del tuo prompt.\\n\\n    Non è la stessa cosa di: deduplicazione semantica, memorizzazione delle risposte, o caching a livello di applicazione.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 966,
+    "outputTokens": 1138,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 3314
+  },
+  "cost": {
+    "inputUsd": 0.000037674,
+    "outputUsd": 0.00020483999999999997,
+    "totalUsd": 0.00024251399999999996,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
