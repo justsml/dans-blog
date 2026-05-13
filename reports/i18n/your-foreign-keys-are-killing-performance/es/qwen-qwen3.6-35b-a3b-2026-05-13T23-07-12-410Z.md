@@ -3,7 +3,7 @@
 - Locale: es
 - Model: qwen/qwen3.6-35b-a3b
 - Target: src/content/posts/2025-12-29--your-foreign-keys-are-killing-performance/es/index.mdx
-- Validation: deferred
+- Validation: rejected: direct AI SDK translation failed
 - Runtime seconds: 131.63
 - Input tokens: 7688
 - Output tokens: 28620
@@ -12,64 +12,58 @@
 - Cache write tokens: 0
 - Estimated cost: $0.029773
 - Pricing source: local-openrouter-estimate
-- Note: Generated through the direct AI SDK chunked translator.
+- Note: Command failed: git commit --only -m i18n candidate(es): your-foreign-keys-are-killing-performance via qwen/qwen3.6-35b-a3b -- reports/i18n/your-foreign-keys-are-killing-performance/es reports/i18n/your-foreign-keys-are-killing-performance/candidates.jsonl
 ## Raw Output
 
 ````mdx
 ---
-title: 'Claves foráneas: deja de preguntar si son rápidas'
-subTitle: Pregunta qué estás optimizando realmente.
-date: '2025-12-29'
-modified: '2026-01-10'
-tags:
-  - postgres
-  - postgresql
-  - databases
-  - performance
-  - foreign-keys
-  - constraints
-  - indexing
+title: "Claves foráneas: deja de preguntar si son rápidas"
+subTitle: "Pregunta para qué estás optimizando realmente."
+date: 2025-12-29
+modified: 2026-01-10
+tags: [postgres, postgresql, databases, performance, foreign-keys, constraints, indexing]
 category: Code
 subCategory: Databases
-cover_full_width: ../wide.webp
-cover_mobile: ../square.webp
-cover_icon: ../square.webp
+cover_full_width: ./wide.webp
+cover_mobile: ./square.webp
+cover_icon: ./square.webp
 ---
-La optimización de base de datos más costosa que he presenciado empezó cuando alguien eliminó todas las claves foráneas.
 
-No porque hubieran medido un cuello de botella. No porque las escrituras fueran realmente lentas. Porque leyeron en algún lado que "las claves foráneas no escalan". Seis meses después, tenían 2000 millones de registros huérfanos, un sistema de facturación cobrando a usuarios eliminados y analíticas con una desviación del 40%.
+La optimización de bases de datos más cara que he visto empezó con alguien eliminando todas las claves foráneas.
 
-¿Qué pasó cuando intentaron restaurar las restricciones? La base de datos se detuvo en seco intentando validar registros existentes que ya estaban corruptos.
+No porque hubieran medido un cuello de botella. No porque las escrituras fueran realmente lentas. Porque leyeron en algún sitio que "las claves foráneas no escalan". Seis meses después, tenían 2 000 millones de registros huérfanos, un sistema de facturación cobrando a usuarios eliminados y analíticas desviadas un 40 %.
 
-En el desarrollo web circula la idea generalizada de que las claves foráneas son inherentemente lentas, como ruedas auxiliares que se quitan al pasar a sistemas "reales". Pero eso ignora por completo el propósito de una restricción. No estás eligiendo entre rápido y lento. Estás eligiendo entre diferentes modos de fallo.
+¿Cuando intentaron volver a añadir las restricciones? La base de datos se paralizó intentando validar datos existentes que ya estaban corruptos.
 
-Piénsalo así: el vidrio laminado, los cinturones de seguridad y los airbags agregan peso al auto. Definitivamente lo hacen más lento y menos eficiente en combustible. Pero no los arrancas para mejorar tu tiempo 0-60, porque estás optimizando para otra cosa por completo.
+Existe esta idea generalizada en el desarrollo web de que las claves foráneas son inherentemente lentas, que son rueditas de entrenamiento que quitas una vez que pasas a sistemas "de verdad". Pero eso es perder completamente de vista para qué sirve una restricción. No estás eligiendo entre rápido y lento. Estás eligiendo entre distintos modos de fallo.
 
-La pregunta no es si las claves foráneas te ralentizan. Por supuesto que lo hacen. La pregunta es qué obtienes a cambio y si realmente lo necesitas.
+Piénsalo así: los cristales de seguridad, los cinturones y los airbags añaden peso a tu coche. Sin duda lo hacen más lento y menos eficiente en combustible. Pero no los arrancas para optimizar tu aceleración de 0 a 100, porque estás optimizando para algo completamente distinto.
 
-## Qué estás intercambiando realmente
+La pregunta no es si las claves foráneas te ralentizan. Claro que lo hacen. La pregunta es qué obtienes a cambio y si realmente lo necesitas.
 
-Déjame darte un ejemplo concreto. Estás construyendo un sistema de monitoreo meteorológico con tablas para estaciones meteorológicas, dispositivos de sensores, lecturas de sensores y estados de EE. UU.
+## Lo que realmente estás intercambiando
 
-¿Vinculas todo con claves foráneas? Pensemos en qué cambia realmente y cuáles son las consecuencias:
+Déjame darte un ejemplo concreto. Estás construyendo un sistema de monitorización meteorológica con tablas para estaciones meteorológicas, dispositivos sensores, lecturas de sensores y estados de EE. UU.
 
-Los estados de EE. UU. probablemente no van a cambiar. Wyoming no va a cambiar de nombre en el corto plazo. No necesitas una clave foránea para validar códigos de estado en cada inserción cuando sabes que los datos de referencia son estáticos. Eso es sobrecarga innecesaria.
+¿Pones claves foráneas conectándolo todo? Pensemos en qué cambia realmente y cuáles son las consecuencias:
 
-Las estaciones meteorológicas se agregan, se reubican y se dan de baja. Pero aquí va una pregunta: ¿quieres que las lecturas históricas "pierdan" su estación si alguien elimina accidentalmente un registro de estación? Quizás prefieras que esos datos permanezcan intactos incluso si la estación ya no existe. Eso implicaría tratar las lecturas como un instantáneo histórico en lugar de una referencia en tiempo real, lo cual cambia por completo si una clave foránea tiene sentido o no.
+Los estados de EE. UU. probablemente no van a cambiar. Wyoming no va a cambiar de nombre pronto. No necesitas una clave foránea para validar códigos de estado en cada inserción cuando sabes que los datos de referencia son estáticos. Eso es sobrecarga inútil.
 
-Las lecturas de los sensores se insertan miles de veces por minuto. Cada validación de clave foránea implica una búsqueda. Cada búsqueda genera contención en tus tablas. Si una validación lenta hace que tu cola de inserciones se sature y pierdas datos en tiempo real, eso es un tipo de pérdida de datos distinto a tener un registro huérfano.
+Las estaciones meteorológicas se añaden, se mueven y se desmantelan. Pero aquí va una pregunta: ¿quieres que las lecturas históricas "pierdan" su estación si alguien elimina accidentalmente un registro de estación? Quizás realmente quieres que esos datos se mantengan intactos aunque la estación desaparezca. Eso significaría que tratas las lecturas como una instantánea histórica en lugar de una referencia en vivo, lo cual cambia si una clave foránea tiene sentido siquiera.
 
-Ya ves hacia dónde va esto. La elección no se trata de rendimiento versus corrección como conceptos abstractos. Se trata de qué fallo específico estás más dispuesto a tolerar, dados tus restricciones reales y sus consecuencias reales.
+Las lecturas de sensores se insertan miles de veces por minuto. Cada comprobación de clave foránea implica una búsqueda. Cada búsqueda genera contención en tus tablas. Si una validación lenta hace que tu cola de inserciones se atasque y pierdes datos en tiempo real, eso es un tipo de pérdida de datos distinto a tener un registro huérfano.
 
-Si referencias incorrectas significan datos de facturación corruptos o violaciones regulatorias, probablemente quieras claves foráneas que te protejan, sin importar el costo de rendimiento. Si una validación lenta hace que pierdas para siempre los datos de sensores en tiempo real porque tu cola se desborda, entonces quizás la validación sea el intercambio incorrecto.
+Ya ves por dónde va esto. La elección no es rendimiento contra corrección como conceptos abstractos. Se trata de qué fallo específico estás más dispuesto a tolerar dadas tus restricciones reales y tus consecuencias reales.
 
-## Cuando las escrituras rápidas realmente importan
+Si referencias incorrectas significan datos de facturación corruptos o violaciones regulatorias, probablemente quieres claves foráneas protegiéndote independientemente del coste de rendimiento. Si una validación lenta significa que pierdes datos de sensores en tiempo real para siempre porque tu cola se desborda, entonces quizás la validación es el intercambio equivocado.
 
-Así que has decidido que necesitas la máxima velocidad de escritura. Tu cola se está acumulando, las transacciones están expirando y las validaciones de clave foránea están causando problemas reales que has medido (no solo teorizado).
+## Cuándo las escrituras rápidas realmente importan
 
-Tienes algunas opciones. Podrías cambiar el nivel de aislamiento de transacción de `SERIALIZABLE` a `READ COMMITTED`, que es más rápido pero renuncia a algunas garantías de consistencia. Podrías agrupar tus commits, insertando 1000 filas por transacción en lugar de una a una para amortizar la sobrecarga de las FK. O podrías desnormalizar hacia una estructura de registro append-only donde ni siquiera intentas validar referencias.
+Así que has decidido que necesitas máxima velocidad de escritura. Tu cola se está acumulando, las transacciones están agotando el tiempo de espera y las comprobaciones de claves foráneas están causando legítimamente problemas que has medido realmente (no solo teorizado).
 
-Esa tercera opción, por cierto, no es hacer trampa. Es simplemente un diseño diferente:
+Tienes algunas opciones. Podrías cambiar tu nivel de aislamiento de transacciones de `SERIALIZABLE` a `READ COMMITTED`, que es más rápido pero sacrifica algunas garantías de consistencia. Podrías agrupar tus commits, insertando 1000 filas por transacción en lugar de una en una para amortizar la sobrecarga de las FK. O podrías desnormalizar en una estructura de log de solo append donde ni siquiera intentas validar referencias.
+
+Esa tercera opción no es hacer trampa, por cierto. Es simplemente un diseño distinto:
 
 ```sql
 CREATE TABLE sensor_log (
@@ -82,90 +76,90 @@ CREATE INDEX ON sensor_log USING GIN (data);
 CREATE INDEX ON sensor_log (recorded_at);
 ```
 
-Sin joins. Sin validaciones de clave foránea. Solo añade datos y consulta por rango de tiempo o por el índice GIN sobre el blob JSONB. ¿Es esto "mejor práctica"? Probablemente no en el sentido que enseñan los libros de texto de bases de datos. ¿Funciona cuando insertas 50.000 filas por minuto en una Raspberry Pi? Absolutamente.
+Sin joins. Sin comprobaciones de claves foráneas. Solo añadir datos y consultar por rango de tiempo o índice GIN sobre el blob JSONB. ¿Es esto "best practice"? Probablemente no en el sentido que enseñan los libros de texto de bases de datos. ¿Funciona cuando estás insertando 50 000 filas por minuto en una Raspberry Pi? Absolutamente.
 
-La desconexión ocurre cuando la gente trata la "mejor práctica" como un imperativo moral en lugar de un patrón que funciona bien en escenarios comunes pero que quizás no se ajuste al tuyo.
+La desconexión ocurre cuando la gente trata "best practice" como un imperativo moral en lugar de un patrón que funciona bien en escenarios comunes pero puede no encajar en el tuyo.
 
 ## La trampa de la normalización
 
 Los cursos de bases de datos adoran enseñar normalización. Evita la duplicación a toda costa. Tercera Forma Normal o nada.
 
-Así terminas con algo como: `Orders` → `OrderItems` → `Products` → `Variants` → `Colors` → `Sizes`
+Así que terminas con algo como: `Orders` → `OrderItems` → `Products` → `Variants` → `Colors` → `Sizes`
 
-Seis `JOIN` de tablas solo para responder: "¿Pedí la camisa roja o la azul la Navidad pasada?" Y que no te falte incluir el nombre del producto, porque eso son tres `JOIN` más en la jerarquía del catálogo.
+Seis joins de tablas solo para responder "¿Pedí la camiseta roja o la azul la Navidad pasada?" Y ni hablemos de que necesites incluir el nombre del producto, porque eso son tres joins más en la jerarquía del catálogo.
 
-Pero espera. La justificación suele ser: "¿Y si la marca cambia cómo etiqueta el azul?" Si eso pasa, ¿realmente quieres que los pedidos históricos cambien de color retroactivamente? Claro que no. Cuando alguien realizó ese pedido, compró una "Camiseta Azul, Talla M" tal como existía en ese momento, no como una referencia abstracta a una entrada de catálogo que podría actualizarse después.
+Pero espera. La justificación suele ser "¿Y si la marca cambia cómo etiqueta el azul?" Si eso pasa, ¿realmente quieres que los pedidos históricos cambien de color retroactivamente? Por supuesto que no. Cuando alguien hizo ese pedido, compró una "Camiseta azul, talla M" tal como existía en ese momento, no como alguna referencia abstracta a una entrada de catálogo que podría actualizarse más tarde.
 
-Vale la pena detenerse en esto porque es sutil. Algunos datos son fundamentalmente una instantánea, no una referencia. Cuando tratas los datos de instantánea como si fueran una referencia en vivo, terminas con una proliferación absurda de `JOIN` para reconstruir algo que debería haberse desnormalizado directamente al escribir.
+Esto vale la pena detenerse porque es sutil. Algunos datos son fundamentalmente una instantánea, no una referencia. Cuando tratas datos de instantánea como si fueran una referencia en vivo, terminas con esta proliferación absurda de joins para reconstruir algo que simplemente debería haberse desnormalizado en el momento de la escritura.
 
-Almacena `{"color": "blue", "size": "M"}` directamente en el pedido. Listo.
+Guarda `{"color": "blue", "size": "M"}` directamente en el pedido. Ya está.
 
-### Identificar datos de instantánea
+### Reconociendo datos de instantánea
 
-¿Cómo sabes cuándo algo debería ser una instantánea? Pregúntate si se trata de un registro de un punto en el tiempo:
+¿Cómo sabes cuándo algo debería ser una instantánea? Pregúntate si es un registro en un punto en el tiempo:
 
-Los pedidos capturan los detalles del producto tal como existían al momento de la compra. Los registros de auditoría registran el estado del usuario cuando ejecutó una acción. Las tablas de historial preservan el estado del registro antes de una actualización. Los flujos de eventos capturan qué sucedió, cuándo y con qué datos.
+Los pedidos capturan detalles del producto tal como existían en el momento de la compra. Los logs de auditoría registran el estado del usuario cuando realizó una acción. Las tablas de historial preservan el estado del registro antes de una actualización. Los streams de eventos capturan qué ocurrió, cuándo, con qué datos.
 
-Si la respuesta es "sí, esto registra un instante en el tiempo", deja de normalizarlo. Empieza a tomar instantáneas.
+Si la respuesta es "sí, esto está registrando un momento en el tiempo", deja de normalizarlo. Empieza a hacer instantáneas.
 
-### Bloques opacos
+### Blobs opacos
 
-Hay otra categoría más allá de las instantáneas: datos que nunca consultas por campos. Simplemente los almacenas y los recuperas completos.
+Hay otra categoría más allá de las instantáneas: datos en los que nunca consultas dentro. Solo los almacenas y los recuperas completos.
 
-Las configuraciones de modelos LLM como `{"model": "gpt-4", "temperature": 0.7, "max_tokens": 2000}` no son algo que consultes por temperatura. Obtienes toda la configuración por ID de solicitud cuando la necesitas. Payloads de JWT después de descodificarlos, registros de peticiones/respuestas de API para depuración, objetos de preferencias de usuario con ajustes de tema y banderas de notificación. Todos estos son bloques opacos. No necesitas normalización. No necesitas claves foráneas. Mételos en JSONB y sigue con tu vida.
+Las configuraciones de modelos LLM como `{"model": "gpt-4", "temperature": 0.7, "max_tokens": 2000}` no son algo que consultes por temperatura. Recuperas toda la configuración por ID de solicitud cuando la necesitas. Payloads de JWT después de decodificar, logs de solicitud/respuesta de API para depuración, objetos de preferencias de usuario con ajustes de tema y banderas de notificación. Todos estos son blobs opacos. No necesitas normalización. No necesitas claves foráneas. Mételos en JSONB y sigue con tu vida.
 
-¿Un join de 6 tablas para saber qué color de camisa se pidió? Eso no es una normalización adecuada. Es una confusión conceptual sobre si estás almacenando una referencia o un valor.
+¿El join de 6 tablas para averiguar qué color de camiseta se pidió? Eso no es normalización correcta. Eso es pensamiento confuso sobre si estás almacenando una referencia o un valor.
 
-(Aunque ten cuidado: esto puede salir mal estrepitosamente si más adelante necesitas consultar esos datos. Consulta [La seducción de JSONB](../the-jsonb-seduction) para ver cuándo este enfoque genera su propia pesadilla.)
+(Aunque ten cuidado: esto puede salir espectacularmente mal si más tarde necesitas consultar esos datos. Consulta [The JSONB Seduction](/the-jsonb-seduction) para ver cuándo este enfoque crea su propia pesadilla).
 
 ## La escala es contexto
 
-Escucharás a gente decir que "las claves foráneas no escalan". Pero la escala es completamente relativa a tu hardware y arquitectura.
+Oirás a gente decir "las claves foráneas no escalan". Pero la escala es completamente relativa a tu hardware y arquitectura.
 
-¿Un Raspberry Pi registrando 10.000 lecturas de sensores por minuto en una tarjeta microSD? Eso es una escala legítimamente alta para ese hardware. ¿AWS Aurora con IOPS provisionados manejando billones de filas? Puedes aplicar claves foráneas sin sudar la gota gorda.
+¿Una Raspberry Pi registrando 10 000 lecturas de sensor por minuto en una tarjeta microSD? Eso es legítimamente alta escala para ese hardware. ¿AWS Aurora con IOPS provisionados manejando miles de millones de filas? Puedes poner claves foráneas por todo eso sin despeinarte.
 
-El límite duro real no tiene que ver con el número de filas ni con el volumen de escrituras. Es el sharding.
+El límite duro real no es sobre cantidad de filas o volumen de escritura. Es el sharding.
 
-Cuando tu tabla `Users` reside en el Servidor A y tu tabla `Orders` en el Servidor B, las claves foráneas no pueden funcionar físicamente. La base de datos carece de un mecanismo para aplicar una restricción a través de límites de red. En ese punto, ya estás ejecutando trabajos en segundo plano para detectar huérfanos e implementando patrones de consistencia eventual.
+Cuando tu tabla `Users` vive en el Servidor A y tu tabla `Orders` vive en el Servidor B, las claves foráneas físicamente no pueden funcionar. La base de datos no tiene mecanismo para aplicar una restricción a través de límites de red. En ese punto, ya estás ejecutando jobs en segundo plano para encontrar huérfanos e implementando patrones de consistencia eventual.
 
-Esto ocurre en entornos SaaS multiinquilino donde cada cliente obtiene su propia base de datos aislada por cumplimiento normativo, o en despliegues de IoT con 50.000 dispositivos de borde ejecutando SQLite localmente. Una vez que llegas ahí, las claves foráneas quedan descartadas (literalmente), independientemente de las consideraciones de rendimiento.
+Esto ocurre en SaaS multi-tenant donde cada tenant obtiene su propia base de datos aislada por cumplimiento, o en despliegues IoT donde tienes 50 000 dispositivos edge ejecutando SQLite localmente. Una vez llegas ahí, las claves foráneas están fuera de la mesa (literalmente) independientemente de consideraciones de rendimiento.
 
-Pero hasta que no cruces ese límite arquitectónico, quizás no convenga optimizar prematuramente para los problemas de Netflix cuando estás construyendo una herramienta interna para 10 usuarios.
+Pero hasta que alcances ese límite arquitectónico, quizás no optimices prematuramente para los problemas de Netflix cuando estás construyendo una herramienta interna de 10 usuarios.
 
 ## Cómo se ve esto realmente en la práctica
 
-En lugar de preguntar «¿debería usar claves foráneas?», prueba a hacerte estas tres preguntas:
+En lugar de preguntar "¿debería usar claves foráneas?", intenta preguntar estas tres cosas:
 
-¿Qué se rompe si esta referencia es incorrecta? ¿Una demanda, facturación corrupta, incumplimiento regulatorio? ¿O es solo un join faltante que devuelve null en tu dashboard de analíticas?
+¿Qué se rompe si esta referencia es incorrecta? ¿Es una demanda, facturación corrupta, violación regulatoria? ¿O es simplemente un join faltante que devuelve null en tu dashboard de analíticas?
 
-¿Qué se rompe si la validación es lenta? ¿Pierdes datos en tiempo real irrecuperables? ¿O tus consultas simplemente tardan 50 milisegundos más?
+¿Qué se rompe si la validación es lenta? ¿Pierdes datos en tiempo real irremplazables? ¿O tus consultas solo tardan 50 milisegundos extra?
 
-¿Son estos datos un snapshot o una referencia? ¿Estás grabando cómo se veía algo en un momento concreto, o estás apuntando al valor actual de referencia?
+¿Son estos datos una instantánea o una referencia? ¿Estás registrando cómo se veía algo en un momento específico, o estás apuntando al valor actual autorizado?
 
-A partir de ahí, los patrones emergen con bastante naturalidad:
+A partir de ahí, los patrones emergen bastante naturalmente:
 
-Las transacciones financieras, las sesiones de autenticación, cualquier cosa donde la corrupción de datos implique responsabilidad legal probablemente justifica el uso de claves foráneas, independientemente de la sobrecarga de rendimiento.
+Transacciones financieras, sesiones de autenticación, cualquier cosa donde la corrupción de datos signifique responsabilidad legal probablemente quiere claves foráneas independientemente de la sobrecarga de rendimiento.
 
-Los registros de alto volumen, los datos de series temporales append-only, cualquier cosa donde estés escribiendo un millón de eventos por minuto probablemente no necesite sobrecarga de validación en cada escritura.
+Logs de alto volumen, datos de series temporales de solo append, cualquier cosa donde estés escribiendo un millón de eventos por minuto probablemente no necesita sobrecarga de validación en cada escritura.
 
-Las instantáneas históricas como pedidos y registros de auditoría, los datos que siempre consultas como un bloque completo como las preferencias de usuario, los esquemas que no controlas como los payloads de webhook de APIs externas… estos suelen funcionar mejor desnormalizados.
+Instantáneas históricas como pedidos y logs de auditoría, datos que siempre recuperas como un blob completo como preferencias de usuario, esquemas que no controlas como payloads de webhook de APIs externas… estos a menudo funcionan mejor desnormalizados.
 
-Pero fíjate que dije "probablemente" y "suelen". Porque el contexto importa, y el tuyo es distinto al mío.
+Pero fíjate que dije "probablemente" y "a menudo". Porque el contexto importa, y tu contexto es distinto al mío.
 
 ## Reflexiones finales
 
-Las claves foráneas no son un problema de rendimiento. Son un compromiso entre la velocidad de escritura y la integridad de los datos, y si ese compromiso tiene sentido depende por completo de tus cuellos de botella específicos y de las consecuencias específicas que asumas.
+Las claves foráneas no son un problema de rendimiento. Son un intercambio entre velocidad de escritura e integridad de datos, y si ese intercambio tiene sentido depende enteramente de tus cuellos de botella específicos y tus consecuencias específicas.
 
-El verdadero problema surge cuando la gente elimina las claves foráneas por algo que leyeron sobre "escala web" sin medir realmente si tienen un problema de rendimiento de escritura ni considerar lo que están renunciando. Terminas copiando a ciegas la arquitectura de Netflix en un proyecto desde cero que procesa 100 transacciones al día.
+El problema real es cuando la gente elimina claves foráneas por algo que leyeron sobre "web scale" sin medir realmente si tienen un problema de rendimiento de escritura ni considerar qué están sacrificando. Terminas haciendo cargo-culting de la arquitectura de Netflix en un proyecto greenfield que procesa 100 transacciones al día.
 
-Quizás el coste de rendimiento valga la pena para tu caso de uso. Quizás no. Pero al menos toma esa decisión basándote en lo que realmente estás optimizando, no en lo que crees que deberías optimizar.
+Quizás el coste de rendimiento merece la pena para tu caso de uso. Quizás no. Pero al menos toma esa decisión basándote en lo que realmente estás optimizando, no en lo que crees que deberías estar optimizando.
 
-¿En qué estás optimizando?
+¿Para qué estás optimizando?
 
 ## Recursos
 
-- [Documentación sobre restricciones de claves foráneas de PostgreSQL](https://www.postgresql.org/docs/current/ddl-constraints.html#DDL-CONSTRAINTS-FK)
-- [Consejos de rendimiento de PostgreSQL](https://www.postgresql.org/docs/current/performance-tips.html)
-- [Use The Index, Luke! - Claves foráneas](https://use-the-index-luke.com/sql/clustering/data-clustering)
-- [Normalización vs desnormalización de bases de datos](https://www.postgresql.org/docs/current/tutorial-concepts.html)
+- [PostgreSQL Foreign Key Constraints Documentation](https://www.postgresql.org/docs/current/ddl-constraints.html#DDL-CONSTRAINTS-FK)
+- [PostgreSQL Performance Tips](https://www.postgresql.org/docs/current/performance-tips.html)
+- [Use The Index, Luke! - Foreign Keys](https://use-the-index-luke.com/sql/clustering/data-clustering)
+- [Database Normalization vs Denormalization](https://www.postgresql.org/docs/current/tutorial-concepts.html)
 ````
