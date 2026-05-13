@@ -1,0 +1,126 @@
+# Translation Candidate
+- Slug: docker-firewall-setup
+- Locale: fr
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2015-06-06--docker-firewall-setup/fr/index.mdx
+- Validation: rejected: direct AI SDK translation failed
+- Runtime seconds: 4.92
+- Input tokens: 4012
+- Output tokens: 860
+- Thinking tokens: unknown
+- Cached input tokens: 256
+- Cache write tokens: 0
+- Estimated cost: $0.000311
+- Pricing source: local-openrouter-estimate
+- Note: Command failed: bun run i18n:validate --slug docker-firewall-setup --locale fr
+## Raw Output
+
+````mdx
+---
+title: Configuration du pare-feu Docker
+subTitle: Configurer le pare‑feu d’un hôte Docker
+draft: true
+date: '2015-06-06'
+modified: '2016-07-30'
+category: DevOps
+subCategory: docker
+tags:
+  - docker
+  - security
+  - devops
+cover: ../charles-deluvio-456501-unsplash.webp
+cover_mobile: ../w300_charles-deluvio-456501-unsplash.webp
+cover_icon: ../icon_charles-deluvio-456501-unsplash.webp
+---
+## Configurer le pare‑feu de l’hôte Docker
+
+1. Serveur Debian/Ubuntu présumé
+1. Conçu pour fonctionner sur un serveur hôte Docker
+
+### Installer les prérequis
+
+~~~sh
+# Pare‑feu ultime requis
+apt-get update && apt-get install -y ufw nmap curl
+~~~
+
+### Obtenir vos adresses IP internes et externes
+
+~~~sh
+# Récupérer vos adresses IP, sortie simple :
+hostname --all-ip-addresses
+
+
+# OU utilisez l’outil ip, exemple :
+ip addr
+~~~
+
+### Configuration du pare‑feu (UFW) – Commandes d’exemple
+
+~~~sh
+ufw logging on # on=low - medium peut être meilleur pour le diagnostic
+ufw logging medium
+# D’abord, bloquer tout
+ufw default deny incoming
+
+# OBLIGATOIRE : CHOISISSEZ *UNE* DES RÈGLES DE SORTIE PAR DÉFAUT SUIVANTES :
+ufw default deny outgoing
+ufw default allow outgoing
+
+# Autoriser et journaliser toutes les nouvelles connexions SSH,
+ufw allow log proto tcp from any to any port 22
+## Autoriser le trafic HTTP (sans journalisation explicite)
+ufw allow out on docker0 53/udp to 172.17.0.1/16
+ufw allow out on eth0 to any port 53
+ufw allow out on eth0 from 0.0.0.0/0 to any port 80 proto tcp
+ufw allow out on eth0 from 0.0.0.0/0 to any port 443 proto tcp
+
+# Verbeux : ufw allow proto tcp from any to any port 80
+ufw allow 80/tcp
+ufw allow 443/tcp
+ufw allow log 22/tcp
+ufw limit ssh # Limite de base : 4, atténuation des tentatives de force brute SSH
+
+
+# Définissez votre IP externe
+export EXTERNAL_IP=123.123.123.123
+# Mettez à jour l'IP Docker si nécessaire
+export DOCKER_IP=172.17.42.1
+# Redirigez le trafic TCP 8080 vers l'application Dockerisée
+ufw allow proto tcp from $EXTERNAL_IP port 8080 to $DOCKER_IP port 3000
+~~~
+
+## Activer / Démarrer le pare‑feu
+
+> Soyez prudent, ne vous bloquez pas le port SSH (sshd utilise 22 par défaut)
+
+~~~sh
+ufw --force enable
+
+ufw reset
+~~~
+
+-----------------
+
+### Testez votre pare‑feu
+
+> Important : UTILISEZ UNE ADRESSE IP / LOCALISATION DISTANTE
+
+```sh
+# Vérifier la dépendance
+apt-get update && apt-get install -y nmap
+
+# Définir la cible du scan
+export TARGET_HOST=123.123.123.123
+
+# Exemples de commandes de scan :
+# Vérification rapide des ports ouverts
+nmap -p 1-10240,27017 -T5 $TARGET_HOST
+# Scan complet
+nmap -p 1-10240,27017 --open -v -APN $TARGET_HOST
+# Inspection du service
+nmap -p 1-10240,27017 -O --osscan-guess $TARGET_HOST
+```
+
+> TERMINÉ ! Vous ne devriez voir QUE les ports que vous avez configurés.
+````
