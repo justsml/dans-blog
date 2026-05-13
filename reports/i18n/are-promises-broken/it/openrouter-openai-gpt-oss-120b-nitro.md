@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: are-promises-broken
+- Locale: it
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2018-10-06--are-promises-broken/it/index.mdx
+- Validation: passed
+- Runtime seconds: 3.11
+- Input tokens: 9218
+- Output tokens: 2794
+- Thinking tokens: unknown
+- Cached input tokens: 4480
+- Cache write tokens: 0
+- Estimated cost: $0.000862
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Promesse infrante?
@@ -227,3 +245,4 @@ log(result)
 1. Non è leggibile per molte persone  
 2. I diff di git non mostrano subito chi ha cambiato cosa  
 3. È difficile fare debug o log dal mezzo delle funzioni annidate
+````
