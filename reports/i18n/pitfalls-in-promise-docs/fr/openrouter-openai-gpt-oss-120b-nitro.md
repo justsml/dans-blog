@@ -1,0 +1,84 @@
+# Translation Candidate
+- Slug: pitfalls-in-promise-docs
+- Locale: fr
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2017-05-10--pitfalls-in-promise-docs/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 1.32
+- Input tokens: 2893
+- Output tokens: 855
+- Thinking tokens: unknown
+- Cached input tokens: 1280
+- Cache write tokens: 0
+- Estimated cost: $0.000267
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: Pièges dans la documentation des Promises
+subTitle: Éviter les problèmes des docs populaires
+date: '2017-05-10'
+modified: '2024-07-30'
+category: Code
+subCategory: promises
+tags:
+  - programming
+  - patterns
+  - promises
+  - functional-programming
+cover: ../craig-whitehead-433328-unsplash.webp
+cover_mobile: ../w300_craig-whitehead-433328-unsplash.webp
+cover_icon: ../icon_craig-whitehead-433328-unsplash.webp
+---
+> Spotting Promise Anti‑Patterns in google search results, and popular libraries.
+
+![craig-whitehead-433328-unsplash.webp](../craig-whitehead-433328-unsplash.webp)
+
+Je commence par une confession : je suis coupable d’écrire les mêmes « anti‑patterns » que je critique ci‑dessous, comme le sont probablement de nombreux développeurs JS. Rien de ce que je présente n’est personnel ni dirigé contre les auteurs originaux. Il s’agit simplement d’une revue de code des motifs récurrents — j’espère transmettre ma façon de prioriser et mon raisonnement critique.
+
+> J’espère que vous pourrez repérer les signes avant‑coureurs de mauvaises Promises après avoir étudié ce projet.
+
+1. [CallbackHell.com](#callbackhellcom)
+1. [StrongLoop](#strongloop)
+1. [RisingStack](#risingstack)
+1. [Q Library](#qlibrary)
+
+--------------------------
+### CallbackHell.com
+> **CREDIT:** http://callbackhell.com/
+![CallbackHell.com](../callbackhell.webp)
+
+----------------------
+### StrongLoop
+> **CREDIT :** `https://strongloop.com/strongblog/node-js-callback-hell-promises-generators/`
+![strong loop](../strongloop.webp)
+
+----------------
+### RisingStack
+> **CREDIT :** https://blog.risingstack.com/node-js-async-best-practices-avoiding-callback-hell-node-js-at-scale/
+C’est un article assez solide. Je n’ai qu’une seule réserve :
+
+![Rising Stack](../risingstack.webp)
+
+------------------------
+### Q Library
+> **CREDIT :** https://github.com/kriskowal/q
+
+La bibliothèque Q est l’une des plus utilisées et les plus anciennes associées aux « Promises ». Elle souffre donc d’exemples vieillissants et de la nécessité de conserver la compatibilité ascendante.  
+**Je dis « associée aux 'Promises' » parce que je considère que Q tourne réellement autour du pattern `deferred`.**
+
+Elle peut ressembler à des Promises, mais j’insiste, ce n’est pas le cas. Son API couvre une surface bien trop grande pour les mauvaises raisons. De plus, la convention de nommage abrége les noms de façon incohérente, ce qui complique la mémorisation de l’interface. Des méthodes comme `when` et `done` sont superflues.
+
+Conclusion: le pattern `deferred` est un anti‑pattern douloureux – il n’apporte pratiquement aucune amélioration par rapport à l’approche classique basée sur les callbacks.
+
+![q first example](../qlibrary-1.webp)
+
+![q xmlHTTP deferred anti-pattern](../qlibrary-2.webp)
+
+> Veuillez consulter (et étoiler) le projet compagnon de cet article sur Github, **Escape From Callback Mountain** (https://github.com/justsml/escape-from-callback-mountain)
+
+> Objectif du projet : rechercher et développer de meilleurs patterns fonctionnels pour JavaScript.
+````
