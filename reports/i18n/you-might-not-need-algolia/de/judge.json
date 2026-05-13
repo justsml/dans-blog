@@ -1,0 +1,74 @@
+{
+  "selectedCommit": "1220550254443fd21b61afc5c9579e5d726b85cb",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "scores": {
+    "readability": 5,
+    "technicalAccuracy": 5,
+    "coherence": 5,
+    "relevance": 5,
+    "translationQuality": 5,
+    "mdxPreservation": 5
+  },
+  "suggestions": [],
+  "rationale": "The current German translation already incorporates the fixes suggested in the previous judge report (e.g., 'Source of Truth' instead of 'Quellquelle', 'die Chunks' with a space, and 'den Output' instead of 'das Output'). It maintains Dan's direct, slightly informal style ('Infrastruktur-Kosmetik') and preserves all MDX components and technical accuracy. No further high-priority changes are required.",
+  "slug": "you-might-not-need-algolia",
+  "locale": "de",
+  "candidateCommits": [
+    "1220550254443fd21b61afc5c9579e5d726b85cb",
+    "050d55442b41f4fc29eb8b45578d246d104e604b",
+    "3ad0ecd5b14d872cdbb5d5fa842f7f300394d229"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "social_image: desktop-social.webp",
+      "replacement": "social_image: ../desktop-social.webp",
+      "reason": "The image path must be relative to the parent directory to match the English source's structure and ensure the image resolves correctly in the build.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "![Indexierung meiner Site mit PageFind](PageFind-Cleaner-better-15fps-720p2.webp \"Indexierung meiner Site mit PageFind\")",
+      "replacement": "![Indexierung meiner Site mit PageFind](../PageFind-Cleaner-better-15fps-720p2.webp \"Indexierung meiner Site mit PageFind\")",
+      "reason": "The image path must be relative to the parent directory.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "synchron mit deiner Quellquelle",
+      "replacement": "synchron mit deiner Source of Truth",
+      "reason": "The term 'Quellquelle' is a redundant and awkward translation of 'source of truth'. Keeping the technical term or using 'Datenquelle' is more natural.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "dieChunks",
+      "replacement": "die Chunks",
+      "reason": "Missing space between the article and the noun.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "das Output",
+      "replacement": "den Output",
+      "reason": "In German technical context, 'Output' is typically masculine (den Output) rather than neuter.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug you-might-not-need-algolia --locale de --skip-global",
+    "output": ""
+  }
+}
