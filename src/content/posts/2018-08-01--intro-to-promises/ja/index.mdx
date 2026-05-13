@@ -1,6 +1,6 @@
 ---
 social_image: ../desktop-social.webp
-title: Promise 入門
+title: Promise入門
 subTitle: JavaScriptのPromiseは楽しい！
 date: '2018-08-01'
 modified: '2024-07-31'
@@ -20,13 +20,13 @@ cover: ../joe-yates-480485-unsplash.webp
 cover_mobile: ../w300_joe-yates-480485-unsplash.webp
 cover_icon: ../icon_joe-yates-480485-unsplash.webp
 ---
-## Promises… 結局何が便利なのか？
+## Promises... 何がすごいのか？
 
-コンピュータコードを実行する際、結果は常に**成功**か**失敗**のいずれかになる。
+どんなコードを実行するときも、結果は **成功** か **失敗** の2つしかない。
 
-コードが非同期である場合、その結果を確実に信頼して利用するのは難しくなる。
+そのコードが非同期処理なら、結果に確実に依存するのはさらに難しくなる。
 
-**`Promise`** はこれを処理するための実用的な手段を提供する。
+**`Promises`** はこれを扱う便利な方法を提供する。
 
 ```
                         +--Promise---+
@@ -40,18 +40,19 @@ cover_icon: ../icon_joe-yates-480485-unsplash.webp
                 (Rejected)           (Resolved)
 ```
 
-> 補足: Promise は本来 resolve または reject されるべきだが、どちらにも至らない場合がある。これによりアプリケーションがハングアップし、デバッグが極めて困難になる。
+> 余談: Promise は解決 (resolve) または拒否 (reject) されるべきだが、どちらも行われないことがある。これによりアプリがハングし、デバッグが非常に困難になる。
 
 ### Promise はどこから来るのか？
 
-多くの場合、自分で Promise を生成する必要はない。`fetch` などのネイティブ API や `axios` などの人気ライブラリは、すでに Promise を返す。
+多くの場合、自分でPromiseを作成する必要はありません。`fetch`のようなネイティブAPIや、`axios`のような人気ライブラリは、すでにPromiseを返します。
 
-ただし、あえて Promise を生成する必要がある場合は、2つの方法がある。
+ただし、どうしてもPromiseを作成する必要がある場合、2つの方法があります：
 
-### Promise の生成方法 1/2:
-Promise を生成する最も簡単な方法は、ヘルパーメソッド `Promise.resolve()` を使うことだ。
+### Promiseの作成 #1/2:
 
-`Promise.resolve(value)` を通じて、任意の値を Promise でラップ（または「変換」）できる。
+Promiseを作成する最も簡単な方法は、ヘルパーメソッド `Promise.resolve()` を使うことです。
+
+`Promise.resolve(value)` を使えば、任意の値をPromiseでラップ（または「変換」）できます。
 
 ```js
 // Without Promises:
@@ -70,11 +71,11 @@ add10Promised(10)
   .then(x => console.log(x)) //=> 20
 ```
 
-### Promise の生成方法 2/2:
+### Promiseの作成 #2/2:
 
-より柔軟な別の手段：`Promise` コンストラクタを使用する。
+もう一つのより柔軟な方法: `Promise` コンストラクタを使う。
 
-`new Promise(callback)` は、以下のインターフェースを持つ `callback` 関数を受け取る。
+`new Promise(callback)` は以下のインターフェースを持つ `callback` 関数を受け取る。
 
 ```js
 new Promise(function(resolve, reject) {
@@ -87,21 +88,21 @@ new Promise(function(resolve, reject) {
 })
 ```
 
-### Promise API
+### Promises API
 
-Promise API が提供するメソッドは、実はごく少ない。
+Promises APIは実際には少数のメソッドで構成されている。
 
-インスタンスメソッドが 2 つ、静的（ユーティリティ）メソッドが 4 つ。
+2つのインスタンス関数と、4つの静的/ユーティリティ関数である。
 
-#### Promise インスタンスメソッド
+#### Promiseインスタンスメソッド
 
-Promise から内部の値を取り出す場合、JavaScript の通常の同期ログ出力手法（例：`console.log(promise)`）では期待通りに動作しない。これは `console.log` が実行時点で Promise オブジェクトの参照を出力するためであり、非同期タスクが完了した後の実際の値（fulfilled/rejected の中身）は表示されない。値を取得するには、必ず `.then()` や `.catch()` 経由で処理を記述する必要がある。
+Promiseから値を取得するのに、通常の方法（`console.log(promise)`など）は使えない。
 
-すべての Promise インスタンスは、処理結果として成功（`.then(fn)` 経由）か失敗（`.catch(fn)` 経由）のいずれかの実行パスを返す。これにより、非同期処理の制御フローを同期的なコードのように連鎖させられる。
+すべてのPromiseは、成功（`.then(fn)`経由）または失敗（`.catch(fn)`経由）のいずれかを返す。
 
-#### Promise ユーティリティメソッド
+#### Promiseユーティリティメソッド
 
-* `Promise.resolve(value)` - 任意の値（Promise 以外も含む）を Promise インスタンスに変換する
-* `Promise.reject(Error)` - 失敗状態の Promise を生成し、チェーン内の後続 `.catch()` ハンドラをトリガーする
-* `Promise.all([...promises])` - 配列に格納されたすべての Promise が完了（解決または拒否）するまで待機し、結果を配列で返す。いずれか一つでも拒否されると、即座に拒否状態になる
-* `Promise.race([...promises])` - 配列内の最初の Promise が解決または拒否された時点で、その結果で即時解決する
+* `Promise.resolve(value)` - 任意の値をPromiseに変換する
+* `Promise.reject(Error)` - 失敗のPromise値を作成し、後続の`.catch()`をトリガーする
+* `Promise.all([...promises])` - Promiseの配列がすべて完了するのを待つ
+* `Promise.race([...promises])` - 最初のPromiseが解決した時点で解決する
