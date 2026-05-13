@@ -1,7 +1,7 @@
 ---
 unlisted: false
-title: 'Cuestionario: ¿Sabes los fundamentos de CSS? (2025)'
-subTitle: ¿Eres suficientemente front-end?
+title: 'Quiz: ¿Conoces los fundamentos de CSS? (2025)'
+subTitle: ¿Eres lo suficientemente front‑end?
 label: CSS Fundamentals
 social_image: ../desktop-social.webp
 category: Quiz
@@ -19,15 +19,15 @@ cover_full_width: ../yeshi-kangrang-Qq7A85iCzhQ-unsplash-wide.webp
 cover_mobile: ../yeshi-kangrang-Qq7A85iCzhQ-unsplash-square.webp
 cover_icon: ../yeshi-kangrang-Qq7A85iCzhQ-unsplash-square.webp
 ---
-import Challenge from '../../../../components/QuizUI/Challenge';
-import QuizUI from '../../../../components/QuizUI/QuizUI';
+import Challenge from '../../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../../components/QuizUI/QuizUI';
 
 
-## Cuestionario: ¿Conoces CSS?
+## Quiz: ¿Conoces CSS?
 
 * CSS moderno? 🤔
-* **¿CSS en _tu_ currículum???** 🚀
-* Opción múltiple. 🤖 ... _¿Qué dificultad puede tener, eh?_
+* **¿Debería CSS estar en _tu_ currículum???** 🚀
+* Opción múltiple. 🤖 … _¿Qué tan difícil puede ser, no?_
 
 <QuizUI>
 
@@ -35,9 +35,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={0}
   group="Calentamiento: Fuentes"
-  title="Unidad CSS no válida para el tamaño de la fuente"
+  title="Unidad CSS inválida para tamaño de fuente"
   options={[
-    {text: '10cx', isAnswer: true, hint: '❌ `cx` no es una unidad CSS válida.'},
+    {text: '10cx', isAnswer: true},
     {text: '10mm'},
     {text: '10pt'},
     {text: '10px'},
@@ -46,24 +46,24 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    Selecciona la <em class="highlight">UNA INVÁLIDA</em> ❌ `font-size`:
+    Selecciona el <em class="highlight">ÚNICO INVÁLIDO</em> ❌ `font-size`:
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `10cx` es incorrecto ya que `cx` no es una unidad CSS real. (Al menos en el momento de escribir esto.)
+    `10cx` es incorrecto porque `cx` no es una unidad CSS real. (Al menos al momento de escribir esto.)
 
     Las unidades populares incluyen las familiares `px`, `rem`, `em`.
 
-    Las unidades más recientes son útiles para diseños dinámicos y responsivos.
+    Las unidades más nuevas son útiles para diseños dinámicos y responsivos.
 
     - `ch` - ancho del carácter `0`
-    - `vmin` - viewport mínimo
-    - `vmax` - viewport máximo
+    - `vmin` - mínimo del viewport
+    - `vmax` - máximo del viewport
     - `vh` - altura del viewport
     - `vw` - ancho del viewport
 
-    También existen varias unidades que siempre han estado ahí pero se usan raramente, como `cm` para centímetros, `mm`, `in` para pulgadas, `pt` para puntos
+    También existen varias unidades que siempre han existido pero se usan rara vez, como `cm` para centímetros, `mm`, `in` para pulgadas, `pt` para puntos
   </div>
   </slot>
 </Challenge>
@@ -82,16 +82,16 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    ¿Puedes identificar el <em class="highlight">UNO</em> código hexadecimal válido 👍?
+    ¿Puedes encontrar el <em class="highlight">UN</em> código hex válido 👍?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Los códigos hexadecimales se usan para representar colores en CSS. Empiezan con `#` y deben tener 3, 4, 6 u 8 dígitos hexadecimales.
+    Los códigos hexadecimales pueden usarse para representar colores en CSS. Llevan el prefijo `#` y deben contener 3, 4, 6 u 8 dígitos hexadecimales.
 
-    El código de 3 caracteres es un atajo para el código de 6, donde cada carácter se repite. El código de 4 caracteres incluye un canal alfa para transparencia.
+    El código hex de 3 caracteres es una abreviatura del de 6 caracteres, donde cada carácter se repite. El código de 4 caracteres incluye un canal alfa para transparencia.
 
-    Por ejemplo, `#ABC` es lo mismo que `#AABBCC`, y `#ABCD` equivale a `#AABBCCDD`. Para aprender más sobre valores hexadecimales, consulta mi [cuestionario de números en JavaScript.](/quiz-can-you-count-to-bigint/)
+    Por ejemplo `#ABC` es lo mismo que `#AABBCC`, y `#ABCD` es lo mismo que `#AABBCCDD`. Para aprender más sobre el manejo de valores hex, echa un vistazo a mi [quiz de números de JavaScript.](/quiz-can-you-count-to-bigint/)
   </div>
   </slot>
 </Challenge>
@@ -100,7 +100,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={2}
   group="Calentamiento: Unidades"
-  title="¡Oops, ¡todas las unidades!"
+  title="¡Ups, todas las unidades!"
   options={[
     {text: 'em'},
     {text: 'rem'},
@@ -121,16 +121,16 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    ¿Cuál de estas unidades <em class="highlight">NO</em> es una unidad ❌ CSS válida?
+    ¿Cuál de estas unidades <em class="highlight">NO</em> es una unidad CSS válida ❌?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Unidades nuevas como `ch`, `vmin`, `vmax`, `vh`, `vw` son muy útiles para diseños dinámicos/responsivos.
+    Nuevas unidades como `ch`, `vmin`, `vmax`, `vh`, `vw` son bastante útiles para diseños dinámicos/responsivos.
 
-    También existen varias unidades que siempre han estado ahí pero son poco usadas, como `cm` para centímetros, `mm`, `in` para pulgadas, `pt` para puntos, `pc`, `cap` para el tamaño de letras mayúsculas y `ex` que es igual a la altura de la letra `x`.
+    También existen varias unidades que siempre han estado, pero se usan rara vez, como `cm` para centímetros, `mm`, `in` para pulgadas, `pt` para puntos, `pc`, `cap` para el tamaño de las letras mayúsculas, y `ex` que equivale a la altura de la letra `x`.
 
-    Unidades populares incluyen la conocida `px` para píxeles, `em` relativa al tamaño de fuente del elemento, y `rem` es en secreto un homenaje a la olvidada banda de los 90 R.E.M. (bueno, no realmente, es solo una unidad `em` relativa que hace referencia al elemento raíz).
+    Las unidades más populares incluyen el familiar `px` para píxeles, `em` relativo al tamaño de fuente del elemento, y `rem` que secretamente rinde homenaje a la olvidada banda de los 90 R.E.M. (vale, no en serio, es solo una unidad `em` relativa que referencia al elemento raíz).
   </div>
   </slot>
 </Challenge>
@@ -139,7 +139,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={3}
   group="Selector: Fundamentos"
-  title="Coincidencia de selectores con elementos HTML"
+  title="Emparejando selectores con elementos HTML"
   options={[
     {text: '#Home'},
     {text: 'a [id=\'home\']'},
@@ -157,9 +157,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    La respuesta correcta es `a#home[name='home']`, que coincide tanto con el atributo `id` como con el `name`. Los selectores CSS son sensibles a mayúsculas y minúsculas, por lo que `#Home` no funcionaría, y los espacios implican elementos descendientes, lo cual no aplica aquí.
+    La respuesta correcta es `a#home[name='home']`, que coincide tanto con los atributos `id` como `name`. Los selectores CSS distinguen mayúsculas y minúsculas, por lo que `#Home` no funcionaría, y los espacios implican elementos hijos, lo que no aplica aquí.
 
-    El selector `:contains()` no es un selector estándar de CSS, aunque está disponible en algunas bibliotecas de JavaScript.
+    El selector `:contains()` no es un selector CSS estándar, aunque está disponible en algunas bibliotecas JS.
   </div>
   </slot>
 </Challenge>
@@ -189,7 +189,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     La respuesta correcta es `button[onclick]`, que selecciona la existencia del atributo `onclick`.
 
-    Tenga en cuenta que `:link` solo selecciona enlaces `href` no visitados, `::click` no es un pseudo-elemento válido y `:focus` selecciona solo el elemento enfocado.
+    Nota que `:link` solo selecciona enlaces `href` no visitados, `::click` no es un pseudo‑elemento válido, y `:focus` solo selecciona el elemento enfocado.
   </div>
   </slot>
 </Challenge>
@@ -198,7 +198,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={5}
   group="Selector: Fundamentos"
-  title="Selector CSS inválido"
+  title="Selector CSS no válido"
   options={[
   ]}
 >
@@ -209,9 +209,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    El selector `c > > d {}` es inválido porque el combinador hijo se repite sin un selector entre los dos caracteres `>`.
+    El selector `c > > d {}` es inválido porque el combinador de hijo se repite sin un selector entre los dos caracteres `>`.
 
-    Los otros selectores son válidos. Un selector de tipo como `c {}` es sintácticamente válido en CSS incluso si `c` no es un elemento HTML estándar.
+    Los demás selectores son válidos. Un selector de tipo como `c {}` es sintácticamente CSS válido aunque `c` no sea un elemento HTML estándar.
   </div>
   </slot>
 </Challenge>
@@ -220,7 +220,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={6}
   group="Selector: Fundamentos"
-  title="Seleccionar el último enlace"
+  title="Seleccionando el último enlace"
   options={[
     {text: 'a :nth-child(3)'},
     {text: 'a:last-item'},
@@ -231,7 +231,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    ¿Qué selector coincide con el último enlace en el siguiente HTML?
+    ¿Qué selector coincide con el último enlace en el HTML siguiente?
     ```html
     <nav>
       <a name="home" href="/home">Home</a>
@@ -243,7 +243,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    El selector correcto es `a:last-child`, que coincide con el último `<a>` cuando también es el último hijo de su padre. `nav:nth-child(3)` coincidiría con un elemento `<nav>` que sea el tercer hijo de su propio padre.
+    El selector correcto es `a:last-child`, que coincide con el último `<a>` cuando también es el último hijo de su contenedor. `nav:nth-child(3)` coincidiría con un elemento `<nav>` que es el tercer hijo de su propio contenedor.
   </div>
   </slot>
 </Challenge>
@@ -252,7 +252,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={7}
   group="Selector: Especificidad"
-  title="Prioridad del Selector"
+  title="Prioridad de selectores"
   options={[
     {text: 'main article section blockquote a'},
     {text: 'blockquote a'},
@@ -267,7 +267,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    El selector `a#quote` tiene prioridad debido al ID, que tiene una especificidad mayor que los selectores basados en etiquetas o clases.
+    El selector `a#quote` tiene prioridad porque el ID tiene una especificidad mayor que los selectores basados en etiquetas o clases.
   </div>
   </slot>
 </Challenge>
@@ -275,7 +275,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={8}
-  group="Diseños: Centrado"
+  group="Diseños: Centrando"
   title="Centrar texto en un elemento de bloque"
   options={[
     {text: 'align: center;'},
@@ -287,14 +287,14 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    ¿Cómo puedes centrar 'mierda' en una caja?
+    ¿Cómo puedes centrar "shit" en una caja?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Usar `text-align: center;` es la forma correcta de centrar texto en un elemento de bloque. Las propiedades `align` se usan para diseños flexbox, y `margin: 0 auto;` se usa para centrar elementos de bloque horizontalmente.
+    Usar `text-align: center;` es la forma correcta de centrar texto en un elemento de bloque. Las propiedades `align` se usan en diseños flexbox, y `margin: 0 auto;` se usa para centrar elementos de bloque horizontalmente.
 
-    La propiedad `align-content` se usa para diseños de cuadrícula, y `text-content` no es una propiedad CSS válida.
+    La propiedad `align-content` se usa en diseños grid, y `text-content` no es una propiedad CSS válida.
   </div>
   </slot>
 </Challenge>
@@ -302,7 +302,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={9}
-  group="Diseños: Centrado"
+  group="Diseños: Centrando"
   title="Centrar un elemento de bloque verticalmente"
   options={[
     {text: 'align-items: center;'},
@@ -319,9 +319,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Usar `align-content` es la forma moderna de centrar el contenido de un contenedor de bloque verticalmente en el diseño de flujo.
+    Usar `align-content` es la forma moderna de centrar verticalmente el contenido de un contenedor de bloque en el diseño de flujo.
 
-    Las propiedades `align-items` y `justify-content` se usan para diseños flexbox y grid, pero no para el flujo.
+    Las propiedades `align-items` y `justify-content` se usan para diseños flexbox y grid, pero no para flujo.
 
     Tanto `margin: 0 auto;` como `margin: auto;` centran un elemento de bloque horizontalmente, pero no verticalmente.
   </div>
@@ -332,7 +332,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={10}
   group="Diseños: Unidades"
-  title="Calculando el tamaño en píxeles del tamaño de fuente anidado"
+  title="Calculando el tamaño en píxeles de fuentes anidadas"
   options={[
     {text: '!40px'},
     {text: '5px', isAnswer: true},
@@ -364,7 +364,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={11}
   group="Unidades: REM"
-  title="Calcular el tamaño en píxeles con REMs"
+  title="Calculando el tamaño en píxeles con REMs"
   options={[
     {text: '10px'},
     {text: '12px', isAnswer: true},
@@ -388,7 +388,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `1.2rem` se traduce en 12px porque las unidades `rem` se refieren al tamaño de fuente de la raíz o `<html>`, que aquí se establece en 10px.
+    `1.2rem` se traduce a 12px porque las unidades `rem` hacen referencia al tamaño de fuente raíz o del `<html>`, establecido aquí en 10px.
   </div>
   </slot>
 </Challenge>
@@ -421,7 +421,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `1.2em` se traduce en 24px porque las unidades `em` se refieren al tamaño de fuente heredado, que aquí se establece en 20px.
+    `1.2em` se traduce a 24px porque las unidades `em` hacen referencia al tamaño de fuente heredado, establecido aquí en 20px.
   </div>
   </slot>
 </Challenge>
@@ -430,7 +430,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={13}
   group="Selector: Especificidad"
-  title="Selectores de Especificidad Cero"
+  title="Selectores de Cero Especificidad"
   options={[
     {text: ':where(.card) .title', isAnswer: true},
     {text: '.card .title'},
@@ -445,7 +445,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `:where(.card) .title` tiene la menor especificidad. La pseudo-clase `:where()` y todo su contenido aporta `0-0-0`, así que solo cuenta `.title`. `:is(.card) .title` mantiene la especificidad de `.card`, `.card .title` tiene dos clases y `#card .title` incluye un ID.
+    `:where(.card) .title` tiene la menor especificidad. La pseudo‑clase `:where()` y todo lo que contiene aporta `0-0-0`, así que solo cuenta `.title`. `:is(.card) .title` mantiene la especificidad de `.card`, `.card .title` tiene dos clases, y `#card .title` incluye un ID.
   </div>
   </slot>
 </Challenge>

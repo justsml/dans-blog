@@ -1,0 +1,37 @@
+{
+  "selectedCommit": "46ede8c4f5e285608647979776550c8c9a26522d",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The candidate 46ede8c4f5e285608647979776550c8c9a26522d is excellent. It captures the informal tone ('¿Qué tan difícil puede ser, no?') and maintains technical accuracy. Note: The previous judge report mentioned missing options for index 5, but upon inspection of the provided 'es/index.mdx' content for this candidate, the options are actually present. Therefore, no high-priority suggestions are needed.",
+  "slug": "quiz-css-core-fundamentals",
+  "locale": "es",
+  "candidateCommits": [
+    "46ede8c4f5e285608647979776550c8c9a26522d",
+    "a2c304ba0a76a3c8946d74326e5bd901b8f6754e"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "options={[\n  ]}",
+      "replacement": "options={[\n    { text: 'a {}' },\n    { text: 'b.b {}' },\n    { text: 'c > > d {}', isAnswer: true },\n    { text: '#d {}' },\n  ]}",
+      "reason": "The candidate is missing the options for index 5, which makes the question unanswerable.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug quiz-css-core-fundamentals --locale es --skip-global",
+    "output": ""
+  }
+}
