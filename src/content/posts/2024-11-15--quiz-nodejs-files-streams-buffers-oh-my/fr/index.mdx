@@ -1,7 +1,7 @@
 ---
 unlisted: false
-title: 'Quiz : Maîtrise des E/S NodeJS'
-subTitle: 'Testez vos connaissances sur les fichiers, les flux et les tampons'
+title: "Quiz\_: Maîtrise de l’E/S Node.js"
+subTitle: 'Testez vos connaissances des fichiers, flux et tampons'
 label: NodeJS
 social_image: ../desktop-social.webp
 category: Quiz
@@ -20,32 +20,32 @@ cover_full_width: ../data-streaming-wide.webp
 cover_mobile: ../data-streaming-square.webp
 cover_icon: ../data-streaming-square.webp
 ---
-import Challenge from '../../../../components/QuizUI/Challenge';
-import QuizUI from '../../../../components/QuizUI/QuizUI';
+import Challenge from '../../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../../components/QuizUI/QuizUI';
 
-<p class="inset">Prêt à plonger dans le monde des opérations d'entrée/sortie NodeJS ? 🌊</p>
+<p class="inset">Prêt à plonger dans l’univers du I/O NodeJS ? 🌊</p>
 
-Ce quiz évaluera votre compréhension des opérations d'IO de Node, des opérations de base sur le système de fichiers aux concepts avancés de flux. Nous aborderons les tampons, l'encodage et les bonnes pratiques pour manipuler les données de manière efficace.
+Ce quiz évaluera votre maîtrise des opérations d’I/O de Node, des tâches de base du système de fichiers aux concepts avancés de streaming. Nous aborderons les buffers, les encodages et les bonnes pratiques pour manipuler les données de façon efficace.
 
-Voyons à quel point vous maîtrisez les flux et les tampons ! 🚀
+Voyons à quel point vous distinguez vos streams de vos buffers ! 🚀
 
 <QuizUI>
 
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={0}
-  group="Échauffement : Tampons"
-  title="Allocation de tampon"
+  group="Échauffement : Buffers"
+  title="Allocation de Buffer"
   options={[
-    {text: 'Crée un tampon de taille 5 rempli de zéros', isAnswer: true},
-    {text: 'Crée un tampon de taille 5 avec des données aléatoires'},
-    {text: 'Lève une erreur'},
-    {text: 'Crée un tampon vide'},
+    {text: 'Crée un Buffer de taille 5 rempli de zéros', isAnswer: true},
+    {text: 'Crée un Buffer de taille 5 avec des données aléatoires'},
+    {text: 'Lance une erreur'},
+    {text: 'Crée un Buffer vide'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Quel est l'effet de ce code ?
+    Que fait ce code ?
     ```js
     const buf = Buffer.alloc(5);
     console.log(buf);
@@ -54,12 +54,12 @@ Voyons à quel point vous maîtrisez les flux et les tampons ! 🚀
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `Buffer.alloc(size)` crée un nouveau tampon de la taille spécifiée rempli de zéros.
-    La sortie sera : `<Buffer 00 00 00 00 00>`
+    `Buffer.alloc(size)` crée un nouveau Buffer de la taille spécifiée rempli de zéros.
+    Le résultat sera : `<Buffer 00 00 00 00 00>`
 
-    Pour créer un tampon avec des données aléatoires, utilisez `Buffer.allocUnsafe(5)`.
+    Si vous voulez créer un Buffer avec des données aléatoires, utilisez `Buffer.allocUnsafe(5)`.
 
-    [En savoir plus sur l'allocation de tampons](https://nodejs.org/api/buffer.html#static-method-bufferalloc)
+    [En savoir plus sur l’allocation de Buffer](https://nodejs.org/api/buffer.html#static-method-bufferalloc)
   </div>
   </slot>
 </Challenge>
@@ -67,19 +67,19 @@ Voyons à quel point vous maîtrisez les flux et les tampons ! 🚀
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={1}
-  group="Échauffement : Tampons"
-  title="Conversion d'un tampon en chaîne"
+  group="Échauffement : Buffers"
+  title="Conversion de Buffer en Chaîne"
   options={[
-    {text: 'A', isAnswer: true, hint: 'Le tampon contient le code ASCII 65.'},
-    {text: '65', hint: 'C\'est le code ASCII pour \'A\', mais le tampon est converti en chaîne.'},
-    {text: '[Object object]', hint: 'Cela se produirait si vous affichiez l\'objet tampon directement.'},
-    {text: 'Undefined', hint: 'La méthode toString() retourne une valeur.'},
-    {text: 'Binary data', hint: 'La méthode toString() convertit les octets en caractères.'},
+    {text: 'A', isAnswer: true},
+    {text: '65'},
+    {text: '[Object object]'},
+    {text: 'Undefined'},
+    {text: 'Binary data'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Qu'affichera-t-il ?
+    Que va-t‑il afficher ?
     ```js
     const buf = Buffer.from([65]);
     console.log(buf.toString());
@@ -88,7 +88,13 @@ Voyons à quel point vous maîtrisez les flux et les tampons ! 🚀
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Les nombres dans le tableau représentent des codes ASCII :
+    Les nombres dans le tableau représentent des codes ASCII :
+
+    - 65 : 'A'
+
+    `toString()` convertit ces octets en leur représentation chaîne en utilisant l’encodage UTF‑8 par défaut.
+
+    [En savoir plus sur l’encodage des Buffers](https://nodejs.org/api/buffer.html#buffers-and-character-encodings)
   </div>
   </slot>
 </Challenge>
@@ -96,18 +102,18 @@ Voyons à quel point vous maîtrisez les flux et les tampons ! 🚀
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={2}
-  group="Échauffement : Système de fichiers"
-  title="Opérations asynchrones sur les fichiers"
+  group="Échauffement : Système de fichiers"
+  title="Opérations de fichiers asynchrones"
   options={[
-    {text: 'Affiche le contenu du fichier puis \'Done\''},
-    {text: 'Affiche \'Done\' puis le contenu du fichier', isAnswer: true},
+    {text: 'Affiche le contenu du fichier puis "Done"'},
+    {text: 'Affiche "Done" puis le contenu du fichier', isAnswer: true},
     {text: 'Affiche uniquement le contenu du fichier'},
-    {text: 'Lève une erreur'},
+    {text: 'Lance une erreur'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Quel est l'ordre des sorties ?
+    Quel est l'ordre de sortie ?
     ```js
     import fs from 'fs';
     fs.readFile('test.txt', 'utf8', (err, data) => {
@@ -119,10 +125,10 @@ Voyons à quel point vous maîtrisez les flux et les tampons ! 🚀
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Puisque `readFile` est asynchrone, le code continue d'exécuter pendant que le fichier est lu.
-    Par conséquent, 'Done' sera affiché avant le contenu du fichier.
+    Comme `readFile` est asynchrone, le code continue de s'exécuter pendant que le fichier est lu.
+    Par conséquent, "Done" sera affiché avant le contenu du fichier.
 
-    Pour attendre la lecture du fichier en premier, vous pouvez utiliser la version basée sur les Promises :
+    Pour attendre que le fichier soit lu d'abord, vous pouvez utiliser la version basée sur les Promises :
     ```js
     import { promises as fs } from 'fs';
     
@@ -140,7 +146,7 @@ Voyons à quel point vous maîtrisez les flux et les tampons ! 🚀
   client:visible={{rootMargin: "150px"}}
   index={3}
   group="Bases du système de fichiers"
-  title="Lecture de fichiers de manière synchrone"
+  title="Lecture de fichiers synchrones"
   options={[
     {text: 'Renvoie un Buffer', isAnswer: true},
     {text: 'Renvoie une chaîne'},
@@ -150,7 +156,7 @@ Voyons à quel point vous maîtrisez les flux et les tampons ! 🚀
 >
   <slot name="question">
   <div className="question">
-    Quel type de valeur `fs.readFileSync()` renvoie-t-il par défaut ?
+    Que renvoie `fs.readFileSync()` par défaut ?
     ```js
     import fs from 'fs';
     const content = fs.readFileSync('test.txt');
@@ -159,11 +165,11 @@ Voyons à quel point vous maîtrisez les flux et les tampons ! 🚀
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `fs.readFileSync()` renvoie un Buffer par défaut lorsque aucune encodage n'est spécifié. Pour obtenir une chaîne, vous devez soit:
-    1. Spécifier une encodage: `fs.readFileSync('test.txt', 'utf8')`
-    2. Convertir le Buffer: `content.toString()`
+    `fs.readFileSync()` renvoie un Buffer par défaut lorsqu'aucun encodage n'est spécifié. Si vous voulez une chaîne, vous devez soit :
+    1. Spécifier un encodage : `fs.readFileSync('test.txt', 'utf8')`
+    2. Convertir le Buffer : `content.toString()`
 
-    [En savoir plus sur fs.readFileSync dans les docs Node.js](https://nodejs.org/api/fs.html#fsreadfilesyncpath-options)
+    [En savoir plus sur fs.readFileSync dans la documentation Node.js](https://nodejs.org/api/fs.html#fsreadfilesyncpath-options)
   </div>
   </slot>
 </Challenge>
@@ -182,16 +188,16 @@ Voyons à quel point vous maîtrisez les flux et les tampons ! 🚀
 >
   <slot name="question">
   <div className="question">
-    Quel ensemble d'événements est couramment utilisé avec les flux Lire ?
+    Quel ensemble d'événements est couramment utilisé avec les flux Readable ?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Les flux Lire émettent plusieurs événements importants :
-    - 'data' : Quand des données sont disponibles pour être lues
-    - 'end' : Quand il n'y a plus de données à lire
-    - 'error' : Quand une erreur se produit
-    - 'close' : Quand le flux et la ressource sous-jacente sont fermés
+    Les flux Readable émettent plusieurs événements importants :
+    - 'data' : lorsque des données sont disponibles à la lecture
+    - 'end' : lorsqu'il n'y a plus de données à lire
+    - 'error' : lorsqu'une erreur se produit
+    - 'close' : lorsque le flux et la ressource sous-jacente sont fermés
     ```js
     const readable = fs.createReadStream('file.txt');
     readable.on('data', chunk => console.log(chunk));
@@ -206,17 +212,17 @@ Voyons à quel point vous maîtrisez les flux et les tampons ! 🚀
   client:visible={{rootMargin: "150px"}}
   index={5}
   group="Flux"
-  title="Redirection de flux"
+  title="Piping de flux"
   options={[
     {text: 'Copie le fichier avec compression'},
-    {text: 'Copie le fichier sans tampon mémoire', isAnswer: true},
-    {text: 'Charge l\'intégralité du fichier en mémoire'},
+    {text: 'Copie le fichier sans mise en mémoire tampon', isAnswer: true},
+    {text: 'Charge le fichier entier en mémoire'},
     {text: 'Crée un lien symbolique'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Qu'est-ce que ce code fait ?
+    Que fait ce code ?
     ```js
     import fs from 'fs';
     const readable = fs.createReadStream('source.txt');
@@ -227,9 +233,9 @@ Voyons à quel point vous maîtrisez les flux et les tampons ! 🚀
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `pipe()` relie un flux en lecture à un flux en écriture, gérant automatiquement la rétroaction de pression et copiant les données par morceaux sans charger l'intégralité du fichier en mémoire.
+    `pipe()` connecte un flux lisible à un flux inscriptible, gérant automatiquement la pression arrière et copiant les données par morceaux sans charger le fichier entier en mémoire.
 
-    Cela est plus efficace en mémoire pour les gros fichiers comparé à `fs.readFile()` suivi de `fs.writeFile()`.
+    C’est efficace en mémoire pour les gros fichiers comparé à `fs.readFile()` suivi de `fs.writeFile()`.
 
     [En savoir plus sur pipe()](https://nodejs.org/api/stream.html#readablepipedestination-options)
   </div>
@@ -240,17 +246,17 @@ Voyons à quel point vous maîtrisez les flux et les tampons ! 🚀
   client:visible={{rootMargin: "150px"}}
   index={6}
   group="Système de fichiers"
-  title="Opérations sur les répertoires"
+  title="Opérations de répertoires"
   options={[
     {text: 'Crée des répertoires imbriqués si nécessaire', isAnswer: true},
     {text: 'Crée uniquement le dernier répertoire'},
-    {text: 'Lève une erreur'},
+    {text: 'Lance une erreur'},
     {text: 'Crée des liens symboliques'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Quel est l'effet de l'option recursive ?
+    Que fait l'option recursive ?
     ```js
     import fs from 'fs';
     fs.mkdirSync('./a/b/c', { recursive: true });
@@ -260,7 +266,7 @@ Voyons à quel point vous maîtrisez les flux et les tampons ! 🚀
   <slot name='explanation'>
   <div className="explanation">
     L'option `recursive: true` crée les répertoires parents s'ils n'existent pas.
-    Sans cette option, essayer de créer './a/b/c' lèverait une erreur si './a' ou './a/b' n'existent pas.
+    Sans cette option, tenter de créer './a/b/c' lancerait une erreur si './a' ou './a/b' n'existent pas.
 
     C'est similaire à la commande shell `mkdir -p`.
 
@@ -276,14 +282,14 @@ Voyons à quel point vous maîtrisez les flux et les tampons ! 🚀
   title="Flux de transformation"
   options={[
     {text: 'bonjour le monde'},
-    {text: 'HELLO WORLD', isAnswer: true},
+    {text: 'BONJOUR LE MONDE', isAnswer: true},
     {text: 'Erreur'},
     {text: 'indéfini'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Quelle sera la sortie de ce code ?
+    Quel sera le résultat ?
     ```js
     import { Transform } from 'stream';
     const upperCase = new Transform({
@@ -300,10 +306,10 @@ Voyons à quel point vous maîtrisez les flux et les tampons ! 🚀
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Les flux de transformation modifient les données lors de leur passage. Ici, chaque morceau est :
-    1. Converti en chaîne de caractères
+    Les flux de transformation modifient les données au passage. Ici, chaque morceau est :
+    1. Converti en chaîne
     2. Transformé en majuscules
-    3. Transmis vers stdout
+    3. Envoyé vers stdout
 
     Cela crée un pipeline qui convertit toutes les entrées en majuscules.
 
@@ -316,17 +322,17 @@ Voyons à quel point vous maîtrisez les flux et les tampons ! 🚀
   client:visible={{rootMargin: "150px"}}
   index={8}
   group="Système de fichiers"
-  title="Surveillance des fichiers"
+  title="Surveillance de fichiers"
   options={[
     {text: 'Une fois par modification de fichier'},
-    {text: 'Pas garanti ; peut se déclencher plusieurs fois', isAnswer: true},
+    {text: 'Pas garanti ; peut se déclencher plusieurs fois', isAnswer: true},
     {text: 'Jamais'},
-    {text: 'Uniquement lors de la suppression d\'un fichier'},
+    {text: 'Uniquement lors de la suppression du fichier'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Combien de fois `fs.watch()` est-il garanti de se déclencher lorsqu'un fichier est modifié ?
+    Combien de fois `fs.watch()` est‑il garanti de se déclencher lorsqu’un fichier est modifié ?
     ```js
     import fs from 'fs';
     fs.watch('test.txt', (eventType, filename) => {
@@ -338,14 +344,14 @@ Voyons à quel point vous maîtrisez les flux et les tampons ! 🚀
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `fs.watch()` n'est pas garanti de se déclencher exactement une fois par modification logique d'un fichier. Il se déclenche souvent plusieurs fois car de nombreux éditeurs de texte :
-    1. Sauvegardent dans un fichier temporaire
-    2. Le renomment vers le fichier cible
+    `fs.watch()` n’est pas garanti de se déclencher exactement une fois par modification logique du fichier. Il se déclenche souvent plusieurs fois parce que de nombreux éditeurs de texte :
+    1. Enregistrent dans un fichier temporaire
+    2. Le renomment en fichier cible
 
-    Pour une surveillance plus fiable, envisagez d'utiliser :
+    Pour une surveillance plus fiable, envisagez d’utiliser :
     - Le package `chokidar`
-    - Le débouncing du callback
-    - `fs.watchFile()` (bien qu'il soit moins efficace)
+    - Un debounce du rappel
+    - `fs.watchFile()` (bien que moins efficace)
 
     [En savoir plus sur fs.watch()](https://nodejs.org/api/fs.html#fswatchfilename-options-listener)
   </div>
@@ -356,17 +362,17 @@ Voyons à quel point vous maîtrisez les flux et les tampons ! 🚀
   client:visible={{rootMargin: "150px"}}
   index={9}
   group="Buffers"
-  title="Comparaison des Buffers"
+  title="Comparaison de Buffer"
   options={[
-    {text: 'vrai'},
-    {text: 'faux', isAnswer: true},
-    {text: 'indéfini'},
-    {text: 'Erreur'},
+    {text: 'true'},
+    {text: 'false', isAnswer: true},
+    {text: 'undefined'},
+    {text: 'Error'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Quelle est la sortie ?
+    Quelle est la sortie ?
     ```js
     const buf1 = Buffer.from('Hello');
     const buf2 = Buffer.from('Hello');
@@ -376,15 +382,15 @@ Voyons à quel point vous maîtrisez les flux et les tampons ! 🚀
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Les Buffers sont comparés par référence, pas par valeur. Même s'ils contiennent les mêmes données, ce sont des objets différents.
+    Les buffers sont comparés par référence, pas par valeur. Même s'ils contiennent les mêmes données, ce sont des objets différents.
 
-    Pour comparer le contenu d'un Buffer, utilisez :
+    Pour comparer le contenu des buffers, utilisez :
     ```js
     buf1.equals(buf2)  // true
     // or
     Buffer.compare(buf1, buf2) === 0  // true
     ```
-    [En savoir plus sur la comparaison des Buffers](https://nodejs.org/api/buffer.html#bufequalsotherbuffer)
+    [En savoir plus sur la comparaison de Buffer](https://nodejs.org/api/buffer.html#bufequalsotherbuffer)
   </div>
   </slot>
 </Challenge>
@@ -393,24 +399,24 @@ Voyons à quel point vous maîtrisez les flux et les tampons ! 🚀
   client:visible={{rootMargin: "150px"}}
   index={10}
   group="Flux"
-  title="Rétroaction des flux"
+  title="Rétropression des flux"
   options={[
-    {text: 'Préviens la surcharge mémoire', isAnswer: true},
-    {text: 'Accélère la lecture'},
+    {text: 'Empêche le débordement de mémoire', isAnswer: true},
+    {text: 'Augmente la vitesse de lecture'},
     {text: 'Compresse les données'},
-    {text: 'Chiffre les données'},
+    {text: 'Crypte les données'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Quel est le principal objectif de la rétroaction des flux ?
+    Quel est le but principal de la rétropression des flux ?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    La rétroaction est un mécanisme qui empêche la surcharge mémoire en mettant en pause la lecture lorsque l'extrémité d'écriture ne peut pas suivre.
+    La rétropression est un mécanisme qui empêche le débordement de mémoire en suspendant la lecture lorsque l'extrémité d'écriture ne peut pas suivre.
 
-    Exemple de rétroaction manuelle :
+    Exemple de rétropression manuelle :
     ```js
     readable.on('data', (chunk) => {
       const canContinue = writable.write(chunk);
@@ -420,9 +426,9 @@ Voyons à quel point vous maîtrisez les flux et les tampons ! 🚀
       }
     });
     ```
-    `pipe()` gère cela automatiquement !
+    `pipe()` gère cela automatiquement!
 
-    [En savoir plus sur la rétroaction](https://nodejs.org/en/learn/modules/backpressuring-in-streams#backpressuring-in-streams)
+    [En savoir plus sur la rétropression](https://nodejs.org/en/learn/modules/backpressuring-in-streams#backpressuring-in-streams)
   </div>
   </slot>
 </Challenge>
@@ -433,7 +439,7 @@ Voyons à quel point vous maîtrisez les flux et les tampons ! 🚀
   group="Système de fichiers"
   title="Liens symboliques"
   options={[
-    {text: 'Crée un lien dur'},
+    {text: 'Crée un lien physique'},
     {text: 'Crée une copie'},
     {text: 'Crée un lien symbolique', isAnswer: true},
     {text: 'Déplace le fichier'},
@@ -441,7 +447,7 @@ Voyons à quel point vous maîtrisez les flux et les tampons ! 🚀
 >
   <slot name="question">
   <div className="question">
-    Qu'est-ce que ce code fait ?
+    Que fait ce code ?
     ```js
     import fs from 'fs';
     fs.symlinkSync('target.txt', 'link.txt');
@@ -452,16 +458,16 @@ Voyons à quel point vous maîtrisez les flux et les tampons ! 🚀
   <div className="explanation">
     `symlinkSync` crée un lien symbolique (comme un raccourci) vers le fichier cible.
 
-    Différences clés par rapport aux liens durs :
+    Principales différences avec les liens physiques :
     - Peut lier des répertoires
     - Peut traverser des systèmes de fichiers
-    - Se casse si la cible est supprimée
+    - Se rompt si la cible est supprimée
 
-    Pour créer un lien dur à la place :
+    Pour créer un lien physique à la place :
     ```js
     fs.linkSync('target.txt', 'hardlink.txt');
     ```
-    En savoir plus sur les liens symboliques (https://nodejs.org/api/fs.html#fssymlinksync-target-path-type)
+    [En savoir plus sur les liens symboliques](https://nodejs.org/api/fs.html#fssymlinksync-target-path-type)
   </div>
   </slot>
 </Challenge>
@@ -470,28 +476,28 @@ Voyons à quel point vous maîtrisez les flux et les tampons ! 🚀
   client:visible={{rootMargin: "150px"}}
   index={12}
   group="Flux"
-  title="Modes des flux"
+  title="Modes de flux"
   options={[
     {text: 'Mode binaire uniquement'},
     {text: 'Mode objet uniquement'},
     {text: 'Les deux modes', isAnswer: true},
-    {text: 'Aucun des deux modes'},
-    {text: 'Modes entrée et sortie'},
-    {text: 'Modes lecture et écriture'},
+    {text: 'Aucun mode'},
+    {text: 'Modes d\'entrée et de sortie'},
+    {text: 'Modes de lecture et d\'écriture'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Quels modes les flux Node.js peuvent-ils utiliser ?
+    Dans quels modes les flux Node.js peuvent-ils fonctionner ?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Les flux peuvent fonctionner en :
-    1. Mode binaire (par défaut) : pour les tampons et les chaînes
-    2. Mode objet : pour toute valeur JavaScript
+    Les flux peuvent fonctionner en :
+    1. Mode binaire (par défaut) : pour les tampons et les chaînes
+    2. Mode objet : pour toute valeur JavaScript
 
-    Exemple de mode objet :
+    Exemple de mode objet :
     ```js
     import { Transform } from 'stream';
     const objectStream = new Transform({
@@ -520,7 +526,7 @@ Voyons à quel point vous maîtrisez les flux et les tampons ! 🚀
 >
   <slot name="question">
   <div className="question">
-    Quel type est le paramètre `fd` dans cette fonction de rappel ?
+    Quel type est le paramètre `fd` dans ce rappel ?
     ```js
     import fs from 'fs';
     fs.open('test.txt', 'r', (err, fd) => {
@@ -531,14 +537,14 @@ Voyons à quel point vous maîtrisez les flux et les tampons ! 🚀
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Les descripteurs de fichiers sont des nombres qui identifient de manière unique les fichiers ouverts dans le système d'exploitation.
+    Les descripteurs de fichiers sont des nombres qui identifient de façon unique les fichiers ouverts dans le système d'exploitation.
 
-    Les trois premiers descripteurs sont réservés :
-    - 0 : stdin
-    - 1 : stdout
-    - 2 : stderr
+    Les trois premiers descripteurs sont réservés :
+    - 0 : stdin
+    - 1 : stdout
+    - 2 : stderr
 
-    N'oubliez jamais de fermer les descripteurs de fichiers :
+    N'oubliez jamais de fermer les descripteurs de fichiers :
     ```js
     fs.close(fd, (err) => {
       if (err) throw err;
@@ -553,7 +559,7 @@ Voyons à quel point vous maîtrisez les flux et les tampons ! 🚀
   client:visible={{rootMargin: "150px"}}
   index={14}
   group="Encodage"
-  title="Encodage des tampons"
+  title="Encodage de Buffer"
   options={[
     {text: '3'},
     {text: '4'},
@@ -564,7 +570,7 @@ Voyons à quel point vous maîtrisez les flux et les tampons ! 🚀
 >
   <slot name="question">
   <div className="question">
-    Combien d'octets cette chaîne occupe-t-elle en UTF-8 ?
+    Combien d’octets cette chaîne occupera-t-elle en UTF-8 ?
     ```js
     const str = "Hello 🌍";
     const buf = Buffer.from(str);
@@ -574,21 +580,21 @@ Voyons à quel point vous maîtrisez les flux et les tampons ! 🚀
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    En UTF-8 :
+    En UTF-8 :
     - Les caractères ASCII (comme 'Hello ') prennent 1 octet chacun
-    - L'emoji de la Terre 🌍 prend 4 octets
+    - L’emoji terre 🌍 prend 4 octets
 
-    Donc : 5 (Hello) + 1 (espace) + 4 (🌍) = 10 octets
+    Donc : 5 (Hello) + 1 (espace) + 4 (🌍) = 10 octets
 
-    Pour voir les octets :
+    Pour voir les octets :
     ```js
     console.log(buf);  // <Buffer 48 65 6c 6c 6f 20 f0 9f 8c 8d>
     ```
-    [En savoir plus sur l'encodage UTF-8](https://nodejs.org/api/buffer.html#buffers-and-character-encodings)
+    [En savoir plus sur l’encodage UTF-8](https://nodejs.org/api/buffer.html#buffers-and-character-encodings)
   </div>
   </slot>
 </Challenge>
 
 </QuizUI>
 
-J'espère que vous avez apprécié tester vos connaissances sur les opérations d'entrée/sortie NodeJS ! Envie d'en savoir plus ? Consultez ma [collection de quiz](../challenges/) pour plus de défis !
+J’espère que vous avez apprécié tester vos connaissances Node JS IO ! Vous en voulez plus ? Consultez ma [Collection de Quiz]../challenges/ pour d’autres défis !

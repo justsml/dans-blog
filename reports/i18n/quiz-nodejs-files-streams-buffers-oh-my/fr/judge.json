@@ -1,0 +1,37 @@
+{
+  "selectedCommit": "3ddd87dbf91869630430accd130a79a6b4d8d051",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 10,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The candidate 3ddd87dbf91869630430accd130a79a6b4d8d051 is the only one that provides a complete translation. The 'current' version and the other candidate both have a major bug where the explanation for Challenge 1 is missing/truncated. This candidate uses high-quality technical French and correctly preserves all MDX components. Note: The suggestion in the previous judge report regarding the link was already correctly implemented in this candidate's text (it uses '(/challenges/)'), so no further fixes are required.",
+  "slug": "quiz-nodejs-files-streams-buffers-oh-my",
+  "locale": "fr",
+  "candidateCommits": [
+    "3ddd87dbf91869630430accd130a79a6b4d8d051",
+    "407254d51d5ee2483d2c84cf98b26ca10867ff6a"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "[Collection de Quiz]../challenges/",
+      "replacement": "[Collection de Quiz](/challenges/)",
+      "reason": "The link syntax is broken (missing parenthesis and incorrect path). It should match the English source's absolute-style path for internal links.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug quiz-nodejs-files-streams-buffers-oh-my --locale fr --skip-global",
+    "output": ""
+  }
+}
