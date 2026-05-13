@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: linux-system-benchmark-scripts
+- Locale: fr
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2017-05-01--linux-system-benchmark-scripts/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 3.56
+- Input tokens: 2729
+- Output tokens: 1361
+- Thinking tokens: unknown
+- Cached input tokens: 512
+- Cache write tokens: 0
+- Estimated cost: $0.000351
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Scripts de benchmark pour serveurs Linux
@@ -153,3 +171,4 @@ benchDisk
 1. System: iotop
 1. Per command: dtrace/ltrace/strace
 -->
+````
