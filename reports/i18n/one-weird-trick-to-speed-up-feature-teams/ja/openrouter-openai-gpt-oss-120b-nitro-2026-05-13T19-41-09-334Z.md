@@ -1,0 +1,169 @@
+# Translation Candidate
+- Slug: one-weird-trick-to-speed-up-feature-teams
+- Locale: ja
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2024-09-29--one-weird-trick-to-speed-up-feature-teams/ja/index.mdx
+- Validation: deferred
+- Runtime seconds: 5.11
+- Input tokens: 10377
+- Output tokens: 3049
+- Thinking tokens: unknown
+- Cached input tokens: 3712
+- Cache write tokens: 0
+- Estimated cost: $0.000954
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: 機能チームを高速化する奇抜なテクニック
+subTitle: スタッフエンジニアはこれが嫌いだ！
+date: '2024-09-29'
+modified: '2024-09-30'
+tags:
+  - agile
+  - teams
+category: Engineering
+social_image: ../desktop-social.webp
+cover_full_width: ../wide_danny-howe-98KlbUsOO_w-unsplash.webp
+cover_mobile: ../danny-howe-98KlbUsOO_w-unsplash__w200.webp
+cover_icon: ../danny-howe-98KlbUsOO_w-unsplash__w200.webp
+cover_credit: >-
+  Photo by <a
+  href="https://unsplash.com/@dannyhowe?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Danny
+  Howe</a> on <a
+  href="https://unsplash.com/photos/red-and-white-neon-light-signage-98KlbUsOO_w?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
+---
+{/* Add html5 toggle element */}
+
+<details>
+<summary>Table of Contents</summary>
+
+- [Thinking in Keys](#thinking-in-keys)
+  - [Designing with Keys](#designing-with-keys)
+  - [KVs as Graphs & Trees?](#kvs-as-graphs--trees)
+  - [When to Use KV Patterns](#when-to-use-kv-patterns)
+  - [When to Avoid KV Patterns](#when-to-avoid-kv-patterns)
+  - [When you need more than KV](#when-you-need-more-than-kv)
+- [Next Steps](#next-steps)
+  - [Fact Service - Reference Project](#fact-service---reference-project)
+- [Conclusion](#conclusion)
+  - [Further Reading](#further-reading)
+
+</details>
+
+新しいシステムや機能を設計する際、スキーマ設計に時間を取られがちです。本稿では、私のキャリアで実績を上げてきたシンプルな手法を共有します。
+
+<section class="breakout">
+  _Try_ the simplest possible data persistence when designing a new system or feature.
+</section>
+
+多くの場合、チームはデータ保存先として SQL や MongoDB を唯一の選択肢と見なします。SQL を選んでも誰も叱責されませんが、もっとシンプルで高速、しかもコストが低い方法があるとしたらどうでしょうか？
+
+KV、つまりキー‑バリュー・ストアが必要なだけかもしれません。Redis や S3 のようなものです。
+
+それが常に最適な選択というわけではありませんが、**思いのほぼ半数以上**は実は KV が適しています。
+
+シンプルな保存層を導入すれば、データ層のコードを再利用でき、スキーマ設計やマイグレーションに伴う churn コストを回避できるため、*初期* 開発を適度に高速化できます。churn は必ず発生します。コード側でできるだけ長く扱わせておき、変更箇所を二か所に増やすのは避けましょう。
+
+`key` の検索は高度に最適化されているため、パフォーマンス向上が期待でき、書き込みはバッチ更新の恩恵を受けやすくなります。
+
+{/* データセットに対して JOIN が必要な場合や、プロパティでクエリを実行したい場合は KV パターンを避けてください。また、無制限に増大し続けるデータセット（`Logs`、`Signups` など）にも同様です。 */}
+
+## キーで考える
+
+オブジェクト階層やエンティティリレーション図（ER 図）を前提に設計し、SQL で直接実装することに慣れている場合、最初にキー‑バリュー パターンで設計するのは違和感があるかもしれません。
+
+おそらく **キー‑バリュー** パターンはすでに使ったことがあるでしょう。設定ファイルや URL、S3 形式のオブジェクトストレージなど、至る所にあります。データを一意な `ID` で扱うたびに、実は別のキー‑バリュー パターンが現れています（必ずしも KV ストアである必要はありませんが）。
+
+### キーで設計する
+
+実質的にすべてのデータは KV パターンで表現できます。（実際、多くの上位レベルのデータベースは下位レベルの KV パターン上に構築されています。）いくつか例を見てみましょう。
+
+```markdown
+user/123          {id: 123, ...}
+user/123/block    ['user/456', 'user/789']
+user/123/groups   ['admin', 'staff']
+user/420/friends  ['user/456', 'user/789']
+
+group/admin       {user: '*:rw'}
+group/default     {user: '*:r'}
+
+product/42/discount/<UUID>	{percentOff: '10%'}
+product/42/discount/<UUID>	{percentOff: '20%', minTotal: 100.0}
+```
+
+気づいたかもしれませんが、`ID` 自体がキーになることが多いです。これは KV ストアでよく見られるパターンで、キーはエンティティの種別と一意識別子を組み合わせた複合キーになることが一般的です（例: `user/123`、`user:456`）。
+
+### KV をグラフやツリーとして扱う？
+
+複雑なデータ構造、たとえばグラフやツリーを KV パターンで表現すると便利なことがあります。（再び、REST の URL が典型的な例です。）
+
+キー階層（`user/420` → `user/420/friends`）は、`user` とその `friends` 間のグラフ関係を自然にエンコードします。
+
+これはグラフデータ構造をシリアライズする手軽で低コストな手法です。特に、Neo4j のようなグラフデータベースの複雑さが不要な場合に有効です。
+
+<figure>
+![Graph of user/123](../KVsCanBeGraphs.webp)
+<figcaption>user/123 のグラフ</figcaption>
+</figure>
+
+### KV パターンを使うべきケース
+
+- 大規模スケールが必要なとき（数十億、場合によっては数兆の KV ペア）。
+- 主に一意キーでデータにアクセスする場合。
+- シンプルなデータ構造で十分なとき。
+- 階層・グラフ・ツリー構造を持つデータがあるとき。
+
+### KV パターンを避けるべきケース
+
+単一の KV ペアにブログコメントのようなデータを詰め込まないでください。例として `post/666 -> {comments: [...too many...]}` のように保存するのは避けます。代わりに `post/666/comments/1` や `post/666/comments/<UUID>` などのキーを使うか、SQL テーブルに移行します。
+
+- データセット内でキーや ID ではなくプロパティで検索する必要があるとき。  
+- 複数のエンティティにまたがってデータを **JOIN** する必要があるとき。  
+- 複雑な制約やリレーションシップを強制する必要があるとき。  
+
+### KV 以上が必要なとき
+
+プロジェクトの要件は自然に進化するため、KV ストアだけでは足りなくなることがあります。この段階では、より複雑なデータストアへの移行を検討する必要があります。
+
+{/* 良いニュースは、KV パターンで始めて必要に応じて徐々に複雑なシステムへ進化させられることです。S3 は単なるストレージ以上の機能を提供し、Athena でファイル検索、Glacier、期限ポリシーなど多彩な活用が可能です。また、Redis も Pub/Sub、ジオ空間、ストリーム、ソート済みセットなどの高レベル機能を追加しており、いくつかの要件を満たすのに役立ちます。}}
+
+良いニュースは、単一の KV ストアを SQL に移行する方が、複数テーブル・インデックス・制約などを持つ複雑な SQL スキーマを KV に移行するよりも比較的容易だということです。これまでに 50 行程度のスクリプトで何度も実施しています。
+
+経験則として、KV パターンから始めると SQL 設計の品質が上がることが多いです。データを別の視点で捉えることを強制され、SQL で本当に必要なものを **正確に** 把握できるようになります。
+
+## 次のステップ
+
+学ぶ最良の方法は実際に手を動かすことです。Redis、DynamoDB、S3 のいずれかで **実装してみる** ことをおすすめします。どれも一長一短のある優れた KV ストアです。
+
+### Fact Service – 参考プロジェクト
+
+私のオープンソースプロジェクト ["Fact Service"](https://github.com/justsml/fact-service) をチェックしてください。これは GitHub 上の参照実装です。
+
+単体で動作する RESTful API として、KV データサービスを提供します。
+
+多数の[data adapters](https://github.com/justsml/fact-service/tree/main/lib/providers)が用意されています。Postgres、Redis、DynamoDB、Firestore、そして Cassandra 用のアダプタも含まれています！（[Docker コマンド](https://github.com/justsml/fact-service/tree/main/lib/providers)が完備されているので、すぐに始められます。）
+
+Fact Service は入門用・学習用プロジェクトとして設計されており、フォークして自分だけの KV データサービスを構築してください！
+
+## 結論
+
+この記事が参考になったことを願っています。質問やフィードバックがあれば、遠慮なくコメントするか、[Twitter](https://x.com/justsml)で `@` を付けてお知らせください。
+
+### クレジット
+
+- [Modeling Hierarchical Tree Data in PostgreSQL](https://leonardqmarcq.com/posts/modeling-hierarchical-tree-data)
+- [Do's and Don'ts of Storing Large Trees in PostgreSQL](https://leonardqmarcq.com/posts/dos-and-donts-of-modeling-hierarchical-trees-in-postgres)
+
+### さらに読む
+
+- [Fact Service](https://github.com/justsml/fact-service)
+- [Postgres](https://www.postgresql.org/)
+- [Redis](https://redis.io/)
+- [DynamoDB](https://aws.amazon.com/dynamodb/)
+- [S3](https://aws.amazon.com/s3/)
+- [Cassandra](https://cassandra.apache.org/)
+- [Firestore](https://firebase.google.com/docs/firestore)
+````
