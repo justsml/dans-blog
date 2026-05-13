@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: mastra-security-guardrails
+- Locale: es
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-01-03--mastra-security-guardrails/es/index.mdx
+- Validation: passed
+- Runtime seconds: 59.72
+- Input tokens: 6460
+- Output tokens: 5730
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.001892
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: La IA en producción es aterradora (Y cómo solucionarlo)
 subTitle: 'Si tu agente no tiene barreras de seguridad, no estás listo para producción.'
@@ -166,3 +184,4 @@ La mayoría de los problemas de seguridad en IA de producción no son ataques so
 2. **Seguridad y Guardrails** (Este Post)  
 3. [MCP e Integraciones de Herramientas](../mastra-mcp-tool-integrations)  
 4. [Flujos de Trabajo y Memoria](../mastra-workflows-memory)
+````
