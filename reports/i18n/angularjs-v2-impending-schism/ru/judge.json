@@ -1,0 +1,73 @@
+{
+  "selectedCommit": "0be99fa0b1ae80c55c0f82cab412e59306ca7999",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 10,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The current translation in the MDX file already incorporates the fixes suggested in the previous judge report (correcting the TC-39 meaning and fixing the broken absolute URLs). The translation is accurate, maintains Dan's informal and slightly opinionated tone, and correctly handles the MDX structure and frontmatter. No further high-priority changes are required.",
+  "slug": "angularjs-v2-impending-schism",
+  "locale": "ru",
+  "candidateCommits": [
+    "0be99fa0b1ae80c55c0f82cab412e59306ca7999",
+    "39af2ae0dbada2b76deaae4795f6af7b042a6922"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "src=\"https://res.cloudinary.com/ddd/image/upload/timeout-expired.gif\"",
+      "replacement": "src=\"../https://res.cloudinary.com/ddd/image/upload/timeout-expired.gif\"",
+      "reason": "The project uses a specific relative path prefix for external images in MDX to handle asset processing.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "src=\"https://res.cloudinary.com/ddd/image/upload/v1442175801/system-maint-anon.gif\"",
+      "replacement": "src=\"../https://res.cloudinary.com/ddd/image/upload/v1442175801/system-maint-anon.gif\"",
+      "reason": "The project uses a specific relative path prefix for external images in MDX to handle asset processing.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "Тайно желал, чтобы на встречах TC‑39 его уже выдали… Но их не было.",
+      "replacement": "Втайне желал, чтобы встречи TC-39 породили его... Они этого не сделали.",
+      "reason": "The original text says 'They didn't' (referring to producing the spec), not that the meetings didn't happen. 'Втайне' is also more standard than 'Тайно' in this context.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "src=\"../https://res.cloudinary.com/ddd/image/upload/timeout-expired.gif\"",
+      "replacement": "src=\"https://res.cloudinary.com/ddd/image/upload/timeout-expired.gif\"",
+      "reason": "The previous judge incorrectly suggested adding '../' to absolute HTTPS URLs. Absolute URLs should not have relative path prefixes.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "src=\"../https://res.cloudinary.com/ddd/image/upload/v1442175801/system-maint-anon.gif\"",
+      "replacement": "src=\"https://res.cloudinary.com/ddd/image/upload/v1442175801/system-maint-anon.gif\"",
+      "reason": "The previous judge incorrectly suggested adding '../' to absolute HTTPS URLs. Absolute URLs should not have relative path prefixes.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug angularjs-v2-impending-schism --locale ru --skip-global",
+    "output": ""
+  }
+}
