@@ -1,0 +1,131 @@
+# Translation Candidate
+- Slug: the-4-pillars-of-collaborative-culture
+- Locale: de
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2021-03-03--the-4-pillars-of-collaborative-culture/de/index.mdx
+- Validation: passed
+- Runtime seconds: 12.11
+- Input tokens: 5181
+- Output tokens: 1973
+- Thinking tokens: unknown
+- Cached input tokens: 1024
+- Cache write tokens: 0
+- Estimated cost: $0.000557
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: Die 4 Säulen einer kollaborativen Kultur
+subTitle: 'Sicherheit, Geschwindigkeit, Klarheit und Engagement.'
+date: '2021-04-03'
+modified: '2022-02-27'
+tags:
+  - collaborative-culture
+  - culture
+  - teams
+  - growth
+  - personal-development
+category: Leadership
+subCategory: culture
+cover: ../pexels-fauxels-3184430-cropped.webp
+cover_mobile: ../w300_pexels-fauxels-3184430-cropped.webp
+cover_icon: ../icon_pexels-fauxels-3184430-cropped.webp
+credit: Photo by fauxels from Pexels
+---
+## Die 4 Säulen der kollaborativen Kultur
+
+Teilt **jeder in Ihrem Team regelmäßig Ideen**?  
+Gibt er **Feedback oder stellt Fragen**?  
+Kann er sich verletzlich zeigen? Sicher die Mission **in Frage stellen**?
+
+Es gibt 4 wesentliche Säulen einer Kultur der Zusammenarbeit:
+
+- Sicherheit  
+- Geschwindigkeit  
+- Klarheit  
+- Verpflichtung  
+
+Die ersten beiden beeinflussen einander stark: ***Sicherheit & Geschwindigkeit***.  
+Die nächsten beiden Säulen stellen sicher, dass Ihr Prozess sowohl kurz‑ als auch langfristig Mehrwert liefert.
+
+#### Die 4 Säulen
+
+- [ ]  **Sicherheit:** Ist es *sicher*, zu scheitern? Wird Experimentieren gefeiert?  
+    - Ein „Fehlschlag“ ist stets eine Gelegenheit zum Lernen & Verbessern.  
+    - Wird diskutiert & akzeptiert, wenn sich Situation und/oder Meinung ändern?  
+    - Führungskräfte sollten Erkenntnisse aus „abgelehnten“ Vorschlägen hervorheben – selbst wenn kein Vorschlag „gewonnen“ hat.  
+    - Zeigen, wann eine Ursachenanalyse sinnvoll ist? (Passte das nicht zu den OKRs? Könnte die Führung die Ziele klarer oder enger fassen?)  
+- [ ]  **Geschwindigkeit:** Wie viel Zeit sollte das Entwerfen beanspruchen?  
+    - **Daumenregel:** idealerweise 1–20 Minuten; höchstens 2 Stunden.  
+    - **Geschwindigkeit bedeutet hier** Effizienz. Das respektiert sowohl Ihre als auch die Zeit Ihrer Kolleg*innen.  
+- [ ]  **Klarheit:** Erzeugen Sie klare und umsetzbare Entscheidungen? Ist der Nutzen für alle Beteiligten ersichtlich? Denken Sie an den Wert für externe Teams, die früher informiert werden und so unnötige Arbeit an Code vermeiden, gegen den Rechts‑ & Compliance‑Teams Einwände haben könnten.  
+- [ ]  **Verpflichtung:** Können Sie die Entscheidungen finden, die Sie vor 2 Wochen getroffen haben? Vor 3 Sprints? Wenn nicht, macht es wenig Sinn, viel Zeit zu investieren.  
+
+#### Teams sollten ihre Normen & Erwartungen definieren
+
+**Tipp:** Besprechen und bestimmen Sie die beste Arbeitsweise für das Team. Bei Bedarf anpassen.
+
+Dokumentieren Sie Ihre Erkenntnisse so prägnant wie möglich, zum Beispiel:
+
+- Screenshots im Intro bevorzugt für alles UI‑bezogene.  
+- 1‑Zeilen‑Text‑Zusammenfassung bevorzugt. (Für BizDev oder neue Features 1 Absatz verwenden.)  
+- Mock‑Screens in vorgeschlagenen Lösungen, bevor das endgültige Entscheidungsdatum erreicht ist.  
+- Konkrete Label‑Empfehlungen geben: (z. B. `Urgent`, `[Team-Name]`, `Needs C-Level Approval`, `Hackathon`, `Spike related`.)  
+
+#### Überlegungen für Ihr Team
+
+Nehmen Sie sich etwas Zeit, um über diesen Prozess nachzudenken, und zeigen Sie Ihrem Team, dass Sie ein Umfeld schätzen, in dem ihre Ideen gehört werden.
+
+Konzentrieren Sie sich auf diese Bereiche:
+
+- **Klare & minimale Erwartungen festlegen. In der Regel wird das pro Rolle/Abteilung definiert** (z. B. Finanzen, Sicherheit, Incident Response, Engineering, Management.)
+    - [ ]  Kein Entwurf ist zu grob, um geteilt zu werden. (Verwenden Sie eindeutige Labels, um das zu kennzeichnen.)
+    - [ ]  Werden korrekte Rechtschreibung & Grammatik erwartet? (Bei Management‑Vorschlägen ja. Bei Sicherheitsvorfällen kann Grammatik weniger Priorität haben.)
+    - [ ]  Werden Skizzen oder Diagramme bevorzugt? (Für Netzwerkänderungen können Flowcharts Pflicht sein. Verkaufsprognosen sind in diesem Team üblich.)
+    - [ ]  Wird vom Autor erwartet, eine Lösung für das Problem vorzuschlagen? (Oder nur eine Platzhalter‑„Stroh‑“Lösung?)
+- **Mehrere Beispiel‑Vorschläge bereitstellen**
+    - [ ]  Kurze Beispiele in jedem Modus erstellen.
+    - [ ]  Ausstehende Entscheidungen nutzen, um Teammitglieder einzubeziehen.
+- **Je nach Beschaffenheit Ihrer Gruppe einen Verhaltenskodex in Betracht ziehen**
+    - [ ]  Wichtig, wenn Sie Drittparteien, Nicht‑Mitarbeiter, die Open‑Source‑Community usw. einbinden.
+- **Empathie**
+    - [ ]  Menschen sind häufig nervös, wenn sie Ideen teilen. Das ist menschlich, selbst Rockstars werden beim Auftreten nervös.
+    - [ ]  Berücksichtigen Sie Kommunikationspräferenzen und -bedürfnisse der Teammitglieder.
+    - [ ]  **Sprechen Sie regelmäßig** mit Ihrer Gruppe (oder einzeln) darüber. Oft hilft eine kurze Pair‑Programming‑ oder Brain‑Storming‑Sitzung, Blockaden zu lösen und neue Energie zu geben.
+
+**Tipp:** Machen Sie es sich zur Gewohnheit, **den Vorschlag zu teilen, sobald ein Titel steht.**
+
+Es ist in Ordnung, wenn er eine Weile im `draft` bleibt.
+
+Sobald ein Vorschlag bereit ist, weiterzugehen, holen Sie die Stakeholder dazu, diskutieren Sie und treiben Sie die Sache voran.
+
+Wenn Vorschläge weiterentwickelt werden, wird ein Rückstand an Entwurfs‑Ideen zu einer Quelle von Möglichkeiten.
+
+Werden frische Ideen gefeiert? Feiern Sie „ausgefallene“ Vorschläge? Das beeinflusst den Wert und das Volumen der Ideen.
+
+**Seien Sie bewusst darin, das zu modellieren, was Sie sehen wollen.**
+
+#### Scope & Expectations
+
+Wo immer möglich, sollte die Reaktion auf einen Vorschlag idealerweise ein paar‑Klick‑Prozess sein.
+
+Entscheiden Sie, ob Sie eine ausführliche Analyse mit umfassenden Notizen benötigen, einen schnellen einzeiligen Kommentar oder sogar eine Emoji‑Abstimmung.
+
+Erwartungen müssen klar sein. Die Qualität allein durch Etiketten wie „WORK IN PROGRESS“ oder „Feasibility Comments Requested“ zu beschreiben, motiviert Kommentatoren selten. Teams profitieren davon, zu wissen, welche Art von Ergebnis erwartet wird.
+
+Ablehnung (oder die Wahrnehmung von Misserfolg) darf niemals zum Abschreckungsfaktor werden. Eine „Kultur des Fehlermachens“ ist hier entscheidend: **Schneller / häufiger scheitern zulassen! Einen günstigen & frühen Feedback‑Loop wertschätzen!**
+
+Jedes Team wird hier unterschiedliche Normen und Prioritäten haben. Versuchen Sie, den Ansatz Ihres Teams im Rahmen von Retrospektiven zu reflektieren und zu verbessern.
+
+#### Erfolg messen
+
+Betrachten Sie, wie Ideen in Ihrer Organisation entstehen und sich weiterentwickeln:
+
+- Welcher Prozentsatz Ihrer Mitarbeitenden/ Ihres Teams teilt Ideen?
+- Wie lange dauert es im Durchschnitt, bis ein Mitarbeitender den ersten Vorschlag macht? Tage? Monate? Jahre?!?!?
+- Teilt wirklich jeder im Team regelmäßig Ideen?
+- Fühlen sich die Menschen sicher? Können sie Verwundbarkeit zeigen? Sogar die Mission hinterfragen?
+````
