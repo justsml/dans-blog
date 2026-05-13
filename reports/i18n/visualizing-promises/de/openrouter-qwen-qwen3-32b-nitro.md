@@ -4,13 +4,13 @@
 - Model: openrouter/qwen/qwen3-32b:nitro
 - Target: src/content/posts/2018-09-30--visualizing-promises/de/index.mdx
 - Validation: rejected: direct AI SDK translation failed
-- Runtime seconds: 10.13
-- Input tokens: 3803
-- Output tokens: 4320
+- Runtime seconds: 13.45
+- Input tokens: 4459
+- Output tokens: 4169
 - Thinking tokens: unknown
-- Cached input tokens: 0
+- Cached input tokens: 1024
 - Cache write tokens: 0
-- Estimated cost: $0.001341
+- Estimated cost: $0.001357
 - Pricing source: local-openrouter-estimate
 - Note: Command failed: bun run i18n:validate --slug visualizing-promises --locale de
 ## Raw Output
@@ -18,8 +18,8 @@
 ````mdx
 ---
 social_image: ../desktop-social.webp
-title: ''
-subTitle: ''
+title: Visualisierung von Promises
+subTitle: Durchbrechen...
 date: '2018-09-30'
 modified: '2024-07-30'
 category: Guides
@@ -39,7 +39,7 @@ related:
   - stop-trying-to-make-async-await-happen
   - javascript-promises-quiz
 ---
-Um zu veranschaulichen, wie Promises ausgeführt werden, definieren wir eine neue Methode `delay(millisecs)`.
+Um zu visualisieren, wie Promises ausgeführt werden, definieren wir eine neue Methode `delay(millisecs)`.
 
 ```js
 function delay(millisecs) {
@@ -49,11 +49,11 @@ function delay(millisecs) {
 }
 ```
 
-Dies ist eine Hilfsmethode, die aufgelöst wird, sobald die Timeoutdauer verstrichen ist.
+Dies ist eine Hilfsmethode, die nach Ablauf des Timeouts aufgelöst wird.
 
 Die Verzögerung in Millisekunden wird an den Callback von `.then` übergeben.
 
-Schauen wir uns 4 Beispiele an (mit animierten Timelines).
+Schauen wir uns 4 Beispiele (mit animierten Zeitachsen) an.
 
 ## Beispiel #1/4
 
@@ -63,7 +63,7 @@ Dies zeigt, wie die Ausführung von `console.log()` durch `delay(msec)` verzöge
 delay(1000).then(() => console.log("done"));
 ```
 
-![Zeitlinie, die zeigt, dass delay(1000) den console.log nach einer Sekunde ausführt](../N_1000ms_log.webp)
+![Timeline showing delay 1000 then console log running after one second](../N_1000ms_log.webp)
 
 <!-- ```
 delay(1000) --------|.then(fn)
@@ -76,19 +76,19 @@ delay(1000) --------|.then(fn)
 
 _Dies zeigt einen häufigen Fehler._
 
-Der `console.log` wird genau dann ausgelöst, wenn `delay(1000)` **beginnt**. Nicht **nach** der Verzögerung, wie Sie es wahrscheinlich gewollt haben.
+Der `console.log` wird direkt, sobald `delay(1000)` **beginnt**, ausgelöst. Nicht **nach** der Verzögerung, wie Sie es wahrscheinlich gewollt haben.
 
 Weil `console.log` `undefined` zurückgibt, wird unser `.then()` stillschweigend ignoriert.
 
 Beachten Sie den Unterschied zwischen `typeof console.log === 'function'` und `typeof console.log() === undefined`.
 
-Im Allgemeinen ist die gewünschte Verwendung von `console.log` in Beispiel #1 dargestellt. Stellen Sie sicher, dass Sie Funktionen in `.then` und `.catch` übergeben.
+Im Allgemeinen ist die gewünschte Verwendung von `console.log` in Beispiel #1 dargestellt. Stellen Sie sicher, dass Sie Funktionen an `.then` und `.catch` übergeben.
 
 ```js
 delay(1000).then(console.log("done"));
 ```
 
-![Zeitlinie, die zeigt, wie console.log sofort vor dem Abschluss des Verzögerungsvorgangs ausgeführt wird](N_1000ms_!log.webp)
+![Timeline showing console log running immediately before the delay finishes](../N_1000ms_!log.webp)
 
 <!-- ```
 delay(1000) --------|.then(null)
@@ -99,7 +99,7 @@ console.log('done')
 
 ## Beispiel #3/4
 
-3 Promises laufen gleichzeitig ab.
+3 Promises führen gleichzeitig aus.
 
 ```js
 delay(1000).then(console.log);
@@ -107,7 +107,7 @@ delay(2000).then(console.log);
 delay(3000).then(console.log);
 ```
 
-![Zeitlinie, die zeigt, wie drei Verzögerungsversprechen nach einer, zwei und drei Sekunden gelöst werden](../N_3000ms.webp)
+![Zeitlinie, die drei delay-Versprechen zeigt, die nach einer, zwei und drei Sekunden gelöst werden](../N_3000ms.webp)
 
 <!-- ```
 delay(1000) ------|.then(console.log)
@@ -126,17 +126,11 @@ delay(3000) ------|--------------------|--------------------|.then(console.log)
 Promise.all([delay(1000), delay(2000), delay(3000)]).then(console.log);
 ```
 
-![Zeitlinie, die zeigt, wie Promise.all auf alle drei Verzögerungsversprechen wartet](../N_3000ms_PromiseAll.webp)
+![Zeitlinie, die zeigt, wie Promise all auf alle drei delay-Versprechen wartet](../N_3000ms_PromiseAll.webp)
 
-<!-- ```js
-delay(1000) ------|--------------------|--------------------|
-delay(2000) ------|--------------------|--------------------|
-delay(3000) ------|--------------------|--------------------|
-Promise.all(...) ------------------------|.then(console.log)
-|-----------------|--------------------|--------------------|-------------------
-|                 |                    |                    |
-0msec           1sec                 2sec                 3sec
-``` -->
+<!-- ``` 
+--- CHUNK END ---
+```
 
 ```
 delay(1000) ---| [erfüllt]------------------v
@@ -148,7 +142,9 @@ Promise.all()  |--------------|-------------- > console.log([1000, 2000, 3000])
 0msec        1sec           2sec           3sec
 ```
 
-> Credits:
+>
+
+Credits:
 > 
 > - Animierte asynchrone Diagramme von [Patrick Biffle](https://github.com/Piglacquer)
 > - Inspiration für diesen Artikel: https://pouchdb.com/2015/05/18/we-have-a-problem-with-promises.html
