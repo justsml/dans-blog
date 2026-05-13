@@ -4,7 +4,7 @@
 - Model: openrouter/qwen/qwen3-32b:nitro
 - Target: src/content/posts/2024-11-06--quiz-can-you-count-to-bigint/de/index.mdx
 - Validation: rejected: direct AI SDK translation failed
-- Runtime seconds: 5.35
+- Runtime seconds: 5.95
 - Input tokens: unknown
 - Output tokens: unknown
 - Thinking tokens: unknown
