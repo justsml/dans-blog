@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: serverless-database-magic
+- Locale: ja
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2025-09-15--serverless-database-magic/ja/index.mdx
+- Validation: deferred
+- Runtime seconds: 3.73
+- Input tokens: 6388
+- Output tokens: 3807
+- Thinking tokens: unknown
+- Cached input tokens: 2048
+- Cache write tokens: 0
+- Estimated cost: $0.000934
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: 2025年 データベース革新の波
 subTitle: AIに感謝。
@@ -242,3 +260,4 @@ AWS も S3 に隣接したベクトル検索機能を進めており、これは
 > **免責事項:** 私は何年も Pagefind を使い、2025 年にコントリビュータになりました。小規模プロジェクトで Orama と Chroma を試し、より大規模な AI アプリケーションで LanceDB を検証中です。これらのプロジェクトと金銭的な関係はなく、データベースの進化に対する純粋な関心から執筆しています。
 
 [1]: https://danlevy.net/you-might-not-need-algolia/
+````
