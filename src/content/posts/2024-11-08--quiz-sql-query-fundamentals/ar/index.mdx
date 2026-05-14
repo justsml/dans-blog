@@ -1,0 +1,336 @@
+---
+unlisted: false
+title: 'اختبار: أثبت مهاراتك في SQL!'
+subTitle: هل أنت مع SQL أم noSQL؟
+label: SQL 101
+social_image: ../desktop-social.webp
+category: Quiz
+subCategory: Database
+date: '2024-11-08'
+modified: '2024-11-08'
+tags:
+  - quiz
+  - intro
+  - sql
+  - core
+  - fundamentals
+  - beginner
+  - intermediate
+cover_full_width: ../peter-thomas-os14nsuXdI4-unsplash-wide.webp
+cover_mobile: ../peter-thomas-os14nsuXdI4-unsplash-square.webp
+cover_icon: ../peter-thomas-os14nsuXdI4-unsplash-square.webp
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+## اختبر أساسيات استعلامات SQL لديك
+
+هل جعلك استخدام ORM ضعيفًا في المهارات؟ لا تقلق، هذا يحدث للكثير من المطورين.
+
+انطلق فورًا لتثبت إتقانك لأساسيات استعلامات SQL! 👇
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="أساسيات SQL"
+  title="جملة WHERE الأساسية"
+  options={[
+    {text: 'SELECT * FROM users WHERE name LIKE(John);'},
+    {text: 'SELECT * FROM users WHERE name = \"', isAnswer: true},
+    {text: 'SELECT * FROM users WHERE name == "John";'},
+    {text: 'SELECT * FROM users WHERE name === "John";'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    أي من استعلامات SQL التالية يسترجع بشكل صحيح الصفوف التي يكون اسمها "John"؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    في SQL، يتم استخدام علامة المساواة المفردة (`=`) للتحقق من المساواة في جملة `WHERE`، وليس `==` أو `===`، وهي عوامل تشغيل في JavaScript.
+
+    الصيغة الصحيحة هي `SELECT * FROM users WHERE name = 'John';`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="أساسيات SQL"
+  title="دالة التجميع COUNT"
+  options={[
+    {text: 'يحسب جميع الصفوف بما في ذلك القيم NULL'},
+    {text: 'يحسب فقط القيم غير NULL في عمود', isAnswer: true},
+    {text: 'يحسب القيم NULL كقيمة فريدة واحدة'},
+    {text: 'يعامل كل قيمة NULL كقيمة فريدة، مشابهة لـ NaN !== NaN'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ماذا تفعل `COUNT(column_name)` في SQL؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `COUNT(column_name)` يحسب عدد القيم غير NULL في عمود محدد. لحساب جميع الصفوف، بما في ذلك القيم NULL، استخدم `COUNT(*)`.
+
+    يمكنك أيضًا استخدام `COALESCE` لضمان أن القيم NULL تأخذ قيمة افتراضية غير NULL. على سبيل المثال: `COUNT(COALESCE(column_name, 0))`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="عمليات JOIN في SQL"
+  title="أساسيات LEFT JOIN"
+  options={[
+    {text: 'يعيد صفًا واحدًا لكل صف مطابق، ويتجاهل الصفوف غير المطابقة'},
+    {text: 'يعيد جميع الصفوف من الجدول الأيسر، بالإضافة إلى الصفوف المطابقة من الجدول الأيمن', isAnswer: true},
+    {text: 'يعيد جميع الصفوف المطابقة أو غير المطابقة، حيث تشير القيم NULL إلى عدم وجود تطابق'},
+    {text: 'يعيد جميع الصفوف من الجدول الأيمن، مع أي صفوف مطابقة من الجدول الأيسر'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ماذا يفعل `LEFT JOIN` في SQL؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    يقوم `LEFT JOIN` بإرجاع جميع الصفوف من الجدول الأيسر والصفوف المطابقة من الجدول الأيمن، مع قيمة NULL للصفوف غير المطابقة في الجدول الأيمن.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="SQL Joins"
+  title="استخدام INNER JOIN"
+  options={[
+    {text: 'يعيد الصفوف غير المتطابقة من كلا الجدولين'},
+    {text: 'يعيد جميع الصفوف من كلا الجدولين، مع قيم NULL للصفوف غير المتطابقة'},
+    {text: 'يعيد الصفوف التي تحقق شرط الربط في كلا الجدولين', isAnswer: true},
+    {text: 'يعيد الصفوف غير المتطابقة من الجدول الأيمن'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ماذا يفعل `INNER JOIN` في SQL؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    يقوم `INNER JOIN` بإرجاع الصفوف التي يتطابق فيها شرط الربط مع صفوف من كلا الجدولين. لا يتم تضمين الصفوف غير المتطابقة في مجموعة النتائج.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="الاستعلامات الفرعية في SQL"
+  title="الاستعلام الفرعي المرتبط"
+  options={[
+    {text: 'استعلام فرعي يتم تنفيذه مرة واحدة بشكل عام'},
+    {text: 'استعلام فرعي يُستخدم فقط في عبارات JOIN'},
+    {text: 'استعلام فرعي يُرجع أعمدة متعددة فقط'},
+    {text: 'استعلام فرعي يتم تنفيذه مرة واحدة لكل صف في الاستعلام الخارجي', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما هو الاستعلام الفرعي المرتبط في SQL؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    يتم تقييم الاستعلام الفرعي المرتبط مرة واحدة لكل صف من الاستعلام الخارجي. يشير إلى أعمدة من الاستعلام الخارجي، مما يجعله معتمدًا على كل صف.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="CTEs في SQL"
+  title="بناء جملة عبارة WITH"
+  options={[
+    {text: 'مسموح بها فقط في عبارات DELETE'},
+    {text: 'تُستخدم لدوال التجميع'},
+    {text: 'تُستخدم فقط لتعريف العروض (Views)'},
+    {text: 'تعريف مجموعة نتائج مؤقتة لاستخدامها في عبارة SQL أكبر', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما هو الغرض من عبارة `WITH` (التعبير الجدولي المشترك) في SQL؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    تُستخدم عبارة `WITH`، أو التعبير الجدولي المشترك (CTE)، لتعريف مجموعة نتائج مؤقتة يمكن الرجوع إليها داخل الاستعلام الرئيسي. في PostgreSQL، يمكن إرفاق `WITH` بعبارات مثل `SELECT`، `INSERT`، `UPDATE`، `DELETE`، أو `MERGE`.
+
+    يساعد ذلك في تحسين قابلية القراءة والصيانة للاستعلامات المعقدة.
+
+    الصيغة هي:
+    ```sql
+        WITH cte_name AS (
+        SELECT column_name
+        FROM table_name
+        )
+        SELECT *
+        FROM cte_name;
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="أساسيات SQL"
+  title="IS NULL مقابل IS NOT NULL"
+  options={[
+    {text: 'يتحقق مما إذا كانت القيمة NULL', isAnswer: true},
+    {text: 'يتحقق مما إذا كانت القيمة فارغة'},
+    {text: 'يتحقق مما إذا كانت القيمة نصية'},
+    {text: 'يتحقق مما إذا كانت القيمة رقمية'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ماذا يفعل العامل `IS NULL` في SQL؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    يتحقق `IS NULL` مما إذا كان العمود المحدد يحتوي على قيمة NULL. ويتحقق `IS NOT NULL` من العكس.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="عوامل SQL"
+  title="استخدام عامل IN"
+  options={[
+    {text: 'إرجاع الصفوف الفريدة'},
+    {text: 'يتطلب عمودًا مفهرسًا'},
+    {text: 'ينطبق فقط على الأعمدة الرقمية'},
+    {text: 'إرجاع الصفوف التي تطابق القيم في قائمة محددة', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ماذا يفعل عامل `IN` في SQL؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    عامل `IN` يقوم بتصفية الصفوف لتطابق أي قيم في قائمة محددة، وغالبًا ما يكون بديلاً لعدة شروط OR.
+
+    بينما قد *يعيد* "صفوفًا فريدة" (وغالبًا ما يفعل)، إلا أن هذا ليس الغرض الأساسي بالضرورة.
+
+    الفهرسة غير مطلوبة هنا، على الرغم من أنها بالتأكيد ممارسة جيدة لاستخدام `IN` على عمود مفهرس، ويفضل أن يكون فهرسًا `UNIQUE`، حيث يمكن أن يحسن الأداء.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="دوال SQL"
+  title="استخدام دالة COALESCE"
+  options={[
+    {text: 'تحسب القيم الفارغة (NULL)'},
+    {text: 'ترجع آخر وسيطة غير فارغة (non-NULL)'},
+    {text: 'ترجع أول وسيطة غير فارغة (non-NULL)', isAnswer: true},
+    {text: 'مقتصرة على أعمدة IDENTITY'},
+    {text: 'أصلها من Printer Coalation'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ماذا تفعل دالة `COALESCE` في SQL؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    ترجع دالة `COALESCE` أول قيمة غير فارغة (non-NULL) في قائمة محددة، وهي مفيدة لاستبدال القيم الافتراضية عند مواجهة القيم الفارغة.
+
+    على سبيل المثال، `COALESCE(column_name, 0)` سترجع `0` إذا كانت `column_name` هي `NULL`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="دوال التجميع في SQL"
+  title="استخدام GROUP BY"
+  options={[
+    {text: 'يخفي التكرارات'},
+    {text: 'يُستخدم فقط في الانضمامات'},
+    {text: 'يرتب الصفوف بترتيب تصاعدي'},
+    {text: 'يجمع الصفوف حسب العمود (الأعمدة) المحدد', isAnswer: true},
+    {text: 'يجب أن تكون الصيغة GROUP WITH/USING'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما هو الغرض من جملة `GROUP BY` في SQL؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    تقوم جملة `GROUP BY` بتجميع الصفوف التي لها نفس القيم في الأعمدة المحددة، مما يسمح بتطبيق دوال التجميع على كل مجموعة.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="الانضمامات في SQL"
+  title="أساسيات FULL OUTER JOIN"
+  options={[
+    {text: 'يعيد فقط الصفوف المتطابقة'},
+    {text: 'يعيد فقط الصفوف ذات القيم غير الفارغة'},
+    {text: 'يعيد الصفوف غير المتطابقة من الجدول الأيسر فقط'},
+    {text: 'يعيد الصفوف غير المتطابقة من الجدول الأيمن فقط'},
+    {text: 'يعيد جميع الصفوف من كلا الجدولين، مع قيم فارغة للصفوف غير المتطابقة', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ماذا يفعل `FULL OUTER JOIN` في SQL؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    يقوم `FULL OUTER JOIN` بإرجاع جميع الصفوف من كلا الجدولين، ويملأ الصفوف غير المتطابقة بقيم فارغة للقيم المفقودة.
+
+    هذا مفيد لمقارنة جدولين وإيجاد الاختلافات بينهما.
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>

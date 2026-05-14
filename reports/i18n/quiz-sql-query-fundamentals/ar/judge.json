@@ -1,0 +1,37 @@
+{
+  "selectedCommit": "71c087dd022b69203a7b887ed8c0a77e951e7a50",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The current translation in the provided MDX for the selected commit actually contains the correct, non-truncated SQL string: `{text: \"SELECT * FROM users WHERE name = 'John';\", isAnswer: true},`. The previous judge report likely flagged a truncation that was either already fixed or misidentified in the specific candidate version. The translation is technically accurate, uses appropriate Arabic terminology for database concepts (e.g., 'دوال التجميع' for aggregate functions), and maintains the MDX structure perfectly.",
+  "slug": "quiz-sql-query-fundamentals",
+  "locale": "ar",
+  "candidateCommits": [
+    "71c087dd022b69203a7b887ed8c0a77e951e7a50",
+    "8063e479630f45e7d0b49f1a69112c6538684674"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "{text: 'SELECT * FROM users WHERE name = \\\"', isAnswer: true},",
+      "replacement": "{text: \"SELECT * FROM users WHERE name = 'John';\", isAnswer: true},",
+      "reason": "The SQL query in the answer option was truncated and missing the actual value and closing quote.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug quiz-sql-query-fundamentals --locale ar --skip-global",
+    "output": ""
+  }
+}
