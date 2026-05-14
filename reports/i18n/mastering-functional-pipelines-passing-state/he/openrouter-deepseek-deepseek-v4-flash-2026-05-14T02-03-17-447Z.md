@@ -1,0 +1,221 @@
+# Translation Candidate
+- Slug: mastering-functional-pipelines-passing-state
+- Locale: he
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2023-08-13--mastering-functional-pipelines-passing-state/he/index.mdx
+- Validation: deferred
+- Runtime seconds: 48.04
+- Input tokens: 7327
+- Output tokens: 8181
+- Thinking tokens: unknown
+- Cached input tokens: 1920
+- Cache write tokens: 0
+- Estimated cost: $0.003053
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: 'מומחה צינורות: העברת מצב'
+subTitle: 'שלום, קלוז''ר, ידידי הוותיק.'
+date: '2023-08-09'
+modified: '2024-07-30'
+tags:
+  - typescript
+  - closure
+  - stateful
+  - scoping
+  - hoisting
+  - functional
+  - pipeline
+category: Guides
+subCategory: JavaScript
+cover: ../sven-kucinic-LxYxC6jdjcA-unsplash-cropped-1200.webp
+cover_mobile: ../w300_sven-kucinic-LxYxC6jdjcA-unsplash-cropped-1200.webp
+cover_icon: ../icon_sven-kucinic-LxYxC6jdjcA-unsplash-cropped-1200.webp
+---
+## מאסטר הצינורות: העברת מצב
+
+נתקלתם באתגרים בהעברת מצב באמצעות צינורות פונקציונליים?
+
+הארגון (או היעדרו) של הקוד שלכם משפיע ישירות על הקלות שבה מצב מועבר מצד לצד.
+
+במאמר זה נחקור טכניקה יעילה להעברת מצב דרך צינור. תוך כדי כך נשפר את הארגון והקריאות של הקוד.
+
+הקטע ה"אמיתי" הבא יהיה המוקד של מאמר זה: פונקציית צ'ק-אאוט, המקבלת `userId` ומערך של `products`. היא מחזירה שרשרת Promise המבצעת 4 פונקציות ברצף.
+
+```tsx
+const checkout = (userId: number, products: number[]) => {
+  return getProductsSubtotal(userId, products)
+    .then(subTotal => applyTaxes(userId, subTotal))
+    .then(total => purchaseProducts(userId, total))
+    .then(result => sendReceipt(userId, result));
+};
+```
+
+רגע אחד, הקוד הזה די סביר, לפחות מבחינת צינורות ב-JS!
+
+עם זאת, יש בו כמה בעיות עדינות שעלולות להצטבר לבעיות משמעותיות יותר.
+
+בעיה אחת היא שאנחנו מעבירים שוב ושוב את `userId` לכל פונקציה (הקשורה לוגית).
+כעת שלבו את זה עם בעיה נוספת שקל לפספס גם למפתחים וגם ל-TypeScript: החלפת הארגומנטים המספריים יוצרת בקלות באג שקט. (ראו `applyTaxes` ו-`purchaseProducts`. _האם `userId` או `amount` בא קודם?_)
+
+לפני שנחליט איך לשפר את הקוד הזה, בואו נזהה כמה יתרונות/חסרונות.
+
+### יתרונות וחסרונות
+
+#### יתרונות
+
+- שימוש טוב בקלוז'ר! העברת `userId` ו-`products` פעם אחת!
+- שמות ארגומנטים עקביים.
+- הרכבה יעילה ותמציתית יחסית של 4 פונקציות מפתח לתהליך התשלום.
+- בקרת זרימת שגיאות "חינמית". (שגיאות מבעבעות מכל פונקציה מקוננת, ומדחות את ה-Promise שמוחזר מ-`checkout()`.)
+
+#### חסרונות
+
+- העברה חוזרת של `userId` היא מייגעת.
+- הפונקציות אינן חד-פרמטריות (unary). _זה משפיע על יכולת ההרכבה. ראו [דוגמה סופית](#checkout-with-further-improvements) להסבר._
+- לא תמיד ברור מה כל פונקציה מחזירה. (האם זו תוצאת שליחת האימייל, או המשתנה `result`? או משהו אחר?)
+- לא ברור איך להוסיף פונקציונליות (למשל, אם נצטרך לטעון הנחת לקוח/אשראי/נקודות וכו').
+- לפעמים שמות פרמטרים "זמניים" (כמו ב-`.then(param => {})`) מוסיפים הקשר. אבל עם הזמן, הם כנראה יהפכו למקור לעומס מיותר בשמות.
+
+### פתרון, חלק 1: צרו מודול!
+
+הטכניקה הזו עוסקת בארגון פונקציות קשורות למודול יחיד (למשל `CartHelpers`). היא לא דורשת תבנית ספציפית. חקרו [פונקציות מפעל](#carthelpers-factory), [מחלקות](#carthelpers-class), קלוז'רים, מיקסינים וכו'. מצאו מה מתאים לפרויקט ולצוות שלכם.
+
+#### CartHelpers Factory
+
+דוגמה למודול `CartHelpers`, שבו `userId` מועבר פעם אחת, וכל המתודות הן בעלות ארגומנט יחיד.
+
+```tsx
+const CartHelpers = (userId: number) => {
+  return {
+    getProductsSubtotal: products => getProductsSubtotal(userId, products),
+    applyTaxes: subTotal => applyTaxes(userId, subTotal),
+    purchaseProducts: total => purchaseProducts(userId, total),
+    sendReceipt: invoice => sendReceipt(userId, invoice)
+  };
+};
+```
+
+#### מחלקת CartHelpers
+
+אם מחלקות הן הקטע שלכם, קל להתאים:
+
+```tsx
+class CartHelpers {
+  constructor(userId) {
+    this.userId = userId;
+  }
+  getProductsSubtotal = products => getProductsSubtotal(this.userId, products);
+  applyTaxes = subTotal => applyTaxes(this.userId, subTotal);
+  purchaseProducts = total => purchaseProducts(this.userId, total);
+  sendReceipt = invoice => sendReceipt(this.userId, invoice);
+}
+```
+
+כמה יתרונות מיידיים:
+
+- מבטל העברת משתנים חוזרת.
+  - DRY: `CartHelpers` מפשטת את הארגומנט החוזר `userId`.
+  - כל מתודה מקבלת **_רק_** את הארגומנטים הנחוצים. מה שהופך את `cart.applyTaxes(subTotal)` לקריאה בלתי מפתיעה לחלוטין.
+- פונקציות עם ארגומנט יחיד ב-`CartHelpers` קריאות יותר, עם מטרה ברורה יותר.
+
+על ידי קיבוץ פונקציות קשורות, אנו יוצרים הזדמנות להקטין את שטח הפנים החשוף (למשל, `checkout()`, המתודות ה'ציבוריות' של `CartHelpers`).
+
+> פחות שטח פנים === פחות עומס קוגניטיבי, בדיקות ותחזוקה טובות יותר.
+> _תכנן מערכות בכוונה ובמיקוד. ✨_
+
+#### שימוש ב-Checkout ו-CartHelpers
+
+בואו נראה איך הפונקציה `checkout()` נראית עכשיו:
+
+```tsx
+export const checkout = ({ userId, products }) => {
+  const cart = CartHelpers(userId);
+
+  return Promise.resolve(products)
+    .then(products => cart.getProductsSubtotal(products))
+    .then(subTotal => cart.applyTaxes(subTotal))
+    .then(total => cart.purchaseProducts(total))
+    .then(result => cart.sendReceipt(result));
+};
+```
+
+##### Checkout עם שיפורים נוספים
+
+> אפשר לשפר עוד? כן! אין צורך לחזור על ארגומנטים בכלל!
+
+כאשר הארגומנטים של פונקציה מסופקים על ידי הפלט של פונקציות קודמות, ניתן לפשט את הקוד עוד יותר.
+
+```tsx
+export const checkout = ({ userId, products }) => {
+  const cart = CartHelpers(userId);
+
+  // 🌈 פונקציות נערמות כמו לגו וקוראות כמו "מילים אנושיות" רגילות! 💅
+  return Promise.resolve(products)
+    .then(cart.getProductsSubtotal)
+    .then(cart.applyTaxes)
+    .then(cart.purchaseProducts)
+    .then(cart.sendReceipt);
+};
+```
+
+**אם מרגיש לא טבעי לשלב פרמטרים לארגומנטים בודדים (אובייקט),** שקול לפרק את הפונקציות שלך **או** לשלב אותן למודולים עם תחום מתאים יותר.
+
+#### מאיפה להתחיל?
+
+מצא פונקציות קשורות, וקבץ אותן יחד. (למשל `CartHelpers`.)
+
+חלק מהאתגר במציאת מודולים לוגיים אפשריים הוא זיהוי קוד קשור מלכתחילה.
+
+##### מה הופך פונקציות לקשורות?
+
+טריק נחמד: חפש חזרות בפרמטרים של פונקציות. שאל האם יש קשר בפעולה? או אחריות בסיסית?
+
+- ✅ פונקציות עם ארגומנטים חוזרים ונפוצים. (למשל, אם 4 מתודות מקבלות `userRewards`, סביר להניח שאתה צריך מודול `Rewards` או אחר.)
+- ✅ פונקציות שהארגומנטים שלהן מסופקים ישירות על ידי הפלט של פונקציות קודמות. (רצפי צעדים. למשל `Extract`, `Transform`, `Load`.)
+- ❌ כל דבר שקשור במעורפל לאזור התכונה, 'רכישת מוצרים?'
+- ❌ פונקציות עם שמות בעלי תחילית או סיומת משותפת?
+- ❌ פונקציות הדורשות אובייקטים גדולים כארגומנטים, למרות שהן משתמשות רק בכמה ערכים מתוך אותם אובייקטים. (למשל `applyTaxes({ user, business, rewards, kitchenSink })` לעומת `applyTaxes({ subTotal })`)
+
+אמנם אין 'תשובה נכונה' יחידה לעיצוב מודולים, אבל זה עוזר לזהות 2-3 אפשרויות לארגון – צייר מתווה, כתוב קוד 'דמיוני', שאל 'האם זה מעורר שמחה?'
+
+<aside>
+📌 לעתים קרובות נדרשים מספר ניסיונות בארגון מודולים לפני שמודל התחום שלך מתגבש. אל תתייסר על השגת שלמות.
+</aside>
+
+> אולי תרגיש ש-`cart.sendReceipt()` לא שייך למתודות הקשורות לתשלום. אולי `customerNotifications.sendReceipt()` הוא בית טוב יותר להודעות ללקוח. אם `CartHelper` הוא בעל חשיבות מספקת, הוא עשוי לפעול כ-**_controller_** הקורא באופן פנימי לכל ה-**_services_** הנחוצות, כמו `customerNotifications`.
+
+#### איך יודעים אם אתה עוזר?
+
+אם הקריאות לא נפגעת בזמן שאתה מבטל ארגומנטים אד-הוק, **מזל טוב!!!** כנראה שבנית מודול עם תחום ברור ועמיד!
+
+- להסרת ארגומנטים ביניים יש דרך לאלץ 'שכבות' לצוץ.
+- זה _אמור_ להיות קשה לזרוק קוד אד-הוק במקום הלא נכון!
+
+אז, זה מעלה את השאלה, היכן נוסיף פונקציונליות?
+
+מניסיוני, ישנן 2 אסטרטגיות עיקריות להערכה בעת הוספת פונקציונליות:
+
+1.  להרחיב/לשפץ מתודה קיימת. (כשקוד חדש קרוב מספיק לקוד קיים.)
+2.  ליצור פונקציה חדשה (חמישית) במקום הרצוי בשרשרת. (בהנחה שקוד חדש אינו קשור לפונקציות קיימות.)
+
+בסופו של דבר זה מקל על ההחלטה היכן שייכת פונקציונליות חדשה. (למשל `cart.applyDiscounts()`, `cart.applyTaxes()`, `rewards.getBalance()`.)
+
+### סיכום
+
+העברת מצב דרך צינור מורכב יכולה להיות מסובכת. עם זאת, עם קצת תרגול של שחזור, תמצא את עצמך כותב קוד קריא יותר, עם עומס קוגניטיבי נמוך יותר.
+
+שאלות? תגובות? חששות? אל תהסס לפנות [@justsml](https://x.com/justsml) או [דוא"ל](mailto:dan@danlevy.net).
+
+#### הישארו מעודכנים לחלק הבא בסדרה
+
+נחקור כיצד להחיל מצב חיצוני, ולהרחיב פונקציונליות במודול שלנו!
+
+#### קריאה נוספת
+
+- [קשיים דומים קיימים בעולם React המונחה רכיבים.](https://kyleshevlin.com/quit-your-yapping)
+````
