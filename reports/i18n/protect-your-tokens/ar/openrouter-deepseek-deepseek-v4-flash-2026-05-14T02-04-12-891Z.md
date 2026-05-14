@@ -1,0 +1,143 @@
+# Translation Candidate
+- Slug: protect-your-tokens
+- Locale: ar
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2018-10-27--protect-your-tokens/ar/index.mdx
+- Validation: deferred
+- Runtime seconds: 24.45
+- Input tokens: 4765
+- Output tokens: 3899
+- Thinking tokens: unknown
+- Cached input tokens: 768
+- Cache write tokens: 0
+- Estimated cost: $0.001653
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: حماية رموزك ومفاتيح API وأسرارك
+subTitle: عام؟ خاص؟ إيه؟
+date: '2018-10-27'
+modified: '2024-07-30'
+tags:
+  - tokens
+  - api-keys
+  - secrets
+  - security
+  - nodejs
+  - json-web-tokens
+category: Guides
+subCategory: security
+cover: ../dayne-topkin-78982-unsplash.webp
+cover_mobile: ../w300_dayne-topkin-78982-unsplash.webp
+cover_icon: ../icon_dayne-topkin-78982-unsplash.webp
+---
+## متى يجب حماية رموزك؟
+
+<!--  For the purpose of this article we'll treat the following terms as related: . **They are not interchangable** despite most documentation and [StackOverflow](https://stackoverflow.com/questions/51698672/how-to-secure-my-api-key) answers using them as such. -->
+
+<!-- (Google Maps Credentials, AWS S3 Keys, Geocoding Service, etc.)  -->
+
+> تأمين مفاتيح API والرموز **أمر بالغ الأهمية**!
+
+خطأ واحد قد يؤدي إلى فقدان السيطرة على خادمك وبياناتك لصالح المخترقين!
+
+لا ينبغي أن يكون من الصعب تحديد ما إذا كان يجب إخفاء رمز معين - حتى بناءً على الوثائق الرسمية!
+
+غالبًا ما يزداد الأمر سوءًا بسبب خليط المصطلحات ذات الصلة التي ستواجهها: _الرموز_، _المفاتيح_، _بيانات الاعتماد_، _الأسرار_، _الخاصة_، و_العامة_.
+
+دعنا نعيد صياغة هذا على أنه بين `سري` و`غير سري`.
+
+* 🔒 [`المفاتيح السرية`](#-secret-keys) يجب أن تبقى مخفية. بشكل عام، لا ينبغي أبدًا أن تغادر خادمك الخاص (أو الخدمة - مثل heroku أو netlify أو travis-ci).
+* 🌍 [`المفاتيح غير السرية`](#-non-secret-keys) تصف سلاسل يمكن مشاركتها بحرية وتضمينها في طلبات المتصفح.
+
+<br />
+
+---------------------------------------------
+
+## 🔒 `المفاتيح السرية`
+
+** ‼️ مهم:** `المفاتيح السرية` **يجب** أن يتجاهلها Git _و_ تُحذف من جميع أكواد المتصفح. [_كيفية استخدام dotenv_](#-how-to-handle-secrets-safely)
+
+<br />
+
+_كيف تعرف أنك تتعامل مع `مفتاح سري`؟_
+
+<br />
+
+**👍 قاعدة عامة:** الخوادم التي تُرجع `أخطاء CORS` تفتقر إلى دعم المتصفح. هذا يشير بقوة إلى أنك **يجب** أن تُمرر الخدمة عبر وسيط (proxy)، وتتعامل معها كما لو كانت `سرية`.
+
+**👍 قاعدة عامة:** الخدمات المكلفة يجب (دائمًا تقريبًا) أن تُمرر عبر وسيط أو تُخفى.
+
+**👍 قاعدة عامة:** إذا كنت تُجري عملية كتابة (**رفع ملف، إدراج صف في قاعدة بيانات**)، فقد تتعامل مع `مفاتيح سرية`.
+
+<br />
+
+**_حالات الاستخدام والميزات:_** `المفاتيح السرية`
+
+- تفويض طويل الأمد (بيانات الاعتماد، رموز الوصول، رموز JSON Web Tokens)
+- تفويض قصير الأمد (رموز OAuth، مخزن الجلسات)
+- الوصول إلى الخدمات المدفوعة/الباهظة (للمصادقة، الترميز الجغرافي، تخزين الملفات، إلخ)
+- الجزء الخاص من الزوج العام/الخاص (RECAPTCHA، Stripe، Auth0)
+- بيانات اعتماد الخدمة (البريد الإلكتروني/SMTP، LDAP/خدمات الدليل)
+- تشفير البيانات والتحقق من التكامل
+
+### قائمة التحقق: التعامل الآمن مع المفاتيح السرية
+
+#### نظرة عامة سريعة
+
+أكمل الخطوات التالية **لإزالة المفاتيح السرية من الكود الخاص بك:**
+
+- [ ] استبدل المفاتيح المكتوبة بشكل ثابت بمتغيرات البيئة. مثال: `process.env.API_SECRET`
+- [ ] استخدم مكتبة مثل [`dotenv`](https://github.com/motdotla/dotenv#dotenv) مع ملف `.env`. أضف مفاتيحك السرية التي كانت مكتوبة بشكل ثابت سابقًا إلى ملف `.env`.
+- [ ] أضف سطرًا `.env` في ملف `.gitignore` الخاص بك!
+
+> **لا** تقم بإنشاء ملف `.env` على الخوادم المنشورة. استخدم أداة إدارة متغيرات البيئة التي توفرها خدمة الاستضافة الخاصة بك (مثل [Heroku](https://devcenter.heroku.com/articles/config-vars)، Netlify، AWS EC2): مثل **لوحة التحكم أو سطر الأوامر.**
+
+<blockquote><h2 style="margin: 0.125em 0; text-align: center;">مقال ذو صلة: <a href="/securely-using-environment-variables-in-nodejs/">استخدام dotenv بأمان في NodeJS</a></h2></blockquote>
+
+-----------------------------------
+
+## 🌍 `المفاتيح غير السرية`
+
+**👍 قاعدة عامة:** عندما يجب إرسال مفتاح إلى المتصفح في الكود أو بشكل مضمّن (مثلًا عبر وسم `<script src="https://my-api/?apiKey=123-abc-456">`)، **فهو بالتأكيد `غير سري`**. مثال شائع هو خرائط Google.
+
+<br />
+
+**_حالات الاستخدام والميزات:_** المفاتيح `غير السرية`
+
+- وصول قصير المدى (معرفات جلسة المستخدم، رموز JSON Web Tokens)
+- تقييد الوصول إلى API حسب التطبيق/المطور (للمصادقة، الترميز الجغرافي، إلخ)
+- الجزء العام من زوج عام/خاص (RECAPTCHA، Stripe، Auth0)
+- معرفات التحليلات
+
+#### ✅ التعامل مع المفاتيح غير السرية:
+
+> **من الآمن ترميز المفاتيح غير السرية (العامة) بشكل ثابت في الكود!**
+
+اجعل هذا أسهل في الإدارة على المدى الطويل باستخدام ملف `config.js` مشترك لتطبيقك.
+
+**مثال:**
+
+```js
+// config.js
+module.exports = {
+  googleMapsKey: '123-abc'
+};
+```
+
+```js
+// load-map.js
+const config = require('./config.js');
+const key = config.googleMapsKey;
+const src = `//maps.googleapis.com/maps/api/js?key=${key}`;
+// ...
+```
+
+-----------------------------------
+
+**ملاحظة:** هناك _حالات استخدام_ أخرى لمتغيرات البيئة. بعضها لم أتطرق إليه: CI/CD والاختبار، أعلام الميزات، وإعدادات وقت التشغيل للبيئات الخاصة!
+````
