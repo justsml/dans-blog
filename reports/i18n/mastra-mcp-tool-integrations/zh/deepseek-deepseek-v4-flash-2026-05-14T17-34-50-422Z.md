@@ -1,0 +1,242 @@
+# Translation Candidate
+- Slug: mastra-mcp-tool-integrations
+- Locale: zh
+- Model: deepseek/deepseek-v4-flash
+- Target: src/content/posts/2026-01-04--mastra-mcp-tool-integrations/zh/index.mdx
+- Validation: deferred
+- Runtime seconds: 22.68
+- Input tokens: 4425
+- Output tokens: 3424
+- Thinking tokens: unknown
+- Cached input tokens: 768
+- Cache write tokens: 0
+- Estimated cost: $0.001473
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: 没有这个，你的AI代理毫无用处
+subTitle: 为什么MCP是人工智能的USB-C。
+date: '2026-01-04'
+modified: '2026-01-08'
+tags:
+  - ai
+  - mcp
+  - tools
+  - integrations
+  - mastra
+  - salesforce
+  - apis
+category: AI
+subCategory: Integration
+social_image: ../desktop-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+你构建了一个AI代理。也许它甚至是个好代理。提示词很紧凑，模型很快，回复感觉也很自然。
+
+但接着有人让它去检查Salesforce里的客户记录。或者拉取最新的Jira工单。或者搜索你的内部文档。
+
+而你那个漂亮的代理就是……做不到。
+
+这就是每个AI平台最终都会遇到的集成问题。你的代理需要手。它需要能接入你的实际业务系统。没有这些，你只是在运行一个昂贵的聊天机器人。
+
+传统的解决方案？为每个你想连接的服务编写一个自定义API包装器。阅读他们的文档，处理他们的认证，应对他们的速率限制，祈祷他们下个月不要改端点。然后对下一个服务重复一遍。再下一个。
+
+模型上下文协议彻底改变了这个局面。
+
+---
+
+## MCP实际解决了什么
+
+想想USB-C之前的USB。你有Mini-USB、Micro-USB、苹果专有连接器，以及一抽屉只适用于特定设备的线缆。USB-C不仅仅是增加了一个新连接器——它建立了一个标准，使得任何线缆都能与任何设备配合使用。
+
+MCP正在为AI工具集成做同样的事情。
+
+你不再需要编写自定义代码来将你的代理连接到Salesforce、HubSpot、GitHub或任何其他服务。你只需实现一次协议（或下载一个预构建的服务器），任何兼容MCP的代理都能立即与之通信。
+
+该协议处理通信层。你只需定义你的工具做什么以及它们需要什么数据。
+
+---
+
+## 设置多个集成
+
+Mastra通过其[`MCPClient`](https://mastra.ai/docs/mcp/overview)原生支持MCP。你可以连接本地工具（作为子进程运行）和远程服务（运行在自己的基础设施上）。
+
+以下是一个连接Google Maps用于路线规划、天气服务和本地Wikipedia搜索的真实生产环境设置：
+
+```typescript
+// src/mastra/mcp/index.ts
+import { MCPClient } from '@mastra/mcp';
+
+export const mcpClient = new MCPClient({
+  servers: {
+    // 本地工具（Stdio）
+    wikipedia: {
+      command: 'npx',
+      args: ['-y', 'wikipedia-mcp'],
+    },
+    // 地图与导航（远程/HTTP）
+    googleMaps: {
+      url: new URL(process.env.GOOGLE_MAPS_MCP_URL!),
+      requestInit: {
+        headers: {
+          Authorization: `Bearer ${process.env.GOOGLE_MAPS_API_KEY}`,
+        },
+      },
+    },
+    // 天气服务集成
+    weather: {
+      url: new URL('https://mcp.weatherapi.dev/v1'),
+      requestInit: {
+        headers: {
+          'X-API-Key': process.env.WEATHER_API_KEY!,
+        },
+      },
+    },
+  },
+});
+```
+
+客户端管理连接生命周期，处理本地工具的进程生成，并维护远程服务器的HTTP连接。你不需要直接操作套接字或stdio。
+
+## 将工具连接到智能体
+
+一旦配置好MCP客户端，将这些工具赋予智能体就很简单了：
+
+```typescript
+// src/mastra/agents/navigation-agent.ts
+import { Agent } from '@mastra/core/agent';
+import { openai } from '@ai-sdk/openai';
+import { mcpClient } from '../mcp';
+
+export const navigationDirectionsAgent = new Agent({
+  id: 'navigation-directions-agent',
+  name: 'Navigation & Directions Assistant',
+  instructions: `You are a helpful navigation assistant that provides route planning and travel advice.
+    - Always confirm the start and destination locations
+    - Use Google Maps tools to find optimal routes
+    - Check weather conditions along the route
+    - Provide estimated travel times and suggest alternatives if weather is poor
+    - Include relevant details like traffic, road conditions, and points of interest
+    - Keep responses clear and actionable`,
+  model: openai('gpt-5'),
+  tools: await mcpClient.getTools(), // <--- This is the magic line
+});
+```
+
+当用户询问：“从旧金山到太浩湖的最佳路线是什么？我是否需要担心天气？”
+
+智能体读取可用的工具定义，意识到它可以访问Google Maps路线规划和天气预报工具，使用正确的参数执行它们，并返回最优路线以及沿途的当前天气状况。
+
+你没有编写任何一行Google Maps API代码或天气服务集成代码。
+
+---
+
+## 每用户身份验证
+
+这里有一个容易犯的安全错误：硬编码凭据。
+
+如果你将一个Google Maps API密钥放在环境变量中然后收工，那么所有用户共享相同的配额和速率限制。更重要的是，如果你使用存储用户偏好（如保存的位置或收藏路线）的服务，每个人都会看到相同的数据。这在演示中没问题。在生产中则是一个隐患。
+
+Mastra通过允许你使用用户特定的凭据动态创建MCP客户端来处理这个问题：
+
+```typescript
+async function handleUserRequest(userPrompt: string, userCredentials: UserCreds) {
+  // Create a client for THIS specific user
+  const userMcp = new MCPClient({
+    servers: {
+      googleMaps: {
+        url: new URL(process.env.GOOGLE_MAPS_MCP_URL!),
+        requestInit: {
+          headers: {
+            // User's specific API key or token
+            Authorization: `Bearer ${userCredentials.mapsApiKey}`,
+            'X-User-ID': userCredentials.userId,
+          },
+        },
+      },
+    },
+  });
+
+  const agent = mastra.getAgent('navigationDirectionsAgent');
+  
+  // Inject tools at runtime
+  const response = await agent.generate(userPrompt, {
+    toolsets: await userMcp.getToolsets(),
+  });
+
+  return response;
+}
+```
+
+每个用户获得自己独立的工具集，拥有自己的API配额和偏好。用户A的保存位置保持私密，用户B的路线历史是分开的。这就是多租户SaaS智能体在实际中的工作方式。
+
+---
+
+## 构建复合工具
+
+有时你需要将多个MCP工具组合成一个单一操作。也许你想规划一条路线，同时考虑实时交通和沿途的天气状况。
+
+你可以将MCP工具包装在自定义工具定义中：
+
+```typescript
+export const smartRouteTool = createTool({
+  id: 'smart-route-planner',
+  description: 'Plans optimal route considering traffic and weather conditions',
+  execute: async ({ context, mastra }) => {
+    // Get the raw tools
+    const tools = await mcpClient.getTools();
+    
+    // 1. Get base route from Google Maps
+    const routeData = await tools.googleMaps_getDirections.execute({ 
+      context: { 
+        origin: context.origin,
+        destination: context.destination 
+      } 
+    });
+    
+    // 2. Check weather along the route
+    const weatherData = await tools.weather_getForecast.execute({
+      context: { coordinates: routeData.waypoints }
+    });
+    
+    // 3. Return enhanced route with weather warnings
+    return { 
+      ...routeData, 
+      weatherAlerts: weatherData.alerts,
+      recommendation: weatherData.severe ? 'Consider delaying trip' : 'Safe to travel'
+    };
+  },
+});
+```
+
+这让你能够精细控制工具之间的交互方式，同时仍然利用MCP协议处理繁重的工作。
+
+---
+
+## 这将导向何处
+
+为AI代理需要交互的每个服务编写自定义API客户端从来都不是可持续的。它扩展性差、频繁崩溃，并且将你的平台绑定到特定实现上。
+
+MCP并不能解决所有集成挑战——身份验证仍然复杂，速率限制仍然重要，而且并非每个服务都有MCP服务器。但它奠定了一个基础，使得构建代理平台的痛苦大大减轻。
+
+如果你正在设计一个需要与外部服务交互的AI系统，理解MCP可能值得你花时间。
+
+### 资源
+
+- [Mastra MCP 文档](https://mastra.ai/docs/mcp/overview)
+- [MCP 注册表](https://registry.modelcontextprotocol.io)
+- [Klavis AI（企业级 MCP）](https://klavis.ai)
+- [Mastra GitHub 仓库](https://github.com/mastra-ai/mastra)
+
+## 阅读系列文章
+
+1. [LLM 路由](../llm-routing-mastra-ai)
+2. [安全与防护](../mastra-security-guardrails)
+3. **MCP 与工具集成**（本文）
+4. [工作流与记忆](../mastra-workflows-memory)
+````
