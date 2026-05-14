@@ -1,0 +1,142 @@
+# Translation Candidate
+- Slug: honest-priorities
+- Locale: zh
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2024-10-23--honest-priorities/zh/index.mdx
+- Validation: deferred
+- Runtime seconds: 11.59
+- Input tokens: 4305
+- Output tokens: 2942
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.001050
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: 优先级陷阱
+subTitle: 多选是最佳选择吗？
+category: Thoughts
+subCategory: Agile
+date: '2024-10-23'
+modified: '2024-10-24'
+tags:
+  - agile
+  - leadership
+  - priority
+  - backlog
+  - jira
+cover: ../new-priority-city.webp
+cover_full_width: ../new-priority-city.webp
+cover_mobile: ../new-priority-city-w300.webp
+cover_icon: ../new-priority-city-w200.webp
+cover_credit: >-
+  Photo by <a
+  href="https://unsplash.com/@mroz?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Filip
+  Mroz</a> on <a
+  href="https://unsplash.com/photos/photo-of-tram-beside-waiting-station-during-nighttime-023T4jyCRqA?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
+---
+## 优先级下拉菜单陷阱
+
+<aside className="breakout">
+💡 当组织规模扩大时，待办事项清单会不可避免地膨胀。最终，清单的庞大体积将*迫使*我们进行优先级排序。
+</aside>
+
+## 一个初创公司的故事
+
+不出所料，你的Jira管理员们会有一个解决方案：看啊，这就是`优先级`字段下拉菜单！（给企业开发者的专业提示：可能被命名为`Priority2`或`P-等级`）
+
+奇怪的是，100%的公司都会在`P1, P2, P3, P4`或`低、中、高、关键`之间做选择——显然没有其他选项。
+
+四个固定选项的列表？好吧。让我们试用几周看看...
+
+### 两天后
+
+在*令所有人毫不意外*的转折中，组织发现了一个需要更高优先级的工单，于是不得不进行小幅hack：添加`P0`，或者`Critical Max+`！
+
+### 又过了三天
+
+*我们的勇敢老板在会议上有了惊人的发现！*
+
+他们居然发现了一个比`P0`还要高的优先级！
+
+从那时起，团队就埋头研究如何给这个新优先级贴标签。
+
+也许用`-1`？不，不行。这太容易混淆（`P-1` vs `P1`）。那`P0.5`呢？也不行？
+
+<p className="breakout">在一个"灵感迸发"的时刻，团队发明了更高优先级：双零！<br />现在被称为`P00`优先级。</p>
+
+{/* *终于，我们可以把世界上所有事情都整齐地归类到优先级下拉菜单里了！(…邪恶笑声…)* */}
+
+### 洪水来临前
+
+在任何人意识到之前，你的团队已经莫名其妙地被`P00`工单淹没！
+
+<b>我们该如何避免这场荒谬的工程剧场游戏？</b>
+
+## 如果优先级不是多选题呢？
+
+我们该如何更好地表示这个不断变化、流动的人类概念`Priority`？
+
+- 在现实世界中，优先级会随着新信息、市场变化和组织目标的不断变化而演变。
+- 紧迫性、重要性、资源可用性和成本/风险分析之间往往存在复杂的相互作用，而简单的下拉菜单无法捕捉这些，尤其是在时间推移后。（工单腐烂。）
+- 不同的利益相关者可能对什么是高优先级有相互冲突的观点，使得一刀切的方法不适用。
+
+## 那么接下来呢？
+
+有几个替代方案值得探索，从低到高努力：
+
+- 为了提供更多的空间和灵活性，选择一个“中性”的起始值，比如100或1,000。你可以随时增加或减少这个数字。
+    - 或者从零开始，更高的数字代表更高的优先级。
+- 实施一个多维优先级系统，考虑商业价值、紧急性和所需工作量等因素。（创建一个`composite`分数，使排序和过滤更容易。）
+- 采用动态优先级方法，如[MoSCoW技术](../wiki/MoSCoW_method)（必须有、应该有、可能有、不会有的），允许定期重新评估。（另见[Kano模型](../wiki/Kano_model)。）
+
+## 总结
+
+尽管优先级的衰变速度很快，但人们却把太多东西寄托在它上面。昨天的`CRITICAL`工单很可能不会成为下个季度的`CRITICAL`工单。
+
+随着时间的推移，旧的高优先级工单会变得难以清理和维护。毕竟，谁想降低曾经被声明为“关键”的东西的`Priority`呢？更不用说删除那些无关紧要的工单了……（天啊！想想待办事项列表！）
+
+我看到多家公司将`Severity`和`Priority`混淆了。`Severity`描述的是***紧急性***（或时间敏感性）。
+
+`Priority ≠ Severity`。定义3-5个严重级别是有意义的（通常用于维护服务等级协议）。
+
+紧急程度的等级有助于传达从“零客户影响”到“部分/完全服务中断”的信息。
+
+## 一个警告
+
+部署无界优先级字段需要一些计划和纪律！
+
+如果你熟悉前端开发，可能经历过`z-index`战争。
+
+本质上，`z-index`允许设计师设置*任何*正整数，以确保他们的小部件显示在其他较低`z-index`内容的“上方”。
+
+即使是微小的组件更新也可能改变`z-index`在他们的`<Dialog />`上的值——突然让它不可见。当我们的第三方组件、功能工作和其他团队贡献试图互相“压过”对方的`z-index`时，这些情况会变得一团糟。
+
+`z-index`曾经限制在约32,000。但最近我看到一个代码片段使用了十亿的`z-index: 1000000000`！
+
+通货膨胀对`z-index`的冲击可谓猛烈。
+
+## 讨论
+
+- 这是否值得作为一个思想实验？
+- 永续增长的优先级概念是否令人恐惧？是否引发焦虑？
+- 这种方法最终是否会超出64位整数限制？是否不可避免？
+- 除了`严重性`或`紧急性`，其他字段能否参与这场讨论？
+- Jira应承担多少责任？或获得多少赞誉？
+
+我们可以在互联网上尖叫：“谁来清理这些`P00`工单？”
+
+或者，你可以***真正***认真对待你的待办事项。
+
+- 接受你1000个工单中90%永远不会完成的事实。这没关系。
+- 归档数月未动的工单。任何初始优先级/紧急性已不再适用。况且归档的问题通常可以恢复。
+- 当某个问题重新出现时，这很正常；它只是提升了优先级。
+- 个人经验表明，丢弃旧的和未完成的工单从未造成任何危害。
+- 无止境地追加到待办事项数据库中，错失了聚焦团队和组织核心目标的机会。（面向未来的事物。而待办事项本质上回顾过去。）
+- 深厚的待办事项最终会变成一个反常奖杯室，庆祝那些你永远不会交付的垃圾。
+````
