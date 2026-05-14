@@ -1,0 +1,52 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "Destructuring with Nested Default Values",
+  "translatedTitle": "التفكيك مع القيم الافتراضية المتداخلة",
+  "translation": {
+    "title": "التفكيك مع القيم الافتراضية المتداخلة",
+    "group": "التفكيك المتداخل في TypeScript",
+    "options": [
+      {
+        "text": "خطأ: الخاصية 'first' مفقودة"
+      },
+      {
+        "text": "خطأ: الخاصية 'last' مفقودة"
+      },
+      {
+        "text": "خطأ: الخاصيتان 'birth' و 'age' مفقودتان"
+      },
+      {
+        "text": "خطأ: الخاصية 'place' مفقودة"
+      },
+      {
+        "text": "خطأ: 'string' لا يحتوي على خصائص في {...}"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "حدد خطأ النوع:"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "الخطأ في توقيع الدالة `greet`. الخاصيتان `age` و `birth` مفقودتان في الكائن الممرَّر، لذا يجب أن تكونا اختياريتين في تعريف النوع.\n\n    رغم أن الخاصية `birth` تم تفكيكها مع قيمة افتراضية، تعريف النوع يطلب وجودها. لتحديد خاصية كاختيارية في TypeScript، يجب استخدام العامل `?`.\n  \n    لاحظ أن `birth?: { place?: string }` ليس هو نفسه `birth: { place?: string } | undefined`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"التفكيك مع القيم الافتراضية المتداخلة\",\n  \"group\": \"التفكيك المتداخل في TypeScript\",\n  \"options\": [\n    {\n      \"text\": \"خطأ: الخاصية 'first' مفقودة\"\n    },\n    {\n      \"text\": \"خطأ: الخاصية 'last' مفقودة\"\n    },\n    {\n      \"text\": \"خطأ: الخاصيتان 'birth' و 'age' مفقودتان\"\n    },\n    {\n      \"text\": \"خطأ: الخاصية 'place' مفقودة\"\n    },\n    {\n      \"text\": \"خطأ: 'string' لا يحتوي على خصائص في {...}\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"حدد خطأ النوع:\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"الخطأ في توقيع الدالة `greet`. الخاصيتان `age` و `birth` مفقودتان في الكائن الممرَّر، لذا يجب أن تكونا اختياريتين في تعريف النوع.\\n\\n    رغم أن الخاصية `birth` تم تفكيكها مع قيمة افتراضية، تعريف النوع يطلب وجودها. لتحديد خاصية كاختيارية في TypeScript، يجب استخدام العامل `?`.\\n  \\n    لاحظ أن `birth?: { place?: string }` ليس هو نفسه `birth: { place?: string } | undefined`.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1002,
+    "outputTokens": 936,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 2636,
+    "providerCostUsd": 0.0006927,
+    "providerUpstreamCostUsd": 0.0006927,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000039078,
+    "outputUsd": 0.00016847999999999999,
+    "totalUsd": 0.000207558,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

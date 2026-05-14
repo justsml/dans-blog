@@ -1,0 +1,52 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "Nested Destructuring",
+  "translatedTitle": "التفكيك المتداخل",
+  "translation": {
+    "title": "التفكيك المتداخل",
+    "group": "التفكيك المتداخل",
+    "options": [
+      {
+        "text": "الأول: Dan، المدينة: Denver"
+      },
+      {
+        "text": "الأول: undefined، المدينة: Denver"
+      },
+      {
+        "text": "خطأ: لا يمكن قراءة الخاصية 'first'"
+      },
+      {
+        "text": "الأول: Dan، المدينة: undefined"
+      },
+      {
+        "text": "خطأ"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "ماذا عن بعض التفكيك المتداخل؟"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "خاصية `birth: { place }` غير موجودة في `person`، لذا ستثير خطأ.\n    أحد الحلول هو توفير قيم افتراضية للخصائص المتداخلة.\n\n    عند الوصول إلى الخصائص المتداخلة - كن حذرًا - لأن الأخطاء قد تكون صعبة الاكتشاف. ورسائل الأخطاء تختلف بين المتصفحات والمنصات الأخرى، مما يجعل عملية التصحيح أكثر تحديًا.\n\n    في Chrome الحديث: `TypeError: Cannot read properties of undefined (reading 'place')`\n\n    في Node، هذا أيضًا `TypeError` لأن JavaScript تحاول تفكيك `place` من `undefined` قبل قراءة `place`.\n\n    الصياغة الدقيقة تختلف بين المتصفحات وبيئات التشغيل."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"التفكيك المتداخل\",\n  \"group\": \"التفكيك المتداخل\",\n  \"options\": [\n    {\n      \"text\": \"الأول: Dan، المدينة: Denver\"\n    },\n    {\n      \"text\": \"الأول: undefined، المدينة: Denver\"\n    },\n    {\n      \"text\": \"خطأ: لا يمكن قراءة الخاصية 'first'\"\n    },\n    {\n      \"text\": \"الأول: Dan، المدينة: undefined\"\n    },\n    {\n      \"text\": \"خطأ\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"ماذا عن بعض التفكيك المتداخل؟\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"خاصية `birth: { place }` غير موجودة في `person`، لذا ستثير خطأ.\\n    أحد الحلول هو توفير قيم افتراضية للخصائص المتداخلة.\\n\\n    عند الوصول إلى الخصائص المتداخلة - كن حذرًا - لأن الأخطاء قد تكون صعبة الاكتشاف. ورسائل الأخطاء تختلف بين المتصفحات والمنصات الأخرى، مما يجعل عملية التصحيح أكثر تحديًا.\\n\\n    في Chrome الحديث: `TypeError: Cannot read properties of undefined (reading 'place')`\\n\\n    في Node، هذا أيضًا `TypeError` لأن JavaScript تحاول تفكيك `place` من `undefined` قبل قراءة `place`.\\n\\n    الصياغة الدقيقة تختلف بين المتصفحات وبيئات التشغيل.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1010,
+    "outputTokens": 912,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 2841,
+    "providerCostUsd": 0.0006795,
+    "providerUpstreamCostUsd": 0.0006795,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00003939,
+    "outputUsd": 0.00016416,
+    "totalUsd": 0.00020355,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
