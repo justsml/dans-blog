@@ -1,0 +1,142 @@
+---
+social_image: ../desktop-social.webp
+title: Promise可视化
+subTitle: 突破极限...
+date: '2018-09-30'
+modified: '2024-07-30'
+category: Guides
+subCategory: promises
+cover: ../junior-ferreira-735237-unsplash.webp
+cover_mobile: ../w300_junior-ferreira-735237-unsplash.webp
+cover_icon: ../icon_junior-ferreira-735237-unsplash.webp
+tags:
+  - promises
+  - async
+  - visualizing
+  - javascript
+  - composition
+related:
+  - intro-to-promises
+  - promise-gotchas
+  - stop-trying-to-make-async-await-happen
+  - javascript-promises-quiz
+---
+为了可视化Promise的执行过程，我们定义一个新的方法`delay(millisecs)`。
+
+```js
+function delay(millisecs) {
+  return new Promise(resolve => {
+    setTimeout(() => resolve(millisecs), millisecs);
+  });
+}
+```
+
+这是一个工具方法，超时时间到达后会执行resolve。
+
+以毫秒为单位的延迟时间将传递给`.then`的回调函数。
+
+让我们通过4个示例（配合动画时间线）来观察。
+
+## 示例 #1/4
+
+这展示了`console.log()`的执行将被`delay(msec)`延迟。
+
+```js
+delay(1000).then(() => console.log("done"));
+```
+
+![时间线展示延迟1000ms后console log在1秒后运行](../N_1000ms_log.webp)
+
+<!-- ```
+delay(1000) --------|.then(fn)
+                    | console.log('done')
+|-------------------|--------------------|--------------------|-----------------
+0msec             1sec                 2sec                 3sec
+``` -->
+
+## 示例 #2/4
+
+_这展示了常见的错误用法。_
+
+`console.log`会在`delay(1000)`**开始时**立即执行，而不是**延迟后**执行。
+
+因为`console.log`返回`undefined`，我们的`.then()`会被静默忽略。
+
+注意`typeof console.log === 'function'`与`typeof console.log() === undefined`的区别。
+
+通常推荐的`console.log`用法如示例#1所示。确保将函数传递给`.then`和`.catch`。
+
+```js
+delay(1000).then(console.log("done"));
+```
+
+![时间线展示console log在延迟完成前立即运行](../N_1000ms_!log.webp)
+
+<!-- ```
+delay(1000) --------|.then(null)
+console.log('done')
+|-------------------|--------------------|--------------------|-----------------
+0msec             1sec                 2sec                 3sec
+``` -->
+
+## 示例 #3/4
+
+3个Promise同时执行。
+
+```js
+delay(1000).then(console.log);
+delay(2000).then(console.log);
+delay(3000).then(console.log);
+```
+
+![时间线展示三个延迟Promise在一、二、三秒后解析](../N_3000ms.webp)
+
+<!-- ```
+delay(1000) ------|.then(console.log)
+delay(2000) ------|--------------------|.then(console.log)
+delay(3000) ------|--------------------|--------------------|.then(console.log)
+|-----------------|--------------------|--------------------|-------------------
+|                 |                    |                    |
+0msec           1sec                 2sec                 3sec
+``` -->
+
+## 示例 #4/4
+
+`Promise.all`与3个`delay` Promises。它们将同时执行。
+
+```js
+Promise.all([delay(1000), delay(2000), delay(3000)]).then(console.log);
+```
+
+![时间线展示Promise all等待三个延迟Promise](../N_3000ms_PromiseAll.webp)
+
+<!--
+
+```
+delay(1000) ---| [resolved]------------------v
+delay(2000) ---|--------------| [resolved]---v
+delay(3000) ---|--------------|--------------v [resolved]
+Promise.all()  |--------------|-------------- > console.log([1000, 2000, 3000])
+|--------------|--------------|--------------|--------------------------------
+|              |              |              |
+0msec        1sec           2sec           3sec
+```
+
+-->
+
+> 致谢：
+>
+> - 异步动画图表由 [Patrick Biffle](https://github.com/Piglacquer)
+> - 本文灵感来源：https://pouchdb.com/2015/05/18/we-have-a-problem-with-promises.html
+
+<!-- <div class="challenge" title="问题 #1: 生命的意义:">
+
+  <ul class="options">
+    <li>1</li>
+    <li>2</li>
+    <li class="answer">42</li>
+    <li>3</li>
+  </ul>
+  <div class="description">生命的意义是什么？</div>
+
+</div> -->
