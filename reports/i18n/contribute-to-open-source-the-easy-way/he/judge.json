@@ -1,0 +1,46 @@
+{
+  "selectedCommit": "3d1ce5c537f37f4d0b0a30fb1eefcf39567b3a61",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The selected translation is excellent. It captures Dan's informal and energetic tone perfectly (e.g., 'טיפש-טיפש' for 'dumb dumb'). It correctly handles MDX components, asset paths, and preserves the structure of the original post. The previous judge's suggestions for 'זאת' and 'שוחה במאגרי קוד' were already incorporated into the current version of the file, so no further high-priority fixes are required.",
+  "slug": "contribute-to-open-source-the-easy-way",
+  "locale": "he",
+  "candidateCommits": [
+    "3d1ce5c537f37f4d0b0a30fb1eefcf39567b3a61",
+    "e94cdff3fb47aaafee08997d56717535adc40e14"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "זו (לא) הדרך",
+      "replacement": "זאת (לא) הדרך",
+      "reason": "Grammatical gender agreement: 'Derekh' (way) is feminine in Hebrew.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "מתגלגל ברפוזיטוריות?",
+      "replacement": "שוחה במאגרי קוד?",
+      "reason": "'Rolling in repos' is an idiom; 'Rolling' (מתגלגל) doesn't convey the same meaning in Hebrew. 'Swimming in' or 'Drowning in' is more natural for abundance.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug contribute-to-open-source-the-easy-way --locale he --skip-global",
+    "output": ""
+  }
+}
