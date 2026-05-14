@@ -1,0 +1,49 @@
+{
+  "index": 8,
+  "attempt": 1,
+  "originalTitle": "File Watching",
+  "translatedTitle": "文件监视",
+  "translation": {
+    "title": "文件监视",
+    "group": "文件系统",
+    "options": [
+      {
+        "text": "每次文件更改时触发一次"
+      },
+      {
+        "text": "不保证；可能会多次触发"
+      },
+      {
+        "text": "永不"
+      },
+      {
+        "text": "仅在文件删除时"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "当文件被修改时，`fs.watch()` 保证会触发多少次？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "`fs.watch()` 并不保证每一次逻辑文件更改只触发一次。它常常会多次触发，因为许多文本编辑器：\n    1. 保存到临时文件\n    2. 将其重命名为目标文件\n\n    为了更可靠的监视，考虑使用：\n    - `chokidar` 包\n    - 对回调进行防抖处理\n    - 使用 `fs.watchFile()`（虽然效率较低）\n\n    [了解更多关于 fs.watch()](https://nodejs.org/api/fs.html#fswatchfilename-options-listener)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"文件监视\",\n  \"group\": \"文件系统\",\n  \"options\": [\n    {\n      \"text\": \"每次文件更改时触发一次\"\n    },\n    {\n      \"text\": \"不保证；可能会多次触发\"\n    },\n    {\n      \"text\": \"永不\"\n    },\n    {\n      \"text\": \"仅在文件删除时\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"当文件被修改时，`fs.watch()` 保证会触发多少次？\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"js\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"`fs.watch()` 并不保证每一次逻辑文件更改只触发一次。它常常会多次触发，因为许多文本编辑器：\\n    1. 保存到临时文件\\n    2. 将其重命名为目标文件\\n\\n    为了更可靠的监视，考虑使用：\\n    - `chokidar` 包\\n    - 对回调进行防抖处理\\n    - 使用 `fs.watchFile()`（虽然效率较低）\\n\\n    [了解更多关于 fs.watch()](https://nodejs.org/api/fs.html#fswatchfilename-options-listener)\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 925,
+    "outputTokens": 628,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 1966,
+    "providerCostUsd": 0.00049635,
+    "providerUpstreamCostUsd": 0.00049635,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000036075,
+    "outputUsd": 0.00011303999999999999,
+    "totalUsd": 0.00014911499999999998,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

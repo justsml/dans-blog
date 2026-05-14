@@ -1,0 +1,49 @@
+{
+  "index": 3,
+  "attempt": 1,
+  "originalTitle": "Reading Files Synchronously",
+  "translatedTitle": "同步读取文件",
+  "translation": {
+    "title": "同步读取文件",
+    "group": "文件系统基础",
+    "options": [
+      {
+        "text": "返回一个 Buffer"
+      },
+      {
+        "text": "返回一个字符串"
+      },
+      {
+        "text": "返回 undefined"
+      },
+      {
+        "text": "返回一个 Promise"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "默认情况下，`fs.readFileSync()` 返回什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "`fs.readFileSync()` 在未指定编码时默认返回一个 Buffer。如果想要字符串，需要做到以下其一：\n    1. 指定编码：`fs.readFileSync('test.txt', 'utf8')`\n    2. 将 Buffer 转为字符串：`content.toString()`\n\n    [了解更多关于 fs.readFileSync 的信息，请查阅 Node.js 文档](https://nodejs.org/api/fs.html#fsreadfilesyncpath-options)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"同步读取文件\",\n  \"group\": \"文件系统基础\",\n  \"options\": [\n    {\n      \"text\": \"返回一个 Buffer\"\n    },\n    {\n      \"text\": \"返回一个字符串\"\n    },\n    {\n      \"text\": \"返回 undefined\"\n    },\n    {\n      \"text\": \"返回一个 Promise\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"默认情况下，`fs.readFileSync()` 返回什么？\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"js\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"`fs.readFileSync()` 在未指定编码时默认返回一个 Buffer。如果想要字符串，需要做到以下其一：\\n    1. 指定编码：`fs.readFileSync('test.txt', 'utf8')`\\n    2. 将 Buffer 转为字符串：`content.toString()`\\n\\n    [了解更多关于 fs.readFileSync 的信息，请查阅 Node.js 文档](https://nodejs.org/api/fs.html#fsreadfilesyncpath-options)\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 899,
+    "outputTokens": 668,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 3035,
+    "providerCostUsd": 0.00051645,
+    "providerUpstreamCostUsd": 0.00051645,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000035061,
+    "outputUsd": 0.00012023999999999999,
+    "totalUsd": 0.000155301,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
