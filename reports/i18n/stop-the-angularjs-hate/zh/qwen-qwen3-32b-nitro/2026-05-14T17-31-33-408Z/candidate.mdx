@@ -1,0 +1,117 @@
+---
+social_image: ../desktop-social.webp
+title: AngularJS 技巧
+subTitle: AngularJS 其实很有趣！
+date: '2015-02-26'
+modified: '2016-02-01'
+category: Code
+subCategory: angularjs
+tags:
+  - angularjs
+  - development
+  - performance
+  - programming
+cover: ../sharon-mccutcheon-522851-unsplash.webp
+cover_mobile: ../w300_sharon-mccutcheon-522851-unsplash.webp
+cover_icon: ../icon_sharon-mccutcheon-522851-unsplash.webp
+---
+## AngularJS 可以很有趣！
+
+> 适用于：AngularJS v1.x
+
+1.  AngularJS 开发者很快会发现，他们的中等规模到大型应用在散乱的 `$watch` 和臃肿的 `$scope` 依赖下开始崩溃。
+2.  保持 `$scope` 中不包含多余的 UI 状态，尽量减少整体层级的大小和深度。
+
+### 双向数据绑定：双刃剑
+
+仅凭双向绑定就足以让从 Backbone 等其他框架转来的开发者感到**极度震撼**。
+
+问题在于：许多网站**过度依赖** Angular 的设计模式。
+这会导致指令爆炸式增长，以及 `$scope/rootScope` 容易拥有数千个实例，这些实例可能持有巨大的对象，从而阻碍有效的垃圾回收。
+
+你已经知道接下来会发生什么：浏览器会精疲力尽！永远困在**疯狂的执行速度**中，不断进行冗余的 UI/DOM 重新编译。
+
+### 停止过度 Angular.JS 化
+
+> “如果你唯一的工具是锤子，那么每个问题看起来都像钉子。”
+>
+> - 老话
+
+你的应用有指令相关的问题吗？
+
+```jade
+current-user-status-label
+  div(ng-if='loggedIn')
+    view-user-surplusage(ng-if='!editMode')
+      .head: contact-details(user='user')
+      .tool: contact-buttons(loggedIn='loggedIn')
+      a.edit-icon(ng-click='editMode = true')
+    edit-user-surplusage(ng-if='editMode')
+      .head: avatar-edit(user='user')
+      .body: edit-contact-details(user='user')
+      a.save-icon(ng-click='editMode = false')
+```
+
+让我们设计一个灵活的用户小部件来解决这个问题：
+
+1.  可复用的组件化设计，使用 DRY 的 Angular 代码
+1.  易于理解的指令，最小化指令的大小/深度（注意 ng-repeats）
+1.  简单的服务层
+1.  实际编码需求极少 - 仅需 HTML/视图代码
+
+```jade
+// jade
+user-widget
+  div(ng-if='loggedIn')
+    div.edit(ng-if='editMode')
+      h4.email-icon: input(type='email', ng-model='user.email')
+      h4.phone-icon: input(type='email', ng-model='user.phone')
+      a.save-icon(ng-click='editMode = false')
+    div.show(ng-if='!editMode')
+      h1.users-icon {{ user.name  }}
+      h4.email-icon {{ user.email }}
+      h4.phone-icon {{ user.phone }}
+      a.edit-icon(ng-click='editMode = true')
+  div(ng-if='!loggedIn')
+    h5: i Welcome User
+    a.btn(href='/login') Login
+```
+
+## 解决方案
+
+### Angular 建议
+
+1.  使用单向绑定（例如 `{ :: title }`）
+1.  限制指令的递归嵌套
+1.  如果必须嵌套指令，_绝不要_ 在 `ng-repeat` 内部进行 - 性能会迅速退化到类似 `O(n^2)^3` 的程度
+    I. 使用工厂模式中的原生 JS/DOM 代码创建基础 DOM/UI 片段，示例：模态消息框、状态栏。从指令或控制器调用 UI 工厂。
+1.  _额外建议：_ 理解浏览器渲染生命周期的[成本和触发条件](https://developers.google.com/web/fundamentals/performance/rendering/index?hl=en)：动画、合成渲染、重排
+
+### 使用 Browserify 组织项目
+
+虽然不专为 Angular 设计，但对简单依赖管理至关重要。
+
+[Browserify](../browserify-handbook/readme.markdown#exports) 通过几乎零代码开销（好吧，几百个字符）让 JS 项目变得易于管理。
+
+[阅读此部分](https://github.com/substack/browserify-handbook/blob/master/readme.markdown#exports) 的 [Browserify 手册](https://github.com/substack/browserify-handbook/)
+
+## 替代方案
+
+### [ReactJS](https://facebook.github.io/react/)（来自 Facebook）
+
+如果你有大量可复用的小型 UI 组件 - ReactJS 可能是更好的选择：
+
+- 如果你的项目...?：
+  - 对 UI/DOM 实现有不同于 Angular 的哲学
+  - 已经有某种“框架” - 你可以**将 ReactJS 与 AngularJS、Ember、Backbone 一起使用**。（尽管可能应避免）
+  - 在代码中处理频繁的数据模型变更，你将受益于避免 Angular 中 digest/loop 模式的 ADHD 特性
+
+### [Polymer Project](http://www.Polymer-Project.org/)（来自 Google）
+
+### 更纯粹的 JS 方法
+
+- 顺便说一下，这是我尝试创建框架无关代码的地方（+1 可测试性，+1 可复用性）
+  1. 使用纯 JavaScript 类加载数据（AJAX/JSONP/嵌入页面等）
+  1. 使用 mustache 模板生成 HTML 字符串（或直接操作 DOM）
+  1. 如果可以，将渲染内容缓存到 localStorage
+  1. （可选）现在添加一个事件监听器重新渲染内容。我已标准化事件名为 `refresh.<class-name>`
