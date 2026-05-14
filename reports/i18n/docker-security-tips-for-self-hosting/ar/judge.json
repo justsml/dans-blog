@@ -1,0 +1,44 @@
+{
+  "selectedCommit": "0e425f58cd219b3e8b0f6fce379fc79c11fe63b3",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 0,
+    "technicalAccuracy": 0,
+    "coherence": 0,
+    "relevance": 0,
+    "translationQuality": 0,
+    "mdxPreservation": 0
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "exact translated text currently in the selected MDX",
+      "replacement": "exact replacement text to write into the selected MDX",
+      "reason": "English explanation of why this medium/high-priority change is needed"
+    }
+  ],
+  "rationale": "Selected 0e425f58cd219b3e8b0f6fce379fc79c11fe63b3.",
+  "slug": "docker-security-tips-for-self-hosting",
+  "locale": "ar",
+  "candidateCommits": [
+    "ec80e37a43b7369ac1e11bca1c1416d5eb88840d",
+    "0e425f58cd219b3e8b0f6fce379fc79c11fe63b3"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "exact translated text currently in the selected MDX",
+      "replacement": "exact replacement text to write into the selected MDX",
+      "reason": "English explanation of why this medium/high-priority change is needed",
+      "pass": 1,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug docker-security-tips-for-self-hosting --locale ar --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug docker-security-tips-for-self-hosting --locale ar --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug docker-security-tips-for-self-hosting --locale ar --skip-global\n111 |     })\n112 |     .filter((message): message is string => message != null);\n113 | \n114 |   if (mismatches.length === 0) return;\n115 | \n116 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2025-01-05--docker-security-tips-for-self-hosting/ar/index.mdx changed heading counts. H1: English has 0, translation has 13; H2: English has 10, translation has 6; H3: English has 17, translation has 14; H4: English has 11, translation has 8\n      at assertHeadingCounts (/Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:116:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:28:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}
