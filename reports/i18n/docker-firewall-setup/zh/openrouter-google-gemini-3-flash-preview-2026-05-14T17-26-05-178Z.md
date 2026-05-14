@@ -1,0 +1,122 @@
+# Translation Candidate
+- Slug: docker-firewall-setup
+- Locale: zh
+- Model: openrouter/google/gemini-3-flash-preview
+- Target: src/content/posts/2015-06-06--docker-firewall-setup/zh/index.mdx
+- Validation: deferred
+- Runtime seconds: 7.88
+- Input tokens: 2417
+- Output tokens: 760
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.003489
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: Docker 防火墙配置
+subTitle: 配置 Docker 宿主机防火墙
+draft: true
+date: '2015-06-06'
+modified: '2016-07-30'
+category: DevOps
+subCategory: docker
+tags:
+  - docker
+  - security
+  - devops
+cover: ../charles-deluvio-456501-unsplash.webp
+cover_mobile: ../w300_charles-deluvio-456501-unsplash.webp
+cover_icon: ../icon_charles-deluvio-456501-unsplash.webp
+---
+## 配置 Docker 宿主机防火墙
+
+1. 假设使用 Debian/Ubuntu Server
+1. 专为 Docker 宿主机运行环境设计
+
+### 安装必要组件
+
+~~~sh
+# 安装 UFW 防火墙及相关工具
+apt-get update && apt-get install -y ufw nmap curl
+~~~
+
+### 获取内网与外网 IP 地址
+
+~~~sh
+# 获取 IP 地址，简洁输出模式：
+hostname --all-ip-addresses
+
+# 或者使用 ip 工具查看详情：
+ip addr
+~~~
+
+### 防火墙 (UFW) 配置 - 示例命令
+
+~~~sh
+ufw logging on # on 等同于 low 级别 - 诊断时建议设为 medium
+ufw logging medium
+# 首先，默认拒绝所有入站流量
+ufw default deny incoming
+
+# 必须项：从以下两条默认出站规则中“二选一”：
+ufw default deny outgoing
+ufw default allow outgoing
+
+# 允许并记录所有新的 SSH 连接
+ufw allow log proto tcp from any to any port 22
+## 允许 HTTP 流量（不记录日志）
+ufw allow out on docker0 53/udp to 172.17.0.1/16
+ufw allow out on eth0 to any port 53
+ufw allow out on eth0 from 0.0.0.0/0 to any port 80 proto tcp
+ufw allow out on eth0 from 0.0.0.0/0 to any port 443 proto tcp
+
+# 详细写法：ufw allow proto tcp from any to any port 80
+ufw allow 80/tcp
+ufw allow 443/tcp
+ufw allow log 22/tcp
+ufw limit ssh # 基础频率限制，用于缓解 SSH 暴力破解
+
+# 设置你的外网 IP
+export EXTERNAL_IP=123.123.123.123
+# 根据实际情况更新 Docker IP
+export DOCKER_IP=172.17.42.1
+# 将 TCP 8080 流量转发至 Docker 容器应用
+ufw allow proto tcp from $EXTERNAL_IP port 8080 to $DOCKER_IP port 3000
+~~~
+
+## 启用 / 启动防火墙
+
+> 注意：操作需谨慎，确保不要把自己锁在 SSH 端口之外（sshd 默认端口为 22）
+
+~~~sh
+ufw --force enable
+
+ufw reset
+~~~
+
+### 测试你的防火墙
+
+> 注意：请务必从远程 IP 地址或外部位置进行测试
+
+~~~sh
+# 验证依赖项
+apt-get update && apt-get install -y nmap
+
+# 设置扫描目标
+export TARGET_HOST=123.123.123.123
+
+# 扫描命令示例：
+# 快速开放端口检查
+nmap -p 1-10240,27017 -T5 $TARGET_HOST
+# 深度扫描
+nmap -p 1-10240,27017 --open -v -APN $TARGET_HOST
+# 服务探测
+nmap -p 1-10240,27017 -O --osscan-guess $TARGET_HOST
+~~~
+
+> 大功告成！现在你应该只能看到你显式配置过的端口。
+````
