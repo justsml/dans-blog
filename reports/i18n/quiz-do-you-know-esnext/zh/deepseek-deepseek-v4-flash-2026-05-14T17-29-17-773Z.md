@@ -1,0 +1,451 @@
+# Translation Candidate
+- Slug: quiz-do-you-know-esnext
+- Locale: zh
+- Model: deepseek/deepseek-v4-flash
+- Target: src/content/posts/2024-10-31--quiz-do-you-know-esnext/zh/index.mdx
+- Validation: deferred
+- Runtime seconds: 86.10
+- Input tokens: 9894
+- Output tokens: 13005
+- Thinking tokens: unknown
+- Cached input tokens: 2176
+- Cache write tokens: 0
+- Estimated cost: $0.004818
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: 测验：你了解现代JavaScript吗？
+subTitle: 证明你卓越的JavaScript技能！
+label: ES2019+ Features
+social_image: ../desktop-social.webp
+category: Quiz
+subCategory: JavaScript
+unlisted: false
+date: '2024-10-31'
+modified: '2024-11-08'
+tags:
+  - quiz
+  - javascript
+  - intro
+  - esnext
+  - features
+  - intermediate
+cover_full_width: ../christopher-burns-8KfCR12oeUM-unsplash-wide.webp
+cover_mobile: ../christopher-burns-8KfCR12oeUM-unsplash-square.webp
+cover_icon: ../christopher-burns-8KfCR12oeUM-unsplash-square.webp
+---
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+
+### 你能分清 ES2015 和 ES2022 吗？
+
+* **证明你的 JavaScript 技能！** 🚀
+* 无需登录或注册。 ✨
+* 选择题。 🤖 ... _能有多难呢，嗯？_
+---
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="ES2020"
+  title="空值合并"
+  options={[
+    {text: '42'},
+    {text: 'null'},
+    {text: 'undefined'},
+    {text: '100', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    `result` 的值是什么？
+    ```js
+        console.log(null ?? 100);
+    ```
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    请仔细检查 JavaScript 运算符的确切语义。容易选错的答案往往是旧语法会做的事情，而不是这个新特性的行为。
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    空值合并运算符（`??`）在左侧操作数（`a`）为 `null` 或 `undefined` 时返回右侧操作数（`b`）。在这个例子中，`a` 是 `null`，所以 `result` 是 `100`。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="ES2020"
+  title="空值合并"
+  options={[
+    {text: 'false', isAnswer: true},
+    {text: '42'},
+    {text: 'null'},
+    {text: 'undefined'},
+    {text: '100'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    以下代码的输出是什么？
+    ```js
+        const value = false;
+        const defaultVal = 42;
+        console.log(value ?? defaultVal);
+    ```
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    检查 JavaScript 运算符的确切语义。容易误选的答案往往是旧语法会做的事情，而不是这个特性的实际行为。
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    空值合并运算符 (`??`) 将像 `false` 这样的假值视为有效值。由于 `value` 是 `false`，它被认为是有效值并被返回。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="可选链"
+  title="可选链"
+  options={[
+    {text: 'undefined', isAnswer: true},
+    {text: 'Error: Cannot read property of undefined'},
+    {text: 'null'},
+    {text: '100'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    以下代码的输出是什么？
+    ```js
+        const obj = { foo: null };
+        const result = obj.foo?.bar;
+        console.log(result);
+    ```
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    检查 JavaScript 运算符的确切语义。容易选错的答案往往是旧语法会做的事情，而不是这个特性实际做的事情。
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    可选链运算符（`?.`）会在左侧为 `null` 或 `undefined` 时停止求值。由于 `obj.foo` 是 `null`，所以 `obj.foo?.bar` 求值为 `undefined`。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="BigInt"
+  title="BigInt 的使用"
+  options={[
+    {text: 'TypeError: 不能混合 BigInt 和 number'},
+    {text: '42n'},
+    {text: '84n', isAnswer: true},
+    {text: 'undefined'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    以下代码的输出是什么？
+    ```js
+        const a = 42n;
+        const result = a * 2n;
+        console.log(result);
+    ```
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    检查 JavaScript 运算符的确切语义。容易选错的答案往往是旧语法会做的事情，而不是这个特性实际做的事情。
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    BigInt 值通过在数字后面附加 `n` 来创建。你不能在算术运算中混合 BigInt 和常规数字。这里，两个值都是 BigInt，所以乘法有效，结果是 `84n`。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="动态导入"
+  title="动态导入语法"
+  options={[
+    {text: 'SyntaxError'},
+    {text: 'Promise'},
+    {text: 'Module'},
+    {text: 'object', isAnswer: true},
+    {text: 'undefined'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    这段代码会输出什么？
+    ```js
+        const modulePromise = import('./myModule.js');
+        console.log(typeof modulePromise);
+    ```
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    检查 JavaScript 运算符的确切语义。容易误选的答案往往是旧语法会做的事情，而不是这个新特性的行为。
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `import()` 函数返回一个 `Promise`，该 Promise 解析为模块对象。由于 `Promise` 实例是对象，`typeof modulePromise` 会输出 `'object'`。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="Promise.allSettled"
+  title="Promise.allSettled"
+  options={[
+    {text: '已完成：success', isAnswer: true},
+    {text: '已拒绝：error'},
+    {text: '待定'},
+    {text: 'null'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    以下代码的结果是什么？
+    ```js
+        const promises = [
+          Promise.resolve('success'),
+          Promise.reject('error')
+        ];
+        Promise.allSettled(promises).then(results => {
+          console.log(results[0].status + ': ' + results[0].value);
+        });
+    ```
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    检查确切的JavaScript运算符语义。容易误选的答案往往是旧语法会做的事情，而不是这个特性的实际行为。
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `Promise.allSettled` 返回一个对象数组，描述每个 Promise 的结果。第一个 Promise 是 `fulfilled` 状态，值为 `'success'`，因此日志语句将打印 `fulfilled: success`。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="String.matchAll"
+  title="String.matchAll 用法"
+  options={[
+    {text: '匹配数组'},
+    {text: '匹配结果的迭代器', isAnswer: true},
+    {text: '错误：无效调用'},
+    {text: 'null'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    `str.matchAll()` 返回什么？
+    ```js
+        const str = 'foo1bar2baz3';
+        const matches = str.matchAll(/\d/g);
+    ```
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    检查准确的 JavaScript 运算符语义。诱人的答案通常是旧语法会做的事情，而不是这个特性的实际行为。
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `String.matchAll` 返回一个匹配结果的迭代器，而不是数组。这个迭代器可用于获取字符串中的所有匹配组。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="导入元数据"
+  title="导入元数据用法"
+  options={[
+    {text: '当前模块的URL', isAnswer: true},
+    {text: '当前时间戳'},
+    {text: 'undefined'},
+    {text: 'SyntaxError'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    `import.meta.url` 代表什么？
+    ```js
+        console.log(import.meta.url);
+    ```
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    检查确切的 JavaScript 运算符语义。容易选错的答案往往是旧语法会做的事情，而不是这个特性的实际作用。
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `import.meta` 是一个包含当前模块元数据的对象。`import.meta.url` 属性表示当前模块的 URL，可用于获取脚本运行位置的信息。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="逻辑赋值"
+  title="逻辑赋值"
+  options={[
+    {text: '5'},
+    {text: '10', isAnswer: true},
+    {text: 'undefined'},
+    {text: 'null'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    逻辑赋值后，`a` 的值是什么？
+    ```js
+        let a = null;
+        a ||= 10;
+        console.log(a);
+    ```
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    检查 JavaScript 运算符的确切语义。容易选错的答案通常是旧语法会做的事情，而不是这个新特性的行为。
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    逻辑或赋值（`||=`）会在左侧值为假值（`null`、`undefined`、`0`、`false` 等）时赋右侧值。由于 `a` 是 `null`，所以被赋值为 `10`。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="逻辑空值赋值"
+  title="逻辑空值赋值"
+  options={[
+    {text: '5'},
+    {text: '10', isAnswer: true},
+    {text: 'undefined'},
+    {text: 'null'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    在空值赋值之后，`b` 的值是多少？
+    ```js
+        let b = null;
+        b ??= 10;
+        console.log(b);
+    ```
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    请检查 JavaScript 运算符的确切语义。容易选错的答案往往是旧语法会做的事情，而不是这个特性实际做的事情。
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    空值合并赋值运算符（`??=`）会在左侧值为 `null` 或 `undefined` 时，将右侧的值赋给左侧。由于 `b` 是 `null`，因此它被赋值为 `10`。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="WeakRef"
+  title="WeakRef 用法"
+  options={[
+    {text: 'ReferenceError'},
+    {text: '{ data: \'important\' }', isAnswer: true},
+    {text: 'null'},
+    {text: 'undefined'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    `WeakRef` 提供了什么？
+    ```js
+        const obj = { data: 'important' };
+        const ref = new WeakRef(obj);
+        console.log(ref.deref());
+    ```
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    检查确切的 JavaScript 操作符语义。容易选错的答案往往是旧语法会做的事情，而不是这个特性的实际行为。
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `WeakRef` 提供对对象的弱引用，允许在没有其他引用时让对象被垃圾回收。由于这里的 `obj` 仍然被强引用，`deref()` 返回原始对象。如果目标已被回收，`deref()` 将返回 `undefined`。
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+````

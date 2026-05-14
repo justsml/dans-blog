@@ -1,0 +1,51 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "WeakRef Usage",
+  "translatedTitle": "WeakRef 用法",
+  "translation": {
+    "title": "WeakRef 用法",
+    "group": "WeakRef",
+    "options": [
+      {
+        "text": "ReferenceError"
+      },
+      {
+        "text": "{ data: 'important' }"
+      },
+      {
+        "text": "null"
+      },
+      {
+        "text": "undefined"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "`WeakRef` 提供了什么？"
+    ],
+    "hintsProse": [
+      "检查确切的 JavaScript 操作符语义。容易选错的答案往往是旧语法会做的事情，而不是这个特性的实际行为。"
+    ],
+    "explanationProse": [
+      "`WeakRef` 提供对对象的弱引用，允许在没有其他引用时让对象被垃圾回收。由于这里的 `obj` 仍然被强引用，`deref()` 返回原始对象。如果目标已被回收，`deref()` 将返回 `undefined`。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"WeakRef 用法\",\n  \"group\": \"WeakRef\",\n  \"options\": [\n    { \"text\": \"ReferenceError\" },\n    { \"text\": \"{ data: 'important' }\" },\n    { \"text\": \"null\" },\n    { \"text\": \"undefined\" }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"`WeakRef` 提供了什么？\"\n  ],\n  \"hintsProse\": [\n    \"检查确切的 JavaScript 操作符语义。容易选错的答案往往是旧语法会做的事情，而不是这个特性的实际行为。\"\n  ],\n  \"explanationProse\": [\n    \"`WeakRef` 提供对对象的弱引用，允许在没有其他引用时让对象被垃圾回收。由于这里的 `obj` 仍然被强引用，`deref()` 返回原始对象。如果目标已被回收，`deref()` 将返回 `undefined`。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 803,
+    "outputTokens": 1111,
+    "cacheReadTokens": 384,
+    "cacheWriteTokens": 0,
+    "durationMs": 7035,
+    "providerCostUsd": 0.00054356,
+    "providerUpstreamCostUsd": 0.00054356,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000059735200000000004,
+    "outputUsd": 0.00031108000000000004,
+    "totalUsd": 0.00037081520000000005,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
