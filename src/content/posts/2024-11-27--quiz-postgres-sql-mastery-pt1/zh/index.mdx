@@ -1,0 +1,568 @@
+---
+unlisted: false
+social_image: ../mobile.webp
+title: 测验：深度Postgres：第一部分
+subTitle: SQL 让你尖叫吗？
+label: 'Deep PostgreSQL #1'
+category: Quiz
+subCategory: Database
+date: '2024-11-27'
+modified: '2024-12-03'
+tags:
+  - quiz
+  - postgresql
+  - sql
+  - database
+  - intermediate
+  - advanced
+cover_full_width: ../elephant-synthwave-gym-wide.webp
+cover_mobile: ../elephant-synthwave-gym-square-200.webp
+cover_icon: ../elephant-synthwave-gym-square-200.webp
+---
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+> **第一部分（共两部分）。** [前往第二部分](/quiz-postgres-sql-mastery-pt2/)
+
+<p class="inset">PostgreSQL 🐘 绝对是我最喜欢的数据库！我总是在学习新的技巧和陷阱，所以我决定把它们放进一个新的测验中！</p>
+
+这个测验涵盖了熟悉和鲜为人知的 PostgreSQL 特性和陷阱：从内置聚合函数到类型转换、约束等等。
+
+祝你好运！🍀
+---
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="热身：函数"
+  title="内置聚合函数"
+  options={[
+    {text: 'MIN'},
+    {text: 'MAX'},
+    {text: 'AVG'},
+    {text: 'MEDIAN', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    哪一个不是 PostgreSQL 的内置聚合函数？
+    ```sql
+        SELECT 
+          MIN(grade) as lowest,
+          MAX(grade) as highest,
+          AVG(grade) as average,
+          MEDIAN(grade) as middle
+        FROM grades;
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `MEDIAN` 不是内置的！你需要：
+    ```sql
+        PERCENTILE_CONT(0.5) 
+        WITHIN GROUP (ORDER BY grade)
+    ```
+    常见的内置聚合函数：
+    - `MIN`, `MAX`, `COUNT`
+    - `AVG`, `SUM`
+    - `ARRAY_AGG`, `STRING_AGG`
+    - 各种统计函数
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="热身：类型转换"
+  title="类型转换语法变体"
+  options={[
+    {text: '\'95\'::INTEGER'},
+    {text: 'INTEGER \'95\''},
+    {text: 'CAST(\'95\', INTEGER)', isAnswer: true},
+    {text: 'CAST(\'95\' AS INTEGER)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    以下哪种类型转换是**无效的** ❌？
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    PostgreSQL 支持三种类型转换语法：
+
+    1. ANSI SQL：`CAST(expression AS type)`。
+    2. PostgreSQL：`expression::type`。
+    3. 类型函数：`type 'literal'`。
+
+    它们在功能上等价，但：
+    - `CAST()` 可移植性最好。
+    - `::` 是 PostgreSQL 特有的，但很常用。
+    - 中缀风格的 `type 'literal'` 不太常见，但依然有效。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="约束"
+  title="UNIQUE约束与NULL"
+  options={[
+    {text: '不允许NULL'},
+    {text: '允许一个NULL'},
+    {text: '允许多个NULL', isAnswer: true},
+    {text: '取决于PostgreSQL版本'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    这里允许多少个NULL值？
+    ```sql
+        CREATE TABLE student_emails (
+          student_id INTEGER,
+          email VARCHAR(255),
+          UNIQUE(email)
+        );
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    PostgreSQL中的UNIQUE约束：
+    - 允许多个NULL值。
+    - 在唯一性检查中，`NULL` ≠ `NULL`。
+
+    要防止`NULL`值，请添加`NOT NULL`：
+    ```sql
+        CREATE TABLE student_emails (
+          student_id INTEGER,
+          email VARCHAR(255) NOT NULL,
+          UNIQUE(email)
+        );
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="日期/时间"
+  title="日期运算"
+  options={[
+    {text: '2024-11-27'},
+    {text: '2024-11-27 00:00:00'},
+    {text: '2024-11-28'},
+    {text: '2024-11-28 00:00:00', isAnswer: true},
+    {text: '错误：无效时间'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    这会返回什么？
+    ```sql
+        SELECT '2024-11-27'::date + interval '24 hours';
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    区间是简化日期范围操作的强大工具！
+
+    PostgreSQL中的日期运算：
+    - `+ interval '24 hours'` 增加24小时
+    - `+ interval '1 day'` 增加1天
+    - `+ interval '1 month'` 增加1个月
+    - `+ interval '1 year'` 增加1年
+
+    结果是 `2024-11-28 00:00:00`。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="时间戳"
+  title="timestamptz 与 timestamp 对比"
+  options={[
+    {text: '它们都占用 8 字节，但表示不同的时间戳语义', isAnswer: true},
+    {text: '它们\'},
+    {text: 'timestamptz 保留任何输入时区'},
+    {text: 'timestamptz 存储原始时区名称或偏移量'},
+    {text: 'timestamptz 存储一个 2 字节的时区值'},
+    {text: 'timestamptz 是 timestamp 的继任者'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    关于 `timestamptz` 和 `timestamp`，**最准确**的说法是什么？
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    它们都占用 8 字节，但存储的值类型不同。
+
+    那么区别在哪里？在于输入解析。
+
+    **`timestamptz`**
+    - 将输入归一化为绝对时间点。
+    - 在解析没有显式偏移量的输入时，以及在显示输出时，会考虑服务器/连接的 `TimeZone` 设置。
+
+    **`timestamp`**
+    - 存储不带时区转换的日期和时间。
+    - 不保留或归一化时区信息。
+
+
+    **`timestamp`**
+
+    - 存储不带时区信息的日期和时间。
+    - 适用于显式存储标准化日期，无论是 UTC 还是特定时区。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="PostgreSQL 类型"
+  title="识别无效类型"
+  options={[
+    {text: 'VARCHAR(100)'},
+    {text: 'CHAR(100)'},
+    {text: 'TEXT'},
+    {text: 'STRING(100)', isAnswer: true},
+    {text: 'CHARACTER VARYING(100)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    以下哪个不是 ❌ 有效的 PostgreSQL 类型？
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    PostgreSQL 拥有丰富的数据类型，但 `STRING(100)` 不是其中之一。
+
+    正确的字符串类型包括：
+    - `VARCHAR(100)`（可变长度字符串）
+    - `CHAR(100)`（固定长度字符串）
+    - `TEXT`（无限长度）
+    - `CHARACTER VARYING(100)`（等同于 `VARCHAR(100)`）
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="PostgreSQL 类型"
+  title="识别无效类型"
+  options={[
+    {text: 'int'},
+    {text: 'real'},
+    {text: 'bigint'},
+    {text: 'bigserial'},
+    {text: 'smallserial'},
+    {text: 'decimal128', isAnswer: true},
+    {text: 'double precision'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    以下哪个不是 ❌ 有效的 PostgreSQL 类型？
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `decimal128` 在许多地方（包括 Mongo 和 Java）都是常见的类型，但它不是有效的 PostgreSQL 类型，`decimal` 才是。
+
+    正确的数值类型包括：
+    - `int`（4 字节整数）
+    - `bigint`（8 字节整数）
+    - `real`（4 字节浮点数）
+    - `double precision`（8 字节浮点数）
+    - `bigserial`（自增 8 字节整数）
+    - `smallserial`（自增 2 字节整数）
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="Postgres 类型"
+  title="识别无效类型"
+  options={[
+    {text: 'cidr'},
+    {text: 'inet'},
+    {text: 'ipv4', isAnswer: true},
+    {text: 'macaddr'},
+    {text: 'macaddr8'},
+    {text: 'interval'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    以下哪个不是 ❌ 有效的 PostgreSQL 类型？
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    这让你感到沮丧，甚至 _生气_ 了吗？你不是一个人！引用一位匿名的“核心”数据库贡献者的话：“搞什么鬼，丹？！我在类型问题上栽了！太暴力了，先生！不分享我的分数了，哈。” 😈 不客气。
+
+    PostgreSQL 丰富的网络类型中并不包含 `ipv4`。每次我尝试使用它而不谷歌搜索时，我都会搞错。也许 `macaddr8` 让我觉得 _一定_ 有 `ipv4` 和 `ipv6` 类型。不，`inet` 涵盖了这两者。另外，`cidr` 涵盖了这两者的网络掩码。
+
+    有效的网络类型包括：
+    - `cidr`（IPv4/IPv6 网络地址）
+    - `inet`（IPv4/IPv6 主机地址）
+    - `macaddr`（MAC 地址）
+    - `macaddr8`（EUI-64 MAC 地址）
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="Postgres 类型"
+  title="识别无效类型"
+  options={[
+    {text: 'xml'},
+    {text: 'uuid'},
+    {text: 'money'},
+    {text: 'currency', isAnswer: true},
+    {text: 'interval'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    以下哪个不是 ❌ 有效的 PostgreSQL 类型？
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    PostgreSQL 拥有丰富的专用类型，但 `currency` 并不在其中！
+
+    有效的类型包括：
+    - `xml`（XML 数据）
+    - `uuid`（UUID）
+    - `money`（货币金额）
+    - `interval`（时间间隔）
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="Postgres 类型"
+  title="识别无效类型"
+  options={[
+    {text: 'box'},
+    {text: 'line'},
+    {text: 'point'},
+    {text: 'circle'},
+    {text: 'polygon'},
+    {text: 'triangle', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    以下哪个不是 ❌ 有效的 PostgreSQL 类型？
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    PostgreSQL 拥有丰富的专用类型，但 `triangle` 不在其中。
+
+    我相信即将发布的 [GEOS](https://libgeos.org/) 版本将包含 `Triangle` OGC/WKT 支持，这意味着它最终应该会被包含在 Postgis 中。（基本上，这个答案在未来可能会是错误的。）
+
+    正确的专用类型包括：
+    - `box`（矩形框）
+    - `line`（无限直线）
+    - `point`（二维点）
+    - `circle`（二维圆）
+    - `polygon`（二维多边形）
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="整数运算"
+  title="整数溢出"
+  options={[
+    {text: '4294967296'},
+    {text: '错误：整数超出范围', isAnswer: true},
+    {text: '0'},
+    {text: '2147483647'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    计算可能的学号总数时会发生什么？
+    ```sql
+        SELECT 256 * 256 * 256 * 256;
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    PostgreSQL的`integer`类型是32位有符号整数，范围从`-2,147,483,648`到`2,147,483,647`。
+
+    计算`256^4` = `4,294,967,296`超出了这个范围。
+
+    要处理更大的数字：
+    ```sql
+        -- Use BIGINT
+        SELECT 256::bigint * 256 * 256 * 256;
+
+        -- Or numeric for arbitrary precision
+        SELECT 256::numeric * 256 * 256 * 256;
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="日期/时间"
+  title="时间戳精度"
+  options={[
+    {text: '2024-01-08 13:30:00+00'},
+    {text: '2024-01-08 13:30:00.123456+00'},
+    {text: '2024-01-08 13:30:00.123456789+00'},
+    {text: '2024-01-08 13:30:00.1234567', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    在PostgreSQL中，哪个是最小的`timestamp`字面量，超过了`time`的最大精度？
+    ```sql
+        CREATE TABLE class_sessions (
+          id INT GENERATED BY DEFAULT AS IDENTITY,
+          start_time timestamptz,
+          end_time timestamptz
+        );
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    PostgreSQL 时间戳具有微秒（6位小数）精度。
+
+    - 最大值：`.123456`（6位数字）
+    - 纳秒（9位数字）会被四舍五入或截断到支持的精度
+    - 时区偏移对于`timestamptz`是可接受的，但不是必需的
+
+    **不太常见的陷阱：** 某些语言/框架会发送纳秒精度，但PostgreSQL以微秒精度存储时间戳。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="Postgres 类型"
+  title="识别无效类型"
+  options={[
+    {text: 'lseg'},
+    {text: 'bytea'},
+    {text: 'tsquery'},
+    {text: 'tsvector'},
+    {text: 'tsrank', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    以下哪个不是 ❌ 有效的 PostgreSQL 类型？
+
+    （说真的，这些（大部分）都是真实的类型。）
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    PostgreSQL 内置了几种几何和文本搜索类型，但 `tsrank` 不是其中之一。
+
+    正确的几何和文本搜索类型包括：
+    - `lseg`（线段）
+    - `bytea`（二进制数据）
+    - `tsquery`（文本搜索查询）
+    - `tsvector`（文本搜索文档）
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={13}
+  group="约束"
+  title="检查约束时机"
+  options={[
+    {text: '对新行或更改的行立即检查', isAnswer: true},
+    {text: '在事务提交时'},
+    {text: '在下次查询时'},
+    {text: '从不 - 约束仅在 INSERT 时检查'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    这个 grade 约束何时被检查？
+    ```sql
+        ALTER TABLE students 
+        ADD CONSTRAINT valid_grade 
+        CHECK (
+          (grade >= 0 AND grade <= 100) OR 
+          grade IS NULL
+        ) NOT VALID;
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `NOT VALID` 约束：
+    - 对新插入和更新的行立即检查
+    - 不验证现有行
+    - 之后可以通过 `VALIDATE CONSTRAINT` 验证现有行
+    - 对大型表很有用
+
+    没有 `NOT VALID` 时：
+    - 约束立即被检查
+    - 所有现有行都被验证
+    - 在大型表上可能很慢
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+
+干得漂亮！你在 PostgreSQL 的多个领域都深入探索了一番！🐘
+
+希望你学到了新东西，或者至少拿到了一个可以炫耀的分数！🏆
+
+<p class="inset">想继续玩转 Postgres？来看看<a href="/quiz-postgres-sql-mastery-pt2/">第二部分</a>吧！🚀</p>
+
+生活需要更多刺激？来我的<a href="/challenges/">测验合集</a>体验无穷*乐趣吧！
