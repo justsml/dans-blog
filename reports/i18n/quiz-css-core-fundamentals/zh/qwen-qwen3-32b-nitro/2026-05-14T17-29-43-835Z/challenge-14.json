@@ -1,0 +1,49 @@
+{
+  "index": 13,
+  "attempt": 1,
+  "originalTitle": "Zero-Specificity Selectors",
+  "translatedTitle": "零特异性选择器",
+  "translation": {
+    "title": "零特异性选择器",
+    "group": "选择器：特异性",
+    "options": [
+      {
+        "text": ":where(.card) .title"
+      },
+      {
+        "text": ".card .title"
+      },
+      {
+        "text": ":is(.card) .title"
+      },
+      {
+        "text": "#card .title"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "哪个选择器的特异性最低？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "`:where(.card) .title` 的特异性最低。`:where()` 伪类及其内部所有内容贡献 `0-0-0`，因此只有 `.title` 计入特异性。`:is(.card) .title` 保留了 `.card` 的特异性，`.card .title` 包含两个类选择器，而 `#card .title` 包含一个 ID 选择器。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"零特异性选择器\",\n  \"group\": \"选择器：特异性\",\n  \"options\": [\n    {\n      \"text\": \":where(.card) .title\"\n    },\n    {\n      \"text\": \".card .title\"\n    },\n    {\n      \"text\": \":is(.card) .title\"\n    },\n    {\n      \"text\": \"#card .title\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"哪个选择器的特异性最低？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"`:where(.card) .title` 的特异性最低。`:where()` 伪类及其内部所有内容贡献 `0-0-0`，因此只有 `.title` 计入特异性。`:is(.card) .title` 保留了 `.card` 的特异性，`.card .title` 包含两个类选择器，而 `#card .title` 包含一个 ID 选择器。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 778,
+    "outputTokens": 774,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 2249,
+    "providerCostUsd": 0.00060804,
+    "providerUpstreamCostUsd": 0.00060804,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00006224,
+    "outputUsd": 0.00018575999999999998,
+    "totalUsd": 0.00024799999999999996,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

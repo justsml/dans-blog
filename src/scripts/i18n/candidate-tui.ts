@@ -33,6 +33,7 @@ type CandidateSummary = {
   costUsd: number;
   hasUnknownTokens: boolean;
   hasUnknownCost: boolean;
+  accountingSources: string[];
 };
 
 type ArticleRow = SourcePost & {
@@ -111,6 +112,8 @@ const DEFAULT_CANDIDATE_MODELS = [
 ];
 const JUDGE_PROGRESS_PREFIX = "::i18n-judge-progress::";
 const OUT_OF_CREDIT_SETTLE_MS = 60_000;
+const CURRENT_RUN_STARTED_AT_GRACE_MS = 2000;
+const FINALIZED_CANDIDATE_RUN_STATUSES = new Set(["completed", "failed", "interrupted"]);
 
 const options = parseArgs();
 const explicitExpectedCandidates = parseOptionalPositiveInteger(optionalString(options, "expected"));
@@ -658,6 +661,7 @@ function readCandidateSummary(slug: string, locale: ActiveLocale): CandidateSumm
     costUsd: accounting.costUsd,
     hasUnknownTokens: accounting.hasUnknownTokens,
     hasUnknownCost: accounting.hasUnknownCost,
+    accountingSources: accounting.sources,
   };
 }
 
@@ -700,9 +704,9 @@ function isRunInProgress(reportDir: string) {
 }
 
 function readAccountingTotals(reportDir: string): AccountingTotals {
-  const activeSummary = readActiveRunSummary(reportDir);
-  const totals = createAccountingTotals(activeSummary == null ? [] : ["active run events"]);
-  if (activeSummary != null) addRunSummaryToAccounting(totals, activeSummary, { includeCandidates: true });
+  const summary = readCurrentRunSummary(reportDir);
+  const totals = createAccountingTotals(summary == null ? [] : [accountingSourceForRunSummary(summary)]);
+  if (summary != null) addRunSummaryToAccounting(totals, summary, { includeCandidates: true });
   return totals;
 }
 
@@ -844,12 +848,16 @@ function readJsonRecord(path: string): Record<string, unknown> | undefined {
 function readLatestRunSummary(reportDir: string): Record<string, unknown> | undefined {
   const latestEvent = readLatestRunEventSummary(reportDir);
   if (latestEvent != null) return latestEvent;
+  const latestHistory = readLatestRunHistorySummary(reportDir);
+  if (latestHistory != null) return latestHistory;
   return readJsonRecord(join(reportDir, "candidate-run-summary.json"));
 }
 
-function readActiveRunSummary(reportDir: string): Record<string, unknown> | undefined {
+function readCurrentRunSummary(reportDir: string): Record<string, unknown> | undefined {
   const latestSummary = readLatestRunSummary(reportDir);
-  return latestSummary?.runStatus === "running" ? latestSummary : undefined;
+  if (latestSummary == null) return undefined;
+  if (latestSummary.runStatus === "running") return latestSummary;
+  return isCurrentWorkerRunSummary(latestSummary) ? latestSummary : undefined;
 }
 
 function readLatestRunEventSummary(reportDir: string): Record<string, unknown> | undefined {
@@ -859,6 +867,29 @@ function readLatestRunEventSummary(reportDir: string): Record<string, unknown> |
     if (summary != null) return summary;
   }
   return undefined;
+}
+
+function readLatestRunHistorySummary(reportDir: string): Record<string, unknown> | undefined {
+  const rows = readCandidateRows(join(reportDir, "candidate-run-history.jsonl"));
+  for (let index = rows.length - 1; index >= 0; index -= 1) {
+    const summary = recordValue(rows[index]);
+    if (summary != null) return summary;
+  }
+  return undefined;
+}
+
+function isCurrentWorkerRunSummary(summary: Record<string, unknown>) {
+  if (!shouldRunWorker || workerState.startedAt == null) return false;
+  if (!FINALIZED_CANDIDATE_RUN_STATUSES.has(String(summary.runStatus))) return false;
+
+  const startedAt = typeof summary.startedAt === "string" ? Date.parse(summary.startedAt) : Number.NaN;
+  if (!Number.isFinite(startedAt)) return false;
+
+  return startedAt >= Number(workerState.startedAt) - CURRENT_RUN_STARTED_AT_GRACE_MS;
+}
+
+function accountingSourceForRunSummary(summary: Record<string, unknown>) {
+  return summary.runStatus === "running" ? "active run events" : "current worker run events";
 }
 
 function numberOrZero(value: unknown) {
@@ -886,7 +917,7 @@ function countCandidateReportFiles(reportDir: string) {
 
 function summarize(rows: ArticleRow[]): Totals {
   const summaries = rows.flatMap((row) => selectedLocales.map((locale) => row.candidates[locale]));
-  const activeRun = createAccountingTotals(["active run events"]);
+  const activeRun = createAccountingTotals();
   for (const summary of summaries) addSummaryToActiveRunTotals(activeRun, summary);
   const expectedCandidateRows = summaries.reduce((sum, summary) => sum + summary.expected, 0);
   const candidateProgressRows = summaries.reduce((sum, summary) => sum + Math.min(summary.count, summary.expected), 0);
@@ -919,6 +950,9 @@ function addSummaryToActiveRunTotals(totals: AccountingTotals, summary: Candidat
   totals.costUsd += summary.costUsd;
   totals.hasUnknownTokens = totals.hasUnknownTokens || summary.hasUnknownTokens;
   totals.hasUnknownCost = totals.hasUnknownCost || summary.hasUnknownCost;
+  for (const source of summary.accountingSources) {
+    if (!totals.sources.includes(source)) totals.sources.push(source);
+  }
 }
 
 function renderDashboard(rows: ArticleRow[], totals: Totals) {

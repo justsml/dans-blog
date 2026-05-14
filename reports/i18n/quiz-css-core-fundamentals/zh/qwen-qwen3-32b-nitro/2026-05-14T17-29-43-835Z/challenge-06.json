@@ -1,0 +1,49 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Invalid CSS Selector",
+  "translatedTitle": "无效的CSS选择器",
+  "translation": {
+    "title": "无效的CSS选择器",
+    "group": "选择器：基础",
+    "options": [
+      {
+        "text": "a {}"
+      },
+      {
+        "text": "b.b {}"
+      },
+      {
+        "text": "c > > d {}"
+      },
+      {
+        "text": "#d {}"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "这些选择器中哪个是无效的？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "选择器 `c > > d {}` 是无效的，因为子组合符在两个 `>` 字符之间重复使用而没有选择器。\n\n其他选择器都是有效的。像 `c {}` 这样的类型选择器在语法上是有效的CSS，即使 `c` 不是标准HTML元素。"
+    ]
+  },
+  "rawText": "```json\n{\n  \"title\": \"无效的CSS选择器\",\n  \"group\": \"选择器：基础\",\n  \"options\": [\n    {\n      \"text\": \"a {}\"\n    },\n    {\n      \"text\": \"b.b {}\"\n    },\n    {\n      \"text\": \"c > > d {}\"\n    },\n    {\n      \"text\": \"#d {}\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"这些选择器中哪个是无效的？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"选择器 `c > > d {}` 是无效的，因为子组合符在两个 `>` 字符之间重复使用而没有选择器。\\n\\n其他选择器都是有效的。像 `c {}` 这样的类型选择器在语法上是有效的CSS，即使 `c` 不是标准HTML元素。\"\n  ]\n}\n```",
+  "telemetry": {
+    "inputTokens": 756,
+    "outputTokens": 683,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 2590,
+    "providerCostUsd": 0.00054797,
+    "providerUpstreamCostUsd": 0.00054797,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000060480000000000004,
+    "outputUsd": 0.00016392,
+    "totalUsd": 0.00022439999999999998,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
