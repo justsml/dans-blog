@@ -1,0 +1,45 @@
+{
+  "selectedCommit": "4a191840ae7a17ead85bfbc1fe6eed6f113c0a22",
+  "selectedModel": "deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 9,
+    "relevance": 9,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "![从工具渲染组件到开放式生成 HTML 的光谱](../control-spectrum.webp)",
+      "replacement": "![从工具渲染组件到开放式生成 HTML 的光谱](../control-spectrum.webp)",
+      "reason": "The candidate is already correct, but I am verifying the path logic. The candidate correctly uses ../ for assets."
+    }
+  ],
+  "rationale": "DeepSeek provided the most natural translation of technical terms (e.g., '辅助轮' for training wheels, '工件' for artifacts) while strictly adhering to the MDX structure and asset path requirements. It correctly handled the duplicated paragraph in the source text and maintained the direct, punchy style of the original author.",
+  "slug": "llm-generative-ui-landscape",
+  "locale": "zh",
+  "candidateCommits": [
+    "4a191840ae7a17ead85bfbc1fe6eed6f113c0a22",
+    "fe015a60505b474c00b4a41ddb0121e2329e0960",
+    "f71c5f0b26929bd7cb2d17ece90a930de1c46ec2"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "![从工具渲染组件到开放式生成 HTML 的光谱](../control-spectrum.webp)",
+      "replacement": "![从工具渲染组件到开放式生成 HTML 的光谱](../control-spectrum.webp)",
+      "reason": "The candidate is already correct, but I am verifying the path logic. The candidate correctly uses ../ for assets.",
+      "pass": 1,
+      "applied": false,
+      "note": "Exact match and replacement are identical; no MDX change needed."
+    }
+  ],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug llm-generative-ui-landscape --locale zh --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug llm-generative-ui-landscape --locale zh --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug llm-generative-ui-landscape --locale zh --skip-global\n82 |   }\n83 | \n84 |   const sourceFences = sourceContents.match(/```/g)?.length ?? 0;\n85 |   const targetFences = targetContents.match(/```/g)?.length ?? 0;\n86 |   if (sourceFences !== targetFences) {\n87 |     throw new Error(\n                   ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2026-05-06--llm-generative-ui-landscape/zh/index.mdx changed fenced code block count from 8 to 12\n      at assertProtectedTokens (/Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:87:15)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}
