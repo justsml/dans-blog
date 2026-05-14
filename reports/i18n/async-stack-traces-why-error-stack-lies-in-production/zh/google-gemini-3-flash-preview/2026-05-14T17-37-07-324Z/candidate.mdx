@@ -1,0 +1,99 @@
+---
+title: 异步堆栈追踪：为什么 Error.stack 会骗你
+subTitle: 微任务队列吞掉了我的代码（以及调试上下文）。
+date: '2025-12-29'
+modified: '2025-12-30'
+tags:
+  - javascript
+  - async
+  - debugging
+  - node.js
+  - v8
+  - performance
+category: Code
+subCategory: Best Practices
+social_image: ../desktop-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+凌晨 2 点。PagerDuty 的警报疯狂作响。
+
+你打开日志，看到了这个：
+
+```
+Error: Cannot read properties of undefined (reading 'id')
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+```
+
+没了。没有函数名，没有行号，没有文件路径。只有一行 "processTicksAndRejections"。
+
+欢迎来到异步 JavaScript 的世界，在这里，堆栈追踪（stack traces）是虚构的，行号也毫无意义。
+
+---
+
+## 为什么堆栈追踪会失效
+
+在同步代码中，调用栈（Call Stack）是一部完美的家谱。A 调用了 B，B 调用了 C。当 C 崩溃时，你可以清晰地看到你是如何到达那里的。
+
+但在异步代码（`async/await`）中，每一个 `await` 关键字都是一个挂起点。
+
+当你执行 `await` 时，你的函数会从栈中被剥离。它被放入一个名为微任务队列（Microtask Queue）的“低温冷冻库”中。此时栈是空的（或者正在处理其他事情）。
+
+当 Promise 状态变为 resolved 时，你的函数会被解冻并重新扔回栈中。但历史记录已经丢失了。
+
+引擎根本不知道 500 毫秒前是谁调用了 `await`。它只知道现在有一个任务需要运行。
+
+---
+
+## V8 尝试修复它的努力
+
+Node.js 试图提供帮助。我们有：
+
+1.  `Error.captureStackTrace()`：在*创建*时捕获堆栈。如果错误是在稍后抛出的，这就毫无用处。
+2.  `--async-stack-traces`：一个让 Node.js 维护 Promise 链“影子栈（shadow stack）”的标志位。
+    *   **代价**：它会让你的应用变慢 30%。
+    *   **结果**：虽有帮助，但很快就会产生大量噪音。
+
+---
+
+## 真正的解决方案：AsyncLocalStorage
+
+如果你想在生产环境中生存下去，别再盯着堆栈追踪看了。去关注因果关系（causality）。
+
+我们需要将上下文（用户 ID、请求 ID）附加到执行“线程”上，即便它在栈（Stack）和微任务队列（Microtask Queue）之间来回跳跃。
+
+Node.js 为此提供了一个内置工具：`AsyncLocalStorage`。
+
+```javascript
+import { AsyncLocalStorage } from 'async_hooks';
+
+const context = new AsyncLocalStorage();
+
+// 1. Wrap the request
+context.run({ requestId: '123' }, () => {
+  // 2. Call deep async code
+  await processOrder();
+});
+
+// 3. Deep inside processOrder:
+async function processOrder() {
+  await db.query();
+  
+  // Magic! We can still see the requestId
+  const { requestId } = context.getStore();
+  console.log(`[${requestId}] Failed to process order`);
+}
+```
+
+无论中间经历了多少个 `await`，上下文都能存活下来。
+
+---
+
+## 生产环境实战指南
+
+1.  **别再迷信 `err.stack`**。它在设计上就是残缺的。
+2.  **使用结构化日志**。利用 `AsyncLocalStorage` 为每一行日志都附上 `requestId`。
+3.  **追踪因果，而非堆栈**。使用 OpenTelemetry。它能可视化跨服务的因果链，而这才是你真正关心的。
+
+你的代码是异步的，但你的调试上下文不该是。

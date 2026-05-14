@@ -1,0 +1,57 @@
+{
+  "runId": "google-gemini-3-flash-preview@2026-05-14T17-37-07-324Z",
+  "slug": "async-stack-traces-why-error-stack-lies-in-production",
+  "locale": "zh",
+  "model": "google/gemini-3-flash-preview",
+  "modelPath": "google-gemini-3-flash-preview",
+  "createdAt": "2026-05-14T17:37:25.991Z",
+  "sourcePath": "src/content/posts/2025-12-29--async-stack-traces-why-error-stack-lies-in-production/index.mdx",
+  "targetPath": "src/content/posts/2025-12-29--async-stack-traces-why-error-stack-lies-in-production/zh/index.mdx",
+  "candidatePath": "reports/i18n/async-stack-traces-why-error-stack-lies-in-production/zh/google-gemini-3-flash-preview/2026-05-14T17-37-07-324Z/candidate.mdx",
+  "sourceHash": "bda8adb66cf30fc89c91baea70bf6d81ae97177b838379f1fd437c2da47c9917",
+  "outputHash": "1ad481e5f62dd301c42402aacc55d8932523e72357e521749056e865ca6920eb",
+  "reasoningEffort": "low",
+  "temperature": 0.3,
+  "maxTokens": 16000,
+  "timeoutMs": 200000,
+  "articleSummary": "This analytical technical article argues that standard JavaScript stack traces are fundamentally broken in asynchronous environments because `await` keywords clear the execution history from the call stack. The author explains how the V8 engine’s \"shadow stacks\" incur significant performance penalties, ultimately advocating for `AsyncLocalStorage` and structured logging as superior alternatives for maintaining execution context. Written in a pragmatic, slightly urgent tone aimed at Node.js backend developers, the piece uses the metaphor of \"cryogenic freezing\" to describe how the Microtask Queue preserves functions while losing their causal genealogy. The core thesis is that developers should prioritize \"causality over stacks\" by using tools like OpenTelemetry to track request IDs across asynchronous boundaries.",
+  "totalInputTokens": 2506,
+  "totalOutputTokens": 1392,
+  "totalCacheReadTokens": 0,
+  "totalCacheWriteTokens": 0,
+  "totalDurationMs": 9675,
+  "totalCostUsd": 0.005429,
+  "pricingSource": "local-openrouter-estimate",
+  "telemetry": {
+    "model": "google/gemini-3-flash-preview",
+    "chunkSize": "18p",
+    "totalChunks": 2,
+    "totalInputTokens": 2506,
+    "totalOutputTokens": 1392,
+    "totalCacheReadTokens": 0,
+    "totalCacheWriteTokens": 0,
+    "totalDurationMs": 9675,
+    "totalCostUsd": 0.005429,
+    "pricingSource": "local-openrouter-estimate",
+    "chunks": [
+      {
+        "index": 0,
+        "inputTokens": 1204,
+        "outputTokens": 468,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 4411,
+        "costUsd": 0.002006
+      },
+      {
+        "index": 1,
+        "inputTokens": 1302,
+        "outputTokens": 924,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 5264,
+        "costUsd": 0.0034230000000000003
+      }
+    ]
+  }
+}
