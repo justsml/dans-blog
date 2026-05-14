@@ -1,0 +1,53 @@
+{
+  "index": 25,
+  "attempt": 1,
+  "originalTitle": "Scaling Behavior",
+  "translatedTitle": "扩展行为",
+  "translation": {
+    "title": "扩展行为",
+    "group": "Aurora Serverless",
+    "options": [
+      {
+        "text": "扩展速度取决于当前容量和配置的容量"
+      },
+      {
+        "text": "按需即时扩展"
+      },
+      {
+        "text": "仅在预设间隔时扩展"
+      },
+      {
+        "text": "仅手动扩展"
+      }
+    ],
+    "objectives": [
+      "了解 Aurora Serverless 的扩展机制",
+      "识别扩展触发条件",
+      "为可变工作负载优化成本"
+    ],
+    "questionProse": [
+      "在依赖 Aurora Serverless 处理突发流量时，关键的考虑因素是什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "Aurora Serverless 扩展：\n      - Aurora Serverless v2 以细粒度 ACU 增量进行容量扩展\n      - 扩展速度取决于当前容量和最小/最大 ACU 设置\n      - 支持的版本在配置后可在 0 ACU 时自动暂停\n      - 按秒计费，基于 ACU 使用量\n\n      最佳实践：\n      - 为关键工作负载的突发需求将最小容量设置得足够高\n      - 监控扩展事件\n      - 注意连接管理"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"扩展行为\",\n  \"group\": \"Aurora Serverless\",\n  \"options\": [\n    {\n      \"text\": \"扩展速度取决于当前容量和配置的容量\"\n    },\n    {\n      \"text\": \"按需即时扩展\"\n    },\n    {\n      \"text\": \"仅在预设间隔时扩展\"\n    },\n    {\n      \"text\": \"仅手动扩展\"\n    }\n  ],\n  \"objectives\": [\n    \"了解 Aurora Serverless 的扩展机制\",\n    \"识别扩展触发条件\",\n    \"为可变工作负载优化成本\"\n  ],\n  \"questionProse\": [\n    \"在依赖 Aurora Serverless 处理突发流量时，关键的考虑因素是什么？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"Aurora Serverless 扩展：\\n      - Aurora Serverless v2 以细粒度 ACU 增量进行容量扩展\\n      - 扩展速度取决于当前容量和最小/最大 ACU 设置\\n      - 支持的版本在配置后可在 0 ACU 时自动暂停\\n      - 按秒计费，基于 ACU 使用量\\n\\n      最佳实践：\\n      - 为关键工作负载的突发需求将最小容量设置得足够高\\n      - 监控扩展事件\\n      - 注意连接管理\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 949,
+    "outputTokens": 347,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 1202,
+    "providerCostUsd": 0.00031215,
+    "providerUpstreamCostUsd": 0.00031215,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000037011,
+    "outputUsd": 0.00006246,
+    "totalUsd": 0.000099471,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
