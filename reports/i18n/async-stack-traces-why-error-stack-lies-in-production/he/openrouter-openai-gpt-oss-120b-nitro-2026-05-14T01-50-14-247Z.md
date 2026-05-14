@@ -1,0 +1,118 @@
+# Translation Candidate
+- Slug: async-stack-traces-why-error-stack-lies-in-production
+- Locale: he
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2025-12-29--async-stack-traces-why-error-stack-lies-in-production/he/index.mdx
+- Validation: deferred
+- Runtime seconds: 1.48
+- Input tokens: 3571
+- Output tokens: 926
+- Thinking tokens: unknown
+- Cached input tokens: 2048
+- Cache write tokens: 0
+- Estimated cost: $0.000306
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: 'עקבות ערימה אסינכרוניות: למה `Error.stack` משקר לך'
+subTitle: תורמת המיקרו‑טאסק אכלה את שיעורי הבית שלי (ואת הקשר הדיבוג).
+date: '2025-12-29'
+modified: '2025-12-30'
+tags:
+  - javascript
+  - async
+  - debugging
+  - node.js
+  - v8
+  - performance
+category: Code
+subCategory: Best Practices
+social_image: ../desktop-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+זה 2 לפנות בוקר. הא alarm של PagerDuty רועם.
+
+אתה פותח את הלוגים ורואה את זה:
+
+```
+Error: Cannot read properties of undefined (reading 'id')
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+```
+
+זה הכל. אין שם פונקציה. אין מספר שורה. אין נתיב קובץ. רק „processTicksAndRejections”.
+
+ברוך הבא ל‑JavaScript האסינכרוני, שבו עקבות המחסנית מומצאות ומספרי השורות אינם חשובים.
+
+---
+
+## למה עקבות המחסנית נקרעות
+
+בקוד סינכרוני, ערמת הקריאות היא גנאלוגיה יפה. A קורא ל‑B, B קורא ל‑C. כש‑C מתרסק, אתה רואה בדיוק איך הגיע לשם.
+
+בקוד אסינכרוני (`async/await`), כל מילת מפתח `await` היא נקודת השהייה.
+
+כאשר אתה `await`, הפונקציה שלך ניתקת מהמחסנית. היא מועברת למקפיא קריאוגני שנקרא תור המיקרו‑טאסק. המחסנית כעת ריקה (או עושה משהו אחר).
+
+כאשר ה‑Promise מתממש, הפונקציה שלך מתפשרת וחוזרת לתוך המחסנית. אבל ההיסטוריה נעלמת.
+
+המנוע אין שום מושג מי קרא ל‑`await` לפני חצי שנייה. הוא רק יודע שיש לו משימה להריץ.
+
+---
+
+## ניסיונות של V8 לתקן זאת
+
+Node.js מנסה לעזור. יש לנו:
+
+1.  `Error.captureStackTrace()`: תופס את הערימה *בזמן היצירה*. חסר תועלת אם השגיאה נזרקת מאוחר יותר.
+2.  `--async-stack-traces`: דגל שמגרם ל‑Node.js לשמור על “ערימת צל” של שרשראות הבטחות.
+    *   העלות: זה מאט את האפליקציה בכ‑30%.
+    *   התוצאה: זה עוזר, אבל מהר נעשה רועש.
+
+---
+
+## הפתרון האמיתי: AsyncLocalStorage
+
+אם אתה רוצה לשרוד בייצור, תפסיק להסתכל על ערימות שגיאה. תסתכל על הסיבתיות.
+
+אנחנו צריכים לצרף הקשר (מזהה משתמש, מזהה בקשה) ל‑“חוט” של ההרצה, גם כשהוא קופץ בין הערימה לתור המיקרו‑טאסק.
+
+ל‑Node.js יש כלי מובנה לכך: `AsyncLocalStorage`.
+
+```javascript
+import { AsyncLocalStorage } from 'async_hooks';
+
+const context = new AsyncLocalStorage();
+
+// 1. עטוף את הבקשה
+context.run({ requestId: '123' }, () => {
+  // 2. קרא קוד אסינכרוני עמוק
+  await processOrder();
+});
+
+// 3. עמוק בתוך processOrder:
+async function processOrder() {
+  await db.query();
+  
+  // קסם! עדיין ניתן לראות את requestId
+  const { requestId } = context.getStore();
+  console.log(`[${requestId}] Failed to process order`);
+}
+```
+
+לא משנה כמה `await` יופיעו באמצע. ההקשר נשאר קיים.
+
+---
+
+## מדריך ייצור
+
+1. הפסק לבטוח ב‑`err.stack`. הוא חסר בכוונה.
+2. השתמש ברישום מובנה. צרף `requestId` לכל שורת לוג באמצעות `AsyncLocalStorage`.
+3. עקוב, לא תצבור. השתמש ב‑OpenTelemetry. הוא מציג את שרשרת הסיבתיות בין שירותים, וזה מה שבאמת חשוב.
+
+הקוד שלך אסינכרוני. הקשר הדיבוג שלך לא צריך להיות.
+````
