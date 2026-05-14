@@ -1,0 +1,38 @@
+{
+  "selectedCommit": "6ef6b5928646e8b118fbf4edb91ed6da72256a3a",
+  "selectedModel": "deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The current selected translation already incorporates the fix for 'Type Design' (changing '字体' to '类型') as suggested in the previous judge report. The translation is technically accurate, maintains Dan's direct and slightly informal style, and correctly handles MDX asset paths and structure. The term '非常规类型' for 'Guerrilla Types' is a good contextual choice.",
+  "slug": "guerrilla-types-in-typescript",
+  "locale": "zh",
+  "candidateCommits": [
+    "6ef6b5928646e8b118fbf4edb91ed6da72256a3a",
+    "8a0f02aa7ae4c68a74834c65e03f931a48b6eb62",
+    "ff7bced0792ad96bd91261476c8ce789f47519c2"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "medium",
+      "match": "反叛字体设计",
+      "replacement": "叛逆的类型设计",
+      "reason": "The subtitle 'Renegade Type Design' refers to programming types, not fonts (字体).",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug guerrilla-types-in-typescript --locale zh --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug guerrilla-types-in-typescript --locale zh --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug guerrilla-types-in-typescript --locale zh --skip-global\n82 |   }\n83 | \n84 |   const sourceFences = sourceContents.match(/```/g)?.length ?? 0;\n85 |   const targetFences = targetContents.match(/```/g)?.length ?? 0;\n86 |   if (sourceFences !== targetFences) {\n87 |     throw new Error(\n                   ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2023-09-06--guerrilla-types-in-typescript/zh/index.mdx changed fenced code block count from 22 to 23\n      at assertProtectedTokens (/Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:87:15)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}
