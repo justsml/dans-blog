@@ -1,0 +1,64 @@
+# Translation Candidate
+- Slug: security-notes-regex
+- Locale: zh
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2015-02-24--security-notes-regex/zh/index.mdx
+- Validation: deferred
+- Runtime seconds: 1.71
+- Input tokens: 1193
+- Output tokens: 578
+- Thinking tokens: unknown
+- Cached input tokens: 512
+- Cache write tokens: 0
+- Estimated cost: $0.000151
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: 安全说明：正则表达式
+subTitle: 正则表达式会有安全漏洞吗？
+date: '2015-02-24'
+modified: '2018-07-30'
+category: Security
+subCategory: RegEx
+tags:
+  - security
+  - regex
+  - dos
+  - remote-exploit
+cover_credit: Photo by Markus Spiske on Unsplash
+cover: ../markus-spiske-666905-unsplash.webp
+cover_mobile: ../w300_markus-spiske-666905-unsplash.webp
+cover_icon: ../icon_markus-spiske-666905-unsplash.webp
+social_image: ../desktop-social.webp
+---
+## 正则表达式拒绝服务：ReDOS
+
+我遇到的一个既出人意料又难以发现的漏洞，往往与正则表达式本身的编写或实现方式有关。  
+不管是写得糟糕，还是实现得不当，都可能在面对大规模或特制的用户输入时耗尽内存或 CPU。
+
+> 这是一种拒绝服务漏洞，而不仅仅是性能问题。如果恶意输入能够让 CPU 长时间被占用，以至于真实用户被饿死，那么它必须出现在你的安全威胁模型中。
+
+### 警示信号
+
+1. 嵌套量词、重复分组或交叉的 alternation  
+2. 采用回溯密集的引擎且没有超时或输入长度限制  
+3. 正则表达式直接用于未经检查的用户输入  
+4. 正则校验运行在热点请求路径上  
+
+### 缓解 / 解决方案
+
+1. 正则表达式本身很棘手。  
+   1. 例如，下面是 [OWASP 推荐的 IP 校验写法][owasp]：  
+      `^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$`  
+   2. 这段正则比一条（老式）推文还长，却只用来匹配 4 字节的 IP 地址！！！  
+2. 在正则评估前限制输入长度。  
+3. 添加超时、使用静态分析，或在平台支持的情况下切换到非回溯引擎。  
+4. 该问题几乎涉及所有语言和平台：.NET、Node、Python、PERL、Java。  
+
+### 参考
+
+- [OWASP ReDoS](https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS)
+````
