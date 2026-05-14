@@ -1,0 +1,52 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "Destructuring with Nested Default Values",
+  "translatedTitle": "التفكيك مع القيم الافتراضية المتداخلة",
+  "translation": {
+    "title": "التفكيك مع القيم الافتراضية المتداخلة",
+    "group": "التفكيك المتداخل في TypeScript",
+    "options": [
+      {
+        "text": "خطأ: الخاصية 'first' مفقودة"
+      },
+      {
+        "text": "خطأ: الخاصية 'last' مفقودة"
+      },
+      {
+        "text": "خطأ: الخاصيتان 'birth' و 'age' مفقودتان"
+      },
+      {
+        "text": "خطأ: الخاصية 'place' مفقودة"
+      },
+      {
+        "text": "خطأ: 'string' ليس لها خصائص في {...}"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "اكتشف الخطأ النوعي:"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "الخطأ في توقيع الدالة `greet`. الخاصيتان `age` و `birth` مفقودتان في الكائن المُمرر، لذا يجب أن تكونا اختياريتين في تعريف النوع.\n\n    على الرغم من أن الخاصية `birth` يتم تفكيكها بقيمة افتراضية، إلا أن تعريف النوع يتطلب وجودها. لتحديد خاصية كاختيارية في TypeScript، يجب استخدام العامل `?`.\n  \n    لاحظ أن `birth?: { place?: string }` ليس نفس `birth: { place?: string } | undefined`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"التفكيك مع القيم الافتراضية المتداخلة\",\n  \"group\": \"التفكيك المتداخل في TypeScript\",\n  \"options\": [\n    { \"text\": \"خطأ: الخاصية 'first' مفقودة\" },\n    { \"text\": \"خطأ: الخاصية 'last' مفقودة\" },\n    { \"text\": \"خطأ: الخاصيتان 'birth' و 'age' مفقودتان\" },\n    { \"text\": \"خطأ: الخاصية 'place' مفقودة\" },\n    { \"text\": \"خطأ: 'string' ليس لها خصائص في {...}\" }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\"اكتشف الخطأ النوعي:\"],\n  \"hintsProse\": [],\n  \"explanationProse\": [\"الخطأ في توقيع الدالة `greet`. الخاصيتان `age` و `birth` مفقودتان في الكائن المُمرر، لذا يجب أن تكونا اختياريتين في تعريف النوع.\\n\\n    على الرغم من أن الخاصية `birth` يتم تفكيكها بقيمة افتراضية، إلا أن تعريف النوع يتطلب وجودها. لتحديد خاصية كاختيارية في TypeScript، يجب استخدام العامل `?`.\\n  \\n    لاحظ أن `birth?: { place?: string }` ليس نفس `birth: { place?: string } | undefined`.\"]\n}",
+  "telemetry": {
+    "inputTokens": 896,
+    "outputTokens": 2089,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 17256,
+    "providerCostUsd": 0.0010148,
+    "providerUpstreamCostUsd": 0.0010148,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00012544000000000002,
+    "outputUsd": 0.0005849200000000001,
+    "totalUsd": 0.00071036,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
