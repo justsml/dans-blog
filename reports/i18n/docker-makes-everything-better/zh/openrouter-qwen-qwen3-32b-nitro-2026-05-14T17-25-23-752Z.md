@@ -1,0 +1,83 @@
+# Translation Candidate
+- Slug: docker-makes-everything-better
+- Locale: zh
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2015-03-12--docker-makes-everything-better/zh/index.mdx
+- Validation: deferred
+- Runtime seconds: 2.97
+- Input tokens: 1130
+- Output tokens: 1092
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.000352
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: Docker 就是挚爱
+subTitle: Docker无所不能！
+date: '2015-02-26'
+modified: '2024-07-30'
+category: DevOps
+subCategory: docker
+tags:
+  - docker
+  - devops
+  - patterns
+related:
+  - docker-server-setup-notes
+  - docker-rocks
+  - docker-security-tips-for-self-hosting
+cover: ../guillaume-bolduc-259596-unsplash.webp
+cover_mobile: ../w300_guillaume-bolduc-259596-unsplash.webp
+cover_icon: ../icon_guillaume-bolduc-259596-unsplash.webp
+---
+## Docker 可以做一切！\*
+
+> 历史注记：这是 2015 年 Docker 热潮和本地开发习惯的快照，主要作为时间胶囊保存。请将命令和安全策略视为现代化的起点，而非生产环境指南。
+
+改进你的工作流程：
+
+1.  在几乎零风险的情况下测试开发工具与服务器，不会破坏 PC 上的依赖关系  
+1.  测试你的软件  
+1.  让你编写更多幂等、模块化的代码...（我将在后续文章中说明如何实际实现这一点）
+
+看似有很多新东西要学，**但不要让这点阻止你开始**。
+
+### 备注
+
+- 如果看到带有 `-d` 或 `-it` 选项的 `docker run` 命令：  
+  _ `-it` 或 `-i -t` 会以交互模式运行配置的命令  
+  _ `-d` 会以前台服务（守护进程）模式启动 Docker 容器  
+
+---
+
+### 示例
+
+### nginx
+
+```bash
+# 注意：使用基于主机的共享文件夹  
+#（共享文件夹无法通过 VOLUME Dockerfile 命令实现）  
+sudo docker run --name web01 -d -p 8181:80 \  
+  -v $(NGINX_DIR)/etc:/etc/nginx \  
+  -v $(NGINX_DIR)/log:/var/log/nginx \  
+  -v $(NGINX_DIR)/www:/var/www/html \  
+  nginx:latest  
+
+## 本地数据，隔离在实例内  
+sudo docker run --name web01 -d -p 8181:80 nginx:latest  
+
+# nodejs  
+sudo docker run --name nodejs01 -d -p 3300:3300 -p 4433:4433 nodejs:latest  
+```
+
+> 致谢：[https://dockerfile.github.io/#/nginx](https://dockerfile.github.io/#/nginx)  
+> Docker 将在你整个 SDLC 周期中简化工作  
+
+> - 差不多如此
+````
