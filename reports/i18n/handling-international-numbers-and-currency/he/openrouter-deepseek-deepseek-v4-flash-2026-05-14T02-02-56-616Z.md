@@ -1,0 +1,145 @@
+# Translation Candidate
+- Slug: handling-international-numbers-and-currency
+- Locale: he
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2024-08-29--handling-international-numbers-and-currency/he/index.mdx
+- Validation: deferred
+- Runtime seconds: 23.80
+- Input tokens: 4891
+- Output tokens: 3683
+- Thinking tokens: unknown
+- Cached input tokens: 768
+- Cache write tokens: 0
+- Estimated cost: $0.001611
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: הבנת מספרים ומטבעות בינלאומיים
+subTitle: הסבר על כסף מותאם מקומית!
+draft: false
+date: '2024-08-28'
+modified: '2024-09-03'
+tags:
+  - engineering
+  - internationalization
+  - localization
+  - currency
+  - numbers
+category: HowTo
+subCategory: Internationalization
+cover_full_width: ../currency-banner-wide.webp
+cover_mobile: ../currency-banner-pic__w200.webp
+cover_icon: ../currency-banner-pic__w200.webp
+---
+- [כסף: לוקליזציה (L10n) ובין-לאומיות (i18n)](#money-localization-l10n-and-internationalization-i18n)
+- [מושגי מפתח](#critical-concepts)
+  - [מספרים הם מקומיים 🏘️](#numbers-are-local-️)
+  - [מטבע הוא גלובלי 🌎](#currency-is-global-️)
+  - [מתי הלוקל משנה](#when-locale-matters)
+- [פתרון](#a-solution)
+- [השלבים הבאים](#next-steps)
+
+## כסף: לוקליזציה (L10n) ובין-לאומיות (i18n)
+
+הן לא רק בשביל לנצח במשחק שבץ-נא, _לוקליזציה_ ו_בין-לאומיות_ מתייחסות לתהליך של הפיכת מוצר **לכזה שמרגיש ביתי במדינה אחרת.**
+
+<p class="breakout quote">הצגת מטבע בפורמט מקומי שגוי היא חותמת ברורה: לא השקעתם מאמץ.<br/>אם אתם לא יודעים לעצב מחיר, איך תתמודדו עם משלוח?</p>
+
+בין-לאומיות הוא נושא רחב, המכסה הכל מתרגום טקסט ועד עיצוב תאריכים. בפוסט הזה נתמקד בתת-נושא מסוים, **עיצוב מספרים ומטבעות.**
+
+בואו נבחן עיצוב בין 3 מדינות גוש האירו, ארה"ב והודו:
+
+- `€1,234,567.89` אירלנד 🇮🇪
+- `1.234.567,89 €` גרמניה 🇩🇪
+- `1 234 567,89 €` צרפת 🇫🇷
+- `$1,234,567.89` ארה"ב 🇺🇸
+- `₹12,34,567.89` הודו 🇮🇳
+
+כאוס! נכון? יש סמלים, רווחים וסימני פיסוק שעפים לכל עבר! זה מדהים שהאיחוד האירופי מצליח להסכים על משהו! 😅
+
+## מושגי מפתח
+
+לפני שנצלול לפתרונות, למה הכוונה ב"מספרים הם מקומיים"?
+
+### מספרים הם מקומיים 🏘️
+כל לוקאל (מדינה לפי [ISO 3166](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes)) מגדיר כללים לעיצוב מספרים.
+
+כללי עיצוב מספרים כוללים:
+
+- נקודה עשרונית: פסיק, נקודה.
+- אלפים: פסיק, נקודה, רווח.
+- מיקום ורווחים של סמל המטבע.
+
+### מטבע הוא גלובלי 🌎
+
+`מטבע` מתייחס ליחידת כסף ספציפית. (ראה [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217#Active_codes_(list_one)) לרשימה.)
+
+- מציין סמל: `$`, `€`, `£`, `¥`. (לעיתים קרובות בשימוש חוזר.)
+- תמיד יש קוד בן 3 אותיות: `USD`, `EUR`, `GBP`, `JPY`.
+- ניתן לשימוש/המרה ב"כל" מדינה. בתיאוריה.
+- המרה בין מטבעות דורשת נתוני שער חליפין.
+- הערך אינו משתנה בהתאם ללוקאל.
+
+### מתי הלוקאל חשוב
+
+רוב ממשקי ה-API של מסחר אלקטרוני/תשלומים עוסקים ב-`price` + `currencyCode`. למה אין לוקאלים?
+
+לוקאלים נקבעים (בדרך כלל) ברמת מערכת ההפעלה/המכשיר, ודפדפנים הופכים אותו לזמין דרך `navigator.language`. מכיוון שלכל אחד מהמשתמשים שלך יכול להיות לוקאל שונה, הגיוני לעצב מספרים ומטבעות בצד הלקוח.
+
+## פתרון
+
+אוקיי, חדשות טובות! לשפות תכנות מודרניות יש תמיכה מובנית בזה. ב-JavaScript, יש לנו את המחלקה [`Intl`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl) ואת `Intl.NumberFormat`!
+
+בואו נסתכל על קצת קוד:
+
+```javascript
+const number = 1_234_567.89;
+
+/**
+ * Format a number in local currency.
+ * @param {number} amount - The amount to format.
+ * @param {string} currency - The 3-letter currency code.
+ * @param {string} [locale] - The users locale string.
+ */
+const formatMoney = (amount, currency, locale = navigator.language) =>
+  new Intl.NumberFormat(locale, { currency, style: 'currency' })
+    .format(amount);
+
+console.log('🇩🇪 ' + formatMoney(number, 'EUR', 'de-DE'));
+console.log('🇮🇪 ' + formatMoney(number, 'EUR', 'ga-IE'));
+console.log('🇫🇷 ' + formatMoney(number, 'EUR', 'fr-FR'));
+```
+
+אם צריך לעשות דברים מתוחכמים יותר, כמו חישוב מיסים, הפעלת הנחות או המרה בין מטבעות, כדאי להשתמש בספרייה כמו [dinero.js](https://v2.dinerojs.com/).
+
+## צעדים הבאים
+
+בהתאם לצרכים הספציפיים שלך, אולי תרצה לחקור מושגים קשורים:
+
+- שיטות עבודה מומלצות עם לוקאל משתמש. זיהוי + אפשרות לעקיפה. (למשל, תפריט נפתח לבחירת מדינה.)
+- שמירת מספרים שלמים (לאחסן סנטים, לא דולרים.)
+- חישובים כספיים. (למשל, הפעלת קופון `20% הנחה`, חישוב `סכום ביניים + מיסים` וכו'.)
+- שערי חליפין חיים. (לרכישות קמעונאיות, המרות מט"ח/מטבע.)
+
+<p class="breakout quote">תודיעו לי אם תרצו לראות מאמר עתידי בנושאים האלה!</p>
+
+{/* ## המלצות
+
+כמה ספריות יכולות לעזור במשימות האלה: */}
+
+**JavaScript / TypeScript**
+
+- [dinero.js](https://v2.dinerojs.com/) תומך בחישובים כספיים, שערי חליפין, עיצוב וניתוח!
+
+**Rust**
+
+- [rusty_money](https://crates.io/crates/rusty_money) היא הספרייה המועדפת עליי ב-Rust.
+
+**Go**
+
+- [currency](https://github.com/bojanz/currency) היא הבחירה הנוכחית שלי ב-Golang.
+````
