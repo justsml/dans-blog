@@ -1,0 +1,76 @@
+# Translation Candidate
+- Slug: creating-collaborative-culture
+- Locale: zh
+- Model: openrouter/google/gemini-3-flash-preview
+- Target: src/content/posts/2021-03-03--creating-collaborative-culture/zh/index.mdx
+- Validation: deferred
+- Runtime seconds: 5.09
+- Input tokens: 1182
+- Output tokens: 541
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.002214
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: 构建协作文化
+subTitle: 释放团队创造力！
+date: '2021-01-01'
+modified: '2023-01-25'
+tags:
+  - collaborative-culture
+  - culture
+  - teams
+  - growth
+  - personal-development
+category: Leadership
+subCategory: culture
+cover: ../pexels-photo-3184431--cropped.webp
+cover_mobile: ../w300_pexels-photo-3184431--cropped.webp
+cover_icon: ../icon_pexels-photo-3184431--cropped.webp
+---
+## 什么是“协作文化”？
+
+大多数组织的文化氛围都介于**快乐蜜蜂**与**杀人蜂群**之间。
+
+对于**快乐蜜蜂**型组织而言，“协作文化”包含两个核心原则：
+
+1. 庆祝创意！（尤其是那些听起来荒诞不经的。）
+1. 欢迎创意！（无论提出者的头衔或职位如何。）
+
+<!-- > 归根结底，最优秀的组织会不带偏见地欢迎来自任何职级的任何想法。 -->
+
+## 为什么要推行“协作文化”？
+
+关于“协作文化”，我最喜欢的案例是一个清洁工的故事：他提出了一个价值十亿美元的创意，而首席执行官（CEO）听取了他的建议。
+
+当百事公司（PepsiCo）的 CEO 罗杰·恩里克（Roger Enrico）恳请员工“像老板一样思考”时，没几个员工当真。但理查德·蒙塔涅斯（Richard Montañez）是个例外。他敏锐地察觉到辣味零食市场尚待开发。于是，他从公司通讯录里查到了 CEO 的电话，并请求面谈。由于一些阴差阳错的误会，秘书以为他是某位区域工厂经理，于是安排了会议。真正的工厂经理得知这场即将开始的提案会后自然大吃一惊，在说了几句重话后，他告诉蒙塔涅斯：这是你成败在此一举的机会——以后绝不许再搞这种越级汇报的噱头。
+
+在那次会议之后（以及付出了大量努力），蒙塔涅斯一路晋升，最终成为销售副总裁，并为百事公司创造了数十亿美元的收入。
+
+伟大的创意和灵感可能在任何时间、任何地点，由任何人提出！
+
+为了实现长期成功，企业文化必须接纳这一点！
+
+## 后续行动
+
+首先，评估现状。花点时间思考以下几个问题：
+
+- 组织中参与分享创意的员工占比是多少？
+- 新员工入职后多久会提出建议？
+- 频率如何？
+
+从个人层面来看：
+
+- 同事最近一次向你提出的创意是什么？
+- 你是如何回应的？你是否赋予了他们权力？你是否花时间倾听？并给予他们应有的功劳？
+- 同事在产生下一个创意时，是否感到可以自如地向你开口？
+
+> 敬请期待！
+> 我的下一篇文章将探讨在组织中培养“协作文化”的具体流程和习惯！
+````
