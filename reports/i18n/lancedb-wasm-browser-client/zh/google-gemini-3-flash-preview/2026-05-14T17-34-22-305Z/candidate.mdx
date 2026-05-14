@@ -1,0 +1,131 @@
+---
+title: Serverless 向量搜索
+subTitle: 使用 Rust、WASM 和 TypeScript 构建向量搜索浏览器客户端
+date: '2026-04-16'
+modified: '2026-04-16'
+tags:
+  - rust
+  - wasm
+  - lancedb
+  - vector-search
+  - open-source
+  - webassembly
+  - typescript
+  - ai
+category: AI
+subCategory: Open Source
+draft: false
+hidden: true
+publish: false
+popularity: 0.75
+social_image: ../desktop-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+## 问题：你无法在浏览器中搜索 Lance 表
+
+LanceDB 是一款出色的向量数据库。它比传统数据库更简单、更便宜。你可以发布带有向量列、全文搜索 (FTS) 列的表，将文件托管在 S3 或 CDN 上，并直接从 Node.js 服务器通过 S3 查询数据。无需守护进程。
+
+但在这次 PR 之前，你*无法*做到的事情是：直接从浏览器打开该表并运行搜索。你需要在中间加一层服务器：一个 Lambda、一个容器，或者任何能运行 Rust、Node.js/WASM 或 Python 的东西。
+
+我们的目标很宏大，但聚焦于一个极具意义的最终结果：**直接可搜索、只读、HTTP 托管的向量索引。**
+
+---
+
+## 架构设计
+
+该实现分为三个层级：
+
+### 1. Rust 发布产物 (`web_publish.rs`)
+
+在浏览器搜索 Lance 表之前，它需要知道哪些内容是安全可搜的。Lance 的内部格式包含一些浏览器不可移植的特性——增量文件 (delta files)、外部基座 (external bases)，以及 WASM 运行时无法执行的索引类型。与其让浏览器在搜索时才发现这些问题（体验很差），发布步骤会生成明确的旁路 (sidecar) 文件：
+
+- `_web.json` —— 声明 Schema 以及哪些列是浏览器可搜索的（支持距离类型的向量列、FTS 列）。
+- `_snapshot.json` —— 数据集的时点视图，浏览器客户端可以直接消费，而无需理解完整的数据集演进协议。
+- `_latest.manifest` / `_latest.version` —— 浏览器轮询的稳定指针，用于检测数据过时。
+
+快照中的 `isComplete` 标志是安全阀。如果数据集依赖于浏览器路径无法安全读取的外部基座或数据文件，则 `isComplete=false`，浏览器会尽早拒绝并抛出明确错误，而不是产生微妙的错误结果。
+
+这是我最庆幸用 Rust 而不是 JavaScript 构建的部分。关于“什么是浏览器安全”的判断逻辑，应该留在表元数据实际存在的地方。
+
+### 2. `lancedb-wasm` Rust Crate
+
+这是 WebAssembly 运行时：一个基于 `fetch` 的对象存储、一个浏览器端搜索引擎，以及一个用于过滤谓词的表达式求值器。
+
+Fetch 对象存储 (`fetch_object_store.rs`) 在 HTTP Range 请求之上实现了 Lance 的 `ObjectStore` 特性 (trait)。Lance 的内部读取已经结构化为范围字节获取，这可以完美映射到 `Range: bytes=N-M` 请求头。这是整个项目中最令人愉悦的部分——现有的架构几乎是为此量身定制的，我只需要把它接通。
+
+浏览器引擎 (`browser.rs`) 处理搜索：向量最近邻、全文搜索以及混合搜索（通过 RRF 融合向量 + FTS）。过滤表达式 (`browser_expr.rs`) 在纯 Rust 中评估 Lance 过滤谓词，并编译为 WASM。
+
+特性拒绝是严格且刻意的。`hamming` 距离？预先拒绝并给出明确提示——不是静默错误，也不是运行时崩溃。在不完整的快照上进行 `fastSearch`？拒绝。不支持的基准路径布局？拒绝。目标是“故障关闭” (fail-closed)：如果浏览器路径无法履行契约，它会直接告知。
+
+### 3. `@lancedb/lancedb-web` TypeScript 包
+
+公开 API 表面积被刻意压缩得很小：
+
+```typescript
+import { searchTable } from "@lancedb/lancedb-web";
+
+const results = await searchTable("https://my-cdn.example.com/my-table", "semantic search query", {
+  select: ["title", "url", "score"],
+  limit: 10,
+});
+```
+
+在底层，`searchTable()` 优先选择基于 Worker 的执行路径，以确保搜索不会阻塞主线程。WASM 模块在 Worker 中运行；结果通过类型化协议 (`worker_protocol.ts`) 传回。此外还有一个可选的 `./transformers` 导出，它封装了 `@xenova/transformers` 以在客户端生成查询嵌入（embeddings）——这样你就可以在不离开浏览器的情况下，完成从原始文本查询到向量搜索结果的全过程。
+
+---
+
+## 难点所在
+
+### HTTP 范围读取并非毫无代价
+
+Lance 的读取模式假设对象存储能够高效处理大量小范围的获取（ranged fetches）。S3 和 GCS 正是为此设计的。浏览器……大部分情况下也是如此，但带有 `Range` 请求头的 `fetch` 存在一些怪癖，这是现有的 Rust 对象存储抽象层无需关心的。
+
+主要问题在于浏览器有时会进行激进的缓冲或重新请求，而且你无法像在原生进程中那样控制 TCP 连接池。对于大型向量索引，这一点至关重要。目前的实现是正确的；至于它在处理大型表时是否足够快以胜任生产环境，这需要在评审过程中进一步验证。
+
+### Sidecar 文件生成的抉择
+
+我在 PR 中明确向维护者提出了这个问题，因为这里存在真正的设计权衡：浏览器 sidecar 文件（`_web.json`、`_snapshot.json`）应该在每次表提交时**自动**生成，还是应该通过显式的 `publish()` 调用来生成？
+
+自动生成更符合人体工程学——你可以免费获得浏览器支持。但这意味着每次本地写入都会产生额外的开销，并且将浏览器契约与核心提交路径耦合在一起，这可能会使未来的变更变得复杂。
+
+显式发布从契约角度来看更准确——你是在声明“此版本已准备好用于浏览器”——但它很容易被遗忘，这意味着本应支持浏览器搜索的表会由于疏忽而无法搜索。
+
+我倾向于自动生成，并让 sidecar 生成失败时记录警告而不是导致提交失败。但我确实拿不准，并在 PR 中标注了这一点。
+
+### 什么才算“浏览器安全”？
+
+`web_publish.rs` 中的 `isComplete` 标志和列过滤逻辑体现了对浏览器处理能力的判断。这种判断必须与 WASM 运行时的实际能力保持同步。如果有人向 Lance 添加了浏览器无法执行的新索引类型，发布代码必须知道将其排除——否则你会宣称拥有某种能力，而浏览器在搜索时却无法兑现。
+
+正确的修复方法可能是建立一个由发布路径和运行时共享的能力注册表（capability registry），以防止两者发生偏移。目前我将其实现为并行常量，这虽然权宜但很脆弱。这可能是我下一步想要改进的地方。
+
+---
+
+## Transformers 封装器的两难境地
+
+`./transformers` 导出是一个提升生活质量的功能：它接收文本查询，通过 `@xenova/transformers` 在本地嵌入模型中运行，并将生成的向量交给 LanceDB 搜索引擎。从静态 HTML 页面实现零服务器语义搜索。
+
+这也是我最不确定是否该放在这个 PR 里的东西。它确实很有用，而且已经实现了，但它引入了额外的依赖和 API 表面积，这与核心的浏览器搜索问题是解耦的。维护者可能会更倾向于先落地基础的 `searchTable()` API，然后再单独迭代嵌入模型（embeddings）部分。
+
+我已经问过他们的意见了，拭目以待。
+
+---
+
+## 如果重来一次，我会做哪些改变
+
+**更早地拆分作用域。** 这个 PR 有 14,500 行。一次性审查这么多代码量太大了。我本可以先提交发布产物的格式，然后是 WASM 运行时，最后是 TypeScript 包。三个较小的 PR 会更容易合并。我没这么做是因为我想在提议任何组件之前验证完整的端到端流程——这从增强信心的角度来看是有意义的，但确实增加了审查负担。
+
+**先写能力注册表（Capability Registry）。** `web_publish.rs` 和 `browser.rs` 之间发生偏移的风险是真实存在的。从一个双方都引用的共享能力类型开始，会比我现在必须手动同步的并行常量列表要优雅得多。
+
+**命名不要太随性。** `_web.json` 作为内部格式是个不错的名字。但一旦有人缓存了它或围绕它构建工具，它就变成了具有承重能力的正式名称。我应该在提交之前花更多时间推敲命名——在别人产生依赖之前，修改命名的成本是最低的。
+
+---
+
+## 更深层的意义
+
+这个项目之所以可行，是因为 Lance 的内部架构已经针对 Range Requests（范围读取）做了很好的设计。对象存储（Object Store）的抽象很干净，元数据格式很明确。快照（Snapshot）的概念给了我一个自然的切入点来表达“这是该数据集的一个浏览器安全视图”。
+
+良好的抽象边界不仅让内部代码更易于理解，还让像我这样项目之外的人能够直接介入，在不触动核心逻辑的情况下插入一个新的执行环境。这是一种真正的设计美德，它让这 14,000 行代码感觉更像是在填充一个既定的形状，而不是在与代码库搏斗。
+
+如果你想查看细节，PR 在[这里](https://github.com/lancedb/lancedb/pull/3247)。目前仍在等待审查。维护者的态度很友善，我持审慎乐观的态度。
