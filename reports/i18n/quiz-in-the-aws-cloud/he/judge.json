@@ -1,0 +1,37 @@
+{
+  "selectedCommit": "175a37f9ee2ea7a660be695979616fe799c3fb37",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 10,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The translation is technically accurate and maintains the playful, direct tone of the original. It correctly preserves MDX components and handles Hebrew right-to-left considerations well. The previous suggestion regarding the challenges link was already addressed in the provided file content (it uses /challenges/ correctly).",
+  "slug": "quiz-in-the-aws-cloud",
+  "locale": "he",
+  "candidateCommits": [
+    "175a37f9ee2ea7a660be695979616fe799c3fb37",
+    "9c52f72f461ec1990304b60eac7f1c29785cb9d1"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "בדקו עוד [אתגרים של דן](../challenges/)!",
+      "replacement": "בדקו עוד [אתגרים של דן](/challenges/)!",
+      "reason": "The link should be absolute to the site root as per the English source, or at least consistent with the site structure. The candidate changed /challenges/ to ../challenges/ which might break if the base path is different.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug quiz-in-the-aws-cloud --locale he --skip-global",
+    "output": ""
+  }
+}
