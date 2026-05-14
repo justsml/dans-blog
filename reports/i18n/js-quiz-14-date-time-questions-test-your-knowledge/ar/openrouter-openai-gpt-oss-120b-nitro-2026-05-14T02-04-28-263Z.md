@@ -1,0 +1,537 @@
+# Translation Candidate
+- Slug: js-quiz-14-date-time-questions-test-your-knowledge
+- Locale: ar
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2020-01-02--js-quiz-14-date-time-questions-test-your-knowledge/ar/index.mdx
+- Validation: deferred
+- Runtime seconds: 26.57
+- Input tokens: 14757
+- Output tokens: 9140
+- Thinking tokens: unknown
+- Cached input tokens: 4352
+- Cache write tokens: 0
+- Estimated cost: $0.002511
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+unlisted: false
+title: 'اختبار: 14 سؤالًا حول تاريخ JavaScript'
+subTitle: تعلّم إبهار الحضور بألغاز جافاسكريبت! ✨
+label: Dates & Times
+date: '2020-01-02'
+modified: '2024-11-27'
+tags:
+  - quiz
+  - javascript
+  - date
+  - date
+  - gotchas
+  - challenge
+  - intermediate
+social_image: ../desktop-social.webp
+category: Quiz
+subCategory: JavaScript
+cover: ../pocket-watch.webp
+cover_mobile: ../w300_pocket-watch.webp
+cover_icon: ../icon_pocket-watch.webp
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+## ما مدى إلمامك بفئة `Date`؟
+
+> * **أثبت مهاراتك في JavaScript!** 🚀  
+> * لا حاجة لتسجيل الدخول أو إنشاء حساب. ✨  
+> * اختيار من متعدد. 🤖 … _كم يمكن أن يكون صعبًا، أليس كذلك؟_
+
+### المخطط العام
+
+فئة `Date` في JavaScript تمتلك واجهة برمجة تطبيقات صعبة السمعة. لقد ورثت هذه الواجهة من Java، ويمكنني فقط أن أفترض أنها استُلهمت من أساليب قياس الوقت النيوليتيكية القديمة.
+
+الصعوبة في التعامل مع `Date` تدفع الكثير من المطورين لاستخدام مكتبات طرف ثالث دون تفكير. وعلى الرغم من أن هذه المكتبات غالبًا ما تكون خيارًا آمنًا وموثوقًا، إلا أنها نادرًا ما تكون ضرورية لتنسيق التواريخ أو التعريب!
+
+تم تصميم هذا الاختبار لقياس (وتعميق) معرفتك بواجهة `Date` الأصلية. استخدم الأزرار الخضراء للحصول على تلميحات وشروحات! نأمل أنه بحلول نهاية التحدي تكون قد رسخت فهمك لكيفية عمل `Date` في JavaScript.
+
+#### **ملاحظة:** جميع الأمثلة تفترض المنطقة الزمنية المحلية GMT-7.
+
+### 👇 14 سؤالًا أدناه 👇
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="معالجة التواريخ"
+  title="منشئ التاريخ الجزء 1"
+  options={[
+    {text: 'Jan 01 2020'},
+    {text: 'Feb 01 2020', isAnswer: true},
+    {text: 'RangeError: Invalid argument.'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما الذي سيتضمنه الإخراج؟
+    ```js
+        const d1 = new Date(2020, 1, 1)
+        console.log(d1)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    المعامل الخاص بالشهر يبدأ من الصفر. النطاق هو 0-11 (باستخدام التقويم الغربي).
+
+    'فبراير' له قيمة فهرس واحدة. (فكر فيه كبحث في مصفوفة.)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="معالجة التواريخ"
+  title="منشئ التاريخ الجزء 2"
+  options={[
+    {text: 'Jan 01 2020', isAnswer: true},
+    {text: 'Feb 01 2020'},
+    {text: 'RangeError: Invalid argument.'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما الذي سيتضمنه الناتج؟
+    ```js
+        const d2 = new Date(2020, 0, 1)
+        console.log(d2)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    معامل الشهر يبدأ من الصفر. النطاق هو 0-11 (باستخدام التقويم الغربي).
+
+    'January' لها قيمة فهرس صفر. (فكر فيها كبحث في مصفوفة.)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="معالجة التواريخ"
+  title="منشئ التاريخ الجزء 3"
+  options={[
+    {text: '01 Jan 1970'},
+    {text: 'نقطة البداية يونكس (Epoch) بقيمة 0'},
+    {text: 'التاريخ الحالي، بتوقيت UTC/GMT'},
+    {text: 'التاريخ الحالي', isAnswer: true},
+    {text: 'NaN'},
+    {text: 'RangeError: وسيط غير صالح.'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما الذي سيتضمنه الإخراج؟
+    ```js
+        const d3 = Date('Thu, 01 Jan 1970 00:00:00 GMT')
+        console.log(d3)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    لا تنسَ كلمة المفتاح `new`! `Date` هي فئة، ويجب استدعاؤها باستخدام `new`.
+
+    `Date('...')` بدون `new` يتجاهل ما تمرره إليها. يبدو أنها دائمًا تُنتج التاريخ والوقت الحاليين عند استخدام `new Date()` (بدون وسائط).
+
+    هذا **خطأ شائع** من السهل **تغاضيه**، حتى أثناء مراجعة الشيفرة.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="معالجة التواريخ"
+  title="منشئ التاريخ الجزء 4"
+  options={[
+    {text: '1969', isAnswer: true},
+    {text: '1970'},
+    {text: '2019'},
+    {text: '2020'},
+    {text: '2021'},
+    {text: 'RangeError: حجة غير صالحة.'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما الذي سيتضمنه الإخراج؟
+    ```js
+          const date = new Date(2020)
+          console.log(date.getFullYear())
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    يتم تفسير كائن `Date` المُنشأ بمعامل عدد صحيح واحد كقيمة `Epoch` يونكس. `Epoch` هو عدد الملليثانية منذ 1 يناير 1970.
+
+    قيمة `2020` (ملليثانية) تُترجم إلى ثانيتين بعد 1 يناير 1970.
+
+    ثم بما أن المنطقة الزمنية المحلية لدينا لديها إزاحة سالبة قدرها -7 ساعات، نحصل على `Wed Dec 31 1969 17:00:02 GMT-0700 (Mountain Standard Time)`.
+
+    يمكنك تجاوز إزاحة المنطقة الزمنية المحلية باستخدام [`.getUTCFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getUTCFullYear).
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="معالجة التواريخ"
+  title="تحليل سلسلة التاريخ"
+  options={[
+    {text: '2019 2020', isAnswer: true},
+    {text: '2020 2021'},
+    {text: '2020 2020'},
+    {text: '2020 2019'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما القيمة التي ستُطبع في وحدة التحكم؟
+    ```js
+          const d1 = new Date('2020-01-01')
+          const d2 = new Date('2020-01-01T00:00')
+          console.log(d1.getFullYear(), d2.getFullYear())
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    السلسلة التي لا تحتوي على قيمة وقت `T` قد تبدو كأنها 1 يناير 2020 - لكن سلاسل التاريخ فقط تُفسَّر كـ UTC، وعند تعديلها إلى المنطقة الزمنية المحلية لدينا (GMT-7) نجد أننا ما زلنا في 2019.
+
+    سلاسل التاريخ‑الوقت التي لا تحتوي على منطقة زمنية صريحة تُفسَّر بالتوقيت المحلي.
+
+    الصيغة `T00:00` تجعل القيمة الثانية تُفسَّر كمنتصف الليل المحلي.
+
+    التاريخ الأول يُفسَّر كـ `Tue Dec 31 2019 17:00:00 GMT-0700 (Mountain Standard Time)`.
+    التاريخ الثاني يُفسَّر كـ `Wed Jan 01 2020 00:00:00 GMT-0700 (Mountain Standard Time)`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="معالجة التواريخ"
+  title="تنسيق الجزء 1"
+  options={[
+    {text: 'new Intl.DateTimeFormat(\'},
+    {text: 'date.toLocaleFormat(\', isAnswer: true},
+    {text: 'date.toLocaleString(\'},
+    {text: 'date.toLocaleDateString(\'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    اختر طريقة تنسيق _غير صحيحة_:
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    الطريقة `toLocaleFormat()` ليست معيارية! قد تبدو مألوفة لأنها من مكتبة طرف ثالث قديمة.
+
+    اطلع على وثائق [`toLocaleDateString` docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleDateString) الطريقة. سلوكها موثق تحت [`Intl.DateTimeFormat`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat).
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="معالجة التواريخ"
+  title="تواريخ UTC الجزء الأول"
+  options={[
+    {text: 'Wed, 01 Jan 2020 00:00:00 GMT'},
+    {text: 'Thu, 02 Jan 2020 00:00:00 GMT'},
+    {text: 'TypeError', isAnswer: true},
+    {text: 'NaN'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما الذي سيتضمنه الإخراج؟
+    ```js
+          var date = Date.UTC('2020-01-02T00:00')
+          console.log(date.toUTCString())
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    سوف تحصل على `TypeError: date.toUTCString is not a function`، لأن [`Date.UTC()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/UTC) يُعيد عددًا صحيحًا بالمللي ثانية، وليس كائن تاريخ.
+
+    {/* طريقة [`getFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getFullYear) تستخدم الإزاحة المحلية لديك (افترض GMT-07:00 لهذه الأسئلة.)
+    مما يعني أنها ستعطي السنة السابقة (رأس السنة -7 ساعات).
+    طريقة [`getUTCFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getUTCFullYear) ستعطي السنة كما قدمناها إلى `Date.UTC()`، 2020.
+    */}
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="معالجة التواريخ"
+  title="تواريخ UTC الجزء 2"
+  options={[
+    {text: 'كائن تاريخ يعتمد على UTC'},
+    {text: 'كائن تاريخ معدل للمنطقة الزمنية المحلية'},
+    {text: 'ميليثانية منذ 1 يناير 1970 بتوقيت GMT', isAnswer: true},
+    {text: 'خطأ'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما الذي سيتضمنه الإخراج؟
+    ```js
+          const d = Date.UTC(2020, 0, 1)
+          console.log(d)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    طريقة المساعدة [`Date.UTC`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/UTC) لا تُعيد كائن تاريخ. إنها تُعيد عددًا صحيحًا بالميليثانية.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="معالجة التواريخ"
+  title="تواريخ UTC الجزء 3"
+  options={[
+    {text: '0'},
+    {text: '420', isAnswer: true},
+    {text: '700'},
+    {text: '1400'},
+    {text: 'null'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما الذي سيتضمنه الناتج؟
+    ```js
+          // Assume local TZ is -07:00
+          const d = new Date(Date.UTC(2020, 0, 1))
+          console.log(d.getTimezoneOffset())
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    سيتم عرض كائنات `Date` ضمنيًا بالتوقيت المحلي، مع قيمة ثابتة تقريبًا لـ[`.getTimezoneOffset()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getTimezoneOffset).
+
+    `Date` لا تخزن بيانات المنطقة الزمنية. هي تخزن عدد الملليثانية منذ بداية يونيكس (1 يناير 1970). تُؤخذ المنطقة الزمنية في الاعتبار عند تحليل سلاسل التاريخ وعرضها. سلوك العرض الافتراضي يُحدد تلقائيًا بناءً على إعدادات اللغة أو المنطقة في النظام أو المتصفح.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="معالجة التواريخ"
+  title="مُعيّنات التاريخ الجزء الأول"
+  options={[
+    {text: 'يناير 01 2020', isAnswer: true},
+    {text: 'فبراير 01 2020'},
+    {text: 'RangeError: حجة غير صالحة.'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما الذي سيتضمنه الناتج؟
+    ```js
+          const d = new Date(2020, 0, 1)
+          d.setDate(1)
+          console.log(d)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    طريقة [`.setDate()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setDate) تُعيّن يوم الشهر بناءً على الشهر الحالي للعنصر.
+
+    إذا تم تمرير قيمة خارج نطاق عدد الأيام المتاحة، سيتم تعديل قيمة شهر العنصر (مثلاً `setDate(32)` في يناير سيُحسب كـ 1 فبراير.)
+
+    <aside class="hint">`setDate` تُعيّن يوم الشهر، عادةً في النطاق 1‑31.</aside>
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="معالجة التواريخ"
+  title="محددات التاريخ الجزء 2"
+  options={[
+    {text: 'Jan 01 2020'},
+    {text: 'Feb 01 2020', isAnswer: true},
+    {text: 'RangeError: Invalid argument.'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما الذي سيتضمنه الناتج؟
+    ```js
+          const d = new Date(2020, 0, 1)
+          d.setMonth(1)
+          console.log(d)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    طريقة [`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) تُعيّن شهر كائن التاريخ المعطى.
+
+    الشهر يُعطى بصفر‑مؤشر، ويتراوح بين 0‑11 (باستخدام التقويم الغربي).
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="معالجة التواريخ"
+  title="مُحدِّدات التاريخ الجزء 3"
+  options={[
+    {text: 'Jan 01 2020'},
+    {text: 'Jan 01 2021', isAnswer: true},
+    {text: 'Feb 01 2020'},
+    {text: 'RangeError: Invalid argument.'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما الذي سيتضمنه الناتج؟
+    ```js
+          const d = new Date(2020, 0, 1)
+          d.setMonth(12)
+          console.log(d)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    طريقة [`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) تُعيّن شهر كائن التاريخ المُعطى.
+
+    معامل `month` يُحسب من الصفر، ويقع في النطاق 0‑11 (باستخدام التقويم الغربي).
+
+    هنا نرى أن السنة تُعدَّل إلى 2021، لأن `setMonth(12)` هو قيمة أكبر بواحد من 11 (ديسمبر).
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="معالجة التواريخ"
+  title="مُحدِّدات التاريخ الجزء الرابع"
+  options={[
+    {text: 'Jan 01 2020'},
+    {text: 'Feb 01 2020'},
+    {text: 'Jan 01 2021'},
+    {text: 'Feb 01 2021', isAnswer: true},
+    {text: 'RangeError: Invalid argument.'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما الذي سيتضمنه الناتج؟
+    ```js
+          const d = new Date(2020, 0, 1)
+          d.setMonth(13)
+          console.log(d)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    طريقة [`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) تُعيّن شهر كائن التاريخ المُعطى.
+
+    الشهر يُعطى بصفر‑مؤشر، ويتراوح من 0 إلى 11 (في التقويم الغربي).
+
+    هنا نرى أن الشهر والسنة تم تعديلهما إلى فبراير 2021، لأن `setMonth(13)` يساوي 2 أكثر من 11 (ديسمبر).
+
+    <aside class="hint">`setMonth` يحدد الشهر بحسب الفهرس، حيث تُرقَّم الشهور الـ12 من 0‑11.</aside>
+    <aside class="hint">
+    القيم خارج النطاق 0‑11 ستؤدي إلى تدفق السنة للأعلى أو للأسفل. على سبيل المثال، `setMonth(13)` سيُعدِّل السنة إلى 2021 (في فبراير لأن 13 هو 2 أكثر من 11).
+    </aside>
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={13}
+  group="معالجة التواريخ"
+  title="مُحدِّدات التاريخ الجزء 5"
+  options={[
+    {text: 'يناير 01 2020'},
+    {text: 'فبراير 01 2020'},
+    {text: 'يناير 01 2019'},
+    {text: 'ديسمبر 01 2019', isAnswer: true},
+    {text: 'RangeError: Invalid argument.'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ماذا سيتضمن الإخراج؟
+    ```js
+          const d = new Date(2020, 0, 1)
+          d.setMonth(-1)
+          console.log(d)
+    ```
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    <aside class="hint">الأشهر غير متساوية، تتراوح بين 28‑31 يوماً.</aside>
+    <aside class="hint">`setDate` يحدد يوم الشهر، عادةً في النطاق 1‑31. الأعداد السالبة وأي أعداد أكبر من `31` ستؤدي إلى تعديل اليوم والشهر، أحياناً بطرق مفاجئة.</aside>
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    طريقة [.setMonth()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) تُعيّن شهر كائن التاريخ المعطى.
+
+    معامل الشهر يبدأ من الصفر، ويتراوح بين 0‑11 (باستخدام التقويم الغربي).
+
+    هنا نلاحظ أن الشهر والسنة يعودان إلى ديسمبر 2019، لأن `setMonth(-1)` أصغر من 0 (يناير).
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+````

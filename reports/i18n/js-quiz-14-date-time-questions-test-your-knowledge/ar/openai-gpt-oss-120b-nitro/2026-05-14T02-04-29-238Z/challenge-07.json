@@ -1,0 +1,49 @@
+{
+  "index": 6,
+  "attempt": 1,
+  "originalTitle": "UTC Dates Part 1",
+  "translatedTitle": "تواريخ UTC الجزء الأول",
+  "translation": {
+    "title": "تواريخ UTC الجزء الأول",
+    "group": "معالجة التواريخ",
+    "options": [
+      {
+        "text": "Wed, 01 Jan 2020 00:00:00 GMT"
+      },
+      {
+        "text": "Thu, 02 Jan 2020 00:00:00 GMT"
+      },
+      {
+        "text": "TypeError"
+      },
+      {
+        "text": "NaN"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "ما الذي سيتضمنه الإخراج؟"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "سوف تحصل على `TypeError: date.toUTCString is not a function`، لأن [`Date.UTC()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/UTC) يُعيد عددًا صحيحًا بالمللي ثانية، وليس كائن تاريخ.\n\n      {/* طريقة [`getFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getFullYear) تستخدم الإزاحة المحلية لديك (افترض GMT-07:00 لهذه الأسئلة.)\n      مما يعني أنها ستعطي السنة السابقة (رأس السنة -7 ساعات).\n      طريقة [`getUTCFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getUTCFullYear) ستعطي السنة كما قدمناها إلى `Date.UTC()`، 2020.\n      */}"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"تواريخ UTC الجزء الأول\",\n  \"group\": \"معالجة التواريخ\",\n  \"options\": [\n    {\n      \"text\": \"Wed, 01 Jan 2020 00:00:00 GMT\"\n    },\n    {\n      \"text\": \"Thu, 02 Jan 2020 00:00:00 GMT\"\n    },\n    {\n      \"text\": \"TypeError\"\n    },\n    {\n      \"text\": \"NaN\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"ما الذي سيتضمنه الإخراج؟\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"سوف تحصل على `TypeError: date.toUTCString is not a function`، لأن [`Date.UTC()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/UTC) يُعيد عددًا صحيحًا بالمللي ثانية، وليس كائن تاريخ.\\n\\n      {/* طريقة [`getFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getFullYear) تستخدم الإزاحة المحلية لديك (افترض GMT-07:00 لهذه الأسئلة.)\\n      مما يعني أنها ستعطي السنة السابقة (رأس السنة -7 ساعات).\\n      طريقة [`getUTCFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getUTCFullYear) ستعطي السنة كما قدمناها إلى `Date.UTC()`، 2020.\\n      */}\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1016,
+    "outputTokens": 870,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 2563,
+    "providerCostUsd": 0.000636,
+    "providerUpstreamCostUsd": 0.000636,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000039624,
+    "outputUsd": 0.00015659999999999998,
+    "totalUsd": 0.000196224,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

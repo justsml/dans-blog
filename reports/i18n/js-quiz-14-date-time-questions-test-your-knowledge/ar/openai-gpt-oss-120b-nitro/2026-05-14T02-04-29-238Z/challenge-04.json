@@ -1,0 +1,55 @@
+{
+  "index": 3,
+  "attempt": 1,
+  "originalTitle": "Date Constructor Part 4",
+  "translatedTitle": "منشئ التاريخ الجزء 4",
+  "translation": {
+    "title": "منشئ التاريخ الجزء 4",
+    "group": "معالجة التواريخ",
+    "options": [
+      {
+        "text": "1969"
+      },
+      {
+        "text": "1970"
+      },
+      {
+        "text": "2019"
+      },
+      {
+        "text": "2020"
+      },
+      {
+        "text": "2021"
+      },
+      {
+        "text": "RangeError: حجة غير صالحة."
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "ما الذي سيتضمنه الإخراج؟"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "يتم تفسير كائن `Date` المُنشأ بمعامل عدد صحيح واحد كقيمة `Epoch` يونكس. `Epoch` هو عدد الملليثانية منذ 1 يناير 1970.\n\n      قيمة `2020` (ملليثانية) تُترجم إلى ثانيتين بعد 1 يناير 1970.\n      \n      ثم بما أن المنطقة الزمنية المحلية لدينا لديها إزاحة سالبة قدرها -7 ساعات، نحصل على `Wed Dec 31 1969 17:00:02 GMT-0700 (Mountain Standard Time)`.\n  \n      يمكنك تجاوز إزاحة المنطقة الزمنية المحلية باستخدام [`.getUTCFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getUTCFullYear)."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"منشئ التاريخ الجزء 4\",\n  \"group\": \"معالجة التواريخ\",\n  \"options\": [\n    {\n      \"text\": \"1969\"\n    },\n    {\n      \"text\": \"1970\"\n    },\n    {\n      \"text\": \"2019\"\n    },\n    {\n      \"text\": \"2020\"\n    },\n    {\n      \"text\": \"2021\"\n    },\n    {\n      \"text\": \"RangeError: حجة غير صالحة.\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"ما الذي سيتضمنه الإخراج؟\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"يتم تفسير كائن `Date` المُنشأ بمعامل عدد صحيح واحد كقيمة `Epoch` يونكس. `Epoch` هو عدد الملليثانية منذ 1 يناير 1970.\\n\\n      قيمة `2020` (ملليثانية) تُترجم إلى ثانيتين بعد 1 يناير 1970.\\n      \\n      ثم بما أن المنطقة الزمنية المحلية لدينا لديها إزاحة سالبة قدرها -7 ساعات، نحصل على `Wed Dec 31 1969 17:00:02 GMT-0700 (Mountain Standard Time)`.\\n  \\n      يمكنك تجاوز إزاحة المنطقة الزمنية المحلية باستخدام [`.getUTCFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getUTCFullYear).\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 997,
+    "outputTokens": 895,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 2258,
+    "providerCostUsd": 0.00066735,
+    "providerUpstreamCostUsd": 0.00066735,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000038883,
+    "outputUsd": 0.00016109999999999999,
+    "totalUsd": 0.00019998299999999999,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "index": 12,
+  "attempt": 1,
+  "originalTitle": "Date Setters Part 4",
+  "translatedTitle": "مُحدِّدات التاريخ الجزء الرابع",
+  "translation": {
+    "title": "مُحدِّدات التاريخ الجزء الرابع",
+    "group": "معالجة التواريخ",
+    "options": [
+      {
+        "text": "Jan 01 2020"
+      },
+      {
+        "text": "Feb 01 2020"
+      },
+      {
+        "text": "Jan 01 2021"
+      },
+      {
+        "text": "Feb 01 2021"
+      },
+      {
+        "text": "RangeError: Invalid argument."
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "ما الذي سيتضمنه الناتج؟"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "طريقة [`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) تُعيّن شهر كائن التاريخ المُعطى.\n\nالشهر يُعطى بصفر‑مؤشر، ويتراوح من 0 إلى 11 (في التقويم الغربي).\n\nهنا نرى أن الشهر والسنة تم تعديلهما إلى فبراير 2021، لأن `setMonth(13)` يساوي 2 أكثر من 11 (ديسمبر).\n\n<aside class=\"hint\">`setMonth` يحدد الشهر بحسب الفهرس، حيث تُرقَّم الشهور الـ12 من 0‑11.</aside>\n<aside class=\"hint\">\n  القيم خارج النطاق 0‑11 ستؤدي إلى تدفق السنة للأعلى أو للأسفل. على سبيل المثال، `setMonth(13)` سيُعدِّل السنة إلى 2021 (في فبراير لأن 13 هو 2 أكثر من 11).\n</aside>"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"مُحدِّدات التاريخ الجزء الرابع\",\n  \"group\": \"معالجة التواريخ\",\n  \"options\": [\n    {\n      \"text\": \"Jan 01 2020\"\n    },\n    {\n      \"text\": \"Feb 01 2020\"\n    },\n    {\n      \"text\": \"Jan 01 2021\"\n    },\n    {\n      \"text\": \"Feb 01 2021\"\n    },\n    {\n      \"text\": \"RangeError: Invalid argument.\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"ما الذي سيتضمنه الناتج؟\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"طريقة [`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) تُعيّن شهر كائن التاريخ المُعطى.\\n\\nالشهر يُعطى بصفر‑مؤشر، ويتراوح من 0 إلى 11 (في التقويم الغربي).\\n\\nهنا نرى أن الشهر والسنة تم تعديلهما إلى فبراير 2021، لأن `setMonth(13)` يساوي 2 أكثر من 11 (ديسمبر).\\n\\n<aside class=\\\"hint\\\">`setMonth` يحدد الشهر بحسب الفهرس، حيث تُرقَّم الشهور الـ12 من 0‑11.</aside>\\n<aside class=\\\"hint\\\">\\n  القيم خارج النطاق 0‑11 ستؤدي إلى تدفق السنة للأعلى أو للأسفل. على سبيل المثال، `setMonth(13)` سيُعدِّل السنة إلى 2021 (في فبراير لأن 13 هو 2 أكثر من 11).\\n</aside>\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1040,
+    "outputTokens": 478,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 1771,
+    "providerCostUsd": 0.0004044,
+    "providerUpstreamCostUsd": 0.0004044,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000040560000000000005,
+    "outputUsd": 0.00008604,
+    "totalUsd": 0.0001266,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
