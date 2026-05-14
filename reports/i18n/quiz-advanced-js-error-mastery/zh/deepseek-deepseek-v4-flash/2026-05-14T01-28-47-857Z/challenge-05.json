@@ -1,0 +1,51 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "String Throws",
+  "translatedTitle": "字符串抛出",
+  "translation": {
+    "title": "字符串抛出",
+    "group": "抛出非错误对象",
+    "options": [
+      {
+        "text": "TypeError: 字符串不是错误对象"
+      },
+      {
+        "text": "false, \"string\""
+      },
+      {
+        "text": "自动创建一个 Error 对象"
+      },
+      {
+        "text": "未定义行为"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "当你抛出一个字符串时会发生什么？"
+    ],
+    "hintsProse": [
+      "JavaScript 允许抛出任何值，而不仅仅是 Error 对象。"
+    ],
+    "explanationProse": [
+      "JavaScript 允许抛出任何值。这里，`e instanceof Error` 为 `false`，`typeof e` 为 `\"string\"`。这可能会破坏那些假设所有捕获的异常都是 Error 对象的错误处理代码。为了更好的调试，始终抛出 Error 实例。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"字符串抛出\",\n  \"group\": \"抛出非错误对象\",\n  \"options\": [\n    {\n      \"text\": \"TypeError: 字符串不是错误对象\"\n    },\n    {\n      \"text\": \"false, \\\"string\\\"\"\n    },\n    {\n      \"text\": \"自动创建一个 Error 对象\"\n    },\n    {\n      \"text\": \"未定义行为\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"当你抛出一个字符串时会发生什么？\"\n  ],\n  \"hintsProse\": [\n    \"JavaScript 允许抛出任何值，而不仅仅是 Error 对象。\"\n  ],\n  \"explanationProse\": [\n    \"JavaScript 允许抛出任何值。这里，`e instanceof Error` 为 `false`，`typeof e` 为 `\\\"string\\\"`。这可能会破坏那些假设所有捕获的异常都是 Error 对象的错误处理代码。为了更好的调试，始终抛出 Error 实例。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 790,
+    "outputTokens": 972,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 9515,
+    "providerCostUsd": 0.0005468,
+    "providerUpstreamCostUsd": 0.0005468,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00011060000000000002,
+    "outputUsd": 0.00027216,
+    "totalUsd": 0.00038276000000000006,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

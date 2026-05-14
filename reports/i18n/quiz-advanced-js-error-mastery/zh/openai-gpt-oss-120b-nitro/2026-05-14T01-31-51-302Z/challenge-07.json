@@ -1,0 +1,51 @@
+{
+  "index": 6,
+  "attempt": 1,
+  "originalTitle": "Constructor Name Gotcha",
+  "translatedTitle": "构造函数名称陷阱",
+  "translation": {
+    "title": "构造函数名称陷阱",
+    "group": "自定义错误",
+    "options": [
+      {
+        "text": "\"MyError\""
+      },
+      {
+        "text": "\"Error\""
+      },
+      {
+        "text": "undefined"
+      },
+      {
+        "text": "TypeError"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "如果不设置 `name`，输出是什么？"
+    ],
+    "hintsProse": [
+      "Error 的默认 name 属性包含什么？"
+    ],
+    "explanationProse": [
+      "如果不显式设置 `this.name`，错误会继承 `Error` 类的默认 `name` 属性，即 `\"Error\"`。这就是自定义错误类在构造函数中始终应设置 `this.name = this.constructor.name` 的原因。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"构造函数名称陷阱\",\n  \"group\": \"自定义错误\",\n  \"options\": [\n    {\n      \"text\": \"\\\"MyError\\\"\"\n    },\n    {\n      \"text\": \"\\\"Error\\\"\"\n    },\n    {\n      \"text\": \"undefined\"\n    },\n    {\n      \"text\": \"TypeError\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"如果不设置 `name`，输出是什么？\"\n  ],\n  \"hintsProse\": [\n    \"Error 的默认 name 属性包含什么？\"\n  ],\n  \"explanationProse\": [\n    \"如果不显式设置 `this.name`，错误会继承 `Error` 类的默认 `name` 属性，即 `\\\"Error\\\"`。这就是自定义错误类在构造函数中始终应设置 `this.name = this.constructor.name` 的原因。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 865,
+    "outputTokens": 536,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 1434,
+    "providerCostUsd": 0.00043215,
+    "providerUpstreamCostUsd": 0.00043215,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000033734999999999995,
+    "outputUsd": 0.00009648,
+    "totalUsd": 0.00013021499999999999,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

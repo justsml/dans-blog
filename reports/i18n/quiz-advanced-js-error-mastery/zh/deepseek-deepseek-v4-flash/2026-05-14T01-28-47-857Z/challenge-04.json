@@ -1,0 +1,51 @@
+{
+  "index": 3,
+  "attempt": 1,
+  "originalTitle": "Cross-Frame instanceof",
+  "translatedTitle": "跨框架的 instanceof",
+  "translation": {
+    "title": "跨框架的 instanceof",
+    "group": "类型检查技巧",
+    "options": [
+      {
+        "text": "始终为 true"
+      },
+      {
+        "text": "始终为 false"
+      },
+      {
+        "text": "跨框架时可能为 false"
+      },
+      {
+        "text": "抛出错误"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "跨 iframe 使用 `instanceof Error` 会发生什么？"
+    ],
+    "hintsProse": [
+      "不同的上下文有不同的 Error 构造函数。"
+    ],
+    "explanationProse": [
+      "`instanceof` 在不同执行上下文（iframe、worker）中可能返回 `false`，因为每个上下文都有自己的 `Error` 构造函数。使用 `Object.prototype.toString.call(obj) === '[object Error]'` 可以在跨上下文时可靠地检测错误。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"跨框架的 instanceof\",\n  \"group\": \"类型检查技巧\",\n  \"options\": [\n    {\n      \"text\": \"始终为 true\"\n    },\n    {\n      \"text\": \"始终为 false\"\n    },\n    {\n      \"text\": \"跨框架时可能为 false\"\n    },\n    {\n      \"text\": \"抛出错误\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"跨 iframe 使用 `instanceof Error` 会发生什么？\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"js\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [\n    \"不同的上下文有不同的 Error 构造函数。\"\n  ],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"`instanceof` 在不同执行上下文（iframe、worker）中可能返回 `false`，因为每个上下文都有自己的 `Error` 构造函数。使用 `Object.prototype.toString.call(obj) === '[object Error]'` 可以在跨上下文时可靠地检测错误。\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 783,
+    "outputTokens": 793,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 11273,
+    "providerCostUsd": 0.0004738,
+    "providerUpstreamCostUsd": 0.0004738,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00010962,
+    "outputUsd": 0.00022204,
+    "totalUsd": 0.00033166,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
