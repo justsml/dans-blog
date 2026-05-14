@@ -1,0 +1,106 @@
+---
+title: הגדרת חומת אש ל‑Docker
+subTitle: הגדרת חומת האש של מארח Docker
+draft: true
+date: '2015-06-06'
+modified: '2016-07-30'
+category: DevOps
+subCategory: docker
+tags:
+  - docker
+  - security
+  - devops
+cover: ../charles-deluvio-456501-unsplash.webp
+cover_mobile: ../w300_charles-deluvio-456501-unsplash.webp
+cover_icon: ../icon_charles-deluvio-456501-unsplash.webp
+---
+## הגדרת חומת האש של מארח Docker
+
+1. מניחים שרת Debian/Ubuntu
+1. מיועד לפעול על שרת מארח Docker
+
+### התקנת דרישות
+
+```sh
+# חומת אש אולטימטיבית נדרשת
+apt-get update && apt-get install -y ufw nmap curl
+```
+
+### קבלת כתובות ה‑IP הפנימיות והחיצוניות שלך
+
+```sh
+# קבל את כתובות ה‑IP שלך, פלט פשוט:
+hostname --all-ip-addresses
+
+# או השתמש בכלי ip, לדוגמה:
+ip addr
+```
+
+### הגדרת Firtewall (UFW) – פקודות לדוגמה
+
+```sh
+ufw logging on # on=low - medium עשוי להיות טוב יותר לאבחון
+ufw logging medium
+# ראשית, חסום את כל התעבורה
+ufw default deny incoming
+
+# נדרש: בחר *אחת* מהכללים הבאים לתעבורה יוצאת ברירת מחדל:
+ufw default deny outgoing
+ufw default allow outgoing
+```
+
+# אפשר והקלט את כל חיבורי SSH החדשים,
+ufw allow log proto tcp from any to any port 22
+## אפשר תעבורת HTTP (בלי רישום מפורש)
+ufw allow out on docker0 53/udp to 172.17.0.1/16
+ufw allow out on eth0 to any port 53
+ufw allow out on eth0 from 0.0.0.0/0 to any port 80 proto tcp
+ufw allow out on eth0 from 0.0.0.0/0 to any port 443 proto tcp
+
+# מפורט: ufw allow proto tcp from any to any port 80
+ufw allow 80/tcp
+ufw allow 443/tcp
+ufw allow log 22/tcp
+ufw limit ssh # הגבלה בסיסית של קצב – מקטין התקפות ברוט‑פורס על SSH
+
+# הגדר את כתובת ה‑IP החיצונית שלך
+export EXTERNAL_IP=123.123.123.123
+# עדכן את כתובת ה‑IP של Docker אם נדרש
+export DOCKER_IP=172.17.42.1
+# הפנה תעבורת tcp 8080 לאפליקציה שמופעלת ב‑Docker
+ufw allow proto tcp from $EXTERNAL_IP port 8080 to $DOCKER_IP port 3000
+~~~
+
+## הפעל / התחל חומת אש
+
+> זהירות, אל תנעול את פורט ה‑SSH שלך (sshd ברירת מחדל היא 22)
+
+~~~sh
+ufw --force enable
+
+ufw reset
+~~~
+
+-----------------
+
+### בדוק את חומת האש שלך
+
+> חשוב: השתמש בכתובת IP/מיקום מרוחק.
+
+~~~sh
+# Verify dependency
+apt-get update && apt-get install -y nmap
+
+# Set scan target
+export TARGET_HOST=123.123.123.123
+
+# Example Scan Commands:
+# Fast open port check
+nmap -p 1-10240,27017 -T5 $TARGET_HOST
+# Thorough scan
+nmap -p 1-10240,27017 --open -v -APN $TARGET_HOST
+# Svc Inspection
+nmap -p 1-10240,27017 -O --osscan-guess $TARGET_HOST
+~~~
+
+> הושלם! עכשיו אתה צריך לראות רק את הפורטים שהגדרת!
