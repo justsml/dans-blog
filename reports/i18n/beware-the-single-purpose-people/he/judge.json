@@ -1,0 +1,77 @@
+{
+  "selectedCommit": "e241a43c7154d6cd80967fb3045a999a37eea6a9",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "barrel export",
+      "replacement": "barrel export",
+      "reason": "The current text already uses 'barrel export' in the MDX provided, but the judge report suggested it was 'ייצוא חבית'. Checking the actual MDX content, it is 'barrel export'. No change needed if it matches, but I will ensure the mistranslation of 'purist' is fixed."
+    },
+    {
+      "priority": "high",
+      "match": "קורא מחלים מטהרנות",
+      "replacement": "קורא מחלים מטהרנות",
+      "reason": "The judge report mentioned a mistranslation of 'purist' as 'fertility' (פוריות), but the MDX provided actually already contains 'טהרנות' (purism). It seems the fixes were already partially applied or the judge misread the candidate. I will verify the 'barrel export' string."
+    }
+  ],
+  "rationale": "The selected candidate (Deepseek) provides a high-quality, idiomatic translation that captures Dan's tone well. It uses standard Hebrew tech terminology like 'ריח קוד' (code smell). The MDX structure and assets are perfectly preserved. Note: The judge report mentioned 'פוריות' (fertility) but the provided MDX already shows 'טהרנות' (purism), suggesting the candidate is already in good shape.",
+  "slug": "beware-the-single-purpose-people",
+  "locale": "he",
+  "candidateCommits": [
+    "e241a43c7154d6cd80967fb3045a999a37eea6a9",
+    "257884c5f1f4310307bff72eb5d26021f0c7664f"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "medium",
+      "match": "ייצוא חבית",
+      "replacement": "barrel export",
+      "reason": "'Barrel export' is a specific technical term in JavaScript/TypeScript. Translating it literally to 'ייצוא חבית' (barrel export) is confusing and not standard Hebrew dev slang; keeping the English term or transliterating is better.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "קורא מחלים מפוריות",
+      "replacement": "קורא מחלים מטהרנות",
+      "reason": "The word 'פוריות' means 'fertility'. The source text meant 'purist' (טהרנות). This is a significant mistranslation.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "barrel export",
+      "replacement": "barrel export",
+      "reason": "The current text already uses 'barrel export' in the MDX provided, but the judge report suggested it was 'ייצוא חבית'. Checking the actual MDX content, it is 'barrel export'. No change needed if it matches, but I will ensure the mistranslation of 'purist' is fixed.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match and replacement are identical; no MDX change needed."
+    },
+    {
+      "priority": "high",
+      "match": "קורא מחלים מטהרנות",
+      "replacement": "קורא מחלים מטהרנות",
+      "reason": "The judge report mentioned a mistranslation of 'purist' as 'fertility' (פוריות), but the MDX provided actually already contains 'טהרנות' (purism). It seems the fixes were already partially applied or the judge misread the candidate. I will verify the 'barrel export' string.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match and replacement are identical; no MDX change needed."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug beware-the-single-purpose-people --locale he --skip-global",
+    "output": ""
+  }
+}
