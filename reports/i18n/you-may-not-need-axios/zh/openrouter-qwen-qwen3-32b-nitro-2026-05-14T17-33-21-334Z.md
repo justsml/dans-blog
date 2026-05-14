@@ -1,0 +1,221 @@
+# Translation Candidate
+- Slug: you-may-not-need-axios
+- Locale: zh
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2018-11-15--you-may-not-need-axios/zh/index.mdx
+- Validation: deferred
+- Runtime seconds: 14.43
+- Input tokens: 7017
+- Output tokens: 5465
+- Thinking tokens: unknown
+- Cached input tokens: 1536
+- Cache write tokens: 0
+- Estimated cost: $0.001873
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: 你可能不需要Axios
+subTitle: Fetch API救场！
+date: '2018-11-14'
+modified: '2024-08-21'
+tags:
+  - programming
+  - patterns
+  - examples
+  - nodejs
+  - javascript
+  - promises
+  - axios
+  - fetch
+category: Guides
+subCategory: fetch
+cover: ../brock-dupont-575648-unsplash.webp
+cover_mobile: ../w300_brock-dupont-575648-unsplash.webp
+cover_icon: ../icon_brock-dupont-575648-unsplash.webp
+---
+import Gist from '../../../../components/Gist/index.astro'
+
+## 你可能不需要 Axios
+
+<p class="breakout call-to-action">这**并不是对**[Axios](https://www.npmjs.com/package/axios) 的攻击。<br />
+
+而是**倡导功能日益强大的原生 `fetch` API**。🦄</p>
+
+### 概述
+
+本文收集了我希望更容易找到的 `fetch` 缺失代码片段和常见使用场景。
+
+- [概述](#overview)
+- [功能对比](#feature-comparison)
+- [Fetch 实用示例](#fetch-recipes)
+  - [从 URL 获取 JSON](#get-json-from-a-url)
+  - [自定义请求头](#custom-headers)
+  - [HTTP 错误处理](#http-error-handling)
+  - [CORS 示例](#cors-example)
+  - [发送 JSON](#posting-json)
+  - [发送 HTML `<form>`](#posting-an-html-form)
+  - [表单编码数据](#form-encoded-data)
+  - [上传文件](#uploading-a-file)
+  - [上传多个文件](#uploading-multiple-files)
+  - [超时控制](#timeouts)
+  - [下载进度辅助函数](#download-progress-helper)
+  - [递归重试辅助函数](#recursive-retry-helper)
+  - [处理 HTTP 重定向](#handling-http-redirects)
+  - [取消 fetch 请求](#canceling-a-fetch-request) ✨新功能✨
+- [兼容性](#compatibility)
+
+> 你的使用场景未在列表中？[告诉我 ✉️](/contact/)
+
+<br />
+
+### 功能对比
+
+|                                                 | fetch    | axios    | request |
+|-------------------------------------------------|:--------:|:--------:|:-------:|
+| 拦截请求和响应                                  |✅        |✅         |✅       |
+| 转换请求和响应数据                               |✅        |✅         |✅       |
+| 取消请求                                        |✅        |✅         |❌       |
+| JSON 数据的自动转换                             |需要手动辅助函数 |✅         |✅       |
+| 客户端保护机制防止 XSRF 攻击                    |✅        |✅         |✅       |
+| 进度监控                                        |✅        |✅         |✅       |
+| 流式处理                                        |✅        |✅         |✅       |
+| 重定向处理                                      |✅        |✅         |✅       |
+
+<br /><br />
+
+在撰写本文时（2018 年末，2024 年更新），我原本以为最终会得到一个混合勾选的表格。毕竟肯定存在某些特殊_使用场景_，这些场景可以证明 [`axios`](https://www.npmjs.com/package/axios)、[`request`](https://www.npmjs.com/package/request)、[`r2`](https://www.npmjs.com/package/r2)、[`superagent`](https://www.npmjs.com/package/superagent)、[`got`](https://www.npmjs.com/package/got) 等库的合理性。
+
+事实证明，**我对第三方 HTTP 库的需求估计过高了**。
+
+尽管我已使用 `fetch` 多年（包括执行非平凡任务：文件上传和错误/重试支持），但我仍然对 `fetch` 的能力与限制存在误解。
+
+原生 `fetch` 不会自动解析 JSON 响应或序列化 JSON 请求体。你需要在返回时调用 `response.json()`，在发送时调用 `JSON.stringify()`。Axios 在这一点上仍具有更符合人体工程学的优势；`fetch` 的优势在于一个微型辅助函数通常就能弥补这一差距。
+
+那么，让我们看看 `fetch` 能做些什么... 
+
+## Fetch 实用示例
+
+### 从 URL 获取 JSON
+
+<Gist path='justsml/de941bd61cc86e30beedbb8a3a646f81'></Gist>
+
+### 自定义请求头
+
+<Gist path='justsml/fca7cd72ec1ebc07d994eac13a665ddf' />
+
+### HTTP 错误处理
+
+<Gist path='justsml/81919a72897ebc503c6b34a556a9bde2' />
+
+### CORS 示例
+
+CORS 的验证主要由服务器端完成 - 因此请确保服务器端的配置正确。
+
+`credentials` 选项控制是否自动包含你的 Cookie。
+
+<Gist path='justsml/3ddd9ed8705f48cdf45d313d1e57aa2a' />
+
+### 提交 JSON 数据
+
+<Gist path='justsml/13915347d6c8413c73f4bd7240c68e51' />
+
+### 提交 HTML `<form>`
+
+<Gist path='justsml/ef2e356bec0ef7c6e528d84a5f75ba7e' />
+
+### 表单编码数据
+
+要提交 `application/x-www-form-urlencoded` 类型的数据，我们将使用 `URLSearchParams` 将数据编码为查询字符串格式。
+
+例如，`new URLSearchParams({a: 1, b: 2})` 会生成 `a=1&b=2`。
+
+<Gist path='justsml/716c4534ef4afb22f65d4fc4367c7136' />
+
+### 上传文件
+
+<Gist path='justsml/301f22aa37df565ba3051bd5f95b4df1' />
+
+### 上传多个文件
+
+使用带有 `multiple` 属性的文件上传元素：
+
+<Gist path='justsml/37836357041d8ca4d1b32e12638cb0ba' />
+
+然后配合使用如下代码：
+
+<Gist path='justsml/d17f50c36a5ddb70f584c0aa6de94237' />
+
+### 超时处理
+
+这是一个通用的 Promise 超时实现，使用了"部分应用"模式。它适用于任何 Promise 接口。不要在提供的 promise 链中执行过多工作，它会继续运行 - 任何失败都可能造成长期内存泄漏。
+
+<Gist path='justsml/f93b2ef6457b3e52eb995831b67cab85' />
+
+更复杂的示例，包含一个跟踪标志 `__timeout`，以便**拦截任何耗时操作**。
+
+<Gist path='justsml/5e492db8997a4f7e22e61b7486cbf273' />
+
+### 下载进度辅助工具
+
+上传进度在 Chrome 以外的浏览器中目前存在一些bug。
+
+[下方展示的进度处理技术](#source-progress-helper)避免了将 `fetch` 调用包裹在闭包中。👍
+
+`progressHelper` 具有以下接口（源码见下方）
+
+<Gist path='justsml/db5ccc55ffb93c75e04e014d1f553cfb' />
+
+我们来看一个使用示例：
+
+一个可复用的图像下载器可能看起来像 `getBlob()`：
+
+<Gist path='justsml/bef2dd7e630eb7642beb3e2be29489b2' />
+
+顺便说一句，`Blob` 是二进制大对象（Binary Large Object）。
+
+选择以下两种用法模式中的一种非常重要（它们在功能上是等效的）：
+
+<Gist path='justsml/6ad9e37a96ad1f3a75ca509038510a5b' />
+
+我倾向于使用 `选项 #1`。不过，你的作用域设计可能会迫使你使用 `选项 #2`。
+
+最后，这是这个配方的最后一部分，我们的 `progressHelper`：
+
+##### 源码：进度辅助工具
+
+<Gist path='justsml/a8ffd810fc7e5a5295dfc898302ddbfc' />
+
+_致谢：_ 特别感谢 Anthum Chris 及其 [此处展示的出色 Progress+Fetch 概念验证](https://github.com/AnthumChris/fetch-progress-indicators)
+
+### 递归重试辅助工具
+
+<Gist path='justsml/7e52521a0af50fa590be57d5b4593120' />
+
+### 处理 HTTP 重定向
+
+<Gist path='justsml/3dd0a799ada8da7cd15943ff254266de' />
+
+### 取消 fetch 请求
+
+<Gist path='justsml/7f257ac3de3c7792db848558c54e938' />
+
+### 兼容性
+
+截至2022年，`fetch` API 已在所有现代浏览器中得到[广泛支持](https://caniuse.com/#feat=fetch)，并且在 NodeJS v18+ 的较新版本中也得到支持。
+
+如果必须支持 IE，可以使用 `github/fetch` 包[填充 fetch](https://github.com/github/fetch#browser-support)（由 GitHub 的优秀团队维护）。理论上可以回溯到 [IE8](https://github.com/camsong/fetch-ie8) - _效果可能因情况而异_。
+
+较早版本的 NodeJS 可以通过 [`node-fetch`](https://www.npmjs.com/package/node-fetch) 包使用 `fetch` API：
+
+```sh
+npm install node-fetch
+```
+
+_使用填充+node-fetch后：99.99% 兼容_ ✅
+
+> 如果有其他想看到的_使用场景_，请[推特联系我](https://x.com/justsml)。❤️
+````
