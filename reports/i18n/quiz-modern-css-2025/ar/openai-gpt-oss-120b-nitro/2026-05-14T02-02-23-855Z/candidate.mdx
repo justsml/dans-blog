@@ -1,0 +1,419 @@
+---
+unlisted: false
+title: 'اختبار: هل تعرف CSS الحديث؟ (لـ 2025)'
+subTitle: هل أنت كافٍ في الواجهة الأمامية؟
+label: Advanced CSS
+social_image: ../desktop-social.webp
+category: Quiz
+subCategory: CSS
+minReleaseDate: '2024-10-31'
+date: '2024-10-31'
+modified: '2024-11-09'
+tags:
+  - quiz
+  - css
+  - advanced
+  - intermediate
+cover_full_width: ../dan-levy-downtown-denver-at-night-wide.webp
+cover_mobile: ../dan-levy-downtown-denver-at-night-square-200.webp
+cover_icon: ../dan-levy-downtown-denver-at-night-square-200.webp
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+
+## اختبار: هل تعرف CSS؟
+
+* CSS حديث؟ 🤔
+* **هل يجب أن يكون CSS في _سيرتك الذاتية_???** 🚀
+* اختيار متعدد. 🤖 ... _كم يمكن أن يكون صعبًا، أليس كذلك؟_
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="تمهيد"
+  title="استخدام متغيّرات CSS"
+  options={[
+    {text: 'background-color: blue;'},
+    {text: 'background-color: --main-color;'},
+    {text: 'background-color: var(--main-color);', isAnswer: true},
+    {text: 'background-color: $main-color;'},
+    {text: 'background-color: @main-color;'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما هي الطريقة الصحيحة لاستخدام متغيّر CSS اسمه `--main-color` لتعيين لون خلفية العنصر؟
+    ```css
+        :root {
+          --main-color: blue;
+        }
+        div {
+          /* How do we use --main-color here? */
+        }
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    تُستخدم متغيّرات CSS مع الدالة `var`، لذا الإجابة الصحيحة هي `background-color: var(--main-color);`. هذه الصياغة تسترجع قيمة `--main-color` وتطبّقها.
+
+    الخيارات الأخرى قد تبدو مألوفة من لغات أو صيغ ما قبل المعالجة مثل Sass أو Less.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="دوال CSS"
+  title="دالة CSS min()"
+  options={[
+    {text: 'width: 50%;'},
+    {text: 'width: 200px;', isAnswer: true},
+    {text: 'width: 250px;'},
+    {text: 'width: 500px;'},
+    {text: 'width: max(50%, 200px);'},
+    {text: 'Invalid syntax'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    إذا كان عرض العنصر الأب/الحاوية 400px، ما هو العرض المحسوب للعنصر التالي؟
+    ```css
+        div {
+          width: min(250px, 50%);
+        }
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    ستختار الدالة `min()` أصغر قيمة بين 250px و 50% من عرض العنصر الأب.
+
+    لفهم القيمة المحسوبة، نحتاج إلى تحويل الوحدات النسبية إلى بكسل:
+
+    - `50%` من `400px` يساوي `200px`
+    - `250px` هي بالفعل بكسل
+    ```css
+        /* This gets computed to */
+        width: min(250px, 200px);
+        /* -> 200px wins */
+    ```
+    تُعدّ الدالة `min()` مفيدة بشكل خاص في التصميم المتجاوب، حيث يمكنك التأكد من أن المكوّن (أو حجم الخط) لا يتجاوز حدًا معينًا.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="دوال CSS"
+  title="دالة max() في CSS"
+  options={[
+    {text: 'width: 6em;'},
+    {text: 'width: 10%;'},
+    {text: 'width: 10px;'},
+    {text: 'width: 50px;'},
+    {text: 'width: 96px;', isAnswer: true},
+    {text: 'Invalid syntax'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    مع وجود حاوية بعرض 200px، ما هو العرض المحسوب للعنصر `<div>`؟
+    ```css
+        div {
+          width: max(50px, 10%, 6rem);
+        }
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    دالة `max()` تقبل مدخلين أو أكثر، وستستخدم أكبر قيمة تلقائيًا. بافتراض أن حجم الخط الجذري هو القيمة الافتراضية للمتصفح `16px`، فإن العرض يصبح `96px`.
+
+    لفهم القيمة المحسوبة، نحتاج إلى تحويل الوحدات النسبية إلى بكسل:
+
+    - `50px` هي بالفعل بكسل
+    - `10%` من `200px` يساوي `20px`
+    - `6rem` هو `6 * 16px` (حجم الخط الافتراضي) وهو `96px`
+    ```css
+        /* This gets computed to */
+        width: max(50px, 20px, 96px);
+        /* -> 96px wins */
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="دوال شبكة CSS"
+  title="دالة CSS minmax()"
+  options={[
+    {text: 'جميع عرض الأعمدة بين 100px و 200px'},
+    {text: 'تعيين الأعمدة إلى 100px والصفوف إلى 200px'},
+    {text: 'العمود الأول سيكون بين 100px و 200px', isAnswer: true},
+    {text: 'تطبيق النطاق بشكل متكرر، بما في ذلك الشبكات الفرعية'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما هو تأثير استخدام `minmax(100px, 200px)` لمسار شبكة CSS؟
+    ```css
+        grid-template-columns: minmax(100px, 200px);
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    استخدام `minmax(100px, 200px)` يسمح لمسار الشبكة بأن يتغير حجمه بين `100px` و `200px`، متكيفًا مع المساحة المتاحة لكنه لا ينخفض أبداً تحت `100px` أو يرتفع فوق `200px`.
+
+    يمكنك إنشاء تخطيطات تتكيف تلقائيًا حيث يلعب الحاوية والأطفال دورًا في حساب التخطيطات. هذا قوي عندما يُدمج مع `repeat()` و `auto-fill` أو `auto-fit`، التي ستنشئ أكبر عدد ممكن من المسارات ضمن القيود.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="متغيّرات CSS"
+  title="البدائل للمتغيّرات في CSS"
+  options={[
+    {text: 'أزرق'},
+    {text: 'أحمر'},
+    {text: 'الوضع الافتراضي للنظام'},
+    {text: '#6b8e23', isAnswer: true},
+    {text: 'var(--secondary-color)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما اللون الذي سيكون خلفية العنصر وفقًا للـ CSS التالي؟
+    ```css
+        div {
+          background: var(--primary, olivedrab);
+        }
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    تسمح لك الدالة `var()` بتحديد قيمة احتياطية إذا لم يتم تعريف المتغيّر. في هذه الحالة، ستكون الخلفية `olivedrab` (`#6b8e23`) لأن المتغيّر `--primary` غير معرف.
+
+    هذه طريقة رائعة لضمان عدم انكسار الأنماط إذا كان المتغيّر مفقودًا أو غير مدعوم.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="دوال CSS"
+  title="استخدام clamp() للتصميم المتجاوب"
+  options={[
+    {text: 'بديل للوحدات التي قد لا تكون مدعومة'},
+    {text: 'تأكد من أن وحدات `vw` بين 20px و 50px'},
+    {text: 'مقياس خطي بين 200px و 500px', isAnswer: true},
+    {text: 'مقياس Log₂ بين 200px و 500px'},
+    {text: 'فشل! لا يدعم IE 11'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ماذا يفعل `clamp()`؟
+    ```css
+        .card {
+          width: clamp(200px, 50vw, 500px);
+        }
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    تسمح دالة `clamp()` للعرض أن يتغير بناءً على `50vw`، لكنها تحافظ عليه ضمن نطاق من 200px إلى 500px.
+
+    هذا يعني أن العرض سيكون 200px عندما تكون `50vw` أقل من 200px، و500px عندما تكون `50vw` أكبر من 500px، ويتغير خطيًا بين هذين الحدين.
+
+    إنه يجعلك تستجيب تلقائيًا بطريقة سحرية! ما يجب معرفته عن `clamp` هو أنه يجمع **الوحدات الثابتة** مع **الوحدات المتجاوبة أو المحسوبة**.
+
+    عادةً لا ترغب في استخدام وحدات العرض للخطوط، لكن مع `clamp()` يمكننا التأكد من أن حجم الخط لا يصبح صغيرًا جدًا ولا كبيرًا جدًا.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="تعشيق CSS"
+  title="التعشيق الأصلي في CSS"
+  options={[
+    {text: 'فقط مع SCSS'},
+    {text: 'تقنياً مع PostCSS'},
+    {text: 'نعم', isAnswer: true},
+    {text: 'لا'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    هل يدعم CSS التعشيق أصلاً؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    نعم! لدينا أخيراً تعشيق أصلي في CSS! قدم CSS بنية التعشيق الأصلية في السنوات الأخيرة (2023)، مما يسمح بالتنسيق الهرمي مباشرةً في CSS.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="تداخل CSS"
+  title="تداخل CSS"
+  options={[
+    {text: 'يجب أن ينتهي اسم الملف بـ .scss'},
+    {text: '`.title` يجب أن يسبق خصائص مثل `color`'},
+    {text: 'فقط مع PostCSS'},
+    {text: 'مثالي. لا ملاحظات.', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    هل هذا استخدام صحيح لتداخل CSS الأصلي؟
+    ```css
+        .container {
+          color: black;
+          .title {
+            color: white;
+            background: black;
+          }
+        }
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    الفئة `.title` متداخلة داخل الفئة `.container`، والخصائص تُطبق كما هو متوقع.
+
+    هذه طريقة رائعة للحفاظ على الأنماط المرتبطة معًا وتجنب المحددات الطويلة.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="تداخل CSS"
+  title="محدد الطفل المباشر مع التداخل"
+  options={[
+    {text: 'background-color: red'},
+    {text: 'background-color: white', isAnswer: true},
+    {text: 'background-color: blue'},
+    {text: 'Invalid syntax'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما لون الخلفية الذي سيُطبق على عناصر `div` المباشرة داخل `.container`؟
+    ```css
+        .container {
+          background-color: red;
+          > div {
+            background-color: white;
+          }
+          background-color: blue !important;
+        }
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    المحدد `>` في القاعدة المتداخلة يطبق `background-color: white` فقط على عناصر `div` المباشرة داخل `.container`.
+
+    القاعدة الأخيرة، `background-color: blue !important;`، هي مجرد تشتيت بسيط. إنها **خارج القاعدة المتداخلة** وسيتم تطبيقها على جميع عناصر `.container`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="متغيّرات CSS"
+  title="تغيير متغيّر CSS في وقت التشغيل"
+  options={[
+    {text: 'متغيّرات CSS غير قابلة للتغيير'},
+    {text: 'باستخدام JavaScript', isAnswer: true},
+    {text: 'فقط باستخدام SCSS'},
+    {text: 'فقط باستخدام الأنماط المضمنة'},
+    {text: 'باستخدام الوحدات المتجاوبة'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    كيف يمكنك تغيير قيمة متغيّر CSS أثناء التشغيل؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    يمكن تعيين متغيّرات CSS باستخدام الفئات و JavaScript. يمكن حتى تعريفها 'بعد' استخدامها تقنياً.
+    ```js
+        document.documentElement.style.setProperty('--main-color', 'blue');
+    ```
+    سيغيّر هذا قيمة `--main-color` إلى `blue` لكامل المستند.
+
+    متغيّرات CSS قابلة للتغيير، ويمكن تعديلها أثناء التشغيل باستخدام JavaScript.
+
+    يمكن أيضاً تغييرها بإضافة أو إزالة الفئات، وهو نمط شائع للتصميم المتغيّر.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="متغيّرات CSS"
+  title="استخدام calc() مع متغيّرات CSS"
+  options={[
+    {text: 'العرض: 50px'},
+    {text: 'العرض: 100px'},
+    {text: 'العرض: 110px', isAnswer: true},
+    {text: 'العرض: 120px'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما هو العرض المحسوب للعنصر؟
+    ```css
+        :root {
+          --base-width: 100px;
+        }
+        div {
+          width: calc(var(--base-width) + 10px);
+        }
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    دالة `calc()` تجمع قيمة `--base-width` (100px) مع 10px إضافية، مما ينتج عرضًا قدره 110px.
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
