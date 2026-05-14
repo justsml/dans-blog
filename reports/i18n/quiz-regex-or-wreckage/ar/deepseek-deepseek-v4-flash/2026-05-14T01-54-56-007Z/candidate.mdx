@@ -1,0 +1,623 @@
+---
+unlisted: false
+title: 'اختبار: إتقان التعبيرات النمطية'
+subTitle: هل تستطيع ترويض بعض التعبيرات النمطية الجامحة؟
+label: RegEx
+social_image: ../desktop-social.webp
+category: Quiz
+subCategory: RegEx
+date: '2024-11-15'
+modified: '2024-11-16'
+tags:
+  - quiz
+  - regex
+  - javascript
+  - intermediate
+  - patterns
+cover_full_width: ../dan-lounsbury-uHZ2-nzYuIs-unsplash-wide.webp
+cover_mobile: ../dan-lounsbury-uHZ2-nzYuIs-unsplash-square-200.webp
+cover_icon: ../dan-lounsbury-uHZ2-nzYuIs-unsplash-square-200.webp
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+<p class="inset">هل أنت مستعد لمصارعة بعض التعبيرات النمطية؟ 🤼‍♂️</p>
+
+اختبر معرفتك بالتعبيرات النمطية من خلال أسئلة تغطي الأنماط الأساسية، والمحددات الكمية، والمجموعات، وتأكيدات النظرة الخادعة. من مطابقة السلاسل البسيطة إلى التحقق من الأنماط المعقدة - هل يمكنك تحديد التعبير النمطي الصحيح؟
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="إحماء"
+  title="المطابقة الحساسة لحالة الأحرف"
+  options={[
+    {text: '["Cat"]'},
+    {text: '["cat", "CAT", "Cat"]'},
+    {text: '["cat"]', isAnswer: true},
+    {text: '[]'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما الذي يطابق؟
+    ```js
+        'cat CAT Cat'.match(/cat/g)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    يستخدم هذا النمط `g`، ولكن ليس `i`:
+    - `g` يجد جميع المطابقات
+    - بدون `i`، تكون المطابقة حساسة لحالة الأحرف
+
+    بدون العلم `i`، يطابق فقط "cat" بالأحرف الصغيرة.
+
+    هذا مفيد بشكل خاص عند التعامل مع إدخال المستخدم أو HTML حيث قد تختلف حالة الأحرف.
+
+    [تعلم المزيد عن RegExp flags](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#advanced_searching_with_flags)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="إحماء"
+  title="مطابقة الأحرف البسيطة"
+  options={[
+    {text: '["cat", "hat"]', isAnswer: true},
+    {text: '["cat", "hat", "what"]'},
+    {text: '["cat"]'},
+    {text: '[]'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ماذا سيعيد هذا الكود؟
+    ```js
+        const words = ['cat', 'hat', 'what', 'bat'];
+        words.filter(word => word.match(/^[ch]at/))
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    النمط `/^[ch]at/` يطابق السلاسل التي:
+    - تبدأ (`^`) إما بـ 'c' أو 'h' (هذا ما يعنيه `[ch]` - فئة أحرف تطابق حرفًا واحدًا)
+    - متبوعة حرفيًا بـ 'at'
+
+    لذلك، فقط "cat" و "hat" يطابقان هذا النمط. طريقة `filter()` تحتفظ فقط بالعناصر المطابقة.
+
+    [تعلم المزيد عن فئات الأحرف على MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Character_Classes)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="المطابقة الأساسية"
+  title="الجشع مقابل غير الجشع"
+  options={[
+    {text: '["<div>Hello</div>"]'},
+    {text: '["<div>", "</div>"]'},
+    {text: '["<div>Hello</div><div>World</div>"]'},
+    {text: '["<div>Hello</div>", "<div>World</div>"]', isAnswer: true},
+    {text: '["Hello", "World"]'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ماذا ستطابق هذه العبارة؟
+    ```js
+        '<div>Hello</div><div>World</div>'.match(/<div>.*?<\/div>/g)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    النمط `/<div>.*?<\/div>/g` يستخدم المطابقة غير الجشعة مع `*?` مما يعني:
+    - طابق `<div>`
+    - طابق أي حرف (`.*`) ولكن بأقل عدد ممكن (`?`)
+    - حتى تجد `</div>`
+    - العلامة `g` تجعله يطابق جميع التكرارات
+
+    بدون `?`، المطابقة الجشعة `.*` ستطابق كل شيء من أول `<div>` إلى آخر `</div>`، مما يعطي تطابقًا واحدًا كبيرًا. مع `?`، يطابق كل زوج على حدة.
+
+    [تعلم المزيد عن المطابقة الجشعة مقابل الكسولة](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="المزالق الشائعة"
+  title="الرمز الفوقي النقطة"
+  options={[
+    {text: '["hello\nworld"]'},
+    {text: '["hello", "world"]', isAnswer: true},
+    {text: '["hello\n", "world"]'},
+    {text: 'null'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ماذا سيعيد هذا؟
+    ```js
+        'hello\nworld'.match(/\w+/g)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    النمط `\w+` يطابق حرفًا أو أكثر من حروف الكلمات. على الرغم من وجود سطر جديد في النص، فإن `\w` يطابق:
+    - الحروف (a-z, A-Z)
+    - الأرقام (0-9)
+    - الشرطة السفلية (_)
+
+    لذا، يعمل السطر الجديد كحدود للكلمة، ونحصل على تطابقين. لو استخدمنا `.*`، لما كان سيطابق السطر الجديد افتراضيًا (ستحتاج إلى العلم `s` لذلك).
+
+    [تعلم المزيد عن الرموز الفوقية](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Character_Classes#types)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="التطلع إلى الأمام"
+  title="التطلع الإيجابي"
+  options={[
+    {text: '["$100", "€50"]'},
+    {text: '["100", "50"]'},
+    {text: '["$", "€"]'},
+    {text: '[]'},
+    {text: 'null', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ماذا سيطابق هذا؟
+    ```js
+        '$100 and €50'.match(/\d+(?=[\$€])/g)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    هذا النمط لن يطابق أي شيء لأن التطلع إلى الأمام معكوس! إذا كنت تريد أرقامًا مسبوقة بـ `$` أو `€`، استخدم التطلع إلى الخلف: `/(?<=[\$€])\d+/g`.
+
+    تتحقق التطلعات إلى الأمام مما يأتي *بعد* الموضع الحالي. النمط كما هو مكتوب يبحث عن:
+    - رقم واحد أو أكثر (`\d+`)
+    - متبوعًا بـ (`(?=...)`) إما $ أو € (`[\$€]`)
+
+    نظرًا لعدم وجود أرقام متبوعة برموز العملات (بل هي مسبوقة بها)، لا نحصل على أي تطابقات.
+
+    [تعرف أكثر على تأكيدات التطلع إلى الأمام](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="المطابقة الأساسية"
+  title="حدود الكلمات"
+  options={[
+    {text: '["cat", "cats"]'},
+    {text: '["cat"]', isAnswer: true},
+    {text: '["cats"]'},
+    {text: '[]'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما الذي سيتطابق؟
+    ```js
+        'cat cats category'.match(/\bcat\b/g)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    يمثل `\b` حدًا للكلمة، والذي يتطابق مع:
+    - بين حرف كلمة وحرف غير كلمة
+    - في بداية/نهاية السلسلة إذا كان هناك حرف كلمة
+
+    لذلك `/\bcat\b/` يتطابق مع "cat" فقط عندما تكون كلمة كاملة، وليس جزءًا من كلمة أخرى.
+    - ✅ "cat" (محاطة بمسافات)
+    - ❌ "cats" (لا يوجد حد بعد "cat")
+    - ❌ "category" (لا يوجد حد بعد "cat")
+
+    [تعلم المزيد عن حدود الكلمات](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions#other_assertions)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="المزالق الشائعة"
+  title="العلامة العامة"
+  options={[
+    {text: 'null'},
+    {text: '["a"]'},
+    {text: '["a", "a", "a"]', isAnswer: true},
+    {text: '["b", "n", "n"]'},
+    {text: 'Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما هو المخرَج؟
+    ```js
+        'banana'.match(/a/g)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    يغير العلم `g` (العام) سلوك `match()`:
+    - بدون `g`: يُرجع أول تطابق مع مجموعات الالتقاط
+    - مع `g`: يُرجع مصفوفة من جميع السلاسل المطابقة
+
+    في هذه الحالة، يجد جميع تكرارات "a" في "banana".
+
+    ملاحظة: إذا كنت بحاجة إلى جميع التطابقات ومجموعات الالتقاط معًا، استخدم `matchAll()` أو طريقة `exec()` في حلقة.
+
+    [تعلم المزيد عن العلم العام](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/global)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="النظر الخلفي"
+  title="النظر الخلفي السلبي"
+  options={[
+    {text: '["123"]'},
+    {text: '["123", "456"]'},
+    {text: '["23", "456"]', isAnswer: true},
+    {text: '["456"]'},
+    {text: '[]'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما الذي يطابق هذا النمط؟
+    ```js
+        'abc123 def456'.match(/(?<!abc)\d+/g)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    النظر الخلفي السلبي `(?<!abc)` يضمن أن الأرقام لا يسبقها "abc":
+    - ❌ "123" (يسبقه "abc")
+    - ✅ "23" (يسبقه "abc1")
+    - ✅ "456" (يسبقه "def")
+
+    تدعم JavaScript تأكيدات النظر الخلفي في المحركات الحديثة. يستخدم هذا المثال نظرًا خلفيًا بطول ثابت: `abc` دائمًا ثلاثة أحرف. النظر الخلفي بطول متغير هو الحافة الأكثر تعقيدًا الخاصة بالمحرك.
+
+    ملاحظة: دعم النظر الخلفي حديث نسبيًا في JavaScript. تحقق من [توافق المتصفح](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#browser_compatibility) إذا كنت بحاجة لدعم المتصفحات القديمة.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="المطابقة الأساسية"
+  title="المجموعات الملتقطة"
+  options={[
+    {text: '["2029-12-31"]'},
+    {text: '["2029", "12", "31"]', isAnswer: true},
+    {text: '["20", "29", "12", "31"]'},
+    {text: 'null'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما الذي سيعيده هذا؟
+    ```js
+        '2029-12-31'.match(/(\d{4})-(\d{2})-(\d{2})/).slice(1)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    يستخدم النمط ثلاث مجموعات ملتقطة:
+    1. `(\d{4})` تلتقط السنة
+    2. `(\d{2})` تلتقط الشهر
+    3. `(\d{2})` تلتقط اليوم
+
+    `match()` بدون العلم `g` يعيد:
+    - الفهرس 0: المطابقة الكاملة
+    - الفهرس 1+: المجموعات الملتقطة
+
+    `slice(1)` هي حيلة شائعة للحصول على المجموعات الملتقطة فقط.
+
+    [تعلم المزيد عن المجموعات والالتقاط](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Groups_and_Backreferences)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="النظر إلى الأمام"
+  title="النظر إلى الأمام السلبي"
+  options={[
+    {text: '["password123"]'},
+    {text: '["abc123"]'},
+    {text: '["123aBc"]'},
+    {text: '["12"]', isAnswer: true},
+    {text: '["abc"]'},
+    {text: 'Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    أي من هذه سيكون الناتج؟
+    ```js
+        "123aBc".match(/^\d+(?![a-z])/ig)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    يضمن النظرة إلى الأمام السلبية `(?![a-z])` عدم وجود أحرف صغيرة بعد الأرقام. نظرًا لأن الجزء "3aBc" يحتوي على حرف صغير بعد الأرقام، فإن الجزء الخاص به لا يتطابق. لذلك فقط البداية "12" هي التي تتطابق.
+
+    [تعلم المزيد عن النظر إلى الأمام السلبي](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="النظرة الخلفية"
+  title="تقسيم باستخدام النظرة الخلفية"
+  options={[
+    {text: '["a,", "b,", "c"]', isAnswer: true},
+    {text: '["a,b,c"]'},
+    {text: '["a", ",", "b", ",", "c"]'},
+    {text: '["a,b,c", ""]'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما الذي يتم إرجاعه؟
+    ```js
+        'a,b,c'.split(/(?<=,)/)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    النمط `/(?<=,)/` هو نظرة خلفية تتطابق بعد الفاصلة:
+    - `a,` (بعد الفاصلة)
+    - `b,` (بعد الفاصلة)
+    - `c` (لا توجد فاصلة بعدها)
+
+    النظرة الخلفية لا تستهلك الفاصلة، لذا تبقى الفاصلة ملتصقة بالجزء السابق في نتيجة التقسيم.
+
+    هذا مفيد عندما تريد تقسيم سلسلة بناءً على ما يسبقها **دون فقدان الحرف (أو الأحرف) الفاصلة.**
+
+    [تعلم المزيد عن تأكيدات النظرة الخلفية](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="المزالق الشائعة"
+  title="إفلات الأحرف الخاصة"
+  options={[
+    {text: '["$100"]'},
+    {text: '["100"]'},
+    {text: '[]'},
+    {text: 'null', isAnswer: true},
+    {text: 'Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما الذي يطابق؟
+    ```js
+        '$100'.match(/$\d+/)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    الأحرف الخاصة تحتاج إلى إفلات باستخدام `\` لمطابقتها حرفيًا:
+    - `$` هو حرف خاص (نهاية السلسلة)
+    - لمطابقة علامة الدولار حرفيًا، قم بإفلاتها: `\$`
+
+    الأحرف الشائعة التي تحتاج إلى إفلات:
+    ```js
+        . * + ? ^ $ [ ] \ ( ) { } |
+    ```
+    بدون الإفلات، العديد من الأحرف الخاصة لها معاني في التعبيرات المنتظمة قد لا تكون ما تريده.
+
+    [تعلم المزيد عن إفلات الأحرف الخاصة](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#escaping)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="النظر إلى الخلف"
+  title="النظر إلى الخلف الإيجابي"
+  options={[
+    {text: '["$100"]'},
+    {text: '["100"]', isAnswer: true},
+    {text: '["$"]'},
+    {text: '[]'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما الذي تمت مطابقته؟
+    ```js
+        '$100'.match(/(?<=\$)\d+/)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    تأكيد النظر إلى الخلف الإيجابي `(?<=\$)` يضمن أن الأرقام مسبوقة بعلامة الدولار:
+    - `(?<=\$)`: النظر إلى الخلف لعلامة الدولار
+    - `\d+`: مطابقة رقم واحد أو أكثر
+
+    تأكيدات النظر إلى الخلف لا تستهلك الأحرف؛ فهي تتحقق فقط مما يأتي قبل.
+    هذا مفيد عندما تريد مطابقة شيء بناءً على ما يسبقه دون تضمين الجزء السابق.
+
+    [تعلم المزيد عن تأكيدات النظر إلى الخلف](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={13}
+  group="المطابقة الأساسية"
+  title="المُحدِّدات الكسولة مقابل الجشعة"
+  options={[
+    {text: '["<b>bold</b>"]'},
+    {text: '["bold"]', isAnswer: true},
+    {text: '["<b>", "</b>"]'},
+    {text: '[]'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما الذي تمت مطابقته؟
+    ```js
+        '<b>bold</b>'.match(/<b>(.*?)<\/b>/).slice(1)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    يستخدم النمط المطابقة الكسولة مع `*?`:
+    - `<b>`: مطابقة الوسم الافتتاحي
+    - `(.*?)`: التقاط أي أحرف (كسول)
+    - `</b>`: مطابقة الوسم الختامي
+
+    إن `?` بعد `*` يجعله كسولًا، حيث يطابق أقل عدد ممكن من الأحرف.
+    بدون `?`، سيكون جشعًا ويطابق أكبر عدد ممكن.
+
+    `slice(1)` يُرجع المجموعة الملتقطة فقط.
+
+    [تعلم المزيد عن المطابقة الجشعة مقابل الكسولة](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={14}
+  group="المطابقة الأساسية"
+  title="علامة يونيكود"
+  options={[
+    {text: '["🙂"]'},
+    {text: '["😀", "🙂"]', isAnswer: true},
+    {text: 'null'},
+    {text: 'Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما الذي يطابق؟
+    ```js
+        '😀 🙂'.match(/\p{Emoji}/gu)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    العلم `u` يمكّن:
+    - هروب خصائص يونيكود (`\p{...}`)
+    - التعامل الصحيح مع الأزواج البديلة
+
+    بدون `u`، قد لا تتطابق الرموز التعبيرية وغيرها من أحرف يونيكود بشكل صحيح.
+    النمط `\p{Emoji}` يطابق الأحرف التي تمتلك خاصية `Emoji` في يونيكود. في هذه السلسلة، يعني ذلك الرمزين التعبيريين.
+
+    ملاحظة: هروب خصائص يونيكود يتطلب العلم `u`.
+
+    [تعلم المزيد عن وضع يونيكود](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Unicode_Property_Escapes)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={15}
+  group="انظر إلى الجحيم"
+  title="التحقق من كلمة المرور"
+  options={[
+    {text: '"sassword123"'},
+    {text: '"Sass123!"', isAnswer: true},
+    {text: '"SASSWORD123"'},
+    {text: '"Sass word123"'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    اعتذار مقدمًا! 😈<br />
+    أي كلمة مرور تطابق هذا النمط؟
+    ```js
+        /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    لا تكتب شيئًا كهذا في الإنتاج! 😅
+
+    يستخدم هذا النمط عدة تطلعات إيجابية (positive look-aheads) لفرض:
+    - حرف كبير واحد على الأقل: `(?=.*[A-Z])`
+    - حرف صغير واحد على الأقل: `(?=.*[a-z])`
+    - رقم واحد على الأقل: `(?=.*\d)`
+    - رمز خاص واحد على الأقل: `(?=.*[!@#$%^&*])`
+    - طول أدنى 8: `.{8,}`
+
+    التطلعات (look-aheads) مثالية للتحقق من كلمة المرور لأنها تستطيع التحقق من معايير متعددة دون استهلاك الأحرف.
+
+    [تعلم المزيد عن أنماط التحقق من كلمة المرور](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+
+<h2>كيف كان أداؤك؟ 🧐</h2>
+
+التعبيرات المنتظمة قد تكون وحشًا يصعب ترويضه، لكنها قوية بشكل لا يُصدق بمجرد أن تتقنها (وجميع الصياغات الأحدث). استمر في الممارسة، وستصبح سيدًا في RegEx في وقت قصير! 🧙‍♂️
+
+<p class="inset">هل تبحث عن استراحة بعد كل هذا الـ RegEx؟<br />هاه، تذكر: استراحة *بعد* المهارات! <br /><br />اضغط على [صالة التحديات](/challenges/) لتحطيم المزيد من التحديات! 💪</p>

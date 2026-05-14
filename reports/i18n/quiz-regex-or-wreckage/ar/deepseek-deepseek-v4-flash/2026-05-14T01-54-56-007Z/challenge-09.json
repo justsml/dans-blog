@@ -1,0 +1,49 @@
+{
+  "index": 8,
+  "attempt": 1,
+  "originalTitle": "Capturing Groups",
+  "translatedTitle": "المجموعات الملتقطة",
+  "translation": {
+    "title": "المجموعات الملتقطة",
+    "group": "المطابقة الأساسية",
+    "options": [
+      {
+        "text": "[\"2029-12-31\"]"
+      },
+      {
+        "text": "[\"2029\", \"12\", \"31\"]"
+      },
+      {
+        "text": "[\"20\", \"29\", \"12\", \"31\"]"
+      },
+      {
+        "text": "null"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "ما الذي سيعيده هذا؟"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "يستخدم النمط ثلاث مجموعات ملتقطة:\n    1. `(\\d{4})` تلتقط السنة\n    2. `(\\d{2})` تلتقط الشهر\n    3. `(\\d{2})` تلتقط اليوم\n\n    `match()` بدون العلم `g` يعيد:\n    - الفهرس 0: المطابقة الكاملة\n    - الفهرس 1+: المجموعات الملتقطة\n\n    `slice(1)` هي حيلة شائعة للحصول على المجموعات الملتقطة فقط.\n\n    [تعلم المزيد عن المجموعات والالتقاط](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Groups_and_Backreferences)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"المجموعات الملتقطة\",\n  \"group\": \"المطابقة الأساسية\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"2029-12-31\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"2029\\\", \\\"12\\\", \\\"31\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"20\\\", \\\"29\\\", \\\"12\\\", \\\"31\\\"]\"\n    },\n    {\n      \"text\": \"null\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"ما الذي سيعيده هذا؟\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"يستخدم النمط ثلاث مجموعات ملتقطة:\\n    1. `(\\\\d{4})` تلتقط السنة\\n    2. `(\\\\d{2})` تلتقط الشهر\\n    3. `(\\\\d{2})` تلتقط اليوم\\n\\n    `match()` بدون العلم `g` يعيد:\\n    - الفهرس 0: المطابقة الكاملة\\n    - الفهرس 1+: المجموعات الملتقطة\\n\\n    `slice(1)` هي حيلة شائعة للحصول على المجموعات الملتقطة فقط.\\n\\n    [تعلم المزيد عن المجموعات والالتقاط](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Groups_and_Backreferences)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 888,
+    "outputTokens": 1676,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 10492,
+    "providerCostUsd": 0.000848,
+    "providerUpstreamCostUsd": 0.000848,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00012432,
+    "outputUsd": 0.00046928000000000003,
+    "totalUsd": 0.0005936,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

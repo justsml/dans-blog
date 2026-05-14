@@ -1,0 +1,52 @@
+{
+  "index": 7,
+  "attempt": 1,
+  "originalTitle": "Negative Look-behind",
+  "translatedTitle": "النظر الخلفي السلبي",
+  "translation": {
+    "title": "النظر الخلفي السلبي",
+    "group": "النظر الخلفي",
+    "options": [
+      {
+        "text": "[\"123\"]"
+      },
+      {
+        "text": "[\"123\", \"456\"]"
+      },
+      {
+        "text": "[\"23\", \"456\"]"
+      },
+      {
+        "text": "[\"456\"]"
+      },
+      {
+        "text": "[]"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "ما الذي يطابق هذا النمط؟"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "النظر الخلفي السلبي `(?<!abc)` يضمن أن الأرقام لا يسبقها \"abc\":\n    - ❌ \"123\" (يسبقه \"abc\")\n    - ✅ \"23\" (يسبقه \"abc1\")\n    - ✅ \"456\" (يسبقه \"def\")\n\n    تدعم JavaScript تأكيدات النظر الخلفي في المحركات الحديثة. يستخدم هذا المثال نظرًا خلفيًا بطول ثابت: `abc` دائمًا ثلاثة أحرف. النظر الخلفي بطول متغير هو الحافة الأكثر تعقيدًا الخاصة بالمحرك.\n\n    ملاحظة: دعم النظر الخلفي حديث نسبيًا في JavaScript. تحقق من [توافق المتصفح](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#browser_compatibility) إذا كنت بحاجة لدعم المتصفحات القديمة."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"النظر الخلفي السلبي\",\n  \"group\": \"النظر الخلفي\",\n  \"options\": [\n    {\"text\": \"[\\\"123\\\"]\"},\n    {\"text\": \"[\\\"123\\\", \\\"456\\\"]\"},\n    {\"text\": \"[\\\"23\\\", \\\"456\\\"]\"},\n    {\"text\": \"[\\\"456\\\"]\"},\n    {\"text\": \"[]\"}\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\"ما الذي يطابق هذا النمط؟\"],\n  \"hintsProse\": [],\n  \"explanationProse\": [\"النظر الخلفي السلبي `(?<!abc)` يضمن أن الأرقام لا يسبقها \\\"abc\\\":\\n    - ❌ \\\"123\\\" (يسبقه \\\"abc\\\")\\n    - ✅ \\\"23\\\" (يسبقه \\\"abc1\\\")\\n    - ✅ \\\"456\\\" (يسبقه \\\"def\\\")\\n\\n    تدعم JavaScript تأكيدات النظر الخلفي في المحركات الحديثة. يستخدم هذا المثال نظرًا خلفيًا بطول ثابت: `abc` دائمًا ثلاثة أحرف. النظر الخلفي بطول متغير هو الحافة الأكثر تعقيدًا الخاصة بالمحرك.\\n\\n    ملاحظة: دعم النظر الخلفي حديث نسبيًا في JavaScript. تحقق من [توافق المتصفح](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#browser_compatibility) إذا كنت بحاجة لدعم المتصفحات القديمة.\"]\n}",
+  "telemetry": {
+    "inputTokens": 916,
+    "outputTokens": 2123,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 12783,
+    "providerCostUsd": 0.0010324,
+    "providerUpstreamCostUsd": 0.0010324,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00012824,
+    "outputUsd": 0.00059444,
+    "totalUsd": 0.0007226800000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

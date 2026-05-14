@@ -1,0 +1,49 @@
+{
+  "index": 15,
+  "attempt": 1,
+  "originalTitle": "Password Validation",
+  "translatedTitle": "التحقق من كلمة المرور",
+  "translation": {
+    "title": "التحقق من كلمة المرور",
+    "group": "انظر إلى الجحيم",
+    "options": [
+      {
+        "text": "\"sassword123\""
+      },
+      {
+        "text": "\"Sass123!\""
+      },
+      {
+        "text": "\"SASSWORD123\""
+      },
+      {
+        "text": "\"Sass word123\""
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "اعتذار مقدمًا! 😈<br />\n    أي كلمة مرور تطابق هذا النمط؟"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "لا تكتب شيئًا كهذا في الإنتاج! 😅\n\n    يستخدم هذا النمط عدة تطلعات إيجابية (positive look-aheads) لفرض:\n    - حرف كبير واحد على الأقل: `(?=.*[A-Z])`\n    - حرف صغير واحد على الأقل: `(?=.*[a-z])`\n    - رقم واحد على الأقل: `(?=.*\\d)`\n    - رمز خاص واحد على الأقل: `(?=.*[!@#$%^&*])`\n    - طول أدنى 8: `.{8,}`\n\n    التطلعات (look-aheads) مثالية للتحقق من كلمة المرور لأنها تستطيع التحقق من معايير متعددة دون استهلاك الأحرف.\n\n    [تعلم المزيد عن أنماط التحقق من كلمة المرور](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"التحقق من كلمة المرور\",\n  \"group\": \"انظر إلى الجحيم\",\n  \"options\": [\n    {\n      \"text\": \"\\\"sassword123\\\"\"\n    },\n    {\n      \"text\": \"\\\"Sass123!\\\"\"\n    },\n    {\n      \"text\": \"\\\"SASSWORD123\\\"\"\n    },\n    {\n      \"text\": \"\\\"Sass word123\\\"\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"اعتذار مقدمًا! 😈<br />\\n    أي كلمة مرور تطابق هذا النمط؟\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"js\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"لا تكتب شيئًا كهذا في الإنتاج! 😅\\n\\n    يستخدم هذا النمط عدة تطلعات إيجابية (positive look-aheads) لفرض:\\n    - حرف كبير واحد على الأقل: `(?=.*[A-Z])`\\n    - حرف صغير واحد على الأقل: `(?=.*[a-z])`\\n    - رقم واحد على الأقل: `(?=.*\\\\d)`\\n    - رمز خاص واحد على الأقل: `(?=.*[!@#$%^&*])`\\n    - طول أدنى 8: `.{8,}`\\n\\n    التطلعات (look-aheads) مثالية للتحقق من كلمة المرور لأنها تستطيع التحقق من معايير متعددة دون استهلاك الأحرف.\\n\\n    [تعلم المزيد عن أنماط التحقق من كلمة المرور](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 924,
+    "outputTokens": 2114,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 12099,
+    "providerCostUsd": 0.0010304,
+    "providerUpstreamCostUsd": 0.0010304,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00012936000000000002,
+    "outputUsd": 0.00059192,
+    "totalUsd": 0.00072128,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

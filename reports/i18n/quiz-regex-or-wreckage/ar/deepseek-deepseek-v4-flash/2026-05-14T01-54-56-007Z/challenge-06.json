@@ -1,0 +1,49 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Word Boundaries",
+  "translatedTitle": "حدود الكلمات",
+  "translation": {
+    "title": "حدود الكلمات",
+    "group": "المطابقة الأساسية",
+    "options": [
+      {
+        "text": "[\"cat\", \"cats\"]"
+      },
+      {
+        "text": "[\"cat\"]"
+      },
+      {
+        "text": "[\"cats\"]"
+      },
+      {
+        "text": "[]"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "ما الذي سيتطابق؟"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "يمثل `\\b` حدًا للكلمة، والذي يتطابق مع:\n    - بين حرف كلمة وحرف غير كلمة\n    - في بداية/نهاية السلسلة إذا كان هناك حرف كلمة\n\n    لذلك `/\\bcat\\b/` يتطابق مع \"cat\" فقط عندما تكون كلمة كاملة، وليس جزءًا من كلمة أخرى.\n    - ✅ \"cat\" (محاطة بمسافات)\n    - ❌ \"cats\" (لا يوجد حد بعد \"cat\")\n    - ❌ \"category\" (لا يوجد حد بعد \"cat\")\n\n    [تعلم المزيد عن حدود الكلمات](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions#other_assertions)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"حدود الكلمات\",\n  \"group\": \"المطابقة الأساسية\",\n  \"options\": [\n    {\"text\": \"[\\\"cat\\\", \\\"cats\\\"]\"},\n    {\"text\": \"[\\\"cat\\\"]\"},\n    {\"text\": \"[\\\"cats\\\"]\"},\n    {\"text\": \"[]\"}\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\"ما الذي سيتطابق؟\"],\n  \"questionCode\": [{\"language\": \"js\", \"code\": \"[PRESERVED — do not translate]\"}],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\"يمثل `\\\\b` حدًا للكلمة، والذي يتطابق مع:\\n    - بين حرف كلمة وحرف غير كلمة\\n    - في بداية/نهاية السلسلة إذا كان هناك حرف كلمة\\n\\n    لذلك `/\\\\bcat\\\\b/` يتطابق مع \\\"cat\\\" فقط عندما تكون كلمة كاملة، وليس جزءًا من كلمة أخرى.\\n    - ✅ \\\"cat\\\" (محاطة بمسافات)\\n    - ❌ \\\"cats\\\" (لا يوجد حد بعد \\\"cat\\\")\\n    - ❌ \\\"category\\\" (لا يوجد حد بعد \\\"cat\\\")\\n\\n    [تعلم المزيد عن حدود الكلمات](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions#other_assertions)\"],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 883,
+    "outputTokens": 2026,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 17951,
+    "providerCostUsd": 0.000987,
+    "providerUpstreamCostUsd": 0.000987,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00012362,
+    "outputUsd": 0.0005672800000000001,
+    "totalUsd": 0.0006909000000000002,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Positive Look-ahead",
+  "translatedTitle": "التطلع الإيجابي",
+  "translation": {
+    "title": "التطلع الإيجابي",
+    "group": "التطلع إلى الأمام",
+    "options": [
+      {
+        "text": "[\"$100\", \"€50\"]"
+      },
+      {
+        "text": "[\"100\", \"50\"]"
+      },
+      {
+        "text": "[\"$\", \"€\"]"
+      },
+      {
+        "text": "[]"
+      },
+      {
+        "text": "null"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "ماذا سيطابق هذا؟"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "هذا النمط لن يطابق أي شيء لأن التطلع إلى الأمام معكوس! إذا كنت تريد أرقامًا مسبوقة بـ `$` أو `€`، استخدم التطلع إلى الخلف: `/(?<=[\\$€])\\d+/g`.\n\n    تتحقق التطلعات إلى الأمام مما يأتي *بعد* الموضع الحالي. النمط كما هو مكتوب يبحث عن:\n    - رقم واحد أو أكثر (`\\d+`)\n    - متبوعًا بـ (`(?=...)`) إما $ أو € (`[\\$€]`)\n\n    نظرًا لعدم وجود أرقام متبوعة برموز العملات (بل هي مسبوقة بها)، لا نحصل على أي تطابقات.\n\n    [تعرف أكثر على تأكيدات التطلع إلى الأمام](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"التطلع الإيجابي\",\n  \"group\": \"التطلع إلى الأمام\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"$100\\\", \\\"€50\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"100\\\", \\\"50\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"$\\\", \\\"€\\\"]\"\n    },\n    {\n      \"text\": \"[]\"\n    },\n    {\n      \"text\": \"null\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"ماذا سيطابق هذا؟\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"js\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"هذا النمط لن يطابق أي شيء لأن التطلع إلى الأمام معكوس! إذا كنت تريد أرقامًا مسبوقة بـ `$` أو `€`، استخدم التطلع إلى الخلف: `/(?<=[\\\\$€])\\\\d+/g`.\\n\\n    تتحقق التطلعات إلى الأمام مما يأتي *بعد* الموضع الحالي. النمط كما هو مكتوب يبحث عن:\\n    - رقم واحد أو أكثر (`\\\\d+`)\\n    - متبوعًا بـ (`(?=...)`) إما $ أو € (`[\\\\$€]`)\\n\\n    نظرًا لعدم وجود أرقام متبوعة برموز العملات (بل هي مسبوقة بها)، لا نحصل على أي تطابقات.\\n\\n    [تعرف أكثر على تأكيدات التطلع إلى الأمام](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 917,
+    "outputTokens": 2037,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 12568,
+    "providerCostUsd": 0.0009982,
+    "providerUpstreamCostUsd": 0.0009982,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00012838000000000001,
+    "outputUsd": 0.0005703600000000001,
+    "totalUsd": 0.0006987400000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

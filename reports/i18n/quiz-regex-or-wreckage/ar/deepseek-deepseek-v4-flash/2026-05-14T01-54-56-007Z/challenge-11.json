@@ -1,0 +1,49 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "Look-behind Split",
+  "translatedTitle": "تقسيم باستخدام النظرة الخلفية",
+  "translation": {
+    "title": "تقسيم باستخدام النظرة الخلفية",
+    "group": "النظرة الخلفية",
+    "options": [
+      {
+        "text": "[\"a,\", \"b,\", \"c\"]"
+      },
+      {
+        "text": "[\"a,b,c\"]"
+      },
+      {
+        "text": "[\"a\", \",\", \"b\", \",\", \"c\"]"
+      },
+      {
+        "text": "[\"a,b,c\", \"\"]"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "ما الذي يتم إرجاعه؟"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "النمط `/(?<=,)/` هو نظرة خلفية تتطابق بعد الفاصلة:\n    - `a,` (بعد الفاصلة)\n    - `b,` (بعد الفاصلة)\n    - `c` (لا توجد فاصلة بعدها)\n\n    النظرة الخلفية لا تستهلك الفاصلة، لذا تبقى الفاصلة ملتصقة بالجزء السابق في نتيجة التقسيم.\n\n    هذا مفيد عندما تريد تقسيم سلسلة بناءً على ما يسبقها **دون فقدان الحرف (أو الأحرف) الفاصلة.**\n\n    [تعلم المزيد عن تأكيدات النظرة الخلفية](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"تقسيم باستخدام النظرة الخلفية\",\n  \"group\": \"النظرة الخلفية\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"a,\\\", \\\"b,\\\", \\\"c\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"a,b,c\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"a\\\", \\\",\\\", \\\"b\\\", \\\",\\\", \\\"c\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"a,b,c\\\", \\\"\\\"]\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"ما الذي يتم إرجاعه؟\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"js\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"النمط `/(?<=,)/` هو نظرة خلفية تتطابق بعد الفاصلة:\\n    - `a,` (بعد الفاصلة)\\n    - `b,` (بعد الفاصلة)\\n    - `c` (لا توجد فاصلة بعدها)\\n\\n    النظرة الخلفية لا تستهلك الفاصلة، لذا تبقى الفاصلة ملتصقة بالجزء السابق في نتيجة التقسيم.\\n\\n    هذا مفيد عندما تريد تقسيم سلسلة بناءً على ما يسبقها **دون فقدان الحرف (أو الأحرف) الفاصلة.**\\n\\n    [تعلم المزيد عن تأكيدات النظرة الخلفية](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 902,
+    "outputTokens": 1689,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 10603,
+    "providerCostUsd": 0.000856,
+    "providerUpstreamCostUsd": 0.000856,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00012628000000000002,
+    "outputUsd": 0.00047292000000000005,
+    "totalUsd": 0.0005992,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
