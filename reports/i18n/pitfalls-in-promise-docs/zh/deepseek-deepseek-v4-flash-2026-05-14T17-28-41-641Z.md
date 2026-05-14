@@ -1,0 +1,84 @@
+# Translation Candidate
+- Slug: pitfalls-in-promise-docs
+- Locale: zh
+- Model: deepseek/deepseek-v4-flash
+- Target: src/content/posts/2017-05-10--pitfalls-in-promise-docs/zh/index.mdx
+- Validation: deferred
+- Runtime seconds: 4.69
+- Input tokens: 1252
+- Output tokens: 683
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.000367
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: Promise 文档中的陷阱
+subTitle: 避免常见文档中的问题
+date: '2017-05-10'
+modified: '2024-07-30'
+category: Code
+subCategory: promises
+tags:
+  - programming
+  - patterns
+  - promises
+  - functional-programming
+cover: ../craig-whitehead-433328-unsplash.webp
+cover_mobile: ../w300_craig-whitehead-433328-unsplash.webp
+cover_icon: ../icon_craig-whitehead-433328-unsplash.webp
+---
+> 在谷歌搜索结果和流行库中发现 Promise 反模式。
+
+![craig-whitehead-433328-unsplash.webp](../craig-whitehead-433328-unsplash.webp)
+
+让我先坦白：我也曾写过下面批评的那些“反模式”，我相信很多 JS 开发者也是如此。我列出的内容并非针对个人，也不是针对原作者。我只是对常见模式进行代码审查——希望能传递我对优先级的理解以及批判性思考的过程。
+
+> 希望你在理解了这个项目之后，能够识别出糟糕 Promise 的警告信号。
+
+1. [CallbackHell.com](#callbackhellcom)
+1. [StrongLoop](#strongloop)
+1. [RisingStack](#risingstack)
+1. [Q 库](#qlibrary)
+
+--------------------------
+### CallbackHell.com
+> **来源：** http://callbackhell.com/
+![CallbackHell.com](../callbackhell.webp)
+
+----------------------
+### StrongLoop
+> **来源：** `https://strongloop.com/strongblog/node-js-callback-hell-promises-generators/`
+![strong loop](../strongloop.webp)
+
+----------------
+### RisingStack
+> **来源：** https://blog.risingstack.com/node-js-async-best-practices-avoiding-callback-hell-node-js-at-scale/
+这是一篇相当扎实的文章。我只有一个担忧：
+
+![Rising Stack](../risingstack.webp)
+
+------------------------
+### Q 库
+> **来源：** https://github.com/kriskowal/q
+
+Q 库是最常用且最古老的与“Promise”相关的库之一。因此它受限于过时的示例以及保持向后兼容性的需求。
+**我说“与‘Promise’相关”，是因为我觉得 Q 实际上就是 `deferred` 模式。**
+
+它可能看起来像 Promise，但我坚持认为它不是。它的表面面积太大，而且理由都不对。此外，命名惯例不一致地缩写名称，使得接口更难记忆。像 `when` 和 `done` 这样的方法是不必要的。
+
+底线：`deferred` 模式是一种痛苦的反模式——它几乎不比典型的回调方法有任何改进。
+
+![q 第一个示例](../qlibrary-1.webp)
+
+![q xmlHTTP deferred 反模式](../qlibrary-2.webp)
+
+> 请查看（并点赞）本文的配套 Github 项目 [Escape From Callback Mountain](https://github.com/justsml/escape-from-callback-mountain)
+
+> 项目目标：研究并开发 JavaScript 中更好的函数式语言模式。
+````
