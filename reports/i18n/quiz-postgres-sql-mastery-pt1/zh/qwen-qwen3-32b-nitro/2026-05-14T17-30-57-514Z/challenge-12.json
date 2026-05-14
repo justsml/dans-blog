@@ -1,0 +1,49 @@
+{
+  "index": 11,
+  "attempt": 1,
+  "originalTitle": "Timestamp Precision",
+  "translatedTitle": "时间戳精度",
+  "translation": {
+    "title": "时间戳精度",
+    "group": "日期/时间",
+    "options": [
+      {
+        "text": "2024-01-08 13:30:00+00"
+      },
+      {
+        "text": "2024-01-08 13:30:00.123456+00"
+      },
+      {
+        "text": "2024-01-08 13:30:00.123456789+00"
+      },
+      {
+        "text": "2024-01-08 13:30:00.1234567"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "哪个是最小的 `timestamp` 字面量，其精度超过了 PostgreSQL 中 `time` 的最大精度？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "PostgreSQL 的时间戳具有微秒（6 位小数）精度。\n\n    - 最大值：`.123456`（6 位数字）\n    - 纳秒（9 位数字）会被四舍五入或截断到支持的精度\n    - 时区偏移量对 `timestamptz` 是可接受的，但不是必需的\n\n    **不太常见的陷阱：** 某些语言/框架会发送纳秒级精度，但 PostgreSQL 以微秒级精度存储时间戳。"
+    ]
+  },
+  "rawText": "```json\n{\n  \"title\": \"时间戳精度\",\n  \"group\": \"日期/时间\",\n  \"options\": [\n    {\n      \"text\": \"2024-01-08 13:30:00+00\"\n    },\n    {\n      \"text\": \"2024-01-08 13:30:00.123456+00\"\n    },\n    {\n      \"text\": \"2024-01-08 13:30:00.123456789+00\"\n    },\n    {\n      \"text\": \"2024-01-08 13:30:00.1234567\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"哪个是最小的 `timestamp` 字面量，其精度超过了 PostgreSQL 中 `time` 的最大精度？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"PostgreSQL 的时间戳具有微秒（6 位小数）精度。\\n\\n    - 最大值：`.123456`（6 位数字）\\n    - 纳秒（9 位数字）会被四舍五入或截断到支持的精度\\n    - 时区偏移量对 `timestamptz` 是可接受的，但不是必需的\\n\\n    **不太常见的陷阱：** 某些语言/框架会发送纳秒级精度，但 PostgreSQL 以微秒级精度存储时间戳。\"\n  ]\n}\n```",
+  "telemetry": {
+    "inputTokens": 940,
+    "outputTokens": 1221,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 3155,
+    "providerCostUsd": 0.00091875,
+    "providerUpstreamCostUsd": 0.00091875,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.0000752,
+    "outputUsd": 0.00029304,
+    "totalUsd": 0.00036824,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

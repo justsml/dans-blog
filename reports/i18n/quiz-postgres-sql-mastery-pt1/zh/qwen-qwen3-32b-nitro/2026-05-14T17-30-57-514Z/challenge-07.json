@@ -1,0 +1,58 @@
+{
+  "index": 6,
+  "attempt": 1,
+  "originalTitle": "Identify Invalid Types",
+  "translatedTitle": "识别无效类型",
+  "translation": {
+    "title": "识别无效类型",
+    "group": "Postgres 类型",
+    "options": [
+      {
+        "text": "int"
+      },
+      {
+        "text": "real"
+      },
+      {
+        "text": "bigint"
+      },
+      {
+        "text": "bigserial"
+      },
+      {
+        "text": "smallserial"
+      },
+      {
+        "text": "decimal128"
+      },
+      {
+        "text": "double precision"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "以下哪项不是 ❌ 有效的 PostgreSQL 类型？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "`decimal128` 可能看起来很眼熟（Mongo 和 Java 中都有这个类型），但它不是 PostgreSQL 的有效类型，正确的类型是 `decimal`。\n\n有效的数值类型包括：\n- `int`（4字节整数）\n- `bigint`（8字节整数）\n- `real`（4字节浮点数）\n- `double precision`（8字节浮点数）\n- `bigserial`（8字节自增整数）\n- `smallserial`（2字节自增整数）"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"识别无效类型\",\n  \"group\": \"Postgres 类型\",\n  \"options\": [\n    {\"text\": \"int\"},\n    {\"text\": \"real\"},\n    {\"text\": \"bigint\"},\n    {\"text\": \"bigserial\"},\n    {\"text\": \"smallserial\"},\n    {\"text\": \"decimal128\"},\n    {\"text\": \"double precision\"}\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"以下哪项不是 ❌ 有效的 PostgreSQL 类型？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"`decimal128` 可能看起来很眼熟（Mongo 和 Java 中都有这个类型），但它不是 PostgreSQL 的有效类型，正确的类型是 `decimal`。\\n\\n有效的数值类型包括：\\n- `int`（4字节整数）\\n- `bigint`（8字节整数）\\n- `real`（4字节浮点数）\\n- `double precision`（8字节浮点数）\\n- `bigserial`（8字节自增整数）\\n- `smallserial`（2字节自增整数）\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 870,
+    "outputTokens": 827,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2247,
+    "providerCostUsd": 0.00074023,
+    "providerUpstreamCostUsd": 0.00074023,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.0000696,
+    "outputUsd": 0.00019848,
+    "totalUsd": 0.00026808,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

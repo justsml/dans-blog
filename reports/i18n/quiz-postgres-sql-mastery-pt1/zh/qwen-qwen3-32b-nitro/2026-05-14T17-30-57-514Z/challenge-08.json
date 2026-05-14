@@ -1,0 +1,55 @@
+{
+  "index": 7,
+  "attempt": 1,
+  "originalTitle": "Identify Invalid Types",
+  "translatedTitle": "识别无效类型",
+  "translation": {
+    "title": "识别无效类型",
+    "group": "PostgreSQL 类型",
+    "options": [
+      {
+        "text": "cidr"
+      },
+      {
+        "text": "inet"
+      },
+      {
+        "text": "ipv4"
+      },
+      {
+        "text": "macaddr"
+      },
+      {
+        "text": "macaddr8"
+      },
+      {
+        "text": "interval"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "以下哪一项不是❌有效的PostgreSQL类型？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "这个问题让你感到沮丧，甚至_愤怒_吗？你不是一个人！引用一位未具名的\"核心\"数据库贡献者的话：\"丹啊！我栽在类型问题上了！这太狠了！我就不告诉你我的得分了，哈哈哈\"😈 感谢你的理解。\n\n    PostgreSQL丰富的网络类型中并不包含`ipv4`。每次我不查文档就尝试使用它时，都会搞错。也许`macaddr8`的存在让我觉得_必须_存在`ipv4`和`ipv6`类型。实际上并没有，`inet`同时覆盖了这两种。同样，`cidr`也同时覆盖了两种网络掩码。\n\n    有效的网络类型包括：\n    - `cidr` (IPv4/IPv6网络地址)\n    - `inet` (IPv4/IPv6主机地址)\n    - `macaddr` (MAC地址)\n    - `macaddr8` (EUI-64 MAC地址)"
+    ]
+  },
+  "rawText": "```json\n{\n  \"title\": \"识别无效类型\",\n  \"group\": \"PostgreSQL 类型\",\n  \"options\": [\n    { \"text\": \"cidr\" },\n    { \"text\": \"inet\" },\n    { \"text\": \"ipv4\" },\n    { \"text\": \"macaddr\" },\n    { \"text\": \"macaddr8\" },\n    { \"text\": \"interval\" }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"以下哪一项不是❌有效的PostgreSQL类型？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"这个问题让你感到沮丧，甚至_愤怒_吗？你不是一个人！引用一位未具名的\\\"核心\\\"数据库贡献者的话：\\\"丹啊！我栽在类型问题上了！这太狠了！我就不告诉你我的得分了，哈哈哈\\\"😈 感谢你的理解。\\n\\n    PostgreSQL丰富的网络类型中并不包含`ipv4`。每次我不查文档就尝试使用它时，都会搞错。也许`macaddr8`的存在让我觉得_必须_存在`ipv4`和`ipv6`类型。实际上并没有，`inet`同时覆盖了这两种。同样，`cidr`也同时覆盖了两种网络掩码。\\n\\n    有效的网络类型包括：\\n    - `cidr` (IPv4/IPv6网络地址)\\n    - `inet` (IPv4/IPv6主机地址)\\n    - `macaddr` (MAC地址)\\n    - `macaddr8` (EUI-64 MAC地址)\"\n  ]\n}\n```",
+  "telemetry": {
+    "inputTokens": 938,
+    "outputTokens": 840,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 2504,
+    "providerCostUsd": 0.00069338,
+    "providerUpstreamCostUsd": 0.00069338,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00007504,
+    "outputUsd": 0.0002016,
+    "totalUsd": 0.00027664,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

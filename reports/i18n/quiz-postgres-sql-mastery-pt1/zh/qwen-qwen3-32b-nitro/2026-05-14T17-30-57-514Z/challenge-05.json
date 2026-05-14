@@ -1,0 +1,55 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "timestamptz vs timestamp",
+  "translatedTitle": "timestamptz 与 timestamp",
+  "translation": {
+    "title": "timestamptz 与 timestamp",
+    "group": "时间戳",
+    "options": [
+      {
+        "text": "它们都占用8字节，但表示不同的时间戳语义"
+      },
+      {
+        "text": "它们\\"
+      },
+      {
+        "text": "timestamptz 保留任何输入的时区"
+      },
+      {
+        "text": "timestamptz 存储原始时区名称或偏移量"
+      },
+      {
+        "text": "timestamptz 存储一个2字节的TZ值"
+      },
+      {
+        "text": "timestamptz 是 timestamp 的后续版本"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "关于 `timestamptz` 和 `timestamp`，以下哪个说法**最准确**？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "它们都占用8字节，但存储的值类型不同。\n\n    具体区别在于输入解析方式。\n\n    **`timestamptz`**\n    - 将输入标准化为绝对时间点。\n    - 在解析无显式偏移量的输入和显示输出时，会考虑服务器/连接的 `TimeZone` 设置。\n\n    **`timestamp`**\n    - 存储不含时区转换的日期和时间。\n    - 不保留或标准化时区信息。\n    \n    \n    **`timestamp`**\n\n    - 存储不含时区信息的日期和时间。\n    - 适用于显式存储标准化日期（如UTC或特定时区）。"
+    ]
+  },
+  "rawText": "```json\n{\n  \"title\": \"timestamptz 与 timestamp\",\n  \"group\": \"时间戳\",\n  \"options\": [\n    {\n      \"text\": \"它们都占用8字节，但表示不同的时间戳语义\"\n    },\n    {\n      \"text\": \"它们\\\\\"\n    },\n    {\n      \"text\": \"timestamptz 保留任何输入的时区\"\n    },\n    {\n      \"text\": \"timestamptz 存储原始时区名称或偏移量\"\n    },\n    {\n      \"text\": \"timestamptz 存储一个2字节的TZ值\"\n    },\n    {\n      \"text\": \"timestamptz 是 timestamp 的后续版本\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"关于 `timestamptz` 和 `timestamp`，以下哪个说法**最准确**？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"它们都占用8字节，但存储的值类型不同。\\n\\n    具体区别在于输入解析方式。\\n\\n    **`timestamptz`**\\n    - 将输入标准化为绝对时间点。\\n    - 在解析无显式偏移量的输入和显示输出时，会考虑服务器/连接的 `TimeZone` 设置。\\n\\n    **`timestamp`**\\n    - 存储不含时区转换的日期和时间。\\n    - 不保留或标准化时区信息。\\n    \\n    \\n    **`timestamp`**\\n\\n    - 存储不含时区信息的日期和时间。\\n    - 适用于显式存储标准化日期（如UTC或特定时区）。\"\n  ]\n}\n```",
+  "telemetry": {
+    "inputTokens": 952,
+    "outputTokens": 814,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2152,
+    "providerCostUsd": 0.00075634,
+    "providerUpstreamCostUsd": 0.00075634,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00007616,
+    "outputUsd": 0.00019536,
+    "totalUsd": 0.00027152000000000003,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

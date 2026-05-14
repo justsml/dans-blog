@@ -1,0 +1,49 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "Integer Overflow",
+  "translatedTitle": "整数溢出",
+  "translation": {
+    "title": "整数溢出",
+    "group": "整数运算",
+    "options": [
+      {
+        "text": "4294967296"
+      },
+      {
+        "text": "错误：整数超出范围"
+      },
+      {
+        "text": "0"
+      },
+      {
+        "text": "2147483647"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "计算所有可能的学生ID总数时会发生什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "PostgreSQL的`integer`类型是32位有符号的，范围从`-2,147,483,648`到`2,147,483,647`。\n\n    计算`256^4`=`4,294,967,296`超过了这个范围。\n\n    要处理更大的数字："
+    ]
+  },
+  "rawText": "```json\n{\n  \"title\": \"整数溢出\",\n  \"group\": \"整数运算\",\n  \"options\": [\n    {\n      \"text\": \"4294967296\"\n    },\n    {\n      \"text\": \"错误：整数超出范围\"\n    },\n    {\n      \"text\": \"0\"\n    },\n    {\n      \"text\": \"2147483647\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"计算所有可能的学生ID总数时会发生什么？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"PostgreSQL的`integer`类型是32位有符号的，范围从`-2,147,483,648`到`2,147,483,647`。\\n\\n    计算`256^4`=`4,294,967,296`超过了这个范围。\\n\\n    要处理更大的数字：\"\n  ]\n}\n```",
+  "telemetry": {
+    "inputTokens": 863,
+    "outputTokens": 778,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 2606,
+    "providerCostUsd": 0.00063505,
+    "providerUpstreamCostUsd": 0.00063505,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00006904,
+    "outputUsd": 0.00018672,
+    "totalUsd": 0.00025576,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

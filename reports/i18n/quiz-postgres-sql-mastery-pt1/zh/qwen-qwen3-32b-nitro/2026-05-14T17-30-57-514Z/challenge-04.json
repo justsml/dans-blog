@@ -1,0 +1,52 @@
+{
+  "index": 3,
+  "attempt": 1,
+  "originalTitle": "Date Arithmetic",
+  "translatedTitle": "日期运算",
+  "translation": {
+    "title": "日期运算",
+    "group": "日期/时间",
+    "options": [
+      {
+        "text": "2024-11-27"
+      },
+      {
+        "text": "2024-11-27 00:00:00"
+      },
+      {
+        "text": "2024-11-28"
+      },
+      {
+        "text": "2024-11-28 00:00:00"
+      },
+      {
+        "text": "Error: invalid time"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "这会返回什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "间隔是简化日期范围操作的利器！\n\nPostgreSQL的日期运算规则：\n- `+ interval '24 hours'` 增加24小时\n- `+ interval '1 day'` 增加1天\n- `+ interval '1 month'` 增加1个月\n- `+ interval '1 year'` 增加1年\n\n最终结果是 `2024-11-28 00:00:00`。"
+    ]
+  },
+  "rawText": "```json\n{\n  \"title\": \"日期运算\",\n  \"group\": \"日期/时间\",\n  \"options\": [\n    { \"text\": \"2024-11-27\" },\n    { \"text\": \"2024-11-27 00:00:00\" },\n    { \"text\": \"2024-11-28\" },\n    { \"text\": \"2024-11-28 00:00:00\" },\n    { \"text\": \"Error: invalid time\" }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\"这会返回什么？\"],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"间隔是简化日期范围操作的利器！\\n\\nPostgreSQL的日期运算规则：\\n- `+ interval '24 hours'` 增加24小时\\n- `+ interval '1 day'` 增加1天\\n- `+ interval '1 month'` 增加1个月\\n- `+ interval '1 year'` 增加1年\\n\\n最终结果是 `2024-11-28 00:00:00`。\"\n  ]\n}\n```",
+  "telemetry": {
+    "inputTokens": 901,
+    "outputTokens": 921,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2967,
+    "providerCostUsd": 0.00080468,
+    "providerUpstreamCostUsd": 0.00080468,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00007208,
+    "outputUsd": 0.00022104,
+    "totalUsd": 0.00029312,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
