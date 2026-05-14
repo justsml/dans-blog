@@ -1,0 +1,212 @@
+# Translation Candidate
+- Slug: love-computer-languages
+- Locale: he
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2015-06-12--love-computer-languages/he/index.mdx
+- Validation: deferred
+- Runtime seconds: 48.88
+- Input tokens: 6031
+- Output tokens: 7357
+- Thinking tokens: unknown
+- Cached input tokens: 1152
+- Cache write tokens: 0
+- Estimated cost: $0.002746
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: שפות אהבה (מחשב)
+date: '2015-06-12'
+modified: '2017-02-28'
+category: Code
+subCategory: languages
+draft: true
+hidden: true
+publish: true
+tags:
+  - programming
+  - languages
+  - lua
+  - haskell
+  - scala
+  - rust
+  - smalltalk
+  - go
+  - javascript
+  - python
+cover: ../rawpixel-602144-unsplash.webp
+cover_mobile: ../w300_rawpixel-602144-unsplash.webp
+cover_icon: ../icon_rawpixel-602144-unsplash.webp
+---
+import Gist from '../../../../components/Gist/index.astro'
+
+## הערות על שפות תכנות
+
+#### אני בטוח שהתצפיות השונות שלי נאמרו כבר, אבל הנה הרשימה שלי לשפות המעניינות ביותר:
+
+### JavaScript
+
+אהבתי האחת והיחידה, רב-תכליתית ואומניפוטנטית במיוחד – האלופה הכול-יכולה להפליא!  
+זוהי השפה הפעילה/פופולרית ביותר ב-GitHub.com מזה _שנים_.
+
+אני שונא להודות בזה, אבל במשך שנים טיפשתי בבוז ובלעג כלפי מה שהיא כיום, **השפה האהובה עליי**.
+
+**ES6** רק הגבירה את ~~~ההתמכרות~~~ האהבה שלי. בעוד ש-ES5 הטהור תמיד יישאר חקוק בלבי, בכל פעם שאני משתמש ב-**ES6**, אני מרגיש את עקיצת העכביש הרדיואקטיבית הזו...
+
+היו 4 גורמים שדחפו אותי למחנה **ES6**:
+
+1.  זה כיף. ברצינות. יש רווחים מוחשיים ביופי, בבהירות ובפרודוקטיביות.
+
+- טוענים שזה סובייקטיבי? תנו לי להראות לכם קצת ES6:  
+- `let expired = users.filter(u => Date.now() > u.trialDate)`  
+- עכשיו אתם לא צריכים להעמיד פנים שאתם יודעים להשתמש ב-`Object.create` או `Object.defineProperty`  
+- ראו דוגמאות בהמשך
+
+1.  החל מיולי 2015, ES6 הוא תקן רשמי סופי!
+1.  התמיכה היא למעשה 100%*! ... ובכן, יש צורך ב-BabelJS כדי לתקן את הקוד שלך כך שיהיה תואם ל-ES5. מבחינה היסטורית, טרנספילרים של JS זכו לביקורת. עם זאת, לאחרונה (2014-15) הדברים השתנו, ו-BabelJS הפך למאפשר/מניע מרכזי של התקדמות השפה. המון חברות, כולל מיקרוסופט ופייסבוק, משתמשות בו באחדים מהאתרים הגדולים ביותר.
+1.  [הגרסאות האחרונות של Node](https://nodejs.org/en/blog/release/v4.0.0/) כוללות את אותו מנוע V8 JS כמו Chrome v45, זה v4.5
+
+#### דוגמאות
+
+> אני הולך להראות לכם מה סוף סוף גרם לי _להתחיל_ לשתות את ה-KoolAid בטעם ES6.
+
+מניסיוני האחרון, ES6 עוזר לכתוב קוד מהר יותר. לעניין.
+מכיוון שהקוד תמציתי יותר, נדרשת פחות משמעותית כוח מוח כדי לעבור ולהבין את הקוד הישן שלך (או של חברי הצוות).
+
+ראיתי באופן קבוע חיסכון של כ-20-50% ב-KLOC. זה כמו קיצוץ של קייט מוס!
+
+**_תמונה חסרה:_ EcmaScript 5 לעומת ES 2016 - הדגמה: מחלקות, הרס, מגניב**
+{/* ](../images/screenshots/Diff-ES6-vs-ES5-Head-to-Head.png) */}
+
+```js
+// /services/users.js
+class Users {
+  constructor(data) {
+    this.users = data || [];
+  }
+  expired() {
+    return this.users.filter(u => Date.now() > u.trialDate);
+  }
+}
+```
+
+- אין יותר קוד מייגע ל'חילוץ' ו'בדיקה' של שדות המועברים לפונקציה. קפוץ לדוגמה `add()`:
+
+```js
+// /services/users.js
+class Users {
+  constructor(data) {
+    this.users = data || [];
+  }
+  add({ name, email, password }) {
+    // Store pwd hash, We only need to define 1 explicit `var/let` - the other vars are 'defined' with the `{fields}` wizardry above ^^^
+    let hash = getSha256(password);
+    return http
+      .post("/users", {
+        name: name,
+        email: email,
+        passwordHash: hash
+      })
+      .then(usr => this.users.push(usr)); // append user upon service response
+  }
+}
+```
+
+<Gist path='justsml/aaddc9852c1624d61cf3'></Gist>
+
+<p>&#160;</p>
+
+#### קפיצה ל-ES6 יכולה להרגיש כמו לעבור מ:
+
+<div class="anigif top">
+  <img alt='הא?' title="הא?" src="https://res.cloudinary.com/ddd/image/upload/v1441143891/wtf__tumblr_inline_n7ygqh6Y0C1svcdm1_igeqey.gif" />
+</div>
+<h3>אל</h3>
+<div class="anigif">
+  <img alt='מה לעזאזל?!' title="מה לעזאזל?!?!?" src="https://res.cloudinary.com/ddd/image/upload/v1443133148/cat-wtf-trap.gif" />
+</div>
+<h3>אל</h3>
+<div class="anigif end">
+  <img alt='#מנצח' title='#מנצח' src="https://res.cloudinary.com/ddd/image/upload/v1443133141/full-throttle.gif" />
+</div>
+
+רק תמשיך לחפור בדברים החדשים. תסתכל על תבניות מחרוזת, קישור אוטומטי של `this`, ירושה הגיונית יותר...
+
+##### [Node.JS](http://nodejs.org/)
+
+### Rust
+
+##### [אתר רשמי](http://www.rust-lang.org/)
+
+- **יתרונות**
+
+- דמיין שפת תכנות מהירה כמו C ועוצמתית כמו Python/C++, אבל בלי המורכבות/מלכודות שבדרך כלל תופסות אפילו את המפתחים המיומנים ביותר.
+  - למעשה, הייתי מנחש ש-Rust מורכבת בערך כמו מפרט ES6.
+  - היא כוללת המון תוספות:
+    1.  בעצם Rust מתרגמת מתחביר חצי-דינמי ל**קוד C טהור**!
+    1.  כולל **כל השיטות המומלצות** ב-C שהיית כנראה מפשל בהן, אני ~~בסופו של דבר~~ תמיד עושה את זה.
+    - באופן אוטומטי אתה מקבל:
+    - ניהול זיכרון אוטומטי (בלי צורך באוסף זבל איטי!)
+    - בעלות/נעילה של אובייקטים בהיקף מושלם (מינימום מוטקסים והחלפות הקשר)
+    - משך חיים של אובייקטים (מיושם אוטומטית\*, ומקודד כאילו ידעת כל מקרה קצה)
+    - מונע כמעט את כל שגיאות זמן הריצה (ברצינות, נתיבי הקוד שלך הופכים מפורשים: אתה פשוט לא יכול להתעלם מנתיב קוד)
+  - אה כן, היא מוסיפה הרחבה אמיתית של השפה עם תכונת 'מאקרו' הגיונית.
+    - צריך Comprehensions? [סגנון סקאלה? בוצע](https://gist.github.com/hanny24/5749688), ו[כמו פייתון? בוצע](https://gist.github.com/JeffBelgum/5e762761cd63c796e803).
+    1.  טוב מכדי להיות אמיתי? לא, זה משתפר:
+    - אינדיקטורים בחזית הטכנולוגיה (סטטיסטיקות github.com) מראים ש-Rust תחרותית ביותר ואפילו מנצחת את Go (השפה החמה-יחסית של גוגל)
+      - בערך 4,000 כוכבים יותר מ-Go (כרגע בסביבות 12,200)
+      - יותר תורמים בסך הכל (פי 2! - 1,071 לעומת 479 של Go)
+      - יותר פיצולים (פי 3! - 2,343 לעומת 765)
+      - מספר בעיות פתוחות, מפסידה בהפרש קטן (2,000 לעומת 1,730 מ-Go)
+      - בקשות משיכה (Rust 70+ לעומת 1 של Go)
+    - הייתי צריך לבדוק את המספרים שלוש פעמים גם כן.
+  - ספריות אחרות יציבות מאוד בזכות המבנים והחוקים של Rust.
+  - מודל תהליכונים שמיש על ידי בני תמותה בלבד
+
+- **חסרונות**
+  - **מסגרות אינטרנט** סבירות יחסית חדשות, לא מנוסות, ובדרך כלל לא מתועדות (אם כי הן **נהיות** מרשימות מאוד - נכון למרץ 2015).
+  - הרבה שינויים שוברים מוקדמים לפני גרסה 1.0
+
+### Python
+
+- **יתרונות**
+  - מבחר עצום ומלא של אלגוריתמים כבר מיושם ב-Python (ראה: scilearnkit, numpy, matplotlib, pil/pillow, וכו')
+  - כיף מאוד לכתוב! Comprehensions ו-Decomposition הן תכונות נהדרות וגורמות לשפות אחרות להיראות מנופחות!
+  - מערכים, 'רצפים', tuples וכו' פשוטים יחסית
+
+```python
+## קוד דמה: מגדיר צבע + קואורדינטת פיקסל -
+def pixel(x, y, r, g, b): return dict(x=x, y=y, r=r, g=g, b=b)
+## יצירת אובייקט פיקסל חדש והחלתו על קבוצת משתנים
+x, y, r, g, b = pixel(10, 20, 255, 255, 255)
+## כעת נוכל לקרוא לפיקסל
+```
+
+- **חסרונות**
+  - למרבה הצער, Python 2.x ו-3.x אינן תואמות. הפילוג הגדול נמשך, שנים רבות לאחר מכן.
+  - חלק מספריות חיוניות אינן מובנות בהכרח על ידי מפתחים מסוימים (numpy)
+
+### Haskell
+
+- **יתרונות**
+  - מתגמל מאוד כשסוף סוף משננים מספיק תחביר כדי לזקק תבניות אקספרסיביות מבוססות comprehensions
+  - תלמדו תבניות קוד מעוררות מחשבה – לעיתים קרובות ישימות חלקית לשפות אחרות.
+- **חסרונות**
+  - תחביר ותבניות עלולים להיות קשים להתרגלות.
+
+<div class="anigif end">
+  <img alt='לולאה אינסופית' src="https://res.cloudinary.com/ddd/image/upload/v1441143881/endless-loop.gif" />
+</div>
+
+### SmallTalk-80
+
+- **יתרונות**
+  - מהדרים פשוטים להפליא (המקוריים במיוחד)
+  - משאבים מצוינים: [Smalltalk MVC מתורגם ל-JavaScript](http://peter.michaux.ca/articles/smalltalk-mvc-translated-to-javascript)
+- **חסרונות**
+  - סביר להניח שלעולם לא תשתמשו בשפה זו לשום דבר. אפס פרויקטים. עם זאת, תהיה לה השפעה גדולה יותר על סגנון הקידוד שלכם, מהר יותר מאשר שפות פונקציונליות אחרות... זה אמור להיות ברשימת היתרונות)
+
+#### _עבודה בתהליך (עודכן בדצמבר 2015)_
+````
