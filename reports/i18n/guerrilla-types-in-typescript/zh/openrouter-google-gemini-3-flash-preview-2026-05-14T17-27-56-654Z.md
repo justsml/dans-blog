@@ -1,0 +1,304 @@
+# Translation Candidate
+- Slug: guerrilla-types-in-typescript
+- Locale: zh
+- Model: openrouter/google/gemini-3-flash-preview
+- Target: src/content/posts/2023-09-06--guerrilla-types-in-typescript/zh/index.mdx
+- Validation: deferred
+- Runtime seconds: 24.58
+- Input tokens: 5366
+- Output tokens: 3812
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.014119
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: TypeScript 游击式类型
+subTitle: 叛逆字体设计
+date: '2023-09-05'
+modified: '2024-07-30'
+tags:
+  - engineering
+  - typescript
+  - composition
+  - types
+category: Guides
+subCategory: TypeScript
+cover: ../gorilla-types_dall-e.webp
+cover_mobile: ../w300_gorilla-types_dall-e.webp
+cover_icon: ../icon_gorilla-types_dall-e.webp
+---
+## TypeScript 游击类型技巧
+
+在本文中，我们将探讨三种有趣（也可能很糟糕？）的类型设计技巧！
+
+核心目标是构建**一致**且**可预测**的模型/实体/类（Model/Entity/Class）接口。
+
+- [类型设计方法](#approaches-to-designing-types)
+  - [单一大型对象](#single-large-object)
+  - [多个命名类型](#multiple-named-types)
+- [技巧 #1：为什么不全都要](#technique-1-why-not-all)
+- [技巧 #2：混入 (Mix-ins)](#technique-2-mix-ins)
+  - [Mix-in 示例](#mix-in-examples)
+  - [User 示例](#example-user)
+- [技巧 #3：使用命名空间进行组织](#technique-3-organizing-with-namespaces)
+  - [实际应用](#real-world-usage)
+- [总结](#summary)
+
+<!--
+1.  类型的逻辑高层表示 - 以对开发者和业务利益相关者都有意义的方式。
+2.  对逻辑相关字段组合进行建模的持久方式。
+    1.  示例：**对象实例**通常包含通用字段 `id`、`createdDate`、`createdById` 等。
+    2.  从离散的数据库模型中建模请求和响应字段。（例如 `_version`、`_v`）
+    3.  可组合的工具类、分页/负载包装器等：`pageNumber`、`sortBy`、`impersonateSession`、`token`、`_version` 等。
+3.  避免命名和类型中出现意外的偏差（`id`、`Id`、`ID`、`created_at`、`date_created`，天哪！）
+4.  使用多个较小的可重用接口和类型组合更高层的类型。
+5.  利用 [联合类型 (Unions)](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes-func.html#discriminated-unions) 来“自动”匹配类型的变体。 -->
+
+### 类型设计方法
+
+在处理第三方 API 数据时，你可能遇到或编写过各种“类型实现”模式。
+
+**注意：** 我特意忽略了构建实体关系图 (ERD) 或面向对象编程 (OOP) 继承层级的“传统”流程。在这里，我们构建类型是为了表示半结构化的 API 数据。
+
+让我们探讨两种高层方法：**单一大型对象**（自顶向下）与**多个命名类型**（自底向上）。
+
+#### 单一大型对象
+
+优先考虑显式表达，而非重用性和 DRY（Don't Repeat Yourself）原则。
+
+**优点：** IDE/开发体验极佳，因为悬停提示（tooltips）能提供更完整的预览——无需跳转。
+
+```tsx
+interface ProductDetails {
+  name: string;
+  seller: { name: string };
+  availability: Array<{ warehouseId: string; quantity: number }>;
+  reviews: Array<{ authorId: number; stars: number }>;
+}
+```
+
+既然我们优先考虑显式的可读性，那么在合理范围内忍受“一些”重复是可以接受的。当某些属性组重复出现“多次”时，可以随时将重复字段提取为命名类型。
+
+#### 多个命名类型
+
+优先考虑重用性和 DRY 原则。
+
+<!-- 可读性是一个有趣的衡量标准。因为当类型/文件较少时，可读性通常很好甚至**极佳**。但**类型不可避免地会激增**，属性也越来越多。**可读性随之下降**。 -->
+
+这可能是绝大多数人的首选方法。
+
+```ts
+interface ProductDetails {
+  name: string;
+  seller: Seller;
+  reviews: Reviews[];
+  availability: Availability[];
+}
+interface Seller { name: string; }
+interface Availability { warehouseId: string; quantity: number; }
+interface Reviews { authorId: number; stars: number; }
+```
+
+总的来说，这种方法很棒。但它并非没有缺点。
+
+- **可读性**起初极佳；但随着类型规模和数量的增长，它**确实**会受到影响。
+- 极度追求 DRY（不重复原则），但代价是什么？（稍后详述。）
+- 开发体验（DX）可能会下降，因为工具提示（tooltips）提供的信息不够直观。
+
+> ⚠️ 自（大约）TypeScript v3 以来，语言服务器（Language Server）会截断工具提示，忽略嵌套属性。
+> 💡 有些小技巧可以改善这一点。尝试按住 `Cmd` 或 `Ctrl` 键，然后悬停在各种类型名称上——你应该能在工具提示中多看到至少一层属性。
+
+为什么我们必须在两种方法之间做选择？（大而全的类型 vs. 命名的子类型。）
+
+### 技巧 #1：全都要
+
+鱼与熊掌可以兼得吗？
+
+- “全局观”类型的清晰度？
+- 加上命名的子类型？
+- 且不重复？
+
+> ✅ 当然可以！ 🎉
+
+```tsx
+export interface ProductDetails {
+  name: string;
+  seller: { name: string };
+  reviews: Array<{ authorId: number; stars: number }>;
+  availability: Array<{ warehouseId: string; quantity: number }>;
+}
+export type Seller = ProductDetails["seller"];
+export type Review = ProductDetails["reviews"][number];
+export type Availability = ProductDetails["availability"][number];
+```
+
+1.  创建大型“主”（Primary）结构类型。
+2.  导出从主类型派生的子类型。
+
+这种方法在那些“高层”对象需要集中文档化的系统中表现出色。
+此外，该技术支持在多种用例之间复用：模型（Models）、服务（Services）、查询结果（Query Results）等。
+
+### 技巧 #2：混入 (Mix-ins)
+
+这一策略的核心在于将**正确的字段**以**正确的名称**组合在一起，从而**表示单个逻辑对象**。其目标是利用 TypeScript 工具类型（Utilities）和联合类型（Type Unions）高效地应对多种用例。
+
+这种方法不同于传统的 OOP 继承和层级结构，后者旨在将对象层级构建为紧密绑定的分类体系。**混入方法关注的是扁平且松散关联的类型**，在减少重复的同时对相关字段进行分组。
+
+#### 混入示例
+
+```tsx
+interface TodoModel {
+  text: string;
+  complete: boolean;
+}
+interface InstanceMixin {
+  id: number;
+}
+/** TodoDraft 表示表单状态，可能全部为 undefined */
+export type TodoDraft = Partial<TodoModel>;
+/** Todo 表示来自数据库的 Todo 实例记录 */
+export type Todo = TodoModel & InstanceMixin;
+```
+
+#### `User` 示例
+
+```tsx
+interface User {
+  id: number;
+  name: string;
+  bio: string;
+  social: Record<"facebook" | "instagram" | "github", URL>;
+}
+```
+
+让我们来表示保存到数据库之前和之后的 `User`。
+
+```tsx
+// 核心 User 字段（例如用于 <form>）
+interface UserBase {
+  name: string;
+  bio: string;
+  social: Record<"facebook" | "instagram" | "github", URL>;
+}
+// 来自数据库的字段
+interface InstanceMixin {
+  id: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
+// 一个 User **实例** - 包含所有字段
+type UserInstance = InstanceMixin & UserBase;
+```
+
+现在我们可以塑造我们需要的确切字段（例如用于创建/更新的 `password`，但不包含在 `UserInstance` 的查询结果中）。
+
+```tsx
+interface UserBase {
+  name: string;
+  bio: string;
+  social: Record<"facebook" | "instagram" | "github", URL>;
+}
+interface InstanceMixin {
+  id: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
+/** 用于注册的 User 负载，包含 `password` 字段 */
+export type UserPayload = UserBase & { password: string };
+/** 表示从服务器返回的 User 类型。 */
+export type UserInstance = UserBase & InstanceMixin;
+```
+
+1.  “这是最佳实践吗？”
+2.  “我应该尝试一下吗？”
+
+说不准。我们继续。
+
+### 技巧 #3：使用命名空间 (Namespaces) 进行组织
+
+在这里，我们声明一个 `ModelMixins` 命名空间。这提供了一定的组织性，以及更清晰的复用模式。
+
+**标准化形状**
+
+- `createdAt` 和 `updatedAt` 总是成对出现。
+- 使用 `id`，而不是 `ID` 或 `_id`。
+
+```tsx
+// `src/types/mixins.d.ts`
+namespace ModelMixins {
+  interface Identity {
+    id: number;
+  }
+  interface Timestamp {
+    createdAt: Date;
+    updatedAt: Date;
+  }
+  type Instance = ModelMixins.Identity & ModelMixins.Timestamp;
+  interface HashedPassword {
+    passwordHash: string;
+  }
+  interface InputPassword {
+    password: string;
+  }
+}
+```
+
+**使用联合类型**
+
+```tsx
+// `src/types/user.d.ts`
+export interface UserBase {
+  name: string;
+  bio: string;
+  social: Record<"facebook" | "instagram" | "github", URL>;
+}
+// 单个 `User` 类型，使用联合类型动态地
+// 表示创建前后的状态。
+export type User =
+  | (UserBase & ModelMixins.Instance & ModelMixins.HashedPassword)
+  | (UserBase & ModelMixins.InputPassword);
+```
+
+如果需要，你也可以导出单独的命名类型：
+
+```tsx
+/** 用于注册的 User 负载，包含 `password` 字段 */
+export type UserPayload = UserBase & ModelMixins.Instance & ModelMixins.HashedPassword;
+/** 表示从服务器返回的 User 类型。 */
+export type UserInstance = UserBase & ModelMixins.InputPassword;
+```
+
+#### 实际应用
+
+这是一个 `upsert()` 函数，它使用 `in` 操作符来区分 `UserInstance` 和 `UserPayload` 类型。
+
+```tsx
+function upsert(user: User) {
+  if ("id" in user) {
+    // TypeScript 知道此处的 `user` 拥有来自 Instance 的字段（id, createdAt 等）
+    return updateUser(user.id, user);
+  } else {
+    // TypeScript 知道这一定是 `UserBase & ModelMixins.InputPassword` 版本的 user。
+    return createUser(user);
+  }
+}
+```
+
+### 总结
+
+我们介绍了三种技巧以及一些相关的辅助思路。
+
+你可能会问，这些是好的模式吗？我应该采用其中的一些想法吗？
+
+## 资源
+
+- [TypeScript tips for legacy projects: Type only you need](https://sergiocarracedo.es/typescript-tips/)
+- [Matt Pocock's Excellent new book](https://www.totaltypescript.com/books/total-typescript-essentials)
+- [Total TypeScript Tips](https://www.totaltypescript.com/tips)
+````
