@@ -1,0 +1,57 @@
+{
+  "runId": "openai-gpt-oss-120b-nitro@2026-05-14T17-36-26-318Z",
+  "slug": "async-stack-traces-why-error-stack-lies-in-production",
+  "locale": "zh",
+  "model": "openai/gpt-oss-120b:nitro",
+  "modelPath": "openai-gpt-oss-120b-nitro",
+  "createdAt": "2026-05-14T17:36:31.250Z",
+  "sourcePath": "src/content/posts/2025-12-29--async-stack-traces-why-error-stack-lies-in-production/index.mdx",
+  "targetPath": "src/content/posts/2025-12-29--async-stack-traces-why-error-stack-lies-in-production/zh/index.mdx",
+  "candidatePath": "reports/i18n/async-stack-traces-why-error-stack-lies-in-production/zh/openai-gpt-oss-120b-nitro/2026-05-14T17-36-26-318Z/candidate.mdx",
+  "sourceHash": "bda8adb66cf30fc89c91baea70bf6d81ae97177b838379f1fd437c2da47c9917",
+  "outputHash": "c822a49018b9ce9f1a103aed020b7b9afcb772c3124c7e2b6b6bfe6fda406321",
+  "reasoningEffort": "low",
+  "temperature": 0.3,
+  "maxTokens": 16000,
+  "timeoutMs": 200000,
+  "articleSummary": "The article argues that JavaScript’s `Error.stack` is fundamentally unreliable for async code because `await` detaches execution from the call stack, leaving only generic “processTicksAndRejections” entries. It explains why traditional stack traces break, reviews V8’s partial fixes (e.g., `--async‑stack‑traces` and `Error.captureStackTrace`) and their performance costs, and then advocates using `AsyncLocalStorage` to propagate request‑level context across async boundaries. The piece is aimed at Node.js developers and SREs who need practical debugging strategies, adopting an analytical tone with a recurring metaphor of “freezing/thawing” functions and “shadow stacks.” It concludes with a production playbook: stop trusting `err.stack`, employ structured logging via `AsyncLocalStorage`, and prefer tracing tools like OpenTelemetry.",
+  "totalInputTokens": 2602,
+  "totalOutputTokens": 818,
+  "totalCacheReadTokens": 1024,
+  "totalCacheWriteTokens": 0,
+  "totalDurationMs": 3268,
+  "totalCostUsd": 0.000248718,
+  "pricingSource": "local-openrouter-estimate",
+  "telemetry": {
+    "model": "openai/gpt-oss-120b:nitro",
+    "chunkSize": "18p",
+    "totalChunks": 2,
+    "totalInputTokens": 2602,
+    "totalOutputTokens": 818,
+    "totalCacheReadTokens": 1024,
+    "totalCacheWriteTokens": 0,
+    "totalDurationMs": 3268,
+    "totalCostUsd": 0.000248718,
+    "pricingSource": "local-openrouter-estimate",
+    "chunks": [
+      {
+        "index": 0,
+        "inputTokens": 1235,
+        "outputTokens": 485,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 1850,
+        "costUsd": 0.000135465
+      },
+      {
+        "index": 1,
+        "inputTokens": 1367,
+        "outputTokens": 333,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 1418,
+        "costUsd": 0.000113253
+      }
+    ]
+  }
+}
