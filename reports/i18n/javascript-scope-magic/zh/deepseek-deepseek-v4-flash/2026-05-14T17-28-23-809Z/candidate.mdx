@@ -1,0 +1,109 @@
+---
+title: JavaScript 魔法
+subTitle: '[草稿] 命令式 vs. 递归式 vs. 函数式'
+date: '2015-06-06'
+modified: '2024-07-30'
+category: Code
+subCategory: javascript
+draft: true
+publish: true
+tags:
+  - javascript
+  - programming
+  - performance
+  - patterns
+cover: ../markus-spiske-197281-unsplash.webp
+cover_mobile: ../w300_markus-spiske-197281-unsplash.webp
+cover_icon: ../icon_markus-spiske-197281-unsplash.webp
+---
+## 命令式 vs 递归 vs 函数式
+
+> [ 施工中 ]
+
+```javascript
+// 命令式：最快（+ 非常简单，没有新指针或多余分配）：
+function fib(n) {
+  var a = 1,
+    b = 1,
+    c = 0;
+  for (var i = 1; i < n - 1; ++i) {
+    c = a + b;
+    a = b;
+    b = c;
+  }
+  return b;
+}
+
+// 递归：（仅限 FIREFOX 或 BABELJS）ES6 函数定义，
+//  使用参数默认值设置初始（内部/递归）值
+function fib(n, current = 0, a = 1, b = 1, c = 0) {
+  current++;
+  c = a + b;
+  a = b;
+  b = c;
+  return current >= n ? b : fib(n, current, a, b, c);
+}
+
+// 教科书式反面示例——函数作用域糟糕，多个可变外部值
+function fib(n) {
+  if (!arr) {
+    var arr = [1, 1];
+    n = n - 2;
+  } // 糟糕
+  if (n === -1) {
+    return [arr[0]];
+  }
+  if (n === 0) {
+    return arr;
+  }
+  var proc = function() {
+    --n;
+    arr.push(arr[arr.length - 1] + arr[arr.length - 2]);
+    return n === 0 ? arr : proc();
+    // 糟糕：不需要内部递归函数，提示：使用的变量来自父函数作用域
+  };
+  var ans = proc();
+  return ans[ans.length - 1];
+}
+```
+
+## Promise：太棒了！
+
+```js
+// 使用 bluebird Promise 及其
+var Promise = require("bluebird"),
+  fs = Promise.promisifyAll(require("fs")),
+  less = Promise.promisifyAll(require("less"));
+
+function writeFileData(data) {
+  return fs.writeFileAsync("/tmp/output.css", data);
+}
+// Bluebird 让类似这样的操作变得异常简单和简洁：
+fs.readFileAsync("./style.less") // 调用 promisified 的 readFile()
+  .then(less.renderAsync) // 交给 less.render
+  .then(writeFileData); // 接收 css 内容的函数（第一个参数）
+```
+
+1.  虽然原生 ES6 Promise 很棒，但我更喜欢功能强大的 [Bluebird Promise 库](https://github.com/petkaantonov/bluebird/blob/master/API.md)。
+1.  不管用不用库，现代浏览器已经支持 Promise 多年了。
+1.  Promise 无需疯狂模式即可使用——隐式 `deferred` 更可取。
+1.  **$q 就是坨屎**，直接用 bluebird，见上。
+1.  值得一提：Bluebird 的基准测试是最佳情况下的测试，所以如果搞复杂花哨的 Promise 链，要注意这点。
+
+## Java 与 JavaScript
+
+### 速率限制 / 防抖 / 节流
+
+1.  在 JavaScript 中，[David Walsh 用不到 20 行实现了 debounce](http://davidwalsh.name/essential-javascript-functions)！
+1.  在 Java 中，JDebounce 这个库要复杂得多，大约 500 多行。
+1.  _ 两者对比：_
+1.  JavaScript 速度快，利用一等函数实现了极致的简洁。
+1.  而 Java 有更多活动部件，使用注解在编译时应用行为，还有大量 XML，纯粹为了好玩！
+
+<!--
+## 控制反转技术
+
+施工中
+-->
+
+[fuck_this]: https://res.cloudinary.com/ddd/image/upload/panda-rampage__tumblr_nq7srwTXqr1stn6klo1_500_gm2som.gif
