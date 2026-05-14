@@ -1,0 +1,667 @@
+---
+title: 'اختبار: هياكل البيانات والخوارزميات'
+subTitle: هل يمكنك خداع شجرة ثنائية؟
+label: Algorithms & DS
+unlisted: true
+date: '2024-10-31'
+modified: '2024-11-08'
+social_image: ../desktop-social.webp
+category: Quiz
+subCategory: Data Structures
+tags:
+  - quiz
+  - data-structures
+  - algorithms
+  - intermediate
+  - advanced
+cover: ../redcharlie-mugDbuNnbd0-unsplash-square.webp
+cover_full_width: ../redcharlie-mugDbuNnbd0-unsplash-wide.webp
+cover_mobile: ../redcharlie-mugDbuNnbd0-unsplash-square.webp
+cover_icon: ../redcharlie-mugDbuNnbd0-unsplash-square.webp
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+<section class="inset">
+  مرحبًا بك في اختبار هياكل البيانات والخوارزميات!
+</section>
+
+سيختبر هذا الاختبار معرفتك بهياكل البيانات (المكدسات، القوائم، الأشجار، إلخ)، والخوارزميات ()، وتعقيد الوقت.
+
+### 20 سؤالًا... ابدأ!
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="هياكل البيانات"
+  title="المكدسات مقابل قوائم الانتظار"
+  options={[
+    {text: 'كلاهما'},
+    {text: 'قوائم الانتظار'},
+    {text: 'المكدسات', isAnswer: true},
+    {text: 'لا شيء'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما هي بنية البيانات الأكثر ملاءمة لنمط الوصول LIFO (آخر دخول، أول خروج)؟
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    انظر إلى نمط الوصول، وليس اسم الهيكل. الإجابة الصحيحة عادة ما تتبع ما يجب أن يحدث أولاً أو أخيراً.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    المكدسات هي الأكثر ملاءمة لأنماط الوصول LIFO. قوائم الانتظار هي الأكثر ملاءمة لأنماط الوصول FIFO (أول دخول، أول خروج).
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="الخوارزميات"
+  title="تدوين Big O"
+  options={[
+    {text: 'O(1)', isAnswer: true},
+    {text: 'O(n)'},
+    {text: 'O(log n)'},
+    {text: 'O(n^2)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما هو التعقيد الزمني لخوارزمية تستغرق دائمًا نفس الوقت للتشغيل، بغض النظر عن حجم الإدخال؟
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    انظر إلى نمط الوصول، وليس اسم الهيكل. الإجابة الصحيحة عادةً تتبع من ما يجب أن يحدث أولاً أو أخيرًا.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    يمثل O(1) التعقيد الزمني الثابت. يعني أن الخوارزمية تستغرق دائمًا نفس الوقت للتشغيل، بغض النظر عن حجم الإدخال.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="هياكل البيانات"
+  title="حساب طول القائمة المرتبطة"
+  options={[
+    {text: 'O(1)'},
+    {text: 'O(log n)'},
+    {text: 'O(n^2)'},
+    {text: 'O(n)', isAnswer: true},
+    {text: 'O(n log n)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما هو التعقيد الزمني لحساب طول قائمة مرتبطة منفردة؟
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    انظر إلى نمط الوصول، وليس اسم الهيكل. الإجابة الصحيحة عادةً تتبع ما يجب أن يحدث أولاً أو آخراً.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    لحساب طول قائمة مرتبطة منفردة، يجب عليك اجتياز كل عقدة من الرأس إلى الذيل، مما يؤدي إلى تعقيد زمني O(n).
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="هياكل البيانات"
+  title="البحث في شجرة البحث الثنائية"
+  options={[
+    {text: 'O(1)'},
+    {text: 'O(log n)', isAnswer: true},
+    {text: 'O(n)'},
+    {text: 'O(n^2)'},
+    {text: 'O(n log n)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما هو متوسط التعقيد الزمني للبحث عن عنصر في شجرة بحث ثنائية متوازنة؟
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    انظر إلى نمط الوصول، وليس اسم الهيكل. الإجابة الصحيحة عادةً تتبع ما يجب أن يحدث أولاً أو أخيرًا.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    في شجرة بحث ثنائية متوازنة، متوسط التعقيد الزمني للبحث هو O(log n) لأن كل مستوى يسمح بتقسيم مساحة البحث إلى النصف.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="خوارزميات الفرز"
+  title="تعقيد خوارزمية الفرز بالدمج"
+  options={[
+    {text: 'O(n^2)'},
+    {text: 'O(log n)'},
+    {text: 'O(n log n)', isAnswer: true},
+    {text: 'O(n)'},
+    {text: 'O(1)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما هو التعقيد الزمني لخوارزمية الفرز بالدمج في أسوأ الحالات؟
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    انظر إلى نمط الوصول، وليس اسم البنية. الإجابة الصحيحة عادةً تتبع ما يجب أن يحدث أولاً أو أخيرًا.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    تعمل خوارزمية الفرز بالدمج دائمًا بتعقيد أسوأ حالة O(n log n) حيث تقوم بتقسيم المصفوفة إلى نصفين بشكل متكرر ودمج المصفوفات الفرعية المرتبة.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="الرسومات البيانية"
+  title="DFS مقابل BFS"
+  options={[
+    {text: 'طابور', isAnswer: true},
+    {text: 'مكدس'},
+    {text: 'طابور الأولوية'},
+    {text: 'جدول التجزئة'},
+    {text: 'مجموعة'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما هي بنية البيانات المستخدمة عادةً لتنفيذ بحث العرض أولاً (BFS)؟
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    انظر إلى نمط الوصول، وليس اسم البنية. عادةً ما تتبع الإجابة الصحيحة من ما يجب أن يحدث أولاً أو أخيرًا.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    يستخدم BFS طابورًا لاستكشاف العقد مستوىً بمستوى، ومعالجة العقد بطريقة العرض أولاً (حسب "الصف").
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="الرسوم البيانية"
+  title="كشف الدورات في الرسوم البيانية"
+  options={[
+    {text: 'الترتيب السريع'},
+    {text: 'البحث بالعرض'},
+    {text: 'الترتيب بالدمج'},
+    {text: 'البحث بالعمق', isAnswer: true},
+    {text: 'الترتيب الفقاعي'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    أي خوارزمية تُستخدم عادةً لكشف الدورات في رسم بياني موجه؟
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    انظر إلى نمط الوصول، وليس اسم الهيكل. الإجابة الصحيحة عادةً تتبع ما يجب أن يحدث أولاً أو أخيرًا.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    عادةً ما يُستخدم البحث بالعمق (DFS) لكشف الدورات في رسم بياني عن طريق الحفاظ على مكدس استدعاء لتتبع العُقد التي تم زيارتها.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="خوارزميات الفرز"
+  title="تعقيد فرز الكومة"
+  options={[
+    {text: 'O(n^2)'},
+    {text: 'O(n log n)', isAnswer: true},
+    {text: 'O(n)'},
+    {text: 'O(log n)'},
+    {text: 'O(1)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما هو التعقيد الزمني لفرز الكومة في أسوأ الحالات؟
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    انظر إلى نمط الوصول، وليس اسم البنية. الإجابة الصحيحة عادةً تتبع ما يجب أن يحدث أولاً أو أخيرًا.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    يحافظ فرز الكومة على تعقيد زمني في أسوأ الحالات هو O(n log n)، حيث يقوم ببناء كومة واستخراج العنصر الأقصى بشكل متكرر.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="هياكل البيانات"
+  title="تعقيد الوقت في جدول التجزئة"
+  options={[
+    {text: 'O(n)'},
+    {text: 'O(log n)'},
+    {text: 'O(1)', isAnswer: true},
+    {text: 'O(n^2)'},
+    {text: 'O(n log n)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما هو متوسط تعقيد الوقت للوصول إلى عنصر في جدول التجزئة؟
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    انظر إلى نمط الوصول، وليس اسم الهيكل. الإجابة الصحيحة عادةً ما تُستنتج من ما يجب أن يحدث أولاً أو أخيرًا.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    جداول التجزئة لها تعقيد وقت متوسط قدره O(1) للوصول إلى العناصر، بافتراض وجود دالة تجزئة جيدة تقلل من التصادمات.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="هياكل البيانات"
+  title="عمليات المكدس"
+  options={[
+    {text: 'Push, Pop, Peek', isAnswer: true},
+    {text: 'Enqueue, Dequeue, Peek'},
+    {text: 'Insert, Search, Delete'},
+    {text: 'Traverse, Visit, Sort'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    أي مجموعة تحتوي على العمليات النموذجية التي يتم إجراؤها على المكدس؟
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    انظر إلى نمط الوصول، وليس اسم الهيكل. الإجابة الصحيحة عادةً تتبع ما يجب أن يحدث أولاً أو آخراً.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    العمليات الأساسية للمكدس هي Push (إضافة عنصر)، Pop (إزالة عنصر)، و Peek (عرض العنصر العلوي دون إزالته).
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="خوارزميات الرسم البياني"
+  title="خوارزمية أقصر مسار"
+  options={[
+    {text: 'خوارزمية كروسكال'},
+    {text: 'خوارزمية بريم'},
+    {text: 'خوارزمية بيلمان-فورد'},
+    {text: 'خوارزمية ديكسترا', isAnswer: true},
+    {text: 'خوارزمية فلويد-وارشال'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما هي الخوارزمية الشائعة الاستخدام لإيجاد أقصر مسار في رسم بياني موزون بحواف غير سالبة؟
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    انظر إلى نمط الوصول، وليس اسم الهيكل. الإجابة الصحيحة عادةً تتبع ما يجب أن يحدث أولاً أو أخيرًا.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    خوارزمية ديكسترا تُستخدم بشكل متكرر لإيجاد أقصر مسار في الرسوم البيانية ذات أوزان الحواف غير السالبة. تستخدم طابور أولوية لتحديد أقصر مسافة بكفاءة.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="هياكل بيانات الأشجار"
+  title="أشجار البحث ذاتية التوازن"
+  options={[
+    {text: 'شجرة البحث الثنائية والكومة الصغرى'},
+    {text: 'شجرة AVL وشجرة الأحمر-الأسود', isAnswer: true},
+    {text: 'الكومة الصغرى والكومة الكبرى'},
+    {text: 'المكدس والطابور'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    أي مجموعة تحتوي على أمثلة لهياكل بيانات أشجار البحث الثنائية ذاتية التوازن؟
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    انظر إلى نمط الوصول، وليس إلى اسم الهيكل. الإجابة الصحيحة عادةً تتبع ما يجب أن يحدث أولاً أو أخيرًا.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    أشجار AVL وأشجار الأحمر-الأسود هي أنواع من الأشجار ذاتية التوازن، والتي تضمن بقاء الشجرة متوازنة بعد كل إدراج أو حذف.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="التكرار"
+  title="حالة الأساس للتكرار"
+  options={[
+    {text: 'حلقة لا نهائية'},
+    {text: 'تجاوز سعة المكدس'},
+    {text: 'حالة الأساس', isAnswer: true},
+    {text: 'متغير عام'},
+    {text: 'تحديد النطاق'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما الذي يجب تعريفه في دالة تكرارية لمنع التكرار اللانهائي؟
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    انظر إلى نمط الوصول، وليس اسم الهيكل. الإجابة الصحيحة عادةً تتبع ما يجب أن يحدث أولاً أو أخيرًا.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    حالة الأساس ضرورية في دالة تكرارية لإيقاف الاستدعاءات التكرارية عند تحقق شرط معين، مما يمنع التكرار اللانهائي.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={13}
+  group="هياكل البيانات"
+  title="عمليات الطابور"
+  options={[
+    {text: 'الإدراج والإزالة', isAnswer: true},
+    {text: 'الدفع والإخراج'},
+    {text: 'الاطلاع والقمة'},
+    {text: 'الاجتياز والفرز'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما هما العمليتان الأساسيتان للطابور؟
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    انظر إلى نمط الوصول، وليس اسم الهيكل. الإجابة الصحيحة عادةً تتبع ما يجب أن يحدث أولاً أو أخيرًا.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    العمليتان الأساسيتان في الطابور هما الإدراج (إضافة عنصر إلى الخلف) والإزالة (إزالة عنصر من الأمام).
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={14}
+  group="خوارزميات الرسوم البيانية"
+  title="الترتيب الطوبولوجي"
+  options={[
+    {text: 'يجب أن يحتوي الرسم البياني على دورات'},
+    {text: 'يجب أن يكون الرسم البياني موزونًا ومتصلًا'},
+    {text: 'يجب أن يكون الرسم البياني غير موجه ولا دوري'},
+    {text: 'يجب أن يكون الرسم البياني موجهًا ولا دوريًا', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما هي شروط إجراء الترتيب الطوبولوجي على رسم بياني؟
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    انظر إلى نمط الوصول، وليس اسم الهيكل. الإجابة الصحيحة عادةً تتبع ما يجب أن يحدث أولاً أو أخيرًا.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    يمكن إجراء الترتيب الطوبولوجي على رسم بياني إذا كان موجهًا ولا دوريًا (DAG). هذا النوع من الترتيب مفيد في مشاكل جدولة المهام.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={15}
+  group="البرمجة الديناميكية"
+  title="تعقيد دالة فيبوناتشي التكرارية"
+  options={[
+    {text: 'O(1)'},
+    {text: 'O(2^n)', isAnswer: true},
+    {text: 'O(n)'},
+    {text: 'O(log n)'},
+    {text: 'O(n^2)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما هو التعقيد الزمني لتطبيق تكراري ساذج لمتتالية فيبوناتشي؟
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    انظر إلى نمط الوصول، وليس اسم الهيكل. الإجابة الصحيحة عادةً تتبع ما يجب أن يحدث أولاً أو أخيرًا.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    التطبيق التكراري الساذج لمتتالية فيبوناتشي له تعقيد زمني O(2^n) بسبب الحسابات المتكررة الواسعة لكل رقم فيبوناتشي.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={16}
+  group="هياكل البيانات"
+  title="تنفيذ قائمة الأولويات"
+  options={[
+    {text: 'مصفوفة'},
+    {text: 'مكدس'},
+    {text: 'كومة', isAnswer: true},
+    {text: 'طابور'},
+    {text: 'قائمة مرتبطة'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما هي بنية البيانات المستخدمة عادة لتنفيذ طابور الأولوية؟
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    انظر إلى نمط الوصول، وليس اسم الهيكل. الإجابة الصحيحة عادةً ما تتبع ما يجب أن يحدث أولاً أو أخيرًا.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    غالبًا ما يتم تنفيذ طابور الأولوية باستخدام الكومة لأنها تسمح باستخراج العنصر ذي الأولوية الأعلى أو الأدنى بكفاءة.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={17}
+  group="هياكل البيانات"
+  title="اجتيازات الشجرة الثنائية"
+  options={[
+    {text: 'الترتيب الداخلي، الترتيب المسبق، الترتيب اللاحق', isAnswer: true},
+    {text: 'الاتساع أولاً، العمق أولاً، التكويم'},
+    {text: 'الفرز، البحث، التدوير'},
+    {text: 'الدفع، السحب، النظر'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    أي من المجموعات التالية تسرد ترتيبات الاجتياز بالعمق أولاً الشائعة للشجرة الثنائية؟
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    انظر إلى نمط الوصول، وليس اسم الهيكل. الإجابة الصحيحة عادةً تتبع ما يجب أن يحدث أولاً أو أخيراً.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    الترتيب الداخلي والترتيب المسبق والترتيب اللاحق هي ترتيبات الاجتياز بالعمق أولاً الثلاثة الشائعة للأشجار الثنائية، ولكل منها ترتيب مختلف لزيارة العقد. الاجتياز بالاتساع أولاً شائع أيضًا، لكنه فئة اجتياز مختلفة.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={18}
+  group="هياكل بيانات الشجرة"
+  title="خاصية الكومة"
+  options={[
+    {text: 'جميع العقد مرتبة من اليسار إلى اليمين'},
+    {text: 'الجذر دائمًا هو أكبر عنصر'},
+    {text: 'جميع الأوراق في نفس المستوى'},
+    {text: 'الجذر هو أصغر عنصر والارتفاع هو O(log n)', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    أي من الخصائص التالية صحيحة بالنسبة للكومة الصغرى؟
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    انظر إلى نمط الوصول، وليس اسم الهيكل. الإجابة الصحيحة عادةً تتبع ما يجب أن يحدث أولاً أو أخيرًا.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    في الكومة الصغرى، الجذر دائمًا هو أصغر عنصر، وارتفاع الشجرة هو O(log n)، مما يجعل الإدراج والاستخراج فعالين.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={19}
+  group="خوارزميات الترتيب"
+  title="استقرار ترتيب الفقاعات"
+  options={[
+    {text: 'غير مستقر'},
+    {text: 'مستقر', isAnswer: true},
+    {text: 'يعتمد على التنفيذ'},
+    {text: 'لا هذا ولا ذاك'},
+    {text: 'التعقيد يحدد الاستقرار'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    هل خوارزمية ترتيب الفقاعات مستقرة؟
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    انظر إلى نمط الوصول، وليس اسم الهيكل. الإجابة الصحيحة عادةً تتبع ما يجب أن يحدث أولاً أو أخيرًا.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    ترتيب الفقاعات هو خوارزمية ترتيب مستقرة لأنها تحافظ على الترتيب النسبي للعناصر المتساوية أثناء الترتيب.
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
