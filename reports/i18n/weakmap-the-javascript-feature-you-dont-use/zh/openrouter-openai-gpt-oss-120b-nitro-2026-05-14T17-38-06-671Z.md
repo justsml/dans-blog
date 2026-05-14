@@ -1,0 +1,147 @@
+# Translation Candidate
+- Slug: weakmap-the-javascript-feature-you-dont-use
+- Locale: zh
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2025-12-29--weakmap-the-javascript-feature-you-dont-use/zh/index.mdx
+- Validation: deferred
+- Runtime seconds: 4.76
+- Input tokens: 3319
+- Output tokens: 1590
+- Thinking tokens: unknown
+- Cached input tokens: 1024
+- Cache write tokens: 0
+- Estimated cost: $0.000416
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: 使用 WeakMap 防止内存泄漏
+subTitle: 用弱引用修复脆弱代码！
+date: '2025-12-29'
+modified: '2026-01-12'
+tags:
+  - javascript
+  - memory
+  - garbage-collection
+  - performance
+  - patterns
+category: Code
+subCategory: Best Practices
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+你知道那种只改一行代码，内存使用率立刻下降 50% 的感觉吗？我就在 Chrome DevTools 性能监视器里看到，一个仪表盘应用从每小时泄漏 100 MB 降到整个下午都保持干净。
+
+改动只有一行：`new Map()` 变成了 `new WeakMap()`。
+
+仅此而已。相同的 API 表面、相同的使用模式，底层行为却截然不同。但要弄懂它为何有效，就必须理解大多数 JavaScript 开发者从未思考的事情：当没有任何东西再关注你的数据时会发生什么。
+
+## 当引用变成锚点
+
+普通的 Map 在 JavaScript 中把键当作贵重货物。一旦把某个对象放进去，Map 就会用铁拳抓住它。垃圾回收器看到这层关系会想，“显然它们仍然需要这个对象，别动它。”
+
+这种保护本能在你存储临时事物的元数据时会变成问题。被移除的 DOM 节点、过期的用户会话、已卸载的组件实例。Map 并不知道这些对象已经不再有用，它只知道自己还有引用，于是把它们一直保活。
+
+```javascript
+const cache = new Map();
+
+function trackClick(element) {
+  cache.set(element, { clicks: 0 });
+}
+
+document.body.removeChild(element);
+// 元素已经从 DOM 中移除，但 cache 仍然把它留在内存中
+```
+
+垃圾回收器无法回收 `element`，因为 `cache` 仍在指向它。这是一种“强引用”，在长期运行的单页应用中会导致泄漏，最终让浏览器崩溃。
+
+## WeakMap 改变了规则
+
+WeakMap 的工作方式不同。它把键当作临时公民，而不是永久居民。当你在 WeakMap 中存入某个对象时，实际上是在说：“我想把这条数据关联到这个对象上，但我不想成为它存活的原因。”
+
+如果唯一让对象保留在内存中的是 WeakMap，垃圾回收器就可以把它回收。对象一消失，WeakMap 条目也随之消失。无需手动清理。
+
+```javascript
+const cache = new WeakMap();
+
+function trackClick(element) {
+  cache.set(element, { clicks: 0 });
+}
+
+document.body.removeChild(element);
+// 元素被垃圾回收
+// 缓存条目自动消失
+```
+
+我做了一个基准测试：创建 100,000 个 DOM 节点，为每个节点存储元数据，然后全部移除。使用 Map 时，浏览器占用 150‑200 MB；使用 WeakMap 时降到 70‑80 MB。代码相同，功能相同，内存占用减半。
+
+## 你要放弃的东西
+
+WeakMap 有一些限制，乍看像是缺陷，直到你意识到正是这些限制让它发挥魔力。
+
+**不能遍历 WeakMap。** 没有 `forEach`，没有 `keys()`，没有 `values()`。这在逻辑上是合理的：垃圾回收器可能在循环进行时删除条目，你真的想处理这种情况吗？
+
+**不能检查大小。** 没有 `.size` 属性，也没有 `.length`。同样，这是一只不断移动的目标。查询时的数量可能在你得到答案之前就已经改变。
+
+**键必须是对象。** 不能是字符串、数字或其他原始值。这是弱引用工作原理的根本：原始值没有可以单独追踪的身份。
+
+这些不是 bug，而是设计。WeakMap 只为一种特定任务而生：在不阻止对象被回收的前提下，为对象附加元数据。如果你需要遍历、原始键或条目计数，说明你在解决别的问题，应该使用普通的 Map。
+
+## 实际有帮助的场景
+
+“私有数据”模式是 WeakMap 最初的用例，早在 JavaScript 引入 `#private` 字段之前。库会在类外部创建一个 WeakMap，用它来存放不应在实例上直接访问的数据。
+
+```javascript
+const privateData = new WeakMap();
+
+class User {
+  constructor(name) {
+    privateData.set(this, { name });
+  }
+
+  getName() {
+    return privateData.get(this).name;
+  }
+}
+```
+
+当 `User` 实例被垃圾回收时，私有数据随之消失，无需额外的清理代码。
+
+记忆化（Memoization）也是天然的匹配场景，尤其是当你基于对象输入而非原始值来缓存结果时。如果你的昂贵计算接受一个配置对象作为参数，使用 WeakMap 可以避免缓存的生命周期超过配置对象本身。
+
+```javascript
+const cache = new WeakMap();
+
+function expensiveCalc(obj) {
+  if (cache.has(obj)) return cache.get(obj);
+  
+  const result = heavyMath(obj);
+  cache.set(obj, result);
+  return result;
+}
+```
+
+缓存仅在被缓存的对象仍然存活时存在。只要 `obj` 不再被其他地方引用，缓存的结果和条目会一起消失。
+
+## 何时使用它
+
+现代 Web 应用的内存泄漏通常来源于对本应被清理的对象的陈旧引用。如果你在构建长期运行的东西——整天保持打开的仪表盘、运行数小时的聊天应用、从不刷新的管理后台——就必须考虑旧数据的去向。
+
+WeakMap 在你需要把数据关联到 DOM 节点、组件实例或任何生命周期不受你控制的对象时特别有用。如果你基于某个引用存储信息，而该引用可能会消失，WeakMap 能让清理工作变得极其简洁。
+
+普通的 Map 仍然是正确的选择，当你需要实现带有淘汰策略的真实缓存、需要遍历条目、使用原始键，或数据本身比与对象的关联更重要时。
+
+WeakMap 的好处在于它的需求往往很明显。如果你发现自己必须编写清理代码来在对象销毁时移除 map 条目，那就是信号；如果你担心内存无限增长却不确定何时删除条目，那也是信号。
+
+有时最好的特性就是那种你根本不需要思考、它就能自行工作的特性。
+
+## 资源
+
+- [MDN: WeakMap](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap)
+- [MDN: Memory Management](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Memory_management)
+- [V8 Blog: Weak References and Finalizers](https://v8.dev/features/weak-references)
+- [JavaScript.info: WeakMap and WeakSet](https://javascript.info/weakmap-weakset)
+````
