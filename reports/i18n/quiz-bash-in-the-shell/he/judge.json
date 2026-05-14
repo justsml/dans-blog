@@ -1,0 +1,53 @@
+{
+  "selectedCommit": "dc93ac450330fd2785855afae333d51654c5ecba",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "או בצע לו escape עם לוכסן אחורי",
+      "replacement": "או בצע לו escape (באמצעות לוכסן אחורי `\\`)",
+      "reason": "The current text already uses 'בצע לו escape' in the provided MDX, but the judge report mentioned 'ברוח ממנו' which was likely a hallucination in the report or from an earlier version. However, ensuring the backslash is clearly associated with the escape action is better for technical clarity."
+    }
+  ],
+  "rationale": "DeepSeek provided a very natural translation that captures Dan's direct and slightly informal style well. It correctly handled the MDX structure and asset paths. The technical terminology is accurate. The judge report mentioned a phrase 'ברוח ממנו' as a negative, but that phrase does not actually appear in the selected MDX (it already uses 'בצע לו escape'), suggesting the translation is even better than the judge's initial critique implied.",
+  "slug": "quiz-bash-in-the-shell",
+  "locale": "he",
+  "candidateCommits": [
+    "dc93ac450330fd2785855afae333d51654c5ecba",
+    "487586a380ab3f3264588a02e2d3b627cdeb903b"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "medium",
+      "match": "ברוח ממנו",
+      "replacement": "בצע לו escape",
+      "reason": "The phrase 'ברוח ממנו' is a literal/hallucinated translation of 'escape it'. In a technical context, 'בצע לו escape' or 'השתמש בלוכסן אחורי כדי לבטל את משמעות התו' is clearer.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "או בצע לו escape עם לוכסן אחורי",
+      "replacement": "או בצע לו escape (באמצעות לוכסן אחורי `\\`)",
+      "reason": "The current text already uses 'בצע לו escape' in the provided MDX, but the judge report mentioned 'ברוח ממנו' which was likely a hallucination in the report or from an earlier version. However, ensuring the backslash is clearly associated with the escape action is better for technical clarity.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug quiz-bash-in-the-shell --locale he --skip-global",
+    "output": ""
+  }
+}
