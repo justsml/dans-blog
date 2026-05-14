@@ -1,0 +1,37 @@
+{
+  "selectedCommit": "23006777964500ef9107c33ba8d6e6063a5d247c",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The current translation already incorporates the high-priority fix suggested in the previous judge report ('مذهل للغاية' is already present in the text). The translation is technically accurate, maintains Dan's informal yet professional tone, and correctly handles MDX asset paths and structure. The use of 'دعامة' for 'crutch' and 'جمع القمامة' for 'garbage collection' are appropriate technical translations in Arabic.",
+  "slug": "stop-the-angularjs-hate",
+  "locale": "ar",
+  "candidateCommits": [
+    "23006777964500ef9107c33ba8d6e6063a5d247c",
+    "bc5bd0839109eb3b5b3b3c7ae8a75bb872417d1e"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "شيء مذهل بشكل لا يُصدق",
+      "replacement": "مذهل للغاية",
+      "reason": "The original 'frickin amazeballs' is slangy and punchy; the candidate's translation is a bit literal and wordy. 'مذهل للغاية' or 'رهيب' fits Dan's style better.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug stop-the-angularjs-hate --locale ar --skip-global",
+    "output": ""
+  }
+}
