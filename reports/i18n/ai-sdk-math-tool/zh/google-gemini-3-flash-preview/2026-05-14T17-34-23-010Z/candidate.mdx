@@ -1,0 +1,138 @@
+---
+title: 别再让 LLM 做数学了
+subTitle: 它们做得并不好。以下是解决方法。
+date: '2026-01-06'
+modified: '2026-01-07'
+tags:
+  - ai
+  - ai-sdk
+  - typescript
+  - math
+  - tools
+  - patterns
+category: AI
+subCategory: Engineering
+social_image: ../desktop-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+语言模型有个很奇怪的现象，你发现了吗？它们能解释量子力学，能写诗，还能帮你调试 TypeScript……但如果你让它们算一下 18472 乘以 9347，它们很有可能会一本正经地给你一个差了成千上万的错误答案。
+
+以前我也对此感到困惑，直到我意识到我们到底在要求它们做什么。我们是在要求一个模式匹配引擎去充当计算器。这就像是因为体操运动员理解“平衡”的概念，就找他们来平衡你的账目一样离谱。
+
+问题的核心在于，LLM（大语言模型）并不进行计算。当你问 GPT 或 Claude “2 + 2 等于几”时，它们并不是在做加法。它们是在预测“4”这个 token 最有可能出现在“2 + 2 =”之后。大多数情况下，这行得通，因为这些模式存在于它们的训练数据中。但一旦超出简单的算术，进入多步计算或训练数据中不常见的数字，你基本上就是在掷骰子。
+
+我最近在审查一段代码时正面撞到了这个问题：那段代码使用一个顶级模型来计算抵押贷款还款额。模型回答得极其自信，但结果每月误差高达 400 美元。这种错误是致命的。
+
+即使模型推理能力在不断提升（据说 GPT-5 有所改进），它们本质上仍然是在进行复杂的模式匹配，而非符号计算。对于创意工作和自然语言任务，这种概率特性正是其魔力所在。但对于数学？真不是那么回事。
+
+## 到底该如何解决？
+
+答案不是等待更聪明的模型，而是给模型配备合适的工具。
+
+想想如果你在构建一个非 AI 系统时会如何解决这个问题。你不会自己写一套数学逻辑，而是会调用一个库。同样的原则也适用于这里，只不过现在我们要教会 LLM 何时以及如何使用那个库。
+
+现代 AI SDK 中的工具调用（Tool calling）功能允许我们为模型提供可调用的结构化函数。与其强迫 LLM 假装懂数学，不如给它一个真正懂行的东西：符号数学引擎。
+
+我一直在使用 [AI SDK v5 和 v6](https://ai-sdk.vercel.ai/) 配合 CortexJS Compute Engine 来处理这类任务。SDK 负责编排和工具路由，而 CortexJS 处理从基础算术到微积分的一切计算。这是一种非常清晰的关注点分离。
+
+```bash
+bun add ai @ai-sdk/anthropic @cortex-js/compute-engine zod
+```
+
+## 构建数学工具
+
+实现过程比你预想的要直接。我们要构建的是 LLM 的自然语言理解能力与实际数学计算之间的桥梁。
+
+```typescript
+import { generateText, stepCountIs, tool } from 'ai';
+import { ComputeEngine } from '@cortex-js/compute-engine';
+import { z } from 'zod';
+
+// 初始化引擎实例
+const ce = new ComputeEngine();
+
+const mathTool = tool({
+  description: '以保证的准确性评估数学表达式并求解方程。必须用于所有数学运算以验证正确性——不要尝试心算。支持算术、代数、微积分和复杂运算。可以同时处理多个表达式。',
+  parameters: z.object({
+    expressions: z.array(z.string()).describe(
+      'LaTeX 或普通记法形式的数学表达式数组，例如 ["2 + 2", "\\frac{x^2 + 1}{x - 1}", "\\int x^2 dx"]'
+    ),
+  }),
+  execute: async ({ expressions }) => {
+    // 并行处理所有表达式（或详细批处理）
+    return expressions.map(expression => {
+      try {
+        const result = ce.parse(expression).evaluate();
+        return {
+          expression,
+          result: result.toString(),
+          latex: result.latex,
+        };
+      } catch (error) {
+        return { 
+          expression,
+          error: (error as Error).message 
+        };
+      }
+    });
+  },
+});
+```
+
+关于这段代码，有几点值得注意：
+
+描述（description）起到了关键作用。那种“必须使用”的语气看似强硬，但根据我的经验，明确告诉模型何时使用工具，是决定它“偶尔奏效”还是“稳定可靠”的关键。可以把它看作是工具层面的提示词工程（Prompt Engineering）。
+
+通过 `expressions` 数组进行批处理比你想象的更重要。每次模型调用都有延迟。如果你在解方程组或进行多步数学运算，逐个处理会导致极差的用户体验。批处理意味着一次往返就能解决十个问题。
+
+使用符号引擎而不是简单的 `eval()`（求你千万别用 `eval()`）能让我们获得真正的数学理解。引擎会解析意图，处理 LaTeX 格式，并能处理导数和积分。我们不只是在做计算，我们是在处理数学。
+
+错误处理是针对每个表达式独立进行的。如果一个计算失败，我们会返回该错误，但继续处理其余部分。这让模型能看到哪些成功了，哪些失败了，从而可能在下一步中进行自我修正。
+
+## 投入实战
+
+让我们给它扔一个通常会让原生模型产生幻觉的任务：
+
+```typescript
+import { anthropic } from '@ai-sdk/anthropic';
+
+const { text } = await generateText({
+  model: anthropic('claude-sonnet-4-5'),
+  prompt: 'Calculate 18472 × 9347, divide by 127, then take the square root of the result.',
+  tools: { mathTool },
+  stopWhen: stepCountIs(5), // 允许最多五步模型/工具交互
+});
+
+console.log(text);
+```
+
+模型看到数学题，意识到需要精确度，调用工具，获取准确结果，然后用自然语言进行解释。每个组件都在做它最擅长的事。
+
+## 超越基础算术
+
+由于我们使用的是符号引擎，这种方法可以处理简单计算器工具无法触及的任务。
+
+想要解代数方程？“解这些方程：3x + 7 = 22 和 2y - 5 = 13”可以正常工作。
+
+需要微积分？“求 x^3 + 2x^2 的导数并在 x = 2 处求值”也只是另一次工具调用。
+
+如果你正在构建教育类应用，LaTeX 支持尤其有用。该引擎天生理解 LaTeX 输入，并能返回格式化后的结果用于渲染。无需额外的解析工作。
+
+## 更宏观的视角
+
+我认为这种模式的意义不仅限于数学。我们实际上是在承认 LLM 局限性的同时，发挥其长处。它们在理解意图、解析自然语言和编排工作流方面表现惊人。但它们不是计算器、数据库或文件系统。
+
+每当我们试图让 LLM 执行确定性任务时，我们都在违背它的天性。但当我们把这种自然语言理解能力与处理确定性任务的专业工具结合起来时，事情就变得有趣了。
+
+数学工具只是一个例子。同样的原则也适用于日期处理、财务计算、图像处理、数据库查询……任何精度比创造性更重要的地方。让模型理解用户想要什么，然后将实际工作交给为此而生的工具。
+
+这是我们构建 AI 应用思维方式的一种转变。不再是“模型能做这个吗？”，而是“模型能编排这个吗？”。措辞上的微小差异，却带来了可靠性上的巨大飞跃。
+
+## 资源
+
+- [Vercel AI SDK 文档](https://sdk.vercel.ai/docs)
+- [CortexJS Compute Engine](https://cortexjs.io/compute-engine/)
+- [工具调用指南](https://sdk.vercel.ai/docs/ai-sdk-core/tools-and-tool-calling)
+- [AI SDK 示例仓库](https://github.com/vercel/ai/tree/main/examples)
