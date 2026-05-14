@@ -5,6 +5,7 @@ import {
   getMissingTranslationSlots,
 } from "./corpus-inventory.ts";
 import {
+  gitCommit,
   optionalString,
   parseArgs,
   parseList,
@@ -113,8 +114,9 @@ function processTask(task: Task) {
         "",
       ].join("\n"),
     );
-    runInherited("git", ["add", relativeToRepo(reportPath)]);
-    runInherited("git", ["commit", "-m", `i18n skipped(${task.locale}): ${task.slug} lacked ${minCandidates} candidates`]);
+    gitCommit(`i18n skipped(${task.locale}): ${task.slug} lacked ${minCandidates} candidates`, [
+      relativeToRepo(reportPath),
+    ]);
     console.log(`Skipped judge: only ${candidates.length}/${minCandidates} candidates.`);
     return;
   }
@@ -166,9 +168,58 @@ function getCandidateCommits(task: Task) {
         "-r",
         commit,
       ]);
-      return changedFiles.split(/\r?\n/).includes(targetRelPath);
+      if (changedFiles.split(/\r?\n/).includes(targetRelPath)) return true;
+      return getCandidatePathFromCommit(commit, task) != null;
     })
     .reverse();
+}
+
+function getCandidatePathFromCommit(commit: string, task: Task) {
+  const candidatesPath = `reports/i18n/${task.slug}/candidates.jsonl`;
+  const model = getCandidateModel(commit);
+  let contents = "";
+
+  try {
+    contents = run("git", ["show", `${commit}:${candidatesPath}`]);
+  } catch {
+    return undefined;
+  }
+
+  const rows = contents
+    .split(/\r?\n/)
+    .filter(Boolean)
+    .flatMap((line) => {
+      try {
+        return [JSON.parse(line) as Record<string, unknown>];
+      } catch {
+        return [];
+      }
+    })
+    .filter((row) => row.locale === task.locale)
+    .filter((row) => normalizeModelId(String(row.model ?? "")) === normalizeModelId(model))
+    .toReversed();
+
+  for (const row of rows) {
+    const candidatePath = typeof row.candidatePath === "string" ? row.candidatePath : undefined;
+    if (candidatePath == null) continue;
+    try {
+      run("git", ["cat-file", "-e", `${commit}:${candidatePath}`]);
+      return candidatePath;
+    } catch {
+      // Keep looking for a row whose candidate file exists in this commit.
+    }
+  }
+
+  return undefined;
+}
+
+function getCandidateModel(commit: string) {
+  const subject = run("git", ["show", "-s", "--format=%s", commit]);
+  return subject.match(/ via (.+)$/)?.[1] ?? "";
+}
+
+function normalizeModelId(model: string) {
+  return model.replace(/^openrouter\//, "");
 }
 
 function parsePositiveInteger(rawValue: string | undefined, fallback: number) {

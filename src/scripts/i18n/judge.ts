@@ -904,7 +904,7 @@ function buildJudgeContext(contextItems: Array<CandidateRef | string>) {
     if (/^[a-f0-9]{40}$/i.test(item)) {
       sections.push(renderContextSection(
         `candidate ${item} (${getCandidateModel(item)})`,
-        run("git", ["show", `${item}:${targetRelPath}`]),
+        readCandidateCommitContents(item),
       ));
       continue;
     }
@@ -919,7 +919,20 @@ function buildJudgeContext(contextItems: Array<CandidateRef | string>) {
 
 function readCandidateContents(candidate: CandidateRef) {
   if (candidate.source === "current") return readFileSync(targetPath, "utf8");
-  return run("git", ["show", `${candidate.id}:${targetRelPath}`]);
+  return readCandidateCommitContents(candidate.id);
+}
+
+function readCandidateCommitContents(commit: string) {
+  if (commitChangesTarget(commit)) {
+    return run("git", ["show", `${commit}:${targetRelPath}`]);
+  }
+
+  const candidatePath = getCandidatePathFromCommit(commit);
+  if (candidatePath != null) {
+    return run("git", ["show", `${commit}:${candidatePath}`]);
+  }
+
+  throw new Error(`Candidate commit ${commit} does not contain ${targetRelPath} or a report-backed candidate.mdx.`);
 }
 
 function describeJudgeContextItem(item: CandidateRef | string) {
@@ -1188,7 +1201,7 @@ function getCandidateCommits() {
   const commits = output
     .split(/\r?\n/)
     .filter(Boolean)
-    .filter((commit) => commitChangesTarget(commit))
+    .filter((commit) => commitChangesTarget(commit) || getCandidatePathFromCommit(commit) != null)
     .filter((commit) => candidateModels.length === 0 || candidateModels.includes(getCandidateModel(commit)))
     .reverse();
 
@@ -1240,6 +1253,50 @@ function withCurrentCandidate(candidates: CandidateRef[], currentCandidate: Cand
 function getCandidateModel(commit: string) {
   const subject = run("git", ["show", "-s", "--format=%s", commit]);
   return subject.match(/ via (.+)$/)?.[1] ?? "";
+}
+
+function getCandidatePathFromCommit(commit: string) {
+  const candidatesRelPath = `reports/i18n/${slug}/candidates.jsonl`;
+  const model = getCandidateModel(commit);
+  let contents = "";
+
+  try {
+    contents = run("git", ["show", `${commit}:${candidatesRelPath}`]);
+  } catch {
+    return undefined;
+  }
+
+  const rows = contents
+    .split(/\r?\n/)
+    .filter(Boolean)
+    .flatMap((line) => {
+      try {
+        return [JSON.parse(line) as Record<string, unknown>];
+      } catch {
+        return [];
+      }
+    })
+    .filter((row) => row.locale === locale)
+    .filter((row) => normalizeModelId(String(row.model ?? "")) === normalizeModelId(model))
+    .toReversed();
+
+  for (const row of rows) {
+    const candidatePath = typeof row.candidatePath === "string" ? row.candidatePath : undefined;
+    if (candidatePath == null) continue;
+
+    try {
+      run("git", ["cat-file", "-e", `${commit}:${candidatePath}`]);
+      return candidatePath;
+    } catch {
+      // Keep looking for a row whose candidate file exists in this commit.
+    }
+  }
+
+  return undefined;
+}
+
+function normalizeModelId(model: string) {
+  return model.replace(/^openrouter\//, "");
 }
 
 function commitChangesTarget(commit: string) {
