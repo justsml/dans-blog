@@ -1,0 +1,136 @@
+# Translation Candidate
+- Slug: naming-things-real-good
+- Locale: he
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2016-06-01--naming-things-real-good/he/index.mdx
+- Validation: deferred
+- Runtime seconds: 38.91
+- Input tokens: 3793
+- Output tokens: 5652
+- Thinking tokens: unknown
+- Cached input tokens: 1152
+- Cache write tokens: 0
+- Estimated cost: $0.001956
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: שמות טובים
+subTitle: 'מתן שמות: יסודות מונחה עצמים'
+date: '2016-06-01'
+modified: '2024-08-10'
+category: Guides
+subCategory: programming
+tags:
+  - programming
+  - patterns
+  - naming
+  - source-code
+  - organization
+cover: ../rawpixel-652639-unsplash.webp
+cover_mobile: ../w300_rawpixel-652639-unsplash.webp
+cover_icon: ../icon_rawpixel-652639-unsplash.webp
+---
+## מתן שמות: יסודות תכנות מונחה עצמים
+
+בואו נבחן עיצוב של אובייקט/מחלקה באמצעות דוגמה...
+
+### המצב
+
+האם אי פעם עיצבתם `מודל נתונים` (בקוד, SQL, או גיליונות אקסל)?
+האם הדבר הבא נראה מוכר?
+
+```
+*** anti-pattern - don't copy-paste ***
+* User
+  - id
+  - avatarUrl
+  - name
+  - email
+  - password
+
+* Agent
+  - id
+  - primaryPhoto
+  - name
+  - email
+  - agentEmail
+  - agentPhoneMain
+  - agentEmailPrimary
+  - agentPhonePrimary
+  - agentAddressFull
+  - agentCompanyName
+  - agentCompanyAddress
+  - *userEmail* - 'Pointer' to User table ^^^
+```
+
+### איפה הבאג?
+
+ובכן, טכנית אין באג, פשוט נתונים שזקוקים לארגון מחדש.
+
+**האם הדבר הבא נשמע מוכר?**
+
+1.  כל שינוי באפליקציה שלך ידרוש שעות של ניפוי שגיאות מפרך.
+1.  כל דרישות משתנות יובילו ל:
+
+![ארגון מחדש של סכמה][schema_refactor]
+
+למה מתן שם לשדה `agentEmailPrimary` הוא _כל כך גרוע_?
+
+ראשית, אתה **לא** יוצר דבר חדש לגמרי ביקום. לספציפיות יתר יש כמה מלכודות:
+
+1.  'נעול' בשם ספציפי מדי, פירושו ש-`agentEmailPrimary` כנראה הופך את התצוגות והקוד הקשור ל**0% לשימוש חוזר**, ומציג באגים חוזרים ומעצבנים כמו:
+
+- נתונים לא מסתנכרנים בין טבלאות (לא ברור אם `user.email` צריך להתפשט ל-`agent.agentEmail` או להיפך - שלא לדבר על המורכבות של יישום ידני היכן וכיצד לאכוף את ה'לוגיקה' הזו...)
+- כללי ולוגיקת אימות כנראה משוכפלים ולא עקביים.
+- בהדרגה, הפרויקט שלך ידמה למגדל ג'נגה רועד.
+- שבריריות מצטברת עם כל קובץ חדש, שכן נדרשת תשומת לב גבוהה ביותר לפרטים אפילו לשינויים טריוויאליים
+
+1.  `agentEmailPrimary` יכול להתפרש בכמה דרכים שונות. הימנע מעמימות עם **שמות קצרים יותר**.
+
+- היזהרו ממילים מיותרות מטופשות. `Primary`? רק מוביל לשאלות נוספות: האם יש Secondary? האם זה עבור קרוב המשפחה הראשי שלהם?
+
+מספיק מילים דן, איך זה אמור להיראות במקום?
+
+### פתרון
+
+```
+// Consolidated Schema:
+
+User
+  - id
+  - role: ['agent', 'lead', 'admin']
+  - name
+  - phone
+  - address
+  - email
+  - password
+  - company
+    - name
+    - address
+```
+
+הסרתי את טבלת `Agent`, מכיוון שהיא לא הכילה שדות ייחודיים לסוכנים. ואובייקט `User.company` (עם `.name`, `.address`) צץ לאחר שניקיתי את השמות.
+
+כמה עקרונות מנחים:
+
+1.  בטל טבלאות מיותרות. האם אתה באמת צריך טבלת `statuses`? כאשר אתה יכול להוסיף שדה `status::VARCHAR(8)` בטבלת `User`? זה בסדר, השתמש בבתים הנוספים לשורה.
+2.  נסה למזג טבלאות קשורות. **נתונים**
+3.  מחק איסוף נתונים מיותר (למשל, הסר טבלת `ActivityLogs` אם הוחלפה בפתרון אנליטיקס.)
+4.  נסה לשמור על **כל שמות השדות** כ**מילה/שם עצם/כינוי בודד**. זה בסדר להסתמך על ההקשר שמספקת הטבלה. (למשל, `PersonalAccount.email` לעומת `BusinessAccount.email` - ההקשר מסופק על ידי שם הטבלה.)
+5.  אין **דבר כזה** `Agent.agentEmail` או `Agent.agentPhonePrimary`. נקודה. אמור איתי: "זה `email` ו-`phone`."
+6.  על ידי שימוש בשמות ספציפיים ביותר, אתה מטביע באבן רמה מסוימת של `שימוש חוזר בקוד` ו`עמידות`, ובכן, ספציפית **אפס אחוז**.
+7.  אתה לא עושה לעצמך טובות עם שטויות כמו `User.profileSummaryEmail`. 💞
+
+**קריאה מומלצת כוללת:**
+
+1. [אולי נורמליזציה אינה נורמלית](https://blog.codinghorror.com/maybe-normalizing-isnt-normal/)
+1.  [הפשרות בין נורמליזציה לדה-נורמליזציה של מסד נתונים](https://dev.to/er_dward/the-trade-offs-between-database-normalization-and-denormalization-4kdo)
+2.  [http://phlonx.com/resources/nf3/](http://phlonx.com/resources/nf3/)
+3.  [https://en.wikipedia.org/wiki/Database_normalization](https://en.wikipedia.org/wiki/Database_normalization)
+
+[schema_refactor]: https://res.cloudinary.com/ddd/image/upload/bldg-collapse__wsZKhIc_kafcha.gif
+````
