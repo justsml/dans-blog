@@ -1,0 +1,93 @@
+{
+  "runId": "openai-gpt-oss-120b-nitro@2026-05-14T02-04-37-729Z",
+  "slug": "mastering-functional-pipelines-passing-state",
+  "locale": "he",
+  "model": "openai/gpt-oss-120b:nitro",
+  "modelPath": "openai-gpt-oss-120b-nitro",
+  "createdAt": "2026-05-14T02:04:48.100Z",
+  "sourcePath": "src/content/posts/2023-08-13--mastering-functional-pipelines-passing-state/index.md",
+  "targetPath": "src/content/posts/2023-08-13--mastering-functional-pipelines-passing-state/he/index.mdx",
+  "candidatePath": "reports/i18n/mastering-functional-pipelines-passing-state/he/openai-gpt-oss-120b-nitro/2026-05-14T02-04-37-729Z/candidate.mdx",
+  "sourceHash": "eb38b169d02823202679eaaf98349caf70a17781d65244f001b5c4d7c04d2d25",
+  "outputHash": "f53de1143f5c6900088afc29037079d4124ac9e6185ef741161c56195ea4ba7f",
+  "reasoningEffort": "low",
+  "temperature": 0.3,
+  "maxTokens": 16000,
+  "timeoutMs": 200000,
+  "articleSummary": "The article argues that passing shared state (e.g., `userId`) through JavaScript promise pipelines is error‑prone and harms composability, and proposes encapsulating that state in a dedicated module (a factory or class such as `CartHelpers`) so each pipeline step becomes a unary function. It demonstrates the transformation of a checkout flow from repeatedly passing `userId` to a cleaner version where the module supplies the context, allowing the `.then` chain to be written as simple function references (`.then(cart.getProductsSubtotal)…`). The piece is a tutorial‑style guide aimed at front‑end or Node developers who use TypeScript and promise‑based pipelines, using the recurring metaphor of “Lego‑like” function stacking and emphasizing DRY, readability, and reduced cognitive surface.",
+  "totalInputTokens": 7664,
+  "totalOutputTokens": 2706,
+  "totalCacheReadTokens": 3328,
+  "totalCacheWriteTokens": 0,
+  "totalDurationMs": 9135,
+  "totalCostUsd": 0.000785976,
+  "pricingSource": "local-openrouter-estimate",
+  "telemetry": {
+    "model": "openai/gpt-oss-120b:nitro",
+    "chunkSize": "10p",
+    "totalChunks": 6,
+    "totalInputTokens": 7664,
+    "totalOutputTokens": 2706,
+    "totalCacheReadTokens": 3328,
+    "totalCacheWriteTokens": 0,
+    "totalDurationMs": 9135,
+    "totalCostUsd": 0.000785976,
+    "pricingSource": "local-openrouter-estimate",
+    "chunks": [
+      {
+        "index": 0,
+        "inputTokens": 1138,
+        "outputTokens": 432,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 1575,
+        "costUsd": 0.000122142
+      },
+      {
+        "index": 1,
+        "inputTokens": 1399,
+        "outputTokens": 567,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 1590,
+        "costUsd": 0.000156621
+      },
+      {
+        "index": 2,
+        "inputTokens": 1426,
+        "outputTokens": 620,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 2667,
+        "costUsd": 0.000167214
+      },
+      {
+        "index": 3,
+        "inputTokens": 1402,
+        "outputTokens": 538,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 1742,
+        "costUsd": 0.00015151799999999998
+      },
+      {
+        "index": 4,
+        "inputTokens": 1254,
+        "outputTokens": 402,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 1061,
+        "costUsd": 0.000121266
+      },
+      {
+        "index": 5,
+        "inputTokens": 1045,
+        "outputTokens": 147,
+        "cacheReadTokens": 768,
+        "cacheWriteTokens": 0,
+        "durationMs": 500,
+        "costUsd": 0.000067215
+      }
+    ]
+  }
+}
