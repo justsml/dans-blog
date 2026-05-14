@@ -1,0 +1,37 @@
+{
+  "selectedCommit": "039e85a6cd18342ae92c033dddbb4e964deef1e6",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 10,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The current translation is already high quality and follows the judge's previous recommendations. The suggestion regarding 'fulfilled: success' was already applied in the current version (it appears as 'fulfilled: success' in the provided Hebrew MDX). The translation of technical terms like 'Null Coalescing' to 'איחוי Null' is consistent and the MDX structure is perfectly preserved.",
+  "slug": "quiz-do-you-know-esnext",
+  "locale": "he",
+  "candidateCommits": [
+    "039e85a6cd18342ae92c033dddbb4e964deef1e6",
+    "2849eab53d4e99420c9f4582a33ef2c969c4e965"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "התמלא: הצלחה",
+      "replacement": "fulfilled: success",
+      "reason": "The code output being checked in the console.log is the literal string 'fulfilled' and 'success'. Translating these values makes the quiz question technically incorrect as the code would not output Hebrew.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug quiz-do-you-know-esnext --locale he --skip-global",
+    "output": ""
+  }
+}

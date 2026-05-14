@@ -1,0 +1,431 @@
+---
+title: 'חידון: האם אתה מכיר JavaScript מודרני?'
+subTitle: הוכח את כישורי ה-JavaScript הנכבדים שלך!
+label: ES2019+ Features
+social_image: ../desktop-social.webp
+category: Quiz
+subCategory: JavaScript
+unlisted: false
+date: '2024-10-31'
+modified: '2024-11-08'
+tags:
+  - quiz
+  - javascript
+  - intro
+  - esnext
+  - features
+  - intermediate
+cover_full_width: ../christopher-burns-8KfCR12oeUM-unsplash-wide.webp
+cover_mobile: ../christopher-burns-8KfCR12oeUM-unsplash-square.webp
+cover_icon: ../christopher-burns-8KfCR12oeUM-unsplash-square.webp
+---
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+
+### האם אתה מזהה ES2015 לעומת ES2022?
+
+* **הוכיחו את כישורי ה-JavaScript שלכם!** 🚀
+* אין צורך בהתחברות או הרשמה. ✨
+* שאלות אמריקאיות. 🤖 ... _כמה קשה זה יכול להיות, הא?_
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="ES2020"
+  title="איחוי Null"
+  options={[
+    {text: '42'},
+    {text: 'null'},
+    {text: 'undefined'},
+    {text: '100', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה הערך של `result`?
+    ```js
+        console.log(null ?? 100);
+    ```
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    בדוק את הסמנטיקה המדויקת של האופרטור ב-JavaScript. התשובה המפתה היא לרוב מה שתחביר ישן יותר היה עושה, לא מה שהתכונה הזו עושה.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    אופרטור איחוי Null (`??`) מחזיר את האופרנד הימני (`b`) אם האופרנד השמאלי (`a`) הוא `null` או `undefined`. במקרה זה, `a` הוא `null`, ולכן `result` הוא `100`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="ES2020"
+  title="איחוי null"
+  options={[
+    {text: 'false', isAnswer: true},
+    {text: '42'},
+    {text: 'null'},
+    {text: 'undefined'},
+    {text: '100'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה תהיה הפלט של הקוד הבא?
+    ```js
+        const value = false;
+        const defaultVal = 42;
+        console.log(value ?? defaultVal);
+    ```
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    בדוק את הסמנטיקה המדויקת של האופרטור ב-JavaScript. התשובה המפתה היא לרוב מה שתחביר ישן יותר היה עושה, לא מה שתכונה זו עושה.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    אופרטור איחוי null (`??`) מתייחס לערכים falsey כמו `false` כערכים תקפים. מכיוון ש-`value` הוא `false`, הוא נחשב לערך תקף ומוחזר.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="שרשור אופציונלי"
+  title="שרשור אופציונלי"
+  options={[
+    {text: 'undefined', isAnswer: true},
+    {text: 'שגיאה: לא ניתן לקרוא מאפיין של undefined'},
+    {text: 'null'},
+    {text: '100'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה הפלט של הקוד הבא?
+    ```js
+        const obj = { foo: null };
+        const result = obj.foo?.bar;
+        console.log(result);
+    ```
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    בדוק את הסמנטיקה המדויקת של האופרטור ב-JavaScript. התשובה המפתה היא לעתים קרובות מה שתחביר ישן יותר היה עושה, לא מה שהתכונה הזו עושה.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    אופרטור השרשור האופציונלי (`?.`) מפסיק את ההערכה אם הצד השמאלי הוא `null` או `undefined`. מכיוון ש-`obj.foo` הוא `null`, `obj.foo?.bar` מוערך ל-`undefined`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="BigInt"
+  title="שימוש ב-BigInt"
+  options={[
+    {text: 'TypeError: לא ניתן לערבב BigInt ומספר'},
+    {text: '42n'},
+    {text: '84n', isAnswer: true},
+    {text: 'undefined'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה הפלט של הקוד הבא?
+    ```js
+        const a = 42n;
+        const result = a * 2n;
+        console.log(result);
+    ```
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    בדוק את הסמנטיקה המדויקת של אופרטורים ב-JavaScript. התשובה המפתה היא לרוב מה שתחביר ישן יותר היה עושה, לא מה שהתכונה הזו עושה.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    ערכי BigInt נוצרים על ידי הוספת `n` למספר. לא ניתן לערבב BigInt עם מספרים רגילים בפעולות אריתמטיות. כאן, שני הערכים הם BigInt, ולכן הכפל עובד, ומתקבל `84n`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="ייבוא דינמי"
+  title="תחביר ייבוא דינמי"
+  options={[
+    {text: 'SyntaxError'},
+    {text: 'Promise'},
+    {text: 'Module'},
+    {text: 'object', isAnswer: true},
+    {text: 'undefined'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה יודפס?
+    ```js
+        const modulePromise = import('./myModule.js');
+        console.log(typeof modulePromise);
+    ```
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    בדוק את הסמנטיקה המדויקת של האופרטור. התשובה המפתה היא לרוב מה שהיה קורה בתחביר ישן, לא מה שהתכונה הזו עושה.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    הפונקציה `import()` מחזירה `Promise` שמתממש לאובייקט המודול. מכיוון שמופעי `Promise` הם אובייקטים, `typeof modulePromise` ידפיס `'object'`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="Promise.allSettled"
+  title="Promise.allSettled"
+  options={[
+    {text: 'התמלא: הצלחה', isAnswer: true},
+    {text: 'נדחה: שגיאה'},
+    {text: 'ממתין'},
+    {text: 'null'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה תהיה התוצאה של הקוד הבא?
+    ```js
+        const promises = [
+          Promise.resolve('success'),
+          Promise.reject('error')
+        ];
+        Promise.allSettled(promises).then(results => {
+          console.log(results[0].status + ': ' + results[0].value);
+        });
+    ```
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    בדוק את הסמנטיקה המדויקת של האופרטור ב-JavaScript. התשובה המפתה היא לעתים קרובות מה שתחביר ישן יותר היה עושה, לא מה שהתכונה הזו עושה.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `Promise.allSettled` מחזירה מערך של אובייקטים המתארים את התוצאה של כל הבטחה. ההבטחה הראשונה היא `fulfilled` עם הערך `'success'`, לכן הצהרת ה-log תדפיס `fulfilled: success`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="String.matchAll"
+  title="שימוש ב-String.matchAll"
+  options={[
+    {text: 'מערך של התאמות'},
+    {text: 'איטרטור של התאמות', isAnswer: true},
+    {text: 'שגיאה: קריאה לא חוקית'},
+    {text: 'null'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה מחזירה `str.matchAll()`?
+    ```js
+        const str = 'foo1bar2baz3';
+        const matches = str.matchAll(/\d/g);
+    ```
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    בדוק את הסמנטיקה המדויקת של האופרטור ב-JavaScript. התשובה המפתה היא לרוב מה שתחביר ישן יותר היה עושה, לא מה שהתכונה הזו עושה.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `String.matchAll` מחזירה איטרטור של התאמות, לא מערך. ניתן להשתמש באיטרטור זה כדי לקבל את כל קבוצות ההתאמה ממחרוזת.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="Import Meta"
+  title="שימוש ב-Import Meta"
+  options={[
+    {text: 'כתובת ה-URL של המודול הנוכחי', isAnswer: true},
+    {text: 'חותמת זמן נוכחית'},
+    {text: 'undefined'},
+    {text: 'SyntaxError'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה מייצג `import.meta.url`?
+    ```js
+        console.log(import.meta.url);
+    ```
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    בדוק את הסמנטיקה המדויקת של האופרטור ב-JavaScript. התשובה המפתה היא לעתים קרובות מה שתחביר ישן יותר היה עושה, לא מה שהתכונה הזו עושה.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `import.meta` הוא אובייקט המכיל מטא-דאטה על המודול הנוכחי. המאפיין `import.meta.url` מייצג את כתובת ה-URL של המודול הנוכחי, שניתן להשתמש בו כדי לקבל מידע על היכן הסקריפט רץ.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="השמה לוגית"
+  title="השמה לוגית"
+  options={[
+    {text: '5'},
+    {text: '10', isAnswer: true},
+    {text: 'undefined'},
+    {text: 'null'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה הערך של `a` לאחר ההשמה הלוגית?
+    ```js
+        let a = null;
+        a ||= 10;
+        console.log(a);
+    ```
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    בדוק את הסמנטיקה המדויקת של האופרטור ב-JavaScript. התשובה המפתה היא לעתים מה שתחביר ישן יותר היה עושה, לא מה שהתכונה הזו עושה.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    השמת OR לוגי (`||=`) משימה את הערך מצד ימין אם הערך מצד שמאל הוא falsy (`null`, `undefined`, `0`, `false` וכו'). מכיוון ש-`a` הוא `null`, הוא מקבל את הערך `10`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="השמה לוגית nullish"
+  title="השמה לוגית nullish"
+  options={[
+    {text: '5'},
+    {text: '10', isAnswer: true},
+    {text: 'undefined'},
+    {text: 'null'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה הערך של `b` לאחר ההשמה nullish?
+    ```js
+        let b = null;
+        b ??= 10;
+        console.log(b);
+    ```
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    בדוק את הסמנטיקה המדויקת של האופרטור ב-JavaScript. התשובה המפתה היא לעתים קרובות מה שתחביר ישן יותר היה עושה, לא מה שהתכונה הזו עושה.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    השמת nullish coalescing (`??=`) מקצה את הערך מצד ימין אם הערך מצד שמאל הוא `null` או `undefined`. מכיוון ש-`b` הוא `null`, הוא מקבל את הערך `10`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="WeakRef"
+  title="שימוש ב- WeakRef"
+  options={[
+    {text: 'ReferenceError'},
+    {text: '{ data: \'important\' }', isAnswer: true},
+    {text: 'null'},
+    {text: 'undefined'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה מספק `WeakRef`?
+    ```js
+        const obj = { data: 'important' };
+        const ref = new WeakRef(obj);
+        console.log(ref.deref());
+    ```
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    בדוק את הסמנטיקה המדויקת של האופרטור ב-JavaScript. התשובה המפתה היא לעתים קרובות מה שתחביר ישן יותר היה עושה, לא מה שהתכונה הזו עושה.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `WeakRef` מספקת הפניה חלשה לאובייקט, המאפשרת לאובייקט להיאסף על ידי איסוף הזבל אם אין הפניות אחרות. מכיוון ש- `obj` עדיין מופנה חזק כאן, `deref()` מחזירה את האובייקט המקורי. אם היעד היה נאסף, `deref()` הייתה מחזירה `undefined`.
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
