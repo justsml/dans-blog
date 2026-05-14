@@ -1,0 +1,46 @@
+{
+  "selectedCommit": "cbb8e1952da76366eb24ed92147219eae793ead1",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The current translation already incorporates the high and medium priority fixes suggested in the previous judge report (fixing the conditional grammar in the first paragraph and the imperative 'stop' verb). The translation is technically sound, uses natural Hebrew terminology for 'serverless' and 'stemming', and maintains the author's direct, punchy style. MDX structure and asset paths are correctly preserved.",
+  "slug": "serverless-database-magic",
+  "locale": "he",
+  "candidateCommits": [
+    "cbb8e1952da76366eb24ed92147219eae793ead1",
+    "c35e9f4f3a8990983fc6bb4c1bc070ba56523295"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "הנה כלל ההחלטה שהייתי רוצה שהשתמשתי בו קודם:",
+      "replacement": "הנה כלל ההחלטה שהייתי רוצה שהייתי משתמש בו קודם:",
+      "reason": "Grammar fix: 'שהשתמשתי' (that I used) should be 'שהייתי משתמש' (that I would have used) to match the conditional 'wish I had used'.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "והפסיק לנסות לגרום ל‑S3 להתחפש לאחד כזה.",
+      "replacement": "ותפסיקו לנסות לגרום ל‑S3 להתחפש לאחד כזה.",
+      "reason": "The imperative 'stop' in this context is directed at the reader (plural or general), 'ותפסיקו' flows better in Dan's direct style.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug serverless-database-magic --locale he --skip-global",
+    "output": ""
+  }
+}
