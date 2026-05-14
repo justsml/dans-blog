@@ -1,0 +1,62 @@
+{
+  "index": 0,
+  "attempt": 1,
+  "originalTitle": "Basic Move Semantics",
+  "translatedTitle": "基础移动语义",
+  "translation": {
+    "title": "基础移动语义",
+    "group": "所有权",
+    "options": [
+      {
+        "text": "Hello, !",
+        "hint": "思考在移动后 `philosopher` 会怎样"
+      },
+      {
+        "text": "Hello, Zeno of Citium!",
+        "hint": "值被移动后还能继续使用吗？"
+      },
+      {
+        "text": "Hello, Zeno of Elea!",
+        "hint": "字符串里包含的是 “Citium”，而不是 “Elea”"
+      },
+      {
+        "text": "Hello, Marcus Aurelius",
+        "hint": "检查这是否与字符串内容匹配"
+      },
+      {
+        "text": "Compilation Error: value borrowed after move"
+      },
+      {
+        "text": "Runtime Error: null pointer exception",
+        "hint": "Rust 会在编译期捕获这些问题"
+      }
+    ],
+    "questionProse": [
+      "运行这段代码会怎样？尝试预测输出或错误："
+    ],
+    "explanationProse": [
+      "这段代码无法编译，因为触犯了 Rust 的所有权规则。当我们把 `philosopher` 赋给 `greeting` 时，String 的所有权被移动到 `greeting`。移动后，`philosopher` 已不再有效。",
+      "1. 克隆字符串（创建一个新副本）：",
+      "2. 使用引用（借用值）：",
+      "3. 使用字符串切片（借用字符串的一部分）：",
+      "每种方案都有不同的使用场景和性能影响。克隆更昂贵但获得所有权，引用更轻量但受生命周期约束。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"基础移动语义\",\n  \"group\": \"所有权\",\n  \"options\": [\n    {\n      \"text\": \"Hello, !\",\n      \"hint\": \"思考在移动后 `philosopher` 会怎样\"\n    },\n    {\n      \"text\": \"Hello, Zeno of Citium!\",\n      \"hint\": \"值被移动后还能继续使用吗？\"\n    },\n    {\n      \"text\": \"Hello, Zeno of Elea!\",\n      \"hint\": \"字符串里包含的是 “Citium”，而不是 “Elea”\"\n    },\n    {\n      \"text\": \"Hello, Marcus Aurelius\",\n      \"hint\": \"检查这是否与字符串内容匹配\"\n    },\n    {\n      \"text\": \"Compilation Error: value borrowed after move\"\n    },\n    {\n      \"text\": \"Runtime Error: null pointer exception\",\n      \"hint\": \"Rust 会在编译期捕获这些问题\"\n    }\n  ],\n  \"questionProse\": [\n    \"运行这段代码会怎样？尝试预测输出或错误：\"\n  ],\n  \"explanationProse\": [\n    \"这段代码无法编译，因为触犯了 Rust 的所有权规则。当我们把 `philosopher` 赋给 `greeting` 时，String 的所有权被移动到 `greeting`。移动后，`philosopher` 已不再有效。\",\n    \"1. 克隆字符串（创建一个新副本）：\",\n    \"2. 使用引用（借用值）：\",\n    \"3. 使用字符串切片（借用字符串的一部分）：\",\n    \"每种方案都有不同的使用场景和性能影响。克隆更昂贵但获得所有权，引用更轻量但受生命周期约束。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1090,
+    "outputTokens": 423,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1483,
+    "providerCostUsd": 0.0004173,
+    "providerUpstreamCostUsd": 0.0004173,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000042510000000000005,
+    "outputUsd": 0.00007614,
+    "totalUsd": 0.00011865000000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

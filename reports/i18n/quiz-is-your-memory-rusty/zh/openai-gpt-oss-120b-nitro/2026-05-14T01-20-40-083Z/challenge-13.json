@@ -1,0 +1,55 @@
+{
+  "index": 12,
+  "attempt": 1,
+  "originalTitle": "Arc and Mutex",
+  "translatedTitle": "Arc 与 Mutex",
+  "translation": {
+    "title": "Arc 与 Mutex",
+    "group": "智能指针",
+    "options": [
+      {
+        "text": "打印: 42",
+        "hint": "代码永远不会到达打印语句"
+      },
+      {
+        "text": "打印: 43",
+        "hint": "代码在打印前会卡住"
+      },
+      {
+        "text": "编译错误",
+        "hint": "代码在语法上是正确的"
+      },
+      {
+        "text": "运行时恐慌",
+        "hint": "这比恐慌更糟"
+      },
+      {
+        "text": "死锁"
+      }
+    ],
+    "questionProse": [
+      "这段代码运行时会怎样？"
+    ],
+    "explanationProse": [
+      "这段代码演示了经典的死锁场景。以下是修复方法：",
+      "防止死锁的最佳实践：\n      1. 保持临界区尽可能小\n      2. 使用作用域及时释放锁\n      3. 按一致的顺序获取多个锁\n      4. 使用 `parking_lot::Mutex` 以获得更好性能\n      5. 在读密集的工作负载下考虑使用 `RwLock`\n\n      常见模式："
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Arc 与 Mutex\",\n  \"group\": \"智能指针\",\n  \"options\": [\n    {\n      \"text\": \"打印: 42\",\n      \"hint\": \"代码永远不会到达打印语句\"\n    },\n    {\n      \"text\": \"打印: 43\",\n      \"hint\": \"代码在打印前会卡住\"\n    },\n    {\n      \"text\": \"编译错误\",\n      \"hint\": \"代码在语法上是正确的\"\n    },\n    {\n      \"text\": \"运行时恐慌\",\n      \"hint\": \"这比恐慌更糟\"\n    },\n    {\n      \"text\": \"死锁\"\n    }\n  ],\n  \"questionProse\": [\n    \"这段代码运行时会怎样？\"\n  ],\n  \"explanationProse\": [\n    \"这段代码演示了经典的死锁场景。以下是修复方法：\",\n    \"防止死锁的最佳实践：\\n      1. 保持临界区尽可能小\\n      2. 使用作用域及时释放锁\\n      3. 按一致的顺序获取多个锁\\n      4. 使用 `parking_lot::Mutex` 以获得更好性能\\n      5. 在读密集的工作负载下考虑使用 `RwLock`\\n\\n      常见模式：\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 948,
+    "outputTokens": 828,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 2136,
+    "providerCostUsd": 0.0006006,
+    "providerUpstreamCostUsd": 0.0006006,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000036972,
+    "outputUsd": 0.00014904,
+    "totalUsd": 0.000186012,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

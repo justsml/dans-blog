@@ -1,0 +1,35 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Rc Smart Pointer",
+  "translatedTitle": "Rc 智能指针",
+  "translation": {
+    "title": "Rc 智能指针",
+    "group": "引用计数",
+    "options": [],
+    "questionProse": [
+      "这段代码会打印什么？仔细数数！"
+    ],
+    "explanationProse": [
+      "让我们拆解 Rc 的工作原理：\n\n      1. 使用 `Rc::new()` 初始创建：计数 = 1\n      2. 为 `marcus` 第一次克隆：计数 = 2\n      3. 为 `aurelius` 第二次克隆：计数 = 3\n\n      Rc 的重要特性：",
+      "关键点：\n      - `Rc::clone()` 开销小——它只会递增计数器\n      - Rc 仅用于单线程场景\n      - 当最后一个引用被释放时，数据会被清理\n      - 使用 Weak 引用来防止引用循环\n\n      最佳实践：\n      - 需要共享所有权时使用 Rc\n      - 线程安全场景考虑 Arc\n      - 避免创建引用循环"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Rc 智能指针\",\n  \"group\": \"引用计数\",\n  \"options\": [],\n  \"questionProse\": [\n    \"这段代码会打印什么？仔细数数！\"\n  ],\n  \"explanationProse\": [\n    \"让我们拆解 Rc 的工作原理：\\n\\n      1. 使用 `Rc::new()` 初始创建：计数 = 1\\n      2. 为 `marcus` 第一次克隆：计数 = 2\\n      3. 为 `aurelius` 第二次克隆：计数 = 3\\n\\n      Rc 的重要特性：\",\n    \"关键点：\\n      - `Rc::clone()` 开销小——它只会递增计数器\\n      - Rc 仅用于单线程场景\\n      - 当最后一个引用被释放时，数据会被清理\\n      - 使用 Weak 引用来防止引用循环\\n\\n      最佳实践：\\n      - 需要共享所有权时使用 Rc\\n      - 线程安全场景考虑 Arc\\n      - 避免创建引用循环\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 872,
+    "outputTokens": 732,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1849,
+    "providerCostUsd": 0.00057,
+    "providerUpstreamCostUsd": 0.00057,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000034008000000000004,
+    "outputUsd": 0.00013176,
+    "totalUsd": 0.000165768,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
