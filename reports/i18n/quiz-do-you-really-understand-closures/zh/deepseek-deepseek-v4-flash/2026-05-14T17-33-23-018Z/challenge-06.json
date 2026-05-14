@@ -1,0 +1,49 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Stale Closure in React",
+  "translatedTitle": "React中的过时闭包",
+  "translation": {
+    "title": "React中的过时闭包",
+    "group": "高级",
+    "options": [
+      {
+        "text": "每次点击都记录当前计数"
+      },
+      {
+        "text": "始终记录0"
+      },
+      {
+        "text": "记录NaN"
+      },
+      {
+        "text": "这不会编译"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "当按钮被多次点击时，这个React组件会表现出什么行为？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "经典的过时闭包。`useEffect`只运行一次（空依赖数组），并创建一个闭包，该闭包捕获了挂载时的`count`值：`0`。无论你点击多少次，间隔函数的闭包永远看不到更新后的值。\n\n    按钮标签会正确更新——那是重新渲染的结果。但`console.log`永远被困在`0`。\n\n    解决方法：将`count`添加到依赖数组中（重新创建间隔）或使用ref："
+    ]
+  },
+  "rawText": "{\n  \"title\": \"React中的过时闭包\",\n  \"group\": \"高级\",\n  \"options\": [\n    { \"text\": \"每次点击都记录当前计数\" },\n    { \"text\": \"始终记录0\" },\n    { \"text\": \"记录NaN\" },\n    { \"text\": \"这不会编译\" }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"当按钮被多次点击时，这个React组件会表现出什么行为？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"经典的过时闭包。`useEffect`只运行一次（空依赖数组），并创建一个闭包，该闭包捕获了挂载时的`count`值：`0`。无论你点击多少次，间隔函数的闭包永远看不到更新后的值。\\n\\n    按钮标签会正确更新——那是重新渲染的结果。但`console.log`永远被困在`0`。\\n\\n    解决方法：将`count`添加到依赖数组中（重新创建间隔）或使用ref：\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 906,
+    "outputTokens": 1554,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 10117,
+    "providerCostUsd": 0.0008028,
+    "providerUpstreamCostUsd": 0.0008028,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00012684000000000003,
+    "outputUsd": 0.00043512000000000005,
+    "totalUsd": 0.00056196,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

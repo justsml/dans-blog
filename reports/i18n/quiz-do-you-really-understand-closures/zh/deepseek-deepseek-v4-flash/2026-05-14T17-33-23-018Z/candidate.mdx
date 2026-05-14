@@ -1,0 +1,473 @@
+---
+title: 测验：你真的理解 JavaScript 闭包吗？
+subTitle: 大多数开发者认为他们懂。但大多数开发者错了。
+date: '2026-05-01'
+modified: '2026-05-05'
+tags:
+  - javascript
+  - closures
+  - quiz
+  - fundamentals
+  - scope
+  - advanced
+category: Quiz
+subCategory: JavaScript
+draft: true
+unlisted: true
+hidden: true
+publish: false
+popularity: 0.85
+social_image: ../desktop-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+<p class="inset">闭包是那种每个 JavaScript 开发者都*以为*自己理解的概念——直到某个瞬间发现自己其实没懂。这个测验会帮你摸清自己认知的边界。</p>
+
+闭包出现在事件处理器、工厂函数、React Hook、模块模式，以及几乎所有地方。它们并不稀奇，它们就是 JavaScript 的编织纤维。
+
+题目从合理的难度开始，然后逐渐拆掉你脚下的地板。
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="热身"
+  title="经典计数器"
+  options={[
+    {text: '0, 0, 0'},
+    {text: '0, 1, 2'},
+    {text: '1, 2, 3', isAnswer: true},
+    {text: 'ReferenceError'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    这段代码会输出什么？
+    ```javascript
+        function makeCounter() {
+          let count = 0;
+          return () => ++count;
+        }
+        const tick = makeCounter();
+        console.log(tick(), tick(), tick());
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `tick` 闭包捕获了 `count`。每次调用都会递增并返回 *同一个* `count` 变量。三次调用产生 `1, 2, 3`。
+
+    关键词：*同一个*。`count` 并没有被复制到闭包中。闭包持有的是对变量绑定的**实时引用**。就是这么回事。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="热身"
+  title="独立的闭包"
+  options={[
+    {text: '1, 1', isAnswer: true},
+    {text: '1, 2'},
+    {text: '2, 2'},
+    {text: '0, 0'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    这段代码会输出什么？
+    ```javascript
+        function makeCounter() {
+          let count = 0;
+          return () => ++count;
+        }
+        const a = makeCounter();
+        const b = makeCounter();
+        console.log(a(), b());
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    每次调用 `makeCounter()` 都会创建一个**新的执行上下文**，拥有自己全新的 `count`。`a` 和 `b` 分别闭包了*不同的* `count` 绑定。它们不共享状态。
+
+    结果：`1, 1`
+
+    这就是为什么闭包常用于构建私有状态——每个“实例”都是独立的。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="经典陷阱"
+  title="循环中的 var"
+  options={[
+    {text: '0, 1, 2, 3, 4'},
+    {text: '5, 5, 5, 5, 5', isAnswer: true},
+    {text: '1, 2, 3, 4, 5'},
+    {text: 'undefined 五次'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    100毫秒后输出什么？
+    ```javascript
+        for (var i = 0; i < 5; i++) {
+          setTimeout(() => console.log(i), 100);
+        }
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `var` 是函数作用域的。只有一个 `i`——所有五个回调都闭包引用了同一个绑定。当定时器触发时，循环已经结束，`i` 的值是 `5`。
+
+    五个回调。一个 `i`。值：`5`。输出五次。
+
+    解决办法是使用 `let`（块级作用域，每次迭代创建新绑定）或者用 IIFE 包裹来捕获当前值：
+    ```javascript
+        for (let i = 0; i < 5; i++) {
+          setTimeout(() => console.log(i), 100); // 0, 1, 2, 3, 4 ✓
+        }
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="经典陷阱"
+  title="let 修复了它（真的吗？）"
+  options={[
+    {text: '0, 1, 2, 3, 4', isAnswer: true},
+    {text: '5, 5, 5, 5, 5'},
+    {text: '4, 4, 4, 4, 4'},
+    {text: 'ReferenceError: i is not defined'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    同样的循环，不同的关键字。输出什么？
+    ```javascript
+        for (let i = 0; i < 5; i++) {
+          setTimeout(() => console.log(i), 100);
+        }
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    在 `for` 循环中使用 `let` 是特殊的。规范指出：每次迭代都会获得自己的 **新绑定** 的 `i`。就好像循环偷偷做了这样的事：
+    ```javascript
+        { let i = 0; setTimeout(() => console.log(i), 100) }
+        { let i = 1; setTimeout(() => console.log(i), 100) }
+        // ...
+    ```
+    因此，五个回调函数分别捕获了五个不同的变量。结果：`0, 1, 2, 3, 4`。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="闭包与对象"
+  title="对象突变"
+  options={[
+    {text: '{ x: 1 }, { x: 1 }'},
+    {text: '{ x: 1 }, { x: 99 }'},
+    {text: '{ x: 99 }, { x: 99 }', isAnswer: true},
+    {text: '{ x: 99 }, { x: 1 }'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    这段代码会输出什么？
+    ```javascript
+        function wrap() {
+          const obj = { x: 1 };
+          const getObj = () => obj;
+          obj.x = 99;
+          return getObj;
+        }
+        const get = wrap();
+        console.log(get(), get());
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    闭包捕获的是 **绑定** `obj`，而不是对象的快照。对象本身在闭包创建后被修改——但 `obj` 仍然指向同一个引用。两次调用都返回同一个被修改的对象：`{ x: 99 }`。
+
+    这会让那些以为闭包会“冻结”值的人栽跟头。它们不会。它们捕获的是 **引用**。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="高级"
+  title="React中的过时闭包"
+  options={[
+    {text: '每次点击都记录当前计数'},
+    {text: '始终记录0', isAnswer: true},
+    {text: '记录NaN'},
+    {text: '这不会编译'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    当按钮被多次点击时，这个React组件会表现出什么行为？
+    ```jsx
+        function Counter() {
+          const [count, setCount] = useState(0);
+
+          useEffect(() => {
+            const id = setInterval(() => {
+              console.log('count is', count);
+            }, 1000);
+            return () => clearInterval(id);
+          }, []); // empty deps
+
+          return <button onClick={() => setCount(c => c + 1)}>
+            Click ({count})
+          </button>;
+        }
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    经典的过时闭包。`useEffect`只运行一次（空依赖数组），并创建一个闭包，该闭包捕获了挂载时的`count`值：`0`。无论你点击多少次，间隔函数的闭包永远看不到更新后的值。
+
+    按钮标签会正确更新——那是重新渲染的结果。但`console.log`永远被困在`0`。
+
+    解决方法：将`count`添加到依赖数组中（重新创建间隔）或使用ref：
+    ```jsx
+        const countRef = useRef(count);
+        useEffect(() => { countRef.current = count; }, [count]);
+        // then use countRef.current inside the interval
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="高级"
+  title="模块模式"
+  options={[
+    {text: '60', isAnswer: true},
+    {text: 'TypeError: balance is not defined'},
+    {text: '-40'},
+    {text: '100'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    等等——仔细看，实际发生了什么？
+    ```javascript
+        const bank = (() => {
+          let balance = 0;
+          return {
+            deposit: (n) => (balance += n),
+            withdraw: (n) => (balance -= n),
+            getBalance: () => balance,
+          };
+        })();
+
+        bank.deposit(100);
+        bank.withdraw(40);
+        console.log(bank.getBalance());
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    答案是 `60`。
+
+    这就是**模块模式**——一个返回闭包对象的立即执行函数。所有三个方法都封闭在同一个 `balance` 绑定上。它是真正私有的：你无法从外部访问 `balance`。
+    ```javascript
+        console.log(bank.balance); // undefined
+    ```
+    在类出现之前，这是 JavaScript 中封装状态的*标准*方式。你仍然会在遗留代码库和工具库中看到它。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="专家级"
+  title="闭包内存泄漏"
+  options={[
+    {text: '它会记录数据数组的长度'},
+    {text: '它会造成内存泄漏', isAnswer: true},
+    {text: '它会抛出 RangeError'},
+    {text: '没什么异常——这没问题'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    这段代码有什么问题？
+    ```javascript
+        function attachHandler(element) {
+          const data = new Array(100_000).fill('🔥');
+          element.addEventListener('click', () => {
+            console.log('clicked!', data.length);
+          });
+        }
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    事件监听器闭包捕获了 `data`，因此只要监听器可达，数组就保持可达。如果 `element` 生命周期很长且监听器从未被移除，那么那个大数组也会被保留。
+
+    `element` 在 DOM 中。监听器持有 `data`。垃圾回收无法回收它。
+
+    修复：除非确实需要，否则不要在长生命周期的监听器中捕获大数据，并在所属 UI 被拆除时移除监听器：
+    ```javascript
+        function attachHandler(element) {
+          const data = new Array(100_000).fill('🔥');
+          // do something with data...
+
+          const onClick = () => {
+            console.log('clicked!');
+          };
+
+          element.addEventListener('click', onClick);
+          return () => element.removeEventListener('click', onClick);
+        }
+    ```
+    现代 V8 引擎在这方面比以前好多了。但在拥有大量事件监听器的长期运行的单页应用中，这种模式仍然会坑人。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="专家"
+  title="this 陷阱"
+  options={[
+    {text: 'Dan, Dan'},
+    {text: 'Dan, undefined'},
+    {text: 'undefined, Dan'},
+    {text: 'undefined, undefined', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    这段代码会输出什么？
+    ```javascript
+        const user = {
+          name: 'Dan',
+          greetArrow: () => console.log(this?.name),
+          greetRegular() {
+            const inner = () => console.log(this?.name);
+            inner();
+          },
+        };
+
+        user.greetArrow();
+        const fn = user.greetRegular;
+        fn();
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    两个微妙的陷阱：
+
+    **`greetArrow`**：箭头函数没有自己的 `this`。它们从封闭的词法作用域捕获 `this` —— 这里是模块/全局作用域，而不是 `user`。所以 `this?.name` 是 `undefined`。
+
+    **`fn()`**：`greetRegular` 在没有接收者的情况下被调用（`fn()` 而不是 `user.greetRegular()`）。在严格模式下，`this` 是 `undefined`。在非严格模式下，它是全局对象。无论哪种情况，`this?.name` 都是 `undefined`。
+
+    如果你直接调用 `user.greetRegular()`，你会得到 `'Dan'` —— 因为此时 `this` 绑定到了 `user`。
+
+    结果：`undefined, undefined`。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="附加题"
+  title="通过闭包实现记忆化"
+  options={[
+    {text: '调用 expensive() 3 次'},
+    {text: '调用 expensive() 1 次', isAnswer: true},
+    {text: '调用 expensive() 2 次'},
+    {text: '抛出错误：超出最大调用栈'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    `expensive()` 实际上被调用了多少次？
+    ```javascript
+        function memoize(fn) {
+          const cache = new Map();
+          return (arg) => {
+            if (cache.has(arg)) return cache.get(arg);
+            const result = fn(arg);
+            cache.set(arg, result);
+            return result;
+          };
+        }
+
+        let calls = 0;
+        const expensive = (n) => { calls++; return n * 2; };
+        const fast = memoize(expensive);
+
+        fast(5);
+        fast(5);
+        fast(5);
+        console.log(calls);
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    记忆化函数通过闭包捕获了 `cache`。第一次调用 (`fast(5)`) 未命中缓存，调用了 `expensive` 并存储结果。第二次和第三次调用命中缓存，立即返回。
+
+    `calls` 为 `1`。
+
+    这就是闭包的实际应用。`cache` 是私有的（无法从 `memoize` 外部访问）、持久的（只要 `fast` 存在就存活），并且在所有对 `fast` 的调用之间共享。
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+
+你做得怎么样？
+
+- **9-10**：你真的懂闭包。可能结对编程时会让人害怕。
+- **6-8**：扎实。过时闭包 / `this` 的问题绊住了你，这很诚实。
+- **3-5**：你知道这个概念，但边界模糊。去读 MDN 作用域链文档。
+- **0-2**：你以前以为你知道闭包。现在你真的知道了。这就是重点。
+
+React 中的过时闭包（#6）和 `this` 陷阱（#8）是导致实际生产 bug 的问题。如果这些感觉不熟悉，值得重新审视——它们在代码审查中出现的频率超过任何其他闭包相关问题。

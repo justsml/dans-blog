@@ -1,0 +1,49 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "var in a Loop",
+  "translatedTitle": "循环中的 var",
+  "translation": {
+    "title": "循环中的 var",
+    "group": "经典陷阱",
+    "options": [
+      {
+        "text": "0, 1, 2, 3, 4"
+      },
+      {
+        "text": "5, 5, 5, 5, 5"
+      },
+      {
+        "text": "1, 2, 3, 4, 5"
+      },
+      {
+        "text": "undefined 五次"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "100毫秒后输出什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "`var` 是函数作用域的。只有一个 `i`——所有五个回调都闭包引用了同一个绑定。当定时器触发时，循环已经结束，`i` 的值是 `5`。\n\n    五个回调。一个 `i`。值：`5`。输出五次。\n\n    解决办法是使用 `let`（块级作用域，每次迭代创建新绑定）或者用 IIFE 包裹来捕获当前值："
+    ]
+  },
+  "rawText": "{\n  \"title\": \"循环中的 var\",\n  \"group\": \"经典陷阱\",\n  \"options\": [\n    { \"text\": \"0, 1, 2, 3, 4\" },\n    { \"text\": \"5, 5, 5, 5, 5\" },\n    { \"text\": \"1, 2, 3, 4, 5\" },\n    { \"text\": \"undefined 五次\" }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\"100毫秒后输出什么？\"],\n  \"hintsProse\": [],\n  \"explanationProse\": [\"`var` 是函数作用域的。只有一个 `i`——所有五个回调都闭包引用了同一个绑定。当定时器触发时，循环已经结束，`i` 的值是 `5`。\\n\\n    五个回调。一个 `i`。值：`5`。输出五次。\\n\\n    解决办法是使用 `let`（块级作用域，每次迭代创建新绑定）或者用 IIFE 包裹来捕获当前值：\"]\n}",
+  "telemetry": {
+    "inputTokens": 913,
+    "outputTokens": 1410,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 8346,
+    "providerCostUsd": 0.0007466,
+    "providerUpstreamCostUsd": 0.0007466,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00012782,
+    "outputUsd": 0.00039480000000000006,
+    "totalUsd": 0.0005226200000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

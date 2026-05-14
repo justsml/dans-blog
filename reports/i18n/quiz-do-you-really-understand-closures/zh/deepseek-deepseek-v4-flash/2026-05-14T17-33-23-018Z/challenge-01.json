@@ -1,0 +1,49 @@
+{
+  "index": 0,
+  "attempt": 1,
+  "originalTitle": "Classic Counter",
+  "translatedTitle": "经典计数器",
+  "translation": {
+    "title": "经典计数器",
+    "group": "热身",
+    "options": [
+      {
+        "text": "0, 0, 0"
+      },
+      {
+        "text": "0, 1, 2"
+      },
+      {
+        "text": "1, 2, 3"
+      },
+      {
+        "text": "ReferenceError"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "这段代码会输出什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "`tick` 闭包捕获了 `count`。每次调用都会递增并返回 *同一个* `count` 变量。三次调用产生 `1, 2, 3`。\n\n    关键词：*同一个*。`count` 并没有被复制到闭包中。闭包持有的是对变量绑定的**实时引用**。就是这么回事。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"经典计数器\",\n  \"group\": \"热身\",\n  \"options\": [\n    {\n      \"text\": \"0, 0, 0\"\n    },\n    {\n      \"text\": \"0, 1, 2\"\n    },\n    {\n      \"text\": \"1, 2, 3\"\n    },\n    {\n      \"text\": \"ReferenceError\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"这段代码会输出什么？\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"javascript\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"`tick` 闭包捕获了 `count`。每次调用都会递增并返回 *同一个* `count` 变量。三次调用产生 `1, 2, 3`。\\n\\n    关键词：*同一个*。`count` 并没有被复制到闭包中。闭包持有的是对变量绑定的**实时引用**。就是这么回事。\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 836,
+    "outputTokens": 1479,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 8783,
+    "providerCostUsd": 0.0007588,
+    "providerUpstreamCostUsd": 0.0007588,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00011704000000000002,
+    "outputUsd": 0.0004141200000000001,
+    "totalUsd": 0.0005311600000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Object Mutation",
+  "translatedTitle": "对象突变",
+  "translation": {
+    "title": "对象突变",
+    "group": "闭包与对象",
+    "options": [
+      {
+        "text": "{ x: 1 }, { x: 1 }"
+      },
+      {
+        "text": "{ x: 1 }, { x: 99 }"
+      },
+      {
+        "text": "{ x: 99 }, { x: 99 }"
+      },
+      {
+        "text": "{ x: 99 }, { x: 1 }"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "这段代码会输出什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "闭包捕获的是 **绑定** `obj`，而不是对象的快照。对象本身在闭包创建后被修改——但 `obj` 仍然指向同一个引用。两次调用都返回同一个被修改的对象：`{ x: 99 }`。\n\n    这会让那些以为闭包会“冻结”值的人栽跟头。它们不会。它们捕获的是 **引用**。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"对象突变\",\n  \"group\": \"闭包与对象\",\n  \"options\": [\n    {\n      \"text\": \"{ x: 1 }, { x: 1 }\"\n    },\n    {\n      \"text\": \"{ x: 1 }, { x: 99 }\"\n    },\n    {\n      \"text\": \"{ x: 99 }, { x: 99 }\"\n    },\n    {\n      \"text\": \"{ x: 99 }, { x: 1 }\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"这段代码会输出什么？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"闭包捕获的是 **绑定** `obj`，而不是对象的快照。对象本身在闭包创建后被修改——但 `obj` 仍然指向同一个引用。两次调用都返回同一个被修改的对象：`{ x: 99 }`。\\n\\n    这会让那些以为闭包会“冻结”值的人栽跟头。它们不会。它们捕获的是 **引用**。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 862,
+    "outputTokens": 1165,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 10284,
+    "providerCostUsd": 0.0006384,
+    "providerUpstreamCostUsd": 0.0006384,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00012068000000000002,
+    "outputUsd": 0.0003262,
+    "totalUsd": 0.00044688000000000003,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

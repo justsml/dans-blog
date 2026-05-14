@@ -1,0 +1,50 @@
+{
+  "index": 7,
+  "attempt": 1,
+  "originalTitle": "Closure Memory Leak",
+  "translatedTitle": "闭包内存泄漏",
+  "translation": {
+    "title": "闭包内存泄漏",
+    "group": "专家级",
+    "options": [
+      {
+        "text": "它会记录数据数组的长度"
+      },
+      {
+        "text": "它会造成内存泄漏"
+      },
+      {
+        "text": "它会抛出 RangeError"
+      },
+      {
+        "text": "没什么异常——这没问题"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "这段代码有什么问题？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "事件监听器闭包捕获了 `data`，因此只要监听器可达，数组就保持可达。如果 `element` 生命周期很长且监听器从未被移除，那么那个大数组也会被保留。\n\n    `element` 在 DOM 中。监听器持有 `data`。垃圾回收无法回收它。\n\n    修复：除非确实需要，否则不要在长生命周期的监听器中捕获大数据，并在所属 UI 被拆除时移除监听器：",
+      "现代 V8 引擎在这方面比以前好多了。但在拥有大量事件监听器的长期运行的单页应用中，这种模式仍然会坑人。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"闭包内存泄漏\",\n  \"group\": \"专家级\",\n  \"options\": [\n    {\n      \"text\": \"它会记录数据数组的长度\"\n    },\n    {\n      \"text\": \"它会造成内存泄漏\"\n    },\n    {\n      \"text\": \"它会抛出 RangeError\"\n    },\n    {\n      \"text\": \"没什么异常——这没问题\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"这段代码有什么问题？\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"javascript\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"事件监听器闭包捕获了 `data`，因此只要监听器可达，数组就保持可达。如果 `element` 生命周期很长且监听器从未被移除，那么那个大数组也会被保留。\\n\\n    `element` 在 DOM 中。监听器持有 `data`。垃圾回收无法回收它。\\n\\n    修复：除非确实需要，否则不要在长生命周期的监听器中捕获大数据，并在所属 UI 被拆除时移除监听器：\",\n    \"现代 V8 引擎在这方面比以前好多了。但在拥有大量事件监听器的长期运行的单页应用中，这种模式仍然会坑人。\"\n  ],\n  \"explanationCode\": [\n    {\n      \"language\": \"javascript\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 924,
+    "outputTokens": 1159,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 6833,
+    "providerCostUsd": 0.0006484,
+    "providerUpstreamCostUsd": 0.0006484,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00012936000000000002,
+    "outputUsd": 0.00032452000000000007,
+    "totalUsd": 0.0004538800000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
