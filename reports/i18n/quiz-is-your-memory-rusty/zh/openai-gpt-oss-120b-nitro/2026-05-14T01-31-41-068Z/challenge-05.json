@@ -1,0 +1,37 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Box Smart Pointer",
+  "translatedTitle": "Box 智能指针",
+  "translation": {
+    "title": "Box 智能指针",
+    "group": "智能指针",
+    "options": [],
+    "objectives": [],
+    "questionProse": [
+      "这个递归类型定义有什么问题？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "这段代码会编译失败，因为编译器无法在编译时确定 `CatList` 的大小。类型的递归特性意味着它可能无限大！\n\n      下面展示如何使用 `Box<T>` 来修复它：",
+      "`Box<T>` 为什么有效：\n      1. Box 提供一个固定大小的指针（在 64 位系统上通常是 8 字节）\n      2. 实际数据存放在堆上\n      3. 编译器现在能够准确知道需要分配多少空间\n\n      `Box<T>` 的常见用例：\n      - 递归数据结构（链表、树）\n      - 需要确保在堆上分配的大数据\n      - 需要动态分发时的 trait 对象\n\n      最佳实践：在以下情况下使用 `Box<T>`：\n      - 递归类型\n      - 确保堆分配\n      - 在不复制的情况下移动大数据"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Box 智能指针\",\n  \"group\": \"智能指针\",\n  \"options\": [],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"这个递归类型定义有什么问题？\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"rust\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"这段代码会编译失败，因为编译器无法在编译时确定 `CatList` 的大小。类型的递归特性意味着它可能无限大！\\n\\n      下面展示如何使用 `Box<T>` 来修复它：\",\n    \"`Box<T>` 为什么有效：\\n      1. Box 提供一个固定大小的指针（在 64 位系统上通常是 8 字节）\\n      2. 实际数据存放在堆上\\n      3. 编译器现在能够准确知道需要分配多少空间\\n\\n      `Box<T>` 的常见用例：\\n      - 递归数据结构（链表、树）\\n      - 需要确保在堆上分配的大数据\\n      - 需要动态分发时的 trait 对象\\n\\n      最佳实践：在以下情况下使用 `Box<T>`：\\n      - 递归类型\\n      - 确保堆分配\\n      - 在不复制的情况下移动大数据\"\n  ],\n  \"explanationCode\": [\n    {\n      \"language\": \"rust\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 958,
+    "outputTokens": 1050,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 2622,
+    "providerCostUsd": 0.0007545,
+    "providerUpstreamCostUsd": 0.0007545,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000037362,
+    "outputUsd": 0.00018899999999999999,
+    "totalUsd": 0.00022636199999999997,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

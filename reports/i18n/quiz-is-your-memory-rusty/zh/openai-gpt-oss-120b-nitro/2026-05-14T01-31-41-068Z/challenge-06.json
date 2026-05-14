@@ -1,0 +1,37 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Rc Smart Pointer",
+  "translatedTitle": "Rc 智能指针",
+  "translation": {
+    "title": "Rc 智能指针",
+    "group": "引用计数",
+    "options": [],
+    "objectives": [],
+    "questionProse": [
+      "这段代码会打印什么？仔细数数！"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "让我们拆解 Rc 的工作原理：\n\n      1. 使用 `Rc::new()` 初始化：计数 = 1\n      2. 为 `marcus` 第一次克隆：计数 = 2\n      3. 为 `aurelius` 第二次克隆：计数 = 3\n\n      Rc 的重要特性：",
+      "关键点：\n      - `Rc::clone()` 很廉价——它只会递增计数器\n      - Rc 仅用于单线程场景\n      - 当最后一个引用被释放时，数据会被清理\n      - 使用 Weak 引用来防止引用循环\n\n      最佳实践：\n      - 需要共享所有权时使用 Rc\n      - 对于线程安全的场景考虑使用 Arc\n      - 避免创建引用循环"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Rc 智能指针\",\n  \"group\": \"引用计数\",\n  \"options\": [],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"这段代码会打印什么？仔细数数！\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"rust\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"让我们拆解 Rc 的工作原理：\\n\\n      1. 使用 `Rc::new()` 初始化：计数 = 1\\n      2. 为 `marcus` 第一次克隆：计数 = 2\\n      3. 为 `aurelius` 第二次克隆：计数 = 3\\n\\n      Rc 的重要特性：\",\n    \"关键点：\\n      - `Rc::clone()` 很廉价——它只会递增计数器\\n      - Rc 仅用于单线程场景\\n      - 当最后一个引用被释放时，数据会被清理\\n      - 使用 Weak 引用来防止引用循环\\n\\n      最佳实践：\\n      - 需要共享所有权时使用 Rc\\n      - 对于线程安全的场景考虑使用 Arc\\n      - 避免创建引用循环\"\n  ],\n  \"explanationCode\": [\n    {\n      \"language\": \"rust\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 924,
+    "outputTokens": 826,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 2140,
+    "providerCostUsd": 0.000615,
+    "providerUpstreamCostUsd": 0.000615,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000036036,
+    "outputUsd": 0.00014868,
+    "totalUsd": 0.000184716,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

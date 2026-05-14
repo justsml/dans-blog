@@ -1,0 +1,57 @@
+{
+  "index": 17,
+  "attempt": 1,
+  "originalTitle": "Zero-Cost Abstractions",
+  "translatedTitle": "零成本抽象",
+  "translation": {
+    "title": "零成本抽象",
+    "group": "高级模式",
+    "options": [
+      {
+        "text": "迭代器的运行时开销",
+        "hint": "Rust 迭代器是零成本抽象"
+      },
+      {
+        "text": "与原始循环性能相同"
+      },
+      {
+        "text": "更慢但更易读",
+        "hint": "抽象不会影响运行时性能"
+      },
+      {
+        "text": "取决于优化等级",
+        "hint": "抽象在编译时被消除"
+      }
+    ],
+    "objectives": [
+      "理解 Rust 的零成本抽象原则",
+      "分析编译时与运行时成本",
+      "在不产生性能开销的情况下使用抽象"
+    ],
+    "questionProse": [
+      "这两种实现的性能如何比较？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "Rust 的零成本抽象会编译成等效的高效代码：",
+      "关键原则：\n      1. 未使用的东西，你不付费\n      2. 已使用的东西，你手写也做不到更好\n\n      最佳实践：\n      1. 自由使用高级抽象\n      2. 信任编译器的优化\n      3. 优化前先进行性能分析\n      4. 首先关注可读性\n      5. 无惧使用迭代器和闭包"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"零成本抽象\",\n  \"group\": \"高级模式\",\n  \"options\": [\n    {\n      \"text\": \"迭代器的运行时开销\",\n      \"hint\": \"Rust 迭代器是零成本抽象\"\n    },\n    {\n      \"text\": \"与原始循环性能相同\"\n    },\n    {\n      \"text\": \"更慢但更易读\",\n      \"hint\": \"抽象不会影响运行时性能\"\n    },\n    {\n      \"text\": \"取决于优化等级\",\n      \"hint\": \"抽象在编译时被消除\"\n    }\n  ],\n  \"objectives\": [\n    \"理解 Rust 的零成本抽象原则\",\n    \"分析编译时与运行时成本\",\n    \"在不产生性能开销的情况下使用抽象\"\n  ],\n  \"questionProse\": [\n    \"这两种实现的性能如何比较？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"Rust 的零成本抽象会编译成等效的高效代码：\",\n    \"关键原则：\\n      1. 未使用的东西，你不付费\\n      2. 已使用的东西，你手写也做不到更好\\n\\n      最佳实践：\\n      1. 自由使用高级抽象\\n      2. 信任编译器的优化\\n      3. 优化前先进行性能分析\\n      4. 首先关注可读性\\n      5. 无惧使用迭代器和闭包\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1006,
+    "outputTokens": 1034,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 2505,
+    "providerCostUsd": 0.0007521,
+    "providerUpstreamCostUsd": 0.0007521,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000039234,
+    "outputUsd": 0.00018612,
+    "totalUsd": 0.00022535399999999998,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
