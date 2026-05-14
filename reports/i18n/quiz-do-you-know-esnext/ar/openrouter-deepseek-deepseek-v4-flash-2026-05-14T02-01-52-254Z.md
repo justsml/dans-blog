@@ -1,0 +1,449 @@
+# Translation Candidate
+- Slug: quiz-do-you-know-esnext
+- Locale: ar
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2024-10-31--quiz-do-you-know-esnext/ar/index.mdx
+- Validation: deferred
+- Runtime seconds: 117.49
+- Input tokens: 9918
+- Output tokens: 15868
+- Thinking tokens: unknown
+- Cached input tokens: 640
+- Cache write tokens: 0
+- Estimated cost: $0.005831
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: 'اختبار: هل تعرف JavaScript الحديثة؟'
+subTitle: أثبت مهاراتك في JavaScript!
+label: ES2019+ Features
+social_image: ../desktop-social.webp
+category: Quiz
+subCategory: JavaScript
+unlisted: false
+date: '2024-10-31'
+modified: '2024-11-08'
+tags:
+  - quiz
+  - javascript
+  - intro
+  - esnext
+  - features
+  - intermediate
+cover_full_width: ../christopher-burns-8KfCR12oeUM-unsplash-wide.webp
+cover_mobile: ../christopher-burns-8KfCR12oeUM-unsplash-square.webp
+cover_icon: ../christopher-burns-8KfCR12oeUM-unsplash-square.webp
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+
+### هل تفرق بين ES2015 و ES2022؟
+
+* **أثبت مهاراتك في JavaScript!** 🚀
+* لا حاجة لتسجيل الدخول أو الاشتراك. ✨
+* اختيار من متعدد. 🤖 ... _ما مدى صعوبة الأمر، هاه؟_
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="ES2020"
+  title="الدمج الفارغ"
+  options={[
+    {text: '42'},
+    {text: 'null'},
+    {text: 'undefined'},
+    {text: '100', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما هي قيمة `result`؟
+    ```js
+        console.log(null ?? 100);
+    ```
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    تحقق من دلالات العامل في JavaScript بالضبط. الإجابة المغرية غالبًا هي ما كانت ستفعله الصياغة القديمة، وليس ما يفعله هذا العامل.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    عامل الدمج الفارغ (`??`) يُرجع المعامل الأيمن (`b`) إذا كان المعامل الأيسر (`a`) هو `null` أو `undefined`. في هذه الحالة، `a` هو `null`، لذا فإن `result` يساوي `100`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="ES2020"
+  title="الدمج الفارغ"
+  options={[
+    {text: 'false', isAnswer: true},
+    {text: '42'},
+    {text: 'null'},
+    {text: 'undefined'},
+    {text: '100'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ماذا سيكون ناتج الكود التالي؟
+    ```js
+        const value = false;
+        const defaultVal = 42;
+        console.log(value ?? defaultVal);
+    ```
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    تحقق من دلالات العامل في JavaScript بدقة. الإجابة المغرية غالبًا هي ما كانت ستفعله الصياغة القديمة، وليس ما يفعله هذا العامل.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    عامل الدمج الفارغ (`??`) يعامل القيم الخاطئة مثل `false` كقيم صالحة. بما أن `value` هي `false`، فإنها تُعتبر قيمة صالحة ويتم إرجاعها.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="الربط الاختياري"
+  title="الربط الاختياري"
+  options={[
+    {text: 'undefined', isAnswer: true},
+    {text: 'خطأ: لا يمكن قراءة خاصية من undefined'},
+    {text: 'null'},
+    {text: '100'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما هو ناتج الكود التالي؟
+    ```js
+        const obj = { foo: null };
+        const result = obj.foo?.bar;
+        console.log(result);
+    ```
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    تحقق من دلالات عامل التشغيل في JavaScript بالضبط. الإجابة المغرية غالبًا ما تكون ما كانت ستفعله الصياغة القديمة، وليس ما يفعله هذا الميزة.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    عامل الربط الاختياري (`?.`) يوقف التقييم إذا كان الجانب الأيسر هو `null` أو `undefined`. بما أن `obj.foo` هو `null`، فإن `obj.foo?.bar` يتم تقييمه إلى `undefined`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="BigInt"
+  title="استخدام BigInt"
+  options={[
+    {text: 'TypeError: لا يمكن خلط BigInt مع number'},
+    {text: '42n'},
+    {text: '84n', isAnswer: true},
+    {text: 'undefined'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما هو ناتج الكود التالي؟
+    ```js
+        const a = 42n;
+        const result = a * 2n;
+        console.log(result);
+    ```
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    تحقق من دلالات العوامل في JavaScript بدقة. الإجابة المغرية غالبًا ما تكون ما كانت ستفعله الصياغة القديمة، وليس ما تفعله هذه الميزة.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    يتم إنشاء قيم BigInt بإلحاق `n` برقم. لا يمكنك خلط BigInt مع الأرقام العادية في العمليات الحسابية. هنا، كلا القيمتين من نوع BigInt، لذا تعمل عملية الضرب، مما ينتج عنه `84n`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="الاستيراد الديناميكي"
+  title="صيغة الاستيراد الديناميكي"
+  options={[
+    {text: 'SyntaxError'},
+    {text: 'Promise'},
+    {text: 'Module'},
+    {text: 'object', isAnswer: true},
+    {text: 'undefined'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ماذا يسجل هذا؟
+    ```js
+        const modulePromise = import('./myModule.js');
+        console.log(typeof modulePromise);
+    ```
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    تحقق من دلالات عامل التشغيل في JavaScript بدقة. الإجابة المغرية غالبًا ما تكون ما كانت ستفعله الصيغة القديمة، وليس ما تفعله هذه الميزة.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    الدالة `import()` تُرجع `Promise` يتم حله إلى كائن الوحدة. لأن مثيلات `Promise` هي كائنات، فإن `typeof modulePromise` يسجل `'object'`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="Promise.allSettled"
+  title="Promise.allSettled"
+  options={[
+    {text: 'تم الوفاء: نجاح', isAnswer: true},
+    {text: 'مرفوض: خطأ'},
+    {text: 'قيد الانتظار'},
+    {text: 'null'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ماذا ستكون نتيجة الكود التالي؟
+    ```js
+        const promises = [
+          Promise.resolve('success'),
+          Promise.reject('error')
+        ];
+        Promise.allSettled(promises).then(results => {
+          console.log(results[0].status + ': ' + results[0].value);
+        });
+    ```
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    تحقق من دلالات العوامل في JavaScript بدقة. الإجابة المغريّة غالبًا هي ما كانت ستفعله الصياغة القديمة، وليس ما يفعله هذا الميزة.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    تقوم `Promise.allSettled` بإرجاع مصفوفة من الكائنات التي تصف نتيجة كل وعد. الوعد الأول هو `fulfilled` بالقيمة `'success'`، لذا ستطبع جملة الطباعة `fulfilled: success`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="String.matchAll"
+  title="استخدام String.matchAll"
+  options={[
+    {text: 'مصفوفة من المطابقات'},
+    {text: 'مكرر من المطابقات', isAnswer: true},
+    {text: 'خطأ: استدعاء غير صالح'},
+    {text: 'null'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ماذا يُرجع `str.matchAll()`؟
+    ```js
+        const str = 'foo1bar2baz3';
+        const matches = str.matchAll(/\d/g);
+    ```
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    تحقق من دلالات العوامل في JavaScript بالضبط. الإجابة المغرية غالبًا ما تكون ما كانت ستفعله الصياغة القديمة، وليس ما تفعله هذه الميزة.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    يُعيد `String.matchAll` مكررًا من المطابقات، وليس مصفوفة. يمكن استخدام هذا المكرر للحصول على جميع المجموعات المتطابقة من سلسلة نصية.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="بيانات الاستيراد الوصفية"
+  title="استخدام بيانات الاستيراد الوصفية"
+  options={[
+    {text: 'رابط الوحدة الحالية', isAnswer: true},
+    {text: 'الطابع الزمني الحالي'},
+    {text: 'undefined'},
+    {text: 'SyntaxError'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ماذا يمثل `import.meta.url`؟
+    ```js
+        console.log(import.meta.url);
+    ```
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    تحقق من دلالات عامل التشغيل JavaScript بالضبط. الإجابة المغرية غالبًا ما تكون ما كانت ستفعله الصياغة القديمة، وليس ما تفعله هذه الميزة.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `import.meta` هو كائن يحتوي على بيانات وصفية حول الوحدة الحالية. الخاصية `import.meta.url` تمثل رابط الوحدة الحالية، والتي يمكن استخدامها للحصول على معلومات حول مكان تشغيل السكريبت.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="التعيين المنطقي"
+  title="التعيين المنطقي"
+  options={[
+    {text: '5'},
+    {text: '10', isAnswer: true},
+    {text: 'undefined'},
+    {text: 'null'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما هي قيمة `a` بعد التعيين المنطقي؟
+    ```js
+        let a = null;
+        a ||= 10;
+        console.log(a);
+    ```
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    تحقق من دلالات العوامل في JavaScript بالضبط. الإجابة المغرية غالبًا ما تكون ما كانت ستفعله الصياغة القديمة، وليس ما يفعله هذه الميزة.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    التعيين بالـ OR المنطقي (`||=`) يعين القيمة اليمنى إذا كانت القيمة اليسرى خاطئة (`null`، `undefined`، `0`، `false`، إلخ). بما أن `a` هي `null`، فإنها تُعين القيمة `10`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="التخصيص المنطقي للقيم الفارغة"
+  title="التخصيص المنطقي للقيم الفارغة"
+  options={[
+    {text: '5'},
+    {text: '10', isAnswer: true},
+    {text: 'undefined'},
+    {text: 'null'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما هي قيمة `b` بعد التخصيص المنطقي للقيم الفارغة؟
+    ```js
+        let b = null;
+        b ??= 10;
+        console.log(b);
+    ```
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    تحقق من دلالات عامل التشغيل في JavaScript بالضبط. الإجابة المغرية غالبًا ما تكون ما كانت ستفعله الصياغة القديمة، وليس ما يفعله هذه الميزة.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    التخصيص المنطقي للقيم الفارغة (`??=`) يعين القيمة اليمنى إذا كانت القيمة اليسرى `null` أو `undefined`. بما أن `b` هي `null`، فقد تم تعيين القيمة `10`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="WeakRef"
+  title="استخدام WeakRef"
+  options={[
+    {text: 'ReferenceError'},
+    {text: '{ data: \'important\' }', isAnswer: true},
+    {text: 'null'},
+    {text: 'undefined'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ماذا يوفر `WeakRef`؟
+    ```js
+        const obj = { data: 'important' };
+        const ref = new WeakRef(obj);
+        console.log(ref.deref());
+    ```
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    تحقق من دلالات العوامل الدقيقة في JavaScript. الإجابة المغرية غالبًا ما تكون ما كانت ستفعله الصياغة القديمة، وليس ما تفعله هذه الميزة.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    يوفر `WeakRef` مرجعًا ضعيفًا لكائن، مما يسمح بجمع الكائن بواسطة جامع القمامة إذا لم توجد مراجع أخرى. نظرًا لأن `obj` لا يزال مرجعًا قويًا هنا، فإن `deref()` يُرجع الكائن الأصلي. إذا تم استرداد الهدف، فإن `deref()` سيعيد `undefined`.
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+````
