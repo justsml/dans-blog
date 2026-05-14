@@ -1,0 +1,46 @@
+{
+  "selectedCommit": "59694d8eaca8533d027d43e86da1c92a7678c696",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The current translation already incorporates the high and medium priority fixes suggested in the previous judge report (using 'מפילות' for pitfalls and 'מנגנון איסוף זבל' for garbage collector). It maintains Dan's enthusiastic tone, correctly translates technical headers like Pros/Cons into Hebrew, and preserves all MDX components and relative asset paths. The Hebrew flow is natural and technically accurate.",
+  "slug": "love-computer-languages",
+  "locale": "he",
+  "candidateCommits": [
+    "59694d8eaca8533d027d43e86da1c92a7678c696",
+    "23ecd8c79d2b301f482186a363252dae29758431"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "בלי המורכבות/מלכודות שבדרך כלל תופסות",
+      "replacement": "בלי המורכבות/המלכודות שבדרך כלל מפילות",
+      "reason": "'מפילות' (tripping up) is more natural than 'תופסות' (catching) in the context of programming pitfalls.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "בלי צורך באוסף זבל איטי!",
+      "replacement": "בלי צורך במנגנון איסוף זבל איטי!",
+      "reason": "'Garbage collector' is better translated as 'מנגנון איסוף זבל' or simply 'איסוף זבל' rather than 'אוסף זבל' (which sounds like a person collecting trash).",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug love-computer-languages --locale he --skip-global",
+    "output": ""
+  }
+}
