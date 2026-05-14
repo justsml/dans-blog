@@ -1,0 +1,46 @@
+{
+  "selectedCommit": "635ed6fc1d62aee004bfb87ee101310ab631f930",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 10,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The current selected translation already includes the necessary '../' path fixes for images in the body and frontmatter, which were identified as missing in the previous judge report. The translation is idiomatic, maintains Dan's direct style, and preserves all MDX components and heading structures correctly. No further high-priority fixes are required.",
+  "slug": "stop-trying-to-make-async-await-happen",
+  "locale": "he",
+  "candidateCommits": [
+    "635ed6fc1d62aee004bfb87ee101310ab631f930",
+    "f784a8fc88839245807840c0c250794e3970d422"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "![VS Code מחלץ מתודות אסינכרוניות מקוד Promise](async-refactor-google-extract-methods-resized-75.webp \"חילוץ מתודות\")",
+      "replacement": "![VS Code מחלץ מתודות אסינכרוניות מקוד Promise](../async-refactor-google-extract-methods-resized-75.webp \"חילוץ מתודות\")",
+      "reason": "Asset paths must start with ../ in locale subfolders to match the English source structure.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "![שרשרת Promise שעברה רפקטורינג באמצעות Promise all ו-map לשיפור קריאות](async-refactor-google-chain-methods-resized-75.webp \"שיפור קריאות\")",
+      "replacement": "![שרשרת Promise שעברה רפקטורינג באמצעות Promise all ו-map לשיפור קריאות](../async-refactor-google-chain-methods-resized-75.webp \"שיפור קריאות\")",
+      "reason": "Asset paths must start with ../ in locale subfolders to match the English source structure.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug stop-trying-to-make-async-await-happen --locale he --skip-global",
+    "output": ""
+  }
+}
