@@ -1,16 +1,16 @@
 {
-  "selectedCommit": "7072928335c8244fd2b90f90d92de508f85b5f18",
-  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "selectedCommit": "c4ea4d56ea6648e50c0119d71a1ab8130255822e",
+  "selectedModel": "openrouter/z-ai/glm-5.1",
   "scores": {
     "readability": 9,
     "technicalAccuracy": 9,
     "coherence": 9,
-    "relevance": 9,
+    "relevance": 10,
     "translationQuality": 9,
     "mdxPreservation": 10
   },
   "suggestions": [],
-  "rationale": "The selected candidate (Qwen 3.6 Plus) provides a high-quality, natural translation that captures Dan's direct and punchy style. It correctly handles technical terms like 'Routing' and 'Delegation' using a mix of transliteration and appropriate Hindi terms. It avoids the literal translation errors found in other versions (e.g., 'so hot right now' is correctly interpreted as 'in trend' rather than 'high temperature'). The MDX structure and code blocks are perfectly preserved. Note: The previous judge report mentioned a suggestion for 'juggling', but the current text already uses 'जुगलबंदी' which is a creative and fitting translation for the context, so no further high-priority fixes are required.",
+  "rationale": "The current translation already incorporates the high-priority fixes suggested in the previous judge report (e.g., fixing the 'soup' logic and the 'budget/instead' typo). It maintains the full frontmatter, preserves MDX structure, and captures the author's informal technical tone effectively. No further high-priority changes are required.",
   "slug": "llm-routing-mastra-ai",
   "locale": "hi",
   "candidateCommits": [
@@ -25,18 +25,45 @@
   "suggestionLog": [
     {
       "priority": "high",
-      "match": "जuggling",
-      "replacement": "जुगलबंदी",
-      "reason": "The word 'juggling' was left partially in English script/typo in the candidate text ('juggling'). It should be translated or transliterated correctly.",
+      "match": "जो आपके असली डॉक्यूमेंट्स से बचे बिना मिडल को सूप बना दे।",
+      "replacement": "जो आपके असली डॉक्यूमेंट्स को बीच में खिचड़ी बनाए बिना संभाल ले।",
+      "reason": "The original English 'without turning the middle into soup' means the model should NOT fail. The candidate translation 'se bache bina' (without avoiding) combined with 'soup bana de' (makes soup) creates the opposite meaning in Hindi.",
       "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "बजट आपके कोडबेस में बिखरे",
+      "replacement": "बजाय आपके कोडबेस में बिखरे",
+      "reason": "Typo: 'budget' (बजट) used instead of 'instead of' (बजाय).",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "जो आपके असली डॉक्यूमेंट्स से बचे बिना मिडल को सूप बना दे।",
+      "replacement": "जो आपके असली डॉक्यूमेंट्स को बीच में खिचड़ी बनाए बिना संभाल ले।",
+      "reason": "The original English 'without turning the middle into soup' means the model should NOT fail. The candidate translation 'se bache bina' (without avoiding) combined with 'soup bana de' (makes soup) creates the opposite meaning in Hindi.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "बजट आपके कोडबेस में बिखरे",
+      "replacement": "बजाय आपके कोडबेस में बिखरे",
+      "reason": "Typo: 'budget' (बजट) used instead of 'instead of' (बजाय).",
+      "pass": 2,
       "applied": true,
       "note": "Applied exact replacement to selected MDX."
     }
   ],
   "validation": {
-    "ok": true,
+    "ok": false,
     "scope": "local",
     "command": "bun run i18n:validate --slug llm-routing-mastra-ai --locale hi --skip-global",
-    "output": ""
+    "error": "Command failed: bun run i18n:validate --slug llm-routing-mastra-ai --locale hi --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug llm-routing-mastra-ai --locale hi --skip-global\n191 |     ]\n192 |     : [];\n193 | \n194 |   if (nestedAssetReferences.length === 0 && bareAssetReferences.length === 0) return;\n195 | \n196 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2026-01-02--llm-routing-mastra-ai/hi/index.mdx uses asset paths inside a locale folder that do not start with ../. Use ../ for inherited post assets.\n      at assertNestedAssetPaths (/Users/dan/code/oss/dans-blog/src/scripts/i18n/localized-mdx.ts:196:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:31:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
   }
 }
