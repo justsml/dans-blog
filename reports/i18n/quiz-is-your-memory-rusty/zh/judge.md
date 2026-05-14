@@ -1,7 +1,7 @@
 # Translation Judge
 
-- Selected candidate: f30560254a3f057d3bcc84862232d4935036be18
-- Selected model: openrouter/openai/gpt-oss-120b:nitro
+- Selected candidate: 21c60bf86625294228d9061a3fa48e03af22a983
+- Selected model: openrouter/deepseek/deepseek-v4-flash
 - Judge model: openrouter/deepseek/deepseek-v4-flash
 
-The selected translation is complete and accurate after applying pre-publish fixes. All missing objectives and options for Challenges 4, 5, and 13 have been restored. No further medium/high-priority fixes are needed.
+Candidate 21c60bf86625294228d9061a3fa48e03af22a983 is selected for its clever and natural translation of the subTitle pun ('（借用）先自查，别自毁！'), consistent translation of error messages into Chinese, accurate preservation of group names (e.g., 'RefCells' vs 'RefCell'), and overall polished, readable Chinese that matches Dan's direct style. Both candidates preserve MDX structure and asset paths correctly, but this one demonstrates slightly better attention to detail and natural language flow.
