@@ -1,0 +1,120 @@
+# Translation Candidate
+- Slug: should-you-use-named-or-default-exports
+- Locale: ar
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2023-08-18--should-you-use-named-or-default-exports/ar/index.mdx
+- Validation: deferred
+- Runtime seconds: 13.28
+- Input tokens: 2860
+- Output tokens: 1879
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.000927
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: 'تصديرات ESM: مسماة أم افتراضية؟'
+subTitle: أن تسمي أم لا تسمي؟
+date: '2023-08-10'
+modified: '2024-08-01'
+tags:
+  - typescript
+  - javascript
+  - modules
+category: Guides
+subCategory: JavaScript
+cover: ../austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp
+cover_mobile: ../w300_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp
+cover_icon: ../icon_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp
+---
+## هل يجب استخدام التصدير المُسمى (`named`) أم التصدير الافتراضي (`default`) في JavaScript؟
+
+لا يوجد نقص في المقالات ذات الآراء القوية حول هذا الموضوع.
+
+الأغلبية تحكم على `export default` بأنه "سيء". بينما يرى آخرون أن `default` يجب أن يفوز (مثل دليل أسلوب AirBnb).
+
+غالبًا ما يلومون أشياء **مؤقتة تمامًا**: أخطاء الاستيراد التلقائي في بيئة التطوير، قدرات التجميع (tree-shaking) لأداة حزم معينة، أو مجرد احتمالية الأخطاء المطبعية عند تسمية الاستيراد.
+
+هل فاتنا الهدف الأساسي من `export` في المقام الأول؟
+
+**الكود هو تواصل. ✨**
+
+> نحن نرسل إشارة إلى المستوردين _كيفية استخدام الشيء_.
+
+### إذن، ماذا نقول؟
+
+بشكل عام، هناك طريقتان لتصدير الأشياء في JavaScript الحديثة:
+
+- `export default` يعلن بجرأة "هذا هو **_الشيء الأكثر أهمية_**." وأيضًا، "أي تصديرات مُسماة تلعب دورًا داعمًا فقط."
+- `named export` يقول إنه "بالتأكيد **_شيء ما!_**" كما يثير بعض الأسئلة: "هل لديك أي رفاق آخرين هناك؟" ويتبعه: "هل هم مدعوون أم مطلوبون؟"
+
+بالتأكيد يمكنك الجمع بينهما، أو استخدام أساليب مختلفة لأجزاء مختلفة من قاعدة الكود الخاصة بك. [شاهد المزيد من الأمثلة في نهاية المقال.](#summary)
+
+### حجج ضعيفة، يا رجل
+
+دعنا نعالج بعض "المشكلات المؤقتة" الشائعة التي يواجهها الناس.
+
+- الحجة رقم 1: التصديرات المُسماة تضمن اتساق الاسم. [المصدر](https://blog.neufund.org/why-we-have-banned-default-exports-and-you-should-do-the-same-d51fdc2cf2ad)
+  - لا، لا تفعل. ربما تبحث عن قاعدة lint؟
+  - (أكره أن أفسد عليك الأمر، لكن انتظر حتى تتعلم ما يمكن للمتغيرات فعله!)
+
+```tsx
+// يمكنك استخدام اسم مستعار مع كليهما!
+import { Knife as Handle } from "./knife.js"; // 🔪
+import { default as Handle } from "./knife.js"; // 🔪
+import Handle from "./knife.js"; // 🔪
+```
+
+- الحجة رقم 2: استخدم `import * as soManyKnives from './kinves.js'` لدمج التصديرات المُسماة. (لم يتم الربط، المؤلف تراجع.)
+  - ميزة لطيفة. ليست النقطة.
+  - الآن أخبرني، كيف أمسك بجهازك مرة أخرى؟ لا نية للمؤلف.
+- الحجة رقم 3: التصديرات المُسماة لها دعم أفضل لاستيراد IDE أو إعادة التسمية. [المصدر](https://www.bundleapps.io/blog/use-named-exports-over-default-exports-in-javascript)
+
+- غير صحيح (بعد الآن). قم بتكوين/تحديث أدواتك.
+  - الدعم موجود منذ أكثر من 3 سنوات في [VS Code](https://github.com/microsoft/vscode/pull/94480) و IntelliJ، إلخ.
+  - ومع ذلك، هناك بعض "أفضل الممارسات" لاستخدامها مع `default exports` للحصول على أفضل تجربة IDE وإعادة هيكلة.
+  - ✅ `export default function UserService() {}` - دائماً فضّل الدوال المُسماة.
+  - ❌ `export default function() { }` - الدوال المجهولة ليست مرتبطة ضمنياً باسم ملفها. إذا لم تسمِّ الشيء، فمن الصعب أن تطلب من الكمبيوتر تغييره.
+  - **ملاحظة:** لأسباب تاريخية، لا يمكنك الجمع بين `export default` وتعبير `const`.
+
+    ```tsx
+    export default const Knife = () => {...blade, ...handle}
+    // ^ ❌ غير مدعوم ❌ ^
+    // لا يمكن تصدير const كافتراضي ....
+    // ==========================
+
+    // ومع ذلك، بمجرد التصريح، يمكنك تصدير متغير const كافتراضي.
+    const Knife = () => {...blade, ...handle}
+    export default Knife;
+    // ^ ✅ صالح
+
+    // للاكتمال:
+    export default class anyoneStillUseThese {}
+    // ^ ✅ صالح أيضاً لتصدير كلاس كافتراضي
+    ```
+
+<section className="scroll-x">
+## ملخص
+
+في الواقع هناك العديد من التركيبات لطرق تصدير الأشياء، كل منها يروي قصة مختلفة:
+
+| افتراضي (تصديرات) | مُسمى (تصديرات) | دوال خاصة | النمط                                                   | المعنى                                                       |
+| ----------------- | --------------- | ----------- | --------------------------------------------------------- | ------------------------------------------------------------- |
+| ✅                | ❌              | ❌          | تصدير افتراضي واحد.                                       | "تقديم دالة واحدة ذات غرض واحد!"                  |
+| ❌                | ✅              | ❌          | تصدير مُسمى واحد.                                         | "من فضلك لا تعيد تسميتي."                                     |
+| ✅                | ✅              | ✅          | تصدير افتراضي + دوال 'خاصة' متعددة غير مُصدرة | "إليك بعض المنطق المرتبط. أيضاً، توقع سلوكاً شبيهًا بالكلاس." |
+| ❌                | ❌              | ✅          | تصديرات مُسماة متعددة، اسم ملف عام.                | "حقيبة مختلطة من أشياء مرتبطة بشكل فضفاض، بدون تسلسل هرمي." |
+| ✅                | ✅              | ❌          | تصدير مُسمى واحد يُصدر أيضاً كافتراضي.             | "لا يمكنك أن تخطئ في استيرادي."                             |
+</section>
+
+**شيء للتفكير فيه:** ماذا نقول عندما يتطابق اسم الملف أو لا يتطابق مع أحد تصديراته؟ (على سبيل المثال، ملف `utils.js` به دوال كثيرة.)
+
+### الخاتمة
+
+إذا كان الكود هو تواصل، فمن فضلك `export` وكأنك تعني ذلك بكل جدية. 💞
+````
