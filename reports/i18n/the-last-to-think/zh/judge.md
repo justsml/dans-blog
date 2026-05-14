@@ -1,7 +1,7 @@
 # Translation Judge
 
-- Selected candidate: a598bfedb5097fca760a453e94111db354e4c88b
-- Selected model: openrouter/deepseek/deepseek-v4-flash
-- Judge model: openrouter/deepseek/deepseek-v4-flash
+- Selected candidate: 4ff8366adfac30d31bfc769bdbe3236c7c175345
+- Selected model: openrouter/google/gemini-3-flash-preview
+- Judge model: openrouter/google/gemini-3-flash-preview
 
-Candidate a598bfe demonstrates superior technical accuracy with correct translations of key phrases ('计时' for 'set by', '非人的速度' for 'inhuman speeds', '末日预言者' for 'doomsayers', '历史账本' for 'receipts'). Natural language is colloquial and matches Dan's direct style. MDX structure is preserved with appropriate relative paths. No high-priority errors found.
+The Gemini candidate provides the most natural and idiomatic Chinese translation while maintaining Dan's direct and slightly cynical tone. It correctly handles the technical requirements (MDX structure, asset paths). It uses '洪水猛兽' (flood and wild beasts) for 'bogeyman', which is a very culturally appropriate idiom for something feared as a corrupting influence. It also provides a helpful parenthetical explanation for 'CliffsNotes', which is less known in a Chinese context, improving readability without losing the original meaning.
