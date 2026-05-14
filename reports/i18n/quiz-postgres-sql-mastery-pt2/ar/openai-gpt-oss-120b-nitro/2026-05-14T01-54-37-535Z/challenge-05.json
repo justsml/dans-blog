@@ -1,0 +1,49 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Hash Join Eligibility",
+  "translatedTitle": "أهلية الانضمام التجميعي",
+  "translation": {
+    "title": "أهلية الانضمام التجميعي",
+    "group": "الداخلية في SQL",
+    "options": [
+      {
+        "text": "ON a.id = b.id"
+      },
+      {
+        "text": "ON a.id > b.id"
+      },
+      {
+        "text": "ON a.id >= b.id"
+      },
+      {
+        "text": "HASH JOIN ON a.id = b.id ..."
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "أي شرط `ON` يمكن لـ PostgreSQL استخدامه في `HASH JOIN`؟"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "يمكن تنفيذ عملية hash join بشرط مساواة (`=`) في جملة `ON`.\n\n    - `=` هو الشكل الأساسي للشرط في hash joins\n    - `>` و `>=` ليسا شروطًا لـ hash join\n    - `HASH JOIN` ليس بناءً صالحًا في PostgreSQL\n\n    قد يختار المخطط ما زال تنفيذ nested loop أو merge join اعتمادًا على حجم الجداول والإحصاءات والفهارس وإعدادات الذاكرة."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"أهلية الانضمام التجميعي\",\n  \"group\": \"الداخلية في SQL\",\n  \"options\": [\n    {\n      \"text\": \"ON a.id = b.id\"\n    },\n    {\n      \"text\": \"ON a.id > b.id\"\n    },\n    {\n      \"text\": \"ON a.id >= b.id\"\n    },\n    {\n      \"text\": \"HASH JOIN ON a.id = b.id ...\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"أي شرط `ON` يمكن لـ PostgreSQL استخدامه في `HASH JOIN`؟\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"يمكن تنفيذ عملية hash join بشرط مساواة (`=`) في جملة `ON`.\\n\\n    - `=` هو الشكل الأساسي للشرط في hash joins\\n    - `>` و `>=` ليسا شروطًا لـ hash join\\n    - `HASH JOIN` ليس بناءً صالحًا في PostgreSQL\\n\\n    قد يختار المخطط ما زال تنفيذ nested loop أو merge join اعتمادًا على حجم الجداول والإحصاءات والفهارس وإعدادات الذاكرة.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 935,
+    "outputTokens": 550,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 1767,
+    "providerCostUsd": 0.00045105,
+    "providerUpstreamCostUsd": 0.00045105,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000036465,
+    "outputUsd": 0.00009900000000000001,
+    "totalUsd": 0.000135465,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

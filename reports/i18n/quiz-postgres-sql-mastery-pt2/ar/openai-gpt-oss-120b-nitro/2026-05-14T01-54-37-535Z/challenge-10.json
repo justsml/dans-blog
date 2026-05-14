@@ -1,0 +1,52 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Partial Indexes",
+  "translatedTitle": "الفهارس الجزئية",
+  "translation": {
+    "title": "الفهارس الجزئية",
+    "group": "الفهرسة",
+    "options": [
+      {
+        "text": "صيغة غير صالحة"
+      },
+      {
+        "text": "ينشئ فهارس مكررة"
+      },
+      {
+        "text": "يفهرس فقط الطلاب النشطين"
+      },
+      {
+        "text": "يفهرس الطلاب النشطين أولاً"
+      },
+      {
+        "text": "يوفر تلميحًا لمخطط الاستعلام"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "ماذا يفعل هذا التعويذة؟"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "هذه الحيلة تسمى `Partial Index`.\n\n    إنها مفيدة لتقليل استخدام القرص وتسريع الاستعلامات عندما يتم عادةً الاستعلام عن جزء فقط من الصفوف.\n\n    سيستخدم Postgres الفهرس فقط عندما يكون شرط `status = 'active'` موجودًا في الاستعلام.\n\n    **تذكير:** لا يدعم Postgres 'query hints' مثل أنظمة إدارة قواعد البيانات الأخرى. سيقرر مخطط الاستعلام متى يستخدم أي فهرس (فهارس) مناسب."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"الفهارس الجزئية\",\n  \"group\": \"الفهرسة\",\n  \"options\": [\n    {\n      \"text\": \"صيغة غير صالحة\"\n    },\n    {\n      \"text\": \"ينشئ فهارس مكررة\"\n    },\n    {\n      \"text\": \"يفهرس فقط الطلاب النشطين\"\n    },\n    {\n      \"text\": \"يفهرس الطلاب النشطين أولاً\"\n    },\n    {\n      \"text\": \"يوفر تلميحًا لمخطط الاستعلام\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"ماذا يفعل هذا التعويذة؟\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"sql\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"هذه الحيلة تسمى `Partial Index`.\\n\\n    إنها مفيدة لتقليل استخدام القرص وتسريع الاستعلامات عندما يتم عادةً الاستعلام عن جزء فقط من الصفوف.\\n\\n    سيستخدم Postgres الفهرس فقط عندما يكون شرط `status = 'active'` موجودًا في الاستعلام.\\n\\n    **تذكير:** لا يدعم Postgres 'query hints' مثل أنظمة إدارة قواعد البيانات الأخرى. سيقرر مخطط الاستعلام متى يستخدم أي فهرس (فهارس) مناسب.\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 934,
+    "outputTokens": 761,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 1891,
+    "providerCostUsd": 0.0005775,
+    "providerUpstreamCostUsd": 0.0005775,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000036426,
+    "outputUsd": 0.00013697999999999998,
+    "totalUsd": 0.00017340599999999997,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

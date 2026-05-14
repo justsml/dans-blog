@@ -1,0 +1,49 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Multi-Column Index Order",
+  "translatedTitle": "ترتيب الفهرس متعدد الأعمدة",
+  "translation": {
+    "title": "ترتيب الفهرس متعدد الأعمدة",
+    "group": "الفهرسة",
+    "options": [
+      {
+        "text": "CREATE INDEX ON students(grade_level, last_name);"
+      },
+      {
+        "text": "CREATE INDEX ON students(grade_level);"
+      },
+      {
+        "text": "CREATE INDEX ON students(last_name, age);"
+      },
+      {
+        "text": "CREATE INDEX ON students(first_name, last_name, grade_level);"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "أي فهرس هو الأنسب لهذا الاستعلام؟"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "ما يدهشني هنا هو أن الفهرس متعدد الأعمدة يمكن أن يُستخدم حتى عندما لا يتطابق ترتيب الأعمدة في نص الاستعلام مع تعريف الفهرس.\n\n**ملاحظة:** مع فهارس B-tree، العمود الرائد مهم. بما أن هذا الاستعلام يفلتر بـ `grade_level` و `last_name`، فإن فهرس يبدأ بـ `grade_level` ثم `last_name` يناسبه جيدًا.\n\nكلما كان SQL أسرع في اختيار أقل عدد من الصفوف، كلما كان الأداء أفضل.\n\nعلى سبيل المثال، إذا كان لديك جدول `task`، وتعلم أن `status` أكثر انتقائية من `created_at`، قد تختار فهرسًا يبدأ بـ `status` لاستعلام مثل `status = 'done' AND created_at > '2024-01-01'`. ترتيب الشروط في نص جملة `WHERE` ليس ما يهم؛ إنما ترتيب أعمدة الفهرس وأشكال المتنبئات هو المهم.\n\nيمكن استخدام فهرس B+Tree لـ:\n- العمود الرائد، أو أي بادئة يسرى من الأعمدة.\n- عوامل مثل `=`, `>`, `<`, `BETWEEN`, و `IN`، حسب شكل الاستعلام.\n- مطابقة البادئة، `LIKE 'prefix%'`.\n\nشكرًا لـ [u/mwdb2](https://www.reddit.com/r/PostgreSQL/comments/1h6kw87/comment/m0fovn0/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button) على الإشارة إلى خطأ سابق في هذا الشرح!"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"ترتيب الفهرس متعدد الأعمدة\",\n  \"group\": \"الفهرسة\",\n  \"options\": [\n    {\n      \"text\": \"CREATE INDEX ON students(grade_level, last_name);\"\n    },\n    {\n      \"text\": \"CREATE INDEX ON students(grade_level);\"\n    },\n    {\n      \"text\": \"CREATE INDEX ON students(last_name, age);\"\n    },\n    {\n      \"text\": \"CREATE INDEX ON students(first_name, last_name, grade_level);\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"أي فهرس هو الأنسب لهذا الاستعلام؟\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"ما يدهشني هنا هو أن الفهرس متعدد الأعمدة يمكن أن يُستخدم حتى عندما لا يتطابق ترتيب الأعمدة في نص الاستعلام مع تعريف الفهرس.\\n\\n**ملاحظة:** مع فهارس B-tree، العمود الرائد مهم. بما أن هذا الاستعلام يفلتر بـ `grade_level` و `last_name`، فإن فهرس يبدأ بـ `grade_level` ثم `last_name` يناسبه جيدًا.\\n\\nكلما كان SQL أسرع في اختيار أقل عدد من الصفوف، كلما كان الأداء أفضل.\\n\\nعلى سبيل المثال، إذا كان لديك جدول `task`، وتعلم أن `status` أكثر انتقائية من `created_at`، قد تختار فهرسًا يبدأ بـ `status` لاستعلام مثل `status = 'done' AND created_at > '2024-01-01'`. ترتيب الشروط في نص جملة `WHERE` ليس ما يهم؛ إنما ترتيب أعمدة الفهرس وأشكال المتنبئات هو المهم.\\n\\nيمكن استخدام فهرس B+Tree لـ:\\n- العمود الرائد، أو أي بادئة يسرى من الأعمدة.\\n- عوامل مثل `=`, `>`, `<`, `BETWEEN`, و `IN`، حسب شكل الاستعلام.\\n- مطابقة البادئة، `LIKE 'prefix%'`.\\n\\nشكرًا لـ [u/mwdb2](https://www.reddit.com/r/PostgreSQL/comments/1h6kw87/comment/m0fovn0/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button) على الإشارة إلى خطأ سابق في هذا الشرح!\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1181,
+    "outputTokens": 1252,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2848,
+    "providerCostUsd": 0.00092835,
+    "providerUpstreamCostUsd": 0.00092835,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000046059,
+    "outputUsd": 0.00022536,
+    "totalUsd": 0.000271419,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

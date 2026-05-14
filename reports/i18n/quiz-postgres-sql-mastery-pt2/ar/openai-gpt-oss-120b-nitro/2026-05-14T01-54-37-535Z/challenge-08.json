@@ -1,0 +1,52 @@
+{
+  "index": 7,
+  "attempt": 1,
+  "originalTitle": "Column Name Quoting",
+  "translatedTitle": "تحديد اسم العمود باستخدام علامات الاقتباس",
+  "translation": {
+    "title": "تحديد اسم العمود باستخدام علامات الاقتباس",
+    "group": "الاقتباس 2",
+    "options": [
+      {
+        "text": "first.name"
+      },
+      {
+        "text": "\"first.name\""
+      },
+      {
+        "text": "\\"
+      },
+      {
+        "text": "[first.name]"
+      },
+      {
+        "text": "[first].[name]"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "كيف تحدد **اسم عمود يحتوي على نقطة؟**"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "PostgreSQL يستخدم علامات الاقتباس المزدوجة لتحديد المعرفات:\n    - علامات الاقتباس المزدوجة `\"...\"` للمعرفات (أسماء الأعمدة، أسماء الجداول)\n    - علامات الاقتباس المفردة `'...'` للثوابت النصية\n    - الصيغة `first.name` تُفسَّر كـ `table_name.column_name`\n\n    بدون علامات اقتباس، ستُفسَّر النقطة في اسم العمود كفاصل بين المخطط/الجدول! بالإضافة إلى ذلك، جميع المعرفات غير المقتبسة تُحوَّل إلى أحرف صغيرة افتراضياً.\n\n    لتقليل المفاجآت، من الأفضل استخدام `snake_case` وتجنب استخدام الأحرف الخاصة."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"تحديد اسم العمود باستخدام علامات الاقتباس\",\n  \"group\": \"الاقتباس 2\",\n  \"options\": [\n    {\n      \"text\": \"first.name\"\n    },\n    {\n      \"text\": \"\\\"first.name\\\"\"\n    },\n    {\n      \"text\": \"\\\\\"\n    },\n    {\n      \"text\": \"[first.name]\"\n    },\n    {\n      \"text\": \"[first].[name]\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"كيف تحدد **اسم عمود يحتوي على نقطة؟**\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"PostgreSQL يستخدم علامات الاقتباس المزدوجة لتحديد المعرفات:\\n    - علامات الاقتباس المزدوجة `\\\"...\\\"` للمعرفات (أسماء الأعمدة، أسماء الجداول)\\n    - علامات الاقتباس المفردة `'...'` للثوابت النصية\\n    - الصيغة `first.name` تُفسَّر كـ `table_name.column_name`\\n\\n    بدون علامات اقتباس، ستُفسَّر النقطة في اسم العمود كفاصل بين المخطط/الجدول! بالإضافة إلى ذلك، جميع المعرفات غير المقتبسة تُحوَّل إلى أحرف صغيرة افتراضياً.\\n\\n    لتقليل المفاجآت، من الأفضل استخدام `snake_case` وتجنب استخدام الأحرف الخاصة.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 954,
+    "outputTokens": 697,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 1965,
+    "providerCostUsd": 0.0005421,
+    "providerUpstreamCostUsd": 0.0005421,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000037206,
+    "outputUsd": 0.00012546,
+    "totalUsd": 0.000162666,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
