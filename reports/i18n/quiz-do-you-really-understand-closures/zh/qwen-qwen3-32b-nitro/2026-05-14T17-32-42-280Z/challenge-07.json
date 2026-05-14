@@ -1,0 +1,50 @@
+{
+  "index": 6,
+  "attempt": 1,
+  "originalTitle": "Module Pattern",
+  "translatedTitle": "模块模式",
+  "translation": {
+    "title": "模块模式",
+    "group": "高级",
+    "options": [
+      {
+        "text": "60"
+      },
+      {
+        "text": "TypeError: balance is not defined"
+      },
+      {
+        "text": "-40"
+      },
+      {
+        "text": "100"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "等等——仔细读。实际上会发生什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "答案是`60`。\n\n    这是**模块模式**——一个返回闭包对象的立即执行函数表达式（IIFE）。这三个方法共享同一个`balance`绑定。这个变量是真正的私有属性：你无法从外部访问`balance`。",
+      "在class出现之前，这就是JavaScript中*最常用*的封装状态的方式。你仍然会在遗留代码库和工具库中看到这种模式。"
+    ]
+  },
+  "rawText": "```json\n{\n  \"title\": \"模块模式\",\n  \"group\": \"高级\",\n  \"options\": [\n    {\n      \"text\": \"60\"\n    },\n    {\n      \"text\": \"TypeError: balance is not defined\"\n    },\n    {\n      \"text\": \"-40\"\n    },\n    {\n      \"text\": \"100\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"等等——仔细读。实际上会发生什么？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"答案是`60`。\\n\\n    这是**模块模式**——一个返回闭包对象的立即执行函数表达式（IIFE）。这三个方法共享同一个`balance`绑定。这个变量是真正的私有属性：你无法从外部访问`balance`。\",\n    \"在class出现之前，这就是JavaScript中*最常用*的封装状态的方式。你仍然会在遗留代码库和工具库中看到这种模式。\"\n  ]\n}\n```",
+  "telemetry": {
+    "inputTokens": 853,
+    "outputTokens": 823,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 2932,
+    "providerCostUsd": 0.0006587,
+    "providerUpstreamCostUsd": 0.0006587,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00006824,
+    "outputUsd": 0.00019752,
+    "totalUsd": 0.00026576,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

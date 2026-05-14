@@ -1,0 +1,49 @@
+{
+  "index": 1,
+  "attempt": 1,
+  "originalTitle": "Separate Closures",
+  "translatedTitle": "独立闭包",
+  "translation": {
+    "title": "独立闭包",
+    "group": "热身",
+    "options": [
+      {
+        "text": "1, 1"
+      },
+      {
+        "text": "1, 2"
+      },
+      {
+        "text": "2, 2"
+      },
+      {
+        "text": "0, 0"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "这段代码会输出什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "每次调用 `makeCounter()` 都会创建一个**新的执行上下文**，拥有独立的 `count` 变量。`a` 和 `b` 分别闭包捕获了*不同的* `count` 绑定。它们不共享状态。\n\n    结果：`1, 1`\n\n    这就是为什么闭包被用来构建私有状态——每个\"实例\"都是独立的。"
+    ]
+  },
+  "rawText": "```json\n{\n  \"title\": \"独立闭包\",\n  \"group\": \"热身\",\n  \"options\": [\n    {\n      \"text\": \"1, 1\"\n    },\n    {\n      \"text\": \"1, 2\"\n    },\n    {\n      \"text\": \"2, 2\"\n    },\n    {\n      \"text\": \"0, 0\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"这段代码会输出什么？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"每次调用 `makeCounter()` 都会创建一个**新的执行上下文**，拥有独立的 `count` 变量。`a` 和 `b` 分别闭包捕获了*不同的* `count` 绑定。它们不共享状态。\\n\\n    结果：`1, 1`\\n\\n    这就是为什么闭包被用来构建私有状态——每个\\\"实例\\\"都是独立的。\"\n  ]\n}\n```",
+  "telemetry": {
+    "inputTokens": 818,
+    "outputTokens": 527,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 1543,
+    "providerCostUsd": 0.00047391,
+    "providerUpstreamCostUsd": 0.00047391,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00006544,
+    "outputUsd": 0.00012648,
+    "totalUsd": 0.00019192,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

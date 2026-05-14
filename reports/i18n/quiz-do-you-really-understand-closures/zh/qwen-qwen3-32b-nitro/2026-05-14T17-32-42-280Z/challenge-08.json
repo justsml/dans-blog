@@ -1,0 +1,50 @@
+{
+  "index": 7,
+  "attempt": 1,
+  "originalTitle": "Closure Memory Leak",
+  "translatedTitle": "闭包内存泄漏",
+  "translation": {
+    "title": "闭包内存泄漏",
+    "group": "专家级",
+    "options": [
+      {
+        "text": "它记录data数组的长度"
+      },
+      {
+        "text": "它创建了内存泄漏"
+      },
+      {
+        "text": "它抛出RangeError异常"
+      },
+      {
+        "text": "没有问题——这很正常"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "这段代码的问题是什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "事件监听器闭包捕获了`data`，所以只要监听器存在，该数组就保持可访问状态。如果`element`长期存在且监听器从未被移除，这个大数组也会被保留下来。\n\n    `element`在DOM中。监听器持有`data`。GC无法回收它。\n\n    修复方案：除非确实需要，在长期存在的监听器中不要捕获大数据，当所属UI被销毁时移除监听器：",
+      "现代V8引擎在这方面比以前有所改进。但在长期存在的单页应用（SPA）中，如果存在大量事件监听器，这种模式仍然会引发问题。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"闭包内存泄漏\",\n  \"group\": \"专家级\",\n  \"options\": [\n    {\n      \"text\": \"它记录data数组的长度\"\n    },\n    {\n      \"text\": \"它创建了内存泄漏\"\n    },\n    {\n      \"text\": \"它抛出RangeError异常\"\n    },\n    {\n      \"text\": \"没有问题——这很正常\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"这段代码的问题是什么？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"事件监听器闭包捕获了`data`，所以只要监听器存在，该数组就保持可访问状态。如果`element`长期存在且监听器从未被移除，这个大数组也会被保留下来。\\n\\n    `element`在DOM中。监听器持有`data`。GC无法回收它。\\n\\n    修复方案：除非确实需要，在长期存在的监听器中不要捕获大数据，当所属UI被销毁时移除监听器：\",\n    \"现代V8引擎在这方面比以前有所改进。但在长期存在的单页应用（SPA）中，如果存在大量事件监听器，这种模式仍然会引发问题。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 906,
+    "outputTokens": 649,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2115,
+    "providerCostUsd": 0.00064565,
+    "providerUpstreamCostUsd": 0.00064565,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00007248,
+    "outputUsd": 0.00015575999999999999,
+    "totalUsd": 0.00022824,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "index": 0,
+  "attempt": 1,
+  "originalTitle": "Classic Counter",
+  "translatedTitle": "经典计数器",
+  "translation": {
+    "title": "经典计数器",
+    "group": "热身",
+    "options": [
+      {
+        "text": "0, 0, 0"
+      },
+      {
+        "text": "0, 1, 2"
+      },
+      {
+        "text": "1, 2, 3"
+      },
+      {
+        "text": "ReferenceError"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "这段代码会输出什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "`tick`闭包捕获了`count`变量。每次调用都会递增并返回**同一个**`count`变量。三次调用的结果是`1, 2, 3`。\n\n    关键词是：**同一个**。闭包不会复制变量，而是持有对变量绑定的**实时引用**。这才是闭包的精髓所在。"
+    ]
+  },
+  "rawText": "```json\n{\n  \"title\": \"经典计数器\",\n  \"group\": \"热身\",\n  \"options\": [\n    {\n      \"text\": \"0, 0, 0\"\n    },\n    {\n      \"text\": \"0, 1, 2\"\n    },\n    {\n      \"text\": \"1, 2, 3\"\n    },\n    {\n      \"text\": \"ReferenceError\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"这段代码会输出什么？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"`tick`闭包捕获了`count`变量。每次调用都会递增并返回**同一个**`count`变量。三次调用的结果是`1, 2, 3`。\\n\\n    关键词是：**同一个**。闭包不会复制变量，而是持有对变量绑定的**实时引用**。这才是闭包的精髓所在。\"\n  ]\n}\n```",
+  "telemetry": {
+    "inputTokens": 821,
+    "outputTokens": 684,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1637,
+    "providerCostUsd": 0.00064165,
+    "providerUpstreamCostUsd": 0.00064165,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00006568000000000001,
+    "outputUsd": 0.00016416,
+    "totalUsd": 0.00022984,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

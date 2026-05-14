@@ -1,0 +1,49 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Object Mutation",
+  "translatedTitle": "对象变异",
+  "translation": {
+    "title": "对象变异",
+    "group": "闭包与对象",
+    "options": [
+      {
+        "text": "{ x: 1 }, { x: 1 }"
+      },
+      {
+        "text": "{ x: 1 }, { x: 99 }"
+      },
+      {
+        "text": "{ x: 99 }, { x: 99 }"
+      },
+      {
+        "text": "{ x: 99 }, { x: 1 }"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "这段代码会输出什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "闭包捕获的是 **绑定** `obj`，而不是对象的快照。创建闭包后对象本身被修改了——但 `obj` 仍然指向相同的引用。两次调用返回的是同一个被修改后的对象：`{ x: 99 }`。\n\n    这会让误以为闭包会\"冻结\"值的开发者掉进陷阱。它们不会。它们捕获的是 **引用**。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"对象变异\",\n  \"group\": \"闭包与对象\",\n  \"options\": [\n    {\n      \"text\": \"{ x: 1 }, { x: 1 }\"\n    },\n    {\n      \"text\": \"{ x: 1 }, { x: 99 }\"\n    },\n    {\n      \"text\": \"{ x: 99 }, { x: 99 }\"\n    },\n    {\n      \"text\": \"{ x: 99 }, { x: 1 }\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"这段代码会输出什么？\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"javascript\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"闭包捕获的是 **绑定** `obj`，而不是对象的快照。创建闭包后对象本身被修改了——但 `obj` 仍然指向相同的引用。两次调用返回的是同一个被修改后的对象：`{ x: 99 }`。\\n\\n    这会让误以为闭包会\\\"冻结\\\"值的开发者掉进陷阱。它们不会。它们捕获的是 **引用**。\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 854,
+    "outputTokens": 789,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 1803,
+    "providerCostUsd": 0.00063893,
+    "providerUpstreamCostUsd": 0.00063893,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00006832,
+    "outputUsd": 0.00018936,
+    "totalUsd": 0.00025768,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

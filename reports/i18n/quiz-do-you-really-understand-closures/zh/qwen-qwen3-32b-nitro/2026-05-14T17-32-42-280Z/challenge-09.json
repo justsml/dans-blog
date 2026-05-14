@@ -1,0 +1,49 @@
+{
+  "index": 8,
+  "attempt": 1,
+  "originalTitle": "The this Trap",
+  "translatedTitle": "this 的陷阱",
+  "translation": {
+    "title": "this 的陷阱",
+    "group": "专家级",
+    "options": [
+      {
+        "text": "Dan, Dan"
+      },
+      {
+        "text": "Dan, undefined"
+      },
+      {
+        "text": "undefined, Dan"
+      },
+      {
+        "text": "undefined, undefined"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "这段代码会输出什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "两个微妙的陷阱：\n\n    **`greetArrow`**：箭头函数没有自己的 `this`。它从封闭的词法作用域捕获 `this`——在这里是模块/全局作用域，而不是 `user`。因此 `this?.name` 是 `undefined`。\n\n    **`fn()`**：`greetRegular` 没有接收者调用（`fn()` 而不是 `user.greetRegular()`）。在严格模式下，`this` 是 `undefined`。在非严格模式下，它是全局对象。无论如何，`this?.name` 都是 `undefined`。\n\n    如果你直接调用 `user.greetRegular()`，你会得到 `'Dan'`——因为此时 `this` 绑定到 `user`。\n\n    结果：`undefined, undefined`。"
+    ]
+  },
+  "rawText": "```json\n{\n  \"title\": \"this 的陷阱\",\n  \"group\": \"专家级\",\n  \"options\": [\n    {\n      \"text\": \"Dan, Dan\"\n    },\n    {\n      \"text\": \"Dan, undefined\"\n    },\n    {\n      \"text\": \"undefined, Dan\"\n    },\n    {\n      \"text\": \"undefined, undefined\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"这段代码会输出什么？\"\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"两个微妙的陷阱：\\n\\n    **`greetArrow`**：箭头函数没有自己的 `this`。它从封闭的词法作用域捕获 `this`——在这里是模块/全局作用域，而不是 `user`。因此 `this?.name` 是 `undefined`。\\n\\n    **`fn()`**：`greetRegular` 没有接收者调用（`fn()` 而不是 `user.greetRegular()`）。在严格模式下，`this` 是 `undefined`。在非严格模式下，它是全局对象。无论如何，`this?.name` 都是 `undefined`。\\n\\n    如果你直接调用 `user.greetRegular()`，你会得到 `'Dan'`——因为此时 `this` 绑定到 `user`。\\n\\n    结果：`undefined, undefined`。\"\n  ],\n  \"explanationCode\": []\n}\n```",
+  "telemetry": {
+    "inputTokens": 903,
+    "outputTokens": 1266,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 3546,
+    "providerCostUsd": 0.00093457,
+    "providerUpstreamCostUsd": 0.00093457,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00007224,
+    "outputUsd": 0.00030384,
+    "totalUsd": 0.00037608,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
