@@ -1,0 +1,1081 @@
+---
+unlisted: false
+title: 'חידון: אחסון AWS: יותר מ‑20 שאלות!'
+subTitle: האםתוכל לנווט במבוך הענן?
+label: AWS Storage
+category: Quiz
+subCategory: Cloud
+date: '2024-12-28'
+modified: '2024-12-29'
+tags:
+  - quiz
+  - aws
+  - cloud
+  - storage
+  - databases
+  - s3
+  - dynamodb
+  - rds
+  - elasticache
+social_image: ../mobile.webp
+cover_full_width: ../aws-cloud--city-focus-wide.webp
+cover_mobile: ../aws-cloud--city-focus-square.webp
+cover_icon: ../aws-cloud--city-focus-square.webp
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+<p class="inset">מוכן לשחק בענן?! 🤡</p>
+
+צלול לעומק של שירותי האחסון של AWS! חידון זה יבדוק את הידע שלך ב‑S3, DynamoDB, Aurora, RDS, ElastiCache ועוד. מנוהל של מיטב הפרקטיקות ועד למלכודות המסובכות, נחקור את נוף האחסון בענן.
+
+התכונן להוכיח את המומחיות שלך בענן! 🚀
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="חימום"
+  title="טריוויה S3"
+  difficulty={1}
+  objectives={[
+    "זכור את המשמעות של שם השירות AWS S3",
+    "זהה שירותי אחסון בסיסיים של AWS",
+  ]}
+  options={[
+    {text: 'Server Storage v3'},
+    {text: 'Storage as a Service'},
+    {text: 'Simple Storage Service', isAnswer: true},
+    {text: 'Sassy Storage Service'},
+    {text: 'Simple Synchronized Store'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    <p className="text-sm">אימות אחרון: 8 במאי 2026. מגבלות ותמחור של AWS משתנים במהירות.</p>
+    מה המשמעות של השם `S3`?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    S3 הוא קיצור של **Simple Storage Service**. זהו שירות אחסון אובייקטים מדרגי שנועד לאחסון נתונים בקנה מידה גדול.
+
+    AWS S3 מציע מספר מחלקות אחסון:
+    - Standard: לנתונים שנגישים בתדירות גבוהה
+    - Infrequent Access (IA): עלות נמוכה יותר לגישה פחות תדירה
+    - Glacier: אחסון ארכיוני ארוך טווח, בעל עלות נמוכה
+
+    כל מחלקה מציעה תמחור ותכונות גישה שונות, מה שמאפשר אופטימיזציית עלויות בהתאם לדפוסי השימוש בנתונים.
+
+    [למידע נוסף על מחלקות האחסון של S3](https://aws.amazon.com/s3/storage-classes/)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="ללא סכימה"
+  title="DynamoDB"
+  difficulty={2}
+  objectives={[
+    "להגדיר מאפייני מסד נתונים ללא סכימה",
+    "להסביר את מודל הנתונים הגמיש של DynamoDB",
+  ]}
+  options={[
+    {text: 'אחסון תכונות שרירותיות', isAnswer: true},
+    {text: 'מפתחות מחיצה דינאמיים'},
+    {text: 'עמודות ללא טיפוס'},
+    {text: 'סכימת JSON מנוהלת אוטומטית'},
+    {text: 'מתבסס על RDS לתמיכה בסכימה'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה המשמעות של תיאור DynamoDB כ"ללא סכימה"?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    DynamoDB נחשב "ללא סכימה" מכיוון שהוא מאפשר לך לאחסן תכונות שרירותיות בפריטים ללא סכימה מוגדרת מראש.
+
+    [DynamoDB Best Practices](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/best-practices.html)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="ללא סכימה"
+  title="DynamoDB"
+  difficulty={4}
+  objectives={[
+    "להשוות בין יכולות הפעולות האצווה של DynamoDB",
+    "למטב את פעולות העדכון ב‑DynamoDB",
+    "להעריך שיקולי סקיילינג לעדכונים",
+  ]}
+  options={[
+    {text: 'PutItem', hint: 'יוצר פריט חדש, או מחליף פריט קיים בפריט חדש.'},
+    {text: 'BatchUpdateItem', hint: 'לא קיים.'},
+    {text: 'BatchWriteItem', hint: 'מכניס (מוסיף) או מוחק מספר פריטים בקריאה אחת.'},
+    {text: 'UpdateItem', isAnswer: true},
+    {text: 'BatchUpsertItem', hint: 'ב‑DynamoDB?'},
+    {text: 'TransactWriteItems', hint: 'משלב מספר פעולות PutItem, UpdateItem, DeleteItem, ו‑ConditionCheck בקריאה אחת.'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    איזה API של DynamoDB מעדכן תכונות בפריט קיים אחד?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    המפתח כאן הוא <b>עדכונים</b>, ולא הוספות או PUTs. אם אתה מבצע הוספות, אפשר להשתמש ב‑`BatchWriteItem` או `TransactWriteItems`.
+
+    בעוד ש‑`BatchWriteItem` יכול לטפל במספר פעולות, הוא מוגבל ל‑PUTs ול‑DELETES. `TransactWriteItems` חזק יותר, אך הוא כמו פטיש גדול לעדכונים פשוטים.
+    לעדכונים פשוטים, `UpdateItem` הוא הבחירה הטובה ביותר. הוא מאפשר לך לעדכן, או לשנות תכונה אחת או יותר בפריט קיים.
+
+    הפעולה `UpdateItem` משנה פריט אחד לכל בקשה. עבור מילוי מאגר גדול או עדכונים בכמות, בדרך כלל מתזמנים הרבה קריאות `UpdateItem` או משתמשים בתהליך עבודה גדול יותר כמו ביצוע אצווה ב‑PartiQL, Step Functions, Glue, EMR, או תהליך עובד מותאם.
+
+    הפעולה `UpdateItem`:
+    - מעדכנת את תכונות הפריט הקיים.
+    - מוסיפה תכונות חדשות לפריט קיים.
+    - מסירה תכונות מהפריט הקיים.
+    - מבצעת את העדכון בתנאי שהפריט קיים או עומד בתנאים מסוימים.
+
+    [DynamoDB UpdateItem](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateItem.html)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="יכולות שאילתה"
+  title="תכונות חיפוש מתקדמות"
+  difficulty={3}
+  objectives={[
+    "להבין יכולות שאילתה מתקדמות במגוון שירותי AWS",
+    "להשוות תכונות חיפוש טקסט מלא",
+  ]}
+  options={[
+    {text: 'ElastiCache', hint: 'בעיקר מטמון בזיכרון; גרסאות Valkey חדשות כוללות תכונות חיפוש.'},
+    {text: 'OpenSearch', isAnswer: true},
+    {text: 'Neptune', hint: 'מסד נתונים גרפי עם יכולות שאילתה מתקדמות'},
+    {text: 'Redshift', hint: 'שאילתות אנליטיות מורכבות'},
+    {text: 'DocumentDB', hint: 'שאילתות תואמות MongoDB'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    איזה שירות של AWS כאן נבנה במיוחד לחיפוש טקסט מלא וניתוח חיפוש?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    OpenSearch הוא השירות המנוהל של AWS לחיפוש, ניתוח יומנים, ועומסי עבודה של חיפוש טקסט מלא.
+
+    המפזרים הם שירותים שימושיים, אך הם אינם מנוע החיפוש שנבנה במיוחד ברשימה זו:
+    - ElastiCache: בעיקר מטמון בזיכרון. ElastiCache עבור Valkey הנוכחי כולל פקודות חיפוש לנתונים מאונדקסים בזיכרון, ולכן לא מדויק יותר לתאר את כל השירות כחסר חיפוש מובנה.
+    - Neptune: מסד נתונים גרפי; הוא יכול להשתלב עם OpenSearch לחיפוש טקסט מלא.
+    - Redshift: מחסן נתונים לניתוח SQL.
+    - DocumentDB: מסד נתונים מסמכי עם חיפוש טקסט תואם MongoDB בגרסאות נתמכות.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="RDS"
+  title="פריסת Multi-AZ"
+  difficulty={2}
+  objectives={[
+    "זיהוי המטרה העיקרית של פריסות Multi-AZ",
+    "הבחנה בין זמינות גבוהה להרחבת קריאה",
+  ]}
+  options={[
+    {text: 'מפחית עלויות אחסון'},
+    {text: 'פותר את בעיית ה‑Egress'},
+    {text: 'מספק מעבר אוטומטי', isAnswer: true},
+    {text: 'משפר ביצועי קריאה'},
+    {text: 'משפר תעבורה גיאוגרפית מבוזרת'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מהו היתרון **הראשוני** של פריסת Multi-AZ ב‑RDS?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    אזורי זמינות (AZs) הם מרכזי נתונים נפרדים **בתוך אזור.** פריסת RDS Multi-AZ מספקת מעבר אוטומטי למעתק מוכן במצב standby ב‑AZ *קרוב*.
+
+    פריסת Multi-AZ:
+    - מספקת מעבר אוטומטי
+    - מגבירה את זמינות מסד הנתונים
+    - יוצרת מעתק standby סינכרוני
+    - מצמצמת זמן השבתה בעת תקלות תשתית
+
+    אל תבלבלו בין פריסת Multi-AZ ל‑Read Replicas, המשמשות להרחבת פעולות קריאה.
+
+    {/* [RDS Multi-AZ Details](https://aws.amazon.com/rds/features/multi-az/) */}
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="WebSockets"
+  title="קוסמות WebSocket"
+  difficulty={3}
+  objectives={[
+    "להשוות תמיכת WebSocket בין שירותי AWS",
+    "לזהות מגבלות ארכיטקטוניות בשירותי AWS",
+    "להעריך אפשרויות יישום של WebSocket",
+  ]}
+  options={[
+    {text: 'API Gateway', isAnswer: true},
+    {text: 'EKS', hint: 'EKS יכול להריץ שירותי WebSocket ארוכי‑חיים משלך.'},
+    {text: 'Lightsail', hint: 'מופעי Lightsail יכולים להריץ שרת WebSocket משלך.'},
+    {text: 'AppSync', hint: 'AppSync מציע מנויים בזמן אמת ב‑GraphQL על גבי WebSockets, ולא סוקטים גולמיים שרירותיים.'},
+    {text: 'EC2', hint: 'EC2 יכול להריץ תהליך שרת WebSocket ארוך‑חיים משלך.'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    👋 אני מקווה שאתה נהנה עד כה!
+
+    הגיע זמן לשאלה מסובכת...
+
+    איזה שירות של AWS מספק APIs מנוהלים של WebSocket כאשר AWS מחזיק בחיבור הלקוח ומנתב הודעות לאינטגרציות?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    API Gateway תומך ב‑APIs של WebSocket דו‑כיווני, אך היישום מנוהל על‑ידי API Gateway במקום להיות סוקט ישיר לתהליך השרת שלך.
+    API Gateway שומר על חיבור הלקוח ומנתב הודעות ל‑Lambda, נקודות קצה HTTP, או אינטגרציות אחרות. ניתן לשלוח הודעות חזרה ללקוחות המחוברים דרך API Gateway Management API.
+
+    השאר הרבה יותר ידידותיים ל‑WebSocket:
+    - Lightsail: מושלם להגדרות WebSocket פשוטות 👌
+    - AppSync: משתמש ב‑WebSockets למנויים מנוהלים ב‑GraphQL
+    - EC2: האופציה הקלאסית "עשה מה שבא לך" עבור WebSockets
+    - EKS: מצוין להרצת אשכולות WebSocket ניתנים להרחבה
+
+    טיפ מקצועי: אם אתה צריך כוח גולמי של WebSocket, השתמש בשירותי המחשוב!
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="אבטחת S3"
+  title="מדיניות דלי S3"
+  difficulty={2}
+  objectives={[
+    "החלת שיטות האבטחה הטובות ביותר על S3",
+    "יישום עקרון מינימום הרשאות",
+  ]}
+  options={[
+    {text: 'הפוך דליים חדשים לציבוריים', hint: 'פרינציפ של מינימום הרשאות, קודם.'},
+    {text: 'העבר S3 למקומי כדי לשלוט במלואו ב-ACLs'},
+    {text: 'העבר נתונים לבלוקצ\'יין פרטי', hint: 'מתבדח, נכון?'},
+    {text: 'השתמש בעקרון מינימום הרשאות', isAnswer: true},
+    {text: 'השתמש בתווי כל במדיניות כדי להבטיח גישה נדרשת', hint: '😯 לא!'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה הגישה המומלצת להרשאות דלי S3?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    בכמעט כל המערכות, אימוץ עיצוב "מינימום הרשאות" הוא דרך מרכזית לחיזוק והכנת המערכת לעתיד. ניסיון לנעול מערכת קיימת קשה כמו להעביר בניין משרדים שלם ליסוד חדש.
+
+    דליים של S3 אינם יוצאים מן הכלל. כדי ליישם את עקרון מינימום הרשאות, התחילו ללא הרשאות והעניקו רק את הגישה הנדרשת. השתמשו בתפקידים ובמדיניות של IAM כדי לשלוט בגישה ובדקו באופן קבוע את הרשאות הדלי.
+
+    שיטות אבטחה מומלצות:
+    - יישום עקרון מינימום הרשאות
+    - התחלה ללא הרשאות
+    - הענקת גישה רק כנדרש
+    - שימוש בתפקידים ובמדיניות של IAM
+    - ביקורת קבועה על הרשאות הדלי
+
+    הימנעו מהגדרות מרשימות מדי שיכולות לחשוף נתונים רגישים.
+
+    [S3 Security Best Practices](https://aws.amazon.com/s3/security/)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="Aurora"
+  title="Aurora Serverless"
+  difficulty={2}
+  objectives={[
+    "זיהוי תכונות מפתח של Aurora Serverless",
+    "הבחנה בין מסדי נתונים ללא שרת למתוכננים",
+  ]}
+  options={[
+    {text: 'תמיד זול יותר מהמתוכנן'},
+    {text: 'מתאם באופן אוטומטי את קיבולת המחשוב', isAnswer: true},
+    {text: 'מספק אחסון בלתי מוגבל'},
+    {text: 'מבטל ניהול מסד נתונים'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מהי תכונה מרכזית של Aurora Serverless?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    Aurora Serverless:
+    - מתאם באופן אוטומטי את קיבולת המחשוב
+    - מתאים משאבים בהתאם לעומס העבודה
+    - אידיאלי לעומסים בלתי צפויים
+    - משלם רק עבור המשאבים שבשימוש
+
+    מצוין ליישומים עם תבניות תנועה משתנות.
+
+    [סקירת Aurora Serverless](https://aws.amazon.com/rds/aurora/serverless/)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="אצוות, חלק 1!"
+  title="מגבלות BatchGetItem"
+  difficulty={2}
+  objectives={[
+    "זכור את מגבלות DynamoDB BatchGetItem",
+    "השווה את BatchGetItem עם פעולות אצווה אחרות",
+  ]}
+  options={[
+    {text: '1', hint: '... אני מתעקש על אצווה.'},
+    {text: '25', hint: 'זהו המגבלה עבור `BatchWriteItem`.'},
+    {text: '100', isAnswer: true},
+    {text: '75', hint: 'קרוב, אבל יש מספר עגול.'},
+    {text: '50', hint: 'קצת יותר גבוה עבור `BatchGetItem`.'},
+    {text: '200', hint: 'קצת יותר גבוה מדי...'},
+    {text: 'Unlimited', hint: 'קיימת מגבלה קבועה עבור `BatchGetItem`.'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    עוד שאלה על אצוות ב‑DynamoDB!<br />
+    מהו המספר המרבי של פריטים שניתן לקבל בבקשת `BatchGetItem` אחת של DynamoDB?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    ה‑SDK של DynamoDB מאפשר לך לקבל עד **100** פריטים בבקשת `BatchGetItem` אחת. זה גבוה יותר מהמגבלה עבור `BatchWriteItem`, שהיא 25 פריטים.
+    בנוסף, קיימות מגבלות על גודל המשקל הכולל, גודל המסמך וקצב הבקשות.
+
+    הבנת המגבלות הללו קריטית לאופטימיזציית ביצועי האפליקציה שלך ולהבטחת פעולות נתונים יעילות.
+
+    **הערה:** אפשר לחרוג מ_חלק_ מהמגבלות האלה – אם תוכל לשכנע את מנהל החשבון של AWS שלך. 😎
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="אצוות, חלק 2!"
+  title="פעולות באצ'"
+  difficulty={4}
+  objectives={[
+    "להבין מגבלות פעולות באצ' של DynamoDB",
+    "להבדיל בין פעולות בודדות לבאצ'",
+  ]}
+  options={[
+    {text: '1', isAnswer: true},
+    {text: '10'},
+    {text: '25', hint: 'ניחוש טוב...'},
+    {text: '50'},
+    {text: '100', hint: 'חושב על מגבלת GetItem?'},
+    {text: '100 when streaming'},
+    {text: 'None of the above', hint: 'זה קצת מסובך...'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מהו המספר המרבי של מסמכים ש‑DynamoDB יכול `UPDATE` בכל באצ'?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    הלקוחות של DynamoDB הם בעצם עטיפות ל‑API HTTP שלו. הפעולה `BatchWriteItem` יכולה `PUT` או `DELETE` עד **25** מסמכים בבקשת HTTP אחת, אך היא אינה יכולה `UPDATE` מספר מסמכים.
+
+    בעוד ש‑DynamoDB יכול `INSERT` עד **25** מסמכים בבקשת HTTP, הוא יכול `UPDATE` רק **1** מסמך לבקשה באמצעות הפעולה `UpdateItem`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="DynamoDB"
+  title="קיבולת פרוביזונד מול קיבולת לפי דרישה"
+  difficulty={3}
+  objectives={[
+    "להשוות מצבי קיבולת של DynamoDB",
+    "לבחור במצב קיבולת מתאים בהתאם לעומס העבודה",
+    "להעריך את השלכות העלות של בחירות הקיבולת",
+  ]}
+  options={[
+    {text: 'פרוביזונד תמיד עדיף'},
+    {text: 'קיבולת לפי דרישה היא בלתי מוגבלת'},
+    {text: 'הן מתפקדות באופן זהה'},
+    {text: 'קיבולת לפי דרישה זולה יותר עבור עומסי עבודה בלתי צפויים', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מתי יש להשתמש בקיבולת On-Demand של DynamoDB?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    קיבולת On-Demand היא הטובה ביותר עבור:
+    - עומסי עבודה בלתי צפויים
+    - תנועה מזדמנת
+    - יישומים עם דפוסי גישה לא ידועים
+    - הימנעות מהקצאת יתר
+
+    קיבולת פרוביזונד עדיפה עבור:
+    - עומסי עבודה צפויים ועקביים
+    - שליטה רבה יותר בביצועים
+    - חיסכון פוטנציאלי בעלויות
+
+    [מצבי קיבולת של DynamoDB](https://aws.amazon.com/dynamodb/pricing/)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="ביצועי S3"
+  title="אופטימיזציית ביצועי S3"
+  difficulty={3}
+  objectives={[
+    "למטב ביצועי S3 עבור קצב בקשות גבוה",
+    "להחיל את מיטב השיטות בשם מפתחות S3",
+    "לעצב לחלוקת מחיצות S3",
+  ]}
+  options={[
+    {text: 'השתמש בקידומות אקראיות/האש'},
+    {text: 'השתמש בקידומות לוגיות; אין צורך באקראיות', isAnswer: true},
+    {text: 'תמיד השתמש באובייקטים הגדולים ביותר'},
+    {text: 'הפחת את מספר האובייקטים'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    איך למטב את ביצועי S3 עבור קצב בקשות גבוה?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    טיפים לביצועי S3:
+    - S3 מודרני מקנה באופן אוטומטי קצב בקשות לכל קידומת
+    - אינך צריך קידומות אקראיות/האש לביצועים
+    - השתמש בשם מפתחות לוגיים שמתאימים לתבניות הגישה שלך
+    - נטר תגובות 503 Slow Down אם אתה דוחף קצב בקשות גבוה מאוד
+
+    הנחיות ישנות המליצו על אקראיות בקידומות כדי למנוע מחיצות חמות, אך AWS כבר לא ממליצה על כך כברירת מחדל לביצועים.
+
+    [S3 Performance Guidelines](https://aws.amazon.com/s3/performance/)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="גיבוי RDS"
+  title="אסטרטגיית גיבוי של RDS"
+  difficulty={2}
+  objectives={[
+    "זיהוי שיטות העבודה הטובות ביותר לאסטרטגיות גיבוי של RDS",
+    "הבנת יכולות השחזור בנקודת זמן",
+  ]}
+  options={[
+    {text: 'רק צילומי מצב ידניים'},
+    {text: 'אין צורך בגיבויים'},
+    {text: 'גיבויים אוטומטיים עם שחזור בנקודת זמן', isAnswer: true},
+    {text: 'גיבויים מלאים שבועיים'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מהי הגישה המומלצת לגיבוי RDS?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    שיטות גיבוי מומלצות:
+    - הפעלת גיבויים אוטומטיים
+    - שימוש בשחזור בנקודת זמן
+    - שמירת גיבויים בהתאם לדרישות הציות
+    - בדיקת תהליך השחזור באופן קבוע
+    - שקילה של גיבוי בין-אזורי
+
+    גיבויים אוטומטיים מספקים:
+    - הגנה רציפה על הנתונים
+    - אפשרויות שחזור גמישות
+
+    [שיטות גיבוי של RDS](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_CommonTasks.BackupRestore.html)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={13}
+  group="ElastiCache"
+  title="Redis מול Memcached"
+  difficulty={2}
+  objectives={[
+    "להשוות בין היכולות של Redis ו‑Memcached",
+    "להבדיל בין תכונות מנועי הקאשינג",
+  ]}
+  options={[
+    {text: 'Redis תומך במבני נתונים ופעולות נוספים', isAnswer: true},
+    {text: 'זהה בכל ההיבטים'},
+    {text: 'תאימות ברמת ה-API'},
+    {text: 'Memcached תמיד מהיר יותר'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ההבדל המרכזי בין `Redis` ל‑`Memcached` ב‑`ElastiCache`?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    יתרונות Redis:
+    - תומך במבני נתונים מורכבים
+    - אפשרויות שמירה
+    - פעולות מתקדמות
+    - הודעות Pub/Sub
+
+    Memcached:
+    - אחסון מפתח‑ערך פשוט
+    - קאשינג טהור
+    - ביצועים גבוהים למקרים פשוטים
+
+    [Redis מול Memcached](https://aws.amazon.com/elasticache/redis-vs-memcached/)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={14}
+  group="אינדקסים של DynamoDB"
+  title="אינדקס משני גלובלי"
+  difficulty={3}
+  objectives={[
+    "להבין את מטרת האינדקס המשני הגלובלי",
+    "להעריך תבניות גישה ב‑DynamoDB",
+    "לעצב אסטרטגיות שאילתה יעילות",
+  ]}
+  options={[
+    {text: 'זהה למפתח הראשי'},
+    {text: 'חינם ללא עלות נוספת'},
+    {text: 'מפחית ביצועי כתיבה'},
+    {text: 'מאפשר שאילתות על תכונות שאינן מפתח ראשי', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מהי המטרה של אינדקס משני גלובלי ב‑DynamoDB?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    אינדקס משני גלובלי (GSI):
+    - מאפשר שאילתות על תכונות שאינן מפתח ראשי
+    - יוצר תבניות גישה חלופיות
+    - מגביר גמישות של שאילתות
+    - מגיע עם עלות נוספת של קיבולת כתיבה
+
+    שימושי לדרישות שאילתה מורכבות שמעבר למפתח הראשי.
+
+    [אינדקסים של DynamoDB](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GSI.html)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={15}
+  group="מחזור החיים של S3"
+  title="ניהול מחזור החיים של S3"
+  difficulty={2}
+  objectives={[
+    "להבין את יכולות ניהול מחזור החיים של S3",
+    "ליישם אסטרטגיות אופטימיזציית עלות עבור S3",
+  ]}
+  options={[
+    {text: 'הזזת אובייקטים ידנית'},
+    {text: 'מעבר אוטומטי של אובייקטים בין מחלקות אחסון', isAnswer: true},
+    {text: 'לעולם לא למחוק אובייקטים ישנים'},
+    {text: 'לאחסן הכל במחלקת Standard'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה מאפשר ניהול מחזור החיים של S3?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    ניהול מחזור החיים:
+    - מעבר אוטומטי של אובייקטים בין מחלקות אחסון
+    - העברת נתונים נדירים לאחסון זול יותר
+    - הגדרת כללים לפקיעת אובייקטים
+    - אופטימיזציית עלויות האחסון
+    - הפחתת עומס ניהול ידני
+
+    [כללי מחזור החיים של S3](https://docs.aws.amazon.com/AmazonS3/latest/userguide/lifecycle-configuration-examples.html)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={16}
+  group="הרחבת Aurora"
+  title="הרחבת קריאות עם Amazon Aurora"
+  difficulty={2}
+  objectives={[
+    "זכור את מגבלות המעתקים לקריאה של Aurora",
+    "הבין את יכולות ההרחבה של קריאות ב‑Aurora",
+  ]}
+  options={[
+    {text: 'מוגבל למעתק קריאה יחיד', hint: 'חשוב על תכונות ההרחבה של Aurora.'},
+    {text: 'אין אפשרות להרחבת קריאות', hint: 'האם זה תואם ליכולות של Aurora?'},
+    {text: 'תומך עד 15 מעתקים לקריאה', isAnswer: true},
+    {text: 'מעתקים לקריאה ללא הגבלה', hint: 'קיים גבול מעשי שיש לקחת בחשבון.'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מהו המספר המרבי של מעתקים לקריאה ש‑Amazon Aurora תומכת בו?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    Amazon Aurora תומכת **עד 15 מעתקים לקריאה**, מה שמאפשר לך להרחיב משמעותית את פעולות הקריאה. המעתקים הללו נהנים מ:
+
+    - **שכפול כמעט מיידי** בין המעתקים
+    - **השפעה מינימלית על הביצועים** של המופע הראשי
+    - **הפצה יעילה** של עומסי קריאה
+
+    תצורה זו מאפשרת הרחבה אופקית ליישומים עם דרישות קריאה גבוהות.
+
+    [למידע נוסף על מעתקים לקריאה ב‑Aurora](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Replicas.html)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={17}
+  group="אבטחת RDS"
+  title="הצפנה ב‑RDS"
+  difficulty={2}
+  objectives={[
+    "זיהוי יכולות ההצפנה של RDS",
+    "הבנת מנגנוני הגנת הנתונים ב‑RDS",
+  ]}
+  options={[
+    {text: 'הצפנת נתונים במנוחה ובמעבר', isAnswer: true},
+    {text: 'הצפנה היא אופציונלית'},
+    {text: 'אין הצפנה זמינה'},
+    {text: 'הצפנה רק של עמודות ספציפיות'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    אילו יכולות הצפנה RDS מספק?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    תכונות הצפנה ב‑RDS:
+    - הצפנת נתונים במנוחה באמצעות KMS
+    - הצפנת נתונים במעבר באמצעות SSL/TLS
+    - הפעלת הצפנה בעת יצירת מסד הנתונים
+    - הגנה על מידע רגיש
+    - עמידה בתקני אבטחה
+
+    [אפשרויות הצפנה ב‑RDS](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/encryption-options.html)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={18}
+  group="זרמי DynamoDB"
+  title="מטרת זרמי DynamoDB"
+  difficulty={3}
+  objectives={[
+    "להבין מקרי שימוש של זרמי DynamoDB",
+    "לעצב ארכיטקטורות מונעות אירועים עם DynamoDB",
+    "להעריך תבניות עיבוד נתונים מבוססות זרם",
+  ]}
+  options={[
+    {text: 'אחסן עותקים נוספים של נתונים'},
+    {text: 'זיכויים של DynamoDB עבור ספקים ירוקים', hint: 'באמת?'},
+    {text: 'הגבר ביצועי כתיבה', hint: 'הזרמים הם '},
+    {text: 'לכוד שינויים ברמת פריט עבור ארכיטקטורות מונעות אירועים', isAnswer: true},
+    {text: 'חלופה לאינדקסים משניים גלובליים', hint: 'אתה מנחש?'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה השימוש העיקרי של זרמי DynamoDB?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    זרמי DynamoDB:
+    - לכוד שינויים ברמת פריט
+    - אפשר ארכיטקטורות מונעות אירועים
+    - הפעל פונקציות Lambda
+    - תמוך בשכפול בין-אזורי
+    - ספק תזוזת נתונים כמעט בזמן אמת
+
+    [סקירת זרמי DynamoDB](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Streams.html)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={19}
+  group="העברת S3"
+  title="העברת קבצים גדולים"
+  difficulty={2}
+  objectives={[
+    "זהה את השיטות הטובות ביותר להעלאת קבצים גדולים",
+    "הבין את היתרונות של Multipart Upload",
+  ]}
+  options={[
+    {text: 'תמיד להשתמש בבקשת PUT יחידה'},
+    {text: 'השתמש ב‑Multipart Upload לקבצים גדולים', isAnswer: true},
+    {text: 'דחס לפני ההעלאה'},
+    {text: 'פצל ידנית לפני ההעלאה'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מהי השיטה הטובה ביותר להעלאת קבצים גדולים ל‑S3?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    יתרונות ה‑Multipart Upload:
+    - טיפול יעיל בקבצים גדולים
+    - המשך העלאות שהופרעו
+    - העלאה מקבילית של חלקי הקובץ
+    - מומלץ לקבצים > 100 MB
+    - אמינות רשת משופרת
+
+    [S3 Multipart Upload](https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={20}
+  group="אופטימיזציית עלות"
+  title="ניתוח עלות אחסון"
+  difficulty={4}
+  objectives={[
+    "להשוות עלויות אחסון בין שירותי AWS",
+    "להעריך את השלכות העלות של בחירות האחסון",
+    "להחיל אסטרטגיות אופטימיזציית עלות",
+  ]}
+  options={[
+    {text: 'S3 Standard לכל הנתונים'},
+    {text: 'תמיד להשתמש באחסון הזול ביותר'},
+    {text: 'לשלב מחלקות אחסון לפי תבניות גישה', isAnswer: true},
+    {text: 'לאחסן את כל הדברים ב‑Glacier'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מהי הגישה החסכונית ביותר לאחסון של 1PB נתונים כאשר 20% נגישים יומיומית, 30% חודשי, ו‑50% שנתי?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    אסטרטגיית אחסון אופטימלית:
+    - 20% ב‑S3 Standard לגישה יומיומית
+    - 30% ב‑S3 Standard-IA לגישה חודשית
+    - 50% ב‑Glacier לגישה שנתית
+
+    גישה זו ממקסמת עלויות תוך שמירה על תבניות גישה מתאימות.
+
+    שיקולי עלות:
+    - תמחור אחסון לכל GB
+    - עלויות אחזור
+    - תבניות גישה
+    - עלויות מעבר
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={21}
+  group="עקביות ב‑DynamoDB"
+  title="מודלים של עקביות"
+  difficulty={4}
+  objectives={[
+    "להבין מודלי עקביות של DynamoDB",
+    "להעריך את הוויתורים בין רמות העקביות",
+    "ליישם מודלי עקביות בתרחישים מהעולם האמיתי",
+  ]}
+  options={[
+    {text: '100 קריאות לשנייה', isAnswer: true},
+    {text: '50 קריאות לשנייה'},
+    {text: '200 קריאות לשנייה'},
+    {text: 'קריאות בלתי מוגבלות לשנייה'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    לטבלה ב‑DynamoDB יש קיבולת קריאה מסופקת של 100 RCUs. כמה קריאות חזקות של פריטים בגודל 4KB ניתן לבצע לשנייה?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    הבנת מודלי העקביות של DynamoDB היא קריטית:
+
+    - 1 RCU = 1 קריאה חזקתית לשנייה לפריטים עד 4KB
+    - 1 RCU = 2 קריאות עקביות באופן סופי לשנייה לפריטים עד 4KB
+
+    לכן:
+    - 100 RCUs = 100 קריאות חזקתיות של 4KB לשנייה
+    - 100 RCUs = 200 קריאות עקביות באופן סופי של 4KB לשנייה
+
+    בחרו מודלי עקביות על בסיס:
+    - דרישות האפליקציה
+    - שיקולי עלות
+    - צרכי ביצועים
+    - דרישות רענון הנתונים
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={22}
+  group="זמינות גבוהה של Aurora"
+  title="מנגנון כשל ב‑Aurora"
+  difficulty={3}
+  objectives={[
+    "להבין את תהליך הכשל ב‑Aurora",
+    "לזהות תצורות זמינות גבוהה",
+    "להחיל את שיטות העבודה הטובות ביותר לשחזור מאסון",
+  ]}
+  options={[
+    {text: 'נדרש התערבות ידנית'},
+    {text: 'דורש קונפיגורציית אפליקציה מחדש'},
+    {text: 'תמיד מעביר לכשל למעתק הישן ביותר'},
+    {text: 'קידום אוטומטי על בסיס רמת עדיפות הכשל', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ב‑cluster של Aurora עם מספר מועדפי קריאה, מה קורה במהלך כשל אוטומטי כאשר המופע הראשי נכשל?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    תהליך הכשל ב‑Aurora:
+    1. מזהה כשל של המופע הראשי
+    2. בוחר מעתק Aurora בהתבסס בעיקר על רמת עדיפות הכשל
+    3. משתמש במאפייני המופע כמפרידים כאשר העדיפויות שוות
+    4. מעדכן את נקודת הקצה של ה‑cluster אוטומטית
+
+    שיטות עבודה מומלצות:
+    - שמור מספר מועדפים במגוון אזורי זמינות (AZs)
+    - קבע רמות קידום במכוון
+    - השתמש בנקודת הקצה של ה‑cluster באפליקציות
+    - בדוק תרחישי כשל באופן קבוע
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={23}
+  group="עקביות ב‑S3"
+  title="עקביות חזקה ב‑S3"
+  difficulty={3}
+  objectives={[
+    "להבין את מודל העקביות של S3",
+    "לזהות את ההבטחות של פעולות S3",
+    "להשתמש בידע על העקביות בתכנון יישומים",
+  ]}
+  options={[
+    {text: 'רק עבור אובייקטים חדשים'},
+    {text: 'עקביות חזקה לכל הפעולות', isAnswer: true},
+    {text: 'עקביות סופית לעדכונים'},
+    {text: 'תלוי באזור'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מאוחר ב‑2020, איזה מודל עקביות S3 מספק לכל הפעולות?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    מודל העקביות של S3:
+    - עקביות קריאה-אחרי-כתיבה חזקה לכל הפעולות
+    - חל על PUTs ו‑DELETEs
+    - אין צורך בתיקונים שהיו בשימוש קודם
+    - ללא עלות נוספת
+
+    השפעה:
+    - לוגיקה של היישום מפושטת
+    - אין צורך בבדיקות עקביות
+    - קריאות מיידיות אמינות אחרי כתיבה
+    - אמינות היישום משופרת
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={24}
+  group="תכונות DynamoDB"
+  title="זמן לחיות (TTL)"
+  difficulty={3}
+  objectives={[
+    "להבין את תכונת TTL של DynamoDB",
+    "להחיל TTL לניהול מחזור חיי הנתונים",
+    "לעצב אסטרטגיות אפקטיביות לפקיעת נתונים",
+  ]}
+  options={[
+    {text: 'מוחק פריטים מייד עם הפקיעה'},
+    {text: 'דורש טריגר מחיקה ידני'},
+    {text: 'מחיקה ברקע עם תזמון מיטבי', isAnswer: true},
+    {text: 'מפוגג פריטים אך משאיר אותם מאוחסנים'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    איך תכונת TTL של DynamoDB מתמודדת עם מחיקת פריטים?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    מאפייני TTL של DynamoDB:
+    - תהליך רקע מנטר את תכונת ה‑TTL
+    - פריטים שפג תוקפם נמחקים לפי לוח זמנים מיטבי, בדרך כלל בתוך כמה ימים
+    - אין עלות נוספת עבור TTL
+    - פריטים שנמחקו מופיעים ב‑streams
+
+    מקרי שימוש:
+    - ניהול סשנים
+    - פקיעת יומנים
+    - ניקוי נתונים זמניים
+    - עמידה בתקנות
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={25}
+  group="Aurora Serverless"
+  title="התנהגות סקיילינג"
+  difficulty={4}
+  objectives={[
+    "להבין את הסקיילינג ב‑Aurora Serverless",
+    "לזהות את גורמי ההפעלה של הסקיילינג",
+    "לאופטימיזציית העלות עבור עומסי עבודה משתנים",
+  ]}
+  options={[
+    {text: 'מהירות הסקיילינג תלויה בקיבולת הנוכחית והמתוכנת', isAnswer: true},
+    {text: 'מתרחיב באופן מיידי לפי דרישה'},
+    {text: 'מתרחיב רק במרווחים קבועים מראש'},
+    {text: 'סקיילינג ידני בלבד'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מהו השיקול המרכזי כשסומכים על Aurora Serverless לטיפול בפיצוצים פתאומיים בתנועה?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    סקיילינג ב‑Aurora Serverless:
+    - Aurora Serverless v2 מגדיל קיבולת בתוספות ACU מדויקות
+    - מהירות הסקיילינג תלויה בקיבולת הנוכחית ובהגדרות מינימום/מקסימום של ACU
+    - גרסאות נתמכות יכולות לעצור אוטומטית ב‑0 ACU כאשר מוגדרות כך
+    - החיוב לפי שנייה בהתבסס על ACU
+
+    שיטות מומלצות:
+    - קבעו קיבולת מינימלית גבוהה מספיק כדי להתמודד עם פיצוצים פתאומיים בעומסי עבודה קריטיים
+    - מעקב אחרי אירועי סקיילינג
+    - שמרו על ניהול חיבורים בתודעה
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+
+וואו, ההרפתקה הזאת נגעה לעומק השטחים! 🚀☁️  
+מקווה שנהניתם מהמסע, ואולי אפילו למדתם משהו על שירותי האחסון של AWS.
+
+הציצו לעוד אתגרים של [Dan](/challenges/)! 🧠  
+
+הבהרה משפטית: חידון זה נועד למטרות חינוכיות בלבד. כל הסימנים המסחריים וזכויות היוצרים שייכים לבעליהם, במיוחד לחברות הגדולות.

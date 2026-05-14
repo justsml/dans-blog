@@ -1,0 +1,53 @@
+{
+  "index": 21,
+  "attempt": 1,
+  "originalTitle": "Consistency Models",
+  "translatedTitle": "מודלים של עקביות",
+  "translation": {
+    "title": "מודלים של עקביות",
+    "group": "עקביות ב‑DynamoDB",
+    "options": [
+      {
+        "text": "100 קריאות לשנייה"
+      },
+      {
+        "text": "50 קריאות לשנייה"
+      },
+      {
+        "text": "200 קריאות לשנייה"
+      },
+      {
+        "text": "קריאות בלתי מוגבלות לשנייה"
+      }
+    ],
+    "objectives": [
+      "להבין מודלי עקביות של DynamoDB",
+      "להעריך את הוויתורים בין רמות העקביות",
+      "ליישם מודלי עקביות בתרחישים מהעולם האמיתי"
+    ],
+    "questionProse": [
+      "לטבלה ב‑DynamoDB יש קיבולת קריאה מסופקת של 100 RCUs. כמה קריאות חזקות של פריטים בגודל 4KB ניתן לבצע לשנייה?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "הבנת מודלי העקביות של DynamoDB היא קריטית:\n\n- 1 RCU = 1 קריאה חזקתית לשנייה לפריטים עד 4KB\n- 1 RCU = 2 קריאות עקביות באופן סופי לשנייה לפריטים עד 4KB\n\nלכן:\n- 100 RCUs = 100 קריאות חזקתיות של 4KB לשנייה\n- 100 RCUs = 200 קריאות עקביות באופן סופי של 4KB לשנייה\n\nבחרו מודלי עקביות על בסיס:\n- דרישות האפליקציה\n- שיקולי עלות\n- צרכי ביצועים\n- דרישות רענון הנתונים"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"מודלים של עקביות\",\n  \"group\": \"עקביות ב‑DynamoDB\",\n  \"options\": [\n    {\n      \"text\": \"100 קריאות לשנייה\"\n    },\n    {\n      \"text\": \"50 קריאות לשנייה\"\n    },\n    {\n      \"text\": \"200 קריאות לשנייה\"\n    },\n    {\n      \"text\": \"קריאות בלתי מוגבלות לשנייה\"\n    }\n  ],\n  \"objectives\": [\n    \"להבין מודלי עקביות של DynamoDB\",\n    \"להעריך את הוויתורים בין רמות העקביות\",\n    \"ליישם מודלי עקביות בתרחישים מהעולם האמיתי\"\n  ],\n  \"questionProse\": [\n    \"לטבלה ב‑DynamoDB יש קיבולת קריאה מסופקת של 100 RCUs. כמה קריאות חזקות של פריטים בגודל 4KB ניתן לבצע לשנייה?\"\n  ],\n  \"questionCode\": [],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"הבנת מודלי העקביות של DynamoDB היא קריטית:\\n\\n- 1 RCU = 1 קריאה חזקתית לשנייה לפריטים עד 4KB\\n- 1 RCU = 2 קריאות עקביות באופן סופי לשנייה לפריטים עד 4KB\\n\\nלכן:\\n- 100 RCUs = 100 קריאות חזקתיות של 4KB לשנייה\\n- 100 RCUs = 200 קריאות עקביות באופן סופי של 4KB לשנייה\\n\\nבחרו מודלי עקביות על בסיס:\\n- דרישות האפליקציה\\n- שיקולי עלות\\n- צרכי ביצועים\\n- דרישות רענון הנתונים\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 974,
+    "outputTokens": 462,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1212,
+    "providerCostUsd": 0.0004233,
+    "providerUpstreamCostUsd": 0.0004233,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000037986,
+    "outputUsd": 0.00008316,
+    "totalUsd": 0.000121146,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

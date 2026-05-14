@@ -1,0 +1,53 @@
+{
+  "index": 24,
+  "attempt": 1,
+  "originalTitle": "Time To Live (TTL)",
+  "translatedTitle": "זמן לחיות (TTL)",
+  "translation": {
+    "title": "זמן לחיות (TTL)",
+    "group": "תכונות DynamoDB",
+    "options": [
+      {
+        "text": "מוחק פריטים מייד עם הפקיעה"
+      },
+      {
+        "text": "דורש טריגר מחיקה ידני"
+      },
+      {
+        "text": "מחיקה ברקע עם תזמון מיטבי"
+      },
+      {
+        "text": "מפוגג פריטים אך משאיר אותם מאוחסנים"
+      }
+    ],
+    "objectives": [
+      "להבין את תכונת TTL של DynamoDB",
+      "להחיל TTL לניהול מחזור חיי הנתונים",
+      "לעצב אסטרטגיות אפקטיביות לפקיעת נתונים"
+    ],
+    "questionProse": [
+      "איך תכונת TTL של DynamoDB מתמודדת עם מחיקת פריטים?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "מאפייני TTL של DynamoDB:\n      - תהליך רקע מנטר את תכונת ה‑TTL\n      - פריטים שפג תוקפם נמחקים לפי לוח זמנים מיטבי, בדרך כלל בתוך כמה ימים\n      - אין עלות נוספת עבור TTL\n      - פריטים שנמחקו מופיעים ב‑streams\n\n      מקרי שימוש:\n      - ניהול סשנים\n      - פקיעת יומנים\n      - ניקוי נתונים זמניים\n      - עמידה בתקנות"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"זמן לחיות (TTL)\",\n  \"group\": \"תכונות DynamoDB\",\n  \"options\": [\n    {\n      \"text\": \"מוחק פריטים מייד עם הפקיעה\"\n    },\n    {\n      \"text\": \"דורש טריגר מחיקה ידני\"\n    },\n    {\n      \"text\": \"מחיקה ברקע עם תזמון מיטבי\"\n    },\n    {\n      \"text\": \"מפוגג פריטים אך משאיר אותם מאוחסנים\"\n    }\n  ],\n  \"objectives\": [\n    \"להבין את תכונת TTL של DynamoDB\",\n    \"להחיל TTL לניהול מחזור חיי הנתונים\",\n    \"לעצב אסטרטגיות אפקטיביות לפקיעת נתונים\"\n  ],\n  \"questionProse\": [\n    \"איך תכונת TTL של DynamoDB מתמודדת עם מחיקת פריטים?\"\n  ],\n  \"questionCode\": [],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"מאפייני TTL של DynamoDB:\\n      - תהליך רקע מנטר את תכונת ה‑TTL\\n      - פריטים שפג תוקפם נמחקים לפי לוח זמנים מיטבי, בדרך כלל בתוך כמה ימים\\n      - אין עלות נוספת עבור TTL\\n      - פריטים שנמחקו מופיעים ב‑streams\\n\\n      מקרי שימוש:\\n      - ניהול סשנים\\n      - פקיעת יומנים\\n      - ניקוי נתונים זמניים\\n      - עמידה בתקנות\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 912,
+    "outputTokens": 907,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 650,
+    "providerCostUsd": 0.00099945,
+    "providerUpstreamCostUsd": 0.00099945,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000035567999999999996,
+    "outputUsd": 0.00016326,
+    "totalUsd": 0.00019882800000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
