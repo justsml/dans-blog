@@ -47,12 +47,12 @@ delay(1000).then(() => console.log("done"));
 
 ![Timeline showing delay 1000 then console log running after one second](../N_1000ms_log.webp)
 
-<!-- ```
+{/* ```
 delay(1000) --------|.then(fn)
                     | console.log('done')
 |-------------------|--------------------|--------------------|-----------------
 0msec             1sec                 2sec                 3sec
-``` -->
+``` */}
 
 ## Beispiel #2/4
 
@@ -72,12 +72,12 @@ delay(1000).then(console.log("done"));
 
 ![Timeline showing console log running immediately before the delay finishes](../N_1000ms_!log.webp)
 
-<!-- ```
+{/* ```
 delay(1000) --------|.then(null)
 console.log('done')
 |-------------------|--------------------|--------------------|-----------------
 0msec             1sec                 2sec                 3sec
-``` -->
+``` */}
 
 ## Beispiel #3/4
 
@@ -91,14 +91,14 @@ delay(3000).then(console.log);
 
 ![Timeline showing three delay promises resolving after one two and three seconds](../N_3000ms.webp)
 
-<!-- ```
+{/* ```
 delay(1000) ------|.then(console.log)
 delay(2000) ------|--------------------|.then(console.log)
 delay(3000) ------|--------------------|--------------------|.then(console.log)
 |-----------------|--------------------|--------------------|-------------------
 |                 |                    |                    |
 0msec           1sec                 2sec                 3sec
-``` -->
+``` */}
 
 ## Beispiel #4/4
 

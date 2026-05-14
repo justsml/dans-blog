@@ -27,7 +27,7 @@ Desde el principio de lostiempos, los desarrolladores han peleado muchas batalla
 <br />
 <small>_Respuestas:_ Linux y Spaces.</small>
 
-<!-- Vamos a analizar 2 reglas para mejorar tu vida con Promesas. -->
+{/* Vamos a analizar 2 reglas para mejorar tu vida con Promesas. */}
 
 ## ¿La pelea...?
 
@@ -72,9 +72,9 @@ Veamos un ejemplo típico:
 
 Realizando una solicitud HTTP GET con `fetch`:
 
-<!-- la especificación de fetch indica que los códigos de estado HTTP [sobre 400 o 500](https://http.cat/) **no disparan automáticamente un error**. El comportamiento por defecto en muchas librerías AJAX (jQuery, axios). -->
+{/* la especificación de fetch indica que los códigos de estado HTTP [sobre 400 o 500](https://http.cat/) **no disparan automáticamente un error**. El comportamiento por defecto en muchas librerías AJAX (jQuery, axios). */}
 
-<!-- Antes de ver la solución, revisa una implementación “recomendada” común: -->
+{/* Antes de ver la solución, revisa una implementación “recomendada” común: */}
 
 ### Anti‑Patrón
 
@@ -133,11 +133,11 @@ function getText(response) {
 Dada la implementación de una función, suma 1 punto por cada línea que contenga cualquiera de los siguientes tokens: `if`, `return`, ternario, `for`, `const`, `let`, `var`, `switch`, `while`, `[].map/filter/reduce/etc`. Añade 1 punto por cada instrucción (ignora líneas en blanco). Una cadena de expresiones o métodos encadenados cuenta solo como 1 punto.
 
 Uf, eso fue un poco de jerga.  
--->
+*/}
 
 Curiosamente, la mayoría de los desarrolladores afirman que son *bastante buenos* aplicando **Propósito Único** a su código. No es casualidad: también se consideran excelentes conductores.
 
-<!-- Esto **no es un problema exclusivo de Promises**, los métodos de arrays y todas las demás APIs basadas en HoF (Higher Order Function) presentan la misma ergonomía. -->
+{/* Esto **no es un problema exclusivo de Promises**, los métodos de arrays y todas las demás APIs basadas en HoF (Higher Order Function) presentan la misma ergonomía. */}
 
 Veamos un ejemplo que el (increíblemente talentoso) [Jake Archibald](https://x.com/jaffathecake) incluye en su artículo sobre async/await para el sitio de Google Developers (nota: 2024, enlace eliminado).
 
@@ -170,7 +170,7 @@ Yo diría que no. ¿Qué está haciendo `logInOrder`?
 
 Hay 5 métodos anónimos definidos dentro de esta única función. Como señala Jake, el `.reduce` es demasiado complejo. No tiene sentido escribir a mano mecanismos matizados por todo el código. En otras palabras, no escribimos código de creación de DOM con infinitos `document.createElement()`, `element.setAttribute()`, etc. En su lugar elegimos la mejor herramienta entre muchas opciones: funciones auxiliares/utilitarias, bibliotecas o frameworks.
 
-<!-- **Nota:** Si la intención era _iniciar solicitudes_ en secuencia, en lugar de simplemente imprimir los resultados en orden, este código no lo hace realmente. Lo refactorizaremos en consecuencia. -->
+{/* **Nota:** Si la intención era _iniciar solicitudes_ en secuencia, en lugar de simplemente imprimir los resultados en orden, este código no lo hace realmente. Lo refactorizaremos en consecuencia. */}
 
 #### Solución: Funciones de Propósito Único
 

@@ -32,7 +32,7 @@ cover_icon: ../icon_gorilla-types_dall-e.webp
   - [שימוש בעולם האמיתי](#real-world-usage)
 - [סיכום](#summary)
 
-<!--
+{/*
 1.  High-level logical representation of types - in a way meaningful to both devs and business stakeholders.
 2.  Durable way to model combinations of logically related fields.
     1.  Example: **Object instances** often include common fields `id`, `createdDate`, `createdById`, etc.
@@ -40,7 +40,7 @@ cover_icon: ../icon_gorilla-types_dall-e.webp
     3.  Composable utilities, Paging/Payload wrapper, etc: `pageNumber`, `sortBy`, `impersonateSession`, `token`, `_version`, etc.
 3.  Avoid unintended variances in naming and typing (`id`, `Id`, `ID`, `created_at`, `date_created`, oh noes!)
 4.  Compose higher level types with multiple smaller reusable interfaces & types.
-5.  Utilize [Unions](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes-func.html#discriminated-unions) to 'automatically' match variants of a type. -->
+5.  Utilize [Unions](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes-func.html#discriminated-unions) to 'automatically' match variants of a type. */}
 
 ### גישות לעיצוב טיפוסים
 
@@ -71,7 +71,7 @@ interface ProductDetails {
 
 מעניק עדיפות לשימוש חוזר ועקרון DRY.
 
-<!-- קריאות היא מדד מצחיק. קריאות היא לרוב טובה או **מצוינת כשיש מעט טיפוסים/קבצים.** **באופן בלתי נמנע טיפוסים נוטים להתרבות,** עם עוד ועוד מאפיינים. **הקריאות סובלת.** -->
+{/* קריאות היא מדד מצחיק. קריאות היא לרוב טובה או **מצוינת כשיש מעט טיפוסים/קבצים.** **באופן בלתי נמנע טיפוסים נוטים להתרבות,** עם עוד ועוד מאפיינים. **הקריאות סובלת.** */}
 
 גישה זו היא ככל הנראה המועדפת בפער ניכר.
 
@@ -108,17 +108,17 @@ interface Reviews { authorId: number; stars: number; }
 
 > ✅ כן! 🎉
 
-<!-- ### כמה דברים לשקול -->
+{/* ### כמה דברים לשקול */}
 
-<!-- - איך מייצגים יחס `אחד-לאחד` כמו `Product` -> `Seller`? -->
-<!-- - מה לגבי יחסי `אחד-לרבים`? נגיד `Reviews`, או `Photos`? -->
-<!-- - לתת לפריזמה לטפל בזה? (לא רעיון רע, אבל המאמר הזה בסתר עוסק בלימוד קצת TypeScript...) -->
+{/* - איך מייצגים יחס `אחד-לאחד` כמו `Product` -> `Seller`? */}
+{/* - מה לגבי יחסי `אחד-לרבים`? נגיד `Reviews`, או `Photos`? */}
+{/* - לתת לפריזמה לטפל בזה? (לא רעיון רע, אבל המאמר הזה בסתר עוסק בלימוד קצת TypeScript...) */}
 
-<!-- גישה זו היא תרגיל באי-כפילות של שמות שדות מודל. בדרך, אני חושב ש'תמונת העל' ברורה יותר (במקום אחד). מתחילים מהטיפוס הגדול ביותר ברמה הגבוהה ביותר, ומגזרים ממנו את הטיפוסים הפשוטים יותר. -->
+{/* גישה זו היא תרגיל באי-כפילות של שמות שדות מודל. בדרך, אני חושב ש'תמונת העל' ברורה יותר (במקום אחד). מתחילים מהטיפוס הגדול ביותר ברמה הגבוהה ביותר, ומגזרים ממנו את הטיפוסים הפשוטים יותר. */}
 
-<!-- כאשר מקבלים נתונים מובנים מסוג מערך/אובייקט, מתכנתי TypeScript רבים חשים דחף ליצור טיפוסים. המון טיפוסים. בסופו של דבר נוצרת מפל שכבות, המורכב מטיפוסים פשוטים הבונים טיפוסים מורכבים יותר ויותר. -->
+{/* כאשר מקבלים נתונים מובנים מסוג מערך/אובייקט, מתכנתי TypeScript רבים חשים דחף ליצור טיפוסים. המון טיפוסים. בסופו של דבר נוצרת מפל שכבות, המורכב מטיפוסים פשוטים הבונים טיפוסים מורכבים יותר ויותר. */}
 
-<!-- או אולי אתה מהסוג שמתחיל בטיפוס ברמה הגבוהה ביותר, בונה מספיק פיגומים כדי לכתוב את תת-הטיפוס הבא בעץ? -->
+{/* או אולי אתה מהסוג שמתחיל בטיפוס ברמה הגבוהה ביותר, בונה מספיק פיגומים כדי לכתוב את תת-הטיפוס הבא בעץ? */}
 
 ```tsx
 export interface ProductDetails {

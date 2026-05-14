@@ -27,7 +27,7 @@ cover_icon: ../icon_matt-nelson-414464-unsplash.webp
 <br />
 <small>_答案:_ Linux 和 Spaces.</small>
 
-<!-- We're going to look at 2 rules to improve your life with Promises. -->
+{/* We're going to look at 2 rules to improve your life with Promises. */}
 
 ## 这场争论……？
 
@@ -45,7 +45,7 @@ VS Code 最近新增的一个功能进一步助长了这种偏见。正如 [@uma
 
 <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Visual Studio Code 现在可以将你的长串 Promise.then() 链转换为 async/await！🎊 在 JavaScript 和 TypeScript 文件中都运行良好。.catch() 也能正确转换为 try/catch ✅ <a href="https://t.co/xb39Lsp84V">pic.x.com/xb39Lsp84V</a></p>&mdash; Umar Hansa (@umaar) <a href="https://x.com/umaar/status/1045655069478334464?ref_src=twsrc%5Etfw">2018年9月28日</a></blockquote>
 
-<!-- Sure, it's an impressive addition to an already amazing list of features. -->
+{/* Sure, it's an impressive addition to an already amazing list of features. */}
 
 如果你讨厌 Promise，并且想要这个重构功能，我不怪你。
 
@@ -74,9 +74,9 @@ _我感同身受。我理解。_
 
 使用 `fetch` 发起 HTTP GET 请求：
 
-<!-- fetch 规范规定 [HTTP 状态码](https://http.cat/) 超过 400 或 500 **不会自动触发错误。** 许多 AJAX 库（jQuery、axios）的默认行为则不同。 -->
+{/* fetch 规范规定 [HTTP 状态码](https://http.cat/) 超过 400 或 500 **不会自动触发错误。** 许多 AJAX 库（jQuery、axios）的默认行为则不同。 */}
 
-<!-- 在看解决方案之前，先看看常见的“推荐”实现： -->
+{/* 在看解决方案之前，先看看常见的“推荐”实现： */}
 
 ### 反模式
 
@@ -119,7 +119,7 @@ function getText(response) {
 
 但它其实非常主观、随意，甚至有时毫无意义。
 
-<!-- 与其争论某个函数是否足够聚焦，
+{/* 与其争论某个函数是否足够聚焦，
 
 我提出了一个粗略的衡量标准：`职责成本`。分数越高，越可能做了太多事。
 
@@ -142,12 +142,12 @@ function getText(response) {
 
 有趣的是，大多数开发者报告说他们在**单一职责**化代码方面_相当擅长_。毫不意外的是，他们也报告说自己开车技术很棒！
 
-<!-- 这**并非 Promise 独有的问题**，数组方法和所有其他基于高阶函数（HoF）的 API 都有相同的使用体验。 -->
+{/* 这**并非 Promise 独有的问题**，数组方法和所有其他基于高阶函数（HoF）的 API 都有相同的使用体验。 */}
 
 让我们看一个例子，这个例子来自（才华横溢的）[Jake Archibald](https://x.com/jaffathecake) 在 Google Developers 网站上关于 async/await 的文章（注意：2024 年，链接已移除）。
 
-<!--
-让我们看看其中一个所谓的“❌ 不推荐”的 Promise 示例。（描述是“假设我们想按顺序获取一系列 URL，并在尽可能快的情况下按正确顺序记录它们。”） -->
+{/*
+让我们看看其中一个所谓的“❌ 不推荐”的 Promise 示例。（描述是“假设我们想按顺序获取一系列 URL，并在尽可能快的情况下按正确顺序记录它们。”） */}
 
 ```js
 // 来源：https://developers.google.com/web/fundamentals/primers/async-functions
@@ -178,11 +178,11 @@ function logInOrder(urls) {
 
 这个单一函数中定义了 5 个匿名方法。正如 Jake 所指出的，`.reduce` 过于复杂。在代码中到处手写这种精细机制并不合理。换句话说，我们不会用无尽的 `document.createElement()`、`element.setAttribute()` 等来编写 DOM 创建代码。相反，我们会从众多选项中选择最佳工具：辅助/工具函数、库或框架。
 
-<!-- 我们需要隔离正在进行的每个“步骤”：有一个 HTTP 请求，一个将 URL 列表转换为结果列表的变换。还需要一个 `console.log`。 -->
+{/* 我们需要隔离正在进行的每个“步骤”：有一个 HTTP 请求，一个将 URL 列表转换为结果列表的变换。还需要一个 `console.log`。 */}
 
-<!-- > 🤔 为什么 `Promise` 会让开发者放弃我们在其他地方使用的实践？ -->
+{/* > 🤔 为什么 `Promise` 会让开发者放弃我们在其他地方使用的实践？ */}
 
-<!-- **注意：** 如果意图是_按顺序发起请求_，而不仅仅是按顺序打印结果，这段代码实际上并没有做到。我们将相应地重构。 -->
+{/* **注意：** 如果意图是_按顺序发起请求_，而不仅仅是按顺序打印结果，这段代码实际上并没有做到。我们将相应地重构。 */}
 
 #### 解决方案：单一职责函数
 

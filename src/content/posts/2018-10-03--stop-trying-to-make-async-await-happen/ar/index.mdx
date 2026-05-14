@@ -27,7 +27,7 @@ cover_icon: ../icon_matt-nelson-414464-unsplash.webp
 <br />
 <small>_الإجابات:_ لينكس والمسافات.</small>
 
-<!-- سننظر في قاعدتين لتحسين حياتك مع الوعود (Promises). -->
+{/* سننظر في قاعدتين لتحسين حياتك مع الوعود (Promises). */}
 
 ## المعركة...؟
 
@@ -45,7 +45,7 @@ cover_icon: ../icon_matt-nelson-414464-unsplash.webp
 
 <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">يمكن لـ Visual Studio Code الآن تحويل سلاسل Promise.then() الطويلة إلى async/await! 🎊 تعمل بشكل جيد في ملفات JavaScript و TypeScript. كما يتم تحويل .catch() بشكل صحيح إلى try/catch ✅ <a href="https://t.co/xb39Lsp84V">pic.x.com/xb39Lsp84V</a></p>&mdash; عمر هانزا (@umaar) <a href="https://x.com/umaar/status/1045655069478334464?ref_src=twsrc%5Etfw">28 سبتمبر 2018</a></blockquote>
 
-<!-- Sure, it's an impressive addition to an already amazing list of features. -->
+{/* Sure, it's an impressive addition to an already amazing list of features. */}
 
 إذا كنت تكره الوعود، وتريد هذه الميزة لإعادة الهيكلة، فلا ألومك.
 
@@ -74,9 +74,9 @@ _أتعاطف معك. أفهمك._
 
 إجراء طلب HTTP GET باستخدام `fetch`:
 
-<!-- مواصفات fetch تنص على أن [رموز حالة HTTP](https://http.cat/) فوق 400 أو 500 **لا تؤدي تلقائيًا إلى خطأ.** هذا هو السلوك الافتراضي في العديد من مكتبات AJAX (jQuery, axios). -->
+{/* مواصفات fetch تنص على أن [رموز حالة HTTP](https://http.cat/) فوق 400 أو 500 **لا تؤدي تلقائيًا إلى خطأ.** هذا هو السلوك الافتراضي في العديد من مكتبات AJAX (jQuery, axios). */}
 
-<!-- قبل أن نرى الحل، ألقِ نظرة على تنفيذ "موصى به" شائع: -->
+{/* قبل أن نرى الحل، ألقِ نظرة على تنفيذ "موصى به" شائع: */}
 
 ### النمط المضاد
 
@@ -119,7 +119,7 @@ function getText(response) {
 
 لكنه في الواقع ذاتي، تعسفي، وأحيانًا بلا معنى.
 
-<!-- Instead of arguing if a given function is sufficiently focused.
+{/* Instead of arguing if a given function is sufficiently focused.
 
 I came up with a rough measure for this: `Purpose Cost`. The higher the score, more likely it's doing too much.
 
@@ -139,16 +139,16 @@ function getText(response) {
 Given a function's code, add 1 point for every line containing any of: `if`, `return`, ternary, `for`, `const`, `let`, `var`, `switch`, `while`, `[].map/filter/reduce/etc`. Add 1 point for each instruction (ignore extra lines from whitespace). A number of chained expressions or methods only count for 1 point.
 
 Whew, that was a bit of jargon.
- -->
+ */}
 
 المثير للاهتمام أن معظم المطورين يذكرون أنهم _جيدون جدًا_ في تطبيق مبدأ **الغرض الواحد** على كودهم. وليس منفصلاً عن ذلك: فهم يذكرون أنهم سائقون ممتازون أيضًا!
 
-<!-- This **isn't a unique issue with Promises**, array methods and all other HoF-based (Higher Order Function) APIs have the same ergonomics. -->
+{/* This **isn't a unique issue with Promises**, array methods and all other HoF-based (Higher Order Function) APIs have the same ergonomics. */}
 
 لنلقِ نظرة على مثال يذكره (الموهوب للغاية) [Jake Archibald](https://x.com/jaffathecake) في مقالته عن async/await على موقع Google Developers (ملاحظة: 2024، تمت إزالة الرابط).
 
-<!--
-Let's look at one of the so called "❌ Not recommended" Promise examples. (The description is "say we wanted to fetch a series URLs and log them as soon as possible, in the correct order.") -->
+{/*
+Let's look at one of the so called "❌ Not recommended" Promise examples. (The description is "say we wanted to fetch a series URLs and log them as soon as possible, in the correct order.") */}
 
 ```js
 // source: https://developers.google.com/web/fundamentals/primers/async-functions
@@ -179,11 +179,11 @@ function logInOrder(urls) {
 
 هناك 5 دوال مجهولة مُعرّفة في هذه الدالة الواحدة. وكما يشير Jake حتى، فإن `.reduce` معقدة جدًا. ليس من المنطقي كتابة آليات دقيقة يدويًا في جميع أنحاء الكود. بعبارة أخرى، نحن لا نكتب كود إنشاء DOM باستخدام `document.createElement()` و `element.setAttribute()` إلى ما لا نهاية. بدلاً من ذلك، نختار أفضل أداة من بين العديد من الخيارات: دوال مساعدة/أدوات مساعدة، مكتبات أو أطر عمل.
 
-<!-- We need to isolate each 'step' that's going on: there's an HTTP request, a transform for a list of URLs into a list of results. Also a `console.log` is needed. -->
+{/* We need to isolate each 'step' that's going on: there's an HTTP request, a transform for a list of URLs into a list of results. Also a `console.log` is needed. */}
 
-<!-- > 🤔 Why do `Promises` cause developers to abandon practices we use elsewhere? -->
+{/* > 🤔 Why do `Promises` cause developers to abandon practices we use elsewhere? */}
 
-<!-- **Note:** If the intention was to _initiate requests_ in a sequence, instead of merely printing the results out in order, this code doesn't actually do that. We'll refactor accordingly. -->
+{/* **Note:** If the intention was to _initiate requests_ in a sequence, instead of merely printing the results out in order, this code doesn't actually do that. We'll refactor accordingly. */}
 
 #### الحل: دوال ذات غرض واحد
 

@@ -17,7 +17,7 @@ Seit Anbeginn der Zeit führen Entwickler viele alberne Streitereien. Vom klassi
 <br />
 <small>_Antworten:_ Linux und Spaces.</small>
 
-<!-- We're going to look at 2 rules to improve your life with Promises. -->
+{/* We're going to look at 2 rules to improve your life with Promises. */}
 
 ## Der Kampf...?
 
@@ -36,7 +36,7 @@ Eine kürzliche Ergänzung in VS Code treibt diese Voreingenommenheit voran. Wie
 
 <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Visual Studio Code can now convert your long chains of Promise.then()&#39;s into async/await! 🎊 Works very well in both JavaScript and TypeScript files. .catch() is also correctly converted to try/catch ✅ <a href="https://t.co/xb39Lsp84V">pic.x.com/xb39Lsp84V</a></p>&mdash; Umar Hansa (@umaar) <a href="https://x.com/umaar/status/1045655069478334464?ref_src=twsrc%5Etfw">September 28, 2018</a></blockquote>
 
-<!-- Sure, it's an impressive addition to an already amazing list of features. -->
+{/* Sure, it's an impressive addition to an already amazing list of features. */}
 
 Wenn du Promises hasst und diese Refactoring-Funktion willst, gebe ich dir keine Schuld.
 <br />
@@ -61,9 +61,9 @@ Schauen wir uns ein gängiges Beispiel an:
 
 Eine HTTP-GET-Anfrage mit `fetch` stellen:
 
-<!-- the fetch specification states [HTTP status codes](https://http.cat/) over 400 or 500 **do not automatically trigger an error.** The default in many AJAX libraries (jQuery, axios). -->
+{/* the fetch specification states [HTTP status codes](https://http.cat/) over 400 or 500 **do not automatically trigger an error.** The default in many AJAX libraries (jQuery, axios). */}
 
-<!-- Before we see the solution, look over a common "recommended" implementation: -->
+{/* Before we see the solution, look over a common "recommended" implementation: */}
 
 ### Anti-Pattern
 
@@ -106,7 +106,7 @@ Es klingt _täuschend präzise_: Einzelziel.
 
 Und doch ist es so subjektiv, willkürlich und sicher manchmal sogar bedeutungslos.
 
-<!-- Instead of arguing if a given function is sufficiently focused.
+{/* Instead of arguing if a given function is sufficiently focused.
 
 I came up with a rough measure for this: `Purpose Cost`. The higher the score, more likely it's doing too much.
 
@@ -126,16 +126,16 @@ function getText(response) {
 Given a function's code, add 1 point for every line containing any of: `if`, `return`, ternary, `for`, `const`, `let`, `var`, `switch`, `while`, `[].map/filter/reduce/etc`. Add 1 point for each instruction (ignore extra lines from whitespace). A number of chained expressions or methods only count for 1 point.
 
 Whew, that was a bit of jargon.
- -->
+ */}
 
 Interessanterweise berichten die meisten Entwickler, sie seien _verdammt gut_ darin, ihren Code auf **Einzelziel** zu trimmen. Nicht verwunderlich: Sie berichten auch, großartige Fahrer zu sein!
 
-<!-- This **isn't a unique issue with Promises**, array methods and all other HoF-based (Higher Order Function) APIs have the same ergonomics. -->
+{/* This **isn't a unique issue with Promises**, array methods and all other HoF-based (Higher Order Function) APIs have the same ergonomics. */}
 
 Schauen wir uns ein Beispiel an, das der (unglaublich talentierte) [Jake Archibald](https://x.com/jaffathecake) in seinem Async/Await-Artikel für die Google Developers-Seite vorstellt (Hinweis: 2024, Link entfernt).
 
-<!--
-Let's look at one of the so called "❌ Not recommended" Promise examples. (The description is "say we wanted to fetch a series URLs and log them as soon as possible, in the correct order.") -->
+{/*
+Let's look at one of the so called "❌ Not recommended" Promise examples. (The description is "say we wanted to fetch a series URLs and log them as soon as possible, in the correct order.") */}
 
 ```js
 // source: https://developers.google.com/web/fundamentals/primers/async-functions
@@ -166,11 +166,11 @@ Ich würde sagen: Nein. Was macht `logInOrder`?
 
 Es gibt 5 anonyme Methoden, die in dieser einzelnen Funktion definiert sind. Wie Jake sogar selbst anmerkt, ist das `.reduce` zu komplex. Es macht keinen Sinn, nuancierte Mechanismen überall im Code von Hand zu schreiben. Anders ausgedrückt: Wir schreiben keine DOM-Erstellungs-Code mit endlosen `document.createElement()`, `element.setAttribute()` usw. Stattdessen wählen wir das beste Werkzeug aus vielen Optionen: Hilfs-/Utility-Funktionen, Bibliotheken oder Frameworks.
 
-<!-- We need to isolate each 'step' that's going on: there's an HTTP request, a transform for a list of URLs into a list of results. Also a `console.log` is needed. -->
+{/* We need to isolate each 'step' that's going on: there's an HTTP request, a transform for a list of URLs into a list of results. Also a `console.log` is needed. */}
 
-<!-- > 🤔 Why do `Promises` cause developers to abandon practices we use elsewhere? -->
+{/* > 🤔 Why do `Promises` cause developers to abandon practices we use elsewhere? */}
 
-<!-- **Note:** If the intention was to _initiate requests_ in a sequence, instead of merely printing the results out in order, this code doesn't actually do that. We'll refactor accordingly. -->
+{/* **Note:** If the intention was to _initiate requests_ in a sequence, instead of merely printing the results out in order, this code doesn't actually do that. We'll refactor accordingly. */}
 
 
 

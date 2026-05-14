@@ -32,7 +32,7 @@ L'objectif principal est d'obtenir des interfaces de modèle/entité/classe **co
   - [Utilisation concrète](#utilisation-concrète)
 - [Résumé](#résumé)
 
-<!--
+{/*
 1.  Représentation logique de haut niveau des types - de manière pertinente à la fois pour les développeurs et les parties prenantes métier.
 2.  Modélisation durable de combinaisons de champs logiquement liés.
     1.  Exemple : les **instances d'objet** contiennent souvent des champs communs `id`, `createdDate`, `createdById`, etc.
@@ -40,7 +40,7 @@ L'objectif principal est d'obtenir des interfaces de modèle/entité/classe **co
     3.  Utilitaires composites, enveloppe de pagination/charge utile, etc. : `pageNumber`, `sortBy`, `impersonateSession`, `token`, `_version`, etc.
 3.  Éviter les variations non intentionnelles dans les noms et les types (`id`, `Id`, `ID`, `created_at`, `date_created`, oh non !)
 4.  Composer des types de haut niveau à partir d'interfaces et de types plus petits réutilisables.
-5.  Utiliser les [Unions](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes-func.html#discriminated-unions) pour 'automatiquement' faire correspondre les variantes d'un type. -->
+5.  Utiliser les [Unions](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes-func.html#discriminated-unions) pour 'automatiquement' faire correspondre les variantes d'un type. */}
 
 ### Approches pour la conception des types
 
@@ -71,7 +71,7 @@ Puisque nous privilégions l'explicitisme, il est acceptable d'accepter _une cer
 
 Privilégie la réutilisabilité et l'absence de répétition.
 
-<!-- La lisibilité est une mesure curieuse. La lisibilité est souvent bonne ou **excellente quand il y a peu de types/fichiers.** **Les types ont inévitablement tendance à se multiplier,** avec de plus en plus de propriétés. **La lisibilité souffre.** -->
+{/* La lisibilité est une mesure curieuse. La lisibilité est souvent bonne ou **excellente quand il y a peu de types/fichiers.** **Les types ont inévitablement tendance à se multiplier,** avec de plus en plus de propriétés. **La lisibilité souffre.** */}
 
 Cette approche est probablement la plus adoptée.
 
@@ -108,17 +108,17 @@ Pouvons-nous tout avoir ?
 
 > ✅ OUI ! 🎉
 
-<!-- ### Quelques points à considérer
+{/* ### Quelques points à considérer
 
 - Comment représentez-vous une relation `one-to-one` comme `Product` -> `Seller` ?
 - Et les relations `one-to-many` ? Par exemple `Reviews`, ou `Photos` ?
-- Laissez-vous Prisma s'en charger ? (Ce n'est pas une mauvaise idée, mais cet article vise secrètement à apprendre un peu de TypeScript...) -->
+- Laissez-vous Prisma s'en charger ? (Ce n'est pas une mauvaise idée, mais cet article vise secrètement à apprendre un peu de TypeScript...) */}
 
-<!-- Cette approche est un exercice de JAMAIS dupliquer les noms de champs des modèles. En chemin, je pense que le « grand tableau » devient plus évident (en un seul endroit). En commençant par le type le plus vaste, le plus haut niveau, puis en dérivant les types plus simples à partir de celui-ci. -->
+{/* Cette approche est un exercice de JAMAIS dupliquer les noms de champs des modèles. En chemin, je pense que le « grand tableau » devient plus évident (en un seul endroit). En commençant par le type le plus vaste, le plus haut niveau, puis en dérivant les types plus simples à partir de celui-ci. */}
 
-<!-- Lorsqu'on est confronté à un tableau ou un objet structuré, de nombreux développeurs TypeScript ressentent le besoin de créer des types. Beaucoup de types. Finalement, une cascade de couches se forme, composée de types simples construisant des types de plus en plus complexes.
+{/* Lorsqu'on est confronté à un tableau ou un objet structuré, de nombreux développeurs TypeScript ressentent le besoin de créer des types. Beaucoup de types. Finalement, une cascade de couches se forme, composée de types simples construisant des types de plus en plus complexes.
 
-Ou peut-être êtes-vous du genre à commencer par le type de plus haut niveau, à établir un squelette suffisant pour écrire le sous-type suivant dans l'arbre ? -->
+Ou peut-être êtes-vous du genre à commencer par le type de plus haut niveau, à établir un squelette suffisant pour écrire le sous-type suivant dans l'arbre ? */}
 
 ```tsx
 export interface ProductDetails {

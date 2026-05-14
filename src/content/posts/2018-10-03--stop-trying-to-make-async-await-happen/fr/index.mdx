@@ -27,7 +27,7 @@ Depuis la nuit des temps, les développeurs se sont battus dans de nombreuses qu
 <br />
 <small>Réponses : Linux et espaces.</small>
 
-<!-- We're going to look at 2 rules to improve your life with Promises. -->
+{/* We're going to look at 2 rules to improve your life with Promises. */}
 
 ## La querelle... ?
 
@@ -72,9 +72,9 @@ Examinons un exemple courant :
 
 Effectuer une requête HTTP GET avec `fetch` :
 
-<!-- la spécification fetch indique que les [codes d'état HTTP](https://http.cat/) supérieurs à 400 ou 500 **n'entraînent pas automatiquement une erreur.** Le comportement par défaut dans de nombreuses bibliothèques AJAX (jQuery, axios). -->
+{/* la spécification fetch indique que les [codes d'état HTTP](https://http.cat/) supérieurs à 400 ou 500 **n'entraînent pas automatiquement une erreur.** Le comportement par défaut dans de nombreuses bibliothèques AJAX (jQuery, axios). */}
 
-<!-- Avant de voir la solution, examinez une implémentation couramment "recommandée" : -->
+{/* Avant de voir la solution, examinez une implémentation couramment "recommandée" : */}
 
 ### Anti-Pattern
 
@@ -117,9 +117,9 @@ Il semble _précisément trompeur_ : Objectif Unique.
 
 Pourtant, c'est si subjectif, arbitraire, et oui, parfois même sans sens.
 
-<!-- Au lieu de débattre si une fonction donnée est suffisamment focalisée.
+{/* Au lieu de débattre si une fonction donnée est suffisamment focalisée.
 
-J'ai élaboré une mesure approximative pour cela : le `Coût de l'Objectif`. Plus le score est élevé, plus il est probable que la fonction fait trop de choses. -->
+J'ai élaboré une mesure approximative pour cela : le `Coût de l'Objectif`. Plus le score est élevé, plus il est probable que la fonction fait trop de choses. */}
 
 ```js
 // 1 point : le return & l'opérateur ternaire forment une ligne unique
@@ -140,12 +140,12 @@ Whaou, c'était un peu technique.
 
 Intéressant, la plupart des développeurs affirment être _assez bons_ dans l'application du principe **Objectif Unique** à leur code. Coïncidence non liée : ils affirment aussi être de très bons conducteurs !
 
-<!-- Ce **n'est pas un problème unique aux Promises**, les méthodes de tableau et toutes les autres APIs basées sur les fonctions d'ordre supérieur (Higher Order Functions) souffrent des mêmes ergonomiques. -->
+{/* Ce **n'est pas un problème unique aux Promises**, les méthodes de tableau et toutes les autres APIs basées sur les fonctions d'ordre supérieur (Higher Order Functions) souffrent des mêmes ergonomiques. */}
 
 Examinons un exemple présenté par (exceptionnellement talentueux) [Jake Archibald](https://x.com/jaffathecake) dans son article sur async/await pour le site Google Developers (note : lien retiré en 2024). 
 
-<!-- 
-Examinons l'un des exemples de Promises soi-disant "❌ Non recommandé". (La description est "disons que nous voulons charger une série d'URLs et les enregistrer dès que possible, dans l'ordre correct.") -->
+{/* 
+Examinons l'un des exemples de Promises soi-disant "❌ Non recommandé". (La description est "disons que nous voulons charger une série d'URLs et les enregistrer dès que possible, dans l'ordre correct.") */}
 ---
 
 ```js
@@ -177,9 +177,9 @@ Je dirais non. Qu'est-ce que `logInOrder` fait exactement ?
 
 Il y a 5 fonctions anonymes définies au sein de cette unique fonction. Comme le souligne Jake, la méthode `.reduce` est trop complexe. Il ne fait pas de sens de rédiger manuellement des mécanismes détaillés un peu partout dans son code. Pour reformuler, nous n'écrivons pas des codes de création de DOM avec des appels infinis à `document.createElement()`, `element.setAttribute()`, etc. Au lieu de cela, nous choisissons l'outil le plus adapté parmi plusieurs options : fonctions utilitaires, bibliothèques ou frameworks.
 
-<!-- Nous devons isoler chaque 'étape' en jeu : il y a une requête HTTP, une transformation d'une liste d'URLs en une liste de résultats. Un `console.log` est également nécessaire. -->
+{/* Nous devons isoler chaque 'étape' en jeu : il y a une requête HTTP, une transformation d'une liste d'URLs en une liste de résultats. Un `console.log` est également nécessaire. */}
 
-<!-- > 🤔 Pourquoi les `Promises` poussent-elles les développeurs à abandonner les pratiques qu'ils utilisent ailleurs ? -->
+{/* > 🤔 Pourquoi les `Promises` poussent-elles les développeurs à abandonner les pratiques qu'ils utilisent ailleurs ? */}
 
 **Remarque :** Si l'intention était de _lancer des requêtes_ de manière séquentielle, plutôt que simplement d'afficher les résultats dans l'ordre, ce code ne le fait pas effectivement. Nous allons procéder à un refactor correspondant.
 

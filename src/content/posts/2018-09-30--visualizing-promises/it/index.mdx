@@ -39,12 +39,12 @@ delay(1000).then(() => console.log("done"));
 
 ![Timeline che mostra delay 1000 poi console log in esecuzione dopo un secondo](N_1000ms_log.webp)
 
-<!-- ```
+{/* ```
 delay(1000) --------|.then(fn)
                     | console.log('done')
 |-------------------|--------------------|--------------------|-----------------
 0msec             1sec                 2sec                 3sec
-``` -->
+``` */}
 
 ## Esempio #2/4
 
@@ -64,12 +64,12 @@ delay(1000).then(console.log("done"));
 
 ![Timeline che mostra console log in esecuzione immediatamente prima che il ritardo finisca](N_1000ms_!log.webp)
 
-<!-- ```
+{/* ```
 delay(1000) --------|.then(null)
 console.log('done')
 |-------------------|--------------------|--------------------|-----------------
 0msec             1sec                 2sec                 3sec
-``` -->
+``` */}
 
 ## Esempio #3/4
 
@@ -83,14 +83,14 @@ delay(3000).then(console.log);
 
 ![Timeline che mostra tre promise di ritardo che si risolvono dopo uno due e tre secondi](N_3000ms.webp)
 
-<!-- ```
+{/* ```
 delay(1000) ------|.then(console.log)
 delay(2000) ------|--------------------|.then(console.log)
 delay(3000) ------|--------------------|--------------------|.then(console.log)
 |-----------------|--------------------|--------------------|-------------------
 |                 |                    |                    |
 0msec           1sec                 2sec                 3sec
-``` -->
+``` */}
 
 ## Esempio #4/4
 
@@ -102,7 +102,7 @@ Promise.all([delay(1000), delay(2000), delay(3000)]).then(console.log);
 
 ![Timeline che mostra Promise all che attende tutte e tre le promise di ritardo](N_3000ms_PromiseAll.webp)
 
-<!--
+{/*
 ```
 delay(1000) ---| [resolved]------------------v
 delay(2000) ---|--------------| [resolved]---v
@@ -112,14 +112,14 @@ Promise.all()  |--------------|-------------- > console.log([1000, 2000, 3000])
 |              |              |              |
 0msec        1sec           2sec           3sec
 ```
--->
+*/}
 
 > Crediti:
 >
 > - Diagrammi async animati di [Patrick Biffle](https://github.com/Piglacquer)
 > - Ispirazione per questo articolo: https://pouchdb.com/2015/05/18/we-have-a-problem-with-promises.html
 
-<!-- <div class="challenge" title="Domanda #1: Il senso della vita:">
+{/* <div class="challenge" title="Domanda #1: Il senso della vita:">
   <ul class="options">
     <li>1</li>
     <li>2</li>
@@ -127,4 +127,4 @@ Promise.all()  |--------------|-------------- > console.log([1000, 2000, 3000])
     <li>3</li>
   </ul>
   <div class="description">Qual è il senso della vita?</div>
-</div> -->
+</div> */}

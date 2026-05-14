@@ -25,7 +25,7 @@ Einige Ingenieure nutzen ihr Wissen über Git (und das Terminal) als Signal für
 
 Weitere Faktoren sind Vertrautheit und Survivorship Bias, die unsere eigene Einschätzung und unsere Annahmen zusätzlich vernebeln können.
 
-<!-- Fehlgeleiteter Glaube an die inhärente Tugend bestimmter OSS-Projektprozesse. (Der Linux-Kernel verwendet Rebasing, und wenn du das nicht tust, **_BIST DU ÜBERHAUPT EIN RICHTIGER INGENIEUR?!_**) -->
+{/* Fehlgeleiteter Glaube an die inhärente Tugend bestimmter OSS-Projektprozesse. (Der Linux-Kernel verwendet Rebasing, und wenn du das nicht tust, **_BIST DU ÜBERHAUPT EIN RICHTIGER INGENIEUR?!_**) */}
 
 ### Schlüsselfrage: Was ist der Zweck eines Git-Commits?
 
@@ -41,7 +41,7 @@ Weitere Faktoren sind Vertrautheit und Survivorship Bias, die unsere eigene Eins
 
 Denkst du über Git auf eine Weise nach, die **den größten Wert** für dich, dein Team und deine Organisation schafft?
 
-<!-- Was für ein Open-Source-Projekt wie Postgres oder den Linux-Kernel sinnvoll ist, mag nicht die beste Wahl für dich oder dein Team sein. -->
+{/* Was für ein Open-Source-Projekt wie Postgres oder den Linux-Kernel sinnvoll ist, mag nicht die beste Wahl für dich oder dein Team sein. */}
 
 Angesichts so unterschiedlicher Denkweisen rund um Commit-Strategien ist es kein Wunder, dass so viel Verwirrung um den „richtigen" Git-Einsatz herrscht.
 
@@ -66,7 +66,7 @@ Mentales Modell: „Ich möchte eine alternative Version einer bestehenden Histo
 #### Vorteile
 
 - 🔌 Absolute Macht. Du kannst die Historie ändern.
-  <!-- - 🎭 Übe deine Engineering-Theater-Skills. -->
+  {/* - 🎭 Übe deine Engineering-Theater-Skills. */}
 
 #### Nachteile
 
@@ -101,9 +101,9 @@ Mentales Modell: „Ich möchte ein individuelles Release, beginnend an einem be
 
 Letztendlich sollte **ein einfacherer Prozess mit weniger Risiko gewinnen.**
 
-<!-- **Squash Merge** ist der klare Gewinner hier. Er ist **einfacher** und **weniger fehleranfällig**. Er **lässt auch die bestehende Commit-Historie intakt**. Das ist ein **riesiger Vorteil** für **Kollaboration** und **Code Review**. -->
+{/* **Squash Merge** ist der klare Gewinner hier. Er ist **einfacher** und **weniger fehleranfällig**. Er **lässt auch die bestehende Commit-Historie intakt**. Das ist ein **riesiger Vorteil** für **Kollaboration** und **Code Review**. */}
 
-<!-- Include a diagram of a rebase flow with 2 feature branches -->
+{/* Include a diagram of a rebase flow with 2 feature branches */}
 
 Auch wenn _Rebaser_ durchaus Wege haben, ihre Probleme zu lösen (oder zu vermeiden), bleibt die **Tatsache: Du brauchst irgendwann einen schwarzen Gurt in Git-Fu.** (z. B. Sogar ein simpler `git push` kann zusätzliche Komplexität mit sich bringen: War es `git push --force` oder `git push --force-with-lease`? Warum sich damit überhaupt herumschlagen?)
 
@@ -120,7 +120,7 @@ Letztendlich bedeutet **Rebasing, dass du gelegentlich irrelevante alte Commits 
 - _🔤 Always Be Committing!_
   - In >95 % der Unternehmensprojekte ist die „Backup-Denkweise" der „skulptierten Kunst"-Denkweise überlegen. Mit der Zeit verblasst die Bedeutung deiner Commit-Messages viel schneller als der Code, dessen Logik und Tests ihre Bedeutung behalten werden.
 
-<!--
+{/*
 #### Bonus: Releases-Tipp
 
 Brauchst du jemals nur eine einzelne Datei oder ein paar Ordner aus einem Branch? Ohne die Commit-Historie?
@@ -128,4 +128,4 @@ Brauchst du jemals nur eine einzelne Datei oder ein paar Ordner aus einem Branch
 - Du kannst den speziellen "--"-Separator mit `git checkout` verwenden, um im aktuellen Branch zu bleiben, während du die angegebenen Dateien kopierst:
 - `git checkout feature/half-a-feature **--** <Ordner- oder Dateipfad>`
 - Stelle sicher, dass du alle Änderungen, die du behalten möchtest, zuerst committet hast, da dies lokale Änderungen überschreibt.
--->
+*/}

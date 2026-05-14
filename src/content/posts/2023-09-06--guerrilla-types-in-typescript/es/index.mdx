@@ -32,7 +32,7 @@ El objetivo principal es **consistente** y **predecible** en las interfaces de M
   - [Uso en el mundo real](#real-world-usage)
 - [Resumen](#summary)
 
-<!--
+{/*
 1.  Representación lógica de alto nivel de los tipos, de forma que tenga sentido tanto para desarrolladores como para interesados del negocio.
 2.  Forma durable de modelar combinaciones de campos lógicamente relacionados.
     1.  Ejemplo: **Instancias de objetos** suelen incluir campos comunes `id`, `createdDate`, `createdById`, etc.
@@ -40,7 +40,7 @@ El objetivo principal es **consistente** y **predecible** en las interfaces de M
     3.  Utilidades composables, wrapper de paginación/carga, etc.: `pageNumber`, `sortBy`, `impersonateSession`, `token`, `_version`, etc.
 3.  Evitar variaciones no deseadas en nombres y tipado (`id`, `Id`, `ID`, `created_at`, `date_created`, ¡oh no!).
 4.  Componer tipos de nivel superior con múltiples interfaces y tipos reutilizables más pequeños.
-5.  Utilizar [Uniones](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes-func.html#discriminated-unions) para 'automáticamente' coincidir variantes de un tipo. -->
+5.  Utilizar [Uniones](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes-func.html#discriminated-unions) para 'automáticamente' coincidir variantes de un tipo. */}
 
 ### Enfoques para diseñar tipos
 
@@ -71,7 +71,7 @@ Como estamos priorizando la legibilidad explícita, está bien permitir algo de 
 
 Prioriza la reutilización y el DRY.
 
-<!-- Readability is a funny measure. Since Readability is often good or **great when there are few types/files.** **Inevitably types tend to proliferate,** featuring ever more properties. **Readability suffers.** -->
+{/* Readability is a funny measure. Since Readability is often good or **great when there are few types/files.** **Inevitably types tend to proliferate,** featuring ever more properties. **Readability suffers.** */}
 
 Este enfoque es probablemente el preferido por un amplio margen.
 
@@ -108,17 +108,17 @@ En general, este enfoque es excelente. Pero no está exento de inconvenientes.
 
 > ✅ ¡SÍ! 🎉
 
-<!-- ### Algunas cosas a considerar
+{/* ### Algunas cosas a considerar
 
 - ¿Cómo representas una relación `uno a uno` como `Product` → `Seller`?
 - ¿Qué pasa con relaciones `uno a muchos`? Por ejemplo `Reviews` o `Photos`?
-- ¿Dejar que Prisma lo maneje? (No es una mala idea, pero este artículo trata secretamente de aprender un poco de TypeScript…) -->
+- ¿Dejar que Prisma lo maneje? (No es una mala idea, pero este artículo trata secretamente de aprender un poco de TypeScript…) */}
 
-<!-- Este enfoque es un ejercicio para NUNCA duplicar los nombres de los campos del Modelo. En el proceso, creo que la “gran visión” se vuelve más evidente (en un solo lugar), comenzando con el tipo más grande y de más alto nivel, y derivando los tipos más simples a partir de él. -->
+{/* Este enfoque es un ejercicio para NUNCA duplicar los nombres de los campos del Modelo. En el proceso, creo que la “gran visión” se vuelve más evidente (en un solo lugar), comenzando con el tipo más grande y de más alto nivel, y derivando los tipos más simples a partir de él. */}
 
-<!-- Cuando se dispone de datos estructurados en forma de array/objeto, muchos programadores de TypeScript sienten la necesidad de crear tipos. Montones de tipos. Eventualmente se forma una cascada de capas, compuesta por tipos más simples que construyen tipos cada vez más complejos.
+{/* Cuando se dispone de datos estructurados en forma de array/objeto, muchos programadores de TypeScript sienten la necesidad de crear tipos. Montones de tipos. Eventualmente se forma una cascada de capas, compuesta por tipos más simples que construyen tipos cada vez más complejos.
 
-¿O tal vez eres del tipo que empieza por el tipo de nivel más alto, preparando lo suficiente para escribir el siguiente subtipo en el árbol? -->
+¿O tal vez eres del tipo que empieza por el tipo de nivel más alto, preparando lo suficiente para escribir el siguiente subtipo en el árbol? */}
 
 ```tsx
 export interface ProductDetails {

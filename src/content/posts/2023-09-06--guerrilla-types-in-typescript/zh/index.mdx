@@ -32,7 +32,7 @@ cover_icon: ../icon_gorilla-types_dall-e.webp
   - [实际使用](#real-world-usage)
 - [总结](#summary)
 
-<!--
+{/*
 1.  类型的高层逻辑表示——以对开发者和业务利益相关者都有意义的方式。
 2.  对逻辑相关字段组合进行建模的持久方式。
     1.  示例：**对象实例**通常包含公共字段 `id`、`createdDate`、`createdById` 等。
@@ -40,7 +40,7 @@ cover_icon: ../icon_gorilla-types_dall-e.webp
     3.  可组合的工具、分页/负载包装器等：`pageNumber`、`sortBy`、`impersonateSession`、`token`、`_version` 等。
 3.  避免命名和类型中的意外差异（`id`、`Id`、`ID`、`created_at`、`date_created`，哦不！）
 4.  使用多个较小的可复用接口和类型组合更高级的类型。
-5.  利用[联合类型](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes-func.html#discriminated-unions)来“自动”匹配类型的变体。 -->
+5.  利用[联合类型](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes-func.html#discriminated-unions)来“自动”匹配类型的变体。 */}
 
 ### 类型设计的方法
 
@@ -71,7 +71,7 @@ interface ProductDetails {
 
 优先考虑可复用性和 DRY 原则。
 
-<!-- 可读性是一个有趣的衡量标准。因为当类型/文件较少时，可读性通常很好或**很棒**。**类型不可避免地会扩散，** 拥有越来越多的属性。**可读性会受到影响。** -->
+{/* 可读性是一个有趣的衡量标准。因为当类型/文件较少时，可读性通常很好或**很棒**。**类型不可避免地会扩散，** 拥有越来越多的属性。**可读性会受到影响。** */}
 
 这种方法很可能是大多数人的首选方法。
 
@@ -108,17 +108,17 @@ interface Reviews { authorId: number; stars: number; }
 
 > ✅ 是的！🎉
 
-<!-- ### 一些考虑因素
+{/* ### 一些考虑因素
 
 - 如何表示像 `Product` -> `Seller` 这样的 `一对一` 关系？
 - 那 `一对多` 关系呢？比如 `Reviews` 或 `Photos`？
-- 让 Prisma 处理？（不错的主意，但这篇文章实际上是关于学习一些 TypeScript...） -->
+- 让 Prisma 处理？（不错的主意，但这篇文章实际上是关于学习一些 TypeScript...） */}
 
-<!-- 这种方法旨在绝不重复模型字段名。在此过程中，我认为“大局”更加明显（在一个地方）。从最大、最高层的类型开始，然后从中派生出更简单的类型。 -->
+{/* 这种方法旨在绝不重复模型字段名。在此过程中，我认为“大局”更加明显（在一个地方）。从最大、最高层的类型开始，然后从中派生出更简单的类型。 */}
 
-<!-- 当面对一些结构化的数组/对象数据时，许多 TypeScript 程序员会感到需要创建类型。大量的类型。最终形成一层层的层级，由简单的类型构建出越来越复杂的类型。
+{/* 当面对一些结构化的数组/对象数据时，许多 TypeScript 程序员会感到需要创建类型。大量的类型。最终形成一层层的层级，由简单的类型构建出越来越复杂的类型。
 
-或者，也许你是那种从最高层类型开始，搭建足够的脚手架来编写树中下一个子类型的人？ -->
+或者，也许你是那种从最高层类型开始，搭建足够的脚手架来编写树中下一个子类型的人？ */}
 
 ```tsx
 export interface ProductDetails {
