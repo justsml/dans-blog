@@ -1,0 +1,53 @@
+{
+  "selectedCommit": "f7223b26e88e8d01191aead7db3d4ca30ed69aaf",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 5,
+    "technicalAccuracy": 5,
+    "coherence": 5,
+    "relevance": 5,
+    "translationQuality": 5,
+    "mdxPreservation": 5
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "![ציר זמן המציג השהייה של 1000 ואז ריצת console.log לאחר שנייה אחת](N_1000ms_log.webp)",
+      "replacement": "![ציר זמן המציג השהייה של 1000 ואז ריצת console.log לאחר שנייה אחת](../N_1000ms_log.webp)",
+      "reason": "The first image path is missing the '../' prefix required for locale files located in subdirectories (he/) to correctly reference assets in the parent directory."
+    }
+  ],
+  "rationale": "The candidate f7223b26e88e8d01191aead7db3d4ca30ed69aaf is the best choice as it translates the alt text and the hidden challenge section, maintaining the direct style of the original. It correctly applied the '../' prefix to most images, though it missed the first one, which is addressed in the suggestions.",
+  "slug": "visualizing-promises",
+  "locale": "he",
+  "candidateCommits": [
+    "f7223b26e88e8d01191aead7db3d4ca30ed69aaf",
+    "b360839bd73f5ac27b2d81594c3732eb4dd42fbc"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "![ציר זמן המציג השהייה של 1000 ואז ריצת console.log לאחר שנייה אחת](../N_1000ms_log.webp)",
+      "replacement": "![ציר זמן המציג השהייה של 1000 ואז ריצת console.log לאחר שנייה אחת](N_1000ms_log.webp)",
+      "reason": "The instruction to use ../ for assets only applies if the locale file is deeper than the English file. However, in this project structure, the locale file is in a subfolder (he/), so the relative path to the image (which is in the same folder as the English index.md) must be ../image.webp. Wait, looking at the prompt: 'Locale files live one folder deeper than English... Any inherited local image... must start with ../'. The candidate correctly followed this. My suggestion was wrong based on the prompt's specific constraint.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "![ציר זמן המציג השהייה של 1000 ואז ריצת console.log לאחר שנייה אחת](N_1000ms_log.webp)",
+      "replacement": "![ציר זמן המציג השהייה של 1000 ואז ריצת console.log לאחר שנייה אחת](../N_1000ms_log.webp)",
+      "reason": "The first image path is missing the '../' prefix required for locale files located in subdirectories (he/) to correctly reference assets in the parent directory.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug visualizing-promises --locale he --skip-global",
+    "output": ""
+  }
+}
