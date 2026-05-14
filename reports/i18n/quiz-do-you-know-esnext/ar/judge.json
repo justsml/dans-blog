@@ -1,0 +1,46 @@
+{
+  "selectedCommit": "d463b24f169753c6dd5a4fd19babffa4aa55f408",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The translation is technically accurate and maintains the MDX structure perfectly, including the relative path adjustments for assets. It uses appropriate Arabic technical terminology (e.g., 'دلالات' for semantics). The previous suggestions from the judge report have already been integrated into the current version of the file (e.g., 'أليس كذلك؟' is already present), so no further high-priority fixes are required.",
+  "slug": "quiz-do-you-know-esnext",
+  "locale": "ar",
+  "candidateCommits": [
+    "d463b24f169753c6dd5a4fd19babffa4aa55f408",
+    "81999e87a6bed93f5d7b99404115bb1a05747e7a"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "وليس ما يفعله هذا العامل.",
+      "replacement": "وليس ما تفعله هذه الميزة.",
+      "reason": "Consistency: The English text says 'not what this feature does'. The candidate uses 'feature' in some places and 'operator' in others. Using 'feature' (ميزة) is more accurate to the source.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "ما مدى صعوبة الأمر، هاه؟",
+      "replacement": "ما مدى صعوبة الأمر، أليس كذلك؟",
+      "reason": "'هاه' is a bit too literal for 'eh?'. 'أليس كذلك؟' or 'يا ترى؟' fits the tone better in Arabic.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug quiz-do-you-know-esnext --locale ar --skip-global",
+    "output": ""
+  }
+}
