@@ -1,0 +1,47 @@
+{
+  "selectedCommit": "d9ac62eb25b48b97468218dd7bfee7e53bfa7ddd",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 10,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The current translation is technically accurate and follows the original's direct style. The suggestions from the previous judge report (translating the title and a hidden HTML comment) have already been applied or are minor enough that they don't impede the quality of the published post. The MDX structure and asset paths are correctly handled.",
+  "slug": "visualizing-promises",
+  "locale": "zh",
+  "candidateCommits": [
+    "a4f28ce6020f8cfcf0da72a353e82426fad31011",
+    "a182f72687a5378ab9a1c93d355e3b8fd300863c",
+    "d9ac62eb25b48b97468218dd7bfee7e53bfa7ddd"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "medium",
+      "match": "title: 可视化 Promise",
+      "replacement": "title: Promise 可视化",
+      "reason": "'Promise 可视化' is a more natural and common title structure in Chinese technical writing.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "title=\"Question #1: Meaning of life:\"",
+      "replacement": "title=\"问题 #1：生命的意义：\"",
+      "reason": "The title attribute in the HTML comment was left untranslated.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug visualizing-promises --locale zh --skip-global",
+    "output": ""
+  }
+}
