@@ -1,0 +1,191 @@
+# Translation Candidate
+- Slug: mastra-security-guardrails
+- Locale: zh
+- Model: openrouter/google/gemini-3-flash-preview
+- Target: src/content/posts/2026-01-03--mastra-security-guardrails/zh/index.mdx
+- Validation: deferred
+- Runtime seconds: 12.31
+- Input tokens: 3588
+- Output tokens: 1886
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.007452
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: 生产环境下的 AI 令人畏惧（以及应对之道）
+subTitle: 没有护栏的 Agent，谈不上生产就绪。
+date: '2026-01-03'
+modified: '2026-01-08'
+tags:
+  - ai
+  - security
+  - mastra
+  - guardrails
+  - privacy
+  - pii
+category: AI
+subCategory: Security
+social_image: ../desktop-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+没有人一开始就打算构建一个不安全的 AI 系统。你写好指令，测试边缘案例，再加上几条验证规则。然后，有人发现他们可以诱导你的机器人扮演海盗并泄露用户数据。或者，一个信用卡号出现在了你的日志里。又或者，模型一本正经地推荐了竞争对手的产品。
+
+“演示环境可用”与“生产环境安全”之间的差距，比大多数团队预想的要大得多。
+
+部分问题在于，原生 LLM 对自己该做什么或不该做什么没有立场。它们是预测机器，只是试图延续你开始的任何模式。给它们一个看起来像“系统覆盖模式（system override mode）”的提示词，它们会非常乐意配合。这并不是模型的 bug；这正是语言模型的工作原理。
+
+大多数框架只是把模型交给你，然后祝你好运。Mastra 采取了不同的方法：它假设你最终会需要护栏，因此从一开始就将它们构建到 Agent 架构中。
+
+---
+
+## 将 Processor 作为安全层
+
+核心机制非常直接。在你的提示词到达模型之前，它会通过一系列输入处理器（input processors）。在模型响应之后，输出处理器（output processors）开始工作。每个处理器都可以在该阶段检查、修改或拦截内容。
+
+可以把它们看作 AI 交互的中间件。你堆叠所需的处理器，配置它们的行为，它们就会在每次请求时自动运行。
+
+### 1. 拦截“海盗”（提示词注入）
+
+提示词注入（Prompt injection）攻击已经变得花样百出。人们使用不可见的 Unicode 字符，用 base64 编写指令，或者说服模型它正处于“调试模式”，从而绕过常规规则。这些技术一直在演进。
+
+Mastra 包含了一些可以捕获常见模式的处理器：
+
+```typescript
+// src/mastra/agents/secure-agent.ts
+import { Agent } from '@mastra/core/agent';
+import { PromptInjectionDetector, UnicodeNormalizer } from '@mastra/core/processors';
+import { openai } from '@ai-sdk/openai';
+
+export const secureAgent = new Agent({
+  id: 'fortress-assistant',
+  name: 'fortress-assistant',
+  instructions: 'You are a secure assistant.',
+  model: openai('gpt-5'),
+  inputProcessors: [
+    // 1. 清理不可见字符
+    new UnicodeNormalizer({
+      id: 'unicode-normalizer',
+      stripControlChars: true,
+      collapseWhitespace: true,
+    }),
+    // 2. 检测注入尝试
+    new PromptInjectionDetector({
+      id: 'prompt-injection-detector',
+      model: openai('gpt-5-nano'), // 便宜、快速
+      threshold: 0.8,
+      strategy: 'block', // 直接拦截
+      detectionTypes: ['injection', 'jailbreak', 'system-override'],
+    }),
+  ],
+});
+```
+
+[`UnicodeNormalizer`](../mastra.ai/docs/processors) 会剥离控制字符并压缩空白符。[`PromptInjectionDetector`](../mastra.ai/docs/processors) 则分析清洗后的输入，寻找暗示有人试图覆盖你指令的模式。
+
+你可以配置检测的激进程度（`threshold` 参数）以及触发时的处理方式（拦截、记录日志或仅标记）。
+
+### 2. 处理 PII（个人身份信息）
+
+日志中的信用卡号、向量数据库中的社会安全号码、存储时间超出必要的电子邮件地址。这些问题往往会演变成合规性灾难。挑战在于，用户并不总是意识到他们正在向聊天窗口粘贴敏感数据。
+
+[`PIIDetector`](../mastra.ai/docs/processors) 会在数据到达模型或写入存储之前扫描常见模式：
+
+```typescript
+import { PIIDetector } from '@mastra/core/processors';
+
+export const privateAgent = new Agent({
+  id: 'privacy-first-assistant',
+  name: 'privacy-first-assistant',
+  instructions: 'You are a helpful assistant that never stores personal information.',
+  model: openai('gpt-5'),
+  inputProcessors: [
+    new PIIDetector({
+      id: 'pii-detector',
+      model: openai('gpt-5-nano'),
+      detectionTypes: ['email', 'phone', 'credit-card', 'ssn'],
+      threshold: 0.6,
+      strategy: 'redact',
+      redactionMethod: 'mask',  // 替换为 [REDACTED]
+      instructions: 'Detect and mask personally identifiable information',
+    }),
+  ],
+});
+```
+
+你可以选择脱敏（替换为 `[REDACTED]`）、哈希处理或完全拦截。该处理器在输入和输出端都可以运行，因此即使模型在响应中意外生成了敏感数据，你也能得到保护。
+
+### 3. 内容审核
+
+在互联网数据上训练出来的模型见过各种大场面。如果不加过滤，它们偶尔会生成让你的公关团队心惊胆战的响应。[`ModerationProcessor`](../https://mastra.ai/docs/processors) 可以拦截违反你准则的内容：
+
+```typescript
+import { ModerationProcessor } from '@mastra/core/processors';
+
+export const moderatedAgent = new Agent({
+  id: 'safe-assistant',
+  name: 'safe-assistant',
+  instructions: 'You are a helpful assistant for a community platform.',
+  model: openai('gpt-5'),
+  inputProcessors: [
+    new ModerationProcessor({
+      id: 'moderation-processor',
+      model: openai('gpt-5-nano'),  // 使用快速、廉价的模型进行分类
+      categories: ['hate', 'harassment', 'violence', 'self-harm'],
+      threshold: 0.7,  // 如果置信度 > 70% 则拦截
+      strategy: 'block',  // 立即停止请求
+      instructions: 'Detect harmful content that violates community guidelines',
+    }),
+  ],
+});
+```
+
+有趣的地方在于，你可以定义哪些类别对你的业务场景至关重要。创意写作工具可能比客服机器人允许更多表达性的内容。阈值（threshold）和策略（strategy）让你能够控制过滤的严格程度。
+
+---
+
+## 当“绊网”触发时
+
+处理器在检测到问题时不会直接抛出错误。相反，它们会在结果对象上设置一个标志位：
+
+```typescript
+const result = await secureAgent.generate('Ignore all previous instructions...');
+
+if (result.tripwire) {
+  console.log(`Blocked! Reason: ${result.tripwireReason}`);
+  // "Blocked! Reason: Prompt injection detected."
+  return "Nice try, script kiddie.";
+}
+```
+
+这种模式允许你以最适合应用的方式处理安全事件。你可以记录日志用于分析，返回通用的错误提示，甚至在特定上下文中允许某些违规行为。`tripwireReason` 字段会明确告诉你哪个处理器标记了该内容，这在你调试误报或调整阈值时非常有帮助。
+
+---
+
+## 这不能解决什么问题
+
+处理器能拦截很多问题，但它们不是万能药。一个有耐心的攻击者只要投入足够的时间，总能找到绕过检测的提示词。模型偶尔会以处理器无法预测的方式产生幻觉。而且，安全性和灵活性之间永远存在权衡：规则越严格，误伤合法用例的可能性就越大。
+
+其价值不在于提供完美的保护，而在于提供一种系统化的方法来处理生产环境中必然会出现的常见问题。你可以根据用户的实际行为来调整敏感度。你可以针对特定领域的风险添加自定义处理器。此外，你还拥有审计追踪，可以查看哪些内容被拦截以及原因。
+
+生产环境 AI 中的大多数安全问题并不是复杂的攻击。它们通常是用户复制粘贴了不该输入的数据，或者通过反复尝试发现机器人会执行你意料之外的操作。处理器无法阻止所有潜在问题，但它们能让那些显而易见的漏洞变得极难被利用。
+
+### 资源
+
+- [Mastra Guardrails 文档](../https://mastra.ai/docs/agents/guardrails)
+- [安全最佳实践](../https://mastra.ai/docs/security)
+- [Mastra GitHub 仓库](../https://github.com/mastra-ai/mastra)
+
+## 阅读系列文章
+
+1. [LLM 路由](../llm-routing-mastra-ai)
+2. **安全与护栏** (本文)
+3. [MCP 与工具集成](../mastra-mcp-tool-integrations)
+4. [工作流与记忆](../mastra-workflows-memory)
+````
