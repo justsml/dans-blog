@@ -1,0 +1,37 @@
+{
+  "selectedCommit": "bfea7e37fbfed2e2b3802f8597de9511bc4ceef1",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The selected candidate (DeepSeek) is excellent. It correctly handles relative path adjustments for MDX assets (../), preserves all MDX components and comments, and maintains the heading structure. The translation of technical concepts like 'Squash Merge' is handled well by providing the English term in parentheses, which is the industry standard for Arabic technical content. The tone is consistent with the original author's direct and slightly informal style. The previous suggestion regarding 'دمج الضغط' was already addressed in the candidate text as 'دمج السكواش (Squash Merge)', so no further high-priority fixes are required.",
+  "slug": "deathmatch-git-rebase-vs-merge",
+  "locale": "ar",
+  "candidateCommits": [
+    "bfea7e37fbfed2e2b3802f8597de9511bc4ceef1",
+    "3b5e4a41932055b9fdea2bfde4a0f5f28751be08"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "دمج الضغط",
+      "replacement": "دمج السكواش (Squash Merge)",
+      "reason": "'دمج الضغط' is a literal translation that might be confusing. Using 'Squash Merge' or a transliteration with the English term is standard in technical Arabic.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug deathmatch-git-rebase-vs-merge --locale ar --skip-global",
+    "output": ""
+  }
+}
