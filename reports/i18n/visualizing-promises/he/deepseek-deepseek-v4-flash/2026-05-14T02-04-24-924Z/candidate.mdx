@@ -1,0 +1,142 @@
+---
+social_image: ../desktop-social.webp
+title: הדמיית הבטחות
+subTitle: תפרוץ דרך...
+date: '2018-09-30'
+modified: '2024-07-30'
+category: Guides
+subCategory: promises
+cover: ../junior-ferreira-735237-unsplash.webp
+cover_mobile: ../w300_junior-ferreira-735237-unsplash.webp
+cover_icon: ../icon_junior-ferreira-735237-unsplash.webp
+tags:
+  - promises
+  - async
+  - visualizing
+  - javascript
+  - composition
+related:
+  - intro-to-promises
+  - promise-gotchas
+  - stop-trying-to-make-async-await-happen
+  - javascript-promises-quiz
+---
+כדי להמחיש כיצד Promises מתבצעות, נגדיר מתודה חדשה `delay(millisecs)`.
+
+```js
+function delay(millisecs) {
+  return new Promise(resolve => {
+    setTimeout(() => resolve(millisecs), millisecs);
+  });
+}
+```
+
+זוהי מתודת עזר שתיפתר לאחר שהטיימאאוט יעבור.
+
+השהייה במילישניות תועבר לקולבק של `.then`.
+
+בואו נסתכל על 4 דוגמאות (עם צירי זמן מונפשים).
+
+## דוגמה #1/4
+
+זה מראה כיצד הביצוע של `console.log()` יידחה על ידי `delay(msec)`.
+
+```js
+delay(1000).then(() => console.log("done"));
+```
+
+![ציר זמן המציג השהייה של 1000 ואז ריצת console.log לאחר שנייה אחת](../N_1000ms_log.webp)
+
+<!-- ```
+delay(1000) --------|.then(fn)
+                    | console.log('done')
+|-------------------|--------------------|--------------------|-----------------
+0msec             1sec                 2sec                 3sec
+``` -->
+
+## דוגמה #2/4
+
+_זה מראה טעות נפוצה._
+
+`console.log` מופעל מיד כשה-`delay(1000)` **מתחיל**. לא **אחרי** ההשהיה כמו שרצית כנראה.
+
+מכיוון ש-`console.log` מחזיר `undefined`, ה-`.then()` שלנו מתעלם בשקט.
+
+שימו לב להבדל בין `typeof console.log === 'function'` לבין `typeof console.log() === undefined`.
+
+באופן כללי, השימוש הרצוי ב-`console.log` מוצג בדוגמה #1. וודאו שאתם מעבירים פונקציות לתוך `.then` ו-`.catch`.
+
+```js
+delay(1000).then(console.log("done"));
+```
+
+![ציר זמן המציג ריצת console.log מיד לפני סיום ההשהיה](../N_1000ms_!log.webp)
+
+<!-- ```
+delay(1000) --------|.then(null)
+console.log('done')
+|-------------------|--------------------|--------------------|-----------------
+0msec             1sec                 2sec                 3sec
+``` -->
+
+## דוגמה #3/4
+
+3 הבטחות רצות בו-זמנית.
+
+```js
+delay(1000).then(console.log);
+delay(2000).then(console.log);
+delay(3000).then(console.log);
+```
+
+![ציר זמן המציג שלוש הבטחות delay שנפתרות לאחר אחת, שתיים ושלוש שניות](../N_3000ms.webp)
+
+<!-- ```
+delay(1000) ------|.then(console.log)
+delay(2000) ------|--------------------|.then(console.log)
+delay(3000) ------|--------------------|--------------------|.then(console.log)
+|-----------------|--------------------|--------------------|-------------------
+|                 |                    |                    |
+0msec           1sec                 2sec                 3sec
+``` -->
+
+## דוגמה #4/4
+
+`Promise.all` עם 3 הבטחות `delay`. הן ירוצו במקביל.
+
+```js
+Promise.all([delay(1000), delay(2000), delay(3000)]).then(console.log);
+```
+
+![ציר זמן המראה את Promise.all ממתין לכל שלוש הבטחות ההשהיה](../N_3000ms_PromiseAll.webp)
+
+<!--
+
+```
+delay(1000) ---| [resolved]------------------v
+delay(2000) ---|--------------| [resolved]---v
+delay(3000) ---|--------------|--------------v [resolved]
+Promise.all()  |--------------|-------------- > console.log([1000, 2000, 3000])
+|--------------|--------------|--------------|--------------------------------
+|              |              |              |
+0msec        1sec           2sec           3sec
+```
+
+-->
+
+> קרדיטים:
+>
+> - דיאגרמות אסינכרוניות מונפשות מאת [Patrick Biffle](https://github.com/Piglacquer)
+> - השראה למאמר זה: https://pouchdb.com/2015/05/18/we-have-a-problem-with-promises.html
+
+<!-- <div class="challenge" title="שאלה #1: משמעות החיים:">
+
+  <ul class="options">
+    <li>1</li>
+    <li>2</li>
+    <li class="answer">42</li>
+    <li>3</li>
+  </ul>
+  <div class="description">מהי משמעות החיים?</div>
+
+</div> -->
