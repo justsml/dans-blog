@@ -1,0 +1,510 @@
+# Translation Candidate
+- Slug: quiz-context-engineering
+- Locale: zh
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-05-09--quiz-context-engineering/zh/index.mdx
+- Validation: deferred
+- Runtime seconds: 47.62
+- Input tokens: 15373
+- Output tokens: 15365
+- Thinking tokens: unknown
+- Cached input tokens: 1024
+- Cache write tokens: 0
+- Estimated cost: $0.005762
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: 'Quiz: 14 个上下文工程问题'
+subTitle: 提示工程是你所做的。上下文工程是你部署的。
+date: '2026-05-09'
+modified: '2026-05-09'
+tags:
+  - quiz
+  - ai
+  - llm
+  - context-engineering
+  - prompts
+  - rag
+  - tokens
+  - advanced
+category: Quiz
+subCategory: AI
+draft: true
+unlisted: true
+hidden: true
+publish: false
+popularity: 0.85
+social_image: ../desktop-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+<p class="inset">提示工程赢得标语，上下文工程赢得紧急警报。你对实际部署AI系统中真正起作用的部分了解多少？</p>
+
+本测验涵盖上下文窗口、令牌预算、检索、提示结构以及将整洁演示转化为混乱产品的故障模式。难度从温和开始，但不会止步于此。
+
+准备好证明你的实力吧。
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="基础概念"
+  title="上下文窗口基础"
+  options={[
+    {text: '每分钟最大请求数'},
+    {text: '输入和输出的总标记数限制', isAnswer: true},
+    {text: '对话中的消息数量'},
+    {text: '会话之间的可用内存'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    在大语言模型中，'上下文窗口'指的是什么？
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    上下文窗口是指模型在单次调用中可以处理的**总标记数**——**输入和输出的总和**。128K的上下文窗口意味着你的提示词+检索到的文档+对话历史+模型的响应必须全部容纳在128,000个标记内。
+
+    它与会话、内存或速率限制无关。当触及限制时，模型要么截断内容，要么报错，更糟糕的是——**静默丢弃你意想不到的标记**。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="基础"
+  title="令牌估算"
+  options={[
+    {text: '大约50个令牌'},
+    {text: '大约130个令牌', isAnswer: true},
+    {text: '大约300个令牌'},
+    {text: '大约1,000个令牌'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    使用现代通用分词器时，一个100词的英文段落大约会使用多少个令牌？
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    经验法则是**典型英文散文中每个单词约1.3个令牌**。100词段落≈130个令牌。
+
+    不同内容类型差异显著：
+    - 代码：~1.5–2令牌/词（特殊字符、空格）
+    - 含大量标识符的技术文档：可能更高
+    - 常见英文单词：通常1个令牌
+    - 生僻词、人名、非英文文本：通常2–4个令牌
+
+    `tiktoken`库能提供精确统计。永远不要假设，先实际测量。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="基础"
+  title="系统提示的作用"
+  options={[
+    {text: '它会被优先处理，并比用户消息具有更高的权重', isAnswer: true},
+    {text: '它与用户消息完全相同，只是显示方式不同'},
+    {text: '它仅用于API调用，不适用于聊天界面'},
+    {text: '它会作为长期记忆在会话间持续存在'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    在消息数组中使用`system`角色与`user`角色会产生什么实际效果？
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `system`角色会被视为高优先级指令。模型经过训练会赋予它比用户消息更高的权重——这是开发者指令与用户指令之间的架构边界。
+
+    这不是魔法。它不能保证模型会忽略冲突的用户指令（参见：提示注入）。但它确实能显著提高模型遵循你指令的可能性，尤其是在指令遵循能力较强的模型上。
+
+    实践建议：将角色设定、规则和行为约束放在`system`中。将检索到的上下文和用户数据放在`user`中。永远不要将用户可控的输入放在`system`中。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="检索"
+  title="中间迷失"
+  options={[
+    {text: '模型在上下文放置位置不同时表现相同'},
+    {text: '模型在上下文位于末尾时表现最佳'},
+    {text: '模型在上下文位于开头和末尾时表现最佳，中间最差', isAnswer: true},
+    {text: '模型在上下文位于提示中间时表现最佳'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    关于‘中间迷失’问题的研究表明，大型语言模型（LLM）倾向于：
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    《[中间迷失论文（Liu 等，2023）](https://arxiv.org/abs/2307.03172)》证明了LLM在长上下文中处理中间位置的信息时表现最差。当相关信息出现在上下文窗口的**开头或末尾**时，性能显著提高。
+
+    实践启示：在将检索到的块插入RAG提示时，不要只是按相关性顺序追加。将最高排名的结果放在最前面，第二高的放在最后，中间填充低排名内容。这看似违反直觉，但经实测效果更佳。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="检索"
+  title="分块策略"
+  options={[
+    {text: '使用上下文窗口允许的最大分块大小'},
+    {text: '始终使用512 tokens——它\'},
+    {text: '使用与内容结构匹配的重叠分块', isAnswer: true},
+    {text: '分块大小不要\'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    在为RAG分块文档时，最重要的原则是什么？
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    没有通用的正确分块大小——这取决于你的内容。重要原则有：
+
+    1. **匹配你的内容结构。** FAQ页面在Q+A级别分块效果很好。法律文档在条款级别分块效果更好。代码在函数级别分块最佳。
+    2. **使用重叠。** 512-token分块在两侧有64-token重叠，可以确保跨边界的答案仍能被检索到。
+    3. **进行测量。** 构建评估集并测试多种分块大小。分块大小比嵌入模型更重要。
+
+    "512 tokens"是一个合理的起点，但不是铁律。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="检索"
+  title="混合搜索"
+  options={[
+    {text: '为了冗余而对同一查询运行两次'},
+    {text: '在相同语料库上使用两种不同的嵌入模型'},
+    {text: '将向量搜索与关键词搜索结合以提高检索效果', isAnswer: true},
+    {text: '同时跨多个向量数据库进行搜索'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    在RAG系统中，"混合搜索"指的是：
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    混合搜索结合了**向量搜索**（通过嵌入实现语义相似度）和**关键词搜索**（BM25/全文搜索），因为它们在互补场景下会失效：
+
+    - 向量搜索难以处理精确术语：产品名称、错误代码、型号编号、技术标识符
+    - 关键词搜索难以处理同义改写："如何取消" vs. "终止订阅"
+
+    通过**互惠排名融合（Reciprocal Rank Fusion, RRF）**对两者结果进行融合——这是一种无需标准化分数即可合并多个排序列表的排名算法。
+
+    在Postgres中可通过`pgvector` + `tsvector`实现，你可能不需要单独的搜索服务。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="令牌管理"
+  title="上下文预算"
+  options={[
+    {text: '使用95%以上的上下文窗口以最大化信息量'},
+    {text: '为输出保留有意义的余量，而不是填满整个窗口', isAnswer: true},
+    {text: '上下文预算仅对32K令牌以下的模型重要'},
+    {text: '当窗口超出时模型会自动截断'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    在构建带有检索上下文的RAG提示时，关于上下文预算的一个实用经验法则是：
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    上下文窗口在**输入和输出**之间共享。如果你用90%用于输入，模型只剩下10%的窗口来生成响应——这通常会导致输出被截断或质量下降。
+
+    合理的启发式方法是：先确定预期输出大小，然后将输入控制在剩余预算范围内。对于许多RAG任务，这意味着输入不应超过**总上下文窗口的60-70%**（系统提示+历史记录+检索上下文）。其余部分留给生成和安全余量。
+
+    另外，模型在接近上下文窗口边缘时表现更差——随着上下文填满，理解能力和指令遵循能力会下降。虽然技术上可以运行在95%，但体验与运行在50%完全不同。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="令牌管理"
+  title="对话历史管理"
+  options={[
+    {text: '始终发送完整的对话历史'},
+    {text: '当历史记录超出令牌预算时总结旧消息', isAnswer: true},
+    {text: '删除旧消息——模型具有持久记忆'},
+    {text: '将历史记录存储在向量数据库中并检索相关内容'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    在多轮对话应用中，当对话历史变长时，正确的策略是什么？
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    大型语言模型没有持久记忆。每次API调用都是无状态的——你发送完整上下文，得到响应。对话的“记忆”完全取决于你在每次请求中包含的消息历史。
+
+    当历史记录超出预算时，有以下选择：
+    1. **总结**：将旧对话压缩为运行摘要，保留最近对话原文
+    2. **滑动窗口**：保留最后N轮对话，丢弃更早的
+    3. **选择性检索**：对对话内容进行嵌入并在每个查询时检索相关内容（复杂但强大）
+
+    简单截断——为了适应预算而直接删除旧消息——是最差的选项，因为它会静默移除模型可能需要的上下文。
+
+    理论上向量数据库检索对话历史很有吸引力，但对大多数聊天应用来说通常过度设计。总结策略是务实的默认选择。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="提示结构"
+  title="少样本示例"
+  options={[
+    {text: '更多示例总是能产生更好的结果'},
+    {text: '3–5个高质量、多样化的示例', isAnswer: true},
+    {text: '少样本示例仅对分类任务有帮助'},
+    {text: '示例应该放在用户查询之后，而不是之前'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    对于大多数生产环境用例，最佳的少样本示例策略是：
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    少样本示例能显著提升输出一致性和格式规范性。对大多数任务而言，**3–5个高质量、多样化的示例**是最佳选择。
+
+    为什么不多加？每个示例都会消耗令牌。超过5-10个示例后，边际效益递减而成本持续上升。过多示例还会增加模型过度拟合示例的风险，而非理解底层模式。
+
+    为什么需要多样性：如果所有示例都是同类型输入，模型无法很好地泛化到边缘案例。应包含覆盖主要变体的示例。
+
+    放置位置：示例应放在用户查询*之前*，作为系统提示的一部分或预填充的对话轮次——而不是之后。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="提示结构"
+  title="XML标签用于结构"
+  options={[
+    {text: 'XML标签仅在Anthropic模型中有效'},
+    {text: 'XML标签帮助模型区分指令和数据并提高解析准确性', isAnswer: true},
+    {text: 'XML标签会减慢分词速度应避免使用'},
+    {text: 'XML标签等同于markdown标题'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    为什么许多生产环境的提示会使用XML风格的标签如<document>、<context>、<instructions>？
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    XML风格的标签提供**明确的结构边界**，这些边界是模型经过训练后能够识别和遵循的。它们起到两个作用：
+
+    1. **分离**：它们向模型表明指令结束的位置和数据开始的位置——这对RAG系统和降低检索文档中的提示注入风险至关重要。
+    2. **可解析性**：当你要求模型以XML格式回复（例如<answer>...</answer>）时，这些标签提供了干净的提取点，无需使用正则表达式。
+
+    这并不是把XML当作标记语言使用。而是将XML作为分隔符约定，这是模型在训练中习得的。有效是因为模型在训练中大量接触过这种模式，而不是因为它在验证模式。
+
+    在大多数经过指令微调的模型中都足够有效，因此值得使用——这是一种训练数据约定，而非供应商特性或安全保证。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="高级"
+  title="温度与确定性"
+  options={[
+    {text: 'temperature=0 总是为相同输入生成相同输出'},
+    {text: 'temperature=0 使输出更加确定性但不保证完全相同', isAnswer: true},
+    {text: 'temperature=0 会禁用模型'},
+    {text: 'temperature 仅影响响应长度'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    在您的LLM调用中设置 `temperature=0` 意味着：
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `temperature=0` 会使模型在每一步选择概率最高的token（贪婪解码），从而产生**更一致**的输出——但不能保证完全相同。
+
+    温度=0时的差异来源：
+    - **GPU计算中的浮点非确定性**，特别是在不同硬件或批量大小下
+    - **服务端基础设施变更**（模型更新、服务基础设施）
+    - **长输出**会累积微小差异
+
+    对于需要严格确定性的测试套件和评估，`temperature=0` 是正确选择——但不要为逐字相同的输出编写断言。应断言结构、关键内容和行为，而非精确字符串。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="高级"
+  title="提示缓存"
+  options={[
+    {text: '缓存存储响应并为相同查询重放'},
+    {text: '缓存存储编译后的KV键值对用于静态提示前缀，减少输入令牌成本', isAnswer: true},
+    {text: '缓存仅在OpenAI模型中可用'},
+    {text: '缓存是自动的且不需要开发者配置'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    在LLM API（Anthropic、OpenAI）的上下文中，什么是"提示缓存"？
+    <p className="text-sm">最后验证：2026年5月8日。提供商缓存控制和定价变化迅速。</p>
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    提示缓存通过重用**键值缓存/提示前缀状态**来实现，当供应商支持时，对于静态提示前缀会进行缓存。在后续请求中，如果前缀相同，模型可以跳过重新处理这些令牌——这会减少延迟并显著降低成本。
+
+    这不是响应缓存。模型每次仍会生成新响应。你只是避免了对不变提示部分的重新分词和注意力计算。
+
+    最佳使用场景：大型系统提示、静态文档、工具定义、少量示例——任何在多个请求中保持不变的内容。缓存的前缀必须位于提示的*开头*。
+
+    与以下不同：语义去重、响应记忆化或应用层缓存。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="高级"
+  title="基础与幻觉"
+  options={[
+    {text: '在系统提示中告诉模型不要产生幻觉'},
+    {text: '使用更高的温度生成更自信的响应'},
+    {text: '提供检索到的源文档并指示模型引用它们', isAnswer: true},
+    {text: '使用更大的模型——幻觉只发生在较小的模型中'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    在生产AI系统中减少幻觉的最有效技术是：
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    指示模型不要产生幻觉并不能阻止幻觉——模型没有可靠的内在信号来判断"我在编造内容"。这只会让模型在编造内容时自信地告诉你它没有编造。
+
+    真正有效的是**基础**。给模型提供它需要的信息并限制其仅使用这些信息：
+    ```
+        Answer only using the provided documents.
+        If the answer isn't in the documents, say: "I don't have enough information to answer that."
+    ```
+    然后验证输出：检查响应中的声明是否出现在检索到的上下文中。这就是引用基础检查——参见RAG评估讨论中的实现方式。
+
+    更大的模型平均来说产生幻觉较少，但所有模型都会产生幻觉。基础是缓解策略，而不是模型大小。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={13}
+  group="专家级"
+  title="上下文工程与微调对比"
+  options={[
+    {text: '微调总是更好——上下文工程只是权宜之计'},
+    {text: '上下文工程是免费的；微调成本高；永远使用上下文工程'},
+    {text: '上下文工程按请求改变行为；微调永久改变模型权重', isAnswer: true},
+    {text: '它们是同一技术的不同名称'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    上下文工程和微调的关键区别是什么？在什么情况下微调才是真正有意义的？
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    **上下文工程**通过提示词塑造模型行为——系统指令、少量示例、检索到的上下文。它是按请求生效的、可逆的，且不需要训练。
+
+    **微调**在你的数据上更新模型权重。更改是永久的（针对该检查点），且适用于每次推理。
+
+    微调真正更优的场景：
+    - 当你需要一种模型仅凭指令无法可靠遵循的稳定风格/格式时
+    - 当你的任务需要领域特定模式的可重复行为，而提示词和检索无法解决时
+    - 当你需要减少提示长度——微调后的行为无需在每次请求中解释
+    - 当你运行大量请求时，稳定的少量示例会消耗大量token
+
+    微调是过度设计的场景：
+    - 当你的指令可以放入系统提示词中
+    - 当你主要需要当前或专有事实，这些事实可以在请求时检索到
+    - 当需求频繁变化（你需要重新微调）
+    - 当你尚未穷尽上下文工程的可能性
+
+    正确顺序：先解决上下文工程问题。只有在证明上下文工程不足时才进行微调。
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+
+你的表现如何？
+
+- **13–14**：你正在构建生产级AI系统，而不仅仅是演示它们。罕见。
+- **9–12**：扎实的实践者。你熟悉工具，但细节仍模糊。
+- **5–8**：你大量使用过LLM，但未深入思考上下文管理。阅读提示缓存和混合搜索——它们将改变你对成本的认知。
+- **0–4**：好消息：本测验的所有内容都可学习且立即实用。在下一次RAG部署前，理解“中间丢失”问题本身就很值得。
+
+上下文工程是一门学科，要求你对窗口中放入的信息、放置位置以及结构方式进行有意设计。模型是你系统中最不可控的部分。围绕它的所有内容，都掌握在你手中。
+````

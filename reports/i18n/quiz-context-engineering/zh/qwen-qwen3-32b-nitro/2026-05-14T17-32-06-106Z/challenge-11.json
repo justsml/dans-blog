@@ -1,0 +1,49 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "Temperature and Determinism",
+  "translatedTitle": "温度与确定性",
+  "translation": {
+    "title": "温度与确定性",
+    "group": "高级",
+    "options": [
+      {
+        "text": "temperature=0 总是为相同输入生成相同输出"
+      },
+      {
+        "text": "temperature=0 使输出更加确定性但不保证完全相同"
+      },
+      {
+        "text": "temperature=0 会禁用模型"
+      },
+      {
+        "text": "temperature 仅影响响应长度"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "在您的LLM调用中设置 `temperature=0` 意味着："
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "`temperature=0` 会使模型在每一步选择概率最高的token（贪婪解码），从而产生**更一致**的输出——但不能保证完全相同。\n\n    温度=0时的差异来源：\n    - **GPU计算中的浮点非确定性**，特别是在不同硬件或批量大小下\n    - **服务端基础设施变更**（模型更新、服务基础设施）\n    - **长输出**会累积微小差异\n\n    对于需要严格确定性的测试套件和评估，`temperature=0` 是正确选择——但不要为逐字相同的输出编写断言。应断言结构、关键内容和行为，而非精确字符串。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"温度与确定性\",\n  \"group\": \"高级\",\n  \"options\": [\n    {\n      \"text\": \"temperature=0 总是为相同输入生成相同输出\"\n    },\n    {\n      \"text\": \"temperature=0 使输出更加确定性但不保证完全相同\"\n    },\n    {\n      \"text\": \"temperature=0 会禁用模型\"\n    },\n    {\n      \"text\": \"temperature 仅影响响应长度\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"在您的LLM调用中设置 `temperature=0` 意味着：\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"`temperature=0` 会使模型在每一步选择概率最高的token（贪婪解码），从而产生**更一致**的输出——但不能保证完全相同。\\n\\n    温度=0时的差异来源：\\n    - **GPU计算中的浮点非确定性**，特别是在不同硬件或批量大小下\\n    - **服务端基础设施变更**（模型更新、服务基础设施）\\n    - **长输出**会累积微小差异\\n\\n    对于需要严格确定性的测试套件和评估，`temperature=0` 是正确选择——但不要为逐字相同的输出编写断言。应断言结构、关键内容和行为，而非精确字符串。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 901,
+    "outputTokens": 953,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2305,
+    "providerCostUsd": 0.00082356,
+    "providerUpstreamCostUsd": 0.00082356,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00007208,
+    "outputUsd": 0.00022872,
+    "totalUsd": 0.0003008,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

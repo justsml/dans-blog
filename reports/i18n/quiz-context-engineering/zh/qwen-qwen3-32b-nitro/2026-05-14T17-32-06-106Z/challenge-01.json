@@ -1,0 +1,49 @@
+{
+  "index": 0,
+  "attempt": 1,
+  "originalTitle": "Context Window Basics",
+  "translatedTitle": "上下文窗口基础",
+  "translation": {
+    "title": "上下文窗口基础",
+    "group": "基础概念",
+    "options": [
+      {
+        "text": "每分钟最大请求数"
+      },
+      {
+        "text": "输入和输出的总标记数限制"
+      },
+      {
+        "text": "对话中的消息数量"
+      },
+      {
+        "text": "会话之间的可用内存"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "在大语言模型中，'上下文窗口'指的是什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "上下文窗口是指模型在单次调用中可以处理的**总标记数**——**输入和输出的总和**。128K的上下文窗口意味着你的提示词+检索到的文档+对话历史+模型的响应必须全部容纳在128,000个标记内。\n\n它与会话、内存或速率限制无关。当触及限制时，模型要么截断内容，要么报错，更糟糕的是——**静默丢弃你意想不到的标记**。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"上下文窗口基础\",\n  \"group\": \"基础概念\",\n  \"options\": [\n    {\n      \"text\": \"每分钟最大请求数\"\n    },\n    {\n      \"text\": \"输入和输出的总标记数限制\"\n    },\n    {\n      \"text\": \"对话中的消息数量\"\n    },\n    {\n      \"text\": \"会话之间的可用内存\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"在大语言模型中，'上下文窗口'指的是什么？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"上下文窗口是指模型在单次调用中可以处理的**总标记数**——**输入和输出的总和**。128K的上下文窗口意味着你的提示词+检索到的文档+对话历史+模型的响应必须全部容纳在128,000个标记内。\\n\\n它与会话、内存或速率限制无关。当触及限制时，模型要么截断内容，要么报错，更糟糕的是——**静默丢弃你意想不到的标记**。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 845,
+    "outputTokens": 906,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2853,
+    "providerCostUsd": 0.00077959,
+    "providerUpstreamCostUsd": 0.00077959,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.0000676,
+    "outputUsd": 0.00021744,
+    "totalUsd": 0.00028504,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

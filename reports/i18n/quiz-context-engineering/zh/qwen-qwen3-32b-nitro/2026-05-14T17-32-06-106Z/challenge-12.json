@@ -1,0 +1,49 @@
+{
+  "index": 11,
+  "attempt": 1,
+  "originalTitle": "Prompt Caching",
+  "translatedTitle": "提示缓存",
+  "translation": {
+    "title": "提示缓存",
+    "group": "高级",
+    "options": [
+      {
+        "text": "缓存存储响应并为相同查询重放"
+      },
+      {
+        "text": "缓存存储编译后的KV键值对用于静态提示前缀，减少输入令牌成本"
+      },
+      {
+        "text": "缓存仅在OpenAI模型中可用"
+      },
+      {
+        "text": "缓存是自动的且不需要开发者配置"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "在LLM API（Anthropic、OpenAI）的上下文中，什么是\"提示缓存\"？\n    <p className=\"text-sm\">最后验证：2026年5月8日。提供商缓存控制和定价变化迅速。</p>"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "提示缓存通过重用**键值缓存/提示前缀状态**来实现，当供应商支持时，对于静态提示前缀会进行缓存。在后续请求中，如果前缀相同，模型可以跳过重新处理这些令牌——这会减少延迟并显著降低成本。\n\n    这不是响应缓存。模型每次仍会生成新响应。你只是避免了对不变提示部分的重新分词和注意力计算。\n\n    最佳使用场景：大型系统提示、静态文档、工具定义、少量示例——任何在多个请求中保持不变的内容。缓存的前缀必须位于提示的*开头*。\n\n    与以下不同：语义去重、响应记忆化或应用层缓存。"
+    ]
+  },
+  "rawText": "```json\n{\n  \"title\": \"提示缓存\",\n  \"group\": \"高级\",\n  \"options\": [\n    {\n      \"text\": \"缓存存储响应并为相同查询重放\"\n    },\n    {\n      \"text\": \"缓存存储编译后的KV键值对用于静态提示前缀，减少输入令牌成本\"\n    },\n    {\n      \"text\": \"缓存仅在OpenAI模型中可用\"\n    },\n    {\n      \"text\": \"缓存是自动的且不需要开发者配置\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"在LLM API（Anthropic、OpenAI）的上下文中，什么是\\\"提示缓存\\\"？\\n    <p className=\\\"text-sm\\\">最后验证：2026年5月8日。提供商缓存控制和定价变化迅速。</p>\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"提示缓存通过重用**键值缓存/提示前缀状态**来实现，当供应商支持时，对于静态提示前缀会进行缓存。在后续请求中，如果前缀相同，模型可以跳过重新处理这些令牌——这会减少延迟并显著降低成本。\\n\\n    这不是响应缓存。模型每次仍会生成新响应。你只是避免了对不变提示部分的重新分词和注意力计算。\\n\\n    最佳使用场景：大型系统提示、静态文档、工具定义、少量示例——任何在多个请求中保持不变的内容。缓存的前缀必须位于提示的*开头*。\\n\\n    与以下不同：语义去重、响应记忆化或应用层缓存。\"\n  ]\n}\n```",
+  "telemetry": {
+    "inputTokens": 958,
+    "outputTokens": 976,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2599,
+    "providerCostUsd": 0.00085366,
+    "providerUpstreamCostUsd": 0.00085366,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00007664,
+    "outputUsd": 0.00023423999999999998,
+    "totalUsd": 0.00031088,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Hybrid Search",
+  "translatedTitle": "混合搜索",
+  "translation": {
+    "title": "混合搜索",
+    "group": "检索",
+    "options": [
+      {
+        "text": "为了冗余而对同一查询运行两次"
+      },
+      {
+        "text": "在相同语料库上使用两种不同的嵌入模型"
+      },
+      {
+        "text": "将向量搜索与关键词搜索结合以提高检索效果"
+      },
+      {
+        "text": "同时跨多个向量数据库进行搜索"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "在RAG系统中，\"混合搜索\"指的是："
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "混合搜索结合了**向量搜索**（通过嵌入实现语义相似度）和**关键词搜索**（BM25/全文搜索），因为它们在互补场景下会失效：\n\n    - 向量搜索难以处理精确术语：产品名称、错误代码、型号编号、技术标识符\n    - 关键词搜索难以处理同义改写：\"如何取消\" vs. \"终止订阅\"\n\n    通过**互惠排名融合（Reciprocal Rank Fusion, RRF）**对两者结果进行融合——这是一种无需标准化分数即可合并多个排序列表的排名算法。\n\n    在Postgres中可通过`pgvector` + `tsvector`实现，你可能不需要单独的搜索服务。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"混合搜索\",\n  \"group\": \"检索\",\n  \"options\": [\n    {\n      \"text\": \"为了冗余而对同一查询运行两次\"\n    },\n    {\n      \"text\": \"在相同语料库上使用两种不同的嵌入模型\"\n    },\n    {\n      \"text\": \"将向量搜索与关键词搜索结合以提高检索效果\"\n    },\n    {\n      \"text\": \"同时跨多个向量数据库进行搜索\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"在RAG系统中，\\\"混合搜索\\\"指的是：\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"混合搜索结合了**向量搜索**（通过嵌入实现语义相似度）和**关键词搜索**（BM25/全文搜索），因为它们在互补场景下会失效：\\n\\n    - 向量搜索难以处理精确术语：产品名称、错误代码、型号编号、技术标识符\\n    - 关键词搜索难以处理同义改写：\\\"如何取消\\\" vs. \\\"终止订阅\\\"\\n\\n    通过**互惠排名融合（Reciprocal Rank Fusion, RRF）**对两者结果进行融合——这是一种无需标准化分数即可合并多个排序列表的排名算法。\\n\\n    在Postgres中可通过`pgvector` + `tsvector`实现，你可能不需要单独的搜索服务。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 888,
+    "outputTokens": 955,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2532,
+    "providerCostUsd": 0.00082097,
+    "providerUpstreamCostUsd": 0.00082097,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00007104,
+    "outputUsd": 0.0002292,
+    "totalUsd": 0.00030024,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
