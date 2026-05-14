@@ -1,0 +1,102 @@
+---
+social_image: ../desktop-social.webp
+title: ESM 导出：命名 vs 默认？
+subTitle: 命名还是不命名？
+date: '2023-08-10'
+modified: '2024-08-01'
+tags:
+  - typescript
+  - javascript
+  - modules
+category: Guides
+subCategory: JavaScript
+cover: ../austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp
+cover_mobile: ../w300_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp
+cover_icon: ../icon_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp
+---
+## 应该在 JavaScript 中使用 `named` 还是 `default` 导出？
+
+关于这个话题的强硬文章层出不穷。
+
+大多数人把 `default export` 判定为“糟透了”。也有一些人坚持 `default` 应该获胜（例如 AirBnb 风格指南）。
+
+他们常常把 **完全临时** 的因素当作罪魁祸首：IDE 自动导入的 bug、某个特定打包工具的 tree‑shaking 能力，或者仅仅是命名导入时可能出现的拼写错误。
+
+我们是不是一开始就误解了 `export` 的意义？
+
+**代码是沟通。✨**
+
+> 我们在向 `import` 方发送一个 **如何使用某个东西** 的信号。
+
+### 那么，我们到底在说什么？
+
+宽泛地说，现代 JavaScript 有两种导出方式：
+
+- `export default` 大胆宣称 “这是 **_最重要的唯一事物_**”。同时，“所有命名导出只能充当配角”。
+- `named export` 表示它 “绝对是 **_某个事物_**”。也会引出一些问题，“还有别的伙伴吗？” 接着，“它们是被邀请的还是必须的？”
+
+当然，你可以两者混用，或者对代码库的不同部分采用不同策略。[文章末尾还有更多示例。](#summary)
+
+### 弱论，兄弟
+
+来看看大家常提的那些“临时问题”。
+
+- 论点 #1：命名导出保证名称一致性。[来源](https://blog.neufund.org/why-we-have-banned-default-exports-and-you-should-do-the-same-d51fdc2cf2ad)
+  - 不，它们并不能。也许你需要一个 lint 规则？
+  - （我不想打击你，但等你了解变量能做什么再说！）
+
+```tsx
+// 你可以同时使用别名！
+import { Knife as Handle } from "./knife.js"; // 🔪
+import { default as Handle } from "./knife.js"; // 🔪
+import Handle from "./knife.js"; // 🔪
+```
+
+- 论点 #2：使用 `import * as soManyKnives from './kinves.js'` 来合并命名导出。（未链接，作者已撤回。）
+  - 很酷的特性。不是重点。
+  - 那么再告诉我，我该怎么再次握住你的装置？没有作者意图可言。
+
+- 论点 #3：命名导出在 IDE 导入或重命名时支持更好。[来源](https://www.bundleapps.io/blog/use-named-exports-over-default-exports-in-javascript)
+
+- 论点 #4：不对（还有别的）。配置/更新你的工具。
+  - 这类支持在 [VS Code](https://github.com/microsoft/vscode/pull/94480)、IntelliJ 等已存在 3 年以上。
+  - 不过，仍有一些 “最佳实践” 可用于 `default export`，以获得更好的 IDE 与重构体验。
+  - ✅ `export default function UserService() {}` —— 始终优先使用具名函数。
+  - ❌ `export default function() { }` —— 匿名函数不会隐式关联到文件名。若不命名，想让编辑器帮你改名就很困难。
+  - **注意：** 由于历史原因，不能把 `export default` 与 `const` 表达式直接组合。
+
+    ```tsx
+    export default const Knife = () => {...blade, ...handle}
+    // ^ ❌ 不支持 ❌ ^
+    // 不能直接 export default const ....
+    // ==========================
+
+    // 但声明后可以把 const 变量作为默认导出。
+    const Knife = () => {...blade, ...handle}
+    export default Knife;
+    // ^ ✅ 有效
+
+    // 为了完整性：
+    export default class anyoneStillUseThese {}
+    // ^ ✅ 同样可以把类作为默认导出
+    ```
+
+<section className="scroll-x">
+## 小结
+
+实际上我们可以组合出很多导出方式，每种方式都在讲述不同的故事：
+
+| Default (Exports) | Named (Exports) | Private Fns | Pattern                                                   | Meaning                                                       |
+| ----------------- | --------------- | ----------- | --------------------------------------------------------- | ------------------------------------------------------------- |
+| ✅                | ❌              | ❌          | 一个默认导出。                                            | “呈现唯一且单一职责的函数！”                                 |
+| ❌                | ✅              | ❌          | 一个命名导出。                                            | “请不要随意重命名我。”                                       |
+| ✅                | ✅              | ✅          | 默认导出 + 多个“私有”未导出的函数                         | “这里有一些相关逻辑。另外，还会有类式行为。”               |
+| ❌                | ❌              | ✅          | 多个命名导出，文件名通用。                                 | “一堆松散关联的东西，没有层级暗示。”                         |
+| ✅                | ✅              | ❌          | 单个命名导出同时作为默认导出。                             | “你不可能把导入搞错。”                                       |
+</section>
+
+**值得思考的点：** 当文件名与其某个导出匹配或不匹配时，我们到底在传递什么信息？（比如，一个包含众多函数的 `utils.js`。）
+
+### 结论
+
+如果代码是沟通，就请 **`export`** 时他妈的真的下功夫。 💞
