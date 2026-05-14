@@ -1,0 +1,27 @@
+{
+  "selectedCommit": "42a8d13688880c50333a6cef62bc0bb5da242dc8",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The translation is technically accurate and follows the requested style. It correctly handles the MDX structure and asset paths. It uses 'נכס' (property) and 'מאפיין' consistently. The other candidate left some English text ('Depends on context') in the options of Challenge 3, whereas this candidate translated everything correctly.",
+  "slug": "quiz-js-interfaces-symbols-and-enumerables",
+  "locale": "he",
+  "candidateCommits": [
+    "42a8d13688880c50333a6cef62bc0bb5da242dc8",
+    "3a47391d025ef1a5be74e4ec3633ac1302ac7bd6"
+  ],
+  "suggestionLog": [],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug quiz-js-interfaces-symbols-and-enumerables --locale he --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug quiz-js-interfaces-symbols-and-enumerables --locale he --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug quiz-js-interfaces-symbols-and-enumerables --locale he --skip-global\n153 | \n154 |   for (const slotName of [\"hints\", \"explanation\"] as const) {\n155 |     const sourceSlots = countSlot(sourceContents, slotName);\n156 |     const targetSlots = countSlot(targetContents, slotName);\n157 |     if (sourceSlots !== targetSlots) {\n158 |       throw new Error(\n                      ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2024-10-31--quiz-js-interfaces-symbols-and-enumerables/he/index.mdx changed hints slot count from 7 to 0\n      at assertQuizStructure (/Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:158:17)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:30:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}
