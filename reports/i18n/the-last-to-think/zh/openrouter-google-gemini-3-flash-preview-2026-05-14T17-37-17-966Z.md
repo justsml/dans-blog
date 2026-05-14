@@ -1,0 +1,54 @@
+# Translation Candidate
+- Slug: the-last-to-think
+- Locale: zh
+- Model: openrouter/google/gemini-3-flash-preview
+- Target: src/content/posts/2025-05-31--the-last-to-think/zh/index.mdx
+- Validation: deferred
+- Runtime seconds: 4.17
+- Input tokens: 1097
+- Output tokens: 542
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.002174
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+language: English
+title: 最后的思考者
+subTitle: 是人还是机器？
+category: AI
+subCategory: Policy
+date: '2025-05-31'
+modified: '2025-06-02'
+tags:
+  - edtech
+  - education
+  - technology
+  - history
+social_image: ../mobile-social.webp
+cover_full_width: ../banner-thinking-decay-wide.webp
+cover_mobile: ../banner-thinking-decay-square-200.webp
+cover_icon: ../banner-thinking-decay-square-200.webp
+---
+每一代人都会发现属于自己的技术“洪水猛兽”。某种新设备一出现，文明似乎瞬间就滑向了愚昧的边缘。这种恐慌感准时得就像 Apple Watch 的闹钟——前提是它还有电，否则我们就得求助于模拟计时器了。
+
+今天的恐慌中心是 AI。但在我们为了那些连手写感谢信都不会、却能“写出”关于《卡拉马佐夫兄弟》中正义与救赎主题的深度哲学论文的 12 岁孩子而过度焦虑之前，先让我们翻翻历史账本。
+
+从 CliffsNotes（名著精读笔记）到计算器，每项新技术都曾引发过智力退化的担忧。20 世纪 40 年代，教育工作者警告说 CliffsNotes 会让学生变得懒于阅读。50 年代，漫画书被指责为青少年犯罪的元凶。80 年代，计算器被贴上了“会使一代人变残废的拐杖”的标签。互联网曾被担心会终结人类的注意力，但它却实现了知识的民主化，并将偏远地区的学生与世界级资源连接在一起。每一次，社会都选择了适应，而非崩溃。
+
+看看 GPS——那些末日预言者在技术层面上说对了。大多数 40 岁以下的人确实不会看纸质地图了。但我们并没有因此变成迷途的旅人，反而获得了在全世界任何城市更频繁导航的能力，还能顺便避开拥堵。现在还有谁在为丧失地图阅读技能而扼腕叹息吗？没有。我们适应了。
+
+AI 肯定会遵循这一模式。* 是的，它能处理海量信息，并以非人的速度生成类人文本。不，它无法复制人类的情感智能或创造力。挑战不在于禁止使用，而在于**教授如何有效应用**，建立相关的素养。**学生需要理解** AI 何时是在放大思考，何时是在让大脑发育短路。**教育者必须针对 AI 增强的世界重新设计评估方式**。
+
+我们根本无法指望旧方法在这个新格局中继续奏效。
+
+我们熬过了计算器、CliffsNotes，以及（目前看来）TikTok。我们也同样能挺过 ChatGPT。孩子们会适应的。我只希望成年人不要花太长时间才跟上节奏。
+
+<p> </p>
+
+\* _假设我们能改善其环境影响，并避免陷入反乌托邦的噩梦。但那是另一个话题了。_
+````
