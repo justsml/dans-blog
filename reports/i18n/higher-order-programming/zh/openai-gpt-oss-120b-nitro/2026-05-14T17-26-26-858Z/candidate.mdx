@@ -1,0 +1,66 @@
+---
+social_image: ../desktop-social.webp
+title: 高阶编程
+subTitle: 探索基于数组和集合的流水线技术
+date: '2015-09-22'
+modified: '2024-07-30'
+category: Code
+subCategory: programming
+tags:
+  - programming
+  - patterns
+  - models
+  - source-code
+  - organization
+cover: ../susan-holt-simpson-799094-unsplash.webp
+cover_mobile: ../w300_susan-holt-simpson-799094-unsplash.webp
+cover_icon: ../icon_susan-holt-simpson-799094-unsplash.webp
+---
+## 探索基于数组和集合的管道技术
+
+### 反模式？
+
+这是一篇关于当你 **把所有东西都写成数组** 时能获得的优势的探索。（使用 SmallTalk 中的 Jedi 概念）
+
+以下是一些指导原则：
+
+1.  所有输入都应是类数组的。即使是长度为 1 的数组。
+2.  高层函数通常应接受 **并返回** 数组。（循环回调方法除外：map / reduce / each / filter）
+3.  百里挑一的开发者代码中，99% 都患有我称之为 `acute schema surplusage` 综合症。
+4.  当心臃肿的 `class-backed models` —— 那些可预见的负担：易碎的 `instance state`、大量可调的杠杆和旋钮、数据库事务、SQL 锁、异步/互斥（总是第一次就成功）、使用惯用的 `property getter/setters`，以及你的 `public/private/final/etc` 用法已经很稳固，对吧？
+
+1.  那么让我挑选一个常见问题并 _shoehorn_ ~~~add~~~ 一些基于集合的思考。
+2.  假设一个博客站点拥有大量 Article，同时还有更多的 Post（评论）。
+3.  我们来添加一个 `delete` 方法（如下），但要同时支持单个对象和数组。
+
+```java
+package net.danlevy.why.java___why.you.got.all.the.dots____it.must.be.all.the.factories;
+
+public class Post {
+  public String   title;
+  public Date     created;
+  public String   message;
+
+  public Post(String title, String message) {
+    this.title    = title;
+    this.message  = message;
+    this.created  = new Date();
+  }
+
+  public Date isArchived() {
+    return this.created < new Date(2015, 0, 1);
+  }
+
+  // Post.delete` can be called w/ a singular Post or an array of Post[]
+  public static int delete(Post post) {
+    List<Post> posts = new List<Post>(post);
+    return delete(posts)
+  }
+
+  public static int delete(List<Post> posts) {
+    return posts.map(Dao.remove);
+  }
+}
+```
+
+> 若我的 Java 有点生疏，请多包涵。
