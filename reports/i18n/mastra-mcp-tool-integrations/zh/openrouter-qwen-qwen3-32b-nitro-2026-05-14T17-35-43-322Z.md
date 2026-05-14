@@ -1,0 +1,238 @@
+# Translation Candidate
+- Slug: mastra-mcp-tool-integrations
+- Locale: zh
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-01-04--mastra-mcp-tool-integrations/zh/index.mdx
+- Validation: deferred
+- Runtime seconds: 8.10
+- Input tokens: 4312
+- Output tokens: 3530
+- Thinking tokens: unknown
+- Cached input tokens: 512
+- Cache write tokens: 0
+- Estimated cost: $0.001192
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: 缺少这个，你的AI代理毫无用处
+subTitle: 为什么MCP是人工智能的通用接口。
+date: '2026-01-04'
+modified: '2026-01-08'
+tags:
+  - ai
+  - mcp
+  - tools
+  - integrations
+  - mastra
+  - salesforce
+  - apis
+category: AI
+subCategory: Integration
+social_image: ../desktop-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+你已经构建了一个AI代理。也许它甚至是一个优秀的代理。提示语简洁，模型响应迅速，回复自然流畅。
+
+但当有人要求它检查Salesforce中的客户记录时，或者拉取最新的Jira任务时，或者搜索内部文档时...
+
+你的完美代理就...做不到。
+
+这就是每个AI平台最终都会遇到的集成问题。你的代理需要"双手"。它需要真正进入你的业务系统的"眼睛"。没有这些能力，你运行的只是一个昂贵的聊天机器人。
+
+传统解决方案是什么？为每个要连接的服务编写自定义API封装。阅读它们的文档，处理它们的认证，应对它们的速率限制，祈祷它们下个月不会修改接口。然后对下一个服务重复这个过程。再下一个。
+
+Model Context Protocol（MCP）彻底改变了这种计算方式。
+
+---
+
+## MCP实际解决的问题
+
+想想USB-C出现前的USB。你有Mini-USB、Micro-USB、专有的苹果接口，以及抽屉里一堆只能匹配特定设备的数据线。USB-C不仅仅是新增了一个接口——它建立了一个标准，意味着任何数据线都能适配任何设备。
+
+MCP正在为AI工具集成做同样的事情。
+
+你不需要为Salesforce、HubSpot、GitHub或其他任何服务编写定制代码，只需实现一次协议（或下载预构建的服务器），任何兼容MCP的代理都能立即与之通信。
+
+协议处理通信层。你只需要定义工具的功能和所需的数据。
+
+---
+
+## 设置多个集成
+
+Mastra通过其 [`MCPClient`](https://mastra.ai/docs/mcp/overview) 提供原生MCP支持。你可以连接本地工具（作为子进程运行）和远程服务（在独立基础设施上运行）。
+
+以下是一个真实生产环境的示例，连接Google Maps进行路线规划、天气服务和本地维基百科搜索：
+
+```typescript
+// src/mastra/mcp/index.ts
+import { MCPClient } from '@mastra/mcp';
+
+export const mcpClient = new MCPClient({
+  servers: {
+    // 本地工具（标准输入输出）
+    wikipedia: {
+      command: 'npx',
+      args: ['-y', 'wikipedia-mcp'],
+    },
+    // 地图与导航（远程/HTTP）
+    googleMaps: {
+      url: new URL(process.env.GOOGLE_MAPS_MCP_URL!),
+      requestInit: {
+        headers: {
+          Authorization: `Bearer ${process.env.GOOGLE_MAPS_API_KEY}`,
+        },
+      },
+    },
+    // 天气服务集成
+    weather: {
+      url: new URL('https://mcp.weatherapi.dev/v1'),
+      requestInit: {
+        headers: {
+          'X-API-Key': process.env.WEATHER_API_KEY!,
+        },
+      },
+    },
+  },
+});
+```
+
+客户端管理连接生命周期，处理本地工具的进程启动，并维护远程服务器的HTTP连接。你无需直接操作套接字或标准输入输出。
+
+## 将工具连接到代理
+
+配置好MCP客户端后，将这些工具分配给代理就很简单了：
+
+```typescript
+// src/mastra/agents/navigation-agent.ts
+import { Agent } from '@mastra/core/agent';
+import { openai } from '@ai-sdk/openai';
+import { mcpClient } from '../mcp';
+
+export const navigationDirectionsAgent = new Agent({
+  id: 'navigation-directions-agent',
+  name: '导航与路线助手',
+  instructions: `你是一个提供路线规划和旅行建议的导航助手。
+    - 始终确认起点和目的地
+    - 使用Google Maps工具查找最佳路线
+    - 检查路线上的天气状况
+    - 提供预计旅行时间，如果天气恶劣则建议替代方案
+    - 包含相关细节如交通、道路状况和兴趣点
+    - 保持回复清晰且可操作`,
+  model: openai('gpt-5'),
+  tools: await mcpClient.getTools(), // <--- 这是关键代码行
+});
+```
+
+当用户询问：*"从旧金山到太浩湖的最佳路线是什么？我需要担心天气吗？"*
+
+代理会读取可用的工具定义，意识到自己可以访问Google Maps路线规划和天气预报工具，用正确的参数执行它们，并给出最佳路线加上沿途的当前天气情况。
+
+你不需要编写任何Google Maps API代码或天气服务集成。
+
+---
+
+## 按用户认证
+
+这里有一个容易犯的安全错误：硬编码凭证。
+
+如果你在环境变量中放入一个Google Maps API密钥并就此作罢，所有用户将共享相同的配额和速率限制。更重要的是，如果你使用存储用户偏好（如保存的位置或常用路线）的服务，每个人都会看到相同的数据。这在演示中没问题。但在生产环境中会带来风险。
+
+Mastra通过允许你使用用户特定凭证动态创建MCP客户端来解决这个问题：
+
+```typescript
+async function handleUserRequest(userPrompt: string, userCredentials: UserCreds) {
+  // 为特定用户创建客户端
+  const userMcp = new MCPClient({
+    servers: {
+      googleMaps: {
+        url: new URL(process.env.GOOGLE_MAPS_MCP_URL!),
+        requestInit: {
+          headers: {
+            // 用户特定的API密钥或令牌
+            Authorization: `Bearer ${userCredentials.mapsApiKey}`,
+            'X-User-ID': userCredentials.userId,
+          },
+        },
+      },
+    },
+  });
+
+  const agent = mastra.getAgent('navigationDirectionsAgent');
+  
+  // 运行时注入工具集
+  const response = await agent.generate(userPrompt, {
+    toolsets: await userMcp.getToolsets(),
+  });
+
+  return response;
+}
+```
+
+每个用户都会获得自己的隔离工具集，拥有各自的API配额和偏好。用户A的保存位置保持私密，用户B的路线历史是独立的。这正是多租户SaaS代理在实践中运作的方式。
+
+---
+
+## 构建复合工具
+
+有时你需要将多个MCP工具组合成一个操作。比如你可能想规划一条路线，同时考虑实时交通和沿途天气状况。
+
+你可以通过自定义工具定义来封装MCP工具：
+
+```typescript
+export const smartRouteTool = createTool({
+  id: 'smart-route-planner',
+  description: '规划考虑交通和天气状况的最优路线',
+  execute: async ({ context, mastra }) => {
+    // 获取原始工具
+    const tools = await mcpClient.getTools();
+    
+    // 1. 从Google Maps获取基础路线
+    const routeData = await tools.googleMaps_getDirections.execute({ 
+      context: { 
+        origin: context.origin,
+        destination: context.destination 
+      } 
+    });
+    
+    // 2. 检查路线上的天气
+    const weatherData = await tools.weather_getForecast.execute({
+      context: { coordinates: routeData.waypoints }
+    });
+    
+    // 3. 返回包含天气警告的增强路线
+    return { 
+      ...routeData, 
+      weatherAlerts: weatherData.alerts,
+      recommendation: weatherData.severe ? '考虑延迟行程' : '可以安全出行'
+    };
+  },
+});
+```
+
+这让你可以精确控制工具如何交互，同时仍然利用MCP协议处理繁重的工作。
+
+为AI代理需要交互的每个服务编写自定义API客户端从来都不是可持续的。它扩展性差、频繁出错，并且将你的平台绑定到特定实现上。
+
+MCP并未解决所有集成挑战——身份验证仍然复杂，速率限制依然重要，而且并非所有服务都已有MCP服务器。但它建立了一个基础，使构建代理平台显著减少痛苦。
+
+如果你正在构建需要与外部服务交互的AI系统，理解MCP很可能值得你投入时间。
+
+### 资源
+
+- [Mastra MCP文档](https://mastra.ai/docs/mcp/overview)
+- [MCP注册表](https://registry.modelcontextprotocol.io)
+- [Klavis AI（企业MCP）](https://klavis.ai)
+- [Mastra GitHub仓库](https://github.com/mastra-ai/mastra)
+
+## 阅读系列文章
+
+1. [LLM路由](/llm-routing-mastra-ai)
+2. [安全与防护](/mastra-security-guardrails)
+3. **MCP与工具集成**（本文）
+4. [工作流与记忆](/mastra-workflows-memory)
+````
