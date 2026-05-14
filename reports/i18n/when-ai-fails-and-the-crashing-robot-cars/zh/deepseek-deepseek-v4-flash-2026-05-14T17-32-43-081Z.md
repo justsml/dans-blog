@@ -1,0 +1,73 @@
+# Translation Candidate
+- Slug: when-ai-fails-and-the-crashing-robot-cars
+- Locale: zh
+- Model: deepseek/deepseek-v4-flash
+- Target: src/content/posts/2015-12-18--when-ai-fails-and-the-crashing-robot-cars/zh/index.mdx
+- Validation: deferred
+- Runtime seconds: 11.50
+- Input tokens: 1387
+- Output tokens: 2084
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.000778
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: AI失灵与撞毁的机器人汽车
+subTitle: 谷歌自动驾驶汽车的事故数量是人工驾驶的两倍
+date: '2015-12-18'
+modified: '2024-07-30'
+category: AI
+subCategory: machine-learning
+tags:
+  - artificial-intelligence
+  - ai
+  - self-driving-cars
+  - fails
+cover: ../sandy-millar-749381-unsplash.webp
+cover_mobile: ../w300_sandy-millar-749381-unsplash.webp
+cover_icon: ../icon_sandy-millar-749381-unsplash.webp
+---
+## 自动驾驶汽车：事故更多还是更少？
+
+谷歌的自动驾驶汽车事故率似乎是人类驾驶员的两倍——如果你认为这只是新技术漏洞百出、从一开始就过于复杂——好吧，你只说对了一部分。[有一个重要细节需要分享：截至2015年12月，几乎**所有事故都不是机器人的错**。](http://www.bloomberg.com/news/articles/2015-12-18/humans-are-slamming-into-driverless-cars-and-exposing-a-key-flaw)
+
+这些事故是由**人类驾驶员**造成的，他们不熟悉机器人驾驶员的驾驶方式。此外，谷歌将汽车编程为绝对遵守法律——从不超速，在密集或快速的高速公路交通中难以并线。
+
+这引发了一系列法律和伦理问题（这就是著名的[电车难题](https://en.wikipedia.org/wiki/Trolley_problem)）——
+
+- 是否允许：
+  - 为了避免追尾，在红灯时驶过人行横道，**假设路径是空的**？
+  - 为了躲避横穿车道的自行车而驶上人行道？——人工智能是否可以接受这种违反“交通规则”的行为？
+
+我理解谷歌的做法，尤其是在试图最小化责任时：始终遵守规则——从逻辑上讲，如果你**始终**遵守法律，你就不能真正有过错。
+
+如果事故是由于故意设计的法律“灵活性”而发生的，那将带来**巨大的责任**。
+
+### 不要让未来从我们手中溜走
+
+未来仍会到来，即使机器人开车像八旬老人一样慢。
+
+也许现在一个简单的解决办法是使用亮红色闪烁LED灯（想想校车），提醒人类驾驶员他们即将追尾一个无辜的机器人。
+
+我更倾向于一辆具有分层遵守和规则遵循能力的汽车。在我看来，这更接近人类的驾驶方式。
+
+想象以下三层系统感知：（为简化起见，省略决策层和其他层）
+
+1.  基础层：以令人恼火的精确度遵守法律
+2.  局部层：根据当前交通状况进行灵活调整——例如，如果需要超过10英里/小时的速度才能并线，则允许在高速公路上并线。反之，如果交通速度过快，汽车应足够智能地靠边停车，以免对其他驾驶员造成困扰。
+3.  360度层：计算任何潜在的极端碰撞风险/规避措施——驶上路肩或
+
+这可能需要一个智能的平衡机制——例如，基础层检测到即将发生的事故，且无法通过遵守法律来避免，那么它将把所有处理器能力转移到360度层——希望能找到创造性的方法来避免伤害。
+
+自动驾驶汽车在技术上正处在比任何人类驾驶员更聪明、更快的边缘。接受它。欢迎它。
+
+### 参考文献
+
+1.  [http://nn.cs.utexas.edu/pages/research/neat-warning/](http://nn.cs.utexas.edu/pages/research/neat-warning/)
+````
