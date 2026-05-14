@@ -1,0 +1,439 @@
+# Translation Candidate
+- Slug: quiz-modern-css-2025
+- Locale: he
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2024-11-07--quiz-modern-css-2025/he/index.mdx
+- Validation: deferred
+- Runtime seconds: 113.15
+- Input tokens: 10147
+- Output tokens: 11720
+- Thinking tokens: unknown
+- Cached input tokens: 640
+- Cache write tokens: 0
+- Estimated cost: $0.004685
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+unlisted: false
+title: 'חידון: האם אתה מכיר CSS מודרני? (ל-2025)'
+subTitle: האם אתה פרונט-אנד מספיק?
+label: Advanced CSS
+social_image: ../desktop-social.webp
+category: Quiz
+subCategory: CSS
+minReleaseDate: '2024-10-31'
+date: '2024-10-31'
+modified: '2024-11-09'
+tags:
+  - quiz
+  - css
+  - advanced
+  - intermediate
+cover_full_width: ../dan-levy-downtown-denver-at-night-wide.webp
+cover_mobile: ../dan-levy-downtown-denver-at-night-square-200.webp
+cover_icon: ../dan-levy-downtown-denver-at-night-square-200.webp
+---
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+
+## חידון: האם אתה מכיר CSS?
+
+* CSS מודרני?  🤔
+* **האם CSS שייך _לקורות החיים_ שלך???** 🚀
+* רב־ברירה. 🤖 ... _כמה קשה זה יכול להיות, הא?_
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="חימום"
+  title="שימוש במשתני CSS"
+  options={[
+    {text: 'background-color: blue;'},
+    {text: 'background-color: --main-color;'},
+    {text: 'background-color: var(--main-color);', isAnswer: true},
+    {text: 'background-color: $main-color;'},
+    {text: 'background-color: @main-color;'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מהי הדרך הנכונה להשתמש במשתנה CSS בשם `--main-color` כדי לקבוע את צבע הרקע של אלמנט?
+    ```css
+        :root {
+          --main-color: blue;
+        }
+        div {
+          /* How do we use --main-color here? */
+        }
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    משתני CSS משמשים עם הפונקציה `var`, לכן התשובה הנכונה היא `background-color: var(--main-color);`. תחביר זה שולף את הערך של `--main-color` ומחיל אותו.
+
+    האפשרויות האחרות עשויות להיות מוכרות משפות אחרות או מתחבירי מעבדים מקדימים, כמו Sass או Less.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="פונקציות CSS"
+  title="פונקציית CSS min()"
+  options={[
+    {text: 'width: 50%;'},
+    {text: 'width: 200px;', isAnswer: true},
+    {text: 'width: 250px;'},
+    {text: 'width: 500px;'},
+    {text: 'width: max(50%, 200px);'},
+    {text: 'Invalid syntax'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    אם רוחב האלמנט ההורה/מכיל הוא 400px, מה יהיה הרוחב המחושב של האלמנט הבא?
+    ```css
+        div {
+          width: min(250px, 50%);
+        }
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    הפונקציה `min()` תבחר את הערך הקטן ביותר בין 250px ל-50% מרוחב ההורה.
+
+    כדי להבין את הערך המחושב, עלינו להמיר את היחידות היחסיות לפיקסלים:
+
+    - `50%` מ-`400px` הוא `200px`
+    - `250px` הוא כבר בפיקסלים
+    ```css
+        /* This gets computed to */
+        width: min(250px, 200px);
+        /* -> 200px wins */
+    ```
+    הפונקציה `min()` שימושית במיוחד לעיצוב רספונסיבי, שבו ניתן להבטיח שרכיב (או גודל גופן) לא יחרוג מגבול מסוים.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="פונקציות CSS"
+  title="פונקציית CSS max()"
+  options={[
+    {text: 'width: 6em;'},
+    {text: 'width: 10%;'},
+    {text: 'width: 10px;'},
+    {text: 'width: 50px;'},
+    {text: 'width: 96px;', isAnswer: true},
+    {text: 'Invalid syntax'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    בהינתן מיכל ברוחב 200px, מה יהיה הרוחב המחושב של ה-`<div>`?
+    ```css
+        div {
+          width: max(50px, 10%, 6rem);
+        }
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    הפונקציה `max()` מקבלת 2 קלטים או יותר, ותשתמש בערך הגדול ביותר באופן אוטומטי. בהנחה שגודל הגופן הבסיסי הוא ברירת המחדל של הדפדפן `16px`, הרוחב יוצא `96px`.
+
+    כדי להבין את הערך המחושב, עלינו להמיר את היחידות היחסיות לפיקסלים:
+
+    - `50px` כבר בפיקסלים
+    - `10%` מ-`200px` הוא `20px`
+    - `6rem` הוא `6 * 16px` (גודל הגופן הבסיסי) שהוא `96px`
+    ```css
+        /* This gets computed to */
+        width: max(50px, 20px, 96px);
+        /* -> 96px wins */
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="פונקציות Grid ב-CSS"
+  title="פונקציית minmax() ב-CSS"
+  options={[
+    {text: 'כל רוחבי העמודות בין 100px ל-200px'},
+    {text: 'הגדרת עמודות ל-100px, שורות ל-200px'},
+    {text: 'עמודה אחת תהיה בין 100px ל-200px', isAnswer: true},
+    {text: 'החלת טווח באופן רקורסיבי, כולל תת-גרידים'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה ההשפעה של שימוש ב-`minmax(100px, 200px)` עבור מסלול Grid ב-CSS?
+    ```css
+        grid-template-columns: minmax(100px, 200px);
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    שימוש ב-`minmax(100px, 200px)` מאפשר למסלול הגריד לשנות גודל בין `100px` ל-`200px`, תוך התאמה לשטח הפנוי אך מבלי לרדת מתחת ל-`100px` או לעלות מעל `200px`.
+
+    ניתן ליצור פריסות מתכווננות אוטומטית שבהן המיכל והילדים כל אחד ממלא תפקיד בחישוב הפריסות. זה חזק במיוחד בשילוב עם `repeat()` ו-`auto-fill` או `auto-fit`, שייצרו כמה שיותר מסלולים בתוך המגבלות.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="משתני CSS"
+  title="גיבוי משתני CSS"
+  options={[
+    {text: 'blue'},
+    {text: 'red'},
+    {text: 'ברירת מחדל של המערכת'},
+    {text: '#6b8e23', isAnswer: true},
+    {text: 'var(--secondary-color)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    באיזה צבע יהיה הרקע עבור ה-CSS הבא?
+    ```css
+        div {
+          background: var(--primary, olivedrab);
+        }
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    הפונקציה `var()` מאפשרת להגדיר ערך גיבוי אם המשתנה לא מוגדר. במקרה זה, הרקע יהיה `olivedrab` (`#6b8e23`) מכיוון ש-`--primary` לא מוגדר.
+
+    זוהי דרך מצוינת להבטיח שהסגנונות שלך לא ישברו אם משתנה חסר או לא נתמך.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="פונקציות CSS"
+  title="שימוש ב-clamp() לעיצוב רספונסיבי"
+  options={[
+    {text: 'גיבוי ליחידות שאולי לא נתמכות'},
+    {text: 'לוודא שיחידות `vw` נמצאות בין 20px ל-50px'},
+    {text: 'קנה מידה ליניארי בין 200px ל-500px', isAnswer: true},
+    {text: 'קנה מידה לוגריתמי (בסיס 2) בין 200px ל-500px'},
+    {text: 'כישלון! אין תמיכה ב-IE 11'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה עושה הפונקציה `clamp()`?
+    ```css
+        .card {
+          width: clamp(200px, 50vw, 500px);
+        }
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    הפונקציה `clamp()` מאפשרת לרוחב להתכוונן לפי `50vw`, אך שומרת אותו בטווח שבין 200px ל-500px.
+
+    המשמעות היא שהרוחב יהיה 200px כאשר 50vw יהיה קטן מ-200px, 500px כאשר 50vw יהיה גדול מ-500px, וליניארי בין הגבולות הללו.
+
+    זה מאפשר לך להיות רספונסיבי באופן אוטומטי! הדבר שחשוב לדעת על `clamp` הוא שהיא משלבת **יחידות קבועות** עם **יחידות רספונסיביות או מחושבות.**
+
+    בדרך כלל לא היית רוצה להשתמש ביחידות viewport עבור גדלי גופנים, אבל עם `clamp()` אנחנו יכולים להבטיח שגודל הגופן לא יהיה קטן מדי או גדול מדי.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="קינון CSS"
+  title="קינון CSS טבעי"
+  options={[
+    {text: 'רק עם SCSS'},
+    {text: 'טכנית עם PostCSS'},
+    {text: 'כן', isAnswer: true},
+    {text: 'לא'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    האם CSS תומך בקינון באופן טבעי?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    כן! סוף סוף יש לנו קינון CSS טבעי! CSS הציגה תחביר קינון טבעי בשנים האחרונות (2023), המאפשר עיצוב היררכי ישירות ב-CSS.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="קינון CSS"
+  title="קינון CSS"
+  options={[
+    {text: 'שם הקובץ חייב להסתיים ב-.scss'},
+    {text: '`.title` חייב לבוא לפני מאפיינים כמו `color`'},
+    {text: 'רק עם PostCSS'},
+    {text: 'מושלם. אין הערות.', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    האם זה שימוש נכון בקינון CSS טבעי?
+    ```css
+        .container {
+          color: black;
+          .title {
+            color: white;
+            background: black;
+          }
+        }
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    המחלקה `.title` מקוננת בתוך המחלקה `.container`, והמאפיינים מוחלים כצפוי.
+
+    זוהי דרך מצוינת לשמור סגנונות קשורים יחד ולהימנע מסלקטורים ארוכים.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="קינון ב-CSS"
+  title="סלקטור ילד ישיר עם קינון"
+  options={[
+    {text: 'background-color: red'},
+    {text: 'background-color: white', isAnswer: true},
+    {text: 'background-color: blue'},
+    {text: 'Invalid syntax'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    איזה צבע רקע יוחל על `div`ים שהם ילדים ישירים של `.container`?
+    ```css
+        .container {
+          background-color: red;
+          > div {
+            background-color: white;
+          }
+          background-color: blue !important;
+        }
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    הסלקטור `>` בכלל המקונן מחיל `background-color: white` רק על אלמנטי `div` שהם ילדים ישירים בתוך `.container`.
+
+    הכלל האחרון, `background-color: blue !important;`, הוא קצת הסחת דעת. הוא **מחוץ לכלל המקונן** ויוחל על כל האלמנטים של `.container`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="משתני CSS"
+  title="שינוי משתנה CSS בזמן ריצה"
+  options={[
+    {text: 'משתני CSS הם בלתי ניתנים לשינוי'},
+    {text: 'באמצעות JavaScript', isAnswer: true},
+    {text: 'רק עם SCSS'},
+    {text: 'רק עם סגנונות מוטבעים'},
+    {text: 'באמצעות יחידות רספונסיביות'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    איך אפשר לשנות את הערך של משתנה CSS בזמן ריצה?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    ניתן להגדיר משתני CSS באמצעות מחלקות ו-JavaScript. אפשר אפילו להגדיר אותם 'אחרי' שהם כבר בשימוש טכני.
+    ```js
+        document.documentElement.style.setProperty('--main-color', 'blue');
+    ```
+    זה ישנה את הערך של `--main-color` ל-`blue` עבור כל המסמך.
+
+    משתני CSS ניתנים לשינוי, וניתן לשנות אותם בזמן ריצה באמצעות JavaScript.
+
+    אפשר גם לשנות אותם על ידי הוספה או הסרה של מחלקות, שזה דפוס נפוץ לעיצוב נושאים (theming).
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="משתני CSS"
+  title="שימוש ב-calc() עם משתני CSS"
+  options={[
+    {text: 'רוחב: 50px'},
+    {text: 'רוחב: 100px'},
+    {text: 'רוחב: 110px', isAnswer: true},
+    {text: 'רוחב: 120px'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה יהיה הרוחב המחושב של האלמנט?
+    ```css
+        :root {
+          --base-width: 100px;
+        }
+        div {
+          width: calc(var(--base-width) + 10px);
+        }
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    הפונקציה `calc()` משלבת את הערך של `--base-width` (100px) עם תוספת של 10px, ומתקבל רוחב של 110px.
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+````
