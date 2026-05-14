@@ -1,0 +1,108 @@
+---
+social_image: ../desktop-social.webp
+title: مقدمة في الوعود
+subTitle: الوعود في JavaScript ممتعة!
+date: '2018-08-01'
+modified: '2024-07-31'
+category: Code
+subCategory: promises
+tags:
+  - promises
+  - async
+  - javascript
+  - composition
+related:
+  - promise-gotchas
+  - visualizing-promises
+  - stop-trying-to-make-async-await-happen
+  - javascript-promises-quiz
+cover: ../joe-yates-480485-unsplash.webp
+cover_mobile: ../w300_joe-yates-480485-unsplash.webp
+cover_icon: ../icon_joe-yates-480485-unsplash.webp
+---
+## الوعود... ما قصتها؟
+
+عندما تنفذ أي كود حاسوبي، هناك نتيجتان محتملتان: **النجاح** أو **الفشل**.
+
+إذا كان هذا الكود غير متزامن بطبيعته، فقد يصعب الاعتماد على تلك النتيجة بشكل موثوق.
+
+توفر **`الوعود`** طريقة ملائمة للتعامل مع هذا.
+
+```
+                        +--Promise---+
+                        |            |
+                        | <-either-> |
+                        |            |
+                <-------+            +-------->
+                |Failure?             Success?|
+                |                             |
+                v                             v
+                (Rejected)           (Resolved)
+```
+
+> ملاحظة جانبية: بينما من المفترض أن تنجح الوعود أو تفشل، فقد تفشل في فعل أي منهما. هذا يتسبب في تعليق التطبيقات، وقد يكون من الصعب جدًا تصحيحه.
+
+### من أين تأتي الوعود؟
+
+في كثير من الأحيان لن تحتاج إلى إنشاء وعد بنفسك. واجهات برمجة التطبيقات الأصلية مثل `fetch` والمكتبات الشائعة مثل `axios` تعيد بالفعل وعودًا.
+
+ولكن إذا كان عليك إنشاء وعد، فهناك طريقتان للقيام بذلك:
+
+### إنشاء الوعود #1/2:
+
+أبسط طريقة لإنشاء وعد هي باستخدام الطريقة المساعدة: `Promise.resolve()`.
+
+يمكنك تغليف (أو "تحويل") أي قيمة إلى وعد باستخدام `Promise.resolve(value)`.
+
+```js
+// Without Promises:
+function add10(num) {
+  return num + 10
+}
+
+// With Promises:
+function add10Promised(num) {
+  return Promise.resolve(num + 10)
+}
+
+console.log(add10(10)) //=> 20
+
+add10Promised(10)
+  .then(x => console.log(x)) //=> 20
+```
+
+### إنشاء الوعود #2/2:
+
+طريقة أخرى أكثر مرونة: استخدام مُنشئ `Promise`.
+
+`new Promise(callback)` يقبل دالة `callback` بالواجهة التالية:
+
+```js
+new Promise(function(resolve, reject) {
+  // الوسيطان `resolve` و `reject` كلاهما دوال.
+  // typeof resolve === 'function'
+  // typeof reject === 'function'
+
+  // يجب تنفيذ `resolve(result)` عندما يتم الوفاء بالوعد
+  // يجب تنفيذ `reject(Error)` إذا تم رفض الوعد
+})
+```
+
+### واجهة برمجة تطبيقات الوعود
+
+واجهة برمجة تطبيقات الوعود هي في الواقع عدد صغير من الطرق.
+
+دالتان للكائنات (instance)، و4 دوال ثابتة/مساعدة.
+
+#### طرق الكائنات للوعود
+
+الوصول إلى القيم من وعد لن يعمل باستخدام الحيل المعتادة (مثل `console.log(promise)`).
+
+جميع الوعود تعيد إما نجاحًا (عبر `.then(fn)`) أو فشلًا (عبر `.catch(fn)`).
+
+#### طرق مساعدة للوعود
+
+* `Promise.resolve(value)` - تحويل أي قيمة إلى وعد
+* `Promise.reject(Error)` - ينشئ قيمة وعد بالفشل، ويؤدي إلى تشغيل `.catch()` التالي
+* `Promise.all([...promises])` - انتظر حتى تكتمل جميع الوعود في المصفوفة
+* `Promise.race([...promises])` - يتم الحل بمجرد حل أول وعد
