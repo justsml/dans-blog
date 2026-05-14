@@ -1,0 +1,118 @@
+# Translation Candidate
+- Slug: async-stack-traces-why-error-stack-lies-in-production
+- Locale: ar
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2025-12-29--async-stack-traces-why-error-stack-lies-in-production/ar/index.mdx
+- Validation: deferred
+- Runtime seconds: 20.11
+- Input tokens: 3293
+- Output tokens: 3713
+- Thinking tokens: unknown
+- Cached input tokens: 768
+- Cache write tokens: 0
+- Estimated cost: $0.001395
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: 'تتبعات المكدس غير المتزامنة: لماذا يخدعك `Error.stack`'
+subTitle: طابور المهام الصغيرة أكل واجبي المنزلي (وسياق التصحيح الخاص بي).
+date: '2025-12-29'
+modified: '2025-12-30'
+tags:
+  - javascript
+  - async
+  - debugging
+  - node.js
+  - v8
+  - performance
+category: Code
+subCategory: Best Practices
+social_image: ../desktop-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+إنها الساعة 2 صباحًا. إنذار PagerDuty يدوي.
+
+تفتح السجلات وترى هذا:
+
+```
+Error: Cannot read properties of undefined (reading 'id')
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+```
+
+هذا كل شيء. لا اسم دالة. لا رقم سطر. لا مسار ملف. فقط "processTicksAndRejections".
+
+مرحبًا بك في JavaScript غير المتزامن، حيث تلفيق تتبعات المكدس وأرقام الأسطر لا تهم.
+
+---
+
+## لماذا تتعطل تتبعات المكدس
+
+في الكود المتزامن، مكدس الاستدعاءات هو شجرة أنساب جميلة. A استدعى B، B استدعى C. عندما تتعطل C، يمكنك رؤية كيف وصلت إلى هناك بالضبط.
+
+في الكود غير المتزامن (`async/await`)، كل كلمة مفتاحية `await` هي نقطة تعليق.
+
+عندما تستخدم `await`، تُنتزع دالتك من المكدس. تُوضع في مجمّد تبريد عميق يُسمى قائمة المهام الصغرى (Microtask Queue). يصبح المكدس فارغًا الآن (أو يفعل شيئًا آخر).
+
+عندما يتم حل الوعد (Promise)، تُذاب دالتك وتُلقى مرة أخرى على المكدس. لكن التاريخ قد اختفى.
+
+لا يعلم المحرك من استدعى `await` قبل 500 ميلي ثانية. إنه يعلم فقط أن لديه مهمة لتنفيذها.
+
+---
+
+## محاولات V8 لإصلاح ذلك
+
+يحاول Node.js المساعدة. لدينا:
+
+1.  `Error.captureStackTrace()`: يلتقط المكدس *عند الإنشاء*. عديم الفائدة إذا تم إلقاء الخطأ لاحقًا.
+2.  `--async-stack-traces`: علامة تجعل Node.js يحتفظ بـ"مكدس ظل" لسلاسل الوعود.
+    *   التكلفة: يجعل تطبيقك أبطأ بنسبة 30%.
+    *   النتيجة: يساعد، لكنه يصبح مزعجًا بسرعة.
+
+---
+
+## الحل الحقيقي: AsyncLocalStorage
+
+إذا كنت تريد النجاة في الإنتاج، توقف عن النظر إلى تتبعات المكدس. انظر إلى السببية.
+
+نحتاج إلى إرفاق سياق (معرف المستخدم، معرف الطلب) بـ"خيط" التنفيذ، حتى أثناء قفزه بين المكدس وقائمة المهام الصغرى.
+
+لدى Node.js أداة مدمجة لهذا: `AsyncLocalStorage`.
+
+```javascript
+import { AsyncLocalStorage } from 'async_hooks';
+
+const context = new AsyncLocalStorage();
+
+// 1. Wrap the request
+context.run({ requestId: '123' }, () => {
+  // 2. Call deep async code
+  await processOrder();
+});
+
+// 3. Deep inside processOrder:
+async function processOrder() {
+  await db.query();
+  
+  // Magic! We can still see the requestId
+  const { requestId } = context.getStore();
+  console.log(`[${requestId}] Failed to process order`);
+}
+```
+
+لا يهم عدد مرات `await` التي تحدث بينهما. السياق يبقى.
+
+---
+
+## دليل الإنتاج
+
+1.  توقف عن الثقة في `err.stack`. إنه غير مكتمل بحكم التصميم.
+2.  استخدم التسجيل المنظم. أرفق `requestId` بكل سطر سجل باستخدام `AsyncLocalStorage`.
+3.  تتبّع، لا تتراكم. استخدم OpenTelemetry. إنه يصور السلسلة السببية عبر الخدمات، وهو ما يهمك حقًا.
+
+كودك غير متزامن. سياق التصحيح الخاص بك لا ينبغي أن يكون كذلك.
+````
