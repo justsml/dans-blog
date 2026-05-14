@@ -116,16 +116,26 @@ export function normalizeJudgeScores(value: unknown): JudgeScoreMap | undefined 
   ));
   if (!hasAnyScore) return undefined;
 
+  const numericScores = keys
+    .map((key) => typeof record[key] === "number" ? record[key] : Number(record[key]))
+    .filter((score) => Number.isFinite(score));
+  const appearsTenPointScale = numericScores.length > 0 && numericScores.every((score) => score >= 0 && score <= 10);
+
   return {
-    readability: normalizeJudgeScore(record.readability),
-    technicalAccuracy: normalizeJudgeScore(record.technicalAccuracy),
-    coherence: normalizeJudgeScore(record.coherence),
-    relevance: normalizeJudgeScore(record.relevance),
-    translationQuality: normalizeJudgeScore(record.translationQuality),
-    mdxPreservation: normalizeJudgeScore(record.mdxPreservation),
-    culturalAdaptation: normalizeJudgeScore(record.culturalAdaptation),
-    languagePurity: normalizeJudgeScore(record.languagePurity),
+    readability: normalizeJudgeScoreForScale(record.readability, appearsTenPointScale),
+    technicalAccuracy: normalizeJudgeScoreForScale(record.technicalAccuracy, appearsTenPointScale),
+    coherence: normalizeJudgeScoreForScale(record.coherence, appearsTenPointScale),
+    relevance: normalizeJudgeScoreForScale(record.relevance, appearsTenPointScale),
+    translationQuality: normalizeJudgeScoreForScale(record.translationQuality, appearsTenPointScale),
+    mdxPreservation: normalizeJudgeScoreForScale(record.mdxPreservation, appearsTenPointScale),
+    culturalAdaptation: normalizeJudgeScoreForScale(record.culturalAdaptation, appearsTenPointScale),
+    languagePurity: normalizeJudgeScoreForScale(record.languagePurity, appearsTenPointScale),
   };
+}
+
+function normalizeJudgeScoreForScale(value: unknown, appearsTenPointScale: boolean): number {
+  const score = typeof value === "number" ? value : Number(value);
+  return normalizeJudgeScore(appearsTenPointScale && Number.isFinite(score) ? score * 10 : score);
 }
 
 export function averageJudgeScore(scores: JudgeScoreMap): number {
@@ -318,6 +328,7 @@ export function buildPrimaryJudgePrompt(
     `Reject candidates that mix substantial English source prose into the target language, while allowing technical terms, code identifiers, product names, and URLs.`,
     `Score culturalAdaptation by whether idioms, jokes, metaphors, and culturally loaded expressions are natural in ${ctx.locale} while preserving Dan's direct technical voice. Low scores mean literal or culturally awkward wording.`,
     `Score languagePurity by whether reader-facing prose is consistently in ${ctx.locale} without untranslated English source prose or LLM instruction leakage. Do not penalize code, API names, brand names, commands, URLs, or deliberate English technical terms.`,
+    `All score values must be integers from 0 to 100, where 100 is excellent and 0 is unusable. Do not use a 0 to 10 scale.`,
     getLengthValidationGuidance(ctx.locale),
     `Candidate MDX contents are attached below; do not ask to run git show.`,
     `Return the selected candidate id in selectedCommit. Use "current" only if the <current> pre-existing translation is best and selectable.`,

@@ -39,6 +39,9 @@ import {
   buildUserPrompt,
 } from "./prompts.ts";
 import {
+  resolveCheapFastTranslationModel,
+} from "./model-presets.ts";
+import {
   averageJudgeScore,
   buildPrimaryJudgePrompt,
   getJudgeJsonShape,
@@ -59,14 +62,14 @@ import { isVisiblePostData, type PostVisibilityData } from "../../shared/postVis
 const EVAL_REPORT_DIR = join(process.cwd(), "reports/i18n/evals");
 const POSTS_DIR = join(process.cwd(), "src/content/posts");
 const DEFAULT_TRANSLATION_MODEL = "openrouter/openai/gpt-oss-120b:nitro";
-const DEFAULT_JUDGE_MODEL = "deepseek/deepseek-v4-flash";
+const DEFAULT_JUDGE_MODEL = "openrouter/deepseek/deepseek-v4-flash";
 const DEFAULT_LOCALE: ActiveLocale = "es";
 const DEFAULT_MIN_LLM_SCORE = 72;
 const TIMEOUT_MS = 90_000;
 
 const args = parseArgs();
-const translationModel = optionalString(args, "translation-model") ?? optionalString(args, "model") ?? DEFAULT_TRANSLATION_MODEL;
-const judgeModel = optionalString(args, "judge-model") ?? optionalString(args, "model") ?? DEFAULT_JUDGE_MODEL;
+const translationModel = resolveEvalModelInput(optionalString(args, "translation-model") ?? optionalString(args, "model"), DEFAULT_TRANSLATION_MODEL);
+const judgeModel = resolveEvalModelInput(optionalString(args, "judge-model") ?? optionalString(args, "model"), DEFAULT_JUDGE_MODEL);
 const requestedLocale = optionalString(args, "locale");
 const locale = parseLocale(requestedLocale);
 const requestedSlug = optionalString(args, "slug");
@@ -328,6 +331,10 @@ function parseLocale(value: string | undefined): ActiveLocale {
   if (value == null) return DEFAULT_LOCALE;
   if (isActiveLocale(value)) return value;
   throw new Error(`--locale must be one of ${ACTIVE_LOCALES.join(", ")}. Received "${value}".`);
+}
+
+function resolveEvalModelInput(value: string | undefined, fallback: string) {
+  return resolveCheapFastTranslationModel(value ?? fallback);
 }
 
 function getPostDateMs(data: Record<string, unknown>, postDir: string) {

@@ -20,6 +20,7 @@ import {
   type JudgeSuggestion,
 } from "./judge-utils.ts";
 import { analyzeTranslationIntegrity } from "./integrity-checks.ts";
+import { resolveCheapFastTranslationModel } from "./model-presets.ts";
 
 const SHA_A = "a".repeat(40);
 const SHA_B = "b".repeat(40);
@@ -28,6 +29,26 @@ const SHA_C = "c".repeat(40);
 function makeCandidate(id: string, model = "test-model"): CandidateRef {
   return { id, label: `<candidate id="${id}">`, source: "commit", model };
 }
+
+// ---------------------------------------------------------------------------
+// model preset resolution
+// ---------------------------------------------------------------------------
+
+describe("resolveCheapFastTranslationModel", () => {
+  test("passes full model IDs through", () => {
+    expect(resolveCheapFastTranslationModel("openrouter/qwen/qwen3-32b:nitro")).toBe("openrouter/qwen/qwen3-32b:nitro");
+  });
+
+  test("resolves loose substrings to the first cheap/fast model match", () => {
+    expect(resolveCheapFastTranslationModel("nitro")).toBe("openrouter/openai/gpt-oss-120b:nitro");
+    expect(resolveCheapFastTranslationModel("32b")).toBe("openrouter/qwen/qwen3-32b:nitro");
+    expect(resolveCheapFastTranslationModel("deepseek")).toBe("openrouter/deepseek/deepseek-v4-flash");
+  });
+
+  test("returns unmatched input unchanged for custom or downstream handling", () => {
+    expect(resolveCheapFastTranslationModel("not-a-real-model")).toBe("not-a-real-model");
+  });
+});
 
 // ---------------------------------------------------------------------------
 // extractJsonObject
@@ -164,6 +185,29 @@ describe("normalizeJudgeScores", () => {
       mdxPreservation: 95,
       culturalAdaptation: 82,
       languagePurity: 93,
+    });
+  });
+
+  test("rescales judge outputs that use a 0-10 rubric", () => {
+    const result = normalizeJudgeScores({
+      readability: 10,
+      technicalAccuracy: 10,
+      coherence: 10,
+      relevance: 10,
+      translationQuality: 9,
+      mdxPreservation: 10,
+      culturalAdaptation: 9,
+      languagePurity: 9,
+    });
+    expect(result).toEqual({
+      readability: 100,
+      technicalAccuracy: 100,
+      coherence: 100,
+      relevance: 100,
+      translationQuality: 90,
+      mdxPreservation: 100,
+      culturalAdaptation: 90,
+      languagePurity: 90,
     });
   });
 

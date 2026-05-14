@@ -34,11 +34,12 @@ bun run i18n:eval -- --kind quiz
 
 # Swap translation model
 bun run i18n:eval -- --translation-model openrouter/qwen/qwen3-32b:nitro
+bun run i18n:eval -- --translation-model 32b
 
 # Swap both models independently
 bun run i18n:eval -- \
-  --translation-model openrouter/deepseek/deepseek-v4-flash \
-  --judge-model openrouter/google/gemini-2.0-flash-001
+  --translation-model nitro \
+  --judge-model flash
 ```
 
 ## Flags
@@ -54,6 +55,8 @@ bun run i18n:eval -- \
 | `--article-slug` | — | Pin the article case to this slug |
 | `--quiz-slug` | — | Pin the quiz case to this slug |
 | `--dry-run` | false | Print selected cases and exit without calling any model |
+
+Model flags accept either full OpenRouter IDs or loose case-insensitive substrings. Loose input resolves to the first match in the shared cheap/fast translation model list, so `nitro` becomes `openrouter/openai/gpt-oss-120b:nitro`, `32b` becomes `openrouter/qwen/qwen3-32b:nitro`, and `flash` becomes `openrouter/deepseek/deepseek-v4-flash`.
 
 ## Input: real corpus posts
 

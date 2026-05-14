@@ -19,19 +19,10 @@ import {
   runInherited,
   writeTextFile,
 } from "./utils.ts";
-
-const CHEAP_CANDIDATE_MODELS = [
-  "openrouter/qwen/qwen3.6-plus",
-  "openrouter/deepseek/deepseek-v4-flash",
-  "openrouter/openai/gpt-oss-120b:nitro",
-  "openrouter/qwen/qwen3-32b:nitro",
-  "openrouter/z-ai/glm-4.7-flash",
-  "openrouter/minimax/minimax-m2.5",
-  "openrouter/google/gemini-3-flash-preview",
-  "openrouter/deepseek/deepseek-v3.2",
-  "openrouter/minimax/minimax-m2.7",
-  "openrouter/z-ai/glm-5-turbo",
-];
+import {
+  CHEAP_FAST_TRANSLATION_MODELS,
+  resolveCheapFastTranslationModels,
+} from "./model-presets.ts";
 
 const JUDGE_MODEL = "openrouter/google/gemini-3-flash-preview";
 const ESCALATION_JUDGE_MODEL = "openrouter/anthropic/claude-sonnet-4.6";
@@ -47,7 +38,9 @@ type Task = {
 const options = parseArgs();
 const selectedLocales = filterActiveLocales(parseList(optionalString(options, "locales"), [...ACTIVE_LOCALES]));
 const selectedSlugs = new Set(parseList(optionalString(options, "slugs"), []));
-const candidateModels = randomizeListOrder(validateCandidateModels(parseList(optionalString(options, "models"), CHEAP_CANDIDATE_MODELS)));
+const candidateModels = randomizeListOrder(validateCandidateModels(
+  resolveCheapFastTranslationModels(parseList(optionalString(options, "models"), [...CHEAP_FAST_TRANSLATION_MODELS])),
+));
 const minCandidates = parsePositiveInteger(optionalString(options, "min-candidates"), 2);
 const limit = parseOptionalPositiveInteger(optionalString(options, "limit"));
 const latestPosts = parseOptionalPositiveInteger(optionalString(options, "latest-posts"));

@@ -250,6 +250,8 @@ openrouter/deepseek/deepseek-v3.2
 openrouter/z-ai/glm-5-turbo
 ```
 
+`--models` accepts full IDs or loose case-insensitive substrings matched against that list in order. For example, `--models nitro,32b,deepseek` resolves to `openrouter/openai/gpt-oss-120b:nitro`, `openrouter/qwen/qwen3-32b:nitro`, and the first DeepSeek match, `openrouter/deepseek/deepseek-v4-flash`.
+
 OpenRouter pricing checked on 2026-05-13 showed `openrouter/openai/gpt-oss-120b:nitro` at $0.039/M input and $0.18/M output tokens, and `openrouter/qwen/qwen3-32b:nitro` at $0.08/M input and $0.24/M output tokens. Both are kept after the current primary Qwen and DeepSeek candidates in the cheap pool.
 
 OpenRouter pricing checked on 2026-05-10 showed `openrouter/qwen/qwen3.6-plus` cheaper than `openrouter/z-ai/glm-5-turbo`, so GLM 5 Turbo is kept as a later fallback instead of an early default.

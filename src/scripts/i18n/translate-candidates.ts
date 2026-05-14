@@ -28,19 +28,10 @@ import {
   isOutOfCreditError,
   recordOutOfCreditIssue,
 } from "./out-of-credit.ts";
-
-const DEFAULT_CANDIDATE_MODELS = [
-  "openrouter/qwen/qwen3.6-plus",
-  "openrouter/deepseek/deepseek-v4-flash",
-  "openrouter/openai/gpt-oss-120b:nitro",
-  "openrouter/qwen/qwen3-32b:nitro",
-  "openrouter/z-ai/glm-4.7-flash",
-  "openrouter/minimax/minimax-m2.5",
-  "openrouter/minimax/minimax-m2.7",
-  "openrouter/google/gemini-3-flash-preview",
-  "openrouter/deepseek/deepseek-v3.2",
-  "openrouter/z-ai/glm-5-turbo",
-];
+import {
+  CHEAP_FAST_TRANSLATION_MODELS,
+  resolveCheapFastTranslationModels,
+} from "./model-presets.ts";
 
 const DEFAULT_TRANSLATION_TIMEOUT_SECONDS = 240;
 const DEFAULT_CHUNK_SIZE = "18p";
@@ -121,7 +112,9 @@ const TOKEN_FIELDS = [
 ] as const satisfies Array<[keyof CandidateTelemetry["tokens"], keyof Totals, keyof Totals]>;
 
 const options = parseArgs();
-const models = randomizeListOrder(validateCandidateModels(parseList(optionalString(options, "models"), DEFAULT_CANDIDATE_MODELS)));
+const models = randomizeListOrder(validateCandidateModels(
+  resolveCheapFastTranslationModels(parseList(optionalString(options, "models"), [...CHEAP_FAST_TRANSLATION_MODELS])),
+));
 const shouldValidateCandidates = options.validate === true || options["validate-candidates"] === true;
 const shouldRunFullCandidateValidation = options["full-validation"] === true;
 const shouldSkipCommit = options["no-commit"] === true;
