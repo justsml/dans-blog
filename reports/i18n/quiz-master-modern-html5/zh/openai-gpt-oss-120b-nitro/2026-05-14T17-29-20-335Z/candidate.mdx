@@ -1,0 +1,511 @@
+---
+unlisted: false
+title: 测验：HTML 仍然适合写在你的简历上吗？
+subTitle: 证明自己！
+label: Semantic HTML5
+social_image: ../desktop-social.webp
+category: Quiz
+subCategory: HTML
+date: '2024-10-31'
+modified: '2024-11-06'
+tags:
+  - quiz
+  - web
+  - quiz
+  - semantic
+  - html5
+  - web
+  - beginner
+  - intermediate
+cover_full_width: ../jakob-owens-FBih1nqPi0w-unsplash-wide.webp
+cover_mobile: ../jakob-owens-FBih1nqPi0w-unsplash-square.webp
+cover_icon: ../jakob-owens-FBih1nqPi0w-unsplash-square.webp
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+
+## 那么，你觉得自己掌握了 HTML5 技能吗？
+
+毕竟，你已经能区分 `<div>` 和 `<span>` 了，对吧？但你对 HTML5 中更高级的语义化元素了解多少？
+
+> 注意：如果你无法通过此测试，法律上必须把简历中的 “HTML Skills” 删除。
+
+### 开始！
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="热身"
+  title="`<ul>` 的作用"
+  options={[
+    {text: '无序列表', isAnswer: true},
+    {text: '唯一列表'},
+    {text: '通用列表'},
+    {text: '用户列表'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    HTML 中 `<ul>` 元素的主要作用是什么？
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `<ul>` 标签创建一个无序列表，列表项通常以项目符号标记。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="高级语义 HTML"
+  title="`<dd>` 的用法"
+  options={[
+    {text: '描述定义'},
+    {text: '描述术语'},
+    {text: '数据展示'},
+    {text: '描述细节', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    `<dd>` 元素在 HTML 中表示什么？
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    The [`<dd>` 元素](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dd) 定义了描述、定义或值，在描述列表中使用，需放在 `<dl>` 标签内并与 `<dt>`（_描述术语_）配对。
+
+    这在展示键值数据时很有用。个人资料信息、设置和统计是常见示例。
+    ```html
+        <dl>
+        <dt>JS</dt>
+        <dd>Client-side</dd>
+        <dd>Server-side</dd>
+
+        <dt>HTML</dt>
+        <dd>Client-side</dd>
+        </dl>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="高级语义 HTML"
+  title="`<figure>`/`<figcaption>` 的使用"
+  options={[
+    {text: '用于显示带有版权信息的图像'},
+    {text: '用于描述图像、图表等', isAnswer: true},
+    {text: '用于注释表格、计算等'},
+    {text: '用于为视频添加标题'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    何时应该使用 `<figure>` 和 `<figcaption>` 元素？
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    [`<figure>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/figure) 标签通常用于包裹自包含的（媒体）内容，如图像或图表，并配合 [`<figcaption>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/figcaption) 提供标题。
+
+    这对于图像、图表、代码片段等都很有用。
+    ```html
+        <figure>
+        <img src="image.jpg" alt="Description of image">
+        <figcaption>Image caption</figcaption>
+        </figure>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="高级语义 HTML"
+  title="`<article>` 的用法"
+  options={[
+    {text: '用于内容、侧边栏和版权信息'},
+    {text: '独立的内容区块', isAnswer: true},
+    {text: '属于 <newsletter> 的一部分'},
+    {text: '定义新闻文章'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    `<article>` 元素在 HTML 中的用途是什么？
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    The [`<article>` 元素](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/article) 用于定义可以独立分发或复用的独立内容块。
+
+    它常用于博客文章、新闻稿、论坛帖子或用户评论。
+
+    你可以在同一页面使用多个 articles（例如无限滚动页面），或者将它们相互嵌套，形成“独立内容”的层级结构。
+    ```html
+        <article>
+        <h2>Article Title</h2>
+        <p>Article content...</p>
+        <article class="discussion">
+        <h3>Comment by User</h3>
+        <p>Comment content...</p>
+        </article>
+        </article>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="高级语义 HTML"
+  title="`<fieldset>/<legend>` 的用法"
+  options={[
+    {text: '在标题下对表单元素进行分组', isAnswer: true},
+    {text: '为表单字段定义说明'},
+    {text: '不是 <legend> 的有效用法'},
+    {text: '定义可展开的区域'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    在表单中，`<fieldset>` 和 `<legend>` 元素的作用是什么？
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    [`<fieldset>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/fieldset) 用于将相关的表单控件分组，`<legend>` 为该组提供标题/标签，提升可访问性。
+
+    这对于将相关表单元素归类非常有用，例如用于收货地址或付款详情的区域。
+    ```html
+        <fieldset>
+        <legend>Shipping Address</legend>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name">
+        ...
+        </fieldset>
+        <fieldset>
+        <legend>Payment Details</legend>
+        <label for="card">Card Number:</label>
+        <input type="text" id="card" name="card">
+        ...
+        </fieldset>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="高级语义 HTML"
+  title="`<meter>` 的用途"
+  options={[
+    {text: '以公制单位显示的进度条'},
+    {text: '在范围内显示数值', isAnswer: true},
+    {text: '将距离转换为米'},
+    {text: '专用的性能相关标签'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    `<meter>` 元素的用途是什么？
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    The [`<meter>` element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meter) 用于在设定范围内表示标量（单一）测量，例如温度、磁盘使用率或投票计数。
+
+    它看起来可能类似于 [`<progress>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/progress) 条，但进度条 **始终** 从零开始。因此 `<progress>` 元素显示 `percent of completion`，而 `<meter>` 则显示可定义范围内的任意值。
+    ```html
+        <meter min="-60" max="130" value="75" /> 75°F
+        <meter min="0" max="100" value="75" /> 75%
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="语义化 HTML"
+  title="`<source>` 的用法"
+  options={[
+    {text: '用于定义数据源'},
+    {text: '声明可用的媒体文件格式', isAnswer: true},
+    {text: '使用 APA 或 MLA 格式引用来源'},
+    {text: '定义源代码块'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    为什么要使用 `<source>` 元素？
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    The [`<source>` 元素用于指定可用的媒体格式](https://developer.mozilla.org/en-us/docs/web/html/element/source)。
+
+    特别与 [`<video>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video)、[`<audio>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/audio) 和 [`<picture>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/picture) 元素一起使用，使浏览器能够选择最合适的格式。
+    ```html
+        <video controls>
+        <source src="movie.mp4" type="video/mp4">
+        <source src="movie.ogg" type="video/ogg">
+        </video>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="高级语义 HTML"
+  title="`<hgroup>` 的用法"
+  options={[
+    {text: '已废弃的元素，不再使用'},
+    {text: '用于将多个标题组合在一起'},
+    {text: '定义目录'},
+    {text: '将标题与副标题组合在一起', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    应该如何使用 `<hgroup>` 元素？
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    The [`<hgroup>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/hgroup) 元素用于将标题与相关的次要内容（通常是一段或多段 `<p>` 元素）组合在一起。
+
+    当标题有副标题、标语或替代标题且不应在文档大纲中生成另一个标题时，它可能会很有用。
+    ```html
+        <article>
+        <hgroup>
+        <h1>Frankenstein</h1>
+        <p>Or: The Modern Prometheus</p>
+        </hgroup>
+        <section>
+        <h2>Chapter 1</h2>
+        <p>...</p>
+        </section>
+        </article>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="高级语义 HTML"
+  title="`<menu>` 的用法"
+  options={[
+    {text: '用于定义有序列表'},
+    {text: '用于列出命令或工具栏控件', isAnswer: true},
+    {text: '用于表示导航栏'},
+    {text: '用于定义按钮组'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    HTML 中 `<menu>` 元素的用途是什么？
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    [`<menu>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/menu) 表示一组命令或交互式控件。
+
+    如果你的列表是导航链接，请使用 `<nav>` 搭配 `<ul>`。`<menu>` 适用于类似工具栏的控件或命令列表。
+    ```html
+        <menu>
+        <li><button type="button">Copy</button></li>
+        <li><button type="button">Paste</button></li>
+        </menu>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="高级语义 HTML"
+  title="`<details>/<summary>` 的作用"
+  options={[
+    {text: '原生可折叠内容', isAnswer: true},
+    {text: '原生工具提示'},
+    {text: '为 <section> 添加上下文'},
+    {text: '用于显示结构化数据'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    `<details>` 和 `<summary>` 在 HTML 中的作用是什么？
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    [`<details>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details) 允许折叠内容，[`<summary>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/summary) 为内容指定可见标题。
+
+    这对于 FAQ、可折叠章节或任何可切换的内容都很有用。
+    ```html
+        <details>
+        <summary>Click to expand 🤯</summary>
+        <p>Hidden content! 💥</p>
+        </details>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="高级语义 HTML"
+  title="`<dialog>` 的用途"
+  options={[
+    {text: '编剧使用的格式'},
+    {text: '声明模态框或弹出层', isAnswer: true},
+    {text: '声明类似 ChatGPT 的聊天讨论'},
+    {text: '已弃用，建议使用 <wizard>'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    为什么要使用 `<dialog>` 元素？
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    The [`<dialog>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog) 元素用于弹出层或模态框，提供语义化标记、扩展的 CSS，以及原生 API 来处理这些交互。
+
+    使用 JavaScript 调用 `.showModal()` 打开模态对话框，或 `.show()` 打开非模态对话框，关闭时使用 `.close()` 或通过 `method="dialog"` 的表单提交。
+    ```html
+        <dialog>
+        <h2>Modal Title</h2>
+        <p>Modal content...</p>
+        <button>Close</button>
+        </dialog>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="高级语义 HTML"
+  title="`<time>` 的用法"
+  options={[
+    {text: '用于表示日期和时间', isAnswer: true},
+    {text: '用于定义时间戳'},
+    {text: '仅用于格式化日期'},
+    {text: '使日期输入可拖拽'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    `<time>` 元素在 HTML 中如何使用？
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `<time>` 元素用于日期、时间或持续时间。它可以包含人类可读的内容以及机器可读的 `datetime` 属性。HTML 没有 `<date>` 元素。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="高级语义 HTML"
+  title="ARIA 属性的目的"
+  options={[
+    {text: '为触摸设备提供帮助'},
+    {text: '提升可访问性', isAnswer: true},
+    {text: '控制声音和播放'},
+    {text: '仅用于 <div>\'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ARIA 属性的目的是什么？
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    ARIA（可访问的富互联网应用）属性通过为屏幕阅读器和其他辅助技术提供额外的上下文信息，提升网页的可访问性。
+
+    其中包括可用于描述元素的角色、状态和属性。
+    ```html
+        <button aria-label="Close" aria-expanded="true">X</button>
+        <main aria-live="polite">...</main>
+        <dialog
+        role="alertdialog"
+        aria-modal="true"
+        aria-labelledby="dialog_label"
+        aria-describedby="dialog_desc"
+        ></dialog>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={13}
+  group="高级语义 HTML"
+  title="使用 `role` 属性"
+  options={[
+    {text: '用于定义组件行为'},
+    {text: '描述元素的用途', isAnswer: true},
+    {text: '限制对元素的访问'},
+    {text: '仅用于 Web 组件'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    HTML 中 `role` 属性的作用是什么？
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `role` 属性描述
+
+    元素的用途，以便辅助技术识别，从而提升可访问性。
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+
+那么，你的表现如何？准备在下一个项目里多用语义化的 HTML 元素了吗？🚀  
+
+还是决定终身与 `<div>`、`<span>` 为伴？😅  
+
+在下方评论告诉我你的想法吧！👇
