@@ -1,0 +1,57 @@
+{
+  "runId": "deepseek-deepseek-v4-flash@2026-05-14T17-36-50-305Z",
+  "slug": "async-stack-traces-why-error-stack-lies-in-production",
+  "locale": "zh",
+  "model": "deepseek/deepseek-v4-flash",
+  "modelPath": "deepseek-deepseek-v4-flash",
+  "createdAt": "2026-05-14T17:37:05.099Z",
+  "sourcePath": "src/content/posts/2025-12-29--async-stack-traces-why-error-stack-lies-in-production/index.mdx",
+  "targetPath": "src/content/posts/2025-12-29--async-stack-traces-why-error-stack-lies-in-production/zh/index.mdx",
+  "candidatePath": "reports/i18n/async-stack-traces-why-error-stack-lies-in-production/zh/deepseek-deepseek-v4-flash/2026-05-14T17-36-50-305Z/candidate.mdx",
+  "sourceHash": "bda8adb66cf30fc89c91baea70bf6d81ae97177b838379f1fd437c2da47c9917",
+  "outputHash": "9427954411294a13d296a5cafc7c4e146878a0087289aa655f7cb41dd03beebb",
+  "reasoningEffort": "low",
+  "temperature": 0.3,
+  "maxTokens": 16000,
+  "timeoutMs": 200000,
+  "articleSummary": "The article argues that JavaScript async stack traces are inherently unreliable because `await` suspends functions, erasing call history—a problem V8's `--async-stack-traces` flag only mitigates at a 30% performance cost. The author, writing in an urgent, instructional tone aimed at production Node.js developers, recommends abandoning `Error.stack` in favor of `AsyncLocalStorage` to manually propagate context like request IDs across async boundaries. Recurring metaphors frame `await` as a \"cryogenic freezer\" and stack traces as a \"broken genealogy,\" while the core thesis insists on tracing causality over stack history.",
+  "totalInputTokens": 2413,
+  "totalOutputTokens": 935,
+  "totalCacheReadTokens": 0,
+  "totalCacheWriteTokens": 0,
+  "totalDurationMs": 6875,
+  "totalCostUsd": 0.0005996200000000001,
+  "pricingSource": "local-openrouter-estimate",
+  "telemetry": {
+    "model": "deepseek/deepseek-v4-flash",
+    "chunkSize": "18p",
+    "totalChunks": 2,
+    "totalInputTokens": 2413,
+    "totalOutputTokens": 935,
+    "totalCacheReadTokens": 0,
+    "totalCacheWriteTokens": 0,
+    "totalDurationMs": 6875,
+    "totalCostUsd": 0.0005996200000000001,
+    "pricingSource": "local-openrouter-estimate",
+    "chunks": [
+      {
+        "index": 0,
+        "inputTokens": 1167,
+        "outputTokens": 576,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 4391,
+        "costUsd": 0.00032466000000000005
+      },
+      {
+        "index": 1,
+        "inputTokens": 1246,
+        "outputTokens": 359,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 2484,
+        "costUsd": 0.00027496000000000004
+      }
+    ]
+  }
+}
