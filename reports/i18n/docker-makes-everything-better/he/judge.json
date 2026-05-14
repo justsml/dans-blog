@@ -1,0 +1,62 @@
+{
+  "selectedCommit": "bac51fa924d2ae8e696b2fa99dc52c633893a889",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "subTitle: 'דוקר יכול לעשות :הכל:!'",
+      "replacement": "subTitle: 'Docker can do :allthethings:!'",
+      "reason": "The emoji shortcode :allthethings: is a specific technical identifier/custom emoji and should not be translated into Hebrew text inside the colons, as it breaks the rendering. Reverting to the original subtitle also maintains consistency with the English 'Docker' branding used elsewhere."
+    }
+  ],
+  "rationale": "The DeepSeek candidate provided a high-quality translation that correctly interprets 'snapshot' as 'תמונת מצב' (contextual) rather than 'צילום מסך' (literal screenshot). It preserves MDX structure and asset paths correctly. The suggestion fixes a broken emoji shortcode in the subtitle.",
+  "slug": "docker-makes-everything-better",
+  "locale": "he",
+  "candidateCommits": [
+    "bac51fa924d2ae8e696b2fa99dc52c633893a889",
+    "07c50187293b7853b04a9e0a1aa637cb8c9afcd6"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "'דוקר יכול לעשות :הכל:!'",
+      "replacement": "'Docker יכול לעשות :הכל:!'",
+      "reason": "The term 'Docker' is usually kept in English in Hebrew technical contexts, and the candidate used 'Docker' in the H2 but 'דוקר' in the subTitle. Consistency is better.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "subTitle: 'Docker יכול לעשות :הכל:!'",
+      "replacement": "subTitle: 'Docker יכול לעשות :allthethings:!'",
+      "reason": "The emoji shortcode :allthethings: is a specific technical identifier/custom emoji used in the original and should not be translated to Hebrew text inside the colons, as it will break the emoji rendering.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "title: דוקר === אהבה",
+      "replacement": "title: \"Docker === Love\"",
+      "reason": "Maintaining the English 'Docker === Love' in the title is more consistent with the technical 'Docker === Love' branding and the author's style, and matches the H2 usage of 'Docker' in English.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug docker-makes-everything-better --locale he --skip-global",
+    "output": ""
+  }
+}
