@@ -1,0 +1,58 @@
+{
+  "index": 6,
+  "attempt": 1,
+  "originalTitle": "Identify Invalid Types",
+  "translatedTitle": "זיהוי סוגים לא חוקיים",
+  "translation": {
+    "title": "זיהוי סוגים לא חוקיים",
+    "group": "סוגי Postgres",
+    "options": [
+      {
+        "text": "int"
+      },
+      {
+        "text": "real"
+      },
+      {
+        "text": "bigint"
+      },
+      {
+        "text": "bigserial"
+      },
+      {
+        "text": "smallserial"
+      },
+      {
+        "text": "decimal128"
+      },
+      {
+        "text": "double precision"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "איזה מהבאים אינו ❌ סוג PostgreSQL חוקי?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "זה אולי נראה מוכר מכיוון ש-`decimal128` הוא סוג במקומות רבים (כולל Mongo ו-Java). זה לא סוג PostgreSQL חוקי, `decimal` הוא.\n\n    הסוגים המספריים הנכונים כוללים:\n    - `int` (מספר שלם של 4 בתים)\n    - `bigint` (מספר שלם של 8 בתים)\n    - `real` (נקודה צפה של 4 בתים)\n    - `double precision` (נקודה צפה של 8 בתים)\n    - `bigserial` (מספר שלם אוטו-אינקרמנטלי של 8 בתים)\n    - `smallserial` (מספר שלם אוטו-אינקרמנטלי של 2 בתים)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"זיהוי סוגים לא חוקיים\",\n  \"group\": \"סוגי Postgres\",\n  \"options\": [\n    {\"text\": \"int\"},\n    {\"text\": \"real\"},\n    {\"text\": \"bigint\"},\n    {\"text\": \"bigserial\"},\n    {\"text\": \"smallserial\"},\n    {\"text\": \"decimal128\"},\n    {\"text\": \"double precision\"}\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"איזה מהבאים אינו ❌ סוג PostgreSQL חוקי?\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"זה אולי נראה מוכר מכיוון ש-`decimal128` הוא סוג במקומות רבים (כולל Mongo ו-Java). זה לא סוג PostgreSQL חוקי, `decimal` הוא.\\n\\n    הסוגים המספריים הנכונים כוללים:\\n    - `int` (מספר שלם של 4 בתים)\\n    - `bigint` (מספר שלם של 8 בתים)\\n    - `real` (נקודה צפה של 4 בתים)\\n    - `double precision` (נקודה צפה של 8 בתים)\\n    - `bigserial` (מספר שלם אוטו-אינקרמנטלי של 8 בתים)\\n    - `smallserial` (מספר שלם אוטו-אינקרמנטלי של 2 בתים)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 880,
+    "outputTokens": 1305,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 9012,
+    "providerCostUsd": 0.000698,
+    "providerUpstreamCostUsd": 0.000698,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.0001232,
+    "outputUsd": 0.00036540000000000005,
+    "totalUsd": 0.0004886000000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

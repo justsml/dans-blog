@@ -1,0 +1,49 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "Integer Overflow",
+  "translatedTitle": "גלישת מספרים שלמים",
+  "translation": {
+    "title": "גלישת מספרים שלמים",
+    "group": "אריתמטיקת שלמים",
+    "options": [
+      {
+        "text": "4294967296"
+      },
+      {
+        "text": "שגיאה: מספר שלם מחוץ לטווח"
+      },
+      {
+        "text": "0"
+      },
+      {
+        "text": "2147483647"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "מה קורה כשמחשבים את סך כל תעודות הזהות האפשריות של תלמידים?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "סוג ה-`integer` של PostgreSQL הוא חתום ב-32 סיביות, בטווח שבין `-2,147,483,648` ל-`2,147,483,647`.\n\n    החישוב `256^4` = `4,294,967,296` חורג מהטווח הזה.\n\n    כדי לטפל במספרים גדולים יותר:"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"גלישת מספרים שלמים\",\n  \"group\": \"אריתמטיקת שלמים\",\n  \"options\": [\n    {\n      \"text\": \"4294967296\"\n    },\n    {\n      \"text\": \"שגיאה: מספר שלם מחוץ לטווח\"\n    },\n    {\n      \"text\": \"0\"\n    },\n    {\n      \"text\": \"2147483647\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"מה קורה כשמחשבים את סך כל תעודות הזהות האפשריות של תלמידים?\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"סוג ה-`integer` של PostgreSQL הוא חתום ב-32 סיביות, בטווח שבין `-2,147,483,648` ל-`2,147,483,647`.\\n\\n    החישוב `256^4` = `4,294,967,296` חורג מהטווח הזה.\\n\\n    כדי לטפל במספרים גדולים יותר:\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 821,
+    "outputTokens": 1641,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 11463,
+    "providerCostUsd": 0.0008206,
+    "providerUpstreamCostUsd": 0.0008206,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00011494000000000001,
+    "outputUsd": 0.00045948000000000007,
+    "totalUsd": 0.0005744200000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

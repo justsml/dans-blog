@@ -1,0 +1,49 @@
+{
+  "index": 11,
+  "attempt": 1,
+  "originalTitle": "Timestamp Precision",
+  "translatedTitle": "דיוק חותמת זמן",
+  "translation": {
+    "title": "דיוק חותמת זמן",
+    "group": "תאריך/שעה",
+    "options": [
+      {
+        "text": "2024-01-08 13:30:00+00"
+      },
+      {
+        "text": "2024-01-08 13:30:00.123456+00"
+      },
+      {
+        "text": "2024-01-08 13:30:00.123456789+00"
+      },
+      {
+        "text": "2024-01-08 13:30:00.1234567"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "מהו הערך הקטן ביותר של ליטרל `timestamp` שחורג מהדיוק המרבי של `time` ב-Postgres?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "לחותמות זמן ב-PostgreSQL יש דיוק של מיקרו-שניות (6 ספרות עשרוניות).\n\n    - מקסימום: `.123456` (6 ספרות)\n    - ננו-שניות (9 ספרות) מעוגלות או מקוצרות לדיוק הנתמך\n    - היסטוריית אזורי זמן מתקבלת עבור `timestamptz`, אך אינה נדרשת\n\n    **תופעה לא כל כך נפוצה:** שפות/מסגרות מסוימות שולחות דיוק של ננו-שניות, אך PostgreSQL מאחסן חותמות זמן בדיוק של מיקרו-שניות."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"דיוק חותמת זמן\",\n  \"group\": \"תאריך/שעה\",\n  \"options\": [\n    {\n      \"text\": \"2024-01-08 13:30:00+00\"\n    },\n    {\n      \"text\": \"2024-01-08 13:30:00.123456+00\"\n    },\n    {\n      \"text\": \"2024-01-08 13:30:00.123456789+00\"\n    },\n    {\n      \"text\": \"2024-01-08 13:30:00.1234567\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"מהו הערך הקטן ביותר של ליטרל `timestamp` שחורג מהדיוק המרבי של `time` ב-Postgres?\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"לחותמות זמן ב-PostgreSQL יש דיוק של מיקרו-שניות (6 ספרות עשרוניות).\\n\\n    - מקסימום: `.123456` (6 ספרות)\\n    - ננו-שניות (9 ספרות) מעוגלות או מקוצרות לדיוק הנתמך\\n    - היסטוריית אזורי זמן מתקבלת עבור `timestamptz`, אך אינה נדרשת\\n\\n    **תופעה לא כל כך נפוצה:** שפות/מסגרות מסוימות שולחות דיוק של ננו-שניות, אך PostgreSQL מאחסן חותמות זמן בדיוק של מיקרו-שניות.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 881,
+    "outputTokens": 1384,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 10006,
+    "providerCostUsd": 0.0007298,
+    "providerUpstreamCostUsd": 0.0007298,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00012334,
+    "outputUsd": 0.00038752000000000003,
+    "totalUsd": 0.00051086,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

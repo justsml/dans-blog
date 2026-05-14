@@ -1,0 +1,58 @@
+{
+  "index": 6,
+  "attempt": 1,
+  "originalTitle": "Identify Invalid Types",
+  "translatedTitle": "זיהוי סוגים לא חוקיים",
+  "translation": {
+    "title": "זיהוי סוגים לא חוקיים",
+    "group": "טיפוסי PostgreSQL",
+    "options": [
+      {
+        "text": "int"
+      },
+      {
+        "text": "real"
+      },
+      {
+        "text": "bigint"
+      },
+      {
+        "text": "bigserial"
+      },
+      {
+        "text": "smallserial"
+      },
+      {
+        "text": "decimal128"
+      },
+      {
+        "text": "double precision"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "איזה מהבאים אינו ❌ טיפוס PostgreSQL חוקי?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "זה אולי נראה מוכר מכיוון ש-`decimal128` הוא טיפוס במקומות רבים (כולל Mongo ו-Java). זה לא טיפוס PostgreSQL חוקי, `decimal` הוא.\n\n    הטיפוסים המספריים הנכונים כוללים:\n    - `int` (4-byte integer)\n    - `bigint` (8-byte integer)\n    - `real` (4-byte floating-point)\n    - `double precision` (8-byte floating-point)\n    - `bigserial` (auto-incrementing 8-byte integer)\n    - `smallserial` (auto-incrementing 2-byte integer)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"זיהוי סוגים לא חוקיים\",\n  \"group\": \"טיפוסי PostgreSQL\",\n  \"options\": [\n    {\"text\": \"int\"},\n    {\"text\": \"real\"},\n    {\"text\": \"bigint\"},\n    {\"text\": \"bigserial\"},\n    {\"text\": \"smallserial\"},\n    {\"text\": \"decimal128\"},\n    {\"text\": \"double precision\"}\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"איזה מהבאים אינו ❌ טיפוס PostgreSQL חוקי?\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"זה אולי נראה מוכר מכיוון ש-`decimal128` הוא טיפוס במקומות רבים (כולל Mongo ו-Java). זה לא טיפוס PostgreSQL חוקי, `decimal` הוא.\\n\\n    הטיפוסים המספריים הנכונים כוללים:\\n    - `int` (4-byte integer)\\n    - `bigint` (8-byte integer)\\n    - `real` (4-byte floating-point)\\n    - `double precision` (8-byte floating-point)\\n    - `bigserial` (auto-incrementing 8-byte integer)\\n    - `smallserial` (auto-incrementing 2-byte integer)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 859,
+    "outputTokens": 1052,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 6729,
+    "providerCostUsd": 0.0005926,
+    "providerUpstreamCostUsd": 0.0005926,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00012026,
+    "outputUsd": 0.00029456,
+    "totalUsd": 0.00041482000000000004,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

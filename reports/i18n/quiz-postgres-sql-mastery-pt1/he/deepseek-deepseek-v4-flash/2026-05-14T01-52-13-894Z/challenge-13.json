@@ -1,0 +1,52 @@
+{
+  "index": 12,
+  "attempt": 1,
+  "originalTitle": "Identify Invalid Types",
+  "translatedTitle": "זיהוי טיפוסים לא חוקיים",
+  "translation": {
+    "title": "זיהוי טיפוסים לא חוקיים",
+    "group": "טיפוסי PostgreSQL",
+    "options": [
+      {
+        "text": "lseg"
+      },
+      {
+        "text": "bytea"
+      },
+      {
+        "text": "tsquery"
+      },
+      {
+        "text": "tsvector"
+      },
+      {
+        "text": "tsrank"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "איזה מהבאים אינו ❌ טיפוס PostgreSQL חוקי?\n\n    (ברצינות, אלה (בעיקר) טיפוסים אמיתיים.)"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "ל-PostgreSQL יש מספר טיפוסים גאומטריים וטיפוסי חיפוש טקסט מובנים, אבל `tsrank` אינו אחד מהם.\n\n    הטיפוסים הגאומטריים וטיפוסי חיפוש הטקסט הנכונים כוללים:\n    - `lseg` (קטע קו)\n    - `bytea` (נתונים בינאריים)\n    - `tsquery` (שאילתת חיפוש טקסט)\n    - `tsvector` (מסמך חיפוש טקסט)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"זיהוי טיפוסים לא חוקיים\",\n  \"group\": \"טיפוסי PostgreSQL\",\n  \"options\": [\n    {\"text\": \"lseg\"},\n    {\"text\": \"bytea\"},\n    {\"text\": \"tsquery\"},\n    {\"text\": \"tsvector\"},\n    {\"text\": \"tsrank\"}\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"איזה מהבאים אינו ❌ טיפוס PostgreSQL חוקי?\\n\\n    (ברצינות, אלה (בעיקר) טיפוסים אמיתיים.)\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"ל-PostgreSQL יש מספר טיפוסים גאומטריים וטיפוסי חיפוש טקסט מובנים, אבל `tsrank` אינו אחד מהם.\\n\\n    הטיפוסים הגאומטריים וטיפוסי חיפוש הטקסט הנכונים כוללים:\\n    - `lseg` (קטע קו)\\n    - `bytea` (נתונים בינאריים)\\n    - `tsquery` (שאילתת חיפוש טקסט)\\n    - `tsvector` (מסמך חיפוש טקסט)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 824,
+    "outputTokens": 881,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 5788,
+    "providerCostUsd": 0.0005172,
+    "providerUpstreamCostUsd": 0.0005172,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00011536000000000001,
+    "outputUsd": 0.00024668,
+    "totalUsd": 0.00036204,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

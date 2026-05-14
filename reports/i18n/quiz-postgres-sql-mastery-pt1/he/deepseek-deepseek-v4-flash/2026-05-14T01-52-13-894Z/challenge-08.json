@@ -1,0 +1,55 @@
+{
+  "index": 7,
+  "attempt": 1,
+  "originalTitle": "Identify Invalid Types",
+  "translatedTitle": "זיהוי סוגים לא חוקיים",
+  "translation": {
+    "title": "זיהוי סוגים לא חוקיים",
+    "group": "סוגי PostgreSQL",
+    "options": [
+      {
+        "text": "cidr"
+      },
+      {
+        "text": "inet"
+      },
+      {
+        "text": "ipv4"
+      },
+      {
+        "text": "macaddr"
+      },
+      {
+        "text": "macaddr8"
+      },
+      {
+        "text": "interval"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "איזה מהבאים אינו ❌ סוג PostgreSQL חוקי?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "זה הכעיס אותך, אפילו _הרגיז_? אתה לא לבד! כפי שאמר תורם \"ליבה\" אנונימי, \"מה לעזאזל, דן?! נפלתי בשאלות הטיפוסים! זה אלים, אדוני! לא משתף את הציון שלי, חה חה.\" 😈 בבקשה.\n\n    מערך הטיפוסים העשיר של PostgreSQL לרשת אינו כולל את `ipv4`. בכל פעם שאני מנסה להשתמש בו בלי לחפש בגוגל, אני טועה. אולי `macaddr8` גורם לי להרגיש שחייבים להיות טיפוסים `ipv4` ו-`ipv6`. לא, `inet` מכסה את שניהם. כמו כן, `cidr` מכסה מסכות רשת לשניהם.\n\n    טיפוסי רשת חוקיים כוללים:\n    - `cidr` (כתובת רשת IPv4/IPv6)\n    - `inet` (כתובת מארח IPv4/IPv6)\n    - `macaddr` (כתובת MAC)\n    - `macaddr8` (כתובת MAC EUI-64)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"זיהוי סוגים לא חוקיים\",\n  \"group\": \"סוגי PostgreSQL\",\n  \"options\": [\n    {\"text\": \"cidr\"},\n    {\"text\": \"inet\"},\n    {\"text\": \"ipv4\"},\n    {\"text\": \"macaddr\"},\n    {\"text\": \"macaddr8\"},\n    {\"text\": \"interval\"}\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"איזה מהבאים אינו ❌ סוג PostgreSQL חוקי?\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"זה הכעיס אותך, אפילו _הרגיז_? אתה לא לבד! כפי שאמר תורם \\\"ליבה\\\" אנונימי, \\\"מה לעזאזל, דן?! נפלתי בשאלות הטיפוסים! זה אלים, אדוני! לא משתף את הציון שלי, חה חה.\\\" 😈 בבקשה.\\n\\n    מערך הטיפוסים העשיר של PostgreSQL לרשת אינו כולל את `ipv4`. בכל פעם שאני מנסה להשתמש בו בלי לחפש בגוגל, אני טועה. אולי `macaddr8` גורם לי להרגיש שחייבים להיות טיפוסים `ipv4` ו-`ipv6`. לא, `inet` מכסה את שניהם. כמו כן, `cidr` מכסה מסכות רשת לשניהם.\\n\\n    טיפוסי רשת חוקיים כוללים:\\n    - `cidr` (כתובת רשת IPv4/IPv6)\\n    - `inet` (כתובת מארח IPv4/IPv6)\\n    - `macaddr` (כתובת MAC)\\n    - `macaddr8` (כתובת MAC EUI-64)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 950,
+    "outputTokens": 1150,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 8878,
+    "providerCostUsd": 0.00065,
+    "providerUpstreamCostUsd": 0.00065,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000133,
+    "outputUsd": 0.000322,
+    "totalUsd": 0.000455,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "index": 13,
+  "attempt": 1,
+  "originalTitle": "Check Constraint Timing",
+  "translatedTitle": "תזמון בדיקת אילוץ (Check Constraint)",
+  "translation": {
+    "title": "תזמון בדיקת אילוץ (Check Constraint)",
+    "group": "אילוצים",
+    "options": [
+      {
+        "text": "מיד עבור שורות חדשות או שהשתנו"
+      },
+      {
+        "text": "בעת אישור הטרנזקציה"
+      },
+      {
+        "text": "בשאילתה הבאה"
+      },
+      {
+        "text": "לעולם לא - אילוצים נבדקים רק ב-INSERT"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "מתי נבדק אילוץ הציון הזה?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "אילוצי `NOT VALID`:\n    - נבדקים מיד עבור הוספות ועדכונים חדשים\n    - אינם מאמתים שורות קיימות\n    - ניתן לאמת שורות קיימות מאוחר יותר באמצעות `VALIDATE CONSTRAINT`\n    - שימושיים עבור טבלאות גדולות\n    \n    ללא `NOT VALID`:\n    - האילוץ נבדק מיד\n    - כל השורות הקיימות מאומתות\n    - עלול להיות איטי בטבלאות גדולות"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"תזמון בדיקת אילוץ (Check Constraint)\",\n  \"group\": \"אילוצים\",\n  \"options\": [\n    {\n      \"text\": \"מיד עבור שורות חדשות או שהשתנו\"\n    },\n    {\n      \"text\": \"בעת אישור הטרנזקציה\"\n    },\n    {\n      \"text\": \"בשאילתה הבאה\"\n    },\n    {\n      \"text\": \"לעולם לא - אילוצים נבדקים רק ב-INSERT\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"מתי נבדק אילוץ הציון הזה?\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"אילוצי `NOT VALID`:\\n    - נבדקים מיד עבור הוספות ועדכונים חדשים\\n    - אינם מאמתים שורות קיימות\\n    - ניתן לאמת שורות קיימות מאוחר יותר באמצעות `VALIDATE CONSTRAINT`\\n    - שימושיים עבור טבלאות גדולות\\n    \\n    ללא `NOT VALID`:\\n    - האילוץ נבדק מיד\\n    - כל השורות הקיימות מאומתות\\n    - עלול להיות איטי בטבלאות גדולות\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 816,
+    "outputTokens": 1274,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 13303,
+    "providerCostUsd": 0.0006728,
+    "providerUpstreamCostUsd": 0.0006728,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00011424,
+    "outputUsd": 0.00035672000000000004,
+    "totalUsd": 0.00047096000000000003,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "index": 7,
+  "attempt": 1,
+  "originalTitle": "Identify Invalid Types",
+  "translatedTitle": "זיהוי סוגים לא חוקיים",
+  "translation": {
+    "title": "זיהוי סוגים לא חוקיים",
+    "group": "סוגי PostgreSQL",
+    "options": [
+      {
+        "text": "cidr"
+      },
+      {
+        "text": "inet"
+      },
+      {
+        "text": "ipv4"
+      },
+      {
+        "text": "macaddr"
+      },
+      {
+        "text": "macaddr8"
+      },
+      {
+        "text": "interval"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "איזה מהבאים אינו ❌ סוג PostgreSQL חוקי?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "האם זה הוציא אותך מדעתך, אפילו _כועס_? אתה לא לבד! כדי לצטט תורם \"ליבה\" לא מזוהה למסד הנתונים, \"מה לעזאזל, דן?! התרסקתי על שאלות הטיפוסים! זה אלים, אדוני! לא משתף את הציון שלי, חה.\" 😈 בבקשה.\n\n    מערך טיפוסי הרשת העשיר של PostgreSQL אינו כולל `ipv4`. בכל פעם שאני מנסה להשתמש בו בלי לחפש בגוגל, אני טועה. אולי `macaddr8` גורם לי להרגיש שחייבים להיות טיפוסים `ipv4` ו-`ipv6`. לא, `inet` מכסה את שניהם. כמו כן, `cidr` מכסה מסכות רשת לשניהם.\n\n    טיפוסי רשת חוקיים כוללים:\n    - `cidr` (כתובת רשת IPv4/IPv6)\n    - `inet` (כתובת מארח IPv4/IPv6)\n    - `macaddr` (כתובת MAC)\n    - `macaddr8` (כתובת MAC EUI-64)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"זיהוי סוגים לא חוקיים\",\n  \"group\": \"סוגי PostgreSQL\",\n  \"options\": [\n    {\n      \"text\": \"cidr\"\n    },\n    {\n      \"text\": \"inet\"\n    },\n    {\n      \"text\": \"ipv4\"\n    },\n    {\n      \"text\": \"macaddr\"\n    },\n    {\n      \"text\": \"macaddr8\"\n    },\n    {\n      \"text\": \"interval\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"איזה מהבאים אינו ❌ סוג PostgreSQL חוקי?\"\n  ],\n  \"questionCode\": [],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"האם זה הוציא אותך מדעתך, אפילו _כועס_? אתה לא לבד! כדי לצטט תורם \\\"ליבה\\\" לא מזוהה למסד הנתונים, \\\"מה לעזאזל, דן?! התרסקתי על שאלות הטיפוסים! זה אלים, אדוני! לא משתף את הציון שלי, חה.\\\" 😈 בבקשה.\\n\\n    מערך טיפוסי הרשת העשיר של PostgreSQL אינו כולל `ipv4`. בכל פעם שאני מנסה להשתמש בו בלי לחפש בגוגל, אני טועה. אולי `macaddr8` גורם לי להרגיש שחייבים להיות טיפוסים `ipv4` ו-`ipv6`. לא, `inet` מכסה את שניהם. כמו כן, `cidr` מכסה מסכות רשת לשניהם.\\n\\n    טיפוסי רשת חוקיים כוללים:\\n    - `cidr` (כתובת רשת IPv4/IPv6)\\n    - `inet` (כתובת מארח IPv4/IPv6)\\n    - `macaddr` (כתובת MAC)\\n    - `macaddr8` (כתובת MAC EUI-64)\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 929,
+    "outputTokens": 817,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 9155,
+    "providerCostUsd": 0.0005126,
+    "providerUpstreamCostUsd": 0.0005126,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00013006,
+    "outputUsd": 0.00022876000000000003,
+    "totalUsd": 0.00035882000000000004,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

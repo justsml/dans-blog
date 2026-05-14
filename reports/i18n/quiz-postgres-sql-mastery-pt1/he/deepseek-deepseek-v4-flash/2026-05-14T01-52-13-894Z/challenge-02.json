@@ -1,0 +1,49 @@
+{
+  "index": 1,
+  "attempt": 1,
+  "originalTitle": "Cast Syntax Variations",
+  "translatedTitle": "וריאציות תחביר המרה",
+  "translation": {
+    "title": "וריאציות תחביר המרה",
+    "group": "חימום: המרת טיפוסים",
+    "options": [
+      {
+        "text": "'95'::INTEGER"
+      },
+      {
+        "text": "INTEGER '95'"
+      },
+      {
+        "text": "CAST('95', INTEGER)"
+      },
+      {
+        "text": "CAST('95' AS INTEGER)"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "איזו מהמרות הטיפוסים הבאות **אינה חוקית** ❌?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "PostgreSQL תומך בשלוש תחבירי המרה:\n\n    1. ANSI SQL: `CAST(expression AS type)`.\n    2. PostgreSQL: `expression::type`.\n    3. פונקציית טיפוס: `type 'literal'`.\n\n    כולם שקולים מבחינה פונקציונלית, אבל:\n    - `CAST()` הוא הנייד ביותר.\n    - `::` הוא ספציפי ל-PostgreSQL אך נפוץ בשימוש.\n    - סגנון אינפיקס `type 'literal'` פחות נפוץ אך עדיין חוקי."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"וריאציות תחביר המרה\",\n  \"group\": \"חימום: המרת טיפוסים\",\n  \"options\": [\n    {\"text\": \"'95'::INTEGER\"},\n    {\"text\": \"INTEGER '95'\"},\n    {\"text\": \"CAST('95', INTEGER)\"},\n    {\"text\": \"CAST('95' AS INTEGER)\"}\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"איזו מהמרות הטיפוסים הבאות **אינה חוקית** ❌?\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"PostgreSQL תומך בשלוש תחבירי המרה:\\n\\n    1. ANSI SQL: `CAST(expression AS type)`.\\n    2. PostgreSQL: `expression::type`.\\n    3. פונקציית טיפוס: `type 'literal'`.\\n\\n    כולם שקולים מבחינה פונקציונלית, אבל:\\n    - `CAST()` הוא הנייד ביותר.\\n    - `::` הוא ספציפי ל-PostgreSQL אך נפוץ בשימוש.\\n    - סגנון אינפיקס `type 'literal'` פחות נפוץ אך עדיין חוקי.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 835,
+    "outputTokens": 898,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 8497,
+    "providerCostUsd": 0.0005262,
+    "providerUpstreamCostUsd": 0.0005262,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00011690000000000001,
+    "outputUsd": 0.00025144,
+    "totalUsd": 0.00036834000000000004,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
