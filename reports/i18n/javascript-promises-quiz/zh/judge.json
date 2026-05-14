@@ -1,0 +1,28 @@
+{
+  "selectedCommit": "cc8104d5014d73dd95046f15cbacaaf96529936c",
+  "selectedModel": "openrouter/google/gemini-3-flash-preview",
+  "scores": {
+    "readability": 95,
+    "technicalAccuracy": 100,
+    "coherence": 95,
+    "relevance": 100,
+    "translationQuality": 95,
+    "mdxPreservation": 100
+  },
+  "suggestions": [],
+  "rationale": "The Gemini candidate provides the most natural and technically accurate translation. It correctly handles the MDX structure and asset paths. It uses standard Chinese technical terminology (e.g., '构造函数', '处理程序', '宿主环境') and maintains the informal yet professional tone of the original. Other candidates had minor issues like inconsistent spacing or slightly less natural phrasing in the explanation sections.",
+  "slug": "javascript-promises-quiz",
+  "locale": "zh",
+  "candidateCommits": [
+    "cc8104d5014d73dd95046f15cbacaaf96529936c",
+    "2b19ab21ddae13fdeace51f7a0cd70f743e54f7b",
+    "8f8c64d1ba4600242c9202cfbcab8cce1014af55"
+  ],
+  "suggestionLog": [],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug javascript-promises-quiz --locale zh --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug javascript-promises-quiz --locale zh --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug javascript-promises-quiz --locale zh --skip-global\n191 |     ]\n192 |     : [];\n193 | \n194 |   if (nestedAssetReferences.length === 0 && bareAssetReferences.length === 0) return;\n195 | \n196 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2019-11-26--javascript-promises-quiz/zh/index.mdx uses asset paths inside a locale folder that do not start with ../. Use ../ for inherited post assets.\n      at assertNestedAssetPaths (/Users/dan/code/oss/dans-blog/src/scripts/i18n/localized-mdx.ts:196:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:31:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}
