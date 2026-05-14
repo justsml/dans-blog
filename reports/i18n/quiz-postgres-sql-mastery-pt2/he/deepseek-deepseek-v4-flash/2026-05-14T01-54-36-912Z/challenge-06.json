@@ -1,0 +1,49 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Multi-Column Index Order",
+  "translatedTitle": "סדר אינדקס רב-עמודות",
+  "translation": {
+    "title": "סדר אינדקס רב-עמודות",
+    "group": "אינדקסים",
+    "options": [
+      {
+        "text": "CREATE INDEX ON students(grade_level, last_name);"
+      },
+      {
+        "text": "CREATE INDEX ON students(grade_level);"
+      },
+      {
+        "text": "CREATE INDEX ON students(last_name, age);"
+      },
+      {
+        "text": "CREATE INDEX ON students(first_name, last_name, grade_level);"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "איזה אינדקס מתאים יותר לשאילתה זו?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "להפתעתי, הדבר המפתיע כאן הוא שניתן להשתמש באינדקס רב-עמודות גם כאשר סדר העמודות בשאילתה אינו תואם להגדרת האינדקס.\n\n    **הערה:** באינדקסי B-tree, העמודה המובילה היא החשובה. מכיוון ששאילתה זו מסננת לפי `grade_level` ו-`last_name`, אינדקס שמתחיל ב-`grade_level` ואחריו `last_name` הוא מתאים.\n\n    ככל ש-SQL מצליח לבחור פחות שורות, הביצועים טובים יותר.\n\n    לדוגמה, אם יש לך טבלת `task`, ואתה יודע ש-`status` סלקטיבי יותר מ-`created_at`, ייתכן שתבחר באינדקס שמתחיל ב-`status` עבור שאילתה כמו `status = 'done' AND created_at > '2024-01-01'`. סדר התנאים בטקסט של `WHERE` אינו משנה; סדר העמודות באינדקס וצורת הפרדיקטים הם שקובעים.\n\n    ניתן להשתמש באינדקס B+Tree עבור:\n    - העמודה המובילה, או קידומת שמאלית של עמודות.\n    - אופרטורים כמו `=`, `>`, `<`, `BETWEEN`, ו-`IN`, בהתאם לצורת השאילתה.\n    - התאמת קידומת, `LIKE 'prefix%'`.\n\n    תודה ל-[u/mwdb2](https://www.reddit.com/r/PostgreSQL/comments/1h6kw87/comment/m0fovn0/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button) על שהצביע על טעות קודמת בהסבר זה!"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"סדר אינדקס רב-עמודות\",\n  \"group\": \"אינדקסים\",\n  \"options\": [\n    {\n      \"text\": \"CREATE INDEX ON students(grade_level, last_name);\"\n    },\n    {\n      \"text\": \"CREATE INDEX ON students(grade_level);\"\n    },\n    {\n      \"text\": \"CREATE INDEX ON students(last_name, age);\"\n    },\n    {\n      \"text\": \"CREATE INDEX ON students(first_name, last_name, grade_level);\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"איזה אינדקס מתאים יותר לשאילתה זו?\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"sql\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"להפתעתי, הדבר המפתיע כאן הוא שניתן להשתמש באינדקס רב-עמודות גם כאשר סדר העמודות בשאילתה אינו תואם להגדרת האינדקס.\\n\\n    **הערה:** באינדקסי B-tree, העמודה המובילה היא החשובה. מכיוון ששאילתה זו מסננת לפי `grade_level` ו-`last_name`, אינדקס שמתחיל ב-`grade_level` ואחריו `last_name` הוא מתאים.\\n\\n    ככל ש-SQL מצליח לבחור פחות שורות, הביצועים טובים יותר.\\n\\n    לדוגמה, אם יש לך טבלת `task`, ואתה יודע ש-`status` סלקטיבי יותר מ-`created_at`, ייתכן שתבחר באינדקס שמתחיל ב-`status` עבור שאילתה כמו `status = 'done' AND created_at > '2024-01-01'`. סדר התנאים בטקסט של `WHERE` אינו משנה; סדר העמודות באינדקס וצורת הפרדיקטים הם שקובעים.\\n\\n    ניתן להשתמש באינדקס B+Tree עבור:\\n    - העמודה המובילה, או קידומת שמאלית של עמודות.\\n    - אופרטורים כמו `=`, `>`, `<`, `BETWEEN`, ו-`IN`, בהתאם לצורת השאילתה.\\n    - התאמת קידומת, `LIKE 'prefix%'`.\\n\\n    תודה ל-[u/mwdb2](https://www.reddit.com/r/PostgreSQL/comments/1h6kw87/comment/m0fovn0/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button) על שהצביע על טעות קודמת בהסבר זה!\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 1106,
+    "outputTokens": 2306,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 14807,
+    "providerCostUsd": 0.0011436,
+    "providerUpstreamCostUsd": 0.0011436,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00015484,
+    "outputUsd": 0.00064568,
+    "totalUsd": 0.0008005200000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

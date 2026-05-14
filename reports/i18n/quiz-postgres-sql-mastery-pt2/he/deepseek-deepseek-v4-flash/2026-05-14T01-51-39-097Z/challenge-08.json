@@ -1,0 +1,52 @@
+{
+  "index": 7,
+  "attempt": 2,
+  "originalTitle": "Column Name Quoting",
+  "translatedTitle": "ציטוט שם עמודה",
+  "translation": {
+    "title": "ציטוט שם עמודה",
+    "group": "ציטוט 2",
+    "options": [
+      {
+        "text": "first.name"
+      },
+      {
+        "text": "\"first.name\""
+      },
+      {
+        "text": "\\"
+      },
+      {
+        "text": "[first.name]"
+      },
+      {
+        "text": "[first].[name]"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "איך מציינים **שם עמודה המכיל נקודה?**"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "PostgreSQL משתמשת במרכאות כפולות לציטוט מזהים:\n    - מרכאות כפולות `\"...\"` למזהים (שמות עמודות, שמות טבלאות)\n    - מרכאות בודדות `'...'` למחרוזות\n    - הצורה `first.name` מתפרשת כ-`table_name.column_name`\n\n    ללא מרכאות, נקודה בשם עמודה תתפרש כמפריד סכמה/טבלה! בנוסף, כל המזהים ללא מרכאות מומרים לאותיות קטנות כברירת מחדל.\n\n    כדי להפחית הפתעות, עדיף להשתמש ב-`snake_case` ולהימנע משימוש בתווים מיוחדים."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"ציטוט שם עמודה\",\n  \"group\": \"ציטוט 2\",\n  \"options\": [\n    {\n      \"text\": \"first.name\"\n    },\n    {\n      \"text\": \"\\\"first.name\\\"\"\n    },\n    {\n      \"text\": \"\\\\\"\n    },\n    {\n      \"text\": \"[first.name]\"\n    },\n    {\n      \"text\": \"[first].[name]\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"איך מציינים **שם עמודה המכיל נקודה?**\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"PostgreSQL משתמשת במרכאות כפולות לציטוט מזהים:\\n    - מרכאות כפולות `\\\"...\\\"` למזהים (שמות עמודות, שמות טבלאות)\\n    - מרכאות בודדות `'...'` למחרוזות\\n    - הצורה `first.name` מתפרשת כ-`table_name.column_name`\\n\\n    ללא מרכאות, נקודה בשם עמודה תתפרש כמפריד סכמה/טבלה! בנוסף, כל המזהים ללא מרכאות מומרים לאותיות קטנות כברירת מחדל.\\n\\n    כדי להפחית הפתעות, עדיף להשתמש ב-`snake_case` ולהימנע משימוש בתווים מיוחדים.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 886,
+    "outputTokens": 1569,
+    "cacheReadTokens": 640,
+    "cacheWriteTokens": 0,
+    "durationMs": 9841,
+    "providerCostUsd": 0.0007024,
+    "providerUpstreamCostUsd": 0.0007024,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000036232,
+    "outputUsd": 0.00043932000000000004,
+    "totalUsd": 0.00047555200000000007,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

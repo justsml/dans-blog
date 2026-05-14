@@ -1,0 +1,49 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Hash Join Eligibility",
+  "translatedTitle": "זכאות לחיבור Hash",
+  "translation": {
+    "title": "זכאות לחיבור Hash",
+    "group": "פנימיות SQL",
+    "options": [
+      {
+        "text": "ON a.id = b.id"
+      },
+      {
+        "text": "ON a.id > b.id"
+      },
+      {
+        "text": "ON a.id >= b.id"
+      },
+      {
+        "text": "HASH JOIN ON a.id = b.id ..."
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "באיזה תנאי `ON` יכול PostgreSQL להשתמש עבור `HASH JOIN`?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "חיבור Hash אפשרי עם תנאי שוויון (`=`) בסעיף `ON`.\n\n    - `=` הוא צורת הפרדיקט המפתח עבור חיבורי Hash\n    - `>` ו-`>=` אינם פרדיקטים של חיבור Hash\n    - `HASH JOIN` אינו תחביר תקין ב-PostgreSQL\n\n    המתכנן עדיין עשוי לבחור בלולאה מקוננת או חיבור מיזוג בהתאם לגודל הטבלה, סטטיסטיקות, אינדקסים והגדרות זיכרון."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"זכאות לחיבור Hash\",\n  \"group\": \"פנימיות SQL\",\n  \"options\": [\n    {\"text\": \"ON a.id = b.id\"},\n    {\"text\": \"ON a.id > b.id\"},\n    {\"text\": \"ON a.id >= b.id\"},\n    {\"text\": \"HASH JOIN ON a.id = b.id ...\"}\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"באיזה תנאי `ON` יכול PostgreSQL להשתמש עבור `HASH JOIN`?\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"חיבור Hash אפשרי עם תנאי שוויון (`=`) בסעיף `ON`.\\n\\n    - `=` הוא צורת הפרדיקט המפתח עבור חיבורי Hash\\n    - `>` ו-`>=` אינם פרדיקטים של חיבור Hash\\n    - `HASH JOIN` אינו תחביר תקין ב-PostgreSQL\\n\\n    המתכנן עדיין עשוי לבחור בלולאה מקוננת או חיבור מיזוג בהתאם לגודל הטבלה, סטטיסטיקות, אינדקסים והגדרות זיכרון.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 850,
+    "outputTokens": 1164,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 7764,
+    "providerCostUsd": 0.0006356,
+    "providerUpstreamCostUsd": 0.0006356,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000119,
+    "outputUsd": 0.00032592000000000005,
+    "totalUsd": 0.00044492000000000007,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "index": 7,
+  "attempt": 1,
+  "originalTitle": "Column Name Quoting",
+  "translatedTitle": "ציטוט שמות עמודות",
+  "translation": {
+    "title": "ציטוט שמות עמודות",
+    "group": "ציטוט 2",
+    "options": [
+      {
+        "text": "first.name"
+      },
+      {
+        "text": "\"first.name\""
+      },
+      {
+        "text": "\\"
+      },
+      {
+        "text": "[first.name]"
+      },
+      {
+        "text": "[first].[name]"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "איך מציינים **שם עמודה המכיל נקודה?**"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "PostgreSQL משתמש במרכאות כפולות לציטוט מזהים:\n    - מרכאות כפולות `\"...\"` עבור מזהים (שמות עמודות, שמות טבלאות)\n    - מרכאות בודדות `'...'` עבור מחרוזות מילוליות\n    - הצורה `first.name` מתפרשת כ-`table_name.column_name`\n\n    ללא מרכאות, נקודה בשם עמודה תתפרש כמפריד סכמה/טבלה! בנוסף, כל המזהים ללא מרכאות מומרים לאותיות קטנות כברירת מחדל.\n\n    כדי להפחית הפתעות, עדיף להשתמש ב-`snake_case` ולהימנע משימוש בתווים מיוחדים."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"ציטוט שמות עמודות\",\n  \"group\": \"ציטוט 2\",\n  \"options\": [\n    {\n      \"text\": \"first.name\"\n    },\n    {\n      \"text\": \"\\\"first.name\\\"\"\n    },\n    {\n      \"text\": \"\\\\\"\n    },\n    {\n      \"text\": \"[first.name]\"\n    },\n    {\n      \"text\": \"[first].[name]\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"איך מציינים **שם עמודה המכיל נקודה?**\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"sql\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"PostgreSQL משתמש במרכאות כפולות לציטוט מזהים:\\n    - מרכאות כפולות `\\\"...\\\"` עבור מזהים (שמות עמודות, שמות טבלאות)\\n    - מרכאות בודדות `'...'` עבור מחרוזות מילוליות\\n    - הצורה `first.name` מתפרשת כ-`table_name.column_name`\\n\\n    ללא מרכאות, נקודה בשם עמודה תתפרש כמפריד סכמה/טבלה! בנוסף, כל המזהים ללא מרכאות מומרים לאותיות קטנות כברירת מחדל.\\n\\n    כדי להפחית הפתעות, עדיף להשתמש ב-`snake_case` ולהימנע משימוש בתווים מיוחדים.\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 879,
+    "outputTokens": 1699,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 12007,
+    "providerCostUsd": 0.0008554,
+    "providerUpstreamCostUsd": 0.0008554,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00012306,
+    "outputUsd": 0.00047572000000000006,
+    "totalUsd": 0.00059878,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
