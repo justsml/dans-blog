@@ -1,0 +1,52 @@
+{
+  "index": 7,
+  "attempt": 1,
+  "originalTitle": "Negative Look-behind",
+  "translatedTitle": "Look-behind שלילי",
+  "translation": {
+    "title": "Look-behind שלילי",
+    "group": "Look-behind",
+    "options": [
+      {
+        "text": "[\"123\"]"
+      },
+      {
+        "text": "[\"123\", \"456\"]"
+      },
+      {
+        "text": "[\"23\", \"456\"]"
+      },
+      {
+        "text": "[\"456\"]"
+      },
+      {
+        "text": "[]"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "מה תואם לתבנית הזו?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "התבנית של look-behind שלילי `(?<!abc)` מבטיחה שהספרות אינן מוקדמות ב‑\"abc\":\n    - ❌ \"123\" (מוקדם ב‑\"abc\")\n    - ✅ \"23\" (מוקדם ב‑\"abc1\")\n    - ✅ \"456\" (מוקדם ב‑\"def\")\n\n    JavaScript תומך ב‑look-behind assertions במנועים מודרניים. בדוגמה זו משתמשים ב‑look-behind באורך קבוע: `abc` הוא תמיד שלושה תווים. look-behind באורך משתנה הוא תחום מורכב יותר ותלוי במנוע.\n\n    הערה: תמיכת look-behind היא יחסית חדשה ב‑JavaScript. בדוק את [תאימות הדפדפנים](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#browser_compatibility) אם אתה צריך לתמוך בדפדפנים ישנים."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Look-behind שלילי\",\n  \"group\": \"Look-behind\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"123\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"123\\\", \\\"456\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"23\\\", \\\"456\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"456\\\"]\"\n    },\n    {\n      \"text\": \"[]\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"מה תואם לתבנית הזו?\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"js\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"התבנית של look-behind שלילי `(?<!abc)` מבטיחה שהספרות אינן מוקדמות ב‑\\\"abc\\\":\\n    - ❌ \\\"123\\\" (מוקדם ב‑\\\"abc\\\")\\n    - ✅ \\\"23\\\" (מוקדם ב‑\\\"abc1\\\")\\n    - ✅ \\\"456\\\" (מוקדם ב‑\\\"def\\\")\\n\\n    JavaScript תומך ב‑look-behind assertions במנועים מודרניים. בדוגמה זו משתמשים ב‑look-behind באורך קבוע: `abc` הוא תמיד שלושה תווים. look-behind באורך משתנה הוא תחום מורכב יותר ותלוי במנוע.\\n\\n    הערה: תמיכת look-behind היא יחסית חדשה ב‑JavaScript. בדוק את [תאימות הדפדפנים](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#browser_compatibility) אם אתה צריך לתמוך בדפדפנים ישנים.\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 994,
+    "outputTokens": 911,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2219,
+    "providerCostUsd": 0.0006957,
+    "providerUpstreamCostUsd": 0.0006957,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000038766,
+    "outputUsd": 0.00016397999999999999,
+    "totalUsd": 0.00020274599999999999,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

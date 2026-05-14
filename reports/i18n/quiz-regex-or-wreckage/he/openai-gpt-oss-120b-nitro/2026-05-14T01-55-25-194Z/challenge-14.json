@@ -1,0 +1,49 @@
+{
+  "index": 13,
+  "attempt": 1,
+  "originalTitle": "Lazy vs Greedy Quantifiers",
+  "translatedTitle": "כמויות עצלניות מול קביות",
+  "translation": {
+    "title": "כמויות עצלניות מול קביות",
+    "group": "התאמה בסיסית",
+    "options": [
+      {
+        "text": "[\"<b>bold</b>\"]"
+      },
+      {
+        "text": "[\"bold\"]"
+      },
+      {
+        "text": "[\"<b>\", \"</b>\"]"
+      },
+      {
+        "text": "[]"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "מה תואם?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "הדפוס משתמש בהתאמה עצלנית עם `*?`:\n    - `<b>`: התאמת תג פתיחה\n    - `(.*?)`: לכידת כל תו (עצלנית)\n    - `</b>`: התאמת תג סגירה\n\n    ה-`?` אחרי `*` הופך את ההתאמה לעצלנית, כך שהיא תתפוס כמה שפחות תווים אפשריים.\n    ללא `?`, ההתאמה הייתה קבייה והייתה תופסת כמה שיותר.\n\n    `slice(1)` מחזיר רק את הקבוצה שנלכדה.\n\n    [למידע נוסף על התאמה קבייה מול עצלנית](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"כמויות עצלניות מול קביות\",\n  \"group\": \"התאמה בסיסית\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"<b>bold</b>\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"bold\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"<b>\\\", \\\"</b>\\\"]\"\n    },\n    {\n      \"text\": \"[]\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"מה תואם?\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"js\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"הדפוס משתמש בהתאמה עצלנית עם `*?`:\\n    - `<b>`: התאמת תג פתיחה\\n    - `(.*?)`: לכידת כל תו (עצלנית)\\n    - `</b>`: התאמת תג סגירה\\n\\n    ה-`?` אחרי `*` הופך את ההתאמה לעצלנית, כך שהיא תתפוס כמה שפחות תווים אפשריים.\\n    ללא `?`, ההתאמה הייתה קבייה והייתה תופסת כמה שיותר.\\n\\n    `slice(1)` מחזיר רק את הקבוצה שנלכדה.\\n\\n    [למידע נוסף על התאמה קבייה מול עצלנית](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 965,
+    "outputTokens": 459,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2564,
+    "providerCostUsd": 0.00042015,
+    "providerUpstreamCostUsd": 0.00042015,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000037635,
+    "outputUsd": 0.00008261999999999999,
+    "totalUsd": 0.00012025499999999999,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

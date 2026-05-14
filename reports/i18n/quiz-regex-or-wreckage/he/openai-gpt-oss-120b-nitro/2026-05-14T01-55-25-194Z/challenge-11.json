@@ -1,0 +1,49 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "Look-behind Split",
+  "translatedTitle": "פיצול עם Look-behind",
+  "translation": {
+    "title": "פיצול עם Look-behind",
+    "group": "Look-behind",
+    "options": [
+      {
+        "text": "[\"a,\", \"b,\", \"c\"]"
+      },
+      {
+        "text": "[\"a,b,c\"]"
+      },
+      {
+        "text": "[\"a\", \",\", \"b\", \",\", \"c\"]"
+      },
+      {
+        "text": "[\"a,b,c\", \"\"]"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "מה מוחזר?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "התבנית `/(?<=,)/` היא look-behind שמתאימה אחרי פסיק:\n    - `a,` (אחרי הפסיק)\n    - `b,` (אחרי הפסיק)\n    - `c` (אין פסיק אחרי)\n\n    ה‑look-behind אינו צורך את הפסיק, ולכן הפסיק נשאר מצורף לחלק הקודם בתוצאה של הפיצול.\n\n    זה שימושי כשאתם רוצים לפצל מחרוזת על בסיס מה שמופיע לפני המפריד **בלי לאבד את תו(י) הפיצול.**\n\n    [למידע נוסף על אסרטציות look-behind](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"פיצול עם Look-behind\",\n  \"group\": \"Look-behind\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"a,\\\", \\\"b,\\\", \\\"c\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"a,b,c\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"a\\\", \\\",\\\", \\\"b\\\", \\\",\\\", \\\"c\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"a,b,c\\\", \\\"\\\"]\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"מה מוחזר?\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"js\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"התבנית `/(?<=,)/` היא look-behind שמתאימה אחרי פסיק:\\n    - `a,` (אחרי הפסיק)\\n    - `b,` (אחרי הפסיק)\\n    - `c` (אין פסיק אחרי)\\n\\n    ה‑look-behind אינו צורך את הפסיק, ולכן הפסיק נשאר מצורף לחלק הקודם בתוצאה של הפיצול.\\n\\n    זה שימושי כשאתם רוצים לפצל מחרוזת על בסיס מה שמופיע לפני המפריד **בלי לאבד את תו(י) הפיצול.**\\n\\n    [למידע נוסף על אסרטציות look-behind](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 976,
+    "outputTokens": 455,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 1683,
+    "providerCostUsd": 0.0004002,
+    "providerUpstreamCostUsd": 0.0004002,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000038064,
+    "outputUsd": 0.0000819,
+    "totalUsd": 0.00011996399999999999,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Positive Look-ahead",
+  "translatedTitle": "הסתכלות קדימה חיובית",
+  "translation": {
+    "title": "הסתכלות קדימה חיובית",
+    "group": "הסתכלות קדימה",
+    "options": [
+      {
+        "text": "[\"$100\", \"€50\"]"
+      },
+      {
+        "text": "[\"100\", \"50\"]"
+      },
+      {
+        "text": "[\"$\", \"€\"]"
+      },
+      {
+        "text": "[]"
+      },
+      {
+        "text": "null"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "מה יתאים לזה?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "התבנית לא תתאים לשום דבר מכיוון שה‑look‑ahead הפוך! אם אתה רוצה ספרות שמוקדמות ב‑`$` או `€`, השתמש ב‑look‑behind: `/(?<=[\\$€])\\d+/g`.\n\nה‑look‑aheads בודקים מה מגיע *אחרי* המיקום הנוכחי. התבנית כפי שנכתבה מחפשת:\n- אחת או יותר ספרות (`\\d+`)\n- אחריה (`(?=...)`) או $ או € (`[\\$€]`)\n\nמאחר שאין מספרים שמאחרים בסמלי מטבע (הם מוקדמים בהם), לא נקבל התאמות.\n\n[למידע נוסף על אסרטציות look-ahead](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"הסתכלות קדימה חיובית\",\n  \"group\": \"הסתכלות קדימה\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"$100\\\", \\\"€50\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"100\\\", \\\"50\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"$\\\", \\\"€\\\"]\"\n    },\n    {\n      \"text\": \"[]\"\n    },\n    {\n      \"text\": \"null\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"מה יתאים לזה?\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"js\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"התבנית לא תתאים לשום דבר מכיוון שה‑look‑ahead הפוך! אם אתה רוצה ספרות שמוקדמות ב‑`$` או `€`, השתמש ב‑look‑behind: `/(?<=[\\\\$€])\\\\d+/g`.\\n\\nה‑look‑aheads בודקים מה מגיע *אחרי* המיקום הנוכחי. התבנית כפי שנכתבה מחפשת:\\n- אחת או יותר ספרות (`\\\\d+`)\\n- אחריה (`(?=...)`) או $ או € (`[\\\\$€]`)\\n\\nמאחר שאין מספרים שמאחרים בסמלי מטבע (הם מוקדמים בהם), לא נקבל התאמות.\\n\\n[למידע נוסף על אסרטציות look-ahead](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 993,
+    "outputTokens": 839,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 2622,
+    "providerCostUsd": 0.00063315,
+    "providerUpstreamCostUsd": 0.00063315,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000038727000000000004,
+    "outputUsd": 0.00015102,
+    "totalUsd": 0.000189747,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

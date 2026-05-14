@@ -1,0 +1,52 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "Greedy vs Non-Greedy",
+  "translatedTitle": "חמדני מול לא‑חמדני",
+  "translation": {
+    "title": "חמדני מול לא‑חמדני",
+    "group": "התאמה בסיסית",
+    "options": [
+      {
+        "text": "[\"<div>Hello</div>\"]"
+      },
+      {
+        "text": "[\"<div>\", \"</div>\"]"
+      },
+      {
+        "text": "[\"<div>Hello</div><div>World</div>\"]"
+      },
+      {
+        "text": "[\"<div>Hello</div>\", \"<div>World</div>\"]"
+      },
+      {
+        "text": "[\"Hello\", \"World\"]"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "מה יתאים לזה?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "הדפוס `/<div>.*?<\\/div>/g` משתמש בהתאמה לא‑חמדנית עם `*?` שמשמעותו:\n    - התאמה ל-`<div>`\n    - התאמה לכל תו (`.*`) אך כמה שפחות אפשרי (`?`)\n    - עד למציאת `</div>`\n    - הדגל `g` גורם להתאמה של כל המופעים\n\n    ללא ה-`?`, ההתאמה החמדנית `.*` הייתה מתאימה לכל דבר מה-`<div>` הראשון עד ל-`</div>` האחרון, ויוצרת התאמה אחת גדולה. עם `?`, היא מתאימה לכל זוג בנפרד.\n\n    [למידע נוסף על התאמה חמדנית מול עצלנית](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"חמדני מול לא‑חמדני\",\n  \"group\": \"התאמה בסיסית\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"<div>Hello</div>\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"<div>\\\", \\\"</div>\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"<div>Hello</div><div>World</div>\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"<div>Hello</div>\\\", \\\"<div>World</div>\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"Hello\\\", \\\"World\\\"]\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"מה יתאים לזה?\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"הדפוס `/<div>.*?<\\\\/div>/g` משתמש בהתאמה לא‑חמדנית עם `*?` שמשמעותו:\\n    - התאמה ל-`<div>`\\n    - התאמה לכל תו (`.*`) אך כמה שפחות אפשרי (`?`)\\n    - עד למציאת `</div>`\\n    - הדגל `g` גורם להתאמה של כל המופעים\\n\\n    ללא ה-`?`, ההתאמה החמדנית `.*` הייתה מתאימה לכל דבר מה-`<div>` הראשון עד ל-`</div>` האחרון, ויוצרת התאמה אחת גדולה. עם `?`, היא מתאימה לכל זוג בנפרד.\\n\\n    [למידע נוסף על התאמה חמדנית מול עצלנית](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1034,
+    "outputTokens": 706,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 1823,
+    "providerCostUsd": 0.0005595,
+    "providerUpstreamCostUsd": 0.0005595,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000040326,
+    "outputUsd": 0.00012708,
+    "totalUsd": 0.00016740600000000002,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

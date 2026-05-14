@@ -1,0 +1,49 @@
+{
+  "index": 8,
+  "attempt": 1,
+  "originalTitle": "Capturing Groups",
+  "translatedTitle": "קבוצות לכידה",
+  "translation": {
+    "title": "קבוצות לכידה",
+    "group": "התאמה בסיסית",
+    "options": [
+      {
+        "text": "[\"2029-12-31\"]"
+      },
+      {
+        "text": "[\"2029\", \"12\", \"31\"]"
+      },
+      {
+        "text": "[\"20\", \"29\", \"12\", \"31\"]"
+      },
+      {
+        "text": "null"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "מה זה יחזיר?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "הדפוס משתמש בשלוש קבוצות לכידה:\n    1. `(\\d{4})` לוכדת את השנה\n    2. `(\\d{2})` לוכדת את החודש\n    3. `(\\d{2})` לוכדת את היום\n\n    `match()` ללא הדגל `g` מחזיר:\n    - אינדקס 0: ההתאמה המלאה\n    - אינדקס 1+: קבוצות הלכידה\n\n    `slice(1)` הוא טריק נפוץ כדי לקבל רק את קבוצות הלכידה.\n\n    [למידע נוסף על קבוצות ולכידה](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Groups_and_Backreferences)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"קבוצות לכידה\",\n  \"group\": \"התאמה בסיסית\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"2029-12-31\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"2029\\\", \\\"12\\\", \\\"31\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"20\\\", \\\"29\\\", \\\"12\\\", \\\"31\\\"]\"\n    },\n    {\n      \"text\": \"null\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"מה זה יחזיר?\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"js\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"הדפוס משתמש בשלוש קבוצות לכידה:\\n    1. `(\\\\d{4})` לוכדת את השנה\\n    2. `(\\\\d{2})` לוכדת את החודש\\n    3. `(\\\\d{2})` לוכדת את היום\\n\\n    `match()` ללא הדגל `g` מחזיר:\\n    - אינדקס 0: ההתאמה המלאה\\n    - אינדקס 1+: קבוצות הלכידה\\n\\n    `slice(1)` הוא טריק נפוץ כדי לקבל רק את קבוצות הלכידה.\\n\\n    [למידע נוסף על קבוצות ולכידה](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Groups_and_Backreferences)\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 967,
+    "outputTokens": 439,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1694,
+    "providerCostUsd": 0.00040845,
+    "providerUpstreamCostUsd": 0.00040845,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000037712999999999996,
+    "outputUsd": 0.00007902,
+    "totalUsd": 0.000116733,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
