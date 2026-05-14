@@ -1,0 +1,121 @@
+# Translation Candidate
+- Slug: should-you-use-named-or-default-exports
+- Locale: zh
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2023-08-18--should-you-use-named-or-default-exports/zh/index.mdx
+- Validation: deferred
+- Runtime seconds: 6.51
+- Input tokens: 2845
+- Output tokens: 2737
+- Thinking tokens: unknown
+- Cached input tokens: 512
+- Cache write tokens: 0
+- Estimated cost: $0.000884
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: ESM 导出：命名与默认对比？
+subTitle: 命名，还是不命名？
+date: '2023-08-10'
+modified: '2024-08-01'
+tags:
+  - typescript
+  - javascript
+  - modules
+category: Guides
+subCategory: JavaScript
+cover: ../austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp
+cover_mobile: ../w300_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp
+cover_icon: ../icon_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp
+---
+## 在JavaScript中应该使用 `named` 还是 `default` 导出？
+
+关于这个话题的文章从不缺乏强烈的观点。
+
+大多数文章将 `default export` 判定为“糟糕”。另一些则坚持认为 `default` 应该胜出（例如 AirBnb 风格指南）。
+
+他们经常归咎于一些**完全临时性**的问题：IDE 自动导入错误、特定打包工具的tree-shaking能力，或者仅仅是命名导入时可能打错字的可能性。
+
+我们是否忽略了 `export` 最初的目的？
+
+**代码即沟通。✨**
+
+> 我们在向 `import` 者发送信号，告诉他们如何使用某个东西。
+
+### 那么，我们在传达什么？
+
+广义上讲，现代JavaScript中有两种导出方式：
+
+- `export default` 明确声明“这是**_最重要的单一_**东西。”同时，“任何命名导出都只是次要角色。”
+- `named export` 表示“这肯定是**_一个东西！_**”同时引发一些问题，“那边还有其他伙伴吗？” 进一步追问，“他们是受邀的还是必须的？”
+
+当然你可以结合使用两者，或者在代码库的不同部分采用不同方法。[在文章末尾查看更多示例。](#summary)
+
+### 虚弱的论点
+
+让我们解决一些常见的“临时性问题”。
+
+- 论点1：命名导出确保命名一致性。[来源](https://blog.neufund.org/why-we-have-banned-default-exports-and-you-should-do-the-same-d51fdc2cf2ad)
+  - 不，它们并不能。你可能在寻找一个lint规则？
+  - （我不得不告诉你，但等你学会变量能做什么时再告诉你吧！）
+
+```tsx
+// 两种导出都可以别名！
+import { Knife as Handle } from "./knife.js"; // 🔪
+import { default as Handle } from "./knife.js"; // 🔪
+import Handle from "./knife.js"; // 🔪
+```
+
+- 论点2：使用 `import * as soManyKnives from './kinves.js'` 来组合命名导出。（未提供来源，作者已撤回）
+  - 很酷的功能。但这不是重点。
+  - 现在告诉我，我该如何再次握住你的工具？没有作者意图。
+
+- 论点3：命名导出在IDE导入或重命名支持方面更好。[来源](https://www.bundleapps.io/blog/use-named-exports-over-default-exports-in-javascript)
+
+- 不正确（至少现在不是）。配置/更新你的工具。
+  - [VS Code](https://github.com/microsoft/vscode/pull/94480)、IntelliJ等工具已支持3年以上。
+  - 仍然有一些“最佳实践”可以与 `default exports` 结合使用，以获得最佳IDE和重构体验。
+  - ✅ `export default function UserService() {}` - 始终优先使用命名函数。
+  - ❌ `export default function() { }` - 匿名函数不会隐式绑定到文件名。如果你不给这个东西命名，就很难要求计算机去修改它。
+  - **注意：** 历史原因导致不能将 `export default` 与 `const` 表达式结合使用。
+
+    ```tsx
+    export default const Knife = () => {...blade, ...handle}
+    // ^ ❌ 不支持 ❌ ^
+    // 不能导出默认const...
+    // ==========================
+
+    // 但是，一旦声明后，你可以将const变量作为默认导出。
+    const Knife = () => {...blade, ...handle}
+    export default Knife;
+    // ^ ✅ 有效
+
+    // 完整性补充：
+    export default class anyoneStillUseThese {}
+    // ^ ✅ 同样有效，可以默认导出类
+    ```
+
+<section className="scroll-x">
+## 总结
+
+实际上，我们有很多种导出方式的组合，每种组合讲述不同的故事：
+
+| 默认导出 | 命名导出 | 私有函数 | 模式                                                   | 含义                                                       |
+| -------- | -------- | -------- | ------------------------------------------------------ | ---------------------------------------------------------- |
+| ✅       | ❌       | ❌       | 单个默认导出                                           | “呈现一个单一功能，单一目的！”                             |
+| ❌       | ✅       | ❌       | 单个命名导出                                           | “请不要重命名我。”                                         |
+| ✅       | ✅       | ✅       | 默认导出 + 多个未导出的“私有”函数                      | “这里有一些相关逻辑。同时，预期会有类似的结构。”           |
+| ❌       | ❌       | ✅       | 多个命名导出，通用文件名                                 | “一组松散相关的工具集合，没有层级关系。”                   |
+| ✅       | ✅       | ❌       | 单个命名导出同时作为默认导出                             | “你无法搞砸我的导入方式。”                                 |
+</section>
+
+**值得思考的问题：** 当文件名与其中一个导出项匹配或不匹配时，我们在传达什么？（例如，一个包含多个函数的 `utils.js` 文件。）
+
+### 结论
+
+如果代码即沟通，请务必认真对待你的 `export`。💖
+````
