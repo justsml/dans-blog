@@ -1,0 +1,108 @@
+---
+social_image: ../desktop-social.webp
+title: מבוא להבטחות
+subTitle: הבטחות JavaScript – כיף!
+date: '2018-08-01'
+modified: '2024-07-31'
+category: Code
+subCategory: promises
+tags:
+  - promises
+  - async
+  - javascript
+  - composition
+related:
+  - promise-gotchas
+  - visualizing-promises
+  - stop-trying-to-make-async-await-happen
+  - javascript-promises-quiz
+cover: ../joe-yates-480485-unsplash.webp
+cover_mobile: ../w300_joe-yates-480485-unsplash.webp
+cover_icon: ../icon_joe-yates-480485-unsplash.webp
+---
+## Promises... מה הקטע שלהם?
+
+בכל פעם שאתה מריץ קוד מחשב, יש שתי תוצאות אפשריות: **הצלחה** או **כישלון**.
+
+אם הקוד הוא אסינכרוני באופיו, יכול להיות קשה יותר להסתמך על התוצאה הזו בצורה אמינה.
+
+**`Promises`** מספקות דרך נוחה להתמודד עם זה.
+
+```
+                        +--Promise---+
+                        |            |
+                        | <-either-> |
+                        |            |
+                <-------+            +-------->
+                |Failure?             Success?|
+                |                             |
+                v                             v
+                (Rejected)           (Resolved)
+```
+
+> הערה צדדית: בעוד ש-Promises אמורות להיפתר או להידחות, ייתכן שהן לא יצליחו לעשות אף אחת מהן. זה גורם לאפליקציות להיתקע, ויכול להיות קשה מאוד לנפות באגים.
+
+### מאיפה מגיעות Promises?
+
+פעמים רבות לא תצטרך ליצור Promise בעצמך. ממשקי API מקוריים כמו `fetch` וספריות פופולריות כמו `axios` כבר מחזירות Promises.
+
+עם זאת, אם אתה חייב ליצור Promise, יש שתי דרכים לעשות זאת:
+
+### יצירת Promises #1/2:
+
+הדרך הפשוטה ביותר ליצור Promise היא באמצעות מתודת העזר: `Promise.resolve()`.
+
+אתה יכול לעטוף (או "להמיר") כל ערך ל-Promise באמצעות `Promise.resolve(value)`.
+
+```js
+// Without Promises:
+function add10(num) {
+  return num + 10
+}
+
+// With Promises:
+function add10Promised(num) {
+  return Promise.resolve(num + 10)
+}
+
+console.log(add10(10)) //=> 20
+
+add10Promised(10)
+  .then(x => console.log(x)) //=> 20
+```
+
+### יצירת Promises #2/2:
+
+שיטה נוספת וגמישה יותר: השתמש בבנאי `Promise`.
+
+`new Promise(callback)` מקבל פונקציית `callback` עם הממשק הבא:
+
+```js
+new Promise(function(resolve, reject) {
+  // The arguments `resolve` and `reject` are both functions.
+  // typeof resolve === 'function'
+  // typeof reject === 'function'
+
+  // `resolve(result)` must get executed when the promise is fulfilled
+  // `reject(Error)` must get executed if the promise is rejected
+})
+```
+
+### ממשק ה-API של Promises
+
+ממשק ה-API של Promises הוא למעשה מספר קטן של מתודות.
+
+2 פונקציות מופע, ו-4 פונקציות סטטיות/עזר.
+
+#### מתודות מופע של Promise
+
+גישה לערכים מ-Promise לא תעבוד באמצעות טריקים רגילים (למשל `console.log(promise)`).
+
+כל ה-Promises מחזירות או הצלחה (באמצעות `.then(fn)`) או כישלון (באמצעות `.catch(fn)`).
+
+#### מתודות עזר של Promise
+
+* `Promise.resolve(value)` - המרת כל ערך ל-Promise
+* `Promise.reject(Error)` - יוצר ערך Promise של כישלון, מפעיל `.catch()` לאחר מכן
+* `Promise.all([...promises])` - המתנה עד שכל מערך ה-Promises יושלם
+* `Promise.race([...promises])` - נפתר ברגע שה-Promise הראשון נפתר
