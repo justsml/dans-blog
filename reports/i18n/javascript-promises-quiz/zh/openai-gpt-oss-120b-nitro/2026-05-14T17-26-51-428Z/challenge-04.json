@@ -1,0 +1,49 @@
+{
+  "index": 3,
+  "attempt": 1,
+  "originalTitle": "Chaining `.catch`'s",
+  "translatedTitle": "链式 `.catch`",
+  "translation": {
+    "title": "链式 `.catch`",
+    "group": "错误处理",
+    "options": [
+      {
+        "text": "只打印一次错误信息"
+      },
+      {
+        "text": "打印两次错误信息"
+      },
+      {
+        "text": "出现 UnhandledPromiseRejectionWarning"
+      },
+      {
+        "text": "进程退出"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "下面的代码会输出什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "在链式 `.catch` 时，每个 `.catch` 只会处理前面的 `.then` 或 `.catch` “步骤”中抛出的错误。这个例子里，第一个 `.catch` 返回了 `console.log`，只有在两个 `.catch` 之后再加一个 `.then()` 才能访问到它。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"链式 `.catch`\",\n  \"group\": \"错误处理\",\n  \"options\": [\n    {\n      \"text\": \"只打印一次错误信息\"\n    },\n    {\n      \"text\": \"打印两次错误信息\"\n    },\n    {\n      \"text\": \"出现 UnhandledPromiseRejectionWarning\"\n    },\n    {\n      \"text\": \"进程退出\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"下面的代码会输出什么？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"在链式 `.catch` 时，每个 `.catch` 只会处理前面的 `.then` 或 `.catch` “步骤”中抛出的错误。这个例子里，第一个 `.catch` 返回了 `console.log`，只有在两个 `.catch` 之后再加一个 `.then()` 才能访问到它。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 864,
+    "outputTokens": 275,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 1117,
+    "providerCostUsd": 0.0002754,
+    "providerUpstreamCostUsd": 0.0002754,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000033696000000000004,
+    "outputUsd": 0.000049500000000000004,
+    "totalUsd": 0.00008319600000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
