@@ -1,0 +1,61 @@
+{
+  "index": 12,
+  "attempt": 1,
+  "originalTitle": "Arc and Mutex",
+  "translatedTitle": "Arc و Mutex",
+  "translation": {
+    "title": "Arc و Mutex",
+    "group": "المؤشرات الذكية",
+    "options": [
+      {
+        "text": "يطبع: 42",
+        "hint": "الكود لن يصل أبداً إلى جملة الطباعة"
+      },
+      {
+        "text": "يطبع: 43",
+        "hint": "الكود سيتعطل قبل الطباعة"
+      },
+      {
+        "text": "خطأ في التجميع",
+        "hint": "الكود صحيح نحويًا"
+      },
+      {
+        "text": "ذعر أثناء التشغيل",
+        "hint": "إنه أسوأ من الذعر"
+      },
+      {
+        "text": "توقف"
+      }
+    ],
+    "objectives": [
+      "تحليل أنماط الوصول المتزامن باستخدام Arc و Mutex",
+      "تحديد سيناريوهات الـ deadlock المحتملة",
+      "تطبيق أنماط المزامنة الصحيحة لمنع الـ deadlock"
+    ],
+    "questionProse": [
+      "ماذا يحدث عندما يُنفّذ هذا الكود؟"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "هذا الكود يوضح سيناريو deadlock كلاسيكي. إليك طريقة إصلاحه:",
+      "أفضل الممارسات لمنع الـ deadlock:\n      1. إبقاء الأقسام الحرجة صغيرة\n      2. تحرير الأقفال بسرعة باستخدام النطاقات\n      3. الحصول على أقفال متعددة بترتيب ثابت\n      4. استخدام parking_lot::Mutex لأداء أفضل\n      5. النظر في استخدام RwLock للأحمال الثقيلة للقراءة\n\n      الأنماط الشائعة:"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Arc و Mutex\",\n  \"group\": \"المؤشرات الذكية\",\n  \"options\": [\n    {\n      \"text\": \"يطبع: 42\",\n      \"hint\": \"الكود لن يصل أبداً إلى جملة الطباعة\"\n    },\n    {\n      \"text\": \"يطبع: 43\",\n      \"hint\": \"الكود سيتعطل قبل الطباعة\"\n    },\n    {\n      \"text\": \"خطأ في التجميع\",\n      \"hint\": \"الكود صحيح نحويًا\"\n    },\n    {\n      \"text\": \"ذعر أثناء التشغيل\",\n      \"hint\": \"إنه أسوأ من الذعر\"\n    },\n    {\n      \"text\": \"توقف\"\n    }\n  ],\n  \"objectives\": [\n    \"تحليل أنماط الوصول المتزامن باستخدام Arc و Mutex\",\n    \"تحديد سيناريوهات الـ deadlock المحتملة\",\n    \"تطبيق أنماط المزامنة الصحيحة لمنع الـ deadlock\"\n  ],\n  \"questionProse\": [\n    \"ماذا يحدث عندما يُنفّذ هذا الكود؟\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"هذا الكود يوضح سيناريو deadlock كلاسيكي. إليك طريقة إصلاحه:\",\n    \"أفضل الممارسات لمنع الـ deadlock:\\n      1. إبقاء الأقسام الحرجة صغيرة\\n      2. تحرير الأقفال بسرعة باستخدام النطاقات\\n      3. الحصول على أقفال متعددة بترتيب ثابت\\n      4. استخدام parking_lot::Mutex لأداء أفضل\\n      5. النظر في استخدام RwLock للأحمال الثقيلة للقراءة\\n\\n      الأنماط الشائعة:\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1030,
+    "outputTokens": 1032,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 2571,
+    "providerCostUsd": 0.0007353,
+    "providerUpstreamCostUsd": 0.0007353,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00004017,
+    "outputUsd": 0.00018575999999999998,
+    "totalUsd": 0.00022593,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

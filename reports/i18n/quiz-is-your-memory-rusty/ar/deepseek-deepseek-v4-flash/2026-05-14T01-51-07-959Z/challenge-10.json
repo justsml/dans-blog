@@ -1,0 +1,57 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Cell vs RefCell",
+  "translatedTitle": "Cell مقابل RefCell",
+  "translation": {
+    "title": "Cell مقابل RefCell",
+    "group": "القابلية للتغيير",
+    "options": [
+      {
+        "text": "يطبع: 42, 43"
+      },
+      {
+        "text": "يطبع: 43, 43",
+        "hint": "Cell::get() تُرجع القيمة في وقت الاستدعاء"
+      },
+      {
+        "text": "خطأ في الترجمة",
+        "hint": "Cell مصمم خصيصًا لهذه الحالة"
+      },
+      {
+        "text": "ذعر وقت التشغيل",
+        "hint": "عمليات Cell آمنة دائمًا للأنواع القابلة للنسخ (Copy)"
+      }
+    ],
+    "objectives": [
+      "التمييز بين أنماط استخدام Cell و RefCell",
+      "تطبيق Cell للقابلية للتغيير الداخلي البسيطة",
+      "مقارنة سلوك الأنواع القابلة للنسخ (Copy) وغير القابلة للنسخ مع Cell"
+    ],
+    "questionProse": [
+      "ماذا سيطبع هذا الكود؟"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "Cell و RefCell يخدمان أغراضًا مختلفة للقابلية للتغيير الداخلي:",
+      "الاختلافات الرئيسية:\n      1. Cell:\n         - يعمل بشكل أفضل مع الأنواع القابلة للنسخ (Copy)\n         - لا يحتوي على واجهة برمجة للاقتراض\n         - دائمًا ينسخ أو ينقل القيم\n      \n      2. RefCell:\n         - يعمل مع أي نوع\n         - يحتوي على واجهة برمجة للاقتراض\n         - فحص الاقتراض في وقت التشغيل\n\n      أفضل الممارسات:\n      1. استخدم Cell للأنواع القابلة للنسخ البسيطة (الأرقام، bool، إلخ)\n      2. استخدم RefCell عندما تحتاج إلى اقتراض المحتويات\n      3. حافظ على التعديلات عبر Cell/RefCell إلى الحد الأدنى\n      4. وثّق سبب الحاجة إلى القابلية للتغيير الداخلي"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Cell مقابل RefCell\",\n  \"group\": \"القابلية للتغيير\",\n  \"options\": [\n    {\n      \"text\": \"يطبع: 42, 43\"\n    },\n    {\n      \"text\": \"يطبع: 43, 43\",\n      \"hint\": \"Cell::get() تُرجع القيمة في وقت الاستدعاء\"\n    },\n    {\n      \"text\": \"خطأ في الترجمة\",\n      \"hint\": \"Cell مصمم خصيصًا لهذه الحالة\"\n    },\n    {\n      \"text\": \"ذعر وقت التشغيل\",\n      \"hint\": \"عمليات Cell آمنة دائمًا للأنواع القابلة للنسخ (Copy)\"\n    }\n  ],\n  \"objectives\": [\n    \"التمييز بين أنماط استخدام Cell و RefCell\",\n    \"تطبيق Cell للقابلية للتغيير الداخلي البسيطة\",\n    \"مقارنة سلوك الأنواع القابلة للنسخ (Copy) وغير القابلة للنسخ مع Cell\"\n  ],\n  \"questionProse\": [\n    \"ماذا سيطبع هذا الكود؟\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"rust\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"Cell و RefCell يخدمان أغراضًا مختلفة للقابلية للتغيير الداخلي:\",\n    \"الاختلافات الرئيسية:\\n      1. Cell:\\n         - يعمل بشكل أفضل مع الأنواع القابلة للنسخ (Copy)\\n         - لا يحتوي على واجهة برمجة للاقتراض\\n         - دائمًا ينسخ أو ينقل القيم\\n      \\n      2. RefCell:\\n         - يعمل مع أي نوع\\n         - يحتوي على واجهة برمجة للاقتراض\\n         - فحص الاقتراض في وقت التشغيل\\n\\n      أفضل الممارسات:\\n      1. استخدم Cell للأنواع القابلة للنسخ البسيطة (الأرقام، bool، إلخ)\\n      2. استخدم RefCell عندما تحتاج إلى اقتراض المحتويات\\n      3. حافظ على التعديلات عبر Cell/RefCell إلى الحد الأدنى\\n      4. وثّق سبب الحاجة إلى القابلية للتغيير الداخلي\"\n  ],\n  \"explanationCode\": [\n    {\n      \"language\": \"rust\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 972,
+    "outputTokens": 2220,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 12148,
+    "providerCostUsd": 0.0010824,
+    "providerUpstreamCostUsd": 0.0010824,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00013608,
+    "outputUsd": 0.0006216000000000001,
+    "totalUsd": 0.0007576800000000002,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
