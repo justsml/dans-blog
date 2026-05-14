@@ -1,0 +1,46 @@
+{
+  "selectedCommit": "e37122f3b01b52c45d74077380570bd6061faa87",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 5,
+    "technicalAccuracy": 5,
+    "coherence": 5,
+    "relevance": 5,
+    "translationQuality": 5,
+    "mdxPreservation": 5
+  },
+  "suggestions": [],
+  "rationale": "The current Hebrew translation already incorporates the high and medium priority fixes suggested in the previous judge report (fixing the 'no fucks left' idiom and the 'disruptor' terminology). The translation is technically sound, preserves MDX structure, and captures Dan's satirical tone effectively.",
+  "slug": "breaking-unicorns",
+  "locale": "he",
+  "candidateCommits": [
+    "e37122f3b01b52c45d74077380570bd6061faa87",
+    "f06baaa1b2339df555bcc4b26d9ffe9375a93015"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "כמו _נגמרו הזין._",
+      "replacement": "כמו _נגמרו הזינים לתת._",
+      "reason": "The original 'no fucks left' is an idiom. The candidate's literal translation is grammatically incorrect in Hebrew; the suggested replacement is a more natural (though still vulgar) slang equivalent.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "האם אתה מופרע?",
+      "replacement": "האם אתה משבש?",
+      "reason": "'Disrupted' in a startup context refers to 'Disruption' (innovation), not being mentally 'disturbed' (מופרע).",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug breaking-unicorns --locale he --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug breaking-unicorns --locale he --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug breaking-unicorns --locale he --skip-global\n75 |   const sourceComponents = new Set(\n76 |     [...sourceContents.matchAll(/<\\/?([A-Z][A-Za-z0-9_.]*)\\b/g)].map((match) => match[1]),\n77 |   );\n78 |   for (const component of sourceComponents) {\n79 |     if (!new RegExp(`</?${escapeRegExp(component)}\\\\b`).test(targetContents)) {\n80 |       throw new Error(`Missing preserved MDX component in ${targetPath}: ${component}`);\n                     ^\nerror: Missing preserved MDX component in /Users/dan/code/oss/dans-blog/src/content/posts/2024-09-01--breaking-unicorns/he/index.mdx: Insert\n      at assertProtectedTokens (/Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:80:17)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}
