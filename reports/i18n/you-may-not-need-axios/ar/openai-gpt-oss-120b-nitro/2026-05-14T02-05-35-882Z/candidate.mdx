@@ -1,0 +1,204 @@
+---
+social_image: ../desktop-social.webp
+title: (لا يوجد عنوان للترجمة)
+subTitle: Fetch API للإنقاذ!
+date: '2018-11-14'
+modified: '2024-08-21'
+tags:
+  - programming
+  - patterns
+  - examples
+  - nodejs
+  - javascript
+  - promises
+  - axios
+  - fetch
+category: Guides
+subCategory: fetch
+cover: ../brock-dupont-575648-unsplash.webp
+cover_mobile: ../w300_brock-dupont-575648-unsplash.webp
+cover_icon: ../icon_brock-dupont-575648-unsplash.webp
+---
+import Gist from '../../../../components/Gist/index.astro'
+
+## قد لا تحتاج إلى Axios
+
+<p class="breakout call-to-action">هذا **ليس هجومًا** على [Axios](https://www.npmjs.com/package/axios). <br />
+
+بل هو **دعم لاستخدام واجهة `fetch` التي أصبحت قوية جدًا.** 🦄</p>
+
+### نظرة عامة
+
+هذه المقالة مجموعة من مقتطفات `fetch` “المفقودة” وحالات الاستخدام الشائعة التي أتمنى لو كانت أسهل في العثور عليها.
+
+- [نظرة عامة](#overview)
+- [مقارنة الميزات](#feature-comparison)
+- [وصفات fetch](#fetch-recipes)
+  - [جلب JSON من عنوان URL](#get-json-from-a-url)
+  - [رؤوس مخصصة](#custom-headers)
+  - [معالجة أخطاء HTTP](#http-error-handling)
+  - [مثال CORS](#cors-example)
+  - [إرسال JSON](#posting-json)
+  - [إرسال نموذج HTML `<form>`](#posting-an-html-form)
+  - [بيانات مشفرة بنموذج](#form-encoded-data)
+  - [رفع ملف](#uploading-a-file)
+  - [رفع ملفات متعددة](#uploading-multiple-files)
+  - [مهلات زمنية](#timeouts)
+  - [مساعد تتبع تحميل الملفات](#download-progress-helper)
+  - [مساعد إعادة المحاولة المتكررة](#recursive-retry-helper)
+  - [معالجة إعادة توجيه HTTP](#handling-http-redirects)
+  - [إلغاء طلب fetch](#canceling-a-fetch-request) ✨new✨
+- [التوافقية](#compatibility)
+
+> هل حالتك غير مدرجة؟ [أخبرني ✉️](/contact/)
+
+<br />
+
+### مقارنة الميزات
+
+|                                                 | fetch    | axios    | request |
+|-------------------------------------------------|:--------:|:--------:|:-------:|
+| اعتراض الطلب والاستجابة                         |✅        |✅         |✅       |
+| تحويل بيانات الطلب والاستجابة                    |✅        |✅         |✅       |
+| إلغاء الطلبات                                    |✅        |✅         |❌       |
+| تحويلات تلقائية لبيانات JSON                     |مساعدات يدوية |✅         |✅       |
+| دعم جانب العميل للحماية من XSRF                 |✅        |✅         |✅       |
+| التقدّم (Progress)                               |✅        |✅         |✅       |
+| البث (Streaming)                                 |✅        |✅         |✅       |
+| إعادة التوجيه (Redirects)                       |✅        |✅         |✅       |
+
+<br /><br />
+
+عند بدء كتابة هذه المقالة (أواخر 2018، محدثة 2024) افترضت أنني سأنتهي بجدول من مربعات الاختيار المختلطة. بالتأكيد هناك _حالات استخدام_ خاصة تبرر وجود [`axios`](https://www.npmjs.com/package/axios)، [`request`](https://www.npmjs.com/package/request)، [`r2`](https://www.npmjs.com/package/r2)، [`superagent`](https://www.npmjs.com/package/superagent)، [`got`](https://www.npmjs.com/package/got) وغيرها.
+
+حسنًا، كما تبيّن، **لقد بالغت في تقدير الحاجة إلى مكتبات HTTP من الطرف الثالث**.
+
+على الرغم من استخدامي لـ `fetch` لعدة سنوات (بما في ذلك مهام غير بسيطة: رفع ملفات ودعم الأخطاء/إعادة المحاولة) ما زلت أملك تصورات خاطئة حول قدرات `fetch` وحدوده.
+
+`fetch` الأصلي لا يحلل استجابات JSON تلقائيًا ولا يحول أجسام الطلبات إلى JSON تلقائيًا. عليك استدعاء `response.json()` عند الاستلام و`JSON.stringify()` عند الإرسال. لا يزال Axios يتفوق في هذه النقطة من حيث السهولة؛ الحجة لصالح `fetch` هي أن مساعدًا صغيرًا يغطي الفجوة في معظم الأحيان.
+
+حسنًا، دعنا نتحقق مما يمكن لـ `fetch` القيام به...
+
+## وصفات fetch
+
+### جلب JSON من عنوان URL
+
+<Gist path='justsml/de941bd61cc86e30beedbb8a3a646f81'></Gist>
+
+### رؤوس مخصصة
+
+<Gist path='justsml/fca7cd72ec1ebc07d994eac13a665ddf' />
+
+### معالجة أخطاء HTTP
+
+<Gist path='justsml/81919a72897ebc503c6b34a556a9bde2' />
+
+### مثال CORS
+
+يتم فحص CORS أساسًا على الخادم – لذا تأكد من أن إعداداتك صحيحة على جانب الخادم.
+
+خيار `credentials` يتحكم فيما إذا كانت ملفات تعريف الارتباط تُضمّن تلقائيًا.
+
+<Gist path='justsml/3ddd9ed8705f48cdf45d313d1e57aa2a' />
+
+### إرسال JSON
+
+<Gist path='justsml/13915347d6c8413c73f4bd7240c68e51' />
+
+### نشر نموذج HTML `<form>`
+
+<Gist path='justsml/ef2e356bec0ef7c6e528d84a5f75ba7e' />
+
+### بيانات مشفّرة بصيغة Form
+
+لنشر البيانات مع رأس `Content-Type` يساوي `application/x-www-form-urlencoded` سنستخدم `URLSearchParams` لتشفير البيانات كما في سلسلة الاستعلام.
+
+على سبيل المثال، `new URLSearchParams({a: 1, b: 2})` ينتج `a=1&b=2`.
+
+<Gist path='justsml/716c4534ef4afb22f65d4fc4367c7136' />
+
+### رفع ملف
+
+<Gist path='justsml/301f22aa37df565ba3051bd5f95b4df1' />
+
+### رفع ملفات متعددة
+
+قم بإعداد عنصر رفع ملفات مع السمة `multiple`:
+
+<Gist path='justsml/37836357041d8ca4d1b32e12638cb0ba' />
+
+ثم استخدمها مع شيء مثل:
+
+<Gist path='justsml/d17f50c36a5ddb70f584c0aa6de94237' />
+
+### مهلات (Timeouts)
+
+هذا مثال عام على مهلة باستخدام نمط “التطبيق الجزئي”. سيعمل مع أي واجهة Promise. لا تُجري الكثير من العمل داخل سلسلة الـ Promise المقدَّمة، لأنها ستستمر في التنفيذ – وأي فشل قد يخلق تسريبات ذاكرة طويلة الأمد.
+
+<Gist path='justsml/f93b2ef6457b3e52eb995831b67cab85' />
+
+ومثال أكثر تعقيدًا، يتضمن علم تتبع `__timeout` لتتمكن من **اعتراض أي عمل مكلف**.
+
+<Gist path='justsml/5e492db8997a4f7e22e61b7486cbf273' />
+
+### أداة مساعدة لتتبع تحميل الملفات (Download Progress Helper)
+
+تتبع تحميل الملفات لا يزال معطوبًا قليلًا خارج Chrome.
+
+معالج التقدم **[التقنية الموضحة أدناه تتجنب تغليف](#source-progress-helper) استدعاء `fetch` داخل إغلاق**. 👍  
+
+`progressHelper` له الواجهة التالية (المصدر متاح أدناه)
+
+<Gist path='../justsml/db5ccc55ffb93c75e04e014d1f553cfb' />
+
+لنلقِ نظرة على مثال للاستخدام:
+
+<Gist path='../justsml/9bec219590ff50688972c1caff67c14b' />
+
+قد يبدو مُنزِّل الصور القابل لإعادة الاستخدام كدالة `getBlob()`:
+
+<Gist path='../justsml/bef2dd7e630eb7642beb3e2be29489b2' />
+
+بالمناسبة، الـ `Blob` هو كائن ثنائي كبير (Binary Large Object).
+
+من المهم اختيار **واحد** من نمطَي الاستخدام أدناه (هما متكافئان وظيفيًا):
+
+<Gist path='../justsml/6ad9e37a96ad1f3a75ca509038510a5b' />
+
+تفضيلي هو `الخيار #1`. ومع ذلك، قد يجبرك تصميم نطاقك على استخدام `الخيار #2`.
+
+وأخيرًا، إليك الجزء الأخير من هذه الوصفة، وهو `progressHelper` الخاص بنا:
+
+##### المصدر: مساعد التقدم
+
+<Gist path='../justsml/a8ffd810fc7e5a5295dfc898302ddbfc' />
+
+_شكر خاص:_ شكرًا لـ Anthum Chris و[دليل إثبات المفهوم الرائع لتقدم + fetch المعروض هنا](https://github.com/AnthumChris/fetch-progress-indicators)
+
+### مساعد إعادة المحاولة المتكررة
+
+<Gist path='../justsml/7e52521a0af50fa590be57d5b4593120' />
+
+### التعامل مع عمليات إعادة توجيه HTTP
+
+<Gist path='../justsml/3dd0a799ada8da7cd15943ff254266de' />
+
+### إلغاء طلب fetch
+
+<Gist path='../justsml/7f257ac3de3c7792db8485588c54e938' />
+
+### التوافق
+
+اعتبارًا من عام 2022، تُدعم واجهة برمجة التطبيقات `fetch` على نطاق واسع [هنا](https://caniuse.com/#feat=fetch) في جميع المتصفحات الحديثة وفي إصدارات NodeJS الأحدث v18+.
+
+إذا كان لا بد لك من دعم Internet Explorer يمكنك [إضافة polyfill لـ fetch](https://github.com/github/fetch#browser-support) باستخدام حزمة `github/fetch` (يُديرها فريق رائع في GitHub). يمكن العودة إلى الإصدارات القديمة مثل [IE8](https://github.com/camsong/fetch-ie8) - _قد تختلف النتائج حسب البيئة_.
+
+يمكن لإصدارات NodeJS الأقدم الاستفادة من واجهة `fetch` عبر حزمة [`node-fetch`](https://www.npmjs.com/package/node-fetch):
+
+```sh
+npm install node-fetch
+```
+
+_بعد الجمع بين polyfill و node-fetch: توافق 99.99٪_ ✅
+
+> رجاءً [غرد لي](https://x.com/justsml) إذا كان لديك حالات استخدام أخرى ترغب في رؤيتها. ❤️
