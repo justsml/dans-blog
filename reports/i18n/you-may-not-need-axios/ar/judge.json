@@ -1,0 +1,86 @@
+{
+  "selectedCommit": "fee423804eacea0b685dda68aa306ef10657ccdd",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "تفضيلِي هو `الخيار رقم 1`",
+      "replacement": "تفضيلِي هو `الخيار رقم 1`",
+      "reason": "The judge report mentioned a mistranslation of 'My preference' as a feminine command, but the current MDX text already uses 'تفضيلِي' (My preference). No change needed."
+    },
+    {
+      "priority": "medium",
+      "match": "[أخبرني ✉️](../contact/)",
+      "replacement": "[أخبرني ✉️](/contact/)",
+      "reason": "The link should be root-relative to match the English source and ensure it works across different environments."
+    }
+  ],
+  "rationale": "The DeepSeek candidate correctly preserved all MDX components, Gist IDs, and asset paths. It maintained the technical structure of the table and code blocks perfectly. The Arabic translation is natural and professional. I corrected the contact link to be root-relative as per the source.",
+  "slug": "you-may-not-need-axios",
+  "locale": "ar",
+  "candidateCommits": [
+    "fee423804eacea0b685dda68aa306ef10657ccdd",
+    "ea7a2b801f2665c1b2a831198e21f022df0719ea"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "title: قد لا تحتاج Axios",
+      "replacement": "title: \"قد لا تحتاج Axios\"",
+      "reason": "The English title is wrapped in quotes; preserving this ensures consistency with the original frontmatter style.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "[أخبرني ✉️](../contact/)",
+      "replacement": "[أخبرني ✉️](/contact/)",
+      "reason": "The English file uses a root-relative path '/contact/'. While the instructions mention assets, internal site links should generally remain as defined in the source unless they are relative file paths.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "title: \"قد لا تحتاج Axios\"",
+      "replacement": "title: \"قد لا تحتاج Axios\"",
+      "reason": "The current text already has quotes in the provided MDX content, but the judge JSON suggested a fix. Verifying the actual content shows the quotes are present. No change needed if already present.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match and replacement are identical; no MDX change needed."
+    },
+    {
+      "priority": "medium",
+      "match": "[أخبرني ✉️](/contact/)",
+      "replacement": "[أخبرني ✉️](/contact/)",
+      "reason": "The current text already uses the correct root-relative path. No change needed.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match and replacement are identical; no MDX change needed."
+    },
+    {
+      "priority": "high",
+      "match": "تفضّلي هي `الخيار رقم 1`",
+      "replacement": "تفضيلِي هو `الخيار رقم 1`",
+      "reason": "The word 'تفضّلي' is a feminine imperative 'Please (female)', whereas the context is 'My preference is'. 'تفضيلِي' (My preference) is the correct translation.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug you-may-not-need-axios --locale ar --skip-global",
+    "output": ""
+  }
+}
