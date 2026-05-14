@@ -10,6 +10,7 @@ Use this skill for DanLevy.net article translation work. The priority is not onl
 ## Core Rules
 
 - Use Bun scripts only. Never use npm or yarn.
+- Prefer high parallelism for translation batches: include `--quiz-concurrency 24 --task-concurrency 12` unless you are deliberately debugging a single item or the provider is rate-limiting.
 - Keep English slugs permanently. English routes stay unprefixed, translated routes use `/{locale}/{base-slug}/`.
 - Store translated files next to the English post: `src/content/posts/YYYY-MM-DD--slug/{ar,de,es,fr,he,hi,it,ja,ru,zh}/index.mdx`.
 - Preserve full Git history. Commit candidate outputs, rejected attempts, judge passes, and final fixes as normal commits. Do not squash.
@@ -76,7 +77,7 @@ For higher-risk batches, add a second cheap judge explicitly with `--second-mode
 
    AI SDK translation and judge calls default to a 240 second timeout. Use `--timeout-seconds 240` explicitly for batch work. Thinking-capable models should stay cheap: Qwen, gpt-oss, and GLM run with low reasoning effort; Gemini 3 Flash runs with minimal reasoning effort.
 
-   Article translation chunks default to `10p`: ten paragraphs per active chunk, with one neighboring source paragraph before and after as context padding when available. Stable translation instructions, locale guidance, and article/quiz context should live in cacheable prompt blocks; dynamic prompt text should contain only per-chunk or per-question material. Quiz posts ignore chunk padding because they use structured Challenge input/output.
+   Article translation chunks default to `18p`: eighteen paragraphs per active chunk, with one neighboring source paragraph before and after as context padding when available. Stable translation instructions, locale guidance, and article/quiz context should live in cacheable prompt blocks; dynamic prompt text should contain only per-chunk or per-question material. Quiz posts ignore chunk padding because they use structured Challenge input/output.
 
    Each model report should include runtime seconds, input tokens, output tokens, thinking/reasoning tokens, cached input tokens, and estimated cost. Token counts are best-effort from provider output; write `unknown` rather than omitting unavailable fields.
 
@@ -89,7 +90,8 @@ For higher-risk batches, add a second cheap judge explicitly with `--second-mode
      --slug javascript-promises-quiz \
      --locale ja \
      --models openrouter/openai/gpt-oss-120b:nitro,openrouter/qwen/qwen3-32b:nitro \
-     --quiz-concurrency 18 \
+     --task-concurrency 12 \
+     --quiz-concurrency 24 \
      --challenge-retries 2 \
      --timeout-seconds 240
    ```
@@ -109,7 +111,7 @@ For higher-risk batches, add a second cheap judge explicitly with `--second-mode
 
    Automatic pre-publish fixes loop until no medium/high-priority issues remain or `--fix-pass-limit` is reached. The default limit is 2.
 
-   The candidate TUI can launch a parallel judge pass with `--judge`, or with `j` while the dashboard is open. It uses `--task-concurrency` to run separate slug/locale eval+fix loops in parallel.
+   The candidate TUI can launch a parallel judge pass with `--judge`, or with `j` while the dashboard is open. It uses `--task-concurrency` to run separate slug/locale eval+fix loops in parallel; prefer `--task-concurrency 12` for normal batch work.
 
    For broad missing-translation sweeps, use `translate:all-missing`. Start with a dry run:
 
@@ -121,14 +123,14 @@ For higher-risk batches, add a second cheap judge explicitly with `--second-mode
      --judge-model openrouter/google/gemini-3-flash-preview \
      --judge-timeout-seconds 300 \
      --timeout-seconds 300 \
-     --task-concurrency 24 \
-     --candidate-task-concurrency 32 \
-     --quiz-concurrency 32 \
+     --task-concurrency 12 \
+     --candidate-task-concurrency 12 \
+     --quiz-concurrency 24 \
      --continue-on-error \
      --dry-run
    ```
 
-   Then run the same command without `--dry-run`. These higher limits are appropriate when the user explicitly says to maximize throughput and the machine/API budget can handle it. `--continue-on-error` is important for large batches: it lets later tasks finish when one candidate, judge, or shortfall commit fails.
+   Then run the same command without `--dry-run`. These higher limits are the standard recommendation for translation batches when the machine/API budget can handle it. `--continue-on-error` is important for large batches: it lets later tasks finish when one candidate, judge, or shortfall commit fails.
 
    For stubborn cases where one model repeatedly fails validation and one good candidate exists, judge the single good candidate explicitly:
 

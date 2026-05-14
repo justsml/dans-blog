@@ -74,6 +74,8 @@ Judge runs compare at most three candidate commits per model call, with any pre-
 
 Candidate generation harvests and commits each model output as an immutable candidate artifact unless `--no-commit` is passed. It should not skip a model just because a previous candidate exists, and it should not leave the translated `src/content` file changed after harvesting. The judge step is responsible for comparing candidates, refining the selected output, and updating the live translated post.
 
+For translation batches, prefer high parallelism unless you are deliberately debugging a single slug/locale: `--quiz-concurrency 24 --task-concurrency 12`. Keep those flags visible in examples so batch runs do not quietly fall back to slow serial habits.
+
 For broad baseline coverage, run the low-confidence Qwen queue directly on `main`:
 
 ```sh
@@ -96,7 +98,9 @@ Use `--only-modified` for refresh passes that should only re-translate existing 
 ```sh
 bun run i18n:translate:candidates -- \
   --locales es,ja,zh \
-  --only-modified
+  --only-modified \
+  --task-concurrency 12 \
+  --quiz-concurrency 24
 ```
 
 Keep telemetry reports inside timestamped run directories. Do not write or commit latest-by-model `reports/i18n/{slug}/{locale}/{model}/chunked-*.md` files.
@@ -139,7 +143,7 @@ bun run i18n:judge -- \
 
 Judge comparison calls are capped at three candidate commits by default. `--judge-batch-size` may be set lower, but values above 3 are capped to keep prompts bounded. `--fix-pass-limit` controls the medium/high-priority fix loop and defaults to 2.
 
-Article translation chunks default to `10p`: ten paragraphs per translated chunk. For non-quiz prose, the prompt also includes one neighboring source paragraph before and after the active chunk when available. That padding is context only; the model is told to translate only the active chunk. Stable translation instructions, locale guidance, and article/quiz context are sent in cacheable prompt blocks; the dynamic prompt should contain only per-chunk or per-question material. Quiz posts ignore prose chunk padding because they use structured Challenge input/output instead.
+Article translation chunks default to `18p`: eighteen paragraphs per translated chunk. For non-quiz prose, the prompt also includes one neighboring source paragraph before and after the active chunk when available. That padding is context only; the model is told to translate only the active chunk. Stable translation instructions, locale guidance, and article/quiz context are sent in cacheable prompt blocks; the dynamic prompt should contain only per-chunk or per-question material. Quiz posts ignore prose chunk padding because they use structured Challenge input/output instead.
 
 Example: For quiz posts, generate competing Nitro candidates through the normal candidate wrapper so each model output is committed and available to the judge:
 
@@ -148,7 +152,8 @@ bun run i18n:translate:candidates -- \
   --slug javascript-promises-quiz \
   --locale ja \
   --models openrouter/openai/gpt-oss-120b:nitro,openrouter/qwen/qwen3-32b:nitro \
-  --quiz-concurrency 18 \
+  --task-concurrency 12 \
+  --quiz-concurrency 24 \
   --challenge-retries 2 \
   --timeout-seconds 240
 ```
@@ -160,7 +165,8 @@ bun run i18n:translate:candidates -- \
   --slug javascript-promises-quiz \
   --locale ja \
   --models openrouter/qwen/qwen3.6-plus,openrouter/deepseek/deepseek-v4-flash,openrouter/openai/gpt-oss-120b:nitro,openrouter/qwen/qwen3-32b:nitro \
-  --quiz-concurrency 18 \
+  --task-concurrency 12 \
+  --quiz-concurrency 24 \
   --challenge-retries 2 \
   --timeout-seconds 240
 ```

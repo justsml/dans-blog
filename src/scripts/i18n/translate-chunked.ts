@@ -6,7 +6,7 @@
  * giving the model bounded context.
  *
  * Usage:
- *   bun run i18n:translate:chunked -- --slug my-article --locale es --chunk 10p --model openrouter/qwen/qwen3.6-plus
+ *   bun run i18n:translate:chunked -- --slug my-article --locale es --chunk 18p --model openrouter/qwen/qwen3.6-plus
  *
  * Chunk formats:
  *   1p  = 1 paragraph per chunk
@@ -79,7 +79,7 @@ interface LlmConfig {
 
 const DEFAULT_REASONING_EFFORT = "low";
 const DEFAULT_LLM_TIMEOUT_MS = 200_000;
-const DEFAULT_CHUNK_SIZE = "10p";
+const DEFAULT_CHUNK_SIZE = "18p";
 const DEFAULT_PARALLEL_CHALLENGE_CALLS = 18;
 const MAX_PARALLEL_CHALLENGE_CALLS = 32;
 const DEFAULT_CHALLENGE_RETRIES = 2;

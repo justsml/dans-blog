@@ -6,17 +6,19 @@
 
 ## Article Translations
 
-Article i18n uses locale subfolders, English slugs, OpenCode/OpenRouter candidate models, and full Git provenance for every candidate, rejection, judge pass, and final polish. Start with [docs/translations.md](docs/translations.md).
+Article i18n uses locale subfolders, English slugs, AI SDK/OpenRouter candidate models, and full Git provenance for every candidate, rejection, judge pass, and final polish. Start with [docs/translations.md](docs/translations.md).
 
 Common TUI commands:
 
 ```sh
 bun run i18n:candidates:tui -- \
   --quiz-concurrency 24 \
-  --task-concurrency 8 \
+  --task-concurrency 12 \
   --models openrouter/openai/gpt-oss-120b:nitro,openrouter/qwen/qwen3-32b:nitro,deepseek/deepseek-v4-flash,qwen/qwen3.6-plus,qwen/qwen3.6-35b-a3b,qwen/qwen3.5-9b
 bun run i18n:candidates:tui -- --judge
 ```
+
+For translation batches, prefer high parallelism unless you are deliberately debugging a single item: `--quiz-concurrency 24 --task-concurrency 12`.
 
 Manual translation commands:
 
@@ -27,7 +29,7 @@ bun run i18n:validate -- --slug the-last-to-think --locale es
 bun run i18n:report:models
 ```
 
-Candidate and judge OpenCode calls default to 90 second timeouts; use `--timeout-seconds 60` or `--timeout-seconds 90` for batch work. Thinking-capable models run with low/minimal variants by default.
+Candidate and judge AI SDK calls default to 240 second timeouts; use `--timeout-seconds 240` or higher for batch work. Thinking-capable models run with low/minimal variants by default.
 
 The matching Codex skill is `.agents/skills/article-i18n-translator/SKILL.md`.
 
