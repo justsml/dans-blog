@@ -1,7 +1,7 @@
 # Translation Judge
 
-- Selected candidate: d4168f0013267c73816265b73d4ccd7be53bd634
-- Selected model: openrouter/openai/gpt-oss-120b:nitro
-- Judge model: openrouter/deepseek/deepseek-v4-flash
+- Selected candidate: b5b3ba1d3e4ce345750145bd1ef2f5145989f680
+- Selected model: deepseek/deepseek-v4-flash
+- Judge model: openrouter/google/gemini-3-flash-preview
 
-Candidate 1 (gpt-oss-120b) provides a more accurate and natural translation. It preserves the original's vivid tone ('凭空捏造' for 'made up'), includes the precise '约30%' for the performance cost, keeps the console.log message in English as in the original code, and ends with a natural final line ('调试上下文也不该例外'). Candidate 2 has minor issues: missing '约' for 30%, translating the console.log message to Chinese (deviating from the code example), and a less natural final line. Both preserve MDX structure and heading counts correctly.
+The translation is technically accurate and captures Dan's direct, punchy style well (e.g., '族谱' for genealogy, '低温冷冻箱' for cryogenic freezer). It correctly handles the MDX requirements, including the relative paths for assets. It is more complete than the qwen candidate which missed a code block, and more natural than the gemini candidate.
