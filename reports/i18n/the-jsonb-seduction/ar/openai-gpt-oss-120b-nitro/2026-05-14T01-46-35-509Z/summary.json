@@ -1,0 +1,93 @@
+{
+  "runId": "openai-gpt-oss-120b-nitro@2026-05-14T01-46-35-509Z",
+  "slug": "the-jsonb-seduction",
+  "locale": "ar",
+  "model": "openai/gpt-oss-120b:nitro",
+  "modelPath": "openai-gpt-oss-120b-nitro",
+  "createdAt": "2026-05-14T01:46:40.227Z",
+  "sourcePath": "src/content/posts/2025-12-29--the-jsonb-seduction/index.mdx",
+  "targetPath": "src/content/posts/2025-12-29--the-jsonb-seduction/ar/index.mdx",
+  "candidatePath": "reports/i18n/the-jsonb-seduction/ar/openai-gpt-oss-120b-nitro/2026-05-14T01-46-35-509Z/candidate.mdx",
+  "sourceHash": "5f06fc45c6cafa097a503ef6364c5de73ba38e7ac53442da9a6385355155df99",
+  "outputHash": "04c4b4f7fc28baed4b630721c5910785cf2e2270068ad97065b5902308d71e77",
+  "reasoningEffort": "low",
+  "temperature": 0.3,
+  "maxTokens": 16000,
+  "timeoutMs": 200000,
+  "articleSummary": "Thearticle argues that JSONB in PostgreSQL is a useful tool for storing semi‑structured data, but it becomes a source of technical debt when teams use it as a shortcut for undefined schemas and then treat the opaque blob as a primary data store. It illustrates a common pattern: a JSONB column is added to defer schema decisions, later proliferates into many divergent versions accessed by multiple services, leading to costly full‑table scans, scattered validation logic, and hidden schema‑on‑read complexity. The piece delineates legitimate use cases—webhook payloads, logs, user preferences, LLM configuration, API caching, event sourcing, and extensible plugin data—where fetching the whole document by a stable key is appropriate, and recommends a hybrid approach that keeps relational columns for fields that require frequent querying. The tone is a mix of analytical rant and practical tutorial, using the metaphor of “deferring cleaning your room” to frame the pitfalls of over‑relying on JSONB. The intended audience is developers, DBAs, and product teams who design data models and need guidance on when JSONB is a benefit versus a liability.",
+  "totalInputTokens": 8379,
+  "totalOutputTokens": 2813,
+  "totalCacheReadTokens": 3840,
+  "totalCacheWriteTokens": 0,
+  "totalDurationMs": 3857,
+  "totalCostUsd": 0.000833121,
+  "pricingSource": "local-openrouter-estimate",
+  "telemetry": {
+    "model": "openai/gpt-oss-120b:nitro",
+    "chunkSize": "10p",
+    "totalChunks": 6,
+    "totalInputTokens": 8379,
+    "totalOutputTokens": 2813,
+    "totalCacheReadTokens": 3840,
+    "totalCacheWriteTokens": 0,
+    "totalDurationMs": 3857,
+    "totalCostUsd": 0.000833121,
+    "pricingSource": "local-openrouter-estimate",
+    "chunks": [
+      {
+        "index": 0,
+        "inputTokens": 1321,
+        "outputTokens": 580,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 795,
+        "costUsd": 0.000155919
+      },
+      {
+        "index": 1,
+        "inputTokens": 1276,
+        "outputTokens": 282,
+        "cacheReadTokens": 768,
+        "cacheWriteTokens": 0,
+        "durationMs": 411,
+        "costUsd": 0.000100524
+      },
+      {
+        "index": 2,
+        "inputTokens": 1570,
+        "outputTokens": 677,
+        "cacheReadTokens": 768,
+        "cacheWriteTokens": 0,
+        "durationMs": 768,
+        "costUsd": 0.00018309
+      },
+      {
+        "index": 3,
+        "inputTokens": 1447,
+        "outputTokens": 459,
+        "cacheReadTokens": 768,
+        "cacheWriteTokens": 0,
+        "durationMs": 915,
+        "costUsd": 0.00013905299999999998
+      },
+      {
+        "index": 4,
+        "inputTokens": 1460,
+        "outputTokens": 417,
+        "cacheReadTokens": 768,
+        "cacheWriteTokens": 0,
+        "durationMs": 515,
+        "costUsd": 0.000132
+      },
+      {
+        "index": 5,
+        "inputTokens": 1305,
+        "outputTokens": 398,
+        "cacheReadTokens": 768,
+        "cacheWriteTokens": 0,
+        "durationMs": 453,
+        "costUsd": 0.000122535
+      }
+    ]
+  }
+}
