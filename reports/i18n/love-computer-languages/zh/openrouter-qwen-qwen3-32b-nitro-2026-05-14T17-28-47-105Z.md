@@ -1,0 +1,209 @@
+# Translation Candidate
+- Slug: love-computer-languages
+- Locale: zh
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2015-06-12--love-computer-languages/zh/index.mdx
+- Validation: deferred
+- Runtime seconds: 19.10
+- Input tokens: 4957
+- Output tokens: 3757
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.001298
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: 爱（计算机）语言
+date: '2015-06-12'
+modified: '2017-02-28'
+category: Code
+subCategory: languages
+draft: true
+hidden: true
+publish: true
+tags:
+  - programming
+  - languages
+  - lua
+  - haskell
+  - scala
+  - rust
+  - smalltalk
+  - go
+  - javascript
+  - python
+cover: ../rawpixel-602144-unsplash.webp
+cover_mobile: ../w300_rawpixel-602144-unsplash.webp
+cover_icon: ../icon_rawpixel-602144-unsplash.webp
+---
+import Gist from '../../../../components/Gist/index.astro'
+
+## 编程语言笔记
+
+#### 我的杂乱观察可能早有人提过，但这是我最感兴趣的编程语言列表：
+
+### JavaScript
+
+我的唯一真爱，极其灵活且无处不在 - 全能型、令人惊叹的强大冠军！
+它在 GitHub.com 上连续多年稳居最活跃/最流行语言第一名。
+
+我不得不承认，多年来我愚蠢地对现在**我最喜欢的编程语言**充满轻蔑和嘲讽。
+
+**ES6** 只是加剧了我对它的~上瘾~热爱。虽然纯 ES5 永远占据我心中的特殊位置，但每次使用 **ES6** 时，我都能感受到那种放射性蜘蛛叮咬般的冲击...
+
+让我转向 **ES6阵营** 有4个关键因素：
+
+1. 它很有趣。认真的。在美感、清晰度和生产力方面都有切实提升。
+
+- 你说这是主观判断？让我展示一些 ES6 示例：
+- `let expired = users.filter(u => Date.now() > u.trialDate)`
+- 你不再需要假装会使用 `Object.create` 或 `Object.defineProperty`
+- 请参见以下示例
+
+1. 截至2015年7月，ES6 已正式成为标准！
+1. 支持度达到99.999%！...好吧，需要 BabelJS 将代码转译为ES5兼容版本。历史上JS转译器曾备受质疑。但自2014-15年起情况改变，BabelJS 成为语言发展的关键推动者。微软、Facebook等公司都在最大型网站中使用它。
+1. [Node最新版本](https://nodejs.org/en/blog/release/v4.0.0/)包含与Chrome v45相同的V8 JS引擎，即v4.5
+
+#### 示例
+
+> 我将展示最终让我开始"饮用ES6风味的酷爱饮料"的内容。
+
+在我的近期实践中，ES6 帮助你更快地编写代码。因为代码更简洁，明显减少理解旧代码（或队友代码）所需的脑力消耗。
+
+我经常看到每千行代码节省20-50%。这就像Kate Moss的瘦身效果！
+
+**_缺失图片:_ EcmaScript 5 vs ES 2016 - 演示：类、解构、简洁**
+{/* ](/images/screenshots/Diff-ES6-vs-ES5-Head-to-Head.png) */}
+
+```js
+// /services/users.js
+class Users {
+  constructor(data) {
+    this.users = data || [];
+  }
+  expired() {
+    return this.users.filter(u => Date.now() > u.trialDate);
+  }
+}
+```
+
+- 不再需要繁琐的代码来'提取'和'检查'传递给函数的字段。看 `add()` 示例：
+
+```js
+// /services/users.js
+class Users {
+  constructor(data) {
+    this.users = data || [];
+  }
+  add({ name, email, password }) {
+    // 存储密码哈希，我们只需要显式定义一个 `var/let` - 其他变量通过 `{fields}` 魔法定义
+    let hash = getSha256(password);
+    return http
+      .post("/users", {
+        name: name,
+        email: email,
+        passwordHash: hash
+      })
+      .then(usr => this.users.push(usr)); // 服务响应后追加用户
+  }
+}
+```
+
+<Gist path='justsml/aaddc9852c1624d61cf3'></Gist>
+
+#### 采用 ES6 可能会让人感觉从:
+
+<div class="anigif top">
+  <img alt='嗯？' title="嗯？" src="https://res.cloudinary.com/ddd/image/upload/v1441143891/wtf__tumblr_inline_n7ygqh6Y0C1svcdm1_igeqey.gif" />
+</div>
+<h3>到</h3>
+<div class="anigif">
+  <img alt='什么？' title="什么？！" src="https://res.cloudinary.com/ddd/image/upload/v1443133148/cat-wtf-trap.gif" />
+</div>
+<h3>再到</h3>
+<div class="anigif end">
+  <img alt='#胜利' title='#胜利' src="https://res.cloudinary.com/ddd/image/upload/v1443133141/full-throttle.gif" />
+</div>
+
+继续筛选新特性。看看字符串模板、自动 `this` 绑定、更合理的继承...
+
+##### [Node.JS](http://nodejs.org/)
+
+### Rust
+
+##### [官方网站](http://www.rust-lang.org/)
+
+- **优点**
+
+- 想象一种语言，速度像 C 一样快，功能像 Python/C++ 一样强大，却没有通常会困住即使是经验最丰富的开发者的复杂性/陷阱。
+  - 实际上，我认为 Rust 的复杂度大致与 ES6 规范文档相当。
+  - 它包含大量附加功能：
+    1.  Rust 实质上将半动态语法转译为 **纯 C 代码**！
+    1.  包含 C 中你可能会搞错的 **所有最佳实践**，我 ~~最终~~ 总是会搞错。
+    - 自动获得：
+    - 自动内存管理（无需使用缓慢的垃圾回收器！）
+    - 完美作用域的对象所有权/锁定（最小化互斥锁和上下文切换）
+    - 对象生命周期（自动实现\*，并像你了解每个边缘情况一样自动编码）
+    - 几乎防止所有运行时错误（认真的，你的代码路径变得显式：你无法忽略任何代码路径）
+  - 噢对了，它还通过合理的“宏”功能提供真正的语言可扩展性。
+    - 需要推导式？[Scala 风格？完成了](https://gist.github.com/hanny24/5749688)，[喜欢 Python？完成了](https://gist.github.com/JeffBelgum/5e762761cd63c796e803)。
+    1.  太美好而不真实？不，它更好：
+    - 前沿指标（github.com 数据）显示 Rust 高度竞争甚至超越 Go（Google 的新兴语言）
+      - 星标数比 Go 多约 4K（当前约 12,200）
+      - 总贡献者数量（2 倍！1,071 vs. Go 的 479）
+      - 分叉数量（3 倍！2,343 vs. 765）
+      - 开放问题数量，略微落后（2,000 vs Go 的 1,730）
+      - 拉取请求（Rust 70+ vs. Go 的 1）
+    - 我也反复核对了这些数字。
+  - 由于 Rust 的结构和规则，其他库非常稳定。
+  - 普通开发者可用的线程模型
+
+- **缺点**
+  - 相当不错的 **Web 框架** 还是相对较新、未经验证且通常没有文档（尽管它们 **正在变得** 非常令人印象深刻 - 截至 2015 年 3 月）。
+  - 很多 1.0 之前的破坏性变更
+
+### Python
+
+- **优点**
+  - Python 中已经实现了大量算法（参见：scilearnkit, numpy, matplotlib, pil/pillow 等）
+  - 非常有趣！推导式和解构是伟大的特性，让其他语言看起来臃肿！
+  - 数组、'序列'、元组等相对简单
+
+```python
+## 示例代码：定义颜色 + 像素坐标 -
+def pixel(x, y, r, g, b): return dict(x=x, y=y, r=r, g=g, b=b)
+## 创建新的像素对象并应用到变量集
+x, y, r, g, b = pixel(10, 20, 255, 255, 255)
+## 现在我们可以调用 pixel
+```
+
+- **缺点**
+  - 令人恼火的是，Python 2.x 和 3.x 不兼容。多年后，大分裂仍在继续。
+  - 某些关键库可能并非所有开发人员都能理解（numpy）
+
+### Haskell
+
+- **优点**
+  - 当你终于记住足够的语法来快速编写基于推导式的表达式模式时，会非常有成就感。
+  - 你会学到令人脑洞大开的代码模式 - 经常可以部分应用于其他语言。
+- **缺点**
+  - 语法和模式可能难以适应。
+
+<div class="anigif end">
+  <img alt='无限循环' src="https://res.cloudinary.com/ddd/image/upload/v1441143881/endless-loop.gif" />
+</div>
+
+### SmallTalk-80
+
+- **优点**
+  - 非常简单的编译器（尤其是原始版本）
+  - 优秀资源：[Smalltalk MVC 翻译为 JavaScript](http://peter.michaux.ca/articles/smalltalk-mvc-translated-to-javascript)
+- **缺点**
+  - 你很可能永远不会用这个语言做任何事。零项目。然而它对你的编码风格的影响速度会比其他函数式语言更快... 这应该放在优点列表里）
+
+#### _进行中 (更新于 2015年12月)_
+````
