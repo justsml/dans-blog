@@ -1,0 +1,122 @@
+# Translation Candidate
+- Slug: docker-firewall-setup
+- Locale: zh
+- Model: deepseek/deepseek-v4-flash
+- Target: src/content/posts/2015-06-06--docker-firewall-setup/zh/index.mdx
+- Validation: deferred
+- Runtime seconds: 7.91
+- Input tokens: 2320
+- Output tokens: 1401
+- Thinking tokens: unknown
+- Cached input tokens: 384
+- Cache write tokens: 0
+- Estimated cost: $0.000664
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: Docker 防火墙设置
+subTitle: 配置 Docker 主机的防火墙
+draft: true
+date: '2015-06-06'
+modified: '2016-07-30'
+category: DevOps
+subCategory: docker
+tags:
+  - docker
+  - security
+  - devops
+cover: ../charles-deluvio-456501-unsplash.webp
+cover_mobile: ../w300_charles-deluvio-456501-unsplash.webp
+cover_icon: ../icon_charles-deluvio-456501-unsplash.webp
+---
+## 设置 Docker 主机的防火墙
+
+1. 假设使用 Debian/Ubuntu Server
+1. 专为 Docker 主机服务器设计
+
+### 安装所需软件
+
+~~~sh
+# Ultimate Firewall Needed
+apt-get update && apt-get install -y ufw nmap curl
+~~~
+
+### 获取你的内网和外网 IP 地址
+
+~~~sh
+# Get your IP Addresses, simple output:
+hostname --all-ip-addresses
+
+# OR use ip tool, example:
+ip addr
+~~~
+
+### 防火墙 (UFW) 设置 - 示例命令
+
+~~~sh
+ufw logging on # on=low - medium might be better for diagnostics
+ufw logging medium
+# First, block all the things
+ufw default deny incoming
+
+# REQUIRED: CHOOSE *ONE* OF THE FOLLOWING DEFAULT OUTBOUND RULES:
+ufw default deny outgoing
+ufw default allow outgoing
+
+# Allow and log all new ssh connections,
+ufw allow log proto tcp from any to any port 22
+## Allow http traffic (w/o explicit logging)
+ufw allow out on docker0 53/udp to 172.17.0.1/16
+ufw allow out on eth0 to any port 53
+ufw allow out on eth0 from 0.0.0.0/0 to any port 80 proto tcp
+ufw allow out on eth0 from 0.0.0.0/0 to any port 443 proto tcp
+
+# Verbose: ufw allow proto tcp from any to any port 80
+ufw allow 80/tcp
+ufw allow 443/tcp
+ufw allow log 22/tcp
+ufw limit ssh # Basic Rate limit 4 SSH brute force mitigation
+
+# Set your ext IP
+export EXTERNAL_IP=123.123.123.123
+# Update docker IP if needed
+export DOCKER_IP=172.17.42.1
+# Forward tcp 8080 traffic to  Dockerized App
+ufw allow proto tcp from $EXTERNAL_IP port 8080 to $DOCKER_IP port 3000
+~~~
+
+## 启用 / 启动防火墙
+
+> 小心，不要锁掉你的 SSH 端口（sshd 默认使用 22）
+
+~~~sh
+ufw --force enable
+
+ufw reset
+~~~
+
+### 测试你的防火墙
+
+> 重要：请使用远程 IP 地址/位置
+
+~~~sh
+# 验证依赖
+apt-get update && apt-get install -y nmap
+
+# 设置扫描目标
+export TARGET_HOST=123.123.123.123
+
+# 示例扫描命令：
+# 快速开放端口检查
+nmap -p 1-10240,27017 -T5 $TARGET_HOST
+# 全面扫描
+nmap -p 1-10240,27017 --open -v -APN $TARGET_HOST
+# 服务检测
+nmap -p 1-10240,27017 -O --osscan-guess $TARGET_HOST
+~~~
+
+> 完成！现在你应该只看到你配置的端口！
+````
