@@ -1,0 +1,62 @@
+{
+  "selectedCommit": "5a0ceb1a327eb988c5f5aa9843e8d02def65b2f3",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "ואלגוריתמים, ובסיבוכיות זמן.",
+      "replacement": "ואלגוריתמים, ובסיבוכיות זמן.",
+      "reason": "The previous judge suggested a fix for empty parentheses that are not actually present in the current selected MDX. No change needed here, but keeping the technical term 'סיבוכיות'."
+    }
+  ],
+  "rationale": "The translation is technically sound and uses standard Hebrew computer science terminology (e.g., 'מחסניות' for Stacks, 'רשימה מקושרת' for Linked List). The MDX structure and asset paths are correctly preserved. The previous judge's suggestion regarding empty parentheses was based on a misreading of the candidate text, which is actually clean.",
+  "slug": "quiz-data-structures-algorithms",
+  "locale": "he",
+  "candidateCommits": [
+    "5a0ceb1a327eb988c5f5aa9843e8d02def65b2f3",
+    "d4bcdcba1837aa6d5f03dbf807cc64a9d7978df0"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "ואלגוריתמים (), ובמורכבות זמן.",
+      "replacement": "ואלגוריתמים, ובסיבוכיות זמן.",
+      "reason": "The empty parentheses are a leftover from the English source and should be removed. 'סיבוכיות' is the standard technical term for complexity in Hebrew CS contexts.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "האם אתה יכול לעבוד על עץ בינארי?",
+      "replacement": "האם אתה יכול לבלף עץ בינארי?",
+      "reason": "The subtitle 'Can you BS a Binary Tree?' is a play on words. 'לעבוד על' is okay but 'לבלף' captures the 'BS' nuance better in a casual technical context.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "ואלגוריתמים, ובסיבוכיות זמן.",
+      "replacement": "ואלגוריתמים, ובסיבוכיות זמן.",
+      "reason": "The previous judge suggested a fix for empty parentheses that are not actually present in the current selected MDX. No change needed here, but keeping the technical term 'סיבוכיות'.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match and replacement are identical; no MDX change needed."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug quiz-data-structures-algorithms --locale he --skip-global",
+    "output": ""
+  }
+}

@@ -1,0 +1,668 @@
+---
+title: 'חידון: מבני נתונים ואלגוריתמים'
+subTitle: האם אתה יכול לעבוד על עץ בינארי?
+label: Algorithms & DS
+unlisted: true
+date: '2024-10-31'
+modified: '2024-11-08'
+social_image: ../desktop-social.webp
+category: Quiz
+subCategory: Data Structures
+tags:
+  - quiz
+  - data-structures
+  - algorithms
+  - intermediate
+  - advanced
+cover: ../redcharlie-mugDbuNnbd0-unsplash-square.webp
+cover_full_width: ../redcharlie-mugDbuNnbd0-unsplash-wide.webp
+cover_mobile: ../redcharlie-mugDbuNnbd0-unsplash-square.webp
+cover_icon: ../redcharlie-mugDbuNnbd0-unsplash-square.webp
+---
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+<section class="inset">
+  ברוכים הבאים לחידון מבני הנתונים והאלגוריתמים שלי!
+</section>
+
+חידון זה יבחן את הידע שלך במבני נתונים (מחסניות, רשימות, עצים וכו'), ואלגוריתמים (), ובמורכבות זמן.
+
+### 20 שאלות... התחל!
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="מבני נתונים"
+  title="מחסניות לעומת תורים"
+  options={[
+    {text: 'שניהם'},
+    {text: 'תורים'},
+    {text: 'מחסניות', isAnswer: true},
+    {text: 'אף אחד'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    איזה מבנה נתונים מתאים ביותר לדפוס גישה LIFO (אחרון נכנס, ראשון יוצא)?
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    הסתכל על דפוס הגישה, לא על שם המבנה. התשובה הנכונה בדרך כלל נובעת ממה שחייב לקרות ראשון או אחרון.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    מחסניות מתאימות ביותר לדפוסי גישה LIFO. תורים מתאימים ביותר לדפוסי גישה FIFO (ראשון נכנס, ראשון יוצא).
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="אלגוריתמים"
+  title="סימון O גדול"
+  options={[
+    {text: 'O(1)', isAnswer: true},
+    {text: 'O(n)'},
+    {text: 'O(log n)'},
+    {text: 'O(n^2)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מהי סיבוכיות הזמן של אלגוריתם שתמיד לוקח אותו זמן לביצוע, ללא קשר לגודל הקלט?
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    הסתכל על תבנית הגישה, לא על שם המבנה. התשובה הנכונה בדרך כלל נובעת ממה שחייב לקרות ראשון או אחרון.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    O(1) מייצג סיבוכיות זמן קבועה. זה אומר שהאלגוריתם תמיד לוקח אותו זמן לרוץ, ללא תלות בגודל הקלט.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="מבני נתונים"
+  title="חישוב אורך של רשימה מקושרת"
+  options={[
+    {text: 'O(1)'},
+    {text: 'O(log n)'},
+    {text: 'O(n^2)'},
+    {text: 'O(n)', isAnswer: true},
+    {text: 'O(n log n)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מהי סיבוכיות הזמן לחישוב אורך של רשימה מקושרת חד-כיוונית?
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    הסתכל על תבנית הגישה, לא על שם המבנה. התשובה הנכונה בדרך כלל נובעת ממה שחייב לקרות ראשון או אחרון.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    כדי לחשב את אורך של רשימה מקושרת חד-כיוונית, יש לעבור על כל הצמתים מהראש לזנב, מה שמוביל לסיבוכיות זמן O(n).
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="מבני נתונים"
+  title="חיפוש בעץ חיפוש בינארי"
+  options={[
+    {text: 'O(1)'},
+    {text: 'O(log n)', isAnswer: true},
+    {text: 'O(n)'},
+    {text: 'O(n^2)'},
+    {text: 'O(n log n)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מהי סיבוכיות הזמן הממוצעת לחיפוש איבר בעץ חיפוש בינארי מאוזן?
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    הסתכל על דפוס הגישה, לא על שם המבנה. התשובה הנכונה בדרך כלל נובעת ממה שחייב לקרות ראשון או אחרון.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    בעץ חיפוש בינארי מאוזן, סיבוכיות הזמן הממוצעת לחיפוש היא O(log n) מכיוון שכל רמה מאפשרת לצמצם את מרחב החיפוש בחצי.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="אלגוריתמי מיון"
+  title="מורכבות מיון מיזוג"
+  options={[
+    {text: 'O(n^2)'},
+    {text: 'O(log n)'},
+    {text: 'O(n log n)', isAnswer: true},
+    {text: 'O(n)'},
+    {text: 'O(1)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מהי סיבוכיות הזמן של אלגוריתם מיון מיזוג במקרה הגרוע?
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    הסתכל על דפוס הגישה, לא על שם המבנה. התשובה הנכונה בדרך כלל נובעת ממה שחייב לקרות ראשון או אחרון.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    מיון מיזוג תמיד פועל עם סיבוכיות במקרה הגרוע של O(n log n) מכיוון שהוא מפצל את המערך לחצאים שוב ושוב וממזג את תת-המערכים הממוינים.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="גרפים"
+  title="DFS לעומת BFS"
+  options={[
+    {text: 'תור', isAnswer: true},
+    {text: 'מחסנית'},
+    {text: 'תור עדיפויות'},
+    {text: 'מפת גיבוב'},
+    {text: 'קבוצה'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    באיזה מבנה נתונים משתמשים בדרך כלל למימוש חיפוש לרוחב (BFS)?
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    הסתכל על תבנית הגישה, לא על שם המבנה. התשובה הנכונה בדרך כלל נובעת ממה שחייב לקרות ראשון או אחרון.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    BFS משתמש בתור כדי לחקור צמתים רמה אחר רמה, תוך עיבוד צמתים בצורה לרוחב (לפי "row").
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="גרפים"
+  title="זיהוי מעגלים בגרפים"
+  options={[
+    {text: 'מיון מהיר'},
+    {text: 'חיפוש לרוחב'},
+    {text: 'מיון מיזוג'},
+    {text: 'חיפוש לעומק', isAnswer: true},
+    {text: 'מיון בועות'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    באיזה אלגוריתם משתמשים בדרך כלל לזיהוי מעגלים בגרף מכוון?
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    הסתכל על דפוס הגישה, לא על שם המבנה. התשובה הנכונה בדרך כלל נובעת ממה שחייב לקרות ראשון או אחרון.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    חיפוש לעומק (DFS) משמש בדרך כלל לזיהוי מעגלים בגרף על ידי שמירת מחסנית רקורסיה למעקב אחר צמתים שביקרו בהם.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="אלגוריתמי מיון"
+  title="סיבוכיות מיון ערימה"
+  options={[
+    {text: 'O(n^2)'},
+    {text: 'O(n log n)', isAnswer: true},
+    {text: 'O(n)'},
+    {text: 'O(log n)'},
+    {text: 'O(1)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מהי סיבוכיות הזמן של מיון ערימה במקרה הגרוע?
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    הסתכל על דפוס הגישה, לא על שם המבנה. התשובה הנכונה בדרך כלל נובעת ממה שחייב לקרות ראשון או אחרון.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    מיון ערימה שומר על סיבוכיות זמן במקרה הגרוע של O(n log n), מכיוון שהוא בונה ערימה ושולף שוב ושוב את האלמנט המקסימלי.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="מבני נתונים"
+  title="סיבוכיות זמן של טבלת גיבוב"
+  options={[
+    {text: 'O(n)'},
+    {text: 'O(log n)'},
+    {text: 'O(1)', isAnswer: true},
+    {text: 'O(n^2)'},
+    {text: 'O(n log n)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מהי סיבוכיות הזמן הממוצעת לגישה לאלמנט בטבלת גיבוב?
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    הסתכל על תבנית הגישה, לא על שם המבנה. התשובה הנכונה בדרך כלל נובעת ממה שחייב לקרות ראשון או אחרון.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    לטבלאות גיבוב יש סיבוכיות זמן ממוצעת של O(1) לגישה לאלמנטים, בהנחה שפונקציית הגיבוב טובה וממזערת התנגשויות.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="מבני נתונים"
+  title="פעולות מחסנית"
+  options={[
+    {text: 'Push, Pop, Peek', isAnswer: true},
+    {text: 'Enqueue, Dequeue, Peek'},
+    {text: 'Insert, Search, Delete'},
+    {text: 'Traverse, Visit, Sort'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    איזו קבוצה מכילה פעולות אופייניות המתבצעות על מחסנית?
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    הסתכל על תבנית הגישה, לא על שם המבנה. התשובה הנכונה בדרך כלל נובעת ממה שחייב לקרות ראשון או אחרון.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    הפעולות העיקריות של מחסנית הן Push (הוספת איבר), Pop (הסרת איבר) ו-Peek (צפייה באיבר העליון מבלי להסירו).
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="אלגוריתמי גרפים"
+  title="אלגוריתם למציאת המסלול הקצר ביותר"
+  options={[
+    {text: 'Kruskal\'s Algorithm'},
+    {text: 'Prim\'s Algorithm'},
+    {text: 'Bellman-Ford Algorithm'},
+    {text: 'Dijkstra\'s Algorithm', isAnswer: true},
+    {text: 'Floyd-Warshall Algorithm'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    איזה אלגוריתם נפוץ למציאת המסלול הקצר ביותר בגרף משוקלל עם קשתות לא שליליות?
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    הסתכל על דפוס הגישה, לא על שם המבנה. התשובה הנכונה בדרך כלל נובעת ממה שחייב לקרות ראשון או אחרון.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    אלגוריתם דייקסטרה (Dijkstra's Algorithm) משמש לעיתים קרובות למציאת המסלול הקצר ביותר בגרפים עם משקלי קשתות לא שליליים. הוא משתמש בתור עדיפות כדי לקבוע את המרחק הקצר ביותר ביעילות.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="מבני נתונים של עצים"
+  title="עצי חיפוש מאוזנים עצמית"
+  options={[
+    {text: 'עץ חיפוש בינארי וערימת מינימום'},
+    {text: 'עץ AVL ועץ אדום-שחור', isAnswer: true},
+    {text: 'ערימת מינימום וערימת מקסימום'},
+    {text: 'מחסנית ותור'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    איזו קבוצה מכילה דוגמאות למבני נתונים של עצי חיפוש בינאריים מאוזנים עצמית?
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    הסתכל על דפוס הגישה, לא על שם המבנה. התשובה הנכונה בדרך כלל נובעת ממה שחייב לקרות ראשון או אחרון.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    עצי AVL ועצים אדום-שחור הם סוגים של עצים מאוזנים עצמית, המבטיחים שהעץ נשאר מאוזן לאחר כל הכנסה או מחיקה.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="רקורסיה"
+  title="מקרה הבסיס ברקורסיה"
+  options={[
+    {text: 'לולאה אינסופית'},
+    {text: 'גלישת מחסנית'},
+    {text: 'מקרה בסיס', isAnswer: true},
+    {text: 'משתנה גלובלי'},
+    {text: 'מגבלת תחום'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה חייב להיות מוגדר בפונקציה רקורסיבית כדי למנוע רקורסיה אינסופית?
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    הסתכל על דפוס הגישה, לא על שם המבנה. התשובה הנכונה בדרך כלל נובעת ממה שחייב לקרות ראשון או אחרון.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    מקרה בסיס הכרחי בפונקציה רקורסיבית כדי לעצור את הקריאות הרקורסיביות כאשר מתקיים תנאי מסוים, ובכך למנוע רקורסיה אינסופית.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={13}
+  group="מבני נתונים"
+  title="פעולות תור"
+  options={[
+    {text: 'הכנסה והוצאה', isAnswer: true},
+    {text: 'דחיפה ושליפה'},
+    {text: 'הצצה וראש'},
+    {text: 'סריקה ומיון'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מהן שתי הפעולות העיקריות של תור?
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    הסתכל על תבנית הגישה, לא על שם המבנה. התשובה הנכונה בדרך כלל נובעת ממה שחייב לקרות ראשון או אחרון.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    שתי הפעולות העיקריות בתור הן הכנסה (הוספת איבר לסוף) והוצאה (הסרת איבר מההתחלה).
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={14}
+  group="אלגוריתמי גרפים"
+  title="מיון טופולוגי"
+  options={[
+    {text: 'הגרף חייב להכיל מעגלים'},
+    {text: 'הגרף חייב להיות משוקלל וקשיר'},
+    {text: 'הגרף חייב להיות לא מכוון וחסר מעגלים'},
+    {text: 'הגרף חייב להיות מכוון וחסר מעגלים', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מהם התנאים לביצוע מיון טופולוגי על גרף?
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    הסתכל על דפוס הגישה, לא על שם המבנה. התשובה הנכונה בדרך כלל נובעת ממה שחייב לקרות ראשון או אחרון.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    ניתן לבצע מיון טופולוגי על גרף אם הוא מכוון וחסר מעגלים (DAG). סוג זה של סדר שימושי בבעיות תזמון משימות.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={15}
+  group="תכנות דינמי"
+  title="סיבוכיות רקורסיית פיבונאצ'י"
+  options={[
+    {text: 'O(1)'},
+    {text: 'O(2^n)', isAnswer: true},
+    {text: 'O(n)'},
+    {text: 'O(log n)'},
+    {text: 'O(n^2)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מהי סיבוכיות הזמן של מימוש רקורסיבי נאיבי של סדרת פיבונאצ'י?
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    הסתכל על תבנית הגישה, לא על שם המבנה. התשובה הנכונה בדרך כלל נובעת ממה שחייב לקרות ראשון או אחרון.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    למימוש הרקורסיבי הנאיבי של סדרת פיבונאצ'י יש סיבוכיות זמן של O(2^n) בשל החישובים החוזרים הרבים עבור כל מספר פיבונאצ'י.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={16}
+  group="מבני נתונים"
+  title="מימוש תור עדיפויות"
+  options={[
+    {text: 'מערך'},
+    {text: 'מחסנית'},
+    {text: 'ערימה', isAnswer: true},
+    {text: 'תור'},
+    {text: 'רשימה מקושרת'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    איזה מבנה נתונים משמש בדרך כלל למימוש תור עדיפויות?
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    הסתכל על דפוס הגישה, לא על שם המבנה. התשובה הנכונה בדרך כלל נובעת ממה שחייב לקרות ראשון או אחרון.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    תור עדיפויות מיושם לרוב באמצעות ערימה כי היא מאפשרת שליפה יעילה של האלמנט בעל העדיפות הגבוהה או הנמוכה ביותר.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={17}
+  group="מבני נתונים"
+  title="סריקות עץ בינארי"
+  options={[
+    {text: 'סדר-תוך, סדר-קדם, סדר-אחר', isAnswer: true},
+    {text: 'רוחב-ראשון, עומק-ראשון, ערימה'},
+    {text: 'מיון, חיפוש, סיבוב'},
+    {text: 'דחיפה, שליפה, הצצה'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    איזו קבוצה מציגה את סדרי הסריקה הנפוצים של עומק-ראשון בעץ בינארי?
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    הסתכל על תבנית הגישה, לא על שם המבנה. התשובה הנכונה בדרך כלל נובעת ממה שחייב לקרות ראשון או אחרון.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    סדר-תוך, סדר-קדם וסדר-אחר הם שלושת סדרי הסריקה הנפוצים של עומק-ראשון בעץ בינארי, כל אחד עם סדר ביקור שונה בצמתים. סריקת רוחב-ראשון גם היא נפוצה, אך היא קטגוריית סריקה שונה.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={18}
+  group="מבני נתונים של עצים"
+  title="תכונת ערימה"
+  options={[
+    {text: 'כל הצמתים ממוינים משמאל לימין'},
+    {text: 'השורש הוא תמיד האלמנט הגדול ביותר'},
+    {text: 'כל העלים נמצאים באותה רמה'},
+    {text: 'השורש הוא האלמנט הקטן ביותר והגובה הוא O(log n)', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    איזו מהתכונות הבאות נכונה לגבי ערימת מינימום?
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    הסתכל על תבנית הגישה, לא על שם המבנה. התשובה הנכונה בדרך כלל נובעת ממה שחייב לקרות ראשון או אחרון.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    בערימת מינימום, השורש הוא תמיד האלמנט הקטן ביותר, וגובה העץ הוא O(log n), מה שהופך הכנסה והוצאה ליעילות.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={19}
+  group="אלגוריתמי מיון"
+  title="יציבות של מיון בועות"
+  options={[
+    {text: 'לא יציב'},
+    {text: 'יציב', isAnswer: true},
+    {text: 'תלוי במימוש'},
+    {text: 'אף אחד'},
+    {text: 'המורכבות קובעת את היציבות'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    האם אלגוריתם מיון בועות הוא יציב?
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    הסתכל על דפוס הגישה, לא על שם המבנה. התשובה הנכונה בדרך כלל נובעת ממה שחייב לקרות ראשון או אחרון.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    מיון בועות הוא אלגוריתם מיון יציב מכיוון שהוא שומר על הסדר היחסי של איברים שווים במהלך המיון.
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
