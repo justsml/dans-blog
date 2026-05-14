@@ -1,0 +1,52 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "COUNT and NULL",
+  "translatedTitle": "COUNT 与 NULL",
+  "translation": {
+    "title": "COUNT 与 NULL",
+    "group": "NULL 行为",
+    "options": [
+      {
+        "text": "100"
+      },
+      {
+        "text": "90"
+      },
+      {
+        "text": "10"
+      },
+      {
+        "text": "1"
+      },
+      {
+        "text": "0"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "这将返回多少*行*？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "好，这有点儿棘手。关键是 `x = NULL` 永远不会匹配任何行，它总是返回一行，计数为 `0`。\n\n    因为 `NULL` 是未知值，不能与任何东西比较，甚至不能与它自身比较。\n    \n    检查 `NULL` 值的正确方式是使用 `IS NULL`。\n\n    示例："
+    ]
+  },
+  "rawText": "{\n  \"title\": \"COUNT 与 NULL\",\n  \"group\": \"NULL 行为\",\n  \"options\": [\n    {\n      \"text\": \"100\"\n    },\n    {\n      \"text\": \"90\"\n    },\n    {\n      \"text\": \"10\"\n    },\n    {\n      \"text\": \"1\"\n    },\n    {\n      \"text\": \"0\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"这将返回多少*行*？\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"sql\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"好，这有点儿棘手。关键是 `x = NULL` 永远不会匹配任何行，它总是返回一行，计数为 `0`。\\n\\n    因为 `NULL` 是未知值，不能与任何东西比较，甚至不能与它自身比较。\\n    \\n    检查 `NULL` 值的正确方式是使用 `IS NULL`。\\n\\n    示例：\"\n  ],\n  \"explanationCode\": [\n    {\n      \"language\": \"sql\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 938,
+    "outputTokens": 617,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 2503,
+    "providerCostUsd": 0.0004917,
+    "providerUpstreamCostUsd": 0.0004917,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000036581999999999996,
+    "outputUsd": 0.00011106,
+    "totalUsd": 0.000147642,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

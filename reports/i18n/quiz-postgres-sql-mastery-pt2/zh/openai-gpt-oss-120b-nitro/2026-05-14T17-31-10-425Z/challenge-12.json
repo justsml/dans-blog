@@ -1,0 +1,49 @@
+{
+  "index": 11,
+  "attempt": 1,
+  "originalTitle": "EXPLAIN ANALYZE Gotcha",
+  "translatedTitle": "EXPLAIN ANALYZE 陷阱",
+  "translation": {
+    "title": "EXPLAIN ANALYZE 陷阱",
+    "group": "性能",
+    "options": [
+      {
+        "text": "轻量计划估计"
+      },
+      {
+        "text": "仅适用于 SELECT"
+      },
+      {
+        "text": "修改数据并输出计划"
+      },
+      {
+        "text": "模拟执行以获取计划"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "`EXPLAIN ANALYZE` 对 `UPDATE` 语句有什么作用？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "`EXPLAIN ANALYZE` 实际上会执行查询！在分析写操作时要小心，尤其是 `UPDATE`、`DELETE` 和 `INSERT` 语句。每次运行 `EXPLAIN ANALYZE` 后可能需要执行清理操作，以获得可重复的结果。\n\n    最佳实践：\n    - 对 UPDATE/DELETE/INSERT 使用不带 ANALYZE 的 `EXPLAIN`\n    - 将修改包装在事务中："
+    ]
+  },
+  "rawText": "{\n  \"title\": \"EXPLAIN ANALYZE 陷阱\",\n  \"group\": \"性能\",\n  \"options\": [\n    {\n      \"text\": \"轻量计划估计\"\n    },\n    {\n      \"text\": \"仅适用于 SELECT\"\n    },\n    {\n      \"text\": \"修改数据并输出计划\"\n    },\n    {\n      \"text\": \"模拟执行以获取计划\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"`EXPLAIN ANALYZE` 对 `UPDATE` 语句有什么作用？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"`EXPLAIN ANALYZE` 实际上会执行查询！在分析写操作时要小心，尤其是 `UPDATE`、`DELETE` 和 `INSERT` 语句。每次运行 `EXPLAIN ANALYZE` 后可能需要执行清理操作，以获得可重复的结果。\\n\\n    最佳实践：\\n    - 对 UPDATE/DELETE/INSERT 使用不带 ANALYZE 的 `EXPLAIN`\\n    - 将修改包装在事务中：\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 956,
+    "outputTokens": 713,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2952,
+    "providerCostUsd": 0.0005712,
+    "providerUpstreamCostUsd": 0.0005712,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000037284000000000004,
+    "outputUsd": 0.00012833999999999998,
+    "totalUsd": 0.00016562399999999998,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

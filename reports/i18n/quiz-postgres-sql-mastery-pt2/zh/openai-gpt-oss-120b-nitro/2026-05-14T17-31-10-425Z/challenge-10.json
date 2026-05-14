@@ -1,0 +1,52 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Partial Indexes",
+  "translatedTitle": "部分索引",
+  "translation": {
+    "title": "部分索引",
+    "group": "索引",
+    "options": [
+      {
+        "text": "语法无效"
+      },
+      {
+        "text": "创建重复索引"
+      },
+      {
+        "text": "仅为活跃学生建立索引"
+      },
+      {
+        "text": "优先为活跃学生建立索引"
+      },
+      {
+        "text": "向查询规划器提供提示"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "这段咒语做什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "这个技巧叫做 `Partial Index`。\n\n    当通常只查询一部分行时，它们有助于减少磁盘使用并加速查询。\n\n    当查询中出现 `status = 'active'` 条件时，Postgres 才会使用该索引。\n\n    **提醒:** Postgres 不支持像其他 RDBMS 那样的 “query hints”。查询规划器会自行决定何时使用合适的索引。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"部分索引\",\n  \"group\": \"索引\",\n  \"options\": [\n    {\n      \"text\": \"语法无效\"\n    },\n    {\n      \"text\": \"创建重复索引\"\n    },\n    {\n      \"text\": \"仅为活跃学生建立索引\"\n    },\n    {\n      \"text\": \"优先为活跃学生建立索引\"\n    },\n    {\n      \"text\": \"向查询规划器提供提示\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"这段咒语做什么？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"这个技巧叫做 `Partial Index`。\\n\\n    当通常只查询一部分行时，它们有助于减少磁盘使用并加速查询。\\n\\n    当查询中出现 `status = 'active'` 条件时，Postgres 才会使用该索引。\\n\\n    **提醒:** Postgres 不支持像其他 RDBMS 那样的 “query hints”。查询规划器会自行决定何时使用合适的索引。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 931,
+    "outputTokens": 649,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 3248,
+    "providerCostUsd": 0.00049065,
+    "providerUpstreamCostUsd": 0.00049065,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000036308999999999994,
+    "outputUsd": 0.00011681999999999998,
+    "totalUsd": 0.00015312899999999998,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

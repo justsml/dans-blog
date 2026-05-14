@@ -1,0 +1,62 @@
+{
+  "index": 8,
+  "attempt": 1,
+  "originalTitle": "TABLESAMPLE Syntax",
+  "translatedTitle": "TABLESAMPLE 语法",
+  "translation": {
+    "title": "TABLESAMPLE 语法",
+    "group": "数据抽样",
+    "options": [
+      {
+        "text": "...学生 SAMPLETABLE BERNOULLI (0.10)"
+      },
+      {
+        "text": "...学生 TABLESAMPLE USER (10)"
+      },
+      {
+        "text": "...学生 TABLESAMPLE RANDOM (10)"
+      },
+      {
+        "text": "...学生 SAMPLE 10 PERCENT"
+      },
+      {
+        "text": "ROW_NUMBER() OVER (ORDER BY RAND())"
+      },
+      {
+        "text": "ORDER BY RANDOM() >= 10"
+      },
+      {
+        "text": "WHERE RANDOM() >= 0.1"
+      },
+      {
+        "text": "WHERE RANDOM() >= 0.9"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "哪种语法可以**随机抽样 10%**的学生？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "这道题很刁钻！大约有 6 个陷阱，例如：\n\n1. 高层描述 + 语法碎片，考察你如何拼凑不完整的信息。\n2. 需要熟悉 `TABLESAMPLE` 语法，因为没有一个 `TABLESAMPLE` 选项使用了正确的写法！（阴险！我知道！继续，加油，我相信你!!! ❤️）\n3. `ROW_NUMBER() OVER (ORDER BY RAND())` 和 `ORDER BY RANDOM() > 10` 只是红鲱鱼。它们看起来像是可行的，但其实不对。`RAND()` 并不存在，且 `RANDOM() > 10` 永远为假，因为 `RANDOM()` 的取值范围是 `0.0-1.0`。\n   另外，`ORDER BY RANDOM() > 10` 甚至会在布尔值上排序，而不是在随机数上。`> 10` 看起来像是百分比，但其实不是。\n4. `BERNOULLI` 是合法的，但 `SAMPLETABLE` 不是。\n5. `WHERE RANDOM() >= 0.1` 是个陷阱！`RANDOM()` 返回 `0.0 <= x < 1.0`，所以 `>= 0.1` 会返回约 90% 的行，而不是 10%。\n\nPostgreSQL 支持两种抽样方法：\n- `BERNOULLI`：每行等概率抽取\n- `SYSTEM`：块级抽样（更快但随机性稍差）\n\n想了解更多抽样技巧，请阅读来自 [Render](https://render.com/blog/postgresql-random-samples-big-tables) 的文章。\n\n示例：",
+      "还有一点值得一提，`TABLESAMPLE` 已被 [报告](https://stackoverflow.com/questions/8674718/best-way-to-select-random-rows-postgresql) 说随机性不佳。如果需要更随机的固定大小抽样，可以考虑使用 `ORDER BY RANDOM() LIMIT 10`。但要注意，这会返回 10 行，而不是 10%，且在大表上可能很慢。\n\n市面上也有一些第三方扩展提供更好的随机抽样方法，但超出本题范围 😅"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"TABLESAMPLE 语法\",\n  \"group\": \"数据抽样\",\n  \"options\": [\n    {\n      \"text\": \"...学生 SAMPLETABLE BERNOULLI (0.10)\"\n    },\n    {\n      \"text\": \"...学生 TABLESAMPLE USER (10)\"\n    },\n    {\n      \"text\": \"...学生 TABLESAMPLE RANDOM (10)\"\n    },\n    {\n      \"text\": \"...学生 SAMPLE 10 PERCENT\"\n    },\n    {\n      \"text\": \"ROW_NUMBER() OVER (ORDER BY RAND())\"\n    },\n    {\n      \"text\": \"ORDER BY RANDOM() >= 10\"\n    },\n    {\n      \"text\": \"WHERE RANDOM() >= 0.1\"\n    },\n    {\n      \"text\": \"WHERE RANDOM() >= 0.9\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"哪种语法可以**随机抽样 10%**的学生？\"\n  ],\n  \"questionCode\": [],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"这道题很刁钻！大约有 6 个陷阱，例如：\\n\\n1. 高层描述 + 语法碎片，考察你如何拼凑不完整的信息。\\n2. 需要熟悉 `TABLESAMPLE` 语法，因为没有一个 `TABLESAMPLE` 选项使用了正确的写法！（阴险！我知道！继续，加油，我相信你!!! ❤️）\\n3. `ROW_NUMBER() OVER (ORDER BY RAND())` 和 `ORDER BY RANDOM() > 10` 只是红鲱鱼。它们看起来像是可行的，但其实不对。`RAND()` 并不存在，且 `RANDOM() > 10` 永远为假，因为 `RANDOM()` 的取值范围是 `0.0-1.0`。\\n   另外，`ORDER BY RANDOM() > 10` 甚至会在布尔值上排序，而不是在随机数上。`> 10` 看起来像是百分比，但其实不是。\\n4. `BERNOULLI` 是合法的，但 `SAMPLETABLE` 不是。\\n5. `WHERE RANDOM() >= 0.1` 是个陷阱！`RANDOM()` 返回 `0.0 <= x < 1.0`，所以 `>= 0.1` 会返回约 90% 的行，而不是 10%。\\n\\nPostgreSQL 支持两种抽样方法：\\n- `BERNOULLI`：每行等概率抽取\\n- `SYSTEM`：块级抽样（更快但随机性稍差）\\n\\n想了解更多抽样技巧，请阅读来自 [Render](https://render.com/blog/postgresql-random-samples-big-tables) 的文章。\\n\\n示例：\",\n    \"还有一点值得一提，`TABLESAMPLE` 已被 [报告](https://stackoverflow.com/questions/8674718/best-way-to-select-random-rows-postgresql) 说随机性不佳。如果需要更随机的固定大小抽样，可以考虑使用 `ORDER BY RANDOM() LIMIT 10`。但要注意，这会返回 10 行，而不是 10%，且在大表上可能很慢。\\n\\n市面上也有一些第三方扩展提供更好的随机抽样方法，但超出本题范围 😅\"\n  ],\n  \"explanationCode\": [\n    {\n      \"language\": \"sql\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1435,
+    "outputTokens": 1166,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 2885,
+    "providerCostUsd": 0.00089565,
+    "providerUpstreamCostUsd": 0.00089565,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000055965,
+    "outputUsd": 0.00020988,
+    "totalUsd": 0.000265845,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

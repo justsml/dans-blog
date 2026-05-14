@@ -1,0 +1,52 @@
+{
+  "index": 7,
+  "attempt": 1,
+  "originalTitle": "Column Name Quoting",
+  "translatedTitle": "列名引用",
+  "translation": {
+    "title": "列名引用",
+    "group": "引用 2",
+    "options": [
+      {
+        "text": "first.name"
+      },
+      {
+        "text": "\"first.name\""
+      },
+      {
+        "text": "\\"
+      },
+      {
+        "text": "[first.name]"
+      },
+      {
+        "text": "[first].[name]"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "如何指定包含句点的**列名**？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "PostgreSQL 使用双引号来引用标识符：\n    - 双引号 `\"...\"` 用于标识符（列名、表名）\n    - 单引号 `'...'` 用于字符串字面量\n    - 形式 `first.name` 会被解释为 `table_name.column_name`\n\n    如果不加引号，列名中的句点会被当作模式/表分隔符！此外，所有未加引号的标识符默认会被转为小写。\n\n    为了减少意外，最好使用 `snake_case` 并避免使用特殊字符。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"列名引用\",\n  \"group\": \"引用 2\",\n  \"options\": [\n    {\n      \"text\": \"first.name\"\n    },\n    {\n      \"text\": \"\\\"first.name\\\"\"\n    },\n    {\n      \"text\": \"\\\\\"\n    },\n    {\n      \"text\": \"[first.name]\"\n    },\n    {\n      \"text\": \"[first].[name]\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"如何指定包含句点的**列名**？\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"sql\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"PostgreSQL 使用双引号来引用标识符：\\n    - 双引号 `\\\"...\\\"` 用于标识符（列名、表名）\\n    - 单引号 `'...'` 用于字符串字面量\\n    - 形式 `first.name` 会被解释为 `table_name.column_name`\\n\\n    如果不加引号，列名中的句点会被当作模式/表分隔符！此外，所有未加引号的标识符默认会被转为小写。\\n\\n    为了减少意外，最好使用 `snake_case` 并避免使用特殊字符。\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 951,
+    "outputTokens": 461,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 1926,
+    "providerCostUsd": 0.00038085,
+    "providerUpstreamCostUsd": 0.00038085,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000037089,
+    "outputUsd": 0.00008298,
+    "totalUsd": 0.00012006899999999999,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
