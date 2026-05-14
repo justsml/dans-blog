@@ -1,0 +1,52 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "Destructuring with Nested Default Values",
+  "translatedTitle": "带有嵌套默认值的解构",
+  "translation": {
+    "title": "带有嵌套默认值的解构",
+    "group": "TS 中的嵌套解构",
+    "options": [
+      {
+        "text": "错误：缺少属性 'first'"
+      },
+      {
+        "text": "错误：缺少属性 'last'"
+      },
+      {
+        "text": "错误：缺少属性 'birth' 和 'age'"
+      },
+      {
+        "text": "错误：缺少属性 'place'"
+      },
+      {
+        "text": "错误：'string' 在 {...} 中没有属性"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "找出类型错误："
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "错误出现在 `greet` 函数签名中。传入的对象缺少 `age` 和 `birth` 属性，因此在类型定义里它们应当是可选的。\n\n    即使 `birth` 属性使用了默认值进行解构，类型定义仍要求它必须存在。要在 TypeScript 中将属性标记为可选，需要使用 `?` 运算符。\n\n    注意 `birth?: { place?: string }` 并不等同于 `birth: { place?: string } | undefined`。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"带有嵌套默认值的解构\",\n  \"group\": \"TS 中的嵌套解构\",\n  \"options\": [\n    {\n      \"text\": \"错误：缺少属性 'first'\"\n    },\n    {\n      \"text\": \"错误：缺少属性 'last'\"\n    },\n    {\n      \"text\": \"错误：缺少属性 'birth' 和 'age'\"\n    },\n    {\n      \"text\": \"错误：缺少属性 'place'\"\n    },\n    {\n      \"text\": \"错误：'string' 在 {...} 中没有属性\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"找出类型错误：\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"错误出现在 `greet` 函数签名中。传入的对象缺少 `age` 和 `birth` 属性，因此在类型定义里它们应当是可选的。\\n\\n    即使 `birth` 属性使用了默认值进行解构，类型定义仍要求它必须存在。要在 TypeScript 中将属性标记为可选，需要使用 `?` 运算符。\\n\\n    注意 `birth?: { place?: string }` 并不等同于 `birth: { place?: string } | undefined`。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 993,
+    "outputTokens": 856,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 662,
+    "providerCostUsd": 0.00098955,
+    "providerUpstreamCostUsd": 0.00098955,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000038727000000000004,
+    "outputUsd": 0.00015408,
+    "totalUsd": 0.000192807,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

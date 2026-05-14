@@ -1,0 +1,52 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "Nested Destructuring",
+  "translatedTitle": "嵌套解构",
+  "translation": {
+    "title": "嵌套解构",
+    "group": "嵌套解构",
+    "options": [
+      {
+        "text": "First: Dan, City: Denver"
+      },
+      {
+        "text": "First: undefined, City: Denver"
+      },
+      {
+        "text": "错误：无法读取属性 'first'"
+      },
+      {
+        "text": "First: Dan, City: undefined"
+      },
+      {
+        "text": "错误"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "来点嵌套解构吧？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "`birth: { place }` 属性在 `person` 上不存在，因此会抛出错误。提供嵌套属性的默认值是一种解决方案。\n\n访问嵌套属性时要小心——错误往往不易发现，而且不同浏览器和平台的错误信息各不相同，调试会更具挑战性。\n\n在现代 Chrome 中：`TypeError: Cannot read properties of undefined (reading 'place')`\n\n在 Node 中也是 `TypeError`，因为 JavaScript 在读取 `place` 之前就尝试从 `undefined` 解构 `place`。\n\n具体的错误文字会因浏览器和运行时而异。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"嵌套解构\",\n  \"group\": \"嵌套解构\",\n  \"options\": [\n    {\n      \"text\": \"First: Dan, City: Denver\"\n    },\n    {\n      \"text\": \"First: undefined, City: Denver\"\n    },\n    {\n      \"text\": \"错误：无法读取属性 'first'\"\n    },\n    {\n      \"text\": \"First: Dan, City: undefined\"\n    },\n    {\n      \"text\": \"错误\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"来点嵌套解构吧？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"`birth: { place }` 属性在 `person` 上不存在，因此会抛出错误。提供嵌套属性的默认值是一种解决方案。\\n\\n访问嵌套属性时要小心——错误往往不易发现，而且不同浏览器和平台的错误信息各不相同，调试会更具挑战性。\\n\\n在现代 Chrome 中：`TypeError: Cannot read properties of undefined (reading 'place')`\\n\\n在 Node 中也是 `TypeError`，因为 JavaScript 在读取 `place` 之前就尝试从 `undefined` 解构 `place`。\\n\\n具体的错误文字会因浏览器和运行时而异。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1001,
+    "outputTokens": 1035,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 4298,
+    "providerCostUsd": 0.00075195,
+    "providerUpstreamCostUsd": 0.00075195,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000039039,
+    "outputUsd": 0.00018629999999999997,
+    "totalUsd": 0.00022533899999999996,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
