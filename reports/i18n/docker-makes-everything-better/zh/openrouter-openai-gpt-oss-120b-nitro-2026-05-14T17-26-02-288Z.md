@@ -1,0 +1,83 @@
+# Translation Candidate
+- Slug: docker-makes-everything-better
+- Locale: zh
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2015-03-12--docker-makes-everything-better/zh/index.mdx
+- Validation: deferred
+- Runtime seconds: 0.62
+- Input tokens: 1231
+- Output tokens: 499
+- Thinking tokens: unknown
+- Cached input tokens: 512
+- Cache write tokens: 0
+- Estimated cost: $0.000138
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: Docker === 爱
+subTitle: Docker 能搞定所有事！
+date: '2015-02-26'
+modified: '2024-07-30'
+category: DevOps
+subCategory: docker
+tags:
+  - docker
+  - devops
+  - patterns
+related:
+  - docker-server-setup-notes
+  - docker-rocks
+  - docker-security-tips-for-self-hosting
+cover: ../guillaume-bolduc-259596-unsplash.webp
+cover_mobile: ../w300_guillaume-bolduc-259596-unsplash.webp
+cover_icon: ../icon_guillaume-bolduc-259596-unsplash.webp
+---
+## Docker 能做一切！\*
+
+> 历史注记：这是一段 2015 年的 Docker 热情与本地开发习惯的快照，主要作为时间胶囊保存。将其中的命令和安全姿态视为现代化的起点，而非生产环境的指导。
+
+提升你的流程：
+
+1.  在几乎 **零风险** 的情况下测试开发工具和服务器，避免弄乱本机依赖
+2.  测试你的软件
+3.  促使你编写更幂等、模块化的代码……（后续会写如何落地实现）
+
+可能会觉得要学习的东西太多，**别让这成为阻碍**，直接上手吧。
+
+### 备注
+
+- 如果看到 `docker run` 命令带有 `-d` 或 `-it` 选项：
+  _ `-it` 或 `-i -t` 会以交互方式运行配置的命令
+  _ `-d` 会把 Docker 容器作为 “守护进程” 启动，即后台服务。
+
+---
+
+### 示例
+
+### nginx
+
+```bash
+# Note: using host-based, shared folders
+#(shared folders are not possible with the VOLUME Dockerfile cmd)
+sudo docker run --name web01 -d -p 8181:80 \
+  -v $(NGINX_DIR)/etc:/etc/nginx \
+  -v $(NGINX_DIR)/log:/var/log/nginx \
+  -v $(NGINX_DIR)/www:/var/www/html \
+  nginx:latest
+
+## Local data, isolated within instance
+sudo docker run --name web01 -d -p 8181:80 nginx:latest
+
+# nodejs
+sudo docker run --name nodejs01 -d -p 3300:3300 -p 4433:4433 nodejs:latest
+```
+
+> Credits: [https://dockerfile.github.io/#/nginx](https://dockerfile.github.io/#/nginx)
+> Docker 将在整个 **SDLC** 期间让你的工作更轻松。
+
+> - 相当接近
+````
