@@ -1,0 +1,53 @@
+{
+  "selectedCommit": "5d5a4c5189a7597b23c13c189930a8ddaf84078a",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 10,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "{text: '\\''}",
+      "replacement": "{text: '\\'first.name\\''}",
+      "reason": "The candidate accidentally truncated the single-quote option in Challenge 7, leaving only a backslash/quote fragment."
+    }
+  ],
+  "rationale": "The DeepSeek candidate provides a very natural and technically accurate translation. It correctly handles the relative paths for assets and maintains the MDX structure perfectly. It uses standard Arabic technical terminology. There is one minor truncation in the options for Challenge 7 which is easily fixed.",
+  "slug": "quiz-postgres-sql-mastery-pt2",
+  "locale": "ar",
+  "candidateCommits": [
+    "5d5a4c5189a7597b23c13c189930a8ddaf84078a",
+    "e2e7ee16f95e442546c69de721bdfbf4cf8b58ea"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "{text: '\\'}",
+      "replacement": "{text: '\\'first.name\\''}",
+      "reason": "The candidate accidentally truncated the single-quote option in Challenge 7, leaving only a backslash.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "{text: '\\''}",
+      "replacement": "{text: '\\'first.name\\''}",
+      "reason": "The candidate accidentally truncated the single-quote option in Challenge 7, leaving only a backslash/quote fragment.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug quiz-postgres-sql-mastery-pt2 --locale ar --skip-global",
+    "output": ""
+  }
+}
