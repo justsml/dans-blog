@@ -1,0 +1,183 @@
+# Translation Candidate
+- Slug: upgrade-from-gatsby-to-astro
+- Locale: he
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2024-08-22--upgrade-from-gatsby-to-astro/he/index.mdx
+- Validation: deferred
+- Runtime seconds: 55.62
+- Input tokens: 6774
+- Output tokens: 9286
+- Thinking tokens: unknown
+- Cached input tokens: 1152
+- Cache write tokens: 0
+- Estimated cost: $0.003390
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: לקחים משדרוג הבלוג שלי
+subTitle: 'Astro, Tailwind, MDX, Pagefind, ועוד!'
+date: '2024-08-21'
+modified: '2024-08-23'
+category: Guides
+tags:
+  - astro
+  - tailwind
+  - mdx
+  - pagefind
+  - gatsby
+cover: ../galaxy-contribution-mode.webp
+cover_full_width: ../galaxy-contribution-banner.webp
+cover_mobile: ../w300_galaxy-contribution-mode.webp
+cover_icon: ../icon_galaxy-contribution-mode.webp
+---
+לאחרונה יצאתי למסע לשדרוג האתר שלי מבוסס Gatsby v1, בן יותר מ-8 שנים.
+
+פוסט זה יחלוק כמה לקחים שלמדתי בתהליך זה, כמו גם טכנולוגיות מהנות שחקרתי.
+
+## תוכן עניינים
+
+- [דרישות הפרויקט](#project-requirements)
+- [בחירת ערימת הטכנולוגיה המתאימה לי](#choosing-my-right-technology-stack)
+- [Astro: עקומת למידה ותכונות מפתח](#astro-learning-curve-and-key-features)
+- [CSS מודרני: וואו](#modern-css-wow)
+- [חיפוש: Pagefind](#search-pagefind)
+- [תגובות: Utterances](#comments-utterances)
+- [Tailwind: חרטות](#tailwind-regrets)
+- [סיכום](#conclusion)
+
+## דרישות הפרויקט
+
+לפני הצלילה לשדרוג, קבעתי סט דרישות:
+
+מכיוון שהבלוג שלי מקבל מספר משתנה מאוד של צפיות יומיות, הרגשתי שאתר שנוצר מראש באופן סטטי ייתן את הביצועים שרציתי ללא מורכבות נוספת.
+
+כמו כן, הייתי צריך לשמור על התוכן והתכונות הקיימים של האתר, כולל:
+
+- הדגשת קוד
+- תגובות
+- חיפוש באתר
+- רכיבי React קיימים: ממשק חידון, הטמעות Gist
+- טופס יצירת קשר
+- תמונות רספונסיביות
+- זמן טעינה מתחת לשנייה
+- תאימות דפדפנים: 2018 ומעלה
+- פריסות אוטומטיות ומבוססות PR
+
+## בחירת ערימת הטכנולוגיה המתאימה לי
+
+במהלך השנים עבדתי עם כלים רבים לאתרים סטטיים, מ-Jekyll, Hugo, Slate ו-Gatsby. וגם עם מסגרות פרונט-אנד רבות: Ember, Knockout, Angular, Vue וכמובן React.
+
+אז, יש לי בדיוק יותר מדי אפשרויות, שבסופו של דבר צמצמתי ל-**Remix**, **Next.js** ו-**Astro**.
+
+יכולתי לכתוב סדרת בלוגים שלמה על תהליך ההערכה שלי, אבל אסכם זאת כאן:
+
+<p class="breakout">בחרתי ב-[Astro](https://astro.build) כי מהר מאוד יכולתי _לעשות דברים משמעותיים_.</p>
+
+עיצוב ה-API שלהם פשוט באופן מרענן. זהו [איזון מצוין בין גמישות לדעות עיצוביות טובות.](https://docs.astro.build/en/concepts/why-astro/)
+
+זה היה קצת מרגיע שלאסטרו אין הטיה ברורה לענן או אג'נדה של מסגרת.
+
+אסטרו לא הייתה הטכנולוגיה היחידה שהשתמשתי בה, הנה פירוט מלא של הערימה:
+
+- [Astro](https://astro.build): מחולל אתרים סטטיים מודרני.
+- [ShadcnUI](https://ui.shadcn.com): אוסף של רכיבים לשימוש חוזר.
+- [Tailwind CSS](https://tailwindcss.com): מסגרת CSS מבוססת-תועלת.
+- [MDX](https://mdxjs.com): תוכן Markdown + רכיבים מוטמעים.
+- [Pagefind](https://pagefind.app): ספריית חיפוש אתרים מהירה, סטטית ומצב לא מקוון. אין צורך ב-Algolia!
+- [Utterances](https://utteranc.es): מערכת תגובות המבוססת על Issues של GitHub.
+- [Netlify](https://www.netlify.com): פריסות אוטומטיות, טופס יצירת קשר עם קפצ'ה.
+
+## אסטרו: עקומת למידה ותכונות מפתח
+
+<p class="breakout quote">אסטרו הפכה במהירות לאבן הפינה של השדרוג שלי.</p>
+
+להלן כמה תכונות מפתח שמצאתי שימושיות במיוחד:
+
+- קבצי `.astro`: במבט ראשון, רכיבי Astro עשויים להיראות כמו רכיבי React JSX, אך הם שונים למדי ומשרתים מטרות שונות. (ראו טבלת השוואה להלן.)
+- מופעל על ידי [כלי הבנייה](https://github.com/withastro/compiler) משלו ב-Golang ו-Vite: זה פשוט עובד. מטפל בצורה חלקה ב-ESM/CJS, TypeScript, איגוד קוד, סגנונות, תמונות וכו'.
+- [ללא הטיית מסגרת](https://docs.astro.build/en/guides/framework-components/#official-ui-framework-integrations) או [הטיית ענן](https://docs.astro.build/en/guides/deploy/). (*שיעול* Next.js, OpenNext)
+- [עיבוד סטטי לעומת היברידי](https://docs.astro.build/en/basics/rendering-modes/): Astro מספקת [גמישות למיקוד ברוב פלטפורמות הענן](https://docs.astro.build/en/guides/deploy/): AWS, GCP, Firebase, Netlify, Vercel, Cloudflare Pages, Azure, Fly.io ועוד רבות אחרות.
+- אוספי תוכן: ה-API [`getCollection`](https://docs.astro.build/en/reference/api-reference/#getcollection) מפשט את העבודה עם קבצי תוכן כמקור נתונים.
+- ניתוב מבוסס קבצים: מערכת הניתוב מבוססת הקבצים של Astro, בשילוב עם `getStaticPaths`, הופכת יצירת דפים לקלה ביותר.
+- SEO: [Astro לא מפריע לך](https://github.com/justsml/dans-blog/blob/010c5cb58bb327adb8c8fff608594daa612ad9d5/src/components/BaseHead.astro#L43-L63), ופולט רק כמות מינימלית של ~~פסולת~~ קוד תבניתי (`astro-island`) בעת הצורך.
+
+כמה דברים היו מעט מפתיעים, כמו עיצוב סביב הסימון המוזרק של Astro, וההשפעה של `display:contents`.
+
+```tsx
+
+<style>astro-island,astro-slot,astro-static-slot{display:contents}</style>
+
+```
+
+### השוואת `.astro` לעומת רכיבי לקוח
+
+רכיבי Astro הם בעצם תבניות HTML עם תבנית רכיבים ומאפיינים עוצמתית. הם יכולים לאחזר נתונים בזמן בנייה, לגשת למשאבי צד שרת, ולשמור מידע רגיש מסוים מוסתר.
+
+הדרך הטובה ביותר להבין את רכיבי `.astro` של Astro היא להשוות ולהבדיל בינם לבין רכיבי צד לקוח. (React, Vue, Svelte וכו')
+
+<section className="scroll-x">
+| מה צריך לעשות? | רכיב `.astro` | רכיב לקוח |
+| ---------------------------------------------------------------------------------- | ------------------- | ------------------- |
+| יצירת HTML עם תבנית רכיבים+תבניות עוצמתית | ✅ | ❌ |
+| אחזור נתונים בזמן בנייה | ✅ | ❌ |
+| גישה למשאבי צד שרת (ישירות) | ✅ | ❌ |
+| שמירת מידע רגיש מוסתר (טוקני גישה, מפתחות API וכו') | ✅ | ❌ |
+| הפחתת JavaScript בצד הלקוח | ✅ | ❌ |
+| שימוש ברכיבי לקוח (React, Vue, Svelte וכו') | ✅ | ✅ |
+| הוספת אינטראקטיביות ומאזיני אירועים (`onClick()`, `onChange()` וכו') | ❌ | ✅ |
+| שימוש במצב ואפקטים של מחזור חיים (`useState()`, `useReducer()`, `useEffect()` וכו') | ❌ | ✅ |
+| שימוש ב-API של דפדפן בלבד | ❌ | ✅ |
+| שימוש בהוקים מותאמים אישית התלויים במצב, אפקטים או API של דפדפן בלבד | ❌ | ✅ |
+</section>
+
+## CSS מודרני: וואו
+
+## CSS מודרני: וואו
+
+בחזרה לפיתוח צד לקוח, שמחתי לראות את ההתקדמות ב-CSS המקורי:
+
+- **משתני CSS**: זמינים כבר זמן מה, ויציבים למדי בין דפדפנים מאז 201\*.
+- **קינון**: סוף סוף בתקן, וללא התחביר המביך הקודם. עכשיו זה דומה ל-Less או SCSS.
+- **סלקטורים חדשים**: [`:is()`, `:where()`, ו-`:has()`](https://www.youtube.com/watch?v=3ncFpP8GP4g) מאפשרים מיקוד מדויק יותר של אלמנטים.
+- **יחידות מודרניות** כמו `ch`, `vw`, ופונקציות כמו `clamp()` מספקות שליטה טובה יותר על פריסות וטיפוגרפיה.
+- **קביעת מרווחים בצורה טבעית יותר** עם תכונות `-inline` ו-`-block`. הגדר padding או margin על הציר האופקי או האנכי. במקום `margin: 0 1rem 0 1rem` → `margin-inline: 1rem`.
+- **פריסות מתקדמות**: ללמוד מחדש CSS Grid. וואו, יש שם הרבה שטויות. זה יכול להיות מאיים עם אינספור דרכים להשתמש בו. זכור, אפשר להסתדר עם הבנה של דרך אחת או שתיים. בדוק את המשאבים המעולים האלה שעזרו לי לעשות טריקים עם grid: [הסרטון של Kevin Powell: Learn CSS Grid the easy way](https://www.youtube.com/watch?v=rg7Fvvl3taU), [Responsive w/o media queries](https://ardilamorin.com/responsive-no-media-queries/), [Ten modern layouts in one line of CSS](https://web.dev/articles/one-line-layouts).
+
+## חיפוש: Pagefind
+
+יישום **חיפוש באתר** ללא שירותי צד שלישי או אחסון מסד נתונים נראה כמו אתגר מהנה. אחרי הכל, אין לי 10,000 פוסטים לאינדקס (עדיין).
+
+בזמן שעיינתי ב[אינטגרציות הקהילה של Astro](https://astro.build/integrations/?search=find) נתקלתי בכלי פנטסטי שהייתי רוצה להכיר מוקדם יותר: [Pagefind](https://pagefind.app/).
+
+<p class="breakout quote">מעט כלים פותרים בעיה כלשהי באותה מידה ש-Pagefind פותר חיפוש מקומי באתר.</p>
+
+הפשטות של יישום Pagefind היא תענוג. ניתן לשלב אותו עם כל תוכן אתר סטטי, ואתה יכול לבחור אם אתה רוצה ממשק משתמש ברירת מחדל, או לבנות משהו מותאם אישית אם תרצה.
+
+הוא פתר בצורה מסודרת את כל מה שרציתי. לקח רק דקות לשלב, ורוב העבודה כללה הוספת תג `<div id="search"></div>` וקצת עיצוב!
+
+## תגובות: Utterances
+
+לצערי, נאלצתי להיפרד מ-Disqus ומהתגובות שצברתי במשך שנים רבות.
+
+רציתי שליטה/נראות טובה יותר על הסקריפטים של צד שלישי באתר שלי.
+
+בנוסף, זה צריך להיות פשוט וניתן לתחזוקה.
+
+זה הוביל אותי לבחור בשירות הנהדר [Utterances](https://utteranc.es/). מערכת התגובות שלו (המבוססת על Issues של GitHub) מתאימה היטב לקהל שלי. בנוסף, קל להגדיר אותו, והוא חינמי.
+
+## Tailwind: חרטות
+
+יש רק טכנולוגיה אחת שאני מתחרט יותר ויותר על השימוש בה: Tailwind.
+
+עם הזמן, אני מרגיש את הבדל העלות בין כתיבה לעומת תחזוקה. Tailwind כל כך מהיר לכתיבה, אבל ברגע שהוא מספיק מורכב, הוא יכול להפוך למייגע לקריאה ולהרחבה.
+
+## סיכום
+
+שדרוג האתר הישן שלי מבוסס Gatsby v1 לסטack מודרני סביב Astro היה חוויה מהנה. 10/10 ממליץ.
+
+אם אתה שוקל לשדרג אתר ישן או לבנות אתר סטטי (או היברידי) חדש, אני ממליץ בחום להסתכל על Astro. עקומת הלמידה עשויה להיות תלולה לפעמים, אבל היתרונות מבחינת ביצועים, חוויית מפתח, והגנה על הפרויקט שלך לעתיד שווים בהחלט את המאמץ.
+````
