@@ -1,0 +1,101 @@
+{
+  "selectedCommit": "071449f22d81d262d8b49ce76844230d35f33980",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "(..../mastra-security-guardrails)",
+      "replacement": "(/mastra-security-guardrails)",
+      "reason": "The current translation has an incorrect path format '..../'. It should be a standard root-relative or relative path. Given the site structure, '/mastra-security-guardrails' is the standard for internal cross-linking in this project."
+    },
+    {
+      "priority": "high",
+      "match": "(..../mastra-mcp-tool-integrations)",
+      "replacement": "(/mastra-mcp-tool-integrations)",
+      "reason": "Correcting the broken path prefix '..../' to the standard internal link format."
+    },
+    {
+      "priority": "high",
+      "match": "(..../mastra-workflows-memory)",
+      "replacement": "(/mastra-workflows-memory)",
+      "reason": "Correcting the broken path prefix '..../' to the standard internal link format."
+    }
+  ],
+  "rationale": "The translation is excellent, capturing Dan's direct and slightly informal tone ('so hot right now', 'turning the middle into soup'). It correctly handles technical terms and code blocks. However, the internal links in the 'Read the Series' section were corrupted with '..../' prefixes which will break the site navigation.",
+  "slug": "llm-routing-mastra-ai",
+  "locale": "ar",
+  "candidateCommits": [
+    "071449f22d81d262d8b49ce76844230d35f33980",
+    "dadcbea6f315310a7fc733427c76a636bcfb9433"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "/mastra-security-guardrails",
+      "replacement": "../mastra-security-guardrails",
+      "reason": "The link must start with ../ to correctly reference the parent directory in the localized folder structure.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "/mastra-mcp-tool-integrations",
+      "replacement": "../mastra-mcp-tool-integrations",
+      "reason": "The link must start with ../ to correctly reference the parent directory in the localized folder structure.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "/mastra-workflows-memory",
+      "replacement": "../mastra-workflows-memory",
+      "reason": "The link must start with ../ to correctly reference the parent directory in the localized folder structure.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "(..../mastra-security-guardrails)",
+      "replacement": "(/mastra-security-guardrails)",
+      "reason": "The current translation has an incorrect path format '..../'. It should be a standard root-relative or relative path. Given the site structure, '/mastra-security-guardrails' is the standard for internal cross-linking in this project.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "(..../mastra-mcp-tool-integrations)",
+      "replacement": "(/mastra-mcp-tool-integrations)",
+      "reason": "Correcting the broken path prefix '..../' to the standard internal link format.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "(..../mastra-workflows-memory)",
+      "replacement": "(/mastra-workflows-memory)",
+      "reason": "Correcting the broken path prefix '..../' to the standard internal link format.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug llm-routing-mastra-ai --locale ar --skip-global",
+    "output": ""
+  }
+}
