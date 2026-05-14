@@ -129,7 +129,8 @@ La soluzione è la ricerca ibrida: eseguire entrambe le modalità e fondere i ri
 
 **Reciprocal Rank Fusion (RRF)** è l’algoritmo standard per combinare elenchi ordinati provenienti da diversi sistemi di recupero. Non richiede la normalizzazione dei punteggi tra i sistemi — utilizza solo le posizioni di ranking. Un risultato che appare in alto in *entrambi* gli elenchi ottiene un punteggio combinato più forte rispetto a uno che domina solo una delle due.
 
-```sqlWITH fts_results AS (
+```sql
+WITH fts_results AS (
   SELECT id,
     ROW_NUMBER() OVER (ORDER BY ts_rank(search_vector, query) DESC) AS rank
   FROM documents, to_tsquery('english', $1) query
