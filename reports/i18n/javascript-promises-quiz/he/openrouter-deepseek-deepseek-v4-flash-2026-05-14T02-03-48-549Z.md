@@ -1,0 +1,382 @@
+# Translation Candidate
+- Slug: javascript-promises-quiz
+- Locale: he
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2019-11-26--javascript-promises-quiz/he/index.mdx
+- Validation: deferred
+- Runtime seconds: 109.77
+- Input tokens: 8644
+- Output tokens: 14734
+- Thinking tokens: unknown
+- Cached input tokens: 640
+- Cache write tokens: 0
+- Estimated cost: $0.005479
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: 'חידון: 9 שאלות Promise ב-JavaScript'
+subTitle: לעולם אל תפר הבטחה שוב!
+label: Promise Gotchas
+date: '2019-11-26'
+modified: '2024-11-28'
+tags:
+  - promises
+  - programming
+  - async
+  - javascript
+  - guides
+  - quiz
+  - intermediate
+related:
+  - intro-to-promises
+  - promise-gotchas
+  - visualizing-promises
+  - stop-trying-to-make-async-await-happen
+category: Quiz
+unlisted: false
+subCategory: JavaScript
+cover: ../olav-ahrens-rotne-jvBXiynINGE-resized.webp
+cover_mobile: ../w300_olav-ahrens-rotne-jvBXiynINGE-resized.webp
+cover_icon: ../icon_olav-ahrens-rotne-jvBXiynINGE-resized.webp
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+
+## האם אתה מכיר את JavaScript Promises?
+
+> * **הוכיחו את כישורי ה-JavaScript שלכם!** 🚀
+
+1. **בדוק רמזים** (כפתור גדול, בפינה התחתונה).
+2. נסה את הקוד בקונסול של הדפדפן (נסה קיצור דרך `F12` או חפש אותו) או השתמש ב-[repl.it](https://repl.it)*.
+3. אנא הרגש חופשי [לצייץ אלי @justsml](https://x.com/intent/tweet?text=Hey%20Dan%2C%20I%20was%20taking%20your%20promises%20quiz%2E%2E%2E&url=https://danlevy.net/). **אשמח לשמוע את מחשבותיך!**
+
+### 👇 השלם 9 שאלות למטה 👇
+---
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="טיפול בשגיאות"
+  title="ריבוי `.catch`'s #1"
+  options={[
+    {text: 'הדפסת הודעה פעם אחת'},
+    {text: 'הדפסת הודעה פעמיים', isAnswer: true},
+    {text: 'UnhandledPromiseRejectionWarning'},
+    {text: 'התהליך מסתיים'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה תהיה הפלט עבור הקוד הבא?
+    ```js
+        var p = new Promise((resolve, reject) => {
+          reject(Error('The Fails!'))
+        })
+        p.catch(error => console.log(error.message))
+        p.catch(error => console.log(error.message))
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    אנו יוצרים Promise באמצעות מתודת הבנאי, ומפעילים שגיאה מידית עם ה-callback `reject`.
+
+    לאחר מכן, מטפלי `.catch` פועלים כמו `.addEventListener(event, callback)` של ה-DOM או `.on(event, callback)` של Event Emitter, שבהם **ניתן להוסיף מספר callbacks של מטפלים.** כל אחד ייקרא עם אותם הארגומנטים.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="טיפול בשגיאות"
+  title="מרובים `.catch`'s #2"
+  options={[
+    {text: 'הדפס הודעה פעם אחת'},
+    {text: 'הדפס הודעה פעמיים'},
+    {text: 'הבטחה שנדחתה ללא טיפול', isAnswer: true},
+    {text: 'תהליך יוצא'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה יהיה הפלט עבור הקוד הבא?
+    ```js
+        var p = new Promise((resolve, reject) => {
+          return Promise.reject(Error('The Fails!'))
+        })
+        p.catch(error => console.log(error.message))
+        p.catch(error => console.log(error.message))
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    בעת שימוש בבנאי Promise עליך להפעיל את קריאות ה-`resolve()` או `reject()`. בנאי Promise מתעלם מערך ההחזרה של המבצע, כך שהבטחה הנוספת שנוצרה עם `Promise.reject()` אינה משורשרת ל-`p`. שני המטפלים מחוברים ל-`p`, שנשאר בהמתנה, בעוד שהבטחה הנדחת שהוחזרה מדווחת כלא מטופלת על ידי סביבת האירוח.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:only="react"
+  index={2}
+  group="טיפול בשגיאות"
+  title="שרשור `.then` ו-`.catch`"
+  client:only="react"
+  options={[
+    {text: 'הדפסת שגיאה ו-`undefined`', isAnswer: true},
+    {text: 'הדפסת שגיאה פעמיים'},
+    {text: 'UnhandledPromiseRejectionWarning'},
+    {text: 'undefined'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה תהיה הפלט עבור הקוד הבא?
+    ```js
+        var p = new Promise((resolve, reject) => {
+          reject(Error('The Fails!'))
+        })
+        .catch(error => console.log(error))
+        .then(error => console.log(error))
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    כאשר משרשרים `.then` ו-`.catch`, כדאי לחשוב עליהם כסדרה של צעדים. כל `.then` מקבל את הערך שהוחזר על ידי ה-`.then` הקודם (כארגומנט שלו). עם זאת, אם ה"צעד" שלך נתקל בשגיאה, כל צעדי `.then` הבאים ידולגו עד שיימצא `.catch`. אם ברצונך לעקוף שגיאה, כל מה שאתה צריך לעשות הוא להחזיר ערך שאינו שגיאה. ניתן לגשת אליו דרך כל `.then` עוקב.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:only="react"
+  index={3}
+  group="טיפול בשגיאות"
+  title="שרשור `.catch`'s"
+  client:only="react"
+  options={[
+    {text: 'הדפסת הודעת שגיאה פעם אחת', isAnswer: true},
+    {text: 'הדפסת הודעת שגיאה פעמיים'},
+    {text: 'UnhandledPromiseRejectionWarning'},
+    {text: 'התהליך מסתיים'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה תהיה הפלט עבור הקוד הבא?
+    ```js
+        var p = new Promise((resolve, reject) => {
+          reject(Error('The Fails!'))
+        })
+        .catch(error => console.log(error.message))
+        .catch(error => console.log(error.message))
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    כאשר משרשרים `.catch`'s, כל אחד מטפל רק בשגיאות שנזרקות ב-`.then` או `.catch` הקודמים ("צעדים"). בדוגמה זו, ה-`.catch` הראשון מחזיר את ה-`console.log` שניתן לגשת אליו רק על ידי הוספת `.then()` אחרי שני ה-`.catch`'s.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="טיפול בשגיאות"
+  title="ריבוי `.catch`'ים"
+  options={[
+    {text: 'הדפסת הודעה פעם אחת'},
+    {text: 'הדפסת הודעה פעמיים'},
+    {text: 'UnhandledPromiseRejectionWarning'},
+    {text: 'שום דבר לא מודפס', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה תהיה הפלט עבור הקוד הבא?
+    ```js
+        new Promise((resolve, reject) => {
+            resolve('Success!')
+          })
+          .then(() => {
+            throw Error('Oh noes!')
+          })
+          .catch(error => {
+            return "actually, that worked"
+          })
+          .catch(error => console.log(error.message))
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    **רמז:** ניתן להשתמש ב-`.catch`'ים כדי להתעלם (או לעקוף) שגיאות פשוט על ידי החזרת ערך רגיל.
+
+    This trick works only when there is a subsequent `.then` to receive the value.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="טיפול בנתונים"
+  title="זרימה בין `.then`'s"
+  options={[
+    {text: 'ידפיס "Success!" ו־"SUCCESS!"'},
+    {text: 'ידפיס "Success!"'},
+    {text: 'ידפיס "SUCCESS!"', isAnswer: true},
+    {text: 'שום דבר לא יודפס'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה יהיה הפלט של הקוד הבא?
+    ```js
+        Promise.resolve('Success!')
+          .then(data => {
+            return data.toUpperCase()
+          })
+          .then(data => {
+            console.log(data)
+          })
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    **רמז:** `.then`'s מעבירים נתונים ברצף, מ־`return value` אל ה־`.then` הבא `(value => /* handle value */)`.
+
+    `return` הוא המפתח כדי להעביר ערך אל ה־`.then` הבא.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="טיפול בנתונים"
+  title="זרימה בין `.then`'s"
+  options={[
+    {text: 'הדפס "SUCCESS!"'},
+    {text: 'הדפס "Success!"'},
+    {text: 'הדפס "SUCCESS!" ו-"SUCCESS!"', isAnswer: true},
+    {text: 'שום דבר לא מודפס'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה יהיה הפלט של הקוד הבא?
+    ```js
+        Promise.resolve('Success!')
+          .then(data => {
+            return data.toUpperCase()
+          })
+          .then(data => {
+            console.log(data)
+            return data
+          })
+          .then(console.log)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    ישנן 2 קריאות `console.log` שייקראו.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="טיפול בנתונים"
+  title="זרימה בין `.then`'s"
+  options={[
+    {text: 'הדפס "SUCCESS!"'},
+    {text: 'הדפס "Success!"'},
+    {text: 'הדפס "SUCCESS!" ו-"SUCCESS!"'},
+    {text: 'הדפס `undefined`', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה תהיה הפלט עבור הקוד הבא?
+    ```js
+        Promise.resolve('Success!')
+          .then(data => {
+            data.toUpperCase()
+          })
+          .then(data => {
+            console.log(data)
+          })
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    **רמז:** `.then`'s מעבירים נתונים ברצף, מ-`return value` ל-`.then(value => /* handle value */)` הבא.
+
+    `return` הוא המפתח כדי להעביר ערך ל-`.then` הבא.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="טיפול בנתונים"
+  title="זרימה בין `.then` ל-`.catch`"
+  options={[
+    {text: 'הדפס "Oh noes!" ו-"The fails!"'},
+    {text: 'הדפס "Oh noes!"'},
+    {text: 'הדפס "The fails!"', isAnswer: true},
+    {text: 'הדפס "actually, that worked"'},
+    {text: 'שום דבר לא מודפס'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה יהיה הפלט עבור הקוד הבא?
+    ```js
+        Promise.resolve('Success!')
+          .then(() => {
+            throw Error('Oh noes!')
+          })
+          .catch(error => {
+            return 'actually, that worked'
+          })
+          .then(data => {
+            throw Error('The fails!')
+          })
+          .catch(error => console.log(error.message))
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    ![annotated-code/question-9-4.webp](annotated-code/question-9-4.webp)
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+````

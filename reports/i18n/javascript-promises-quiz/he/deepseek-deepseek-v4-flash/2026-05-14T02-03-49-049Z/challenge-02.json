@@ -1,0 +1,49 @@
+{
+  "index": 1,
+  "attempt": 1,
+  "originalTitle": "Multiple `.catch`'s #2",
+  "translatedTitle": "מרובים `.catch`'s #2",
+  "translation": {
+    "title": "מרובים `.catch`'s #2",
+    "group": "טיפול בשגיאות",
+    "options": [
+      {
+        "text": "הדפס הודעה פעם אחת"
+      },
+      {
+        "text": "הדפס הודעה פעמיים"
+      },
+      {
+        "text": "הבטחה שנדחתה ללא טיפול"
+      },
+      {
+        "text": "תהליך יוצא"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "מה יהיה הפלט עבור הקוד הבא?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "בעת שימוש בבנאי Promise עליך להפעיל את קריאות ה-`resolve()` או `reject()`. בנאי Promise מתעלם מערך ההחזרה של המבצע, כך שהבטחה הנוספת שנוצרה עם `Promise.reject()` אינה משורשרת ל-`p`. שני המטפלים מחוברים ל-`p`, שנשאר בהמתנה, בעוד שהבטחה הנדחת שהוחזרה מדווחת כלא מטופלת על ידי סביבת האירוח."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"מרובים `.catch`'s #2\",\n  \"group\": \"טיפול בשגיאות\",\n  \"options\": [\n    {\n      \"text\": \"הדפס הודעה פעם אחת\"\n    },\n    {\n      \"text\": \"הדפס הודעה פעמיים\"\n    },\n    {\n      \"text\": \"הבטחה שנדחתה ללא טיפול\"\n    },\n    {\n      \"text\": \"תהליך יוצא\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"מה יהיה הפלט עבור הקוד הבא?\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"בעת שימוש בבנאי Promise עליך להפעיל את קריאות ה-`resolve()` או `reject()`. בנאי Promise מתעלם מערך ההחזרה של המבצע, כך שהבטחה הנוספת שנוצרה עם `Promise.reject()` אינה משורשרת ל-`p`. שני המטפלים מחוברים ל-`p`, שנשאר בהמתנה, בעוד שהבטחה הנדחת שהוחזרה מדווחת כלא מטופלת על ידי סביבת האירוח.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 811,
+    "outputTokens": 1090,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 8175,
+    "providerCostUsd": 0.0005982,
+    "providerUpstreamCostUsd": 0.0005982,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00011354000000000001,
+    "outputUsd": 0.00030520000000000005,
+    "totalUsd": 0.0004187400000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
