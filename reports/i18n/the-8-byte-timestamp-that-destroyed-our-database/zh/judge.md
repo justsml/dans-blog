@@ -1,7 +1,7 @@
 # Translation Judge
 
-- Selected candidate: 4663ee08a5239e7ec617e1663357f57a2c68a5a2
-- Selected model: openrouter/deepseek/deepseek-v4-flash
-- Judge model: openrouter/deepseek/deepseek-v4-flash
+- Selected candidate: bd35a430a9bf3c0c75fe6b403e2f130f968bc5be
+- Selected model: openrouter/google/gemini-3-flash-preview
+- Judge model: openrouter/google/gemini-3-flash-preview
 
-Candidate 4663ee08 (deepseek-v4-flash) is selected over 5d785ed0 (gpt-oss-120b) due to slightly more natural phrasing, no typographical errors (the other candidate has a stray space in '一 个'), and consistent terminology. Both translations accurately convey technical concepts and preserve MDX structure, but 4663ee08 reads more fluidly in Chinese while maintaining Dan's direct, conversational style.
+This candidate provides the most natural and professional translation while strictly adhering to the MDX structure and asset path requirements. It captures Dan's direct, conversational style well (e.g., using '门槛' or '诀窍' for 'trick', and '栽跟头' for 'bite you'). It correctly translates technical terms like 'wall-clock time' as '挂钟时间' and maintains the integrity of the code blocks and frontmatter.

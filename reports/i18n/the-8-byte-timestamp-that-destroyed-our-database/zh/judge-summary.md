@@ -2,7 +2,7 @@
 
 - Slug: the-8-byte-timestamp-that-destroyed-our-database
 - Locale: zh
-- Judge model: openrouter/deepseek/deepseek-v4-flash
+- Judge model: openrouter/google/gemini-3-flash-preview
 - Second judge model: not run
 - Escalation judge model: not run
 - Max candidate commits per judge call: 3
@@ -12,16 +12,17 @@
 - Validation scope: local
 
 ## Primary Judge Telemetry
-- Runtime seconds: 16.29
-- Input tokens: 7724
-- Output tokens: 3236
+- Runtime seconds: 5.18
+- Input tokens: 13566
+- Output tokens: 198
 - Thinking tokens: unknown
 - Cached input tokens: 0
 - Cache write tokens: 0
-- OpenRouter cost credits: 0.002839
-- Estimated cost: $0.002839
+- OpenRouter cost credits: 0.007377
+- Estimated cost: $0.007377
 
 ## Candidates
-- current not present
-- 5d785ed0f91cf0dfe90faf2bc79c536b3ee81097 i18n candidate(zh): the-8-byte-timestamp-that-destroyed-our-database via openrouter/openai/gpt-oss-120b:nitro
-- 4663ee08a5239e7ec617e1663357f57a2c68a5a2 i18n candidate(zh): the-8-byte-timestamp-that-destroyed-our-database via openrouter/deepseek/deepseek-v4-flash
+- current src/content/posts/2025-12-29--the-8-byte-timestamp-that-destroyed-our-database/zh/index.mdx
+- bd35a430a9bf3c0c75fe6b403e2f130f968bc5be i18n candidate(zh): the-8-byte-timestamp-that-destroyed-our-database via openrouter/google/gemini-3-flash-preview
+- 7f8d88ff30eabe254e903d1cb733cae28c48f6da i18n candidate(zh): the-8-byte-timestamp-that-destroyed-our-database via openrouter/qwen/qwen3-32b:nitro
+- 0bfe22fa3641602bde404f5bf8d55842733dc02b i18n candidate(zh): the-8-byte-timestamp-that-destroyed-our-database via openrouter/openai/gpt-oss-120b:nitro
