@@ -1,0 +1,102 @@
+{
+  "selectedCommit": "ceb77f5e19cb4ae15da5085d95f7a32146965b23",
+  "selectedModel": "deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 90,
+    "technicalAccuracy": 95,
+    "coherence": 90,
+    "relevance": 100,
+    "translationQuality": 90,
+    "mdxPreservation": 100
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "{text: '总是使用 512 个 token —— 这是标准},",
+      "replacement": "{text: '总是使用 512 个 token —— 这是标准'},",
+      "reason": "Fixing a syntax error: missing closing quote in the options array."
+    },
+    {
+      "priority": "high",
+      "match": "{text: '只要嵌入模型足够好，块大小就不重要},",
+      "replacement": "{text: '只要嵌入模型足够好，块大小就不重要'},",
+      "reason": "Fixing a syntax error: missing closing quote in the options array."
+    },
+    {
+      "priority": "high",
+      "match": "{text: 'temperature=0 禁用模型生成随机性},",
+      "replacement": "{text: 'temperature=0 禁用模型生成随机性'},",
+      "reason": "Fixing a syntax error: missing closing quote in the options array."
+    }
+  ],
+  "rationale": "The candidate provides a high-quality translation with good technical terminology (e.g., '接地' for grounding, '倒数排名融合' for RRF). It preserves the MDX structure perfectly. However, it has three instances of broken strings in the 'options' arrays (missing closing quotes), which would cause a build failure. These are corrected in the suggestions.",
+  "slug": "quiz-context-engineering",
+  "locale": "zh",
+  "candidateCommits": [
+    "34460ffaa6191254028f301242f6e3d1213a4803",
+    "4e78e1f194b770aceed93cae270e38c994958abe",
+    "ceb77f5e19cb4ae15da5085d95f7a32146965b23"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "总是使用512个token——它\\'",
+      "replacement": "总是使用 512 个 token —— 这是标准",
+      "reason": "The candidate has a broken string with an escaped apostrophe and missing text in the options array.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "块大小并不\\'",
+      "replacement": "只要嵌入模型足够好，块大小就不重要",
+      "reason": "The candidate has a broken string with an escaped apostrophe and missing text in the options array.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "temperature=0 禁用模型\\'",
+      "replacement": "temperature=0 禁用模型生成随机性",
+      "reason": "The candidate has a broken string with an escaped apostrophe and missing text in the options array.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "{text: '总是使用 512 个 token —— 这是标准},",
+      "replacement": "{text: '总是使用 512 个 token —— 这是标准'},",
+      "reason": "Fixing a syntax error: missing closing quote in the options array.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "{text: '只要嵌入模型足够好，块大小就不重要},",
+      "replacement": "{text: '只要嵌入模型足够好，块大小就不重要'},",
+      "reason": "Fixing a syntax error: missing closing quote in the options array.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "{text: 'temperature=0 禁用模型生成随机性},",
+      "replacement": "{text: 'temperature=0 禁用模型生成随机性'},",
+      "reason": "Fixing a syntax error: missing closing quote in the options array.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug quiz-context-engineering --locale zh --skip-global",
+    "output": ""
+  }
+}
