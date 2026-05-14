@@ -46,6 +46,9 @@ bun run i18n:eval -- --kind quiz --locales zh
 
 # Override judge model
 bun run i18n:eval -- --judge-model openrouter/google/gemini-3-flash-preview
+
+# Also mirror streamed model chunks to stdout while writing stream artifacts
+bun run i18n:eval -- --print-streams
 ```
 
 ## Flags
@@ -58,6 +61,7 @@ bun run i18n:eval -- --judge-model openrouter/google/gemini-3-flash-preview
 | `--kind` | `all` | `article`, `quiz`, or `all` |
 | `--slug` | — | Pin to a specific slug (auto-detects article vs quiz) |
 | `--dry-run` | false | Print all cases and exit without calling any model |
+| `--print-streams` | false | Mirror text deltas to stdout in addition to writing stream files |
 
 ## Multi-model, multi-locale comparison
 
@@ -77,13 +81,26 @@ Posts marked `draft: true`, `hidden: true`, `publish: false`, or `unlisted: true
 
 ## Outputs
 
-Each run writes two files under `reports/i18n/evals/`:
+Each run writes summary files plus live stream artifacts under `reports/i18n/evals/`:
 
 ```text
 reports/i18n/evals/
-├── eval-run-<ISO-timestamp>.jsonl        # one JSON line per case
-└── eval-run-<ISO-timestamp>-summary.md  # human-readable pass/fail table
+└── eval-run-<ISO-timestamp>/       # folder per run
+    ├── summary.md                  # human-readable markdown report with tables and graphs
+    ├── cases.jsonl                 # all cases with metadata, scores, and stream paths
+    ├── translation-<case>.txt      # full/partial translation text as it arrives
+    ├── translation-<case>.jsonl    # stream lifecycle + errors
+    ├── judge-<case>.txt            # raw judge JSON/prose as it arrives
+    └── judge-<case>.jsonl          # stream lifecycle + errors
 ```
+
+Translation and judge calls stream by default into the run-local
+`reports/i18n/evals/eval-run-<ISO-timestamp>/` directory. These files are
+intentionally useful when a provider returns malformed
+MDX, invalid JSON, or dies halfway through a response: the `.txt` file preserves
+whatever arrived, and the `.jsonl` event log records stream errors with the
+partial text length and error message. Use `tail -f reports/i18n/evals/eval-run-…/*.txt`
+while a run is active, or add `--print-streams` when stdout interleaving is acceptable.
 
 JSONL fields per row:
 
@@ -116,7 +133,8 @@ JSONL fields per row:
   "durationMs": 4200,
   "inputTokens": 1100,
   "outputTokens": 680,
-  "providerCostUsd": 0.00004
+  "providerCostUsd": 0.00004,
+  "streamTextPath": "reports/i18n/evals/eval-run-…/translation-article-stop-hardcoding-your-prompts-es-openrouter-openai-gpt-oss-120b-nitro.txt"
 }
 ```
 
@@ -186,4 +204,4 @@ Covered areas:
 | `src/scripts/i18n/judge.ts` | Production judge script |
 | `src/scripts/i18n/prompts.ts` | Translation prompt builders (`buildSystemPrompt`, `buildUserPrompt`) |
 | `src/scripts/i18n/judge.test.ts` | Offline unit tests for judge scoring loop |
-| `reports/i18n/evals/` | Eval run output (JSONL + markdown summaries) |
+| `reports/i18n/evals/` | Eval run folders with `summary.md`, `cases.jsonl`, and streamed raw response artifacts |

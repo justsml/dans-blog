@@ -195,6 +195,13 @@ For higher-risk batches, add a second cheap judge explicitly with `--second-mode
   - heading-count mismatches should be reported separately from missing coverage, because they may require editorial repair rather than queue reruns.
 - A green coverage report only means files exist. Run the locale validator before declaring a translation sweep done.
 
+## I18n Eval Suite
+
+- Run prompt/inference evals with `bun run i18n:eval`; see `docs/i18n-evals.md` before changing eval output paths or report formats.
+- Eval runs write one folder per run: `reports/i18n/evals/eval-run-<ISO-timestamp>/`.
+- Inside each eval run folder, `summary.md` is the human-readable report, `cases.jsonl` is the append-only case log, and `translation-<case>.txt` / `judge-<case>.txt` preserve full or partial streamed model output as it arrives. Matching `.jsonl` stream files record lifecycle events and errors.
+- Use `--print-streams` only when stdout interleaving is acceptable; otherwise inspect live partial output with `tail -f reports/i18n/evals/eval-run-.../*.txt`.
+
 ## Commit Subjects
 
 - `i18n candidate(es): slug via openrouter/qwen/qwen3.6-plus`

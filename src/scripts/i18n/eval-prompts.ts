@@ -361,7 +361,7 @@ async function scoreLlmJudge(input: EvalInput, output: EvalOutput): Promise<Judg
     }, {
       phase: "judge",
       inputId: input.id,
-      model: `openrouter/${judgeModel}`,
+      model: `openrouter/${judgeModel}-for-${output.model}`,
     });
     judgeStreamPath = result.streamTextPath;
 
@@ -612,9 +612,10 @@ function parseLocales(value: string | undefined): ActiveLocale[] {
 
 mkdirSync(EVAL_REPORT_DIR, { recursive: true });
 const runId = new Date().toISOString().replace(/[:.]/g, "-");
-const outputPath = join(EVAL_REPORT_DIR, `eval-run-${runId}.jsonl`);
-const summaryPath = join(EVAL_REPORT_DIR, `eval-run-${runId}-summary.md`);
-const streamDir = join(EVAL_REPORT_DIR, `eval-run-${runId}-streams`);
+const runDir = join(EVAL_REPORT_DIR, `eval-run-${runId}`);
+const outputPath = join(runDir, "cases.jsonl");
+const summaryPath = join(runDir, "summary.md");
+const streamDir = runDir;
 
 // inputs = unique articles × locales; pairs = inputs × models
 const inputs = locales.flatMap((loc) => selectInputs(loc));
@@ -627,14 +628,17 @@ if (isDryRun) {
     console.log(`  source: ${relative(process.cwd(), input.sourcePath)}`);
   }
   console.log(`\nJudge model: ${judgeModel}`);
-  console.log(`Output: ${outputPath}`);
+  console.log(`Output: ${runDir}`);
   process.exit(0);
 }
+
+mkdirSync(runDir, { recursive: true });
 
 console.log(`\n${inputs.length} input(s) × ${translationModels.length} model(s) = ${pairs.length} eval(s) running in parallel`);
 console.log(`Models  : ${translationModels.map((m) => m.replace(/^openrouter\//, "")).join(", ")}`);
 console.log(`Judge   : ${judgeModel}`);
 console.log(`Locales : ${locales.join(", ")}\n`);
+console.log(`Output  : ${relative(process.cwd(), runDir)}`);
 console.log(`Streams : ${relative(process.cwd(), streamDir)}${printStreams ? " (+stdout)" : ""}\n`);
 
 if (braintrustEnabled) {
