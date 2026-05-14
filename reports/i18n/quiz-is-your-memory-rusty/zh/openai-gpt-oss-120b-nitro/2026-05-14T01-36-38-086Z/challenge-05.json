@@ -1,0 +1,57 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Box Smart Pointer",
+  "translatedTitle": "Box 智能指针",
+  "translation": {
+    "title": "Box 智能指针",
+    "group": "智能指针",
+    "options": [
+      {
+        "text": "5",
+        "hint": "代码甚至无法编译得到一个值"
+      },
+      {
+        "text": "null",
+        "hint": "Rust 没有 null 值"
+      },
+      {
+        "text": "Compilation Error",
+        "hint": "编译器无法确定此递归类型的固定大小。"
+      },
+      {
+        "text": "Stack overflow"
+      }
+    ],
+    "objectives": [
+      "理解递归类型定义及其内存影响",
+      "识别需要 Box<T> 的情况",
+      "使用 Box<T> 修复递归数据结构"
+    ],
+    "questionProse": [
+      "这个递归类型定义有什么问题？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "这段代码会失败，因为编译器无法在编译时确定 `CatList` 的大小。类型的递归特性意味着它可能无限大！\n\n      以下是使用 `Box<T>` 修复的方法：",
+      "为什么 `Box<T>` 有效：\n      1. Box 提供一个固定大小的指针（在 64 位系统上通常是 8 字节）\n      2. 实际数据存放在堆上\n      3. 编译器现在确切知道要分配多少空间\n\n      `Box<T>` 的常见用例：\n      - 递归数据结构（链表、树）\n      - 需要确保堆分配的大数据\n      - 当需要动态分发时的特征对象\n\n      最佳实践：在以下情况下使用 `Box<T>`：\n      - 递归类型\n      - 确保堆分配\n      - 在不复制的情况下移动大数据"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Box 智能指针\",\n  \"group\": \"智能指针\",\n  \"options\": [\n    {\n      \"text\": \"5\",\n      \"hint\": \"代码甚至无法编译得到一个值\"\n    },\n    {\n      \"text\": \"null\",\n      \"hint\": \"Rust 没有 null 值\"\n    },\n    {\n      \"text\": \"Compilation Error\",\n      \"hint\": \"编译器无法确定此递归类型的固定大小。\"\n    },\n    {\n      \"text\": \"Stack overflow\"\n    }\n  ],\n  \"objectives\": [\n    \"理解递归类型定义及其内存影响\",\n    \"识别需要 Box<T> 的情况\",\n    \"使用 Box<T> 修复递归数据结构\"\n  ],\n  \"questionProse\": [\n    \"这个递归类型定义有什么问题？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"这段代码会失败，因为编译器无法在编译时确定 `CatList` 的大小。类型的递归特性意味着它可能无限大！\\n\\n      以下是使用 `Box<T>` 修复的方法：\",\n    \"为什么 `Box<T>` 有效：\\n      1. Box 提供一个固定大小的指针（在 64 位系统上通常是 8 字节）\\n      2. 实际数据存放在堆上\\n      3. 编译器现在确切知道要分配多少空间\\n\\n      `Box<T>` 的常见用例：\\n      - 递归数据结构（链表、树）\\n      - 需要确保堆分配的大数据\\n      - 当需要动态分发时的特征对象\\n\\n      最佳实践：在以下情况下使用 `Box<T>`：\\n      - 递归类型\\n      - 确保堆分配\\n      - 在不复制的情况下移动大数据\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1100,
+    "outputTokens": 1173,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 2880,
+    "providerCostUsd": 0.0008496,
+    "providerUpstreamCostUsd": 0.0008496,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.0000429,
+    "outputUsd": 0.00021114,
+    "totalUsd": 0.00025404,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

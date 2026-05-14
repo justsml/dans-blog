@@ -1,0 +1,58 @@
+{
+  "index": 14,
+  "attempt": 1,
+  "originalTitle": "RAII Pattern",
+  "translatedTitle": "RAII 模式",
+  "translation": {
+    "title": "RAII 模式",
+    "group": "内存模式",
+    "options": [
+      {
+        "text": "资源在作用域结束后被释放",
+        "hint": "File 字段已有自己的 Drop 实现。"
+      },
+      {
+        "text": "资源泄漏",
+        "hint": "包装器没有自定义 Drop，但其字段仍会被释放。"
+      },
+      {
+        "text": "编译错误",
+        "hint": "代码能够成功编译"
+      },
+      {
+        "text": "运行时错误",
+        "hint": "问题出在资源清理上"
+      }
+    ],
+    "objectives": [
+      "理解 Rust 中的 RAII（资源获取即初始化）",
+      "使用 Drop trait 实现正确的资源清理",
+      "在资源管理中应用 RAII 模式"
+    ],
+    "questionProse": [
+      "在这个 RAII 示例中，文件句柄会怎样？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "Rust 中的 RAII 确保资源得到妥善管理。在本例中，`FileWrapper` 不需要自定义 `Drop` 实现来关闭文件句柄：当包装器离开作用域时，它的 `File` 字段会自动被释放。\n\n      只有当包装器本身需要在字段释放之外执行额外的清理行为时，才实现 `Drop`：",
+      "RAII 模式：\n      1. 构造函数获取资源\n      2. 方法安全地使用资源\n      3. 当所有者离开作用域时，字段会自动被释放\n      4. 必要时自定义 Drop 进行额外清理\n      5. 使用 `?` 进行错误传播\n\n      最佳实践：\n      1. 当标准库的 Drop 实现已经能够描述资源时，直接依赖它们\n      2. 保持资源管理简洁明了\n      3. 尽可能使用标准库类型\n      4. 为清理行为编写文档\n      5. 考虑使用 guard 模式进行作用域操作"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"RAII 模式\",\n  \"group\": \"内存模式\",\n  \"options\": [\n    {\n      \"text\": \"资源在作用域结束后被释放\",\n      \"hint\": \"File 字段已有自己的 Drop 实现。\"\n    },\n    {\n      \"text\": \"资源泄漏\",\n      \"hint\": \"包装器没有自定义 Drop，但其字段仍会被释放。\"\n    },\n    {\n      \"text\": \"编译错误\",\n      \"hint\": \"代码能够成功编译\"\n    },\n    {\n      \"text\": \"运行时错误\",\n      \"hint\": \"问题出在资源清理上\"\n    }\n  ],\n  \"objectives\": [\n    \"理解 Rust 中的 RAII（资源获取即初始化）\",\n    \"使用 Drop trait 实现正确的资源清理\",\n    \"在资源管理中应用 RAII 模式\"\n  ],\n  \"questionProse\": [\n    \"在这个 RAII 示例中，文件句柄会怎样？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"Rust 中的 RAII 确保资源得到妥善管理。在本例中，`FileWrapper` 不需要自定义 `Drop` 实现来关闭文件句柄：当包装器离开作用域时，它的 `File` 字段会自动被释放。\\n\\n      只有当包装器本身需要在字段释放之外执行额外的清理行为时，才实现 `Drop`：\",\n    \"RAII 模式：\\n      1. 构造函数获取资源\\n      2. 方法安全地使用资源\\n      3. 当所有者离开作用域时，字段会自动被释放\\n      4. 必要时自定义 Drop 进行额外清理\\n      5. 使用 `?` 进行错误传播\\n\\n      最佳实践：\\n      1. 当标准库的 Drop 实现已经能够描述资源时，直接依赖它们\\n      2. 保持资源管理简洁明了\\n      3. 尽可能使用标准库类型\\n      4. 为清理行为编写文档\\n      5. 考虑使用 guard 模式进行作用域操作\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1135,
+    "outputTokens": 1388,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 3247,
+    "providerCostUsd": 0.00100305,
+    "providerUpstreamCostUsd": 0.00100305,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000044265,
+    "outputUsd": 0.00024984,
+    "totalUsd": 0.00029410499999999996,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

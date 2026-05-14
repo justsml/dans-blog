@@ -1,0 +1,67 @@
+{
+  "index": 0,
+  "attempt": 1,
+  "originalTitle": "Basic Move Semantics",
+  "translatedTitle": "基本移动语义",
+  "translation": {
+    "title": "基本移动语义",
+    "group": "所有权",
+    "options": [
+      {
+        "text": "Hello, !",
+        "hint": "思考在移动后 'philosopher' 会发生什么"
+      },
+      {
+        "text": "Hello, Zeno of Citium!",
+        "hint": "值被移动后，我们还能使用它吗？"
+      },
+      {
+        "text": "Hello, Zeno of Elea!",
+        "hint": "字符串包含 'Citium'，而不是 'Elea'"
+      },
+      {
+        "text": "Hello, Marcus Aurelius",
+        "hint": "检查这是否与字符串内容匹配"
+      },
+      {
+        "text": "Compilation Error: value borrowed after move"
+      },
+      {
+        "text": "Runtime Error: null pointer exception",
+        "hint": "Rust 在编译时捕获这些问题"
+      }
+    ],
+    "objectives": [
+      "解释 Rust 的所有权规则和移动语义",
+      "识别与已移动值相关的编译错误",
+      "应用解决方案来修复与移动相关的编译错误"
+    ],
+    "questionProse": [
+      "运行这段代码会发生什么？尝试预测输出或错误："
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "这段代码因 Rust 的所有权规则而无法编译。当我们将 `philosopher` 赋给 `greeting` 时，String 的所有权被移动到 `greeting`。移动后，`philosopher` 已不再有效。\n\n      以下是三种修复方法：\n\n      1. 克隆字符串（创建一个新副本）：",
+      "2. 使用引用（借用该值）：",
+      "3. 使用字符串切片（借用字符串的一部分）：",
+      "每种方案都有不同的使用场景和性能影响。克隆成本更高但获得所有权，而引用成本更低但受生命周期约束。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"基本移动语义\",\n  \"group\": \"所有权\",\n  \"options\": [\n    {\n      \"text\": \"Hello, !\",\n      \"hint\": \"思考在移动后 'philosopher' 会发生什么\"\n    },\n    {\n      \"text\": \"Hello, Zeno of Citium!\",\n      \"hint\": \"值被移动后，我们还能使用它吗？\"\n    },\n    {\n      \"text\": \"Hello, Zeno of Elea!\",\n      \"hint\": \"字符串包含 'Citium'，而不是 'Elea'\"\n    },\n    {\n      \"text\": \"Hello, Marcus Aurelius\",\n      \"hint\": \"检查这是否与字符串内容匹配\"\n    },\n    {\n      \"text\": \"Compilation Error: value borrowed after move\"\n    },\n    {\n      \"text\": \"Runtime Error: null pointer exception\",\n      \"hint\": \"Rust 在编译时捕获这些问题\"\n    }\n  ],\n  \"objectives\": [\n    \"解释 Rust 的所有权规则和移动语义\",\n    \"识别与已移动值相关的编译错误\",\n    \"应用解决方案来修复与移动相关的编译错误\"\n  ],\n  \"questionProse\": [\n    \"运行这段代码会发生什么？尝试预测输出或错误：\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"这段代码因 Rust 的所有权规则而无法编译。当我们将 `philosopher` 赋给 `greeting` 时，String 的所有权被移动到 `greeting`。移动后，`philosopher` 已不再有效。\\n\\n      以下是三种修复方法：\\n\\n      1. 克隆字符串（创建一个新副本）：\",\n    \"2. 使用引用（借用该值）：\",\n    \"3. 使用字符串切片（借用字符串的一部分）：\",\n    \"每种方案都有不同的使用场景和性能影响。克隆成本更高但获得所有权，而引用成本更低但受生命周期约束。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1191,
+    "outputTokens": 1197,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 2785,
+    "providerCostUsd": 0.00087765,
+    "providerUpstreamCostUsd": 0.00087765,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000046448999999999995,
+    "outputUsd": 0.00021545999999999997,
+    "totalUsd": 0.00026190899999999995,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

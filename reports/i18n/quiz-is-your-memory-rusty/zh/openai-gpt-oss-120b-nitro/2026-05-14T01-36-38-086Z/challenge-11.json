@@ -1,0 +1,61 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "Understanding Rc",
+  "translatedTitle": "理解 Rc",
+  "translation": {
+    "title": "理解 Rc",
+    "group": "引用计数",
+    "options": [
+      {
+        "text": "Rc 用于单线程环境"
+      },
+      {
+        "text": "Rc 用于多线程环境",
+        "hint": "考虑线程安全——Rc 没有同步机制"
+      },
+      {
+        "text": "Rc 仅用于不可变数据",
+        "hint": "Rc 可以与内部可变性结合使用"
+      },
+      {
+        "text": "Rc 仅用于可变数据",
+        "hint": "Rc 可用于可变和不可变数据"
+      },
+      {
+        "text": "Rc 用于遥控",
+        "hint": "虽然很巧妙，但这不是编程概念！"
+      }
+    ],
+    "objectives": [
+      "了解 Rc 的目的和局限性",
+      "区分单线程和多线程的引用计数",
+      "在共享所有权场景中恰当地使用 Rc"
+    ],
+    "questionProse": [
+      "何时应该在 Rust 中使用 Rc（引用计数）？\n\n      请参考以下示例："
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "Rc（引用计数）专为需要共享所有权的单线程场景设计。\n\n      常见用例：",
+      "关键点：\n      1. 在以下情况下使用 Rc：\n         - 代码的多个部分需要所有权\n         - 你知道共享是单线程的\n         - 生命周期无法静态确定\n\n      2. 在以下情况下改用 Arc：\n         - 需要线程安全的共享\n         - 多个线程需要所有权\n\n      3. Rc 的局限性：\n         - 非线程安全\n         - 有轻微的运行时开销\n         - 不能自动打破引用循环\n\n      最佳实践：\n      1. 尽可能首选唯一所有权\n      2. 对单线程共享所有权使用 Rc\n      3. 对多线程场景使用 Arc\n      4. 与 Weak 结合以防止引用循环"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"理解 Rc\",\n  \"group\": \"引用计数\",\n  \"options\": [\n    {\n      \"text\": \"Rc 用于单线程环境\"\n    },\n    {\n      \"text\": \"Rc 用于多线程环境\",\n      \"hint\": \"考虑线程安全——Rc 没有同步机制\"\n    },\n    {\n      \"text\": \"Rc 仅用于不可变数据\",\n      \"hint\": \"Rc 可以与内部可变性结合使用\"\n    },\n    {\n      \"text\": \"Rc 仅用于可变数据\",\n      \"hint\": \"Rc 可用于可变和不可变数据\"\n    },\n    {\n      \"text\": \"Rc 用于遥控\",\n      \"hint\": \"虽然很巧妙，但这不是编程概念！\"\n    }\n  ],\n  \"objectives\": [\n    \"了解 Rc 的目的和局限性\",\n    \"区分单线程和多线程的引用计数\",\n    \"在共享所有权场景中恰当地使用 Rc\"\n  ],\n  \"questionProse\": [\n    \"何时应该在 Rust 中使用 Rc（引用计数）？\\n\\n      请参考以下示例：\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"rust\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"Rc（引用计数）专为需要共享所有权的单线程场景设计。\\n\\n      常见用例：\",\n    \"关键点：\\n      1. 在以下情况下使用 Rc：\\n         - 代码的多个部分需要所有权\\n         - 你知道共享是单线程的\\n         - 生命周期无法静态确定\\n\\n      2. 在以下情况下改用 Arc：\\n         - 需要线程安全的共享\\n         - 多个线程需要所有权\\n\\n      3. Rc 的局限性：\\n         - 非线程安全\\n         - 有轻微的运行时开销\\n         - 不能自动打破引用循环\\n\\n      最佳实践：\\n      1. 尽可能首选唯一所有权\\n      2. 对单线程共享所有权使用 Rc\\n      3. 对多线程场景使用 Arc\\n      4. 与 Weak 结合以防止引用循环\"\n  ],\n  \"explanationCode\": [\n    {\n      \"language\": \"rust\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1153,
+    "outputTokens": 1389,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 3667,
+    "providerCostUsd": 0.00096795,
+    "providerUpstreamCostUsd": 0.00096795,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000044967,
+    "outputUsd": 0.00025002,
+    "totalUsd": 0.00029498699999999997,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

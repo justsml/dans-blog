@@ -1,0 +1,58 @@
+{
+  "index": 3,
+  "attempt": 1,
+  "originalTitle": "Implicit Lifetimes",
+  "translatedTitle": "隐式生命周期",
+  "translation": {
+    "title": "隐式生命周期",
+    "group": "生命周期省略",
+    "options": [
+      {
+        "text": "编译成功"
+      },
+      {
+        "text": "错误：缺少生命周期说明符",
+        "hint": "记住生命周期省略规则——它们是来帮你的！"
+      },
+      {
+        "text": "错误：需要显式生命周期",
+        "hint": "编译器可以自动推断这个"
+      },
+      {
+        "text": "错误：生命周期不匹配",
+        "hint": "这里的生命周期完全对齐"
+      }
+    ],
+    "objectives": [
+      "理解 Rust 的生命周期省略规则",
+      "识别何时不需要显式生命周期注解",
+      "在函数签名中应用生命周期省略原则"
+    ],
+    "questionProse": [
+      "这段代码会编译吗？如果会，为什么？如果不会，哪里出错了？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "这段代码能够成功编译，归功于 Rust 的生命周期省略规则。 \n      这些规则允许编译器在常见模式下自动推断生命周期。\n\n      三条生命周期省略规则是：\n      1. 每个参数都有其自己的生命周期参数\n      2. 如果恰好只有一个输入生命周期参数，则该生命周期会分配给所有输出生命周期参数\n      3. 如果有多个输入生命周期参数，但其中一个是 &self 或 &mut self，则 self 的生命周期会分配给所有输出生命周期参数\n\n      该函数等价于：",
+      "省略适用的常见模式：",
+      "最佳实践：在可能的情况下让省略发挥作用，但要了解何时需要显式生命周期。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"隐式生命周期\",\n  \"group\": \"生命周期省略\",\n  \"options\": [\n    {\n      \"text\": \"编译成功\"\n    },\n    {\n      \"text\": \"错误：缺少生命周期说明符\",\n      \"hint\": \"记住生命周期省略规则——它们是来帮你的！\"\n    },\n    {\n      \"text\": \"错误：需要显式生命周期\",\n      \"hint\": \"编译器可以自动推断这个\"\n    },\n    {\n      \"text\": \"错误：生命周期不匹配\",\n      \"hint\": \"这里的生命周期完全对齐\"\n    }\n  ],\n  \"objectives\": [\n    \"理解 Rust 的生命周期省略规则\",\n    \"识别何时不需要显式生命周期注解\",\n    \"在函数签名中应用生命周期省略原则\"\n  ],\n  \"questionProse\": [\n    \"这段代码会编译吗？如果会，为什么？如果不会，哪里出错了？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"这段代码能够成功编译，归功于 Rust 的生命周期省略规则。 \\n      这些规则允许编译器在常见模式下自动推断生命周期。\\n\\n      三条生命周期省略规则是：\\n      1. 每个参数都有其自己的生命周期参数\\n      2. 如果恰好只有一个输入生命周期参数，则该生命周期会分配给所有输出生命周期参数\\n      3. 如果有多个输入生命周期参数，但其中一个是 &self 或 &mut self，则 self 的生命周期会分配给所有输出生命周期参数\\n\\n      该函数等价于：\",\n    \"省略适用的常见模式：\",\n    \"最佳实践：在可能的情况下让省略发挥作用，但要了解何时需要显式生命周期。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1105,
+    "outputTokens": 1024,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 2755,
+    "providerCostUsd": 0.00074175,
+    "providerUpstreamCostUsd": 0.00074175,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000043095,
+    "outputUsd": 0.00018432,
+    "totalUsd": 0.000227415,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
