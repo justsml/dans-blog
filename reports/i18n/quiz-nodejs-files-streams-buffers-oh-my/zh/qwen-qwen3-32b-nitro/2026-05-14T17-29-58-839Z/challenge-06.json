@@ -1,0 +1,49 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Stream Piping",
+  "translatedTitle": "流管道",
+  "translation": {
+    "title": "流管道",
+    "group": "流",
+    "options": [
+      {
+        "text": "复制文件并进行压缩"
+      },
+      {
+        "text": "复制文件而不使用内存缓冲"
+      },
+      {
+        "text": "将整个文件加载到内存中"
+      },
+      {
+        "text": "创建符号链接"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "这段代码的作用是什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "`pipe()` 将可读流连接到可写流，自动管理反压并以块为单位复制数据，而不会将整个文件加载到内存中。\n\n    与 `fs.readFile()` 后跟 `fs.writeFile()` 相比，这对大文件更高效。\n\n    [了解更多关于 pipe() 的信息](https://nodejs.org/api/stream.html#readablepipedestination-options)"
+    ]
+  },
+  "rawText": "```json\n{\n  \"title\": \"流管道\",\n  \"group\": \"流\",\n  \"options\": [\n    {\n      \"text\": \"复制文件并进行压缩\"\n    },\n    {\n      \"text\": \"复制文件而不使用内存缓冲\"\n    },\n    {\n      \"text\": \"将整个文件加载到内存中\"\n    },\n    {\n      \"text\": \"创建符号链接\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"这段代码的作用是什么？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"`pipe()` 将可读流连接到可写流，自动管理反压并以块为单位复制数据，而不会将整个文件加载到内存中。\\n\\n    与 `fs.readFile()` 后跟 `fs.writeFile()` 相比，这对大文件更高效。\\n\\n    [了解更多关于 pipe() 的信息](https://nodejs.org/api/stream.html#readablepipedestination-options)\"\n  ]\n}\n```",
+  "telemetry": {
+    "inputTokens": 810,
+    "outputTokens": 545,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2325,
+    "providerCostUsd": 0.00055645,
+    "providerUpstreamCostUsd": 0.00055645,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.0000648,
+    "outputUsd": 0.0001308,
+    "totalUsd": 0.0001956,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

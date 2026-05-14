@@ -1,0 +1,49 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "Async File Operations",
+  "translatedTitle": "异步文件操作",
+  "translation": {
+    "title": "异步文件操作",
+    "group": "热身：文件系统",
+    "options": [
+      {
+        "text": "先打印文件内容，然后打印'Done'"
+      },
+      {
+        "text": "先打印'Done'，然后打印文件内容"
+      },
+      {
+        "text": "仅打印文件内容"
+      },
+      {
+        "text": "抛出错误"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "输出顺序是什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "由于`readFile`是异步操作，代码在文件读取过程中会继续执行。\n    因此，'Done'会在文件内容之前打印。\n\n    如果想要先等待文件读取完成，可以使用Promise版本："
+    ]
+  },
+  "rawText": "{\n  \"title\": \"异步文件操作\",\n  \"group\": \"热身：文件系统\",\n  \"options\": [\n    {\n      \"text\": \"先打印文件内容，然后打印'Done'\"\n    },\n    {\n      \"text\": \"先打印'Done'，然后打印文件内容\"\n    },\n    {\n      \"text\": \"仅打印文件内容\"\n    },\n    {\n      \"text\": \"抛出错误\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"输出顺序是什么？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"由于`readFile`是异步操作，代码在文件读取过程中会继续执行。\\n    因此，'Done'会在文件内容之前打印。\\n\\n    如果想要先等待文件读取完成，可以使用Promise版本：\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 821,
+    "outputTokens": 543,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 1901,
+    "providerCostUsd": 0.00048422,
+    "providerUpstreamCostUsd": 0.00048422,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00006568,
+    "outputUsd": 0.00013031999999999999,
+    "totalUsd": 0.000196,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
