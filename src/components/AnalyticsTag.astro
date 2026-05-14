@@ -2,20 +2,16 @@
 
 ---
 <script>
+  import { POSTHOG_CONFIG, POSTHOG_TOKEN } from "./posthogConfig";
+
   if (!isLocalhost(globalThis.location.hostname)) deferAnalytics(initStats);
 
   async function initStats() {
-    const { posthog } = await import("posthog-js/dist/module.js");
+    const { default: posthog } = await import("posthog-js/dist/module.no-external");
 
-    posthog.init(
-      "phc_JODNIixGF47WMcySFGQwT2YS7z6ZD5uqk7Tj3KmAqP9",
-      {
-        api_host: "https://us.i.posthog.com",
-        person_profiles: "always",
-        disable_session_recording: true,
-        capture_pageview: true,
-      },
-    );
+    if (!posthog.__loaded) {
+      posthog.init(POSTHOG_TOKEN, POSTHOG_CONFIG);
+    }
 
     (globalThis as typeof globalThis & { _posthog?: typeof posthog })._posthog = posthog;
   }

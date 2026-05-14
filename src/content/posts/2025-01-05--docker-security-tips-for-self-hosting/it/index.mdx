@@ -106,7 +106,7 @@ Se usi segnaposto come `__WARNING_REPLACE_ME__` nei tuoi segreti, ottimo, magari
 
 Nel caso, puoi aggiungere una piccola protezione a runtime con poco sforzo. Ecco come potresti farlo in JavaScript, Rust e Go:
 
-<CodeTabs client:load tabs={["JavaScript", "Rust", "Go"]}>
+<CodeTabs client:load tabs={["Helper commands", "Persist secrets in environment", "Use secrets per command"]}>
 
 ```javascript
 // validateSecrets.js
@@ -221,7 +221,7 @@ Per gli utenti Mac, una delle soluzioni più semplici è usare Keychain.
 
 Ecco un modo rapido per automatizzare il caricamento dei segreti dal portachiavi di macOS, con supporto a `TouchID` e una sicurezza leggermente superiore rispetto ai file `.env`.
 
-Il credito originale va a <cite>[Brian Hetfield](https://gist.github.com/bmhatfield/f613c10e360b4f27033761bbee4404fd)</cite> e <cite>[Jan Schaumann](https://www.netmeister.org/)</cite>
+Original credit: [Brian Hetfield](https://gist.github.com/bmhatfield/f613c10e360b4f27033761bbee4404fd) and [Jan Schaumann](https://www.netmeister.org/).
 
 <CodeTabs client:load tabs={[
   "Comandi di supporto",
@@ -231,7 +231,7 @@ Il credito originale va a <cite>[Brian Hetfield](https://gist.github.com/bmhatfi
 ```bash title="keychain-secrets.sh"
 ### Funzioni per impostare e recuperare variabili d'ambiente dal portachiavi OSX ###
 ### Adattato da: https://www.netmeister.org/blog/keychain-passwords.html e 
-### https://gist.github.com/bmhatfield/f613c10e360b4f27033761bbee4404fd
+Original credit: [Brian Hetfield](https://gist.github.com/bmhatfield/f613c10e360b4f27033761bbee4404fd) and [Jan Schaumann](https://www.netmeister.org/).
 
 # Uso: get-keychain-secret VAR_ENV_SEGRETO
 function get-keychain-secret () {

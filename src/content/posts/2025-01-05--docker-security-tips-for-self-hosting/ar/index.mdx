@@ -106,7 +106,7 @@ If you use placeholders like `__WARNING_REPLACE_ME__` in your secrets, great, ma
 
 Just in case, you can also add a little runtime safety with little effort. Here’s how you might do it in JavaScript, Rust, and Go:
 
-<CodeTabs client:load tabs={["JavaScript", "Rust", "Go"]}>
+<CodeTabs client:load tabs={["Helper commands", "Persist secrets in environment", "Use secrets per command"]}>
 
 ```javascript
 // validateSecrets.js
@@ -221,7 +221,7 @@ echo "New .env file generated with secure random values!"
 
 إليك طريقة بسيطة لأتمتة تحميل الأسرار من مخزن مفاتيح macOS، تدعم `TouchID`، وتُعد أكثر أمانًا قليلًا من ملفات `.env`.
 
-الائتمان الأصلي يعود إلى [Brian Hetfield](https://gist.github.com/bmhatfield/f613c10e360b4f27033761bbee4404fd) و[Jan Schaumann](https://www.netmeister.org/)</cite>
+Original credit: [Brian Hetfield](https://gist.github.com/bmhatfield/f613c10e360b4f27033761bbee4404fd) and [Jan Schaumann](https://www.netmeister.org/).
 
 <CodeTabs client:load tabs={[
   "أوامر المساعدة",
@@ -231,7 +231,7 @@ echo "New .env file generated with secure random values!"
 ```bash title="keychain-secrets.sh"
 ### وظائف لتعيين وإحضار متغيّرات البيئة من مخزن مفاتيح macOS ###
 ### مقتبسة من: https://www.netmeister.org/blog/keychain-passwords.html و 
-### https://gist.github.com/bmhatfield/f613c10e360b4f27033761bbee4404fd
+Original credit: [Brian Hetfield](https://gist.github.com/bmhatfield/f613c10e360b4f27033761bbee4404fd) and [Jan Schaumann](https://www.netmeister.org/).
 
 # الاستخدام: get-keychain-secret SECRET_ENV_VAR
 function get-keychain-secret () {

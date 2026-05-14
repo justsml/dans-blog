@@ -130,10 +130,11 @@ Run by `runDeterministicScorers` in `eval-prompts.ts`, powered by `analyzeTransl
 
 | Scorer | Severity | What it checks |
 | --- | --- | --- |
-| `integrity:*` | high/medium/low | Structural issues from `analyzeTranslationIntegrity`: heading count drift, bare asset paths, LLM instruction leakage, code fence count, etc. |
+| `integrity:*` | high/medium/low | Structural issues from `analyzeTranslationIntegrity`: heading count drift, malformed locale asset paths, broken Gist paths, wrong locale component import depth, suspicious code-fence languages, quiz option/answer drift, LLM instruction leakage, code fence count, etc. |
 | `frontmatter-preserved` | high | Output must start with `---` frontmatter delimiters |
 | `title-translated` | medium | Frontmatter `title:` must not be identical to the English source title |
 | `no-wrapper-text` | high | Output must not start with wrapper prose (`"Here is…"`, `"Sure!"`) or a raw fence |
+| `mdx-syntax-parse` | high | Output must parse with the MDX compiler after frontmatter is stripped |
 
 A case **fails** if any high- or medium-severity deterministic scorer fails, regardless of LLM score.
 

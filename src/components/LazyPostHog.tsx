@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { POSTHOG_CONFIG } from './posthogConfig';
 
 interface LazyPostHogProps {
   apiKey?: string;
@@ -12,7 +13,6 @@ interface LazyPostHogProps {
  */
 export function LazyPostHog({ apiKey, host, children }: LazyPostHogProps) {
   const [isLoaded, setIsLoaded] = useState(false);
-  const [posthog, setPosthog] = useState<any>(null);
 
   useEffect(() => {
     if (isLoaded || !apiKey) return;
@@ -24,51 +24,13 @@ export function LazyPostHog({ apiKey, host, children }: LazyPostHogProps) {
       interactionOccurred = true;
 
       try {
-        // Dynamic import reduces initial bundle size
         const { default: posthogLib } = await import('posthog-js/dist/module.no-external');
-        
-        // Initialize PostHog
+
         posthogLib.init(apiKey, {
-          api_host: host || 'https://app.posthog.com',
-          // Defer heavy features
-          disable_session_recording: true,
-          // @ts-ignore
-          disable_web_vitals: true,
-          disable_exception_autocapture: true,
-          // Enable basic tracking
-          capture_pageview: true,
-          capture_pageleave: true
+          ...POSTHOG_CONFIG,
+          api_host: host || POSTHOG_CONFIG.api_host,
         });
 
-        // Load additional features after a delay
-        setTimeout(async () => {
-          try {
-            await Promise.all([
-              // @ts-expect-error - ts & posthog not friends
-              import('posthog-js/dist/exception-autocapture'),
-              // @ts-expect-error - ts & posthog not friends
-              import('posthog-js/dist/web-vitals')
-            ]);
-            
-            // Enable features that were deferred
-            posthogLib.opt_in_capturing();
-          } catch (error) {
-            console.warn('Failed to load additional PostHog features:', error);
-          }
-        }, 2000);
-
-        // Load session recording even later (heavy feature)
-        setTimeout(async () => {
-          try {
-              // @ts-expect-error - ts & posthog not friends
-            await import('posthog-js/dist/recorder');
-            posthogLib.startSessionRecording();
-          } catch (error) {
-            console.warn('Failed to load PostHog session recording:', error);
-          }
-        }, 5000);
-
-        setPosthog(posthogLib);
         setIsLoaded(true);
 
         // Make available globally for backward compatibility

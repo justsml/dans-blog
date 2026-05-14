@@ -1,4 +1,9 @@
 import { useEffect, useState } from 'react';
+import { POSTHOG_CONFIG, POSTHOG_TOKEN } from './posthogConfig';
+
+type PostHogGlobal = typeof globalThis & {
+  _posthog?: any;
+};
 
 // Deferred analytics loading - only load after user interaction
 let analyticsLoaded = false;
@@ -6,29 +11,25 @@ let posthogInstance: any = null;
 
 const loadAnalytics = async () => {
   if (analyticsLoaded) return posthogInstance;
-  
+
+  const posthogGlobal = globalThis as PostHogGlobal;
+
+  if (posthogGlobal._posthog) {
+    analyticsLoaded = true;
+    posthogInstance = posthogGlobal._posthog;
+    return posthogInstance;
+  }
+
   try {
-    // Load core PostHog module first
     const { default: posthog } = await import('posthog-js/dist/module.no-external');
-    
-    // Load additional modules only after user interaction
-    await Promise.allSettled([
-      // @ts-expect-error
-      import('posthog-js/dist/exception-autocapture') as any,
-      // @ts-expect-error
-      import('posthog-js/dist/tracing-headers') as any,
-      // @ts-expect-error
-      import('posthog-js/dist/web-vitals') as any
-    ]).catch(console.warn);
-    
-    // Defer session recording - heavy feature, load separately
-    setTimeout(() => {
-      // @ts-expect-error
-      import('posthog-js/dist/recorder').catch(console.warn);
-    }, 2000);
-    
+
+    if (!posthog.__loaded) {
+      posthog.init(POSTHOG_TOKEN, POSTHOG_CONFIG);
+    }
+
     analyticsLoaded = true;
     posthogInstance = posthog;
+    posthogGlobal._posthog = posthog;
     return posthog;
   } catch (error) {
     console.warn('Analytics loading failed:', error);

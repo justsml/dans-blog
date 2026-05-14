@@ -106,7 +106,7 @@ Si vous utilisez des espaces réservés comme `__WARNING_REPLACE_ME__` dans vos 
 
 Au cas où, vous pouvez également ajouter une petite sécurité d’exécution avec peu d’effort. Voici comment le faire en JavaScript, Rust et Go :
 
-<CodeTabs client:load tabs={["JavaScript", "Rust", "Go"]}>
+<CodeTabs client:load tabs={["Helper commands", "Persist secrets in environment", "Use secrets per command"]}>
 
 ```javascript
 // validateSecrets.js
@@ -221,7 +221,7 @@ Pour les utilisateurs macOS, l’une des options les plus simples consiste à ex
 
 Voici une méthode basique pour automatiser le chargement des secrets depuis le trousseau macOS, compatible avec `TouchID` et légèrement plus sûre que les fichiers `.env`.
 
-Le créditoriginal revient à <cite>[Brian Hetfield](https://gist.github.com/bmhatfield/f613c10e360b4f27033761bbee4404fd) et [Jan Schaumann](https://www.netmeister.org/)</cite>
+Original credit: [Brian Hetfield](https://gist.github.com/bmhatfield/f613c10e360b4f27033761bbee4404fd) and [Jan Schaumann](https://www.netmeister.org/).
 
 <CodeTabs client:load tabs={[
   "Commandes d’aide",
@@ -231,7 +231,7 @@ Le créditoriginal revient à <cite>[Brian Hetfield](https://gist.github.com/bmh
 ```bash title="keychain-secrets.sh"
 ### Fonctions pour définir et récupérer des variables d’environnement depuis le trousseau macOS ###
 ### Adapté de : https://www.netmeister.org/blog/keychain-passwords.html et 
-### https://gist.github.com/bmhatfield/f613c10e360b4f27033761bbee4404fd
+Original credit: [Brian Hetfield](https://gist.github.com/bmhatfield/f613c10e360b4f27033761bbee4404fd) and [Jan Schaumann](https://www.netmeister.org/).
 
 # Utilisation : get-keychain-secret VARIABLE_ENV
 function get-keychain-secret () {

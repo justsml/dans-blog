@@ -322,6 +322,9 @@ export function buildPrimaryJudgePrompt(
     `The final MDX must preserve the English file's per-level heading counts: same number of H1, H2, H3, H4, H5, and H6 headings. Translate heading text, but do not add, remove, promote, or demote headings.`,
     `Also preserve structural counts for fenced code blocks, Markdown/HTML images, blockquotes, tables, imports, MDX components, and quiz Challenge blocks/options/answer flags. Treat mismatches as high-priority unless the English source itself is malformed.`,
     `Locale files live one folder deeper than English. Any inherited local image or asset path in frontmatter, Markdown, or JSX must start with ../, even if the English file uses a bare path or ./ path. Never suggest changing ../asset.webp to asset.webp or ./asset.webp.`,
+    `Gist component paths must remain owner/id values such as justsml/abc123; never turn them into locale-relative paths like ../justsml/abc123.`,
+    `Component imports in locale files must resolve from the locale folder depth; imported components should use ../../../../components/... unless the source uses an alias.`,
+    `Reject suspicious code fence languages such as shdocker or sqlWITH; they usually mean translated prose was glued to the opening fence marker.`,
     `Reject candidates with raw HTML comments outside code fences; MDX comments must use {/* ... */}.`,
     `Reject candidates with broken HTML/MDX markup such as unclosed <section>, <p>, or other non-void tags.`,
     `Reject candidates that leak LLM instructions, wrappers, candidate labels, system/user prompt text, or translation-task narration.`,
@@ -354,7 +357,7 @@ export function buildPrePublishRescorePrompt(
     candidateSummary,
     ``,
     `Check ${ctx.targetRelPath} against ${ctx.sourcePath ?? "the English source"} for technical accuracy, natural language quality, Dan's direct style, cultural adaptation, language purity, MDX preservation, per-level heading count preservation, structural count preservation, and comparable body length.`,
-    `Look specifically for bad HTML comments, unclosed HTML/MDX tags, invalid inherited asset paths, changed code block/image/blockquote/table counts, changed quiz options or answer flags, mixed-language prose, and leaked LLM instructions.`,
+    `Look specifically for bad HTML comments, unclosed HTML/MDX tags, invalid inherited asset paths, broken Gist paths, wrong locale component import depth, suspicious code fence languages, changed code block/image/blockquote/table counts, changed quiz options or answer flags, mixed-language prose, and leaked LLM instructions.`,
     `Return refreshed scoring and pre-publish status as strict JSON. The wrapper script writes reports and applies exact medium/high-priority replacements.`,
     `Use this JSON shape:`,
     JSON.stringify(getJudgeJsonShape()),
@@ -377,7 +380,7 @@ export function buildSecondJudgePrompt(
     `Candidate commits:`,
     candidateSummary,
     ``,
-    `Check for MDX/frontmatter breakage, raw HTML comments, invalid inherited asset paths, unclosed HTML tags, code block/image/blockquote/table count mismatches, heading count mismatches by level, changed quiz options or answer flags, untranslated or mixed-language reader-facing prose, leaked LLM instructions, major terminology errors, weak cultural adaptation, and obvious tone regressions.`,
+    `Check for MDX/frontmatter breakage, raw HTML comments, invalid inherited asset paths, broken Gist paths, wrong locale component import depth, suspicious code fence languages, unclosed HTML tags, code block/image/blockquote/table count mismatches, heading count mismatches by level, changed quiz options or answer flags, untranslated or mixed-language reader-facing prose, leaked LLM instructions, major terminology errors, weak cultural adaptation, and obvious tone regressions.`,
     `Return your agreement or disagreement as strict JSON. If acceptable, put the exact phrase "No escalation required" in rationale.`,
     `Do not edit ${ctx.targetRelPath}. If you disagree, state the exact candidate SHA or issue that requires escalation.`,
   ].join("\n");
@@ -395,7 +398,7 @@ export function buildEscalationPrompt(
     `Read the attached primary and second judge reports.`,
     `Candidate MDX contents are attached below; do not ask to run git show.`,
     `The final MDX must preserve the English file's per-level heading counts: same number of H1, H2, H3, H4, H5, and H6 headings.`,
-    `Also preserve code block, image, blockquote, table, Challenge, quiz option, and answer-flag counts; reject leaked LLM instructions, raw HTML comments, invalid asset paths, mixed-language prose, and broken HTML/MDX markup.`,
+    `Also preserve code block, image, blockquote, table, Challenge, quiz option, and answer-flag counts; reject leaked LLM instructions, raw HTML comments, invalid asset paths, broken Gist paths, wrong locale component import depth, suspicious code fence languages, mixed-language prose, and broken HTML/MDX markup.`,
     `Return the final selected candidate SHA and rationale as strict JSON. The wrapper script writes ${ctx.targetRelPath} and judge reports.`,
   ].join("\n");
 }

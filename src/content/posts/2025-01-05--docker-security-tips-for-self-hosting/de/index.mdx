@@ -16,7 +16,7 @@ cover_mobile: ../docker-ukiyo-e-container-square-200.webp
 cover_icon: ../docker-ukiyo-e-container-square-200.webp
 cover_credit: © 2025 Dan Levy
 ---
-import {CodeTabs} from '../../../../../components/CodeTabs';
+import {CodeTabs} from '../../../../components/CodeTabs';
 
 **Inhalt**
 
@@ -106,7 +106,7 @@ Wenn Sie Platzhalter wie `__WARNING_REPLACE_ME__` in Ihren Geheimnissen verwende
 
 Um sicherzugehen, können Sie auch eine kleine Laufzeit-Sicherheit mit geringem Aufwand hinzufügen. Hier ist, wie Sie es in JavaScript, Rust und Go umsetzen könnten:
 
-<CodeTabs client:load tabs={["JavaScript", "Rust", "Go"]}>
+<CodeTabs client:load tabs={["Helper commands", "Persist secrets in environment", "Use secrets per command"]}>
 
 ```javascript
 // validateSecrets.js
@@ -194,7 +194,7 @@ Für Mac-Nutzer ist eine der einfachsten Optionen die Verwendung des Keychains.
 
 Hier ist eine einfache Methode, um Geheimnisse automatisch aus dem OSX Keychain zu laden, die `TouchID` unterstützt und sicherer ist als `.env`-Dateien.
 
-Das Original <cite>verdankt [Brian Hetfield](https://gist.github.com/bmhatfield/f613c10e360b4f27033761bbee4404fd) und [Jan Schaumann](https://www.netmeister.org/</cite> die Credits.
+Original credit: [Brian Hetfield](https://gist.github.com/bmhatfield/f613c10e360b4f27033761bbee4404fd) and [Jan Schaumann](https://www.netmeister.org/).
 
 <CodeTabs client:load tabs={[
   "Helper commands",
@@ -204,7 +204,7 @@ Das Original <cite>verdankt [Brian Hetfield](https://gist.github.com/bmhatfield/
 ```bash title="keychain-secrets.sh"
 ### Funktionen zum Setzen und Abrufen von Umgebungsvariablen aus dem OSX Keychain ###
 ### Adaptiert von: https://www.netmeister.org/blog/keychain-passwords.html und 
-### https://gist.github.com/bmhatfield/f613c10e360b4f27033761bbee4404fd
+Original credit: [Brian Hetfield](https://gist.github.com/bmhatfield/f613c10e360b4f27033761bbee4404fd) and [Jan Schaumann](https://www.netmeister.org/).
 
 # Verwendung: get-keychain-secret SECRET_ENV_VAR
 function get-keychain-secret () {

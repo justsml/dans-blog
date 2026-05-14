@@ -24,7 +24,6 @@ cover_full_width: ../fade-to-clouds-wide.webp
 cover_mobile: ../fade-to-clouds-square-200.webp
 cover_icon: ../fade-to-clouds-square-200.webp
 ---
-```mdx
 import Challenge from '../../../../components/QuizUI/Challenge';
 import QuizUI from '../../../../components/QuizUI/QuizUI';
 
@@ -35,8 +34,6 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 **Примечание:** Вопросы отформатированы в ширину ~50 колонок для обеспечения читаемости на всех устройствах. (Предложения по улучшению приветствуются!)
 
 Неважно, являетесь ли вы опытным разработчиком Rust или только начинаете осваивать управление памятью, этот тест поможет закрепить ваши знания. **Погрузимся в тему!** 🦀
-```
-
 <QuizUI>
 
 <Challenge
@@ -62,7 +59,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
             String::from("Zeno of Citium");
         let greeting = philosopher;
 
-        println!("Hello, {}!", philosopher);
+        println!("Hello, &#123;&#125;!", philosopher);
     }
     ```
   </div>
@@ -107,14 +104,14 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     Что происходит при запуске этого кода? Подумайте о передаче владения:
     ```rust
     fn take_knowledge(knowledge: String) {
-        println!("Knowledge: {}", knowledge);
+        println!("Knowledge: &#123;&#125;", knowledge);
     }
 
     fn main() {
         let wisdom = String::from("know thyself");
         take_knowledge(wisdom);
         // What happens to our wisdom?
-        println!("Do you {}", wisdom);
+        println!("Do you &#123;&#125;", wisdom);
     }
     ```
   </div>
@@ -128,7 +125,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     1. Передать по ссылке (забрать значение):
     ```rust
     fn borrow_it(text: &String) {
-        println!("Inside: {}", text);
+        println!("Inside: &#123;&#125;", text);
     }
     borrow_it(&wisdom);  // Now wisdom can be used after
     ```
@@ -145,7 +142,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     Рекомендация: Используйте ссылки, если не требуется передача владения.
     ```rust
     fn take_and_return(text: String) -> String {
-        println!("Inside: {}", text);
+        println!("Inside: &#123;&#125;", text);
         text  // Return ownership back
     }
     let wisdom = take_and_return(wisdom);  // Reassign returned ownership
@@ -246,7 +243,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     fn main() {
         let name = String::from("Seneca the Younger");
         let first = first_word(&name);
-        println!("Hello, {}", first);
+        println!("Hello, &#123;&#125;", first);
     }
     ```
   </div>
@@ -366,7 +363,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
         let marcus = Rc::clone(&text);    // What happens here?
         let aurelius = Rc::clone(&text);  // And here?
         println!(
-            "Reference count: {}",
+            "Reference count: &#123;&#125;",
             Rc::strong_count(&text)
         );
     }
@@ -387,14 +384,14 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
       
     fn demonstrate_rc() {
         let original = Rc::new(String::from("Shared"));
-        println!("Count after creation: {}", Rc::strong_count(&original)); // 1
+        println!("Count after creation: &#123;&#125;", Rc::strong_count(&original)); // 1
           
         {
             let copy = Rc::clone(&original);
-            println!("Count inside scope: {}", Rc::strong_count(&original)); // 2
+            println!("Count inside scope: &#123;&#125;", Rc::strong_count(&original)); // 2
         } // copy is dropped here
           
-        println!("Count after scope: {}", Rc::strong_count(&original)); // 1
+        println!("Count after scope: &#123;&#125;", Rc::strong_count(&original)); // 1
     }
     ```
     Ключевые моменты:
@@ -505,7 +502,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     }
 
     fn main() {
-        println!("{}", longest(
+        println!("&#123;&#125;", longest(
             "Seneca the Younger",
             "Marcus Aurelius"
         ));
@@ -582,7 +579,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
         let data = RefCell::new(42);
         let _borrow1 = data.borrow_mut();  // First mutable borrow
         let _borrow2 = data.borrow_mut();  // Second mutable borrow
-        println!("Value: {}", _borrow2);
+        println!("Value: &#123;&#125;", _borrow2);
     }
     ```
   </div>
@@ -650,9 +647,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     fn main() {
         let life = Cell::new(42);
         let meaning = &life;        // Shared reference
-        println!("{}", life.get()); // What prints here?
+        println!("&#123;&#125;", life.get()); // What prints here?
         meaning.set(43);            // Mutation through shared ref
-        println!("{}", life.get()); // And here?
+        println!("&#123;&#125;", life.get()); // And here?
     }
     ```
   </div>
@@ -900,7 +897,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
         let _guard1 = lock.lock().unwrap();   // First lock
         let _guard2 = lock2.lock().unwrap();  // Second lock attempt
           
-        println!("Value: {}", _guard2);
+        println!("Value: &#123;&#125;", _guard2);
     }
     ```
   </div>
@@ -922,7 +919,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
           
         // Now we can acquire it again
         let data2 = lock.lock().unwrap();
-        println!("Value: {}", data2);
+        println!("Value: &#123;&#125;", data2);
     }
 
     // Using multiple mutexes safely
@@ -1093,7 +1090,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
         fn drop(&mut self) {
             // Ensure file is properly closed
             // Could also do cleanup like deletion
-            println!("Closing file: {}", self.path);
+            println!("Closing file: &#123;&#125;", self.path);
         }
     }
     ```
@@ -1142,7 +1139,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
             founder: String::from("Zeno of Citium")
         };
         let new_school = stoicism.clone();
-        println!("{} - {}", 
+        println!("&#123;&#125; - &#123;&#125;", 
             stoicism.school, new_school.school);
     }
     ```

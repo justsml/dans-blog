@@ -18,6 +18,7 @@ const instrumentedAi = braintrustEnabled
   : ai;
 
 export const generateText = instrumentedAi.generateText;
+export const streamText = instrumentedAi.streamText;
 
 /**
  * Wraps fn() in a Braintrust span when BRAINTRUST_API_KEY is set, otherwise

@@ -16,7 +16,7 @@ cover_mobile: ../docker-ukiyo-e-container-square-200.webp
 cover_icon: ../docker-ukiyo-e-container-square-200.webp
 cover_credit: © 2025 Dan Levy
 ---
-import {CodeTabs} from '../../../../../components/CodeTabs';
+import {CodeTabs} from '../../../../components/CodeTabs';
 
 **Содержание**
 
@@ -107,7 +107,7 @@ TODO: Move to Maintainer's Guide
 
 На всякий случай можно добавить небольшую проверку во время выполнения с минимальными усилиями. Вот как это можно реализовать на JavaScript, Rust и Go:
 
-<CodeTabs client:load tabs={["JavaScript", "Rust", "Go"]}>
+<CodeTabs client:load tabs={["Helper commands", "Persist secrets in environment", "Use secrets per command"]}>
 
 ```javascript
 // validateSecrets.js
@@ -223,7 +223,7 @@ echo "New .env file generated with secure random values!"
 
 Ниже простой способ автоматизировать загрузку секретов из Keychain macOS, поддерживает `TouchID` и немного безопаснее, чем файлы `.env`.
 
-Исходный <cite>благодарность [Brian Hetfield](https://gist.github.com/bmhatfield/f613c10e360b4f27033761bbee4404fd) и [Jan Schaumann](https://www.netmeister.org/)</cite>
+Original credit: [Brian Hetfield](https://gist.github.com/bmhatfield/f613c10e360b4f27033761bbee4404fd) and [Jan Schaumann](https://www.netmeister.org/).
 
 <CodeTabs client:load tabs={[
   "Helper commands",
@@ -233,7 +233,7 @@ echo "New .env file generated with secure random values!"
 ```bash title="keychain-secrets.sh"
 ### Functions for setting and getting environment variables from the OSX keychain ###
 ### Adapted from: https://www.netmeister.org/blog/keychain-passwords.html and 
-### https://gist.github.com/bmhatfield/f613c10e360b4f27033761bbee4404fd
+Original credit: [Brian Hetfield](https://gist.github.com/bmhatfield/f613c10e360b4f27033761bbee4404fd) and [Jan Schaumann](https://www.netmeister.org/).
 
 # Use: get-keychain-secret SECRET_ENV_VAR
 function get-keychain-secret () {

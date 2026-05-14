@@ -40,7 +40,7 @@ describe("resolveCheapFastTranslationModel", () => {
   });
 
   test("resolves loose substrings to the first cheap/fast model match", () => {
-    expect(resolveCheapFastTranslationModel("nitro")).toBe("openrouter/openai/gpt-oss-120b:nitro");
+    expect(resolveCheapFastTranslationModel("nitro")).toBe("openrouter/google/gemma-4-26b-a4b-it:nitro");
     expect(resolveCheapFastTranslationModel("32b")).toBe("openrouter/qwen/qwen3-32b:nitro");
     expect(resolveCheapFastTranslationModel("deepseek")).toBe("openrouter/deepseek/deepseek-v4-flash");
   });
@@ -314,6 +314,69 @@ describe("analyzeTranslationIntegrity", () => {
     expect(issues.some((issue) => issue.code === "invalid-localized-asset-path")).toBe(true);
   });
 
+  test("flags bare inherited asset paths with Markdown image titles", () => {
+    const target = source.replace(
+      "![Diagram](./diagram.webp)",
+      '![Diagram](diagram.webp "Translated diagram")',
+    );
+    const issues = analyzeTranslationIntegrity({
+      sourceContents: source,
+      targetContents: target,
+      targetPath: "/repo/src/content/posts/test/es/index.mdx",
+      locale: "es",
+    });
+    expect(issues.some((issue) => issue.code === "invalid-localized-asset-path")).toBe(true);
+  });
+
+  test("flags external reference assets rewritten as local paths", () => {
+    const sourceWithReference = `${source}\n\n[diagram_ref]: https://cdn.example.com/diagram.gif`;
+    const target = `${source.replace("./diagram.webp", "diagram_ref")}\n\n[diagram_ref]: ../diagram/diagram.gif`;
+    const issues = analyzeTranslationIntegrity({
+      sourceContents: sourceWithReference,
+      targetContents: target,
+      targetPath: "/repo/src/content/posts/test/fr/index.mdx",
+      locale: "fr",
+    });
+    expect(issues.some((issue) => issue.code === "external-asset-rewritten-local")).toBe(true);
+  });
+
+  test("flags malformed locale-relative Gist paths", () => {
+    const target = `${source}\n\n<Gist path='../justsml/13915347d6c8413c73f4bd7240c68e51' />`;
+    const issues = analyzeTranslationIntegrity({
+      sourceContents: source,
+      targetContents: target,
+      targetPath: "/repo/src/content/posts/test/de/index.mdx",
+      locale: "de",
+    });
+    expect(issues.some((issue) => issue.code === "invalid-gist-path")).toBe(true);
+  });
+
+  test("flags locale component imports with the wrong relative depth", () => {
+    const target = [
+      "import CodeTabs from '../../../../../components/CodeTabs.astro'",
+      "",
+      source,
+    ].join("\n");
+    const issues = analyzeTranslationIntegrity({
+      sourceContents: source,
+      targetContents: target,
+      targetPath: "/repo/src/content/posts/test/hi/index.mdx",
+      locale: "hi",
+    });
+    expect(issues.some((issue) => issue.code === "invalid-localized-component-import")).toBe(true);
+  });
+
+  test("flags suspicious code fence languages created by glued prose", () => {
+    const target = source.replace("```js", "```sqlWITH");
+    const issues = analyzeTranslationIntegrity({
+      sourceContents: source,
+      targetContents: target,
+      targetPath: "/repo/src/content/posts/test/it/index.mdx",
+      locale: "it",
+    });
+    expect(issues.some((issue) => issue.code === "suspicious-code-fence-language")).toBe(true);
+  });
+
   test("flags structural count drift", () => {
     const target = source.replace("> quoted", "");
     const issues = analyzeTranslationIntegrity({
@@ -337,6 +400,17 @@ describe("analyzeTranslationIntegrity", () => {
     });
     expect(issues.some((issue) => issue.code === "quiz-answer-count")).toBe(true);
     expect(issues.some((issue) => issue.code === "quiz-code-option-preservation")).toBe(true);
+  });
+
+  test("flags quiz challenges with options but no correct answer", () => {
+    const target = source.replace("isAnswer: true", "hint: 'not the answer'");
+    const issues = analyzeTranslationIntegrity({
+      sourceContents: source,
+      targetContents: target,
+      targetPath: "/repo/src/content/posts/test/ru/index.mdx",
+      locale: "ru",
+    });
+    expect(issues.some((issue) => issue.code === "quiz-missing-answer")).toBe(true);
   });
 
   test("flags LLM instruction leakage", () => {
@@ -568,6 +642,12 @@ describe("buildPrimaryJudgePrompt", () => {
 
   test("includes asset path rule", () => {
     expect(prompt).toContain("../");
+  });
+
+  test("includes deploy-breaker structural rules", () => {
+    expect(prompt).toContain("Gist component paths");
+    expect(prompt).toContain("../../../../components");
+    expect(prompt).toContain("suspicious code fence languages");
   });
 
   test("includes JSON shape", () => {

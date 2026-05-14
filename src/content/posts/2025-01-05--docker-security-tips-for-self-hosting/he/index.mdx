@@ -106,7 +106,7 @@ TODO: Move to Maintainer's Guide
 
 למקרה הצורך, אפשר גם להוסיף מעט בטיחות בזמן ריצה במאמץ מינימלי. כך אפשר לעשות זאת ב‑JavaScript, Rust ו‑Go:
 
-<CodeTabs client:load tabs={["JavaScript", "Rust", "Go"]}>
+<CodeTabs client:load tabs={["Helper commands", "Persist secrets in environment", "Use secrets per command"]}>
 
 ```javascript
 // validateSecrets.js
@@ -221,17 +221,13 @@ echo "New .env file generated with secure random values!"
 
 הנה דרך קלה לאוטומציה של טעינת סודות מ‑Keychain של macOS, תומכת ב‑TouchID, והיא בטוחה במקצת יותר מקבצי `.env`.
 
-המקור <cite>הקרדיט שייך ל‑[Brian Hetfield](https://gist.github.com/bmhatfield/f613c10e360b4f27033761bbee4404fd) ול‑[Jan Schaumann](https://www.netmeister.org/)</cite>
+Original credit: [Brian Hetfield](https://gist.github.com/bmhatfield/f613c10e360b4f27033761bbee4404fd) and [Jan Schaumann](https://www.netmeister.org/).
 
-<CodeTabs client:load tabs={[
-  "פקודות עזר",
-  "שמירת סודות בסביבה",
-  "שימוש בסודות per command"]
-]}>
+<CodeTabs client:load tabs={["Helper commands", "Persist secrets in environment", "Use secrets per command"]}>
 ```bash title="keychain-secrets.sh"
 ### פונקציות להגדרת וקבלת משתני סביבה מ‑Keychain של macOS ###
 ### מותאם מ‑: https://www.netmeister.org/blog/keychain-passwords.html ו‑
-### https://gist.github.com/bmhatfield/f613c10e360b4f27033761bbee4404fd
+Original credit: [Brian Hetfield](https://gist.github.com/bmhatfield/f613c10e360b4f27033761bbee4404fd) and [Jan Schaumann](https://www.netmeister.org/).
 
 # שימוש: get-keychain-secret SECRET_ENV_VAR
 function get-keychain-secret () {

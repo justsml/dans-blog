@@ -21,7 +21,8 @@ import { appendFileSync, mkdirSync, readdirSync, readFileSync, writeFileSync } f
 import { basename, dirname, join, relative } from "node:path";
 import "dotenv/config";
 import matter from "gray-matter";
-import { BRAINTRUST_PROJECT_NAME, braintrustEnabled, generateText, tracedEval } from "./braintrust.ts";
+import { compile } from "@mdx-js/mdx";
+import { BRAINTRUST_PROJECT_NAME, braintrustEnabled, streamText, tracedEval } from "./braintrust.ts";
 import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 import { OPENROUTER_USAGE_ACCOUNTING, usageFromResult } from "./llm-telemetry.ts";
 import { buildSystemPrompt, buildUserPrompt } from "./prompts.ts";
@@ -64,6 +65,7 @@ const translationModels = resolveCheapFastTranslationModels(
 const requestedSlug = optionalString(args, "slug");
 const requestedKind = optionalString(args, "kind") ?? "all";
 const isDryRun = args["dry-run"] === true;
+const printStreams = args["print-streams"] === true;
 
 // ---------------------------------------------------------------------------
 // Data types  (mirroring Braintrust shape: input → output → scores)
@@ -91,6 +93,7 @@ type EvalOutput = {
   inputTokens: number;
   outputTokens: number;
   providerCostUsd?: number;
+  streamTextPath: string;
 };
 
 /** One scorer result (Braintrust convention: name + score 0–1). */
@@ -118,7 +121,117 @@ type EvalResult = {
   inputTokens: number;
   outputTokens: number;
   providerCostUsd?: number;
+  streamTextPath?: string;
 };
+
+type StreamedTextResult = {
+  text: string;
+  durationMs: number;
+  inputTokens: number;
+  outputTokens: number;
+  providerCostUsd?: number;
+  streamTextPath: string;
+};
+
+type StreamContext = {
+  phase: "translation" | "judge";
+  inputId: string;
+  model: string;
+};
+
+type StreamTextSettings = Parameters<typeof streamText>[0];
+
+class StreamedTextError extends Error {
+  partialText: string;
+  streamTextPath: string;
+  durationMs: number;
+
+  constructor(message: string, options: { partialText: string; streamTextPath: string; durationMs: number }) {
+    super(message);
+    this.name = "StreamedTextError";
+    this.partialText = options.partialText;
+    this.streamTextPath = options.streamTextPath;
+    this.durationMs = options.durationMs;
+  }
+}
+
+async function streamLlmText(settings: StreamTextSettings, context: StreamContext): Promise<StreamedTextResult> {
+  const startedAt = Date.now();
+  const stem = safeFileName(`${context.phase}-${context.inputId}-${context.model.replace(/^openrouter\//, "")}`);
+  const textPath = join(streamDir, `${stem}.txt`);
+  const eventsPath = join(streamDir, `${stem}.jsonl`);
+  const relTextPath = relative(process.cwd(), textPath);
+  let text = "";
+  let chunkCount = 0;
+
+  mkdirSync(streamDir, { recursive: true });
+  writeFileSync(textPath, "", "utf8");
+  appendJsonl(eventsPath, {
+    at: new Date().toISOString(),
+    event: "stream_started",
+    phase: context.phase,
+    inputId: context.inputId,
+    model: context.model,
+    textPath: relTextPath,
+  });
+  console.log(`      stream ${context.phase} → ${relTextPath}`);
+
+  try {
+    const result = streamText(settings);
+    for await (const delta of result.textStream) {
+      chunkCount += 1;
+      text += delta;
+      appendFileSync(textPath, delta, "utf8");
+      if (printStreams) process.stdout.write(delta);
+    }
+    if (printStreams && text.length > 0) process.stdout.write("\n");
+
+    const durationMs = Date.now() - startedAt;
+    const [usage, providerMetadata] = await Promise.all([result.usage, result.providerMetadata]);
+    const telemetry = usageFromResult(usage, durationMs, providerMetadata);
+    appendJsonl(eventsPath, {
+      at: new Date().toISOString(),
+      event: "stream_finished",
+      phase: context.phase,
+      inputId: context.inputId,
+      model: context.model,
+      durationMs,
+      chunkCount,
+      textLength: text.length,
+      usage,
+      providerMetadata,
+    });
+
+    return {
+      text,
+      durationMs,
+      inputTokens: telemetry.inputTokens,
+      outputTokens: telemetry.outputTokens,
+      providerCostUsd: telemetry.providerCostUsd,
+      streamTextPath: relTextPath,
+    };
+  } catch (error) {
+    const durationMs = Date.now() - startedAt;
+    const message = error instanceof Error ? error.message : String(error);
+    appendJsonl(eventsPath, {
+      at: new Date().toISOString(),
+      event: "stream_error",
+      phase: context.phase,
+      inputId: context.inputId,
+      model: context.model,
+      durationMs,
+      chunkCount,
+      textLength: text.length,
+      errorMessage: message,
+      partialText: text,
+    });
+    throw new StreamedTextError(`${message} (partial stream: ${relTextPath})`, {
+      partialText: text,
+      streamTextPath: relTextPath,
+      durationMs,
+    });
+  }
+}
 
 // ---------------------------------------------------------------------------
 // Scorers  (pure functions: (input, output) => Score | Score[])
@@ -179,6 +292,30 @@ function scoreNoWrapperText(_input: EvalInput, output: EvalOutput): Score {
   };
 }
 
+async function scoreMdxSyntax(input: EvalInput, output: EvalOutput): Promise<Score> {
+  try {
+    await compile(stripFrontmatter(output.translation), {
+      development: false,
+      outputFormat: "function-body",
+      providerImportSource: "@mdx-js/react",
+    });
+    return {
+      name: "mdx-syntax-parse",
+      score: 1,
+      passed: true,
+      severity: "high",
+    };
+  } catch (error) {
+    return {
+      name: "mdx-syntax-parse",
+      score: 0,
+      passed: false,
+      severity: "high",
+      details: `${input.slug}/${input.locale} does not parse as MDX: ${error instanceof Error ? error.message : String(error)}`,
+    };
+  }
+}
+
 type JudgeResult = {
   scores: Score[];
   judgeScores?: JudgeScoreMap;
@@ -189,6 +326,7 @@ async function scoreLlmJudge(input: EvalInput, output: EvalOutput): Promise<Judg
     scores: [{ name: "judge:overall", score: 0, passed: false, severity: "medium", details }],
   });
 
+  let judgeStreamPath: string | undefined;
   try {
     const sha = "eval000000000000000000000000000000000000";
     const candidates: CandidateRef[] = [
@@ -213,14 +351,19 @@ async function scoreLlmJudge(input: EvalInput, output: EvalOutput): Promise<Judg
       `Use this JSON shape: ${JSON.stringify(getJudgeJsonShape())}`,
     ].join("\n");
 
-    const result = await generateText({
+    const result = await streamLlmText({
       model: createOpenRouter({}).chat(judgeModel, OPENROUTER_USAGE_ACCOUNTING),
       system: "You are a constrained translation judge. Return strict JSON only. No markdown fences.",
       prompt,
       temperature: 0.1,
       maxOutputTokens: 2000,
       timeout: { totalMs: TIMEOUT_MS },
+    }, {
+      phase: "judge",
+      inputId: input.id,
+      model: `openrouter/${judgeModel}`,
     });
+    judgeStreamPath = result.streamTextPath;
 
     const parsed = parseJudgeOutput(result.text);
     const judgeScores = normalizeJudgeScores(parsed.scores);
@@ -249,7 +392,9 @@ async function scoreLlmJudge(input: EvalInput, output: EvalOutput): Promise<Judg
 
     return { scores: [...dimensionScores, overall], judgeScores };
   } catch (error) {
-    return fail(error instanceof Error ? error.message : String(error));
+    const message = error instanceof Error ? error.message : String(error);
+    const streamPath = error instanceof StreamedTextError ? error.streamTextPath : judgeStreamPath;
+    return fail(streamPath == null ? message : `${message} (stream: ${streamPath})`);
   }
 }
 
@@ -258,8 +403,7 @@ async function scoreLlmJudge(input: EvalInput, output: EvalOutput): Promise<Judg
 // ---------------------------------------------------------------------------
 
 async function translate(input: EvalInput, model: string): Promise<EvalOutput> {
-  const startedAt = Date.now();
-  const result = await generateText({
+  const result = await streamLlmText({
     model: createOpenRouter({}).chat(model.replace(/^openrouter\//, ""), OPENROUTER_USAGE_ACCOUNTING),
     system: buildSystemPrompt(input.locale, input.isQuiz),
     prompt: buildUserPrompt(input.source, input.locale, {
@@ -270,17 +414,20 @@ async function translate(input: EvalInput, model: string): Promise<EvalOutput> {
     temperature: 0.1,
     maxOutputTokens: Math.min(16_000, Math.max(4_000, Math.ceil(input.source.length / 2))),
     timeout: { totalMs: TIMEOUT_MS },
+  }, {
+    phase: "translation",
+    inputId: input.id,
+    model,
   });
 
-  const durationMs = Date.now() - startedAt;
-  const telemetry = usageFromResult(result.usage, durationMs, result.providerMetadata);
   return {
     translation: result.text.trim(),
     model,
-    durationMs,
-    inputTokens: telemetry.inputTokens,
-    outputTokens: telemetry.outputTokens,
-    providerCostUsd: telemetry.providerCostUsd,
+    durationMs: result.durationMs,
+    inputTokens: result.inputTokens,
+    outputTokens: result.outputTokens,
+    providerCostUsd: result.providerCostUsd,
+    streamTextPath: result.streamTextPath,
   };
 }
 
@@ -293,6 +440,7 @@ async function runEval(input: EvalInput, model: string): Promise<EvalResult> {
   try {
     output = await translate(input, model);
   } catch (error) {
+    const streamError = error instanceof StreamedTextError ? error : undefined;
     return {
       inputId: input.id,
       kind: input.kind,
@@ -303,22 +451,24 @@ async function runEval(input: EvalInput, model: string): Promise<EvalResult> {
       overallScore: 0,
       scores: [],
       errorMessage: error instanceof Error ? error.message : String(error),
-      durationMs: 0,
+      durationMs: streamError?.durationMs ?? 0,
       inputTokens: 0,
       outputTokens: 0,
+      streamTextPath: streamError?.streamTextPath,
     };
   }
 
   // Run all scorers — deterministic ones sync, LLM judge async
-  const [integrityScores, frontmatter, title, wrapper, judgeResult] = await Promise.all([
+  const [integrityScores, frontmatter, title, wrapper, mdxSyntax, judgeResult] = await Promise.all([
     Promise.resolve(scoreIntegrity(input, output)),
     Promise.resolve(scoreFrontmatter(input, output)),
     Promise.resolve(scoreTitleTranslated(input, output)),
     Promise.resolve(scoreNoWrapperText(input, output)),
+    scoreMdxSyntax(input, output),
     scoreLlmJudge(input, output),
   ]);
 
-  const scores: Score[] = [...integrityScores, frontmatter, title, wrapper, ...judgeResult.scores];
+  const scores: Score[] = [...integrityScores, frontmatter, title, wrapper, mdxSyntax, ...judgeResult.scores];
   const overallScore = scores.reduce((sum, s) => sum + s.score, 0) / scores.length;
   const passed = scores.every((s) => s.passed || s.severity === "low");
 
@@ -336,6 +486,7 @@ async function runEval(input: EvalInput, model: string): Promise<EvalResult> {
     inputTokens: output.inputTokens,
     outputTokens: output.outputTokens,
     providerCostUsd: output.providerCostUsd,
+    streamTextPath: output.streamTextPath,
   };
 }
 
@@ -345,14 +496,33 @@ async function runEval(input: EvalInput, model: string): Promise<EvalResult> {
 
 function selectInputs(locale: ActiveLocale): EvalInput[] {
   const corpus = loadPublishedPosts();
+
+  if (requestedSlug != null) {
+    const normalizedSlug = normalizeSlug(requestedSlug);
+    const post = corpus.find((p) => p.slug === normalizedSlug)
+      ?? (() => { throw new Error(`Slug "${requestedSlug}" not found in visible corpus.`); })();
+
+    if (requestedKind !== "all" && post.kind !== requestedKind) {
+      throw new Error(`Slug "${requestedSlug}" has kind "${post.kind}", not "${requestedKind}".`);
+    }
+
+    return [{
+      id: `${post.kind}:${post.slug}:${locale}`,
+      kind: post.kind,
+      slug: post.slug,
+      sourcePath: post.sourcePath,
+      locale,
+      isQuiz: post.kind === "quiz",
+      title: post.title,
+      source: post.source,
+    }];
+  }
+
   const kinds = requestedKind === "all" ? (["article", "quiz"] as ArticleKind[]) : [requestedKind as ArticleKind];
 
   return kinds.map((kind) => {
-    const post = requestedSlug != null
-      ? corpus.find((p) => p.slug === normalizeSlug(requestedSlug) && (requestedKind === "all" || p.kind === kind))
-        ?? (() => { throw new Error(`Slug "${requestedSlug}" not found in visible corpus.`); })()
-      : corpus.find((p) => p.kind === kind)
-        ?? (() => { throw new Error(`No visible published ${kind} found.`); })();
+    const post = corpus.find((p) => p.kind === kind)
+      ?? (() => { throw new Error(`No visible published ${kind} found.`); })();
 
     return {
       id: `${kind}:${post.slug}:${locale}`,
@@ -412,6 +582,21 @@ function normalizeSlug(slug: string) {
     .replace(/^\d{4}-\d{2}-\d{2}--/, "");
 }
 
+function stripFrontmatter(contents: string) {
+  if (!contents.startsWith("---")) return contents;
+  const frontmatterEnd = contents.indexOf("\n---", 3);
+  if (frontmatterEnd === -1) return contents;
+  return contents.slice(frontmatterEnd + 4);
+}
+
+function safeFileName(value: string) {
+  return value.replace(/[^a-z0-9._-]+/gi, "-").replace(/^-+|-+$/g, "").slice(0, 180);
+}
+
+function appendJsonl(path: string, value: unknown) {
+  appendFileSync(path, JSON.stringify(value) + "\n", "utf8");
+}
+
 function parseLocales(value: string | undefined): ActiveLocale[] {
   if (value == null) return [DEFAULT_LOCALE];
   return value.split(",").map((v) => {
@@ -429,6 +614,7 @@ mkdirSync(EVAL_REPORT_DIR, { recursive: true });
 const runId = new Date().toISOString().replace(/[:.]/g, "-");
 const outputPath = join(EVAL_REPORT_DIR, `eval-run-${runId}.jsonl`);
 const summaryPath = join(EVAL_REPORT_DIR, `eval-run-${runId}-summary.md`);
+const streamDir = join(EVAL_REPORT_DIR, `eval-run-${runId}-streams`);
 
 // inputs = unique articles × locales; pairs = inputs × models
 const inputs = locales.flatMap((loc) => selectInputs(loc));
@@ -449,6 +635,7 @@ console.log(`\n${inputs.length} input(s) × ${translationModels.length} model(s)
 console.log(`Models  : ${translationModels.map((m) => m.replace(/^openrouter\//, "")).join(", ")}`);
 console.log(`Judge   : ${judgeModel}`);
 console.log(`Locales : ${locales.join(", ")}\n`);
+console.log(`Streams : ${relative(process.cwd(), streamDir)}${printStreams ? " (+stdout)" : ""}\n`);
 
 if (braintrustEnabled) {
   console.log(`Braintrust: logging to project "${BRAINTRUST_PROJECT_NAME}"\n`);
@@ -469,6 +656,7 @@ const results = await Promise.all(
       for (const s of result.scores.filter((s) => !s.passed && s.severity !== "low")) {
         console.log(`      ✗ ${s.name}${s.details ? `: ${s.details}` : ""}`);
       }
+      if (result.streamTextPath != null) console.log(`      raw translation stream: ${result.streamTextPath}`);
     }
     appendFileSync(outputPath, JSON.stringify({ at: new Date().toISOString(), ...result }) + "\n", "utf8");
     return result;
@@ -505,11 +693,12 @@ function writeSummary(results: EvalResult[]) {
     `**${passCount} passed, ${failCount} failed** | total cost $${totalCost.toFixed(5)}`,
     `Models: ${translationModels.map((m) => m.replace(/^openrouter\//, "")).join(", ")}`,
     `Judge: ${judgeModel}`,
+    `Streams: ${relative(process.cwd(), streamDir)}`,
     ``,
     `## Results`,
     ``,
-    `| Kind | Slug | Locale | Model | Pass | Overall | Judge | ${judgeKeys.map((k) => k.replace("judge:", "")).join(" | ")} | Cost |`,
-    `| --- | --- | --- | --- | --- | --- | --- | ${judgeKeys.map(() => "---").join(" | ")} | --- |`,
+    `| Kind | Slug | Locale | Model | Pass | Overall | Judge | ${judgeKeys.map((k) => k.replace("judge:", "")).join(" | ")} | Cost | Stream |`,
+    `| --- | --- | --- | --- | --- | --- | --- | ${judgeKeys.map(() => "---").join(" | ")} | --- | --- |`,
     ...results.map((r) => {
       const scoreMap = Object.fromEntries(r.scores.map((s) => [s.name, s]));
       const judgeOverall = scoreMap["judge:overall"];
@@ -527,6 +716,7 @@ function writeSummary(results: EvalResult[]) {
         judgeOverall != null ? `${(judgeOverall.score * 100).toFixed(1)}${judgeOverall.passed ? "" : "✗"}` : "—",
         ...dimCells,
         r.providerCostUsd != null ? `$${r.providerCostUsd.toFixed(5)}` : "—",
+        r.streamTextPath != null ? `[txt](${relative(dirname(summaryPath), join(process.cwd(), r.streamTextPath))})` : "—",
       ].join(" | ") + " |";
     }),
     ``,

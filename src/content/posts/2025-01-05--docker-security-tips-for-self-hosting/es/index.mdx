@@ -16,7 +16,7 @@ cover_mobile: ../docker-ukiyo-e-container-square-200.webp
 cover_icon: ../docker-ukiyo-e-container-square-200.webp
 cover_credit: © 2025 Dan Levy
 ---
-import {CodeTabs} from '../../../../../components/CodeTabs';
+import {CodeTabs} from '../../../../components/CodeTabs';
 
 **Tabla de contenidos**
 
@@ -107,7 +107,7 @@ Si utilizas marcadores de posición como `__WARNING_REPLACE_ME__` en tus secreto
 
 Por si acaso, también puedes añadir una pequeña seguridad en tiempo de ejecución con poco esfuerzo. Así es como podrías hacerlo en JavaScript, Rust y Go:
 
-<CodeTabs client:load tabs={["JavaScript", "Rust", "Go"]}>
+<CodeTabs client:load tabs={["Helper commands", "Persist secrets in environment", "Use secrets per command"]}>
 
 ```javascript
 // validateSecrets.js
@@ -222,7 +222,7 @@ Para usuarios de Mac, una de las opciones más simples es usar Keychain.
 
 A continuación tienes una forma sencilla de automatizar la carga de secretos desde el llavero de macOS, con soporte para `TouchID` y un nivel de seguridad algo mayor que los archivos `.env`.  
 
-El crédito original corresponde a [Brian Hetfield](https://gist.github.com/bmhatfield/f613c10e360b4f27033761bbee4404fd) y [Jan Schaumann](https://www.netmeister.org/).  
+Original credit: [Brian Hetfield](https://gist.github.com/bmhatfield/f613c10e360b4f27033761bbee4404fd) and [Jan Schaumann](https://www.netmeister.org/).
 
 <CodeTabs client:load tabs={[
   "Helper commands",
@@ -232,7 +232,7 @@ El crédito original corresponde a [Brian Hetfield](https://gist.github.com/bmha
 ```bash title="keychain-secrets.sh"
 ### Funciones para establecer y obtener variables de entorno desde el llavero de macOS ###
 ### Adaptado de: https://www.netmeister.org/blog/keychain-passwords.html y 
-### https://gist.github.com/bmhatfield/f613c10e360b4f27033761bbee4404fd
+Original credit: [Brian Hetfield](https://gist.github.com/bmhatfield/f613c10e360b4f27033761bbee4404fd) and [Jan Schaumann](https://www.netmeister.org/).
 
 # Uso: get-keychain-secret VARIABLE_DE_ENTORNO
 function get-keychain-secret () {

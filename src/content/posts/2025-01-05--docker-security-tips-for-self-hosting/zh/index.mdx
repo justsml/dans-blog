@@ -104,7 +104,7 @@ TODO: 移动到维护者指南
 
 为了保险起见，你还可以用很小的代价添加运行时检查。以下是JavaScript、Rust和Go中可能的实现方式：
 
-<CodeTabs client:load tabs={["JavaScript", "Rust", "Go"]}>
+<CodeTabs client:load tabs={["Helper commands", "Persist secrets in environment", "Use secrets per command"]}>
 
 ```javascript
 // validateSecrets.js
@@ -212,17 +212,13 @@ echo "已使用安全随机值生成新的 .env 文件！"
 
 这里提供一种自动化从 OSX 密钥串加载密钥的方法，支持 TouchID，比 `.env` 文件更安全一些。
 
-原始 <cite>思路来自 [Brian Hetfield](https://gist.github.com/bmhatfield/f613c10e360b4f27033761bbee4404fd) 和 [Jan Schaumann](https://www.netmeister.org/)</cite>
+Original credit: [Brian Hetfield](https://gist.github.com/bmhatfield/f613c10e360b4f27033761bbee4404fd) and [Jan Schaumann](https://www.netmeister.org/).
 
-<CodeTabs client:load tabs={[
-  "辅助命令",
-  "持久化环境变量",
-  "按命令使用密钥"
-]}>
+<CodeTabs client:load tabs={["Helper commands", "Persist secrets in environment", "Use secrets per command"]}>
 ```bash title="keychain-secrets.sh"
 ### 从 OSX 密钥串设置和获取环境变量的函数 ###
 ### 参考来源: https://www.netmeister.org/blog/keychain-passwords.html 和 
-### https://gist.github.com/bmhatfield/f613c10e360b4f27033761bbee4404fd
+Original credit: [Brian Hetfield](https://gist.github.com/bmhatfield/f613c10e360b4f27033761bbee4404fd) and [Jan Schaumann](https://www.netmeister.org/).
 
 # 用法: get-keychain-secret SECRET_ENV_VAR
 function get-keychain-secret () {

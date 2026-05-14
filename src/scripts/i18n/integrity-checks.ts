@@ -61,7 +61,10 @@ export function analyzeTranslationIntegrity({
 
   issues.push(...checkHtmlComments(targetContents, targetPath));
   issues.push(...checkHtmlMarkup(targetContents, targetPath));
-  issues.push(...checkAssetPaths(targetContents, targetPath));
+  issues.push(...checkFenceLanguages(targetContents, targetPath));
+  issues.push(...checkAssetPaths(sourceContents, targetContents, targetPath));
+  issues.push(...checkGistPaths(targetContents, targetPath));
+  issues.push(...checkLocalizedComponentImports(targetContents, targetPath));
   issues.push(...checkStructuralCounts(sourceContents, targetContents, targetPath));
   issues.push(...checkQuizOptions(sourceContents, targetContents, targetPath));
   issues.push(...checkInstructionLeaks(targetContents, targetPath));
@@ -146,25 +149,93 @@ function checkHtmlMarkup(contents: string, targetPath: string): IntegrityIssue[]
   return issues;
 }
 
-function checkAssetPaths(contents: string, targetPath: string): IntegrityIssue[] {
+function checkFenceLanguages(contents: string, targetPath: string): IntegrityIssue[] {
+  const issues: IntegrityIssue[] = [];
+  const suspiciousPrefixes = /^(?:sql|sh|bash|shell|js|jsx|ts|tsx|json|yaml|yml|html|css|docker|dockerfile)[A-Z]/;
+  const suspiciousKnown = new Set(["shdocker"]);
+
+  for (const { line, lineNumber } of iterFenceOpenings(contents)) {
+    const info = line.replace(/^\s{0,3}(```+|~~~+)/, "").trim().split(/\s+/)[0] ?? "";
+    if (info === "") continue;
+    if (suspiciousKnown.has(info) || suspiciousPrefixes.test(info)) {
+      issues.push({
+        code: "suspicious-code-fence-language",
+        severity: "medium",
+        message: `${targetPath}:${lineNumber} uses suspicious code fence language "${info}". This often means prose was glued to the fence marker.`,
+      });
+    }
+  }
+
+  return issues;
+}
+
+function checkAssetPaths(sourceContents: string, contents: string, targetPath: string): IntegrityIssue[] {
   if (!/\/[a-z]{2}\/index\.mdx?$/.test(targetPath)) return [];
 
   const badReferences = [
-    ...contents.matchAll(/]\(\.\/(?!\.)[^)]+\)/g),
+    ...contents.matchAll(/]\(\.\/(?!\.)[^)]*\)/g),
     ...contents.matchAll(/src=["']\.\/(?!\.)[^"']+["']/g),
     ...contents.matchAll(/:\s*\.\/(?!\.)\S+\.(?:avif|gif|jpe?g|png|svg|webp)\b/g),
     ...contents.matchAll(/=["']\.\/(?!\.)[^"']+\.(?:avif|gif|jpe?g|png|svg|webp)["']/g),
-    ...contents.matchAll(/!\[[^\]]*]\((?!\.\.\/|\/|https?:\/\/|#)[^)]+\.(?:avif|gif|jpe?g|png|svg|webp)\)/gi),
+    ...contents.matchAll(/!\[[^\]]*]\((?!\.\.\/|\/|https?:\/\/|#)[^)\s]+\.(?:avif|gif|jpe?g|png|svg|webp)(?:\s+["'][^"']*["'])?\)/gi),
+    ...contents.matchAll(/^\s*\[[^\]]+]:\s*(?!\.\.\/|\/|https?:\/\/|#)\S+\.(?:avif|gif|jpe?g|png|svg|webp)\b/gim),
+    ...contents.matchAll(/(?:\]\(|:\s*|=["'])\.\.\/https?:\/\//gi),
     ...contents.matchAll(/(?:src|image|cover|icon|thumbnail)=["'](?!\.\.\/|\/|https?:\/\/)[^"']+\.(?:avif|gif|jpe?g|png|svg|webp)["']/gi),
     ...contents.matchAll(/^\s*[A-Za-z0-9_-]*(?:image|cover|icon|hero|thumbnail)[A-Za-z0-9_-]*:\s*(?!\.\.\/|\/|https?:\/\/)[^\s]+\.(?:avif|gif|jpe?g|png|svg|webp)\b/gim),
+  ];
+
+  const issues: IntegrityIssue[] = [];
+  if (badReferences.length > 0) {
+    issues.push({
+      code: "invalid-localized-asset-path",
+      severity: "high",
+      message: `${targetPath} has ${badReferences.length} inherited asset path(s) that must start with ../ inside locale folders.`,
+    });
+  }
+
+  const externalReferenceDrift = findExternalReferenceDrift(sourceContents, contents);
+  if (externalReferenceDrift.length > 0) {
+    issues.push({
+      code: "external-asset-rewritten-local",
+      severity: "high",
+      message: `${targetPath} rewrote ${externalReferenceDrift.length} external Markdown reference asset(s) to local relative paths.`,
+    });
+  }
+
+  return issues;
+}
+
+function checkGistPaths(contents: string, targetPath: string): IntegrityIssue[] {
+  const badReferences = [
+    ...contents.matchAll(/<Gist\b[^>]*\bpath=["']\.\.\/[^"']+["']/g),
+    ...contents.matchAll(/\bpath=["']\.\.\/justsml\//g),
   ];
 
   return badReferences.length === 0
     ? []
     : [{
-      code: "invalid-localized-asset-path",
+      code: "invalid-gist-path",
       severity: "high",
-      message: `${targetPath} has ${badReferences.length} inherited asset path(s) that must start with ../ inside locale folders.`,
+      message: `${targetPath} has ${badReferences.length} Gist path(s) that must be owner/id, not a locale-relative path.`,
+    }];
+}
+
+function checkLocalizedComponentImports(contents: string, targetPath: string): IntegrityIssue[] {
+  if (!/\/[a-z]{2}\/index\.mdx?$/.test(targetPath)) return [];
+
+  const badImports = (contents.match(/^import\s+.+?\s+from\s+['"]((?:\.\.\/)+components\/[^'"]+)['"]/gm) ?? [])
+    .filter((line) => {
+      const specifier = line.match(/from\s+['"]([^'"]+)['"]/)?.[1] ?? "";
+      const depth = specifier.match(/\.\.\//g)?.length ?? 0;
+      return depth !== 4;
+    });
+
+  return badImports.length === 0
+    ? []
+    : [{
+      code: "invalid-localized-component-import",
+      severity: "high",
+      message: `${targetPath} has ${badImports.length} component import(s) with the wrong locale-folder relative depth. Use ../../../../components/...`,
     }];
 }
 
@@ -235,6 +306,13 @@ function checkQuizOptions(sourceContents: string, targetContents: string, target
 
     const sourceAnswers = sourceOptions.filter((option) => option.isAnswer).length;
     const targetAnswers = targetOptions.filter((option) => option.isAnswer).length;
+    if (targetOptions.length > 0 && targetAnswers === 0) {
+      issues.push({
+        code: "quiz-missing-answer",
+        severity: "high",
+        message: `${targetPath} Challenge ${sourceChallenge.index} has options but no correct answer flag.`,
+      });
+    }
     if (sourceAnswers !== targetAnswers) {
       issues.push({
         code: "quiz-answer-count",
@@ -335,6 +413,28 @@ function iterNonFenceLines(contents: string) {
   return result;
 }
 
+function iterFenceOpenings(contents: string) {
+  const lines = contents.split(/\r?\n/);
+  const result: Array<{ line: string; lineNumber: number }> = [];
+  let fence: string | undefined;
+
+  for (let index = 0; index < lines.length; index += 1) {
+    const line = lines[index];
+    const fenceMatch = line.match(/^\s{0,3}(```+|~~~+)/);
+    if (fenceMatch == null) continue;
+
+    const marker = fenceMatch[1][0];
+    if (fence == null) {
+      fence = marker;
+      result.push({ line, lineNumber: index + 1 });
+    } else if (fence === marker) {
+      fence = undefined;
+    }
+  }
+
+  return result;
+}
+
 function countFenceMarkers(contents: string) {
   return [...contents.matchAll(/^\s{0,3}(```+|~~~+)/gm)].length;
 }
@@ -406,6 +506,30 @@ function extractQuizOptions(challengeOpening: string) {
       isAnswer: /\bisAnswer\s*:\s*true\b/.test(raw),
     };
   }).filter((option) => option.text !== "");
+}
+
+function findExternalReferenceDrift(sourceContents: string, targetContents: string) {
+  const sourceRefs = extractMarkdownReferenceDefinitions(sourceContents);
+  const targetRefs = extractMarkdownReferenceDefinitions(targetContents);
+  const drift: string[] = [];
+
+  for (const [id, sourceUrl] of sourceRefs) {
+    const targetUrl = targetRefs.get(id);
+    if (targetUrl == null) continue;
+    if (/^https?:\/\//i.test(sourceUrl) && /^(?:\.\.?\/|[^:/#]+\/)/.test(targetUrl)) {
+      drift.push(id);
+    }
+  }
+
+  return drift;
+}
+
+function extractMarkdownReferenceDefinitions(contents: string) {
+  const refs = new Map<string, string>();
+  for (const match of stripFencedCodeBlocks(contents).matchAll(/^\s*\[([^\]]+)]:\s*(\S+)/gm)) {
+    refs.set(match[1].trim().toLowerCase(), match[2].trim());
+  }
+  return refs;
 }
 
 function isCodeLikeQuizOption(value: string) {
