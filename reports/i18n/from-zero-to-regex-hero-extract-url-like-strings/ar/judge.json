@@ -1,0 +1,44 @@
+{
+  "selectedCommit": "3a69376c8d3e0428487828df77c591136f2378fa",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 0,
+    "technicalAccuracy": 0,
+    "coherence": 0,
+    "relevance": 0,
+    "translationQuality": 0,
+    "mdxPreservation": 0
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "exact translated text currently in the selected MDX",
+      "replacement": "exact replacement text to write into the selected MDX",
+      "reason": "English explanation of why this medium/high-priority change is needed"
+    }
+  ],
+  "rationale": "Selected 3a69376c8d3e0428487828df77c591136f2378fa.",
+  "slug": "from-zero-to-regex-hero-extract-url-like-strings",
+  "locale": "ar",
+  "candidateCommits": [
+    "17b5d04e395f53d769821ee4768de82e03cbd803",
+    "3a69376c8d3e0428487828df77c591136f2378fa"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "exact translated text currently in the selected MDX",
+      "replacement": "exact replacement text to write into the selected MDX",
+      "reason": "English explanation of why this medium/high-priority change is needed",
+      "pass": 1,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug from-zero-to-regex-hero-extract-url-like-strings --locale ar --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug from-zero-to-regex-hero-extract-url-like-strings --locale ar --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug from-zero-to-regex-hero-extract-url-like-strings --locale ar --skip-global\n82 |   }\n83 | \n84 |   const sourceFences = sourceContents.match(/```/g)?.length ?? 0;\n85 |   const targetFences = targetContents.match(/```/g)?.length ?? 0;\n86 |   if (sourceFences !== targetFences) {\n87 |     throw new Error(\n                   ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2024-12-29--from-zero-to-regex-hero-extract-url-like-strings/ar/index.mdx changed fenced code block count from 8 to 10\n      at assertProtectedTokens (/Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:87:15)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}
