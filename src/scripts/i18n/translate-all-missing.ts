@@ -1,4 +1,5 @@
 import { join } from "node:path";
+import { spawn } from "node:child_process";
 import { ACTIVE_LOCALES, type ActiveLocale } from "../../shared/i18n.ts";
 import {
   filterActiveLocales,
@@ -31,6 +32,7 @@ const CHEAP_CANDIDATE_MODELS = [
 
 const JUDGE_MODEL = "openrouter/google/gemini-3-flash-preview";
 const ESCALATION_JUDGE_MODEL = "openrouter/anthropic/claude-sonnet-4.6";
+const DEFAULT_TASK_CONCURRENCY = 8;
 
 type Task = {
   slug: string;
@@ -47,6 +49,7 @@ const limit = parseOptionalPositiveInteger(optionalString(options, "limit"));
 const latestPosts = parseOptionalPositiveInteger(optionalString(options, "latest-posts"));
 const candidateTimeoutSeconds = parsePositiveInteger(optionalString(options, "timeout-seconds"), 240);
 const judgeTimeoutSeconds = parsePositiveInteger(optionalString(options, "judge-timeout-seconds"), 240);
+const taskConcurrency = parsePositiveInteger(optionalString(options, "task-concurrency"), DEFAULT_TASK_CONCURRENCY);
 const judgeModel = optionalString(options, "judge-model") ?? JUDGE_MODEL;
 const secondJudgeModel = optionalString(options, "second-judge-model");
 const escalationJudgeModel = optionalString(options, "escalate-model") ?? ESCALATION_JUDGE_MODEL;
@@ -58,6 +61,7 @@ const limitedTasks = limit == null ? tasks : tasks.slice(0, limit);
 
 console.log(`Found ${tasks.length} missing translation task(s).`);
 console.log(`Processing ${limitedTasks.length} task(s).`);
+console.log(`Task concurrency: ${shouldPush ? 1 : taskConcurrency}${shouldPush ? " (--push serializes task processing)" : ""}`);
 console.log(`Candidate pool: ${candidateModels.join(", ")}`);
 
 if (shouldDryRun) {
@@ -67,15 +71,17 @@ if (shouldDryRun) {
   process.exit(0);
 }
 
-for (const [index, task] of limitedTasks.entries()) {
+await mapLimit(limitedTasks, shouldPush ? 1 : taskConcurrency, processTask);
+
+async function processTask(task: Task, index: number) {
   console.log(`\n[${index + 1}/${limitedTasks.length}] ${task.locale}/${task.slug}`);
-  processTask(task);
+  await translateAndJudgeTask(task);
   if (shouldPush) {
     runInherited("git", ["push", "origin", "HEAD:main"]);
   }
 }
 
-function processTask(task: Task) {
+async function translateAndJudgeTask(task: Task) {
   for (const model of candidateModels) {
     const candidates = getCandidateCommits(task);
     if (candidates.length >= minCandidates) break;
@@ -84,7 +90,7 @@ function processTask(task: Task) {
     }
 
     console.log(`Generating candidate ${candidates.length + 1}/${minCandidates} with ${model}`);
-    runInherited("bun", [
+    await runInheritedAsync("bun", [
       "run",
       "i18n:translate:candidates",
       "--",
@@ -96,6 +102,8 @@ function processTask(task: Task) {
       model,
       "--timeout-seconds",
       String(candidateTimeoutSeconds),
+      "--run-lock-path",
+      getTaskRunLockPath(task, model),
     ]);
   }
 
@@ -125,7 +133,7 @@ function processTask(task: Task) {
   }
 
   console.log(`Judging ${candidates.length} candidate(s).`);
-  runInherited("bun", [
+  await runInheritedAsync("bun", [
     "run",
     "i18n:judge",
     "--",
@@ -145,6 +153,45 @@ function processTask(task: Task) {
 
 function optionalArg(name: string, value: string | undefined) {
   return value == null ? [] : [name, value];
+}
+
+async function mapLimit<T>(
+  items: T[],
+  limit: number,
+  worker: (item: T, index: number) => Promise<void>,
+) {
+  let nextIndex = 0;
+
+  async function runWorker() {
+    while (nextIndex < items.length) {
+      const index = nextIndex;
+      nextIndex += 1;
+      await worker(items[index], index);
+    }
+  }
+
+  await Promise.all(
+    Array.from({ length: Math.min(limit, items.length) }, () => runWorker()),
+  );
+}
+
+function runInheritedAsync(command: string, args: string[]) {
+  return new Promise<void>((resolve, reject) => {
+    const child = spawn(command, args, {
+      cwd: process.cwd(),
+      stdio: "inherit",
+    });
+
+    child.on("error", reject);
+    child.on("exit", (code, signal) => {
+      if (code === 0) {
+        resolve();
+        return;
+      }
+
+      reject(new Error(`Command failed: ${command} ${args.join(" ")} (${signal ?? `code ${code}`})`));
+    });
+  });
 }
 
 function getMissingTranslationTasks() {
@@ -223,6 +270,19 @@ function getCandidateModel(commit: string) {
 
 function normalizeModelId(model: string) {
   return model.replace(/^openrouter\//, "");
+}
+
+function getTaskRunLockPath(task: Task, model: string) {
+  return join(
+    process.cwd(),
+    ".git",
+    "i18n-all-missing-runlocks",
+    `${safeLockPart(task.slug)}-${task.locale}-${safeLockPart(normalizeModelId(model))}.json`,
+  );
+}
+
+function safeLockPart(value: string) {
+  return value.replace(/[^a-z0-9._-]+/gi, "-");
 }
 
 function parsePositiveInteger(rawValue: string | undefined, fallback: number) {

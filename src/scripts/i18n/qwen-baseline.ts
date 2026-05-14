@@ -1,5 +1,5 @@
 import { existsSync, mkdirSync, readFileSync, rmSync, statSync, writeFileSync } from "node:fs";
-import { spawnSync } from "node:child_process";
+import { spawn, spawnSync } from "node:child_process";
 import { dirname, join } from "node:path";
 import { ACTIVE_LOCALES, type ActiveLocale } from "../../shared/i18n.ts";
 import {
@@ -21,6 +21,7 @@ const QWEN_REPORT_FILE = "openrouter-qwen-qwen3.6-plus.md";
 const QWEN_DEFERRED_SLUGS = new Set([
   "quiz-is-your-memory-rusty",
 ]);
+const DEFAULT_TASK_CONCURRENCY = 8;
 
 type Task = {
   slug: string;
@@ -36,13 +37,14 @@ const selectedSlugs = new Set(parseList(optionalString(options, "slugs"), []));
 const limit = parseOptionalPositiveInteger(optionalString(options, "limit"));
 const latestPosts = parseOptionalPositiveInteger(optionalString(options, "latest-posts"));
 const timeoutSeconds = parsePositiveInteger(optionalString(options, "timeout-seconds"), 240);
+const taskConcurrency = parsePositiveInteger(optionalString(options, "task-concurrency"), DEFAULT_TASK_CONCURRENCY);
 const shardCount = parsePositiveInteger(optionalString(options, "shard-count"), 1);
 const shardIndex = parseNonNegativeInteger(optionalString(options, "shard-index"), 0);
 const shouldDryRun = options["dry-run"] === true;
 const shouldPush = options["push"] === true;
 const shouldMissingOnly = options["missing-only"] === true;
 const shouldRetryRejected = options["retry-rejected"] !== false;
-const shouldConcurrentWorktree = options["concurrent-worktree"] === true || shardCount > 1;
+const shouldConcurrentWorktree = options["concurrent-worktree"] === true || shardCount > 1 || taskConcurrency > 1;
 
 if (shardIndex >= shardCount) {
   throw new Error(`--shard-index must be smaller than --shard-count. Received ${shardIndex}/${shardCount}.`);
@@ -56,6 +58,7 @@ console.log(`Found ${tasks.length} Qwen baseline task(s).`);
 console.log(`Processing ${limitedTasks.length} task(s).`);
 console.log(`Model: ${QWEN_BASELINE_MODEL}`);
 console.log(`Timeout seconds: ${timeoutSeconds}`);
+console.log(`Task concurrency: ${taskConcurrency}`);
 console.log(`Shard: ${shardIndex + 1}/${shardCount}`);
 console.log(`Concurrent worktree mode: ${shouldConcurrentWorktree ? "yes" : "no"}`);
 
@@ -67,18 +70,20 @@ if (shouldDryRun) {
   process.exit(0);
 }
 
-for (const [index, task] of limitedTasks.entries()) {
+await mapLimit(limitedTasks, shouldConcurrentWorktree ? taskConcurrency : 1, processTask);
+
+async function processTask(task: Task, index: number) {
   console.log(`\n[${index + 1}/${limitedTasks.length}] ${task.locale}/${task.slug}`);
   const releaseTaskLock = shouldConcurrentWorktree ? claimTask(task) : undefined;
   if (shouldConcurrentWorktree && releaseTaskLock == null) {
     console.log(`Skipping ${task.locale}/${task.slug}; another worker already claimed it.`);
-    continue;
+    return;
   }
 
   if (shouldConcurrentWorktree && hasSuccessfulQwenReport(task.reportPath)) {
     console.log(`Skipping ${task.locale}/${task.slug}; Qwen report was completed by another worker.`);
     releaseTaskLock?.();
-    continue;
+    return;
   }
 
   if (!shouldConcurrentWorktree) {
@@ -106,10 +111,14 @@ for (const [index, task] of limitedTasks.entries()) {
       console.log(`Using ${taskTimeoutSeconds}s timeout for large source ${task.slug}.`);
     }
     if (shouldConcurrentWorktree) {
-      args.push("--no-commit", "--allow-concurrent-worktree");
+      args.push(
+        "--no-commit",
+        "--run-lock-path",
+        getTaskRunLockPath(task),
+      );
     }
     try {
-      runInherited("bun", args);
+      await runInheritedAsync("bun", args);
     } catch (error) {
       if (!shouldConcurrentWorktree) throw error;
 
@@ -120,8 +129,9 @@ for (const [index, task] of limitedTasks.entries()) {
       );
       if (hasRejectedQwenReport(task.reportPath)) {
         withRepoLock(() => {
-          runInherited("git", ["add", relativeToRepo(task.reportPath)]);
-          runInherited("git", ["commit", "-m", `i18n rejected(${task.locale}): ${task.slug} via ${QWEN_BASELINE_MODEL}`]);
+          const paths = [relativeToRepo(task.reportPath)];
+          runInherited("git", ["add", ...paths]);
+          runInherited("git", ["commit", "--only", "-m", `i18n rejected(${task.locale}): ${task.slug} via ${QWEN_BASELINE_MODEL}`, "--", ...paths]);
           if (shouldPush) {
             runInherited("git", ["push", "origin", "HEAD:main"]);
           }
@@ -131,7 +141,7 @@ for (const [index, task] of limitedTasks.entries()) {
       if (!hasRejectedQwenReport(task.reportPath)) {
         restorePathToHead(task.reportPath);
       }
-      continue;
+      return;
     }
 
     if (shouldConcurrentWorktree) {
@@ -139,8 +149,9 @@ for (const [index, task] of limitedTasks.entries()) {
         console.log("No successful Qwen diff to commit; cleaning rejected or unchanged artifacts.");
         if (hasRejectedQwenReport(task.reportPath)) {
           withRepoLock(() => {
-            runInherited("git", ["add", relativeToRepo(task.reportPath)]);
-            runInherited("git", ["commit", "-m", `i18n rejected(${task.locale}): ${task.slug} via ${QWEN_BASELINE_MODEL}`]);
+            const paths = [relativeToRepo(task.reportPath)];
+            runInherited("git", ["add", ...paths]);
+            runInherited("git", ["commit", "--only", "-m", `i18n rejected(${task.locale}): ${task.slug} via ${QWEN_BASELINE_MODEL}`, "--", ...paths]);
             if (shouldPush) {
               runInherited("git", ["push", "origin", "HEAD:main"]);
             }
@@ -150,23 +161,24 @@ for (const [index, task] of limitedTasks.entries()) {
         if (!hasRejectedQwenReport(task.reportPath)) {
           restorePathToHead(task.reportPath);
         }
-        continue;
+        return;
       }
 
       withRepoLock(() => {
-        runInherited("git", ["add", relativeToRepo(task.targetPath), relativeToRepo(dirname(task.reportPath))]);
-        runInherited("git", ["commit", "-m", `i18n candidate(${task.locale}): ${task.slug} via ${QWEN_BASELINE_MODEL}`]);
+        const paths = [relativeToRepo(task.targetPath), relativeToRepo(dirname(task.reportPath))];
+        runInherited("git", ["add", ...paths]);
+        runInherited("git", ["commit", "--only", "-m", `i18n candidate(${task.locale}): ${task.slug} via ${QWEN_BASELINE_MODEL}`, "--", ...paths]);
         if (shouldPush) {
           runInherited("git", ["push", "origin", "HEAD:main"]);
         }
       });
-      continue;
+      return;
     }
 
     const afterHead = run("git", ["rev-parse", "HEAD"]);
     if (afterHead === beforeHead) {
       console.log("No commit created; Qwen report already satisfied or model produced no change.");
-      continue;
+      return;
     }
 
     if (shouldPush) {
@@ -237,6 +249,45 @@ function hasGitDiff(...paths: string[]) {
   return run("git", ["status", "--porcelain", "--", ...relativePaths]).trim().length > 0;
 }
 
+async function mapLimit<T>(
+  items: T[],
+  limit: number,
+  worker: (item: T, index: number) => Promise<void>,
+) {
+  let nextIndex = 0;
+
+  async function runWorker() {
+    while (nextIndex < items.length) {
+      const index = nextIndex;
+      nextIndex += 1;
+      await worker(items[index], index);
+    }
+  }
+
+  await Promise.all(
+    Array.from({ length: Math.min(limit, items.length) }, () => runWorker()),
+  );
+}
+
+function runInheritedAsync(command: string, args: string[]) {
+  return new Promise<void>((resolve, reject) => {
+    const child = spawn(command, args, {
+      cwd: process.cwd(),
+      stdio: "inherit",
+    });
+
+    child.on("error", reject);
+    child.on("exit", (code, signal) => {
+      if (code === 0) {
+        resolve();
+        return;
+      }
+
+      reject(new Error(`Command failed: ${command} ${args.join(" ")} (${signal ?? `code ${code}`})`));
+    });
+  });
+}
+
 function withRepoLock(callback: () => void) {
   const lockDir = join(process.cwd(), ".git", "i18n-qwen-baseline.lock");
   const startedAt = Date.now();
@@ -286,6 +337,15 @@ function isStaleLock(lockDir: string) {
 
 function safeLockPart(value: string) {
   return value.replace(/[^a-z0-9._-]+/gi, "-");
+}
+
+function getTaskRunLockPath(task: Task) {
+  return join(
+    process.cwd(),
+    ".git",
+    "i18n-qwen-baseline-runlocks",
+    `${safeLockPart(task.slug)}-${task.locale}.json`,
+  );
 }
 
 function restorePathToHead(path: string) {

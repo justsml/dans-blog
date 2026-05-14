@@ -29,8 +29,14 @@ const TranslationSchema = z.object({
       hint: z.string().optional().describe("Translated hint text (if present)"),
     }),
   ).describe("Answer options — same count and order as input"),
+  objectives: z.array(
+    z.string().describe("Translated learning objective text"),
+  ).describe("Learning objectives — same count and order as input"),
   questionProse: z.array(
     z.string().describe("Translated prose segments from the question slot (same count, same order)"),
+  ),
+  hintsProse: z.array(
+    z.string().describe("Translated prose segments from the hints slot (same count, same order)"),
   ),
   explanationProse: z.array(
     z.string().describe("Translated prose segments from the explanation slot (same count, same order)"),
@@ -98,7 +104,9 @@ function buildCachedQuizPromptContext(
     `- title: translated title`,
     `- group: translated group name`,
     `- options: array of {text, hint?} — SAME COUNT as input`,
+    `- objectives: array of strings — SAME COUNT as input objectives`,
     `- questionProse: array of strings — SAME COUNT as input questionProse`,
+    `- hintsProse: array of strings — SAME COUNT as input hintsProse`,
     `- explanationProse: array of strings — SAME COUNT as input explanationProse`,
     ``,
     `The code blocks are preserved automatically. Only translate the prose fields.`,
@@ -108,6 +116,7 @@ function buildCachedQuizPromptContext(
 
 function buildDynamicQuizPrompt(challenge: QuizChallenge): string {
   const { prose: questionProse, codeBlocks: questionCode } = slotToTranslatable(challenge.question);
+  const { prose: hintsProse, codeBlocks: hintsCode } = slotToTranslatable(challenge.hints);
   const { prose: explanationProse, codeBlocks: explanationCode } = slotToTranslatable(challenge.explanation);
 
   const payload = {
@@ -117,8 +126,11 @@ function buildDynamicQuizPrompt(challenge: QuizChallenge): string {
       text: o.text,
       hint: o.hint,
     })),
+    objectives: challenge.objectives,
     questionProse,
     questionCode: questionCode.map((c) => ({ language: c.language, code: "[PRESERVED — do not translate]" })),
+    hintsProse,
+    hintsCode: hintsCode.map((c) => ({ language: c.language, code: "[PRESERVED — do not translate]" })),
     explanationProse,
     explanationCode: explanationCode.map((c) => ({ language: c.language, code: "[PRESERVED — do not translate]" })),
   };
@@ -188,6 +200,7 @@ export async function translateChallenge(
   }
 
   const translated = validated.data;
+  assertTranslatedCounts(challenge, translated);
 
   // Merge translation back into challenge
   const merged = mergeTranslation(challenge, translated);
@@ -208,6 +221,7 @@ function mergeTranslation(
 
   merged.title = translated.title;
   merged.group = translated.group;
+  merged.objectives = original.objectives.map((objective, i) => translated.objectives[i] ?? objective);
 
   // Merge options
   merged.options = original.options.map((opt, i) => {
@@ -223,10 +237,34 @@ function mergeTranslation(
   // Merge question slot
   merged.question = slotFromTranslatable(original.question, translated.questionProse);
 
+  // Merge hints slot
+  merged.hints = slotFromTranslatable(original.hints, translated.hintsProse);
+
   // Merge explanation slot
   merged.explanation = slotFromTranslatable(original.explanation, translated.explanationProse);
 
   return merged;
+}
+
+function assertTranslatedCounts(original: QuizChallenge, translated: TranslationResult) {
+  const { prose: questionProse } = slotToTranslatable(original.question);
+  const { prose: hintsProse } = slotToTranslatable(original.hints);
+  const { prose: explanationProse } = slotToTranslatable(original.explanation);
+  const checks: Array<[string, number, number]> = [
+    ["options", original.options.length, translated.options.length],
+    ["objectives", original.objectives.length, translated.objectives.length],
+    ["questionProse", questionProse.length, translated.questionProse.length],
+    ["hintsProse", hintsProse.length, translated.hintsProse.length],
+    ["explanationProse", explanationProse.length, translated.explanationProse.length],
+  ];
+
+  const mismatches = checks
+    .filter(([, expected, actual]) => expected !== actual)
+    .map(([field, expected, actual]) => `${field}: expected ${expected}, got ${actual}`);
+
+  if (mismatches.length > 0) {
+    throw new Error(`Quiz translation changed array counts for Challenge ${original.index}: ${mismatches.join("; ")}`);
+  }
 }
 
 /** Generate a short quiz description from the intro/outro for translation context. */

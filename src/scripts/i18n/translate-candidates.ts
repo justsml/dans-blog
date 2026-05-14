@@ -109,6 +109,16 @@ type CandidateRunSummary = {
   attempts: CandidateRunAttempt[];
 };
 
+type Totals = ReturnType<typeof createCandidateRunTotals>;
+
+const TOKEN_FIELDS = [
+  ["input",      "inputTokens",       "hasUnknownInputTokens"      ],
+  ["output",     "outputTokens",      "hasUnknownOutputTokens"     ],
+  ["thinking",   "thinkingTokens",    "hasUnknownThinkingTokens"   ],
+  ["cached",     "cachedInputTokens", "hasUnknownCachedInputTokens"],
+  ["cacheWrite", "cacheWriteTokens",  "hasUnknownCacheWriteTokens" ],
+] as const satisfies Array<[keyof CandidateTelemetry["tokens"], keyof Totals, keyof Totals]>;
+
 const options = parseArgs();
 const models = randomizeListOrder(validateCandidateModels(parseList(optionalString(options, "models"), DEFAULT_CANDIDATE_MODELS)));
 const shouldValidateCandidates = options.validate === true || options["validate-candidates"] === true;
@@ -130,14 +140,17 @@ const requestedSlugs = parseList(optionalString(options, "slugs"), requestedSlug
 const slugs = requestedSlugs.length > 0 ? requestedSlugs : getAllPostSlugs();
 const locales = getRequestedLocales();
 
+// Mutable task context — reset at the start of each processTask() call.
 let slug = "";
 let locale: ActiveLocale = "es";
 let sourcePath = "";
 let targetPath = "";
+let targetRelPath = "";
 let reportDir = "";
 let articleReportDir = "";
-let targetRelPath = "";
 let candidatesPath = "";
+
+// Candidate run state — written to events/history JSONL files.
 let candidateRunStartedAt = new Date();
 let candidateRunId = "";
 let candidateRunEventsPath = "";
@@ -521,30 +534,16 @@ function killChildTree(child: ChildProcess) {
 
 async function runDirectTranslation(model: string) {
   const args = [
-    "run",
-    "i18n:translate:chunked",
-    "--",
-    "--slug",
-    slug,
-    "--locale",
-    locale,
-    "--model",
-    model,
-    "--chunk",
-    chunkSize,
-    "--run-id",
-    processRunId,
-    "--run-lock-path",
-    runLockPath,
+    "run", "i18n:translate:chunked", "--",
+    "--slug", slug,
+    "--locale", locale,
+    "--model", model,
+    "--chunk", chunkSize,
+    "--run-id", processRunId,
+    "--run-lock-path", runLockPath,
+    ...optionalArg("--quiz-concurrency", quizConcurrency),
+    ...optionalArg("--challenge-retries", challengeRetries),
   ];
-
-  if (quizConcurrency != null) {
-    args.push("--quiz-concurrency", quizConcurrency);
-  }
-  if (challengeRetries != null) {
-    args.push("--challenge-retries", challengeRetries);
-  }
-
   await runTrackedInherited("bun", args, { timeoutMs: timeoutSeconds * 1000 });
 }
 
@@ -899,8 +898,14 @@ function finalizeCandidateRun(
 
 function buildCandidateRunSummary(): CandidateRunSummary {
   const totals = createCandidateRunTotals();
+  let skippedModels = 0;
+  let rejectedModels = 0;
+  let candidateModels = 0;
+
   for (const attempt of candidateRunAttempts) {
-    if (attempt.status === "skipped") continue;
+    if (attempt.status === "skipped") { skippedModels++; continue; }
+    if (attempt.status === "rejected") rejectedModels++;
+    if (attempt.status === "candidate") candidateModels++;
     addTelemetryToTotals(totals, attempt.telemetry);
   }
 
@@ -912,10 +917,10 @@ function buildCandidateRunSummary(): CandidateRunSummary {
     startedAt: candidateRunStartedAt.toISOString(),
     updatedAt: new Date().toISOString(),
     modelsRequested: models,
-    attemptedModels: candidateRunAttempts.filter((attempt) => attempt.status !== "skipped").length,
-    skippedModels: candidateRunAttempts.filter((attempt) => attempt.status === "skipped").length,
-    rejectedModels: candidateRunAttempts.filter((attempt) => attempt.status === "rejected").length,
-    candidateModels: candidateRunAttempts.filter((attempt) => attempt.status === "candidate").length,
+    attemptedModels: candidateRunAttempts.length - skippedModels,
+    skippedModels,
+    rejectedModels,
+    candidateModels,
     totals: {
       ...totals,
       runtimeSeconds: (totals.runtimeMilliseconds / 1000).toFixed(2),
@@ -943,10 +948,7 @@ function createCandidateRunTotals() {
   };
 }
 
-function addTelemetryToTotals(
-  totals: ReturnType<typeof createCandidateRunTotals>,
-  telemetry: CandidateTelemetry | undefined,
-) {
+function addTelemetryToTotals(totals: Totals, telemetry: CandidateTelemetry | undefined) {
   if (telemetry == null) {
     totals.hasUnknownInputTokens = true;
     totals.hasUnknownOutputTokens = true;
@@ -958,25 +960,16 @@ function addTelemetryToTotals(
   }
 
   const runtimeSeconds = Number(telemetry.runtimeSeconds);
-  if (Number.isFinite(runtimeSeconds)) {
-    totals.runtimeMilliseconds += runtimeSeconds * 1000;
-  }
+  if (Number.isFinite(runtimeSeconds)) totals.runtimeMilliseconds += runtimeSeconds * 1000;
 
-  totals.inputTokens += addKnownMetric(telemetry.tokens.input, () => {
-    totals.hasUnknownInputTokens = true;
-  });
-  totals.outputTokens += addKnownMetric(telemetry.tokens.output, () => {
-    totals.hasUnknownOutputTokens = true;
-  });
-  totals.thinkingTokens += addKnownMetric(telemetry.tokens.thinking, () => {
-    totals.hasUnknownThinkingTokens = true;
-  });
-  totals.cachedInputTokens += addKnownMetric(telemetry.tokens.cached, () => {
-    totals.hasUnknownCachedInputTokens = true;
-  });
-  totals.cacheWriteTokens += addKnownMetric(telemetry.tokens.cacheWrite, () => {
-    totals.hasUnknownCacheWriteTokens = true;
-  });
+  for (const [tokenKey, totalKey, unknownKey] of TOKEN_FIELDS) {
+    const value = telemetry.tokens[tokenKey];
+    if (value == null) {
+      (totals[unknownKey] as boolean) = true;
+    } else {
+      (totals[totalKey] as number) += value;
+    }
+  }
 
   if (telemetry.estimatedCostUsd == null) {
     totals.hasUnknownEstimatedCost = true;
@@ -985,12 +978,9 @@ function addTelemetryToTotals(
   }
 }
 
-function addKnownMetric(value: number | undefined, markUnknown: () => void) {
-  if (value == null) {
-    markUnknown();
-    return 0;
-  }
-  return value;
+function summaryForOutput(summary: CandidateRunSummary) {
+  const { runtimeMilliseconds: _, ...totals } = summary.totals as CandidateRunSummary["totals"] & { runtimeMilliseconds?: number };
+  return { ...summary, totals };
 }
 
 function appendCandidateRunEvent(
@@ -998,26 +988,21 @@ function appendCandidateRunEvent(
   summary: CandidateRunSummary,
   extra: Record<string, unknown> = {},
 ) {
-  const { runtimeMilliseconds: _runtimeMilliseconds, ...totals } = summary.totals as CandidateRunSummary["totals"] & {
-    runtimeMilliseconds?: number;
-  };
-  appendFileSync(candidateRunEventsPath, `${JSON.stringify({
+  const record = {
     event,
     at: new Date().toISOString(),
     runId: summary.runId,
     slug: summary.slug,
     locale: summary.locale,
     runStatus: summary.runStatus,
-    summary: { ...summary, totals },
+    summary: summaryForOutput(summary),
     ...extra,
-  })}\n`, "utf8");
+  };
+  appendFileSync(candidateRunEventsPath, `${JSON.stringify(record)}\n`, "utf8");
 }
 
 function appendCandidateRunHistory(summary: CandidateRunSummary) {
-  const { runtimeMilliseconds: _runtimeMilliseconds, ...totals } = summary.totals as CandidateRunSummary["totals"] & {
-    runtimeMilliseconds?: number;
-  };
-  appendFileSync(candidateRunHistoryPath, `${JSON.stringify({ ...summary, totals })}\n`, "utf8");
+  appendFileSync(candidateRunHistoryPath, `${JSON.stringify(summaryForOutput(summary))}\n`, "utf8");
 }
 
 function printCandidateRunSummary(summary: CandidateRunSummary) {

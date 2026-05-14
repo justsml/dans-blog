@@ -27,6 +27,7 @@ assertFrontmatter(target);
 assertTranslationLength({ sourceContents: source, targetContents: target, targetPath });
 assertHeadingCounts(source, target);
 assertProtectedTokens(source, target);
+assertQuizStructure(source, target);
 assertNestedAssetPaths(target, targetPath);
 
 if (shouldSkipGlobalChecks) {
@@ -115,6 +116,78 @@ function assertHeadingCounts(sourceContents: string, targetContents: string) {
   throw new Error(
     `${targetPath} changed heading counts. ${mismatches.join("; ")}`,
   );
+}
+
+function assertQuizStructure(sourceContents: string, targetContents: string) {
+  if (!sourceContents.includes("<Challenge")) return;
+
+  const sourceChallenges = extractChallengeBlocks(sourceContents);
+  const targetChallenges = extractChallengeBlocks(targetContents);
+  if (sourceChallenges.length !== targetChallenges.length) {
+    throw new Error(
+      `${targetPath} changed Challenge count from ${sourceChallenges.length} to ${targetChallenges.length}`,
+    );
+  }
+
+  const targetByIndex = new Map(targetChallenges.map((challenge) => [challenge.index, challenge]));
+  for (const sourceChallenge of sourceChallenges) {
+    const targetChallenge = targetByIndex.get(sourceChallenge.index);
+    if (targetChallenge == null) {
+      throw new Error(`${targetPath} is missing Challenge index ${sourceChallenge.index}`);
+    }
+
+    for (const prop of ["difficulty", "objectives"] as const) {
+      if (sourceChallenge.opening.includes(`${prop}=`) && !targetChallenge.opening.includes(`${prop}=`)) {
+        throw new Error(`${targetPath} Challenge ${sourceChallenge.index} is missing preserved ${prop} prop`);
+      }
+    }
+
+    const sourceOptions = countOptionTexts(sourceChallenge.opening);
+    const targetOptions = countOptionTexts(targetChallenge.opening);
+    if (sourceOptions !== targetOptions) {
+      throw new Error(
+        `${targetPath} Challenge ${sourceChallenge.index} changed option count from ${sourceOptions} to ${targetOptions}`,
+      );
+    }
+  }
+
+  for (const slotName of ["hints", "explanation"] as const) {
+    const sourceSlots = countSlot(sourceContents, slotName);
+    const targetSlots = countSlot(targetContents, slotName);
+    if (sourceSlots !== targetSlots) {
+      throw new Error(
+        `${targetPath} changed ${slotName} slot count from ${sourceSlots} to ${targetSlots}`,
+      );
+    }
+  }
+}
+
+function extractChallengeBlocks(contents: string) {
+  return [...contents.matchAll(/<Challenge\b[\s\S]*?<\/Challenge>/g)].map((match) => {
+    const block = match[0];
+    const openingEnd = block.indexOf(">\n");
+    const opening = openingEnd === -1 ? block : block.slice(0, openingEnd + 1);
+    const indexMatch = opening.match(/\bindex=\{(\d+)\}/);
+    if (indexMatch == null) {
+      throw new Error(`${targetPath} has a Challenge without an index prop`);
+    }
+
+    return {
+      block,
+      opening,
+      index: Number(indexMatch[1]),
+    };
+  });
+}
+
+function countOptionTexts(challengeOpening: string) {
+  const optionsMatch = challengeOpening.match(/\boptions=\{\[([\s\S]*?)\]\}/);
+  if (optionsMatch == null) return 0;
+  return [...optionsMatch[1].matchAll(/\btext\s*:/g)].length;
+}
+
+function countSlot(contents: string, slotName: string) {
+  return [...contents.matchAll(new RegExp(`\\bslot\\s+name=["']${escapeRegExp(slotName)}["']`, "g"))].length;
 }
 
 function countHeadings(contents: string) {

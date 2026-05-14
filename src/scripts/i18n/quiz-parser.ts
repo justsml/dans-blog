@@ -31,9 +31,13 @@ export interface QuizChallenge {
   index: number;
   group: string;
   title: string;
+  difficulty?: string;
+  objectives: string[];
+  extraProps: string[][];
   clientVisible: string;
   options: QuizOption[];
   question: QuizSlot;
+  hints: QuizSlot;
   explanation: QuizSlot;
   raw: string;
 }
@@ -102,10 +106,7 @@ export function parseQuiz(body: string): ParsedQuiz {
 }
 
 function parseChallengeBlock(raw: string, fallbackIndex: number): QuizChallenge {
-  const openTagMatch = raw.match(/<Challenge\s+([^>]*)>/s);
-  if (!openTagMatch) throw new Error("Could not parse Challenge opening tag");
-
-  const propsText = openTagMatch[1];
+  const propsText = extractChallengeProps(raw);
 
   const indexMatch = propsText.match(/index=\{(\d+)\}/);
   const index = indexMatch ? parseInt(indexMatch[1], 10) : fallbackIndex;
@@ -121,11 +122,103 @@ function parseChallengeBlock(raw: string, fallbackIndex: number): QuizChallenge 
   );
   const clientVisible = clientDirectiveMatch ? clientDirectiveMatch[1] : "";
 
+  const difficultyMatch = propsText.match(/\bdifficulty=\{([^}]*)\}/);
+  const difficulty = difficultyMatch ? difficultyMatch[1].trim() : undefined;
+
+  const objectives = parseStringArrayProp(propsText, "objectives");
+  const extraProps = parseExtraPropSegments(propsText, new Set([
+    "client:visible",
+    "index",
+    "group",
+    "title",
+    "difficulty",
+    "objectives",
+    "options",
+  ]));
+
   const options = parseOptions(propsText);
   const question = parseSlot(raw, "question");
+  const hints = parseSlot(raw, "hints");
   const explanation = parseSlot(raw, "explanation");
 
-  return { index, group, title, clientVisible, options, question, explanation, raw };
+  return {
+    index,
+    group,
+    title,
+    difficulty,
+    objectives,
+    extraProps,
+    clientVisible,
+    options,
+    question,
+    hints,
+    explanation,
+    raw,
+  };
+}
+
+function extractChallengeProps(raw: string): string {
+  const lines = raw.split("\n");
+  const startIndex = lines.findIndex((line) => line.match(/^\s*<Challenge\b/));
+  if (startIndex === -1) throw new Error("Could not parse Challenge opening tag");
+
+  const propLines: string[] = [];
+  const firstLineRemainder = lines[startIndex].replace(/^\s*<Challenge\b/, "").trim();
+  if (firstLineRemainder && firstLineRemainder !== ">") {
+    propLines.push(firstLineRemainder.replace(/>$/, "").trim());
+    if (firstLineRemainder.endsWith(">")) return propLines.join("\n");
+  }
+
+  for (let i = startIndex + 1; i < lines.length; i++) {
+    if (lines[i].trim() === ">") return propLines.join("\n");
+    propLines.push(lines[i]);
+  }
+
+  throw new Error("Could not find end of Challenge opening tag");
+}
+
+function parseStringArrayProp(propsText: string, propName: string): string[] {
+  const match = propsText.match(new RegExp(`\\b${propName}=\\{\\[([\\s\\S]*?)\\]\\}`));
+  if (!match) return [];
+
+  const values: string[] = [];
+  const stringRegex = /(["'`])((?:\\.|(?!\1)[\s\S])*)\1/g;
+  let stringMatch: RegExpExecArray | null;
+  while ((stringMatch = stringRegex.exec(match[1])) !== null) {
+    values.push(unescapeJsString(stringMatch[2]));
+  }
+  return values;
+}
+
+function parseExtraPropSegments(propsText: string, excludedNames: Set<string>): string[][] {
+  const segments = splitPropSegments(propsText);
+  return segments
+    .filter((segment) => {
+      const first = segment[0]?.trim() ?? "";
+      const name = first.match(/^([A-Za-z_][\w:-]*)=/)?.[1];
+      return name != null && !excludedNames.has(name);
+    })
+    .map((segment) => segment.map((line) => line.replace(/[ \t]+$/g, "")));
+}
+
+function splitPropSegments(propsText: string): string[][] {
+  const segments: string[][] = [];
+  let current: string[] = [];
+
+  for (const line of propsText.split("\n")) {
+    const normalized = line.replace(/[ \t]+$/g, "");
+    if (normalized.trim() === "") continue;
+
+    if (/^\s*[A-Za-z_][\w:-]*=/.test(normalized)) {
+      if (current.length > 0) segments.push(current);
+      current = [normalized];
+    } else if (current.length > 0) {
+      current.push(normalized);
+    }
+  }
+
+  if (current.length > 0) segments.push(current);
+  return segments;
 }
 
 function parseOptions(propsText: string): QuizOption[] {
@@ -171,7 +264,7 @@ function parseSlot(raw: string, slotName: string): QuizSlot {
 }
 
 function unwrapSlotContainer(content: string, slotName: string): string {
-  const className = slotName === "question" ? "question" : "explanation";
+  const className = slotName === "hints" ? "hint" : slotName === "question" ? "question" : "explanation";
   const lines = content.split("\n");
   const firstContentLine = lines.findIndex((line) => line.trim() !== "");
   const lastContentLine = lines.findLastIndex((line) => line.trim() !== "");
@@ -295,6 +388,21 @@ function assembleChallenge(challenge: QuizChallenge): string {
   lines.push(`  index={${challenge.index}}`);
   lines.push(`  group="${escapeQuotes(challenge.group)}"`);
   lines.push(`  title="${escapeQuotes(challenge.title)}"`);
+  if (challenge.difficulty) {
+    lines.push(`  difficulty={${challenge.difficulty}}`);
+  }
+  if (challenge.objectives.length > 0) {
+    lines.push(`  objectives={[`);
+    for (const objective of challenge.objectives) {
+      lines.push(`    "${escapeDoubleQuotedString(objective)}",`);
+    }
+    lines.push(`  ]}`);
+  }
+  for (const propLines of challenge.extraProps) {
+    for (const line of propLines) {
+      lines.push(`  ${line.trimStart()}`);
+    }
+  }
 
   lines.push(`  options={[`);
   for (const opt of challenge.options) {
@@ -312,6 +420,16 @@ function assembleChallenge(challenge: QuizChallenge): string {
   lines.push(`  </div>`);
   lines.push(`  </slot>`);
 
+  if (challenge.hints.raw || challenge.hints.fragments.length > 0) {
+    lines.push(``);
+    lines.push(`  <slot name="hints">`);
+    lines.push(`  <div className="hint">`);
+    lines.push(...assembleSlotLines(challenge.hints));
+    lines.push(`  </div>`);
+    lines.push(`  </slot>`);
+  }
+
+  lines.push(``);
   lines.push(`  <slot name='explanation'>`);
   lines.push(`  <div className="explanation">`);
   lines.push(...assembleSlotLines(challenge.explanation));
@@ -397,4 +515,10 @@ function escapeQuotes(str: string): string {
 }
 function escapeSingleQuotes(str: string): string {
   return str.replace(/'/g, "\\'");
+}
+function escapeDoubleQuotedString(str: string): string {
+  return str.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
+}
+function unescapeJsString(str: string): string {
+  return str.replace(/\\(["'`\\])/g, "$1");
 }

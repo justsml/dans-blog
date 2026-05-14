@@ -93,7 +93,7 @@ type WorkerProgress = {
 
 const REPORT_ROOT = join(process.cwd(), "reports/i18n");
 const DEFAULT_TUI_TASK_CONCURRENCY = "16";
-const DEFAULT_TUI_QUIZ_CONCURRENCY = "8";
+const DEFAULT_TUI_QUIZ_CONCURRENCY = "18";
 const DEFAULT_REFRESH_DEBOUNCE_MS = 750;
 const DEFAULT_CANDIDATE_MODELS = [
   "openrouter/deepseek/deepseek-v3.2",
