@@ -1,0 +1,49 @@
+{
+  "index": 13,
+  "attempt": 1,
+  "originalTitle": "Zero-Specificity Selectors",
+  "translatedTitle": "محددات بدون خصوصية",
+  "translation": {
+    "title": "محددات بدون خصوصية",
+    "group": "المحدد: الخصوصية",
+    "options": [
+      {
+        "text": ":where(.card) .title"
+      },
+      {
+        "text": ".card .title"
+      },
+      {
+        "text": ":is(.card) .title"
+      },
+      {
+        "text": "#card .title"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "أي محدد لديه أقل خصوصية؟"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "المحدد `:where(.card) .title` لديه أقل خصوصية. الفئة الزائفة `:where()` وكل ما بداخلها تساهم بـ `0-0-0`، لذا فقط `.title` يُحتسب. المحدد `:is(.card) .title` يحتفظ بخصوصية `.card`، والمحدد `.card .title` يحتوي على صنفين، والمحدد `#card .title` يتضمن معرفًا."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"محددات بدون خصوصية\",\n  \"group\": \"المحدد: الخصوصية\",\n  \"options\": [\n    {\"text\": \":where(.card) .title\"},\n    {\"text\": \".card .title\"},\n    {\"text\": \":is(.card) .title\"},\n    {\"text\": \"#card .title\"}\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\"أي محدد لديه أقل خصوصية؟\"],\n  \"hintsProse\": [],\n  \"explanationProse\": [\"المحدد `:where(.card) .title` لديه أقل خصوصية. الفئة الزائفة `:where()` وكل ما بداخلها تساهم بـ `0-0-0`، لذا فقط `.title` يُحتسب. المحدد `:is(.card) .title` يحتفظ بخصوصية `.card`، والمحدد `.card .title` يحتوي على صنفين، والمحدد `#card .title` يتضمن معرفًا.\"]\n}",
+  "telemetry": {
+    "inputTokens": 759,
+    "outputTokens": 1399,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 9053,
+    "providerCostUsd": 0.0007114,
+    "providerUpstreamCostUsd": 0.0007114,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00010626000000000002,
+    "outputUsd": 0.0003917200000000001,
+    "totalUsd": 0.0004979800000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
