@@ -1,0 +1,49 @@
+{
+  "index": 11,
+  "attempt": 1,
+  "originalTitle": "EXPLAIN ANALYZE Gotcha",
+  "translatedTitle": "המלכודת של EXPLAIN ANALYZE",
+  "translation": {
+    "title": "המלכודת של EXPLAIN ANALYZE",
+    "group": "ביצועים",
+    "options": [
+      {
+        "text": "אומדן תכנית קל"
+      },
+      {
+        "text": "עובד רק על SELECT"
+      },
+      {
+        "text": "משנה נתונים ומפיק תכנית"
+      },
+      {
+        "text": "מדמה ביצוע כדי לקבל תכנית"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "מה `EXPLAIN ANALYZE` עושה עבור הצהרות `UPDATE`?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "`EXPLAIN ANALYZE` למעשה מבצע את השאילתה! היזהר בעת ניתוח פעולת כתיבה, במיוחד הצהרות `UPDATE`, `DELETE` ו-`INSERT`. ייתכן שתצטרך להפעיל פעולות ניקוי לאחר כל `EXPLAIN ANALYZE` כדי לקבל תוצאות ניתנות לשחזור.\n\n    שיטות מומלצות:\n    - השתמש ב-`EXPLAIN` (ללא ANALYZE) עבור UPDATE/DELETE/INSERT\n    - עטף שינויים בטרנזקציות:"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"המלכודת של EXPLAIN ANALYZE\",\n  \"group\": \"ביצועים\",\n  \"options\": [\n    {\n      \"text\": \"אומדן תכנית קל\"\n    },\n    {\n      \"text\": \"עובד רק על SELECT\"\n    },\n    {\n      \"text\": \"משנה נתונים ומפיק תכנית\"\n    },\n    {\n      \"text\": \"מדמה ביצוע כדי לקבל תכנית\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"מה `EXPLAIN ANALYZE` עושה עבור הצהרות `UPDATE`?\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"sql\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"`EXPLAIN ANALYZE` למעשה מבצע את השאילתה! היזהר בעת ניתוח פעולת כתיבה, במיוחד הצהרות `UPDATE`, `DELETE` ו-`INSERT`. ייתכן שתצטרך להפעיל פעולות ניקוי לאחר כל `EXPLAIN ANALYZE` כדי לקבל תוצאות ניתנות לשחזור.\\n\\n    שיטות מומלצות:\\n    - השתמש ב-`EXPLAIN` (ללא ANALYZE) עבור UPDATE/DELETE/INSERT\\n    - עטף שינויים בטרנזקציות:\"\n  ],\n  \"explanationCode\": [\n    {\n      \"language\": \"sql\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 885,
+    "outputTokens": 2142,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 13002,
+    "providerCostUsd": 0.0010338,
+    "providerUpstreamCostUsd": 0.0010338,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00012390000000000003,
+    "outputUsd": 0.00059976,
+    "totalUsd": 0.00072366,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

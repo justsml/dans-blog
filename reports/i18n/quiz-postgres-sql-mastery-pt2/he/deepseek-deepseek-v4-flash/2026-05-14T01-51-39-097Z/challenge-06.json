@@ -1,0 +1,49 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Multi-Column Index Order",
+  "translatedTitle": "סדר אינדקס רב-עמודות",
+  "translation": {
+    "title": "סדר אינדקס רב-עמודות",
+    "group": "אינדקסים",
+    "options": [
+      {
+        "text": "CREATE INDEX ON students(grade_level, last_name);"
+      },
+      {
+        "text": "CREATE INDEX ON students(grade_level);"
+      },
+      {
+        "text": "CREATE INDEX ON students(last_name, age);"
+      },
+      {
+        "text": "CREATE INDEX ON students(first_name, last_name, grade_level);"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "איזה אינדקס מתאים יותר לשאילתה זו?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "לדעתי, הדבר המפתיע כאן הוא שניתן להשתמש באינדקס רב-עמודות גם כאשר סדר העמודות בשאילתה אינו תואם את הגדרת האינדקס.\n\n**הערה:** באינדקסי B-tree, העמודה המובילה חשובה. מכיוון ששאילתה זו מסננת לפי `grade_level` ו-`last_name`, אינדקס שמתחיל ב-`grade_level` ולאחר מכן `last_name` הוא התאמה טובה.\n\nככל שה-SQL יכול לבחור את מספר השורות הקטן ביותר מהר יותר, כך הביצועים טובים יותר.\n\nלדוגמה, אם יש לך טבלת `task`, ואתה יודע ש-`status` הוא יותר סלקטיבי מ-`created_at`, ייתכן שתבחר באינדקס שמתחיל ב-`status` עבור שאילתה כמו `status = 'done' AND created_at > '2024-01-01'`. סדר התנאים בטקסט של סעיף `WHERE` אינו מה שחשוב; סדר העמודות באינדקס וצורת הפרדיקטים הם שקובעים.\n\nאינדקס B+Tree יכול לשמש עבור:\n- העמודה המובילה, או קידומת שמאלית של עמודות.\n- אופרטורים כמו `=`, `>`, `<`, `BETWEEN`, ו-`IN`, בהתאם לצורת השאילתה.\n- התאמת קידומת, `LIKE 'prefix%'`.\n\nתודה ל-[u/mwdb2](https://www.reddit.com/r/PostgreSQL/comments/1h6kw87/comment/m0fovn0/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button) על שהצביע על טעות קודמת בהסבר זה!"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"סדר אינדקס רב-עמודות\",\n  \"group\": \"אינדקסים\",\n  \"options\": [\n    {\"text\": \"CREATE INDEX ON students(grade_level, last_name);\"},\n    {\"text\": \"CREATE INDEX ON students(grade_level);\"},\n    {\"text\": \"CREATE INDEX ON students(last_name, age);\"},\n    {\"text\": \"CREATE INDEX ON students(first_name, last_name, grade_level);\"}\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\"איזה אינדקס מתאים יותר לשאילתה זו?\"],\n  \"questionCode\": [{\"language\": \"sql\", \"code\": \"[PRESERVED — do not translate]\"}],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\"לדעתי, הדבר המפתיע כאן הוא שניתן להשתמש באינדקס רב-עמודות גם כאשר סדר העמודות בשאילתה אינו תואם את הגדרת האינדקס.\\n\\n**הערה:** באינדקסי B-tree, העמודה המובילה חשובה. מכיוון ששאילתה זו מסננת לפי `grade_level` ו-`last_name`, אינדקס שמתחיל ב-`grade_level` ולאחר מכן `last_name` הוא התאמה טובה.\\n\\nככל שה-SQL יכול לבחור את מספר השורות הקטן ביותר מהר יותר, כך הביצועים טובים יותר.\\n\\nלדוגמה, אם יש לך טבלת `task`, ואתה יודע ש-`status` הוא יותר סלקטיבי מ-`created_at`, ייתכן שתבחר באינדקס שמתחיל ב-`status` עבור שאילתה כמו `status = 'done' AND created_at > '2024-01-01'`. סדר התנאים בטקסט של סעיף `WHERE` אינו מה שחשוב; סדר העמודות באינדקס וצורת הפרדיקטים הם שקובעים.\\n\\nאינדקס B+Tree יכול לשמש עבור:\\n- העמודה המובילה, או קידומת שמאלית של עמודות.\\n- אופרטורים כמו `=`, `>`, `<`, `BETWEEN`, ו-`IN`, בהתאם לצורת השאילתה.\\n- התאמת קידומת, `LIKE 'prefix%'`.\\n\\nתודה ל-[u/mwdb2](https://www.reddit.com/r/PostgreSQL/comments/1h6kw87/comment/m0fovn0/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button) על שהצביע על טעות קודמת בהסבר זה!\"],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 1113,
+    "outputTokens": 3623,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 21861,
+    "providerCostUsd": 0.0016718,
+    "providerUpstreamCostUsd": 0.0016718,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00015582000000000004,
+    "outputUsd": 0.0010144400000000001,
+    "totalUsd": 0.0011702600000000002,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
