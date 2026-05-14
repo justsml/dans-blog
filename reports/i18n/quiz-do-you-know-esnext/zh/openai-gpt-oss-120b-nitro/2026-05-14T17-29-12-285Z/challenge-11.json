@@ -1,0 +1,51 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "WeakRef Usage",
+  "translatedTitle": "WeakRef 用法",
+  "translation": {
+    "title": "WeakRef 用法",
+    "group": "WeakRef",
+    "options": [
+      {
+        "text": "ReferenceError"
+      },
+      {
+        "text": "{ data: 'important' }"
+      },
+      {
+        "text": "null"
+      },
+      {
+        "text": "undefined"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "`WeakRef` 提供了什么？"
+    ],
+    "hintsProse": [
+      "检查 JavaScript 运算符的精确语义。诱人的答案往往是旧语法的行为，而不是此特性的实际作用。"
+    ],
+    "explanationProse": [
+      "`WeakRef` 提供对对象的弱引用，如果没有其他引用存在，对象可以被垃圾回收。由于这里 `obj` 仍被强引用，`deref()` 返回原始对象。如果目标已被回收，`deref()` 将返回 `undefined`。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"WeakRef 用法\",\n  \"group\": \"WeakRef\",\n  \"options\": [\n    {\n      \"text\": \"ReferenceError\"\n    },\n    {\n      \"text\": \"{ data: 'important' }\"\n    },\n    {\n      \"text\": \"null\"\n    },\n    {\n      \"text\": \"undefined\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"`WeakRef` 提供了什么？\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"js\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [\n    \"检查 JavaScript 运算符的精确语义。诱人的答案往往是旧语法的行为，而不是此特性的实际作用。\"\n  ],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"`WeakRef` 提供对对象的弱引用，如果没有其他引用存在，对象可以被垃圾回收。由于这里 `obj` 仍被强引用，`deref()` 返回原始对象。如果目标已被回收，`deref()` 将返回 `undefined`。\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 906,
+    "outputTokens": 580,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 2934,
+    "providerCostUsd": 0.0004647,
+    "providerUpstreamCostUsd": 0.0004647,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000035334,
+    "outputUsd": 0.0001044,
+    "totalUsd": 0.000139734,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
