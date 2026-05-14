@@ -1,0 +1,38 @@
+{
+  "selectedCommit": "d16d2a2f2716178cfc57e583ab432055d616d748",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 5,
+    "technicalAccuracy": 5,
+    "coherence": 5,
+    "relevance": 5,
+    "translationQuality": 5,
+    "mdxPreservation": 5
+  },
+  "suggestions": [],
+  "rationale": "The current translation in the provided zh/index.mdx already matches the high-quality output of the selected commit d16d2a2f2716178cfc57e583ab432055d616d748. The specific error mentioned in the previous judge report ('更改指纹') is not present in the provided zh/index.mdx text, which correctly reads 'return; // 内容未变，跳过重新嵌入'. The translation is technically accurate, maintains Dan's direct style, and preserves all MDX structures and heading counts.",
+  "slug": "rag-pipeline-failures",
+  "locale": "zh",
+  "candidateCommits": [
+    "d16d2a2f2716178cfc57e583ab432055d616d748",
+    "70d177cfd74c26bd0699fce17cd4952657be9bcf",
+    "94e53d2c2fcd36ecc7a3d9df25d312ed1288b506"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "return; // 内容未变，更改指纹，跳过重新嵌入",
+      "replacement": "return; // 内容未变，跳过重新嵌入",
+      "reason": "The original English comment says 'Content unchanged, skip re-embedding'. The candidate added '更改指纹' (change fingerprint) which is logically incorrect as the code returns early without changing anything.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug rag-pipeline-failures --locale zh --skip-global",
+    "output": ""
+  }
+}
