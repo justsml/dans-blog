@@ -1,0 +1,143 @@
+---
+social_image: ../desktop-social.webp
+title: استخدام المتغيّرات البيئية في NodeJS
+subTitle: استخدام `dotenv`
+date: '2018-11-13'
+modified: '2020-07-30'
+tags:
+  - dotenv
+  - api-keys
+  - secrets
+  - tokens
+  - security
+  - nodejs
+category: Code
+subCategory: howto
+cover: ../john-salvino-417565-unsplash.webp
+cover_mobile: ../w300_john-salvino-417565-unsplash.webp
+cover_icon: ../icon_john-salvino-417565-unsplash.webp
+---
+## التعامل الآمن مع الأسرار ورموز API
+
+### المقال المرتبط: [احمِ رموزك](/protect-your-tokens/)
+
+لنلخّص سريعًا الفرق بين `سرّي` و`غير سرّي`.
+
+* 🔒 يجب أن تُستخدم **المفاتيح السرية** عبر خادم مخصص (مثل Node/Express/Heroku) لإخفاء (وكيل) الطلبات إلى خدمات API الطرف الثالث.
+* 🌍 **المفاتيح غير السرية** هي المفاتيح التي يمكن إرسالها إلى المتصفح.
+
+<br />
+
+---------------------------------------------
+
+> سنركز في هذه المقالة على التعامل مع 🔒 `المفاتيح السرية` باستخدام **متغيّرات البيئة**.
+
+[أمثلة الشيفرة مرفقة أدناه.](#️-code-example)
+
+#### نظرة عامة
+
+لـ **الوصول الآمن إلى الأسرار في شفرة NodeJS الخاصة بك:**
+
+1. استبدل المفاتيح المكتوبة صراحةً بمتغيّرات البيئة. مثال: `process.env.API_SECRET`  
+1. استخدم مكتبة مثل [`dotenv`](https://github.com/motdotla/dotenv) مع ملف `.env`. أضف الأسرار التي كنت تكتبها صراحةً إلى ملف `.env`.  
+1. تأكّد من وجود سطر `.env` في ملف `.gitignore` الخاص بك!  
+
+> **لا** تنشئ ملف `.env` على الخوادم التي تم نشرها. استخدم أداة إدارة متغيّرات البيئة التي توفرها خدمات الاستضافة (مثل [Heroku](https://devcenter.heroku.com/articles/config-vars)، Netlify، AWS EC2): إما عبر **لوحة التحكم** أو **سطر الأوامر**.  
+
+### مثال على الشيفرة  
+
+سنعرّف بعض الملفات.
+
+1. `.env`  
+1. `./db/connection.js`  
+1. `./api/users.js`  
+
+<!-- Example config object which uses `process.env.PG*`
+
+```js
+// ./db/config.js
+module.exports = {
+  postgres: {
+    host: process.env.PGHOST || 'localhost',
+    port: process.env.PGPORT || 5234,
+    user: process.env.PGUSER || 'postgres',
+    password: process.env.PGPASSWORD || 'password',
+    database: process.env.PGDATABASE || 'postgres',
+  }
+};
+```
+
+The `db/config.js` file is just an example of how your secrets should be stored for re-use in your code.
+-->
+
+أولاً، ثبّت حزمة [`dotenv`](https://www.npmjs.com/package/dotenv).
+
+```bash
+npm install dotenv
+```
+
+بعد ذلك، أنشئ ملف `.env` في جذر مشروعك.
+
+```
+# .env
+PGDATABASE="postgres"
+PGHOST="localhost"
+PGPORT=5234
+PGUSER="postgres"
+PGPASSWORD="password"
+```
+
+❌ **أبدًا** لا تلتزم بملف `.env`.
+
+❌ تجنّب إنشاء ملف `.env` على الخوادم.
+
+تحقق من وثائق موفر الاستضافة الخاص بك لإعداد _متغيّرات البيئة_.
+
+للتأكد بسهولة من أن ملف `.gitignore` يحتوي على سطر `.env`.
+
+```bash
+# تحديث .gitignore تلقائيًا
+# تشغيل في الطرفية:
+[ "$(grep '^.env' .gitignore)" == "" ] && echo '.env' >> .gitignore
+# ملاحظة: لن يتم طباعة أي إخراج
+```
+
+ملف `./db/connection.js` يوفّر نسخة مشتركة من كائن `pg.Pool`. سيُستخدم لاستعلام قاعدة البيانات.
+
+```js
+// ./db/connection.js
+require('dotenv').config(); // ✅ تحميل ملف .env
+const pg = require('pg');
+const {PGUSER, PGHOST, PGPORT} = process.env;
+
+if (process.env.NODE_ENV === 'development')
+  console.log(`Connecting to ${PGUSER} @ ${PGHOST}:${PGHOST}`);
+// ^^ فقط لعرض متغيّرات الاتصال أثناء التصحيح
+
+// pg يستخدم تلقائيًا متغيّرات البيئة PG*
+module.exports = new pg.Pool();
+```
+
+مجلد `./api` يحتوي على واجهات لجداولك/مناظرك.
+
+إليك مثال `./api/users.js` لجدول `users`.
+
+```js
+// ./api/users.js
+const db = require('../db/connection.js');
+
+module.exports = {
+  findUsername: function(username) {
+    return db.query('SELECT * FROM users WHERE username=$1', username);
+  }
+};
+```
+
+- لا تقم أبدًا بارتكاب أسرارك الموجودة في `.env` إلى git!
+- لا تشارك ملفات `.env` مع فريقك. *
+
+\* يجب على كل جهاز تطوير جديد—لابتوب أو سطح مكتب—أن **ينتج مفاتيح وصول ورموز جديدة**. إذا تعذّر ذلك، فاحرص على مشاركة ملف `.env` بحذر (في الحالات التي قد تُلغي فيها الخدمة جميع المفاتيح القديمة، أو عندما يكون لديك رمز وصول محدود لواجهة برمجة تطبيقات مدفوعة.)
+
+#### ⚠️ مهم: إذا لزم الأمر، استخدم دائمًا خدمة رسائل آمنة (يفضل أن تدعم رسائل منتهية الصلاحية).
+
+حظًا موفقًا، ولا تتردد في طرح أي أسئلة! 🎉
