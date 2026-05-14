@@ -1,0 +1,50 @@
+{
+  "index": 3,
+  "attempt": 1,
+  "originalTitle": "let Fixes It (Or Does It?)",
+  "translatedTitle": "let 修复了它（还是没修复？）",
+  "translation": {
+    "title": "let 修复了它（还是没修复？）",
+    "group": "经典陷阱",
+    "options": [
+      {
+        "text": "0, 1, 2, 3, 4"
+      },
+      {
+        "text": "5, 5, 5, 5, 5"
+      },
+      {
+        "text": "4, 4, 4, 4, 4"
+      },
+      {
+        "text": "ReferenceError: i 未定义"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "相同的循环，不同的关键字。会输出什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "`let` 在 `for` 循环中很特殊。规范说明：每次迭代都会获得自己的 **新绑定** `i`。好像循环暗中这样做：",
+      "于是这五个回调各自闭包了五个不同的变量。结果：`0, 1, 2, 3, 4`。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"let 修复了它（还是没修复？）\",\n  \"group\": \"经典陷阱\",\n  \"options\": [\n    {\n      \"text\": \"0, 1, 2, 3, 4\"\n    },\n    {\n      \"text\": \"5, 5, 5, 5, 5\"\n    },\n    {\n      \"text\": \"4, 4, 4, 4, 4\"\n    },\n    {\n      \"text\": \"ReferenceError: i 未定义\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"相同的循环，不同的关键字。会输出什么？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"`let` 在 `for` 循环中很特殊。规范说明：每次迭代都会获得自己的 **新绑定** `i`。好像循环暗中这样做：\",\n    \"于是这五个回调各自闭包了五个不同的变量。结果：`0, 1, 2, 3, 4`。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 948,
+    "outputTokens": 675,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 2356,
+    "providerCostUsd": 0.000528,
+    "providerUpstreamCostUsd": 0.000528,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000036972,
+    "outputUsd": 0.0001215,
+    "totalUsd": 0.000158472,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

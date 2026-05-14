@@ -1,0 +1,49 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Stale Closure in React",
+  "translatedTitle": "React 中的陈旧闭包",
+  "translation": {
+    "title": "React 中的陈旧闭包",
+    "group": "高级",
+    "options": [
+      {
+        "text": "在每次点击时记录当前计数"
+      },
+      {
+        "text": "总是记录 0"
+      },
+      {
+        "text": "记录 NaN"
+      },
+      {
+        "text": "这段代码无法编译"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "当按钮被多次点击时，这个 React 组件会表现出什么行为？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "经典的陈旧闭包。`useEffect` 只运行一次（空依赖数组），并创建一个 interval，捕获当时挂载时的 `count` 值：`0`。无论点击多少次，interval 的闭包都看不到更新后的值。\n\n    按钮标签会正确更新——这是一次全新的渲染。但 `console.log` 永远卡在 `0`。\n\n    通过将 `count` 加入依赖数组（重新创建 interval）或使用 ref 来修复："
+    ]
+  },
+  "rawText": "{\n  \"title\": \"React 中的陈旧闭包\",\n  \"group\": \"高级\",\n  \"options\": [\n    {\n      \"text\": \"在每次点击时记录当前计数\"\n    },\n    {\n      \"text\": \"总是记录 0\"\n    },\n    {\n      \"text\": \"记录 NaN\"\n    },\n    {\n      \"text\": \"这段代码无法编译\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"当按钮被多次点击时，这个 React 组件会表现出什么行为？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"经典的陈旧闭包。`useEffect` 只运行一次（空依赖数组），并创建一个 interval，捕获当时挂载时的 `count` 值：`0`。无论点击多少次，interval 的闭包都看不到更新后的值。\\n\\n    按钮标签会正确更新——这是一次全新的渲染。但 `console.log` 永远卡在 `0`。\\n\\n    通过将 `count` 加入依赖数组（重新创建 interval）或使用 ref 来修复：\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 958,
+    "outputTokens": 797,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 3374,
+    "providerCostUsd": 0.0005835,
+    "providerUpstreamCostUsd": 0.0005835,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000037362,
+    "outputUsd": 0.00014345999999999999,
+    "totalUsd": 0.00018082199999999997,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

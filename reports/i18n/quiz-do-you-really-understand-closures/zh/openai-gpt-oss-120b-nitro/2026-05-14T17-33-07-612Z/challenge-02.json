@@ -1,0 +1,49 @@
+{
+  "index": 1,
+  "attempt": 1,
+  "originalTitle": "Separate Closures",
+  "translatedTitle": "分离闭包",
+  "translation": {
+    "title": "分离闭包",
+    "group": "热身",
+    "options": [
+      {
+        "text": "1, 1"
+      },
+      {
+        "text": "1, 2"
+      },
+      {
+        "text": "2, 2"
+      },
+      {
+        "text": "0, 0"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "这会输出什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "每次调用 `makeCounter()` 都会创建一个 **新的执行上下文**，拥有各自全新的 `count`。`a` 和 `b` 闭包捕获的是 *不同的* `count` 绑定。它们之间不共享状态。\n\n结果：`1, 1`\n\n这正是闭包用于构建私有状态的原因——每个“实例”都是独立的。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"分离闭包\",\n  \"group\": \"热身\",\n  \"options\": [\n    {\n      \"text\": \"1, 1\"\n    },\n    {\n      \"text\": \"1, 2\"\n    },\n    {\n      \"text\": \"2, 2\"\n    },\n    {\n      \"text\": \"0, 0\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"这会输出什么？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"每次调用 `makeCounter()` 都会创建一个 **新的执行上下文**，拥有各自全新的 `count`。`a` 和 `b` 闭包捕获的是 *不同的* `count` 绑定。它们之间不共享状态。\\n\\n结果：`1, 1`\\n\\n这正是闭包用于构建私有状态的原因——每个“实例”都是独立的。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 889,
+    "outputTokens": 286,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 1232,
+    "providerCostUsd": 0.00028575,
+    "providerUpstreamCostUsd": 0.00028575,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000034671,
+    "outputUsd": 0.00005148,
+    "totalUsd": 0.000086151,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Memoization via Closure",
+  "translatedTitle": "通过闭包实现记忆化",
+  "translation": {
+    "title": "通过闭包实现记忆化",
+    "group": "额外奖励",
+    "options": [
+      {
+        "text": "调用 expensive() 3 次"
+      },
+      {
+        "text": "调用 expensive() 1 次"
+      },
+      {
+        "text": "调用 expensive() 2 次"
+      },
+      {
+        "text": "抛出错误：Maximum call stack exceeded"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "实际会调用 `expensive()` 几次？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "记忆化函数闭包了 `cache`。第一次调用 (`fast(5)`) 未命中缓存，调用 `expensive` 并存储结果。第二次和第三次调用命中缓存，直接返回。\n\n`calls` 为 `1`。\n\n这正是闭包在真正工作：`cache` 是私有的（外部无法访问 `memoize`），是持久的（只要 `fast` 存在就一直存在），并且在所有对 `fast` 的调用之间共享。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"通过闭包实现记忆化\",\n  \"group\": \"额外奖励\",\n  \"options\": [\n    {\n      \"text\": \"调用 expensive() 3 次\"\n    },\n    {\n      \"text\": \"调用 expensive() 1 次\"\n    },\n    {\n      \"text\": \"调用 expensive() 2 次\"\n    },\n    {\n      \"text\": \"抛出错误：Maximum call stack exceeded\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"实际会调用 `expensive()` 几次？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"记忆化函数闭包了 `cache`。第一次调用 (`fast(5)`) 未命中缓存，调用 `expensive` 并存储结果。第二次和第三次调用命中缓存，直接返回。\\n\\n`calls` 为 `1`。\\n\\n这正是闭包在真正工作：`cache` 是私有的（外部无法访问 `memoize`），是持久的（只要 `fast` 存在就一直存在），并且在所有对 `fast` 的调用之间共享。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 931,
+    "outputTokens": 418,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 1526,
+    "providerCostUsd": 0.00037125,
+    "providerUpstreamCostUsd": 0.00037125,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000036309,
+    "outputUsd": 0.00007524,
+    "totalUsd": 0.00011154900000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
