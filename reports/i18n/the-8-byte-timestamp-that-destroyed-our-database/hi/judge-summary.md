@@ -12,14 +12,14 @@
 - Validation scope: local
 
 ## Primary Judge Telemetry
-- Runtime seconds: 3.15
-- Input tokens: 15945
-- Output tokens: 252
+- Runtime seconds: 2.77
+- Input tokens: 15949
+- Output tokens: 177
 - Thinking tokens: unknown
 - Cached input tokens: 0
 - Cache write tokens: 0
-- OpenRouter cost credits: unknown
-- Estimated cost: $0.008729
+- OpenRouter cost credits: 0.008505
+- Estimated cost: $0.008505
 
 ## Candidates
 - current src/content/posts/2025-12-29--the-8-byte-timestamp-that-destroyed-our-database/hi/index.mdx

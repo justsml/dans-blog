@@ -4,4 +4,4 @@
 - Selected model: openrouter/qwen/qwen3.6-plus
 - Judge model: openrouter/google/gemini-3-flash-preview
 
-Candidate 1a0cec341d6cca0d3e034d7c5e8198ae81ac7655 is the best choice because it provides a natural, modern Hindi translation that balances technical terminology with readability. Unlike the 'current' and 'c61d5b17' versions, it correctly handles the heading structure (avoiding the duplicated/broken H2 in the 'Wall-Clock' section). It also uses more natural phrasing for technical concepts (e.g., using 'store' instead of 'sangrahit' in many places where it flows better) and maintains Dan's direct, conversational style. It correctly preserves all MDX components and heading levels.
+This candidate provides the most natural and technically accurate translation while strictly adhering to the MDX structure and heading counts. It correctly handles the technical terms (TIMESTAMPTZ, INTERVAL) and maintains the author's direct, conversational tone. Other candidates either had minor formatting issues (like missing spaces in lists or inconsistent heading translations) or used slightly less natural phrasing for technical concepts.
