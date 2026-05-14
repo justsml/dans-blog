@@ -1,0 +1,248 @@
+# Translation Candidate
+- Slug: are-promises-broken
+- Locale: ar
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2018-10-06--are-promises-broken/ar/index.mdx
+- Validation: deferred
+- Runtime seconds: 37.34
+- Input tokens: 7486
+- Output tokens: 6172
+- Thinking tokens: unknown
+- Cached input tokens: 1536
+- Cache write tokens: 0
+- Estimated cost: $0.002565
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: وعود مكسورة؟
+unlisted: true
+subTitle: تجاهل الأخطاء، فقدان النتائج...
+date: '2018-10-06'
+modified: '2024-12-11'
+tags:
+  - promises
+  - javascript
+  - errors
+  - programming
+category: Code
+subCategory: promises
+cover: ../lennart-heim-766366-unsplash.webp
+cover_mobile: ../w300_lennart-heim-766366-unsplash.webp
+cover_icon: ../icon_lennart-heim-766366-unsplash.webp
+---
+## هل وعود JavaScript معطلة؟
+
+### في الزمن السابق
+
+أحد أكثر الخرافات شيوعًا حول الوعود (Promises) هو **القصور المزعوم** في معالجة الأخطاء.
+
+**منذ سنوات عديدة** كانت الوعود _فعلاً_ سيئة جدًا مع الأخطاء. **تم بذل الكثير من العمل لإصلاح ذلك.**
+
+> وها هو ذا، **تم إصلاحه**، بل و**انتشر على نطاق واسع**.
+
+#### ابتهج الناس
+
+وللأسف، لم يلاحظ البعض ذلك.
+
+### الزمن الحالي
+
+لا تزال الخرافة قائمة، وأراها في كل مكان: [مقالات شائعة على medium](https://hackernoon.com/6-reasons-why-javascripts-async-await-blows-promises-away-tutorial-c7ec10518dd9)، [على dzone](#redacted)، و[عدة](https://medium.com/@avaq/broken-promises-2ae92780f33) مصادر أخرى.
+
+سأعترف، حتى المصادر والوثائق "الرسمية" تقدم في الغالب [أمثلة واهية وعادات سيئة](../promise-gotchas/). غالبًا ما تُستخدم هذه "لإثبات" القضية ضد الوعود. بل إن البعض يقترح "علاجات" تجعل الأمور أسوأ بكثير. (ملاحظة: تمت إزالة الرابط)
+
+<!-- إحدى هذه النصائح التي رأيتها عدة مرات: هي عدم استخدام `.catch` أبدًا، واستخدام حدث عالمي `"unhandledRejection"` بدلاً من ذلك. **لا تفعل هذا أبدًا**. تم تصميم unhandledRejection لتنظيف المراجع العالمية، مثل اتصالات قاعدة البيانات، قبل إيقاف التشغيل الوشيك.) -->
+
+<br />
+<br />
+
+## قواعد لتجنب المشاكل
+
+1. [الوعود تحتاج إلى شيء تتشبث به](#1-promises-need-something-to-hang-on-to)
+    * **دائمًا** `return` من دوالك.
+1. [استخدم مثيلات `Error` حقيقية](#2-use-real-error-instances)
+    * **دائمًا** استخدم مثيلات `Error`.
+1. [تعامل مع الأخطاء حيثما كان ذلك منطقيًا](#3-handle-errors-where-it-makes-sense)
+    * **دائمًا** استخدم `.catch()`، على الأقل مرة واحدة.
+1. [أضف الوضوح باستخدام الدوال المسماة 🦄✨](#4-add-clarity-with-named-functions-)
+    * __فضل__ الدوال المسماة.
+
+-------------------------------------------
+
+#### #1 الوعود تحتاج إلى شيء تتشبث به
+
+من الضروري أن **تقوم دائمًا بـ `return`** من دوالك.
+
+تتبع دوال الاستدعاء للوعود نمطًا معينًا في `.then(callback)` و `.catch(callback)`.
+
+يتم تمرير كل قيمة معادة إلى دالة الاستدعاء التالية لـ `.then()`.
+
+```js
+function addTen(number) {
+  return number + 10;
+}
+
+Promise.resolve(10)  // 10
+  .then(addTen)      // 20
+  .then(addTen)      // 30
+  .then(addTen)      // 40
+  .then(console.log) // logs "40"
+```
+
+> مكافأة "العودة دائمًا": الكود أسهل بكثير في اختبار الوحدة.
+
+**سؤال:** كم عدد حالات الوعد المميزة (تم الحل والرفض) التي تم إنشاؤها؟
+
+**سؤال:** كم عدد الوعود التي تم إنشاؤها في المثال السابق؟
+
+#### #2 استخدم مثيلات `Error` الحقيقية
+
+لدى JavaScript سلوك مثير للاهتمام حول الأخطاء (ينطبق على الكود غير المتزامن **و** المتزامن.)
+
+<a href="https://repl.it/@justsml/throwing-errors-in-javascript" target="_blank">[<i>انظر المثال في repl.it: `throwing errors in javascript`</i>]</a>
+<img alt="رمي الأخطاء في جافا سكريبت" src="../throwing-errors-in-javascript.webp" />
+
+للحصول على **تفاصيل مفيدة حول رقم السطر** ومكدس الاستدعاءات، يجب عليك استخدام مثيلات `Error`. رمي السلاسل النصية لا يعمل كما في Python أو Ruby.
+
+بينما **يبدو** أن JavaScript تتعامل مع `throw "string"`، كما سترى السلسلة في معالج `catch` الخاص بك. ومع ذلك، فإن البيانات هي كل ما ستراه*. لن يتم تضمين أي [إطارات مكدس](https://en.wikipedia.org/wiki/Call_stack#Stack_and_frame_pointers) سابقة.
+
+أمثلة صحيحة `new Error`:
+
+```js
+throw new Error('message')           // ✅
+Promise.reject(new Error('message')) // ✅
+throw Error('message')               // ✅
+Promise.reject(Error('message'))     // ✅
+```
+
+فيما يلي أنماط مضادة شائعة:
+
+```js
+throw 'error message'  // ❌
+Promise.reject(-42)    // ❌
+```
+
+<iframe height="400px" width="100%" src="https://repl.it/@justsml/throwing-errors-in-javascript?lite=true" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals"></iframe>
+
+#### #3 تعامل مع الأخطاء حيثما يكون ذلك منطقيًا
+
+توفر الـ Promises طريقة أنيقة للتعامل مع الأخطاء باستخدام `.catch()`. إنها في الأساس نوع خاص من `.then()` - حيث يتم التعامل مع أي أخطاء من `.then()` السابقة. دعنا نلقي نظرة على مثال...
+
+```js
+Promise.resolve(42)
+  .then(() => 'hello')
+  .catch(() => console.log('will not get hit'))
+  .then(() => throw new Error('totes fail'))
+  .catch(() => console.log('WILL get hit'))
+```
+
+بينما قد يبدو `.catch()` مثل معالج أحداث DOM (مثل `click`، `keypress`). فإن موضعه مهم، حيث يمكنه فقط 'التقاط' الأخطاء التي تم رميها **فوقه.**
+
+**تجاوز الأخطاء أمر تافه نسبيًا** قم بإرجاع قيمة غير خطأ في رد الاتصال `.catch()`، وسيتحول سلسلة الـ Promise إلى تشغيل ردود الاتصال `.then()` بالتسلسل. (بشكل فعال.)
+
+حاول متابعة تسلسل المثال التالي:
+
+```js
+Promise.resolve(42)
+  .then(() => 'hello')
+  .then(() => throw new Error('totes fail'))
+  .catch(() => {
+    return 99
+  })
+  .then(num => num + 1)
+  .then(console.log) // expected output: 100
+```
+
+**التسلسل هو ما يهم فهمه.**
+
+على الرغم من أنه مثال سخيف، إلا أنه مصمم **لتوضيح كيفية تدفق الأخطاء والبيانات** في الـ Promises.
+
+فيما يلي مخطط للتسلسل:
+
+1. 42 هي القيمة الأولية.
+1. يتم دائمًا إرجاع `hello` بواسطة الطريقة التالية.
+1. نتجاهل القيمة السابقة، ونرمي خطأ برسالة `'totes fail'`.
+1. يتدخل `.catch()` في الخطأ، ويعيد بدلاً من ذلك `99` والتي سيتم التعامل معها بواسطة أي `.then()` لاحق.
+1. نزيد `num`، ونعيد `100`.
+1. تستقبل الطريقة `console.log` القيمة `100` وتطبعها! :tada:
+
+**سؤال:** ماذا يحدث عندما يكون هناك `.catch()` متتاليان؟ هل يمكن للثاني أن يعمل أبدًا؟ هل يمكنك التفكير في حالة استخدام؟
+
+**سؤال:** كيف يمكن لـ `.catch()` تجاهل الأخطاء؟ كيف تمنع الأخطاء من إجبار الخروج المبكر من `Promise.all`؟
+
+#### #4 أضف الوضوح باستخدام الدوال المسماة 🦄✨
+
+قارن **قابلية القراءة** بين المثالين التاليين:
+
+**مجهول:** ❌
+
+```js
+Promise.resolve(10)          // 10
+  .then(x => x * 2)          // 20
+  .then(x => x / 4)          // 5
+  .then(x => x * x)          // 25
+  .then(x => x.toFixed(2))   // "25.00"
+  .then(x => console.log(x)) // expected output: "25.00"
+```
+
+**مسمى:** ✅
+
+```js
+Promise.resolve(10) // 10
+  .then(double)     // 20
+  .then(quarter)    // 5
+  .then(square)     // 25
+  .then(format)     // "25.00"
+  .then(log)        // expected output: "25.00"
+
+const double = x => x * 2
+const quarter = x => x / 4
+const square = x => x * x
+const format = x => x.toFixed(2)
+const log = x => console.log(x)
+
+```
+
+**مكافأة:** ✅
+
+> متوافقة مع دوال المصفوفات!!!
+
+يمكنك إعادة استخدام دوالك المسماة مع أصدقائنا من `Array.prototype.` بما في ذلك `.map()` و `.filter()` و `.every()` و `.some()` و `.find()`!
+
+خطوط أنابيب التجميع #للنصر:
+
+```js
+// إنه نفس الشيء :انفجار_ذهني:
+
+[10, 20]           // [ 10, 20 ]
+  .map(double)     // [ 20, 40 ]
+  .map(quarter)    // [ 5, 10 ]
+  .map(square)     // [ 25, 100 ]
+  .map(format)     // [ "25.00", "100.00" ]
+  .map(log)        // expected 2 lines of output: "25.00", "100.00"
+
+```
+
+وإذا كنت لا تريد البرمجة بهذا الأسلوب الخطي... حسنًا، لديك دوال بسيطة!
+
+يمكنك استخدامها بالطريقة التي تناسبك:
+
+```js
+// نمط التداخل
+// ❌ من فضلك لا تفعل هذا، ولكن
+
+const result = format(square(quarter(double(10))))
+
+log(result)
+// الناتج المتوقع: "25.00"
+```
+
+**لماذا يُعتبر تداخل الدوال نمطًا سيئًا؟**
+
+1. غير قابل للقراءة لعدد كبير من الأشخاص
+2. لا تُظهر فروق git بسهولة من غيّر ماذا
+3. يصعب تصحيح الأخطاء أو تسجيل السجلات من منتصف الدوال المتداخلة
+````
