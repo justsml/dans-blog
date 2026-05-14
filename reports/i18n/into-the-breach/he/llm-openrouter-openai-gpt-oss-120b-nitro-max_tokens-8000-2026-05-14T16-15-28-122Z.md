@@ -1,0 +1,15 @@
+# Translation Candidate
+- Slug: into-the-breach
+- Locale: he
+- Model: llm://openrouter/openai/gpt-oss-120b:nitro?max_tokens=8000
+- Target: src/content/posts/2026-05-13--into-the-breach/he/index.mdx
+- Validation: rejected: direct AI SDK translation failed
+- Runtime seconds: 6.57
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Cache write tokens: unknown
+- Estimated cost: unknown
+- Pricing source: unknown
+- Note: Command failed: bun run i18n:translate:chunked -- --slug into-the-breach --locale he --model llm://openrouter/openai/gpt-oss-120b:nitro?max_tokens=8000 --chunk 10p --run-id 2026-05-14T16-15-28-115Z-58678 --run-lock-path /Users/dan/code/oss/dans-blog/.git/i18n-all-missing-runlocks/into-the-breach-he-llm-openrouter-openai-gpt-oss-120b-nitro-max_tokens-8000.json --quiz-concurrency 12 (code 1)
