@@ -1,0 +1,66 @@
+---
+social_image: ../desktop-social.webp
+title: البرمجة عالية الرتبة
+subTitle: استكشاف تقنيات خطوط الأنابيب القائمة على المصفوفات والمجموعات
+date: '2015-09-22'
+modified: '2024-07-30'
+category: Code
+subCategory: programming
+tags:
+  - programming
+  - patterns
+  - models
+  - source-code
+  - organization
+cover: ../susan-holt-simpson-799094-unsplash.webp
+cover_mobile: ../w300_susan-holt-simpson-799094-unsplash.webp
+cover_icon: ../icon_susan-holt-simpson-799094-unsplash.webp
+---
+## استكشاف تقنيات خط الأنابيب القائمة على المصفوفات والمجموعات
+
+### نمط مضاد؟
+
+هذا استكشاف للمزايا التي تتحقق عندما **تقوم بترميز كل شيء كمصفوفة.** (باستخدام مفاهيم الجيداي من SmallTalk)
+
+إليك بعض المبادئ التوجيهية:
+
+1.  كل المدخلات تشبه المصفوفة. حتى لو كانت مصفوفة من عنصر واحد.
+1.  الدوال عالية المستوى يجب أن تقبل وتعيد مصفوفات بشكل عام. (باستثناء دوال الاستدعاء للحلقات: map/reduce/each/filter)
+1.  99 من أصل 100 مبرمج يعانون مما أسميه متلازمة `acute schema surplusage`.
+1.  احذر من `class-backed models` المنتفخة - بكل ما تحمله من سمات متوقعة: `instance state` هش مع العديد من المقابض والأزرار للعبث بها، معاملات قاعدة البيانات، أقفال SQL، المزامنة/الاستبعاد المتبادل (التي تعمل دائمًا من أول مرة)، استخدام `property getter/setters` الاصطلاحية، واستخدامك لـ `public/private/final/etc` متين، أليس كذلك؟
+
+1.  لذا دعوني آخذ مشكلة شائعة وأقحم ~~~add~~~ بعض التأملات القائمة على المجموعات.
+1.  موقع مدونة افتراضي يحتوي على الكثير من المقالات، وحتى المزيد من المشاركات (التعليقات).
+1.  دعنا نضيف طريقة `delete` (أدناه) - ولكن مع دعم لكل من المفرد أو المصفوفات.
+
+```java
+package net.danlevy.why.java___why.you.got.all.the.dots____it.must.be.all.the.factories;
+
+public class Post {
+  public String   title;
+  public Date     created;
+  public String   message;
+
+  public Post(String title, String message) {
+    this.title    = title;
+    this.message  = message;
+    this.created  = new Date();
+  }
+
+  public Date isArchived() {
+    return this.created < new Date(2015, 0, 1);
+  }
+
+  // Post.delete` can be called w/ a singular Post or an array of Post[]
+  public static int delete(Post post) {
+    List<Post> posts = new List<Post>(post);
+    return delete(posts)
+  }
+
+  public static int delete(List<Post> posts) {
+    return posts.map(Dao.remove);
+  }
+}
+```
+
+> سامحني إذا كانت لغة الجافا لديّ صدئة قليلاً.
