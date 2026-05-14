@@ -1,0 +1,57 @@
+{
+  "index": 16,
+  "attempt": 2,
+  "originalTitle": "Memory Optimization",
+  "translatedTitle": "内存优化",
+  "translation": {
+    "title": "内存优化",
+    "group": "最佳实践",
+    "options": [
+      {
+        "text": "16 字节",
+        "hint": "考虑对齐要求"
+      },
+      {
+        "text": "24 字节"
+      },
+      {
+        "text": "32 字节",
+        "hint": "String 比单个指针大。"
+      },
+      {
+        "text": "取决于平台",
+        "hint": "我们指定了 64 位系统"
+      }
+    ],
+    "objectives": [
+      "分析结构体内存布局和对齐",
+      "优化结构体字段顺序以提高内存效率",
+      "应用对齐原则以减小结构体大小"
+    ],
+    "questionProse": [
+      "在典型的当前 64 位 Rust 目标上，这个结构体的大小是多少？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "让我们分解结构体内存布局和优化：",
+      "内存布局考虑：\n      1. 对齐要求：\n         - u32: 4 字节对齐\n         - String: 在常见 64 位目标上为 8 字节对齐和 24 字节大小\n         - bool: 1 字节对齐\n\n      2. 字段排序策略：\n         - 将相似大小的字段分组\n         - 将较大对齐的字段放在前面\n         - 考虑缓存行优化\n\n      最佳实践：\n      1. 对于 FFI 或稳定的布局假设，使用适当的 `repr(...)`\n      2. 使用适当的整数大小\n      3. 考虑使用 Option 表示可选字段\n      4. 使用 `std::mem::size_of` 测量大小关键的结构体\n      5. 谨慎使用 `#[repr(packed)]` - 它可能影响性能"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"内存优化\",\n  \"group\": \"最佳实践\",\n  \"options\": [\n    {\n      \"text\": \"16 字节\",\n      \"hint\": \"考虑对齐要求\"\n    },\n    {\n      \"text\": \"24 字节\"\n    },\n    {\n      \"text\": \"32 字节\",\n      \"hint\": \"String 比单个指针大。\"\n    },\n    {\n      \"text\": \"取决于平台\",\n      \"hint\": \"我们指定了 64 位系统\"\n    }\n  ],\n  \"objectives\": [\n    \"分析结构体内存布局和对齐\",\n    \"优化结构体字段顺序以提高内存效率\",\n    \"应用对齐原则以减小结构体大小\"\n  ],\n  \"questionProse\": [\n    \"在典型的当前 64 位 Rust 目标上，这个结构体的大小是多少？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"让我们分解结构体内存布局和优化：\",\n    \"内存布局考虑：\\n      1. 对齐要求：\\n         - u32: 4 字节对齐\\n         - String: 在常见 64 位目标上为 8 字节对齐和 24 字节大小\\n         - bool: 1 字节对齐\\n\\n      2. 字段排序策略：\\n         - 将相似大小的字段分组\\n         - 将较大对齐的字段放在前面\\n         - 考虑缓存行优化\\n\\n      最佳实践：\\n      1. 对于 FFI 或稳定的布局假设，使用适当的 `repr(...)`\\n      2. 使用适当的整数大小\\n      3. 考虑使用 Option 表示可选字段\\n      4. 使用 `std::mem::size_of` 测量大小关键的结构体\\n      5. 谨慎使用 `#[repr(packed)]` - 它可能影响性能\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1012,
+    "outputTokens": 1773,
+    "cacheReadTokens": 384,
+    "cacheWriteTokens": 0,
+    "durationMs": 11453,
+    "providerCostUsd": 0.00085016,
+    "providerUpstreamCostUsd": 0.00085016,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.0000889952,
+    "outputUsd": 0.00049644,
+    "totalUsd": 0.0005854352,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

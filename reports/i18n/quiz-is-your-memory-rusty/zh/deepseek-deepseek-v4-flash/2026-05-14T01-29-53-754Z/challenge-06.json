@@ -1,0 +1,37 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Rc Smart Pointer",
+  "translatedTitle": "Rc 智能指针",
+  "translation": {
+    "title": "Rc 智能指针",
+    "group": "引用计数",
+    "options": [],
+    "objectives": [],
+    "questionProse": [
+      "这段代码会打印什么？仔细计数！"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "让我们分解 Rc 的工作原理：\n\n      1. 使用 `Rc::new()` 初始创建：计数 = 1\n      2. 第一次克隆给 `marcus`：计数 = 2\n      3. 第二次克隆给 `aurelius`：计数 = 3\n\n      重要的 Rc 特性：",
+      "关键点：\n      - `Rc::clone()` 很廉价——它只增加一个计数器\n      - Rc 仅适用于单线程场景\n      - 当最后一个引用被丢弃时，数据会被清理\n      - 使用 Weak 引用来防止引用循环\n\n      最佳实践：\n      - 当你需要共享所有权时使用 Rc\n      - 对于线程安全场景考虑使用 Arc\n      - 避免创建引用循环"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Rc 智能指针\",\n  \"group\": \"引用计数\",\n  \"options\": [],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"这段代码会打印什么？仔细计数！\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"rust\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"让我们分解 Rc 的工作原理：\\n\\n      1. 使用 `Rc::new()` 初始创建：计数 = 1\\n      2. 第一次克隆给 `marcus`：计数 = 2\\n      3. 第二次克隆给 `aurelius`：计数 = 3\\n\\n      重要的 Rc 特性：\",\n    \"关键点：\\n      - `Rc::clone()` 很廉价——它只增加一个计数器\\n      - Rc 仅适用于单线程场景\\n      - 当最后一个引用被丢弃时，数据会被清理\\n      - 使用 Weak 引用来防止引用循环\\n\\n      最佳实践：\\n      - 当你需要共享所有权时使用 Rc\\n      - 对于线程安全场景考虑使用 Arc\\n      - 避免创建引用循环\"\n  ],\n  \"explanationCode\": [\n    {\n      \"language\": \"rust\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 867,
+    "outputTokens": 1339,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 8539,
+    "providerCostUsd": 0.000709,
+    "providerUpstreamCostUsd": 0.000709,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00012138000000000002,
+    "outputUsd": 0.00037492,
+    "totalUsd": 0.0004963,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

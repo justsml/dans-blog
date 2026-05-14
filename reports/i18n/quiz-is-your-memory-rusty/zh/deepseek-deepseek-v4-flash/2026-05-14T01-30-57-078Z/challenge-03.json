@@ -1,0 +1,59 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "Mutable References",
+  "translatedTitle": "可变引用",
+  "translation": {
+    "title": "可变引用",
+    "group": "借用",
+    "options": [
+      {
+        "text": "编译成功",
+        "hint": "我们能否同时拥有多个可变引用？"
+      },
+      {
+        "text": "错误：不能将 `wisdom` 多次借用为可变"
+      },
+      {
+        "text": "错误：缺少生命周期标注",
+        "hint": "这里的问题不在于生命周期"
+      },
+      {
+        "text": "运行时恐慌",
+        "hint": "Rust 在编译时就能捕获这些问题"
+      }
+    ],
+    "objectives": [
+      "理解 Rust 中可变引用的规则",
+      "识别违反 Rust 借用规则的情况",
+      "应用适当的作用域来处理多个可变引用"
+    ],
+    "questionProse": [
+      "多个可变引用会发生什么？",
+      "思考 Rust 中可变引用的规则。"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "这段代码违反了 Rust 的基本借用规则：\n      - 同一时间只能有一个对值的可变引用\n      - 或者任意数量的不可变引用\n      - 引用不能比其引用的对象存活得更久\n\n      以下是修复代码的方法：\n\n      1. 使用顺序作用域：",
+      "2. 或者通过单次借用来修改字符串：",
+      "这些规则在编译时防止了数据竞争，使得 Rust 默认就是线程安全的。\n\n      常见陷阱：试图使用多个可变引用来避免克隆，或者同时修改同一值的不同部分。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"可变引用\",\n  \"group\": \"借用\",\n  \"options\": [\n    {\n      \"text\": \"编译成功\",\n      \"hint\": \"我们能否同时拥有多个可变引用？\"\n    },\n    {\n      \"text\": \"错误：不能将 `wisdom` 多次借用为可变\"\n    },\n    {\n      \"text\": \"错误：缺少生命周期标注\",\n      \"hint\": \"这里的问题不在于生命周期\"\n    },\n    {\n      \"text\": \"运行时恐慌\",\n      \"hint\": \"Rust 在编译时就能捕获这些问题\"\n    }\n  ],\n  \"objectives\": [\n    \"理解 Rust 中可变引用的规则\",\n    \"识别违反 Rust 借用规则的情况\",\n    \"应用适当的作用域来处理多个可变引用\"\n  ],\n  \"questionProse\": [\n    \"多个可变引用会发生什么？\",\n    \"思考 Rust 中可变引用的规则。\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"rust\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"这段代码违反了 Rust 的基本借用规则：\\n      - 同一时间只能有一个对值的可变引用\\n      - 或者任意数量的不可变引用\\n      - 引用不能比其引用的对象存活得更久\\n\\n      以下是修复代码的方法：\\n\\n      1. 使用顺序作用域：\",\n    \"2. 或者通过单次借用来修改字符串：\",\n    \"这些规则在编译时防止了数据竞争，使得 Rust 默认就是线程安全的。\\n\\n      常见陷阱：试图使用多个可变引用来避免克隆，或者同时修改同一值的不同部分。\"\n  ],\n  \"explanationCode\": [\n    {\n      \"language\": \"rust\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    },\n    {\n      \"language\": \"rust\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1010,
+    "outputTokens": 1578,
+    "cacheReadTokens": 384,
+    "cacheWriteTokens": 0,
+    "durationMs": 10474,
+    "providerCostUsd": 0.00077176,
+    "providerUpstreamCostUsd": 0.00077176,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00008871520000000001,
+    "outputUsd": 0.00044184000000000004,
+    "totalUsd": 0.0005305552,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
