@@ -1,0 +1,53 @@
+{
+  "selectedCommit": "a721d19647ca84e96d0fe77b6a8895373aea0760",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 10,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "والخوارزميات، وتعقيد الوقت.",
+      "replacement": "والخوارزميات، والتعقيد الزمني.",
+      "reason": "In Arabic computer science terminology, 'Time Complexity' is more accurately and naturally translated as 'التعقيد الزمني' rather than 'تعقيد الوقت'."
+    }
+  ],
+  "rationale": "The candidate provides a high-quality translation that respects the technical terminology of computer science in Arabic. It correctly handles the MDX structure and asset paths. It is consistent in its terminology (e.g., using 'طابور' for Queue) and correctly preserved the slot structure and heading counts.",
+  "slug": "quiz-data-structures-algorithms",
+  "locale": "ar",
+  "candidateCommits": [
+    "a721d19647ca84e96d0fe77b6a8895373aea0760",
+    "57f32ca73e5fff1f64d2671b7e4d44d075ee4dfb"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "والخوارزميات ()،",
+      "replacement": "والخوارزميات،",
+      "reason": "The empty parentheses in the English source were likely a placeholder or typo; in Arabic, they look like a mistake and should be removed for better flow.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "والخوارزميات، وتعقيد الوقت.",
+      "replacement": "والخوارزميات، والتعقيد الزمني.",
+      "reason": "In Arabic computer science terminology, 'Time Complexity' is more accurately and naturally translated as 'التعقيد الزمني' rather than 'تعقيد الوقت'.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug quiz-data-structures-algorithms --locale ar --skip-global",
+    "output": ""
+  }
+}
