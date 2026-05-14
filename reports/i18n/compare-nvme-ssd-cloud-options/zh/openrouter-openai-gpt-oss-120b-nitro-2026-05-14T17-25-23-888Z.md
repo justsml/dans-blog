@@ -1,0 +1,85 @@
+# Translation Candidate
+- Slug: compare-nvme-ssd-cloud-options
+- Locale: zh
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2017-04-15--compare-nvme-ssd-cloud-options/zh/index.mdx
+- Validation: deferred
+- Runtime seconds: 1.28
+- Input tokens: 2672
+- Output tokens: 1070
+- Thinking tokens: unknown
+- Cached input tokens: 768
+- Cache write tokens: 0
+- Estimated cost: $0.000297
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: 比较 NVMe SSD 云选项
+subTitle: NVMe SSD 对比：AWS、DigitalOcean、Packet.net
+date: '2017-04-15'
+modified: '2020-01-30'
+category: DevOps
+subCategory: programming
+tags:
+  - cloud
+  - servers
+  - architecture
+  - scaling
+  - digital-ocean
+  - amazon-web-services
+  - google-cloud-engine
+  - azure
+  - packet
+  - ovh
+  - ssd
+  - io
+cover: ../solaiman-hossen-553024-unsplash.webp
+cover_mobile: ../w300_solaiman-hossen-553024-unsplash.webp
+cover_icon: ../icon_solaiman-hossen-553024-unsplash.webp
+---
+## 提升云性能最高可达 70%
+
+> 以下为选定托管提供商的通用备注与章节（2017 年中期）。
+
+- [AWS（Amazon Web Services）、EC2（Elastic Compute Cloud）、EBS（Elastic Block Storage）等](#aws_tips)
+- [Digital Ocean](#do_tips)
+- [Packet.net](#packet_tips)
+
+<a id='aws_tips'></a>
+
+### Amazon Web Services / EC2 / EBS / S3
+
+> TLDR；虽然 AWS 通常提供受限的硬件和令人望而生畏的定价层级，但 **i3.large**（以及更大的实例）在 性价比 与 I/O 性能方面最为高效，并且在整体性能上也是最快的。
+
+> EC2 **i3.large** 配备 **475 GB NVMe SSD**，月租约 **$110！** > <br />
+> **i3.2xlarge** 配 1.9 TB NVMe，月租约 **$450** * > <br /> > \_*USA/2018\_
+
+<br />
+<br />
+
+### 正面比较
+
+\[[全屏数据视图](https://docs.google.com/spreadsheets/d/1qQ62m1RFj73YScdS77Q9R2GpRqJOk7JHuTEOFDR4jJE/pubchart?oid=116848524&format=interactive)\]
+
+<iframe style="position: relative; left: -150px; height: 650px; width: 990px; min-width: 100%;" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/1qQ62m1RFj73YScdS77Q9R2GpRqJOk7JHuTEOFDR4jJE/pubchart?oid=116848524&amp;format=interactive"></iframe>
+
+[查看 EC2 价格](https://www.ec2instances.info/?filter=nvm&region=us-east-2&cost_duration=monthly&selected=c5d.large,i3.large,i3.xlarge,i3.2xlarge)
+
+![ec2instances.info](../ec2-updated-prices-2018.webp)
+
+请注意，**i3.\*xlarge** 是唯一提供具竞争力 NVMe 存储（超高速 +1 GB/s）的硬件。我们发现的主要瓶颈是实际网络速度。标称 “最高 10 Gb/s” 的服务器往往只能达到约 1 Gb/s（60‑80 MB/s）。
+
+网络测试在同一可用区内最多使用了 9 台额外实例。任何异常数据点均被置为 0。由于仅收集了 1‑2 个样本，仍需进一步测试。
+
+\[[全屏数据视图](https://docs.google.com/spreadsheets/d/1qQ62m1RFj73YScdS77Q9R2GpRqJOk7JHuTEOFDR4jJE/pubchart?oid=13370750&format=interactive)\]
+
+<iframe style="position: relative; left: -150px; height: 790px; width: 950px; min-width: 100%;" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/1qQ62m1RFj73YScdS77Q9R2GpRqJOk7JHuTEOFDR4jJE/pubchart?oid=13370750&amp;format=interactive"></iframe>
+
+#### 致谢
+
+- [ec2instances.info](https://www.ec2instances.info/?filter=nvm&region=us-east-2&cost_duration=monthly&selected=c5d.large,i3.large,i3.xlarge,i3.2xlarge)
+````
