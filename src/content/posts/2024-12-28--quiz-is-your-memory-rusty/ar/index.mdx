@@ -1,0 +1,1500 @@
+---
+unlisted: false
+draft: false
+title: 'اختبار: إدارة الذاكرة الأساسية في Rust'
+subTitle: "تحقق من نفسك قبل أن تُفسد نفسك! \U0001F980"
+label: 'Memory, man'
+category: Quiz
+subCategory: Rust
+date: '2024-12-28'
+modified: '2024-12-29'
+social_image: ../mobile.webp
+tags:
+  - quiz
+  - rust
+  - memory-management
+  - ownership
+  - borrowing
+  - lifetimes
+  - intermediate
+  - advanced
+redirects:
+  - /quiz/rust/memory/
+cover_full_width: ../fade-to-clouds-wide.webp
+cover_mobile: ../fade-to-clouds-square-200.webp
+cover_icon: ../fade-to-clouds-square-200.webp
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+<p class="inset">مستعد لاختبار مهاراتك في إدارة الذاكرة بـ Rust؟ 🦀</p>
+
+هذا الاختبار سيختبر فهمك لنظام الملكية في Rust، قواعد الاستعارة، أوقات الحياة، والمؤشرات الذكية.
+
+**ملاحظة:** تم تنسيق الأسئلة بعرض ~50 عمودًا لضمان قابلية القراءة على جميع الأجهزة. (نرحب باقتراحات التحسين!)
+
+سواء كنت مبرمج Rust مخضرم أو بدأت للتو في إدارة الذاكرة، سيساعدك هذا الاختبار على تعزيز معرفتك. **هيا نبدأ!** 🦀
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="الملكية"
+  title="أساسيات نقل القيم"
+  difficulty={2}
+  objectives={[
+    "شرح قواعد الملكية في Rust ونقل القيم",
+    "تحديد أخطاء التجميع المتعلقة بالقيم المنقولة",
+    "تطبيق حلول لإصلاح أخطاء التجميع المرتبطة بالنقل",
+  ]}
+  options={[
+    {text: 'مرحبًا، !', hint: 'فكّر فيما يحدث لـ \'philosopher\' بعد نقله'},
+    {text: 'مرحبًا، زينو من سيتّيوم!', hint: 'بعد نقل القيمة، هل يمكننا استخدامها مرة أخرى؟'},
+    {text: 'مرحبًا، زينو من إيليا!', hint: 'السلسلة تحتوي على \'Citium\' وليس \'Elea\''},
+    {text: 'مرحبًا، ماركوس أوريليوس', hint: 'تحقق مما إذا كان هذا يتطابق مع محتوى السلسلة'},
+    {text: 'خطأ تجميع: تم استعارة القيمة بعد النقل', isAnswer: true},
+    {text: 'خطأ وقت تشغيل: استثناء مؤشر فارغ', hint: 'يكتشف Rust هذه المشكلات أثناء التجميع'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ماذا يحدث عندما تشغّل هذا الكود؟ حاول توقع النتيجة أو الخطأ:
+    ```rust
+          fn main() {
+              let philosopher =
+                  String::from("Zeno of Citium");
+              let greeting = philosopher;
+
+              println!("Hello, {}!", philosopher);
+          }
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    يفشل هذا الكود في التجميع بسبب قواعد الملكية في Rust. عندما نُعيّن `philosopher` إلى `greeting`، تنتقل ملكية الـ String إلى `greeting`. بعد هذا النقل، لا يعود `philosopher` صالحًا للاستخدام.
+
+    إليك ثلاث طرق لإصلاح ذلك:
+
+    1. استنساخ السلسلة (ينشئ نسخة جديدة):
+    ```rust
+          let greeting = philosopher.clone();
+    ```
+    2. استخدم مرجعًا (يستعير القيمة):
+    ```rust
+          let greeting = &philosopher;
+    ```
+    3. استخدم شريحة سلسلة (تستعير جزءًا من السلسلة):
+    ```rust
+          let greeting = &philosopher[..];
+    ```
+    كل حل له حالات استخدام مختلفة وتأثيرات على الأداء. الاستنساخ أكثر تكلفة لكنه يمنحك الملكية، بينما المراجع أرخص لكنها تتطلب قيودًا على العمر.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="الملكية"
+  title="دلالات النقل مع الدوال"
+  difficulty={2}
+  objectives={[
+    "فهم كيفية انتقال الملكية عند تمرير القيم إلى الدوال",
+    "التعرف على أخطاء التجميع المتعلقة بالملكية في استدعاءات الدوال",
+    "تطبيق استراتيجيات مختلفة للتعامل مع ملكية القيم في الدوال",
+  ]}
+  options={[
+    {text: 'يطبع السطرين', hint: 'فكّر ماذا يحدث لـ \'wisdom\' بعد تمريره إلى الدالة'},
+    {text: 'يطبع السطر الأول فقط', hint: 'الكود لن يُترجم حتى يصل إلى وقت التشغيل'},
+    {text: 'خطأ في التجميع', isAnswer: true},
+    {text: 'خطأ في وقت التشغيل', hint: 'قواعد الملكية في Rust تُفرض أثناء التجميع'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ماذا يحدث عندما تشغّل هذا الكود؟ فكر في نقل الملكية:
+    ```rust
+          fn take_knowledge(knowledge: String) {
+              println!("Knowledge: {}", knowledge);
+          }
+
+          fn main() {
+              let wisdom = String::from("know thyself");
+              take_knowledge(wisdom);
+              // What happens to our wisdom?
+              println!("Do you {}", wisdom);
+          }
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    يفشل الكود في التجميع لأن ملكية `wisdom` انتقلت إلى `take_knowledge` وبالتالي لا يمكن استخدامها لاحقًا.
+
+    إليك ثلاث طرق لإصلاح هذه المشكلة:
+
+    1. المرور بالمرجع (استعارة القيمة):
+    ```rust
+          fn borrow_it(text: &String) {
+              println!("Inside: {}", text);
+          }
+          borrow_it(&wisdom);  // Now wisdom can be used after
+    ```
+    2. استنساخ القيمة (إنشاء نسخة جديدة):
+    ```rust
+          take_knowledge(wisdom.clone());  // Original wisdom remains valid
+    ```
+    3. إرجاع الملكية من الدالة:
+    ```rust
+          fn take_and_return(text: String) -> String {
+              println!("Inside: {}", text);
+              text  // Return ownership back
+          }
+          let wisdom = take_and_return(wisdom);  // Reassign returned ownership
+    ```
+    كل نهج له حالات استخدام مختلفة:
+    - المراجع: الأكثر كفاءة، لكن تحتاج إلى إدارة العمر
+    - الاستنساخ: بسيط لكنه قد يكون مكلفًا
+    - إرجاع الملكية: مفيد لتحويل القيم
+
+    الممارسة المثلى: استخدم المراجع ما لم تكن بحاجة إلى نقل الملكية.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="الاستعارة"
+  title="المراجع القابلة للتغيير"
+  difficulty={3}
+  objectives={[
+    "فهم قواعد Rust للمراجع القابلة للتغيير",
+    "تحديد انتهاكات قواعد الاستعارة في Rust",
+    "تطبيق نطاق صحيح للتعامل مع مراجع قابلة للتغيير متعددة",
+  ]}
+  options={[
+    {text: 'يتجميع بنجاح', hint: 'هل يمكننا الحصول على مراجع قابلة للتغيير متعددة في نفس الوقت؟'},
+    {text: 'خطأ: لا يمكن استعارة `wisdom` كقابلة للتغيير أكثر من مرة واحدة', isAnswer: true},
+    {text: 'خطأ: مفقود محدد العمر', hint: 'المشكلة ليست حول الأعمار هنا'},
+    {text: 'فشل وقت التشغيل', hint: 'يكتشف Rust هذه المشكلات أثناء التجميع'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ماذا يحدث عند وجود مراجع قابلة للتغيير متعددة؟
+    ```rust
+          fn main() {
+              let mut wisdom = String::from("He who laughs at");
+              let ref1 = &mut wisdom;  // First mutable borrow
+              let ref2 = &mut wisdom;  // Second mutable borrow
+              ref1.push_str(" himself never runs");
+              ref2.push_str(" out of things to laugh at.");
+          }
+    ```
+    فكّر في قواعد Rust للمراجع القابلة للتغيير.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    هذا الكود ينتهك قواعد الاستعارة الأساسية في Rust:
+    - مرجع قابل للتغيير واحد فقط للقيمة في كل مرة
+    - أو أي عدد من المراجع غير القابلة للتغيير
+    - لا يمكن للمراجع أن تعيش بعد كائنها
+
+    إليك كيفية إصلاح الكود:
+
+    1. استخدم نطاقًا تسلسليًا:
+    ```rust
+          let mut wisdom = String::from("He who laughs at");
+          {
+              let ref1 = &mut wisdom;
+              ref1.push_str(" himself never runs");
+          }  // ref1 goes out of scope
+          let ref2 = &mut wisdom;  // Now this is valid
+          ref2.push_str(" out of things to laugh at.");
+    ```
+    2. أو عدّل السلسلة في استعارة واحدة:
+    ```rust
+          let mut wisdom = String::from("He who laughs at");
+          let ref1 = &mut wisdom;
+          ref1.push_str(" himself never runs out of things to laugh at.");
+    ```
+    هذه القواعد تمنع سباقات البيانات أثناء التجميع، مما يجعل Rust آمنًا من الخيوط بشكل افتراضي.
+
+    خطأ شائع: محاولة استخدام مراجع قابلة للتغيير متعددة لتجنب النسخ أو
+    لتعديل أجزاء مختلفة من نفس القيمة في آن واحد.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="إسقاط الأعمار"
+  title="الأعمار الضمنية"
+  difficulty={3}
+  objectives={[
+    "فهم قواعد إسقاط الأعمار في Rust",
+    "تحديد متى تكون تعليقات الأعمار الصريحة غير ضرورية",
+    "تطبيق مبادئ إسقاط الأعمار في توقيعات الدوال",
+  ]}
+  options={[
+    {text: 'ينجح التجميع', isAnswer: true},
+    {text: 'خطأ: مفقود محدد العمر', hint: 'تذكر قواعد إسقاط الأعمار - إنها هنا لمساعدتك!'},
+    {text: 'خطأ: مطلوب عمر صريح', hint: 'المترجم يمكنه استنتاج هذا تلقائيًا'},
+    {text: 'خطأ: عدم تطابق الأعمار', hint: 'الأعمار متطابقة تمامًا هنا'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    هل سيُجمع هذا الكود؟ إذا نعم، لماذا؟ إذا لا، ما الخطأ؟
+    ```rust
+          fn first_word(s: &str) -> &str {  // No explicit lifetimes?
+              match s.find(' ') {
+                  Some(pos) => &s[0..pos],
+                  None => s,
+              }
+          }
+
+          fn main() {
+              let name = String::from("Seneca the Younger");
+              let first = first_word(&name);
+              println!("Hello, {}", first);
+          }
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    هذا الكود ينجح في التجميع بفضل قواعد إسقاط الأعمار في Rust.
+    تسمح هذه القواعد للمترجم باستنتاج الأعمار تلقائيًا في الأنماط الشائعة.
+
+    القواعد الثلاثة لإسقاط الأعمار هي:
+    1. كل معلمة تحصل على معلمة عمر خاصة بها
+    2. إذا كان هناك معلمة عمر واحدة فقط كمدخل، تُعطى هذه العمر لجميع معلمات العمر في المخرجات
+    3. إذا كان هناك عدة معلمات عمر كمدخل، ولكن إحداها هي &self أو &mut self، يُعطى عمر self لجميع معلمات العمر في المخرجات
+
+    هذه الدالة تعادل:
+    ```rust
+          fn first_word<'a>(s: &'a str) -> &'a str {
+              // ... same implementation
+          }
+    ```
+    أنماط شائعة حيث يعمل الإسقاط:
+    ```rust
+          // These don't need explicit lifetimes
+          fn get_str(s: &str) -> &str { s }
+          fn get_first(s: &str) -> &str { &s[0..1] }
+
+          // These would need explicit lifetimes
+          fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
+              if x.len() > y.len() { x } else { y }
+          }
+    ```
+    أفضل ممارسة: دع الإسقاط يعمل لك عندما يكون ممكنًا، لكن افهم متى تكون الأعمار الصريحة ضرورية.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="المؤشرات الذكية"
+  title="مؤشر Box الذكي"
+  difficulty={4}
+  objectives={[
+    "فهم تعريفات الأنواع المتكررة وتداعياتها على الذاكرة",
+    "تحديد الحالات التي يكون فيها Box<T> ضروريًا",
+    "استخدام Box<T> لإصلاح الهياكل المتكررة",
+  ]}
+  options={[
+    {text: '5', hint: 'لن يتم تجميع الكود حتى ينتج قيمة'},
+    {text: 'null', hint: 'لغة Rust لا تحتوي على قيم null'},
+    {text: 'Compilation Error', isAnswer: true, hint: 'المترجم لا يستطيع تحديد حجم نهائي لهذا النوع المتكرر.'},
+    {text: 'Stack overflow'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما الخطأ في تعريف هذا النوع المتكرر؟
+    ```rust
+          #[derive(Debug)]
+          enum CatList {
+              Cons(i32, CatList),  // Recursive without indirection
+              Nil,
+          }
+
+          fn main() {
+              let catlist = CatList::Cons(1,
+                  CatList::Cons(2,
+                      CatList::Cons(3,
+                          CatList::Nil)));
+          }
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    يفشل هذا الكود لأن المترجم لا يستطيع تحديد حجم `CatList` أثناء التجميع. الطبيعة المتكررة للنوع تعني أنه قد يكون لا نهائيًا!
+
+    إليك طريقة إصلاحه باستخدام `Box<T>`:
+    ```rust
+          #[derive(Debug)]
+          enum CatList {
+              Cons(i32, Box<CatList>),  // Box provides a fixed-size pointer
+              Nil,
+          }
+
+          fn main() {
+              let catlist = CatList::Cons(1,
+                  Box::new(CatList::Cons(2,
+                      Box::new(CatList::Cons(3,
+                          Box::new(CatList::Nil))))));
+          }
+    ```
+    لماذا `Box<T>` يعمل:
+    1. يوفر Box مؤشرًا ثابت الحجم (عادة 8 بايت على الأنظمة 64‑بت)
+    2. تُخزن البيانات الفعلية على الكومة
+    3. الآن يعرف المترجم بالضبط مقدار المساحة التي يجب تخصيصها
+
+    حالات الاستخدام الشائعة لـ `Box<T>`:
+    - هياكل بيانات متكررة (قوائم مرتبطة، أشجار)
+    - بيانات كبيرة تريد التأكد من تخصيصها على الكومة
+    - كائنات Traits عندما تحتاج إلى استدعاء ديناميكي
+
+    أفضل ممارسة: استخدم `Box<T>` عندما تحتاج إلى:
+    - أنواع متكررة
+    - لضمان تخصيص على الكومة
+    - لنقل بيانات كبيرة دون نسخ
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="العد المرجعي"
+  title="مؤشر Rc الذكي"
+  difficulty={3}
+  objectives={[
+    "فهم كيفية عمل العد المرجعي في Rust",
+    "استخدام Rc<T> في سيناريوهات الملكية المشتركة",
+    "تحليل سلوك عد المراجع في الشيفرة",
+  ]}
+  options={[
+    {text: 'عدد المراجع: 1', hint: 'احسب الإنشاء الأولي بالإضافة إلى كل نسخة'},
+    {text: 'عدد المراجع: 2', hint: 'لا تنس المرجع الأصلي'},
+    {text: 'عدد المراجع: 3', isAnswer: true},
+    {text: 'خطأ تجميعي', hint: 'تم تصميم Rc<T> لهذا السيناريو بالضبط'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ماذا سيطبع هذا الكود؟ احسب بعناية!
+    ```rust
+          use std::rc::Rc;
+
+          fn main() {
+              let text = Rc::new(String::from("Meditations"));  // Count: 1
+              let marcus = Rc::clone(&text);    // What happens here?
+              let aurelius = Rc::clone(&text);  // And here?
+              println!(
+                  "Reference count: {}",
+                  Rc::strong_count(&text)
+              );
+          }
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    لنشرح كيف يعمل Rc:
+
+    1. الإنشاء الأولي باستخدام `Rc::new()`: العدد = 1
+    2. النسخة الأولى لـ `marcus`: العدد = 2
+    3. النسخة الثانية لـ `aurelius`: العدد = 3
+
+    خصائص Rc المهمة:
+    ```rust
+          use std::rc::Rc;
+      
+          fn demonstrate_rc() {
+              let original = Rc::new(String::from("Shared"));
+              println!("Count after creation: {}", Rc::strong_count(&original)); // 1
+          
+              {
+                  let copy = Rc::clone(&original);
+                  println!("Count inside scope: {}", Rc::strong_count(&original)); // 2
+              } // copy is dropped here
+          
+              println!("Count after scope: {}", Rc::strong_count(&original)); // 1
+          }
+    ```
+    نقاط رئيسية:
+    - `Rc::clone()` رخيص - فهو فقط يزيد العداد
+    - Rc مخصص للسيناريوهات أحادية الخيط فقط
+    - عندما يُسقط آخر مرجع، يتم تنظيف البيانات
+    - استخدم المراجع الضعيفة (Weak) لمنع دورات المراجع
+
+    أفضل الممارسات:
+    - استخدم Rc عندما تحتاج إلى ملكية مشتركة
+    - فكر في Arc للسيناريوهات الآمنة عبر الخيوط
+    - تجنب إنشاء دورات مراجع
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="الأعمار"
+  title="عمر الهياكل"
+  difficulty={3}
+  objectives={[
+    "فهم تعيينات العمر في تعريفات الهياكل",
+    "تحديد متى تحتاج حقول الهيكل إلى معاملات عمر",
+    "تطبيق تعيينات العمر بشكل صحيح في تنفيذات الهياكل",
+  ]}
+  options={[
+    {text: 'يتجميع بنجاح', hint: 'الهياكل التي تحتوي على مراجع تحتاج إلى تعيينات عمر'},
+    {text: 'خطأ: مفقود محدد العمر', isAnswer: true},
+    {text: 'خطأ: عدم تطابق العمر', hint: 'لم نحدد أي أعمار بعد'},
+    {text: 'خطأ: مرجع غير صالح', hint: 'المراجع صالحة، لكن شيء آخر مفقود'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    هل سيتجميع تعريف هذا الهيكل؟ لماذا أو لماذا لا؟
+    ```rust
+          struct Philosopher {
+              name: &str,    // Reference without lifetime
+              quote: &str,   // Another reference without lifetime
+          }
+
+          fn main() {
+              let phil = Philosopher {
+                  name: "Seneca",
+                  quote: "Luck happens when preparation meets opportunity",
+              };
+          }
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    يفشل الكود لأن الهياكل التي تحتوي على مراجع يجب أن تحدد الأعمار. إليك طريقة الإصلاح:
+    ```rust
+          // Single lifetime parameter
+          struct Philosopher<'a> {
+              name: &'a str,
+              quote: &'a str,
+          }
+
+          // Or different lifetimes if needed
+          struct PhilosopherFlex<'n, 'q> {
+              name: &'n str,
+              quote: &'q str,
+          }
+    ```
+    أنماط شائعة:
+    ```rust
+          // Own the data instead
+          struct PhilosopherOwned {
+              name: String,
+              quote: String,
+          }
+
+          // Mixed ownership
+          struct PhilosopherMixed<'a> {
+              name: String,      // Owned
+              quote: &'a str,    // Borrowed
+          }
+    ```
+    أفضل الممارسات:
+    1. استخدم الأنواع المملوكة (String) عندما تحتاج إلى تخزين البيانات إلى أجل غير مسمى
+    2. استخدم المراجع عندما يكون عمر الهيكل أقصر بوضوح من عمر البيانات
+    3. فكر في عدة معاملات عمر عندما يمكن للمراجع أن تكون لها أعمار مختلفة
+    4. وثّق علاقات الأعمار في الهياكل المعقدة
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="الأعمار"
+  title="توضيحات العمر"
+  difficulty={4}
+  objectives={[
+    "تحليل توقيعات الدوال لتحديد متى تكون توضيحات العمر مطلوبة",
+    "تطبيق توضيحات العمر على الدوال التي تحتوي على مراجع متعددة",
+    "تقييم العلاقة بين أعمار الإدخال والإخراج",
+  ]}
+  options={[
+    {text: 'النتيجة: سينيكا الأصغر', hint: 'الكود لن يُترجم لإنتاج أي مخرجات'},
+    {text: 'خطأ: مفقود محدد العمر', isAnswer: true},
+    {text: 'خطأ: لا يمكن إرجاع مرجع إلى متغير محلي', hint: 'المرجع يشير إلى معامل إدخال، وليس إلى متغير محلي'},
+    {text: 'خطأ: عدم تطابق العمر', hint: 'لم نحدد الأعمار بعد لتسبب عدم تطابق'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ماذا يحدث مع هذه الدالة التي تُعيد أطول شريحة نصية من شريحتين؟
+    ```rust
+          fn longest(text1: &str, text2: &str) -> &str {
+              if text1.len() > text2.len() {
+                  text1    // Returning a reference, but which lifetime?
+              } else {
+                  text2    // Could be this reference instead
+              }
+          }
+
+          fn main() {
+              println!("{}", longest(
+                  "Seneca the Younger",
+                  "Marcus Aurelius"
+              ));
+          }
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    يفشل هذا الكود لأن المترجم لا يستطيع تحديد العلاقة بين أعمار الإدخال والإخراج. إليك السبب وكيفية إصلاحه:
+    ```rust
+          // Correct version with explicit lifetime annotation
+          fn longest<'a>(text1: &'a str, text2: &'a str) -> &'a str {
+              if text1.len() > text2.len() {
+                  text1
+              } else {
+                  text2
+              }
+          }
+
+          // Alternative with different lifetimes
+          fn longest_flex<'a, 'b>(text1: &'a str, text2: &'b str) -> &'a str {
+              if text1.len() > text2.len() {
+                  text1
+              } else {
+                  text2.to_string().as_str() // Won't compile! Shows why we need same lifetime
+              }
+          }
+    ```
+    لماذا تحتاج الأعمار هنا:
+    1. مراجع الإدخال المتعددة قد تكون لها أعمار مختلفة
+    2. يجب أن تكون قيمة الإرجاع حية طوال عمر كلا الإدخالين
+    3. يحتاج المترجم إلى التحقق من هذه العلاقات
+
+    الأنماط الشائعة:
+    ```rust
+          // Single input reference - elision works
+          fn first_word(s: &str) -> &str { /* ... */ }
+
+          // Multiple references, same lifetime needed
+          fn compare_str<'a>(s1: &'a str, s2: &'a str) -> &'a str { /* ... */ }
+
+          // Different lifetimes possible
+          fn combine<'a, 'b>(s1: &'a str, s2: &'b str) -> String { /* ... */ }
+    ```
+    أفضل الممارسات:
+    1. دع استنتاج العمر يعمل عندما يكون ذلك ممكنًا
+    2. استخدم أعمارًا صريحة عندما تحتاج العلاقات إلى وضوح
+    3. فكر في إرجاع أنواع مملوكة لتجنب تعقيد العمر
+    4. وثّق العلاقات المعقدة للأعمار
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="RefCells"
+  title="سلوك RefCell"
+  difficulty={4}
+  objectives={[
+    "فهم القابلية للتغيير الداخلي باستخدام RefCell",
+    "تحليل قواعد الاستعارة في وقت التشغيل مع RefCell",
+    "تطبيق RefCell للوصول المتحكم به إلى mutable",
+  ]}
+  options={[
+    {text: 'يطبع: 42', hint: 'هل يمكننا الحصول على استعارتين mutable في آن واحد؟'},
+    {text: 'panic وقت التشغيل: RefCell مستعار بالفعل', isAnswer: true},
+    {text: 'خطأ في التجميع', hint: 'RefCell ينقل الفحوصات إلى وقت التشغيل'},
+    {text: 'panic وقت التشغيل: رسالة مختلفة', hint: 'الخطأ يذكر الاستعارة تحديدًا'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ماذا يحدث عندما يُنفّذ هذا الكود؟
+    ```rust
+          use std::cell::RefCell;
+
+          fn main() {
+              let data = RefCell::new(42);
+              let _borrow1 = data.borrow_mut();  // First mutable borrow
+              let _borrow2 = data.borrow_mut();  // Second mutable borrow
+              println!("Value: {}", _borrow2);
+          }
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    RefCell يوفر القابلية للتغيير الداخلي لكنه لا يزال يفرض قواعد الاستعارة في Rust أثناء وقت التشغيل:
+    ```rust
+          use std::cell::RefCell;
+
+          fn demonstrate_refcell() {
+              let data = RefCell::new(42);
+          
+              // Correct way to use RefCell
+              {
+                  let mut first = data.borrow_mut();
+                  *first += 1;
+              } // first is dropped here
+          
+              // Now we can borrow again
+              let second = data.borrow_mut();
+          
+              // Or multiple immutable borrows
+              let read1 = data.borrow();
+              let read2 = data.borrow(); // This is OK
+          }
+    ```
+    المفاهيم الأساسية:
+    1. RefCell ينقل فحوصات الاستعارة إلى وقت التشغيل
+    2. يمكن أن يسبب panics إذا تم خرق القواعد
+    3. مفيد لنمط القابلية للتغيير الداخلي
+
+    حالات الاستخدام الشائعة:
+    - كائنات mock في الاختبارات
+    - تنفيذ هياكل ذات مراجع ذاتية
+    - عندما تحتاج إلى تعديل بيانات خلف مرجع مشترك
+
+    أفضل الممارسات:
+    1. فضل الاستعارة في وقت التجميع عندما يكون ذلك ممكنًا
+    2. حافظ على استعارات RefCell في نطاقات ضيقة
+    3. فكر في استخدام drop() لإنهاء الاستعارات صراحةً
+    4. استخدم RefCell فقط عندما تحتاج إلى القابلية للتغيير الداخلي
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="القابلية للتغيير"
+  title="Cell مقابل RefCell"
+  difficulty={3}
+  objectives={[
+    "تمييز أنماط استخدام Cell و RefCell",
+    "استخدام Cell لتغيير داخلي بسيط",
+    "مقارنة سلوك الأنواع القابلة للنسخ وغير القابلة للنسخ مع Cell",
+  ]}
+  options={[
+    {text: 'يطبع: 42, 43', isAnswer: true},
+    {text: 'يطبع: 43, 43', hint: 'Cell::get() تُعيد القيمة في وقت الاستدعاء'},
+    {text: 'خطأ في التجميع', hint: 'Cell صُممت لهذا الاستخدام بالضبط'},
+    {text: 'ذعر وقت التشغيل', hint: 'عمليات Cell آمنة دائمًا للأنواع القابلة للنسخ'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ماذا سيطبع هذا الكود؟
+    ```rust
+          use std::cell::Cell;
+
+          fn main() {
+              let life = Cell::new(42);
+              let meaning = &life;        // Shared reference
+              println!("{}", life.get()); // What prints here?
+              meaning.set(43);            // Mutation through shared ref
+              println!("{}", life.get()); // And here?
+          }
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    Cell و RefCell يخدمان أغراضًا مختلفة لتغيير داخلي:
+    ```rust
+          use std::cell::{Cell, RefCell};
+
+          // Cell for Copy types
+          struct Counter {
+              count: Cell<i32>,
+          }
+
+          impl Counter {
+              fn increment(&self) {
+                  self.count.set(self.count.get() + 1);
+              }
+          }
+
+          // RefCell for non-Copy types
+          struct Logger {
+              messages: RefCell<Vec<String>>,
+          }
+
+          impl Logger {
+              fn log(&self, msg: &str) {
+                  self.messages.borrow_mut().push(msg.to_string());
+              }
+          }
+    ```
+    الاختلافات الرئيسية:
+    1. Cell:
+    - يعمل بشكل أفضل مع الأنواع القابلة للنسخ
+    - لا يوجد API للاستعارة
+    - دائمًا ينسخ أو ينقل القيم
+
+    2. RefCell:
+    - يعمل مع أي نوع
+    - يحتوي على API للاستعارة
+    - فحص الاستعارة في وقت التشغيل
+
+    أفضل الممارسات:
+    1. استخدم Cell للأنواع القابلة للنسخ البسيطة (أرقام، منطقية، إلخ)
+    2. استخدم RefCell عندما تحتاج إلى استعارة المحتويات
+    3. حافظ على الحد الأدنى من التغييرات عبر Cell/RefCell
+    4. وثّق لماذا الحاجة إلى تغيير داخلي
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="العدّ المرجعي"
+  title="فهم Rc"
+  difficulty={3}
+  objectives={[
+    "فهم الغرض والقيود الخاصة بـ Rc",
+    "تمييز بين العدّ المرجعي ذو الخيط الواحد ومتعدد الخيوط",
+    "استخدام Rc بشكل مناسب في سيناريوهات الملكية المشتركة",
+  ]}
+  options={[
+    {text: 'يُستخدم Rc في بيئات ذات خيط واحد', isAnswer: true},
+    {text: 'يُستخدم Rc في بيئات متعددة الخيوط', hint: 'فكّر في أمان الخيوط - Rc لا يحتوي على مزامنة'},
+    {text: 'يُستخدم Rc فقط للبيانات غير القابلة للتغيير', hint: 'يمكن دمج Rc مع القابلية للتغيير الداخلية'},
+    {text: 'يُستخدم Rc فقط للبيانات القابلة للتغيير', hint: 'Rc يعمل مع البيانات القابلة وغير القابلة للتغيير'},
+    {text: 'Rc للتحكم عن بُعد', hint: 'رغم الذكاء، هذا ليس مفهومًا برمجيًا!'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    متى يجب عليك استخدام Rc (العدّ المرجعي) في Rust؟
+
+    انظر إلى هذا المثال:
+    ```rust
+          use std::rc::Rc;
+
+          struct SharedConfig {
+              name: String,
+              value: i32,
+          }
+
+          fn main() {
+              let config = Rc::new(SharedConfig {
+                  name: "settings".to_string(),
+                  value: 42,
+              });
+          
+              let config2 = Rc::clone(&config);
+              // Both config and config2 share ownership
+          }
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    تم تصميم Rc (العدّ المرجعي) لسيناريوهات ذات خيط واحد حيث تحتاج إلى ملكية مشتركة.
+
+    حالات الاستخدام الشائعة:
+    ```rust
+          use std::rc::Rc;
+          use std::cell::RefCell;
+
+          // Shared ownership in data structures
+          struct Node {
+              next: Option<Rc<Node>>,
+              value: i32,
+          }
+
+          // Combining with interior mutability
+          struct SharedState {
+              data: Rc<RefCell<Vec<String>>>,
+          }
+
+          // Multiple owners of same data
+          let original = Rc::new(vec![1, 2, 3]);
+          let clone1 = Rc::clone(&original);
+          let clone2 = Rc::clone(&original);
+    ```
+    النقاط الرئيسية:
+    1. استخدم Rc عندما:
+    - تحتاج أجزاء متعددة من الشيفرة إلى ملكية
+    - تعرف أن المشاركة ذات خيط واحد
+    - لا يمكن تحديد عمر القيمة ثابتًا
+
+    2. استخدم Arc بدلاً من ذلك عندما:
+    - تحتاج إلى مشاركة آمنة عبر الخيوط
+    - تحتاج خيوط متعددة إلى ملكية
+
+    3. قيود Rc:
+    - غير آمن عبر الخيوط
+    - بعض الحمل الزمني أثناء التشغيل
+    - لا يمكن كسر دورات المرجعية تلقائيًا
+
+    أفضل الممارسات:
+    1. فضل الملكية الفريدة عندما يكون ذلك ممكنًا
+    2. استخدم Rc للملكية المشتركة في خيط واحد
+    3. استخدم Arc للسيناريوهات متعددة الخيوط
+    4. دمج مع Weak لمنع دورات المرجعية
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="RefCell"
+  title="RefCells والخيوط"
+  difficulty={4}
+  objectives={[
+    "فهم الفروقات بين RefCell والبدائل الآمنة للخيوط",
+    "تحديد حالات الاستخدام المناسبة لـ RefCell مقابل RwLock",
+    "استخدام بدائل التزامن الصحيحة بناءً على متطلبات الخيوط",
+  ]}
+  options={[
+    {text: 'يُستخدم RefCell للاستعارات القابلة للتغيير، بينما يُستخدم Rw للقراءة فقط', hint: 'كلا النوعين يدعمان الاستعارات القابلة للتغيير وغير القابلة للتغيير'},
+    {text: 'يُستخدم Rw للاستعارات القابلة للتغيير، وRefCell للقراءة فقط', hint: 'كلاهما يدعم كلا النوعين من الاستعارات'},
+    {text: 'يُستخدم RefCell وRw لنفس الغرض', hint: 'فكّر في أمان الخيوط'},
+    {text: 'RefCell يُستخدم فقط في بيئات ذات خيط واحد', isAnswer: true},
+    {text: 'Rw يُستخدم فقط في بيئات متعددة الخيوط', hint: 'على الرغم من أنه يُستخدم عادةً مع الخيوط، إلا أن هذا ليس الفرق الأساسي'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما هو الفرق الرئيسي بين RefCell و RwLock في Rust؟
+
+    انظر إلى هذه الأمثلة:
+    ```rust
+          use std::cell::RefCell;
+          use std::sync::RwLock;
+
+          // Example 1
+          let data = RefCell::new(vec![1, 2, 3]);
+          let borrowed = data.borrow_mut();
+
+          // Example 2
+          let shared = RwLock::new(vec![1, 2, 3]);
+          let locked = shared.write().unwrap();
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    يخدم RefCell و RwLock أغراضًا مشابهة لكن في سياقات مختلفة:
+    ```rust
+          // Single-threaded scenario with RefCell
+          use std::cell::RefCell;
+      
+          struct SingleThreaded {
+              data: RefCell<Vec<i32>>,
+          }
+
+          impl SingleThreaded {
+              fn modify(&self) {
+                  self.data.borrow_mut().push(42);
+              }
+          }
+
+          // Multi-threaded scenario with RwLock
+          use std::sync::RwLock;
+      
+          struct ThreadSafe {
+              data: RwLock<Vec<i32>>,
+          }
+
+          impl ThreadSafe {
+              fn modify(&self) {
+                  self.data.write().unwrap().push(42);
+              }
+          }
+    ```
+    الاختلافات الرئيسية:
+    1. RefCell:
+    - يعمل في خيط واحد فقط
+    - لا يوجد عبء تزامن
+    - يثير panic عند انتهاك الاستعارة
+
+    2. RwLock:
+    - آمن للخيوط
+    - يضيف عبء تزامن
+    - يمكن أن يحجب الخيوط بدلاً من إحداث panic
+
+    أفضل الممارسات:
+    1. استخدم RefCell للمتغيرية الداخلية في بيئة خيط واحد
+    2. استخدم RwLock عندما تكون أمان الخيوط مطلوبًا
+    3. فكر في Mutex لتبسيط المتغيرية الآمنة للخيوط
+    4. وثّق متطلبات أمان الخيوط بوضوح
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="المؤشرات الذكية"
+  title="Arc و Mutex"
+  difficulty={5}
+  objectives={[
+    "تحليل أنماط الوصول المتزامن باستخدام Arc و Mutex",
+    "تحديد سيناريوهات الـ deadlock المحتملة",
+    "تطبيق أنماط المزامنة الصحيحة لمنع الـ deadlock",
+  ]}
+  options={[
+    {text: 'يطبع: 42', hint: 'الكود لن يصل أبداً إلى جملة الطباعة'},
+    {text: 'يطبع: 43', hint: 'الكود سيتعطل قبل الطباعة'},
+    {text: 'خطأ في التجميع', hint: 'الكود صحيح نحويًا'},
+    {text: 'ذعر أثناء التشغيل', hint: 'إنه أسوأ من الذعر'},
+    {text: 'توقف', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ماذا يحدث عندما يُنفّذ هذا الكود؟
+    ```rust
+          use std::sync::{Arc, Mutex};
+
+          fn main() {
+              let lock = Arc::new(Mutex::new(42));
+              let lock2 = Arc::clone(&lock);
+          
+              let _guard1 = lock.lock().unwrap();   // First lock
+              let _guard2 = lock2.lock().unwrap();  // Second lock attempt
+          
+              println!("Value: {}", _guard2);
+          }
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    هذا الكود يوضح سيناريو deadlock كلاسيكي. إليك طريقة إصلاحه:
+    ```rust
+          use std::sync::{Arc, Mutex};
+
+          // Correct way - Release lock before acquiring it again
+          fn safe_mutex() {
+              let lock = Arc::new(Mutex::new(42));
+          
+              {
+                  let mut data = lock.lock().unwrap();
+                  *data += 1;
+              } // Lock is released here
+          
+              // Now we can acquire it again
+              let data2 = lock.lock().unwrap();
+              println!("Value: {}", data2);
+          }
+
+          // Using multiple mutexes safely
+          fn multiple_mutexes() {
+              let lock1 = Arc::new(Mutex::new(42));
+              let lock2 = Arc::new(Mutex::new(43));
+          
+              // Always acquire locks in the same order
+              let guard1 = lock1.lock().unwrap();
+              let guard2 = lock2.lock().unwrap();
+          }
+    ```
+    أفضل الممارسات لمنع الـ deadlock:
+    1. إبقاء الأقسام الحرجة صغيرة
+    2. تحرير الأقفال بسرعة باستخدام النطاقات
+    3. الحصول على أقفال متعددة بترتيب ثابت
+    4. استخدام parking_lot::Mutex لأداء أفضل
+    5. النظر في استخدام RwLock للأحمال الثقيلة للقراءة
+
+    الأنماط الشائعة:
+    ```rust
+          // Thread-safe counter
+          struct Counter {
+              count: Arc<Mutex<i32>>,
+          }
+
+          impl Counter {
+              fn increment(&self) {
+                  let mut count = self.count.lock().unwrap();
+                  *count += 1;
+              } // Lock automatically released here
+          }
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={13}
+  group="المؤشرات الذكية"
+  title="المراجع الضعيفة"
+  difficulty={4}
+  objectives={[
+    "فهم هدف وسلوك المراجع الضعيفة",
+    "تحديد السيناريوهات التي تمنع فيها المراجع الضعيفة تسرب الذاكرة",
+    "استخدام Weak<T> لكسر دورات الإشارة",
+  ]}
+  options={[
+    {text: 'يطبع: Some("Wisdom")', hint: 'ماذا يحدث للبيانات عندما تُسقط جميع المراجع القوية؟'},
+    {text: 'يطبع: None', isAnswer: true},
+    {text: 'خطأ تجميعي', hint: 'الكود صحيح نحويًا'},
+    {text: 'فشل أثناء التشغيل', hint: 'المراجع الضعيفة تتعامل بأناقة مع القيم المُسقطة'},
+    {text: 'فشل وجودي', hint: 'رغم أنه فلسفي، لكنه ليس خطأ Rust حقيقي!'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ماذا يحدث عندما تشغّل هذا الكود باستخدام المراجع الضعيفة؟
+    ```rust
+          use std::rc::{Rc, Weak};
+
+          fn main() {
+              let data = Rc::new(String::from("Wisdom"));
+              let weak = Rc::downgrade(&data);  // Create weak reference
+              drop(data);                       // Drop strong reference
+          
+              println!("Value: {:?}", weak.upgrade());
+          }
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    المراجع الضعيفة لا تمنع تحرير أهدافها. إليك مثالًا مفصلاً:
+    ```rust
+          use std::rc::{Rc, Weak};
+          use std::cell::RefCell;
+
+          // Parent-child tree structure avoiding reference cycles
+          struct Node {
+              next: Option<Rc<Node>>,
+              parent: RefCell<Weak<Node>>,  // Weak to prevent cycles
+              value: i32,
+          }
+
+          impl Node {
+              fn new(value: i32) -> Rc<Node> {
+                  Rc::new(Node {
+                      next: None,
+                      parent: RefCell::new(Weak::new()),
+                      value,
+                  })
+              }
+
+              fn set_parent(&self, parent: &Rc<Node>) {
+                  *self.parent.borrow_mut() = Rc::downgrade(parent);
+              }
+
+              fn get_parent(&self) -> Option<Rc<Node>> {
+                  self.parent.borrow().upgrade()
+              }
+          }
+    ```
+    حالات الاستخدام الشائعة:
+    1. هياكل شبيهة بالذاكرة المؤقتة حيث يمكن مسح الإدخالات
+    2. هياكل شجرية مع مراجع للآباء
+    3. أنماط المراقب حيث يمكن إسقاط المواضيع
+    4. كسر دورات الإشارة في هياكل بيانات معقدة
+
+    أفضل الممارسات:
+    1. استخدم المراجع الضعيفة للعلاقات الاختيارية
+    2. تحقق من نتائج upgrade() قبل الاستخدام
+    3. وثّق علاقات الملكية بوضوح
+    4. فكر في بدائل مثل الفهارس للحالات الأبسط
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={14}
+  group="أنماط الذاكرة"
+  title="نمط RAII"
+  difficulty={3}
+  objectives={[
+    "فهم نمط RAII (الحصول على المورد هو التهيئة) في Rust",
+    "تنفيذ تنظيف موارد صحيح باستخدام سمة Drop",
+    "تطبيق أنماط RAII لإدارة الموارد",
+  ]}
+  options={[
+    {text: 'المورد يُحرّر بعد النطاق', isAnswer: true, hint: 'حقل File لديه تنفيذ Drop خاص به.'},
+    {text: 'تسرب الموارد', hint: 'الملف المغلف لا يحتوي على Drop مخصص، لكن حقوله لا تزال تُحرّر.'},
+    {text: 'خطأ تجميعي', hint: 'الكود يُجمّع بنجاح'},
+    {text: 'خطأ وقت التشغيل', hint: 'المشكلة تتعلق بتنظيف الموارد'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ماذا يحدث لمقبض الملف في مثال RAII هذا؟
+    ```rust
+          use std::fs::File;
+      
+          struct FileWrapper {
+              file: File,
+          }
+      
+          fn main() {
+              let file = File::create("test.txt").unwrap();
+              let wrapper = FileWrapper { file };
+              // ... use wrapper ...
+              // No Drop implementation
+          }
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    يضمن RAII في Rust إدارة الموارد بشكل صحيح. في هذا المثال، لا يحتاج `FileWrapper` إلى تنفيذ `Drop` مخصص لإغلاق مقبض الملف: حقل `File` يُحرّر تلقائيًا عندما يخرج المغلف من النطاق.
+
+    تقوم بتنفيذ `Drop` فقط عندما يكون للمغلف سلوك تنظيف إضافي يتجاوز تحرير حقوله:
+    ```rust
+          use std::fs::File;
+          use std::io::{self, Write};
+
+          struct FileWrapper {
+              file: File,
+              path: String,
+          }
+
+          impl FileWrapper {
+              fn new(path: &str) -> io::Result<FileWrapper> {
+                  Ok(FileWrapper {
+                      file: File::create(path)?,
+                      path: path.to_string(),
+                  })
+              }
+
+              fn write(&mut self, content: &str) -> io::Result<()> {
+                  self.file.write_all(content.as_bytes())
+              }
+          }
+
+          impl Drop for FileWrapper {
+              fn drop(&mut self) {
+                  // Ensure file is properly closed
+                  // Could also do cleanup like deletion
+                  println!("Closing file: {}", self.path);
+              }
+          }
+    ```
+    أنماط RAII:
+    1. المُنشئ يحصل على الموارد
+    2. الطرق تستخدم الموارد بأمان
+    3. الحقول تُحرّر تلقائيًا عندما يخرج المالك من النطاق
+    4. Drop مخصص يضيف تنظيفًا إضافيًا عند الحاجة
+    5. استخدم `?` لنشر الأخطاء
+
+    أفضل الممارسات:
+    1. اعتمد على تنفيذات Drop في المكتبة القياسية عندما تكون تمثل المورد بالفعل
+    2. اجعل إدارة الموارد بسيطة وواضحة
+    3. استخدم أنواع المكتبة القياسية عندما يكون ذلك ممكنًا
+    4. وثّق سلوك التنظيف
+    5. فكر في استخدام أنماط الحراسة للعمليات ذات النطاق المحدد
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={15}
+  group="أنماط التصميم"
+  title="النسخ مقابل الاستنساخ"
+  difficulty={3}
+  objectives={[
+    "تمييز بين سِمَتي Copy و Clone",
+    "فهم متى يتم تنفيذ كل سمة",
+    "تطبيق الاستنتاج المناسب لـ Copy و Clone",
+  ]}
+  options={[
+    {text: 'خطأ في التجميع', hint: 'سمة الـ derive مستخدمة بشكل صحيح'},
+    {text: 'تم إنشاء نسخة عميقة', isAnswer: true},
+    {text: 'تم إنشاء نسخة سطحية', hint: 'Clone ينشئ نسخة عميقة لحقول String'},
+    {text: 'تم تطبيق دلالات النقل', hint: 'Clone ينشئ نسخة جديدة صراحةً'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ماذا يحدث عندما نستنسخ بنية Philosophy هذه؟
+    ```rust
+          #[derive(Clone)]
+          struct Philosophy {
+              school: String,
+              founder: String,
+          }
+
+          fn main() {
+              let stoicism = Philosophy {
+                  school: String::from("Stoicism"),
+                  founder: String::from("Zeno of Citium")
+              };
+              let new_school = stoicism.clone();
+              println!("{} - {}", 
+                  stoicism.school, new_school.school);
+          }
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    دعونا نفهم Copy vs Clone بالتفصيل:
+    ```rust
+          // Types that can be Copy
+          #[derive(Copy, Clone)]
+          struct Point {
+              x: i32,
+              y: i32,
+          }
+
+          // Types that can only be Clone
+          #[derive(Clone)]
+          struct ComplexData {
+              name: String,    // String can't be Copy
+              points: Vec<i32> // Vec can't be Copy
+          }
+
+          // Manual implementation example
+          #[derive(Debug)]
+          struct Custom {
+              data: Vec<i32>,
+              identifier: u32,
+          }
+
+          impl Clone for Custom {
+              fn clone(&self) -> Self {
+                  Custom {
+                      data: self.data.clone(),
+                      identifier: self.identifier,  // Copy type
+                  }
+              }
+          }
+    ```
+    الاختلافات الرئيسية:
+    1. Copy:
+    - نسخ ضمني على مستوى البت
+    - يجب أن يكون آمنًا للـ Copy (بدون تخصيصات على الـ heap)
+    - عادةً للأنواع الصغيرة التي تُخزن على الـ stack فقط
+
+    2. Clone:
+    - صريح، قد يكون نسخة عميقة
+    - يمكنه التعامل مع تخصيصات الـ heap
+    - أكثر مرونة لكنه قد يكون مكلفًا
+
+    أفضل الممارسات:
+    1. تنفيذ Copy للأنواع الصغيرة التي تُخزن على الـ stack فقط
+    2. استخدام Clone للأنواع التي تمتلك موارد
+    3. توثيق تأثيرات الأداء لـ Clone
+    4. النظر في تنفيذات Clone مخصصة للتحسين
+    5. توخي الحذر مع الاستنتاج التلقائي
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={16}
+  group="أفضل الممارسات"
+  title="تحسين الذاكرة"
+  difficulty={4}
+  objectives={[
+    "تحليل تخطيط الذاكرة للهيكل والمحاذاة",
+    "تحسين ترتيب حقول الهيكل لكفاءة الذاكرة",
+    "تطبيق مبادئ المحاذاة لتقليل حجم الهيكل",
+  ]}
+  options={[
+    {text: '16 بايت', hint: 'ضع في الاعتبار متطلبات المحاذاة'},
+    {text: '24 بايت'},
+    {text: '32 بايت', isAnswer: true, hint: 'السلسلة أكبر من مؤشر واحد.'},
+    {text: 'يعتمد على المنصة', hint: 'لقد حددنا نظام 64-بت'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    على هدف Rust 64-بت شائع حاليًا، ما حجم هذا الهيكل؟
+    ```rust
+          struct Metadata {
+              id: u32,        // How many bytes?
+              name: String,   // How many bytes?
+              active: bool    // How many bytes + padding?
+          }
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    لنُحلل تخطيط الذاكرة للهيكل وتحسينه:
+    ```rust
+          // Typical current 64-bit Rust layout: 32 bytes
+          struct Metadata {
+              id: u32,       // 4 bytes
+              name: String,  // 24 bytes on 64-bit systems
+              active: bool   // 1 byte + padding/alignment
+          }
+
+          // Reordering fields may reduce padding for repr(C) structs,
+          // but default Rust layout is not a stable ABI guarantee.
+          struct OptimizedMetadata {
+              name: String,   // 24 bytes
+              id: u32,       // 4 bytes
+              active: bool    // 1 byte + 3 padding
+          }
+
+          // Further optimization with packing
+          #[repr(packed)]
+          struct PackedMetadata {
+              id: u32,
+              active: bool,
+              name: String,
+          }
+    ```
+    اعتبارات تخطيط الذاكرة:
+    1. متطلبات المحاذاة:
+    - u32: محاذاة 4 بايت
+    - String: محاذاة 8 بايت وحجم 24 بايت على الأنظمة 64-بت الشائعة
+    - bool: محاذاة بايت واحد
+
+    2. استراتيجيات ترتيب الحقول:
+    - تجميع الحقول ذات الأحجام المتشابهة
+    - وضع المحاذاة الأكبر أولاً
+    - النظر في تحسين خط الذاكرة المؤقتة (cache line)
+
+    أفضل الممارسات:
+    1. للـ FFI أو افتراضات تخطيط ثابت، استخدم `repr(...)` المناسب
+    2. استخدم أحجام أعداد صحيحة مناسبة
+    3. فكر في استخدام Option للحقول الاختيارية
+    4. قس حجم الهياكل الحساسة للذاكرة باستخدام `std::mem::size_of`
+    5. استخدم #[repr(packed)] بحذر - قد يؤثر على الأداء
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={17}
+  group="أنماط متقدمة"
+  title="التجريدات بلا تكلفة"
+  difficulty={5}
+  objectives={[
+    "فهم مبادئ التجريدات بلا تكلفة في Rust",
+    "تحليل تكاليف وقت التجميع مقابل وقت التشغيل",
+    "تطبيق التجريدات دون تكلفة أداء",
+  ]}
+  options={[
+    {text: 'تكلفة تشغيلية من المكرّر', hint: 'المكررات في Rust هي تجريدات بلا تكلفة'},
+    {text: 'نفس الأداء كالحلقة الخام', isAnswer: true},
+    {text: 'أبطأ لكن أكثر قابلية للقراءة', hint: 'التجريد لا يؤثر على الأداء أثناء التشغيل'},
+    {text: 'يعتمد على مستوى التحسين', hint: 'يتم إلغاء التجريد أثناء وقت التجميع'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    كيف يقارن أداء هذين التنفيذين؟
+    ```rust
+          // Implementation A: Iterator
+          fn sum_iterator(v: &[i32]) -> i32 {
+              v.iter().fold(0, |acc, &x| acc + x)
+          }
+
+          // Implementation B: Raw loop
+          fn sum_loop(v: &[i32]) -> i32 {
+              let mut sum = 0;
+              for i in 0..v.len() {
+                  sum += v[i];
+              }
+              sum
+          }
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    تتحول تجريدات Rust بلا تكلفة إلى شفرة فعّالة مكافئة عند التجميع:
+    ```rust
+          use std::ops::Range;
+
+          // High-level abstraction
+          trait ZeroCost {
+              fn process(&self) -> u32;
+          }
+
+          impl ZeroCost for Range<u32> {
+              fn process(&self) -> u32 {
+                  self.fold(0, |acc, x| acc + x)
+              }
+          }
+
+          // Compiles to essentially the same code as:
+          fn manual_process(range: Range<u32>) -> u32 {
+              let mut sum = 0;
+              let mut i = range.start;
+              while i < range.end {
+                  sum += i;
+                  i += 1;
+              }
+              sum
+          }
+
+          // Even more abstractions, still zero-cost
+          fn complex_processing<T>(data: &[T]) -> u32 
+          where T: AsRef<str> {
+              data.iter()
+                  .map(|s| s.as_ref().len())
+                  .filter(|&n| n > 3)
+                  .fold(0, |acc, n| acc + n as u32)
+          }
+    ```
+    المبادئ الأساسية:
+    1. ما لا تستخدمه لا تدفع ثمنه
+    2. ما تستخدمه لا يمكنك كتابة شفرة يدوية أفضل منه
+
+    أفضل الممارسات:
+    1. استخدم التجريدات عالية المستوى بحرية
+    2. ثق بتحسينات المترجم
+    3. قم بالتحليل قبل التحسين
+    4. ركّز على القابلية للقراءة أولاً
+    5. استخدم المكررات والإغلاق دون خوف
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+
+شكراً على مشاركتك في الاختبار! إذا استمتعت باختبار معرفتك بـ Rust، تفقد تحدياتي البرمجية الأخرى [programming challenges](/challenges/)! 🧠
+
+**هل تريد رفع مستوى مهاراتك في Rust؟** إليك بعض الموارد الموصى بها:
+
+- [كتاب Rust - الفصل 4: الملكية](https://doc.rust-lang.org/book/ch04-00-understanding-ownership.html)
+- [Rust By Example - إدارة الذاكرة](https://doc.rust-lang.org/rust-by-example/scope.html)
+- [مرجع Rust - نموذج الذاكرة](https://doc.rust-lang.org/reference/memory-model.html)
