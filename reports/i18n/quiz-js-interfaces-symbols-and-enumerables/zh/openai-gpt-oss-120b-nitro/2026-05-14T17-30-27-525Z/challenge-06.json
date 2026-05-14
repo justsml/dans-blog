@@ -1,0 +1,49 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Symbols as Non-Enumerable Keys",
+  "translatedTitle": "Symbol 作为不可枚举键",
+  "translation": {
+    "title": "Symbol 作为不可枚举键",
+    "group": "高级接口",
+    "options": [
+      {
+        "text": "不会，它不会被列出"
+      },
+      {
+        "text": "会，它会被列出"
+      },
+      {
+        "text": "取决于迭代方式"
+      },
+      {
+        "text": "会抛出错误"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "在 `for...in` 循环中，Symbol 键的属性会被列出吗？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "Symbol 键的属性可以拥有自己的 `enumerable` 标志，但 `for...in` 和 `Object.keys()` 只会遍历字符串键且可枚举的属性。在本例中，仅会列出 `regularKey`，Symbol 键的属性不会被列出。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Symbol 作为不可枚举键\",\n  \"group\": \"高级接口\",\n  \"options\": [\n    {\n      \"text\": \"不会，它不会被列出\"\n    },\n    {\n      \"text\": \"会，它会被列出\"\n    },\n    {\n      \"text\": \"取决于迭代方式\"\n    },\n    {\n      \"text\": \"会抛出错误\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"在 `for...in` 循环中，Symbol 键的属性会被列出吗？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"Symbol 键的属性可以拥有自己的 `enumerable` 标志，但 `for...in` 和 `Object.keys()` 只会遍历字符串键且可枚举的属性。在本例中，仅会列出 `regularKey`，Symbol 键的属性不会被列出。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 868,
+    "outputTokens": 398,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 2129,
+    "providerCostUsd": 0.0003306,
+    "providerUpstreamCostUsd": 0.0003306,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000033852,
+    "outputUsd": 0.00007164,
+    "totalUsd": 0.000105492,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
