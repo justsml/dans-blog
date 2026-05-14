@@ -1,0 +1,57 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Rc Smart Pointer",
+  "translatedTitle": "Rc 智能指针",
+  "translation": {
+    "title": "Rc 智能指针",
+    "group": "引用计数",
+    "options": [
+      {
+        "text": "引用计数：1",
+        "hint": "计算初始创建以及每次克隆"
+      },
+      {
+        "text": "引用计数：2",
+        "hint": "别忘了原始引用"
+      },
+      {
+        "text": "引用计数：3"
+      },
+      {
+        "text": "编译错误",
+        "hint": "Rc<T> 正好为此用例而设计"
+      }
+    ],
+    "objectives": [
+      "了解 Rust 中引用计数的工作原理",
+      "在共享所有权场景中使用 Rc<T>",
+      "分析代码中的引用计数行为"
+    ],
+    "questionProse": [
+      "这段代码会打印什么？仔细数一下！"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "让我们拆解 Rc 的工作原理：\n\n      1. 使用 `Rc::new()` 的初始创建：计数 = 1\n      2. 为 `marcus` 的第一次克隆：计数 = 2\n      3. 为 `aurelius` 的第二次克隆：计数 = 3\n\n      Rc 的重要特性：",
+      "关键点：\n      - `Rc::clone()` 开销小——它只会递增计数器\n      - Rc 仅适用于单线程场景\n      - 当最后一个引用被释放时，数据会被清理\n      - 使用 Weak 引用来防止引用循环\n\n      最佳实践：\n      - 需要共享所有权时使用 Rc\n      - 对于线程安全的场景考虑使用 Arc\n      - 避免创建引用循环"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Rc 智能指针\",\n  \"group\": \"引用计数\",\n  \"options\": [\n    {\n      \"text\": \"引用计数：1\",\n      \"hint\": \"计算初始创建以及每次克隆\"\n    },\n    {\n      \"text\": \"引用计数：2\",\n      \"hint\": \"别忘了原始引用\"\n    },\n    {\n      \"text\": \"引用计数：3\"\n    },\n    {\n      \"text\": \"编译错误\",\n      \"hint\": \"Rc<T> 正好为此用例而设计\"\n    }\n  ],\n  \"objectives\": [\n    \"了解 Rust 中引用计数的工作原理\",\n    \"在共享所有权场景中使用 Rc<T>\",\n    \"分析代码中的引用计数行为\"\n  ],\n  \"questionProse\": [\n    \"这段代码会打印什么？仔细数一下！\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"让我们拆解 Rc 的工作原理：\\n\\n      1. 使用 `Rc::new()` 的初始创建：计数 = 1\\n      2. 为 `marcus` 的第一次克隆：计数 = 2\\n      3. 为 `aurelius` 的第二次克隆：计数 = 3\\n\\n      Rc 的重要特性：\",\n    \"关键点：\\n      - `Rc::clone()` 开销小——它只会递增计数器\\n      - Rc 仅适用于单线程场景\\n      - 当最后一个引用被释放时，数据会被清理\\n      - 使用 Weak 引用来防止引用循环\\n\\n      最佳实践：\\n      - 需要共享所有权时使用 Rc\\n      - 对于线程安全的场景考虑使用 Arc\\n      - 避免创建引用循环\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1042,
+    "outputTokens": 1132,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1163,
+    "providerCostUsd": 0.0012137,
+    "providerUpstreamCostUsd": 0.0012137,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000040638,
+    "outputUsd": 0.00020376,
+    "totalUsd": 0.000244398,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "index": 16,
+  "attempt": 1,
+  "originalTitle": "Memory Optimization",
+  "translatedTitle": "内存优化",
+  "translation": {
+    "title": "内存优化",
+    "group": "最佳实践",
+    "options": [
+      {
+        "text": "16 字节",
+        "hint": "考虑对齐要求"
+      },
+      {
+        "text": "24 字节"
+      },
+      {
+        "text": "32 字节",
+        "hint": "String 大于单个指针。"
+      },
+      {
+        "text": "取决于平台",
+        "hint": "我们指定了 64 位系统"
+      }
+    ],
+    "objectives": [
+      "分析结构体内存布局和对齐",
+      "优化结构体字段顺序以提升内存效率",
+      "运用对齐原则来减小结构体大小"
+    ],
+    "questionProse": [
+      "在典型的 64 位 Rust 目标上，这个结构体的大小是多少？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "让我们拆解结构体内存布局与优化：",
+      "内存布局考虑因素：\n      1. 对齐要求：\n         - u32：4 字节对齐\n         - String：8 字节对齐，在常见的 64 位目标上大小为 24 字节\n         - bool：1 字节对齐\n\n      2. 字段排序策略：\n         - 将大小相近的字段分组\n         - 将更大对齐要求的字段放前面\n         - 考虑缓存行优化\n\n      最佳实践：\n      1. 对于 FFI 或稳定布局假设，使用合适的 `repr(...)`\n      2. 使用合适的整数大小\n      3. 对可选字段考虑使用 Option\n      4. 使用 `std::mem::size_of` 测量大小关键的结构体\n      5. 谨慎使用 #[repr(packed)]——它可能影响性能"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"内存优化\",\n  \"group\": \"最佳实践\",\n  \"options\": [\n    {\n      \"text\": \"16 字节\",\n      \"hint\": \"考虑对齐要求\"\n    },\n    {\n      \"text\": \"24 字节\"\n    },\n    {\n      \"text\": \"32 字节\",\n      \"hint\": \"String 大于单个指针。\"\n    },\n    {\n      \"text\": \"取决于平台\",\n      \"hint\": \"我们指定了 64 位系统\"\n    }\n  ],\n  \"objectives\": [\n    \"分析结构体内存布局和对齐\",\n    \"优化结构体字段顺序以提升内存效率\",\n    \"运用对齐原则来减小结构体大小\"\n  ],\n  \"questionProse\": [\n    \"在典型的 64 位 Rust 目标上，这个结构体的大小是多少？\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"rust\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"让我们拆解结构体内存布局与优化：\",\n    \"内存布局考虑因素：\\n      1. 对齐要求：\\n         - u32：4 字节对齐\\n         - String：8 字节对齐，在常见的 64 位目标上大小为 24 字节\\n         - bool：1 字节对齐\\n\\n      2. 字段排序策略：\\n         - 将大小相近的字段分组\\n         - 将更大对齐要求的字段放前面\\n         - 考虑缓存行优化\\n\\n      最佳实践：\\n      1. 对于 FFI 或稳定布局假设，使用合适的 `repr(...)`\\n      2. 使用合适的整数大小\\n      3. 对可选字段考虑使用 Option\\n      4. 使用 `std::mem::size_of` 测量大小关键的结构体\\n      5. 谨慎使用 #[repr(packed)]——它可能影响性能\"\n  ],\n  \"explanationCode\": [\n    {\n      \"language\": \"rust\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1055,
+    "outputTokens": 1291,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 3417,
+    "providerCostUsd": 0.00089445,
+    "providerUpstreamCostUsd": 0.00089445,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000041145,
+    "outputUsd": 0.00023238,
+    "totalUsd": 0.000273525,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

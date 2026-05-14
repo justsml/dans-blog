@@ -1,0 +1,57 @@
+{
+  "index": 8,
+  "attempt": 1,
+  "originalTitle": "RefCell Behavior",
+  "translatedTitle": "RefCell 行为",
+  "translation": {
+    "title": "RefCell 行为",
+    "group": "RefCell",
+    "options": [
+      {
+        "text": "打印: 42",
+        "hint": "我们能一次拥有两个可变借用吗？"
+      },
+      {
+        "text": "运行时 panic: RefCell 已被借用"
+      },
+      {
+        "text": "编译错误",
+        "hint": "RefCell 将检查移到运行时"
+      },
+      {
+        "text": "运行时 Panic: 不同的消息",
+        "hint": "错误明确提到了借用"
+      }
+    ],
+    "objectives": [
+      "理解使用 RefCell 的内部可变性",
+      "分析 RefCell 的运行时借用规则",
+      "在受控的可变访问中使用 RefCell"
+    ],
+    "questionProse": [
+      "这段代码运行时会发生什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "RefCell 提供内部可变性，但仍在运行时强制执行 Rust 的借用规则：",
+      "关键概念:\n      1. RefCell 将借用检查移到运行时\n      2. 若规则被违反会导致 panic\n      3. 对内部可变性模式很有用\n\n      常见用例:\n      - 在测试中模拟对象\n      - 实现自引用结构\n      - 当需要在共享引用后面修改数据时\n      \n      最佳实践:\n      1. 尽可能使用编译时借用\n      2. 将 RefCell 的借用限制在狭窄作用域内\n      3. 考虑使用 drop() 显式结束借用\n      4. 当需要内部可变性时使用 RefCell"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"RefCell 行为\",\n  \"group\": \"RefCell\",\n  \"options\": [\n    {\n      \"text\": \"打印: 42\",\n      \"hint\": \"我们能一次拥有两个可变借用吗？\"\n    },\n    {\n      \"text\": \"运行时 panic: RefCell 已被借用\"\n    },\n    {\n      \"text\": \"编译错误\",\n      \"hint\": \"RefCell 将检查移到运行时\"\n    },\n    {\n      \"text\": \"运行时 Panic: 不同的消息\",\n      \"hint\": \"错误明确提到了借用\"\n    }\n  ],\n  \"objectives\": [\n    \"理解使用 RefCell 的内部可变性\",\n    \"分析 RefCell 的运行时借用规则\",\n    \"在受控的可变访问中使用 RefCell\"\n  ],\n  \"questionProse\": [\n    \"这段代码运行时会发生什么？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"RefCell 提供内部可变性，但仍在运行时强制执行 Rust 的借用规则：\",\n    \"关键概念:\\n      1. RefCell 将借用检查移到运行时\\n      2. 若规则被违反会导致 panic\\n      3. 对内部可变性模式很有用\\n\\n      常见用例:\\n      - 在测试中模拟对象\\n      - 实现自引用结构\\n      - 当需要在共享引用后面修改数据时\\n      \\n      最佳实践:\\n      1. 尽可能使用编译时借用\\n      2. 将 RefCell 的借用限制在狭窄作用域内\\n      3. 考虑使用 drop() 显式结束借用\\n      4. 当需要内部可变性时使用 RefCell\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1041,
+    "outputTokens": 1157,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 3159,
+    "providerCostUsd": 0.00083115,
+    "providerUpstreamCostUsd": 0.00083115,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000040598999999999995,
+    "outputUsd": 0.00020826,
+    "totalUsd": 0.000248859,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
