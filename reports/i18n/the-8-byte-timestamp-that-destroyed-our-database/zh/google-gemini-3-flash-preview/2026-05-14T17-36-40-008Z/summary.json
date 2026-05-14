@@ -1,0 +1,66 @@
+{
+  "runId": "google-gemini-3-flash-preview@2026-05-14T17-36-40-008Z",
+  "slug": "the-8-byte-timestamp-that-destroyed-our-database",
+  "locale": "zh",
+  "model": "google/gemini-3-flash-preview",
+  "modelPath": "google-gemini-3-flash-preview",
+  "createdAt": "2026-05-14T17:37:07.568Z",
+  "sourcePath": "src/content/posts/2025-12-29--the-8-byte-timestamp-that-destroyed-our-database/index.mdx",
+  "targetPath": "src/content/posts/2025-12-29--the-8-byte-timestamp-that-destroyed-our-database/zh/index.mdx",
+  "candidatePath": "reports/i18n/the-8-byte-timestamp-that-destroyed-our-database/zh/google-gemini-3-flash-preview/2026-05-14T17-36-40-008Z/candidate.mdx",
+  "sourceHash": "4d98d485a209ef83adfb3ec4df7994acdb6c23964910ec139710bf29772952fe",
+  "outputHash": "eec4901f65fa74d37105a2e7e89816e28fee04c1a05bb1b9f44afece08cb4d1f",
+  "reasoningEffort": "low",
+  "temperature": 0.3,
+  "maxTokens": 16000,
+  "timeoutMs": 200000,
+  "articleSummary": "This technical analysis argues that database timestamp selection depends on the intended \"meaning\" of time—whether it represents an absolute global moment, a wall-clock reading, or a duration. Using a train journey metaphor, the author clarifies that Postgres's `TIMESTAMPTZ` does not store timezone data but rather performs UTC conversion for absolute events, while `TIMESTAMP` or `TIME` combined with a text-based timezone field is necessary for \"promises\" like local departure times or hotel check-ins. Intended for backend developers and database architects, the article adopts an analytical yet opinionated tone to provide practical rules for handling time-based data, intervals, and precision mismatches in production environments.",
+  "totalInputTokens": 5155,
+  "totalOutputTokens": 2325,
+  "totalCacheReadTokens": 0,
+  "totalCacheWriteTokens": 0,
+  "totalDurationMs": 18675,
+  "totalCostUsd": 0.0095525,
+  "pricingSource": "local-openrouter-estimate",
+  "telemetry": {
+    "model": "google/gemini-3-flash-preview",
+    "chunkSize": "18p",
+    "totalChunks": 3,
+    "totalInputTokens": 5155,
+    "totalOutputTokens": 2325,
+    "totalCacheReadTokens": 0,
+    "totalCacheWriteTokens": 0,
+    "totalDurationMs": 18675,
+    "totalCostUsd": 0.0095525,
+    "pricingSource": "local-openrouter-estimate",
+    "chunks": [
+      {
+        "index": 0,
+        "inputTokens": 1477,
+        "outputTokens": 680,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 5782,
+        "costUsd": 0.0027785
+      },
+      {
+        "index": 1,
+        "inputTokens": 1815,
+        "outputTokens": 832,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 6449,
+        "costUsd": 0.0034035
+      },
+      {
+        "index": 2,
+        "inputTokens": 1863,
+        "outputTokens": 813,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 6444,
+        "costUsd": 0.0033705000000000002
+      }
+    ]
+  }
+}
