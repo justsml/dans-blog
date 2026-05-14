@@ -1,0 +1,266 @@
+---
+unlisted: false
+title: 'اختبار: الرموز والقابلة للتعداد'
+subTitle: هل تعرف الميزات الأقل شهرة في ES2015؟
+label: Symbols
+social_image: ../desktop-social.webp
+category: Quiz
+subCategory: JavaScript
+date: '2024-10-31'
+modified: '2024-11-07'
+tags:
+  - quiz
+  - javascript
+  - interfaces
+  - symbols
+  - enumerables
+cover_full_width: ../logan-weaver-lgnwvr-96ES9AOLRzQ-unsplash.webp
+cover_mobile: ../logan-weaver-lgnwvr-96ES9AOLRzQ-unsplash_w300.webp
+cover_icon: ../logan-weaver-lgnwvr-96ES9AOLRzQ-unsplash_w300.webp
+---
+## اختبار: واجهات JavaScript، الرموز، والقابلة للتعداد
+
+> * **أثبت مهاراتك في JavaScript!** 🚀
+> * لا حاجة لتسجيل الدخول أو الاشتراك. ✨
+> * اختيار من متعدد. 🤖 ... _ما مدى صعوبة ذلك، هاه؟_
+
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="الواجهات المتقدمة"
+  title="الوصول عبر getter مقابل الوصول المباشر للخاصية"
+  options={[
+    {text: 'استخدام حلقة'},
+    {text: 'استدعاء دالة للوصول إلى القيمة'},
+    {text: 'الوصول إلى القيمة مباشرة', isAnswer: true},
+    {text: 'إلقاء خطأ'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    كيف يجب أن تصل إلى خاصية كائن JavaScript تستخدم دالة getter؟
+    ```js
+        const obj = {
+          get val() {
+            return 'got it!';
+          }
+        };
+        console.log(obj.val);
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    في JavaScript، يمكن الوصول إلى getter كخاصية عادية. لا حاجة لاستدعائها كدالة.
+    في هذا المثال، الوصول إلى `obj.val` مباشرة يستدعي دالة getter ويخرج `got it!`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="الواجهات المتقدمة"
+  title="استخدام الرموز (Symbol) في مفاتيح الكائنات"
+  options={[
+    {text: 'استخدام رمز (Symbol)', isAnswer: true},
+    {text: 'استخدام سلسلة نصية'},
+    {text: 'استخدام رقم'},
+    {text: 'استخدام كائن كمفتاح'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما هي الطريقة الصحيحة لإنشاء مفتاح خاصية فريد حقًا لكائن JavaScript؟
+    ```js
+        const uniqueKey = Symbol('myUniqueKey');
+        const obj = {
+          [uniqueKey]: 'unique value'
+        };
+        console.log(obj[uniqueKey]);
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    الرموز (Symbols) هي نوع بدائي فريد وغير قابل للتغيير يمكن استخدامه كمفاتيح لخصائص الكائنات. يساعد ذلك في تجنب تضارب الأسماء، خاصة في قواعد الأكواد الكبيرة أو عند كتابة مكتبات قابلة لإعادة الاستخدام.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="الواجهات المتقدمة"
+  title="الخصائص القابلة للتعداد"
+  options={[
+    {text: 'يطرح خطأ'},
+    {text: 'لا، لن يتم إدراجها'},
+    {text: 'يعتمد على نوع القيمة'},
+    {text: 'نعم، سيتم إدراجها', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    هل سيتم إدراج الخاصية `age` أثناء التكرار باستخدام `for...in`؟
+    ```js
+        const person = {};
+        Object.defineProperty(person, 'age', {
+          value: 25,
+          enumerable: true
+        });
+        for (let key in person) {
+          console.log(key);
+        }
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    تتحكم الخاصية `enumerable` في `Object.defineProperty()` في ما إذا كانت الخاصية ستظهر في طرق التعداد مثل `for...in`. في هذا المثال، بما أن `enumerable: true`، فإن الخاصية `age` سيتم إدراجها أثناء التكرار.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="العمل مع الكائنات"
+  title="التعداد الافتراضي مع Object.defineProperty()"
+  options={[
+    {text: 'صحيح'},
+    {text: 'خاطئ', isAnswer: true},
+    {text: 'غير معرف'},
+    {text: 'يعتمد على السياق'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما هو التعداد الافتراضي للخاصية عند استخدام `Object.defineProperty()` دون تحديد `enumerable`؟
+    ```js
+        const car = {};
+        Object.defineProperty(car, 'make', {
+          value: 'Toyota'
+        });
+        console.log(Object.keys(car));
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    عند استخدام `Object.defineProperty()` دون تحديد `enumerable`، تكون قيمته الافتراضية `false`. وهذا يعني أن الخاصية `make` لن تظهر في `Object.keys()` أو طرق التعداد الأخرى.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="واجهات متقدمة"
+  title="رموز فريدة"
+  options={[
+    {text: 'يعتمد على أوصافها'},
+    {text: 'صحيح'},
+    {text: 'خطأ', isAnswer: true},
+    {text: 'يُحدث خطأ'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ماذا ستكون نتيجة المقارنة التالية؟
+    ```js
+        const sym1 = Symbol('id');
+        const sym2 = Symbol('id');
+        console.log(sym1 === sym2);
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    كل استدعاء لـ `Symbol()` ينشئ قيمة فريدة وغير قابلة للتغيير، حتى لو كان الوصف متطابقًا. في هذه الحالة، `sym1` و `sym2` هما رمزان مختلفان، لذا تعيد المقارنة `false`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="الواجهات المتقدمة"
+  title="الرموز كمفاتيح غير قابلة للتعداد"
+  options={[
+    {text: 'لا، لن يتم إدراجها', isAnswer: true},
+    {text: 'نعم، سيتم إدراجها'},
+    {text: 'يعتمد على طريقة التكرار'},
+    {text: 'يطرح خطأ'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    هل سيتم إدراج الخاصية ذات المفتاح Symbol أثناء تكرار `for...in`؟
+    ```js
+        const sym = Symbol('uniqueKey');
+        const obj = {
+          [sym]: 'symbol value',
+          regularKey: 'regular value'
+        };
+        for (let key in obj) {
+          console.log(key);
+        }
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    يمكن أن تحتوي الخصائص ذات المفاتيح Symbol على علم `enumerable` خاص بها، لكن `for...in` و `Object.keys()` تزور فقط الخصائص القابلة للتعداد ذات المفاتيح النصية. في هذا المثال، سيتم إدراج `regularKey` فقط، وليس الخاصية ذات المفتاح Symbol.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="واجهات متقدمة"
+  title="استرداد جميع مفاتيح Symbol"
+  options={[
+    {text: 'Object.keys()'},
+    {text: 'Symbol.keys()'},
+    {text: 'Object.symbols()'},
+    {text: 'Object.getOwnPropertySymbols()', isAnswer: true},
+    {text: 'Object.entries()'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    أي طريقة يمكن استخدامها لاسترداد جميع مفاتيح Symbol لكائن؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    تُستخدم طريقة `Object.getOwnPropertySymbols()` لاسترداد مفاتيح خاصية Symbol الخاصة بالكائن.
+    ```js
+        const sym1 = Symbol('id');
+        const sym2 = Symbol('name');
+        const obj = {
+          [sym1]: 'symbol value',
+          [sym2]: 'another symbol value'
+        };
+        console.log(Object.getOwnPropertySymbols(obj));
+        // [Symbol(id), Symbol(name)]
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
