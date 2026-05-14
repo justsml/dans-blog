@@ -1,0 +1,38 @@
+{
+  "selectedCommit": "cd543bde75ea4092b0abe476a699fd0bcd5468e9",
+  "selectedModel": "openrouter/google/gemini-3-flash-preview",
+  "scores": {
+    "readability": 5,
+    "technicalAccuracy": 5,
+    "coherence": 5,
+    "relevance": 5,
+    "translationQuality": 5,
+    "mdxPreservation": 5
+  },
+  "suggestions": [],
+  "rationale": "The current translation is excellent. It maintains Dan's direct and conversational tone while using precise technical terminology (e.g., '原子化 CSS' for utility-first). It correctly adjusted relative image paths in the frontmatter to account for the sub-directory structure. The previous suggestion regarding a broken link was actually incorrect; the current MDX already contains the correct absolute URL 'https://docs.astro.build/en/concepts/why-astro/'. No further fixes are required.",
+  "slug": "upgrade-from-gatsby-to-astro",
+  "locale": "zh",
+  "candidateCommits": [
+    "cd543bde75ea4092b0abe476a699fd0bcd5468e9",
+    "637063f220b048adacf342a648d1901d6b5cf15c",
+    "b91b4d0ce3d50b4b5aac1fd5c7b4686bde7cd6f2"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "[灵活性和优秀的架构主张之间取得了极佳的平衡](../docs.astro.build/en/concepts/why-astro/)",
+      "replacement": "[灵活性和优秀的架构主张之间取得了极佳的平衡](https://docs.astro.build/en/concepts/why-astro/)",
+      "reason": "The link was incorrectly changed to a relative path pointing to a non-existent local directory instead of the original external URL.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug upgrade-from-gatsby-to-astro --locale zh --skip-global",
+    "output": ""
+  }
+}
