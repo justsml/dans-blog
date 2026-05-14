@@ -1,0 +1,379 @@
+---
+title: 语义向量搜索与赢得友谊、爱情的其他话题
+subTitle: 完整搜索全景：精确、模糊、语义、混合——以及何时组合使用。
+date: '2026-05-01'
+modified: '2026-05-04'
+tags:
+  - postgres
+  - postgresql
+  - pgvector
+  - vector-search
+  - semantic-search
+  - hybrid-search
+  - rag
+  - ai
+  - databases
+  - search
+  - embeddings
+category: Code
+subCategory: Databases
+popularity: 0.8
+social_image: ../desktop-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+搜索不是单一概念，语义搜索也不是对其他搜索方式的替代。
+
+“查找邮箱为 `dan@example.com` 的用户”和“给我一些关于新工程师调试的文章”都被称作搜索，但它们在工程问题上几乎没有共同点。前者有唯一正确答案，只需一次 `O(log n)` 的索引查找。后者没有唯一正确答案——只有相关性——并且需要理解语言、意图和含义。
+
+最能说服搜索决策的工程师——那些赢得论辩并交付合适系统的人——了解整个生态。他们知道该用哪种工具以及原因，并能清晰解释。
+
+本文聚焦语义层：向量搜索到底做了什么、何时能取胜以及何时应让它退居次要。实用的做法不是“把所有东西都嵌入”。关键是知道何时在混合架构中让向量与词法、模糊和精确匹配搜索并存。
+
+词法和模糊搜索的部分——`tsvector`、`pg_trgm`、`pg_search`——详见 [Postgres Text Searching Guide 2026](../postgres-text-search-guide)。
+
+---
+
+## 一目了然的术语
+
+**Embedding** — 由模型生成的密集浮点数列表，将一段文本（或图像、音频等）表示为高维空间中的一点。语义相关的内容会落在彼此附近，毫不相关的内容则相距遥远。
+
+**Lexical search** — 基于精确单词和标记匹配的搜索。快速、确定且对已知词汇正确。无法理解同义词、改写或跨语言等价。
+
+**Semantic search** — 基于意义而非标记的搜索。查询 “how do I handle timeouts” 可以匹配标题为 “configuring retry policies” 的文档，即使两者没有共享词，因为它们的嵌入在几何上相近。
+
+**Vector** — 数字列表。在搜索场景中指嵌入模型的输出。 “向量搜索” 通过几何距离寻找最接近查询向量的向量。
+
+**FTS (Full-Text Search)** — Postgres 内置的词法搜索，由 `tsvector` / `tsquery` 提供支持。对文本进行标记化、词干提取并建立索引，以供关键词查询使用。对散文和精确词项查找表现强劲；对意义视而不见。
+
+**BM25** — 用于词法搜索的排序算法（Elasticsearch、Qdrant 等均使用）。根据词项频率与该词在整个语料库中的稀有程度加权评分。优于纯关键词匹配；仍属词法范畴。
+
+**HNSW (Hierarchical Navigable Small World)** — 向量搜索的标准近似最近邻索引。构建分层邻近图，实现快速、高召回率的相似度查询。pgvector、Qdrant、Weaviate 等大多数实现都采用它。
+
+**RRF (Reciprocal Rank Fusion)** — 用于合并多个检索系统排序结果的算法。仅使用排名位置——无需分数归一化。一个在 FTS 与向量列表中都排名靠前的结果，其组合得分会比仅在其中一个列表中占优势的结果更高。
+
+---
+
+## 语义搜索到底做了什么
+
+向量嵌入将文本（或图像、音频等）转换为数字列表——即高维空间中的一点。嵌入模型的训练目标是让语义相关的文本在该空间中彼此靠近。“Dog” 与 “canine” 会相邻。“Running a marathon” 与 “running a Python script” 则会相距甚远，尽管它们共享单词 “running”。
+
+相似度搜索在该空间中寻找*意义*最接近查询的文档，而不考虑词汇的精确重叠。
+
+这意味着：
+- “如何配置请求超时？”可以匹配标题为“设置连接限制和重试策略”的文章——没有关键词重叠，但概念相关度极高
+- “适合夏日晚间的轻盈饮品”可以匹配一款葡萄酒推荐，即使产品描述中没有出现任何关键词
+- 如果嵌入模型是多语言训练的，英文查询可以匹配法文、西班牙文或日文的相关文档
+
+词法搜索（`tsvector`、`pg_trgm`）做不到这些。它只在词和字符层面工作，而不是在意义层面。两者并非可互换的工具——它们解决的是不同的问题。
+
+## pgvector 何时占优势
+
+**构建 RAG。** Retrieval‑Augmented Generation 会检索与用户问题意义最接近的文档块，然后将它们作为上下文传递给语言模型。检索这一步是向量操作。全文检索会错过同义词、改写以及概念匹配，而这些往往在相关块中以不同的表述出现。pgvector 相比单独的向量存储的优势在于：它运行在已有的 Postgres 实例内部——无需部署、运维或同步额外的服务。
+
+**用户描述需求，而不是描述搜索关键词。** “关于新经理如何建立自信的文章”没有可靠的关键词能够覆盖所有相关帖子。“用于处理副作用的轻量框架”在文档中可能也不出现这些确切词汇。向量搜索匹配的是意图，而不是拼写。
+
+**寻找相似项。** 相关产品、相似的支持工单、重复的 bug 报告、你可能感兴趣的文章。“查找与此相似的问题”本质上是最近邻搜索——对项目进行嵌入，找到其几何邻居。需要注意的一个重要前提：向量搜索始终会返回结果，即使没有真正相似的项。对于去重和推荐场景，务必通过最小相似度阈值（例如余弦相似度 ≥ 0.80）进行过滤，避免把低置信度的匹配误当成有意义的结果。
+
+**语义去重。** 在为 RAG 或搜索建立索引之前，通常需要先识别语料库中的近重复内容——多次修订的文章、重复提交的支持工单、显著重叠的知识库条目。对文档进行嵌入并使用余弦相似度阈值过滤，可标记或合并这些近重复项，防止检索时返回多个几乎相同的块，从而稀释上下文窗口。
+
+**多语言搜索。** 多语言嵌入模型会把跨语言语义等价的内容映射到相邻的向量。西班牙语查询 “perder peso” 可以匹配英文文章 “sustainable weight loss habits”——没有共享的 token，但底层意义相同。全文检索需要为每种语言单独配置词典，跨语言查询表现不佳。`pg_trgm` 虽然语言无关，但仍是基于字形的，而非语义。
+
+### 安装 pgvector
+
+从扩展安装到相似度查询，只需几条 SQL 语句：
+
+```sql
+CREATE EXTENSION IF NOT EXISTS vector;
+
+ALTER TABLE documents ADD COLUMN embedding vector(1536);
+
+-- 对于中等规模数据集，HNSW 通常是首选索引
+CREATE INDEX documents_embedding_idx
+  ON documents USING hnsw (embedding vector_cosine_ops);
+
+-- 语义搜索查询
+SELECT id, title, 1 - (embedding <=> $1::vector) AS similarity
+FROM documents
+ORDER BY embedding <=> $1::vector
+LIMIT 10;
+```
+
+`<=>` 表示余弦距离。`1 - cosine_distance` 即为余弦相似度（1.0 = 完全相同，0.0 = 正交）。若使用 `ivfflat`（较老且构建更快的替代方案），可将 `lists = sqrt(row_count)` 作为起始值。
+
+### pgvector 的局限
+
+- 精确 token 匹配——产品 SKU、错误码、函数名。`ORD-12345` 在语义上与任何内容都不相似，基于嵌入的搜索可能返回 `ORD-12344` 或根本没有相关结果。此时应使用全文检索或 B‑tree 索引。
+- 人名和专有名词。向量空间按意义组织，而非按拼写。“Micheal Jordan” 的用户记录不一定会落在 “Michael Jordan” 附近。
+- 短字符串，字符层面的相似度比意义更重要。`pg_trgm` 适合此类场景。
+- 必须出现确切词汇的查询。已知词匹配时，BM25 与全文检索更可靠。
+
+## 混合搜索：两者并行的理由
+
+技术文档是最典型的例子，单靠任一工具都难以满足全部需求。
+
+用户搜索 “how to configure timeouts” 时需要概念匹配：标题为 “Setting retry policies and connection limits” 的文章没有任何重叠关键词，却正是他们想要的答案。
+
+同一批用户还会搜索 `withRetry()`、`ECONNRESET` 和 `ERR_SOCKET_TIMEOUT`。这些精确字符串必须出现——语义匹配可能找不到它们，且出现概念相似但并非正确 API 的误报会产生误导。
+
+向量搜索处理概念查询，全文检索处理精确词项。单独使用任意一种都难以兼顾两者。
+
+解决方案是混合搜索：同时运行两种检索并融合结果。
+
+### 互惠排名融合（Reciprocal Rank Fusion）
+
+**Reciprocal Rank Fusion (RRF)** 是组合不同检索系统排名列表的标准算法。它不需要对系统间的分数进行归一化——只使用排名位置。出现在 *两个* 列表中都靠前的结果会获得比只在其中一个列表中占优的结果更高的综合得分。
+
+```sql
+WITH fts_results AS (
+  SELECT id,
+    ROW_NUMBER() OVER (ORDER BY ts_rank(search_vector, query) DESC) AS rank
+  FROM documents, to_tsquery('english', $1) query
+  WHERE search_vector @@ query
+  LIMIT 50
+),
+vector_results AS (
+  SELECT id,
+    ROW_NUMBER() OVER (ORDER BY embedding <=> $2::vector) AS rank
+  FROM documents
+  ORDER BY embedding <=> $2::vector
+  LIMIT 50
+),
+rrf AS (
+  SELECT
+    COALESCE(f.id, v.id) AS id,
+    COALESCE(1.0 / (60 + f.rank), 0) +
+    COALESCE(1.0 / (60 + v.rank), 0) AS rrf_score
+  FROM fts_results f
+  FULL OUTER JOIN vector_results v ON f.id = v.id
+)
+SELECT d.id, d.title, rrf.rrf_score
+FROM rrf
+JOIN documents d ON d.id = rrf.id
+ORDER BY rrf_score DESC
+LIMIT 10;
+```
+
+分母中的 `60` 是 RRF 常数。数值越大对排名差异的抑制越强，数值越小则放大差异。默认的 60 在大多数内容类型上表现良好。
+
+RRF 避免了将 `ts_rank`（对数频率得分）与余弦距离（几何度量）进行归一化的难题——两者不可比。RRF 只关心：“该结果在每个列表中出现得多高？”
+
+### 兼顾 Trigram 的混合搜索
+
+对于面向用户的混合内容搜索——用户可能在同一次会话中搜索人名、概念或精确术语——三路融合可以同时满足所有需求：
+
+```sql
+WITH trgm_results AS (
+  SELECT id,
+    ROW_NUMBER() OVER (ORDER BY similarity(title, $1) DESC) AS rank
+  FROM documents
+  WHERE title % $1
+  LIMIT 50
+),
+fts_results AS (
+  SELECT id,
+    ROW_NUMBER() OVER (ORDER BY ts_rank(search_vector, to_tsquery('english', $1)) DESC) AS rank
+  FROM documents
+  WHERE search_vector @@ to_tsquery('english', $1)
+  LIMIT 50
+),
+vector_results AS (
+  SELECT id,
+    ROW_NUMBER() OVER (ORDER BY embedding <=> $2::vector) AS rank
+  FROM documents
+  ORDER BY embedding <=> $2::vector
+  LIMIT 50
+),
+rrf AS (
+  SELECT
+    COALESCE(t.id, f.id, v.id) AS id,
+    COALESCE(1.0 / (60 + t.rank), 0) +
+    COALESCE(1.0 / (60 + f.rank), 0) +
+    COALESCE(1.0 / (60 + v.rank), 0) AS rrf_score
+  FROM trgm_results t
+  FULL OUTER JOIN fts_results f ON t.id = f.id
+  FULL OUTER JOIN vector_results v ON COALESCE(t.id, f.id) = v.id
+)
+SELECT d.id, d.title, rrf.rrf_score
+FROM rrf
+JOIN documents d ON d.id = rrf.id
+ORDER BY rrf_score DESC
+LIMIT 10;
+```
+
+这可以同时处理：模糊人名匹配（trigram）、精确关键词匹配（全文检索）以及概念查询（向量）。一个搜索框即可覆盖这三种用户意图。
+
+---
+
+## 多层混合架构
+
+真实的应用很少只有单一的搜索入口。它们往往拥有多个入口，每个入口的需求各不相同：
+
+| 搜索入口 | 用户查询类型 | 推荐层组合 |
+|---|---|---|
+| 博客 / 文档搜索 | 关键词 + 概念 | FTS + pgvector (RRF) |
+| 用户/客户姓名查找 | 带错别字的姓名 | `pg_trgm` |
+| 商品搜索 | 名称、描述、“相似于” | `pg_trgm` + FTS + pgvector |
+| 工单去重 | “与此相似的问题” | 仅 pgvector |
+| 内部 SKU/订单搜索 | 精确标识符 | B‑tree 索引 |
+| 大型知识库的 RAG | 自然语言问答 | pgvector（分块文档） |
+| 电商 “你可能还想看” | 行为 + 语义相似度 | pgvector |
+| 自动补全 | 前缀、容错拼写 | `pg_trgm` |
+
+这些并非假设。大多数内容密集型应用至少需要两个不同的搜索入口，且查询形态各异。常见的误区是选一种方案并在所有场景中复用——如今往往是向量搜索，因为它“潮”。这会导致在本可以使用 trigram 索引更快、更便宜、更准确的场景中，额外产生昂贵的嵌入计算。
+
+### 经验法则
+
+当出现当前层无法解决的失效模式时，就添加新的一层：
+
+- 用户抱怨拼写错误导致匹配不到 → 添加 `pg_trgm`  
+- 用户按概念搜索却错失相关结果 → 添加 pgvector  
+- 用户搜索精确符号或代码却得到概念性结果 → 添加 FTS 或检查是否过度依赖向量搜索  
+- 延迟成为问题 → 评估预过滤、近似索引或专用存储  
+
+---
+
+## 如果真的需要专用向量存储
+
+pgvector 已经能满足大多数应用的搜索需求，只有在需要其他数据库时才考虑迁移。具体的分界线取决于向量数量、索引设置、写入速率、过滤条件、硬件和并发度，因此任何 “向量少于 1000 万” 的规则都只能作为基准假设来做基准测试，而不是产品硬性限制。当你真的超出它的承载能力——极高并发、极低的 p99 延迟要求、数十亿向量，或需要严格的多租户隔离——专用向量数据库的生态就非常广阔，值得深入了解。
+
+### 矩阵列实际含义
+
+**Hybrid search** 指在同一次查询中同时运行 BM25 关键字搜索和向量相似度，并通过 RRF 合并结果。没有它，你只能在两种搜索模式中选其一，或自行在两次查询后融合。
+
+**Sparse vectors** 超越了 BM25。一个 SPLADE 稀疏向量约有 30,000 维（对应词汇表中的每个词），约 98% 为零。非零位置告诉你哪些词重要以及重要程度。对 “dogs” 的查询同样会加权 “canine” 与 “pet” —— 兼具 BM25 级别的精确度和向量索引内部的词项扩展。如果此列为 false，则需要单独的 FTS 层来处理精确词项查询。
+
+```python
+# SPLADE: ~30,000 dims, ~60 non-zero — only relevant vocabulary positions fire
+def encode_splade(text: str) -> dict:
+    tokens = tokenizer(text, return_tensors="pt", truncation=True, max_length=512)
+    with torch.no_grad():
+        output = model(**tokens)
+    vec = torch.log1p(torch.relu(output.logits)).max(dim=1).values.squeeze()
+    return {"indices": vec.nonzero().squeeze().tolist(), "values": vec[vec != 0].tolist()}
+```
+
+**SQL / 类 SQL** 实际上是指过滤能力。没有过滤的向量搜索只能算演示。你仍然需要租户范围、日期范围、权限和分类过滤。完整的 SQL（pgvector、LanceDB）可以和现有的 join 并存。专用数据库则使用 JSON 过滤对象（Qdrant、Pinecone）、查询 DSL（Elasticsearch、Milvus）或 GraphQL（Weaviate）。它们都能工作；当过滤逻辑变得复杂时，SQL 会更具吸引力。
+
+```sql
+-- pgvector: vector similarity is just another expression
+SELECT id, title, 1 - (embedding <=> $1) AS score
+FROM documents
+WHERE tenant_id = $2
+  AND category = ANY($3::text[])
+  AND created_at > NOW() - INTERVAL '90 days'
+ORDER BY embedding <=> $1
+LIMIT 10;
+```
+
+```python
+# Qdrant: equivalent filter as a Python object — same result, more ceremony
+results = client.query_points(
+    collection_name="documents", query=query_embedding,
+    query_filter=models.Filter(must=[
+        models.FieldCondition(key="tenant_id", match=models.MatchValue(value=tenant_id)),
+        models.FieldCondition(key="category",  match=models.MatchAny(any=categories)),
+        models.FieldCondition(key="created_at", range=models.DatetimeRange(gte=cutoff)),
+    ]),
+    limit=10,
+)
+```
+
+**Multimodal native** 表示数据库自带非文本内容的嵌入模型。你只需提供原始图片 URL，数据库负责向量化。大多数数据库对嵌入保持中立——嵌入管道由用户自行实现。Marqo 与 Weaviate（通过 CLIP/ImageBind 模块）则把这一步闭环。
+
+```python
+# Marqo: POST raw images, query with text — no external embedding step
+mq.index("products").add_documents(
+    [{"id": "shoe-001", "image": "https://cdn.example.com/shoes/001.jpg"}],
+    tensor_fields=["image"]
+)
+results = mq.index("products").search(q="lightweight shoes for summer")
+# Returns shoe-001 despite zero keyword overlap — CLIP handles the cross-modal match
+```
+
+**Disk-based index** 是成本杠杆。每百万条 1536 维原始向量在 RAM 中的 HNSW 索引可能需要数 GB 内存（还要算图结构和元数据）。磁盘原生方案（Milvus DiskANN、Elasticsearch DiskBBQ、LanceDB 的 Lance 格式、Turbopuffer 的对象存储层）通常以稍高的查询延迟换取更低的基础设施成本。对于模型延迟已经是主要瓶颈的 RAG 工作负载，这种权衡常常值得基准测试。
+
+**Max dimensions** 是隐藏在架构中的迁移风险。`text-embedding-3-large` 使用 3072 维，Jina v3 能输出更大维度，研究模型仍在不断提升。部分托管服务会公布硬性维度上限；另一些则只给出高上限或对常见模型没有实际限制。使用前务必查阅最新文档，选取有余量的方案；因为维度上限导致的向量索引迁移往往是一场痛苦的冲刺。
+
+*最后一次核对公共项目文档和产品页面的时间为 2026 年 5 月 8 日。将下表视为决策辅助，而非检查当前限制、定价和托管服务特性标记的替代方案。*
+
+### 生态概览
+
+| 数据库 | 部署方式 | 许可证 | Hybrid Search | Sparse Vectors | SQL / 类 SQL | Multimodal | Disk Index | Max Dims | 适用场景 |
+|---|---|---|---|---|---|---|---|---|---|
+| **[pgvector](https://github.com/pgvector/pgvector)** | 自托管 / 托管（Supabase、Neon、RDS） | OSS (PostgreSQL) | 手动 (SQL 中 RRF) | ❌ | ✅ 完整 SQL | ❌ | ✅ HNSW on disk | 16,000 存储；2,000 已索引 `vector` | 已在 Postgres 上；中等向量规模 |
+| **[Qdrant](https://github.com/qdrant/qdrant)** | 自托管 / 云 | Apache 2.0 | ✅ 原生 BM25 | ✅ 成熟支持 | ❌ (REST/gRPC) | ❌ | ✅ | 65,535 | 大规模过滤查询；复杂元数据 |
+| **[Weaviate](https://github.com/weaviate/weaviate)** | 自托管 / 云 | BSD 3 | ✅ 原生 BM25 + RRF | ✅ | ❌ (GraphQL / gRPC) | ✅ via modules | ✅ | 65,535 | GraphQL 访问模式；内置向量化 |
+| **[Pinecone](https://www.pinecone.io/)** | 仅云 | Proprietary | ✅ (2024 添加) | ✅ | ❌ | ❌ | ✅ (serverless) | 20,000 | 托管简易；无需运维 |
+| **[Milvus](https://github.com/milvus-io/milvus) / [Zilliz](https://zilliz.com/)** | 自托管 / 云 (Zilliz) | Apache 2.0 | ✅ 原生 | ✅ | ✅ 类 SQL (Milvus Query Language) | ✅ | ✅ DiskANN | 32,768 | 十亿级规模；企业本地部署 |
+| **[Chroma](https://github.com/chroma-core/chroma)** | 嵌入式 / 自托管 | Apache 2.0 | ❌ | ❌ | ❌ | ❌ | ❌ | 65,535 | 本地开发与原型验证 |
+| **[LanceDB](https://github.com/lancedb/lancedb)** | 嵌入式 / 云 | Apache 2.0 | ✅ | ❌ | ✅ 通过 DataFusion 的 SQL | ✅ 原生 | ✅ (Lance 格式) | Unlimited | Edge / serverless；多模态湖仓 |
+| **[Orama](https://github.com/oramasearch/orama)** | 嵌入式 / 云 | Apache 2.0 | ✅ 全文 + 向量 | ❌ | ❌ | ❌ | ❌ | 视实现而定 | JS/edge 应用；轻量站点搜索 |
+| **[Turbopuffer](https://turbopuffer.com/)** | 仅云 (serverless) | Proprietary | ✅ BM25 + 向量 | ❌ | ❌ | ❌ | ✅ (对象存储) | 16,000 | 多租户 SaaS；数百万命名空间 |
+| **[Elasticsearch](https://github.com/elastic/elasticsearch)** | 自托管 / Elastic Cloud | SSPL / AGPLv3 | ✅ RRF + ELSER 稀疏 | ✅ (ELSER) | ✅ Query DSL | ❌ | ✅ DiskBBQ | 4,096 | 已在 Elastic 生态；企业混合搜索 |
+| **[OpenSearch](https://github.com/opensearch-project/OpenSearch)** | 自托管 / AWS 托管 | Apache 2.0 | ✅ RRF + Neural Search | ✅ | ✅ Query DSL | ❌ | ✅ FAISS + HNSW | 16,000 | AWS 原生；开源 Elastic 替代 |
+| **[Vespa](https://github.com/vespa-engine/vespa)** | 自托管 / 云 | Apache 2.0 | ✅ 原生 | ✅ Tensors / lexical ranking | ✅ YQL | ✅ Tensors | ✅ | 实际上无限 | 搜索 + 排序 + 推荐系统 |
+| **[ClickHouse](https://github.com/ClickHouse/ClickHouse)** | 自托管 / 云 | Apache 2.0 | 手动 | ❌ | ✅ 完整 SQL | ❌ | ✅ Columnar + HNSW | 视实现而定 | 分析/日志 + 向量搜索并行 OLAP |
+| **[MongoDB Atlas](https://github.com/mongodb/mongo)** | 云 / 自托管 | SSPL | ✅ 内建 | ❌ | ✅ MQL + aggregation | ❌ | ✅ HNSW | 8,192 | 已在 MongoDB 上；文档 + 向量合一 |
+| **[Redis (VSS)](https://github.com/redis/redis)** | 自托管 / Redis Cloud | RSALv2 / SSPL | ✅ (RediSearch) | ✅ | ❌ | ❌ | ❌ 仅 RAM | 32,768 | 超低延迟；缓存层向量搜索 |
+| **[Marqo](https://github.com/marqo-ai/marqo)** | 云 / 自托管 | Apache 2.0 | ✅ | ❌ | ❌ | ✅ 原生聚焦 | ✅ | 视实现而定 | 端到端多模态：图像 + 文本 + 视频 |
+
+### 表格未覆盖的几点说明
+
+**Turbopuffer 的多租户设计** 侧重于极高的命名空间数量。其公开定位和客户案例强调类似 Notion 那样的大规模、命名空间密集型语料。如果每个用户或组织都需要独立的向量搜索，这种架构会改变成本结构，但仍需自行基准测试实际租户形态。
+
+**LanceDB 的嵌入模式** 是最接近 “SQLite for vector search” 的实现。它在进程内运行，无需服务器，可在 Lambda、Cloudflare Workers 以及边缘环境中使用。Lance 的列式格式让嵌入式操作在真实规模下也变得可行。
+
+**Chroma 最适合开发/测试和小型应用部署。** 若目标是极大规模语料、需要高可用、磁盘重负载或一流的混合搜索，请在将原型提升为生产基础设施前评估更面向生产的存储方案。
+
+**Vespa 是在检索只占产品一半时的首选。** 它将词法检索、最近邻搜索、张量、排序表达式、分组以及在线服务融合在一起。其强大功能确实存在，但运维和建模的复杂度同样不容小觑。它更适合搜索/推荐团队，而不是 “给我的 CRUD 应用加个语义搜索”。
+
+**ClickHouse 在搜索与分析结合时值得一提。** 如果你的真相数据来源是事件、日志、追踪或指标，ClickHouse 能在同一个 SQL 引擎里同时处理向量距离、过滤、聚合以及严肃的全文索引。它不是专门的向量数据库，但往往是分析检索的“无聊却正确”答案。
+
+**稀疏向量是让向量索引内部实现 BM25 级别关键词匹配的方式**——无需再跑单独的全文引擎。Qdrant 和 Elasticsearch 在这方面实现尤为成熟。如果混合搜索至关重要且两套系统的架构是硬性阻碍，稀疏向量支持就是关键。
+
+### 当你已经超出 pgvector 的适用范围时的选择
+
+- **SaaS 产品需要租户隔离** → Turbopuffer  
+- **大规模复杂元数据过滤** → Qdrant  
+- **已经在使用 Elastic/ELK 堆栈** → Elasticsearch + DiskBBQ  
+- **AWS 环境且想要开源方案** → OpenSearch  
+- **搜索/推荐平台需要严肃排序** → Vespa  
+- **分析、可观测性、日志/事件搜索** → ClickHouse  
+- **千亿级规模的本地/自托管** → Milvus  
+- **边缘/无服务器/多模态** → LanceDB  
+- **小型 JS 应用、文档站点或边缘原生搜索 UI** → Orama  
+- **零运维，成本不是首要** → Pinecone  
+- **多模态优先（图像、视频、音频）** → Marqo  
+- **已经在使用 MongoDB** → Atlas Vector Search  
+- **已经在使用 Postgres，需要更大容量** → Supabase Vector 或 Neon（均为 pgvector 托管版，工具链更完善）
+
+---
+
+## 必须避免的做法
+
+不要把向量搜索当作模糊文本搜索来处理那些有唯一正确答案的场景。
+
+“找出邮箱为 `dan@example.com` 的用户”不是向量搜索问题。  
+“找出订单号为 `ORD-12345` 的订单”同样不是。把 `ORD-12345` 做嵌入后用余弦相似度搜索会返回 *某个* 结果——但可能是错误的。标识符本身就有唯一正确答案，对标识符进行近似匹配属于 bug。
+
+向量搜索总是返回数据集中**最相似**的条目，即使实际上没有任何相关内容。它无法判断何时不存在合适答案。这在检索相关文档时还能接受，但在精确记录查找时会导致自信的错误答案，远比空结果更糟。
+
+反向同理：不要在用户描述概念的查询上使用全文检索。比如 “关于在不确定性下做艰难决策的文章” 并没有可靠的关键词，全文检索要么噪声太多，要么什么也不返回。要根据查询形态选对工具。
+
+---
+
+## 全局视角
+
+大多数生产搜索系统需要多层组合：
+
+- **`pg_trgm`** 用于姓名、拼写错误、自动完成  
+- **FTS / `pg_search`** 用于基于关键词的正文检索  
+- **pgvector** 用于语义和概念查询  
+- **RRF 融合** 用于用户混合查询类型的场景  
+- **常规索引** 用于精确标识符、过滤和排序列表  
+
+这些工具并非相互竞争，而是相辅相成。一个构建良好的搜索系统会为每种查询形态挑选合适的层——当查询形态重叠时，会并行运行多个层并融合结果。
+
+能够交付优秀搜索功能的团队懂得整个技术栈，而不是盲目引入向量数据库、把所有内容都嵌入，然后惊讶于精确查找有时会返回错误记录。
