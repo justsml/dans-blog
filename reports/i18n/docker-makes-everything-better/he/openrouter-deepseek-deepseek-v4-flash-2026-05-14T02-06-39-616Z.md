@@ -1,0 +1,83 @@
+# Translation Candidate
+- Slug: docker-makes-everything-better
+- Locale: he
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2015-03-12--docker-makes-everything-better/he/index.mdx
+- Validation: deferred
+- Runtime seconds: 7.77
+- Input tokens: 2150
+- Output tokens: 1121
+- Thinking tokens: unknown
+- Cached input tokens: 384
+- Cache write tokens: 0
+- Estimated cost: $0.000562
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: דוקר === אהבה
+subTitle: 'דוקר יכול לעשות :הכל:!'
+date: '2015-02-26'
+modified: '2024-07-30'
+category: DevOps
+subCategory: docker
+tags:
+  - docker
+  - devops
+  - patterns
+related:
+  - docker-server-setup-notes
+  - docker-rocks
+  - docker-security-tips-for-self-hosting
+cover: ../guillaume-bolduc-259596-unsplash.webp
+cover_mobile: ../w300_guillaume-bolduc-259596-unsplash.webp
+cover_icon: ../icon_guillaume-bolduc-259596-unsplash.webp
+---
+## Docker יכול לעשות הכל!\*
+
+> הערה היסטורית: זוהי תמונת מצב משנת 2015 של ההתלהבות מ-Docker והרגלי פיתוח מקומיים, שנשמרה בעיקר כקפסולת זמן. יש להתייחס לפקודות ולעמדת האבטחה כנקודות התחלה למודרניזציה, לא כהנחיות לייצור.
+
+שפר את התהליך שלך עבור:
+
+1.  בדיקת כלי פיתוח ושרתים **כמעט ללא סיכון** לפגיעה בתלויות במחשב האישי שלך
+1.  בדיקת התוכנה שלך
+1.  גורם לך לכתוב קוד אידמפוטנטי ומודולרי יותר... (אכתוב כיצד לממש זאת בפועל בפוסט המשך)
+
+ייתכן שיהיה נפח עצום של דברים חדשים ללמוד, **אל תיתן לכך לעצור אותך** מלהתחיל.
+
+### הערות
+
+- אם אתה רואה פקודת `docker run` עם האפשרויות `-d` או `-it`:
+  _ `-it` או `-i -t` יריצו את הפקודה המוגדרת במצב אינטראקטיבי
+  _ `-d` יתחיל את קונטיינר Docker כ'דמון', כלומר שירות רקע.
+
+---
+
+### דוגמאות
+
+### nginx
+
+```bash
+# Note: using host-based, shared folders
+#(shared folders are not possible with the VOLUME Dockerfile cmd)
+sudo docker run --name web01 -d -p 8181:80 \
+  -v $(NGINX_DIR)/etc:/etc/nginx \
+  -v $(NGINX_DIR)/log:/var/log/nginx \
+  -v $(NGINX_DIR)/www:/var/www/html \
+  nginx:latest
+
+## Local data, isolated within instance
+sudo docker run --name web01 -d -p 8181:80 nginx:latest
+
+# nodejs
+sudo docker run --name nodejs01 -d -p 3300:3300 -p 4433:4433 nodejs:latest
+```
+
+> קרדיטים: [https://dockerfile.github.io/#/nginx](https://dockerfile.github.io/#/nginx)
+> Docker יקל על חייך לאורך _כל_ מחזור חיי הפיתוח (SDLC).
+
+> - די קרוב
+````
