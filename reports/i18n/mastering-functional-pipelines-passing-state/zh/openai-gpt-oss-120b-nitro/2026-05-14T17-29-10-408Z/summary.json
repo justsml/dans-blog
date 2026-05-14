@@ -1,0 +1,66 @@
+{
+  "runId": "openai-gpt-oss-120b-nitro@2026-05-14T17-29-10-408Z",
+  "slug": "mastering-functional-pipelines-passing-state",
+  "locale": "zh",
+  "model": "openai/gpt-oss-120b:nitro",
+  "modelPath": "openai-gpt-oss-120b-nitro",
+  "createdAt": "2026-05-14T17:29:23.630Z",
+  "sourcePath": "src/content/posts/2023-08-13--mastering-functional-pipelines-passing-state/index.md",
+  "targetPath": "src/content/posts/2023-08-13--mastering-functional-pipelines-passing-state/zh/index.mdx",
+  "candidatePath": "reports/i18n/mastering-functional-pipelines-passing-state/zh/openai-gpt-oss-120b-nitro/2026-05-14T17-29-10-408Z/candidate.mdx",
+  "sourceHash": "eb38b169d02823202679eaaf98349caf70a17781d65244f001b5c4d7c04d2d25",
+  "outputHash": "4a416ab815039e98fd94fa2d93edba225cc0e9df6bbd278df51c863e2c2a8021",
+  "reasoningEffort": "low",
+  "temperature": 0.3,
+  "maxTokens": 16000,
+  "timeoutMs": 200000,
+  "articleSummary": "**Summary:**  \nThe article argues that passing shared state (e.g., `userId`) through JavaScript promise pipelines is cumbersome and harms composability, and proposes grouping related functions into a dedicated module (such as a factory or class) that captures the common state once and exposes only unary methods. It demonstrates this with a “checkout” example, refactoring the original chain into a `CartHelpers` module that eliminates repetitive arguments and allows the pipeline to be written as a clean sequence of single‑argument functions (`then(cart.getProductsSubtotal)…`). The tone is tutorial‑focused, using a “Lego‑blocks” metaphor to emphasize modularity and readability, and is aimed at front‑end or full‑stack developers familiar with TypeScript, promises, and functional composition.",
+  "totalInputTokens": 4996,
+  "totalOutputTokens": 2178,
+  "totalCacheReadTokens": 1536,
+  "totalCacheWriteTokens": 0,
+  "totalDurationMs": 6548,
+  "totalCostUsd": 0.000586884,
+  "pricingSource": "local-openrouter-estimate",
+  "telemetry": {
+    "model": "openai/gpt-oss-120b:nitro",
+    "chunkSize": "18p",
+    "totalChunks": 3,
+    "totalInputTokens": 4996,
+    "totalOutputTokens": 2178,
+    "totalCacheReadTokens": 1536,
+    "totalCacheWriteTokens": 0,
+    "totalDurationMs": 6548,
+    "totalCostUsd": 0.000586884,
+    "pricingSource": "local-openrouter-estimate",
+    "chunks": [
+      {
+        "index": 0,
+        "inputTokens": 1447,
+        "outputTokens": 710,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 1830,
+        "costUsd": 0.00018423299999999998
+      },
+      {
+        "index": 1,
+        "inputTokens": 1892,
+        "outputTokens": 877,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 2864,
+        "costUsd": 0.000231648
+      },
+      {
+        "index": 2,
+        "inputTokens": 1657,
+        "outputTokens": 591,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 1854,
+        "costUsd": 0.000171003
+      }
+    ]
+  }
+}
