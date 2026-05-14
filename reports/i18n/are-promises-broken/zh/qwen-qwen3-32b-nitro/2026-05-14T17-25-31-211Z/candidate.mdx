@@ -1,0 +1,233 @@
+---
+social_image: ../desktop-social.webp
+title: 未兑现的承诺？
+unlisted: true
+subTitle: 忽略错误，结果丢失...
+date: '2018-10-06'
+modified: '2024-12-11'
+tags:
+  - promises
+  - javascript
+  - errors
+  - programming
+category: Code
+subCategory: promises
+cover: ../lennart-heim-766366-unsplash.webp
+cover_mobile: ../w300_lennart-heim-766366-unsplash.webp
+cover_icon: ../icon_lennart-heim-766366-unsplash.webp
+---
+## JavaScript Promise 是否有缺陷？
+
+### 过去的年代
+
+关于 Promise 最常见的误解之一是其**所谓的**错误处理缺陷。
+
+**很多年前**，Promise 的错误处理确实很糟糕。**大量工作投入到了修复中**。
+
+> 于是，**问题得到了解决**，甚至**广泛部署**。
+
+#### 人们欣喜若狂
+
+可惜的是，有些人并未注意到这一点。
+
+### 当代
+
+这个误解依然存在，我随处可见：[Medium 上的流行文章](https://hackernoon.com/6-reasons-why-javascripts-async-await-blows-promises-away-tutorial-c7ec10518dd9)，[在 DZone](#redacted)，以及[许多](https://medium.com/@avaq/broken-promises-2ae92780f33)其他来源。
+
+我承认，即便是“官方”资源和文档，也主要提供[脆弱的示例和不良习惯](/promise-gotchas/)。这些示例常被用来“证明”反对 Promise 的论点。有些甚至提出了让问题变得更糟的“解决方案”。（注：链接已移除）
+
+<!-- 我见过多次的一个建议是：永远不要使用 `.catch`，而改用全局的 `"unhandledRejection"` 事件。**绝不要这么做**。unhandledRejection 的设计目的是在即将关闭前清理全局引用，例如数据库连接。 -->
+
+<br />
+<br />
+
+## 规避麻烦的规则
+
+1. [Promise 需要可以挂靠的对象](#1-promises-need-something-to-hang-on-to)
+    * **始终** 在函数中 `return`
+1. [使用真正的 `Error` 实例](#2-use-real-error-instances)
+    * **始终** 使用 `Error` 实例
+1. [在有意义的地方处理错误](#3-handle-errors-where-it-makes-sense)
+    * **至少** 使用一次 `.catch()`
+1. [用具名函数增加清晰度 🦄✨](#4-add-clarity-with-named-functions-)
+    * __优先__ 使用具名函数
+
+-------------------------------------------
+
+#### #1 Promise 需要可以挂靠的对象
+
+你必须**始终 `return`** 你的函数。
+
+Promise 的回调函数在 `.then(callback)` 和 `.catch(callback)` 中遵循特定模式。
+
+#### #1 Promise 需要可以挂靠的对象
+
+你必须**始终 `return`** 你的函数。
+
+Promise 的回调函数在 `.then(callback)` 和 `.catch(callback)` 中遵循特定模式。
+
+每个返回的值都会传递给下一个 `.then()` 的回调函数。
+
+```js
+function addTen(number) {
+  return number + 10;
+}
+
+Promise.resolve(10)  // 10
+  .then(addTen)      // 20
+  .then(addTen)      // 30
+  .then(addTen)      // 40
+  .then(console.log) // logs "40"
+```
+
+> "始终返回" 的额外好处：代码更容易进行单元测试。
+
+**问题：** 创建了多少个不同的 Promise 状态（已解决和已拒绝）？
+
+**问题：** 在上一个示例中创建了多少个 Promise？
+
+#### #2 使用真正的 `Error` 实例
+
+JavaScript 在错误处理上有一个有趣的特性（适用于异步和同步代码）。
+
+<a href="https://repl.it/@justsml/throwing-errors-in-javascript" target="_blank">[<i>在 repl.it 查看示例：`throwing errors in javascript`</i>]</a>
+<img alt="throwing errors in javascript" src="../throwing-errors-in-javascript.webp" />
+
+为了**获取有关行号和调用堆栈的有用信息**，你必须使用 `Error` 实例。抛出字符串在 Python 或 Ruby 中有效，但在 JavaScript 中无效。
+
+虽然 JavaScript **看似**可以处理 `throw "string"`，并且你会在 `catch` 处理器中看到字符串。然而，这些信息是你能看到的全部内容*。不会包含任何之前的[堆栈帧](https://en.wikipedia.org/wiki/Call_stack#Stack_and_frame_pointers)。
+
+正确的 `new Error` 示例：
+
+```js
+throw new Error('message')           // ✅
+Promise.reject(new Error('message')) // ✅
+throw Error('message')               // ✅
+Promise.reject(Error('message'))     // ✅
+```
+
+以下是一些常见的反模式：
+
+```js
+throw 'error message'  // ❌
+Promise.reject(-42)    // ❌
+```
+
+<iframe height="400px" width="100%" src="https://repl.it/@justsml/throwing-errors-in-javascript?lite=true" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals"></iframe>
+
+#### #3 在有意义的地方处理错误
+
+Promises 提供了一种优雅的错误处理方式，通过 `.catch()`。它本质上是一种特殊的 `.then()`，用于处理前面 `.then()` 中抛出的任何错误。让我们看一个例子...
+
+```js
+Promise.resolve(42)
+  .then(() => 'hello')
+  .catch(() => console.log('will not get hit'))
+  .then(() => throw new Error('totes fail'))
+  .catch(() => console.log('WILL get hit'))
+```
+
+虽然 `.catch()` 可能看起来像 DOM 事件处理器（如 `click`、`keypress`），但它的位置非常重要，因为它只能捕获**它上方抛出的错误**。
+
+**覆盖错误相对简单**：在 `.catch()` 回调中返回一个非错误值，Promise 链会切换为依次执行 `.then()` 回调。（本质上如此。）
+
+尝试跟踪以下示例的执行顺序：
+
+```js
+Promise.resolve(42)
+  .then(() => 'hello')
+  .then(() => throw new Error('totes fail'))
+  .catch(() => {
+    return 99
+  })
+  .then(num => num + 1)
+  .then(console.log) // 预期输出：100
+```
+
+**理解执行顺序是关键。**
+
+虽然这是一个看似愚蠢的例子，但它的设计目的是**说明 Promise 中错误和数据的流动方式**。
+
+以下是执行顺序的概述：
+
+1. 42 是初始值。
+2. 下一个方法始终返回 `hello`。
+3. 我们忽略之前的值，并抛出一条 `'totes fail'` 的错误信息。
+4. `.catch()` 捕获错误，转而返回 `99`，这个值将被后续的 `.then()` 处理。
+5. 增加 `num`，返回 `100`。
+6. `console.log` 方法接收到 `100` 并打印它！:tada:
+
+**问题：** 当两个 `.catch()` 依次出现时会发生什么？第二个 `.catch()` 是否会运行？你能想到什么使用场景吗？
+
+**问题：** `.catch()` 如何忽略错误？你如何防止错误强制 `Promise.all` 提前退出？
+
+#### #4 用命名函数增加可读性 🦄✨
+
+比较以下两个示例的**可读性**：
+
+**匿名函数：** ❌
+
+```js
+Promise.resolve(10)          // 10
+  .then(x => x * 2)          // 20
+  .then(x => x / 4)          // 5
+  .then(x => x * x)          // 25
+  .then(x => x.toFixed(2))   // "25.00"
+  .then(x => console.log(x)) // 预期输出："25.00"
+```
+
+**命名函数：** ✅
+
+```js
+Promise.resolve(10) // 10
+  .then(double)     // 20
+  .then(quarter)    // 5
+  .then(square)     // 25
+  .then(format)     // "25.00"
+  .then(log)        // 预期输出："25.00"
+
+const double = x => x * 2
+const quarter = x => x / 4
+const square = x => x * x
+const format = x => x.toFixed(2)
+const log = x => console.log(x)
+```
+
+**额外加分：** ✅
+
+> 与数组方法兼容！
+
+你可以将命名函数与 `Array.prototype.` 的朋友们一起使用。包括 `.map()`、`.filter()`、`.every()`、`.some()`、`.find()`！
+
+集合管道 #FTW:
+
+```js
+// 这就像同一个东西 :mindblown:
+
+[10, 20]           // [ 10, 20 ]
+  .map(double)     // [ 20, 40 ]
+  .map(quarter)    // [ 5, 10 ]
+  .map(square)     // [ 25, 100 ]
+  .map(format)     // [ "25.00", "100.00" ]
+  .map(log)        // 预期输出两行："25.00", "100.00"
+```
+
+如果你不想使用这种线性风格的编码... 好吧，你有简单的函数！
+
+你可以按需使用它们：
+
+```js
+// 嵌套模式
+// ❌ 请不要这样做
+
+const result = format(square(quarter(double(10))))
+
+log(result)
+// 预期输出："25.00"
+```
+
+**为什么嵌套函数是一种反模式？**
+
+1. 不如线性代码易读
+2. git 差异难以显示是谁修改了什么
+3. 很难调试或记录嵌套函数中间的值
