@@ -1,0 +1,266 @@
+---
+unlisted: false
+title: 'חידון: סימנים ו‑enumerables'
+subTitle: האם אתה מכיר את הפיצ'רים הפחות מוכרים של ES2015?
+label: Symbols
+social_image: ../desktop-social.webp
+category: Quiz
+subCategory: JavaScript
+date: '2024-10-31'
+modified: '2024-11-07'
+tags:
+  - quiz
+  - javascript
+  - interfaces
+  - symbols
+  - enumerables
+cover_full_width: ../logan-weaver-lgnwvr-96ES9AOLRzQ-unsplash.webp
+cover_mobile: ../logan-weaver-lgnwvr-96ES9AOLRzQ-unsplash_w300.webp
+cover_icon: ../logan-weaver-lgnwvr-96ES9AOLRzQ-unsplash_w300.webp
+---
+## חידון: ממשקי JavaScript, Symbolים ו‑Enumerables
+
+> * **הוכיחו את המיומנות שלכם ב‑JavaScript!** 🚀  
+> * אין צורך בכניסה או הרשמה. ✨  
+> * בחירה מרובה. 🤖 … _כמה זה יכול להיות קשה, נכון?_  
+
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="ממשקים מתקדמים"
+  title="גישה למאפיין עם getter מול גישה ישירה"
+  options={[
+    {text: 'השתמש בלולאה'},
+    {text: 'קרא למתודה כדי לגשת לערך'},
+    {text: 'גש לערך ישירות', isAnswer: true},
+    {text: 'השלך שגיאה'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    איך צריך לגשת למאפיין של אובייקט JavaScript שמשתמש במתודת getter?
+    ```js
+        const obj = {
+          get val() {
+            return 'got it!';
+          }
+        };
+        console.log(obj.val);
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    ב-JavaScript, ניתן לגשת ל-getter כמו למאפיין רגיל. אין צורך לקרוא לו כפעולה.
+    בדוגמה זו, גישה ל-`obj.val` מפעילה ישירות את מתודת ה-getter ומחזירה `got it!`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="ממשקים מתקדמים"
+  title="שימוש ב‑Symbol במפתחות של אובייקטים"
+  options={[
+    {text: 'שימוש ב‑Symbol', isAnswer: true},
+    {text: 'שימוש במחרוזת'},
+    {text: 'שימוש במספר'},
+    {text: 'שימוש באובייקט כמפתח'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה הדרך הנכונה ליצור מפתח נכס באמת ייחודי עבור אובייקט JavaScript?
+    ```js
+        const uniqueKey = Symbol('myUniqueKey');
+        const obj = {
+          [uniqueKey]: 'unique value'
+        };
+        console.log(obj[uniqueKey]);
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    Symbols הם סוג פרימיטיבי ייחודי ובלתי ניתן לשינוי שניתן להשתמש בו כמפתחות למאפייני אובייקט. זה מסייע במניעת התנגשויות שמות, במיוחד בקודbases גדולים או בעת כתיבת ספריות שניתן להשתמש בהן מחדש.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="ממשקים מתקדמים"
+  title="מאפיינים ניתנים לה enumeration"
+  options={[
+    {text: 'זורק שגיאה'},
+    {text: 'לא, זה לא יופיע'},
+    {text: 'זה תלוי בסוג הערך'},
+    {text: 'כן, הוא יופיע ברשימה', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    האם המאפיין `age` יופיע במהלך איטרציה של `for...in`?
+    ```js
+        const person = {};
+        Object.defineProperty(person, 'age', {
+          value: 25,
+          enumerable: true
+        });
+        for (let key in person) {
+          console.log(key);
+        }
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    המאפיין `enumerable` ב-`Object.defineProperty()` קובע האם המאפיין יופיע בשיטות מיון כמו `for...in`. בדוגמה זו, מאחר ש-`enumerable: true`, המאפיין `age` יופיע במהלך האיטרציה.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="עבודה עם אובייקטים"
+  title="ברירת המחדל של סופיות עם Object.defineProperty()"
+  options={[
+    {text: 'true'},
+    {text: 'false', isAnswer: true},
+    {text: 'undefined'},
+    {text: 'Depends on context'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מהי ברירת המחדל של סופיות של מאפיין כשמשתמשים ב‑`Object.defineProperty()` מבלי לציין `enumerable`?
+    ```js
+        const car = {};
+        Object.defineProperty(car, 'make', {
+          value: 'Toyota'
+        });
+        console.log(Object.keys(car));
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    כאשר אתה משתמש ב‑`Object.defineProperty()` מבלי לציין `enumerable`, ערך ברירת המחדל שלו הוא `false`. משמעות הדבר שהמאפיין `make` לא יופיע ב‑`Object.keys()` או בשיטות מיון אחרות.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="ממשקים מתקדמים"
+  title="סמלים ייחודיים"
+  options={[
+    {text: 'תלוי בתיאור שלהם'},
+    {text: 'true'},
+    {text: 'false', isAnswer: true},
+    {text: 'זורק שגיאה'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה יהיה התוצאה של ההשוואה הבאה?
+    ```js
+        const sym1 = Symbol('id');
+        const sym2 = Symbol('id');
+        console.log(sym1 === sym2);
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    כל קריאה ל-`Symbol()` יוצרת ערך ייחודי ובלתי‑ניתן לשינוי, אפילו אם התיאור זהה. במקרה זה, `sym1` ו-`sym2` הם סמלים שונים, ולכן ההשוואה מחזירה `false`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="ממשקים מתקדמים"
+  title="סמלים כמפתחות לא‑ניתנים להצגה"
+  options={[
+    {text: 'לא, זה לא יופיע', isAnswer: true},
+    {text: 'כן, הוא יופיע ברשימה'},
+    {text: 'תלוי בשיטת האיטרציה'},
+    {text: 'זורק שגיאה'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    האם המאפיין עם מפתח Symbol יופיע במהלך איטרציית `for...in`?
+    ```js
+        const sym = Symbol('uniqueKey');
+        const obj = {
+          [sym]: 'symbol value',
+          regularKey: 'regular value'
+        };
+        for (let key in obj) {
+          console.log(key);
+        }
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    למאפיינים עם מפתח Symbol יכול להיות דגל `enumerable` משלהם, אך `for...in` ו‑`Object.keys()` מבקרים רק מאפיינים ניתנים להצגה עם מפתח מחרוזת. בדוגמה זו, רק `regularKey` יופיע, ולא המאפיין עם מפתח Symbol.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="ממשקים מתקדמים"
+  title="קבל את כל מפתחות ה‑Symbol"
+  options={[
+    {text: 'Object.keys()'},
+    {text: 'Symbol.keys()'},
+    {text: 'Object.symbols()'},
+    {text: 'Object.getOwnPropertySymbols()', isAnswer: true},
+    {text: 'Object.entries()'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    איזה מתודה ניתן להשתמש כדי לקבל את כל מפתחות ה‑Symbol של אובייקט?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    מתודת `Object.getOwnPropertySymbols()` משמשת לקבלת מפתחות ה‑Symbol של האובייקט עצמו.
+    ```js
+        const sym1 = Symbol('id');
+        const sym2 = Symbol('name');
+        const obj = {
+          [sym1]: 'symbol value',
+          [sym2]: 'another symbol value'
+        };
+        console.log(Object.getOwnPropertySymbols(obj));
+        // [Symbol(id), Symbol(name)]
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
