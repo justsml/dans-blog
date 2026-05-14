@@ -1,0 +1,73 @@
+{
+  "selectedCommit": "2e4d54f08280afc4805f12b85bba14bab2f20237",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 8,
+    "technicalAccuracy": 8,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 9
+  },
+  "suggestions": [],
+  "rationale": "The deepseek candidate was selected and after pre-publish fixes pass 1, all suggested code string translations have been reverted to English, improving translation quality. No further medium/high-priority fixes remain.",
+  "slug": "docker-security-for-admins-and-maintainers",
+  "locale": "zh",
+  "candidateCommits": [
+    "2e4d54f08280afc4805f12b85bba14bab2f20237",
+    "a64f17c3b921b686f80fe69297a2780e11598b79"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "medium",
+      "match": "console.error(\"检测到不安全的密钥:\", missingSecrets);",
+      "replacement": "console.error(\"Unsafe secrets detected:\", missingSecrets);",
+      "reason": "Code examples should preserve original English strings to maintain consistency with the source and avoid altering executable code.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "panic!(\"{} 中存在不安全的密钥\", key);",
+      "replacement": "panic!(\"Unsafe secret in {}\", key);",
+      "reason": "Code examples should preserve original English strings to maintain consistency with the source and avoid altering executable code.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "panic(fmt.Sprintf(\"%s 中存在不安全的密钥\", pair[0]))",
+      "replacement": "panic(fmt.Sprintf(\"Unsafe secret in %s\", pair[0]))",
+      "reason": "Code examples should preserve original English strings to maintain consistency with the source and avoid altering executable code.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "echo \".env 文件已存在！\"",
+      "replacement": "echo \".env file already exists!\"",
+      "reason": "Shell script output strings should remain in English to match the original example and avoid confusion.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "echo \"已生成新的 .env 文件！\"",
+      "replacement": "echo \"New .env file generated!\"",
+      "reason": "Shell script output strings should remain in English to match the original example and avoid confusion.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug docker-security-for-admins-and-maintainers --locale zh --skip-global",
+    "output": ""
+  }
+}
