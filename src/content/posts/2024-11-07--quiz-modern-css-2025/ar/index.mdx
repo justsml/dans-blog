@@ -47,12 +47,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     ما هي الطريقة الصحيحة لاستخدام متغير CSS يُسمى `--main-color` لتعيين لون خلفية عنصر؟
     ```css
-        :root {
-          --main-color: blue;
-        }
-        div {
-          /* How do we use --main-color here? */
-        }
+    :root {
+      --main-color: blue;
+    }
+    div {
+      /* How do we use --main-color here? */
+    }
     ```
   </div>
   </slot>
@@ -84,9 +84,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     إذا كان عرض العنصر الأب/الحاوية هو 400px، فما هو العرض المحسوب للعنصر التالي؟
     ```css
-        div {
-          width: min(250px, 50%);
-        }
+    div {
+      width: min(250px, 50%);
+    }
     ```
   </div>
   </slot>
@@ -100,9 +100,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     - `50%` من `400px` يساوي `200px`
     - `250px` هي بالفعل بالبكسل
     ```css
-        /* This gets computed to */
-        width: min(250px, 200px);
-        /* -> 200px wins */
+    /* This gets computed to */
+    width: min(250px, 200px);
+    /* -> 200px wins */
     ```
     الدالة `min()` مفيدة بشكل خاص للتصميم المتجاوب، حيث يمكنك ضمان ألا يتجاوز المكون (أو حجم الخط) حدًا معينًا.
   </div>
@@ -127,9 +127,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     بافتراض وجود حاوية بعرض 200px، ما هو العرض المحسوب للعنصر `<div>`؟
     ```css
-        div {
-          width: max(50px, 10%, 6rem);
-        }
+    div {
+      width: max(50px, 10%, 6rem);
+    }
     ```
   </div>
   </slot>
@@ -144,9 +144,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     - `10%` من `200px` يساوي `20px`
     - `6rem` يساوي `6 * 16px` (حجم الخط الافتراضي) وهو `96px`
     ```css
-        /* This gets computed to */
-        width: max(50px, 20px, 96px);
-        /* -> 96px wins */
+    /* This gets computed to */
+    width: max(50px, 20px, 96px);
+    /* -> 96px wins */
     ```
   </div>
   </slot>
@@ -168,7 +168,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     ما هو تأثير استخدام `minmax(100px, 200px)` لمسار شبكة CSS؟
     ```css
-        grid-template-columns: minmax(100px, 200px);
+    grid-template-columns: minmax(100px, 200px);
     ```
   </div>
   </slot>
@@ -199,9 +199,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     ما لون الخلفية في CSS التالي؟
     ```css
-        div {
-          background: var(--primary, olivedrab);
-        }
+    div {
+      background: var(--primary, olivedrab);
+    }
     ```
   </div>
   </slot>
@@ -232,9 +232,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     ماذا تفعل الدالة `clamp()`؟
     ```css
-        .card {
-          width: clamp(200px, 50vw, 500px);
-        }
+    .card {
+      width: clamp(200px, 50vw, 500px);
+    }
     ```
   </div>
   </slot>
@@ -293,13 +293,13 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     هل هذا استخدام صحيح للتداخل الأصلي في CSS؟
     ```css
-        .container {
-          color: black;
-          .title {
-            color: white;
-            background: black;
-          }
-        }
+    .container {
+      color: black;
+      .title {
+        color: white;
+        background: black;
+      }
+    }
     ```
   </div>
   </slot>
@@ -329,13 +329,13 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     ما لون الخلفية الذي سيتم تطبيقه على عناصر `div` المباشرة التابعة لـ `.container`؟
     ```css
-        .container {
-          background-color: red;
-          > div {
-            background-color: white;
-          }
-          background-color: blue !important;
-        }
+    .container {
+      background-color: red;
+      > div {
+        background-color: white;
+      }
+      background-color: blue !important;
+    }
     ```
   </div>
   </slot>
@@ -372,7 +372,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     يمكن تعيين متغيرات CSS باستخدام الفئات وJavaScript. بل يمكن تعريفها 'بعد' استخدامها تقنيًا.
     ```js
-        document.documentElement.style.setProperty('--main-color', 'blue');
+    document.documentElement.style.setProperty('--main-color', 'blue');
     ```
     سيؤدي هذا إلى تغيير قيمة `--main-color` إلى `blue` للمستند بأكمله.
 
@@ -399,12 +399,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     ما هو العرض المحسوب للعنصر؟
     ```css
-        :root {
-          --base-width: 100px;
-        }
-        div {
-          width: calc(var(--base-width) + 10px);
-        }
+    :root {
+      --base-width: 100px;
+    }
+    div {
+      width: calc(var(--base-width) + 10px);
+    }
     ```
   </div>
   </slot>

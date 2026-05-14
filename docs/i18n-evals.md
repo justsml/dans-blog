@@ -1,6 +1,6 @@
 # i18n Eval Suite
 
-Offline eval harness for the translation pipeline. Runs real LLM inferences with cheap models against fixed source fixtures, scores outputs with a lightweight judge, and records results to `reports/i18n/evals/`.
+Offline eval harness for the translation pipeline. Runs real LLM inferences with cheap models against real corpus articles, scores outputs with deterministic integrity checks plus a lightweight LLM judge, and records results to `reports/i18n/evals/`.
 
 No Braintrust account required. All results are local JSONL + markdown.
 
@@ -9,7 +9,7 @@ No Braintrust account required. All results are local JSONL + markdown.
 - After editing any prompt in `src/scripts/i18n/prompts.ts`
 - After editing judge prompt builders in `src/scripts/i18n/judge-utils.ts`
 - Before merging changes to translation or judge logic
-- Periodically to track prompt quality drift across model upgrades
+- Periodically to catch prompt quality drift across model upgrades
 
 ## Quick start
 
@@ -17,11 +17,20 @@ No Braintrust account required. All results are local JSONL + markdown.
 # Dry-run: list cases without spending tokens
 bun run i18n:eval -- --dry-run
 
-# Run all fixtures with defaults
+# Run defaults (newest article + newest quiz, locale=es)
 bun run i18n:eval
 
 # Single locale
-bun run i18n:eval -- --locale es
+bun run i18n:eval -- --locale ja
+
+# Pin to a specific article or quiz slug
+bun run i18n:eval -- --article-slug postgres-fts-vs-pgvector
+bun run i18n:eval -- --quiz-slug quiz-modern-css-2025
+bun run i18n:eval -- --slug stop-hardcoding-your-prompts   # auto-detects kind
+
+# One kind only
+bun run i18n:eval -- --kind article
+bun run i18n:eval -- --kind quiz
 
 # Swap translation model
 bun run i18n:eval -- --translation-model openrouter/qwen/qwen3-32b:nitro
@@ -30,27 +39,38 @@ bun run i18n:eval -- --translation-model openrouter/qwen/qwen3-32b:nitro
 bun run i18n:eval -- \
   --translation-model openrouter/deepseek/deepseek-v4-flash \
   --judge-model openrouter/google/gemini-2.0-flash-001
-
-# One suite only
-bun run i18n:eval -- --suite translation
 ```
 
 ## Flags
 
 | Flag | Default | Description |
-|------|---------|-------------|
-| `--model` | see below | Sets both `--translation-model` and `--judge-model` at once |
+| --- | --- | --- |
+| `--model` | — | Sets both `--translation-model` and `--judge-model` at once |
 | `--translation-model` | `openrouter/openai/gpt-oss-120b:nitro` | Model used to produce translations |
 | `--judge-model` | `deepseek/deepseek-v4-flash` | Model used to score translations |
-| `--locale` | all | Filter to one locale (`es`, `ja`, `zh`, `fr`, …) |
-| `--suite` | `all` | `translation`, `judge`, or `all` |
-| `--dry-run` | false | Print cases and exit without calling any model |
+| `--locale` | `es` | Target locale (`es`, `ja`, `zh`, `fr`, `de`, …) |
+| `--kind` | `all` | `article`, `quiz`, or `all` |
+| `--slug` | — | Pin to a specific slug (auto-detects article vs quiz) |
+| `--article-slug` | — | Pin the article case to this slug |
+| `--quiz-slug` | — | Pin the quiz case to this slug |
+| `--dry-run` | false | Print selected cases and exit without calling any model |
+
+## Input: real corpus posts
+
+The eval runner reads from the live `src/content/posts` corpus — no synthetic fixtures. By default it selects:
+
+- The **newest visible, published non-quiz article**
+- The **newest visible, published quiz**
+
+Posts marked `draft: true`, `hidden: true`, `publish: false`, or `unlisted: true` are excluded. Future-dated posts are also excluded.
+
+This means eval results reflect real article complexity and real quiz structure, including any quirks in your actual content.
 
 ## Outputs
 
 Each run writes two files under `reports/i18n/evals/`:
 
-```
+```text
 reports/i18n/evals/
 ├── eval-run-<ISO-timestamp>.jsonl        # one JSON line per case
 └── eval-run-<ISO-timestamp>-summary.md  # human-readable pass/fail table
@@ -61,16 +81,21 @@ JSONL fields per row:
 ```json
 {
   "at": "2026-05-14T…",
-  "id": "basic-mdx-article-es",
-  "suite": "translation",
+  "id": "article:stop-hardcoding-your-prompts:es",
+  "kind": "article",
   "locale": "es",
+  "slug": "stop-hardcoding-your-prompts",
   "translationModel": "openrouter/openai/gpt-oss-120b:nitro",
   "judgeModel": "deepseek/deepseek-v4-flash",
   "passed": true,
   "overallScore": 84.2,
-  "minScore": 70,
-  "rubricResults": [
-    { "rule": "mustPreserve: \"```ts\"", "passed": true }
+  "llmJudgeScore": 88.5,
+  "deterministicScore": 75.0,
+  "minScore": 72,
+  "deterministicScores": [
+    { "name": "frontmatter-preserved", "score": 100, "passed": true, "severity": "high" },
+    { "name": "title-translated", "score": 100, "passed": true, "severity": "medium" },
+    { "name": "no-wrapper-text", "score": 100, "passed": true, "severity": "high" }
   ],
   "durationMs": 4200,
   "inputTokens": 1100,
@@ -79,71 +104,43 @@ JSONL fields per row:
 }
 ```
 
-## Suites
+## Scoring model
 
-### `translation`
+Each case produces two score tracks that are combined into an overall score.
 
-Runs the full translation prompt (system + user, as built by `buildSystemPrompt` / `buildUserPrompt` in `prompts.ts`) and checks each output against a rubric + a minimum judge score.
+### Deterministic scorers
 
-Each fixture specifies:
+Run by `runDeterministicScorers` in `eval-prompts.ts`, powered by `analyzeTranslationIntegrity` from `integrity-checks.ts`. No LLM calls.
 
-- **`mustPreserve`** — strings or regexes that must appear in the output (e.g. preserved code fences, import paths, JSX prop names)
-- **`mustNotContain`** — strings or regexes that must not appear (e.g. the original English title, bare `./` asset paths)
-- **`minScore`** — minimum acceptable overall judge score (0–100); a case fails if the judge returns a score below this threshold
+| Scorer | Severity | What it checks |
+| --- | --- | --- |
+| `integrity:*` | high/medium/low | Structural issues from `analyzeTranslationIntegrity`: heading count drift, bare asset paths, LLM instruction leakage, code fence count, etc. |
+| `frontmatter-preserved` | high | Output must start with `---` frontmatter delimiters |
+| `title-translated` | medium | Frontmatter `title:` must not be identical to the English source title |
+| `no-wrapper-text` | high | Output must not start with wrapper prose (`"Here is…"`, `"Sure!"`) or a raw fence |
 
-Current fixtures:
+A case **fails** if any high- or medium-severity deterministic scorer fails, regardless of LLM score.
 
-| ID | Locale | What it tests |
-|----|--------|---------------|
-| `basic-mdx-article-es` | `es` | Code fence preservation, heading structure, title translation |
-| `quiz-challenge-ja` | `ja` | `<Challenge>` prop preservation (`index`, `client:visible`, `isAnswer`), import path depth |
-| `asset-paths-zh` | `zh` | `./` → `../` asset path rewriting in markdown, HTML, and frontmatter |
-| `heading-structure-fr` | `fr` | H1/H2/H3 count preservation |
+### LLM judge score
 
-### `judge`
-
-Reserved for deterministic judge/validator failure-state fixtures — cases where a known-bad translation should produce low scores or specific issue codes. Not yet populated; add cases here as regressions are discovered.
-
-## Scoring
-
-The eval runner asks the judge model to score each translation using the same JSON shape as the production judge (`judge-utils.ts: getJudgeJsonShape()`). Scores are on a 0–100 scale across six dimensions:
+The judge model scores the translation on eight dimensions (0–100 each):
 
 | Dimension | What it measures |
-|-----------|-----------------|
+| --- | --- |
 | `readability` | Native flow, idiom, sentence clarity |
 | `technicalAccuracy` | Preserves technical meaning, constraints, warnings |
 | `coherence` | Consistent terminology, argument flow |
 | `relevance` | No hallucinated content, no omissions |
-| `translationQuality` | Natural target-language register + Dan's direct voice |
+| `translationQuality` | Natural register + Dan's direct voice |
 | `mdxPreservation` | MDX/JSX structural correctness |
 | `culturalAdaptation` | Locale-appropriate cultural register |
 | `languagePurity` | No untranslated reader-facing prose leaking through |
 
-The overall score is the arithmetic mean of all dimensions that the judge returns. Cases with a missing or un-parseable judge response still check rubric rules; the score threshold is skipped with a warning.
+The overall score is: `(llmJudgeScore × 0.7) + (deterministicScore × 0.3)`.
 
-## Adding fixtures
+If the judge call fails or returns no parseable scores, the overall score falls back to the deterministic score alone, and the LLM threshold is skipped with a warning.
 
-Add an entry to `TRANSLATION_FIXTURES` in `src/scripts/i18n/eval-prompts.ts`:
-
-```ts
-{
-  id: "my-new-fixture-de",
-  slug: "my-article-slug",
-  locale: "de",
-  isQuiz: false,
-  source: `---\ntitle: My Article\n---\n\nBody text…`,
-  mustPreserve: [
-    "```ts",          // code fence must survive
-    /^## /m,          // at least one H2 must appear
-  ],
-  mustNotContain: [
-    "My Article",     // title should be translated
-  ],
-  minScore: 70,
-}
-```
-
-Keep fixtures small (< 30 lines of source). They are meant to be fast and cheap, not exhaustive.
+A case **fails** if `llmJudgeScore < minScore` (default: 72).
 
 ## Unit tests (offline, no LLM)
 
@@ -167,10 +164,11 @@ Covered areas:
 ## Key source files
 
 | File | Role |
-|------|------|
-| `src/scripts/i18n/eval-prompts.ts` | Eval runner — fixtures, rubric checks, LLM calls, reporting |
-| `src/scripts/i18n/judge-utils.ts` | Pure functions used by both `judge.ts` and `eval-prompts.ts` |
-| `src/scripts/i18n/judge.ts` | Production judge script (imports from `judge-utils.ts`) |
+| --- | --- |
+| `src/scripts/i18n/eval-prompts.ts` | Eval runner — corpus selection, scorers, LLM calls, reporting |
+| `src/scripts/i18n/integrity-checks.ts` | Deterministic structural integrity checks used by scorers |
+| `src/scripts/i18n/judge-utils.ts` | Pure functions shared by `judge.ts` and `eval-prompts.ts` |
+| `src/scripts/i18n/judge.ts` | Production judge script |
 | `src/scripts/i18n/prompts.ts` | Translation prompt builders (`buildSystemPrompt`, `buildUserPrompt`) |
 | `src/scripts/i18n/judge.test.ts` | Offline unit tests for judge scoring loop |
 | `reports/i18n/evals/` | Eval run output (JSONL + markdown summaries) |

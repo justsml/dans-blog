@@ -85,14 +85,14 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     यह की-वैल्यू (key-value) डेटा दिखाने के लिए उपयोगी है। प्रोफाइल जानकारी, सेटिंग्स और आंकड़े इसके सामान्य उदाहरण हैं।
     ```html
-        <dl>
-        <dt>JS</dt>
-        <dd>Client-side</dd>
-        <dd>Server-side</dd>
+    <dl>
+    <dt>JS</dt>
+    <dd>Client-side</dd>
+    <dd>Server-side</dd>
 
-        <dt>HTML</dt>
-        <dd>Client-side</dd>
-        </dl>
+    <dt>HTML</dt>
+    <dd>Client-side</dd>
+    </dl>
     ```
   </div>
   </slot>
@@ -122,10 +122,10 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     यह इमेज, डायग्राम, कोड स्निपेट और बहुत कुछ के लिए उपयोगी है।
     ```html
-        <figure>
-        <img src="../image.jpg" alt="Description of image">
-        <figcaption>Image caption</figcaption>
-        </figure>
+    <figure>
+    <img src="../image.jpg" alt="Description of image">
+    <figcaption>Image caption</figcaption>
+    </figure>
     ```
   </div>
   </slot>
@@ -157,14 +157,14 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     आप एक पेज पर कई आर्टिकल्स का उपयोग कर सकते हैं (उदाहरण के लिए, इनफिनिटी स्क्रॉलिंग पेजों के लिए)। या, आप "स्वतंत्र कंटेंट" का पदानुक्रम (hierarchy) बनाने के लिए उन्हें एक-दूसरे के भीतर नेस्ट भी कर सकते हैं।
     ```html
-        <article>
-        <h2>Article Title</h2>
-        <p>Article content...</p>
-        <article class="discussion">
-        <h3>Comment by User</h3>
-        <p>Comment content...</p>
-        </article>
-        </article>
+    <article>
+    <h2>Article Title</h2>
+    <p>Article content...</p>
+    <article class="discussion">
+    <h3>Comment by User</h3>
+    <p>Comment content...</p>
+    </article>
+    </article>
     ```
   </div>
   </slot>
@@ -194,18 +194,18 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     यह संबंधित फॉर्म एलिमेंट्स को व्यवस्थित करने के लिए उपयोगी है, जैसे शिपिंग एड्रेस या पेमेंट डिटेल्स के लिए एक अलग सेक्शन बनाना।
     ```html
-        <fieldset>
-        <legend>Shipping Address</legend>
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name">
-        ...
-        </fieldset>
-        <fieldset>
-        <legend>Payment Details</legend>
-        <label for="card">Card Number:</label>
-        <input type="text" id="card" name="card">
-        ...
-        </fieldset>
+    <fieldset>
+    <legend>Shipping Address</legend>
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name">
+    ...
+    </fieldset>
+    <fieldset>
+    <legend>Payment Details</legend>
+    <label for="card">Card Number:</label>
+    <input type="text" id="card" name="card">
+    ...
+    </fieldset>
     ```
   </div>
   </slot>
@@ -235,8 +235,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     यह [`<progress>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/progress) बार के समान लग सकता है, हालांकि प्रोग्रेस बार **हमेशा** शून्य से शुरू होते हैं। इसलिए `<progress>` एलिमेंट `percent of completion` दिखाते हैं, जबकि एक `<meter>` किसी भी परिभाषित रेंज के भीतर की वैल्यू को दर्शाता है।
     ```html
-        <meter min="-60" max="130" value="75" /> 75°F
-        <meter min="0" max="100" value="75" /> 75%
+    <meter min="-60" max="130" value="75" /> 75°F
+    <meter min="0" max="100" value="75" /> 75%
     ```
   </div>
   </slot>
@@ -266,10 +266,10 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     खास तौर पर इसका उपयोग [`<video>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video), [`<audio>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/audio), और [`<picture>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/picture) एलिमेंट्स के साथ किया जाता है, जिससे ब्राउज़र सबसे उपयुक्त फॉर्मेट चुन सकता है।
     ```html
-        <video controls>
-        <source src="movie.mp4" type="video/mp4">
-        <source src="movie.ogg" type="video/ogg">
-        </video>
+    <video controls>
+    <source src="movie.mp4" type="video/mp4">
+    <source src="movie.ogg" type="video/ogg">
+    </video>
     ```
   </div>
   </slot>
@@ -299,16 +299,16 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     यह तब उपयोगी हो सकता है जब किसी हेडिंग का कोई सबटाइटल, टैगलाइन, या वैकल्पिक शीर्षक हो जिसे डॉक्यूमेंट आउटलाइन में एक अलग हेडिंग नहीं बनना चाहिए।
     ```html
-        <article>
-        <hgroup>
-        <h1>Frankenstein</h1>
-        <p>Or: The Modern Prometheus</p>
-        </hgroup>
-        <section>
-        <h2>Chapter 1</h2>
-        <p>...</p>
-        </section>
-        </article>
+    <article>
+    <hgroup>
+    <h1>Frankenstein</h1>
+    <p>Or: The Modern Prometheus</p>
+    </hgroup>
+    <section>
+    <h2>Chapter 1</h2>
+    <p>...</p>
+    </section>
+    </article>
     ```
   </div>
   </slot>
@@ -338,10 +338,10 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     यदि आपकी लिस्ट नेविगेशन लिंक्स की है, तो `<ul>` के साथ `<nav>` का उपयोग करें। टूलबार जैसे कंट्रोल्स या कमांड लिस्ट के लिए `<menu>` का उपयोग करें।
     ```html
-        <menu>
-        <li><button type="button">Copy</button></li>
-        <li><button type="button">Paste</button></li>
-        </menu>
+    <menu>
+    <li><button type="button">Copy</button></li>
+    <li><button type="button">Paste</button></li>
+    </menu>
     ```
   </div>
   </slot>
@@ -371,10 +371,10 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     यह FAQs, कोलैप्सिबल सेक्शन, या किसी भी ऐसे कंटेंट के लिए उपयोगी है जिसे टॉगल (toggle) किया जा सकता है।
     ```html
-        <details>
-        <summary>Click to expand 🤯</summary>
-        <p>Hidden content! 💥</p>
-        </details>
+    <details>
+    <summary>Click to expand 🤯</summary>
+    <p>Hidden content! 💥</p>
+    </details>
     ```
   </div>
   </slot>
@@ -404,11 +404,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     मोडल डायलॉग के लिए इसे `.showModal()` के साथ या नॉन-मोडल डायलॉग के लिए `.show()` के साथ खोलने के लिए JavaScript का उपयोग करें, और इसे `.close()` या `method="dialog"` का उपयोग करके फॉर्म सबमिशन के साथ बंद करें।
     ```html
-        <dialog>
-        <h2>Modal Title</h2>
-        <p>Modal content...</p>
-        <button>Close</button>
-        </dialog>
+    <dialog>
+    <h2>Modal Title</h2>
+    <p>Modal content...</p>
+    <button>Close</button>
+    </dialog>
     ```
   </div>
   </slot>
@@ -463,14 +463,14 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     एलिमेंट्स का वर्णन करने के लिए इसमें roles, states और properties का उपयोग किया जाता है।
     ```html
-        <button aria-label="Close" aria-expanded="true">X</button>
-        <main aria-live="polite">...</main>
-        <dialog
-        role="alertdialog"
-        aria-modal="true"
-        aria-labelledby="dialog_label"
-        aria-describedby="dialog_desc"
-        ></dialog>
+    <button aria-label="Close" aria-expanded="true">X</button>
+    <main aria-live="polite">...</main>
+    <dialog
+    role="alertdialog"
+    aria-modal="true"
+    aria-labelledby="dialog_label"
+    aria-describedby="dialog_desc"
+    ></dialog>
     ```
   </div>
   </slot>

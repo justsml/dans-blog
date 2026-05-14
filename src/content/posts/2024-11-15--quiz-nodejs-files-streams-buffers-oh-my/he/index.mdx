@@ -48,8 +48,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     מה הקוד הזה עושה?
     ```js
-        const buf = Buffer.alloc(5);
-        console.log(buf);
+    const buf = Buffer.alloc(5);
+    console.log(buf);
     ```
   </div>
   </slot>
@@ -83,8 +83,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     מה יודפס?
     ```js
-        const buf = Buffer.from([65]);
-        console.log(buf.toString());
+    const buf = Buffer.from([65]);
+    console.log(buf.toString());
     ```
   </div>
   </slot>
@@ -118,11 +118,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     מה סדר הפלט?
     ```js
-        import fs from 'fs';
-        fs.readFile('test.txt', 'utf8', (err, data) => {
-          console.log(data);
-        });
-        console.log('Done');
+    import fs from 'fs';
+    fs.readFile('test.txt', 'utf8', (err, data) => {
+      console.log(data);
+    });
+    console.log('Done');
     ```
   </div>
   </slot>
@@ -134,13 +134,13 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     כדי לחכות שהקובץ ייקרא קודם, תוכל להשתמש בגרסה מבוססת Promise:
     ```js
-        import { promises as fs } from 'fs';
+    import { promises as fs } from 'fs';
     
-        async function read() {
-          const data = await fs.readFile('test.txt', 'utf8');
-          console.log(data);
-          console.log('Done');
-        }
+    async function read() {
+      const data = await fs.readFile('test.txt', 'utf8');
+      console.log(data);
+      console.log('Done');
+    }
     ```
   </div>
   </slot>
@@ -162,8 +162,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     מה `fs.readFileSync()` מחזיר כברירת מחדל?
     ```js
-        import fs from 'fs';
-        const content = fs.readFileSync('test.txt');
+    import fs from 'fs';
+    const content = fs.readFileSync('test.txt');
     ```
   </div>
   </slot>
@@ -205,9 +205,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     - 'error': כאשר מתרחשת שגיאה
     - 'close': כאשר הזרם והמשאב הבסיסי נסגרו
     ```js
-        const readable = fs.createReadStream('file.txt');
-        readable.on('data', chunk => console.log(chunk));
-        readable.on('end', () => console.log('Done!'));
+    const readable = fs.createReadStream('file.txt');
+    readable.on('data', chunk => console.log(chunk));
+    readable.on('end', () => console.log('Done!'));
     ```
     [למד עוד על אירועי זרם](https://nodejs.org/api/stream.html#class-streamreadable)
   </div>
@@ -230,10 +230,10 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     מה הקוד הזה עושה?
     ```js
-        import fs from 'fs';
-        const readable = fs.createReadStream('source.txt');
-        const writable = fs.createWriteStream('dest.txt');
-        readable.pipe(writable);
+    import fs from 'fs';
+    const readable = fs.createReadStream('source.txt');
+    const writable = fs.createWriteStream('dest.txt');
+    readable.pipe(writable);
     ```
   </div>
   </slot>
@@ -265,8 +265,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     מה עושה האפשרות recursive?
     ```js
-        import fs from 'fs';
-        fs.mkdirSync('./a/b/c', { recursive: true });
+    import fs from 'fs';
+    fs.mkdirSync('./a/b/c', { recursive: true });
     ```
   </div>
   </slot>
@@ -299,16 +299,16 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     מה ייצא?
     ```js
-        import { Transform } from 'stream';
-        const upperCase = new Transform({
-          transform(chunk, encoding, callback) {
-            callback(null, chunk.toString().toUpperCase());
-          }
-        });
-        process.stdin
-          .pipe(upperCase)
-          .pipe(process.stdout);
-        // Input: "hello world"
+    import { Transform } from 'stream';
+    const upperCase = new Transform({
+      transform(chunk, encoding, callback) {
+        callback(null, chunk.toString().toUpperCase());
+      }
+    });
+    process.stdin
+      .pipe(upperCase)
+      .pipe(process.stdout);
+    // Input: "hello world"
     ```
   </div>
   </slot>
@@ -343,11 +343,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     כמה פעמים מובטח ש-`fs.watch()` יופעל כאשר קובץ משתנה?
     ```js
-        import fs from 'fs';
-        fs.watch('test.txt', (eventType, filename) => {
-          console.log(`${filename} was changed`);
-        });
-        // Then modify test.txt once
+    import fs from 'fs';
+    fs.watch('test.txt', (eventType, filename) => {
+      console.log(`${filename} was changed`);
+    });
+    // Then modify test.txt once
     ```
   </div>
   </slot>
@@ -384,9 +384,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     מה הפלט?
     ```js
-        const buf1 = Buffer.from('Hello');
-        const buf2 = Buffer.from('Hello');
-        console.log(buf1 === buf2);
+    const buf1 = Buffer.from('Hello');
+    const buf2 = Buffer.from('Hello');
+    console.log(buf1 === buf2);
     ```
   </div>
   </slot>
@@ -397,9 +397,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     כדי להשוות תוכן של Buffer, השתמש ב:
     ```js
-        buf1.equals(buf2)  // true
-        // or
-        Buffer.compare(buf1, buf2) === 0  // true
+    buf1.equals(buf2)  // true
+    // or
+    Buffer.compare(buf1, buf2) === 0  // true
     ```
     [למד עוד על השוואת Buffer](https://nodejs.org/api/buffer.html#bufequalsotherbuffer)
   </div>
@@ -430,13 +430,13 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     דוגמה ל-Backpressure ידני:
     ```js
-        readable.on('data', (chunk) => {
-          const canContinue = writable.write(chunk);
-          if (!canContinue) {
-            readable.pause();
-            writable.once('drain', () => readable.resume());
-          }
-        });
+    readable.on('data', (chunk) => {
+      const canContinue = writable.write(chunk);
+      if (!canContinue) {
+        readable.pause();
+        writable.once('drain', () => readable.resume());
+      }
+    });
     ```
     `pipe()` מטפל בזה באופן אוטומטי!
 
@@ -461,8 +461,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     מה הקוד הזה עושה?
     ```js
-        import fs from 'fs';
-        fs.symlinkSync('target.txt', 'link.txt');
+    import fs from 'fs';
+    fs.symlinkSync('target.txt', 'link.txt');
     ```
   </div>
   </slot>
@@ -478,7 +478,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     כדי ליצור קישור קשיח במקום:
     ```js
-        fs.linkSync('target.txt', 'hardlink.txt');
+    fs.linkSync('target.txt', 'hardlink.txt');
     ```
     [למד עוד על קישורים סימבוליים](https://nodejs.org/api/fs.html#fssymlinksync-target-path-type)
   </div>
@@ -513,13 +513,13 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     דוגמה למצב אובייקט:
     ```js
-        import { Transform } from 'stream';
-        const objectStream = new Transform({
-          objectMode: true,
-          transform(chunk, encoding, callback) {
-            callback(null, { value: chunk });
-          }
-        });
+    import { Transform } from 'stream';
+    const objectStream = new Transform({
+      objectMode: true,
+      transform(chunk, encoding, callback) {
+        callback(null, { value: chunk });
+      }
+    });
     ```
     [למד עוד על מצבי סטרים](https://nodejs.org/api/stream.html#object-mode)
   </div>
@@ -542,10 +542,10 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     איזה טיפוס הוא הפרמטר `fd` בקולבק הזה?
     ```js
-        import fs from 'fs';
-        fs.open('test.txt', 'r', (err, fd) => {
-          console.log(typeof fd);
-        });
+    import fs from 'fs';
+    fs.open('test.txt', 'r', (err, fd) => {
+      console.log(typeof fd);
+    });
     ```
   </div>
   </slot>
@@ -561,9 +561,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     תמיד זכור לסגור מתארי קבצים:
     ```js
-        fs.close(fd, (err) => {
-          if (err) throw err;
-        });
+    fs.close(fd, (err) => {
+      if (err) throw err;
+    });
     ```
     [למד עוד על מתארי קבצים](https://nodejs.org/api/fs.html#file-descriptors)
   </div>
@@ -587,9 +587,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     כמה בתים יתפוס המחרוזת הזו ב-UTF-8?
     ```js
-        const str = "Hello 🌍";
-        const buf = Buffer.from(str);
-        console.log(buf.length);
+    const str = "Hello 🌍";
+    const buf = Buffer.from(str);
+    console.log(buf.length);
     ```
   </div>
   </slot>
@@ -604,7 +604,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     כדי לראות את הבתים:
     ```js
-        console.log(buf);  // <Buffer 48 65 6c 6c 6f 20 f0 9f 8c 8d>
+    console.log(buf);  // <Buffer 48 65 6c 6c 6f 20 f0 9f 8c 8d>
     ```
     [למידע נוסף על קידוד UTF-8](https://nodejs.org/api/buffer.html#buffers-and-character-encodings)
   </div>

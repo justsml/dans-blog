@@ -48,7 +48,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     מה הערך של `result`?
     ```js
-        console.log(null ?? 100);
+    console.log(null ?? 100);
     ```
   </div>
   </slot>
@@ -83,9 +83,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     מה תהיה הפלט של הקוד הבא?
     ```js
-        const value = false;
-        const defaultVal = 42;
-        console.log(value ?? defaultVal);
+    const value = false;
+    const defaultVal = 42;
+    console.log(value ?? defaultVal);
     ```
   </div>
   </slot>
@@ -119,9 +119,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     מה הפלט של הקוד הבא?
     ```js
-        const obj = { foo: null };
-        const result = obj.foo?.bar;
-        console.log(result);
+    const obj = { foo: null };
+    const result = obj.foo?.bar;
+    console.log(result);
     ```
   </div>
   </slot>
@@ -155,9 +155,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     מה הפלט של הקוד הבא?
     ```js
-        const a = 42n;
-        const result = a * 2n;
-        console.log(result);
+    const a = 42n;
+    const result = a * 2n;
+    console.log(result);
     ```
   </div>
   </slot>
@@ -192,8 +192,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     מה יודפס?
     ```js
-        const modulePromise = import('./myModule.js');
-        console.log(typeof modulePromise);
+    const modulePromise = import('./myModule.js');
+    console.log(typeof modulePromise);
     ```
   </div>
   </slot>
@@ -227,13 +227,13 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     מה תהיה התוצאה של הקוד הבא?
     ```js
-        const promises = [
-          Promise.resolve('success'),
-          Promise.reject('error')
-        ];
-        Promise.allSettled(promises).then(results => {
-          console.log(results[0].status + ': ' + results[0].value);
-        });
+    const promises = [
+      Promise.resolve('success'),
+      Promise.reject('error')
+    ];
+    Promise.allSettled(promises).then(results => {
+      console.log(results[0].status + ': ' + results[0].value);
+    });
     ```
   </div>
   </slot>
@@ -267,8 +267,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     מה מחזירה `str.matchAll()`?
     ```js
-        const str = 'foo1bar2baz3';
-        const matches = str.matchAll(/\d/g);
+    const str = 'foo1bar2baz3';
+    const matches = str.matchAll(/\d/g);
     ```
   </div>
   </slot>
@@ -302,7 +302,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     מה מייצג `import.meta.url`?
     ```js
-        console.log(import.meta.url);
+    console.log(import.meta.url);
     ```
   </div>
   </slot>
@@ -336,9 +336,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     מה הערך של `a` לאחר ההשמה הלוגית?
     ```js
-        let a = null;
-        a ||= 10;
-        console.log(a);
+    let a = null;
+    a ||= 10;
+    console.log(a);
     ```
   </div>
   </slot>
@@ -372,9 +372,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     מה הערך של `b` לאחר ההשמה nullish?
     ```js
-        let b = null;
-        b ??= 10;
-        console.log(b);
+    let b = null;
+    b ??= 10;
+    console.log(b);
     ```
   </div>
   </slot>
@@ -408,9 +408,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     מה מספק `WeakRef`?
     ```js
-        const obj = { data: 'important' };
-        const ref = new WeakRef(obj);
-        console.log(ref.deref());
+    const obj = { data: 'important' };
+    const ref = new WeakRef(obj);
+    console.log(ref.deref());
     ```
   </div>
   </slot>

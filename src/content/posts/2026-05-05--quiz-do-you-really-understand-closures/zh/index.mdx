@@ -49,12 +49,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     这段代码会输出什么？
     ```javascript
-        function makeCounter() {
-          let count = 0;
-          return () => ++count;
-        }
-        const tick = makeCounter();
-        console.log(tick(), tick(), tick());
+    function makeCounter() {
+      let count = 0;
+      return () => ++count;
+    }
+    const tick = makeCounter();
+    console.log(tick(), tick(), tick());
     ```
   </div>
   </slot>
@@ -84,13 +84,13 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     这段代码会输出什么？
     ```javascript
-        function makeCounter() {
-          let count = 0;
-          return () => ++count;
-        }
-        const a = makeCounter();
-        const b = makeCounter();
-        console.log(a(), b());
+    function makeCounter() {
+      let count = 0;
+      return () => ++count;
+    }
+    const a = makeCounter();
+    const b = makeCounter();
+    console.log(a(), b());
     ```
   </div>
   </slot>
@@ -122,9 +122,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     100ms后会输出什么？
     ```javascript
-        for (var i = 0; i < 5; i++) {
-          setTimeout(() => console.log(i), 100);
-        }
+    for (var i = 0; i < 5; i++) {
+      setTimeout(() => console.log(i), 100);
+    }
     ```
   </div>
   </slot>
@@ -137,9 +137,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     解决方案是使用`let`（块作用域，每次迭代创建新绑定）或用IIFE包裹来捕获当前值：
     ```javascript
-        for (let i = 0; i < 5; i++) {
-          setTimeout(() => console.log(i), 100); // 0, 1, 2, 3, 4 ✓
-        }
+    for (let i = 0; i < 5; i++) {
+      setTimeout(() => console.log(i), 100); // 0, 1, 2, 3, 4 ✓
+    }
     ```
   </div>
   </slot>
@@ -161,9 +161,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     相同的循环，不同的关键字。会输出什么？
     ```javascript
-        for (let i = 0; i < 5; i++) {
-          setTimeout(() => console.log(i), 100);
-        }
+    for (let i = 0; i < 5; i++) {
+      setTimeout(() => console.log(i), 100);
+    }
     ```
   </div>
   </slot>
@@ -172,9 +172,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     `let`在`for`循环中是特殊的。规范规定：每次迭代都会获得`i`的**新绑定**。就像循环秘密地做了这件事：
     ```javascript
-        { let i = 0; setTimeout(() => console.log(i), 100) }
-        { let i = 1; setTimeout(() => console.log(i), 100) }
-        // ...
+    { let i = 0; setTimeout(() => console.log(i), 100) }
+    { let i = 1; setTimeout(() => console.log(i), 100) }
+    // ...
     ```
     因此五个回调函数分别闭包了五个不同的变量。结果：`0, 1, 2, 3, 4`。
   </div>
@@ -197,14 +197,14 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     这段代码会输出什么？
     ```javascript
-        function wrap() {
-          const obj = { x: 1 };
-          const getObj = () => obj;
-          obj.x = 99;
-          return getObj;
-        }
-        const get = wrap();
-        console.log(get(), get());
+    function wrap() {
+      const obj = { x: 1 };
+      const getObj = () => obj;
+      obj.x = 99;
+      return getObj;
+    }
+    const get = wrap();
+    console.log(get(), get());
     ```
   </div>
   </slot>
@@ -234,20 +234,20 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     当按钮被多次点击时，这个React组件会表现出什么行为？
     ```jsx
-        function Counter() {
-          const [count, setCount] = useState(0);
+    function Counter() {
+      const [count, setCount] = useState(0);
 
-          useEffect(() => {
-            const id = setInterval(() => {
-              console.log('count is', count);
-            }, 1000);
-            return () => clearInterval(id);
-          }, []); // empty deps
+      useEffect(() => {
+        const id = setInterval(() => {
+          console.log('count is', count);
+        }, 1000);
+        return () => clearInterval(id);
+      }, []); // empty deps
 
-          return <button onClick={() => setCount(c => c + 1)}>
-            Click ({count})
-          </button>;
-        }
+      return <button onClick={() => setCount(c => c + 1)}>
+        Click ({count})
+      </button>;
+    }
     ```
   </div>
   </slot>
@@ -260,9 +260,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     修复方法是将`count`添加到依赖数组中（重新创建间隔）或使用ref：
     ```jsx
-        const countRef = useRef(count);
-        useEffect(() => { countRef.current = count; }, [count]);
-        // then use countRef.current inside the interval
+    const countRef = useRef(count);
+    useEffect(() => { countRef.current = count; }, [count]);
+    // then use countRef.current inside the interval
     ```
   </div>
   </slot>
@@ -284,18 +284,18 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     等等——仔细读。实际上会发生什么？
     ```javascript
-        const bank = (() => {
-          let balance = 0;
-          return {
-            deposit: (n) => (balance += n),
-            withdraw: (n) => (balance -= n),
-            getBalance: () => balance,
-          };
-        })();
+    const bank = (() => {
+      let balance = 0;
+      return {
+        deposit: (n) => (balance += n),
+        withdraw: (n) => (balance -= n),
+        getBalance: () => balance,
+      };
+    })();
 
-        bank.deposit(100);
-        bank.withdraw(40);
-        console.log(bank.getBalance());
+    bank.deposit(100);
+    bank.withdraw(40);
+    console.log(bank.getBalance());
     ```
   </div>
   </slot>
@@ -306,7 +306,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     这是**模块模式**——一个返回闭包对象的立即执行函数表达式（IIFE）。这三个方法共享同一个`balance`绑定。这个变量是真正的私有属性：你无法从外部访问`balance`。
     ```javascript
-        console.log(bank.balance); // undefined
+    console.log(bank.balance); // undefined
     ```
     在class出现之前，这就是JavaScript中*最常用*的封装状态的方式。你仍然会在遗留代码库和工具库中看到这种模式。
   </div>
@@ -329,12 +329,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     这段代码的问题是什么？
     ```javascript
-        function attachHandler(element) {
-          const data = new Array(100_000).fill('🔥');
-          element.addEventListener('click', () => {
-            console.log('clicked!', data.length);
-          });
-        }
+    function attachHandler(element) {
+      const data = new Array(100_000).fill('🔥');
+      element.addEventListener('click', () => {
+        console.log('clicked!', data.length);
+      });
+    }
     ```
   </div>
   </slot>
@@ -347,17 +347,17 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     修复方案：除非确实需要，在长期存在的监听器中不要捕获大数据，当所属UI被销毁时移除监听器：
     ```javascript
-        function attachHandler(element) {
-          const data = new Array(100_000).fill('🔥');
-          // do something with data...
+    function attachHandler(element) {
+      const data = new Array(100_000).fill('🔥');
+      // do something with data...
 
-          const onClick = () => {
-            console.log('clicked!');
-          };
+      const onClick = () => {
+        console.log('clicked!');
+      };
 
-          element.addEventListener('click', onClick);
-          return () => element.removeEventListener('click', onClick);
-        }
+      element.addEventListener('click', onClick);
+      return () => element.removeEventListener('click', onClick);
+    }
     ```
     现代V8引擎在这方面比以前有所改进。但在长期存在的单页应用（SPA）中，如果存在大量事件监听器，这种模式仍然会引发问题。
   </div>
@@ -380,18 +380,18 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     这段代码会输出什么？
     ```javascript
-        const user = {
-          name: 'Dan',
-          greetArrow: () => console.log(this?.name),
-          greetRegular() {
-            const inner = () => console.log(this?.name);
-            inner();
-          },
-        };
+    const user = {
+      name: 'Dan',
+      greetArrow: () => console.log(this?.name),
+      greetRegular() {
+        const inner = () => console.log(this?.name);
+        inner();
+      },
+    };
 
-        user.greetArrow();
-        const fn = user.greetRegular;
-        fn();
+    user.greetArrow();
+    const fn = user.greetRegular;
+    fn();
     ```
   </div>
   </slot>
@@ -427,24 +427,24 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     `expensive()` 实际被调用多少次？
     ```javascript
-        function memoize(fn) {
-          const cache = new Map();
-          return (arg) => {
-            if (cache.has(arg)) return cache.get(arg);
-            const result = fn(arg);
-            cache.set(arg, result);
-            return result;
-          };
-        }
+    function memoize(fn) {
+      const cache = new Map();
+      return (arg) => {
+        if (cache.has(arg)) return cache.get(arg);
+        const result = fn(arg);
+        cache.set(arg, result);
+        return result;
+      };
+    }
 
-        let calls = 0;
-        const expensive = (n) => { calls++; return n * 2; };
-        const fast = memoize(expensive);
+    let calls = 0;
+    const expensive = (n) => { calls++; return n * 2; };
+    const fast = memoize(expensive);
 
-        fast(5);
-        fast(5);
-        fast(5);
-        console.log(calls);
+    fast(5);
+    fast(5);
+    fast(5);
+    console.log(calls);
     ```
   </div>
   </slot>

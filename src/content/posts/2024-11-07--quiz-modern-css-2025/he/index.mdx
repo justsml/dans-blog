@@ -48,12 +48,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     מהי הדרך הנכונה להשתמש במשתנה CSS בשם `--main-color` כדי לקבוע את צבע הרקע של אלמנט?
     ```css
-        :root {
-          --main-color: blue;
-        }
-        div {
-          /* How do we use --main-color here? */
-        }
+    :root {
+      --main-color: blue;
+    }
+    div {
+      /* How do we use --main-color here? */
+    }
     ```
   </div>
   </slot>
@@ -85,9 +85,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     אם רוחב האלמנט ההורה/מכיל הוא 400px, מה יהיה הרוחב המחושב של האלמנט הבא?
     ```css
-        div {
-          width: min(250px, 50%);
-        }
+    div {
+      width: min(250px, 50%);
+    }
     ```
   </div>
   </slot>
@@ -101,9 +101,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     - `50%` מ-`400px` הוא `200px`
     - `250px` הוא כבר בפיקסלים
     ```css
-        /* This gets computed to */
-        width: min(250px, 200px);
-        /* -> 200px wins */
+    /* This gets computed to */
+    width: min(250px, 200px);
+    /* -> 200px wins */
     ```
     הפונקציה `min()` שימושית במיוחד לעיצוב רספונסיבי, שבו ניתן להבטיח שרכיב (או גודל גופן) לא יחרוג מגבול מסוים.
   </div>
@@ -128,9 +128,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     בהינתן מיכל ברוחב 200px, מה יהיה הרוחב המחושב של ה-`<div>`?
     ```css
-        div {
-          width: max(50px, 10%, 6rem);
-        }
+    div {
+      width: max(50px, 10%, 6rem);
+    }
     ```
   </div>
   </slot>
@@ -145,9 +145,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     - `10%` מ-`200px` הוא `20px`
     - `6rem` הוא `6 * 16px` (גודל הגופן הבסיסי) שהוא `96px`
     ```css
-        /* This gets computed to */
-        width: max(50px, 20px, 96px);
-        /* -> 96px wins */
+    /* This gets computed to */
+    width: max(50px, 20px, 96px);
+    /* -> 96px wins */
     ```
   </div>
   </slot>
@@ -169,7 +169,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     מה ההשפעה של שימוש ב-`minmax(100px, 200px)` עבור מסלול Grid ב-CSS?
     ```css
-        grid-template-columns: minmax(100px, 200px);
+    grid-template-columns: minmax(100px, 200px);
     ```
   </div>
   </slot>
@@ -200,9 +200,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     באיזה צבע יהיה הרקע עבור ה-CSS הבא?
     ```css
-        div {
-          background: var(--primary, olivedrab);
-        }
+    div {
+      background: var(--primary, olivedrab);
+    }
     ```
   </div>
   </slot>
@@ -233,9 +233,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     מה עושה הפונקציה `clamp()`?
     ```css
-        .card {
-          width: clamp(200px, 50vw, 500px);
-        }
+    .card {
+      width: clamp(200px, 50vw, 500px);
+    }
     ```
   </div>
   </slot>
@@ -294,13 +294,13 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     האם זה שימוש נכון בקינון CSS טבעי?
     ```css
-        .container {
-          color: black;
-          .title {
-            color: white;
-            background: black;
-          }
-        }
+    .container {
+      color: black;
+      .title {
+        color: white;
+        background: black;
+      }
+    }
     ```
   </div>
   </slot>
@@ -330,13 +330,13 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     איזה צבע רקע יוחל על `div`ים שהם ילדים ישירים של `.container`?
     ```css
-        .container {
-          background-color: red;
-          > div {
-            background-color: white;
-          }
-          background-color: blue !important;
-        }
+    .container {
+      background-color: red;
+      > div {
+        background-color: white;
+      }
+      background-color: blue !important;
+    }
     ```
   </div>
   </slot>
@@ -373,7 +373,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     ניתן להגדיר משתני CSS באמצעות מחלקות ו-JavaScript. אפשר אפילו להגדיר אותם 'אחרי' שהם כבר בשימוש טכני.
     ```js
-        document.documentElement.style.setProperty('--main-color', 'blue');
+    document.documentElement.style.setProperty('--main-color', 'blue');
     ```
     זה ישנה את הערך של `--main-color` ל-`blue` עבור כל המסמך.
 
@@ -400,12 +400,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     מה יהיה הרוחב המחושב של האלמנט?
     ```css
-        :root {
-          --base-width: 100px;
-        }
-        div {
-          width: calc(var(--base-width) + 10px);
-        }
+    :root {
+      --base-width: 100px;
+    }
+    div {
+      width: calc(var(--base-width) + 10px);
+    }
     ```
   </div>
   </slot>

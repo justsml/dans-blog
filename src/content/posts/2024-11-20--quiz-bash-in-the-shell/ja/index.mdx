@@ -54,7 +54,7 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     Bashでの変数宣言は`=`の前後にスペースを付けません。例えば：
     ```bash
-        name=Alice
+    name=Alice
     ```
     これは`name`変数に`"Alice"`を代入します。
 
@@ -93,7 +93,7 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 
     シングルクォート内ではシングルクォートをエスケープする必要があります。`'\''`というクォート→エスケープ→クォートのシーケンスで出力できます：
     ```plaintext
-        It's 🔨 Time!
+    It's 🔨 Time!
     ```
     他の方法もありますが、これは最も一般的な方法です。
   </div>
@@ -118,7 +118,7 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   <div className="question">
     このコマンドは何を出力しますか？
     ```bash
-        echo c{a,b}t
+    echo c{a,b}t
     ```
   </div>
   </slot>
@@ -128,7 +128,7 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 
     ここでは`c{a,b}t`は次のように展開されます：
     ```plaintext
-        cat cbt
+    cat cbt
     ```
   </div>
   </slot>
@@ -152,8 +152,8 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   <div className="question">
     では、これは何を出力するでしょうか？
     ```bash
-        price="$100"
-        echo "Cost: $price"
+    price="$100"
+    echo "Cost: $price"
     ```
   </div>
   </slot>
@@ -165,8 +165,8 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 
     リテラルの`$`文字を出力するには、シングルクォートを使用するか、バックスラッシュでエスケープしてください（`\`）：
     ```bash
-        price="\$100"
-        echo "Cost: $price"
+    price="\$100"
+    echo "Cost: $price"
     ```
   </div>
   </slot>
@@ -189,8 +189,8 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   <div className="question">
     ここでは何が起こっている？
     ```bash
-        str="Bark bark"
-        echo ${str/bark/meow}
+    str="Bark bark"
+    echo ${str/bark/meow}
     ```
   </div>
   </slot>
@@ -198,7 +198,7 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     `${var/pattern/replacement}` 構文は、`pattern` の最初の出現を `replacement` で置換します。ここでの出力は:
     ```plaintext
-        Bark meow
+    Bark meow
     ```
     これは大文字小文字を区別します。`bark` と `Bark` の両方を処理するには、`${var/[Bb]ark/Bark}` のようなパターンを使用するか、置換前に文字列を正規化してください。
 
@@ -233,8 +233,8 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 
     例:
     ```bash
-        username="@justsml"
-        echo ${#username} # => 8
+    username="@justsml"
+    echo ${#username} # => 8
     ```
     `wc`は機能しますが、これは厳密にBashの一部ではありません。
 
@@ -263,11 +263,11 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   <div className="question">
     ファイル`cats.txt`が存在する場合、このスクリプトは何を出力しますか？
     ```bash
-        if [ -e cats.txt]; then
-          echo "File exists"
-        else
-          echo "File does not exist"
-        fi
+    if [ -e cats.txt]; then
+      echo "File exists"
+    else
+      echo "File does not exist"
+    fi
     ```
   </div>
   </slot>
@@ -281,11 +281,11 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 
     正しい構文は次の通りです:
     ```bash
-        if [ -e example.txt ]; then
-          echo "File exists"
-        else
-          echo "File does not exist"
-        fi
+    if [ -e example.txt ]; then
+      echo "File exists"
+    else
+      echo "File does not exist"
+    fi
     ```
     注: 条件式には**二重括弧`[[ ]]`**の使用を推奨します。[BashFAQを参照してください。](https://mywiki.wooledge.org/BashFAQ/031)
   </div>
@@ -308,13 +308,13 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   <div className="question">
     Bashで文字列を比較する方法は？
     ```bash
-        cat1="Rosie"
-        cat2="Sunflower"
-        if [ "$cat1" === "$cat2" ]; then
-          echo "Same cat"
-        else
-          echo "Different cats"
-        fi
+    cat1="Rosie"
+    cat2="Sunflower"
+    if [ "$cat1" === "$cat2" ]; then
+      echo "Same cat"
+    else
+      echo "Different cats"
+    fi
     ```
   </div>
   </slot>
@@ -349,10 +349,10 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   <div className="question">
     このスクリプトは何を出力しますか？
     ```bash
-        function greet () {
-          echo "$1"
-        }
-        greet Hi Dan
+    function greet () {
+      echo "$1"
+    }
+    greet Hi Dan
     ```
   </div>
   </slot>
@@ -388,8 +388,8 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     パイプ演算子`|`は、1つのコマンドの出力を別のコマンドの入力に接続します。例えば:
     ```bash
-        echo "Mr. Levy 👨🏻‍🔬" | wc -m
-        # => 14
+    echo "Mr. Levy 👨🏻‍🔬" | wc -m
+    # => 14
     ```
   </div>
   </slot>
@@ -419,14 +419,14 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 
     簡単な計算に使用できます:
     ```bash
-        ((result = 2 + 2))
-        echo $result # => 4
+    ((result = 2 + 2))
+    echo $result # => 4
     ```
     条件式にも利用可能です:
     ```bash
-        if (( 2 > 1 )); then
-          echo "2 is greater than 1"
-        fi
+    if (( 2 > 1 )); then
+      echo "2 is greater than 1"
+    fi
     ```
     浮動小数点演算が必要な場合は、[`bc`](https://www.gnu.org/software/bc/manual/html_mono/bc.html)や[`awk`](https://www.gnu.org/software/gawk/manual/gawk.html)の利用を検討してください。
   </div>
@@ -480,8 +480,8 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   <div className="question">
     このスクリプトで`:`はどのような働きをするか？
     ```bash
-        rosie="Bad cat, good cat"
-        echo ${rosie:9}
+    rosie="Bad cat, good cat"
+    echo ${rosie:9}
     ```
   </div>
   </slot>
@@ -489,7 +489,7 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     `${var:offset}`という構文は、`offset`から始まる部分文字列を抽出します。ここでは、出力は次のようになります：
     ```plaintext
-        good cat
+    good cat
     ```
     特定の長さの部分文字列を抽出するには`${var:offset:length}`を使用します。
 
@@ -547,8 +547,8 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     `$(ls -l)` の構文は**括弧内**のコマンドを実行し、出力を置換します。例えば：
     ```bash
-        echo "Today is $(date +%F)"
-        # => Today is 2029-12-31
+    echo "Today is $(date +%F)"
+    # => Today is 2029-12-31
     ```
     1番目のオプションは**シングルクォート** `'` を使用しています。これは展開を防ぎ、`'$(date +%F)'` は単に文字列 `$(date +%F)` を出力します。
 

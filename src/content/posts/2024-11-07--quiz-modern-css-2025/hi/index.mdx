@@ -49,12 +49,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     `--main-color` नामक CSS वेरिएबल का उपयोग करके किसी तत्व की पृष्ठभूमि रंग सेट करने का सही तरीका क्या है?
     ```css
-        :root {
-          --main-color: blue;
-        }
-        div {
-          /* How do we use --main-color here? */
-        }
+    :root {
+      --main-color: blue;
+    }
+    div {
+      /* How do we use --main-color here? */
+    }
     ```
   </div>
   </slot>
@@ -85,9 +85,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     यदि पैरेंट/कंटेनर की चौड़ाई 400px है, तो नीचे दिए गए तत्व की गणना की गई चौड़ाई क्या होगी?
     ```css
-        div {
-          width: min(250px, 50%);
-        }
+    div {
+      width: min(250px, 50%);
+    }
     ```
   </div>
   </slot>
@@ -100,9 +100,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     - `400px` का `50%` `200px` है
     - `250px` पहले से ही पिक्सल में है
     ```css
-        /* This gets computed to */
-        width: min(250px, 200px);
-        /* -> 200px wins */
+    /* This gets computed to */
+    width: min(250px, 200px);
+    /* -> 200px wins */
     ```
     `min()` फ़ंक्शन रिस्पॉन्सिव डिज़ाइन में विशेष रूप से उपयोगी है, जहाँ आप सुनिश्चित कर सकते हैं कि कोई घटक (या फ़ॉन्ट आकार) किसी निश्चित सीमा से अधिक न हो।
   </div>
@@ -127,9 +127,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     यदि कंटेनर की चौड़ाई 200px है, तो `<div>` की गणना की गई चौड़ाई क्या होगी?
     ```css
-        div {
-          width: max(50px, 10%, 6rem);
-        }
+    div {
+      width: max(50px, 10%, 6rem);
+    }
     ```
   </div>
   </slot>
@@ -143,9 +143,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     - `200px` का `10%` `20px` है
     - `6rem` `6 * 16px` (डिफ़ॉल्ट फ़ॉन्ट आकार) है, जो `96px` है
     ```css
-        /* This gets computed to */
-        width: max(50px, 20px, 96px);
-        /* -> 96px wins */
+    /* This gets computed to */
+    width: max(50px, 20px, 96px);
+    /* -> 96px wins */
     ```
   </div>
   </slot>
@@ -167,7 +167,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     CSS ग्रिड ट्रैक के लिए `minmax(100px, 200px)` उपयोग करने का प्रभाव क्या है?
     ```css
-        grid-template-columns: minmax(100px, 200px);
+    grid-template-columns: minmax(100px, 200px);
     ```
   </div>
   </slot>
@@ -197,9 +197,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     निम्नलिखित CSS के लिए बैकग्राउंड का रंग क्या होगा?
     ```css
-        div {
-          background: var(--primary, olivedrab);
-        }
+    div {
+      background: var(--primary, olivedrab);
+    }
     ```
   </div>
   </slot>
@@ -229,9 +229,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     `clamp()` क्या करता है?
     ```css
-        .card {
-          width: clamp(200px, 50vw, 500px);
-        }
+    .card {
+      width: clamp(200px, 50vw, 500px);
+    }
     ```
   </div>
   </slot>
@@ -288,13 +288,13 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     क्या यह मूल CSS नेस्टिंग का सही उपयोग है?
     ```css
-        .container {
-          color: black;
-          .title {
-            color: white;
-            background: black;
-          }
-        }
+    .container {
+      color: black;
+      .title {
+        color: white;
+        background: black;
+      }
+    }
     ```
   </div>
   </slot>
@@ -323,13 +323,13 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     `.container` के डायरेक्ट चाइल्ड `div` पर कौन सा बैकग्राउंड रंग लागू होगा?
     ```css
-        .container {
-          background-color: red;
-          > div {
-            background-color: white;
-          }
-          background-color: blue !important;
-        }
+    .container {
+      background-color: red;
+      > div {
+        background-color: white;
+      }
+      background-color: blue !important;
+    }
     ```
   </div>
   </slot>
@@ -364,7 +364,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     CSS वेरिएबल्स को क्लासेज़ और जावास्क्रिप्ट का उपयोग करके सेट किया जा सकता है। इन्हें यहाँ तक कि तकनीकी रूप से उपयोग होने के बाद भी परिभाषित किया जा सकता है।
     ```js
-        document.documentElement.style.setProperty('--main-color', 'blue');
+    document.documentElement.style.setProperty('--main-color', 'blue');
     ```
     यह पूरे दस्तावेज़ के लिए `--main-color` का मान `blue` में बदल देगा.
 
@@ -391,12 +391,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     इस तत्व की गणना की गई चौड़ाई क्या होगी?
     ```css
-        :root {
-          --base-width: 100px;
-        }
-        div {
-          width: calc(var(--base-width) + 10px);
-        }
+    :root {
+      --base-width: 100px;
+    }
+    div {
+      width: calc(var(--base-width) + 10px);
+    }
     ```
   </div>
   </slot>

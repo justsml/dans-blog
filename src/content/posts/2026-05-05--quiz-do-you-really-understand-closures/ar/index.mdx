@@ -49,12 +49,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     ما الذي يُطبع هنا؟
     ```javascript
-        function makeCounter() {
-          let count = 0;
-          return () => ++count;
-        }
-        const tick = makeCounter();
-        console.log(tick(), tick(), tick());
+    function makeCounter() {
+      let count = 0;
+      return () => ++count;
+    }
+    const tick = makeCounter();
+    console.log(tick(), tick(), tick());
     ```
   </div>
   </slot>
@@ -83,13 +83,13 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     ما هو الناتج الذي سيُطبع؟
     ```javascript
-        function makeCounter() {
-          let count = 0;
-          return () => ++count;
-        }
-        const a = makeCounter();
-        const b = makeCounter();
-        console.log(a(), b());
+    function makeCounter() {
+      let count = 0;
+      return () => ++count;
+    }
+    const a = makeCounter();
+    const b = makeCounter();
+    console.log(a(), b());
     ```
   </div>
   </slot>
@@ -120,9 +120,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     ما الذي يُسجَّل بعد 100 مللي ثانية؟
     ```javascript
-        for (var i = 0; i < 5; i++) {
-          setTimeout(() => console.log(i), 100);
-        }
+    for (var i = 0; i < 5; i++) {
+      setTimeout(() => console.log(i), 100);
+    }
     ```
   </div>
   </slot>
@@ -134,9 +134,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     الحل هو استخدام `let` (نطاق كتلي، ارتباط جديد في كل تكرار) أو تغليفها في IIFE لالتقاط القيمة الحالية:
     ```javascript
-        for (let i = 0; i < 5; i++) {
-          setTimeout(() => console.log(i), 100); // 0, 1, 2, 3, 4 ✓
-        }
+    for (let i = 0; i < 5; i++) {
+      setTimeout(() => console.log(i), 100); // 0, 1, 2, 3, 4 ✓
+    }
     ```
   </div>
   </slot>
@@ -158,9 +158,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     نفس الحلقة، كلمة مفتاح مختلفة. ماذا يُسجَّل؟
     ```javascript
-        for (let i = 0; i < 5; i++) {
-          setTimeout(() => console.log(i), 100);
-        }
+    for (let i = 0; i < 5; i++) {
+      setTimeout(() => console.log(i), 100);
+    }
     ```
   </div>
   </slot>
@@ -168,9 +168,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     `let` في حلقة `for` خاصة. المواصفات تقول: كل تكرار يحصل على **ربط جديد** لـ `i`. كأن الحلقة تقوم سراً بهذا:
     ```javascript
-        { let i = 0; setTimeout(() => console.log(i), 100) }
-        { let i = 1; setTimeout(() => console.log(i), 100) }
-        // ...
+    { let i = 0; setTimeout(() => console.log(i), 100) }
+    { let i = 1; setTimeout(() => console.log(i), 100) }
+    // ...
     ```
     لذا الخمس دوال رد نداء تغلق على خمس متغيرات متميزة. النتيجة: `0, 1, 2, 3, 4`.
   </div>
@@ -193,14 +193,14 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     ماذا يسجل هذا؟
     ```javascript
-        function wrap() {
-          const obj = { x: 1 };
-          const getObj = () => obj;
-          obj.x = 99;
-          return getObj;
-        }
-        const get = wrap();
-        console.log(get(), get());
+    function wrap() {
+      const obj = { x: 1 };
+      const getObj = () => obj;
+      obj.x = 99;
+      return getObj;
+    }
+    const get = wrap();
+    console.log(get(), get());
     ```
   </div>
   </slot>
@@ -229,20 +229,20 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     ما السلوك الذي يظهره هذا المكوّن React عندما يتم النقر على الزر عدة مرات؟
     ```jsx
-        function Counter() {
-          const [count, setCount] = useState(0);
+    function Counter() {
+      const [count, setCount] = useState(0);
 
-          useEffect(() => {
-            const id = setInterval(() => {
-              console.log('count is', count);
-            }, 1000);
-            return () => clearInterval(id);
-          }, []); // empty deps
+      useEffect(() => {
+        const id = setInterval(() => {
+          console.log('count is', count);
+        }, 1000);
+        return () => clearInterval(id);
+      }, []); // empty deps
 
-          return <button onClick={() => setCount(c => c + 1)}>
-            Click ({count})
-          </button>;
-        }
+      return <button onClick={() => setCount(c => c + 1)}>
+        Click ({count})
+      </button>;
+    }
     ```
   </div>
   </slot>
@@ -254,9 +254,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     أصلحه بإضافة `count` إلى مصفوفة الاعتماديات (يعيد إنشاء الفاصل) أو باستخدام مرجع (`ref`):
     ```jsx
-        const countRef = useRef(count);
-        useEffect(() => { countRef.current = count; }, [count]);
-        // then use countRef.current inside the interval
+    const countRef = useRef(count);
+    useEffect(() => { countRef.current = count; }, [count]);
+    // then use countRef.current inside the interval
     ```
   </div>
   </slot>
@@ -278,18 +278,18 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     انتظر — اقرأ بعناية. ماذا يحدث فعلاً؟
     ```javascript
-        const bank = (() => {
-          let balance = 0;
-          return {
-            deposit: (n) => (balance += n),
-            withdraw: (n) => (balance -= n),
-            getBalance: () => balance,
-          };
-        })();
+    const bank = (() => {
+      let balance = 0;
+      return {
+        deposit: (n) => (balance += n),
+        withdraw: (n) => (balance -= n),
+        getBalance: () => balance,
+      };
+    })();
 
-        bank.deposit(100);
-        bank.withdraw(40);
-        console.log(bank.getBalance());
+    bank.deposit(100);
+    bank.withdraw(40);
+    console.log(bank.getBalance());
     ```
   </div>
   </slot>
@@ -299,7 +299,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     هذا هو **نمط الوحدة** — دالة تُستدعى فوراً (IIFE) تُعيد كائنًا من الإغلاقات. جميع الطرق الثلاثة تغلق على نفس ربط `balance`. إنه خاص حقًا: لا يمكنك الوصول إلى `balance` من الخارج.
     ```javascript
-        console.log(bank.balance); // undefined
+    console.log(bank.balance); // undefined
     ```
     قبل وجود الفئات، كان هذا هو *الطريقة* لتغليف الحالة في جافاسكريبت. لا يزال يظهر في قواعد الشيفرة القديمة ومكتبات الأدوات.
   </div>
@@ -322,12 +322,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     ما المشكلة في هذا الكود؟
     ```javascript
-        function attachHandler(element) {
-          const data = new Array(100_000).fill('🔥');
-          element.addEventListener('click', () => {
-            console.log('clicked!', data.length);
-          });
-        }
+    function attachHandler(element) {
+      const data = new Array(100_000).fill('🔥');
+      element.addEventListener('click', () => {
+        console.log('clicked!', data.length);
+      });
+    }
     ```
   </div>
   </slot>
@@ -339,17 +339,17 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     الحل: لا تلتقط بيانات كبيرة في مستمعين طويلي العمر إلا إذا كنت بحاجة فعلًا إليها، وأزل المستمعين عندما يتم تفكيك واجهة المستخدم المالكة:
     ```javascript
-        function attachHandler(element) {
-          const data = new Array(100_000).fill('🔥');
-          // do something with data...
+    function attachHandler(element) {
+      const data = new Array(100_000).fill('🔥');
+      // do something with data...
 
-          const onClick = () => {
-            console.log('clicked!');
-          };
+      const onClick = () => {
+        console.log('clicked!');
+      };
 
-          element.addEventListener('click', onClick);
-          return () => element.removeEventListener('click', onClick);
-        }
+      element.addEventListener('click', onClick);
+      return () => element.removeEventListener('click', onClick);
+    }
     ```
     محرك V8 الحديث أفضل في هذا الأمر مقارنةً بالماضي. لكن في تطبيقات SPA طويلة العمر مع العديد من مستمعي الأحداث، لا يزال هذا النمط يسبب مشاكل للناس.
   </div>
@@ -372,18 +372,18 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     ماذا يُسجِّل هذا؟
     ```javascript
-        const user = {
-          name: 'Dan',
-          greetArrow: () => console.log(this?.name),
-          greetRegular() {
-            const inner = () => console.log(this?.name);
-            inner();
-          },
-        };
+    const user = {
+      name: 'Dan',
+      greetArrow: () => console.log(this?.name),
+      greetRegular() {
+        const inner = () => console.log(this?.name);
+        inner();
+      },
+    };
 
-        user.greetArrow();
-        const fn = user.greetRegular;
-        fn();
+    user.greetArrow();
+    const fn = user.greetRegular;
+    fn();
     ```
   </div>
   </slot>
@@ -418,24 +418,24 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     كم مرة يتم نداء `expensive()` فعليًا؟
     ```javascript
-        function memoize(fn) {
-          const cache = new Map();
-          return (arg) => {
-            if (cache.has(arg)) return cache.get(arg);
-            const result = fn(arg);
-            cache.set(arg, result);
-            return result;
-          };
-        }
+    function memoize(fn) {
+      const cache = new Map();
+      return (arg) => {
+        if (cache.has(arg)) return cache.get(arg);
+        const result = fn(arg);
+        cache.set(arg, result);
+        return result;
+      };
+    }
 
-        let calls = 0;
-        const expensive = (n) => { calls++; return n * 2; };
-        const fast = memoize(expensive);
+    let calls = 0;
+    const expensive = (n) => { calls++; return n * 2; };
+    const fast = memoize(expensive);
 
-        fast(5);
-        fast(5);
-        fast(5);
-        console.log(calls);
+    fast(5);
+    fast(5);
+    fast(5);
+    console.log(calls);
     ```
   </div>
   </slot>

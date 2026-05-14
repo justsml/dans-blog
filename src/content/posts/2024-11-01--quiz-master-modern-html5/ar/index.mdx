@@ -85,14 +85,14 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     هذا مفيد عند عرض بيانات مفتاح-قيمة. معلومات الملف الشخصي والإعدادات والإحصائيات أمثلة شائعة.
     ```html
-        <dl>
-        <dt>JS</dt>
-        <dd>Client-side</dd>
-        <dd>Server-side</dd>
+    <dl>
+    <dt>JS</dt>
+    <dd>Client-side</dd>
+    <dd>Server-side</dd>
 
-        <dt>HTML</dt>
-        <dd>Client-side</dd>
-        </dl>
+    <dt>HTML</dt>
+    <dd>Client-side</dd>
+    </dl>
     ```
   </div>
   </slot>
@@ -122,10 +122,10 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     هذا مفيد للصور والرسوم البيانية ومقتطفات التعليمات البرمجية وغيرها.
     ```html
-        <figure>
-        <img src="../image.jpg" alt="Description of image">
-        <figcaption>Image caption</figcaption>
-        </figure>
+    <figure>
+    <img src="../image.jpg" alt="Description of image">
+    <figcaption>Image caption</figcaption>
+    </figure>
     ```
   </div>
   </slot>
@@ -157,14 +157,14 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     يمكنك استخدام عدة عناصر `<article>` في صفحة واحدة (مثلاً في صفحات التمرير اللانهائي). أو يمكنك تداخلها داخل بعضها البعض لإنشاء تسلسل هرمي من «المحتوى المستقل».
     ```html
-        <article>
-        <h2>Article Title</h2>
-        <p>Article content...</p>
-        <article class="discussion">
-        <h3>Comment by User</h3>
-        <p>Comment content...</p>
-        </article>
-        </article>
+    <article>
+    <h2>Article Title</h2>
+    <p>Article content...</p>
+    <article class="discussion">
+    <h3>Comment by User</h3>
+    <p>Comment content...</p>
+    </article>
+    </article>
     ```
   </div>
   </slot>
@@ -194,18 +194,18 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     هذا مفيد لتجميع عناصر النموذج ذات الصلة، مثل قسم لعنوان الشحن أو تفاصيل الدفع.
     ```html
-        <fieldset>
-        <legend>Shipping Address</legend>
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name">
-        ...
-        </fieldset>
-        <fieldset>
-        <legend>Payment Details</legend>
-        <label for="card">Card Number:</label>
-        <input type="text" id="card" name="card">
-        ...
-        </fieldset>
+    <fieldset>
+    <legend>Shipping Address</legend>
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name">
+    ...
+    </fieldset>
+    <fieldset>
+    <legend>Payment Details</legend>
+    <label for="card">Card Number:</label>
+    <input type="text" id="card" name="card">
+    ...
+    </fieldset>
     ```
   </div>
   </slot>
@@ -235,8 +235,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     قد يبدو مشابهًا لشريط [`<progress>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/progress)، لكن أشرطة التقدم **دائمًا** تبدأ من الصفر. لذلك تُظهر عناصر `<progress>` `نسبة الإنجاز`، بينما يُظهر `<meter>` أي قيمة ضمن نطاق قابل للتحديد.
     ```html
-        <meter min="-60" max="130" value="75" /> 75°F
-        <meter min="0" max="100" value="75" /> 75%
+    <meter min="-60" max="130" value="75" /> 75°F
+    <meter min="0" max="100" value="75" /> 75%
     ```
   </div>
   </slot>
@@ -266,10 +266,10 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     يُستخدم تحديدًا مع عناصر [`<video>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video) و [`<audio>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/audio) و [`<picture>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/picture)، مما يسمح للمتصفح باختيار التنسيق الأنسب.
     ```html
-        <video controls>
-        <source src="movie.mp4" type="video/mp4">
-        <source src="movie.ogg" type="video/ogg">
-        </video>
+    <video controls>
+    <source src="movie.mp4" type="video/mp4">
+    <source src="movie.ogg" type="video/ogg">
+    </video>
     ```
   </div>
   </slot>
@@ -299,16 +299,16 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     قد يكون مفيدًا عندما يحتوي العنوان على عنوان فرعي أو شعار أو عنوان بديل لا ينبغي أن يصبح عنوانًا آخر في مخطط المستند.
     ```html
-        <article>
-        <hgroup>
-        <h1>Frankenstein</h1>
-        <p>Or: The Modern Prometheus</p>
-        </hgroup>
-        <section>
-        <h2>Chapter 1</h2>
-        <p>...</p>
-        </section>
-        </article>
+    <article>
+    <hgroup>
+    <h1>Frankenstein</h1>
+    <p>Or: The Modern Prometheus</p>
+    </hgroup>
+    <section>
+    <h2>Chapter 1</h2>
+    <p>...</p>
+    </section>
+    </article>
     ```
   </div>
   </slot>
@@ -338,10 +338,10 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     إذا كانت قائمتك عبارة عن روابط تنقل، استخدم `<nav>` مع `<ul>`. استخدم `<menu>` لعناصر تحكم تشبه شريط الأدوات أو قوائم الأوامر.
     ```html
-        <menu>
-        <li><button type="button">Copy</button></li>
-        <li><button type="button">Paste</button></li>
-        </menu>
+    <menu>
+    <li><button type="button">Copy</button></li>
+    <li><button type="button">Paste</button></li>
+    </menu>
     ```
   </div>
   </slot>
@@ -371,10 +371,10 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     هذا مفيد للأسئلة الشائعة، والأقسام القابلة للطي، أو أي محتوى يمكن تبديله.
     ```html
-        <details>
-        <summary>Click to expand 🤯</summary>
-        <p>Hidden content! 💥</p>
-        </details>
+    <details>
+    <summary>Click to expand 🤯</summary>
+    <p>Hidden content! 💥</p>
+    </details>
     ```
   </div>
   </slot>
@@ -404,11 +404,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     استخدم JavaScript لفتحه باستخدام `.showModal()` للنوافذ المشروطة أو `.show()` للنوافذ غير المشروطة، وأغلقه باستخدام `.close()` أو إرسال نموذج باستخدام `method="dialog"`.
     ```html
-        <dialog>
-        <h2>Modal Title</h2>
-        <p>Modal content...</p>
-        <button>Close</button>
-        </dialog>
+    <dialog>
+    <h2>Modal Title</h2>
+    <p>Modal content...</p>
+    <button>Close</button>
+    </dialog>
     ```
   </div>
   </slot>
@@ -463,14 +463,14 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     هناك أدوار وحالات وخصائص يمكن استخدامها لوصف العناصر.
     ```html
-        <button aria-label="Close" aria-expanded="true">X</button>
-        <main aria-live="polite">...</main>
-        <dialog
-        role="alertdialog"
-        aria-modal="true"
-        aria-labelledby="dialog_label"
-        aria-describedby="dialog_desc"
-        ></dialog>
+    <button aria-label="Close" aria-expanded="true">X</button>
+    <main aria-live="polite">...</main>
+    <dialog
+    role="alertdialog"
+    aria-modal="true"
+    aria-labelledby="dialog_label"
+    aria-describedby="dialog_desc"
+    ></dialog>
     ```
   </div>
   </slot>

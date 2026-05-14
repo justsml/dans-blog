@@ -47,12 +47,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     使用名为 `--main-color` 的 CSS 变量来设置元素背景颜色的正确方法是什么？
     ```css
-        :root {
-          --main-color: blue;
-        }
-        div {
-          /* How do we use --main-color here? */
-        }
+    :root {
+      --main-color: blue;
+    }
+    div {
+      /* How do we use --main-color here? */
+    }
     ```
   </div>
   </slot>
@@ -84,9 +84,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     如果父容器宽度为 400px，以下元素的计算宽度是多少？
     ```css
-        div {
-          width: min(250px, 50%);
-        }
+    div {
+      width: min(250px, 50%);
+    }
     ```
   </div>
   </slot>
@@ -100,9 +100,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     - `400px` 的 `50%` 是 `200px`
     - `250px` 已经是像素值
     ```css
-        /* This gets computed to */
-        width: min(250px, 200px);
-        /* -> 200px wins */
+    /* This gets computed to */
+    width: min(250px, 200px);
+    /* -> 200px wins */
     ```
     `min()` 函数在响应式设计中特别有用，可以确保组件（或字体大小）不超过某个限制。
   </div>
@@ -127,9 +127,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     假设一个容器的宽度为 200px，那么 `<div>` 的计算宽度是多少？
     ```css
-        div {
-          width: max(50px, 10%, 6rem);
-        }
+    div {
+      width: max(50px, 10%, 6rem);
+    }
     ```
   </div>
   </slot>
@@ -144,9 +144,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     - `200px` 的 `10%` 是 `20px`
     - `6rem` 是 `6 * 16px`（默认字体大小），即 `96px`
     ```css
-        /* This gets computed to */
-        width: max(50px, 20px, 96px);
-        /* -> 96px wins */
+    /* This gets computed to */
+    width: max(50px, 20px, 96px);
+    /* -> 96px wins */
     ```
   </div>
   </slot>
@@ -168,7 +168,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     在 CSS 网格轨道中使用 `minmax(100px, 200px)` 的效果是什么？
     ```css
-        grid-template-columns: minmax(100px, 200px);
+    grid-template-columns: minmax(100px, 200px);
     ```
   </div>
   </slot>
@@ -199,9 +199,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     以下 CSS 的背景颜色是什么？
     ```css
-        div {
-          background: var(--primary, olivedrab);
-        }
+    div {
+      background: var(--primary, olivedrab);
+    }
     ```
   </div>
   </slot>
@@ -232,9 +232,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     `clamp()` 的作用是什么？
     ```css
-        .card {
-          width: clamp(200px, 50vw, 500px);
-        }
+    .card {
+      width: clamp(200px, 50vw, 500px);
+    }
     ```
   </div>
   </slot>
@@ -293,13 +293,13 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     这是原生 CSS 嵌套的正确用法吗？
     ```css
-        .container {
-          color: black;
-          .title {
-            color: white;
-            background: black;
-          }
-        }
+    .container {
+      color: black;
+      .title {
+        color: white;
+        background: black;
+      }
+    }
     ```
   </div>
   </slot>
@@ -329,13 +329,13 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     `.container` 的直接子元素 `div` 会应用什么背景颜色？
     ```css
-        .container {
-          background-color: red;
-          > div {
-            background-color: white;
-          }
-          background-color: blue !important;
-        }
+    .container {
+      background-color: red;
+      > div {
+        background-color: white;
+      }
+      background-color: blue !important;
+    }
     ```
   </div>
   </slot>
@@ -372,7 +372,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     CSS变量可以通过类和JavaScript设置。它们甚至可以在技术上被使用'之后'才定义。
     ```js
-        document.documentElement.style.setProperty('--main-color', 'blue');
+    document.documentElement.style.setProperty('--main-color', 'blue');
     ```
     这将把整个文档的`--main-color`的值改为`blue`。
 
@@ -399,12 +399,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     该元素的计算宽度是多少？
     ```css
-        :root {
-          --base-width: 100px;
-        }
-        div {
-          width: calc(var(--base-width) + 10px);
-        }
+    :root {
+      --base-width: 100px;
+    }
+    div {
+      width: calc(var(--base-width) + 10px);
+    }
     ```
   </div>
   </slot>

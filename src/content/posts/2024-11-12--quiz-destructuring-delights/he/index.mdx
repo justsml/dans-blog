@@ -51,12 +51,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     מה ידפיס הקוד הזה?
     ```js
-        const person = {
-          name: 'Dan Levy',
-          location: 'Cape Town',
-        };
-        const { name, age } = person;
-        console.log(`Name: ${name}, Age: ${age}`);
+    const person = {
+      name: 'Dan Levy',
+      location: 'Cape Town',
+    };
+    const { name, age } = person;
+    console.log(`Name: ${name}, Age: ${age}`);
     ```
   </div>
   </slot>
@@ -67,7 +67,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     התוצאה היא:
     ```plaintext
-        Name: Dan Levy, Age: undefined
+    Name: Dan Levy, Age: undefined
     ```
   </div>
   </slot>
@@ -91,9 +91,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     מה הקוד הזה יעשה?
     ```js
-        const person = [ 'Dan Levy', 'Cape Town' ];
-        const [ name, origin, age ] = person;
-        console.log(`Name: ${name}, Age: ${age}`);
+    const person = [ 'Dan Levy', 'Cape Town' ];
+    const [ name, origin, age ] = person;
+    console.log(`Name: ${name}, Age: ${age}`);
     ```
   </div>
   </slot>
@@ -104,7 +104,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     התוצאה תהיה:
     ```plaintext
-        Name: Dan Levy, Age: undefined
+    Name: Dan Levy, Age: undefined
     ```
   </div>
   </slot>
@@ -127,19 +127,19 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     מה לגבי פירוק מבנה מקונן?
     ```js
-        'use strict';
-        const person = {
-          name: { first: 'Dan' },
-          address: { city: 'Denver' },
-        };
-        const {
-          name: { first },
-          address: { city },
-          birth: { place },
-        } = person;
-        console.log(
-          `First: ${first}, City: ${place}`,
-        );
+    'use strict';
+    const person = {
+      name: { first: 'Dan' },
+      address: { city: 'Denver' },
+    };
+    const {
+      name: { first },
+      address: { city },
+      birth: { place },
+    } = person;
+    console.log(
+      `First: ${first}, City: ${place}`,
+    );
     ```
   </div>
   </slot>
@@ -177,18 +177,18 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     עכשיו עם כמה ברירות מחדל, מה זה יעשה?
     ```js
-        'use strict';
-        const person = {
-          name: { first: 'Dan' },
-          address: { city: 'Denver' },
-        };
-        const {
-          name: { first = 'Unknown' },
-          birth: { place = 'Unknown' },
-        } = person;
-        console.log(
-          `Hi ${first} from ${place}`,
-        );
+    'use strict';
+    const person = {
+      name: { first: 'Dan' },
+      address: { city: 'Denver' },
+    };
+    const {
+      name: { first = 'Unknown' },
+      birth: { place = 'Unknown' },
+    } = person;
+    console.log(
+      `Hi ${first} from ${place}`,
+    );
     ```
   </div>
   </slot>
@@ -199,11 +199,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     הדרך שבה זה כתוב, אומרת "אם `person.birth` הוא `undefined`, אז `place` הוא `Unknown`". אבל `person.birth` הוא `undefined`, אז זה מנסה לפרק `undefined`, מה שגורם לשגיאה.
     ```plaintext
-        In modern Chrome: `TypeError: Cannot read properties of undefined (reading 'place')`
+    In modern Chrome: `TypeError: Cannot read properties of undefined (reading 'place')`
 
-        In Node, this is also a `TypeError` because JavaScript tries to destructure `place` from `undefined`.
+    In Node, this is also a `TypeError` because JavaScript tries to destructure `place` from `undefined`.
 
-        Exact wording varies between browsers and runtimes.
+    Exact wording varies between browsers and runtimes.
     ```
   </div>
   </slot>
@@ -227,18 +227,18 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     מה זה יעשה?
     ```js
-        const person = {
-          name: { first: 'Dan' },
-          address: { city: 'Denver' },
-        };
-        const {
-          name: { first = 'Unknown' },
-          birth: { place = 'Unknown' } = {},
-        } = person;
+    const person = {
+      name: { first: 'Dan' },
+      address: { city: 'Denver' },
+    };
+    const {
+      name: { first = 'Unknown' },
+      birth: { place = 'Unknown' } = {},
+    } = person;
 
-        console.log(
-          `Hi ${first} from ${place}`,
-        );
+    console.log(
+      `Hi ${first} from ${place}`,
+    );
     ```
   </div>
   </slot>
@@ -268,14 +268,14 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     עכשיו כפרמטרים של פונקציה, מה זה יעשה?
     ```js
-        'use strict';
-        function displayUser({
-          name = "Unknown",
-          age = -1,
-        } = { place: "Unknown" }) {
-          console.log(`Hi ${name} from ${place}`);
-        }
-        displayUser({ name: "Dan" });
+    'use strict';
+    function displayUser({
+      name = "Unknown",
+      age = -1,
+    } = { place: "Unknown" }) {
+      console.log(`Hi ${name} from ${place}`);
+    }
+    displayUser({ name: "Dan" });
     ```
   </div>
   </slot>
@@ -309,17 +309,17 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     איך מטפלים בערכים `undefined`?
     ```js
-        'use strict';
-        function displayPlace({
-          name = "N/A",
-          place = "N/A",
-          age = -1,
-        } = { place: "Unknown" }) {
-          console.log(`${place}`);
-        }
-        displayPlace({ name: "Dan" });
-        displayPlace({ name: "Dan", place: undefined });
-        displayPlace({ name: "Dan", place: "Joburg" });
+    'use strict';
+    function displayPlace({
+      name = "N/A",
+      place = "N/A",
+      age = -1,
+    } = { place: "Unknown" }) {
+      console.log(`${place}`);
+    }
+    displayPlace({ name: "Dan" });
+    displayPlace({ name: "Dan", place: undefined });
+    displayPlace({ name: "Dan", place: "Joburg" });
     ```
   </div>
   </slot>
@@ -332,9 +332,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     התוצאה היא:
     ```js
-        displayPlace() // Unknown
-        displayPlace({ name: "Dan" }) // N/A
-        displayPlace({ name: "Dan", place: undefined }) // N/A
+    displayPlace() // Unknown
+    displayPlace({ name: "Dan" }) // N/A
+    displayPlace({ name: "Dan", place: undefined }) // N/A
     ```
   </div>
   </slot>
@@ -361,15 +361,15 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     דומה לשאלה הקודמת... איך מטפלים ב-`null`?_
     ```js
-        function displayPlace({
-          name = "N/A",
-          place = "N/A",
-          age = -1,
-        } = { place: "Unknown" }) {
-          console.log(`${place}`);
-        }
-        displayPlace({ name: "Dan", place: null });
-        displayPlace({ name: "Dan", place: undefined });
+    function displayPlace({
+      name = "N/A",
+      place = "N/A",
+      age = -1,
+    } = { place: "Unknown" }) {
+      console.log(`${place}`);
+    }
+    displayPlace({ name: "Dan", place: null });
+    displayPlace({ name: "Dan", place: undefined });
     ```
   </div>
   </slot>
@@ -398,20 +398,20 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     עכשיו ב-TypeScript... _מה זה יעשה?_
     ```ts
-        'use strict';
-        function displayPlace(
-          {
-            name = 'N/A',
-            place = 'N/A',
-          }: {
-            name: string;
-            place: string;
-            age: number;
-          },
-        ) {
-          console.log(`${place}`);
-        }
-        displayPlace({ name: 'Dan', place: null });
+    'use strict';
+    function displayPlace(
+      {
+        name = 'N/A',
+        place = 'N/A',
+      }: {
+        name: string;
+        place: string;
+        age: number;
+      },
+    ) {
+      console.log(`${place}`);
+    }
+    displayPlace({ name: 'Dan', place: null });
     ```
   </div>
   </slot>
@@ -445,18 +445,18 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     בואו ננסה שינוי שם/השמה...
     ```ts
-        'use strict';
-        function displayPlace({
-          name = 'N/A',
-          place: location = 'N/A',
-        }: {
-          name: string;
-          place: string;
-          age?: number;
-        }) {
-          console.log(`${location}`);
-        }
-        displayPlace({ name: 'Dan', place: 'Denver' });
+    'use strict';
+    function displayPlace({
+      name = 'N/A',
+      place: location = 'N/A',
+    }: {
+      name: string;
+      place: string;
+      age?: number;
+    }) {
+      console.log(`${location}`);
+    }
+    displayPlace({ name: 'Dan', place: 'Denver' });
     ```
   </div>
   </slot>
@@ -485,18 +485,18 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     זהה את שגיאת הטיפוס:
     ```ts
-        function greet({
-          name: {first = "N/A", last = "N/A"},
-          birth: {place = "N/A"} = {},
-          age = -1,
-        }: {
-          name: {first?: string, last?: string};
-          birth: {place?: string};
-          age: number;
-        }) {
-          console.log(`Hi ${first} ${last} from ${place}`);
-        }
-        greet({ name: {first: 'Dan'} });
+    function greet({
+      name: {first = "N/A", last = "N/A"},
+      birth: {place = "N/A"} = {},
+      age = -1,
+    }: {
+      name: {first?: string, last?: string};
+      birth: {place?: string};
+      age: number;
+    }) {
+      console.log(`Hi ${first} ${last} from ${place}`);
+    }
+    greet({ name: {first: 'Dan'} });
     ```
   </div>
   </slot>
@@ -529,25 +529,25 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     עכשיו עם **השמה** (שימו לב למשתנים `f`, `l` ו-`p`)
     ```ts
-        'use strict';
-        function greet(
-          {
-            name: {first: f = "N/A", last: l = "N/A"},
-            birth: {place: p = "N/A"} = {},
-            age = -1,
-          }: {
-            name: {first?: string, last?: string};
-            birth?: {place?: string};
-            age?: number;
-          }
-        ) {
-          console.log(`Hi ${f} ${l} from ${place}`);
-          // What will 👆 do?
-        }
-        greet({
-          name: {first: 'Dan', last: 'Levy'},
-          birth: {place: 'Cape Town'},
-        });
+    'use strict';
+    function greet(
+      {
+        name: {first: f = "N/A", last: l = "N/A"},
+        birth: {place: p = "N/A"} = {},
+        age = -1,
+      }: {
+        name: {first?: string, last?: string};
+        birth?: {place?: string};
+        age?: number;
+      }
+    ) {
+      console.log(`Hi ${f} ${l} from ${place}`);
+      // What will 👆 do?
+    }
+    greet({
+      name: {first: 'Dan', last: 'Levy'},
+      birth: {place: 'Cape Town'},
+    });
     ```
   </div>
   </slot>
@@ -560,9 +560,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     ברגע ש-`place` מושם מחדש למשתנה `p`, הוא כבר לא מוגדר בטווח של פקודת `console.log`.
     ```ts
-        console.log(`Hi ${f} ${l} from ${place}`); // ❌
-        // to:
-        console.log(`Hi ${f} ${l} from ${p}`); // ✅
+    console.log(`Hi ${f} ${l} from ${place}`); // ❌
+    // to:
+    console.log(`Hi ${f} ${l} from ${p}`); // ✅
     ```
   </div>
   </slot>

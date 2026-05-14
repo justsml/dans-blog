@@ -45,12 +45,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     आपको एक जावास्क्रिप्ट ऑब्जेक्ट प्रॉपर्टी जिसे गेटर मेथड का उपयोग करता है, कैसे एक्सेस करना चाहिए?
     ```js
-        const obj = {
-          get val() {
-            return 'got it!';
-          }
-        };
-        console.log(obj.val);
+    const obj = {
+      get val() {
+        return 'got it!';
+      }
+    };
+    console.log(obj.val);
     ```
   </div>
   </slot>
@@ -78,11 +78,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     जावास्क्रिप्ट ऑब्जेक्ट के लिए वास्तव में अद्वितीय प्रॉपर्टी कुंजी बनाने का सही तरीका क्या है?
     ```js
-        const uniqueKey = Symbol('myUniqueKey');
-        const obj = {
-          [uniqueKey]: 'unique value'
-        };
-        console.log(obj[uniqueKey]);
+    const uniqueKey = Symbol('myUniqueKey');
+    const obj = {
+      [uniqueKey]: 'unique value'
+    };
+    console.log(obj[uniqueKey]);
     ```
   </div>
   </slot>
@@ -109,14 +109,14 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     क्या `age` प्रॉपर्टी `for...in` इटरेशन के दौरान सूचीबद्ध होगी?
     ```js
-        const person = {};
-        Object.defineProperty(person, 'age', {
-          value: 25,
-          enumerable: true
-        });
-        for (let key in person) {
-          console.log(key);
-        }
+    const person = {};
+    Object.defineProperty(person, 'age', {
+      value: 25,
+      enumerable: true
+    });
+    for (let key in person) {
+      console.log(key);
+    }
     ```
   </div>
   </slot>
@@ -143,11 +143,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     `Object.defineProperty()` का उपयोग करते समय यदि `enumerable` निर्दिष्ट नहीं किया गया हो तो किसी प्रॉपर्टी की डिफ़ॉल्ट एनेमरेबिलिटी क्या होती है?
     ```js
-        const car = {};
-        Object.defineProperty(car, 'make', {
-          value: 'Toyota'
-        });
-        console.log(Object.keys(car));
+    const car = {};
+    Object.defineProperty(car, 'make', {
+      value: 'Toyota'
+    });
+    console.log(Object.keys(car));
     ```
   </div>
   </slot>
@@ -174,9 +174,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     निम्न तुलना का परिणाम क्या होगा?
     ```js
-        const sym1 = Symbol('id');
-        const sym2 = Symbol('id');
-        console.log(sym1 === sym2);
+    const sym1 = Symbol('id');
+    const sym2 = Symbol('id');
+    console.log(sym1 === sym2);
     ```
   </div>
   </slot>
@@ -203,14 +203,14 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     क्या Symbol‑की वाली प्रॉपर्टी `for...in` इटरेशन के दौरान सूचीबद्ध होगी?
     ```js
-        const sym = Symbol('uniqueKey');
-        const obj = {
-          [sym]: 'symbol value',
-          regularKey: 'regular value'
-        };
-        for (let key in obj) {
-          console.log(key);
-        }
+    const sym = Symbol('uniqueKey');
+    const obj = {
+      [sym]: 'symbol value',
+      regularKey: 'regular value'
+    };
+    for (let key in obj) {
+      console.log(key);
+    }
     ```
   </div>
   </slot>
@@ -243,14 +243,14 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     `Object.getOwnPropertySymbols()` मेथड का उपयोग वस्तु की अपनी Symbol प्रॉपर्टी कुंजियों को प्राप्त करने के लिए किया जाता है।
     ```js
-        const sym1 = Symbol('id');
-        const sym2 = Symbol('name');
-        const obj = {
-          [sym1]: 'symbol value',
-          [sym2]: 'another symbol value'
-        };
-        console.log(Object.getOwnPropertySymbols(obj));
-        // [Symbol(id), Symbol(name)]
+    const sym1 = Symbol('id');
+    const sym2 = Symbol('name');
+    const obj = {
+      [sym1]: 'symbol value',
+      [sym2]: 'another symbol value'
+    };
+    console.log(Object.getOwnPropertySymbols(obj));
+    // [Symbol(id), Symbol(name)]
     ```
   </div>
   </slot>

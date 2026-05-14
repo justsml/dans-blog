@@ -18,7 +18,6 @@ cover_full_width: ../logan-weaver-lgnwvr-96ES9AOLRzQ-unsplash.webp
 cover_mobile: ../logan-weaver-lgnwvr-96ES9AOLRzQ-unsplash_w300.webp
 cover_icon: ../logan-weaver-lgnwvr-96ES9AOLRzQ-unsplash_w300.webp
 ---
----
 ## חידון: ממשקי JavaScript, Symbols ו-Enumerables
 
 > * **הוכיחו את כישורי ה-JavaScript שלכם!** 🚀
@@ -27,7 +26,6 @@ cover_icon: ../logan-weaver-lgnwvr-96ES9AOLRzQ-unsplash_w300.webp
 
 import Challenge from '../../../../components/QuizUI/Challenge';
 import QuizUI from '../../../../components/QuizUI/QuizUI';
----
 
 <QuizUI>
 
@@ -47,12 +45,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     כיצד עליך לגשת לנכס של אובייקט JavaScript שמשתמש במתודת getter?
     ```js
-        const obj = {
-          get val() {
-            return 'got it!';
-          }
-        };
-        console.log(obj.val);
+    const obj = {
+      get val() {
+        return 'got it!';
+      }
+    };
+    console.log(obj.val);
     ```
   </div>
   </slot>
@@ -86,11 +84,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     מהי הדרך הנכונה ליצור מפתח מאפיין ייחודי באמת עבור אובייקט JavaScript?
     ```js
-        const uniqueKey = Symbol('myUniqueKey');
-        const obj = {
-          [uniqueKey]: 'unique value'
-        };
-        console.log(obj[uniqueKey]);
+    const uniqueKey = Symbol('myUniqueKey');
+    const obj = {
+      [uniqueKey]: 'unique value'
+    };
+    console.log(obj[uniqueKey]);
     ```
   </div>
   </slot>
@@ -123,14 +121,14 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     האם המאפיין `age` יופיע במהלך איטרציית `for...in`?
     ```js
-        const person = {};
-        Object.defineProperty(person, 'age', {
-          value: 25,
-          enumerable: true
-        });
-        for (let key in person) {
-          console.log(key);
-        }
+    const person = {};
+    Object.defineProperty(person, 'age', {
+      value: 25,
+      enumerable: true
+    });
+    for (let key in person) {
+      console.log(key);
+    }
     ```
   </div>
   </slot>
@@ -163,11 +161,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     מהי ברירת המחדל של ספירה של מאפיין כאשר משתמשים ב-`Object.defineProperty()` מבלי לציין `enumerable`?
     ```js
-        const car = {};
-        Object.defineProperty(car, 'make', {
-          value: 'Toyota'
-        });
-        console.log(Object.keys(car));
+    const car = {};
+    Object.defineProperty(car, 'make', {
+      value: 'Toyota'
+    });
+    console.log(Object.keys(car));
     ```
   </div>
   </slot>
@@ -200,9 +198,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     מה תהיה התוצאה של ההשוואה הבאה?
     ```js
-        const sym1 = Symbol('id');
-        const sym2 = Symbol('id');
-        console.log(sym1 === sym2);
+    const sym1 = Symbol('id');
+    const sym2 = Symbol('id');
+    console.log(sym1 === sym2);
     ```
   </div>
   </slot>
@@ -235,14 +233,14 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     האם המאפיין עם מפתח Symbol יופיע במהלך איטרציית `for...in`?
     ```js
-        const sym = Symbol('uniqueKey');
-        const obj = {
-          [sym]: 'symbol value',
-          regularKey: 'regular value'
-        };
-        for (let key in obj) {
-          console.log(key);
-        }
+    const sym = Symbol('uniqueKey');
+    const obj = {
+      [sym]: 'symbol value',
+      regularKey: 'regular value'
+    };
+    for (let key in obj) {
+      console.log(key);
+    }
     ```
   </div>
   </slot>
@@ -287,14 +285,14 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     השיטה `Object.getOwnPropertySymbols()` משמשת לאחזור מפתחות Symbol עצמיים של אובייקט.
     ```js
-        const sym1 = Symbol('id');
-        const sym2 = Symbol('name');
-        const obj = {
-          [sym1]: 'symbol value',
-          [sym2]: 'another symbol value'
-        };
-        console.log(Object.getOwnPropertySymbols(obj));
-        // [Symbol(id), Symbol(name)]
+    const sym1 = Symbol('id');
+    const sym2 = Symbol('name');
+    const obj = {
+      [sym1]: 'symbol value',
+      [sym2]: 'another symbol value'
+    };
+    console.log(Object.getOwnPropertySymbols(obj));
+    // [Symbol(id), Symbol(name)]
     ```
   </div>
   </slot>

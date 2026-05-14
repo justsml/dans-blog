@@ -54,7 +54,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     Bash में वेरिएबल्स `=` चिह्न के आसपास स्पेस के बिना घोषित किए जाते हैं। उदाहरण के लिए:
     ```bash
-        name=Alice
+    name=Alice
     ```
     यह `name` वेरिएबल को मान `"Alice"` असाइन करता है।
 
@@ -93,7 +93,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     सिंगल कोट्स को सिंगल‑कोटेड स्ट्रिंग्स के भीतर एस्केप करना पड़ता है। क्लोज‑कोट, एस्केप्ड‑कोट, री‑ओपन‑कोट सीक्वेंस (`'\''`) आउटपुट देता है:
     ```plaintext
-        It's 🔨 Time!
+    It's 🔨 Time!
     ```
     ऐसे और भी तरीके हैं, लेकिन यह सबसे आम है।
   </div>
@@ -118,7 +118,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     इस कमांड का आउटपुट क्या होगा?
     ```bash
-        echo c{a,b}t
+    echo c{a,b}t
     ```
   </div>
   </slot>
@@ -128,7 +128,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     यहाँ, `c{a,b}t` विस्तारित होता है:
     ```plaintext
-        cat cbt
+    cat cbt
     ```
   </div>
   </slot>
@@ -152,8 +152,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     अब, यह क्या प्रिंट करेगा?
     ```bash
-        price="$100"
-        echo "Cost: $price"
+    price="$100"
+    echo "Cost: $price"
     ```
   </div>
   </slot>
@@ -165,8 +165,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     एक लिटरल `$` कैरेक्टर प्रिंट करने के लिए, सिंगल कोट्स का उपयोग करें, या बैकस्लैश (`\`) से एस्केप करें:
     ```bash
-        price="\$100"
-        echo "Cost: $price"
+    price="\$100"
+    echo "Cost: $price"
     ```
   </div>
   </slot>
@@ -189,8 +189,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     यहाँ क्या हो रहा है?
     ```bash
-        str="Bark bark"
-        echo ${str/bark/meow}
+    str="Bark bark"
+    echo ${str/bark/meow}
     ```
   </div>
   </slot>
@@ -198,7 +198,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     `${var/pattern/replacement}` सिंटैक्स `pattern` की पहली उपस्थिति को `replacement` से बदलता है। यहाँ, आउटपुट है:
     ```plaintext
-        Bark meow
+    Bark meow
     ```
     यह केस-सेंसिटिव है। `bark` और `Bark` दोनों को संभालने के लिए `${var/[Bb]ark/Bark}` जैसा पैटर्न उपयोग करें या प्रतिस्थापन से पहले स्ट्रिंग को सामान्य करें।
 
@@ -235,8 +235,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     उदाहरण के लिए:
     ```bash
-        username="@justsml"
-        echo ${#username} # => 8
+    username="@justsml"
+    echo ${#username} # => 8
     ```
     `wc` काम कर सकता है, लेकिन यह तकनीकी रूप से Bash का हिस्सा नहीं है।
 
@@ -265,11 +265,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     यदि फ़ाइल `cats.txt` मौजूद है तो यह स्क्रिप्ट क्या आउटपुट देती है?
     ```bash
-        if [ -e cats.txt]; then
-          echo "File exists"
-        else
-          echo "File does not exist"
-        fi
+    if [ -e cats.txt]; then
+      echo "File exists"
+    else
+      echo "File does not exist"
+    fi
     ```
   </div>
   </slot>
@@ -283,11 +283,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     सही सिंटैक्स है:
     ```bash
-        if [ -e example.txt ]; then
-          echo "File exists"
-        else
-          echo "File does not exist"
-        fi
+    if [ -e example.txt ]; then
+      echo "File exists"
+    else
+      echo "File does not exist"
+    fi
     ```
     ध्यान दें: डबल ब्रैकेट `[[ ]]` शर्तीय अभिव्यक्तियों के लिए **सिफारिश** किए जाते हैं। [देखें BashFAQ.](https://mywiki.wooledge.org/BashFAQ/031)
   </div>
@@ -310,13 +310,13 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     Bash में स्ट्रिंग्स की तुलना कैसे करें?
     ```bash
-        cat1="Rosie"
-        cat2="Sunflower"
-        if [ "$cat1" === "$cat2" ]; then
-          echo "Same cat"
-        else
-          echo "Different cats"
-        fi
+    cat1="Rosie"
+    cat2="Sunflower"
+    if [ "$cat1" === "$cat2" ]; then
+      echo "Same cat"
+    else
+      echo "Different cats"
+    fi
     ```
   </div>
   </slot>
@@ -351,10 +351,10 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     इस स्क्रिप्ट का आउटपुट क्या होगा?
     ```bash
-        function greet () {
-          echo "$1"
-        }
-        greet Hi Dan
+    function greet () {
+      echo "$1"
+    }
+    greet Hi Dan
     ```
   </div>
   </slot>
@@ -384,8 +384,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     `|` पाइप ऑपरेटर एक कमांड के आउटपुट को दूसरे के इनपुट से जोड़ता है। उदाहरण के लिए:
     ```bash
-        echo "Mr. Levy 👨🏻‍🔬" | wc -m
-        # => 14
+    echo "Mr. Levy 👨🏻‍🔬" | wc -m
+    # => 14
     ```
   </div>
   </slot>
@@ -415,14 +415,14 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     इसे सरल गणनाओं के लिए उपयोग किया जा सकता है:
     ```bash
-        ((result = 2 + 2))
-        echo $result # => 4
+    ((result = 2 + 2))
+    echo $result # => 4
     ```
     या शर्तीय अभिव्यक्तियों के लिए:
     ```bash
-        if (( 2 > 1 )); then
-          echo "2 is greater than 1"
-        fi
+    if (( 2 > 1 )); then
+      echo "2 is greater than 1"
+    fi
     ```
     फ़्लोटिंग‑पॉइंट अंकगणित के लिए, [`bc`](https://www.gnu.org/software/bc/manual/html_mono/bc.html) या [`awk`](https://www.gnu.org/software/gawk/manual/gawk.html) का उपयोग करने पर विचार करें।
   </div>
@@ -476,8 +476,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     इस स्क्रिप्ट में `:` क्या करता है?
     ```bash
-        rosie="Bad cat, good cat"
-        echo ${rosie:9}
+    rosie="Bad cat, good cat"
+    echo ${rosie:9}
     ```
   </div>
   </slot>
@@ -485,7 +485,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     `${var:offset}` सिंटैक्स `offset` से शुरू होने वाली सबस्ट्रिंग निकालता है। यहाँ, आउटपुट है:
     ```plaintext
-        good cat
+    good cat
     ```
     विशिष्ट लंबाई की सबस्ट्रिंग निकालने के लिए, `${var:offset:length}` का उपयोग करें।
 
@@ -543,8 +543,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     `$(ls -l)` सिंटैक्स कमांड को **कोष्ठकों** के भीतर चलाता है और आउटपुट को प्रतिस्थापित करता है। उदाहरण के लिए:
     ```bash
-        echo "Today is $(date +%F)"
-        # => Today is 2029-12-31
+    echo "Today is $(date +%F)"
+    # => Today is 2029-12-31
     ```
     पहला विकल्प सिंगल कोट `'` का उपयोग करता है, **बैकटिक नहीं**। यह विस्तार को रोकता है, इसलिए `'$(date +%F)'` केवल स्ट्रिंग `$(date +%F)` को ही प्रिंट करेगा।
 

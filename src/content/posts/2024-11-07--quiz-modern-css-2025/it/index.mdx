@@ -47,12 +47,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     Qual è il modo corretto di usare una variabile CSS chiamata `--main-color` per impostare il colore di sfondo di un elemento?
     ```css
-        :root {
-          --main-color: blue;
-        }
-        div {
-          /* How do we use --main-color here? */
-        }
+    :root {
+      --main-color: blue;
+    }
+    div {
+      /* How do we use --main-color here? */
+    }
     ```
   </div>
   </slot>
@@ -83,9 +83,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     Se la larghezza del genitore/contenitore è 400px, qual è la larghezza calcolata del seguente elemento?
     ```css
-        div {
-          width: min(250px, 50%);
-        }
+    div {
+      width: min(250px, 50%);
+    }
     ```
   </div>
   </slot>
@@ -98,9 +98,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     - `50%` di `400px` è `200px`
     - `250px` è già in pixel
     ```css
-        /* This gets computed to */
-        width: min(250px, 200px);
-        /* -> 200px wins */
+    /* This gets computed to */
+    width: min(250px, 200px);
+    /* -> 200px wins */
     ```
     La funzione `min()` è particolarmente utile per il design responsivo, dove puoi assicurarti che un componente (o la dimensione del font) non superi un certo limite.
   </div>
@@ -125,9 +125,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     Dato un contenitore largo 200 px, qual è la larghezza calcolata del `<div>`?
     ```css
-        div {
-          width: max(50px, 10%, 6rem);
-        }
+    div {
+      width: max(50px, 10%, 6rem);
+    }
     ```
   </div>
   </slot>
@@ -141,9 +141,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     - `10%` di `200px` è `20px`
     - `6rem` è `6 * 16px` (la dimensione del font predefinita) che equivale a `96px`
     ```css
-        /* This gets computed to */
-        width: max(50px, 20px, 96px);
-        /* -> 96px wins */
+    /* This gets computed to */
+    width: max(50px, 20px, 96px);
+    /* -> 96px wins */
     ```
   </div>
   </slot>
@@ -165,7 +165,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     Qual è l'effetto di usare `minmax(100px, 200px)` per una traccia di grid CSS?
     ```css
-        grid-template-columns: minmax(100px, 200px);
+    grid-template-columns: minmax(100px, 200px);
     ```
   </div>
   </slot>
@@ -195,9 +195,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     Quale colore avrà lo sfondo per il seguente CSS?
     ```css
-        div {
-          background: var(--primary, olivedrab);
-        }
+    div {
+      background: var(--primary, olivedrab);
+    }
     ```
   </div>
   </slot>
@@ -227,9 +227,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     Cosa fa `clamp()`?
     ```css
-        .card {
-          width: clamp(200px, 50vw, 500px);
-        }
+    .card {
+      width: clamp(200px, 50vw, 500px);
+    }
     ```
   </div>
   </slot>
@@ -286,13 +286,13 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     È questo un uso corretto dell'annidamento CSS nativo?
     ```css
-        .container {
-          color: black;
-          .title {
-            color: white;
-            background: black;
-          }
-        }
+    .container {
+      color: black;
+      .title {
+        color: white;
+        background: black;
+      }
+    }
     ```
   </div>
   </slot>
@@ -321,13 +321,13 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     Quale colore di sfondo verrà applicato ai `div` figli diretti di `.container`?
     ```css
-        .container {
-          background-color: red;
-          > div {
-            background-color: white;
-          }
-          background-color: blue !important;
-        }
+    .container {
+      background-color: red;
+      > div {
+        background-color: white;
+      }
+      background-color: blue !important;
+    }
     ```
   </div>
   </slot>
@@ -362,7 +362,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     Le variabili CSS possono essere impostate usando classi e JavaScript. Possono anche essere definite 'dopo' che sono tecnicamente utilizzate.
     ```js
-        document.documentElement.style.setProperty('--main-color', 'blue');
+    document.documentElement.style.setProperty('--main-color', 'blue');
     ```
     Questo cambierà il valore di `--main-color` in `blue` per l'intero documento.
 
@@ -389,12 +389,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     Quale sarà la larghezza calcolata dell'elemento?
     ```css
-        :root {
-          --base-width: 100px;
-        }
-        div {
-          width: calc(var(--base-width) + 10px);
-        }
+    :root {
+      --base-width: 100px;
+    }
+    div {
+      width: calc(var(--base-width) + 10px);
+    }
     ```
   </div>
   </slot>

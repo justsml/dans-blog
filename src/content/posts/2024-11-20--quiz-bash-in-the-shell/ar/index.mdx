@@ -55,7 +55,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     يتم إعلان المتغيرات في Bash بدون مسافات حول علامة `=`. على سبيل المثال:
     ```bash
-        name=Alice
+    name=Alice
     ```
     هذا يعين القيمة `"Alice"` للمتغير `name`.
 
@@ -95,7 +95,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     علامات الاقتباس المفردة تحتاج إلى إفلات داخل السلاسل المقتبسة بمفردها. التسلسل (إغلاق الاقتباس، إفلات الاقتباس، إعادة فتح الاقتباس) (`'\''`) يسمح بإخراج:
     ```plaintext
-        It's 🔨 Time!
+    It's 🔨 Time!
     ```
     هناك طرق أخرى للتعامل مع هذا، لكن هذه هي الأكثر شيوعًا.
   </div>
@@ -120,7 +120,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     ماذا سيكون ناتج هذا الأمر؟
     ```bash
-        echo c{a,b}t
+    echo c{a,b}t
     ```
   </div>
   </slot>
@@ -131,7 +131,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     هنا، `c{a,b}t` يتوسع إلى:
     ```plaintext
-        cat cbt
+    cat cbt
     ```
   </div>
   </slot>
@@ -155,8 +155,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     الآن، ماذا سيطبع هذا؟
     ```bash
-        price="$100"
-        echo "Cost: $price"
+    price="$100"
+    echo "Cost: $price"
     ```
   </div>
   </slot>
@@ -169,8 +169,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     لطباعة حرف `$` حرفيًا، استخدم علامات الاقتباس المفردة، أو قم بإفلاته باستخدام الخط المائل العكسي (`\`):
     ```bash
-        price="\$100"
-        echo "Cost: $price"
+    price="\$100"
+    echo "Cost: $price"
     ```
   </div>
   </slot>
@@ -193,8 +193,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     ماذا يحدث هنا؟
     ```bash
-        str="Bark bark"
-        echo ${str/bark/meow}
+    str="Bark bark"
+    echo ${str/bark/meow}
     ```
   </div>
   </slot>
@@ -203,7 +203,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     بناء الجملة `${var/pattern/replacement}` يستبدل أول ظهور لـ `pattern` بـ `replacement`. هنا، الناتج هو:
     ```plaintext
-        Bark meow
+    Bark meow
     ```
     إنها حساسة لحالة الأحرف. للتعامل مع كل من `bark` و `Bark`، استخدم نمطًا مثل `${var/[Bb]ark/Bark}` أو قم بتطبيع السلسلة قبل الاستبدال.
 
@@ -241,8 +241,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     على سبيل المثال:
     ```bash
-        username="@justsml"
-        echo ${#username} # => 8
+    username="@justsml"
+    echo ${#username} # => 8
     ```
     بينما `wc` قد تعمل، إلا أنها تقنيًا ليست جزءًا من Bash.
 
@@ -271,11 +271,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     ماذا يخرج هذا السكريبت إذا كان الملف `cats.txt` موجودًا؟
     ```bash
-        if [ -e cats.txt]; then
-          echo "File exists"
-        else
-          echo "File does not exist"
-        fi
+    if [ -e cats.txt]; then
+      echo "File exists"
+    else
+      echo "File does not exist"
+    fi
     ```
   </div>
   </slot>
@@ -290,11 +290,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     الصيغة الصحيحة هي:
     ```bash
-        if [ -e example.txt ]; then
-          echo "File exists"
-        else
-          echo "File does not exist"
-        fi
+    if [ -e example.txt ]; then
+      echo "File exists"
+    else
+      echo "File does not exist"
+    fi
     ```
     ملاحظة: الأقواس المزدوجة `[[ ]]` **موصى بها** للتعبيرات الشرطية. [انظر BashFAQ.](https://mywiki.wooledge.org/BashFAQ/031)
   </div>
@@ -317,13 +317,13 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     كيف يمكننا مقارنة السلاسل النصية في Bash؟
     ```bash
-        cat1="Rosie"
-        cat2="Sunflower"
-        if [ "$cat1" === "$cat2" ]; then
-          echo "Same cat"
-        else
-          echo "Different cats"
-        fi
+    cat1="Rosie"
+    cat2="Sunflower"
+    if [ "$cat1" === "$cat2" ]; then
+      echo "Same cat"
+    else
+      echo "Different cats"
+    fi
     ```
   </div>
   </slot>
@@ -359,10 +359,10 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     ماذا سيكون مخرجات هذا السكريبت؟
     ```bash
-        function greet () {
-          echo "$1"
-        }
-        greet Hi Dan
+    function greet () {
+      echo "$1"
+    }
+    greet Hi Dan
     ```
   </div>
   </slot>
@@ -400,8 +400,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     عامل الأنبوب `|` يربط مخرجات أمر ما بمدخلات أمر آخر. على سبيل المثال:
     ```bash
-        echo "Mr. Levy 👨🏻‍🔬" | wc -m
-        # => 14
+    echo "Mr. Levy 👨🏻‍🔬" | wc -m
+    # => 14
     ```
   </div>
   </slot>
@@ -432,14 +432,14 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     يمكن استخدامه في العمليات الحسابية البسيطة:
     ```bash
-        ((result = 2 + 2))
-        echo $result # => 4
+    ((result = 2 + 2))
+    echo $result # => 4
     ```
     أو للتعبيرات الشرطية:
     ```bash
-        if (( 2 > 1 )); then
-          echo "2 is greater than 1"
-        fi
+    if (( 2 > 1 )); then
+      echo "2 is greater than 1"
+    fi
     ```
     للعمليات الحسابية على الأعداد العشرية، فكر في استخدام [`bc`](https://www.gnu.org/software/bc/manual/html_mono/bc.html) أو [`awk`](https://www.gnu.org/software/gawk/manual/gawk.html).
   </div>
@@ -494,8 +494,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     ماذا يفعل `:` في هذا السكريبت؟
     ```bash
-        rosie="Bad cat, good cat"
-        echo ${rosie:9}
+    rosie="Bad cat, good cat"
+    echo ${rosie:9}
     ```
   </div>
   </slot>
@@ -504,7 +504,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     الصيغة `${var:offset}` تستخرج سلسلة فرعية تبدأ من `offset`. هنا، المخرجات هي:
     ```plaintext
-        good cat
+    good cat
     ```
     لاستخراج سلسلة فرعية بطول محدد، استخدم `${var:offset:length}`.
 
@@ -564,8 +564,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     بناء `$(ls -l)` ينفذ الأمر داخل **الأقواس** ويستبدل المخرجات. على سبيل المثال:
     ```bash
-        echo "Today is $(date +%F)"
-        # => Today is 2029-12-31
+    echo "Today is $(date +%F)"
+    # => Today is 2029-12-31
     ```
     الخيار الأول يستخدم علامات الاقتباس المفردة `'`، **وليس علامات التنصيص الخلفية.** هذا يمنع التوسيع، لذا `'$(date +%F)'` سيطبع ببساطة السلسلة الحرفية `$(date +%F)`.
 

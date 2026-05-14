@@ -50,12 +50,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     这段代码会输出什么？
     ```js
-        const person = {
-          name: 'Dan Levy',
-          location: 'Cape Town',
-        };
-        const { name, age } = person;
-        console.log(`Name: ${name}, Age: ${age}`);
+    const person = {
+      name: 'Dan Levy',
+      location: 'Cape Town',
+    };
+    const { name, age } = person;
+    console.log(`Name: ${name}, Age: ${age}`);
     ```
   </div>
   </slot>
@@ -66,7 +66,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     结果是：
     ```plaintext
-        Name: Dan Levy, Age: undefined
+    Name: Dan Levy, Age: undefined
     ```
   </div>
   </slot>
@@ -90,9 +90,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     这段代码会做什么？
     ```js
-        const person = [ 'Dan Levy', 'Cape Town' ];
-        const [ name, origin, age ] = person;
-        console.log(`Name: ${name}, Age: ${age}`);
+    const person = [ 'Dan Levy', 'Cape Town' ];
+    const [ name, origin, age ] = person;
+    console.log(`Name: ${name}, Age: ${age}`);
     ```
   </div>
   </slot>
@@ -103,7 +103,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     这将导致：
     ```plaintext
-        Name: Dan Levy, Age: undefined
+    Name: Dan Levy, Age: undefined
     ```
   </div>
   </slot>
@@ -126,19 +126,19 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     来点嵌套解构吧？
     ```js
-        'use strict';
-        const person = {
-          name: { first: 'Dan' },
-          address: { city: 'Denver' },
-        };
-        const {
-          name: { first },
-          address: { city },
-          birth: { place },
-        } = person;
-        console.log(
-          `First: ${first}, City: ${place}`,
-        );
+    'use strict';
+    const person = {
+      name: { first: 'Dan' },
+      address: { city: 'Denver' },
+    };
+    const {
+      name: { first },
+      address: { city },
+      birth: { place },
+    } = person;
+    console.log(
+      `First: ${first}, City: ${place}`,
+    );
     ```
   </div>
   </slot>
@@ -175,18 +175,18 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     现在有了一些默认值，这会怎么做？
     ```js
-        'use strict';
-        const person = {
-          name: { first: 'Dan' },
-          address: { city: 'Denver' },
-        };
-        const {
-          name: { first = 'Unknown' },
-          birth: { place = 'Unknown' },
-        } = person;
-        console.log(
-          `Hi ${first} from ${place}`,
-        );
+    'use strict';
+    const person = {
+      name: { first: 'Dan' },
+      address: { city: 'Denver' },
+    };
+    const {
+      name: { first = 'Unknown' },
+      birth: { place = 'Unknown' },
+    } = person;
+    console.log(
+      `Hi ${first} from ${place}`,
+    );
     ```
   </div>
   </slot>
@@ -197,11 +197,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     这样写的意思是“如果 `person.birth` 为 `undefined`，则 `place` 为 `Unknown`”。但 `person.birth` 为 `undefined`，于是尝试对 `undefined` 进行解构，导致错误。
     ```plaintext
-        In modern Chrome: `TypeError: Cannot read properties of undefined (reading 'place')`
+    In modern Chrome: `TypeError: Cannot read properties of undefined (reading 'place')`
 
-        In Node, this is also a `TypeError` because JavaScript tries to destructure `place` from `undefined`.
+    In Node, this is also a `TypeError` because JavaScript tries to destructure `place` from `undefined`.
 
-        Exact wording varies between browsers and runtimes.
+    Exact wording varies between browsers and runtimes.
     ```
   </div>
   </slot>
@@ -225,18 +225,18 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     这段代码会做什么？
     ```js
-        const person = {
-          name: { first: 'Dan' },
-          address: { city: 'Denver' },
-        };
-        const {
-          name: { first = 'Unknown' },
-          birth: { place = 'Unknown' } = {},
-        } = person;
+    const person = {
+      name: { first: 'Dan' },
+      address: { city: 'Denver' },
+    };
+    const {
+      name: { first = 'Unknown' },
+      birth: { place = 'Unknown' } = {},
+    } = person;
 
-        console.log(
-          `Hi ${first} from ${place}`,
-        );
+    console.log(
+      `Hi ${first} from ${place}`,
+    );
     ```
   </div>
   </slot>
@@ -266,14 +266,14 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     现在把它当作函数参数，会发生什么？
     ```js
-        'use strict';
-        function displayUser({
-          name = "Unknown",
-          age = -1,
-        } = { place: "Unknown" }) {
-          console.log(`Hi ${name} from ${place}`);
-        }
-        displayUser({ name: "Dan" });
+    'use strict';
+    function displayUser({
+      name = "Unknown",
+      age = -1,
+    } = { place: "Unknown" }) {
+      console.log(`Hi ${name} from ${place}`);
+    }
+    displayUser({ name: "Dan" });
     ```
   </div>
   </slot>
@@ -307,17 +307,17 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     `undefined` 值是如何处理的？
     ```js
-        'use strict';
-        function displayPlace({
-          name = "N/A",
-          place = "N/A",
-          age = -1,
-        } = { place: "Unknown" }) {
-          console.log(`${place}`);
-        }
-        displayPlace({ name: "Dan" });
-        displayPlace({ name: "Dan", place: undefined });
-        displayPlace({ name: "Dan", place: "Joburg" });
+    'use strict';
+    function displayPlace({
+      name = "N/A",
+      place = "N/A",
+      age = -1,
+    } = { place: "Unknown" }) {
+      console.log(`${place}`);
+    }
+    displayPlace({ name: "Dan" });
+    displayPlace({ name: "Dan", place: undefined });
+    displayPlace({ name: "Dan", place: "Joburg" });
     ```
   </div>
   </slot>
@@ -330,9 +330,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     结果是：
     ```js
-        displayPlace() // Unknown
-        displayPlace({ name: "Dan" }) // N/A
-        displayPlace({ name: "Dan", place: undefined }) // N/A
+    displayPlace() // Unknown
+    displayPlace({ name: "Dan" }) // N/A
+    displayPlace({ name: "Dan", place: undefined }) // N/A
     ```
   </div>
   </slot>
@@ -359,15 +359,15 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     和前一个类似……`null` 是怎么处理的？_
     ```js
-        function displayPlace({
-          name = "N/A",
-          place = "N/A",
-          age = -1,
-        } = { place: "Unknown" }) {
-          console.log(`${place}`);
-        }
-        displayPlace({ name: "Dan", place: null });
-        displayPlace({ name: "Dan", place: undefined });
+    function displayPlace({
+      name = "N/A",
+      place = "N/A",
+      age = -1,
+    } = { place: "Unknown" }) {
+      console.log(`${place}`);
+    }
+    displayPlace({ name: "Dan", place: null });
+    displayPlace({ name: "Dan", place: undefined });
     ```
   </div>
   </slot>
@@ -398,20 +398,20 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     现在在 TypeScript 中…… _这会怎么做？_
     ```ts
-        'use strict';
-        function displayPlace(
-          {
-            name = 'N/A',
-            place = 'N/A',
-          }: {
-            name: string;
-            place: string;
-            age: number;
-          },
-        ) {
-          console.log(`${place}`);
-        }
-        displayPlace({ name: 'Dan', place: null });
+    'use strict';
+    function displayPlace(
+      {
+        name = 'N/A',
+        place = 'N/A',
+      }: {
+        name: string;
+        place: string;
+        age: number;
+      },
+    ) {
+      console.log(`${place}`);
+    }
+    displayPlace({ name: 'Dan', place: null });
     ```
   </div>
   </slot>
@@ -445,18 +445,18 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     我们来试试重命名/赋值吧……
     ```ts
-        'use strict';
-        function displayPlace({
-          name = 'N/A',
-          place: location = 'N/A',
-        }: {
-          name: string;
-          place: string;
-          age?: number;
-        }) {
-          console.log(`${location}`);
-        }
-        displayPlace({ name: 'Dan', place: 'Denver' });
+    'use strict';
+    function displayPlace({
+      name = 'N/A',
+      place: location = 'N/A',
+    }: {
+      name: string;
+      place: string;
+      age?: number;
+    }) {
+      console.log(`${location}`);
+    }
+    displayPlace({ name: 'Dan', place: 'Denver' });
     ```
   </div>
   </slot>
@@ -485,18 +485,18 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     找出类型错误：
     ```ts
-        function greet({
-          name: {first = "N/A", last = "N/A"},
-          birth: {place = "N/A"} = {},
-          age = -1,
-        }: {
-          name: {first?: string, last?: string};
-          birth: {place?: string};
-          age: number;
-        }) {
-          console.log(`Hi ${first} ${last} from ${place}`);
-        }
-        greet({ name: {first: 'Dan'} });
+    function greet({
+      name: {first = "N/A", last = "N/A"},
+      birth: {place = "N/A"} = {},
+      age = -1,
+    }: {
+      name: {first?: string, last?: string};
+      birth: {place?: string};
+      age: number;
+    }) {
+      console.log(`Hi ${first} ${last} from ${place}`);
+    }
+    greet({ name: {first: 'Dan'} });
     ```
   </div>
   </slot>
@@ -529,25 +529,25 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     现在使用 **赋值**（注意 `f`、`l` 和 `p` 变量）
     ```ts
-        'use strict';
-        function greet(
-          {
-            name: {first: f = "N/A", last: l = "N/A"},
-            birth: {place: p = "N/A"} = {},
-            age = -1,
-          }: {
-            name: {first?: string, last?: string};
-            birth?: {place?: string};
-            age?: number;
-          }
-        ) {
-          console.log(`Hi ${f} ${l} from ${place}`);
-          // What will 👆 do?
-        }
-        greet({
-          name: {first: 'Dan', last: 'Levy'},
-          birth: {place: 'Cape Town'},
-        });
+    'use strict';
+    function greet(
+      {
+        name: {first: f = "N/A", last: l = "N/A"},
+        birth: {place: p = "N/A"} = {},
+        age = -1,
+      }: {
+        name: {first?: string, last?: string};
+        birth?: {place?: string};
+        age?: number;
+      }
+    ) {
+      console.log(`Hi ${f} ${l} from ${place}`);
+      // What will 👆 do?
+    }
+    greet({
+      name: {first: 'Dan', last: 'Levy'},
+      birth: {place: 'Cape Town'},
+    });
     ```
   </div>
   </slot>
@@ -560,9 +560,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     一旦 `place` 被重新赋值给 `p` 变量，它就在 `console.log` 语句的作用域中不再定义。
     ```ts
-        console.log(`Hi ${f} ${l} from ${place}`); // ❌
-        // to:
-        console.log(`Hi ${f} ${l} from ${p}`); // ✅
+    console.log(`Hi ${f} ${l} from ${place}`); // ❌
+    // to:
+    console.log(`Hi ${f} ${l} from ${p}`); // ✅
     ```
   </div>
   </slot>

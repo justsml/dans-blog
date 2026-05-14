@@ -55,7 +55,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     在 Bash 中，变量声明时 `=` 两侧不能有空格。例如：
     ```bash
-        name=Alice
+    name=Alice
     ```
     这会把值 `"Alice"` 赋给变量 `name`。
 
@@ -95,7 +95,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     单引号在单引号字符串内部需要转义。关闭引号、转义引号、重新打开引号的序列（`'\''`）可以输出：
     ```plaintext
-        It's 🔨 Time!
+    It's 🔨 Time!
     ```
     还有其他处理方式，但这是最常见的。
   </div>
@@ -120,7 +120,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     此命令会输出什么？
     ```bash
-        echo c{a,b}t
+    echo c{a,b}t
     ```
   </div>
   </slot>
@@ -131,7 +131,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     这里，`c{a,b}t` 会展开为：
     ```plaintext
-        cat cbt
+    cat cbt
     ```
   </div>
   </slot>
@@ -155,8 +155,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     现在，这会打印什么？
     ```bash
-        price="$100"
-        echo "Cost: $price"
+    price="$100"
+    echo "Cost: $price"
     ```
   </div>
   </slot>
@@ -169,8 +169,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     要打印字面 `$` 字符，使用单引号，或用反斜杠转义它（`\\`）：
     ```bash
-        price="\$100"
-        echo "Cost: $price"
+    price="\$100"
+    echo "Cost: $price"
     ```
   </div>
   </slot>
@@ -193,8 +193,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     这里发生了什么？
     ```bash
-        str="Bark bark"
-        echo ${str/bark/meow}
+    str="Bark bark"
+    echo ${str/bark/meow}
     ```
   </div>
   </slot>
@@ -203,7 +203,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     `${var/pattern/replacement}` 语法将 `pattern` 的第一次出现替换为 `replacement`。这里的输出是：
     ```plaintext
-        Bark meow
+    Bark meow
     ```
     它是区分大小写的。要同时处理 `bark` 和 `Bark`，可以使用类似 `${var/[Bb]ark/Bark}` 的模式，或在替换前对字符串进行规范化。
 
@@ -241,8 +241,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     例如：
     ```bash
-        username="@justsml"
-        echo ${#username} # => 8
+    username="@justsml"
+    echo ${#username} # => 8
     ```
     虽然 `wc` 能工作，但它技术上不是 Bash 的一部分。
 
@@ -271,11 +271,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     如果文件 `cats.txt` 存在，这段脚本会输出什么？
     ```bash
-        if [ -e cats.txt]; then
-          echo "File exists"
-        else
-          echo "File does not exist"
-        fi
+    if [ -e cats.txt]; then
+      echo "File exists"
+    else
+      echo "File does not exist"
+    fi
     ```
   </div>
   </slot>
@@ -290,11 +290,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     正确的语法是：
     ```bash
-        if [ -e example.txt ]; then
-          echo "File exists"
-        else
-          echo "File does not exist"
-        fi
+    if [ -e example.txt ]; then
+      echo "File exists"
+    else
+      echo "File does not exist"
+    fi
     ```
     注意：条件表达式建议使用双中括号 `[[ ]]` **推荐**。[参见 BashFAQ.](https://mywiki.wooledge.org/BashFAQ/031)
   </div>
@@ -317,13 +317,13 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     在 Bash 中如何比较字符串？
     ```bash
-        cat1="Rosie"
-        cat2="Sunflower"
-        if [ "$cat1" === "$cat2" ]; then
-          echo "Same cat"
-        else
-          echo "Different cats"
-        fi
+    cat1="Rosie"
+    cat2="Sunflower"
+    if [ "$cat1" === "$cat2" ]; then
+      echo "Same cat"
+    else
+      echo "Different cats"
+    fi
     ```
   </div>
   </slot>
@@ -359,10 +359,10 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     这个脚本会输出什么？
     ```bash
-        function greet () {
-          echo "$1"
-        }
-        greet Hi Dan
+    function greet () {
+      echo "$1"
+    }
+    greet Hi Dan
     ```
   </div>
   </slot>
@@ -400,8 +400,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     `|` 管道运算符将一个命令的输出连接到另一个命令的输入。例如：
     ```bash
-        echo "Mr. Levy 👨🏻‍🔬" | wc -m
-        # => 14
+    echo "Mr. Levy 👨🏻‍🔬" | wc -m
+    # => 14
     ```
   </div>
   </slot>
@@ -432,14 +432,14 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     它可用于简单计算：
     ```bash
-        ((result = 2 + 2))
-        echo $result # => 4
+    ((result = 2 + 2))
+    echo $result # => 4
     ```
     或用于条件表达式：
     ```bash
-        if (( 2 > 1 )); then
-          echo "2 is greater than 1"
-        fi
+    if (( 2 > 1 )); then
+      echo "2 is greater than 1"
+    fi
     ```
     对于浮点运算，考虑使用 [`bc`](https://www.gnu.org/software/bc/manual/html_mono/bc.html) 或 [`awk`](https://www.gnu.org/software/gawk/manual/gawk.html)。
   </div>
@@ -494,8 +494,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     这个脚本中的 `:` 是做什么的？
     ```bash
-        rosie="Bad cat, good cat"
-        echo ${rosie:9}
+    rosie="Bad cat, good cat"
+    echo ${rosie:9}
     ```
   </div>
   </slot>
@@ -504,7 +504,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     `${var:offset}` 语法会从 `offset` 开始提取子串。这里的输出是：
     ```plaintext
-        good cat
+    good cat
     ```
     要提取特定长度的子串，使用 `${var:offset:length}`。
 
@@ -564,8 +564,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     `$(ls -l)` 语法会执行 **括号** 中的命令并替换为输出。例如：
     ```bash
-        echo "Today is $(date +%F)"
-        # => Today is 2029-12-31
+    echo "Today is $(date +%F)"
+    # => Today is 2029-12-31
     ```
     第一个选项使用单引号 `'`，**而不是反引号**。这会阻止展开，所以 `'$(date +%F)'` 只会打印字面字符串 `$(date +%F)`。
 

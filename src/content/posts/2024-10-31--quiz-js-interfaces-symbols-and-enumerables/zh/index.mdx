@@ -47,12 +47,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     你应该如何访问一个使用了 getter 方法的 JavaScript 对象属性？
     ```js
-        const obj = {
-          get val() {
-            return 'got it!';
-          }
-        };
-        console.log(obj.val);
+    const obj = {
+      get val() {
+        return 'got it!';
+      }
+    };
+    console.log(obj.val);
     ```
   </div>
   </slot>
@@ -84,11 +84,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     为 JavaScript 对象创建一个真正唯一的属性键，正确的方法是什么？
     ```js
-        const uniqueKey = Symbol('myUniqueKey');
-        const obj = {
-          [uniqueKey]: 'unique value'
-        };
-        console.log(obj[uniqueKey]);
+    const uniqueKey = Symbol('myUniqueKey');
+    const obj = {
+      [uniqueKey]: 'unique value'
+    };
+    console.log(obj[uniqueKey]);
     ```
   </div>
   </slot>
@@ -119,14 +119,14 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     在 `for...in` 循环迭代期间，`age` 属性会被列出来吗？
     ```js
-        const person = {};
-        Object.defineProperty(person, 'age', {
-          value: 25,
-          enumerable: true
-        });
-        for (let key in person) {
-          console.log(key);
-        }
+    const person = {};
+    Object.defineProperty(person, 'age', {
+      value: 25,
+      enumerable: true
+    });
+    for (let key in person) {
+      console.log(key);
+    }
     ```
   </div>
   </slot>
@@ -157,11 +157,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     在使用 `Object.defineProperty()` 且未明确指定 `enumerable` 时，该属性的默认可枚举性是什么？
     ```js
-        const car = {};
-        Object.defineProperty(car, 'make', {
-          value: 'Toyota'
-        });
-        console.log(Object.keys(car));
+    const car = {};
+    Object.defineProperty(car, 'make', {
+      value: 'Toyota'
+    });
+    console.log(Object.keys(car));
     ```
   </div>
   </slot>
@@ -192,9 +192,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     以下比较的结果是什么？
     ```js
-        const sym1 = Symbol('id');
-        const sym2 = Symbol('id');
-        console.log(sym1 === sym2);
+    const sym1 = Symbol('id');
+    const sym2 = Symbol('id');
+    console.log(sym1 === sym2);
     ```
   </div>
   </slot>
@@ -225,14 +225,14 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     在 `for...in` 迭代期间，以 Symbol 作为键的属性会被列出吗？
     ```js
-        const sym = Symbol('uniqueKey');
-        const obj = {
-          [sym]: 'symbol value',
-          regularKey: 'regular value'
-        };
-        for (let key in obj) {
-          console.log(key);
-        }
+    const sym = Symbol('uniqueKey');
+    const obj = {
+      [sym]: 'symbol value',
+      regularKey: 'regular value'
+    };
+    for (let key in obj) {
+      console.log(key);
+    }
     ```
   </div>
   </slot>
@@ -273,14 +273,14 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     `Object.getOwnPropertySymbols()` 方法专门用于获取对象自身的所有 Symbol 属性键。
     ```js
-        const sym1 = Symbol('id');
-        const sym2 = Symbol('name');
-        const obj = {
-          [sym1]: 'symbol value',
-          [sym2]: 'another symbol value'
-        };
-        console.log(Object.getOwnPropertySymbols(obj));
-        // [Symbol(id), Symbol(name)]
+    const sym1 = Symbol('id');
+    const sym2 = Symbol('name');
+    const obj = {
+      [sym1]: 'symbol value',
+      [sym2]: 'another symbol value'
+    };
+    console.log(Object.getOwnPropertySymbols(obj));
+    // [Symbol(id), Symbol(name)]
     ```
   </div>
   </slot>

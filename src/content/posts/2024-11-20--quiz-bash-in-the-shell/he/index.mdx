@@ -55,7 +55,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     משתנים ב-Bash מוצהרים ללא רווחים סביב סימן `=`. לדוגמה:
     ```bash
-        name=Alice
+    name=Alice
     ```
     פעולה זו משייכת את הערך `"Alice"` למשתנה `name`.
 
@@ -95,7 +95,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     מרכאות בודדות דורשות בריחה בתוך מחרוזות עם מרכאות בודדות. הרצף של סגירת מרכאה, מרכאה מוברחת, פתיחת מרכאה (`'\''`) מאפשר פלט של:
     ```plaintext
-        It's 🔨 Time!
+    It's 🔨 Time!
     ```
     יש דרכים אחרות לטפל בזה, אבל זו הנפוצה ביותר.
   </div>
@@ -120,7 +120,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     מה הפלט של הפקודה הזו?
     ```bash
-        echo c{a,b}t
+    echo c{a,b}t
     ```
   </div>
   </slot>
@@ -131,7 +131,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     כאן, `c{a,b}t` מתרחבת ל:
     ```plaintext
-        cat cbt
+    cat cbt
     ```
   </div>
   </slot>
@@ -155,8 +155,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     עכשיו, מה זה ידפיס?
     ```bash
-        price="$100"
-        echo "Cost: $price"
+    price="$100"
+    echo "Cost: $price"
     ```
   </div>
   </slot>
@@ -169,8 +169,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     כדי להדפיס תו `$` מילולי, השתמש בגרשיים בודדים, או ברוח ממנו עם לוכסן אחורי (`\`):
     ```bash
-        price="\$100"
-        echo "Cost: $price"
+    price="\$100"
+    echo "Cost: $price"
     ```
   </div>
   </slot>
@@ -193,8 +193,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     מה קורה כאן?
     ```bash
-        str="Bark bark"
-        echo ${str/bark/meow}
+    str="Bark bark"
+    echo ${str/bark/meow}
     ```
   </div>
   </slot>
@@ -203,7 +203,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     התחביר `${var/pattern/replacement}` מחליף את המופע הראשון של `pattern` ב-`replacement`. כאן, הפלט הוא:
     ```plaintext
-        Bark meow
+    Bark meow
     ```
     זה תלוי רישיות. כדי לטפל גם ב-`bark` וגם ב-`Bark`, השתמש בתבנית כמו `${var/[Bb]ark/Bark}` או נרמל את המחרוזת לפני ההחלפה.
 
@@ -241,8 +241,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     לדוגמה:
     ```bash
-        username="@justsml"
-        echo ${#username} # => 8
+    username="@justsml"
+    echo ${#username} # => 8
     ```
     למרות ש-`wc` יעבוד, מבחינה טכנית זה לא חלק מ-Bash.
 
@@ -271,11 +271,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     מה הפלט של הסקריפט אם הקובץ `cats.txt` קיים?
     ```bash
-        if [ -e cats.txt]; then
-          echo "File exists"
-        else
-          echo "File does not exist"
-        fi
+    if [ -e cats.txt]; then
+      echo "File exists"
+    else
+      echo "File does not exist"
+    fi
     ```
   </div>
   </slot>
@@ -290,11 +290,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     התחביר הנכון הוא:
     ```bash
-        if [ -e example.txt ]; then
-          echo "File exists"
-        else
-          echo "File does not exist"
-        fi
+    if [ -e example.txt ]; then
+      echo "File exists"
+    else
+      echo "File does not exist"
+    fi
     ```
     הערה: סוגריים כפולים `[[ ]]` **מומלצים** לביטויי תנאי. [ראה BashFAQ.](https://mywiki.wooledge.org/BashFAQ/031)
   </div>
@@ -317,13 +317,13 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     איך אפשר להשוות מחרוזות בבאש?
     ```bash
-        cat1="Rosie"
-        cat2="Sunflower"
-        if [ "$cat1" === "$cat2" ]; then
-          echo "Same cat"
-        else
-          echo "Different cats"
-        fi
+    cat1="Rosie"
+    cat2="Sunflower"
+    if [ "$cat1" === "$cat2" ]; then
+      echo "Same cat"
+    else
+      echo "Different cats"
+    fi
     ```
   </div>
   </slot>
@@ -359,10 +359,10 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     מה הפלט של הסקריפט הזה?
     ```bash
-        function greet () {
-          echo "$1"
-        }
-        greet Hi Dan
+    function greet () {
+      echo "$1"
+    }
+    greet Hi Dan
     ```
   </div>
   </slot>
@@ -400,8 +400,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     אופרטור הצינור `|` מחבר את הפלט של פקודה אחת לקלט של פקודה אחרת. לדוגמה:
     ```bash
-        echo "Mr. Levy 👨🏻‍🔬" | wc -m
-        # => 14
+    echo "Mr. Levy 👨🏻‍🔬" | wc -m
+    # => 14
     ```
   </div>
   </slot>
@@ -432,14 +432,14 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     ניתן להשתמש בו לחישובים פשוטים:
     ```bash
-        ((result = 2 + 2))
-        echo $result # => 4
+    ((result = 2 + 2))
+    echo $result # => 4
     ```
     או לביטויים תנאיים:
     ```bash
-        if (( 2 > 1 )); then
-          echo "2 is greater than 1"
-        fi
+    if (( 2 > 1 )); then
+      echo "2 is greater than 1"
+    fi
     ```
     לחישובי נקודה צפה, שקול להשתמש ב-[`bc`](https://www.gnu.org/software/bc/manual/html_mono/bc.html) או [`awk`](https://www.gnu.org/software/gawk/manual/gawk.html).
   </div>
@@ -494,8 +494,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     מה עושה ה-`:` בסקריפט הזה?
     ```bash
-        rosie="Bad cat, good cat"
-        echo ${rosie:9}
+    rosie="Bad cat, good cat"
+    echo ${rosie:9}
     ```
   </div>
   </slot>
@@ -504,7 +504,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     התחביר `${var:offset}` מחלץ תת-מחרוזת החל מ-`offset`. כאן, הפלט הוא:
     ```plaintext
-        good cat
+    good cat
     ```
     כדי לחלץ תת-מחרוזת באורך מסוים, השתמש ב-`${var:offset:length}`.
 
@@ -564,8 +564,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     התחביר `$(ls -l)` מבצע את הפקודה בתוך **הסוגריים** ומחליף את הפלט. לדוגמה:
     ```bash
-        echo "Today is $(date +%F)"
-        # => Today is 2029-12-31
+    echo "Today is $(date +%F)"
+    # => Today is 2029-12-31
     ```
     האפשרות הראשונה משתמשת בגרשיים בודדים `'`, **לא בגרשיים אחוריים.** זה מונע הרחבה, כך ש-`'$(date +%F)'` פשוט ידפיס את המחרוזת המילולית `$(date +%F)`.
 

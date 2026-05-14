@@ -54,7 +54,7 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     В Bash переменные объявляются без пробелов вокруг знака `=`. Например:
     ```bash
-        name=Alice
+    name=Alice
     ```
     Это присваивает значение `"Alice"` переменной `name`.
 
@@ -93,7 +93,7 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 
     Single quotes need escaping inside single-quoted strings. The close-quote, escaped-quote, reopen-quote sequence (`'\''`) allows output of:
     ```plaintext
-        It's 🔨 Time!
+    It's 🔨 Time!
     ```
     Есть и другие способы решить эту задачу, но это самый распространённый.
   </div>
@@ -118,7 +118,7 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   <div className="question">
     Что выведет эта команда?
     ```bash
-        echo c{a,b}t
+    echo c{a,b}t
     ```
   </div>
   </slot>
@@ -128,7 +128,7 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 
     Здесь `c{a,b}t` разворачивается в:
     ```plaintext
-        cat cbt
+    cat cbt
     ```
   </div>
   </slot>
@@ -152,8 +152,8 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   <div className="question">
     Итак, что будет выведено?
     ```bash
-        price="$100"
-        echo "Cost: $price"
+    price="$100"
+    echo "Cost: $price"
     ```
   </div>
   </slot>
@@ -165,8 +165,8 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 
     Чтобы вывести буквальный символ `$`, используйте одинарные кавычки или экранируйте его обратным слешем (`\\`):
     ```bash
-        price="\$100"
-        echo "Cost: $price"
+    price="\$100"
+    echo "Cost: $price"
     ```
   </div>
   </slot>
@@ -189,8 +189,8 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   <div className="question">
     Что здесь происходит?
     ```bash
-        str="Bark bark"
-        echo ${str/bark/meow}
+    str="Bark bark"
+    echo ${str/bark/meow}
     ```
   </div>
   </slot>
@@ -198,7 +198,7 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     Синтаксис `${var/pattern/replacement}` заменяет первое вхождение `pattern` на `replacement`. Здесь вывод:
     ```plaintext
-        Bark meow
+    Bark meow
     ```
     Он чувствителен к регистру. Чтобы обработать как `bark`, так и `Bark`, используйте шаблон вроде `${var/[Bb]ark/Bark}` или нормализуйте строку перед заменой.
 
@@ -235,8 +235,8 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 
     Например:
     ```bash
-        username="@justsml"
-        echo ${#username} # => 8
+    username="@justsml"
+    echo ${#username} # => 8
     ```
     Хотя `wc` сработает, технически это не часть Bash.
 
@@ -265,11 +265,11 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   <div className="question">
     Что выведет этот скрипт, если файл `cats.txt` СУЩЕСТВУЕТ?
     ```bash
-        if [ -e cats.txt]; then
-          echo "File exists"
-        else
-          echo "File does not exist"
-        fi
+    if [ -e cats.txt]; then
+      echo "File exists"
+    else
+      echo "File does not exist"
+    fi
     ```
   </div>
   </slot>
@@ -283,11 +283,11 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 
     Правильный синтаксис:
     ```bash
-        if [ -e example.txt ]; then
-          echo "File exists"
-        else
-          echo "File does not exist"
-        fi
+    if [ -e example.txt ]; then
+      echo "File exists"
+    else
+      echo "File does not exist"
+    fi
     ```
     Примечание: двойные квадратные скобки `[[ ]]` **рекомендованы** для условных выражений. [См. BashFAQ.](https://mywiki.wooledge.org/BashFAQ/031)
   </div>
@@ -310,13 +310,13 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   <div className="question">
     Как сравнивать строки в Bash?
     ```bash
-        cat1="Rosie"
-        cat2="Sunflower"
-        if [ "$cat1" === "$cat2" ]; then
-          echo "Same cat"
-        else
-          echo "Different cats"
-        fi
+    cat1="Rosie"
+    cat2="Sunflower"
+    if [ "$cat1" === "$cat2" ]; then
+      echo "Same cat"
+    else
+      echo "Different cats"
+    fi
     ```
   </div>
   </slot>
@@ -351,10 +351,10 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   <div className="question">
     Что выведет этот скрипт?
     ```bash
-        function greet () {
-          echo "$1"
-        }
-        greet Hi Dan
+    function greet () {
+      echo "$1"
+    }
+    greet Hi Dan
     ```
   </div>
   </slot>
@@ -390,8 +390,8 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     Оператор `|` соединяет вывод одной команды со вводом другой. Например:
     ```bash
-        echo "Mr. Levy 👨🏻‍🔬" | wc -m
-        # => 14
+    echo "Mr. Levy 👨🏻‍🔬" | wc -m
+    # => 14
     ```
   </div>
   </slot>
@@ -421,14 +421,14 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 
     Его можно использовать для простых вычислений:
     ```bash
-        ((result = 2 + 2))
-        echo $result # => 4
+    ((result = 2 + 2))
+    echo $result # => 4
     ```
     Или для условных выражений:
     ```bash
-        if (( 2 > 1 )); then
-          echo "2 is greater than 1"
-        fi
+    if (( 2 > 1 )); then
+      echo "2 is greater than 1"
+    fi
     ```
     Для арифметики с плавающей точкой рассмотрите использование [`bc`](https://www.gnu.org/software/bc/manual/html_mono/bc.html) или [`awk`](https://www.gnu.org/software/gawk/manual/gawk.html).
   </div>
@@ -482,8 +482,8 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   <div className="question">
     Что делает `:` в этом скрипте?
     ```bash
-        rosie="Bad cat, good cat"
-        echo ${rosie:9}
+    rosie="Bad cat, good cat"
+    echo ${rosie:9}
     ```
   </div>
   </slot>
@@ -491,7 +491,7 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     Синтаксис `${var:offset}` извлекает подстроку, начиная с `offset`. Здесь вывод:
     ```plaintext
-        good cat
+    good cat
     ```
     Чтобы извлечь подстроку заданной длины, используйте `${var:offset:length}`.
 
@@ -549,8 +549,8 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     Синтаксис `$(ls -l)` выполняет команду внутри **скобок** и подставляет её вывод. Например:
     ```bash
-        echo "Today is $(date +%F)"
-        # => Today is 2029-12-31
+    echo "Today is $(date +%F)"
+    # => Today is 2029-12-31
     ```
     Первый вариант использует одинарные кавычки `'`, **а не обратные кавычки**. Это подавляет расширение, поэтому `'$(date +%F)'` просто выведет буквальную строку `$(date +%F)`.
 
