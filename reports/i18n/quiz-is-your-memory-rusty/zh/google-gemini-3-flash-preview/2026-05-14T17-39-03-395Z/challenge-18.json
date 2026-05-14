@@ -1,0 +1,57 @@
+{
+  "index": 17,
+  "attempt": 1,
+  "originalTitle": "Zero-Cost Abstractions",
+  "translatedTitle": "零成本抽象",
+  "translation": {
+    "title": "零成本抽象",
+    "group": "高级模式",
+    "options": [
+      {
+        "text": "Iterator 带来的运行时开销",
+        "hint": "Rust 的迭代器是零成本抽象"
+      },
+      {
+        "text": "与原始循环性能相同"
+      },
+      {
+        "text": "更慢但更具可读性",
+        "hint": "抽象不会影响运行时性能"
+      },
+      {
+        "text": "取决于优化级别",
+        "hint": "抽象在编译时就被消除了"
+      }
+    ],
+    "objectives": [
+      "理解 Rust 的零成本抽象原则",
+      "分析编译时与运行时成本",
+      "在不产生性能开销的情况下应用抽象"
+    ],
+    "questionProse": [
+      "这两者实现的性能对比如何？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "Rust 的零成本抽象会编译成等效的高效代码：",
+      "核心原则：\n      1. 你没用到的东西，你不需要付出代价\n      2. 你用到的东西，你不可能写出更好的手工代码\n\n      最佳实践：\n      1. 自由地使用高级抽象\n      2. 信任编译器的优化\n      3. 在优化前进行性能分析\n      4. 优先考虑可读性\n      5. 放心使用迭代器和闭包"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"零成本抽象\",\n  \"group\": \"高级模式\",\n  \"options\": [\n    {\n      \"text\": \"Iterator 带来的运行时开销\",\n      \"hint\": \"Rust 的迭代器是零成本抽象\"\n    },\n    {\n      \"text\": \"与原始循环性能相同\"\n    },\n    {\n      \"text\": \"更慢但更具可读性\",\n      \"hint\": \"抽象不会影响运行时性能\"\n    },\n    {\n      \"text\": \"取决于优化级别\",\n      \"hint\": \"抽象在编译时就被消除了\"\n    }\n  ],\n  \"objectives\": [\n    \"理解 Rust 的零成本抽象原则\",\n    \"分析编译时与运行时成本\",\n    \"在不产生性能开销的情况下应用抽象\"\n  ],\n  \"questionProse\": [\n    \"这两者实现的性能对比如何？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"Rust 的零成本抽象会编译成等效的高效代码：\",\n    \"核心原则：\\n      1. 你没用到的东西，你不需要付出代价\\n      2. 你用到的东西，你不可能写出更好的手工代码\\n\\n      最佳实践：\\n      1. 自由地使用高级抽象\\n      2. 信任编译器的优化\\n      3. 在优化前进行性能分析\\n      4. 优先考虑可读性\\n      5. 放心使用迭代器和闭包\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 987,
+    "outputTokens": 1102,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 7141,
+    "providerCostUsd": 0.0037995,
+    "providerUpstreamCostUsd": 0.0037995,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.0004935,
+    "outputUsd": 0.003306,
+    "totalUsd": 0.0037995,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Box Smart Pointer",
+  "translatedTitle": "Box 智能指针",
+  "translation": {
+    "title": "Box 智能指针",
+    "group": "智能指针",
+    "options": [
+      {
+        "text": "5",
+        "hint": "这段代码甚至无法编译出结果"
+      },
+      {
+        "text": "null",
+        "hint": "Rust 中没有 null 值"
+      },
+      {
+        "text": "编译错误",
+        "hint": "编译器无法确定这种递归类型的有限大小。"
+      },
+      {
+        "text": "栈溢出"
+      }
+    ],
+    "objectives": [
+      "理解递归类型定义及其对内存的影响",
+      "识别必须使用 `Box<T>` 的场景",
+      "应用 `Box<T>` 修复递归数据结构"
+    ],
+    "questionProse": [
+      "这个递归类型定义有什么问题？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "这段代码会失败，因为编译器无法在编译时确定 `CatList` 的大小。该类型的递归特性意味着它理论上可能无限大！\n\n以下是使用 `Box<T>` 修复它的方法：",
+      "为什么 `Box<T>` 有效：\n1. Box 提供了一个固定大小的指针（在 64 位系统上通常为 8 字节）\n2. 实际数据存储在堆（heap）上\n3. 编译器现在确切知道需要分配多少空间\n\n`Box<T>` 的常见用例：\n- 递归数据结构（链表、树）\n- 你希望确保在堆上分配的大型数据\n- 需要动态分派时的 Trait 对象\n\n最佳实践：在以下情况使用 `Box<T>`：\n- 递归类型\n- 确保堆分配\n- 在不进行拷贝的情况下移动大型数据"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Box 智能指针\",\n  \"group\": \"智能指针\",\n  \"options\": [\n    {\n      \"text\": \"5\",\n      \"hint\": \"这段代码甚至无法编译出结果\"\n    },\n    {\n      \"text\": \"null\",\n      \"hint\": \"Rust 中没有 null 值\"\n    },\n    {\n      \"text\": \"编译错误\",\n      \"hint\": \"编译器无法确定这种递归类型的有限大小。\"\n    },\n    {\n      \"text\": \"栈溢出\"\n    }\n  ],\n  \"objectives\": [\n    \"理解递归类型定义及其对内存的影响\",\n    \"识别必须使用 `Box<T>` 的场景\",\n    \"应用 `Box<T>` 修复递归数据结构\"\n  ],\n  \"questionProse\": [\n    \"这个递归类型定义有什么问题？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"这段代码会失败，因为编译器无法在编译时确定 `CatList` 的大小。该类型的递归特性意味着它理论上可能无限大！\\n\\n以下是使用 `Box<T>` 修复它的方法：\",\n    \"为什么 `Box<T>` 有效：\\n1. Box 提供了一个固定大小的指针（在 64 位系统上通常为 8 字节）\\n2. 实际数据存储在堆（heap）上\\n3. 编译器现在确切知道需要分配多少空间\\n\\n`Box<T>` 的常见用例：\\n- 递归数据结构（链表、树）\\n- 你希望确保在堆上分配的大型数据\\n- 需要动态分派时的 Trait 对象\\n\\n最佳实践：在以下情况使用 `Box<T>`：\\n- 递归类型\\n- 确保堆分配\\n- 在不进行拷贝的情况下移动大型数据\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1082,
+    "outputTokens": 435,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 3847,
+    "providerCostUsd": 0.001846,
+    "providerUpstreamCostUsd": 0.001846,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000541,
+    "outputUsd": 0.001305,
+    "totalUsd": 0.001846,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

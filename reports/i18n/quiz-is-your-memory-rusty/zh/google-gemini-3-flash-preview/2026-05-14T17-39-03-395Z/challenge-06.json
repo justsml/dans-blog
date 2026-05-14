@@ -1,0 +1,57 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Rc Smart Pointer",
+  "translatedTitle": "Rc 智能指针",
+  "translation": {
+    "title": "Rc 智能指针",
+    "group": "引用计数",
+    "options": [
+      {
+        "text": "引用计数: 1",
+        "hint": "计算初始创建以及每次克隆的次数"
+      },
+      {
+        "text": "引用计数: 2",
+        "hint": "别忘了原始引用"
+      },
+      {
+        "text": "引用计数: 3"
+      },
+      {
+        "text": "编译错误",
+        "hint": "Rc<T> 正是为这种场景设计的"
+      }
+    ],
+    "objectives": [
+      "理解 Rust 中引用计数的工作原理",
+      "在共享所有权场景中应用 Rc<T>",
+      "分析代码中的引用计数行为"
+    ],
+    "questionProse": [
+      "这段代码会打印什么？仔细数数！"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "让我们拆解一下 Rc 的工作原理：\n\n      1. 使用 `Rc::new()` 初始创建：计数 = 1\n      2. 为 `marcus` 进行第一次克隆：计数 = 2\n      3. 为 `aurelius` 进行第二次克隆：计数 = 3\n\n      Rc 的重要特性：",
+      "关键点：\n      - `Rc::clone()` 的开销很小 —— 它只增加计数器\n      - Rc 仅适用于单线程场景\n      - 当最后一个引用被丢弃（drop）时，数据会被清理\n      - 使用 Weak 引用来防止循环引用\n\n      最佳实践：\n      - 当你需要共享所有权时使用 Rc\n      - 在线程安全场景下考虑使用 Arc\n      - 避免创建循环引用"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Rc 智能指针\",\n  \"group\": \"引用计数\",\n  \"options\": [\n    {\n      \"text\": \"引用计数: 1\",\n      \"hint\": \"计算初始创建以及每次克隆的次数\"\n    },\n    {\n      \"text\": \"引用计数: 2\",\n      \"hint\": \"别忘了原始引用\"\n    },\n    {\n      \"text\": \"引用计数: 3\"\n    },\n    {\n      \"text\": \"编译错误\",\n      \"hint\": \"Rc<T> 正是为这种场景设计的\"\n    }\n  ],\n  \"objectives\": [\n    \"理解 Rust 中引用计数的工作原理\",\n    \"在共享所有权场景中应用 Rc<T>\",\n    \"分析代码中的引用计数行为\"\n  ],\n  \"questionProse\": [\n    \"这段代码会打印什么？仔细数数！\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"让我们拆解一下 Rc 的工作原理：\\n\\n      1. 使用 `Rc::new()` 初始创建：计数 = 1\\n      2. 为 `marcus` 进行第一次克隆：计数 = 2\\n      3. 为 `aurelius` 进行第二次克隆：计数 = 3\\n\\n      Rc 的重要特性：\",\n    \"关键点：\\n      - `Rc::clone()` 的开销很小 —— 它只增加计数器\\n      - Rc 仅适用于单线程场景\\n      - 当最后一个引用被丢弃（drop）时，数据会被清理\\n      - 使用 Weak 引用来防止循环引用\\n\\n      最佳实践：\\n      - 当你需要共享所有权时使用 Rc\\n      - 在线程安全场景下考虑使用 Arc\\n      - 避免创建循环引用\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1040,
+    "outputTokens": 426,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 3787,
+    "providerCostUsd": 0.001798,
+    "providerUpstreamCostUsd": 0.001798,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00052,
+    "outputUsd": 0.001278,
+    "totalUsd": 0.0017980000000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "index": 8,
+  "attempt": 1,
+  "originalTitle": "RefCell Behavior",
+  "translatedTitle": "RefCell 行为",
+  "translation": {
+    "title": "RefCell 行为",
+    "group": "RefCells",
+    "options": [
+      {
+        "text": "打印：42",
+        "hint": "我们可以同时拥有两个可变借用吗？"
+      },
+      {
+        "text": "运行时恐慌（Panic）：RefCell already borrowed"
+      },
+      {
+        "text": "编译错误",
+        "hint": "RefCell 将检查移至运行时"
+      },
+      {
+        "text": "运行时恐慌（Panic）：不同的错误信息",
+        "hint": "该错误会明确提到借用（borrowing）相关信息"
+      }
+    ],
+    "objectives": [
+      "理解使用 RefCell 实现的内部可变性",
+      "分析 RefCell 的运行时借用规则",
+      "应用 RefCell 进行受控的可变访问"
+    ],
+    "questionProse": [
+      "这段代码运行时会发生什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "`RefCell` 提供了内部可变性，但它仍然在运行时强制执行 Rust 的借用规则：",
+      "核心概念：\n      1. `RefCell` 将借用检查从编译时移动到了运行时\n      2. 如果违反借用规则，会导致程序恐慌（panic）\n      3. 适用于内部可变性模式\n\n      常见使用场景：\n      - 测试中的模拟对象（Mock objects）\n      - 实现自引用结构\n      - 当你需要在共享引用之后修改数据时\n      \n      最佳实践：\n      1. 尽可能优先使用编译时借用检查\n      2. 保持 `RefCell` 借用的作用域尽可能小\n      3. 考虑使用 `drop()` 来显式结束借用\n      4. 在确实需要内部可变性时才使用 `RefCell`"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"RefCell 行为\",\n  \"group\": \"RefCells\",\n  \"options\": [\n    {\n      \"text\": \"打印：42\",\n      \"hint\": \"我们可以同时拥有两个可变借用吗？\"\n    },\n    {\n      \"text\": \"运行时恐慌（Panic）：RefCell already borrowed\"\n    },\n    {\n      \"text\": \"编译错误\",\n      \"hint\": \"RefCell 将检查移至运行时\"\n    },\n    {\n      \"text\": \"运行时恐慌（Panic）：不同的错误信息\",\n      \"hint\": \"该错误会明确提到借用（borrowing）相关信息\"\n    }\n  ],\n  \"objectives\": [\n    \"理解使用 RefCell 实现的内部可变性\",\n    \"分析 RefCell 的运行时借用规则\",\n    \"应用 RefCell 进行受控的可变访问\"\n  ],\n  \"questionProse\": [\n    \"这段代码运行时会发生什么？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"`RefCell` 提供了内部可变性，但它仍然在运行时强制执行 Rust 的借用规则：\",\n    \"核心概念：\\n      1. `RefCell` 将借用检查从编译时移动到了运行时\\n      2. 如果违反借用规则，会导致程序恐慌（panic）\\n      3. 适用于内部可变性模式\\n\\n      常见使用场景：\\n      - 测试中的模拟对象（Mock objects）\\n      - 实现自引用结构\\n      - 当你需要在共享引用之后修改数据时\\n      \\n      最佳实践：\\n      1. 尽可能优先使用编译时借用检查\\n      2. 保持 `RefCell` 借用的作用域尽可能小\\n      3. 考虑使用 `drop()` 来显式结束借用\\n      4. 在确实需要内部可变性时才使用 `RefCell`\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1023,
+    "outputTokens": 452,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 4272,
+    "providerCostUsd": 0.0018675,
+    "providerUpstreamCostUsd": 0.0018675,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.0005115,
+    "outputUsd": 0.001356,
+    "totalUsd": 0.0018675,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
