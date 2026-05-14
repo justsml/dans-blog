@@ -20,7 +20,9 @@ export type JudgeScoreKey =
   | "coherence"
   | "relevance"
   | "translationQuality"
-  | "mdxPreservation";
+  | "mdxPreservation"
+  | "culturalAdaptation"
+  | "languagePurity";
 
 export type JudgeScoreMap = Record<JudgeScoreKey, number>;
 
@@ -106,6 +108,8 @@ export function normalizeJudgeScores(value: unknown): JudgeScoreMap | undefined 
     "relevance",
     "translationQuality",
     "mdxPreservation",
+    "culturalAdaptation",
+    "languagePurity",
   ];
   const hasAnyScore = keys.some((key) => Number.isFinite(
     typeof record[key] === "number" ? record[key] : Number(record[key]),
@@ -119,6 +123,8 @@ export function normalizeJudgeScores(value: unknown): JudgeScoreMap | undefined 
     relevance: normalizeJudgeScore(record.relevance),
     translationQuality: normalizeJudgeScore(record.translationQuality),
     mdxPreservation: normalizeJudgeScore(record.mdxPreservation),
+    culturalAdaptation: normalizeJudgeScore(record.culturalAdaptation),
+    languagePurity: normalizeJudgeScore(record.languagePurity),
   };
 }
 
@@ -270,6 +276,8 @@ export function getJudgeJsonShape() {
       relevance: 0,
       translationQuality: 0,
       mdxPreservation: 0,
+      culturalAdaptation: 0,
+      languagePurity: 0,
     },
     suggestions: [
       {
@@ -302,7 +310,14 @@ export function buildPrimaryJudgePrompt(
       ? `Use ${ctx.selectedCommit} as the selected candidate unless it is structurally broken and it is selectable in this comparison.`
       : "Choose the best selectable candidate by technical accuracy, natural language quality, Dan's direct style, and MDX preservation.",
     `The final MDX must preserve the English file's per-level heading counts: same number of H1, H2, H3, H4, H5, and H6 headings. Translate heading text, but do not add, remove, promote, or demote headings.`,
+    `Also preserve structural counts for fenced code blocks, Markdown/HTML images, blockquotes, tables, imports, MDX components, and quiz Challenge blocks/options/answer flags. Treat mismatches as high-priority unless the English source itself is malformed.`,
     `Locale files live one folder deeper than English. Any inherited local image or asset path in frontmatter, Markdown, or JSX must start with ../, even if the English file uses a bare path or ./ path. Never suggest changing ../asset.webp to asset.webp or ./asset.webp.`,
+    `Reject candidates with raw HTML comments outside code fences; MDX comments must use {/* ... */}.`,
+    `Reject candidates with broken HTML/MDX markup such as unclosed <section>, <p>, or other non-void tags.`,
+    `Reject candidates that leak LLM instructions, wrappers, candidate labels, system/user prompt text, or translation-task narration.`,
+    `Reject candidates that mix substantial English source prose into the target language, while allowing technical terms, code identifiers, product names, and URLs.`,
+    `Score culturalAdaptation by whether idioms, jokes, metaphors, and culturally loaded expressions are natural in ${ctx.locale} while preserving Dan's direct technical voice. Low scores mean literal or culturally awkward wording.`,
+    `Score languagePurity by whether reader-facing prose is consistently in ${ctx.locale} without untranslated English source prose or LLM instruction leakage. Do not penalize code, API names, brand names, commands, URLs, or deliberate English technical terms.`,
     getLengthValidationGuidance(ctx.locale),
     `Candidate MDX contents are attached below; do not ask to run git show.`,
     `Return the selected candidate id in selectedCommit. Use "current" only if the <current> pre-existing translation is best and selectable.`,
@@ -327,7 +342,8 @@ export function buildPrePublishRescorePrompt(
     `Candidate commits for context:`,
     candidateSummary,
     ``,
-    `Check ${ctx.targetRelPath} against ${ctx.sourcePath ?? "the English source"} for technical accuracy, natural language quality, Dan's direct style, MDX preservation, per-level heading count preservation, and comparable body length.`,
+    `Check ${ctx.targetRelPath} against ${ctx.sourcePath ?? "the English source"} for technical accuracy, natural language quality, Dan's direct style, cultural adaptation, language purity, MDX preservation, per-level heading count preservation, structural count preservation, and comparable body length.`,
+    `Look specifically for bad HTML comments, unclosed HTML/MDX tags, invalid inherited asset paths, changed code block/image/blockquote/table counts, changed quiz options or answer flags, mixed-language prose, and leaked LLM instructions.`,
     `Return refreshed scoring and pre-publish status as strict JSON. The wrapper script writes reports and applies exact medium/high-priority replacements.`,
     `Use this JSON shape:`,
     JSON.stringify(getJudgeJsonShape()),
@@ -350,7 +366,7 @@ export function buildSecondJudgePrompt(
     `Candidate commits:`,
     candidateSummary,
     ``,
-    `Check for MDX/frontmatter breakage, heading count mismatches by level, untranslated reader-facing prose, major terminology errors, and obvious tone regressions.`,
+    `Check for MDX/frontmatter breakage, raw HTML comments, invalid inherited asset paths, unclosed HTML tags, code block/image/blockquote/table count mismatches, heading count mismatches by level, changed quiz options or answer flags, untranslated or mixed-language reader-facing prose, leaked LLM instructions, major terminology errors, weak cultural adaptation, and obvious tone regressions.`,
     `Return your agreement or disagreement as strict JSON. If acceptable, put the exact phrase "No escalation required" in rationale.`,
     `Do not edit ${ctx.targetRelPath}. If you disagree, state the exact candidate SHA or issue that requires escalation.`,
   ].join("\n");
@@ -368,6 +384,7 @@ export function buildEscalationPrompt(
     `Read the attached primary and second judge reports.`,
     `Candidate MDX contents are attached below; do not ask to run git show.`,
     `The final MDX must preserve the English file's per-level heading counts: same number of H1, H2, H3, H4, H5, and H6 headings.`,
+    `Also preserve code block, image, blockquote, table, Challenge, quiz option, and answer-flag counts; reject leaked LLM instructions, raw HTML comments, invalid asset paths, mixed-language prose, and broken HTML/MDX markup.`,
     `Return the final selected candidate SHA and rationale as strict JSON. The wrapper script writes ${ctx.targetRelPath} and judge reports.`,
   ].join("\n");
 }

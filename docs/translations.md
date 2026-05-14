@@ -66,7 +66,13 @@ bun run i18n:validate -- --slug the-last-to-think --locale es
 bun run i18n:coverage
 bun run i18n:promote -- --slug the-last-to-think --locale es
 bun run i18n:report:models
+bun run i18n:score                   # LLM-score all promoted translations
+bun run i18n:eval                    # offline prompt evals against fixed fixtures
 ```
+
+**Prompt eval suite**: `bun run i18n:eval` runs real cheap-model inferences against fixed source fixtures and scores outputs with a lightweight judge. Run it after editing prompts in `prompts.ts` or judge builders in `judge-utils.ts`. See [i18n-evals.md](i18n-evals.md) for full documentation.
+
+**Unit tests** (no LLM, no tokens): `bun test src/scripts/i18n/judge.test.ts` covers all pure functions in `judge-utils.ts` — JSON parsing, score normalization, suggestion normalization, escalation logic, and prompt builder structure.
 
 Validation checks frontmatter, preserved imports/components, fenced code counts, nested locale asset paths, per-level heading counts, and comparable prose length. English and translated files must keep the same number of H1, H2, H3, H4, H5, and H6 headings; translate the heading text, but do not promote, demote, add, or drop headings. Translated bodies must stay within the locale's comparable-length range after frontmatter, imports, fenced code blocks, `<pre>` blocks, comments, and excess whitespace are ignored. CJK languages use lower character-count minimums because the text is naturally denser; Arabic, Hebrew, Hindi, German, French, Italian, Spanish, and Russian each have locale-specific expansion/compression bounds instead of sharing one English-centric percentage.
 

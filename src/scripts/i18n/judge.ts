@@ -58,12 +58,6 @@ type JudgeCommandResult = {
   errorMessage?: string;
 };
 
-type CandidateRef = {
-  id: string;
-  label: string;
-  source: "commit" | "current";
-  model: string;
-};
 
 type JudgeOperationKind = "candidate-batch" | "final" | "fix-rescore" | "second" | "escalation";
 

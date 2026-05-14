@@ -259,6 +259,42 @@ playwright.config.ts         # E2E tests
 - For quiz posts, center the teaching insight behind the questions, not only the answer key mechanics.
 - Humor works best as seasoning. If a bit starts competing with the argument, cut it back.
 
+## i18n Translation Pipeline
+
+Scripts live in `src/scripts/i18n/`. See `docs/translations.md` for the full workflow.
+
+```bash
+bun run i18n:translate:candidates -- --slug <slug> --locale <locale>
+bun run i18n:judge              -- --slug <slug> --locale <locale>
+bun run i18n:validate           -- --slug <slug> --locale <locale>
+bun run i18n:coverage               # corpus health overview
+bun run i18n:score                  # LLM-score all promoted translations
+bun run i18n:eval                   # offline prompt evals (see below)
+```
+
+### i18n Eval Suite
+
+`bun run i18n:eval` runs real LLM inferences with cheap models against fixed source fixtures and scores outputs with a lightweight judge. Use it after editing prompts in `prompts.ts` or `judge-utils.ts`, and before merging changes to translation or judge logic.
+
+```bash
+bun run i18n:eval -- --dry-run         # list cases without spending tokens
+bun run i18n:eval -- --locale es       # one locale
+bun run i18n:eval -- --suite translation
+bun run i18n:eval -- \
+  --translation-model openrouter/deepseek/deepseek-v4-flash \
+  --judge-model openrouter/google/gemini-2.0-flash-001
+```
+
+Results land in `reports/i18n/evals/` as JSONL + markdown summaries. See `docs/i18n-evals.md` for full docs.
+
+### i18n Unit Tests (offline, no LLM)
+
+`src/scripts/i18n/judge.test.ts` covers all pure functions in `judge-utils.ts` — JSON parsing, score normalization, suggestion normalization, escalation logic, candidate selection, and all prompt builders. No tokens spent.
+
+```bash
+bun test src/scripts/i18n/judge.test.ts
+```
+
 ## Debugging
 
 - **Type errors**: `bun run check`
@@ -266,3 +302,4 @@ playwright.config.ts         # E2E tests
 - **Quiz state issues**: Clear localStorage or use `QuestionStore._clearAllQuizData()`
 - **Images not optimizing**: Verify WebP format, run `bun run webp-images`
 - **Build fails**: Check for hidden posts with invalid frontmatter
+- **Translation prompt regressions**: Run `bun run i18n:eval` after prompt changes

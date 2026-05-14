@@ -9,6 +9,7 @@ import {
 } from "./utils.ts";
 import { assertTranslationLength } from "./structural-validation.ts";
 import { assertNestedAssetPaths } from "./localized-mdx.ts";
+import { assertTranslationIntegrity } from "./integrity-checks.ts";
 
 const options = parseArgs();
 const slug = requireString(options, "slug");
@@ -29,6 +30,12 @@ assertHeadingCounts(source, target);
 assertProtectedTokens(source, target);
 assertQuizStructure(source, target);
 assertNestedAssetPaths(target, targetPath);
+assertTranslationIntegrity({
+  sourceContents: source,
+  targetContents: target,
+  targetPath,
+  locale,
+});
 
 if (shouldSkipGlobalChecks) {
   process.exit(0);
