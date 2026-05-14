@@ -1,0 +1,76 @@
+# Translation Candidate
+- Slug: creating-collaborative-culture
+- Locale: zh
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2021-03-03--creating-collaborative-culture/zh/index.mdx
+- Validation: deferred
+- Runtime seconds: 3.06
+- Input tokens: 1074
+- Output tokens: 1241
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.000384
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: 创建协作文化
+subTitle: 释放团队的创造力！
+date: '2021-01-01'
+modified: '2023-01-25'
+tags:
+  - collaborative-culture
+  - culture
+  - teams
+  - growth
+  - personal-development
+category: Leadership
+subCategory: culture
+cover: ../pexels-photo-3184431--cropped.webp
+cover_mobile: ../w300_pexels-photo-3184431--cropped.webp
+cover_icon: ../icon_pexels-photo-3184431--cropped.webp
+---
+## 什么是*协作文化*？
+
+大多数组织都处于**快乐蜜蜂**和**杀人蜂群**之间的某个位置。
+
+*协作文化*具有两个关键原则，可实现**快乐蜜蜂**：
+
+1. 欢迎所有想法！（尤其是那些看似荒谬的。）
+1. 接纳所有想法！（无论职位或角色如何。）
+
+<!-- > 最终，最优秀的组织会无差别地接纳所有想法，无论提出者地位如何。 -->
+
+## 为什么需要*协作文化*？
+
+我最喜欢的一个*协作文化*案例，讲述了一位清洁工、他的十亿美元创意，以及一位愿意倾听的CEO。
+
+当百事公司CEO罗杰·恩里科要求员工"像所有者一样行事"时，很少有员工当真。但理查德·蒙塔内兹当真了。他知道辣味零食存在未被开发的市场。于是他拨通了CEO的电话（从公司电话簿上找到），要求面谈。由于一些幸运的误会，他们以为要和区域工厂经理见面。工厂经理得知即将举行提案会议时显然有些惊讶，经过一番推敲后，工厂经理告诉蒙塔内兹这是他沉浮的机会——永远不要再搞这种把戏了。
+
+在那次会面（以及大量努力工作）之后，蒙塔内兹的事业迅速上升，最终成为百事公司的销售副总裁，为公司创造了数十亿美元。
+
+伟大的想法和灵感可以来自任何人、任何地方、任何时间！
+
+要实现长期成功，工作文化必须接纳这一点！
+
+## 下一步行动
+
+首先，评估现状。花几分钟思考一些问题：
+
+- 组织中有多少比例的人会分享想法？
+- 新员工提出想法的速度有多快？
+- 频率如何？
+
+更个人化的问题：
+
+- 同事最近一次向你提出的想法是什么？
+- 你如何回应？你是否赋予他们权力？你是否花时间倾听并给予他们应有的认可？
+- 同事是否觉得向你提出下一个想法是安全的？
+
+> 请持续关注！
+> 我的下一篇文章将探讨如何在组织中建立推动*协作文化*的流程和习惯！
+````
