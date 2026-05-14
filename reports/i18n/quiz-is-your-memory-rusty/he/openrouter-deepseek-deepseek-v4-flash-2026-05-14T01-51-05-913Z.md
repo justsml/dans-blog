@@ -1,0 +1,15 @@
+# Translation Candidate
+- Slug: quiz-is-your-memory-rusty
+- Locale: he
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2024-12-28--quiz-is-your-memory-rusty/he/index.mdx
+- Validation: rejected: direct AI SDK translation failed
+- Runtime seconds: 66.83
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Cache write tokens: unknown
+- Estimated cost: unknown
+- Pricing source: unknown
+- Note: Command failed: bun run i18n:translate:chunked -- --slug quiz-is-your-memory-rusty --locale he --model openrouter/deepseek/deepseek-v4-flash --chunk 10p --run-id 2026-05-14T01-51-05-910Z-75505 --run-lock-path /Users/dan/code/oss/dans-blog/.git/i18n-all-missing-runlocks/quiz-is-your-memory-rusty-he-deepseek-deepseek-v4-flash.json (code 1)
