@@ -1,0 +1,109 @@
+---
+title: سحر جافا سكريبت
+subTitle: الأمرية مقابل التكرارية مقابل الوظيفية
+date: '2015-06-06'
+modified: '2024-07-30'
+category: Code
+subCategory: javascript
+draft: true
+publish: true
+tags:
+  - javascript
+  - programming
+  - performance
+  - patterns
+cover: ../markus-spiske-197281-unsplash.webp
+cover_mobile: ../w300_markus-spiske-197281-unsplash.webp
+cover_icon: ../icon_markus-spiske-197281-unsplash.webp
+---
+## أمرّي مقابل عودي مقابل وظيفي
+
+> [ قيد الإعداد ]
+
+```javascript
+// Imperative: The Fastest ( + very simple, no new pointers or excess allocs ):
+function fib(n) {
+  var a = 1,
+    b = 1,
+    c = 0;
+  for (var i = 1; i < n - 1; ++i) {
+    c = a + b;
+    a = b;
+    b = c;
+  }
+  return b;
+}
+
+// Recursive: (FIREFOX or BABELJS Only) ES6 function definition with
+//  parameter defaults used to set initial (internal/recursive) values
+function fib(n, current = 0, a = 1, b = 1, c = 0) {
+  current++;
+  c = a + b;
+  a = b;
+  b = c;
+  return current >= n ? b : fib(n, current, a, b, c);
+}
+
+// Text-book-Bad Example - poor function scope w/ multiple mutable external values
+function fib(n) {
+  if (!arr) {
+    var arr = [1, 1];
+    n = n - 2;
+  } // Bad
+  if (n === -1) {
+    return [arr[0]];
+  }
+  if (n === 0) {
+    return arr;
+  }
+  var proc = function() {
+    --n;
+    arr.push(arr[arr.length - 1] + arr[arr.length - 2]);
+    return n === 0 ? arr : proc();
+    // Bad: inner recursive function not needed, hint: variables used are from parent function scope
+  };
+  var ans = proc();
+  return ans[ans.length - 1];
+}
+```
+
+## الوعود: رائعة!
+
+```js
+// Example Using bluebird Promises and it's
+var Promise = require("bluebird"),
+  fs = Promise.promisifyAll(require("fs")),
+  less = Promise.promisifyAll(require("less"));
+
+function writeFileData(data) {
+  return fs.writeFileAsync("/tmp/output.css", data);
+}
+// Bluebird makes something like this perhaps uncomfortably simple and succinct:
+fs.readFileAsync("./style.less") // Call promisified readFile()
+  .then(less.renderAsync) // Hand off to less.render
+  .then(writeFileData); // Function to recieve the css contents (1st parameter)
+```
+
+1.  بينما الوعود الأصلية في ES6 رائعة، إلا أنني أفضل مكتبة [Bluebird Promise Library](https://github.com/petkaantonov/bluebird/blob/master/API.md) القوية.
+1.  سواء باستخدام مكتبة أم لا، المتصفحات الحديثة تدعم Promise منذ سنوات.
+1.  يمكن استخدام الوعود بدون أنماط معقدة - استخدام `deferred` الضمني هو الأفضل.
+1.  **$q سيء جدًا** فقط استخدم bluebird، انظر أعلاه.
+1.  جدير بالذكر: معايير Bluebird هي اختبارات في أفضل الحالات، لذا انتبه إذا كنت تستخدم سلاسل وعود معقدة جدًا.
+
+## جافا مقابل جافا سكريبت
+
+### تحديد المعدل / إزالة الارتداد / الخنق
+
+1.  في جافا سكريبت، نفذ [David Walsh دالة debounce](http://davidwalsh.name/essential-javascript-functions) في أقل من 20 سطرًا!
+1.  في جافا، JDebounce، مكتبة أكثر تعقيدًا بكثير، بحوالي 500+ سطر.
+1.  _ مقارنة بين الاثنين: _
+1.  جافا سكريبت سريعة وتستخدم دوال من الدرجة الأولى لتحقيق بساطة رائعة.
+1.  بينما جافا لديها أجزاء متحركة أكثر بكثير، تُستخدم التعليقات التوضيحية لتطبيق السلوك في وقت الترجمة، وهناك كمية هائلة من XML، فقط للمتعة!
+
+<!--
+## تقنيات عكس التحكم
+
+قيد الإعداد
+-->
+
+[fuck_this]: https://res.cloudinary.com/ddd/image/upload/panda-rampage__tumblr_nq7srwTXqr1stn6klo1_500_gm2som.gif
