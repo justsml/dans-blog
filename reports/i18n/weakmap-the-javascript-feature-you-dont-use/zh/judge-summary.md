@@ -2,7 +2,7 @@
 
 - Slug: weakmap-the-javascript-feature-you-dont-use
 - Locale: zh
-- Judge model: openrouter/deepseek/deepseek-v4-flash
+- Judge model: openrouter/google/gemini-3-flash-preview
 - Second judge model: not run
 - Escalation judge model: not run
 - Max candidate commits per judge call: 3
@@ -12,16 +12,17 @@
 - Validation scope: local
 
 ## Primary Judge Telemetry
-- Runtime seconds: 44.93
-- Input tokens: 5342
-- Output tokens: 2859
+- Runtime seconds: 3.06
+- Input tokens: 9595
+- Output tokens: 162
 - Thinking tokens: unknown
 - Cached input tokens: 0
 - Cache write tokens: 0
-- OpenRouter cost credits: 0.002212
-- Estimated cost: $0.002212
+- OpenRouter cost credits: 0.005284
+- Estimated cost: $0.005284
 
 ## Candidates
-- current not present
-- 7729f325e39e8d49e09fd442bf0b51303a74a168 i18n candidate(zh): weakmap-the-javascript-feature-you-dont-use via openrouter/openai/gpt-oss-120b:nitro
-- 8c2a740073d262f8933b928a62d024c00f27fc07 i18n candidate(zh): weakmap-the-javascript-feature-you-dont-use via openrouter/deepseek/deepseek-v4-flash
+- current src/content/posts/2025-12-29--weakmap-the-javascript-feature-you-dont-use/zh/index.mdx
+- cc9d99091f8e1e1233ccdf14e7e14d92a7d12900 i18n candidate(zh): weakmap-the-javascript-feature-you-dont-use via openrouter/openai/gpt-oss-120b:nitro
+- 114e931352e1b5b9f34a8d167861dca9ae024c19 i18n candidate(zh): weakmap-the-javascript-feature-you-dont-use via deepseek/deepseek-v4-flash
+- 95faa5de6cf88ed424fad122cff73d8d374ebbae i18n candidate(zh): weakmap-the-javascript-feature-you-dont-use via openrouter/google/gemini-3-flash-preview

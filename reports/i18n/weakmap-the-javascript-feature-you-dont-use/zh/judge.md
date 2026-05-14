@@ -1,7 +1,7 @@
 # Translation Judge
 
-- Selected candidate: 8c2a740073d262f8933b928a62d024c00f27fc07
-- Selected model: openrouter/deepseek/deepseek-v4-flash
-- Judge model: openrouter/deepseek/deepseek-v4-flash
+- Selected candidate: 95faa5de6cf88ed424fad122cff73d8d374ebbae
+- Selected model: openrouter/google/gemini-3-flash-preview
+- Judge model: openrouter/google/gemini-3-flash-preview
 
-Candidate 8c2a740 provides a more natural and conversational translation that matches Dan's direct style, with accurate technical terminology and proper MDX formatting. The opening paragraph is particularly engaging and idiomatic. The code blocks are correctly formatted, and all comments are translated. The heading structure is preserved. No high-priority issues found.
+The Gemini candidate provides the most natural and professional translation while maintaining Dan's direct, conversational style. It correctly translates technical terms like 'strong reference' and 'memoization' and handles the MDX structure perfectly. It avoids the repetitive heading error found in the DeepSeek candidate and feels more polished than the GPT-OSS candidate.
