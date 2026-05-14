@@ -1,24 +1,51 @@
 {
-  "selectedCommit": "5aefcd5c879c1752150d3bfa274ed7920764f69d",
-  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "selectedCommit": "82cb0d7519eaea549f42dca30c465532b29945a9",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
   "scores": {
-    "readability": 5,
-    "technicalAccuracy": 5,
-    "coherence": 5,
-    "relevance": 5,
-    "translationQuality": 5,
-    "mdxPreservation": 5
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 10,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
   },
-  "suggestions": [],
-  "rationale": "The candidate 5aefcd5c879c1752150d3bfa274ed7920764f69d is the best choice. It provides a complete translation including the frontmatter title (which was missing in 'current' and '2d1e13b'). It maintains the correct heading structure and uses natural, technically accurate French terminology (e.g., 'données de première classe', 'dérive du schéma'). It avoids the duplication of the 'Resources' section found in the 'current' and '2d1e13b' versions. The tone is consistent with Dan's direct style.",
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "valider/versionner",
+      "replacement": "valider/versionner",
+      "reason": "The previous judge suggested fixing 'valider/versions' to 'valider/versionner', but the selected commit 82cb0d7519eaea549f42dca30c465532b29945a9 already contains 'valider/versionner'. No change is actually needed."
+    }
+  ],
+  "rationale": "The translation is excellent, capturing the technical nuances and the author's voice perfectly. It uses high-quality typography (non-breaking spaces with colons). The frontmatter and asset paths are correctly handled. Note: the previous judge's suggestion was already implemented in this commit.",
   "slug": "the-jsonb-seduction",
   "locale": "fr",
   "candidateCommits": [
     "5aefcd5c879c1752150d3bfa274ed7920764f69d",
     "82cb0d7519eaea549f42dca30c465532b29945a9",
-    "2d1e13bbeb3a2a18127959bccdf48162c654b787"
+    "2d1e13bbeb3a2a18127959bccdf48162c654b787",
+    "ef10a93ee0feb8a17d39cc3fd1da9f5c29ee399b"
   ],
-  "suggestionLog": [],
+  "suggestionLog": [
+    {
+      "priority": "medium",
+      "match": "valider/versions",
+      "replacement": "valider/versionner",
+      "reason": "Grammar: 'versions' is a noun or conjugated verb, but the infinitive 'versionner' is needed here to match 'valider'.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "valider/versionner",
+      "replacement": "valider/versionner",
+      "reason": "The previous judge suggested fixing 'valider/versions' to 'valider/versionner', but the selected commit 82cb0d7519eaea549f42dca30c465532b29945a9 already contains 'valider/versionner'. No change is actually needed.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match and replacement are identical; no MDX change needed."
+    }
+  ],
   "validation": {
     "ok": true,
     "scope": "local",

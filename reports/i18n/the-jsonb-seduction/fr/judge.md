@@ -1,7 +1,7 @@
 # Translation Judge
 
-- Selected candidate: 5aefcd5c879c1752150d3bfa274ed7920764f69d
-- Selected model: openrouter/qwen/qwen3.6-plus
+- Selected candidate: 82cb0d7519eaea549f42dca30c465532b29945a9
+- Selected model: openrouter/openai/gpt-oss-120b:nitro
 - Judge model: openrouter/google/gemini-3-flash-preview
 
-The candidate 5aefcd5c879c1752150d3bfa274ed7920764f69d is the best choice. It provides a complete translation including the frontmatter title (which was missing in 'current' and '2d1e13b'). It maintains the correct heading structure and uses natural, technically accurate French terminology (e.g., 'données de première classe', 'dérive du schéma'). It avoids the duplication of the 'Resources' section found in the 'current' and '2d1e13b' versions. The tone is consistent with Dan's direct style.
+The translation is excellent, capturing the technical nuances and the author's voice perfectly. It uses high-quality typography (non-breaking spaces with colons). The frontmatter and asset paths are correctly handled. Note: the previous judge's suggestion was already implemented in this commit.
