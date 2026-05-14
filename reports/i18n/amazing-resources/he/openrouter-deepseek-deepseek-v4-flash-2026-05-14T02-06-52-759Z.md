@@ -1,0 +1,210 @@
+# Translation Candidate
+- Slug: amazing-resources
+- Locale: he
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2015-02-26--amazing-resources/he/index.mdx
+- Validation: deferred
+- Runtime seconds: 70.25
+- Input tokens: 7535
+- Output tokens: 11333
+- Thinking tokens: unknown
+- Cached input tokens: 384
+- Cache write tokens: 0
+- Estimated cost: $0.004175
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: המשאבים החינמיים הטובים ביותר לעיצוב UI למפתחים
+subTitle: >-
+  רשימה מאוצרת לשנת 2026 של ערכות UI, בלוקים של Tailwind, אייקונים, גופנים,
+  איורים, אנימציות וכלי עיצוב לבניית אתרים מלוטשים במהירות.
+date: '2015-02-26'
+modified: '2026-04-29'
+category: Code
+subCategory: design
+tags:
+  - development
+  - design
+  - resources
+  - ui
+  - tailwind
+  - icons
+  - patterns
+cover_full_width: ../carl-heyerdahl-181868-unsplash.webp
+cover_mobile: ../w300_carl-heyerdahl-181868-unsplash.webp
+cover_icon: ../icon_carl-heyerdahl-181868-unsplash.webp
+---
+אם אתה בונה אתרים או אפליקציות ורוצה שהם ייראו מלוטשים יותר מבלי לבזבז ימים על המצאה מחדש של דפוסים נפוצים, זו הרשימה הקצרה שהייתי נותן לך.
+
+היא מתמקדת במשאבי עיצוב ממשק משתמש חינמיים למפתחים: ספריות רכיבים, בלוקים של Tailwind, אייקונים, איורים, כלי צבע, מקורות גופנים, ספריות אנימציה, וכלים פרקטיים שעוזרים לך לשלוח מהר יותר.
+
+רוב הקישורים כאן הם חינמיים, בקוד פתוח, או שיש להם שכבה חינמית שימושית באמת.
+
+> עודכן לאחרונה: 2026-04-29
+
+## תוכן
+
+1. [התחל כאן](#start-here)
+2. [רכיבי ממשק, בלוקים ותבניות](#ui-components-blocks-and-templates)
+3. [כלי עיצוב ועריכת תמונות](#design-and-image-editing-tools)
+4. [כלי גופנים וצבע](#fonts-and-color-tools)
+5. [אנימציה ואינטראקציה](#animation-and-interaction)
+6. [אייקונים ואיורים](#icons-and-illustrations)
+7. [תמונות ואירוח אתרים](#photos-and-website-hosting)
+8. [משאבי CSS, UX וזרימת עבודה מועילים](#helpful-css-ux-and-workflow-resources)
+9. [טיפים לרישוי ושימוש](#licensing-and-usage-tips)
+
+## התחל כאן
+
+אם אתה צריך רק כמה בחירות אמינות, התחל עם אלה:
+
+- לרכיבי React או Tailwind UI מלוטשים: [Aceternity UI](https://ui.aceternity.com/components), [Shadcnblocks](https://www.shadcnblocks.com/blocks), ו-[Tailark](https://tailark.com/blocks?licences=free).
+- לממשקי מוצרי AI ודפוסי צ'אט: [Assistant UI](https://www.assistant-ui.com/) ו-[AI SDK Elements: Chain of Thought](https://elements.ai-sdk.dev/components/chain-of-thought).
+- לאייקונים: [Lucide](https://lucide.dev/), [Iconoir](https://iconoir.com), ו-[Simple Icons](https://simpleicons.org/).
+- לאיורים: [ManyPixels](https://www.manypixels.co/gallery/), [DrawKit Free](https://www.drawkit.io/free), ו-[Humaaans](https://www.humaaans.com/).
+- לגופנים: [Fontsource](https://fontsource.org) ו-[Google Fonts](https://fonts.google.com/).
+- לצבע ונגישות: [Coolors](https://coolors.co/), [Adobe Color](https://color.adobe.com/create/color-wheel/), ו-[WebAIM Contrast Checker](https://webaim.org/resources/contrastchecker/).
+
+## רכיבי ממשק, בלוקים ותבניות
+
+זה הקטע שרוב האנשים באמת רוצים: תבניות אתרים, קטעי גיבור, שלדי אפליקציות, בלוקים של Tailwind ורכיבי ממשק שאפשר להתאים במקום לעצב מקנבס ריק.
+
+### AI וממשקי צ'אט
+
+- [Assistant UI](https://www.assistant-ui.com/) — רכיבי ממשק צ'אט AI בקוד פתוח לאפליקציות React.
+- [AI SDK Elements: Chain of Thought](https://elements.ai-sdk.dev/components/chain-of-thought) — תבנית ממשק צ'אט בסגנון חשיבה נקייה למוצרי AI.
+
+### בלוקים, קטעים ורכיבים
+
+- [Aceternity UI](https://ui.aceternity.com/components) — רכיבי React ו-Tailwind מלוטשים עם אישיות ויזואלית חזקה.
+- [reui Collapsible](https://reui.io/components/collapsible) — תבניות ממשק מתקפלות וסגנון אקורדיון נקיות לממשקי React.
+- [Shadcnblocks](https://www.shadcnblocks.com/blocks) — קטעים ובלוקים מוכנים מראש הבנויים סביב אקוסיסטם shadcn.
+- [Tailark](https://tailark.com/blocks?licences=free) — בלוקי Tailwind חינמיים לאתרי שיווק ודפי מוצר.
+- [Tool UI](https://www.tool-ui.com/) — בלוקים ורכיבי ממשק מודרניים לאפליקציות ודפי נחיתה.
+- [CSS Layout](https://csslayout.io/patterns) — תבניות פריסה להעתקה-הדבקה למבני אתרים נפוצים.
+
+### תבניות מלאות והשראה
+
+- [HTML5 UP](https://html5up.net) — תבניות HTML יפות ורספונסיביות.
+- [Creative Tim Free React Templates](https://www.creative-tim.com/templates/react-free) — לוחות מחוונים, ערכות ותבניות בסגנון ניהול חינמיים ל-React.
+- [Awesome Landing Page](https://github.com/nordicgiant2/awesome-landing-page) — תבניות דפי נחיתה ודוגמאות מאוצרות.
+
+## כלי עיצוב ועריכת תמונות
+
+למוקאפים, גרפיקה, צילומי מסך, עריכת תמונות קלה או עבודת עיצוב מהירה בדפדפן.
+
+- [Photopea](https://www.photopea.com/) — עריכה דמוית פוטושופ ישירות בדפדפן.
+- [Penpot](https://penpot.app/) — עיצוב ואבות טיפוס בקוד פתוח.
+- [Corel Vector / Gravit Designer](https://designer.gravit.io/) — עיצוב וקטורי מבוסס דפדפן עם שכבה חינמית.
+- [Boxy SVG](https://boxy-svg.com/) — עורך SVG ממוקד לדפדפני Chromium ו-WebKit.
+- [VectorInk](https://vectorink.io/app/) — ציור ואיור וקטורי מבוסס דפדפן.
+- [SVGOMG](https://jakearchibald.github.io/svgomg/) — אופטימיזציה וניקוי קבצי SVG לפני הפצה.
+- [Pixlr X](https://pixlr.com/x/) — עריכת תמונות מקוונת מהירה כשאין צורך באפליקציית עיצוב מלאה.
+
+## כלי גופנים וצבעים
+
+להחלטות על טיפוגרפיה וצבע יש השפעה מכרעת על האם ממשק משתמש מרגיש מחושב או גנרי.
+
+### גופנים
+
+- [Fontsource](https://fontsource.org) — אחסון עצמי של גופנים בקוד פתוח עם התקנות מבוססות חבילות.
+- [Google Fonts](https://fonts.google.com/) — קטלוג הגופנים הקלאסי.
+- [Fontpair](https://fontpair.co/fonts/) — השראה לצירופי גופנים כשרוצים החלטה מהירה יותר.
+- [The Stocks](http://thestocks.im/) — מאגד גופנים, אייקונים, תמונות ומשאבים יצירתיים נוספים.
+
+### צבע וניגודיות
+
+- [Adobe Color](https://color.adobe.com/create/color-wheel/) — גלגל צבעים קלאסי וכלי הרמוניה.
+- [Coolors](https://coolors.co/) — צור, נעל והתאם פלטות במהירות.
+- [Color Hunt](https://colorhunt.co/) — השראה לפלטות שנאספו.
+- [Paletton](https://paletton.com/) — מחולל ערכות צבעים עם תצוגה מקדימה.
+- [WebAIM Contrast Checker](https://webaim.org/resources/contrastchecker/) — בדוק יחסי ניגודיות לפי WCAG.
+- [Contrast Ratio](https://contrast-ratio.com/) — בדיקת ניגודיות מהירה עם ממשק נקי יותר.
+
+## אנימציה ואינטראקציה
+
+השתמש באלה כשפריסות סטטיות מרגישות שטוחות ואתה צריך תנועה טובה יותר, מצבי ריחוף או ניווט חי יותר.
+
+- [GSAP](https://greensock.com/gsap) — סוס העבודה התעשייתי לאנימציית UI מורכבת.
+- [Anime.js](https://animejs.com/) — מנוע אנימציית JavaScript חזק עם עקומת למידה ידידותית יותר.
+- [Animate.css](https://animate.style/) — אנימציות מוכנות מראש מהירות לכניסות פשוטות ומשוב.
+- [Hover.css](https://ianlunn.github.io/Hover/) — אינטראקציות ריחוף מוכנות ומיקרו-אפקטים.
+- [Magic Animations](https://www.minimamente.com/project/magic/) — אנימציות CSS מוכנות מראש.
+- [Bounce.js](https://bouncejs.com/) — יצירת keyframe דמוית קפיץ. בארכיון, אך עדיין שימושי להשראה.
+- [Hamburgers](https://github.com/jonsuh/hamburgers) — אנימציות תפריט המבורגר נגישות.
+- [Best Snip SVG Animator](https://bestsnip.com/svg_animation/) — כלי אינטרנט פשוט להנפשת SVG.
+- [KokonutUI: Flow Field](https://kokonutui.com/docs/backgrounds/flow-field) — מתכון רקע מונפש עם תמורה ויזואלית חזקה.
+- [KokonutUI: Smooth Tab](https://kokonutui.com/docs/navigation/smooth-tab) — תבנית ניווט טאבים חלקה שניתן להתאים ל-UI של אפליקציה.
+
+## אייקונים ואיורים
+
+אלה המשאבים הכי קלים לשימוש מוגזם בצורה גרועה. העדיפו משפחה ויזואלית עקבית על פני ערבוב של חמישה סגנונות בממשק אחד.
+
+### אייקונים
+
+- [Lucide](https://lucide.dev/) — אייקונים נקיים בקוד פתוח ובחירת ברירת מחדל מצוינת.
+- [Iconoir](https://iconoir.com) — סט אייקוני SVG חינמי גדול עם מראה רך מעט יותר.
+- [Simple Icons](https://simpleicons.org/) — אייקוני מותג למוצרים וקישורים חברתיים.
+- [Phosphor Icons](https://phosphoricons.com/) — משפחת אייקונים גמישה לממשקים ואפליקציות.
+- [IcoMoon App](https://icomoon.io/app/#/select) — בנו סט אייקונים מותאם אישית וייצאו חבילות SVG או PNG.
+- [Font Awesome Free Search](https://fontawesome.com/v6/search?o=r&m=free) — שימושי כשצריך רוחב יותר מאישיות.
+- [The Noun Project](https://thenounproject.com) — ספריית אייקונים ענקית עם שפע של אובייקטים ומושגים נישתיים.
+- [SVG Repo](https://www.svgrepo.com/) — ספריית SVG קהילתית ענקית. האיכות משתנה, אז סננו בקפידה.
+
+### איורים ודמויות
+
+- [Humaaans](https://www.humaaans.com/) — איורי אנשים מודולריים לדפי מוצר ושיווק.
+- [ManyPixels](https://www.manypixels.co/gallery/) — ספריית איורים המתעדכנת לעתים קרובות.
+- [DrawKit Free](https://www.drawkit.io/free) — חבילות איורים חינמיות באיכות גבוהה.
+- [Open Doodles Generator](https://generator.opendoodles.com/) — שרבוטים גנרטיביים בסגנון ציור יד שובב.
+- [Illlustrations](https://illlustrations.co/) — סגנון איור מצויר ביד עם תחושה קז'ואלית.
+- [Icons8 Illustrations](https://icons8.com/illustrations) — חבילות איורים חינמיות במגוון סגנונות.
+- [Isometric](https://isometric.online/) — איורים ונכסים איזומטריים.
+- [React Kawaii](https://react-kawaii.vercel.app/#/Components) — רכיבי דמויות SVG חמודים.
+
+## תמונות ואירוח אתרים
+
+אלה פחות קשורים למערכות UI ויותר להבאת פרויקט לקו הסיום.
+
+### תמונות
+
+- [Unsplash](https://unsplash.com/) — צילומי מלאי באיכות גבוהה עם רישיון מתירני.
+- [Pexels](https://www.pexels.com/) — תמונות וסרטוני מלאי חינמיים.
+- [Women of Color in Tech](https://www.flickr.com/photos/wocintechchat/) — דימויים אותנטיים יותר של מקומות עבודה וטכנולוגיה.
+- [The Stocks](http://thestocks.im/) — עדיין שימושי כאגרגטור כשרוצים אפשרויות מהר.
+
+### אירוח אתרים
+
+- [Netlify](https://www.netlify.com/) — DX מעולה לאתרים סטטיים ולפרויקטים כבדים בצד הלקוח.
+- [Vercel](https://vercel.com/) — ברירת מחדל חזקה לאפליקציות צד־לקוח, תצוגות מקדימות ויכולות Edge.
+- [GitHub Pages](https://pages.github.com/) — אירוח חינמי פשוט לאתרים סטטיים.
+- [Render](https://render.com/) — שימושי כשצריך אירוח סטטי יחד עם שירותים או משימות cron.
+- [Surge](https://surge.sh/) — אירוח סטטי פשוט ביותר משורת הפקודה.
+
+## משאבי CSS, UX ועבודה שימושיים
+
+כלים קטנים אבל פרקטיים שפותרים בעיות ספציפיות בצד הלקוח במהירות.
+
+- [Shadow Designer](https://brumm.af/shadows) — יצירת צללים מרובדים שנראים טוב יותר מגישת הטשטוש־והתפלל הרגילה.
+- [Clippy](https://bennettfeely.com/clippy/) — מחולל `clip-path` ב־CSS.
+- [UX Design Glossary](https://www.qualtrics.com/blog/ux-design-glossary/) — שימושי כשרוצים שפה טובה יותר להסברת החלטות עיצוב.
+- [Coding Heroes Resources](http://codingheroes.io/resources/) — אוסף רחב יותר של משאבים יצירתיים.
+
+## טיפים בנושא רישוי ושימוש
+
+- אל תניחו ש"חינמי" פירושו "ללא ייחוס". בדקו כל רישיון לפני שאתם שולחים עבודה ללקוח.
+- שימו לב להגבלות סימני מסחר כשאתם משתמשים בסימני מותג, לוגואים או אייקוני אפליקציות בתבניות.
+- ייצאו SVG כשאפשר, כדי שאייקונים ואיורים יישארו חדים וקל יותר להתאים אותם לערכת העיצוב.
+- שמרו על עקביות במשפחת האייקונים. אייקון Lucide נקי לצד SVG שוקי מצויר בדרך כלל נראה לא מכוון.
+- תמיד בדקו ניגודיות טקסט. הרבה פלטות "יפות" קורסות על טקסט גוף אמיתי.
+- התייחסו לאיורי מלאי כאל חומר גלם. קצת עריכה עושה דרך ארוכה כדי להימנע מתחושת התבנית המועתקת.
+
+---
+
+יומן שינויים: 2026-04 — ארגון מחדש של הדף לטובת בני אדם ו־SEO, שיפור כותרות ותיאורים, והוספת Assistant UI, AI SDK Elements, Aceternity UI, Shadcnblocks, Tailark, KokonutUI patterns ו־Tool UI.
+יומן שינויים: 2025-09 — עדכון קישורים, רענון משאבים ישנים יותר, והוספת כלים מודרניים לאייקונים, ניגודיות ועיצוב.
+````
