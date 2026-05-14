@@ -1,0 +1,15 @@
+# Translation Candidate
+- Slug: weakmap-the-javascript-feature-you-dont-use
+- Locale: zh
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2025-12-29--weakmap-the-javascript-feature-you-dont-use/zh/index.mdx
+- Validation: rejected: direct AI SDK translation failed
+- Runtime seconds: 39.67
+- Input tokens: 4196
+- Output tokens: 3144
+- Thinking tokens: unknown
+- Cached input tokens: 384
+- Cache write tokens: 0
+- Estimated cost: $0.001415
+- Pricing source: local-openrouter-estimate
+- Note: Command failed: bun run i18n:translate:chunked -- --slug weakmap-the-javascript-feature-you-dont-use --locale zh --model openrouter/deepseek/deepseek-v4-flash --chunk 10p --run-id 2026-05-14T00-52-38-067Z-52210 --run-lock-path /Users/dan/code/oss/dans-blog/.git/codex-i18n-translation-run.json (code 1)
