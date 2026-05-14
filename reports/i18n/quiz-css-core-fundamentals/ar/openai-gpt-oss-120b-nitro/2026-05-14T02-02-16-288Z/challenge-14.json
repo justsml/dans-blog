@@ -1,0 +1,49 @@
+{
+  "index": 13,
+  "attempt": 1,
+  "originalTitle": "Zero-Specificity Selectors",
+  "translatedTitle": "المحددات ذات الصفرية في الخصوصية",
+  "translation": {
+    "title": "المحددات ذات الصفرية في الخصوصية",
+    "group": "المحدد: الخصوصية",
+    "options": [
+      {
+        "text": ":where(.card) .title"
+      },
+      {
+        "text": ".card .title"
+      },
+      {
+        "text": ":is(.card) .title"
+      },
+      {
+        "text": "#card .title"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "أي محدد يمتلك أقل خصوصية؟"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "`:where(.card) .title` لديه أقل خصوصية. الفئة الزائفة `:where()` وكل ما بداخلها يضيف `0-0-0`، لذا يُحسب فقط `.title`. `:is(.card) .title` يحتفظ بخصوصية `.card`، `.card .title` يحتوي على فئتين، و `#card .title` يتضمن معرفًا."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"المحددات ذات الصفرية في الخصوصية\",\n  \"group\": \"المحدد: الخصوصية\",\n  \"options\": [\n    {\n      \"text\": \":where(.card) .title\"\n    },\n    {\n      \"text\": \".card .title\"\n    },\n    {\n      \"text\": \":is(.card) .title\"\n    },\n    {\n      \"text\": \"#card .title\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"أي محدد يمتلك أقل خصوصية؟\"\n  ],\n  \"questionCode\": [],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"`:where(.card) .title` لديه أقل خصوصية. الفئة الزائفة `:where()` وكل ما بداخلها يضيف `0-0-0`، لذا يُحسب فقط `.title`. `:is(.card) .title` يحتفظ بخصوصية `.card`، `.card .title` يحتوي على فئتين، و `#card .title` يتضمن معرفًا.\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 875,
+    "outputTokens": 622,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 2194,
+    "providerCostUsd": 0.00048525,
+    "providerUpstreamCostUsd": 0.00048525,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000034124999999999996,
+    "outputUsd": 0.00011196,
+    "totalUsd": 0.000146085,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

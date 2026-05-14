@@ -1,0 +1,471 @@
+---
+unlisted: false
+title: 'اختبار: هل تعرف أساسيات CSS؟ (2025)'
+subTitle: هل أنت كافٍ في الواجهة الأمامية؟
+label: CSS Fundamentals
+social_image: ../desktop-social.webp
+category: Quiz
+subCategory: CSS
+date: '2024-11-08'
+modified: '2024-11-10'
+tags:
+  - quiz
+  - intro
+  - css
+  - styles
+  - beginner
+  - intermediate
+cover_full_width: ../yeshi-kangrang-Qq7A85iCzhQ-unsplash-wide.webp
+cover_mobile: ../yeshi-kangrang-Qq7A85iCzhQ-unsplash-square.webp
+cover_icon: ../yeshi-kangrang-Qq7A85iCzhQ-unsplash-square.webp
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+
+## اختبار: هل تعرف CSS؟
+
+* CSS حديث؟ 🤔
+* **هل CSS يليق في سيرتك الذاتية???** 🚀
+* اختيار من متعدد. 🤖 ... _كم يمكن أن يكون صعبًا، أليس كذلك؟_
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="تمهيد: الخطوط"
+  title="وحدة CSS غير صالحة لحجم الخط"
+  options={[
+    {text: '10cx', isAnswer: true},
+    {text: '10mm'},
+    {text: '10pt'},
+    {text: '10px'},
+    {text: '10vmin'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    اختر الـ <em class="highlight">واحد غير صالح</em> ❌ `font-size`:
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `10cx` غير صحيحة لأن `cx` ليست وحدة CSS حقيقية. (على الأقل في وقت كتابة هذا.)
+
+    الوحدات الشائعة تشمل `px` المألوفة، `rem`، `em`.
+
+    الوحدات الأحدث مفيدة لتصميمات ديناميكية ومتجاوبة.
+
+    - `ch` - عرض حرف `0`
+    - `vmin` - أصغر بعد للمنطقة المرئية
+    - `vmax` - أكبر بعد للمنطقة المرئية
+    - `vh` - ارتفاع المنطقة المرئية
+    - `vw` - عرض المنطقة المرئية
+
+    هناك أيضاً عدة وحدات موجودة دائماً لكن نادراً ما تُستعمل، مثل `cm` للسنتيمترات، `mm`، `in` للبوصات، `pt` للنقاط
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="تمهيد: الألوان"
+  title="أكواد Hex"
+  options={[
+    {text: '#A'},
+    {text: '#AB'},
+    {text: '#ABCD', isAnswer: true},
+    {text: '#ABCDE'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    هل يمكنك العثور على <em class="highlight">واحد</em> كود hex صالح 👍؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    يمكن استخدام أكواد Hex لتمثيل الألوان في CSS. تُسبق بـ `#` ويجب أن تحتوي على 3 أو 4 أو 6 أو 8 أرقام سداسية عشرية.
+
+    الكود Hex المكوّن من 3 أحرف هو اختصار للكود المكوّن من 6 أحرف، حيث يُكرر كل حرف. الكود المكوّن من 4 أحرف يتضمن قناة ألفا للشفافية.
+
+    على سبيل المثال `#ABC` يساوي `#AABBCC`، و `#ABCD` يساوي `#AABBCCDD`. لتعلم المزيد عن التعامل مع قيم Hex، اطلع على [اختبار أعداد JavaScript](/quiz-can-you-count-to-bigint/).
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="تمهيد: الوحدات"
+  title="عذرًا، كل الوحدات!"
+  options={[
+    {text: 'em'},
+    {text: 'rem'},
+    {text: 'cm'},
+    {text: 'mm'},
+    {text: 'in'},
+    {text: 'pt'},
+    {text: 'pc'},
+    {text: 'px'},
+    {text: 'ex'},
+    {text: 'ch'},
+    {text: 'vmin'},
+    {text: 'vmax'},
+    {text: 'vh'},
+    {text: 'rel', isAnswer: true},
+    {text: 'vw'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    أي من هذه الوحدات <em class="highlight">ليس</em> وحدة CSS صالحة ❌؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    الوحدات الجديدة مثل `ch`، `vmin`، `vmax`، `vh`، `vw` مفيدة جدًا لتصميمات ديناميكية/متجاوبة.
+
+    هناك أيضًا عدة وحدات موجودة منذ زمن بعيد لكن نادرًا ما تُستعمل، مثل `cm` للسنتيمترات، `mm`، `in` للبوصات، `pt` للنقاط، `pc`، `cap` لحجم الحروف الكبيرة، و`ex` التي تساوي ارتفاع حرف `x`.
+
+    الوحدات الشائعة تشمل `px` المألوفة للبكسلات، `em` النسبة إلى حجم خط العنصر، و`rem` التي تُعد تحية سرية للفرقة المنسية من التسعينات R.E.M. (حسنًا، ليس حقًا، إنها مجرد وحدة `em` نسبية تشير إلى العنصر الجذر).
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="المحدد: الأساسيات"
+  title="مطابقة المحددات مع عناصر HTML"
+  options={[
+    {text: '#Home'},
+    {text: 'a [id=\'home\']'},
+    {text: 'a:contains(home)'},
+    {text: 'a#home[name=\'home\']', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    أي محدد يطابق أفضل عنصر HTML التالي؟
+    ```html
+          <a id="home" name="home" href="/home">Home</a>
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    الإجابة الصحيحة هي `a#home[name='home']`، والتي تطابق كلًا من السمتين `id` و `name`. محددات CSS حساسة لحالة الأحرف، لذا `#Home` لن تعمل، والمسافات تشير إلى عناصر فرعية، وهذا غير مطبق هنا.
+
+    محدد `:contains()` ليس محدد CSS قياسيًا، لكنه متاح في بعض مكتبات JavaScript.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="المحدد: الأساسيات"
+  title="محدد السمة لزر"
+  options={[
+    {text: 'button:link'},
+    {text: 'button::click'},
+    {text: 'button:focus'},
+    {text: 'button[onclick]', isAnswer: true},
+    {text: 'button[on-click]'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    أي محدد يطابق زر HTML التالي؟
+    ```html
+          <button onclick="openModal()">Contact</button>
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    الإجابة الصحيحة هي `button[onclick]`، التي تستهدف وجود السمة `onclick`.
+
+    لاحظ أن `:link` يطابق فقط الروابط غير المزارة ذات `href`، وأن `::click` ليس pseudo‑element صالحًا، وأن `:focus` يطابق العنصر فقط عندما يكون مركّزًا.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="المحدد: الأساسيات"
+  title="محدد CSS غير صالح"
+  options={[
+    {text: 'a {}'},
+    {text: 'b.b {}'},
+    {text: 'c > > d {}', isAnswer: true},
+    {text: '#d {}'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    أي من هذه المحددات غير صالح؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    المحدد `c > > d {}` غير صالح لأن عامل الجمع الطفل مكرر دون وجود محدد بين علامتي `>`.
+
+    المحددات الأخرى صالحة. محدد النوع مثل `c {}` هو CSS صحيح نحويًا حتى وإن لم يكن `c` عنصر HTML قياسي.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="المحدد: الأساسيات"
+  title="اختيار الرابط الأخير"
+  options={[
+    {text: 'a :nth-child(3)'},
+    {text: 'a:last-item'},
+    {text: 'nav:last-of-type(a)'},
+    {text: 'nav:nth-child(3)'},
+    {text: 'a:last-child', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    أي محدد يطابق الرابط الأخير في الـ HTML التالي؟
+    ```html
+          <nav>
+            <a name="home" href="/home">Home</a>
+            <a name="login" href="/login">Login</a>
+            <a name="help" href="/help">Help</a>
+          </nav>
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    المحدد الصحيح هو `a:last-child`، الذي يطابق العنصر `<a>` الأخير عندما يكون هو أيضاً الطفل الأخير لوالده. `nav:nth-child(3)` سيطابق عنصر `<nav>` الذي هو الطفل الثالث لوالده.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="المحدد: التحديدية"
+  title="أولوية المحدد"
+  options={[
+    {text: 'main article section blockquote a'},
+    {text: 'blockquote a'},
+    {text: 'a#quote', isAnswer: true},
+    {text: 'a.quote'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    أي محدد سيأخذ الأولوية؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    المحدد `a#quote` يأخذ الأولوية بسبب الـ ID، الذي له تحديدية أعلى من المحددات القائمة على الوسم أو الفئة.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="التخطيطات: التوسيط"
+  title="توسيط النص داخل عنصر كتلي"
+  options={[
+    {text: 'align: center;'},
+    {text: 'margin: 0 auto;'},
+    {text: 'align-content: center;'},
+    {text: 'text-align: center;', isAnswer: true},
+    {text: 'text-content: center;'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    كيف يمكنك توسيط "shit" داخل صندوق؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    استخدام `text-align: center;` هو الطريقة الصحيحة لتوسيط النص داخل عنصر كتلي. خصائص `align` تُستخدم لتخطيطات flexbox، و`margin: 0 auto;` تُستخدم لتوسيط العناصر الكتلية أفقياً.
+
+    خاصية `align-content` تُستخدم لتخطيطات grid، و`text-content` ليست خاصية CSS صالحة.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="التخطيطات: التوسيط"
+  title="توسيط عنصر كتلي عموديًا"
+  options={[
+    {text: 'align-items: center;'},
+    {text: 'justify-content: center;'},
+    {text: 'align-content: center;', isAnswer: true},
+    {text: 'margin: auto;'},
+    {text: 'margin: 0 auto;'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    كيف تُوسّط المحتوى عموديًا داخل حاوية كتلية في تخطيط التدفق الحديث؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    استخدام `align-content` هو الطريقة الحديثة لتوسيط محتويات حاوية كتلية عموديًا في تخطيط التدفق.
+
+    تُستخدم خصائص `align-items` و `justify-content` لتخطيطات flexbox و grid، وليس للتدفق.
+
+    كل من `margin: 0 auto;` و `margin: auto;` يوسّطان عنصرًا كتليًا أفقيًا، لكن ليس عموديًا.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="التخطيطات: الوحدات"
+  title="حساب حجم البكسل لأحجام الخط المتداخلة"
+  options={[
+    {text: '!40px'},
+    {text: '5px', isAnswer: true},
+    {text: '20px'},
+    {text: '25px'},
+    {text: '40px'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما هو حجم البكسل لنص رابط `<a>` في الـ HTML التالي؟
+    ```html
+          <body style="font-size: 40px !important;">
+            <nav style="font-size: 50%;">
+              <a style="font-size: 25%;">HOME</a>
+            </nav>
+          </body>
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    يتم حساب `font-size` للعنصر `<a>` كـ 5px: 40px (body) * 50% (nav) = 20px، ثم 20px * 25% = 5px.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="الوحدات: REM"
+  title="حساب حجم البكسل باستخدام الـ REM"
+  options={[
+    {text: '10px'},
+    {text: '12px', isAnswer: true},
+    {text: '14px'},
+    {text: '20px'},
+    {text: '24px'},
+    {text: '34px'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما هو حجم البكسل لـ `1.2rem` لرابط "HOME" في الـ HTML التالي؟
+    ```html
+          <html style="font-size: 10px;">
+            <body style="font-size: 20px;">
+              <a style="font-size: 1.2rem;">HOME</a>
+            </body>
+          </html>
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `1.2rem` يترجم إلى 12px لأن وحدات `rem` تشير إلى حجم الخط الجذري أو `<html>`، والذي تم ضبطه هنا على 10px.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="الوحدات: EM"
+  title="حساب حجم البكسل باستخدام EMs"
+  options={[
+    {text: '10px'},
+    {text: '12px'},
+    {text: '14px'},
+    {text: '20px'},
+    {text: '24px', isAnswer: true},
+    {text: '34px'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    مشابه للسؤال السابق، ما هو حجم البكسل لـ `1.2em` لرابط "HOME" في الـ HTML التالي؟
+    ```html
+          <html style="font-size: 10px;">
+            <body style="font-size: 20px;">
+              <a style="font-size: 1.2em;">HOME</a>
+            </body>
+          </html>
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `1.2em` يساوي 24px لأن وحدات `em` تشير إلى حجم الخط الموروث، والذي تم تعيينه هنا إلى 20px.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={13}
+  group="المحدد: الخصوصية"
+  title="المحددات ذات الصفرية في الخصوصية"
+  options={[
+    {text: ':where(.card) .title', isAnswer: true},
+    {text: '.card .title'},
+    {text: ':is(.card) .title'},
+    {text: '#card .title'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    أي محدد يمتلك أقل خصوصية؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `:where(.card) .title` لديه أقل خصوصية. الفئة الزائفة `:where()` وكل ما بداخلها يضيف `0-0-0`، لذا يُحسب فقط `.title`. `:is(.card) .title` يحتفظ بخصوصية `.card`، `.card .title` يحتوي على فئتين، و `#card .title` يتضمن معرفًا.
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
