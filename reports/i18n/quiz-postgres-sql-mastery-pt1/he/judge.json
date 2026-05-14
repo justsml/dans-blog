@@ -1,0 +1,64 @@
+{
+  "selectedCommit": "5a76cc25c759bc4447ef8af6af9592d75e904897",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 10,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The current translation is based on the deepseek-v4-flash candidate which was already corrected for the high-priority syntax error and the missing translation in the previous pass. The Hebrew is natural, technical terms are handled correctly, and the MDX structure is perfectly preserved. No further high or medium priority fixes are required.",
+  "slug": "quiz-postgres-sql-mastery-pt1",
+  "locale": "he",
+  "candidateCommits": [
+    "0d4b27d0fd9e62bfd86200dec97627ba90e03404",
+    "5a76cc25c759bc4447ef8af6af9592d75e904897"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "{text: 'הם\\'},",
+      "replacement": "{text: 'הם ניתנים להחלפה מאז גרסה 10'},",
+      "reason": "The candidate has a broken string/syntax error in the options for Challenge index 4.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "Intervals are a powerful tool for simplifying date range operations!",
+      "replacement": "מרווחים (Intervals) הם כלי רב עוצמה לפישוט פעולות על טווחי תאריכים!",
+      "reason": "One sentence was left untranslated in the explanation for Challenge index 3.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "{text: 'הם\\'},",
+      "replacement": "{text: 'הם ניתנים להחלפה מאז גרסה 10'},",
+      "reason": "The candidate has a broken string/syntax error in the options for Challenge index 4.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "Date arithmetic in PostgreSQL:",
+      "replacement": "אריתמטיקה של תאריכים ב-PostgreSQL:",
+      "reason": "One sentence was left untranslated in the explanation for Challenge index 3.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug quiz-postgres-sql-mastery-pt1 --locale he --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug quiz-postgres-sql-mastery-pt1 --locale he --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug \"quiz-postgres-sql-mastery-pt1\" --locale he --skip-global\n111 |     })\n112 |     .filter((message): message is string => message != null);\n113 | \n114 |   if (mismatches.length === 0) return;\n115 | \n116 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2024-11-27--quiz-postgres-sql-mastery-pt1/he/index.mdx changed heading counts. H2: English has 1, translation has 0\n      at assertHeadingCounts (/Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:116:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:28:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}
