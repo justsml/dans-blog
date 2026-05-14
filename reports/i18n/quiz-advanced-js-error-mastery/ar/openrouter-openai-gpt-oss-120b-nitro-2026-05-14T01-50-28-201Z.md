@@ -1,0 +1,612 @@
+# Translation Candidate
+- Slug: quiz-advanced-js-error-mastery
+- Locale: ar
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2025-11-04--quiz-advanced-js-error-mastery/ar/index.mdx
+- Validation: deferred
+- Runtime seconds: 25.70
+- Input tokens: 14722
+- Output tokens: 8332
+- Thinking tokens: unknown
+- Cached input tokens: 2048
+- Cache write tokens: 0
+- Estimated cost: $0.002439
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: 'اختبار: إتقان أخطاء جافاسكريبت المتقدمة'
+subTitle: هل استثنائاتك استثنائية حقًا؟
+label: Errors
+category: Quiz
+subCategory: JavaScript
+unlisted: false
+date: '2025-11-03'
+modified: '2025-11-04'
+tags:
+  - quiz
+  - javascript
+  - error-handling
+  - debugging
+  - advanced
+cover_full_width: ../ahmed-slimene-c09hZthLq_s-unsplash-wide.webp
+cover_mobile: ../ahmed-slimene-c09hZthLq_s-unsplash-square-300px.webp
+cover_icon: ../ahmed-slimene-c09hZthLq_s-unsplash-square-300px.webp
+cover_credit: >-
+  Photo by <a
+  href="https://unsplash.com/@assl?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Ahmed
+  Slimene</a> on <a
+  href="https://unsplash.com/photos/a-tall-white-building-with-balconies-on-top-of-it-c09hZthLq_s?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+
+### هل تعتقد أنك تعرف أخطاء جافاسكريبت من جميع الزوايا؟
+
+* **اختبر مهاراتك في معالجة الأخطاء!** 💥
+* لا حاجة لتسجيل الدخول أو إنشاء حساب. ✨
+* اختيار من متعدد. 🤖 … _هذه ليست أسئلة try‑catch التقليدية!_
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="مفاجآت التسلسل"
+  title="لغز الكائن الفارغ"
+  options={[
+    {text: '{"message":"Oops","name":"Error"}'},
+    {text: '{}', isAnswer: true},
+    {text: '{"error":"Oops"}'},
+    {text: 'null'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ماذا تعيد `JSON.stringify(error)`؟
+    ```js
+        const error = new Error('Oops');
+        console.log(JSON.stringify(error));
+    ```
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    فكّر في الخصائص القابلة للتعداد في كائنات Error.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    كائنات Error لديها خصائص غير قابلة للتعداد (`message`، `name`، `stack`)، لذا `JSON.stringify()` تعيد `{}`. هذا خطأ شائع عند إرسال الأخطاء في استجابات API. استخدم `JSON.stringify(error, Object.getOwnPropertyNames(error))` أو أنشئ كائنًا عاديًا بدلاً من ذلك.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="مفاجآت التسلسل"
+  title="Console vs JSON"
+  options={[
+    {text: 'كلاهما يعرض نفس النتيجة'},
+    {text: 'console.log يعرض معلومات أكثر', isAnswer: true},
+    {text: 'JSON.stringify يعرض معلومات أكثر'},
+    {text: 'كلاهما يعرض كائنات فارغة'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما الفرق بين هذين الاثنين؟
+    ```js
+        const err = new Error('Test');
+        console.log(err);
+        console.log(JSON.stringify(err));
+    ```
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    فكّر في كيفية تعامل console.log مع الكائنات مقارنةً بتسلسل JSON.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `console.log(err)` يعرض الخطأ مع رسالته وتتبع المكدس لأن وحدة التحكم تتعامل بشكل خاص مع كائنات Error. `JSON.stringify(err)` تُعيد `'{}'` لأن خصائص Error غير قابلة للتعداد. هذا الاختلاف يُربك الكثير من المطورين عند تصحيح واجهات برمجة التطبيقات.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="حيل فحص النوع"
+  title="وراثة instanceof"
+  options={[
+    {text: 'true, true, true', isAnswer: true},
+    {text: 'true, false, false'},
+    {text: 'false, true, true'},
+    {text: 'true, true, false'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما هي نتائج هذه الفحوصات؟
+    ```js
+        class CustomError extends Error {}
+        const err = new CustomError('test');
+    
+        console.log(err instanceof CustomError);
+        console.log(err instanceof Error);
+        console.log(err instanceof Object);
+    ```
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    تذكر سلسلة النموذج الأولي في وراثة JavaScript.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    الجميع يرجع `true`. `CustomError` يورث من `Error`، الذي يورث من `Object`. عامل `instanceof` يتحقق من كامل سلسلة النموذج الأولي، لذا فإن كائن `CustomError` هو أيضًا كائن من نوع `Error` و `Object`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="Type Checking Tricks"
+  title="Cross-Frame instanceof"
+  options={[
+    {text: 'دائمًا صحيح'},
+    {text: 'دائمًا خطأ'},
+    {text: 'قد يكون خطأ عبر الإطارات', isAnswer: true},
+    {text: 'يرمي خطأ'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ماذا يحدث مع `instanceof Error` عبر إطارات الـ iframe؟
+    ```js
+        // In iframe:
+        const iframeError = new Error('test');
+        // In parent window:
+        console.log(iframeError instanceof Error);
+    ```
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    السياقات المختلفة لها مُنشئات Error مختلفة.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `instanceof` يمكن أن يُعيد `false` عبر سياقات تنفيذ مختلفة (iframes, workers) لأن كل سياق لديه مُنشئ `Error` الخاص به. استخدم `Object.prototype.toString.call(obj) === '[object Error]'` للكشف الموثوق عن الأخطاء عبر السياقات.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="رمي غير الأخطاء"
+  title="رمي السلاسل"
+  options={[
+    {text: 'TypeError: السلسلة ليست خطأ'},
+    {text: 'false, "string"', isAnswer: true},
+    {text: 'ينشئ كائن Error تلقائيًا'},
+    {text: 'سلوك غير معرف'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ماذا يحدث عندما ترمي سلسلة؟
+    ```js
+        try {
+          throw "Oops!";
+        } catch (e) {
+          console.log(e instanceof Error);
+          console.log(typeof e);
+        }
+    ```
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    تسمح JavaScript برمي أي قيمة، وليس فقط كائنات Error.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    تسمح JavaScript برمي أي قيمة. هنا، `e instanceof Error` هو `false` و `typeof e` هو "string". هذا يمكن أن يكسر كود معالجة الأخطاء الذي يفترض أن جميع الاستثناءات الملتقطة هي كائنات Error. دائمًا ارمي مثيلات Error للحصول على تصحيح أفضل.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="أخطاء مخصصة"
+  title="خاصية الاسم للخطأ"
+  options={[
+    {text: '"Error"'},
+    {text: '"CustomError"', isAnswer: true},
+    {text: 'undefined'},
+    {text: 'Depends on the browser'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما قيمة `err.name`؟
+    ```js
+        class CustomError extends Error {
+          constructor(message) {
+            super(message);
+            this.name = this.constructor.name;
+          }
+        }
+        const err = new CustomError('test');
+        console.log(err.name);
+    ```
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    انظر إلى ما يُقيمه `this.constructor.name`.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `err.name` هو `"CustomError"` لأن `this.constructor.name` يُعيد اسم الفئة. تعيين `this.name = this.constructor.name` هو نمط شائع لضمان أن تُظهر فئات الأخطاء المخصصة الاسم الصحيح في تتبع المكدس ورسائل الأخطاء.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="الأخطاء المخصصة"
+  title="فخ اسم المُنشئ"
+  options={[
+    {text: '"MyError"'},
+    {text: '"Error"', isAnswer: true},
+    {text: 'undefined'},
+    {text: 'TypeError'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما هو الناتج دون تعيين `name`؟
+    ```js
+        class MyError extends Error {
+          // No constructor or name setting
+        }
+        const err = new MyError('test');
+        console.log(err.name);
+    ```
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    ماذا يحتوي خاصية `name` الافتراضية في `Error`؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    بدون تعيين `this.name` صراحةً، يرث الخطأ خاصية `name` الافتراضية من فئة `Error`، والتي هي `"Error"`. لهذا السبب يجب على فئات الأخطاء المخصصة دائمًا تعيين `this.name = this.constructor.name` في المُنشئ الخاص بها.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="سبب الخطأ"
+  title="Error.cause الحديثة"
+  options={[
+    {text: '"خطأ أصلي"', isAnswer: true},
+    {text: 'undefined'},
+    {text: 'خطأ التغليف'},
+    {text: 'SyntaxError'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ماذا تعيد `wrapper.cause.message`؟
+    ```js
+        const original = new Error('Original error');
+        const wrapper = new Error('Wrapper', 
+          { cause: original }
+        );
+        console.log(wrapper.cause.message);
+    ```
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    Error.cause هي ميزة حديثة في JavaScript لسلسلة الأخطاء.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `Error.cause` (ES2022) يسمح بسلسلة الأخطاء للحفاظ على سياق الخطأ الأصلي. `wrapper.cause` يشير إلى الخطأ الأصلي، لذا `wrapper.cause.message` يعيد `"Original error"`. هذا مفيد لتغليف الأخطاء ذات المستوى الأدنى بسياق أعلى.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="آثار المكدس"
+  title="تلاعب المكدس"
+  options={[
+    {text: 'يزيل createError من المكدس', isAnswer: true},
+    {text: 'يمسح المكدس بالكامل'},
+    {text: 'لا يفعل شيئًا'},
+    {text: 'يرمي TypeError'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ماذا يفعل `Error.captureStackTrace`؟
+    ```js
+        function createError(msg) {
+          const err = new Error(msg);
+          Error.captureStackTrace(err, createError);
+          return err;
+        }
+        const error = createError('test');
+    ```
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    هذه ميزة خاصة بـ V8 للحصول على آثار مكدس أنظف.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `Error.captureStackTrace` (V8/Node.js) يزيل الدالة المحددة (`createError`) من أثر المكدس، مما يجعل وظائف مصنع الأخطاء غير مرئية للمستخدم النهائي. هذا ينتج آثار مكدس أنظف تشير إلى مكان استدعاء المصنع، وليس إلى المصنع نفسه.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="قوالب الرسائل"
+  title="القوالب النصية في الأخطاء"
+  options={[
+    {text: '"Value ${value} is invalid"'},
+    {text: '"Value undefined is invalid"', isAnswer: true},
+    {text: 'ReferenceError: value is not defined'},
+    {text: '"Value  is invalid"'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما هي رسالة الخطأ؟
+    ```js
+        function validate(value) {
+          if (!value) {
+            throw new Error(
+              `Value ${value} is invalid`
+            );
+          }
+        }
+        try {
+          validate(undefined);
+        } catch (e) {
+          console.log(e.message);
+        }
+    ```
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    كيف يتعامل استبدال القوالب النصية مع undefined؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    القوالب النصية تحوّل `undefined` إلى السلسلة `"undefined"` أثناء الاستبدال. تصبح رسالة الخطأ `"Value undefined is invalid"`. للحصول على رسائل أنظف، فكر في استخدام `value ?? 'null'` أو فحوصات مماثلة قبل الاستبدال.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="مفاجآت API"
+  title="خطأ استجابة Express"
+  options={[
+    {text: 'يرسل كائن الخطأ بالكامل'},
+    {text: 'يرسل {"error":{}}', isAnswer: true},
+    {text: 'يرمي خطأ خادم'},
+    {text: 'يرسل رسالة الخطأ فقط'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما الذي يُرسل إلى العميل؟
+    ```js
+        // Express.js route
+        app.get('/api/data', (req, res) => {
+          const error = new Error('Database failed');
+          res.json({ error });
+        });
+    ```
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    تذكر كيف يتم تسلسل كائنات Error بواسطة JSON.stringify.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `res.json()` يستخدم `JSON.stringify()` داخليًا، لذا يصبح كائن Error `{}`. يتلقى العميل `{"error":{}}`. لإصلاح ذلك، استخدم `res.json({ error: error.message })` أو `res.json({ error: { message: error.message, name: error.name } })`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="أخطاء غير المتزامنة"
+  title="قِيَم رفض الـ Promise"
+  options={[
+    {text: 'دائمًا كائنات Error'},
+    {text: 'أي قيمة يمكن أن تكون رفضًا', isAnswer: true},
+    {text: 'فقط السلاسل وكائنات Error'},
+    {text: 'مغلَّفة تلقائيًا في Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما الذي يمكن أن تقبله `Promise.reject()`؟
+    ```js
+        Promise.reject('string').catch(e => 
+          console.log(typeof e)
+        );
+        Promise.reject({code: 404}).catch(e => 
+          console.log(e.code)
+        );
+        Promise.reject(42).catch(e => 
+          console.log(e)
+        );
+    ```
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    رفض الـ Promise يعمل مشابهًا لتصريحات throw.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    مثل `throw`، `Promise.reject()` تقبل أي قيمة – سلاسل، كائنات، أرقام، إلخ. هذا يطبع `"string"`، `404`، و `42`. تحقق دائمًا من نوع القيم الملتقطة في سلاسل الـ promise، خاصةً عند التعامل مع كود من طرف ثالث قد يرفض بقيم غير Error.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="خصائص الخطأ"
+  title="الخصائص غير القياسية"
+  options={[
+    {text: 'دائمًا متاحة'},
+    {text: 'قد لا تكون موجودة في جميع البيئات', isAnswer: true},
+    {text: 'فقط في Node.js'},
+    {text: 'مهجورة ومُزالة'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما مدى موثوقية `error.code` و `error.errno`؟
+    ```js
+        const fs = require('fs');
+        fs.readFile('missing.txt', (err, data) => {
+          if (err) {
+            console.log(err.code);    // 'ENOENT'
+            console.log(err.errno);   // -2
+          }
+        });
+    ```
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    ضع في اعتبارك بيئات JavaScript المختلفة وأنواع الأخطاء.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    الخصائص مثل `code` و `errno` خاصة بالبيئة (Node.js في هذه الحالة) وليست جزءًا من كائن Error القياسي. الأخطاء في المتصفح لن تحتوي على هذه الخصائص. تحقق دائمًا من وجودها: `if (err.code === 'ENOENT')` بدلاً من الافتراض بأنها موجودة.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={13}
+  group="حدود الأخطاء"
+  title="الكائن مقابل الكشف عن الخطأ"
+  options={[
+    {text: 'true, true'},
+    {text: 'false, false', isAnswer: true},
+    {text: 'true, false'},
+    {text: 'false, true'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ماذا تُعيد هذه الفحوصات؟
+    ```js
+        const fakeError = {
+          name: 'Error',
+          message: 'Fake error',
+          stack: 'fake stack'
+        };
+    
+        console.log(fakeError instanceof Error);
+        console.log(Object.prototype.toString.call(
+          fakeError
+        ) === '[object Error]');
+    ```
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    إحدى الفحوصات تنظر إلى سلسلة النموذج الأولي، والأخرى إلى الفتحات الداخلية.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `instanceof Error` تُعيد `false` لأن الكائن لم يُنشأ بواسطة مُنشئ Error. `Object.prototype.toString.call()` تُعيد أيضًا `false` (تُعيد `'[object Object]'`) لأنها تتحقق من الفتحة الداخلية `[[Class]]`. كلا الطريقتين تحددان بشكل صحيح أن هذا كائن خطأ مزيف.
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+
+## إتقان فن معالجة الأخطاء
+
+من الفخاخ في التسلسل إلى فشل `instanceof` عبر السياقات، هذه المفاهيم المتقدمة هي الفاصل بين المطورين الصغار والمهنيين المتضررين المخضرمين.
+
+هل أنت مستعد لمزيد من التحديات؟ تفقد [مجموعة الاختبارات الكاملة](../challenges/) للحصول على ألغاز إضافية حول JavaScript، الخوارزميات، وأكثر!
+````

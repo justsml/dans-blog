@@ -1,0 +1,51 @@
+{
+  "index": 3,
+  "attempt": 1,
+  "originalTitle": "Cross-Frame instanceof",
+  "translatedTitle": "Cross-Frame instanceof",
+  "translation": {
+    "title": "Cross-Frame instanceof",
+    "group": "Type Checking Tricks",
+    "options": [
+      {
+        "text": "دائمًا صحيح"
+      },
+      {
+        "text": "دائمًا خطأ"
+      },
+      {
+        "text": "قد يكون خطأ عبر الإطارات"
+      },
+      {
+        "text": "يرمي خطأ"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "ماذا يحدث مع `instanceof Error` عبر إطارات الـ iframe؟"
+    ],
+    "hintsProse": [
+      "السياقات المختلفة لها مُنشئات Error مختلفة."
+    ],
+    "explanationProse": [
+      "`instanceof` يمكن أن يُعيد `false` عبر سياقات تنفيذ مختلفة (iframes, workers) لأن كل سياق لديه مُنشئ `Error` الخاص به. استخدم `Object.prototype.toString.call(obj) === '[object Error]'` للكشف الموثوق عن الأخطاء عبر السياقات."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Cross-Frame instanceof\",\n  \"group\": \"Type Checking Tricks\",\n  \"options\": [\n    {\n      \"text\": \"دائمًا صحيح\"\n    },\n    {\n      \"text\": \"دائمًا خطأ\"\n    },\n    {\n      \"text\": \"قد يكون خطأ عبر الإطارات\"\n    },\n    {\n      \"text\": \"يرمي خطأ\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"ماذا يحدث مع `instanceof Error` عبر إطارات الـ iframe؟\"\n  ],\n  \"hintsProse\": [\n    \"السياقات المختلفة لها مُنشئات Error مختلفة.\"\n  ],\n  \"explanationProse\": [\n    \"`instanceof` يمكن أن يُعيد `false` عبر سياقات تنفيذ مختلفة (iframes, workers) لأن كل سياق لديه مُنشئ `Error` الخاص به. استخدم `Object.prototype.toString.call(obj) === '[object Error]'` للكشف الموثوق عن الأخطاء عبر السياقات.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 866,
+    "outputTokens": 560,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1903,
+    "providerCostUsd": 0.0004659,
+    "providerUpstreamCostUsd": 0.0004659,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000033774,
+    "outputUsd": 0.00010079999999999998,
+    "totalUsd": 0.000134574,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

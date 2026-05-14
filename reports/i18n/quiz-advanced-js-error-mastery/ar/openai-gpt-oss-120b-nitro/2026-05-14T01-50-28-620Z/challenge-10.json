@@ -1,0 +1,51 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Template Literals in Errors",
+  "translatedTitle": "القوالب النصية في الأخطاء",
+  "translation": {
+    "title": "القوالب النصية في الأخطاء",
+    "group": "قوالب الرسائل",
+    "options": [
+      {
+        "text": "\"Value ${value} is invalid\""
+      },
+      {
+        "text": "\"Value undefined is invalid\""
+      },
+      {
+        "text": "ReferenceError: value is not defined"
+      },
+      {
+        "text": "\"Value  is invalid\""
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "ما هي رسالة الخطأ؟"
+    ],
+    "hintsProse": [
+      "كيف يتعامل استبدال القوالب النصية مع undefined؟"
+    ],
+    "explanationProse": [
+      "القوالب النصية تحوّل `undefined` إلى السلسلة `\"undefined\"` أثناء الاستبدال. تصبح رسالة الخطأ `\"Value undefined is invalid\"`. للحصول على رسائل أنظف، فكر في استخدام `value ?? 'null'` أو فحوصات مماثلة قبل الاستبدال."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"القوالب النصية في الأخطاء\",\n  \"group\": \"قوالب الرسائل\",\n  \"options\": [\n    {\n      \"text\": \"\\\"Value ${value} is invalid\\\"\"\n    },\n    {\n      \"text\": \"\\\"Value undefined is invalid\\\"\"\n    },\n    {\n      \"text\": \"ReferenceError: value is not defined\"\n    },\n    {\n      \"text\": \"\\\"Value  is invalid\\\"\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"ما هي رسالة الخطأ؟\"\n  ],\n  \"hintsProse\": [\n    \"كيف يتعامل استبدال القوالب النصية مع undefined؟\"\n  ],\n  \"explanationProse\": [\n    \"القوالب النصية تحوّل `undefined` إلى السلسلة `\\\"undefined\\\"` أثناء الاستبدال. تصبح رسالة الخطأ `\\\"Value undefined is invalid\\\"`. للحصول على رسائل أنظف، فكر في استخدام `value ?? 'null'` أو فحوصات مماثلة قبل الاستبدال.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 868,
+    "outputTokens": 567,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 1704,
+    "providerCostUsd": 0.000432,
+    "providerUpstreamCostUsd": 0.000432,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000033852,
+    "outputUsd": 0.00010206,
+    "totalUsd": 0.000135912,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

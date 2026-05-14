@@ -1,0 +1,51 @@
+{
+  "index": 6,
+  "attempt": 1,
+  "originalTitle": "Constructor Name Gotcha",
+  "translatedTitle": "فخ اسم المُنشئ",
+  "translation": {
+    "title": "فخ اسم المُنشئ",
+    "group": "الأخطاء المخصصة",
+    "options": [
+      {
+        "text": "\"MyError\""
+      },
+      {
+        "text": "\"Error\""
+      },
+      {
+        "text": "undefined"
+      },
+      {
+        "text": "TypeError"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "ما هو الناتج دون تعيين `name`؟"
+    ],
+    "hintsProse": [
+      "ماذا يحتوي خاصية `name` الافتراضية في `Error`؟"
+    ],
+    "explanationProse": [
+      "بدون تعيين `this.name` صراحةً، يرث الخطأ خاصية `name` الافتراضية من فئة `Error`، والتي هي `\"Error\"`. لهذا السبب يجب على فئات الأخطاء المخصصة دائمًا تعيين `this.name = this.constructor.name` في المُنشئ الخاص بها."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"فخ اسم المُنشئ\",\n  \"group\": \"الأخطاء المخصصة\",\n  \"options\": [\n    {\n      \"text\": \"\\\"MyError\\\"\"\n    },\n    {\n      \"text\": \"\\\"Error\\\"\"\n    },\n    {\n      \"text\": \"undefined\"\n    },\n    {\n      \"text\": \"TypeError\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"ما هو الناتج دون تعيين `name`؟\"\n  ],\n  \"hintsProse\": [\n    \"ماذا يحتوي خاصية `name` الافتراضية في `Error`؟\"\n  ],\n  \"explanationProse\": [\n    \"بدون تعيين `this.name` صراحةً، يرث الخطأ خاصية `name` الافتراضية من فئة `Error`، والتي هي `\\\"Error\\\"`. لهذا السبب يجب على فئات الأخطاء المخصصة دائمًا تعيين `this.name = this.constructor.name` في المُنشئ الخاص بها.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 859,
+    "outputTokens": 411,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 1905,
+    "providerCostUsd": 0.00033705,
+    "providerUpstreamCostUsd": 0.00033705,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000033500999999999997,
+    "outputUsd": 0.00007398,
+    "totalUsd": 0.00010748100000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

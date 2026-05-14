@@ -1,0 +1,51 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "Express Response Error",
+  "translatedTitle": "خطأ استجابة Express",
+  "translation": {
+    "title": "خطأ استجابة Express",
+    "group": "مفاجآت API",
+    "options": [
+      {
+        "text": "يرسل كائن الخطأ بالكامل"
+      },
+      {
+        "text": "يرسل {\"error\":{}}"
+      },
+      {
+        "text": "يرمي خطأ خادم"
+      },
+      {
+        "text": "يرسل رسالة الخطأ فقط"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "ما الذي يُرسل إلى العميل؟"
+    ],
+    "hintsProse": [
+      "تذكر كيف يتم تسلسل كائنات Error بواسطة JSON.stringify."
+    ],
+    "explanationProse": [
+      "`res.json()` يستخدم `JSON.stringify()` داخليًا، لذا يصبح كائن Error `{}`. يتلقى العميل `{\"error\":{}}`. لإصلاح ذلك، استخدم `res.json({ error: error.message })` أو `res.json({ error: { message: error.message, name: error.name } })`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"خطأ استجابة Express\",\n  \"group\": \"مفاجآت API\",\n  \"options\": [\n    {\n      \"text\": \"يرسل كائن الخطأ بالكامل\"\n    },\n    {\n      \"text\": \"يرسل {\\\"error\\\":{}}\"\n    },\n    {\n      \"text\": \"يرمي خطأ خادم\"\n    },\n    {\n      \"text\": \"يرسل رسالة الخطأ فقط\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"ما الذي يُرسل إلى العميل؟\"\n  ],\n  \"hintsProse\": [\n    \"تذكر كيف يتم تسلسل كائنات Error بواسطة JSON.stringify.\"\n  ],\n  \"explanationProse\": [\n    \"`res.json()` يستخدم `JSON.stringify()` داخليًا، لذا يصبح كائن Error `{}`. يتلقى العميل `{\\\"error\\\":{}}`. لإصلاح ذلك، استخدم `res.json({ error: error.message })` أو `res.json({ error: { message: error.message, name: error.name } })`.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 887,
+    "outputTokens": 587,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 2099,
+    "providerCostUsd": 0.00044685,
+    "providerUpstreamCostUsd": 0.00044685,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000034593,
+    "outputUsd": 0.00010565999999999999,
+    "totalUsd": 0.000140253,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "index": 13,
+  "attempt": 1,
+  "originalTitle": "Object vs Error Detection",
+  "translatedTitle": "الكائن مقابل الكشف عن الخطأ",
+  "translation": {
+    "title": "الكائن مقابل الكشف عن الخطأ",
+    "group": "حدود الأخطاء",
+    "options": [
+      {
+        "text": "true, true"
+      },
+      {
+        "text": "false, false"
+      },
+      {
+        "text": "true, false"
+      },
+      {
+        "text": "false, true"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "ماذا تُعيد هذه الفحوصات؟"
+    ],
+    "hintsProse": [
+      "إحدى الفحوصات تنظر إلى سلسلة النموذج الأولي، والأخرى إلى الفتحات الداخلية."
+    ],
+    "explanationProse": [
+      "`instanceof Error` تُعيد `false` لأن الكائن لم يُنشأ بواسطة مُنشئ Error. `Object.prototype.toString.call()` تُعيد أيضًا `false` (تُعيد `'[object Object]'`) لأنها تتحقق من الفتحة الداخلية `[[Class]]`. كلا الطريقتين تحددان بشكل صحيح أن هذا كائن خطأ مزيف."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"الكائن مقابل الكشف عن الخطأ\",\n  \"group\": \"حدود الأخطاء\",\n  \"options\": [\n    {\n      \"text\": \"true, true\"\n    },\n    {\n      \"text\": \"false, false\"\n    },\n    {\n      \"text\": \"true, false\"\n    },\n    {\n      \"text\": \"false, true\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"ماذا تُعيد هذه الفحوصات؟\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"js\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [\n    \"إحدى الفحوصات تنظر إلى سلسلة النموذج الأولي، والأخرى إلى الفتحات الداخلية.\"\n  ],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"`instanceof Error` تُعيد `false` لأن الكائن لم يُنشأ بواسطة مُنشئ Error. `Object.prototype.toString.call()` تُعيد أيضًا `false` (تُعيد `'[object Object]'`) لأنها تتحقق من الفتحة الداخلية `[[Class]]`. كلا الطريقتين تحددان بشكل صحيح أن هذا كائن خطأ مزيف.\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 876,
+    "outputTokens": 654,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1677,
+    "providerCostUsd": 0.0005238,
+    "providerUpstreamCostUsd": 0.0005238,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000034164,
+    "outputUsd": 0.00011771999999999999,
+    "totalUsd": 0.000151884,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
