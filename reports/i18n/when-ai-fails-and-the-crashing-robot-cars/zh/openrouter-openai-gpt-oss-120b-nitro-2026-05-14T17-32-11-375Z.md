@@ -1,0 +1,72 @@
+# Translation Candidate
+- Slug: when-ai-fails-and-the-crashing-robot-cars
+- Locale: zh
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2015-12-18--when-ai-fails-and-the-crashing-robot-cars/zh/index.mdx
+- Validation: deferred
+- Runtime seconds: 2.18
+- Input tokens: 1441
+- Output tokens: 749
+- Thinking tokens: unknown
+- Cached input tokens: 512
+- Cache write tokens: 0
+- Estimated cost: $0.000191
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: AI 失效与崩溃的机器人车
+subTitle: Google 的自动驾驶汽车事故率是人类司机的两倍。
+date: '2015-12-18'
+modified: '2024-07-30'
+category: AI
+subCategory: machine-learning
+tags:
+  - artificial-intelligence
+  - ai
+  - self-driving-cars
+  - fails
+cover: ../sandy-millar-749381-unsplash.webp
+cover_mobile: ../w300_sandy-millar-749381-unsplash.webp
+cover_icon: ../icon_sandy-millar-749381-unsplash.webp
+---
+## 机器人汽车：事故更多还是更少？
+
+Google 的自动驾驶汽车事故率显然是人类司机的两倍——如果你认为这只是新技术的 Bug，或者从一开始就太复杂——好吧，你部分是对的。[一个重要细节需要说明：截至 2015 年 12 月，几乎**所有事故都不是机器人造成的**。](http://www.bloomberg.com/news/articles/2015-12-18/humans-are-slamming-into-driverless-cars-and-exposing-a-key-flaw)
+
+事故**是由不熟悉机器人司机的人类司机**导致的。此外，Google 已经把车辆编程为绝对遵守法律——永不超速，在密集或高速的高速公路上很难并线。  
+这引出了一系列法律、伦理问题（这被称为[电车难题](https://en.wikipedia.org/wiki/Trolley_problem)）——
+
+- 是否在以下情况下可以例外：
+  - 为了避免追尾而在红灯前驶过人行横道**前提是道路畅通**？
+  - 为了躲避横穿车道的自行车而驶上人行道？——AI 是否可以接受这种“违背道路规则”的行为？
+
+我理解 Google 的做法，尤其是在试图降低责任风险时：始终遵守规则——逻辑上这意味着只要**始终**遵守法律，就不太可能被认定为有责。
+
+如果因故意在法律周围设计“灵活性”而导致事故，**责任将是巨大的**。
+
+### 别让未来溜走
+
+未来仍会到来，即使机器人像八十岁老人一样驾驶。
+
+或许现在的简单解决方案是使用亮红色闪烁 LED（想想校车的灯光）来提醒人类司机他们即将追尾一辆无辜的机器人。
+
+我更倾向于一辆拥有多层遵守与规则遵循的汽车。对我而言，这更接近人类的驾驶方式。
+
+设想如下的三层系统感知（为简化省略决策等层）：
+
+1. 基础层：以令人恼火的精度遵守法律  
+2. 本地层：基于当前交通进行灵活调整——例如在高速公路上需要加速 10 MPH 以上才能并线。相反，如果交通速度过快，车辆应足够智能地靠边停靠，以免成为其他司机的麻烦。  
+3. 360 层：计算任何潜在的极端碰撞风险/规避措施——例如驶上路肩或…
+
+这可能需要一次聪明的平衡——比如第 1 层检测到无法在遵守法律的前提下避免的紧急事故时，就会把所有处理器资源转向第 3 层——希望能找到创造性的方式避免伤害。
+
+机器人汽车正站在技术上比任何人类司机都更聪明、更快速的临界点。接受它，欢迎它。
+
+### 参考文献
+
+1.  [http://nn.cs.utexas.edu/pages/research/neat-warning/](http://nn.cs.utexas.edu/pages/research/neat-warning/)
+````
