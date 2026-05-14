@@ -1,0 +1,53 @@
+{
+  "selectedCommit": "f39470436e2e42673dcf6bbd875e16b84b4e3cd5",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 5,
+    "technicalAccuracy": 5,
+    "coherence": 5,
+    "relevance": 5,
+    "translationQuality": 5,
+    "mdxPreservation": 5
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "{text: 'لاستخدام <div>\\'s',",
+      "replacement": "{text: 'لاستخدام <div> فقط',",
+      "reason": "The candidate contains a broken string with a trailing backslash and 's' from the English source, which is invalid in the Arabic context and looks like a technical leak."
+    }
+  ],
+  "rationale": "The DeepSeek candidate is technically superior as it translates the full content including the article explanation which the other candidate left in English. It maintains the MDX structure perfectly. One minor fix is needed for a leaked English pluralization character in a code block.",
+  "slug": "quiz-master-modern-html5",
+  "locale": "ar",
+  "candidateCommits": [
+    "f39470436e2e42673dcf6bbd875e16b84b4e3cd5",
+    "4d9ef595e6ba0b4be2d7064bf33109654359e427"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "لاستخدام <div>\\'",
+      "replacement": "لاستخدام <div> فقط",
+      "reason": "The candidate has a trailing backslash and missing word in the Arabic translation of 'To only use <div>\\'s'.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "{text: 'لاستخدام <div>\\'s',",
+      "replacement": "{text: 'لاستخدام <div> فقط',",
+      "reason": "The candidate contains a broken string with a trailing backslash and 's' from the English source, which is invalid in the Arabic context and looks like a technical leak.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug quiz-master-modern-html5 --locale ar --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug quiz-master-modern-html5 --locale ar --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug \"quiz-master-modern-html5\" --locale ar --skip-global\n191 |     ]\n192 |     : [];\n193 | \n194 |   if (nestedAssetReferences.length === 0 && bareAssetReferences.length === 0) return;\n195 | \n196 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2024-11-01--quiz-master-modern-html5/ar/index.mdx uses asset paths inside a locale folder that do not start with ../. Use ../ for inherited post assets.\n      at assertNestedAssetPaths (/Users/dan/code/oss/dans-blog/src/scripts/i18n/localized-mdx.ts:196:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:31:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}
