@@ -1,0 +1,631 @@
+---
+unlisted: false
+title: 'اختبار: إتقان Bash و Shell'
+subTitle: هل تستطيع التحدث مع الحواسيب؟ أعني، بطلاقة؟
+label: Bash
+category: Quiz
+subCategory: Bash
+date: '2024-11-20'
+modified: '2024-11-21'
+tags:
+  - quiz
+  - bash
+  - scripting
+  - shell
+  - linux
+  - beginner
+  - intermediate
+  - advanced
+social_image: ../desktop-social.webp
+cover_full_width: ../psychedelic-shell-wide.webp
+cover_mobile: ../psychedelic-shell-square-200.webp
+cover_icon: ../psychedelic-shell-square-200.webp
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+<p class="inset">اختبر مهاراتك في كتابة نصوص Bash مع هذه الأسئلة الـ16!</p>
+
+تغطي المتغيرات، الحلقات، الشروط، معالجة النصوص، الدوال، والمزالق النحوية من الأساسية إلى الصعبة.
+
+صقل (أو إثبات) **مهاراتك** في كتابة نصوص الصدفة!
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="إحماء"
+  title="إعلان المتغيرات"
+  options={[
+    {text: '$name=Dan'},
+    {text: 'name=Dan', isAnswer: true},
+    {text: 'name =Dan'},
+    {text: 'name == Dan'},
+    {text: 'name : Dan'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    كيف يتم تعريف المتغيرات في Bash؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    يتم إعلان المتغيرات في Bash بدون مسافات حول علامة `=`. على سبيل المثال:
+    ```bash
+        name=Alice
+    ```
+    هذا يعين القيمة `"Alice"` للمتغير `name`.
+
+    ملاحظة: `$name` يُستخدم **للإشارة** أو قراءة قيمة المتغير.
+
+    إضافة مسافات تجعل الصدفة تفسر الأمر كبرنامج لتشغيله، وهو ليس ما تريده عند تعيين متغير.
+
+    أيضًا، Bash حساس لحالة الأحرف، لذا `name` و `NAME` و `Name` متغيرات مختلفة.
+
+    أخيرًا، لا يمكن أن تحتوي أسماء المتغيرات على مسافات أو شرطات (`-`). استخدم الشرطات السفلية (`_`) أو camelCase بدلاً من ذلك.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="إحماء: الإفلات"
+  title="إفلات علامات الاقتباس"
+  options={[
+    {text: 'echo \'It\'s 🔨 Time!\''},
+    {text: 'echo \'It\\\'s 🔨 Time!\''},
+    {text: 'echo \'It\'\\\'\'s 🔨 Time!\'', isAnswer: true},
+    {text: 'echo \'It\'\'s 🔨 Time!\''},
+    {text: 'Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    _ما الذي سيطبع `It's 🔨 Time!`؟_
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    أعرف. من الجنون كيف يجعل الإفلات تحليل السلاسل النصية صعبًا بسرعة. تخيل إفلات لغات أخرى في سلاسل Bash - مع كل تلك علامات الاقتباس والفواصل العليا ورموز `$` التي قد تزعجك. 🫠
+
+    علامات الاقتباس المفردة تحتاج إلى إفلات داخل السلاسل المقتبسة بمفردها. التسلسل (إغلاق الاقتباس، إفلات الاقتباس، إعادة فتح الاقتباس) (`'\''`) يسمح بإخراج:
+    ```plaintext
+        It's 🔨 Time!
+    ```
+    هناك طرق أخرى للتعامل مع هذا، لكن هذه هي الأكثر شيوعًا.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="إحماء: التوسيع"
+  title="أمر echo"
+  options={[
+    {text: 'cat cab'},
+    {text: 'cat cbt', isAnswer: true},
+    {text: 'ca bt'},
+    {text: 'cat'},
+    {text: 'cbd'},
+    {text: 'Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ماذا سيكون ناتج هذا الأمر؟
+    ```bash
+        echo c{a,b}t
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    توليد التوسيع بالأقواس `{}` نسخًا متعددة من سياق السلسلة النصية، واحدة (أو أكثر) لكل قيمة أو نمط مفصول بفاصلة.
+
+    هنا، `c{a,b}t` يتوسع إلى:
+    ```plaintext
+        cat cbt
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="المتغيرات"
+  title="إفلات الأحرف"
+  options={[
+    {text: 'التكلفة: $$100'},
+    {text: 'التكلفة: $100'},
+    {text: 'التكلفة: 100'},
+    {text: 'التكلفة: 00', isAnswer: true},
+    {text: 'التكلفة:'},
+    {text: 'خطأ'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    الآن، ماذا سيطبع هذا؟
+    ```bash
+        price="$100"
+        echo "Cost: $price"
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    المتغيرات المرقمة لها معنى خاص. في هذه الحالة، `$1` هو متغير خاص يحمل الوسيط الأول الذي تم تمريره إلى السكريبت أو الدالة.
+
+    بما أننا نشغل السكريبت في بيئة REPL، فلا توجد وسائط، لذا فإن `$1` فارغ. النص المتبقي `00` يُطبع كما هو.
+
+    لطباعة حرف `$` حرفيًا، استخدم علامات الاقتباس المفردة، أو قم بإفلاته باستخدام الخط المائل العكسي (`\`):
+    ```bash
+        price="\$100"
+        echo "Cost: $price"
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="استبدال النصوص الفرعية"
+  title="استبدال النص الفرعي"
+  options={[
+    {text: 'مواء مواء'},
+    {text: 'مواء مواء'},
+    {text: 'نباح مواء', isAnswer: true},
+    {text: 'نباح نباح'},
+    {text: 'خطأ'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ماذا يحدث هنا؟
+    ```bash
+        str="Bark bark"
+        echo ${str/bark/meow}
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    بناء الجملة `${var/pattern/replacement}` يستبدل أول ظهور لـ `pattern` بـ `replacement`. هنا، الناتج هو:
+    ```plaintext
+        Bark meow
+    ```
+    إنها حساسة لحالة الأحرف. للتعامل مع كل من `bark` و `Bark`، استخدم نمطًا مثل `${var/[Bb]ark/Bark}` أو قم بتطبيع السلسلة قبل الاستبدال.
+
+    لاستبدال جميع الظهورات، استخدم `${var//pattern/replacement}`.
+
+    للاستبدال من بداية السلسلة، استخدم `${var/#pattern/replacement}`.
+
+    للاستبدال من نهاية السلسلة، استخدم `${var/%pattern/replacement}`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="طول السلسلة"
+  title="طول السلسلة"
+  options={[
+    {text: '$#username'},
+    {text: '#$username'},
+    {text: '${#username}', isAnswer: true},
+    {text: '${username#}'},
+    {text: 'echo $username | wc -c'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    كيف يمكنك الحصول على طول متغير في Bash؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    الصيغة `${#username}` تُرجع طول `username`.
+
+    على سبيل المثال:
+    ```bash
+        username="@justsml"
+        echo ${#username} # => 8
+    ```
+    بينما `wc` قد تعمل، إلا أنها تقنيًا ليست جزءًا من Bash.
+
+    الأداة `wc` هي نكتة داخلية قديمة تشير إلى "water closet"، أو المرحاض.
+    أمزح! هل يقرأ أحد هذه النصوص؟
+
+    في الواقع `wc` هي أمر قديم من Posix (وأيام AT&T Unix.) وهي اختصار لـ "word count" ويمكنها عد الأسطر والكلمات والأحرف في ملف أو تيار إدخال.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="الجمل الشرطية"
+  title="أساسيات if-else"
+  options={[
+    {text: 'الملف موجود'},
+    {text: 'الملف غير موجود، بعد تشخيص الاختبار', isAnswer: true},
+    {text: 'خطأ فقط'},
+    {text: 'فقدان الأقواس المزدوجة'},
+    {text: 'لا شيء'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ماذا يخرج هذا السكريبت إذا كان الملف `cats.txt` موجودًا؟
+    ```bash
+        if [ -e cats.txt]; then
+          echo "File exists"
+        else
+          echo "File does not exist"
+        fi
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    هل لاحظت المسافة المفقودة قبل القوس الإغلاق؟
+
+    Bash حساس جدًا هنا: المسافات مطلوبة داخل تعبيرات الأقواس.
+
+    بسبب المسافة المفقودة، يرى الأمر `[` عدم وجود قوس إغلاق `]`، فيطبع Bash رسالة تشخيص، ويعتبر الاختبار فاشلاً، ويستمر إلى فرع `else`.
+
+    الصيغة الصحيحة هي:
+    ```bash
+        if [ -e example.txt ]; then
+          echo "File exists"
+        else
+          echo "File does not exist"
+        fi
+    ```
+    ملاحظة: الأقواس المزدوجة `[[ ]]` **موصى بها** للتعبيرات الشرطية. [انظر BashFAQ.](https://mywiki.wooledge.org/BashFAQ/031)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="الجمل الشرطية"
+  title="مقارنة السلاسل النصية"
+  options={[
+    {text: 'نفس القطة'},
+    {text: 'قطط مختلفة، بعد خطأ في بناء الجملة الاختباري', isAnswer: true},
+    {text: 'Zalgo'},
+    {text: 'خطأ فقط'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    كيف يمكننا مقارنة السلاسل النصية في Bash؟
+    ```bash
+        cat1="Rosie"
+        cat2="Sunflower"
+        if [ "$cat1" === "$cat2" ]; then
+          echo "Same cat"
+        else
+          echo "Different cats"
+        fi
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    خطأ آخر في بناء الجملة الاختباري!
+
+    هل لاحظت العامل غير الصحيح `===`؟
+
+    ربما كنت تفكر في JavaScript...
+
+    مع `[ ... ]`، يبلغ Bash عن تشخيص ويكون الشرط خاطئًا، لذا يطبع فرع `else` `Different cats`. في Bash، استخدم `=` أو `==` لمقارنات المساواة.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="الدوال"
+  title="إعلان الدالة"
+  options={[
+    {text: 'مرحبًا', isAnswer: true},
+    {text: 'دان'},
+    {text: 'مرحبًا دان'},
+    {text: 'greet'},
+    {text: 'خطأ'},
+    {text: 'خطأ نحوي'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ماذا سيكون مخرجات هذا السكريبت؟
+    ```bash
+        function greet () {
+          echo "$1"
+        }
+        greet Hi Dan
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    الدوال في Bash يمكنها استقبال الوسائط. المتغير `$1` يحمل أول وسيطة تم تمريرها إلى الدالة.
+
+    تذكر، `$0` هو اسم السكريبت، `$1` هي الوسيطة الأولى، `$2` هي الثانية، وهكذا. **المسافات تفصل بين الوسائط.** لذا، `greet Hi Dan` تمرر `"Hi"` كأول وسيطة. لتمرير `"Hi Dan"` كوسيطة واحدة، يجب وضعها بين علامتي اقتباس: `greet "Hi Dan"`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="التركيب"
+  title="استخدام الأنابيب"
+  options={[
+    {text: '>'},
+    {text: '>>'},
+    {text: '|', isAnswer: true},
+    {text: '||'},
+    {text: '|>'},
+    {text: 'Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    أي عامل يربط **مخرجات** أمر ما بـ **مدخلات** الأمر التالي؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    عامل الأنبوب `|` يربط مخرجات أمر ما بمدخلات أمر آخر. على سبيل المثال:
+    ```bash
+        echo "Mr. Levy 👨🏻‍🔬" | wc -m
+        # => 14
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="الحساب"
+  title="الحساب الأساسي"
+  options={[
+    {text: 'echo 2 + 2'},
+    {text: 'echo ${2 + 2}'},
+    {text: 'echo %(2 + 2)'},
+    {text: 'echo $(( 2 + 2 ))', isAnswer: true},
+    {text: 'Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    كيف تعمل العمليات الحسابية في Bash؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    بناء الجملة `(( ))` يقوم بإجراء العمليات الحسابية على الأعداد الصحيحة في Bash.
+
+    يمكن استخدامه في العمليات الحسابية البسيطة:
+    ```bash
+        ((result = 2 + 2))
+        echo $result # => 4
+    ```
+    أو للتعبيرات الشرطية:
+    ```bash
+        if (( 2 > 1 )); then
+          echo "2 is greater than 1"
+        fi
+    ```
+    للعمليات الحسابية على الأعداد العشرية، فكر في استخدام [`bc`](https://www.gnu.org/software/bc/manual/html_mono/bc.html) أو [`awk`](https://www.gnu.org/software/gawk/manual/gawk.html).
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="الضرب"
+  title="الحساب الأساسي"
+  options={[
+    {text: 'echo 10 * 0.5'},
+    {text: 'echo (10 * 0.5)'},
+    {text: 'echo ${ 10 * 0.5 }'},
+    {text: 'echo %( 10 * 0.5 )'},
+    {text: 'echo $(( 10 * 0.5 ))'},
+    {text: 'echo \'10 * 0.5\' | bc', isAnswer: true},
+    {text: 'Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    أي من هذه الخيارات يقوم بضرب 10 و 0.5 بشكل صحيح، ويطبع 5؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    بناء الجملة `(( ))` يقوم فقط بالحساب **الصحيح** (الأعداد الصحيحة) بدون أعداد عشرية!
+
+    قد تفتقر Bash (بشكل مفاجئ) إلى دعم **مدمج** للحساب بالأعداد العشرية.
+
+    الحل الأكثر شيوعًا هو استخدام أدوات GNU [`bc`](https://www.gnu.org/software/bc/manual/html_mono/bc.html) أو [`awk`](https://www.gnu.org/software/gawk/manual/gawk.html).
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="معالجة السلاسل النصية"
+  title="استخراج السلسلة الفرعية"
+  options={[
+    {text: 'قطة سيئة'},
+    {text: 'قطة سيئة، قطة جيدة:9'},
+    {text: 'قطة جيدة', isAnswer: true},
+    {text: 'خطأ'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ماذا يفعل `:` في هذا السكريبت؟
+    ```bash
+        rosie="Bad cat, good cat"
+        echo ${rosie:9}
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    الصيغة `${var:offset}` تستخرج سلسلة فرعية تبدأ من `offset`. هنا، المخرجات هي:
+    ```plaintext
+        good cat
+    ```
+    لاستخراج سلسلة فرعية بطول محدد، استخدم `${var:offset:length}`.
+
+    للاستخراج من نهاية السلسلة، استخدم `${var: -offset}`. (لاحظ المسافة قبل `-`!)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={13}
+  group="الحلقات"
+  title="الحلقات في Bash"
+  options={[
+    {text: 'do'},
+    {text: 'each', isAnswer: true},
+    {text: 'for'},
+    {text: 'until'},
+    {text: 'while'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما هي الكلمة التي ليست ❌ من كلمات الحلقات في Bash؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `each` ليست كلمة حلقة في Bash. كلمات الحلقات الرئيسية هي `for` و `while` و `until`.
+
+    بينما `do` ليست تقنيًا كلمة حلقة، إلا أنها جزء أساسي من بناء جملة الحلقات.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={14}
+  group="المزالق"
+  title="استبدال الأوامر"
+  options={[
+    {text: '\'ls -l\''},
+    {text: '% ls -l'},
+    {text: '$ ls -l'},
+    {text: '$(ls -l)', isAnswer: true},
+    {text: '${ls -l}'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    أي خيار سينفذ الأمر `ls -l` ويعيد المخرجات؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    بناء `$(ls -l)` ينفذ الأمر داخل **الأقواس** ويستبدل المخرجات. على سبيل المثال:
+    ```bash
+        echo "Today is $(date +%F)"
+        # => Today is 2029-12-31
+    ```
+    الخيار الأول يستخدم علامات الاقتباس المفردة `'`، **وليس علامات التنصيص الخلفية.** هذا يمنع التوسيع، لذا `'$(date +%F)'` سيطبع ببساطة السلسلة الحرفية `$(date +%F)`.
+
+    بينما لا يزال استخدام علامات التنصيص الخلفية (`` `ls -l` ``) مدعومًا لتنفيذ الأوامر، إلا أنه أصبح مؤخرًا نوعًا ما نمطًا مضادًا (في بعض السياقات.) يوصي معظمهم باستخدام `$(command)` لتحسين قابلية القراءة والاتساق مع مختلف الصدف والإصدارات.
+
+    الأقواس المعقوفة `${}` تُستخدم لتوسيع المتغيرات، وليس لاستبدال الأوامر.
+
+    الحرف `%` لا يُستخدم لاستبدال الأوامر.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={15}
+  group="الإدخال/الإخراج القياسي"
+  title="القيم الافتراضية"
+  options={[
+    {text: '1>&2'},
+    {text: '&2>&1'},
+    {text: '2>&1', isAnswer: true},
+    {text: '2>1'},
+    {text: '&2>1'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    أي عامل يستخدم لدمج مخرجات الخطأ مع المخرجات القياسية؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    يقوم العامل `2>&1` بتوجيه الخطأ القياسي (وصف الملف 2) إلى المخرجات القياسية (وصف الملف 1). هذا مفيد لالتقاط رسائل الخطأ في نفس تيار المخرجات مثل المخرجات العادية.
+
+    العامل `1>&2` يقوم بتوجيه المخرجات القياسية إلى الخطأ القياسي، لكن السؤال كان عن كيفية توجيه الخطأ القياسي إلى المخرجات القياسية.
+
+    لمعرفة المزيد عن ما يحدث تحت الغطاء، اطّلع على [دليل إعادة التوجيه الممتاز لجريج](https://mywiki.wooledge.org/BashFAQ/055).
+
+    أيضًا، شكرًا لمستخدم Reddit [u/OneTurnMore](https://www.reddit.com/user/OneTurnMore/) على اقتراح تحسينات النص.
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+
+<p className="inset">هل تركك اختبار Bash الخاص بي في حالة من الفوضى؟</p>
+
+أخبرني في التعليقات أدناه!
+
+### قراءة إضافية
+
+حسّن مهاراتك في Bash باستخدام الموارد التالية:
+
+- [دليل Bash](https://www.gnu.org/software/bash/manual/bash.html)
+- [أسئلة شائعة عن Bash](http://mywiki.wooledge.org/BashFAQ)
+- [ShellCheck](https://www.shellcheck.net/)
+- [أكاديمية Bash](https://guide.bash.academy/)
+- [درس تعليمي لبرمجة Bash](https://ryanstutorials.net/bash-scripting-tutorial/)
+- [دليل Bash المرجعي](https://www.gnu.org/software/bash/manual/bash.html)
+- [ويكي Bash Hackers](http://wiki.bash-hackers.org/)
+- [دليل Bash للمبتدئين](http://tldp.org/LDP/Bash-Beginners-Guide/html/index.html)
+- [بطاقة Bash المرجعية](http://www.tldp.org/LDP/Bash-Beginners-Guide/html/Bash-Beginners-Guide.html)

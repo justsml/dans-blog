@@ -1,0 +1,58 @@
+{
+  "index": 11,
+  "attempt": 1,
+  "originalTitle": "Basic Arithmetic",
+  "translatedTitle": "الحساب الأساسي",
+  "translation": {
+    "title": "الحساب الأساسي",
+    "group": "الضرب",
+    "options": [
+      {
+        "text": "echo 10 * 0.5"
+      },
+      {
+        "text": "echo (10 * 0.5)"
+      },
+      {
+        "text": "echo ${ 10 * 0.5 }"
+      },
+      {
+        "text": "echo %( 10 * 0.5 )"
+      },
+      {
+        "text": "echo $(( 10 * 0.5 ))"
+      },
+      {
+        "text": "echo '10 * 0.5' | bc"
+      },
+      {
+        "text": "Error"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "أي من هذه الخيارات يقوم بضرب 10 و 0.5 بشكل صحيح، ويطبع 5؟"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "بناء الجملة `(( ))` يقوم فقط بالحساب **الصحيح** (الأعداد الصحيحة) بدون أعداد عشرية!\n\nقد تفتقر Bash (بشكل مفاجئ) إلى دعم **مدمج** للحساب بالأعداد العشرية.\n\nالحل الأكثر شيوعًا هو استخدام أدوات GNU [`bc`](https://www.gnu.org/software/bc/manual/html_mono/bc.html) أو [`awk`](https://www.gnu.org/software/gawk/manual/gawk.html)."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"الحساب الأساسي\",\n  \"group\": \"الضرب\",\n  \"options\": [\n    {\"text\": \"echo 10 * 0.5\"},\n    {\"text\": \"echo (10 * 0.5)\"},\n    {\"text\": \"echo ${ 10 * 0.5 }\"},\n    {\"text\": \"echo %( 10 * 0.5 )\"},\n    {\"text\": \"echo $(( 10 * 0.5 ))\"},\n    {\"text\": \"echo '10 * 0.5' | bc\"},\n    {\"text\": \"Error\"}\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"أي من هذه الخيارات يقوم بضرب 10 و 0.5 بشكل صحيح، ويطبع 5؟\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"بناء الجملة `(( ))` يقوم فقط بالحساب **الصحيح** (الأعداد الصحيحة) بدون أعداد عشرية!\\n\\nقد تفتقر Bash (بشكل مفاجئ) إلى دعم **مدمج** للحساب بالأعداد العشرية.\\n\\nالحل الأكثر شيوعًا هو استخدام أدوات GNU [`bc`](https://www.gnu.org/software/bc/manual/html_mono/bc.html) أو [`awk`](https://www.gnu.org/software/gawk/manual/gawk.html).\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 889,
+    "outputTokens": 1098,
+    "cacheReadTokens": 384,
+    "cacheWriteTokens": 0,
+    "durationMs": 8662,
+    "providerCostUsd": 0.00055556,
+    "providerUpstreamCostUsd": 0.00055556,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00007177520000000001,
+    "outputUsd": 0.00030744,
+    "totalUsd": 0.00037921520000000003,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
