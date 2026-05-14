@@ -1,0 +1,134 @@
+# Translation Candidate
+- Slug: llm-routing-mastra-ai
+- Locale: zh
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-01-02--llm-routing-mastra-ai/zh/index.mdx
+- Validation: deferred
+- Runtime seconds: 5.05
+- Input tokens: 3204
+- Output tokens: 1501
+- Thinking tokens: unknown
+- Cached input tokens: 1024
+- Cache write tokens: 0
+- Estimated cost: $0.000395
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: 别嫁给模型
+subTitle: LLM 路由，热度正高
+date: '2026-01-02'
+modified: '2026-01-08'
+tags:
+  - ai
+  - llm
+  - typescript
+  - mastra
+  - agent-orchestration
+category: AI
+subCategory: Engineering
+social_image: ../mobile-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+大多数工程团队会挑选一个语言模型并一直使用它。一个供应商，一个模型，所有任务都交给它。就像雇了一个人来负责你的编码、文案写作和报税，因为他在第一次面试时表现不错。
+
+在任何时刻，某个模型在代码上更强，另一个在处理冗长混乱的上下文上更好，还有一个是最便宜的普通工作马，专门做分类。模型的名字会变，问题的本质不会。把单一模型当作全能选手，要么在简单任务上付出过高费用，要么在专业任务上得到次优结果。
+
+我曾看到一个团队在一个每百万 token 30 美元的模型上跑情感分析，花了几千美元，而 0.5 美元的模型完全可以胜任。简单的 JSON 格式化、基础分类任务，都走他们的高价供应商。唯一升温的只有他们的 AWS 账单。
+
+其实有更好的办法，而且并不复杂。
+
+## 委派胜于盲目依赖
+
+如果可以把请求路由到最适合该任务的模型会怎样？把昂贵的强力模型留给硬核任务，而把简单的解析和格式化交给更便宜的模型。这样既能享受多供应商的优势，又不必在代码库里手动切换。
+
+Mastra 正是用来构建这种系统的。你为不同工作类型设置专用代理，然后创建一个路由代理，让它决定哪个专员应该处理每个请求。下面的模型 ID 仅作示例，并非排行榜。请替换为当前在你的评估中表现最佳且符合预算的模型。
+
+可以把它想象成团队里有三位专家。
+
+```typescript
+// ./src/mastra/index.ts
+import { Mastra } from '@mastra/core';
+import { Agent } from '@mastra/core/agent';
+import { openai } from '@ai-sdk/openai';
+import { anthropic } from '@ai-sdk/anthropic';
+import { google } from '@ai-sdk/google';
+
+export const claudeAgent = new Agent({
+  id: 'claude-agent',
+  instructions: 'You are an expert engineer. Write bugs? You are fired.',
+  model: anthropic(process.env.CODE_MODEL ?? 'claude-sonnet-4-5'),
+});
+
+export const geminiAgent = new Agent({
+  id: 'gemini-agent',
+  instructions: 'You are a creative writer. Be weird.',
+  model: google(process.env.LONG_CONTEXT_MODEL ?? 'gemini-3-pro-preview'),
+});
+
+export const gptAgent = new Agent({
+  id: 'gpt-agent',
+  instructions: 'You are a helpful assistant. Be boring.',
+  model: openai(process.env.GENERAL_MODEL ?? 'gpt-5.2'),
+});
+```
+
+每个代理都有自己的职责。代码代理应该是通过你仓库特定编码评估的模型；长上下文代理要能在不把中间部分弄成烂摊子的情况下处理真实文档；通用代理则需要便宜、可靠且“无聊”到极致。
+
+接下来就有意思了。你再加一个充当智能代理的路由器：
+
+```typescript
+export const routerAgent = new Agent({
+  id: 'router-agent',
+  name: 'The Boss',
+  instructions: `You are an intelligent router.
+  - Coding -> Claude
+  - Poetry -> Gemini
+  - Facts -> GPT
+
+  Do not do the work yourself. Delegate.`,
+  model: openai(process.env.ROUTER_MODEL ?? 'gpt-5-mini'), // Use a cheap model for routing!
+  agents: {
+    claudeAgent,
+    geminiAgent,
+    gptAgent,
+  },
+});
+
+export const mastra = new Mastra({
+  agents: { routerAgent, claudeAgent, geminiAgent, gptAgent },
+});
+```
+
+路由器本身运行在轻量模型上，因为它只负责决定流量该发往何处。你并没有为决定使用哪个高价模型而付出高额费用。也要监控这一点；糟糕的路由器会悄悄把节省的成本变成误路。
+
+当有人请求实现冒泡排序时，路由器会识别为代码工作并交给代码专家。创意写作的提示则交给你为文风和表现力挑选的模型。关于历史事件的事实性问题则路由到通用代理，最好配合检索以满足新鲜度或引用需求。
+
+## 实际收益
+
+**成本效率比想象中更重要。** 一个小型路由模型做委派决策的费用，仅是把每个请求都送到最贵供应商的零头。长期、规模化使用时，这会转化为真实的金钱节省。只有在真正需要重型智能时才付费。
+
+**质量随模型‑任务匹配而提升。** 胜者会随月份、任务和提示形态变化。这就是路由层应基于你的评估，而不是某个模型在某周的 Twitter 热度。
+
+**弹性是副产品。** 当 OpenAI 遭遇周期性宕机（确实会发生）时，路由器可以把流量切换到其他供应商。你不会因为单一 API 不可用而陷入停滞。
+
+这并不是为了炫技，而是构建在财务和技术上都合理的系统。你不会用同一把锤子去完成所有建筑任务，同理也不该用同一个语言模型处理所有 AI 任务。
+
+这种做法的美妙之处在于，应用代码无需改动。你仍然只调用路由代理。决定使用哪个模型的复杂性集中在一个位置，配置一次即可，而不是在代码库里到处散布条件逻辑。
+
+### 资源
+
+- [Mastra.ai 文档](https://mastra.ai/docs)
+- [Mastra GitHub 仓库](https://github.com/mastra-ai/mastra)
+
+## 阅读系列
+
+1. **LLM 路由**（本文）
+2. [安全与防护栏](../mastra-security-guardrails)
+3. [MCP 与工具集成](../mastra-mcp-tool-integrations)
+4. [工作流与记忆](../mastra-workflows-memory)
+````
