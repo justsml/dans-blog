@@ -1,0 +1,64 @@
+# Translation Candidate
+- Slug: security-notes-regex
+- Locale: zh
+- Model: deepseek/deepseek-v4-flash
+- Target: src/content/posts/2015-02-24--security-notes-regex/zh/index.mdx
+- Validation: deferred
+- Runtime seconds: 14.08
+- Input tokens: 1169
+- Output tokens: 1819
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.000673
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: 安全笔记：正则表达式
+subTitle: 正则表达式是否存在漏洞？
+date: '2015-02-24'
+modified: '2018-07-30'
+category: Security
+subCategory: RegEx
+tags:
+  - security
+  - regex
+  - dos
+  - remote-exploit
+cover_credit: Photo by Markus Spiske on Unsplash
+cover: ../markus-spiske-666905-unsplash.webp
+cover_mobile: ../w300_markus-spiske-666905-unsplash.webp
+cover_icon: ../icon_markus-spiske-666905-unsplash.webp
+social_image: ../desktop-social.webp
+---
+## 正则表达式拒绝服务：ReDOS
+
+我发现的更令人惊讶且难以察觉的漏洞之一与正则表达式有关。要么写得不好，要么实现得不好。
+
+大量或特制的用户输入可能会耗尽内存/CPU。
+
+> 这是一个拒绝服务漏洞，而不仅仅是性能问题。如果恶意输入能够长时间占用CPU，导致真实用户无法使用，那么它就应该属于你的安全威胁模型。
+
+### 警告信号
+
+1. 嵌套量词、重复分组或重叠交替
+2. 没有超时或输入长度限制的、回溯密集型的引擎
+3. 表达式用于未检查的用户输入
+4. 正则表达式验证在热请求路径上运行
+
+### 缓解措施 / 解决方案
+
+1. 正则表达式很难。
+    1. 例如，[OWASP][owasp] 的聪明人推荐这样处理IP验证：`^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$`
+    2. 这比一条（老式）推文还长，而它只是用来验证一个4字节的IP地址！！！
+2. 在正则表达式评估之前限制输入长度。
+3. 添加超时、静态分析，或者在平台支持的情况下使用非回溯引擎。
+4. 这几乎影响所有语言和平台：.NET/Node/Python/PERL/Java。
+
+### 参考
+
+- [OWASP ReDoS](https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS)
+````
