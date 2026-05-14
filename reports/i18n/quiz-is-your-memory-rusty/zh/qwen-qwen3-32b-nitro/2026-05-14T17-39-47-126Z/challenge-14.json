@@ -1,0 +1,61 @@
+{
+  "index": 13,
+  "attempt": 1,
+  "originalTitle": "Weak References",
+  "translatedTitle": "弱引用",
+  "translation": {
+    "title": "弱引用",
+    "group": "智能指针",
+    "options": [
+      {
+        "text": "输出：Some(\"Wisdom\")",
+        "hint": "当所有强引用被丢弃时，数据会发生什么？"
+      },
+      {
+        "text": "输出：None"
+      },
+      {
+        "text": "编译错误",
+        "hint": "代码在语法上是正确的"
+      },
+      {
+        "text": "运行时恐慌",
+        "hint": "弱引用可以优雅地处理被丢弃的值"
+      },
+      {
+        "text": "存在主义恐慌",
+        "hint": "虽然听起来很哲学，但这不是真正的Rust错误！"
+      }
+    ],
+    "objectives": [
+      "理解弱引用的目的和行为",
+      "识别弱引用可以防止内存泄漏的场景",
+      "使用Weak<T>打破引用循环"
+    ],
+    "questionProse": [
+      "运行这段带有弱引用的代码会发生什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "弱引用不会阻止其目标的分配。这里有一个详细示例：",
+      "常见使用场景：\n      1. 可以清除条目的缓存结构\n      2. 具有父引用的树结构\n      3. 主体可以被丢弃的观察者模式\n      4. 复杂数据结构中的引用循环打破\n\n      最佳实践：\n      1. 用弱引用表示可选关系\n      2. 使用前检查upgrade()的结果\n      3. 清晰地文档化所有权关系\n      4. 对于简单场景考虑使用索引等替代方案"
+    ]
+  },
+  "rawText": "```json\n{\n  \"title\": \"弱引用\",\n  \"group\": \"智能指针\",\n  \"options\": [\n    {\n      \"text\": \"输出：Some(\\\"Wisdom\\\")\",\n      \"hint\": \"当所有强引用被丢弃时，数据会发生什么？\"\n    },\n    {\n      \"text\": \"输出：None\"\n    },\n    {\n      \"text\": \"编译错误\",\n      \"hint\": \"代码在语法上是正确的\"\n    },\n    {\n      \"text\": \"运行时恐慌\",\n      \"hint\": \"弱引用可以优雅地处理被丢弃的值\"\n    },\n    {\n      \"text\": \"存在主义恐慌\",\n      \"hint\": \"虽然听起来很哲学，但这不是真正的Rust错误！\"\n    }\n  ],\n  \"objectives\": [\n    \"理解弱引用的目的和行为\",\n    \"识别弱引用可以防止内存泄漏的场景\",\n    \"使用Weak<T>打破引用循环\"\n  ],\n  \"questionProse\": [\n    \"运行这段带有弱引用的代码会发生什么？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"弱引用不会阻止其目标的分配。这里有一个详细示例：\",\n    \"常见使用场景：\\n      1. 可以清除条目的缓存结构\\n      2. 具有父引用的树结构\\n      3. 主体可以被丢弃的观察者模式\\n      4. 复杂数据结构中的引用循环打破\\n\\n      最佳实践：\\n      1. 用弱引用表示可选关系\\n      2. 使用前检查upgrade()的结果\\n      3. 清晰地文档化所有权关系\\n      4. 对于简单场景考虑使用索引等替代方案\"\n  ]\n}\n```",
+  "telemetry": {
+    "inputTokens": 971,
+    "outputTokens": 1010,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 3078,
+    "providerCostUsd": 0.00080325,
+    "providerUpstreamCostUsd": 0.00080325,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00007768,
+    "outputUsd": 0.0002424,
+    "totalUsd": 0.00032008000000000004,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

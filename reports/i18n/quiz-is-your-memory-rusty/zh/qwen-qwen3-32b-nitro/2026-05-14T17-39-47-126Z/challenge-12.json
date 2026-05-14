@@ -1,0 +1,61 @@
+{
+  "index": 11,
+  "attempt": 1,
+  "originalTitle": "RefCells and Threading",
+  "translatedTitle": "RefCell与线程",
+  "translation": {
+    "title": "RefCell与线程",
+    "group": "RefCell",
+    "options": [
+      {
+        "text": "RefCell用于可变借用，Rw用于不可变借用",
+        "hint": "两种类型都支持可变和不可变借用"
+      },
+      {
+        "text": "Rw用于可变借用，RefCell用于不可变借用",
+        "hint": "两种类型都支持两种借用类型"
+      },
+      {
+        "text": "RefCell和Rw用于相同目的",
+        "hint": "考虑线程安全性"
+      },
+      {
+        "text": "RefCell仅用于单线程环境"
+      },
+      {
+        "text": "Rw仅用于多线程环境",
+        "hint": "虽然通常用于线程，但这不是关键区别"
+      }
+    ],
+    "objectives": [
+      "理解RefCell与线程安全替代方案的差异",
+      "识别RefCell与RwLock的适用场景",
+      "根据线程需求应用正确的同步原语"
+    ],
+    "questionProse": [
+      "Rust中RefCell和RwLock的关键区别是什么？\n\n      考虑这些示例："
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "RefCell和RwLock在不同上下文中实现相似功能：",
+      "关键区别：\n      1. RefCell:\n         - 仅限单线程\n         - 无同步开销\n         - 借用违规时会panic\n         \n      2. RwLock:\n         - 线程安全\n         - 有同步开销\n         - 可阻塞线程而非panic\n\n      最佳实践：\n      1. 使用RefCell实现单线程内部可变性\n      2. 需要线程安全时使用RwLock\n      3. 简单线程安全可变性考虑Mutex\n      4. 明确标注线程安全需求"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"RefCell与线程\",\n  \"group\": \"RefCell\",\n  \"options\": [\n    {\n      \"text\": \"RefCell用于可变借用，Rw用于不可变借用\",\n      \"hint\": \"两种类型都支持可变和不可变借用\"\n    },\n    {\n      \"text\": \"Rw用于可变借用，RefCell用于不可变借用\",\n      \"hint\": \"两种类型都支持两种借用类型\"\n    },\n    {\n      \"text\": \"RefCell和Rw用于相同目的\",\n      \"hint\": \"考虑线程安全性\"\n    },\n    {\n      \"text\": \"RefCell仅用于单线程环境\"\n    },\n    {\n      \"text\": \"Rw仅用于多线程环境\",\n      \"hint\": \"虽然通常用于线程，但这不是关键区别\"\n    }\n  ],\n  \"objectives\": [\n    \"理解RefCell与线程安全替代方案的差异\",\n    \"识别RefCell与RwLock的适用场景\",\n    \"根据线程需求应用正确的同步原语\"\n  ],\n  \"questionProse\": [\n    \"Rust中RefCell和RwLock的关键区别是什么？\\n\\n      考虑这些示例：\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"RefCell和RwLock在不同上下文中实现相似功能：\",\n    \"关键区别：\\n      1. RefCell:\\n         - 仅限单线程\\n         - 无同步开销\\n         - 借用违规时会panic\\n         \\n      2. RwLock:\\n         - 线程安全\\n         - 有同步开销\\n         - 可阻塞线程而非panic\\n\\n      最佳实践：\\n      1. 使用RefCell实现单线程内部可变性\\n      2. 需要线程安全时使用RwLock\\n      3. 简单线程安全可变性考虑Mutex\\n      4. 明确标注线程安全需求\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1039,
+    "outputTokens": 1061,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2568,
+    "providerCostUsd": 0.0009273,
+    "providerUpstreamCostUsd": 0.0009273,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00008312,
+    "outputUsd": 0.00025464,
+    "totalUsd": 0.00033776,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "index": 0,
+  "attempt": 1,
+  "originalTitle": "Basic Move Semantics",
+  "translatedTitle": "基础移动语义",
+  "translation": {
+    "title": "基础移动语义",
+    "group": "所有权",
+    "options": [
+      {
+        "text": "Hello, !",
+        "hint": "想想'philosopher'在被移动后会发生什么"
+      },
+      {
+        "text": "Hello, Zeno of Citium!",
+        "hint": "一旦值被移动，还能继续使用吗？"
+      },
+      {
+        "text": "Hello, Zeno of Elea!",
+        "hint": "字符串包含的是'Citium'，不是'Elea'"
+      },
+      {
+        "text": "Hello, Marcus Aurelius",
+        "hint": "检查这是否与字符串内容匹配"
+      },
+      {
+        "text": "编译错误: 值在移动后被借用"
+      },
+      {
+        "text": "运行时错误: 空指针异常",
+        "hint": "Rust会在编译时捕获这类问题"
+      }
+    ],
+    "objectives": [
+      "解释Rust的所有权规则和移动语义",
+      "识别与移动值相关的编译错误",
+      "应用解决方案修复移动相关的编译错误"
+    ],
+    "questionProse": [
+      "运行这段代码会发生什么？尝试预测输出或错误："
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "这段代码因Rust的所有权规则无法编译。当我们把`philosopher`赋值给`greeting`时，String的所有权被移动到`greeting`。移动后，`philosopher`就不再有效了。\n\n这里有三种修复方法：\n\n1. 克隆字符串（创建新副本）：",
+      "2. 使用引用（借用值）：",
+      "3. 使用字符串切片（借用字符串部分）：",
+      "每种解决方案都有不同的使用场景和性能影响。克隆更耗费资源但提供所有权，而引用更高效但有生命周期限制。"
+    ]
+  },
+  "rawText": "```json\n{\n  \"title\": \"基础移动语义\",\n  \"group\": \"所有权\",\n  \"options\": [\n    {\n      \"text\": \"Hello, !\",\n      \"hint\": \"想想'philosopher'在被移动后会发生什么\"\n    },\n    {\n      \"text\": \"Hello, Zeno of Citium!\",\n      \"hint\": \"一旦值被移动，还能继续使用吗？\"\n    },\n    {\n      \"text\": \"Hello, Zeno of Elea!\",\n      \"hint\": \"字符串包含的是'Citium'，不是'Elea'\"\n    },\n    {\n      \"text\": \"Hello, Marcus Aurelius\",\n      \"hint\": \"检查这是否与字符串内容匹配\"\n    },\n    {\n      \"text\": \"编译错误: 值在移动后被借用\"\n    },\n    {\n      \"text\": \"运行时错误: 空指针异常\",\n      \"hint\": \"Rust会在编译时捕获这类问题\"\n    }\n  ],\n  \"objectives\": [\n    \"解释Rust的所有权规则和移动语义\",\n    \"识别与移动值相关的编译错误\",\n    \"应用解决方案修复移动相关的编译错误\"\n  ],\n  \"questionProse\": [\n    \"运行这段代码会发生什么？尝试预测输出或错误：\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"这段代码因Rust的所有权规则无法编译。当我们把`philosopher`赋值给`greeting`时，String的所有权被移动到`greeting`。移动后，`philosopher`就不再有效了。\\n\\n这里有三种修复方法：\\n\\n1. 克隆字符串（创建新副本）：\",\n    \"2. 使用引用（借用值）：\",\n    \"3. 使用字符串切片（借用字符串部分）：\",\n    \"每种解决方案都有不同的使用场景和性能影响。克隆更耗费资源但提供所有权，而引用更高效但有生命周期限制。\"\n  ]\n}\n```",
+  "telemetry": {
+    "inputTokens": 1092,
+    "outputTokens": 980,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2210,
+    "providerCostUsd": 0.00089488,
+    "providerUpstreamCostUsd": 0.00089488,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00008736,
+    "outputUsd": 0.00023519999999999997,
+    "totalUsd": 0.00032255999999999995,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

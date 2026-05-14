@@ -1,0 +1,58 @@
+{
+  "index": 14,
+  "attempt": 1,
+  "originalTitle": "RAII Pattern",
+  "translatedTitle": "RAII模式",
+  "translation": {
+    "title": "RAII模式",
+    "group": "内存模式",
+    "options": [
+      {
+        "text": "资源在作用域结束后释放",
+        "hint": "File字段有其自己的Drop实现。"
+      },
+      {
+        "text": "资源泄漏",
+        "hint": "包装器没有自定义Drop，但其字段仍会被释放。"
+      },
+      {
+        "text": "编译错误",
+        "hint": "代码成功编译"
+      },
+      {
+        "text": "运行时错误",
+        "hint": "问题是关于资源清理的"
+      }
+    ],
+    "objectives": [
+      "理解Rust中的RAII（资源获取即初始化）模式",
+      "使用Drop trait实现正确的资源清理",
+      "应用RAII模式进行资源管理"
+    ],
+    "questionProse": [
+      "在这个RAII示例中，文件句柄会发生什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "Rust中的RAII确保资源被正确管理。在此示例中，`FileWrapper`无需为文件句柄关闭实现自定义`Drop`：当包装器超出作用域时，其`File`字段会自动被释放。\n\n      只有当包装器本身需要额外的清理行为时才需要实现`Drop`：",
+      "RAII模式：\n      1. 构造函数获取资源\n      2. 方法安全使用资源\n      3. 当所有者超出作用域时字段自动释放\n      4. 自定义Drop在需要时添加额外清理\n      5. 使用`?`进行错误传播\n\n      最佳实践：\n      1. 当标准库的Drop实现已能建模资源时，直接复用\n      2. 保持资源管理简单直观\n      3. 尽量使用标准库类型\n      4. 文档化清理行为\n      5. 考虑使用守卫模式进行作用域操作"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"RAII模式\",\n  \"group\": \"内存模式\",\n  \"options\": [\n    {\n      \"text\": \"资源在作用域结束后释放\",\n      \"hint\": \"File字段有其自己的Drop实现。\"\n    },\n    {\n      \"text\": \"资源泄漏\",\n      \"hint\": \"包装器没有自定义Drop，但其字段仍会被释放。\"\n    },\n    {\n      \"text\": \"编译错误\",\n      \"hint\": \"代码成功编译\"\n    },\n    {\n      \"text\": \"运行时错误\",\n      \"hint\": \"问题是关于资源清理的\"\n    }\n  ],\n  \"objectives\": [\n    \"理解Rust中的RAII（资源获取即初始化）模式\",\n    \"使用Drop trait实现正确的资源清理\",\n    \"应用RAII模式进行资源管理\"\n  ],\n  \"questionProse\": [\n    \"在这个RAII示例中，文件句柄会发生什么？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"Rust中的RAII确保资源被正确管理。在此示例中，`FileWrapper`无需为文件句柄关闭实现自定义`Drop`：当包装器超出作用域时，其`File`字段会自动被释放。\\n\\n      只有当包装器本身需要额外的清理行为时才需要实现`Drop`：\",\n    \"RAII模式：\\n      1. 构造函数获取资源\\n      2. 方法安全使用资源\\n      3. 当所有者超出作用域时字段自动释放\\n      4. 自定义Drop在需要时添加额外清理\\n      5. 使用`?`进行错误传播\\n\\n      最佳实践：\\n      1. 当标准库的Drop实现已能建模资源时，直接复用\\n      2. 保持资源管理简单直观\\n      3. 尽量使用标准库类型\\n      4. 文档化清理行为\\n      5. 考虑使用守卫模式进行作用域操作\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1037,
+    "outputTokens": 1096,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2649,
+    "providerCostUsd": 0.00094737,
+    "providerUpstreamCostUsd": 0.00094737,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00008295999999999999,
+    "outputUsd": 0.00026304,
+    "totalUsd": 0.00034599999999999995,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

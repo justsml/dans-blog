@@ -1,0 +1,59 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "Mutable References",
+  "translatedTitle": "可变引用",
+  "translation": {
+    "title": "可变引用",
+    "group": "借用",
+    "options": [
+      {
+        "text": "成功编译",
+        "hint": "我们可以同时拥有多个可变引用吗？"
+      },
+      {
+        "text": "错误：不能多次将 `wisdom` 作为可变借用"
+      },
+      {
+        "text": "错误：缺少生命周期说明符",
+        "hint": "这里的问题与生命周期无关"
+      },
+      {
+        "text": "运行时恐慌",
+        "hint": "Rust会在编译时捕获这些问题"
+      }
+    ],
+    "objectives": [
+      "理解Rust中可变引用的规则",
+      "识别Rust借用规则的违规情况",
+      "应用适当的范围处理多个可变引用"
+    ],
+    "questionProse": [
+      "多个可变引用会发生什么？",
+      "思考Rust中可变引用的规则。"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "此代码违反了Rust的基本借用规则：\n      - 同一值的可变引用只能有一个\n      - 或者可以有任意数量的不可变引用\n      - 引用不能比其指向的对象存活更久\n\n      修复代码的方法：\n\n      1. 使用顺序作用域：",
+      "2. 或者在单个借用中修改字符串：",
+      "这些规则在编译时防止数据竞争，使Rust默认线程安全。\n\n      常见误区：尝试使用多个可变引用来避免克隆或\n      同时修改同一值的不同部分。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"可变引用\",\n  \"group\": \"借用\",\n  \"options\": [\n    {\n      \"text\": \"成功编译\",\n      \"hint\": \"我们可以同时拥有多个可变引用吗？\"\n    },\n    {\n      \"text\": \"错误：不能多次将 `wisdom` 作为可变借用\"\n    },\n    {\n      \"text\": \"错误：缺少生命周期说明符\",\n      \"hint\": \"这里的问题与生命周期无关\"\n    },\n    {\n      \"text\": \"运行时恐慌\",\n      \"hint\": \"Rust会在编译时捕获这些问题\"\n    }\n  ],\n  \"objectives\": [\n    \"理解Rust中可变引用的规则\",\n    \"识别Rust借用规则的违规情况\",\n    \"应用适当的范围处理多个可变引用\"\n  ],\n  \"questionProse\": [\n    \"多个可变引用会发生什么？\",\n    \"思考Rust中可变引用的规则。\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"此代码违反了Rust的基本借用规则：\\n      - 同一值的可变引用只能有一个\\n      - 或者可以有任意数量的不可变引用\\n      - 引用不能比其指向的对象存活更久\\n\\n      修复代码的方法：\\n\\n      1. 使用顺序作用域：\",\n    \"2. 或者在单个借用中修改字符串：\",\n    \"这些规则在编译时防止数据竞争，使Rust默认线程安全。\\n\\n      常见误区：尝试使用多个可变引用来避免克隆或\\n      同时修改同一值的不同部分。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 985,
+    "outputTokens": 879,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2194,
+    "providerCostUsd": 0.00080426,
+    "providerUpstreamCostUsd": 0.00080426,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.0000788,
+    "outputUsd": 0.00021096,
+    "totalUsd": 0.00028976,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

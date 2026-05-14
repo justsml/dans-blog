@@ -1,0 +1,57 @@
+{
+  "index": 15,
+  "attempt": 1,
+  "originalTitle": "Copy vs Clone",
+  "translatedTitle": "复制与克隆",
+  "translation": {
+    "title": "复制与克隆",
+    "group": "设计模式",
+    "options": [
+      {
+        "text": "编译错误",
+        "hint": "The derive attribute is correctly used"
+      },
+      {
+        "text": "深拷贝创建"
+      },
+      {
+        "text": "浅拷贝创建",
+        "hint": "Clone creates a deep copy of String fields"
+      },
+      {
+        "text": "移动语义应用",
+        "hint": "Clone explicitly creates a new copy"
+      }
+    ],
+    "objectives": [
+      "区分Copy和Clone特性",
+      "理解何时实现每个特性",
+      "应用Copy和Clone的适当派生"
+    ],
+    "questionProse": [
+      "克隆这个Philosophy结构体时会发生什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "让我们深入了解Copy和Clone的区别：",
+      "关键差异：\n      1. Copy:\n         - 隐式位拷贝\n         - 必须是Copy安全的（无堆分配）\n         - 通常用于小型、仅栈分配的类型\n         \n      2. Clone:\n         - 显式深拷贝\n         - 可处理堆分配\n         - 更灵活但可能更昂贵\n      \n      最佳实践：\n      1. 对小型栈分配类型实现Copy\n      2. 对拥有资源的类型使用Clone\n      3. 文档化Clone的性能影响\n      4. 考虑自定义Clone实现进行优化\n      5. 对自动派生保持谨慎"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"复制与克隆\",\n  \"group\": \"设计模式\",\n  \"options\": [\n    {\n      \"text\": \"编译错误\",\n      \"hint\": \"The derive attribute is correctly used\"\n    },\n    {\n      \"text\": \"深拷贝创建\"\n    },\n    {\n      \"text\": \"浅拷贝创建\",\n      \"hint\": \"Clone creates a deep copy of String fields\"\n    },\n    {\n      \"text\": \"移动语义应用\",\n      \"hint\": \"Clone explicitly creates a new copy\"\n    }\n  ],\n  \"objectives\": [\n    \"区分Copy和Clone特性\",\n    \"理解何时实现每个特性\",\n    \"应用Copy和Clone的适当派生\"\n  ],\n  \"questionProse\": [\n    \"克隆这个Philosophy结构体时会发生什么？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"让我们深入了解Copy和Clone的区别：\",\n    \"关键差异：\\n      1. Copy:\\n         - 隐式位拷贝\\n         - 必须是Copy安全的（无堆分配）\\n         - 通常用于小型、仅栈分配的类型\\n         \\n      2. Clone:\\n         - 显式深拷贝\\n         - 可处理堆分配\\n         - 更灵活但可能更昂贵\\n      \\n      最佳实践：\\n      1. 对小型栈分配类型实现Copy\\n      2. 对拥有资源的类型使用Clone\\n      3. 文档化Clone的性能影响\\n      4. 考虑自定义Clone实现进行优化\\n      5. 对自动派生保持谨慎\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 955,
+    "outputTokens": 736,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2001,
+    "providerCostUsd": 0.00071119,
+    "providerUpstreamCostUsd": 0.00071119,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.0000764,
+    "outputUsd": 0.00017664,
+    "totalUsd": 0.00025304,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

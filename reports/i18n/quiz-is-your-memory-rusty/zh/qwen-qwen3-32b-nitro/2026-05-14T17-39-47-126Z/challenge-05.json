@@ -1,0 +1,57 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Box Smart Pointer",
+  "translatedTitle": "Box 智能指针",
+  "translation": {
+    "title": "Box 智能指针",
+    "group": "智能指针",
+    "options": [
+      {
+        "text": "5",
+        "hint": "代码甚至无法编译以生成值"
+      },
+      {
+        "text": "null",
+        "hint": "Rust 没有空值概念"
+      },
+      {
+        "text": "编译错误",
+        "hint": "编译器无法确定这种递归类型的有限大小"
+      },
+      {
+        "text": "堆栈溢出"
+      }
+    ],
+    "objectives": [
+      "理解递归类型定义及其内存影响",
+      "识别需要使用 Box<T> 的场景",
+      "应用 Box<T> 修复递归数据结构"
+    ],
+    "questionProse": [
+      "这个递归类型定义有什么问题？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "这段代码失败是因为编译器无法在编译时确定 `CatList` 的大小。这种类型的递归性意味着它可能是无限大的！\n\n      使用 `Box<T>` 修复的方法：",
+      "`Box<T>` 能解决问题的原因：\n      1. Box 提供固定大小的指针（通常在64位系统上是8字节）\n      2. 实际数据存储在堆上\n      3. 编译器现在能精确知道要分配多少空间\n\n      `Box<T>` 的常见使用场景：\n      - 递归数据结构（链表、树）\n      - 需要确保大块数据堆分配的情况\n      - 需要动态派发的 trait 对象\n\n      最佳实践：在以下情况使用 `Box<T>`：\n      - 处理递归类型\n      - 确保堆分配\n      - 移动大块数据而无需复制"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Box 智能指针\",\n  \"group\": \"智能指针\",\n  \"options\": [\n    {\n      \"text\": \"5\",\n      \"hint\": \"代码甚至无法编译以生成值\"\n    },\n    {\n      \"text\": \"null\",\n      \"hint\": \"Rust 没有空值概念\"\n    },\n    {\n      \"text\": \"编译错误\",\n      \"hint\": \"编译器无法确定这种递归类型的有限大小\"\n    },\n    {\n      \"text\": \"堆栈溢出\"\n    }\n  ],\n  \"objectives\": [\n    \"理解递归类型定义及其内存影响\",\n    \"识别需要使用 Box<T> 的场景\",\n    \"应用 Box<T> 修复递归数据结构\"\n  ],\n  \"questionProse\": [\n    \"这个递归类型定义有什么问题？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"这段代码失败是因为编译器无法在编译时确定 `CatList` 的大小。这种类型的递归性意味着它可能是无限大的！\\n\\n      使用 `Box<T>` 修复的方法：\",\n    \"`Box<T>` 能解决问题的原因：\\n      1. Box 提供固定大小的指针（通常在64位系统上是8字节）\\n      2. 实际数据存储在堆上\\n      3. 编译器现在能精确知道要分配多少空间\\n\\n      `Box<T>` 的常见使用场景：\\n      - 递归数据结构（链表、树）\\n      - 需要确保大块数据堆分配的情况\\n      - 需要动态派发的 trait 对象\\n\\n      最佳实践：在以下情况使用 `Box<T>`：\\n      - 处理递归类型\\n      - 确保堆分配\\n      - 移动大块数据而无需复制\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1010,
+    "outputTokens": 1017,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2608,
+    "providerCostUsd": 0.00089293,
+    "providerUpstreamCostUsd": 0.00089293,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.0000808,
+    "outputUsd": 0.00024407999999999995,
+    "totalUsd": 0.00032487999999999994,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

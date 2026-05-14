@@ -1,0 +1,57 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Cell vs RefCell",
+  "translatedTitle": "Cell 与 RefCell 的区别",
+  "translation": {
+    "title": "Cell 与 RefCell 的区别",
+    "group": "可变性",
+    "options": [
+      {
+        "text": "输出：42, 43"
+      },
+      {
+        "text": "输出：43, 43",
+        "hint": "Cell::get() 返回调用时的值"
+      },
+      {
+        "text": "编译错误",
+        "hint": "Cell 正是为此类用例设计的"
+      },
+      {
+        "text": "运行时 panic",
+        "hint": "对 Copy 类型的 Cell 操作始终是安全的"
+      }
+    ],
+    "objectives": [
+      "区分 Cell 和 RefCell 的使用模式",
+      "应用 Cell 实现简单的内部可变性",
+      "比较 Copy 类型和非 Copy 类型在 Cell 中的行为"
+    ],
+    "questionProse": [
+      "这段代码会输出什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "Cell 和 RefCell 在内部可变性方面有不同的用途：",
+      "关键区别：\n      1. Cell:\n         - 最适合 Copy 类型\n         - 没有借用 API\n         - 始终复制或移动值\n      \n      2. RefCell:\n         - 适用于任何类型\n         - 具备借用 API\n         - 运行时借用检查\n\n      最佳实践：\n      1. 对简单 Copy 类型（数字、bool 等）使用 Cell\n      2. 需要借用内容时使用 RefCell\n      3. 尽量减少通过 Cell/RefCell 的修改\n      4. 文档中说明为何需要内部可变性"
+    ]
+  },
+  "rawText": "```json\n{\n  \"title\": \"Cell 与 RefCell 的区别\",\n  \"group\": \"可变性\",\n  \"options\": [\n    {\n      \"text\": \"输出：42, 43\"\n    },\n    {\n      \"text\": \"输出：43, 43\",\n      \"hint\": \"Cell::get() 返回调用时的值\"\n    },\n    {\n      \"text\": \"编译错误\",\n      \"hint\": \"Cell 正是为此类用例设计的\"\n    },\n    {\n      \"text\": \"运行时 panic\",\n      \"hint\": \"对 Copy 类型的 Cell 操作始终是安全的\"\n    }\n  ],\n  \"objectives\": [\n    \"区分 Cell 和 RefCell 的使用模式\",\n    \"应用 Cell 实现简单的内部可变性\",\n    \"比较 Copy 类型和非 Copy 类型在 Cell 中的行为\"\n  ],\n  \"questionProse\": [\n    \"这段代码会输出什么？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"Cell 和 RefCell 在内部可变性方面有不同的用途：\",\n    \"关键区别：\\n      1. Cell:\\n         - 最适合 Copy 类型\\n         - 没有借用 API\\n         - 始终复制或移动值\\n      \\n      2. RefCell:\\n         - 适用于任何类型\\n         - 具备借用 API\\n         - 运行时借用检查\\n\\n      最佳实践：\\n      1. 对简单 Copy 类型（数字、bool 等）使用 Cell\\n      2. 需要借用内容时使用 RefCell\\n      3. 尽量减少通过 Cell/RefCell 的修改\\n      4. 文档中说明为何需要内部可变性\"\n  ]\n}\n```",
+  "telemetry": {
+    "inputTokens": 973,
+    "outputTokens": 893,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2914,
+    "providerCostUsd": 0.00080904,
+    "providerUpstreamCostUsd": 0.00080904,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00007784,
+    "outputUsd": 0.00021432,
+    "totalUsd": 0.00029215999999999997,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "index": 12,
+  "attempt": 1,
+  "originalTitle": "Arc and Mutex",
+  "translatedTitle": "Arc 和 Mutex",
+  "translation": {
+    "title": "Arc 和 Mutex",
+    "group": "智能指针",
+    "options": [
+      {
+        "text": "打印：42",
+        "hint": "代码永远不会执行到打印语句"
+      },
+      {
+        "text": "打印：43",
+        "hint": "代码在打印前会卡住"
+      },
+      {
+        "text": "编译错误",
+        "hint": "代码在语法上是正确的"
+      },
+      {
+        "text": "运行时 panic",
+        "hint": "情况比 panic 更糟"
+      },
+      {
+        "text": "死锁"
+      }
+    ],
+    "objectives": [
+      "使用 Arc 和 Mutex 分析并发访问模式",
+      "识别潜在的死锁场景",
+      "应用正确的同步模式防止死锁"
+    ],
+    "questionProse": [
+      "运行这段代码会发生什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "这段代码演示了一个经典的死锁场景。以下是修复方法：",
+      "防止死锁的最佳实践：\n      1. 保持临界区代码简洁\n      2. 使用作用域及时释放锁\n      3. 按一致顺序获取多个锁\n      4. 使用 parking_lot::Mutex 提高性能\n      5. 读多写少场景考虑使用 RwLock\n\n      常见模式："
+    ]
+  },
+  "rawText": "```json\n{\n  \"title\": \"Arc 和 Mutex\",\n  \"group\": \"智能指针\",\n  \"options\": [\n    {\n      \"text\": \"打印：42\",\n      \"hint\": \"代码永远不会执行到打印语句\"\n    },\n    {\n      \"text\": \"打印：43\",\n      \"hint\": \"代码在打印前会卡住\"\n    },\n    {\n      \"text\": \"编译错误\",\n      \"hint\": \"代码在语法上是正确的\"\n    },\n    {\n      \"text\": \"运行时 panic\",\n      \"hint\": \"情况比 panic 更糟\"\n    },\n    {\n      \"text\": \"死锁\"\n    }\n  ],\n  \"objectives\": [\n    \"使用 Arc 和 Mutex 分析并发访问模式\",\n    \"识别潜在的死锁场景\",\n    \"应用正确的同步模式防止死锁\"\n  ],\n  \"questionProse\": [\n    \"运行这段代码会发生什么？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"这段代码演示了一个经典的死锁场景。以下是修复方法：\",\n    \"防止死锁的最佳实践：\\n      1. 保持临界区代码简洁\\n      2. 使用作用域及时释放锁\\n      3. 按一致顺序获取多个锁\\n      4. 使用 parking_lot::Mutex 提高性能\\n      5. 读多写少场景考虑使用 RwLock\\n\\n      常见模式：\"\n  ]\n}\n```",
+  "telemetry": {
+    "inputTokens": 952,
+    "outputTokens": 924,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2506,
+    "providerCostUsd": 0.00082124,
+    "providerUpstreamCostUsd": 0.00082124,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00007616,
+    "outputUsd": 0.00022176,
+    "totalUsd": 0.00029792,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
