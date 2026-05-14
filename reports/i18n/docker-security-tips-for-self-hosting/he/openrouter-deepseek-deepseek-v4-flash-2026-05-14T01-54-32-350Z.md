@@ -1,0 +1,747 @@
+# Translation Candidate
+- Slug: docker-security-tips-for-self-hosting
+- Locale: he
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2025-01-05--docker-security-tips-for-self-hosting/he/index.mdx
+- Validation: deferred
+- Runtime seconds: 165.23
+- Input tokens: 22079
+- Output tokens: 27562
+- Thinking tokens: unknown
+- Cached input tokens: 3840
+- Cache write tokens: 0
+- Estimated cost: $0.010282
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: טיפים חיוניים לאבטחת Docker באירוח עצמי
+subTitle: 'אבטח את השירותים המאוחסנים בעצמך, מהגנה ועד ניטור!'
+date: '2025-01-04'
+modified: '2025-07-09'
+tags:
+  - docker
+  - security
+  - devops
+  - containers
+  - best-practices
+category: Security
+social_image: ../desktop-social.webp
+cover_full_width: ../docker-ukiyo-e-wide.webp
+cover_mobile: ../docker-ukiyo-e-container-square-200.webp
+cover_icon: ../docker-ukiyo-e-container-square-200.webp
+cover_credit: © 2025 Dan Levy
+---
+import {CodeTabs} from '../../../../components/CodeTabs';
+
+**תוכן עניינים**
+
+- 🧗‍♀️ [לאמיצים](#️-for-the-brave)
+- 🔄 [ריקוד ה-`:latest`](#-the-latest-dance)
+- 🔐 [ניהול סודות: הדרך הנכונה](#-secrets-management)
+- 🌐 [סכנת רשת](#-network-hazard)
+- 🛡️ [בקרות גישה](#️-access-controls)
+- 🔍 [ניטור ואימות](#-monitoring--verification)
+- ⏰ [טיפים שמרבים להתעלם מהם](#-often-overlooked-tips)
+- 🚀 [רשימת בדיקה לייצור](#-production-checklist)
+- 📚 [קריאה נוספת](#-further-reading)
+
+## 🧗‍♀️ לאמיצים
+
+אם אתה מריץ שירותי Docker בעצמך, האחריות לאבטחה היא שלך מההתחלה ועד הסוף—אין ספק ענן שיגן עליך מסריקות פורטים או תצורה מרושלת. בין אם אתה מעלה אפליקציות ברשת הביתית שלך או שוכר VPS מספקים כמו Vultr, DigitalOcean, Linode, AWS, Azure או Google Cloud, תצטרך לנעול את הדברים—ולוודא שעשית זאת נכון.
+
+במדריך הזה נעבור על אבטחת Docker—מטכניקות ש"פחות מוכרות" ועד לאחרות ש"קשה לעשות נכון"; נחקור טוקנים של קנרית, נפחי קריאה בלבד, כללי חומת אש, פילוח רשת והקשחתה, הוספת פרוקסי מאומתים, ועוד.
+
+נשווה גם בין רשתות ביתיות להגדרות ענן ציבורי ונראה לך איך להגדיר פרוקסי אימות בסיסי עם Nginx. בסוף, יהיו לך כמה אפשרויות להרחיק את הפולשים (חברים, משפחה, ולפעמים אפילו את עצמך...)
+
+זה המון דברים! אבל הרבה מהם קשורים זה לזה, ואתה יכול לבחור מה רלוונטי ביותר להגדרה שלך. 🍀
+
+## 🔄 ריקוד ה-`:latest`
+
+עדכון תמונות הוא קריטי לאבטחה. עם זאת, הסתמכות על `:latest` עלולה להכניס שינויים שוברים או בניות פגיעות ללא שלב סקירה.
+
+### הדרך הבטוחה לעדכן
+
+שלב פקודות עדכון עם `pull` או `build` כדי לרענן תמונות בכוונה, ואז הפעל מחדש בחלון זמן שבו תוכל להבחין בשברים.
+
+```bash
+#!/bin/bash
+# update-and-run.sh
+docker compose pull && \
+  docker compose up -d
+```
+
+### קיבוע גרסה מול Latest
+
+בחירת הגרסה הנכונה לקיבוע היא איזון בין יציבות לאבטחה. הנה כמה אסטרטגיות נפוצות:
+
+```yaml
+# docker-compose.yml
+# ...
+  # קיבוע גרסה מדויק, הכי טוב לשירותים קריטיים
+  image: postgres:17.2
+
+  # קיבוע גרסת תיקון, טוב לשירותים לא קריטיים
+  image: postgres:17.2
+
+  # קיבוע גרסה ראשית, מושלם לפרויקטים כתחביב
+  image: postgres:17
+
+  # יולו, הימנע אם אפשר
+  image: postgres:latest
+```
+
+השתמש ב-[Dependabot](https://github.com/features/security) או [Renovate](https://github.com/renovatebot/renovate) כדי לפתוח PRs עדכון שניתנים לסקירה. עבור כל דבר שיעציב אותך לבנות מחדש ב-2 בלילה, קבע לגרסה ספציפית או digest ותן לאוטומציה לומר לך מתי לזוז.
+
+_ספר לי על הכלים המועדפים שלך לשמירת תמונות Docker מעודכנות!_
+
+## 🔐 ניהול סודות
+
+- [צור סודות חזקים](#generate-strong-secrets)
+- [אסימוני קנרית](#canary-tokens)
+- [שדרג מ-`.env` ל-MacOS Keychain](#upgrade-from-env-to-macos-keychain)
+{/* - [Placeholder Validation](#placeholder-validation) */}
+
+ישנן דרכים רבות לנהל סודות, אבל אחד הכללים החשובים ביותר שיש להקפיד עליו הוא: **לעולם אל תקבע סודות בקוד בתוך תמונות docker או תעביר אותם ל-git.** זוהי אחת הטעויות הנפוצות ביותר באבטחה, היא מציגה סיכון לטווח ארוך, וזה כאב לתקן.
+
+אחסון מאובטח של סודות הוא נושא רחב עם אפשרויות רבות, החל מקבצי `.env`, [Docker secrets](https://docs.docker.com/compose/how-tos/use-secrets/), [1Password](https://1password.com/downloads/command-line)/[Bitwarden](https://bitwarden.com/developers/), או מנהל סודות כמו [HashiCorp Vault](https://www.vaultproject.io/) או AWS Secrets Manager.
+
+תצטרך לבחור את רמת המאמץ והאבטחה ה'נכונה' עבור מקרה השימוש שלך.
+
+{/*
+TODO: Move to Maintainer's Guide
+// TODO: Move to Maintainer's Guide
+
+### Placeholder Validation
+
+<blockquote>You wouldn't believe how easy it is to hack a JWT token when the secret isn't secret!</blockquote>
+
+<p className='inset'>💡 Ensure secrets are always unique. Try make it impossible to run with unsafe/hard-coded defaults.</p>
+
+If you use placeholders like `__WARNING_REPLACE_ME__` in your secrets, great, maybe someone will notice!
+
+Just in case, you can also add a little runtime safety with little effort. Here’s how you might do it in JavaScript, Rust, and Go:
+
+<CodeTabs client:load tabs={["JavaScript", "Rust", "Go"]}>
+
+```javascript
+// validateSecrets.js
+const validateSecrets = () => {
+  const unsafePlaceholder = /__WARNING_REPLACE_ME__/;
+  const missingSecrets = Object.entries(process.env).filter(
+    ([key, value]) => unsafePlaceholder.test(value)
+  );
+
+  if (missingSecrets.length) {
+    console.error("Unsafe secrets detected:", missingSecrets);
+    process.exit(1);
+  }
+};
+
+validateSecrets();
+```
+
+```rust
+// validate_secrets.rs
+use std::env;
+
+fn validate_secrets() {
+    let unsafe_placeholder = "__WARNING_REPLACE_ME__";
+    for (key, value) in env::vars() {
+        if value.contains(unsafe_placeholder) {
+            panic!("Unsafe secret in {}", key);
+        }
+    }
+}
+
+fn main() {
+    validate_secrets();
+}
+```
+
+```go
+// validate_secrets.go
+package main
+
+import (
+	"fmt"
+	"os"
+	"strings"
+)
+
+func validateSecrets() {
+	placeholder := "__WARNING_REPLACE_ME__"
+	for _, env := range os.Environ() {
+		pair := strings.SplitN(env, "=", 2)
+		if len(pair) == 2 && strings.Contains(pair[1], placeholder) {
+			panic(fmt.Sprintf("Unsafe secret in %s", pair[0]))
+		}
+	}
+}
+
+func main() {
+	validateSecrets();
+}
+```
+</CodeTabs>
+
+*/}
+
+### יצירת סודות חזקים
+
+הנה סקריפט קטן ליצירת סודות חדשים לקובץ `.env`:
+
+```bash
+#!/bin/bash
+# generate-secrets.sh
+
+generate_secret() {
+    local length=${1:-30}
+    local generate_length=$((length + 4))
+    openssl rand -base64 "$generate_length" | tr -d '+=/\n' | cut -c1-"$length"
+}
+
+[ -f .env ] && { echo ".env file already exists!"; exit 1; }
+
+cat > .env << EOL
+POSTGRES_PASSWORD=$(generate_secret)
+JWT_SECRET=$(generate_secret 64)
+SESSION_KEY=$(generate_secret 24)
+REDIS_PASSWORD=$(generate_secret 20)
+UNSAFE_PLACEHOLDER=__WARNING_REPLACE_RANDOM_TEXT__
+EOL
+
+echo "New .env file generated with secure random values!"
+```
+
+### אסימוני קנרית (Canary Tokens)
+
+[**אסימוני קנרית**](https://canarytokens.org/) הם דרך מצוינת לזהות אם הסודות שלך נחשפו (ונעשה בהם שימוש). הם כמו חוט מעידה שאפשר להוסיף לכל קובץ רגיש, כתובת URL או אסימון.
+
+שקול להציב אותם לצד הסודות שבאמת מדאיגים אותך: קבצי `.env`, משתני CI, מנהלי סיסמאות, תיקיות גיבוי ואישורי ענן. אל תהפוך את זה לתיאטרון; שים חוטי מעידה במקום שתוקף אמיתי או טעות של "אתה מהעתיד" ייגעו בהם.
+
+יש סוגים רבים של אסימוני קנרית לבחירה: אסימוני AWS, מספרי [כרטיסי אשראי מזויפים](https://blog.thinkst.com/2024/12/its-baaack-credit-card-canarytokens-are-now-on-your-consoles.html), קבצי Excel ו-Word, קבצי Kubeconfig, פרטי VPN, אפילו קבצי sql dump יכולים להכיל חוט מעידה!
+
+#### שיטות עבודה מומלצות לאסימוני קנרית
+
+- **הצב בכל מקום**: בכל קובץ `.env`, צינור CI/CD ו"מנהל סודות" שאתה יכול לחשוב עליו.
+  - הצב קובץ `passwords.xlsx` או `passwords.docx` בתיקיית הבית שלך.
+  - הוסף פרופיל AWS `billing_prod` עם אסימון קנרית כסוד.
+  - צור קובץ `private.key` עבור תיקיית `~/.ssh` שלך.
+  - צור SQL dump קנרית בשם `all_credit_cards.sql` בתיקיית `~/backups` שלך.
+- **נטר**: הגדר כללים/התראות בדוא"ל כדי לתפוס מתי אסימון קנרית מופעל.
+
+### שדרוג מ-`.env` ל-MacOS Keychain
+
+למשתמשי Mac, אחת האפשרויות הפשוטות ביותר היא להשתמש ב-Keychain.
+
+הנה דרך פשוטה לאוטומציה של טעינת סודות מ-OSX keychain, תומכת ב-`TouchID`, והיא מעט יותר מאובטחת מקבצי `.env`.
+
+הקרדיט המקורי מגיע ל-[בריאן הטפילד](https://gist.github.com/bmhatfield/f613c10e360b4f27033761bbee4404fd) ול-[יאן שאומן](https://www.netmeister.org/)
+
+<CodeTabs client:load tabs={[
+  "פקודות עזר",
+  "התמדת סודות במשתני סביבה",
+  "שימוש בסודות לכל פקודה"]
+}>
+```bash title="keychain-secrets.sh"
+### Functions for setting and getting environment variables from the OSX keychain ###
+### Adapted from: https://www.netmeister.org/blog/keychain-passwords.html and 
+### https://gist.github.com/bmhatfield/f613c10e360b4f27033761bbee4404fd
+
+# Use: get-keychain-secret SECRET_ENV_VAR
+function get-keychain-secret () {
+    security find-generic-password -w -a ${USER} -D "environment variable" -s "${1}"
+}
+
+# Use: set-keychain-secret SECRET_ENV_VAR
+# You will be prompted to enter the secret value!
+function set-keychain-secret () {
+    [ -n "$1" ] || print "Missing environment variable name"
+    
+    # prompt user for secret
+    echo -n "Enter secret for ${1}"
+    read secret
+    [ -n "$secret" ] || return 1
+
+    ( [ -n "$1" ] || [ -n "$secret" ] ) || return 1
+    security add-generic-password -U -a ${USER} -D "environment variable" -s "${1}" -w "${secret}"
+}
+```
+
+```bash title="~/code/app/.env-secrets.sh"
+source ~/keychain-secrets.sh
+
+# Load Env vars into the current shell
+export AWS_ACCESS_KEY_ID=$(get-keychain-secret AWS_ACCESS_KEY_ID);
+export AWS_SECRET_ACCESS_KEY=$(get-keychain-secret AWS_SECRET_ACCESS_KEY);
+# Note: If an attack can run `env` in your shell, then these secrets could be exposed!
+```
+
+```bash title="~/code/app/scripts/env-run.sh"
+#!/usr/bin/env bash
+source ~/keychain-secrets.sh
+
+# Specify all secrets for this project
+AWS_ACCESS_KEY_ID=$(get-keychain-secret AWS_ACCESS_KEY_ID) \
+AWS_SECRET_ACCESS_KEY=$(get-keychain-secret AWS_SECRET_ACCESS_KEY) \
+  "$@"
+
+# Note: Using a shell wrapper helps prevent secrets from staying
+# around in the environment. And it's safe to commit.
+
+# Usage:
+# ./scripts/env-run.sh docker compose up -d
+# ./scripts/env-run.sh docker run -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS ...
+```
+</CodeTabs>
+
+## 🌐 סכנת רשת
+
+### רשתות מותאמות אישית ופורטים פנימיים
+
+בידוד נכון של שירותים באמצעות רשתות Docker הוא דרך חשובה לצמצם את שטח התקיפה שלך.
+
+היזהר בעת יצירת חורים ברשת שלך! העברת פורט אחת שגויה עלולה להסתיים רע מאוד.
+
+כברירת מחדל, שירותים ברשת פרטית (LAN) לא יהיו חשופים לאינטרנט – עליך להעביר פורטים במפורש מהנתב שלך.
+
+### Docker ברשת מקומית
+
+בין אם אתה מפתח שמפעיל שרתי פיתוח מקומיים, או מארח שירותים בעצמך מהרשת הביתית שלך, **הנחות לגבי מודל הרשת של Docker עלולות להוביל לצרות.**
+
+מפתחים מופתעים לעתים קרובות לגלות ששיטות 'מסורתיות' לאבטחת שרתי לינוקס (`iptables`, הגבלת אפשרויות sysctl של TCP/IP) יכולות **להיכשל בשקט** במארחי Docker! זה נכון במיוחד כאשר **מארחים בעצמך – או רצים על רשת ביתית טיפוסית.** (למי שבאחורה: זה יכול לאפשר גישה לקונטיינרים של פיתוח ב-MacBook שלך!!!)
+
+> ⚠️ **אזהרה #1:** פורטים שפורסמו על ידי Docker יכולים לעקוף את כללי חומת האש שחשבת שמגנים על המארח, במיוחד עם UFW באובונטו/דביאן. זה לא הופך כל כלל חומת אש לחסר תועלת, אבל זה אומר ש"UFW אומר דחה" אינו הוכחה. [ראה issue #690: Docker עוקף את כללי חומת האש של UFW](https://github.com/moby/moby/issues/690).
+
+> ⚠️ **אזהרה #2:** קשירת פורטים לכתובות IP מקומיות (למשל `-p 127.0.0.1:8080:80`) היא ברירת המחדל הנכונה, אבל בגרסאות Docker Engine ישנות מ-28.0.0 היו מקרים שבהם מארחים באותה רשת L2 עדיין יכלו להגיע לפורטים שפורסמו על localhost. [Docker מתעד את האזהרה במדריך פרסום הפורטים](https://docs.docker.com/engine/network/port-publishing/), וההרגל של אימות עם nmap להלן עדיין חשוב.
+
+<p class="inset">אם אתה מופתע לגלות את זה, גם אני!</p>
+
+**קשירה לכתובות IP מקומיות היא עדיין פרקטיקה טובה** ויש לה השפעה משמעותית ב**סביבות ענן מנוהלות ורשתות מוגדרות במיוחד.** 
+{/* אל תחשוב על חומת האש או הרשת הפרטית שלך כעל ההגנה העיקרית או היחידה, הוסף רשתות Docker לתערובת לצורך **בידוד** טוב יותר, ותמיד שקול אם אתה צריך לחשוף פורטים בכלל. */}
+
+### דוגמה ל-Docker Compose
+
+הנה דוגמה לקובץ `docker-compose.yml` שקושר את שירות `app` ל-`127.0.0.1:8080` ומחבר את שני הקונטיינרים לרשת המותאמת אישית `backend`.
+
+```yaml title="docker-compose.yml" {6-10,14-17}
+networks:
+  backend:
+
+services:
+  app:
+    networks:
+      - backend
+    ports:
+      # Bind to localhost if possible
+      - "127.0.0.1:8080:8080"
+    # ... other settings
+  database:
+    image: postgres:17.1
+    # No ports needed; accessible inside backend network.
+    networks:
+      - backend
+
+```
+
+{/* #### בדוק ואמת */}
+
+{/* כמו בכל אמצעי אבטחה, חיוני שתבדוק ותאמת את הגדרות הרשת שלך. */}
+
+{/* בעוד שאבטחת רשת וביקורת היא אחריות במשרה מלאה ברוב החברות, רוב האנשים שמארחים בעצמם לא מקדישים לזה שום זמן! */}
+
+{/* תראה, אני מבין, זה יכול להיות מאיים. _(רשתות משנה, מסכות רשת, CIDR, VLANs, וטבלאות ניתוב, אוי ואבוי! אם זה לא היה הגיוני, זה בסדר, אתה במקום הנכון. כמו כן, אנחנו לא צריכים לדאוג לגבי כל זה כרגע.)_ */}
+
+### שיטות עבודה מומלצות לרשת
+
+- 🏆 **אל תפרסם אף פורט** לאחרונה למדתי שזה שימושי יותר ממה שאתה מצפה! בעת שימוש ברשת בעלת שם (bridge), לקונטיינרים יש גישה לא מסוננת זה לזה. הם מתנהגים כאילו הם מאחורי רשת מקומית (שער NAT).
+  - למרות שלא אפשרי בכל המקרים, זה עשוי להיות שימושי עבור קונטיינרים שמפעילים עבודות אצווה, או שניגשים אליהם בעיקר דרך `attach` או `exec`.
+- 🥇 **השתמש ברשתות Docker** כדי לבודד ולשלוט אילו קונטיינרים יכולים לדבר זה עם זה.
+- 🥉 **השתמש בקשירה ל-localhost**: למרות ש[לא מושלם](https://github.com/moby/moby/issues/45610), בדרך כלל עדיף לקשור פורטים לכתובת loopback (למשל `127.0.0.1:8080:80`). רק וודא שאתה [אמת את ההגדרה שלך.](#-monitoring--verification)
+
+## 🛡️ בקרות גישה
+
+בקרות גישה הן חלק קריטי באבטחת שירותי Docker שלך. זה כולל הגבלת יכולות והרשאות קונטיינר, הגבלת גישה ל-Docker socket, ועוד.
+
+- [הגבלת יכולות קונטיינר](#limiting-container-capabilities)
+- [גישה ל-Docker Socket](#docker-socket-access)
+- [חסימת מדינה!](#blocking-country)
+- [חיזוק מארח פרוקסי של CloudFlare](#hardening-cloudflare-proxy-host)
+
+### הגבלת יכולות קונטיינר
+
+עוד פרקטיקה מוצקה של בקרת גישה היא להגביל את היכולות של הקונטיינרים שלך. זה מקטין את רדיוס הפיצוץ של מספר איומים, מהסלמת הרשאות ועד חטיפת תעבורה. זה לא שדה כוח, אבל זה מסיר הרשאות שרוב הקונטיינרים מעולם לא היו צריכים.
+
+**מהן יכולות?** הרשאות או יכולות בעלות שם המוגדרות על ידי ליבת לינוקס. (דף ה-man של [`capabilities`](https://man7.org/linux/man-pages/man7/capabilities.7.html) מכיל רשימה מלאה.) הן כוללות דברים כמו `CAP_CHOWN` (שינוי בעלות על קבצים), `CAP_NET_ADMIN` (הגדרת ממשקי רשת), `CAP_KILL` (הריגת כל תהליך), ועוד רבות אחרות.
+
+שתי הדרכים לקבוע את היכולות הנדרשות הן:
+
+1. **ניסוי וטעייה**: שיטה איטית אך יעילה זו מתחילה ללא יכולות, ואז מוסיפה אותן אחת אחת עד שהאפליקציה עובדת.
+2. **מציאת עבודה קודמת**: חפש "`שם-פרויקט` `cap_drop` Dockerfile", או "`שם-פרויקט` `cap_drop` docker-compose.yml" כדי לראות אם אחרים כבר עשו את העבודה בשבילך. LLM יכול להציע נקודת התחלה, אבל התייחס אליה כאל ניחוש עד שתבדוק את הקונטיינר ותקרא את תיעוד התמונה.
+
+#### שיטות עבודה מומלצות ליכולות
+
+- **הסר את כל היכולות**: השתמש ב-`cap_drop: [ ALL ]` כדי להסיר את כל יכולות לינוקס מהקונטיינר.
+- **ללא הרשאות חדשות**: השתמש ב-`security_opt: [ no-new-privileges=true ]` כדי למנוע מהקונטיינר לקבל הרשאות חדשות.
+
+```yaml title="Example: Drop/Limit Capabilities" {5-14}
+services:
+  database:
+    image: postgres:17.1
+    networks: [ db-network ]
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - DAC_READ_SEARCH
+      - FOWNER
+      - SETGID
+      - SETUID
+  db-admin:
+    image: dpage/pgadmin4:4.1
+    networks: [ db-network ]
+    ports:
+      - "8081:80"
+    # ... other settings
+networks:
+  db-network:
+```
+
+כעת השירותים שלך יכולים לתקשר זה עם זה דרך רשת `db-network`. Docker Compose תיצור את הרשת הזו באופן אוטומטי.
+
+השתמש באפשרות `--external`/`external:` כדי להצטרף ל**רשת קיימת.** השמט אותה כדי ליצור רשת חדשה.
+
+### גישה ל-Docker Socket
+
+#### ⚠️ אזהרה: `docker.sock` הוא בעצם גישת מנהל למארח
+
+<blockquote class="inset">⚠️ האפשרות \`:ro\` אינה משפיעה על קלט/פלט שנשלח דרך ה-socket!</blockquote>
+
+היא רק מבטיחה שנתיב ה-socket עצמו מותקן לקריאה בלבד. קריאות ה-API שנשלחות דרך אותו socket עדיין יכולות ליצור קונטיינרים, להרכיב נתיבי מארח, ולעשות דברים מרגשים אחרים שכנראה לא התכוונת להאציל.
+
+{/* כל תהליך שיכול "לפתוח" את ה-socket יכול (כנראה) להשיג גישת root במארח. */}
+
+#### שיטות מומלצות ל-Socket
+
+- 🥇 **הימנע מהרכבת ה-Docker socket** – כנראה שיש חלופה טובה יותר.
+- 🫣 אם חייבים, **שים פרוקסי צר לפניו** ואפשר רק את נקודות הקצה של ה-API שהאפליקציה באמת צריכה. תסתכל על פרויקט `docker-socket-proxy` במקור מ-Tecnativa, [docker-socket-proxy](https://github.com/Tecnativa/docker-socket-proxy). לאחר מכן וודא שהקריאות החסומות אכן נחסמות.
+- 🤢 אוקיי, _אולי_ שיתוף שלו בסדר בסביבת בדיקה **באמון גבוה מאוד** ו**בסיכון נמוך**.
+
+#### חסימת מדינה!
+
+לפעמים שימושי, אבל לא גבול אבטחה אמיתי.
+
+_מדובר על הישות הגאופוליטית, לא על המוזיקה..._
+
+אם אתה מארח אפליקציות בעיקר עבור המשפחה והחברים המקומיים שלך, תוכל לחסום תעבורה ממדינות שאתה לא מצפה לקבל מהן תעבורה. או לאפשר רק תעבורה ממדינות שאתה כן מצפה. זה מקטין רעש; זה לא עוצר VPNs, פרוקסים, botnets, או מישהו סבלני.
+
+בדוק את הסקריפט הזה לחסימת כל התעבורה מסין:
+
+```bash title="block-china.sh"
+curl -fsSL https://www.ipdeny.com/ipblocks/data/countries/cn.zone | \
+  while read line; do ufw deny from $line to any; done
+
+```
+
+באופן דומה, תוכל לאפשר רק תעבורה מארה"ב:
+
+```bash title="allow-usa.sh"
+curl -fsSL https://www.ipdeny.com/ipblocks/data/countries/us.zone | \
+  while read line; do ufw allow from $line to any; done
+```
+
+#### הקשחת מארח פרוקסי CloudFlare
+
+אם השרת הביתי שלך מוגן מאחורי כתובת IP של CloudFlare (פרוקסי), תוכל להגביל גישה רק לכתובות IP של CloudFlare ולרשת המקומית שלך.
+
+זה דומה במקצת ל[חסימת מדינה](#-חסימת-מדינה) למעלה, אבל עם שליטה הרבה יותר הדוקה.
+
+```bash title="whitelist-ingress-from-cloudflare.sh"
+ufw default deny incoming # חסום את כל התעבורה הנכנסת!!!
+ufw default allow outgoing # אפשר את כל התעבורה היוצאת
+ufw allow ssh # אפשר SSH
+
+# אפשר גישה לרשת המשנה המקומית (רצוי DMZ/VLAN ייעודי לשירותים המאוחסנים)
+ufw allow from 10.0.0.0/8 to any port 443
+
+# אפשר כתובות IP של CloudFlare
+curl -fsSL https://www.cloudflare.com/ips-v4 | \
+  while read line; do ufw allow from $line to any port 443; done
+# הוסף תמיכה ב-IPv6
+# curl -fsSL https://www.cloudflare.com/ips-v6 | \
+#   while read line; do ufw allow from $line to any port 443; done
+
+```
+
+כדי לבדוק שינויים מבוססי מיקום גיאוגרפי, VPN עם מיקומים במדינה הרצויה יכול להיות שימושי. ראה עוד בסעיף [ניטור ואימות](#-monitoring--verification).
+
+### אבטחת שכבת היישום
+
+לאחר שהרשת והמארח שלך [הוקשחו מבחינת אבטחה,](#-network-hazard) ייתכן שתגלה שיש עוד מה לעשות.
+
+כעת עלינו לחשוב על שכבת ה"יישום" של השירותים עצמם.
+
+<p class="inset">האם למסד הנתונים הזה יש סיסמה תקפה? האם הקונטיינר הזה מבצע אוטומציה של HTTPS/תעודות? האם האפליקציה כוללת אימות מובנה? האם יש מגבלות על אילו כתובות דוא"ל יכולות להירשם? האם יש פרטי כניסה ברירת מחדל או משתני סביבה שיש לשנות?</p>
+
+הדרך היחידה _לדעת_ היא לבדוק. במקרה זה, התחל עם `README` וקבצי מפתח אחרים כמו `docker-compose.yml`, `Dockerfile`, ו-`.env.*`. גם בפרויקט עצמו, וגם באופן אידיאלי בשירותים התומכים שלו. (למשל Postgres, Redis, וכו')
+
+#### פרוקסי הפוך
+
+שכבת הגנה נוספת היא אימות בסיסי (basic auth). אל תשתמש בו ללא HTTPS. עבור שירותים מדור קודם, הצבת אימות בסיסי מול נתיב ניהול (admin) מספיקה לעיתים קרובות כדי לעצור בקשות מזדמנות וסורקים לא מאומתים מלהתעסק ישירות בשירות.
+
+```nginx
+
+# /etc/nginx/conf.d/secure-admin.conf
+location /admin {
+    auth_basic "Restricted Access";
+    auth_basic_user_file /etc/nginx/.htpasswd;
+    proxy_pass http://internal_admin:80;
+    proxy_set_header X-Real-IP $remote_addr;
+}
+
+```
+
+צור פרטי כניסה:
+
+```bash
+
+htpasswd -c /etc/nginx/.htpasswd admin
+
+```
+
+עם פרוקסי אימות בסיסי, לתוקפים יש מכשול נוסף—שם משתמש וסיסמה—לפני שהם מגיעים לשירות הפנימי שלך.
+
+אפשרות נוספת היא להשתמש בשירות כמו [Traefik](https://traefik.io/) או [Caddy](https://caddyserver.com/) שיכול לבצע אוטומציה של HTTPS ואימות בסיסי עבורך.
+
+אם אתה רוצה לנהל דומיינים ושירותים רבים באמצעות ממשק גרפי, אני ממליץ על [Nginx Proxy Manager](https://nginxproxymanager.com/).
+
+## 🔍 ניטור ואימות
+
+- [בדוק את הפורטים שלך](#check-your-ports)
+- [הצג פורטים פתוחים](#view-open-ports)
+- [ניטור קבצים](#file-monitoring)
+
+זהו השלב **החשוב ביותר והמוזנח ביותר.** אתה יכול לקבל את חומת האש הטובה ביותר, את הרשת הטובה ביותר, ואת השיטות הטובות ביותר, אבל אם לא תאמת, אין לך מושג אם זה עובד.
+
+בנוסף, ידיעה של קומץ פקודות – או היכן לחפש אותן – יכולה להיות ההבדל בין מניעת פריצה. התחושה של להיות האקר היא רק בונוס. (לפרטים ודוגמאות, דלג קדימה לסעיף [ניטור ואימות](#-monitoring--verification).)
+
+<p class="inset">אל תסמוך, אמת פעמיים</p>
+
+### בדוק את הפורטים שלך
+
+<p class="inset">⚠️ חשוב: אל תסרוק מארחים שאינם בבעלותך.</p>
+
+בין אם אתה ברשת ביתית או ב-VPS, תרצה לדעת אילו פורטים פתוחים לעולם.
+
+יש 2 דרכים לעשות זאת:
+
+- בדוק את הרשת (`nmap`, `masscan`)
+- שאל את מערכת ההפעלה (`lsof`, `netstat`, `ss`)
+
+#### בדיקה מחוץ לרשת שלך
+
+תצטרך את ה-IP הנוכחי (הציבורי) שלך, בקלות באמצעות שירותים כמו `ifconfig.me`: `curl https://ifconfig.me`. או חפש אותו בלוח הבקרה של ספק האירוח שלך.
+
+```bash title="Get Public IP"
+curl -fsSL https://ifconfig.me
+# --> CURRENT PUBLIC IP
+```
+
+לאחר שיש לך את ה-IP הציבורי שלך, כעת עליך **להתחבר לרשת חיצונית.** אתה יכול להשתמש במחשב של חבר, נקודה חמה של טלפון/5G, או שרת מארח ייעודי.
+
+```bash title="nmap External Scan"
+target_host="$(curl -fsSL https://ifconfig.me)"
+
+```bash title="סריקת nmap חיצונית"
+target_host="$(curl -fsSL https://ifconfig.me)"
+# הערה: ודא ש-`target_host` הוא ה-IP הרצוי
+
+# סריקת פורטים ספציפיים:
+nmap -A -p 80,443,8080 --open --reason $target_host
+# 100 הפורטים המובילים:
+nmap -A --top-ports 100 --open --reason $target_host
+# כל הפורטים
+nmap -A -p1-65535 --open --reason $target_host
+
+```
+
+#### בדיקה בתוך הרשת שלך
+
+תרגל שימוש ב-`nmap`, סרוק את הרשת המקומית שלך או אחד מהשרתים שלך, בדוק את הנתב, המדפסת, המקרר החכם.
+
+{/* אף על פי שסריקות פורטים הן עובדה קבועה בחיים, ייתכן שהן מפרות את חוק CFAA (חוק ההונאה והניצול לרעה של מחשבים) בארה"ב. לכן, סרוק רק דברים שבבעלותך. */}
+
+#### דוגמאות לפקודות סריקה
+
+```bash
+
+# סרוק את localhost שלך עבור כל הפורטים הפתוחים
+nmap -sT localhost
+
+# סרוק את ה-IP הפרטי של המכונה שלך עבור שירותים
+nmap -sV 192.168.1.10
+
+# מצא פרטי שירותים ברשת שלך
+nmap -sn 192.168.0.0/24
+nmap -sn 10.0.0.0/24
+# או על רשת docker 172.18.0.1/16
+nmap -sn 172.18.0.1/16
+
+```
+
+```text title="סריקת nmap" frame="terminal"
+% nmap -A --open --reason 192.168.0.87
+
+Starting Nmap 7.95 ( https://nmap.org ) at 2025-01-06 13:51 MST
+Nmap scan report for dev02.local (192.168.0.87)
+Host is up, received syn-ack (0.0067s latency).
+Not shown: 995 closed tcp ports (conn-refused)
+PORT     STATE SERVICE     REASON  VERSION
+22/tcp   open  ssh         syn-ack OpenSSH 9.6p1 Ubuntu 3ubuntu13.5 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey:
+|_  256 {FINGERPRINT} (ED25519)
+80/tcp   open  http        syn-ack Caddy httpd
+|_http-server-header: Caddy
+|_http-title: Dev02.DanLevy.net
+443/tcp  open  ssl/https   syn-ack
+|_http-title: Dev02.DanLevy.net
+1234/tcp open  http        syn-ack Node.js Express framework
+|_http-cors: GET POST PUT DELETE PATCH
+|_http-title: Dev02.DanLevy.net (application/json; charset=utf-8).
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 13.36 seconds
+```
+
+### הצגת פורטים פתוחים
+
+הכר את `lsof` – זמין ב-MacOS וב-Linux. הוא מציג מצב רשת גרנולרי ופעילות דיסק.
+
+```bash title="פקודות lsof"
+# ניטור פורט ספציפי
+sudo lsof -i:80 -Pn
+
+# ניטור חיבורים מבוססים (ESTABLISHED)
+sudo lsof -i -Pn | grep ESTABLISHED
+# הצגת LISTEN
+sudo lsof -i -Pn | grep LISTEN
+
+# כדי לראות שמות רשת במקום כתובות IP (יכול להיות איטי מאוד עקב בדיקות DNS הפוכות)
+sudo lsof -i -P | grep LISTEN
+```
+
+# ניטור כל חיבורי הרשת
+sudo watch -n1 "lsof -i -Pn"
+
+```
+
+#### פלט לדוגמה
+
+![סריקת nmap למאזינים](../lsof-scan-listen.webp)
+
+### ניטור קבצים
+
+כדי לזהות אילו **תהליכים** משתמשים הכי הרבה ברוחב הפס של **הדיסק הקשיח**, אפשר להשתמש ב-`iotop`:
+
+```bash
+
+sudo iotop
+
+```
+
+כדי לראות שינויים בקבצים בודדים, אפשר להשתמש ב-`inotifywait` בלינוקס או ב-`fswatch` ב-MacOS:
+
+זה יכול להיות שימושי לאיתור התנהגות לא מורשית או חריגה בתיקייה או במערכת כולה.
+
+```bash
+
+# ניטור כל שינויי הקבצים בתיקייה
+sudo inotifywait -m /path/to/directory
+
+```
+
+ב-MacOS אפשר להשתמש ב-`fswatch`:
+
+התקנה עם `brew install fswatch`
+
+```bash
+
+fswatch -r /path/to/directory
+
+```
+
+## ⏰ טיפים שלעתים קרובות מתעלמים מהם
+
+1. **הגבלת קצב (Rate Limiting)** לניסיונות אימות ולכל נקודת קצה קריטית אחרת. בין אם דרך מודול `limit_req` של Nginx או `fail2ban` לגישת SSH, חניקת התקפות כוח גס היא _כנראה_ רעיון טוב. אני אומר _כנראה_ כי בעידן של IPv6 ובוטנטים בזול, ובכן, זה לא מה שהיה פעם.
+
+2. **שימוש ב-Read-Only Volumes** היכן שאפשר:
+   ```yaml
+
+services:
+     webapp:
+       volumes:
+         - ./config:/config:ro
+
+```
+   בשילוב עם שיטות עבודה מומלצות אחרות (משתמשים שאינם root, הרשאות מינימליות לתיקיות), אפשרות הרכבת ה-volume `:ro` מספקת הגנות נוספות מפני שינויים מקריים ומפני ניסיונות כתיבה מסוימים מתוך הקונטיינר. היא אינה מגינה על המארח מפני תהליך שכבר יש לו הרשאות רחבות יותר.
+
+3. **בדוק גישת קונטיינרים** באופן קבוע.
+   אם קונטיינר לא צריך סוד, פורט או הרכבה – הסר אותם!
+
+4. **היזהרו מ"ערסלי WiFi"**
+   אני בטוח שלעולם לא תחלק את סיסמת ה-WiFi שלך, במיוחד לאף מוזר, נכון? ובכן, חוץ מכמה חברים... אוקיי, אולי גם משפחה. אתה אף פעם לא יודע אילו אפליקציות יש להם ואיזו מהן עשויה לשתף את ה-SSID והסיסמה שלך עם העולם.
+
+### רשת ביתית לעומת ספק ציבורי לעומת Tunneling
+
+1. **בידוד וירטואלי/DMZ**: עבור שרתים ביתיים, שים אותם ב-VLAN או DMZ נפרדים אם אפשר. זה שומר על המכשירים הפנימיים שלך חסינים מפני פגיעה אפשרית מצד השרת.
+   - השתמש בנתב או VLAN נפרדים עבור השרת הביתי שלך.
+   - השתמש ברשת WiFi נפרדת עבור השרת הביתי שלך.
+   - השתמש בתת-רשת נפרדת עבור השרת הביתי שלך.
+
+2. **ספקי ענן**: Hetzner, Vultr, DigitalOcean, Linode, AWS, Azure ו-Google Cloud כולם מספקים תכונות חומת אש שונות.
+   - חלק מהספקים והשירותים חוסמים פורטים כברירת מחדל. חלק מציעים הצטרפות או תוספות. בדוק את התיעוד של ספק השירות שלך.
+   - ספקים רבים מציעים שירותי ניטור מתקדמים ואיתור איומים.
+
+3. **VPNs ו-Tunneling**: שקול להשתמש באפשרות דמוית VPN או בשירות tunneling כדי לחבר שירותים בצורה מאובטחת דרך האינטרנט מבלי לחשוף אותם לאינטרנט הציבורי.
+   - TailScale, ngrok, ZeroTier.
+   - WireGuard, OpenVPN.
+
+{/* 3. **הקשחה נגד התקפות פנימיות/צדדיות**: התקן אחד נגוע יכול לסכן רשת שלמה. פילוח שירותי Docker על רשתות מותאמות אישית, שימוש בחומרה, חוקי UFW וחסימת פורטים מיותרים יכולים כולם לעזור להפחית סיכון (כאשר מוגדרים כראוי). */}
+
+## 🚀 רשימת בדיקה לייצור
+
+- [ ] **סודות**: כל הסודות נוצרים אקראית ומאוחסנים בצורה מאובטחת
+- [ ] **עדכונים**: אסטרטגיית עדכון מיכלים מתועדת ואוטומטית. (בסדר אם זה רק כמה פקודות בקובץ טקסט.)
+- [ ] **רשת**: רק פורטים הכרחיים חשופים, רשתות פנימיות מוגדרות.
+- [ ] **חוקי חומת אש**: ברירת מחדל דחה, הרשאות מפורשות, חסימות מדינה במידת הצורך.
+- [ ] **פרוקסי הפוך**: Nginx, Caddy או Traefik יכולים להוסיף שכבת אימות בסיסי
+- [ ] **אסימוני קנרית**: מקם אותם ליד הקבצים והאישורים הרגישים שבאמת תחקור אם ייגעו בהם.
+- [ ] **ניטור**: דע את המערכות שלך עם `nmap`, `lsof`, `inotifywait`, `glances` וכו'.
+- [ ] **אסטרטגיית גיבוי**: נבדקה, רצוי אוטומטית, ומחוץ לאתר.
+- [ ] **הרשאות מינימליות**: משתמשי מיכל שאינם root, נפחי קריאה בלבד.
+
+## 📚 קריאה נוספת
+
+- [שיטות עבודה מומלצות לאבטחת Docker](https://docs.docker.com/develop/security-best-practices/)
+- [דף מידע של OWASP לאבטחת Docker](https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html)
+- [CIS Docker Benchmark](https://www.cisecurity.org/benchmark/docker)
+- [Canarytokens.org לאסימוני קנרית](https://canarytokens.org/)
+
+## תודות
+
+תודה מיוחדת לכמה רדיטורים נמרצים:
+
+- <em className="cite">[u/JCBird1012](https://www.reddit.com/user/JCBird1012/) - [שרשור](https://www.reddit.com/r/selfhosted/comments/1hv8jn6/comment/m5rvlzi/).</em>
+- <em className="cite">[u/Salzig](https://www.reddit.com/user/Salzig/)</em>
+- <em className="cite">[u/Myelrond](https://www.reddit.com/user/myelrond/)</em>
+- <em className="cite">[u/shrimpdiddle](https://www.reddit.com/user/shrimpdiddle/)</em>
+- <em className="cite">[u/troeberry](https://www.reddit.com/user/troeberry/)</em>
+
+תודה שקראתם! אני מקווה שהמדריך הזה היה מועיל. אם יש לכם שאלות או הצעות, אתם מוזמנים לפנות אליי דרך הרשתות החברתיות שלי למטה, או ללחוץ על הקישור `Edit on GitHub` כדי לפתוח PR! ❤️
+````
