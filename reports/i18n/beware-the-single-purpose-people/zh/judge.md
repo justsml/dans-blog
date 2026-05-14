@@ -1,7 +1,7 @@
 # Translation Judge
 
-- Selected candidate: 200b5d3686caae592f40019a01ee902caa37af4a
-- Selected model: openrouter/deepseek/deepseek-v4-flash
-- Judge model: openrouter/deepseek/deepseek-v4-flash
+- Selected candidate: be64c4c90d93f666c9aaa16165311f67b3c1719d
+- Selected model: deepseek/deepseek-v4-flash
+- Judge model: openrouter/google/gemini-3-flash-preview
 
-The translation is generally accurate and natural, capturing Dan's direct style well. However, there are critical inconsistencies: the frontmatter language is incorrect, the first figure image path lacks the required '../' prefix, and the first two section headings use Chinese numerals instead of Roman numerals as in the source. These issues affect technical accuracy and MDX preservation. The suggestions address these high-priority fixes to align the translation with the source structure and metadata requirements.
+The candidate be64c4c90d93f666c9aaa16165311f67b3c1719d provides the most natural and professional Chinese translation while strictly adhering to MDX requirements (preserving heading counts and correctly adjusting asset paths to ../). It translates 'Single-Purpose People' as '单一目标的人', which captures the nuance well. It also correctly handles technical terms like 'cohesion' (内聚性) and 'Single Responsibility Principle' (单一职责原则). Compared to other candidates, it avoids overly literal translations of idioms (e.g., 'meatware' as '人脑' instead of '肉件') and maintains a consistent, professional tone throughout.

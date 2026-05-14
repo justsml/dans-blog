@@ -1,130 +1,24 @@
 {
-  "selectedCommit": "200b5d3686caae592f40019a01ee902caa37af4a",
-  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "selectedCommit": "be64c4c90d93f666c9aaa16165311f67b3c1719d",
+  "selectedModel": "deepseek/deepseek-v4-flash",
   "scores": {
-    "readability": 8,
-    "technicalAccuracy": 7,
+    "readability": 9,
+    "technicalAccuracy": 9,
     "coherence": 9,
     "relevance": 9,
-    "translationQuality": 8,
-    "mdxPreservation": 9
+    "translationQuality": 9,
+    "mdxPreservation": 10
   },
-  "suggestions": [
-    {
-      "priority": "high",
-      "match": "language: English",
-      "replacement": "language: Chinese",
-      "reason": "The frontmatter language field must reflect the actual content language. Since the translation is in Chinese, it should be 'Chinese' instead of 'English' to ensure correct metadata."
-    },
-    {
-      "priority": "high",
-      "match": "![组件，到处都是组件](software-patterns__the-dismembered-architecture.webp \"组件，到处都是组件\")",
-      "replacement": "![组件，到处都是组件](../software-patterns__the-dismembered-architecture.webp \"组件，到处都是组件\")",
-      "reason": "The image path for the first figure is missing the '../' prefix. Since the zh translation is in a subdirectory, all image paths must use '../' to correctly reference images in the parent post directory."
-    },
-    {
-      "priority": "high",
-      "match": "## 一、底层的有用思想",
-      "replacement": "## I. 底层的有用思想",
-      "reason": "Heading numbering must be consistent with the English source, which uses Roman numerals (I, II, III, etc.). The current translation uses Chinese numerals for the first two headings, breaking consistency."
-    },
-    {
-      "priority": "high",
-      "match": "## 二、过度抽象：当简洁变成混乱",
-      "replacement": "## II. 过度抽象：当简洁变成混乱",
-      "reason": "Same as above: this heading should use Roman numeral 'II' to match the source and maintain consistency with the other headings in the translation."
-    }
-  ],
-  "rationale": "The translation is generally accurate and natural, capturing Dan's direct style well. However, there are critical inconsistencies: the frontmatter language is incorrect, the first figure image path lacks the required '../' prefix, and the first two section headings use Chinese numerals instead of Roman numerals as in the source. These issues affect technical accuracy and MDX preservation. The suggestions address these high-priority fixes to align the translation with the source structure and metadata requirements.",
+  "suggestions": [],
+  "rationale": "The candidate be64c4c90d93f666c9aaa16165311f67b3c1719d provides the most natural and professional Chinese translation while strictly adhering to MDX requirements (preserving heading counts and correctly adjusting asset paths to ../). It translates 'Single-Purpose People' as '单一目标的人', which captures the nuance well. It also correctly handles technical terms like 'cohesion' (内聚性) and 'Single Responsibility Principle' (单一职责原则). Compared to other candidates, it avoids overly literal translations of idioms (e.g., 'meatware' as '人脑' instead of '肉件') and maintains a consistent, professional tone throughout.",
   "slug": "beware-the-single-purpose-people",
   "locale": "zh",
   "candidateCommits": [
-    "0d80625af9dafb06ef6c03d105bb645b37008667",
-    "200b5d3686caae592f40019a01ee902caa37af4a"
+    "c6c374d0ee4fefdaa724e796ac335953363749ea",
+    "be64c4c90d93f666c9aaa16165311f67b3c1719d",
+    "4a58c199dc498487cca950647c31535a0b887201"
   ],
-  "suggestionLog": [
-    {
-      "priority": "high",
-      "match": "social_image: ../desktop-social.webp",
-      "replacement": "social_image: desktop-social.webp",
-      "reason": "Image path should be relative to the file location, not parent directory. The English file uses 'desktop-social.webp' without '../'.",
-      "pass": 1,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
-    },
-    {
-      "priority": "high",
-      "match": "cover_full_width: ../endless-little-boxes.webp",
-      "replacement": "cover_full_width: endless-little-boxes.webp",
-      "reason": "Same as above.",
-      "pass": 1,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
-    },
-    {
-      "priority": "high",
-      "match": "cover_mobile: ../endless-little-boxes-square-200.webp",
-      "replacement": "cover_mobile: endless-little-boxes-square-200.webp",
-      "reason": "Same as above.",
-      "pass": 1,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
-    },
-    {
-      "priority": "high",
-      "match": "cover_icon: ../endless-little-boxes-square-200.webp",
-      "replacement": "cover_icon: endless-little-boxes-square-200.webp",
-      "reason": "Same as above.",
-      "pass": 1,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
-    },
-    {
-      "priority": "high",
-      "match": "../software-patterns__the-mc-escher-stack.webp",
-      "replacement": "software-patterns__the-mc-escher-stack.webp",
-      "reason": "Image path should be relative to the file location, not parent directory.",
-      "pass": 1,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
-    },
-    {
-      "priority": "high",
-      "match": "../software-patterns__the-rube-goldberg-architecture.webp",
-      "replacement": "software-patterns__the-rube-goldberg-architecture.webp",
-      "reason": "Same as above.",
-      "pass": 1,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
-    },
-    {
-      "priority": "medium",
-      "match": "## 一、底层的有用思想",
-      "replacement": "## I. 底层的有用思想",
-      "reason": "Heading numbering should be consistent with English original and the rest of the article (II, III, IV, V).",
-      "pass": 1,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
-    },
-    {
-      "priority": "medium",
-      "match": "## 二、过度抽象：当简洁变成混乱",
-      "replacement": "## II. 过度抽象：当简洁变成混乱",
-      "reason": "Same as above.",
-      "pass": 1,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
-    },
-    {
-      "priority": "medium",
-      "match": "language: English",
-      "replacement": "language: Chinese",
-      "reason": "The frontmatter language field should reflect the actual content language. Since the translation is in Chinese, it should be 'Chinese' (or 'zh') instead of 'English' to ensure correct metadata for the site.",
-      "pass": 2,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
-    }
-  ],
+  "suggestionLog": [],
   "validation": {
     "ok": true,
     "scope": "local",
