@@ -1,0 +1,27 @@
+{
+  "selectedCommit": "466cc1040acdf3e080abef097e0bbe7c82b636e4",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 10,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The translation is technically accurate and maintains the original structure perfectly. It uses natural Arabic technical terminology. It correctly handles the MDX components and asset paths. The tone is consistent with the original English text.",
+  "slug": "quiz-destructuring-delights",
+  "locale": "ar",
+  "candidateCommits": [
+    "466cc1040acdf3e080abef097e0bbe7c82b636e4",
+    "2e0b0ca4bbb5c9c7c0ae33dbad12dc0cc41124af"
+  ],
+  "suggestionLog": [],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug quiz-destructuring-delights --locale ar --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug quiz-destructuring-delights --locale ar --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug quiz-destructuring-delights --locale ar --skip-global\n111 |     })\n112 |     .filter((message): message is string => message != null);\n113 | \n114 |   if (mismatches.length === 0) return;\n115 | \n116 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2024-11-12--quiz-destructuring-delights/ar/index.mdx changed heading counts. H2: English has 1, translation has 0\n      at assertHeadingCounts (/Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:116:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:28:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}
