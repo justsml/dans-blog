@@ -1,0 +1,726 @@
+---
+title: نصائح أمان Docker الأساسية للاستضافة الذاتية
+subTitle: قم بتأمين خدماتك المستضافة ذاتيًا، من الدفاع إلى المراقبة!
+date: '2025-01-04'
+modified: '2025-07-09'
+tags:
+  - docker
+  - security
+  - devops
+  - containers
+  - best-practices
+category: Security
+social_image: ../desktop-social.webp
+cover_full_width: ../docker-ukiyo-e-wide.webp
+cover_mobile: ../docker-ukiyo-e-container-square-200.webp
+cover_icon: ../docker-ukiyo-e-container-square-200.webp
+cover_credit: © 2025 Dan Levy
+---
+import {CodeTabs} from '../../../../components/CodeTabs';
+
+**جدول المحتويات**
+
+- 🧗‍♀️ [للشجعان](#️-for-the-brave)
+- 🔄 [رقصة `:latest`](#-the-latest-dance)
+- 🔐 [إدارة الأسرار: الطريقة الصحيحة](#-secrets-management)
+- 🌐 [خطر الشبكة](#-network-hazard)
+- 🛡️ [ضوابط الوصول](#️-access-controls)
+- 🔍 [المراقبة والتحقق](#-monitoring--verification)
+- ⏰ [نصائح غالبًا ما تُغفل](#-often-overlooked-tips)
+- 🚀 [قائمة التحقق للإنتاج](#-production-checklist)
+- 📚 [قراءات إضافية](#-further-reading)
+
+## 🧗‍♀️ للشجعان
+
+إذا كنت تستضيف خدمات Docker بنفسك، فالأمان مسؤوليتك من الأعلى إلى الأسفل—لا يوجد مزود سحابي ليحميك من فحص المنافذ أو الإعدادات المتراخية. سواء كنت تشغل تطبيقات على شبكتك المنزلية أو تستأجر خوادم افتراضية خاصة (VPS) من مزودين مثل Vultr، DigitalOcean، Linode، AWS، Azure، أو Google Cloud، ستحتاج إلى تأمين كل شيء—والتحقق من أنك فعلتها بشكل صحيح.
+
+في هذا الدليل، سنستعرض أمان Docker—بدءًا من بعض التقنيات `الأقل شهرة` إلى أخرى `يصعب إتقانها`؛ سنستكشف رموز الكناري (canary tokens)، وحدات التخزين للقراءة فقط، قواعد جدار الحماية، تقسيم الشبكة وتقويتها، إضافة بروكسي موثّق، والمزيد.
+
+سنقارن أيضًا بين الشبكات المنزلية وإعدادات السحابة العامة، ونوضح لك كيفية إعداد بروكسي مصادقة أساسي باستخدام Nginx. في النهاية، سيكون لديك عدة خيارات لإبعاد المتسللين (الأصدقاء، العائلة، وأحيانًا حتى نفسك...).
+
+هذا كثير من المحتوى! لكن معظمه مترابط، ويمكنك اختيار ما هو الأكثر صلة بإعدادك. 🍀
+
+## 🔄 رقصة `:latest`
+
+الحفاظ على تحديث الصور أمر بالغ الأهمية للأمان. ومع ذلك، الاعتماد على `:latest` قد يُدخل تغييرات مكسورة أو إصدارات ضعيفة دون خطوة مراجعة.
+
+### الطريقة الآمنة للتحديث
+
+اجمع بين أوامر التحديث مع `pull` أو `build` بحيث تقوم بتحديث الصور عمدًا، ثم أعد التشغيل خلال نافذة زمنية يمكنك فيها ملاحظة أي خلل.
+
+```bash
+#!/bin/bash
+# update-and-run.sh
+docker compose pull && \
+  docker compose up -d
+```
+
+### تثبيت الإصدار مقابل الأحدث
+
+اختيار الإصدار المناسب لتثبيته هو موازنة بين الاستقرار والأمان. إليك بعض الاستراتيجيات الشائعة:
+
+```yaml
+# docker-compose.yml
+# ...
+  # تثبيت إصدار محدد بالكامل، الأفضل للخدمات الحرجة
+  image: postgres:17.2
+
+  # تثبيت إصدار التصحيح، مناسب للخدمات غير الحرجة
+  image: postgres:17.2
+
+  # تثبيت الإصدار الرئيسي، مثالي للمشاريع الهواة
+  image: postgres:17
+
+  # يولو، تجنبه إن أمكن
+  image: postgres:latest
+```
+
+استخدم [Dependabot](https://github.com/features/security) أو [Renovate](https://github.com/renovatebot/renovate) لفتح طلبات تحديث قابلة للمراجعة. لأي شيء ستشعر بالأسف إذا أعدت بناؤه في الساعة 2 صباحًا، ثبّت إصدارًا محددًا أو digest واترك الأتمتة تخبرك متى تتحرك.
+
+_أخبرني عن أدواتك المفضلة للحفاظ على تحديث صور Docker!_
+
+## 🔐 إدارة الأسرار
+
+- [توليد أسرار قوية](#generate-strong-secrets)
+- [رموز الكناري](#canary-tokens)
+- [الترقية من `.env` إلى MacOS Keychain](#upgrade-from-env-to-macos-keychain)
+{/* - [Placeholder Validation](#placeholder-validation) */}
+
+هناك طرق عديدة لإدارة الأسرار، لكن واحدة من أهم القواعد التي يجب الالتزام بها هي: **لا تقم أبدًا بتضمين الأسرار بشكل ثابت في صور Docker أو إيداعها في git.** إنه أحد أكثر أخطاء الأمان شيوعًا، ويشكل خطرًا طويل الأمد، ومن الصعب إصلاحه.
+
+تخزين الأسرار بشكل آمن موضوع واسع مع العديد من الخيارات، بدءًا من ملفات `.env`، و[Docker secrets](https://docs.docker.com/compose/how-tos/use-secrets/)، و[1Password](https://1password.com/downloads/command-line)/[Bitwarden](https://bitwarden.com/developers/)، أو مدير أسرار مثل [HashiCorp Vault](https://www.vaultproject.io/) أو AWS Secrets Manager.
+
+سيكون عليك اختيار المستوى "المناسب" من الجهد والأمان لحالة استخدامك.
+
+{/*
+TODO: نقل إلى دليل المشرف
+// TODO: نقل إلى دليل المشرف
+
+### التحقق من العناصر النائبة
+
+<blockquote>لن تصدق كم هو سهل اختراق رمز JWT عندما لا يكون السر سريًا!</blockquote>
+
+<p className='inset'>💡 تأكد دائمًا من أن الأسرار فريدة. حاول أن تجعل من المستحيل تشغيل النظام بقيم افتراضية غير آمنة أو مشفرة.</p>
+
+إذا كنت تستخدم عناصر نائبة مثل `__WARNING_REPLACE_ME__` في أسرارك، فهذا رائع، ربما سيلاحظها أحدهم!
+
+وللاحتياط، يمكنك أيضًا إضافة القليل من الأمان في وقت التشغيل بجهد بسيط. إليك كيفية القيام بذلك في جافا سكريبت، رست، وغو:
+
+<CodeTabs client:load tabs={["جافا سكريبت", "رست", "غو"]}>
+
+```javascript
+// validateSecrets.js
+const validateSecrets = () => {
+  const unsafePlaceholder = /__WARNING_REPLACE_ME__/;
+  const missingSecrets = Object.entries(process.env).filter(
+    ([key, value]) => unsafePlaceholder.test(value)
+  );
+
+  if (missingSecrets.length) {
+    console.error("Unsafe secrets detected:", missingSecrets);
+    process.exit(1);
+  }
+};
+
+validateSecrets();
+```
+
+```rust
+// validate_secrets.rs
+use std::env;
+
+fn validate_secrets() {
+    let unsafe_placeholder = "__WARNING_REPLACE_ME__";
+    for (key, value) in env::vars() {
+        if value.contains(unsafe_placeholder) {
+            panic!("Unsafe secret in {}", key);
+        }
+    }
+}
+
+fn main() {
+    validate_secrets();
+}
+```
+
+```go
+// validate_secrets.go
+package main
+
+import (
+	"fmt"
+	"os"
+	"strings"
+)
+
+func validateSecrets() {
+	placeholder := "__WARNING_REPLACE_ME__"
+	for _, env := range os.Environ() {
+		pair := strings.SplitN(env, "=", 2)
+		if len(pair) == 2 && strings.Contains(pair[1], placeholder) {
+			panic(fmt.Sprintf("Unsafe secret in %s", pair[0]))
+		}
+	}
+}
+
+func main() {
+	validateSecrets()
+}
+```
+</CodeTabs>
+
+*/}
+
+### توليد أسرار قوية
+
+إليك نص برمجي صغير لتوليد أسرار جديدة لملف `.env`:
+
+```bash
+#!/bin/bash
+# generate-secrets.sh
+
+generate_secret() {
+    local length=${1:-30}
+    local generate_length=$((length + 4))
+    openssl rand -base64 "$generate_length" | tr -d '+=/\n' | cut -c1-"$length"
+}
+
+[ -f .env ] && { echo ".env file already exists!"; exit 1; }
+
+cat > .env << EOL
+POSTGRES_PASSWORD=$(generate_secret)
+JWT_SECRET=$(generate_secret 64)
+SESSION_KEY=$(generate_secret 24)
+REDIS_PASSWORD=$(generate_secret 20)
+UNSAFE_PLACEHOLDER=__WARNING_REPLACE_RANDOM_TEXT__
+EOL
+
+echo "New .env file generated with secure random values!"
+```
+
+### رموز الكناري
+
+[**رموز الكناري**](https://canarytokens.org/) هي وسيلة رائعة لاكتشاف ما إذا كانت أسرارك قد تم اختراقها (واستخدامها). إنها أشبه بشرك يمكنك إضافته إلى أي ملفات حساسة، روابط، ورموز مميزة.
+
+فكر في وضعها بجوار الأسرار التي تقلق بشأنها فعلاً: ملفات `.env`، متغيرات CI، مديري كلمات المرور، مجلدات النسخ الاحتياطي، وبيانات اعتماد السحابة. لا تحوّل هذا إلى مسرحية؛ ضع الشراك حيث يمكن لمهاجم حقيقي أو خطأ منك في المستقبل أن يلمسها.
+
+هناك أنواع عديدة من "رموز الكناري" للاختيار من بينها، بدءًا من رموز AWS، وأرقام [بطاقات الائتمان المزيفة](https://blog.thinkst.com/2024/12/its-baaack-credit-card-canarytokens-are-now-on-your-consoles.html)، وملفات Excel وWord، وملفات Kubeconfig، وبيانات اعتماد VPN، وحتى ملفات تفريغ SQL يمكن أن تحتوي على شرك!
+
+#### أفضل ممارسات رموز الكناري
+
+- **ضعها في كل مكان**: في كل ملف `.env`، وخط أنابيب CI/CD، و"مدير أسرار" يمكنك التفكير فيه.
+  - ضع ملف `passwords.xlsx` أو `passwords.docx` في دليل منزلك.
+  - أضف ملف تعريف AWS باسم `billing_prod` مع رمز كناري كالسر.
+  - أنشئ ملف `private.key` لدليل `~/.ssh` الخاص بك.
+  - أنشئ تفريغ SQL كناري باسم `all_credit_cards.sql` لمجلد `~/backups` الخاص بك.
+- **راقب**: قم بإعداد قواعد/تنبيهات بريد إلكتروني لالتقاط أي تفعيل لرمز كناري.
+
+### الترقية من `.env` إلى Keychain في MacOS
+
+لمستخدمي Mac، أحد أبسط الخيارات هو استخدام Keychain.
+
+إليك طريقة بسيطة لأتمتة تحميل الأسرار من Keychain في OSX، تدعم `TouchID`، وهي أكثر أمانًا قليلاً من ملفات `.env`.
+
+يذهب الفضل الأصلي إلى <cite>[بريان هيتفيلد](https://gist.github.com/bmhatfield/f613c10e360b4f27033761bbee4404fd) و[جان شاومان](https://www.netmeister.org/)</cite>
+
+<CodeTabs client:load tabs={[
+  "أوامر مساعدة",
+  "حفظ الأسرار في البيئة",
+  "استخدام الأسرار لكل أمر"
+]}>
+```bash title="keychain-secrets.sh"
+### Functions for setting and getting environment variables from the OSX keychain ###
+### Adapted from: https://www.netmeister.org/blog/keychain-passwords.html and 
+### https://gist.github.com/bmhatfield/f613c10e360b4f27033761bbee4404fd
+
+# Use: get-keychain-secret SECRET_ENV_VAR
+function get-keychain-secret () {
+    security find-generic-password -w -a ${USER} -D "environment variable" -s "${1}"
+}
+
+# Use: set-keychain-secret SECRET_ENV_VAR
+# You will be prompted to enter the secret value!
+function set-keychain-secret () {
+    [ -n "$1" ] || print "Missing environment variable name"
+    
+    # prompt user for secret
+    echo -n "Enter secret for ${1}"
+    read secret
+    [ -n "$secret" ] || return 1
+
+    ( [ -n "$1" ] || [ -n "$secret" ] ) || return 1
+    security add-generic-password -U -a ${USER} -D "environment variable" -s "${1}" -w "${secret}"
+}
+```
+
+```bash title="~/code/app/.env-secrets.sh"
+source ~/keychain-secrets.sh
+
+# Load Env vars into the current shell
+export AWS_ACCESS_KEY_ID=$(get-keychain-secret AWS_ACCESS_KEY_ID);
+export AWS_SECRET_ACCESS_KEY=$(get-keychain-secret AWS_SECRET_ACCESS_KEY);
+# Note: If an attack can run `env` in your shell, then these secrets could be exposed!
+```
+
+```bash title="~/code/app/scripts/env-run.sh"
+#!/usr/bin/env bash
+source ~/keychain-secrets.sh
+
+# Specify all secrets for this project
+AWS_ACCESS_KEY_ID=$(get-keychain-secret AWS_ACCESS_KEY_ID) \
+AWS_SECRET_ACCESS_KEY=$(get-keychain-secret AWS_SECRET_ACCESS_KEY) \
+  "$@"
+
+# Note: Using a shell wrapper helps prevent secrets from staying
+# around in the environment. And it's safe to commit.
+
+# Usage:
+# ./scripts/env-run.sh docker compose up -d
+# ./scripts/env-run.sh docker run -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS ...
+```
+</CodeTabs>
+
+## 🌐 خطر الشبكة
+
+### الشبكات المخصصة والمنافذ الداخلية
+
+عزل الخدمات بشكل صحيح باستخدام شبكات Docker هو وسيلة مهمة لتقليل مساحة الهجوم لديك.
+
+كن حذرًا عند عمل ثقوب في شبكتك! فإعادة توجيه منفذ واحد تم تكوينه بشكل خاطئ يمكن أن ينتهي بشكل سيء جدًا.
+
+بشكل افتراضي، لن تتعرض الخدمات على شبكة LAN خاصة للإنترنت—يجب عليك إعادة توجيه المنافذ من جهاز التوجيه الخاص بك بشكل صريح.
+
+### Docker على الشبكة المحلية
+
+سواء كنت مطورًا تشغل خوادم تطوير محليًا، أو تستضيف خدمات بنفسك من شبكتك المحلية، **فإن الافتراضات حول نموذج شبكة Docker يمكن أن تؤدي إلى مشاكل.**
+
+غالبًا ما يفاجأ المطورون عندما يجدون أن الطرق 'التقليدية' لتأمين خوادم لينكس (`iptables`، تقييد خيارات tcp/ip sysctl) يمكن أن **تفشل بصمت** على مضيفات Docker! هذا هو الحال بشكل خاص عند **الاستضافة الذاتية—أو التشغيل على شبكة منزلية نموذجية.** (للذين في الخلف: هذا يمكن أن يسمح بالوصول إلى حاويات التطوير على MacBook الخاص بك!!!)
+
+> ⚠️ **تحذير #1:** يمكن للمنافذ المنشورة عبر Docker تجاوز قواعد جدار الحماية التي كنت تعتقد أنها تحمي المضيف، خاصة مع UFW على Ubuntu/Debian. هذا لا يجعل كل قاعدة جدار حماية عديمة الفائدة، لكنه يعني أن "UFW يقول ارفض" ليس دليلاً. [انظر المشكلة #690: Docker يتجاوز قواعد جدار حماية ufw](https://github.com/moby/moby/issues/690).
+
+> ⚠️ **تحذير #2:** ربط المنافذ بعناوين IP محلية (مثل `-p 127.0.0.1:8080:80`) هو الإعداد الافتراضي الصحيح، لكن إصدارات Docker Engine الأقدم من 28.0.0 كانت بها حالات حيث يمكن للمضيفين على نفس شبكة L2 الوصول إلى المنافذ المنشورة على localhost. [يوثق Docker هذا التحذير في دليل نشر المنافذ](https://docs.docker.com/engine/network/port-publishing/)، وعادة التحقق باستخدام nmap أدناه لا تزال مهمة.
+
+<p class="inset">إذا كنت متفاجئًا بمعرفة هذا، وأنا مثلك!</p>
+
+**ربط عناوين IP المحلية لا يزال ممارسة جيدة** وله تأثير كبير في **بيئات السحابة المدارة والشبكات المكونة خصيصًا.** 
+{/* Don't think of your firewall or private network as your main or only defense, add Docker Networks to the mix for better **isolation**, and always consider if you need to expose ports at all. */}
+
+### مثال على Docker Compose
+
+إليك مثال لملف `docker-compose.yml` يربط خدمة `app` بـ `127.0.0.1:8080` ويوصل كلا الحاويتين بشبكة `backend` المخصصة.
+
+```yaml title="docker-compose.yml" {6-10,14-17}
+networks:
+  backend:
+
+services:
+  app:
+    networks:
+      - backend
+    ports:
+      # Bind to localhost if possible
+      - "127.0.0.1:8080:8080"
+    # ... other settings
+  database:
+    image: postgres:17.1
+    # No ports needed; accessible inside backend network.
+    networks:
+      - backend
+
+```
+
+{/* #### Test & Verify
+
+As with all security measures, it's critical that you **test and verify** your network setup. */}
+
+{/* While network security & auditing is a full-time responsibility in most companies, most self-host folks don't spend ANY time on it! */}
+
+{/* Look, I get it, it can be intimidating. _(Subnets, net masks, CIDR, VLANs, and routing tables, oh my! If that made no sense, that's ok, you're in the right place. Also, we don't need to worry about any of that for now.)_ */}
+
+### أفضل ممارسات الشبكة
+
+- 🏆 **لا تنشر أي منافذ** لقد تعلمت مؤخرًا أن هذا أكثر فائدة مما تتوقع! عند استخدام شبكة (جسر) مسماة، تتمتع الحاويات بوصول غير مفلتر لبعضها البعض. تتصرف كما لو كانت خلف شبكة محلية (بوابة NAT).
+  - على الرغم من أن هذا غير ممكن في جميع حالات الاستخدام، إلا أنه قد يكون مفيدًا للحاويات التي تشغل وظائف دفعية، أو التي يتم الوصول إليها بشكل أساسي عبر `attach` أو `exec`.
+- 🥇 **استخدم شبكات Docker** لعزل والتحكم في أي الحاويات يمكنها التحدث مع بعضها.
+- 🥉 **استخدم ربط Localhost**: على الرغم من [عدم الكمال](https://github.com/moby/moby/issues/45610)، فأنت بشكل أفضل عند ربط المنافذ بعنوان loopback (مثل `127.0.0.1:8080:80`). فقط تأكد من [التحقق من إعداداتك.](#-monitoring--verification)
+
+## 🛡️ ضوابط الوصول
+
+ضوابط الوصول جزء حاسم من تأمين خدمات Docker الخاصة بك. يشمل ذلك تقييد قدرات الحاوية والأذونات، وتقييد الوصول إلى مقبس Docker، والمزيد.
+
+- [تقييد قدرات الحاوية](#limiting-container-capabilities)
+- [الوصول إلى مقبس Docker](#docker-socket-access)
+- [حظر بلد!](#blocking-country)
+- [تعزيز مضيف وكيل CloudFlare](#hardening-cloudflare-proxy-host)
+
+### تقييد قدرات الحاوية
+
+ممارسة أخرى صلبة لضوابط الوصول هي تقييد قدرات الحاويات الخاصة بك. هذا يقلل من نصف قطر الانفجار للعديد من التهديدات، من تصعيد الامتيازات إلى اختطاف حركة المرور. إنه ليس حقل قوة، لكنه يزيل الأذونات التي لم تحتجها معظم الحاويات أبدًا.
+
+**ما هي القدرات؟** أذونات أو قدرات مسماة معرفة من نواة لينكس. (صفحة الدليل [`capabilities`](https://man7.org/linux/man-pages/man7/capabilities.7.html) تحتوي على قائمة كاملة.) تتضمن أشياء مثل `CAP_CHOWN` (تغيير ملكية الملف)، `CAP_NET_ADMIN` (تكوين واجهات الشبكة)، `CAP_KILL` (قتل أي عملية)، وغيرها الكثير.
+
+الطريقتان لتحديد القدرات المطلوبة هما:
+
+1. **التجربة والخطأ**: هذه الطريقة الأبطأ ولكن الفعالة تبدأ بعدم وجود قدرات، ثم إضافتها واحدة تلو الأخرى حتى يعمل تطبيقك.
+2. **ابحث عن عمل سابق**: ابحث عن "`project-name` `cap_drop` Dockerfile" أو "`project-name` `cap_drop` docker-compose.yml" لترى إذا كان الآخرون قد قاموا بالعمل من أجلك. يمكن لنموذج لغوي كبير (LLM) اقتراح نقطة بداية، لكن تعامل معها كتخمين حتى تختبر الحاوية وتقرأ وثائق الصورة.
+
+#### أفضل ممارسات القدرات
+
+- **إسقاط جميع القدرات**: استخدم `cap_drop: [ ALL ]` لإسقاط جميع قدرات لينكس من الحاوية.
+- **لا امتيازات جديدة**: استخدم `security_opt: [ no-new-privileges=true ]` لمنع الحاوية من اكتساب امتيازات جديدة.
+
+```yaml title="Example: Drop/Limit Capabilities" {5-14}
+services:
+  database:
+    image: postgres:17.1
+    networks: [ db-network ]
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - DAC_READ_SEARCH
+      - FOWNER
+      - SETGID
+      - SETUID
+  db-admin:
+    image: dpage/pgadmin4:4.1
+    networks: [ db-network ]
+    ports:
+      - "8081:80"
+    # ... other settings
+networks:
+  db-network:
+```
+
+الآن يمكن لخدماتك التواصل مع بعضها البعض عبر شبكة `db-network`. سيقوم Docker Compose بإنشاء تلك الشبكة تلقائيًا.
+
+استخدم الخيار `--external`/`external:` للانضمام إلى **شبكة موجودة مسبقًا.** احذفه لإنشاء شبكة جديدة.
+
+### الوصول إلى مقبس Docker
+
+#### ⚠️ تحذير: `docker.sock` هو في الأساس صلاحية مدير للنظام المضيف
+
+<blockquote class="inset">⚠️ الخيار \`:ro\` لا يؤثر على الإدخال/الإخراج المُرسَل عبر المقبس!</blockquote>
+
+إنه يضمن فقط أن مسار المقبس نفسه مُثبَّت للقراءة فقط. لا تزال استدعاءات API المُرسَلة عبر ذلك المقبس قادرة على إنشاء حاويات، وتثبيت مسارات المضيف، والقيام بأشياء أخرى مثيرة جدًا ربما لم تقصد تفويضها.
+
+{/* أي عملية يمكنها "فتح" المقبس يمكنها (على الأرجح) الحصول على صلاحية الجذر على المضيف. */}
+
+#### أفضل الممارسات للمقبس
+
+- 🥇 **تجنب تثبيت مقبس Docker**، فمن المحتمل وجود بديل أفضل.
+- 🫣 إذا كان لا بد من ذلك، **ضع وكيلًا ضيقًا أمامه** واسمح فقط بنقاط نهاية API التي يحتاجها التطبيق بالفعل. اطّلع على مشروع `docker-socket-proxy` الأصلي من Tecnativa، [docker-socket-proxy](https://github.com/Tecnativa/docker-socket-proxy). ثم تحقق من أن الاستدعاءات الممنوعة ممنوعة بالفعل.
+- 🤢 حسنًا، _ربما_ تكون مشاركته مقبولة في بيئة اختبار **عالية الثقة** و**منخفضة المخاطر**.
+
+#### حظر دولة!
+
+مفيد أحيانًا، لكنه ليس حدًا أمنيًا حقيقيًا.
+
+_أتحدث عن الكيان الجيوسياسي، وليس الموسيقى..._
+
+إذا كنت تستضيف تطبيقات في الغالب لعائلتك وأصدقائك المحليين، يمكنك حظر حركة المرور من البلدان التي لا تتوقع استقبال حركة مرور منها. أو السماح فقط بحركة المرور من البلدان التي تتوقعها. يقلل ذلك من الضوضاء؛ لكنه لا يوقف شبكات VPN أو البروكسيات أو البوت نت أو أي شخص صبور.
+
+تحقق من هذا السكربت لحظر كل حركة المرور من الصين:
+
+```bash title="block-china.sh"
+curl -fsSL https://www.ipdeny.com/ipblocks/data/countries/cn.zone | \
+  while read line; do ufw deny from $line to any; done
+
+```
+
+وبالمثل، يمكنك السماح فقط بحركة المرور من الولايات المتحدة:
+
+```bash title="allow-usa.sh"
+curl -fsSL https://www.ipdeny.com/ipblocks/data/countries/us.zone | \
+  while read line; do ufw allow from $line to any; done
+```
+
+#### تعزيز مضيف وكيل CloudFlare
+
+إذا كان خادمك المنزلي محميًا خلف عنوان IP لـ CloudFlare (وكيل)، يمكنك تقييد الوصول إلى عناوين IP الخاصة بـ CloudFlare فقط، وشبكتك المحلية.
+
+هذا مشابه قليلاً لـ [حظر الدولة](#blocking-country) أعلاه، ولكن مع تحكم أكثر صرامة.
+
+```bash title="whitelist-ingress-from-cloudflare.sh"
+ufw default deny incoming # Block all incoming!!!
+ufw default allow outgoing # Allow all outgoing
+ufw allow ssh # Allow SSH
+
+# Allow access for local subnet (preferably dedicated DMZ/VLAN for hosted services)
+ufw allow from 10.0.0.0/8 to any port 443
+
+# Allow CloudFlare IPs
+curl -fsSL https://www.cloudflare.com/ips-v4 | \
+  while read line; do ufw allow from $line to any port 443; done
+# Add IPv6 support
+# curl -fsSL https://www.cloudflare.com/ips-v6 | \
+#   while read line; do ufw allow from $line to any port 443; done
+
+```
+
+لاختبار التغييرات المستندة إلى الموقع الجغرافي، قد يكون استخدام VPN مع مواقع في البلد المطلوب مفيدًا. انظر المزيد في قسم [المراقبة والتحقق](#-monitoring--verification).
+
+### أمان طبقة التطبيق
+
+بمجرد أن تكون [الشبكة والمضيف محصنين أمنيًا](#-network-hazard)، قد تجد أن هناك المزيد لفعله.
+
+الآن نحتاج إلى التفكير في طبقة "التطبيق" لخدماتنا نفسها.
+
+<p class="inset">هل تحتوي قاعدة البيانات تلك على كلمة مرور صالحة؟ هل يقوم هذا الحاوية بأتمتة HTTPS/الشهادات؟ هل يتضمن التطبيق مصادقة مدمجة؟ هل هناك حدود على البريد الإلكتروني الذي يمكنه التسجيل؟ هل هناك بيانات اعتماد افتراضية أو متغير بيئة لتغييره؟</p>
+
+الطريقة الوحيدة لـ _المعرفة_ هي التحقق. في هذه الحالة، ابدأ بـ `README` والملفات الرئيسية الأخرى مثل `docker-compose.yml` و `Dockerfile` و `.env.*`. في كل من المشروع، ومن الناحية المثالية خدمات الدعم الخاصة به أيضًا. (مثل Postgres و Redis وما إلى ذلك).
+
+#### الوكيل العكسي
+
+طبقة دفاع أخرى هي المصادقة الأساسية. لا تستخدمها بدون HTTPS. بالنسبة للخدمات القديمة، غالبًا ما يكون وضع المصادقة الأساسية أمام مسار الإدارة كافيًا لإيقاف الطلبات العشوائية والزواحف غير المصادقة من العبث بالخدمة مباشرة.
+
+```nginx
+
+# /etc/nginx/conf.d/secure-admin.conf
+location /admin {
+    auth_basic "Restricted Access";
+    auth_basic_user_file /etc/nginx/.htpasswd;
+    proxy_pass http://internal_admin:80;
+    proxy_set_header X-Real-IP $remote_addr;
+}
+
+```
+
+إنشاء بيانات الاعتماد:
+
+```bash
+
+htpasswd -c /etc/nginx/.htpasswd admin
+
+```
+
+مع وكيل المصادقة الأساسية، يواجه المهاجمون عقبة إضافية—اسم المستخدم وكلمة المرور—قبل الوصول إلى خدمتك الداخلية.
+
+خيار آخر هو استخدام خدمة مثل [Traefik](https://traefik.io/) أو [Caddy](https://caddyserver.com/) التي يمكنها أتمتة HTTPS والمصادقة الأساسية لك.
+
+إذا كنت ترغب في إدارة العديد من النطاقات والخدمات بواجهة رسومية، أنصحك باستخدام [Nginx Proxy Manager](https://nginxproxymanager.com/).
+
+## 🔍 المراقبة والتحقق
+
+- [تحقق من منافذك](#check-your-ports)
+- [عرض المنافذ المفتوحة](#view-open-ports)
+- [مراقبة الملفات](#file-monitoring)
+
+هذه هي **الخطوة الأهم والأكثر تجاهلًا.** يمكن أن يكون لديك أفضل جدار ناري، وأفضل شبكة، وأفضل الممارسات، لكن إذا لم تتحقق، فلن تعرف إن كان الأمر يعمل أم لا.
+
+بل إن معرفة بضعة أوامر فقط—أو معرفة أين تبحث عنها—قد تعني الفرق بين منع الاختراق أم لا. الشعور بأنك هاكر هو مجرد مكافأة إضافية. (للتفاصيل والأمثلة، انتقل إلى قسم [المراقبة والتحقق](#-monitoring--verification).)
+
+<p class="inset">لا تثق، تحقق مرتين</p>
+
+### تحقق من منافذك
+
+<p class="inset">⚠️ هام: لا تقم بمسح المضيفات التي لا تملكها.</p>
+
+سواء كنت على شبكة منزلية أو VPS، ستحتاج إلى معرفة المنافذ المفتوحة للعالم.
+
+هناك طريقتان لفعل ذلك:
+
+- فحص الشبكة (`nmap`، `masscan`)
+- سؤال نظام التشغيل (`lsof`، `netstat`، `ss`)
+
+#### الاختبار خارج شبكتك
+
+ستحتاج إلى عنوان IP العام الحالي الخاص بك، بسهولة عبر خدمات مثل `ifconfig.me`: `curl https://ifconfig.me`. أو ابحث عنه في لوحة تحكم مزود الاستضافة.
+
+```bash title="الحصول على IP العام"
+curl -fsSL https://ifconfig.me
+# --> CURRENT PUBLIC IP
+```
+
+بمجرد حصولك على IP العام، ستحتاج الآن إلى **الاتصال بشبكة خارجية.** يمكنك استخدام كمبيوتر صديق، أو نقطة اتصال هاتف/5G، أو مضيف خادم مخصص.
+
+```bash title="فحص خارجي باستخدام nmap"
+target_host="$(curl -fsSL https://ifconfig.me)"
+
+# ملاحظة: تأكد من أن `target_host` هو عنوان IP المطلوب
+
+# فحص منافذ محددة:
+nmap -A -p 80,443,8080 --open --reason $target_host
+# أعلى 100 منفذ:
+nmap -A --top-ports 100 --open --reason $target_host
+# جميع المنافذ
+nmap -A -p1-65535 --open --reason $target_host
+
+```
+
+#### اختبار داخل شبكتك
+
+تدرب على استخدام `nmap`، امسح شبكتك المحلية أو أحد خوادمك، تحقق من جهاز التوجيه، الطابعة، الثلاجة الذكية.
+
+{/* بينما تعتبر عمليات فحص المنافذ حقيقة ثابتة في الحياة، قد تكون انتهاكًا لقانون الاحتيال وإساءة استخدام الحاسوب (CFAA) في الولايات المتحدة. لذا، امسح فقط الأشياء التي تملكها. */}
+
+#### أمثلة على أوامر الفحص
+
+```bash
+
+# امسح localhost لجميع المنافذ المفتوحة
+nmap -sT localhost
+
+# امسح عنوان IP الخاص لجهازك للخدمات
+nmap -sV 192.168.1.10
+
+# ابحث عن تفاصيل الخدمات على شبكتك
+nmap -sn 192.168.0.0/24
+nmap -sn 10.0.0.0/24
+# أو على شبكة docker 172.18.0.1/16
+nmap -sn 172.18.0.1/16
+
+```
+
+```text title="فحص nmap" frame="terminal"
+% nmap -A --open --reason 192.168.0.87
+
+Starting Nmap 7.95 ( https://nmap.org ) at 2025-01-06 13:51 MST
+Nmap scan report for dev02.local (192.168.0.87)
+Host is up, received syn-ack (0.0067s latency).
+Not shown: 995 closed tcp ports (conn-refused)
+PORT     STATE SERVICE     REASON  VERSION
+22/tcp   open  ssh         syn-ack OpenSSH 9.6p1 Ubuntu 3ubuntu13.5 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey:
+|_  256 {FINGERPRINT} (ED25519)
+80/tcp   open  http        syn-ack Caddy httpd
+|_http-server-header: Caddy
+|_http-title: Dev02.DanLevy.net
+443/tcp  open  ssl/https   syn-ack
+|_http-title: Dev02.DanLevy.net
+1234/tcp open  http        syn-ack Node.js Express framework
+|_http-cors: GET POST PUT DELETE PATCH
+|_http-title: Dev02.DanLevy.net (application/json; charset=utf-8).
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 13.36 seconds
+```
+
+### عرض المنافذ المفتوحة
+
+تعرف على `lsof` - فهو متاح على MacOS و Linux. يعرض حالة الشبكة ونشاط القرص بشكل تفصيلي.
+
+```bash title="أوامر lsof"
+# مراقبة منفذ محدد
+sudo lsof -i:80 -Pn
+
+# مراقبة الاتصالات القائمة (ESTABLISHED)
+sudo lsof -i -Pn | grep ESTABLISHED
+# عرض الاستماع (LISTEN)
+sudo lsof -i -Pn | grep LISTEN
+
+# لعرض أسماء الشبكة بدلاً من عناوين IP (قد يكون بطيئًا جدًا في عمليات البحث العكسي DNS)
+sudo lsof -i -P | grep LISTEN
+```
+
+# Monitor all network connections
+sudo watch -n1 "lsof -i -Pn"
+
+```
+
+#### مثال على الإخراج
+
+![فحص nmap للمستمعين](../lsof-scan-listen.webp)
+
+### مراقبة الملفات
+
+لتحديد **العمليات** التي تستخدم أكبر قدر من **عرض النطاق الترددي للقرص الصلب**، يمكنك استخدام `iotop`:
+
+```bash
+
+sudo iotop
+
+```
+
+لمشاهدة تغييرات الملفات الفردية، يمكنك استخدام `inotifywait` على Linux أو `fswatch` على MacOS:
+
+قد يكون هذا مفيدًا لاكتشاف السلوك غير المصرح به أو الغريب لكل مجلد أو على مستوى النظام.
+
+```bash
+
+# مراقبة جميع تغييرات الملفات في دليل
+sudo inotifywait -m /path/to/directory
+
+```
+
+على MacOS يمكنك استخدام `fswatch`:
+
+قم بالتثبيت باستخدام `brew install fswatch`
+
+```bash
+
+fswatch -r /path/to/directory
+
+```
+
+## ⏰ نصائح غالبًا ما يتم تجاهلها
+
+1. **تحديد المعدل** لمحاولات المصادقة وأي نقاط نهاية رئيسية أخرى. سواء عبر وحدة `limit_req` في Nginx أو `fail2ban` للوصول SSH، فإن تقليل القوة الغاشمة هو _ربما_ فكرة جيدة. أقول _ربما_ لأنه في عصر IPv6 والشبكات الروبوتية الرخيصة، حسنًا، لم يعد الأمر كما كان.
+
+2. **استخدم وحدات التخزين للقراءة فقط** حيثما أمكن:
+   ```yaml
+
+services:
+     webapp:
+       volumes:
+         - ./config:/config:ro
+
+```
+   بالاقتران مع أفضل الممارسات الأخرى (مستخدمون غير جذريين، أذونات مجلدات ضئيلة)، يوفر خيار تحميل وحدة التخزين `:ro` حماية إضافية ضد التغييرات العرضية وبعض محاولات الكتابة من داخل الحاوية. لا يحمي المضيف من عملية تمتلك صلاحيات أوسع بالفعل.
+
+3. **تدقيق الوصول إلى الحاوية** بانتظام.
+   إذا كانت الحاوية لا تحتاج إلى سر أو منفذ أو تحميل، قم بإزالته!
+
+4. **احذر من حثالة WiFi**
+   أنا متأكد من أنك لن تعطي كلمة مرور WiFi الخاصة بك أبدًا، خاصة لأي غرباء، أليس كذلك؟ حسنًا، باستثناء بعض الأصدقاء... حسنًا، ربما العائلة أيضًا. لا تعرف أبدًا ما هي التطبيقات التي لديهم والتي قد تشارك SSID وكلمة المرور الخاصة بك مع العالم.
+
+### الشبكة المنزلية مقابل المزود العام مقابل التوجيه النفقي
+
+1. **العزل الافتراضي/DMZ**: بالنسبة للخوادم المنزلية، ضعها على VLAN أو DMZ منفصلين إن أمكن. هذا يبقي أجهزتك الداخلية بعيدة عن متناول الاختراق المحتمل من جانب الخادم.
+   - استخدم راوتر أو VLAN منفصلين لخادم منزلك.
+   - استخدم شبكة WiFi منفصلة لخادم منزلك.
+   - استخدم شبكة فرعية منفصلة لخادم منزلك.
+
+2. **مزوّدو الخدمات السحابية**: يوفّر كل من Hetzner وVultr وDigitalOcean وLinode وAWS وAzure وGoogle Cloud ميزات جدار حماية مختلفة.
+   - بعض المزوّدين والخدمات يحجبون المنافذ افتراضيًا. البعض الآخر يوفّر خيارات الاشتراك أو الإضافات. راجع وثائق مزوّد الخدمة الخاص بك.
+   - يقدّم العديد من المزوّدين خدمات متقدمة للمراقبة وكشف التهديدات.
+
+3. **الشبكات الخاصة الافتراضية (VPN) والتوجيه النفقي**: فكّر في استخدام خيار يشبه VPN أو خدمة توجيه نفق لتوصيل الخدمات بأمان عبر الإنترنت دون تعريضها للإنترنت العام.
+   - TailScale، ngrok، ZeroTier.
+   - WireGuard، OpenVPN.
+
+{/* 3. **تعزيز الأمان ضد الهجمات الداخلية/الجانبية**: يمكن لجهاز واحد مصاب أن يخترق الشبكة بالكامل. يمكن أن يساعد عزل خدمات Docker على شبكات مخصصة، واستخدام الأجهزة، وقواعد UFW، وحظر المنافذ غير الضرورية في تقليل المخاطر (عند تكوينها بشكل صحيح). */}
+
+## 🚀 قائمة التحقق للإنتاج
+
+- [ ] **الأسرار**: جميع الأسرار تم إنشاؤها عشوائيًا وتخزينها بأمان
+- [ ] **التحديثات**: توثيق استراتيجية تحديث الحاويات وأتمتتها. (لا بأس إذا كانت مجرد بضعة أوامر في ملف نصي.)
+- [ ] **الشبكة**: فقط المنافذ الضرورية مكشوفة، والشبكات الداخلية مُعدّة.
+- [ ] **قواعد جدار الحماية**: رفض افتراضي، سماح صريح، حظر الدول إذا لزم الأمر.
+- [ ] **الوكيل العكسي**: يمكن لـ Nginx أو Caddy أو Traefik إضافة طبقة من المصادقة الأساسية
+- [ ] **رموز الشرك (Canary Tokens)**: ضعها بالقرب من الملفات الحساسة وبيانات الاعتماد التي ستحقق فيها فعليًا إذا تم لمسها.
+- [ ] **المراقبة**: اعرف أنظمتك باستخدام `nmap` و`lsof` و`inotifywait` و`glances` وغيرها.
+- [ ] **استراتيجية النسخ الاحتياطي**: مختبرة، ويفضل أن تكون آلية، وخارج الموقع.
+- [ ] **الحد الأدنى من الصلاحيات**: مستخدمي حاويات غير جذر، وحدات تخزين للقراءة فقط.
+
+## 📚 قراءات إضافية
+
+- [أفضل ممارسات أمان Docker](https://docs.docker.com/develop/security-best-practices/)
+- [ورقة غش أمان Docker من OWASP](https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html)
+- [معيار CIS Docker](https://www.cisecurity.org/benchmark/docker)
+- [Canarytokens.org للحصول على رموز الشرك](https://canarytokens.org/)
+
+## شكر
+
+تحية لبعض مستخدمي Reddit النشطين:
+
+- <em className="cite">[u/JCBird1012](https://www.reddit.com/user/JCBird1012/) - [الموضوع](https://www.reddit.com/r/selfhosted/comments/1hv8jn6/comment/m5rvlzi/).</em>
+- <em className="cite">[u/Salzig](https://www.reddit.com/user/Salzig/)</em>
+- <em className="cite">[u/Myelrond](https://www.reddit.com/user/myelrond/)</em>
+- <em className="cite">[u/shrimpdiddle](https://www.reddit.com/user/shrimpdiddle/)</em>
+- <em className="cite">[u/troeberry](https://www.reddit.com/user/troeberry/)</em>
+
+شكرًا للقراءة! أتمنى أن يكون هذا الدليل مفيدًا لك. إذا كان لديك أي أسئلة أو اقتراحات، فلا تتردد في التواصل معي عبر حساباتي على وسائل التواصل أدناه، أو لا تتردد في النقر على رابط `Edit on GitHub` لإنشاء طلب سحب (PR)! ❤️
