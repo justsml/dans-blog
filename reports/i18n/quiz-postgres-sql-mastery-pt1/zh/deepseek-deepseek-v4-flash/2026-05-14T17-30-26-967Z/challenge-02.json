@@ -1,0 +1,49 @@
+{
+  "index": 1,
+  "attempt": 1,
+  "originalTitle": "Cast Syntax Variations",
+  "translatedTitle": "类型转换语法变体",
+  "translation": {
+    "title": "类型转换语法变体",
+    "group": "热身：类型转换",
+    "options": [
+      {
+        "text": "'95'::INTEGER"
+      },
+      {
+        "text": "INTEGER '95'"
+      },
+      {
+        "text": "CAST('95', INTEGER)"
+      },
+      {
+        "text": "CAST('95' AS INTEGER)"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "以下哪种类型转换是**无效的** ❌？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "PostgreSQL 支持三种类型转换语法：\n\n    1. ANSI SQL：`CAST(expression AS type)`。\n    2. PostgreSQL：`expression::type`。\n    3. 类型函数：`type 'literal'`。\n\n    它们在功能上等价，但：\n    - `CAST()` 可移植性最好。\n    - `::` 是 PostgreSQL 特有的，但很常用。\n    - 中缀风格的 `type 'literal'` 不太常见，但依然有效。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"类型转换语法变体\",\n  \"group\": \"热身：类型转换\",\n  \"options\": [\n    {\n      \"text\": \"'95'::INTEGER\"\n    },\n    {\n      \"text\": \"INTEGER '95'\"\n    },\n    {\n      \"text\": \"CAST('95', INTEGER)\"\n    },\n    {\n      \"text\": \"CAST('95' AS INTEGER)\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"以下哪种类型转换是**无效的** ❌？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"PostgreSQL 支持三种类型转换语法：\\n\\n    1. ANSI SQL：`CAST(expression AS type)`。\\n    2. PostgreSQL：`expression::type`。\\n    3. 类型函数：`type 'literal'`。\\n\\n    它们在功能上等价，但：\\n    - `CAST()` 可移植性最好。\\n    - `::` 是 PostgreSQL 特有的，但很常用。\\n    - 中缀风格的 `type 'literal'` 不太常见，但依然有效。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 820,
+    "outputTokens": 504,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 4146,
+    "providerCostUsd": 0.0003656,
+    "providerUpstreamCostUsd": 0.0003656,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00011480000000000001,
+    "outputUsd": 0.00014112,
+    "totalUsd": 0.00025592000000000003,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

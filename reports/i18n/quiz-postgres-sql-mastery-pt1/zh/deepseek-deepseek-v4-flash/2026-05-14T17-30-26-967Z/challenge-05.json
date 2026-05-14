@@ -1,0 +1,55 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "timestamptz vs timestamp",
+  "translatedTitle": "timestamptz 与 timestamp 对比",
+  "translation": {
+    "title": "timestamptz 与 timestamp 对比",
+    "group": "时间戳",
+    "options": [
+      {
+        "text": "它们都占用 8 字节，但表示不同的时间戳语义"
+      },
+      {
+        "text": "它们\\"
+      },
+      {
+        "text": "timestamptz 保留任何输入时区"
+      },
+      {
+        "text": "timestamptz 存储原始时区名称或偏移量"
+      },
+      {
+        "text": "timestamptz 存储一个 2 字节的时区值"
+      },
+      {
+        "text": "timestamptz 是 timestamp 的继任者"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "关于 `timestamptz` 和 `timestamp`，**最准确**的说法是什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "它们都占用 8 字节，但存储的值类型不同。\n\n    那么区别在哪里？在于输入解析。\n\n    **`timestamptz`**\n    - 将输入归一化为绝对时间点。\n    - 在解析没有显式偏移量的输入时，以及在显示输出时，会考虑服务器/连接的 `TimeZone` 设置。\n\n    **`timestamp`**\n    - 存储不带时区转换的日期和时间。\n    - 不保留或归一化时区信息。\n    \n    \n    **`timestamp`**\n\n    - 存储不带时区信息的日期和时间。\n    - 适用于显式存储标准化日期，无论是 UTC 还是特定时区。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"timestamptz 与 timestamp 对比\",\n  \"group\": \"时间戳\",\n  \"options\": [\n    {\n      \"text\": \"它们都占用 8 字节，但表示不同的时间戳语义\"\n    },\n    {\n      \"text\": \"它们\\\\\"\n    },\n    {\n      \"text\": \"timestamptz 保留任何输入时区\"\n    },\n    {\n      \"text\": \"timestamptz 存储原始时区名称或偏移量\"\n    },\n    {\n      \"text\": \"timestamptz 存储一个 2 字节的时区值\"\n    },\n    {\n      \"text\": \"timestamptz 是 timestamp 的继任者\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"关于 `timestamptz` 和 `timestamp`，**最准确**的说法是什么？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"它们都占用 8 字节，但存储的值类型不同。\\n\\n    那么区别在哪里？在于输入解析。\\n\\n    **`timestamptz`**\\n    - 将输入归一化为绝对时间点。\\n    - 在解析没有显式偏移量的输入时，以及在显示输出时，会考虑服务器/连接的 `TimeZone` 设置。\\n\\n    **`timestamp`**\\n    - 存储不带时区转换的日期和时间。\\n    - 不保留或归一化时区信息。\\n    \\n    \\n    **`timestamp`**\\n\\n    - 存储不带时区信息的日期和时间。\\n    - 适用于显式存储标准化日期，无论是 UTC 还是特定时区。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 954,
+    "outputTokens": 2215,
+    "cacheReadTokens": 384,
+    "cacheWriteTokens": 0,
+    "durationMs": 13211,
+    "providerCostUsd": 0.00101536,
+    "providerUpstreamCostUsd": 0.00101536,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.0000808752,
+    "outputUsd": 0.0006202,
+    "totalUsd": 0.0007010752,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

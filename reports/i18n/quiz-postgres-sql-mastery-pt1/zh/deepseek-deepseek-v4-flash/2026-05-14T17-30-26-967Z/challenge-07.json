@@ -1,0 +1,58 @@
+{
+  "index": 6,
+  "attempt": 1,
+  "originalTitle": "Identify Invalid Types",
+  "translatedTitle": "识别无效类型",
+  "translation": {
+    "title": "识别无效类型",
+    "group": "PostgreSQL 类型",
+    "options": [
+      {
+        "text": "int"
+      },
+      {
+        "text": "real"
+      },
+      {
+        "text": "bigint"
+      },
+      {
+        "text": "bigserial"
+      },
+      {
+        "text": "smallserial"
+      },
+      {
+        "text": "decimal128"
+      },
+      {
+        "text": "double precision"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "以下哪个不是 ❌ 有效的 PostgreSQL 类型？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "`decimal128` 在许多地方（包括 Mongo 和 Java）都是常见的类型，但它不是有效的 PostgreSQL 类型，`decimal` 才是。\n\n    正确的数值类型包括：\n    - `int`（4 字节整数）\n    - `bigint`（8 字节整数）\n    - `real`（4 字节浮点数）\n    - `double precision`（8 字节浮点数）\n    - `bigserial`（自增 8 字节整数）\n    - `smallserial`（自增 2 字节整数）"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"识别无效类型\",\n  \"group\": \"PostgreSQL 类型\",\n  \"options\": [\n    {\"text\": \"int\"},\n    {\"text\": \"real\"},\n    {\"text\": \"bigint\"},\n    {\"text\": \"bigserial\"},\n    {\"text\": \"smallserial\"},\n    {\"text\": \"decimal128\"},\n    {\"text\": \"double precision\"}\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\"以下哪个不是 ❌ 有效的 PostgreSQL 类型？\"],\n  \"hintsProse\": [],\n  \"explanationProse\": [\"`decimal128` 在许多地方（包括 Mongo 和 Java）都是常见的类型，但它不是有效的 PostgreSQL 类型，`decimal` 才是。\\n\\n    正确的数值类型包括：\\n    - `int`（4 字节整数）\\n    - `bigint`（8 字节整数）\\n    - `real`（4 字节浮点数）\\n    - `double precision`（8 字节浮点数）\\n    - `bigserial`（自增 8 字节整数）\\n    - `smallserial`（自增 2 字节整数）\"]\n}",
+  "telemetry": {
+    "inputTokens": 865,
+    "outputTokens": 1739,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 12805,
+    "providerCostUsd": 0.0008686,
+    "providerUpstreamCostUsd": 0.0008686,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00012110000000000002,
+    "outputUsd": 0.00048692000000000006,
+    "totalUsd": 0.0006080200000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
