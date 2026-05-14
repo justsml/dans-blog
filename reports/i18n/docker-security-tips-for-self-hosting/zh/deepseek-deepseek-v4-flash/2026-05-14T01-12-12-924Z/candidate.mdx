@@ -1,0 +1,728 @@
+---
+title: 自托管 Docker 必备安全技巧
+subTitle: 保护你的自托管服务，从防御到监控！
+date: '2025-01-04'
+modified: '2025-07-09'
+tags:
+  - docker
+  - security
+  - devops
+  - containers
+  - best-practices
+category: Security
+social_image: ../desktop-social.webp
+cover_full_width: ../docker-ukiyo-e-wide.webp
+cover_mobile: ../docker-ukiyo-e-container-square-200.webp
+cover_icon: ../docker-ukiyo-e-container-square-200.webp
+cover_credit: © 2025 Dan Levy
+---
+import {CodeTabs} from '../../../../components/CodeTabs';
+
+**目录**
+
+- 🧗‍♀️ [勇者之路](#️-for-the-brave)
+- 🔄 [`:latest` 之舞](#-the-latest-dance)
+- 🔐 [密钥管理：正确做法](#-secrets-management)
+- 🌐 [网络风险](#-network-hazard)
+- 🛡️ [访问控制](#️-access-controls)
+- 🔍 [监控与验证](#-monitoring--verification)
+- ⏰ [常被忽略的技巧](#-often-overlooked-tips)
+- 🚀 [生产环境检查清单](#-production-checklist)
+- 📚 [延伸阅读](#-further-reading)
+
+## 🧗‍♀️ 勇者之路
+
+如果你在自托管 Docker 服务，安全从头到尾都是你的责任——没有云提供商来帮你抵挡端口扫描或糟糕的配置。无论你是在家庭网络上启动应用，还是从 Vultr、DigitalOcean、Linode、AWS、Azure 或 Google Cloud 等提供商租用 VPS，你都需要加固系统——并验证你做得是否正确。
+
+在本指南中，我们将深入探讨 Docker 安全——从一些“鲜为人知”到其他“难以做对”的技巧；我们将探索蜜罐令牌、只读卷、防火墙规则、网络隔离与加固、添加认证代理等等。
+
+我们还会比较家庭网络与公有云设置，并展示如何用 Nginx 搭建一个基础认证代理。最后，你将拥有多种方法来阻挡不速之客（朋友、家人，有时甚至是你自己……）。
+
+内容很多！但大部分相互关联，你可以挑选最适合自己环境的方案。🍀
+
+## 🔄 `:latest` 之舞
+
+保持镜像更新对安全至关重要。然而，依赖 `:latest` 可能会在没有审查步骤的情况下引入破坏性变更或有漏洞的构建。
+
+### 安全更新方式
+
+将更新命令与 `pull` 或 `build` 结合使用，这样你可以有意识地刷新镜像，然后在能够注意到故障的时间窗口内重启。
+
+```bash
+#!/bin/bash
+# update-and-run.sh
+docker compose pull && \
+  docker compose up -d
+```
+
+### 版本锁定 vs 最新版
+
+选择合适的版本锁定策略，需要在稳定性与安全性之间取得平衡。以下是几种常见策略：
+
+```yaml
+# docker-compose.yml
+# ...
+  # 精确版本锁定，最适合关键服务
+  image: postgres:17.2
+
+  # 补丁版本锁定，适合非关键服务
+  image: postgres:17.2
+
+  # 主版本锁定，适合个人项目
+  image: postgres:17
+
+  # 随缘模式，尽量避免
+  image: postgres:latest
+```
+
+使用 [Dependabot](https://github.com/features/security) 或 [Renovate](https://github.com/renovatebot/renovate) 来生成可审查的更新 PR。对于任何你不想在凌晨两点爬起来重建的东西，锁定到特定版本或摘要，让自动化工具通知你何时需要升级。
+
+_如果你有喜欢的 Docker 镜像更新工具，欢迎告诉我！_
+
+## 🔐 密钥管理
+
+- [生成强密钥](#generate-strong-secrets)
+- [蜜罐令牌](#canary-tokens)
+- [从 `.env` 升级到 MacOS Keychain](#upgrade-from-env-to-macos-keychain)
+{/* - [占位符验证](#placeholder-validation) */}
+
+管理密钥的方法有很多，但最重要的一条规则是：**永远不要将密钥硬编码到 Docker 镜像中，也不要提交到 Git 仓库。** 这是最常见的安全错误之一，会带来长期风险，而且修复起来很麻烦。
+
+安全存储密钥是一个庞大的话题，可选方案包括 `.env` 文件、[Docker secrets](https://docs.docker.com/compose/how-tos/use-secrets/)、[1Password](https://1password.com/downloads/command-line)/[Bitwarden](https://bitwarden.com/developers/)，或者像 [HashiCorp Vault](https://www.vaultproject.io/) 和 AWS Secrets Manager 这样的密钥管理器。
+
+你需要为你的用例选择“合适”的努力程度和安全级别。
+
+{/*
+TODO: Move to Maintainer's Guide
+// TODO: Move to Maintainer's Guide
+
+### Placeholder Validation
+
+<blockquote>You wouldn't believe how easy it is to hack a JWT token when the secret isn't secret!</blockquote>
+
+<p className='inset'>💡 Ensure secrets are always unique. Try make it impossible to run with unsafe/hard-coded defaults.</p>
+
+If you use placeholders like `__WARNING_REPLACE_ME__` in your secrets, great, maybe someone will notice!
+
+Just in case, you can also add a little runtime safety with little effort. Here’s how you might do it in JavaScript, Rust, and Go:
+
+<CodeTabs client:load tabs={["JavaScript", "Rust", "Go"]}>
+
+```javascript
+// validateSecrets.js
+const validateSecrets = () => {
+  const unsafePlaceholder = /__WARNING_REPLACE_ME__/;
+  const missingSecrets = Object.entries(process.env).filter(
+    ([key, value]) => unsafePlaceholder.test(value)
+  );
+
+  if (missingSecrets.length) {
+    console.error("Unsafe secrets detected:", missingSecrets);
+    process.exit(1);
+  }
+};
+
+validateSecrets();
+```
+
+```rust
+// validate_secrets.rs
+use std::env;
+
+fn validate_secrets() {
+    let unsafe_placeholder = "__WARNING_REPLACE_ME__";
+    for (key, value) in env::vars() {
+        if value.contains(unsafe_placeholder) {
+            panic!("Unsafe secret in {}", key);
+        }
+    }
+}
+
+fn main() {
+    validate_secrets();
+}
+```
+
+```go
+// validate_secrets.go
+package main
+
+import (
+	"fmt"
+	"os"
+	"strings"
+)
+
+func validateSecrets() {
+	placeholder := "__WARNING_REPLACE_ME__"
+	for _, env := range os.Environ() {
+		pair := strings.SplitN(env, "=", 2)
+		if len(pair) == 2 && strings.Contains(pair[1], placeholder) {
+			panic(fmt.Sprintf("Unsafe secret in %s", pair[0]))
+		}
+	}
+}
+
+func main() {
+	validateSecrets()
+}
+```
+</CodeTabs>
+
+*/}
+
+### 生成强密钥
+
+### 生成强密钥
+
+这里有一个小脚本，用于为 `.env` 文件生成新密钥：
+
+```bash
+#!/bin/bash
+# generate-secrets.sh
+
+generate_secret() {
+    local length=${1:-30}
+    local generate_length=$((length + 4))
+    openssl rand -base64 "$generate_length" | tr -d '+=/\n' | cut -c1-"$length"
+}
+
+[ -f .env ] && { echo ".env file already exists!"; exit 1; }
+
+cat > .env << EOL
+POSTGRES_PASSWORD=$(generate_secret)
+JWT_SECRET=$(generate_secret 64)
+SESSION_KEY=$(generate_secret 24)
+REDIS_PASSWORD=$(generate_secret 20)
+UNSAFE_PLACEHOLDER=__WARNING_REPLACE_RANDOM_TEXT__
+EOL
+
+echo "New .env file generated with secure random values!"
+```
+
+### 蜜罐令牌（Canary Tokens）
+
+[**蜜罐令牌**](https://canarytokens.org/) 是检测你的密钥是否已被泄露（并被使用）的绝佳方式。它们就像一根绊线，你可以将其添加到任何敏感文件、URL 和令牌中。
+
+考虑将它们放在你真正担心的密钥旁边：`.env` 文件、CI 变量、密码管理器、备份文件夹和云凭证。别把这变成形式主义；把绊线放在真正的攻击者或未来的你犯错时会触及的地方。
+
+蜜罐“令牌”有多种类型可供选择，从 AWS 令牌、[假信用卡号](https://blog.thinkst.com/2024/12/its-baaack-credit-card-canarytokens-are-now-on-your-consoles.html)、Excel 和 Word 文件、Kubeconfig 文件、VPN 凭证，甚至 SQL 转储文件都可以设置绊线！
+
+#### 蜜罐令牌最佳实践
+
+- **随处放置**：在你想到的每一个 `.env` 文件、CI/CD 流水线和“密钥管理器”中。
+  - 在你的主目录中放置一个 `passwords.xlsx` 或 `passwords.docx` 文件。
+  - 添加一个 AWS 配置文件 `billing_prod`，并将蜜罐令牌作为密钥。
+  - 为你的 `~/.ssh` 目录生成一个 `private.key` 文件。
+  - 为你的 `~/backups` 目录创建一个蜜罐 SQL 转储文件 `all_credit_cards.sql`。
+- **监控**：设置邮件规则/警报，以便在蜜罐令牌被触发时及时捕获。
+
+### 从 `.env` 升级到 MacOS 钥匙串
+
+对于 Mac 用户，最简单的选项之一是使用钥匙串（Keychain）。
+
+这里有一种简单的方法来自动从 OSX 钥匙串加载密钥，支持 `TouchID`，并且比 `.env` 文件更安全一些。
+
+原始致谢归功于 [Brian Hetfield](https://gist.github.com/bmhatfield/f613c10e360b4f27033761bbee4404fd) 和 [Jan Schaumann](https://www.netmeister.org/)
+
+<CodeTabs client:load tabs={[
+  "辅助命令",
+  "在环境中持久化密钥",
+  "按命令使用密钥"
+]}>
+```bash title="keychain-secrets.sh"
+### Functions for setting and getting environment variables from the OSX keychain ###
+### Adapted from: https://www.netmeister.org/blog/keychain-passwords.html and 
+### https://gist.github.com/bmhatfield/f613c10e360b4f27033761bbee4404fd
+
+# Use: get-keychain-secret SECRET_ENV_VAR
+function get-keychain-secret () {
+    security find-generic-password -w -a ${USER} -D "environment variable" -s "${1}"
+}
+
+# Use: set-keychain-secret SECRET_ENV_VAR
+# You will be prompted to enter the secret value!
+function set-keychain-secret () {
+    [ -n "$1" ] || print "Missing environment variable name"
+    
+    # prompt user for secret
+    echo -n "Enter secret for ${1}"
+    read secret
+    [ -n "$secret" ] || return 1
+
+    ( [ -n "$1" ] || [ -n "$secret" ] ) || return 1
+    security add-generic-password -U -a ${USER} -D "environment variable" -s "${1}" -w "${secret}"
+}
+```
+
+```bash title="~/code/app/.env-secrets.sh"
+source ~/keychain-secrets.sh
+
+# Load Env vars into the current shell
+export AWS_ACCESS_KEY_ID=$(get-keychain-secret AWS_ACCESS_KEY_ID);
+export AWS_SECRET_ACCESS_KEY=$(get-keychain-secret AWS_SECRET_ACCESS_KEY);
+# Note: If an attack can run `env` in your shell, then these secrets could be exposed!
+```
+
+```bash title="~/code/app/scripts/env-run.sh"
+#!/usr/bin/env bash
+source ~/keychain-secrets.sh
+
+# Specify all secrets for this project
+AWS_ACCESS_KEY_ID=$(get-keychain-secret AWS_ACCESS_KEY_ID) \
+AWS_SECRET_ACCESS_KEY=$(get-keychain-secret AWS_SECRET_ACCESS_KEY) \
+  "$@"
+
+# Note: Using a shell wrapper helps prevent secrets from staying
+# around in the environment. And it's safe to commit.
+
+# Usage:
+# ./scripts/env-run.sh docker compose up -d
+# ./scripts/env-run.sh docker run -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS ...
+```
+</CodeTabs>
+
+## 🌐 网络风险
+
+### 自定义网络与内部端口
+
+使用 Docker 网络正确隔离服务是减少攻击面的重要方法。
+
+小心在网络中开洞！一个错误配置的端口转发可能导致严重后果。
+
+默认情况下，私有局域网上的服务不会暴露到互联网——你必须显式地从路由器转发端口。
+
+### Docker 在局域网中
+
+无论你是在本地运行开发服务器，还是从本地网络自托管服务，**对 Docker 网络模型的假设都可能带来麻烦。**
+
+开发者常常惊讶地发现，保护 Linux 服务器的“传统”方法（`iptables`、限制 TCP/IP sysctl 选项）在 Docker 主机上可能**静默失效**！这在**自托管或在典型家庭网络上运行时**尤其如此。（对后排的人说：这可能导致你的 MacBook 上的开发容器被访问！！！）
+
+> ⚠️ **警告 #1：** Docker 发布的端口可能绕过你以为能保护主机的防火墙规则，尤其是在 Ubuntu/Debian 上使用 UFW 时。这并不意味着所有防火墙规则都无用，但确实说明“UFW 说拒绝”并不算数。[参见 issue #690：Docker 绕过 ufw 防火墙规则](https://github.com/moby/moby/issues/690)。
+
+> ⚠️ **警告 #2：** 将端口绑定到本地 IP 地址（例如 `-p 127.0.0.1:8080:80`）是正确的默认做法，但 Docker Engine 版本低于 28.0.0 时，存在同一 L2 网络上的主机仍可能访问 localhost 发布端口的情况。[Docker 在其端口发布指南中记录了该注意事项](https://docs.docker.com/engine/network/port-publishing/)，下面提到的“用 nmap 验证”的习惯仍然重要。
+
+<p class="inset">如果你对此感到惊讶，我也是！</p>
+
+**绑定到本地 IP 仍然是一个好习惯**，并且在**托管云环境和特殊配置的网络**中具有显著效果。
+{/* 不要将防火墙或私有网络视为主要或唯一的防御手段，将 Docker 网络加入组合以获得更好的**隔离**，并始终考虑是否真的需要暴露端口。 */}
+
+### Docker Compose 示例
+
+以下是一个 `docker-compose.yml` 文件示例，它将 `app` 服务绑定到 `127.0.0.1:8080`，并将两个容器连接到 `backend` 自定义网络。
+
+```yaml title="docker-compose.yml" {6-10,14-17}
+networks:
+  backend:
+
+services:
+  app:
+    networks:
+      - backend
+    ports:
+      # 如果可能，绑定到 localhost
+      - "127.0.0.1:8080:8080"
+    # ... 其他设置
+  database:
+    image: postgres:17.1
+    # 无需端口；可通过 backend 网络访问。
+    networks:
+      - backend
+
+```
+
+{/* #### 测试与验证
+
+与所有安全措施一样，**测试和验证**你的网络设置至关重要。 */}
+
+{/* 虽然网络安全与审计在大多数公司是一项全职责任，但大多数自托管用户根本不会花时间在这上面！ */}
+
+{/* 听着，我理解，这可能会让人望而生畏。（子网、网络掩码、CIDR、VLAN 和路由表，天哪！如果这些让你一头雾水，没关系，你来对地方了。而且，我们现在还不需要担心这些。） */}
+
+### 网络最佳实践
+
+- 🏆 **不要发布任何端口** 最近我了解到，这比你想象中更有用！当使用命名（桥接）网络时，容器之间可以无限制地相互访问。它们的行为就像位于本地网络（NAT 网关）之后。
+  - 虽然并非所有用例都可行，但这对于运行批处理作业或主要通过 `attach` 或 `exec` 访问的容器可能很有用。
+- 🥇 **使用 Docker 网络** 来隔离和控制哪些容器可以相互通信。
+- 🥉 **使用 Localhost 绑定**：虽然[不完美](https://github.com/moby/moby/issues/45610)，但将端口绑定到回环地址（例如 `127.0.0.1:8080:80`）通常更好。只需确保[验证你的设置。](#-监控--验证)
+
+## 🛡️ 访问控制
+
+访问控制是保护 Docker 服务安全的关键部分。这包括限制容器能力与权限、限制对 Docker 套接字的访问等。
+
+- [限制容器能力](#限制容器能力)
+- [Docker 套接字访问](#docker-套接字访问)
+- [屏蔽国家！](#屏蔽国家)
+- [加固 CloudFlare 代理主机](#加固-cloudflare-代理主机)
+
+### 限制容器能力
+
+另一个可靠的访问控制实践是限制容器的能力。这可以缩小多种威胁的爆炸半径，从权限提升到流量劫持。它并非力场，但能移除大多数容器从未需要过的权限。
+
+**什么是能力？** Linux 内核定义的、命名的权限或能力。（[`capabilities`](https://man7.org/linux/man-pages/man7/capabilities.7.html) 手册页有完整列表。）包括 `CAP_CHOWN`（更改文件所有者）、`CAP_NET_ADMIN`（配置网络接口）、`CAP_KILL`（杀死任何进程）等。
+
+确定所需能力的两种方法：
+
+1. **试错法**：这种较慢但有效的方法是从无能力开始，然后逐个添加，直到应用正常工作。
+2. **查找前人工作**：搜索“`项目名` `cap_drop` Dockerfile”或“`项目名` `cap_drop` docker-compose.yml”，看看是否有人已经为你完成了这项工作。LLM 可以给出一个起点，但在测试容器并阅读镜像文档之前，请将其视为猜测。
+
+#### 能力最佳实践
+
+- **丢弃所有能力**：使用 `cap_drop: [ ALL ]` 丢弃容器的所有 Linux 能力。
+- **无新特权**：使用 `security_opt: [ no-new-privileges=true ]` 防止容器获得新特权。
+
+```yaml title="示例：丢弃/限制能力" {5-14}
+services:
+  database:
+    image: postgres:17.1
+    networks: [ db-network ]
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - DAC_READ_SEARCH
+      - FOWNER
+      - SETGID
+      - SETUID
+  db-admin:
+    image: dpage/pgadmin4:4.1
+    networks: [ db-network ]
+    ports:
+      - "8081:80"
+    # ... 其他设置
+networks:
+  db-network:
+```
+
+现在你的服务可以通过 `db-network` 网络相互通信。Docker Compose 会自动创建该网络。
+
+使用 `--external`/`external:` 选项加入一个**已存在的网络**。省略该选项则创建一个新网络。
+
+### Docker 套接字访问
+
+#### ⚠️ 警告：`docker.sock` 本质上就是主机管理员权限
+
+<blockquote class="inset">⚠️ `:ro` 选项不会影响通过套接字发送的 I/O！</blockquote>
+
+它仅仅确保套接字路径本身以只读方式挂载。通过该套接字发送的 API 调用仍然可以创建容器、挂载主机路径，以及执行其他你可能并不想委托出去的、非常刺激的操作。
+
+{/* 任何能够“打开”该套接字的进程（很可能）都能在主机上获得 root 权限。 */}
+
+#### 套接字最佳实践
+
+- 🥇 **避免挂载 Docker 套接字**，通常有更好的替代方案。
+- 🫣 如果必须挂载，**在其前面放置一个窄代理**，仅允许应用实际需要的 API 端点。请查看最初来自 Tecnativa 的 `docker-socket-proxy` 项目：[docker-socket-proxy](https://github.com/Tecnativa/docker-socket-proxy)。然后验证被拒绝的调用确实被拒绝了。
+- 🤢 好吧，在**高度信任**、**低风险**的测试环境中，_也许_共享它是可以的。
+
+#### 屏蔽国家/地区！
+
+有时有用，但并非真正的安全边界。
+
+_这里说的是地理政治实体，不是音乐……_
+
+如果你主要是在为本地家人和朋友托管应用，可以屏蔽掉你不期望接收流量的国家/地区的流量。或者只允许你期望的国家的流量。这能减少噪音，但无法阻止VPN、代理、僵尸网络或任何有耐心的人。
+
+试试这个脚本，屏蔽来自中国的所有流量：
+
+```bash title="block-china.sh"
+curl -fsSL https://www.ipdeny.com/ipblocks/data/countries/cn.zone | \
+  while read line; do ufw deny from $line to any; done
+
+```
+
+类似地，你也可以只允许来自美国的流量：
+
+```bash title="allow-usa.sh"
+curl -fsSL https://www.ipdeny.com/ipblocks/data/countries/us.zone | \
+  while read line; do ufw allow from $line to any; done
+```
+
+#### 加固 CloudFlare 代理主机
+
+如果你的家庭服务器通过 CloudFlare IP（代理）保护，你可以将访问限制为仅限 CloudFlare IP 和你的本地网络。
+
+这与上面的[屏蔽国家/地区](#blocking-country)有些类似，但控制更严格。
+
+```bash title="whitelist-ingress-from-cloudflare.sh"
+ufw default deny incoming # 阻止所有入站流量！！！
+ufw default allow outgoing # 允许所有出站流量
+ufw allow ssh # 允许 SSH
+
+# 允许本地子网访问（最好是专用的 DMZ/VLAN 用于托管服务）
+ufw allow from 10.0.0.0/8 to any port 443
+
+# 允许 CloudFlare IP
+curl -fsSL https://www.cloudflare.com/ips-v4 | \
+  while read line; do ufw allow from $line to any port 443; done
+# 添加 IPv6 支持
+# curl -fsSL https://www.cloudflare.com/ips-v6 | \
+#   while read line; do ufw allow from $line to any port 443; done
+
+```
+
+要测试基于地理位置的变化，使用具有所需国家位置的VPN会很有用。更多信息请参见[监控与验证](#-monitoring--verification)部分。
+
+### 应用层安全
+
+一旦你的[网络和主机进行了安全加固](#-network-hazard)，你可能会发现还有更多事情要做。
+
+现在我们需要考虑服务本身的“应用”层。
+
+<p class="inset">那个数据库有有效的密码吗？这个容器是否自动处理HTTPS/证书？应用是否包含内置认证？对哪些电子邮件可以注册有限制吗？是否有默认凭据或需要更改的环境变量？</p>
+
+唯一能_知道_的方法就是检查。在这种情况下，从`README`和其他关键文件开始，比如`docker-compose.yml`、`Dockerfile`和`.env.*`。既要在项目中检查，理想情况下也要在其支持服务中检查（例如Postgres、Redis等）。
+
+#### 反向代理
+
+另一层防御是基本认证。不要在没有HTTPS的情况下使用它。对于遗留服务，在管理路由前放置基本认证通常足以阻止路过式请求和未经认证的爬虫直接探测服务。
+
+```nginx
+
+# /etc/nginx/conf.d/secure-admin.conf
+location /admin {
+    auth_basic "Restricted Access";
+    auth_basic_user_file /etc/nginx/.htpasswd;
+    proxy_pass http://internal_admin:80;
+    proxy_set_header X-Real-IP $remote_addr;
+}
+
+```
+
+生成凭据：
+
+```bash
+
+htpasswd -c /etc/nginx/.htpasswd admin
+
+```
+
+有了基本认证代理，攻击者在访问你的内部服务之前就多了一道障碍——用户名和密码。
+
+另一种选择是使用像[Traefik](https://traefik.io/)或[Caddy](https://caddyserver.com/)这样的服务，它们可以为你自动处理HTTPS和基本认证。
+
+如果你希望通过图形界面管理多个域名和服务，我推荐使用 [Nginx Proxy Manager](https://nginxproxymanager.com/)。
+
+## 🔍 监控与验证
+
+- [检查你的端口](#check-your-ports)
+- [查看开放端口](#view-open-ports)
+- [文件监控](#file-monitoring)
+
+这是**最重要也最容易被忽视的一步。** 即使你有最好的防火墙、最好的网络和最佳实践，如果不验证，你根本不知道它是否真的有效。
+
+此外，掌握几个命令——或者知道去哪里查——可能就决定了能否防止一次入侵。那种当黑客的感觉只是额外奖励。（详细内容和示例，请跳转到[监控与验证](#-监控--验证)部分。）
+
+<p class="inset">不要信任，验证两次</p>
+
+### 检查你的端口
+
+<p class="inset">⚠️ 重要提示：不要扫描你不拥有的主机。</p>
+
+无论你是在家庭网络还是VPS上，你都需要知道哪些端口对外部世界开放。
+
+有两种方法可以做到：
+
+- 检查网络（`nmap`、`masscan`）
+- 询问操作系统（`lsof`、`netstat`、`ss`）
+
+#### 从外部网络测试
+
+你需要获取当前的（公网）IP，可以方便地使用像 `ifconfig.me` 这样的服务：`curl https://ifconfig.me`。或者在托管服务商的控制面板中查找。
+
+```bash title="获取公网IP"
+curl -fsSL https://ifconfig.me
+# --> 当前公网IP
+```
+
+一旦你有了公网IP，现在需要**连接到外部网络。** 你可以使用朋友的电脑、手机/5G热点，或者专用的服务器主机。
+
+```bash title="nmap 外部扫描"
+target_host="$(curl -fsSL https://ifconfig.me)"
+
+# 注意：确保 `target_host` 是目标IP
+
+# 扫描特定端口：
+nmap -A -p 80,443,8080 --open --reason $target_host
+# 前100个端口：
+nmap -A --top-ports 100 --open --reason $target_host
+# 所有端口
+nmap -A -p1-65535 --open --reason $target_host
+
+```
+
+#### 测试内部网络
+
+练习使用 `nmap`，扫描你的本地网络或其中一台服务器，检查你的路由器、打印机、智能冰箱。
+
+{/* While port scans are a constant fact of life, it might be a violation of the CFAA (Computer Fraud and Abuse Act) in the US. So, only scan things you own. */}
+
+#### 示例扫描命令
+
+```bash
+
+# 扫描本地主机的所有开放端口
+nmap -sT localhost
+
+# 扫描机器私有IP上的服务
+nmap -sV 192.168.1.10
+
+# 查找网络上的服务详情
+nmap -sn 192.168.0.0/24
+nmap -sn 10.0.0.0/24
+# 或者在docker 172.18.0.1/16上
+nmap -sn 172.18.0.1/16
+
+```
+
+```text title="nmap 扫描" frame="terminal"
+% nmap -A --open --reason 192.168.0.87
+
+Starting Nmap 7.95 ( https://nmap.org ) at 2025-01-06 13:51 MST
+Nmap scan report for dev02.local (192.168.0.87)
+Host is up, received syn-ack (0.0067s latency).
+Not shown: 995 closed tcp ports (conn-refused)
+PORT     STATE SERVICE     REASON  VERSION
+22/tcp   open  ssh         syn-ack OpenSSH 9.6p1 Ubuntu 3ubuntu13.5 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey:
+|_  256 {FINGERPRINT} (ED25519)
+80/tcp   open  http        syn-ack Caddy httpd
+|_http-server-header: Caddy
+|_http-title: Dev02.DanLevy.net
+443/tcp  open  ssl/https   syn-ack
+|_http-title: Dev02.DanLevy.net
+1234/tcp open  http        syn-ack Node.js Express framework
+|_http-cors: GET POST PUT DELETE PATCH
+|_http-title: Dev02.DanLevy.net (application/json; charset=utf-8).
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 13.36 seconds
+```
+
+### 查看开放端口
+
+熟悉 `lsof`——它在 MacOS 和 Linux 上可用。它能显示细粒度的网络状态和磁盘活动。
+
+```bash title="lsof 命令"
+# 监控特定端口
+sudo lsof -i:80 -Pn
+
+# 监控已建立的连接
+sudo lsof -i -Pn | grep ESTABLISHED
+# 查看监听中的连接
+sudo lsof -i -Pn | grep LISTEN
+
+# 显示网络名称而非IP地址（反向DNS查询可能非常慢）
+sudo lsof -i -P | grep LISTEN
+```
+
+# 监控所有网络连接
+sudo watch -n1 "lsof -i -Pn"
+
+```
+
+#### 示例输出
+
+![nmap 扫描监听端口](lsof-scan-listen.webp)
+
+### 文件监控
+
+要识别哪些**进程**占用了最多的**硬盘带宽**，可以使用 `iotop`：
+
+```bash
+
+sudo iotop
+
+```
+
+要查看单个文件的变化，可以在 Linux 上使用 `inotifywait`，在 MacOS 上使用 `fswatch`：
+
+这对于检测每个文件夹或系统范围内的未授权或异常行为非常有用。
+
+```bash
+
+# 监控目录中的所有文件变化
+sudo inotifywait -m /path/to/directory
+
+```
+
+在 MacOS 上可以使用 `fswatch`：
+
+通过 `brew install fswatch` 安装
+
+```bash
+
+fswatch -r /path/to/directory
+
+```
+
+## ⏰ 常被忽略的提示
+
+1. **速率限制**：对身份验证尝试及其他关键端点进行限速。无论是通过 Nginx 的 `limit_req` 模块还是 `fail2ban` 来限制 SSH 访问，限制暴力破解都_可能_是个好主意。我说_可能_是因为在 IPv6 和廉价僵尸网络的时代，情况已经不同往日了。
+
+2. **尽可能使用只读卷**：
+   ```yaml
+
+services:
+     webapp:
+       volumes:
+         - ./config:/config:ro
+
+```
+   结合其他最佳实践（非 root 用户、最小文件夹权限），`:ro` 卷挂载选项提供了额外的保护，防止意外更改以及来自容器内部的某些写入尝试。但它无法保护主机免受已经拥有更广泛权限的进程的影响。
+
+3. **定期审计容器访问权限**。
+   如果容器不需要某个密钥、端口或挂载点，就移除它！
+
+4. **当心 WiFi 闲杂人等**
+   我相信你绝不会把 WiFi 密码告诉别人，尤其是那些怪人，对吧？嗯，除了某些朋友……好吧，也许还有家人。你永远不知道他们安装了哪些应用，这些应用可能会把你的 SSID 和密码泄露出去。
+
+### 家庭网络 vs. 公共提供商 vs. 隧道
+
+1. **虚拟隔离/DMZ**：对于家庭服务器，如果可能的话，将它们放在单独的 VLAN 或 DMZ 中。这样可以防止服务器端潜在入侵影响到你的内部设备。
+   - 为家庭服务器使用单独的路由器或 VLAN。
+   - 为家庭服务器使用单独的 WiFi 网络。
+   - 为家庭服务器使用单独的子网。
+
+2. **云服务提供商**：Hetzner、Vultr、DigitalOcean、Linode、AWS、Azure 和 Google Cloud 都提供不同的防火墙功能。
+   - 部分提供商和服务默认屏蔽端口，有些提供可选或附加功能。请查阅你的服务提供商文档。
+   - 许多提供商提供高级监控和威胁检测服务。
+
+3. **VPN 与隧道**：考虑使用类似 VPN 的选项或隧道服务，在不暴露于公共互联网的情况下安全地跨网络连接服务。
+   - TailScale、ngrok、ZeroTier。
+   - WireGuard、OpenVPN。
+
+{/* 3. **防范内部/横向攻击**：一台受感染的设备可能危及整个网络。将 Docker 服务隔离到自定义网络中，使用硬件、UFW 规则并屏蔽不需要的端口，都有助于降低风险（前提是配置得当）。 */}
+
+## 🚀 生产环境检查清单
+
+- [ ] **密钥**：所有密钥随机生成并安全存储
+- [ ] **更新**：容器更新策略已记录并自动化。（如果只是文本文件中的几条命令，也可以接受。）
+- [ ] **网络**：仅暴露必要端口，内部网络已配置。
+- [ ] **防火墙规则**：默认拒绝，显式允许，必要时按国家屏蔽。
+- [ ] **反向代理**：Nginx、Caddy 或 Traefik 可增加一层基本认证。
+- [ ] **蜜罐令牌**：将其放置在敏感文件和凭据附近，以便在有人触碰时你能实际调查。
+- [ ] **监控**：使用 `nmap`、`lsof`、`inotifywait`、`glances` 等工具了解你的系统。
+- [ ] **备份策略**：经过测试，最好自动化且异地存储。
+- [ ] **最小权限**：使用非 root 容器用户、只读卷。
+
+## 📚 延伸阅读
+
+- [Docker 安全最佳实践](https://docs.docker.com/develop/security-best-practices/)
+- [OWASP Docker 安全速查表](https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html)
+- [CIS Docker 基准](https://www.cisecurity.org/benchmark/docker)
+- [Canarytokens.org 蜜罐令牌](https://canarytokens.org/)
+
+## 致谢
+
+感谢一些敏锐的 Reddit 用户：
+
+- <em className="cite">[u/JCBird1012](https://www.reddit.com/user/JCBird1012/) - [帖子](https://www.reddit.com/r/selfhosted/comments/1hv8jn6/comment/m5rvlzi/).</em>
+- <em className="cite">[u/Salzig](https://www.reddit.com/user/Salzig/)</em>
+- <em className="cite">[u/Myelrond](https://www.reddit.com/user/myelrond/)</em>
+- <em className="cite">[u/shrimpdiddle](https://www.reddit.com/user/shrimpdiddle/)</em>
+- <em className="cite">[u/troeberry](https://www.reddit.com/user/troeberry/)</em>
+
+感谢阅读！希望这份指南对你有帮助。如有任何问题或建议，欢迎通过下方我的社交账号联系，或点击 `Edit on GitHub` 链接提交 PR！❤️
