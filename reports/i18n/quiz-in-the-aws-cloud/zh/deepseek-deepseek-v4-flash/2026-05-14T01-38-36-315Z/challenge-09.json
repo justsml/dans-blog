@@ -1,0 +1,67 @@
+{
+  "index": 8,
+  "attempt": 1,
+  "originalTitle": "BatchGetItem Limits",
+  "translatedTitle": "BatchGetItem 限制",
+  "translation": {
+    "title": "BatchGetItem 限制",
+    "group": "批量操作，第一部分！",
+    "options": [
+      {
+        "text": "1",
+        "hint": "……我坚持要批量处理。"
+      },
+      {
+        "text": "25",
+        "hint": "那是 `BatchWriteItem` 的限制。"
+      },
+      {
+        "text": "100"
+      },
+      {
+        "text": "75",
+        "hint": "接近了，但有一个整数。"
+      },
+      {
+        "text": "50",
+        "hint": "对于 `BatchGetItem` 来说有点高。"
+      },
+      {
+        "text": "200",
+        "hint": "有点太高了……"
+      },
+      {
+        "text": "Unlimited",
+        "hint": "`BatchGetItem` 有一个固定限制。"
+      }
+    ],
+    "objectives": [
+      "回忆 DynamoDB BatchGetItem 的限制",
+      "比较 BatchGetItem 与其他批量操作"
+    ],
+    "questionProse": [
+      "再来一个 DynamoDB 批量操作的问题！<br />\n      使用单个 DynamoDB `BatchGetItem` 请求最多可以检索多少项？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "DynamoDB SDK 允许您在单个 `BatchGetItem` 请求中检索最多 **100** 项。这高于 `BatchWriteItem` 的限制（25 项）。\n      此外，还有总负载大小、文档大小和请求速率的限制。\n\n      了解这些限制对于优化应用程序性能并确保高效的数据操作至关重要。\n\n      **注意：** 有可能超过 _某些_ 限制——如果您能说服您的 AWS 客户经理的话。😎"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"BatchGetItem 限制\",\n  \"group\": \"批量操作，第一部分！\",\n  \"options\": [\n    {\n      \"text\": \"1\",\n      \"hint\": \"……我坚持要批量处理。\"\n    },\n    {\n      \"text\": \"25\",\n      \"hint\": \"那是 `BatchWriteItem` 的限制。\"\n    },\n    {\n      \"text\": \"100\"\n    },\n    {\n      \"text\": \"75\",\n      \"hint\": \"接近了，但有一个整数。\"\n    },\n    {\n      \"text\": \"50\",\n      \"hint\": \"对于 `BatchGetItem` 来说有点高。\"\n    },\n    {\n      \"text\": \"200\",\n      \"hint\": \"有点太高了……\"\n    },\n    {\n      \"text\": \"Unlimited\",\n      \"hint\": \"`BatchGetItem` 有一个固定限制。\"\n    }\n  ],\n  \"objectives\": [\n    \"回忆 DynamoDB BatchGetItem 的限制\",\n    \"比较 BatchGetItem 与其他批量操作\"\n  ],\n  \"questionProse\": [\n    \"再来一个 DynamoDB 批量操作的问题！<br />\\n      使用单个 DynamoDB `BatchGetItem` 请求最多可以检索多少项？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"DynamoDB SDK 允许您在单个 `BatchGetItem` 请求中检索最多 **100** 项。这高于 `BatchWriteItem` 的限制（25 项）。\\n      此外，还有总负载大小、文档大小和请求速率的限制。\\n\\n      了解这些限制对于优化应用程序性能并确保高效的数据操作至关重要。\\n\\n      **注意：** 有可能超过 _某些_ 限制——如果您能说服您的 AWS 客户经理的话。😎\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1005,
+    "outputTokens": 2554,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 14055,
+    "providerCostUsd": 0.0012226,
+    "providerUpstreamCostUsd": 0.0012226,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.0001407,
+    "outputUsd": 0.0007151200000000001,
+    "totalUsd": 0.0008558200000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

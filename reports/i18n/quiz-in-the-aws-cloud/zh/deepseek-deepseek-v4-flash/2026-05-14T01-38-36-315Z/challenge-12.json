@@ -1,0 +1,53 @@
+{
+  "index": 11,
+  "attempt": 1,
+  "originalTitle": "S3 Performance Optimization",
+  "translatedTitle": "S3 性能优化",
+  "translation": {
+    "title": "S3 性能优化",
+    "group": "S3 性能",
+    "options": [
+      {
+        "text": "使用随机/哈希前缀"
+      },
+      {
+        "text": "使用逻辑前缀；无需随机化"
+      },
+      {
+        "text": "始终使用最大的对象"
+      },
+      {
+        "text": "最小化对象数量"
+      }
+    ],
+    "objectives": [
+      "优化 S3 在高请求率下的性能",
+      "应用 S3 键命名最佳实践",
+      "设计 S3 分区分布"
+    ],
+    "questionProse": [
+      "如何优化 S3 在高请求率下的性能？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "S3 性能提示：\n    - 现代 S3 会自动按前缀扩展请求速率\n    - 你不需要为了性能而使用随机/哈希前缀\n    - 使用符合访问模式的逻辑键名\n    - 如果推送非常高的请求速率，请监控 503 Slow Down 响应\n\n    旧指南建议随机化前缀以避免热分区，但 AWS 不再将其作为默认性能要求。\n\n    [S3 性能指南](https://aws.amazon.com/s3/performance/)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"S3 性能优化\",\n  \"group\": \"S3 性能\",\n  \"options\": [\n    {\n      \"text\": \"使用随机/哈希前缀\"\n    },\n    {\n      \"text\": \"使用逻辑前缀；无需随机化\"\n    },\n    {\n      \"text\": \"始终使用最大的对象\"\n    },\n    {\n      \"text\": \"最小化对象数量\"\n    }\n  ],\n  \"objectives\": [\n    \"优化 S3 在高请求率下的性能\",\n    \"应用 S3 键命名最佳实践\",\n    \"设计 S3 分区分布\"\n  ],\n  \"questionProse\": [\n    \"如何优化 S3 在高请求率下的性能？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"S3 性能提示：\\n    - 现代 S3 会自动按前缀扩展请求速率\\n    - 你不需要为了性能而使用随机/哈希前缀\\n    - 使用符合访问模式的逻辑键名\\n    - 如果推送非常高的请求速率，请监控 503 Slow Down 响应\\n\\n    旧指南建议随机化前缀以避免热分区，但 AWS 不再将其作为默认性能要求。\\n\\n    [S3 性能指南](https://aws.amazon.com/s3/performance/)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 869,
+    "outputTokens": 973,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 5878,
+    "providerCostUsd": 0.000563,
+    "providerUpstreamCostUsd": 0.000563,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00012166000000000001,
+    "outputUsd": 0.00027244000000000004,
+    "totalUsd": 0.00039410000000000004,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "index": 20,
+  "attempt": 1,
+  "originalTitle": "Storage Cost Analysis",
+  "translatedTitle": "存储成本分析",
+  "translation": {
+    "title": "存储成本分析",
+    "group": "成本优化",
+    "options": [
+      {
+        "text": "对所有数据使用 S3 Standard"
+      },
+      {
+        "text": "始终使用最便宜的存储"
+      },
+      {
+        "text": "根据访问模式混合存储类别"
+      },
+      {
+        "text": "将所有数据存储在 Glacier 中"
+      }
+    ],
+    "objectives": [
+      "比较 AWS 服务之间的存储成本",
+      "评估存储选择的成本影响",
+      "应用成本优化策略"
+    ],
+    "questionProse": [
+      "存储 1PB 数据，其中 20% 每天访问，30% 每月访问，50% 每年访问，最经济有效的方法是什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "最佳存储策略：\n    - 20% 存储在 S3 Standard 用于每日访问\n    - 30% 存储在 S3 Standard-IA 用于每月访问\n    - 50% 存储在 Glacier 用于每年访问\n\n    这种方法在保持适当访问模式的同时优化了成本。\n\n    成本考虑因素：\n    - 每 GB 存储定价\n    - 检索成本\n    - 访问模式\n    - 转换成本"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"存储成本分析\",\n  \"group\": \"成本优化\",\n  \"options\": [\n    {\n      \"text\": \"对所有数据使用 S3 Standard\"\n    },\n    {\n      \"text\": \"始终使用最便宜的存储\"\n    },\n    {\n      \"text\": \"根据访问模式混合存储类别\"\n    },\n    {\n      \"text\": \"将所有数据存储在 Glacier 中\"\n    }\n  ],\n  \"objectives\": [\n    \"比较 AWS 服务之间的存储成本\",\n    \"评估存储选择的成本影响\",\n    \"应用成本优化策略\"\n  ],\n  \"questionProse\": [\n    \"存储 1PB 数据，其中 20% 每天访问，30% 每月访问，50% 每年访问，最经济有效的方法是什么？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"最佳存储策略：\\n    - 20% 存储在 S3 Standard 用于每日访问\\n    - 30% 存储在 S3 Standard-IA 用于每月访问\\n    - 50% 存储在 Glacier 用于每年访问\\n\\n    这种方法在保持适当访问模式的同时优化了成本。\\n\\n    成本考虑因素：\\n    - 每 GB 存储定价\\n    - 检索成本\\n    - 访问模式\\n    - 转换成本\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 866,
+    "outputTokens": 884,
+    "cacheReadTokens": 384,
+    "cacheWriteTokens": 0,
+    "durationMs": 5138,
+    "providerCostUsd": 0.00046536,
+    "providerUpstreamCostUsd": 0.00046536,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00006855520000000001,
+    "outputUsd": 0.00024752000000000004,
+    "totalUsd": 0.00031607520000000004,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
