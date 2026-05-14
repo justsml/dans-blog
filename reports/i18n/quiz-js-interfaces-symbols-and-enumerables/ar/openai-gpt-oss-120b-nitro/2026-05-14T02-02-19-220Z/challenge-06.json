@@ -1,0 +1,49 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Symbols as Non-Enumerable Keys",
+  "translatedTitle": "الرموز كمفاتيح غير قابلة للعد",
+  "translation": {
+    "title": "الرموز كمفاتيح غير قابلة للعد",
+    "group": "الواجهات المتقدمة",
+    "options": [
+      {
+        "text": "لا، لن يتم"
+      },
+      {
+        "text": "نعم، سيتم إدراجه"
+      },
+      {
+        "text": "يعتمد على طريقة التكرار"
+      },
+      {
+        "text": "يرمي خطأ"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "هل سيتم إدراج الخاصية ذات المفتاح `Symbol` أثناء تكرار `for...in`؟"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "يمكن للخصائص ذات المفتاح `Symbol` أن يكون لها علم `enumerable` خاص بها، لكن `for...in` و `Object.keys()` يزوران فقط الخصائص القابلة للعد ذات المفاتيح النصية. في هذا المثال، سيتم إدراج `regularKey` فقط، وليس الخاصية ذات المفتاح `Symbol`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"الرموز كمفاتيح غير قابلة للعد\",\n  \"group\": \"الواجهات المتقدمة\",\n  \"options\": [\n    {\n      \"text\": \"لا، لن يتم\"\n    },\n    {\n      \"text\": \"نعم، سيتم إدراجه\"\n    },\n    {\n      \"text\": \"يعتمد على طريقة التكرار\"\n    },\n    {\n      \"text\": \"يرمي خطأ\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"هل سيتم إدراج الخاصية ذات المفتاح `Symbol` أثناء تكرار `for...in`؟\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"يمكن للخصائص ذات المفتاح `Symbol` أن يكون لها علم `enumerable` خاص بها، لكن `for...in` و `Object.keys()` يزوران فقط الخصائص القابلة للعد ذات المفاتيح النصية. في هذا المثال، سيتم إدراج `regularKey` فقط، وليس الخاصية ذات المفتاح `Symbol`.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 893,
+    "outputTokens": 539,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 1524,
+    "providerCostUsd": 0.00043815,
+    "providerUpstreamCostUsd": 0.00043815,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000034827,
+    "outputUsd": 0.00009701999999999999,
+    "totalUsd": 0.00013184699999999999,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
