@@ -1,7 +1,7 @@
 # Translation Judge
 
-- Selected candidate: d2aeb239d71875755de67f0d4f1eadb4dd3df7b4
-- Selected model: openrouter/openai/gpt-oss-120b:nitro
-- Judge model: openrouter/deepseek/deepseek-v4-flash
+- Selected candidate: bea9c67f7fdc1db0c24da68edceae416bbd4bf2a
+- Selected model: openrouter/qwen/qwen3-32b:nitro
+- Judge model: openrouter/google/gemini-3-flash-preview
 
-Selected d2aeb239d71875755de67f0d4f1eadb4dd3df7b4.
+Selected bea9c67f7fdc1db0c24da68edceae416bbd4bf2a.
