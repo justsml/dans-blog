@@ -1,0 +1,49 @@
+{
+  "index": 8,
+  "attempt": 1,
+  "originalTitle": "File Watching",
+  "translatedTitle": "צפייה בקבצים",
+  "translation": {
+    "title": "צפייה בקבצים",
+    "group": "מערכת קבצים",
+    "options": [
+      {
+        "text": "פעם אחת לכל שינוי בקובץ"
+      },
+      {
+        "text": "לא מובטח; עלול להיפתח מספר פעמים"
+      },
+      {
+        "text": "אף פעם"
+      },
+      {
+        "text": "רק בעת מחיקת קובץ"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "כמה פעמים מובטח ש-`fs.watch()` יופעל כאשר קובץ משתנה?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "`fs.watch()` אינו מובטח להיפתח בדיוק פעם אחת לכל שינוי לוגי בקובץ. לעתים קרובות הוא מופעל מספר פעמים מכיוון שעורכי טקסט רבים:\n    1. שומרים לקובץ זמני\n    2. משנים את שמו לקובץ היעד\n\n    לצפייה אמינה יותר, שקול להשתמש ב:\n    - החבילה `chokidar`\n    - דיבואונס (debouncing) של הקריאה החוזרת\n    - שימוש ב-`fs.watchFile()` (אם כי זה פחות יעיל)\n\n    [למידע נוסף על fs.watch()](https://nodejs.org/api/fs.html#fswatchfilename-options-listener)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"צפייה בקבצים\",\n  \"group\": \"מערכת קבצים\",\n  \"options\": [\n    {\n      \"text\": \"פעם אחת לכל שינוי בקובץ\"\n    },\n    {\n      \"text\": \"לא מובטח; עלול להיפתח מספר פעמים\"\n    },\n    {\n      \"text\": \"אף פעם\"\n    },\n    {\n      \"text\": \"רק בעת מחיקת קובץ\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"כמה פעמים מובטח ש-`fs.watch()` יופעל כאשר קובץ משתנה?\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"`fs.watch()` אינו מובטח להיפתח בדיוק פעם אחת לכל שינוי לוגי בקובץ. לעתים קרובות הוא מופעל מספר פעמים מכיוון שעורכי טקסט רבים:\\n    1. שומרים לקובץ זמני\\n    2. משנים את שמו לקובץ היעד\\n\\n    לצפייה אמינה יותר, שקול להשתמש ב:\\n    - החבילה `chokidar`\\n    - דיבואונס (debouncing) של הקריאה החוזרת\\n    - שימוש ב-`fs.watchFile()` (אם כי זה פחות יעיל)\\n\\n    [למידע נוסף על fs.watch()](https://nodejs.org/api/fs.html#fswatchfilename-options-listener)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 856,
+    "outputTokens": 1143,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 8237,
+    "providerCostUsd": 0.0006284,
+    "providerUpstreamCostUsd": 0.0006284,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00011984,
+    "outputUsd": 0.00032004,
+    "totalUsd": 0.00043988,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
