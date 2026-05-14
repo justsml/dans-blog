@@ -1,0 +1,53 @@
+{
+  "index": 14,
+  "attempt": 1,
+  "originalTitle": "Command Substitution",
+  "translatedTitle": "命令替换",
+  "translation": {
+    "title": "命令替换",
+    "group": "陷阱",
+    "options": [
+      {
+        "text": "'ls -l'"
+      },
+      {
+        "text": "% ls -l"
+      },
+      {
+        "text": "$ ls -l"
+      },
+      {
+        "text": "$(ls -l)"
+      },
+      {
+        "text": "${ls -l}"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "哪个选项会执行 `ls -l` 并返回其输出？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "`$(ls -l)` 语法会执行 **括号** 中的命令并替换为输出。例如：",
+      "第一个选项使用单引号 `'`，**而不是反引号**。这会阻止展开，所以 `'$(date +%F)'` 只会打印字面字符串 `$(date +%F)`。\n\n    虽然仍然支持使用反引号（`` `ls -l` ``）来执行命令，但最近在某些场景下被视为反模式。大多数人推荐使用 `$(command)`，因为可读性更好且在不同 shell 与版本间更一致。\n\n    花括号 `${}` 用于变量展开，而不是命令替换。\n\n    `%` 符号并不用于命令替换。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"命令替换\",\n  \"group\": \"陷阱\",\n  \"options\": [\n    {\n      \"text\": \"'ls -l'\"\n    },\n    {\n      \"text\": \"% ls -l\"\n    },\n    {\n      \"text\": \"$ ls -l\"\n    },\n    {\n      \"text\": \"$(ls -l)\"\n    },\n    {\n      \"text\": \"${ls -l}\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"哪个选项会执行 `ls -l` 并返回其输出？\"\n  ],\n  \"questionCode\": [],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"`$(ls -l)` 语法会执行 **括号** 中的命令并替换为输出。例如：\",\n    \"第一个选项使用单引号 `'`，**而不是反引号**。这会阻止展开，所以 `'$(date +%F)'` 只会打印字面字符串 `$(date +%F)`。\\n\\n    虽然仍然支持使用反引号（`` `ls -l` ``）来执行命令，但最近在某些场景下被视为反模式。大多数人推荐使用 `$(command)`，因为可读性更好且在不同 shell 与版本间更一致。\\n\\n    花括号 `${}` 用于变量展开，而不是命令替换。\\n\\n    `%` 符号并不用于命令替换。\"\n  ],\n  \"explanationCode\": [\n    {\n      \"language\": \"bash\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 989,
+    "outputTokens": 839,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 2255,
+    "providerCostUsd": 0.00063255,
+    "providerUpstreamCostUsd": 0.00063255,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000038571,
+    "outputUsd": 0.00015102,
+    "totalUsd": 0.000189591,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
