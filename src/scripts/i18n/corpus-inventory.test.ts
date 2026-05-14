@@ -112,9 +112,9 @@ test("finds missing translation slots with latest-post and slug filters", () => 
 });
 
 test("validates active locales with a stable error message", () => {
-  expect(parseActiveLocales(["es", "ja"], "--locale/--locales")).toEqual(["es", "ja"]);
-  expect(() => parseActiveLocales(["es", "zh"], "--locale/--locales")).toThrow(
-    "--locale/--locales must use active locales: es, hi, ja, ru, de, fr, it. Received: zh",
+  expect(parseActiveLocales(["es", "zh"], "--locale/--locales")).toEqual(["es", "zh"]);
+  expect(() => parseActiveLocales(["es", "pt"], "--locale/--locales")).toThrow(
+    "--locale/--locales must use active locales: es, hi, ja, ru, de, fr, it, ar, he, zh. Received: pt",
   );
 });
 
