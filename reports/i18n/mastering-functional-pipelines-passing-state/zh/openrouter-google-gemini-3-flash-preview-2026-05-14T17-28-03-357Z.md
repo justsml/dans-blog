@@ -1,0 +1,221 @@
+# Translation Candidate
+- Slug: mastering-functional-pipelines-passing-state
+- Locale: zh
+- Model: openrouter/google/gemini-3-flash-preview
+- Target: src/content/posts/2023-08-13--mastering-functional-pipelines-passing-state/zh/index.mdx
+- Validation: deferred
+- Runtime seconds: 17.79
+- Input tokens: 4921
+- Output tokens: 2086
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.008719
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: 精通 Pipeline：状态传递
+subTitle: 你好闭包，我的老朋友。
+date: '2023-08-09'
+modified: '2024-07-30'
+tags:
+  - typescript
+  - closure
+  - stateful
+  - scoping
+  - hoisting
+  - functional
+  - pipeline
+category: Guides
+subCategory: JavaScript
+cover: ../sven-kucinic-LxYxC6jdjcA-unsplash-cropped-1200.webp
+cover_mobile: ../w300_sven-kucinic-LxYxC6jdjcA-unsplash-cropped-1200.webp
+cover_icon: ../icon_sven-kucinic-LxYxC6jdjcA-unsplash-cropped-1200.webp
+---
+## 管道大师：状态传递
+
+你是否在利用函数式管道（Functional Pipelines）传递状态时遇到过挑战？
+
+代码的组织方式（或其混乱程度）直接影响了状态传递的难易程度。
+
+在本文中，我们将探讨一种在管道中传递状态的有效技术。在此过程中，我们还将提升代码的组织结构和可读性。
+
+以下这段“真实”的代码片段将是本文的重点：一个结账函数，它接收 `userId` 和一个 `products` 数组，并返回一个按顺序执行 4 个函数的 Promise 链。
+
+```tsx
+const checkout = (userId: number, products: number[]) => {
+  return getProductsSubtotal(userId, products)
+    .then(subTotal => applyTaxes(userId, subTotal))
+    .then(total => purchaseProducts(userId, total))
+    .then(result => sendReceipt(userId, result));
+};
+```
+
+等等，就 JS 的管道而言，这段代码其实写得还不错！
+
+但它确实存在一些微妙的问题，这些问题累积起来可能会演变成更严重的麻烦。
+
+其中一个问题是，我们不断地向每个（逻辑相关的）函数重复传递 `userId`。
+再结合另一个开发者和 TypeScript 都容易忽略的问题：调换数值参数的顺序很容易产生隐蔽的 Bug。（看看 `applyTaxes` 和 `purchaseProducts`。*到底是 `userId` 在前还是 `amount` 在前？*）
+
+在决定如何改进这段代码之前，我们先来分析一下它的优缺点。
+
+### 优缺点分析
+
+#### 优点
+
+- 闭包用得不错！只需传入一次 `userId` 和 `products`！
+- 参数命名一致。
+- 对结账的 4 个核心函数进行了相对有效且简洁的组合。
+- “天然”的错误流控制。（错误会从任何嵌套函数中向上冒泡，导致 `checkout()` 返回的 Promise 被 reject。）
+
+#### 缺点
+
+- 重复传递 `userId` 非常繁琐。
+- 函数不是单参数（即一元函数）。*这会影响可组合性。至于原因，请参考[最终示例](#checkout-with-further-improvements)。*
+- 每个函数的返回值并不直观。（返回的是邮件发送结果，还是那个 `result` 变量？或者是别的？）
+- 扩展功能不方便（例如：如果我们需要加载客户折扣/积分/点数等）。
+- 有时“临时”参数名（如每个 `.then(param => {})` 中的参数）能提供上下文。但随着时间的推移，它们很可能变成命名垃圾的温床。
+
+### 解决方案第一部分：构建模块！
+
+这种技术的核心是将相关的函数组织到一个模块中（例如 `CartHelpers`）。它不强制要求特定的模式。你可以尝试 [工厂函数](#carthelpers-factory)、[类（Classes）](#carthelpers-class)、闭包、混入（Mixins）等。选择最适合你的项目和团队的方式。
+
+#### CartHelpers 工厂函数
+
+这是一个 `CartHelpers` 模块的示例，其中 `userId` 只需传入一次，且所有方法都是单参数的。
+
+```tsx
+const CartHelpers = (userId: number) => {
+  return {
+    getProductsSubtotal: products => getProductsSubtotal(userId, products),
+    applyTaxes: subTotal => applyTaxes(userId, subTotal),
+    purchaseProducts: total => purchaseProducts(userId, total),
+    sendReceipt: invoice => sendReceipt(userId, invoice)
+  };
+};
+```
+
+#### CartHelpers 类
+
+如果你更倾向于使用类（Class），也很容易适配：
+
+```tsx
+class CartHelpers {
+  constructor(userId) {
+    this.userId = userId;
+  }
+  getProductsSubtotal = products => getProductsSubtotal(this.userId, products);
+  applyTaxes = subTotal => applyTaxes(this.userId, subTotal);
+  purchaseProducts = total => purchaseProducts(this.userId, total);
+  sendReceipt = invoice => sendReceipt(this.userId, invoice);
+}
+```
+
+显而易见的好处：
+
+- 消除重复的变量传递。
+  - DRY 原则：`CartHelpers` 抽象掉了重复的 `userId` 参数。
+  - 每个方法**只**接收必要的参数。这使得 `cart.applyTaxes(subTotal)` 的可读性非常直观。
+- `CartHelpers` 中的单参数函数目的更明确，可读性更强。
+
+通过将相关函数分组，我们有机会减少暴露的表面积（例如 `checkout()` 内部只关注 `CartHelpers` 的“公共”方法）。
+
+> 更小的表面积 === 更低的认知负荷，更好的测试与可维护性。
+> _有意识、有重点地设计系统。✨_
+
+#### Checkout 与 CartHelpers 的配合使用
+
+来看看现在的 `checkout()` 函数是什么样子的：
+
+```tsx
+export const checkout = ({ userId, products }) => {
+  const cart = CartHelpers(userId);
+
+  return Promise.resolve(products)
+    .then(products => cart.getProductsSubtotal(products))
+    .then(subTotal => cart.applyTaxes(subTotal))
+    .then(total => cart.purchaseProducts(total))
+    .then(result => cart.sendReceipt(result));
+};
+```
+
+##### 进一步优化 Checkout
+
+> 还能再优化吗？当然！我们甚至可以完全不重复写参数！
+
+当一个函数的参数直接由前一个函数的输出提供时，你可以进一步简化代码。
+
+```tsx
+export const checkout = ({ userId, products }) => {
+  const cart = CartHelpers(userId);
+
+  // 🌈 函数像乐高一样堆叠，读起来就像普通的“人话”！💅
+  return Promise.resolve(products)
+    .then(cart.getProductsSubtotal)
+    .then(cart.applyTaxes)
+    .then(cart.purchaseProducts)
+    .then(cart.sendReceipt);
+};
+```
+
+**如果你觉得将参数组合成单个（对象）参数很不自然，** 请考虑拆分你的函数，**或者**将它们组合进作用域更合适的模块中。
+
+#### 从哪里开始？
+
+寻找相关的函数，并将它们归类（例如 `CartHelpers`）。
+
+寻找潜在逻辑模块的难点之一，首先在于识别哪些代码是相关的。
+
+##### 什么是函数的相关性？
+
+一个实用的技巧：寻找函数参数中的重复项。问问自己：这里是否存在某种关联？或者某种底层的职责？
+
+- ✅ 具有重复、通用参数的函数。（例如：如果 4 个方法都接收 `userRewards`，那么你很可能需要一个 `Rewards` 或其他模块。）
+- ✅ 参数直接由前一个函数的输出提供的函数。（即步骤序列，例如 `Extract`、`Transform`、`Load`。）
+- ❌ 任何与功能领域模糊相关的东西，比如“产品购买？”
+- ❌ 具有相同前缀或后缀命名的函数。
+- ❌ 需要大型对象作为参数，但实际上只使用其中几个值的函数。（例如：`applyTaxes({ user, business, rewards, kitchenSink })` 对比 `applyTaxes({ subTotal })`）
+
+虽然设计模块没有唯一的“标准答案”，但识别出 2-3 种组织方案会很有帮助——画个大纲，写写“幻想”代码，然后问问自己：“这代码写得爽吗？”
+
+<aside>
+📌 在领域模型（Domain Model）成型之前，通常需要多次尝试模块组织。不要纠结于一次就做到完美。
+</aside>
+
+> 你可能会觉得 `cart.sendReceipt()` 不该和支付相关的方法放在一起。也许 `customerNotifications.sendReceipt()` 更适合存放客户消息逻辑。如果 `CartHelper` 的重要性足够高，它可以作为一个 **_控制器（controller）_**，在内部调用所有必要的 **_服务（services）_**，比如 `customerNotifications`。
+
+#### 如何判断你的改动是否有益？
+
+如果在消除临时参数的同时，代码的可读性没有受损，那么**恭喜你！** 你很可能构建了一个职责清晰且稳固的模块。
+
+- 移除中间参数往往会迫使代码“分层”显现。
+- 这样做应该会让把临时代码乱塞到错误位置变得“很困难”。
+
+那么，问题来了：我们该在哪里添加新功能？
+
+根据我的经验，在添加功能时主要有两种策略可供评估：
+
+1.  **扩展/重构现有方法。**（当新代码与现有代码逻辑足够接近时。）
+2.  **在链条的所需位置创建一个新的（第 5 个）函数。**（假设新代码与现有函数无关。）
+
+最终，这会让决定新功能的归属变得更容易。（例如：`cart.applyDiscounts()`、`cart.applyTaxes()`、`rewards.getBalance()`。）
+
+### 总结
+
+在复杂的流水线中传递状态确实很棘手。然而，通过一些重构练习，你会发现自己写出的代码可读性更高，认知负荷更低。
+
+有问题？建议？或顾虑？欢迎通过 [@justsml](https://x.com/justsml) 或 [邮件](mailto:dan@danlevy.net) 联系我。
+
+#### 敬请期待本系列的下一部分
+
+我们将探讨如何外部化状态，以及如何扩展模块的功能！
+
+#### 相关阅读
+
+- [组件驱动的 React 世界中也存在类似的困扰。](https://kyleshevlin.com/quit-your-yapping)
+````
