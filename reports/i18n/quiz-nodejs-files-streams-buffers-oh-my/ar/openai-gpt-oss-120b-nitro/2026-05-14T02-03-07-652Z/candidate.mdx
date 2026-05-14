@@ -1,0 +1,615 @@
+---
+unlisted: false
+title: 'اختبار: إتقان إدخال وإخراج NodeJS'
+subTitle: اختبر معرفتك بالملفات، التدفقات والمخازن المؤقتة
+label: NodeJS
+social_image: ../desktop-social.webp
+category: Quiz
+subCategory: NodeJS
+date: '2024-11-15'
+modified: '2024-11-15'
+tags:
+  - quiz
+  - nodejs
+  - io
+  - streams
+  - buffers
+  - filesystem
+  - intermediate
+cover_full_width: ../data-streaming-wide.webp
+cover_mobile: ../data-streaming-square.webp
+cover_icon: ../data-streaming-square.webp
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+<p class="inset">مستعد للغوص في عالم إدخال وإخراج NodeJS؟ 🌊</p>
+
+هذا الاختبار سيقيس فهمك لعمليات الإدخال والإخراج في Node، بدءًا من عمليات نظام الملفات الأساسية وصولاً إلى مفاهيم البث المتقدمة. سنغطي الـ Buffers، الترميز، وأفضل الممارسات لمعالجة البيانات بكفاءة.
+
+لنرى مدى إتقانك للفروقات بين الـ streams والـ buffers! 🚀
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="تمهيد: الذاكرة المؤقتة"
+  title="تخصيص الذاكرة المؤقتة"
+  options={[
+    {text: 'ينشئ Buffer بحجم 5 مملوء بالأصفار', isAnswer: true},
+    {text: 'ينشئ Buffer بحجم 5 ببيانات عشوائية'},
+    {text: 'يرمي خطأ'},
+    {text: 'ينشئ Buffer فارغ'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ماذا يفعل هذا الكود؟
+    ```js
+        const buf = Buffer.alloc(5);
+        console.log(buf);
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `Buffer.alloc(size)` ينشئ Buffer جديد بالحجم المحدد مملوء بالأصفار.
+    النتيجة ستكون: `<Buffer 00 00 00 00 00>`
+
+    إذا أردت إنشاء Buffer ببيانات عشوائية، استخدم `Buffer.allocUnsafe(5)`.
+
+    [اعرف المزيد عن تخصيص Buffer](https://nodejs.org/api/buffer.html#static-method-bufferalloc)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="تمهيد: Buffers"
+  title="تحويل Buffer إلى سلسلة"
+  options={[
+    {text: 'A', isAnswer: true},
+    {text: '65'},
+    {text: '[Object object]'},
+    {text: 'Undefined'},
+    {text: 'Binary data'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ماذا سيطبع هذا؟
+    ```js
+        const buf = Buffer.from([65]);
+        console.log(buf.toString());
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    الأرقام في المصفوفة تمثل رموز ASCII:
+
+    - 65: 'A'
+
+    `toString()` يحول هذه البايتات إلى تمثيلها النصي باستخدام ترميز UTF-8 بشكل افتراضي.
+
+    [تعرف على المزيد حول ترميز Buffer](https://nodejs.org/api/buffer.html#buffers-and-character-encodings)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="تمهيد: نظام الملفات"
+  title="عمليات الملف غير المتزامنة"
+  options={[
+    {text: 'يطبع محتوى الملف ثم "Done"'},
+    {text: 'يطبع "Done" ثم محتوى الملف', isAnswer: true},
+    {text: 'يطبع فقط محتوى الملف'},
+    {text: 'يرمي خطأ'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما هو ترتيب الإخراج؟
+    ```js
+        import fs from 'fs';
+        fs.readFile('test.txt', 'utf8', (err, data) => {
+          console.log(data);
+        });
+        console.log('Done');
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    نظرًا لأن `readFile` غير متزامن، يستمر تنفيذ الكود بينما يتم قراءة الملف.
+    لذلك، سيتم طباعة "Done" قبل محتوى الملف.
+
+    للانتظار حتى يقرأ الملف أولاً، يمكنك استخدام النسخة القائمة على الـ Promise:
+    ```js
+        import { promises as fs } from 'fs';
+    
+        async function read() {
+          const data = await fs.readFile('test.txt', 'utf8');
+          console.log(data);
+          console.log('Done');
+        }
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="أساسيات نظام الملفات"
+  title="قراءة الملفات بشكل متزامن"
+  options={[
+    {text: 'يرجع Buffer', isAnswer: true},
+    {text: 'يرجع سلسلة'},
+    {text: 'يرجع undefined'},
+    {text: 'يرجع Promise'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ماذا يرجع `fs.readFileSync()` بشكل افتراضي؟
+    ```js
+        import fs from 'fs';
+        const content = fs.readFileSync('test.txt');
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `fs.readFileSync()` يرجع Buffer بشكل افتراضي عندما لا يتم تحديد ترميز. إذا كنت تريد سلسلة، عليك إما:
+    1. تحديد ترميز: `fs.readFileSync('test.txt', 'utf8')`
+    2. تحويل الـ Buffer: `content.toString()`
+
+    [تعرف على المزيد حول fs.readFileSync في وثائق Node.js](https://nodejs.org/api/fs.html#fsreadfilesyncpath-options)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="الدفقات"
+  title="أحداث الدفق"
+  options={[
+    {text: '\'data\', \'end\', \'error\', \'close\'', isAnswer: true},
+    {text: '\'finish\', \'drain\', \'pipe\''},
+    {text: '\'read\', \'write\', \'end\''},
+    {text: '\'open\', \'close\', \'data\''},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما مجموعة الأحداث التي تُستخدم عادةً مع الدفقات القابلة للقراءة؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    الدفقات القابلة للقراءة تُصدر عدة أحداث مهمة:
+    - 'data': عندما تتوفر بيانات للقراءة
+    - 'end': عندما لا يبقى أي بيانات أخرى للقراءة
+    - 'error': عندما يحدث خطأ
+    - 'close': عندما يُغلق الدفق والموارد الأساسية
+    ```js
+        const readable = fs.createReadStream('file.txt');
+        readable.on('data', chunk => console.log(chunk));
+        readable.on('end', () => console.log('Done!'));
+    ```
+    [تعرف على المزيد حول أحداث الدفق](https://nodejs.org/api/stream.html#class-streamreadable)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="التدفقات"
+  title="تمرير التدفق"
+  options={[
+    {text: 'ينسخ الملف مع الضغط'},
+    {text: 'ينسخ الملف دون تخزين مؤقت في الذاكرة', isAnswer: true},
+    {text: 'يحمّل الملف بالكامل في الذاكرة'},
+    {text: 'ينشئ رابطًا رمزيًا'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ماذا يفعل هذا الكود؟
+    ```js
+        import fs from 'fs';
+        const readable = fs.createReadStream('source.txt');
+        const writable = fs.createWriteStream('dest.txt');
+        readable.pipe(writable);
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `pipe()` يتصل بتدفق قابل للقراءة إلى تدفق قابل للكتابة، يدير ضغط الظهر تلقائيًا وينسخ البيانات على شكل قطع دون تحميل الملف بالكامل في الذاكرة.
+
+    هذا فعال من حيث الذاكرة للملفات الكبيرة مقارنةً بـ `fs.readFile()` متبوعًا بـ `fs.writeFile()`.
+
+    [تعلم المزيد عن pipe()](https://nodejs.org/api/stream.html#readablepipedestination-options)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="نظام الملفات"
+  title="عمليات الدليل"
+  options={[
+    {text: 'ينشئ أدلة متداخلة إذا لزم الأمر', isAnswer: true},
+    {text: 'ينشئ الدليل الأخير فقط'},
+    {text: 'يرمي خطأ'},
+    {text: 'ينشئ روابط رمزية'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ماذا يفعل الخيار recursive؟
+    ```js
+        import fs from 'fs';
+        fs.mkdirSync('./a/b/c', { recursive: true });
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    الخيار `recursive: true` ينشئ الأدلة الأصلية إذا لم تكن موجودة.
+    بدون هذا الخيار، محاولة إنشاء './a/b/c' ستؤدي إلى رمي خطأ إذا لم يكن './a' أو './a/b' موجودين.
+
+    هذا مشابه لأمر الصدفة `mkdir -p`.
+
+    [تعرف على المزيد حول mkdir](https://nodejs.org/api/fs.html#fsmkdirsyncpath-options)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="التيارات"
+  title="تيارات التحويل"
+  options={[
+    {text: 'مرحبا بالعالم'},
+    {text: 'مرحبا بالعالم', isAnswer: true},
+    {text: 'خطأ'},
+    {text: 'غير معرف'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ماذا سيطبع هذا؟
+    ```js
+        import { Transform } from 'stream';
+        const upperCase = new Transform({
+          transform(chunk, encoding, callback) {
+            callback(null, chunk.toString().toUpperCase());
+          }
+        });
+        process.stdin
+          .pipe(upperCase)
+          .pipe(process.stdout);
+        // Input: "hello world"
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    تقوم تيارات التحويل بتعديل البيانات أثناء مرورها. هنا، كل قطعة هي:
+    1. تُحوَّل إلى سلسلة
+    2. تُحوَّل إلى أحرف كبيرة
+    3. تُمرَّر إلى stdout
+
+    هذا يُنشئ خط أنابيب يحول كل الإدخال إلى أحرف كبيرة.
+
+    [تعرف على المزيد حول تيارات التحويل](https://nodejs.org/api/stream.html#class-streamtransform)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="نظام الملفات"
+  title="مراقبة الملفات"
+  options={[
+    {text: 'مرة واحدة لكل تغيير في الملف'},
+    {text: 'غير مضمون؛ قد يُطلق عدة مرات', isAnswer: true},
+    {text: 'أبدًا'},
+    {text: 'فقط عند حذف الملف'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    كم مرة يضمن `fs.watch()` أن يُطلق عندما يتم تعديل ملف؟
+    ```js
+        import fs from 'fs';
+        fs.watch('test.txt', (eventType, filename) => {
+          console.log(`${filename} was changed`);
+        });
+        // Then modify test.txt once
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `fs.watch()` ليس مضمونًا أن يُطلق مرة واحدة بالضبط لكل تغيير منطقي في الملف. غالبًا ما يُطلق عدة مرات لأن العديد من محررات النصوص:
+    1. تحفظ إلى ملف مؤقت
+    2. تعيد تسميته إلى الملف الهدف
+
+    للحصول على مراقبة أكثر موثوقية، فكر في استخدام:
+    - حزمة `chokidar`
+    - تطبيق تقنية الـ Debouncing على الدالة الراجعة
+    - استخدام `fs.watchFile()` (على الرغم من أنه أقل كفاءة)
+
+    [تعرف على المزيد حول fs.watch()](https://nodejs.org/api/fs.html#fswatchfilename-options-listener)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="الـ Buffers"
+  title="مقارنة الـ Buffer"
+  options={[
+    {text: 'true'},
+    {text: 'false', isAnswer: true},
+    {text: 'undefined'},
+    {text: 'Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما هو الناتج؟
+    ```js
+        const buf1 = Buffer.from('Hello');
+        const buf2 = Buffer.from('Hello');
+        console.log(buf1 === buf2);
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    يتم مقارنة الـ Buffers بالمرجع، وليس بالقيمة. رغم أنها تحتوي على نفس البيانات، فهي كائنات مختلفة.
+
+    لمقارنة محتويات الـ Buffer، استخدم:
+    ```js
+        buf1.equals(buf2)  // true
+        // or
+        Buffer.compare(buf1, buf2) === 0  // true
+    ```
+    [تعرف على المزيد حول مقارنة الـ Buffer](https://nodejs.org/api/buffer.html#bufequalsotherbuffer)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="التدفقات"
+  title="ضغط الرجوع في التدفق"
+  options={[
+    {text: 'يمنع تجاوز الذاكرة', isAnswer: true},
+    {text: 'يزيد من سرعة القراءة'},
+    {text: 'يضغط البيانات'},
+    {text: 'يشفر البيانات'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما هو الهدف الرئيسي من ضغط الرجوع في التدفق؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    ضغط الرجوع هو آلية تمنع تجاوز الذاكرة عن طريق إيقاف القراءة عندما لا يستطيع طرف الكتابة المتابعة.
+
+    مثال على ضغط الرجوع اليدوي:
+    ```js
+        readable.on('data', (chunk) => {
+          const canContinue = writable.write(chunk);
+          if (!canContinue) {
+            readable.pause();
+            writable.once('drain', () => readable.resume());
+          }
+        });
+    ```
+    `pipe()` يتعامل مع ذلك تلقائيًا!
+
+    [تعرف على المزيد حول ضغط الرجوع](https://nodejs.org/en/learn/modules/backpressuring-in-streams#backpressuring-in-streams)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="نظام الملفات"
+  title="الروابط الرمزية"
+  options={[
+    {text: 'ينشئ ارتباطًا صلبًا'},
+    {text: 'ينشئ نسخة'},
+    {text: 'ينشئ رابطًا رمزيًا', isAnswer: true},
+    {text: 'ينقل الملف'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ماذا يفعل هذا الكود؟
+    ```js
+        import fs from 'fs';
+        fs.symlinkSync('target.txt', 'link.txt');
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `symlinkSync` ينشئ رابطًا رمزيًا (مثل اختصار) إلى الملف الهدف.
+
+    الفروقات الرئيسية عن الروابط الصلبة:
+    - يمكن ربطه بأدلة
+    - يمكن أن يمتد عبر أنظمة ملفات مختلفة
+    - ينكسر إذا تم حذف الهدف
+
+    لإنشاء ارتباط صلب بدلاً من ذلك:
+    ```js
+        fs.linkSync('target.txt', 'hardlink.txt');
+    ```
+    [تعرف على المزيد حول الروابط الرمزية](https://nodejs.org/api/fs.html#fssymlinksync-target-path-type)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="التدفقات"
+  title="أنماط التدفق"
+  options={[
+    {text: 'وضع ثنائي فقط'},
+    {text: 'وضع كائن فقط'},
+    {text: 'كلا الوضعين', isAnswer: true},
+    {text: 'لا وضع'},
+    {text: 'وضع الإدخال والإخراج'},
+    {text: 'وضع القراءة والكتابة'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما هي الأنماط التي يمكن لتدفقات Node.js العمل بها؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    يمكن للتدفقات العمل في:
+    1. وضع ثنائي (افتراضي): للـ buffers والسلاسل
+    2. وضع كائن: لأي قيمة JavaScript
+
+    مثال على وضع الكائن:
+    ```js
+        import { Transform } from 'stream';
+        const objectStream = new Transform({
+          objectMode: true,
+          transform(chunk, encoding, callback) {
+            callback(null, { value: chunk });
+          }
+        });
+    ```
+    [تعرف على المزيد حول أوضاع التدفق](https://nodejs.org/api/stream.html#object-mode)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={13}
+  group="نظام الملفات"
+  title="مقابض الملفات"
+  options={[
+    {text: 'رقم', isAnswer: true},
+    {text: 'نص'},
+    {text: 'كائن'},
+    {text: 'مخزن مؤقت'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما هو نوع المعامل `fd` في هذه الدالة الراجعة؟
+    ```js
+        import fs from 'fs';
+        fs.open('test.txt', 'r', (err, fd) => {
+          console.log(typeof fd);
+        });
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    مقابض الملفات هي أرقام تُعرّف الملفات المفتوحة في نظام التشغيل بشكل فريد.
+
+    الأرقام الثلاثة الأولى لمقابض الملفات محجوزة:
+    - 0: stdin
+    - 1: stdout
+    - 2: stderr
+
+    تذكّر دائمًا إغلاق مقابض الملفات:
+    ```js
+        fs.close(fd, (err) => {
+          if (err) throw err;
+        });
+    ```
+    [تعرف على المزيد حول مقابض الملفات](https://nodejs.org/api/fs.html#file-descriptors)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={14}
+  group="الترميز"
+  title="ترميز البوفر"
+  options={[
+    {text: '3'},
+    {text: '4'},
+    {text: '6'},
+    {text: '8'},
+    {text: '10', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    كم عدد البايتات التي سيستهلكها هذا النص في UTF-8؟
+    ```js
+        const str = "Hello 🌍";
+        const buf = Buffer.from(str);
+        console.log(buf.length);
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    في UTF-8:
+    - الأحرف ASCII (مثل 'Hello ') تأخذ بايت واحد لكل منها
+    - إيموجي الأرض 🌍 يأخذ 4 بايتات
+
+    إذن: 5 (Hello) + 1 (space) + 4 (🌍) = 10 بايتات
+
+    لرؤية البايتات:
+    ```js
+        console.log(buf);  // <Buffer 48 65 6c 6c 6f 20 f0 9f 8c 8d>
+    ```
+    [تعرف على المزيد حول ترميز UTF-8](https://nodejs.org/api/buffer.html#buffers-and-character-encodings)
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+
+آمل أن تكون قد استمتعت باختبار معرفتك بـ NodeJS I/O! هل تريد المزيد؟ تفقد [مجموعة الاختبارات](../challenges/) للمزيد من التحديات!

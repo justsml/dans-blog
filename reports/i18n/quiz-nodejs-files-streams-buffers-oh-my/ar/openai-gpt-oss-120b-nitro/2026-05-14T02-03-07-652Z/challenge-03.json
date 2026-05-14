@@ -1,0 +1,49 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "Async File Operations",
+  "translatedTitle": "عمليات الملف غير المتزامنة",
+  "translation": {
+    "title": "عمليات الملف غير المتزامنة",
+    "group": "تمهيد: نظام الملفات",
+    "options": [
+      {
+        "text": "يطبع محتوى الملف ثم \"Done\""
+      },
+      {
+        "text": "يطبع \"Done\" ثم محتوى الملف"
+      },
+      {
+        "text": "يطبع فقط محتوى الملف"
+      },
+      {
+        "text": "يرمي خطأ"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "ما هو ترتيب الإخراج؟"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "نظرًا لأن `readFile` غير متزامن، يستمر تنفيذ الكود بينما يتم قراءة الملف.\n    لذلك، سيتم طباعة \"Done\" قبل محتوى الملف.\n\n    للانتظار حتى يقرأ الملف أولاً، يمكنك استخدام النسخة القائمة على الـ Promise:"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"عمليات الملف غير المتزامنة\",\n  \"group\": \"تمهيد: نظام الملفات\",\n  \"options\": [\n    {\n      \"text\": \"يطبع محتوى الملف ثم \\\"Done\\\"\"\n    },\n    {\n      \"text\": \"يطبع \\\"Done\\\" ثم محتوى الملف\"\n    },\n    {\n      \"text\": \"يطبع فقط محتوى الملف\"\n    },\n    {\n      \"text\": \"يرمي خطأ\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"ما هو ترتيب الإخراج؟\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"نظرًا لأن `readFile` غير متزامن، يستمر تنفيذ الكود بينما يتم قراءة الملف.\\n    لذلك، سيتم طباعة \\\"Done\\\" قبل محتوى الملف.\\n\\n    للانتظار حتى يقرأ الملف أولاً، يمكنك استخدام النسخة القائمة على الـ Promise:\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 918,
+    "outputTokens": 533,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 1666,
+    "providerCostUsd": 0.0004383,
+    "providerUpstreamCostUsd": 0.0004383,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000035802,
+    "outputUsd": 0.00009594,
+    "totalUsd": 0.00013174200000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
