@@ -1,0 +1,49 @@
+{
+  "index": 11,
+  "attempt": 1,
+  "originalTitle": "EXPLAIN ANALYZE Gotcha",
+  "translatedTitle": "תפיסת EXPLAIN ANALYZE",
+  "translation": {
+    "title": "תפיסת EXPLAIN ANALYZE",
+    "group": "ביצועים",
+    "options": [
+      {
+        "text": "הערכת תוכנית קלה"
+      },
+      {
+        "text": "פועל רק על SELECT"
+      },
+      {
+        "text": "משנה נתונים ומוציא תוכנית"
+      },
+      {
+        "text": "מדמה ביצוע כדי לקבל תוכנית"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "מה עושה `EXPLAIN ANALYZE` עבור משפטי `UPDATE`?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "`EXPLAIN ANALYZE` למעשה מבצע את השאילתה! יש להיות זהירים כשמנתחים פעולה של כתיבה, במיוחד משפטי `UPDATE`, `DELETE`, ו-`INSERT`. ייתכן שיהיה צורך להריץ פעולות ניקוי אחרי כל `EXPLAIN ANALYZE` כדי לקבל תוצאות חוזרות.\n\n    המלצות:\n    - השתמשו ב-`EXPLAIN` (בלי ANALYZE) עבור UPDATE/DELETE/INSERT\n    - עטפו שינויי נתונים בעסקאות:"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"תפיסת EXPLAIN ANALYZE\",\n  \"group\": \"ביצועים\",\n  \"options\": [\n    {\n      \"text\": \"הערכת תוכנית קלה\"\n    },\n    {\n      \"text\": \"פועל רק על SELECT\"\n    },\n    {\n      \"text\": \"משנה נתונים ומוציא תוכנית\"\n    },\n    {\n      \"text\": \"מדמה ביצוע כדי לקבל תוכנית\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"מה עושה `EXPLAIN ANALYZE` עבור משפטי `UPDATE`?\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"`EXPLAIN ANALYZE` למעשה מבצע את השאילתה! יש להיות זהירים כשמנתחים פעולה של כתיבה, במיוחד משפטי `UPDATE`, `DELETE`, ו-`INSERT`. ייתכן שיהיה צורך להריץ פעולות ניקוי אחרי כל `EXPLAIN ANALYZE` כדי לקבל תוצאות חוזרות.\\n\\n    המלצות:\\n    - השתמשו ב-`EXPLAIN` (בלי ANALYZE) עבור UPDATE/DELETE/INSERT\\n    - עטפו שינויי נתונים בעסקאות:\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 935,
+    "outputTokens": 892,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 2427,
+    "providerCostUsd": 0.00065625,
+    "providerUpstreamCostUsd": 0.00065625,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000036465,
+    "outputUsd": 0.00016056,
+    "totalUsd": 0.00019702499999999998,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

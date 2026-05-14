@@ -1,0 +1,49 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Hash Join Eligibility",
+  "translatedTitle": "זכאות ל‑HASH JOIN",
+  "translation": {
+    "title": "זכאות ל‑HASH JOIN",
+    "group": "פנימיות SQL",
+    "options": [
+      {
+        "text": "ON a.id = b.id"
+      },
+      {
+        "text": "ON a.id > b.id"
+      },
+      {
+        "text": "ON a.id >= b.id"
+      },
+      {
+        "text": "HASH JOIN ON a.id = b.id ..."
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "איזה תנאי `ON` יכול PostgreSQL להשתמש בו עבור `HASH JOIN`?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "ניתן לבצע hash join עם תנאי שוויון (`=`) ב‑`ON`.\n\n    - `=` הוא צורת הפראדיקט המרכזית ל‑hash joins\n    - `>` ו‑`>=` אינם פראדיקט של hash join\n    - `HASH JOIN` אינו תחביר תקף ב‑PostgreSQL\n\n    המתכנן עדיין עשוי לבחור ב‑nested loop או merge join בהתאם לגודל הטבלה, הסטטיסטיקות, האינדקסים והגדרות הזיכרון."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"זכאות ל‑HASH JOIN\",\n  \"group\": \"פנימיות SQL\",\n  \"options\": [\n    {\n      \"text\": \"ON a.id = b.id\"\n    },\n    {\n      \"text\": \"ON a.id > b.id\"\n    },\n    {\n      \"text\": \"ON a.id >= b.id\"\n    },\n    {\n      \"text\": \"HASH JOIN ON a.id = b.id ...\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"איזה תנאי `ON` יכול PostgreSQL להשתמש בו עבור `HASH JOIN`?\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"ניתן לבצע hash join עם תנאי שוויון (`=`) ב‑`ON`.\\n\\n    - `=` הוא צורת הפראדיקט המרכזית ל‑hash joins\\n    - `>` ו‑`>=` אינם פראדיקט של hash join\\n    - `HASH JOIN` אינו תחביר תקף ב‑PostgreSQL\\n\\n    המתכנן עדיין עשוי לבחור ב‑nested loop או merge join בהתאם לגודל הטבלה, הסטטיסטיקות, האינדקסים והגדרות הזיכרון.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 911,
+    "outputTokens": 700,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2488,
+    "providerCostUsd": 0.00055665,
+    "providerUpstreamCostUsd": 0.00055665,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000035529,
+    "outputUsd": 0.000126,
+    "totalUsd": 0.000161529,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

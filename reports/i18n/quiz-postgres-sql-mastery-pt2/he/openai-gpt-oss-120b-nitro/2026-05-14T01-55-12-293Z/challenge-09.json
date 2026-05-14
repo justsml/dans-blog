@@ -1,0 +1,62 @@
+{
+  "index": 8,
+  "attempt": 1,
+  "originalTitle": "TABLESAMPLE Syntax",
+  "translatedTitle": "תחביר TABLESAMPLE",
+  "translation": {
+    "title": "תחביר TABLESAMPLE",
+    "group": "דגימת נתונים",
+    "options": [
+      {
+        "text": "...students SAMPLETABLE BERNOULLI (0.10)"
+      },
+      {
+        "text": "...students TABLESAMPLE USER (10)"
+      },
+      {
+        "text": "...students TABLESAMPLE RANDOM (10)"
+      },
+      {
+        "text": "...students SAMPLE 10 PERCENT"
+      },
+      {
+        "text": "ROW_NUMBER() OVER (ORDER BY RAND())"
+      },
+      {
+        "text": "ORDER BY RANDOM() >= 10"
+      },
+      {
+        "text": "WHERE RANDOM() >= 0.1"
+      },
+      {
+        "text": "WHERE RANDOM() >= 0.9"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "איזה תחביר תקין כדי **לדגום באופן רנדומלי 10%** של תלמידים?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "זה קצת מסובך! יש כאן בערך 6 מלכודות, חלקן כוללות:\n\n1. תיאור ברמה גבוהה + חלקי תחביר. בודק איך אתם מרכיבים מידע חלקי.\n2. דורש ידע מוכר של תחביר `TABLESAMPLE`, משום שאף אחת מאפשרויות `TABLESAMPLE` לא משתמשת בתחביר הנכון! (מרושש! אני יודע! תמשיכו, אני מאמין בכם!!! ❤️)\n3. `ROW_NUMBER() OVER (ORDER BY RAND())` ו‑`ORDER BY RANDOM() > 10` הם הסחות דעת. הם נראים נכונים, אבל אינם. `RAND()` לא קיים. וגם `RANDOM() > 10` הוא ביטוי בוליאני שתמיד יהיה שקר מכיוון ש‑`RANDOM()` מחזיר ערך בטווח `0.0‑1.0`.\n   בעיה נוספת, `ORDER BY RANDOM() > 10` היה ממיין לפי ערך בוליאני, לא לפי מספר רנדומלי. אבל ה‑`> 10` בהחלט נראה כמו אחוז, נכון?\n4. `BERNOULLI` הוא תקין, אבל `SAMPLETABLE` אינו.\n5. `WHERE RANDOM() >= 0.1` הוא תחבולה! `RANDOM()` מחזיר ערך בטווח `0.0 <= x < 1.0`, ולכן `>= 0.1` יחזיר כ‑90% מהשורות, לא 10%.\n\nכפי שמודגם, PostgreSQL תומך בשתי שיטות דגימה:\n- `BERNOULLI`: לכל שורה יש הסתברות שווה\n- `SYSTEM`: דגימה ברמת בלוק (מהירה יותר אך פחות רנדומלית)\n\nלהעמקה, קראו את המאמר מ‑[Render](https://render.com/blog/postgresql-random-samples-big-tables).",
+      "כדאי גם לציין ש‑`TABLESAMPLE` [דווח](https://stackoverflow.com/questions/8674718/best-way-to-select-random-rows-postgresql) שהוא לא תמיד רנדומלי במלואו. אם אתם צריכים דגימה קבועה יותר רנדומלית, שקלו להשתמש ב‑`ORDER BY RANDOM() LIMIT 10`. שימו לב שזה מחזיר 10 שורות, ולא 10%, ויכול להיות איטי בטבלאות גדולות.\n\nקיימות גם הרחבות צד שלישי שמספקות שיטות דגימה רנדומליות יותר, אבל זה מחוץ לתחום של השאלה! 😅"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"תחביר TABLESAMPLE\",\n  \"group\": \"דגימת נתונים\",\n  \"options\": [\n    {\n      \"text\": \"...students SAMPLETABLE BERNOULLI (0.10)\"\n    },\n    {\n      \"text\": \"...students TABLESAMPLE USER (10)\"\n    },\n    {\n      \"text\": \"...students TABLESAMPLE RANDOM (10)\"\n    },\n    {\n      \"text\": \"...students SAMPLE 10 PERCENT\"\n    },\n    {\n      \"text\": \"ROW_NUMBER() OVER (ORDER BY RAND())\"\n    },\n    {\n      \"text\": \"ORDER BY RANDOM() >= 10\"\n    },\n    {\n      \"text\": \"WHERE RANDOM() >= 0.1\"\n    },\n    {\n      \"text\": \"WHERE RANDOM() >= 0.9\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"איזה תחביר תקין כדי **לדגום באופן רנדומלי 10%** של תלמידים?\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"זה קצת מסובך! יש כאן בערך 6 מלכודות, חלקן כוללות:\\n\\n1. תיאור ברמה גבוהה + חלקי תחביר. בודק איך אתם מרכיבים מידע חלקי.\\n2. דורש ידע מוכר של תחביר `TABLESAMPLE`, משום שאף אחת מאפשרויות `TABLESAMPLE` לא משתמשת בתחביר הנכון! (מרושש! אני יודע! תמשיכו, אני מאמין בכם!!! ❤️)\\n3. `ROW_NUMBER() OVER (ORDER BY RAND())` ו‑`ORDER BY RANDOM() > 10` הם הסחות דעת. הם נראים נכונים, אבל אינם. `RAND()` לא קיים. וגם `RANDOM() > 10` הוא ביטוי בוליאני שתמיד יהיה שקר מכיוון ש‑`RANDOM()` מחזיר ערך בטווח `0.0‑1.0`.\\n   בעיה נוספת, `ORDER BY RANDOM() > 10` היה ממיין לפי ערך בוליאני, לא לפי מספר רנדומלי. אבל ה‑`> 10` בהחלט נראה כמו אחוז, נכון?\\n4. `BERNOULLI` הוא תקין, אבל `SAMPLETABLE` אינו.\\n5. `WHERE RANDOM() >= 0.1` הוא תחבולה! `RANDOM()` מחזיר ערך בטווח `0.0 <= x < 1.0`, ולכן `>= 0.1` יחזיר כ‑90% מהשורות, לא 10%.\\n\\nכפי שמודגם, PostgreSQL תומך בשתי שיטות דגימה:\\n- `BERNOULLI`: לכל שורה יש הסתברות שווה\\n- `SYSTEM`: דגימה ברמת בלוק (מהירה יותר אך פחות רנדומלית)\\n\\nלהעמקה, קראו את המאמר מ‑[Render](https://render.com/blog/postgresql-random-samples-big-tables).\",\n    \"כדאי גם לציין ש‑`TABLESAMPLE` [דווח](https://stackoverflow.com/questions/8674718/best-way-to-select-random-rows-postgresql) שהוא לא תמיד רנדומלי במלואו. אם אתם צריכים דגימה קבועה יותר רנדומלית, שקלו להשתמש ב‑`ORDER BY RANDOM() LIMIT 10`. שימו לב שזה מחזיר 10 שורות, ולא 10%, ויכול להיות איטי בטבלאות גדולות.\\n\\nקיימות גם הרחבות צד שלישי שמספקות שיטות דגימה רנדומליות יותר, אבל זה מחוץ לתחום של השאלה! 😅\"\n  ],\n  \"explanationCode\": [\n    {\n      \"language\": \"sql\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1414,
+    "outputTokens": 1025,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 3062,
+    "providerCostUsd": 0.0008079,
+    "providerUpstreamCostUsd": 0.0008079,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000055146,
+    "outputUsd": 0.0001845,
+    "totalUsd": 0.00023964600000000002,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

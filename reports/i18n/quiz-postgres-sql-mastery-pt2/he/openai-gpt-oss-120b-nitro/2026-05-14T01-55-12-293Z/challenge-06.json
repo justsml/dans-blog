@@ -1,0 +1,49 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Multi-Column Index Order",
+  "translatedTitle": "סדר אינדקס מרובה עמודות",
+  "translation": {
+    "title": "סדר אינדקס מרובה עמודות",
+    "group": "אינדקסים",
+    "options": [
+      {
+        "text": "CREATE INDEX ON students(grade_level, last_name);"
+      },
+      {
+        "text": "CREATE INDEX ON students(grade_level);"
+      },
+      {
+        "text": "CREATE INDEX ON students(last_name, age);"
+      },
+      {
+        "text": "CREATE INDEX ON students(first_name, last_name, grade_level);"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "איזה אינדקס מתאים יותר לשאילתה הזו?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "לדעתי, הדבר המפתיע כאן הוא שאינדקס מרובה עמודות יכול לשמש אפילו כשסדר העמודות בטקסט השאילתה אינו תואם להגדרת האינדקס.\n\n**הערה:** באינדקסים מסוג B‑tree, העמודה המובילה חשובה. מכיוון שהשאילתה הזו מסננת לפי `grade_level` ו‑`last_name`, אינדקס שמתחיל ב‑`grade_level` ולאחריו `last_name` הוא התאמה טובה.\n\nככל שה‑SQL יוכל לבחור בפחות שורות, כך הביצועים יהיו טובים יותר.\n\nלדוגמה, אם יש לך טבלה `task`, ואתה יודע ש‑`status` יותר סלקטיבי מ‑`created_at`, ייתכן שתבחר באינדקס שמתחיל ב‑`status` לשאילתה כמו `status = 'done' AND created_at > '2024-01-01'`. סדר התנאים בטקסט של `WHERE` אינו מה שחשוב; מה שחשוב הוא סדר העמודות באינדקס וצורת הפראדיקט.\n\nאינדקס B+Tree ניתן לשימוש עבור:\n- העמודה המובילה, או קידומת שמאלית של העמודות.\n- אופרטורים כגון `=`, `>`, `<`, `BETWEEN`, ו‑`IN`, בהתאם לצורת השאילתה.\n- התאמת קידומת, `LIKE 'prefix%'`.\n\nתודה ל‑[u/mwdb2](https://www.reddit.com/r/PostgreSQL/comments/1h6kw87/comment/m0fovn0/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button) על שהצביע על טעות קודמת בהסבר זה!"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"סדר אינדקס מרובה עמודות\",\n  \"group\": \"אינדקסים\",\n  \"options\": [\n    {\n      \"text\": \"CREATE INDEX ON students(grade_level, last_name);\"\n    },\n    {\n      \"text\": \"CREATE INDEX ON students(grade_level);\"\n    },\n    {\n      \"text\": \"CREATE INDEX ON students(last_name, age);\"\n    },\n    {\n      \"text\": \"CREATE INDEX ON students(first_name, last_name, grade_level);\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"איזה אינדקס מתאים יותר לשאילתה הזו?\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"sql\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"לדעתי, הדבר המפתיע כאן הוא שאינדקס מרובה עמודות יכול לשמש אפילו כשסדר העמודות בטקסט השאילתה אינו תואם להגדרת האינדקס.\\n\\n**הערה:** באינדקסים מסוג B‑tree, העמודה המובילה חשובה. מכיוון שהשאילתה הזו מסננת לפי `grade_level` ו‑`last_name`, אינדקס שמתחיל ב‑`grade_level` ולאחריו `last_name` הוא התאמה טובה.\\n\\nככל שה‑SQL יוכל לבחור בפחות שורות, כך הביצועים יהיו טובים יותר.\\n\\nלדוגמה, אם יש לך טבלה `task`, ואתה יודע ש‑`status` יותר סלקטיבי מ‑`created_at`, ייתכן שתבחר באינדקס שמתחיל ב‑`status` לשאילתה כמו `status = 'done' AND created_at > '2024-01-01'`. סדר התנאים בטקסט של `WHERE` אינו מה שחשוב; מה שחשוב הוא סדר העמודות באינדקס וצורת הפראדיקט.\\n\\nאינדקס B+Tree ניתן לשימוש עבור:\\n- העמודה המובילה, או קידומת שמאלית של העמודות.\\n- אופרטורים כגון `=`, `>`, `<`, `BETWEEN`, ו‑`IN`, בהתאם לצורת השאילתה.\\n- התאמת קידומת, `LIKE 'prefix%'`.\\n\\nתודה ל‑[u/mwdb2](https://www.reddit.com/r/PostgreSQL/comments/1h6kw87/comment/m0fovn0/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button) על שהצביע על טעות קודמת בהסבר זה!\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 1157,
+    "outputTokens": 1071,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 3184,
+    "providerCostUsd": 0.00077775,
+    "providerUpstreamCostUsd": 0.00077775,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000045122999999999995,
+    "outputUsd": 0.00019277999999999998,
+    "totalUsd": 0.00023790299999999998,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

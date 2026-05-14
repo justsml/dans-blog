@@ -1,0 +1,52 @@
+{
+  "index": 7,
+  "attempt": 1,
+  "originalTitle": "Column Name Quoting",
+  "translatedTitle": "ציטוט שם עמודה",
+  "translation": {
+    "title": "ציטוט שם עמודה",
+    "group": "ציטוט 2",
+    "options": [
+      {
+        "text": "first.name"
+      },
+      {
+        "text": "\"first.name\""
+      },
+      {
+        "text": "\\"
+      },
+      {
+        "text": "[first.name]"
+      },
+      {
+        "text": "[first].[name]"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "איך מציינים **שם עמודה שמכיל נקודה?**"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "PostgreSQL משתמש במרכאות כפולות לציטוט מזהים:\n    - מרכאות כפולות `\"...\"` למזהים (שמות עמודות, שמות טבלאות)\n    - מרכאות בודדות `'...'` למחרוזות\n    - הצורה `first.name` מתפרשת כ-`table_name.column_name`\n\n    בלי מרכאות, נקודה בשם עמודה תתפרש כמפריד בין סכימה/טבלה! בנוסף, כל המזהים ללא מרכאות מומרים לאותיות קטנות כברירת מחדל.\n\n    כדי למזער הפתעות, עדיף להשתמש ב-`snake_case` ולהימנע משימוש בתווים מיוחדים."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"ציטוט שם עמודה\",\n  \"group\": \"ציטוט 2\",\n  \"options\": [\n    {\n      \"text\": \"first.name\"\n    },\n    {\n      \"text\": \"\\\"first.name\\\"\"\n    },\n    {\n      \"text\": \"\\\\\"\n    },\n    {\n      \"text\": \"[first.name]\"\n    },\n    {\n      \"text\": \"[first].[name]\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"איך מציינים **שם עמודה שמכיל נקודה?**\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"sql\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"PostgreSQL משתמש במרכאות כפולות לציטוט מזהים:\\n    - מרכאות כפולות `\\\"...\\\"` למזהים (שמות עמודות, שמות טבלאות)\\n    - מרכאות בודדות `'...'` למחרוזות\\n    - הצורה `first.name` מתפרשת כ-`table_name.column_name`\\n\\n    בלי מרכאות, נקודה בשם עמודה תתפרש כמפריד בין סכימה/טבלה! בנוסף, כל המזהים ללא מרכאות מומרים לאותיות קטנות כברירת מחדל.\\n\\n    כדי למזער הפתעות, עדיף להשתמש ב-`snake_case` ולהימנע משימוש בתווים מיוחדים.\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 930,
+    "outputTokens": 767,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1903,
+    "providerCostUsd": 0.0005997,
+    "providerUpstreamCostUsd": 0.0005997,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000036270000000000003,
+    "outputUsd": 0.00013806,
+    "totalUsd": 0.00017433,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
