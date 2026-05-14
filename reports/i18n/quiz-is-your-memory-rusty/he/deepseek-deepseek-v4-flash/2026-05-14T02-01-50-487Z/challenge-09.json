@@ -1,0 +1,57 @@
+{
+  "index": 8,
+  "attempt": 1,
+  "originalTitle": "RefCell Behavior",
+  "translatedTitle": "התנהגות RefCell",
+  "translation": {
+    "title": "התנהגות RefCell",
+    "group": "RefCells",
+    "options": [
+      {
+        "text": "מדפיס: 42",
+        "hint": "האם אפשר לקבל שתי השאלות ניתנות לשינוי בו זמנית?"
+      },
+      {
+        "text": "פאניקה בזמן ריצה: RefCell כבר מושאל"
+      },
+      {
+        "text": "שגיאת קומפילציה",
+        "hint": "RefCell מעביר את הבדיקות לזמן ריצה"
+      },
+      {
+        "text": "פאניקה בזמן ריצה: הודעה שונה",
+        "hint": "השגיאה מזכירה במפורש השאלה"
+      }
+    ],
+    "objectives": [
+      "הבנת שינוי פנימי (interior mutability) באמצעות RefCell",
+      "ניתוח כללי השאלה בזמן ריצה עם RefCell",
+      "יישום RefCell לגישה ניתנת לשינוי מבוקרת"
+    ],
+    "questionProse": [
+      "מה קורה כשהקוד הזה רץ?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "RefCell מספק שינוי פנימי (interior mutability) אך עדיין אוכף את כללי ההשאלה של Rust בזמן ריצה:",
+      "מושגי מפתח:\n      1. RefCell מעביר את בדיקות ההשאלה לזמן ריצה\n      2. עלול לגרום לפאניקות אם הכללים מופרים\n      3. שימושי לתבנית שינוי פנימי\n\n      מקרי שימוש נפוצים:\n      - אובייקטי מדמה בבדיקות\n      - מימוש מבנים עם הפניה עצמית\n      - כאשר אתה צריך לשנות נתונים מאחורי הפניה משותפת\n      \n      שיטות עבודה מומלצות:\n      1. העדף השאלה בזמן קומפילציה כאשר אפשר\n      2. שמור על השאלות RefCell בטווחים צרים\n      3. שקול להשתמש ב-drop() כדי לסיים השאלות במפורש\n      4. השתמש ב-RefCell כאשר אתה צריך שינוי פנימי"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"התנהגות RefCell\",\n  \"group\": \"RefCells\",\n  \"options\": [\n    {\n      \"text\": \"מדפיס: 42\",\n      \"hint\": \"האם אפשר לקבל שתי השאלות ניתנות לשינוי בו זמנית?\"\n    },\n    {\n      \"text\": \"פאניקה בזמן ריצה: RefCell כבר מושאל\"\n    },\n    {\n      \"text\": \"שגיאת קומפילציה\",\n      \"hint\": \"RefCell מעביר את הבדיקות לזמן ריצה\"\n    },\n    {\n      \"text\": \"פאניקה בזמן ריצה: הודעה שונה\",\n      \"hint\": \"השגיאה מזכירה במפורש השאלה\"\n    }\n  ],\n  \"objectives\": [\n    \"הבנת שינוי פנימי (interior mutability) באמצעות RefCell\",\n    \"ניתוח כללי השאלה בזמן ריצה עם RefCell\",\n    \"יישום RefCell לגישה ניתנת לשינוי מבוקרת\"\n  ],\n  \"questionProse\": [\n    \"מה קורה כשהקוד הזה רץ?\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"rust\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"RefCell מספק שינוי פנימי (interior mutability) אך עדיין אוכף את כללי ההשאלה של Rust בזמן ריצה:\",\n    \"מושגי מפתח:\\n      1. RefCell מעביר את בדיקות ההשאלה לזמן ריצה\\n      2. עלול לגרום לפאניקות אם הכללים מופרים\\n      3. שימושי לתבנית שינוי פנימי\\n\\n      מקרי שימוש נפוצים:\\n      - אובייקטי מדמה בבדיקות\\n      - מימוש מבנים עם הפניה עצמית\\n      - כאשר אתה צריך לשנות נתונים מאחורי הפניה משותפת\\n      \\n      שיטות עבודה מומלצות:\\n      1. העדף השאלה בזמן קומפילציה כאשר אפשר\\n      2. שמור על השאלות RefCell בטווחים צרים\\n      3. שקול להשתמש ב-drop() כדי לסיים השאלות במפורש\\n      4. השתמש ב-RefCell כאשר אתה צריך שינוי פנימי\"\n  ],\n  \"explanationCode\": [\n    {\n      \"language\": \"rust\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 990,
+    "outputTokens": 2600,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 20751,
+    "providerCostUsd": 0.001238,
+    "providerUpstreamCostUsd": 0.001238,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.0001386,
+    "outputUsd": 0.000728,
+    "totalUsd": 0.0008666,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
