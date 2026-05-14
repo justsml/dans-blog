@@ -1,0 +1,51 @@
+{
+  "index": 13,
+  "attempt": 1,
+  "originalTitle": "Object vs Error Detection",
+  "translatedTitle": "对象与错误检测",
+  "translation": {
+    "title": "对象与错误检测",
+    "group": "错误边界",
+    "options": [
+      {
+        "text": "true, true"
+      },
+      {
+        "text": "false, false"
+      },
+      {
+        "text": "true, false"
+      },
+      {
+        "text": "false, true"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "这些检查返回什么？"
+    ],
+    "hintsProse": [
+      "一个检查原型链，另一个检查内部槽位。"
+    ],
+    "explanationProse": [
+      "`instanceof Error` 返回 `false`，因为该对象并非由 Error 构造函数创建。`Object.prototype.toString.call()` 同样返回 `false`（它返回 `'[object Object]'`），因为它检查内部 `[[Class]]` 槽位。两种方法都正确识别出这是一个伪造的错误对象。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"对象与错误检测\",\n  \"group\": \"错误边界\",\n  \"options\": [\n    {\n      \"text\": \"true, true\"\n    },\n    {\n      \"text\": \"false, false\"\n    },\n    {\n      \"text\": \"true, false\"\n    },\n    {\n      \"text\": \"false, true\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"这些检查返回什么？\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"js\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [\n    \"一个检查原型链，另一个检查内部槽位。\"\n  ],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"`instanceof Error` 返回 `false`，因为该对象并非由 Error 构造函数创建。`Object.prototype.toString.call()` 同样返回 `false`（它返回 `'[object Object]'`），因为它检查内部 `[[Class]]` 槽位。两种方法都正确识别出这是一个伪造的错误对象。\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 808,
+    "outputTokens": 789,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 6222,
+    "providerCostUsd": 0.0004772,
+    "providerUpstreamCostUsd": 0.0004772,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00011312000000000001,
+    "outputUsd": 0.00022092000000000002,
+    "totalUsd": 0.00033404,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
