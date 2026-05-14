@@ -1,0 +1,75 @@
+{
+  "runId": "openai-gpt-oss-120b-nitro@2026-05-14T17-33-53-187Z",
+  "slug": "beam-search-transformers-js",
+  "locale": "zh",
+  "model": "openai/gpt-oss-120b:nitro",
+  "modelPath": "openai-gpt-oss-120b-nitro",
+  "createdAt": "2026-05-14T17:34:01.159Z",
+  "sourcePath": "src/content/posts/2026-04-16--beam-search-transformers-js/index.mdx",
+  "targetPath": "src/content/posts/2026-04-16--beam-search-transformers-js/zh/index.mdx",
+  "candidatePath": "reports/i18n/beam-search-transformers-js/zh/openai-gpt-oss-120b-nitro/2026-05-14T17-33-53-187Z/candidate.mdx",
+  "sourceHash": "f18620b582f1c2a340c4b7d98da5cb544cd646463534f4076975963727af3149",
+  "outputHash": "3cb99c30bb92fbbc7e86f3016e57c8da75102e3bdf00fdc0fdda0bb4a96599c4",
+  "reasoningEffort": "low",
+  "temperature": 0.3,
+  "maxTokens": 16000,
+  "timeoutMs": 200000,
+  "articleSummary": "The article arguesthat the “num_beams” option in transformers.js was silently ignored, causing all models to fall back to greedy decoding, and walks the reader through a full implementation of true beam search—including standard, diverse, and sampling variants—tailored to the library’s architecture. It explains the core algorithmic steps (log‑softmax, cumulative scores, a two‑level sort over num_beams × vocab_size candidates) and highlights the hardest engineering hurdle: correctly reordering the transformer’s key‑value cache after each pruning step, with separate CPU and async‑GPU paths. The piece is written as a hands‑on tutorial, peppered with informal metaphors (“bounded breadth‑first search,” “the first word you say isn’t always the best start”) and occasional humor, aimed at JavaScript developers familiar with transformer models who need to extend or debug generation code.",
+  "totalInputTokens": 6478,
+  "totalOutputTokens": 2404,
+  "totalCacheReadTokens": 1536,
+  "totalCacheWriteTokens": 0,
+  "totalDurationMs": 6847,
+  "totalCostUsd": 0.0006853619999999999,
+  "pricingSource": "local-openrouter-estimate",
+  "telemetry": {
+    "model": "openai/gpt-oss-120b:nitro",
+    "chunkSize": "18p",
+    "totalChunks": 4,
+    "totalInputTokens": 6478,
+    "totalOutputTokens": 2404,
+    "totalCacheReadTokens": 1536,
+    "totalCacheWriteTokens": 0,
+    "totalDurationMs": 6847,
+    "totalCostUsd": 0.0006853619999999999,
+    "pricingSource": "local-openrouter-estimate",
+    "chunks": [
+      {
+        "index": 0,
+        "inputTokens": 1570,
+        "outputTokens": 199,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 780,
+        "costUsd": 0.00009705
+      },
+      {
+        "index": 1,
+        "inputTokens": 1745,
+        "outputTokens": 819,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 2130,
+        "costUsd": 0.000215475
+      },
+      {
+        "index": 2,
+        "inputTokens": 1613,
+        "outputTokens": 782,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 1930,
+        "costUsd": 0.000203667
+      },
+      {
+        "index": 3,
+        "inputTokens": 1550,
+        "outputTokens": 604,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 2007,
+        "costUsd": 0.00016917
+      }
+    ]
+  }
+}
