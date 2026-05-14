@@ -1,0 +1,49 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "Chaining `.then` and `.catch`'s",
+  "translatedTitle": "链式调用 `.then` 和 `.catch`",
+  "translation": {
+    "title": "链式调用 `.then` 和 `.catch`",
+    "group": "错误处理",
+    "options": [
+      {
+        "text": "打印 error 和 `undefined`"
+      },
+      {
+        "text": "打印两次 error"
+      },
+      {
+        "text": "UnhandledPromiseRejectionWarning"
+      },
+      {
+        "text": "undefined"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "以下代码的输出结果是什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "在链式调用 `.then` 和 `.catch` 时，将它们想象成一系列步骤会很有帮助。每个 `.then` 都会接收上一个 `.then` 返回的值（作为其参数）。但是，如果你的某个“步骤”遇到了错误，后续的所有 `.then` 步骤都将被跳过，直到遇到 `.catch`。如果你想覆盖错误并继续执行，只需返回一个非错误值即可。该值可以通过后续的任何 `.then` 访问。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"链式调用 `.then` 和 `.catch`\",\n  \"group\": \"错误处理\",\n  \"options\": [\n    {\n      \"text\": \"打印 error 和 `undefined`\"\n    },\n    {\n      \"text\": \"打印两次 error\"\n    },\n    {\n      \"text\": \"UnhandledPromiseRejectionWarning\"\n    },\n    {\n      \"text\": \"undefined\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"以下代码的输出结果是什么？\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"js\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"在链式调用 `.then` 和 `.catch` 时，将它们想象成一系列步骤会很有帮助。每个 `.then` 都会接收上一个 `.then` 返回的值（作为其参数）。但是，如果你的某个“步骤”遇到了错误，后续的所有 `.then` 步骤都将被跳过，直到遇到 `.catch`。如果你想覆盖错误并继续执行，只需返回一个非错误值即可。该值可以通过后续的任何 `.then` 访问。\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 853,
+    "outputTokens": 307,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 3224,
+    "providerCostUsd": 0.0013475,
+    "providerUpstreamCostUsd": 0.0013475,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.0004265,
+    "outputUsd": 0.0009209999999999999,
+    "totalUsd": 0.0013475,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
