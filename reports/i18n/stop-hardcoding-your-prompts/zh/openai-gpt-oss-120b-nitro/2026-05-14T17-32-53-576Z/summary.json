@@ -1,0 +1,66 @@
+{
+  "runId": "openai-gpt-oss-120b-nitro@2026-05-14T17-32-53-576Z",
+  "slug": "stop-hardcoding-your-prompts",
+  "locale": "zh",
+  "model": "openai/gpt-oss-120b:nitro",
+  "modelPath": "openai-gpt-oss-120b-nitro",
+  "createdAt": "2026-05-14T17:33:01.884Z",
+  "sourcePath": "src/content/posts/2026-05-07--stop-hardcoding-your-prompts/index.mdx",
+  "targetPath": "src/content/posts/2026-05-07--stop-hardcoding-your-prompts/zh/index.mdx",
+  "candidatePath": "reports/i18n/stop-hardcoding-your-prompts/zh/openai-gpt-oss-120b-nitro/2026-05-14T17-32-53-576Z/candidate.mdx",
+  "sourceHash": "33ae6a35f2ff3387543fa0c1a51d8fcd437bb76314cd5422f314ec4f9632700e",
+  "outputHash": "7f53111cabbc064ee4621c869388e7f72226d93b6a7907607243270126f5a2cc",
+  "reasoningEffort": "low",
+  "temperature": 0.3,
+  "maxTokens": 16000,
+  "timeoutMs": 200000,
+  "articleSummary": "**Summary**  \nThe article argues that embedding LLM prompts directly as raw strings in application code is a hidden, fragile configuration that should be treated like any other runtime‑controlled code. It warns that such “buried” prompts invite bugs, make roll‑backs impossible, and expose the system to prompt‑injection attacks similar to SQL injection when user data is interpolated unchecked. To solve this, the author proposes three concrete patterns: (1) **Typed Prompt Templates** – define a schema (e.g., with Zod) for all prompt variables, validate them, and generate the prompt in a single, testable function; (2) **Composable Prompt Sections** – break a prompt into named, prioritized pieces that can be assembled conditionally, improving readability, versioning, and testability; (3) **Separate Instructions from Data** – use the chat‑message format (system/user roles) instead of a monolithic string, keeping instruction and user‑supplied content distinct to mitigate injection. The tone is a pragmatic tutorial‑style rant, using the metaphor of “prompt as architecture” and comparing raw interpolation to unsafe SQL concatenation. The intended audience is developers building LLM‑powered products who need reliable, maintainable prompt management.",
+  "totalInputTokens": 5428,
+  "totalOutputTokens": 2706,
+  "totalCacheReadTokens": 512,
+  "totalCacheWriteTokens": 0,
+  "totalDurationMs": 6977,
+  "totalCostUsd": 0.0006987720000000001,
+  "pricingSource": "local-openrouter-estimate",
+  "telemetry": {
+    "model": "openai/gpt-oss-120b:nitro",
+    "chunkSize": "18p",
+    "totalChunks": 3,
+    "totalInputTokens": 5428,
+    "totalOutputTokens": 2706,
+    "totalCacheReadTokens": 512,
+    "totalCacheWriteTokens": 0,
+    "totalDurationMs": 6977,
+    "totalCostUsd": 0.0006987720000000001,
+    "pricingSource": "local-openrouter-estimate",
+    "chunks": [
+      {
+        "index": 0,
+        "inputTokens": 1431,
+        "outputTokens": 649,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 1608,
+        "costUsd": 0.000172629
+      },
+      {
+        "index": 1,
+        "inputTokens": 2354,
+        "outputTokens": 1417,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 3770,
+        "costUsd": 0.000346866
+      },
+      {
+        "index": 2,
+        "inputTokens": 1643,
+        "outputTokens": 640,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 1599,
+        "costUsd": 0.000179277
+      }
+    ]
+  }
+}
