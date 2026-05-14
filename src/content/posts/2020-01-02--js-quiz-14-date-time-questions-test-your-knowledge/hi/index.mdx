@@ -66,6 +66,9 @@ JavaScript में `Date` क्लास का API अपनी पेची
   </div>
   </slot>
 
+  <slot name='hints'>
+  </slot>
+
   <slot name='explanation'>
   <div className="explanation">
     Month (महीना) आर्गुमेंट ज़ीरो-बेस्ड (zero-based) होता है। इसकी रेंज 0-11 होती है (पश्चिमी कैलेंडर के अनुसार)।
@@ -94,6 +97,9 @@ JavaScript में `Date` क्लास का API अपनी पेची
         console.log(d2)
     ```
   </div>
+  </slot>
+
+  <slot name='hints'>
   </slot>
 
   <slot name='explanation'>
@@ -129,6 +135,9 @@ JavaScript में `Date` क्लास का API अपनी पेची
   </div>
   </slot>
 
+  <slot name='hints'>
+  </slot>
+
   <slot name='explanation'>
   <div className="explanation">
     `new` कीवर्ड को न भूलें! `Date` एक क्लास है, और इसे `new` के साथ कॉल किया जाना चाहिए।
@@ -162,6 +171,9 @@ JavaScript में `Date` क्लास का API अपनी पेची
           console.log(date.getFullYear())
     ```
   </div>
+  </slot>
+
+  <slot name='hints'>
   </slot>
 
   <slot name='explanation'>
@@ -200,6 +212,9 @@ JavaScript में `Date` क्लास का API अपनी पेची
   </div>
   </slot>
 
+  <slot name='hints'>
+  </slot>
+
   <slot name='explanation'>
   <div className="explanation">
     बिना `T` टाइम वैल्यू वाली स्ट्रिंग 1 जनवरी, 2020 लग सकती है - लेकिन केवल डेट वाली स्ट्रिंग्स को UTC माना जाता है, और जब इसे स्थानीय टाइमज़ोन (GMT-7) में एडजस्ट किया जाता है, तो हम पाते हैं कि हम अभी भी 2019 में ही हैं।
@@ -220,16 +235,19 @@ JavaScript में `Date` क्लास का API अपनी पेची
   group="तारीखों को संभालना"
   title="फॉर्मेटिंग भाग 1"
   options={[
-    {text: 'new Intl.DateTimeFormat(\'},
-    {text: 'date.toLocaleFormat(\', isAnswer: true},
-    {text: 'date.toLocaleString(\'},
-    {text: 'date.toLocaleDateString(\'},
+    {text: 'new Intl.DateTimeFormat(\'en-US\').format(date)'},
+    {text: 'date.toLocaleFormat(\'en-US\')', isAnswer: true },
+    {text: 'date.toLocaleString(\'en-GB\', { timeZone: \'UTC\' })'},
+    {text: 'date.toLocaleDateString(\'en-US\', { timeZone: \'UTC\', timeZoneName: \'short\' })'},
   ]}
 >
   <slot name="question">
   <div className="question">
     एक _गलत_ फॉर्मेटिंग मेथड चुनें:
   </div>
+  </slot>
+
+  <slot name='hints'>
   </slot>
 
   <slot name='explanation'>
@@ -261,6 +279,9 @@ JavaScript में `Date` क्लास का API अपनी पेची
           console.log(date.toUTCString())
     ```
   </div>
+  </slot>
+
+  <slot name='hints'>
   </slot>
 
   <slot name='explanation'>
@@ -297,6 +318,9 @@ JavaScript में `Date` क्लास का API अपनी पेची
   </div>
   </slot>
 
+  <slot name='hints'>
+  </slot>
+
   <slot name='explanation'>
   <div className="explanation">
     हेल्पर मेथड [`Date.UTC`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/UTC) कोई date instance वापस नहीं करता है। यह मिलीसेकंड में एक पूर्णांक (integer) वापस करता है।
@@ -328,6 +352,9 @@ JavaScript में `Date` क्लास का API अपनी पेची
   </div>
   </slot>
 
+  <slot name='hints'>
+  </slot>
+
   <slot name='explanation'>
   <div className="explanation">
     तारीखें (Dates) स्वाभाविक रूप से स्थानीय समय (local time) में दिखाई जाएंगी, जिसमें [`.getTimezoneOffset()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getTimezoneOffset) (प्रभावी रूप से) अपरिवर्तित रहता है।
@@ -357,6 +384,9 @@ JavaScript में `Date` क्लास का API अपनी पेची
           console.log(d)
     ```
   </div>
+  </slot>
+
+  <slot name='hints'>
   </slot>
 
   <slot name='explanation'>
@@ -424,6 +454,9 @@ JavaScript में `Date` क्लास का API अपनी पेची
   </div>
   </slot>
 
+  <slot name='hints'>
+  </slot>
+
   <slot name='explanation'>
   <div className="explanation">
     [`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) मेथड दिए गए डेट इंस्टेंस का महीना सेट करता है।
@@ -457,6 +490,9 @@ JavaScript में `Date` क्लास का API अपनी पेची
           console.log(d)
     ```
   </div>
+  </slot>
+
+  <slot name='hints'>
   </slot>
 
   <slot name='explanation'>

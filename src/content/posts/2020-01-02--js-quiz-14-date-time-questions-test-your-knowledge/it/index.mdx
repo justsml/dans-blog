@@ -66,6 +66,9 @@ Questo quiz è progettato per testare (e approfondire) la tua conoscenza dell'AP
   </div>
   </slot>
 
+  <slot name='hints'>
+  </slot>
+
   <slot name='explanation'>
   <div className="explanation">
     L'argomento relativo al mese è basato su zero, con un intervallo 0-11 (utilizzando i calendari occidentali).
@@ -94,6 +97,9 @@ Questo quiz è progettato per testare (e approfondire) la tua conoscenza dell'AP
         console.log(d2)
     ```
   </div>
+  </slot>
+
+  <slot name='hints'>
   </slot>
 
   <slot name='explanation'>
@@ -129,6 +135,9 @@ Questo quiz è progettato per testare (e approfondire) la tua conoscenza dell'AP
   </div>
   </slot>
 
+  <slot name='hints'>
+  </slot>
+
   <slot name='explanation'>
   <div className="explanation">
     Non dimenticare la keyword `new`! `Date` è una classe e dovrebbe essere chiamata con `new`.
@@ -162,6 +171,9 @@ Questo quiz è progettato per testare (e approfondire) la tua conoscenza dell'AP
           console.log(date.getFullYear())
     ```
   </div>
+  </slot>
+
+  <slot name='hints'>
   </slot>
 
   <slot name='explanation'>
@@ -200,6 +212,9 @@ Questo quiz è progettato per testare (e approfondire) la tua conoscenza dell'AP
   </div>
   </slot>
 
+  <slot name='hints'>
+  </slot>
+
   <slot name='explanation'>
   <div className="explanation">
     La stringa senza il valore temporale `T` potrebbe sembrare il 1° gennaio 2020 - ma le stringhe di sola data vengono interpretate come UTC e, quando adattate al nostro fuso orario locale (GMT-7), scopriamo di essere ancora nel 2019.
@@ -220,16 +235,19 @@ Questo quiz è progettato per testare (e approfondire) la tua conoscenza dell'AP
   group="Gestione delle Date"
   title="Formattazione Parte 1"
   options={[
-    {text: 'new Intl.DateTimeFormat("'},
-    {text: 'date.toLocaleFormat("', isAnswer: true},
-    {text: 'date.toLocaleString("'},
-    {text: 'date.toLocaleDateString("'},
+    {text: 'new Intl.DateTimeFormat(\'en-US\').format(date)'},
+    {text: 'date.toLocaleFormat(\'en-US\')', isAnswer: true },
+    {text: 'date.toLocaleString(\'en-GB\', { timeZone: \'UTC\' })'},
+    {text: 'date.toLocaleDateString(\'en-US\', { timeZone: \'UTC\', timeZoneName: \'short\' })'},
   ]}
 >
   <slot name="question">
   <div className="question">
     Seleziona un metodo di formattazione _errato_:
   </div>
+  </slot>
+
+  <slot name='hints'>
   </slot>
 
   <slot name='explanation'>
@@ -261,6 +279,9 @@ Questo quiz è progettato per testare (e approfondire) la tua conoscenza dell'AP
           console.log(date.toUTCString())
     ```
   </div>
+  </slot>
+
+  <slot name='hints'>
   </slot>
 
   <slot name='explanation'>
@@ -297,6 +318,9 @@ Questo quiz è progettato per testare (e approfondire) la tua conoscenza dell'AP
   </div>
   </slot>
 
+  <slot name='hints'>
+  </slot>
+
   <slot name='explanation'>
   <div className="explanation">
     Il metodo helper [`Date.UTC`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/UTC) non restituisce un'istanza di data. Restituisce un intero che rappresenta i millisecondi.
@@ -328,6 +352,9 @@ Questo quiz è progettato per testare (e approfondire) la tua conoscenza dell'AP
   </div>
   </slot>
 
+  <slot name='hints'>
+  </slot>
+
   <slot name='explanation'>
   <div className="explanation">
     Le istanze di `Date` verranno presentate implicitamente nell'ora locale, con un valore di [`.getTimezoneOffset()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getTimezoneOffset) (effettivamente) invariato.
@@ -357,6 +384,9 @@ Questo quiz è progettato per testare (e approfondire) la tua conoscenza dell'AP
           console.log(d)
     ```
   </div>
+  </slot>
+
+  <slot name='hints'>
   </slot>
 
   <slot name='explanation'>
@@ -424,6 +454,9 @@ Questo quiz è progettato per testare (e approfondire) la tua conoscenza dell'AP
   </div>
   </slot>
 
+  <slot name='hints'>
+  </slot>
+
   <slot name='explanation'>
   <div className="explanation">
     Il metodo [`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) imposta il mese per una specifica istanza di data.
@@ -457,6 +490,9 @@ Questo quiz è progettato per testare (e approfondire) la tua conoscenza dell'AP
           console.log(d)
     ```
   </div>
+  </slot>
+
+  <slot name='hints'>
   </slot>
 
   <slot name='explanation'>

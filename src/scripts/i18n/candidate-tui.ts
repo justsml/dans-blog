@@ -4,6 +4,8 @@ import { spawn, type ChildProcess } from "node:child_process";
 import { ACTIVE_LOCALES, type ActiveLocale } from "../../shared/i18n.ts";
 import {
   collectSourcePosts as collectInventorySourcePosts,
+  getTranslationSlot,
+  isTranslationOlderThanSource,
   parseActiveLocales,
   type SourcePost,
 } from "./corpus-inventory.ts";
@@ -118,6 +120,7 @@ const selectedSlugs = new Set(parseList(optionalString(options, "slugs"), []));
 const shouldIncludeDrafts = options["include-drafts"] === true;
 const shouldIncludeHidden = options["include-hidden"] === true;
 const shouldIncompleteOnly = options["incomplete-only"] === true;
+const shouldOnlyModified = options["only-modified"] === true;
 const shouldMarkdown = options.markdown === true || options["no-tui"] === true;
 const watchIntervalSeconds = parseOptionalPositiveInteger(optionalString(options, "watch"));
 const refreshDebounceMs = parsePositiveInteger(optionalString(options, "refresh-debounce-ms"), DEFAULT_REFRESH_DEBOUNCE_MS);
@@ -610,6 +613,10 @@ function collectRows(): ArticleRow[] {
     .filter((post) => shouldIncludeHidden || !post.isHidden)
     .filter((post) => shouldIncludeDrafts || !post.isDraft)
     .filter((post) => selectedSlugs.size === 0 || selectedSlugs.has(post.slug) || selectedSlugs.has(post.directory))
+    .filter((post) =>
+      !shouldOnlyModified ||
+      selectedLocales.some((locale) => isTranslationOlderThanSource(getTranslationSlot(post, locale))),
+    )
     .map((post) => ({
       ...post,
       candidates: Object.fromEntries(
@@ -1306,7 +1313,7 @@ function buildGeneratorArgs() {
   addGeneratorArgWithDefault(args, "quiz-concurrency", DEFAULT_TUI_QUIZ_CONCURRENCY);
   addOptionalGeneratorArg(args, "challenge-retries");
 
-  for (const name of ["validate", "validate-candidates", "full-validation", "no-commit", "dry-run"]) {
+  for (const name of ["validate", "validate-candidates", "full-validation", "no-commit", "dry-run", "only-modified"]) {
     if (options[name] === true) args.push(`--${name}`);
   }
 

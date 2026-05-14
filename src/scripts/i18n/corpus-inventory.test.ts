@@ -136,6 +136,7 @@ test("finds modified translation slots when English modified is newer", () => {
     ].join("\n"),
     "utf8",
   );
+  mkdirSync(join(repoRoot, "src/content/posts/2026-05-13--stale-post/ja"), { recursive: true });
   writeFileSync(
     join(repoRoot, "src/content/posts/2026-05-13--stale-post/ja/index.mdx"),
     [

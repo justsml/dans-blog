@@ -54,6 +54,7 @@ import { parseQuiz, assembleQuiz } from "./quiz-parser.ts";
 import { translateChallenge, generateQuizDescription } from "./quiz-translator.ts";
 import { estimateTokenCost, safeModelPathName } from "./translation-costs.ts";
 import { OPENROUTER_USAGE_ACCOUNTING, cachedText, usageFromResult } from "./llm-telemetry.ts";
+import { isTranslationOlderThanSource } from "./corpus-inventory.ts";
 import {
   assertNoOutOfCreditMarker,
   isOutOfCreditError,
@@ -948,6 +949,7 @@ async function main() {
   const skipSummary = options["skip-summary"] === true;
   const dryRun = options["dry-run"] === true;
   const shouldPublish = options["no-publish"] !== true;
+  const shouldOnlyModified = options["only-modified"] === true;
   const quizConcurrency = parseQuizConcurrency(options["quiz-concurrency"]);
   const challengeRetries = parseChallengeRetries(options["challenge-retries"]);
   const runLockPath = typeof options["run-lock-path"] === "string" ? options["run-lock-path"] : undefined;
@@ -957,12 +959,18 @@ async function main() {
   assertNoOutOfCreditMarker();
 
   const llmConfig = resolveLlmConfig(modelId);
-  const { sourcePath, targetPath } = getPostPaths(slug, locale);
+  const paths = getPostPaths(slug, locale);
+  const { sourcePath, targetPath } = paths;
   const runTimestamp = createRunTimestamp();
   const runPaths = getCandidateRunPaths(slug, locale, llmConfig.modelId, runTimestamp);
 
   if (!existsSync(sourcePath)) {
     throw new Error(`Source file not found: ${sourcePath}`);
+  }
+
+  if (shouldOnlyModified && !isTranslationOlderThanSource(paths)) {
+    console.log(`Skipping ${slug} [${locale}]; English modified is not newer than the translation modified date.`);
+    return;
   }
 
   const sourceRaw = readFileSync(sourcePath, "utf8");

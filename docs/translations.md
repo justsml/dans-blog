@@ -91,6 +91,14 @@ bun run i18n:translate:candidates -- \
   --models openrouter/qwen/qwen3.6-plus
 ```
 
+Use `--only-modified` for refresh passes that should only re-translate existing locale files whose English `modified` frontmatter date is newer than the localized file's `modified` date. Locale files with no `modified` are treated as stale when English has one; missing locale files are not included by this flag. The flag is supported by the candidate, all-missing, Qwen baseline, chunked translator, and candidate TUI wrappers.
+
+```sh
+bun run i18n:translate:candidates -- \
+  --locales es,ja,zh \
+  --only-modified
+```
+
 Keep telemetry reports inside timestamped run directories. Do not write or commit latest-by-model `reports/i18n/{slug}/{locale}/{model}/chunked-*.md` files.
 
 Every future candidate report includes run telemetry:

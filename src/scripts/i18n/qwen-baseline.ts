@@ -6,6 +6,7 @@ import {
   collectSourcePosts,
   filterActiveLocales,
   getTranslationSlot,
+  isTranslationOlderThanSource,
 } from "./corpus-inventory.ts";
 import {
   optionalString,
@@ -43,6 +44,7 @@ const shardIndex = parseNonNegativeInteger(optionalString(options, "shard-index"
 const shouldDryRun = options["dry-run"] === true;
 const shouldPush = options["push"] === true;
 const shouldMissingOnly = options["missing-only"] === true;
+const shouldOnlyModified = options["only-modified"] === true;
 const shouldRetryRejected = options["retry-rejected"] !== false;
 const shouldConcurrentWorktree = options["concurrent-worktree"] === true || shardCount > 1 || taskConcurrency > 1;
 
@@ -61,6 +63,7 @@ console.log(`Timeout seconds: ${timeoutSeconds}`);
 console.log(`Task concurrency: ${taskConcurrency}`);
 console.log(`Shard: ${shardIndex + 1}/${shardCount}`);
 console.log(`Concurrent worktree mode: ${shouldConcurrentWorktree ? "yes" : "no"}`);
+console.log(`Only modified: ${shouldOnlyModified ? "yes" : "no"}`);
 
 if (shouldDryRun) {
   for (const task of limitedTasks) {
@@ -203,8 +206,9 @@ function getQwenBaselineTasks() {
       const reportPath = join(slot.reportDir, QWEN_REPORT_FILE);
       const targetPath = slot.targetPath;
       if (shouldMissingOnly && existsSync(targetPath)) continue;
-      if (hasSuccessfulQwenReport(reportPath)) continue;
-      if (!shouldRetryRejected && existsSync(reportPath)) continue;
+      if (shouldOnlyModified && !isTranslationOlderThanSource(slot)) continue;
+      if (!shouldOnlyModified && hasSuccessfulQwenReport(reportPath)) continue;
+      if (!shouldOnlyModified && !shouldRetryRejected && existsSync(reportPath)) continue;
       tasks.push({ slug: post.slug, locale, sourcePath: slot.sourcePath, targetPath, reportPath });
     }
   }

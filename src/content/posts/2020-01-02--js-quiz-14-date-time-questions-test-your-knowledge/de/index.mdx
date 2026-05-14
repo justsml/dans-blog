@@ -66,6 +66,9 @@ Dieses Quiz soll Ihr Wissen über die native `Date`-API testen (und vertiefen). 
   </div>
   </slot>
 
+  <slot name='hints'>
+  </slot>
+
   <slot name='explanation'>
   <div className="explanation">
     Das Monats-Argument ist nullbasiert, mit einem Bereich von 0-11 (bei Verwendung westlicher Kalender).
@@ -94,6 +97,9 @@ Dieses Quiz soll Ihr Wissen über die native `Date`-API testen (und vertiefen). 
         console.log(d2)
     ```
   </div>
+  </slot>
+
+  <slot name='hints'>
   </slot>
 
   <slot name='explanation'>
@@ -129,6 +135,9 @@ Dieses Quiz soll Ihr Wissen über die native `Date`-API testen (und vertiefen). 
   </div>
   </slot>
 
+  <slot name='hints'>
+  </slot>
+
   <slot name='explanation'>
   <div className="explanation">
     Vergiss nicht das `new`-Schlüsselwort! `Date` ist eine Klasse und sollte mit `new` aufgerufen werden.
@@ -162,6 +171,9 @@ Dieses Quiz soll Ihr Wissen über die native `Date`-API testen (und vertiefen). 
           console.log(date.getFullYear())
     ```
   </div>
+  </slot>
+
+  <slot name='hints'>
   </slot>
 
   <slot name='explanation'>
@@ -200,6 +212,9 @@ Dieses Quiz soll Ihr Wissen über die native `Date`-API testen (und vertiefen). 
   </div>
   </slot>
 
+  <slot name='hints'>
+  </slot>
+
   <slot name='explanation'>
   <div className="explanation">
     Ein String ohne einen `T`-Zeitwert mag wie der 1. Januar 2020 erscheinen – aber reine Datums-Strings werden als UTC interpretiert. Wenn wir dies an unsere lokale Zeitzone (GMT-7) anpassen, befinden wir uns tatsächlich noch im Jahr 2019.
@@ -220,16 +235,19 @@ Dieses Quiz soll Ihr Wissen über die native `Date`-API testen (und vertiefen). 
   group="Umgang mit Daten"
   title="Formatierung Teil 1"
   options={[
-    {text: 'new Intl.DateTimeFormat(\'},
-    {text: 'date.toLocaleFormat(\', isAnswer: true},
-    {text: 'date.toLocaleString(\'},
-    {text: 'date.toLocaleDateString(\'},
+    {text: 'new Intl.DateTimeFormat(\'en-US\').format(date)'},
+    {text: 'date.toLocaleFormat(\'en-US\')', isAnswer: true },
+    {text: 'date.toLocaleString(\'en-GB\', { timeZone: \'UTC\' })'},
+    {text: 'date.toLocaleDateString(\'en-US\', { timeZone: \'UTC\', timeZoneName: \'short\' })'},
   ]}
 >
   <slot name="question">
   <div className="question">
     Wähle eine _falsche_ Formatierungsmethode aus:
   </div>
+  </slot>
+
+  <slot name='hints'>
   </slot>
 
   <slot name='explanation'>
@@ -261,6 +279,9 @@ Dieses Quiz soll Ihr Wissen über die native `Date`-API testen (und vertiefen). 
           console.log(date.toUTCString())
     ```
   </div>
+  </slot>
+
+  <slot name='hints'>
   </slot>
 
   <slot name='explanation'>
@@ -297,6 +318,9 @@ Dieses Quiz soll Ihr Wissen über die native `Date`-API testen (und vertiefen). 
   </div>
   </slot>
 
+  <slot name='hints'>
+  </slot>
+
   <slot name='explanation'>
   <div className="explanation">
     Die Hilfsmethode [`Date.UTC`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/UTC) gibt keine Date-Instanz zurück. Sie gibt eine Ganzzahl in Millisekunden zurück.
@@ -328,6 +352,9 @@ Dieses Quiz soll Ihr Wissen über die native `Date`-API testen (und vertiefen). 
   </div>
   </slot>
 
+  <slot name='hints'>
+  </slot>
+
   <slot name='explanation'>
   <div className="explanation">
     Daten werden implizit in der lokalen Zeit dargestellt, mit einem (effektiv) unveränderlichen [`.getTimezoneOffset()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getTimezoneOffset).
@@ -357,6 +384,9 @@ Dieses Quiz soll Ihr Wissen über die native `Date`-API testen (und vertiefen). 
           console.log(d)
     ```
   </div>
+  </slot>
+
+  <slot name='hints'>
   </slot>
 
   <slot name='explanation'>
@@ -424,6 +454,9 @@ Dieses Quiz soll Ihr Wissen über die native `Date`-API testen (und vertiefen). 
   </div>
   </slot>
 
+  <slot name='hints'>
+  </slot>
+
   <slot name='explanation'>
   <div className="explanation">
     Die Methode [`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) setzt den Monat für eine gegebene Datumsinstanz.
@@ -457,6 +490,9 @@ Dieses Quiz soll Ihr Wissen über die native `Date`-API testen (und vertiefen). 
           console.log(d)
     ```
   </div>
+  </slot>
+
+  <slot name='hints'>
   </slot>
 
   <slot name='explanation'>

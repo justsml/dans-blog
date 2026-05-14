@@ -102,6 +102,11 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   group="Базовое сопоставление"
   title="Жадный vs Нежадный"
   options={[
+    {text: '["<div>Hello</div>"]'},
+    {text: '["<div>", "</div>"]'},
+    {text: '["<div>Hello</div><div>World</div>"]'},
+    {text: '["<div>Hello</div>", "<div>World</div>"]', isAnswer: true},
+    {text: '["Hello", "World"]'}
   ]}
 >
   <slot name="question">
@@ -219,14 +224,14 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    The `\b` представляет границу слова, которая совпадает:
-    - Между символом слова и не‑символом слова
-    - В начале/конце строки, если есть символ слова
+    `\b` обозначает границу слова. Она совпадает:
+    - Между символом слова и не-символом слова
+    - В начале или конце строки, если рядом есть символ слова
 
-    Поэтому `/\bcat\b/` совпадает с "cat" только когда это отдельное слово, а не часть другого слова.
+    Поэтому `/\bcat\b/` находит "cat" только как отдельное слово, а не как часть другого слова.
     - ✅ "cat" (окружено пробелами)
-    - ❌ "cats" (нет границы после "cat")
-    - ❌ "category" (нет границы после "cat")
+    - ❌ "cats" (после "cat" нет границы слова)
+    - ❌ "category" (после "cat" нет границы слова)
 
     [Узнайте больше о границах слов](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions#other_assertions)
   </div>
@@ -256,15 +261,15 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    The `g` (глобальный) flag changes how `match()` behaves:
-    - Without `g`: Returns first match with capture groups
-    - With `g`: Returns array of all matching strings
+    Флаг `g` (global, глобальный) меняет поведение `match()`:
+    - Без `g`: возвращает первое совпадение вместе с группами захвата
+    - С `g`: возвращает массив всех найденных строк
 
-    In this case, it finds all occurrences of "a" in "banana".
+    В этом случае выражение находит все вхождения "a" в "banana".
 
-    Note: If you need both all matches AND capture groups, use `matchAll()` or the `exec()` method in a loop.
+    Примечание: если вам нужны и все совпадения, и группы захвата, используйте `matchAll()` или метод `exec()` в цикле.
 
-    [Learn more about the global flag](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/global)
+    [Узнайте больше о глобальном флаге](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/global)
   </div>
   </slot>
 </Challenge>
@@ -487,6 +492,10 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   group="Базовое сопоставление"
   title="Жадные и ленивые квантификаторы"
   options={[
+    {text: '["<b>bold</b>"]'},
+    {text: '["bold"]', isAnswer: true},
+    {text: '["<b>", "</b>"]'},
+    {text: '[]'}
   ]}
 >
   <slot name="question">

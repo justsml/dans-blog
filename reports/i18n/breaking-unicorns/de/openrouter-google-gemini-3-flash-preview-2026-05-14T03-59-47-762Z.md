@@ -1,0 +1,201 @@
+# Translation Candidate
+- Slug: breaking-unicorns
+- Locale: de
+- Model: openrouter/google/gemini-3-flash-preview
+- Target: src/content/posts/2024-09-01--breaking-unicorns/de/index.mdx
+- Validation: passed: local checks only
+- Runtime seconds: 11.60
+- Input tokens: 2684
+- Output tokens: 2252
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.008098
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: Wie man eine Milliarde Dollar extrem schnell verliert
+subTitle: Unicorns zerlegen
+date: '2024-09-25'
+modified: '2024-09-25'
+tags:
+  - breaking-unicorns
+  - startup
+  - satire
+  - silicon-valley
+category: Lulz
+subCategory: Thoughts
+cover: ../your-score-zero.webp
+cover_full_width: ../your-score-zero.webp
+cover_mobile: ../square-icon-w200.webp
+cover_icon: ../square-icon-w200.webp
+---
+import {Timeline} from '../../../../components/ui/timeline'
+
+<p class="inset">Beobachtungen von Einhörnern in freier Wildbahn. 🦄</p>
+
+<h3>Heute im Programm...</h3>
+<ul>
+  <li>[Enterprise-Theater 🎭](#enterprise-theater-)</li>
+  <li>[Raising the Bar 💪](#raising-the-bar-)</li>
+  <li>[Bist du disruptiert? 🚀](#are-you-disrupted-)</li>
+  <li>[Book Clubbed to Death 📚](#book-clubbed-to-death-)</li>
+</ul>
+
+<section>
+  <Timeline client:idle
+    headline=''
+  
+    data={[
+      {
+        title: "Enterprise-Theater 🎭",
+        slot: "slotEnterpriseTheater",
+      },
+      /*{
+        title: "The Savior",
+        slot: "slotTheSavior",
+      },*/
+      {
+        title: "Raising the Bar 💪",
+        slot: "slotRaisingTheBar",
+      },
+      /* {
+        title: "Bizno Babble",
+        slot: "slotBiznoBabble",
+      },
+      {
+        title: "The Big Raise & oops we spent it all",
+        slot: "slotTheBigRaise",
+      }, */
+      /*{
+        title: "How to be a Big Boi CEO",
+        slot: "slotHowToBigBoiCEO",
+      },*/
+      {
+        title: "Bist du disruptiert? 🚀",
+        slot: "slotAreYouARealDisruptor",
+      },
+      {
+        title: "Book Clubbed to Death 📚",
+        slot: "slotBookClubbing",
+      }
+    ]}>
+
+<section slot="slotEnterpriseTheater">
+Leidet Ihre Firma unter `low-H`? (_Hustle_, nicht Heroin.)
+
+Oder `low-F`? (Im Sinne von: _keine Fucks mehr übrig._)
+
+Keine Sorge, der **Big Boss** hat die Lösung!
+
+- Es liegt an der Kultur! Wir müssen ein Buch lesen! Oder einen Berater engagieren! Company Offsite? Hawaii? _So kultiviert!_
+- Es liegt an den Werten! _Verinnerlichen Sie Ihre neuen, verordneten Werte!_
+- Eigentlich liegt es an der _Wahrnehmung_ der Leute. Dumme Leute. _Zeit für ein Rebranding!_
+- Wir haben vergessen, dass wir einen Erwachsenen brauchen. Einen `Savior`! Jemand, der alles richtet. Jemand aus einer echten Firma, respektiert von Freunden und Feinden gleichermaßen. Jemand, der eindeutig eine [prätentiöse Menge Zeit in seine Website investiert hat.](https://danlevy.net).
+- Der Savior sagt, wir müssen datengetrieben sein. Ach was, ihr Genies. Jetzt _treiben wir Daten!_ Charts müssen nach oben rechts gehen, brrr!
+- Lustige Geschichte: Es stellte sich heraus, es liegt an der Belegschaft. `Feuere Schlüsselpersonen/zufällige Leute.` _Damit sie merken, dass wir es ernst meinen._
+
+<blockquote style="margin-block: 2rem; width: 60%;">**Anzeige:** Falls Ihre Engineering-Organisation einen `Savior` sucht, [melden Sie sich](/docs/resume.pdf), um mehr über das neueste SaaS (Savior as a Service) von Dan zu erfahren!</blockquote>
+
+</section>
+
+<section slot="slotTheSavior">
+  <p>Ist Ihre `<Insert Dept. Name>` im Chaos versunken?</p>
+
+  <p>Waren es die Entlassungen? (Äh, _strategische Anpassung._) Nein, nein, das kann es nicht sein...</p>
+
+  <p>Machen Sie sich keine Gedanken über die Ursachen, die Firma hat die Lösung!</p>
+  <p>Auftritt: Ein `Savior`! Jemand, der alles repariert!</p>
+  
+  <p><b>Spoiler:</b> Es sind immer "Daten". Die "Lösung" ist (unironisch) immer Jira.</p>
+</section>
+
+<section slot="slotRaisingTheBar">
+  <p>Sie haben also eine große Finanzierungsrunde abgeschlossen? Zeit, alles rauszuhauen!</p>
+  <p>_Wir können uns neue Leute leisten, bessere Leute, **schlaue Leute**._ 🍷</p>
+
+  <p>Ganz unabhängig davon: Wir führen 360-Grad-Reviews ein! (Benannt nach der Anzahl der Reviews, die Ihnen zugewiesen werden.)</p>
+
+  <p>Jetzt ist es Zeit, die `Messlatte höher zu legen`! (Euphemismus für: _Leute einstellen und feuern!_)</p>
+
+<figure>
+![Team Falcon Gedenkstätte für die Raising the Bar Satire](../TeamFalcon.webp "RIP Team Falcon: Verloren im tragischen 'Raising the Bar'-Zwischenfall.")
+  <figcaption>RIP Team Falcon: Verloren im tragischen "Raising the Bar"-Zwischenfall.</figcaption>
+</figure>
+</section>
+
+<figure slot="slotHowToBigBoiCEO">
+![Produkt-Team-Lebenszyklus Satire für How to be a Big Boi CEO](../HowToBeBigBoiCEO.webp "Produkt-(Team-)Lebenszyklus")
+<figcaption>Wie man ein Big Boi CEO wird</figcaption>
+</figure>
+
+<section slot="slotAreYouARealDisruptor">
+  <p>Bist du ein `echter Disruptor`? Dreh auf bis 11! Bring den Blue Ocean zum Kochen!</p>
+  <figure>
+![How it started versus how it is going Startup Disruption Satire](../HowItStartedHowItsGoing.webp "Wie es läuft.")
+    <figcaption>Sei die Disruption</figcaption>
+  </figure>
+</section>
+
+<section slot="slotBookClubbing">
+
+<figure>
+![Wie man beim Book Club gewinnt Satire](../HowToWinAtBookClub.webp "Wie man beim Book Club gewinnt")
+  <figcaption>Wie man beim Book Club gewinnt</figcaption>
+</figure>
+
+  <h3>Der Buch-Decoder-Ring</h3>
+
+  {/* Die Auswahl eines Buchclub-Buches sagt viel darüber aus, wohin eine Firma steuert. Es kann eine Methode sein, den Ton für das nächste Quartal zu setzen, oder ein Vorbote für bevorstehende Entlassungen. */}
+
+  Obwohl viele dieser Bücher fantastisch und absolut empfehlenswert sind, **muss das niemanden davon abhalten, sie falsch zu verwenden, falsch zu verstehen und falsch anzuwenden!**
+
+  <section class="books-list">
+    <div class="book" itemscope itemtype="http://schema.org/Book">
+      <h3 itemprop="name" itemscope itemtype="http://schema.org/Book">Crucial Conversations: Tools for Talking When Stakes are High</h3>
+      <h5 itemprop="author" itemscope itemtype="http://schema.org/Person">Joseph Grenny, Kerry Patterson, Ron McMillan, Al Switzle</h5>
+      <div class="review" itemscope itemtype="http://schema.org/Review">Bei allem gebührenden Respekt: Fick dich.</div>
+    </div>
+
+    <div class="book" itemscope itemtype="http://schema.org/Book">
+      <h3 itemprop="name" itemscope itemtype="http://schema.org/Book">Flow: Das Geheimnis des Glücks</h3>
+      <h5 itemprop="author" itemscope itemtype="http://schema.org/Person">Mihály Csíkszentmihály</h5>
+      <div class="review" itemscope itemtype="http://schema.org/Review">Schneller, ihr Bauern!</div>
+    </div>
+
+    <div class="book" itemscope itemtype="http://schema.org/Book">
+      <h3 itemprop="name" itemscope itemtype="http://schema.org/Book">What Got You Here Won't Get You There</h3>
+      <h5 itemprop="author" itemscope itemtype="http://schema.org/Person">Marshall Goldsmith</h5>
+      <div class="review" itemscope itemtype="http://schema.org/Review">Levelt endlich up, ihr verdammten Amateure.</div>
+    </div>
+
+    <div class="book" itemscope itemtype="http://schema.org/Book">
+      <h3 itemprop="name" itemscope itemtype="http://schema.org/Book">Keine Regeln: Warum Netflix so erfolgreich ist</h3>
+      <h5 itemprop="author" itemscope itemtype="http://schema.org/Person">Reed Hastings, Erin Meyer</h5>
+      <div class="review" itemscope itemtype="http://schema.org/Review">Ihr werdet bald deutlich mehr Arbeit haben.</div>
+    </div>
+
+    <div class="book" itemscope itemtype="http://schema.org/Book">
+      <h3 itemprop="name" itemscope itemtype="http://schema.org/Book">Super Pumped: The Battle for Uber</h3>
+      <h5 itemprop="author" itemscope itemtype="http://schema.org/Person">Mike Isaac</h5>
+      <div class="review" itemscope itemtype="http://schema.org/Review">Ihr werdet bald deutlich weniger Schlaf haben.</div>
+    </div>
+
+    <div class="book" itemscope itemtype="http://schema.org/Book">
+      <h3 itemprop="name" itemscope itemtype="http://schema.org/Book">Der Allesverkäufer: Jeff Bezos und der Aufstieg von Amazon</h3>
+      <h5 itemprop="author" itemscope itemtype="http://schema.org/Person">Brad Stone</h5>
+      <div class="review" itemscope itemtype="http://schema.org/Review">Ich hoffe, ihr pinkelt gerne in Flaschen!</div>
+    </div>
+  </section>
+</section>
+
+  </Timeline>
+
+</section>
+
+{/* <aside class="disclaimer">Ich liebe den Startup-Ritt! Ich habe selbst ein paar Startups gegründet und bei ca. 5 Firmen gearbeitet, während sie zu Einhörnern wurden. Ich habe Dutzende von 100M$+ Unternehmen beraten. In meiner Arbeit als Engineer, Manager und Consultant habe ich schon einigen verrückten Scheiß gesehen.</aside> */}
+````
