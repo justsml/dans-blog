@@ -1,0 +1,57 @@
+{
+  "index": 8,
+  "attempt": 1,
+  "originalTitle": "RefCell Behavior",
+  "translatedTitle": "RefCell 行为",
+  "translation": {
+    "title": "RefCell 行为",
+    "group": "RefCells",
+    "options": [
+      {
+        "text": "输出：42",
+        "hint": "我们能同时有两个可变借用吗？"
+      },
+      {
+        "text": "运行时恐慌：RefCell 已被借用"
+      },
+      {
+        "text": "编译错误",
+        "hint": "RefCell 将检查移至运行时"
+      },
+      {
+        "text": "运行时恐慌：不同消息",
+        "hint": "错误特别提到了借用"
+      }
+    ],
+    "objectives": [
+      "理解使用 RefCell 的内部可变性",
+      "分析 RefCell 的运行时借用规则",
+      "应用 RefCell 实现受控的可变访问"
+    ],
+    "questionProse": [
+      "这段代码运行时会怎样？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "RefCell 提供了内部可变性，但仍在运行时强制执行 Rust 的借用规则：",
+      "关键概念：\n      1. RefCell 将借用检查移至运行时\n      2. 如果违反规则，可能导致恐慌\n      3. 适用于内部可变性模式\n\n      常见用例：\n      - 测试中的模拟对象\n      - 实现自引用结构\n      - 当你需要在共享引用后修改数据时\n      \n      最佳实践：\n      1. 尽可能优先使用编译时借用\n      2. 将 RefCell 借用保持在狭窄的作用域内\n      3. 考虑使用 drop() 显式结束借用\n      4. 在需要内部可变性时使用 RefCell"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"RefCell 行为\",\n  \"group\": \"RefCells\",\n  \"options\": [\n    {\n      \"text\": \"输出：42\",\n      \"hint\": \"我们能同时有两个可变借用吗？\"\n    },\n    {\n      \"text\": \"运行时恐慌：RefCell 已被借用\"\n    },\n    {\n      \"text\": \"编译错误\",\n      \"hint\": \"RefCell 将检查移至运行时\"\n    },\n    {\n      \"text\": \"运行时恐慌：不同消息\",\n      \"hint\": \"错误特别提到了借用\"\n    }\n  ],\n  \"objectives\": [\n    \"理解使用 RefCell 的内部可变性\",\n    \"分析 RefCell 的运行时借用规则\",\n    \"应用 RefCell 实现受控的可变访问\"\n  ],\n  \"questionProse\": [\n    \"这段代码运行时会怎样？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"RefCell 提供了内部可变性，但仍在运行时强制执行 Rust 的借用规则：\",\n    \"关键概念：\\n      1. RefCell 将借用检查移至运行时\\n      2. 如果违反规则，可能导致恐慌\\n      3. 适用于内部可变性模式\\n\\n      常见用例：\\n      - 测试中的模拟对象\\n      - 实现自引用结构\\n      - 当你需要在共享引用后修改数据时\\n      \\n      最佳实践：\\n      1. 尽可能优先使用编译时借用\\n      2. 将 RefCell 借用保持在狭窄的作用域内\\n      3. 考虑使用 drop() 显式结束借用\\n      4. 在需要内部可变性时使用 RefCell\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 982,
+    "outputTokens": 1737,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 9937,
+    "providerCostUsd": 0.0008912,
+    "providerUpstreamCostUsd": 0.0008912,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00013748000000000002,
+    "outputUsd": 0.0004863600000000001,
+    "totalUsd": 0.0006238400000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

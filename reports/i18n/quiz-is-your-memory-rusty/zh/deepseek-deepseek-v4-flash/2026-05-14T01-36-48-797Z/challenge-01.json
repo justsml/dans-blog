@@ -1,0 +1,67 @@
+{
+  "index": 0,
+  "attempt": 1,
+  "originalTitle": "Basic Move Semantics",
+  "translatedTitle": "基础移动语义",
+  "translation": {
+    "title": "基础移动语义",
+    "group": "所有权",
+    "options": [
+      {
+        "text": "你好，！",
+        "hint": "思考一下 'philosopher' 被移动后会发生什么"
+      },
+      {
+        "text": "你好，季蒂昂的芝诺！",
+        "hint": "一旦值被移动，我们还能使用它吗？"
+      },
+      {
+        "text": "你好，埃利亚的芝诺！",
+        "hint": "字符串包含 'Citium'，而不是 'Elea'"
+      },
+      {
+        "text": "你好，马可·奥勒留",
+        "hint": "检查是否与字符串内容匹配"
+      },
+      {
+        "text": "编译错误：移动后借用了值"
+      },
+      {
+        "text": "运行时错误：空指针异常",
+        "hint": "Rust 在编译时捕获这些问题"
+      }
+    ],
+    "objectives": [
+      "解释 Rust 的所有权规则和移动语义",
+      "识别与移动值相关的编译错误",
+      "应用解决方案修复与移动相关的编译错误"
+    ],
+    "questionProse": [
+      "运行这段代码会发生什么？尝试预测输出或错误："
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "这段代码无法编译，因为 Rust 的所有权规则。当我们将 `philosopher` 赋值给 `greeting` 时，字符串的所有权被移动到了 `greeting`。移动之后，`philosopher` 不再有效。\n\n      这里有三种修复方法：\n\n      1. 克隆字符串（创建一个新副本）：",
+      "2. 使用引用（借用值）：",
+      "3. 使用字符串切片（借用字符串的一部分）：",
+      "每种解决方案都有不同的使用场景和性能影响。克隆更昂贵但赋予你所有权，而引用更便宜但有生命周期约束。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"基础移动语义\",\n  \"group\": \"所有权\",\n  \"options\": [\n    {\n      \"text\": \"你好，！\",\n      \"hint\": \"思考一下 'philosopher' 被移动后会发生什么\"\n    },\n    {\n      \"text\": \"你好，季蒂昂的芝诺！\",\n      \"hint\": \"一旦值被移动，我们还能使用它吗？\"\n    },\n    {\n      \"text\": \"你好，埃利亚的芝诺！\",\n      \"hint\": \"字符串包含 'Citium'，而不是 'Elea'\"\n    },\n    {\n      \"text\": \"你好，马可·奥勒留\",\n      \"hint\": \"检查是否与字符串内容匹配\"\n    },\n    {\n      \"text\": \"编译错误：移动后借用了值\"\n    },\n    {\n      \"text\": \"运行时错误：空指针异常\",\n      \"hint\": \"Rust 在编译时捕获这些问题\"\n    }\n  ],\n  \"objectives\": [\n    \"解释 Rust 的所有权规则和移动语义\",\n    \"识别与移动值相关的编译错误\",\n    \"应用解决方案修复与移动相关的编译错误\"\n  ],\n  \"questionProse\": [\n    \"运行这段代码会发生什么？尝试预测输出或错误：\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"rust\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"这段代码无法编译，因为 Rust 的所有权规则。当我们将 `philosopher` 赋值给 `greeting` 时，字符串的所有权被移动到了 `greeting`。移动之后，`philosopher` 不再有效。\\n\\n      这里有三种修复方法：\\n\\n      1. 克隆字符串（创建一个新副本）：\",\n    \"2. 使用引用（借用值）：\",\n    \"3. 使用字符串切片（借用字符串的一部分）：\",\n    \"每种解决方案都有不同的使用场景和性能影响。克隆更昂贵但赋予你所有权，而引用更便宜但有生命周期约束。\"\n  ],\n  \"explanationCode\": [\n    {\n      \"language\": \"rust\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    },\n    {\n      \"language\": \"rust\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    },\n    {\n      \"language\": \"rust\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1121,
+    "outputTokens": 2161,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 18099,
+    "providerCostUsd": 0.0010886,
+    "providerUpstreamCostUsd": 0.0010886,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00015694000000000003,
+    "outputUsd": 0.0006050800000000001,
+    "totalUsd": 0.0007620200000000002,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
