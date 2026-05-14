@@ -1,0 +1,52 @@
+{
+  "index": 6,
+  "attempt": 1,
+  "originalTitle": "The Global Flag",
+  "translatedTitle": "全局标志",
+  "translation": {
+    "title": "全局标志",
+    "group": "常见陷阱",
+    "options": [
+      {
+        "text": "null"
+      },
+      {
+        "text": "[\"a\"]"
+      },
+      {
+        "text": "[\"a\", \"a\", \"a\"]"
+      },
+      {
+        "text": "[\"b\", \"n\", \"n\"]"
+      },
+      {
+        "text": "Error"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "输出是什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "`g`（全局）标志会改变 `match()` 的行为：\n    - 不带 `g`：返回第一个匹配及捕获组\n    - 带 `g`：返回所有匹配字符串的数组\n\n    在本例中，它会找到 \"banana\" 中所有的 \"a\"。\n\n    注意：如果既需要所有匹配又需要捕获组，请使用 `matchAll()` 或在循环中使用 `exec()` 方法。\n\n    [了解更多关于全局标志](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/global)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"全局标志\",\n  \"group\": \"常见陷阱\",\n  \"options\": [\n    {\n      \"text\": \"null\"\n    },\n    {\n      \"text\": \"[\\\"a\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"a\\\", \\\"a\\\", \\\"a\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"b\\\", \\\"n\\\", \\\"n\\\"]\"\n    },\n    {\n      \"text\": \"Error\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"输出是什么？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"`g`（全局）标志会改变 `match()` 的行为：\\n    - 不带 `g`：返回第一个匹配及捕获组\\n    - 带 `g`：返回所有匹配字符串的数组\\n\\n    在本例中，它会找到 \\\"banana\\\" 中所有的 \\\"a\\\"。\\n\\n    注意：如果既需要所有匹配又需要捕获组，请使用 `matchAll()` 或在循环中使用 `exec()` 方法。\\n\\n    [了解更多关于全局标志](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/global)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 937,
+    "outputTokens": 625,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 1816,
+    "providerCostUsd": 0.00047715,
+    "providerUpstreamCostUsd": 0.00047715,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000036543,
+    "outputUsd": 0.0001125,
+    "totalUsd": 0.000149043,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

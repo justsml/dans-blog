@@ -1,0 +1,49 @@
+{
+  "index": 12,
+  "attempt": 1,
+  "originalTitle": "Positive Look-behind",
+  "translatedTitle": "正向后向断言",
+  "translation": {
+    "title": "正向后向断言",
+    "group": "后向断言",
+    "options": [
+      {
+        "text": "[\"$100\"]"
+      },
+      {
+        "text": "[\"100\"]"
+      },
+      {
+        "text": "[\"$\"]"
+      },
+      {
+        "text": "[]"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "匹配到了什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "正向后向断言 `(?<=\\$)` 确保数字前面有美元符号：\n    - `(?<=\\$)`: 查找美元符号的后向断言\n    - `\\d+`: 匹配一个或多个数字\n\n    后向断言不会消耗字符，只是检查前面的内容。\n    当你想基于前面的内容匹配而不把前面的部分包括进结果时，这非常有用。\n\n    [了解更多关于向后查找断言的内容](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"正向后向断言\",\n  \"group\": \"后向断言\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"$100\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"100\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"$\\\"]\"\n    },\n    {\n      \"text\": \"[]\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"匹配到了什么？\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"js\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"正向后向断言 `(?<=\\\\$)` 确保数字前面有美元符号：\\n    - `(?<=\\\\$)`: 查找美元符号的后向断言\\n    - `\\\\d+`: 匹配一个或多个数字\\n\\n    后向断言不会消耗字符，只是检查前面的内容。\\n    当你想基于前面的内容匹配而不把前面的部分包括进结果时，这非常有用。\\n\\n    [了解更多关于向后查找断言的内容](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 914,
+    "outputTokens": 577,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1537,
+    "providerCostUsd": 0.0004833,
+    "providerUpstreamCostUsd": 0.0004833,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000035646,
+    "outputUsd": 0.00010386,
+    "totalUsd": 0.000139506,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

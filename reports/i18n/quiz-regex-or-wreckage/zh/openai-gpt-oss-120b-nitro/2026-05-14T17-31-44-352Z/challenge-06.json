@@ -1,0 +1,49 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Word Boundaries",
+  "translatedTitle": "单词边界",
+  "translation": {
+    "title": "单词边界",
+    "group": "基础匹配",
+    "options": [
+      {
+        "text": "[\"cat\", \"cats\"]"
+      },
+      {
+        "text": "[\"cat\"]"
+      },
+      {
+        "text": "[\"cats\"]"
+      },
+      {
+        "text": "[]"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "会匹配什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "`\\b` 表示单词边界，匹配：\n    - 单词字符与非单词字符之间\n    - 如果字符串开头/结尾是单词字符，也匹配\n\n    因此 `/\\bcat\\b/` 只在 \"cat\" 是完整单词时匹配，而不会匹配它是其他单词的一部分。\n    - ✅ \"cat\"（被空格包围）\n    - ❌ \"cats\"（\"cat\" 后没有边界）\n    - ❌ \"category\"（\"cat\" 后没有边界）\n\n    [了解更多关于单词边界](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions#other_assertions)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"单词边界\",\n  \"group\": \"基础匹配\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"cat\\\", \\\"cats\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"cat\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"cats\\\"]\"\n    },\n    {\n      \"text\": \"[]\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"会匹配什么？\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"js\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"`\\\\b` 表示单词边界，匹配：\\n    - 单词字符与非单词字符之间\\n    - 如果字符串开头/结尾是单词字符，也匹配\\n\\n    因此 `/\\\\bcat\\\\b/` 只在 \\\"cat\\\" 是完整单词时匹配，而不会匹配它是其他单词的一部分。\\n    - ✅ \\\"cat\\\"（被空格包围）\\n    - ❌ \\\"cats\\\"（\\\"cat\\\" 后没有边界）\\n    - ❌ \\\"category\\\"（\\\"cat\\\" 后没有边界）\\n\\n    [了解更多关于单词边界](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions#other_assertions)\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 940,
+    "outputTokens": 774,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 2511,
+    "providerCostUsd": 0.0005862,
+    "providerUpstreamCostUsd": 0.0005862,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00003666,
+    "outputUsd": 0.00013932,
+    "totalUsd": 0.00017597999999999998,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

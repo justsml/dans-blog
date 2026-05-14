@@ -1,0 +1,52 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Positive Look-ahead",
+  "translatedTitle": "正向前瞻",
+  "translation": {
+    "title": "正向前瞻",
+    "group": "前瞻",
+    "options": [
+      {
+        "text": "[\"$100\", \"€50\"]"
+      },
+      {
+        "text": "[\"100\", \"50\"]"
+      },
+      {
+        "text": "[\"$\", \"€\"]"
+      },
+      {
+        "text": "[]"
+      },
+      {
+        "text": "null"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "这会匹配什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "这个模式不会匹配任何内容，因为前瞻是向后看的！如果你想匹配前面带有 `$` 或 `€` 的数字，请使用后顾断言：`/(?<=[\\$€])\\d+/g`。\n\n    前瞻检查当前位置**之后**的内容。该模式实际上在寻找：\n    - 一个或多个数字（`\\d+`）\n    - 紧跟着（`(?=...)`）美元或欧元符号（`[\\$€]`）\n\n    由于没有数字后面跟着货币符号（它们是前置的），所以没有匹配结果。\n\n    [了解更多关于前瞻断言的内容](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"正向前瞻\",\n  \"group\": \"前瞻\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"$100\\\", \\\"€50\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"100\\\", \\\"50\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"$\\\", \\\"€\\\"]\"\n    },\n    {\n      \"text\": \"[]\"\n    },\n    {\n      \"text\": \"null\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"这会匹配什么？\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"js\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"这个模式不会匹配任何内容，因为前瞻是向后看的！如果你想匹配前面带有 `$` 或 `€` 的数字，请使用后顾断言：`/(?<=[\\\\$€])\\\\d+/g`。\\n\\n    前瞻检查当前位置**之后**的内容。该模式实际上在寻找：\\n    - 一个或多个数字（`\\\\d+`）\\n    - 紧跟着（`(?=...)`）美元或欧元符号（`[\\\\$€]`）\\n\\n    由于没有数字后面跟着货币符号（它们是前置的），所以没有匹配结果。\\n\\n    [了解更多关于前瞻断言的内容](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 974,
+    "outputTokens": 733,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 2342,
+    "providerCostUsd": 0.0005667,
+    "providerUpstreamCostUsd": 0.0005667,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000037986,
+    "outputUsd": 0.00013194000000000001,
+    "totalUsd": 0.000169926,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

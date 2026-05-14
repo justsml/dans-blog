@@ -1,0 +1,49 @@
+{
+  "index": 3,
+  "attempt": 1,
+  "originalTitle": "The Dot Metacharacter",
+  "translatedTitle": "点元字符",
+  "translation": {
+    "title": "点元字符",
+    "group": "常见陷阱",
+    "options": [
+      {
+        "text": "[\"hello\\nworld\"]"
+      },
+      {
+        "text": "[\"hello\", \"world\"]"
+      },
+      {
+        "text": "[\"hello\\n\", \"world\"]"
+      },
+      {
+        "text": "null"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "这将返回什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "`\\w+` 模式匹配一个或多个单词字符。即使字符串中有换行符，`\\w` 仍匹配：\n    - 字母 (a-z, A-Z)\n    - 数字 (0-9)\n    - 下划线 (_)\n\n    因此，换行符充当单词边界，我们得到两个匹配。如果使用 `.*`，默认情况下它不会匹配换行符（需要 `s` 标志）。\n\n    [了解更多关于元字符](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Character_Classes#types)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"点元字符\",\n  \"group\": \"常见陷阱\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"hello\\\\nworld\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"hello\\\", \\\"world\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"hello\\\\n\\\", \\\"world\\\"]\"\n    },\n    {\n      \"text\": \"null\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"这将返回什么？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"`\\\\w+` 模式匹配一个或多个单词字符。即使字符串中有换行符，`\\\\w` 仍匹配：\\n    - 字母 (a-z, A-Z)\\n    - 数字 (0-9)\\n    - 下划线 (_)\\n\\n    因此，换行符充当单词边界，我们得到两个匹配。如果使用 `.*`，默认情况下它不会匹配换行符（需要 `s` 标志）。\\n\\n    [了解更多关于元字符](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Character_Classes#types)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 941,
+    "outputTokens": 672,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 2224,
+    "providerCostUsd": 0.00052515,
+    "providerUpstreamCostUsd": 0.00052515,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000036698999999999995,
+    "outputUsd": 0.00012096,
+    "totalUsd": 0.000157659,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

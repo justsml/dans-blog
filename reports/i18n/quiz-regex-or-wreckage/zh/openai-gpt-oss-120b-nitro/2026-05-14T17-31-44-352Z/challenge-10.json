@@ -1,0 +1,55 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Negative Look-ahead",
+  "translatedTitle": "负向前瞻",
+  "translation": {
+    "title": "负向前瞻",
+    "group": "前瞻",
+    "options": [
+      {
+        "text": "[\"password123\"]"
+      },
+      {
+        "text": "[\"abc123\"]"
+      },
+      {
+        "text": "[\"123aBc\"]"
+      },
+      {
+        "text": "[\"12\"]"
+      },
+      {
+        "text": "[\"abc\"]"
+      },
+      {
+        "text": "Error"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "这将得到什么结果？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "负向前瞻 `(?![a-z])` 确保数字后面没有小写字母。因为 \"3aBc\" 部分在数字后面有小写字母，它的部分不匹配。所以只有开头的 \"12\" 匹配。\n\n    [了解更多关于负向前瞻](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"负向前瞻\",\n  \"group\": \"前瞻\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"password123\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"abc123\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"123aBc\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"12\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"abc\\\"]\"\n    },\n    {\n      \"text\": \"Error\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"这将得到什么结果？\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"js\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"负向前瞻 `(?![a-z])` 确保数字后面没有小写字母。因为 \\\"3aBc\\\" 部分在数字后面有小写字母，它的部分不匹配。所以只有开头的 \\\"12\\\" 匹配。\\n\\n    [了解更多关于负向前瞻](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 909,
+    "outputTokens": 519,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 1414,
+    "providerCostUsd": 0.00042855,
+    "providerUpstreamCostUsd": 0.00042855,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000035451,
+    "outputUsd": 0.00009342000000000001,
+    "totalUsd": 0.00012887100000000002,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

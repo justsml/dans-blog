@@ -1,0 +1,49 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "Look-behind Split",
+  "translatedTitle": "向后查找分割",
+  "translation": {
+    "title": "向后查找分割",
+    "group": "向后查找",
+    "options": [
+      {
+        "text": "[\"a,\", \"b,\", \"c\"]"
+      },
+      {
+        "text": "[\"a,b,c\"]"
+      },
+      {
+        "text": "[\"a\", \",\", \"b\", \",\", \"c\"]"
+      },
+      {
+        "text": "[\"a,b,c\", \"\"]"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "返回什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "`/(?<=,)/` 模式是一个向后查找，匹配逗号之后的位置：\n    - `a,`（逗号后）\n    - `b,`（逗号后）\n    - `c`（后面没有逗号）\n\n    向后查找不会消耗逗号，所以逗号仍然保留在分割结果的前一个片段中。\n\n    当你想基于某个字符之前的内容进行分割且**不丢失分割字符**时，这很有用。\n\n    [了解更多关于向后查找断言的内容](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"向后查找分割\",\n  \"group\": \"向后查找\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"a,\\\", \\\"b,\\\", \\\"c\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"a,b,c\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"a\\\", \\\",\\\", \\\"b\\\", \\\",\\\", \\\"c\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"a,b,c\\\", \\\"\\\"]\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"返回什么？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"`/(?<=,)/` 模式是一个向后查找，匹配逗号之后的位置：\\n    - `a,`（逗号后）\\n    - `b,`（逗号后）\\n    - `c`（后面没有逗号）\\n\\n    向后查找不会消耗逗号，所以逗号仍然保留在分割结果的前一个片段中。\\n\\n    当你想基于某个字符之前的内容进行分割且**不丢失分割字符**时，这很有用。\\n\\n    [了解更多关于向后查找断言的内容](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 957,
+    "outputTokens": 732,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 2190,
+    "providerCostUsd": 0.00056355,
+    "providerUpstreamCostUsd": 0.00056355,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000037323,
+    "outputUsd": 0.00013176,
+    "totalUsd": 0.000169083,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
