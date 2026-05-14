@@ -1,0 +1,46 @@
+{
+  "selectedCommit": "4ca8e7938ddb038690f32472ea72c2d27f28ff19",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 90,
+    "technicalAccuracy": 95,
+    "coherence": 95,
+    "relevance": 100,
+    "translationQuality": 92,
+    "mdxPreservation": 100
+  },
+  "suggestions": [],
+  "rationale": "The selected commit provides a high-quality translation that maintains the technical context of Agile and collaborative environments. It correctly handles MDX components like checklists and frontmatter paths. The suggestions from the previous judge report (regarding 'Sprints' and 'Strawman solution') have already been incorporated into the current version of the translation, so no further high-priority fixes are required.",
+  "slug": "the-4-pillars-of-collaborative-culture",
+  "locale": "ar",
+  "candidateCommits": [
+    "4ca8e7938ddb038690f32472ea72c2d27f28ff19",
+    "297c5f35d224abc2149c24fb756948bfb31b4063"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "medium",
+      "match": "منذ 3 سباقات؟",
+      "replacement": "منذ 3 دورات عمل (Sprints)؟",
+      "reason": "'Sprints' is a technical term in Agile; 'سباقات' is too literal and might be confusing without context.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "حل مؤقت \"مبدئي\"؟",
+      "replacement": "حل مؤقت (Strawman solution)؟",
+      "reason": "'Strawman solution' is a specific idiom for a proposal intended to be critiqued; the translation is okay but adding the term helps clarity.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug the-4-pillars-of-collaborative-culture --locale ar --skip-global",
+    "output": ""
+  }
+}
