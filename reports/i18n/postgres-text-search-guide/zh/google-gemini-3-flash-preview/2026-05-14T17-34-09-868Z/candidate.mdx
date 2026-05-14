@@ -1,0 +1,479 @@
+---
+title: Postgres 文本搜索指南 2026
+subTitle: 数据库内置的搜索工具，以及它们各自在何时才真正物有所值。
+date: '2026-05-02'
+modified: '2026-05-03'
+tags:
+  - postgres
+  - postgresql
+  - full-text-search
+  - trigrams
+  - pg_trgm
+  - databases
+  - search
+  - sql
+  - pg_search
+category: Code
+subCategory: Databases
+popularity: 0.8
+social_image: ../desktop-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+大多数团队只使用一种 Postgres 搜索工具。而了解全部三种工具的团队，能以更低的复杂度交付更出色的搜索体验，并避免过早转向昂贵的专用搜索服务。
+
+本指南涵盖了 Postgres 原生的全套选项：每种工具的功能、适用场景以及如何分层使用它们。
+
+---
+
+## 三大工具
+
+**全文搜索**（`tsvector` / `GIN` 索引）是基于词法的。它将文本标记为词位（lexemes），提取词干，并将查询与索引进行匹配。“Running”和“runs”会折叠为同一个词位，“dog”和“dogs”也是如此。排名函数（`ts_rank`）会奖励那些查询词出现频率高或位置显著的文档。
+
+**三元组（Trigrams）**（`pg_trgm`）将字符串分解为重叠的 3 字符切片，并衡量两个字符串共享切片的数量。“Dan” → `" da"`, `"dan"`, `"an "`。“Micheal”和“Michael”共享大部分三元组，因此相似度很高。这使得 `pg_trgm` 在模糊名称匹配、容错纠错和自动补全方面表现出色——而这些正是全文搜索（FTS）的短板。
+
+**精确匹配索引**（B-tree, hash）处理主键、电子邮件地址、ID、SKU 以及任何答案是二元（匹配或不匹配）的场景。这些看起来不像“搜索”，但它们属于讨论范畴，因为最糟糕的设计模式就是把模糊搜索或语义搜索浪费在明明有准确答案的问题上。
+
+选择哪种工具不在于技术的先进程度，而在于工具与查询形态的匹配。
+
+<figure>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 720" role="img" aria-labelledby="stm-title stm-desc">
+  <title id="stm-title">Postgres 搜索工具地图</title>
+  <desc id="stm-desc">根据输入形态和查询意图对比 pg_trgm、全文搜索、pgvector 和混合搜索。</desc>
+  <defs>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#111827" flood-opacity="0.14"/>
+    </filter>
+    <linearGradient id="header" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#0f172a"/>
+      <stop offset="1" stop-color="#25324a"/>
+    </linearGradient>
+    <style>{`
+      .stm-bg { fill: #f7f3ea; }
+      .stm-card { fill: #fffdf8; stroke: #d9cdb6; stroke-width: 2; filter: url(#shadow); }
+      .stm-title-text { font: 800 34px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #111827; }
+      .stm-subtitle { font: 500 18px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #4b5563; }
+      .stm-label { font: 800 14px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; letter-spacing: .08em; text-transform: uppercase; fill: #ffffff; }
+      .stm-tool { font: 800 27px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #111827; }
+      .stm-body { font: 500 18px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #374151; }
+      .stm-small { font: 600 15px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #4b5563; }
+      .stm-axis { font: 800 15px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #111827; letter-spacing: .06em; text-transform: uppercase; }
+      .stm-chip { font: 800 14px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #ffffff; }
+      .stm-line { stroke: #9ca3af; stroke-width: 2; stroke-dasharray: 8 8; }
+    `}</style>
+  </defs>
+
+  <rect class="stm-bg" width="1120" height="720" rx="0"/>
+  <text class="stm-title-text" x="64" y="70">根据输入形态选择搜索原语</text>
+  <text class="stm-subtitle" x="64" y="103">同一个 Postgres 表可以同时支持这四种。诀窍在于将查询与文本匹配。</text>
+
+  <line class="stm-line" x1="560" y1="150" x2="560" y2="640"/>
+  <line class="stm-line" x1="76" y1="395" x2="1044" y2="395"/>
+
+  <text class="stm-axis" x="360" y="142">关注精确词汇</text>
+  <text class="stm-axis" x="650" y="142">关注语义</text>
+  <text class="stm-axis" x="78" y="388" transform="rotate(-90 78 388)">短文本 / 结构化文本</text>
+  <text class="stm-axis" x="78" y="628" transform="rotate(-90 78 628)">长篇散文 / 文本块</text>
+
+  <rect class="stm-card" x="112" y="168" width="408" height="186" rx="20"/>
+  <rect x="136" y="192" width="100" height="28" rx="14" fill="#f59e0b"/>
+  <text class="stm-label" x="154" y="212">模糊</text>
+  <text class="stm-tool" x="136" y="256">pg_trgm</text>
+  <text class="stm-body" x="136" y="294">姓名、地址、标题、拼写错误、</text>
+  <text class="stm-body" x="136" y="320">自动补全、部分字符串。</text>
+  <text class="stm-small" x="136" y="344">拼写相似度：拼写距离。</text>
+
+  <rect class="stm-card" x="600" y="168" width="408" height="186" rx="20"/>
+  <rect x="624" y="192" width="116" height="28" rx="14" fill="#22c55e"/>
+  <text class="stm-label" x="644" y="212">相似</text>
+  <text class="stm-tool" x="624" y="256">pgvector</text>
+  <text class="stm-body" x="624" y="294">相关项目、重复工单、</text>
+  <text class="stm-body" x="624" y="320">基于简短描述的推荐。</text>
+  <text class="stm-small" x="624" y="344">嵌入相似度：语义距离。</text>
+
+  <rect class="stm-card" x="112" y="436" width="408" height="186" rx="20"/>
+  <rect x="136" y="460" width="102" height="28" rx="14" fill="#38bdf8"/>
+  <text class="stm-label" x="158" y="480">词法</text>
+  <text class="stm-tool" x="136" y="524">全文搜索</text>
+  <text class="stm-body" x="136" y="562">文章、文档、日志、支持内容，</text>
+  <text class="stm-body" x="136" y="588">要求查询词必须出现。</text>
+  <text class="stm-small" x="136" y="612">词位、词干提取、排名、布尔过滤。</text>
+
+  <rect class="stm-card" x="600" y="436" width="408" height="186" rx="20"/>
+  <rect x="624" y="460" width="102" height="28" rx="14" fill="#f472b6"/>
+  <text class="stm-label" x="645" y="480">混合</text>
+  <text class="stm-tool" x="624" y="524">FTS + pgvector</text>
+  <text class="stm-body" x="624" y="562">技术文档和 RAG，用户会提出</text>
+  <text class="stm-body" x="624" y="588">概念性问题并结合精确符号。</text>
+  <text class="stm-small" x="624" y="612">同时运行两者，使用 RRF 融合排名。</text>
+
+  <rect x="396" y="658" width="328" height="36" rx="18" fill="url(#header)"/>
+  <text class="stm-chip" x="429" y="681">先看查询意图，再检查文本形态</text>
+</svg>
+<figcaption>根据查询意图（精确 vs 语义）和文本形态（结构化 vs 散文）划分的四种 Postgres 搜索原语。同一个表可以承载所有四种索引——选择取决于具体的查询，而不是表。</figcaption>
+</figure>
+
+---
+
+## 全文搜索的胜出场景
+
+**在散文中搜索关键词。** 博客文章、文档、产品描述、支持工单、法律文件。FTS 专为这种形态的内容设计：对自然语言文本进行索引和排名检索。
+
+**基于关键词的用户查询。** 用户输入搜索词、按标签过滤或按关键词浏览。FTS 原生处理此类意图，无需任何嵌入（embedding）基础设施。
+
+**无需外部依赖的排名结果。** FTS 索引速度快、具有确定性，且不需要 API 调用。相关性信号来自词频，并根据字段位置进行加权。
+
+**搜索时的布尔过滤。** FTS 能自然地与现有的查询逻辑组合：
+
+```sql
+SELECT * FROM posts
+WHERE search_vector @@ to_tsquery('english', 'postgres & performance')
+  AND category = 'tutorial'
+  AND published_at > NOW() - INTERVAL '6 months';
+```
+
+### 设置 FTS
+
+```sql
+-- 生成列会自动保持索引更新
+ALTER TABLE posts ADD COLUMN search_vector tsvector
+  GENERATED ALWAYS AS (
+    setweight(to_tsvector('english', coalesce(title, '')), 'A') ||
+    setweight(to_tsvector('english', coalesce(body,  '')), 'B')
+  ) STORED;
+
+CREATE INDEX posts_search_idx ON posts USING GIN (search_vector);
+
+-- 查询
+SELECT title, ts_rank(search_vector, query) AS rank
+FROM posts, to_tsquery('english', 'postgres & performance') query
+WHERE search_vector @@ query
+ORDER BY rank DESC
+LIMIT 10;
+```
+
+`setweight` 分配重要性：`A`（标题）的权重高于 `B`（正文）。对于大多数内容搜索用例，这就是全部的相关性模型。
+
+### FTS 不擅长的场景
+
+- 查询中的拼写错误 —— "javascipt" 匹配不到 "javascript"
+- 人名、地址、专有名词等无法进行可预测词干提取（stemming）的词汇
+- 未经特殊配置的前缀/自动补全
+- 用户描述概念而非直接命名实体的查询
+
+---
+
+## 三元语法（Trigrams）的胜算 (`pg_trgm`)
+
+`pg_trgm` 填补了全文搜索（FTS）经常失手的尴尬地带。
+
+FTS 将文本分词并提取词干。对于散文段落，这是正确的；但对于名称和短标识符，通常并非如此：
+
+- 人名（"Dan Levy" → 根据词典和语言配置的不同，提取出的词干也不同）
+- 公司名、地址、产品标题等拼写至关重要的场景
+- 带有拼写错误的查询 —— "Micheal Jordan"、"Amaon"、"javascipt"
+- 自动补全 / 前缀搜索
+- 部分字符串匹配（例如用 "son" 匹配 "Johnson"、"Anderson"）
+
+此外，`pg_trgm` 与语言无关，这对于处理来自不同语言背景的名称至关重要。相比之下，FTS 需要为每种语言配置词典。
+
+### 模糊名称搜索
+
+```sql
+CREATE EXTENSION IF NOT EXISTS pg_trgm;
+
+CREATE INDEX users_name_trgm_idx ON users USING GIN (name gin_trgm_ops);
+
+-- 搜索 "Michael Jordan" 时能找到 "Micheal Jordan"
+SELECT id, name, similarity(name, $1) AS score
+FROM users
+WHERE name % $1          -- % 运算符 = 相似度阈值 (默认 0.3)
+ORDER BY score DESC
+LIMIT 10;
+```
+
+`%` 运算符使用 `pg_trgm.similarity_threshold`（默认 0.3，范围 0–1）。对于名称搜索，0.3–0.4 可以在保持低噪点的同时捕获拼写错误。
+
+### 自动补全、前缀及包含搜索
+
+```sql
+-- 用于自动补全的前缀匹配。三元语法 GIN 索引会有所帮助，
+-- 但对于纯左锚定前缀，B-tree 模式索引（pattern index）可能效果更好。
+SELECT name FROM users
+WHERE name ILIKE $1 || '%'
+ORDER BY name
+LIMIT 10;
+
+-- word_similarity 用于长字符串中的部分匹配
+-- (在 "Andrew Johnson III" 中匹配 "Johnson")
+SELECT id, name, word_similarity($1, name) AS score
+FROM users
+WHERE $1 <% name
+ORDER BY score DESC
+LIMIT 10;
+```
+
+三元语法 GIN 索引在处理 `ILIKE '%pattern%'` 包含查询和容错匹配时特别有用 —— 如果没有三元语法索引，这类模式通常会导致全表扫描。
+
+### 何时选择 pg_trgm 而非 FTS
+
+| 场景 | 选用工具 |
+|---|---|
+| 包含拼写错误的人名/公司名搜索 | `pg_trgm` |
+| 自动补全 / 前缀搜索 | `pg_trgm` (或配合前缀查询的 FTS) |
+| 短字符串、标识符、代码 | `pg_trgm` |
+| 散文文章、文档、工单 | FTS |
+| 针对关键词的日志消息搜索 | FTS |
+| 多语言名称搜索 | `pg_trgm` (语言无关) |
+
+---
+
+## 精确匹配 SQL 的胜算
+
+有些所谓的“搜索”问题根本不是搜索。
+
+“查找邮箱为 `dan@example.com` 的用户”是一个等值检查。“查找订单 `ORD-12345`”是主键查找。“列出 `tutorial` 分类下按日期排序的文章”是一个过滤查询。这些需求属于 B-tree 或 Hash 索引的范畴。
+
+在这些场景下使用 FTS 或三元语法会增加复杂度，却无法提升准确性 —— 而且对于精确标识符来说，返回一个“近似匹配”的结果比没有结果更糟糕。
+
+```sql
+CREATE INDEX users_email_idx ON users (email);
+
+-- 精确查找：快速且无歧义
+SELECT id, name FROM users WHERE email = $1;
+```
+
+更深层的教训是：针对有标准答案的问题使用模糊搜索是一种分类错误。它总会返回*点什么* —— 而这些结果可能错得一本正经。
+
+---
+
+## 组合这些工具
+
+这些工具可以干净地组合使用。你不需要只选其一。
+
+**FTS + pg_trgm：实现支持关键词纠错的搜索框：**
+
+```sql
+-- title 上的三元语法相似度用于捕获拼写错误；ts_rank 处理正文相关性
+SELECT id, title,
+  ts_rank(search_vector, to_tsquery('simple', $1)) AS fts_rank,
+  similarity(title, $1) AS trgm_score
+FROM posts
+WHERE search_vector @@ to_tsquery('simple', $1)
+   OR title % $1
+ORDER BY (ts_rank(search_vector, to_tsquery('simple', $1)) + similarity(title, $1)) DESC
+LIMIT 10;
+```
+
+**FTS + `unaccent`：处理国际化内容：**
+
+```sql
+-- 去除变音符号，使 "José" 匹配 "Jose"
+CREATE EXTENSION IF NOT EXISTS unaccent;
+
+CREATE TEXT SEARCH CONFIGURATION public.simple_unaccent (COPY = pg_catalog.simple);
+
+ALTER TEXT SEARCH CONFIGURATION public.simple_unaccent
+  ALTER MAPPING FOR hword, hword_part, word
+  WITH unaccent, simple;
+
+ALTER TABLE posts ADD COLUMN search_vector tsvector;
+
+CREATE TRIGGER posts_search_vector_refresh
+BEFORE INSERT OR UPDATE OF title, body ON posts
+FOR EACH ROW EXECUTE FUNCTION
+  tsvector_update_trigger(search_vector, 'public.simple_unaccent', title, body);
+```
+
+**`unaccent` + `pg_trgm`：用于国际化姓名搜索：**
+
+```sql
+ALTER TABLE users ADD COLUMN name_search text;
+
+CREATE FUNCTION users_name_search_refresh()
+RETURNS trigger LANGUAGE plpgsql AS $$
+BEGIN
+  NEW.name_search := unaccent(coalesce(NEW.name, ''));
+  RETURN NEW;
+END;
+$$;
+
+CREATE TRIGGER users_name_search_refresh
+BEFORE INSERT OR UPDATE OF name ON users
+FOR EACH ROW EXECUTE FUNCTION users_name_search_refresh();
+
+CREATE INDEX users_name_search_trgm_idx
+  ON users USING GIN (name_search gin_trgm_ops);
+
+SELECT id, name
+FROM users
+WHERE name_search % unaccent($1)
+ORDER BY similarity(name_search, unaccent($1)) DESC
+LIMIT 10;
+```
+
+触发器示例避免了在生成列或索引表达式中直接使用 `unaccent()`，因为这涉及 PostgreSQL 的不可变性（immutability）规则。如果你将 `unaccent()` 封装在自定义的不可变函数中，请务必记录你正在承担升级或配置变动带来的风险。
+
+---
+
+## 值得关注的扩展
+
+**`pg_trgm`**：大多数 Postgres 发行版都内置了该插件，但需要手动启用。它是 Postgres 模糊字符串匹配的基石。
+
+**`unaccent`**：在索引和查询前去除变音符号。与 `pg_trgm` 和 FTS 配合使用效果极佳，尤其适用于欧洲语言内容。Postgres 内置。
+
+**`pg_bigm`**：将三元语法（trigram）扩展为二元语法（bigram，2 字符切片），这显著提升了 `pg_trgm` 表现不佳的 CJK（中日韩）语言的搜索效果。需单独安装，未内置。
+
+**`pg_search`**：（来自 [ParadeDB](https://www.paradedb.com/)）用基于 Tantivy 的 BM25 索引替换了标准的 `GIN` / `tsvector` 栈。它提供了 BM25 评分（通常优于 `ts_rank`）、FTS 查询内的模糊匹配、分面搜索（faceted search），以及在大表上极快的索引速度。当标准 FTS 遇到排名质量或性能瓶颈时，这是一个无缝升级路径。
+
+```sql
+-- pg_search: 支持模糊匹配的 BM25 全文检索
+CREATE INDEX posts_bm25_idx ON posts
+  USING bm25 (id, title, body)
+  WITH (key_field = 'id', text_fields = '{"title": {}, "body": {}}');
+
+-- 使用 BM25 评分 + 模糊匹配进行查询（可捕获 "javascipt"）
+SELECT id, title, paradedb.score(id) AS rank
+FROM posts
+WHERE posts @@@ paradedb.fuzzy_phrase(field => 'title', value => 'postgres performnce')
+ORDER BY rank DESC
+LIMIT 10;
+```
+
+**`pgvector`**：增加稠密向量存储和相似度搜索。当用户描述需求而非直接命名时，它是正确的工具 —— 适用于语义搜索、RAG、相关内容推荐和跨语言查询。详见[语义向量搜索与混合策略](../semantic-vector-search-landscape)。
+
+---
+
+## 决策表
+
+| 搜索对象 | 推荐方案 |
+|---|---|
+| 散文文章、文档、工单 | FTS |
+| 带有拼写错误的人名/公司名 | `pg_trgm` |
+| 自动补全、前缀搜索 | `pg_trgm` |
+| 短代码、标识符 | `pg_trgm` |
+| 针对关键词的日志消息 | FTS |
+| 国际化姓名 | `pg_trgm` + `unaccent` |
+| 海量内容、更优排名需求 | `pg_search` (ParadeDB BM25) |
+| 主键、精确邮箱、ID | B-tree 索引 |
+| 日期、范围、排序列表 | B-tree 索引 |
+| 权限、分类、过滤条件 | 常规 WHERE 子句 |
+| 提问、转述、概念 | pgvector (见下一篇文章) |
+
+如果不确定如何选择：带有拼写变体的短字符串用 Trigrams；关键字查询的长篇散文用 FTS；结构化标识符用常规索引；概念性或自然语言查询用 pgvector。
+
+---
+
+## 混合搜索：双重信号，统一排名
+
+当类似 `"withRetry timeout errors"` 的查询进入搜索框时，它携带了两种意图：用户知道的精确符号名称（`withRetry`）和概念性描述（`timeout errors`）。没有任何单一原语能同时覆盖这两者。并行运行 FTS 和向量搜索，然后使用倒数排名融合（Reciprocal Rank Fusion, RRF）合并它们的排名列表，可以解决这个问题。
+
+RRF 为每个列表中的每个结果计算分值 `1 / (60 + rank)`，并将各列表的分值求和。常量 60 削弱了顶级排名的绝对优势，因此在两个列表中都排在第二位的结果，可能会击败在一个列表中夺冠但在另一个列表中完全落榜的结果。至关重要的是，RRF 绝不会对不同方法的原始分值取平均值——FTS 排名和余弦距离是不同的“货币”，不能进行算术合并。
+
+<figure>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 660" role="img" aria-labelledby="rrf-title rrf-desc">
+  <title id="rrf-title">使用倒数排名融合的混合搜索</title>
+  <desc id="rrf-desc">查询分发到全文搜索和向量搜索，各自产生排名，倒数排名融合将它们合并为一个结果列表。</desc>
+  <defs>
+    <marker id="rrf-arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M2,2 L10,6 L2,10 Z" fill="#334155"/>
+    </marker>
+    <filter id="rrf-shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="11" flood-color="#0f172a" flood-opacity="0.13"/>
+    </filter>
+    <style>{`
+      .rrf-bg { fill: #f8fafc; }
+      .rrf-title-text { font: 800 34px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #0f172a; }
+      .rrf-subtitle { font: 500 18px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #475569; }
+      .rrf-box { fill: #ffffff; stroke: #cbd5e1; stroke-width: 2; filter: url(#rrf-shadow); }
+      .rrf-query { fill: #fff7ed; stroke: #fdba74; }
+      .rrf-fts { fill: #eff6ff; stroke: #60a5fa; }
+      .rrf-vector { fill: #f0fdf4; stroke: #86efac; }
+      .rrf-merge { fill: #fdf2f8; stroke: #f9a8d4; }
+      .rrf-result { fill: #ecfeff; stroke: #67e8f9; }
+      .rrf-head { font: 800 24px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #111827; }
+      .rrf-body { font: 550 17px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #334155; }
+      .rrf-mono { font: 800 17px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fill: #0f172a; }
+      .rrf-rank { font: 800 16px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #475569; }
+      .rrf-arrow-line { stroke: #334155; stroke-width: 3; fill: none; marker-end: url(#rrf-arrow); }
+      .rrf-thin { stroke: #94a3b8; stroke-width: 2; fill: none; marker-end: url(#rrf-arrow); }
+    `}</style>
+  </defs>
+
+  <rect class="rrf-bg" width="1120" height="660"/>
+  <text class="rrf-title-text" x="64" y="68">混合搜索：两个真实的信号，一个合并后的排名</text>
+  <text class="rrf-subtitle" x="64" y="102">不要对原始分值取平均。FTS 排名和余弦距离是不同的“货币”。</text>
+
+  <rect class="rrf-box rrf-query" x="72" y="238" width="214" height="132" rx="20"/>
+  <text class="rrf-head" x="104" y="288">用户查询</text>
+  <text class="rrf-mono" x="104" y="324">"withRetry</text>
+  <text class="rrf-mono" x="104" y="350">timeout errors"</text>
+
+  <path class="rrf-arrow-line" d="M286 270 C350 270 350 188 418 188"/>
+  <path class="rrf-arrow-line" d="M286 338 C350 338 350 440 418 440"/>
+
+  <rect class="rrf-box rrf-fts" x="418" y="142" width="266" height="144" rx="20"/>
+  <text class="rrf-head" x="450" y="188">FTS / BM25</text>
+  <text class="rrf-body" x="450" y="224">精确符号和词汇</text>
+  <text class="rrf-rank" x="450" y="256">1. API 参考</text>
+  <text class="rrf-rank" x="578" y="256">2. 重试指南</text>
+
+  <rect class="rrf-box rrf-vector" x="418" y="394" width="266" height="144" rx="20"/>
+  <text class="rrf-head" x="450" y="440">pgvector</text>
+  <text class="rrf-body" x="450" y="476">概念邻居</text>
+  <text class="rrf-rank" x="450" y="508">1. 网络故障</text>
+  <text class="rrf-rank" x="594" y="508">2. 重试指南</text>
+
+  <path class="rrf-thin" d="M684 214 C734 214 734 294 778 294"/>
+  <path class="rrf-thin" d="M684 466 C734 466 734 366 778 366"/>
+
+  <rect class="rrf-box rrf-merge" x="778" y="260" width="258" height="166" rx="22"/>
+  <text class="rrf-head" x="810" y="306">RRF 合并</text>
+  <text class="rrf-body" x="810" y="342">根据每个结果在各列表</text>
+  <text class="rrf-body" x="810" y="368">中的排名赋予权重。</text>
+  <text class="rrf-mono" x="810" y="402">1 / (60 + rank)</text>
+
+  <path class="rrf-arrow-line" d="M907 426 L907 492"/>
+
+  <rect class="rrf-box rrf-result" x="736" y="492" width="342" height="110" rx="20"/>
+  <text class="rrf-head" x="768" y="538">最终结果</text>
+  <text class="rrf-body" x="768" y="574">排名最高的是精确术语</text>
+  <text class="rrf-body" x="768" y="598">与语义意图一致的文档。</text>
+</svg>
+<figcaption>查询并行分发到 FTS 和 pgvector。每个产生自己的排名列表。RRF 根据每个文档在各列表中的位置进行评分并求和——结果会浮现出两个信号都认可的文档。</figcaption>
+</figure>
+
+```sql
+-- 混合搜索：FTS + pgvector，使用 RRF 合并
+WITH fts AS (
+  SELECT id, ts_rank(search_vector, query) AS score,
+         ROW_NUMBER() OVER (ORDER BY ts_rank(search_vector, query) DESC) AS rank
+  FROM docs, to_tsquery('english', 'withRetry & timeout') query
+  WHERE search_vector @@ query
+  LIMIT 60
+),
+vec AS (
+  SELECT id,
+         ROW_NUMBER() OVER (ORDER BY embedding <=> $embedding) AS rank
+  FROM docs
+  ORDER BY embedding <=> $embedding
+  LIMIT 60
+)
+SELECT COALESCE(fts.id, vec.id) AS id,
+       (COALESCE(1.0 / (60 + fts.rank), 0) +
+        COALESCE(1.0 / (60 + vec.rank), 0)) AS rrf_score
+FROM fts FULL JOIN vec ON fts.id = vec.id
+ORDER BY rrf_score DESC
+LIMIT 10;
+```
+
+每个分支 60 个文档的候选池（`LIMIT 60`）是一个常见的起点。如果召回率低，则扩大它；为了速度，则缩小它。
+
+---
+
+## 下一步
+
+Postgres 文本搜索覆盖了很大范围，但它也有上限。当用户描述他们想要什么而不是直接命名时——例如“能帮我在飞机上睡觉的东西”、“关于作为新工程师如何建立调试信心的文章”——词法搜索和 Trigram 搜索都会失效。
+
+这就是向量嵌入、语义搜索和混合架构的领地。详见[语义向量搜索与混合策略](../semantic-vector-search-landscape)。
