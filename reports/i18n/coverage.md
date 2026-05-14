@@ -1,13 +1,13 @@
 # I18n Coverage
 
-Generated at `2026-05-14T17:14:21.052Z`.
+Generated at `2026-05-14T18:20:44.665Z`.
 
 ## Summary
 
 - English posts: 76
-- Translation slots: 697/760 filled (91.7%)
-- Missing slots: 63
-- Fully translated posts: 27/76
+- Translation slots: 746/760 filled (98.2%)
+- Missing slots: 14
+- Fully translated posts: 65/76
 - Locales: es, hi, ja, ru, de, fr, it, ar, he, zh
 
 ## Locale Coverage
@@ -23,7 +23,7 @@ Generated at `2026-05-14T17:14:21.052Z`.
 | it | 74 | 2 | 97.4% |
 | ar | 76 | 0 | 100.0% |
 | he | 76 | 0 | 100.0% |
-| zh | 27 | 49 | 35.5% |
+| zh | 76 | 0 | 100.0% |
 
 ## Zero Coverage Posts
 
@@ -32,7 +32,7 @@ No zero-coverage posts.
 ## Health Notes
 
 - Missing locale slots with candidate reports waiting: 14
-- Existing translations without judge summaries: 141
+- Existing translations without judge summaries: 133
 
 ### Candidate Reports Without Translation Files
 
@@ -57,6 +57,75 @@ No zero-coverage posts.
 
 | Post | Locale | Qwen baseline |
 | --- | --- | --- |
+| upgrade-from-gatsby-to-astro | hi | yes |
+| upgrade-from-gatsby-to-astro | ru | no |
+| visualizing-promises | es | yes |
+| visualizing-promises | ru | yes |
+| visualizing-promises | de | yes |
+| docker-server-setup-notes | ja | yes |
+| docker-server-setup-notes | de | no |
+| docker-server-setup-notes | it | no |
+| one-weird-trick-to-speed-up-feature-teams | hi | no |
+| one-weird-trick-to-speed-up-feature-teams | ru | yes |
+| contribute-to-open-source-the-easy-way | ja | yes |
+| the-4-pillars-of-collaborative-culture | hi | yes |
+| creating-collaborative-culture | ja | yes |
+| creating-collaborative-culture | ru | yes |
+| creating-collaborative-culture | it | yes |
+| securely-using-environment-variables-in-nodejs | hi | yes |
+| securely-using-environment-variables-in-nodejs | ru | yes |
+| are-promises-broken | hi | no |
+| promise-gotchas | hi | no |
+| pitfalls-in-promise-docs | it | yes |
+| llm-connection-strings | ar | no |
+| llm-connection-strings | he | no |
+| llm-evals-are-broken | ar | no |
+| llm-evals-are-broken | he | no |
+| postgres-text-search-guide | ar | no |
+| postgres-text-search-guide | he | no |
+| semantic-vector-search-landscape | ar | no |
+| semantic-vector-search-landscape | he | no |
+| securing-clawdbot-tailscale | ar | no |
+| securing-clawdbot-tailscale | he | no |
+| ai-sdk-math-tool | ar | no |
+| ai-sdk-math-tool | he | no |
+| mastra-workflows-memory | ar | no |
+| mastra-workflows-memory | he | no |
+| mastra-mcp-tool-integrations | ar | no |
+| mastra-mcp-tool-integrations | he | no |
+| the-jsonb-seduction | hi | yes |
+| the-jsonb-seduction | ja | yes |
+| the-8-byte-timestamp-that-destroyed-our-database | it | yes |
+| async-stack-traces-why-error-stack-lies-in-production | hi | yes |
+| async-stack-traces-why-error-stack-lies-in-production | ja | yes |
+| async-stack-traces-why-error-stack-lies-in-production | ru | yes |
+| quiz-advanced-js-error-mastery | es | yes |
+| quiz-advanced-js-error-mastery | hi | no |
+| quiz-advanced-js-error-mastery | ja | yes |
+| quiz-advanced-js-error-mastery | ru | yes |
+| quiz-advanced-js-error-mastery | de | no |
+| quiz-advanced-js-error-mastery | fr | yes |
+| quiz-advanced-js-error-mastery | it | yes |
+| serverless-database-magic | es | yes |
+| serverless-database-magic | hi | yes |
+| patchy-with-a-chance-of-vulnerability | hi | yes |
+| beware-the-single-purpose-people | hi | yes |
+| beware-the-single-purpose-people | ja | yes |
+| beware-the-single-purpose-people | ru | yes |
+| beware-the-single-purpose-people | it | yes |
+| quiz-is-your-memory-rusty | es | no |
+| quiz-is-your-memory-rusty | hi | no |
+| quiz-is-your-memory-rusty | ja | no |
+| quiz-is-your-memory-rusty | ru | no |
+| quiz-is-your-memory-rusty | de | no |
+| quiz-is-your-memory-rusty | fr | no |
+| quiz-is-your-memory-rusty | it | no |
+| quiz-in-the-aws-cloud | ja | no |
+| quiz-in-the-aws-cloud | de | no |
+| quiz-in-the-aws-cloud | fr | no |
+| quiz-in-the-aws-cloud | it | yes |
+| replacing-my-job-with-gpt-and-llm | ja | yes |
+| replacing-my-job-with-gpt-and-llm | it | yes |
 | quiz-postgres-sql-mastery-pt2 | ja | yes |
 | quiz-postgres-sql-mastery-pt1 | hi | no |
 | quiz-postgres-sql-mastery-pt1 | it | no |
@@ -97,31 +166,6 @@ No zero-coverage posts.
 | quiz-data-structures-algorithms | hi | no |
 | quiz-data-structures-algorithms | ru | yes |
 | quiz-data-structures-algorithms | it | no |
-| js-quiz-14-date-time-questions-test-your-knowledge | ja | no |
-| javascript-promises-quiz | hi | no |
-| javascript-promises-quiz | it | no |
-| upgrade-from-gatsby-to-astro | hi | yes |
-| upgrade-from-gatsby-to-astro | ru | no |
-| visualizing-promises | es | yes |
-| visualizing-promises | ru | yes |
-| visualizing-promises | de | yes |
-| docker-server-setup-notes | ja | yes |
-| docker-server-setup-notes | de | no |
-| docker-server-setup-notes | it | no |
-| one-weird-trick-to-speed-up-feature-teams | hi | no |
-| one-weird-trick-to-speed-up-feature-teams | ru | yes |
-| contribute-to-open-source-the-easy-way | ja | yes |
-| the-4-pillars-of-collaborative-culture | hi | yes |
-| creating-collaborative-culture | ja | yes |
-| creating-collaborative-culture | ru | yes |
-| creating-collaborative-culture | it | yes |
-| securely-using-environment-variables-in-nodejs | hi | yes |
-| securely-using-environment-variables-in-nodejs | ru | yes |
-| are-promises-broken | hi | no |
-| promise-gotchas | hi | no |
-| pitfalls-in-promise-docs | it | yes |
-| replacing-my-job-with-gpt-and-llm | ja | yes |
-| replacing-my-job-with-gpt-and-llm | it | yes |
 | honest-priorities | hi | yes |
 | honest-priorities | ru | yes |
 | honest-priorities | it | no |
@@ -129,6 +173,9 @@ No zero-coverage posts.
 | guerrilla-types-in-typescript | it | no |
 | deathmatch-git-rebase-vs-merge | it | yes |
 | should-you-use-named-or-default-exports | it | no |
+| js-quiz-14-date-time-questions-test-your-knowledge | ja | no |
+| javascript-promises-quiz | hi | no |
+| javascript-promises-quiz | it | no |
 | you-may-not-need-axios | ja | no |
 | you-may-not-need-axios | it | no |
 | compare-nvme-ssd-cloud-options | hi | yes |
@@ -143,115 +190,22 @@ No zero-coverage posts.
 | security-notes-regex | hi | no |
 | security-notes-regex | de | no |
 | security-notes-regex | fr | no |
-| llm-connection-strings | ar | no |
-| llm-connection-strings | he | no |
-| llm-connection-strings | zh | no |
-| llm-evals-are-broken | ar | no |
-| llm-evals-are-broken | he | no |
-| llm-evals-are-broken | zh | no |
-| postgres-text-search-guide | ar | no |
-| postgres-text-search-guide | he | no |
-| postgres-text-search-guide | zh | no |
-| semantic-vector-search-landscape | ar | no |
-| semantic-vector-search-landscape | he | no |
-| semantic-vector-search-landscape | zh | no |
-| securing-clawdbot-tailscale | ar | no |
-| securing-clawdbot-tailscale | he | no |
-| securing-clawdbot-tailscale | zh | no |
-| ai-sdk-math-tool | ar | no |
-| ai-sdk-math-tool | he | no |
-| ai-sdk-math-tool | zh | no |
-| mastra-workflows-memory | ar | no |
-| mastra-workflows-memory | he | no |
-| mastra-workflows-memory | zh | no |
-| mastra-mcp-tool-integrations | ar | no |
-| mastra-mcp-tool-integrations | he | no |
-| mastra-mcp-tool-integrations | zh | no |
-| the-jsonb-seduction | hi | yes |
-| the-jsonb-seduction | ja | yes |
-| the-8-byte-timestamp-that-destroyed-our-database | it | yes |
-| async-stack-traces-why-error-stack-lies-in-production | hi | yes |
-| async-stack-traces-why-error-stack-lies-in-production | ja | yes |
-| async-stack-traces-why-error-stack-lies-in-production | ru | yes |
-| quiz-advanced-js-error-mastery | es | yes |
-| quiz-advanced-js-error-mastery | hi | no |
-| quiz-advanced-js-error-mastery | ja | yes |
-| quiz-advanced-js-error-mastery | ru | yes |
-| quiz-advanced-js-error-mastery | de | no |
-| quiz-advanced-js-error-mastery | fr | yes |
-| quiz-advanced-js-error-mastery | it | yes |
-| serverless-database-magic | es | yes |
-| serverless-database-magic | hi | yes |
-| patchy-with-a-chance-of-vulnerability | hi | yes |
-| beware-the-single-purpose-people | hi | yes |
-| beware-the-single-purpose-people | ja | yes |
-| beware-the-single-purpose-people | ru | yes |
-| beware-the-single-purpose-people | it | yes |
-| quiz-is-your-memory-rusty | es | no |
-| quiz-is-your-memory-rusty | hi | no |
-| quiz-is-your-memory-rusty | ja | no |
-| quiz-is-your-memory-rusty | ru | no |
-| quiz-is-your-memory-rusty | de | no |
-| quiz-is-your-memory-rusty | fr | no |
-| quiz-is-your-memory-rusty | it | no |
-| quiz-in-the-aws-cloud | ja | no |
-| quiz-in-the-aws-cloud | de | no |
-| quiz-in-the-aws-cloud | fr | no |
-| quiz-in-the-aws-cloud | it | yes |
 
 ## Prioritized Gaps
 
 | Priority | Post | Category | Date | Filled | Missing locales | Reports waiting |
 | --- | --- | --- | --- | ---: | --- | ---: |
-| medium | quiz-postgres-sql-mastery-pt2 | Quiz | 2024-11-28 | 9/10 | zh | 0 |
-| medium | quiz-postgres-sql-mastery-pt1 | Quiz | 2024-11-27 | 9/10 | zh | 0 |
-| medium | quiz-bash-in-the-shell | Quiz | 2024-11-20 | 9/10 | zh | 0 |
-| medium | quiz-regex-or-wreckage | Quiz | 2024-11-15 | 9/10 | zh | 0 |
-| medium | quiz-nodejs-files-streams-buffers-oh-my | Quiz | 2024-11-15 | 9/10 | zh | 0 |
-| medium | quiz-destructuring-delights | Quiz | 2024-11-12 | 9/10 | zh | 0 |
-| medium | quiz-sql-query-fundamentals | Quiz | 2024-11-08 | 9/10 | zh | 0 |
-| medium | quiz-css-core-fundamentals | Quiz | 2024-11-08 | 9/10 | zh | 0 |
-| medium | quiz-modern-css-2025 | Quiz | 2024-10-31 | 9/10 | zh | 0 |
-| medium | quiz-can-you-count-to-bigint | Quiz | 2024-10-31 | 9/10 | zh | 0 |
-| medium | quiz-master-modern-html5 | Quiz | 2024-10-31 | 9/10 | zh | 0 |
-| medium | quiz-js-interfaces-symbols-and-enumerables | Quiz | 2024-10-31 | 9/10 | zh | 0 |
-| medium | quiz-do-you-know-esnext | Quiz | 2024-10-31 | 9/10 | zh | 0 |
-| medium | quiz-data-structures-algorithms | Quiz | 2024-10-31 | 9/10 | zh | 0 |
-| medium | js-quiz-14-date-time-questions-test-your-knowledge | Quiz | 2020-01-02 | 9/10 | zh | 0 |
-| medium | javascript-promises-quiz | Quiz | 2019-11-26 | 9/10 | zh | 0 |
-| low | upgrade-from-gatsby-to-astro | Guides | 2024-08-21 | 7/10 | ja, fr, zh | 2 |
-| low | visualizing-promises | Guides | 2018-09-30 | 7/10 | hi, ja, zh | 2 |
-| low | docker-server-setup-notes | DevOps | 2015-04-06 | 7/10 | hi, fr, zh | 2 |
-| low | one-weird-trick-to-speed-up-feature-teams | Engineering | 2024-09-29 | 8/10 | ja, zh | 1 |
-| low | contribute-to-open-source-the-easy-way | Guides | 2024-01-16 | 8/10 | ru, zh | 1 |
-| low | the-4-pillars-of-collaborative-culture | Leadership | 2021-04-03 | 8/10 | ru, zh | 1 |
-| low | creating-collaborative-culture | Leadership | 2021-01-01 | 8/10 | hi, zh | 1 |
-| low | securely-using-environment-variables-in-nodejs | Code | 2018-11-13 | 8/10 | it, zh | 1 |
-| low | are-promises-broken | Code | 2018-10-06 | 8/10 | ru, zh | 1 |
-| low | promise-gotchas | Code | 2018-09-26 | 8/10 | it, zh | 1 |
-| low | pitfalls-in-promise-docs | Code | 2017-05-10 | 8/10 | ja, zh | 1 |
-| low | replacing-my-job-with-gpt-and-llm | AI | 2024-12-04 | 9/10 | zh | 0 |
-| low | honest-priorities | Thoughts | 2024-10-23 | 9/10 | zh | 0 |
-| low | breaking-unicorns | Lulz | 2024-09-25 | 9/10 | zh | 0 |
-| low | handling-international-numbers-and-currency | HowTo | 2024-08-28 | 9/10 | zh | 0 |
-| low | guerrilla-types-in-typescript | Guides | 2023-09-05 | 9/10 | zh | 0 |
-| low | deathmatch-git-rebase-vs-merge | Thoughts | 2023-08-27 | 9/10 | zh | 0 |
-| low | should-you-use-named-or-default-exports | Guides | 2023-08-10 | 9/10 | zh | 0 |
-| low | mastering-functional-pipelines-passing-state | Guides | 2023-08-09 | 9/10 | zh | 0 |
-| low | you-may-not-need-axios | Guides | 2018-11-14 | 9/10 | zh | 0 |
-| low | protect-your-tokens | Guides | 2018-10-27 | 9/10 | zh | 0 |
-| low | stop-trying-to-make-async-await-happen | Guides | 2018-10-03 | 9/10 | zh | 0 |
-| low | intro-to-promises | Code | 2018-08-01 | 9/10 | zh | 0 |
-| low | compare-nvme-ssd-cloud-options | DevOps | 2017-04-15 | 9/10 | zh | 0 |
-| low | naming-things-real-good | Guides | 2016-06-01 | 9/10 | zh | 0 |
-| low | when-ai-fails-and-the-crashing-robot-cars | AI | 2015-12-18 | 9/10 | zh | 0 |
-| low | higher-order-programming | Code | 2015-09-22 | 9/10 | zh | 0 |
-| low | angularjs-v2-impending-schism | Thoughts | 2015-08-05 | 9/10 | zh | 0 |
-| low | docker-rocks | DevOps | 2015-06-11 | 9/10 | zh | 0 |
-| low | docker-makes-everything-better | DevOps | 2015-02-26 | 9/10 | zh | 0 |
-| low | stop-the-angularjs-hate | Code | 2015-02-26 | 9/10 | zh | 0 |
-| low | amazing-resources | Code | 2015-02-26 | 9/10 | zh | 0 |
-| low | security-notes-regex | Security | 2015-02-24 | 9/10 | zh | 0 |
+| low | upgrade-from-gatsby-to-astro | Guides | 2024-08-21 | 8/10 | ja, fr | 2 |
+| low | visualizing-promises | Guides | 2018-09-30 | 8/10 | hi, ja | 2 |
+| low | docker-server-setup-notes | DevOps | 2015-04-06 | 8/10 | hi, fr | 2 |
+| low | one-weird-trick-to-speed-up-feature-teams | Engineering | 2024-09-29 | 9/10 | ja | 1 |
+| low | contribute-to-open-source-the-easy-way | Guides | 2024-01-16 | 9/10 | ru | 1 |
+| low | the-4-pillars-of-collaborative-culture | Leadership | 2021-04-03 | 9/10 | ru | 1 |
+| low | creating-collaborative-culture | Leadership | 2021-01-01 | 9/10 | hi | 1 |
+| low | securely-using-environment-variables-in-nodejs | Code | 2018-11-13 | 9/10 | it | 1 |
+| low | are-promises-broken | Code | 2018-10-06 | 9/10 | ru | 1 |
+| low | promise-gotchas | Code | 2018-09-26 | 9/10 | it | 1 |
+| low | pitfalls-in-promise-docs | Code | 2017-05-10 | 9/10 | ja | 1 |
 
 ## Translation Queue Commands
 
