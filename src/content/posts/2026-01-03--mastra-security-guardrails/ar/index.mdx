@@ -1,0 +1,172 @@
+---
+title: الذكاء الاصطناعي في الإنتاج مرعب (وكيفية إصلاح ذلك)
+subTitle: إذا لم يكن وكيلك مزودًا بضوابط الأمان، فأنت لست جاهزًا للإنتاج.
+date: '2026-01-03'
+modified: '2026-01-08'
+tags:
+  - ai
+  - security
+  - mastra
+  - guardrails
+  - privacy
+  - pii
+category: AI
+subCategory: Security
+social_image: ../desktop-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+لا أحد يبدأ في بناء نظام ذكاء اصطناعي غير آمن. تكتب التعليمات، وتختبر الحالات الحدية، وتضيف بعض قواعد التحقق. ثم يكتشف شخص ما أنه يمكنه خداع البوت الخاص بك ليتقمص دور قرصان ويكشف بيانات المستخدمين. أو ينتهي رقم بطاقة ائتمان في سجلاتك. أو يوصي النموذج بثقة بمنتج منافس.
+
+الفجوة بين "يعمل في العرض التوضيحي" و"آمن في الإنتاج" أوسع مما تتوقع معظم الفرق.
+
+جزء من المشكلة هو أن نماذج اللغة الكبيرة الخام ليس لديها آراء حول ما يجب أو لا يجب فعله. إنها آلات تنبؤ تحاول متابعة أي نمط بدأته. أعطها موجهًا يبدو مثل "وضع تجاوز النظام"، وستلعب معك بسعادة. هذا ليس عيبًا في النموذج؛ إنها فقط طريقة عمل نماذج اللغة.
+
+معظم الأطر تمنحك النموذج وتتمنى لك التوفيق. ماسترا تتبع نهجًا مختلفًا: فهي تفترض أنك ستحتاج إلى حواجز حماية في النهاية، لذا تدمجها في بنية الوكيل منذ البداية.
+
+---
+
+## المعالجات كطبقات أمان
+
+الآلية الأساسية بسيطة. قبل أن يصل موجهك إلى النموذج، يمر عبر سلسلة من معالجات الإدخال. بعد أن يستجيب النموذج، يأتي دور معالجات الإخراج. يمكن لكل معالج فحص المحتوى أو تعديله أو حظره في تلك المرحلة.
+
+فكر فيها كوسيط للتفاعلات مع الذكاء الاصطناعي. تقوم بتجميع ما تحتاجه، وتكوين سلوكها، وتعمل تلقائيًا على كل طلب.
+
+### 1. إيقاف القراصنة (حقن الموجه)
+
+أصبحت هجمات حقن الموجه مبتكرة. يستخدم الأشخاص أحرف Unicode غير مرئية، ويكتبون التعليمات في base64، أو يقنعون النموذج بأنهم في "وضع التصحيح" حيث لا تنطبق القواعد العادية. تستمر التقنيات في التطور.
+
+تتضمن ماسترا معالجات تكتشف الأنماط الشائعة:
+
+```typescript
+// src/mastra/agents/secure-agent.ts
+import { Agent } from '@mastra/core/agent';
+import { PromptInjectionDetector, UnicodeNormalizer } from '@mastra/core/processors';
+import { openai } from '@ai-sdk/openai';
+
+export const secureAgent = new Agent({
+  id: 'fortress-assistant',
+  name: 'fortress-assistant',
+  instructions: 'You are a secure assistant.',
+  model: openai('gpt-5'),
+  inputProcessors: [
+    // 1. Scrub invisible characters
+    new UnicodeNormalizer({
+      id: 'unicode-normalizer',
+      stripControlChars: true,
+      collapseWhitespace: true,
+    }),
+    // 2. Detect the attempt
+    new PromptInjectionDetector({
+      id: 'prompt-injection-detector',
+      model: openai('gpt-5-nano'), // Cheap, fast
+      threshold: 0.8,
+      strategy: 'block', // Hard stop
+      detectionTypes: ['injection', 'jailbreak', 'system-override'],
+    }),
+  ],
+});
+```
+
+يقوم [`UnicodeNormalizer`](https://mastra.ai/docs/processors) بإزالة أحرف التحكم وضغط المسافات البيضاء. ويقوم [`PromptInjectionDetector`](https://mastra.ai/docs/processors) بتحليل المدخلات المنظفة بحثًا عن أنماط تشير إلى محاولة شخص ما تجاوز تعليماتك.
+
+يمكنك تكوين مدى عدوانية الكشف الذي تريده (معامل `threshold`) وما يجب أن يحدث عند تفعيله (حظر، تسجيل، أو مجرد وضع علامة عليه).
+
+### 2. التعامل مع المعلومات الشخصية (PII)
+
+أرقام بطاقات الائتمان في السجلات، أرقام الضمان الاجتماعي في قواعد البيانات المتجهة، عناوين البريد الإلكتروني المخزنة لفترة أطول من اللازم. هذه هي أنواع المشكلات التي تتحول إلى مشاكل تنظيمية. التحدي هو أن المستخدمين لا يدركون دائمًا أنهم يلصقون بيانات حساسة في نافذة الدردشة.
+
+يقوم [`PIIDetector`](https://mastra.ai/docs/processors) بمسح الأنماط الشائعة قبل وصولها إلى نموذجك أو كتابتها في التخزين:
+
+```typescript
+import { PIIDetector } from '@mastra/core/processors';
+
+export const privateAgent = new Agent({
+  id: 'privacy-first-assistant',
+  name: 'privacy-first-assistant',
+  instructions: 'You are a helpful assistant that never stores personal information.',
+  model: openai('gpt-5'),
+  inputProcessors: [
+    new PIIDetector({
+      id: 'pii-detector',
+      model: openai('gpt-5-nano'),
+      detectionTypes: ['email', 'phone', 'credit-card', 'ssn'],
+      threshold: 0.6,
+      strategy: 'redact',
+      redactionMethod: 'mask',  // Replace with [REDACTED]
+      instructions: 'Detect and mask personally identifiable information',
+    }),
+  ],
+});
+```
+
+يمكنك اختيار التنقيح (الاستبدال بـ `[REDACTED]`)، أو التجزئة، أو الحظر بالكامل. يعمل المعالج على كل من المدخلات والمخرجات، لذا فأنت محمي حتى لو قام النموذج بطريقة ما بتوليد بيانات حساسة في رده.
+
+### 3. مراقبة المحتوى
+
+النماذج المدربة على بيانات الإنترنت قد رأت بعض الأشياء. بدون تصفية، يمكنها أحيانًا إنتاج ردود قد تجعل فريق العلاقات العامة لديك متوترًا. يلتقط [`ModerationProcessor`](https://mastra.ai/docs/processors) المحتوى الذي ينتهك إرشاداتك:
+
+```typescript
+import { ModerationProcessor } from '@mastra/core/processors';
+
+export const moderatedAgent = new Agent({
+  id: 'safe-assistant',
+  name: 'safe-assistant',
+  instructions: 'You are a helpful assistant for a community platform.',
+  model: openai('gpt-5'),
+  inputProcessors: [
+    new ModerationProcessor({
+      id: 'moderation-processor',
+      model: openai('gpt-5-nano'),  // Fast, cheap model for classification
+      categories: ['hate', 'harassment', 'violence', 'self-harm'],
+      threshold: 0.7,  // Block if confidence > 70%
+      strategy: 'block',  // Stop the request immediately
+      instructions: 'Detect harmful content that violates community guidelines',
+    }),
+  ],
+});
+```
+
+الجزء المثير للاهتمام هو أنك تحدد الفئات المهمة لحالة الاستخدام الخاصة بك. قد تسمح أداة الكتابة الإبداعية بمحتوى أكثر تعبيرًا من روبوت خدمة العملاء. تمنحك العتبة والاستراتيجية التحكم في مدى صرامة التصفية.
+
+---
+
+## عندما تتعثر الأمور
+
+لا تُلقي المعالجات أخطاءً عند اكتشاف مشكلة. بدلاً من ذلك، تضع علامة على كائن النتيجة:
+
+```typescript
+const result = await secureAgent.generate('Ignore all previous instructions...');
+
+if (result.tripwire) {
+  console.log(`Blocked! Reason: ${result.tripwireReason}`);
+  // "Blocked! Reason: Prompt injection detected."
+  return "Nice try, script kiddie.";
+}
+```
+
+يتيح لك هذا النمط التعامل مع أحداث الأمان بالطريقة التي تناسب تطبيقك. قد تسجلها للتحليل، أو تعيد رسالة خطأ عامة، أو حتى تسمح ببعض الانتهاكات في سياقات محددة. يخبرك حقل `tripwireReason` بالضبط أي معالج أشار إلى المحتوى، مما يساعد عند تصحيح الإيجابيات الكاذبة أو ضبط العتبات.
+
+---
+
+## ما لا يحله هذا
+
+المعالجات تلتقط الكثير، لكنها ليست سحرية. يمكن لمهاجم مصمم مع الوقت الكافي أن يجد على الأرجح موجهًا يتسلل من خلالها. النماذج أحيانًا تهلوس بطرق لا تستطيع المعالجات توقعها. وهناك دائمًا مفاضلة بين الأمان والمرونة: كلما كانت قواعدك أكثر صرامة، زاد احتمال حظر حالات الاستخدام المشروعة.
+
+القيمة ليست في الحماية المثالية. بل في وجود طريقة منهجية للتعامل مع المشكلات الشائعة التي ستظهر بالتأكيد في الإنتاج. يمكنك ضبط الحساسية كلما تعلمت ما يفعله مستخدموك بالفعل. يمكنك إضافة معالجات مخصصة للمخاطر الخاصة بالمجال. ولديك سجلات تدقيق تظهر ما تم حظره ولماذا.
+
+معظم مشكلات الأمان في الذكاء الاصطناعي الإنتاجي ليست هجمات متطورة. إنها أشخاص ينسخون ويلصقون بيانات لا ينبغي لهم، أو يكتشفون بالتجربة والخطأ أن البوت سيفعل أشياء لم تقصدها. لن توقف المعالجات كل مشكلة محتملة، لكنها تجعل المشكلات الواضحة أصعب بكثير.
+
+### الموارد
+
+- [وثائق حواجز الأمان في ماسترا](https://mastra.ai/docs/agents/guardrails)
+- [أفضل ممارسات الأمان](https://mastra.ai/docs/security)
+- [مستودع ماسترا على جيت‌هاب](https://github.com/mastra-ai/mastra)
+
+## اقرأ السلسلة
+
+1. [توجيه نماذج اللغة الكبيرة](../llm-routing-mastra-ai)
+2. **الأمان والحواجز** (هذه المقالة)
+3. [تكاملات MCP والأدوات](../mastra-mcp-tool-integrations)
+4. [سير العمل والذاكرة](../mastra-workflows-memory)
