@@ -1,0 +1,100 @@
+---
+social_image: ../desktop-social.webp
+title: 'ייצוא ESM: בשם מול ברירת מחדל?'
+subTitle: 'לשמול, או לא לשמול?'
+date: '2023-08-10'
+modified: '2024-08-01'
+tags:
+  - typescript
+  - javascript
+  - modules
+category: Guides
+subCategory: JavaScript
+cover: ../austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp
+cover_mobile: ../w300_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp
+cover_icon: ../icon_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp
+---
+## האם כדאי להשתמש בייצוא `named` או `default` ב-JavaScript?
+
+אין מחסור במאמרים נחרצים בנושא זה.
+
+הרוב שופטים את `default export` כ"נוראי." אחרים טוענים ש-`default` צריך לנצח (למשל, מדריך הסגנון של AirBnb).
+
+הם מאשימים לעיתים קרובות דברים **זמניים לחלוטין**: באגים בייבוא אוטומטי של IDE, יכולות tree-shaking של באנדלר מסוים, או האפשרות הפשוטה של טעויות הקלדה בעת מתן שם לייבוא.
+
+האם פספסנו את הנקודה של `export` מלכתחילה?
+
+**קוד הוא תקשורת. ✨**
+
+> אנו שולחים איתות ל-`import`רים _כיצד להשתמש בדבר._
+
+### אז מה אנחנו אומרים?
+
+באופן כללי, ישנן 2 דרכים לייצא דברים ב-JavaScript המודרני:
+
+- `export default` מכריז באומץ "זה **_הדבר החשוב ביותר_**." כמו כן, "כל ייצוא בשם (named export) משחק תפקיד תומך בלבד."
+- `named export` אומר שזה "בהחלט **_דבר!_**" כמו כן מעלה שאלות, "יש לך חברים אחרים שם?" המשך, "הם מוזמנים או נדרשים?"
+
+כמובן שאפשר לשלב בין שתי הגישות, או להשתמש בגישות שונות בחלקים שונים של בסיס הקוד. [ראה דוגמאות נוספות בסוף המאמר.](#summary)
+
+### טיעונים חלשים, בנאדם
+
+בואו נתייחס לכמה מה"בעיות הזמניות" הנפוצות שאנשים נתקלים בהן.
+
+- טיעון מס' 1: ייצוא בשם מבטיח עקביות בשמות. [מקור](https://blog.neufund.org/why-we-have-banned-default-exports-and-you-should-do-the-same-d51fdc2cf2ad)
+  - לא, הם לא. אולי אתה מחפש כלל lint?
+  - (אני שונא לשבור לך את זה, אבל חכה עד שתלמד מה משתנים יכולים לעשות!)
+
+```tsx
+// You can alias using both!
+import { Knife as Handle } from "./knife.js"; // 🔪
+import { default as Handle } from "./knife.js"; // 🔪
+import Handle from "./knife.js"; // 🔪
+```
+
+- טיעון מס' 2: השתמש ב-`import * as soManyKnives from './kinves.js'` כדי לשלב ייצוא בשם. (לא מקושר, המחבר חזר בו.)
+  - תכונה נחמדה. לא הנקודה.
+  - עכשיו תגיד לי, איך אני מחזיק את המכשיר שלך שוב? אין כוונת מחבר.
+- טיעון מס' 3: לייצוא בשם יש תמיכה טובה יותר בייבוא או שינוי שמות ב-IDE. [מקור](https://www.bundleapps.io/blog/use-named-exports-over-default-exports-in-javascript)
+  - לא נכון (כבר לא). הגדר/עדכן את הכלים שלך.
+  - תמיכה קיימת כבר 3+ שנים ב-[VS Code](https://github.com/microsoft/vscode/pull/94480), IntelliJ וכו'.
+  - עדיין, יש כמה "שיטות עבודה מומלצות" לשימוש עם `default exports` כדי לקבל את חוויית ה-IDE והריפקטורינג הטובה ביותר.
+  - ✅ `export default function UserService() {}` - תמיד העדף פונקציות בעלות שם.
+  - ❌ `export default function() { }` - פונקציות אנונימיות אינן מקושרות באופן מרומז לשם הקובץ. אם לא תקרא לדבר בשם, קשה לבקש מהמחשב לשנות אותו.
+  - **הערה:** מסיבות היסטוריות לא ניתן לשלב `export default` עם ביטוי `const`.
+
+    ```tsx
+    export default const Knife = () => {...blade, ...handle}
+    // ^ ❌ Not Supported ❌ ^
+    // Cannot export default const ....
+    // ==========================
+
+    // However, once declared you can export a const var as the default.
+    const Knife = () => {...blade, ...handle}
+    export default Knife;
+    // ^ ✅ Valid
+
+    // For completeness:
+    export default class anyoneStillUseThese {}
+    // ^ ✅ Also valid to export a class as default
+    ```
+
+<section className="scroll-x">
+## סיכום
+
+למעשה יש שילובים רבים של דרכים לייצא דברים, כל אחד מספר סיפור אחר:
+
+| ברירת מחדל (ייצוא) | בשם (ייצוא) | פונקציות פרטיות | תבנית | משמעות |
+| ----------------- | --------------- | ----------- | --------------------------------------------------------- | ------------------------------------------------------------- |
+| ✅ | ❌ | ❌ | ייצוא ברירת מחדל אחד. | "מציג פונקציה אחת עם מטרה יחידה!" |
+| ❌ | ✅ | ❌ | ייצוא בשם אחד. | "בבקשה אל תשנה את שמי." |
+| ✅ | ✅ | ✅ | ייצוא ברירת מחדל + פונקציות 'פרטיות' לא מיוצאות | "הנה קצת לוגיקה קשורה. כמו כן, צפה להתנהגות דמוית מחלקה." |
+| ❌ | ❌ | ✅ | ייצוא בשם מרובים, שם קובץ גנרי. | "שקית מעורבבת של דברים קשורים באופן רופף, ללא היררכיה משתמעת." |
+| ✅ | ✅ | ❌ | ייצוא בשם יחיד שמיוצא גם כברירת מחדל. | "אתה לא יכול לפשל בייבוא שלי." |
+</section>
+
+**משהו לחשוב עליו:** מה אנחנו אומרים כששם הקובץ תואם או לא תואם לאחד מהייצואים שלו? (לדוגמה, `utils.js` עם פונקציות רבות.)
+
+### מסקנה
+
+אם קוד הוא תקשורת, בבקשה `export` כאילו אתה מתכוון לזה לעזאזל. 💞
