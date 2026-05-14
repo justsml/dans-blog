@@ -1,0 +1,272 @@
+# Translation Candidate
+- Slug: mastra-workflows-memory
+- Locale: zh
+- Model: openrouter/google/gemini-3-flash-preview
+- Target: src/content/posts/2026-01-05--mastra-workflows-memory/zh/index.mdx
+- Validation: deferred
+- Runtime seconds: 20.40
+- Input tokens: 5159
+- Output tokens: 2647
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.010521
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: 别再构建不稳定的 Agent：改用工作流与记忆
+subTitle: 为非确定性模型提供确定性模式。
+date: '2026-01-05'
+modified: '2026-01-08'
+tags:
+  - ai
+  - workflows
+  - memory
+  - mastra
+  - agent-networks
+  - orchestration
+category: AI
+subCategory: Architecture
+social_image: ../desktop-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+LLM 有一个古怪的特性：它们极其擅长理解细微差别，但在遵循固定流程（recipes）方面表现糟糕。给 GPT-4 一个模糊的问题，它能推导出各种可能性；但如果你给它一个精确的步骤序列，它可能会跳过第 3 步，因为第 5 步“感觉更相关”。
+
+这并不是模型的 Bug，而是概率性系统在试图解决确定性问题时表现出的基本特征。
+
+我见过许多团队在处理这种错配时苦苦挣扎。他们构建了一个 Agent 来处理客户退款，给它配了一堆工具，并期望它能可靠地执行业务流程。有时它运行得非常完美，有时它会幻觉出从未发生过的审批，有时它又会陷入死循环，反复询问同一个信息。
+
+解决方案不是写更好的 Prompt，而是要明确什么时候该停止让 LLM “思考”，转而命令它“服从”。
+
+---
+
+## 当确定性胜过创造力
+
+想想处理支持工单时会发生什么。现实世界的业务逻辑通常如下：
+
+1. 从数据库中获取工单详情
+2. 检查用户是否符合退款资格（政策规则）
+3. 验证交易是否存在且尚未退款
+4. 计算退款金额
+5. 执行付款撤回
+6. 更新工单状态
+7. 发送确认邮件
+
+你可以把这些作为 Tool-calling 任务交给 LLM。根据我的经验，这纯属找麻烦。模型可能会觉得第 2 步和第 3 步“基本上是一回事”而跳过其中一个；或者因为它觉得用户看起来很生气，就在检查资格之前先执行了退款。
+
+工作流（Workflows）正是为了这种场景而存在的。它们并不令人兴奋，但这正是重点所在。
+
+### 构建天气活动规划器
+
+这里有一个展示该模式的实际例子。我们需要硬性的、事实性的天气数据，并结合创造性的活动建议。获取天气的过程绝不应该有创造性，但建议部分可以有。
+
+```typescript
+// src/mastra/workflows/activity-planner.ts
+import { createWorkflow, createStep } from '@mastra/core/workflows';
+import { Agent } from '@mastra/core/agent';
+import { openai } from '@ai-sdk/openai';
+import { z } from 'zod';
+
+// 步骤 1：获取天气数据（确定性）
+const fetchWeather = createStep({
+  id: 'fetch-weather',
+  description: 'Fetches weather forecast for a given city',
+  inputSchema: z.object({
+    city: z.string(),
+  }),
+  outputSchema: z.object({
+    location: z.string(),
+    temperature: z.number(),
+    conditions: z.string(),
+    precipitationChance: z.number(),
+  }),
+  execute: async ({ inputData }) => {
+    // ... (获取逻辑) ...
+    const weather = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&current=temperature_2m,weather_code&daily=precipitation_probability_mean`).then(r => r.json());
+    
+    return {
+      location: inputData.city,
+      temperature: weather.current.temperature_2m,
+      conditions: getWeatherCondition(weather.current.weather_code),
+      precipitationChance: weather.daily.precipitation_probability_mean[0],
+    };
+  },
+});
+
+// 步骤 2：Agent 建议活动（创造性）
+const activityPlanner = new Agent({
+  id: 'activity-planner-agent',
+  name: 'Activity Planner',
+  instructions: `You are a local activities expert. Based on weather conditions, suggest 3-5 appropriate activities.
+    - For rain (>50% precipitation), prioritize indoor activities
+    - For extreme temperatures, consider climate-appropriate options
+    - Always include one adventurous and one relaxing option`,
+  model: openai('gpt-5'),
+});
+
+const planActivities = createStep({
+  id: 'plan-activities',
+  description: 'Uses AI to suggest activities based on weather',
+  inputSchema: z.object({
+    location: z.string(),
+    temperature: z.number(),
+    conditions: z.string(),
+    precipitationChance: z.number(),
+  }),
+  outputSchema: z.object({
+    activities: z.string(),
+  }),
+  execute: async ({ inputData }) => {
+    const prompt = `Weather in ${inputData.location}: ${inputData.temperature}°C...`;
+    const response = await activityPlanner.generate(prompt);
+    return { activities: response.text };
+  },
+});
+
+// 编排流水线
+export const activityPlannerWorkflow = createWorkflow({
+  id: 'activity-planner',
+  inputSchema: z.object({ city: z.string() }),
+  outputSchema: z.object({ activities: z.string() }),
+})
+  .then(fetchWeather)
+  .then(planActivities);
+
+activityPlannerWorkflow.commit();
+```
+
+LLM 永远不会直接接触天气 API。它接收确凿的事实数据作为输入，然后做它真正擅长的事：提供上下文相关的建议。如果你把这个流程反过来，让 Agent 去获取天气数据，你最终总会遇到明明在下雨，它却给你一个晴天预报的情况。
+
+**何时考虑使用工作流：**
+- 你有一系列必须按顺序执行的已知步骤
+- 你需要在每个阶段都有可观测性（日志、指标、耗时）
+- 你需要针对不稳定的外部 API 编写重试逻辑
+- 业务规则不能被“解释”——它们必须被严格执行
+
+---
+
+## 没人讨论的上下文窗口问题
+
+我经常看到这样一种模式：有人开发了一个聊天机器人，测试时表现完美。但在生产环境中，用户进行了较长的对话后，机器人突然就“断片”了。
+
+开发者查看日志后发现，他们每次请求都会发送完整的对话历史。整整 47 条消息。他们为了处理那些大多无关紧要的信息，白白烧掉了大量的 Token 和上下文空间。
+
+更糟糕的是，研究人员称之为“迷失中段”（lost in the middle）的现象：当关键信息埋没在长上下文中时，模型的表现会变差。模型字面上就是“只见树木，不见森林”。
+
+发送完整的对话历史看似稳妥，因为你给了模型“所有信息”。但实际上，你是在增加模型聚焦核心重点的难度。
+
+### 工作记忆 vs. 长期存储
+
+Mastra 的记忆系统同时提供了这两者。工作记忆将最近的消息保留在上下文窗口中。而语义召回（Semantic recall）则在当前查询看似相关时，去搜索历史消息。
+
+```typescript
+// src/mastra/agents/memory-agent.ts
+import { Agent } from '@mastra/core/agent';
+import { Memory } from '@mastra/memory';
+import { LibSQLStore } from '@mastra/libsql';
+
+export const memoryAgent = new Agent({
+  id: 'memory-agent',
+  name: 'Memory Agent',
+  instructions: 'You are a helpful assistant with perfect recall of our conversations.',
+  model: openai('gpt-5'),
+  memory: new Memory({
+    storage: new LibSQLStore({
+      id: 'memory-agent-store',
+      url: 'file:../mastra.db',
+    }),
+    options: {
+      lastMessages: 20,  // 在上下文中保留最近 20 条消息
+      semanticRecall: {
+        enabled: true,  // 使用向量嵌入查找旧内容
+        topK: 5,
+        threshold: 0.7,
+      },
+    },
+  }),
+});
+```
+
+在实践中，它是这样运作的。用户问：“你上个月推荐的那家意大利餐厅叫什么？”
+
+如果没有语义召回，Agent 只能看到最近的 20 条消息。而那条餐厅推荐是 506 条消息中的第 487 条。它已经消失了。Agent 会说：“我没有相关信息。”
+
+有了语义召回：
+1. 查询被向量化：`[0.234, -0.567, 0.891, ...]`
+2. 向量与历史消息进行比对
+3. 第 487 条消息（“我推荐 Trattoria Bella —— 他们的培根蛋面棒极了”）的相似度得分为 0.89
+4. 该消息被注入到当前的上下文中
+5. Agent 回答：“我推荐的是 Trattoria Bella。他们的培根蛋面当时特别吸引我。”
+
+Agent 表现得像是拥有完美记忆，而实际上只消耗了一小部分上下文窗口。这不仅仅是巧妙的工程设计 —— 一旦对话超过几十条，这在功能上就是必须的。
+
+---
+
+## 通过 Agent 网络进行协作
+
+有时你既需要结构化，又需要灵活性。纯粹的工作流太死板，而纯粹的 Agent 又太不可预测。
+
+Agent 网络提供了一个协调者，它根据任务决定调用哪个专门的 Agent 或工作流。你可以把它看作是 AI 能力的智能负载均衡器。
+
+```typescript
+export const coordinatorAgent = new Agent({
+  id: 'coordinator-agent',
+  name: 'Research Coordinator',
+  instructions: `You are a network of researchers and writers.
+    - Use researchAgent for gathering facts
+    - Use writingAgent for producing final content
+    - Use weatherTool for current weather data
+    - Use activityPlannerWorkflow for location-based planning
+    
+    Always produce comprehensive, well-structured responses.`,
+  model: openai('gpt-5'),
+  
+  // 可用的原语
+  agents: { researchAgent, writingAgent },
+  workflows: { activityPlannerWorkflow },
+  tools: { weatherTool },
+  
+  // 网络需要记忆
+  memory: new Memory({
+    storage: new LibSQLStore({ id: 'network-store', url: 'file:../network.db' }),
+  }),
+});
+```
+
+当你查询这个网络时，协调者会分析请求并进行路由：
+- “我需要关于 X 的事实” 触发研究 Agent
+- “规划西雅图的周末行程” 运行活动规划工作流
+- “写一份关于 Y 的报告” 启用写作 Agent
+
+这种模式比尝试将所有内容塞进一个超级 Agent 扩展性更好。专门的 Agent 可以培养专注的领域知识，协调者负责路由。每个组件各司其职。
+
+---
+
+## 总结
+
+真正的生产级 AI 系统需要的是架构，而不仅仅是提示词（Prompt）。你正在构建的是分布式系统，只不过其中一些节点恰好是 LLM。
+
+工作流在你需要事情分毫不差地执行时提供保证。记忆在不烧掉 Token 预算的情况下提供上下文。Agent 网络则让你能够通过简单的部件组合出复杂的系统。
+
+这些工作并不光鲜。但在目睹了足够多“全自动 Agent”在生产环境中翻车后，我开始意识到，枯燥的可靠性远比令人兴奋的不可预测性更有价值。
+
+你的情况可能有所不同，但根据我的经验，那些真正能够交付并持续运行的系统，无一例外都将 LLM 视为大型架构中的组件，而不是能解决一切问题的魔法盒。
+
+### 资源
+
+- [Mastra 工作流文档](https://mastra.ai/docs/workflows/overview)
+- [Mastra 记忆文档](https://mastra.ai/docs/memory/overview)
+- [完整演示代码](https://github.com/justsml/mastra-examples)
+
+## 阅读系列文章
+
+1. [LLM 路由](../llm-routing-mastra-ai)
+2. [安全与防护栏](../mastra-security-guardrails)
+3. [MCP 与工具集成](../mastra-mcp-tool-integrations)
+4. **工作流与记忆**（本文）
+````
