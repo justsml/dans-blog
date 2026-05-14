@@ -1,0 +1,49 @@
+{
+  "index": 0,
+  "attempt": 1,
+  "originalTitle": "Context Window Basics",
+  "translatedTitle": "上下文窗口基础",
+  "translation": {
+    "title": "上下文窗口基础",
+    "group": "基础",
+    "options": [
+      {
+        "text": "每分钟的最大请求数"
+      },
+      {
+        "text": "输入和输出的合计 token 限制"
+      },
+      {
+        "text": "对话中的消息数量"
+      },
+      {
+        "text": "会话之间可用的内存"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "在 LLM 中，“上下文窗口”指的是什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "上下文窗口是模型在一次调用中能够处理的 token 总数——**输入 + 输出的合计**。128K 的上下文窗口意味着你的提示词 + 检索到的文档 + 对话历史 + 模型的回复必须全部控制在 128,000 个 token 之内。\n\n它与会话、内存或速率限制毫无关系。当达到上限时，模型要么截断，要么报错，甚至更糟——悄悄丢弃你未预料的 token。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"上下文窗口基础\",\n  \"group\": \"基础\",\n  \"options\": [\n    {\n      \"text\": \"每分钟的最大请求数\"\n    },\n    {\n      \"text\": \"输入和输出的合计 token 限制\"\n    },\n    {\n      \"text\": \"对话中的消息数量\"\n    },\n    {\n      \"text\": \"会话之间可用的内存\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"在 LLM 中，“上下文窗口”指的是什么？\"\n  ],\n  \"questionCode\": [],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"上下文窗口是模型在一次调用中能够处理的 token 总数——**输入 + 输出的合计**。128K 的上下文窗口意味着你的提示词 + 检索到的文档 + 对话历史 + 模型的回复必须全部控制在 128,000 个 token 之内。\\n\\n它与会话、内存或速率限制毫无关系。当达到上限时，模型要么截断，要么报错，甚至更糟——悄悄丢弃你未预料的 token。\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 921,
+    "outputTokens": 743,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 2607,
+    "providerCostUsd": 0.00056475,
+    "providerUpstreamCostUsd": 0.00056475,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000035919,
+    "outputUsd": 0.00013373999999999998,
+    "totalUsd": 0.00016965899999999998,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

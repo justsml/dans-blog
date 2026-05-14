@@ -1,0 +1,49 @@
+{
+  "index": 7,
+  "attempt": 1,
+  "originalTitle": "Conversation History Management",
+  "translatedTitle": "对话历史管理",
+  "translation": {
+    "title": "对话历史管理",
+    "group": "令牌管理",
+    "options": [
+      {
+        "text": "始终发送完整的对话历史"
+      },
+      {
+        "text": "当历史超过令牌预算时，对旧消息进行摘要"
+      },
+      {
+        "text": "删除旧消息——模型拥有持久记忆"
+      },
+      {
+        "text": "将历史存储在向量数据库中并检索相关回合"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "在多轮聊天应用中，当对话历史变得很长时，正确的策略是什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "LLM 并没有持久记忆。每次 API 调用都是无状态的——你发送完整上下文，得到响应。对话的“记忆”完全取决于你在每个请求中包含的消息历史。\n\n当历史超过你的预算时，可选方案有：\n1. **Summarize**：将较旧的回合压缩成持续的摘要，保留最近的回合原文\n2. **Sliding window**：保留最近的 N 条回合，丢弃更早的\n3. **Selective retrieval**：对对话回合进行嵌入，并在每次查询时检索相关回合（复杂但强大）\n\n普通截断——为了凑合而削减旧消息——是最糟的选项，因为它会悄悄移除模型可能需要的上下文。\n\n向量数据库检索对话历史在理论上很吸引人，但对大多数聊天应用来说通常是大材小用。摘要是务实的默认选择。"
+    ]
+  },
+  "rawText": "{\n\"title\": \"对话历史管理\",\n  \"group\": \"令牌管理\",\n  \"options\": [\n    {\n      \"text\": \"始终发送完整的对话历史\"\n    },\n    {\n      \"text\": \"当历史超过令牌预算时，对旧消息进行摘要\"\n    },\n    {\n      \"text\": \"删除旧消息——模型拥有持久记忆\"\n    },\n    {\n      \"text\": \"将历史存储在向量数据库中并检索相关回合\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"在多轮聊天应用中，当对话历史变得很长时，正确的策略是什么？\"\n  ],\n  \"questionCode\": [],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"LLM 并没有持久记忆。每次 API 调用都是无状态的——你发送完整上下文，得到响应。对话的“记忆”完全取决于你在每个请求中包含的消息历史。\\n\\n当历史超过你的预算时，可选方案有：\\n1. **Summarize**：将较旧的回合压缩成持续的摘要，保留最近的回合原文\\n2. **Sliding window**：保留最近的 N 条回合，丢弃更早的\\n3. **Selective retrieval**：对对话回合进行嵌入，并在每次查询时检索相关回合（复杂但强大）\\n\\n普通截断——为了凑合而削减旧消息——是最糟的选项，因为它会悄悄移除模型可能需要的上下文。\\n\\n向量数据库检索对话历史在理论上很吸引人，但对大多数聊天应用来说通常是大材小用。摘要是务实的默认选择。\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 1018,
+    "outputTokens": 1128,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1186,
+    "providerCostUsd": 0.0012023,
+    "providerUpstreamCostUsd": 0.0012023,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000039702,
+    "outputUsd": 0.00020304,
+    "totalUsd": 0.000242742,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Chunking Strategy",
+  "translatedTitle": "分块策略",
+  "translation": {
+    "title": "分块策略",
+    "group": "检索",
+    "options": [
+      {
+        "text": "使用上下文窗口允许的最大块大小"
+      },
+      {
+        "text": "始终使用 512 token — 它"
+      },
+      {
+        "text": "使用与内容结构匹配的重叠块大小"
+      },
+      {
+        "text": "块大小不"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "在对文档进行 RAG 分块时，最重要的原则是什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "没有通用的正确块大小——它取决于你的内容。重要原则有：\n\n    1. **匹配你的内容结构。** FAQ 页面在问答层级上分块效果好。法律文档在条款层级上分块效果好。代码在函数层级上分块效果好。\n    2. **使用重叠。** 一个 512 token 的块在两侧各有 64 token 的重叠，意味着跨越边界的答案仍能被检索到。\n    3. **进行测量。** 构建评估集并测试多种块大小。块大小比嵌入模型更重要。\n\n    “512 token”是一个合理的起点，但不是硬性规定。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"分块策略\",\n  \"group\": \"检索\",\n  \"options\": [\n    {\n      \"text\": \"使用上下文窗口允许的最大块大小\"\n    },\n    {\n      \"text\": \"始终使用 512 token — 它\"\n    },\n    {\n      \"text\": \"使用与内容结构匹配的重叠块大小\"\n    },\n    {\n      \"text\": \"块大小不\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"在对文档进行 RAG 分块时，最重要的原则是什么？\"\n  ],\n  \"questionCode\": [],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"没有通用的正确块大小——它取决于你的内容。重要原则有：\\n\\n    1. **匹配你的内容结构。** FAQ 页面在问答层级上分块效果好。法律文档在条款层级上分块效果好。代码在函数层级上分块效果好。\\n    2. **使用重叠。** 一个 512 token 的块在两侧各有 64 token 的重叠，意味着跨越边界的答案仍能被检索到。\\n    3. **进行测量。** 构建评估集并测试多种块大小。块大小比嵌入模型更重要。\\n\\n    “512 token”是一个合理的起点，但不是硬性规定。\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 966,
+    "outputTokens": 892,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 2495,
+    "providerCostUsd": 0.0006417,
+    "providerUpstreamCostUsd": 0.0006417,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000037674,
+    "outputUsd": 0.00016056,
+    "totalUsd": 0.00019823399999999999,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

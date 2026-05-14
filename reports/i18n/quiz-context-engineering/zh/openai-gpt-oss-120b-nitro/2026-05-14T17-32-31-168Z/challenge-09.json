@@ -1,0 +1,49 @@
+{
+  "index": 8,
+  "attempt": 1,
+  "originalTitle": "Few-Shot Examples",
+  "translatedTitle": "少量示例",
+  "translation": {
+    "title": "少量示例",
+    "group": "提示结构",
+    "options": [
+      {
+        "text": "更多示例总是能产生更好的结果"
+      },
+      {
+        "text": "在提示中使用 3–5 条高质量、多样化的示例"
+      },
+      {
+        "text": "少量示例仅对分类任务有帮助"
+      },
+      {
+        "text": "示例应放在用户查询之后，而不是之前"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "对于大多数生产场景，最佳的少量示例策略是："
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "少量示例能显著提升输出的一致性和格式遵循度。对大多数任务而言，最佳取值是 **3–5 条高质量、多样化的示例**。\n\n    为什么不放更多？每个示例都要消耗 token。超过 5–10 条示例后，边际收益下降，而 token 成本持续上升。示例过多还会增加模型对示例过拟合、而不是理解底层模式的风险。\n\n    为什么多样性重要：如果所有示例都是同一种输入，模型在边缘案例上就难以泛化。请加入覆盖最关键变体的示例。\n\n    放置位置：示例应放在 *用户查询之前*，作为系统提示的一部分或预填的对话轮次——而不是之后。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"少量示例\",\n  \"group\": \"提示结构\",\n  \"options\": [\n    {\n      \"text\": \"更多示例总是能产生更好的结果\"\n    },\n    {\n      \"text\": \"在提示中使用 3–5 条高质量、多样化的示例\"\n    },\n    {\n      \"text\": \"少量示例仅对分类任务有帮助\"\n    },\n    {\n      \"text\": \"示例应放在用户查询之后，而不是之前\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"对于大多数生产场景，最佳的少量示例策略是：\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"少量示例能显著提升输出的一致性和格式遵循度。对大多数任务而言，最佳取值是 **3–5 条高质量、多样化的示例**。\\n\\n    为什么不放更多？每个示例都要消耗 token。超过 5–10 条示例后，边际收益下降，而 token 成本持续上升。示例过多还会增加模型对示例过拟合、而不是理解底层模式的风险。\\n\\n    为什么多样性重要：如果所有示例都是同一种输入，模型在边缘案例上就难以泛化。请加入覆盖最关键变体的示例。\\n\\n    放置位置：示例应放在 *用户查询之前*，作为系统提示的一部分或预填的对话轮次——而不是之后。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 980,
+    "outputTokens": 925,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 2423,
+    "providerCostUsd": 0.0006828,
+    "providerUpstreamCostUsd": 0.0006828,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00003822,
+    "outputUsd": 0.0001665,
+    "totalUsd": 0.00020472,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

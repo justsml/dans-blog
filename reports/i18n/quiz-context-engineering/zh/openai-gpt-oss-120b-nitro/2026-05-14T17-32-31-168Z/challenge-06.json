@@ -1,0 +1,49 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Hybrid Search",
+  "translatedTitle": "混合搜索",
+  "translation": {
+    "title": "混合搜索",
+    "group": "检索",
+    "options": [
+      {
+        "text": "为冗余而将同一查询执行两次"
+      },
+      {
+        "text": "在同一语料库上使用两种不同的嵌入模型"
+      },
+      {
+        "text": "将向量搜索与关键词搜索结合，以获得更好的检索效果"
+      },
+      {
+        "text": "同时在多个向量数据库中进行搜索"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "在 RAG 系统中，“混合搜索”指的是："
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "混合搜索将 **向量搜索**（通过嵌入实现语义相似度）与 **关键词搜索**（BM25 / 全文检索）结合，因为它们的弱点互补：\n\n- 向量搜索在精确词汇上表现欠佳：产品名称、错误码、型号、技术标识符\n- 关键词搜索在同义改写上受限：比如 “如何取消” 与 “终止订阅”\n\n两者的结果通过 **Reciprocal Rank Fusion (RRF)** 融合——这是一种无需归一化分数即可合并多个排序列表位置的排名算法。\n\n在 Postgres 中，使用 `pgvector` + `tsvector` 即可实现上述功能，无需额外的搜索服务。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"混合搜索\",\n  \"group\": \"检索\",\n  \"options\": [\n    {\n      \"text\": \"为冗余而将同一查询执行两次\"\n    },\n    {\n      \"text\": \"在同一语料库上使用两种不同的嵌入模型\"\n    },\n    {\n      \"text\": \"将向量搜索与关键词搜索结合，以获得更好的检索效果\"\n    },\n    {\n      \"text\": \"同时在多个向量数据库中进行搜索\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"在 RAG 系统中，“混合搜索”指的是：\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"混合搜索将 **向量搜索**（通过嵌入实现语义相似度）与 **关键词搜索**（BM25 / 全文检索）结合，因为它们的弱点互补：\\n\\n- 向量搜索在精确词汇上表现欠佳：产品名称、错误码、型号、技术标识符\\n- 关键词搜索在同义改写上受限：比如 “如何取消” 与 “终止订阅”\\n\\n两者的结果通过 **Reciprocal Rank Fusion (RRF)** 融合——这是一种无需归一化分数即可合并多个排序列表位置的排名算法。\\n\\n在 Postgres 中，使用 `pgvector` + `tsvector` 即可实现上述功能，无需额外的搜索服务。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 968,
+    "outputTokens": 387,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1987,
+    "providerCostUsd": 0.0003774,
+    "providerUpstreamCostUsd": 0.0003774,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000037752,
+    "outputUsd": 0.00006966,
+    "totalUsd": 0.000107412,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

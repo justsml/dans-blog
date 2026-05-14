@@ -1,0 +1,50 @@
+{
+  "index": 12,
+  "attempt": 1,
+  "originalTitle": "Grounding vs. Hallucination",
+  "translatedTitle": "基础与幻觉",
+  "translation": {
+    "title": "基础与幻觉",
+    "group": "高级",
+    "options": [
+      {
+        "text": "在系统提示中告诉模型“不要产生幻觉”"
+      },
+      {
+        "text": "使用更高的 temperature 来生成更自信的回复"
+      },
+      {
+        "text": "提供检索到的源文档并指示模型引用它们"
+      },
+      {
+        "text": "使用更大的模型——幻觉只会在小模型中出现"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "在生产 AI 系统中降低幻觉的最有效技术是："
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "指示模型不要产生幻觉并不能阻止幻觉——模型没有可靠的自省信号来判断“我在编造”。这只会导致模型自信地告诉你它没有编造，却仍在编造。\n\n实际上有效的办法是：**grounding**。向模型提供它正确回答所需的信息，并将其约束在这些信息范围内：",
+      "随后验证输出：检查响应中的主张是否出现在检索到的上下文中。这就是引用 grounding 检查——实现细节请参见 RAG 评估讨论。\n\n更大的模型平均幻觉更少，但所有模型都会产生幻觉。grounding 才是缓解策略，而不是模型大小。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"基础与幻觉\",\n  \"group\": \"高级\",\n  \"options\": [\n    {\n      \"text\": \"在系统提示中告诉模型“不要产生幻觉”\"\n    },\n    {\n      \"text\": \"使用更高的 temperature 来生成更自信的回复\"\n    },\n    {\n      \"text\": \"提供检索到的源文档并指示模型引用它们\"\n    },\n    {\n      \"text\": \"使用更大的模型——幻觉只会在小模型中出现\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"在生产 AI 系统中降低幻觉的最有效技术是：\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"指示模型不要产生幻觉并不能阻止幻觉——模型没有可靠的自省信号来判断“我在编造”。这只会导致模型自信地告诉你它没有编造，却仍在编造。\\n\\n实际上有效的办法是：**grounding**。向模型提供它正确回答所需的信息，并将其约束在这些信息范围内：\",\n    \"随后验证输出：检查响应中的主张是否出现在检索到的上下文中。这就是引用 grounding 检查——实现细节请参见 RAG 评估讨论。\\n\\n更大的模型平均幻觉更少，但所有模型都会产生幻觉。grounding 才是缓解策略，而不是模型大小。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1012,
+    "outputTokens": 756,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 2303,
+    "providerCostUsd": 0.0005862,
+    "providerUpstreamCostUsd": 0.0005862,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000039468,
+    "outputUsd": 0.00013608,
+    "totalUsd": 0.000175548,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "index": 3,
+  "attempt": 1,
+  "originalTitle": "Lost in the Middle",
+  "translatedTitle": "中间迷失",
+  "translation": {
+    "title": "中间迷失",
+    "group": "检索",
+    "options": [
+      {
+        "text": "模型在上下文放置位置上表现相同"
+      },
+      {
+        "text": "模型在上下文位于最末时表现最佳"
+      },
+      {
+        "text": "模型在上下文位于开头和结尾时表现最佳，而在中间时表现最差"
+      },
+      {
+        "text": "模型在上下文位于提示中间时表现最佳"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "对“中间迷失”问题的研究表明，大语言模型往往会："
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "《Lost in the Middle 论文 (Liu et al., 2023)》[链接](https://arxiv.org/abs/2307.03172) 证明，LLM 在长上下文中放置于中间的信息时可靠地表现不佳。当相关信息出现在上下文窗口的 **开头或结尾** 时，性能显著更高。\n\n实际意义：在向 RAG 提示中插入检索块时，不要仅仅按相关性顺序追加它们。把排名最高的结果放在最前，第二高的放在最后，中间填入排名较低的材料。看似违背直觉，却有可衡量的提升。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"中间迷失\",\n  \"group\": \"检索\",\n  \"options\": [\n    {\n      \"text\": \"模型在上下文放置位置上表现相同\"\n    },\n    {\n      \"text\": \"模型在上下文位于最末时表现最佳\"\n    },\n    {\n      \"text\": \"模型在上下文位于开头和结尾时表现最佳，而在中间时表现最差\"\n    },\n    {\n      \"text\": \"模型在上下文位于提示中间时表现最佳\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"对“中间迷失”问题的研究表明，大语言模型往往会：\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"《Lost in the Middle 论文 (Liu et al., 2023)》[链接](https://arxiv.org/abs/2307.03172) 证明，LLM 在长上下文中放置于中间的信息时可靠地表现不佳。当相关信息出现在上下文窗口的 **开头或结尾** 时，性能显著更高。\\n\\n实际意义：在向 RAG 提示中插入检索块时，不要仅仅按相关性顺序追加它们。把排名最高的结果放在最前，第二高的放在最后，中间填入排名较低的材料。看似违背直觉，却有可衡量的提升。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 973,
+    "outputTokens": 866,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 1023,
+    "providerCostUsd": 0.00099005,
+    "providerUpstreamCostUsd": 0.00099005,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000037947,
+    "outputUsd": 0.00015588,
+    "totalUsd": 0.000193827,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
