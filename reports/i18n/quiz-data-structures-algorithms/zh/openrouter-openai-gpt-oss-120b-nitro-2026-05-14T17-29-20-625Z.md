@@ -1,0 +1,686 @@
+# Translation Candidate
+- Slug: quiz-data-structures-algorithms
+- Locale: zh
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2024-10-31--quiz-data-structures-algorithms/zh/index.mdx
+- Validation: deferred
+- Runtime seconds: 39.26
+- Input tokens: 18527
+- Output tokens: 10254
+- Thinking tokens: unknown
+- Cached input tokens: 5120
+- Cache write tokens: 0
+- Estimated cost: $0.002741
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: 测验：数据结构与算法
+subTitle: 你能对二叉树进行 BS 吗？
+label: Algorithms & DS
+unlisted: true
+date: '2024-10-31'
+modified: '2024-11-08'
+social_image: ../desktop-social.webp
+category: Quiz
+subCategory: Data Structures
+tags:
+  - quiz
+  - data-structures
+  - algorithms
+  - intermediate
+  - advanced
+cover: ../redcharlie-mugDbuNnbd0-unsplash-square.webp
+cover_full_width: ../redcharlie-mugDbuNnbd0-unsplash-wide.webp
+cover_mobile: ../redcharlie-mugDbuNnbd0-unsplash-square.webp
+cover_icon: ../redcharlie-mugDbuNnbd0-unsplash-square.webp
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+<section class="inset">
+  欢迎参加我的数据结构与算法测验！
+</section>
+
+这套测验将检验你对数据结构（栈、列表、树等）以及算法和时间复杂度的掌握程度。
+
+### 20 道题目……开始！
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="数据结构"
+  title="栈 vs 队列"
+  options={[
+    {text: '两者皆是'},
+    {text: '队列'},
+    {text: '栈', isAnswer: true},
+    {text: '都不是'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    哪种数据结构最适合 LIFO（后进先出）访问模式？
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    关注访问模式，而不是结构的名称。正确答案通常取决于必须先或后发生的情况。
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    栈最适合 LIFO 访问模式。队列最适合 FIFO（先进先出）访问模式。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="算法"
+  title="大 O 表记法"
+  options={[
+    {text: 'O(1)', isAnswer: true},
+    {text: 'O(n)'},
+    {text: 'O(log n)'},
+    {text: 'O(n^2)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    对于始终在相同时间内运行、且不受输入规模影响的算法，其时间复杂度是什么？
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    关注访问模式，而不是结构的名称。正确答案通常由必须首先或最后发生的操作决定。
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    O(1) 表示常数时间复杂度。它意味着算法始终在相同的时间内运行，不受输入规模的影响。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="数据结构"
+  title="链表长度计算"
+  options={[
+    {text: 'O(1)'},
+    {text: 'O(log n)'},
+    {text: 'O(n^2)'},
+    {text: 'O(n)', isAnswer: true},
+    {text: 'O(n log n)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    计算单向链表长度的时间复杂度是多少？
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    关注访问模式，而不是结构的名称。正确答案通常取决于必须首先或最后发生的操作。
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    要计算单向链表的长度，需要从头遍历到尾部的每个节点，时间复杂度为 O(n)。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="数据结构"
+  title="二叉搜索树查找"
+  options={[
+    {text: 'O(1)'},
+    {text: 'O(log n)', isAnswer: true},
+    {text: 'O(n)'},
+    {text: 'O(n^2)'},
+    {text: 'O(n log n)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    在平衡二叉搜索树中查找元素的平均时间复杂度是多少？
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    关注访问模式，而不是结构的名称。正确答案通常取决于必须先或后发生的事情。
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    在平衡的二叉搜索树中，查找的平均时间复杂度是 O(log n)，因为每一层都能将搜索空间减半。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="排序算法"
+  title="归并排序复杂度"
+  options={[
+    {text: 'O(n^2)'},
+    {text: 'O(log n)'},
+    {text: 'O(n log n)', isAnswer: true},
+    {text: 'O(n)'},
+    {text: 'O(1)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    在最坏情况下，归并排序算法的时间复杂度是多少？
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    关注访问模式，而不是结构的名称。正确答案通常取决于必须先或后发生的操作。
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    归并排序在最坏情况下始终具有 O(n log n) 的复杂度，因为它会不断将数组对半划分并合并已排序的子数组。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="图"
+  title="DFS vs BFS"
+  options={[
+    {text: '队列', isAnswer: true},
+    {text: '栈'},
+    {text: '优先队列'},
+    {text: '哈希映射'},
+    {text: '集合'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    实现广度优先搜索（BFS）通常使用哪种数据结构？
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    关注访问模式，而不是结构的名称。正确答案通常由必须先或后发生的操作决定。
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    BFS 使用队列按层遍历节点，以广度优先的方式（按“行”）处理节点。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="图"
+  title="图中的环检测"
+  options={[
+    {text: '快速排序'},
+    {text: '广度优先搜索'},
+    {text: '归并排序'},
+    {text: '深度优先搜索', isAnswer: true},
+    {text: '冒泡排序'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    哪种算法常用于检测有向图中的环？
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    关注访问模式，而不是结构名称。正确答案通常取决于必须先或后发生的情况。
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    深度优先搜索（DFS）通常通过维护递归栈来跟踪已访问节点，从而用于检测图中的环。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="排序算法"
+  title="堆排序复杂度"
+  options={[
+    {text: 'O(n^2)'},
+    {text: 'O(n log n)', isAnswer: true},
+    {text: 'O(n)'},
+    {text: 'O(log n)'},
+    {text: 'O(1)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    在最坏情况下，堆排序的时间复杂度是多少？
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    关注访问模式，而不是结构的名称。正确答案通常取决于必须先或后发生的操作。
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    堆排序在最坏情况下保持 O(n log n) 的时间复杂度，因为它会构建堆并反复提取最大元素。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="数据结构"
+  title="哈希表时间复杂度"
+  options={[
+    {text: 'O(n)'},
+    {text: 'O(log n)'},
+    {text: 'O(1)', isAnswer: true},
+    {text: 'O(n^2)'},
+    {text: 'O(n log n)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    在哈希表中访问元素的平均时间复杂度是多少？
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    关注访问模式，而不是结构的名称。正确答案通常取决于必须先或后发生的事情。
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    哈希表在访问元素时的平均时间复杂度为 O(1)，前提是使用能够最小化冲突的良好哈希函数。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="数据结构"
+  title="栈操作"
+  options={[
+    {text: 'Push, Pop, Peek', isAnswer: true},
+    {text: 'Enqueue, Dequeue, Peek'},
+    {text: 'Insert, Search, Delete'},
+    {text: 'Traverse, Visit, Sort'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    哪个集合包含栈的典型操作？
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    关注访问模式，而不是结构的名称。正确答案通常取决于先后发生的顺序。
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    栈的主要操作是 Push（添加元素）、Pop（移除元素）和 Peek（在不移除的情况下查看栈顶元素）。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="图算法"
+  title="最短路径算法"
+  options={[
+    {text: 'Kruskal算法'},
+    {text: 'Prim算法'},
+    {text: 'Bellman-Ford算法'},
+    {text: 'Dijkstra算法', isAnswer: true},
+    {text: 'Floyd-Warshall算法'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    哪种算法常用于在带非负权重的加权图中寻找最短路径？
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    关注访问模式，而不是结构的名称。正确答案通常取决于必须先后发生的步骤。
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    Dijkstra算法常用于在具有非负边权的图中寻找最短路径。它使用优先队列来高效地确定最短距离。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="树数据结构"
+  title="自平衡搜索树"
+  options={[
+    {text: '二叉搜索树和最小堆'},
+    {text: 'AVL 树和红黑树', isAnswer: true},
+    {text: '最小堆和最大堆'},
+    {text: '栈和队列'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    哪个集合包含自平衡二叉搜索树数据结构的示例？
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    关注访问模式，而不是结构的名称。正确答案通常可以从必须先后发生的操作推断出来。
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    AVL 树和红黑树是自平衡树的类型，它们确保在每次插入或删除后树保持平衡。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="递归"
+  title="递归基准情况"
+  options={[
+    {text: '无限循环'},
+    {text: '栈溢出'},
+    {text: '基准情况', isAnswer: true},
+    {text: '全局变量'},
+    {text: '作用域限制'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    递归函数必须定义什么来防止无限递归？
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    关注访问模式，而不是结构的名称。正确答案通常源自必须首先或最后发生的事情。
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    递归函数需要基准情况，以在满足特定条件时停止递归调用，从而防止无限递归。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={13}
+  group="数据结构"
+  title="队列操作"
+  options={[
+    {text: '入队和出队', isAnswer: true},
+    {text: '压入和弹出'},
+    {text: '窥视和顶部'},
+    {text: '遍历和排序'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    队列的两个主要操作是什么？
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    关注访问模式，而不是结构的名称。正确答案通常由必须先后发生的操作决定。
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    队列的两个主要操作是入队（将元素添加到尾部）和出队（从头部移除元素）。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={14}
+  group="图算法"
+  title="拓扑排序"
+  options={[
+    {text: '图必须包含环'},
+    {text: '图必须是加权且连通的'},
+    {text: '图必须是无向且无环的'},
+    {text: '图必须是有向且无环的', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    对图进行拓扑排序的条件是什么？
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    关注访问模式，而不是结构的名称。正确答案通常来源于必须先后发生的事情。
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    如果图是有向且无环的（DAG），就可以进行拓扑排序。这种排序在任务调度问题中非常有用。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={15}
+  group="动态规划"
+  title="斐波那契递归复杂度"
+  options={[
+    {text: 'O(1)'},
+    {text: 'O(2^n)', isAnswer: true},
+    {text: 'O(n)'},
+    {text: 'O(log n)'},
+    {text: 'O(n^2)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    朴素递归实现斐波那契数列的时间复杂度是多少？
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    关注访问模式，而不是结构的名称。正确答案通常取决于必须首先或最后发生的事情。
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    朴素递归实现斐波那契数列的时间复杂度为 O(2^n)，因为对每个斐波那契数都会进行大量重复计算。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={16}
+  group="数据结构"
+  title="优先队列实现"
+  options={[
+    {text: '数组'},
+    {text: '栈'},
+    {text: '堆', isAnswer: true},
+    {text: '队列'},
+    {text: '链表'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    哪种数据结构常用于实现优先队列？
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    关注访问模式，而不是结构的名称。正确答案通常取决于必须先或后发生的操作。
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    优先队列通常使用堆来实现，因为堆能够高效地提取最高或最低优先级的元素。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={17}
+  group="数据结构"
+  title="二叉树遍历"
+  options={[
+    {text: '中序、前序、后序', isAnswer: true},
+    {text: '广度优先、深度优先、堆化'},
+    {text: '排序、搜索、旋转'},
+    {text: '压入、弹出、窥视'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    哪一组列出了二叉树常见的深度优先遍历顺序？
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    关注访问模式，而不是结构名称。正确答案通常取决于必须先后发生的顺序。
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    中序、前序和后序是二叉树三种常见的深度优先遍历顺序，每种遍历访问节点的顺序不同。广度优先遍历也很常见，但它属于另一类遍历。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={18}
+  group="树数据结构"
+  title="堆属性"
+  options={[
+    {text: '所有节点从左到右排序'},
+    {text: '根始终是最大的元素'},
+    {text: '所有叶子在同一层'},
+    {text: '根是最小的元素，且高度为 O(log n)', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    以下哪些属性对最小堆成立？
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    关注访问模式，而不是结构的名称。正确答案通常取决于必须先或后发生的情况。
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    在最小堆中，根始终是最小的元素，树的高度为 O(log n)，这使得插入和提取操作高效。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={19}
+  group="排序算法"
+  title="冒泡排序的稳定性"
+  options={[
+    {text: '不稳定'},
+    {text: '稳定', isAnswer: true},
+    {text: '取决于实现方式'},
+    {text: '都不是'},
+    {text: '复杂度决定稳定性'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    冒泡排序算法是稳定的吗？
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    查看访问模式，而不是结构的名称。正确答案通常取决于必须先后发生的事情。
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    冒泡排序是一种稳定的排序算法，因为它在排序过程中保持相等元素的相对顺序。
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+````
