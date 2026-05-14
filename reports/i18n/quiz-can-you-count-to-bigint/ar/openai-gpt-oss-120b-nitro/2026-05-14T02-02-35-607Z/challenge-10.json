@@ -1,0 +1,47 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Using `.map(parseInt)`",
+  "translatedTitle": "استخدام `.map(parseInt)`",
+  "translation": {
+    "title": "استخدام `.map(parseInt)`",
+    "group": "Number[]",
+    "options": [
+      {
+        "text": "[24, NaN, NaN]"
+      },
+      {
+        "text": "[24, NaN, 42]"
+      },
+      {
+        "text": "[24, 42]"
+      },
+      {
+        "text": "NaN"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [],
+    "hintsProse": [],
+    "explanationProse": [
+      "الوسيط الثاني لـ `parseInt` (القاعدة) يتطابق مع وسيط `index` في طرق المصفوفة. هذا يسبب نتائج غير متوقعة، حيث أن `parseInt(\"One\", 1)` يُعيد `NaN` بسبب الإدخال غير صالح.\n\nالعنصر الأول، `24`، يُ解析 كـ `24` في القاعدة 0 (اكتشاف تلقائي)، لذا يبقى `24`. العنصر الثاني، `'One'`، يُ解析 كـ `NaN` في القاعدة 1. العنصر الثالث، `42`، يُ解析 باستخدام القاعدة 2. في القاعدة 2، `'42'` هو `NaN`، لذا النتيجة هي `[24, NaN, NaN]`.\n\nهذا هو فخ شائع مع `parseInt` و `map`. إذا أردت تحويل مصفوفة من السلاسل إلى أعداد، الطريقة المدمجة الآمنة الوحيدة هي `.map(Number)` أو إضافة دالة رد نداء مثل `.map(x => parseInt(x, 10))`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"استخدام `.map(parseInt)`\",\n  \"group\": \"Number[]\",\n  \"options\": [\n    {\n      \"text\": \"[24, NaN, NaN]\"\n    },\n    {\n      \"text\": \"[24, NaN, 42]\"\n    },\n    {\n      \"text\": \"[24, 42]\"\n    },\n    {\n      \"text\": \"NaN\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [],\n  \"questionCode\": [\n    {\n      \"language\": \"jsx\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"الوسيط الثاني لـ `parseInt` (القاعدة) يتطابق مع وسيط `index` في طرق المصفوفة. هذا يسبب نتائج غير متوقعة، حيث أن `parseInt(\\\"One\\\", 1)` يُعيد `NaN` بسبب الإدخال غير صالح.\\n\\nالعنصر الأول، `24`، يُ解析 كـ `24` في القاعدة 0 (اكتشاف تلقائي)، لذا يبقى `24`. العنصر الثاني، `'One'`، يُ解析 كـ `NaN` في القاعدة 1. العنصر الثالث، `42`، يُ解析 باستخدام القاعدة 2. في القاعدة 2، `'42'` هو `NaN`، لذا النتيجة هي `[24, NaN, NaN]`.\\n\\nهذا هو فخ شائع مع `parseInt` و `map`. إذا أردت تحويل مصفوفة من السلاسل إلى أعداد، الطريقة المدمجة الآمنة الوحيدة هي `.map(Number)` أو إضافة دالة رد نداء مثل `.map(x => parseInt(x, 10))`.\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 1027,
+    "outputTokens": 1097,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 2789,
+    "providerCostUsd": 0.00079305,
+    "providerUpstreamCostUsd": 0.00079305,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000040053,
+    "outputUsd": 0.00019746000000000002,
+    "totalUsd": 0.00023751300000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
