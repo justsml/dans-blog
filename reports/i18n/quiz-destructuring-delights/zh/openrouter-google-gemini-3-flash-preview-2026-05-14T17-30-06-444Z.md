@@ -1,0 +1,589 @@
+# Translation Candidate
+- Slug: quiz-destructuring-delights
+- Locale: zh
+- Model: openrouter/google/gemini-3-flash-preview
+- Target: src/content/posts/2024-11-12--quiz-destructuring-delights/zh/index.mdx
+- Validation: deferred
+- Runtime seconds: 98.85
+- Input tokens: 12037
+- Output tokens: 4676
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.020046
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+unlisted: false
+title: 测验：解构的乐趣
+subTitle: 你精通解构吗？
+label: Destructuring
+social_image: ../desktop-social.webp
+category: Quiz
+subCategory: JavaScript
+date: '2024-11-12'
+modified: '2024-11-16'
+tags:
+  - quiz
+  - intro
+  - javascript
+  - es2015
+  - destructuring
+  - beginner
+  - intermediate
+cover_full_width: ../boxes-of-nesting-dolls.webp
+cover_mobile: ../boxes-of-nesting-dolls-square.webp
+cover_icon: ../boxes-of-nesting-dolls-square.webp
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+{/* 你是解构大师吗？<br/> */}
+<p class="inset">还是说，这是你的<em>《毁灭交响曲》？</em></p>
+
+本测试将检验你对 JavaScript 解构的掌握程度：从“基础”对象语法到嵌套解构和默认值。此外，还有关于 TypeScript 和内联类型的加分题！
+
+直接进入热身环节 —— 证明你的解构功底！👇
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="热身：对象"
+  title="基础对象解构"
+  options={[
+    {text: 'Name: Dan Levy, Age: 20'},
+    {text: 'Name: Dan Levy, Age: 40'},
+    {text: 'Name: Dan Levy, Age: Infinity'},
+    {text: 'Name: Dan Levy, Age: undefined', isAnswer: true},
+    {text: 'Error: Cannot read property \'age\''},
+    {text: 'Name: undefined, Age: 40'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    这段代码会打印什么？
+    ```js
+        const person = {
+          name: 'Dan Levy',
+          location: 'Cape Town',
+        };
+        const { name, age } = person;
+        console.log(`Name: ${name}, Age: ${age}`);
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `person` 对象上不存在 `age` 属性，所以 `age` 的值将是 `undefined`。绝对不是 `Infinity` 😅
+
+    结果如下：
+    ```plaintext
+        Name: Dan Levy, Age: undefined
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="热身：数组"
+  title="对象解构中的默认值"
+  options={[
+    {text: 'Name: Dan Levy, Age: NaN'},
+    {text: 'Name: Dan Levy, Age: null'},
+    {text: 'Name: Dan Levy, Age: undefined', isAnswer: true},
+    {text: 'Name: Dan Levy, Age: 40'},
+    {text: 'Error: Cannot destructure property \'age\''},
+    {text: 'SyntaxError: Unexpected token \',\''},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    这段代码的执行结果是什么？
+    ```js
+        const person = [ 'Dan Levy', 'Cape Town' ];
+        const [ name, origin, age ] = person;
+        console.log(`Name: ${name}, Age: ${age}`);
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `age` 变量在 `tuple` 数组中并不存在，因此它的值将是 `undefined`。
+
+    这会导致输出结果为：
+    ```plaintext
+        Name: Dan Levy, Age: undefined
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="嵌套解构"
+  title="嵌套解构"
+  options={[
+    {text: 'First: Dan, City: Denver'},
+    {text: 'First: undefined, City: Denver'},
+    {text: 'Error: Cannot read property \'first\''},
+    {text: 'First: Dan, City: undefined'},
+    {text: 'Error', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    来点嵌套解构怎么样？
+    ```js
+        'use strict';
+        const person = {
+          name: { first: 'Dan' },
+          address: { city: 'Denver' },
+        };
+        const {
+          name: { first },
+          address: { city },
+          birth: { place },
+        } = person;
+        console.log(
+          `First: ${first}, City: ${place}`,
+        );
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `person` 对象上并不存在 `birth: { place }` 属性，因此它会抛出错误。
+    一种解决方案是为嵌套属性提供默认值。
+
+    在访问嵌套属性时要格外小心，因为这类错误可能很难被察觉。而且不同浏览器和其他平台之间的错误消息各不相同，这让调试变得更有挑战性。
+
+    在现代 Chrome 中：`TypeError: Cannot read properties of undefined (reading 'place')`。
+
+    在 Node 中，这同样是一个 `TypeError`，因为 JavaScript 在读取 `place` 之前，会尝试从 `undefined` 中解构出 `place`。
+
+    具体的错误描述在不同浏览器和运行时之间会有所差异。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="默认值"
+  title="对象解构中的默认值"
+  options={[
+    {text: 'Hi Dan from Unknown'},
+    {text: 'Hi Dan from Denver'},
+    {text: 'Hi Unknown from Unknown'},
+    {text: 'Hi Unknown from Denver'},
+    {text: 'Error', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    现在加上了一些默认值，这段代码会执行什么操作？
+    ```js
+        'use strict';
+        const person = {
+          name: { first: 'Dan' },
+          address: { city: 'Denver' },
+        };
+        const {
+          name: { first = 'Unknown' },
+          birth: { place = 'Unknown' },
+        } = person;
+        console.log(
+          `Hi ${first} from ${place}`,
+        );
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `person` 对象上并不存在 `birth` 属性，因此整个对象仍然需要一个默认值，而不仅仅是嵌套属性。简单来说，这里缺少了一个 ` = {}` 默认值。
+
+    按照目前的写法，它的意思是“如果 `person.birth` 为 `undefined`，那么 `place` 就是 `Unknown`”。但由于 `person.birth` 本身就是 `undefined`，代码正试图对 `undefined` 进行解构，这会导致错误。
+    ```plaintext
+        In modern Chrome: `TypeError: Cannot read properties of undefined (reading 'place')`
+
+        In Node, this is also a `TypeError` because JavaScript tries to destructure `place` from `undefined`.
+
+        Exact wording varies between browsers and runtimes.
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="默认值"
+  title="对象解构中的默认值"
+  options={[
+    {text: 'Hi Dan from Denver'},
+    {text: 'Hi Dan from Johannesburg'},
+    {text: 'Hi Dan from Unknown', isAnswer: true},
+    {text: 'Hi Unknown from Unknown'},
+    {text: 'Hi Unknown from Denver'},
+    {text: 'Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    这段代码的执行结果是什么？
+    ```js
+        const person = {
+          name: { first: 'Dan' },
+          address: { city: 'Denver' },
+        };
+        const {
+          name: { first = 'Unknown' },
+          birth: { place = 'Unknown' } = {},
+        } = person;
+
+        console.log(
+          `Hi ${first} from ${place}`,
+        );
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `person` 对象中不存在 `birth` 属性，因此它会回退到空对象 `{}`。这使得内部的默认值能够被成功使用。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="函数参数"
+  title="带默认值的函数参数解构"
+  options={[
+    {text: 'Hi Dan from undefined'},
+    {text: 'Hi Dan from Unknown'},
+    {text: 'Hi Dan from Denver'},
+    {text: 'Hi Unknown from Unknown'},
+    {text: 'Hi Unknown from Denver'},
+    {text: 'Error', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    现在作为函数参数，这段代码会输出什么？
+    ```js
+        'use strict';
+        function displayUser({
+          name = "Unknown",
+          age = -1,
+        } = { place: "Unknown" }) {
+          console.log(`Hi ${name} from ${place}`);
+        }
+        displayUser({ name: "Dan" });
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    这个函数提取了 `name` 和 `age` 属性，并在必要时使用默认值。在这种情况下，默认对象上的 `place` 键只是干扰项，因为它在 `displayUser()` 内部根本没被用到。
+
+    严格模式也不会改变结果：尝试读取未声明的 `place` 绑定会抛出 `ReferenceError`。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="函数参数"
+  title="嵌套默认值的解构"
+  options={[
+    {text: 'Unknown, Unknown, Joburg'},
+    {text: 'Unknown, Unknown, Unknown'},
+    {text: 'Unknown, `undefined`, Joburg'},
+    {text: 'N/A, `undefined`, Joburg'},
+    {text: 'N/A, Unknown, Joburg'},
+    {text: 'N/A, N/A, Joburg', isAnswer: true},
+    {text: 'Unknown, N/A, Joburg'},
+    {text: 'Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    `undefined` 值是如何被处理的？
+    ```js
+        'use strict';
+        function displayPlace({
+          name = "N/A",
+          place = "N/A",
+          age = -1,
+        } = { place: "Unknown" }) {
+          console.log(`${place}`);
+        }
+        displayPlace({ name: "Dan" });
+        displayPlace({ name: "Dan", place: undefined });
+        displayPlace({ name: "Dan", place: "Joburg" });
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    函数 `displayPlace` 只有在没有传入任何对象时才会使用默认对象。因此，获取 `{ place: "Unknown" }` 默认值的唯一方法是不带参数调用 `displayPlace()`。
+
+    另一个值得注意的行为是，为 `place` 传入 `undefined` 会导致使用默认值，这与 `JSON.stringify` 的行为有点类似（忽略 `undefined`，但识别 `null`）。
+
+    这会导致以下结果：
+    ```js
+        displayPlace() // Unknown
+        displayPlace({ name: "Dan" }) // N/A
+        displayPlace({ name: "Dan", place: undefined }) // N/A
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="函数参数"
+  title="嵌套默认值的解构"
+  options={[
+    {text: 'N/A, N/A'},
+    {text: 'N/A, undefined'},
+    {text: 'Unknown, N/A'},
+    {text: 'Unknown, Unknown'},
+    {text: 'Unknown, undefined'},
+    {text: 'null, N/A', isAnswer: true},
+    {text: 'null, Unknown'},
+    {text: 'null, undefined'},
+    {text: 'Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    和前一个类似... `null` 是如何被处理的？
+    ```js
+        function displayPlace({
+          name = "N/A",
+          place = "N/A",
+          age = -1,
+        } = { place: "Unknown" }) {
+          console.log(`${place}`);
+        }
+        displayPlace({ name: "Dan", place: null });
+        displayPlace({ name: "Dan", place: undefined });
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    在这种情况下，第一次调用中 `place` 属性被设置为 `null`，而第二次调用中为 `undefined`。`place` 的默认值仅在整个对象缺失 **或** 为 `undefined` 时才会被使用。`null` 会被原样传递。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="TypeScript 内联类型"
+  title="嵌套默认值的解构"
+  options={[
+    {text: 'N/A'},
+    {text: 'undefined'},
+    {text: 'Unknown'},
+    {text: '\'null\''},
+    {text: 'TypeScript 错误', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    现在换成 TypeScript... _这段代码会发生什么？_
+    ```ts
+        'use strict';
+        function displayPlace(
+          {
+            name = 'N/A',
+            place = 'N/A',
+          }: {
+            name: string;
+            place: string;
+            age: number;
+          },
+        ) {
+          console.log(`${place}`);
+        }
+        displayPlace({ name: 'Dan', place: null });
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    TypeScript 会报错，因为 `place` 被定义为 `string` 类型，但调用时传入了 `null`。此外，该调用还遗漏了必需的 `age` 属性。
+
+    如果你忽略类型错误强行运行代码，控制台将打印出 `null`。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="TypeScript：带赋值操作"
+  title="嵌套默认值的解构赋值"
+  options={[
+    {text: 'undefined'},
+    {text: 'null'},
+    {text: 'N/A'},
+    {text: 'Unknown'},
+    {text: 'Denver', isAnswer: true},
+    {text: 'SyntaxError'},
+    {text: 'Error: Invalid type'},
+    {text: 'Error: Invalid Arguments'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    让我们来尝试一下重命名和赋值操作...
+    ```ts
+        'use strict';
+        function displayPlace({
+          name = 'N/A',
+          place: location = 'N/A',
+        }: {
+          name: string;
+          place: string;
+          age?: number;
+        }) {
+          console.log(`${location}`);
+        }
+        displayPlace({ name: 'Dan', place: 'Denver' });
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    控制台将打印出 `Denver`。在函数签名中，`place` 属性被重命名为 `location`。在适配第三方数据结构时，这种在解构过程中重命名属性的模式非常常见。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="TypeScript 中的嵌套解构"
+  title="嵌套解构与默认值"
+  options={[
+    {text: '错误：缺少属性 \'first\''},
+    {text: '错误：缺少属性 \'last\''},
+    {text: '错误：缺少属性 \'birth\' 和 \'age\'', isAnswer: true},
+    {text: '错误：缺少属性 \'place\''},
+    {text: '错误：\'string\' 在 {...} 中没有属性'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    找出类型错误：
+    ```ts
+        function greet({
+          name: {first = "N/A", last = "N/A"},
+          birth: {place = "N/A"} = {},
+          age = -1,
+        }: {
+          name: {first?: string, last?: string};
+          birth: {place?: string};
+          age: number;
+        }) {
+          console.log(`Hi ${first} ${last} from ${place}`);
+        }
+        greet({ name: {first: 'Dan'} });
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `greet` 函数的签名中存在错误。传入的对象中缺少 `age` 和 `birth` 属性，因此在类型定义中它们应该是可选的。
+
+    即便 `birth` 属性在解构时带有默认值，类型定义仍然要求它必须存在。在 TypeScript 中，若要将属性标记为可选，应使用 `?` 操作符。
+
+    注意，`birth?: { place?: string }` 与 `birth: { place?: string } | undefined` 并不等价。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="TypeScript + 变量赋值"
+  title="嵌套解构、变量赋值与类型定义"
+  options={[
+    {text: 'Hi Dan Levy from N/A'},
+    {text: 'Hi Dan Levy from Cape Town'},
+    {text: 'Hi N/A N/A from N/A'},
+    {text: 'Hi N/A N/A from Cape Town'},
+    {text: 'Error', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    现在加入 **变量赋值**（注意 `f`、`l` 和 `p` 变量）
+    ```ts
+        'use strict';
+        function greet(
+          {
+            name: {first: f = "N/A", last: l = "N/A"},
+            birth: {place: p = "N/A"} = {},
+            age = -1,
+          }: {
+            name: {first?: string, last?: string};
+            birth?: {place?: string};
+            age?: number;
+          }
+        ) {
+          console.log(`Hi ${f} ${l} from ${place}`);
+          // What will 👆 do?
+        }
+        greet({
+          name: {first: 'Dan', last: 'Levy'},
+          birth: {place: 'Cape Town'},
+        });
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    又是一个错误！你开始靠猜了吧？！
+
+    同时处理多层嵌套解构、默认值、变量重命名和类型定义确实非常困难！
+
+    一旦 `place` 被重新赋值给了变量 `p`，它在 `console.log` 语句的作用域中就不再存在了。
+    ```ts
+        console.log(`Hi ${f} ${l} from ${place}`); // ❌
+        // to:
+        console.log(`Hi ${f} ${l} from ${p}`); // ✅
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+````

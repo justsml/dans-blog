@@ -1,0 +1,52 @@
+{
+  "index": 3,
+  "attempt": 1,
+  "originalTitle": "Default Values in Object Destructuring",
+  "translatedTitle": "对象解构中的默认值",
+  "translation": {
+    "title": "对象解构中的默认值",
+    "group": "默认值",
+    "options": [
+      {
+        "text": "Hi Dan from Unknown"
+      },
+      {
+        "text": "Hi Dan from Denver"
+      },
+      {
+        "text": "Hi Unknown from Unknown"
+      },
+      {
+        "text": "Hi Unknown from Denver"
+      },
+      {
+        "text": "Error"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "现在加上了一些默认值，这段代码会执行什么操作？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "`person` 对象上并不存在 `birth` 属性，因此整个对象仍然需要一个默认值，而不仅仅是嵌套属性。简单来说，这里缺少了一个 ` = {}` 默认值。\n\n按照目前的写法，它的意思是“如果 `person.birth` 为 `undefined`，那么 `place` 就是 `Unknown`”。但由于 `person.birth` 本身就是 `undefined`，代码正试图对 `undefined` 进行解构，这会导致错误。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"对象解构中的默认值\",\n  \"group\": \"默认值\",\n  \"options\": [\n    {\n      \"text\": \"Hi Dan from Unknown\"\n    },\n    {\n      \"text\": \"Hi Dan from Denver\"\n    },\n    {\n      \"text\": \"Hi Unknown from Unknown\"\n    },\n    {\n      \"text\": \"Hi Unknown from Denver\"\n    },\n    {\n      \"text\": \"Error\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"现在加上了一些默认值，这段代码会执行什么操作？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"`person` 对象上并不存在 `birth` 属性，因此整个对象仍然需要一个默认值，而不仅仅是嵌套属性。简单来说，这里缺少了一个 ` = {}` 默认值。\\n\\n按照目前的写法，它的意思是“如果 `person.birth` 为 `undefined`，那么 `place` 就是 `Unknown`”。但由于 `person.birth` 本身就是 `undefined`，代码正试图对 `undefined` 进行解构，这会导致错误。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 906,
+    "outputTokens": 273,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 10536,
+    "providerCostUsd": 0.001272,
+    "providerUpstreamCostUsd": 0.001272,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000453,
+    "outputUsd": 0.0008190000000000001,
+    "totalUsd": 0.0012720000000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

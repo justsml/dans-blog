@@ -1,0 +1,52 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "Nested Destructuring",
+  "translatedTitle": "嵌套解构",
+  "translation": {
+    "title": "嵌套解构",
+    "group": "嵌套解构",
+    "options": [
+      {
+        "text": "First: Dan, City: Denver"
+      },
+      {
+        "text": "First: undefined, City: Denver"
+      },
+      {
+        "text": "Error: Cannot read property 'first'"
+      },
+      {
+        "text": "First: Dan, City: undefined"
+      },
+      {
+        "text": "Error"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "来点嵌套解构怎么样？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "`person` 对象上并不存在 `birth: { place }` 属性，因此它会抛出错误。\n    一种解决方案是为嵌套属性提供默认值。\n\n    在访问嵌套属性时要格外小心，因为这类错误可能很难被察觉。而且不同浏览器和其他平台之间的错误消息各不相同，这让调试变得更有挑战性。\n\n    在现代 Chrome 中：`TypeError: Cannot read properties of undefined (reading 'place')`。\n\n    在 Node 中，这同样是一个 `TypeError`，因为 JavaScript 在读取 `place` 之前，会尝试从 `undefined` 中解构出 `place`。\n\n    具体的错误描述在不同浏览器和运行时之间会有所差异。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"嵌套解构\",\n  \"group\": \"嵌套解构\",\n  \"options\": [\n    {\n      \"text\": \"First: Dan, City: Denver\"\n    },\n    {\n      \"text\": \"First: undefined, City: Denver\"\n    },\n    {\n      \"text\": \"Error: Cannot read property 'first'\"\n    },\n    {\n      \"text\": \"First: Dan, City: undefined\"\n    },\n    {\n      \"text\": \"Error\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"来点嵌套解构怎么样？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"`person` 对象上并不存在 `birth: { place }` 属性，因此它会抛出错误。\\n    一种解决方案是为嵌套属性提供默认值。\\n\\n    在访问嵌套属性时要格外小心，因为这类错误可能很难被察觉。而且不同浏览器和其他平台之间的错误消息各不相同，这让调试变得更有挑战性。\\n\\n    在现代 Chrome 中：`TypeError: Cannot read properties of undefined (reading 'place')`。\\n\\n    在 Node 中，这同样是一个 `TypeError`，因为 JavaScript 在读取 `place` 之前，会尝试从 `undefined` 中解构出 `place`。\\n\\n    具体的错误描述在不同浏览器和运行时之间会有所差异。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 931,
+    "outputTokens": 334,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 3619,
+    "providerCostUsd": 0.0014675,
+    "providerUpstreamCostUsd": 0.0014675,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.0004655,
+    "outputUsd": 0.0010019999999999999,
+    "totalUsd": 0.0014674999999999998,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
