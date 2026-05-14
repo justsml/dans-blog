@@ -21,7 +21,7 @@ import { appendFileSync, mkdirSync, readdirSync, readFileSync, writeFileSync } f
 import { basename, dirname, join, relative } from "node:path";
 import "dotenv/config";
 import matter from "gray-matter";
-import { generateText } from "ai";
+import { generateText } from "./braintrust.ts";
 import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 import { OPENROUTER_USAGE_ACCOUNTING, usageFromResult } from "./llm-telemetry.ts";
 import { buildSystemPrompt, buildUserPrompt } from "./prompts.ts";

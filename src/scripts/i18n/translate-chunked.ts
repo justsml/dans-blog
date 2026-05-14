@@ -19,7 +19,7 @@ import { readFileSync, existsSync, mkdirSync, writeFileSync, appendFileSync } fr
 import { dirname, join } from "node:path";
 import "dotenv/config";
 import matter from "gray-matter";
-import { generateText } from "ai";
+import { generateText } from "./braintrust.ts";
 import { createOpenRouter, type OpenRouterProviderSettings } from "@openrouter/ai-sdk-provider";
 import { parse as parseLlmString } from "llm-strings";
 import {

@@ -2,7 +2,7 @@ import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, writeFileSync, appendFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import "dotenv/config";
-import { generateText } from "ai";
+import { generateText } from "./braintrust.ts";
 import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 import {
   getPostPaths,

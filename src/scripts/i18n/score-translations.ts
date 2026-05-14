@@ -4,7 +4,7 @@ import { dirname, join } from "node:path";
 import { spawn } from "node:child_process";
 import "dotenv/config";
 import matter from "gray-matter";
-import { generateText } from "ai";
+import { generateText } from "./braintrust.ts";
 import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 import { jsonrepair } from "jsonrepair";
 import { ACTIVE_LOCALES, LOCALE_LABELS, type ActiveLocale } from "../../shared/i18n.ts";
