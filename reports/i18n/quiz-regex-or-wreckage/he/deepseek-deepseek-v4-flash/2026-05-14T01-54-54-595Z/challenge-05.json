@@ -1,0 +1,52 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Positive Look-ahead",
+  "translatedTitle": "מבט קדימה חיובי",
+  "translation": {
+    "title": "מבט קדימה חיובי",
+    "group": "מבט קדימה",
+    "options": [
+      {
+        "text": "[\"$100\", \"€50\"]"
+      },
+      {
+        "text": "[\"100\", \"50\"]"
+      },
+      {
+        "text": "[\"$\", \"€\"]"
+      },
+      {
+        "text": "[]"
+      },
+      {
+        "text": "null"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "מה יותאם?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "התבנית הזו לא תתאים לשום דבר מכיוון שהמבט קדימה הוא הפוך! אם אתה רוצה ספרות שלפניהן `$` או `€`, השתמש במבט אחורה: `/(?<=[\\$€])\\d+/g`.\n\n    מבט קדימה בודק מה בא *אחרי* המיקום הנוכחי. התבנית כפי שנכתבה מחפשת:\n    - ספרה אחת או יותר (`\\d+`)\n    - ואחריה (`(?=...)`) או $ או € (`[\\$€]`)\n\n    מכיוון שאין מספרים שאחריהם סמלי מטבע (הם לפניהם), לא נקבל התאמות.\n\n    [למידע נוסף על מבט קדימה](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"מבט קדימה חיובי\",\n  \"group\": \"מבט קדימה\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"$100\\\", \\\"€50\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"100\\\", \\\"50\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"$\\\", \\\"€\\\"]\"\n    },\n    {\n      \"text\": \"[]\"\n    },\n    {\n      \"text\": \"null\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"מה יותאם?\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"התבנית הזו לא תתאים לשום דבר מכיוון שהמבט קדימה הוא הפוך! אם אתה רוצה ספרות שלפניהן `$` או `€`, השתמש במבט אחורה: `/(?<=[\\\\$€])\\\\d+/g`.\\n\\n    מבט קדימה בודק מה בא *אחרי* המיקום הנוכחי. התבנית כפי שנכתבה מחפשת:\\n    - ספרה אחת או יותר (`\\\\d+`)\\n    - ואחריה (`(?=...)`) או $ או € (`[\\\\$€]`)\\n\\n    מכיוון שאין מספרים שאחריהם סמלי מטבע (הם לפניהם), לא נקבל התאמות.\\n\\n    [למידע נוסף על מבט קדימה](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 917,
+    "outputTokens": 1524,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 9002,
+    "providerCostUsd": 0.000793,
+    "providerUpstreamCostUsd": 0.000793,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00012838000000000001,
+    "outputUsd": 0.00042672,
+    "totalUsd": 0.0005551,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

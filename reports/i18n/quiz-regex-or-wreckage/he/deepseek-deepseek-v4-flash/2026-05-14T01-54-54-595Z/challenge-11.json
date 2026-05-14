@@ -1,0 +1,49 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "Look-behind Split",
+  "translatedTitle": "פיצול עם מבט לאחור",
+  "translation": {
+    "title": "פיצול עם מבט לאחור",
+    "group": "מבט לאחור",
+    "options": [
+      {
+        "text": "[\"a,\", \"b,\", \"c\"]"
+      },
+      {
+        "text": "[\"a,b,c\"]"
+      },
+      {
+        "text": "[\"a\", \",\", \"b\", \",\", \"c\"]"
+      },
+      {
+        "text": "[\"a,b,c\", \"\"]"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "מה מוחזר?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "התבנית `/(?<=,)/` היא מבט לאחור (look-behind) שתואמת אחרי פסיק:\n    - `a,` (אחרי פסיק)\n    - `b,` (אחרי פסיק)\n    - `c` (אין פסיק אחריו)\n\n    המבט לאחור אינו צורך את הפסיק, כך שהפסיק נשאר צמוד לקטע הקודם בתוצאת הפיצול.\n\n    זה שימושי כאשר רוצים לפצל מחרוזת על סמך מה שלפניו **מבלי לאבד את תו/י הפיצול**.\n\n    [למידע נוסף על מבט לאחור](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"פיצול עם מבט לאחור\",\n  \"group\": \"מבט לאחור\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"a,\\\", \\\"b,\\\", \\\"c\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"a,b,c\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"a\\\", \\\",\\\", \\\"b\\\", \\\",\\\", \\\"c\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"a,b,c\\\", \\\"\\\"]\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"מה מוחזר?\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"התבנית `/(?<=,)/` היא מבט לאחור (look-behind) שתואמת אחרי פסיק:\\n    - `a,` (אחרי פסיק)\\n    - `b,` (אחרי פסיק)\\n    - `c` (אין פסיק אחריו)\\n\\n    המבט לאחור אינו צורך את הפסיק, כך שהפסיק נשאר צמוד לקטע הקודם בתוצאת הפיצול.\\n\\n    זה שימושי כאשר רוצים לפצל מחרוזת על סמך מה שלפניו **מבלי לאבד את תו/י הפיצול**.\\n\\n    [למידע נוסף על מבט לאחור](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 902,
+    "outputTokens": 1345,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 8638,
+    "providerCostUsd": 0.0007184,
+    "providerUpstreamCostUsd": 0.0007184,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00012628000000000002,
+    "outputUsd": 0.00037660000000000005,
+    "totalUsd": 0.00050288,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

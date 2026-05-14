@@ -1,0 +1,52 @@
+{
+  "index": 7,
+  "attempt": 1,
+  "originalTitle": "Negative Look-behind",
+  "translatedTitle": "מבט לאחור שלילי",
+  "translation": {
+    "title": "מבט לאחור שלילי",
+    "group": "מבט לאחור",
+    "options": [
+      {
+        "text": "[\"123\"]"
+      },
+      {
+        "text": "[\"123\", \"456\"]"
+      },
+      {
+        "text": "[\"23\", \"456\"]"
+      },
+      {
+        "text": "[\"456\"]"
+      },
+      {
+        "text": "[]"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "מה מתאים לתבנית הזו?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "המבט לאחור השלילי `(?<!abc)` מבטיח שלפני הספרות לא מופיע \"abc\":\n    - ❌ \"123\" (לפניו \"abc\")\n    - ✅ \"23\" (לפניו \"abc1\")\n    - ✅ \"456\" (לפניו \"def\")\n\n    JavaScript תומך במבט לאחור במנועים מודרניים. דוגמה זו משתמשת במבט לאחור באורך קבוע: `abc` הוא תמיד שלושה תווים. מבט לאחור באורך משתנה הוא קצה תלוי מנוע מסובך יותר.\n\n    הערה: תמיכה במבט לאחור היא יחסית חדשה ב-JavaScript. בדוק [תאימות דפדפן](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#browser_compatibility) אם אתה צריך לתמוך בדפדפנים ישנים יותר."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"מבט לאחור שלילי\",\n  \"group\": \"מבט לאחור\",\n  \"options\": [\n    {\"text\": \"[\\\"123\\\"]\"},\n    {\"text\": \"[\\\"123\\\", \\\"456\\\"]\"},\n    {\"text\": \"[\\\"23\\\", \\\"456\\\"]\"},\n    {\"text\": \"[\\\"456\\\"]\"},\n    {\"text\": \"[]\"}\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\"מה מתאים לתבנית הזו?\"],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"המבט לאחור השלילי `(?<!abc)` מבטיח שלפני הספרות לא מופיע \\\"abc\\\":\\n    - ❌ \\\"123\\\" (לפניו \\\"abc\\\")\\n    - ✅ \\\"23\\\" (לפניו \\\"abc1\\\")\\n    - ✅ \\\"456\\\" (לפניו \\\"def\\\")\\n\\n    JavaScript תומך במבט לאחור במנועים מודרניים. דוגמה זו משתמשת במבט לאחור באורך קבוע: `abc` הוא תמיד שלושה תווים. מבט לאחור באורך משתנה הוא קצה תלוי מנוע מסובך יותר.\\n\\n    הערה: תמיכה במבט לאחור היא יחסית חדשה ב-JavaScript. בדוק [תאימות דפדפן](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#browser_compatibility) אם אתה צריך לתמוך בדפדפנים ישנים יותר.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 916,
+    "outputTokens": 1831,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 10716,
+    "providerCostUsd": 0.0009156,
+    "providerUpstreamCostUsd": 0.0009156,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00012824,
+    "outputUsd": 0.0005126800000000001,
+    "totalUsd": 0.0006409200000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

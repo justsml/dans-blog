@@ -1,0 +1,49 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Word Boundaries",
+  "translatedTitle": "גבולות מילים",
+  "translation": {
+    "title": "גבולות מילים",
+    "group": "התאמה בסיסית",
+    "options": [
+      {
+        "text": "[\"cat\", \"cats\"]"
+      },
+      {
+        "text": "[\"cat\"]"
+      },
+      {
+        "text": "[\"cats\"]"
+      },
+      {
+        "text": "[]"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "מה יתאים?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "הסימן `\\b` מייצג גבול מילה, המתאים:\n    - בין תו של מילה לתו שאינו של מילה\n    - בתחילת/סוף המחרוזת אם יש תו של מילה\n\n    לכן `/\\bcat\\b/` מתאים ל-\"cat\" רק כשהיא מילה שלמה, לא כחלק ממילה אחרת.\n    - ✅ \"cat\" (מוקף ברווחים)\n    - ❌ \"cats\" (אין גבול אחרי \"cat\")\n    - ❌ \"category\" (אין גבול אחרי \"cat\")\n\n    [למידע נוסף על גבולות מילים](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions#other_assertions)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"גבולות מילים\",\n  \"group\": \"התאמה בסיסית\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"cat\\\", \\\"cats\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"cat\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"cats\\\"]\"\n    },\n    {\n      \"text\": \"[]\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"מה יתאים?\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"js\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"הסימן `\\\\b` מייצג גבול מילה, המתאים:\\n    - בין תו של מילה לתו שאינו של מילה\\n    - בתחילת/סוף המחרוזת אם יש תו של מילה\\n\\n    לכן `/\\\\bcat\\\\b/` מתאים ל-\\\"cat\\\" רק כשהיא מילה שלמה, לא כחלק ממילה אחרת.\\n    - ✅ \\\"cat\\\" (מוקף ברווחים)\\n    - ❌ \\\"cats\\\" (אין גבול אחרי \\\"cat\\\")\\n    - ❌ \\\"category\\\" (אין גבול אחרי \\\"cat\\\")\\n\\n    [למידע נוסף על גבולות מילים](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions#other_assertions)\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 883,
+    "outputTokens": 558,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 3883,
+    "providerCostUsd": 0.0003998,
+    "providerUpstreamCostUsd": 0.0003998,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00012362,
+    "outputUsd": 0.00015624,
+    "totalUsd": 0.00027986000000000005,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

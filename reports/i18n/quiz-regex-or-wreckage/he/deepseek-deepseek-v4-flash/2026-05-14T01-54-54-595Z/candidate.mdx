@@ -1,0 +1,623 @@
+---
+unlisted: false
+title: 'חידון: שליטה בביטויים רגולריים'
+subTitle: תוכל לאלף רגקס פראי?
+label: RegEx
+social_image: ../desktop-social.webp
+category: Quiz
+subCategory: RegEx
+date: '2024-11-15'
+modified: '2024-11-16'
+tags:
+  - quiz
+  - regex
+  - javascript
+  - intermediate
+  - patterns
+cover_full_width: ../dan-lounsbury-uHZ2-nzYuIs-unsplash-wide.webp
+cover_mobile: ../dan-lounsbury-uHZ2-nzYuIs-unsplash-square-200.webp
+cover_icon: ../dan-lounsbury-uHZ2-nzYuIs-unsplash-square-200.webp
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+<p class="inset">מוכנים להתמודד עם כמה ביטויים רגולריים? 🤼‍♂️</p>
+
+בחנו את הידע שלכם בביטויים רגולריים עם שאלות על תבניות בסיסיות, מכמתים, קבוצות ואותן טענות מבט קדימה/אחורה המסובכות. מהתאמת מחרוזות פשוטה ועד אימות תבניות מורכב – האם תצליחו לזהות את הביטוי הרגולרי הנכון?
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="חימום"
+  title="התאמה תלוית רישיות"
+  options={[
+    {text: '["Cat"]'},
+    {text: '["cat", "CAT", "Cat"]'},
+    {text: '["cat"]', isAnswer: true},
+    {text: '[]'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה תואם?
+    ```js
+        'cat CAT Cat'.match(/cat/g)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    התבנית הזו משתמשת ב-`g`, אך לא ב-`i`:
+    - `g` מוצא את כל ההתאמות
+    - ללא `i`, ההתאמה תלוית רישיות
+
+    ללא הדגל `i`, רק "cat" באותיות קטנות תואם.
+
+    זה שימושי במיוחד כאשר עובדים עם קלט משתמש או HTML שבו הרישיות עשויה להשתנות.
+
+    [למידע נוסף על דגלי RegExp](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#advanced_searching_with_flags)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="חימום"
+  title="התאמת תווים פשוטה"
+  options={[
+    {text: '["cat", "hat"]', isAnswer: true},
+    {text: '["cat", "hat", "what"]'},
+    {text: '["cat"]'},
+    {text: '[]'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה יחזיר הקוד הזה?
+    ```js
+        const words = ['cat', 'hat', 'what', 'bat'];
+        words.filter(word => word.match(/^[ch]at/))
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    התבנית `/^[ch]at/` תואמת מחרוזות ש:
+    - מתחילות (`^`) ב-'c' או 'h' (זה מה ש-`[ch]` אומר - מחלקת תווים התואמת תו אחד)
+    - ואחריהן בדיוק 'at'
+
+    לכן, רק "cat" ו-"hat" תואמות לתבנית. השיטה `filter()` שומרת רק על האלמנטים התואמים.
+
+    [למידע נוסף על מחלקות תווים ב-MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Character_Classes)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="התאמה בסיסית"
+  title="חמדני לעומת לא חמדני"
+  options={[
+    {text: '["<div>Hello</div>"]'},
+    {text: '["<div>", "</div>"]'},
+    {text: '["<div>Hello</div><div>World</div>"]'},
+    {text: '["<div>Hello</div>", "<div>World</div>"]', isAnswer: true},
+    {text: '["Hello", "World"]'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה תתאים התבנית?
+    ```js
+        '<div>Hello</div><div>World</div>'.match(/<div>.*?<\/div>/g)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    התבנית `/<div>.*?<\/div>/g` משתמשת בהתאמה לא חמדנית (non-greedy) עם `*?` שמשמעותה:
+    - התאם את `<div>`
+    - התאם כל תו (`.*`) אבל בכמות המינימלית האפשרית (`?`)
+    - עד למציאת `</div>`
+    - הדגל `g` גורם להתאמה של כל המופעים
+
+    ללא ה-`?`, ה-`.*` החמדן יתאים הכל מהתגית `<div>` הראשונה ועד לתגית `</div>` האחרונה, וייתן התאמה אחת גדולה. עם `?`, הוא מתאים כל זוג בנפרד.
+
+    [למידע נוסף על התאמה חמדנית לעומת לא חמדנית (עצלנית)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="מלכודות נפוצות"
+  title="מטא-תו הנקודה"
+  options={[
+    {text: '["hello\nworld"]'},
+    {text: '["hello", "world"]', isAnswer: true},
+    {text: '["hello\n", "world"]'},
+    {text: 'null'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה זה יחזיר?
+    ```js
+        'hello\nworld'.match(/\w+/g)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    התבנית `\w+` מתאימה לתו אחד או יותר של תווי מילה. למרות שיש שורת חדשה במחרוזת, `\w` מתאים:
+    - אותיות (a-z, A-Z)
+    - מספרים (0-9)
+    - קו תחתון (_)
+
+    לכן, שורת החדשה פועלת כגבול מילה, ואנחנו מקבלים שתי התאמות. אם היינו משתמשים ב-`.*`, זה לא היה מתאים לשורת החדשה כברירת מחדל (היית צריך את הדגל `s` בשביל זה).
+
+    [למד עוד על מטא-תווים](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Character_Classes#types)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="מבט קדימה"
+  title="מבט קדימה חיובי"
+  options={[
+    {text: '["$100", "€50"]'},
+    {text: '["100", "50"]'},
+    {text: '["$", "€"]'},
+    {text: '[]'},
+    {text: 'null', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה יותאם?
+    ```js
+        '$100 and €50'.match(/\d+(?=[\$€])/g)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    התבנית הזו לא תתאים לשום דבר מכיוון שהמבט קדימה הוא הפוך! אם אתה רוצה ספרות שלפניהן `$` או `€`, השתמש במבט אחורה: `/(?<=[\$€])\d+/g`.
+
+    מבט קדימה בודק מה בא *אחרי* המיקום הנוכחי. התבנית כפי שנכתבה מחפשת:
+    - ספרה אחת או יותר (`\d+`)
+    - ואחריה (`(?=...)`) או $ או € (`[\$€]`)
+
+    מכיוון שאין מספרים שאחריהם סמלי מטבע (הם לפניהם), לא נקבל התאמות.
+
+    [למידע נוסף על מבט קדימה](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="התאמה בסיסית"
+  title="גבולות מילים"
+  options={[
+    {text: '["cat", "cats"]'},
+    {text: '["cat"]', isAnswer: true},
+    {text: '["cats"]'},
+    {text: '[]'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה יתאים?
+    ```js
+        'cat cats category'.match(/\bcat\b/g)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    הסימן `\b` מייצג גבול מילה, המתאים:
+    - בין תו של מילה לתו שאינו של מילה
+    - בתחילת/סוף המחרוזת אם יש תו של מילה
+
+    לכן `/\bcat\b/` מתאים ל-"cat" רק כשהיא מילה שלמה, לא כחלק ממילה אחרת.
+    - ✅ "cat" (מוקף ברווחים)
+    - ❌ "cats" (אין גבול אחרי "cat")
+    - ❌ "category" (אין גבול אחרי "cat")
+
+    [למידע נוסף על גבולות מילים](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions#other_assertions)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="מלכודות נפוצות"
+  title="הדגל הגלובלי"
+  options={[
+    {text: 'null'},
+    {text: '["a"]'},
+    {text: '["a", "a", "a"]', isAnswer: true},
+    {text: '["b", "n", "n"]'},
+    {text: 'Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה הפלט?
+    ```js
+        'banana'.match(/a/g)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    הדגל `g` (גלובלי) משנה את התנהגות `match()`:
+    - ללא `g`: מחזיר את ההתאמה הראשונה עם קבוצות לכידה
+    - עם `g`: מחזיר מערך של כל המחרוזות התואמות
+
+    במקרה זה, הוא מוצא את כל המופעים של "a" ב-"banana".
+
+    הערה: אם אתה צריך גם את כל ההתאמות וגם קבוצות לכידה, השתמש ב-`matchAll()` או בשיטת `exec()` בלולאה.
+
+    [למידע נוסף על הדגל הגלובלי](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/global)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="מבט לאחור"
+  title="מבט לאחור שלילי"
+  options={[
+    {text: '["123"]'},
+    {text: '["123", "456"]'},
+    {text: '["23", "456"]', isAnswer: true},
+    {text: '["456"]'},
+    {text: '[]'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה מתאים לתבנית הזו?
+    ```js
+        'abc123 def456'.match(/(?<!abc)\d+/g)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    המבט לאחור השלילי `(?<!abc)` מבטיח שלפני הספרות לא מופיע "abc":
+    - ❌ "123" (לפניו "abc")
+    - ✅ "23" (לפניו "abc1")
+    - ✅ "456" (לפניו "def")
+
+    JavaScript תומך במבט לאחור במנועים מודרניים. דוגמה זו משתמשת במבט לאחור באורך קבוע: `abc` הוא תמיד שלושה תווים. מבט לאחור באורך משתנה הוא קצה תלוי מנוע מסובך יותר.
+
+    הערה: תמיכה במבט לאחור היא יחסית חדשה ב-JavaScript. בדוק [תאימות דפדפן](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#browser_compatibility) אם אתה צריך לתמוך בדפדפנים ישנים יותר.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="התאמה בסיסית"
+  title="קבוצות לכידה"
+  options={[
+    {text: '["2029-12-31"]'},
+    {text: '["2029", "12", "31"]', isAnswer: true},
+    {text: '["20", "29", "12", "31"]'},
+    {text: 'null'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה זה יחזיר?
+    ```js
+        '2029-12-31'.match(/(\d{4})-(\d{2})-(\d{2})/).slice(1)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    התבנית משתמשת בשלוש קבוצות לכידה:
+    1. `(\d{4})` לוכדת את השנה
+    2. `(\d{2})` לוכדת את החודש
+    3. `(\d{2})` לוכדת את היום
+
+    `match()` ללא הדגל `g` מחזיר:
+    - אינדקס 0: התאמה מלאה
+    - אינדקס 1+: קבוצות לכידה
+
+    `slice(1)` הוא טריק נפוץ לקבלת קבוצות הלכידה בלבד.
+
+    [למידע נוסף על קבוצות ולכידה](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Groups_and_Backreferences)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="מבט קדימה"
+  title="מבט קדימה שלילי"
+  options={[
+    {text: '["password123"]'},
+    {text: '["abc123"]'},
+    {text: '["123aBc"]'},
+    {text: '["12"]', isAnswer: true},
+    {text: '["abc"]'},
+    {text: 'Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה תהיה התוצאה של זה?
+    ```js
+        "123aBc".match(/^\d+(?![a-z])/ig)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    המבט קדימה השלילי `(?![a-z])` מבטיח שאין אותיות קטנות אחרי הספרות. מכיוון שבחלק `"3aBc"` יש אות קטנה אחרי הספרות, החלק הזה לא תואם. לכן רק ההתחלה `"12"` תואמת.
+
+    [למד עוד על מבט קדימה שלילי](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="מבט לאחור"
+  title="פיצול עם מבט לאחור"
+  options={[
+    {text: '["a,", "b,", "c"]', isAnswer: true},
+    {text: '["a,b,c"]'},
+    {text: '["a", ",", "b", ",", "c"]'},
+    {text: '["a,b,c", ""]'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה מוחזר?
+    ```js
+        'a,b,c'.split(/(?<=,)/)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    התבנית `/(?<=,)/` היא מבט לאחור (look-behind) שתואמת אחרי פסיק:
+    - `a,` (אחרי פסיק)
+    - `b,` (אחרי פסיק)
+    - `c` (אין פסיק אחריו)
+
+    המבט לאחור אינו צורך את הפסיק, כך שהפסיק נשאר צמוד לקטע הקודם בתוצאת הפיצול.
+
+    זה שימושי כאשר רוצים לפצל מחרוזת על סמך מה שלפניו **מבלי לאבד את תו/י הפיצול**.
+
+    [למידע נוסף על מבט לאחור](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="מלכודות נפוצות"
+  title="בריחה מתווים מיוחדים"
+  options={[
+    {text: '["$100"]'},
+    {text: '["100"]'},
+    {text: '[]'},
+    {text: 'null', isAnswer: true},
+    {text: 'Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה תואם?
+    ```js
+        '$100'.match(/$\d+/)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    תווים מיוחדים דורשים בריחה עם `\` כדי להתאים כפשוטם:
+    - `$` הוא תו מיוחד (סוף המחרוזת)
+    - כדי להתאים סימן דולר ממשי, יש לברוח ממנו: `\$`
+
+    תווים נפוצים שדורשים בריחה:
+    ```js
+        . * + ? ^ $ [ ] \ ( ) { } |
+    ```
+    ללא בריחה, לתווים מיוחדים רבים יש משמעויות regex שאולי אינן מה שאתה רוצה.
+
+    [למידע נוסף על בריחה מתווים מיוחדים](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#escaping)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="מבט לאחור"
+  title="מבט לאחור חיובי"
+  options={[
+    {text: '["$100"]'},
+    {text: '["100"]', isAnswer: true},
+    {text: '["$"]'},
+    {text: '[]'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה תואם?
+    ```js
+        '$100'.match(/(?<=\$)\d+/)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    המבט לאחור החיובי `(?<=\$)` מבטיח שהספרות מקדימות על ידי סימן דולר:
+    - `(?<=\$)`: מבט לאחור עבור סימן דולר
+    - `\d+`: התאמה של ספרה אחת או יותר
+
+    טענות מבט לאחור אינן צורכות תווים; הן רק בודקות מה בא לפני.
+    זה שימושי כאשר רוצים להתאים משהו על סמך מה שבא לפניו מבלי לכלול את החלק הקודם.
+
+    [למידע נוסף על טענות מבט לאחור](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={13}
+  group="התאמה בסיסית"
+  title="מכפילים עצלים לעומת חמדנים"
+  options={[
+    {text: '["<b>bold</b>"]'},
+    {text: '["bold"]', isAnswer: true},
+    {text: '["<b>", "</b>"]'},
+    {text: '[]'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה הותאם?
+    ```js
+        '<b>bold</b>'.match(/<b>(.*?)<\/b>/).slice(1)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    התבנית משתמשת בהתאמה עצלה עם `*?`:
+    - `<b>`: התאמת תג פתיחה
+    - `(.*?)`: לכידת כל תווים (עצל)
+    - `</b>`: התאמת תג סגירה
+
+    ה-`?` אחרי `*` הופך אותו לעצל, ומתאים כמה שפחות תווים.
+    ללא `?`, הוא היה חמדן ומתאים כמה שיותר תווים.
+
+    `slice(1)` מחזירה רק את הקבוצה שנלכדה.
+
+    [למידע נוסף על התאמה חמדנית לעומת עצלה](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={14}
+  group="התאמה בסיסית"
+  title="דגל Unicode"
+  options={[
+    {text: '["🙂"]'},
+    {text: '["😀", "🙂"]', isAnswer: true},
+    {text: 'null'},
+    {text: 'Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה תואם?
+    ```js
+        '😀 🙂'.match(/\p{Emoji}/gu)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    הדגל `u` מאפשר:
+    - בריחות מאפיין Unicode (`\p{...}`)
+    - טיפול נכון בזוגות תחליפיים (surrogate pairs)
+
+    ללא `u`, אמוג'י ותווים אחרים של Unicode עלולים לא להתאים כראוי.
+    התבנית `\p{Emoji}` תואמת תווים בעלי המאפיין `Emoji` של Unicode. במחרוזת זו, הכוונה לשני הפיקטוגרפים של אמוג'י.
+
+    הערה: בריחות מאפיין Unicode דורשות את הדגל `u`.
+
+    [קרא עוד על מצב Unicode](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Unicode_Property_Escapes)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={15}
+  group="מבט-לתוך-הגיהנום"
+  title="אימות סיסמה"
+  options={[
+    {text: '"sassword123"'},
+    {text: '"Sass123!"', isAnswer: true},
+    {text: '"SASSWORD123"'},
+    {text: '"Sass word123"'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    סליחה מראש! 😈<br />
+    איזו סיסמה תואמת לתבנית זו?
+    ```js
+        /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    אל תכתבו משהו כזה בסביבת ייצור! 😅
+
+    התבנית הזו משתמשת במספר look-aheads חיוביים כדי לאכוף:
+    - לפחות אות אחת גדולה: `(?=.*[A-Z])`
+    - לפחות אות אחת קטנה: `(?=.*[a-z])`
+    - לפחות ספרה אחת: `(?=.*\d)`
+    - לפחות תו מיוחד אחד: `(?=.*[!@#$%^&*])`
+    - אורך מינימלי של 8: `.{8,}`
+
+    Look-aheads מושלמים לאימות סיסמה כי הם יכולים לבדוק קריטריונים מרובים מבלי לצרוך תווים.
+
+    [למידע נוסף על תבניות אימות סיסמה](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+
+<h2>איך הצלחת? 🧐</h2>
+
+ביטויים רגולריים יכולים להיות חיה קשה לאילוף, אבל הם חזקים להפליא ברגע שמבינים אותם (ואת כל התחביר החדש יותר). תמשיך לתרגל, ותהיה מאסטר RegEx תוך זמן קצר! 🧙‍♂️
+
+<p class="inset">מחפש הפסקה אחרי כל ה-RegEx הזה?<br />פחח, זכור: הפסקה *אחרי* הכישורים! <br /><br />לך ל[חדר הכושר שלי](../challenges/) כדי לרסק עוד אתגרים! 💪</p>

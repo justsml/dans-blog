@@ -1,0 +1,49 @@
+{
+  "index": 8,
+  "attempt": 1,
+  "originalTitle": "Capturing Groups",
+  "translatedTitle": "קבוצות לכידה",
+  "translation": {
+    "title": "קבוצות לכידה",
+    "group": "התאמה בסיסית",
+    "options": [
+      {
+        "text": "[\"2029-12-31\"]"
+      },
+      {
+        "text": "[\"2029\", \"12\", \"31\"]"
+      },
+      {
+        "text": "[\"20\", \"29\", \"12\", \"31\"]"
+      },
+      {
+        "text": "null"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "מה זה יחזיר?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "התבנית משתמשת בשלוש קבוצות לכידה:\n    1. `(\\d{4})` לוכדת את השנה\n    2. `(\\d{2})` לוכדת את החודש\n    3. `(\\d{2})` לוכדת את היום\n\n    `match()` ללא הדגל `g` מחזיר:\n    - אינדקס 0: התאמה מלאה\n    - אינדקס 1+: קבוצות לכידה\n\n    `slice(1)` הוא טריק נפוץ לקבלת קבוצות הלכידה בלבד.\n\n    [למידע נוסף על קבוצות ולכידה](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Groups_and_Backreferences)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"קבוצות לכידה\",\n  \"group\": \"התאמה בסיסית\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"2029-12-31\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"2029\\\", \\\"12\\\", \\\"31\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"20\\\", \\\"29\\\", \\\"12\\\", \\\"31\\\"]\"\n    },\n    {\n      \"text\": \"null\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"מה זה יחזיר?\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"התבנית משתמשת בשלוש קבוצות לכידה:\\n    1. `(\\\\d{4})` לוכדת את השנה\\n    2. `(\\\\d{2})` לוכדת את החודש\\n    3. `(\\\\d{2})` לוכדת את היום\\n\\n    `match()` ללא הדגל `g` מחזיר:\\n    - אינדקס 0: התאמה מלאה\\n    - אינדקס 1+: קבוצות לכידה\\n\\n    `slice(1)` הוא טריק נפוץ לקבלת קבוצות הלכידה בלבד.\\n\\n    [למידע נוסף על קבוצות ולכידה](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Groups_and_Backreferences)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 888,
+    "outputTokens": 1053,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 6492,
+    "providerCostUsd": 0.0005988,
+    "providerUpstreamCostUsd": 0.0005988,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00012432,
+    "outputUsd": 0.00029484,
+    "totalUsd": 0.00041916,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
