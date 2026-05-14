@@ -1,0 +1,123 @@
+---
+social_image: ../desktop-social.webp
+title: 优先级陷阱
+subTitle: 多项选择是最佳选择吗？
+category: Thoughts
+subCategory: Agile
+date: '2024-10-23'
+modified: '2024-10-24'
+tags:
+  - agile
+  - leadership
+  - priority
+  - backlog
+  - jira
+cover: ../new-priority-city.webp
+cover_full_width: ../new-priority-city.webp
+cover_mobile: ../new-priority-city-w300.webp
+cover_icon: ../new-priority-city-w200.webp
+cover_credit: >-
+  Photo by <a
+  href="https://unsplash.com/@mroz?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Filip
+  Mroz</a> on <a
+  href="https://unsplash.com/photos/photo-of-tram-beside-waiting-station-during-nighttime-023T4jyCRqA?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
+---
+## `Priority` 下拉框陷阱
+
+<aside className="breakout">
+💡 随着组织规模扩大，积压的工作必然会膨胀。最终，列表的规模会*要求*进行优先级排序。
+</aside>
+
+## 初创公司故事
+
+毫无例外，你的 Jira 管理员会提供一个解决方案：瞧，一个 `Priority` 字段的下拉框！（给企业开发者的专业提示：可能叫 `Priority2` 或 `P-level`。）
+
+奇怪的是，100% 的公司只在 `P1, P2, P3, P4` 或 `Low, Med, High, and Critical` 之间做选择——显然没有其他选项。
+
+硬编码的四个选项列表？好吧，先试几周……
+
+### 两天后
+
+在一次*对谁都不惊讶*的事件中，组织发现了一条新票据，标记了更高的优先级，迫使他们做了个小 hack：加入 `P0`，或者 `Critical Max+`！
+
+### 再过三天
+
+*我们勇敢的老板在会议上有了激动人心的发现！*
+
+他们居然找到了比 `P0` 更高的优先级！
+
+从此，团队埋头研究如何给这个新 Priority 命名。
+
+也许是 `-1`？不不，那太混乱了（`P-1` 与 `P1` 容易混淆）。好吧，那 `P0.5` 怎么样？
+
+<p className="breakout">在一次“灵感”迸发的时刻，团队发明了更高的优先级：双零！<br />现在称为 `P00` Priority。</p>
+
+{/* *终于可以把世界上的所有事物整齐地归入我们的 Priorities 下拉框了！（…邪恶笑声…）* */}
+
+### 洪水来临前
+
+在任何人意识到之前，你的团队已经在 `P00` 票据中“溺水”了！
+
+<b>我们该如何避免这场愚蠢的工程戏码？</b>
+
+## 如果优先级不是多选的？
+
+我们该如何更好地表达像 `Priority` 这样不断变化、流动的人类概念？
+
+- 在现实中，优先级会随着新信息、市场变化和组织目标而不断转移和演进。
+- 紧迫性、重要性、资源可用性以及成本/风险分析之间往往存在复杂的相互作用，而一个简单的下拉框无法捕获，尤其是随着时间的推移。（票据腐烂。）
+- 不同的利益相关者可能对什么算高优先级有冲突的看法，使得“一刀切”的方式不适用。
+
+## 那接下来怎么办？
+
+以下是几种值得探索的替代方案，工作量从低到高不等：
+
+- 为了提供更多余地，选取一个“中性”起始值，例如 100 或 1,000。你可以随时增大或缩小这个数字。
+    - 或者直接从零开始，数值越大优先级越高。
+- 实施多维度的优先级评估体系，考虑业务价值、紧迫性和所需工作量等因素。（创建一个 `composite` 分数，以便更容易排序和过滤。）
+- 采用动态优先级方法，例如 [MoSCoW technique](https://en.wikipedia.org/wiki/MoSCoW_method)（必须有、应该有、可以有、不会有），以便定期重新评估。（另见 [Kano Model](https://en.wikipedia.org/wiki/Kano_model)。）
+
+## 小结
+
+尽管优先级衰减得很快，却仍被大量使用。昨天的 `CRITICAL` 票据不太可能在下个季度仍然是 `CRITICAL`。
+
+随着时间推移，旧的高优先级票据会变得难以清理和维护。毕竟，谁愿意把已经标记为 ***essential*** 的东西的 `Priority` 降下来？更别提删除那些不相关的票据了…（惊叹！想想积压的工作！）
+
+我见过多家公司把 `Severity` 与 `Priority` 搞混。`Severity` 描述的是 ***紧迫性***（或时间敏感度）。
+
+`Priority ≠ Severity`。定义 3‑5 个严重程度等级是有意义的（通常用于维护服务等级协议）。
+
+紧迫程度帮助传达从 `zero customer impact` 到 `partial/complete service outage` 的不同影响层级。
+
+## 警示
+
+部署一个无限制的 Priority 字段需要一点规划和纪律！
+
+如果你熟悉前端开发，可能已经经历过 `z-index` 战争。
+
+本质上，`z-index` 让设计师可以设置任意正整数，以确保他们的部件显示在其他较低 `z-index` 内容之上。
+
+即使是一次小的组件更新，也可能在 `<Dialog />` 上引入 `z-index` 的变动——导致它瞬间不可见。随着第三方组件、功能开发以及其他团队贡献相互争抢 `z-index`，这种情况会变得一团糟。
+
+`z-index` 曾经被限制在约 32,000。但我最近看到一段代码片段使用了十亿级的 `z-index: 1000000000`！
+
+通胀一定对 `z-index` 造成了冲击。
+
+## 讨论
+
+- 这算是值得的思维实验吗？
+- 不断上升的 Priority 概念是否令人恐惧？引发焦虑？
+- 这种做法最终会超出 64 位整数限制吗？
+- 除了 `Severity` 或 `Urgency`，还有其他字段可以加入讨论吗？
+- Jira 应该受到多少指责？还是该得到赞誉？
+
+我们可以在互联网上大喊：“谁来清理这些 `P00` 票？”
+
+或者，你可以对自己的 backlog **认真**一点。
+
+- 接受 90% 的 1,000 条工单永远不会完成的事实。没关系。
+- 将几个月未动的工单归档。最初的 priority/urgency 已经不再适用。归档的议题通常还能找回。
+- 当问题再次出现时，没事；它只会提升优先级。
+- 经验上，我发现丢弃旧的、未完成的工单并不会带来任何伤害。
+- 不断向 backlog‑as‑database 追加内容会错失让团队和组织聚焦关键事务的机会。（重点在前方，而 backlog 本质上是回顾过去。）
+- 一个深不见底的 backlog 最终会变成 Bizzaro 奖杯室，庆祝那些永远也不会交付的烂摊子。
