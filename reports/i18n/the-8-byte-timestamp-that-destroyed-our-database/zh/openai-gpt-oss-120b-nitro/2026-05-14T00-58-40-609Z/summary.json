@@ -1,0 +1,93 @@
+{
+  "runId": "openai-gpt-oss-120b-nitro@2026-05-14T00-58-40-609Z",
+  "slug": "the-8-byte-timestamp-that-destroyed-our-database",
+  "locale": "zh",
+  "model": "openai/gpt-oss-120b:nitro",
+  "modelPath": "openai-gpt-oss-120b-nitro",
+  "createdAt": "2026-05-14T00:58:44.576Z",
+  "sourcePath": "src/content/posts/2025-12-29--the-8-byte-timestamp-that-destroyed-our-database/index.mdx",
+  "targetPath": "src/content/posts/2025-12-29--the-8-byte-timestamp-that-destroyed-our-database/zh/index.mdx",
+  "candidatePath": "reports/i18n/the-8-byte-timestamp-that-destroyed-our-database/zh/openai-gpt-oss-120b-nitro/2026-05-14T00-58-40-609Z/candidate.mdx",
+  "sourceHash": "4d98d485a209ef83adfb3ec4df7994acdb6c23964910ec139710bf29772952fe",
+  "outputHash": "a6b3bf89bd6d81de415b8e7659614f15d0d0f8e72eeae756efadd37cc00887e0",
+  "reasoningEffort": "low",
+  "temperature": 0.3,
+  "maxTokens": 16000,
+  "timeoutMs": 200000,
+  "articleSummary": "The articleargues that PostgreSQL’s two 8‑byte date‑time types serve fundamentally different purposes: `TIMESTAMP` records a wall‑clock reading (a time as it would appear on a local clock), while `TIMESTAMPTZ` stores an absolute instant by converting input to UTC and re‑applying the session’s zone on output. It uses train‑ticket and flight‑tracking analogies to show when each representation is appropriate, recommends storing absolute moments with `TIMESTAMPTZ`, the associated zone as a separate text field, and durations as `INTERVAL`, and warns that mismatched precision (microseconds vs. milliseconds) can cause bugs. The tone is a practical, tutorial‑style analysis aimed at developers and DBAs building multi‑region applications who need to choose the right time type.",
+  "totalInputTokens": 8773,
+  "totalOutputTokens": 2799,
+  "totalCacheReadTokens": 4224,
+  "totalCacheWriteTokens": 0,
+  "totalDurationMs": 3120,
+  "totalCostUsd": 0.000845967,
+  "pricingSource": "local-openrouter-estimate",
+  "telemetry": {
+    "model": "openai/gpt-oss-120b:nitro",
+    "chunkSize": "10p",
+    "totalChunks": 6,
+    "totalInputTokens": 8773,
+    "totalOutputTokens": 2799,
+    "totalCacheReadTokens": 4224,
+    "totalCacheWriteTokens": 0,
+    "totalDurationMs": 3120,
+    "totalCostUsd": 0.000845967,
+    "pricingSource": "local-openrouter-estimate",
+    "chunks": [
+      {
+        "index": 0,
+        "inputTokens": 1166,
+        "outputTokens": 383,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 444,
+        "costUsd": 0.00011441399999999999
+      },
+      {
+        "index": 1,
+        "inputTokens": 1568,
+        "outputTokens": 542,
+        "cacheReadTokens": 640,
+        "cacheWriteTokens": 0,
+        "durationMs": 566,
+        "costUsd": 0.00015871199999999998
+      },
+      {
+        "index": 2,
+        "inputTokens": 1593,
+        "outputTokens": 572,
+        "cacheReadTokens": 768,
+        "cacheWriteTokens": 0,
+        "durationMs": 561,
+        "costUsd": 0.00016508700000000001
+      },
+      {
+        "index": 3,
+        "inputTokens": 1568,
+        "outputTokens": 470,
+        "cacheReadTokens": 768,
+        "cacheWriteTokens": 0,
+        "durationMs": 479,
+        "costUsd": 0.000145752
+      },
+      {
+        "index": 4,
+        "inputTokens": 1589,
+        "outputTokens": 589,
+        "cacheReadTokens": 768,
+        "cacheWriteTokens": 0,
+        "durationMs": 575,
+        "costUsd": 0.00016799099999999998
+      },
+      {
+        "index": 5,
+        "inputTokens": 1289,
+        "outputTokens": 243,
+        "cacheReadTokens": 768,
+        "cacheWriteTokens": 0,
+        "durationMs": 495,
+        "costUsd": 0.00009401099999999999
+      }
+    ]
+  }
+}
