@@ -1,0 +1,84 @@
+# Translation Candidate
+- Slug: compare-nvme-ssd-cloud-options
+- Locale: ar
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2017-04-15--compare-nvme-ssd-cloud-options/ar/index.mdx
+- Validation: deferred
+- Runtime seconds: 18.57
+- Input tokens: 2598
+- Output tokens: 3128
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.001240
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: مقارنة خيارات NVMe SSD السحابية
+subTitle: 'مقارنة NVMe SSD: AWS، DigitalOcean، Packet.net'
+date: '2017-04-15'
+modified: '2020-01-30'
+category: DevOps
+subCategory: programming
+tags:
+  - cloud
+  - servers
+  - architecture
+  - scaling
+  - digital-ocean
+  - amazon-web-services
+  - google-cloud-engine
+  - azure
+  - packet
+  - ovh
+  - ssd
+  - io
+cover: ../solaiman-hossen-553024-unsplash.webp
+cover_mobile: ../w300_solaiman-hossen-553024-unsplash.webp
+cover_icon: ../icon_solaiman-hossen-553024-unsplash.webp
+---
+## تعزيز أداء السحابة بنسبة تصل إلى 70%
+
+> ملاحظات عامة وأقسام لمزودي استضافة مختارين أدناه (منتصف 2017).
+
+- [AWS (أمازون ويب سيرفيسز)، EC2 (الحوسبة السحابية المرنة)، EBS (التخزين الكتلي المرن)، إلخ.](#aws_tips)
+- [Digital Ocean](#do_tips)
+- [Packet.net](#packet_tips)
+
+<a id='aws_tips'></a>
+
+### أمازون ويب سيرفيسز / EC2 / EBS / S3
+
+> الخلاصة؛ بينما تقدم AWS عادةً أجهزة مقيدة وطبقات تسعير مخيفة، فإن أجهزة **i3.large** (وما هو أكبر) هي الأكثر كفاءة من حيث السعر مقابل أداء الإدخال/الإخراج، وهي الأسرع في الأداء الكلي.
+
+> EC2 **i3.large** مع **NVMe SSD بسعة 475 جيجابايت** يكلف عادةً حوالي **110 دولارًا شهريًا!** > <br />
+> **i3.2xlarge مع NVMe بسعة 1.9 تيرابايت** يكلف حوالي **450 دولارًا شهريًا** * > <br />
+> \_*الولايات المتحدة/2018\_
+
+<br />
+<br />
+
+### مقارنة وجهاً لوجه
+
+\[[عرض البيانات بملء الشاشة](https://docs.google.com/spreadsheets/d/1qQ62m1RFj73YScdS77Q9R2GpRqJOk7JHuTEOFDR4jJE/pubchart?oid=116848524&format=interactive)\]
+
+<iframe style="position: relative; left: -150px; height: 650px; width: 990px; min-width: 100%;" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/1qQ62m1RFj73YScdS77Q9R2GpRqJOk7JHuTEOFDR4jJE/pubchart?oid=116848524&amp;format=interactive"></iframe>
+
+[عرض الأسعار على EC2](https://www.ec2instances.info/?filter=nvm&region=us-east-2&cost_duration=monthly&selected=c5d.large,i3.large,i3.xlarge,i3.2xlarge)
+
+![ec2instances.info](../ec2-updated-prices-2018.webp)
+
+لاحظ أن **i3.\*xlarge** هو الجهاز الوحيد الذي يقدم تخزين NVMe بأسعار تنافسية (سرعات فائقة تزيد عن 1 جيجابايت/ثانية). كان العامل المحدد الرئيسي الذي وجدته هو السرعة الفعلية للشبكة. الخوادم ذات السرعات المعلنة "حتى 10 جيجابت/ثانية" بالكاد تصل إلى 1 جيجابت/ثانية (60-80 ميجابايت/ثانية). استخدمت اختبارات الشبكة ما يصل إلى 9 مثيلات إضافية في نفس منطقة التوفر. أي نقاط بيانات خاطئة استبدلتها بـ 0. هناك حاجة لاختبارات إضافية حيث تم جمع عينة أو عينتين فقط.
+
+[عرض البيانات بملء الشاشة](https://docs.google.com/spreadsheets/d/1qQ62m1RFj73YScdS77Q9R2GpRqJOk7JHuTEOFDR4jJE/pubchart?oid=13370750&format=interactive)
+
+<iframe style="position: relative; left: -150px; height: 790px; width: 950px; min-width: 100%;" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/1qQ62m1RFj73YScdS77Q9R2GpRqJOk7JHuTEOFDR4jJE/pubchart?oid=13370750&amp;format=interactive"></iframe>
+
+#### الاعتمادات
+
+- [ec2instances.info](https://www.ec2instances.info/?filter=nvm&region=us-east-2&cost_duration=monthly&selected=c5d.large,i3.large,i3.xlarge,i3.2xlarge)
+````
