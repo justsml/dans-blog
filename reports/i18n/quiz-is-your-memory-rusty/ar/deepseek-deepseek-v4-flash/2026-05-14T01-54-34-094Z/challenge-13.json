@@ -1,0 +1,61 @@
+{
+  "index": 12,
+  "attempt": 1,
+  "originalTitle": "Arc and Mutex",
+  "translatedTitle": "Arc و Mutex",
+  "translation": {
+    "title": "Arc و Mutex",
+    "group": "المؤشرات الذكية",
+    "options": [
+      {
+        "text": "يطبع: 42",
+        "hint": "لن يصل الكود إلى عبارة الطباعة أبدًا"
+      },
+      {
+        "text": "يطبع: 43",
+        "hint": "سيعلق الكود قبل الطباعة"
+      },
+      {
+        "text": "خطأ في التجميع",
+        "hint": "الكود صحيح نحويًا"
+      },
+      {
+        "text": "ذعر وقت التشغيل",
+        "hint": "إنه أسوأ من الذعر"
+      },
+      {
+        "text": "توقف تام"
+      }
+    ],
+    "objectives": [
+      "تحليل أنماط الوصول المتزامن باستخدام Arc و Mutex",
+      "تحديد سيناريوهات التوقف التام المحتملة",
+      "تطبيق أنماط المزامنة المناسبة لمنع التوقف التام"
+    ],
+    "questionProse": [
+      "ماذا يحدث عند تشغيل هذا الكود؟"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "يوضح هذا الكود سيناريو توقف تام كلاسيكي. إليك كيفية إصلاحه:",
+      "أفضل الممارسات لمنع التوقف التام:\n      1. حافظ على صغر الأقسام الحرجة\n      2. حرر الأقفال فورًا باستخدام النطاقات\n      3. احصل على أقفال متعددة بترتيب ثابت\n      4. استخدم parking_lot::Mutex لأداء أفضل\n      5. فكر في استخدام RwLock لأعباء العمل كثيفة القراءة\n\n      الأنماط الشائعة:"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Arc و Mutex\",\n  \"group\": \"المؤشرات الذكية\",\n  \"options\": [\n    {\n      \"text\": \"يطبع: 42\",\n      \"hint\": \"لن يصل الكود إلى عبارة الطباعة أبدًا\"\n    },\n    {\n      \"text\": \"يطبع: 43\",\n      \"hint\": \"سيعلق الكود قبل الطباعة\"\n    },\n    {\n      \"text\": \"خطأ في التجميع\",\n      \"hint\": \"الكود صحيح نحويًا\"\n    },\n    {\n      \"text\": \"ذعر وقت التشغيل\",\n      \"hint\": \"إنه أسوأ من الذعر\"\n    },\n    {\n      \"text\": \"توقف تام\"\n    }\n  ],\n  \"objectives\": [\n    \"تحليل أنماط الوصول المتزامن باستخدام Arc و Mutex\",\n    \"تحديد سيناريوهات التوقف التام المحتملة\",\n    \"تطبيق أنماط المزامنة المناسبة لمنع التوقف التام\"\n  ],\n  \"questionProse\": [\n    \"ماذا يحدث عند تشغيل هذا الكود؟\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"rust\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"يوضح هذا الكود سيناريو توقف تام كلاسيكي. إليك كيفية إصلاحه:\",\n    \"أفضل الممارسات لمنع التوقف التام:\\n      1. حافظ على صغر الأقسام الحرجة\\n      2. حرر الأقفال فورًا باستخدام النطاقات\\n      3. احصل على أقفال متعددة بترتيب ثابت\\n      4. استخدم parking_lot::Mutex لأداء أفضل\\n      5. فكر في استخدام RwLock لأعباء العمل كثيفة القراءة\\n\\n      الأنماط الشائعة:\"\n  ],\n  \"explanationCode\": [\n    {\n      \"language\": \"rust\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    },\n    {\n      \"language\": \"rust\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 981,
+    "outputTokens": 2430,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 34544,
+    "providerCostUsd": 0.0011682,
+    "providerUpstreamCostUsd": 0.0011682,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00013734000000000004,
+    "outputUsd": 0.0006804000000000001,
+    "totalUsd": 0.0008177400000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
