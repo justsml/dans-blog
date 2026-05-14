@@ -1,0 +1,47 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "Precision with Floating Points",
+  "translatedTitle": "浮点数精度",
+  "translation": {
+    "title": "浮点数精度",
+    "group": "数学",
+    "options": [
+      {
+        "text": "0.1 + 0.2 === 0.3"
+      },
+      {
+        "text": "false"
+      },
+      {
+        "text": "true"
+      },
+      {
+        "text": "NaN"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [],
+    "hintsProse": [],
+    "explanationProse": [
+      "由于浮点数精度误差，`0.1 + 0.2` 并不等于 `0.3`。因为浮点数在内存中的存储方式，结果实际上是 `0.30000000000000004`。导致这一现象的是 IEEE 754 标准，它无法精确表示某些数字。这是所有编程语言都会遇到的常见问题。最终会出现无限循环小数，而无论语言如何，计算机只能在某个点停止追踪无限循环的位数。\n\n一些语言如 Python 和 Java 提供 `Decimal` 或 `BigDecimal` 来处理这种情况，但 JavaScript 并未内置此功能。可以使用 `big.js` 或 `decimal.js` 等库来解决此类问题。\n\n（注：某些语言在更高层次上设计了分数、虚数等的处理，能够保留字面表达式。但它们在硬件层面仍然要面对相同的浮点数精度问题。）"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"浮点数精度\",\n  \"group\": \"数学\",\n  \"options\": [\n    {\n      \"text\": \"0.1 + 0.2 === 0.3\"\n    },\n    {\n      \"text\": \"false\"\n    },\n    {\n      \"text\": \"true\"\n    },\n    {\n      \"text\": \"NaN\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [],\n  \"questionCode\": [\n    {\n      \"language\": \"tsx\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"由于浮点数精度误差，`0.1 + 0.2` 并不等于 `0.3`。因为浮点数在内存中的存储方式，结果实际上是 `0.30000000000000004`。导致这一现象的是 IEEE 754 标准，它无法精确表示某些数字。这是所有编程语言都会遇到的常见问题。最终会出现无限循环小数，而无论语言如何，计算机只能在某个点停止追踪无限循环的位数。\\n\\n一些语言如 Python 和 Java 提供 `Decimal` 或 `BigDecimal` 来处理这种情况，但 JavaScript 并未内置此功能。可以使用 `big.js` 或 `decimal.js` 等库来解决此类问题。\\n\\n（注：某些语言在更高层次上设计了分数、虚数等的处理，能够保留字面表达式。但它们在硬件层面仍然要面对相同的浮点数精度问题。）\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 1019,
+    "outputTokens": 542,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 3704,
+    "providerCostUsd": 0.00047805,
+    "providerUpstreamCostUsd": 0.00047805,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000039741,
+    "outputUsd": 0.00009755999999999998,
+    "totalUsd": 0.000137301,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
