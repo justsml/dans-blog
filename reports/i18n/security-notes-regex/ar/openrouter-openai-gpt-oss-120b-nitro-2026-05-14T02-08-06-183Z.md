@@ -1,0 +1,65 @@
+# Translation Candidate
+- Slug: security-notes-regex
+- Locale: ar
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2015-02-24--security-notes-regex/ar/index.mdx
+- Validation: deferred
+- Runtime seconds: 2.24
+- Input tokens: 1210
+- Output tokens: 588
+- Thinking tokens: unknown
+- Cached input tokens: 512
+- Cache write tokens: 0
+- Estimated cost: $0.000153
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: 'ملاحظات الأمان: التعابير النمطية'
+subTitle: هل يمكن أن تكون تعبيرات RegEx معرضة للثغرات؟
+date: '2015-02-24'
+modified: '2018-07-30'
+category: Security
+subCategory: RegEx
+tags:
+  - security
+  - regex
+  - dos
+  - remote-exploit
+cover_credit: Photo by Markus Spiske on Unsplash
+cover: ../markus-spiske-666905-unsplash.webp
+cover_mobile: ../w300_markus-spiske-666905-unsplash.webp
+cover_icon: ../icon_markus-spiske-666905-unsplash.webp
+social_image: ../desktop-social.webp
+---
+## رفض الخدمة عبر التعبير النمطي: ReDOS
+
+إحدى الثغرات الأكثر إدهاءً، والتي يصعب اكتشافها، هي تلك المرتبطة بالتعبيرات النمطية.  
+إما مكتوبة بشكل سيء أو مُنفَّذة بشكل غير سليم.
+
+يمكن استنزاف الذاكرة/وحدة المعالجة المركزية بمدخلات مستخدم كبيرة أو مُصمَّمة خصيصًا.
+
+> هذه ثغرة رفض خدمة، ليست مجرد رائحة أداء. إذا كان بإمكان مدخل عدائي أن يحجز وحدة المعالجة المركزية لفترة كافية ليحرم المستخدمين الحقيقيين من الخدمة، فإنها يجب أن تُدرج في نموذج التهديد الأمني الخاص بك.
+
+### علامات التحذير
+
+1. كميات متداخلة، مجموعات مكررة، أو بدائل متداخلة
+2. محركات تعتمد على التراجع دون مهلة أو حد لطول المدخل
+3. يُستَخدم التعبير النمطي مع مدخلات مستخدم غير مُفحوصة
+4. تشغيل تحقق التعبير النمطي على مسار طلب ساخن
+
+### التخفيف / الحل
+
+1. التعامل مع التعبيرات النمطية صعب.  
+    1. على سبيل المثال، هكذا يوصي الخبراء في [OWASP بمعالجة التحقق من صحة IP][owasp]: `^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$`  
+    2. هذا أطول من تغريدة (قديمة) لعنوان IP مكوّن من 4 بايت!!!
+2. حدّ طول المدخل قبل تقييم التعبير النمطي.
+3. أضف مهلات، تحليل ثابت، أو محرك غير متراجع إذا كان المنصَّة تدعمه.
+4. هذا يؤثر على تقريبًا كل لغة ومنصة .NET/Node/Python/PERL/Java.
+
+### المراجع
+
+- [OWASP ReDoS](https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS)
+````
