@@ -1,0 +1,15 @@
+# Translation Candidate
+- Slug: from-zero-to-regex-hero-extract-url-like-strings
+- Locale: he
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2024-12-29--from-zero-to-regex-hero-extract-url-like-strings/he/index.mdx
+- Validation: rejected: direct AI SDK translation failed
+- Runtime seconds: 82.74
+- Input tokens: 8764
+- Output tokens: 12044
+- Thinking tokens: unknown
+- Cached input tokens: 768
+- Cache write tokens: 0
+- Estimated cost: $0.004494
+- Pricing source: local-openrouter-estimate
+- Note: Command failed: bun run i18n:translate:chunked -- --slug from-zero-to-regex-hero-extract-url-like-strings --locale he --model openrouter/deepseek/deepseek-v4-flash --chunk 10p --run-id 2026-05-14T02-01-48-483Z-80671 --run-lock-path /Users/dan/code/oss/dans-blog/.git/i18n-all-missing-runlocks/from-zero-to-regex-hero-extract-url-like-strings-he-deepseek-deepseek-v4-flash.json --quiz-concurrency 32 (code 1)
