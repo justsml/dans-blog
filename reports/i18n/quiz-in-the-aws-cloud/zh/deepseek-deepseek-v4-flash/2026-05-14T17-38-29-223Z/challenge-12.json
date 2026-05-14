@@ -1,0 +1,53 @@
+{
+  "index": 11,
+  "attempt": 1,
+  "originalTitle": "S3 Performance Optimization",
+  "translatedTitle": "S3 性能优化",
+  "translation": {
+    "title": "S3 性能优化",
+    "group": "S3 性能",
+    "options": [
+      {
+        "text": "使用随机/哈希前缀"
+      },
+      {
+        "text": "使用逻辑前缀；不需要随机化"
+      },
+      {
+        "text": "始终使用最大对象"
+      },
+      {
+        "text": "最小化对象数量"
+      }
+    ],
+    "objectives": [
+      "优化 S3 以应对高请求率",
+      "应用 S3 键命名最佳实践",
+      "为 S3 分区分布进行设计"
+    ],
+    "questionProse": [
+      "如何优化 S3 以应对高请求率？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "S3 性能提示：\n    - 现代 S3 会自动按前缀扩展请求率\n    - 你不需要为了性能而使用随机/哈希前缀\n    - 使用符合访问模式的逻辑键名\n    - 如果请求率非常高，请监控 503 Slow Down 响应\n\n    旧指南建议随机化前缀以避免热点分区，但 AWS 不再将其作为默认性能要求。\n\n    [S3 性能指南](https://aws.amazon.com/s3/performance/)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"S3 性能优化\",\n  \"group\": \"S3 性能\",\n  \"options\": [\n    {\n      \"text\": \"使用随机/哈希前缀\"\n    },\n    {\n      \"text\": \"使用逻辑前缀；不需要随机化\"\n    },\n    {\n      \"text\": \"始终使用最大对象\"\n    },\n    {\n      \"text\": \"最小化对象数量\"\n    }\n  ],\n  \"objectives\": [\n    \"优化 S3 以应对高请求率\",\n    \"应用 S3 键命名最佳实践\",\n    \"为 S3 分区分布进行设计\"\n  ],\n  \"questionProse\": [\n    \"如何优化 S3 以应对高请求率？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"S3 性能提示：\\n    - 现代 S3 会自动按前缀扩展请求率\\n    - 你不需要为了性能而使用随机/哈希前缀\\n    - 使用符合访问模式的逻辑键名\\n    - 如果请求率非常高，请监控 503 Slow Down 响应\\n\\n    旧指南建议随机化前缀以避免热点分区，但 AWS 不再将其作为默认性能要求。\\n\\n    [S3 性能指南](https://aws.amazon.com/s3/performance/)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 873,
+    "outputTokens": 1044,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 7118,
+    "providerCostUsd": 0.0005922,
+    "providerUpstreamCostUsd": 0.0005922,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00012222,
+    "outputUsd": 0.00029232000000000005,
+    "totalUsd": 0.00041454,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

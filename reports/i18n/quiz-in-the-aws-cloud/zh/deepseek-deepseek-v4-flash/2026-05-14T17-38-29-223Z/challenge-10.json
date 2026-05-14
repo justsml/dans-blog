@@ -1,0 +1,64 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Batch Operations",
+  "translatedTitle": "批量操作",
+  "translation": {
+    "title": "批量操作",
+    "group": "批量操作，第二部分！",
+    "options": [
+      {
+        "text": "1"
+      },
+      {
+        "text": "10"
+      },
+      {
+        "text": "25",
+        "hint": "猜得不错..."
+      },
+      {
+        "text": "50"
+      },
+      {
+        "text": "100",
+        "hint": "想到 GetItem 的限制了？"
+      },
+      {
+        "text": "100 when streaming"
+      },
+      {
+        "text": "以上都不是",
+        "hint": "这有点棘手..."
+      }
+    ],
+    "objectives": [
+      "了解 DynamoDB 批量操作的限制",
+      "区分单次操作和批量操作"
+    ],
+    "questionProse": [
+      "DynamoDB 每批最多可以 `UPDATE` 多少个文档？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "DynamoDB 客户端本质上都是其 HTTP API 的封装。`BatchWriteItem` 操作可以在每个 HTTP 请求中 `PUT` 或 `DELETE` 最多 **25** 个文档，但不能 `UPDATE` 多个文档。\n\n    虽然 DynamoDB 可以在每个 HTTP 请求中 `INSERT` 最多 **25** 个文档，但使用 `UpdateItem` 操作每次只能 `UPDATE` **1** 个文档。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"批量操作\",\n  \"group\": \"批量操作，第二部分！\",\n  \"options\": [\n    {\n      \"text\": \"1\"\n    },\n    {\n      \"text\": \"10\"\n    },\n    {\n      \"text\": \"25\",\n      \"hint\": \"猜得不错...\"\n    },\n    {\n      \"text\": \"50\"\n    },\n    {\n      \"text\": \"100\",\n      \"hint\": \"想到 GetItem 的限制了？\"\n    },\n    {\n      \"text\": \"100 when streaming\"\n    },\n    {\n      \"text\": \"以上都不是\",\n      \"hint\": \"这有点棘手...\"\n    }\n  ],\n  \"objectives\": [\n    \"了解 DynamoDB 批量操作的限制\",\n    \"区分单次操作和批量操作\"\n  ],\n  \"questionProse\": [\n    \"DynamoDB 每批最多可以 `UPDATE` 多少个文档？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"DynamoDB 客户端本质上都是其 HTTP API 的封装。`BatchWriteItem` 操作可以在每个 HTTP 请求中 `PUT` 或 `DELETE` 最多 **25** 个文档，但不能 `UPDATE` 多个文档。\\n\\n    虽然 DynamoDB 可以在每个 HTTP 请求中 `INSERT` 最多 **25** 个文档，但使用 `UpdateItem` 操作每次只能 `UPDATE` **1** 个文档。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 909,
+    "outputTokens": 1137,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 8219,
+    "providerCostUsd": 0.0006366,
+    "providerUpstreamCostUsd": 0.0006366,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00012726,
+    "outputUsd": 0.00031836,
+    "totalUsd": 0.00044562,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

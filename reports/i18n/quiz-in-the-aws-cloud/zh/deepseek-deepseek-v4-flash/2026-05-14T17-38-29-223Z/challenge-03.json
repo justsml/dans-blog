@@ -1,0 +1,64 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "DynamoDB",
+  "translatedTitle": "DynamoDB",
+  "translation": {
+    "title": "DynamoDB",
+    "group": "无模式",
+    "options": [
+      {
+        "text": "PutItem",
+        "hint": "创建新项目，或用新项目替换旧项目。"
+      },
+      {
+        "text": "BatchUpdateItem",
+        "hint": "不存在。"
+      },
+      {
+        "text": "BatchWriteItem",
+        "hint": "在单个调用中插入或删除多个项目。"
+      },
+      {
+        "text": "UpdateItem"
+      },
+      {
+        "text": "BatchUpsertItem",
+        "hint": "在DynamoDB中？"
+      },
+      {
+        "text": "TransactWriteItems",
+        "hint": "将多个PutItem、UpdateItem、DeleteItem和ConditionCheck操作合并到单个调用中。"
+      }
+    ],
+    "objectives": [
+      "比较DynamoDB批量操作能力",
+      "优化DynamoDB更新操作",
+      "评估更新的扩展考虑因素"
+    ],
+    "questionProse": [
+      "哪个DynamoDB API更新单个现有项目的属性？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "关键在于<b>更新</b>，而不是插入或PUT操作。如果你在进行插入操作，可以使用`BatchWriteItem`或`TransactWriteItems`。\n\n    虽然`BatchWriteItem`可以处理多个操作，但它仅限于PUT和DELETE操作。`TransactWriteItems`更强大，但对于简单更新来说有点大材小用。\n    对于简单更新，`UpdateItem`是最佳选择。它允许你更新或修改现有项目中的一个或多个属性。\n\n    `UpdateItem`操作每次请求修改一个项目。对于大规模回填或批量更新，通常需要协调多个`UpdateItem`调用，或使用更大的工作流，如PartiQL批量执行、Step Functions、Glue、EMR或自定义工作进程。\n\n    `UpdateItem`操作：\n    - 更新现有项目的属性。\n    - 向现有项目添加新属性。\n    - 从现有项目中删除属性。\n    - 如果项目存在或满足特定条件，则条件性地执行更新。\n\n    [DynamoDB UpdateItem](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateItem.html)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"DynamoDB\",\n  \"group\": \"无模式\",\n  \"options\": [\n    {\n      \"text\": \"PutItem\",\n      \"hint\": \"创建新项目，或用新项目替换旧项目。\"\n    },\n    {\n      \"text\": \"BatchUpdateItem\",\n      \"hint\": \"不存在。\"\n    },\n    {\n      \"text\": \"BatchWriteItem\",\n      \"hint\": \"在单个调用中插入或删除多个项目。\"\n    },\n    {\n      \"text\": \"UpdateItem\"\n    },\n    {\n      \"text\": \"BatchUpsertItem\",\n      \"hint\": \"在DynamoDB中？\"\n    },\n    {\n      \"text\": \"TransactWriteItems\",\n      \"hint\": \"将多个PutItem、UpdateItem、DeleteItem和ConditionCheck操作合并到单个调用中。\"\n    }\n  ],\n  \"objectives\": [\n    \"比较DynamoDB批量操作能力\",\n    \"优化DynamoDB更新操作\",\n    \"评估更新的扩展考虑因素\"\n  ],\n  \"questionProse\": [\n    \"哪个DynamoDB API更新单个现有项目的属性？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"关键在于<b>更新</b>，而不是插入或PUT操作。如果你在进行插入操作，可以使用`BatchWriteItem`或`TransactWriteItems`。\\n\\n    虽然`BatchWriteItem`可以处理多个操作，但它仅限于PUT和DELETE操作。`TransactWriteItems`更强大，但对于简单更新来说有点大材小用。\\n    对于简单更新，`UpdateItem`是最佳选择。它允许你更新或修改现有项目中的一个或多个属性。\\n\\n    `UpdateItem`操作每次请求修改一个项目。对于大规模回填或批量更新，通常需要协调多个`UpdateItem`调用，或使用更大的工作流，如PartiQL批量执行、Step Functions、Glue、EMR或自定义工作进程。\\n\\n    `UpdateItem`操作：\\n    - 更新现有项目的属性。\\n    - 向现有项目添加新属性。\\n    - 从现有项目中删除属性。\\n    - 如果项目存在或满足特定条件，则条件性地执行更新。\\n\\n    [DynamoDB UpdateItem](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateItem.html)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1152,
+    "outputTokens": 2227,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 14992,
+    "providerCostUsd": 0.0011212,
+    "providerUpstreamCostUsd": 0.0011212,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00016128000000000003,
+    "outputUsd": 0.00062356,
+    "totalUsd": 0.00078484,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
