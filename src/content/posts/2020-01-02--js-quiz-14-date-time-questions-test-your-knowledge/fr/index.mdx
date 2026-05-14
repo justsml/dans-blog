@@ -214,10 +214,10 @@ Ce quiz a pour but de tester (et d’approfondir) votre connaissance de l’API 
   group="Gestion des dates"
   title="Mise en forme Partie 1"
   options={[
-    {text: 'new Intl.DateTimeFormat(\'},
-    {text: 'date.toLocaleFormat(\', isAnswer: true},
-    {text: 'date.toLocaleString(\'},
-    {text: 'date.toLocaleDateString(\'},
+    {text: 'new Intl.DateTimeFormat(\'en-US\').format(date)'},
+    {text: 'date.toLocaleFormat(\'en-US\')', isAnswer: true },
+    {text: 'date.toLocaleString(\'en-GB\', { timeZone: \'UTC\' })'},
+    {text: 'date.toLocaleDateString(\'en-US\', { timeZone: \'UTC\', timeZoneName: \'short\' })'},
   ]}
 >
   <slot name="question">
