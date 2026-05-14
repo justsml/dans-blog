@@ -12,28 +12,29 @@
 - Validation scope: local
 
 ## Primary Judge Telemetry
-- Runtime seconds: 2.42
-- Input tokens: 8528
-- Output tokens: 235
+- Runtime seconds: 4.01
+- Input tokens: 8457
+- Output tokens: 502
 - Thinking tokens: unknown
 - Cached input tokens: 0
 - Cache write tokens: 0
-- OpenRouter cost credits: unknown
-- Estimated cost: $0.004969
+- OpenRouter cost credits: 0.005735
+- Estimated cost: $0.005735
 
 ## Pre-Publish Rescore Telemetry
 ### Pass 1
-- Runtime seconds: 2.25
-- Input tokens: 5416
-- Output tokens: 233
+- Runtime seconds: 2.38
+- Input tokens: 5897
+- Output tokens: 203
 - Thinking tokens: unknown
 - Cached input tokens: 0
 - Cache write tokens: 0
-- OpenRouter cost credits: unknown
-- Estimated cost: $0.003407
+- OpenRouter cost credits: 0.003557
+- Estimated cost: $0.003557
 
 ## Judge Suggestions
-1. Pass 1: applied high priority suggestion. Match: "[_Cómo usar dotenv_](#-como-manejar-los-secretos-de-forma-segura)" Replacement: "[_Cómo usar dotenv_](#checklist-manejo-de-secretos-de-forma-segura)" Reason: The anchor link must match the generated ID of the heading it points to for the link to work. Note: Applied exact replacement to selected MDX.
+1. Pass 1: applied high priority suggestion. Match: "title: \"Protegiendo tus Tokens, Claves de API y Secretos\"" Replacement: "social_image: ../desktop-social.webp title: \"Protegiendo tus Tokens, Claves de API y Secretos\"" Reason: The candidate is missing the social_image frontmatter field present in the English source. Note: Applied exact replacement to selected MDX.
+2. Pass 1: applied high priority suggestion. Match: "subTitle: ¿Público? ¿Privado? ¿Qué? ---" Replacement: "subTitle: ¿Público? ¿Privado? ¿Qué? date: 2018-10-27 modified: 2024-07-30 tags: [tokens, api-keys, secrets, security, nodejs, json-web-tokens] category: Guides subCategory: secu..." Reason: The candidate is missing several frontmatter fields (date, modified, tags, category, subCategory, cover) and the asset paths must be updated to use ../ as per instructions. Note: Applied exact replacement to selected MDX.
 
 ## Candidates
 - current src/content/posts/2018-10-27--protect-your-tokens/es/index.mdx
