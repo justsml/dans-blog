@@ -1,0 +1,288 @@
+# Translation Candidate
+- Slug: llm-evals-are-broken
+- Locale: zh
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-05-06--llm-evals-are-broken/zh/index.mdx
+- Validation: deferred
+- Runtime seconds: 7.25
+- Input tokens: 6784
+- Output tokens: 3308
+- Thinking tokens: unknown
+- Cached input tokens: 1536
+- Cache write tokens: 0
+- Estimated cost: $0.000860
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: 用评估来对抗邪恶！
+subTitle: 基准用于衡量基准。你的系统需要自定义度量。
+date: '2026-05-01'
+modified: '2026-05-06'
+tags:
+  - ai
+  - llm
+  - evals
+  - testing
+  - production
+  - quality
+  - observability
+category: AI
+subCategory: Engineering
+popularity: 0.85
+social_image: ../desktop-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+每个新模型都会披上一套基准测试的礼服。
+
+MMLU：92.4%。HumanEval：87.2%。LLeMU：88.7%。MATH：73.6%。AGI：127%！
+
+然而，对于 99% 的企业来说，**这些都不重要**——他们在用 AI 构建流程和产品。
+
+重要的是什么？你的工作负载表现如何？在提升还是在退步？唯一合理的办法是编写针对你系统的特定任务、数据和失效模式的 Evals（LLM 测试）。
+
+<blockquote class="breakout">
+  <p>基准测试并没有撒谎，只是回答了别人的问题。</p>
+</blockquote>
+
+---
+
+## “氛围式评估” 实际的代价
+
+标准做法：发布模型改动，监控投诉渠道，如果舆论变得嘈杂就回滚。
+
+这种方式几乎遗漏了所有有价值的信号：
+
+**你只能捕捉到明显的故障。** 那些自信地给出错误答案却未察觉的用户？沉默。 那些得到更差答案后直接放弃功能的用户？沉默。 支持工单和错误率只能反映质量回退的一小部分。
+
+**你无法区分回退和改进。** 如果新模型在任务 A 上更好、在任务 B 上更差，针对 B 的投诉看起来和“AI 变差了”的通用反馈没有区别。你根本不知道该修哪儿。
+
+**你把用户当成了测试基础设施。** 他们并没有签约去做这件事。
+
+---
+
+## 评估光谱（以及大多数团队常犯的错误）
+
+评估方法分布在从“快速但薄弱”到“昂贵但可靠”的光谱上。
+
+<figure class="breakout">
+
+![比较确定性检查、LLM‑as‑judge 与人工评估在速度、成本和有效性上的光谱图。](../eval-spectrum.svg)
+
+<figcaption>使用最便宜且能够真实捕获失效的评估方法。</figcaption>
+</figure>
+
+**LLM‑as‑judge** 是当前的宠儿：让强大的模型给另一个模型的输出打分。快速、可扩展、成本低。问题在于它把评分模型的偏见也带进来，容易被游戏化，并形成循环依赖。如果你用 GPT‑5 去评估 GPT‑5 的输出，你实际上测量的是“GPT‑5 与 GPT‑5 的一致程度”。这并非毫无价值，但也不是你想要的答案。
+
+**人工评估** 是大家都想绕过的金标准。让人工评估输出成本高、速度慢、评估者之间不一致，而且排期麻烦。但它是唯一能够验证你的系统对真实人类是否有用的手段。
+
+**面向任务的自动检查** 是大多数团队应该投入更多时间的地方。它们并不光鲜亮丽，但快速、确定且直接关联到系统真正重要的点。
+
+---
+
+## 实际可行的做法
+
+### 1. 在发布前先定义失败标准
+
+在更换模型或提示词之前，先写清楚“坏”的表现具体是什么。要具体。
+
+而不是 “输出应该是准确的”。那不是测试。更像是：
+
+- 结构化的 JSON 输出必须能够解析且不报错
+- 响应中的所有引用必须在检索到的上下文中逐字出现
+- 回答中不得提及竞争对手的产品名称
+- SQL 查询必须语法合法，并且只引用模式中实际存在的表
+- 情感分类在现有测试集上正向转为负向的比例不能超过 3%
+
+这些都可以通过程序自动检查。无需评判模型。
+
+**Eval harness：确定性检查**
+
+```typescript
+type EvalResult = { passed: boolean; reason?: string };
+
+const evals: Record<string, (output: string, context: EvalContext) => EvalResult> = {
+  // JSON 必须可解析
+  validJson: (output) => {
+    try {
+      JSON.parse(output);
+      return { passed: true };
+    } catch (e) {
+      return { passed: false, reason: `Invalid JSON: ${e.message}` };
+    }
+  },
+
+  // 没有幻觉引用——每个声明必须出现在上下文中
+  groundedCitations: (output, { retrievedChunks }) => {
+    const claims = extractCitations(output);
+    const ungrounded = claims.filter(
+      (claim) => !retrievedChunks.some((chunk) => chunk.includes(claim))
+    );
+    return ungrounded.length === 0
+      ? { passed: true }
+      : { passed: false, reason: `Ungrounded claims: ${ungrounded.join(', ')}` };
+  },
+
+  // 响应长度合理性检查——捕获截断或失控生成
+  reasonableLength: (output) => {
+    const words = output.split(/\s+/).length;
+    return words >= 10 && words <= 2000
+      ? { passed: true }
+      : { passed: false, reason: `Word count ${words} out of bounds` };
+  },
+};
+```
+
+### 2. 从最糟糕的日子中构建 Golden Set
+
+最有价值的评估数据往往是那些让人尴尬的案例：导致用户提交工单、截图幻觉，或悄然停止使用功能的输出。
+
+每当用户报告错误输出、标记幻觉，或你手动发现一次失败时，将其加入 Golden Set：包括输入、上下文以及正确的行为。保持 50‑100 条案例，并在每次模型变动时运行。
+
+起初会感觉很手工。六个月后，你拥有的测试套件是任何公开基准都无法操纵的，因为每个案例都来源于你自己的失败历史。
+
+<figure class="breakout">
+
+![展示生产事故如何转化为 Golden 案例、随后 CI 评估运行、最终阻止回归或批准发布的工作流图。](../golden-set-lifecycle.svg)
+
+<figcaption>Golden Set 将尴尬的案例转化为回归测试套件。</figcaption>
+</figure>
+
+**Golden case 结构**
+
+```typescript
+interface GoldenCase {
+  id: string;
+  input: string;
+  context: Record<string, unknown>;
+  expectedBehavior: {
+    mustContain?: string[];
+    mustNotContain?: string[];
+    structureCheck?: (output: string) => boolean;
+    minSimilarityToReference?: number; // cosine similarity to a reference answer
+  };
+  sourceIncident?: string; // link back to the bug report or ticket
+}
+```
+
+### 3. 回归测试，而不仅是验收测试
+
+大多数团队只在考虑模型变更时运行评估。这属于验收测试：“这个新东西够好吗？”
+
+你还需要回归测试：“这次改动是否破坏了之前能正常工作的功能？”
+
+运行你的黄金集（golden set）在每一次提示（prompt）变更时，而不仅仅是模型变更时。一个原本运行良好的提示在你添加新工具、改变 RAG 检索策略或更新上下文模板时，可能会悄然退化。没有基线，你根本不知道。像 [Langfuse](https://langfuse.com/) 这样的工具会把评估分数附加到生产追踪上，使回归问题出现在仪表盘中，而不仅仅是事故报告里。
+
+<details>
+<summary>评估框架：基线 vs 候选对比</summary>
+
+```typescript
+async function compareModelVersions(
+  goldenCases: GoldenCase[],
+  baselinePipeline: Pipeline,
+  candidatePipeline: Pipeline
+) {
+  const results = await Promise.all(
+    goldenCases.map(async (tc) => {
+      const [baseline, candidate] = await Promise.all([
+        baselinePipeline.run(tc.input, tc.context),
+        candidatePipeline.run(tc.input, tc.context),
+      ]);
+
+      return {
+        id: tc.id,
+        baselinePassed: runEvals(baseline, tc.expectedBehavior),
+        candidatePassed: runEvals(candidate, tc.expectedBehavior),
+        regression: /* baseline passed */ && /* candidate failed */,
+        improvement: /* baseline failed */ && /* candidate passed */,
+      };
+    })
+  );
+
+  const regressions = results.filter((r) => r.regression);
+  const improvements = results.filter((r) => r.improvement);
+
+  console.log(`Regressions: ${regressions.length} / ${goldenCases.length}`);
+  console.log(`Improvements: ${improvements.length} / ${goldenCases.length}`);
+
+  if (regressions.length > 0) {
+    console.error('Blocking regressions found:');
+    regressions.forEach((r) => console.error(` - ${r.id}`));
+  }
+
+  return { regressions, improvements };
+}
+```
+
+</details>
+
+如果候选模型在已知失败案例上出现回归，升级的讨论会变得异常具体：哪些案例得到改进，哪些案例被破坏，以及这种权衡是否值得。
+
+### 4. 只让 LLM‑as‑Judge 做一件事
+
+LLM‑as‑Judge 在没有确定性正确答案的开放式输出上有用，例如：“这个回复有帮助吗？”、“这个摘要保留了关键要点吗？”、“这个解释对初学者来说是否正确？”
+
+就在这些场景使用它。不要在确定性答案上使用它。如果必须使用，请明确评分标准：
+
+**评估框架：基于评分标准的评审**
+
+```typescript
+async function judgeHelpfulness(
+  userQuery: string,
+  modelResponse: string
+): Promise<{ score: number; reasoning: string }> {
+  const judgePrompt = `
+You are evaluating a customer support response.
+
+User question: ${userQuery}
+Response: ${modelResponse}
+
+Rate the response on a scale of 1-5:
+5 = Directly answers the question with accurate, actionable information
+4 = Answers the question but could be more specific or actionable
+3 = Partially addresses the question; key information is missing
+2 = Tangentially related but doesn't answer the question
+1 = Off-topic, factually wrong, or harmful
+
+Respond with JSON: {"score": <number>, "reasoning": "<one sentence>"}
+`;
+
+  const result = await judgeModel.generate(judgePrompt);
+  return JSON.parse(result);
+}
+```
+
+明确的评分标准可以降低评审方差，提供可解释的输出，并在评审出错时更容易审计。像 [Autoevals](https://github.com/braintrustdata/autoevals) 和 [Braintrust](https://www.braintrust.dev/) 这样的库已经提供了常见任务的预构建评分标准——在从零编写之前值得直接使用。
+
+---
+
+## 值得了解的工具
+
+你不必从头全部自行实现。已有多款工具在评估基础设施上取得了实质性进展：
+
+**[Braintrust](https://www.braintrust.dev/)** — 完整的评估平台，具备实验追踪、数据集管理和评分函数。按提示、模型和部署组织评估运行，让你能够随时间而非仅跨版本对比质量。它与开源的 **[Autoevals](https://github.com/braintrustdata/autoevals)** 库配合良好，后者提供了常见任务（事实准确性、帮助程度、毒性、语义相似度）的预构建模型评分函数。
+
+**[Langfuse](https://langfuse.com/)** — 开源 LLM 可观测性平台，位于你的应用与模型之间。追踪每一次调用，将评估分数（人工或自动）附加到单独的 span 上，并在生产流量中展示质量趋势。如果你希望在同一工具中同时拥有可观测性和评估功能，这是个不错的选择。
+
+**[Evalite](https://www.evalite.dev/)** — 由 Matt Pocock 开发的 TypeScript 原生评估框架。低门槛：定义任务、定义评分器，在现有测试环境中运行。面向希望评估体验像单元测试而非独立机器学习实验平台的团队。
+
+**[promptfoo](https://www.promptfoo.dev/)** — 以 CLI 为主的评估运行器，专注于提示比较和红队测试。通过 YAML 易于配置，兼容多数模型提供商，并内置对提示注入等对抗性输入的检测支持。
+
+**[deepeval](https://docs.confident-ai.com/)** — Python 评估框架，拥有大量内置指标库（G‑Eval、RAG 可信度、答案相关性、幻觉检测）。在 RAG 流水线中尤为有用，因为它可以对检索质量进行专门评分，而不仅仅是生成质量。
+
+正确的工具取决于你的技术栈和起点。比起选择哪个框架，更重要的是坚持运行评估的纪律——在每一次重要变更时，都要持续、系统地执行评估。
+
+## 不舒服的部分
+
+大多数团队会跳过这一步，因为它在一开始就提出了一个令人恼火的问题：这里的“好”应该是什么样子？
+
+对一个新 AI 功能来说，这确实很难判断。但如果你在乎可靠性，这一步就不可省略。交付可信 AI 的团队会像对待任何关键代码路径一样：定义预期行为、编写测试并持续运行这些测试。
+
+基准测试本身没有撒谎，它们只是在回答别人的问题。不要把它们当作产品路线图来看待，而是要编写与自己系统匹配的测试。
+
+你的用户会先于仪表盘发现问题。先构建测试套件吧。
+````
