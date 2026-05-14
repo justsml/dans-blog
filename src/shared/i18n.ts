@@ -1,7 +1,7 @@
 export const DEFAULT_LOCALE = "en" as const;
 
-export const ACTIVE_LOCALES = ["es", "hi", "ja", "ru", "de", "fr", "it"] as const;
-export const FUTURE_LOCALES = ["zh"] as const;
+export const ACTIVE_LOCALES = ["es", "hi", "ja", "ru", "de", "fr", "it", "ar", "he", "zh"] as const;
+export const FUTURE_LOCALES = [] as const;
 export const SUPPORTED_LOCALES = [
   DEFAULT_LOCALE,
   ...ACTIVE_LOCALES,
@@ -20,6 +20,8 @@ export const LOCALE_LABELS: Record<Locale, string> = {
   de: "Deutsch",
   fr: "Français",
   it: "Italiano",
+  ar: "العربية",
+  he: "עברית",
   zh: "中文",
 };
 
@@ -31,7 +33,12 @@ export const LOCALE_DISCLOSURE: Record<ActiveLocale, string> = {
   de: "Mit KI übersetzt und auf technische Genauigkeit geprüft.",
   fr: "Traduit par IA et vérifié pour l’exactitude technique.",
   it: "Tradotto con IA e verificato per accuratezza tecnica.",
+  ar: "تُرجم بالذكاء الاصطناعي وروجع لضمان الدقة التقنية.",
+  he: "תורגם בעזרת AI ונבדק לדיוק טכני.",
+  zh: "由 AI 翻译，并已核对技术准确性。",
 };
+
+export const RTL_LOCALES = ["ar", "he"] as const satisfies readonly ActiveLocale[];
 
 export type LanguageOption = {
   locale: Locale;
@@ -128,4 +135,8 @@ export function getBaseSlugFromRouteSlug(slug: string) {
 
 export function getHtmlLang(locale: Locale) {
   return locale;
+}
+
+export function getTextDirection(locale: Locale): "ltr" | "rtl" {
+  return RTL_LOCALES.includes(locale as (typeof RTL_LOCALES)[number]) ? "rtl" : "ltr";
 }

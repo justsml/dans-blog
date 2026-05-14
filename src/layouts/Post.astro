@@ -23,6 +23,7 @@ import {
   LOCALE_LABELS,
   getHtmlLang,
   getLocalizedPostPath,
+  getTextDirection,
   isActiveLocale,
   type Locale,
 } from "../shared/i18n";
@@ -172,7 +173,7 @@ const shouldCropMobileBanner =
   cover_full_width.width / cover_full_width.height < 2.4;
 ---
 
-<html lang={htmlLang}>
+<html lang={htmlLang} dir={getTextDirection(locale)}>
   <head>
     <BaseHead
       title={title}

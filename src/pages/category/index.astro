@@ -6,7 +6,7 @@ import Footer from "@/components/Footer.astro";
 import { slugify } from "@/shared/pathHelpers";
 import { PostCollections } from "../../shared/postsCache";
 import socialBanner from "../../assets/social-banner.webp";
-import { DEFAULT_LOCALE, getHtmlLang, getLocalizedPagePath, type Locale } from "../../shared/i18n";
+import { DEFAULT_LOCALE, getHtmlLang, getLocalizedPagePath, getTextDirection, type Locale } from "../../shared/i18n";
 import { getUiCopy } from "../../shared/uiTranslations";
 
 const categories = PostCollections.getCategoryList();
@@ -20,7 +20,7 @@ const catCount = categoryList.length;
 const totalCount = categoryList.reduce((acc, [_, count]) => acc + count, 0);
 ---
 <!doctype html>
-<html lang={getHtmlLang(locale)}>
+<html lang={getHtmlLang(locale)} dir={getTextDirection(locale)}>
   <head>
     <BaseHead
       title={copy.category.title}

@@ -5,7 +5,7 @@ This project translates articles with competing LLM candidates, a cheap judge pa
 ## Routing Contract
 
 - English stays unprefixed: `/the-last-to-think/`.
-- Translations use locale prefixes: `/es/the-last-to-think/`, `/hi/the-last-to-think/`, `/ja/the-last-to-think/`, `/ru/the-last-to-think/`, `/de/the-last-to-think/`, `/fr/the-last-to-think/`, `/it/the-last-to-think/`.
+- Translations use locale prefixes: `/es/the-last-to-think/`, `/hi/the-last-to-think/`, `/ja/the-last-to-think/`, `/ru/the-last-to-think/`, `/de/the-last-to-think/`, `/fr/the-last-to-think/`, `/it/the-last-to-think/`, `/ar/the-last-to-think/`, `/he/the-last-to-think/`, `/zh/the-last-to-think/`.
 - Slugs remain English permanently.
 - Translation files live beside the English article:
 
@@ -18,6 +18,9 @@ This project translates articles with competing LLM candidates, a cheap judge pa
   src/content/posts/YYYY-MM-DD--slug/de/index.mdx
   src/content/posts/YYYY-MM-DD--slug/fr/index.mdx
   src/content/posts/YYYY-MM-DD--slug/it/index.mdx
+  src/content/posts/YYYY-MM-DD--slug/ar/index.mdx
+  src/content/posts/YYYY-MM-DD--slug/he/index.mdx
+  src/content/posts/YYYY-MM-DD--slug/zh/index.mdx
   ```
 
 - Missing translated URLs redirect to English instead of rendering duplicate English content.

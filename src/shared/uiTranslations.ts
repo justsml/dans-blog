@@ -270,6 +270,8 @@ const copies: Record<Locale, UiCopy> = {
   de: en,
   fr: en,
   it: en,
+  ar: en,
+  he: en,
   zh: en,
 };
 

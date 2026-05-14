@@ -5,6 +5,7 @@ import {
   FUTURE_LOCALES,
   getBaseSlugFromRouteSlug,
   getLocaleFromRouteSlug,
+  getTextDirection,
   getLocalizedPagePath,
   getLocalizedPostPath,
   getLocalizedPostSlug,
@@ -134,17 +135,25 @@ describe("i18n post routing helpers", () => {
     }
   });
 
-  test("distinguishes supported future locales from active rollout locales", () => {
-    expect(FUTURE_LOCALES).toContain("zh");
+  test("distinguishes active rollout locales from unsupported prefixes", () => {
+    expect(FUTURE_LOCALES).toEqual([]);
     expect(isLocale("zh")).toBe(true);
-    expect(isActiveLocale("zh")).toBe(false);
+    expect(isActiveLocale("zh")).toBe(true);
+    expect(isLocale("ar")).toBe(true);
+    expect(isActiveLocale("ar")).toBe(true);
+    expect(isLocale("he")).toBe(true);
+    expect(isActiveLocale("he")).toBe(true);
     expect(isLocale("pt")).toBe(false);
     expect(isActiveLocale("pt")).toBe(false);
   });
 
-  test("parses future locale routes but does not treat unsupported prefixes as locales", () => {
+  test("parses newly active locale routes but does not treat unsupported prefixes as locales", () => {
     expect(getLocaleFromRouteSlug("zh/postgres-text-search-guide")).toBe("zh");
     expect(getBaseSlugFromRouteSlug("zh/postgres-text-search-guide")).toBe(
+      "postgres-text-search-guide",
+    );
+    expect(getLocaleFromRouteSlug("ar/postgres-text-search-guide")).toBe("ar");
+    expect(getBaseSlugFromRouteSlug("he/postgres-text-search-guide")).toBe(
       "postgres-text-search-guide",
     );
 
@@ -167,5 +176,12 @@ describe("i18n post routing helpers", () => {
     expect(getBaseSlugFromRouteSlug("postgres-text-search-guide")).toBe(
       "postgres-text-search-guide",
     );
+  });
+
+  test("marks Arabic and Hebrew as right-to-left locales", () => {
+    expect(getTextDirection("ar")).toBe("rtl");
+    expect(getTextDirection("he")).toBe("rtl");
+    expect(getTextDirection("zh")).toBe("ltr");
+    expect(getTextDirection(DEFAULT_LOCALE)).toBe("ltr");
   });
 });

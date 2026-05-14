@@ -9,6 +9,7 @@ import SiteLinkedData from "../components/Seo/SiteLinkedData.astro";
 import {
   DEFAULT_LOCALE,
   getHtmlLang,
+  getTextDirection,
   getPageAlternates,
   getLocalizedPagePath,
   getUnlocalizedPagePath,
@@ -40,7 +41,7 @@ const canonicalPath = Astro.props.canonicalPath ?? getLocalizedPagePath(basePage
 const alternates = Astro.props.alternates ?? getPageAlternates(basePagePath);
 ---
 
-<html lang={getHtmlLang(locale)}>
+<html lang={getHtmlLang(locale)} dir={getTextDirection(locale)}>
   <head>
     <BaseHead
       title={title}
