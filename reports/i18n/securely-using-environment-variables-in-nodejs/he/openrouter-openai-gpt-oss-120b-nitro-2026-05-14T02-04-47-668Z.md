@@ -1,0 +1,162 @@
+# Translation Candidate
+- Slug: securely-using-environment-variables-in-nodejs
+- Locale: he
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2018-11-14--securely-using-environment-variables-in-nodejs/he/index.mdx
+- Validation: deferred
+- Runtime seconds: 5.96
+- Input tokens: 3761
+- Output tokens: 1285
+- Thinking tokens: unknown
+- Cached input tokens: 1536
+- Cache write tokens: 0
+- Estimated cost: $0.000378
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: שימוש במשתני סביבה ב‑NodeJS
+subTitle: שימוש ב-`dotenv`
+date: '2018-11-13'
+modified: '2020-07-30'
+tags:
+  - dotenv
+  - api-keys
+  - secrets
+  - tokens
+  - security
+  - nodejs
+category: Code
+subCategory: howto
+cover: ../john-salvino-417565-unsplash.webp
+cover_mobile: ../w300_john-salvino-417565-unsplash.webp
+cover_icon: ../icon_john-salvino-417565-unsplash.webp
+---
+## טיפול בסודות ובאסימוני API בצורה בטוחה
+
+### מאמר קשור: [הגן על האסימונים שלך](/protect-your-tokens/)
+
+בואו נסכם בקצרה את ההבדל בין `סוד` ל`לא‑סוד`.
+
+* 🔒 `מפתחות סודיים` חייבים לרוץ על שרת מותאם (למשל Node/Express/Heroku) כדי להסתיר (לפרוקסי) בקשות לשירותי API של צד שלישי.
+* 🌍 `מפתחות לא‑סודיים` הם מפתחות שניתן לשלוח לדפדפן.
+
+<br />
+
+---------------------------------------------
+
+> במאמר זה נתמקד בטיפול ב‑🔒 `מפתחות סודיים` באמצעות **משתני סביבה**.
+
+[דוגמאות קוד נכללות למטה.](#️-code-example)
+
+#### סקירה כללית
+
+כדי **לגשת לסודות בקוד NodeJS שלך בצורה בטוחה**:
+
+1. החלף מפתחות מקודדים בקוד במשתני סביבה. לדוגמה `process.env.API_SECRET`  
+1. השתמש בספרייה כמו [`dotenv`](https://github.com/motdotla/dotenv) יחד עם קובץ `.env`. הוסף את הסודות שהיו מקודדים קודם לקובץ `.env`.  
+1. וודא שהשורה `.env` קיימת בקובץ `.gitignore` שלך!  
+
+> **אל** תיצור קובץ `.env` על שרתים שמופעלים. השתמש בכלי ניהול משתני הסביבה שמספק ספק האירוח שלך (למשל [Heroku](https://devcenter.heroku.com/articles/config-vars), Netlify, AWS EC2): לדוגמה **לוח בקרה או שורת פקודה**.  
+
+### דוגמת קוד  
+
+אנו ניצור כמה קבצים.  
+
+1. `.env`  
+1. `./db/connection.js`  
+1. `./api/users.js`  
+
+<!-- Example config object which uses `process.env.PG*`
+
+```js
+// ./db/config.js
+module.exports = {
+  postgres: {
+    host: process.env.PGHOST || 'localhost',
+    port: process.env.PGPORT || 5234,
+    user: process.env.PGUSER || 'postgres',
+    password: process.env.PGPASSWORD || 'password',
+    database: process.env.PGDATABASE || 'postgres',
+  }
+};
+```
+
+The `db/config.js` file is just an example of how your secrets should be stored for re-use in your code.
+-->
+
+ראשית, התקן את חבילת [`dotenv`](https://www.npmjs.com/package/dotenv).  
+
+```bash
+npm install dotenv
+```
+
+לאחר מכן, צור קובץ `.env` בתיקייה הראשית של הפרויקט.  
+
+```
+# .env
+PGDATABASE="postgres"
+PGHOST="localhost"
+PGPORT=5234
+PGUSER="postgres"
+PGPASSWORD="password"
+```
+
+❌ **לעולם אל** תבצע commit לקובץ `.env`.
+
+❌ אל תיצור קובץ `.env` על השרתים.
+
+בדוק את תיעוד ספק האחסון שלך כדי להגדיר _משתני סביבה_.
+
+כדי לוודא בקלות שה‑`.gitignore` שלך מכיל שורה של `.env`.
+
+```bash
+# עדכון אוטומטי של .gitignore
+# הרץ בטרמינל:
+[ "$(grep '^.env' .gitignore)" == "" ] && echo '.env' >> .gitignore
+# הערה: לא יודפס שום פלט
+```
+
+הקובץ `./db/connection.js` מספק מופע משותף של `pg.Pool`. הוא ישמש לביצוע שאילתות לבסיס הנתונים.
+
+```js
+// ./db/connection.js
+require('dotenv').config(); // ✅ טען קובץ .env
+const pg = require('pg');
+const {PGUSER, PGHOST, PGPORT} = process.env;
+
+if (process.env.NODE_ENV === 'development')
+  console.log(`Connecting to ${PGUSER} @ ${PGHOST}:${PGHOST}`);
+// ^^ רק להצגת משתני חיבור לדיבאג
+
+// pg משתמש אוטומטית במשתני סביבה PG*
+module.exports = new pg.Pool();
+```
+
+תיקיית `./api` מכילה ממשקים לטבלאות/תצוגות שלך.
+
+הנה דוגמה לקובץ `./api/users.js` עבור טבלת `users`.
+
+```js
+// ./api/users.js
+const db = require('../db/connection.js');
+
+module.exports = {
+  findUsername: function(username) {
+    return db.query('SELECT * FROM users WHERE username=$1', username);
+  }
+};
+```
+
+- לעולם אל תבצע commit של סודות `.env` ל‑git!  
+- אל תשתף קבצי `.env` בצוות. *
+
+\* כל מחשב נייד או שולחני חדש בפיתוח צריך **ליצור מפתחות גישה וטוקנים חדשים**. אם זה בלתי אפשרי, השתמש בזהירות מרובה בעת שיתוף ה‑`.env` (במקרים שבהם שירות עשוי לבטל את כל המפתחות הישנים, או שיש לך טוקן גישה מוגבל של API בתשלום).
+
+#### ⚠️ חשוב: אם נדרש, השתמש תמיד בשירות הודעות מאובטח (עדיף עם תמיכה בתפוגת הודעות).
+
+בהצלחה, ואל תהסס לפנות אם יש לך שאלות! 🎉
+````
