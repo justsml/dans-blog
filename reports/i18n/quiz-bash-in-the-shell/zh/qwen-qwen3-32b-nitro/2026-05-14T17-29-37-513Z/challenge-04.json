@@ -1,0 +1,55 @@
+{
+  "index": 3,
+  "attempt": 1,
+  "originalTitle": "Escaping Characters",
+  "translatedTitle": "转义字符",
+  "translation": {
+    "title": "转义字符",
+    "group": "变量",
+    "options": [
+      {
+        "text": "成本：$$100"
+      },
+      {
+        "text": "成本：$100"
+      },
+      {
+        "text": "成本：100"
+      },
+      {
+        "text": "成本：00"
+      },
+      {
+        "text": "成本："
+      },
+      {
+        "text": "错误"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "现在，这会输出什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "编号变量有特殊含义。在这种情况下，`$1`是特殊变量，用于存储传递给脚本或函数的第一个参数。\n\n由于我们在REPL中运行脚本，没有参数，因此`$1`为空。剩余文本`00`按原样打印。\n\n要打印字面意义上的`$`字符，请使用单引号，或用反斜杠(`\\`)转义："
+    ]
+  },
+  "rawText": "```json\n{\n  \"title\": \"转义字符\",\n  \"group\": \"变量\",\n  \"options\": [\n    { \"text\": \"成本：$$100\" },\n    { \"text\": \"成本：$100\" },\n    { \"text\": \"成本：100\" },\n    { \"text\": \"成本：00\" },\n    { \"text\": \"成本：\" },\n    { \"text\": \"错误\" }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"现在，这会输出什么？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"编号变量有特殊含义。在这种情况下，`$1`是特殊变量，用于存储传递给脚本或函数的第一个参数。\\n\\n由于我们在REPL中运行脚本，没有参数，因此`$1`为空。剩余文本`00`按原样打印。\\n\\n要打印字面意义上的`$`字符，请使用单引号，或用反斜杠(`\\\\`)转义：\"\n  ]\n}\n```",
+  "telemetry": {
+    "inputTokens": 874,
+    "outputTokens": 968,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 3539,
+    "providerCostUsd": 0.00075034,
+    "providerUpstreamCostUsd": 0.00075034,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00006992000000000001,
+    "outputUsd": 0.00023232,
+    "totalUsd": 0.00030224,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

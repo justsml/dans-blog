@@ -1,0 +1,53 @@
+{
+  "index": 6,
+  "attempt": 1,
+  "originalTitle": "Basic If-Else",
+  "translatedTitle": "基本的If-Else",
+  "translation": {
+    "title": "基本的If-Else",
+    "group": "条件语句",
+    "options": [
+      {
+        "text": "文件存在"
+      },
+      {
+        "text": "文件不存在，且在诊断后"
+      },
+      {
+        "text": "仅错误"
+      },
+      {
+        "text": "缺少双括号"
+      },
+      {
+        "text": "无输出"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "如果文件 `cats.txt` 存在，此脚本输出什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "你发现闭合括号前缺少空格了吗？\n    \n    Bash 对此非常敏感：括号表达式内部需要空格。\n\n    缺少空格导致 `[` 命令看不到闭合的 `]`，Bash 会打印诊断信息，将测试视为失败，并继续执行 `else` 分支。\n\n    正确语法是：",
+      "注意：双括号 `[[ ]]` 是**推荐**用于条件表达式的。[参见 BashFAQ。](https://mywiki.wooledge.org/BashFAQ/031)"
+    ]
+  },
+  "rawText": "```json\n{\n  \"title\": \"基本的If-Else\",\n  \"group\": \"条件语句\",\n  \"options\": [\n    { \"text\": \"文件存在\" },\n    { \"text\": \"文件不存在，且在诊断后\" },\n    { \"text\": \"仅错误\" },\n    { \"text\": \"缺少双括号\" },\n    { \"text\": \"无输出\" }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"如果文件 `cats.txt` 存在，此脚本输出什么？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"你发现闭合括号前缺少空格了吗？\\n    \\n    Bash 对此非常敏感：括号表达式内部需要空格。\\n\\n    缺少空格导致 `[` 命令看不到闭合的 `]`，Bash 会打印诊断信息，将测试视为失败，并继续执行 `else` 分支。\\n\\n    正确语法是：\",\n    \"注意：双括号 `[[ ]]` 是**推荐**用于条件表达式的。[参见 BashFAQ。](https://mywiki.wooledge.org/BashFAQ/031)\"\n  ]\n}\n```",
+  "telemetry": {
+    "inputTokens": 886,
+    "outputTokens": 1074,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 2966,
+    "providerCostUsd": 0.00081636,
+    "providerUpstreamCostUsd": 0.00081636,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00007088,
+    "outputUsd": 0.00025776,
+    "totalUsd": 0.00032864,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "index": 11,
+  "attempt": 1,
+  "originalTitle": "Basic Arithmetic",
+  "translatedTitle": "基本算术运算",
+  "translation": {
+    "title": "基本算术运算",
+    "group": "乘法",
+    "options": [
+      {
+        "text": "echo 10 * 0.5"
+      },
+      {
+        "text": "echo (10 * 0.5)"
+      },
+      {
+        "text": "echo ${ 10 * 0.5 }"
+      },
+      {
+        "text": "echo %( 10 * 0.5 )"
+      },
+      {
+        "text": "echo $(( 10 * 0.5 ))"
+      },
+      {
+        "text": "echo '10 * 0.5' | bc"
+      },
+      {
+        "text": "Error"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "以下哪项正确地将10和0.5相乘并输出5？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "`(( ))`语法**仅**执行**整数**运算。是的，就是没有小数点的整数！\n\n    Bash（或许令人惊讶地）**没有内置**的浮点数运算支持。\n\n    最常见的解决方案是使用GNU工具 [`bc`](https://www.gnu.org/software/bc/manual/html_mono/bc.html) 或 [`awk`](https://www.gnu.org/software/gawk/manual/gawk.html)。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"基本算术运算\",\n  \"group\": \"乘法\",\n  \"options\": [\n    { \"text\": \"echo 10 * 0.5\" },\n    { \"text\": \"echo (10 * 0.5)\" },\n    { \"text\": \"echo ${ 10 * 0.5 }\" },\n    { \"text\": \"echo %( 10 * 0.5 )\" },\n    { \"text\": \"echo $(( 10 * 0.5 ))\" },\n    { \"text\": \"echo '10 * 0.5' | bc\" },\n    { \"text\": \"Error\" }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"以下哪项正确地将10和0.5相乘并输出5？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"`(( ))`语法**仅**执行**整数**运算。是的，就是没有小数点的整数！\\n\\n    Bash（或许令人惊讶地）**没有内置**的浮点数运算支持。\\n\\n    最常见的解决方案是使用GNU工具 [`bc`](https://www.gnu.org/software/bc/manual/html_mono/bc.html) 或 [`awk`](https://www.gnu.org/software/gawk/manual/gawk.html)。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 881,
+    "outputTokens": 1021,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 6102,
+    "providerCostUsd": 0.00085788,
+    "providerUpstreamCostUsd": 0.00085788,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00007048,
+    "outputUsd": 0.00024503999999999997,
+    "totalUsd": 0.00031551999999999996,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
