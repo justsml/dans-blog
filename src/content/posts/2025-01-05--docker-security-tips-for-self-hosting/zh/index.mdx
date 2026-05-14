@@ -171,7 +171,7 @@ func main() {
 
 */}
 
-### 生成强密钥
+### 生成强随机 secret
 
 以下是一个用于为 `.env` 文件生成新 secret 的小脚本：
 
@@ -198,7 +198,7 @@ EOL
 echo "New .env file generated with secure random values!"
 ```
 
-### 蜜罐令牌
+### Canary Tokens
 
 [**Canary Tokens**](https://canarytokens.org/) 是检测 secret 是否被泄露（并被使用）的绝佳手段。它们就像可以嵌入任意敏感文件、URL 和 token 的触发线。
 
@@ -206,7 +206,7 @@ echo "New .env file generated with secure random values!"
 
 Canary “token” 类型繁多，可选项包括 AWS token、[伪信用卡](https://blog.thinkst.com/2024/12/its-baaack-credit-card-canarytokens-are-now-on-your-consoles.html) 号码、Excel 与 Word 文件、Kubeconfig 文件、VPN 凭证，甚至 SQL 转储文件都可以加入触发线！
 
-#### 蜜罐令牌最佳实践
+#### Canary Token 最佳实践
 
 - **全方位布置**：在每个 `.env` 文件、CI/CD 流水线以及你能想到的 “secrets manager” 中都放置。
   - 在家目录放置 `passwords.xlsx` 或 `passwords.docx` 文件。
@@ -224,7 +224,7 @@ Canary “token” 类型繁多，可选项包括 AWS token、[伪信用卡](htt
 原始署名归功于 <cite>[Brian Hetfield](https://gist.github.com/bmhatfield/f613c10e360b4f27033761bbee4404fd) 与 [Jan Schaumann](https://www.netmeister.org/)</cite>
 
 <CodeTabs client:load tabs={[
-  "辅助命令",
+  "Helper commands",
   "Persist secrets in environment",
   "Use secrets per command"]
 }>
@@ -368,7 +368,7 @@ services:
 - **全部删除**：使用 `cap_drop: [ ALL ]` 删除容器的所有 Linux 能力。
 - **不授予新特权**：使用 `security_opt: [ no-new-privileges=true ]` 防止容器获取新特权。
 
-```yaml title="示例：丢弃/限制能力" {5-14}
+```yaml title="Example: Drop/Limit Capabilities" {5-14}
 services:
   database:
     image: postgres:17.1
@@ -568,7 +568,7 @@ nmap -sn 172.18.0.1/16
 
 ```
 
-```text title="nmap 扫描" frame="terminal"
+```text title="nmap Scan" frame="terminal"
 % nmap -A --open --reason 192.168.0.87
 
 Starting Nmap 7.95 ( https://nmap.org ) at 2025-01-06 13:51 MST
@@ -597,7 +597,7 @@ Nmap done: 1 IP address (1 host up) scanned in 13.36 seconds
 
 熟悉 `lsof` ——它在 macOS 与 Linux 上均可使用，能够显示细粒度的网络状态和磁盘活动。
 
-```bash title="lsof 命令"
+```bash title="lsof Commands"
 # 监控特定端口
 sudo lsof -i:80 -Pn
 
