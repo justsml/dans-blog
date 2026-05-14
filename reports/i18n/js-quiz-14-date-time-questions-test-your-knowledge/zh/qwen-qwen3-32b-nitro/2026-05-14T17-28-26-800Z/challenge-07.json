@@ -1,0 +1,49 @@
+{
+  "index": 6,
+  "attempt": 1,
+  "originalTitle": "UTC Dates Part 1",
+  "translatedTitle": "UTC日期 第1部分",
+  "translation": {
+    "title": "UTC日期 第1部分",
+    "group": "处理日期",
+    "options": [
+      {
+        "text": "Wed, 01 Jan 2020 00:00:00 GMT"
+      },
+      {
+        "text": "Thu, 02 Jan 2020 00:00:00 GMT"
+      },
+      {
+        "text": "TypeError"
+      },
+      {
+        "text": "NaN"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "输出将包含什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "你会得到 `TypeError: date.toUTCString is not a function`，因为 [`Date.UTC()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/UTC) 返回的是毫秒整数而非日期实例。\n\n      {/* [`getFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getFullYear) 方法会使用你的本地时区偏移（假设这些题目中为 GMT-07:00）\n      这意味着它会给出前一年（新年夜-7小时）。\n      [`getUTCFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getUTCFullYear) 方法会返回我们通过 `Date.UTC()` 提供的年份，即 2020。\n      */}"
+    ]
+  },
+  "rawText": "```json\n{\n  \"title\": \"UTC日期 第1部分\",\n  \"group\": \"处理日期\",\n  \"options\": [\n    {\n      \"text\": \"Wed, 01 Jan 2020 00:00:00 GMT\"\n    },\n    {\n      \"text\": \"Thu, 02 Jan 2020 00:00:00 GMT\"\n    },\n    {\n      \"text\": \"TypeError\"\n    },\n    {\n      \"text\": \"NaN\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"输出将包含什么？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"你会得到 `TypeError: date.toUTCString is not a function`，因为 [`Date.UTC()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/UTC) 返回的是毫秒整数而非日期实例。\\n\\n      {/* [`getFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getFullYear) 方法会使用你的本地时区偏移（假设这些题目中为 GMT-07:00）\\n      这意味着它会给出前一年（新年夜-7小时）。\\n      [`getUTCFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getUTCFullYear) 方法会返回我们通过 `Date.UTC()` 提供的年份，即 2020。\\n      */}\"\n  ]\n}\n```",
+  "telemetry": {
+    "inputTokens": 944,
+    "outputTokens": 769,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 2432,
+    "providerCostUsd": 0.00065323,
+    "providerUpstreamCostUsd": 0.00065323,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00007552000000000001,
+    "outputUsd": 0.00018456,
+    "totalUsd": 0.00026008,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

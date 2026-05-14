@@ -1,0 +1,52 @@
+{
+  "index": 12,
+  "attempt": 1,
+  "originalTitle": "Date Setters Part 4",
+  "translatedTitle": "日期设置器 第4部分",
+  "translation": {
+    "title": "日期设置器 第4部分",
+    "group": "处理日期",
+    "options": [
+      {
+        "text": "2020年1月1日"
+      },
+      {
+        "text": "2020年2月1日"
+      },
+      {
+        "text": "2021年1月1日"
+      },
+      {
+        "text": "2021年2月1日"
+      },
+      {
+        "text": "RangeError: 无效参数。"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "输出将包含什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "[`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) 方法设置给定日期实例的月份。\n\n月份参数是零基索引，范围为0-11（使用西方日历）。\n\n在这里我们看到月份和年份调整为2021年2月，因为 `setMonth(13)` 比11（12月）多出2个月。\n\n<aside class=\"hint\">`setMonth` 通过索引设置月份，12个月按0-11索引排列。</aside>\n<aside class=\"hint\">\n超出0-11范围的数字会导致年份溢出或下溢。例如，`setMonth(13)` 会将年份调整为2021年（2月，因为13比11多2）。\n</aside>"
+    ]
+  },
+  "rawText": "```json\n{\n  \"title\": \"日期设置器 第4部分\",\n  \"group\": \"处理日期\",\n  \"options\": [\n    { \"text\": \"2020年1月1日\" },\n    { \"text\": \"2020年2月1日\" },\n    { \"text\": \"2021年1月1日\" },\n    { \"text\": \"2021年2月1日\" },\n    { \"text\": \"RangeError: 无效参数。\" }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"输出将包含什么？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"[`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) 方法设置给定日期实例的月份。\\n\\n月份参数是零基索引，范围为0-11（使用西方日历）。\\n\\n在这里我们看到月份和年份调整为2021年2月，因为 `setMonth(13)` 比11（12月）多出2个月。\\n\\n<aside class=\\\"hint\\\">`setMonth` 通过索引设置月份，12个月按0-11索引排列。</aside>\\n<aside class=\\\"hint\\\">\\n超出0-11范围的数字会导致年份溢出或下溢。例如，`setMonth(13)` 会将年份调整为2021年（2月，因为13比11多2）。\\n</aside>\"\n  ]\n}\n```",
+  "telemetry": {
+    "inputTokens": 988,
+    "outputTokens": 806,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2052,
+    "providerCostUsd": 0.00076206,
+    "providerUpstreamCostUsd": 0.00076206,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00007904,
+    "outputUsd": 0.00019344,
+    "totalUsd": 0.00027247999999999997,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

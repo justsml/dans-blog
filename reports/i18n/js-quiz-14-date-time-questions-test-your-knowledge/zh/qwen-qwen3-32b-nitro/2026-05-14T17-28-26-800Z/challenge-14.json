@@ -1,0 +1,54 @@
+{
+  "index": 13,
+  "attempt": 1,
+  "originalTitle": "Date Setters Part 5",
+  "translatedTitle": "日期设定方法第五部分",
+  "translation": {
+    "title": "日期设定方法第五部分",
+    "group": "日期处理",
+    "options": [
+      {
+        "text": "2020年1月1日"
+      },
+      {
+        "text": "2020年2月1日"
+      },
+      {
+        "text": "2019年1月1日"
+      },
+      {
+        "text": "2019年12月1日"
+      },
+      {
+        "text": "RangeError: 无效参数。"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "输出将包含什么？"
+    ],
+    "hintsProse": [
+      "<aside class=\"hint\">月份长度不统一，天数在28到31天之间变化。</aside>\n      <aside class=\"hint\">`setDate` 设置月份中的日期，通常范围是1-31。负数或大于`31`的数字会导致日期和月份以意想不到的方式调整。</aside>"
+    ],
+    "explanationProse": [
+      "[`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) 方法设置给定日期实例的月份。\n  \n      月份参数是从0开始计算的（使用公历），范围为0-11。\n\n      这里我们看到月份和年份回滚到2019年12月，因为 `setMonth(-1)` 小于0（即1月）。"
+    ]
+  },
+  "rawText": "```json\n{\n  \"title\": \"日期设定方法第五部分\",\n  \"group\": \"日期处理\",\n  \"options\": [\n    { \"text\": \"2020年1月1日\" },\n    { \"text\": \"2020年2月1日\" },\n    { \"text\": \"2019年1月1日\" },\n    { \"text\": \"2019年12月1日\" },\n    { \"text\": \"RangeError: 无效参数。\" }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"输出将包含什么？\"\n  ],\n  \"hintsProse\": [\n    \"<aside class=\\\"hint\\\">月份长度不统一，天数在28到31天之间变化。</aside>\\n      <aside class=\\\"hint\\\">`setDate` 设置月份中的日期，通常范围是1-31。负数或大于`31`的数字会导致日期和月份以意想不到的方式调整。</aside>\"\n  ],\n  \"explanationProse\": [\n    \"[`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) 方法设置给定日期实例的月份。\\n  \\n      月份参数是从0开始计算的（使用公历），范围为0-11。\\n\\n      这里我们看到月份和年份回滚到2019年12月，因为 `setMonth(-1)` 小于0（即1月）。\"\n  ]\n}\n```",
+  "telemetry": {
+    "inputTokens": 961,
+    "outputTokens": 1117,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 2799,
+    "providerCostUsd": 0.00086348,
+    "providerUpstreamCostUsd": 0.00086348,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00007688000000000001,
+    "outputUsd": 0.00026807999999999997,
+    "totalUsd": 0.00034495999999999995,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Date String Parsing",
+  "translatedTitle": "日期字符串解析",
+  "translation": {
+    "title": "日期字符串解析",
+    "group": "处理日期",
+    "options": [
+      {
+        "text": "2019 2020"
+      },
+      {
+        "text": "2020 2021"
+      },
+      {
+        "text": "2020 2020"
+      },
+      {
+        "text": "2020 2019"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "什么值会打印到控制台？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "缺少`T`时间值的字符串看似是2020年1月1日 - 但仅包含日期的字符串会被解释为UTC时间。当调整到本地时区(GMT-7)时，我们发现其实还在2019年。\n\n      没有显式时区的日期时间字符串会被解释为本地时间。\n  \n      `T00:00`格式会让第二个值被解释为本地午夜时间。\n\n      第一个日期被解释为`Tue Dec 31 2019 17:00:00 GMT-0700 (Mountain Standard Time)`。\n      第二个日期被解释为`Wed Jan 01 2020 00:00:00 GMT-0700 (Mountain Standard Time)`。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"日期字符串解析\",\n  \"group\": \"处理日期\",\n  \"options\": [\n    { \"text\": \"2019 2020\" },\n    { \"text\": \"2020 2021\" },\n    { \"text\": \"2020 2020\" },\n    { \"text\": \"2020 2019\" }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\"什么值会打印到控制台？\"],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"缺少`T`时间值的字符串看似是2020年1月1日 - 但仅包含日期的字符串会被解释为UTC时间。当调整到本地时区(GMT-7)时，我们发现其实还在2019年。\\n\\n      没有显式时区的日期时间字符串会被解释为本地时间。\\n  \\n      `T00:00`格式会让第二个值被解释为本地午夜时间。\\n\\n      第一个日期被解释为`Tue Dec 31 2019 17:00:00 GMT-0700 (Mountain Standard Time)`。\\n      第二个日期被解释为`Wed Jan 01 2020 00:00:00 GMT-0700 (Mountain Standard Time)`。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 939,
+    "outputTokens": 720,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 2057,
+    "providerCostUsd": 0.00062287,
+    "providerUpstreamCostUsd": 0.00062287,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00007512,
+    "outputUsd": 0.0001728,
+    "totalUsd": 0.00024792,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
