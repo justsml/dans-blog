@@ -17,46 +17,46 @@ No Braintrust account required. All results are local JSONL + markdown.
 # Dry-run: list cases without spending tokens
 bun run i18n:eval -- --dry-run
 
-# Run defaults (newest article + newest quiz, locale=es)
+# Run defaults (newest article + newest quiz, locale=es, two models)
 bun run i18n:eval
 
-# Single locale
-bun run i18n:eval -- --locale ja
+# Multiple locales — each becomes its own set of eval cases
+bun run i18n:eval -- --locales es,ja,zh
 
-# Pin to a specific article or quiz slug
-bun run i18n:eval -- --article-slug postgres-fts-vs-pgvector
-bun run i18n:eval -- --quiz-slug quiz-modern-css-2025
-bun run i18n:eval -- --slug stop-hardcoding-your-prompts   # auto-detects kind
+# Compare multiple models in parallel against the same inputs
+bun run i18n:eval -- --models openrouter/qwen/qwen3-32b:nitro,openrouter/deepseek/deepseek-v4-flash
+
+# Full matrix: multiple locales × multiple models
+bun run i18n:eval -- --locales es,ja --models openrouter/qwen/qwen3-32b:nitro,openrouter/deepseek/deepseek-v4-flash
+
+# Pin to a specific slug
+bun run i18n:eval -- --slug stop-hardcoding-your-prompts --locales es
 
 # One kind only
 bun run i18n:eval -- --kind article
-bun run i18n:eval -- --kind quiz
+bun run i18n:eval -- --kind quiz --locales zh
 
-# Swap translation model
-bun run i18n:eval -- --translation-model openrouter/qwen/qwen3-32b:nitro
-bun run i18n:eval -- --translation-model 32b
-
-# Swap both models independently
-bun run i18n:eval -- \
-  --translation-model nitro \
-  --judge-model flash
+# Override judge model
+bun run i18n:eval -- --judge-model openrouter/google/gemini-3-flash-preview
 ```
 
 ## Flags
 
 | Flag | Default | Description |
 | --- | --- | --- |
-| `--model` | — | Sets both `--translation-model` and `--judge-model` at once |
-| `--translation-model` | `openrouter/openai/gpt-oss-120b:nitro` | Model used to produce translations |
-| `--judge-model` | `deepseek/deepseek-v4-flash` | Model used to score translations |
-| `--locale` | `es` | Target locale (`es`, `ja`, `zh`, `fr`, `de`, …) |
+| `--models` | two cheap defaults | Comma-separated translation models to compare in parallel |
+| `--judge-model` | `gemini-3-flash-preview` | Model used to score translations |
+| `--locales` | `es` | Comma-separated locales (`es,ja,zh`, …) — each is a separate eval axis |
 | `--kind` | `all` | `article`, `quiz`, or `all` |
 | `--slug` | — | Pin to a specific slug (auto-detects article vs quiz) |
-| `--article-slug` | — | Pin the article case to this slug |
-| `--quiz-slug` | — | Pin the quiz case to this slug |
-| `--dry-run` | false | Print selected cases and exit without calling any model |
+| `--dry-run` | false | Print all cases and exit without calling any model |
 
-Model flags accept either full OpenRouter IDs or loose case-insensitive substrings. Loose input resolves to the first match in the shared cheap/fast translation model list, so `nitro` becomes `openrouter/openai/gpt-oss-120b:nitro`, `32b` becomes `openrouter/qwen/qwen3-32b:nitro`, and `flash` becomes `openrouter/deepseek/deepseek-v4-flash`.
+## Multi-model, multi-locale comparison
+
+All combinations of `--locales × --models` run in parallel via `Promise.all`. Each `(input × locale × model)` triple is an independent eval case scored by the same shared scorers, so results are directly comparable across any axis.
+
+Default models: `openrouter/openai/gpt-oss-120b:nitro` and `openrouter/deepseek/deepseek-v4-flash`.  
+Model names resolve through `model-presets.ts` — short substrings like `nitro` or `flash` are accepted.
 
 ## Input: real corpus posts
 
@@ -65,9 +65,7 @@ The eval runner reads from the live `src/content/posts` corpus — no synthetic 
 - The **newest visible, published non-quiz article**
 - The **newest visible, published quiz**
 
-Posts marked `draft: true`, `hidden: true`, `publish: false`, or `unlisted: true` are excluded. Future-dated posts are also excluded.
-
-This means eval results reflect real article complexity and real quiz structure, including any quirks in your actual content.
+Posts marked `draft: true`, `hidden: true`, `publish: false`, or `unlisted: true` are excluded. Future-dated posts are also excluded. Use `--slug` to pin to a specific article.
 
 ## Outputs
 
@@ -84,22 +82,29 @@ JSONL fields per row:
 ```json
 {
   "at": "2026-05-14T…",
-  "id": "article:stop-hardcoding-your-prompts:es",
+  "inputId": "article:stop-hardcoding-your-prompts:es",
   "kind": "article",
   "locale": "es",
   "slug": "stop-hardcoding-your-prompts",
-  "translationModel": "openrouter/openai/gpt-oss-120b:nitro",
-  "judgeModel": "deepseek/deepseek-v4-flash",
+  "model": "openrouter/openai/gpt-oss-120b:nitro",
   "passed": true,
-  "overallScore": 84.2,
-  "llmJudgeScore": 88.5,
-  "deterministicScore": 75.0,
-  "minScore": 72,
-  "deterministicScores": [
-    { "name": "frontmatter-preserved", "score": 100, "passed": true, "severity": "high" },
-    { "name": "title-translated", "score": 100, "passed": true, "severity": "medium" },
-    { "name": "no-wrapper-text", "score": 100, "passed": true, "severity": "high" }
+  "overallScore": 0.87,
+  "scores": [
+    { "name": "frontmatter-preserved", "score": 1, "passed": true, "severity": "high" },
+    { "name": "title-translated",       "score": 1, "passed": true, "severity": "medium" },
+    { "name": "no-wrapper-text",        "score": 1, "passed": true, "severity": "high" },
+    { "name": "judge:readability",       "score": 0.88, "passed": true, "severity": "low" },
+    { "name": "judge:technicalAccuracy", "score": 0.91, "passed": true, "severity": "low" },
+    { "name": "judge:coherence",         "score": 0.85, "passed": true, "severity": "low" },
+    { "name": "judge:translationQuality","score": 0.87, "passed": true, "severity": "low" },
+    { "name": "judge:mdxPreservation",   "score": 0.95, "passed": true, "severity": "low" },
+    { "name": "judge:overall",           "score": 0.89, "passed": true, "severity": "medium",
+      "details": "Strong technical accuracy, natural register…" }
   ],
+  "judgeScores": {
+    "readability": 88, "technicalAccuracy": 91, "coherence": 85,
+    "translationQuality": 87, "mdxPreservation": 95, "judge:overall": 89
+  },
   "durationMs": 4200,
   "inputTokens": 1100,
   "outputTokens": 680,
@@ -109,7 +114,7 @@ JSONL fields per row:
 
 ## Scoring model
 
-Each case produces two score tracks that are combined into an overall score.
+Every scorer produces a named `Score` entry with `score` (0–1), `passed`, and `severity`. All scores are written to the JSONL and surfaced in the per-result breakdown table in the markdown summary. The overall score is the mean across all entries; a composite is also shown but does not hide the details.
 
 ### Deterministic scorers
 
@@ -139,11 +144,9 @@ The judge model scores the translation on eight dimensions (0–100 each):
 | `culturalAdaptation` | Locale-appropriate cultural register |
 | `languagePurity` | No untranslated reader-facing prose leaking through |
 
-The overall score is: `(llmJudgeScore × 0.7) + (deterministicScore × 0.3)`.
+Each judge dimension becomes its own `judge:<dim>` scorer entry (severity `low` — individual dimensions don't block by themselves). A `judge:overall` entry (severity `medium`) carries the mean and the judge's rationale snippet. A case fails if `judge:overall` score < `minScore` (default: 72/100) or any high/medium deterministic scorer fails.
 
-If the judge call fails or returns no parseable scores, the overall score falls back to the deterministic score alone, and the LLM threshold is skipped with a warning.
-
-A case **fails** if `llmJudgeScore < minScore` (default: 72).
+If the judge call fails entirely, a single `judge:overall` failure entry is recorded and the LLM threshold is skipped.
 
 ## Unit tests (offline, no LLM)
 

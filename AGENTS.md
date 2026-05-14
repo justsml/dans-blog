@@ -43,7 +43,8 @@ bun run webp-images      # Convert images to WebP format
 ### Content Structure
 
 Posts live in date-prefixed directories:
-```
+
+```text
 src/content/posts/YYYY-MM-DD--slug-name/
 ├── index.mdx          # Post content with frontmatter
 └── *.webp             # Images (stored with post)
@@ -52,6 +53,7 @@ src/content/posts/YYYY-MM-DD--slug-name/
 **Frontmatter schema**: `src/content.config.ts`
 
 **Critical frontmatter fields**:
+
 - `redirects: string[]` - Old URLs to redirect here (auto-generates Netlify `_redirects` file)
 - `category: string` - Controlled primary category from `src/content.config.ts`
 - `draft: boolean` - Hide from build
@@ -109,6 +111,7 @@ export async function getStaticPaths() {
 At build time, Astro calls `getStaticPaths()` and generates one static HTML file per post.
 
 **Other dynamic routes**:
+
 - `category/[...category].astro` - Category listing pages
 - `pages/[...page].astro` - Paginated post lists
 
@@ -132,10 +135,12 @@ Implementation: `src/scripts/redirectManager.tsx`
 ### Quiz System
 
 **Components**:
+
 - `<QuizUI>` - Container component
 - `<Challenge>` - Individual question with options/explanations
 
 **State persistence**: Answers stored in browser localStorage via `QuestionStore.ts`:
+
 ```javascript
 // Key: post slug (e.g., "quiz-javascript-promises")
 // Value: Array of question states
@@ -166,6 +171,7 @@ Implementation: `src/scripts/redirectManager.tsx`
 
 1. Create post with `category: "Quiz"`
 2. Use `<Challenge>` components:
+
    ```mdx
    <Challenge
      index={0}
@@ -182,6 +188,7 @@ Implementation: `src/scripts/redirectManager.tsx`
 ### Redirect Old URLs
 
 Add to frontmatter:
+
 ```yaml
 redirects:
   - /old-path
@@ -221,7 +228,7 @@ Redirects auto-generate during build.
 
 ## Key Files
 
-```
+```text
 src/
 ├── content/posts/           # MDX blog posts
 ├── pages/[...slug].astro    # Main post routing (ENTRY POINT)
@@ -277,12 +284,10 @@ bun run i18n:eval                   # offline prompt evals (see below)
 `bun run i18n:eval` runs real LLM inferences with cheap models against fixed source fixtures and scores outputs with a lightweight judge. Use it after editing prompts in `prompts.ts` or `judge-utils.ts`, and before merging changes to translation or judge logic.
 
 ```bash
-bun run i18n:eval -- --dry-run         # list cases without spending tokens
-bun run i18n:eval -- --locale es       # one locale
-bun run i18n:eval -- --suite translation
-bun run i18n:eval -- \
-  --translation-model openrouter/deepseek/deepseek-v4-flash \
-  --judge-model openrouter/google/gemini-2.0-flash-001
+bun run i18n:eval -- --dry-run
+bun run i18n:eval -- --locale ja
+bun run i18n:eval -- --models openrouter/qwen/qwen3-32b:nitro,openrouter/deepseek/deepseek-v4-flash
+bun run i18n:eval -- --slug stop-hardcoding-your-prompts --locale es
 ```
 
 Results land in `reports/i18n/evals/` as JSONL + markdown summaries. See `docs/i18n-evals.md` for full docs.
