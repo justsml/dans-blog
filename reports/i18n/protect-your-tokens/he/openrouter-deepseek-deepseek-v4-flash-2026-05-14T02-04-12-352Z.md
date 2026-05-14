@@ -1,0 +1,141 @@
+# Translation Candidate
+- Slug: protect-your-tokens
+- Locale: he
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2018-10-27--protect-your-tokens/he/index.mdx
+- Validation: deferred
+- Runtime seconds: 31.88
+- Input tokens: 4821
+- Output tokens: 5351
+- Thinking tokens: unknown
+- Cached input tokens: 1536
+- Cache write tokens: 0
+- Estimated cost: $0.001962
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: 'הגנה על הטוקנים, מפתחות ה-API והסודות שלך'
+subTitle: ציבורי? פרטי? מה?
+date: '2018-10-27'
+modified: '2024-07-30'
+tags:
+  - tokens
+  - api-keys
+  - secrets
+  - security
+  - nodejs
+  - json-web-tokens
+category: Guides
+subCategory: security
+cover: ../dayne-topkin-78982-unsplash.webp
+cover_mobile: ../w300_dayne-topkin-78982-unsplash.webp
+cover_icon: ../icon_dayne-topkin-78982-unsplash.webp
+---
+## מתי להגן על הטוקנים שלך?
+
+<!--  For the purpose of this article we'll treat the following terms as related: . **They are not interchangable** despite most documentation and [StackOverflow](https://stackoverflow.com/questions/51698672/how-to-secure-my-api-key) answers using them as such. -->
+
+<!-- (Google Maps Credentials, AWS S3 Keys, Geocoding Service, etc.)  -->
+
+> אבטחת מפתחות API וטוקנים היא **קריטית ביותר**!
+
+טעות אחת עלולה להוביל לאובדן שליטה על השרת והנתונים שלך להאקרים!
+
+לא אמור להיות כל כך קשה לקבוע אם טוקן מסוים חייב להיות מוסתר – אפילו על סמך תיעוד רשמי!
+
+לעתים קרובות זה מחמיר בגלל מרק המונחים הקשורים שתפגוש: _טוקנים_, _מפתחות_, _אישורים_, _סודות_, _פרטיים_ ו_ציבוריים_.
+
+בוא נמסגר מחדש את זה בין `סודי` ל`לא-סודי`.
+
+* 🔒 [`מפתחות סודיים`](#-secret-keys) **חייבים** להישמר מוסתרים. באופן כללי הם לעולם לא צריכים לעזוב את השרת הפרטי שלך (או שירות – כמו heroku, netlify או travis-ci).
+* 🌍 [`מפתחות לא-סודיים`](#-non-secret-keys) מתאר מחרוזות שניתן לשתף בחופשיות ולכלול בבקשות דפדפן.
+
+<br />
+
+## 🔒 `מפתחות סודיים`
+
+** ‼️ חשוב:** `מפתחות סודיים` **חייבים** להיות מתעלמים על ידי Git _וגם_ מושמטים מכל קוד דפדפן. [_כיצד להשתמש ב-dotenv_](#-how-to-handle-secrets-safely)
+
+<br />
+
+_איך תדע מתי אתה מתמודד עם `מפתח סודי`?_
+
+<br />
+
+**👍 כלל אצבע:** שרתים שמחזירים `שגיאות CORS` חסרים תמיכת דפדפן. זה מצביע חזק על כך שאתה **חייב** לפרוקסי את השירות, להתייחס אליו כאילו הוא `סודי`.
+
+**👍 כלל אצבע:** שירותים יקרים צריכים (כמעט) תמיד להיות מפרוקסיים או מוסתרים.
+
+**👍 כלל אצבע:** אם אתה מבצע פעולת כתיבה (**העלאת קובץ, הוספת שורה למסד נתונים**), ייתכן שאתה מתמודד עם `מפתחות סודיים`.
+
+<br />
+
+**_שימושים ותכונות:_** `מפתחות` סודיים
+
+- הרשאה לטווח ארוך (אישורי גישה, אסימוני גישה, JSON Web Tokens)
+- הרשאה לטווח קצר (אסימוני OAuth, אחסון הפעלות)
+- גישה לשירותים בתשלום/יקרים (לאימות, גיאוקודינג, אחסון קבצים וכו')
+- החלק הפרטי של זוג ציבורי/פרטי (RECAPTCHA, Stripe, Auth0)
+- אישורי שירות (דואר אלקטרוני/SMTP, שירותי ספריות/LDAP)
+- הצפנת נתונים ובדיקת שלמות
+
+### רשימת משימות: טיפול בטוח במפתחות סודיים
+
+#### סקירה מהירה
+
+בצע את השלבים הבאים כדי **להיפטר ממפתחות סודיים בקוד שלך:**
+
+- [ ] החלף מפתחות מוקשים בקוד במשתני סביבה. לדוגמה: `process.env.API_SECRET`
+- [ ] השתמש בספרייה כמו [`dotenv`](https://github.com/motdotla/dotenv#dotenv) יחד עם קובץ `.env`. הוסף את המפתחות הסודיים שהיו מוקשים בקוד לקובץ `.env`.
+- [ ] הוסף שורה עם `.env` בקובץ `.gitignore` שלך!
+
+> **אל** תיצור קובץ `.env` בשרתים פרוסים. השתמש בכלי ניהול משתני הסביבה שמספק שירות האירוח שלך (למשל [Heroku](https://devcenter.heroku.com/articles/config-vars), Netlify, AWS EC2): לדוגמה **לוח הבקרה או שורת הפקודה.**
+
+<blockquote><h2 style="margin: 0.125em 0; text-align: center;">מאמר קשור: <a href="../securely-using-environment-variables-in-nodejs/">שימוש מאובטח ב-dotenv ב-NodeJS</a></h2></blockquote>
+
+-----------------------------------
+
+## 🌍 `מפתחות לא סודיים`
+
+**👍 כלל אצבע:** בכל פעם שמפתח חייב להישלח לדפדפן בקוד או בתוך השורה (למשל דרך תג `<script src="https://my-api/?apiKey=123-abc-456">`), **זה בהחלט `לא סודי`**. דוגמה נפוצה היא Google Maps.
+
+<br />
+
+**_מקרי שימוש ותכונות:_** מפתחות `לא סודיים`
+
+- גישה לטווח קצר (מזהי הפעלת משתמש, JSON Web Tokens)
+- הגבלת גישת API לפי אפליקציה/מפתח (לאימות, קידוד גיאוגרפי וכו')
+- חלק ציבורי של זוג ציבורי/פרטי (RECAPTCHA, Stripe, Auth0)
+- מזהי אנליטיקס
+
+#### ✅ טיפול במפתחות לא סודיים:
+
+> **זה בטוח לקודד מפתחות לא סודיים (ציבוריים) בקוד!**
+
+הקל על הניהול לטווח ארוך עם קובץ `config.js` משותף לאפליקציה שלך.
+
+**דוגמה:**
+
+```js
+// config.js
+module.exports = {
+  googleMapsKey: '123-abc'
+};
+```
+
+```js
+// load-map.js
+const config = require('./config.js');
+const key = config.googleMapsKey;
+const src = `//maps.googleapis.com/maps/api/js?key=${key}`;
+// ...
+```
+
+-----------------------------------
+
+**הערה:** ישנם _מקרי שימוש_ נוספים למשתני סביבה. כמה שלא כיסיתי: CI/CD/בדיקות, דגלי תכונה, ותצורת זמן ריצה עבור סביבות מיוחדות!
+````
