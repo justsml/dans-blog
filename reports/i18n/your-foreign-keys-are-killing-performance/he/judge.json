@@ -1,0 +1,46 @@
+{
+  "selectedCommit": "e615b82a41f2b756345502b9b6ae1d29b1107241",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The selected candidate (e615b82a41f2b756345502b9b6ae1d29b1107241) is technically accurate and preserves MDX structure perfectly. The previous judge report mentioned a suggestion for 'מתקשקשים', but looking at the actual file content for this commit, it already uses 'עוברים סקייל' (scale) and 'היא לא רמאות' (is not cheating), meaning the high-priority fixes suggested in the previous pass are already present in the file. The translation maintains Dan's direct, conversational tone while handling technical database terminology correctly.",
+  "slug": "your-foreign-keys-are-killing-performance",
+  "locale": "he",
+  "candidateCommits": [
+    "e615b82a41f2b756345502b9b6ae1d29b1107241",
+    "71c959674ef71d43a6f5e5876ca078f771a61c7f"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "מפתחות זרים לא מתקשקשים",
+      "replacement": "מפתחות זרים לא עוברים סקייל",
+      "reason": "The term 'מתקשקשים' is a literal/slang mistranslation of 'scale'. In a database context, 'עוברים סקייל' or 'מתרחבים' is appropriate.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "האפשרות השלישית הזו אינה רמאות",
+      "replacement": "האפשרות השלישית הזו היא לא רמאות",
+      "reason": "While 'אינה' is grammatically correct, Dan's style is direct and conversational; 'היא לא' fits the tone better.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug your-foreign-keys-are-killing-performance --locale he --skip-global",
+    "output": ""
+  }
+}
