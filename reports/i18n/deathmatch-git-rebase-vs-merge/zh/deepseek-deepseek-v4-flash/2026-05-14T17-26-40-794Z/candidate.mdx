@@ -1,0 +1,134 @@
+---
+social_image: ../desktop-social.webp
+title: 对决：Git Rebase vs. Merge
+subTitle: 一个永恒的问题……
+date: '2023-08-27'
+modified: '2024-07-28'
+tags:
+  - engineering
+  - git
+  - rebase
+  - merge
+category: Thoughts
+subCategory: Git
+cover: ../casper-johansson-GBHnQXbY2Ts-unsplash-cropped.webp
+cover_mobile: ../w300_casper-johansson-GBHnQXbY2Ts-unsplash-cropped.webp
+cover_icon: ../icon_casper-johansson-GBHnQXbY2Ts-unsplash-cropped.webp
+---
+## 生死对决：Git Rebase vs. (Squash) Merge!
+
+我该用 Rebase 还是 Squash Merge？
+
+- 这是个人偏好吗？
+  - _答案：当涉及一个或多个团队时，就不是！**任一选择都会影响另一方的可用性**！_
+
+### 为什么这个话题会引发宗教般的狂热？
+
+一些工程师将 git（及终端）的知识视为其相对技能水平的信号。任何与我们的身份/自我挂钩的实践都难以客观分析，更不用说改变了。
+
+其他因素可能包括熟悉度偏差和幸存者偏差，这进一步混淆了我们的评估和假设。
+
+<!-- Misplaced belief in the inherent virtue of certain OSS projects' processes. (The Linux Kernel uses rebasing, and if you don't, **_ArE yOu EvEn A rEaL eNgInEeR?!_**) -->
+
+### 关键问题：git 提交的目的是什么？
+
+1.  你是否尽早且频繁地提交？采用“检查点”或备份的心态？
+    - 记录所有内容，甚至包括错误的开始和实验？（例如 `git commit -am "Updated deps"` && `git push`，定期重复）
+    - 也许对你来说，提交信息不如代码重要？
+1.  或者，你的提交是精心策划、雕琢的艺术品？
+    - 也许每个提交都是一个自包含的、原子性的工作单元？（例如 `git add package.json && git commit -m "Updated deps"`）
+    - 或者，你只是无法忍受“混乱”的提交日志？
+    - 你的 PR 审查是否经常涉及逐提交审查？
+
+| 💡 还有哪些其他心智模型定义了你如何看待提交？请告诉我 @justsml！
+
+你是否以一种**为你、你的团队和你的组织提供最大价值**的方式思考 git？
+
+<!-- What makes sense for an Open Source project like Postgres, or the Linux Kernel, may not be the best choice for you or your team. -->
+
+鉴于围绕提交策略存在截然不同的心态，难怪关于使用 git 的“正确”方式会有如此多的困惑。
+
+### 场景：创建一个修订后的发布标签
+
+让我们比较一下在 `main` 上排除一些最近提交后创建标签发布的过程。
+
+![从 main 分支创建标签发布，包含两个功能分支](../git-branching-with-main-simplified.svg)
+
+### Rebase 方式
+
+心智模型：“我想创建现有历史的一个替代版本。（例如，我在 16 次合并前犯了一个错误，可能需要细粒度控制来纠正它。此外，可能会陷入看似无休止的冲突和 `--continue` 循环。）”
+
+1.  获取最新代码：`git checkout main` && `git pull`
+2.  创建新分支：`git checkout -b release/hot-newness-and-stuff`
+3.  启动交互式变基，并包含你想要回溯的 git 引用：`git rebase -i HEAD~6`（注意：`HEAD~6` 是 `6 次提交前` 的 git 引用简写）
+4.  通过将目标提交的前缀改为 `drop` 来丢弃它们。保存并关闭编辑器。
+5.  解决合并冲突，`git add .` && `git rebase --continue`（不要 `git commit`）。
+6.  重复上一步直到完成。
+7.  使用当前流程打标签/推送。例如 `git tag -a v1.2.3 -m 'Release v1.2.3'` && `git push --tags`
+
+#### 优点
+
+- 🔌 绝对的力量。你可以修改历史。
+  <!-- - 🎭 练习你的工程表演技巧。 -->
+
+#### 缺点
+
+- 😰 绝对的力量。你可以修改历史。（好吧，既是优点也是缺点……）
+- 🔂 你可能会陷入看似无休止的冲突与 `--continue` 循环。（有时即使有 `git rerere` 也逃不掉）
+- 🙀 破坏关键协作功能：PR 评论丢失或成为孤儿。很不礼貌。
+- 🖇️ 永久链接可能不再永久。
+
+### （压缩）合并方式
+
+心智模型：“我想要一个自定义发布，从某个点开始，包含任何需要的分支。”
+
+1.  获取最新代码：`git checkout main` && `git pull`
+2.  创建新分支：`git checkout -b release/hot-newness-and-stuff`
+3.  合并所需的分支和/或提交：`git merge --no-ff feature/hot-newness bug/fix-123`（尽可能使用 `--no-ff` 标志）
+4.  解决任何合并冲突（如果出现的话）。
+5.  使用当前流程打标签/推送。例如 `git tag -a v1.2.3 -m 'Release v1.2.3'` && `git push --tags`
+
+#### 优点
+
+- 💪 流程更少，冲突总体更少，并且使用已有的 git 命令知识。
+- 🚀 让你在更高的 PR/分支层面思考，忽略提交级别的粒度（除非需要）。
+- 🦺 非破坏性。你可以随时回溯和/或创建新分支。
+- 🎥 保留现有提交及消息整体，减少 'blame' 噪声。
+
+#### 缺点
+
+- 🔏 更难修改提交消息。
+- 🤐 更难隐藏你的工作。
+
+### 结论
+
+归根结底，**更简单、风险更低的流程应该胜出。**
+
+<!-- **压缩合并** 是这里的明显赢家。它 **更简单** 且 **更不容易出错**。它还 **保留现有提交历史完整**。这对 **协作** 和 **代码审查** 来说是一个 **巨大的胜利**。 -->
+
+<!-- 包含一个包含两个功能分支的变基流程示意图 -->
+
+尽管 _变基派_ 确实有办法解决（或避免）他们的问题，但 **事实是：你最终需要成为 git 功夫的黑带。**（例如，即使一个简单的 `git push` 也可能面临额外的复杂性：是 `git push --force` 还是 `git push --force-with-lease`？何必自找麻烦？）
+
+还有另一个原因使得 **变基** 来创建修订历史 **始终处于劣势**，相比于 **`git merge ...`**。`git merge` 让 `git` CLI 应用高级算法，通过分析每个分支的 HEAD 来避免冲突。
+
+这之所以更智能，是因为每次合并只关心每个目标分支的最新状态。而 **变基必须按指定顺序重放（或丢弃）提交历史**。这 **限制了 `git` 优化合并的能力**，因为它 **每次只比较 2 个提交**。
+
+最终，**变基意味着你偶尔会发现自己重新经历无关的旧提交和冲突**——即使你知道它们早已被移除或解决。
+
+### 总结
+
+- 💃 答案：**将你的 PR 压缩合并（SQUASH MERGE）到 `main` 上。**
+  - 你的分支历史在需要时仍可访问，而 `main` 会保持相对“干净”。
+- _🔤 始终提交（Always Be Committing）！_
+  - 在超过 95% 的企业项目中，“备份心态”优于“精雕艺术心态”。随着时间的推移，你的提交信息的意义会逐渐褪色，其速度远快于代码本身——代码的逻辑和测试将保持其重要性。
+
+<!--
+#### 额外技巧：发布
+
+是否曾需要从某个分支中获取单个文件或几个文件夹？且不携带提交历史？
+
+- 你可以使用特殊的 `--` 分隔符与 `git checkout`，在保持当前分支的同时复制指定文件：
+- `git checkout feature/half-a-feature **--** <folder or file path>`
+- 请确保先提交你想保留的任何更改，因为这会覆盖所有本地更改。
+-->
