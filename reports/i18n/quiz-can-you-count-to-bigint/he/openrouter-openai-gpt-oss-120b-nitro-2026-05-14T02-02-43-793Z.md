@@ -1,0 +1,449 @@
+# Translation Candidate
+- Slug: quiz-can-you-count-to-bigint
+- Locale: he
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2024-11-06--quiz-can-you-count-to-bigint/he/index.mdx
+- Validation: deferred
+- Runtime seconds: 25.42
+- Input tokens: 14572
+- Output tokens: 7875
+- Thinking tokens: unknown
+- Cached input tokens: 4864
+- Cache write tokens: 0
+- Estimated cost: $0.003097
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+unlisted: false
+title: 'חידון: האם אפשר לספור ב‑JavaScript?'
+subTitle: הכירו את `parseInt` מ‑`parseFloat`?
+label: Numbers
+date: '2024-10-31'
+modified: '2024-11-09'
+social_image: ../desktop-social.webp
+category: Quiz
+subCategory: JavaScript
+tags:
+  - quiz
+  - data-structures
+  - algorithms
+cover: ../victor-freitas-hOuJYX2K5DA-unsplash-square.webp
+cover_full_width: ../victor-freitas-hOuJYX2K5DA-unsplash-wide.webp
+cover_mobile: ../victor-freitas-hOuJYX2K5DA-unsplash-square.webp
+cover_icon: ../victor-freitas-hOuJYX2K5DA-unsplash-square.webp
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="חימום"
+  title="פירוש עם `parseInt`"
+  options={[
+    {text: '123456', isAnswer: true},
+    {text: '123'},
+    {text: '12345600'},
+    {text: '456.00'},
+    {text: 'Error'},
+    {text: 'NaN'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```tsx
+        parseInt(" 123456.00")
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    הפונקציה `parseInt` מתעלמת מרווחים ומפרשת את רצף הספרות הראשוני כמספר שלם. כאן היא נעצרת בנקודה העשרונית, ולכן מוחזרת רק `123456`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="פירוש"
+  title="טיפול בפסיקים"
+  options={[
+    {text: '123', isAnswer: true},
+    {text: '12345600'},
+    {text: '123456.00'},
+    {text: '456.00'},
+    {text: 'שגיאה'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```tsx
+        parseInt("123,456.00")
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    באופן כללי, `parseInt` מפסיק לפרש כאשר הוא נתקל בתו שאינו מספרי. כאן הוא מפסיק בפסיק, ולכן מוחזר רק `123`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="מתמטיקה"
+  title="דיוק עם נקודות צפות"
+  options={[
+    {text: '0.1 + 0.2 === 0.3'},
+    {text: 'false', isAnswer: true},
+    {text: 'true'},
+    {text: 'NaN'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```tsx
+        0.1 + 0.2 === 0.3
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    בגלל שגיאות דיוק של נקודות צפות, `0.1 + 0.2` אינו שווה בדיוק ל-`0.3`. עקב האופן שבו מספרים צפים מאוחסנים בזיכרון, התוצאה היא `0.30000000000000004`. תקן IEEE 754 שמטפל בחישובים צפים הוא האשם – הוא לא יכול לייצג כמה מספרים במדויק. זהו בעיה נפוצה בכל שפות התכנות. בסופו של דבר תיתקלו במספר עשרוני שחוזר אינסופית, ובכל שפה – המחשב פשוט צריך לעצור את הרדיפה אחרי ספרות אינסופיות.
+
+    חלק מהשפות כמו Python ו‑Java מציעות `Decimal` או `BigDecimal` כדי להתמודד עם זה, אך ב‑JavaScript זה לא מובנה. אפשר להשתמש בספריות כמו `big.js` או `decimal.js` כדי לטפל במקרים כאלה.
+
+    (הערה: חלק מהשפות תוכננו להתמודד עם שברים, מספרים מדומים ועוד ברמה לוגית גבוהה יותר, תוך שמירה על ביטויים מילוליים. אך הן עדיין חייבות להתמודד עם אותן בעיות דיוק של נקודות צפות ברמת החומרה.)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="מספרים מתפוצצים"
+  title="טיפול באינסוף"
+  options={[
+    {text: 'Infinity', isAnswer: true},
+    {text: 'NaN'},
+    {text: 'Error'},
+    {text: 'undefined'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```tsx
+        Number.MAX_VALUE * 2
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    מאחר ש-`Number.MAX_VALUE` הוא המספר הרגיל הגדול ביותר **ניתן לייצוג** בג'אווהסקריפט, חציית המגבלה שלו תגרום להצפה מהירה – בעצם תקבל תוצאות חסרות משמעות. הכפלתו ב-`2` מניבה `Infinity`.
+
+    *אתה יודע, ג'אווהסקריפט לפעמים ככה.*
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="עיצוב"
+  title="המרת מחרוזת עם `.toFixed()`"
+  options={[
+    {text: 'TypeError'},
+    {text: 'SyntaxError'},
+    {text: '"5"'},
+    {text: '5'},
+    {text: '"5.00"', isAnswer: true},
+    {text: '5.0'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה זה עלול לעשות?
+    ```tsx
+        5..toFixed(2)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `.toFixed(2)` מחזיר ייצוג מחרוזת של `5` עם שני מקומות עשרוניים, ולכן התוצאה היא `"5.00"`.
+
+    הנקודה הכפולה (`5..toFixed(2)`) היא 'טריק' לגישה למודל האובייקט של מספרים מילוליים.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="השוואת סוגים"
+  title="השוואת שוויון בין `parseInt` ל-`parseFloat`"
+  options={[
+    {text: 'true', isAnswer: true},
+    {text: 'false'},
+    {text: 'NaN'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```jsx
+        parseInt("42") === parseFloat("42")
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    ב‑JavaScript, גם `parseInt` וגם `parseFloat` יפרשו את המחרוזת `"42"` כמספר `42`. לכן, ההשוואה `parseInt("42") === parseFloat("42")` מחזירה `true`. בעוד `parseInt` מפסיק לנתח כאשר הוא נתקל בתו שאינו ספרה, `parseFloat` ממשיך עד שהוא נתקל בתו שאינו חלק ממספר נקודה צפה. אבל מכיוון שאין בנקודה עשרונית או תווים לא‑ספרתיים ב‑`"42"`, שני הפונקציות מחזירות את אותה הערך.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="שוויון"
+  title="השוואת שוויון עם BigInt"
+  options={[
+    {text: 'TypeError'},
+    {text: 'true'},
+    {text: 'false', isAnswer: true},
+    {text: 'NaN'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```jsx
+        BigInt("42") === parseInt("42")
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `BigInt` הוא סוג שונה מ-`number`, ולכן `parseInt("42")` (מספר רגיל) אינו שווה באופן קפדני ל-`BigInt("42")`. כדי להשוות, צריך להמיר את שני הערכים לאותו סוג: `BigInt(parseInt("42")) === BigInt("42")`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="מבוסס"
+  title="פענוח הקסדצימלי"
+  options={[
+    {text: 'אמת', isAnswer: true},
+    {text: 'שקר'},
+    {text: 'NaN'},
+    {text: 'חייב להיות באותיות גדולות: 2A'},
+    {text: 'שגיאה'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה תהיה התוצאה?
+    ```jsx
+        parseInt("0x2A") === parseInt("2a", 16)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    כל מחרוזת קלט שמתחילה ב-`0x` מתייחסת באופן אוטומטי כהקסדצימלית (בסיס `16`).
+    לכן זה שקול להעביר בסיס 16. כך, `parseInt("0x2A")` זהה ל-`parseInt("2a", 16)`. (הקידוד אינו תלוי ברישיות.)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="מבוסס"
+  title="פירוש עם בסיס"
+  options={[
+    {text: '255', isAnswer: true},
+    {text: '0'},
+    {text: '16'},
+    {text: '0.16'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה העניין כאן?
+    ```jsx
+        parseInt('0xFF', 16)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `parseInt` עם בסיס הקסדצימלי (`16`) ממיר את `"FF"` ל-`255` בבסיס עשרוני. ייתכן שראית זאת בקודי צבע CSS RGB/Hex.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="Number[]"
+  title="שימוש ב‑`.map(parseInt)`"
+  options={[
+    {text: '[24, NaN, NaN]', isAnswer: true},
+    {text: '[24, NaN, 42]'},
+    {text: '[24, 42]'},
+    {text: 'NaN'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```jsx
+        [24, 'One', 42].map(parseInt)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    הפרמטר השני של `parseInt` (הבסיס) מתיישב עם הפרמטר `index` של שיטות המערך. זה מוביל לתוצאות בלתי צפויות, שכן `parseInt("One", 1)` מחזיר `NaN` בגלל הקלט הלא תקין.
+
+    האלמנט הראשון, `24`, מומר ל‑`24` בבסיס 0 (זיהוי אוטומטי), ולכן נשאר `24`. האלמנט השני, `'One'`, מומר ל‑`NaN` בבסיס 1. האלמנט השלישי, `42`, מומר בבסיס 2. בבסיס 2, `'42'` הוא `NaN`, ולכן התוצאה היא `[24, NaN, NaN]`.
+
+    זהו פיתון נפוץ עם `parseInt` ו‑`map`. אם ברצונך להמיר מערך של מחרוזות למספרים, השיטה המובנית הבטוחה היחידה היא `.map(Number)` או הוספת קריאה מקיפה `.map(x => parseInt(x, 10))`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="Number[]"
+  title="שימוש ב-`.map(Number)`"
+  options={[
+    {text: '[24, NaN, 34]', isAnswer: true},
+    {text: '[24, NaN, 42]'},
+    {text: '[24, 1, 42]'},
+    {text: '[24, 42]'},
+    {text: 'NaN'},
+    {text: 'TypeError'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```jsx
+        [24, 'Twenty1', 0o42].map(Number)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `Number` ממיר ערכים לסוג מספר בצורה מחמירה יותר מ-`parseInt`. כאן, `'Twenty1'` הופך ל-`NaN`, בעוד ש-`0o42` מזוהה כספרה אוקטלית ומומר ל-`34`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="פירוש"
+  title="טיפול בערכים null"
+  options={[
+    {text: '0 NaN'},
+    {text: '0 0'},
+    {text: 'NaN NaN'},
+    {text: 'NaN 0', isAnswer: true},
+    {text: 'null null'},
+    {text: 'TypeError'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה יהיה התוצאה של הקוד הזה?
+    ```jsx
+        console.log(parseInt(null), Number(null))
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `parseInt` מכפה את הקלט למחרוזת, ולכן `null` הופך ל-`"null"`. מכיוון של‑`"null"` אין תווים תקינים בבסיס‑10 (מספרים רגילים) הוא מחזיר `NaN`.
+
+    `Number(null)` מחזיר `0`. כי JavaScript אוהב לשמור אותך על הקצה.
+    למה? אולי אוכל להעמיק אם יש עניין.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="פירוש"
+  title="פירוש בבסיס"
+  options={[
+    {text: 'NaN'},
+    {text: 'null'},
+    {text: 'undefined'},
+    {text: '36'},
+    {text: '1112745', isAnswer: true},
+    {text: '01001001'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה יהיה התוצאה של הכישוף הזה?
+    ```jsx
+        parseInt(null, 36)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    מאחר ש-`parseInt` תמיד ממיר את הקלט למחרוזת, `null` הופך למחרוזת `"null"`.
+
+    בבסיס 36 (hexatrigesimal, אם אתם עוקבים), המחרוזת `"null"` מייצגת את המספר `1112745`.
+
+    הערכים הרצופים של `nulk`, `null` ו-`nulm` הם בהתאמה `1112744`, `1112745` ו-`1112746` בבסיס 36.
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+
+<section className="scroll-x">
+## טבלת השוואה
+
+| Function | `parseInt` | `parseFloat` | `Number` | `BigInt` |
+| --- | --- | --- | --- | --- |
+| מתעלם מרווחים | ✅ | ✅ | ✅ | ✅ |
+| `.map(FN)`  | ❌ | ☑️ | ✅ | ✅ |
+| תומך בארגומנט בסיס | ✅ | ❌ | ❌ | ❌ |
+| ליטרלים בינאריים/אוקטליים/הקסדצימליים | ✅ | ❌ | ✅ | ✅ |
+| תווים לא חוקיים `42 oh no` | `42` | `42`  | `NaN` | `SyntaxError` |
+</section>
+
+<h2>איך הלך לך? 🧐</h2>
+
+{/* <h4>Are you ok?</h4> */}
+
+<p class="inset">מחפש מנוחה אחרי כל הבינארי הזה?<br />פט, זכור: הפסק *אחרי* הכישורים! <br /><br />הקלק על [החדר כושר שלי](../challenges/) כדי לשבור עוד כמה אתגרים! 💪</p>
+````

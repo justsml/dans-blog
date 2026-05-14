@@ -1,0 +1,47 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Using `.map(parseInt)`",
+  "translatedTitle": "שימוש ב‑`.map(parseInt)`",
+  "translation": {
+    "title": "שימוש ב‑`.map(parseInt)`",
+    "group": "Number[]",
+    "options": [
+      {
+        "text": "[24, NaN, NaN]"
+      },
+      {
+        "text": "[24, NaN, 42]"
+      },
+      {
+        "text": "[24, 42]"
+      },
+      {
+        "text": "NaN"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [],
+    "hintsProse": [],
+    "explanationProse": [
+      "הפרמטר השני של `parseInt` (הבסיס) מתיישב עם הפרמטר `index` של שיטות המערך. זה מוביל לתוצאות בלתי צפויות, שכן `parseInt(\"One\", 1)` מחזיר `NaN` בגלל הקלט הלא תקין.\n\n    האלמנט הראשון, `24`, מומר ל‑`24` בבסיס 0 (זיהוי אוטומטי), ולכן נשאר `24`. האלמנט השני, `'One'`, מומר ל‑`NaN` בבסיס 1. האלמנט השלישי, `42`, מומר בבסיס 2. בבסיס 2, `'42'` הוא `NaN`, ולכן התוצאה היא `[24, NaN, NaN]`.\n\n    זהו פיתון נפוץ עם `parseInt` ו‑`map`. אם ברצונך להמיר מערך של מחרוזות למספרים, השיטה המובנית הבטוחה היחידה היא `.map(Number)` או הוספת קריאה מקיפה `.map(x => parseInt(x, 10))`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"שימוש ב‑`.map(parseInt)`\",\n  \"group\": \"Number[]\",\n  \"options\": [\n    {\n      \"text\": \"[24, NaN, NaN]\"\n    },\n    {\n      \"text\": \"[24, NaN, 42]\"\n    },\n    {\n      \"text\": \"[24, 42]\"\n    },\n    {\n      \"text\": \"NaN\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [],\n  \"questionCode\": [\n    {\n      \"language\": \"jsx\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"הפרמטר השני של `parseInt` (הבסיס) מתיישב עם הפרמטר `index` של שיטות המערך. זה מוביל לתוצאות בלתי צפויות, שכן `parseInt(\\\"One\\\", 1)` מחזיר `NaN` בגלל הקלט הלא תקין.\\n\\n    האלמנט הראשון, `24`, מומר ל‑`24` בבסיס 0 (זיהוי אוטומטי), ולכן נשאר `24`. האלמנט השני, `'One'`, מומר ל‑`NaN` בבסיס 1. האלמנט השלישי, `42`, מומר בבסיס 2. בבסיס 2, `'42'` הוא `NaN`, ולכן התוצאה היא `[24, NaN, NaN]`.\\n\\n    זהו פיתון נפוץ עם `parseInt` ו‑`map`. אם ברצונך להמיר מערך של מחרוזות למספרים, השיטה המובנית הבטוחה היחידה היא `.map(Number)` או הוספת קריאה מקיפה `.map(x => parseInt(x, 10))`.\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 1026,
+    "outputTokens": 1071,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 3105,
+    "providerCostUsd": 0.0007581,
+    "providerUpstreamCostUsd": 0.0007581,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000040014,
+    "outputUsd": 0.00019277999999999998,
+    "totalUsd": 0.00023279399999999998,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
