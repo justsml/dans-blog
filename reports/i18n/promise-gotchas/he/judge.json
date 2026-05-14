@@ -1,0 +1,44 @@
+{
+  "selectedCommit": "d0761b8ae4753b01948e7754316dda15e0d48f71",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 95,
+    "technicalAccuracy": 100,
+    "coherence": 95,
+    "relevance": 100,
+    "translationQuality": 90,
+    "mdxPreservation": 100
+  },
+  "suggestions": [
+    {
+      "priority": "medium",
+      "match": "יקריאו console.log עם 42?",
+      "replacement": "ידפיסו 42 ל-console.log?",
+      "reason": "'יקריאו' (will read out loud) is incorrect for console output; 'ידפיסו' (will print) is the standard technical term."
+    }
+  ],
+  "rationale": "Candidate d0761b8ae4753b01948e7754316dda15e0d48f71 is superior because it translates the comments in the final code block, whereas the other candidate left them in English. It also uses proper Hebrew typography (maqaf instead of hyphen in some places) and maintains the technical structure perfectly. Both candidates correctly handled the asset path requirements.",
+  "slug": "promise-gotchas",
+  "locale": "he",
+  "candidateCommits": [
+    "1e2fa8b9f8fa3b9ff18af026568a49003faf3c67",
+    "d0761b8ae4753b01948e7754316dda15e0d48f71"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "medium",
+      "match": "יקריאו console.log עם 42?",
+      "replacement": "ידפיסו 42 ל-console.log?",
+      "reason": "'יקריאו' (will read out loud) is incorrect for console output; 'ידפיסו' (will print) is the standard technical term.",
+      "pass": 1,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug promise-gotchas --locale he --skip-global",
+    "output": ""
+  }
+}
