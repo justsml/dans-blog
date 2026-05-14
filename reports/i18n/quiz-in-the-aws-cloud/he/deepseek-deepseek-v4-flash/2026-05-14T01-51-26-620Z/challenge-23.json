@@ -1,0 +1,53 @@
+{
+  "index": 22,
+  "attempt": 1,
+  "originalTitle": "Aurora Failover Mechanism",
+  "translatedTitle": "מנגנון Failover של Aurora",
+  "translation": {
+    "title": "מנגנון Failover של Aurora",
+    "group": "Aurora - זמינות גבוהה",
+    "options": [
+      {
+        "text": "נדרשת התערבות ידנית"
+      },
+      {
+        "text": "דורש תצורה מחדש של האפליקציה"
+      },
+      {
+        "text": "תמיד עובר ל-replica הוותיק ביותר"
+      },
+      {
+        "text": "קידום אוטומטי על פי דרגת עדיפות failover"
+      }
+    ],
+    "objectives": [
+      "הבנת תהליך ה-failover של Aurora",
+      "זיהוי תצורות זמינות גבוהה",
+      "יישום שיטות עבודה מומלצות לשחזור מאסון"
+    ],
+    "questionProse": [
+      "באשכול Aurora עם מספר replicas לקריאה, מה קורה במהלך failover אוטומטי כאשר המופע הראשי נכשל?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "תהליך Failover של Aurora:\n      1. מזהה כשל במופע הראשי\n      2. בוחר Aurora Replica על פי דרגת עדיפות failover בעיקר\n      3. משתמש במאפייני המופע כקובעי שוויון כאשר הדרגות תואמות\n      4. מעדכן את נקודת הקצה של האשכול באופן אוטומטי\n\n      שיטות עבודה מומלצות:\n      - שמירה על מספר replicas על פני אזורי זמינות (AZs)\n      - הגדרת דרגות קידום (promotion tiers) בכוונה\n      - שימוש בנקודת קצה של האשכול באפליקציות\n      - בדיקת תרחישי failover באופן קבוע"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"מנגנון Failover של Aurora\",\n  \"group\": \"Aurora - זמינות גבוהה\",\n  \"options\": [\n    {\"text\": \"נדרשת התערבות ידנית\"},\n    {\"text\": \"דורש תצורה מחדש של האפליקציה\"},\n    {\"text\": \"תמיד עובר ל-replica הוותיק ביותר\"},\n    {\"text\": \"קידום אוטומטי על פי דרגת עדיפות failover\"}\n  ],\n  \"objectives\": [\n    \"הבנת תהליך ה-failover של Aurora\",\n    \"זיהוי תצורות זמינות גבוהה\",\n    \"יישום שיטות עבודה מומלצות לשחזור מאסון\"\n  ],\n  \"questionProse\": [\n    \"באשכול Aurora עם מספר replicas לקריאה, מה קורה במהלך failover אוטומטי כאשר המופע הראשי נכשל?\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"תהליך Failover של Aurora:\\n      1. מזהה כשל במופע הראשי\\n      2. בוחר Aurora Replica על פי דרגת עדיפות failover בעיקר\\n      3. משתמש במאפייני המופע כקובעי שוויון כאשר הדרגות תואמות\\n      4. מעדכן את נקודת הקצה של האשכול באופן אוטומטי\\n\\n      שיטות עבודה מומלצות:\\n      - שמירה על מספר replicas על פני אזורי זמינות (AZs)\\n      - הגדרת דרגות קידום (promotion tiers) בכוונה\\n      - שימוש בנקודת קצה של האשכול באפליקציות\\n      - בדיקת תרחישי failover באופן קבוע\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 869,
+    "outputTokens": 2433,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 16123,
+    "providerCostUsd": 0.001147,
+    "providerUpstreamCostUsd": 0.001147,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00012166000000000001,
+    "outputUsd": 0.0006812400000000001,
+    "totalUsd": 0.0008029000000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

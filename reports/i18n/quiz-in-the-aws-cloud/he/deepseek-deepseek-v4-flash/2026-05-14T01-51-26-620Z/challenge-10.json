@@ -1,0 +1,64 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Batch Operations",
+  "translatedTitle": "פעולות אצווה",
+  "translation": {
+    "title": "פעולות אצווה",
+    "group": "אצוות, חלק 2!",
+    "options": [
+      {
+        "text": "1"
+      },
+      {
+        "text": "10"
+      },
+      {
+        "text": "25",
+        "hint": "ניחוש טוב..."
+      },
+      {
+        "text": "50"
+      },
+      {
+        "text": "100",
+        "hint": "חושב על מגבלת GetItem?"
+      },
+      {
+        "text": "100 בזמן סטרימינג"
+      },
+      {
+        "text": "אף אחת מהאפשרויות",
+        "hint": "זה קצת מסובך..."
+      }
+    ],
+    "objectives": [
+      "הבנת מגבלות פעולות אצווה של DynamoDB",
+      "הבחנה בין פעולות בודדות לפעולות אצווה"
+    ],
+    "questionProse": [
+      "מהו המספר המקסימלי של מסמכים ש-DynamoDB יכול לעדכן (`UPDATE`) באצווה?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "לקוחות DynamoDB הם למעשה עטיפות ל-HTTP API שלה. הפעולה `BatchWriteItem` יכולה `PUT` או `DELETE` עד **25** מסמכים לבקשת HTTP, אך היא לא יכולה `UPDATE` מספר מסמכים.\n\n    בעוד ש-DynamoDB יכול `INSERT` עד **25** מסמכים לבקשת HTTP, הוא יכול `UPDATE` רק **1** מסמך לבקשה באמצעות הפעולה `UpdateItem`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"פעולות אצווה\",\n  \"group\": \"אצוות, חלק 2!\",\n  \"options\": [\n    {\n      \"text\": \"1\"\n    },\n    {\n      \"text\": \"10\"\n    },\n    {\n      \"text\": \"25\",\n      \"hint\": \"ניחוש טוב...\"\n    },\n    {\n      \"text\": \"50\"\n    },\n    {\n      \"text\": \"100\",\n      \"hint\": \"חושב על מגבלת GetItem?\"\n    },\n    {\n      \"text\": \"100 בזמן סטרימינג\"\n    },\n    {\n      \"text\": \"אף אחת מהאפשרויות\",\n      \"hint\": \"זה קצת מסובך...\"\n    }\n  ],\n  \"objectives\": [\n    \"הבנת מגבלות פעולות אצווה של DynamoDB\",\n    \"הבחנה בין פעולות בודדות לפעולות אצווה\"\n  ],\n  \"questionProse\": [\n    \"מהו המספר המקסימלי של מסמכים ש-DynamoDB יכול לעדכן (`UPDATE`) באצווה?\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"לקוחות DynamoDB הם למעשה עטיפות ל-HTTP API שלה. הפעולה `BatchWriteItem` יכולה `PUT` או `DELETE` עד **25** מסמכים לבקשת HTTP, אך היא לא יכולה `UPDATE` מספר מסמכים.\\n\\n    בעוד ש-DynamoDB יכול `INSERT` עד **25** מסמכים לבקשת HTTP, הוא יכול `UPDATE` רק **1** מסמך לבקשה באמצעות הפעולה `UpdateItem`.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 905,
+    "outputTokens": 2041,
+    "cacheReadTokens": 384,
+    "cacheWriteTokens": 0,
+    "durationMs": 13512,
+    "providerCostUsd": 0.00093596,
+    "providerUpstreamCostUsd": 0.00093596,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.0000740152,
+    "outputUsd": 0.00057148,
+    "totalUsd": 0.0006454952,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

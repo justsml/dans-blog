@@ -1,0 +1,64 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "DynamoDB",
+  "translatedTitle": "DynamoDB",
+  "translation": {
+    "title": "DynamoDB",
+    "group": "ללא סכמה",
+    "options": [
+      {
+        "text": "PutItem",
+        "hint": "יוצר פריט חדש, או מחליף פריט ישן בפריט חדש."
+      },
+      {
+        "text": "BatchUpdateItem",
+        "hint": "לא קיים."
+      },
+      {
+        "text": "BatchWriteItem",
+        "hint": "מוסיף (מכניס) או מוחק מספר פריטים בקריאה אחת."
+      },
+      {
+        "text": "UpdateItem"
+      },
+      {
+        "text": "BatchUpsertItem",
+        "hint": "ב-DynamoDB?"
+      },
+      {
+        "text": "TransactWriteItems",
+        "hint": "משלב מספר פעולות PutItem, UpdateItem, DeleteItem ו-ConditionCheck לקריאה אחת."
+      }
+    ],
+    "objectives": [
+      "השוואת יכולות פעולות אצווה של DynamoDB",
+      "אופטימיזציה של פעולות עדכון ב-DynamoDB",
+      "הערכת שיקולי קנה מידה לעדכונים"
+    ],
+    "questionProse": [
+      "איזה API של DynamoDB מעדכן תכונות על פריט קיים אחד?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "המפתח כאן הוא <b>עדכונים</b>, לא הכנסות או PUTs. אם אתה מבצע הכנסות, אתה יכול להשתמש ב-`BatchWriteItem` או `TransactWriteItems`.\n\n    בעוד ש-`BatchWriteItem` יכול לטפל במספר פעולות, הוא מוגבל ל-PUTs ו-DELETES. `TransactWriteItems` הוא חזק יותר, אבל הוא קצת פטיש כבד לעדכונים פשוטים.\n    לעדכונים פשוטים, `UpdateItem` הוא הבחירה הטובה ביותר. הוא מאפשר לך לעדכן (UPDATE), או לשנות תכונה אחת או יותר בפריט קיים.\n\n    פעולת `UpdateItem` משנה פריט אחד לכל בקשה. עבור מילוי חוזר גדול או עדכונים בכמות גדולה, אתה בדרך כלל מתזמן קריאות `UpdateItem` רבות או משתמש בתהליך עבודה רחב יותר כמו ביצוע אצווה של PartiQL, Step Functions, Glue, EMR, או תהליך עובד מותאם אישית.\n\n    פעולת `UpdateItem`:\n    - מעדכנת תכונות של פריט קיים.\n    - מוסיפה תכונות חדשות לפריט קיים.\n    - מסירה תכונות מפריט קיים.\n    - מבצעת את העדכון באופן מותנה אם הפריט קיים או עומד בתנאים מסוימים.\n\n    [DynamoDB UpdateItem](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateItem.html)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"DynamoDB\",\n  \"group\": \"ללא סכמה\",\n  \"options\": [\n    {\n      \"text\": \"PutItem\",\n      \"hint\": \"יוצר פריט חדש, או מחליף פריט ישן בפריט חדש.\"\n    },\n    {\n      \"text\": \"BatchUpdateItem\",\n      \"hint\": \"לא קיים.\"\n    },\n    {\n      \"text\": \"BatchWriteItem\",\n      \"hint\": \"מוסיף (מכניס) או מוחק מספר פריטים בקריאה אחת.\"\n    },\n    {\n      \"text\": \"UpdateItem\"\n    },\n    {\n      \"text\": \"BatchUpsertItem\",\n      \"hint\": \"ב-DynamoDB?\"\n    },\n    {\n      \"text\": \"TransactWriteItems\",\n      \"hint\": \"משלב מספר פעולות PutItem, UpdateItem, DeleteItem ו-ConditionCheck לקריאה אחת.\"\n    }\n  ],\n  \"objectives\": [\n    \"השוואת יכולות פעולות אצווה של DynamoDB\",\n    \"אופטימיזציה של פעולות עדכון ב-DynamoDB\",\n    \"הערכת שיקולי קנה מידה לעדכונים\"\n  ],\n  \"questionProse\": [\n    \"איזה API של DynamoDB מעדכן תכונות על פריט קיים אחד?\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"המפתח כאן הוא <b>עדכונים</b>, לא הכנסות או PUTs. אם אתה מבצע הכנסות, אתה יכול להשתמש ב-`BatchWriteItem` או `TransactWriteItems`.\\n\\n    בעוד ש-`BatchWriteItem` יכול לטפל במספר פעולות, הוא מוגבל ל-PUTs ו-DELETES. `TransactWriteItems` הוא חזק יותר, אבל הוא קצת פטיש כבד לעדכונים פשוטים.\\n    לעדכונים פשוטים, `UpdateItem` הוא הבחירה הטובה ביותר. הוא מאפשר לך לעדכן (UPDATE), או לשנות תכונה אחת או יותר בפריט קיים.\\n\\n    פעולת `UpdateItem` משנה פריט אחד לכל בקשה. עבור מילוי חוזר גדול או עדכונים בכמות גדולה, אתה בדרך כלל מתזמן קריאות `UpdateItem` רבות או משתמש בתהליך עבודה רחב יותר כמו ביצוע אצווה של PartiQL, Step Functions, Glue, EMR, או תהליך עובד מותאם אישית.\\n\\n    פעולת `UpdateItem`:\\n    - מעדכנת תכונות של פריט קיים.\\n    - מוסיפה תכונות חדשות לפריט קיים.\\n    - מסירה תכונות מפריט קיים.\\n    - מבצעת את העדכון באופן מותנה אם הפריט קיים או עומד בתנאים מסוימים.\\n\\n    [DynamoDB UpdateItem](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateItem.html)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1148,
+    "outputTokens": 2756,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 25728,
+    "providerCostUsd": 0.001332,
+    "providerUpstreamCostUsd": 0.001332,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00016072,
+    "outputUsd": 0.0007716800000000002,
+    "totalUsd": 0.0009324000000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
