@@ -1,0 +1,66 @@
+---
+social_image: ../desktop-social.webp
+title: 高阶编程
+subTitle: 探索基于数组与集合的管道技术
+date: '2015-09-22'
+modified: '2024-07-30'
+category: Code
+subCategory: programming
+tags:
+  - programming
+  - patterns
+  - models
+  - source-code
+  - organization
+cover: ../susan-holt-simpson-799094-unsplash.webp
+cover_mobile: ../w300_susan-holt-simpson-799094-unsplash.webp
+cover_icon: ../icon_susan-holt-simpson-799094-unsplash.webp
+---
+## 探索基于数组和集合的管道技术
+
+### 一种反模式？
+
+这是当你**将所有内容编码为数组**时获得的优势的探索。（使用来自SmallTalk的Jedi概念）
+
+以下是一些指导原则：
+
+1.  所有输入都是类似数组的。即使是一个元素的数组。
+1.  高级函数通常应该接受并返回数组。（除了循环的回调方法：map/reduce/each/filter）
+1.  100个开发者中有99个的代码患有我称之为`acute schema surplusage`综合征。
+1.  警惕臃肿的`class-backed models`——带有所有可预见的陷阱：脆弱的`instance state`，有太多可以乱动的杠杆和旋钮，数据库事务，SQL锁，异步/互斥（总是第一次就能工作），使用惯用的`property getter/setters`，并且你的`public/private/final/etc`用法很扎实，对吧？
+
+1.  那么让我拿一个常见问题，并_硬塞_ ~~~添加~~~一些基于集合的思考。
+1.  一个假设的博客网站有很多文章，还有更多的帖子（评论）。
+1.  让我们添加一个`delete`方法（如下）——但支持单个或数组。
+
+```java
+package net.danlevy.why.java___why.you.got.all.the.dots____it.must.be.all.the.factories;
+
+public class Post {
+  public String   title;
+  public Date     created;
+  public String   message;
+
+  public Post(String title, String message) {
+    this.title    = title;
+    this.message  = message;
+    this.created  = new Date();
+  }
+
+  public Date isArchived() {
+    return this.created < new Date(2015, 0, 1);
+  }
+
+  // Post.delete` can be called w/ a singular Post or an array of Post[]
+  public static int delete(Post post) {
+    List<Post> posts = new List<Post>(post);
+    return delete(posts)
+  }
+
+  public static int delete(List<Post> posts) {
+    return posts.map(Dao.remove);
+  }
+}
+```
+
+> 如果我的Java有点生疏，请见谅。
