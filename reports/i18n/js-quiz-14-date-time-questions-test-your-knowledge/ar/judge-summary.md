@@ -1,0 +1,65 @@
+# Translation Judge Summary
+
+- Slug: js-quiz-14-date-time-questions-test-your-knowledge
+- Locale: ar
+- Judge model: openrouter/google/gemini-3-flash-preview
+- Second judge model: not run
+- Escalation judge model: not run
+- Max candidate commits per judge call: 3
+- Fix pass limit: 2
+- Selected commit hint: judge selected
+- Validation: failed
+- Validation scope: local
+- Validation error: Command failed: bun run i18n:validate --slug js-quiz-14-date-time-questions-test-your-knowledge --locale ar --skip-global
+$ bun ./src/scripts/i18n/validate.ts --slug "js-quiz-14-date-time-questions-test-your-knowledge" --locale ar --skip-global
+153 | 
+154 |   for (const slotName of ["hints", "explanation"] as const) {
+155 |     const sourceSlots = countSlot(sourceContents, slotName);
+156 |     const targetSlots = countSlot(targetContents, slotName);
+157 |     if (sourceSlots !== targetSlots) {
+158 |       throw new Error(
+                      ^
+error: /Users/dan/code/oss/dans-blog/src/content/posts/2020-01-02--js-quiz-14-date-time-questions-test-your-knowledge/ar/index.mdx changed hints slot count from 13 to 1
+      at assertQuizStructure (/Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:158:17)
+      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:30:1
+      at loadAndEvaluateModule (2:1)
+
+Bun v1.3.1 (macOS arm64)
+error: script "i18n:validate" exited with code 1
+
+
+## Primary Judge Telemetry
+- Runtime seconds: 3.71
+- Input tokens: 18099
+- Output tokens: 453
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- OpenRouter cost credits: 0.010408
+- Estimated cost: $0.010408
+
+## Pre-Publish Rescore Telemetry
+### Pass 1
+- Runtime seconds: 3.79
+- Input tokens: 18526
+- Output tokens: 578
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- OpenRouter cost credits: 0.010997
+- Estimated cost: $0.010997
+
+## Judge Suggestions
+1. Pass 1: applied high priority suggestion. Match: "{text: 'new Intl.DateTimeFormat(\"'}," Replacement: "{text: 'new Intl.DateTimeFormat(\\'en-US\\').format(date)'}," Reason: The candidate truncated the code string in the options, which breaks the technical accuracy of the quiz question. Note: Applied exact replacement to selected MDX.
+2. Pass 1: applied high priority suggestion. Match: "{text: 'date.toLocaleFormat(\"', isAnswer: true}," Replacement: "{text: 'date.toLocaleFormat(\\'en-US\\')', isAnswer: true}," Reason: The candidate truncated the code string in the options. Note: Applied exact replacement to selected MDX.
+3. Pass 1: applied high priority suggestion. Match: "{text: 'date.toLocaleString(\"'}," Replacement: "{text: 'date.toLocaleString(\\'en-GB\\', { timeZone: \\'UTC\\' })'}," Reason: The candidate truncated the code string in the options. Note: Applied exact replacement to selected MDX.
+4. Pass 1: applied high priority suggestion. Match: "{text: 'date.toLocaleDateString(\"'}," Replacement: "{text: 'date.toLocaleDateString(\\'en-US\\', { timeZone: \\'UTC\\', timeZoneName: \\'short\\' })'}," Reason: The candidate truncated the code string in the options. Note: Applied exact replacement to selected MDX.
+5. Pass 2: logged high priority suggestion. Match: "{text: 'new Intl.DateTimeFormat(\\''}," Replacement: "{text: 'new Intl.DateTimeFormat(\\'en-US\\').format(date)'}," Reason: The candidate truncated the code string in the options, which breaks the technical accuracy of the quiz question. Note: Exact match not found in selected MDX.
+6. Pass 2: logged high priority suggestion. Match: "{text: 'date.toLocaleFormat(\\'' , isAnswer: true}," Replacement: "{text: 'date.toLocaleFormat(\\'en-US\\')', isAnswer: true}," Reason: The candidate truncated the code string in the options. Note: Exact match not found in selected MDX.
+7. Pass 2: logged high priority suggestion. Match: "{text: 'date.toLocaleString(\\''}," Replacement: "{text: 'date.toLocaleString(\\'en-GB\\', { timeZone: \\'UTC\\' })'}," Reason: The candidate truncated the code string in the options. Note: Exact match not found in selected MDX.
+8. Pass 2: logged high priority suggestion. Match: "{text: 'date.toLocaleDateString(\\''}," Replacement: "{text: 'date.toLocaleDateString(\\'en-US\\', { timeZone: \\'UTC\\', timeZoneName: \\'short\\' })'}," Reason: The candidate truncated the code string in the options. Note: Exact match not found in selected MDX.
+
+## Candidates
+- current not present
+- 325936e47c2d5c56a9c0e601e9f407b5580b5f72 i18n candidate(ar): js-quiz-14-date-time-questions-test-your-knowledge via openrouter/deepseek/deepseek-v4-flash
+- a65fe42bfba34f35924b770064204691c18afbea i18n candidate(ar): js-quiz-14-date-time-questions-test-your-knowledge via openrouter/openai/gpt-oss-120b:nitro
