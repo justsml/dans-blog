@@ -1,0 +1,136 @@
+# Translation Candidate
+- Slug: stop-the-angularjs-hate
+- Locale: ar
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2015-03-10--stop-the-angularjs-hate/ar/index.mdx
+- Validation: deferred
+- Runtime seconds: 4.93
+- Input tokens: 3826
+- Output tokens: 1404
+- Thinking tokens: unknown
+- Cached input tokens: 1536
+- Cache write tokens: 0
+- Estimated cost: $0.000402
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: حيل AngularJS
+subTitle: AngularJS يمكن أن يكون ممتعًا!
+date: '2015-02-26'
+modified: '2016-02-01'
+category: Code
+subCategory: angularjs
+tags:
+  - angularjs
+  - development
+  - performance
+  - programming
+cover: ../sharon-mccutcheon-522851-unsplash.webp
+cover_mobile: ../w300_sharon-mccutcheon-522851-unsplash.webp
+cover_icon: ../icon_sharon-mccutcheon-522851-unsplash.webp
+---
+## يمكن أن يكون AngularJS ممتعًا!
+
+> للـ: AngularJS v1.x
+
+1. يكتشف مطورو AngularJS بسرعة أن تطبيقاتهم المتوسطة إلى الكبيرة تنهار تحت وزن `$watch` المتناثرة والعصا المتضخمة المعروفة باسم `$scope`.
+2. احرص على أن يكون `$scope` خالٍ من حالة UI الزائدة، وحاول تقليل حجم وعمق الهيكلية العامة.
+
+### ربط البيانات ذو الاتجاهين: سيف ذو اتجاهين
+
+ربط البيانات ذو الاتجاهين وحده يجعل الانتقال من أطر عمل أخرى مثل Backbone، حسنًا، **مذهل جدًا**.
+
+المشكلة هي أن العديد من المواقع **تفرط باستمرار** في استخدام أنماط تصميم Angular.  
+هذا يؤدي إلى انتشار التوجيهات ووجود `$scope/rootScope` يحتوي بسهولة على آلاف الحالات، ويمكنه التمسك بكائنات ضخمة مانعًا أي أمل في جمع القمامة الفعّال.
+
+أنت تعرف إلى أين يتجه هذا: متصفح منهك! محكوم عليه بالعمل بسرعة **مذعورة** مستمرًا في إعادة تجميع UI/DOM بلا نهاية ولا فائدة.
+
+### أوقف الإفراط في Angular.JSification
+
+> “إذا كانت أداةك الوحيدة مطرقة، فكل مشكلة تبدو كمسمار.”
+>
+> - قول مأثور قديم
+
+هل تطبيقك يواجه مشكلة مع التوجيهات؟
+
+```jade
+current-user-status-label
+  div(ng-if='loggedIn')
+    view-user-surplusage(ng-if='!editMode')
+      .head: contact-details(user='user')
+      .tool: contact-buttons(loggedIn='loggedIn')
+      a.edit-icon(ng-click='editMode = true')
+    edit-user-surplusage(ng-if='editMode')
+      .head: avatar-edit(user='user')
+      .body: edit-contact-details(user='user')
+      a.save-icon(ng-click='editMode = false')
+```
+
+لنصمم عنصر `user-widget` مرن يساعد على:
+
+1.  مكوّنات قابلة لإعادة الاستخدام مع كود Angular خالٍ من التكرار  
+2.  توجيهات مفهومة، بأقل حجم/عمق ممكن (احذر `ng-repeats`)  
+3.  طبقة خدمة بسيطة  
+4.  القليل من الشيفرة الفعلية للتنفيذ – فقط HTML/قالب العرض  
+
+```jade
+// jade
+user-widget
+  div(ng-if='loggedIn')
+    div.edit(ng-if='editMode')
+      h4.email-icon: input(type='email', ng-model='user.email')
+      h4.phone-icon: input(type='email', ng-model='user.phone')
+      a.save-icon(ng-click='editMode = false')
+    div.show(ng-if='!editMode')
+      h1.users-icon {{ user.name  }}
+      h4.email-icon {{ user.email }}
+      h4.phone-icon {{ user.phone }}
+      a.edit-icon(ng-click='editMode = true')
+  div(ng-if='!loggedIn')
+    h5: i Welcome User
+    a.btn(href='/login') Login
+```
+
+## حلول
+
+### نصائح Angular
+
+1.  استخدم الربط باتجاه واحد (مثال: `{ :: title }`)  
+2.  حدّ من التعشيق المتكرر للتوجيهات  
+3.  وإذا اضطررت لتعشيق توجيهات، **لا** تفعل ذلك داخل `ng-repeat` — الأداء سيتدهور إلى شيء يشبه `O(n^2)^3` ;)  
+    I. استخدم كود JS/DOM أصلي داخل نمط المصنع لإنشاء قطع DOM/UI أساسية، مثل: صندوق حوار، شريط حالة. استدعِ مصانع UI من التوجيهات أو المتحكمات.  
+4.  **مكافأة:** افهم تكلفة ومحفزات [دورة حياة عرض المتصفح](https://developers.google.com/web/fundamentals/performance/rendering/index?hl=en): الرسوم المتحركة، التركيب، وإعادة التدفق  
+
+### استخدم Browserify لتنظيم المشروع
+
+ليس مخصصًا لـ Angular بحد ذاته، لكنه أساسي لحل الاعتمادات ببساطة.
+
+[Browserify](https://github.com/substack/browserify-handbook/blob/master/readme.markdown#exports) يجعل مشاريع JS قابلة للإدارة دون أي عبء إضافي تقريبًا (حسنًا، بضع مئات من الأحرف).
+
+[اقرأ هذا القسم فقط](https://github.com/substack/browserify-handbook/blob/master/readme.markdown#exports) من [دليل Browserify](https://github.com/substack/browserify-handbook/).
+
+## بدائل
+
+### [ReactJS](https://facebook.github.io/react/) من فيسبوك
+
+إذا كان لديك الكثير من مكوّنات UI الصغيرة القابلة لإعادة الاستخدام – قد يكون ReactJS خيارًا أفضل:
+
+- إذا كان مشروعك…؟:
+  - يتبع فلسفة مختلفة في تنفيذ UI/DOM عن Angular
+  - لديه بالفعل نوع ما من “الإطار” – يمكنك **استخدام ReactJS جنبًا إلى جنب** مع AngularJS أو Ember أو Backbone. (تجنّب ذلك إذا أمكن).
+  - يتعامل مع تغييرات نموذج البيانات المتكررة في شفرته الخاصة، ستستفيد بتفادي طبيعة الـ ADHD لنمط digest/loop في Angular
+
+### [Polymer Project](http://www.Polymer-Project.org/) من جوجل
+
+### نهج JS أكثر نقاءً
+
+- بالمناسبة، هنا أحاول كتابة كود غير مرتبط بأي إطار (+1 قابلية للاختبار، +1 إعادة استخدام)
+  1.  استخدم فئة جافاسكريبت عادية لتحميل البيانات (AJAX/JSONP/مضمّن في الصفحة، إلخ)
+  1.  استخدم قوالب mustache لإنشاء سلاسل HTML (أو DOM مباشرة)
+  1.  خزن المحتوى المرسوم في localStorage إذا استطعت
+  1.  (اختياري) الآن أضف مستمع حدث لإعادة رسم المحتوى. لقد استقرّيت على اسم الحدث `refresh.<class-name>`
+````
