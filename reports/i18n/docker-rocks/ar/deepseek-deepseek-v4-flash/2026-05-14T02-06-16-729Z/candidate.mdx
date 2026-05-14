@@ -1,0 +1,48 @@
+---
+social_image: ../desktop-social.webp
+title: Docker رائع ويعمل الآن على OSX
+subTitle: Docker مذهل، سريع، ومرن
+date: '2015-06-11'
+modified: '2024-08-10'
+category: DevOps
+subCategory: docker
+tags:
+  - docker
+  - boot2docker
+  - devops
+related:
+  - docker-makes-everything-better
+  - docker-server-setup-notes
+  - docker-security-tips-for-self-hosting
+cover: ../guillaume-bolduc-259596-unsplash.webp
+cover_mobile: ../w300_guillaume-bolduc-259596-unsplash.webp
+cover_icon: ../icon_guillaume-bolduc-259596-unsplash.webp
+---
+## دوكر رائع
+
+> تحديثات سبتمبر 2016، 2018  
+> تم استبدال Boot2Docker بـ Docker for Mac
+
+> ملاحظة تاريخية: تم حفظ هذه المقالة عمدًا كلقطة زمنية من عام 2015 حول Docker for Mac. تعكس نصائح الأداء وأسماء الأدوات تلك الفترة؛ وقد تطورت سير عمل Docker Desktop و Compose الحالية.
+
+1. دوكر مذهل، سريع، ومرن.  
+1. الأدوات السابقة، وخاصة boot2docker، كانت بطيئة وعرضة للتعطل.
+
+يمكن لدوكر حاليًا العمل بشكل أصلي على نواة لينكس v3.4+ - والجهاز الافتراضي الحالي لـ boot2docker يعمل فعليًا على الإصدار v4.
+
+أفضل استخدام لعتادك: قم بتثبيت أحدث إصدار من Debian أو Ubuntu على جهاز Mac/Windows الخاص بك،
+
+... هيا، تلك الألعاب لا تساعد شفرتك...
+
+### التحقق من الإعدادات
+
+راجع مخرجات الأمر `docker info`.
+
+1. الأمان: تحقق من وجود منافذ مفتوحة بشكل غير متوقع على الخادم (باستخدام `nmap` من شبكة بعيدة).  
+1. DNS: استخدم خادم DNS محلي مخبأ أو منخفض زمن الوصول.  
+1. التخزين: استخدم مشغل التخزين الصحيح (على الأرجح `overlay2`).
+
+تم التحديث في 2024:
+
+- Docker Desktop هو برنامج احتكاري، لكنه مجاني للاستخدام الشخصي. إنها طريقة رائعة للبدء مع Docker على OSX أو Windows.
+- إذا كنت تبحث عن حل مفتوح المصدر أكثر، تحقق من [Rancher Desktop](https://rancherdesktop.io/).
