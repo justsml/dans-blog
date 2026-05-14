@@ -1,0 +1,116 @@
+# Translation Candidate
+- Slug: async-stack-traces-why-error-stack-lies-in-production
+- Locale: zh
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2025-12-29--async-stack-traces-why-error-stack-lies-in-production/zh/index.mdx
+- Validation: deferred
+- Runtime seconds: 2.72
+- Input tokens: 3688
+- Output tokens: 882
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.000303
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: 异步堆栈跟踪：为何 `Error.stack` 会误导你
+subTitle: 微任务队列吃掉了我的作业（以及调试上下文）。
+date: '2025-12-29'
+modified: '2025-12-30'
+tags:
+  - javascript
+  - async
+  - debugging
+  - node.js
+  - v8
+  - performance
+category: Code
+subCategory: Best Practices
+social_image: ../desktop-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+现在是凌晨2点。PagerDuty 警报响个不停。
+
+你打开日志，看到：
+
+```
+Error: Cannot read properties of undefined (reading 'id')
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+```
+
+仅此而已。没有函数名。没有行号。没有文件路径。只有 “processTicksAndRejections”。
+
+欢迎来到 async JavaScript 的世界，这里堆栈跟踪是凭空捏造的，行号也毫无意义。
+
+---
+
+## 为什么堆栈跟踪会失效
+
+在同步代码中，调用栈是一条清晰的血缘链。A 调用了 B，B 调用了 C。当 C 崩溃时，你可以准确看到是如何到达这里的。
+
+在 async 代码（`async/await`）里，每一个 `await` 关键字都是一个挂起点。
+
+当你 `await` 时，函数会从栈中被剥离，放进一个叫做微任务队列的低温冷冻库。此时栈为空（或正被别的任务占用）。
+
+当 Promise 解析后，函数被解冻并重新压回栈中。但历史已经消失。
+
+引擎根本不知道 500 毫秒前是谁调用了 `await`，它只知道有一个任务要执行。
+
+---
+
+## V8 的修复尝试
+
+Node.js 试图帮忙。我们有：
+
+1. `Error.captureStackTrace()`：在错误创建时捕获堆栈。若错误稍后才抛出，则毫无用处。  
+2. `--async-stack-traces`：一个标志，使 Node.js 保留 Promise 链的“影子堆栈”。  
+   * **代价**：会让你的应用慢约 30%。  
+   * **结果**：有帮助，但很快就会变得嘈杂。
+
+---
+
+## 真正的解决方案：AsyncLocalStorage
+
+想在生产环境中生存下来，就别盯着堆栈跟踪了。关注因果关系。
+
+我们需要把上下文（用户 ID、请求 ID）绑定到执行的“线程”，即使它在栈和微任务队列之间跳来跳去。
+
+Node.js 为此提供了内置工具：`AsyncLocalStorage`。
+
+```javascript
+import { AsyncLocalStorage } from 'async_hooks';
+
+const context = new AsyncLocalStorage();
+
+// 1. Wrap the request
+context.run({ requestId: '123' }, () => {
+  // 2. Call deep async code
+  await processOrder();
+});
+
+// 3. Deep inside processOrder:
+async function processOrder() {
+  await db.query();
+  
+  // Magic! We can still see the requestId
+  const { requestId } = context.getStore();
+  console.log(`[${requestId}] Failed to process order`);
+}
+```
+
+无论中间出现多少次 `await`，上下文都会被保留下来。
+
+## 生产手册
+
+1. 停止依赖 `err.stack`。它本身就不完整。
+2. 使用结构化日志。通过 `AsyncLocalStorage` 将 `requestId` 附加到每一条日志上。
+3. 追踪，而不是堆栈。使用 OpenTelemetry。它可以把跨服务的因果链可视化，这才是你真正关心的。
+
+你的代码是异步的，调试上下文也不该例外。
+````
