@@ -1,0 +1,57 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Rc Smart Pointer",
+  "translatedTitle": "מצביע חכם Rc",
+  "translation": {
+    "title": "מצביע חכם Rc",
+    "group": "ספירת הפניות",
+    "options": [
+      {
+        "text": "ספירת הפניות: 1",
+        "hint": "ספור את היצירה הראשונית ועוד כל שיבוט"
+      },
+      {
+        "text": "ספירת הפניות: 2",
+        "hint": "אל תשכח את ההפניה המקורית"
+      },
+      {
+        "text": "ספירת הפניות: 3"
+      },
+      {
+        "text": "שגיאת קומפילציה",
+        "hint": "Rc<T> מיועד בדיוק למקרה שימוש זה"
+      }
+    ],
+    "objectives": [
+      "הבן כיצד פועלת ספירת הפניות בראסט",
+      "השתמש ב-Rc<T> לתרחישי בעלות משותפת",
+      "נתח התנהגות ספירת הפניות בקוד"
+    ],
+    "questionProse": [
+      "מה ידפיס הקוד הזה? ספור בזהירות!"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "בוא נפרק איך Rc עובד:\n\n      1. יצירה ראשונית עם `Rc::new()`: count = 1\n      2. שיבוט ראשון עבור `marcus`: count = 2\n      3. שיבוט שני עבור `aurelius`: count = 3\n\n      מאפייני Rc חשובים:",
+      "נקודות מפתח:\n      - Rc::clone() הוא זול - הוא רק מגדיל מונה\n      - Rc מיועד לתרחישים חד-חוטיים בלבד\n      - כאשר ההפניה האחרונה נשמטת, הנתונים מנוקים\n      - השתמש בהפניות Weak כדי למנוע מעגלי הפניות\n\n      שיטות עבודה מומלצות:\n      - השתמש ב-Rc כאשר אתה זקוק לבעלות משותפת\n      - שקול Arc לתרחישים בטוחים לריבוי חוטים\n      - הימנע מיצירת מעגלי הפניות"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"מצביע חכם Rc\",\n  \"group\": \"ספירת הפניות\",\n  \"options\": [\n    {\n      \"text\": \"ספירת הפניות: 1\",\n      \"hint\": \"ספור את היצירה הראשונית ועוד כל שיבוט\"\n    },\n    {\n      \"text\": \"ספירת הפניות: 2\",\n      \"hint\": \"אל תשכח את ההפניה המקורית\"\n    },\n    {\n      \"text\": \"ספירת הפניות: 3\"\n    },\n    {\n      \"text\": \"שגיאת קומפילציה\",\n      \"hint\": \"Rc<T> מיועד בדיוק למקרה שימוש זה\"\n    }\n  ],\n  \"objectives\": [\n    \"הבן כיצד פועלת ספירת הפניות בראסט\",\n    \"השתמש ב-Rc<T> לתרחישי בעלות משותפת\",\n    \"נתח התנהגות ספירת הפניות בקוד\"\n  ],\n  \"questionProse\": [\n    \"מה ידפיס הקוד הזה? ספור בזהירות!\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"rust\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"בוא נפרק איך Rc עובד:\\n\\n      1. יצירה ראשונית עם `Rc::new()`: count = 1\\n      2. שיבוט ראשון עבור `marcus`: count = 2\\n      3. שיבוט שני עבור `aurelius`: count = 3\\n\\n      מאפייני Rc חשובים:\",\n    \"נקודות מפתח:\\n      - Rc::clone() הוא זול - הוא רק מגדיל מונה\\n      - Rc מיועד לתרחישים חד-חוטיים בלבד\\n      - כאשר ההפניה האחרונה נשמטת, הנתונים מנוקים\\n      - השתמש בהפניות Weak כדי למנוע מעגלי הפניות\\n\\n      שיטות עבודה מומלצות:\\n      - השתמש ב-Rc כאשר אתה זקוק לבעלות משותפת\\n      - שקול Arc לתרחישים בטוחים לריבוי חוטים\\n      - הימנע מיצירת מעגלי הפניות\"\n  ],\n  \"explanationCode\": [\n    {\n      \"language\": \"rust\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 993,
+    "outputTokens": 2619,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 15366,
+    "providerCostUsd": 0.0012462,
+    "providerUpstreamCostUsd": 0.0012462,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00013902,
+    "outputUsd": 0.00073332,
+    "totalUsd": 0.00087234,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

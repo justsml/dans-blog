@@ -1,0 +1,57 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Cell vs RefCell",
+  "translatedTitle": "Cell מול RefCell",
+  "translation": {
+    "title": "Cell מול RefCell",
+    "group": "שינוייות",
+    "options": [
+      {
+        "text": "ידפיס: 42, 43"
+      },
+      {
+        "text": "ידפיס: 43, 43",
+        "hint": "Cell::get() מחזיר את הערך בזמן הקריאה"
+      },
+      {
+        "text": "שגיאת קומפילציה",
+        "hint": "Cell תוכנן בדיוק למקרה שימוש זה"
+      },
+      {
+        "text": "פאניקה בזמן ריצה",
+        "hint": "פעולות Cell תמיד בטוחות עבור טיפוסי Copy"
+      }
+    ],
+    "objectives": [
+      "הבחנה בין דפוסי שימוש של Cell ו-RefCell",
+      "יישום Cell לשינוייות פנימית פשוטה",
+      "השוואת התנהגות טיפוסי Copy ו-non-Copy עם Cell"
+    ],
+    "questionProse": [
+      "מה ידפיס הקוד הזה?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "Cell ו-RefCell משרתים מטרות שונות לשינוייות פנימית:",
+      "הבדלים עיקריים:\n      1. Cell:\n         - עובד הכי טוב עם טיפוסי Copy\n         - אין API של השאלה\n         - תמיד מעתיק או מעביר ערכים\n      \n      2. RefCell:\n         - עובד עם כל טיפוס\n         - יש API של השאלה\n         - בדיקת השאלה בזמן ריצה\n\n      שיטות מומלצות:\n      1. השתמש ב-Cell עבור טיפוסי Copy פשוטים (מספרים, bool, וכו')\n      2. השתמש ב-RefCell כאשר אתה צריך לשאול את התוכן\n      3. שמור על מינימום שינויים דרך Cell/RefCell\n      4. תעד מדוע יש צורך בשינוייות פנימית"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Cell מול RefCell\",\n  \"group\": \"שינוייות\",\n  \"options\": [\n    {\n      \"text\": \"ידפיס: 42, 43\"\n    },\n    {\n      \"text\": \"ידפיס: 43, 43\",\n      \"hint\": \"Cell::get() מחזיר את הערך בזמן הקריאה\"\n    },\n    {\n      \"text\": \"שגיאת קומפילציה\",\n      \"hint\": \"Cell תוכנן בדיוק למקרה שימוש זה\"\n    },\n    {\n      \"text\": \"פאניקה בזמן ריצה\",\n      \"hint\": \"פעולות Cell תמיד בטוחות עבור טיפוסי Copy\"\n    }\n  ],\n  \"objectives\": [\n    \"הבחנה בין דפוסי שימוש של Cell ו-RefCell\",\n    \"יישום Cell לשינוייות פנימית פשוטה\",\n    \"השוואת התנהגות טיפוסי Copy ו-non-Copy עם Cell\"\n  ],\n  \"questionProse\": [\n    \"מה ידפיס הקוד הזה?\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"rust\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"Cell ו-RefCell משרתים מטרות שונות לשינוייות פנימית:\",\n    \"הבדלים עיקריים:\\n      1. Cell:\\n         - עובד הכי טוב עם טיפוסי Copy\\n         - אין API של השאלה\\n         - תמיד מעתיק או מעביר ערכים\\n      \\n      2. RefCell:\\n         - עובד עם כל טיפוס\\n         - יש API של השאלה\\n         - בדיקת השאלה בזמן ריצה\\n\\n      שיטות מומלצות:\\n      1. השתמש ב-Cell עבור טיפוסי Copy פשוטים (מספרים, bool, וכו')\\n      2. השתמש ב-RefCell כאשר אתה צריך לשאול את התוכן\\n      3. שמור על מינימום שינויים דרך Cell/RefCell\\n      4. תעד מדוע יש צורך בשינוייות פנימית\"\n  ],\n  \"explanationCode\": [\n    {\n      \"language\": \"rust\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 976,
+    "outputTokens": 1663,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 12730,
+    "providerCostUsd": 0.0008604,
+    "providerUpstreamCostUsd": 0.0008604,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00013664000000000002,
+    "outputUsd": 0.00046564,
+    "totalUsd": 0.0006022800000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

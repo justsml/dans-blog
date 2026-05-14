@@ -1,0 +1,57 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Cell vs RefCell",
+  "translatedTitle": "Cell לעומת RefCell",
+  "translation": {
+    "title": "Cell לעומת RefCell",
+    "group": "שינוייות",
+    "options": [
+      {
+        "text": "מדפיס: 42, 43"
+      },
+      {
+        "text": "מדפיס: 43, 43",
+        "hint": "Cell::get() מחזיר את הערך בזמן הקריאה"
+      },
+      {
+        "text": "שגיאת הידור",
+        "hint": "Cell נוצר למקרה שימוש מדויק זה"
+      },
+      {
+        "text": "פאניקה בזמן ריצה",
+        "hint": "פעולות Cell תמיד בטוחות עבור טיפוסים Copy"
+      }
+    ],
+    "objectives": [
+      "להבדיל בין דפוסי השימוש של Cell ו‑RefCell",
+      "להשתמש ב‑Cell למוטיביות פנימית פשוטה",
+      "להשוות התנהגות של טיפוסים Copy ולא‑Copy עם Cell"
+    ],
+    "questionProse": [
+      "מה הקוד הזה ידפיס?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "Cell ו‑RefCell משמשים למטרות שונות של מוטיביות פנימית:",
+      "הבדלים מרכזיים:\n      1. Cell:\n         - עובד הכי טוב עם טיפוסים Copy\n         - אין API להשאלת ערכים\n         - תמיד מעתיק או מזיז ערכים\n      \n      2. RefCell:\n         - עובד עם כל טיפוס\n         - כולל API להשאלת ערכים\n         - בדיקת השאלות בזמן ריצה\n\n      שיטות עבודה מומלצות:\n      1. השתמש ב‑Cell עבור טיפוסים Copy פשוטים (מספרים, bool וכו').\n      2. השתמש ב‑RefCell כשצריך להשאיל את התוכן.\n      3. שמור על מינימום שינויי מוטיביות דרך Cell/RefCell.\n      4. תעד מדוע נדרשת מוטיביות פנימית."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Cell לעומת RefCell\",\n  \"group\": \"שינוייות\",\n  \"options\": [\n    {\n      \"text\": \"מדפיס: 42, 43\"\n    },\n    {\n      \"text\": \"מדפיס: 43, 43\",\n      \"hint\": \"Cell::get() מחזיר את הערך בזמן הקריאה\"\n    },\n    {\n      \"text\": \"שגיאת הידור\",\n      \"hint\": \"Cell נוצר למקרה שימוש מדויק זה\"\n    },\n    {\n      \"text\": \"פאניקה בזמן ריצה\",\n      \"hint\": \"פעולות Cell תמיד בטוחות עבור טיפוסים Copy\"\n    }\n  ],\n  \"objectives\": [\n    \"להבדיל בין דפוסי השימוש של Cell ו‑RefCell\",\n    \"להשתמש ב‑Cell למוטיביות פנימית פשוטה\",\n    \"להשוות התנהגות של טיפוסים Copy ולא‑Copy עם Cell\"\n  ],\n  \"questionProse\": [\n    \"מה הקוד הזה ידפיס?\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"Cell ו‑RefCell משמשים למטרות שונות של מוטיביות פנימית:\",\n    \"הבדלים מרכזיים:\\n      1. Cell:\\n         - עובד הכי טוב עם טיפוסים Copy\\n         - אין API להשאלת ערכים\\n         - תמיד מעתיק או מזיז ערכים\\n      \\n      2. RefCell:\\n         - עובד עם כל טיפוס\\n         - כולל API להשאלת ערכים\\n         - בדיקת השאלות בזמן ריצה\\n\\n      שיטות עבודה מומלצות:\\n      1. השתמש ב‑Cell עבור טיפוסים Copy פשוטים (מספרים, bool וכו').\\n      2. השתמש ב‑RefCell כשצריך להשאיל את התוכן.\\n      3. שמור על מינימום שינויי מוטיביות דרך Cell/RefCell.\\n      4. תעד מדוע נדרשת מוטיביות פנימית.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1048,
+    "outputTokens": 1359,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 5741,
+    "providerCostUsd": 0.0009534,
+    "providerUpstreamCostUsd": 0.0009534,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000040872,
+    "outputUsd": 0.00024461999999999997,
+    "totalUsd": 0.000285492,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
