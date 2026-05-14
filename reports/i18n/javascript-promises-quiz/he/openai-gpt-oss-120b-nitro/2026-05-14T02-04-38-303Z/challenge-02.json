@@ -1,0 +1,49 @@
+{
+  "index": 1,
+  "attempt": 1,
+  "originalTitle": "Multiple `.catch`'s #2",
+  "translatedTitle": "ריבוי `.catch`'s #2",
+  "translation": {
+    "title": "ריבוי `.catch`'s #2",
+    "group": "טיפול בשגיאות",
+    "options": [
+      {
+        "text": "להדפיס הודעה פעם אחת"
+      },
+      {
+        "text": "להדפיס הודעה פעמיים"
+      },
+      {
+        "text": "הבטחה נדחית שלא טופלה"
+      },
+      {
+        "text": "התהליך יוצא"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "מה יהיה הפלט עבור הקוד הבא?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "כאשר משתמשים בבונה ה‑Promise, חייבים לקרוא לאחת מה‑callbacks `resolve()` או `reject()`. בונה ה‑Promise מתעלם מערך ההחזרה של המבצע, ולכן ה‑Promise הנוסף שנוצר עם `Promise.reject()` אינו משוייך ל‑`p`. שני המטפלים מצורפים ל‑`p`, שממשיך במצב pending, בעוד שה‑Promise שנדחה שמוחזר מדווח כלא מטופל על‑ידי סביבת האירוח."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"ריבוי `.catch`'s #2\",\n  \"group\": \"טיפול בשגיאות\",\n  \"options\": [\n    {\n      \"text\": \"להדפיס הודעה פעם אחת\"\n    },\n    {\n      \"text\": \"להדפיס הודעה פעמיים\"\n    },\n    {\n      \"text\": \"הבטחה נדחית שלא טופלה\"\n    },\n    {\n      \"text\": \"התהליך יוצא\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"מה יהיה הפלט עבור הקוד הבא?\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"כאשר משתמשים בבונה ה‑Promise, חייבים לקרוא לאחת מה‑callbacks `resolve()` או `reject()`. בונה ה‑Promise מתעלם מערך ההחזרה של המבצע, ולכן ה‑Promise הנוסף שנוצר עם `Promise.reject()` אינו משוייך ל‑`p`. שני המטפלים מצורפים ל‑`p`, שממשיך במצב pending, בעוד שה‑Promise שנדחה שמוחזר מדווח כלא מטופל על‑ידי סביבת האירוח.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 886,
+    "outputTokens": 664,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 2247,
+    "providerCostUsd": 0.0005121,
+    "providerUpstreamCostUsd": 0.0005121,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000034554,
+    "outputUsd": 0.00011952,
+    "totalUsd": 0.000154074,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
