@@ -1,0 +1,109 @@
+# Translation Candidate
+- Slug: promise-gotchas
+- Locale: he
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2018-09-26--promise-gotchas/he/index.mdx
+- Validation: deferred
+- Runtime seconds: 13.42
+- Input tokens: 2079
+- Output tokens: 2384
+- Thinking tokens: unknown
+- Cached input tokens: 384
+- Cache write tokens: 0
+- Estimated cost: $0.000906
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: מלכודות Promise
+subTitle: הימנעות מטעויות נפוצות
+date: '2018-09-26'
+modified: '2024-07-30'
+category: Code
+subCategory: promises
+tags:
+  - promises
+  - async
+  - debugging
+  - errors
+  - javascript
+  - composition
+related:
+  - intro-to-promises
+  - visualizing-promises
+  - are-promises-broken
+  - javascript-promises-quiz
+cover: ../michal-parzuchowski-224092-unsplash.webp
+cover_mobile: ../w300_michal-parzuchowski-224092-unsplash.webp
+cover_icon: ../icon_michal-parzuchowski-224092-unsplash.webp
+---
+### הבטחות לא פועלות כמו ערכים אחרים
+
+אי אפשר להדפיס את הערך שלהן כמו רוב הערכים:
+
+```js
+// זה לא הגיוני עם הבטחות:
+console.log(Promise.resolve(42));
+
+// אנחנו חייבים להשתמש בממשק `.then`:
+Promise.resolve(42).then(value => console.log(value));
+```
+
+### הבטחות לא מתריעות כשעושים טעות
+
+ובכן, טעות סבירה.
+
+ממגוון סיבות, הוחלט על ידי TC39 שאפשר להעביר `null` ל-`.then` ול-`.catch`. לדוגמה, `.then(null, null)` הוא חוקי וההתנהגות הנדרשת היא לדלג על ה'צעד' הזה בשרשרת.
+
+התוצאה המצערת של זה היא שקל מאוד לפשל.
+
+##### לפי דוגמה
+
+בואו נסתכל על אתגר קטן: איזו מהאפשרויות הבאות תדפיס `console.log` 42?
+
+```js
+// אפשרות #1:
+Promise.resolve(42).then(console.log());
+
+// אפשרות #2:
+Promise.resolve(42).then(console.log);
+
+// אפשרות #3:
+Promise.resolve(42).then(value => console.log(value));
+
+// אפשרות #4:
+Promise.resolve(42)
+  .then(console.log())
+  .then(console.log);
+```
+
+##### התשובה
+
+התשובה היא #2, #3 ו-#4.
+
+למה? בואו נסתכל על ה**סוגים** של מה שהועבר ל-`.then()`:
+
+```js
+var arg1 = console.log();
+var arg2 = console.log;
+var arg3 = value => console.log(value);
+
+typeof arg1 === "undefined";
+typeof arg2 === "function";
+typeof arg3 === "function";
+```
+
+עדיין תוהים איך האופציה הרביעית עובדת?
+
+היא בעצם רצה כך:
+
+```js
+// Option #4 - effectively
+Promise.resolve(42)
+  .then(undefined) // this has no affect on the value, it will be handed to following `.then(fn)`
+  .then(console.log);
+```
+````
