@@ -12,14 +12,14 @@
 - Validation scope: local
 
 ## Primary Judge Telemetry
-- Runtime seconds: 4.17
-- Input tokens: 12059
-- Output tokens: 160
+- Runtime seconds: 3.37
+- Input tokens: 12178
+- Output tokens: 203
 - Thinking tokens: unknown
 - Cached input tokens: 0
 - Cache write tokens: 0
-- OpenRouter cost credits: 0.006509
-- Estimated cost: $0.006509
+- OpenRouter cost credits: 0.006698
+- Estimated cost: $0.006698
 
 ## Candidates
 - current src/content/posts/2026-04-16--lancedb-wasm-browser-client/zh/index.mdx
