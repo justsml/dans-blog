@@ -1,0 +1,28 @@
+{
+  "selectedCommit": "current",
+  "selectedModel": "current",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 10,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The current translation is excellent. It maintains Dan's direct, conversational tone ('撞到了这个问题', '掷骰子') and accurately translates technical terms. It correctly handles the relative paths for assets (../). Compared to the candidates, it has the most natural flow and correctly translates the code comments and tool descriptions while keeping the core logic intact. Candidate d47267ee1e06b11f27e3ecaa22955183834686b2 introduced an incorrect relative path for a URL ([AI SDK v5和v6](../ai-sdk.vercel.ai/)), and other candidates left the tool description in English or had slightly less natural phrasing.",
+  "slug": "ai-sdk-math-tool",
+  "locale": "zh",
+  "candidateCommits": [
+    "6ca37f4ab133750fedb9e02645cb8192db4fd6d9",
+    "10f6defb743f69788226353c91698475d553efd1",
+    "d47267ee1e06b11f27e3ecaa22955183834686b2"
+  ],
+  "suggestionLog": [],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug ai-sdk-math-tool --locale zh --skip-global",
+    "output": ""
+  }
+}
