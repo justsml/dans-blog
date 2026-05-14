@@ -1,0 +1,52 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "Greedy vs Non-Greedy",
+  "translatedTitle": "贪婪匹配与非贪婪匹配",
+  "translation": {
+    "title": "贪婪匹配与非贪婪匹配",
+    "group": "基础匹配",
+    "options": [
+      {
+        "text": "[\"<div>Hello</div>\"]"
+      },
+      {
+        "text": "[\"<div>\", \"</div>\"]"
+      },
+      {
+        "text": "[\"<div>Hello</div><div>World</div>\"]"
+      },
+      {
+        "text": "[\"<div>Hello</div>\", \"<div>World</div>\"]"
+      },
+      {
+        "text": "[\"Hello\", \"World\"]"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "这个模式会匹配到什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "模式 `/<div>.*?<\\/div>/g` 使用了非贪婪匹配，`*?` 表示：\n    - 匹配 `<div>`\n    - 匹配任意字符（`.*`），但尽可能少（`?`）\n    - 直到找到 `</div>`\n    - `g` 标志使其匹配所有出现\n\n    如果没有 `?`，贪婪的 `.*` 会从第一个 `<div>` 匹配到最后一个 `</div>`，得到一个大的匹配。加上 `?` 后，它会分别匹配每一对。\n\n    [了解更多关于贪婪与懒惰匹配](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"贪婪匹配与非贪婪匹配\",\n  \"group\": \"基础匹配\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"<div>Hello</div>\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"<div>\\\", \\\"</div>\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"<div>Hello</div><div>World</div>\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"<div>Hello</div>\\\", \\\"<div>World</div>\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"Hello\\\", \\\"World\\\"]\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"这个模式会匹配到什么？\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"js\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"模式 `/<div>.*?<\\\\/div>/g` 使用了非贪婪匹配，`*?` 表示：\\n    - 匹配 `<div>`\\n    - 匹配任意字符（`.*`），但尽可能少（`?`）\\n    - 直到找到 `</div>`\\n    - `g` 标志使其匹配所有出现\\n\\n    如果没有 `?`，贪婪的 `.*` 会从第一个 `<div>` 匹配到最后一个 `</div>`，得到一个大的匹配。加上 `?` 后，它会分别匹配每一对。\\n\\n    [了解更多关于贪婪与懒惰匹配](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 955,
+    "outputTokens": 1518,
+    "cacheReadTokens": 384,
+    "cacheWriteTokens": 0,
+    "durationMs": 9700,
+    "providerCostUsd": 0.00073676,
+    "providerUpstreamCostUsd": 0.00073676,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00008101520000000001,
+    "outputUsd": 0.00042504000000000006,
+    "totalUsd": 0.0005060552000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

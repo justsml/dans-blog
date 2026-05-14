@@ -1,0 +1,49 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Word Boundaries",
+  "translatedTitle": "单词边界",
+  "translation": {
+    "title": "单词边界",
+    "group": "基本匹配",
+    "options": [
+      {
+        "text": "[\"cat\", \"cats\"]"
+      },
+      {
+        "text": "[\"cat\"]"
+      },
+      {
+        "text": "[\"cats\"]"
+      },
+      {
+        "text": "[]"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "什么会匹配？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "`\\b` 表示单词边界，它匹配：\n    - 单词字符与非单词字符之间的位置\n    - 字符串开头/结尾（如果该位置是单词字符）\n\n    因此 `/\\bcat\\b/` 仅在 \"cat\" 是一个完整的单词时匹配它，而不是作为另一个单词的一部分。\n    - ✅ \"cat\"（前后有空格）\n    - ❌ \"cats\"（\"cat\" 后面没有边界）\n    - ❌ \"category\"（\"cat\" 后面没有边界）\n\n    [了解更多关于单词边界的信息](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions#other_assertions)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"单词边界\",\n  \"group\": \"基本匹配\",\n  \"options\": [\n    {\"text\": \"[\\\"cat\\\", \\\"cats\\\"]\"},\n    {\"text\": \"[\\\"cat\\\"]\"},\n    {\"text\": \"[\\\"cats\\\"]\"},\n    {\"text\": \"[]\"}\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\"什么会匹配？\"],\n  \"hintsProse\": [],\n  \"explanationProse\": [\"`\\\\b` 表示单词边界，它匹配：\\n    - 单词字符与非单词字符之间的位置\\n    - 字符串开头/结尾（如果该位置是单词字符）\\n\\n    因此 `/\\\\bcat\\\\b/` 仅在 \\\"cat\\\" 是一个完整的单词时匹配它，而不是作为另一个单词的一部分。\\n    - ✅ \\\"cat\\\"（前后有空格）\\n    - ❌ \\\"cats\\\"（\\\"cat\\\" 后面没有边界）\\n    - ❌ \\\"category\\\"（\\\"cat\\\" 后面没有边界）\\n\\n    [了解更多关于单词边界的信息](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions#other_assertions)\"]\n}",
+  "telemetry": {
+    "inputTokens": 875,
+    "outputTokens": 1803,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 10993,
+    "providerCostUsd": 0.0008962,
+    "providerUpstreamCostUsd": 0.0008962,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00012250000000000002,
+    "outputUsd": 0.00050484,
+    "totalUsd": 0.00062734,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

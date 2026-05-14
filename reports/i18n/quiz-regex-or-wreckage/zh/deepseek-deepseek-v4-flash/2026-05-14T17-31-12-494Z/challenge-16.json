@@ -1,0 +1,49 @@
+{
+  "index": 15,
+  "attempt": 1,
+  "originalTitle": "Password Validation",
+  "translatedTitle": "密码验证",
+  "translation": {
+    "title": "密码验证",
+    "group": "地狱之眼",
+    "options": [
+      {
+        "text": "\"sassword123\""
+      },
+      {
+        "text": "\"Sass123!\""
+      },
+      {
+        "text": "\"SASSWORD123\""
+      },
+      {
+        "text": "\"Sass word123\""
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "提前道歉！😈<br />\n    哪个密码匹配这个模式？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "不要在生产中写这样的代码！😅\n\n    这个模式使用了多个正向先行断言来强制要求：\n    - 至少一个大写字母：`(?=.*[A-Z])`\n    - 至少一个小写字母：`(?=.*[a-z])`\n    - 至少一个数字：`(?=.*\\d)`\n    - 至少一个特殊字符：`(?=.*[!@#$%^&*])`\n    - 最小长度8个字符：`.{8,}`\n\n    先行断言非常适合密码验证，因为它们可以在不消耗字符的情况下检查多个条件。\n\n    [了解更多关于密码验证模式的信息](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"密码验证\",\n  \"group\": \"地狱之眼\",\n  \"options\": [\n    {\n      \"text\": \"\\\"sassword123\\\"\"\n    },\n    {\n      \"text\": \"\\\"Sass123!\\\"\"\n    },\n    {\n      \"text\": \"\\\"SASSWORD123\\\"\"\n    },\n    {\n      \"text\": \"\\\"Sass word123\\\"\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"提前道歉！😈<br />\\n    哪个密码匹配这个模式？\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"js\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"不要在生产中写这样的代码！😅\\n\\n    这个模式使用了多个正向先行断言来强制要求：\\n    - 至少一个大写字母：`(?=.*[A-Z])`\\n    - 至少一个小写字母：`(?=.*[a-z])`\\n    - 至少一个数字：`(?=.*\\\\d)`\\n    - 至少一个特殊字符：`(?=.*[!@#$%^&*])`\\n    - 最小长度8个字符：`.{8,}`\\n\\n    先行断言非常适合密码验证，因为它们可以在不消耗字符的情况下检查多个条件。\\n\\n    [了解更多关于密码验证模式的信息](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 916,
+    "outputTokens": 1528,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 10197,
+    "providerCostUsd": 0.0007944,
+    "providerUpstreamCostUsd": 0.0007944,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00012824,
+    "outputUsd": 0.0004278400000000001,
+    "totalUsd": 0.00055608,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

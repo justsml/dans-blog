@@ -1,0 +1,52 @@
+{
+  "index": 7,
+  "attempt": 1,
+  "originalTitle": "Negative Look-behind",
+  "translatedTitle": "负向后顾断言",
+  "translation": {
+    "title": "负向后顾断言",
+    "group": "后顾断言",
+    "options": [
+      {
+        "text": "[\"123\"]"
+      },
+      {
+        "text": "[\"123\", \"456\"]"
+      },
+      {
+        "text": "[\"23\", \"456\"]"
+      },
+      {
+        "text": "[\"456\"]"
+      },
+      {
+        "text": "[]"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "这个模式匹配什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "负向后顾断言 `(?<!abc)` 确保数字前面不是 \"abc\"：\n    - ❌ \"123\"（前面是 \"abc\"）\n    - ✅ \"23\"（前面是 \"abc1\"）\n    - ✅ \"456\"（前面是 \"def\"）\n\n    JavaScript 在现代引擎中支持后顾断言。此示例使用固定长度的后顾断言：`abc` 始终是三个字符。可变长度的后顾断言是更棘手的引擎特定边缘情况。\n\n    注意：后顾断言在 JavaScript 中相对较新。如果需要支持旧版浏览器，请查看[浏览器兼容性](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#browser_compatibility)。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"负向后顾断言\",\n  \"group\": \"后顾断言\",\n  \"options\": [\n    {\"text\": \"[\\\"123\\\"]\"},\n    {\"text\": \"[\\\"123\\\", \\\"456\\\"]\"},\n    {\"text\": \"[\\\"23\\\", \\\"456\\\"]\"},\n    {\"text\": \"[\\\"456\\\"]\"},\n    {\"text\": \"[]\"}\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\"这个模式匹配什么？\"],\n  \"questionCode\": [{\"language\": \"js\", \"code\": \"[PRESERVED — do not translate]\"}],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\"负向后顾断言 `(?<!abc)` 确保数字前面不是 \\\"abc\\\"：\\n    - ❌ \\\"123\\\"（前面是 \\\"abc\\\"）\\n    - ✅ \\\"23\\\"（前面是 \\\"abc1\\\"）\\n    - ✅ \\\"456\\\"（前面是 \\\"def\\\"）\\n\\n    JavaScript 在现代引擎中支持后顾断言。此示例使用固定长度的后顾断言：`abc` 始终是三个字符。可变长度的后顾断言是更棘手的引擎特定边缘情况。\\n\\n    注意：后顾断言在 JavaScript 中相对较新。如果需要支持旧版浏览器，请查看[浏览器兼容性](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#browser_compatibility)。\"],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 908,
+    "outputTokens": 2885,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 16767,
+    "providerCostUsd": 0.0013356,
+    "providerUpstreamCostUsd": 0.0013356,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00012712000000000002,
+    "outputUsd": 0.0008078000000000001,
+    "totalUsd": 0.0009349200000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

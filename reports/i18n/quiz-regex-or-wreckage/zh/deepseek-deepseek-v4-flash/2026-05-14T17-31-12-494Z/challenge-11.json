@@ -1,0 +1,49 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "Look-behind Split",
+  "translatedTitle": "后顾分割",
+  "translation": {
+    "title": "后顾分割",
+    "group": "后顾",
+    "options": [
+      {
+        "text": "[\"a,\", \"b,\", \"c\"]"
+      },
+      {
+        "text": "[\"a,b,c\"]"
+      },
+      {
+        "text": "[\"a\", \",\", \"b\", \",\", \"c\"]"
+      },
+      {
+        "text": "[\"a,b,c\", \"\"]"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "返回什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "模式 `/(?<=,)/` 是一个后顾断言，匹配逗号之后的位置：\n    - `a,`（逗号之后）\n    - `b,`（逗号之后）\n    - `c`（后面没有逗号）\n\n    后顾断言不会消耗逗号，因此逗号仍然附着在分割结果的前一个片段上。\n\n    当你想要根据前面的内容分割字符串，**同时保留分割字符**时，这非常有用。\n\n    [了解更多关于后顾断言的信息](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"后顾分割\",\n  \"group\": \"后顾\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"a,\\\", \\\"b,\\\", \\\"c\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"a,b,c\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"a\\\", \\\",\\\", \\\"b\\\", \\\",\\\", \\\"c\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"a,b,c\\\", \\\"\\\"]\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"返回什么？\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"js\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"模式 `/(?<=,)/` 是一个后顾断言，匹配逗号之后的位置：\\n    - `a,`（逗号之后）\\n    - `b,`（逗号之后）\\n    - `c`（后面没有逗号）\\n\\n    后顾断言不会消耗逗号，因此逗号仍然附着在分割结果的前一个片段上。\\n\\n    当你想要根据前面的内容分割字符串，**同时保留分割字符**时，这非常有用。\\n\\n    [了解更多关于后顾断言的信息](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 894,
+    "outputTokens": 1289,
+    "cacheReadTokens": 384,
+    "cacheWriteTokens": 0,
+    "durationMs": 8108,
+    "providerCostUsd": 0.00063296,
+    "providerUpstreamCostUsd": 0.00063296,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00007247520000000001,
+    "outputUsd": 0.00036092000000000003,
+    "totalUsd": 0.00043339520000000006,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

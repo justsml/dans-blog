@@ -1,0 +1,49 @@
+{
+  "index": 12,
+  "attempt": 1,
+  "originalTitle": "Positive Look-behind",
+  "translatedTitle": "正向向后查找",
+  "translation": {
+    "title": "正向向后查找",
+    "group": "向后查找",
+    "options": [
+      {
+        "text": "[\"$100\"]"
+      },
+      {
+        "text": "[\"100\"]"
+      },
+      {
+        "text": "[\"$\"]"
+      },
+      {
+        "text": "[]"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "匹配了什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "正向向后查找 `(?<=\\$) ` 确保数字前面有一个美元符号：\n    - `(?<=\\$)`: 向后查找美元符号\n    - `\\d+`: 匹配一个或多个数字\n\n    向后查找断言不会消耗字符，它们只检查前面的内容。\n    当你想要根据前面的内容匹配某些内容而不包括前面的部分时，这很有用。\n\n    [了解更多关于向后查找断言](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"正向向后查找\",\n  \"group\": \"向后查找\",\n  \"options\": [\n    {\"text\": \"[\\\"$100\\\"]\"},\n    {\"text\": \"[\\\"100\\\"]\"},\n    {\"text\": \"[\\\"$\\\"]\"},\n    {\"text\": \"[]\"}\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\"匹配了什么？\"],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"正向向后查找 `(?<=\\\\$) ` 确保数字前面有一个美元符号：\\n    - `(?<=\\\\$)`: 向后查找美元符号\\n    - `\\\\d+`: 匹配一个或多个数字\\n\\n    向后查找断言不会消耗字符，它们只检查前面的内容。\\n    当你想要根据前面的内容匹配某些内容而不包括前面的部分时，这很有用。\\n\\n    [了解更多关于向后查找断言](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 847,
+    "outputTokens": 1294,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 8190,
+    "providerCostUsd": 0.000687,
+    "providerUpstreamCostUsd": 0.000687,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00011858,
+    "outputUsd": 0.00036232,
+    "totalUsd": 0.00048090000000000003,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

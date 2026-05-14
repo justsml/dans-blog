@@ -1,0 +1,49 @@
+{
+  "index": 13,
+  "attempt": 1,
+  "originalTitle": "Lazy vs Greedy Quantifiers",
+  "translatedTitle": "懒惰与贪婪量词",
+  "translation": {
+    "title": "懒惰与贪婪量词",
+    "group": "基本匹配",
+    "options": [
+      {
+        "text": "[\"<b>bold</b>\"]"
+      },
+      {
+        "text": "[\"bold\"]"
+      },
+      {
+        "text": "[\"<b>\", \"</b>\"]"
+      },
+      {
+        "text": "[]"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "匹配了什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "该模式使用 `*?` 进行懒惰匹配：\n    - `<b>`：匹配开始标签\n    - `(.*?)`：捕获任意字符（懒惰）\n    - `</b>`：匹配结束标签\n\n    `*` 后面的 `?` 使其变为懒惰模式，尽可能少地匹配字符。\n    如果没有 `?`，它将是贪婪模式，尽可能多地匹配。\n\n    `slice(1)` 返回捕获组的内容。\n\n    [了解更多关于贪婪与懒惰匹配](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"懒惰与贪婪量词\",\n  \"group\": \"基本匹配\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"<b>bold</b>\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"bold\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"<b>\\\", \\\"</b>\\\"]\"\n    },\n    {\n      \"text\": \"[]\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"匹配了什么？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"该模式使用 `*?` 进行懒惰匹配：\\n    - `<b>`：匹配开始标签\\n    - `(.*?)`：捕获任意字符（懒惰）\\n    - `</b>`：匹配结束标签\\n\\n    `*` 后面的 `?` 使其变为懒惰模式，尽可能少地匹配字符。\\n    如果没有 `?`，它将是贪婪模式，尽可能多地匹配。\\n\\n    `slice(1)` 返回捕获组的内容。\\n\\n    [了解更多关于贪婪与懒惰匹配](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 884,
+    "outputTokens": 1544,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 9678,
+    "providerCostUsd": 0.0007944,
+    "providerUpstreamCostUsd": 0.0007944,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00012376000000000002,
+    "outputUsd": 0.00043232000000000003,
+    "totalUsd": 0.00055608,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

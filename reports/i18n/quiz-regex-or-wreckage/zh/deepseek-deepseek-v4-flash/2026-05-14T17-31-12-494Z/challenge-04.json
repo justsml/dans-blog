@@ -1,0 +1,49 @@
+{
+  "index": 3,
+  "attempt": 1,
+  "originalTitle": "The Dot Metacharacter",
+  "translatedTitle": "点号元字符",
+  "translation": {
+    "title": "点号元字符",
+    "group": "常见陷阱",
+    "options": [
+      {
+        "text": "[\"hello\\nworld\"]"
+      },
+      {
+        "text": "[\"hello\", \"world\"]"
+      },
+      {
+        "text": "[\"hello\\n\", \"world\"]"
+      },
+      {
+        "text": "null"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "这将返回什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "`\\w+` 模式匹配一个或多个单词字符。尽管字符串中有换行符，`\\w` 匹配：\n    - 字母 (a-z, A-Z)\n    - 数字 (0-9)\n    - 下划线 (_)\n\n    因此，换行符充当了单词边界，我们得到两个匹配。如果我们使用 `.*`，默认情况下它不会匹配换行符（你需要 `s` 标志才能匹配）。\n\n    [了解更多关于元字符的信息](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Character_Classes#types)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"点号元字符\",\n  \"group\": \"常见陷阱\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"hello\\\\nworld\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"hello\\\", \\\"world\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"hello\\\\n\\\", \\\"world\\\"]\"\n    },\n    {\n      \"text\": \"null\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"这将返回什么？\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"js\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"`\\\\w+` 模式匹配一个或多个单词字符。尽管字符串中有换行符，`\\\\w` 匹配：\\n    - 字母 (a-z, A-Z)\\n    - 数字 (0-9)\\n    - 下划线 (_)\\n\\n    因此，换行符充当了单词边界，我们得到两个匹配。如果我们使用 `.*`，默认情况下它不会匹配换行符（你需要 `s` 标志才能匹配）。\\n\\n    [了解更多关于元字符的信息](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Character_Classes#types)\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 878,
+    "outputTokens": 1627,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 10618,
+    "providerCostUsd": 0.0008264,
+    "providerUpstreamCostUsd": 0.0008264,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00012292000000000002,
+    "outputUsd": 0.00045556000000000004,
+    "totalUsd": 0.00057848,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
