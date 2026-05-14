@@ -1,0 +1,49 @@
+{
+  "index": 13,
+  "attempt": 1,
+  "originalTitle": "Zero-Specificity Selectors",
+  "translatedTitle": "零特异性选择器",
+  "translation": {
+    "title": "零特异性选择器",
+    "group": "选择器：特异性",
+    "options": [
+      {
+        "text": ":where(.card) .title"
+      },
+      {
+        "text": ".card .title"
+      },
+      {
+        "text": ":is(.card) .title"
+      },
+      {
+        "text": "#card .title"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "哪个选择器的特异性最低？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "`:where(.card) .title` 的特异性最低。`:where()` 伪类及其内部内容的特异性为 `0-0-0`，因此仅计算 `.title`。而 `:is(.card) .title` 保留了 `.card` 的特异性，`.card .title` 包含两个类选择器，`#card .title` 则包含一个 ID 选择器。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"零特异性选择器\",\n  \"group\": \"选择器：特异性\",\n  \"options\": [\n    {\n      \"text\": \":where(.card) .title\"\n    },\n    {\n      \"text\": \".card .title\"\n    },\n    {\n      \"text\": \":is(.card) .title\"\n    },\n    {\n      \"text\": \"#card .title\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"哪个选择器的特异性最低？\"\n  ],\n  \"questionCode\": [],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"`:where(.card) .title` 的特异性最低。`:where()` 伪类及其内部内容的特异性为 `0-0-0`，因此仅计算 `.title`。而 `:is(.card) .title` 保留了 `.card` 的特异性，`.card .title` 包含两个类选择器，`#card .title` 则包含一个 ID 选择器。\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 878,
+    "outputTokens": 326,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1189,
+    "providerCostUsd": 0.0003273,
+    "providerUpstreamCostUsd": 0.0003273,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000034242,
+    "outputUsd": 0.00005868,
+    "totalUsd": 0.000092922,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
