@@ -1,6 +1,6 @@
 {
-  "selectedCommit": "78734fe52a3af7c057b252263aec6fefad9102b2",
-  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "selectedCommit": "282dd917495d3cfb2378e984366e4e60ea061e18",
+  "selectedModel": "deepseek/deepseek-v4-flash",
   "scores": {
     "readability": 9,
     "technicalAccuracy": 9,
@@ -10,18 +10,19 @@
     "mdxPreservation": 10
   },
   "suggestions": [],
-  "rationale": "DeepSeek provided a more natural and professional translation of technical terms (e.g., '金丝雀令牌' for Canary Tokens is standard, whereas Gemini used '金丝雀令牌' but also '蜜罐' interchangeably in the table, which is slightly less precise in this context). DeepSeek's prose flows better and maintains the direct, urgent tone of the original English text. Both candidates followed MDX constraints perfectly, including the heading counts and asset path adjustments.",
+  "rationale": "DeepSeek's translation is the most natural and technically precise. It correctly handles technical terms like 'infostealer' (信息窃取器) and 'canary tokens' (金丝雀令牌) while maintaining a direct, punchy style that matches the original English. It also correctly preserves all MDX structures and heading levels. The use of '战利品' for 'Prize' in the heading is a particularly good stylistic choice for the context.",
   "slug": "into-the-breach",
   "locale": "zh",
   "candidateCommits": [
-    "78734fe52a3af7c057b252263aec6fefad9102b2",
-    "b80f4df226292c8678b7a8ece9232bcc6a77359b"
+    "282dd917495d3cfb2378e984366e4e60ea061e18",
+    "4394dd0bfb746ce796ce0ae8024bafa765e57c50",
+    "7085623492d11c6aee1398b2071671b1c1b8ecae"
   ],
   "suggestionLog": [],
   "validation": {
-    "ok": false,
+    "ok": true,
     "scope": "local",
     "command": "bun run i18n:validate --slug into-the-breach --locale zh --skip-global",
-    "error": "Command failed: bun run i18n:validate --slug into-the-breach --locale zh --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug into-the-breach --locale zh --skip-global\n111 |     })\n112 |     .filter((message): message is string => message != null);\n113 | \n114 |   if (mismatches.length === 0) return;\n115 | \n116 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2026-05-13--into-the-breach/zh/index.mdx changed heading counts. H4: English has 1, translation has 2\n      at assertHeadingCounts (/Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:116:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:28:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+    "output": ""
   }
 }

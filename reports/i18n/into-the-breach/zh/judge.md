@@ -1,7 +1,7 @@
 # Translation Judge
 
-- Selected candidate: 78734fe52a3af7c057b252263aec6fefad9102b2
-- Selected model: openrouter/deepseek/deepseek-v4-flash
+- Selected candidate: 282dd917495d3cfb2378e984366e4e60ea061e18
+- Selected model: deepseek/deepseek-v4-flash
 - Judge model: openrouter/google/gemini-3-flash-preview
 
-DeepSeek provided a more natural and professional translation of technical terms (e.g., '金丝雀令牌' for Canary Tokens is standard, whereas Gemini used '金丝雀令牌' but also '蜜罐' interchangeably in the table, which is slightly less precise in this context). DeepSeek's prose flows better and maintains the direct, urgent tone of the original English text. Both candidates followed MDX constraints perfectly, including the heading counts and asset path adjustments.
+DeepSeek's translation is the most natural and technically precise. It correctly handles technical terms like 'infostealer' (信息窃取器) and 'canary tokens' (金丝雀令牌) while maintaining a direct, punchy style that matches the original English. It also correctly preserves all MDX structures and heading levels. The use of '战利品' for 'Prize' in the heading is a particularly good stylistic choice for the context.

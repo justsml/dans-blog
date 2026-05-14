@@ -8,37 +8,21 @@
 - Max candidate commits per judge call: 3
 - Fix pass limit: 2
 - Selected commit hint: judge selected
-- Validation: failed
+- Validation: passed
 - Validation scope: local
-- Validation error: Command failed: bun run i18n:validate --slug into-the-breach --locale zh --skip-global
-$ bun ./src/scripts/i18n/validate.ts --slug into-the-breach --locale zh --skip-global
-111 |     })
-112 |     .filter((message): message is string => message != null);
-113 | 
-114 |   if (mismatches.length === 0) return;
-115 | 
-116 |   throw new Error(
-                  ^
-error: /Users/dan/code/oss/dans-blog/src/content/posts/2026-05-13--into-the-breach/zh/index.mdx changed heading counts. H4: English has 1, translation has 2
-      at assertHeadingCounts (/Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:116:13)
-      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:28:1
-      at loadAndEvaluateModule (2:1)
-
-Bun v1.3.1 (macOS arm64)
-error: script "i18n:validate" exited with code 1
-
 
 ## Primary Judge Telemetry
-- Runtime seconds: 2.35
-- Input tokens: 19796
-- Output tokens: 193
+- Runtime seconds: 2.58
+- Input tokens: 32282
+- Output tokens: 192
 - Thinking tokens: unknown
 - Cached input tokens: 0
 - Cache write tokens: 0
-- OpenRouter cost credits: 0.010477
-- Estimated cost: $0.010477
+- OpenRouter cost credits: 0.016717
+- Estimated cost: $0.016717
 
 ## Candidates
-- current not present
-- 78734fe52a3af7c057b252263aec6fefad9102b2 i18n candidate(zh): into-the-breach via openrouter/deepseek/deepseek-v4-flash
-- b80f4df226292c8678b7a8ece9232bcc6a77359b i18n candidate(zh): into-the-breach via openrouter/google/gemini-3-flash-preview
+- current src/content/posts/2026-05-13--into-the-breach/zh/index.mdx
+- 282dd917495d3cfb2378e984366e4e60ea061e18 i18n candidate(zh): into-the-breach via deepseek/deepseek-v4-flash
+- 4394dd0bfb746ce796ce0ae8024bafa765e57c50 i18n candidate(zh): into-the-breach via openrouter/google/gemini-3-flash-preview
+- 7085623492d11c6aee1398b2071671b1c1b8ecae i18n candidate(zh): into-the-breach via openrouter/openai/gpt-oss-120b:nitro
