@@ -1,0 +1,53 @@
+{
+  "index": 21,
+  "attempt": 1,
+  "originalTitle": "Consistency Models",
+  "translatedTitle": "一致性模型",
+  "translation": {
+    "title": "一致性模型",
+    "group": "DynamoDB 一致性",
+    "options": [
+      {
+        "text": "每秒 100 次读取"
+      },
+      {
+        "text": "每秒 50 次读取"
+      },
+      {
+        "text": "每秒 200 次读取"
+      },
+      {
+        "text": "无限制的每秒读取次数"
+      }
+    ],
+    "objectives": [
+      "理解 DynamoDB 一致性模型",
+      "评估不同一致性级别之间的权衡",
+      "将一致性模型应用于实际场景"
+    ],
+    "questionProse": [
+      "一个 DynamoDB 表配置了 100 个 RCU 的预置读取容量。对于 4KB 大小的项目，每秒可以执行多少次强一致性读取？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "理解 DynamoDB 一致性模型至关重要：\n\n      - 1 RCU = 每秒 1 次针对大小不超过 4KB 项目的强一致性读取\n      - 1 RCU = 每秒 2 次针对大小不超过 4KB 项目的最终一致性读取\n\n      因此：\n      - 100 RCU = 每秒 100 次 4KB 强一致性读取\n      - 100 RCU = 每秒 200 次 4KB 最终一致性读取\n\n      根据以下因素选择一致性模型：\n      - 应用程序需求\n      - 成本考量\n      - 性能需求\n      - 数据新鲜度要求"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"一致性模型\",\n  \"group\": \"DynamoDB 一致性\",\n  \"options\": [\n    {\n      \"text\": \"每秒 100 次读取\"\n    },\n    {\n      \"text\": \"每秒 50 次读取\"\n    },\n    {\n      \"text\": \"每秒 200 次读取\"\n    },\n    {\n      \"text\": \"无限制的每秒读取次数\"\n    }\n  ],\n  \"objectives\": [\n    \"理解 DynamoDB 一致性模型\",\n    \"评估不同一致性级别之间的权衡\",\n    \"将一致性模型应用于实际场景\"\n  ],\n  \"questionProse\": [\n    \"一个 DynamoDB 表配置了 100 个 RCU 的预置读取容量。对于 4KB 大小的项目，每秒可以执行多少次强一致性读取？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"理解 DynamoDB 一致性模型至关重要：\\n\\n      - 1 RCU = 每秒 1 次针对大小不超过 4KB 项目的强一致性读取\\n      - 1 RCU = 每秒 2 次针对大小不超过 4KB 项目的最终一致性读取\\n\\n      因此：\\n      - 100 RCU = 每秒 100 次 4KB 强一致性读取\\n      - 100 RCU = 每秒 200 次 4KB 最终一致性读取\\n\\n      根据以下因素选择一致性模型：\\n      - 应用程序需求\\n      - 成本考量\\n      - 性能需求\\n      - 数据新鲜度要求\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 934,
+    "outputTokens": 404,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 7646,
+    "providerCostUsd": 0.001679,
+    "providerUpstreamCostUsd": 0.001679,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000467,
+    "outputUsd": 0.001212,
+    "totalUsd": 0.001679,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

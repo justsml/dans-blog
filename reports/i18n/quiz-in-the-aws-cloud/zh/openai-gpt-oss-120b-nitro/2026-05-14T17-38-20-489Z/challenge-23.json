@@ -1,0 +1,53 @@
+{
+  "index": 22,
+  "attempt": 1,
+  "originalTitle": "Aurora Failover Mechanism",
+  "translatedTitle": "Aurora 故障转移机制",
+  "translation": {
+    "title": "Aurora 故障转移机制",
+    "group": "Aurora 高可用性",
+    "options": [
+      {
+        "text": "需要人工干预"
+      },
+      {
+        "text": "需要重新配置应用程序"
+      },
+      {
+        "text": "总是切换到最旧的副本"
+      },
+      {
+        "text": "基于故障转移优先级层自动提升"
+      }
+    ],
+    "objectives": [
+      "了解 Aurora 故障转移过程",
+      "识别高可用性配置",
+      "应用灾难恢复最佳实践"
+    ],
+    "questionProse": [
+      "在拥有多个只读副本的 Aurora 集群中，主实例故障时自动故障转移会发生什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "Aurora 故障转移过程：\n      1. 检测到主实例故障\n      2. 基于故障转移优先级层选择 Aurora 副本\n      3. 当优先级相同的情况下使用实例特性作为平局决胜因素\n      4. 自动更新集群终端节点\n\n      最佳实践：\n      - 在多个可用区保持多个副本\n      - 有意配置提升层级\n      - 在应用中使用集群终端节点\n      - 定期测试故障转移场景"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Aurora 故障转移机制\",\n  \"group\": \"Aurora 高可用性\",\n  \"options\": [\n    {\n      \"text\": \"需要人工干预\"\n    },\n    {\n      \"text\": \"需要重新配置应用程序\"\n    },\n    {\n      \"text\": \"总是切换到最旧的副本\"\n    },\n    {\n      \"text\": \"基于故障转移优先级层自动提升\"\n    }\n  ],\n  \"objectives\": [\n    \"了解 Aurora 故障转移过程\",\n    \"识别高可用性配置\",\n    \"应用灾难恢复最佳实践\"\n  ],\n  \"questionProse\": [\n    \"在拥有多个只读副本的 Aurora 集群中，主实例故障时自动故障转移会发生什么？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"Aurora 故障转移过程：\\n      1. 检测到主实例故障\\n      2. 基于故障转移优先级层选择 Aurora 副本\\n      3. 当优先级相同的情况下使用实例特性作为平局决胜因素\\n      4. 自动更新集群终端节点\\n\\n      最佳实践：\\n      - 在多个可用区保持多个副本\\n      - 有意配置提升层级\\n      - 在应用中使用集群终端节点\\n      - 定期测试故障转移场景\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 960,
+    "outputTokens": 364,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 1726,
+    "providerCostUsd": 0.000324,
+    "providerUpstreamCostUsd": 0.000324,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000037439999999999994,
+    "outputUsd": 0.00006552,
+    "totalUsd": 0.00010295999999999999,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "WebSocket Wizardry",
+  "translatedTitle": "WebSocket 巫术",
+  "translation": {
+    "title": "WebSocket 巫术",
+    "group": "WebSocket",
+    "options": [
+      {
+        "text": "API Gateway"
+      },
+      {
+        "text": "EKS",
+        "hint": "EKS 可以运行您自己的长期 WebSocket 服务。"
+      },
+      {
+        "text": "Lightsail",
+        "hint": "Lightsail 实例可以运行您自己的 WebSocket 服务器。"
+      },
+      {
+        "text": "AppSync",
+        "hint": "AppSync 提供基于 WebSocket 的托管实时 GraphQL 订阅，而不是任意的原始套接字。"
+      },
+      {
+        "text": "EC2",
+        "hint": "EC2 可以运行您自己的长期 WebSocket 服务器进程。"
+      }
+    ],
+    "objectives": [
+      "比较 AWS 服务的 WebSocket 支持",
+      "识别 AWS 服务的架构限制",
+      "评估 WebSocket 实现选项"
+    ],
+    "questionProse": [
+      "👋 我希望你到目前为止玩得开心！\n\n      来点棘手的吧……\n\n      哪个 AWS 服务提供托管的 WebSocket API，AWS 拥有客户端连接并将消息路由到集成？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "API Gateway 支持双向 WebSocket API，但实现由 API Gateway 托管，而不是直接映射到您自己的服务器进程。\n      API Gateway 维护客户端连接并将消息路由到 Lambda、HTTP 端点或其他集成。可以通过 API Gateway Management API 将消息发送回已连接的客户端。\n\n      其他服务对 WebSocket 更友好：\n      - Lightsail：非常适合简单的 WebSocket 部署 👌\n      - AppSync：使用 WebSocket 实现托管的 GraphQL 订阅\n      - EC2：经典的“想干嘛就干嘛” WebSocket 选项\n      - EKS：适合运行可扩展的 WebSocket 集群\n\n      小技巧：如果需要原始的 WebSocket 能力，还是使用计算服务吧！"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"WebSocket 巫术\",\n  \"group\": \"WebSocket\",\n  \"options\": [\n    {\n      \"text\": \"API Gateway\"\n    },\n    {\n      \"text\": \"EKS\",\n      \"hint\": \"EKS 可以运行您自己的长期 WebSocket 服务。\"\n    },\n    {\n      \"text\": \"Lightsail\",\n      \"hint\": \"Lightsail 实例可以运行您自己的 WebSocket 服务器。\"\n    },\n    {\n      \"text\": \"AppSync\",\n      \"hint\": \"AppSync 提供基于 WebSocket 的托管实时 GraphQL 订阅，而不是任意的原始套接字。\"\n    },\n    {\n      \"text\": \"EC2\",\n      \"hint\": \"EC2 可以运行您自己的长期 WebSocket 服务器进程。\"\n    }\n  ],\n  \"objectives\": [\n    \"比较 AWS 服务的 WebSocket 支持\",\n    \"识别 AWS 服务的架构限制\",\n    \"评估 WebSocket 实现选项\"\n  ],\n  \"questionProse\": [\n    \"👋 我希望你到目前为止玩得开心！\\n\\n      来点棘手的吧……\\n\\n      哪个 AWS 服务提供托管的 WebSocket API，AWS 拥有客户端连接并将消息路由到集成？\"\n  ],\n  \"questionCode\": [],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"API Gateway 支持双向 WebSocket API，但实现由 API Gateway 托管，而不是直接映射到您自己的服务器进程。\\n      API Gateway 维护客户端连接并将消息路由到 Lambda、HTTP 端点或其他集成。可以通过 API Gateway Management API 将消息发送回已连接的客户端。\\n\\n      其他服务对 WebSocket 更友好：\\n      - Lightsail：非常适合简单的 WebSocket 部署 👌\\n      - AppSync：使用 WebSocket 实现托管的 GraphQL 订阅\\n      - EC2：经典的“想干嘛就干嘛” WebSocket 选项\\n      - EKS：适合运行可扩展的 WebSocket 集群\\n\\n      小技巧：如果需要原始的 WebSocket 能力，还是使用计算服务吧！\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 1114,
+    "outputTokens": 1293,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 3647,
+    "providerCostUsd": 0.0009237,
+    "providerUpstreamCostUsd": 0.0009237,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000043446,
+    "outputUsd": 0.00023274,
+    "totalUsd": 0.000276186,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "index": 22,
+  "attempt": 1,
+  "originalTitle": "Aurora Failover Mechanism",
+  "translatedTitle": "Aurora 故障转移机制",
+  "translation": {
+    "title": "Aurora 故障转移机制",
+    "group": "Aurora 高可用性",
+    "options": [
+      {
+        "text": "需要手动干预"
+      },
+      {
+        "text": "需要重新配置应用程序"
+      },
+      {
+        "text": "始终故障转移到最旧的副本"
+      },
+      {
+        "text": "根据故障转移优先级层级自动提升"
+      }
+    ],
+    "objectives": [
+      "理解 Aurora 故障转移过程",
+      "识别高可用性配置",
+      "应用灾难恢复最佳实践"
+    ],
+    "questionProse": [
+      "在一个拥有多个读取副本的 Aurora 集群中，当主实例发生故障并触发自动故障转移时，会发生什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "Aurora 故障转移过程：\n      1. 检测到主实例故障\n      2. 主要根据故障转移优先级层级（failover priority tier）选择一个 Aurora 副本\n      3. 当优先级相同时，使用实例特征作为决胜条件\n      4. 自动更新集群端点（cluster endpoint）\n\n      最佳实践：\n      - 在多个可用区（AZ）中维护多个副本\n      - 有针对性地配置提升层级\n      - 在应用程序中使用集群端点\n      - 定期测试故障转移场景"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Aurora 故障转移机制\",\n  \"group\": \"Aurora 高可用性\",\n  \"options\": [\n    {\n      \"text\": \"需要手动干预\"\n    },\n    {\n      \"text\": \"需要重新配置应用程序\"\n    },\n    {\n      \"text\": \"始终故障转移到最旧的副本\"\n    },\n    {\n      \"text\": \"根据故障转移优先级层级自动提升\"\n    }\n  ],\n  \"objectives\": [\n    \"理解 Aurora 故障转移过程\",\n    \"识别高可用性配置\",\n    \"应用灾难恢复最佳实践\"\n  ],\n  \"questionProse\": [\n    \"在一个拥有多个读取副本的 Aurora 集群中，当主实例发生故障并触发自动故障转移时，会发生什么？\"\n  ],\n  \"questionCode\": [],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"Aurora 故障转移过程：\\n      1. 检测到主实例故障\\n      2. 主要根据故障转移优先级层级（failover priority tier）选择一个 Aurora 副本\\n      3. 当优先级相同时，使用实例特征作为决胜条件\\n      4. 自动更新集群端点（cluster endpoint）\\n\\n      最佳实践：\\n      - 在多个可用区（AZ）中维护多个副本\\n      - 有针对性地配置提升层级\\n      - 在应用程序中使用集群端点\\n      - 定期测试故障转移场景\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 872,
+    "outputTokens": 362,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 4060,
+    "providerCostUsd": 0.001522,
+    "providerUpstreamCostUsd": 0.001522,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000436,
+    "outputUsd": 0.0010860000000000002,
+    "totalUsd": 0.0015220000000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

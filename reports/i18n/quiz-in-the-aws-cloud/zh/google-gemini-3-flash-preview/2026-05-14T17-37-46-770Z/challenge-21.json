@@ -1,0 +1,53 @@
+{
+  "index": 20,
+  "attempt": 1,
+  "originalTitle": "Storage Cost Analysis",
+  "translatedTitle": "存储成本分析",
+  "translation": {
+    "title": "存储成本分析",
+    "group": "成本优化",
+    "options": [
+      {
+        "text": "所有数据均使用 S3 Standard"
+      },
+      {
+        "text": "始终使用最便宜的存储"
+      },
+      {
+        "text": "根据访问模式混合使用存储类"
+      },
+      {
+        "text": "将所有内容存储在 Glacier 中"
+      }
+    ],
+    "objectives": [
+      "比较不同 AWS 服务的存储成本",
+      "评估存储选择对成本的影响",
+      "应用成本优化策略"
+    ],
+    "questionProse": [
+      "对于存储 1PB 的数据，其中 20% 每天访问，30% 每月访问，50% 每年访问，最经济高效的方法是什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "最佳存储策略：\n    - 20% 存放在 `S3 Standard` 以满足每日访问需求\n    - 30% 存放在 `S3 Standard-IA` 以满足每月访问需求\n    - 50% 存放在 `Glacier` 以满足每年访问需求\n\n    这种方法在保持适当访问模式的同时优化了成本。\n\n    成本考量因素：\n    - 每 GB 的存储价格\n    - 检索成本\n    - 访问模式\n    - 转换成本"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"存储成本分析\",\n  \"group\": \"成本优化\",\n  \"options\": [\n    {\n      \"text\": \"所有数据均使用 S3 Standard\"\n    },\n    {\n      \"text\": \"始终使用最便宜的存储\"\n    },\n    {\n      \"text\": \"根据访问模式混合使用存储类\"\n    },\n    {\n      \"text\": \"将所有内容存储在 Glacier 中\"\n    }\n  ],\n  \"objectives\": [\n    \"比较不同 AWS 服务的存储成本\",\n    \"评估存储选择对成本的影响\",\n    \"应用成本优化策略\"\n  ],\n  \"questionProse\": [\n    \"对于存储 1PB 的数据，其中 20% 每天访问，30% 每月访问，50% 每年访问，最经济高效的方法是什么？\"\n  ],\n  \"questionCode\": [],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"最佳存储策略：\\n    - 20% 存放在 `S3 Standard` 以满足每日访问需求\\n    - 30% 存放在 `S3 Standard-IA` 以满足每月访问需求\\n    - 50% 存放在 `Glacier` 以满足每年访问需求\\n\\n    这种方法在保持适当访问模式的同时优化了成本。\\n\\n    成本考量因素：\\n    - 每 GB 的存储价格\\n    - 检索成本\\n    - 访问模式\\n    - 转换成本\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 886,
+    "outputTokens": 369,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 7921,
+    "providerCostUsd": 0.00155,
+    "providerUpstreamCostUsd": 0.00155,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000443,
+    "outputUsd": 0.0011070000000000001,
+    "totalUsd": 0.0015500000000000002,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

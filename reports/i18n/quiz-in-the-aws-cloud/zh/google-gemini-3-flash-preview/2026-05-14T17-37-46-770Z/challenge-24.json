@@ -1,0 +1,53 @@
+{
+  "index": 23,
+  "attempt": 1,
+  "originalTitle": "S3 Strong Consistency",
+  "translatedTitle": "S3 强一致性",
+  "translation": {
+    "title": "S3 强一致性",
+    "group": "S3 一致性",
+    "options": [
+      {
+        "text": "仅针对新对象"
+      },
+      {
+        "text": "所有操作均实现强一致性"
+      },
+      {
+        "text": "更新操作为最终一致性"
+      },
+      {
+        "text": "取决于区域"
+      }
+    ],
+    "objectives": [
+      "理解 S3 一致性模型",
+      "识别 S3 操作保证",
+      "将一致性知识应用于应用设计"
+    ],
+    "questionProse": [
+      "自 2020 年底起，S3 为所有操作提供什么样的一致性模型？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "S3 一致性模型：\n      - 所有操作均实现强读写一致性（Strong read-after-write consistency）\n      - 适用于 `PUTs` 和 `DELETEs` 操作\n      - 不再需要以前使用的各种变通方案\n      - 无需额外费用\n\n      影响：\n      - 简化了应用程序逻辑\n      - 无需进行一致性检查\n      - 写入后可立即进行可靠读取\n      - 提高了应用程序的可靠性"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"S3 强一致性\",\n  \"group\": \"S3 一致性\",\n  \"options\": [\n    {\n      \"text\": \"仅针对新对象\"\n    },\n    {\n      \"text\": \"所有操作均实现强一致性\"\n    },\n    {\n      \"text\": \"更新操作为最终一致性\"\n    },\n    {\n      \"text\": \"取决于区域\"\n    }\n  ],\n  \"objectives\": [\n    \"理解 S3 一致性模型\",\n    \"识别 S3 操作保证\",\n    \"将一致性知识应用于应用设计\"\n  ],\n  \"questionProse\": [\n    \"自 2020 年底起，S3 为所有操作提供什么样的一致性模型？\"\n  ],\n  \"questionCode\": [],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"S3 一致性模型：\\n      - 所有操作均实现强读写一致性（Strong read-after-write consistency）\\n      - 适用于 `PUTs` 和 `DELETEs` 操作\\n      - 不再需要以前使用的各种变通方案\\n      - 无需额外费用\\n\\n      影响：\\n      - 简化了应用程序逻辑\\n      - 无需进行一致性检查\\n      - 写入后可立即进行可靠读取\\n      - 提高了应用程序的可靠性\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 855,
+    "outputTokens": 345,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 3875,
+    "providerCostUsd": 0.0014625,
+    "providerUpstreamCostUsd": 0.0014625,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.0004275,
+    "outputUsd": 0.001035,
+    "totalUsd": 0.0014624999999999998,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

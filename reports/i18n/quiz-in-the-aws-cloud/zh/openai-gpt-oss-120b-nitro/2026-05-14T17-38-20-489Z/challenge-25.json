@@ -1,0 +1,53 @@
+{
+  "index": 24,
+  "attempt": 1,
+  "originalTitle": "Time To Live (TTL)",
+  "translatedTitle": "生存时间 (TTL)",
+  "translation": {
+    "title": "生存时间 (TTL)",
+    "group": "DynamoDB 功能",
+    "options": [
+      {
+        "text": "在到期时立即删除项目"
+      },
+      {
+        "text": "需要手动触发删除"
+      },
+      {
+        "text": "后台删除，尽力而为的时间安排"
+      },
+      {
+        "text": "项目过期但仍保留存储"
+      }
+    ],
+    "objectives": [
+      "了解 DynamoDB 的 TTL 功能",
+      "将 TTL 应用于数据生命周期管理",
+      "设计高效的数据过期策略"
+    ],
+    "questionProse": [
+      "DynamoDB 的 TTL 功能如何处理项目删除？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "DynamoDB TTL 特性：\n      - 后台进程监控 TTL 属性\n      - 过期项目会在尽力而为的调度下删除，通常在几天内完成\n      - TTL 不产生额外费用\n      - 删除的项目会出现在流中\n\n      使用场景：\n      - 会话管理\n      - 日志过期\n      - 临时数据清理\n      - 合规性要求"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"生存时间 (TTL)\",\n  \"group\": \"DynamoDB 功能\",\n  \"options\": [\n    {\n      \"text\": \"在到期时立即删除项目\"\n    },\n    {\n      \"text\": \"需要手动触发删除\"\n    },\n    {\n      \"text\": \"后台删除，尽力而为的时间安排\"\n    },\n    {\n      \"text\": \"项目过期但仍保留存储\"\n    }\n  ],\n  \"objectives\": [\n    \"了解 DynamoDB 的 TTL 功能\",\n    \"将 TTL 应用于数据生命周期管理\",\n    \"设计高效的数据过期策略\"\n  ],\n  \"questionProse\": [\n    \"DynamoDB 的 TTL 功能如何处理项目删除？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"DynamoDB TTL 特性：\\n      - 后台进程监控 TTL 属性\\n      - 过期项目会在尽力而为的调度下删除，通常在几天内完成\\n      - TTL 不产生额外费用\\n      - 删除的项目会出现在流中\\n\\n      使用场景：\\n      - 会话管理\\n      - 日志过期\\n      - 临时数据清理\\n      - 合规性要求\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 933,
+    "outputTokens": 761,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 2380,
+    "providerCostUsd": 0.00057735,
+    "providerUpstreamCostUsd": 0.00057735,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000036386999999999996,
+    "outputUsd": 0.00013697999999999998,
+    "totalUsd": 0.00017336699999999998,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "index": 11,
+  "attempt": 1,
+  "originalTitle": "S3 Performance Optimization",
+  "translatedTitle": "S3 性能优化",
+  "translation": {
+    "title": "S3 性能优化",
+    "group": "S3 性能",
+    "options": [
+      {
+        "text": "使用随机/哈希前缀"
+      },
+      {
+        "text": "使用逻辑前缀；不再需要随机化"
+      },
+      {
+        "text": "始终使用最大的对象"
+      },
+      {
+        "text": "尽量减少对象数量"
+      }
+    ],
+    "objectives": [
+      "针对高请求率优化 S3 性能",
+      "应用 S3 键名命名最佳实践",
+      "针对 S3 分区分布进行设计"
+    ],
+    "questionProse": [
+      "如何针对高请求率优化 S3 的性能？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "S3 性能技巧：\n    - 现代 S3 会根据每个前缀自动扩展请求率\n    - 为了性能，你不再需要使用随机/哈希前缀\n    - 使用符合你访问模式的逻辑键名即可\n    - 如果你推送的请求率极高，请监控 `503 Slow Down` 响应\n\n    旧的指南建议通过随机化前缀来避免热点分区，但 AWS 不再将其作为默认的性能要求。\n\n    [S3 性能指南](https://aws.amazon.com/s3/performance/)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"S3 性能优化\",\n  \"group\": \"S3 性能\",\n  \"options\": [\n    {\n      \"text\": \"使用随机/哈希前缀\"\n    },\n    {\n      \"text\": \"使用逻辑前缀；不再需要随机化\"\n    },\n    {\n      \"text\": \"始终使用最大的对象\"\n    },\n    {\n      \"text\": \"尽量减少对象数量\"\n    }\n  ],\n  \"objectives\": [\n    \"针对高请求率优化 S3 性能\",\n    \"应用 S3 键名命名最佳实践\",\n    \"针对 S3 分区分布进行设计\"\n  ],\n  \"questionProse\": [\n    \"如何针对高请求率优化 S3 的性能？\"\n  ],\n  \"questionCode\": [],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"S3 性能技巧：\\n    - 现代 S3 会根据每个前缀自动扩展请求率\\n    - 为了性能，你不再需要使用随机/哈希前缀\\n    - 使用符合你访问模式的逻辑键名即可\\n    - 如果你推送的请求率极高，请监控 `503 Slow Down` 响应\\n\\n    旧的指南建议通过随机化前缀来避免热点分区，但 AWS 不再将其作为默认的性能要求。\\n\\n    [S3 性能指南](https://aws.amazon.com/s3/performance/)\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 886,
+    "outputTokens": 362,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 4443,
+    "providerCostUsd": 0.001529,
+    "providerUpstreamCostUsd": 0.001529,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000443,
+    "outputUsd": 0.0010860000000000002,
+    "totalUsd": 0.0015290000000000002,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

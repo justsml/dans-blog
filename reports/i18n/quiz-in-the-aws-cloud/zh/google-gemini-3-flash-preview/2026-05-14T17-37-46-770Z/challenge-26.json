@@ -1,0 +1,54 @@
+{
+  "index": 25,
+  "attempt": 1,
+  "originalTitle": "Scaling Behavior",
+  "translatedTitle": "扩展行为",
+  "translation": {
+    "title": "扩展行为",
+    "group": "Aurora Serverless",
+    "options": [
+      {
+        "text": "扩展速度取决于当前容量和配置的容量范围",
+        "hint": "考虑从 0.5 ACU 扩展到 128 ACU 需要多长时间。"
+      },
+      {
+        "text": "按需瞬间完成扩展"
+      },
+      {
+        "text": "仅在预设的时间间隔内扩展"
+      },
+      {
+        "text": "仅支持手动扩展"
+      }
+    ],
+    "objectives": [
+      "理解 Aurora Serverless 的扩展机制",
+      "识别扩展触发条件",
+      "针对多变的工作负载优化成本"
+    ],
+    "questionProse": [
+      "在依靠 Aurora Serverless 处理突发流量高峰时，最核心的考量因素是什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "Aurora Serverless 扩展机制：\n      - Aurora Serverless v2 以精细的 ACU 增量来扩展容量。\n      - 扩展速度取决于当前容量以及设置的最小/最大 ACU 限制。\n      - 支持的版本在配置后可以在 0 ACU 时自动暂停。\n      - 账单按秒根据使用的 ACU 计费。\n\n      最佳实践：\n      - 对于关键业务负载，应将最小容量设置得足够高，以应对突发流量。\n      - 监控扩展事件。\n      - 务必考虑连接管理（Connection Management）。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"扩展行为\",\n  \"group\": \"Aurora Serverless\",\n  \"options\": [\n    {\n      \"text\": \"扩展速度取决于当前容量和配置的容量范围\",\n      \"hint\": \"考虑从 0.5 ACU 扩展到 128 ACU 需要多长时间。\"\n    },\n    {\n      \"text\": \"按需瞬间完成扩展\"\n    },\n    {\n      \"text\": \"仅在预设的时间间隔内扩展\"\n    },\n    {\n      \"text\": \"仅支持手动扩展\"\n    }\n  ],\n  \"objectives\": [\n    \"理解 Aurora Serverless 的扩展机制\",\n    \"识别扩展触发条件\",\n    \"针对多变的工作负载优化成本\"\n  ],\n  \"questionProse\": [\n    \"在依靠 Aurora Serverless 处理突发流量高峰时，最核心的考量因素是什么？\"\n  ],\n  \"questionCode\": [],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"Aurora Serverless 扩展机制：\\n      - Aurora Serverless v2 以精细的 ACU 增量来扩展容量。\\n      - 扩展速度取决于当前容量以及设置的最小/最大 ACU 限制。\\n      - 支持的版本在配置后可以在 0 ACU 时自动暂停。\\n      - 账单按秒根据使用的 ACU 计费。\\n\\n      最佳实践：\\n      - 对于关键业务负载，应将最小容量设置得足够高，以应对突发流量。\\n      - 监控扩展事件。\\n      - 务必考虑连接管理（Connection Management）。\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 874,
+    "outputTokens": 390,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 3882,
+    "providerCostUsd": 0.001607,
+    "providerUpstreamCostUsd": 0.001607,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000437,
+    "outputUsd": 0.00117,
+    "totalUsd": 0.001607,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
