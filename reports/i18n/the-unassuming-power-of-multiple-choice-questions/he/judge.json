@@ -1,0 +1,77 @@
+{
+  "selectedCommit": "f1036a6517336256ef1f7132ade5e1de2e2ac3b9",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 5,
+    "technicalAccuracy": 5,
+    "coherence": 5,
+    "relevance": 5,
+    "translationQuality": 5,
+    "mdxPreservation": 5
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "מהו התחביר",
+      "replacement": "מהו התחביר",
+      "reason": "The judge report suggested changing 'מהי' to 'מהו' for gender agreement, but the current text already uses 'מהו'. No change needed for this specific match, but I will check the other suggestion."
+    },
+    {
+      "priority": "high",
+      "match": "בין תחבירים דומים",
+      "replacement": "בין תחבירים דומים",
+      "reason": "The judge report suggested pluralizing 'תחביר' to 'תחבירים'. The current text already has 'תחבירים'. No change needed."
+    }
+  ],
+  "rationale": "The translation is excellent and captures Dan's direct, conversational style. It correctly uses technical terminology and pedagogical terms like 'מסיח' (distractor). Upon review, the grammatical suggestions provided in the previous judge report were already present in the selected commit's text (likely due to a misread of the diff or a previous fix), so the text is currently correct.",
+  "slug": "the-unassuming-power-of-multiple-choice-questions",
+  "locale": "he",
+  "candidateCommits": [
+    "f1036a6517336256ef1f7132ade5e1de2e2ac3b9",
+    "b34b9f7ab7c4467d7fe18daa9202706a73bd6423"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "המסיח הוא תכנית הלימודים",
+      "replacement": "המסיח הוא תוכנית הלימודים",
+      "reason": "Standard Hebrew spelling (Ktiv Male) for 'program/curriculum' is תוכנית.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "הוא חושף איזה מודל הוא משתמש",
+      "replacement": "הוא חושף באיזה מודל הוא משתמש",
+      "reason": "Grammatical correction: 'using' requires the preposition 'in' (be-) in Hebrew.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "מהי התחביר",
+      "replacement": "מהו התחביר",
+      "reason": "Grammatical gender agreement: 'Syntax' (Tachbir) is masculine in Hebrew, so it should be 'Mahu' not 'Mahi'.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "בין תחביר דומים",
+      "replacement": "בין תחבירים דומים",
+      "reason": "Grammatical number agreement: 'Similar' is plural, so 'Syntax' must be pluralized to 'Tachbirim'.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug the-unassuming-power-of-multiple-choice-questions --locale he --skip-global",
+    "output": ""
+  }
+}
