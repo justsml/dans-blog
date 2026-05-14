@@ -1,0 +1,38 @@
+{
+  "selectedCommit": "8b4112d86d5153616cc5b8c4fc3dc50ed062fec7",
+  "selectedModel": "deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 95,
+    "technicalAccuracy": 95,
+    "coherence": 95,
+    "relevance": 95,
+    "translationQuality": 95,
+    "mdxPreservation": 100
+  },
+  "suggestions": [],
+  "rationale": "The translation is excellent, capturing Dan's direct and slightly informal style while maintaining technical accuracy. It correctly handles the MDX frontmatter and asset paths. The previous suggestion regarding the trailing 'or' in the 360-tier description was already addressed in the current version ('在路肩上行驶或……'), which perfectly matches the source's open-ended 'driving on a shoulder or'.",
+  "slug": "when-ai-fails-and-the-crashing-robot-cars",
+  "locale": "zh",
+  "candidateCommits": [
+    "736e7ed187c7b371c42023dcb0bdd3f33f6a1db0",
+    "fc7e885bfe9da59581ef66b108abd686b5f6c8d2",
+    "8b4112d86d5153616cc5b8c4fc3dc50ed062fec7"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "medium",
+      "match": "驶上路肩或",
+      "replacement": "在路肩上行驶或……",
+      "reason": "The original text ends with 'or' followed by a trailing thought/omission, the translation should reflect that more naturally.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug when-ai-fails-and-the-crashing-robot-cars --locale zh --skip-global",
+    "output": ""
+  }
+}
