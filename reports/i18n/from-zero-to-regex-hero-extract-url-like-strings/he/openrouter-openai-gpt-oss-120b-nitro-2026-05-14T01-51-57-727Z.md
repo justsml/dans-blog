@@ -1,0 +1,283 @@
+# Translation Candidate
+- Slug: from-zero-to-regex-hero-extract-url-like-strings
+- Locale: he
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2024-12-29--from-zero-to-regex-hero-extract-url-like-strings/he/index.mdx
+- Validation: deferred
+- Runtime seconds: 4.37
+- Input tokens: 9032
+- Output tokens: 3656
+- Thinking tokens: unknown
+- Cached input tokens: 2944
+- Cache write tokens: 0
+- Estimated cost: $0.001010
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: מאפס לגיבור רגקס
+subTitle: חילוץ וניתוח מחרוזות דמויות‑URL עם ביטוי רגולרי יחיד
+category: Regex
+subCategory: Data Extraction
+date: '2024-12-29'
+modified: '2025-01-06'
+tags:
+  - regex
+  - url
+  - data-extraction
+  - data-processing
+social_image: ../desktop-social.webp
+cover_full_width: ../regex-url-parsing-wide.webp
+cover_mobile: ../regex-url-parsing-square-200.webp
+cover_icon: ../regex-url-parsing-square-200.webp
+---
+import { CodeTabs } from '../../../../components/CodeTabs';
+
+**תוכן עניינים**
+
+- 🚀 [מבוא](#-introduction)
+- 🔍 [חילוץ כתובות URL מטקסט](#-extracting-urls-from-text)
+- 🛳️ [ה‑Regex של 120+ בתים](#️-the-120-byte-regex)
+- 🧩 [פירוק שלב‑אחר‑שלב](#-breaking-it-down-step-by-step)
+- 🛠️ [דוגמת ניתוח](#-pa)
+- ☑️ [צעדים הבאים](#-next-steps)
+- 📝 [סיכום](#-summary)
+- 📚 [למידה נוספת](#-further-learning)
+
+**TL;DR:** קפצו ישר ל[Regex של 120+ בתים](#️-the-120-byte-regex).
+
+## 🚀 מבוא
+
+חילוץ כתובות URL מטקסט גולמי יכול לעיתים להרגיש כמו משחק משעמם של "הכה חור". פיסוק, עטיפות בסוגריים, ועיצוב דו‑משמעי כולם מתנגשים ומקשים על העבודה. בין אם אתם בונים סקרייפר אינטרנט, מנתח נתונים, או אפליקציית צ'אט, חילוץ מדויק של URL הוא קריטי.
+
+בפוסט הזה נתקוף את הבעיה ישירות עם גישה גמישה של שני שלבים. המטרה שלנו היא **לתפוס תחילה את כל המחרוזות שיכולות להיראות כ‑URL** ולאחר מכן לבצע אימות בתהליך נפרד.
+
+> 💡 **הערה:** תבנית זו איננה מיועדת **לאימות** כתובות URL! היא מתוכננת להיות מרחיבה בכוונה עם פיסוק ואיות לקוי.
+
+1. **תפוס כל מה שדומה ל‑URL**: שגר רשת רחבה כדי ללכוד את כל המחרוזות שיכולות להיות URL. כאן ה‑"regex של 120+ בתים" שלנו מצטיין.  
+2. **אימות**: אחרי שתופסים את המועמדים, השתמשו בבדיקות משניות (למשל, פתרון DNS, השוואה לדומיינים מוכרים) כדי להסיר ערכים שגויים.
+
+### המחשת האתגר
+
+מונחים כמו `extract` ו‑`parse` משמשים לעיתים באופן חלופי, אך הם מתייחסים לתהליכים שונים. חילוץ URL כולל זיהוי ותפיסת כתובות פוטנציאליות מתוך טקסט רחב. פירוק, לעומת זאת, מתמקד בפירוק כתובות אלו לחלקים המרכיבים אותן.
+
+כאשר אני מדבר על פירוק או על "חלקי URL", אני מתכוון לרכיבים הבאים:
+
+<figure>
+  <figcaption>חמשת חלקי כל ה‑URL</figcaption>
+![URL anatomy, visualized](../WhatUrlsAreMadeOf-ColorMatched.svg "URL anatomy, visualized")
+</figure>
+
+<details class="inset breakout">
+  <summary>לחצו כדי לראות צילום מסך של התאמת תתי‑מחרוזת ב‑RegEx101.</summary>
+
+  לפני שנצלול עמוק לתוך ה‑regex, נשתמש בכלי חזותי כדי לראות כמה טוב הדפוס שלנו תופס התאמות רבות:
+
+  <figure>
+    <figcaption>שימוש ב‑[RegEx101.com](https://regex101.com/r/jO8bC4/69) להצגת התאמות מרובות שורות</figcaption>
+    ![Preview 'bulk' multi-line matches](../RegEx101-Matches-Screenshot.webp "Preview 'bulk' multi-line results")
+  </figure>
+</details>
+
+## ה‑Regex של 120+ בתים
+
+להלן regex תמציתי שנועד לחלץ ולפענח URL ב‑צעד אחד. הוא תומך במגוון פרוטוקולים, דומיינים, נתיבים, ובחלקי שאילתה/פרגמנט אופציונליים.
+
+אל תדאגו—נפרק את זה שלב אחרי שלב!
+
+```js title="120+ Byte URL Regex" frame="code"
+const urlRegex = /([-.a-z0-9]+:\/{1,3})([^-\/\.[\](|)\s?][^`\/\s\]?]+)([-_a-z0-9!@$%^&*()=+;/~\.]*)[?]?([^#\s`?]*)[#]?([^#\s'"`\.,!]*)/gi;
+// Compatibility: ES5+
+```
+
+```
+// Samepattern, split on newlines for readability:
+([-.a-z0-9]+:\/{1,3})
+([^-\/\.[\](|)\s?][^`\/\s\]?]+)
+([-_a-z0-9!@$%^&*()=+;/~\.]*)
+[?]?([^#\s`?]*)
+[#]?([^#\s'"`\.,!]*)
+
+```
+
+<blockquote class="inset">שתפו את ה‑regex הכי פראיים שנתקלים בהם (או שכתבתם) בתגובות <a href="#post-comments">להלן</a>! 🚀</blockquote>
+
+## 🧩 פירוק שלב‑אחר‑שלב
+
+בואו ננתח את ה‑regex רכיב‑רכיב כדי להבין איך הוא פועל:
+
+<h3>1. פרוטוקול (קבוצה 1): <code>{`([-.a-z0-9]+:\/{1,3})`}</code></h3>
+
+<ul>
+  <li>**מטרה:** תופס את חלק הפרוטוקול של ה‑URL (למשל `http://`, `ftp://`, `custom-scheme://`).</li>
+  <li>
+    **הסבר:**
+    <ul>
+      <li><code>[-.a-z0-9]+</code>: תופס אותיות קטנות, ספרות, מקפים או נקודות – תווים נפוצים בשם פרוטוקול.</li>
+      <li><code>{`:\/{1,3}`}</code>: תופס נקודתיים ולאחריה אחת עד שלוש קוי נטייה (`:/`, `://` או `:///`).</li>
+    </ul>
+  </li>
+</ul>
+
+<h3>2. דומיין (קבוצה 2): <code>{`([^-\/\.[\](|)\s?][^\`\/\s\]?]+)`}</code></h3>
+
+<ul>
+  <li>**מטרה:** קולט את חלק הדומיין או המארח של ה‑URL.</li>
+  <li>
+    **הסבר:**
+    <ul>
+      <li><code>[^-\/\.[\](|)\s?]</code>: תופס כל תו חוץ מהתווים המיוחדים והמרווחים המצוינים.</li>
+      <li><code>[^`\/\s\]?]+</code>: תופס אחד או יותר תווים חוץ ממקף אחורי, קו נטייה, רווח או סוגר מרובע סגור.</li>
+    </ul>
+  </li>
+</ul>
+
+<h3>3. נתיב (קבוצה 3): <code>{`([-_a-z0-9!@$%^&*()=+;/~\\.]*)`}</code></h3>
+
+<ul>
+  <li>**מטרה:** תופס את רכיב הנתיב של ה‑URL.</li>
+  <li>
+    **הסבר:**
+    <ul>
+      <li><code>[-_a-z0-9!@$%^&*()=+;/~\.]*</code>: תופס אפס או יותר תווים בטוחים ל‑URL שנפוצים בנתיבים.</li>
+    </ul>
+  </li>
+</ul>
+
+<h3>4. מחרוזת שאילתה (קבוצה 4): <code>[?]?([^#\s`?]*)</code></h3>
+
+<ul>
+  <li>**מטרה:** תופס באופן אופציונלי מחרוזת שאילתה, המתחילה בכל תו <code>?</code>.</li>
+  <li>
+    **הסבר:**
+    <ul>
+      <li><code>[?]?</code>: תופס באופן אופציונלי <code>?</code>. (הסוגריים המרובעים אינם הכרחיים, אך הם ברורים מעט יותר מהכתיבה הקיצרתית <code>??</code>. הם גם מספקים מקביל חזותי לקבוצה הבאה <code>[#]?</code>.)</li>
+      <li><code>([^#\s`?]*)</code>: תופס אפס או יותר תווים שאינם סימן hash, רווח, גרש אחורי, או סימן שאלה.</li>
+    </ul>
+  </li>
+</ul>
+
+<h3>5. מקטע (קבוצה 5): <code>[#]?([^#\s'"`\.,!]*)</code></h3>
+
+<ul>
+  <li>**מטרה:** תופס באופן אופציונלי את מזהה המקטע המתחיל ב‑<code>#</code>.</li>
+  <li>
+    **הסבר:**
+    <ul>
+      <li><code>[#]?</code>: תופס באופן אופציונלי <code>#</code>.</li>
+      <li><code>([^#\s'"`\.,!]*)</code>: תופס אפס או יותר תווים שאינם סימני פיסוק או רווחים אסורים.</li>
+    </ul>
+  </li>
+</ul>
+
+## 🛠️ דוגמת ניתוח
+
+כך אפשר להפעיל את הרגקס המפחיד הזה, עם מעט קוד JavaScript:
+
+<CodeTabs client:only
+ tabs={[
+    "קוד: חילוץ URL‑ים",
+    "תוצאות: URL‑ים מחולצים",
+    "תוצאות: חלקי URL",
+  ]} >
+```js title="extract-urls.js" frame="code"
+const text = `
+Check this out: https://example.com/path?query=123#section
+And also (ftp://files.server.org/index).
+Plus a weird one: custom-scheme://host/param;weird^stuff
+`;
+
+const urlRegex =
+  /([-.a-z0-9]+:\/{1,3})([^-\/\.[\](|)\s?][^`\/\s\]?]+)([-_a-z0-9!@$%^&*()=+;/~\.]*)[?]?([^#\s`?]*)[#]?([^#\s'"`\.,!]*)/gi;
+
+const matches = [
+  ...text.matchAll(urlRegex),
+].map((match) => match[0]);
+console.log("Extracted URLs:", matches);
+
+const parts = [
+  ...text.matchAll(urlRegex),
+].map((match) => match.slice(1));
+console.log("Extracted Parts:", parts);
+```
+
+```json title="extracted-urls.json"
+[
+  "https://example.com/path?query=123#section",
+  "ftp://files.server.org/index",
+  "custom-scheme://host/param;weird^stuff"
+]
+```
+
+```json title="urls-parts.json"
+[
+  [
+    "https://",    // Protocol
+    "example.com", // Domain
+    "/path",       // Path
+    "query=123",   // Query
+    "section"      // Fragment
+  ],
+  [
+    "ftp://",           // Protocol
+    "files.server.org", // Domain
+    "/index",           // Path
+    "",                 // Query
+    ""                  // Fragment
+  ],
+  [
+    "custom-scheme://",   // Protocol
+    "host",               // Domain
+    "/param;weird^stuff", // Path
+    "",                   // Query
+    ""                    // Fragment
+  ]
+]
+```
+
+</CodeTabs>
+
+## ☑️ צעדים הבאים
+
+בהתאם למקרה השימוש שלכם, ייתכן שיהיה צורך לחדד את הרגקס הזה או להוסיף שלבי אימות ועיבוד נוספים.
+
+### פרויקטים שונים, צרכים שונים
+
+לפרויקטים יש דרישות שונות וחששות בטחוניים:
+
+1. **סריקת אינטרנט**: אימות כתובות URL כדי לוודא שהן נגישות ואמינות.
+2. **עיבוד נתונים**: חילוץ כתובות URL מתוכן שנוצר על‑ידי משתמשים תוך שמירה על בטיחות.
+3. **ניתוח נתונים**: סינון קישורים משוכפלים או לא רלוונטיים למטרות מחקר או שיווק.
+4. **יישומים למשתמשים**: הוספת קישורים אוטומטית ל‑URL בצ'אט או בפורומים.
+
+### עיבוד נוסף ואימות
+
+לאחר איסוף כתובות URL פוטנציאליות, יש לבצע בדיקות נוספות:
+
+- **בדיקת DNS**: אימות שהדומיינים נפתרים.
+- **בדיקות בטיחות**: שימוש בשירותים לבדיקת אתרים זדוניים או פישינג.
+- **כללים מותאמים**: יישום מסננים ספציפיים לפרויקט (לדוגמה, TLDים מורשים, אורך מקסימלי של URL).
+
+## 📝 סיכום
+
+חילוץ נתוני מחרוזת חצי‑מבנה עשוי להיות החלק המספק ביותר במיומנות הרגקס.
+
+הנה סיכום של הנקודות המרכזיות:
+
+- **השתמשו בכלי חזותי לכתיבה, בדיקה** והבנת ה‑[תבניות Regex שלכם.](https://regex101.com/r/jO8bC4/69)
+- **פצלו את האתגר לחלקים** ופתרו כל חלק בנפרד. במובן מסוים, קבוצות לכידה משמשות כ„סימני דרך“ לדמיון שלנו ברגקס.
+- **השתמשו בביטויים „רפויים“, הימנעו מציות קפדנית למפרט** בעת קבלת נתונים.
+- **הוספת שלבי אימות** אחרי החילוץ הראשוני היא קריטית — תמיד קחו בחשבון את האבטחה והצרכים הספציפיים של הפרויקט.
+
+על‑ידי ביצוע הצעדים האלה, תוכלו לחלץ ביעילות כל מחרוזת חצי‑מובנית, ולבסס את הבסיס לעיבוד ולאימות נוספים.
+
+## 📚 למידה נוספת
+
+- זכרו לשחק עם [הדגמה חיה ב‑RegEx101.com](https://regex101.com/r/jO8bC4/69)!
+- שאלת StackOverflow המקורית, ו[קישור לתשובה שלי כאן](https://stackoverflow.com/a/34669019/369727).
+- [תיעוד MDN על ביטויים רגולריים](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions)
+- [טכניקות Regex מתקדמות](https://www.regular-expressions.info/): חקרו lookaheads, lookbehinds, ותבניות מתקדמות אחרות להתאמה מדויקת יותר.
+- [RFC 3986 – תחביר URI גנרי](https://datatracker.ietf.org/doc/html/rfc3986)
+````
