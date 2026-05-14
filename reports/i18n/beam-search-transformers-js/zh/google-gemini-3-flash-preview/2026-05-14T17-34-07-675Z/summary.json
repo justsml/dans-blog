@@ -1,0 +1,75 @@
+{
+  "runId": "google-gemini-3-flash-preview@2026-05-14T17-34-07-675Z",
+  "slug": "beam-search-transformers-js",
+  "locale": "zh",
+  "model": "google/gemini-3-flash-preview",
+  "modelPath": "google-gemini-3-flash-preview",
+  "createdAt": "2026-05-14T17:34:38.927Z",
+  "sourcePath": "src/content/posts/2026-04-16--beam-search-transformers-js/index.mdx",
+  "targetPath": "src/content/posts/2026-04-16--beam-search-transformers-js/zh/index.mdx",
+  "candidatePath": "reports/i18n/beam-search-transformers-js/zh/google-gemini-3-flash-preview/2026-05-14T17-34-07-675Z/candidate.mdx",
+  "sourceHash": "f18620b582f1c2a340c4b7d98da5cb544cd646463534f4076975963727af3149",
+  "outputHash": "832e1773be99291acb6f81a03f8f722ee204643e86d03e2412c879303dafc786",
+  "reasoningEffort": "low",
+  "temperature": 0.3,
+  "maxTokens": 16000,
+  "timeoutMs": 200000,
+  "articleSummary": "This technical tutorial-style article details the implementation of beam search within the `transformers.js` library to replace a previously non-functional \"greedy-only\" decoding loop. The author explains the architectural transition from simple greedy selection to managing multiple candidate sequences, highlighting the necessity of a global ranking system over the library's existing local samplers. Key technical challenges discussed include the implementation of diverse beam search, the management of a `BeamHypotheses` priority queue, and the critical need to reorder Key-Value (KV) caches to maintain state consistency across beams. The intended audience is JavaScript developers and machine learning engineers interested in the internal mechanics of porting Python-based transformer features to the browser or Node.js environments.",
+  "totalInputTokens": 6236,
+  "totalOutputTokens": 2560,
+  "totalCacheReadTokens": 0,
+  "totalCacheWriteTokens": 0,
+  "totalDurationMs": 21380,
+  "totalCostUsd": 0.010798,
+  "pricingSource": "local-openrouter-estimate",
+  "telemetry": {
+    "model": "google/gemini-3-flash-preview",
+    "chunkSize": "18p",
+    "totalChunks": 4,
+    "totalInputTokens": 6236,
+    "totalOutputTokens": 2560,
+    "totalCacheReadTokens": 0,
+    "totalCacheWriteTokens": 0,
+    "totalDurationMs": 21380,
+    "totalCostUsd": 0.010798,
+    "pricingSource": "local-openrouter-estimate",
+    "chunks": [
+      {
+        "index": 0,
+        "inputTokens": 1278,
+        "outputTokens": 497,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 4946,
+        "costUsd": 0.00213
+      },
+      {
+        "index": 1,
+        "inputTokens": 1763,
+        "outputTokens": 789,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 6652,
+        "costUsd": 0.0032485
+      },
+      {
+        "index": 2,
+        "inputTokens": 1651,
+        "outputTokens": 738,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 5184,
+        "costUsd": 0.0030395
+      },
+      {
+        "index": 3,
+        "inputTokens": 1544,
+        "outputTokens": 536,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 4598,
+        "costUsd": 0.00238
+      }
+    ]
+  }
+}
