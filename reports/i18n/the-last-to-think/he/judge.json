@@ -1,0 +1,46 @@
+{
+  "selectedCommit": "e3b96a2bba48630e9f99707fea2f98b79a880c9a",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 5,
+    "technicalAccuracy": 5,
+    "coherence": 5,
+    "relevance": 5,
+    "translationQuality": 5,
+    "mdxPreservation": 5
+  },
+  "suggestions": [],
+  "rationale": "The current translation in the Hebrew file already has the 'language: Hebrew' fix applied and correctly translates the content with the appropriate tone and technical accuracy. No further high-priority changes are required.",
+  "slug": "the-last-to-think",
+  "locale": "he",
+  "candidateCommits": [
+    "e3b96a2bba48630e9f99707fea2f98b79a880c9a",
+    "208ecfd911a213f9208f953db99e1747ff056874"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "medium",
+      "match": "מי מעקם עכשיו אצבעות",
+      "replacement": "מי כוסס עכשיו ציפורניים",
+      "reason": "The Hebrew idiom for 'hand-wringing' (anxiety/worry) is closer to 'biting nails' or 'wringing hands' (שילוב ידיים/דאגה), 'bending fingers' is not a standard idiom here.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "language: English",
+      "replacement": "language: Hebrew",
+      "reason": "The language frontmatter field should reflect the target language of the translation.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug the-last-to-think --locale he --skip-global",
+    "output": ""
+  }
+}
