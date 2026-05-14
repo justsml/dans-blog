@@ -1,0 +1,117 @@
+---
+social_image: ../desktop-social.webp
+title: 好的命名
+subTitle: 命名实践：面向对象基础
+date: '2016-06-01'
+modified: '2024-08-10'
+category: Guides
+subCategory: programming
+tags:
+  - programming
+  - patterns
+  - naming
+  - source-code
+  - organization
+cover: ../rawpixel-652639-unsplash.webp
+cover_mobile: ../w300_rawpixel-652639-unsplash.webp
+cover_icon: ../icon_rawpixel-652639-unsplash.webp
+---
+## 命名问题：面向对象基础
+
+我们通过示例来看对象/类设计...
+
+### 当前状况
+
+你是否设计过`数据模型`（代码、SQL或Excel表格）？
+以下内容是否似曾相识？
+
+```
+*** 反模式 - 不要复制粘贴 ***
+* User
+  - id
+  - avatarUrl
+  - name
+  - email
+  - password
+
+* Agent
+  - id
+  - primaryPhoto
+  - name
+  - email
+  - agentEmail
+  - agentPhoneMain
+  - agentEmailPrimary
+  - agentPhonePrimary
+  - agentAddressFull
+  - agentCompanyName
+  - agentCompanyAddress
+  - *userEmail* - '指向' User 表 ^^^
+```
+
+### 问题出在哪里？
+
+从技术上讲没有错误，只是数据需要重新组织。
+
+**以下情况是否让你有共鸣？**
+
+1. 应用程序的任何更改都可能导致数小时的繁琐调试
+1. 任何需求变更都会导致：
+
+![schema refactor][schema_refactor]
+
+为什么字段名`agentEmailPrimary`如此糟糕？
+
+首先，你并非在创造宇宙中全新的事物。过度具体存在以下陷阱：
+
+1. 被高度具体的名称锁定，意味着`agentEmailPrimary`很可能使你的视图和相关代码**完全不可复用**，并导致反复出现的恼人错误，例如：
+
+- 表间数据不同步（不清楚`user.email`是否需要传播到`agent.agentEmail`或反之 - 更不用说手动实现此"逻辑"的复杂性...）
+- 验证规则/逻辑可能重复且不一致
+- 项目会越来越像摇摇欲坠的积木塔
+- 每添加一个新文件，脆弱性都在累积，即使微小更改也需要极高的细节关注度
+
+1. `agentEmailPrimary`可能有多种含义。通过**更简短的名称**消除歧义：
+
+- 警惕多余的词语。`Primary`？只会引发更多疑问：是否有Secondary？这是给主要联系人用的吗？
+
+够了Dan，那应该是什么样的？
+
+### 解决方案
+
+```
+// 合并后的模式：
+
+User
+  - id
+  - role: ['agent', 'lead', 'admin']
+  - name
+  - phone
+  - address
+  - email
+  - password
+  - company
+    - name
+    - address
+```
+
+我移除了`Agent`表，因为它不包含Agent独有的字段。而`User.company`对象（含`.name`、`.address`）在清理命名后自然出现了。
+
+一些指导原则：
+
+1. 消除不必要的表。你真的需要一个`statuses`表吗？当你可以直接在`User`表中添加`status::VARCHAR(8)`字段时？没问题，使用每行额外的字节。
+2. 尝试合并相关表。**数据**
+3. 删除冗余的数据收集（例如如果被分析解决方案替代，移除`ActivityLogs`表）
+4. 尝试保持**所有字段名**为**单个单词/名词/代词**。可以依赖表名提供的上下文（例如`PersonalAccount.email` vs `BusinessAccount.email` - 上下文由表名提供）
+5. **绝对不要**有`Agent.agentEmail`或`Agent.agentPhonePrimary`这样的命名。句号。跟我念："它是`email`和`phone`"
+6. 通过使用高度具体的名称，你实际上将代码可重用性和持久性**永久固定为0%**
+7. 你不会通过这种`User.profileSummaryEmail`的垃圾命名帮到任何人。💞
+
+**推荐阅读：**
+
+1. [也许规范化并不正常](https://blog.codinghorror.com/maybe-normalizing-isnt-normal/)
+2. [数据库规范化与反规范化的权衡](https://dev.to/er_dward/the-trade-offs-between-database-normalization-and-denormalization-4kdo)
+3. [http://phlonx.com/resources/nf3/](http://phlonx.com/resources/nf3/)
+4. [https://en.wikipedia.org/wiki/Database_normalization](https://en.wikipedia.org/wiki/Database_normalization)
+
+[schema_refactor]: https://res.cloudinary.com/ddd/image/upload/bldg-collapse__wsZKhIc_kafcha.gif
