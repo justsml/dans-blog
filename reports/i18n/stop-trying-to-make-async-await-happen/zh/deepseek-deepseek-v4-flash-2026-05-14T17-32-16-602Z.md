@@ -1,0 +1,227 @@
+# Translation Candidate
+- Slug: stop-trying-to-make-async-await-happen
+- Locale: zh
+- Model: deepseek/deepseek-v4-flash
+- Target: src/content/posts/2018-10-03--stop-trying-to-make-async-await-happen/zh/index.mdx
+- Validation: deferred
+- Runtime seconds: 47.16
+- Input tokens: 5800
+- Output tokens: 6693
+- Thinking tokens: unknown
+- Cached input tokens: 384
+- Cache write tokens: 0
+- Estimated cost: $0.002633
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: 别再硬推 async/await 了
+subTitle: Promise 现在可火了
+date: '2018-10-03'
+modified: '2024-08-03'
+category: Guides
+subCategory: promises
+tags:
+  - promises
+  - async
+  - await
+  - async-await
+  - javascript
+  - composition
+related:
+  - intro-to-promises
+  - promise-gotchas
+  - visualizing-promises
+  - you-may-not-need-axios
+cover: ../matt-nelson-414464-unsplash.webp
+cover_mobile: ../w300_matt-nelson-414464-unsplash.webp
+cover_icon: ../icon_matt-nelson-414464-unsplash.webp
+---
+自盘古开天辟地以来，开发者们就一直在进行各种愚蠢的争论。从经典的"制表符 vs. 空格"到永恒的"Mac vs. PC"辩论，我们很擅长寻找分散注意力的论点。
+
+<br />
+<small>_答案:_ Linux 和 Spaces.</small>
+
+<!-- We're going to look at 2 rules to improve your life with Promises. -->
+
+## 这场争论……？
+
+### Promise vs. Async/Await！
+
+等等，这是一场争论吗？肯定是吧？我们似乎不再讨论回调函数了？
+
+不，这不是一场争论。归根结底，它只是你工具箱中的另一个潜在工具。然而，由于 `async`/`await` 并未取代 Promise 的所有功能（特别是 `Promise.all`、`.race`），**将其作为替代品来呈现是具有误导性的。**
+
+有很多有影响力的人正在推广这种误解，即 `async`/`await` 是 Promise 的[替代品](https://developers.google.com/web/fundamentals/primers/async-functions)[每个人](https://hackernoon.com/6-reasons-why-javascripts-async-await-blows-promises-away-tutorial-c7ec10518dd9)[一直](https://x.com/umaar/status/1045655069478334464)[等待](http://2ality.com/2017/08/promise-try.html#why-not-just-use-async-functions)[的](https://dzone.com/articles/javascript-promises-and-why-asyncawait-wins-the-ba)。
+
+> **提示：不，绝不，一点也不。**
+
+VS Code 最近新增的一个功能进一步助长了这种偏见。正如 [@umaar](https://x.com/umaar) 在推文中所述：
+
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Visual Studio Code 现在可以将你的长串 Promise.then() 链转换为 async/await！🎊 在 JavaScript 和 TypeScript 文件中都运行良好。.catch() 也能正确转换为 try/catch ✅ <a href="https://t.co/xb39Lsp84V">pic.x.com/xb39Lsp84V</a></p>&mdash; Umar Hansa (@umaar) <a href="https://x.com/umaar/status/1045655069478334464?ref_src=twsrc%5Etfw">2018年9月28日</a></blockquote>
+
+<!-- Sure, it's an impressive addition to an already amazing list of features. -->
+
+如果你讨厌 Promise，并且想要这个重构功能，我不怪你。
+
+<br />
+
+_我感同身受。我理解。_
+
+<br />
+
+我也经历过。🤗
+
+<br />
+
+我过去讨厌 Promise。如今，我彻底转变了看法。**Promise 非常出色。** 它们能够促使/鼓励你**利用函数组合**。
+
+我建议先从以下两个方面入手，提升你的 Promise 技巧。
+
+1. [命名函数（不要匿名）](#rule-1)
+1. [单一职责函数](#rule-2)
+
+<h2 id="rule-1">#1：命名函数！</h2>
+
+干掉你的匿名方法。使用**命名函数**能让代码读起来像需求的诗歌。
+
+来看一个常见例子：
+
+使用 `fetch` 发起 HTTP GET 请求：
+
+<!-- fetch 规范规定 [HTTP 状态码](https://http.cat/) 超过 400 或 500 **不会自动触发错误。** 许多 AJAX 库（jQuery、axios）的默认行为则不同。 -->
+
+<!-- 在看解决方案之前，先看看常见的“推荐”实现： -->
+
+### 反模式
+
+```js
+// ❌ 使用匿名内联函数 💩
+fetch(url)
+  .then(response => response.status < 400
+    ? response
+    : Promise.reject(new Error('Request Failed: ' + response.ststus)))
+  .then(response => response.text())
+```
+
+### 解决方案：命名方法
+
+```js
+// ✅ 清晰显现：命名函数
+fetch(url)
+  .then(checkResponse)
+  .then(getText)
+
+
+// 可复用的通用函数
+function checkResponse(response) {
+  return response.status < 400
+    ? response
+    : Promise.reject(new Error('Request Failed: ' + response.ststus))
+}
+function getText(response) {
+  return response.text()
+}
+```
+
+> 随着代码越来越 DRY，这种方法的优势会愈发明显。
+
+**额外资源：** 查看我的 **1 分钟视频**，演示使用此技术的[基础日志](https://youtu.be/xR_MZE1SIkk)和[高级调试](https://youtu.be/P_tghqWj72M)。
+
+<h2 id="rule-2">#2：单一职责（函数）</h2>
+
+“单一职责”听起来_看似精确_。
+
+但它其实非常主观、随意，甚至有时毫无意义。
+
+<!-- 与其争论某个函数是否足够聚焦，
+
+我提出了一个粗略的衡量标准：`职责成本`。分数越高，越可能做了太多事。
+
+```js
+// 1 分：return 和三元表达式实际上相当于一行代码
+function checkResponse(response) {
+  return response.status < 400
+    ? response
+    : Promise.reject(new Error('Request Failed: ' + response.ststus))
+}
+// 1 分：return 和表达式实际上也相当于一行代码
+function getText(response) {
+  return response.text()
+}
+```
+
+给定一个函数的代码，每行包含以下任一内容加 1 分：`if`、`return`、三元表达式、`for`、`const`、`let`、`var`、`switch`、`while`、`[].map/filter/reduce/etc`。每个指令加 1 分（忽略空白行）。一连串的表达式或方法只计 1 分。
+
+呼，刚才有点术语轰炸了。
+
+有趣的是，大多数开发者报告说他们在**单一职责**化代码方面_相当擅长_。毫不意外的是，他们也报告说自己开车技术很棒！
+
+<!-- 这**并非 Promise 独有的问题**，数组方法和所有其他基于高阶函数（HoF）的 API 都有相同的使用体验。 -->
+
+让我们看一个例子，这个例子来自（才华横溢的）[Jake Archibald](https://x.com/jaffathecake) 在 Google Developers 网站上关于 async/await 的文章（注意：2024 年，链接已移除）。
+
+<!--
+让我们看看其中一个所谓的“❌ 不推荐”的 Promise 示例。（描述是“假设我们想按顺序获取一系列 URL，并在尽可能快的情况下按正确顺序记录它们。”） -->
+
+```js
+// 来源：https://developers.google.com/web/fundamentals/primers/async-functions
+function logInOrder(urls) {
+  // 获取所有 URL
+  const textPromises = urls.map(url => {
+    return fetch(url).then(response => response.text());
+  });
+
+  // 按顺序记录它们
+  textPromises.reduce((chain, textPromise) => {
+    return chain.then(() => textPromise)
+      .then(text => console.log(text));
+  }, Promise.resolve());
+}
+```
+
+### 单一职责？
+
+我认为不是。`logInOrder` 在做什么？
+
+1. 遍历 `urls` 列表
+1. 对每个 URL 执行内联 HTTP GET：
+  1. HTTP `fetch`
+  1. 返回响应文本内容
+1. 在 `textPromise` 中的每个 promise 后追加一个 `.then(text => console.log(text))`
+  1. 串行打印结果
+
+这个单一函数中定义了 5 个匿名方法。正如 Jake 所指出的，`.reduce` 过于复杂。在代码中到处手写这种精细机制并不合理。换句话说，我们不会用无尽的 `document.createElement()`、`element.setAttribute()` 等来编写 DOM 创建代码。相反，我们会从众多选项中选择最佳工具：辅助/工具函数、库或框架。
+
+<!-- 我们需要隔离正在进行的每个“步骤”：有一个 HTTP 请求，一个将 URL 列表转换为结果列表的变换。还需要一个 `console.log`。 -->
+
+<!-- > 🤔 为什么 `Promise` 会让开发者放弃我们在其他地方使用的实践？ -->
+
+<!-- **注意：** 如果意图是_按顺序发起请求_，而不仅仅是按顺序打印结果，这段代码实际上并没有做到。我们将相应地重构。 -->
+
+#### 解决方案：单一职责函数
+
+### 首先**提取方法**...
+
+![从 Promise 代码中提取异步方法的 VS Code 重构](../async-refactor-google-extract-methods-resized-75.webp "提取方法")
+
+### 接着用 `Promise.all` 和 `..map()` 替换 `.reduce()` 和 `logPromise()`...
+
+![使用 Promise.all 和 map 重构 Promise 链以提高可读性](../async-refactor-google-chain-methods-resized-75.webp "提高可读性")
+
+### 总结
+
+尝试将这些技巧应用到自己的代码中！然后[在推特上@我](https://x.com/justsml)，告诉我效果如何。如果有问题或评论，也欢迎联系我！
+
+帮助传播 #PromiseTruth 并分享本文。❤️
+
+![图片来源：matt-nelson-414464-unsplash.webp](../matt-nelson-414464-unsplash.webp)
+
+#### 相关阅读
+
+* [Daniel Brain](https://medium.com/@bluepnume/even-with-async-await-you-probably-still-need-promises-9b259854c161)
+* [Eric Elliott](https://x.com/_ericelliott?lang=en)
+````
