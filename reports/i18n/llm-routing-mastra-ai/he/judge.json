@@ -1,0 +1,37 @@
+{
+  "selectedCommit": "cbf28fc762d0197e58d0295cef0d66f3d844e9c4",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The translation is excellent and captures Dan's direct, punchy style perfectly in Hebrew. It correctly handles MDX assets with relative paths and maintains technical accuracy. The suggestion from the previous judge regarding the heading 'Delegation Over Devotion' was already incorporated into the current text ('האצלה במקום התמסרות'), so no further high-priority suggestions are needed.",
+  "slug": "llm-routing-mastra-ai",
+  "locale": "he",
+  "candidateCommits": [
+    "cbf28fc762d0197e58d0295cef0d66f3d844e9c4",
+    "25ace318d100a2ab182999408a97fc712cef9565"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "האצלה על פני התמסרות",
+      "replacement": "האצלה במקום התמסרות",
+      "reason": "'על פני' is a literal translation of 'over' in this context; 'במקום' (instead of) is more natural for the 'Delegation Over Devotion' heading.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug llm-routing-mastra-ai --locale he --skip-global",
+    "output": ""
+  }
+}
