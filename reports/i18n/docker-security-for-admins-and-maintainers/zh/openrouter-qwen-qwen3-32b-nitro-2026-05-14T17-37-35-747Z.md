@@ -1,0 +1,347 @@
+# Translation Candidate
+- Slug: docker-security-for-admins-and-maintainers
+- Locale: zh
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2025-01-04--docker-security-for-admins-and-maintainers/zh/index.mdx
+- Validation: deferred
+- Runtime seconds: 12.08
+- Input tokens: 4612
+- Output tokens: 4783
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.001517
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+unlisted: true
+draft: true
+hidden: true
+title: Docker 安全：开发者缺失的指南
+subTitle: 了解如何防范网络威胁及危险配置！
+date: '2025-01-04'
+modified: '2025-01-13'
+tags:
+  - local development
+  - security
+  - devops
+  - best-practices
+category: Security
+cover_full_width: ../flame-whale-wide.webp
+cover_mobile: ../flame-whale-head-square-200.webp
+cover_icon: ../flame-whale-head-square-200.webp
+cover_credit: ©️ 2025 Dan Levy
+---
+import {CodeTabs} from '../../../../components/CodeTabs';
+
+## 工作进行中
+
+**目录**
+
+1. [⚠️ 本地网络的风险](#-本地网络的风险)
+2. [🛡️ 防火墙配置](#-防火墙配置)
+3. [🔐 本地开发的密钥管理](#-本地开发的密钥管理)
+4. [🕵️‍ 凭据泄露与侧信道攻击](#-凭据泄露与侧信道攻击)
+5. [🔍 监控与诱饵令牌](#-监控与诱饵令牌)
+6. [❌ 常见误解](#-常见误解)
+
+<p class="inset"></p>
+
+## ⚠️ 本地网络的风险
+
+坦白说，我们每个人都做过。你可能随意连接过咖啡店的Wi-Fi，或者让别人未经思考地使用你的家庭网络。甚至可能信任智能冰箱不会危及你的网络。现实是？这些随意的决定可能会使你的本地开发环境面临不必要的风险。攻击者不仅针对生产系统——本地环境往往是更软的目标，提供了访问敏感项目的途径。
+
+### 攻击场景
+
+1. **流量截获：** 未加密的流量可以被轻易捕获和读取。
+2. **未受保护的服务：** 本地数据库或API暴露在`0.0.0.0`。
+3. **网络欺骗：** 将流量重定向到攻击者的设备。
+
+### 快速修复方案
+
+- 优先使用私有Docker网络而非防火墙，以限制网络暴露。
+- 避免使用公共或共享Wi-Fi；优先使用手机热点。
+- 使用`arp-scan`和`nmap`等工具监控本地网络中的未知设备。
+
+## 🛡️ 防火墙配置
+
+### UFW与Docker（Ubuntu）
+
+> ⚠️ **警告：** 默认情况下，Ubuntu/Debian上的Docker会绕过UFW/iptables规则，可能导致系统暴露在攻击之下。
+> 即使你将端口绑定到本地IP地址（例如`-p 127.0.0.1:8080:80`）也无济于事。
+
+每次了解到这一点时，我都感到惊讶！[Docker默认会绕过UFW规则](https://github.com/moby/moby/issues/4737)，允许容器与主机和其他容器无限制通信。
+
+### 最佳实践
+
+1. 🥇 **使用Docker网络** 隔离并控制哪些容器或网络可以连接到彼此。
+
+2. 🥉 **更新iptables** 如果必须使用`host`网络，或者无法使用自定义网络，可以通过配置iptables缓解风险。这需要一定的技术深度，[请查看下方工具。](#uf)
+
+#### Docker网络隔离
+
+```bash
+# 创建一个新的Docker网络
+docker network create my-network
+
+# 使用新网络运行容器
+docker run --network my-network my-container
+```
+
+#### UFW配置（针对`host`网络）
+
+网上关于解决这个问题的建议很多都是错误的。通过UFW配置Docker的方式基本和预期一致。
+
+我使用过`ufw-docker`来配置自托管系统，效果良好。
+
+```bash title="install-ufw-docker.sh"
+# 以root权限安装二进制文件（本身需要root权限）
+sudo wget -O /usr/local/bin/ufw-docker \
+   https://github.com/chaifeng/ufw-docker/raw/master/ufw-docker
+sudo chmod +x /usr/local/bin/ufw-docker
+# 安装并修改`ufw`的`after.rules`文件
+ufw-docker install
+
+ufw-docker help
+
+```
+
+该命令执行以下操作：
+
+- 备份文件`/etc/ufw/after.rules`。
+- 在文件末尾追加Docker相关规则以与UFW正确集成。
+
+**来源：**[ufw-docker GitHub](https://github.com/chaifeng/ufw-docker/tree/master#install)
+
+**示例用法：**
+
+```bash
+
+# 允许Docker容器使用8080端口
+ufw-docker allow <container_name> 8080/tcp
+
+# 在UFW配置中安全管理规则
+ufw-docker status
+
+```
+
+**注意：** 大多数解决Docker-UFW冲突的"修复方案"都涉及手动配置iptables规则，这在更新时容易出错且脆弱。
+
+### macOS防火墙
+
+1. 进入 **系统偏好设置 > 安全与隐私 > 防火墙**。
+2. 启用防火墙并点击"防火墙选项"。
+3. 阻止所有传入连接，仅保留必要服务。
+
+**注意：** 您可能需要查阅防火墙配置文档以允许某些智能设备使用的服务（例如Google Cast/AirPlay等）。
+
+### 高级用户命令（macOS和Linux）
+
+#### macOS:
+
+```bash
+
+sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setblockall on  # 阻止所有连接
+sudo /usr/libexec/ApplicationFirewall/socketfilterfw --add /path/to/app  # 允许特定应用
+
+```
+
+#### Linux (ufw):
+
+```bash
+
+ufw default deny incoming  # 阻止所有传入连接
+ufw allow ssh  # 允许SSH
+# 允许443和80端口用于网络流量
+ufw allow 80/tcp
+ufw allow 443/tcp
+ufw enable  # 启用防火墙
+
+```
+
+**专业提示：** 在macOS上使用[Little Snitch](https://www.obdev.at/products/littlesnitch/index.html)，在Linux上使用[ufw](https://help.ubuntu.com/community/UFW)可以获得更友好的配置体验。
+
+## 🔐 本地开发的密钥管理
+
+### 主动占位符验证
+
+<p>💡 在运行应用程序前确保密钥已正确设置为真实值。</p>
+
+如果您在密钥中使用类似`__WARNING_REPLACE_ME__`的占位符，这很好，至少有人会注意到。为了保险起见，还可以添加一些验证逻辑来提供运行时保护。
+
+您无法想象当攻击者能猜到密钥时，完全篡改（修改并重新签名）JWT令牌有多么容易！
+
+<CodeTabs client:load tabs={["JavaScript", "Rust", "Go"]}>
+
+```javascript
+// validateSecrets.js
+const validateSecrets = () => {
+  const unsafePlaceholder = /__WARNING_REPLACE_ME__/;
+  const missingSecrets = Object.entries(process.env).filter(
+    ([key, value]) => unsafePlaceholder.test(value)
+  );
+
+  if (missingSecrets.length) {
+    console.error("检测到不安全的密钥：", missingSecrets);
+    process.exit(1);
+  }
+};
+
+validateSecrets();
+```
+
+```rust
+// validate_secrets.rs
+use std::env;
+
+fn validate_secrets() {
+    let unsafe_placeholder = "__WARNING_REPLACE_ME__";
+    for (key, value) in env::vars() {
+        if value.contains(unsafe_placeholder) {
+            panic!("{} 中存在不安全密钥", key);
+        }
+    }
+}
+
+fn main() {
+    validate_secrets();
+}
+```
+
+```go
+// validate_secrets.go
+package main
+
+import (
+	"fmt"
+	"os"
+	"strings"
+)
+
+func validateSecrets() {
+	placeholder := "__WARNING_REPLACE_ME__"
+	for _, env := range os.Environ() {
+		pair := strings.SplitN(env, "=", 2)
+		if len(pair) == 2 && strings.Contains(pair[1], placeholder) {
+			panic(fmt.Sprintf("%s 中存在不安全密钥", pair[0]))
+		}
+	}
+}
+
+func main() {
+	validateSecrets()
+}
+```
+
+</CodeTabs>
+
+### 生成和存储密钥
+
+<p class="inset">切勿在代码库中硬编码密钥。优先使用环境变量和安全保险库。</p>
+
+与其使用 `.env.example`，不如使用 `.env.generate.sh` 来让用户更容易获得带有安全"默认值"的 `.env` 文件。
+
+#### 示例 `.env.generate.sh`
+
+```bash title=".env.generate.sh" frame="code"
+#!/bin/bash
+# 为本地开发生成安全的.env文件
+
+generate_secret() {
+    local length=${1:-30}
+    # 增加4字节以计算填充
+    local generate_length=$((length + 4))
+    openssl rand -base64 "$generate_length" | tr -d '+=/\n' | cut -c1-"$length"
+}
+# 如果.env文件已存在则退出
+[ -f .env ] && { echo ".env文件已存在!"; exit 1; }
+
+cat <<EOL > .env
+# 数据库设置与密钥
+DB_USER=app_user
+DB_PASSWORD=$(generate_secret 30)
+REDIS_PASSWORD=$(generate_secret 20)
+# 会话密钥
+SESSION_KEY=$(generate_secret 32)
+JWT_SECRET=$(generate_secret 64)
+EOL
+
+echo "新.env文件已生成!"
+```
+
+{/*
+
+```zig
+// validate_secrets.zig
+const std = @import("std");
+
+pub fn main() void {
+    var env = std.os.getenv_map();
+    const placeholder = "__WARNING_REPLACE_ME__";
+
+    for (env.items()) |entry| {
+        if (std.mem.contains(u8, entry.value, placeholder)) {
+            std.debug.panic("Unsafe secret in {}", .{entry.key});
+        }
+    }
+}
+``` */}
+
+## 🕵️‍ 监控与双重验证
+
+### `nmap` 示例
+
+#### 内部网络测试
+
+```bash
+
+# 扫描本地主机的所有开放端口
+nmap -sT localhost
+
+# 扫描本机的私有IP上的服务
+nmap -sV 192.168.1.10
+
+# 检测网络上的设备
+nmap -sn 192.168.0.0/24
+nmap -sn 10.0.0.0/24
+
+```
+
+#### 外部网络测试
+
+可以通过 `ifconfig.me` 等服务轻松获取当前（公网）IP：`curl https://ifconfig.me`
+
+使用外部网络或远程服务器测试公网IP：
+
+```bash
+
+print_current_ip() {
+  curl https://ifconfig.me
+}
+
+print_current_ip
+# --> 123.456.789.012
+
+# 将 target_host 替换为你的公网IP或主机名
+# 使用高级技术检查主机
+nmap -A --open --reason $target_host
+nmap -A -F --open --reason $target_host
+nmap -A -p1-65535 --open --reason $target_host
+
+```
+
+**为什么需要双面测试？**
+内部测试揭示内部暴露面，而外部测试识别攻击者可访问的服务。
+
+## 🛡️ 常见误解
+
+1. **我的本地环境不是目标。**
+   - 事实：攻击者可以利用你的机器作为跳板进入生产系统。
+2. **防火墙会阻止所有流量。**
+   - 事实：它们只会阻止你配置的规则。
+3. **私有IP是安全的。**
+   - 事实：NAT绕过等攻击仍可能影响你的网络。
+````
