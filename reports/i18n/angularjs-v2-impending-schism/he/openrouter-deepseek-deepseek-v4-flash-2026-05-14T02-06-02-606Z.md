@@ -1,0 +1,60 @@
+# Translation Candidate
+- Slug: angularjs-v2-impending-schism
+- Locale: he
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2015-08-05--angularjs-v2-impending-schism/he/index.mdx
+- Validation: deferred
+- Runtime seconds: 5.92
+- Input tokens: 1074
+- Output tokens: 622
+- Thinking tokens: unknown
+- Cached input tokens: 384
+- Cache write tokens: 0
+- Estimated cost: $0.000272
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: AngularJS v2.0 והפיצול הממשמש ובא
+subTitle: האם אפשר להימנע?
+date: '2015-08-05'
+modified: '2016-11-30'
+category: Thoughts
+subCategory: angularjs
+tags:
+  - programming
+  - angularjs
+  - javascript
+  - python
+  - opinion
+cover: ../alex-perez-753751-unsplash.webp
+cover_mobile: ../w300_alex-perez-753751-unsplash.webp
+cover_icon: ../icon_alex-perez-753751-unsplash.webp
+---
+אני חושב שאנחנו עדים ל'המרה' של Python 2→3 שוב.  
+AngularJS v2.0 מציגה יותר מדי שינויים. **לא הכי פחות מהם הוא TypeScript**, שזו בקשה גדולה בעיצומה של סיום הגרסה האחרונה של JS: ES6.
+
+> תן לי לומר בבירור: אני אוהב את TypeScript. אני בסתר מייחל שהפגישות TC-39 היו מייצרות אותו... אבל הן לא.  
+> עם זאת, הם העלו ספציפיקציה אחרת (שונה לחלוטין), גם היא מדהימה...
+
+למרות ש-TypeScript מתקמפל ל-JavaScript, זה לא אומר שאתה מעתיק ומדביק בעיוורון TypeScript 'מהודר'. זה הופך למעשה ללמידה הכרחית, כדי להבין את TypeScript המבואר של AngularJS 2.0.
+
+עכשיו, מתחילים חייבים לטפס על 'הר TypeScript' לפני שהם בכלל יכולים להתחיל להרכיב אפליקציית Angular (עם רמה מסוימת של הבנה).
+
+יש לי תחושה איך זה עלול ללכת...
+
+<div class="anigif end">  
+  <img alt='לולאה אינסופית' src="https://res.cloudinary.com/ddd/image/upload/timeout-expired.gif" />  
+</div>
+
+נו טוב, אני אוסיף את זה לרשימת האימונים למתחילים: איפשהו בין `שימוש בסיסי ב-Shell` לבין `Gulp או Grunt? מתנה+ייסורים!`
+
+> בכל מקרה, אני מקווה שזה יעבוד...
+
+<div class="anigif top end">  
+  <img alt='הכל הולך להיות בסדר' src="https://res.cloudinary.com/ddd/image/upload/v1442175801/system-maint-anon.gif" />  
+</div>
+````
