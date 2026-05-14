@@ -1,0 +1,57 @@
+{
+  "runId": "openai-gpt-oss-120b-nitro@2026-05-14T02-05-08-650Z",
+  "slug": "promise-gotchas",
+  "locale": "ar",
+  "model": "openai/gpt-oss-120b:nitro",
+  "modelPath": "openai-gpt-oss-120b-nitro",
+  "createdAt": "2026-05-14T02:05:11.572Z",
+  "sourcePath": "src/content/posts/2018-09-26--promise-gotchas/index.md",
+  "targetPath": "src/content/posts/2018-09-26--promise-gotchas/ar/index.mdx",
+  "candidatePath": "reports/i18n/promise-gotchas/ar/openai-gpt-oss-120b-nitro/2026-05-14T02-05-08-650Z/candidate.mdx",
+  "sourceHash": "585ef3acb24711b5dc9644d20cfc4e64a997bcdd11408aaa68156dd3f28e5615",
+  "outputHash": "26017b56afb19d96438d2ceaec9001c0c2a6c924ca2f7ff59a8a810c83109109",
+  "reasoningEffort": "low",
+  "temperature": 0.3,
+  "maxTokens": 16000,
+  "timeoutMs": 200000,
+  "articleSummary": "**Summary:**  \nThe article warns that JavaScript promises behave fundamentally differently from ordinary values, emphasizing that you cannot log a promise directly but must use its asynchronous `.then` (or `.catch`) interface. It highlights a common pitfall: TC39 permits `null` (or `undefined`) callbacks in `.then`, so passing the result of `console.log()`—which is `undefined—` silently skips a chain step and can lead to confusing bugs. Through a mini‑quiz, the author shows that only the forms `Promise.resolve(42).then(console.log)` and `Promise.resolve(42).then(value => console.log(value))` (and a chained version that relies on the skipped step) correctly output `42`. The tone is tutorial‑style with a cautionary edge, using concrete code examples as the primary framing device. The intended audience is JavaScript developers familiar with promises who need to avoid subtle misuse.",
+  "totalInputTokens": 2223,
+  "totalOutputTokens": 485,
+  "totalCacheReadTokens": 1024,
+  "totalCacheWriteTokens": 0,
+  "totalDurationMs": 1795,
+  "totalCostUsd": 0.00017399699999999998,
+  "pricingSource": "local-openrouter-estimate",
+  "telemetry": {
+    "model": "openai/gpt-oss-120b:nitro",
+    "chunkSize": "10p",
+    "totalChunks": 2,
+    "totalInputTokens": 2223,
+    "totalOutputTokens": 485,
+    "totalCacheReadTokens": 1024,
+    "totalCacheWriteTokens": 0,
+    "totalDurationMs": 1795,
+    "totalCostUsd": 0.00017399699999999998,
+    "pricingSource": "local-openrouter-estimate",
+    "chunks": [
+      {
+        "index": 0,
+        "inputTokens": 1112,
+        "outputTokens": 312,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 1279,
+        "costUsd": 0.00009952799999999999
+      },
+      {
+        "index": 1,
+        "inputTokens": 1111,
+        "outputTokens": 173,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 516,
+        "costUsd": 0.000074469
+      }
+    ]
+  }
+}

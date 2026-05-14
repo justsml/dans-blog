@@ -1,0 +1,109 @@
+# Translation Candidate
+- Slug: promise-gotchas
+- Locale: ar
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2018-09-26--promise-gotchas/ar/index.mdx
+- Validation: deferred
+- Runtime seconds: 1.79
+- Input tokens: 2223
+- Output tokens: 485
+- Thinking tokens: unknown
+- Cached input tokens: 1024
+- Cache write tokens: 0
+- Estimated cost: $0.000174
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: فخاخ الـ Promise
+subTitle: تجنّب الأخطاء الشائعة
+date: '2018-09-26'
+modified: '2024-07-30'
+category: Code
+subCategory: promises
+tags:
+  - promises
+  - async
+  - debugging
+  - errors
+  - javascript
+  - composition
+related:
+  - intro-to-promises
+  - visualizing-promises
+  - are-promises-broken
+  - javascript-promises-quiz
+cover: ../michal-parzuchowski-224092-unsplash.webp
+cover_mobile: ../w300_michal-parzuchowski-224092-unsplash.webp
+cover_icon: ../icon_michal-parzuchowski-224092-unsplash.webp
+---
+### الوعود لا تعمل كالقيم الأخرى
+
+لا يمكنك طباعة قيمتها كما تفعل مع معظم القيم:
+
+```js
+// هذا لا معنى له مع الوعود:
+console.log(Promise.resolve(42));
+
+// يجب أن نستخدم واجهة `.then`:
+Promise.resolve(42).then(value => console.log(value));
+```
+
+### الوعود لا تحذرك عندما ترتكب خطأ
+
+حسنًا، خطأ محتمل.
+
+لأسباب متعددة، قررت TC39 السماح بتمرير `null` إلى `.then` و `.catch`. على سبيل المثال، `.then(null, null)` صالح والسلوك المطلوب هو تخطي تلك "الخطوة" في السلسلة.
+
+العاقبة غير السارة لهذا هي أنه من السهل جدًا إفساد الأمور.
+
+##### بالمثال
+
+لنلقِ نظرة على تحدٍ صغير: أي من الخيارات التالية سيطبع `42` باستخدام `console.log`؟
+
+```js
+// الخيار #1:
+Promise.resolve(42).then(console.log());
+
+// الخيار #2:
+Promise.resolve(42).then(console.log);
+
+// الخيار #3:
+Promise.resolve(42).then(value => console.log(value));
+
+// الخيار #4:
+Promise.resolve(42)
+  .then(console.log())
+  .then(console.log);
+```
+
+##### الجواب
+
+الإجابة هي #2، #3 و #4.
+
+لماذا؟ لنلقِ نظرة على **أنواع** ما تم تمريره إلى `.then()`:
+
+```js
+var arg1 = console.log();
+var arg2 = console.log;
+var arg3 = value => console.log(value);
+
+typeof arg1 === "undefined";
+typeof arg2 === "function";
+typeof arg3 === "function";
+```
+
+ما زلت تتساءل كيف يعمل الخيار الرابع؟
+
+إنه يُنفّذ فعليًا هكذا:
+
+```js
+// Option #4 - effectively
+Promise.resolve(42)
+  .then(undefined) // لا يؤثر هذا على القيمة، سيتم تمريرها إلى `.then(fn)` التالي
+  .then(console.log);
+```
+````
