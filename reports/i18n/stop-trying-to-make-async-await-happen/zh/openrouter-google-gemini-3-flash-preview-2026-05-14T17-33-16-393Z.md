@@ -1,0 +1,216 @@
+# Translation Candidate
+- Slug: stop-trying-to-make-async-await-happen
+- Locale: zh
+- Model: openrouter/google/gemini-3-flash-preview
+- Target: src/content/posts/2018-10-03--stop-trying-to-make-async-await-happen/zh/index.mdx
+- Validation: deferred
+- Runtime seconds: 19.68
+- Input tokens: 6067
+- Output tokens: 2162
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.009520
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: 别再强求 async/await 了
+subTitle: Promise 现在真的很 fetch
+date: '2018-10-03'
+modified: '2024-08-03'
+category: Guides
+subCategory: promises
+tags:
+  - promises
+  - async
+  - await
+  - async-await
+  - javascript
+  - composition
+related:
+  - intro-to-promises
+  - promise-gotchas
+  - visualizing-promises
+  - you-may-not-need-axios
+cover: ../matt-nelson-414464-unsplash.webp
+cover_mobile: ../w300_matt-nelson-414464-unsplash.webp
+cover_icon: ../icon_matt-nelson-414464-unsplash.webp
+---
+自古以来，开发者们就没少在一些无聊的问题上掐架。从经典的“Tabs 还是 Spaces”到经久不衰的“Mac 还是 PC”之争，我们总能精准地找到那些让人分心的论点。
+
+<br />
+<small>_答案是：_ Linux 和 Spaces。</small>
+
+<!-- We're going to look at 2 rules to improve your life with Promises. -->
+
+## 争论点在于……？
+
+### Promises 还是 Async/Await！
+
+等等，这算是一场争论吗？肯定是吧？毕竟我们现在好像都不怎么聊回调（callbacks）了？
+
+不，这算不上争论。归根结底，它只是你工具箱里的另一个备选工具。然而，由于 `async`/`await` 并不能完全替代 Promise 的所有功能（特别是 `Promise.all` 和 `.race`），**将其宣传为替代品是有误导性的。**
+
+有很多影响力很大的人在推波助澜，让人误以为 `async`/`await` 就是[大家](https://developers.google.com/web/fundamentals/primers/async-functions) [一直](https://hackernoon.com/6-reasons-why-javascripts-async-await-blows-promises-away-tutorial-c7ec10518dd9) [在](https://x.com/umaar/status/1045655069478334464) [等待的](http://2ality.com/2017/08/promise-try.html#why-not-just-use-async-functions) [Promise](https://dzone.com/articles/javascript-promises-and-why-asyncawait-wins-the-ba) 终结者。
+
+> **提示：并不是，完全不是，一点边都不沾。**
+
+VS Code 最近增加的一个功能加深了这种偏见。正如 [@umaar](https://x.com/umaar) 在推特上所说：
+
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Visual Studio Code can now convert your long chains of Promise.then()&#39;s into async/await! 🎊 Works very well in both JavaScript and TypeScript files. .catch() is also correctly converted to try/catch ✅ <a href="https://t.co/xb39Lsp84V">pic.x.com/xb39Lsp84V</a></p>&mdash; Umar Hansa (@umaar) <a href="https://x.com/umaar/status/1045655069478334464?ref_src=twsrc%5Etfw">September 28, 2018</a></blockquote>
+
+<!-- Sure, it's an impressive addition to an already amazing list of features. -->
+
+如果你讨厌 Promise，并且想要这个重构功能，我不怪你。
+
+<br />
+
+_我感同身受。我完全理解。_
+
+<br />
+
+我也曾经历过那个阶段。🤗
+
+<br />
+
+我曾经也讨厌 Promise。但现在，我的观点完全转了回来。**Promise 非常了不起。** 它们能促使并鼓励你**利用函数组合（function composition）的优势。**
+
+要提升你的 Promise 技巧，我建议首先关注这两个领域：
+
+1. [具名函数（拒绝匿名函数）](#rule-1)
+2. [单一职责函数](#rule-2)
+
+<h2 id="rule-1">#1: 具名函数！</h2>
+
+干掉你的匿名方法。使用**具名函数**能让代码读起来像是一首关于业务需求的诗。
+
+来看一个常见的例子：
+
+使用 `fetch` 发起 HTTP GET 请求：
+
+<!-- the fetch specification states [HTTP status codes](https://http.cat/) over 400 or 500 **do not automatically trigger an error.** The default in many AJAX libraries (jQuery, axios). -->
+
+<!-- Before we see the solution, look over a common "recommended" implementation: -->
+
+### 反模式（Anti-Pattern）
+
+```js
+// ❌ 使用匿名内联函数 💩
+fetch(url)
+  .then(response => response.status < 400
+    ? response
+    : Promise.reject(new Error('Request Failed: ' + response.ststus)))
+  .then(response => response.text())
+```
+
+### 解决方案：具名方法
+
+```js
+// ✅ 逻辑清晰：具名函数
+fetch(url)
+  .then(checkResponse)
+  .then(getText)
+
+
+// 可复用的通用函数
+function checkResponse(response) {
+  return response.status < 400
+    ? response
+    : Promise.reject(new Error('Request Failed: ' + response.ststus))
+}
+function getText(response) {
+  return response.text()
+}
+```
+
+> 随着代码变得更加 DRY（不自我重复），这种方式的优势会愈发明显。
+
+**额外资源：** 看看我关于使用该技术进行[基础日志记录](https://youtu.be/xR_MZE1SIkk)和[高级调试](https://youtu.be/P_tghqWj72M)的 **1 分钟视频**。
+
+<h2 id="rule-2">#2: 单一职责（函数）</h2>
+
+“单一职责”听起来像是那种*具有误导性的精确*。
+
+它非常主观、随意，甚至有时毫无意义。
+
+<!-- Instead of arguing if a given function is sufficiently focused.
+
+I came up with a rough measure for this: `Purpose Cost`. The higher the score, more likely it's doing too much.
+
+```js
+// 1 分：return 和三元运算符实际上是一行代码
+function checkResponse(response) {
+  return response.status < 400
+    ? response
+    : Promise.reject(new Error('Request Failed: ' + response.ststus))
+}
+// 1 分：return 和表达式实际上也是一行代码
+function getText(response) {
+  return response.text()
+}
+```
+
+给定一个函数的代码，每当一行中包含以下任何内容时加 1 分：`if`、`return`、三元运算符、`for`、`const`、`let`、`var`、`switch`、`while`、`[].map/filter/reduce/etc`。每条指令加 1 分（忽略空格产生的额外行）。一系列链式表达式或方法仅计为 1 分。
+
+呼，这听起来有点像黑话。
+
+有趣的是，大多数开发者都声称自己**非常擅长**编写“单一职责”的代码。这和他们声称自己也是优秀的司机一样，并非毫无关联！
+
+让我们看一个（非常有才华的）[Jake Archibald](https://x.com/jaffathecake) 在他为 Google Developers 网站撰写的 async/await 文章中引用的例子（注：2024 年，链接已移除）。
+
+```js
+// 来源: https://developers.google.com/web/fundamentals/primers/async-functions
+function logInOrder(urls) {
+  // 获取所有 URL
+  const textPromises = urls.map(url => {
+    return fetch(url).then(response => response.text());
+  });
+
+  // 按顺序记录
+  textPromises.reduce((chain, textPromise) => {
+    return chain.then(() => textPromise)
+      .then(text => console.log(text));
+  }, Promise.resolve());
+}
+```
+
+### 单一职责？
+
+我会说不。`logInOrder` 到底在做什么？
+
+1. 遍历 `urls` 列表
+1. 将它们应用于内联的 HTTP GET：
+  1. HTTP `fetch`
+  1. 返回响应文本主体
+1. 在 `textPromise` 中的每个 promise 之后追加一个 `.then(text => console.log(text))`
+  1. 串行打印结果
+
+在这个函数中定义了 5 个匿名方法。正如 Jake 所指出的，`.reduce` 太复杂了。在代码中到处手写这种微妙的机制是没有意义的。换句话说，我们不会用没完没了的 `document.createElement()`、`element.setAttribute()` 等来编写 DOM 创建代码。相反，我们会从众多选项中选择最好的工具：辅助/工具函数、库或框架。
+
+#### 解决方案：单一职责函数
+
+### 从**提取方法**开始……
+
+![VS Code refactor extracting async methods from Promise code](../async-refactor-google-extract-methods-resized-75.webp "提取方法")
+
+### 继续通过 `Promise.all` 和 `.map()` 替换 `.reduce()` 和 `logPromise()`……
+
+![Refactored Promise chain using Promise all and map for readability](../async-refactor-google-chain-methods-resized-75.webp "提高可读性")
+
+### 总结
+
+尝试将这些技巧应用到你自己的代码中！然后在 [Twitter/X 上艾特我](https://x.com/justsml) 告诉我效果如何。如果你有任何疑问或建议，也请随时联系！
+
+请帮忙传播 #PromiseTruth 并分享这篇文章。❤️
+
+![credit: matt-nelson-414464-unsplash.webp](../matt-nelson-414464-unsplash.webp)
+
+#### 相关阅读
+
+* [Daniel Brain](https://medium.com/@bluepnume/even-with-async-await-you-probably-still-need-promises-9b259854c161)
+* [Eric Elliott](https://x.com/_ericelliott?lang=en)
+````
