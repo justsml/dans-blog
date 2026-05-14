@@ -1,0 +1,51 @@
+{
+  "index": 12,
+  "attempt": 1,
+  "originalTitle": "Non-Standard Properties",
+  "translatedTitle": "الخصائص غير القياسية",
+  "translation": {
+    "title": "الخصائص غير القياسية",
+    "group": "خصائص الأخطاء",
+    "options": [
+      {
+        "text": "متوفرة دائمًا"
+      },
+      {
+        "text": "قد لا تكون موجودة في جميع البيئات"
+      },
+      {
+        "text": "فقط في Node.js"
+      },
+      {
+        "text": "مهملة ومزالة"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "ما مدى موثوقية `error.code` و `error.errno`؟"
+    ],
+    "hintsProse": [
+      "ضع في اعتبارك بيئات JavaScript المختلفة وأنواع الأخطاء."
+    ],
+    "explanationProse": [
+      "الخصائص مثل `code` و `errno` خاصة بالبيئة (Node.js في هذه الحالة) وليست جزءًا من كائن Error القياسي. أخطاء المتصفح لن تحتوي على هذه الخصائص. تحقق دائمًا من وجودها: `if (err.code === 'ENOENT')` بدلاً من افتراض وجودها."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"الخصائص غير القياسية\",\n  \"group\": \"خصائص الأخطاء\",\n  \"options\": [\n    {\n      \"text\": \"متوفرة دائمًا\"\n    },\n    {\n      \"text\": \"قد لا تكون موجودة في جميع البيئات\"\n    },\n    {\n      \"text\": \"فقط في Node.js\"\n    },\n    {\n      \"text\": \"مهملة ومزالة\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"ما مدى موثوقية `error.code` و `error.errno`؟\"\n  ],\n  \"hintsProse\": [\n    \"ضع في اعتبارك بيئات JavaScript المختلفة وأنواع الأخطاء.\"\n  ],\n  \"explanationProse\": [\n    \"الخصائص مثل `code` و `errno` خاصة بالبيئة (Node.js في هذه الحالة) وليست جزءًا من كائن Error القياسي. أخطاء المتصفح لن تحتوي على هذه الخصائص. تحقق دائمًا من وجودها: `if (err.code === 'ENOENT')` بدلاً من افتراض وجودها.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 816,
+    "outputTokens": 768,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 5678,
+    "providerCostUsd": 0.0004704,
+    "providerUpstreamCostUsd": 0.0004704,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00011424,
+    "outputUsd": 0.00021504000000000003,
+    "totalUsd": 0.00032928000000000005,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

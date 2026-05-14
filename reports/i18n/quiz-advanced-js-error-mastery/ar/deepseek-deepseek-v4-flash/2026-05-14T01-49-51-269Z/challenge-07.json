@@ -1,0 +1,51 @@
+{
+  "index": 6,
+  "attempt": 1,
+  "originalTitle": "Constructor Name Gotcha",
+  "translatedTitle": "فخ اسم المُنشئ",
+  "translation": {
+    "title": "فخ اسم المُنشئ",
+    "group": "الأخطاء المخصصة",
+    "options": [
+      {
+        "text": "\"MyError\""
+      },
+      {
+        "text": "\"Error\""
+      },
+      {
+        "text": "undefined"
+      },
+      {
+        "text": "TypeError"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "ما الناتج دون تعيين `name`؟"
+    ],
+    "hintsProse": [
+      "ماذا تحتوي خاصية `name` الافتراضية في `Error`؟"
+    ],
+    "explanationProse": [
+      "بدون تعيين `this.name` بشكل صريح، يرث الخطأ خاصية `name` الافتراضية من الكلاس `Error`، وهي `\"Error\"`. لهذا السبب يجب على كلاسات الأخطاء المخصصة دائمًا تعيين `this.name = this.constructor.name` في المُنشئ الخاص بها."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"فخ اسم المُنشئ\",\n  \"group\": \"الأخطاء المخصصة\",\n  \"options\": [\n    {\n      \"text\": \"\\\"MyError\\\"\"\n    },\n    {\n      \"text\": \"\\\"Error\\\"\"\n    },\n    {\n      \"text\": \"undefined\"\n    },\n    {\n      \"text\": \"TypeError\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"ما الناتج دون تعيين `name`؟\"\n  ],\n  \"hintsProse\": [\n    \"ماذا تحتوي خاصية `name` الافتراضية في `Error`؟\"\n  ],\n  \"explanationProse\": [\n    \"بدون تعيين `this.name` بشكل صريح، يرث الخطأ خاصية `name` الافتراضية من الكلاس `Error`، وهي `\\\"Error\\\"`. لهذا السبب يجب على كلاسات الأخطاء المخصصة دائمًا تعيين `this.name = this.constructor.name` في المُنشئ الخاص بها.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 798,
+    "outputTokens": 1004,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 7315,
+    "providerCostUsd": 0.0005612,
+    "providerUpstreamCostUsd": 0.0005612,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00011172000000000001,
+    "outputUsd": 0.00028112,
+    "totalUsd": 0.00039284,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

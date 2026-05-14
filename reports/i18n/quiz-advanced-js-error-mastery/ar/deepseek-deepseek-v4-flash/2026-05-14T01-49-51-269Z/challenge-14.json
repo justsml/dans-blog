@@ -1,0 +1,51 @@
+{
+  "index": 13,
+  "attempt": 1,
+  "originalTitle": "Object vs Error Detection",
+  "translatedTitle": "تمييز الكائن عن الخطأ",
+  "translation": {
+    "title": "تمييز الكائن عن الخطأ",
+    "group": "حدود الأخطاء",
+    "options": [
+      {
+        "text": "صحيح، صحيح"
+      },
+      {
+        "text": "خاطئ، خاطئ"
+      },
+      {
+        "text": "صحيح، خاطئ"
+      },
+      {
+        "text": "خاطئ، صحيح"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "ماذا تُرجع هذه الفحوصات؟"
+    ],
+    "hintsProse": [
+      "أحد الفحوصات ينظر إلى سلسلة النموذج الأولي، والآخر إلى الفتحات الداخلية."
+    ],
+    "explanationProse": [
+      "`instanceof Error` تُرجع `false` لأن الكائن لم يُنشأ بواسطة مُنشئ Error. `Object.prototype.toString.call()` تُرجع أيضًا `false` (تُرجع `'[object Object]'`) لأنها تفحص الفتحة الداخلية `[[Class]]`. كلا الطريقتين تحددان بشكل صحيح أن هذا كائن خطأ مزيف."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"تمييز الكائن عن الخطأ\",\n  \"group\": \"حدود الأخطاء\",\n  \"options\": [\n    {\"text\": \"صحيح، صحيح\"},\n    {\"text\": \"خاطئ، خاطئ\"},\n    {\"text\": \"صحيح، خاطئ\"},\n    {\"text\": \"خاطئ، صحيح\"}\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\"ماذا تُرجع هذه الفحوصات؟\"],\n  \"questionCode\": [{\"language\": \"js\", \"code\": \"[PRESERVED — do not translate]\"}],\n  \"hintsProse\": [\"أحد الفحوصات ينظر إلى سلسلة النموذج الأولي، والآخر إلى الفتحات الداخلية.\"],\n  \"hintsCode\": [],\n  \"explanationProse\": [\"`instanceof Error` تُرجع `false` لأن الكائن لم يُنشأ بواسطة مُنشئ Error. `Object.prototype.toString.call()` تُرجع أيضًا `false` (تُرجع `'[object Object]'`) لأنها تفحص الفتحة الداخلية `[[Class]]`. كلا الطريقتين تحددان بشكل صحيح أن هذا كائن خطأ مزيف.\"],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 812,
+    "outputTokens": 2558,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 13542,
+    "providerCostUsd": 0.0011856,
+    "providerUpstreamCostUsd": 0.0011856,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00011368000000000001,
+    "outputUsd": 0.00071624,
+    "totalUsd": 0.00082992,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

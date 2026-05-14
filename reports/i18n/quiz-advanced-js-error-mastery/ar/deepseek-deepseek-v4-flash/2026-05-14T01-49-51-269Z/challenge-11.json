@@ -1,0 +1,51 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "Express Response Error",
+  "translatedTitle": "خطأ استجابة Express",
+  "translation": {
+    "title": "خطأ استجابة Express",
+    "group": "مزالق API",
+    "options": [
+      {
+        "text": "يرسل كائن الخطأ الكامل"
+      },
+      {
+        "text": "يرسل {\"error\":{}}"
+      },
+      {
+        "text": "يرمي خطأ خادم"
+      },
+      {
+        "text": "يرسل رسالة الخطأ فقط"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "ما الذي يتم إرساله إلى العميل؟"
+    ],
+    "hintsProse": [
+      "تذكر كيف يتم تسلسل كائنات الخطأ بواسطة JSON.stringify."
+    ],
+    "explanationProse": [
+      "يستخدم `res.json()` داخليًا `JSON.stringify()`، لذلك يصبح كائن الخطأ `{}`. يتلقى العميل `{\"error\":{}}`. لإصلاح ذلك، استخدم `res.json({ error: error.message })` أو `res.json({ error: { message: error.message, name: error.name } })`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"خطأ استجابة Express\",\n  \"group\": \"مزالق API\",\n  \"options\": [\n    {\n      \"text\": \"يرسل كائن الخطأ الكامل\"\n    },\n    {\n      \"text\": \"يرسل {\\\"error\\\":{}}\"\n    },\n    {\n      \"text\": \"يرمي خطأ خادم\"\n    },\n    {\n      \"text\": \"يرسل رسالة الخطأ فقط\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"ما الذي يتم إرساله إلى العميل؟\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"js\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [\n    \"تذكر كيف يتم تسلسل كائنات الخطأ بواسطة JSON.stringify.\"\n  ],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"يستخدم `res.json()` داخليًا `JSON.stringify()`، لذلك يصبح كائن الخطأ `{}`. يتلقى العميل `{\\\"error\\\":{}}`. لإصلاح ذلك، استخدم `res.json({ error: error.message })` أو `res.json({ error: { message: error.message, name: error.name } })`.\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 825,
+    "outputTokens": 1523,
+    "cacheReadTokens": 384,
+    "cacheWriteTokens": 0,
+    "durationMs": 10169,
+    "providerCostUsd": 0.00071276,
+    "providerUpstreamCostUsd": 0.00071276,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.0000628152,
+    "outputUsd": 0.00042644000000000004,
+    "totalUsd": 0.0004892552,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

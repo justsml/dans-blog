@@ -1,0 +1,51 @@
+{
+  "index": 0,
+  "attempt": 1,
+  "originalTitle": "The Empty Object Mystery",
+  "translatedTitle": "لغز الكائن الفارغ",
+  "translation": {
+    "title": "لغز الكائن الفارغ",
+    "group": "مفاجآت التسلسل",
+    "options": [
+      {
+        "text": "{\"message\":\"Oops\",\"name\":\"Error\"}"
+      },
+      {
+        "text": "{}"
+      },
+      {
+        "text": "{\"error\":\"Oops\"}"
+      },
+      {
+        "text": "null"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "ماذا يُرجع `JSON.stringify(error)`؟"
+    ],
+    "hintsProse": [
+      "فكر في الخصائص القابلة للتعداد في كائنات الخطأ."
+    ],
+    "explanationProse": [
+      "كائنات الخطأ تحتوي على خصائص غير قابلة للتعداد (`message`, `name`, `stack`)، لذا فإن `JSON.stringify()` يُرجع `{}`. هذا خطأ شائع عند إرسال الأخطاء في استجابات API. استخدم `JSON.stringify(error, Object.getOwnPropertyNames(error))` أو أنشئ كائنًا عاديًا بدلاً من ذلك."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"لغز الكائن الفارغ\",\n  \"group\": \"مفاجآت التسلسل\",\n  \"options\": [\n    {\n      \"text\": \"{\\\"message\\\":\\\"Oops\\\",\\\"name\\\":\\\"Error\\\"}\"\n    },\n    {\n      \"text\": \"{}\"\n    },\n    {\n      \"text\": \"{\\\"error\\\":\\\"Oops\\\"}\"\n    },\n    {\n      \"text\": \"null\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"ماذا يُرجع `JSON.stringify(error)`؟\"\n  ],\n  \"hintsProse\": [\n    \"فكر في الخصائص القابلة للتعداد في كائنات الخطأ.\"\n  ],\n  \"explanationProse\": [\n    \"كائنات الخطأ تحتوي على خصائص غير قابلة للتعداد (`message`, `name`, `stack`)، لذا فإن `JSON.stringify()` يُرجع `{}`. هذا خطأ شائع عند إرسال الأخطاء في استجابات API. استخدم `JSON.stringify(error, Object.getOwnPropertyNames(error))` أو أنشئ كائنًا عاديًا بدلاً من ذلك.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 818,
+    "outputTokens": 976,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 7025,
+    "providerCostUsd": 0.000554,
+    "providerUpstreamCostUsd": 0.000554,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00011452000000000002,
+    "outputUsd": 0.00027328000000000004,
+    "totalUsd": 0.00038780000000000005,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

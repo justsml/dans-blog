@@ -1,0 +1,51 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Template Literals in Errors",
+  "translatedTitle": "القوالب النصية في الأخطاء",
+  "translation": {
+    "title": "القوالب النصية في الأخطاء",
+    "group": "قوالب الرسائل",
+    "options": [
+      {
+        "text": "\"Value ${value} is invalid\""
+      },
+      {
+        "text": "\"Value undefined is invalid\""
+      },
+      {
+        "text": "ReferenceError: value is not defined"
+      },
+      {
+        "text": "\"Value  is invalid\""
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "ما هي رسالة الخطأ؟"
+    ],
+    "hintsProse": [
+      "كيف يتعامل القالب النصي مع القيمة undefined أثناء الاستيفاء؟"
+    ],
+    "explanationProse": [
+      "تقوم القوالب النصية بتحويل `undefined` إلى السلسلة `\"undefined\"` أثناء الاستيفاء. تصبح رسالة الخطأ `\"Value undefined is invalid\"`. للحصول على رسائل أنظف، فكر في استخدام `value ?? 'null'` أو فحوصات مماثلة قبل الاستيفاء."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"القوالب النصية في الأخطاء\",\n  \"group\": \"قوالب الرسائل\",\n  \"options\": [\n    { \"text\": \"\\\"Value ${value} is invalid\\\"\" },\n    { \"text\": \"\\\"Value undefined is invalid\\\"\" },\n    { \"text\": \"ReferenceError: value is not defined\" },\n    { \"text\": \"\\\"Value  is invalid\\\"\" }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\"ما هي رسالة الخطأ؟\"],\n  \"hintsProse\": [\"كيف يتعامل القالب النصي مع القيمة undefined أثناء الاستيفاء؟\"],\n  \"explanationProse\": [\"تقوم القوالب النصية بتحويل `undefined` إلى السلسلة `\\\"undefined\\\"` أثناء الاستيفاء. تصبح رسالة الخطأ `\\\"Value undefined is invalid\\\"`. للحصول على رسائل أنظف، فكر في استخدام `value ?? 'null'` أو فحوصات مماثلة قبل الاستيفاء.\"]\n}",
+  "telemetry": {
+    "inputTokens": 807,
+    "outputTokens": 1616,
+    "cacheReadTokens": 384,
+    "cacheWriteTokens": 0,
+    "durationMs": 10584,
+    "providerCostUsd": 0.00074636,
+    "providerUpstreamCostUsd": 0.00074636,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000060295200000000005,
+    "outputUsd": 0.00045248000000000006,
+    "totalUsd": 0.0005127752000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
