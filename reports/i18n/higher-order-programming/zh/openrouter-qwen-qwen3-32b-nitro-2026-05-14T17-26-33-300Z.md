@@ -1,0 +1,85 @@
+# Translation Candidate
+- Slug: higher-order-programming
+- Locale: zh
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2015-10-05--higher-order-programming/zh/index.mdx
+- Validation: deferred
+- Runtime seconds: 3.49
+- Input tokens: 1220
+- Output tokens: 1203
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.000386
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: 高阶编程
+subTitle: 探索基于数组和集合的流水线技术
+date: '2015-09-22'
+modified: '2024-07-30'
+category: Code
+subCategory: programming
+tags:
+  - programming
+  - patterns
+  - models
+  - source-code
+  - organization
+cover: ../susan-holt-simpson-799094-unsplash.webp
+cover_mobile: ../w300_susan-holt-simpson-799094-unsplash.webp
+cover_icon: ../icon_susan-holt-simpson-799094-unsplash.webp
+---
+## 探索基于数组和集合的流水线技术
+
+### 一种反模式？
+
+这是一次关于**将所有内容编码为数组**所能获得优势的探索。（借鉴SmallTalk的数组中心概念）
+
+以下是一些指导原则：
+
+1. 所有输入都应视为类数组结构。即使数组长度为1。
+1. 高阶函数通常应同时接受并返回数组。（循环的回调方法除外：map/reduce/each/filter）
+1. 99%的开发者代码都患有我称之为`急性模式过剩综合症`的疾病。
+1. 警惕臃肿的`类支撑模型`——伴随着所有可预测的特征：脆弱的`实例状态`，有太多可调节的参数和开关，数据库事务、SQL锁、异步/互斥（总能第一次就完美运行），使用惯用的`属性获取器/设置器`，而你的`public/private/final/等`使用方式绝对正确，对吧？
+
+1. 让我用一个常见问题来演示，并~添加~一些基于集合的思考。
+1. 一个假设的博客网站有许多文章，还有更多的帖子（评论）。
+1. 我们添加一个`delete`方法（如下）——同时支持单个或数组输入。
+
+```java
+package net.danlevy.why.java___why.you.got.all.the.dots____it.must.be.all.the.factories;
+
+public class Post {
+  public String   title;
+  public Date     created;
+  public String   message;
+
+  public Post(String title, String message) {
+    this.title    = title;
+    this.message  = message;
+    this.created  = new Date();
+  }
+
+  public Date isArchived() {
+    return this.created < new Date(2015, 0, 1);
+  }
+
+  // `Post.delete` 可以接受单个Post或Post[]数组调用
+  public static int delete(Post post) {
+    List<Post> posts = new List<Post>(post);
+    return delete(posts)
+  }
+
+  public static int delete(List<Post> posts) {
+    return posts.map(Dao.remove);
+  }
+}
+```
+
+> 如果我的Java有些生疏，请见谅。
+````
