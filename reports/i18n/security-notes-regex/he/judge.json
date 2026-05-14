@@ -1,0 +1,37 @@
+{
+  "selectedCommit": "bf844ebf3540b2a48153f29de42422d5ea31c7c2",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 10,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The selected translation is technically accurate and uses standard Hebrew cybersecurity terminology (e.g., 'מניעת שירות' for Denial of Service). It correctly preserves MDX structure and asset paths. The suggestion from the previous judge regarding 'כמתים' (quantifiers) was already incorporated into the current version of the file, so no further high-priority fixes are required.",
+  "slug": "security-notes-regex",
+  "locale": "he",
+  "candidateCommits": [
+    "bf844ebf3540b2a48153f29de42422d5ea31c7c2",
+    "1b83cbf3cba6a242310896f62c9ac0b444d56ba5"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "medium",
+      "match": "מכפילים מקוננים",
+      "replacement": "כמתים מקוננים",
+      "reason": "'Quantifiers' in RegEx context is more accurately translated as 'כמתים' than 'מכפילים' (multipliers).",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug security-notes-regex --locale he --skip-global",
+    "output": ""
+  }
+}
