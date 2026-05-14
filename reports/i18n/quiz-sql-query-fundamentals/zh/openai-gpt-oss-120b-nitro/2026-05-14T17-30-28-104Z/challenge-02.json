@@ -1,0 +1,49 @@
+{
+  "index": 1,
+  "attempt": 1,
+  "originalTitle": "Aggregate Function COUNT",
+  "translatedTitle": "聚合函数 COUNT",
+  "translation": {
+    "title": "聚合函数 COUNT",
+    "group": "SQL 基础",
+    "options": [
+      {
+        "text": "计数所有行，包括 NULL 值"
+      },
+      {
+        "text": "仅计数列中非 NULL 的值"
+      },
+      {
+        "text": "将 NULL 值计为一个唯一值"
+      },
+      {
+        "text": "把每个 NULL 值视为唯一的，类似于 NaN !== NaN"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "`COUNT(column_name)` 在 SQL 中的作用是什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "`COUNT(column_name)` 统计指定列中非 NULL 值的数量。若想计数所有行（包括 NULL），请使用 `COUNT(*)`。\n\n您也可以使用 `COALESCE` 将 NULL 转换为非 NULL 值，例如：`COUNT(COALESCE(column_name, 0))`。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"聚合函数 COUNT\",\n  \"group\": \"SQL 基础\",\n  \"options\": [\n    {\n      \"text\": \"计数所有行，包括 NULL 值\"\n    },\n    {\n      \"text\": \"仅计数列中非 NULL 的值\"\n    },\n    {\n      \"text\": \"将 NULL 值计为一个唯一值\"\n    },\n    {\n      \"text\": \"把每个 NULL 值视为唯一的，类似于 NaN !== NaN\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"`COUNT(column_name)` 在 SQL 中的作用是什么？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"`COUNT(column_name)` 统计指定列中非 NULL 值的数量。若想计数所有行（包括 NULL），请使用 `COUNT(*)`。\\n\\n您也可以使用 `COALESCE` 将 NULL 转换为非 NULL 值，例如：`COUNT(COALESCE(column_name, 0))`。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 873,
+    "outputTokens": 275,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 842,
+    "providerCostUsd": 0.00027675,
+    "providerUpstreamCostUsd": 0.00027675,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000034047,
+    "outputUsd": 0.000049500000000000004,
+    "totalUsd": 0.000083547,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
