@@ -1,0 +1,181 @@
+# Translation Candidate
+- Slug: upgrade-from-gatsby-to-astro
+- Locale: zh
+- Model: openrouter/google/gemini-3-flash-preview
+- Target: src/content/posts/2024-08-22--upgrade-from-gatsby-to-astro/zh/index.mdx
+- Validation: deferred
+- Runtime seconds: 24.67
+- Input tokens: 5175
+- Output tokens: 2286
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.009445
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: 博客升级经验总结
+subTitle: Astro、Tailwind、MDX、Pagefind 及更多！
+date: '2024-08-21'
+modified: '2024-08-23'
+category: Guides
+tags:
+  - astro
+  - tailwind
+  - mdx
+  - pagefind
+  - gatsby
+cover: ../galaxy-contribution-mode.webp
+cover_full_width: ../galaxy-contribution-banner.webp
+cover_mobile: ../w300_galaxy-contribution-mode.webp
+cover_icon: ../icon_galaxy-contribution-mode.webp
+---
+最近，我开始着手升级我那个运行了 8 年之久的 Gatsby v1 站点。
+
+这篇文章将分享我在这个过程中学到的一些经验，以及我所探索的那些有趣的技術。
+
+## 目录
+
+- [项目需求](#project-requirements)
+- [选择合适的技术栈](#choosing-my-right-technology-stack)
+- [Astro：学习曲线与核心特性](#astro-learning-curve-and-key-features)
+- [现代 CSS：令人惊叹](#modern-css-wow)
+- [搜索：Pagefind](#search-pagefind)
+- [评论：Utterances](#comments-utterances)
+- [Tailwind：遗憾之处](#tailwind-regrets)
+- [总结](#conclusion)
+
+## 项目需求
+
+在开始升级之前，我确立了一系列需求：
+
+由于我博客的日均访问量波动很大，我认为静态预生成的站点能在不增加额外复杂性的情况下，提供我想要的性能。
+
+此外，我需要保留站点现有的内容和功能，包括：
+
+- 代码高亮
+- 评论系统
+- 全站搜索
+- 现有的 React 组件：测验 UI、Gist 嵌入
+- 联系表单
+- 响应式图片
+- 小于 1 秒的加载时间
+- 浏览器兼容性：2018+
+- 基于 PR 的自动化部署
+
+## 选择合适的技术栈
+
+这些年来，我使用过许多静态站点工具，从 Jekyll、Hugo、Slate 到 Gatsby；也接触过不少前端框架：Ember、Knockout、Angular、Vue，当然还有 React。
+
+所以，我的选项实在太多了，最终我将范围缩小到了 **Remix**、**Next.js** 和 **Astro**。
+
+关于评估过程，我完全可以写一整个博客系列，但在这里我简要总结一下：
+
+<p class="breakout">我选择 [Astro](https://astro.build) 是因为我能极快地用它 *做出实实在在的东西*。</p>
+
+他们的 API 设计简洁得令人耳目一新。它在[灵活性和优秀的架构主张之间取得了极佳的平衡](../docs.astro.build/en/concepts/why-astro/)。
+
+让人感到踏实的是，Astro 没有任何明显的云厂商偏好或框架私货。
+
+Astro 并不是我使用的唯一技术，以下是完整的技术栈清单：
+
+- [Astro](https://astro.build)：现代静态站点生成器。
+- [ShadcnUI](https://ui.shadcn.com)：可复用组件库。
+- [Tailwind CSS](https://tailwindcss.com)：原子化 CSS 框架。
+- [MDX](https://mdxjs.com)：Markdown 内容 + 内联组件。
+- [Pagefind](https://pagefind.app)：快速、静态且支持离线的站点搜索库。不再需要 Algolia！
+- [Utterances](https://utteranc.es)：基于 GitHub Issues 的评论系统。
+- [Netlify](https://www.netlify.com)：自动化部署，带验证码的联系表单。
+
+## Astro：学习曲线与核心特性
+
+<p class="breakout quote">Astro 迅速成为了我这次升级的基石。</p>
+
+以下是我发现特别好用的一些核心特性：
+
+- `.astro` 文件：初看之下，Astro 组件可能像 React 的 JSX 组件，但它们本质完全不同，设计目标也各异。（详见下方的对比表。）
+- 由自研的 Golang [构建工具](https://github.com/withastro/compiler)和 Vite 驱动：开箱即用。无缝处理 ESM/CJS、TypeScript、代码打包、样式、图像等。
+- [无框架偏见](https://docs.astro.build/en/guides/framework-components/#official-ui-framework-integrations)或[云厂商绑定](https://docs.astro.build/en/guides/deploy/)。（*咳咳* Next.js, OpenNext）
+- [静态 vs. 混合](https://docs.astro.build/en/basics/rendering-modes/)渲染：Astro 提供了[适配绝大多数云平台的灵活性](https://docs.astro.build/en/guides/deploy/)：AWS、GCP、Firebase、Netlify、Vercel、Cloudflare Pages、Azure、Fly.io 等等。
+- 内容集合（Content collections）：[`getCollection`](https://docs.astro.build/en/reference/api-reference/#getcollection) API 简化了将内容文件作为数据源的操作。
+- 基于文件的路由：Astro 的路由系统结合 `getStaticPaths`，让页面生成变得轻而易举。
+- SEO：[Astro 不会成为你的阻碍](https://github.com/justsml/dans-blog/blob/010c5cb58bb327adb8c8fff608594daa612ad9d5/src/components/BaseHead.astro#L43-L63)，并且只在必要时生成极少量的~~废料~~样板代码（`astro-island`）。
+
+有些地方确实让人意外，比如围绕 Astro 注入的标记进行样式开发，以及 `display:contents` 的影响。
+
+```tsx
+
+<style>astro-island,astro-slot,astro-static-slot{display:contents}</style>
+
+```
+
+### `.astro` 组件 vs. 客户端组件
+
+Astro 组件基本上是带有强大组件和 Props 模式的 HTML 模板。它们可以在构建时获取数据、访问后端资源，并保持敏感信息的隐藏。
+
+理解 Astro 的 `.astro` 组件最好的方法，就是将其与客户端组件（React、Vue、Svelte 等）进行对比。
+
+<section className="scroll-x">
+| 你需要做什么？ | `.astro` 组件 | 客户端组件 |
+| ---------------------------------------------------------------------------------- | ------------------- | ------------------- |
+| 使用强大的模板+组件模式生成 HTML | ✅ | ❌ |
+| 在构建时获取数据 | ✅ | ❌ |
+| （直接）访问后端资源 | ✅ | ❌ |
+| 隐藏敏感信息（访问令牌、API 密钥等） | ✅ | ❌ |
+| 减少客户端 JavaScript | ✅ | ❌ |
+| 使用客户端组件（React、Vue、Svelte 等） | ✅ | ✅ |
+| 添加交互和事件监听器（`onClick()`、`onChange()` 等） | ❌ | ✅ |
+| 使用状态和生命周期副作用（`useState()`、`useEffect()` 等） | ❌ | ✅ |
+| 使用浏览器专属 API | ❌ | ✅ |
+| 使用依赖状态、副作用或浏览器 API 的自定义 Hook | ❌ | ✅ |
+</section>
+
+## 现代 CSS：令人惊叹
+
+重回前端开发，我被原生 CSS 的进步惊艳到了：
+
+- CSS 变量：已经推出一段时间了，自 202* 年起在各大浏览器中表现非常稳定。
+- 嵌套（Nesting）：终于进入了规范，而且没有早期那种别扭的语法。现在它和 Less 或 SCSS 非常相似。
+- 新选择器：[`:is()`、`:where()` 和 `:has()`](https://www.youtube.com/watch?v=3ncFpP8GP4g) 提供了更精准的元素定位能力。
+- 现代单位如 `ch`、`vw` 以及 `clamp()` 等函数，为布局和排版提供了更好的控制。
+- 使用 `-inline` 和 `-block` 属性更自然地设置间距。可以在水平或垂直轴上设置 padding 或 margin。不再需要 `margin: 0 1rem 0 1rem` → 而是 `margin-inline: 1rem`。
+- 高级布局：重新学习 CSS Grid。哇，里面的东西真不少。面对似乎无穷无尽的用法，可能会让人望而生畏。记住，你只需要掌握一两种方法就能应付大部分场景。看看这些帮我玩转 Grid 的优秀资源：[Kevin Powell 的视频：轻松学习 CSS Grid](https://www.youtube.com/watch?v=rg7Fvvl3taU)、[无需媒体查询的响应式布局](https://ardilamorin.com/responsive-no-media-queries/)、[一行 CSS 实现十种现代布局](https://web.dev/articles/one-line-layouts)。
+
+## 搜索：Pagefind
+
+在不使用第三方服务或托管数据库的情况下实现**站点搜索**，听起来是个有趣的挑战。毕竟，我还没有 10,000 篇文章需要索引（目前还没有）。
+
+在浏览 [Astro 社区集成](https://astro.build/integrations/?search=find)时，我偶然发现了一个相见恨晚的神器：[Pagefind](https://pagefind.app/)。
+
+<p class="breakout quote">很少有工具能像 Pagefind 解决本地站点搜索那样，如此完美地解决一个问题。</p>
+
+Pagefind 的实现过程极其简单，令人愉悦。它可以集成到任何静态站点内容中，你可以选择使用默认 UI，也可以根据需要构建任何自定义界面。
+
+它完美地解决了我的所有需求。集成只花了不到几分钟，大部分工作只是添加一个 `<div id="search"></div>` 标签并进行一些样式调整！
+
+## 评论：Utterances
+
+遗憾的是，我不得不告别 Disqus 以及多年来积累的评论。
+
+我希望对站点上的第三方脚本拥有更好的控制权和透明度。
+
+此外，它必须简单且易于维护。
+
+这促使我选择了出色的 [Utterances](https://utteranc.es/) 服务。其基于 GitHub Issues 的评论系统与我的受众群体非常契合。而且，它配置简单，完全免费。
+
+## Tailwind：遗憾
+
+只有一项技术让我越来越感到后悔：Tailwind。
+
+随着时间的推移，我能明显感觉到“编写”与“维护”之间的成本差异。Tailwind 编写起来确实飞快，但一旦复杂度达到一定程度，阅读和扩展就会变得非常乏味。
+
+## 结论
+
+将我陈旧的 Gatsby v1 站点升级到以 Astro 为核心的现代技术栈是一次有趣的体验。满分推荐。
+
+如果你正考虑升级旧站点或构建新的静态（或混合）站点，我强烈建议关注一下 Astro。虽然学习曲线有时可能比较陡峭，但在性能、开发体验以及项目前瞻性方面的收益绝对值得这些投入。
+````
