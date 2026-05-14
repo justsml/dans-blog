@@ -1,0 +1,734 @@
+# Translation Candidate
+- Slug: docker-security-tips-for-self-hosting
+- Locale: zh
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2025-01-05--docker-security-tips-for-self-hosting/zh/index.mdx
+- Validation: deferred
+- Runtime seconds: 22.27
+- Input tokens: 22444
+- Output tokens: 8772
+- Thinking tokens: unknown
+- Cached input tokens: 4096
+- Cache write tokens: 0
+- Estimated cost: $0.002454
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: 自托管的关键 Docker 安全要点
+subTitle: 为自托管服务提供全方位防御与监控！
+date: '2025-01-04'
+modified: '2025-07-09'
+tags:
+  - docker
+  - security
+  - devops
+  - containers
+  - best-practices
+category: Security
+social_image: ../desktop-social.webp
+cover_full_width: ../docker-ukiyo-e-wide.webp
+cover_mobile: ../docker-ukiyo-e-container-square-200.webp
+cover_icon: ../docker-ukiyo-e-container-square-200.webp
+cover_credit: © 2025 Dan Levy
+---
+import {CodeTabs} from '../../../../components/CodeTabs';
+
+**目录**
+
+- 🧗‍♀️ [给勇者的建议](#️-for-the-brave)
+- 🔄 [:latest 的舞蹈](#-the-latest-dance)
+- 🔐 [机密管理：正确方式](#-secrets-management)
+- 🌐 [网络风险](#-network-hazard)
+- 🛡️ [访问控制](#️-access-controls)
+- 🔍 [监控与验证](#-monitoring--verification)
+- ⏰ [常被忽视的技巧](#-often-overlooked-tips)
+- 🚀 [生产检查清单](#-production-checklist)
+- 📚 [进一步阅读](#-further-reading)
+
+## 🧗‍♀️ 给勇者的建议
+
+如果你在自行托管 Docker 服务，安全完全由你负责——没有云提供商帮你挡住端口扫描或糟糕的配置。无论你是在自家网络上启动应用，还是在 Vultr、DigitalOcean、Linode、AWS、Azure、Google Cloud 等供应商租用 VPS，都必须把安全锁紧，并且验证自己的操作是否到位。
+
+本指南将逐步讲解 Docker 安全——从一些“鲜为人知”的技巧到其他“难以做到位”的实践；我们会探讨 Canary 令牌、只读卷、 防火墙规则、网络分段与加固、添加认证代理等内容。
+
+我们还会对比家庭网络和公有云环境，并演示如何使用 Nginx 搭建基础认证代理。阅读完毕后，你将拥有多种手段来阻止不速之客（包括朋友、家人，甚至有时是你自己……）
+
+内容很多！但大多数是相互关联的，你可以根据自己的环境挑选最适用的部分。🍀
+
+## 🔄 :latest 的舞蹈
+
+保持镜像更新对安全至关重要。然而，依赖 `:latest` 可能在没有审查步骤的情况下引入破坏性变更或存在漏洞的构建。
+
+### 安全的更新方式
+
+将更新命令与 `pull` 或 `build` 结合，这样可以有意识地刷新镜像，然后在可以监测到故障的窗口期内重启。
+
+```bash
+#!/bin/bash
+# update-and-run.sh
+docker compose pull && \
+  docker compose up -d
+```
+
+### 版本锁定 vs Latest
+
+选择锁定的版本需要在稳定性和安全性之间权衡。以下是几种常见策略：
+
+```yaml
+# docker-compose.yml
+# ...
+  # 精确版本锁定，适用于关键服务
+  image: postgres:17.2
+
+  # 补丁版本锁定，适用于非关键服务
+  image: postgres:17.2
+
+  # 主版本锁定，适合业余项目
+  image: postgres:17
+
+  # YOLO，尽量避免
+  image: postgres:latest
+```
+
+使用 [Dependabot](https://github.com/features/security) 或 [Renovate](https://github.com/renovatebot/renovate) 开启可审查的更新 PR。对于任何你不想在凌晨 2 点重建的镜像，锁定到具体版本或摘要，并让自动化工具在需要迁移时提醒。
+
+_告诉我你最喜欢的 Docker 镜像更新工具吧！_
+
+## 🔐 密钥管理
+
+- [生成强密码](#generate-strong-secrets)
+- [Canary 令牌](#canary-tokens)
+- [从 `.env` 升级到 macOS 钥匙串](#upgrade-from-env-to-macos-keychain)
+{/* - [占位符验证](#placeholder-validation) */}
+
+管理密钥的方式很多，但最重要的原则是：**绝不要在 Docker 镜像中硬编码密钥或提交到 git。** 这是最常见的安全失误之一，长期风险大，修复成本高。
+
+安全存储密钥是一个庞大的议题，选项众多，包括 `.env` 文件、[Docker secrets](https://docs.docker.com/compose/how-tos/use-secrets/)、[1Password](https://1password.com/downloads/command-line)/[Bitwarden](https://bitwarden.com/developers/)，或使用像 [HashiCorp Vault](https://www.vaultproject.io/)、AWS Secrets Manager 这样的密钥管理服务。
+
+你需要为你的使用场景挑选“恰当”的工作量与安全级别。
+
+{/*
+TODO: Move to Maintainer's Guide
+// TODO: Move to Maintainer's Guide
+
+### Placeholder Validation
+
+<blockquote>你根本想不到在 secret 并不保密时，JWT token 有多容易被攻破！</blockquote>
+
+<p className='inset'>💡 确保 secret 始终唯一。尽量让使用不安全/硬编码默认值的情况不可运行。</p>
+
+如果你在 secret 中使用了类似 `__WARNING_REPLACE_ME__` 的占位符，那就好，或许会有人注意到！
+
+为了防止遗漏，你也可以花一点点功夫在运行时加入安全检查。下面展示了在 JavaScript、Rust 和 Go 中的实现方式：
+
+<CodeTabs client:load tabs={["JavaScript", "Rust", "Go"]}>
+
+```javascript
+// validateSecrets.js
+const validateSecrets = () => {
+  const unsafePlaceholder = /__WARNING_REPLACE_ME__/;
+  const missingSecrets = Object.entries(process.env).filter(
+    ([key, value]) => unsafePlaceholder.test(value)
+  );
+
+  if (missingSecrets.length) {
+    console.error("检测到不安全的 secret：", missingSecrets);
+    process.exit(1);
+  }
+};
+
+validateSecrets();
+```
+
+```rust
+// validate_secrets.rs
+use std::env;
+
+fn validate_secrets() {
+    let unsafe_placeholder = "__WARNING_REPLACE_ME__";
+    for (key, value) in env::vars() {
+        if value.contains(unsafe_placeholder) {
+            panic!("不安全的 secret 出现在 {}", key);
+        }
+    }
+}
+
+fn main() {
+    validate_secrets();
+}
+```
+
+```go
+// validate_secrets.go
+package main
+
+import (
+	"fmt"
+	"os"
+	"strings"
+)
+
+func validateSecrets() {
+	placeholder := "__WARNING_REPLACE_ME__"
+	for _, env := range os.Environ() {
+		pair := strings.SplitN(env, "=", 2)
+		if len(pair) == 2 && strings.Contains(pair[1], placeholder) {
+			panic(fmt.Sprintf("不安全的 secret 出现在 %s", pair[0]))
+		}
+	}
+}
+
+func main() {
+	validateSecrets()
+}
+```
+</CodeTabs>
+
+*/}
+
+### 生成强随机 secret
+
+以下是一个用于为 `.env` 文件生成新 secret 的小脚本：
+
+```bash
+#!/bin/bash
+# generate-secrets.sh
+
+generate_secret() {
+    local length=${1:-30}
+    local generate_length=$((length + 4))
+    openssl rand -base64 "$generate_length" | tr -d '+=/\n' | cut -c1-"$length"
+}
+
+[ -f .env ] && { echo ".env file already exists!"; exit 1; }
+
+cat > .env << EOL
+POSTGRES_PASSWORD=$(generate_secret)
+JWT_SECRET=$(generate_secret 64)
+SESSION_KEY=$(generate_secret 24)
+REDIS_PASSWORD=$(generate_secret 20)
+UNSAFE_PLACEHOLDER=__WARNING_REPLACE_RANDOM_TEXT__
+EOL
+
+echo "New .env file generated with secure random values!"
+```
+
+### Canary Tokens
+
+[**Canary Tokens**](https://canarytokens.org/) 是检测 secret 是否被泄露（并被使用）的绝佳手段。它们就像可以嵌入任意敏感文件、URL 和 token 的触发线。
+
+可以把它们放在真正担心的 secret 旁边：`.env` 文件、CI 变量、密码管理器、备份文件夹以及云凭证。不要把这变成表演；在真实攻击者或未来的自己可能触碰的地方埋设触发线。
+
+Canary “token” 类型繁多，可选项包括 AWS token、[伪信用卡](https://blog.thinkst.com/2024/12/its-baaack-credit-card-canarytokens-are-now-on-your-consoles.html) 号码、Excel 与 Word 文件、Kubeconfig 文件、VPN 凭证，甚至 SQL 转储文件都可以加入触发线！
+
+#### Canary Token 最佳实践
+
+- **全方位布置**：在每个 `.env` 文件、CI/CD 流水线以及你能想到的 “secrets manager” 中都放置。
+  - 在家目录放置 `passwords.xlsx` 或 `passwords.docx` 文件。
+  - 为 AWS profile `billing_prod` 添加一个 Canary token 作为 secret。
+  - 为 `~/.ssh` 目录生成一个 `private.key` 文件。
+  - 为 `~/backups` 目录创建一个 Canary SQL 转储 `all_credit_cards.sql`。
+- **监控**：设置邮件规则或告警，以捕获 Canary token 被触发的事件。
+
+### 从 `.env` 升级到 macOS 钥匙串
+
+对于 macOS 用户，最简便的方案之一是使用钥匙串。
+
+下面提供一种简易方法，可自动从 macOS 钥匙串加载 secret，支持 `TouchID`，相较于 `.env` 文件更安全。
+
+原始署名归功于 <cite>[Brian Hetfield](https://gist.github.com/bmhatfield/f613c10e360b4f27033761bbee4404fd) 与 [Jan Schaumann](https://www.netmeister.org/)</cite>
+
+<CodeTabs client:load tabs={[
+  "Helper commands",
+  "Persist secrets in environment",
+  "Use secrets per command"]
+}>
+```bash title="keychain-secrets.sh"
+### 从 macOS 钥匙串读取和写入环境变量的函数 ###
+### 改编自：https://www.netmeister.org/blog/keychain-passwords.html 与 
+### https://gist.github.com/bmhatfield/f613c10e360b4f27033761bbee4404fd
+
+# 用法：get-keychain-secret SECRET_ENV_VAR
+function get-keychain-secret () {
+    security find-generic-password -w -a ${USER} -D "environment variable" -s "${1}"
+}
+
+# 用法：set-keychain-secret SECRET_ENV_VAR
+# 将提示你输入 secret 的值！
+function set-keychain-secret () {
+    [ -n "$1" ] || print "Missing environment variable name"
+    
+    # 提示用户输入 secret
+    echo -n "Enter secret for ${1}"
+    read secret
+    [ -n "$secret" ] || return 1
+
+    ( [ -n "$1" ] || [ -n "$secret" ] ) || return 1
+    security add-generic-password -U -a ${USER} -D "environment variable" -s "${1}" -w "${secret}"
+}
+```
+
+```bash title="~/code/app/.env-secrets.sh"
+source ~/keychain-secrets.sh
+
+# 将环境变量加载到当前 shell
+export AWS_ACCESS_KEY_ID=$(get-keychain-secret AWS_ACCESS_KEY_ID);
+export AWS_SECRET_ACCESS_KEY=$(get-keychain-secret AWS_SECRET_ACCESS_KEY);
+# 注意：如果攻击者能够在你的 shell 中运行 `env`，这些 secret 可能会泄露！
+```
+
+```bash title="~/code/app/scripts/env-run.sh"
+#!/usr/bin/env bash
+source ~/keychain-secrets.sh
+
+# 为本项目指定所有 secret
+AWS_ACCESS_KEY_ID=$(get-keychain-secret AWS_ACCESS_KEY_ID) \
+AWS_SECRET_ACCESS_KEY=$(get-keychain-secret AWS_SECRET_ACCESS_KEY) \
+  "$@"
+
+# 注意：使用 shell 包装器可以防止 secret 长时间留在环境中。并且可以安全提交。
+
+# 用法示例：
+# ./scripts/env-run.sh docker compose up -d
+# ./scripts/env-run.sh docker run -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS ...
+```
+</CodeTabs>
+
+## 🌐 网络风险
+
+### 自定义网络与内部端口
+
+通过 Docker 网络正确隔离服务是降低攻击面的重要手段。
+
+切勿随意在网络上打洞！一次错误的端口转发可能导致灾难性后果。
+
+默认情况下，私有 LAN 上的服务不会暴露到互联网——必须显式地在路由器上转发端口。
+
+### Docker 在局域网中的使用
+
+无论你是本地开发者在本机运行 dev 服务器，还是在本地网络中自托管服务，**对 Docker 网络模型的错误假设都会惹出麻烦。**
+
+开发者常常惊讶于，传统的 Linux 服务器安全手段（`iptables`、限制 tcp/ip sysctl 选项）在 Docker 主机上**可能悄然失效**！这在**自托管或典型家庭网络**环境中尤为常见。（给后排的朋友们提醒：这可能让人直接访问你 MacBook 上的 dev 容器！！！）
+
+> ⚠️ **警告 #1：** Docker 发布的端口可以绕过你以为在保护主机的防火墙规则，尤其是在 Ubuntu/Debian 上使用 UFW 时。这并不意味着所有防火墙规则都失效，但“UFW 说 deny”并不能作为充分的证明。 [参见 issue #690：Docker 绕过 ufw 防火墙规则](https://github.com/moby/moby/issues/690)。
+
+> ⚠️ **警告 #2：** 将端口绑定到本地 IP 地址（例如 `-p 127.0.0.1:8080:80`）是正确的默认做法，但 Docker Engine 低于 28.0.0 的版本曾出现同一 L2 网络上的主机仍能访问 localhost‑published 端口的情况。 [Docker 在端口发布指南中记录了此注意事项](https://docs.docker.com/engine/network/port-publishing/)，下面的 nmap 验证习惯仍然重要。
+
+<p class="inset">如果你对这点感到惊讶，别担心，你并不孤单！</p>
+
+**绑定到本地 IP 仍然是个好习惯**，在 **受管云环境和特殊配置的网络** 中影响尤为显著。  
+{/* 不要把防火墙或私有网络当作唯一或主要防线，加入 Docker 网络以获得更好的 **隔离**，并始终考虑是否真的需要暴露端口。 */}
+
+### 示例 Docker Compose
+
+下面是一个 `docker-compose.yml` 示例文件，它将 `app` 服务绑定到 `127.0.0.1:8080`，并把两个容器都连接到自定义的 `backend` 网络。
+
+```yaml title="docker-compose.yml" {6-10,14-17}
+networks:
+  backend:
+
+services:
+  app:
+    networks:
+      - backend
+    ports:
+      # 如可能，绑定到 localhost
+      - "127.0.0.1:8080:8080"
+    # ... 其他设置
+  database:
+    image: postgres:17.1
+    # 不需要端口映射；在 backend 网络内部可直接访问。
+    networks:
+      - backend
+
+```
+
+{/* #### 测试与验证
+
+和所有安全措施一样，**测试并验证**你的网络配置至关重要。 */}
+
+{/* 虽然网络安全与审计在大多数公司是全职职责，但大多数自托管者根本不花任何时间在这上面！ */}
+
+{/* 看，我懂，这可能让人望而生畏。_(子网、子网掩码、CIDR、VLAN 和路由表，天哪！如果这些听起来毫无意义，也没关系，你来对地方了。暂时我们也不必担心这些细节。)_ */}
+
+### 网络最佳实践
+
+- 🏆 **不要发布任何端口** 最近我发现这比想象中更有用！使用具名（bridge）网络时，容器之间可以不受过滤地相互访问，行为就像在本地网络（NAT 网关）后面一样。  
+  - 虽然并非所有场景都适用，但这对运行批处理作业或主要通过 `attach`、`exec` 访问的容器非常有帮助。
+- 🥇 **使用 Docker 网络** 来隔离并控制容器之间的通信。
+- 🥉 **使用本地主机绑定**：虽然 [并不完美](https://github.com/moby/moby/issues/45610)，但一般来说将端口绑定到回环地址（例如 `127.0.0.1:8080:80`）更安全。只要确保你 [验证了自己的设置](#-monitoring--verification)。
+
+## 🛡️ 访问控制
+
+访问控制是保护 Docker 服务的关键环节。包括限制容器能力与权限、限制对 Docker socket 的访问等。
+
+- [限制容器能力](#limiting-container-capabilities)
+- [Docker Socket 访问](#docker-socket-access)
+- [封锁国家！](#blocking-country)
+- [加固 CloudFlare 代理主机](#hardening-cloudflare-proxy-host)
+
+### 限制容器能力
+
+另一个可靠的访问控制实践是限制容器的能力。这可以降低多种威胁的冲击范围，从特权提升到流量劫持。它并非防护盾牌，但会剥除大多数容器根本不需要的权限。
+
+**能力是什么？** Linux 内核定义的、具名的权限或能力。（[`capabilities`](https://man7.org/linux/man-pages/man7/capabilities.7.html) 手册页列出了完整列表。）常见的包括 `CAP_CHOWN`（更改文件所有者）、`CAP_NET_ADMIN`（配置网络接口）、`CAP_KILL`（杀死任意进程）等。
+
+确定所需能力的两种方式：
+
+1. **试错法**：先不授予任何能力，然后逐个添加，直至应用正常运行。虽慢但有效。
+2. **查找已有方案**：搜索 "`project-name` `cap_drop` Dockerfile" 或 "`project-name` `cap_drop` docker-compose.yml"，看看是否已有成熟实现。LLM 可以提供起点，但视作猜测，务必测试容器并阅读镜像文档。
+
+#### 能力最佳实践
+
+- **全部删除**：使用 `cap_drop: [ ALL ]` 删除容器的所有 Linux 能力。
+- **不授予新特权**：使用 `security_opt: [ no-new-privileges=true ]` 防止容器获取新特权。
+
+```yaml title="Example: Drop/Limit Capabilities" {5-14}
+services:
+  database:
+    image: postgres:17.1
+    networks: [ db-network ]
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - DAC_READ_SEARCH
+      - FOWNER
+      - SETGID
+      - SETUID
+  db-admin:
+    image: dpage/pgadmin4:4.1
+    networks: [ db-network ]
+    ports:
+      - "8081:80"
+    # ... 其他设置
+networks:
+  db-network:
+```
+
+现在你的服务可以通过 `db-network` 网络相互通信。Docker Compose 会自动创建该网络。
+
+使用 `--external`/`external:` 选项可以加入 **已有网络**。省略该选项则会创建新网络。
+
+### Docker Socket 访问
+
+#### ⚠️ 警告：`docker.sock` 基本上等同于主机管理员权限
+
+<blockquote class="inset">⚠️ `:ro` 选项只影响挂载点本身的只读属性，不能阻止通过套接字发送的 I/O！</blockquote>
+
+它仅保证套接字路径以只读方式挂载。通过该套接字发送的 API 调用仍然可以创建容器、挂载主机路径，以及执行其他你可能并不想委派的危险操作。
+
+{/* 任何能够 “打开” 该套接字的进程几乎都能获得主机的 root 权限。 */}
+
+#### 套接字最佳实践
+
+- 🥇 **避免挂载 Docker 套接字，** 通常有更好的替代方案。
+- 🫣 如果必须挂载，**在其前面放置一个细粒度代理**，只允许应用实际需要的 API 端点。可以参考最初由 Tecnativa 提供的 `docker-socket-proxy` 项目，[docker-socket-proxy](https://github.com/Tecnativa/docker-socket-proxy)。随后验证被拒绝的调用真的被阻止。
+- 🤢 好吧，在 **高度信任、低风险** 的测试环境中，**共享套接字** 可能还能接受。
+
+#### 阻断国家流量！
+
+有时有用，但并非真正的安全边界。
+
+_这里指的是地缘政治实体，而不是音乐……_
+
+如果你的应用主要面向本地的家人和朋友提供服务，可以阻断来自不期望收到流量的国家的请求，或者只允许来自预期国家的流量。这能过滤掉大部分噪声，但并不能阻止 VPN、代理、僵尸网络或有耐心的攻击者。
+
+查看下面的脚本即可阻断所有来自中国的流量：
+
+```bash title="block-china.sh"
+curl -fsSL https://www.ipdeny.com/ipblocks/data/countries/cn.zone | \
+  while read line; do ufw deny from $line to any; done
+```
+
+同理，你可以只允许来自美国的流量：
+
+```bash title="allow-usa.sh"
+curl -fsSL https://www.ipdeny.com/ipblocks/data/countries/us.zone | \
+  while read line; do ufw allow from $line to any; done
+```
+
+#### 加固 CloudFlare 代理主机
+
+如果你的家庭服务器位于 CloudFlare IP（代理）之后，可以将访问限制为仅 CloudFlare 的 IP 段以及本地网络。
+
+这与上面的【国家阻断】思路类似，但控制更为严格。
+
+```bash title="whitelist-ingress-from-cloudflare.sh"
+ufw default deny incoming # 阻断所有入站流量!!!
+ufw default allow outgoing # 允许所有出站流量
+ufw allow ssh # 允许 SSH
+
+# 允许本地子网访问（建议为托管服务专设 DMZ/VLAN）
+ufw allow from 10.0.0.0/8 to any port 443
+
+# 允许 CloudFlare IP 段
+curl -fsSL https://www.cloudflare.com/ips-v4 | \
+  while read line; do ufw allow from $line to any port 443; done
+# 添加 IPv6 支持
+# curl -fsSL https://www.cloudflare.com/ips-v6 | \
+#   while read line; do ufw allow from $line to any port 443; done
+```
+
+要在特定国家进行地理位置测试时，使用带有相应地区的 VPN 会很有帮助。更多细节请参见 [监控与验证](#-monitoring--verification) 小节。
+
+### 应用层安全
+
+在你的 [网络和主机已经完成安全加固](#-network-hazard) 之后，可能会发现还有更多工作要做。
+
+现在需要考虑服务本身的“应用”层面。
+
+<p class="inset">数据库是否设置了有效密码？容器是否自动处理 HTTPS/证书？应用是否内置了认证？是否对可注册的邮箱有限制？是否仍使用默认凭证或环境变量？</p>
+
+唯一能 **确认** 的办法就是检查。此时应从 `README` 以及 `docker-compose.yml`、`Dockerfile`、`.env.*` 等关键文件入手，同时检查项目本身及其依赖的服务（例如 Postgres、Redis 等）。
+
+#### 反向代理
+
+另一层防御手段是基本认证（basic auth）。务必在启用 HTTPS 的前提下使用它。对于遗留服务，在管理路由前加一层 basic auth 往往足以阻止随意访问和未认证爬虫直接触碰内部接口。
+
+```nginx
+# /etc/nginx/conf.d/secure-admin.conf
+location /admin {
+    auth_basic "Restricted Access";
+    auth_basic_user_file /etc/nginx/.htpasswd;
+    proxy_pass http://internal_admin:80;
+    proxy_set_header X-Real-IP $remote_addr;
+}
+```
+
+生成凭证：
+
+```bash
+htpasswd -c /etc/nginx/.htpasswd admin
+```
+
+使用 basic auth 代理后，攻击者在访问内部服务前必须先通过用户名和密码这道额外关卡。
+
+另一种选择是使用 [Traefik](https://traefik.io/) 或 [Caddy](https://caddyserver.com/) 等服务，它们可以为你自动处理 HTTPS 与 basic auth。
+
+如果你想通过 GUI 管理大量域名和服务，我推荐使用 [Nginx Proxy Manager](https://nginxproxymanager.com/)。
+
+## 🔍 监控与验证
+
+- [检查端口](#check-your-ports)
+- [查看开放端口](#view-open-ports)
+- [文件监控](#file-monitoring)
+
+这是 **最重要且最常被忽视的步骤**。即使拥有最好的防火墙、最优的网络和最佳实践，如果不进行验证，你根本不知道它们是否真的生效。
+
+此外，只掌握少量命令——或知道去哪里查找——往往决定了能否阻止一次入侵。拥有黑客的快感只是额外奖励。（详细示例请直接跳到 [监控与验证](#-monitoring--verification) 小节。）
+
+<p class="inset">不信任，验证两次</p>
+
+### 检查你的端口
+
+<p class="inset">⚠️ 重要提示：不要扫描你不拥有的主机。</p>
+
+无论是在家庭网络还是 VPS 上，你都需要了解哪些端口对外开放。
+
+有两种方式可以做到：
+
+- 检查网络层（`nmap`、`masscan`）
+- 查询操作系统层（`lsof`、`netstat`、`ss`）
+
+#### 在网络外部进行测试
+
+首先获取当前（公网）IP，最简单的方式是使用 `ifconfig.me` 等服务：`curl https://ifconfig.me`。也可以在你的云服务商控制台中查看。
+
+```bash title="获取公网 IP"
+curl -fsSL https://ifconfig.me
+# --> 当前公网 IP
+```
+
+拿到公网 IP 后，需要 **从外部网络发起连接**。可以使用朋友的电脑、手机/5G 热点，或租用的专用服务器。
+
+```bash title="nmap 外部扫描"
+target_host="$(curl -fsSL https://ifconfig.me)"
+```
+
+# 注意：确保 `target_host` 是目标 IP
+
+# 扫描特定端口：
+nmap -A -p 80,443,8080 --open --reason $target_host
+# 前 100 端口：
+nmap -A --top-ports 100 --open --reason $target_host
+# 所有端口
+nmap -A -p1-65535 --open --reason $target_host
+
+```
+
+#### 在你的网络内部进行测试
+
+练习使用 `nmap`，扫描本地网络或某台服务器，检查路由器、打印机、智能冰箱等。
+
+{/* 虽然端口扫描是日常操作，但在美国可能触犯《计算机欺诈与滥用法》（CFAA）。因此，只扫描你拥有的资产。 */}
+
+#### 示例扫描命令
+
+```bash
+
+# 扫描本地主机的所有开放端口
+nmap -sT localhost
+
+# 扫描机器的私有 IP 上的服务
+nmap -sV 192.168.1.10
+
+# 查找网络上的服务详情
+nmap -sn 192.168.0.0/24
+nmap -sn 10.0.0.0/24
+# 或扫描 Docker 网络 172.18.0.1/16
+nmap -sn 172.18.0.1/16
+
+```
+
+```text title="nmap Scan" frame="terminal"
+% nmap -A --open --reason 192.168.0.87
+
+Starting Nmap 7.95 ( https://nmap.org ) at 2025-01-06 13:51 MST
+Nmap scan report for dev02.local (192.168.0.87)
+Host is up, received syn-ack (0.0067s latency).
+Not shown: 995 closed tcp ports (conn-refused)
+PORT     STATE SERVICE     REASON  VERSION
+22/tcp   open  ssh         syn-ack OpenSSH 9.6p1 Ubuntu 3ubuntu13.5 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey:
+|_  256 {FINGERPRINT} (ED25519)
+80/tcp   open  http        syn-ack Caddy httpd
+|_http-server-header: Caddy
+|_http-title: Dev02.DanLevy.net
+443/tcp  open  ssl/https   syn-ack
+|_http-title: Dev02.DanLevy.net
+1234/tcp open  http        syn-ack Node.js Express framework
+|_http-cors: GET POST PUT DELETE PATCH
+|_http-title: Dev02.DanLevy.net (application/json; charset=utf-8).
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 13.36 seconds
+```
+
+### 查看开放端口
+
+熟悉 `lsof` ——它在 macOS 与 Linux 上均可使用，能够显示细粒度的网络状态和磁盘活动。
+
+```bash title="lsof Commands"
+# 监控特定端口
+sudo lsof -i:80 -Pn
+
+# 监控已建立的连接
+sudo lsof -i -Pn | grep ESTABLISHED
+# 查看 LISTEN 状态
+sudo lsof -i -Pn | grep LISTEN
+
+# 显示网络名称而非 IP 地址（反向 DNS 解析可能非常慢）
+sudo lsof -i -P | grep LISTEN
+```
+
+# 监控所有网络连接
+sudo watch -n1 "lsof -i -Pn"
+
+```
+
+#### 示例输出
+
+![nmap scan for listeners](../lsof-scan-listen.webp)
+
+### 文件监控
+
+要找出哪些 **进程** 正在消耗最多的 **硬盘带宽**，可以使用 `iotop`：
+
+```bash
+sudo iotop
+```
+
+要查看单个文件的变动，可在 Linux 上使用 `inotifywait`，在 macOS 上使用 `fswatch`：
+
+这在检测文件夹或全系统的未授权或异常行为时非常有用。
+
+```bash
+# 监控目录下的所有文件变动
+sudo inotifywait -m /path/to/directory
+```
+
+在 macOS 上可以使用 `fswatch`：
+
+使用 Homebrew 安装 `fswatch`：
+
+```bash
+brew install fswatch
+```
+
+```bash
+fswatch -r /path/to/directory
+```
+
+## ⏰ 常被忽视的技巧
+
+1. **对认证尝试及其他关键入口进行速率限制**。可以通过 Nginx 的 `limit_req` 模块或 `fail2ban`（用于 SSH）来实现，防止暴力破解——在 IPv6 与廉价僵尸网络横行的今天，这几乎是必需的。
+
+2. **尽可能使用只读卷**：
+   ```yaml
+services:
+  webapp:
+    volumes:
+      - ./config:/config:ro
+   ```
+   配合其他最佳实践（非 root 用户、最小化文件夹权限），`:ro` 挂载选项可以防止意外修改以及容器内部的写入尝试。但它并不能阻止已经拥有更高权限的进程对宿主机的影响。
+
+3. **定期审计容器访问**。如果容器不需要某个 secret、端口或挂载，就把它移除！
+
+4. **警惕 Wi‑Fi 随意共享**  
+   你肯定不会把 Wi‑Fi 密码随便给陌生人，对吧？但有时会给朋友甚至家人。你永远不知道他们的设备上装了哪些应用，哪些可能把你的 SSID 与密码泄露到外网。
+
+### 家庭网络 vs. 公共提供商 vs. 隧道
+
+1. **虚拟隔离/DMZ**：在家庭服务器上，尽可能将其放在独立的 VLAN 或 DMZ 中。这可以防止内部设备被服务器侧的潜在妥协波及。  
+   - 为家庭服务器使用独立的路由器或 VLAN。  
+   - 为家庭服务器使用独立的 Wi‑Fi 网络。  
+   - 为家庭服务器使用独立的子网。
+
+2. **云服务商**：Hetzner、Vultr、DigitalOcean、Linode、AWS、Azure 和 Google Cloud 都提供各自的防火墙功能。  
+   - 部分供应商和服务默认阻断端口。也有提供可选的开启或附加功能。请查阅你的服务商文档。  
+   - 许多供应商提供高级监控和威胁检测服务。
+
+3. **VPN 与隧道**：考虑使用类似 VPN 的方案或隧道服务，在不将服务暴露到公共互联网的前提下安全地跨网络连接。  
+   - TailScale、ngrok、ZeroTier。  
+   - WireGuard、OpenVPN。
+
+{/* 3. **Hardening Against Internal/Lateral Attacks**: One infected device can compromise an entire network. Segmenting Docker services on custom networks, using hardware, UFW rules, and blocking unneeded ports can all help reduce risk (when properly configured.) */}
+
+## 🚀 生产检查清单
+
+- [ ] **Secrets**：所有 secret 均随机生成并安全存储  
+- [ ] **Updates**：容器更新策略已文档化并自动化。（即使只是几行文本文件中的命令也算）  
+- [ ] **Network**：仅暴露必要端口，内部网络已配置  
+- [ ] **Firewall Rules**：默认拒绝，显式放行，必要时进行国家封锁  
+- [ ] **Reverse Proxy**：Nginx、Caddy 或 Traefik 可添加基础认证层  
+- [ ] **Canary Tokens**：将其放置在敏感文件和凭证附近，实际被触碰时才会产生警报  
+- [ ] **Monitoring**：使用 `nmap`、`lsof`、`inotifywait`、`glances` 等工具了解系统状态  
+- [ ] **Backup Strategy**：已测试、最好自动化、并且离线存储  
+- [ ] **Least Privilege**：非 root 容器用户，只读挂载卷  
+
+## 📚 进一步阅读
+
+- [Docker Security Best Practices](https://docs.docker.com/develop/security-best-practices/)  
+- [OWASP Docker Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html)  
+- [CIS Docker Benchmark](https://www.cisecurity.org/benchmark/docker)  
+- [Canarytokens.org for Canary Tokens](https://canarytokens.org/)  
+
+## Thanks
+
+致谢给几位热心的 Reddit 用户：
+
+- <em className="cite">[u/JCBird1012](https://www.reddit.com/user/JCBird1012/) - [thread](https://www.reddit.com/r/selfhosted/comments/1hv8jn6/comment/m5rvlzi/).</em>  
+- <em className="cite">[u/Salzig](https://www.reddit.com/user/Salzig/)</em>  
+- <em className="cite">[u/Myelrond](https://www.reddit.com/user/myelrond/)</em>  
+- <em className="cite">[u/shrimpdiddle](https://www.reddit.com/user/shrimpdiddle/)</em>  
+- <em className="cite">[u/troeberry](https://www.reddit.com/user/troeberry/)</em>
+
+感谢阅读！希望本指南对你有所帮助。如果有任何问题或建议，欢迎通过下方社交渠道联系我，或点击 `Edit on GitHub` 链接提交 PR！❤️
+````
