@@ -155,7 +155,10 @@ test("finds modified translation slots when English modified is newer", () => {
     repoRoot,
   });
 
-  expect(slots.map((slot) => `${slot.locale}/${slot.slug}`)).toEqual(["es/stale-post"]);
+  expect(slots.map((slot) => `${slot.locale}/${slot.slug}`)).toEqual([
+    "zh/stale-post",
+    "es/stale-post",
+  ]);
 });
 
 test("treats existing translations without modified as stale but skips sources without modified", () => {

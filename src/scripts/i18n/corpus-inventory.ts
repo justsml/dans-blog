@@ -229,11 +229,12 @@ export function getModifiedTranslationSlots(options: MissingTranslationSlotOptio
 }
 
 export function isTranslationOlderThanSource(paths: Pick<PostPaths, "sourcePath" | "targetPath" | "fallbackTargetPath">) {
+  const sourceContents = readFileSync(paths.sourcePath, "utf8");
   const translationPath = existingTranslationPath(paths);
-  if (translationPath == null) return false;
+  if (translationPath == null) return frontmatterModifiedMs(sourceContents) != null;
 
   return isTranslationOlderThanSourceContents(
-    readFileSync(paths.sourcePath, "utf8"),
+    sourceContents,
     readFileSync(translationPath, "utf8"),
   );
 }
