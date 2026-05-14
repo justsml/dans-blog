@@ -1,0 +1,67 @@
+{
+  "index": 8,
+  "attempt": 1,
+  "originalTitle": "BatchGetItem Limits",
+  "translatedTitle": "حدود BatchGetItem",
+  "translation": {
+    "title": "حدود BatchGetItem",
+    "group": "الدفعات، الجزء 1!",
+    "options": [
+      {
+        "text": "1",
+        "hint": "... أنا أصر على التجميع."
+      },
+      {
+        "text": "25",
+        "hint": "هذا هو الحد لـ `BatchWriteItem`."
+      },
+      {
+        "text": "100"
+      },
+      {
+        "text": "75",
+        "hint": "قريب، لكن هناك رقم دائري."
+      },
+      {
+        "text": "50",
+        "hint": "أعلى قليلاً لـ `BatchGetItem`."
+      },
+      {
+        "text": "200",
+        "hint": "مرتفع جداً..."
+      },
+      {
+        "text": "غير محدود",
+        "hint": "هناك حد ثابت لـ `BatchGetItem`."
+      }
+    ],
+    "objectives": [
+      "تذكر حدود BatchGetItem في DynamoDB",
+      "مقارنة BatchGetItem مع عمليات الدفعات الأخرى"
+    ],
+    "questionProse": [
+      "سؤال دفعة آخر من DynamoDB!<br />\n      ما هو الحد الأقصى لعدد العناصر التي يمكنك استردادها باستخدام طلب `BatchGetItem` واحد من DynamoDB؟"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "يسمح لك SDK الخاص بـ DynamoDB باسترداد ما يصل إلى **100** عنصر في طلب `BatchGetItem` واحد. هذا أعلى من الحد لـ `BatchWriteItem`، وهو 25 عنصرًا.\n      بالإضافة إلى ذلك، هناك حدود على الحجم الإجمالي للحمولة، وحجم المستند، ومعدل الطلبات.\n\n      فهم هذه الحدود أمر بالغ الأهمية لتحسين أداء تطبيقك وضمان عمليات بيانات فعالة.\n\n      **ملاحظة:** من الممكن تجاوز _بعض_ هذه الحدود - إذا تمكنت من إقناع مدير حساب AWS الخاص بك. 😎"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"حدود BatchGetItem\",\n  \"group\": \"الدفعات، الجزء 1!\",\n  \"options\": [\n    {\n      \"text\": \"1\",\n      \"hint\": \"... أنا أصر على التجميع.\"\n    },\n    {\n      \"text\": \"25\",\n      \"hint\": \"هذا هو الحد لـ `BatchWriteItem`.\"\n    },\n    {\n      \"text\": \"100\"\n    },\n    {\n      \"text\": \"75\",\n      \"hint\": \"قريب، لكن هناك رقم دائري.\"\n    },\n    {\n      \"text\": \"50\",\n      \"hint\": \"أعلى قليلاً لـ `BatchGetItem`.\"\n    },\n    {\n      \"text\": \"200\",\n      \"hint\": \"مرتفع جداً...\"\n    },\n    {\n      \"text\": \"غير محدود\",\n      \"hint\": \"هناك حد ثابت لـ `BatchGetItem`.\"\n    }\n  ],\n  \"objectives\": [\n    \"تذكر حدود BatchGetItem في DynamoDB\",\n    \"مقارنة BatchGetItem مع عمليات الدفعات الأخرى\"\n  ],\n  \"questionProse\": [\n    \"سؤال دفعة آخر من DynamoDB!<br />\\n      ما هو الحد الأقصى لعدد العناصر التي يمكنك استردادها باستخدام طلب `BatchGetItem` واحد من DynamoDB؟\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"يسمح لك SDK الخاص بـ DynamoDB باسترداد ما يصل إلى **100** عنصر في طلب `BatchGetItem` واحد. هذا أعلى من الحد لـ `BatchWriteItem`، وهو 25 عنصرًا.\\n      بالإضافة إلى ذلك، هناك حدود على الحجم الإجمالي للحمولة، وحجم المستند، ومعدل الطلبات.\\n\\n      فهم هذه الحدود أمر بالغ الأهمية لتحسين أداء تطبيقك وضمان عمليات بيانات فعالة.\\n\\n      **ملاحظة:** من الممكن تجاوز _بعض_ هذه الحدود - إذا تمكنت من إقناع مدير حساب AWS الخاص بك. 😎\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1014,
+    "outputTokens": 792,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 5439,
+    "providerCostUsd": 0.0005196,
+    "providerUpstreamCostUsd": 0.0005196,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00014196,
+    "outputUsd": 0.00022176000000000002,
+    "totalUsd": 0.00036372,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

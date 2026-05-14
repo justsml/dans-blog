@@ -1,0 +1,1100 @@
+# Translation Candidate
+- Slug: quiz-in-the-aws-cloud
+- Locale: ar
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2024-12-28--quiz-in-the-aws-cloud/ar/index.mdx
+- Validation: deferred
+- Runtime seconds: 231.85
+- Input tokens: 25972
+- Output tokens: 37166
+- Thinking tokens: unknown
+- Cached input tokens: 4608
+- Cache write tokens: 0
+- Estimated cost: $0.013592
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+unlisted: false
+title: 'اختبار: تخزين AWS: أكثر من 20 سؤالاً!'
+subTitle: هل تستطيع التنقل في متاهة السحابة؟
+label: AWS Storage
+category: Quiz
+subCategory: Cloud
+date: '2024-12-28'
+modified: '2024-12-29'
+tags:
+  - quiz
+  - aws
+  - cloud
+  - storage
+  - databases
+  - s3
+  - dynamodb
+  - rds
+  - elasticache
+social_image: ../mobile.webp
+cover_full_width: ../aws-cloud--city-focus-wide.webp
+cover_mobile: ../aws-cloud--city-focus-square.webp
+cover_icon: ../aws-cloud--city-focus-square.webp
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+<p class="inset">هل أنت مستعد للسحابة؟! 🤡</p>
+
+اغوص في أعماق خدمات التخزين في AWS! هذا الاختبار سيختبر معرفتك بـ S3 و DynamoDB و Aurora و RDS و ElastiCache والمزيد. من أفضل الممارسات إلى الحيل الخادعة، سنستكشف مشهد التخزين السحابي.
+
+استعد لإثبات خبرتك السحابية! 🚀
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="إحماء"
+  title="أسئلة عن S3"
+  difficulty={1}
+  objectives={[
+    "تذكر معنى اسم خدمة AWS S3",
+    "التعرف على خدمات التخزين الأساسية في AWS",
+  ]}
+  options={[
+    {text: 'تخزين الخادم الإصدار 3'},
+    {text: 'التخزين كخدمة'},
+    {text: 'خدمة التخزين البسيطة', isAnswer: true},
+    {text: 'خدمة التخزين الوقحة'},
+    {text: 'متجر متزامن بسيط'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    <p className="text-sm">آخر تحقق: 8 مايو 2026. حدود وأسعار AWS تتغير بسرعة.</p>
+    ماذا يعني الاسم `S3`؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    S3 تعني **Simple Storage Service**. إنها خدمة تخزين كائنات قابلة للتوسع مصممة لتخزين البيانات على نطاق واسع.
+
+    تقدم AWS S3 عدة فئات تخزين:
+    - Standard: للبيانات التي يتم الوصول إليها بشكل متكرر
+    - Infrequent Access (IA): تكلفة أقل للوصول الأقل تكرارًا
+    - Glacier: تخزين أرشيفي طويل الأجل ومنخفض التكلفة
+
+    تقدم كل فئة أسعارًا وخصائص وصول مختلفة، مما يسمح بتحسين التكلفة بناءً على أنماط استخدام البيانات.
+
+    [تعرف على المزيد حول فئات تخزين S3](https://aws.amazon.com/s3/storage-classes/)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="بدون مخطط"
+  title="DynamoDB"
+  difficulty={2}
+  objectives={[
+    "تحديد خصائص قواعد البيانات بدون مخطط",
+    "شرح نموذج البيانات المرن لـ DynamoDB",
+  ]}
+  options={[
+    {text: 'تخزين خصائص عشوائية', isAnswer: true},
+    {text: 'مفاتيح التقسيم الديناميكية'},
+    {text: 'الأعمدة غير محددة النوع'},
+    {text: 'مخطط JSON مُدار تلقائيًا'},
+    {text: 'يعتمد على RDS لدعم المخطط'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ماذا يعني عندما يُوصف DynamoDB بأنه "بدون مخطط"؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    يُعتبر DynamoDB "بدون مخطط" لأنه يسمح لك بتخزين خصائص عشوائية في العناصر دون مخطط محدد مسبقًا.
+
+    [DynamoDB Best Practices](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/best-practices.html)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="بدون مخطط"
+  title="DynamoDB"
+  difficulty={4}
+  objectives={[
+    "مقارنة قدرات عمليات الدفعة في DynamoDB",
+    "تحسين عمليات التحديث في DynamoDB",
+    "تقييم اعتبارات التوسع للتحديثات",
+  ]}
+  options={[
+    {text: 'PutItem', hint: 'ينشئ عنصرًا جديدًا، أو يستبدل عنصرًا قديمًا بعنصر جديد.'},
+    {text: 'BatchUpdateItem', hint: 'غير موجود.'},
+    {text: 'BatchWriteItem', hint: 'يقوم بإدراج (إدراج) أو حذف عناصر متعددة في استدعاء واحد.'},
+    {text: 'UpdateItem', isAnswer: true},
+    {text: 'BatchUpsertItem', hint: 'في DynamoDB؟'},
+    {text: 'TransactWriteItems', hint: 'يجمع بين عمليات PutItem وUpdateItem وDeleteItem وConditionCheck المتعددة في استدعاء واحد.'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    أي واجهة برمجة تطبيقات DynamoDB تقوم بتحديث السمات على عنصر موجود واحد؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    المفتاح هنا هو <b>التحديثات</b>، وليس الإدراج أو PUTs. إذا كنت تقوم بالإدراج، يمكنك استخدام `BatchWriteItem` أو `TransactWriteItems`.
+
+    بينما يمكن لـ `BatchWriteItem` التعامل مع عمليات متعددة، إلا أنه يقتصر على PUTs وDELETES. `TransactWriteItems` أكثر قوة، لكنه يشبه المطرقة الثقيلة للتحديثات البسيطة.
+    بالنسبة للتحديثات البسيطة، `UpdateItem` هو الخيار الأفضل. يسمح لك بتحديث (UPDATE) أو تعديل سمة واحدة أو أكثر في عنصر موجود.
+
+    عملية `UpdateItem` تعدل عنصرًا واحدًا لكل طلب. بالنسبة للتعبئة الخلفية الكبيرة أو التحديثات الجماعية، عادةً ما تقوم بتنسيق العديد من استدعاءات `UpdateItem` أو استخدام سير عمل أكبر مثل تنفيذ PartiQL الدفعي، أو Step Functions، أو Glue، أو EMR، أو عملية عامل مخصصة.
+
+    عملية `UpdateItem`:
+    - تقوم بتحديث سمات عنصر موجود.
+    - تضيف سمات جديدة إلى عنصر موجود.
+    - تزيل سمات من عنصر موجود.
+    - تقوم بالتحديث بشكل مشروط إذا كان العنصر موجودًا أو يستوفي شروطًا معينة.
+
+    [DynamoDB UpdateItem](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateItem.html)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="إمكانيات الاستعلام"
+  title="ميزات البحث المتقدمة"
+  difficulty={3}
+  objectives={[
+    "فهم إمكانيات الاستعلام المتقدمة عبر خدمات AWS",
+    "مقارنة ميزات البحث النصي الكامل",
+  ]}
+  options={[
+    {text: 'ElastiCache', hint: 'ذاكرة تخزين مؤقت بشكل أساسي؛ الإصدارات الأحدث من Valkey تتضمن ميزات بحث.'},
+    {text: 'OpenSearch', isAnswer: true},
+    {text: 'Neptune', hint: 'قاعدة بيانات رسومية مع إمكانيات استعلام متقدمة'},
+    {text: 'Redshift', hint: 'استعلامات تحليلية معقدة'},
+    {text: 'DocumentDB', hint: 'استعلامات متوافقة مع MongoDB'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    أي خدمة AWS هنا مصممة خصيصًا للبحث النصي الكامل وتحليلات البحث؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    OpenSearch هي خدمة AWS المُدارة للبحث، وتحليلات السجلات، وأعباء عمل البحث النصي الكامل.
+
+    الخيارات الأخرى هي خدمات مفيدة، لكنها ليست محرك البحث المخصص في هذه القائمة:
+    - ElastiCache: ذاكرة تخزين مؤقت بشكل أساسي. الإصدار الحالي من ElastiCache لـ Valkey يتضمن أوامر بحث للبيانات المفهرسة في الذاكرة، لذا لم يعد من الدقيق وصف الخدمة بأكملها بأنها لا تحتوي على بحث مدمج.
+    - Neptune: قاعدة بيانات رسومية؛ يمكنها التكامل مع OpenSearch للبحث النصي الكامل.
+    - Redshift: مستودع بيانات لتحليلات SQL.
+    - DocumentDB: قاعدة بيانات مستندات مع بحث نصي متوافق مع MongoDB في الإصدارات المدعومة.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="RDS"
+  title="نشر متعدد مناطق التوفر (Multi-AZ)"
+  difficulty={2}
+  objectives={[
+    "تحديد الغرض الأساسي من نشر متعدد مناطق التوفر",
+    "التمييز بين التوفر العالي وتوسيع نطاق القراءة",
+  ]}
+  options={[
+    {text: 'يقلل تكاليف التخزين'},
+    {text: 'يحل مشكلة الخروج (Egress)'},
+    {text: 'يوفر تجاوز الفشل التلقائي', isAnswer: true},
+    {text: 'يزيد أداء القراءة'},
+    {text: 'يحسن حركة المرور الموزعة جغرافيًا'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما هي الفائدة **الرئيسية** لنشر RDS متعدد مناطق التوفر؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    مناطق التوفر (AZs) هي مراكز بيانات متميزة **داخل المنطقة.** يوفر نشر RDS متعدد مناطق التوفر تجاوز الفشل التلقائي إلى نسخة احتياطية احتياطية في منطقة توفر *قريبة*.
+
+    نشر متعدد مناطق التوفر:
+    - يوفر تجاوز الفشل التلقائي
+    - يزيد من توفر قاعدة البيانات
+    - ينشئ نسخة احتياطية متزامنة
+    - يقلل من وقت التوقف أثناء فشل البنية التحتية
+
+    لا تخلط بين نشر متعدد مناطق التوفر ونسخ القراءة (Read Replicas)، والتي تُستخدم لتوسيع نطاق عمليات القراءة.
+
+    {/* [RDS Multi-AZ Details](https://aws.amazon.com/rds/features/multi-az/) */}
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="WebSockets"
+  title="سحر WebSocket"
+  difficulty={3}
+  objectives={[
+    "مقارنة دعم WebSocket عبر خدمات AWS",
+    "تحديد القيود المعمارية في خدمات AWS",
+    "تقييم خيارات تنفيذ WebSocket",
+  ]}
+  options={[
+    {text: 'API Gateway', isAnswer: true},
+    {text: 'EKS', hint: 'يمكن لـ EKS تشغيل خدمات WebSocket طويلة العمر الخاصة بك.'},
+    {text: 'Lightsail', hint: 'يمكن لحالات Lightsail تشغيل خادم WebSocket الخاص بك.'},
+    {text: 'AppSync', hint: 'يقدم AppSync اشتراكات GraphQL مُدارة في الوقت الفعلي عبر WebSockets، وليس مآخذ توصيل خام عشوائية.'},
+    {text: 'EC2', hint: 'يمكن لـ EC2 تشغيل عملية خادم WebSocket طويلة العمر الخاصة بك.'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    👋 أتمنى أنك تستمتع حتى الآن!
+
+    حان وقت السؤال الصعب...
+
+    أي خدمة AWS توفر واجهات برمجة تطبيقات WebSocket مُدارة حيث تمتلك AWS اتصال العميل وتوجيه الرسائل إلى التكاملات؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    يدعم API Gateway واجهات برمجة تطبيقات WebSocket ثنائية الاتجاه، لكن التنفيذ يُدار بواسطة API Gateway بدلاً من أن يكون مأخذ توصيل مباشر إلى عملية الخادم الخاصة بك.
+    يحافظ API Gateway على اتصال العميل ويوجه الرسائل إلى Lambda أو نقاط نهاية HTTP أو تكاملات أخرى. يمكن إرسال الرسائل مرة أخرى إلى العملاء المتصلين عبر API Gateway Management API.
+
+    الخدمات الأخرى أكثر ملاءمة لـ WebSocket:
+    - Lightsail: مثالي لإعدادات WebSocket البسيطة 👌
+    - AppSync: يستخدم WebSockets لاشتراكات GraphQL المُدارة
+    - EC2: الخيار الكلاسيكي "افعل ما تريد" لـ WebSockets
+    - EKS: رائع لتشغيل مجموعات WebSocket قابلة للتوسع
+
+    نصيحة محترف: إذا كنت بحاجة إلى قوة WebSocket الخام، التزم بخدمات الحوسبة!
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="أمان S3"
+  title="سياسة حاوية S3"
+  difficulty={2}
+  objectives={[
+    "تطبيق أفضل ممارسات الأمان على S3",
+    "تنفيذ مبدأ الحد الأدنى من الامتيازات",
+  ]}
+  options={[
+    {text: 'جعل الحاويات الجديدة عامة', hint: 'الحد الأدنى من الامتيازات أولاً.'},
+    {text: 'نقل S3 إلى البيئة المحلية للتحكم الكامل في قوائم ACL'},
+    {text: 'نقل البيانات إلى سلسلة الكتل الخاصة', hint: 'تمزح، أليس كذلك؟'},
+    {text: 'استخدام مبدأ الحد الأدنى من الامتيازات', isAnswer: true},
+    {text: 'استخدام أحرف البدل في السياسة لضمان الوصول الضروري', hint: '😯 لا!'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما هو الأسلوب الموصى به لأذونات حاوية S3؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    في جميع الأنظمة تقريبًا، يُعد تبني تصميم "الحد الأدنى من الامتيازات" طريقة أساسية لتعزيز الأمان وتأمين المستقبل. محاولة تقييد نظام موجود أصعب تقريبًا من نقل مبنى مكتبي بالكامل إلى أساس جديد.
+
+    حاويات S3 ليست استثناءً. لتطبيق مبدأ الحد الأدنى من الامتيازات، ابدأ بدون أذونات وامنح الوصول الضروري فقط. استخدم أدوار وسياسات IAM للتحكم في الوصول وراجع أذونات الحاويات بانتظام.
+
+    أفضل ممارسات الأمان:
+    - تطبيق مبدأ الحد الأدنى من الامتيازات
+    - البدء بدون أذونات
+    - منح الوصول الضروري فقط
+    - استخدام أدوار وسياسات IAM
+    - مراجعة أذونات الحاويات بانتظام
+
+    تجنب الإعدادات المفرطة في السماح التي قد تعرض البيانات الحساسة.
+
+    [أفضل ممارسات أمان S3](https://aws.amazon.com/s3/security/)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="Aurora"
+  title="Aurora Serverless"
+  difficulty={2}
+  objectives={[
+    "تحديد الميزات الرئيسية لـ Aurora Serverless",
+    "التمييز بين قواعد البيانات بدون خادم والمخصصة",
+  ]}
+  options={[
+    {text: 'دائمًا أرخص من المخصص'},
+    {text: 'يقوم تلقائيًا بتوسيع سعة الحوسبة', isAnswer: true},
+    {text: 'يوفر تخزينًا غير محدود'},
+    {text: 'يلغي إدارة قاعدة البيانات'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما هي الميزة الرئيسية لـ Aurora Serverless؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    Aurora Serverless:
+    - يقوم تلقائيًا بتوسيع سعة الحوسبة
+    - يضبط الموارد بناءً على عبء العمل
+    - مثالي لأعباء العمل غير المتوقعة
+    - ادفع فقط مقابل الموارد المستخدمة
+
+    رائع للتطبيقات ذات أنماط حركة المرور المتغيرة.
+
+    [نظرة عامة على Aurora Serverless](https://aws.amazon.com/rds/aurora/serverless/)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="الدفعات، الجزء 1!"
+  title="حدود BatchGetItem"
+  difficulty={2}
+  objectives={[
+    "تذكر حدود BatchGetItem في DynamoDB",
+    "مقارنة BatchGetItem مع عمليات الدفعات الأخرى",
+  ]}
+  options={[
+    {text: '1', hint: '... أنا أصر على التجميع.'},
+    {text: '25', hint: 'هذا هو الحد لـ `BatchWriteItem`.'},
+    {text: '100', isAnswer: true},
+    {text: '75', hint: 'قريب، لكن هناك رقم دائري.'},
+    {text: '50', hint: 'أعلى قليلاً لـ `BatchGetItem`.'},
+    {text: '200', hint: 'مرتفع جداً...'},
+    {text: 'غير محدود', hint: 'هناك حد ثابت لـ `BatchGetItem`.'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    سؤال دفعة آخر من DynamoDB!<br />
+    ما هو الحد الأقصى لعدد العناصر التي يمكنك استردادها باستخدام طلب `BatchGetItem` واحد من DynamoDB؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    يسمح لك SDK الخاص بـ DynamoDB باسترداد ما يصل إلى **100** عنصر في طلب `BatchGetItem` واحد. هذا أعلى من الحد لـ `BatchWriteItem`، وهو 25 عنصرًا.
+    بالإضافة إلى ذلك، هناك حدود على الحجم الإجمالي للحمولة، وحجم المستند، ومعدل الطلبات.
+
+    فهم هذه الحدود أمر بالغ الأهمية لتحسين أداء تطبيقك وضمان عمليات بيانات فعالة.
+
+    **ملاحظة:** من الممكن تجاوز _بعض_ هذه الحدود - إذا تمكنت من إقناع مدير حساب AWS الخاص بك. 😎
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="الدفعات، الجزء 2!"
+  title="عمليات الدفعات"
+  difficulty={4}
+  objectives={[
+    "فهم حدود عمليات الدفعات في DynamoDB",
+    "التمييز بين العمليات الفردية والدفعية",
+  ]}
+  options={[
+    {text: '1', isAnswer: true},
+    {text: '10'},
+    {text: '25', hint: 'تخمين جيد...'},
+    {text: '50'},
+    {text: '100', hint: 'هل تفكر في حد GetItem؟'},
+    {text: '100 عند البث'},
+    {text: 'لا شيء مما سبق', hint: 'هذا صعب بعض الشيء...'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما هو الحد الأقصى لعدد المستندات التي يمكن لـ DynamoDB `UPDATE` لكل دفعة؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    عملاء DynamoDB هم في الأساس جميعهم أغلفة لواجهة برمجة التطبيقات HTTP الخاصة بها. يمكن لعملية `BatchWriteItem` إجراء `PUT` أو `DELETE` لما يصل إلى **25** مستندًا لكل طلب HTTP، لكنها لا تستطيع `UPDATE` مستندات متعددة.
+
+    بينما يمكن لـ DynamoDB `INSERT` ما يصل إلى **25** مستندًا لكل طلب HTTP، فإنها تستطيع `UPDATE` مستندًا واحدًا فقط لكل طلب باستخدام عملية `UpdateItem`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="DynamoDB"
+  title="السعة المخصصة مقابل السعة عند الطلب"
+  difficulty={3}
+  objectives={[
+    "مقارنة أوضاع السعة في DynamoDB",
+    "اختيار وضع السعة المناسب بناءً على حمل العمل",
+    "تقييم الآثار المترتبة على التكلفة لخيارات السعة",
+  ]}
+  options={[
+    {text: 'السعة المخصصة دائمًا أفضل'},
+    {text: 'السعة عند الطلب غير محدودة'},
+    {text: 'أداؤهما متطابق'},
+    {text: 'السعة عند الطلب أرخص لأحمال العمل غير المتوقعة', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    متى يجب استخدام السعة عند الطلب في DynamoDB؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    السعة عند الطلب هي الأفضل لـ:
+    - أحمال العمل غير المتوقعة
+    - حركة المرور المتقطعة
+    - التطبيقات ذات أنماط الوصول غير المعروفة
+    - تجنب الإفراط في التزويد
+
+    السعة المخصصة أفضل لـ:
+    - أحمال العمل المتوقعة والمتسقة
+    - تحكم أكبر في الأداء
+    - توفير محتمل في التكاليف
+
+    [أوضاع السعة في DynamoDB](https://aws.amazon.com/dynamodb/pricing/)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="أداء S3"
+  title="تحسين أداء S3"
+  difficulty={3}
+  objectives={[
+    "تحسين أداء S3 لمعدلات الطلبات العالية",
+    "تطبيق أفضل ممارسات تسمية مفاتيح S3",
+    "التصميم لتوزيع الأقسام في S3",
+  ]}
+  options={[
+    {text: 'استخدم بادئات عشوائية/تجزئة'},
+    {text: 'استخدم بادئات منطقية؛ التوزيع العشوائي غير مطلوب', isAnswer: true},
+    {text: 'استخدم دائمًا أكبر الكائنات'},
+    {text: 'قلل عدد الكائنات'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    كيف تحسن أداء S3 لمعدلات الطلبات العالية؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    نصائح أداء S3:
+    - S3 الحديثة تقوم تلقائيًا بتحجيم معدلات الطلبات لكل بادئة
+    - لا تحتاج إلى بادئات عشوائية/تجزئة من أجل الأداء
+    - استخدم أسماء مفاتيح منطقية تناسب أنماط الوصول الخاصة بك
+    - راقب استجابات 503 Slow Down إذا دفعت بمعدلات طلبات عالية جدًا
+
+    كانت التوجيهات القديمة توصي بتوزيع عشوائي للبادئات لتجنب الأقسام الساخنة، لكن AWS لم تعد توصي بذلك كمتطلب أداء افتراضي.
+
+    [إرشادات أداء S3](https://aws.amazon.com/s3/performance/)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="النسخ الاحتياطي لـ RDS"
+  title="استراتيجية النسخ الاحتياطي لـ RDS"
+  difficulty={2}
+  objectives={[
+    "تحديد أفضل الممارسات لاستراتيجيات النسخ الاحتياطي لـ RDS",
+    "فهم قدرات الاستعادة في نقطة زمنية",
+  ]}
+  options={[
+    {text: 'لقطات يدوية فقط'},
+    {text: 'لا حاجة للنسخ الاحتياطي'},
+    {text: 'نسخ احتياطي تلقائي مع استعادة في نقطة زمنية', isAnswer: true},
+    {text: 'نسخ احتياطي كامل أسبوعي'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما هو نهج النسخ الاحتياطي الموصى به لـ RDS؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    أفضل ممارسات النسخ الاحتياطي:
+    - تمكين النسخ الاحتياطي التلقائي
+    - استخدام الاستعادة في نقطة زمنية
+    - الاحتفاظ بالنسخ الاحتياطية بناءً على متطلبات الامتثال
+    - اختبار عملية الاستعادة بانتظام
+    - النظر في النسخ الاحتياطي عبر المناطق
+
+    توفر النسخ الاحتياطية التلقائية:
+    - حماية مستمرة للبيانات
+    - خيارات استعادة مرنة
+
+    [أفضل ممارسات النسخ الاحتياطي لـ RDS](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_CommonTasks.BackupRestore.html)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={13}
+  group="ElastiCache"
+  title="Redis مقابل Memcached"
+  difficulty={2}
+  objectives={[
+    "مقارنة قدرات Redis و Memcached",
+    "التمييز بين ميزات محركات التخزين المؤقت",
+  ]}
+  options={[
+    {text: 'Redis يدعم هياكل بيانات وعمليات أكثر', isAnswer: true},
+    {text: 'متطابق في جميع الجوانب'},
+    {text: 'توافق على مستوى API'},
+    {text: 'Memcached دائمًا أسرع'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    الفرق الرئيسي بين `Redis` و `Memcached` في `ElastiCache`؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    مزايا Redis:
+    - يدعم هياكل بيانات معقدة
+    - خيارات الاستمرارية
+    - عمليات متقدمة
+    - رسائل النشر/الاشتراك
+
+    Memcached:
+    - مخزن بسيط للمفتاح والقيمة
+    - تخزين مؤقت بحت
+    - أداء عالٍ لحالات الاستخدام البسيطة
+
+    [Redis مقابل Memcached](https://aws.amazon.com/elasticache/redis-vs-memcached/)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={14}
+  group="فهارس DynamoDB"
+  title="الفهرس الثانوي العام"
+  difficulty={3}
+  objectives={[
+    "فهم الغرض من الفهرس الثانوي العام",
+    "تقييم أنماط الوصول في DynamoDB",
+    "تصميم استراتيجيات استعلام فعالة",
+  ]}
+  options={[
+    {text: 'مطابق للمفتاح الأساسي'},
+    {text: 'بدون تكلفة إضافية'},
+    {text: 'يقلل أداء الكتابة'},
+    {text: 'يسمح بالاستعلام عن السمات غير الأساسية', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما الغرض من الفهرس الثانوي العام في DynamoDB؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    الفهرس الثانوي العام (GSI):
+    - يسمح بالاستعلام عن سمات غير المفتاح الأساسي
+    - ينشئ أنماط وصول بديلة
+    - يزيد من مرونة الاستعلام
+    - يأتي بتكلفة سعة كتابة إضافية
+
+    مفيد لمتطلبات الاستعلام المعقدة التي تتجاوز المفتاح الأساسي.
+
+    [فهارس DynamoDB](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GSI.html)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={15}
+  group="دورة حياة S3"
+  title="إدارة دورة حياة S3"
+  difficulty={2}
+  objectives={[
+    "فهم قدرات إدارة دورة حياة S3",
+    "تطبيق استراتيجيات تحسين التكلفة لـ S3",
+  ]}
+  options={[
+    {text: 'نقل الكائنات يدويًا'},
+    {text: 'نقل الكائنات تلقائيًا بين فئات التخزين', isAnswer: true},
+    {text: 'عدم حذف الكائنات القديمة أبدًا'},
+    {text: 'تخزين كل شيء في الفئة القياسية'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما الذي تتيحه إدارة دورة حياة S3؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    إدارة دورة الحياة:
+    - نقل الكائنات تلقائيًا بين فئات التخزين
+    - نقل البيانات غير المتكررة إلى تخزين أرخص
+    - تعيين قواعد لانتهاء صلاحية الكائنات
+    - تحسين تكاليف التخزين
+    - تقليل عبء الإدارة اليدوية
+
+    [S3 Lifecycle Rules](https://docs.aws.amazon.com/AmazonS3/latest/userguide/lifecycle-configuration-examples.html)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={16}
+  group="توسيع نطاق Aurora"
+  title="توسيع نطاق القراءة باستخدام Amazon Aurora"
+  difficulty={2}
+  objectives={[
+    "تذكر حدود نسخ القراءة في Aurora",
+    "فهم قدرات توسيع نطاق القراءة في Aurora",
+  ]}
+  options={[
+    {text: 'مقتصر على نسخة قراءة واحدة فقط', hint: 'فكر في ميزات قابلية التوسع في Aurora.'},
+    {text: 'لا يمكن توسيع نطاق القراءة', hint: 'هل يتوافق ذلك مع قدرات Aurora؟'},
+    {text: 'يدعم حتى 15 نسخة قراءة', isAnswer: true},
+    {text: 'نسخ قراءة غير محدودة', hint: 'هناك حد عملي يجب مراعاته.'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما هو الحد الأقصى لعدد نسخ القراءة التي يدعمها Amazon Aurora؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    يدعم Amazon Aurora **حتى 15 نسخة قراءة**، مما يسمح لك بتوسيع نطاق عمليات القراءة بشكل كبير. تستفيد هذه النسخ من:
+
+    - **تكاد تكون فورية** عبر النسخ
+    - **تأثير أدنى** على المثيل الأساسي
+    - **توزيع فعال** لأعباء عمل القراءة
+
+    يتيح هذا الإعداد التوسع الأفقي للتطبيقات ذات متطلبات القراءة العالية.
+
+    [تعرف على المزيد حول نسخ القراءة في Aurora](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Replicas.html)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={17}
+  group="أمان RDS"
+  title="تشفير RDS"
+  difficulty={2}
+  objectives={[
+    "التعرف على قدرات تشفير RDS",
+    "فهم آليات حماية البيانات في RDS",
+  ]}
+  options={[
+    {text: 'تشفير البيانات في حالة السكون وأثناء النقل', isAnswer: true},
+    {text: 'التشفير اختياري'},
+    {text: 'لا يتوفر تشفير'},
+    {text: 'تشفير أعمدة محددة فقط'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما هي قدرات التشفير التي يوفرها RDS؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    ميزات تشفير RDS:
+    - تشفير البيانات في حالة السكون باستخدام KMS
+    - تشفير البيانات أثناء النقل باستخدام SSL/TLS
+    - تمكين التشفير أثناء إنشاء قاعدة البيانات
+    - حماية المعلومات الحساسة
+    - الامتثال لمعايير الأمان
+
+    [خيارات تشفير RDS](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/encryption-options.html)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={18}
+  group="DynamoDB Streams"
+  title="الغرض من DynamoDB Streams"
+  difficulty={3}
+  objectives={[
+    "فهم حالات استخدام DynamoDB Streams",
+    "تصميم هندسات معمارية قائمة على الأحداث باستخدام DynamoDB",
+    "تقييم أنماط معالجة البيانات القائمة على التدفقات",
+  ]}
+  options={[
+    {text: 'تخزين نسخ إضافية من البيانات'},
+    {text: 'اعتمادات DynamoDB للموردين الخضر', hint: 'حقًا؟'},
+    {text: 'زيادة أداء الكتابة', hint: 'Streams هي '},
+    {text: 'التقاط التغييرات على مستوى العنصر للهندسات المعمارية القائمة على الأحداث', isAnswer: true},
+    {text: 'بديل عن الفهارس الثانوية العالمية', hint: 'هل تخمن؟'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما هو الاستخدام الأساسي لـ DynamoDB Streams؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    DynamoDB Streams:
+    - التقاط التغييرات على مستوى العنصر
+    - تمكين الهندسات المعمارية القائمة على الأحداث
+    - تشغيل دوال Lambda
+    - دعم النسخ المتماثل عبر المناطق
+    - توفير نقل البيانات في الوقت الفعلي تقريبًا
+
+    [نظرة عامة على DynamoDB Streams](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Streams.html)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={19}
+  group="نقل S3"
+  title="نقل الملفات الكبيرة"
+  difficulty={2}
+  objectives={[
+    "تحديد أفضل الممارسات لتحميل الملفات الكبيرة",
+    "فهم فوائد التحميل متعدد الأجزاء",
+  ]}
+  options={[
+    {text: 'استخدم دائمًا طلب PUT واحد'},
+    {text: 'استخدم Multipart Upload للملفات الكبيرة', isAnswer: true},
+    {text: 'اضغط الملف قبل التحميل'},
+    {text: 'قسّم الملف يدويًا قبل التحميل'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما أفضل طريقة لتحميل الملفات الكبيرة إلى S3؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    فوائد Multipart Upload:
+    - معالجة الملفات الكبيرة بكفاءة
+    - استئناف التحميلات المتقطعة
+    - تحميل متوازي لأجزاء الملف
+    - موصى به للملفات التي تزيد عن 100 ميجابايت
+    - تحسين موثوقية الشبكة
+
+    [S3 Multipart Upload](https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={20}
+  group="تحسين التكلفة"
+  title="تحليل تكلفة التخزين"
+  difficulty={4}
+  objectives={[
+    "مقارنة تكاليف التخزين عبر خدمات AWS",
+    "تقييم الآثار المترتبة على تكلفة خيارات التخزين",
+    "تطبيق استراتيجيات تحسين التكلفة",
+  ]}
+  options={[
+    {text: 'S3 Standard لجميع البيانات'},
+    {text: 'استخدم دائمًا أرخص تخزين'},
+    {text: 'مزج فئات التخزين بناءً على أنماط الوصول', isAnswer: true},
+    {text: 'تخزين كل شيء في Glacier'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما هو النهج الأكثر فعالية من حيث التكلفة لتخزين 1 بيتابايت من البيانات مع 20% يتم الوصول إليها يوميًا، و30% شهريًا، و50% سنويًا؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    استراتيجية التخزين المثلى:
+    - 20% في S3 Standard للوصول اليومي
+    - 30% في S3 Standard-IA للوصول الشهري
+    - 50% في Glacier للوصول السنوي
+
+    هذا النهج يحسن التكاليف مع الحفاظ على أنماط الوصول المناسبة.
+
+    اعتبارات التكلفة:
+    - تسعير التخزين لكل جيجابايت
+    - تكاليف الاسترجاع
+    - أنماط الوصول
+    - تكاليف الانتقال
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={21}
+  group="اتساق DynamoDB"
+  title="نماذج الاتساق"
+  difficulty={4}
+  objectives={[
+    "فهم نماذج الاتساق في DynamoDB",
+    "تقييم المفاضلات بين مستويات الاتساق",
+    "تطبيق نماذج الاتساق على سيناريوهات العالم الحقيقي",
+  ]}
+  options={[
+    {text: '100 قراءة في الثانية', isAnswer: true},
+    {text: '50 قراءة في الثانية'},
+    {text: '200 قراءة في الثانية'},
+    {text: 'قراءات غير محدودة في الثانية'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    جدول DynamoDB لديه سعة قراءة مخصصة تبلغ 100 RCU. كم عدد القراءات المتسقة بقوة لعناصر بحجم 4KB التي يمكن إجراؤها في الثانية؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    فهم نماذج الاتساق في DynamoDB أمر بالغ الأهمية:
+
+    - 1 RCU = 1 قراءة متسقة بقوة/ثانية للعناصر حتى 4KB
+    - 1 RCU = 2 قراءة متسقة في النهاية/ثانية للعناصر حتى 4KB
+
+    لذلك:
+    - 100 RCU = 100 قراءة متسقة بقوة لعناصر 4KB/ثانية
+    - 100 RCU = 200 قراءة متسقة في النهاية لعناصر 4KB/ثانية
+
+    اختر نماذج الاتساق بناءً على:
+    - متطلبات التطبيق
+    - اعتبارات التكلفة
+    - احتياجات الأداء
+    - متطلبات حداثة البيانات
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={22}
+  group="التوفر العالي في Aurora"
+  title="آلية تجاوز الفشل في Aurora"
+  difficulty={3}
+  objectives={[
+    "فهم عملية تجاوز الفشل في Aurora",
+    "تحديد تكوينات التوفر العالي",
+    "تطبيق أفضل ممارسات التعافي من الكوارث",
+  ]}
+  options={[
+    {text: 'يتطلب تدخلًا يدويًا'},
+    {text: 'يتطلب إعادة تكوين التطبيق'},
+    {text: 'دائمًا ما يتحول إلى أقدم نسخة مكررة'},
+    {text: 'الترقية التلقائية بناءً على مستوى أولوية تجاوز الفشل', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    في مجموعة Aurora تحتوي على نسخ مكررة للقراءة متعددة، ماذا يحدث أثناء تجاوز الفشل التلقائي عندما تفشل النسخة الأساسية؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    عملية تجاوز الفشل في Aurora:
+    1. اكتشاف فشل النسخة الأساسية
+    2. اختيار نسخة مكررة من Aurora بناءً على مستوى أولوية تجاوز الفشل بشكل أساسي
+    3. استخدام خصائص النسخة كعوامل كسر التعادل عندما تتطابق الأولويات
+    4. تحديث نقطة نهاية المجموعة تلقائيًا
+
+    أفضل الممارسات:
+    - الحفاظ على نسخ مكررة متعددة عبر مناطق التوفر
+    - تكوين مستويات الترقية بشكل مقصود
+    - استخدام نقطة نهاية المجموعة في التطبيقات
+    - اختبار سيناريوهات تجاوز الفشل بانتظام
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={23}
+  group="اتساق S3"
+  title="الاتساق القوي لـ S3"
+  difficulty={3}
+  objectives={[
+    "فهم نموذج اتساق S3",
+    "تحديد ضمانات عمليات S3",
+    "تطبيق معرفة الاتساق على تصميم التطبيق",
+  ]}
+  options={[
+    {text: 'فقط للكائنات الجديدة'},
+    {text: 'اتساق قوي لجميع العمليات', isAnswer: true},
+    {text: 'اتساق نهائي للتحديثات'},
+    {text: 'يعتمد على المنطقة'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    اعتبارًا من أواخر عام 2020، ما نموذج الاتساق الذي يوفره S3 لجميع العمليات؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    نموذج اتساق S3:
+    - اتساق قوي للقراءة بعد الكتابة لجميع العمليات
+    - ينطبق على عمليات PUT و DELETE
+    - لا حاجة للحلول البديلة التي كانت مستخدمة سابقًا
+    - بدون تكلفة إضافية
+
+    التأثير:
+    - منطق تطبيق مبسط
+    - لا حاجة لفحوصات الاتساق
+    - قراءات فورية موثوقة بعد الكتابة
+    - تحسين موثوقية التطبيق
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={24}
+  group="ميزات DynamoDB"
+  title="الوقت المحدد للحياة (TTL)"
+  difficulty={3}
+  objectives={[
+    "فهم ميزة TTL في DynamoDB",
+    "تطبيق TTL لإدارة دورة حياة البيانات",
+    "تصميم استراتيجيات فعالة لانتهاء صلاحية البيانات",
+  ]}
+  options={[
+    {text: 'يحذف العناصر فور انتهاء صلاحيتها'},
+    {text: 'يتطلب مشغل حذف يدوي'},
+    {text: 'حذف في الخلفية بأفضل جهد زمني', isAnswer: true},
+    {text: 'ينهي صلاحية العناصر لكن يحتفظ بها مخزنة'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    كيف تتعامل ميزة TTL في DynamoDB مع حذف العناصر؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    خصائص TTL في DynamoDB:
+    - عملية خلفية تراقب سمة TTL
+    - يتم حذف العناصر منتهية الصلاحية وفق جدول بأفضل جهد، عادةً في غضون بضعة أيام
+    - لا توجد تكلفة إضافية لـ TTL
+    - تظهر العناصر المحذوفة في التدفقات
+
+    حالات الاستخدام:
+    - إدارة الجلسات
+    - انتهاء صلاحية السجلات
+    - تنظيف البيانات المؤقتة
+    - الامتثال التنظيمي
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={25}
+  group="Aurora Serverless"
+  title="سلوك التوسع"
+  difficulty={4}
+  objectives={[
+    "فهم توسع Aurora Serverless",
+    "تحديد محفزات التوسع",
+    "تحسين التكلفة لأحمال العمل المتغيرة",
+  ]}
+  options={[
+    {text: 'تعتمد سرعة التوسع على السعة الحالية والمهيأة', isAnswer: true},
+    {text: 'يتوسع فورًا عند الطلب'},
+    {text: 'يتوسع فقط في فترات زمنية محددة مسبقًا'},
+    {text: 'التوسع اليدوي فقط'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما الاعتبار الرئيسي عند الاعتماد على Aurora Serverless للتعامل مع الارتفاعات المفاجئة في حركة المرور؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    توسع Aurora Serverless:
+    - يقوم Aurora Serverless v2 بتوسيع السعة بزيادات دقيقة من وحدات ACU
+    - تعتمد سرعة التوسع على السعة الحالية وإعدادات الحد الأدنى/الأقصى لوحدات ACU
+    - يمكن للإصدارات المدعومة الإيقاف التلقائي عند 0 ACU عند التهيئة
+    - الفوترة بالثانية بناءً على وحدات ACU
+
+    أفضل الممارسات:
+    - قم بتعيين الحد الأدنى للسعة عاليًا بما يكفي للارتفاعات المفاجئة في أحمال العمل الحرجة
+    - راقب أحداث التوسع
+    - ضع في اعتبارك إدارة الاتصالات
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+
+واو، تلك المغامرة تعمقت في التفاصيل! 🚀☁️
+أتمنى أن تكون قد استمتعت بالرحلة، وربما تعلمت شيئًا أو اثنين عن خدمات التخزين في AWS.
+
+اطلع على المزيد من [تحديات دان](/challenges/)! 🧠
+
+إخلاء مسؤولية: هذا الاختبار لأغراض تعليمية فقط. جميع العلامات التجارية وحقوق النشر مملوكة لأصحابها المعنيين، وخاصة الكبار منهم.
+````

@@ -1,0 +1,64 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "DynamoDB",
+  "translatedTitle": "DynamoDB",
+  "translation": {
+    "title": "DynamoDB",
+    "group": "بدون مخطط",
+    "options": [
+      {
+        "text": "PutItem",
+        "hint": "ينشئ عنصرًا جديدًا، أو يستبدل عنصرًا قديمًا بعنصر جديد."
+      },
+      {
+        "text": "BatchUpdateItem",
+        "hint": "غير موجود."
+      },
+      {
+        "text": "BatchWriteItem",
+        "hint": "يقوم بإدراج (إدراج) أو حذف عناصر متعددة في استدعاء واحد."
+      },
+      {
+        "text": "UpdateItem"
+      },
+      {
+        "text": "BatchUpsertItem",
+        "hint": "في DynamoDB؟"
+      },
+      {
+        "text": "TransactWriteItems",
+        "hint": "يجمع بين عمليات PutItem وUpdateItem وDeleteItem وConditionCheck المتعددة في استدعاء واحد."
+      }
+    ],
+    "objectives": [
+      "مقارنة قدرات عمليات الدفعة في DynamoDB",
+      "تحسين عمليات التحديث في DynamoDB",
+      "تقييم اعتبارات التوسع للتحديثات"
+    ],
+    "questionProse": [
+      "أي واجهة برمجة تطبيقات DynamoDB تقوم بتحديث السمات على عنصر موجود واحد؟"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "المفتاح هنا هو <b>التحديثات</b>، وليس الإدراج أو PUTs. إذا كنت تقوم بالإدراج، يمكنك استخدام `BatchWriteItem` أو `TransactWriteItems`.\n\n    بينما يمكن لـ `BatchWriteItem` التعامل مع عمليات متعددة، إلا أنه يقتصر على PUTs وDELETES. `TransactWriteItems` أكثر قوة، لكنه يشبه المطرقة الثقيلة للتحديثات البسيطة.\n    بالنسبة للتحديثات البسيطة، `UpdateItem` هو الخيار الأفضل. يسمح لك بتحديث (UPDATE) أو تعديل سمة واحدة أو أكثر في عنصر موجود.\n\n    عملية `UpdateItem` تعدل عنصرًا واحدًا لكل طلب. بالنسبة للتعبئة الخلفية الكبيرة أو التحديثات الجماعية، عادةً ما تقوم بتنسيق العديد من استدعاءات `UpdateItem` أو استخدام سير عمل أكبر مثل تنفيذ PartiQL الدفعي، أو Step Functions، أو Glue، أو EMR، أو عملية عامل مخصصة.\n\n    عملية `UpdateItem`:\n    - تقوم بتحديث سمات عنصر موجود.\n    - تضيف سمات جديدة إلى عنصر موجود.\n    - تزيل سمات من عنصر موجود.\n    - تقوم بالتحديث بشكل مشروط إذا كان العنصر موجودًا أو يستوفي شروطًا معينة.\n\n    [DynamoDB UpdateItem](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateItem.html)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"DynamoDB\",\n  \"group\": \"بدون مخطط\",\n  \"options\": [\n    {\n      \"text\": \"PutItem\",\n      \"hint\": \"ينشئ عنصرًا جديدًا، أو يستبدل عنصرًا قديمًا بعنصر جديد.\"\n    },\n    {\n      \"text\": \"BatchUpdateItem\",\n      \"hint\": \"غير موجود.\"\n    },\n    {\n      \"text\": \"BatchWriteItem\",\n      \"hint\": \"يقوم بإدراج (إدراج) أو حذف عناصر متعددة في استدعاء واحد.\"\n    },\n    {\n      \"text\": \"UpdateItem\"\n    },\n    {\n      \"text\": \"BatchUpsertItem\",\n      \"hint\": \"في DynamoDB؟\"\n    },\n    {\n      \"text\": \"TransactWriteItems\",\n      \"hint\": \"يجمع بين عمليات PutItem وUpdateItem وDeleteItem وConditionCheck المتعددة في استدعاء واحد.\"\n    }\n  ],\n  \"objectives\": [\n    \"مقارنة قدرات عمليات الدفعة في DynamoDB\",\n    \"تحسين عمليات التحديث في DynamoDB\",\n    \"تقييم اعتبارات التوسع للتحديثات\"\n  ],\n  \"questionProse\": [\n    \"أي واجهة برمجة تطبيقات DynamoDB تقوم بتحديث السمات على عنصر موجود واحد؟\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"المفتاح هنا هو <b>التحديثات</b>، وليس الإدراج أو PUTs. إذا كنت تقوم بالإدراج، يمكنك استخدام `BatchWriteItem` أو `TransactWriteItems`.\\n\\n    بينما يمكن لـ `BatchWriteItem` التعامل مع عمليات متعددة، إلا أنه يقتصر على PUTs وDELETES. `TransactWriteItems` أكثر قوة، لكنه يشبه المطرقة الثقيلة للتحديثات البسيطة.\\n    بالنسبة للتحديثات البسيطة، `UpdateItem` هو الخيار الأفضل. يسمح لك بتحديث (UPDATE) أو تعديل سمة واحدة أو أكثر في عنصر موجود.\\n\\n    عملية `UpdateItem` تعدل عنصرًا واحدًا لكل طلب. بالنسبة للتعبئة الخلفية الكبيرة أو التحديثات الجماعية، عادةً ما تقوم بتنسيق العديد من استدعاءات `UpdateItem` أو استخدام سير عمل أكبر مثل تنفيذ PartiQL الدفعي، أو Step Functions، أو Glue، أو EMR، أو عملية عامل مخصصة.\\n\\n    عملية `UpdateItem`:\\n    - تقوم بتحديث سمات عنصر موجود.\\n    - تضيف سمات جديدة إلى عنصر موجود.\\n    - تزيل سمات من عنصر موجود.\\n    - تقوم بالتحديث بشكل مشروط إذا كان العنصر موجودًا أو يستوفي شروطًا معينة.\\n\\n    [DynamoDB UpdateItem](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateItem.html)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1157,
+    "outputTokens": 2258,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 11838,
+    "providerCostUsd": 0.0011346,
+    "providerUpstreamCostUsd": 0.0011346,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00016198000000000002,
+    "outputUsd": 0.0006322400000000001,
+    "totalUsd": 0.0007942200000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
