@@ -50,6 +50,9 @@ const latestPosts = parseOptionalPositiveInteger(optionalString(options, "latest
 const candidateTimeoutSeconds = parsePositiveInteger(optionalString(options, "timeout-seconds"), 240);
 const judgeTimeoutSeconds = parsePositiveInteger(optionalString(options, "judge-timeout-seconds"), 240);
 const taskConcurrency = parsePositiveInteger(optionalString(options, "task-concurrency"), DEFAULT_TASK_CONCURRENCY);
+const candidateTaskConcurrency = optionalString(options, "candidate-task-concurrency");
+const quizConcurrency = optionalString(options, "quiz-concurrency");
+const challengeRetries = optionalString(options, "challenge-retries");
 const judgeModel = optionalString(options, "judge-model") ?? JUDGE_MODEL;
 const secondJudgeModel = optionalString(options, "second-judge-model");
 const escalationJudgeModel = optionalString(options, "escalate-model") ?? ESCALATION_JUDGE_MODEL;
@@ -63,6 +66,8 @@ const limitedTasks = limit == null ? tasks : tasks.slice(0, limit);
 console.log(`Found ${tasks.length} missing translation task(s).`);
 console.log(`Processing ${limitedTasks.length} task(s).`);
 console.log(`Task concurrency: ${shouldPush ? 1 : taskConcurrency}${shouldPush ? " (--push serializes task processing)" : ""}`);
+console.log(`Candidate task concurrency: ${candidateTaskConcurrency ?? "default"}`);
+console.log(`Quiz challenge concurrency: ${quizConcurrency ?? "default"}`);
 console.log(`Candidate pool: ${candidateModels.join(", ")}`);
 
 if (shouldDryRun) {
@@ -113,6 +118,9 @@ async function translateAndJudgeTask(task: Task) {
       String(candidateTimeoutSeconds),
       "--run-lock-path",
       getTaskRunLockPath(task, model),
+      ...optionalArg("--task-concurrency", candidateTaskConcurrency),
+      ...optionalArg("--quiz-concurrency", quizConcurrency),
+      ...optionalArg("--challenge-retries", challengeRetries),
     ]);
   }
 
