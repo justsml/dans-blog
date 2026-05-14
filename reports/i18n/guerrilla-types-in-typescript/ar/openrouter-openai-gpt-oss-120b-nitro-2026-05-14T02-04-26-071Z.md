@@ -1,0 +1,302 @@
+# Translation Candidate
+- Slug: guerrilla-types-in-typescript
+- Locale: ar
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2023-09-06--guerrilla-types-in-typescript/ar/index.mdx
+- Validation: deferred
+- Runtime seconds: 8.20
+- Input tokens: 8389
+- Output tokens: 3197
+- Thinking tokens: unknown
+- Cached input tokens: 2304
+- Cache write tokens: 0
+- Estimated cost: $0.000903
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: أنواع Guerrilla في TypeScript
+subTitle: تصميم نوع متمرد
+date: '2023-09-05'
+modified: '2024-07-30'
+tags:
+  - engineering
+  - typescript
+  - composition
+  - types
+category: Guides
+subCategory: TypeScript
+cover: ../gorilla-types_dall-e.webp
+cover_mobile: ../w300_gorilla-types_dall-e.webp
+cover_icon: ../icon_gorilla-types_dall-e.webp
+---
+## الأنواع القتالية في TypeScript
+
+في هذه المقالة، سنستعرض ثلاث تقنيات مثيرة (ربما فظيعة؟) للمساعدة في تصميم الأنواع!
+
+الهدف الرئيسي هو واجهات **متسقة** و **متوقعة** للنماذج/الكيانات/الفئات.
+
+- [نهج تصميم الأنواع](../#approaches-to-designing-types)
+  - [كائن كبير واحد](../#single-large-object)
+  - [أنواع مسماة متعددة](../#multiple-named-types)
+- [التقنية #1: لماذا لا الكل](../#technique-1-why-not-all)
+- [التقنية #2: الخلطات](../#technique-2-mix-ins)
+  - [أمثلة على الخلطات](../#mix-in-examples)
+  - [مثال `User`](../#example-user)
+- [التقنية #3: التنظيم باستخدام المساحات الاسمية](../#technique-3-organizing-with-namespaces)
+  - [استخدام واقعي](../#real-world-usage)
+- [الملخص](../#summary)
+
+<!--
+1.  تمثيل منطقي عالي المستوى للأنواع - بطريقة ذات معنى لكل من المطورين وأصحاب المصلحة في الأعمال.
+2.  طريقة متينة لنمذجة تركيبات الحقول المرتبطة منطقياً.
+    1.  مثال: **كائنات المثيلات** غالباً ما تشمل حقول مشتركة `id`, `createdDate`, `createdById`, إلخ.
+    2.  نمذجة حقول الطلب والاستجابة من نماذج قاعدة البيانات المنفصلة. (مثل `_version`, `_v`)
+    3.  أدوات قابلة للتكوين، غلاف الصفحات/الحمولة، إلخ: `pageNumber`, `sortBy`, `impersonateSession`, `token`, `_version`, إلخ.
+3.  تجنب التباينات غير المقصودة في التسمية والأنواع (`id`, `Id`, `ID`, `created_at`, `date_created`, يا له من فوضى!)
+4.  تركيب أنواع أعلى مستوى باستخدام واجهات وأنواع أصغر متعددة قابلة لإعادة الاستخدام.
+5.  استخدم [الاتحادات](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes-func.html#discriminated-unions) لتطابق “تلقائيًا” متغيرات النوع. -->
+
+### نهج تصميم الأنواع
+
+ربما صادفت أو كتبت أنماطًا متباينة حول “تنفيذ الأنواع”. خاصةً عند استهلاك البيانات من واجهات برمجة تطبيقات الطرف الثالث.
+
+**ملاحظة:** أتجاهل عمدًا “العمليات التقليدية” لبناء مخططات علاقة الكيانات (ERD) أو هياكل الوراثة في البرمجة الكائنية (OOP). هنا، نبني الأنواع لتمثيل بيانات API شبه منظمة.
+
+لنستكشف نهجين عاليي المستوى: **كائن كبير واحد** (من الأعلى إلى الأسفل) مقابل **أنواع مسماة متعددة** (من الأسفل إلى الأعلى).
+
+#### كائن كبير واحد
+
+يفضل الصراحة على القابلية لإعادة الاستخدام و DRY.
+
+**مكافأة:** تجربة IDE/المطور ممتازة، حيث تتضمن تلميحات الأدوات معاينة أكثر اكتمالًا - بدون عناء.
+
+```tsx
+interface ProductDetails {
+  name: string;
+  seller: { name: string };
+  availability: Array<{ warehouseId: string; quantity: number }>;
+  reviews: Array<{ authorId: number; stars: number }>;
+}
+```
+
+نظرًا لأننا نُعطي الأولوية للقراءة الصريحة، فليس من الخطأ السماح ببعض التكرار (في حدود المعقول). عندما تتكرر مجموعات الخصائص **كثيرًا**، يمكنك استخراج الحقول المتكررة إلى نوع مسمى.
+
+#### عدة أنواع مسماة
+
+يفضل القابلية لإعادة الاستخدام و DRY.
+
+<!-- Readability is a funny measure. Since Readability is often good or **great when there are few types/files.** **Inevitably types tend to proliferate,** featuring ever more properties. **Readability suffers.** -->
+
+هذا النهج هو على الأرجح المفضل بفارق كبير.
+
+```ts
+interface ProductDetails {
+  name: string;
+  seller: Seller;
+  reviews: Reviews[];
+  availability: Availability[];
+}
+interface Seller { name: string; }
+interface Availability { warehouseId: string; quantity: number; }
+interface Reviews { authorId: number; stars: number; }
+```
+
+بشكل عام، هذا النهج ممتاز. لكنه ليس خاليًا من العيوب.
+
+- **القراءة** ممتازة في البداية؛ ومع ذلك، قد _تتدهور_ مع زيادة حجم وعدد الأنواع.
+- DRY بلا هوادة، لكن بأي ثمن؟ (سنتعمق في ذلك لاحقًا.)
+- قد تتأثر تجربة المطور لأن تلميحات الأدوات تصبح أقل إيضاحًا.
+
+> ⚠️ منذ (تقريبًا) TypeScript v3، يقوم خادم اللغة بقطع تلميحات الأدوات، متجاهلًا الخصائص المتداخلة.  
+> 💡 هناك حيل لتحسين الوضع قليلًا. جرّب الضغط على `Cmd` أو `Ctrl` ثم التحويم فوق أسماء الأنواع المختلفة - يجب أن ترى طبقة إضافية واحدة على الأقل من الخصائص في التلميح.
+
+لماذا نحتاج إلى الاختيار بين هذين النهجين؟ (نوع كبير مقابل الأنواع الفرعية المسماة.)
+
+### التقنية #1: لماذا لا يكون الكل
+
+هل يمكننا الحصول على كل شيء؟
+
+- وضوح الأنواع ذات "الصورة الكبيرة"؟
+- بالإضافة إلى الأنواع الفرعية المسماة؟
+- دون تكرار؟
+
+> ✅ نعم! 🎉
+
+```tsx
+export interface ProductDetails {
+  name: string;
+  seller: { name: string };
+  reviews: Array<{ authorId: number; stars: number }>;
+  availability: Array<{ warehouseId: string; quantity: number }>;
+}
+export type Seller = ProductDetails["seller"];
+export type Review = ProductDetails["reviews"][number];
+export type Availability = ProductDetails["availability"][number];
+```
+
+1.  إنشاء أنواع «أساسية» (Primary) كبيرة ومهيكلة.  
+2.  تصدير الأنواع الفرعية المستخرجة من النوع الأساسي.
+
+هذا النهج يبرز حقًا في الأنظمة التي تستفيد فيها الكائنات «عالية المستوى» من توثيق موحد في مكان واحد. كما يدعم إعادة الاستخدام عبر حالات استخدام متعددة: النماذج، الخدمات، نتائج الاستعلام، إلخ.
+
+### التقنية #2: Mix‑ins
+
+هذه الإستراتيجية تدور حول تجميع **الحقول الصحيحة**، مع **الأسماء الصحيحة**، لِـ **تمثيل كائنات منطقية واحدة**. الهدف هو معالجة حالات الاستخدام المتعددة بفعالية باستخدام أدوات TypeScript واتحادات الأنواع.
+
+يختلف هذا النهج عن الوراثة التقليدية في OOP والهياكل الهرمية، التي تسعى لإنشاء طبقات من الكائنات ضمن تصنيفات محكمة. **نهج الـ mix‑in يركز على أنواع مسطحة ومرتبطة بشكل غير وثيق**، يجمع الحقول ذات الصلة مع تقليل التكرار.
+
+#### أمثلة على Mix‑ins
+
+```tsx
+interface TodoModel {
+  text: string;
+  complete: boolean;
+}
+interface InstanceMixin {
+  id: number;
+}
+/** TodoDraft يمثل حالة النموذج، قد تكون جميع الحقول غير معرفة */
+export type TodoDraft = Partial<TodoModel>;
+/** Todo يمثل سجل Todo من قاعدة البيانات */
+export type Todo = TodoModel & InstanceMixin;
+```
+
+#### مثال `User`
+
+```tsx
+interface User {
+  id: number;
+  name: string;
+  bio: string;
+  social: Record<"facebook" | "instagram" | "github", URL>;
+}
+```
+
+لنمثّل الـ `User` قبل وبعد حفظه في قاعدة البيانات.
+
+```tsx
+// الحقول الأساسية للمستخدم (مثلاً لنموذج <form>)
+interface UserBase {
+  name: string;
+  bio: string;
+  social: Record<"facebook" | "instagram" | "github", URL>;
+}
+// الحقول المستمدة من قاعدة البيانات
+interface InstanceMixin {
+  id: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
+// نسخة **المستخدم** – تشمل جميع الحقول
+type UserInstance = InstanceMixin & UserBase;
+```
+
+الآن يمكننا تشكيل الحقول الدقيقة التي نحتاجها (مثل `password` لإنشاء/تحديث، لكن لا تُضمّن في استعلامات `UserInstance`).
+
+```tsx
+interface UserBase {
+  name: string;
+  bio: string;
+  social: Record<"facebook" | "instagram" | "github", URL>;
+}
+interface InstanceMixin {
+  id: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
+/** حمولة المستخدم للتسجيل، تشمل حقل `password` */
+export type UserPayload = UserBase & { password: string };
+/** يمثل نوع المستخدم المسترجع من الخادم. */
+export type UserInstance = UserBase & InstanceMixin;
+```
+
+1.  "هل هذا ممارسة جيدة؟"  
+2.  "هل يجب أن أجربها؟"
+
+لا فكرة. لنستمر!
+
+### التقنية #3: التنظيم باستخدام الـ Namespaces
+
+هنا نعلن مساحة أسماء `ModelMixins`. هذا يوفر بعض التنظيم بالإضافة إلى نمط إعادة استخدام أوضح.
+
+**الأشكال الموحدة**
+
+- `createdAt` و `updatedAt` موجودان معًا.  
+- `id`، وليس `ID` أو `_id`.
+
+```tsx
+// `../src/types/mixins.d.ts`
+namespace ModelMixins {
+  interface Identity {
+    id: number;
+  }
+  interface Timestamp {
+    createdAt: Date;
+    updatedAt: Date;
+  }
+  type Instance = ModelMixins.Identity & ModelMixins.Timestamp;
+  interface HashedPassword {
+    passwordHash: string;
+  }
+  interface InputPassword {
+    password: string;
+  }
+}
+```
+
+**استخدام اتحادات الأنواع**
+
+```tsx
+// `../src/types/user.d.ts`
+export interface UserBase {
+  name: string;
+  bio: string;
+  social: Record<"facebook" | "instagram" | "github", URL>;
+}
+// نوع `User` واحد، يستخدم اتحاد الأنواع لتمثيل حالات ما قبل وما بعد الإنشاء ديناميكيًا.
+export type User =
+  | (UserBase & ModelMixins.Instance & ModelMixins.HashedPassword)
+  | (UserBase & ModelMixins.InputPassword);
+```
+
+إذا رغبت، يمكنك أيضًا تصدير الأنواع المسماة بشكل فردي:
+
+```tsx
+/** حمولة المستخدم للتسجيل، تشمل حقل `password` */
+export type UserPayload = UserBase & ModelMixins.Instance & ModelMixins.HashedPassword;
+/** يمثل نوع المستخدم المسترجع من الخادم. */
+export type UserInstance = UserBase & ModelMixins.InputPassword;
+```
+
+#### الاستخدام في الواقع
+
+إليك دالة `upsert()` التي تستخدم عامل `in` للتمييز بين نوعي `UserInstance` و `UserPayload`.
+
+```tsx
+function upsert(user: User) {
+  if ("id" in user) {
+    // TypeScript يعرف أن `user` هنا يحتوي على الحقول من Instance (id، createdAt، إلخ)
+    return updateUser(user.id, user);
+  } else {
+    // TypeScript يعرف أن هذا يجب أن يكون النسخة `UserBase & ModelMixins.InputPassword` من المستخدم.
+    return createUser(user);
+  }
+}
+```
+
+### الخلاصة
+
+غطّينا ثلاث تقنيات وبعض الأفكار الداعمة المرتبطة.
+
+قد تتساءل: هل هذه أنماط جيدة؟ هل ينبغي أن أتبنى بعضًا من هذه الأفكار؟
+
+## الموارد
+
+- [نصائح TypeScript للمشاريع القديمة: النوع فقط الذي تحتاجه](https://sergiocarracedo.es/typescript-tips/)
+- [الكتاب الجديد الممتاز لمات بوكوك](https://www.totaltypescript.com/books/total-typescript-essentials)
+- [نصائح TypeScript الكاملة](https://www.totaltypescript.com/tips)
+````
