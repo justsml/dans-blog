@@ -20,6 +20,7 @@ cover_icon: ../victor-freitas-hOuJYX2K5DA-unsplash-square.webp
 import Challenge from '../../../../components/QuizUI/Challenge';
 import QuizUI from '../../../../components/QuizUI/QuizUI';
 
+<>
 <QuizUI>
 
 <Challenge
@@ -308,7 +309,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     האלמנט הראשון, `24`, מפורש כ-`24` בבסיס 0 (זיהוי אוטומטי), כך שהוא נשאר `24`. האלמנט השני, `'One'`, מפורש כ-`NaN` בבסיס 1. האלמנט השלישי, `42`, מפורש בבסיס 2. בבסיס 2, `'42'` הוא `NaN`, ולכן התוצאה היא `[24, NaN, NaN]`.
 
-    זוהי מלכודת נפוצה עם `parseInt` ו-`map`. אם ברצונך לפרש מערך של מחרוזות למספרים, השיטה הבטוחה היחידה "המובנית" היא `.map(Number)` או הוספת callback/closure `.map(x => parseInt(x, 10))`.
+    זוהי מלכודת נפוצה עם `parseInt` ו-`map`. אם ברצונך לפרש מערך של מחרוזות למספרים, השיטה הבטוחה היחידה "המובנית" היא `.map(Number)` או הוספת callback/closure <code>{`.map(x => parseInt(x, 10))`}</code>.
   </div>
   </slot>
 </Challenge>
@@ -411,16 +412,57 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
 </QuizUI>
 
+<div>
 <section className="scroll-x">
-## טבלת השוואה
-
-| פונקציה | `parseInt` | `parseFloat` | `Number` | `BigInt` |
-| --- | --- | --- | --- | --- |
-| מתעלם מרווחים | ✅ | ✅ | ✅ | ✅ |
-| `.map(FN)`  | ❌ | ☑️ | ✅ | ✅ |
-| תומך בארגומנט בסיס | ✅ | ❌ | ❌ | ❌ |
-| ליטרלים בינאריים/אוקטליים/הקסדצימליים | ✅ | ❌ | ✅ | ✅ |
-| תווים לא חוקיים `42 oh no` | `42` | `42`  | `NaN` | `SyntaxError` |
+  <h2>טבלת השוואה</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>פונקציה</th>
+        <th><code>parseInt</code></th>
+        <th><code>parseFloat</code></th>
+        <th><code>Number</code></th>
+        <th><code>BigInt</code></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>מתעלם מרווחים</td>
+        <td>✅</td>
+        <td>✅</td>
+        <td>✅</td>
+        <td>✅</td>
+      </tr>
+      <tr>
+        <td><code>.map(FN)</code></td>
+        <td>❌</td>
+        <td>☑️</td>
+        <td>✅</td>
+        <td>✅</td>
+      </tr>
+      <tr>
+        <td>תומך בארגומנט בסיס</td>
+        <td>✅</td>
+        <td>❌</td>
+        <td>❌</td>
+        <td>❌</td>
+      </tr>
+      <tr>
+        <td>ליטרלים בינאריים/אוקטליים/הקסדצימליים</td>
+        <td>✅</td>
+        <td>❌</td>
+        <td>✅</td>
+        <td>✅</td>
+      </tr>
+      <tr>
+        <td>תווים לא חוקיים <code>42 oh no</code></td>
+        <td><code>42</code></td>
+        <td><code>42</code></td>
+        <td><code>NaN</code></td>
+        <td><code>SyntaxError</code></td>
+      </tr>
+    </tbody>
+  </table>
 </section>
 
 <h2>איך הצלחת? 🧐</h2>
@@ -428,3 +470,5 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 {/* <h4>הכל בסדר?</h4> */}
 
 <p class="inset">מחפש מנוחה אחרי כל כך הרבה בינארי?<br />פחח, זכור: הפסקה *אחרי* כישורים! <br /><br />לחץ על [החדר כושר שלי](../challenges/) כדי לרסק עוד אתגרים! 💪</p>
+</div>
+</>

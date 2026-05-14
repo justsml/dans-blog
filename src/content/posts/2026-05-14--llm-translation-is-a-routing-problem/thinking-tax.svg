@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+  <title id="title">Thinking tax in candidate generation</title>
+  <desc id="desc">A bar chart comparing average output tokens and median runtime. Qwen3.6 35B A3B produced far more output tokens and took much longer than the cheaper Nitro models.</desc>
+  <rect width="1200" height="720" fill="#faf4f0"/>
+  <rect x="44" y="44" width="1112" height="632" rx="18" fill="#fffdfb" stroke="#202020" stroke-width="2"/>
+  <text x="76" y="96" font-family="Arial, sans-serif" font-size="34" font-weight="700" fill="#151515">Thinking is a billable hobby</text>
+  <text x="76" y="130" font-family="Arial, sans-serif" font-size="17" fill="#555">Average output tokens and median runtime from candidate attempts. More output did not reliably mean better translation.</text>
+
+  <g font-family="Arial, sans-serif" font-size="15" fill="#555">
+    <text x="380" y="178">Average output tokens</text>
+    <text x="820" y="178">Median runtime</text>
+  </g>
+
+  <g font-family="Arial, sans-serif" font-size="17" fill="#151515">
+    <text x="78" y="230" font-weight="700">GPT OSS 120B Nitro</text>
+    <rect x="380" y="207" width="83" height="26" fill="#487a86"/>
+    <text x="478" y="228">4,334</text>
+    <rect x="820" y="207" width="20" height="26" fill="#a65f44"/>
+    <text x="855" y="228">6.5s</text>
+
+    <text x="78" y="320" font-weight="700">Qwen3 32B Nitro</text>
+    <rect x="380" y="297" width="170" height="26" fill="#487a86"/>
+    <text x="565" y="318">8,824</text>
+    <rect x="820" y="297" width="68" height="26" fill="#a65f44"/>
+    <text x="903" y="318">19.5s</text>
+
+    <text x="78" y="410" font-weight="700">DeepSeek V4 Flash</text>
+    <rect x="380" y="387" width="188" height="26" fill="#487a86"/>
+    <text x="583" y="408">9,735</text>
+    <rect x="820" y="387" width="205" height="26" fill="#a65f44"/>
+    <text x="1040" y="408">59.3s</text>
+
+    <text x="78" y="500" font-weight="700">Qwen3.6 35B A3B</text>
+    <rect x="380" y="477" width="500" height="26" fill="#487a86"/>
+    <text x="895" y="498">25,928</text>
+    <rect x="820" y="537" width="400" height="26" fill="#a65f44"/>
+    <text x="1035" y="558">115.4s</text>
+  </g>
+
+  <g font-family="Arial, sans-serif" font-size="14" fill="#555">
+    <rect x="76" y="626" width="16" height="16" fill="#487a86"/><text x="100" y="639">Output tokens</text>
+    <rect x="210" y="626" width="16" height="16" fill="#a65f44"/><text x="234" y="639">Runtime</text>
+    <text x="76" y="668">The provider metadata did not always label reasoning tokens. The invoice still saw the output-token bloat.</text>
+  </g>
+</svg>

@@ -20,6 +20,7 @@ cover_icon: ../victor-freitas-hOuJYX2K5DA-unsplash-square.webp
 import Challenge from '../../../../components/QuizUI/Challenge';
 import QuizUI from '../../../../components/QuizUI/QuizUI';
 
+<>
 <QuizUI>
 
 <Challenge
@@ -308,7 +309,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     第一个元素 `24` 在基数为 0（自动检测）时被解析为 `24`，因此保持为 `24`。第二个元素 `'One'` 在基数为 1 时被解析为 `NaN`。第三个元素 `42` 使用基数 2 进行解析。在基数 2 中，`'42'` 是 `NaN`，因此结果是 `[24, NaN, NaN]`。
 
-    这是 `parseInt` 和 `map` 的一个常见陷阱。如果你想将字符串数组解析为数字，唯一安全的“内置”方法是 `.map(Number)` 或添加回调/闭包 `.map(x => parseInt(x, 10))`。
+    这是 `parseInt` 和 `map` 的一个常见陷阱。如果你想将字符串数组解析为数字，唯一安全的“内置”方法是 `.map(Number)` 或添加回调/闭包 <code>{`.map(x => parseInt(x, 10))`}</code>。
   </div>
   </slot>
 </Challenge>
@@ -411,16 +412,57 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
 </QuizUI>
 
+<div>
 <section className="scroll-x">
-## 比较表格
-
-| 函数 | `parseInt` | `parseFloat` | `Number` | `BigInt` |
-| --- | --- | --- | --- | --- |
-| 忽略空白 | ✅ | ✅ | ✅ | ✅ |
-| `.map(FN)`  | ❌ | ☑️ | ✅ | ✅ |
-| 支持基数参数 | ✅ | ❌ | ❌ | ❌ |
-| 二进制/八进制/十六进制字面量 | ✅ | ❌ | ✅ | ✅ |
-| 无效字符 `42 oh no` | `42` | `42`  | `NaN` | `SyntaxError` |
+  <h2>比较表格</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>函数</th>
+        <th><code>parseInt</code></th>
+        <th><code>parseFloat</code></th>
+        <th><code>Number</code></th>
+        <th><code>BigInt</code></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>忽略空白</td>
+        <td>✅</td>
+        <td>✅</td>
+        <td>✅</td>
+        <td>✅</td>
+      </tr>
+      <tr>
+        <td><code>.map(FN)</code></td>
+        <td>❌</td>
+        <td>☑️</td>
+        <td>✅</td>
+        <td>✅</td>
+      </tr>
+      <tr>
+        <td>支持基数参数</td>
+        <td>✅</td>
+        <td>❌</td>
+        <td>❌</td>
+        <td>❌</td>
+      </tr>
+      <tr>
+        <td>二进制/八进制/十六进制字面量</td>
+        <td>✅</td>
+        <td>❌</td>
+        <td>✅</td>
+        <td>✅</td>
+      </tr>
+      <tr>
+        <td>无效字符 <code>42 oh no</code></td>
+        <td><code>42</code></td>
+        <td><code>42</code></td>
+        <td><code>NaN</code></td>
+        <td><code>SyntaxError</code></td>
+      </tr>
+    </tbody>
+  </table>
 </section>
 
 <h2>你做得怎么样？🧐</h2>
@@ -428,3 +470,5 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 {/* <h4>你还好吗？</h4> */}
 
 <p class="inset">在这么多二进制之后，你需要休息一下吗？<br />切，记住：技能*之后*再休息！<br /><br />点击[我的健身房](/challenges/)去挑战更多吧！💪</p>
+</div>
+</>

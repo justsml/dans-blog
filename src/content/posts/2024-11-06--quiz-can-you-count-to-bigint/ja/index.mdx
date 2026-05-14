@@ -20,6 +20,7 @@ cover_icon: ../victor-freitas-hOuJYX2K5DA-unsplash-square.webp
 import Challenge from '../../../../components/QuizUI/Challenge';
 import QuizUI from '../../../../components/QuizUI/QuizUI';
 
+<>
 <QuizUI>
 
 <Challenge
@@ -394,16 +395,57 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
 </QuizUI>
 
+<div>
 <section className="scroll-x">
-## 比較表
-
-| 関数 | `parseInt` | `parseFloat` | `Number` | `BigInt` |
-| --- | --- | --- | --- | --- |
-| 空白文字を無視 | ✅ | ✅ | ✅ | ✅ |
-| `.map(FN)`  | ❌ | ☑️ | ✅ | ✅ |
-| 基数（radix）引数をサポート | ✅ | ❌ | ❌ | ❌ |
-| 2進数/8進数/16進数リテラル | ✅ | ❌ | ✅ | ✅ |
-| 無効な文字を含む `42 oh no` | `42` | `42`  | `NaN` | `SyntaxError` |
+  <h2>比較表</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>関数</th>
+        <th><code>parseInt</code></th>
+        <th><code>parseFloat</code></th>
+        <th><code>Number</code></th>
+        <th><code>BigInt</code></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>空白文字を無視</td>
+        <td>✅</td>
+        <td>✅</td>
+        <td>✅</td>
+        <td>✅</td>
+      </tr>
+      <tr>
+        <td><code>.map(FN)</code></td>
+        <td>❌</td>
+        <td>☑️</td>
+        <td>✅</td>
+        <td>✅</td>
+      </tr>
+      <tr>
+        <td>基数（radix）引数をサポート</td>
+        <td>✅</td>
+        <td>❌</td>
+        <td>❌</td>
+        <td>❌</td>
+      </tr>
+      <tr>
+        <td>2進数/8進数/16進数リテラル</td>
+        <td>✅</td>
+        <td>❌</td>
+        <td>✅</td>
+        <td>✅</td>
+      </tr>
+      <tr>
+        <td>無効な文字を含む <code>42 oh no</code></td>
+        <td><code>42</code></td>
+        <td><code>42</code></td>
+        <td><code>NaN</code></td>
+        <td><code>SyntaxError</code></td>
+      </tr>
+    </tbody>
+  </table>
 </section>
 
 <h2>手応えはどう？ 🧐</h2>
@@ -411,3 +453,5 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 {/* <h4>Are you ok?</h4> */}
 
 <p class="inset">2進数攻めで一息つきたい？<br />ふっ、覚えておけ：スキルを身につけた *後* に休め！ <br /><br />もっと課題を叩きのめしたいなら、[俺のジム](/challenges/) へ！💪</p>
+</div>
+</>

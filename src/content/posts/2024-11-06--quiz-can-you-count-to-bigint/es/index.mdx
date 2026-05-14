@@ -20,10 +20,7 @@ cover_icon: ../victor-freitas-hOuJYX2K5DA-unsplash-square.webp
 import Challenge from '../../../../components/QuizUI/Challenge';
 import QuizUI from '../../../../components/QuizUI/QuizUI';
 
-
-import Challenge from '../../../../../components/QuizUI/Challenge';
-import QuizUI from '../../../../../components/QuizUI/QuizUI';
-
+<>
 <QuizUI>
 
 <Challenge
@@ -302,7 +299,7 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 
     El primer elemento, `24`, se analiza como `24` en base 0 (detección automática), así que sigue siendo `24`. El segundo elemento, `'One'`, se analiza como `NaN` en base 1. El tercer elemento, `42`, se analiza usando base 2. En base 2, `'42'` es `NaN`, por lo que el resultado es `[24, NaN, NaN]`.
 
-    Esto es una trampa frecuente con `parseInt` y `map`. Si quieres convertir un array de strings a números, el único método "incorporado" seguro es `.map(Number)` o añadir una función de callback `.map(x => parseInt(x, 10))`.
+    Esto es una trampa frecuente con `parseInt` y `map`. Si quieres convertir un array de strings a números, el único método "incorporado" seguro es `.map(Number)` o añadir una función de callback <code>{`.map(x => parseInt(x, 10))`}</code>.
   </div>
   </slot>
 </Challenge>
@@ -402,16 +399,57 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 
 </QuizUI>
 
+<div>
 <section className="scroll-x">
-## Tabla de Comparación
-
-| Function | `parseInt` | `parseFloat` | `Number` | `BigInt` |
-| --- | --- | --- | --- | --- |
-| Ignores Whitespace | ✅ | ✅ | ✅ | ✅ |
-| `.map(FN)`  | ❌ | ☑️ | ✅ | ✅ |
-| Supports Radix Arg | ✅ | ❌ | ❌ | ❌ |
-| Binary/Octal/Hex literals | ✅ | ❌ | ✅ | ✅ |
-| Invalid chars `42 oh no` | `42` | `42`  | `NaN` | `SyntaxError` |
+  <h2>Tabla de Comparación</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Function</th>
+        <th><code>parseInt</code></th>
+        <th><code>parseFloat</code></th>
+        <th><code>Number</code></th>
+        <th><code>BigInt</code></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Ignores Whitespace</td>
+        <td>✅</td>
+        <td>✅</td>
+        <td>✅</td>
+        <td>✅</td>
+      </tr>
+      <tr>
+        <td><code>.map(FN)</code></td>
+        <td>❌</td>
+        <td>☑️</td>
+        <td>✅</td>
+        <td>✅</td>
+      </tr>
+      <tr>
+        <td>Supports Radix Arg</td>
+        <td>✅</td>
+        <td>❌</td>
+        <td>❌</td>
+        <td>❌</td>
+      </tr>
+      <tr>
+        <td>Binary/Octal/Hex literals</td>
+        <td>✅</td>
+        <td>❌</td>
+        <td>✅</td>
+        <td>✅</td>
+      </tr>
+      <tr>
+        <td>Invalid chars <code>42 oh no</code></td>
+        <td><code>42</code></td>
+        <td><code>42</code></td>
+        <td><code>NaN</code></td>
+        <td><code>SyntaxError</code></td>
+      </tr>
+    </tbody>
+  </table>
 </section>
 
 <h2>¿Cómo lo hiciste? 🧐</h2>
@@ -419,3 +457,5 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 {/* <h4>¿Estás bien?</h4> */}
 
 <p class="inset">¿Necesitas un descanso después de tanto binario?<br />Pftt, recuerda: ¡rompe *después* de las habilidades! <br /><br />¡Entra en [mi gimnasio]("../challenges/") para aplastar más retos! 💪</p>
+</div>
+</>

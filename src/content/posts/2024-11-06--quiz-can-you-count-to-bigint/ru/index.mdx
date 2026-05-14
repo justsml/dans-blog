@@ -20,6 +20,7 @@ cover_icon: ../victor-freitas-hOuJYX2K5DA-unsplash-square.webp
 import Challenge from '../../../../components/QuizUI/Challenge';
 import QuizUI from '../../../../components/QuizUI/QuizUI';
 
+<>
 <QuizUI>
 
 <Challenge
@@ -298,7 +299,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     Первый элемент, `24`, парсится как `24` в базе 0 (авто‑детект), поэтому остаётся `24`. Второй элемент, `'One'`, парсится как `NaN` в базе 1. Третий элемент, `42`, парсится в базе 2. В базе 2 строка `'42'` даёт `NaN`, так что результат `[24, NaN, NaN]`.
 
-    Это распространённая ловушка при использовании `parseInt` с `map`. Если нужно превратить массив строк в числа, единственный безопасный «встроенный» способ — `.map(Number)` или явно указать колбэк, например `.map(x => parseInt(x, 10))`.
+    Это распространённая ловушка при использовании `parseInt` с `map`. Если нужно превратить массив строк в числа, единственный безопасный «встроенный» способ — `.map(Number)` или явно указать колбэк, например <code>{`.map(x => parseInt(x, 10))`}</code>.
   </div>
   </slot>
 </Challenge>
@@ -398,16 +399,57 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
 </QuizUI>
 
+<div>
 <section className="scroll-x">
-## Таблица сравнения
-
-| Функция | `parseInt` | `parseFloat` | `Number` | `BigInt` |
-| --- | --- | --- | --- | --- |
-| Игнорирует пробелы | ✅ | ✅ | ✅ | ✅ |
-| `.map(FN)`  | ❌ | ☑️ | ✅ | ✅ |
-| Поддерживает аргумент radix | ✅ | ❌ | ❌ | ❌ |
-| Бинарные/восьмеричные/шестнадцатеричные литералы | ✅ | ❌ | ✅ | ✅ |
-| Недопустимые символы `42 oh no` | `42` | `42`  | `NaN` | `SyntaxError` |
+  <h2>Таблица сравнения</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Функция</th>
+        <th><code>parseInt</code></th>
+        <th><code>parseFloat</code></th>
+        <th><code>Number</code></th>
+        <th><code>BigInt</code></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Игнорирует пробелы</td>
+        <td>✅</td>
+        <td>✅</td>
+        <td>✅</td>
+        <td>✅</td>
+      </tr>
+      <tr>
+        <td><code>.map(FN)</code></td>
+        <td>❌</td>
+        <td>☑️</td>
+        <td>✅</td>
+        <td>✅</td>
+      </tr>
+      <tr>
+        <td>Поддерживает аргумент radix</td>
+        <td>✅</td>
+        <td>❌</td>
+        <td>❌</td>
+        <td>❌</td>
+      </tr>
+      <tr>
+        <td>Бинарные/восьмеричные/шестнадцатеричные литералы</td>
+        <td>✅</td>
+        <td>❌</td>
+        <td>✅</td>
+        <td>✅</td>
+      </tr>
+      <tr>
+        <td>Недопустимые символы <code>42 oh no</code></td>
+        <td><code>42</code></td>
+        <td><code>42</code></td>
+        <td><code>NaN</code></td>
+        <td><code>SyntaxError</code></td>
+      </tr>
+    </tbody>
+  </table>
 </section>
 
 <h2>Как у вас получилось? 🧐</h2>
@@ -415,3 +457,5 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 {/* <h4>Вы в порядке?</h4> */}
 
 <p class="inset">Нужен перерыв после такой дозы бинарных данных?<br />Пфф, помните: делайте перерыв *после* навыков! <br /><br />Загляните [в мой зал](/challenges/) и разберите ещё несколько задач! 💪</p>
+</div>
+</>

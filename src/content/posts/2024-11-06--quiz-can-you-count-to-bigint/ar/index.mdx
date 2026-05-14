@@ -17,11 +17,10 @@ cover_full_width: ../victor-freitas-hOuJYX2K5DA-unsplash-wide.webp
 cover_mobile: ../victor-freitas-hOuJYX2K5DA-unsplash-square.webp
 cover_icon: ../victor-freitas-hOuJYX2K5DA-unsplash-square.webp
 ---
----
 import Challenge from '../../../../components/QuizUI/Challenge';
 import QuizUI from '../../../../components/QuizUI/QuizUI';
----
 
+<>
 <QuizUI>
 
 <Challenge
@@ -310,7 +309,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     العنصر الأول، `24`، يتم تحليله كـ `24` في الأساس 0 (اكتشاف تلقائي)، لذا يبقى `24`. العنصر الثاني، `'One'`، يتم تحليله كـ `NaN` في الأساس 1. العنصر الثالث، `42`، يتم تحليله باستخدام الأساس 2. في الأساس 2، `'42'` هو `NaN`، لذا تكون النتيجة `[24, NaN, NaN]`.
 
-    هذا خطأ شائع مع `parseInt` و `map`. إذا كنت تريد تحليل مصفوفة من السلاسل إلى أرقام، فإن الطريقة الآمنة الوحيدة "المضمنة" هي `.map(Number)` أو إضافة رد اتصال/إغلاق `.map(x => parseInt(x, 10))`.
+    هذا خطأ شائع مع `parseInt` و `map`. إذا كنت تريد تحليل مصفوفة من السلاسل إلى أرقام، فإن الطريقة الآمنة الوحيدة "المضمنة" هي `.map(Number)` أو إضافة رد اتصال/إغلاق <code>{`.map(x => parseInt(x, 10))`}</code>.
   </div>
   </slot>
 </Challenge>
@@ -413,16 +412,57 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
 </QuizUI>
 
+<div>
 <section className="scroll-x">
-## جدول المقارنة
-
-| الدالة | `parseInt` | `parseFloat` | `Number` | `BigInt` |
-| --- | --- | --- | --- | --- |
-| يتجاهل المسافات البيضاء | ✅ | ✅ | ✅ | ✅ |
-| `.map(FN)`  | ❌ | ☑️ | ✅ | ✅ |
-| يدعم وسيط الأساس (radix) | ✅ | ❌ | ❌ | ❌ |
-| الترميز الثنائي/الثماني/السداسي عشري | ✅ | ❌ | ✅ | ✅ |
-| أحرف غير صالحة `42 oh no` | `42` | `42`  | `NaN` | `SyntaxError` |
+  <h2>جدول المقارنة</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>الدالة</th>
+        <th><code>parseInt</code></th>
+        <th><code>parseFloat</code></th>
+        <th><code>Number</code></th>
+        <th><code>BigInt</code></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>يتجاهل المسافات البيضاء</td>
+        <td>✅</td>
+        <td>✅</td>
+        <td>✅</td>
+        <td>✅</td>
+      </tr>
+      <tr>
+        <td><code>.map(FN)</code></td>
+        <td>❌</td>
+        <td>☑️</td>
+        <td>✅</td>
+        <td>✅</td>
+      </tr>
+      <tr>
+        <td>يدعم وسيط الأساس (radix)</td>
+        <td>✅</td>
+        <td>❌</td>
+        <td>❌</td>
+        <td>❌</td>
+      </tr>
+      <tr>
+        <td>الترميز الثنائي/الثماني/السداسي عشري</td>
+        <td>✅</td>
+        <td>❌</td>
+        <td>✅</td>
+        <td>✅</td>
+      </tr>
+      <tr>
+        <td>أحرف غير صالحة <code>42 oh no</code></td>
+        <td><code>42</code></td>
+        <td><code>42</code></td>
+        <td><code>NaN</code></td>
+        <td><code>SyntaxError</code></td>
+      </tr>
+    </tbody>
+  </table>
 </section>
 
 <h2>كيف كانت نتيجتك؟ 🧐</h2>
@@ -430,3 +470,5 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 {/* <h4>Are you ok?</h4> */}
 
 <p class="inset">هل تبحث عن راحة بعد كل هذا الثنائي؟<br />تفو، تذكر: الاستراحة *بعد* المهارات! <br /><br />اضغط على [صالتنا الرياضية](/challenges/) لتحطيم المزيد من التحديات! 💪</p>
+</div>
+</>

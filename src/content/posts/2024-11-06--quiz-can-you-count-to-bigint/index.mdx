@@ -18,6 +18,7 @@ cover_icon: victor-freitas-hOuJYX2K5DA-unsplash-square.webp
 import Challenge from '../../../components/QuizUI/Challenge';
 import QuizUI from '../../../components/QuizUI/QuizUI';
 
+<>
 <QuizUI>
 
 Welcome to my JavaScript Numbers Challenge!
@@ -420,15 +421,55 @@ We'll cover parsing numeric expressions - in varying bases, handling floating-po
 
 
 <section className="scroll-x">
-## Comparison Table
-
-| Function | `parseInt` | `parseFloat` | `Number` | `BigInt` |
-| --- | --- | --- | --- | --- |
-| Ignores Whitespace | ✅ | ✅ | ✅ | ✅ |
-| `.map(FN)`  | ❌ | ☑️ | ✅ | ✅ |
-| Supports Radix Arg | ✅ | ❌ | ❌ | ❌ |
-| Binary/Octal/Hex literals | ✅ | ❌ | ✅ | ✅ |
-| Invalid chars `42 oh no` | `42` | `42`  | `NaN` | `SyntaxError` |
+  <h2>Comparison Table</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Function</th>
+        <th><code>parseInt</code></th>
+        <th><code>parseFloat</code></th>
+        <th><code>Number</code></th>
+        <th><code>BigInt</code></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Ignores Whitespace</td>
+        <td>✅</td>
+        <td>✅</td>
+        <td>✅</td>
+        <td>✅</td>
+      </tr>
+      <tr>
+        <td><code>.map(FN)</code></td>
+        <td>❌</td>
+        <td>☑️</td>
+        <td>✅</td>
+        <td>✅</td>
+      </tr>
+      <tr>
+        <td>Supports Radix Arg</td>
+        <td>✅</td>
+        <td>❌</td>
+        <td>❌</td>
+        <td>❌</td>
+      </tr>
+      <tr>
+        <td>Binary/Octal/Hex literals</td>
+        <td>✅</td>
+        <td>❌</td>
+        <td>✅</td>
+        <td>✅</td>
+      </tr>
+      <tr>
+        <td>Invalid chars <code>42 oh no</code></td>
+        <td><code>42</code></td>
+        <td><code>42</code></td>
+        <td><code>NaN</code></td>
+        <td><code>SyntaxError</code></td>
+      </tr>
+    </tbody>
+  </table>
 </section>
 
 <h2>How did you do? 🧐</h2>
@@ -436,3 +477,4 @@ We'll cover parsing numeric expressions - in varying bases, handling floating-po
 {/* <h4>Are you ok?</h4> */}
 
 <p class="inset">Are you looking for a rest after so much binary?<br />Pftt, remember: break *after* skills! <br /><br />Hit [my gym](/challenges/) to crush some more challenges! 💪</p>
+</>

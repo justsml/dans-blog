@@ -17,15 +17,14 @@ cover_full_width: ../victor-freitas-hOuJYX2K5DA-unsplash-wide.webp
 cover_mobile: ../victor-freitas-hOuJYX2K5DA-unsplash-square.webp
 cover_icon: ../victor-freitas-hOuJYX2K5DA-unsplash-square.webp
 ---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
 यह क्विज़ जावास्क्रिप्ट संख्यात्मक रूपांतरण फ़ंक्शनों के ज्ञान का मूल्यांकन करता है, उनके व्यवहार, किनारे के मामलों और उचित उपयोग को अलग‑अलग पहचानने की क्षमता का परीक्षण करता है। यह मध्यम कठिनाई का है, निर्देशात्मक स्वर में प्रस्तुत, जो शिक्षार्थियों को तुलना और सामान्य फंदों के माध्यम से मार्गदर्शन करता है। सामग्री पार्सिंग, प्रकार‑बाध्य (type coercion) और संख्यात्मक लिटरल की व्यावहारिक समझ पर जोर देती है।  
 **विषय:** जावास्क्रिप्ट पार्सिंग फ़ंक्शन (parseInt, parseFloat), Number कंस्ट्रक्टर, BigInt प्रकार, रेडिक्स हैंडलिंग, व्हाइटस्पेस और लिटरल फ़ॉर्मेट, एरर हैंडलिंग और NaN व्यवहार  
 **श्रोतागण:** बुनियादी जावास्क्रिप्ट अनुभव वाले डेवलपर और छात्र जो संख्यात्मक प्रकार रूपांतरण की गहरी समझ हासिल करना चाहते हैं और सामान्य गलतियों से बचना चाहते हैं।  
 
-```javascript
-import Challenge from '../../../../components/QuizUI/Challenge';
-import QuizUI from '../../../../components/QuizUI/QuizUI';
-```
-
+<>
 <QuizUI>
 
 <Challenge
@@ -304,7 +303,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     पहला तत्व, `24`, बेस 0 (ऑटो‑डिटेक्ट) में `24` के रूप में पार्स होता है, इसलिए यह `24` ही रहता है। दूसरा तत्व, `'One'`, बेस 1 में `NaN` के रूप में पार्स होता है। तीसरा तत्व, `42`, बेस 2 में पार्स होता है। बेस 2 में `'42'` `NaN` है, इसलिए परिणाम `[24, NaN, NaN]` मिलता है.
 
-    यह `parseInt` और `map` के साथ एक सामान्य गड़बड़ी है। यदि आप स्ट्रिंग्स की एरे को नंबर में बदलना चाहते हैं, तो एकमात्र सुरक्षित “बिल्ट‑इन” तरीका `.map(Number)` है या कॉलबैक/एनक्लोज़र जोड़ें जैसे `.map(x => parseInt(x, 10))`.
+    यह `parseInt` और `map` के साथ एक सामान्य गड़बड़ी है। यदि आप स्ट्रिंग्स की एरे को नंबर में बदलना चाहते हैं, तो एकमात्र सुरक्षित “बिल्ट‑इन” तरीका `.map(Number)` है या कॉलबैक/एनक्लोज़र जोड़ें जैसे <code>{`.map(x => parseInt(x, 10))`}</code>.
   </div>
   </slot>
 </Challenge>
@@ -404,16 +403,57 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
 </QuizUI>
 
+<div>
 <section className="scroll-x">
-## तुलना तालिका
-
-| फ़ंक्शन | `parseInt` | `parseFloat` | `Number` | `BigInt` |
-| --- | --- | --- | --- | --- |
-| खाली जगह को अनदेखा करता है | ✅ | ✅ | ✅ | ✅ |
-| .map(FN)  | ❌ | ☑️ | ✅ | ✅ |
-| रेडिक्स आर्ग का समर्थन | ✅ | ❌ | ❌ | ❌ |
-| बाइनरी/ऑक्टल/हेक्स लिटरल | ✅ | ❌ | ✅ | ✅ |
-| अवैध अक्षर `42 oh no` | `42` | `42`  | `NaN` | `SyntaxError` |
+  <h2>तुलना तालिका</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>फ़ंक्शन</th>
+        <th><code>parseInt</code></th>
+        <th><code>parseFloat</code></th>
+        <th><code>Number</code></th>
+        <th><code>BigInt</code></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>खाली जगह को अनदेखा करता है</td>
+        <td>✅</td>
+        <td>✅</td>
+        <td>✅</td>
+        <td>✅</td>
+      </tr>
+      <tr>
+        <td>.map(FN)</td>
+        <td>❌</td>
+        <td>☑️</td>
+        <td>✅</td>
+        <td>✅</td>
+      </tr>
+      <tr>
+        <td>रेडिक्स आर्ग का समर्थन</td>
+        <td>✅</td>
+        <td>❌</td>
+        <td>❌</td>
+        <td>❌</td>
+      </tr>
+      <tr>
+        <td>बाइनरी/ऑक्टल/हेक्स लिटरल</td>
+        <td>✅</td>
+        <td>❌</td>
+        <td>✅</td>
+        <td>✅</td>
+      </tr>
+      <tr>
+        <td>अवैध अक्षर <code>42 oh no</code></td>
+        <td><code>42</code></td>
+        <td><code>42</code></td>
+        <td><code>NaN</code></td>
+        <td><code>SyntaxError</code></td>
+      </tr>
+    </tbody>
+  </table>
 </section>
 
 <h2>आपका परिणाम क्या रहा? 🧐</h2>
@@ -421,3 +461,5 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 {/* <h4>Are you ok?</h4> */}
 
 <p class="inset">इतने बाइनरी के बाद थोड़ा आराम चाहिए?<br />पफ़्ट, याद रखें: कौशल के बाद *ब्रेक*! <br /><br />और चुनौतियों को तोड़ने के लिए [मेरी जिम](/challenges/) पर जाएँ! 💪</p>
+</div>
+</>
