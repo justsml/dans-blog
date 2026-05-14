@@ -1,0 +1,265 @@
+# Translation Candidate
+- Slug: serverless-database-magic
+- Locale: he
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2025-09-15--serverless-database-magic/he/index.mdx
+- Validation: deferred
+- Runtime seconds: 10.80
+- Input tokens: 4662
+- Output tokens: 3630
+- Thinking tokens: unknown
+- Cached input tokens: 512
+- Cache write tokens: 0
+- Estimated cost: $0.000835
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: גל החדשנות בבסיסי הנתונים של 2025
+subTitle: תודהל‑AI.
+date: '2025-09-10'
+modified: '2025-09-17'
+tags:
+  - serverless
+  - databases
+  - ai
+  - innovation
+  - chroma
+  - lancedb
+  - pagefind
+  - orama
+  - duckdb
+category: Search
+subCategory: Databases
+social_image: ../desktop-social.webp
+cover_full_width: ../data-city-wide.webp
+cover_mobile: ../data-city-square-200.webp
+cover_icon: ../data-city-square-200.webp
+cover_credit: ©️ 2025 Dan Levy
+---
+## לא עוד מאמר על מסדי נתונים וקטוריים
+
+הנה כלל ההחלטה שהייתי רוצה שהשתמשתי בו מוקדם יותר:
+
+<p class="inset">אם הנתונים שלך ניתנים לבנייה מחדש מקבצים והמשתמשים קוראים אותם ברובו, נסה תחילה מסד נתונים על אחסון אובייקטים. אם המשתמשים כותבים אליו כל היום, התחל עם מסד נתונים אמיתי והפסק לנסות לגרום ל‑S3 להתחזות לאחד.</p>
+
+זו השורה המועילה. לא “שרת‑לסס הוא העתיד”. לא “מסדי נתונים וקטוריים שינו את הכל”. המשפטים האלה כבר הודפסו על מספיק שרוולי כנסים.
+
+AI אכן שינה את צורתם של רבים מבעיות החיפוש. פתאום צוותים קטנים רצו חיפוש סמנטי, דירוג היברידי, צ'אט עם מסמכים, חיפוש מולטימודלי וניתוח על קבצים היושבים באחסון אובייקטים. התשובה הישנה הייתה “הפעל Postgres עם pgvector” או “הפעל OpenSearch/Elasticsearch” או “קנה שירות חיפוש מנוהל”. אלו עדיין תשובות טובות כאשר עומס העבודה מצדיק אותן.
+
+אך רבים אינם כך. הם קריאים‑כבדים, ניתנים לבנייה מחדש, וסובלניים לעיכוב קצר בין שינוי תוכן לעדכון החיפוש. תיעוד. צילומי קטלוג. ייצוא סטטי. בסיסי ידע פנימיים. ניתוח מקומי. מערכות RAG ניסיוניות. עבור אלה, מחלקה חדשה של כלים הפכה את הארכיטקטורה המשעממת לכזו שמספקת כוח יוצא דופן: בנה אינדקס, שמור אותו כקבצים, הגש אותו דרך HTTP.
+
+הערת צילומי מצב: האקוסיסטם מתקדם במהירות. ספירות הכוכבים, תוויות התכונות, ומספרי הביצועים למטה הם צילומי מצב של ספטמבר 2025, ולא לוח תוצאות נצחי. התייחס אליהם כהכוונה, ואז בדוק את המסמכים העדכניים לפני שאתה משקיע במעבר ייצור על בסיס תא אחד.
+
+## מסד נתונים בשם אחר
+
+חנותי נתונים ללא שרת ועם יכולות CDN אלו שימושיים למקרים בינוניים, בערך 1,000 עד 1,000,000 רשומות או כמה ג'יגה, שבהם תשתית מסד נתונים מסורתית יכולה להיות יותר טקס מאשר ערך:
+
+- **Pagefind** (2022, ~4.5K ⭐): גישה סטטית טהורה – קומפילציה חד‑פעמית, חיפוש לנצח, ללא דרישות backend
+- **Orama** (2023, ~8K ⭐): פתרון אוניברסלי הפועל בכל מקום מדפדפנים עד פונקציות ללא שרת
+- **Chroma** (2022, ~14K ⭐): AI‑מקורי, נבנה במיוחד ליישומי RAG
+- **LanceDB** (2023, ~4K ⭐): יכולות מולטימודל ארגוניות עם ארכיטקטורה מבוססת דיסק
+- **DuckDB-WASM** (2019, ~23K ⭐): מסד נתונים אנליטי מלא ב‑SQL הפועל בדפדפנים דרך WebAssembly
+
+התנועה הנפוצה היא פשוטה: לשמור את הנתונים העמידים בקבצים או באחסון אובייקטים, ואז לבצע שאילתות מהדפדפן, פונקציית קצה, עובד, או שירות קל משקל. זה לא מבטל מורכבות. הוא מזיז את המורכבות לצינורות הבנייה, רענון האינדקס, ביטול מטמון, ויכולת הלקוח. זה פשרה טובה כאשר קריאות דומיננטיות.
+
+### קרב תיבות הסימון
+
+| תכונה | [Pagefind](https://pagefind.app) | [Orama](https://orama.com) | [Chroma](https://www.trychroma.com/) | [LanceDB](https://lancedb.com) | [DuckDB-WASM](https://duckdb.org/docs/api/wasm) |
+|---------|----------|--------|---------|----------|----------|
+| **חיפוש טקסט מלא** | ✅ נטייה מתקדמת | ✅ BM25, 30 שפות | ✅ SQLite FTS | ✅ Tantivy | ✅ SQL מלא |
+| **חיפוש וקטורי** | ❌ | ✅ דמיון קוסינוס | ✅ HNSW | ✅ IVF_PQ, HNSW, GPU | ⚠️ הרחבות |
+| **אינטגרציות AI/RAG** | אין | ✅ צינור מובנה | ✅ LangChain, LlamaIndex | ✅ דירוג מחדש מתקדם | ⚠️ הגדרה ידנית |
+| **אחסון** | JSON/WASM סטטי | זיכרון + תוספי S3 | מבוסס‑שרת* | Lance תואם‑S3 | WASM + S3/HTTP |
+| **תמיכה בכתיבה** | רק בזמן בנייה | CRUD מלא | CRUD מלא | CRUD מלא | CRUD מלא ב‑SQL |
+| **ביצועים** | תת‑100 ms | 0.0001 ms ‑ 100 ms | תת‑100 ms | 3‑5 ms וקטור, 50 ms FTS | 10 ms‑1 s (SQL מורכב) |
+
+*תמונת מצב ספטמבר 2025: Chroma דורש זמן ריצה של שרת ואינו תומך באחסון ישיר של אובייקטים ב‑S3 כפי שהכלים הקבצים‑אובייקט עושים ([issue #1736](https://github.com/chroma-core/chroma/issues/1736)).
+
+### דוגמאות יישום
+
+ההבדלים בתחביר חושפים את הפיצול האמיתי: חיפוש בזמן בנייה, חיפוש בזיכרון, אחסון וקטורי‑טבעי, טבלאות מולטימודאליות, ו‑SQL בדפדפן אינם באותה קטגוריית מוצר רק בגלל שהם מופיעים יחד בהדגמות AI.
+
+#### חיפוש אתר סטטי עם Pagefind
+
+```html
+
+<link href="/pagefind/pagefind-ui.css" rel="stylesheet">
+<script src="/pagefind/pagefind-ui.js"></script>
+<div id="search"></div>
+<script>new PagefindUI({ element: "#search" });</script>
+```
+
+#### מולטימודלי ברמת ארגון עם LanceDB
+
+**קוד ליצירת טבלה ב‑LanceDB עם הטמעות OpenAI אוטומטיות:**
+```typescript
+import * as lancedb from "@lancedb/lancedb";
+import "@lancedb/lancedb/embedding/openai";
+import { LanceSchema, getRegistry } from "@lancedb/lancedb/embedding";
+import { Utf8 } from "apache-arrow";
+
+const db = await lancedb.connect("data/multimodal-db");
+const func = getRegistry()
+  .get("openai")
+  ?.create({ model: "text-embedding-ada-002" });
+
+// סכימה עם יצירת הטמעה אוטומטית
+const documentsSchema = LanceSchema({
+  text: func.sourceField(new Utf8()),
+  vector: func.vectorField(),
+  category: new Utf8()
+});
+
+const table = await db.createEmptyTable("documents", documentsSchema);
+await table.add([
+  { text: "machine learning concepts", category: "research" },
+  { text: "deep learning fundamentals", category: "research" }
+]);
+```
+
+**דוגמה לשאילתת טבלה ב‑LanceDB:**
+```typescript
+import * as lancedb from "@lancedb/lancedb";
+import "@lancedb/lancedb/embedding/openai";
+// "התחברות" לנתיב URL
+const db = await lancedb.connect("data/multimodal-db");
+const table = db.getTable("documents");
+
+// שילוב SQL + חיפוש וקטורי
+const results = await table.search("machine learning concepts")
+  .where("category = 'research'")
+  .limit(10)
+  .toArray();
+
+console.log(results);
+```
+
+
+#### חיפוש אוניברסלי עם Orama
+```typescript
+import { create, insert, search } from '@orama/orama'
+
+const db = create({
+  schema: {
+    title: 'string',
+    content: 'string', 
+    embedding: 'vector[1536]'
+  }
+})
+
+await insert(db, { 
+  title: 'Getting Started',
+  content: 'Learn the basics',
+  embedding: await generateEmbedding('Learn the basics')
+})
+
+const results = await search(db, { 
+  term: 'basics',
+  mode: 'hybrid' // משלב חיפוש טקסט + וקטור
+})
+```
+
+**DuckDB-WASM:**
+```typescript
+import * as duckdb from "https://cdn.jsdelivr.net/npm/@duckdb/duckdb-wasm@latest/dist/duckdb-browser.mjs";
+const bundle = await duckdb.selectBundle(duckdb.getJsDelivrBundles());
+const worker = new Worker(bundle.mainWorker);
+const db = new duckdb.AsyncDuckDB(new duckdb.ConsoleLogger(), worker);
+await db.instantiate(bundle.mainModule, bundle.pthreadWorker);
+
+const conn = await db.connect();
+await conn.query(`create table t as select * from (values (1,'hybrid search'),(2,'edge sql')) as v(id,txt);`);
+// אופציונלי טקסט מלא:
+await conn.query(`install fts; load fts; select * from t where match_bm25(txt, 'hybrid');`);
+```
+
+#### חיפוש AI‑טבעי עם Chroma  
+```typescript
+import { ChromaClient } from "chromadb";
+
+const client = new ChromaClient();
+const collection = await client.createCollection({ name: "knowledge-base" });
+
+await collection.add({
+  documents: ["AI will transform software development"],
+  metadatas: [{ source: "tech-blog", category: "AI" }],
+  ids: ["doc1"]
+});
+
+const results = await collection.query({
+  queryTexts: ["future of programming"],
+  where: { category: "AI" },
+  nResults: 5
+});
+```
+
+## מדריך מקרים שימושיים
+
+**בחרו Pagefind כאשר:**
+- בונים תיעוד, בלוגים, או בסיסי ידע
+- עדכוני תוכן שבועיים או פחות
+- נדרש אפס עומס תפעולי וקאשינג CDN מושלם
+- *דוגמה: מסמכי חברה עם יותר מ‑10 K דפים שמתעדכנים חודשי*
+
+**בחרו Orama כאשר:**
+- בונים לוחות מחוונים, מסחר אלקטרוני, או אפליקציות דינמיות
+- נדרשים עדכונים בזמן אמת וביצועים תת‑100 ms
+- רוצים גמישות פריסה מדפדפנים לפונקציות קצה
+- *דוגמה: SaaS עם קטלוגי מוצרים דינמיים*
+
+**בחרו Chroma כאשר:**
+- בונים אפליקציות RAG או בסיסי ידע AI
+- נדרשת אינטגרציה עם LangChain/LlamaIndex
+- חיפוש סמנטי הוא הליבה
+- *דוגמה: בוט תמיכה ב‑AI ללקוחות*
+
+**בחרו LanceDB כאשר:**
+- עובדים עם נתונים מולטימודאליים (תמונות, אודיו, וידאו)
+- נדרש ביצוע ארגוני בקנה מידה עצום
+- ניתוחים מורכבים ודירוג מחדש נדרשים
+- *דוגמה: פלטפורמת מדיה עם חיפוש וידאו סמנטי*
+
+**בחרו DuckDB-WASM כאשר:**
+- נדרשות יכולות SQL מלאות בדפדפן או בפונקציות קצה
+- עובדים עם עומסי עבודה אנליטיים ושאילתות מורכבות
+- רוצים לעבד קבצי CSV/Parquet ישירות מ‑S3
+- *דוגמה: לוח מחוונים BI עם שאילתות SQL אד‑הוק*
+
+## כלל קבלת ההחלטה
+
+השאלה המעשית איננה "איזה מסד נתונים הוא הטוב ביותר?"
+
+השאלה המעשית היא: איזה שינוי על המערכת לספוג?
+
+- **תוכן שניתן לבנייה מחדש:** Pagefind, צילומי Orama, קבצי Lance, DuckDB על Parquet. שמרו אותו סטטי עד שזה מתחיל להכאיב.
+- **כתיבות תכופות:** Postgres, שרת Chroma, שירות חיפוש מנוהל, או צינור אינדקסינג עם תור. אתם זקוקים לתיאום, לא לווייבים.
+- **תוצאות מותאמות למשתמש:** השתמשו בגיבוי אמיתי. אחסון אובייקטים אינו מודל הרשאה.
+- **אנליטיקה על קבצים:** DuckDB שימושי עד כדי טירוף. תנו ל‑SQL לעשות מה ש‑SQL עושה.
+- **חיפוש מולטימודלי או וקטורי כבד:** LanceDB ו‑Chroma שווים מבחינת ניסוי על הנתונים שלכם, לא על מדד README.
+
+הנתיב השמח הוא זול. המקרים הקיצוניים מחליטים את הארכיטקטורה.
+
+## התמונה הרחבה יותר
+
+כלים אלה מצמצמים את תשתית המינימום הדרושה לחיפוש יעיל. זה חשוב. ב‑2020, "חיפוש סמנטי" לרוב היה משמע ערימת שירותים, הרבה קוד הדבקה, ומישהו שמסביר אינדקסים וקטוריים בפגישה שבה חצי החדר רצה לארוחת צהריים. ב‑2025, צוות קטן יכול להמחיש את אותה רעיון מוצר עם קבצים, הטמעות, וסוף שבוע.
+
+זה לא אומר שכל תיבת חיפוש צריכה להפוך למערכת RAG. זה אומר שהגרסה הראשונה כבר לא חייבת לרשת תשתית ייצור לפני שיש לה ראיות ייצור.
+
+אפילו AWS מתקדמת בכיוון הזה עם עבודה על חיפוש וקטורי צמוד ל‑S3, וזה סימן משמעותי: אחסון אובייקטים כבר לא רק העלייה שבה קבצים ישנים נחים. הוא הופך למשטח שאילתות.
+
+## התחילו להתנסות
+
+1. **בחרו תחילה את תבנית העדכון**: בזמן בנייה, באצוות שעתי, כתיבות חיות, או תוצאות לפי‑משתמש.
+2. **הדגימו עם הכלי הכנה הקטן ביותר**: Pagefind ל‑HTML סטטי, DuckDB לקבצים אנליטיים, Orama לחיפוש אפליקציה קל, LanceDB או Chroma לעבודה וקטורית כבדה.
+3. **מדדו את החלק המגעיל**: זמן אינדקסינג, רעננות, גודל חבילה, הרשאות, ושאילתת הראשונה אחרי אתחול קר.
+4. **קידמו רק כשכאב הוא אמיתי**: מסד נתונים מנוהל מקבל נימוק אחרי שהגרסה הקבצי‑מבוססת מראה בדיוק היכן היא מתעקמת.
+
+*הסתכלו על [המדריך המעשי שלי ל‑Pagefind][1] ליישום ידני, או חקרו את האקוסיסטמה המתפתחת של מסדי נתונים נייטיב‑קצה שמשנים את הנתונים בקנה מידה.*
+
+> **הבהרה:** השתמשתי ב‑Pagefind במשך שנים והייתי תורם ב‑2025. ניסיתי Orama ו‑Chroma בפרויקטים קטנים ומחקר LanceDB עבור יישומי AI גדולים. אין לי קשרים פיננסיים עם הפרויקטים — רק עניין עמוק בנוף המסדי נתונים המתפתח.
+
+[1]: https://danlevy.net/you-might-not-need-algolia/
+````
