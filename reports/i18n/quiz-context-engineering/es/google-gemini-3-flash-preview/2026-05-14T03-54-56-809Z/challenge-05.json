@@ -1,0 +1,49 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Chunking Strategy",
+  "translatedTitle": "Estrategia de Fragmentación (Chunking)",
+  "translation": {
+    "title": "Estrategia de Fragmentación (Chunking)",
+    "group": "Recuperación (Retrieval)",
+    "options": [
+      {
+        "text": "Usar el tamaño de fragmento más grande que permita tu ventana de contexto"
+      },
+      {
+        "text": "Usar siempre 512 tokens — es el estándar de la industria"
+      },
+      {
+        "text": "Usar fragmentos con solapamiento (overlap) ajustados a la estructura de tu contenido"
+      },
+      {
+        "text": "El tamaño del fragmento no importa si usas un modelo de embeddings potente"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "Al fragmentar documentos para RAG, ¿cuál es el principio más importante?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "No existe un tamaño de fragmento universalmente correcto; depende de tu contenido. Los principios fundamentales son:\n\n1. **Coincidir con la estructura del contenido.** Las páginas de preguntas frecuentes se fragmentan mejor a nivel de Pregunta+Respuesta. Los documentos legales a nivel de cláusula. El código a nivel de función.\n2. **Usar solapamiento (overlap).** Un fragmento de 512 tokens con 64 tokens de solapamiento en cada lado permite que las respuestas que quedan entre dos fragmentos sigan siendo recuperadas.\n3. **Medir.** Crea un conjunto de evaluación y prueba varios tamaños. El tamaño del fragmento suele importar más que el modelo de embeddings elegido.\n\nEl valor de \"512 tokens\" es un punto de partida razonable, no una ley universal."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Estrategia de Fragmentación (Chunking)\",\n  \"group\": \"Recuperación (Retrieval)\",\n  \"options\": [\n    {\n      \"text\": \"Usar el tamaño de fragmento más grande que permita tu ventana de contexto\"\n    },\n    {\n      \"text\": \"Usar siempre 512 tokens — es el estándar de la industria\"\n    },\n    {\n      \"text\": \"Usar fragmentos con solapamiento (overlap) ajustados a la estructura de tu contenido\"\n    },\n    {\n      \"text\": \"El tamaño del fragmento no importa si usas un modelo de embeddings potente\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"Al fragmentar documentos para RAG, ¿cuál es el principio más importante?\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"No existe un tamaño de fragmento universalmente correcto; depende de tu contenido. Los principios fundamentales son:\\n\\n1. **Coincidir con la estructura del contenido.** Las páginas de preguntas frecuentes se fragmentan mejor a nivel de Pregunta+Respuesta. Los documentos legales a nivel de cláusula. El código a nivel de función.\\n2. **Usar solapamiento (overlap).** Un fragmento de 512 tokens con 64 tokens de solapamiento en cada lado permite que las respuestas que quedan entre dos fragmentos sigan siendo recuperadas.\\n3. **Medir.** Crea un conjunto de evaluación y prueba varios tamaños. El tamaño del fragmento suele importar más que el modelo de embeddings elegido.\\n\\nEl valor de \\\"512 tokens\\\" es un punto de partida razonable, no una ley universal.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 821,
+    "outputTokens": 394,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 3727,
+    "providerCostUsd": 0.0015925,
+    "providerUpstreamCostUsd": 0.0015925,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.0004105,
+    "outputUsd": 0.0011819999999999999,
+    "totalUsd": 0.0015925,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

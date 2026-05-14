@@ -1,0 +1,49 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Hash Join Eligibility",
+  "translatedTitle": "Применимость Hash Join",
+  "translation": {
+    "title": "Применимость Hash Join",
+    "group": "Внутреннее устройство SQL",
+    "options": [
+      {
+        "text": "ON a.id = b.id"
+      },
+      {
+        "text": "ON a.id > b.id"
+      },
+      {
+        "text": "ON a.id >= b.id"
+      },
+      {
+        "text": "HASH JOIN ON a.id = b.id ..."
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "Какое условие `ON` PostgreSQL может использовать для выполнения `HASH JOIN`?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "Hash join возможен только при наличии условия равенства (`=`) в предложении `ON`.\n\n    - `=` — это основной предикат для хеш-соединений\n    - `>` и `>=` не являются предикатами для hash join\n    - `HASH JOIN` не является валидным синтаксисом в PostgreSQL\n\n    Планировщик все равно может выбрать nested loop или merge join в зависимости от размера таблиц, статистики, индексов и настроек памяти."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Применимость Hash Join\",\n  \"group\": \"Внутреннее устройство SQL\",\n  \"options\": [\n    {\n      \"text\": \"ON a.id = b.id\"\n    },\n    {\n      \"text\": \"ON a.id > b.id\"\n    },\n    {\n      \"text\": \"ON a.id >= b.id\"\n    },\n    {\n      \"text\": \"HASH JOIN ON a.id = b.id ...\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"Какое условие `ON` PostgreSQL может использовать для выполнения `HASH JOIN`?\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"Hash join возможен только при наличии условия равенства (`=`) в предложении `ON`.\\n\\n    - `=` — это основной предикат для хеш-соединений\\n    - `>` и `>=` не являются предикатами для hash join\\n    - `HASH JOIN` не является валидным синтаксисом в PostgreSQL\\n\\n    Планировщик все равно может выбрать nested loop или merge join в зависимости от размера таблиц, статистики, индексов и настроек памяти.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 804,
+    "outputTokens": 291,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 3808,
+    "providerCostUsd": 0.001275,
+    "providerUpstreamCostUsd": 0.001275,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000402,
+    "outputUsd": 0.0008730000000000001,
+    "totalUsd": 0.001275,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Hybrid Search",
+  "translatedTitle": "Búsqueda Híbrida",
+  "translation": {
+    "title": "Búsqueda Híbrida",
+    "group": "Recuperación",
+    "options": [
+      {
+        "text": "Ejecutar la misma consulta dos veces por redundancia"
+      },
+      {
+        "text": "Usar dos modelos de embedding diferentes sobre el mismo corpus"
+      },
+      {
+        "text": "Combinar la búsqueda vectorial con la búsqueda por palabras clave para una mejor recuperación"
+      },
+      {
+        "text": "Buscar en múltiples bases de datos vectoriales simultáneamente"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "En los sistemas RAG, la \"búsqueda híbrida\" se refiere a:"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "La búsqueda híbrida combina la **búsqueda vectorial** (similitud semántica mediante embeddings) y la **búsqueda por palabras clave** (BM25 / búsqueda de texto completo) porque fallan de formas complementarias:\n\n    - La búsqueda vectorial tiene dificultades con términos exactos: nombres de productos, códigos de error, números de modelo, identificadores técnicos.\n    - La búsqueda por palabras clave tiene dificultades con el parafraseo: \"cómo cancelo\" frente a \"terminar suscripción\".\n\n    Los resultados de ambas se fusionan utilizando **Reciprocal Rank Fusion (RRF)**, un algoritmo de clasificación que combina posiciones de múltiples listas clasificadas sin requerir puntuaciones normalizadas.\n\n    Ambas están disponibles en Postgres con `pgvector` + `tsvector`. Es posible que no necesites un servicio de búsqueda independiente."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Búsqueda Híbrida\",\n  \"group\": \"Recuperación\",\n  \"options\": [\n    {\n      \"text\": \"Ejecutar la misma consulta dos veces por redundancia\"\n    },\n    {\n      \"text\": \"Usar dos modelos de embedding diferentes sobre el mismo corpus\"\n    },\n    {\n      \"text\": \"Combinar la búsqueda vectorial con la búsqueda por palabras clave para una mejor recuperación\"\n    },\n    {\n      \"text\": \"Buscar en múltiples bases de datos vectoriales simultáneamente\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"En los sistemas RAG, la \\\"búsqueda híbrida\\\" se refiere a:\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"La búsqueda híbrida combina la **búsqueda vectorial** (similitud semántica mediante embeddings) y la **búsqueda por palabras clave** (BM25 / búsqueda de texto completo) porque fallan de formas complementarias:\\n\\n    - La búsqueda vectorial tiene dificultades con términos exactos: nombres de productos, códigos de error, números de modelo, identificadores técnicos.\\n    - La búsqueda por palabras clave tiene dificultades con el parafraseo: \\\"cómo cancelo\\\" frente a \\\"terminar suscripción\\\".\\n\\n    Los resultados de ambas se fusionan utilizando **Reciprocal Rank Fusion (RRF)**, un algoritmo de clasificación que combina posiciones de múltiples listas clasificadas sin requerir puntuaciones normalizadas.\\n\\n    Ambas están disponibles en Postgres con `pgvector` + `tsvector`. Es posible que no necesites un servicio de búsqueda independiente.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 817,
+    "outputTokens": 381,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 3484,
+    "providerCostUsd": 0.0015515,
+    "providerUpstreamCostUsd": 0.0015515,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.0004085,
+    "outputUsd": 0.001143,
+    "totalUsd": 0.0015515,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

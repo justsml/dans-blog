@@ -1,0 +1,52 @@
+{
+  "index": 12,
+  "attempt": 1,
+  "originalTitle": "Date Setters Part 4",
+  "translatedTitle": "Date Setters भाग 4",
+  "translation": {
+    "title": "Date Setters भाग 4",
+    "group": "Dates को हैंडल करना",
+    "options": [
+      {
+        "text": "Jan 01 2020"
+      },
+      {
+        "text": "Feb 01 2020"
+      },
+      {
+        "text": "Jan 01 2021"
+      },
+      {
+        "text": "Feb 01 2021"
+      },
+      {
+        "text": "RangeError: Invalid argument."
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "आउटपुट में क्या शामिल होगा?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "[`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) मेथड दिए गए date instance का महीना सेट करता है।\n  \n      महीने का argument zero-based होता है, जिसकी रेंज 0-11 होती है (पश्चिमी कैलेंडर के अनुसार)।\n\n      यहाँ हम देखते हैं कि महीना और साल February 2021 में एडजस्ट हो गया है, क्योंकि `setMonth(13)` की वैल्यू 11 (December) से 2 ज़्यादा है।\n\n      <aside class=\"hint\">`setMonth` इंडेक्स के द्वारा महीना सेट करता है, 12 महीनों को 0-11 तक इंडेक्स किया जाता है। </aside>\n      <aside class=\"hint\">\n        0-11 की रेंज के बाहर के नंबर साल को over-flow या under-flow कर देंगे। उदाहरण के लिए, `setMonth(13)` साल को 2021 में एडजस्ट कर देगा (February में क्योंकि 13, 11 से 2 ज़्यादा है)।\n      </aside>"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Date Setters भाग 4\",\n  \"group\": \"Dates को हैंडल करना\",\n  \"options\": [\n    {\n      \"text\": \"Jan 01 2020\"\n    },\n    {\n      \"text\": \"Feb 01 2020\"\n    },\n    {\n      \"text\": \"Jan 01 2021\"\n    },\n    {\n      \"text\": \"Feb 01 2021\"\n    },\n    {\n      \"text\": \"RangeError: Invalid argument.\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"आउटपुट में क्या शामिल होगा?\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"[`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) मेथड दिए गए date instance का महीना सेट करता है।\\n  \\n      महीने का argument zero-based होता है, जिसकी रेंज 0-11 होती है (पश्चिमी कैलेंडर के अनुसार)।\\n\\n      यहाँ हम देखते हैं कि महीना और साल February 2021 में एडजस्ट हो गया है, क्योंकि `setMonth(13)` की वैल्यू 11 (December) से 2 ज़्यादा है।\\n\\n      <aside class=\\\"hint\\\">`setMonth` इंडेक्स के द्वारा महीना सेट करता है, 12 महीनों को 0-11 तक इंडेक्स किया जाता है। </aside>\\n      <aside class=\\\"hint\\\">\\n        0-11 की रेंज के बाहर के नंबर साल को over-flow या under-flow कर देंगे। उदाहरण के लिए, `setMonth(13)` साल को 2021 में एडजस्ट कर देगा (February में क्योंकि 13, 11 से 2 ज़्यादा है)।\\n      </aside>\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 951,
+    "outputTokens": 1348,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 28270,
+    "providerCostUsd": 0.0045195,
+    "providerUpstreamCostUsd": 0.0045195,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.0004755,
+    "outputUsd": 0.004044,
+    "totalUsd": 0.0045195,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

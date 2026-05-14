@@ -1,0 +1,528 @@
+# Translation Candidate
+- Slug: quiz-master-modern-html5
+- Locale: ja
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2024-11-01--quiz-master-modern-html5/ja/index.mdx
+- Validation: rejected: direct AI SDK translation failed
+- Runtime seconds: 222.11
+- Input tokens: 11016
+- Output tokens: 14722
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.005664
+- Pricing source: local-openrouter-estimate
+- Note: Command failed: bun run i18n:validate --slug quiz-master-modern-html5 --locale ja --skip-global (code 1)
+## Raw Output
+
+````mdx
+---
+unlisted: false
+title: クイズ：HTMLはまだ履歴書に載せるべき？
+subTitle: 実力を示せ
+label: Semantic HTML5
+social_image: ../desktop-social.webp
+category: Quiz
+subCategory: HTML
+date: '2024-10-31'
+modified: '2024-11-06'
+tags:
+  - quiz
+  - web
+  - quiz
+  - semantic
+  - html5
+  - web
+  - beginner
+  - intermediate
+cover_full_width: ../jakob-owens-FBih1nqPi0w-unsplash-wide.webp
+cover_mobile: ../jakob-owens-FBih1nqPi0w-unsplash-square.webp
+cover_icon: ../jakob-owens-FBih1nqPi0w-unsplash-square.webp
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+
+## さて、あなたはHTML5のスキルがあると思っていますか？
+
+結局のところ、`<div>`と`<span>`の違いはわかっていますよね？しかし、HTML5のより高度なセマンティック要素についてはどれくらい知っていますか？
+
+> 注意：このテストに合格できない場合、法的に履歴書から`HTML Skills`を削除しなければなりません。
+
+### 開始！
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="ウォームアップ"
+  title="`<ul>`の役割"
+  options={[
+    {text: '順序なしリスト', isAnswer: true},
+    {text: 'ユニークリスト'},
+    {text: 'ユニバーサルリスト'},
+    {text: 'ユーザーリスト'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    HTMLにおける`<ul>`要素の主な役割は何ですか？
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `<ul>`タグは順序なしリストを作成し、項目は通常箇条書きで表示されます。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="高度なセマンティックHTML"
+  title="`<dd>`の使い方"
+  options={[
+    {text: '説明の定義'},
+    {text: '説明用語'},
+    {text: 'データ表示'},
+    {text: '説明の詳細', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    HTMLにおける`<dd>`要素は何を表しますか？
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    [`<dd>`要素](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dd)は、説明リスト内で説明、定義、または値を定義し、`<dl>`タグ内で`<dt>`（_説明用語_）とペアで使用されます。
+
+    これはキーと値のデータを表示する際に便利です。プロフィール情報、設定、統計情報などが一般的な例です。
+    ```html
+        <dl>
+        <dt>JS</dt>
+        <dd>Client-side</dd>
+        <dd>Server-side</dd>
+
+        <dt>HTML</dt>
+        <dd>Client-side</dd>
+        </dl>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="高度なセマンティックHTML"
+  title="`<figure>`/`<figcaption>`の使い方"
+  options={[
+    {text: '著作権情報を表示する画像に対して'},
+    {text: '画像やチャートなどを説明するために', isAnswer: true},
+    {text: 'テーブルや計算などを注釈するために'},
+    {text: '動画のキャプションに使用する'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    `<figure>`要素と`<figcaption>`要素はいつ使用すべきですか？
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    The [`<figure>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/figure) tag is typically used to wrap self-contained (media) content, like an image or chart, along with [`<figcaption>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/figcaption) to provide a caption.
+
+    This is useful for images, diagrams, code snippets, and more.
+    ```html
+        <figure>
+        <img src="image.jpg" alt="Description of image">
+        <figcaption>Image caption</figcaption>
+        </figure>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="高度なセマンティックHTML"
+  title="`<article>`の使い方"
+  options={[
+    {text: 'コンテンツ、サイドバー、著作権情報に使用する'},
+    {text: '独立したコンテンツセクション', isAnswer: true},
+    {text: '<newsletter>の一部'},
+    {text: 'ニュース記事を定義する'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    HTMLにおける`<article>`要素の目的は何ですか？
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    [`<article>`要素](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/article)は、独立して配布または再利用できるスタンドアロンのコンテンツを定義するために使用されます。
+
+    ブログ記事、ニュース記事、フォーラムの投稿、ユーザーコメントなどによく使われます。
+
+    ページ上で複数のarticleを使用することもできます（例えば無限スクロールページ）。また、互いに入れ子にして「スタンドアロンコンテンツ」の階層を作成することもできます。
+    ```html
+        <article>
+        <h2>Article Title</h2>
+        <p>Article content...</p>
+        <article class="discussion">
+        <h3>Comment by User</h3>
+        <p>Comment content...</p>
+        </article>
+        </article>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="高度なセマンティックHTML"
+  title="`<fieldset>`/`<legend>` の使い方"
+  options={[
+    {text: 'フォーム要素をタイトルの下にグループ化する', isAnswer: true},
+    {text: 'フォームフィールドの指示を定義する'},
+    {text: '`<legend>` の有効な使い方ではない'},
+    {text: '展開可能なセクションを定義する'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    フォームにおける `<fieldset>` と `<legend>` 要素の目的は何ですか？
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    [`<fieldset>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/fieldset) は関連するフォームコントロールをグループ化するために使用され、`<legend>` はそのグループにタイトル/ラベルを提供し、アクセシビリティを向上させます。
+
+    これは、配送先住所や支払い詳細のセクションなど、関連するフォーム要素をグループ化するのに便利です。
+    ```html
+        <fieldset>
+        <legend>Shipping Address</legend>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name">
+        ...
+        </fieldset>
+        <fieldset>
+        <legend>Payment Details</legend>
+        <label for="card">Card Number:</label>
+        <input type="text" id="card" name="card">
+        ...
+        </fieldset>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="高度なセマンティックHTML"
+  title="`<meter>`要素の目的"
+  options={[
+    {text: 'メートル単位のプログレスバー'},
+    {text: '範囲内の数値を表す', isAnswer: true},
+    {text: '距離をメートルに変換する'},
+    {text: '特別なパフォーマンス関連タグ'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    `<meter>`要素の目的は何ですか？
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    [`<meter>`要素](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meter)は、温度、ディスク使用量、投票数など、設定された範囲内のスカラー（単一）測定値を表すために使用されます。
+
+    これは[`<progress>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/progress)バーに似ているように見えるかもしれませんが、プログレスバーは**常に**ゼロから始まります。したがって、`<progress>`要素は「完了のパーセンテージ」を示し、`<meter>`は定義可能な範囲内の任意の値を示します。
+    ```html
+        <meter min="-60" max="130" value="75" /> 75°F
+        <meter min="0" max="100" value="75" /> 75%
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="セマンティックHTML"
+  title="`<source>`の使い方"
+  options={[
+    {text: 'データソースを定義するために使用される'},
+    {text: '利用可能なメディアファイル形式を宣言する', isAnswer: true},
+    {text: 'APAまたはMLA形式でソースを引用する'},
+    {text: 'ソースコードブロックを定義する'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    なぜ`<source>`要素が使われるのですか？
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    [`<source>`要素は利用可能なメディア形式を指定するために使用されます](https://developer.mozilla.org/en-us/docs/web/html/element/source).
+
+    具体的には、[`<video>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video)、[`<audio>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/audio)、[`<picture>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/picture) 要素と共に使用され、ブラウザが最も適切な形式を選択できるようにします。
+    ```html
+        <video controls>
+        <source src="movie.mp4" type="video/mp4">
+        <source src="movie.ogg" type="video/ogg">
+        </video>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="高度なセマンティックHTML"
+  title="`<hgroup>`の使い方"
+  options={[
+    {text: 'レガシー要素で、もう使われていない'},
+    {text: '見出しをまとめるため'},
+    {text: '目次を定義する'},
+    {text: '見出しとそのサブタイトルをグループ化する', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    `<hgroup>`要素はどのように使うべきですか？
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    [`<hgroup>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/hgroup)要素は、見出しと関連する二次的なコンテンツ（通常は1つ以上の`<p>`要素）をグループ化します。
+
+    見出しにサブタイトル、タグライン、または文書アウトラインで別の見出しにすべきでない代替タイトルがある場合に便利です。
+    ```html
+        <article>
+        <hgroup>
+        <h1>Frankenstein</h1>
+        <p>Or: The Modern Prometheus</p>
+        </hgroup>
+        <section>
+        <h2>Chapter 1</h2>
+        <p>...</p>
+        </section>
+        </article>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="高度なセマンティックHTML"
+  title="`<menu>`要素の使い方"
+  options={[
+    {text: '順序付きリストを定義する'},
+    {text: 'コマンドやツールバーコントロールを一覧表示する', isAnswer: true},
+    {text: 'ナビゲーションバーを表す'},
+    {text: 'ボタングループを定義する'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    HTMLで`<menu>`要素は何に使われますか？
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    [`<menu>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/menu)はコマンドまたはインタラクティブコントロールのリストを表します。
+
+    リストがナビゲーションリンクの場合は、`<nav>`と`<ul>`を使用してください。ツールバー的なコントロールやコマンドリストには`<menu>`を使用します。
+    ```html
+        <menu>
+        <li><button type="button">Copy</button></li>
+        <li><button type="button">Paste</button></li>
+        </menu>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="高度なセマンティックHTML"
+  title="`<details>`と`<summary>`の役割"
+  options={[
+    {text: 'ネイティブの折りたたみ可能コンテンツ', isAnswer: true},
+    {text: 'ネイティブのツールチップ'},
+    {text: '`<section>`にコンテキストを追加'},
+    {text: '構造化データを表示するため'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    `<details>`と`<summary>`はHTMLでどのような役割を果たしますか？
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    [`<details>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details)は折りたたみ可能なコンテンツを可能にし、[`<summary>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/summary)はコンテンツの表示タイトルを指定します。
+
+    これはFAQ、折りたたみ可能なセクション、またはトグル可能なコンテンツに便利です。
+    ```html
+        <details>
+        <summary>Click to expand 🤯</summary>
+        <p>Hidden content! 💥</p>
+        </details>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="高度なセマンティックHTML"
+  title="`<dialog>`の目的"
+  options={[
+    {text: '脚本家向けのフォーマット'},
+    {text: 'モーダルまたはポップアップを宣言する', isAnswer: true},
+    {text: 'ChatGPTスタイルのチャットディスカッションを宣言する'},
+    {text: '非推奨、代わりに<wizard>を使用'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    なぜ`<dialog>`要素を使うべきですか？
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    [`<dialog>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog)要素はポップアップやモーダルに使用され、セマンティックマークアップ、拡張CSS、およびこれらのインタラクションのためのネイティブAPIを提供します。
+
+    JavaScriptを使用して、モーダルダイアログの場合は`.showModal()`、非モーダルダイアログの場合は`.show()`で開き、`.close()`または`method="dialog"`を使用したフォーム送信で閉じます。
+    ```html
+        <dialog>
+        <h2>Modal Title</h2>
+        <p>Modal content...</p>
+        <button>Close</button>
+        </dialog>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="高度なセマンティックHTML"
+  title="`<time>`の使い方"
+  options={[
+    {text: '日付と時刻を表すため', isAnswer: true},
+    {text: 'タイムスタンプを定義するため'},
+    {text: '日付のみをフォーマットするため'},
+    {text: '日付入力をドラッグ可能にするため'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    HTMLで`<time>`要素はどのように使われますか？
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `<time>`要素は日付、時刻、または期間を表すために使われます。人間が読めるコンテンツと機械が読める`datetime`属性を含めることができます。HTMLには`<date>`要素はありません。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="高度なセマンティックHTML"
+  title="ARIA属性の目的"
+  options={[
+    {text: 'タッチデバイス用のヘルパー'},
+    {text: 'アクセシビリティの向上', isAnswer: true},
+    {text: 'サウンドと再生の制御'},
+    {text: '<div>\のみを使用するため'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ARIA属性の目的は何ですか？
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    ARIA（Accessible Rich Internet Applications）属性は、スクリーンリーダーやその他の支援技術に追加のコンテキストを提供することで、ウェブアクセシビリティを向上させます。
+
+    要素を説明するために使用できるロール、状態、プロパティがあります。
+    ```html
+        <button aria-label="Close" aria-expanded="true">X</button>
+        <main aria-live="polite">...</main>
+        <dialog
+        role="alertdialog"
+        aria-modal="true"
+        aria-labelledby="dialog_label"
+        aria-describedby="dialog_desc"
+        ></dialog>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={13}
+  group="高度なセマンティックHTML"
+  title="`role`属性の使用"
+  options={[
+    {text: 'コンポーネントの動作を定義するため'},
+    {text: '要素の目的を説明するため', isAnswer: true},
+    {text: '要素へのアクセスを制限する'},
+    {text: 'Web Components専用'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    HTMLの`role`属性の用途は何ですか？
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `role`属性は、支援技術に対して要素の目的を説明し、アクセシビリティの向上に役立ちます。
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+
+さて、結果はどうでしたか？次のプロジェクトで、もっとセマンティックなHTML要素を使いたくなりましたか？🚀
+
+それとも、一生`<div>`と`<span>`に甘んじる覚悟ですか？😅
+
+コメントで教えてください！👇
+````

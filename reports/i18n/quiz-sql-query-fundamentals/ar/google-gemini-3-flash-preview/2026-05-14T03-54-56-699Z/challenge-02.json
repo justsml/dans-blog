@@ -1,0 +1,49 @@
+{
+  "index": 1,
+  "attempt": 1,
+  "originalTitle": "Aggregate Function COUNT",
+  "translatedTitle": "دالة التجميع COUNT",
+  "translation": {
+    "title": "دالة التجميع COUNT",
+    "group": "أساسيات SQL",
+    "options": [
+      {
+        "text": "تحسب جميع الصفوف بما في ذلك قيم NULL"
+      },
+      {
+        "text": "تحسب فقط القيم غير الفارغة (non-NULL) في العمود"
+      },
+      {
+        "text": "تحسب قيم NULL كقيمة فريدة واحدة"
+      },
+      {
+        "text": "تتعامل مع كل قيمة NULL كقيمة فريدة، تماماً مثل NaN !== NaN"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "ماذا تفعل `COUNT(column_name)` في SQL؟"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "تقوم `COUNT(column_name)` بحساب عدد القيم غير الفارغة (non-NULL) في عمود محدد. لحساب جميع الصفوف، بما في ذلك قيم NULL، استخدم `COUNT(*)`.\n\nيمكنك أيضاً استخدام `COALESCE` لضمان تعيين قيمة افتراضية بدلاً من NULL. شيء مثل: `COUNT(COALESCE(column_name, 0))`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"دالة التجميع COUNT\",\n  \"group\": \"أساسيات SQL\",\n  \"options\": [\n    {\n      \"text\": \"تحسب جميع الصفوف بما في ذلك قيم NULL\"\n    },\n    {\n      \"text\": \"تحسب فقط القيم غير الفارغة (non-NULL) في العمود\"\n    },\n    {\n      \"text\": \"تحسب قيم NULL كقيمة فريدة واحدة\"\n    },\n    {\n      \"text\": \"تتعامل مع كل قيمة NULL كقيمة فريدة، تماماً مثل NaN !== NaN\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"ماذا تفعل `COUNT(column_name)` في SQL؟\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"تقوم `COUNT(column_name)` بحساب عدد القيم غير الفارغة (non-NULL) في عمود محدد. لحساب جميع الصفوف، بما في ذلك قيم NULL، استخدم `COUNT(*)`.\\n\\nيمكنك أيضاً استخدام `COALESCE` لضمان تعيين قيمة افتراضية بدلاً من NULL. شيء مثل: `COUNT(COALESCE(column_name, 0))`.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 756,
+    "outputTokens": 287,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 3332,
+    "providerCostUsd": 0.001239,
+    "providerUpstreamCostUsd": 0.001239,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000378,
+    "outputUsd": 0.000861,
+    "totalUsd": 0.001239,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,510 @@
+---
+unlisted: false
+title: 'क्विज़: क्या आपके रेज़्यूमे में अभी भी HTML की जगह है?'
+subTitle: खुद को साबित करें!
+label: Semantic HTML5
+social_image: ../desktop-social.webp
+category: Quiz
+subCategory: HTML
+date: '2024-10-31'
+modified: '2024-11-06'
+tags:
+  - quiz
+  - web
+  - quiz
+  - semantic
+  - html5
+  - web
+  - beginner
+  - intermediate
+cover_full_width: ../jakob-owens-FBih1nqPi0w-unsplash-wide.webp
+cover_mobile: ../jakob-owens-FBih1nqPi0w-unsplash-square.webp
+cover_icon: ../jakob-owens-FBih1nqPi0w-unsplash-square.webp
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+
+## तो, आपको लगता है कि आपको HTML5 आता है?
+
+आखिरकार, आप `<div>` और `<span>` के बीच का अंतर तो जानते ही हैं, है ना? लेकिन आप HTML5 के एडवांस, सिमेंटिक (semantic) एलिमेंट्स को कितनी अच्छी तरह समझते हैं?
+
+> नोट: अगर आप इस टेस्ट को पास नहीं कर पाते हैं, तो कानूनी तौर पर आपको अपने रेज़्यूमे (Resume) से `HTML Skills` हटाना होगा।
+
+### शुरू करें!
+---
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="वार्मअप"
+  title="`<ul>` की भूमिका"
+  options={[
+    {text: 'Unordered List', isAnswer: true},
+    {text: 'Unique List'},
+    {text: 'Universal List'},
+    {text: 'User List'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    HTML में `<ul>` एलिमेंट की प्राथमिक भूमिका क्या है?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `<ul>` टैग एक unordered list बनाता है, जिसमें आइटम आमतौर पर बुलेट्स द्वारा चिह्नित होते हैं।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="उन्नत सिमेंटिक HTML"
+  title="`<dd>` का उपयोग"
+  options={[
+    {text: 'Description definition'},
+    {text: 'Description term'},
+    {text: 'Data display'},
+    {text: 'Description Details', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    HTML में `<dd>` एलिमेंट क्या दर्शाता है?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    [`<dd>` एलिमेंट](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dd) एक डिस्क्रिप्शन लिस्ट में विवरण (description), परिभाषा (definition), या मान (value) को परिभाषित करता है। इसका उपयोग `<dl>` टैग के भीतर `<dt>` (_Description Term_) के साथ जोड़ा बनाने के लिए किया जाता है।
+
+    यह की-वैल्यू (key-value) डेटा दिखाने के लिए उपयोगी है। प्रोफाइल जानकारी, सेटिंग्स और आंकड़े इसके सामान्य उदाहरण हैं।
+    ```html
+        <dl>
+        <dt>JS</dt>
+        <dd>Client-side</dd>
+        <dd>Server-side</dd>
+
+        <dt>HTML</dt>
+        <dd>Client-side</dd>
+        </dl>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="उन्नत सिमेंटिक HTML"
+  title="`<figure>/<figcaption>` का उपयोग"
+  options={[
+    {text: 'कॉपीराइट जानकारी के साथ प्रदर्शित की जाने वाली इमेज के लिए'},
+    {text: 'इमेज, चार्ट आदि का वर्णन करने के लिए', isAnswer: true},
+    {text: 'टेबल, गणना (computations) आदि को एनोटेट करने के लिए'},
+    {text: 'वीडियो में कैप्शन देने के लिए'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    `<figure>` और `<figcaption>` तत्वों का उपयोग कब किया जाना चाहिए?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    [`<figure>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/figure) टैग का उपयोग आमतौर पर इमेज या चार्ट जैसी स्व-निहित (self-contained) मीडिया सामग्री को रैप करने के लिए किया जाता है, साथ ही कैप्शन प्रदान करने के लिए [`<figcaption>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/figcaption) का उपयोग किया जाता है।
+
+    यह इमेज, डायग्राम, कोड स्निपेट और बहुत कुछ के लिए उपयोगी है।
+    ```html
+        <figure>
+        <img src="image.jpg" alt="Description of image">
+        <figcaption>Image caption</figcaption>
+        </figure>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="उन्नत सिमेंटिक HTML"
+  title="`<article>` का उपयोग"
+  options={[
+    {text: 'कंटेंट, साइडबार और कॉपीराइट जानकारी के लिए'},
+    {text: 'एक स्वतंत्र (standalone) कंटेंट सेक्शन', isAnswer: true},
+    {text: '<newsletter> का हिस्सा'},
+    {text: 'एक समाचार लेख को परिभाषित करता है'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    HTML में `<article>` एलिमेंट का उद्देश्य क्या है?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    [`<article>` एलिमेंट](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/article) का उपयोग कंटेंट के एक स्वतंत्र हिस्से को परिभाषित करने के लिए किया जाता है जिसे स्वतंत्र रूप से वितरित या पुन: उपयोग किया जा सकता है।
+
+    इसका उपयोग अक्सर ब्लॉग पोस्ट, समाचार लेख, फ़ोरम पोस्ट या उपयोगकर्ता की टिप्पणियों (comments) के लिए किया जाता है।
+
+    आप एक पेज पर कई आर्टिकल्स का उपयोग कर सकते हैं (उदाहरण के लिए, इनफिनिटी स्क्रॉलिंग पेजों के लिए)। या, आप "स्वतंत्र कंटेंट" का पदानुक्रम (hierarchy) बनाने के लिए उन्हें एक-दूसरे के भीतर नेस्ट भी कर सकते हैं।
+    ```html
+        <article>
+        <h2>Article Title</h2>
+        <p>Article content...</p>
+        <article class="discussion">
+        <h3>Comment by User</h3>
+        <p>Comment content...</p>
+        </article>
+        </article>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="उन्नत सिमेंटिक HTML"
+  title="`<fieldset>/<legend>` का उपयोग"
+  options={[
+    {text: 'एक शीर्षक के तहत फॉर्म एलिमेंट्स को समूहित (grouping) करना', isAnswer: true, hint: 'यह एक्सेसिबिलिटी और संरचना के लिए उपयोग किया जाता है।'},
+    {text: 'फॉर्म फ़ील्ड के लिए निर्देश परिभाषित करना'},
+    {text: '<legend> का यह वैध उपयोग नहीं है'},
+    {text: 'विस्तार योग्य (expandable) सेक्शन को परिभाषित करना'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    एक फॉर्म में `<fieldset>` और `<legend>` एलिमेंट्स का उद्देश्य क्या है?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    [`<fieldset>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/fieldset) का उपयोग संबंधित फॉर्म कंट्रोल्स को ग्रुप करने के लिए किया जाता है, और `<legend>` उस ग्रुप के लिए एक शीर्षक या लेबल प्रदान करता है, जिससे एक्सेसिबिलिटी (accessibility) में सुधार होता है।
+
+    यह संबंधित फॉर्म एलिमेंट्स को व्यवस्थित करने के लिए उपयोगी है, जैसे शिपिंग एड्रेस या पेमेंट डिटेल्स के लिए एक अलग सेक्शन बनाना।
+    ```html
+        <fieldset>
+        <legend>Shipping Address</legend>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name">
+        ...
+        </fieldset>
+        <fieldset>
+        <legend>Payment Details</legend>
+        <label for="card">Card Number:</label>
+        <input type="text" id="card" name="card">
+        ...
+        </fieldset>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="एडवांस्ड सिमेंटिक HTML"
+  title="<meter> का उद्देश्य"
+  options={[
+    {text: 'मेट्रिक यूनिट्स में एक प्रोग्रेस बार'},
+    {text: 'एक रेंज के भीतर एक न्यूमेरिक वैल्यू को दर्शाना', isAnswer: true},
+    {text: 'दूरी को मीटर में बदलना'},
+    {text: 'विशेष परफॉरमेंस से संबंधित टैग'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    <meter> एलिमेंट का उद्देश्य क्या है?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    [`<meter>` एलिमेंट](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meter) का उपयोग एक निर्धारित रेंज के भीतर स्केलर (एकल) माप को दर्शाने के लिए किया जाता है, जैसे कि तापमान, डिस्क उपयोग या वोटों की गिनती।
+
+    यह [`<progress>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/progress) बार के समान लग सकता है, हालांकि प्रोग्रेस बार **हमेशा** शून्य से शुरू होते हैं। इसलिए `<progress>` एलिमेंट `percent of completion` दिखाते हैं, जबकि एक `<meter>` किसी भी परिभाषित रेंज के भीतर की वैल्यू को दर्शाता है।
+    ```html
+        <meter min="-60" max="130" value="75" /> 75°F
+        <meter min="0" max="100" value="75" /> 75%
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="सिमेंटिक HTML"
+  title="`<source>` का उपयोग"
+  options={[
+    {text: 'डेटा सोर्स को परिभाषित करने के लिए उपयोग किया जाता है', hint: 'नहीं, यह डेटाबेस या डेटा स्ट्रीम के लिए नहीं है।'},
+    {text: 'उपलब्ध मीडिया फ़ाइल फॉर्मेट घोषित करने के लिए', isAnswer: true, hint: 'सही! यह ब्राउज़र को चुनने के लिए विकल्प देता है।'},
+    {text: 'APA या MLA फॉर्मेट का उपयोग करके स्रोतों को साइट (cite) करने के लिए', hint: 'यह बिब्लियोग्राफी टूल नहीं है।'},
+    {text: 'सोर्स कोड ब्लॉक को परिभाषित करने के लिए', hint: 'इसके लिए `<code>` या `<pre>` का उपयोग किया जाता है।'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    `<source>` एलिमेंट का उपयोग क्यों किया जाता है?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    [`<source>` एलिमेंट का उपयोग उपलब्ध मीडिया फॉर्मेट को निर्दिष्ट करने के लिए किया जाता है](https://developer.mozilla.org/en-us/docs/web/html/element/source)।
+
+    खास तौर पर इसका उपयोग [`<video>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video), [`<audio>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/audio), और [`<picture>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/picture) एलिमेंट्स के साथ किया जाता है, जिससे ब्राउज़र सबसे उपयुक्त फॉर्मेट चुन सकता है।
+    ```html
+        <video controls>
+        <source src="movie.mp4" type="video/mp4">
+        <source src="movie.ogg" type="video/ogg">
+        </video>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="उन्नत सिमेंटिक HTML"
+  title="`<hgroup>` का उपयोग"
+  options={[
+    {text: 'लिगेसी एलिमेंट, अब उपयोग में नहीं है'},
+    {text: 'हेडिंग्स को एक साथ ग्रुप करने के लिए'},
+    {text: 'विषय सूची (table of contents) को परिभाषित करने के लिए'},
+    {text: 'एक हेडिंग को उसके सबटाइटल के साथ ग्रुप करने के लिए', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    आपको `<hgroup>` एलिमेंट का उपयोग कैसे करना चाहिए?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    [`<hgroup>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/hgroup) एलिमेंट एक हेडिंग को संबंधित माध्यमिक सामग्री (secondary content) के साथ ग्रुप करता है, जो आमतौर पर एक या अधिक `<p>` एलिमेंट होते हैं।
+
+    यह तब उपयोगी हो सकता है जब किसी हेडिंग का कोई सबटाइटल, टैगलाइन, या वैकल्पिक शीर्षक हो जिसे डॉक्यूमेंट आउटलाइन में एक अलग हेडिंग नहीं बनना चाहिए।
+    ```html
+        <article>
+        <hgroup>
+        <h1>Frankenstein</h1>
+        <p>Or: The Modern Prometheus</p>
+        </hgroup>
+        <section>
+        <h2>Chapter 1</h2>
+        <p>...</p>
+        </section>
+        </article>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="उन्नत सिमेंटिक HTML"
+  title="`<menu>` का उपयोग"
+  options={[
+    {text: 'एक ऑर्डर्ड लिस्ट (ordered list) को परिभाषित करने के लिए'},
+    {text: 'कमांड्स या टूलबार कंट्रोल्स को लिस्ट करने के लिए', isAnswer: true},
+    {text: 'एक नेविगेशन बार को दर्शाने के लिए'},
+    {text: 'एक बटन ग्रुप को परिभाषित करने के लिए'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    HTML में `<menu>` एलिमेंट का उपयोग किस लिए किया जाता है?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    [`<menu>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/menu) कमांड्स या इंटरैक्टिव कंट्रोल्स की एक लिस्ट को दर्शाता है।
+
+    यदि आपकी लिस्ट नेविगेशन लिंक्स की है, तो `<ul>` के साथ `<nav>` का उपयोग करें। टूलबार जैसे कंट्रोल्स या कमांड लिस्ट के लिए `<menu>` का उपयोग करें।
+    ```html
+        <menu>
+        <li><button type="button">Copy</button></li>
+        <li><button type="button">Paste</button></li>
+        </menu>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="उन्नत सिमेंटिक HTML"
+  title="`<details>/<summary>` की भूमिका"
+  options={[
+    {text: 'नेटिव कोलैप्सिबल (collapsible) कंटेंट', isAnswer: true},
+    {text: 'नेटिव टूलटिप्स (tooltips)'},
+    {text: '<section> में संदर्भ जोड़ना'},
+    {text: 'स्ट्रक्चर्ड डेटा प्रदर्शित करना'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    HTML में `<details>` और `<summary>` क्या भूमिका निभाते हैं?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    [`<details>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details) कोलैप्सिबल कंटेंट की अनुमति देता है, और [`<summary>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/summary) उस कंटेंट के लिए एक दृश्य शीर्षक (visible title) निर्दिष्ट करता है।
+
+    यह FAQs, कोलैप्सिबल सेक्शन, या किसी भी ऐसे कंटेंट के लिए उपयोगी है जिसे टॉगल (toggle) किया जा सकता है।
+    ```html
+        <details>
+        <summary>Click to expand 🤯</summary>
+        <p>Hidden content! 💥</p>
+        </details>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="उन्नत सिमेंटिक HTML"
+  title="`<dialog>` का उद्देश्य"
+  options={[
+    {text: 'पटकथा लेखकों (screenwriters) के लिए फॉर्मेटिंग'},
+    {text: 'एक modal या popup घोषित करने के लिए', isAnswer: true},
+    {text: 'ChatGPT-स्टाइल चैट चर्चा घोषित करने के लिए'},
+    {text: '<wizard> के पक्ष में हटा दिया गया (Deprecated)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    आपको `<dialog>` एलिमेंट का उपयोग क्यों करना चाहिए?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    [`<dialog>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog) एलिमेंट का उपयोग पॉप-अप या मोडल्स के लिए किया जाता है, और यह इन इंटरैक्शन के लिए सिमेंटिक मार्कअप, विस्तारित CSS और एक नेटिव API प्रदान करता है।
+
+    मोडल डायलॉग के लिए इसे `.showModal()` के साथ या नॉन-मोडल डायलॉग के लिए `.show()` के साथ खोलने के लिए JavaScript का उपयोग करें, और इसे `.close()` या `method="dialog"` का उपयोग करके फॉर्म सबमिशन के साथ बंद करें।
+    ```html
+        <dialog>
+        <h2>Modal Title</h2>
+        <p>Modal content...</p>
+        <button>Close</button>
+        </dialog>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="उन्नत सिमेंटिक HTML"
+  title="<time> का उपयोग"
+  options={[
+    {text: 'तारीख और समय को दर्शाने के लिए', isAnswer: true},
+    {text: 'टाइमस्टैम्प को परिभाषित करने के लिए'},
+    {text: 'केवल तारीखों को फॉर्मेट करने के लिए'},
+    {text: 'तारीख इनपुट को ड्रैगेबल बनाने के लिए'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    HTML में `<time>` एलिमेंट का उपयोग कैसे किया जाता है?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `<time>` एलिमेंट का उपयोग तारीखों (dates), समय (times), या अवधि (durations) के लिए किया जाता है। इसमें मानव-पठनीय (human-readable) कंटेंट और मशीन-पठनीय (machine-readable) `datetime` एट्रिब्यूट शामिल हो सकता है। HTML में कोई `<date>` एलिमेंट नहीं होता है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="उन्नत सिमेंटिक HTML"
+  title="ARIA एट्रिब्यूट्स का उद्देश्य"
+  options={[
+    {text: 'टच डिवाइसेस के लिए मददगार', hint: 'यह मुख्य उद्देश्य नहीं है।'},
+    {text: 'एक्सेसिबिलिटी (पहुंच) में सुधार करना', isAnswer: true, hint: 'बिल्कुल सही!'},
+    {text: 'साउंड और प्लेबैक को नियंत्रित करना', hint: 'ARIA का ऑडियो कंट्रोल से सीधा संबंध नहीं है।'},
+    {text: 'केवल `<div>` का उपयोग करने के लिए', hint: 'यह एक खराब कोडिंग प्रैक्टिस है।'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ARIA एट्रिब्यूट्स का मुख्य उद्देश्य क्या है?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    ARIA (Accessible Rich Internet Applications) एट्रिब्यूट्स स्क्रीन रीडर्स और अन्य सहायक तकनीकों (assistive technologies) के लिए अतिरिक्त संदर्भ (context) प्रदान करके वेब एक्सेसिबिलिटी को बढ़ाते हैं।
+
+    एलिमेंट्स का वर्णन करने के लिए इसमें roles, states और properties का उपयोग किया जाता है।
+    ```html
+        <button aria-label="Close" aria-expanded="true">X</button>
+        <main aria-live="polite">...</main>
+        <dialog
+        role="alertdialog"
+        aria-modal="true"
+        aria-labelledby="dialog_label"
+        aria-describedby="dialog_desc"
+        ></dialog>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={13}
+  group="उन्नत सिमेंटिक HTML"
+  title="`role` एट्रिब्यूट का उपयोग"
+  options={[
+    {text: 'कंपोनेंट के व्यवहार को परिभाषित करने के लिए'},
+    {text: 'एलिमेंट के उद्देश्य का वर्णन करने के लिए', isAnswer: true},
+    {text: 'एलिमेंट्स तक पहुंच को प्रतिबंधित करने के लिए'},
+    {text: 'केवल वेब कंपोनेंट्स के लिए'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    HTML में `role` एट्रिब्यूट का क्या उपयोग है?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `role` एट्रिब्यूट सहायक तकनीकों (assistive technologies) को एलिमेंट के उद्देश्य के बारे में बताता है, जिससे एक्सेसिबिलिटी (accessibility) में सुधार करने में मदद मिलती है।
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+
+तो, आपका प्रदर्शन कैसा रहा? क्या आप अपने अगले प्रोजेक्ट में और अधिक सिमेंटिक HTML एलिमेंट्स इस्तेमाल करने के लिए उत्साहित हैं? 🚀
+
+या फिर, जीवन भर `<div>` और `<span>` के भरोसे रहने का इरादा है? 😅
+
+मुझे नीचे कमेंट्स में बताएं! 👇

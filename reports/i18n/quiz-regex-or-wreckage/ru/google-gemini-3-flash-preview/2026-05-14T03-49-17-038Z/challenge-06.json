@@ -1,0 +1,49 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Word Boundaries",
+  "translatedTitle": "Границы слов",
+  "translation": {
+    "title": "Границы слов",
+    "group": "Базовое соответствие",
+    "options": [
+      {
+        "text": "[\"cat\", \"cats\"]"
+      },
+      {
+        "text": "[\"cat\"]"
+      },
+      {
+        "text": "[\"cats\"]"
+      },
+      {
+        "text": "[]"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "Что вернет этот код?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "`\\b` представляет собой границу слова, которая срабатывает:\n    - Между буквенно-цифровым символом (word character) и не буквенно-цифровым символом\n    - В начале или конце строки, если там находится буквенно-цифровой символ\n\n    Таким образом, `/\\bcat\\b/` соответствует \"cat\" только тогда, когда это отдельное слово, а не часть другого слова.\n    - ✅ \"cat\" (окружено пробелами)\n    - ❌ \"cats\" (после \"cat\" нет границы слова)\n    - ❌ \"category\" (после \"cat\" нет границы слова)\n\n    [Узнать больше о границах слов](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions#other_assertions)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Границы слов\",\n  \"group\": \"Базовое соответствие\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"cat\\\", \\\"cats\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"cat\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"cats\\\"]\"\n    },\n    {\n      \"text\": \"[]\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"Что вернет этот код?\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"`\\\\b` представляет собой границу слова, которая срабатывает:\\n    - Между буквенно-цифровым символом (word character) и не буквенно-цифровым символом\\n    - В начале или конце строки, если там находится буквенно-цифровой символ\\n\\n    Таким образом, `/\\\\bcat\\\\b/` соответствует \\\"cat\\\" только тогда, когда это отдельное слово, а не часть другого слова.\\n    - ✅ \\\"cat\\\" (окружено пробелами)\\n    - ❌ \\\"cats\\\" (после \\\"cat\\\" нет границы слова)\\n    - ❌ \\\"category\\\" (после \\\"cat\\\" нет границы слова)\\n\\n    [Узнать больше о границах слов](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions#other_assertions)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 915,
+    "outputTokens": 342,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 3838,
+    "providerCostUsd": 0.0014835,
+    "providerUpstreamCostUsd": 0.0014835,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.0004575,
+    "outputUsd": 0.001026,
+    "totalUsd": 0.0014835,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

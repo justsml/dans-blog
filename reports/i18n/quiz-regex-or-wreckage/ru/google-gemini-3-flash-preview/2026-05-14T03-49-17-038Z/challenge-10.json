@@ -1,0 +1,55 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Negative Look-ahead",
+  "translatedTitle": "Отрицательная опережающая проверка",
+  "translation": {
+    "title": "Отрицательная опережающая проверка",
+    "group": "Опережающие проверки",
+    "options": [
+      {
+        "text": "[\"password123\"]"
+      },
+      {
+        "text": "[\"abc123\"]"
+      },
+      {
+        "text": "[\"123aBc\"]"
+      },
+      {
+        "text": "[\"12\"]"
+      },
+      {
+        "text": "[\"abc\"]"
+      },
+      {
+        "text": "Error"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "Каков будет результат выполнения этого кода?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "Отрицательная опережающая проверка `(?![a-z])` гарантирует, что после цифр не следуют строчные буквы. Поскольку в части \"3aBc\" после цифр идет строчная буква, эта часть не соответствует условию. В итоге совпадение находит только начальные цифры \"12\".\n\n    [Узнать больше об отрицательной опережающей проверке](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Отрицательная опережающая проверка\",\n  \"group\": \"Опережающие проверки\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"password123\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"abc123\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"123aBc\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"12\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"abc\\\"]\"\n    },\n    {\n      \"text\": \"Error\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"Каков будет результат выполнения этого кода?\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"Отрицательная опережающая проверка `(?![a-z])` гарантирует, что после цифр не следуют строчные буквы. Поскольку в части \\\"3aBc\\\" после цифр идет строчная буква, эта часть не соответствует условию. В итоге совпадение находит только начальные цифры \\\"12\\\".\\n\\n    [Узнать больше об отрицательной опережающей проверке](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 895,
+    "outputTokens": 317,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2927,
+    "providerCostUsd": 0.0013985,
+    "providerUpstreamCostUsd": 0.0013985,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.0004475,
+    "outputUsd": 0.000951,
+    "totalUsd": 0.0013985,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

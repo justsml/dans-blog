@@ -1,0 +1,49 @@
+{
+  "index": 0,
+  "attempt": 1,
+  "originalTitle": "Context Window Basics",
+  "translatedTitle": "Conceptos básicos de la ventana de contexto",
+  "translation": {
+    "title": "Conceptos básicos de la ventana de contexto",
+    "group": "Fundamentos",
+    "options": [
+      {
+        "text": "El número máximo de peticiones por minuto"
+      },
+      {
+        "text": "El límite combinado de tokens para entrada y salida"
+      },
+      {
+        "text": "El número de mensajes en una conversación"
+      },
+      {
+        "text": "La memoria disponible entre sesiones"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "¿A qué se refiere el término \"ventana de contexto\" (context window) en un LLM?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "La ventana de contexto es el número total de tokens que un modelo puede procesar en una sola llamada: **entrada + salida combinadas**. Una ventana de contexto de 128K significa que tu prompt + los documentos recuperados + el historial de la conversación + la respuesta del modelo deben caber dentro de 128,000 tokens.\n\nNo tiene nada que ver con las sesiones, la memoria o los límites de velocidad (rate limits). Cuando alcanzas el límite, el modelo trunca el texto, devuelve un error o, lo que es peor, descarta silenciosamente tokens que no esperabas."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Conceptos básicos de la ventana de contexto\",\n  \"group\": \"Fundamentos\",\n  \"options\": [\n    {\n      \"text\": \"El número máximo de peticiones por minuto\"\n    },\n    {\n      \"text\": \"El límite combinado de tokens para entrada y salida\"\n    },\n    {\n      \"text\": \"El número de mensajes en una conversación\"\n    },\n    {\n      \"text\": \"La memoria disponible entre sesiones\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"¿A qué se refiere el término \\\"ventana de contexto\\\" (context window) en un LLM?\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"La ventana de contexto es el número total de tokens que un modelo puede procesar en una sola llamada: **entrada + salida combinadas**. Una ventana de contexto de 128K significa que tu prompt + los documentos recuperados + el historial de la conversación + la respuesta del modelo deben caber dentro de 128,000 tokens.\\n\\nNo tiene nada que ver con las sesiones, la memoria o los límites de velocidad (rate limits). Cuando alcanzas el límite, el modelo trunca el texto, devuelve un error o, lo que es peor, descarta silenciosamente tokens que no esperabas.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 778,
+    "outputTokens": 310,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 3106,
+    "providerCostUsd": 0.001319,
+    "providerUpstreamCostUsd": 0.001319,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000389,
+    "outputUsd": 0.00093,
+    "totalUsd": 0.001319,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

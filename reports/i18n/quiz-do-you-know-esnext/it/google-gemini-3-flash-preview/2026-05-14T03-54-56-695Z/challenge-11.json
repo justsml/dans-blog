@@ -1,0 +1,51 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "WeakRef Usage",
+  "translatedTitle": "Utilizzo di WeakRef",
+  "translation": {
+    "title": "Utilizzo di WeakRef",
+    "group": "WeakRef",
+    "options": [
+      {
+        "text": "ReferenceError"
+      },
+      {
+        "text": "{ data: 'important' }"
+      },
+      {
+        "text": "null"
+      },
+      {
+        "text": "undefined"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "Cosa restituisce `WeakRef`?"
+    ],
+    "hintsProse": [
+      "Controlla l'esatta semantica degli operatori JavaScript. La risposta più ovvia è spesso ciò che avrebbe fatto la vecchia sintassi, non ciò che fa questa specifica funzionalità."
+    ],
+    "explanationProse": [
+      "`WeakRef` fornisce un riferimento debole a un oggetto, il che consente all'oggetto di essere rimosso dal garbage collector se non esistono altri riferimenti forti. Poiché `obj` è ancora referenziato in modo forte qui, `deref()` restituisce l'oggetto originale. Se il target fosse stato recuperato dal garbage collector, `deref()` avrebbe restituito `undefined`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Utilizzo di WeakRef\",\n  \"group\": \"WeakRef\",\n  \"options\": [\n    {\n      \"text\": \"ReferenceError\"\n    },\n    {\n      \"text\": \"{ data: 'important' }\"\n    },\n    {\n      \"text\": \"null\"\n    },\n    {\n      \"text\": \"undefined\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"Cosa restituisce `WeakRef`?\"\n  ],\n  \"hintsProse\": [\n    \"Controlla l'esatta semantica degli operatori JavaScript. La risposta più ovvia è spesso ciò che avrebbe fatto la vecchia sintassi, non ciò che fa questa specifica funzionalità.\"\n  ],\n  \"explanationProse\": [\n    \"`WeakRef` fornisce un riferimento debole a un oggetto, il che consente all'oggetto di essere rimosso dal garbage collector se non esistono altri riferimenti forti. Poiché `obj` è ancora referenziato in modo forte qui, `deref()` restituisce l'oggetto originale. Se il target fosse stato recuperato dal garbage collector, `deref()` avrebbe restituito `undefined`.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 772,
+    "outputTokens": 272,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 3234,
+    "providerCostUsd": 0.001202,
+    "providerUpstreamCostUsd": 0.001202,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000386,
+    "outputUsd": 0.000816,
+    "totalUsd": 0.001202,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

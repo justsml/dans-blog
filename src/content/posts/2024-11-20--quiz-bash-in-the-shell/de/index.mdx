@@ -373,6 +373,12 @@ Schärfen (oder beweisen) Sie Ihre Shell‑Skript‑**Fähigkeiten**!
   group="Komposition"
   title="Verwendung von Pipes"
   options={[
+    { text: ">" },
+    { text: ">>" },
+    { text: "|", isAnswer: true },
+    { text: "||" },
+    { text: "|>" },
+    { text: "Error" },
   ]}
 >
   <slot name="question">
@@ -563,6 +569,11 @@ Schärfen (oder beweisen) Sie Ihre Shell‑Skript‑**Fähigkeiten**!
   group="Standard Ein/Aus"
   title="Standardwerte"
   options={[
+    { text: "1>&2" },
+    { text: "&2>&1" },
+    { text: "2>&1", isAnswer: true },
+    { text: "2>1" },
+    { text: "&2>1" },
   ]}
 >
   <slot name="question">

@@ -1,0 +1,52 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Partial Indexes",
+  "translatedTitle": "Index Partiels",
+  "translation": {
+    "title": "Index Partiels",
+    "group": "Indexation",
+    "options": [
+      {
+        "text": "Syntaxe invalide"
+      },
+      {
+        "text": "Crée des index en double"
+      },
+      {
+        "text": "Indexe uniquement les étudiants actifs"
+      },
+      {
+        "text": "Indexe les étudiants actifs en premier"
+      },
+      {
+        "text": "Fournit un indice au planificateur de requête"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "Que fait cette incantation ?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "Cette astuce s'appelle un `Partial Index` (index partiel).\n\nIls sont utiles pour réduire l'utilisation du disque et accélérer les requêtes lorsqu'un seul sous-ensemble de lignes est généralement interrogé.\n\nPostgres n'utilisera l'index que si la condition `status = 'active'` est présente dans la requête.\n\n**Rappel :** Postgres ne supporte pas les 'query hints' (indices de requête) comme d'autres RDBMS. Le planificateur de requête décidera quand utiliser le ou les index appropriés."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Index Partiels\",\n  \"group\": \"Indexation\",\n  \"options\": [\n    {\n      \"text\": \"Syntaxe invalide\"\n    },\n    {\n      \"text\": \"Crée des index en double\"\n    },\n    {\n      \"text\": \"Indexe uniquement les étudiants actifs\"\n    },\n    {\n      \"text\": \"Indexe les étudiants actifs en premier\"\n    },\n    {\n      \"text\": \"Fournit un indice au planificateur de requête\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"Que fait cette incantation ?\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"Cette astuce s'appelle un `Partial Index` (index partiel).\\n\\nIls sont utiles pour réduire l'utilisation du disque et accélérer les requêtes lorsqu'un seul sous-ensemble de lignes est généralement interrogé.\\n\\nPostgres n'utilisera l'index que si la condition `status = 'active'` est présente dans la requête.\\n\\n**Rappel :** Postgres ne supporte pas les 'query hints' (indices de requête) comme d'autres RDBMS. Le planificateur de requête décidera quand utiliser le ou les index appropriés.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 796,
+    "outputTokens": 301,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2357,
+    "providerCostUsd": 0.001301,
+    "providerUpstreamCostUsd": 0.001301,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000398,
+    "outputUsd": 0.0009029999999999999,
+    "totalUsd": 0.001301,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

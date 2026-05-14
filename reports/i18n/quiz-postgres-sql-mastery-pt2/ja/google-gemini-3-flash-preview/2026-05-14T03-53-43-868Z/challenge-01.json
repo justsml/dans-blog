@@ -1,0 +1,52 @@
+{
+  "index": 0,
+  "attempt": 1,
+  "originalTitle": "The Many JOINs of PostgreSQL",
+  "translatedTitle": "PostgreSQLの多様なJOIN",
+  "translation": {
+    "title": "PostgreSQLの多様なJOIN",
+    "group": "ウォームアップ：結合（Join）",
+    "options": [
+      {
+        "text": "JOIN ALL"
+      },
+      {
+        "text": "INNER JOIN"
+      },
+      {
+        "text": "CROSS JOIN"
+      },
+      {
+        "text": "LEFT OUTER JOIN"
+      },
+      {
+        "text": "FULL OUTER JOIN"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "PostgreSQLの有効なJOIN式ではない ❌ ものはどれ？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "`CROSS JOIN` は知っていたかな？\n\n    `JOIN ALL` を見て、別の操作である `UNION ALL` を連想しなかっただろうか？\n\n    ここでの正解は `JOIN ALL` ❌ だ。\n\n    正しいJOINの種類は以下の通り：\n    - `INNER JOIN` (デフォルトの JOIN)\n    - `LEFT JOIN` (または `LEFT OUTER JOIN`)\n    - `RIGHT JOIN` (または `RIGHT OUTER JOIN`)\n    - `FULL JOIN` (または `FULL OUTER JOIN`)\n    - `CROSS JOIN` (デカルト積。ただし、後続の `WHERE` 句でフィルタリングされない限り)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"PostgreSQLの多様なJOIN\",\n  \"group\": \"ウォームアップ：結合（Join）\",\n  \"options\": [\n    {\n      \"text\": \"JOIN ALL\"\n    },\n    {\n      \"text\": \"INNER JOIN\"\n    },\n    {\n      \"text\": \"CROSS JOIN\"\n    },\n    {\n      \"text\": \"LEFT OUTER JOIN\"\n    },\n    {\n      \"text\": \"FULL OUTER JOIN\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"PostgreSQLの有効なJOIN式ではない ❌ ものはどれ？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"`CROSS JOIN` は知っていたかな？\\n\\n    `JOIN ALL` を見て、別の操作である `UNION ALL` を連想しなかっただろうか？\\n\\n    ここでの正解は `JOIN ALL` ❌ だ。\\n\\n    正しいJOINの種類は以下の通り：\\n    - `INNER JOIN` (デフォルトの JOIN)\\n    - `LEFT JOIN` (または `LEFT OUTER JOIN`)\\n    - `RIGHT JOIN` (または `RIGHT OUTER JOIN`)\\n    - `FULL JOIN` (または `FULL OUTER JOIN`)\\n    - `CROSS JOIN` (デカルト積。ただし、後続の `WHERE` 句でフィルタリングされない限り)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 809,
+    "outputTokens": 326,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 3420,
+    "providerCostUsd": 0.0013825,
+    "providerUpstreamCostUsd": 0.0013825,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.0004045,
+    "outputUsd": 0.0009780000000000001,
+    "totalUsd": 0.0013825,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "index": 11,
+  "attempt": 1,
+  "originalTitle": "Basic Arithmetic",
+  "translatedTitle": "Grundlegende Arithmetik",
+  "translation": {
+    "title": "Grundlegende Arithmetik",
+    "group": "Multiplikation",
+    "options": [
+      {
+        "text": "echo 10 * 0.5"
+      },
+      {
+        "text": "echo (10 * 0.5)"
+      },
+      {
+        "text": "echo ${ 10 * 0.5 }"
+      },
+      {
+        "text": "echo %( 10 * 0.5 )"
+      },
+      {
+        "text": "echo $(( 10 * 0.5 ))"
+      },
+      {
+        "text": "echo '10 * 0.5' | bc"
+      },
+      {
+        "text": "Error"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "Welche dieser Optionen multipliziert 10 und 0.5 korrekt und gibt 5 aus?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "Die `(( ))` Syntax führt NUR **Integer-Arithmetik** aus. Also ganze Zahlen, ohne Fließkommastellen!\n\n    Bash fehlt (vielleicht überraschenderweise) die **eingebaute** Unterstützung für Fließkomma-Arithmetik.\n\n    Die gängigste Lösung ist die Verwendung von GNU-Utilities wie [`bc`](https://www.gnu.org/software/bc/manual/html_mono/bc.html) oder [`awk`](https://www.gnu.org/software/gawk/manual/gawk.html)."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Grundlegende Arithmetik\",\n  \"group\": \"Multiplikation\",\n  \"options\": [\n    {\n      \"text\": \"echo 10 * 0.5\"\n    },\n    {\n      \"text\": \"echo (10 * 0.5)\"\n    },\n    {\n      \"text\": \"echo ${ 10 * 0.5 }\"\n    },\n    {\n      \"text\": \"echo %( 10 * 0.5 )\"\n    },\n    {\n      \"text\": \"echo $(( 10 * 0.5 ))\"\n    },\n    {\n      \"text\": \"echo '10 * 0.5' | bc\"\n    },\n    {\n      \"text\": \"Error\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"Welche dieser Optionen multipliziert 10 und 0.5 korrekt und gibt 5 aus?\"\n  ],\n  \"questionCode\": [],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"Die `(( ))` Syntax führt NUR **Integer-Arithmetik** aus. Also ganze Zahlen, ohne Fließkommastellen!\\n\\n    Bash fehlt (vielleicht überraschenderweise) die **eingebaute** Unterstützung für Fließkomma-Arithmetik.\\n\\n    Die gängigste Lösung ist die Verwendung von GNU-Utilities wie [`bc`](https://www.gnu.org/software/bc/manual/html_mono/bc.html) oder [`awk`](https://www.gnu.org/software/gawk/manual/gawk.html).\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 928,
+    "outputTokens": 399,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2822,
+    "providerCostUsd": 0.001661,
+    "providerUpstreamCostUsd": 0.001661,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000464,
+    "outputUsd": 0.001197,
+    "totalUsd": 0.001661,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

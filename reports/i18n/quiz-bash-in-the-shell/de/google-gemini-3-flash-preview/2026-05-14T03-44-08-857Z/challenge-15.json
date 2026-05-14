@@ -1,0 +1,53 @@
+{
+  "index": 14,
+  "attempt": 1,
+  "originalTitle": "Command Substitution",
+  "translatedTitle": "Befehlssubstitution",
+  "translation": {
+    "title": "Befehlssubstitution",
+    "group": "Stolperfallen",
+    "options": [
+      {
+        "text": "'ls -l'"
+      },
+      {
+        "text": "% ls -l"
+      },
+      {
+        "text": "$ ls -l"
+      },
+      {
+        "text": "$(ls -l)"
+      },
+      {
+        "text": "${ls -l}"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "Welche Option führt den Befehl `ls -l` aus und gibt das Ergebnis zurück?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "Die Syntax `$(ls -l)` führt den Befehl innerhalb der **Klammern** aus und ersetzt den Ausdruck durch die Ausgabe. Zum Beispiel:",
+      "Die erste Option verwendet einfache Anführungszeichen `'`, **keine Backticks.** Dies verhindert die Expansion, sodass `'$(date +%F)'` einfach die Zeichenfolge `$(date +%F)` wörtlich ausgeben würde.\n\nObwohl die Verwendung von Backticks (`` `ls -l` ``) zur Befehlsausführung weiterhin unterstützt wird, gilt dies mittlerweile in manchen Kontexten als Anti-Pattern. Meist wird die Verwendung von `$(command)` empfohlen, da dies die Lesbarkeit verbessert und die Konsistenz über verschiedene Shells und Versionen hinweg erhöht.\n\nGeschweifte Klammern `${}` werden für die Variablenexpansion verwendet, nicht für die Befehlssubstitution.\n\nDas Zeichen `%` wird nicht für die Befehlssubstitution verwendet."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Befehlssubstitution\",\n  \"group\": \"Stolperfallen\",\n  \"options\": [\n    {\n      \"text\": \"'ls -l'\"\n    },\n    {\n      \"text\": \"% ls -l\"\n    },\n    {\n      \"text\": \"$ ls -l\"\n    },\n    {\n      \"text\": \"$(ls -l)\"\n    },\n    {\n      \"text\": \"${ls -l}\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"Welche Option führt den Befehl `ls -l` aus und gibt das Ergebnis zurück?\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"Die Syntax `$(ls -l)` führt den Befehl innerhalb der **Klammern** aus und ersetzt den Ausdruck durch die Ausgabe. Zum Beispiel:\",\n    \"Die erste Option verwendet einfache Anführungszeichen `'`, **keine Backticks.** Dies verhindert die Expansion, sodass `'$(date +%F)'` einfach die Zeichenfolge `$(date +%F)` wörtlich ausgeben würde.\\n\\nObwohl die Verwendung von Backticks (`` `ls -l` ``) zur Befehlsausführung weiterhin unterstützt wird, gilt dies mittlerweile in manchen Kontexten als Anti-Pattern. Meist wird die Verwendung von `$(command)` empfohlen, da dies die Lesbarkeit verbessert und die Konsistenz über verschiedene Shells und Versionen hinweg erhöht.\\n\\nGeschweifte Klammern `${}` werden für die Variablenexpansion verwendet, nicht für die Befehlssubstitution.\\n\\nDas Zeichen `%` wird nicht für die Befehlssubstitution verwendet.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 939,
+    "outputTokens": 380,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2678,
+    "providerCostUsd": 0.0016095,
+    "providerUpstreamCostUsd": 0.0016095,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.0004695,
+    "outputUsd": 0.00114,
+    "totalUsd": 0.0016094999999999998,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

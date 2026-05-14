@@ -1,0 +1,55 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Negative Look-ahead",
+  "translatedTitle": "Отрицательный опережающий просмотр",
+  "translation": {
+    "title": "Отрицательный опережающий просмотр",
+    "group": "Опережающий просмотр",
+    "options": [
+      {
+        "text": "[\"password123\"]"
+      },
+      {
+        "text": "[\"abc123\"]"
+      },
+      {
+        "text": "[\"123aBc\"]"
+      },
+      {
+        "text": "[\"12\"]"
+      },
+      {
+        "text": "[\"abc\"]"
+      },
+      {
+        "text": "Error"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "Каким будет результат этого?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "Отрицательный опережающий просмотр `(?![a-z])` гарантирует, что после цифр нет строчных букв. Поскольку в части \"3aBc\" после цифр есть строчная буква, эта часть не совпадает. Таким образом, совпадает только начало \"12\".\n\n    [Узнайте больше об отрицательном опережающем просмотре](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Отрицательный опережающий просмотр\",\n  \"group\": \"Опережающий просмотр\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"password123\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"abc123\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"123aBc\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"12\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"abc\\\"]\"\n    },\n    {\n      \"text\": \"Error\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"Каким будет результат этого?\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"Отрицательный опережающий просмотр `(?![a-z])` гарантирует, что после цифр нет строчных букв. Поскольку в части \\\"3aBc\\\" после цифр есть строчная буква, эта часть не совпадает. Таким образом, совпадает только начало \\\"12\\\".\\n\\n    [Узнайте больше об отрицательном опережающем просмотре](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 851,
+    "outputTokens": 1104,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 7945,
+    "providerCostUsd": 0.0006118,
+    "providerUpstreamCostUsd": 0.0006118,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00011914000000000001,
+    "outputUsd": 0.00030912,
+    "totalUsd": 0.00042826,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

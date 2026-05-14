@@ -1,0 +1,49 @@
+{
+  "index": 11,
+  "attempt": 1,
+  "originalTitle": "EXPLAIN ANALYZE Gotcha",
+  "translatedTitle": "Ловушка EXPLAIN ANALYZE",
+  "translation": {
+    "title": "Ловушка EXPLAIN ANALYZE",
+    "group": "Производительность",
+    "options": [
+      {
+        "text": "Оценка по облегченному плану"
+      },
+      {
+        "text": "Работает только с SELECT"
+      },
+      {
+        "text": "Изменяет данные и выводит план"
+      },
+      {
+        "text": "Симулирует выполнение для получения плана"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "Что делает `EXPLAIN ANALYZE` для операторов `UPDATE`?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "`EXPLAIN ANALYZE` на самом деле выполняет запрос! Будьте осторожны при анализе операций записи, а именно операторов `UPDATE`, `DELETE` и `INSERT`. Возможно, вам придется выполнять операции очистки после каждого `EXPLAIN ANALYZE`, чтобы получить повторяемые результаты.\n\n    Лучшие практики:\n    - Используйте `EXPLAIN` (без ANALYZE) для UPDATE/DELETE/INSERT\n    - Оборачивайте модификации в транзакции:"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Ловушка EXPLAIN ANALYZE\",\n  \"group\": \"Производительность\",\n  \"options\": [\n    {\n      \"text\": \"Оценка по облегченному плану\"\n    },\n    {\n      \"text\": \"Работает только с SELECT\"\n    },\n    {\n      \"text\": \"Изменяет данные и выводит план\"\n    },\n    {\n      \"text\": \"Симулирует выполнение для получения плана\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"Что делает `EXPLAIN ANALYZE` для операторов `UPDATE`?\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"`EXPLAIN ANALYZE` на самом деле выполняет запрос! Будьте осторожны при анализе операций записи, а именно операторов `UPDATE`, `DELETE` и `INSERT`. Возможно, вам придется выполнять операции очистки после каждого `EXPLAIN ANALYZE`, чтобы получить повторяемые результаты.\\n\\n    Лучшие практики:\\n    - Используйте `EXPLAIN` (без ANALYZE) для UPDATE/DELETE/INSERT\\n    - Оборачивайте модификации в транзакции:\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 821,
+    "outputTokens": 280,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 3852,
+    "providerCostUsd": 0.0012505,
+    "providerUpstreamCostUsd": 0.0012505,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.0004105,
+    "outputUsd": 0.0008399999999999999,
+    "totalUsd": 0.0012504999999999999,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

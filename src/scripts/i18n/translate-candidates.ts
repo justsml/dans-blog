@@ -4,6 +4,7 @@ import { spawn, type ChildProcess } from "node:child_process";
 import { ACTIVE_LOCALES, type ActiveLocale } from "../../shared/i18n.ts";
 import {
   collectSourcePostSlugs,
+  isTranslationOlderThanSource,
   parseActiveLocales,
 } from "./corpus-inventory.ts";
 import {
@@ -125,6 +126,7 @@ const shouldValidateCandidates = options.validate === true || options["validate-
 const shouldRunFullCandidateValidation = options["full-validation"] === true;
 const shouldSkipCommit = options["no-commit"] === true;
 const shouldDryRun = options["dry-run"] === true;
+const shouldOnlyModified = options["only-modified"] === true;
 const isTaskWorker = options["task-worker"] === true;
 const timeoutSeconds = getTimeoutSeconds();
 const taskConcurrency = getTaskConcurrency();
@@ -219,6 +221,12 @@ async function processTask(currentSlug: string, currentLocale: ActiveLocale) {
   isProcessingTask = true;
 
   try {
+    if (shouldOnlyModified && !isTranslationOlderThanSource(paths)) {
+      console.log(`\nSkipping ${slug} [${locale}]; English modified is not newer than the translation modified date.`);
+      isProcessingTask = false;
+      return;
+    }
+
     console.log(`\nGenerating candidates for ${slug} [${locale}]`);
     mkdirSync(dirname(targetPath), { recursive: true });
     mkdirSync(reportDir, { recursive: true });
@@ -395,6 +403,7 @@ function runTaskWorker(task: CandidateTask) {
     ...optionalFlag("--validate-candidates", shouldValidateCandidates),
     ...optionalFlag("--full-validation", shouldRunFullCandidateValidation),
     ...optionalFlag("--no-commit", shouldSkipCommit),
+    ...optionalFlag("--only-modified", shouldOnlyModified),
     ...optionalArg("--quiz-concurrency", quizConcurrency),
     ...optionalArg("--challenge-retries", challengeRetries),
   ];
@@ -555,6 +564,9 @@ function getCandidateTasks(): CandidateTask[] {
   return slugs
     .flatMap((currentSlug) =>
       locales.map((currentLocale) => getCandidateTaskStats(currentSlug, currentLocale)),
+    )
+    .filter(({ slug: currentSlug, locale: currentLocale }) =>
+      !shouldOnlyModified || isTranslationOlderThanSource(getPostPaths(currentSlug, currentLocale)),
     )
     .sort((a, b) =>
       a.candidateCount - b.candidateCount ||

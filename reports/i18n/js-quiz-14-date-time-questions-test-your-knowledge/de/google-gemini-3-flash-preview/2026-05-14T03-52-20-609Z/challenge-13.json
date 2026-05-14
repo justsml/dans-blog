@@ -1,0 +1,52 @@
+{
+  "index": 12,
+  "attempt": 1,
+  "originalTitle": "Date Setters Part 4",
+  "translatedTitle": "Date Setters Teil 4",
+  "translation": {
+    "title": "Date Setters Teil 4",
+    "group": "Umgang mit Daten",
+    "options": [
+      {
+        "text": "Jan 01 2020"
+      },
+      {
+        "text": "Feb 01 2020"
+      },
+      {
+        "text": "Jan 01 2021"
+      },
+      {
+        "text": "Feb 01 2021"
+      },
+      {
+        "text": "RangeError: Invalid argument."
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "Was wird die Ausgabe enthalten?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "Die Methode [`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) setzt den Monat für eine bestimmte Datumsinstanz.\n  \n      Das Monatsargument ist nullbasiert, mit einem Bereich von 0-11 (im westlichen Kalender).\n\n      Hier sehen wir, dass Monat und Jahr auf Februar 2021 angepasst werden, da `setMonth(13)` um 2 über dem Wert 11 (Dezember) liegt.\n\n      <aside class=\"hint\">`setMonth` setzt den Monat per Index; 12 Monate werden von 0-11 indiziert. </aside>\n      <aside class=\"hint\">\n        Zahlen außerhalb des Bereichs von 0-11 führen dazu, dass das Jahr vor- oder zurückspringt (Überlauf/Unterlauf). Zum Beispiel passt `setMonth(13)` das Jahr auf 2021 an (im Februar, da 13 um 2 größer ist als 11).\n      </aside>"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Date Setters Teil 4\",\n  \"group\": \"Umgang mit Daten\",\n  \"options\": [\n    {\n      \"text\": \"Jan 01 2020\"\n    },\n    {\n      \"text\": \"Feb 01 2020\"\n    },\n    {\n      \"text\": \"Jan 01 2021\"\n    },\n    {\n      \"text\": \"Feb 01 2021\"\n    },\n    {\n      \"text\": \"RangeError: Invalid argument.\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"Was wird die Ausgabe enthalten?\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"Die Methode [`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) setzt den Monat für eine bestimmte Datumsinstanz.\\n  \\n      Das Monatsargument ist nullbasiert, mit einem Bereich von 0-11 (im westlichen Kalender).\\n\\n      Hier sehen wir, dass Monat und Jahr auf Februar 2021 angepasst werden, da `setMonth(13)` um 2 über dem Wert 11 (Dezember) liegt.\\n\\n      <aside class=\\\"hint\\\">`setMonth` setzt den Monat per Index; 12 Monate werden von 0-11 indiziert. </aside>\\n      <aside class=\\\"hint\\\">\\n        Zahlen außerhalb des Bereichs von 0-11 führen dazu, dass das Jahr vor- oder zurückspringt (Überlauf/Unterlauf). Zum Beispiel passt `setMonth(13)` das Jahr auf 2021 an (im Februar, da 13 um 2 größer ist als 11).\\n      </aside>\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 949,
+    "outputTokens": 436,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 3446,
+    "providerCostUsd": 0.0017825,
+    "providerUpstreamCostUsd": 0.0017825,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.0004745,
+    "outputUsd": 0.0013080000000000001,
+    "totalUsd": 0.0017825000000000002,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

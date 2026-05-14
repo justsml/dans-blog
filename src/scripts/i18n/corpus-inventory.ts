@@ -110,7 +110,7 @@ export function collectSourcePosts(options: CorpusInventoryOptions = {}): Source
 
 export function readSourcePost(directory: string, postDir: string): SourcePost {
   const sourcePath = requireSourceIndexPath(postDir);
-  const parsed = matter(readFileSync(sourcePath, "utf8"));
+  const parsed = parseFrontmatterFile(sourcePath);
   const data = parsed.data as Record<string, unknown>;
   const slug = stripDatePrefix(directory);
 
@@ -205,6 +205,70 @@ export function getMissingTranslationSlots(options: MissingTranslationSlotOption
   });
 }
 
+export function getModifiedTranslationSlots(options: MissingTranslationSlotOptions): TranslationSlot[] {
+  const selectedSlugs = options.selectedSlugs ?? new Set<string>();
+  const sourcePosts = collectSourcePosts(options).sort((a, b) => b.directory.localeCompare(a.directory));
+  const scopedPosts = options.latestPosts == null ? sourcePosts : sourcePosts.slice(0, options.latestPosts);
+  const tasks: TranslationSlot[] = [];
+
+  for (const post of scopedPosts) {
+    if (selectedSlugs.size > 0 && !selectedSlugs.has(post.slug) && !selectedSlugs.has(post.directory)) continue;
+
+    for (const locale of options.locales) {
+      const slot = getTranslationSlot(post, locale, options);
+      if (isTranslationOlderThanSource(slot)) {
+        tasks.push(slot);
+      }
+    }
+  }
+
+  return tasks.sort((a, b) => {
+    const byDate = b.targetPath.localeCompare(a.targetPath);
+    return byDate || a.locale.localeCompare(b.locale);
+  });
+}
+
+export function isTranslationOlderThanSource(paths: Pick<PostPaths, "sourcePath" | "targetPath" | "fallbackTargetPath">) {
+  const translationPath = existingTranslationPath(paths);
+  if (translationPath == null) return false;
+
+  return isTranslationOlderThanSourceContents(
+    readFileSync(paths.sourcePath, "utf8"),
+    readFileSync(translationPath, "utf8"),
+  );
+}
+
+export function isTranslationOlderThanSourceContents(sourceContents: string, translationContents: string) {
+  const sourceModifiedMs = frontmatterModifiedMs(sourceContents);
+  if (sourceModifiedMs == null) return false;
+
+  const translationModifiedMs = frontmatterModifiedMs(translationContents);
+  return translationModifiedMs == null || sourceModifiedMs > translationModifiedMs;
+}
+
+export function isTranslationFreshForSourceContents(sourceContents: string, translationContents: string) {
+  const sourceModifiedMs = frontmatterModifiedMs(sourceContents);
+  if (sourceModifiedMs == null) return false;
+
+  const translationModifiedMs = frontmatterModifiedMs(translationContents);
+  return translationModifiedMs != null && translationModifiedMs >= sourceModifiedMs;
+}
+
+function existingTranslationPath(paths: Pick<PostPaths, "targetPath" | "fallbackTargetPath">) {
+  if (existsSync(paths.targetPath)) return paths.targetPath;
+  if (existsSync(paths.fallbackTargetPath)) return paths.fallbackTargetPath;
+  return undefined;
+}
+
+function frontmatterModifiedMs(contents: string) {
+  const parsed = matter(contents);
+  return dateValueMs(parsed.data.modified);
+}
+
+function parseFrontmatterFile(path: string) {
+  return matter(readFileSync(path, "utf8"));
+}
+
 function stringValue(value: unknown) {
   if (value instanceof Date) return value.toISOString().slice(0, 10);
   return typeof value === "string" ? value : undefined;
@@ -212,4 +276,16 @@ function stringValue(value: unknown) {
 
 function numberValue(value: unknown) {
   return typeof value === "number" && Number.isFinite(value) ? value : undefined;
+}
+
+function dateValueMs(value: unknown) {
+  const normalized = value instanceof Date
+    ? value.toISOString().slice(0, 10)
+    : typeof value === "string"
+      ? value
+      : undefined;
+  if (normalized == null || normalized.trim() === "") return undefined;
+
+  const parsed = Date.parse(normalized);
+  return Number.isFinite(parsed) ? parsed : undefined;
 }

@@ -373,6 +373,12 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   group="Композиция"
   title="Использование конвейера"
   options={[
+    { text: ">" },
+    { text: ">>" },
+    { text: "|", isAnswer: true },
+    { text: "||" },
+    { text: "|>" },
+    { text: "Error" },
   ]}
 >
   <slot name="question">
@@ -563,6 +569,11 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   group="Стандартный ввод/вывод"
   title="Значения по умолчанию"
   options={[
+    { text: "1>&2" },
+    { text: "&2>&1" },
+    { text: "2>&1", isAnswer: true },
+    { text: "2>1" },
+    { text: "&2>1" },
   ]}
 >
   <slot name="question">

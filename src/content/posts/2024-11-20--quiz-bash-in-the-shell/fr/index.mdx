@@ -373,6 +373,12 @@ Affûtez (ou prouvez) vos **compétences** en scripting shell !
   group="Composition"
   title="Utilisation du pipe"
   options={[
+    { text: ">" },
+    { text: ">>" },
+    { text: "|", isAnswer: true },
+    { text: "||" },
+    { text: "|>" },
+    { text: "Error" },
   ]}
 >
   <slot name="question">
@@ -557,6 +563,11 @@ Affûtez (ou prouvez) vos **compétences** en scripting shell !
   group="Entrée/Sortie standard"
   title="Valeurs par défaut"
   options={[
+    { text: "1>&2" },
+    { text: "&2>&1" },
+    { text: "2>&1", isAnswer: true },
+    { text: "2>1" },
+    { text: "&2>1" },
   ]}
 >
   <slot name="question">

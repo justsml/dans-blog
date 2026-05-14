@@ -1,0 +1,62 @@
+{
+  "index": 8,
+  "attempt": 1,
+  "originalTitle": "TABLESAMPLE Syntax",
+  "translatedTitle": "Syntaxe TABLESAMPLE",
+  "translation": {
+    "title": "Syntaxe TABLESAMPLE",
+    "group": "Échantillonnage de données",
+    "options": [
+      {
+        "text": "...students SAMPLETABLE BERNOULLI (0.10)"
+      },
+      {
+        "text": "...students TABLESAMPLE USER (10)"
+      },
+      {
+        "text": "...students TABLESAMPLE RANDOM (10)"
+      },
+      {
+        "text": "...students SAMPLE 10 PERCENT"
+      },
+      {
+        "text": "ROW_NUMBER() OVER (ORDER BY RAND())"
+      },
+      {
+        "text": "ORDER BY RANDOM() >= 10"
+      },
+      {
+        "text": "WHERE RANDOM() >= 0.1"
+      },
+      {
+        "text": "WHERE RANDOM() >= 0.9"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "Quelle est la syntaxe valide pour **échantillonner aléatoirement 10 %** des étudiants ?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "Celui-ci est délicat ! Il comporte environ 6 pièges, dont certains incluent :\n\n    1. Description de haut niveau + fragments de syntaxe. Teste comment vous adaptez et assemblez des informations incomplètes.\n    2. Nécessite une connaissance familière de la syntaxe `TABLESAMPLE`, car aucune des options `TABLESAMPLE` n'utilise la syntaxe correcte ! (Sinistre ! Je sais ! Continuez, je crois en vous !!! ❤️)\n    3. `ROW_NUMBER() OVER (ORDER BY RAND())` et `ORDER BY RANDOM() > 10` sont d'autres fausses pistes. Ils ont l'air corrects, mais ne le sont pas. `RAND()` n'existe pas. Et `RANDOM() > 10` est une expression booléenne qui sera toujours fausse puisque `RANDOM()` est toujours dans la plage `0.0-1.0`.\n    Autre problème, `ORDER BY RANDOM() > 10` trierait également sur une valeur booléenne, pas sur un nombre aléatoire. Mais ce `> 10` donnait l'impression qu'il pouvait s'agir d'un pourcentage, n'est-ce pas ?\n    4. `BERNOULLI` est valide, cependant `SAMPLETABLE` ne l'est pas.\n    5. `WHERE RANDOM() >= 0.1` est un piège ! `RANDOM()` renvoie une valeur dans la plage `0.0 <= x < 1.0`, donc `>= 0.1` renverrait environ 90 % des lignes, pas 10 %.\n\n    En ce qui concerne la méthode `TABLESAMPLE`, PostgreSQL prend en charge deux méthodes d'échantillonnage :\n    - `BERNOULLI` : Chaque ligne a une probabilité égale\n    - `SYSTEM` : Échantillonnage au niveau des blocs (plus rapide mais moins aléatoire)\n\n    Pour en savoir plus sur l'échantillonnage, consultez cet article de [Render](https://render.com/blog/postgresql-random-samples-big-tables).\n\n    Exemple :",
+      "Il convient également de mentionner que `TABLESAMPLE` [a été signalé](https://stackoverflow.com/questions/8674718/best-way-to-select-random-rows-postgresql) comme n'étant pas très aléatoire. Si vous avez besoin d'un échantillon de taille fixe _plus_ aléatoire, envisagez d'utiliser `ORDER BY RANDOM() LIMIT 10`. Mais attention, cela renvoie 10 lignes, pas 10 %, et peut être lent sur de grandes tables.\n\n    Il existe également des extensions tierces qui fournissent de meilleures méthodes d'échantillonnage aléatoire, mais cela sort du cadre de ce quiz ! 😅"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Syntaxe TABLESAMPLE\",\n  \"group\": \"Échantillonnage de données\",\n  \"options\": [\n    {\n      \"text\": \"...students SAMPLETABLE BERNOULLI (0.10)\"\n    },\n    {\n      \"text\": \"...students TABLESAMPLE USER (10)\"\n    },\n    {\n      \"text\": \"...students TABLESAMPLE RANDOM (10)\"\n    },\n    {\n      \"text\": \"...students SAMPLE 10 PERCENT\"\n    },\n    {\n      \"text\": \"ROW_NUMBER() OVER (ORDER BY RAND())\"\n    },\n    {\n      \"text\": \"ORDER BY RANDOM() >= 10\"\n    },\n    {\n      \"text\": \"WHERE RANDOM() >= 0.1\"\n    },\n    {\n      \"text\": \"WHERE RANDOM() >= 0.9\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"Quelle est la syntaxe valide pour **échantillonner aléatoirement 10 %** des étudiants ?\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"Celui-ci est délicat ! Il comporte environ 6 pièges, dont certains incluent :\\n\\n    1. Description de haut niveau + fragments de syntaxe. Teste comment vous adaptez et assemblez des informations incomplètes.\\n    2. Nécessite une connaissance familière de la syntaxe `TABLESAMPLE`, car aucune des options `TABLESAMPLE` n'utilise la syntaxe correcte ! (Sinistre ! Je sais ! Continuez, je crois en vous !!! ❤️)\\n    3. `ROW_NUMBER() OVER (ORDER BY RAND())` et `ORDER BY RANDOM() > 10` sont d'autres fausses pistes. Ils ont l'air corrects, mais ne le sont pas. `RAND()` n'existe pas. Et `RANDOM() > 10` est une expression booléenne qui sera toujours fausse puisque `RANDOM()` est toujours dans la plage `0.0-1.0`.\\n    Autre problème, `ORDER BY RANDOM() > 10` trierait également sur une valeur booléenne, pas sur un nombre aléatoire. Mais ce `> 10` donnait l'impression qu'il pouvait s'agir d'un pourcentage, n'est-ce pas ?\\n    4. `BERNOULLI` est valide, cependant `SAMPLETABLE` ne l'est pas.\\n    5. `WHERE RANDOM() >= 0.1` est un piège ! `RANDOM()` renvoie une valeur dans la plage `0.0 <= x < 1.0`, donc `>= 0.1` renverrait environ 90 % des lignes, pas 10 %.\\n\\n    En ce qui concerne la méthode `TABLESAMPLE`, PostgreSQL prend en charge deux méthodes d'échantillonnage :\\n    - `BERNOULLI` : Chaque ligne a une probabilité égale\\n    - `SYSTEM` : Échantillonnage au niveau des blocs (plus rapide mais moins aléatoire)\\n\\n    Pour en savoir plus sur l'échantillonnage, consultez cet article de [Render](https://render.com/blog/postgresql-random-samples-big-tables).\\n\\n    Exemple :\",\n    \"Il convient également de mentionner que `TABLESAMPLE` [a été signalé](https://stackoverflow.com/questions/8674718/best-way-to-select-random-rows-postgresql) comme n'étant pas très aléatoire. Si vous avez besoin d'un échantillon de taille fixe _plus_ aléatoire, envisagez d'utiliser `ORDER BY RANDOM() LIMIT 10`. Mais attention, cela renvoie 10 lignes, pas 10 %, et peut être lent sur de grandes tables.\\n\\n    Il existe également des extensions tierces qui fournissent de meilleures méthodes d'échantillonnage aléatoire, mais cela sort du cadre de ce quiz ! 😅\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1338,
+    "outputTokens": 905,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 4984,
+    "providerCostUsd": 0.003384,
+    "providerUpstreamCostUsd": 0.003384,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000669,
+    "outputUsd": 0.002715,
+    "totalUsd": 0.003384,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

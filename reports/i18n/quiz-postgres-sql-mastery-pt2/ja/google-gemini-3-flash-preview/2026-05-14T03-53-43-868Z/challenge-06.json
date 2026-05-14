@@ -1,0 +1,49 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Multi-Column Index Order",
+  "translatedTitle": "マルチカラムインデックスの順序",
+  "translation": {
+    "title": "マルチカラムインデックスの順序",
+    "group": "インデックス",
+    "options": [
+      {
+        "text": "CREATE INDEX ON students(grade_level, last_name);"
+      },
+      {
+        "text": "CREATE INDEX ON students(grade_level);"
+      },
+      {
+        "text": "CREATE INDEX ON students(last_name, age);"
+      },
+      {
+        "text": "CREATE INDEX ON students(first_name, last_name, grade_level);"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "このクエリに最適なインデックスはどれですか？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "驚くべきことに、クエリ内でのカラムの記述順序がインデックスの定義順序と一致していなくても、マルチカラムインデックスは有効に機能します。\n\n    **注意:** B-treeインデックスでは、先頭のカラムが重要です。このクエリは `grade_level` と `last_name` でフィルタリングしているため、`grade_level` で始まり、次に `last_name` が続くインデックスが最適です。\n\n    SQLがいかに早く行を絞り込めるかが、パフォーマンス向上の鍵となります。\n\n    例えば、`task` テーブルにおいて、`status` の方が `created_at` よりも選択性が高い（行をより絞り込める）ことがわかっている場合、`status = 'done' AND created_at > '2024-01-01'` というクエリに対しては `status` から始まるインデックスを選択するのが賢明です。重要なのは `WHERE` 句の記述順序ではなく、インデックスのカラム順序と述語の形式です。\n\n    B+Treeインデックスは以下のケースで使用可能です：\n    - 先頭のカラム、またはカラムの左側プレフィックス（左端からの連続した列）。\n    - クエリの形状に応じた `=`、`>`、`<`、`BETWEEN`、`IN` などの演算子。\n    - 前方一致検索、`LIKE 'prefix%'`。\n\n    この解説の以前の誤りを指摘してくれた [u/mwdb2](https://www.reddit.com/r/PostgreSQL/comments/1h6kw87/comment/m0fovn0/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button) に感謝します！"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"マルチカラムインデックスの順序\",\n  \"group\": \"インデックス\",\n  \"options\": [\n    {\n      \"text\": \"CREATE INDEX ON students(grade_level, last_name);\"\n    },\n    {\n      \"text\": \"CREATE INDEX ON students(grade_level);\"\n    },\n    {\n      \"text\": \"CREATE INDEX ON students(last_name, age);\"\n    },\n    {\n      \"text\": \"CREATE INDEX ON students(first_name, last_name, grade_level);\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"このクエリに最適なインデックスはどれですか？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"驚くべきことに、クエリ内でのカラムの記述順序がインデックスの定義順序と一致していなくても、マルチカラムインデックスは有効に機能します。\\n\\n    **注意:** B-treeインデックスでは、先頭のカラムが重要です。このクエリは `grade_level` と `last_name` でフィルタリングしているため、`grade_level` で始まり、次に `last_name` が続くインデックスが最適です。\\n\\n    SQLがいかに早く行を絞り込めるかが、パフォーマンス向上の鍵となります。\\n\\n    例えば、`task` テーブルにおいて、`status` の方が `created_at` よりも選択性が高い（行をより絞り込める）ことがわかっている場合、`status = 'done' AND created_at > '2024-01-01'` というクエリに対しては `status` から始まるインデックスを選択するのが賢明です。重要なのは `WHERE` 句の記述順序ではなく、インデックスのカラム順序と述語の形式です。\\n\\n    B+Treeインデックスは以下のケースで使用可能です：\\n    - 先頭のカラム、またはカラムの左側プレフィックス（左端からの連続した列）。\\n    - クエリの形状に応じた `=`、`>`、`<`、`BETWEEN`、`IN` などの演算子。\\n    - 前方一致検索、`LIKE 'prefix%'`。\\n\\n    この解説の以前の誤りを指摘してくれた [u/mwdb2](https://www.reddit.com/r/PostgreSQL/comments/1h6kw87/comment/m0fovn0/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button) に感謝します！\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1075,
+    "outputTokens": 599,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 5018,
+    "providerCostUsd": 0.0023345,
+    "providerUpstreamCostUsd": 0.0023345,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.0005375,
+    "outputUsd": 0.001797,
+    "totalUsd": 0.0023344999999999998,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "index": 7,
+  "attempt": 1,
+  "originalTitle": "Column Name Quoting",
+  "translatedTitle": "カラム名のクォーティング",
+  "translation": {
+    "title": "カラム名のクォーティング",
+    "group": "クォーティング 2",
+    "options": [
+      {
+        "text": "first.name"
+      },
+      {
+        "text": "\"first.name\""
+      },
+      {
+        "text": "\\"
+      },
+      {
+        "text": "[first.name]"
+      },
+      {
+        "text": "[first].[name]"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "**ピリオドを含むカラム名**を指定するにはどうすればよいでしょうか？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "PostgreSQLでは、識別子のクォーティングに二重引用符（ダブルクォート）を使用します：\n    - 識別子（カラム名、テーブル名）には二重引用符 `\"...\"` を使用\n    - 文字列リテラルには単一引用符（シングルクォート） `'...'` を使用\n    - `first.name` という形式は、通常 `table_name.column_name` と解釈されます\n\n    クォートがない場合、カラム名に含まれるピリオドはスキーマやテーブルの区切り文字として解釈されてしまいます！さらに、クォートされていない識別子はデフォルトで小文字に変換されます。\n\n    予期せぬトラブルを避けるため、識別子には `snake_case` を使用し、特殊文字の使用は控えるのが最善です。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"カラム名のクォーティング\",\n  \"group\": \"クォーティング 2\",\n  \"options\": [\n    {\n      \"text\": \"first.name\"\n    },\n    {\n      \"text\": \"\\\"first.name\\\"\"\n    },\n    {\n      \"text\": \"\\\\\"\n    },\n    {\n      \"text\": \"[first.name]\"\n    },\n    {\n      \"text\": \"[first].[name]\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"**ピリオドを含むカラム名**を指定するにはどうすればよいでしょうか？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"PostgreSQLでは、識別子のクォーティングに二重引用符（ダブルクォート）を使用します：\\n    - 識別子（カラム名、テーブル名）には二重引用符 `\\\"...\\\"` を使用\\n    - 文字列リテラルには単一引用符（シングルクォート） `'...'` を使用\\n    - `first.name` という形式は、通常 `table_name.column_name` と解釈されます\\n\\n    クォートがない場合、カラム名に含まれるピリオドはスキーマやテーブルの区切り文字として解釈されてしまいます！さらに、クォートされていない識別子はデフォルトで小文字に変換されます。\\n\\n    予期せぬトラブルを避けるため、識別子には `snake_case` を使用し、特殊文字の使用は控えるのが最善です。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 833,
+    "outputTokens": 362,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 3973,
+    "providerCostUsd": 0.0015025,
+    "providerUpstreamCostUsd": 0.0015025,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.0004165,
+    "outputUsd": 0.0010860000000000002,
+    "totalUsd": 0.0015025000000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

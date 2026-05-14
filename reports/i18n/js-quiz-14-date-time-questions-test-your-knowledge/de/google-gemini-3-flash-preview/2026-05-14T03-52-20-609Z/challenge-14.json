@@ -1,0 +1,54 @@
+{
+  "index": 13,
+  "attempt": 1,
+  "originalTitle": "Date Setters Part 5",
+  "translatedTitle": "Datum-Setter Teil 5",
+  "translation": {
+    "title": "Datum-Setter Teil 5",
+    "group": "Umgang mit Daten",
+    "options": [
+      {
+        "text": "Jan 01 2020"
+      },
+      {
+        "text": "Feb 01 2020"
+      },
+      {
+        "text": "Jan 01 2019"
+      },
+      {
+        "text": "Dec 01 2019"
+      },
+      {
+        "text": "RangeError: Invalid argument."
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "Was wird die Ausgabe enthalten?"
+    ],
+    "hintsProse": [
+      "<aside class=\"hint\">Monate sind nicht einheitlich lang und liegen zwischen 28 und 31 Tagen.</aside>\n      <aside class=\"hint\">`setDate` setzt den Tag des Monats, normalerweise im Bereich 1-31. Negative Zahlen und Zahlen größer als `31` führen dazu, dass sich Tag und Monat anpassen, manchmal auf überraschende Weise.</aside>"
+    ],
+    "explanationProse": [
+      "Die Methode [`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) setzt den Monat für eine bestimmte Datumsinstanz.\n  \n      Das Monatsargument ist nullbasiert und hat einen Bereich von 0-11 (im westlichen Kalender).\n\n      Hier sehen wir, dass Monat und Jahr auf Dezember 2019 zurückspringen, da `setMonth(-1)` kleiner als 0 (Januar) ist."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Datum-Setter Teil 5\",\n  \"group\": \"Umgang mit Daten\",\n  \"options\": [\n    {\n      \"text\": \"Jan 01 2020\"\n    },\n    {\n      \"text\": \"Feb 01 2020\"\n    },\n    {\n      \"text\": \"Jan 01 2019\"\n    },\n    {\n      \"text\": \"Dec 01 2019\"\n    },\n    {\n      \"text\": \"RangeError: Invalid argument.\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"Was wird die Ausgabe enthalten?\"\n  ],\n  \"hintsProse\": [\n    \"<aside class=\\\"hint\\\">Monate sind nicht einheitlich lang und liegen zwischen 28 und 31 Tagen.</aside>\\n      <aside class=\\\"hint\\\">`setDate` setzt den Tag des Monats, normalerweise im Bereich 1-31. Negative Zahlen und Zahlen größer als `31` führen dazu, dass sich Tag und Monat anpassen, manchmal auf überraschende Weise.</aside>\"\n  ],\n  \"explanationProse\": [\n    \"Die Methode [`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) setzt den Monat für eine bestimmte Datumsinstanz.\\n  \\n      Das Monatsargument ist nullbasiert und hat einen Bereich von 0-11 (im westlichen Kalender).\\n\\n      Hier sehen wir, dass Monat und Jahr auf Dezember 2019 zurückspringen, da `setMonth(-1)` kleiner als 0 (Januar) ist.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 920,
+    "outputTokens": 398,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 3354,
+    "providerCostUsd": 0.001654,
+    "providerUpstreamCostUsd": 0.001654,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00046,
+    "outputUsd": 0.0011940000000000002,
+    "totalUsd": 0.001654,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

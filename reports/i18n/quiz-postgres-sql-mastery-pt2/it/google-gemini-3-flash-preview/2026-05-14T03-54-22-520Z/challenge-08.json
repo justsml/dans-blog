@@ -1,0 +1,52 @@
+{
+  "index": 7,
+  "attempt": 1,
+  "originalTitle": "Column Name Quoting",
+  "translatedTitle": "Quoting dei Nomi delle Colonne",
+  "translation": {
+    "title": "Quoting dei Nomi delle Colonne",
+    "group": "Quoting 2",
+    "options": [
+      {
+        "text": "first.name"
+      },
+      {
+        "text": "\"first.name\""
+      },
+      {
+        "text": "\\"
+      },
+      {
+        "text": "[first.name]"
+      },
+      {
+        "text": "[first].[name]"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "Come si specifica un **nome di colonna che contiene un punto?**"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "PostgreSQL utilizza i doppi apici per il quoting degli identificatori:\n    - Doppi apici `\"...\"` per gli identificatori (nomi di colonne, nomi di tabelle)\n    - Singoli apici `'...'` per le stringhe letterali\n    - La forma `first.name` viene interpretata come `nome_tabella.nome_colonna`\n\n    Senza virgolette, un punto nel nome di una colonna verrebbe interpretato come un separatore schema/tabella! Inoltre, tutti gli identificatori non virgolettati vengono convertiti in minuscolo per impostazione predefinita.\n\n    Per ridurre le sorprese, è meglio usare lo `snake_case` ed evitare l'uso di caratteri speciali."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Quoting dei Nomi delle Colonne\",\n  \"group\": \"Quoting 2\",\n  \"options\": [\n    {\n      \"text\": \"first.name\"\n    },\n    {\n      \"text\": \"\\\"first.name\\\"\"\n    },\n    {\n      \"text\": \"\\\\\"\n    },\n    {\n      \"text\": \"[first.name]\"\n    },\n    {\n      \"text\": \"[first].[name]\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"Come si specifica un **nome di colonna che contiene un punto?**\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"PostgreSQL utilizza i doppi apici per il quoting degli identificatori:\\n    - Doppi apici `\\\"...\\\"` per gli identificatori (nomi di colonne, nomi di tabelle)\\n    - Singoli apici `'...'` per le stringhe letterali\\n    - La forma `first.name` viene interpretata come `nome_tabella.nome_colonna`\\n\\n    Senza virgolette, un punto nel nome di una colonna verrebbe interpretato come un separatore schema/tabella! Inoltre, tutti gli identificatori non virgolettati vengono convertiti in minuscolo per impostazione predefinita.\\n\\n    Per ridurre le sorprese, è meglio usare lo `snake_case` ed evitare l'uso di caratteri speciali.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 831,
+    "outputTokens": 343,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2606,
+    "providerCostUsd": 0.0014445,
+    "providerUpstreamCostUsd": 0.0014445,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.0004155,
+    "outputUsd": 0.001029,
+    "totalUsd": 0.0014445,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

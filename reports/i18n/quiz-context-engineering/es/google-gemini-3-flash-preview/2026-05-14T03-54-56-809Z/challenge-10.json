@@ -1,0 +1,50 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "XML Tags for Structure",
+  "translatedTitle": "Etiquetas XML para Estructura",
+  "translation": {
+    "title": "Etiquetas XML para Estructura",
+    "group": "Estructura de Prompts",
+    "options": [
+      {
+        "text": "Las etiquetas XML solo son válidas en los modelos de Anthropic"
+      },
+      {
+        "text": "Las etiquetas XML ayudan a los modelos a distinguir las instrucciones de los datos y mejoran la precisión del parseo",
+        "hint": "Piensa en cómo los delimitadores claros reducen la ambigüedad."
+      },
+      {
+        "text": "Las etiquetas XML ralentizan la tokenización y deben evitarse"
+      },
+      {
+        "text": "Las etiquetas XML son equivalentes a los encabezados de markdown"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "¿Por qué muchos prompts de producción utilizan etiquetas de estilo XML como `<document>`, `<context>`, `<instructions>`?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "Las etiquetas de estilo XML proporcionan **límites estructurales explícitos** que los modelos están entrenados para reconocer y respetar. Hacen dos cosas:\n\n1. **Separación**: Indican al modelo dónde terminan las instrucciones y dónde comienzan los datos; esto es crítico para RAG y para reducir el riesgo de inyección de prompts desde documentos recuperados.\n2. **Parseabilidad**: Cuando pides al modelo que responda en XML (por ejemplo, `<answer>...</answer>`), las etiquetas te ofrecen puntos de extracción limpios sin necesidad de recurrir a trucos de regex.\n\nEsto no es XML como lenguaje de marcado tradicional. Es XML como una convención de delimitadores en la que los modelos han sido entrenados. Funciona porque el modelo ha visto este patrón extensamente durante su entrenamiento, no porque esté validando esquemas.\n\nFunciona en la mayoría de los modelos ajustados por instrucciones con la frecuencia suficiente para ser útil: es una convención de datos de entrenamiento, no una característica exclusiva de un proveedor ni una garantía de seguridad absoluta."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Etiquetas XML para Estructura\",\n  \"group\": \"Estructura de Prompts\",\n  \"options\": [\n    {\n      \"text\": \"Las etiquetas XML solo son válidas en los modelos de Anthropic\"\n    },\n    {\n      \"text\": \"Las etiquetas XML ayudan a los modelos a distinguir las instrucciones de los datos y mejoran la precisión del parseo\",\n      \"hint\": \"Piensa en cómo los delimitadores claros reducen la ambigüedad.\"\n    },\n    {\n      \"text\": \"Las etiquetas XML ralentizan la tokenización y deben evitarse\"\n    },\n    {\n      \"text\": \"Las etiquetas XML son equivalentes a los encabezados de markdown\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"¿Por qué muchos prompts de producción utilizan etiquetas de estilo XML como `<document>`, `<context>`, `<instructions>`?\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"Las etiquetas de estilo XML proporcionan **límites estructurales explícitos** que los modelos están entrenados para reconocer y respetar. Hacen dos cosas:\\n\\n1. **Separación**: Indican al modelo dónde terminan las instrucciones y dónde comienzan los datos; esto es crítico para RAG y para reducir el riesgo de inyección de prompts desde documentos recuperados.\\n2. **Parseabilidad**: Cuando pides al modelo que responda en XML (por ejemplo, `<answer>...</answer>`), las etiquetas te ofrecen puntos de extracción limpios sin necesidad de recurrir a trucos de regex.\\n\\nEsto no es XML como lenguaje de marcado tradicional. Es XML como una convención de delimitadores en la que los modelos han sido entrenados. Funciona porque el modelo ha visto este patrón extensamente durante su entrenamiento, no porque esté validando esquemas.\\n\\nFunciona en la mayoría de los modelos ajustados por instrucciones con la frecuencia suficiente para ser útil: es una convención de datos de entrenamiento, no una característica exclusiva de un proveedor ni una garantía de seguridad absoluta.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 879,
+    "outputTokens": 462,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 3966,
+    "providerCostUsd": 0.0018255,
+    "providerUpstreamCostUsd": 0.0018255,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.0004395,
+    "outputUsd": 0.001386,
+    "totalUsd": 0.0018255,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

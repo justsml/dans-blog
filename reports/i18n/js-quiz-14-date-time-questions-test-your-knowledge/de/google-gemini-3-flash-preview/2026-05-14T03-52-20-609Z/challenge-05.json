@@ -1,0 +1,49 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Date String Parsing",
+  "translatedTitle": "Parsen von Datums-Strings",
+  "translation": {
+    "title": "Parsen von Datums-Strings",
+    "group": "Umgang mit Daten",
+    "options": [
+      {
+        "text": "2019 2020"
+      },
+      {
+        "text": "2020 2021"
+      },
+      {
+        "text": "2020 2020"
+      },
+      {
+        "text": "2020 2019"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "Welcher Wert wird in der Konsole ausgegeben?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "Ein String ohne einen `T`-Zeitwert mag wie der 1. Januar 2020 erscheinen – aber reine Datums-Strings werden als UTC interpretiert. Wenn wir dies an unsere lokale Zeitzone (GMT-7) anpassen, befinden wir uns tatsächlich noch im Jahr 2019.\n\nDatum-Zeit-Strings ohne explizite Zeitzone werden hingegen in der lokalen Zeit interpretiert.\n\nDas Format `T00:00` bewirkt, dass der zweite Wert als lokale Mitternacht interpretiert wird.\n\nDas erste Datum wird als `Tue Dec 31 2019 17:00:00 GMT-0700 (Mountain Standard Time)` interpretiert.\nDas zweite Datum wird als `Wed Jan 01 2020 00:00:00 GMT-0700 (Mountain Standard Time)` interpretiert."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Parsen von Datums-Strings\",\n  \"group\": \"Umgang mit Daten\",\n  \"options\": [\n    {\n      \"text\": \"2019 2020\"\n    },\n    {\n      \"text\": \"2020 2021\"\n    },\n    {\n      \"text\": \"2020 2020\"\n    },\n    {\n      \"text\": \"2020 2019\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"Welcher Wert wird in der Konsole ausgegeben?\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"Ein String ohne einen `T`-Zeitwert mag wie der 1. Januar 2020 erscheinen – aber reine Datums-Strings werden als UTC interpretiert. Wenn wir dies an unsere lokale Zeitzone (GMT-7) anpassen, befinden wir uns tatsächlich noch im Jahr 2019.\\n\\nDatum-Zeit-Strings ohne explizite Zeitzone werden hingegen in der lokalen Zeit interpretiert.\\n\\nDas Format `T00:00` bewirkt, dass der zweite Wert als lokale Mitternacht interpretiert wird.\\n\\nDas erste Datum wird als `Tue Dec 31 2019 17:00:00 GMT-0700 (Mountain Standard Time)` interpretiert.\\nDas zweite Datum wird als `Wed Jan 01 2020 00:00:00 GMT-0700 (Mountain Standard Time)` interpretiert.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 891,
+    "outputTokens": 386,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 3715,
+    "providerCostUsd": 0.0016035,
+    "providerUpstreamCostUsd": 0.0016035,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.0004455,
+    "outputUsd": 0.001158,
+    "totalUsd": 0.0016034999999999999,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "index": 12,
+  "attempt": 1,
+  "originalTitle": "Date Setters Part 4",
+  "translatedTitle": "Date Setters Part 4",
+  "translation": {
+    "title": "Date Setters Part 4",
+    "group": "Handling Dates",
+    "options": [
+      {
+        "text": "Jan 01 2020"
+      },
+      {
+        "text": "Feb 01 2020"
+      },
+      {
+        "text": "Jan 01 2021"
+      },
+      {
+        "text": "Feb 01 2021"
+      },
+      {
+        "text": "RangeError: Invalid argument."
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "आउटपुट में क्या शामिल होगा?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "[`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) मेथड दिए गए डेट इंस्टेंस का महीना सेट करता है।\n  \n      महीने का आर्गुमेंट जीरो-बेस्ड (zero-based) होता है, जिसकी रेंज 0-11 होती है (पश्चिमी कैलेंडर के अनुसार)।\n\n      यहाँ हम देखते हैं कि महीना और साल फरवरी 2021 में एडजस्ट हो जाते हैं, क्योंकि `setMonth(13)` की वैल्यू 11 (दिसंबर) से 2 अधिक है।\n\n      <aside class=\"hint\">`setMonth` महीने को इंडेक्स के आधार पर सेट करता है, 12 महीनों को 0-11 तक इंडेक्स किया जाता है। </aside>\n      <aside class=\"hint\">\n        0-11 की रेंज के बाहर की संख्याएँ साल को आगे (over-flow) या पीछे (under-flow) ले जाएँगी। उदाहरण के लिए, `setMonth(13)` साल को 2021 में एडजस्ट कर देगा (फरवरी में, क्योंकि 13 की वैल्यू 11 से 2 अधिक है)।\n      </aside>"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Date Setters Part 4\",\n  \"group\": \"Handling Dates\",\n  \"options\": [\n    {\n      \"text\": \"Jan 01 2020\"\n    },\n    {\n      \"text\": \"Feb 01 2020\"\n    },\n    {\n      \"text\": \"Jan 01 2021\"\n    },\n    {\n      \"text\": \"Feb 01 2021\"\n    },\n    {\n      \"text\": \"RangeError: Invalid argument.\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"आउटपुट में क्या शामिल होगा?\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"[`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) मेथड दिए गए डेट इंस्टेंस का महीना सेट करता है।\\n  \\n      महीने का आर्गुमेंट जीरो-बेस्ड (zero-based) होता है, जिसकी रेंज 0-11 होती है (पश्चिमी कैलेंडर के अनुसार)।\\n\\n      यहाँ हम देखते हैं कि महीना और साल फरवरी 2021 में एडजस्ट हो जाते हैं, क्योंकि `setMonth(13)` की वैल्यू 11 (दिसंबर) से 2 अधिक है।\\n\\n      <aside class=\\\"hint\\\">`setMonth` महीने को इंडेक्स के आधार पर सेट करता है, 12 महीनों को 0-11 तक इंडेक्स किया जाता है। </aside>\\n      <aside class=\\\"hint\\\">\\n        0-11 की रेंज के बाहर की संख्याएँ साल को आगे (over-flow) या पीछे (under-flow) ले जाएँगी। उदाहरण के लिए, `setMonth(13)` साल को 2021 में एडजस्ट कर देगा (फरवरी में, क्योंकि 13 की वैल्यू 11 से 2 अधिक है)।\\n      </aside>\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1016,
+    "outputTokens": 462,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 3730,
+    "providerCostUsd": 0.001894,
+    "providerUpstreamCostUsd": 0.001894,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000508,
+    "outputUsd": 0.001386,
+    "totalUsd": 0.001894,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

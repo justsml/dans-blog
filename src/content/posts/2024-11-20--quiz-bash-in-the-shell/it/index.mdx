@@ -373,6 +373,12 @@ Affina (o dimostra) le tue **competenze** di scripting shell!
   group="Composizione"
   title="Uso del piping"
   options={[
+    { text: ">" },
+    { text: ">>" },
+    { text: "|", isAnswer: true },
+    { text: "||" },
+    { text: "|>" },
+    { text: "Error" },
   ]}
 >
   <slot name="question">
@@ -563,6 +569,11 @@ Affina (o dimostra) le tue **competenze** di scripting shell!
   group="Input/Output Standard"
   title="Valori Predefiniti"
   options={[
+    { text: "1>&2" },
+    { text: "&2>&1" },
+    { text: "2>&1", isAnswer: true },
+    { text: "2>1" },
+    { text: "&2>1" },
   ]}
 >
   <slot name="question">

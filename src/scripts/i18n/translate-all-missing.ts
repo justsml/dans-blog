@@ -1,9 +1,12 @@
 import { join } from "node:path";
+import { readFileSync } from "node:fs";
 import { spawn } from "node:child_process";
 import { ACTIVE_LOCALES, type ActiveLocale } from "../../shared/i18n.ts";
 import {
   filterActiveLocales,
   getMissingTranslationSlots,
+  getModifiedTranslationSlots,
+  isTranslationFreshForSourceContents,
 } from "./corpus-inventory.ts";
 import {
   gitCommit,
@@ -37,6 +40,7 @@ const DEFAULT_TASK_CONCURRENCY = 8;
 type Task = {
   slug: string;
   locale: ActiveLocale;
+  sourcePath: string;
   targetPath: string;
 };
 
@@ -59,11 +63,12 @@ const escalationJudgeModel = optionalString(options, "escalate-model") ?? ESCALA
 const shouldDryRun = options["dry-run"] === true;
 const shouldPush = options["push"] === true;
 const shouldContinueOnError = options["continue-on-error"] === true;
+const shouldOnlyModified = options["only-modified"] === true;
 
-const tasks = getMissingTranslationTasks();
+const tasks = getTranslationTasks();
 const limitedTasks = limit == null ? tasks : tasks.slice(0, limit);
 
-console.log(`Found ${tasks.length} missing translation task(s).`);
+console.log(`Found ${tasks.length} ${shouldOnlyModified ? "modified" : "missing"} translation task(s).`);
 console.log(`Processing ${limitedTasks.length} task(s).`);
 console.log(`Task concurrency: ${shouldPush ? 1 : taskConcurrency}${shouldPush ? " (--push serializes task processing)" : ""}`);
 console.log(`Candidate task concurrency: ${candidateTaskConcurrency ?? "default"}`);
@@ -121,6 +126,7 @@ async function translateAndJudgeTask(task: Task) {
       ...optionalArg("--task-concurrency", candidateTaskConcurrency),
       ...optionalArg("--quiz-concurrency", quizConcurrency),
       ...optionalArg("--challenge-retries", challengeRetries),
+      ...optionalFlag("--only-modified", shouldOnlyModified),
     ]);
   }
 
@@ -170,6 +176,10 @@ async function translateAndJudgeTask(task: Task) {
 
 function optionalArg(name: string, value: string | undefined) {
   return value == null ? [] : [name, value];
+}
+
+function optionalFlag(name: string, enabled: boolean) {
+  return enabled ? [name] : [];
 }
 
 async function mapLimit<T>(
@@ -222,34 +232,63 @@ function runInheritedAsync(command: string, args: string[]) {
   });
 }
 
-function getMissingTranslationTasks() {
-  return getMissingTranslationSlots({
+function getTranslationTasks() {
+  const slots = shouldOnlyModified ? getModifiedTranslationSlots({
     latestPosts,
     locales: selectedLocales,
     selectedSlugs,
-  }).map(({ slug, locale, targetPath }) => ({ slug, locale, targetPath }));
+  }) : getMissingTranslationSlots({
+    latestPosts,
+    locales: selectedLocales,
+    selectedSlugs,
+  });
+
+  return slots.map(({ slug, locale, sourcePath, targetPath }) => ({ slug, locale, sourcePath, targetPath }));
 }
 
 function getCandidateCommits(task: Task) {
   const grep = `i18n candidate(${task.locale}): ${task.slug} via`;
   const output = run("git", ["log", "--format=%H", "--grep", grep]);
   const targetRelPath = relativeToRepo(task.targetPath);
+  const sourceContents = shouldOnlyModified ? readFileSync(task.sourcePath, "utf8") : undefined;
 
   return output
     .split(/\r?\n/)
     .filter(Boolean)
     .filter((commit) => {
-      const changedFiles = run("git", [
-        "diff-tree",
-        "--no-commit-id",
-        "--name-only",
-        "-r",
-        commit,
-      ]);
-      if (changedFiles.split(/\r?\n/).includes(targetRelPath)) return true;
-      return getCandidatePathFromCommit(commit, task) != null;
+      const candidateContents = getCandidateContentsFromCommit(commit, task, targetRelPath);
+      if (candidateContents == null) return false;
+      if (sourceContents == null) return true;
+      return isTranslationFreshForSourceContents(sourceContents, candidateContents);
     })
     .reverse();
+}
+
+function getCandidateContentsFromCommit(commit: string, task: Task, targetRelPath: string) {
+  const changedFiles = run("git", [
+    "diff-tree",
+    "--no-commit-id",
+    "--name-only",
+    "-r",
+    commit,
+  ]);
+
+  if (changedFiles.split(/\r?\n/).includes(targetRelPath)) {
+    try {
+      return run("git", ["show", `${commit}:${targetRelPath}`]);
+    } catch {
+      // Fall through to timestamped candidate artifacts.
+    }
+  }
+
+  const candidatePath = getCandidatePathFromCommit(commit, task);
+  if (candidatePath == null) return undefined;
+
+  try {
+    return run("git", ["show", `${commit}:${candidatePath}`]);
+  } catch {
+    return undefined;
+  }
 }
 
 function getCandidatePathFromCommit(commit: string, task: Task) {

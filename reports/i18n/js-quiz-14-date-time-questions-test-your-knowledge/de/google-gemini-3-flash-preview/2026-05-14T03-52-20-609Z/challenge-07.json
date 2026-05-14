@@ -1,0 +1,49 @@
+{
+  "index": 6,
+  "attempt": 1,
+  "originalTitle": "UTC Dates Part 1",
+  "translatedTitle": "UTC-Daten Teil 1",
+  "translation": {
+    "title": "UTC-Daten Teil 1",
+    "group": "Umgang mit Daten",
+    "options": [
+      {
+        "text": "Wed, 01 Jan 2020 00:00:00 GMT"
+      },
+      {
+        "text": "Thu, 02 Jan 2020 00:00:00 GMT"
+      },
+      {
+        "text": "TypeError"
+      },
+      {
+        "text": "NaN"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "Was wird die Ausgabe enthalten?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "Du erhältst einen `TypeError: date.toUTCString is not a function`, da [`Date.UTC()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/UTC) eine Ganzzahl in Millisekunden zurückgibt und keine Date-Instanz.\n\n      {/* Die Methode [`getFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getFullYear) verwendet deinen lokalen Offset (nimm für diese Fragen GMT-07:00 an).\n      Das bedeutet, sie würde das Vorjahr zurückgeben (Silvester -7 Stunden).\n      Die Methode [`getUTCFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getUTCFullYear) würde das Jahr zurückgeben, das wir an `Date.UTC()` übergeben haben, also 2020.\n      */}"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"UTC-Daten Teil 1\",\n  \"group\": \"Umgang mit Daten\",\n  \"options\": [\n    {\n      \"text\": \"Wed, 01 Jan 2020 00:00:00 GMT\"\n    },\n    {\n      \"text\": \"Thu, 02 Jan 2020 00:00:00 GMT\"\n    },\n    {\n      \"text\": \"TypeError\"\n    },\n    {\n      \"text\": \"NaN\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"Was wird die Ausgabe enthalten?\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"Du erhältst einen `TypeError: date.toUTCString is not a function`, da [`Date.UTC()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/UTC) eine Ganzzahl in Millisekunden zurückgibt und keine Date-Instanz.\\n\\n      {/* Die Methode [`getFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getFullYear) verwendet deinen lokalen Offset (nimm für diese Fragen GMT-07:00 an).\\n      Das bedeutet, sie würde das Vorjahr zurückgeben (Silvester -7 Stunden).\\n      Die Methode [`getUTCFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getUTCFullYear) würde das Jahr zurückgeben, das wir an `Date.UTC()` übergeben haben, also 2020.\\n      */}\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 920,
+    "outputTokens": 402,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 3328,
+    "providerCostUsd": 0.001666,
+    "providerUpstreamCostUsd": 0.001666,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00046,
+    "outputUsd": 0.001206,
+    "totalUsd": 0.001666,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

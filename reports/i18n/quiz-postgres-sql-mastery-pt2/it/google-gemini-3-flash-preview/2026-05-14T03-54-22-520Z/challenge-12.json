@@ -1,0 +1,49 @@
+{
+  "index": 11,
+  "attempt": 1,
+  "originalTitle": "EXPLAIN ANALYZE Gotcha",
+  "translatedTitle": "L'inghippo di EXPLAIN ANALYZE",
+  "translation": {
+    "title": "L'inghippo di EXPLAIN ANALYZE",
+    "group": "Performance",
+    "options": [
+      {
+        "text": "Stima del piano Lite"
+      },
+      {
+        "text": "Funziona solo su SELECT"
+      },
+      {
+        "text": "Modifica i dati ed emette il piano"
+      },
+      {
+        "text": "Simula l'esecuzione per ottenere un piano"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "Cosa fa `EXPLAIN ANALYZE` per le istruzioni `UPDATE`?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "`EXPLAIN ANALYZE` esegue effettivamente la query! Fai attenzione quando analizzi un'operazione di scrittura, nello specifico le istruzioni `UPDATE`, `DELETE` e `INSERT`. Potresti dover eseguire operazioni di pulizia dopo ogni `EXPLAIN ANALYZE` per ottenere risultati ripetibili.\n\n    Best practice:\n    - Usa `EXPLAIN` (senza ANALYZE) per UPDATE/DELETE/INSERT\n    - Avvolgi le modifiche in transazioni:"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"L'inghippo di EXPLAIN ANALYZE\",\n  \"group\": \"Performance\",\n  \"options\": [\n    {\n      \"text\": \"Stima del piano Lite\"\n    },\n    {\n      \"text\": \"Funziona solo su SELECT\"\n    },\n    {\n      \"text\": \"Modifica i dati ed emette il piano\"\n    },\n    {\n      \"text\": \"Simula l'esecuzione per ottenere un piano\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"Cosa fa `EXPLAIN ANALYZE` per le istruzioni `UPDATE`?\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"`EXPLAIN ANALYZE` esegue effettivamente la query! Fai attenzione quando analizzi un'operazione di scrittura, nello specifico le istruzioni `UPDATE`, `DELETE` e `INSERT`. Potresti dover eseguire operazioni di pulizia dopo ogni `EXPLAIN ANALYZE` per ottenere risultati ripetibili.\\n\\n    Best practice:\\n    - Usa `EXPLAIN` (senza ANALYZE) per UPDATE/DELETE/INSERT\\n    - Avvolgi le modifiche in transazioni:\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 821,
+    "outputTokens": 289,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2595,
+    "providerCostUsd": 0.0012775,
+    "providerUpstreamCostUsd": 0.0012775,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.0004105,
+    "outputUsd": 0.0008669999999999999,
+    "totalUsd": 0.0012775,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

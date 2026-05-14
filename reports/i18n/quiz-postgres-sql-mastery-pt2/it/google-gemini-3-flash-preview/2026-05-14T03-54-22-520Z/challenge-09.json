@@ -1,0 +1,62 @@
+{
+  "index": 8,
+  "attempt": 1,
+  "originalTitle": "TABLESAMPLE Syntax",
+  "translatedTitle": "Sintassi TABLESAMPLE",
+  "translation": {
+    "title": "Sintassi TABLESAMPLE",
+    "group": "Campionamento dei Dati",
+    "options": [
+      {
+        "text": "...students SAMPLETABLE BERNOULLI (0.10)"
+      },
+      {
+        "text": "...students TABLESAMPLE USER (10)"
+      },
+      {
+        "text": "...students TABLESAMPLE RANDOM (10)"
+      },
+      {
+        "text": "...students SAMPLE 10 PERCENT"
+      },
+      {
+        "text": "ROW_NUMBER() OVER (ORDER BY RAND())"
+      },
+      {
+        "text": "ORDER BY RANDOM() >= 10"
+      },
+      {
+        "text": "WHERE RANDOM() >= 0.1"
+      },
+      {
+        "text": "WHERE RANDOM() >= 0.9"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "Qual è la sintassi valida per **campionare casualmente il 10%** degli studenti?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "Questa è difficile! Contiene circa 6 trappole, tra cui:\n\n    1. Descrizione di alto livello + frammenti di sintassi. Mette alla prova come adatti e assembli informazioni incomplete.\n    2. Richiede una conoscenza approfondita della sintassi di `TABLESAMPLE`, poiché nessuna delle opzioni `TABLESAMPLE` utilizza la sintassi corretta! (Sinistro, lo so! Continua così, credo in te!!! ❤️)\n    3. `ROW_NUMBER() OVER (ORDER BY RAND())` e `ORDER BY RANDOM() > 10` sono ulteriori depistaggi. Sembrano corretti, ma non lo sono. `RAND()` non esiste. E `RANDOM() > 10` è un'espressione booleana che sarà sempre falsa poiché `RANDOM()` restituisce sempre un valore nell'intervallo `0.0-1.0`.\n    Un altro problema: `ORDER BY RANDOM() > 10` ordinerebbe in base a un valore booleano, non a un numero casuale. Ma quel `> 10` sembrava proprio una percentuale, vero?\n    4. `BERNOULLI` è valido, tuttavia `SAMPLETABLE` non lo è.\n    5. `WHERE RANDOM() >= 0.1` è un trucco! `RANDOM()` restituisce un valore nell'intervallo `0.0 <= x < 1.0`, quindi `>= 0.1` restituirebbe circa il 90% delle righe, non il 10%.\n\n    Per quanto riguarda il metodo `TABLESAMPLE`, PostgreSQL supporta due metodi di campionamento:\n    - `BERNOULLI`: Ogni riga ha la stessa probabilità.\n    - `SYSTEM`: Campionamento a livello di blocco (più veloce ma meno casuale).\n\n    Per saperne di più sul campionamento, consulta questo articolo di [Render](https://render.com/blog/postgresql-random-samples-big-tables).\n\n    Esempio:",
+      "Vale anche la pena menzionare che `TABLESAMPLE` [è stato segnalato](https://stackoverflow.com/questions/8674718/best-way-to-select-random-rows-postgresql) per non essere molto casuale. Se hai bisogno di un campione di dimensioni fisse _più_ casuale, considera l'uso di `ORDER BY RANDOM() LIMIT 10`. Ma tieni presente che questo restituisce 10 righe, non il 10%, e può essere lento su tabelle di grandi dimensioni.\n\n    Esistono anche alcune estensioni di terze parti che forniscono metodi di campionamento casuale migliori, ma questo va oltre lo scopo di questa sfida! 😅"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Sintassi TABLESAMPLE\",\n  \"group\": \"Campionamento dei Dati\",\n  \"options\": [\n    {\n      \"text\": \"...students SAMPLETABLE BERNOULLI (0.10)\"\n    },\n    {\n      \"text\": \"...students TABLESAMPLE USER (10)\"\n    },\n    {\n      \"text\": \"...students TABLESAMPLE RANDOM (10)\"\n    },\n    {\n      \"text\": \"...students SAMPLE 10 PERCENT\"\n    },\n    {\n      \"text\": \"ROW_NUMBER() OVER (ORDER BY RAND())\"\n    },\n    {\n      \"text\": \"ORDER BY RANDOM() >= 10\"\n    },\n    {\n      \"text\": \"WHERE RANDOM() >= 0.1\"\n    },\n    {\n      \"text\": \"WHERE RANDOM() >= 0.9\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"Qual è la sintassi valida per **campionare casualmente il 10%** degli studenti?\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"Questa è difficile! Contiene circa 6 trappole, tra cui:\\n\\n    1. Descrizione di alto livello + frammenti di sintassi. Mette alla prova come adatti e assembli informazioni incomplete.\\n    2. Richiede una conoscenza approfondita della sintassi di `TABLESAMPLE`, poiché nessuna delle opzioni `TABLESAMPLE` utilizza la sintassi corretta! (Sinistro, lo so! Continua così, credo in te!!! ❤️)\\n    3. `ROW_NUMBER() OVER (ORDER BY RAND())` e `ORDER BY RANDOM() > 10` sono ulteriori depistaggi. Sembrano corretti, ma non lo sono. `RAND()` non esiste. E `RANDOM() > 10` è un'espressione booleana che sarà sempre falsa poiché `RANDOM()` restituisce sempre un valore nell'intervallo `0.0-1.0`.\\n    Un altro problema: `ORDER BY RANDOM() > 10` ordinerebbe in base a un valore booleano, non a un numero casuale. Ma quel `> 10` sembrava proprio una percentuale, vero?\\n    4. `BERNOULLI` è valido, tuttavia `SAMPLETABLE` non lo è.\\n    5. `WHERE RANDOM() >= 0.1` è un trucco! `RANDOM()` restituisce un valore nell'intervallo `0.0 <= x < 1.0`, quindi `>= 0.1` restituirebbe circa il 90% delle righe, non il 10%.\\n\\n    Per quanto riguarda il metodo `TABLESAMPLE`, PostgreSQL supporta due metodi di campionamento:\\n    - `BERNOULLI`: Ogni riga ha la stessa probabilità.\\n    - `SYSTEM`: Campionamento a livello di blocco (più veloce ma meno casuale).\\n\\n    Per saperne di più sul campionamento, consulta questo articolo di [Render](https://render.com/blog/postgresql-random-samples-big-tables).\\n\\n    Esempio:\",\n    \"Vale anche la pena menzionare che `TABLESAMPLE` [è stato segnalato](https://stackoverflow.com/questions/8674718/best-way-to-select-random-rows-postgresql) per non essere molto casuale. Se hai bisogno di un campione di dimensioni fisse _più_ casuale, considera l'uso di `ORDER BY RANDOM() LIMIT 10`. Ma tieni presente che questo restituisce 10 righe, non il 10%, e può essere lento su tabelle di grandi dimensioni.\\n\\n    Esistono anche alcune estensioni di terze parti che forniscono metodi di campionamento casuale migliori, ma questo va oltre lo scopo di questa sfida! 😅\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1338,
+    "outputTokens": 886,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 5097,
+    "providerCostUsd": 0.003327,
+    "providerUpstreamCostUsd": 0.003327,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000669,
+    "outputUsd": 0.0026579999999999998,
+    "totalUsd": 0.0033269999999999997,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

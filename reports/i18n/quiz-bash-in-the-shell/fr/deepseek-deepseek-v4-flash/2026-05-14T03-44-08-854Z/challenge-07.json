@@ -1,0 +1,53 @@
+{
+  "index": 6,
+  "attempt": 1,
+  "originalTitle": "Basic If-Else",
+  "translatedTitle": "If-Else de base",
+  "translation": {
+    "title": "If-Else de base",
+    "group": "Conditionnelles",
+    "options": [
+      {
+        "text": "Le fichier existe"
+      },
+      {
+        "text": "Le fichier n'existe pas, après un diagnostic de test"
+      },
+      {
+        "text": "Erreur uniquement"
+      },
+      {
+        "text": "Doubles crochets manquants"
+      },
+      {
+        "text": "Rien"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "Que produit ce script si le fichier `cats.txt` EXISTE ?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "Avez-vous remarqué l'espace manquant avant le crochet fermant ?\n    \n    Bash est très pointilleux ici : les espaces sont obligatoires à l'intérieur des expressions entre crochets.\n\n    Parce que l'espace manquant fait que la commande `[` ne voit pas de `]` fermant, Bash affiche un diagnostic, considère le test comme échoué et continue vers la branche `else`.\n\n    La syntaxe correcte est :",
+      "Remarque : Les doubles crochets `[[ ]]` sont **recommandés** pour les expressions conditionnelles. [Voir BashFAQ.](https://mywiki.wooledge.org/BashFAQ/031)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"If-Else de base\",\n  \"group\": \"Conditionnelles\",\n  \"options\": [\n    { \"text\": \"Le fichier existe\" },\n    { \"text\": \"Le fichier n'existe pas, après un diagnostic de test\" },\n    { \"text\": \"Erreur uniquement\" },\n    { \"text\": \"Doubles crochets manquants\" },\n    { \"text\": \"Rien\" }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"Que produit ce script si le fichier `cats.txt` EXISTE ?\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"Avez-vous remarqué l'espace manquant avant le crochet fermant ?\\n    \\n    Bash est très pointilleux ici : les espaces sont obligatoires à l'intérieur des expressions entre crochets.\\n\\n    Parce que l'espace manquant fait que la commande `[` ne voit pas de `]` fermant, Bash affiche un diagnostic, considère le test comme échoué et continue vers la branche `else`.\\n\\n    La syntaxe correcte est :\",\n    \"Remarque : Les doubles crochets `[[ ]]` sont **recommandés** pour les expressions conditionnelles. [Voir BashFAQ.](https://mywiki.wooledge.org/BashFAQ/031)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 903,
+    "outputTokens": 1787,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 11161,
+    "providerCostUsd": 0.0008954,
+    "providerUpstreamCostUsd": 0.0008954,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00012642000000000003,
+    "outputUsd": 0.00050036,
+    "totalUsd": 0.0006267800000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

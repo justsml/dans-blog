@@ -1,0 +1,52 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Positive Look-ahead",
+  "translatedTitle": "Положительная опережающая проверка",
+  "translation": {
+    "title": "Положительная опережающая проверка",
+    "group": "Look-ahead",
+    "options": [
+      {
+        "text": "[\"$100\", \"€50\"]"
+      },
+      {
+        "text": "[\"100\", \"50\"]"
+      },
+      {
+        "text": "[\"$\", \"€\"]"
+      },
+      {
+        "text": "[]"
+      },
+      {
+        "text": "null"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "Что вернет этот код?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "Этот паттерн ничего не найдет, потому что опережающая проверка (look-ahead) работает в другую сторону! Если вам нужны цифры, перед которыми стоят `$` или `€`, используйте ретроспективную проверку (look-behind): `/(?<=[\\$€])\\d+/g`.\n\n    Опережающие проверки (look-aheads) проверяют то, что идет *после* текущей позиции. Написанный паттерн ищет:\n    - Одну или более цифр (`\\d+`)\n    - За которыми следует (`(?=...)`) либо $ либо € (`[\\$€]`)\n\n    Так как в строке нет чисел, за которыми следуют символы валют (они стоят перед ними), совпадений не будет.\n\n    [Узнать больше об утверждениях look-ahead](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Положительная опережающая проверка\",\n  \"group\": \"Look-ahead\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"$100\\\", \\\"€50\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"100\\\", \\\"50\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"$\\\", \\\"€\\\"]\"\n    },\n    {\n      \"text\": \"[]\"\n    },\n    {\n      \"text\": \"null\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"Что вернет этот код?\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"js\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"Этот паттерн ничего не найдет, потому что опережающая проверка (look-ahead) работает в другую сторону! Если вам нужны цифры, перед которыми стоят `$` или `€`, используйте ретроспективную проверку (look-behind): `/(?<=[\\\\$€])\\\\d+/g`.\\n\\n    Опережающие проверки (look-aheads) проверяют то, что идет *после* текущей позиции. Написанный паттерн ищет:\\n    - Одну или более цифр (`\\\\d+`)\\n    - За которыми следует (`(?=...)`) либо $ либо € (`[\\\\$€]`)\\n\\n    Так как в строке нет чисел, за которыми следуют символы валют (они стоят перед ними), совпадений не будет.\\n\\n    [Узнать больше об утверждениях look-ahead](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 954,
+    "outputTokens": 451,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 3916,
+    "providerCostUsd": 0.00183,
+    "providerUpstreamCostUsd": 0.00183,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000477,
+    "outputUsd": 0.001353,
+    "totalUsd": 0.00183,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

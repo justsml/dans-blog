@@ -1,0 +1,50 @@
+{
+  "index": 7,
+  "attempt": 1,
+  "originalTitle": "Conversation History Management",
+  "translatedTitle": "Gestión del Historial de Conversación",
+  "translation": {
+    "title": "Gestión del Historial de Conversación",
+    "group": "Gestión de Tokens",
+    "options": [
+      {
+        "text": "Enviar siempre el historial completo de la conversación"
+      },
+      {
+        "text": "Resumir los mensajes antiguos cuando el historial exceda el presupuesto de tokens",
+        "hint": "Esta es una estrategia pragmática para mantener el contexto sin agotar los límites."
+      },
+      {
+        "text": "Eliminar mensajes antiguos: el modelo tiene memoria persistente"
+      },
+      {
+        "text": "Almacenar el historial en una base de datos vectorial y recuperar los turnos relevantes"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "En una aplicación de chat de varios turnos, ¿cuál es la estrategia correcta cuando el historial de la conversación se vuelve muy extenso?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "Los LLMs no tienen memoria persistente. Cada llamada a la API es apátrida (stateless): envías el contexto completo y recibes una respuesta. La \"memoria\" de una conversación es enteramente el historial de mensajes que incluyes en cada solicitud.\n\nCuando ese historial crece más allá de tu presupuesto, las opciones son:\n1. **Resumir**: Comprimir los turnos más antiguos en un resumen continuo y mantener los turnos recientes de forma literal.\n2. **Ventana deslizante (Sliding window)**: Mantener los últimos N turnos y descartar los anteriores.\n3. **Recuperación selectiva**: Generar embeddings de los turnos de la conversación y recuperar los relevantes para cada consulta (complejo pero potente).\n\nEl truncamiento simple (cortar mensajes antiguos para que quepan) es la peor opción porque elimina silenciosamente contexto que el modelo podría necesitar.\n\nLa recuperación de historial mediante bases de datos vectoriales es teóricamente atractiva, pero suele ser excesiva para la mayoría de las aplicaciones de chat. El resumen es la opción pragmática por defecto."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Gestión del Historial de Conversación\",\n  \"group\": \"Gestión de Tokens\",\n  \"options\": [\n    {\n      \"text\": \"Enviar siempre el historial completo de la conversación\"\n    },\n    {\n      \"text\": \"Resumir los mensajes antiguos cuando el historial exceda el presupuesto de tokens\",\n      \"hint\": \"Esta es una estrategia pragmática para mantener el contexto sin agotar los límites.\"\n    },\n    {\n      \"text\": \"Eliminar mensajes antiguos: el modelo tiene memoria persistente\"\n    },\n    {\n      \"text\": \"Almacenar el historial en una base de datos vectorial y recuperar los turnos relevantes\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"En una aplicación de chat de varios turnos, ¿cuál es la estrategia correcta cuando el historial de la conversación se vuelve muy extenso?\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"Los LLMs no tienen memoria persistente. Cada llamada a la API es apátrida (stateless): envías el contexto completo y recibes una respuesta. La \\\"memoria\\\" de una conversación es enteramente el historial de mensajes que incluyes en cada solicitud.\\n\\nCuando ese historial crece más allá de tu presupuesto, las opciones son:\\n1. **Resumir**: Comprimir los turnos más antiguos en un resumen continuo y mantener los turnos recientes de forma literal.\\n2. **Ventana deslizante (Sliding window)**: Mantener los últimos N turnos y descartar los anteriores.\\n3. **Recuperación selectiva**: Generar embeddings de los turnos de la conversación y recuperar los relevantes para cada consulta (complejo pero potente).\\n\\nEl truncamiento simple (cortar mensajes antiguos para que quepan) es la peor opción porque elimina silenciosamente contexto que el modelo podría necesitar.\\n\\nLa recuperación de historial mediante bases de datos vectoriales es teóricamente atractiva, pero suele ser excesiva para la mayoría de las aplicaciones de chat. El resumen es la opción pragmática por defecto.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 864,
+    "outputTokens": 475,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 4117,
+    "providerCostUsd": 0.001857,
+    "providerUpstreamCostUsd": 0.001857,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000432,
+    "outputUsd": 0.001425,
+    "totalUsd": 0.0018570000000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

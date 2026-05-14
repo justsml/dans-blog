@@ -1,0 +1,52 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "Greedy vs Non-Greedy",
+  "translatedTitle": "Жадность против нежадности",
+  "translation": {
+    "title": "Жадность против нежадности",
+    "group": "Базовое соответствие",
+    "options": [
+      {
+        "text": "[\"<div>Hello</div>\"]"
+      },
+      {
+        "text": "[\"<div>\", \"</div>\"]"
+      },
+      {
+        "text": "[\"<div>Hello</div><div>World</div>\"]"
+      },
+      {
+        "text": "[\"<div>Hello</div>\", \"<div>World</div>\"]"
+      },
+      {
+        "text": "[\"Hello\", \"World\"]"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "Что вернет этот поиск?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "Паттерн `/<div>.*?<\\/div>/g` использует «нежадный» (ленивый) поиск с помощью `*?`, что означает:\n    - Найти `<div>`\n    - Найти любой символ (`.*`), но как можно меньше раз (`?`)\n    - Пока не встретится `</div>`\n    - Флаг `g` заставляет найти все вхождения\n\n    Без символа `?` «жадный» квантификатор `.*` захватил бы всё от первого `<div>` до самого последнего `</div>`, выдав одно огромное совпадение. С `?` он находит каждую пару по отдельности.\n\n    [Узнать больше о жадном и ленивом поиске](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Жадность против нежадности\",\n  \"group\": \"Базовое соответствие\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"<div>Hello</div>\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"<div>\\\", \\\"</div>\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"<div>Hello</div><div>World</div>\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"<div>Hello</div>\\\", \\\"<div>World</div>\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"Hello\\\", \\\"World\\\"]\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"Что вернет этот поиск?\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"js\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"Паттерн `/<div>.*?<\\\\/div>/g` использует «нежадный» (ленивый) поиск с помощью `*?`, что означает:\\n    - Найти `<div>`\\n    - Найти любой символ (`.*`), но как можно меньше раз (`?`)\\n    - Пока не встретится `</div>`\\n    - Флаг `g` заставляет найти все вхождения\\n\\n    Без символа `?` «жадный» квантификатор `.*` захватил бы всё от первого `<div>` до самого последнего `</div>`, выдав одно огромное совпадение. С `?` он находит каждую пару по отдельности.\\n\\n    [Узнать больше о жадном и ленивом поиске](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 964,
+    "outputTokens": 451,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 3754,
+    "providerCostUsd": 0.001835,
+    "providerUpstreamCostUsd": 0.001835,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000482,
+    "outputUsd": 0.001353,
+    "totalUsd": 0.001835,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

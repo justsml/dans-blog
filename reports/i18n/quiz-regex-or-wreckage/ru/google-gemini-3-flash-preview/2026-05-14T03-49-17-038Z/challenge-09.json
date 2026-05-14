@@ -1,0 +1,49 @@
+{
+  "index": 8,
+  "attempt": 1,
+  "originalTitle": "Capturing Groups",
+  "translatedTitle": "Захватывающие группы",
+  "translation": {
+    "title": "Захватывающие группы",
+    "group": "Базовое соответствие",
+    "options": [
+      {
+        "text": "[\"2029-12-31\"]"
+      },
+      {
+        "text": "[\"2029\", \"12\", \"31\"]"
+      },
+      {
+        "text": "[\"20\", \"29\", \"12\", \"31\"]"
+      },
+      {
+        "text": "null"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "Что вернет этот код?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "Шаблон использует три захватывающие группы:\n    1. `(\\d{4})` захватывает год\n    2. `(\\d{2})` захватывает месяц\n    3. `(\\d{2})` захватывает день\n\n    Метод `match()` без флага `g` возвращает:\n    - Индекс 0: Полное совпадение\n    - Индекс 1 и далее: Содержимое захватывающих групп\n\n    Использование `slice(1)` — это распространенный прием, позволяющий получить только значения захваченных групп.\n\n    [Узнать больше о группах и обратных ссылках](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Groups_and_Backreferences)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Захватывающие группы\",\n  \"group\": \"Базовое соответствие\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"2029-12-31\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"2029\\\", \\\"12\\\", \\\"31\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"20\\\", \\\"29\\\", \\\"12\\\", \\\"31\\\"]\"\n    },\n    {\n      \"text\": \"null\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"Что вернет этот код?\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"Шаблон использует три захватывающие группы:\\n    1. `(\\\\d{4})` захватывает год\\n    2. `(\\\\d{2})` захватывает месяц\\n    3. `(\\\\d{2})` захватывает день\\n\\n    Метод `match()` без флага `g` возвращает:\\n    - Индекс 0: Полное совпадение\\n    - Индекс 1 и далее: Содержимое захватывающих групп\\n\\n    Использование `slice(1)` — это распространенный прием, позволяющий получить только значения захваченных групп.\\n\\n    [Узнать больше о группах и обратных ссылках](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Groups_and_Backreferences)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 933,
+    "outputTokens": 367,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 3316,
+    "providerCostUsd": 0.0015675,
+    "providerUpstreamCostUsd": 0.0015675,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.0004665,
+    "outputUsd": 0.001101,
+    "totalUsd": 0.0015674999999999999,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

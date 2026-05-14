@@ -1,0 +1,49 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Hash Join Eligibility",
+  "translatedTitle": "ハッシュ結合の適合性",
+  "translation": {
+    "title": "ハッシュ結合の適合性",
+    "group": "SQLの内部構造",
+    "options": [
+      {
+        "text": "ON a.id = b.id"
+      },
+      {
+        "text": "ON a.id > b.id"
+      },
+      {
+        "text": "ON a.id >= b.id"
+      },
+      {
+        "text": "HASH JOIN ON a.id = b.id ..."
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "PostgreSQLにおいて、`HASH JOIN`を使用できるのはどの`ON`条件ですか？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "ハッシュ結合（hash join）は、`ON`句に等価条件（`=`）がある場合に実行可能です。\n\n    - `=` はハッシュ結合における主要な述語の形式です\n    - `>` や `>=` はハッシュ結合の述語にはなりません\n    - `HASH JOIN` という構文はPostgreSQLでは無効です\n\n    なお、テーブルのサイズ、統計情報、インデックス、およびメモリ設定によっては、プランナがネステッドループ結合やマージ結合を選択する場合もあります。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"ハッシュ結合の適合性\",\n  \"group\": \"SQLの内部構造\",\n  \"options\": [\n    {\n      \"text\": \"ON a.id = b.id\"\n    },\n    {\n      \"text\": \"ON a.id > b.id\"\n    },\n    {\n      \"text\": \"ON a.id >= b.id\"\n    },\n    {\n      \"text\": \"HASH JOIN ON a.id = b.id ...\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"PostgreSQLにおいて、`HASH JOIN`を使用できるのはどの`ON`条件ですか？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"ハッシュ結合（hash join）は、`ON`句に等価条件（`=`）がある場合に実行可能です。\\n\\n    - `=` はハッシュ結合における主要な述語の形式です\\n    - `>` や `>=` はハッシュ結合の述語にはなりません\\n    - `HASH JOIN` という構文はPostgreSQLでは無効です\\n\\n    なお、テーブルのサイズ、統計情報、インデックス、およびメモリ設定によっては、プランナがネステッドループ結合やマージ結合を選択する場合もあります。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 806,
+    "outputTokens": 302,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 3607,
+    "providerCostUsd": 0.001309,
+    "providerUpstreamCostUsd": 0.001309,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000403,
+    "outputUsd": 0.0009060000000000001,
+    "totalUsd": 0.001309,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

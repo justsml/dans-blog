@@ -1,0 +1,52 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "COUNT and NULL",
+  "translatedTitle": "COUNT と NULL",
+  "translation": {
+    "title": "COUNT と NULL",
+    "group": "NULL の振る舞い",
+    "options": [
+      {
+        "text": "100"
+      },
+      {
+        "text": "90"
+      },
+      {
+        "text": "10"
+      },
+      {
+        "text": "1"
+      },
+      {
+        "text": "0"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "このクエリは何 *行* を返しますか？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "さて、これは少し意地悪な問題でした。落とし穴は、`x = NULL` はどの行にも決して一致せず、常にカウントが `0` である 1 行を返すという点です。\n\n`NULL` は「未知の値」であるため、他の何とも比較できず、自分自身とさえ比較できません。\n\n`NULL` 値を正しくチェックする方法は `IS NULL` を使うことです。\n\n例:"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"COUNT と NULL\",\n  \"group\": \"NULL の振る舞い\",\n  \"options\": [\n    {\n      \"text\": \"100\"\n    },\n    {\n      \"text\": \"90\"\n    },\n    {\n      \"text\": \"10\"\n    },\n    {\n      \"text\": \"1\"\n    },\n    {\n      \"text\": \"0\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"このクエリは何 *行* を返しますか？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"さて、これは少し意地悪な問題でした。落とし穴は、`x = NULL` はどの行にも決して一致せず、常にカウントが `0` である 1 行を返すという点です。\\n\\n`NULL` は「未知の値」であるため、他の何とも比較できず、自分自身とさえ比較できません。\\n\\n`NULL` 値を正しくチェックする方法は `IS NULL` を使うことです。\\n\\n例:\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 820,
+    "outputTokens": 264,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 3269,
+    "providerCostUsd": 0.001202,
+    "providerUpstreamCostUsd": 0.001202,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00041,
+    "outputUsd": 0.0007920000000000001,
+    "totalUsd": 0.001202,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

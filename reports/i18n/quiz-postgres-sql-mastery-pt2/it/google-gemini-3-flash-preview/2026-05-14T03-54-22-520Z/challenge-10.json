@@ -1,0 +1,52 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Partial Indexes",
+  "translatedTitle": "Indici Parziali",
+  "translation": {
+    "title": "Indici Parziali",
+    "group": "Indicizzazione",
+    "options": [
+      {
+        "text": "Sintassi non valida"
+      },
+      {
+        "text": "Crea indici duplicati"
+      },
+      {
+        "text": "Indicizza solo gli studenti attivi"
+      },
+      {
+        "text": "Indicizza prima gli studenti attivi"
+      },
+      {
+        "text": "Fornisce un suggerimento (hint) al query planner"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "Cosa fa questo incantesimo?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "Questo trucco è chiamato `Partial Index` (Indice Parziale).\n\n    Sono utili per ridurre l'uso del disco e velocizzare le query quando viene interrogato tipicamente solo un sottoinsieme di righe.\n\n    Postgres utilizzerà l'indice solo quando la condizione `status = 'active'` è presente nella query.\n\n    **Promemoria:** Postgres non supporta le 'query hints' come altri RDBMS. Il query planner deciderà autonomamente quando utilizzare gli indici appropriati."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Indici Parziali\",\n  \"group\": \"Indicizzazione\",\n  \"options\": [\n    {\n      \"text\": \"Sintassi non valida\"\n    },\n    {\n      \"text\": \"Crea indici duplicati\"\n    },\n    {\n      \"text\": \"Indicizza solo gli studenti attivi\"\n    },\n    {\n      \"text\": \"Indicizza prima gli studenti attivi\"\n    },\n    {\n      \"text\": \"Fornisce un suggerimento (hint) al query planner\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"Cosa fa questo incantesimo?\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"sql\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"Questo trucco è chiamato `Partial Index` (Indice Parziale).\\n\\n    Sono utili per ridurre l'uso del disco e velocizzare le query quando viene interrogato tipicamente solo un sottoinsieme di righe.\\n\\n    Postgres utilizzerà l'indice solo quando la condizione `status = 'active'` è presente nella query.\\n\\n    **Promemoria:** Postgres non supporta le 'query hints' come altri RDBMS. Il query planner deciderà autonomamente quando utilizzare gli indici appropriati.\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 796,
+    "outputTokens": 351,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2852,
+    "providerCostUsd": 0.001451,
+    "providerUpstreamCostUsd": 0.001451,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000398,
+    "outputUsd": 0.0010530000000000001,
+    "totalUsd": 0.001451,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "index": 11,
+  "attempt": 1,
+  "originalTitle": "Prompt Caching",
+  "translatedTitle": "Prompt Caching",
+  "translation": {
+    "title": "Prompt Caching",
+    "group": "Avanzado",
+    "options": [
+      {
+        "text": "El almacenamiento en caché guarda las respuestas y las reproduce para consultas idénticas",
+        "hint": "Eso sería almacenamiento de respuestas (response caching), no de prompts."
+      },
+      {
+        "text": "El almacenamiento en caché guarda pares KV compilados para prefijos de prompt estáticos, reduciendo el costo de los tokens de entrada"
+      },
+      {
+        "text": "El almacenamiento en caché solo está disponible en los modelos de OpenAI",
+        "hint": "Anthropic y otros proveedores también lo soportan."
+      },
+      {
+        "text": "El almacenamiento en caché es automático y no requiere configuración por parte del desarrollador",
+        "hint": "Normalmente requiere estructurar el prompt de forma específica o usar encabezados."
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "¿Qué es el \"prompt caching\" en el contexto de las APIs de LLM (Anthropic, OpenAI)?\n    <p className=\"text-sm\">Última verificación: 8 de mayo de 2026. Los controles de caché y los precios de los proveedores cambian rápidamente.</p>"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "El prompt caching reutiliza el **KV cache / estado del prefijo del prompt** computado para prefijos de prompt estáticos cuando tu proveedor lo soporta. En solicitudes posteriores con el mismo prefijo, el modelo puede omitir el reprocesamiento de esos tokens, lo que reduce la latencia y puede disminuir drásticamente el costo.\n\n    Esto no es almacenamiento en caché de respuestas. El modelo sigue generando una respuesta nueva cada vez. Simplemente estás evitando volver a tokenizar y volver a calcular la atención para la parte del prompt que no cambia.\n\n    Se recomienda para: prompts de sistema extensos, documentos estáticos, definiciones de herramientas, ejemplos few-shot — cualquier cosa que sea igual en muchas solicitudes. El prefijo almacenado en caché debe estar al *inicio* de tu prompt.\n\n    No es lo mismo que: deduplicación semántica, memorización de respuestas o almacenamiento en caché en la capa de aplicación."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Prompt Caching\",\n  \"group\": \"Avanzado\",\n  \"options\": [\n    {\n      \"text\": \"El almacenamiento en caché guarda las respuestas y las reproduce para consultas idénticas\",\n      \"hint\": \"Eso sería almacenamiento de respuestas (response caching), no de prompts.\"\n    },\n    {\n      \"text\": \"El almacenamiento en caché guarda pares KV compilados para prefijos de prompt estáticos, reduciendo el costo de los tokens de entrada\"\n    },\n    {\n      \"text\": \"El almacenamiento en caché solo está disponible en los modelos de OpenAI\",\n      \"hint\": \"Anthropic y otros proveedores también lo soportan.\"\n    },\n    {\n      \"text\": \"El almacenamiento en caché es automático y no requiere configuración por parte del desarrollador\",\n      \"hint\": \"Normalmente requiere estructurar el prompt de forma específica o usar encabezados.\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"¿Qué es el \\\"prompt caching\\\" en el contexto de las APIs de LLM (Anthropic, OpenAI)?\\n    <p className=\\\"text-sm\\\">Última verificación: 8 de mayo de 2026. Los controles de caché y los precios de los proveedores cambian rápidamente.</p>\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"El prompt caching reutiliza el **KV cache / estado del prefijo del prompt** computado para prefijos de prompt estáticos cuando tu proveedor lo soporta. En solicitudes posteriores con el mismo prefijo, el modelo puede omitir el reprocesamiento de esos tokens, lo que reduce la latencia y puede disminuir drásticamente el costo.\\n\\n    Esto no es almacenamiento en caché de respuestas. El modelo sigue generando una respuesta nueva cada vez. Simplemente estás evitando volver a tokenizar y volver a calcular la atención para la parte del prompt que no cambia.\\n\\n    Se recomienda para: prompts de sistema extensos, documentos estáticos, definiciones de herramientas, ejemplos few-shot — cualquier cosa que sea igual en muchas solicitudes. El prefijo almacenado en caché debe estar al *inicio* de tu prompt.\\n\\n    No es lo mismo que: deduplicación semántica, memorización de respuestas o almacenamiento en caché en la capa de aplicación.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 891,
+    "outputTokens": 516,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 4437,
+    "providerCostUsd": 0.0019935,
+    "providerUpstreamCostUsd": 0.0019935,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.0004455,
+    "outputUsd": 0.001548,
+    "totalUsd": 0.0019935,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

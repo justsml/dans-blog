@@ -1,0 +1,49 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Hash Join Eligibility",
+  "translatedTitle": "Éligibilité au Hash Join",
+  "translation": {
+    "title": "Éligibilité au Hash Join",
+    "group": "Internes SQL",
+    "options": [
+      {
+        "text": "ON a.id = b.id"
+      },
+      {
+        "text": "ON a.id > b.id"
+      },
+      {
+        "text": "ON a.id >= b.id"
+      },
+      {
+        "text": "HASH JOIN ON a.id = b.id ..."
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "Quelle condition `ON` PostgreSQL peut-il utiliser pour un `HASH JOIN` ?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "Une jointure par hachage (hash join) est possible avec une condition d'égalité (`=`) dans la clause `ON`.\n\n    - `=` est la forme de prédicat clé pour les hash joins\n    - `>` et `>=` ne sont pas des prédicats de hash join\n    - `HASH JOIN` n'est pas une syntaxe valide dans PostgreSQL\n\n    Le planificateur peut tout de même choisir une boucle imbriquée (nested loop) ou une jointure par fusion (merge join) selon la taille des tables, les statistiques, les index et les paramètres de mémoire."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Éligibilité au Hash Join\",\n  \"group\": \"Internes SQL\",\n  \"options\": [\n    {\n      \"text\": \"ON a.id = b.id\"\n    },\n    {\n      \"text\": \"ON a.id > b.id\"\n    },\n    {\n      \"text\": \"ON a.id >= b.id\"\n    },\n    {\n      \"text\": \"HASH JOIN ON a.id = b.id ...\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"Quelle condition `ON` PostgreSQL peut-il utiliser pour un `HASH JOIN` ?\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"Une jointure par hachage (hash join) est possible avec une condition d'égalité (`=`) dans la clause `ON`.\\n\\n    - `=` est la forme de prédicat clé pour les hash joins\\n    - `>` et `>=` ne sont pas des prédicats de hash join\\n    - `HASH JOIN` n'est pas une syntaxe valide dans PostgreSQL\\n\\n    Le planificateur peut tout de même choisir une boucle imbriquée (nested loop) ou une jointure par fusion (merge join) selon la taille des tables, les statistiques, les index et les paramètres de mémoire.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 804,
+    "outputTokens": 313,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2375,
+    "providerCostUsd": 0.001341,
+    "providerUpstreamCostUsd": 0.001341,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000402,
+    "outputUsd": 0.0009390000000000001,
+    "totalUsd": 0.0013410000000000002,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

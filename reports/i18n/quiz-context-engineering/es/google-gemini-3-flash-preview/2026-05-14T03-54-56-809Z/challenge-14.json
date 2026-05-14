@@ -1,0 +1,53 @@
+{
+  "index": 13,
+  "attempt": 1,
+  "originalTitle": "Context Engineering vs. Fine-Tuning",
+  "translatedTitle": "Ingeniería de Contexto vs. Fine-Tuning",
+  "translation": {
+    "title": "Ingeniería de Contexto vs. Fine-Tuning",
+    "group": "Experto",
+    "options": [
+      {
+        "text": "El fine-tuning siempre es mejor; la ingeniería de contexto es solo un parche",
+        "hint": "No necesariamente. El contexto es más flexible y rápido de iterar."
+      },
+      {
+        "text": "La ingeniería de contexto es gratuita; el fine-tuning es caro; usa siempre ingeniería de contexto",
+        "hint": "El costo no es el único factor, y el contexto consume tokens en cada llamada."
+      },
+      {
+        "text": "La ingeniería de contexto cambia el comportamiento por petición; el fine-tuning cambia los pesos del modelo permanentemente",
+        "hint": "¡Exacto! Uno es dinámico y el otro es estructural."
+      },
+      {
+        "text": "Son nombres diferentes para la misma técnica",
+        "hint": "Son procesos técnica y conceptualmente distintos."
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "¿Cuál es la distinción clave entre la ingeniería de contexto y el fine-tuning, y cuándo tiene sentido realmente aplicar fine-tuning?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "La **ingeniería de contexto** moldea el comportamiento del modelo a través del prompt: instrucciones del sistema, ejemplos *few-shot* y contexto recuperado. Es por petición, reversible y no requiere entrenamiento.\n\n**Fine-tuning** actualiza los pesos del modelo con tus datos. Los cambios son permanentes (para ese *checkpoint*) y se aplican a cada inferencia.\n\nEl fine-tuning es genuinamente mejor cuando:\n- Necesitas un estilo o formato consistente que el modelo no puede seguir de forma fiable solo con instrucciones.\n- Tu tarea requiere un comportamiento repetible en patrones específicos de un dominio que el prompting y la recuperación no resuelven.\n- Necesitas reducir la longitud del prompt; el comportamiento ajustado mediante fine-tuning no necesita explicarse en cada petición.\n- Estás ejecutando muchas peticiones donde los ejemplos *few-shot* constantes consumen una cantidad significativa de tokens.\n\nEl fine-tuning es excesivo cuando:\n- Tus instrucciones caben en un prompt de sistema.\n- Principalmente necesitas datos actuales o propietarios que pueden recuperarse en tiempo de ejecución.\n- Los requisitos cambian con frecuencia (tendrías que volver a realizar el fine-tuning).\n- No has agotado primero las posibilidades de la ingeniería de contexto.\n\nEl orden correcto: domina primero la ingeniería de contexto. Haz fine-tuning cuando se demuestre que no es suficiente."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Ingeniería de Contexto vs. Fine-Tuning\",\n  \"group\": \"Experto\",\n  \"options\": [\n    {\n      \"text\": \"El fine-tuning siempre es mejor; la ingeniería de contexto es solo un parche\",\n      \"hint\": \"No necesariamente. El contexto es más flexible y rápido de iterar.\"\n    },\n    {\n      \"text\": \"La ingeniería de contexto es gratuita; el fine-tuning es caro; usa siempre ingeniería de contexto\",\n      \"hint\": \"El costo no es el único factor, y el contexto consume tokens en cada llamada.\"\n    },\n    {\n      \"text\": \"La ingeniería de contexto cambia el comportamiento por petición; el fine-tuning cambia los pesos del modelo permanentemente\",\n      \"hint\": \"¡Exacto! Uno es dinámico y el otro es estructural.\"\n    },\n    {\n      \"text\": \"Son nombres diferentes para la misma técnica\",\n      \"hint\": \"Son procesos técnica y conceptualmente distintos.\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"¿Cuál es la distinción clave entre la ingeniería de contexto y el fine-tuning, y cuándo tiene sentido realmente aplicar fine-tuning?\"\n  ],\n  \"questionCode\": [],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"La **ingeniería de contexto** moldea el comportamiento del modelo a través del prompt: instrucciones del sistema, ejemplos *few-shot* y contexto recuperado. Es por petición, reversible y no requiere entrenamiento.\\n\\n**Fine-tuning** actualiza los pesos del modelo con tus datos. Los cambios son permanentes (para ese *checkpoint*) y se aplican a cada inferencia.\\n\\nEl fine-tuning es genuinamente mejor cuando:\\n- Necesitas un estilo o formato consistente que el modelo no puede seguir de forma fiable solo con instrucciones.\\n- Tu tarea requiere un comportamiento repetible en patrones específicos de un dominio que el prompting y la recuperación no resuelven.\\n- Necesitas reducir la longitud del prompt; el comportamiento ajustado mediante fine-tuning no necesita explicarse en cada petición.\\n- Estás ejecutando muchas peticiones donde los ejemplos *few-shot* constantes consumen una cantidad significativa de tokens.\\n\\nEl fine-tuning es excesivo cuando:\\n- Tus instrucciones caben en un prompt de sistema.\\n- Principalmente necesitas datos actuales o propietarios que pueden recuperarse en tiempo de ejecución.\\n- Los requisitos cambian con frecuencia (tendrías que volver a realizar el fine-tuning).\\n- No has agotado primero las posibilidades de la ingeniería de contexto.\\n\\nEl orden correcto: domina primero la ingeniería de contexto. Haz fine-tuning cuando se demuestre que no es suficiente.\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 973,
+    "outputTokens": 626,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 4963,
+    "providerCostUsd": 0.0023645,
+    "providerUpstreamCostUsd": 0.0023645,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.0004865,
+    "outputUsd": 0.0018780000000000001,
+    "totalUsd": 0.0023645000000000003,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

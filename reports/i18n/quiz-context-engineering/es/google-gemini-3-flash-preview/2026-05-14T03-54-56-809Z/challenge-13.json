@@ -1,0 +1,54 @@
+{
+  "index": 12,
+  "attempt": 1,
+  "originalTitle": "Grounding vs. Hallucination",
+  "translatedTitle": "Grounding vs. Alucinación",
+  "translation": {
+    "title": "Grounding vs. Alucinación",
+    "group": "Avanzado",
+    "options": [
+      {
+        "text": "Decirle al modelo \"no alucines\" en el system prompt",
+        "hint": "Los modelos no tienen conciencia de su propia veracidad."
+      },
+      {
+        "text": "Usar una temperatura más alta para generar respuestas más seguras",
+        "hint": "Una temperatura alta aumenta la aleatoriedad, no la precisión."
+      },
+      {
+        "text": "Proporcionar documentos fuente recuperados e instruir al modelo para que los cite",
+        "hint": "Esto se conoce como grounding (anclaje)."
+      },
+      {
+        "text": "Usar un modelo más grande; la alucinación solo ocurre en modelos pequeños",
+        "hint": "Incluso los modelos más potentes pueden inventar información."
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "La técnica más efectiva para reducir la alucinación en un sistema de IA en producción es:"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "Instruir a un modelo para que no alucine no detiene la alucinación; el modelo no tiene una señal introspectiva confiable de \"me estoy inventando esto\". Simplemente significa que el modelo te dirá con total seguridad que no está inventando nada mientras lo hace.\n\nLo que realmente funciona: **grounding** (anclaje). Dale al modelo la información que necesita para responder correctamente y restríngelo a esa información:",
+      "Luego, valida la salida: verifica que las afirmaciones en la respuesta aparezcan en el contexto recuperado. Este es el control de anclaje por citas; consulta la discusión sobre evaluación de RAG para la implementación.\n\nLos modelos más grandes alucinan menos en promedio, pero todos los modelos alucinan. El grounding es la estrategia de mitigación, no el tamaño del modelo."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Grounding vs. Alucinación\",\n  \"group\": \"Avanzado\",\n  \"options\": [\n    {\n      \"text\": \"Decirle al modelo \\\"no alucines\\\" en el system prompt\",\n      \"hint\": \"Los modelos no tienen conciencia de su propia veracidad.\"\n    },\n    {\n      \"text\": \"Usar una temperatura más alta para generar respuestas más seguras\",\n      \"hint\": \"Una temperatura alta aumenta la aleatoriedad, no la precisión.\"\n    },\n    {\n      \"text\": \"Proporcionar documentos fuente recuperados e instruir al modelo para que los cite\",\n      \"hint\": \"Esto se conoce como grounding (anclaje).\"\n    },\n    {\n      \"text\": \"Usar un modelo más grande; la alucinación solo ocurre en modelos pequeños\",\n      \"hint\": \"Incluso los modelos más potentes pueden inventar información.\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"La técnica más efectiva para reducir la alucinación en un sistema de IA en producción es:\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"Instruir a un modelo para que no alucine no detiene la alucinación; el modelo no tiene una señal introspectiva confiable de \\\"me estoy inventando esto\\\". Simplemente significa que el modelo te dirá con total seguridad que no está inventando nada mientras lo hace.\\n\\nLo que realmente funciona: **grounding** (anclaje). Dale al modelo la información que necesita para responder correctamente y restríngelo a esa información:\",\n    \"Luego, valida la salida: verifica que las afirmaciones en la respuesta aparezcan en el contexto recuperado. Este es el control de anclaje por citas; consulta la discusión sobre evaluación de RAG para la implementación.\\n\\nLos modelos más grandes alucinan menos en promedio, pero todos los modelos alucinan. El grounding es la estrategia de mitigación, no el tamaño del modelo.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 876,
+    "outputTokens": 460,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 3819,
+    "providerCostUsd": 0.001818,
+    "providerUpstreamCostUsd": 0.001818,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000438,
+    "outputUsd": 0.0013800000000000002,
+    "totalUsd": 0.0018180000000000002,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "COUNT and NULL",
+  "translatedTitle": "COUNT и NULL",
+  "translation": {
+    "title": "COUNT и NULL",
+    "group": "Поведение NULL",
+    "options": [
+      {
+        "text": "100"
+      },
+      {
+        "text": "90"
+      },
+      {
+        "text": "10"
+      },
+      {
+        "text": "1"
+      },
+      {
+        "text": "0"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "Сколько *строк* вернет этот запрос?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "Ладно, это было с подвохом. Ловушка в том, что `x = NULL` никогда не найдет совпадений ни в одной строке, и запрос ВСЕГДА вернет одну строку со значением `0`.\n\n    Так как `NULL` — это неизвестное значение, его нельзя сравнивать ни с чем, даже с самим собой.\n    \n    Правильный способ проверки на `NULL` — использовать оператор `IS NULL`.\n\n    Пример:"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"COUNT и NULL\",\n  \"group\": \"Поведение NULL\",\n  \"options\": [\n    {\n      \"text\": \"100\"\n    },\n    {\n      \"text\": \"90\"\n    },\n    {\n      \"text\": \"10\"\n    },\n    {\n      \"text\": \"1\"\n    },\n    {\n      \"text\": \"0\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"Сколько *строк* вернет этот запрос?\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"Ладно, это было с подвохом. Ловушка в том, что `x = NULL` никогда не найдет совпадений ни в одной строке, и запрос ВСЕГДА вернет одну строку со значением `0`.\\n\\n    Так как `NULL` — это неизвестное значение, его нельзя сравнивать ни с чем, даже с самим собой.\\n    \\n    Правильный способ проверки на `NULL` — использовать оператор `IS NULL`.\\n\\n    Пример:\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 818,
+    "outputTokens": 269,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 3820,
+    "providerCostUsd": 0.001216,
+    "providerUpstreamCostUsd": 0.001216,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000409,
+    "outputUsd": 0.000807,
+    "totalUsd": 0.001216,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

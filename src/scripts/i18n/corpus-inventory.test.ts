@@ -7,7 +7,10 @@ import {
   collectSourcePosts,
   findPostDirectory,
   getMissingTranslationSlots,
+  getModifiedTranslationSlots,
   getPostPaths,
+  isTranslationFreshForSourceContents,
+  isTranslationOlderThanSourceContents,
   parseActiveLocales,
   stripDatePrefix,
 } from "./corpus-inventory.ts";
@@ -109,6 +112,64 @@ test("finds missing translation slots with latest-post and slug filters", () => 
   });
 
   expect(scopedSlots.map((slot) => `${slot.locale}/${slot.slug}`)).toEqual(["es/old-post"]);
+});
+
+test("finds modified translation slots when English modified is newer", () => {
+  const repoRoot = createTempRepo();
+  writePost(repoRoot, "2026-05-13--stale-post", "index.mdx", [
+    "---",
+    "title: Stale",
+    "modified: 2026-05-13",
+    "---",
+    "",
+    "New source",
+  ].join("\n"));
+  writeFileSync(
+    join(repoRoot, "src/content/posts/2026-05-13--stale-post/es/index.mdx"),
+    [
+      "---",
+      "title: Viejo",
+      "modified: '2026-05-12'",
+      "---",
+      "",
+      "Old translation",
+    ].join("\n"),
+    "utf8",
+  );
+  writeFileSync(
+    join(repoRoot, "src/content/posts/2026-05-13--stale-post/ja/index.mdx"),
+    [
+      "---",
+      "title: Fresh",
+      "modified: '2026-05-13'",
+      "---",
+      "",
+      "Fresh translation",
+    ].join("\n"),
+    "utf8",
+  );
+
+  const slots = getModifiedTranslationSlots({
+    locales: ["es", "ja", "zh"],
+    repoRoot,
+  });
+
+  expect(slots.map((slot) => `${slot.locale}/${slot.slug}`)).toEqual(["es/stale-post"]);
+});
+
+test("treats existing translations without modified as stale but skips sources without modified", () => {
+  expect(isTranslationOlderThanSourceContents(
+    ["---", "modified: 2026-05-13", "---", "", "Source"].join("\n"),
+    ["---", "title: Translation", "---", "", "Translation"].join("\n"),
+  )).toBe(true);
+  expect(isTranslationFreshForSourceContents(
+    ["---", "modified: 2026-05-13", "---", "", "Source"].join("\n"),
+    ["---", "modified: '2026-05-14'", "---", "", "Translation"].join("\n"),
+  )).toBe(true);
+  expect(isTranslationOlderThanSourceContents(
+    ["---", "title: Source", "---", "", "Source"].join("\n"),
+    ["---", "modified: '2026-05-12'", "---", "", "Translation"].join("\n"),
+  )).toBe(false);
 });
 
 test("validates active locales with a stable error message", () => {

@@ -1,0 +1,49 @@
+{
+  "index": 3,
+  "attempt": 1,
+  "originalTitle": "The Dot Metacharacter",
+  "translatedTitle": "Метасимвол точка",
+  "translation": {
+    "title": "Метасимвол точка",
+    "group": "Типичные ловушки",
+    "options": [
+      {
+        "text": "[\"hello\\nworld\"]"
+      },
+      {
+        "text": "[\"hello\", \"world\"]"
+      },
+      {
+        "text": "[\"hello\\n\", \"world\"]"
+      },
+      {
+        "text": "null"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "Что вернет этот код?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "Шаблон `\\w+` соответствует одному или нескольким словесным символам. Несмотря на наличие символа новой строки в строке, `\\w` находит:\n    - Буквы (a-z, A-Z)\n    - Цифры (0-9)\n    - Нижнее подчеркивание (_)\n\n    Таким образом, символ новой строки выступает в роли границы слова, и мы получаем два совпадения. Если бы мы использовали `.*`, он бы по умолчанию не совпал с символом новой строки (для этого понадобился бы флаг `s`).\n\n    [Узнать больше о метасимволах](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Character_Classes#types)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Метасимвол точка\",\n  \"group\": \"Типичные ловушки\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"hello\\\\nworld\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"hello\\\", \\\"world\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"hello\\\\n\\\", \\\"world\\\"]\"\n    },\n    {\n      \"text\": \"null\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"Что вернет этот код?\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"js\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"Шаблон `\\\\w+` соответствует одному или нескольким словесным символам. Несмотря на наличие символа новой строки в строке, `\\\\w` находит:\\n    - Буквы (a-z, A-Z)\\n    - Цифры (0-9)\\n    - Нижнее подчеркивание (_)\\n\\n    Таким образом, символ новой строки выступает в роли границы слова, и мы получаем два совпадения. Если бы мы использовали `.*`, он бы по умолчанию не совпал с символом новой строки (для этого понадобился бы флаг `s`).\\n\\n    [Узнать больше о метасимволах](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Character_Classes#types)\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 916,
+    "outputTokens": 388,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 3661,
+    "providerCostUsd": 0.001622,
+    "providerUpstreamCostUsd": 0.001622,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000458,
+    "outputUsd": 0.001164,
+    "totalUsd": 0.0016220000000000002,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

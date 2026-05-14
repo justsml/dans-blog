@@ -1,0 +1,52 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Partial Indexes",
+  "translatedTitle": "部分インデックス",
+  "translation": {
+    "title": "部分インデックス",
+    "group": "インデックス",
+    "options": [
+      {
+        "text": "構文エラー"
+      },
+      {
+        "text": "重複したインデックスを作成する"
+      },
+      {
+        "text": "アクティブな生徒のみをインデックスする"
+      },
+      {
+        "text": "アクティブな生徒を優先的にインデックスする"
+      },
+      {
+        "text": "クエリプランナにヒントを提供する"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "この呪文は何を実行するもの？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "このテクニックは `Partial Index`（部分インデックス）と呼ばれる。\n\n通常、行の特定のサブセットのみがクエリの対象となる場合に、ディスク使用量を削減し、クエリを高速化するのに役立つ。\n\nPostgresは、クエリ内に `status = 'active'` という条件が存在する場合にのみ、このインデックスを使用する。\n\n**注意:** Postgresは他のRDBMSのような「クエリヒント」をサポートしていない。クエリプランナが、適切なインデックスを使用するかどうかを自律的に判断する。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"部分インデックス\",\n  \"group\": \"インデックス\",\n  \"options\": [\n    {\n      \"text\": \"構文エラー\"\n    },\n    {\n      \"text\": \"重複したインデックスを作成する\"\n    },\n    {\n      \"text\": \"アクティブな生徒のみをインデックスする\"\n    },\n    {\n      \"text\": \"アクティブな生徒を優先的にインデックスする\"\n    },\n    {\n      \"text\": \"クエリプランナにヒントを提供する\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"この呪文は何を実行するもの？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"このテクニックは `Partial Index`（部分インデックス）と呼ばれる。\\n\\n通常、行の特定のサブセットのみがクエリの対象となる場合に、ディスク使用量を削減し、クエリを高速化するのに役立つ。\\n\\nPostgresは、クエリ内に `status = 'active'` という条件が存在する場合にのみ、このインデックスを使用する。\\n\\n**注意:** Postgresは他のRDBMSのような「クエリヒント」をサポートしていない。クエリプランナが、適切なインデックスを使用するかどうかを自律的に判断する。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 798,
+    "outputTokens": 303,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 3296,
+    "providerCostUsd": 0.001308,
+    "providerUpstreamCostUsd": 0.001308,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000399,
+    "outputUsd": 0.000909,
+    "totalUsd": 0.001308,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

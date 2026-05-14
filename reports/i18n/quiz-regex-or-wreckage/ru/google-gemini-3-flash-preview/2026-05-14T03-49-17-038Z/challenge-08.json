@@ -1,0 +1,52 @@
+{
+  "index": 7,
+  "attempt": 1,
+  "originalTitle": "Negative Look-behind",
+  "translatedTitle": "Отрицательная ретроспективная проверка",
+  "translation": {
+    "title": "Отрицательная ретроспективная проверка",
+    "group": "Look-behind",
+    "options": [
+      {
+        "text": "[\"123\"]"
+      },
+      {
+        "text": "[\"123\", \"456\"]"
+      },
+      {
+        "text": "[\"23\", \"456\"]"
+      },
+      {
+        "text": "[\"456\"]"
+      },
+      {
+        "text": "[]"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "Что совпадет с этим шаблоном?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "Отрицательная ретроспективная проверка `(?<!abc)` гарантирует, что перед цифрами не стоит строка \"abc\":\n    - ❌ \"123\" (предшествует \"abc\")\n    - ✅ \"23\" (предшествует \"abc1\")\n    - ✅ \"456\" (предшествует \"def\")\n\n    JavaScript поддерживает ретроспективные проверки (look-behind) в современных движках. В этом примере используется проверка фиксированной длины: `abc` всегда состоит из трех символов. Ретроспективные проверки переменной длины — это более сложный нюанс, зависящий от конкретного движка.\n\n    Примечание: Поддержка look-behind появилась в JavaScript относительно недавно. Проверьте [совместимость с браузерами](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#browser_compatibility), если вам нужно поддерживать старые браузеры."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Отрицательная ретроспективная проверка\",\n  \"group\": \"Look-behind\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"123\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"123\\\", \\\"456\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"23\\\", \\\"456\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"456\\\"]\"\n    },\n    {\n      \"text\": \"[]\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"Что совпадет с этим шаблоном?\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"Отрицательная ретроспективная проверка `(?<!abc)` гарантирует, что перед цифрами не стоит строка \\\"abc\\\":\\n    - ❌ \\\"123\\\" (предшествует \\\"abc\\\")\\n    - ✅ \\\"23\\\" (предшествует \\\"abc1\\\")\\n    - ✅ \\\"456\\\" (предшествует \\\"def\\\")\\n\\n    JavaScript поддерживает ретроспективные проверки (look-behind) в современных движках. В этом примере используется проверка фиксированной длины: `abc` всегда состоит из трех символов. Ретроспективные проверки переменной длины — это более сложный нюанс, зависящий от конкретного движка.\\n\\n    Примечание: Поддержка look-behind появилась в JavaScript относительно недавно. Проверьте [совместимость с браузерами](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#browser_compatibility), если вам нужно поддерживать старые браузеры.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 965,
+    "outputTokens": 408,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 3379,
+    "providerCostUsd": 0.0017065,
+    "providerUpstreamCostUsd": 0.0017065,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.0004825,
+    "outputUsd": 0.001224,
+    "totalUsd": 0.0017065000000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

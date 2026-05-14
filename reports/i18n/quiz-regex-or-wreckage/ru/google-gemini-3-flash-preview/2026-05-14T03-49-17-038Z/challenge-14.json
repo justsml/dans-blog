@@ -1,0 +1,49 @@
+{
+  "index": 13,
+  "attempt": 1,
+  "originalTitle": "Lazy vs Greedy Quantifiers",
+  "translatedTitle": "Ленивые и жадные квантификаторы",
+  "translation": {
+    "title": "Ленивые и жадные квантификаторы",
+    "group": "Базовое соответствие",
+    "options": [
+      {
+        "text": "[\"<b>bold</b>\"]"
+      },
+      {
+        "text": "[\"bold\"]"
+      },
+      {
+        "text": "[\"<b>\", \"</b>\"]"
+      },
+      {
+        "text": "[]"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "Что будет найдено?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "Шаблон использует ленивый поиск с помощью `*?`:\n    - `<b>`: Соответствует открывающему тегу\n    - `(.*?)`: Захватывает любые символы (лениво)\n    - `</b>`: Соответствует закрывающему тегу\n\n    Символ `?` после `*` делает квантификатор ленивым, заставляя его искать как можно меньше символов.\n    Без `?` он был бы жадным и захватил бы максимально возможную строку.\n\n    Метод `slice(1)` возвращает только захваченную группу.\n\n    [Узнать больше о жадном и ленивом поиске](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Ленивые и жадные квантификаторы\",\n  \"group\": \"Базовое соответствие\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"<b>bold</b>\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"bold\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"<b>\\\", \\\"</b>\\\"]\"\n    },\n    {\n      \"text\": \"[]\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"Что будет найдено?\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"js\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"Шаблон использует ленивый поиск с помощью `*?`:\\n    - `<b>`: Соответствует открывающему тегу\\n    - `(.*?)`: Захватывает любые символы (лениво)\\n    - `</b>`: Соответствует закрывающему тегу\\n\\n    Символ `?` после `*` делает квантификатор ленивым, заставляя его искать как можно меньше символов.\\n    Без `?` он был бы жадным и захватил бы максимально возможную строку.\\n\\n    Метод `slice(1)` возвращает только захваченную группу.\\n\\n    [Узнать больше о жадном и ленивом поиске](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 909,
+    "outputTokens": 405,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 3503,
+    "providerCostUsd": 0.0016695,
+    "providerUpstreamCostUsd": 0.0016695,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.0004545,
+    "outputUsd": 0.001215,
+    "totalUsd": 0.0016695,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

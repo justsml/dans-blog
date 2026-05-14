@@ -1,0 +1,49 @@
+{
+  "index": 11,
+  "attempt": 1,
+  "originalTitle": "EXPLAIN ANALYZE Gotcha",
+  "translatedTitle": "EXPLAIN ANALYZE の落とし穴",
+  "translation": {
+    "title": "EXPLAIN ANALYZE の落とし穴",
+    "group": "パフォーマンス",
+    "options": [
+      {
+        "text": "簡易プランの見積もり"
+      },
+      {
+        "text": "SELECT 文でのみ動作する"
+      },
+      {
+        "text": "データを更新し、実行計画を出力する"
+      },
+      {
+        "text": "実行をシミュレートして実行計画を取得する"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "`UPDATE` 文に対して `EXPLAIN ANALYZE` を実行するとどうなりますか？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "`EXPLAIN ANALYZE` は実際にクエリを実行します！書き込み操作、特に `UPDATE`、`DELETE`、`INSERT` 文を分析する際は注意が必要です。再現性のある結果を得るために、`EXPLAIN ANALYZE` を実行するたびにクリーンアップ操作が必要になる場合があります。\n\n    ベストプラクティス:\n    - `UPDATE`/`DELETE`/`INSERT` には（ANALYZE なしの）`EXPLAIN` を使用する\n    - 変更操作をトランザクションで囲む:"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"EXPLAIN ANALYZE の落とし穴\",\n  \"group\": \"パフォーマンス\",\n  \"options\": [\n    {\n      \"text\": \"簡易プランの見積もり\"\n    },\n    {\n      \"text\": \"SELECT 文でのみ動作する\"\n    },\n    {\n      \"text\": \"データを更新し、実行計画を出力する\"\n    },\n    {\n      \"text\": \"実行をシミュレートして実行計画を取得する\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"`UPDATE` 文に対して `EXPLAIN ANALYZE` を実行するとどうなりますか？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"`EXPLAIN ANALYZE` は実際にクエリを実行します！書き込み操作、特に `UPDATE`、`DELETE`、`INSERT` 文を分析する際は注意が必要です。再現性のある結果を得るために、`EXPLAIN ANALYZE` を実行するたびにクリーンアップ操作が必要になる場合があります。\\n\\n    ベストプラクティス:\\n    - `UPDATE`/`DELETE`/`INSERT` には（ANALYZE なしの）`EXPLAIN` を使用する\\n    - 変更操作をトランザクションで囲む:\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 823,
+    "outputTokens": 298,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 3333,
+    "providerCostUsd": 0.0013055,
+    "providerUpstreamCostUsd": 0.0013055,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.0004115,
+    "outputUsd": 0.0008939999999999999,
+    "totalUsd": 0.0013054999999999998,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

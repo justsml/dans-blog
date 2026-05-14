@@ -1,0 +1,49 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Hash Join Eligibility",
+  "translatedTitle": "Idoneità all'Hash Join",
+  "translation": {
+    "title": "Idoneità all'Hash Join",
+    "group": "SQL Internals",
+    "options": [
+      {
+        "text": "ON a.id = b.id"
+      },
+      {
+        "text": "ON a.id > b.id"
+      },
+      {
+        "text": "ON a.id >= b.id"
+      },
+      {
+        "text": "HASH JOIN ON a.id = b.id ..."
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "Quale condizione `ON` può utilizzare PostgreSQL per un `HASH JOIN`?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "Un hash join è possibile con una condizione di uguaglianza (`=`) nella clausola `ON`.\n\n    - `=` è la forma del predicato chiave per gli hash join\n    - `>` e `>=` non sono predicati per hash join\n    - `HASH JOIN` non è una sintassi valida in PostgreSQL\n\n    Il planner potrebbe comunque scegliere un nested loop o un merge join a seconda delle dimensioni della tabella, delle statistiche, degli indici e delle impostazioni della memoria."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Idoneità all'Hash Join\",\n  \"group\": \"SQL Internals\",\n  \"options\": [\n    {\n      \"text\": \"ON a.id = b.id\"\n    },\n    {\n      \"text\": \"ON a.id > b.id\"\n    },\n    {\n      \"text\": \"ON a.id >= b.id\"\n    },\n    {\n      \"text\": \"HASH JOIN ON a.id = b.id ...\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"Quale condizione `ON` può utilizzare PostgreSQL per un `HASH JOIN`?\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"Un hash join è possibile con una condizione di uguaglianza (`=`) nella clausola `ON`.\\n\\n    - `=` è la forma del predicato chiave per gli hash join\\n    - `>` e `>=` non sono predicati per hash join\\n    - `HASH JOIN` non è una sintassi valida in PostgreSQL\\n\\n    Il planner potrebbe comunque scegliere un nested loop o un merge join a seconda delle dimensioni della tabella, delle statistiche, degli indici e delle impostazioni della memoria.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 804,
+    "outputTokens": 290,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2611,
+    "providerCostUsd": 0.001272,
+    "providerUpstreamCostUsd": 0.001272,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000402,
+    "outputUsd": 0.00087,
+    "totalUsd": 0.0012720000000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
