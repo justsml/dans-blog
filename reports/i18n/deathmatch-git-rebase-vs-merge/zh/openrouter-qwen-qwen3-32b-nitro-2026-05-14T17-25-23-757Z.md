@@ -1,0 +1,149 @@
+# Translation Candidate
+- Slug: deathmatch-git-rebase-vs-merge
+- Locale: zh
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2023-08-28--deathmatch-git-rebase-vs-merge/zh/index.mdx
+- Validation: deferred
+- Runtime seconds: 8.25
+- Input tokens: 4770
+- Output tokens: 3428
+- Thinking tokens: unknown
+- Cached input tokens: 512
+- Cache write tokens: 0
+- Estimated cost: $0.001204
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: 对决：Git Rebase 与 Merge
+subTitle: 一个永恒的问题……
+date: '2023-08-27'
+modified: '2024-07-28'
+tags:
+  - engineering
+  - git
+  - rebase
+  - merge
+category: Thoughts
+subCategory: Git
+cover: ../casper-johansson-GBHnQXbY2Ts-unsplash-cropped.webp
+cover_mobile: ../w300_casper-johansson-GBHnQXbY2Ts-unsplash-cropped.webp
+cover_icon: ../icon_casper-johansson-GBHnQXbY2Ts-unsplash-cropped.webp
+---
+## Git Rebase 与（Squash）Merge 的生死对决！
+
+我应该使用 Rebase 还是 Squash Merge？
+
+- 这是个人偏好问题吗？
+  - _答案：当涉及一个或多个团队时，**任何选择都会影响其他团队的可用性**！_
+
+### 为什么这个话题会引发宗教般的狂热？
+
+一些工程师将对 Git（和终端）的掌握程度视为技能水平的信号。而任何与身份/自尊绑定的实践都难以客观分析，更不用说改变了。
+
+其他因素可能包括熟悉度和幸存者偏差，这些会进一步模糊我们自身的评估和假设。
+
+<!-- 对某些开源项目流程固有美德的错误信念。（Linux 内核使用 Rebase，如果你不用，**_你甚至算不算真正的工程师？！_**） -->
+
+### 关键问题：Git 提交的目的是什么？
+
+1. 你是否频繁提交？采用“检查点”或备份的心态？
+    - 即使是错误开始和实验也会被记录？（例如：`git commit -am "Updated deps" && git push`，定期重复）
+    - 可能对你来说代码比提交信息更重要？
+1. 或者，你的提交是一份精心策划、雕琢的艺术作品？
+    - 也许每个提交都是一个独立、原子的工作单元？（例如：`git add package.json && git commit -m "Updated deps"`）
+    - 或者，你根本无法忍受“杂乱”的提交日志？
+    - 你的 PR 审查是否经常逐提交进行？
+
+| 💡 还有其他哪些心智模型定义了你对提交的看法？请告诉我 @justsml！
+
+你是否以**对你、团队和组织最有价值**的方式在思考 Git？
+
+<!-- 对 Postgres 或 Linux 内核这样的开源项目有效的方案，可能并不是你或团队的最佳选择。 -->
+
+鉴于提交策略存在如此不同的思维方式，难怪关于 Git 使用的“正确”方式会如此令人困惑。
+
+### 场景：创建修订版本的标签
+
+让我们比较从 main 分支创建标签发布时排除某些最近提交的过程。
+
+![从 main 分支创建修订版本的标签发布，包含两个功能分支](../git-branching-with-main-simplified.svg)
+
+### Rebase 的方式
+
+心智模型："我想创建现有历史的替代版本。（例如：我在 16 次合并前犯了一个错误，可能需要精细控制来修正。此外，可能会陷入看似无尽的冲突与 `--continue` 循环中。）"
+
+1. 获取最新代码：`git checkout main` && `git pull`  
+2. 创建新分支：`git checkout -b release/hot-newness-and-stuff`  
+3. 启动交互式变基并指定要回溯的 Git 引用：`git rebase -i HEAD~6`（注意：`HEAD~6` 是 `6 commits ago` 的 Git 引用缩写）  
+4. 修改要删除的提交前缀为 `drop`，保存并关闭编辑器。  
+5. 解决合并冲突，执行 `git add .` && `git rebase --continue`（不要使用 `git commit`）。  
+6. 重复上一步直到完成。  
+7. 使用当前流程打标签并推送。示例：`git tag -a v1.2.3 -m 'Release v1.2.3'` && `git push --tags`  
+
+#### 优点  
+- 🔌 **绝对控制权**。你可以修改历史。  
+  <!-- - 🎭 练习你的工程戏剧技巧。 -->  
+
+#### 缺点  
+- 😰 **绝对控制权**。你可以修改历史。（嗯，这既是优点也是缺点……）  
+- 🔂 可能陷入看似无尽的冲突与 `--continue` 循环。（即使使用 `git rerere` 有时也无能为力）  
+- 🙀 破坏关键协作功能：PR 评论丢失/孤立。很不礼貌。  
+- 🖇️ 永久链接（Permalinks）可能不再永久有效。  
+
+### （Squash）合并方式  
+
+心智模型："我想从某个特定点开始创建自定义发布版本，并包含任意分支。"  
+
+1. 获取最新代码：`git checkout main` && `git pull`  
+2. 创建新分支：`git checkout -b release/hot-newness-and-stuff`  
+3. 合并所需分支和/或提交：`git merge --no-ff feature/hot-newness bug/fix-123`（尽可能使用 `--no-ff` 标志）  
+4. 解决可能出现的合并冲突。  
+5. 使用当前流程打标签并推送。示例：`git tag -a v1.2.3 -m 'Release v1.2.3'` && `git push --tags`  
+
+#### 优点  
+- 💪 流程更简单，冲突更少，且使用现有 Git 命令知识。  
+- 🚀 让你以 PR/分支层级思考，忽略提交层级的细节（除非需要）。  
+- 🦺 非破坏性。随时可以回溯或创建新分支。  
+- 🎥 保留原有提交和消息的整体性，减少 'blame' 噪音。  
+
+#### 缺点  
+- 🔐 更难修改提交信息。  
+- 🤐 更难隐藏你的工作。  
+
+### 结论  
+
+归根结底，**流程更简单且风险更低的方案应该胜出**。  
+
+<!-- **Squash merge** 在这里显然是赢家。它更简单、更少出错，并保留原有提交历史。这对 **协作** 和 **代码审查** 是巨大优势。 -->  
+
+<!-- 包含一个包含两个功能分支的变基流程图 -->  
+
+尽管 _Rebasers_ 确实有办法解决（或避免）他们的问题，但 **事实依然存在：你最终需要掌握 Git 的黑带技巧**。（例如，即使是简单的 `git push` 也可能面临额外复杂度：是用 `git push --force` 还是 `git push --force-with-lease`？为何要处理这些？）  
+
+还有另一个原因让 **通过变基修改历史** 永远比 **`git merge ...`** 处于劣势。`git merge` 允许 Git CLI 应用高级算法，通过分析每个分支的 HEAD 来避免冲突。
+
+这可能更智能，因为每次合并只关注每个目标分支的最新状态。而**变基必须按指定顺序重新播放（或丢弃）提交历史**。这**限制了 `git` 的优化能力**，因为**它每次只能比较两个提交**。
+
+最终，**变基意味着你偶尔会重新经历无关的旧提交和冲突**——即使你知道它们已经被删除或解决。
+
+### 总结
+
+- 💃 答案：**将你的 PR 使用 SQUASH MERGE 合并到 `main`**
+  - 如果需要，你的分支历史仍然存在，而 `main` 会保持相对"干净"
+- _🔤 始终在提交！_
+  - 在 >95% 的企业项目中，"备份思维"比"雕塑艺术"思维更可取。随着时间推移，你的提交信息含义会比代码本身的逻辑和测试更快失去意义
+
+<!-- 
+#### 附加：发布技巧
+
+是否需要从某个分支获取单个文件或几个文件夹？不需要提交历史？
+
+- 可以使用 `git checkout` 的特殊 "--" 分隔符，在当前分支下复制指定文件：
+- `git checkout feature/half-a-feature **--** <folder or file path>`
+- 确保先提交想要保留的更改，因为这会覆盖所有本地修改
+-->
+````
