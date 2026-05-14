@@ -1,0 +1,49 @@
+{
+  "index": 3,
+  "attempt": 1,
+  "originalTitle": "Reading Files Synchronously",
+  "translatedTitle": "同步读取文件",
+  "translation": {
+    "title": "同步读取文件",
+    "group": "文件系统基础",
+    "options": [
+      {
+        "text": "返回一个 Buffer"
+      },
+      {
+        "text": "返回一个字符串"
+      },
+      {
+        "text": "返回 undefined"
+      },
+      {
+        "text": "返回一个 Promise"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "默认情况下，`fs.readFileSync()` 返回什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "默认情况下，当未指定编码时，`fs.readFileSync()` 返回一个 Buffer。如果你想要一个字符串，你需要：\n    1. 指定编码：`fs.readFileSync('test.txt', 'utf8')`\n    2. 转换 Buffer：`content.toString()`\n\n    [在 Node.js 文档中了解更多关于 fs.readFileSync 的信息](https://nodejs.org/api/fs.html#fsreadfilesyncpath-options)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"同步读取文件\",\n  \"group\": \"文件系统基础\",\n  \"options\": [\n    {\n      \"text\": \"返回一个 Buffer\"\n    },\n    {\n      \"text\": \"返回一个字符串\"\n    },\n    {\n      \"text\": \"返回 undefined\"\n    },\n    {\n      \"text\": \"返回一个 Promise\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"默认情况下，`fs.readFileSync()` 返回什么？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"默认情况下，当未指定编码时，`fs.readFileSync()` 返回一个 Buffer。如果你想要一个字符串，你需要：\\n    1. 指定编码：`fs.readFileSync('test.txt', 'utf8')`\\n    2. 转换 Buffer：`content.toString()`\\n\\n    [在 Node.js 文档中了解更多关于 fs.readFileSync 的信息](https://nodejs.org/api/fs.html#fsreadfilesyncpath-options)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 827,
+    "outputTokens": 804,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 5417,
+    "providerCostUsd": 0.000487,
+    "providerUpstreamCostUsd": 0.000487,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00011578000000000002,
+    "outputUsd": 0.00022512000000000004,
+    "totalUsd": 0.00034090000000000005,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
