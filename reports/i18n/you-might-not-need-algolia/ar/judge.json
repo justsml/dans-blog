@@ -1,0 +1,46 @@
+{
+  "selectedCommit": "3a9e51b60dfc67493d5e788c6a34bb1c1549b73d",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The selected candidate correctly handled the relative path adjustments for assets (prepending '../') which is critical for localized subdirectories. It also maintained the MDX structure and translated all headings, unlike the other candidate which left some headings in English. The translation captures Dan's direct tone well, using appropriate technical terminology in Arabic.",
+  "slug": "you-might-not-need-algolia",
+  "locale": "ar",
+  "candidateCommits": [
+    "3a9e51b60dfc67493d5e788c6a34bb1c1549b73d",
+    "09bedfd13e37a0421a34dc655a9ce377c809269f"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "medium",
+      "match": "Image by Dan Levy",
+      "replacement": "صورة بواسطة دان ليفي",
+      "reason": "The cover_credit field was left in English; translating it improves localization consistency.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "![فهرسة موقعي باستخدام PageFind](../PageFind-Cleaner-better-15fps-720p2.webp \"فهرسة موقعي باستخدام PageFind\")",
+      "replacement": "![فهرسة موقعي باستخدام PageFind](../PageFind-Cleaner-better-15fps-720p2.webp \"فهرسة موقعي باستخدام PageFind\")",
+      "reason": "The candidate correctly updated the image path to include ../, but the alt text and title are already translated. No change needed, just confirming path correctness.",
+      "pass": 1,
+      "applied": false,
+      "note": "Exact match and replacement are identical; no MDX change needed."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug you-might-not-need-algolia --locale ar --skip-global",
+    "output": ""
+  }
+}
