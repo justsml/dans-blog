@@ -1,0 +1,46 @@
+{
+  "selectedCommit": "9f67cb7d542631ed91f1bd27663981e5664aefbd",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The current translation already includes the fix for the image path (../) and correctly translates the content while maintaining Dan's direct, pragmatic style. The MDX structure and heading levels are preserved. No further high-priority fixes are required.",
+  "slug": "beware-the-single-purpose-people",
+  "locale": "ar",
+  "candidateCommits": [
+    "9f67cb7d542631ed91f1bd27663981e5664aefbd",
+    "1da1ce937e9f255ba4b0a86069e874e5d3d31631"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "![مكونات، مكونات في كل مكان](software-patterns__the-mc-escher-stack.webp \"نمط إيشر\")",
+      "replacement": "![مكونات، مكونات في كل مكان](../software-patterns__the-mc-escher-stack.webp \"نمط إيشر\")",
+      "reason": "The image path is missing the required '../' prefix for localized content folders.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "![مكونات، مكونات في كل مكان](software-patterns__the-mc-escher-stack.webp \"نمط إيشر\")",
+      "replacement": "![مكونات، مكونات في كل مكان](../software-patterns__the-mc-escher-stack.webp \"نمط إيشر\")",
+      "reason": "The image path is missing the required '../' prefix for localized content folders to correctly reference assets in the parent directory.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug beware-the-single-purpose-people --locale ar --skip-global",
+    "output": ""
+  }
+}
