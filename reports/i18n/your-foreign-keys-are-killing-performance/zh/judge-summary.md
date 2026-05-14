@@ -2,7 +2,7 @@
 
 - Slug: your-foreign-keys-are-killing-performance
 - Locale: zh
-- Judge model: openrouter/deepseek/deepseek-v4-flash
+- Judge model: openrouter/google/gemini-3-flash-preview
 - Second judge model: not run
 - Escalation judge model: not run
 - Max candidate commits per judge call: 3
@@ -12,16 +12,17 @@
 - Validation scope: local
 
 ## Primary Judge Telemetry
-- Runtime seconds: 41.35
-- Input tokens: 7822
-- Output tokens: 8948
+- Runtime seconds: 2.82
+- Input tokens: 14058
+- Output tokens: 222
 - Thinking tokens: unknown
 - Cached input tokens: 0
 - Cache write tokens: 0
-- OpenRouter cost credits: 0.005144
-- Estimated cost: $0.005144
+- OpenRouter cost credits: 0.007695
+- Estimated cost: $0.007695
 
 ## Candidates
-- current not present
-- d9fb65703eb22392164f18e336f1c8d02d34418c i18n candidate(zh): your-foreign-keys-are-killing-performance via openrouter/deepseek/deepseek-v4-flash
-- 1ba3e298201d3472d0073faa62b60fa91ca5f1c0 i18n candidate(zh): your-foreign-keys-are-killing-performance via openrouter/openai/gpt-oss-120b:nitro
+- current src/content/posts/2025-12-29--your-foreign-keys-are-killing-performance/zh/index.mdx
+- 77dba6e643dffe5b5a1c72820838942943ba927c i18n candidate(zh): your-foreign-keys-are-killing-performance via openrouter/openai/gpt-oss-120b:nitro
+- 359497dfdab7cf404bd2ef6d4f54d29664ad2fa3 i18n candidate(zh): your-foreign-keys-are-killing-performance via openrouter/google/gemini-3-flash-preview
+- 7a1f715a119c81e25769bbe27d91ac80dc77ae99 i18n candidate(zh): your-foreign-keys-are-killing-performance via openrouter/qwen/qwen3-32b:nitro
