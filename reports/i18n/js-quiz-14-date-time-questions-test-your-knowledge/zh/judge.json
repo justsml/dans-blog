@@ -1,0 +1,126 @@
+{
+  "selectedCommit": "b1cc7e296d220e88bf40ce8cc4b1bf1cc0f6fda2",
+  "selectedModel": "openrouter/qwen/qwen3-32b:nitro",
+  "scores": {
+    "readability": 90,
+    "technicalAccuracy": 85,
+    "coherence": 90,
+    "relevance": 100,
+    "translationQuality": 90,
+    "mdxPreservation": 100
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "{text: 'new Intl.DateTimeFormat(\\',",
+      "replacement": "{text: 'new Intl.DateTimeFormat(\\'en-US\\').format(date)'},",
+      "reason": "The candidate truncated the code string in the options array, making the quiz question broken."
+    },
+    {
+      "priority": "high",
+      "match": "{text: 'date.toLocaleFormat(\\'en-US\\')', isAnswer: true},",
+      "replacement": "{text: 'date.toLocaleFormat(\\'en-US\\')', isAnswer: true },",
+      "reason": "Fixing spacing for consistency with source."
+    },
+    {
+      "priority": "high",
+      "match": "{text: 'date.toLocaleString(\\',",
+      "replacement": "{text: 'date.toLocaleString(\\'en-GB\\', { timeZone: \\'UTC\\' })'},",
+      "reason": "The candidate truncated the code string in the options array."
+    },
+    {
+      "priority": "high",
+      "match": "{text: 'date.toLocaleDateString(\\',",
+      "replacement": "{text: 'date.toLocaleDateString(\\'en-US\\', { timeZone: \\'UTC\\', timeZoneName: \\'short\\' })'},",
+      "reason": "The candidate truncated the code string in the options array."
+    }
+  ],
+  "rationale": "Candidate b1cc7e296d220e88bf40ce8cc4b1bf1cc0f6fda2 (Qwen) provides the most natural and professional translation of the prose. However, it failed on Question 5 by truncating the JavaScript code strings within the `options` array. The suggestions restore the technical integrity of the quiz options.",
+  "slug": "js-quiz-14-date-time-questions-test-your-knowledge",
+  "locale": "zh",
+  "candidateCommits": [
+    "2dd89d29b454f039caf9929c83e0491c91f2b604",
+    "b1cc7e296d220e88bf40ce8cc4b1bf1cc0f6fda2",
+    "2ffcb2593a2a2dc0f89811a3b4bfdea22fe381bc"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "{text: 'new Intl.DateTimeFormat(\\',",
+      "replacement": "{text: 'new Intl.DateTimeFormat(\\'en-US\\').format(date)'},",
+      "reason": "The candidate truncated the code string in the options array, making the quiz question broken.",
+      "pass": 1,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "{text: 'date.toLocaleFormat(\\', isAnswer: true},",
+      "replacement": "{text: 'date.toLocaleFormat(\\'en-US\\')', isAnswer: true },",
+      "reason": "The candidate truncated the code string in the options array.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "{text: 'date.toLocaleString(\\',",
+      "replacement": "{text: 'date.toLocaleString(\\'en-GB\\', { timeZone: \\'UTC\\' })'},",
+      "reason": "The candidate truncated the code string in the options array.",
+      "pass": 1,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "{text: 'date.toLocaleDateString(\\',",
+      "replacement": "{text: 'date.toLocaleDateString(\\'en-US\\', { timeZone: \\'UTC\\', timeZoneName: \\'short\\' })'},",
+      "reason": "The candidate truncated the code string in the options array.",
+      "pass": 1,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "{text: 'new Intl.DateTimeFormat(\\',",
+      "replacement": "{text: 'new Intl.DateTimeFormat(\\'en-US\\').format(date)'},",
+      "reason": "The candidate truncated the code string in the options array, making the quiz question broken.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "{text: 'date.toLocaleFormat(\\'en-US\\')', isAnswer: true},",
+      "replacement": "{text: 'date.toLocaleFormat(\\'en-US\\')', isAnswer: true },",
+      "reason": "Fixing spacing for consistency with source.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "{text: 'date.toLocaleString(\\',",
+      "replacement": "{text: 'date.toLocaleString(\\'en-GB\\', { timeZone: \\'UTC\\' })'},",
+      "reason": "The candidate truncated the code string in the options array.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "{text: 'date.toLocaleDateString(\\',",
+      "replacement": "{text: 'date.toLocaleDateString(\\'en-US\\', { timeZone: \\'UTC\\', timeZoneName: \\'short\\' })'},",
+      "reason": "The candidate truncated the code string in the options array.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug js-quiz-14-date-time-questions-test-your-knowledge --locale zh --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug js-quiz-14-date-time-questions-test-your-knowledge --locale zh --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug \"js-quiz-14-date-time-questions-test-your-knowledge\" --locale zh --skip-global\n153 | \n154 |   for (const slotName of [\"hints\", \"explanation\"] as const) {\n155 |     const sourceSlots = countSlot(sourceContents, slotName);\n156 |     const targetSlots = countSlot(targetContents, slotName);\n157 |     if (sourceSlots !== targetSlots) {\n158 |       throw new Error(\n                      ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2020-01-02--js-quiz-14-date-time-questions-test-your-knowledge/zh/index.mdx changed hints slot count from 13 to 1\n      at assertQuizStructure (/Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:158:17)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:30:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}

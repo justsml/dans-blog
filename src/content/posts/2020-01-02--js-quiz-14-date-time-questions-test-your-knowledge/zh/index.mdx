@@ -1,0 +1,519 @@
+---
+unlisted: false
+title: 测验：14个JavaScript日期问题
+subTitle: 学会用JS冷知识在聚会上脱颖而出！✨
+label: Dates & Times
+date: '2020-01-02'
+modified: '2024-11-27'
+tags:
+  - quiz
+  - javascript
+  - date
+  - date
+  - gotchas
+  - challenge
+  - intermediate
+social_image: ../desktop-social.webp
+category: Quiz
+subCategory: JavaScript
+cover: ../pocket-watch.webp
+cover_mobile: ../w300_pocket-watch.webp
+cover_icon: ../icon_pocket-watch.webp
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+## 你对 `Date` 类的了解程度如何？
+
+> **证明你的 JavaScript 技能！** 🚀  
+> *无需登录或注册。* ✨  
+> *多选题。* 🤖 ... _这能有多难，对吧？_
+
+### 内容概要
+
+JavaScript 中的 `Date` 类拥有臭名昭著的复杂 API。它从 Java 继承而来，我只能推测其设计灵感源自远古的石器时代计时方法。
+
+获取 `Date` 实例的困难程度，使得许多开发者毫不犹豫地转向第三方库。虽然这些库通常是安全可靠的选择，但它们在日期格式化或本地化场景中往往并不必要！
+
+本测验旨在测试（并加深）你对原生 `Date` API 的理解。点击绿色按钮获取提示和解释！希望在完成挑战后，你能牢固掌握 JavaScript 中 `Date` 的用法。
+
+#### **注意：** 所有示例均假设使用 GMT-7 本地时区。
+
+
+### 👇 以下 14 道题目 👇
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="处理日期"
+  title="日期构造函数 第1部分"
+  options={[
+    {text: 'Jan 01 2020'},
+    {text: 'Feb 01 2020', isAnswer: true},
+    {text: 'RangeError: Invalid argument.'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    输出将包含什么？
+    ```js
+        const d1 = new Date(2020, 1, 1)
+        console.log(d1)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    月份参数是零索引的。范围是0-11（使用西方日历）。
+
+    '二月'的索引值是1。（想想数组查找的方式）
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="处理日期"
+  title="日期构造函数 第二部分"
+  options={[
+    {text: '1月 01 2020', isAnswer: true},
+    {text: '2月 01 2020'},
+    {text: 'RangeError：无效参数。'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    输出将包含什么？
+    ```js
+        const d2 = new Date(2020, 0, 1)
+        console.log(d2)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    月份参数是基于零的。在使用西方日历时，范围是0到11。
+
+    '一月'的索引值为零。（可以将其视为数组查找。）
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="日期处理"
+  title="日期构造函数 第3部分"
+  options={[
+    {text: '01 Jan 1970'},
+    {text: 'Unix纪元0'},
+    {text: '当前日期，UTC/GMT时间'},
+    {text: '当前日期', isAnswer: true},
+    {text: 'NaN'},
+    {text: 'RangeError: 无效参数。'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    输出将包含什么？
+    ```js
+        const d3 = Date('Thu, 01 Jan 1970 00:00:00 GMT')
+        console.log(d3)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    别忘了`new`关键字！`Date`是一个类，应该用`new`调用。
+
+    不带`new`的`Date('...')`会忽略你传入的内容。它似乎总是通过`new Date()`（无参数）生成当前日期和时间。
+
+    这是一个**常见陷阱**，**容易被忽视**，即使是在代码审查中也是如此。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="处理日期"
+  title="日期构造函数 第4部分"
+  options={[
+    {text: '1969', isAnswer: true},
+    {text: '1970'},
+    {text: '2019'},
+    {text: '2020'},
+    {text: '2021'},
+    {text: '范围错误：无效参数。'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    输出将包含什么？
+    ```js
+          const date = new Date(2020)
+          console.log(date.getFullYear())
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    使用单个整数参数创建的Date实例会被解释为Unix时间戳。时间戳是自1970年1月1日以来的毫秒数。
+
+    2020（毫秒）对应的是1970年1月1日之后的2秒。
+
+    由于本地时区有-7小时的负偏移，最终结果会是`Wed Dec 31 1969 17:00:02 GMT-0700 (Mountain Standard Time)`。
+
+    可以通过使用[`.getUTCFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getUTCFullYear)跳过本地时区偏移。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="处理日期"
+  title="日期字符串解析"
+  options={[
+    {text: '2019 2020', isAnswer: true},
+    {text: '2020 2021'},
+    {text: '2020 2020'},
+    {text: '2020 2019'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    什么值会打印到控制台？
+    ```js
+          const d1 = new Date('2020-01-01')
+          const d2 = new Date('2020-01-01T00:00')
+          console.log(d1.getFullYear(), d2.getFullYear())
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    缺少`T`时间值的字符串看似是2020年1月1日 - 但仅包含日期的字符串会被解释为UTC时间。当调整到本地时区(GMT-7)时，我们发现其实还在2019年。
+
+    没有显式时区的日期时间字符串会被解释为本地时间。
+
+    `T00:00`格式会让第二个值被解释为本地午夜时间。
+
+    第一个日期被解释为`Tue Dec 31 2019 17:00:00 GMT-0700 (Mountain Standard Time)`。
+    第二个日期被解释为`Wed Jan 01 2020 00:00:00 GMT-0700 (Mountain Standard Time)`。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="日期处理"
+  title="格式化 第1部分"
+  options={[
+    {text: 'new Intl.DateTimeFormat(\'},
+    {text: 'date.toLocaleFormat(\', isAnswer: true},
+    {text: 'date.toLocaleString(\'},
+    {text: 'date.toLocaleDateString(\'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    选择一个_错误_的格式化方法：
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `toLocaleFormat()`方法不是标准的！它可能看起来很眼熟，因为它来自一个古老的第三方库。
+
+    查看[`toLocaleDateString`文档](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleDateString)方法。它的行为在[`Intl.DateTimeFormat`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat)中进行了文档说明。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="处理日期"
+  title="UTC日期 第1部分"
+  options={[
+    {text: 'Wed, 01 Jan 2020 00:00:00 GMT'},
+    {text: 'Thu, 02 Jan 2020 00:00:00 GMT'},
+    {text: 'TypeError', isAnswer: true},
+    {text: 'NaN'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    输出将包含什么？
+    ```js
+          var date = Date.UTC('2020-01-02T00:00')
+          console.log(date.toUTCString())
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    你会得到 `TypeError: date.toUTCString is not a function`，因为 [`Date.UTC()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/UTC) 返回的是毫秒整数而非日期实例。
+
+    {/* [`getFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getFullYear) 方法会使用你的本地时区偏移（假设这些题目中为 GMT-07:00）
+    这意味着它会给出前一年（新年夜-7小时）。
+    [`getUTCFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getUTCFullYear) 方法会返回我们通过 `Date.UTC()` 提供的年份，即 2020。
+    */}
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="日期处理"
+  title="UTC日期第二部分"
+  options={[
+    {text: '基于UTC的日期实例'},
+    {text: '已调整本地时区的日期实例'},
+    {text: '自1970年1月1日GMT以来的毫秒数', isAnswer: true},
+    {text: '一个错误'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    输出将包含什么？
+    ```js
+          const d = Date.UTC(2020, 0, 1)
+          console.log(d)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    辅助方法[`Date.UTC`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/UTC)不会返回日期实例。它返回的是以毫秒为单位的整数。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="处理日期"
+  title="UTC 日期 第3部分"
+  options={[
+    {text: '0'},
+    {text: '420', isAnswer: true},
+    {text: '700'},
+    {text: '1400'},
+    {text: 'null'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    输出将包含什么？
+    ```js
+          // Assume local TZ is -07:00
+          const d = new Date(Date.UTC(2020, 0, 1))
+          console.log(d.getTimezoneOffset())
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    日期对象会以本地时间隐式呈现，其 [`.getTimezoneOffset()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getTimezoneOffset) 会保持（实际上）不变。
+
+    `Date` 实例不会存储时区数据。它们存储的是自 Unix 纪元（1970 年 1 月 1 日）以来的毫秒数。时区在日期字符串解析和渲染时被考虑。默认显示行为基于系统或浏览器的区域设置自动确定。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="处理日期"
+  title="日期设置器 第1部分"
+  options={[
+    {text: '2020年1月1日', isAnswer: true},
+    {text: '2020年2月1日'},
+    {text: 'RangeError: 无效参数。'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    输出将包含什么？
+    ```js
+          const d = new Date(2020, 0, 1)
+          d.setDate(1)
+          console.log(d)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    [`.setDate()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setDate) 方法会根据给定实例的当前月份设置日期。
+
+    如果提供的值超过了该月的天数范围，日期实例的月份值会自动调整（例如：`setDate(32)` 在1月会计算为2月1日）。
+
+    <aside class="hint">`setDate` 用于设置月份中的日期，通常范围是1-31。</aside>
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="处理日期"
+  title="日期设置器 第2部分"
+  options={[
+    {text: '1月 1日 2020年'},
+    {text: '2月 1日 2020年', isAnswer: true},
+    {text: 'RangeError：无效参数。'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    输出将包含什么？
+    ```js
+          const d = new Date(2020, 0, 1)
+          d.setMonth(1)
+          console.log(d)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    [`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) 方法会设置给定日期实例的月份。
+
+    月份参数是从0开始的，范围是0-11（使用西方日历）。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="处理日期"
+  title="日期设置器 第3部分"
+  options={[
+    {text: '2020年1月1日'},
+    {text: '2021年1月1日', isAnswer: true},
+    {text: '2020年2月1日'},
+    {text: 'RangeError: 无效参数。'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    输出将包含什么？
+    ```js
+          const d = new Date(2020, 0, 1)
+          d.setMonth(12)
+          console.log(d)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    [`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) 方法会设置给定日期实例的月份。
+
+    `month` 参数是基于零的（zero-based），在西方日历中取值范围为 0-11（12 个值）。
+
+    在这里我们看到年份被调整为 2021 年，因为 `setMonth(12)` 比 11（12 月）多 1。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="处理日期"
+  title="日期设置器 第4部分"
+  options={[
+    {text: '2020年1月1日'},
+    {text: '2020年2月1日'},
+    {text: '2021年1月1日'},
+    {text: '2021年2月1日', isAnswer: true},
+    {text: 'RangeError: 无效参数。'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    输出将包含什么？
+    ```js
+          const d = new Date(2020, 0, 1)
+          d.setMonth(13)
+          console.log(d)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    [`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) 方法设置给定日期实例的月份。
+
+    月份参数是零基索引，范围为0-11（使用西方日历）。
+
+    在这里我们看到月份和年份调整为2021年2月，因为 `setMonth(13)` 比11（12月）多出2个月。
+
+    <aside class="hint">`setMonth` 通过索引设置月份，12个月按0-11索引排列。</aside>
+    <aside class="hint">
+    超出0-11范围的数字会导致年份溢出或下溢。例如，`setMonth(13)` 会将年份调整为2021年（2月，因为13比11多2）。
+    </aside>
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={13}
+  group="日期处理"
+  title="日期设定方法第五部分"
+  options={[
+    {text: '2020年1月1日'},
+    {text: '2020年2月1日'},
+    {text: '2019年1月1日'},
+    {text: '2019年12月1日', isAnswer: true},
+    {text: 'RangeError: 无效参数。'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    输出将包含什么？
+    ```js
+          const d = new Date(2020, 0, 1)
+          d.setMonth(-1)
+          console.log(d)
+    ```
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    <aside class="hint">月份长度不统一，天数在28到31天之间变化。</aside>
+    <aside class="hint">`setDate` 设置月份中的日期，通常范围是1-31。负数或大于`31`的数字会导致日期和月份以意想不到的方式调整。</aside>
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    [`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) 方法设置给定日期实例的月份。
+
+    月份参数是从0开始计算的（使用公历），范围为0-11。
+
+    这里我们看到月份和年份回滚到2019年12月，因为 `setMonth(-1)` 小于0（即1月）。
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
