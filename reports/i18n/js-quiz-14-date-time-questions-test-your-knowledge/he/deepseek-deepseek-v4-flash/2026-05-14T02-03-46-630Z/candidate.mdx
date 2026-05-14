@@ -1,0 +1,519 @@
+---
+unlisted: false
+title: 'חידון: 14 שאלות על תאריכים ב-JavaScript'
+subTitle: למד להרשים במסיבות עם טריווית JS! ✨
+label: Dates & Times
+date: '2020-01-02'
+modified: '2024-11-27'
+tags:
+  - quiz
+  - javascript
+  - date
+  - date
+  - gotchas
+  - challenge
+  - intermediate
+social_image: ../desktop-social.webp
+category: Quiz
+subCategory: JavaScript
+cover: ../pocket-watch.webp
+cover_mobile: ../w300_pocket-watch.webp
+cover_icon: ../icon_pocket-watch.webp
+---
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+## עד כמה אתה מכיר את המחלקה `Date`?
+
+> * **הוכיח את כישורי ה-JavaScript שלך!** 🚀
+> * אין צורך בהתחברות או הרשמה. ✨
+> * בחירה מרובה. 🤖 ... _כמה קשה זה יכול להיות, הא?_
+
+### סקירה כללית
+
+למחלקת `Date` ב-JavaScript יש API ידוע לשמצה שקשה לעבוד איתו. היא ירשה מ-Java, ואני יכול רק להניח שהיא נוצרה בהשראת שיטות ספירת זמן נאוליתיות עתיקות.
+
+המאבק להבין את `Date` מוביל מפתחים רבים להשתמש בספריות צד שלישי ללא שאלה. למרות שזו לרוב בחירה בטוחה ואמינה, ספריות אלו כמעט ואינן נחוצות לעיצוב תאריכים או לוקליזציה!
+
+החידון הזה נועד לבחון (ולהעמיק) את הידע שלך ב-API המקורי של `Date`. השתמש בכפתורים הירוקים לרמזים והסברים! בתקווה שעד סוף האתגר תגבש את ההבנה שלך לגבי `Date` ב-JavaScript.
+
+#### **הערה:** כל הדוגמאות מניחות אזור זמן מקומי GMT-7.
+
+### 👇 14 שאלות למטה 👇
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="טיפול בתאריכים"
+  title="בנאי תאריך - חלק 1"
+  options={[
+    {text: 'Jan 01 2020'},
+    {text: 'Feb 01 2020', isAnswer: true},
+    {text: 'RangeError: Invalid argument.'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה יכלול הפלט?
+    ```js
+        const d1 = new Date(2020, 1, 1)
+        console.log(d1)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    הארגומנט של החודש הוא מבוסס אפס. הטווח הוא 0-11 (בשימוש בלוחות שנה מערביים).
+
+    ל'פברואר' יש ערך אינדקס של אחד. (תחשוב על זה כמו חיפוש במערך.)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="טיפול בתאריכים"
+  title="בנאי תאריך - חלק 2"
+  options={[
+    {text: 'Jan 01 2020', isAnswer: true},
+    {text: 'Feb 01 2020'},
+    {text: 'RangeError: Invalid argument.'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה יכלול הפלט?
+    ```js
+        const d2 = new Date(2020, 0, 1)
+        console.log(d2)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    ארגומנט החודש מבוסס אפס. עם טווח של 0-11 (בשימוש בלוחות שנה מערביים).
+
+    ל'ינואר' יש ערך אינדקס של אפס. (תחשוב על זה כמו חיפוש במערך.)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="טיפול בתאריכים"
+  title="בנאי Date חלק 3"
+  options={[
+    {text: '01 ינו 1970'},
+    {text: 'עידן יוניקס של 0'},
+    {text: 'תאריך נוכחי, ב-UTC/GMT'},
+    {text: 'תאריך נוכחי', isAnswer: true},
+    {text: 'NaN'},
+    {text: 'RangeError: ארגומנט לא חוקי.'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה יכלול הפלט?
+    ```js
+        const d3 = Date('Thu, 01 Jan 1970 00:00:00 GMT')
+        console.log(d3)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    אל תשכח את מילת המפתח `new`! `Date` היא מחלקה, ויש לקרוא לה עם `new`.
+
+    `Date('...')` ללא `new` מתעלם ממה שאתה נותן לו. נראה שהוא תמיד מייצר את התאריך והשעה הנוכחיים עם `new Date()` (ללא ארגומנטים).
+
+    זוהי **מלכודת נפוצה** ש**קל להתעלם** ממנה, אפילו בסקירת קוד.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="טיפול בתאריכים"
+  title="בנאי Date - חלק 4"
+  options={[
+    {text: '1969', isAnswer: true},
+    {text: '1970'},
+    {text: '2019'},
+    {text: '2020'},
+    {text: '2021'},
+    {text: 'RangeError: ארגומנט לא חוקי.'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה יכלול הפלט?
+    ```js
+          const date = new Date(2020)
+          console.log(date.getFullYear())
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    מופע Date שנוצר עם ארגומנט יחיד מסוג מספר שלם מתפרש כערך Unix `Epoch`. `Epoch` הוא ספירת מילישניות מאז 1 בינואר 1970.
+
+    ערך של `2020` (מילישניות) מתורגם ל-2 שניות אחרי 1 בינואר 1970.
+
+    לאחר מכן, מאחר שאזור הזמן המקומי שלנו הוא אופסט שלילי של 7- שעות, אנחנו מקבלים `Wed Dec 31 1969 17:00:02 GMT-0700 (Mountain Standard Time)`.
+
+    ניתן לעקוף את אופסט אזור הזמן המקומי על ידי שימוש ב-[`.getUTCFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getUTCFullYear).
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="טיפול בתאריכים"
+  title="פירוש מחרוזת תאריך"
+  options={[
+    {text: '2019 2020', isAnswer: true},
+    {text: '2020 2021'},
+    {text: '2020 2020'},
+    {text: '2020 2019'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    איזה ערך יודפס לקונסולה?
+    ```js
+          const d1 = new Date('2020-01-01')
+          const d2 = new Date('2020-01-01T00:00')
+          console.log(d1.getFullYear(), d2.getFullYear())
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    המחרוזת ללא ערך זמן `T` עשויה להיראות כ-1 בינואר 2020 - אבל מחרוזות תאריך בלבד מתפרשות כ-UTC, וכאשר מותאמות לאזור הזמן המקומי שלנו (GMT-7) אנו מגלים שאנחנו עדיין ב-2019.
+
+    מחרוזות תאריך-זמן ללא אזור זמן מפורש מתפרשות בזמן מקומי.
+
+    הצורה `T00:00` גורמת לערך השני להתפרש כחצות מקומי.
+
+    התאריך הראשון מתפרש כ-`Tue Dec 31 2019 17:00:00 GMT-0700 (Mountain Standard Time)`.
+    התאריך השני מתפרש כ-`Wed Jan 01 2020 00:00:00 GMT-0700 (Mountain Standard Time)`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="טיפול בתאריכים"
+  title="עיצוב חלק 1"
+  options={[
+    {text: 'new Intl.DateTimeFormat("'},
+    {text: 'date.toLocaleFormat("', isAnswer: true},
+    {text: 'date.toLocaleString("'},
+    {text: 'date.toLocaleDateString("'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    בחר שיטת עיצוב _שגויה_:
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    המתודה `toLocaleFormat()` אינה סטנדרטית! היא עשויה להיראות מוכרת כי היא מספרייה צד שלישי עתיקה.
+
+    בדוק את המתודה [`toLocaleDateString` תיעוד](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleDateString). ההתנהגות שלה מתועדת תחת [`Intl.DateTimeFormat`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat).
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="טיפול בתאריכים"
+  title="תאריכי UTC חלק 1"
+  options={[
+    {text: 'Wed, 01 Jan 2020 00:00:00 GMT'},
+    {text: 'Thu, 02 Jan 2020 00:00:00 GMT'},
+    {text: 'TypeError', isAnswer: true},
+    {text: 'NaN'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה הפלט יכלול?
+    ```js
+          var date = Date.UTC('2020-01-02T00:00')
+          console.log(date.toUTCString())
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    תקבל `TypeError: date.toUTCString is not a function`, מכיוון ש-[`Date.UTC()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/UTC) מחזירה מספר שלם במילישניות, ולא אובייקט תאריך.
+
+    {/* המתודה [`getFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getFullYear) משתמשת בהסט המקומי שלך (נניח GMT-07:00 לשאלות אלו).
+    כלומר היא תחזיר את השנה הקודמת (ערב השנה החדשה מינוס 7 שעות).
+    המתודה [`getUTCFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getUTCFullYear) תחזיר את השנה כפי שסופקה ל-`Date.UTC()`, 2020.
+    */}
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="טיפול בתאריכים"
+  title="תאריכי UTC חלק 2"
+  options={[
+    {text: 'מופע תאריך מבוסס UTC'},
+    {text: 'מופע תאריך מותאם לאזור זמן מקומי'},
+    {text: 'מילישניות מאז 1 בינואר 1970 GMT', isAnswer: true},
+    {text: 'שגיאה'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה יכלול הפלט?
+    ```js
+          const d = Date.UTC(2020, 0, 1)
+          console.log(d)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    שיטת העזר [`Date.UTC`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/UTC) אינה מחזירה מופע תאריך. היא מחזירה מספר שלם במילישניות.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="טיפול בתאריכים"
+  title="תאריכי UTC חלק 3"
+  options={[
+    {text: '0'},
+    {text: '420', isAnswer: true},
+    {text: '700'},
+    {text: '1400'},
+    {text: 'null'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה יכלול הפלט?
+    ```js
+          // Assume local TZ is -07:00
+          const d = new Date(Date.UTC(2020, 0, 1))
+          console.log(d.getTimezoneOffset())
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    אובייקטי Date יוצגו באופן ברירת מחדל בשעה המקומית, עם [`.getTimezoneOffset()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getTimezoneOffset) שאינו משתנה (למעשה).
+
+    אובייקטי `Date` אינם מאחסנים נתוני אזור זמן. הם מאחסנים את מספר המילישניות מאז תקופת יוניקס (1 בינואר 1970). אזור הזמן נלקח בחשבון בעת ניתוח ועיבוד מחרוזות תאריך. התנהגות התצוגה ברירת המחדל נקבעת אוטומטית על פי הגדרות האזור של המערכת או הדפדפן.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="טיפול בתאריכים"
+  title="קובעי תאריכים חלק 1"
+  options={[
+    {text: 'ינו 01 2020', isAnswer: true},
+    {text: 'פבר 01 2020'},
+    {text: 'RangeError: ארגומנט לא חוקי.'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה יכלול הפלט?
+    ```js
+          const d = new Date(2020, 0, 1)
+          d.setDate(1)
+          console.log(d)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    המתודה [`.setDate()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setDate) קובעת את היום בחודש, בהתבסס על החודש הנוכחי של המופע הנתון.
+
+    אם ניתן ערך מחוץ למספר הימים הזמינים, ערך החודש של מופע התאריך יתכוונן (לדוגמה, `setDate(32)` בינואר יחושב כ-1 בפברואר).
+
+    <aside class="hint">`setDate` קובע את היום בחודש, בדרך כלל בטווח 1-31.</aside>
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="טיפול בתאריכים"
+  title="קובעי תאריך חלק 2"
+  options={[
+    {text: 'Jan 01 2020'},
+    {text: 'Feb 01 2020', isAnswer: true},
+    {text: 'RangeError: Invalid argument.'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה יכלול הפלט?
+    ```js
+          const d = new Date(2020, 0, 1)
+          d.setMonth(1)
+          console.log(d)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    המתודה [`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) קובעת את החודש של מופע התאריך הנתון.
+
+    הארגומנט של החודש הוא מבוסס אפס, בטווח 0-11 (בשימוש בלוחות שנה מערביים).
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="טיפול בתאריכים"
+  title="קובעי תאריכים חלק 3"
+  options={[
+    {text: 'ינו 01 2020'},
+    {text: 'ינו 01 2021', isAnswer: true},
+    {text: 'פבר 01 2020'},
+    {text: 'RangeError: ארגומנט לא חוקי.'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה יכלול הפלט?
+    ```js
+          const d = new Date(2020, 0, 1)
+          d.setMonth(12)
+          console.log(d)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    המתודה [`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) קובעת את החודש של מופע התאריך הנתון.
+
+    הארגומנט `month` מבוסס על אפס, עם 12 ערכים בטווח 0-11 (בשימוש בלוחות שנה מערביים).
+
+    כאן אנו רואים שהשנה מותאמת ל-2021, מכיוון ש-`setMonth(12)` הוא 1 יותר מ-11 (דצמבר).
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="טיפול בתאריכים"
+  title="קובעי תאריך חלק 4"
+  options={[
+    {text: 'ינו 01 2020'},
+    {text: 'פבר 01 2020'},
+    {text: 'ינו 01 2021'},
+    {text: 'פבר 01 2021', isAnswer: true},
+    {text: 'RangeError: ארגומנט לא חוקי.'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה יכלול הפלט?
+    ```js
+          const d = new Date(2020, 0, 1)
+          d.setMonth(13)
+          console.log(d)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    השיטה [`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) קובעת את החודש של מופע התאריך הנתון.
+
+    ארגומנט החודש מבוסס על אינדקס החל מ-0, בטווח 0-11 (בשימוש בלוחות שנה מערביים).
+
+    כאן אנו רואים שהחודש והשנה מותאמים לפברואר 2021, כי `setMonth(13)` הוא 2 יותר מ-11 (דצמבר).
+
+    <aside class="hint">`setMonth` קובע את החודש לפי אינדקס, 12 חודשים ממוספרים מ-0 עד 11. </aside>
+    <aside class="hint">
+    מספרים מחוץ לטווח 0-11 יגרמו לשנה לעלות על גדותיה או לרדת מתחת. לדוגמה, `setMonth(13)` יתאים את השנה ל-2021 (בפברואר כי 13 הוא 2 יותר מ-11).
+    </aside>
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={13}
+  group="טיפול בתאריכים"
+  title="קובעי תאריכים חלק 5"
+  options={[
+    {text: 'Jan 01 2020'},
+    {text: 'Feb 01 2020'},
+    {text: 'Jan 01 2019'},
+    {text: 'Dec 01 2019', isAnswer: true},
+    {text: 'RangeError: Invalid argument.'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה יכלול הפלט?
+    ```js
+          const d = new Date(2020, 0, 1)
+          d.setMonth(-1)
+          console.log(d)
+    ```
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    <aside class="hint">חודשים אינם אחידים, טווח בין 28-31 ימים.</aside>
+    <aside class="hint">`setDate` קובע את היום בחודש, בדרך כלל בטווח 1-31. מספרים שליליים וכל מספר גדול מ-`31` יגרמו להתאמת היום והחודש, לפעמים בדרכים מפתיעות.</aside>
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    המתודה [`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) קובעת את החודש של מופע התאריך הנתון.
+
+    ארגומנט החודש מבוסס אפס, עם טווח של 0-11 (בשימוש בלוחות שנה מערביים).
+
+    כאן אנו רואים שהחודש והשנה מתגלגלים חזרה לדצמבר 2019, מכיוון ש-`setMonth(-1)` קטן מ-0 (ינואר).
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
