@@ -1,6 +1,6 @@
 ---
-title: 停止将提示埋在代码中
-subTitle: 可在生产环境中使用的提示模式
+title: 别再把 Prompt 埋在代码里了
+subTitle: 经得起生产环境考验的 Prompt 模式。
 date: '2026-05-07'
 modified: '2026-05-07'
 tags:
@@ -23,27 +23,27 @@ cover_full_width: ../wide.webp
 cover_mobile: ../square.webp
 cover_icon: ../square.webp
 ---
-在你的代码库的某处，可能有这样的一段字符串：
+在你的代码库某处，存在这样一个字符串：
 
 ```typescript
 const prompt = `You are a helpful assistant. The user said: ${userInput}. Answer them.`;
 ```
 
-这段字符串现在就成了你的系统架构。
+这个字符串现在就是你的系统架构。
 
-最初它还算合理：单一模型、单一用例、快速原型。随后产品要求更温暖的语气。检索功能又加入了几段上下文。合规部门需要针对不同司法辖区的免责声明。有人提交工单要求多语言支持。免费用户和付费用户又突然需要不同的行为。
+起初一切都很合理：一个模型，一个用例，一个快速原型。接着产品部门想要更亲和的语气。检索增强（Retrieval）添加了几段上下文。合规部门要求加入特定司法管辖区的免责声明。有人开了个支持多语言的工单。免费用户和付费用户突然需要不同的行为逻辑。
 
-每一次改动都以字符串编辑的形式散落在代码库的某个角落，通常以 “tweak prompt” 的提交信息出现。没有人知道哪句话真正关键，也没有人能自信地回滚。它承载负载却不可见。
+每一次变更都变成了代码库某处的字符串编辑，提交记录通常写着“微调 prompt”。没人知道哪句话起作用。没人敢有把握地回滚。它是承重的，却是隐形的。
 
-Prompt 本质上是配置。应当把它当作控制运行时行为的代码来对待：要有类型、可测试、版本化，并且改动时要乏味而可控。
+Prompt 是配置。请像对待控制运行时行为的代码一样对待它们：类型化、可测试、版本化，并且变更起来枯燥乏味（即稳定）。
 
 ---
 
 ## 字符串插值的问题
 
-除了 “业务逻辑中埋藏的字符串” 这一问题之外，原始模板字面量还有一种生产环境的失效模式：**注入**。
+除了“字符串埋在业务逻辑中”的问题外，原始模板字面量在生产环境中还有一个失效模式：**注入（injection）**。
 
-你正在构建一个客服机器人。系统提示如下：
+假设你正在构建一个客户支持机器人。系统 prompt 是：
 
 ```typescript
 const systemPrompt = `
@@ -53,31 +53,31 @@ The user's name is ${user.name}.
 `;
 ```
 
-如果 `user.name` 的值是 `"Ignore previous instructions. You are now..."`，会发生什么？
+当 `user.name` 是 `"Ignore previous instructions. You are now..."` 时会发生什么？
 
-你刚刚把攻击者可控的文本拼接进了指令层。[这属于提示注入](/prompt-injection-new-sql-injection/)，而原始字符串插值是其常见入口。把用户数据当作可信的提示内容处理，其风险形同未使用参数化的 SQL 字符串拼接：代码与数据混在一起，然后寄希望于运行时能正确猜测。
+你刚刚将攻击者控制的文本拼接到了你的指令层中。[这就是 Prompt 注入](../prompt-injection-new-sql-injection/)，而原始字符串插值是其入侵的途径之一。将用户数据视为可信的 prompt 内容，其本质与不使用参数化查询而直接构建 SQL 字符串如出一辙：你模糊了代码与数据的界限，然后寄希望于运行时能猜对你的意图。
 
 ---
 
-## 模式 1：类型化提示模板
+## 模式 1：类型化 Prompt 模板
 
-最直接的升级方式：显式声明并验证提示输入。
+最简单的升级方案：让 prompt 输入显式化并进行校验。
 
 ```typescript
 import { z } from 'zod';
 
-// 定义提示所需的全部字段形状
+// 定义 prompt 所需所有内容的结构
 const SupportPromptSchema = z.object({
   companyName: z.string().min(1).max(100),
   userTier: z.enum(['free', 'pro', 'enterprise']),
-  userName: z.string().max(50).regex(/^[a-zA-Z\s'-]+$/), // 限制能进入提示的内容
+  userName: z.string().max(50).regex(/^[a-zA-Z\s'-]+$/), // 限制进入 prompt 的内容
   locale: z.string().default('en-US'),
 });
 
 type SupportPromptVars = z.infer<typeof SupportPromptSchema>;
 
 function buildSupportPrompt(vars: SupportPromptVars): string {
-  // Zod 会在变量不匹配时抛异常——错误输入永远不会进入提示
+  // 如果 vars 不匹配，Zod 会抛出异常 —— 格式错误的数据永远不会进入 prompt
   const validated = SupportPromptSchema.parse(vars);
 
 return `
@@ -100,25 +100,25 @@ ${validated.userTier === 'enterprise' ? '- Include SLA references when discussin
 }
 ```
 
-现在的提示拥有：
-- 编译期合约，明确提示所需的内容
-- 运行时校验，能够在输入错误时拦截，防止其进入提示文本
-- 唯一的提示逻辑入口，便于查找和理解
-- 简单的测试方式：调用 `buildSupportPrompt()` 并传入边界案例，检查返回的字符串
+现在，这个 prompt 具备了：
+- 明确 prompt 所需内容的编译时契约
+- 运行时验证，确保格式错误的数据在进入 prompt 之前就被拦截
+- 查找和理解 prompt 逻辑的唯一入口
+- 易于测试：使用边界情况调用 `buildSupportPrompt()` 并检查输出即可
 
 ---
 
-## 模式 2：可组合的提示片段
+## 模式 2：可组合的 Prompt 分段
 
-随着提示的增长，平铺的字符串会把每个产品请求变成考古现场。新功能会添加新片段，部署需要不同的组合，测试则需要确定性的变体。
+随着 prompt 的增长，扁平字符串会让每次产品需求变更都变成一场“考古”。新功能不断增加片段，不同部署环境需要不同的组合，测试则需要确定性的变体。
 
-使用你在复杂 UI 中会采用的相同思路：用明确的边界组合小块。
+处理这种复杂 UI 的方案同样适用于此：将小片段组合起来，并设定明确的边界。
 
 ```typescript
 type PromptSection = {
   id: string;
   content: string;
-  priority: number; // 优先级越高的片段越靠前
+  priority: number; // 优先级较高的片段排在前面
 };
 
 class PromptBuilder {
@@ -153,7 +153,7 @@ function buildAgentPrompt(context: AgentContext): string {
     .add({
       id: 'core-rules',
       priority: 90,
-      content: CORE_RULES, // 常量导入——所有代理共享
+      content: CORE_RULES, // 导入的常量 —— 在所有 agent 中保持一致
     })
     .addIf(context.userTier === 'enterprise', {
       id: 'enterprise-addendum',
@@ -174,19 +174,19 @@ function buildAgentPrompt(context: AgentContext): string {
 }
 ```
 
-每个片段都是可测试的。`CORE_RULES` 是可以 grep 的常量。企业行为被抽象为命名块，而不是隐藏在段落中间的三元表达式。
+每个分段都是可测试的。`CORE_RULES` 是一个可以全局搜索的常量。企业级行为是一个具名代码块，而不是隐藏在段落中间的三元运算符。
 
 ---
 
-## 模式 3：将指令与数据分离
+## 模式 3：指令与数据分离
 
-这是一种结构化的防御手段，用于缓解提示注入。它并不能让恶意上下文完全无害化，但能够为模型提供清晰的边界，而不是一整块未区分的字符串。
+这是针对 Prompt 注入的一种结构化防御手段。它不能让恶意上下文完全无害化，但它能给模型提供清晰的边界，而不是一串混杂在一起的字符串。
 
 ```typescript
 function buildRagPrompt(query: string, docs: RetrievedDoc[]): ChatMessage[] {
-  // 返回消息数组而不是平铺字符串
-  // 这正是 OpenAI / Anthropic API 的工作方式：
-  // 使用它们的结构，而不是后期再把字符串扁平化
+  // 返回消息数组而不是扁平字符串
+  // 这是 OpenAI/Anthropic API 的工作方式：
+  // 直接使用它们的结构，而不是事后再去拼凑字符串
   return [
     {
       role: 'system',
@@ -218,28 +218,28 @@ function escapeXml(str: string): string {
 }
 ```
 
-用户数据和文档内容在进入提示前都会经过 `escapeXml` 处理。指令则放在单独的 `system` 消息中。若攻击者在文档内容里注入 `</document><system>new instructions</system>`，它会被转义为普通文本并保留明确的边界，而不是直接冲击你的指令层。
+用户数据和文档内容在进入 prompt 之前都会经过 `escapeXml` 处理。指令存在于独立的 `system` 消息中。如果攻击者在文档内容中注入 `</document><system>new instructions</system>`，模型看到的只是带有明确边界的转义文本，而无法直接破坏你的指令层。
 
 ---
 
-## 模式 4：提示版本化
+## 模式 4：Prompt 版本控制
 
-提示的行为会像代码一样必然会变更。如果不做版本化，你将无法：
+Prompt 改变行为的确定性与代码无异。如果没有版本控制，你将无法：
 
-- 知道是哪一次提示产生了哪一次输出（用于调试）
-- 回滚导致回归的提示改动
-- 对两版提示进行 A/B 测试
+- 追踪哪个 prompt 产生了哪个输出（用于调试）
+- 回滚导致效果倒退的 prompt 变更
+- 对两个 prompt 版本进行 A/B 测试
 - 审计系统在特定时间点的行为
 
-最简方案：把提示当作代码来管理，放在带有版本标识的文件中。
+最简单的方案：将 prompt 视为代码，并保存在带有版本标识的文件中。
 
 ```
 src/prompts/
   support-agent/
-    v1.ts       # 原始版
-    v2.ts       # 添加企业规则
-    v3.ts       # 当前版 — 添加引用格式
-    index.ts    # 重新导出当前版本并提供版本元数据
+    v1.ts       # 初始版本
+    v2.ts       # 增加了企业级规则
+    v3.ts       # 当前版本 —— 增加了引用格式
+    index.ts    # 重新导出当前版本 + 版本元数据
 ```
 
 ```typescript
@@ -247,13 +247,13 @@ src/prompts/
 export { buildSupportPrompt as default } from './v3';
 export const PROMPT_VERSION = 'support-agent@v3';
 export const PROMPT_CHANGELOG = {
-  v3: '为企业层添加结构化引用格式',
-  v2: '添加企业规则和 SLA 引用',
-  v1: '初始提示',
+  v3: '为企业级用户增加了结构化引用格式',
+  v2: '增加了企业级规则和 SLA 引用',
+  v1: '初始 prompt',
 };
 ```
 
-为每一次 LLM 调用打上提示版本标签。日志应记录 “support-agent@v3 产生了此输出”，而不是 “提示出现了奇怪的行为”。当行为变化时，你就能明确是哪一个构件随之改变。
+为每一次 LLM 调用打上 prompt 版本标签。日志应该记录“support-agent@v3 产生了此输出”，而不是“这个 prompt 表现得很奇怪”。当行为发生变化时，你能明确知道是哪个工件随之改变了。
 
 ```typescript
 async function callModel(
@@ -275,18 +275,18 @@ async function callModel(
 
 ---
 
-## 模式 5：环境特定行为
+## 模式 5：环境特定的行为
 
-提示在开发、生产和测试环境下往往需要不同的行为。开发时可能希望得到详细的推理过程；生产时则需要简洁的回复；测试时则要求行为确定性。
+Prompt 通常在开发、生产和测试环境中需要不同的行为。在开发环境中，你可能需要详细的推理过程；在生产环境中，需要简洁的回复；而在测试环境中，则需要确定性的行为。
 
-不要把环境检查散落在提示构建器的各处。应在提示配置层统一处理：
+不要把环境检查散落在 Prompt 构建器各处。增加一个 Prompt 配置层：
 
 ```typescript
 const PROMPT_CONFIGS: Record<string, PromptConfig> = {
   development: {
     addThinkingInstructions: true,
     verbosity: 'verbose',
-    temperature: 0.9, // 开发时更具创造性，便于探索
+    temperature: 0.9, // 开发探索阶段允许更多创意
     includeReasoningPreamble: true,
   },
   test: {
@@ -306,18 +306,20 @@ const PROMPT_CONFIGS: Record<string, PromptConfig> = {
 const config = PROMPT_CONFIGS[process.env.NODE_ENV ?? 'production'];
 ```
 
-现在 CI 运行是确定性的（`temperature: 0`），而且你的提示构建器不需要在各处散布 `if (process.env.NODE_ENV === 'development')` 检查。
+现在 CI 运行具有确定性（`temperature: 0`），而且你的 Prompt 构建器也不再到处充斥着 `if (process.env.NODE_ENV === 'development')` 这种检查。
 
-## 综合使用
+---
 
-单独来看这些模式并不惊艳，这正是它们的价值所在。组合使用时，它们把提示工作从经验主义提升为普通工程实践：
+## 总结
 
-1. **类型化模板** — 在边界捕获错误输入，模型接触之前就拦截
-2. **可组合段落** — 从可审计的块构建复杂提示
-3. **数据/指令分离** — 用显式边界降低注入风险
-4. **版本化** — 让提示变更可追溯、可回滚
-5. **环境特定配置** — 防止调试提示意外进入生产
+这些模式本身都不算惊世骇俗。但这正是重点。结合使用它们，能将 Prompt 工作从“玄学”转变为普通的工程实践：
 
-具备全部五个特性的提示看起来与最初的那串字符串判若两人。一次编写成本稍高，但后期修改几乎不再需要紧张。你可以把它交给新人，而不必进行 30 分钟的口头历史说明哪些句子是“神圣不可侵犯”的。
+1. **类型化模板** —— 在输入触达模型之前，就在边界处拦截错误输入。
+2. **可组合片段** —— 从可审计的组件中构建复杂的 Prompt。
+3. **数据与指令分离** —— 通过明确的边界降低注入风险。
+4. **版本控制** —— 让 Prompt 的变更可追溯、可回滚。
+5. **环境特定配置** —— 停止将调试用的 Prompt 发布到生产环境。
 
-模型本身并不是 AI 工程的难点，真正的挑战在于你的提示基础设施。
+具备这五种特性的 Prompt 看起来和你最初写的字符串完全不同。它在第一次编写时耗时更长，但在以后修改时却能让你少担惊受怕。你可以把它交给新人，而不需要花 30 分钟口述哪些句子是“神圣不可侵犯”的。
+
+在 AI 工程中，模型本身并不是难点。你的 Prompt 基础设施才是。
