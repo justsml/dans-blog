@@ -1,0 +1,62 @@
+{
+  "selectedCommit": "e6188d4c743665cd6b7c2f60f98473f1523fafc5",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "5. [🔍 ניטור ובדיקה כפולה](#-monitoring--double-checking)\n5. [🔍 ניטור ואסימוני קנרית](#-monitoring--canary-tokens)",
+      "replacement": "5. [🔍 ניטור ובדיקה כפולה](#-monitoring--double-checking)\n6. [❌ תפיסות מוטעות נפוצות](#-common-misconceptions)",
+      "reason": "The Table of Contents has duplicate item 5s and incorrect numbering/labels compared to the English source and the actual headings in the document."
+    }
+  ],
+  "rationale": "The Deepseek candidate is technically superior to the alternative, which had broken code blocks. The Hebrew translation is natural and maintains the technical context. I am fixing a numbering and duplication error in the Table of Contents to ensure it matches the document structure.",
+  "slug": "docker-security-for-admins-and-maintainers",
+  "locale": "he",
+  "candidateCommits": [
+    "e6188d4c743665cd6b7c2f60f98473f1523fafc5",
+    "403c4cb54850089329ca5ebe677a05e427a8a0ff"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "## עבודה בתהליך",
+      "replacement": "## עבודה בעיצומה",
+      "reason": "'עבודה בעיצומה' is the standard Hebrew translation for 'Work in progress'.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "[🕵️‍ דליפות אישורים והתקפות ערוץ צדדי](#-credential-leaks-and-side-channel-attacks)",
+      "replacement": "[🕵️‍ דליפות אישורים והתקפות ערוץ צדדי](#-credential-leaks-and-side-channel-attacks)\n5. [🔍 ניטור ובדיקה כפולה](#-monitoring--double-checking)",
+      "reason": "The candidate missed translating the 5th item in the Table of Contents list, causing a mismatch with the actual heading below.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "5. [🔍 ניטור ובדיקה כפולה](#-monitoring--double-checking)\n5. [🔍 ניטור ואסימוני קנרית](#-monitoring--canary-tokens)",
+      "replacement": "5. [🔍 ניטור ובדיקה כפולה](#-monitoring--double-checking)\n6. [❌ תפיסות מוטעות נפוצות](#-common-misconceptions)",
+      "reason": "The Table of Contents has duplicate item 5s and incorrect numbering/labels compared to the English source and the actual headings in the document.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug docker-security-for-admins-and-maintainers --locale he --skip-global",
+    "output": ""
+  }
+}
