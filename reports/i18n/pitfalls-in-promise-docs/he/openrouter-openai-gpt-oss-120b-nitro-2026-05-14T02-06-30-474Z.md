@@ -1,0 +1,84 @@
+# Translation Candidate
+- Slug: pitfalls-in-promise-docs
+- Locale: he
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2017-05-10--pitfalls-in-promise-docs/he/index.mdx
+- Validation: deferred
+- Runtime seconds: 2.31
+- Input tokens: 2346
+- Output tokens: 837
+- Thinking tokens: unknown
+- Cached input tokens: 512
+- Cache write tokens: 0
+- Estimated cost: $0.000242
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: בעיות בתיעוד של Promise
+subTitle: הימנעות מבעיות בתיעוד פופולרי
+date: '2017-05-10'
+modified: '2024-07-30'
+category: Code
+subCategory: promises
+tags:
+  - programming
+  - patterns
+  - promises
+  - functional-programming
+cover: ../craig-whitehead-433328-unsplash.webp
+cover_mobile: ../w300_craig-whitehead-433328-unsplash.webp
+cover_icon: ../icon_craig-whitehead-433328-unsplash.webp
+---
+> זיהוי אנטי‑פטרנים של Promise בתוצאות חיפוש של Google ובספריות פופולריות.
+
+![craig-whitehead-433328-unsplash.webp](../craig-whitehead-433328-unsplash.webp)
+
+אודה על וידוי: גם אני כתבתי את ה'אנטי‑פטרנים' שאני מבקר למטה, וכמובן שגם רבים ממפתחי ה‑JS עושים זאת. שום דבר מהכתוב אינו מיועד להיות אישי או מכוון כלפי היוצרים המקוריים. זהו רק סקירת קוד של תבניות נפוצות – אני מקווה להעביר הבנה של סדרי העדיפויות ותהליכי החשיבה הביקורתיים שלי.
+
+> מקווה שתוכלו לזהות את סימני האזהרה של הבטחות רעות אחרי קריאת פרויקט זה.
+
+1. [CallbackHell.com](#callbackhellcom)
+1. [StrongLoop](#strongloop)
+1. [RisingStack](#risingstack)
+1. [Q Library](#qlibrary)
+
+--------------------------
+### CallbackHell.com
+> **CREDIT:** http://callbackhell.com/
+![CallbackHell.com](../callbackhell.webp)
+
+----------------------
+### StrongLoop
+> **CREDIT:** `https://strongloop.com/strongblog/node-js-callback-hell-promises-generators/`
+![strong loop](../strongloop.webp)
+
+----------------
+### RisingStack
+> **CREDIT:** https://blog.risingstack.com/node-js-async-best-practices-avoiding-callback-hell-node-js-at-scale/
+זהו מאמר חזק למדי. יש לי רק דאגה אחת:
+
+![Rising Stack](../risingstack.webp)
+
+------------------------
+### Q Library
+> **CREDIT:** https://github.com/kriskowal/q
+
+ספריית Q היא אחת המשומשות והוותיקות ביותר הקשורות ל‑"Promises". ולכן היא סובלת מדוגמאות מיושנות והצורך לשמור על תאימות לאחור.  
+**אני אומר "קשורה ל‑'Promises'" מכיוון שאני מרגיש ש‑Q בעצם מתמקדת בתבנית `deferred`.**
+
+היא עשויה להיראות כמו Promises, אך אני מתעקש שהיא לא כזו. שטח הפנים שלה גדול מדי – ולכל הסיבות הלא נכונות. בנוסף, קונבנציית השמות מקצרת שמות באופן בלתי עקבי, מה שמקשה על זכירת הממשק. מתודות כמו `when` ו‑`done` אינן נחוצות.
+
+בקיצור: תבנית `deferred` היא אנטי‑תבנית מכאיבה – היא כמעט ולא מוסיפה ערך על פני גישת הקולבק המסורתית.
+
+![q first example](../qlibrary-1.webp)
+
+![q xmlHTTP deferred anti-pattern](../qlibrary-2.webp)
+
+> אנא הסתכלו (וכוכב) על פרויקט ה‑Github של מאמר זה, [Escape From Callback Mountain](https://github.com/justsml/escape-from-callback-mountain)
+
+> יעד הפרויקט: לחקור ולפתח תבניות שפה פונקציונליות משופרות ב‑JavaScript.
+````
