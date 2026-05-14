@@ -2,7 +2,7 @@
 
 - Slug: quiz-advanced-js-error-mastery
 - Locale: zh
-- Judge model: openrouter/deepseek/deepseek-v4-flash
+- Judge model: openrouter/google/gemini-3-flash-preview
 - Second judge model: not run
 - Escalation judge model: not run
 - Max candidate commits per judge call: 3
@@ -12,31 +12,20 @@
 - Validation scope: local
 
 ## Primary Judge Telemetry
-- Runtime seconds: 26.24
-- Input tokens: 18652
-- Output tokens: 4061
+- Runtime seconds: 3.09
+- Input tokens: 26338
+- Output tokens: 201
 - Thinking tokens: unknown
 - Cached input tokens: 0
 - Cache write tokens: 0
-- OpenRouter cost credits: 0.005355
-- Estimated cost: $0.005355
-
-## Pre-Publish Rescore Telemetry
-### Pass 1
-- Runtime seconds: 5.77
-- Input tokens: 14875
-- Output tokens: 956
-- Thinking tokens: unknown
-- Cached input tokens: 0
-- Cache write tokens: 0
-- OpenRouter cost credits: 0.003357
-- Estimated cost: $0.003357
+- OpenRouter cost credits: 0.013772
+- Estimated cost: $0.013772
 
 ## Judge Suggestions
-1. Pass 1: applied high priority suggestion. Match: "查看我们的[完整测验集合](../challenges/)以获取更多关于 JavaScript、算法等的脑筋急转弯！" Replacement: "查看我们的[完整测验集合](/challenges/)以获取更多关于 JavaScript、算法等的脑筋急转弯！" Reason: The English file uses an absolute path '/challenges/' for the link. The relative path '../challenges/' from the zh subfolder would resolve to a non-existent directory, breaking the link. Use the absolute path to match the original and ensure correct navigation. Note: Applied exact replacement to selected MDX.
-2. Pass 1: applied medium priority suggestion. Match: "subTitle: 你的异常真的例外吗？" Replacement: "subTitle: 你的异常真的与众不同吗？" Reason: The English subTitle 'Are your exceptions truly exceptional?' uses wordplay. '例外' is a direct translation of 'exception' but loses the 'exceptional' nuance. '与众不同' (meaning 'out of the ordinary') better captures the intended wordplay and is more natural in Chinese. Note: Applied exact replacement to selected MDX.
+1. Pass 1: logged high priority suggestion. Match: "---" Replacement: "" Reason: The candidate has an extra triple-dash (---) separator after the frontmatter, which can break MDX parsing or render as a horizontal rule. Note: Medium/high-priority suggestion did not include a non-empty exact match and replacement.
 
 ## Candidates
 - current src/content/posts/2025-11-04--quiz-advanced-js-error-mastery/zh/index.mdx
-- 9b4c615ced7d884b2c33b9c1195b5e63c2f8c9a9 i18n candidate(zh): quiz-advanced-js-error-mastery via openrouter/openai/gpt-oss-120b:nitro
-- 01e1db4dff3e5d4c01604039211dac5183ab527f i18n candidate(zh): quiz-advanced-js-error-mastery via openrouter/deepseek/deepseek-v4-flash
+- ac3b9291948110ff8553862e4789f188dadb2aa5 i18n candidate(zh): quiz-advanced-js-error-mastery via openrouter/openai/gpt-oss-120b:nitro
+- 8dac56bb281a0e055d004bf86c54e7c54e39203c i18n candidate(zh): quiz-advanced-js-error-mastery via deepseek/deepseek-v4-flash
+- 970fc681617d71b259ae6ea38c72bd78c58967ea i18n candidate(zh): quiz-advanced-js-error-mastery via openrouter/qwen/qwen3-32b:nitro

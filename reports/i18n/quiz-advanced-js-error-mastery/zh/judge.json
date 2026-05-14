@@ -1,40 +1,39 @@
 {
-  "selectedCommit": "9b4c615ced7d884b2c33b9c1195b5e63c2f8c9a9",
-  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "selectedCommit": "8dac56bb281a0e055d004bf86c54e7c54e39203c",
+  "selectedModel": "deepseek/deepseek-v4-flash",
   "scores": {
     "readability": 9,
-    "technicalAccuracy": 9,
-    "coherence": 9,
-    "relevance": 9,
+    "technicalAccuracy": 10,
+    "coherence": 10,
+    "relevance": 10,
     "translationQuality": 9,
     "mdxPreservation": 10
   },
-  "suggestions": [],
-  "rationale": "Pre-publish fixes from the previous judge have been applied: the subTitle now uses '与众不同' for better wordplay, and the link is absolute. No further medium/high-priority issues remain. The translation is accurate, natural, and preserves MDX structure with all 14 challenges, correct imports, and proper formatting.",
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "---",
+      "replacement": "",
+      "reason": "The candidate has an extra triple-dash (---) separator after the frontmatter, which can break MDX parsing or render as a horizontal rule."
+    }
+  ],
+  "rationale": "The translation is technically accurate and uses natural, professional Chinese. It correctly handles the technical nuances of JavaScript error handling (e.g., 'enumerable properties', 'prototype chain'). It preserves the MDX structure and heading counts. One minor fix is needed for an extra frontmatter separator.",
   "slug": "quiz-advanced-js-error-mastery",
   "locale": "zh",
   "candidateCommits": [
-    "9b4c615ced7d884b2c33b9c1195b5e63c2f8c9a9",
-    "01e1db4dff3e5d4c01604039211dac5183ab527f"
+    "ac3b9291948110ff8553862e4789f188dadb2aa5",
+    "8dac56bb281a0e055d004bf86c54e7c54e39203c",
+    "970fc681617d71b259ae6ea38c72bd78c58967ea"
   ],
   "suggestionLog": [
     {
       "priority": "high",
-      "match": "查看我们的[完整测验集合](../challenges/)以获取更多关于 JavaScript、算法等的脑筋急转弯！",
-      "replacement": "查看我们的[完整测验集合](/challenges/)以获取更多关于 JavaScript、算法等的脑筋急转弯！",
-      "reason": "The English file uses an absolute path '/challenges/' for the link. The relative path '../challenges/' from the zh subfolder would resolve to a non-existent directory, breaking the link. Use the absolute path to match the original and ensure correct navigation.",
+      "match": "---",
+      "replacement": "",
+      "reason": "The candidate has an extra triple-dash (---) separator after the frontmatter, which can break MDX parsing or render as a horizontal rule.",
       "pass": 1,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
-    },
-    {
-      "priority": "medium",
-      "match": "subTitle: 你的异常真的例外吗？",
-      "replacement": "subTitle: 你的异常真的与众不同吗？",
-      "reason": "The English subTitle 'Are your exceptions truly exceptional?' uses wordplay. '例外' is a direct translation of 'exception' but loses the 'exceptional' nuance. '与众不同' (meaning 'out of the ordinary') better captures the intended wordplay and is more natural in Chinese.",
-      "pass": 1,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
+      "applied": false,
+      "note": "Medium/high-priority suggestion did not include a non-empty exact match and replacement."
     }
   ],
   "validation": {
