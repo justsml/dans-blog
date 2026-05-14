@@ -1,0 +1,67 @@
+# Translation Candidate
+- Slug: docker-rocks
+- Locale: he
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2015-06-11--docker-rocks/he/index.mdx
+- Validation: deferred
+- Runtime seconds: 1.57
+- Input tokens: 2170
+- Output tokens: 449
+- Thinking tokens: unknown
+- Cached input tokens: 1024
+- Cache write tokens: 0
+- Estimated cost: $0.000165
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: Docker מדהים ועכשיו עובד ב‑OSX
+subTitle: 'Docker מדהים, מהיר וגמיש'
+date: '2015-06-11'
+modified: '2024-08-10'
+category: DevOps
+subCategory: docker
+tags:
+  - docker
+  - boot2docker
+  - devops
+related:
+  - docker-makes-everything-better
+  - docker-server-setup-notes
+  - docker-security-tips-for-self-hosting
+cover: ../guillaume-bolduc-259596-unsplash.webp
+cover_mobile: ../w300_guillaume-bolduc-259596-unsplash.webp
+cover_icon: ../icon_guillaume-bolduc-259596-unsplash.webp
+---
+## Docker Rocks
+
+> עדכונים ספטמבר 2016, 2018  
+> Boot2Docker הוחלף ב‑Docker for Mac
+
+> הערה היסטורית: פוסט זה נשמר בכוונה כצילומי מצב של Docker‑for‑Mac משנת 2015. עצות הביצועים ושמות הכלים משקפים את אותה תקופה; זרימות העבודה של Docker Desktop ו‑Compose המודרניות כבר התקדמו.
+
+1. Docker מדהים, מהיר וגמיש.  
+1. כלים קודמים, ובפרט boot2docker, היו איטיים ונוטים לקריסות.
+
+Docker יכול היום לרוץ באופן מקורי על ליבת לינוקס v3.4+ – וה‑VM של boot2docker בפועל רץ על v4.
+
+הניצול הטוב ביותר של החומרה שלך: התקן את Debian או Ubuntu העדכניים ביותר על ה‑Mac/Windows שלך,
+
+... בוא, המשחקים האלו לא משפרים את הקוד שלך...
+
+### בדוק את ההגדרה שלך
+
+סקור את הפלט של הפקודה `docker info`.
+
+1. אבטחה: בדוק את השרת עבור פתחות פתוחות בלתי צפויות (עם `nmap` מרשת מרוחקת)  
+1. DNS: השתמש במטמון מקומי או בשרת DNS בעל השהייה נמוכה.  
+1. אחסון: השתמש במנהל האחסון הנכון (`overlay2` הוא הסביר ביותר)
+
+עודכן 2024:
+
+- Docker Desktop הוא קוד קנייני, אך חינמי לשימוש אישי. זהו דרך מצוינת להתחיל עם Docker ב‑OSX או ב‑Windows.  
+- אם אתם מחפשים פתרון יותר קוד פתוח, בדקו את [Rancher Desktop](https://rancherdesktop.io/).
+````
