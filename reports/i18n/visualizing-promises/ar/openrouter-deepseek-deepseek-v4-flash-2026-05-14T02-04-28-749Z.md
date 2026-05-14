@@ -1,0 +1,161 @@
+# Translation Candidate
+- Slug: visualizing-promises
+- Locale: ar
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2018-09-30--visualizing-promises/ar/index.mdx
+- Validation: deferred
+- Runtime seconds: 24.00
+- Input tokens: 3355
+- Output tokens: 4307
+- Thinking tokens: unknown
+- Cached input tokens: 384
+- Cache write tokens: 0
+- Estimated cost: $0.001623
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: تصور الوعود
+subTitle: اخترق الحواجز...
+date: '2018-09-30'
+modified: '2024-07-30'
+category: Guides
+subCategory: promises
+cover: ../junior-ferreira-735237-unsplash.webp
+cover_mobile: ../w300_junior-ferreira-735237-unsplash.webp
+cover_icon: ../icon_junior-ferreira-735237-unsplash.webp
+tags:
+  - promises
+  - async
+  - visualizing
+  - javascript
+  - composition
+related:
+  - intro-to-promises
+  - promise-gotchas
+  - stop-trying-to-make-async-await-happen
+  - javascript-promises-quiz
+---
+لتصور كيفية تنفيذ الـ Promises، دعنا نعرف دالة جديدة `delay(millisecs)`.
+
+```js
+function delay(millisecs) {
+  return new Promise(resolve => {
+    setTimeout(() => resolve(millisecs), millisecs);
+  });
+}
+```
+
+هذه دالة مساعدة ستُحل (resolve) بمجرد انتهاء المهلة.
+
+سيتم تمرير التأخير بالميلي ثانية إلى دالة الاستدعاء الخاصة بـ `.then`.
+
+دعنا نلقي نظرة على 4 أمثلة (مع خطوط زمنية متحركة).
+
+## مثال 1/4
+
+يوضح هذا كيف يتأخر تنفيذ `console.log()` بواسطة `delay(msec)`.
+
+```js
+delay(1000).then(() => console.log("done"));
+```
+
+![خط زمني يظهر تأخير 1000 ثم تشغيل console.log بعد ثانية واحدة](../N_1000ms_log.webp)
+
+<!-- ```
+delay(1000) --------|.then(fn)
+                    | console.log('done')
+|-------------------|--------------------|--------------------|-----------------
+0msec             1sec                 2sec                 3sec
+``` -->
+
+## مثال 2/4
+
+_هذا يوضح خطأ شائعًا._
+
+يتم تشغيل `console.log` فور **بدء** `delay(1000)`، وليس **بعد** التأخير كما كنت تريد على الأرجح.
+
+لأن `console.log` يُرجع `undefined`، يتم تجاهل `.then()` بصمت.
+
+لاحظ الفرق بين `typeof console.log === 'function'` و `typeof console.log() === undefined`.
+
+بشكل عام، الاستخدام المطلوب لـ `console.log` موضح في المثال رقم 1. تأكد من تمرير دوال إلى `.then` و `.catch`.
+
+```js
+delay(1000).then(console.log("done"));
+```
+
+![خط زمني يظهر تشغيل console.log فورًا قبل انتهاء التأخير](../N_1000ms_!log.webp)
+
+<!-- ```
+delay(1000) --------|.then(null)
+console.log('done')
+|-------------------|--------------------|--------------------|-----------------
+0msec             1sec                 2sec                 3sec
+``` -->
+
+## مثال 3/4
+
+يتم تنفيذ 3 وعود (Promises) في وقت واحد.
+
+```js
+delay(1000).then(console.log);
+delay(2000).then(console.log);
+delay(3000).then(console.log);
+```
+
+![خط زمني يظهر ثلاثة وعود تأخير تتحقق بعد ثانية وثانيتين وثلاث ثوان](../N_3000ms.webp)
+
+<!-- ```
+delay(1000) ------|.then(console.log)
+delay(2000) ------|--------------------|.then(console.log)
+delay(3000) ------|--------------------|--------------------|.then(console.log)
+|-----------------|--------------------|--------------------|-------------------
+|                 |                    |                    |
+0msec           1sec                 2sec                 3sec
+``` -->
+
+## مثال #4/4
+
+`Promise.all` مع 3 وعود `delay`. سيتم تنفيذها بشكل متزامن.
+
+```js
+Promise.all([delay(1000), delay(2000), delay(3000)]).then(console.log);
+```
+
+![مخطط زمني يوضح Promise.all وهي تنتظر جميع وعود التأخير الثلاثة](../N_3000ms_PromiseAll.webp)
+
+<!--
+
+```
+delay(1000) ---| [resolved]------------------v
+delay(2000) ---|--------------| [resolved]---v
+delay(3000) ---|--------------|--------------v [resolved]
+Promise.all()  |--------------|-------------- > console.log([1000, 2000, 3000])
+|--------------|--------------|--------------|--------------------------------
+|              |              |              |
+0msec        1sec           2sec           3sec
+```
+
+-->
+
+> إسناد:
+>
+> - المخططات الزمنية المتحركة غير المتزامنة من [Patrick Biffle](https://github.com/Piglacquer)
+> - مصدر إلهام هذه المقالة: https://pouchdb.com/2015/05/18/we-have-a-problem-with-promises.html
+
+<!-- <div class="challenge" title="السؤال رقم 1: معنى الحياة:">
+
+  <ul class="options">
+    <li>1</li>
+    <li>2</li>
+    <li class="answer">42</li>
+    <li>3</li>
+  </ul>
+  <div class="description">ما هو معنى الحياة؟</div>
+
+</div> -->
+````
