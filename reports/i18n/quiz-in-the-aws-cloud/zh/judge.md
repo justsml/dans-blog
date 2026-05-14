@@ -1,7 +1,7 @@
 # Translation Judge
 
-- Selected candidate: b304fcc74d4dba61db615bbd12bdfc4ba7f1db22
+- Selected candidate: 7215e105775a218e0c65896e23e6df7853f21cb7
 - Selected model: openrouter/openai/gpt-oss-120b:nitro
-- Judge model: openrouter/deepseek/deepseek-v4-flash
+- Judge model: openrouter/google/gemini-3-flash-preview
 
-Candidate b304fcc provides a technically accurate and natural Chinese translation that preserves Dan's direct style. It correctly handles asset paths with '../' prefix, maintains the same heading structure (no markdown headings), and uses appropriate terminology (e.g., '20+ 题目', '出站流量问题'). The translation is complete and free of syntax errors, unlike candidate a1a9c6 which has a critical frontmatter double '---' issue. Overall, it best meets all criteria.
+The candidate 7215e105 (gpt-oss-120b:nitro) provides the most natural and technically accurate translation, maintaining Dan's direct and engaging style. It correctly handles complex MDX structures and asset paths. The current translation in the zh/index.mdx file already incorporated most of the previous judge's suggestions (translating '50 reads per second' etc.), but missed the first option '100 reads per second', which I've added as a suggestion for full consistency.
