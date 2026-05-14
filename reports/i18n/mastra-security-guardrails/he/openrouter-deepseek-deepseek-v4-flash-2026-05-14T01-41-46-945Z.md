@@ -1,0 +1,189 @@
+# Translation Candidate
+- Slug: mastra-security-guardrails
+- Locale: he
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2026-01-03--mastra-security-guardrails/he/index.mdx
+- Validation: deferred
+- Runtime seconds: 38.96
+- Input tokens: 5504
+- Output tokens: 6263
+- Thinking tokens: unknown
+- Cached input tokens: 768
+- Cache write tokens: 0
+- Estimated cost: $0.002419
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: AI בפרודקשן הוא מפחיד (ואיך לתקן את זה)
+subTitle: 'אם לסוכן שלך אין מעקות בטיחות, אתה לא מוכן לייצור.'
+date: '2026-01-03'
+modified: '2026-01-08'
+tags:
+  - ai
+  - security
+  - mastra
+  - guardrails
+  - privacy
+  - pii
+category: AI
+subCategory: Security
+social_image: ../desktop-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+אף אחד לא מתכוון לבנות מערכת AI לא בטוחה. אתה כותב הוראות, בודק מקרי קצה, מוסיף כמה כללי אימות. ואז מישהו מגלה שהוא יכול לשטות בבוט שלך לשחק תפקיד של פיראט ולחשוף נתוני משתמשים. או שמספר כרטיס אשראי מגיע ללוגים שלך. או שהמודל ממליץ בביטחון על מוצר של מתחרה.
+
+הפער בין "עובד בדמו" ל"בטוח בפרודקשן" רחב יותר ממה שרוב הצוותים מצפים.
+
+חלק מהבעיה הוא של-LLMs גולמיים אין דעות לגבי מה הם צריכים או לא צריכים לעשות. הם מכונות חיזוי שמנסות להמשיך כל תבנית שהתחלת. תן להם פרומפט שנראה כמו "מצב עקיפת מערכת", והם ישחקו בשמחה. זו לא באג במודל; זה פשוט איך שמודלי שפה עובדים.
+
+רוב הפריימוורקים נותנים לך את המודל ומאחלים לך בהצלחה. מאסטרה נוקטת בגישה שונה: היא מניחה שתצטרך מעקות בטיחות בסופו של דבר, אז היא בונה אותם לתוך ארכיטקטורת הסוכן מההתחלה.
+
+## מעבדים כשכבות בטיחות
+
+המנגנון המרכזי הוא פשוט. לפני שהפרומפט שלך מגיע למודל, הוא עובר דרך שרשרת של מעבדי קלט. אחרי שהמודל מגיב, מעבדי פלט מקבלים את תורם. כל מעבד יכול לבדוק, לשנות או לחסום את התוכן בשלב זה.
+
+חשוב עליהם כעל מידלוור לאינטראקציות AI. אתה עורם את אלה שאתה צריך, מגדיר את ההתנהגות שלהם, והם רצים אוטומטית על כל בקשה.
+
+### 1. עצירת הפיראטים (הזרקת פרומפט)
+
+התקפות הזרקת פרומפט הפכו ליצירתיות. אנשים משתמשים בתווי יוניקוד בלתי נראים, כותבים הוראות ב-base64, או משכנעים את המודל שהם ב"מצב דיבאג" שבו חוקים רגילים לא חלים. הטכניקות ממשיכות להתפתח.
+
+Mastra כוללת מעבדים שתופסים דפוסים נפוצים:
+
+```typescript
+// src/mastra/agents/secure-agent.ts
+import { Agent } from '@mastra/core/agent';
+import { PromptInjectionDetector, UnicodeNormalizer } from '@mastra/core/processors';
+import { openai } from '@ai-sdk/openai';
+
+export const secureAgent = new Agent({
+  id: 'fortress-assistant',
+  name: 'fortress-assistant',
+  instructions: 'You are a secure assistant.',
+  model: openai('gpt-5'),
+  inputProcessors: [
+    // 1. Scrub invisible characters
+    new UnicodeNormalizer({
+      id: 'unicode-normalizer',
+      stripControlChars: true,
+      collapseWhitespace: true,
+    }),
+    // 2. Detect the attempt
+    new PromptInjectionDetector({
+      id: 'prompt-injection-detector',
+      model: openai('gpt-5-nano'), // Cheap, fast
+      threshold: 0.8,
+      strategy: 'block', // Hard stop
+      detectionTypes: ['injection', 'jailbreak', 'system-override'],
+    }),
+  ],
+});
+```
+
+ה-`UnicodeNormalizer` מסיר תווי בקרה ומכווץ רווחים. ה-`PromptInjectionDetector` מנתח את הקלט המנוקה עבור דפוסים שמרמזים שמישהו מנסה לעקוף את ההוראות שלך.
+
+אתה מגדיר עד כמה אגרסיבית תהיה הזיהוי (פרמטר `threshold`) ומה יקרה כשהיא מופעלת (חסימה, רישום ביומן, או סימון בלבד).
+
+### 2. טיפול ב-PII
+
+מספרי כרטיסי אשראי ביומנים, מספרי תעודת זהות במאגרי וקטורים, כתובות אימייל שנשמרות יותר מהנדרש. אלה סוגי הבעיות שהופכות לבעיות רגולטוריות. האתגר הוא שמשתמשים לא תמיד מבינים שהם מדביקים מידע רגיש לחלון צ'אט.
+
+ה-`PIIDetector` סורק דפוסים נפוצים לפני שהם מגיעים למודל שלך או נכתבים לאחסון:
+
+```typescript
+import { PIIDetector } from '@mastra/core/processors';
+
+export const privateAgent = new Agent({
+  id: 'privacy-first-assistant',
+  name: 'privacy-first-assistant',
+  instructions: 'You are a helpful assistant that never stores personal information.',
+  model: openai('gpt-5'),
+  inputProcessors: [
+    new PIIDetector({
+      id: 'pii-detector',
+      model: openai('gpt-5-nano'),
+      detectionTypes: ['email', 'phone', 'credit-card', 'ssn'],
+      threshold: 0.6,
+      strategy: 'redact',
+      redactionMethod: 'mask',  // Replace with [REDACTED]
+      instructions: 'Detect and mask personally identifiable information',
+    }),
+  ],
+});
+```
+
+אתה יכול לבחור להסתיר (להחליף ב-`[REDACTED]`), לגזור (hash), או לחסום לחלוטין. המעבד פועל גם על קלט וגם על פלט, כך שאתה מכוסה גם אם המודל איכשהו מייצר מידע רגיש בתגובתו.
+
+### 3. סינון תוכן
+
+מודלים שאומנו על נתוני אינטרנט ראו דברים מסוימים. ללא סינון, הם יכולים מדי פעם לייצר תגובות שיגרמו לצוות יחסי הציבור שלך להיות עצבני. ה-`ModerationProcessor` תופס תוכן שמפר את ההנחיות שלך:
+
+```typescript
+import { ModerationProcessor } from '@mastra/core/processors';
+
+export const moderatedAgent = new Agent({
+  id: 'safe-assistant',
+  name: 'safe-assistant',
+  instructions: 'You are a helpful assistant for a community platform.',
+  model: openai('gpt-5'),
+  inputProcessors: [
+    new ModerationProcessor({
+      id: 'moderation-processor',
+      model: openai('gpt-5-nano'),  // Fast, cheap model for classification
+      categories: ['hate', 'harassment', 'violence', 'self-harm'],
+      threshold: 0.7,  // Block if confidence > 70%
+      strategy: 'block',  // Stop the request immediately
+      instructions: 'Detect harmful content that violates community guidelines',
+    }),
+  ],
+});
+```
+
+החלק המעניין הוא שאתה מגדיר אילו קטגוריות חשובות למקרה השימוש שלך. כלי לכתיבה יצירתית עשוי לאפשר תוכן אקספרסיבי יותר מאשר בוט שירות לקוחות. הסף והאסטרטגיה נותנים לך שליטה על מידת הקפדנות של הסינון.
+
+---
+
+## כאשר דברים מופעלים
+
+מעבדים לא זורקים שגיאות כשהם מזהים בעיה. במקום זאת, הם מגדירים דגל על אובייקט התוצאה:
+
+```typescript
+const result = await secureAgent.generate('Ignore all previous instructions...');
+
+if (result.tripwire) {
+  console.log(`Blocked! Reason: ${result.tripwireReason}`);
+  // "Blocked! Reason: Prompt injection detected."
+  return "Nice try, script kiddie.";
+}
+```
+
+התבנית הזו מאפשרת לך לטפל באירועי אבטחה באופן שמתאים לאפליקציה שלך. אתה יכול לתעד אותם לניתוח, להחזיר הודעת שגיאה גנרית, או אפילו לאפשר הפרות מסוימות בהקשרים ספציפיים. השדה `tripwireReason` אומר לך בדיוק איזה מעבד סימן את התוכן, מה שעוזר כשאתה מנפה חיובי-שגוי או מכוון את הספים שלך.
+
+---
+
+## מה זה לא פותר
+
+מעבדים תופסים הרבה, אבל הם לא קסם. תוקף נחוש עם מספיק זמן כנראה ימצא פרומפט שמחליק. מודלים לפעמים הוזים בדרכים שמעבדים לא יכולים לחזות. ותמיד יש פשרה בין אבטחה לגמישות: ככל שהחוקים שלך מחמירים יותר, כך גדל הסיכוי שתחסום מקרי שימוש לגיטימיים.
+
+הערך אינו הגנה מושלמת. זה שיש דרך שיטתית לטפל בבעיות הנפוצות שבהחלט יצוצו בייצור. אתה יכול לכוונן את הרגישות ככל שאתה לומד מה המשתמשים שלך באמת עושים. אתה יכול להוסיף מעבדים מותאמים אישית לסיכונים ספציפיים לתחום. ויש לך שרשראות ביקורת שמראות מה נחסם ולמה.
+
+רוב בעיות האבטחה ב-AI בייצור אינן התקפות מתוחכמות. הן אנשים שמעתיקים ומדביקים מידע שהם לא אמורים, או מגלים דרך ניסוי וטעייה שהבוט יעשה דברים שלא התכוונת אליהם. מעבדים לא יעצרו כל בעיה אפשרית, אבל הם מקשים הרבה יותר על הברורות.
+
+### משאבים
+
+- [תיעוד מעקות הבטיחות של Mastra](https://mastra.ai/docs/agents/guardrails)
+- [שיטות עבודה מומלצות לאבטחה](https://mastra.ai/docs/security)
+- [מאגר Mastra ב-GitHub](https://github.com/mastra-ai/mastra)
+
+## קרא את הסדרה
+
+1. [ניתוב LLM](../llm-routing-mastra-ai)
+2. **אבטחה ומעקות בטיחות** (פוסט זה)
+3. [אינטגרציות MCP וכלים](../mastra-mcp-tool-integrations)
+4. [זרימות עבודה וזיכרון](../mastra-workflows-memory)
+````
