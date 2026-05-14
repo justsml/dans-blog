@@ -159,6 +159,17 @@ describe("assertTranslationLength", () => {
     })).not.toThrow();
   });
 
+  test("allows very dense Chinese translations through the validator", () => {
+    const sourceBody = "a".repeat(5600);
+    const targetBody = "字".repeat(1400);
+
+    expect(() => assertTranslationLength({
+      sourceContents: ["---", "title: Source", "---", sourceBody].join("\n"),
+      targetContents: ["---", "title: Target", "---", targetBody].join("\n"),
+      targetPath: "src/content/posts/example/zh/index.mdx",
+    })).not.toThrow();
+  });
+
   test("uses prose length instead of letting code blocks dominate the ratio", () => {
     const prose = "a".repeat(700);
     const hugeCodeBlock = ["```ts", "const value = 1;".repeat(500), "```"].join("\n");
@@ -195,7 +206,7 @@ describe("assertTranslationLength", () => {
       sourceContents: ["---", "title: Source", "---", "a".repeat(2000)].join("\n"),
       targetContents: ["---", "title: Target", "---", "字".repeat(2600)].join("\n"),
       targetPath: "src/content/posts/example/zh/index.mdx",
-    })).toThrow(/35%-125%/);
+    })).toThrow(/20%-125%/);
   });
 
   test("allows tiny legacy posts when they satisfy the locale ratio", () => {

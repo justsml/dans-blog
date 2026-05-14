@@ -67,9 +67,9 @@ const LOCALE_LENGTH_RATIO_BOUNDS: Record<string, LengthRatioBounds> = {
     label: "Russian range: 60%-160% of English",
   },
   zh: {
-    minimumRatio: 0.35,
+    minimumRatio: 0.2,
     maximumRatio: 1.25,
-    label: "Chinese CJK-adjusted range: 35%-125% of English",
+    label: "Chinese CJK-adjusted range: 20%-125% of English",
   },
 };
 

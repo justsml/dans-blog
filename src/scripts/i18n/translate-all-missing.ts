@@ -79,6 +79,9 @@ function processTask(task: Task) {
   for (const model of candidateModels) {
     const candidates = getCandidateCommits(task);
     if (candidates.length >= minCandidates) break;
+    if (candidates.some((commit) => normalizeModelId(getCandidateModel(commit)) === normalizeModelId(model))) {
+      continue;
+    }
 
     console.log(`Generating candidate ${candidates.length + 1}/${minCandidates} with ${model}`);
     runInherited("bun", [
