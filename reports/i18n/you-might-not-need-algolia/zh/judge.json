@@ -1,23 +1,34 @@
 {
-  "selectedCommit": "72df8956d8ad6835f17c2365abe1269bea84b53f",
-  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "selectedCommit": "3156aaefe65015d4beee967b7a29317d5e4fd637",
+  "selectedModel": "openrouter/google/gemini-3-flash-preview",
   "scores": {
     "readability": 9,
-    "technicalAccuracy": 9,
+    "technicalAccuracy": 10,
     "coherence": 9,
-    "relevance": 9,
+    "relevance": 10,
     "translationQuality": 9,
     "mdxPreservation": 10
   },
   "suggestions": [],
-  "rationale": "Candidate 72df8956 preserves the exact heading count (5 H2) as the English original, uses correct asset paths with '../', and delivers a natural, accurate translation that matches Dan's direct style. Candidate b2059ad8 introduces a duplicate H2 heading ('## 我使用的决策规则' appears twice), violating the MDX preservation requirement.",
+  "rationale": "The current translation is excellent. It captures Dan's direct, slightly opinionated tone perfectly. Technical terms like 'infrastructure cosplay' and 'vendor blog voice' are handled with great contextual awareness. The MDX structure, including asset paths and heading levels, is perfectly preserved. No further high-priority fixes are required.",
   "slug": "you-might-not-need-algolia",
   "locale": "zh",
   "candidateCommits": [
-    "b2059ad8cd2d05327178309775f107317aaf8a1c",
-    "72df8956d8ad6835f17c2365abe1269bea84b53f"
+    "7d2757fff5c77c23af8a11a98caf918f5244bc39",
+    "3156aaefe65015d4beee967b7a29317d5e4fd637",
+    "e52c1b11af6ff69c890e249ce722accd7eca359b"
   ],
-  "suggestionLog": [],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "Pagefind 之所以奏效，是因为它拒绝了额外系统",
+      "replacement": "Pagefind 奏效是因为它拒绝了额外系统",
+      "reason": "The original English 'Pagefind Works Because It Refuses The Extra System' is punchier; removing '之所以...是因为' makes the heading more direct and natural in Dan's style.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
   "validation": {
     "ok": true,
     "scope": "local",

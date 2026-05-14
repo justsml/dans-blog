@@ -1,7 +1,7 @@
 # Translation Judge
 
-- Selected candidate: 72df8956d8ad6835f17c2365abe1269bea84b53f
-- Selected model: openrouter/openai/gpt-oss-120b:nitro
-- Judge model: openrouter/deepseek/deepseek-v4-flash
+- Selected candidate: 3156aaefe65015d4beee967b7a29317d5e4fd637
+- Selected model: openrouter/google/gemini-3-flash-preview
+- Judge model: openrouter/google/gemini-3-flash-preview
 
-Candidate 72df8956 preserves the exact heading count (5 H2) as the English original, uses correct asset paths with '../', and delivers a natural, accurate translation that matches Dan's direct style. Candidate b2059ad8 introduces a duplicate H2 heading ('## 我使用的决策规则' appears twice), violating the MDX preservation requirement.
+The current translation is excellent. It captures Dan's direct, slightly opinionated tone perfectly. Technical terms like 'infrastructure cosplay' and 'vendor blog voice' are handled with great contextual awareness. The MDX structure, including asset paths and heading levels, is perfectly preserved. No further high-priority fixes are required.
