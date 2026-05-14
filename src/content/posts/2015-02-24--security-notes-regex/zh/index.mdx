@@ -1,0 +1,46 @@
+---
+title: 安全笔记：正则表达式
+subTitle: 正则表达式也存在漏洞吗？
+date: '2015-02-24'
+modified: '2018-07-30'
+category: Security
+subCategory: RegEx
+tags:
+  - security
+  - regex
+  - dos
+  - remote-exploit
+cover_credit: Photo by Markus Spiske on Unsplash
+cover: ../markus-spiske-666905-unsplash.webp
+cover_mobile: ../w300_markus-spiske-666905-unsplash.webp
+cover_icon: ../icon_markus-spiske-666905-unsplash.webp
+social_image: ../desktop-social.webp
+---
+## 正则表达式拒绝服务攻击：ReDoS
+
+在我发现的漏洞中，最令人意外且难以察觉的类型之一就是与正则表达式相关的漏洞。
+其成因通常是表达式写得太烂，或者实现方式有问题。
+
+通过超大长度或精心构造的用户输入，攻击者可以耗尽服务器的内存或 CPU 资源。
+
+> 这是一个拒绝服务漏洞，而不仅仅是性能坏味道。如果恶意输入能长时间占用 CPU 导致真实用户无法访问，那么它就必须纳入你的安全威胁模型。
+
+### 危险信号
+
+1. 嵌套的限定符（quantifiers）、重复的分组或重叠的交替匹配（alternation）。
+2. 使用回溯密集型引擎，且未设置超时或输入长度限制。
+3. 对未经校验的用户输入直接使用正则表达式。
+4. 正则校验运行在热点请求路径（hot request path）上。
+
+### 缓解与解决
+
+1. 正则表达式很难搞。
+    1. 例如，[OWASP][owasp] 的专家们建议这样处理 IP 校验：`^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$`
+    2. 为了校验一个 4 字节的 IP 地址，正则长度居然比（老款）推文还要长！
+2. 在进行正则求值前，先限制输入内容的长度。
+3. 在平台支持的情况下，增加超时机制、引入静态分析，或改用非回溯型引擎。
+4. 该问题几乎波及所有语言和平台，包括 .NET、Node、Python、PERL 和 Java。
+
+### 参考资料
+
+- [OWASP ReDoS](https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS)
