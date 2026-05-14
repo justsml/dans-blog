@@ -1,0 +1,117 @@
+---
+social_image: ../desktop-social.webp
+title: 如何做好命名
+subTitle: 命名：面向对象基础
+date: '2016-06-01'
+modified: '2024-08-10'
+category: Guides
+subCategory: programming
+tags:
+  - programming
+  - patterns
+  - naming
+  - source-code
+  - organization
+cover: ../rawpixel-652639-unsplash.webp
+cover_mobile: ../w300_rawpixel-652639-unsplash.webp
+cover_icon: ../icon_rawpixel-652639-unsplash.webp
+---
+## 命名规范：面向对象基础
+
+让我们通过实例来看看对象/类设计……
+
+### 现状
+
+你是否设计过“数据模型”（在代码、SQL 或 Excel 表格中）？
+下面的结构看起来眼熟吗？
+
+```
+*** 反模式 - 请勿复制粘贴 ***
+* User
+  - id
+  - avatarUrl
+  - name
+  - email
+  - password
+
+* Agent
+  - id
+  - primaryPhoto
+  - name
+  - email
+  - agentEmail
+  - agentPhoneMain
+  - agentEmailPrimary
+  - agentPhonePrimary
+  - agentAddressFull
+  - agentCompanyName
+  - agentCompanyAddress
+  - *userEmail* - 指向 User 表的“指针” ^^^
+```
+
+### Bug 在哪？
+
+严格来说，这并没有程序错误，只是数据需要重新组织。
+
+**以下情况听起来是否耳熟？**
+
+1.  对应用的任何改动都需要数小时艰苦的调试。
+2.  任何需求变更都会导致：
+
+![schema refactor](../schema_refactor)
+
+为什么把字段命名为 `agentEmailPrimary` 如此糟糕？
+
+首先，你**并不是**在创造一个宇宙中从未存在过的新事物。过度具体化（Over-specificity）会带来一些陷阱：
+
+1.  被“锁死”在极度具体的名称中，意味着 `agentEmailPrimary` 可能会让你的视图和相关代码的**复用率为 0%**，并且会出现令人恼火的反复性 Bug，例如：
+
+- 表之间的数据不同步（不确定 `user.email` 是否需要同步到 `agent.agentEmail`，反之亦然——更不用说手动实现、维护这种“逻辑”的复杂性了……）。
+- 校验规则/逻辑很可能是重复且不一致的。
+- 你的项目会越来越像一个摇摇欲坠的叠叠乐（Jenga）木塔。
+- 脆弱性随每一个新文件堆积，即使是微小的改动也需要极度关注细节。
+
+2.  `agentEmailPrimary` 可能代表几种不同的含义。应使用**更短的名称**来避免歧义。
+
+- 警惕无意义的冗余词汇。`Primary`（首选）？这只会引出更多问题：是否有 `Secondary`（备用）？它是指紧急联系人的首选邮箱吗？
+
+废话少说，Dan，它到底应该长什么样？
+
+### 解决方案
+
+```
+// 整合后的 Schema:
+
+User
+  - id
+  - role: ['agent', 'lead', 'admin']
+  - name
+  - phone
+  - address
+  - email
+  - password
+  - company
+    - name
+    - address
+```
+
+我删除了 `Agent` 表，因为它并不包含 Agent 特有的字段。而在清理完命名后，`User.company` 对象（带有 `.name` 和 `.address`）自然而然地浮现了出来。
+
+一些指导原则：
+
+1.  **消除不必要的表。** 你真的需要一个 `statuses` 表吗？直接在 `User` 表上加一个 `status::VARCHAR(8)` 字段不行吗？没关系，每行多占几个字节死不了人。
+2.  **尝试合并相关的表。** 聚焦于**数据**本身。
+3.  **删除冗余的数据采集。** （例如：如果已经有了分析解决方案，就删掉 `ActivityLogs` 表。）
+4.  **尽量将所有字段名保持为单个单词/名词/代词。** 依赖表提供的上下文是完全没问题的。（例如：`PersonalAccount.email` 对比 `BusinessAccount.email` —— 上下文由表名提供。）
+5.  **绝对不存在** `Agent.agentEmail` 或 `Agent.agentPhonePrimary` 这种东西。永远不要。跟我念一遍：“它就叫 `email` 和 `phone`。”
+6.  **使用高度具体的名称，无异于将代码的可重用性和耐用性钉死在棺材里。** 没错，具体来说，**可重用性为 0%**。
+7.  搞出 `User.profileSummaryEmail` 这种垃圾字段并不会让你显得专业。💞
+
+**推荐阅读：**
+
+1. [也许规范化并不正常](https://blog.codinghorror.com/maybe-normalizing-isnt-normal/)
+1. [数据库规范化与反规范化之间的权衡](https://dev.to/er_dward/the-trade-offs-between-database-normalization-and-denormalization-4kdo)
+2. [http://phlonx.com/resources/nf3/](http://phlonx.com/resources/nf3/)
+3. [https://en.wikipedia.org/wiki/Database_normalization](https://en.wikipedia.org/wiki/Database_normalization)
+
+![schema_refactor](../res.cloudinary.com/ddd/image/upload/bldg-collapse__wsZKhIc_kafcha.gif)
