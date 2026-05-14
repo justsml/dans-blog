@@ -1,0 +1,147 @@
+# Translation Candidate
+- Slug: handling-international-numbers-and-currency
+- Locale: zh
+- Model: openrouter/google/gemini-3-flash-preview
+- Target: src/content/posts/2024-08-29--handling-international-numbers-and-currency/zh/index.mdx
+- Validation: deferred
+- Runtime seconds: 10.22
+- Input tokens: 3068
+- Output tokens: 1360
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.005614
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: 理解国际数字与货币
+subTitle: 货币本地化详解
+draft: false
+date: '2024-08-28'
+modified: '2024-09-03'
+tags:
+  - engineering
+  - internationalization
+  - localization
+  - currency
+  - numbers
+category: HowTo
+subCategory: Internationalization
+cover_full_width: ../currency-banner-wide.webp
+cover_mobile: ../currency-banner-pic__w200.webp
+cover_icon: ../currency-banner-pic__w200.webp
+---
+- [货币：本地化 (L10n) 与国际化 (i18n)](#money-localization-l10n-and-internationalization-i18n)
+- [核心概念](#critical-concepts)
+  - [数字是本地化的 🏘️](#numbers-are-local-️)
+  - [货币是全球性的 🌎](#currency-is-global-️)
+  - [何时需要考虑本地化](#when-locale-matters)
+- [解决方案](#a-solution)
+- [后续步骤](#next-steps)
+
+## 货币：本地化 (L10n) 与国际化 (i18n)
+
+“本地化”与“国际化”不仅仅是用来在拼字游戏中充门面的高级词汇，它们指的是让产品**在不同国家都能拥有“原生感”**的过程。
+
+<p class="breakout quote">以错误的本地格式显示货币是一个明显的破绽：这说明你根本没用心。<br/>如果你连价格格式都处理不好，用户怎么敢指望你能处理好物流？</p>
+
+国际化是一个宏大的话题，涵盖了从文本翻译到日期格式化的方方面面。在这篇文章中，我们将深入探讨一个特定的子话题：**数字与货币的格式化。**
+
+让我们看看三个欧元区国家、美国和印度之间的格式差异：
+
+- `€1,234,567.89` 爱尔兰 🇮🇪
+- `1.234.567,89 €` 德国 🇩🇪
+- `1 234 567,89 €` 法国 🇫🇷
+- `$1,234,567.89` 美国 🇺🇸
+- `₹12,34,567.89` 印度 🇮🇳
+
+简直是一片混乱，对吧？符号、空格和标点符号到处乱飞。欧盟竟然能在任何事情上达成一致，简直是奇迹！😅
+
+## 核心概念
+
+在深入研究解决方案之前，我们所说的“数字是本地化的”究竟是什么意思？
+
+### 数字是本地化的 🏘️
+
+每个地区（[基于 ISO 3166 的国家/地区标准](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes)）都定义了数字格式化的规则。
+
+数字格式化规则包括：
+
+- 小数点：逗号、句点。
+- 千分位分隔符：逗号、句点、空格。
+- 货币符号的位置与间距。
+
+### 货币是全球性的 🌎
+
+“货币”指的是特定的货币单位。（参见 [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217#Active_codes_(list_one)) 列表。）
+
+- 指定一个符号：`$`, `€`, `£`, `¥`。（经常被重复使用。）
+- 始终有一个 3 字母代码：`USD`, `EUR`, `GBP`, `JPY`。
+- 理论上可以在“任何”国家使用/兑换。
+- 货币之间的转换需要汇率数据。
+- 价值不会因地区而改变。
+
+### 何时需要考虑本地化
+
+大多数电商或支付类的 REST API 只处理 `price`（价格）+ `currencyCode`（货币代码）。为什么不处理本地化区域（Locale）？
+
+本地化区域（通常）是在操作系统或设备层级设置的，浏览器通过 `navigator.language` 提供该信息。由于你的每个用户都可能拥有不同的本地化设置，因此在客户端进行数字和货币格式化才是唯一合理的做法。
+
+## 解决方案
+
+好消息是，现代编程语言对此都有内置支持。在 JavaScript 中，我们拥有 [`Intl`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl) 类和 `Intl.NumberFormat`！
+
+让我们来看一下代码：
+
+```javascript
+const number = 1_234_567.89;
+
+/**
+ * 以本地货币格式化数字。
+ * @param {number} amount - 要格式化的金额。
+ * @param {string} currency - 3 字母货币代码。
+ * @param {string} [locale] - 用户的本地化区域字符串。
+ */
+const formatMoney = (amount, currency, locale = navigator.language) =>
+  new Intl.NumberFormat(locale, { currency, style: 'currency' })
+    .format(amount);
+
+console.log('🇩🇪 ' + formatMoney(number, 'EUR', 'de-DE'));
+console.log('🇮🇪 ' + formatMoney(number, 'EUR', 'ga-IE'));
+console.log('🇫🇷 ' + formatMoney(number, 'EUR', 'fr-FR'));
+```
+
+如果你需要处理更复杂的操作，比如计算税费、应用折扣或进行货币转换，你会需要使用像 [dinero.js](https://v2.dinerojs.com/) 这样的库。
+
+## 后续步骤
+
+根据你的具体需求，你可能想要探索相关的概念：
+
+- 处理用户本地化区域的最佳实践：检测并允许手动覆盖（例如提供国家/地区下拉菜单）。
+- 持久化存储整数（存储“分”，而不是“元”）。
+- 货币计算（例如应用“8折”优惠券，计算“小计 + 税费”等）。
+- 实时汇率（用于零售购买、外汇/货币兑换）。
+
+<p class="breakout quote">如果你希望看到关于这些主题的后续文章，请告诉我！</p>
+
+{/* ## 推荐
+
+以下库可以帮助完成这些任务：
+
+**JavaScript / TypeScript**
+
+- [dinero.js](https://v2.dinerojs.com/) 支持货币计算、汇率、格式化和解析！
+
+**Rust**
+
+- [rusty_money](https://crates.io/crates/rusty_money) 是我首选的 Rust 库。
+
+**Go**
+
+- [currency](https://github.com/bojanz/currency) 是我目前在 Golang 上的选择。
+ */}
+````
