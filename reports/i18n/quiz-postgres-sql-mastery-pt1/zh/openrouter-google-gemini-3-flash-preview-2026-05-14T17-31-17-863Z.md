@@ -1,0 +1,15 @@
+# Translation Candidate
+- Slug: quiz-postgres-sql-mastery-pt1
+- Locale: zh
+- Model: openrouter/google/gemini-3-flash-preview
+- Target: src/content/posts/2024-11-27--quiz-postgres-sql-mastery-pt1/zh/index.mdx
+- Validation: rejected: direct AI SDK translation failed
+- Runtime seconds: 5.41
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Cache write tokens: unknown
+- Estimated cost: unknown
+- Pricing source: unknown
+- Note: Command failed: bun run i18n:translate:chunked -- --slug quiz-postgres-sql-mastery-pt1 --locale zh --model openrouter/google/gemini-3-flash-preview --chunk 18p --run-id 2026-05-14T17-25-23-572Z-96183 --run-lock-path /Users/dan/code/oss/dans-blog/.git/codex-i18n-translation-run.json --quiz-concurrency 24 (code 1)
