@@ -1,0 +1,264 @@
+# Translation Candidate
+- Slug: serverless-database-magic
+- Locale: zh
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2025-09-15--serverless-database-magic/zh/index.mdx
+- Validation: deferred
+- Runtime seconds: 8.71
+- Input tokens: 4496
+- Output tokens: 3056
+- Thinking tokens: unknown
+- Cached input tokens: 1024
+- Cache write tokens: 0
+- Estimated cost: $0.000725
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: 2025 年数据库创新浪潮
+subTitle: 你可以感谢 AI。
+date: '2025-09-10'
+modified: '2025-09-17'
+tags:
+  - serverless
+  - databases
+  - ai
+  - innovation
+  - chroma
+  - lancedb
+  - pagefind
+  - orama
+  - duckdb
+category: Search
+subCategory: Databases
+social_image: ../desktop-social.webp
+cover_full_width: ../data-city-wide.webp
+cover_mobile: ../data-city-square-200.webp
+cover_icon: ../data-city-square-200.webp
+cover_credit: ©️ 2025 Dan Levy
+---
+## 不是另一篇向量数据库文章
+
+以下是我本该更早使用的决策规则：
+
+<p class="inset">如果你的数据可以从文件重新构建且用户主要是读取它，先尝试使用对象存储数据库。如果用户整天在写入，直接使用真实数据库，别再让 S3 扮演数据库角色。</p>
+
+这才是有用的句子。不是“无服务器是未来”。也不是“向量数据库改变了一切”。这些话已经在足够多的会议胸卡上出现过。
+
+AI 确实改变了大量搜索问题的形态。小团队突然想要语义搜索、混合排序、文档聊天、多模态检索以及对存放在对象存储中的文件进行分析。过去的答案是“用 pgvector 的 Postgres”或“部署 OpenSearch/Elasticsearch”或“购买托管搜索服务”。当工作负载值得时，这些仍然是好方案。
+
+但很多工作负载并不符合这种情况。它们读取密集、可重建，并且能够容忍内容变更与搜索同步之间的短暂延迟。文档站点、目录快照、静态导出、内部知识库、本地分析、原型 RAG 系统。针对这些场景，一类新工具让看似乏味的架构变得异常强大：构建索引、把它存为文件、通过 HTTP 提供查询。
+
+快照说明：生态系统变化迅速。下面的星标数、特性标签和性能数据是 2025 年 9 月的快照，而非永恒的排行榜。把它们当作参考，然后在做生产迁移前先检查最新文档。
+
+## 名字不同，仍是数据库
+
+这些支持无服务器和 CDN 的数据存储在中等规模场景下非常实用，约 1,000 到 1,000,000 条记录或几 GB 数据，传统数据库基础设施往往带来的仪式感大于价值：
+
+- **Pagefind**（2022，约 4.5K ⭐）：纯静态方式——一次编译，永久搜索，零后端需求
+- **Orama**（2023，约 8K ⭐）：通用方案，可在浏览器到无服务器函数的任何环境运行
+- **Chroma**（2022，约 14K ⭐）：AI 原生，专为 RAG 应用打造
+- **LanceDB**（2023，约 4K ⭐）：企业级多模态能力，基于磁盘架构
+- **DuckDB-WASM**（2019，约 23K ⭐）：通过 WebAssembly 在浏览器中运行的完整 SQL 分析数据库
+
+共同的做法很简单：把持久数据保存在文件或对象存储中，然后在浏览器、边缘函数、worker 或轻量服务中查询。这并未消除复杂度，只是把复杂度转移到构建流水线、索引新鲜度、缓存失效和客户端能力上。当读取占主导时，这是一种相当合理的权衡。
+
+### 复选框对决
+
+| Feature | [Pagefind](../pagefind.app) | [Orama](../orama.com) | [Chroma](../www.trychroma.com/) | [LanceDB](../lancedb.com) | [DuckDB-WASM](../duckdb.org/docs/api/wasm) |
+|---------|----------|--------|---------|----------|----------|
+| **全文搜索** | ✅ 高级词干提取 | ✅ BM25，30 种语言 | ✅ SQLite FTS | ✅ Tantivy | ✅ 完整 SQL |
+| **向量搜索** | ❌ | ✅ 余弦相似度 | ✅ HNSW | ✅ IVF_PQ、HNSW、GPU | ⚠️ 扩展 |
+| **AI/RAG 集成** | 无 | ✅ 内置管道 | ✅ LangChain、LlamaIndex | ✅ 高级重排序 | ⚠️ 手动配置 |
+| **存储方式** | 静态 JSON/WASM | 内存 + S3 插件 | 基于服务器* | S3 兼容 Lance | WASM + S3/HTTP |
+| **写入支持** | 仅构建时 | 完整 CRUD | 完整 CRUD | 完整 CRUD | 完整 SQL CRUD |
+| **性能** | <100 ms | 0.0001 ms‑100 ms | <100 ms | 向量 3‑5 ms，全文 50 ms | 10 ms‑1 s（复杂 SQL） |
+
+*2025 年 9 月快照：Chroma 需要服务器运行时，且不支持像对象文件工具那样直接使用 S3 对象存储（[issue #1736](../github.com/chroma-core/chroma/issues/1736)）。
+
+### 实现示例
+
+语法差异揭示了真实的分层：构建时搜索、内存搜索、向量原生存储、多模态表格以及浏览器 SQL 并不是同一产品类别，仅因为它们都出现在 AI 演示中。
+
+#### 使用 Pagefind 的静态站点搜索
+
+```html
+--- CHUNK END ---
+
+<link href="../pagefind/pagefind-ui.css" rel="stylesheet">
+<script src="../pagefind/pagefind-ui.js"></script>
+<div id="search"></div>
+<script>new PagefindUI({ element: "#search" });</script>
+
+#### 企业级多模态与 LanceDB
+
+**创建带自动 OpenAI 嵌入的 LanceDB 表的代码：**
+```typescript
+import * as lancedb from "@lancedb/lancedb";
+import "@lancedb/lancedb/embedding/openai";
+import { LanceSchema, getRegistry } from "@lancedb/lancedb/embedding";
+import { Utf8 } from "apache-arrow";
+
+const db = await lancedb.connect("data/multimodal-db");
+const func = getRegistry()
+  .get("openai")
+  ?.create({ model: "text-embedding-ada-002" });
+
+// 自动生成嵌入的 Schema
+const documentsSchema = LanceSchema({
+  text: func.sourceField(new Utf8()),
+  vector: func.vectorField(),
+  category: new Utf8()
+});
+
+const table = await db.createEmptyTable("documents", documentsSchema);
+await table.add([
+  { text: "machine learning concepts", category: "research" },
+  { text: "deep learning fundamentals", category: "research" }
+]);
+```
+
+**查询 LanceDB 表的示例：**
+```typescript
+import * as lancedb from "@lancedb/lancedb";
+import "@lancedb/lancedb/embedding/openai";
+// “连接”到一个 URL 路径
+const db = await lancedb.connect("data/multimodal-db");
+const table = db.getTable("documents");
+
+// SQL + 向量搜索组合
+const results = await table.search("machine learning concepts")
+  .where("category = 'research'")
+  .limit(10)
+  .toArray();
+
+console.log(results);
+```
+
+#### 通用搜索与 Orama
+```typescript
+import { create, insert, search } from '@orama/orama'
+
+const db = create({
+  schema: {
+    title: 'string',
+    content: 'string', 
+    embedding: 'vector[1536]'
+  }
+})
+
+await insert(db, { 
+  title: 'Getting Started',
+  content: 'Learn the basics',
+  embedding: await generateEmbedding('Learn the basics')
+})
+
+const results = await search(db, { 
+  term: 'basics',
+  mode: 'hybrid' // 结合文本 + 向量搜索
+})
+```
+
+**DuckDB-WASM：**
+```typescript
+import * as duckdb from "https://cdn.jsdelivr.net/npm/@duckdb/duckdb-wasm@latest/dist/duckdb-browser.mjs";
+const bundle = await duckdb.selectBundle(duckdb.getJsDelivrBundles());
+const worker = new Worker(bundle.mainWorker);
+const db = new duckdb.AsyncDuckDB(new duckdb.ConsoleLogger(), worker);
+await db.instantiate(bundle.mainModule, bundle.pthreadWorker);
+
+const conn = await db.connect();
+await conn.query(`create table t as select * from (values (1,'hybrid search'),(2,'edge sql')) as v(id,txt);`);
+// 可选全文检索：
+await conn.query(`install fts; load fts; select * from t where match_bm25(txt, 'hybrid');`);
+```
+
+#### AI 原生搜索与 Chroma  
+```typescript
+import { ChromaClient } from "chromadb";
+
+const client = new ChromaClient();
+const collection = await client.createCollection({ name: "knowledge-base" });
+
+await collection.add({
+  documents: ["AI will transform software development"],
+  metadatas: [{ source: "tech-blog", category: "AI" }],
+  ids: ["doc1"]
+});
+
+const results = await collection.query({
+  queryTexts: ["future of programming"],
+  where: { category: "AI" },
+  nResults: 5
+});
+```
+
+## 用例指南
+
+**选择 Pagefind 的情形：**
+- 构建文档、博客或知识库
+- 内容每周或更少更新一次
+- 需要零运维开销且完美的 CDN 缓存
+- *示例：公司文档，10K+ 页面，每月更新*
+
+**选择 Orama 的情形：**
+- 构建仪表盘、电商或动态应用
+- 需要实时更新且子 100 ms 的性能
+- 想要从浏览器到边缘函数的部署灵活性
+- *示例：SaaS 动态产品目录*
+
+**选择 Chroma 的情形：**
+- 构建 RAG 应用或 AI 知识库
+- 需要 LangChain/LlamaIndex 集成
+- 语义搜索是核心功能
+- *示例：AI 客服机器人*
+
+**选择 LanceDB 的情形：**
+- 处理多模态数据（图像、音频、视频）
+- 需要企业级大规模性能
+- 需要复杂分析和重新排序
+- *示例：媒体平台的语义视频搜索*
+
+**选择 DuckDB-WASM 的情形：**
+- 需要在浏览器或边缘函数中完整的 SQL 能力
+- 处理分析工作负载和复杂查询
+- 想直接从 S3 处理 CSV/Parquet 文件
+- *示例：业务智能仪表盘的即席 SQL 查询*
+
+## 决策规则
+
+实际的问题不是“哪个数据库最好？”
+
+实际的问题是：系统必须吸收何种变化？
+
+- **可重建内容：** Pagefind、Orama 快照、Lance 文件、DuckDB 读取 Parquet。保持静态，除非真的受限。
+- **频繁写入：** Postgres、Chroma 服务器、托管搜索服务，或基于队列的索引管道。需要协调，而不是凭感觉。
+- **用户特定结果：** 使用真实后端。对象存储本身不是授权模型。
+- **文件分析：** DuckDB 极其有用。让 SQL 做 SQL 该做的事。
+- **多模态或向量密集搜索：** LanceDB 与 Chroma 值得在真实数据上测试，而不是在 README 基准上。
+
+走捷径的路径很便宜。边缘情况才决定架构走向。
+
+## 更大的视角
+
+这些工具降低了有用搜索的最小可行基础设施门槛。这很重要。2020 年，“语义搜索”往往意味着一堆服务、很多胶水代码，以及在会议上有人解释向量索引时，半数与会者已经想去吃午饭。到了 2025 年，一个小团队即可用文件、嵌入和一个周末原型同样的产品想法。
+
+这并不意味着每个搜索框都要变成 RAG 系统。它意味着第一版不再必须在没有生产证据之前就继承完整的生产基础设施。
+
+即使是 AWS 也在朝这个方向前进，推出了与 S3 相邻的向量搜索功能，这是一种有用的信号：对象存储不再只是旧文件的阁楼，它正成为可查询的表面。
+
+## 开始实验
+
+1. **先确定更新模式**：构建时、小时批处理、实时写入或每用户结果。
+2. **用最小、诚实的工具原型**：静态 HTML 用 Pagefind，分析文件用 DuckDB，轻量应用搜索用 Orama，向量密集工作用 LanceDB 或 Chroma。
+3. **测量难点**：索引时间、数据新鲜度、捆绑体积、权限，以及冷启动后的首次查询。
+4. **只有在痛点真实出现时才升级**：在文件版表现出瓶颈后，再去论证托管数据库的合理性。
+
+*查看我的 [实用 Pagefind 指南][1] 获取动手实现细节，或探索日益壮大的边缘原生数据库生态，了解规模化数据处理的新范式。*
+
+> **免责声明：** 我多年来使用 Pagefind 并在 2025 年成为贡献者。也在小项目中尝试过 Orama 与 Chroma，并在更大 AI 应用中探索 LanceDB。与这些项目没有金钱关联——只有对不断演进的数据库格局的浓厚兴趣。
+
+[1]: https://danlevy.net/you-might-not-need-algolia/
+````
