@@ -1,0 +1,15 @@
+# Translation Candidate
+- Slug: quiz-data-structures-algorithms
+- Locale: zh
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2024-10-31--quiz-data-structures-algorithms/zh/index.mdx
+- Validation: rejected: direct AI SDK translation failed
+- Runtime seconds: 7.17
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Cache write tokens: unknown
+- Estimated cost: unknown
+- Pricing source: unknown
+- Note: Command failed: bun run i18n:translate:chunked -- --slug quiz-data-structures-algorithms --locale zh --model openrouter/qwen/qwen3-32b:nitro --chunk 18p --run-id 2026-05-14T17-25-23-572Z-96183 --run-lock-path /Users/dan/code/oss/dans-blog/.git/codex-i18n-translation-run.json --quiz-concurrency 24 (code 1)
