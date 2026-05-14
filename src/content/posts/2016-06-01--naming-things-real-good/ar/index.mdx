@@ -1,0 +1,117 @@
+---
+social_image: ../desktop-social.webp
+title: تسمية الأشياء جيدًا
+subTitle: 'تسمية العناصر: أساسيات التوجه الكائني'
+date: '2016-06-01'
+modified: '2024-08-10'
+category: Guides
+subCategory: programming
+tags:
+  - programming
+  - patterns
+  - naming
+  - source-code
+  - organization
+cover: ../rawpixel-652639-unsplash.webp
+cover_mobile: ../w300_rawpixel-652639-unsplash.webp
+cover_icon: ../icon_rawpixel-652639-unsplash.webp
+---
+## تسمية الأشياء: أساسيات البرمجة الكائنية
+
+لننظر إلى تصميم الكائنات/الفئات من خلال مثال...
+
+### الموقف
+
+هل سبق لك أن صممت `نموذج بيانات` (في الكود، أو SQL، أو جداول إكسل)؟
+هل يبدو ما يلي مألوفًا؟
+
+```
+*** نمط مضاد - لا تنسخ والصق ***
+* مستخدم
+  - id
+  - avatarUrl
+  - name
+  - email
+  - password
+
+* وكيل
+  - id
+  - primaryPhoto
+  - name
+  - email
+  - agentEmail
+  - agentPhoneMain
+  - agentEmailPrimary
+  - agentPhonePrimary
+  - agentAddressFull
+  - agentCompanyName
+  - agentCompanyAddress
+  - *userEmail* - 'مؤشر' إلى جدول المستخدمين ^^^
+```
+
+### أين الخلل؟
+
+حسنًا، من الناحية الفنية لا يوجد خلل، بل مجرد بيانات تحتاج إلى إعادة تنظيم.
+
+**هل يبدو ما يلي مألوفًا؟**
+
+1.  أي تغيير في تطبيقك سيستلزم ساعات من التصحيح المضني.
+1.  أي متطلبات متغيرة ستؤدي إلى:
+
+![إعادة هيكلة النموذج][schema_refactor]
+
+لماذا تسمية حقل `agentEmailPrimary` _سيئة جدًا_؟
+
+بادئ ذي بدء، أنت **لا** تخلق شيئًا جديدًا كليًا في الكون. التخصيص المفرط يحمل بعض الفخاخ:
+
+1.  التقيّد باسم شديد الخصوصية يعني أن `agentEmailPrimary` سيجعل وجهات نظرك ورمزك المرتبط بها **غير قابلة لإعادة الاستخدام بنسبة 0%**، وسيؤدي إلى أخطاء متكررة مزعجة مثل:
+
+- عدم مزامنة البيانات بين الجداول (ليس واضحًا ما إذا كان `user.email` يحتاج إلى الانتشار إلى `agent.agentEmail` أو العكس - ناهيك عن تعقيد التنفيذ اليدوي لمكان وكيفية فرض هذا "المنطق"...)
+- قواعد/منطق التحقق من الصحة مكرر على الأرجح وغير متسق.
+- بشكل متزايد، سيصبح مشروعك أشبه ببرج جينجا مهتز.
+- تتراكم الهشاشة مع كل ملف جديد، حيث يتطلب الأمر درجة عالية جدًا من الانتباه للتفاصيل حتى للتغييرات التافهة.
+
+1.  `agentEmailPrimary` قد يعني عدة أشياء مختلفة. تجنب الغموض باستخدام **أسماء أقصر**.
+
+- احترس من الكلمات الزائدة السخيفة. `Primary`؟ يؤدي فقط إلى مزيد من الأسئلة: هل هناك ثانوي؟ هل هو لصلة القرابة الأساسية؟
+
+كفى كلامًا يا دان، كيف ينبغي أن يبدو بدلًا من ذلك؟
+
+### حل
+
+```
+// Consolidated Schema:
+
+User
+  - id
+  - role: ['agent', 'lead', 'admin']
+  - name
+  - phone
+  - address
+  - email
+  - password
+  - company
+    - name
+    - address
+```
+
+لقد أزلت جدول `Agent`، لأنه لم يحتوي على حقول فريدة للوكلاء. وظهر كائن `User.company` (مع `.name` و `.address`) بمجرد تنظيف التسمية.
+
+بعض المبادئ التوجيهية:
+
+1.  تخلص من الجداول غير الضرورية. هل تحتاج حقًا إلى جدول `statuses`؟ بينما يمكنك إضافة حقل `status::VARCHAR(8)` على جدول `User`؟ لا بأس، استخدم البايتات الإضافية لكل صف.
+2.  حاول دمج الجداول المرتبطة. **البيانات**
+3.  احذف جمع البيانات المكرر (مثل إزالة جدول `ActivityLogs` إذا تم استبداله بحل تحليلي).
+4.  حاول الاحتفاظ **بجميع أسماء الحقول** **ككلمة/اسم/ضمير واحد**. لا بأس بالاعتماد على السياق الذي يوفره الجدول. (مثل `PersonalAccount.email` مقابل `BusinessAccount.email` - السياق مقدم من اسم الجدول.)
+5.  **لا يوجد شيء** اسمه `Agent.agentEmail` أو `Agent.agentPhonePrimary`. نقطة. قل معي: "إنها `email` و `phone`."
+6.  باستخدام أسماء شديدة الخصوصية، فإنك تحدد مستوى معينًا من `قابلية إعادة الاستخدام` و `المتانة`، وبالتحديد **صفر بالمائة**.
+7.  أنت لا تقدم لنفسك معروفًا بمثل هذه الهراءات مثل `User.profileSummaryEmail`. 💞
+
+**القراءات الموصى بها تشمل:**
+
+1. [ربما التطبيع ليس طبيعيًا](https://blog.codinghorror.com/maybe-normalizing-isnt-normal/)
+1. [المقايضات بين تطبيع قاعدة البيانات وإلغاء التطبيع](https://dev.to/er_dward/the-trade-offs-between-database-normalization-and-denormalization-4kdo)
+2. [http://phlonx.com/resources/nf3/](http://phlonx.com/resources/nf3/)
+3. [https://en.wikipedia.org/wiki/Database_normalization](https://en.wikipedia.org/wiki/Database_normalization)
+
+[schema_refactor]: https://res.cloudinary.com/ddd/image/upload/bldg-collapse__wsZKhIc_kafcha.gif
