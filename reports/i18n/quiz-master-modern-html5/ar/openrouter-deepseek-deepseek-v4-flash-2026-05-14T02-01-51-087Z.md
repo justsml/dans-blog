@@ -1,0 +1,531 @@
+# Translation Candidate
+- Slug: quiz-master-modern-html5
+- Locale: ar
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2024-11-01--quiz-master-modern-html5/ar/index.mdx
+- Validation: deferred
+- Runtime seconds: 192.10
+- Input tokens: 13708
+- Output tokens: 21801
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.008272
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+unlisted: false
+title: 'اختبار: هل لا يزال HTML ضروريًا في سيرتك الذاتية؟'
+subTitle: أثبت جدارتك
+label: Semantic HTML5
+social_image: ../desktop-social.webp
+category: Quiz
+subCategory: HTML
+date: '2024-10-31'
+modified: '2024-11-06'
+tags:
+  - quiz
+  - web
+  - quiz
+  - semantic
+  - html5
+  - web
+  - beginner
+  - intermediate
+cover_full_width: ../jakob-owens-FBih1nqPi0w-unsplash-wide.webp
+cover_mobile: ../jakob-owens-FBih1nqPi0w-unsplash-square.webp
+cover_icon: ../jakob-owens-FBih1nqPi0w-unsplash-square.webp
+---
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+
+## إذًا، هل تعتقد أنك تتقن HTML5؟
+
+بعد كل شيء، أنت تعرف `<div>` من `<span>`، أليس كذلك؟ لكن إلى أي مدى تعرف العناصر الدلالية المتقدمة في HTML5؟
+
+> ملاحظة: إذا لم تتمكن من اجتياز هذا الاختبار، فأنت ملزم قانونًا بإزالة `HTML Skills` من سيرتك الذاتية.
+
+### ابدأ!
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="إحماء"
+  title="دور `<ul>`"
+  options={[
+    {text: 'قائمة غير مرتبة', isAnswer: true},
+    {text: 'قائمة فريدة'},
+    {text: 'قائمة شاملة'},
+    {text: 'قائمة المستخدم'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما هو الدور الأساسي لعنصر `<ul>` في HTML؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    يقوم وسم `<ul>` بإنشاء قائمة غير مرتبة، حيث يتم تمييز العناصر عادةً بنقاط.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="HTML الدلالي المتقدم"
+  title="استخدام `<dd>`"
+  options={[
+    {text: 'تعريف الوصف'},
+    {text: 'مصطلح الوصف'},
+    {text: 'عرض البيانات'},
+    {text: 'تفاصيل الوصف', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ماذا يمثل العنصر `<dd>` في HTML؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    يُعرّف [`<dd>` عنصر](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dd) وصفًا أو تعريفًا أو قيمة في قائمة وصف، ويُستخدم داخل وسوم `<dl>` للاقتران مع `<dt>` (_مصطلح الوصف_).
+
+    هذا مفيد عند عرض بيانات مفتاح-قيمة. معلومات الملف الشخصي والإعدادات والإحصائيات أمثلة شائعة.
+    ```html
+        <dl>
+        <dt>JS</dt>
+        <dd>Client-side</dd>
+        <dd>Server-side</dd>
+
+        <dt>HTML</dt>
+        <dd>Client-side</dd>
+        </dl>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="HTML الدلالي المتقدم"
+  title="استخدام `<figure>/<figcaption>`"
+  options={[
+    {text: 'للصور مع معلومات حقوق النشر لعرضها'},
+    {text: 'لوصف الصور والرسوم البيانية، إلخ.', isAnswer: true},
+    {text: 'لتعليق الجداول والحسابات، إلخ.'},
+    {text: 'يُستخدم لتسمية الفيديوهات'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    متى يجب استخدام عنصري `<figure>` و `<figcaption>`؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    عادةً ما يُستخدم وسم [`<figure>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/figure) لتغليف محتوى (وسائط) قائم بذاته، مثل صورة أو رسم بياني، مع [`<figcaption>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/figcaption) لتوفير تسمية توضيحية.
+
+    هذا مفيد للصور والرسوم البيانية ومقتطفات التعليمات البرمجية وغيرها.
+    ```html
+        <figure>
+        <img src="image.jpg" alt="Description of image">
+        <figcaption>Image caption</figcaption>
+        </figure>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="HTML الدلالي المتقدم"
+  title="استخدام عنصر `<article>`"
+  options={[
+    {text: 'للمحتوى، الأشرطة الجانبية ومعلومات حقوق النشر'},
+    {text: 'قسم محتوى مستقل', isAnswer: true},
+    {text: 'جزء من <newsletter>'},
+    {text: 'يحدد مقالة إخبارية'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما هو الغرض من عنصر `<article>` في HTML؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    يُستخدم عنصر [`<article>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/article) لتعريف قطعة محتوى مستقلة يمكن توزيعها أو إعادة استخدامها بشكل مستقل.
+
+    غالبًا ما يُستخدم في منشورات المدونات، المقالات الإخبارية، منشورات المنتديات، أو تعليقات المستخدمين.
+
+    يمكنك استخدام عدة عناصر `<article>` في صفحة واحدة (مثلاً في صفحات التمرير اللانهائي). أو يمكنك تداخلها داخل بعضها البعض لإنشاء تسلسل هرمي من «المحتوى المستقل».
+    ```html
+        <article>
+        <h2>Article Title</h2>
+        <p>Article content...</p>
+        <article class="discussion">
+        <h3>Comment by User</h3>
+        <p>Comment content...</p>
+        </article>
+        </article>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="HTML الدلالي المتقدم"
+  title="استخدام `<fieldset>/<legend>`"
+  options={[
+    {text: 'تجميع عناصر النموذج تحت عنوان', isAnswer: true},
+    {text: 'تحديد تعليمات لحقول النموذج'},
+    {text: 'استخدام غير صحيح لـ `<legend>`'},
+    {text: 'يحدد قسمًا قابلًا للتوسيع'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما هو الغرض من عنصري `<fieldset>` و `<legend>` في النموذج؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    [`<fieldset>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/fieldset) يُستخدم لتجميع عناصر التحكم في النموذج ذات الصلة، ويوفر `<legend>` عنوانًا/تسمية للمجموعة، مما يحسن إمكانية الوصول.
+
+    هذا مفيد لتجميع عناصر النموذج ذات الصلة، مثل قسم لعنوان الشحن أو تفاصيل الدفع.
+    ```html
+        <fieldset>
+        <legend>Shipping Address</legend>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name">
+        ...
+        </fieldset>
+        <fieldset>
+        <legend>Payment Details</legend>
+        <label for="card">Card Number:</label>
+        <input type="text" id="card" name="card">
+        ...
+        </fieldset>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="HTML الدلالي المتقدم"
+  title="الغرض من `<meter>`"
+  options={[
+    {text: 'شريط تقدم بوحدات مترية'},
+    {text: 'تمثيل قيمة رقمية ضمن نطاق', isAnswer: true},
+    {text: 'تحويل مسافة إلى أمتار'},
+    {text: 'وسم خاص متعلق بالأداء'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما هو الغرض من العنصر `<meter>`؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    يُستخدم العنصر [`<meter>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meter) لتمثيل قياس عددي (مفرد) ضمن نطاق محدد، مثل درجة الحرارة أو استخدام القرص أو عدد الأصوات.
+
+    قد يبدو مشابهًا لشريط [`<progress>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/progress)، لكن أشرطة التقدم **دائمًا** تبدأ من الصفر. لذلك تُظهر عناصر `<progress>` `نسبة الإنجاز`، بينما يُظهر `<meter>` أي قيمة ضمن نطاق قابل للتحديد.
+    ```html
+        <meter min="-60" max="130" value="75" /> 75°F
+        <meter min="0" max="100" value="75" /> 75%
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="HTML الدلالي"
+  title="استخدام `<source>`"
+  options={[
+    {text: 'يُستخدم لتحديد مصدر بيانات'},
+    {text: 'الإعلان عن تنسيقات ملفات الوسائط المتاحة', isAnswer: true},
+    {text: 'الاستشهاد بالمصادر باستخدام تنسيق APA أو MLA'},
+    {text: 'تحديد كتلة كود مصدر'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    لماذا يُستخدم العنصر `<source>`؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    يُستخدم [العنصر `<source>` لتحديد تنسيقات الوسائط المتاحة](https://developer.mozilla.org/en-us/docs/web/html/element/source).
+
+    يُستخدم تحديدًا مع عناصر [`<video>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video) و [`<audio>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/audio) و [`<picture>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/picture)، مما يسمح للمتصفح باختيار التنسيق الأنسب.
+    ```html
+        <video controls>
+        <source src="movie.mp4" type="video/mp4">
+        <source src="movie.ogg" type="video/ogg">
+        </video>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="HTML الدلالي المتقدم"
+  title="استخدام `<hgroup>`"
+  options={[
+    {text: 'عنصر قديم، لم يعد قيد الاستخدام'},
+    {text: 'لتجميع العناوين معًا'},
+    {text: 'تحديد جدول المحتويات'},
+    {text: 'تجميع عنوان مع عنوان فرعي', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    كيف يجب استخدام عنصر `<hgroup>`؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    يقوم عنصر [`<hgroup>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/hgroup) بتجميع عنوان مع محتوى ثانوي ذي صلة، عادةً عنصر `<p>` واحد أو أكثر.
+
+    قد يكون مفيدًا عندما يحتوي العنوان على عنوان فرعي أو شعار أو عنوان بديل لا ينبغي أن يصبح عنوانًا آخر في مخطط المستند.
+    ```html
+        <article>
+        <hgroup>
+        <h1>Frankenstein</h1>
+        <p>Or: The Modern Prometheus</p>
+        </hgroup>
+        <section>
+        <h2>Chapter 1</h2>
+        <p>...</p>
+        </section>
+        </article>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="HTML الدلالي المتقدم"
+  title="استخدام `<menu>`"
+  options={[
+    {text: 'لتحديد قائمة مرتبة'},
+    {text: 'لسرد الأوامر أو عناصر التحكم في شريط الأدوات', isAnswer: true},
+    {text: 'لتمثيل شريط التنقل'},
+    {text: 'لتحديد مجموعة أزرار'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما هو استخدام عنصر `<menu>` في HTML؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    يمثل [`<menu>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/menu) قائمة من الأوامر أو عناصر التحكم التفاعلية.
+
+    إذا كانت قائمتك عبارة عن روابط تنقل، استخدم `<nav>` مع `<ul>`. استخدم `<menu>` لعناصر تحكم تشبه شريط الأدوات أو قوائم الأوامر.
+    ```html
+        <menu>
+        <li><button type="button">Copy</button></li>
+        <li><button type="button">Paste</button></li>
+        </menu>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="HTML الدلالي المتقدم"
+  title="دور `<details>/<summary>`"
+  options={[
+    {text: 'محتوى قابل للطي أصلي', isAnswer: true},
+    {text: 'تلميحات أدوات أصلية'},
+    {text: 'إضافة سياق إلى `<section>`'},
+    {text: 'لعرض البيانات المنظمة'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما الدور الذي يلعبه `<details>` و `<summary>` في HTML؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    [`<details>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details) يسمح بمحتوى قابل للطي، و [`<summary>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/summary) يحدد عنوانًا مرئيًا للمحتوى.
+
+    هذا مفيد للأسئلة الشائعة، والأقسام القابلة للطي، أو أي محتوى يمكن تبديله.
+    ```html
+        <details>
+        <summary>Click to expand 🤯</summary>
+        <p>Hidden content! 💥</p>
+        </details>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="HTML الدلالي المتقدم"
+  title="الغرض من `<dialog>`"
+  options={[
+    {text: 'تنسيق لكتّاب السيناريو'},
+    {text: 'إعلان نافذة مشروطة أو منبثقة', isAnswer: true},
+    {text: 'إعلان محادثة على غرار ChatGPT'},
+    {text: 'مهمل لصالح `<wizard>`'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    لماذا يجب عليك استخدام عنصر `<dialog>`؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    يُستخدم عنصر [`<dialog>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog) للنوافذ المنبثقة أو المشروطة، ويوفر ترميزًا دلاليًا، وCSS موسعًا، وواجهة برمجة تطبيقات أصلية لهذه التفاعلات.
+
+    استخدم JavaScript لفتحه باستخدام `.showModal()` للنوافذ المشروطة أو `.show()` للنوافذ غير المشروطة، وأغلقه باستخدام `.close()` أو إرسال نموذج باستخدام `method="dialog"`.
+    ```html
+        <dialog>
+        <h2>Modal Title</h2>
+        <p>Modal content...</p>
+        <button>Close</button>
+        </dialog>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="HTML الدلالي المتقدم"
+  title="استخدام عنصر `<time>`"
+  options={[
+    {text: 'لتمثيل التاريخ والوقت', isAnswer: true},
+    {text: 'لتحديد طابع زمني'},
+    {text: 'لتنسيق التواريخ فقط'},
+    {text: 'لجعل مدخلات التاريخ قابلة للسحب'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    كيف يُستخدم عنصر `<time>` في HTML؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    يُستخدم عنصر `<time>` للتواريخ والأوقات أو المدد. يمكن أن يتضمن محتوى مقروءًا بشريًا وخاصية `datetime` مقروءة آليًا. لا يحتوي HTML على عنصر `<date>`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="HTML الدلالي المتقدم"
+  title="الغرض من سمات ARIA"
+  options={[
+    {text: 'مساعدات للأجهزة اللمسية'},
+    {text: 'تحسين إمكانية الوصول', isAnswer: true},
+    {text: 'التحكم في الصوت والتشغيل'},
+    {text: 'لاستخدام <div>\'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما هو الغرض من سمات ARIA؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    سمات ARIA (تطبيقات الإنترنت الغنية القابلة للوصول) تعزز إمكانية الوصول على الويب من خلال توفير سياق إضافي لقارئات الشاشة والتقنيات المساعدة الأخرى.
+
+    هناك أدوار وحالات وخصائص يمكن استخدامها لوصف العناصر.
+    ```html
+        <button aria-label="Close" aria-expanded="true">X</button>
+        <main aria-live="polite">...</main>
+        <dialog
+        role="alertdialog"
+        aria-modal="true"
+        aria-labelledby="dialog_label"
+        aria-describedby="dialog_desc"
+        ></dialog>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={13}
+  group="HTML الدلالي المتقدم"
+  title="استخدام سمة `role`"
+  options={[
+    {text: 'لتحديد سلوك المكون'},
+    {text: 'لوصف غرض العنصر', isAnswer: true},
+    {text: 'تقييد الوصول إلى العناصر'},
+    {text: 'لمكونات الويب فقط'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما هو استخدام سمة `role` في HTML؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    تصف سمة `role`
+
+    غرض العنصر لتقنيات المساعدة، مما يساعد في تحسين إمكانية الوصول.
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+
+إذًا، كيف كانت نتيجتك؟ هل أنت متحمس لاستخدام المزيد من عناصر HTML الدلالية في مشروعك القادم؟ 🚀
+
+أم أنك استسلمت لـ `<div>` و `<span>` مدى الحياة؟ 😅
+
+أخبرني في التعليقات أدناه! 👇
+````
