@@ -1,0 +1,54 @@
+{
+  "selectedCommit": "c3d5fbcb319737c6dda7bba6eb644cddf0567d1a",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "[`MCPClient`](../mastra.ai/docs/mcp/overview)",
+      "replacement": "[`MCPClient`](https://mastra.ai/docs/mcp/overview)",
+      "reason": "The link in the source is an absolute external URL to the documentation site. The candidate incorrectly changed it to a relative path which will result in a 404."
+    }
+  ],
+  "rationale": "The translation is technically sound and captures Dan's direct, punchy style well. It correctly preserves the MDX structure and code blocks. The only high-priority fix is reverting an incorrect relative link transformation on an external documentation URL.",
+  "slug": "mastra-mcp-tool-integrations",
+  "locale": "zh",
+  "candidateCommits": [
+    "c3d5fbcb319737c6dda7bba6eb644cddf0567d1a",
+    "83ba55b956b8bc979e49594ac8f3d640528c1d73",
+    "a99a7ac4803b27793df53c5e5470ea235debe589"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "[`MCPClient`](https://mastra.ai/docs/mcp/overview)",
+      "replacement": "[`MCPClient`](../mastra.ai/docs/mcp/overview)",
+      "reason": "The English file uses a bare URL which should be relative in the localized folder per instructions.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "[`MCPClient`](../mastra.ai/docs/mcp/overview)",
+      "replacement": "[`MCPClient`](https://mastra.ai/docs/mcp/overview)",
+      "reason": "The link in the source is an absolute external URL to the documentation site. The candidate incorrectly changed it to a relative path which will result in a 404.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug mastra-mcp-tool-integrations --locale zh --skip-global",
+    "output": ""
+  }
+}
