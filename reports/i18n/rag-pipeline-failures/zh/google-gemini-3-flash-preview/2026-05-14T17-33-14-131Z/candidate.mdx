@@ -1,0 +1,203 @@
+---
+title: RAG 在生产环境失败的五种方式
+subTitle: Demo 跑通了，真实用户才是流水线掉链子的地方。
+date: '2026-05-04'
+modified: '2026-05-05'
+tags:
+  - ai
+  - rag
+  - vector-search
+  - llm
+  - production
+  - embeddings
+  - architecture
+category: AI
+subCategory: Architecture
+draft: true
+unlisted: true
+hidden: true
+publish: false
+popularity: 0.8
+social_image: ../desktop-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+RAG 的演示效果总是惊人地好。
+
+你嵌入一些文档，启动向量数据库，将其接入聊天界面，然后看着模型引用你的内部知识库，表现得就像在那里工作了多年一样。完美。利益相关者印象深刻。有人说：“我们发布吧。”
+
+六周后，用户开始得到言之凿凿的错误答案。支持工单堆积如山。系统确实在“运行”，只是没能以人们需要的方式运行。
+
+失败通常不是因为某个戏剧性的大错，而是五个无聊的小错堆叠在一起的结果。
+
+---
+
+## 1. 你的分块（Chunks）大小不对
+
+这种失败不会导致系统崩溃。它只会让每个答案都变差一点点，直到整个功能让人感觉不可信。
+
+向量搜索检索的是“分块”，而不是文档。无论你将源材料切分成什么，它都会成为检索器的“事实单位”。如果分块错了，模型就会用错误的片段来回答。
+
+**太小**：分块只包含部分答案。嵌入向量捕捉到了正确的主题，但检索到的文本缺失了上下文。你抓取到了“最大超时时间为 30 秒”，却漏掉了前一句“在使用旧版 API 时”。
+
+**太大**：嵌入向量变成了多个想法的模糊平均值。语义搜索会感到困惑，因为该分块涉及多个主题，生成的向量无法清晰地代表其中任何一个。
+
+合适的分块大小完全取决于你的内容。技术文档、法律合同和支持记录的分块方式各不相同。没有万能答案。
+
+做法：衡量。根据你的语料库构建一套问答评估集。尝试 256、512 和 1024 标记（token）的分块。衡量检索精度：正确的块是否出现在前 5 名中？你会很快发现，分块大小比你纠结半天的嵌入模型更重要。
+
+此外，使用重叠（overlap）。一个 512 标记的分块，两边各有 64 标记的重叠，意味着跨越边界的答案仍能被检索到。大多数向量库都支持这一点，但大多数人都跳过了它。
+
+---
+
+## 2. 你的嵌入向量已过期（而你却没察觉）
+
+想象一下你的公司重新进行了品牌更名。或者重命名了产品。或者更新了定价。或者废弃了一个 API。
+
+你更新了文档，但没有重新对分块进行嵌入。向量索引仍然代表着旧内容。
+
+用户询问新价格。嵌入向量将他们引导至旧内容。模型读取旧内容，并自信地解释旧定价。技术支持收到了一张工单。
+
+任何严肃的 RAG 系统最终都会遇到这个问题。解决方法听起来显而易见——内容变化时重新嵌入——但团队很少在第一次事故发生前建立起这种流水线。
+
+你需要具备内容指纹识别能力的增量重新索引：
+
+```typescript
+import { createHash } from 'crypto';
+
+async function upsertDocument(doc: Document, vectorStore: VectorStore) {
+  const fingerprint = createHash('sha256')
+    .update(doc.content)
+    .digest('hex');
+
+  const existing = await vectorStore.getBySourceId(doc.id);
+
+  if (existing?.fingerprint === fingerprint) {
+    return; // 内容未变，跳过重新嵌入
+  }
+
+  const chunks = chunkDocument(doc);
+  const embeddings = await embedBatch(chunks);
+
+  await vectorStore.upsert(
+    chunks.map((chunk, i) => ({
+      id: `${doc.id}:${i}`,
+      sourceId: doc.id,
+      fingerprint,
+      vector: embeddings[i],
+      text: chunk.text,
+      metadata: { ...doc.metadata, updatedAt: new Date() },
+    }))
+  );
+}
+```
+
+写入时重新索引，基于内容而非时间戳生成指纹。在你的 CMS 中，文档经常会被更新，但实际内容可能并无变化。
+
+---
+
+## 3. 检索精度 vs. 召回率：你优化错了方向
+
+大多数 RAG 教程只展示如何检索前 K 个分块。它们没有解释两个截然相反的目标之间的权衡。
+
+**高召回率（High recall）**：返回所有可能相关的内容。用户总能得到答案。但模型的上下文窗口充满了边缘相关的噪声，模型会为了填补片段间的空白而产生幻觉。
+
+**高精度（High precision）**：只返回最相关的分块。模型在干净、集中的上下文中工作。但如果正确的分块不在前 3 名中，模型就没有信息，并且无论如何都会自信地编造一些东西。
+
+对用户来说，失败模式看起来是一样的：错误的答案。但原因和解决方法却是相反的。
+
+两种真正有效的技术：
+
+**重排序（Reranking）**：检索更多候选者（前 20 名），然后在传递给 LLM 之前，使用交叉编码器（cross-encoder）模型按相关性重新排序。交叉编码器比向量相似度计算慢，但在最终排序步骤中准确度显著更高。
+
+```typescript
+import { Reranker } from '@mastra/rag';
+
+const results = await vectorStore.search(queryEmbedding, { topK: 20 });
+const reranked = await reranker.rank(query, results);
+const context = reranked.slice(0, 5); // 此时的前 5 名才真正有意义
+```
+
+**混合搜索（Hybrid search）**：将向量搜索（语义相似度）与关键词搜索（BM25）结合。它们的失败方式各不相同。向量搜索在处理特定术语、模型名称和 ID 时很吃力；关键词搜索在处理改写和同义词时很吃力。两者结合可以覆盖彼此的盲区。
+
+---
+
+## 4. 你的上下文窗口形状不对
+
+你检索到了正确的分块。恭喜。但模型仍然会出错。
+
+问题不仅在于你检索了什么，还在于你把它放在了哪里。
+
+LLM 会受到“迷失在中间（lost in the middle）”问题的困扰。Liu 等人的研究衡量了长上下文模型，发现当相关信息出现在提示词中间，而不是开头或结尾附近时，模型利用信息的可靠性会降低。
+
+如果你只是将 20 个分块塞进一个扁平列表中，并寄希望于模型能正确合成它们，那你就是在浪费性能。
+
+实际有效的改进措施：
+
+**评估最相关分块的起始/末尾放置策略。** 一个常见的启发式方法是将排名第一的分块放在最前，排名第二的放在最后，其余的塞在中间。这听起来有悖直觉，但值得针对你的模型和提示词结构进行测试。
+
+**明确对上下文部分进行编号和标记。** 使用 `[Source 1]` ... `[Source 2]` 这种格式，能为模型提供推理时的锚点。
+
+**增加检索置信度信号。** 如果你的相似度得分在 0-1 范围内只有 0.65，请告诉模型：“以下上下文是以中等置信度检索到的。如果答案不明确，请承认不确定性。”
+
+**设置上下文预算。** 不要直接透传所有检索到的内容。计算 Token 数量，按相关性得分排序，并在达到模型上下文窗口的 60-70% 时强制截断。留出足够的空间让模型进行推理，避免因信息过载而产生抖动。
+
+参考资料：[Lost in the Middle: How Language Models Use Long Contexts](https://arxiv.org/abs/2307.03172)。
+
+---
+
+## 5. 你根本不知道它什么时候出错了
+
+这是一种无声的失败：答案返回了，UI 看起来很正常，但内容是错的。
+
+在传统的 API 中，失败是显而易见的：HTTP 500、超时、Schema 校验错误。你能立即察觉。而 RAG 的失败要隐蔽得多：系统返回了一个响应，看起来合情合理，但实际上是错的。
+
+在用户告诉你之前，你可能根本不知道你的 RAG 流水线已经挂了。而通常用户并不会告诉你，他们只会默默地失去信任，然后重新用回 Ctrl+F。
+
+一个生产级 RAG 系统所需的最小可行可观测性配置：
+
+**记录你的检索链。** 记录每一次查询、检索到了什么（分块 ID + 得分）以及模型生成了什么。没有这些，你无法调试任何问题。
+
+**追踪检索指标。** 如果你有标准答案标签（ground-truth labels），追踪平均倒数排名 (MRR) 和 NDCG。起码要追踪相似度得分的分布情况 —— 如果 P50 检索得分下降，说明你的索引质量退化了。
+
+**建立反馈闭环。** 即便是对响应进行简单的点赞/点踩，并将其关联回查询和检索到的分块，也能为你提供训练信号。没有它，你就是在盲飞。
+
+**运行定期评估（Evals）。** 准备一个包含 50-100 个已知正确答案问题的测试集，每周运行一次。这能在用户发现之前捕获回归问题。一个电子表格加一个脚本就足以起步。
+
+```typescript
+async function runEval(
+  testCases: { query: string; expectedAnswer: string }[],
+  pipeline: RAGPipeline
+) {
+  const results = await Promise.all(
+    testCases.map(async ({ query, expectedAnswer }) => {
+      const response = await pipeline.query(query);
+      const score = await scoreResponse(response, expectedAnswer);
+      return { query, score, response };
+    })
+  );
+
+  const avgScore = results.reduce((s, r) => s + r.score, 0) / results.length;
+  console.log(`Eval score: ${(avgScore * 100).toFixed(1)}%`);
+  
+  // 如果得分低于阈值则报警
+  if (avgScore < 0.75) {
+    await notifyTeam(`RAG eval score dropped to ${(avgScore * 100).toFixed(1)}%`);
+  }
+
+  return results;
+}
+```
+
+---
+
+## 核心问题所在
+
+这些失败的主因不在于嵌入模型或向量数据库，而在于围绕它们的整个系统。
+
+RAG 演示之所以能成功，是因为演示环境是受控的：文档干净、问题表述清晰、评估者宽容。生产环境之所以失败，是因为这些条件一个都不成立。
+
+上述每一个失败点都是可以诊断的，前提是你在进行测量。靠谱的 RAG 团队并没有搞什么玄学，他们只是把检索质量当作一个真正的子系统来对待，而不是把它看作某种演示用的产物。
+
+先把评估循环（eval loop）跑起来。一旦有了衡量标准，剩下的事情就简单了。
