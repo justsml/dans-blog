@@ -1,0 +1,66 @@
+{
+  "runId": "qwen-qwen3-32b-nitro@2026-05-14T17-37-08-610Z",
+  "slug": "the-8-byte-timestamp-that-destroyed-our-database",
+  "locale": "zh",
+  "model": "qwen/qwen3-32b:nitro",
+  "modelPath": "qwen-qwen3-32b-nitro",
+  "createdAt": "2026-05-14T17:37:30.733Z",
+  "sourcePath": "src/content/posts/2025-12-29--the-8-byte-timestamp-that-destroyed-our-database/index.mdx",
+  "targetPath": "src/content/posts/2025-12-29--the-8-byte-timestamp-that-destroyed-our-database/zh/index.mdx",
+  "candidatePath": "reports/i18n/the-8-byte-timestamp-that-destroyed-our-database/zh/qwen-qwen3-32b-nitro/2026-05-14T17-37-08-610Z/candidate.mdx",
+  "sourceHash": "4d98d485a209ef83adfb3ec4df7994acdb6c23964910ec139710bf29772952fe",
+  "outputHash": "0173efc9255ae136a2c1326371f7a564e213df2bad5d6f7c324779d644ecb054",
+  "reasoningEffort": "low",
+  "temperature": 0.3,
+  "maxTokens": 16000,
+  "timeoutMs": 200000,
+  "articleSummary": "The article argues that PostgreSQL's `TIMESTAMP` and `TIMESTAMPTZ` types are often misused due to confusion about their purpose, using a train ticket example to illustrate how the same event can require multiple time representations (local times, durations, absolute moments). It clarifies that `TIMESTAMPTZ` stores times in UTC and converts to the session's timezone on retrieval, making it ideal for absolute events, while `TIME` with explicit timezone metadata suits local \"wall-clock\" policies. The tone is analytical and tutorial, emphasizing practical rules like defaulting to `TIMESTAMPTZ` for global consistency and avoiding exact timestamp equality due to precision mismatches. Key metaphors include train schedules (local vs. absolute time) and flight apps (misusing timezones during travel). The audience is developers managing time-sensitive data in multi-region systems.",
+  "totalInputTokens": 5064,
+  "totalOutputTokens": 3702,
+  "totalCacheReadTokens": 1024,
+  "totalCacheWriteTokens": 0,
+  "totalDurationMs": 8578,
+  "totalCostUsd": 0.0012935999999999998,
+  "pricingSource": "local-openrouter-estimate",
+  "telemetry": {
+    "model": "qwen/qwen3-32b:nitro",
+    "chunkSize": "18p",
+    "totalChunks": 3,
+    "totalInputTokens": 5064,
+    "totalOutputTokens": 3702,
+    "totalCacheReadTokens": 1024,
+    "totalCacheWriteTokens": 0,
+    "totalDurationMs": 8578,
+    "totalCostUsd": 0.0012935999999999998,
+    "pricingSource": "local-openrouter-estimate",
+    "chunks": [
+      {
+        "index": 0,
+        "inputTokens": 1445,
+        "outputTokens": 1200,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 2800,
+        "costUsd": 0.00040359999999999994
+      },
+      {
+        "index": 1,
+        "inputTokens": 1794,
+        "outputTokens": 1225,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 2914,
+        "costUsd": 0.00043752
+      },
+      {
+        "index": 2,
+        "inputTokens": 1825,
+        "outputTokens": 1277,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 2864,
+        "costUsd": 0.00045248
+      }
+    ]
+  }
+}
