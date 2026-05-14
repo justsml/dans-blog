@@ -1,0 +1,49 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Date String Parsing",
+  "translatedTitle": "تحليل سلاسل التاريخ",
+  "translation": {
+    "title": "تحليل سلاسل التاريخ",
+    "group": "التعامل مع التواريخ",
+    "options": [
+      {
+        "text": "2019 2020"
+      },
+      {
+        "text": "2020 2021"
+      },
+      {
+        "text": "2020 2020"
+      },
+      {
+        "text": "2020 2019"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "ما القيمة التي ستُطبع في وحدة التحكم؟"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "قد تبدو السلسلة بدون قيمة زمنية `T` وكأنها 1 يناير 2020 - لكن سلاسل التاريخ فقط تُفسر على أنها UTC، وعند تعديلها إلى منطقتنا الزمنية المحلية (GMT-7) نجد أننا لا نزال في 2019.\n\n      سلاسل التاريخ-الوقت بدون منطقة زمنية صريحة تُفسر بالتوقيت المحلي.\n  \n      الصيغة `T00:00` تجعل القيمة الثانية تُفسر على أنها منتصف الليل المحلي.\n\n      التاريخ الأول يُفسر على أنه `Tue Dec 31 2019 17:00:00 GMT-0700 (Mountain Standard Time)`.\n      التاريخ الثاني يُفسر على أنه `Wed Jan 01 2020 00:00:00 GMT-0700 (Mountain Standard Time)`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"تحليل سلاسل التاريخ\",\n  \"group\": \"التعامل مع التواريخ\",\n  \"options\": [\n    { \"text\": \"2019 2020\" },\n    { \"text\": \"2020 2021\" },\n    { \"text\": \"2020 2020\" },\n    { \"text\": \"2020 2019\" }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"ما القيمة التي ستُطبع في وحدة التحكم؟\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"قد تبدو السلسلة بدون قيمة زمنية `T` وكأنها 1 يناير 2020 - لكن سلاسل التاريخ فقط تُفسر على أنها UTC، وعند تعديلها إلى منطقتنا الزمنية المحلية (GMT-7) نجد أننا لا نزال في 2019.\\n\\n      سلاسل التاريخ-الوقت بدون منطقة زمنية صريحة تُفسر بالتوقيت المحلي.\\n  \\n      الصيغة `T00:00` تجعل القيمة الثانية تُفسر على أنها منتصف الليل المحلي.\\n\\n      التاريخ الأول يُفسر على أنه `Tue Dec 31 2019 17:00:00 GMT-0700 (Mountain Standard Time)`.\\n      التاريخ الثاني يُفسر على أنه `Wed Jan 01 2020 00:00:00 GMT-0700 (Mountain Standard Time)`.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 912,
+    "outputTokens": 1156,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 7273,
+    "providerCostUsd": 0.0006448,
+    "providerUpstreamCostUsd": 0.0006448,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00012768000000000002,
+    "outputUsd": 0.00032368,
+    "totalUsd": 0.00045136000000000004,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
