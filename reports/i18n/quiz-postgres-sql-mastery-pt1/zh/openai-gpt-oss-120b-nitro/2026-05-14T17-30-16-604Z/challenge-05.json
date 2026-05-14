@@ -1,0 +1,55 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "timestamptz vs timestamp",
+  "translatedTitle": "timestamptz 与 timestamp 的区别",
+  "translation": {
+    "title": "timestamptz 与 timestamp 的区别",
+    "group": "时间戳",
+    "options": [
+      {
+        "text": "它们都占用 8 字节，但表示不同的时间戳语义"
+      },
+      {
+        "text": "They\\"
+      },
+      {
+        "text": "timestamptz 会保留任何输入的时区"
+      },
+      {
+        "text": "timestamptz 会存储原始的时区名称或偏移量"
+      },
+      {
+        "text": "timestamptz 为时区存储 2 字节的值"
+      },
+      {
+        "text": "timestamptz 是 timestamp 的继任者"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "关于 `timestamptz` 与 `timestamp`，哪条说法最**准确**？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "它们都是 8 字节，但存储的值类型不同。\n\n    那么区别在哪里？在于输入解析。\n\n    **`timestamptz`**\n    - 将输入规范化为绝对时间点。\n    - 在解析没有显式偏移的输入以及显示输出时，会考虑服务器/连接的 `TimeZone` 设置。\n\n    **`timestamp`**\n    - 存储日期和时间，不进行时区转换。\n    - 不会保留或规范化时区信息。\n    \n    \n    **`timestamp`**\n\n    - 存储不含时区信息的日期和时间。\n    - 适用于显式存储标准化日期，无论是 UTC 还是特定时区。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"timestamptz 与 timestamp 的区别\",\n  \"group\": \"时间戳\",\n  \"options\": [\n    {\n      \"text\": \"它们都占用 8 字节，但表示不同的时间戳语义\"\n    },\n    {\n      \"text\": \"They\\\\\"\n    },\n    {\n      \"text\": \"timestamptz 会保留任何输入的时区\"\n    },\n    {\n      \"text\": \"timestamptz 会存储原始的时区名称或偏移量\"\n    },\n    {\n      \"text\": \"timestamptz 为时区存储 2 字节的值\"\n    },\n    {\n      \"text\": \"timestamptz 是 timestamp 的继任者\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"关于 `timestamptz` 与 `timestamp`，哪条说法最**准确**？\"\n  ],\n  \"questionCode\": [],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"它们都是 8 字节，但存储的值类型不同。\\n\\n    那么区别在哪里？在于输入解析。\\n\\n    **`timestamptz`**\\n    - 将输入规范化为绝对时间点。\\n    - 在解析没有显式偏移的输入以及显示输出时，会考虑服务器/连接的 `TimeZone` 设置。\\n\\n    **`timestamp`**\\n    - 存储日期和时间，不进行时区转换。\\n    - 不会保留或规范化时区信息。\\n    \\n    \\n    **`timestamp`**\\n\\n    - 存储不含时区信息的日期和时间。\\n    - 适用于显式存储标准化日期，无论是 UTC 还是特定时区。\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 1019,
+    "outputTokens": 506,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1692,
+    "providerCostUsd": 0.00045645,
+    "providerUpstreamCostUsd": 0.00045645,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000039741,
+    "outputUsd": 0.00009108,
+    "totalUsd": 0.00013082099999999999,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

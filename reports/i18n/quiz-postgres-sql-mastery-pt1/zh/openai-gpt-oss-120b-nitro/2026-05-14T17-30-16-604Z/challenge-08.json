@@ -1,0 +1,55 @@
+{
+  "index": 7,
+  "attempt": 1,
+  "originalTitle": "Identify Invalid Types",
+  "translatedTitle": "识别无效类型",
+  "translation": {
+    "title": "识别无效类型",
+    "group": "Postgres 类型",
+    "options": [
+      {
+        "text": "cidr"
+      },
+      {
+        "text": "inet"
+      },
+      {
+        "text": "ipv4"
+      },
+      {
+        "text": "macaddr"
+      },
+      {
+        "text": "macaddr8"
+      },
+      {
+        "text": "interval"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "以下哪项不是 ❌ 有效的 PostgreSQL 类型？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "这让你感到沮丧，甚至 _愤怒_ 吗？你并不孤单！正如一位未署名的 “核心” 数据库贡献者所说：“what the hell, Dan?! 我在类型题上崩溃了！这太暴力了，先生！不分享我的分数，哈哈。” 😈 不客气。\n\nPostgreSQL 丰富的网络类型中并不包含 `ipv4`。每次我不查资料就尝试使用它时，总是出错。也许 `macaddr8` 让我觉得一定会有 `ipv4` 和 `ipv6` 类型。其实不然，`inet` 已经覆盖了两者。`cidr` 也同时支持网络掩码。\n\n有效的网络类型包括：\n- `cidr`（IPv4/IPv6 网络地址）\n- `inet`（IPv4/IPv6 主机地址）\n- `macaddr`（MAC 地址）\n- `macaddr8`（EUI-64 MAC 地址）"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"识别无效类型\",\n  \"group\": \"Postgres 类型\",\n  \"options\": [\n    {\n      \"text\": \"cidr\"\n    },\n    {\n      \"text\": \"inet\"\n    },\n    {\n      \"text\": \"ipv4\"\n    },\n    {\n      \"text\": \"macaddr\"\n    },\n    {\n      \"text\": \"macaddr8\"\n    },\n    {\n      \"text\": \"interval\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"以下哪项不是 ❌ 有效的 PostgreSQL 类型？\"\n  ],\n  \"questionCode\": [],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"这让你感到沮丧，甚至 _愤怒_ 吗？你并不孤单！正如一位未署名的 “核心” 数据库贡献者所说：“what the hell, Dan?! 我在类型题上崩溃了！这太暴力了，先生！不分享我的分数，哈哈。” 😈 不客气。\\n\\nPostgreSQL 丰富的网络类型中并不包含 `ipv4`。每次我不查资料就尝试使用它时，总是出错。也许 `macaddr8` 让我觉得一定会有 `ipv4` 和 `ipv6` 类型。其实不然，`inet` 已经覆盖了两者。`cidr` 也同时支持网络掩码。\\n\\n有效的网络类型包括：\\n- `cidr`（IPv4/IPv6 网络地址）\\n- `inet`（IPv4/IPv6 主机地址）\\n- `macaddr`（MAC 地址）\\n- `macaddr8`（EUI-64 MAC 地址）\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 1001,
+    "outputTokens": 534,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 1468,
+    "providerCostUsd": 0.00045135,
+    "providerUpstreamCostUsd": 0.00045135,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000039039,
+    "outputUsd": 0.00009612,
+    "totalUsd": 0.00013515899999999998,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

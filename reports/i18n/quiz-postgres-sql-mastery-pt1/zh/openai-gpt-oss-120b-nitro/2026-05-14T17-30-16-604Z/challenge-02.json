@@ -1,0 +1,49 @@
+{
+  "index": 1,
+  "attempt": 1,
+  "originalTitle": "Cast Syntax Variations",
+  "translatedTitle": "强制转换语法变体",
+  "translation": {
+    "title": "强制转换语法变体",
+    "group": "热身：类型转换",
+    "options": [
+      {
+        "text": "'95'::INTEGER"
+      },
+      {
+        "text": "INTEGER '95'"
+      },
+      {
+        "text": "CAST('95', INTEGER)"
+      },
+      {
+        "text": "CAST('95' AS INTEGER)"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "以下哪种类型转换是 **无效** ❌？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "PostgreSQL 支持三种强制转换语法：\n\n    1. ANSI SQL: `CAST(expression AS type)`。\n    2. PostgreSQL: `expression::type`。\n    3. 类型函数: `type 'literal'`。\n\n    它们在功能上等价，但：\n    - `CAST()` 最具可移植性。\n    - `::` 是 PostgreSQL 特有的，但使用广泛。\n    - 中缀式 `type 'literal'` 较少见，但仍然有效。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"强制转换语法变体\",\n  \"group\": \"热身：类型转换\",\n  \"options\": [\n    {\n      \"text\": \"'95'::INTEGER\"\n    },\n    {\n      \"text\": \"INTEGER '95'\"\n    },\n    {\n      \"text\": \"CAST('95', INTEGER)\"\n    },\n    {\n      \"text\": \"CAST('95' AS INTEGER)\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"以下哪种类型转换是 **无效** ❌？\"\n  ],\n  \"questionCode\": [],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"PostgreSQL 支持三种强制转换语法：\\n\\n    1. ANSI SQL: `CAST(expression AS type)`。\\n    2. PostgreSQL: `expression::type`。\\n    3. 类型函数: `type 'literal'`。\\n\\n    它们在功能上等价，但：\\n    - `CAST()` 最具可移植性。\\n    - `::` 是 PostgreSQL 特有的，但使用广泛。\\n    - 中缀式 `type 'literal'` 较少见，但仍然有效。\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 896,
+    "outputTokens": 533,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 1808,
+    "providerCostUsd": 0.000435,
+    "providerUpstreamCostUsd": 0.000435,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000034944,
+    "outputUsd": 0.00009594,
+    "totalUsd": 0.000130884,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

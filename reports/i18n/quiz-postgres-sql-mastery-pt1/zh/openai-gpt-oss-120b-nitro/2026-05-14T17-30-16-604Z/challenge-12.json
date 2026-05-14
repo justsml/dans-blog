@@ -1,0 +1,49 @@
+{
+  "index": 11,
+  "attempt": 1,
+  "originalTitle": "Timestamp Precision",
+  "translatedTitle": "时间戳精度",
+  "translation": {
+    "title": "时间戳精度",
+    "group": "日期/时间",
+    "options": [
+      {
+        "text": "2024-01-08 13:30:00+00"
+      },
+      {
+        "text": "2024-01-08 13:30:00.123456+00"
+      },
+      {
+        "text": "2024-01-08 13:30:00.123456789+00"
+      },
+      {
+        "text": "2024-01-08 13:30:00.1234567"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "哪个 `timestamp` 字面量是最小的、能够超出 Postgres 最大 `time` 精度的？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "PostgreSQL 的时间戳精度为微秒（6 位小数）。\n\n    - 最大精度：`.123456`（6 位）\n    - 纳秒（9 位）会被四舍五入或截断到支持的精度\n    - 对于 `timestamptz` 可以接受时区偏移，但不是必需的\n\n    **不常见的坑点：** 有些语言/框架会发送纳秒精度，但 PostgreSQL 只能以微秒精度存储时间戳。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"时间戳精度\",\n  \"group\": \"日期/时间\",\n  \"options\": [\n    {\n      \"text\": \"2024-01-08 13:30:00+00\"\n    },\n    {\n      \"text\": \"2024-01-08 13:30:00.123456+00\"\n    },\n    {\n      \"text\": \"2024-01-08 13:30:00.123456789+00\"\n    },\n    {\n      \"text\": \"2024-01-08 13:30:00.1234567\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"哪个 `timestamp` 字面量是最小的、能够超出 Postgres 最大 `time` 精度的？\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"sql\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"PostgreSQL 的时间戳精度为微秒（6 位小数）。\\n\\n    - 最大精度：`.123456`（6 位）\\n    - 纳秒（9 位）会被四舍五入或截断到支持的精度\\n    - 对于 `timestamptz` 可以接受时区偏移，但不是必需的\\n\\n    **不常见的坑点：** 有些语言/框架会发送纳秒精度，但 PostgreSQL 只能以微秒精度存储时间戳。\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 959,
+    "outputTokens": 449,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 1204,
+    "providerCostUsd": 0.00039405,
+    "providerUpstreamCostUsd": 0.00039405,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000037400999999999996,
+    "outputUsd": 0.00008082,
+    "totalUsd": 0.000118221,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "index": 6,
+  "attempt": 1,
+  "originalTitle": "Identify Invalid Types",
+  "translatedTitle": "识别无效类型",
+  "translation": {
+    "title": "识别无效类型",
+    "group": "Postgres 类型",
+    "options": [
+      {
+        "text": "int"
+      },
+      {
+        "text": "real"
+      },
+      {
+        "text": "bigint"
+      },
+      {
+        "text": "bigserial"
+      },
+      {
+        "text": "smallserial"
+      },
+      {
+        "text": "decimal128"
+      },
+      {
+        "text": "double precision"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "以下哪项 ❌ 不是有效的 PostgreSQL 类型？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "它看起来很熟悉，因为 `decimal128` 在很多地方都有（包括 Mongo 和 Java）。但它不是有效的 PostgreSQL 类型，PostgreSQL 使用 `decimal`。\n\n正确的数值类型包括：\n- `int`（4 字节整数）\n- `bigint`（8 字节整数）\n- `real`（4 字节浮点数）\n- `double precision`（8 字节浮点数）\n- `bigserial`（自动递增的 8 字节整数）\n- `smallserial`（自动递增的 2 字节整数）"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"识别无效类型\",\n  \"group\": \"Postgres 类型\",\n  \"options\": [\n    {\n      \"text\": \"int\"\n    },\n    {\n      \"text\": \"real\"\n    },\n    {\n      \"text\": \"bigint\"\n    },\n    {\n      \"text\": \"bigserial\"\n    },\n    {\n      \"text\": \"smallserial\"\n    },\n    {\n      \"text\": \"decimal128\"\n    },\n    {\n      \"text\": \"double precision\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"以下哪项 ❌ 不是有效的 PostgreSQL 类型？\"\n  ],\n  \"questionCode\": [],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"它看起来很熟悉，因为 `decimal128` 在很多地方都有（包括 Mongo 和 Java）。但它不是有效的 PostgreSQL 类型，PostgreSQL 使用 `decimal`。\\n\\n正确的数值类型包括：\\n- `int`（4 字节整数）\\n- `bigint`（8 字节整数）\\n- `real`（4 字节浮点数）\\n- `double precision`（8 字节浮点数）\\n- `bigserial`（自动递增的 8 字节整数）\\n- `smallserial`（自动递增的 2 字节整数）\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 935,
+    "outputTokens": 701,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 1843,
+    "providerCostUsd": 0.00054165,
+    "providerUpstreamCostUsd": 0.00054165,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000036465,
+    "outputUsd": 0.00012618,
+    "totalUsd": 0.000162645,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

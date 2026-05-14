@@ -1,0 +1,49 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "Integer Overflow",
+  "translatedTitle": "整数溢出",
+  "translation": {
+    "title": "整数溢出",
+    "group": "整数算术",
+    "options": [
+      {
+        "text": "4294967296"
+      },
+      {
+        "text": "错误：整数超出范围"
+      },
+      {
+        "text": "0"
+      },
+      {
+        "text": "2147483647"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "计算学生 ID 的总可能数会怎样？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "PostgreSQL的 `integer` 类型是 32 位有符号，范围从 `-2,147,483,648` 到 `2,147,483,647`。\n\n    计算 `256^4` = `4,294,967,296` 超出了此范围。\n\n    要处理更大的数字："
+    ]
+  },
+  "rawText": "{\n  \"title\": \"整数溢出\",\n  \"group\": \"整数算术\",\n  \"options\": [\n    {\n      \"text\": \"4294967296\"\n    },\n    {\n      \"text\": \"错误：整数超出范围\"\n    },\n    {\n      \"text\": \"0\"\n    },\n    {\n      \"text\": \"2147483647\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"计算学生 ID 的总可能数会怎样？\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"sql\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"PostgreSQL的 `integer` 类型是 32 位有符号，范围从 `-2,147,483,648` 到 `2,147,483,647`。\\n\\n    计算 `256^4` = `4,294,967,296` 超出了此范围。\\n\\n    要处理更大的数字：\"\n  ],\n  \"explanationCode\": [\n    {\n      \"language\": \"sql\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 898,
+    "outputTokens": 474,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 1843,
+    "providerCostUsd": 0.0003807,
+    "providerUpstreamCostUsd": 0.0003807,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000035022,
+    "outputUsd": 0.00008531999999999999,
+    "totalUsd": 0.00012034199999999998,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

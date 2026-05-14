@@ -1,0 +1,49 @@
+{
+  "index": 13,
+  "attempt": 1,
+  "originalTitle": "Check Constraint Timing",
+  "translatedTitle": "检查约束的时机",
+  "translation": {
+    "title": "检查约束的时机",
+    "group": "约束",
+    "options": [
+      {
+        "text": "对新插入或修改的行立即检查"
+      },
+      {
+        "text": "在事务提交时"
+      },
+      {
+        "text": "在下一个查询时"
+      },
+      {
+        "text": "永不——约束仅在 INSERT 时检查"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "何时检查此 grade 约束？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "`NOT VALID` 约束：\n    - 对新插入和更新的行立即检查\n    - 不会验证已有行\n    - 可以稍后使用 `VALIDATE CONSTRAINT` 验证已有行\n    - 对大表很有用\n\n    没有 `NOT VALID` 时：\n    - 约束立即检查\n    - 所有已有行都会被验证\n    - 在大表上可能很慢"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"检查约束的时机\",\n  \"group\": \"约束\",\n  \"options\": [\n    {\n      \"text\": \"对新插入或修改的行立即检查\"\n    },\n    {\n      \"text\": \"在事务提交时\"\n    },\n    {\n      \"text\": \"在下一个查询时\"\n    },\n    {\n      \"text\": \"永不——约束仅在 INSERT 时检查\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"何时检查此 grade 约束？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"`NOT VALID` 约束：\\n    - 对新插入和更新的行立即检查\\n    - 不会验证已有行\\n    - 可以稍后使用 `VALIDATE CONSTRAINT` 验证已有行\\n    - 对大表很有用\\n\\n    没有 `NOT VALID` 时：\\n    - 约束立即检查\\n    - 所有已有行都会被验证\\n    - 在大表上可能很慢\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 888,
+    "outputTokens": 741,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 2177,
+    "providerCostUsd": 0.0005586,
+    "providerUpstreamCostUsd": 0.0005586,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000034631999999999996,
+    "outputUsd": 0.00013338,
+    "totalUsd": 0.000168012,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
