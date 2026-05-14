@@ -1,0 +1,61 @@
+{
+  "index": 0,
+  "attempt": 1,
+  "originalTitle": "Basic Move Semantics",
+  "translatedTitle": "基本移动语义",
+  "translation": {
+    "title": "基本移动语义",
+    "group": "所有权",
+    "options": [
+      {
+        "text": "你好，！",
+        "hint": "思考'philosopher'被移动后会发生什么"
+      },
+      {
+        "text": "你好，Citium的芝诺！",
+        "hint": "一旦值被移动，我们还能使用它吗？"
+      },
+      {
+        "text": "你好，Elea的芝诺！",
+        "hint": "字符串包含'Citium'，而不是'Elea'"
+      },
+      {
+        "text": "你好，Marcus Aurelius",
+        "hint": "检查这是否匹配字符串内容"
+      },
+      {
+        "text": "编译错误：移动后借用了值"
+      },
+      {
+        "text": "运行时错误：空指针异常",
+        "hint": "Rust在编译时捕获这些问题"
+      }
+    ],
+    "questionProse": [
+      "运行这段代码会发生什么？尝试预测输出或错误："
+    ],
+    "explanationProse": [
+      "这段代码无法编译，因为Rust的所有权规则。当我们把`philosopher`赋值给`greeting`时，String的所有权被移动到了`greeting`。移动之后，`philosopher`不再有效。\n\n      这里有三种修复方法：\n\n      1. 克隆字符串（创建一个新副本）：",
+      "2. 使用引用（借用值）：",
+      "3. 使用字符串切片（借用字符串的一部分）：",
+      "每种解决方案都有不同的用例和性能影响。克隆更昂贵但赋予你所有权，而引用更便宜但有生命周期约束。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"基本移动语义\",\n  \"group\": \"所有权\",\n  \"options\": [\n    {\n      \"text\": \"你好，！\",\n      \"hint\": \"思考'philosopher'被移动后会发生什么\"\n    },\n    {\n      \"text\": \"你好，Citium的芝诺！\",\n      \"hint\": \"一旦值被移动，我们还能使用它吗？\"\n    },\n    {\n      \"text\": \"你好，Elea的芝诺！\",\n      \"hint\": \"字符串包含'Citium'，而不是'Elea'\"\n    },\n    {\n      \"text\": \"你好，Marcus Aurelius\",\n      \"hint\": \"检查这是否匹配字符串内容\"\n    },\n    {\n      \"text\": \"编译错误：移动后借用了值\"\n    },\n    {\n      \"text\": \"运行时错误：空指针异常\",\n      \"hint\": \"Rust在编译时捕获这些问题\"\n    }\n  ],\n  \"questionProse\": [\n    \"运行这段代码会发生什么？尝试预测输出或错误：\"\n  ],\n  \"explanationProse\": [\n    \"这段代码无法编译，因为Rust的所有权规则。当我们把`philosopher`赋值给`greeting`时，String的所有权被移动到了`greeting`。移动之后，`philosopher`不再有效。\\n\\n      这里有三种修复方法：\\n\\n      1. 克隆字符串（创建一个新副本）：\",\n    \"2. 使用引用（借用值）：\",\n    \"3. 使用字符串切片（借用字符串的一部分）：\",\n    \"每种解决方案都有不同的用例和性能影响。克隆更昂贵但赋予你所有权，而引用更便宜但有生命周期约束。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1033,
+    "outputTokens": 1961,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 10851,
+    "providerCostUsd": 0.000991,
+    "providerUpstreamCostUsd": 0.000991,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00014462000000000003,
+    "outputUsd": 0.0005490800000000001,
+    "totalUsd": 0.0006937000000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

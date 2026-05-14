@@ -1,0 +1,51 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Cell vs RefCell",
+  "translatedTitle": "Cell 与 RefCell",
+  "translation": {
+    "title": "Cell 与 RefCell",
+    "group": "可变性",
+    "options": [
+      {
+        "text": "输出：42, 43"
+      },
+      {
+        "text": "输出：43, 43",
+        "hint": "Cell::get() 返回调用时的值"
+      },
+      {
+        "text": "编译错误",
+        "hint": "Cell 正是为此用例设计的"
+      },
+      {
+        "text": "运行时恐慌",
+        "hint": "Cell 操作对于 Copy 类型总是安全的"
+      }
+    ],
+    "questionProse": [
+      "这段代码会输出什么？"
+    ],
+    "explanationProse": [
+      "Cell 和 RefCell 在内部可变性方面服务于不同的目的：",
+      "关键区别：\n      1. Cell：\n         - 最适合 Copy 类型\n         - 无借用 API\n         - 总是复制或移动值\n      \n      2. RefCell：\n         - 适用于任何类型\n         - 有借用 API\n         - 运行时借用检查\n\n      最佳实践：\n      1. 对于简单的 Copy 类型（数字、布尔等）使用 Cell\n      2. 当需要借用内容时使用 RefCell\n      3. 通过 Cell/RefCell 进行的修改应保持最小\n      4. 记录为什么需要内部可变性"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Cell 与 RefCell\",\n  \"group\": \"可变性\",\n  \"options\": [\n    { \"text\": \"输出：42, 43\" },\n    { \"text\": \"输出：43, 43\", \"hint\": \"Cell::get() 返回调用时的值\" },\n    { \"text\": \"编译错误\", \"hint\": \"Cell 正是为此用例设计的\" },\n    { \"text\": \"运行时恐慌\", \"hint\": \"Cell 操作对于 Copy 类型总是安全的\" }\n  ],\n  \"questionProse\": [\"这段代码会输出什么？\"],\n  \"explanationProse\": [\n    \"Cell 和 RefCell 在内部可变性方面服务于不同的目的：\",\n    \"关键区别：\\n      1. Cell：\\n         - 最适合 Copy 类型\\n         - 无借用 API\\n         - 总是复制或移动值\\n      \\n      2. RefCell：\\n         - 适用于任何类型\\n         - 有借用 API\\n         - 运行时借用检查\\n\\n      最佳实践：\\n      1. 对于简单的 Copy 类型（数字、布尔等）使用 Cell\\n      2. 当需要借用内容时使用 RefCell\\n      3. 通过 Cell/RefCell 进行的修改应保持最小\\n      4. 记录为什么需要内部可变性\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 891,
+    "outputTokens": 1602,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 8553,
+    "providerCostUsd": 0.000819,
+    "providerUpstreamCostUsd": 0.000819,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00012474,
+    "outputUsd": 0.00044856000000000003,
+    "totalUsd": 0.0005733,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

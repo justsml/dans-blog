@@ -1,0 +1,51 @@
+{
+  "index": 16,
+  "attempt": 1,
+  "originalTitle": "Memory Optimization",
+  "translatedTitle": "内存优化",
+  "translation": {
+    "title": "内存优化",
+    "group": "最佳实践",
+    "options": [
+      {
+        "text": "16 字节",
+        "hint": "考虑对齐要求"
+      },
+      {
+        "text": "24 字节"
+      },
+      {
+        "text": "32 字节",
+        "hint": "String 比单个指针更大。"
+      },
+      {
+        "text": "取决于平台",
+        "hint": "我们指定了 64 位系统"
+      }
+    ],
+    "questionProse": [
+      "在典型的当前 64 位 Rust 目标上，这个结构体的大小是多少？"
+    ],
+    "explanationProse": [
+      "让我们分解结构体的内存布局和优化：",
+      "内存布局考虑：\n      1. 对齐要求：\n         - u32：4 字节对齐\n         - String：在常见 64 位目标上为 8 字节对齐和 24 字节大小\n         - bool：1 字节对齐\n\n      2. 字段排序策略：\n         - 将相似大小的字段分组\n         - 将较大对齐的字段放在前面\n         - 考虑缓存行优化\n\n      最佳实践：\n      1. 对于 FFI 或稳定布局假设，使用适当的 `repr(...)`\n      2. 使用适当的整数大小\n      3. 考虑对可选字段使用 Option\n      4. 使用 `std::mem::size_of` 测量大小关键的结构体\n      5. 谨慎使用 #[repr(packed)] - 它可能影响性能"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"内存优化\",\n  \"group\": \"最佳实践\",\n  \"options\": [\n    {\n      \"text\": \"16 字节\",\n      \"hint\": \"考虑对齐要求\"\n    },\n    {\n      \"text\": \"24 字节\"\n    },\n    {\n      \"text\": \"32 字节\",\n      \"hint\": \"String 比单个指针更大。\"\n    },\n    {\n      \"text\": \"取决于平台\",\n      \"hint\": \"我们指定了 64 位系统\"\n    }\n  ],\n  \"questionProse\": [\n    \"在典型的当前 64 位 Rust 目标上，这个结构体的大小是多少？\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"rust\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"explanationProse\": [\n    \"让我们分解结构体的内存布局和优化：\",\n    \"内存布局考虑：\\n      1. 对齐要求：\\n         - u32：4 字节对齐\\n         - String：在常见 64 位目标上为 8 字节对齐和 24 字节大小\\n         - bool：1 字节对齐\\n\\n      2. 字段排序策略：\\n         - 将相似大小的字段分组\\n         - 将较大对齐的字段放在前面\\n         - 考虑缓存行优化\\n\\n      最佳实践：\\n      1. 对于 FFI 或稳定布局假设，使用适当的 `repr(...)`\\n      2. 使用适当的整数大小\\n      3. 考虑对可选字段使用 Option\\n      4. 使用 `std::mem::size_of` 测量大小关键的结构体\\n      5. 谨慎使用 #[repr(packed)] - 它可能影响性能\"\n  ],\n  \"explanationCode\": [\n    {\n      \"language\": \"rust\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 918,
+    "outputTokens": 2752,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 14437,
+    "providerCostUsd": 0.0012844,
+    "providerUpstreamCostUsd": 0.0012844,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00012852,
+    "outputUsd": 0.0007705600000000001,
+    "totalUsd": 0.0008990800000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
