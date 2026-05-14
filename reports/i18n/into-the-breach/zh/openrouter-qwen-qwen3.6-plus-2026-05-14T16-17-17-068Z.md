@@ -1,0 +1,15 @@
+# Translation Candidate
+- Slug: into-the-breach
+- Locale: zh
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2026-05-13--into-the-breach/zh/index.mdx
+- Validation: rejected: direct AI SDK translation failed
+- Runtime seconds: 300.04
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Cache write tokens: unknown
+- Estimated cost: unknown
+- Pricing source: unknown
+- Note: Command failed after 300000ms: bun run i18n:translate:chunked -- --slug into-the-breach --locale zh --model openrouter/qwen/qwen3.6-plus --chunk 10p --run-id 2026-05-14T16-17-16-930Z-59233 --run-lock-path /Users/dan/code/oss/dans-blog/.git/codex-i18n-translation-run.json
