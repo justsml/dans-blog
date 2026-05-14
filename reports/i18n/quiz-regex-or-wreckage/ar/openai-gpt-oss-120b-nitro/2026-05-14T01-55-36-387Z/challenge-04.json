@@ -1,0 +1,49 @@
+{
+  "index": 3,
+  "attempt": 1,
+  "originalTitle": "The Dot Metacharacter",
+  "translatedTitle": "حرف النقطة الميتا",
+  "translation": {
+    "title": "حرف النقطة الميتا",
+    "group": "الأخطاء الشائعة",
+    "options": [
+      {
+        "text": "[\"hello\\nworld\"]"
+      },
+      {
+        "text": "[\"hello\", \"world\"]"
+      },
+      {
+        "text": "[\"hello\\n\", \"world\"]"
+      },
+      {
+        "text": "null"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "ماذا سيعيد هذا؟"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "النمط `\\w+` يطابق حرفًا أو أكثر من أحرف الكلمات. رغم وجود سطر جديد في السلسلة، `\\w` يطابق:\n    - الحروف (a-z, A-Z)\n    - الأرقام (0-9)\n    - الشرطة السفلية (_)\n\n    لذا، السطر الجديد يعمل كحد كلمة، ونحصل على تطابقين. إذا استخدمنا `.*`، لن يطابق السطر الجديد افتراضيًا (ستحتاج إلى علم `s` لذلك).\n\n    [تعلم المزيد عن حروف الميتا](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Character_Classes#types)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"حرف النقطة الميتا\",\n  \"group\": \"الأخطاء الشائعة\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"hello\\\\nworld\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"hello\\\", \\\"world\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"hello\\\\n\\\", \\\"world\\\"]\"\n    },\n    {\n      \"text\": \"null\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"ماذا سيعيد هذا؟\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"js\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"النمط `\\\\w+` يطابق حرفًا أو أكثر من أحرف الكلمات. رغم وجود سطر جديد في السلسلة، `\\\\w` يطابق:\\n    - الحروف (a-z, A-Z)\\n    - الأرقام (0-9)\\n    - الشرطة السفلية (_)\\n\\n    لذا، السطر الجديد يعمل كحد كلمة، ونحصل على تطابقين. إذا استخدمنا `.*`، لن يطابق السطر الجديد افتراضيًا (ستحتاج إلى علم `s` لذلك).\\n\\n    [تعلم المزيد عن حروف الميتا](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Character_Classes#types)\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 955,
+    "outputTokens": 765,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 1921,
+    "providerCostUsd": 0.00056385,
+    "providerUpstreamCostUsd": 0.00056385,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000037245,
+    "outputUsd": 0.00013769999999999999,
+    "totalUsd": 0.00017494499999999997,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

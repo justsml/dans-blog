@@ -1,0 +1,55 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Negative Look-ahead",
+  "translatedTitle": "السلبية Look-ahead",
+  "translation": {
+    "title": "السلبية Look-ahead",
+    "group": "Look-ahead",
+    "options": [
+      {
+        "text": "[\"password123\"]"
+      },
+      {
+        "text": "[\"abc123\"]"
+      },
+      {
+        "text": "[\"123aBc\"]"
+      },
+      {
+        "text": "[\"12\"]"
+      },
+      {
+        "text": "[\"abc\"]"
+      },
+      {
+        "text": "Error"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "ما هي النتيجة المتوقعة لهذا؟"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "يضمن الـ negative look-ahead `(?![a-z])` عدم وجود أحرف صغيرة بعد الأرقام. لأن الجزء \"3aBc\" يحتوي على حرف صغير بعد الأرقام، فإن هذا الجزء لا يتطابق. لذا فقط البداية \"12\" هي التي تتطابق.\n\n    [تعرف على المزيد حول الـ negative look-ahead](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"السلبية Look-ahead\",\n  \"group\": \"Look-ahead\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"password123\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"abc123\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"123aBc\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"12\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"abc\\\"]\"\n    },\n    {\n      \"text\": \"Error\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"ما هي النتيجة المتوقعة لهذا؟\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"js\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"يضمن الـ negative look-ahead `(?![a-z])` عدم وجود أحرف صغيرة بعد الأرقام. لأن الجزء \\\"3aBc\\\" يحتوي على حرف صغير بعد الأرقام، فإن هذا الجزء لا يتطابق. لذا فقط البداية \\\"12\\\" هي التي تتطابق.\\n\\n    [تعرف على المزيد حول الـ negative look-ahead](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 923,
+    "outputTokens": 625,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 1604,
+    "providerCostUsd": 0.00047505,
+    "providerUpstreamCostUsd": 0.00047505,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000035997,
+    "outputUsd": 0.0001125,
+    "totalUsd": 0.00014849699999999998,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

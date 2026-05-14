@@ -1,0 +1,49 @@
+{
+  "index": 13,
+  "attempt": 1,
+  "originalTitle": "Lazy vs Greedy Quantifiers",
+  "translatedTitle": "المطابقات الكسولة مقابل المطابقات الجشعة",
+  "translation": {
+    "title": "المطابقات الكسولة مقابل المطابقات الجشعة",
+    "group": "المطابقة الأساسية",
+    "options": [
+      {
+        "text": "[\"<b>bold</b>\"]"
+      },
+      {
+        "text": "[\"bold\"]"
+      },
+      {
+        "text": "[\"<b>\", \"</b>\"]"
+      },
+      {
+        "text": "[]"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "ما الذي يتم مطابقته؟"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "النمط يستخدم المطابقة الكسولة مع `*?`:\n    - `<b>`: مطابقة وسم الفتح\n    - `(.*?)`: التقاط أي أحرف (كسولة)\n    - `</b>`: مطابقة وسم الإغلاق\n\n    الـ `?` بعد `*` يجعل المطابقة كسولة، بحيث يطابق أقل عدد ممكن من الأحرف.\n    بدون `?`، سيكون النمط جشعًا ويطابق أكبر قدر ممكن.\n\n    `slice(1)` يُعيد المجموعة الملتقطة فقط.\n\n    [تعرف على المزيد حول المطابقات الجشعة مقابل الكسولة](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"المطابقات الكسولة مقابل المطابقات الجشعة\",\n  \"group\": \"المطابقة الأساسية\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"<b>bold</b>\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"bold\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"<b>\\\", \\\"</b>\\\"]\"\n    },\n    {\n      \"text\": \"[]\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"ما الذي يتم مطابقته؟\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"js\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"النمط يستخدم المطابقة الكسولة مع `*?`:\\n    - `<b>`: مطابقة وسم الفتح\\n    - `(.*?)`: التقاط أي أحرف (كسولة)\\n    - `</b>`: مطابقة وسم الإغلاق\\n\\n    الـ `?` بعد `*` يجعل المطابقة كسولة، بحيث يطابق أقل عدد ممكن من الأحرف.\\n    بدون `?`، سيكون النمط جشعًا ويطابق أكبر قدر ممكن.\\n\\n    `slice(1)` يُعيد المجموعة الملتقطة فقط.\\n\\n    [تعرف على المزيد حول المطابقات الجشعة مقابل الكسولة](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 960,
+    "outputTokens": 713,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 1928,
+    "providerCostUsd": 0.0005526,
+    "providerUpstreamCostUsd": 0.0005526,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00003744,
+    "outputUsd": 0.00012833999999999998,
+    "totalUsd": 0.00016577999999999997,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

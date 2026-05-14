@@ -1,0 +1,49 @@
+{
+  "index": 8,
+  "attempt": 1,
+  "originalTitle": "Capturing Groups",
+  "translatedTitle": "مجموعات الالتقاط",
+  "translation": {
+    "title": "مجموعات الالتقاط",
+    "group": "المطابقة الأساسية",
+    "options": [
+      {
+        "text": "[\"2029-12-31\"]"
+      },
+      {
+        "text": "[\"2029\", \"12\", \"31\"]"
+      },
+      {
+        "text": "[\"20\", \"29\", \"12\", \"31\"]"
+      },
+      {
+        "text": "null"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "ماذا سيعيد هذا؟"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "النمط يستخدم ثلاث مجموعات التقاط:\n    1. `(\\d{4})` يلتقط السنة\n    2. `(\\d{2})` يلتقط الشهر\n    3. `(\\d{2})` يلتقط اليوم\n\n    `match()` بدون علم `g` يُعيد:\n    - الفهرس 0: التطابق الكامل\n    - الفهرس 1+: مجموعات الالتقاط\n\n    `slice(1)` هو خدعة شائعة للحصول فقط على مجموعات الالتقاط.\n\n    [اعرف المزيد عن المجموعات والالتقاط](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Groups_and_Backreferences)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"مجموعات الالتقاط\",\n  \"group\": \"المطابقة الأساسية\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"2029-12-31\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"2029\\\", \\\"12\\\", \\\"31\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"20\\\", \\\"29\\\", \\\"12\\\", \\\"31\\\"]\"\n    },\n    {\n      \"text\": \"null\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"ماذا سيعيد هذا؟\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"النمط يستخدم ثلاث مجموعات التقاط:\\n    1. `(\\\\d{4})` يلتقط السنة\\n    2. `(\\\\d{2})` يلتقط الشهر\\n    3. `(\\\\d{2})` يلتقط اليوم\\n\\n    `match()` بدون علم `g` يُعيد:\\n    - الفهرس 0: التطابق الكامل\\n    - الفهرس 1+: مجموعات الالتقاط\\n\\n    `slice(1)` هو خدعة شائعة للحصول فقط على مجموعات الالتقاط.\\n\\n    [اعرف المزيد عن المجموعات والالتقاط](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Groups_and_Backreferences)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 962,
+    "outputTokens": 742,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 1926,
+    "providerCostUsd": 0.0005703,
+    "providerUpstreamCostUsd": 0.0005703,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000037518,
+    "outputUsd": 0.00013356,
+    "totalUsd": 0.000171078,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "index": 7,
+  "attempt": 1,
+  "originalTitle": "Negative Look-behind",
+  "translatedTitle": "النظر إلى الخلف السالب",
+  "translation": {
+    "title": "النظر إلى الخلف السالب",
+    "group": "النظر إلى الخلف",
+    "options": [
+      {
+        "text": "[\"123\"]"
+      },
+      {
+        "text": "[\"123\", \"456\"]"
+      },
+      {
+        "text": "[\"23\", \"456\"]"
+      },
+      {
+        "text": "[\"456\"]"
+      },
+      {
+        "text": "[]"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "ما الذي يطابق هذا النمط؟"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "النظر إلى الخلف السالب `(?<!abc)` يضمن أن الأرقام لا تكون مسبوقة بـ \"abc\":\n    - ❌ \"123\" (مسبوقة بـ \"abc\")\n    - ✅ \"23\" (مسبوقة بـ \"abc1\")\n    - ✅ \"456\" (مسبوقة بـ \"def\")\n\n    جافاسكريبت يدعم تأكيدات النظر إلى الخلف في المحركات الحديثة. هذا المثال يستخدم نظرًا إلى الخلف بطول ثابت: `abc` دائمًا ثلاثة أحرف. النظر إلى الخلف بطول متغير هو الجانب الأكثر تعقيدًا ويعتمد على المحرك.\n\n    ملاحظة: دعم النظر إلى الخلف حديث نسبيًا في جافاسكريبت. تحقق من [توافق المتصفحات](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#browser_compatibility) إذا كنت تحتاج لدعم متصفحات أقدم."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"النظر إلى الخلف السالب\",\n  \"group\": \"النظر إلى الخلف\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"123\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"123\\\", \\\"456\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"23\\\", \\\"456\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"456\\\"]\"\n    },\n    {\n      \"text\": \"[]\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"ما الذي يطابق هذا النمط؟\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"js\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"النظر إلى الخلف السالب `(?<!abc)` يضمن أن الأرقام لا تكون مسبوقة بـ \\\"abc\\\":\\n    - ❌ \\\"123\\\" (مسبوقة بـ \\\"abc\\\")\\n    - ✅ \\\"23\\\" (مسبوقة بـ \\\"abc1\\\")\\n    - ✅ \\\"456\\\" (مسبوقة بـ \\\"def\\\")\\n\\n    جافاسكريبت يدعم تأكيدات النظر إلى الخلف في المحركات الحديثة. هذا المثال يستخدم نظرًا إلى الخلف بطول ثابت: `abc` دائمًا ثلاثة أحرف. النظر إلى الخلف بطول متغير هو الجانب الأكثر تعقيدًا ويعتمد على المحرك.\\n\\n    ملاحظة: دعم النظر إلى الخلف حديث نسبيًا في جافاسكريبت. تحقق من [توافق المتصفحات](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#browser_compatibility) إذا كنت تحتاج لدعم متصفحات أقدم.\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 989,
+    "outputTokens": 479,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 1383,
+    "providerCostUsd": 0.00039735,
+    "providerUpstreamCostUsd": 0.00039735,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000038571,
+    "outputUsd": 0.00008622,
+    "totalUsd": 0.000124791,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

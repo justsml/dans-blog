@@ -1,0 +1,49 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Word Boundaries",
+  "translatedTitle": "حدود الكلمات",
+  "translation": {
+    "title": "حدود الكلمات",
+    "group": "المطابقة الأساسية",
+    "options": [
+      {
+        "text": "[\"cat\", \"cats\"]"
+      },
+      {
+        "text": "[\"cat\"]"
+      },
+      {
+        "text": "[\"cats\"]"
+      },
+      {
+        "text": "[]"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "ما الذي سيتطابق؟"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "`\\b` تمثل حد كلمة، وهو يطابق:\n    - بين حرف كلمة وحرف غير كلمة\n    - في بداية/نهاية السلسلة إذا كان هناك حرف كلمة\n\n    لذا `/\\bcat\\b/` يطابق \"cat\" فقط عندما تكون كلمة كاملة، وليس جزءًا من كلمة أخرى.\n    - ✅ \"cat\" (محاط بمسافات)\n    - ❌ \"cats\" (لا حد بعد \"cat\")\n    - ❌ \"category\" (لا حد بعد \"cat\")\n\n    [تعرف على المزيد حول حدود الكلمات](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions#other_assertions)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"حدود الكلمات\",\n  \"group\": \"المطابقة الأساسية\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"cat\\\", \\\"cats\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"cat\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"cats\\\"]\"\n    },\n    {\n      \"text\": \"[]\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"ما الذي سيتطابق؟\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"js\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"`\\\\b` تمثل حد كلمة، وهو يطابق:\\n    - بين حرف كلمة وحرف غير كلمة\\n    - في بداية/نهاية السلسلة إذا كان هناك حرف كلمة\\n\\n    لذا `/\\\\bcat\\\\b/` يطابق \\\"cat\\\" فقط عندما تكون كلمة كاملة، وليس جزءًا من كلمة أخرى.\\n    - ✅ \\\"cat\\\" (محاط بمسافات)\\n    - ❌ \\\"cats\\\" (لا حد بعد \\\"cat\\\")\\n    - ❌ \\\"category\\\" (لا حد بعد \\\"cat\\\")\\n\\n    [تعرف على المزيد حول حدود الكلمات](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions#other_assertions)\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 954,
+    "outputTokens": 734,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 1917,
+    "providerCostUsd": 0.0005643,
+    "providerUpstreamCostUsd": 0.0005643,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000037206,
+    "outputUsd": 0.00013211999999999998,
+    "totalUsd": 0.00016932599999999997,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

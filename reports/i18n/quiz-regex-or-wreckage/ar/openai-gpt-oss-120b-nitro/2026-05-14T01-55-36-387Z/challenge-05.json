@@ -1,0 +1,52 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Positive Look-ahead",
+  "translatedTitle": "التطلّع الإيجابي إلى الأمام",
+  "translation": {
+    "title": "التطلّع الإيجابي إلى الأمام",
+    "group": "التطلّع إلى الأمام",
+    "options": [
+      {
+        "text": "[\"$100\", \"€50\"]"
+      },
+      {
+        "text": "[\"100\", \"50\"]"
+      },
+      {
+        "text": "[\"$\", \"€\"]"
+      },
+      {
+        "text": "[]"
+      },
+      {
+        "text": "null"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "ماذا سيتطابق هذا؟"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "هذا النمط لن يطابق أي شيء لأن التطلّع إلى الأمام موجه للخلف! إذا كنت تريد أرقامًا مسبوقة بـ `$` أو `€`، استخدم نظرة خلفية: `/(?<=[\\$€])\\d+/g`.\n\n    التطلّعات إلى الأمام تتحقق مما يأتي *بعد* الموضع الحالي. النمط كما هو مكتوب يبحث عن:\n    - رقم واحد أو أكثر (`\\d+`)\n    - يليه (`(?=...)`) إما $ أو € (`[\\$€]`)\n\n    بما أنه لا توجد أرقام تليها رموز عملة (إنها مسبوقة بها)، لن نحصل على أي تطابق.\n\n    [تعرف على المزيد حول تأكيدات look-ahead assertions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"التطلّع الإيجابي إلى الأمام\",\n  \"group\": \"التطلّع إلى الأمام\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"$100\\\", \\\"€50\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"100\\\", \\\"50\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"$\\\", \\\"€\\\"]\"\n    },\n    {\n      \"text\": \"[]\"\n    },\n    {\n      \"text\": \"null\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"ماذا سيتطابق هذا؟\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"js\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"هذا النمط لن يطابق أي شيء لأن التطلّع إلى الأمام موجه للخلف! إذا كنت تريد أرقامًا مسبوقة بـ `$` أو `€`، استخدم نظرة خلفية: `/(?<=[\\\\$€])\\\\d+/g`.\\n\\n    التطلّعات إلى الأمام تتحقق مما يأتي *بعد* الموضع الحالي. النمط كما هو مكتوب يبحث عن:\\n    - رقم واحد أو أكثر (`\\\\d+`)\\n    - يليه (`(?=...)`) إما $ أو € (`[\\\\$€]`)\\n\\n    بما أنه لا توجد أرقام تليها رموز عملة (إنها مسبوقة بها)، لن نحصل على أي تطابق.\\n\\n    [تعرف على المزيد حول تأكيدات look-ahead assertions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 988,
+    "outputTokens": 694,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 1813,
+    "providerCostUsd": 0.0005454,
+    "providerUpstreamCostUsd": 0.0005454,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000038532,
+    "outputUsd": 0.00012492,
+    "totalUsd": 0.000163452,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

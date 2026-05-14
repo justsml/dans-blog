@@ -1,0 +1,52 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "Greedy vs Non-Greedy",
+  "translatedTitle": "الجشع مقابل غير الجشع",
+  "translation": {
+    "title": "الجشع مقابل غير الجشع",
+    "group": "المطابقة الأساسية",
+    "options": [
+      {
+        "text": "[\"<div>Hello</div>\"]"
+      },
+      {
+        "text": "[\"<div>\", \"</div>\"]"
+      },
+      {
+        "text": "[\"<div>Hello</div><div>World</div>\"]"
+      },
+      {
+        "text": "[\"<div>Hello</div>\", \"<div>World</div>\"]"
+      },
+      {
+        "text": "[\"Hello\", \"World\"]"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "ما الذي سيتطابق معه هذا؟"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "النمط `/<div>.*?<\\/div>/g` يستخدم المطابقة غير الجشعة مع `*?` وهذا يعني:\n    - مطابقة `<div>`\n    - مطابقة أي حرف (`.*`) لكن بأقل عدد ممكن (`?`)\n    - حتى العثور على `</div>`\n    - علم `g` يجعلها تطابق جميع النتائج\n\n    بدون `?`، الـ `.*` الجشع سيطابق كل شيء من أول `<div>` إلى آخر `</div>`، مما ينتج مطابقة واحدة كبيرة. مع `?`، يطابق كل زوج على حدة.\n\n    [تعرف على المزيد حول المطابقة الجشعة مقابل الكسولة](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"الجشع مقابل غير الجشع\",\n  \"group\": \"المطابقة الأساسية\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"<div>Hello</div>\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"<div>\\\", \\\"</div>\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"<div>Hello</div><div>World</div>\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"<div>Hello</div>\\\", \\\"<div>World</div>\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"Hello\\\", \\\"World\\\"]\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"ما الذي سيتطابق معه هذا؟\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"النمط `/<div>.*?<\\\\/div>/g` يستخدم المطابقة غير الجشعة مع `*?` وهذا يعني:\\n    - مطابقة `<div>`\\n    - مطابقة أي حرف (`.*`) لكن بأقل عدد ممكن (`?`)\\n    - حتى العثور على `</div>`\\n    - علم `g` يجعلها تطابق جميع النتائج\\n\\n    بدون `?`، الـ `.*` الجشع سيطابق كل شيء من أول `<div>` إلى آخر `</div>`، مما ينتج مطابقة واحدة كبيرة. مع `?`، يطابق كل زوج على حدة.\\n\\n    [تعرف على المزيد حول المطابقة الجشعة مقابل الكسولة](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1029,
+    "outputTokens": 888,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 2233,
+    "providerCostUsd": 0.00066795,
+    "providerUpstreamCostUsd": 0.00066795,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000040131,
+    "outputUsd": 0.00015984,
+    "totalUsd": 0.000199971,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
