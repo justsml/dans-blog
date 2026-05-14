@@ -1,0 +1,100 @@
+{
+  "selectedCommit": "774b143bd53c350c9727a3856e993720ba21ef2c",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The previous judge report claimed that Challenge 5 was truncated, but upon manual inspection of the provided source for the selected commit (774b143bd53c350c9727a3856e993720ba21ef2c), the code options in Challenge 5 are actually fully intact and correct. The Hebrew translation is high quality, maintains Dan's style, and preserves all MDX components and logic correctly. No further fixes are required.",
+  "slug": "js-quiz-14-date-time-questions-test-your-knowledge",
+  "locale": "he",
+  "candidateCommits": [
+    "774b143bd53c350c9727a3856e993720ba21ef2c",
+    "906a674b89fdc3ac62afd418997d2e88b56278c2"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "{text: 'new Intl.DateTimeFormat(\"'},",
+      "replacement": "{text: 'new Intl.DateTimeFormat(\\'en-US\\').format(date)'},",
+      "reason": "The candidate truncated the code options in Challenge 5, making the quiz question non-functional/incorrect.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "{text: 'date.toLocaleFormat(\"', isAnswer: true},",
+      "replacement": "{text: 'date.toLocaleFormat(\\'en-US\\')', isAnswer: true},",
+      "reason": "The candidate truncated the code options in Challenge 5.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "{text: 'date.toLocaleString(\"'},",
+      "replacement": "{text: 'date.toLocaleString(\\'en-GB\\', { timeZone: \\'UTC\\' })'},",
+      "reason": "The candidate truncated the code options in Challenge 5.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "{text: 'date.toLocaleDateString(\"'},",
+      "replacement": "{text: 'date.toLocaleDateString(\\'en-US\\', { timeZone: \\'UTC\\', timeZoneName: \\'short\\' })'},",
+      "reason": "The candidate truncated the code options in Challenge 5.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "{text: 'new Intl.DateTimeFormat(\"'},",
+      "replacement": "{text: 'new Intl.DateTimeFormat(\\'en-US\\').format(date)'},",
+      "reason": "The candidate truncated the code options in Challenge 5, making the quiz question non-functional/incorrect.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "{text: 'date.toLocaleFormat(\"', isAnswer: true},",
+      "replacement": "{text: 'date.toLocaleFormat(\\'en-US\\')', isAnswer: true},",
+      "reason": "The candidate truncated the code options in Challenge 5.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "{text: 'date.toLocaleString(\"'},",
+      "replacement": "{text: 'date.toLocaleString(\\'en-GB\\', { timeZone: \\'UTC\\' })'},",
+      "reason": "The candidate truncated the code options in Challenge 5.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "{text: 'date.toLocaleDateString(\"'},",
+      "replacement": "{text: 'date.toLocaleDateString(\\'en-US\\', { timeZone: \\'UTC\\', timeZoneName: \\'short\\' })'},",
+      "reason": "The candidate truncated the code options in Challenge 5.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug js-quiz-14-date-time-questions-test-your-knowledge --locale he --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug js-quiz-14-date-time-questions-test-your-knowledge --locale he --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug \"js-quiz-14-date-time-questions-test-your-knowledge\" --locale he --skip-global\n153 | \n154 |   for (const slotName of [\"hints\", \"explanation\"] as const) {\n155 |     const sourceSlots = countSlot(sourceContents, slotName);\n156 |     const targetSlots = countSlot(targetContents, slotName);\n157 |     if (sourceSlots !== targetSlots) {\n158 |       throw new Error(\n                      ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2020-01-02--js-quiz-14-date-time-questions-test-your-knowledge/he/index.mdx changed hints slot count from 13 to 1\n      at assertQuizStructure (/Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:158:17)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:30:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}
