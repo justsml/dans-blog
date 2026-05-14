@@ -1,0 +1,47 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Using `.map(parseInt)`",
+  "translatedTitle": "שימוש ב-`.map(parseInt)`",
+  "translation": {
+    "title": "שימוש ב-`.map(parseInt)`",
+    "group": "Number[]",
+    "options": [
+      {
+        "text": "[24, NaN, NaN]"
+      },
+      {
+        "text": "[24, NaN, 42]"
+      },
+      {
+        "text": "[24, 42]"
+      },
+      {
+        "text": "NaN"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [],
+    "hintsProse": [],
+    "explanationProse": [
+      "הארגומנט השני של `parseInt` (ה-radix) מתיישר עם ארגומנט ה-`index` של מתודות המערך. זה מוביל לתוצאות בלתי צפויות, מכיוון ש-`parseInt(\"One\", 1)` מחזיר `NaN` עקב קלט לא תקין.\n\n    האלמנט הראשון, `24`, מפורש כ-`24` בבסיס 0 (זיהוי אוטומטי), כך שהוא נשאר `24`. האלמנט השני, `'One'`, מפורש כ-`NaN` בבסיס 1. האלמנט השלישי, `42`, מפורש בבסיס 2. בבסיס 2, `'42'` הוא `NaN`, ולכן התוצאה היא `[24, NaN, NaN]`.\n\n    זוהי מלכודת נפוצה עם `parseInt` ו-`map`. אם ברצונך לפרש מערך של מחרוזות למספרים, השיטה הבטוחה היחידה \"המובנית\" היא `.map(Number)` או הוספת callback/closure `.map(x => parseInt(x, 10))`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"שימוש ב-`.map(parseInt)`\",\n  \"group\": \"Number[]\",\n  \"options\": [\n    {\"text\": \"[24, NaN, NaN]\"},\n    {\"text\": \"[24, NaN, 42]\"},\n    {\"text\": \"[24, 42]\"},\n    {\"text\": \"NaN\"}\n  ],\n  \"objectives\": [],\n  \"questionProse\": [],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"הארגומנט השני של `parseInt` (ה-radix) מתיישר עם ארגומנט ה-`index` של מתודות המערך. זה מוביל לתוצאות בלתי צפויות, מכיוון ש-`parseInt(\\\"One\\\", 1)` מחזיר `NaN` עקב קלט לא תקין.\\n\\n    האלמנט הראשון, `24`, מפורש כ-`24` בבסיס 0 (זיהוי אוטומטי), כך שהוא נשאר `24`. האלמנט השני, `'One'`, מפורש כ-`NaN` בבסיס 1. האלמנט השלישי, `42`, מפורש בבסיס 2. בבסיס 2, `'42'` הוא `NaN`, ולכן התוצאה היא `[24, NaN, NaN]`.\\n\\n    זוהי מלכודת נפוצה עם `parseInt` ו-`map`. אם ברצונך לפרש מערך של מחרוזות למספרים, השיטה הבטוחה היחידה \\\"המובנית\\\" היא `.map(Number)` או הוספת callback/closure `.map(x => parseInt(x, 10))`.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 940,
+    "outputTokens": 2047,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 13814,
+    "providerCostUsd": 0.0010068,
+    "providerUpstreamCostUsd": 0.0010068,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.0001316,
+    "outputUsd": 0.0005731600000000001,
+    "totalUsd": 0.00070476,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
