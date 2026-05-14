@@ -1,16 +1,16 @@
 ---
 title: "Your Laptop Is the Breach"
-subTitle: "Developer workstations are credential warehouses now. Treat them like production."
+subTitle: "Developer workstations are credential warehouses. Prompt injection, poisoned CI, and infostealers don't break in — you let them in. Canary tokens are your last honest alarm."
 date: 2026-05-09
 modified: 2026-05-09
-tags: [security, developer-experience, infostealers, credentials, devcontainers, supply-chain, ai-agents, production]
+tags: [security, developer-experience, infostealers, credentials, devcontainers, supply-chain, ai-agents, canary-tokens, prompt-injection, github-actions, ci-cd]
 category: Security
 subCategory: Security
 draft: true
 unlisted: true
 hidden: true
 publish: false
-popularity: 0.82
+popularity: 0.85
 related:
   - docker-security-for-admins-and-maintainers
   - docker-security-tips-for-self-hosting
@@ -21,9 +21,11 @@ Opening a PDF should not be a production incident.
 
 Clicking a link in an SMS should not become a backup compromise.
 
-Installing a “quick utility” from a search result should not hand someone your cloud console, your source code, your CI tokens, your database exports, and the copy of production you forgot was sitting in `~/Downloads`.
+Installing a "quick utility" from a search result should not hand someone your cloud console, your source code, your CI tokens, your database exports, and the copy of production you forgot was sitting in `~/Downloads`.
 
-And yet here we are, because the modern developer laptop is not a laptop anymore. It is a credential warehouse with a keyboard.
+And yet here we are.
+
+The modern developer laptop is not a laptop anymore. It is a credential warehouse with a keyboard.
 
 It has browser sessions. SSH keys. `.env` files. GitHub tokens. Package manager auth. Cloud CLIs. Password manager browser extensions. AI coding tools with shell access. Local databases. Old backups. One-off exports. Random PDFs from vendors. Maybe a crypto wallet, if the universe has chosen comedy.
 
@@ -34,6 +36,14 @@ That model is done.
 <p class="inset">
 The question is not whether you can avoid every bad click. The question is whether one bad click can read everything, use everything, and leave before you notice.
 </p>
+
+But there is a harder version of this problem.
+
+The attacker is not always a stranger.
+
+Sometimes the attacker is a prompt you approved, a workflow you triggered, a dependency you installed, or a CI job you wrote. The breach is not always something that happened to you. Sometimes you are the one who ran the command.
+
+That reframe matters. It changes what you defend against.
 
 Last verified: May 9, 2026. The threat examples and tool behavior below move quickly, so treat the product details as current notes, not scripture.
 
@@ -51,17 +61,19 @@ A developer gets a message that looks normal enough:
 
 - a PDF invoice from a contractor
 - an SMS about a delivery or account warning
-- a fake CAPTCHA that asks them to paste a command
+- a fake CAPTCHA that asks them to paste a command into their terminal
 - a poisoned search ad for a tool they meant to install anyway
 - a browser extension that quietly asks for a little too much
 - a pull request that adds a dev dependency with a postinstall script
 - an AI coding session that reads more of the filesystem than the task required
+- a GitHub Actions workflow that exfiltrates secrets through an environment variable it was never supposed to see
+- a prompt injected into a document, a web page, or a repository that redirects an AI agent's next action
 
-Some of those paths install malware. Some steal credentials directly through phishing. Some do not need a local exploit at all because the user is tricked into running the attacker’s command by hand.
+Some of those paths install malware. Some steal credentials directly through phishing. Some do not need a local exploit at all because the user is tricked into running the attacker's command by hand.
 
-Microsoft’s Lumma Stealer writeup is a useful snapshot of the current shape. It lists phishing emails, malvertising, drive-by downloads on compromised sites, trojanized applications, abuse of legitimate services, fake CAPTCHA flows, and malware loaders as delivery routes for one prolific infostealer family. The interesting part is not Lumma as a brand name. The interesting part is the distribution strategy: attackers do not need one perfect door when users move through a city of half-trusted doors all day.
+Microsoft's Lumma Stealer writeup is a useful snapshot of the current shape. It lists phishing emails, malvertising, drive-by downloads on compromised sites, trojanized applications, abuse of legitimate services, fake CAPTCHA flows, and malware loaders as delivery routes for one prolific infostealer family. The interesting part is not Lumma as a brand name. The interesting part is the distribution strategy: attackers do not need one perfect door when users move through a city of half-trusted doors all day.
 
-CISA’s phishing guidance makes the same point at the human layer: phishing is not just email anymore. It shows up as text messages, direct messages, phone calls, collaboration tools, and other places where “this looks plausible” does too much work.
+CISA's phishing guidance makes the same point at the human layer: phishing is not just email anymore. It shows up as text messages, direct messages, phone calls, collaboration tools, and other places where "this looks plausible" does too much work.
 
 So set the threat level like this:
 
@@ -73,6 +85,55 @@ Just as you.
 
 That is already enough.
 
+## You Are the Breach
+
+The phrase "my laptop was compromised" carries a passive voice that does not always fit.
+
+Sometimes the story is: I cloned the repo, ran the install command, and the postinstall script phoned home before the test suite started. I opened the file someone sent. I approved the workflow trigger. I pasted the thing. I added the browser extension. I gave the agent "full context" because that was easier than specifying which files it needed.
+
+The modern attack surface includes the places where you are the actor.
+
+### Prompt Injection
+
+AI coding tools are new enough that their attack surface is still being catalogued. One pattern worth knowing: prompt injection.
+
+A malicious instruction hidden in a file, a web page, a repository README, a PR description, or a comment can redirect an agent's behavior. The agent reads the document as content. The hidden instruction is also content. If the model treats the injected text as a command — which depends on context, framing, and model behavior — the agent may take actions the user never intended: reading files, writing files, calling tools, or following a chain of instructions that was never the user's.
+
+This does not require a compromised model. It requires a document the agent was asked to process.
+
+Practical implications:
+
+- Do not give agents unlimited filesystem access "for context." Context is not free.
+- Review what an agent proposes to do before it does it, especially on files or commands it reached for without an explicit request.
+- Be skeptical if an agent suddenly wants to read credentials, send network requests, or act on something "it found while looking at the project."
+- Keep AI shell sessions inside Dev Containers with narrow mounts. The injected instruction can only act on what the agent can reach.
+
+### GitHub CI/CD
+
+GitHub Actions is a powerful, trusted, and frequently misconfigured attack surface.
+
+The shape of the risk is different than a local laptop compromise, but the consequences often land in the same place: credentials, source code, and deployment access.
+
+Common CI/CD attack patterns right now:
+
+**Poisoned third-party actions.** Your workflow pulls `uses: some-org/some-action@v2`. If the upstream repository is compromised, or if that version tag was moved to a malicious commit, your workflow runs attacker code with your repository's secrets. Pin actions to commit SHAs instead of mutable tags.
+
+**Pull request trigger abuse.** Workflows triggered by `pull_request_target` run in the context of the base repository and have access to secrets. An external contributor opens a PR. If your workflow is written carelessly, it may expose secrets to the PR's code. This is a known footgun and a documented GitHub advisory.
+
+**Workflow injection via untrusted input.** If a workflow interpolates `${{ github.event.pull_request.title }}` or other user-controlled strings directly into a `run:` step, an attacker can craft a PR title that includes shell commands. GitHub's own security hardening docs call this out explicitly.
+
+**Secret exfiltration from forks.** Workflows triggered by forked PRs do not receive repository secrets by default, but misconfigurations around environment protection rules or `pull_request_target` can change that.
+
+The practical floor:
+
+- Pin third-party actions to full commit SHAs.
+- Never interpolate `github.event` fields directly into `run:` steps. Use intermediate environment variables.
+- Keep production deployment secrets in environments with protection rules and required reviewers.
+- Audit who can trigger workflows that have access to sensitive secrets.
+- Use OIDC token exchange for cloud access instead of long-lived stored credentials wherever possible.
+
+CI secrets live in a different threat model than laptop secrets, but the exfiltration path is the same: a process with credentials runs, reads them, and sends them somewhere.
+
 ## The Hard Disk Is the Prize
 
 Infostealers are not trying to admire your CPU.
@@ -81,7 +142,7 @@ They want the disk. More specifically, they want the parts of the disk where use
 
 Microsoft says Lumma can steal data from browsers, applications, cryptocurrency wallets, and other local stores. Its disruption post says Lumma was used to steal passwords, credit cards, bank accounts, and wallets, and that Microsoft identified more than 394,000 infected Windows computers globally between March 16 and May 16, 2025.
 
-Mandiant’s Snowflake investigation is the scarier business lesson. In the UNC5537 campaign, Mandiant reported that every incident it responded to traced back to compromised customer credentials, not a breach of Snowflake’s enterprise environment. The credentials were primarily obtained from infostealer infections on non-Snowflake systems. Some credentials dated back to 2020. At least 79.7% of the accounts used in the campaign had prior credential exposure.
+Mandiant's Snowflake investigation is the scarier business lesson. In the UNC5537 campaign, Mandiant reported that every incident it responded to traced back to compromised customer credentials, not a breach of Snowflake's enterprise environment. The credentials were primarily obtained from infostealer infections on non-Snowflake systems. Some credentials dated back to 2020. At least 79.7% of the accounts used in the campaign had prior credential exposure.
 
 That is the part that should make your chair uncomfortable.
 
@@ -99,6 +160,7 @@ For developers, the desk drawer is usually not one drawer. It is a junk room:
 | Database dumps | Backups are often less protected than production and more complete than logs. |
 | AI coding context | The assistant may have been handed sensitive files, command history, or extra directories. |
 | Package manager tokens | Supply chain access is not hypothetical if your publishing token is local. |
+| GitHub tokens | Fine-grained or classic PATs can read repos, trigger workflows, and publish packages. |
 
 Backups deserve special disrespect here.
 
@@ -112,26 +174,25 @@ They are just production without an alarm system.
 
 ## The Complete Takeover Pattern
 
-The phrase “data leak” is too small for what often follows.
+The phrase "data leak" is too small for what often follows.
 
 The ugly path looks like this:
 
-1. Initial touch: the user opens a file, clicks a link, installs a tool, runs a copied command, or lands on a compromised page.
-2. Local scrape: the malware or malicious process reads browser stores, local config, `.env` files, tokens, SSH keys, history, and project directories.
-3. Cloud pivot: valid credentials open SaaS, cloud, GitHub, CI, chat, or data warehouse access.
-4. Backup sweep: local exports, cloud buckets, CI artifacts, and database snapshots get pulled because they are softer than production.
-5. Persistence by legitimacy: the attacker creates new keys, OAuth apps, deploy tokens, personal access tokens, or service accounts.
-6. Extortion or quiet resale: data gets monetized directly, sold as access, or saved for a later campaign.
+1. **Initial touch**: the user opens a file, clicks a link, installs a tool, runs a copied command, or lands on a compromised page.
+2. **Inventory**: the process surveys the machine — directories, config files, browser stores, environment variables, running processes. Attackers want to know what they have before they take anything.
+3. **Local scrape**: browser stores, local config, `.env` files, tokens, SSH keys, history, and project directories.
+4. **Cloud pivot**: valid credentials open SaaS, cloud, GitHub, CI, chat, or data warehouse access.
+5. **Backup sweep**: local exports, cloud buckets, CI artifacts, and database snapshots get pulled because they are softer than production.
+6. **Persistence by legitimacy**: the attacker creates new keys, OAuth apps, deploy tokens, personal access tokens, or service accounts before the window closes.
+7. **Extortion or quiet resale**: data gets monetized directly, sold as access, or saved for a later campaign.
 
-The move from step two to step three is why this is not only a workstation problem.
+The move from step two to step four is why this is not only a workstation problem.
 
 Your laptop is an identity broker. It proves who you are to every system you use. If an attacker can steal enough of that proof, they can show up looking like you.
 
-MFA helps. Hardware keys help more. Device posture checks, session binding, IP allow lists, and conditional access all help. But if your local machine contains long-lived tokens, cached sessions, plaintext secrets, and unmonitored backups, you are still asking one endpoint to carry a lot of institutional trust.
+Notice step two: **inventory first**. Most attackers do a reconnaissance pass before exfiltrating. They look around. They open directories. They check what credentials are present. They try obvious paths.
 
-The goal is not perfect safety.
-
-The goal is to make the easy path stop working.
+This is the window canary tokens are designed to exploit.
 
 ## Developer Tools Made the Blast Radius Bigger
 
@@ -145,13 +206,11 @@ Also: all dangerous when pointed at a workstation full of secrets.
 
 A supply chain compromise in a dev dependency may not need to ship to production to matter. A malicious postinstall script running on a developer machine can read local files, inspect environment variables, and phone home. A compromised CLI plugin can do the same. A helpful AI agent with broad filesystem and shell permissions can amplify a bad instruction, a bad dependency, or a bad assumption.
 
-This is why “be careful” is such weak advice. It asks the human to be the boundary.
+This is why "be careful" is such weak advice. It asks the human to be the boundary.
 
 Humans are not boundaries. Humans are traffic.
 
 Boundaries are boring things like filesystem isolation, encrypted-at-rest secrets, default-deny egress, short-lived credentials, hardware-backed auth, and alerts that fire when a fake secret gets touched.
-
-That is where the solutions get interesting.
 
 ## The Better Frame: Read, Use, Exfiltrate
 
@@ -175,7 +234,7 @@ Can it upload 3 GB to a random host without anyone noticing?
 
 Can it read the backup folder?
 
-Can it ask your AI agent to summarize secrets from another directory because that directory was included as “additional context” three months ago?
+Can it ask your AI agent to summarize secrets from another directory because that directory was included as "additional context" three months ago?
 
 This frame keeps the work practical. It turns the threat from a fog machine into a checklist with teeth.
 
@@ -185,7 +244,7 @@ If I were tightening a developer workstation program without turning the company
 
 ### 1. Move Risky Work Into Dev Containers
 
-Use [Development Containers](https://github.com/devcontainers/spec) for project work that needs dependencies, build tools, package installation, or AI-assisted shell commands. The spec’s promise is simple: use a container as a full-featured development environment that can hold the tools and runtimes for a codebase.
+Use [Development Containers](https://github.com/devcontainers/spec) for project work that needs dependencies, build tools, package installation, or AI-assisted shell commands.
 
 That gives you a useful boundary. Not a magic boundary. A useful one.
 
@@ -193,9 +252,23 @@ The win is that `npm install`, `pip install`, `go generate`, `cargo build`, and 
 
 Mount the repo. Mount only the secrets needed for that project. Avoid mounting `~/.ssh`, `~/.aws`, `~/Downloads`, `~/Documents`, and the entire home folder out of convenience.
 
-If the project needs credentials, inject scoped credentials. Prefer short-lived tokens. Prefer read-only access where possible.
+```jsonc
+// .devcontainer/devcontainer.json — narrow mounts only
+{
+  "name": "app",
+  "image": "mcr.microsoft.com/devcontainers/typescript-node:1-22",
+  "workspaceFolder": "/workspaces/app",
+  "mounts": [
+    "source=${localWorkspaceFolder},target=/workspaces/app,type=bind,consistency=cached"
+  ],
+  "containerEnv": {
+    "NODE_ENV": "development"
+  },
+  "postCreateCommand": "bun install"
+}
+```
 
-The container is not there to make Docker feel sophisticated. It is there to make “this process can run as me” less catastrophic.
+If the project needs credentials, inject scoped credentials. Prefer short-lived tokens. Prefer read-only access where possible. A prompt-injected instruction can only reach what the agent can reach. Make that boring.
 
 ### 2. Encrypt Local Secrets Instead of Worshipping `.env`
 
@@ -205,71 +278,135 @@ Attackers also enjoy files.
 
 [VarLock](https://varlock.dev/guides/secrets/) is interesting because it treats sensitivity as structured metadata instead of a regex guessing game. Its docs describe marking sensitive values explicitly, encrypting local secrets with `varlock()`, redacting sensitive values from console output, and scanning for plaintext occurrences of known sensitive values.
 
-That is the right direction: secrets should know they are secrets.
+```dotenv
+# .env.schema
+# @sensitive
+STRIPE_SECRET_KEY=
 
-It will not solve every credential problem. It will not protect a secret that has already been loaded into a compromised process. But it reduces the number of valuable plaintext files sitting around waiting to become someone else’s inventory.
+# @sensitive
+DATABASE_URL=
+```
 
-### 3. Plant Canary Tokens Where Theft Would Hurt
+That is the right direction: secrets should know they are secrets. It will not protect a secret that has already been loaded into a compromised process. But it reduces the number of valuable plaintext files sitting around waiting to become someone else's inventory.
 
-[Canarytokens](https://help.canary.tools/hc/en-gb/articles/10905485310109-Canarytoken-Overview-and-Use-Cases) are digital tripwires. You place a fake-but-plausible secret, document, API key, URL, or credential somewhere an attacker might look. If it gets touched, you get an alert.
+### 3. Plant Canary Tokens Everywhere a Thief Would Look
 
-The trick is to put them where a real compromise would naturally browse:
+This is the layer most teams skip, and it is arguably the most immediately useful.
 
-- next to `.env` files
-- inside a fake `~/backups/customer-export.sql`
-- in a fake AWS profile
-- in an old-looking password spreadsheet
-- in CI variables named like deprecated credentials
-- in documentation that an intruder would open during reconnaissance
+[Canarytokens](https://help.canary.tools/hc/en-gb/articles/10905485310109-Canarytoken-Overview-and-Use-Cases) are digital tripwires. You place a fake-but-plausible secret, document, API key, URL, or credential somewhere an attacker might look. If it gets touched, you get an alert — often within seconds of the access.
 
-Canaries do not prevent theft. They compress detection time.
+Recall step two of the takeover pattern: **inventory first**. Attackers browse before they steal. They open config directories. They check for AWS credentials. They look for backup files. They read `.env` directories. That reconnaissance pass is your window.
 
-That matters because many breaches are not won in the first minute. They are won in the quiet hours after the first credential works.
+A canary in the right place fires before the exfiltration starts.
+
+The trick is placement. Random bait is trivia. Strategic bait is an alarm system.
+
+**On the local machine:**
+
+```text
+~/backups/customer-prod-export-2024.sql
+```
+
+Put a canary URL or token inside it. If anything opens that file and follows the link, you know. Similarly:
+
+```text
+~/Documents/passwords-old.csv
+~/.aws/credentials   ← add a fake [billing-prod-legacy] profile with a real canary AWS key
+~/.ssh/config        ← add a fake host entry pointing to a canary
+```
+
+**In repositories:**
+
+- a `.env.canary` file with fake credentials
+- old deployment runbooks with fake service tokens
+- deprecated config files an attacker would inspect during source reconnaissance
+
+**In CI/CD:**
+
+- a fake CI secret named like a deploy token
+- a fake kubeconfig in a GitHub environment
+- a fake database user in a workflow comment
+
+**In cloud accounts:**
+
+- a fake IAM user with no privileges but a real canary API key
+- an unused S3 bucket path with a canary object
+- a fake service account documented in a runbook
+
+The alert should be actionable. A canary that emails an unattended inbox is decoration. Route it somewhere that wakes someone up: PagerDuty, Slack with a ping, SMS. Include which token fired, where it was planted, and the rotation checklist.
+
+#### The Blind Spot Worth Knowing
+
+Canary placement has one real limitation: attacker specialization.
+
+A crypto-wallet infostealer may grab wallet files and browser stores and never touch your fake AWS credentials. A ransomware operator may encrypt the disk before any canary fires. A targeted threat actor who already knows your credential layout may skip the reconnaissance pass entirely.
+
+That is fine. The canary strategy is not designed for every threat.
+
+It is designed for the most common threat: an opportunistic attacker who runs a credential sweep, browses for interesting-looking files, and tries to inventory your access before deciding what to steal.
+
+Most attackers who reach your disk want free infrastructure. Cloud credentials are currency. A fake AWS key that triggers an alert when an attacker tries to use it is exactly the kind of tripwire that catches that behavior — and gives you the window to rotate before they find the real one.
+
+The goal is not omniscience. The goal is to make the reconnaissance pass expensive.
 
 ### 4. Add an Outbound Firewall
 
-Most people think “firewall” and picture inbound connections. That misses the workstation problem.
+Most people think "firewall" and picture inbound connections. That misses the workstation problem.
 
 If malware can read local secrets, the next question is whether it can send them out.
 
-On macOS, [LuLu](https://objective-see.org/products/lulu.html) is the free, open-source option that alerts on unknown outgoing connections and only monitors outgoing traffic. [Little Snitch](https://obdev.at/products/littlesnitch/) is the polished commercial option with connection alerts, network monitoring, profiles, and per-app/domain visibility.
+On macOS, [LuLu](https://objective-see.org/products/lulu.html) is the free, open-source option that alerts on unknown outgoing connections. [Little Snitch](https://obdev.at/products/littlesnitch/) is the polished commercial option with connection alerts, network monitoring, profiles, and per-app/domain visibility.
 
-On Windows and Linux, [Portmaster](https://safing.io/) is worth evaluating because it is an open-source application firewall with per-application rules. Windows Defender Firewall also supports outbound rules, though Microsoft’s own guidance notes that default-deny outbound is generally for high-security environments because it requires careful application inventory and rule management.
+On Windows and Linux, [Portmaster](https://safing.io/) is worth evaluating — open-source application firewall with per-application rules.
 
-This layer is annoying at first.
-
-That is not a reason to skip it. That is a reason to deploy it with profiles, allowlists, and expectations. The goal is not to click “deny” heroically all day. The goal is to notice when `invoice-viewer`, `postinstall`, or `python` wants to talk to a domain that has no business being in your Tuesday.
+This layer is annoying at first. That is not a reason to skip it. The goal is not to click "deny" heroically all day. The goal is to notice when `postinstall`, `python`, or `invoice-viewer` wants to talk to a domain that has no business being in your Tuesday.
 
 ### 5. Treat AI Coding Tools Like Junior Admins With Amnesia
 
 AI coding tools are not bad. I use them. I like them.
 
-But they are tools with read access, write access, shell access, network access, and a talent for confident momentum.
+But they are tools with read access, write access, shell access, network access, and a talent for confident momentum. They are also prompt-injectable if they read documents you did not fully review.
 
-Anthropic’s Claude Code docs describe permissions for tools, files, domains, and managed policies, and they distinguish permissions from sandboxing. Permissions decide what the agent may use. Sandboxing provides OS-level enforcement for Bash filesystem and network access.
-
-That distinction is the important part.
+Anthropic's Claude Code docs distinguish permissions from sandboxing. Permissions decide what the agent may use. Sandboxing provides OS-level enforcement.
 
 Policy text is not a sandbox. A permission prompt is not a sandbox. A nice model is not a sandbox.
 
-Use project-level allow and deny rules. Keep sensitive files out of working directories. Run risky commands inside containers. Do not hand an agent your entire home directory because it might need “context.” Context is not free. Sometimes context is your incident report, prewritten.
+Use project-level allow and deny rules. Keep sensitive files out of working directories. Run risky commands inside containers. Do not hand an agent your entire home directory because it might need "context."
+
+## You Have Minutes, Maybe Hours
+
+This is the part the threat-model diagrams omit.
+
+When a canary fires — or when a vendor emails you about a suspicious login, or when GitHub alerts you that a token was used from an unexpected IP — the next step is not optional reading.
+
+You have a window. It might be minutes. It might be a few hours, if the attacker is being patient. It is not a week.
+
+That window is what canary tokens buy you. An attacker inventories your machine, touches your fake AWS key, triggers an alert, and you now have a lead time that did not exist before.
+
+What to do with it:
+
+- **Rotate first, investigate later.** Revoke tokens before you understand what happened. Understanding comes second. Damage limitation comes first.
+- **Check GitHub PATs, OAuth apps, and deploy keys.** An attacker who had your laptop may have created new credentials before they left.
+- **Review recent cloud activity.** New IAM users, new service accounts, new API keys, new S3 bucket policies. Persistence by legitimacy is real.
+- **Audit CI secrets.** Check whether any workflows ran unexpectedly, especially in repositories you did not touch recently.
+- **Kill active browser sessions.** Force logout on anything you care about.
+- **Tell someone.** Security incidents improve with witnesses and timestamps.
+
+The security community talks a lot about detection. It talks less about what happens in the twenty minutes after detection when you are alone at your desk trying to remember which services you have tokens for.
+
+That list should exist before the alert fires.
 
 ## The Table I Want in Every Team Wiki
-
-This is the workstation security map I would rather see than another annual training slide.
 
 | Layer | Bad default | Better default |
 | --- | --- | --- |
 | Filesystem | Projects, secrets, downloads, backups, and tools all share one user context. | Run project work in Dev Containers with narrow mounts. |
 | Secrets | Plaintext `.env` files and long-lived tokens. | Encrypted local secrets, scoped tokens, short lifetimes, hardware-backed auth. |
-| Detection | Hope EDR notices before exfiltration finishes. | Canary tokens in high-value local and cloud locations. |
+| Detection | Hope EDR notices before exfiltration finishes. | Canary tokens in high-value local, CI, cloud, and documentation locations. |
 | Network | Any process can call out unless blocked by reputation. | Outbound application firewall with rules for risky tools. |
-| AI agents | Broad read/write/shell permissions in the main workstation context. | Project-scoped permissions plus sandboxed commands. |
+| AI agents | Broad read/write/shell permissions in the main workstation context. | Project-scoped permissions, prompt-injection awareness, sandboxed commands. |
 | Backups | Local dumps and exports treated like dead files. | Encrypt, expire, isolate, and monitor access to backup artifacts. |
-
-The point is not to buy five tools.
-
-The point is to stop treating the workstation as a trusted blob.
+| CI/CD | Mutable action tags, broad secret access, unsafe input interpolation. | Pinned SHAs, scoped environments, OIDC token exchange, no interpolation of untrusted input. |
 
 ## A Note on Backups
 
@@ -282,7 +419,7 @@ For developer machines:
 - Do not store production exports locally unless there is a real need.
 - Encrypt local backups and database dumps.
 - Add expiration dates to exports.
-- Put canary rows or documents in backup-like places.
+- Put canary rows or documents inside backup-like files.
 - Keep backups out of broad Dev Container mounts.
 - Keep them out of AI tool context.
 - Rotate any credential that appears inside a backup.
@@ -291,7 +428,7 @@ If the backup contains credentials, it is not just a backup. It is a delayed tak
 
 ## The Practical Standard
 
-The standard should not be “never click anything weird.”
+The standard should not be "never click anything weird."
 
 That is advice for a poster, not a system.
 
@@ -299,16 +436,20 @@ The practical standard is:
 
 - a bad PDF should not read all project secrets
 - a malicious dependency should not see cloud credentials from other projects
+- a prompt-injected document should not redirect an agent into your home directory
+- a poisoned GitHub Action should not exfiltrate your deploy token
 - an AI tool mistake should not traverse the whole home folder
-- an infostealer should not find plaintext backups and long-lived tokens
-- an unknown process should not upload sensitive data without a local alarm
+- an infostealer should not find plaintext backups and long-lived tokens without triggering an alarm
+- an unknown process should not upload sensitive data without a local alert
 - a stolen credential should expire, fail MFA, fail device checks, or hit a canary before it becomes a complete takeover
 
 Security gets better when we stop asking humans to be perfect and start making compromise less profitable.
 
 Your laptop is part of production now.
 
-Give it production-shaped boundaries.
+The attacker does not always break in. Sometimes you let them in without knowing.
+
+Give your systems the kind of boundaries that catch both.
 
 ## Sources and Useful Reading
 
@@ -317,6 +458,7 @@ Give it production-shaped boundaries.
 - [Microsoft: Lumma Stealer delivery techniques and capabilities](https://www.microsoft.com/en-us/security/blog/2025/05/21/lumma-stealer-breaking-down-the-delivery-techniques-and-capabilities-of-a-prolific-infostealer/)
 - [Microsoft DCU: Disrupting Lumma Stealer](https://blogs.microsoft.com/on-the-issues/2025/05/21/microsoft-leads-global-action-against-favored-cybercrime-tool/)
 - [CISA: Recognize and Report Phishing](https://www.cisa.gov/secure-our-world/recognize-and-report-phishing)
+- [GitHub: Security hardening for GitHub Actions](https://docs.github.com/en/actions/security-for-github-actions/security-guides/security-hardening-for-github-actions)
 - [Development Containers specification](https://github.com/devcontainers/spec)
 - [VarLock secrets management](https://varlock.dev/guides/secrets/)
 - [Thinkst Canarytokens overview](https://help.canary.tools/hc/en-gb/articles/10905485310109-Canarytoken-Overview-and-Use-Cases)

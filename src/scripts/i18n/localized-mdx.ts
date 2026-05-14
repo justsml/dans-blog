@@ -176,17 +176,25 @@ export function getComparablePostLength(contents: string) {
 }
 
 export function assertNestedAssetPaths(targetContents: string, targetPath: string) {
+  const isLocalePost = /\/[a-z]{2}\/index\.mdx?$/.test(targetPath);
   const nestedAssetReferences = [
     ...targetContents.matchAll(/]\(\.\/(?!\.)[^)]+\)/g),
     ...targetContents.matchAll(/src=["']\.\/(?!\.)[^"']+["']/g),
     ...targetContents.matchAll(/:\s*\.\/(?!\.)\S+\.(?:avif|gif|jpe?g|png|svg|webp)\b/g),
     ...targetContents.matchAll(/=["']\.\/(?!\.)[^"']+\.(?:avif|gif|jpe?g|png|svg|webp)["']/g),
   ];
+  const bareAssetReferences = isLocalePost
+    ? [
+      ...targetContents.matchAll(/!\[[^\]]*]\((?!\.\.\/|\/|https?:\/\/|#)[^)]+\.(?:avif|gif|jpe?g|png|svg|webp)\)/gi),
+      ...targetContents.matchAll(/(?:src|image|cover|icon|thumbnail)=["'](?!\.\.\/|\/|https?:\/\/)[^"']+\.(?:avif|gif|jpe?g|png|svg|webp)["']/gi),
+      ...targetContents.matchAll(/^\s*[A-Za-z0-9_-]*(?:image|cover|icon|hero|thumbnail)[A-Za-z0-9_-]*:\s*(?!\.\.\/|\/|https?:\/\/)[^\s]+\.(?:avif|gif|jpe?g|png|svg|webp)\b/gim),
+    ]
+    : [];
 
-  if (nestedAssetReferences.length === 0) return;
+  if (nestedAssetReferences.length === 0 && bareAssetReferences.length === 0) return;
 
   throw new Error(
-    `${targetPath} uses ./ asset paths inside a locale folder. Use ../ for inherited post assets.`,
+    `${targetPath} uses asset paths inside a locale folder that do not start with ../. Use ../ for inherited post assets.`,
   );
 }
 

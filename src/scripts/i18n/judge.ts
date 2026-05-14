@@ -678,6 +678,7 @@ function getPrimaryJudgePrompt(candidateSummary: string, candidates: CandidateRe
       ? `Use ${selectedCommit} as the selected candidate unless it is structurally broken and it is selectable in this comparison.`
       : "Choose the best selectable candidate by technical accuracy, natural language quality, Dan's direct style, and MDX preservation.",
     `The final MDX must preserve the English file's per-level heading counts: same number of H1, H2, H3, H4, H5, and H6 headings. Translate heading text, but do not add, remove, promote, or demote headings.`,
+    `Locale files live one folder deeper than English. Any inherited local image or asset path in frontmatter, Markdown, or JSX must start with ../, even if the English file uses a bare path or ./ path. Never suggest changing ../asset.webp to asset.webp or ./asset.webp.`,
     getLengthValidationGuidance(locale),
     `Candidate MDX contents are attached below; do not ask to run git show.`,
     `Return the selected candidate id in selectedCommit. Use "current" only if the <current> pre-existing translation is best and selectable.`,

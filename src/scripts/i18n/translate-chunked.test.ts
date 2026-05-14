@@ -3,6 +3,7 @@ import { mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import {
+  assertNestedAssetPaths,
   assertTranslationLength,
   getComparablePostLength,
   normalizeFrontmatterAssetPaths,
@@ -102,6 +103,24 @@ describe("normalizeLocalizedAssetReferences", () => {
       "[External](https://example.com/image.webp)",
       "already: ../done.webp",
     ].join("\n"));
+  });
+});
+
+describe("assertNestedAssetPaths", () => {
+  test("rejects bare inherited assets inside locale folders", () => {
+    expect(() => assertNestedAssetPaths([
+      "cover_full_width: hero.webp",
+      "![Alt](diagram.webp)",
+      '<img src="inline.webp" />',
+    ].join("\n"), "src/content/posts/example/zh/index.mdx")).toThrow(/Use \.\.\//);
+  });
+
+  test("allows parent-relative inherited assets inside locale folders", () => {
+    expect(() => assertNestedAssetPaths([
+      "cover_full_width: ../hero.webp",
+      "![Alt](../diagram.webp)",
+      '<img src="../inline.webp" />',
+    ].join("\n"), "src/content/posts/example/zh/index.mdx")).not.toThrow();
   });
 });
 
