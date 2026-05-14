@@ -1,0 +1,49 @@
+{
+  "index": 7,
+  "attempt": 1,
+  "originalTitle": "Conversation History Management",
+  "translatedTitle": "对话历史管理",
+  "translation": {
+    "title": "对话历史管理",
+    "group": "令牌管理",
+    "options": [
+      {
+        "text": "始终发送完整的对话历史"
+      },
+      {
+        "text": "当历史记录超出令牌预算时，对旧消息进行摘要"
+      },
+      {
+        "text": "删除旧消息——模型具有持久记忆"
+      },
+      {
+        "text": "将历史记录存储在向量数据库中并检索相关轮次"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "在多轮对话应用中，当对话历史变得很长时，正确的策略是什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "LLM没有持久记忆。每次API调用都是无状态的——你发送完整的上下文，得到响应。对话的“记忆”完全取决于你在每个请求中包含的消息历史。\n\n当历史记录超出预算时，选项有：\n1. **摘要**：将较旧的轮次压缩为运行摘要，保留最近的轮次原文\n2. **滑动窗口**：保留最后N轮，丢弃更早的轮次\n3. **选择性检索**：嵌入对话轮次，根据每个查询检索相关轮次（复杂但强大）\n\n简单的截断——删除旧消息以适应预算——是最差的选择，因为它会静默地移除模型可能需要的上下文。\n\n向量数据库检索对话历史在理论上很有吸引力，但对于大多数聊天应用来说通常过于复杂。摘要是实用的默认选择。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"对话历史管理\",\n  \"group\": \"令牌管理\",\n  \"options\": [\n    {\"text\": \"始终发送完整的对话历史\"},\n    {\"text\": \"当历史记录超出令牌预算时，对旧消息进行摘要\"},\n    {\"text\": \"删除旧消息——模型具有持久记忆\"},\n    {\"text\": \"将历史记录存储在向量数据库中并检索相关轮次\"}\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\"在多轮对话应用中，当对话历史变得很长时，正确的策略是什么？\"],\n  \"questionCode\": [],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\"LLM没有持久记忆。每次API调用都是无状态的——你发送完整的上下文，得到响应。对话的“记忆”完全取决于你在每个请求中包含的消息历史。\\n\\n当历史记录超出预算时，选项有：\\n1. **摘要**：将较旧的轮次压缩为运行摘要，保留最近的轮次原文\\n2. **滑动窗口**：保留最后N轮，丢弃更早的轮次\\n3. **选择性检索**：嵌入对话轮次，根据每个查询检索相关轮次（复杂但强大）\\n\\n简单的截断——删除旧消息以适应预算——是最差的选择，因为它会静默地移除模型可能需要的上下文。\\n\\n向量数据库检索对话历史在理论上很有吸引力，但对于大多数聊天应用来说通常过于复杂。摘要是实用的默认选择。\"],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 912,
+    "outputTokens": 1609,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 10712,
+    "providerCostUsd": 0.000826,
+    "providerUpstreamCostUsd": 0.000826,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00012768000000000002,
+    "outputUsd": 0.00045052000000000004,
+    "totalUsd": 0.0005782000000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "XML Tags for Structure",
+  "translatedTitle": "XML标签用于结构化",
+  "translation": {
+    "title": "XML标签用于结构化",
+    "group": "提示结构",
+    "options": [
+      {
+        "text": "XML标签仅在Anthropic模型中有效"
+      },
+      {
+        "text": "XML标签帮助模型区分指令与数据，并提高解析准确性"
+      },
+      {
+        "text": "XML标签会降低分词速度，应避免使用"
+      },
+      {
+        "text": "XML标签等同于Markdown标题"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "为什么许多生产环境中的提示词会使用类似 `<document>`、`<context>`、`<instructions>` 的XML风格标签？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "XML风格标签提供了**明确的结构边界**，模型经过训练能够识别并尊重这些边界。\n\n它们有两个作用：\n\n    1. **分离**：它们向模型指示指令结束和数据开始的位置——这对于RAG以及降低检索文档中的提示注入风险至关重要。\n    2. **可解析性**：当你要求模型以XML格式响应时（例如 `<answer>...</answer>`），这些标签提供了清晰的提取点，无需正则表达式技巧。\n\n    这不是作为标记语言的XML。而是作为模型训练中使用的分隔符约定。它之所以有效，是因为模型在训练中广泛见过这种模式，而不是因为它验证了模式。\n\n    在大多数指令微调模型中通常足够有效——这是一种训练数据约定，而非供应商特性或安全保证。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"XML标签用于结构化\",\n  \"group\": \"提示结构\",\n  \"options\": [\n    { \"text\": \"XML标签仅在Anthropic模型中有效\" },\n    { \"text\": \"XML标签帮助模型区分指令与数据，并提高解析准确性\" },\n    { \"text\": \"XML标签会降低分词速度，应避免使用\" },\n    { \"text\": \"XML标签等同于Markdown标题\" }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"为什么许多生产环境中的提示词会使用类似 `<document>`、`<context>`、`<instructions>` 的XML风格标签？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"XML风格标签提供了**明确的结构边界**，模型经过训练能够识别并尊重这些边界。\\n\\n它们有两个作用：\\n\\n    1. **分离**：它们向模型指示指令结束和数据开始的位置——这对于RAG以及降低检索文档中的提示注入风险至关重要。\\n    2. **可解析性**：当你要求模型以XML格式响应时（例如 `<answer>...</answer>`），这些标签提供了清晰的提取点，无需正则表达式技巧。\\n\\n    这不是作为标记语言的XML。而是作为模型训练中使用的分隔符约定。它之所以有效，是因为模型在训练中广泛见过这种模式，而不是因为它验证了模式。\\n\\n    在大多数指令微调模型中通常足够有效——这是一种训练数据约定，而非供应商特性或安全保证。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 921,
+    "outputTokens": 1812,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 11126,
+    "providerCostUsd": 0.000909,
+    "providerUpstreamCostUsd": 0.000909,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00012894000000000002,
+    "outputUsd": 0.0005073600000000001,
+    "totalUsd": 0.0006363000000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

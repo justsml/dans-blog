@@ -1,0 +1,50 @@
+{
+  "index": 12,
+  "attempt": 1,
+  "originalTitle": "Grounding vs. Hallucination",
+  "translatedTitle": "接地与幻觉",
+  "translation": {
+    "title": "接地与幻觉",
+    "group": "高级",
+    "options": [
+      {
+        "text": "在系统提示中告诉模型‘不要产生幻觉’"
+      },
+      {
+        "text": "使用更高的温度参数生成更自信的回复"
+      },
+      {
+        "text": "提供检索到的源文档并指示模型引用它们"
+      },
+      {
+        "text": "使用更大的模型——幻觉只发生在较小的模型中"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "在生产AI系统中减少幻觉的最有效技术是："
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "指示模型不要产生幻觉并不能阻止幻觉——模型没有可靠的自我反省信号来判断‘我在编造’。这只会让模型在编造的同时自信地告诉你它没有在编造。\n\n    真正有效的是：**接地**。给模型提供正确回答问题所需的信息，并将其限制在这些信息上：",
+      "然后验证输出：检查回复中的声明是否出现在检索到的上下文中。这是引用接地检查——有关实现，请参阅RAG评估讨论。\n\n    较大的模型平均幻觉较少，但所有模型都会产生幻觉。接地是缓解策略，而不是模型大小。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"接地与幻觉\",\n  \"group\": \"高级\",\n  \"options\": [\n    {\n      \"text\": \"在系统提示中告诉模型‘不要产生幻觉’\"\n    },\n    {\n      \"text\": \"使用更高的温度参数生成更自信的回复\"\n    },\n    {\n      \"text\": \"提供检索到的源文档并指示模型引用它们\"\n    },\n    {\n      \"text\": \"使用更大的模型——幻觉只发生在较小的模型中\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"在生产AI系统中减少幻觉的最有效技术是：\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"指示模型不要产生幻觉并不能阻止幻觉——模型没有可靠的自我反省信号来判断‘我在编造’。这只会让模型在编造的同时自信地告诉你它没有在编造。\\n\\n    真正有效的是：**接地**。给模型提供正确回答问题所需的信息，并将其限制在这些信息上：\",\n    \"然后验证输出：检查回复中的声明是否出现在检索到的上下文中。这是引用接地检查——有关实现，请参阅RAG评估讨论。\\n\\n    较大的模型平均幻觉较少，但所有模型都会产生幻觉。接地是缓解策略，而不是模型大小。\"\n  ],\n  \"explanationCode\": [\n    {\n      \"language\": \"\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 917,
+    "outputTokens": 1114,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 8317,
+    "providerCostUsd": 0.000629,
+    "providerUpstreamCostUsd": 0.000629,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00012838000000000001,
+    "outputUsd": 0.00031192000000000004,
+    "totalUsd": 0.0004403,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

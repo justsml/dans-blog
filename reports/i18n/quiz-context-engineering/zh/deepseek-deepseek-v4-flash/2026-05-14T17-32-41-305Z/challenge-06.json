@@ -1,0 +1,49 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Hybrid Search",
+  "translatedTitle": "混合搜索",
+  "translation": {
+    "title": "混合搜索",
+    "group": "检索",
+    "options": [
+      {
+        "text": "为冗余而重复运行同一查询"
+      },
+      {
+        "text": "在同一语料库上使用两种不同的嵌入模型"
+      },
+      {
+        "text": "结合向量搜索与关键词搜索以改善检索效果"
+      },
+      {
+        "text": "同时跨多个向量数据库搜索"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "在RAG系统中，“混合搜索”指的是："
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "混合搜索结合了**向量搜索**（通过嵌入实现语义相似性）和**关键词搜索**（BM25/全文搜索），因为它们的失败模式是互补的：\n\n    - 向量搜索难以处理精确术语：产品名称、错误代码、型号、技术标识符\n    - 关键词搜索难以处理释义：“如何取消” vs. “终止订阅”\n\n    两者的结果通过**倒数排名融合（RRF）**进行合并——这是一种无需标准化分数即可结合多个排名列表位置的排序算法。\n\n    两者在Postgres中均可通过`pgvector` + `tsvector`实现。你可能不需要单独部署搜索服务。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"混合搜索\",\n  \"group\": \"检索\",\n  \"options\": [\n    {\n      \"text\": \"为冗余而重复运行同一查询\"\n    },\n    {\n      \"text\": \"在同一语料库上使用两种不同的嵌入模型\"\n    },\n    {\n      \"text\": \"结合向量搜索与关键词搜索以改善检索效果\"\n    },\n    {\n      \"text\": \"同时跨多个向量数据库搜索\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"在RAG系统中，“混合搜索”指的是：\"\n  ],\n  \"questionCode\": [],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"混合搜索结合了**向量搜索**（通过嵌入实现语义相似性）和**关键词搜索**（BM25/全文搜索），因为它们的失败模式是互补的：\\n\\n    - 向量搜索难以处理精确术语：产品名称、错误代码、型号、技术标识符\\n    - 关键词搜索难以处理释义：“如何取消” vs. “终止订阅”\\n\\n    两者的结果通过**倒数排名融合（RRF）**进行合并——这是一种无需标准化分数即可结合多个排名列表位置的排序算法。\\n\\n    两者在Postgres中均可通过`pgvector` + `tsvector`实现。你可能不需要单独部署搜索服务。\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 872,
+    "outputTokens": 1038,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 7003,
+    "providerCostUsd": 0.0005896,
+    "providerUpstreamCostUsd": 0.0005896,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00012208000000000002,
+    "outputUsd": 0.00029064000000000005,
+    "totalUsd": 0.0004127200000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
