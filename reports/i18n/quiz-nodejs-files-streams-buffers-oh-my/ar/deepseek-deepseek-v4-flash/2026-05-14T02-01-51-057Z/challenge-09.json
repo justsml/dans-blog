@@ -1,0 +1,49 @@
+{
+  "index": 8,
+  "attempt": 1,
+  "originalTitle": "File Watching",
+  "translatedTitle": "مراقبة الملفات",
+  "translation": {
+    "title": "مراقبة الملفات",
+    "group": "نظام الملفات",
+    "options": [
+      {
+        "text": "مرة واحدة لكل تغيير في الملف"
+      },
+      {
+        "text": "غير مضمون؛ قد يتم التشغيل عدة مرات"
+      },
+      {
+        "text": "أبدًا"
+      },
+      {
+        "text": "فقط عند حذف الملف"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "كم مرة يتم ضمان تشغيل `fs.watch()` عند تعديل ملف؟"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "`fs.watch()` ليس مضمونًا للتشغيل مرة واحدة بالضبط لكل تغيير منطقي في الملف. غالبًا ما يتم تشغيله عدة مرات لأن العديد من محررات النصوص:\n    1. تحفظ في ملف مؤقت\n    2. تعيد تسميته إلى الملف الهدف\n\n    للحصول على مراقبة أكثر موثوقية، فكر في استخدام:\n    - حزمة `chokidar`\n    - إزالة الارتداد (debouncing) من رد الاتصال\n    - استخدام `fs.watchFile()` (على الرغم من أنه أقل كفاءة)\n\n    [تعرف على المزيد حول fs.watch()](https://nodejs.org/api/fs.html#fswatchfilename-options-listener)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"مراقبة الملفات\",\n  \"group\": \"نظام الملفات\",\n  \"options\": [\n    {\n      \"text\": \"مرة واحدة لكل تغيير في الملف\"\n    },\n    {\n      \"text\": \"غير مضمون؛ قد يتم التشغيل عدة مرات\"\n    },\n    {\n      \"text\": \"أبدًا\"\n    },\n    {\n      \"text\": \"فقط عند حذف الملف\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"كم مرة يتم ضمان تشغيل `fs.watch()` عند تعديل ملف؟\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"`fs.watch()` ليس مضمونًا للتشغيل مرة واحدة بالضبط لكل تغيير منطقي في الملف. غالبًا ما يتم تشغيله عدة مرات لأن العديد من محررات النصوص:\\n    1. تحفظ في ملف مؤقت\\n    2. تعيد تسميته إلى الملف الهدف\\n\\n    للحصول على مراقبة أكثر موثوقية، فكر في استخدام:\\n    - حزمة `chokidar`\\n    - إزالة الارتداد (debouncing) من رد الاتصال\\n    - استخدام `fs.watchFile()` (على الرغم من أنه أقل كفاءة)\\n\\n    [تعرف على المزيد حول fs.watch()](https://nodejs.org/api/fs.html#fswatchfilename-options-listener)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 857,
+    "outputTokens": 1093,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 8637,
+    "providerCostUsd": 0.0006086,
+    "providerUpstreamCostUsd": 0.0006086,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00011998000000000001,
+    "outputUsd": 0.00030604000000000004,
+    "totalUsd": 0.00042602000000000004,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

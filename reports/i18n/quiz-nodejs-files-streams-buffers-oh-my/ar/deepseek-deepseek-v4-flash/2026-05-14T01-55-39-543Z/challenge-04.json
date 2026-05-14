@@ -1,0 +1,49 @@
+{
+  "index": 3,
+  "attempt": 1,
+  "originalTitle": "Reading Files Synchronously",
+  "translatedTitle": "قراءة الملفات بشكل متزامن",
+  "translation": {
+    "title": "قراءة الملفات بشكل متزامن",
+    "group": "أساسيات نظام الملفات",
+    "options": [
+      {
+        "text": "يعيد Buffer"
+      },
+      {
+        "text": "يعيد string"
+      },
+      {
+        "text": "يعيد undefined"
+      },
+      {
+        "text": "يعيد Promise"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "ما الذي يعيده `fs.readFileSync()` افتراضيًا؟"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "`fs.readFileSync()` يعيد Buffer افتراضيًا عندما لا يتم تحديد ترميز. إذا كنت تريد string، فأنت بحاجة إما إلى:\n    1. تحديد ترميز: `fs.readFileSync('test.txt', 'utf8')`\n    2. تحويل Buffer: `content.toString()`\n\n    [تعلم المزيد عن fs.readFileSync في وثائق Node.js](https://nodejs.org/api/fs.html#fsreadfilesyncpath-options)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"قراءة الملفات بشكل متزامن\",\n  \"group\": \"أساسيات نظام الملفات\",\n  \"options\": [\n    {\n      \"text\": \"يعيد Buffer\"\n    },\n    {\n      \"text\": \"يعيد string\"\n    },\n    {\n      \"text\": \"يعيد undefined\"\n    },\n    {\n      \"text\": \"يعيد Promise\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"ما الذي يعيده `fs.readFileSync()` افتراضيًا؟\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"`fs.readFileSync()` يعيد Buffer افتراضيًا عندما لا يتم تحديد ترميز. إذا كنت تريد string، فأنت بحاجة إما إلى:\\n    1. تحديد ترميز: `fs.readFileSync('test.txt', 'utf8')`\\n    2. تحويل Buffer: `content.toString()`\\n\\n    [تعلم المزيد عن fs.readFileSync في وثائق Node.js](https://nodejs.org/api/fs.html#fsreadfilesyncpath-options)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 823,
+    "outputTokens": 1183,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 9594,
+    "providerCostUsd": 0.0006378,
+    "providerUpstreamCostUsd": 0.0006378,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00011522,
+    "outputUsd": 0.00033124000000000006,
+    "totalUsd": 0.0004464600000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

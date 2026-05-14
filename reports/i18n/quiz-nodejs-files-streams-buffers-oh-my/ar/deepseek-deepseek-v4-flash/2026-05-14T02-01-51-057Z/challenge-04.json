@@ -1,0 +1,49 @@
+{
+  "index": 3,
+  "attempt": 1,
+  "originalTitle": "Reading Files Synchronously",
+  "translatedTitle": "قراءة الملفات بشكل متزامن",
+  "translation": {
+    "title": "قراءة الملفات بشكل متزامن",
+    "group": "أساسيات نظام الملفات",
+    "options": [
+      {
+        "text": "يعيد كائن Buffer"
+      },
+      {
+        "text": "يعيد سلسلة نصية"
+      },
+      {
+        "text": "يعيد undefined"
+      },
+      {
+        "text": "يعيد Promise"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "ما الذي يعيده `fs.readFileSync()` افتراضيًا؟"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "`fs.readFileSync()` يعيد كائن Buffer افتراضيًا عندما لا يتم تحديد ترميز. إذا كنت تريد سلسلة نصية، فأنت بحاجة إما إلى:\n    1. تحديد ترميز: `fs.readFileSync('test.txt', 'utf8')`\n    2. تحويل Buffer: `content.toString()`\n\n    [تعرف على المزيد حول fs.readFileSync في وثائق Node.js](https://nodejs.org/api/fs.html#fsreadfilesyncpath-options)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"قراءة الملفات بشكل متزامن\",\n  \"group\": \"أساسيات نظام الملفات\",\n  \"options\": [\n    {\n      \"text\": \"يعيد كائن Buffer\"\n    },\n    {\n      \"text\": \"يعيد سلسلة نصية\"\n    },\n    {\n      \"text\": \"يعيد undefined\"\n    },\n    {\n      \"text\": \"يعيد Promise\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"ما الذي يعيده `fs.readFileSync()` افتراضيًا؟\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"js\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"`fs.readFileSync()` يعيد كائن Buffer افتراضيًا عندما لا يتم تحديد ترميز. إذا كنت تريد سلسلة نصية، فأنت بحاجة إما إلى:\\n    1. تحديد ترميز: `fs.readFileSync('test.txt', 'utf8')`\\n    2. تحويل Buffer: `content.toString()`\\n\\n    [تعرف على المزيد حول fs.readFileSync في وثائق Node.js](https://nodejs.org/api/fs.html#fsreadfilesyncpath-options)\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 823,
+    "outputTokens": 1298,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 13180,
+    "providerCostUsd": 0.0006838,
+    "providerUpstreamCostUsd": 0.0006838,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00011522,
+    "outputUsd": 0.00036344000000000003,
+    "totalUsd": 0.00047866,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
