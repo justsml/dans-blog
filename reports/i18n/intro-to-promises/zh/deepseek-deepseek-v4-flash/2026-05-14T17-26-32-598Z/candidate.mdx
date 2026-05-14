@@ -1,0 +1,108 @@
+---
+social_image: ../desktop-social.webp
+title: Promise 入门
+subTitle: JavaScript Promises 很有趣！
+date: '2018-08-01'
+modified: '2024-07-31'
+category: Code
+subCategory: promises
+tags:
+  - promises
+  - async
+  - javascript
+  - composition
+related:
+  - promise-gotchas
+  - visualizing-promises
+  - stop-trying-to-make-async-await-happen
+  - javascript-promises-quiz
+cover: ../joe-yates-480485-unsplash.webp
+cover_mobile: ../w300_joe-yates-480485-unsplash.webp
+cover_icon: ../icon_joe-yates-480485-unsplash.webp
+---
+## Promise……它们到底有什么用？
+
+每当执行任何计算机代码时，结果只有两种可能：**成功**或**失败**。
+
+如果代码是异步的，可靠地依赖其结果就会变得更困难。
+
+**`Promise`** 提供了一种方便的方式来处理这种情况。
+
+```
+                        +--Promise---+
+                        |            |
+                        | <-要么->   |
+                        |            |
+                <-------+            +-------->
+                |失败？              成功？|
+                |                             |
+                v                             v
+                (已拒绝)             (已解决)
+```
+
+> 旁注：虽然 Promise 理应被解决或拒绝，但它们也可能两者都不做。这会导致应用挂起，并且很难调试。
+
+### Promise 从何而来？
+
+很多时候你不需要自己创建 Promise。像 `fetch` 这样的原生 API 和 `axios` 这样的流行库已经会返回 Promise。
+
+但如果必须创建 Promise，有两种方式：
+
+### 创建 Promise 方法 #1/2：
+
+创建 Promise 最简单的方式是使用辅助方法：`Promise.resolve()`。
+
+你可以用 `Promise.resolve(value)` 将任何值包装（或“转换”）成一个 Promise。
+
+```js
+// 不使用 Promise：
+function add10(num) {
+  return num + 10
+}
+
+// 使用 Promise：
+function add10Promised(num) {
+  return Promise.resolve(num + 10)
+}
+
+console.log(add10(10)) //=> 20
+
+add10Promised(10)
+  .then(x => console.log(x)) //=> 20
+```
+
+### 创建 Promise 方法 #2/2：
+
+另一种更灵活的方法：使用 Promise 构造函数。
+
+`new Promise(callback)` 接受一个 `callback` 函数，其接口如下：
+
+```js
+new Promise(function(resolve, reject) {
+  // 参数 `resolve` 和 `reject` 都是函数。
+  // typeof resolve === 'function'
+  // typeof reject === 'function'
+
+  // 当 promise 被兑现时，必须执行 `resolve(result)`
+  // 如果 promise 被拒绝，必须执行 `reject(Error)`
+})
+```
+
+### Promise API
+
+Promise API 实际上只有少数几个方法。
+
+2 个实例方法，以及 4 个静态/工具方法。
+
+#### Promise 实例方法
+
+从 Promise 中获取值无法通过常规技巧实现（例如 `console.log(promise)`）。
+
+所有 Promise 要么返回成功（通过 `.then(fn)`），要么返回失败（通过 `.catch(fn)`）。
+
+#### Promise 工具方法
+
+* `Promise.resolve(value)` - 将任意值转换为 Promise
+* `Promise.reject(Error)` - 创建一个失败的 Promise 值，触发后续的 `.catch()`
+* `Promise.all([...promises])` - 等待一个 Promise 数组全部完成
+* `Promise.race([...promises])` - 一旦第一个 Promise 完成就立即决议
