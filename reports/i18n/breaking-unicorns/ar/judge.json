@@ -1,0 +1,37 @@
+{
+  "selectedCommit": "bc4575d185af514ec97cf142652df1b56f3e8309",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 9,
+    "relevance": 9,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The translation is excellent, capturing Dan's satirical tone perfectly. The previous suggestion regarding the placeholder '<اسم القسم هنا>' has already been applied in the current version of the file. The handling of 'low-F' and 'low-H' is creative and maintains the humor without being overly literal. MDX structure and asset paths are correctly preserved.",
+  "slug": "breaking-unicorns",
+  "locale": "ar",
+  "candidateCommits": [
+    "bc4575d185af514ec97cf142652df1b56f3e8309",
+    "6dd11e937904bba40de5f408584f261682ab7e81"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "<p>هل `<أدخل اسم القسم>` في فوضى؟</p>",
+      "replacement": "<p>هل `<اسم القسم هنا>` في فوضى؟</p>",
+      "reason": "The placeholder syntax was partially translated in a way that might break if it were code, though here it is prose, it's better to keep it clean.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug breaking-unicorns --locale ar --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug breaking-unicorns --locale ar --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug breaking-unicorns --locale ar --skip-global\n75 |   const sourceComponents = new Set(\n76 |     [...sourceContents.matchAll(/<\\/?([A-Z][A-Za-z0-9_.]*)\\b/g)].map((match) => match[1]),\n77 |   );\n78 |   for (const component of sourceComponents) {\n79 |     if (!new RegExp(`</?${escapeRegExp(component)}\\\\b`).test(targetContents)) {\n80 |       throw new Error(`Missing preserved MDX component in ${targetPath}: ${component}`);\n                     ^\nerror: Missing preserved MDX component in /Users/dan/code/oss/dans-blog/src/content/posts/2024-09-01--breaking-unicorns/ar/index.mdx: Insert\n      at assertProtectedTokens (/Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:80:17)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}
