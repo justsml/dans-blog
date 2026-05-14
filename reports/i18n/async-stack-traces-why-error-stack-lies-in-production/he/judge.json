@@ -1,0 +1,46 @@
+{
+  "selectedCommit": "6c21dc1c863d69f1ddfb0b46005d7dc7690354f5",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The translation is technically excellent, correctly using 'מחסנית' for Stack. The tone is appropriately informal and direct, matching the source. The suggestions from the previous pass (changing 'מדריך הפקה' to 'צ'ק-ליסט לפרודקשן' and adjusting the microtask phrasing) have already been integrated into the current version of the file, so no further high-priority changes are required.",
+  "slug": "async-stack-traces-why-error-stack-lies-in-production",
+  "locale": "he",
+  "candidateCommits": [
+    "6c21dc1c863d69f1ddfb0b46005d7dc7690354f5",
+    "eba98d2870c24bcfe7cad955254ae78dea1e04b8"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "מדריך הפקה",
+      "replacement": "צ'ק-ליסט לפרודקשן",
+      "reason": "'Production Playbook' is better translated as a checklist or strategy for production environments rather than 'Production Guide' (מדריך הפקה) which sounds like movie production.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "תור המיקרו-משימות אכל את שיעורי הבית שלי",
+      "replacement": "תור המיקרו-טאסקים אכל לי את שיעורי הבית",
+      "reason": "'Microtasks' is standard technical jargon in Hebrew dev circles, and 'אכל לי את' is the idiomatic way to say 'ate my' in this context.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug async-stack-traces-why-error-stack-lies-in-production --locale he --skip-global",
+    "output": ""
+  }
+}
