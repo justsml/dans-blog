@@ -1,0 +1,51 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "Express Response Error",
+  "translatedTitle": "Express 响应错误",
+  "translation": {
+    "title": "Express 响应错误",
+    "group": "API 陷阱",
+    "options": [
+      {
+        "text": "发送完整的错误对象"
+      },
+      {
+        "text": "发送 {\"error\":{}}"
+      },
+      {
+        "text": "抛出服务器错误"
+      },
+      {
+        "text": "仅发送错误信息"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "会向客户端发送什么？"
+    ],
+    "hintsProse": [
+      "记住 Error 对象在 JSON.stringify 时是如何序列化的。"
+    ],
+    "explanationProse": [
+      "`res.json()` 在内部使用 `JSON.stringify()`，因此 Error 对象会变成 `{}`。客户端收到 `{\"error\":{}}`。要修复，可使用 `res.json({ error: error.message })` 或 `res.json({ error: { message: error.message, name: error.name } })`。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Express 响应错误\",\n  \"group\": \"API 陷阱\",\n  \"options\": [\n    {\n      \"text\": \"发送完整的错误对象\"\n    },\n    {\n      \"text\": \"发送 {\\\"error\\\":{}}\"\n    },\n    {\n      \"text\": \"抛出服务器错误\"\n    },\n    {\n      \"text\": \"仅发送错误信息\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"会向客户端发送什么？\"\n  ],\n  \"hintsProse\": [\n    \"记住 Error 对象在 JSON.stringify 时是如何序列化的。\"\n  ],\n  \"explanationProse\": [\n    \"`res.json()` 在内部使用 `JSON.stringify()`，因此 Error 对象会变成 `{}`。客户端收到 `{\\\"error\\\":{}}`。要修复，可使用 `res.json({ error: error.message })` 或 `res.json({ error: { message: error.message, name: error.name } })`。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 881,
+    "outputTokens": 608,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 2761,
+    "providerCostUsd": 0.00047775,
+    "providerUpstreamCostUsd": 0.00047775,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000034359,
+    "outputUsd": 0.00010944,
+    "totalUsd": 0.000143799,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

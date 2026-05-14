@@ -1,0 +1,51 @@
+{
+  "index": 1,
+  "attempt": 1,
+  "originalTitle": "Console vs JSON",
+  "translatedTitle": "控制台 vs JSON",
+  "translation": {
+    "title": "控制台 vs JSON",
+    "group": "序列化惊喜",
+    "options": [
+      {
+        "text": "两者显示相同的输出"
+      },
+      {
+        "text": "console.log 显示更多信息"
+      },
+      {
+        "text": "JSON.stringify 显示更多信息"
+      },
+      {
+        "text": "两者显示空对象"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "这两者有什么区别？"
+    ],
+    "hintsProse": [
+      "考虑 console.log 处理对象的方式与 JSON 序列化的区别。"
+    ],
+    "explanationProse": [
+      "`console.log(err)` 显示错误的消息和堆栈跟踪，因为控制台对 Error 对象有特殊处理。`JSON.stringify(err)` 返回 `'{}'`，因为 Error 的属性不可枚举。这个差异常让调试 API 的开发者踩坑。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"控制台 vs JSON\",\n  \"group\": \"序列化惊喜\",\n  \"options\": [\n    {\n      \"text\": \"两者显示相同的输出\"\n    },\n    {\n      \"text\": \"console.log 显示更多信息\"\n    },\n    {\n      \"text\": \"JSON.stringify 显示更多信息\"\n    },\n    {\n      \"text\": \"两者显示空对象\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"这两者有什么区别？\"\n  ],\n  \"hintsProse\": [\n    \"考虑 console.log 处理对象的方式与 JSON 序列化的区别。\"\n  ],\n  \"explanationProse\": [\n    \"`console.log(err)` 显示错误的消息和堆栈跟踪，因为控制台对 Error 对象有特殊处理。`JSON.stringify(err)` 返回 `'{}'`，因为 Error 的属性不可枚举。这个差异常让调试 API 的开发者踩坑。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 860,
+    "outputTokens": 631,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 2451,
+    "providerCostUsd": 0.0004884,
+    "providerUpstreamCostUsd": 0.0004884,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00003354,
+    "outputUsd": 0.00011358000000000001,
+    "totalUsd": 0.00014712000000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

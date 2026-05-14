@@ -1,0 +1,51 @@
+{
+  "index": 12,
+  "attempt": 1,
+  "originalTitle": "Non-Standard Properties",
+  "translatedTitle": "非标准属性",
+  "translation": {
+    "title": "非标准属性",
+    "group": "错误属性",
+    "options": [
+      {
+        "text": "始终可用"
+      },
+      {
+        "text": "可能并非在所有环境中存在"
+      },
+      {
+        "text": "仅在 Node.js 中出现"
+      },
+      {
+        "text": "已废弃并被移除"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "`error.code` 和 `error.errno` 的可靠性如何？"
+    ],
+    "hintsProse": [
+      "考虑不同的 JavaScript 环境以及错误类型。"
+    ],
+    "explanationProse": [
+      "`code` 和 `errno` 等属性是特定于环境的（这里指 Node.js），并不是标准 Error 对象的一部分。浏览器中的错误不会拥有这些属性。应当先检查它们是否存在，例如 `if (err.code === 'ENOENT')`，而不是直接假设它们一定存在。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"非标准属性\",\n  \"group\": \"错误属性\",\n  \"options\": [\n    {\n      \"text\": \"始终可用\"\n    },\n    {\n      \"text\": \"可能并非在所有环境中存在\"\n    },\n    {\n      \"text\": \"仅在 Node.js 中出现\"\n    },\n    {\n      \"text\": \"已废弃并被移除\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"`error.code` 和 `error.errno` 的可靠性如何？\"\n  ],\n  \"hintsProse\": [\n    \"考虑不同的 JavaScript 环境以及错误类型。\"\n  ],\n  \"explanationProse\": [\n    \"`code` 和 `errno` 等属性是特定于环境的（这里指 Node.js），并不是标准 Error 对象的一部分。浏览器中的错误不会拥有这些属性。应当先检查它们是否存在，例如 `if (err.code === 'ENOENT')`，而不是直接假设它们一定存在。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 872,
+    "outputTokens": 279,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 1872,
+    "providerCostUsd": 0.0002598,
+    "providerUpstreamCostUsd": 0.0002598,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000034008000000000004,
+    "outputUsd": 0.00005022,
+    "totalUsd": 0.000084228,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

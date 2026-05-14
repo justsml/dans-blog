@@ -1,0 +1,51 @@
+{
+  "index": 0,
+  "attempt": 1,
+  "originalTitle": "The Empty Object Mystery",
+  "translatedTitle": "空对象之谜",
+  "translation": {
+    "title": "空对象之谜",
+    "group": "序列化惊喜",
+    "options": [
+      {
+        "text": "{\"message\":\"Oops\",\"name\":\"Error\"}"
+      },
+      {
+        "text": "{}"
+      },
+      {
+        "text": "{\"error\":\"Oops\"}"
+      },
+      {
+        "text": "null"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "`JSON.stringify(error)` 会返回什么？"
+    ],
+    "hintsProse": [
+      "考虑一下 Error 对象上可枚举的属性。"
+    ],
+    "explanationProse": [
+      "Error 对象的属性（`message`、`name`、`stack`）是非可枚举的，因此 `JSON.stringify()` 会返回 `{}`。这在向 API 响应发送错误时是常见的陷阱。可以使用 `JSON.stringify(error, Object.getOwnPropertyNames(error))` 或者改为创建普通对象。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"空对象之谜\",\n  \"group\": \"序列化惊喜\",\n  \"options\": [\n    {\n      \"text\": \"{\\\"message\\\":\\\"Oops\\\",\\\"name\\\":\\\"Error\\\"}\"\n    },\n    {\n      \"text\": \"{}\"\n    },\n    {\n      \"text\": \"{\\\"error\\\":\\\"Oops\\\"}\"\n    },\n    {\n      \"text\": \"null\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"`JSON.stringify(error)` 会返回什么？\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"js\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [\n    \"考虑一下 Error 对象上可枚举的属性。\"\n  ],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"Error 对象的属性（`message`、`name`、`stack`）是非可枚举的，因此 `JSON.stringify()` 会返回 `{}`。这在向 API 响应发送错误时是常见的陷阱。可以使用 `JSON.stringify(error, Object.getOwnPropertyNames(error))` 或者改为创建普通对象。\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 868,
+    "outputTokens": 537,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 1871,
+    "providerCostUsd": 0.0004332,
+    "providerUpstreamCostUsd": 0.0004332,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000033852,
+    "outputUsd": 0.00009666,
+    "totalUsd": 0.000130512,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

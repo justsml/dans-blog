@@ -1,0 +1,51 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Template Literals in Errors",
+  "translatedTitle": "错误中的模板字面量",
+  "translation": {
+    "title": "错误中的模板字面量",
+    "group": "消息模板",
+    "options": [
+      {
+        "text": "\"Value ${value} is invalid\""
+      },
+      {
+        "text": "\"Value undefined is invalid\""
+      },
+      {
+        "text": "ReferenceError: value is not defined"
+      },
+      {
+        "text": "\"Value  is invalid\""
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "错误信息是什么？"
+    ],
+    "hintsProse": [
+      "模板字面量在插值时如何处理 undefined？"
+    ],
+    "explanationProse": [
+      "模板字面量在插值时会把 `undefined` 转换为字符串 `\"undefined\"`。错误信息因此变为 `\"Value undefined is invalid\"`。为了得到更简洁的消息，建议在插值前使用 `value ?? 'null'` 或类似的检查。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"错误中的模板字面量\",\n  \"group\": \"消息模板\",\n  \"options\": [\n    {\n      \"text\": \"\\\"Value ${value} is invalid\\\"\"\n    },\n    {\n      \"text\": \"\\\"Value undefined is invalid\\\"\"\n    },\n    {\n      \"text\": \"ReferenceError: value is not defined\"\n    },\n    {\n      \"text\": \"\\\"Value  is invalid\\\"\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"错误信息是什么？\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"js\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [\n    \"模板字面量在插值时如何处理 undefined？\"\n  ],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"模板字面量在插值时会把 `undefined` 转换为字符串 `\\\"undefined\\\"`。错误信息因此变为 `\\\"Value undefined is invalid\\\"`。为了得到更简洁的消息，建议在插值前使用 `value ?? 'null'` 或类似的检查。\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 862,
+    "outputTokens": 556,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 2045,
+    "providerCostUsd": 0.0004437,
+    "providerUpstreamCostUsd": 0.0004437,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000033618,
+    "outputUsd": 0.00010007999999999999,
+    "totalUsd": 0.000133698,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

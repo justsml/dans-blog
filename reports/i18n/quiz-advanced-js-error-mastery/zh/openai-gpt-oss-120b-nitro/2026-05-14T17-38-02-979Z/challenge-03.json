@@ -1,0 +1,51 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "instanceof Inheritance",
+  "translatedTitle": "instanceof 继承",
+  "translation": {
+    "title": "instanceof 继承",
+    "group": "类型检查技巧",
+    "options": [
+      {
+        "text": "true, true, true"
+      },
+      {
+        "text": "true, false, false"
+      },
+      {
+        "text": "false, true, true"
+      },
+      {
+        "text": "true, true, false"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "这些检查的结果是什么？"
+    ],
+    "hintsProse": [
+      "记住 JavaScript 继承中的原型链。"
+    ],
+    "explanationProse": [
+      "这三者全部返回 `true`。`CustomError` 继承自 `Error`，而 `Error` 继承自 `Object`。`instanceof` 运算符会检查整个原型链，所以 `CustomError` 实例同时也是 `Error` 和 `Object` 的实例。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"instanceof 继承\",\n  \"group\": \"类型检查技巧\",\n  \"options\": [\n    {\n      \"text\": \"true, true, true\"\n    },\n    {\n      \"text\": \"true, false, false\"\n    },\n    {\n      \"text\": \"false, true, true\"\n    },\n    {\n      \"text\": \"true, true, false\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"这些检查的结果是什么？\"\n  ],\n  \"hintsProse\": [\n    \"记住 JavaScript 继承中的原型链。\"\n  ],\n  \"explanationProse\": [\n    \"这三者全部返回 `true`。`CustomError` 继承自 `Error`，而 `Error` 继承自 `Object`。`instanceof` 运算符会检查整个原型链，所以 `CustomError` 实例同时也是 `Error` 和 `Object` 的实例。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 865,
+    "outputTokens": 483,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 2527,
+    "providerCostUsd": 0.00040035,
+    "providerUpstreamCostUsd": 0.00040035,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000033734999999999995,
+    "outputUsd": 0.00008693999999999999,
+    "totalUsd": 0.00012067499999999999,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
