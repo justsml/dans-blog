@@ -1,0 +1,92 @@
+{
+  "selectedCommit": "b2436bf3f1f0443dfa650893edd1886715e6ff1d",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "האם תוכל לזהות את <em class=\"highlight\">היחיד</em> קוד הקס ✅ תקף?",
+      "replacement": "האם תוכל לזהות את קוד ההקס <em class=\"highlight\">היחיד</em> התקף 👍?",
+      "reason": "The original translation had awkward word order ('the only hex code valid') and used the wrong emoji (check mark instead of thumbs up) compared to the source."
+    },
+    {
+      "priority": "medium",
+      "match": "בוררים: יסודות",
+      "replacement": "סלקטורים: יסודות",
+      "reason": "Consistency: The candidate uses 'סלקטורים' in most places but switches to 'בוררים' in index 5. 'סלקטורים' is the standard transliteration used elsewhere in the document."
+    },
+    {
+      "priority": "medium",
+      "match": "בורר: ספציפיות",
+      "replacement": "סלקטור: ספציפיות",
+      "reason": "Consistency: Using 'סלקטור' instead of 'בורר' to match the terminology used in other headings."
+    }
+  ],
+  "rationale": "Deepseek provided a very clean translation that followed all MDX and pathing constraints. It correctly handled the technical terms and the informal tone of the original. It correctly preserved the MDX structure and the specific logic of the CSS questions. The suggestions address minor consistency issues with technical terminology (Selector vs Borrer) and a word-order issue in one question.",
+  "slug": "quiz-css-core-fundamentals",
+  "locale": "he",
+  "candidateCommits": [
+    "b2436bf3f1f0443dfa650893edd1886715e6ff1d",
+    "a69257863cfc1c920ed45daee2291b62764ce49f"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "האם תוכל לזהות את היחיד קוד הקס ✅ תקף?",
+      "replacement": "האם תוכל לזהות את קוד ההקס התקף היחיד 👍?",
+      "reason": "The original translation had awkward word order ('the only hex code valid') and missed the thumbs up emoji from the source.",
+      "pass": 1,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "בוררים: יסודות",
+      "replacement": "סלקטורים: יסודות",
+      "reason": "Consistency: The candidate uses 'סלקטורים' in some places and 'בוררים' in others. 'סלקטורים' is more common in technical Hebrew discourse.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "האם תוכל לזהות את <em class=\"highlight\">היחיד</em> קוד הקס ✅ תקף?",
+      "replacement": "האם תוכל לזהות את קוד ההקס <em class=\"highlight\">היחיד</em> התקף 👍?",
+      "reason": "The original translation had awkward word order ('the only hex code valid') and used the wrong emoji (check mark instead of thumbs up) compared to the source.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "בוררים: יסודות",
+      "replacement": "סלקטורים: יסודות",
+      "reason": "Consistency: The candidate uses 'סלקטורים' in most places but switches to 'בוררים' in index 5. 'סלקטורים' is the standard transliteration used elsewhere in the document.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "בורר: ספציפיות",
+      "replacement": "סלקטור: ספציפיות",
+      "reason": "Consistency: Using 'סלקטור' instead of 'בורר' to match the terminology used in other headings.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug quiz-css-core-fundamentals --locale he --skip-global",
+    "output": ""
+  }
+}
