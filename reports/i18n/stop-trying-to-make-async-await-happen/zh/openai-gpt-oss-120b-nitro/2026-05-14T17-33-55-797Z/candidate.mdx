@@ -1,0 +1,193 @@
+---
+social_image: ../desktop-social.webp
+title: 别再尝试让 async/await 生效
+subTitle: Promises 现在正流行。
+date: '2018-10-03'
+modified: '2024-08-03'
+category: Guides
+subCategory: promises
+tags:
+  - promises
+  - async
+  - await
+  - async-await
+  - javascript
+  - composition
+related:
+  - intro-to-promises
+  - promise-gotchas
+  - visualizing-promises
+  - you-may-not-need-axios
+cover: ../matt-nelson-414464-unsplash.webp
+cover_mobile: ../w300_matt-nelson-414464-unsplash.webp
+cover_icon: ../icon_matt-nelson-414464-unsplash.webp
+---
+自古以来，开发者就喜欢挑起各种无聊的争论。从经典的 *“Tab 与 Space”* 到永恒的 *“Mac 与 PC”* 辩论，我们总能找到分散注意力的论点。
+
+<br />
+<small>_答案：_ Linux 与 Space。</small>
+
+<!-- 我们将查看两条规则，以提升你使用 Promise 的体验。 -->
+
+## 这场争论…？
+
+### Promise 与 Async/Await！
+
+等等，这真的是一场争论吗？一定是吧？我们不再讨论回调函数了？
+
+不，这不是争论。归根结底，它只是你工具箱里的另一件潜在工具。不过，因为 `async`/`await` 并不能取代所有 Promise 功能（尤其是 `Promise.all`、`.race`），把它当作替代品来宣传是误导性的。
+
+有不少有影响力的人在推广这种误解，认为 `async`/`await` 是 Promise 的[替代品](https://developers.google.com/web/fundamentals/primers/async-functions) [每个人](https://hackernoon.com/6-reasons-why-javascripts-async-await-blows-promises-away-tutorial-c7ec10518dd9) [都在](https://x.com/umaar/status/1045655069478334464) [等待](http://2ality.com/2017/08/promise-try.html#why-not-just-use-async-functions) [的](https://dzone.com/articles/javascript-promises-and-why-asyncawait-wins-the-ba)。
+
+> **提示：不，不，也一点都不。**
+
+VS Code 最近的一个功能进一步加剧了这种偏见。正如 [@umaar](https://x.com/umaar) 在推特上所说：
+
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Visual Studio Code can now convert your long chains of Promise.then()&#39;s into async/await! 🎊 Works very well in both JavaScript and TypeScript files. .catch() is also correctly converted to try/catch ✅ <a href="https://t.co/xb39Lsp84V">pic.x.com/xb39Lsp84V</a></p>&mdash; Umar Hansa (@umaar) <a href="https://x.com/umaar/status/1045655069478334464?ref_src=twsrc%5Etfw">2018年9月28日</a></blockquote>
+
+<!-- 确实，这对已经相当强大的功能列表是个令人印象深刻的补充。 -->
+
+如果你讨厌 Promise，却想要这个重构功能，我并不怪你。
+
+<br />
+
+_我能体会。我懂你的感受。_
+
+<br />
+
+我也曾经那样。 🤗
+
+<br />
+
+我曾经讨厌 Promise。今天，我彻底改观了。**Promise 很棒。** 它们可以让你**利用函数组合**。
+
+有两个方向我建议先聚焦，以提升你的 Promise 技巧。
+
+1. [命名函数（不要匿名）](#rule-1)  
+1. [单一职责函数](#rule-2)
+
+<h2 id="rule-1">#1：命名函数！</h2>
+
+淘汰匿名方法。使用**命名函数**让代码读起来像需求的诗篇。
+
+来看一个常见例子：
+
+使用 `fetch` 发起 HTTP GET 请求：
+
+<!-- the fetch specification states [HTTP status codes](https://http.cat/) over 400 or 500 **do not automatically trigger an error.** The default in many AJAX libraries (jQuery, axios). -->
+
+<!-- Before we see the solution, look over a common "recommended" implementation: -->
+
+### 反模式
+
+```js
+// ❌ 使用匿名内联函数 💩
+fetch(url)
+  .then(response => response.status < 400
+    ? response
+    : Promise.reject(new Error('Request Failed: ' + response.ststus)))
+  .then(response => response.text())
+```
+
+### 解决方案：命名方法
+
+```js
+// ✅ 清晰呈现：命名函数
+fetch(url)
+  .then(checkResponse)
+  .then(getText)
+
+
+// 可复用的通用函数
+function checkResponse(response) {
+  return response.status < 400
+    ? response
+    : Promise.reject(new Error('Request Failed: ' + response.ststus))
+}
+function getText(response) {
+  return response.text()
+}
+```
+
+> 随着代码变得更 DRY，这种写法的好处会愈发明显。
+
+**补充资源：** 查看我的 **1 分钟视频**，了解使用该技巧的[基础日志记录](https://youtu.be/xR_MZE1SIkk)和[高级调试](https://youtu.be/P_tghqWj72M)。
+
+<h2 id="rule-2">#2：单一职责（函数）</h2>
+
+听起来**_异常精准_**：单一职责。
+
+然而这往往是主观的、随意的，有时甚至毫无意义。
+
+```js
+// 1 point: the return & ternary are effectively a one-liner
+function checkResponse(response) {
+  return response.status < 400
+    ? response
+    : Promise.reject(new Error('Request Failed: ' + response.ststus))
+}
+// 1 point: the return & expression are also effectively a one-liner
+function getText(response) {
+  return response.text()
+}
+```
+
+给定函数代码时，每出现一次 `if`、`return`、三元运算符、`for`、`const`、`let`、`var`、`switch`、`while`、`[].map/filter/reduce/etc` 就加 1 分。每条指令再加 1 分（忽略空行）。一串链式表达式或方法调用只算 1 分。
+
+呼——这有点行话。
+
+有趣的是，大多数开发者自称在 **单一职责** 上做得 **相当不错**。顺带一提，他们也自称是很棒的司机！
+
+让我们看看（极具天赋的）[Jake Archibald](https://x.com/jaffathecake) 在 Google Developers 上的 async/await 文章里展示的例子（2024 年，链接已移除）。
+
+```js
+// source: https://developers.google.com/web/fundamentals/primers/async-functions
+function logInOrder(urls) {
+  // fetch all the URLs
+  const textPromises = urls.map(url => {
+    return fetch(url).then(response => response.text());
+  });
+
+  // log them in order
+  textPromises.reduce((chain, textPromise) => {
+    return chain.then(() => textPromise)
+      .then(text => console.log(text));
+  }, Promise.resolve());
+}
+```
+
+### 单一职责？
+
+我会说不是。`logInOrder` 到底在干什么？
+
+1. 遍历 `urls` 列表  
+2. 对每个 URL 执行内联 HTTP GET  
+   1. `fetch` 请求  
+   2. 返回响应的文本体  
+3. 在每个 `textPromise` 后追加 `.then(text => console.log(text))`  
+   1. 串行打印结果  
+
+这个单函数里定义了 5 个匿名方法。正如 Jake 所指出的，`.reduce` 过于复杂。把细腻的机制散落在代码各处并不合理。我们不会用无尽的 `document.createElement()`、`element.setAttribute()` 等手写 DOM 创建代码，而是挑选最合适的工具：辅助函数、库或框架。
+
+#### 解决方案：单一职责函数
+
+### 首先 **抽取方法**...
+
+![VS Code refactor extracting async methods from Promise code](../async-refactor-google-extract-methods-resized-75.webp "Extracting methods")
+
+### 然后用 `Promise.all` 和 `map()` 替换 `.reduce()` 与 `logPromise()`...
+
+![Refactored Promise chain using Promise all and map for readability](../async-refactor-google-chain-methods-resized-75.webp "Improving readability")
+
+### 总结
+
+把这些技巧运用到自己的代码里吧！然后[给我发推文](https://x.com/justsml)告诉我效果如何。有什么疑问或想法，也欢迎随时联系！
+
+帮助传播 #PromiseTruth 并分享本文。❤️
+
+![credit: matt-nelson-414464-unsplash.webp](../matt-nelson-414464-unsplash.webp)
+
+#### 相关阅读
+
+* [Daniel Brain](https://medium.com/@bluepnume/even-with-async-await-you-probably-still-need-promises-9b259854c161)
+* [Eric Elliott](https://x.com/_ericelliott?lang=en)
