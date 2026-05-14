@@ -1,0 +1,51 @@
+{
+  "index": 13,
+  "attempt": 1,
+  "originalTitle": "Object vs Error Detection",
+  "translatedTitle": "אובייקט מול זיהוי שגיאה",
+  "translation": {
+    "title": "אובייקט מול זיהוי שגיאה",
+    "group": "גבולות שגיאה",
+    "options": [
+      {
+        "text": "true, true"
+      },
+      {
+        "text": "false, false"
+      },
+      {
+        "text": "true, false"
+      },
+      {
+        "text": "false, true"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "מה מחזירות הבדיקות האלה?"
+    ],
+    "hintsProse": [
+      "בדיקה אחת מסתכלת על שרשרת הפרוטוטייפ, והשנייה על סלאטים פנימיים."
+    ],
+    "explanationProse": [
+      "`instanceof Error` מחזיר `false` מכיוון שהאובייקט לא נוצר על‑ידי הקונסטרוקטור Error. `Object.prototype.toString.call()` גם הוא מחזיר `false` (הוא מחזיר `'[object Object]'`) מכיוון שהוא בודק את הסלאט הפנימי `[[Class]]`. שתי השיטות מזהות נכון שזהו אובייקט שגיאה מזויף."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"אובייקט מול זיהוי שגיאה\",\n  \"group\": \"גבולות שגיאה\",\n  \"options\": [\n    {\n      \"text\": \"true, true\"\n    },\n    {\n      \"text\": \"false, false\"\n    },\n    {\n      \"text\": \"true, false\"\n    },\n    {\n      \"text\": \"false, true\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"מה מחזירות הבדיקות האלה?\"\n  ],\n  \"hintsProse\": [\n    \"בדיקה אחת מסתכלת על שרשרת הפרוטוטייפ, והשנייה על סלאטים פנימיים.\"\n  ],\n  \"explanationProse\": [\n    \"`instanceof Error` מחזיר `false` מכיוון שהאובייקט לא נוצר על‑ידי הקונסטרוקטור Error. `Object.prototype.toString.call()` גם הוא מחזיר `false` (הוא מחזיר `'[object Object]'`) מכיוון שהוא בודק את הסלאט הפנימי `[[Class]]`. שתי השיטות מזהות נכון שזהו אובייקט שגיאה מזויף.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 893,
+    "outputTokens": 685,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 607,
+    "providerCostUsd": 0.0008263,
+    "providerUpstreamCostUsd": 0.0008263,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000034827000000000004,
+    "outputUsd": 0.0001233,
+    "totalUsd": 0.00015812699999999999,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

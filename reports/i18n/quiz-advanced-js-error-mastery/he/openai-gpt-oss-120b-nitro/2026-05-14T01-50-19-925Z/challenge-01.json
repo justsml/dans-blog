@@ -1,0 +1,51 @@
+{
+  "index": 0,
+  "attempt": 1,
+  "originalTitle": "The Empty Object Mystery",
+  "translatedTitle": "החידה של האובייקט הריק",
+  "translation": {
+    "title": "החידה של האובייקט הריק",
+    "group": "הפתעות סיריאליזציה",
+    "options": [
+      {
+        "text": "{\"message\":\"Oops\",\"name\":\"Error\"}"
+      },
+      {
+        "text": "{}"
+      },
+      {
+        "text": "{\"error\":\"Oops\"}"
+      },
+      {
+        "text": "null"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "מה מחזירה `JSON.stringify(error)`?"
+    ],
+    "hintsProse": [
+      "חשוב על תכונות ניתנות לה enumeration באובייקטים מסוג Error."
+    ],
+    "explanationProse": [
+      "לאובייקטי Error יש תכונות שאינן ניתנות לה enumeration (`message`, `name`, `stack`), ולכן `JSON.stringify()` מחזירה `{}`. זה תופעה נפוצה כששולחים שגיאות בתגובות API. השתמשו ב‑`JSON.stringify(error, Object.getOwnPropertyNames(error))` או צרו אובייקט פשוט במקום."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"החידה של האובייקט הריק\",\n  \"group\": \"הפתעות סיריאליזציה\",\n  \"options\": [\n    {\n      \"text\": \"{\\\"message\\\":\\\"Oops\\\",\\\"name\\\":\\\"Error\\\"}\"\n    },\n    {\n      \"text\": \"{}\"\n    },\n    {\n      \"text\": \"{\\\"error\\\":\\\"Oops\\\"}\"\n    },\n    {\n      \"text\": \"null\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"מה מחזירה `JSON.stringify(error)`?\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"js\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [\n    \"חשוב על תכונות ניתנות לה enumeration באובייקטים מסוג Error.\"\n  ],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"לאובייקטי Error יש תכונות שאינן ניתנות לה enumeration (`message`, `name`, `stack`), ולכן `JSON.stringify()` מחזירה `{}`. זה תופעה נפוצה כששולחים שגיאות בתגובות API. השתמשו ב‑`JSON.stringify(error, Object.getOwnPropertyNames(error))` או צרו אובייקט פשוט במקום.\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 891,
+    "outputTokens": 528,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1249,
+    "providerCostUsd": 0.00045045,
+    "providerUpstreamCostUsd": 0.00045045,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000034749,
+    "outputUsd": 0.00009504,
+    "totalUsd": 0.000129789,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

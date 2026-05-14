@@ -1,0 +1,51 @@
+{
+  "index": 3,
+  "attempt": 1,
+  "originalTitle": "Cross-Frame instanceof",
+  "translatedTitle": "instanceof בין‑מסגרות",
+  "translation": {
+    "title": "instanceof בין‑מסגרות",
+    "group": "טריקים לבדיקת סוגים",
+    "options": [
+      {
+        "text": "תמיד נכון"
+      },
+      {
+        "text": "תמיד שגוי"
+      },
+      {
+        "text": "יכול להיות שגוי בין מסגרות"
+      },
+      {
+        "text": "זורק שגיאה"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "מה קורה עם `instanceof Error` בין iframes?"
+    ],
+    "hintsProse": [
+      "הקשרים שונים משתמשים בבוני Error שונים."
+    ],
+    "explanationProse": [
+      "`instanceof` יכול להחזיר `false` בין הקשרים שונים של ביצוע (iframes, workers) מכיוון שלכל הקשר יש בונה `Error` משלו. השתמש ב‑`Object.prototype.toString.call(obj) === '[object Error]'` לזיהוי שגיאות אמין בין הקשרים."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"instanceof בין‑מסגרות\",\n  \"group\": \"טריקים לבדיקת סוגים\",\n  \"options\": [\n    {\n      \"text\": \"תמיד נכון\"\n    },\n    {\n      \"text\": \"תמיד שגוי\"\n    },\n    {\n      \"text\": \"יכול להיות שגוי בין מסגרות\"\n    },\n    {\n      \"text\": \"זורק שגיאה\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"מה קורה עם `instanceof Error` בין iframes?\"\n  ],\n  \"hintsProse\": [\n    \"הקשרים שונים משתמשים בבוני Error שונים.\"\n  ],\n  \"explanationProse\": [\n    \"`instanceof` יכול להחזיר `false` בין הקשרים שונים של ביצוע (iframes, workers) מכיוון שלכל הקשר יש בונה `Error` משלו. השתמש ב‑`Object.prototype.toString.call(obj) === '[object Error]'` לזיהוי שגיאות אמין בין הקשרים.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 883,
+    "outputTokens": 627,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 566,
+    "providerCostUsd": 0.0007793,
+    "providerUpstreamCostUsd": 0.0007793,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000034436999999999996,
+    "outputUsd": 0.00011285999999999999,
+    "totalUsd": 0.00014729699999999998,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

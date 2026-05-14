@@ -1,0 +1,51 @@
+{
+  "index": 6,
+  "attempt": 1,
+  "originalTitle": "Constructor Name Gotcha",
+  "translatedTitle": "קונסטרוקטור שם תפסיק",
+  "translation": {
+    "title": "קונסטרוקטור שם תפסיק",
+    "group": "שגיאות מותאמות",
+    "options": [
+      {
+        "text": "\"MyError\""
+      },
+      {
+        "text": "\"Error\""
+      },
+      {
+        "text": "undefined"
+      },
+      {
+        "text": "TypeError"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "מה הפלט בלי להגדיר `name`?"
+    ],
+    "hintsProse": [
+      "מה מכילה תכונת `name` ברירת המחדל של Error?"
+    ],
+    "explanationProse": [
+      "בלי להגדיר במפורש `this.name`, השגיאה יורשת את תכונת `name` ברירת המחדל מהמחלקה `Error`, שהיא \"Error\". לכן מחלקות שגיאה מותאמות צריכות תמיד להגדיר `this.name = this.constructor.name` בבונה שלהן."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"קונסטרוקטור שם תפסיק\",\n  \"group\": \"שגיאות מותאמות\",\n  \"options\": [\n    {\n      \"text\": \"\\\"MyError\\\"\"\n    },\n    {\n      \"text\": \"\\\"Error\\\"\"\n    },\n    {\n      \"text\": \"undefined\"\n    },\n    {\n      \"text\": \"TypeError\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"מה הפלט בלי להגדיר `name`?\"\n  ],\n  \"hintsProse\": [\n    \"מה מכילה תכונת `name` ברירת המחדל של Error?\"\n  ],\n  \"explanationProse\": [\n    \"בלי להגדיר במפורש `this.name`, השגיאה יורשת את תכונת `name` ברירת המחדל מהמחלקה `Error`, שהיא \\\"Error\\\". לכן מחלקות שגיאה מותאמות צריכות תמיד להגדיר `this.name = this.constructor.name` בבונה שלהן.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 876,
+    "outputTokens": 558,
+    "cacheReadTokens": 128,
+    "cacheWriteTokens": 0,
+    "durationMs": 547,
+    "providerCostUsd": 0.0007251,
+    "providerUpstreamCostUsd": 0.0007251,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000034164,
+    "outputUsd": 0.00010044,
+    "totalUsd": 0.000134604,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

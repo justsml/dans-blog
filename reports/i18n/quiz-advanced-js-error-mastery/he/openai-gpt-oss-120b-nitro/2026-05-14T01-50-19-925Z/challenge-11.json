@@ -1,0 +1,51 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "Express Response Error",
+  "translatedTitle": "שגיאת תגובה ב‑Express",
+  "translation": {
+    "title": "שגיאת תגובה ב‑Express",
+    "group": "פיתויים ב‑API",
+    "options": [
+      {
+        "text": "שולח את אובייקט השגיאה המלא"
+      },
+      {
+        "text": "שולח {\"error\":{}}"
+      },
+      {
+        "text": "זורק שגיאת שרת"
+      },
+      {
+        "text": "שולח רק את הודעת השגיאה"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "מה נשלח ללקוח?"
+    ],
+    "hintsProse": [
+      "זכור איך אובייקטי Error ממוריאלים על‑ידי JSON.stringify."
+    ],
+    "explanationProse": [
+      "`res.json()` משתמש ב‑`JSON.stringify()` פנימית, ולכן אובייקט ה‑Error הופך ל‑`{}`. הלקוח מקבל `{\"error\":{}}`. כדי לתקן זאת, השתמש ב‑`res.json({ error: error.message })` או ב‑`res.json({ error: { message: error.message, name: error.name } })`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"שגיאת תגובה ב‑Express\",\n  \"group\": \"פיתויים ב‑API\",\n  \"options\": [\n    {\n      \"text\": \"שולח את אובייקט השגיאה המלא\"\n    },\n    {\n      \"text\": \"שולח {\\\"error\\\":{}}\"\n    },\n    {\n      \"text\": \"זורק שגיאת שרת\"\n    },\n    {\n      \"text\": \"שולח רק את הודעת השגיאה\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"מה נשלח ללקוח?\"\n  ],\n  \"hintsProse\": [\n    \"זכור איך אובייקטי Error ממוריאלים על‑ידי JSON.stringify.\"\n  ],\n  \"explanationProse\": [\n    \"`res.json()` משתמש ב‑`JSON.stringify()` פנימית, ולכן אובייקט ה‑Error הופך ל‑`{}`. הלקוח מקבל `{\\\"error\\\":{}}`. כדי לתקן זאת, השתמש ב‑`res.json({ error: error.message })` או ב‑`res.json({ error: { message: error.message, name: error.name } })`.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 904,
+    "outputTokens": 718,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1781,
+    "providerCostUsd": 0.0005664,
+    "providerUpstreamCostUsd": 0.0005664,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000035255999999999996,
+    "outputUsd": 0.00012924,
+    "totalUsd": 0.000164496,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
