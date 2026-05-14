@@ -1,0 +1,120 @@
+# Translation Candidate
+- Slug: you-might-not-need-algolia
+- Locale: zh
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2025-03-01--you-might-not-need-algolia/zh/index.mdx
+- Validation: deferred
+- Runtime seconds: 23.82
+- Input tokens: 4916
+- Output tokens: 3092
+- Thinking tokens: unknown
+- Cached input tokens: 768
+- Cache write tokens: 0
+- Estimated cost: $0.001449
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: 你可能不需要Algolia™
+social_image: ../desktop-social.webp
+subTitle: 静态网站通常无需托管搜索
+tags:
+  - search
+  - algolia
+  - pagefind
+  - cdn
+date: '2025-03-01'
+modified: '2025-03-05'
+category: Search
+cover_full_width: ../synth-wave-city-wide.webp
+cover_mobile: ../synth-wave-city-200-square.webp
+cover_icon: ../synth-wave-city-200-square.webp
+cover_credit: Image by Dan Levy
+---
+大多数网站搜索的决策都起步太晚。
+
+等到有人说“我们应该用 Algolia”的时候，团队通常已经跳过了那个关键问题：我们在搜索什么类型的内容？
+
+如果答案是“我们已经构建好的 HTML 页面”，那么 [Pagefind](https://pagefind.app/) 应该是你首先尝试的工具。不是说 Algolia 不好。Algolia 在解决一堆棘手问题上非常出色。但如果你的搜索索引随着网站部署而更新，那么托管式搜索服务可能只是一种“基础设施角色扮演”。
+
+<p class="inset">当你的可搜索内容是在构建时生成的，就用 Pagefind。当搜索需要接受实时写入、业务规则、用户专属排序，或者你的静态构建无法提供的运维保障时，再考虑 Algolia。</p>
+
+这条规则覆盖的网站比人们预期的要多：博客、文档、营销站点、内部手册、产品指南、课程目录，以及大量以发布页面为主的“应用”。
+
+## 问题的本质
+
+Algolia 提供的是一个外部搜索系统。你需要创建记录、推送到索引、配置排序、搭建 UI，并让整个系统与你的数据源保持同步。
+
+Pagefind 则直接读取你已经部署的 HTML，在旁边生成一个静态搜索索引。
+
+这个区别听起来很平淡，直到你需要维护这套集成。
+
+使用 Algolia，你的网站就有了内容的第二份副本。现在你必须回答这样的问题：
+
+- 部署完成了但索引更新失败了吗？
+- 哪些字段是权威的：CMS字段、渲染后的页面，还是搜索记录？
+- 当排名调整不再匹配页面时，谁负责？
+- 当免费套餐实际上并不符合你的流量模式时，会发生什么？
+
+有时这些问题值得考虑。对于市场、支持门户或大型电商目录，它们可能确实值得。但对于静态文档站点，它们往往是自找的复杂性。
+
+## Pagefind 之所以有效，是因为它拒绝了额外的系统
+
+Pagefind 的诀窍不是魔法，而是品味。
+
+它等待你的页面存在，索引完成的HTML，然后写入一组静态资源，你可以将它们放在与网站其余部分相同的CDN上。浏览器只下载它需要的块。没有需要保持活跃的搜索服务器，没有需要监控的爬虫配额，也没有试图记住更改内容的webhook管道。
+
+这使得故障模式更容易理解：
+- 如果页面已部署，索引内容来自该页面。
+- 如果页面未部署，用户无论如何也看不到它。
+- 如果搜索出错，问题通常出在你的渲染标记或Pagefind配置中，而不是某个遥远的同步任务。
+
+这就是为什么我喜欢将它用于内容网站。索引跟随制品。
+
+## 实际设置是什么样的
+
+对于一个普通的静态网站，工作流程愉快地平淡无奇：
+
+- **CLI**：扫描你网站的 HTML 文件，生成索引，然后部署到全球 CDN——全部在几分钟内完成。
+- **静态站点生成器**：使用 PageFind 的 Astro 或 Hugo 插件来自动化索引过程。
+- **自定义解决方案**：利用 PageFind 的 API 构建符合你独特需求的定制搜索体验。
+
+<figure>
+  <figcaption>使用 PageFind CLI 索引我的站点</figcaption>
+  ![使用 PageFind 索引我的站点](../PageFind-Cleaner-better-15fps-720p2.webp "使用 PageFind 索引我的站点")
+</figure>
+
+[入门指南](https://pagefind.app/docs/) 足以让你上手。更好的检验是运维层面：你能在 CI 中重建索引、部署输出，并通过检查渲染后的 HTML 来解释每一次搜索未命中吗？
+
+## Algolia 仍然胜出的场景
+
+Pagefind 并不是披着马甲的迷你 Algolia。它是另一种答案。
+
+当你的搜索索引需要独立于站点部署而变化时，使用 Algolia、OpenSearch、Postgres 搜索或其他实时系统。
+
+这包括：
+
+- 每隔几分钟就会变化的库存数量
+- 按用户权限或私有结果
+- 由收入、新鲜度、流行度或实验驱动的自定义排序
+- 跨多个系统的联合搜索，这些系统不会渲染成一个静态站点
+- 企业期望从托管供应商获得的分析和运维支持
+
+这些都是真实需求。假装 Pagefind 因为速度快就能处理它们，那将是另一种厂商博客的口吻。
+
+## 我使用的决策规则
+
+## 我使用的决策规则
+
+先问一个问题：
+
+> 搜索索引能否从用户正在浏览的同一静态输出重建？
+
+如果能，就从 Pagefind 开始。你将获得默认私有的搜索、CDN 友好的资源，以及少一个带有主见的服务账户。
+
+如果不能，就指出使索引实时变化的具体因素：库存、权限、个性化、分析、排序或写入频率。然后明确选择负责该任务的数据库或搜索服务。
+
+Algolia 在这里不是反派。真正的反派是在证明第一个工件不足之前就引入第二个系统。
+````
