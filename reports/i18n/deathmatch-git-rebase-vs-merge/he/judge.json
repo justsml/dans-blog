@@ -1,0 +1,37 @@
+{
+  "selectedCommit": "81804680de4ab34c831aa5912dd06256f15a9a9b",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The current translation already incorporates the high-priority grammar fix ('מעורב' instead of 'מעורבת' for the masculine noun 'צוות') suggested in the previous judge report. The translation is technically sound, maintains Dan's direct and slightly informal style, and correctly handles all MDX components and asset paths. It uses standard Hebrew technical terminology consistently.",
+  "slug": "deathmatch-git-rebase-vs-merge",
+  "locale": "he",
+  "candidateCommits": [
+    "81804680de4ab34c831aa5912dd06256f15a9a9b",
+    "91073c2dd68613a1bdff7789b64a3235ea84eb03"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "לא כשמעורבת צוות אחד או יותר!",
+      "replacement": "לא כשמעורב צוות אחד או יותר!",
+      "reason": "Grammar: 'צוות' (team) is masculine in Hebrew, so the verb should be 'מעורב' not 'מעורבת'.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug deathmatch-git-rebase-vs-merge --locale he --skip-global",
+    "output": ""
+  }
+}
