@@ -1,0 +1,147 @@
+# Translation Candidate
+- Slug: weakmap-the-javascript-feature-you-dont-use
+- Locale: zh
+- Model: openrouter/google/gemini-3-flash-preview
+- Target: src/content/posts/2025-12-29--weakmap-the-javascript-feature-you-dont-use/zh/index.mdx
+- Validation: deferred
+- Runtime seconds: 21.22
+- Input tokens: 3369
+- Output tokens: 1552
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.006341
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: 使用 WeakMap 防止内存泄漏
+subTitle: 用弱引用修复烂代码！
+date: '2025-12-29'
+modified: '2026-01-12'
+tags:
+  - javascript
+  - memory
+  - garbage-collection
+  - performance
+  - patterns
+category: Code
+subCategory: Best Practices
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+你是否经历过这种感觉：仅仅改动了一行代码，内存占用就瞬间下降了 50%？我曾在 Chrome DevTools 的性能监视器（Performance Monitor）中亲眼目睹了这一幕——一个仪表盘应用从每小时泄露 100MB 内存，变成了能清爽地运行一整个下午。
+
+那行改动极其简单：把 `new Map()` 变成了 `new WeakMap()`。
+
+仅此而已。同样的 API 表面，同样的使用模式，但在底层逻辑上却完全不同。要理解为什么这行得通，就必须理解大多数 JavaScript 开发者从未深思过的一点：当没有任何东西再关注你的数据时，会发生什么。
+
+## 当引用变成“锚点”
+
+JavaScript 中的普通 Map 会像对待珍贵货物一样对待它的键（keys）。一旦你把东西放进去，Map 就会死死地抓住它。垃圾回收机制（Garbage Collector）看到这种关系会想：“显然他们还需要这个对象，最好别碰它。”
+
+当你存储的是关于临时事物的元数据时，这种保护本能就成了问题。被移除的 DOM 节点、过期的用户会话、卸载的组件实例——Map 并不知道这些对象已经失去了使用价值。它只知道自己手里握着一个引用，所以它会让这些对象一直存活。
+
+```javascript
+const cache = new Map();
+
+function trackClick(element) {
+  cache.set(element, { clicks: 0 });
+}
+
+document.body.removeChild(element);
+// 元素已从 DOM 中移除，但 cache 仍将其保留在内存中
+```
+
+垃圾回收器无法清理 `element`，因为 `cache` 仍然指向它。这被称为“强引用（strong reference）”。在长生命周期的单页应用（SPA）中，这会演变成内存泄露，最终导致浏览器崩溃。
+
+## WeakMap 改变了规则
+
+WeakMap 的运作方式截然不同。它将键视为“临时居民”而非“永久居民”。当你将东西存入 WeakMap 时，你实际上是在说：“我想把这些数据与这个对象关联起来，但我不想成为它继续存活的理由。”
+
+如果内存中唯一保留该对象的理由只是一个 WeakMap，那么垃圾回收器就被允许回收它。当对象消失时，WeakMap 中对应的条目也会随之消失。无需手动清理。
+
+```javascript
+const cache = new WeakMap();
+
+function trackClick(element) {
+  cache.set(element, { clicks: 0 });
+}
+
+document.body.removeChild(element);
+// 元素被垃圾回收
+// cache 中的条目自动消失
+```
+
+我运行了一个基准测试：创建 100,000 个 DOM 节点，存储每个节点的元数据，然后将它们全部移除。使用 Map 时，浏览器占用了 150-200MB 内存；而使用 WeakMap 时，内存占用降至 70-80MB。同样的代码，同样的功能，内存占用却减半。
+
+## 你所放弃的
+
+WeakMap 有一些约束，在你看透其背后的“魔法”之前，这些约束听起来像是限制。
+
+**你无法遍历 WeakMap。** 没有 `forEach`，没有 `keys()`，也没有 `values()`。仔细想想这很合理：垃圾回收器可能会在你循环的中途删除某个条目。你真的想处理那种情况吗？
+
+**你无法检查大小。** 没有 `.size` 属性，也没有 `.length`。同样，这是一个动态的目标。在你询问和得到答案之间，数量可能已经发生了变化。
+
+**键必须是对象。** 不能是字符串、数字或原始类型。这是弱引用工作机制的基础：原始类型的值没有独立于其值之外的“身份”可供追踪。
+
+这些不是 Bug，而是设计使然。WeakMap 专为一项特定任务而生：在不阻止对象被清理的前提下，为对象附加元数据。如果你需要遍历、原始类型键或条目计数，那么你可能是在解决另一个问题，应该使用普通的 Map。
+
+## 实际应用场景
+
+在 JavaScript 拥有 `#private` 私有字段之前，“私有数据”模式是 `WeakMap` 的原始用例。库会在类外部创建一个 `WeakMap`，并用它来存储不应在实例上直接访问的数据。
+
+```javascript
+const privateData = new WeakMap();
+
+class User {
+  constructor(name) {
+    privateData.set(this, { name });
+  }
+
+  getName() {
+    return privateData.get(this).name;
+  }
+}
+```
+
+当 `User` 实例被垃圾回收时，私有数据也会随之消失。无需编写任何清理代码。
+
+记忆化（Memoization）是另一个天然契合的场景，特别是当你根据对象输入而非原始值来缓存结果时。如果你的高开销计算接受一个配置对象作为输入，使用 `WeakMap` 意味着你不必担心缓存的生命周期超过配置对象。
+
+```javascript
+const cache = new WeakMap();
+
+function expensiveCalc(obj) {
+  if (cache.has(obj)) return cache.get(obj);
+  
+  const result = heavyMath(obj);
+  cache.set(obj, result);
+  return result;
+}
+```
+
+缓存仅在被缓存的对象存在时才有效。一旦 `obj` 在其他地方不再被引用，缓存的结果和缓存条目都会一起消失。
+
+## 何时使用
+
+现代 Web 应用中的内存泄漏通常源于对本应清理的内容保留了陈旧引用。如果你正在构建任何长运行的应用——整天开启的仪表盘、运行数小时的聊天应用、从不刷新的管理面板——你就需要考虑旧数据的去向。
+
+当你将数据与 DOM 节点、组件实例或任何你无法控制其生命周期的对象关联时，`WeakMap` 特别有用。如果你基于某个引用存储内容，且该引用可能会消失，`WeakMap` 会让清理工作变得简单得多。
+
+当你构建具有淘汰策略的实际缓存、需要遍历条目、使用原始类型键，或者数据本身比它与对象的关联更重要时，普通的 `Map` 仍然是正确的选择。
+
+`WeakMap` 的妙处在于，当你需要它时，通常表现得很明显。如果你发现自己正在编写清理代码，以便在对象销毁时删除 Map 条目，这就是一个信号。如果你担心内存无限增长，因为你不确定何时该删除内容，这是另一个信号。
+
+有时候，最好的特性就是那种无需你操心就能自动生效的功能。
+
+## 资源
+
+- [MDN: WeakMap](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap)
+- [MDN: 内存管理](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Memory_management)
+- [V8 博客: 弱引用与终结器](https://v8.dev/features/weak-references)
+- [JavaScript.info: WeakMap 和 WeakSet](https://javascript.info/weakmap-weakset)
+````
