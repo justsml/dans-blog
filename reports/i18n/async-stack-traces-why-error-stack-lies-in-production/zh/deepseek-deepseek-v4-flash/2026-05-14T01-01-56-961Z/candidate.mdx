@@ -1,0 +1,99 @@
+---
+title: 异步堆栈跟踪：为什么 `Error.stack` 误导你
+subTitle: 微任务队列吞掉了我的作业（还有我的调试上下文）。
+date: '2025-12-29'
+modified: '2025-12-30'
+tags:
+  - javascript
+  - async
+  - debugging
+  - node.js
+  - v8
+  - performance
+category: Code
+subCategory: Best Practices
+social_image: ../desktop-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+凌晨2点。PagerDuty 警报正疯狂作响。
+
+你打开日志，看到这个：
+
+```
+Error: Cannot read properties of undefined (reading 'id')
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+```
+
+就这些。没有函数名。没有行号。没有文件路径。只有“processTicksAndRejections”。
+
+欢迎来到异步 JavaScript——这里的堆栈跟踪是编造的，行号毫无意义。
+
+---
+
+## 为什么堆栈跟踪会失效
+
+在同步代码中，调用栈是一份漂亮的族谱。A 调用了 B，B 调用了 C。当 C 崩溃时，你能清楚地看到你是如何走到这一步的。
+
+在异步代码（`async/await`）中，每个 `await` 关键字都是一个挂起点。
+
+当你 `await` 时，你的函数会被从栈上撕下来。它被扔进一个叫做“微任务队列”的低温冷冻箱里。此时栈是空的（或者正在做别的事）。
+
+当 Promise 解析时，你的函数被解冻并重新扔回栈上。但历史已经消失了。
+
+引擎不知道500毫秒前是谁调用了`await`。它只知道有一个任务要运行。
+
+---
+
+## V8 的修复尝试
+
+Node.js 试图帮忙。我们有：
+
+1.  `Error.captureStackTrace()`：在创建时捕获堆栈。如果错误稍后抛出则无用。
+2.  `--async-stack-traces`：一个标志，让 Node.js 保留 Promise 链的“影子堆栈”。
+    *   代价：使应用慢30%。
+    *   结果：有帮助，但很快变得嘈杂。
+
+---
+
+## 真正的解决方案：AsyncLocalStorage
+
+如果你想在生产中存活，别再盯着堆栈跟踪。关注因果关系。
+
+我们需要将上下文（用户ID、请求ID）附加到执行的“线程”上，即使它在栈和微任务队列之间跳转。
+
+Node.js 有一个内置工具：`AsyncLocalStorage`。
+
+```javascript
+import { AsyncLocalStorage } from 'async_hooks';
+
+const context = new AsyncLocalStorage();
+
+// 1. 包裹请求
+context.run({ requestId: '123' }, () => {
+  // 2. 调用深层异步代码
+  await processOrder();
+});
+
+// 3. 在 processOrder 深处：
+async function processOrder() {
+  await db.query();
+  
+  // 神奇！我们仍然能看到 requestId
+  const { requestId } = context.getStore();
+  console.log(`[${requestId}] 处理订单失败`);
+}
+```
+
+中间有多少个 `await` 都不重要。上下文始终存活。
+
+---
+
+## 生产环境操作指南
+
+1.  别再信任 `err.stack`。它天生就不完整。
+2.  使用结构化日志。通过 `AsyncLocalStorage` 将 `requestId` 附加到每一行日志。
+3.  追踪，而非堆栈。使用 OpenTelemetry。它能可视化跨服务的因果链，这才是你真正关心的。
+
+你的代码是异步的。你的调试上下文不应该也是。

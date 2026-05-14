@@ -1,0 +1,66 @@
+{
+  "runId": "deepseek-deepseek-v4-flash@2026-05-14T01-01-56-961Z",
+  "slug": "async-stack-traces-why-error-stack-lies-in-production",
+  "locale": "zh",
+  "model": "deepseek/deepseek-v4-flash",
+  "modelPath": "deepseek-deepseek-v4-flash",
+  "createdAt": "2026-05-14T01:02:16.077Z",
+  "sourcePath": "src/content/posts/2025-12-29--async-stack-traces-why-error-stack-lies-in-production/index.mdx",
+  "targetPath": "src/content/posts/2025-12-29--async-stack-traces-why-error-stack-lies-in-production/zh/index.mdx",
+  "candidatePath": "reports/i18n/async-stack-traces-why-error-stack-lies-in-production/zh/deepseek-deepseek-v4-flash/2026-05-14T01-01-56-961Z/candidate.mdx",
+  "sourceHash": "bda8adb66cf30fc89c91baea70bf6d81ae97177b838379f1fd437c2da47c9917",
+  "outputHash": "11fa55f4f2b886e8172db35eb7363c02371f09e7501768aa72adee40eea625f0",
+  "reasoningEffort": "low",
+  "temperature": 0.3,
+  "maxTokens": 16000,
+  "timeoutMs": 200000,
+  "articleSummary": "The article argues that async stack traces in Node.js are fundamentally unreliable because `await` suspends execution, clearing the call stack and losing historical context. It critiques V8’s partial fixes—`Error.captureStackTrace()` and the `--async-stack-traces` flag (which incurs a 30% performance penalty)—as inadequate for production debugging. The core solution presented is `AsyncLocalStorage` from `async_hooks`, which preserves causal context (e.g., request IDs) across async boundaries without relying on stack traces. Written in a conversational, slightly exasperated tutorial style for Node.js developers, the piece uses metaphors like a “cryogenic freezer” for the microtask queue and a “shadow stack” to frame the problem. It concludes with a production playbook: stop trusting `err.stack`, use structured logging with `AsyncLocalStorage`, and adopt OpenTelemetry for distributed tracing.",
+  "totalInputTokens": 3570,
+  "totalOutputTokens": 1499,
+  "totalCacheReadTokens": 768,
+  "totalCacheWriteTokens": 0,
+  "totalDurationMs": 13015,
+  "totalCostUsd": 0.0008141504000000001,
+  "pricingSource": "local-openrouter-estimate",
+  "telemetry": {
+    "model": "deepseek/deepseek-v4-flash",
+    "chunkSize": "10p",
+    "totalChunks": 3,
+    "totalInputTokens": 3570,
+    "totalOutputTokens": 1499,
+    "totalCacheReadTokens": 768,
+    "totalCacheWriteTokens": 0,
+    "totalDurationMs": 13015,
+    "totalCostUsd": 0.0008141504000000001,
+    "pricingSource": "local-openrouter-estimate",
+    "chunks": [
+      {
+        "index": 0,
+        "inputTokens": 1058,
+        "outputTokens": 411,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 3217,
+        "costUsd": 0.0002632
+      },
+      {
+        "index": 1,
+        "inputTokens": 1275,
+        "outputTokens": 746,
+        "cacheReadTokens": 384,
+        "cacheWriteTokens": 0,
+        "durationMs": 6290,
+        "costUsd": 0.00033469520000000005
+      },
+      {
+        "index": 2,
+        "inputTokens": 1237,
+        "outputTokens": 342,
+        "cacheReadTokens": 384,
+        "cacheWriteTokens": 0,
+        "durationMs": 3508,
+        "costUsd": 0.00021625520000000004
+      }
+    ]
+  }
+}
