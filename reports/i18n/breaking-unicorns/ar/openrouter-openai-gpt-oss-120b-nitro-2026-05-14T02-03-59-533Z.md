@@ -1,0 +1,201 @@
+# Translation Candidate
+- Slug: breaking-unicorns
+- Locale: ar
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2024-09-01--breaking-unicorns/ar/index.mdx
+- Validation: deferred
+- Runtime seconds: 5.75
+- Input tokens: 2874
+- Output tokens: 2319
+- Thinking tokens: unknown
+- Cached input tokens: 512
+- Cache write tokens: 0
+- Estimated cost: $0.000530
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: كيف تخسر مليار دولار بسرعة فائقة
+subTitle: تحطيم الأحاديّات
+date: '2024-09-25'
+modified: '2024-09-25'
+tags:
+  - breaking-unicorns
+  - startup
+  - satire
+  - silicon-valley
+category: Lulz
+subCategory: Thoughts
+cover: ../your-score-zero.webp
+cover_full_width: ../your-score-zero.webp
+cover_mobile: ../square-icon-w200.webp
+cover_icon: ../square-icon-w200.webp
+---
+import {Timeline} from '../../../../components/ui/timeline'
+
+<p class="inset">ملاحظات عن الأحاديّات في البرية. 🦄</p>
+
+<h3>المميزات...</h3>
+<ul>
+  <li>[مسرح الشركات 🎭](#enterprise-theater-)</li>
+  <li>[رفع المستوى 💪](#raising-the-bar-)</li>
+  <li>[هل أنت مُعطَّل؟ 🚀](#are-you-disrupted-)</li>
+  <li>[نادي الكتب حتى الموت 📚](#book-clubbed-to-death-)</li>
+</ul>
+
+<section>
+  <Timeline client:idle
+    headline=''
+  
+    data={[
+      {
+        title: "Enterprise Theater 🎭",
+        slot: "slotEnterpriseTheater",
+      },
+      /*{
+        title: "The Savior",
+        slot: "slotTheSavior",
+      },*/
+      {
+        title: "Raising the Bar 💪",
+        slot: "slotRaisingTheBar",
+      },
+      /* {
+        title: "Bizno Babble",
+        slot: "slotBiznoBabble",
+      },
+      {
+        title: "The Big Raise & oops we spent it all",
+        slot: "slotTheBigRaise",
+      }, */
+      /*{
+        title: "How to be a Big Boi CEO",
+        slot: "slotHowToBigBoiCEO",
+      },*/
+      {
+        title: "Are You Disrupted? 🚀",
+        slot: "slotAreYouARealDisruptor",
+      },
+      {
+        title: "Book Clubbed to Death 📚",
+        slot: "slotBookClubbing",
+      }
+    ]}>
+
+<section slot="slotEnterpriseTheater">
+هل تعاني شركتك من `low-H`؟ (الـ *Hustle*، ليس الهيروين.)
+
+أو `low-F`؟ (كما في *لا شؤونات متبقية*.)
+
+لا تقلق، **الرئيس الكبير** وجد الحل!
+
+- إنها الثقافة! نحتاج لقراءة كتاب! أو توظيف مستشار! رحلة خارجية للشركة؟ هاواي؟ *كم هو ثقافي!*
+- إنها القيم! *اعتنق القيم المفروضة حديثًا!*
+- في الحقيقة، إنها *تصورات الناس*. أشخاص أغبياء. *وقت إعادة العلامة!*
+- نسينا، نحتاج لتوظيف بالغ. `منقذ`! شخص سيصلح كل شيء. شخص من شركة حقيقية، يحظى باحترام الأصدقاء والأعداء على حد سواء. شخص واضح أنه قضى [كمية متعجرفة من الوقت على موقعه.](https://danlevy.net)
+- قال المنقذ إننا بحاجة لأن نكون مدفوعين بالبيانات. يا للغبيين. الآن، نحن *ندفع البيانات!* نجعل المخططات تصعد إلى اليمين، بَرْرْ!
+- قصة طريفة، تبين أن الأمر يتعلق بالموظفين. `اطرد أشخاصًا عشوائيين/مفتاحيين.` *دع الناس يعرفون أننا جادون.*
+
+<blockquote style="margin-block: 2rem; width: 60%;">**إعلان:** إذا كانت منظمة الهندسة لديك توظف `منقذًا`، يرجى [الاتصال](/docs/resume.pdf) لمعرفة أحدث SaaS (منقذ كخدمة) من دان!</blockquote>
+
+</section>
+
+<section slot="slotTheSavior">
+  <p>هل `<Insert Dept. Name>` في فوضى؟</p>
+
+  <p>هل كان ذلك بسبب التسريحات؟ (أه، *تعديل استراتيجي*.) لا، لا، لا يمكن أن يكون ذلك...</p>
+
+  <p>لا تقلق بشأن الأسباب، الشركة لديها حل!</p>
+  <p>ادخل: `منقذ`! شخص سيصلح كل شيء!</p>
+  
+  <p><b>مفسر القصة:</b> دائمًا ما تكون "البيانات". "الحل" هو (بدون سخرية) دائمًا جيرا.</p>
+</section>
+
+<section slot="slotRaisingTheBar">
+  <p>إذن، جمعت جولة تمويلية ضخمة؟ حان وقت إنفاقها كلها!</p>
+  <p>*يمكننا الآن توظيف أشخاص جدد، أفضل، **أذكياء**.* 🍷</p>
+
+  <p>بالمناسبة، نقدم مراجعات 360°! (سُميت على عدد المراجعات التي ستحصل عليها.)</p>
+
+  <p>الآن حان وقت `رفع المستوى`! (مصطلح ملطف لـ *توظيف وإطاحة الأشخاص!*)</p>
+
+<figure>
+![Team Falcon memorial for the Raising the Bar satire](../TeamFalcon.webp "RIP Team Falcon: Lost in tragic 'Raising the Bar' incident.")
+  <figcaption>RIP Team Falcon: ضائع في حادثة "رفع المستوى" المأساوية.</figcaption>
+</figure>
+</section>
+
+<figure slot="slotHowToBigBoiCEO">
+![Product team lifecycle satire for how to be a Big Boi CEO](../HowToBeBigBoiCEO.webp "Product (Team) Lifecycle")
+<figcaption>كيف تكون مديرًا كبيرًا (Big Boi CEO)</figcaption>
+</figure>
+
+<section slot="slotAreYouARealDisruptor">
+  <p>هل أنت `مُعطِّل حقيقي`؟ صوّره إلى 11! اغلي ذلك المحيط الأزرق!</p>
+  <figure>
+![How it started versus how it is going startup disruption satire](../HowItStartedHowItsGoing.webp "How it's going.")
+    <figcaption>كن التعطيل</figcaption>
+  </figure>
+</section>
+
+<section slot="slotBookClubbing">
+
+<figure>
+![How to win at Book Club satire](../HowToWinAtBookClub.webp "How to Win at Book Club")
+  <figcaption>كيف تفوز في نادي الكتب</figcaption>
+</figure>
+
+  <h3>حلقة فك شفرة الكتب</h3>
+
+  {/* The selection of a book club book says a lot about where a company's heading. It can be a way to set the tone for the next quarter, or telegraph imminent layoffs. */}
+
+  بينما العديد من هذه الكتب رائعة ومُوصى بها بشدة، فإن ذلك **لا يمنع الناس من إساءة استخدامها، أو سوء فهمها، أو تطبيقها بشكل خاطئ!**
+
+  <section class="books-list">
+    <div class="book" itemscope itemtype="http://schema.org/Book">
+      <h3 itemprop="name" itemscope itemtype="http://schema.org/Book">محادثات حاسمة: أدوات للتحدث عندما تكون المخاطر عالية</h3>
+      <h5 itemprop="author" itemscope itemtype="http://schema.org/Person">جوزيف جريني، كيري باترسون، رون ماكميلان، آل سويتزل</h5>
+      <div class="review" itemscope itemtype="http://schema.org/Review">مع كل الاحترام، تبًا لك.</div>
+    </div>
+
+    <div class="book" itemscope itemtype="http://schema.org/Book">
+      <h3 itemprop="name" itemscope itemtype="http://schema.org/Book">التدفق: علم النفس للتجربة المثالية</h3>
+      <h5 itemprop="author" itemscope itemtype="http://schema.org/Person">ميهالي تشيكسينتميهالي</h5>
+      <div class="review" itemscope itemtype="http://schema.org/Review">فلاحون أسرع!</div>
+    </div>
+
+    <div class="book" itemscope itemtype="http://schema.org/Book">
+      <h3 itemprop="name" itemscope itemtype="http://schema.org/Book">ما يجلبك إلى هنا لن يوصلك إلى هناك</h3>
+      <h5 itemprop="author" itemscope itemtype="http://schema.org/Person">مارشال جولدسميث</h5>
+      <div class="review" itemscope itemtype="http://schema.org/Review">ارتقِ يا مبتدئين اللعينين.</div>
+    </div>
+
+    <div class="book" itemscope itemtype="http://schema.org/Book">
+      <h3 itemprop="name" itemscope itemtype="http://schema.org/Book">لا قواعد، لا قواعد: نتفليكس وثقافة التجديد</h3>
+      <h5 itemprop="author" itemscope itemtype="http://schema.org/Person">ريد هاستينغز، إيرين ماير</h5>
+      <div class="review" itemscope itemtype="http://schema.org/Review">ستحصل على الكثير من العمل الإضافي.</div>
+    </div>
+
+    <div class="book" itemscope itemtype="http://schema.org/Book">
+      <h3 itemprop="name" itemscope itemtype="http://schema.org/Book">مضخّم جدًا: المعركة من أجل أوبر</h3>
+      <h5 itemprop="author" itemscope itemtype="http://schema.org/Person">مايك إيزاك</h5>
+      <div class="review" itemscope itemtype="http://schema.org/Review">ستقضي وقتًا أقل بكثير في النوم.</div>
+    </div>
+
+    <div class="book" itemscope itemtype="http://schema.org/Book">
+      <h3 itemprop="name" itemscope itemtype="http://schema.org/Book">متجر كل شيء: جيف بيزوس وعصر أمازون</h3>
+      <h5 itemprop="author" itemscope itemtype="http://schema.org/Person">براد ستون</h5>
+      <div class="review" itemscope itemtype="http://schema.org/Review">آمل أن تحب التبول في زجاجة!</div>
+    </div>
+  </section>
+</section>
+
+  </Timeline>
+
+</section>
+
+{/* <aside class="disclaimer">I love the startup ride! I've had a few startups myself and worked at ~5 companies as they became unicorns. I've consulted with dozens of $100M+ companies.   I have seen some crazy shit In my work as engineer, manager and consultant.</aside> */}
+````
