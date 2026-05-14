@@ -1,0 +1,108 @@
+---
+social_image: ../desktop-social.webp
+title: מבוא להבטחות
+subTitle: ההבטחות ב‑JavaScript כיפיות!
+date: '2018-08-01'
+modified: '2024-07-31'
+category: Code
+subCategory: promises
+tags:
+  - promises
+  - async
+  - javascript
+  - composition
+related:
+  - promise-gotchas
+  - visualizing-promises
+  - stop-trying-to-make-async-await-happen
+  - javascript-promises-quiz
+cover: ../joe-yates-480485-unsplash.webp
+cover_mobile: ../w300_joe-yates-480485-unsplash.webp
+cover_icon: ../icon_joe-yates-480485-unsplash.webp
+---
+## הבטחות… מה העניין שלהן?
+
+בכל פעם שאתה מריץ קוד מחשב, יש שני תוצאות אפשריות: **הצלחה** או **כשל**.
+
+אם הקוד הוא אסינכרוני, קשה יותר לסמוך באופן אמין על התוצאה.
+
+**`Promises`** מספקות דרך נוחה להתמודד עם זה.
+
+```
+                        +--Promise---+
+                        |            |
+                        | <-either-> |
+                        |            |
+                <-------+            +-------->
+                |Failure?             Success?|
+                |                             |
+                v                             v
+                (Rejected)           (Resolved)
+```
+
+> הערה צדדית: למרות שהבטחות אמורות להיפתר או להידחות, הן עלולות שלא לעשות אף אחת מהן. זה גורם לאפליקציות להיתקע, וקשה מאוד לאבחן.
+
+### מאיפה מגיעות ההבטחות?
+
+במקרים רבים לא תצטרך ליצור הבטחה בעצמך. ממשקי API מובנים כמו `fetch` וספריות פופולריות כמו `axios` כבר מחזירים הבטחות.
+
+עם זאת, אם אתה חייב ליצור הבטחה, ישנן 2 דרכים לעשות זאת:
+
+### יצירת הבטחות #1/2:
+
+הדרך הפשוטה ביותר ליצור הבטחה היא באמצעות הפונקציה המסייעת: `Promise.resolve()`.
+
+אתה יכול לעטוף (או „להמיר”) כל ערך להבטחה באמצעות `Promise.resolve(value)`.
+
+```js
+// ללא הבטחות:
+function add10(num) {
+  return num + 10
+}
+
+// עם הבטחות:
+function add10Promised(num) {
+  return Promise.resolve(num + 10)
+}
+
+console.log(add10(10)) //=> 20
+
+add10Promised(10)
+  .then(x => console.log(x)) //=> 20
+```
+
+### יצירת הבטחות #2/2:
+
+שיטה גמישה יותר: השתמש בבונה `Promise`.
+
+`new Promise(callback)` מקבל פונקציית `callback` עם הממשק הבא:
+
+```js
+new Promise(function(resolve, reject) {
+  // הפרמטרים `resolve` ו‑`reject` הם שניהם פונקציות.
+  // typeof resolve === 'function'
+  // typeof reject === 'function'
+
+  // `resolve(result)` חייב להתבצע כאשר ההבטחה מתמלאת
+  // `reject(Error)` חייב להתבצע אם ההבטחה נדחית
+})
+```
+
+### API של הבטחות
+
+API של ההבטחות הוא למעשה מספר קטן של שיטות.
+
+2 פונקציות מופע, ו‑4 פונקציות סטטיות/כלים.
+
+#### שיטות מופע של Promise
+
+גישה לערכים מההבטחה לא תעבוד באמצעות תחבולות רגילות (כלומר `console.log(promise)`).
+
+כל ההבטחות מחזירות או הצלחה (דרך `.then(fn)`) או כשל (דרך `.catch(fn)`).
+
+#### שיטות עזר של Promise
+
+* `Promise.resolve(value)` – ממיר כל ערך ל‑Promise
+* `Promise.reject(Error)` – יוצר ערך Promise נכשל, מפעיל את ה‑`.catch()` הבא
+* `Promise.all([...promises])` – מחכה שמערך של Promises יסתיים **כולם**
+* `Promise.race([...promises])` – מתרחש ברגע שה‑Promise הראשון מתמלא (מתרשם)
