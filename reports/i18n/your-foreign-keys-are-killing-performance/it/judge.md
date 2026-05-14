@@ -1,7 +1,7 @@
 # Translation Judge
 
-- Selected candidate: d03ea08886b5f5c582e15f67ced1d318665c0169
-- Selected model: openrouter/google/gemini-3-flash-preview
+- Selected candidate: 37b3f43cf9cc82e1fdc2ba7949eee9bbab961d60
+- Selected model: openrouter/qwen/qwen3.6-plus
 - Judge model: openrouter/google/gemini-3-flash-preview
 
-This candidate provides the most natural and professional Italian translation while maintaining Dan's direct, conversational style. It correctly translates technical terms (e.g., 'sovraccarico' for overhead, 'convalida' for validation) and handles the 'snapshot' vs 'reference' distinction clearly. It also preserves the MDX structure perfectly. Other candidates either left too many English terms (like 'anytime soon' or 'lookup') or felt slightly more robotic in their phrasing.
+The Qwen candidate is the most technically sound, correctly handling the frontmatter and relative asset paths (../) which are crucial for the site structure. The translation captures Dan's tone well. The previous judge noted an untranslated 'anytime soon', but upon review of the provided Italian source, it appears already translated as 'a breve' ('Il Wyoming non verrà rinominato a breve'), so no further suggestions are required.

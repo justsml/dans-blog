@@ -1,16 +1,16 @@
 {
-  "selectedCommit": "d03ea08886b5f5c582e15f67ced1d318665c0169",
-  "selectedModel": "openrouter/google/gemini-3-flash-preview",
+  "selectedCommit": "37b3f43cf9cc82e1fdc2ba7949eee9bbab961d60",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
   "scores": {
     "readability": 9,
-    "technicalAccuracy": 9,
-    "coherence": 9,
+    "technicalAccuracy": 10,
+    "coherence": 10,
     "relevance": 10,
     "translationQuality": 9,
     "mdxPreservation": 10
   },
   "suggestions": [],
-  "rationale": "This candidate provides the most natural and professional Italian translation while maintaining Dan's direct, conversational style. It correctly translates technical terms (e.g., 'sovraccarico' for overhead, 'convalida' for validation) and handles the 'snapshot' vs 'reference' distinction clearly. It also preserves the MDX structure perfectly. Other candidates either left too many English terms (like 'anytime soon' or 'lookup') or felt slightly more robotic in their phrasing.",
+  "rationale": "The Qwen candidate is the most technically sound, correctly handling the frontmatter and relative asset paths (../) which are crucial for the site structure. The translation captures Dan's tone well. The previous judge noted an untranslated 'anytime soon', but upon review of the provided Italian source, it appears already translated as 'a breve' ('Il Wyoming non verrà rinominato a breve'), so no further suggestions are required.",
   "slug": "your-foreign-keys-are-killing-performance",
   "locale": "it",
   "candidateCommits": [
@@ -18,7 +18,17 @@
     "37b3f43cf9cc82e1fdc2ba7949eee9bbab961d60",
     "5d10314036bcfdcbd00f7f5c42190e79621a6674"
   ],
-  "suggestionLog": [],
+  "suggestionLog": [
+    {
+      "priority": "medium",
+      "match": "anytime soon",
+      "replacement": "a breve",
+      "reason": "The English phrase 'anytime soon' was left untranslated in the Italian text.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
   "validation": {
     "ok": true,
     "scope": "local",

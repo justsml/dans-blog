@@ -12,14 +12,28 @@
 - Validation scope: local
 
 ## Primary Judge Telemetry
-- Runtime seconds: 2.81
-- Input tokens: 16119
-- Output tokens: 199
+- Runtime seconds: 2.51
+- Input tokens: 16128
+- Output tokens: 221
 - Thinking tokens: unknown
 - Cached input tokens: 0
 - Cache write tokens: 0
-- OpenRouter cost credits: unknown
-- Estimated cost: $0.008656
+- OpenRouter cost credits: 0.008727
+- Estimated cost: $0.008727
+
+## Pre-Publish Rescore Telemetry
+### Pass 1
+- Runtime seconds: 2.69
+- Input tokens: 9615
+- Output tokens: 233
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- OpenRouter cost credits: 0.005507
+- Estimated cost: $0.005507
+
+## Judge Suggestions
+1. Pass 1: applied medium priority suggestion. Match: "anytime soon" Replacement: "a breve" Reason: The English phrase 'anytime soon' was left untranslated in the Italian text. Note: Applied exact replacement to selected MDX.
 
 ## Candidates
 - current src/content/posts/2025-12-29--your-foreign-keys-are-killing-performance/it/index.mdx
