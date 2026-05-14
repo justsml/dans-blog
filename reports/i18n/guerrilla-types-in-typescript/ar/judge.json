@@ -1,0 +1,64 @@
+{
+  "selectedCommit": "02b6b8898b890a833e344fcef91560ae45818f87",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 8
+  },
+  "suggestions": [],
+  "rationale": "The current translation in the provided MDX already has the fixes applied (no duplicated heading or broken code blocks found in the provided `ar/index.mdx` text). The translation is technically sound, uses professional terminology ('المزج' for Mix-ins), and preserves the direct, slightly informal tone of the original. Asset paths and frontmatter are correctly handled.",
+  "slug": "guerrilla-types-in-typescript",
+  "locale": "ar",
+  "candidateCommits": [
+    "02b6b8898b890a833e344fcef91560ae45818f87",
+    "4a5e1924aeb87b489f4b1be6eaeb6309ffbb4d35"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "#### كائن واحد كبير\n\n#### كائن واحد كبير",
+      "replacement": "#### كائن واحد كبير",
+      "reason": "The heading is duplicated in the candidate.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "interface Reviews { authorId: number; stars: number; }\n}\n\nبشكل عام، هذا النهج رائع.",
+      "replacement": "interface Reviews { authorId: number; stars: number; }\n```\n\nبشكل عام، هذا النهج رائع.",
+      "reason": "The code block is missing its closing backticks and has an extra closing brace, breaking the MDX structure.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "#### كائن واحد كبير\n\n#### كائن واحد كبير",
+      "replacement": "#### كائن واحد كبير",
+      "reason": "The heading is duplicated in the candidate.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "interface Reviews { authorId: number; stars: number; }\n}\n\nبشكل عام، هذا النهج رائع.",
+      "replacement": "interface Reviews { authorId: number; stars: number; }\n```\n\nبشكل عام، هذا النهج رائع.",
+      "reason": "The code block is missing its closing backticks and has an extra closing brace, breaking the MDX structure.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug guerrilla-types-in-typescript --locale ar --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug guerrilla-types-in-typescript --locale ar --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug guerrilla-types-in-typescript --locale ar --skip-global\n111 |     })\n112 |     .filter((message): message is string => message != null);\n113 | \n114 |   if (mismatches.length === 0) return;\n115 | \n116 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2023-09-06--guerrilla-types-in-typescript/ar/index.mdx changed heading counts. H2: English has 2, translation has 1; H3: English has 5, translation has 1; H4: English has 5, translation has 3\n      at assertHeadingCounts (/Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:116:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:28:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}
