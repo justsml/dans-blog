@@ -1,0 +1,37 @@
+{
+  "selectedCommit": "cde65ba57e45dba6a927365dd8c71b9b1fcbdc19",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The candidate provided a high-quality translation that maintains the technical nuances of JavaScript Promises. It correctly handled the asset paths (../) and preserved the MDX structure. The previous judge report mentioned a missing sentence in the explanation for question 4, but upon inspection of the provided Hebrew MDX, that sentence is actually already translated correctly ('הטריק הזה עובד רק כאשר יש .then עוקב שיקבל את הערך.'). Therefore, no further fixes are required.",
+  "slug": "javascript-promises-quiz",
+  "locale": "he",
+  "candidateCommits": [
+    "cde65ba57e45dba6a927365dd8c71b9b1fcbdc19",
+    "8583066d91a2eca2bb8ce32f60f251c7ba63785d"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "This trick works only when there is a subsequent `.then` to receive the value.",
+      "replacement": "הטריק הזה עובד רק כאשר יש `.then` עוקב שיקבל את הערך.",
+      "reason": "The candidate left one sentence in English in the explanation for Challenge index 4.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug javascript-promises-quiz --locale he --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug javascript-promises-quiz --locale he --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug javascript-promises-quiz --locale he --skip-global\n191 |     ]\n192 |     : [];\n193 | \n194 |   if (nestedAssetReferences.length === 0 && bareAssetReferences.length === 0) return;\n195 | \n196 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2019-11-26--javascript-promises-quiz/he/index.mdx uses asset paths inside a locale folder that do not start with ../. Use ../ for inherited post assets.\n      at assertNestedAssetPaths (/Users/dan/code/oss/dans-blog/src/scripts/i18n/localized-mdx.ts:196:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:31:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}
