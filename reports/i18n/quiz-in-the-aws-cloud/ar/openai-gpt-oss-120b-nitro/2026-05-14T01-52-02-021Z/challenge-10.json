@@ -1,0 +1,64 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Batch Operations",
+  "translatedTitle": "عمليات الدفعة",
+  "translation": {
+    "title": "عمليات الدفعة",
+    "group": "الدفعات، الجزء 2!",
+    "options": [
+      {
+        "text": "1"
+      },
+      {
+        "text": "10"
+      },
+      {
+        "text": "25",
+        "hint": "تخمين جيد..."
+      },
+      {
+        "text": "50"
+      },
+      {
+        "text": "100",
+        "hint": "تفكر في حد GetItem؟"
+      },
+      {
+        "text": "100 when streaming"
+      },
+      {
+        "text": "None of the above",
+        "hint": "هذا أمر معقد قليلاً..."
+      }
+    ],
+    "objectives": [
+      "فهم حدود عمليات الدفعة في DynamoDB",
+      "التمييز بين العمليات الفردية والدفعية"
+    ],
+    "questionProse": [
+      "ما هو الحد الأقصى لعدد المستندات التي يمكن لـ DynamoDB `UPDATE`ها في دفعة واحدة؟"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "عملاء DynamoDB هم في الأساس جميع الأغلفة لواجهة HTTP API الخاصة به. عملية `BatchWriteItem` يمكنها `PUT` أو `DELETE` حتى **25** مستندًا لكل طلب HTTP، لكنها لا تستطيع `UPDATE` عدة مستندات.\n\n    بينما يمكن لـ DynamoDB `INSERT` حتى **25** مستندًا لكل طلب HTTP، يمكنها `UPDATE` مستندًا واحدًا فقط لكل طلب باستخدام عملية `UpdateItem`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"عمليات الدفعة\",\n  \"group\": \"الدفعات، الجزء 2!\",\n  \"options\": [\n    {\n      \"text\": \"1\"\n    },\n    {\n      \"text\": \"10\"\n    },\n    {\n      \"text\": \"25\",\n      \"hint\": \"تخمين جيد...\"\n    },\n    {\n      \"text\": \"50\"\n    },\n    {\n      \"text\": \"100\",\n      \"hint\": \"تفكر في حد GetItem؟\"\n    },\n    {\n      \"text\": \"100 when streaming\"\n    },\n    {\n      \"text\": \"None of the above\",\n      \"hint\": \"هذا أمر معقد قليلاً...\"\n    }\n  ],\n  \"objectives\": [\n    \"فهم حدود عمليات الدفعة في DynamoDB\",\n    \"التمييز بين العمليات الفردية والدفعية\"\n  ],\n  \"questionProse\": [\n    \"ما هو الحد الأقصى لعدد المستندات التي يمكن لـ DynamoDB `UPDATE`ها في دفعة واحدة؟\"\n  ],\n  \"questionCode\": [],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"عملاء DynamoDB هم في الأساس جميع الأغلفة لواجهة HTTP API الخاصة به. عملية `BatchWriteItem` يمكنها `PUT` أو `DELETE` حتى **25** مستندًا لكل طلب HTTP، لكنها لا تستطيع `UPDATE` عدة مستندات.\\n\\n    بينما يمكن لـ DynamoDB `INSERT` حتى **25** مستندًا لكل طلب HTTP، يمكنها `UPDATE` مستندًا واحدًا فقط لكل طلب باستخدام عملية `UpdateItem`.\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 976,
+    "outputTokens": 782,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 2616,
+    "providerCostUsd": 0.0005964,
+    "providerUpstreamCostUsd": 0.0005964,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000038064,
+    "outputUsd": 0.00014076,
+    "totalUsd": 0.000178824,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

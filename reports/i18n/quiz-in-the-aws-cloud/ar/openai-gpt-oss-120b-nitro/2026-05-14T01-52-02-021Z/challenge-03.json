@@ -1,0 +1,64 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "DynamoDB",
+  "translatedTitle": "DynamoDB",
+  "translation": {
+    "title": "DynamoDB",
+    "group": "بدون مخطط",
+    "options": [
+      {
+        "text": "PutItem",
+        "hint": "ينشئ عنصرًا جديدًا، أو يستبدل عنصرًا قديمًا بعنصر جديد."
+      },
+      {
+        "text": "BatchUpdateItem",
+        "hint": "غير موجود."
+      },
+      {
+        "text": "BatchWriteItem",
+        "hint": "يضيف (يدرج) أو يحذف عناصر متعددة في استدعاء واحد."
+      },
+      {
+        "text": "UpdateItem"
+      },
+      {
+        "text": "BatchUpsertItem",
+        "hint": "في DynamoDB؟"
+      },
+      {
+        "text": "TransactWriteItems",
+        "hint": "يجمع عمليات متعددة من PutItem وUpdateItem وDeleteItem وConditionCheck في استدعاء واحد."
+      }
+    ],
+    "objectives": [
+      "قارن قدرات عمليات الدفعة في DynamoDB",
+      "حسّن عمليات التحديث في DynamoDB",
+      "قيّم اعتبارات التوسع للتحديثات"
+    ],
+    "questionProse": [
+      "أي واجهة برمجة تطبيقات DynamoDB تُحدّث الخصائص في عنصر موجود واحد؟"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "المفتاح هنا هو <b>التحديثات</b>، وليس الإدخالات أو عمليات PUT. إذا كنت تقوم بالإدخالات، يمكنك استخدام `BatchWriteItem` أو `TransactWriteItems`.\n\n    بينما يمكن لـ `BatchWriteItem` التعامل مع عمليات متعددة، فهو مقيد بـ PUTs وDELETES. `TransactWriteItems` أكثر قوة، لكنه أشبه بالمطرقة الكبيرة للتحديثات البسيطة.\n    للتحديثات البسيطة، `UpdateItem` هو الخيار الأفضل. يسمح لك بـ UPDATE، أو تعديل خاصية أو أكثر في عنصر موجود.\n\n    عملية `UpdateItem` تعدل عنصرًا واحدًا لكل طلب. للتعبئات الكبيرة أو التحديثات الضخمة، عادةً ما تنسق العديد من استدعاءات `UpdateItem` أو تستخدم سير عمل أكبر مثل تنفيذ دفعات PartiQL، Step Functions، Glue، EMR، أو عملية عامل مخصصة.\n\n    عملية `UpdateItem`:\n    - تُحدّث خصائص عنصر موجود.\n    - تُضيف خصائص جديدة إلى عنصر موجود.\n    - تُزيل الخصائص من العنصر.\n    - تُجري التحديث بشرط وجود العنصر أو استيفائه لشروط معينة.\n\n    [DynamoDB UpdateItem](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateItem.html)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"DynamoDB\",\n  \"group\": \"بدون مخطط\",\n  \"options\": [\n    {\n      \"text\": \"PutItem\",\n      \"hint\": \"ينشئ عنصرًا جديدًا، أو يستبدل عنصرًا قديمًا بعنصر جديد.\"\n    },\n    {\n      \"text\": \"BatchUpdateItem\",\n      \"hint\": \"غير موجود.\"\n    },\n    {\n      \"text\": \"BatchWriteItem\",\n      \"hint\": \"يضيف (يدرج) أو يحذف عناصر متعددة في استدعاء واحد.\"\n    },\n    {\n      \"text\": \"UpdateItem\"\n    },\n    {\n      \"text\": \"BatchUpsertItem\",\n      \"hint\": \"في DynamoDB؟\"\n    },\n    {\n      \"text\": \"TransactWriteItems\",\n      \"hint\": \"يجمع عمليات متعددة من PutItem وUpdateItem وDeleteItem وConditionCheck في استدعاء واحد.\"\n    }\n  ],\n  \"objectives\": [\n    \"قارن قدرات عمليات الدفعة في DynamoDB\",\n    \"حسّن عمليات التحديث في DynamoDB\",\n    \"قيّم اعتبارات التوسع للتحديثات\"\n  ],\n  \"questionProse\": [\n    \"أي واجهة برمجة تطبيقات DynamoDB تُحدّث الخصائص في عنصر موجود واحد؟\"\n  ],\n  \"questionCode\": [],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"المفتاح هنا هو <b>التحديثات</b>، وليس الإدخالات أو عمليات PUT. إذا كنت تقوم بالإدخالات، يمكنك استخدام `BatchWriteItem` أو `TransactWriteItems`.\\n\\n    بينما يمكن لـ `BatchWriteItem` التعامل مع عمليات متعددة، فهو مقيد بـ PUTs وDELETES. `TransactWriteItems` أكثر قوة، لكنه أشبه بالمطرقة الكبيرة للتحديثات البسيطة.\\n    للتحديثات البسيطة، `UpdateItem` هو الخيار الأفضل. يسمح لك بـ UPDATE، أو تعديل خاصية أو أكثر في عنصر موجود.\\n\\n    عملية `UpdateItem` تعدل عنصرًا واحدًا لكل طلب. للتعبئات الكبيرة أو التحديثات الضخمة، عادةً ما تنسق العديد من استدعاءات `UpdateItem` أو تستخدم سير عمل أكبر مثل تنفيذ دفعات PartiQL، Step Functions، Glue، EMR، أو عملية عامل مخصصة.\\n\\n    عملية `UpdateItem`:\\n    - تُحدّث خصائص عنصر موجود.\\n    - تُضيف خصائص جديدة إلى عنصر موجود.\\n    - تُزيل الخصائص من العنصر.\\n    - تُجري التحديث بشرط وجود العنصر أو استيفائه لشروط معينة.\\n\\n    [DynamoDB UpdateItem](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateItem.html)\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 1199,
+    "outputTokens": 1576,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 6450,
+    "providerCostUsd": 0.00108705,
+    "providerUpstreamCostUsd": 0.00108705,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000046760999999999995,
+    "outputUsd": 0.00028367999999999997,
+    "totalUsd": 0.00033044099999999995,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "index": 24,
+  "attempt": 1,
+  "originalTitle": "Time To Live (TTL)",
+  "translatedTitle": "الوقت للعيش (TTL)",
+  "translation": {
+    "title": "الوقت للعيش (TTL)",
+    "group": "ميزات DynamoDB",
+    "options": [
+      {
+        "text": "يحذف العناصر فور انتهاء صلاحيتها"
+      },
+      {
+        "text": "يتطلب تشغيل حذف يدوي"
+      },
+      {
+        "text": "حذف خلفي بأفضل جهد للجدولة"
+      },
+      {
+        "text": "ينتهي صلاحية العناصر لكنه يبقيها مخزنة"
+      }
+    ],
+    "objectives": [
+      "فهم ميزة TTL في DynamoDB",
+      "تطبيق TTL لإدارة دورة حياة البيانات",
+      "تصميم استراتيجيات فعّالة لانتهاء صلاحية البيانات"
+    ],
+    "questionProse": [
+      "كيف يتعامل ميزة TTL في DynamoDB مع حذف العناصر؟"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "خصائص TTL في DynamoDB:\n      - عملية خلفية تراقب سمة TTL\n      - يتم حذف العناصر المنتهية على جدول زمني بأفضل جهد، عادةً خلال بضعة أيام\n      - لا تكلفة إضافية للـ TTL\n      - تظهر العناصر المحذوفة في الـ streams\n\n      حالات الاستخدام:\n      - إدارة الجلسات\n      - انتهاء صلاحية السجلات\n      - تنظيف البيانات المؤقتة\n      - الامتثال التنظيمي"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"الوقت للعيش (TTL)\",\n  \"group\": \"ميزات DynamoDB\",\n  \"options\": [\n    {\n      \"text\": \"يحذف العناصر فور انتهاء صلاحيتها\"\n    },\n    {\n      \"text\": \"يتطلب تشغيل حذف يدوي\"\n    },\n    {\n      \"text\": \"حذف خلفي بأفضل جهد للجدولة\"\n    },\n    {\n      \"text\": \"ينتهي صلاحية العناصر لكنه يبقيها مخزنة\"\n    }\n  ],\n  \"objectives\": [\n    \"فهم ميزة TTL في DynamoDB\",\n    \"تطبيق TTL لإدارة دورة حياة البيانات\",\n    \"تصميم استراتيجيات فعّالة لانتهاء صلاحية البيانات\"\n  ],\n  \"questionProse\": [\n    \"كيف يتعامل ميزة TTL في DynamoDB مع حذف العناصر؟\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"خصائص TTL في DynamoDB:\\n      - عملية خلفية تراقب سمة TTL\\n      - يتم حذف العناصر المنتهية على جدول زمني بأفضل جهد، عادةً خلال بضعة أيام\\n      - لا تكلفة إضافية للـ TTL\\n      - تظهر العناصر المحذوفة في الـ streams\\n\\n      حالات الاستخدام:\\n      - إدارة الجلسات\\n      - انتهاء صلاحية السجلات\\n      - تنظيف البيانات المؤقتة\\n      - الامتثال التنظيمي\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 920,
+    "outputTokens": 788,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 1949,
+    "providerCostUsd": 0.0005916,
+    "providerUpstreamCostUsd": 0.0005916,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00003588,
+    "outputUsd": 0.00014183999999999998,
+    "totalUsd": 0.00017771999999999997,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
