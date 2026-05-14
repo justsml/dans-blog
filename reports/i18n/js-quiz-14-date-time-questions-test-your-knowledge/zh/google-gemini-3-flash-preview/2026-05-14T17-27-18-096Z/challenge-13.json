@@ -1,0 +1,52 @@
+{
+  "index": 12,
+  "attempt": 1,
+  "originalTitle": "Date Setters Part 4",
+  "translatedTitle": "Date 设置方法第四部分",
+  "translation": {
+    "title": "Date 设置方法第四部分",
+    "group": "处理日期",
+    "options": [
+      {
+        "text": "Jan 01 2020"
+      },
+      {
+        "text": "Feb 01 2020"
+      },
+      {
+        "text": "Jan 01 2021"
+      },
+      {
+        "text": "Feb 01 2021"
+      },
+      {
+        "text": "RangeError: Invalid argument."
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "输出结果会包含什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "[`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) 方法用于设置指定日期实例的月份。\n  \n      月份参数是从零开始计算的，范围是 0-11（使用公历）。\n\n      在这里我们可以看到月份和年份被调整到了 2021 年 2 月，因为 `setMonth(13)` 比 11（12月）多了 2。\n\n      <aside class=\"hint\">`setMonth` 通过索引设置月份，12 个月的索引范围是 0-11。</aside>\n      <aside class=\"hint\">\n        超出 0-11 范围的数字会导致年份向上或向下溢出。例如，`setMonth(13)` 会将年份调整为 2021 年（在 2 月，因为 13 比 11 多了 2）。\n      </aside>"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Date 设置方法第四部分\",\n  \"group\": \"处理日期\",\n  \"options\": [\n    {\n      \"text\": \"Jan 01 2020\"\n    },\n    {\n      \"text\": \"Feb 01 2020\"\n    },\n    {\n      \"text\": \"Jan 01 2021\"\n    },\n    {\n      \"text\": \"Feb 01 2021\"\n    },\n    {\n      \"text\": \"RangeError: Invalid argument.\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"输出结果会包含什么？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"[`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) 方法用于设置指定日期实例的月份。\\n  \\n      月份参数是从零开始计算的，范围是 0-11（使用公历）。\\n\\n      在这里我们可以看到月份和年份被调整到了 2021 年 2 月，因为 `setMonth(13)` 比 11（12月）多了 2。\\n\\n      <aside class=\\\"hint\\\">`setMonth` 通过索引设置月份，12 个月的索引范围是 0-11。</aside>\\n      <aside class=\\\"hint\\\">\\n        超出 0-11 范围的数字会导致年份向上或向下溢出。例如，`setMonth(13)` 会将年份调整为 2021 年（在 2 月，因为 13 比 11 多了 2）。\\n      </aside>\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1014,
+    "outputTokens": 409,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2924,
+    "providerCostUsd": 0.001734,
+    "providerUpstreamCostUsd": 0.001734,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000507,
+    "outputUsd": 0.001227,
+    "totalUsd": 0.0017339999999999999,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

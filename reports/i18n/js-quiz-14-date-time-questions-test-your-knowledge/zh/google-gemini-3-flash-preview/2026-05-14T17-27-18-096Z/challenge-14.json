@@ -1,0 +1,54 @@
+{
+  "index": 13,
+  "attempt": 1,
+  "originalTitle": "Date Setters Part 5",
+  "translatedTitle": "Date 设置方法第五部分",
+  "translation": {
+    "title": "Date 设置方法第五部分",
+    "group": "处理日期",
+    "options": [
+      {
+        "text": "Jan 01 2020"
+      },
+      {
+        "text": "Feb 01 2020"
+      },
+      {
+        "text": "Jan 01 2019"
+      },
+      {
+        "text": "Dec 01 2019"
+      },
+      {
+        "text": "RangeError: Invalid argument."
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "输出结果会包含什么？"
+    ],
+    "hintsProse": [
+      "<aside class=\"hint\">每个月的天数并不统一，通常在 28 到 31 天之间。</aside>\n      <aside class=\"hint\">`setDate` 用于设置月份中的某一天，通常范围是 1-31。负数或任何大于 `31` 的数字都会导致日期和月份发生进位或退位调整，有时结果会出人意料。</aside>"
+    ],
+    "explanationProse": [
+      "[`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) 方法用于设置指定日期实例的月份。\n  \n      月份参数是从零开始的，范围是 0-11（使用公历）。\n\n      在这里，我们看到月份和年份回退到了 2019 年 12 月，因为 `setMonth(-1)` 小于 0（即 1 月之前的一个月）。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Date 设置方法第五部分\",\n  \"group\": \"处理日期\",\n  \"options\": [\n    {\n      \"text\": \"Jan 01 2020\"\n    },\n    {\n      \"text\": \"Feb 01 2020\"\n    },\n    {\n      \"text\": \"Jan 01 2019\"\n    },\n    {\n      \"text\": \"Dec 01 2019\"\n    },\n    {\n      \"text\": \"RangeError: Invalid argument.\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"输出结果会包含什么？\"\n  ],\n  \"hintsProse\": [\n    \"<aside class=\\\"hint\\\">每个月的天数并不统一，通常在 28 到 31 天之间。</aside>\\n      <aside class=\\\"hint\\\">`setDate` 用于设置月份中的某一天，通常范围是 1-31。负数或任何大于 `31` 的数字都会导致日期和月份发生进位或退位调整，有时结果会出人意料。</aside>\"\n  ],\n  \"explanationProse\": [\n    \"[`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) 方法用于设置指定日期实例的月份。\\n  \\n      月份参数是从零开始的，范围是 0-11（使用公历）。\\n\\n      在这里，我们看到月份和年份回退到了 2019 年 12 月，因为 `setMonth(-1)` 小于 0（即 1 月之前的一个月）。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 985,
+    "outputTokens": 396,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2940,
+    "providerCostUsd": 0.0016805,
+    "providerUpstreamCostUsd": 0.0016805,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.0004925,
+    "outputUsd": 0.0011879999999999998,
+    "totalUsd": 0.0016804999999999997,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

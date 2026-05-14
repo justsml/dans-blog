@@ -1,0 +1,55 @@
+{
+  "index": 3,
+  "attempt": 1,
+  "originalTitle": "Date Constructor Part 4",
+  "translatedTitle": "Date 构造函数第四部分",
+  "translation": {
+    "title": "Date 构造函数第四部分",
+    "group": "处理日期",
+    "options": [
+      {
+        "text": "1969"
+      },
+      {
+        "text": "1970"
+      },
+      {
+        "text": "2019"
+      },
+      {
+        "text": "2020"
+      },
+      {
+        "text": "2021"
+      },
+      {
+        "text": "RangeError: Invalid argument."
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "输出结果将包含什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "使用单个整数参数创建的 `Date` 实例会被解释为 Unix `Epoch`（纪元）值。`Epoch` 是指自 1970 年 1 月 1 日以来的毫秒数。\n\n`2020`（毫秒）这个值会被转换为 1970 年 1 月 1 日之后 2 秒。\n\n由于我们的本地时区是 -7 小时的负偏移量，最终结果会变成 `Wed Dec 31 1969 17:00:02 GMT-0700 (Mountain Standard Time)`。\n\n你可以通过使用 [`.getUTCFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getUTCFullYear) 来避开本地时区偏移的影响。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Date 构造函数第四部分\",\n  \"group\": \"处理日期\",\n  \"options\": [\n    {\n      \"text\": \"1969\"\n    },\n    {\n      \"text\": \"1970\"\n    },\n    {\n      \"text\": \"2019\"\n    },\n    {\n      \"text\": \"2020\"\n    },\n    {\n      \"text\": \"2021\"\n    },\n    {\n      \"text\": \"RangeError: Invalid argument.\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"输出结果将包含什么？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"使用单个整数参数创建的 `Date` 实例会被解释为 Unix `Epoch`（纪元）值。`Epoch` 是指自 1970 年 1 月 1 日以来的毫秒数。\\n\\n`2020`（毫秒）这个值会被转换为 1970 年 1 月 1 日之后 2 秒。\\n\\n由于我们的本地时区是 -7 小时的负偏移量，最终结果会变成 `Wed Dec 31 1969 17:00:02 GMT-0700 (Mountain Standard Time)`。\\n\\n你可以通过使用 [`.getUTCFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getUTCFullYear) 来避开本地时区偏移的影响。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 971,
+    "outputTokens": 378,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2996,
+    "providerCostUsd": 0.0016195,
+    "providerUpstreamCostUsd": 0.0016195,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.0004855,
+    "outputUsd": 0.001134,
+    "totalUsd": 0.0016195,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

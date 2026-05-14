@@ -1,0 +1,49 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Date String Parsing",
+  "translatedTitle": "日期字符串解析",
+  "translation": {
+    "title": "日期字符串解析",
+    "group": "处理日期",
+    "options": [
+      {
+        "text": "2019 2020"
+      },
+      {
+        "text": "2020 2021"
+      },
+      {
+        "text": "2020 2020"
+      },
+      {
+        "text": "2020 2019"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "控制台会打印出什么值？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "不包含 `T` 时间值的字符串看起来像是 2020 年 1 月 1 日 —— 但仅包含日期的字符串会被解释为 UTC 时间。当调整到本地时区（例如 GMT-7）时，我们会发现时间仍然停留在 2019 年。\n\n不带显式时区的日期时间字符串会被解释为本地时间。\n\n`T00:00` 这种形式会导致第二个值被解释为本地时间的午夜。\n\n第一个日期被解释为 `Tue Dec 31 2019 17:00:00 GMT-0700 (Mountain Standard Time)`。\n第二个日期被解释为 `Wed Jan 01 2020 00:00:00 GMT-0700 (Mountain Standard Time)`。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"日期字符串解析\",\n  \"group\": \"处理日期\",\n  \"options\": [\n    {\n      \"text\": \"2019 2020\"\n    },\n    {\n      \"text\": \"2020 2021\"\n    },\n    {\n      \"text\": \"2020 2020\"\n    },\n    {\n      \"text\": \"2020 2019\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"控制台会打印出什么值？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"不包含 `T` 时间值的字符串看起来像是 2020 年 1 月 1 日 —— 但仅包含日期的字符串会被解释为 UTC 时间。当调整到本地时区（例如 GMT-7）时，我们会发现时间仍然停留在 2019 年。\\n\\n不带显式时区的日期时间字符串会被解释为本地时间。\\n\\n`T00:00` 这种形式会导致第二个值被解释为本地时间的午夜。\\n\\n第一个日期被解释为 `Tue Dec 31 2019 17:00:00 GMT-0700 (Mountain Standard Time)`。\\n第二个日期被解释为 `Wed Jan 01 2020 00:00:00 GMT-0700 (Mountain Standard Time)`。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 956,
+    "outputTokens": 354,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2937,
+    "providerCostUsd": 0.00154,
+    "providerUpstreamCostUsd": 0.00154,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000478,
+    "outputUsd": 0.001062,
+    "totalUsd": 0.0015400000000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
