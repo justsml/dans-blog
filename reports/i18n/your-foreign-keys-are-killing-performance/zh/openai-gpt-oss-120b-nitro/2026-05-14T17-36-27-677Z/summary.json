@@ -1,0 +1,75 @@
+{
+  "runId": "openai-gpt-oss-120b-nitro@2026-05-14T17-36-27-677Z",
+  "slug": "your-foreign-keys-are-killing-performance",
+  "locale": "zh",
+  "model": "openai/gpt-oss-120b:nitro",
+  "modelPath": "openai-gpt-oss-120b-nitro",
+  "createdAt": "2026-05-14T17:36:37.336Z",
+  "sourcePath": "src/content/posts/2025-12-29--your-foreign-keys-are-killing-performance/index.mdx",
+  "targetPath": "src/content/posts/2025-12-29--your-foreign-keys-are-killing-performance/zh/index.mdx",
+  "candidatePath": "reports/i18n/your-foreign-keys-are-killing-performance/zh/openai-gpt-oss-120b-nitro/2026-05-14T17-36-27-677Z/candidate.mdx",
+  "sourceHash": "710eef136b3fb20edb779995cdd3e6132250ff49ebbe95c2159902711bea426c",
+  "outputHash": "7b9be0df86476ed58e56730e93e5a77c04f1e5d7542fda784278b29e03464ce2",
+  "reasoningEffort": "low",
+  "temperature": 0.3,
+  "maxTokens": 16000,
+  "timeoutMs": 200000,
+  "articleSummary": "**Summary**  \nThe article argues that the common belief “foreign keys are slow and should be removed for performance” is misguided; the real decision is about which failure mode you can tolerate, not about speed versus correctness. Using a weather‑monitoring example, it shows that static reference data (e.g., US states) may not need FK checks, while high‑throughput inserts (sensor readings) can suffer from FK‑induced contention, prompting alternatives such as batch commits, lower isolation levels, or an append‑only log table with JSONB. It also critiques the “normalization trap” taught in textbooks, explaining that snapshot data (orders, audit logs, history records) is better stored denormalized rather than forced into a fully normalized schema with many joins.  \n\n**Intended audience** – Web developers, DBAs, and engineers who design relational schemas and need to balance data integrity with write performance.  \n\n**Tone & framing** – A pragmatic, slightly rant‑like analysis that uses everyday metaphors (safety glass, seatbelts) and concrete code examples to illustrate trade‑offs, positioning foreign keys as safety features whose cost must be weighed against the cost of data corruption.",
+  "totalInputTokens": 6756,
+  "totalOutputTokens": 2745,
+  "totalCacheReadTokens": 2304,
+  "totalCacheWriteTokens": 0,
+  "totalDurationMs": 8511,
+  "totalCostUsd": 0.000757584,
+  "pricingSource": "local-openrouter-estimate",
+  "telemetry": {
+    "model": "openai/gpt-oss-120b:nitro",
+    "chunkSize": "18p",
+    "totalChunks": 4,
+    "totalInputTokens": 6756,
+    "totalOutputTokens": 2745,
+    "totalCacheReadTokens": 2304,
+    "totalCacheWriteTokens": 0,
+    "totalDurationMs": 8511,
+    "totalCostUsd": 0.000757584,
+    "pricingSource": "local-openrouter-estimate",
+    "chunks": [
+      {
+        "index": 0,
+        "inputTokens": 1659,
+        "outputTokens": 857,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 2617,
+        "costUsd": 0.000218961
+      },
+      {
+        "index": 1,
+        "inputTokens": 1941,
+        "outputTokens": 908,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 2497,
+        "costUsd": 0.00023913899999999997
+      },
+      {
+        "index": 2,
+        "inputTokens": 1707,
+        "outputTokens": 649,
+        "cacheReadTokens": 768,
+        "cacheWriteTokens": 0,
+        "durationMs": 1971,
+        "costUsd": 0.00018339299999999998
+      },
+      {
+        "index": 3,
+        "inputTokens": 1449,
+        "outputTokens": 331,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 1426,
+        "costUsd": 0.000116091
+      }
+    ]
+  }
+}
