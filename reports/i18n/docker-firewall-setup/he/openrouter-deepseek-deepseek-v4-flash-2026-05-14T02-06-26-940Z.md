@@ -1,0 +1,15 @@
+# Translation Candidate
+- Slug: docker-firewall-setup
+- Locale: he
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2015-06-06--docker-firewall-setup/he/index.mdx
+- Validation: rejected: direct AI SDK translation failed
+- Runtime seconds: 15.83
+- Input tokens: 3344
+- Output tokens: 2581
+- Thinking tokens: unknown
+- Cached input tokens: 768
+- Cache write tokens: 0
+- Estimated cost: $0.001085
+- Pricing source: local-openrouter-estimate
+- Note: Command failed: bun run i18n:translate:chunked -- --slug docker-firewall-setup --locale he --model openrouter/deepseek/deepseek-v4-flash --chunk 10p --run-id 2026-05-14T02-06-26-933Z-88238 --run-lock-path /Users/dan/code/oss/dans-blog/.git/i18n-all-missing-runlocks/docker-firewall-setup-he-deepseek-deepseek-v4-flash.json --quiz-concurrency 32 (code 1)
