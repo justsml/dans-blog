@@ -1,0 +1,77 @@
+{
+  "selectedCommit": "b321c950a728ce606ae193f59afb9a982ae7a5fa",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "يومئ نائب الرئيس بالموافقة. يحدّث مدير المنتج الجدول الزمني. يشعر الجميع بالإنتاجية.",
+      "replacement": "يومئ نائب الرئيس بالموافقة، ويحدّث مدير المنتج الجدول الزمني، ويشعر الجميع بالإنتاجية.",
+      "reason": "Arabic prose flows better with conjunctions (waw al-atf) rather than short, isolated sentences which can feel choppy."
+    },
+    {
+      "priority": "medium",
+      "match": "ولكن كما يكتب مارتي كاجان في كتاب *Inspired*،",
+      "replacement": "ولكن كما يكتب مارتي كاجان في كتاب *Inspired* (مُلهم)،",
+      "reason": "While the candidate kept the English title, adding the Arabic meaning in parentheses helps readability for non-English speakers while maintaining technical recognition."
+    }
+  ],
+  "rationale": "The DeepSeek candidate is significantly better than the alternative, which suffered from 'code-switching' (mixing English words like 'nod' into Arabic sentences). DeepSeek correctly translated technical concepts like 'merge conflicts' and 'standup' into natural Arabic. The MDX structure is perfectly preserved. The suggestions provided aim to further smooth the Arabic sentence flow and ensure consistency in how technical book titles are referenced.",
+  "slug": "just-add-more-engineers-fallacy",
+  "locale": "ar",
+  "candidateCommits": [
+    "b321c950a728ce606ae193f59afb9a982ae7a5fa",
+    "ba92d3237c982f6c8cb52da41a6124810a0a086f"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "يومئ نائب الرئيس بالموافقة. يحدّث مدير المنتج الجدول الزمني.",
+      "replacement": "يومئ نائب الرئيس بالموافقة، ويحدّث مدير المنتج الجدول الزمني.",
+      "reason": "Improved flow in Arabic by using a conjunction instead of short, choppy sentences.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "في كتاب *هندسة الفرق*",
+      "replacement": "في كتاب *Team Topologies*",
+      "reason": "The book title is better left in English or with the English title in parentheses as it is a specific technical methodology title, though the candidate's translation is acceptable, consistency with the 'Further Reading' section is better.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "يومئ نائب الرئيس بالموافقة، ويحدّث مدير المنتج الجدول الزمني. يشعر الجميع بالإنتاجية.",
+      "replacement": "يومئ نائب الرئيس بالموافقة، ويحدّث مدير المنتج الجدول الزمني، ويشعر الجميع بالإنتاجية.",
+      "reason": "Arabic prose flows better with conjunctions (waw al-atf) rather than short, isolated sentences which can feel choppy.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "في كتاب *ملهم*",
+      "replacement": "في كتاب *Inspired*",
+      "reason": "Technical book titles are generally more recognizable in their original English form within the Arabic tech community, or should at least be consistent with the English titles used in the 'Further Reading' section.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug just-add-more-engineers-fallacy --locale ar --skip-global",
+    "output": ""
+  }
+}
