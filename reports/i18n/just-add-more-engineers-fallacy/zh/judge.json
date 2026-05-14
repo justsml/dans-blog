@@ -1,0 +1,55 @@
+{
+  "selectedCommit": "72fad3f5a9166edab86218aea11e17904384d6b8",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 90,
+    "technicalAccuracy": 96,
+    "coherence": 95,
+    "relevance": 100,
+    "translationQuality": 92,
+    "mdxPreservation": 100
+  },
+  "suggestions": [],
+  "rationale": "All medium-priority suggestions from the initial judge report have been applied: book titles corrected to standard Chinese versions ('人月神话', '启示录', '没有银弹：软件工程的本质与意外'). The translation remains technically accurate, natural, and preserves all MDX headings. No further medium/high-priority fixes are needed.",
+  "slug": "just-add-more-engineers-fallacy",
+  "locale": "zh",
+  "candidateCommits": [
+    "72fad3f5a9166edab86218aea11e17904384d6b8",
+    "584bb0fd00b7227ac744ea5a2fc4b1f3966d82e0"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "medium",
+      "match": "《神话中的人月》",
+      "replacement": "《人月神话》",
+      "reason": "The standard Chinese title for Fred Brooks' 'The Mythical Man-Month' is '人月神话', not '神话中的人月'. This ensures readers can identify the book correctly.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "《灵感》",
+      "replacement": "《启示录》",
+      "reason": "The standard Chinese title for Marty Cagan's 'Inspired' is '启示录', not '灵感'. Using the correct title improves accuracy for readers seeking the book.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "没有银弹：软件工程的本质与偶然",
+      "replacement": "没有银弹：软件工程的本质与意外",
+      "reason": "The original English subtitle is 'Essence and Accidents of Software Engineering'. 'Accidents' refers to accidental difficulties, better translated as '意外' rather than '偶然' (coincidence).",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug just-add-more-engineers-fallacy --locale zh --skip-global",
+    "output": ""
+  }
+}
