@@ -1,7 +1,7 @@
 # Translation Judge
 
-- Selected candidate: adca0aaae9971acc962a8d7efee07014aa9a3fce
-- Selected model: openrouter/qwen/qwen3.6-plus
+- Selected candidate: d00d4148d6b3c1f9807cd7f5d19d74a588b5c29e
+- Selected model: openrouter/moonshotai/kimi-k2.6
 - Judge model: openrouter/google/gemini-3-flash-preview
 
-The selected commit (adca0aaae9971acc962a8d7efee07014aa9a3fce) is the most complete and accurate. The 'current' version in the provided text actually already contains the fix suggested in the previous judge report ('sal a que te dé el aire'), meaning the pre-publish fixes have been applied. It maintains Dan's punchy style, correctly translates technical terms like 'failover' and 'parsing', and preserves all MDX components and frontmatter. It avoids the errors found in other candidates such as untranslated Chinese characters or missing frontmatter fields.
+This candidate provides the most natural and technically accurate translation. It correctly handles technical terms like 'connection strings' (often kept in English or used as 'cadenas de conexión', but 'connection strings' is very common in dev circles), 'deployment', and 'timeout'. It preserves the MDX structure perfectly and maintains Dan's informal, punchy style (e.g., 'tocar hierba' for 'touch grass'). It also correctly includes the missing frontmatter fields (date, modified, tags, etc.) that were present in the English source but missing in the 'current' translation.
