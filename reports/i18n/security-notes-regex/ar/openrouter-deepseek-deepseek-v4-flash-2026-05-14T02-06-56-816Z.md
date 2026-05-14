@@ -1,0 +1,64 @@
+# Translation Candidate
+- Slug: security-notes-regex
+- Locale: ar
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2015-02-24--security-notes-regex/ar/index.mdx
+- Validation: deferred
+- Runtime seconds: 12.94
+- Input tokens: 1146
+- Output tokens: 2443
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.000844
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: 'ملاحظات أمنية: التعبيرات النمطية'
+subTitle: هل يمكن أن تكون RegEx عرضة للثغرات؟
+date: '2015-02-24'
+modified: '2018-07-30'
+category: Security
+subCategory: RegEx
+tags:
+  - security
+  - regex
+  - dos
+  - remote-exploit
+cover_credit: Photo by Markus Spiske on Unsplash
+cover: ../markus-spiske-666905-unsplash.webp
+cover_mobile: ../w300_markus-spiske-666905-unsplash.webp
+cover_icon: ../icon_markus-spiske-666905-unsplash.webp
+social_image: ../desktop-social.webp
+---
+## رفض الخدمة عبر التعبيرات المنتظمة: ReDOS
+
+إحدى الثغرات الأكثر إثارة للدهشة، والتي يصعب اكتشافها، التي وجدتها تتعلق بالتعبيرات المنتظمة. إما بسبب كتابتها بشكل سيئ أو تنفيذها بشكل سيئ.
+
+يمكن استنزاف الذاكرة/وحدة المعالجة المركزية (CPU) بإدخال مستخدم كبير أو مصمم خصيصًا.
+
+> هذه ثغرة رفض خدمة، وليست مجرد مشكلة أداء. إذا كان الإدخال الخبيث يمكنه تثبيت CPU لفترة كافية لتجويع المستخدمين الحقيقيين، فهي تنتمي إلى نموذج التهديدات الأمنية الخاص بك.
+
+### علامات التحذير
+
+1. مُكرِّرات متداخلة، مجموعات مكررة، أو تناوب متداخل
+2. محركات تعتمد بكثافة على التراجع بدون حد زمني أو حد لطول الإدخال
+3. استخدام التعبير مع إدخال مستخدم غير مدقق
+4. تشغيل التحقق من التعبير المنتظم على مسار طلب ساخن
+
+### التخفيف / الحل
+
+1. التعبيرات المنتظمة صعبة.
+    1. على سبيل المثال، إليك كيف يوصي الأشخاص الأذكياء حقًا في [OWASP][owasp] بالتعامل مع التحقق من عنوان IP: `^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$`
+    2. هذا أطول من تغريدة (قديمة الطراز)، لعنوان IP بحجم 4 بايت!!!
+2. حدد طول الإدخال قبل تقييم التعبير المنتظم.
+3. أضف حدودًا زمنية، تحليلًا ثابتًا، أو محركًا بدون تراجع حيثما يدعم النظام الأساسي ذلك.
+4. هذا يؤثر على كل لغة ومنصة تقريبًا: .NET/Node/Python/PERL/Java.
+
+### مرجع
+
+- [OWASP ReDoS](https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS)
+````
