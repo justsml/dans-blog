@@ -1,0 +1,57 @@
+{
+  "runId": "qwen-qwen3-32b-nitro@2026-05-14T17-36-32-795Z",
+  "slug": "async-stack-traces-why-error-stack-lies-in-production",
+  "locale": "zh",
+  "model": "qwen/qwen3-32b:nitro",
+  "modelPath": "qwen-qwen3-32b-nitro",
+  "createdAt": "2026-05-14T17:36:49.077Z",
+  "sourcePath": "src/content/posts/2025-12-29--async-stack-traces-why-error-stack-lies-in-production/index.mdx",
+  "targetPath": "src/content/posts/2025-12-29--async-stack-traces-why-error-stack-lies-in-production/zh/index.mdx",
+  "candidatePath": "reports/i18n/async-stack-traces-why-error-stack-lies-in-production/zh/qwen-qwen3-32b-nitro/2026-05-14T17-36-32-795Z/candidate.mdx",
+  "sourceHash": "bda8adb66cf30fc89c91baea70bf6d81ae97177b838379f1fd437c2da47c9917",
+  "outputHash": "92c03811368ad6b3bf9468db53d6889c9c5589ec111ddef4bb9e54a6394ced9f",
+  "reasoningEffort": "low",
+  "temperature": 0.3,
+  "maxTokens": 16000,
+  "timeoutMs": 200000,
+  "articleSummary": "The article argues that **async stack traces in JavaScript are inherently unreliable** due to how `async/await` suspends and resumes execution, erasing critical context like function names and line numbers. It explains that every `await` detaches a function from the call stack, storing it in the microtask queue, which breaks traditional stack trace logic. While V8/Node.js offers partial fixes like `--async-stack-traces`, these are performance-heavy and noisy. The core solution proposed is **`AsyncLocalStorage`**, a Node.js tool that preserves execution context (e.g., request IDs) across async boundaries, paired with structured logging and tracing tools like OpenTelemetry. Framed as a **practical analysis** for production debugging, the article targets **Node.js developers** facing real-world async error",
+  "totalInputTokens": 2439,
+  "totalOutputTokens": 1773,
+  "totalCacheReadTokens": 0,
+  "totalCacheWriteTokens": 0,
+  "totalDurationMs": 4601,
+  "totalCostUsd": 0.00062064,
+  "pricingSource": "local-openrouter-estimate",
+  "telemetry": {
+    "model": "qwen/qwen3-32b:nitro",
+    "chunkSize": "18p",
+    "totalChunks": 2,
+    "totalInputTokens": 2439,
+    "totalOutputTokens": 1773,
+    "totalCacheReadTokens": 0,
+    "totalCacheWriteTokens": 0,
+    "totalDurationMs": 4601,
+    "totalCostUsd": 0.00062064,
+    "pricingSource": "local-openrouter-estimate",
+    "chunks": [
+      {
+        "index": 0,
+        "inputTokens": 1174,
+        "outputTokens": 1072,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 2586,
+        "costUsd": 0.00035119999999999997
+      },
+      {
+        "index": 1,
+        "inputTokens": 1265,
+        "outputTokens": 701,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 2015,
+        "costUsd": 0.00026944
+      }
+    ]
+  }
+}

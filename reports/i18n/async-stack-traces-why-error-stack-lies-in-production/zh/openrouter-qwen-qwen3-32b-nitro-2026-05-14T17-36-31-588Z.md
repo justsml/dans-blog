@@ -1,0 +1,94 @@
+# Translation Candidate
+- Slug: async-stack-traces-why-error-stack-lies-in-production
+- Locale: zh
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2025-12-29--async-stack-traces-why-error-stack-lies-in-production/zh/index.mdx
+- Validation: deferred
+- Runtime seconds: 4.60
+- Input tokens: 2439
+- Output tokens: 1773
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.000621
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: 异步堆栈跟踪：为什么 `Error.stack` 会误导你
+subTitle: 微任务队列吞噬了我的作业（以及我的调试上下文）
+date: '2025-12-29'
+modified: '2025-12-30'
+tags:
+  - javascript
+  - async
+  - debugging
+  - node.js
+  - v8
+  - performance
+category: Code
+subCategory: Best Practices
+social_image: ../desktop-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+import { AsyncLocalStorage } from 'async_hooks';
+
+
+凌晨两点，PagerDuty 警报响彻整个房间。
+
+你打开日志，看到如下内容：
+
+```
+Error: Cannot read properties of undefined (reading 'id')
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+```
+
+仅此而已。没有函数名，没有行号，没有文件路径，只有 "processTicksAndRejections"。
+
+欢迎来到异步 JavaScript 的世界，在这里堆栈跟踪是虚构的，行号无关紧要。
+
+---
+
+## 为什么堆栈跟踪会失效
+
+在同步代码中，调用栈是一份精美的家谱。A 调用了 B，B 调用了 C。当 C 崩溃时，你可以清晰地看到整个调用路径。
+
+在异步代码（`async/await`）中，每个 `await` 关键字都是一个暂停点。
+
+当你使用 `await` 时，你的函数会被从调用栈上撕下，进入名为微任务队列（Microtask Queue）的冷冻舱。此时调用栈是空的（或者正在执行其他任务）。
+
+当 Promise 解决时，你的函数会被解冻并重新放回调用栈。但所有历史记录都消失了。
+
+引擎完全不知道是谁在 500 毫秒前调用了 `await`，它只知道现在有一个任务需要执行。
+
+---
+
+## V8 的修复尝试
+
+Node.js 尝试提供帮助。我们有：
+
+1. `Error.captureStackTrace()`：捕获创建时的堆栈。如果错误在之后抛出则完全无用。
+2. `--async-stack-traces`：一个让 Node.js 为 Promise 链维护“影子堆栈”的标志。
+   * 成本：会使你的应用变慢 30%
+   * 效果：有一定帮助，但很快就会变得杂乱不堪
+
+---
+
+## 真正的解决方案：AsyncLocalStorage
+
+如果想在生产环境中生存，停止依赖堆栈跟踪。关注因果关系。
+
+---
+
+## 生产操作手册
+
+1.  停止信任 `err.stack`。它的设计就是不完整的。
+2.  使用结构化日志。通过 `AsyncLocalStorage` 将 `requestId` 附加到每一条日志记录上。
+3.  追踪而非堆栈。使用 OpenTelemetry。它能可视化跨服务的因果链，这才是你真正关心的内容。
+
+你的代码是异步的。你的调试上下文不应该被同步限制。
+````
