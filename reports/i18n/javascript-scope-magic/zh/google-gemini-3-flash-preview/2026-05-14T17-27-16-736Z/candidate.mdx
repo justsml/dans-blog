@@ -1,0 +1,109 @@
+---
+title: JavaScript 魔法
+subTitle: '[草稿] 命令式 vs. 递归式 vs. 函数式'
+date: '2015-06-06'
+modified: '2024-07-30'
+category: Code
+subCategory: javascript
+draft: true
+publish: true
+tags:
+  - javascript
+  - programming
+  - performance
+  - patterns
+cover: ../markus-spiske-197281-unsplash.webp
+cover_mobile: ../w300_markus-spiske-197281-unsplash.webp
+cover_icon: ../icon_markus-spiske-197281-unsplash.webp
+---
+## 命令式 vs. 递归 vs. 函数式
+
+> [ 编写中 ]
+
+```javascript
+// 命令式：最快（且非常简单，没有新指针或多余的内存分配）：
+function fib(n) {
+  var a = 1,
+    b = 1,
+    c = 0;
+  for (var i = 1; i < n - 1; ++i) {
+    c = a + b;
+    a = b;
+    b = c;
+  }
+  return b;
+}
+
+// 递归：（仅限 FIREFOX 或 BABELJS）利用 ES6 函数定义的
+// 参数默认值来设置初始（内部/递归）值
+function fib(n, current = 0, a = 1, b = 1, c = 0) {
+  current++;
+  c = a + b;
+  a = b;
+  b = c;
+  return current >= n ? b : fib(n, current, a, b, c);
+}
+
+// 教科书级的反面教材 —— 函数作用域糟糕，且包含多个可变的外部值
+function fib(n) {
+  if (!arr) {
+    var arr = [1, 1];
+    n = n - 2;
+  } // 差劲
+  if (n === -1) {
+    return [arr[0]];
+  }
+  if (n === 0) {
+    return arr;
+  }
+  var proc = function() {
+    --n;
+    arr.push(arr[arr.length - 1] + arr[arr.length - 2]);
+    return n === 0 ? arr : proc();
+    // 差劲：不需要内部递归函数，提示：所用变量均来自父级函数作用域
+  };
+  var ans = proc();
+  return ans[ans.length - 1];
+}
+```
+
+## Promises：真香！
+
+```js
+// 使用 bluebird Promises 及其特性的示例
+var Promise = require("bluebird"),
+  fs = Promise.promisifyAll(require("fs")),
+  less = Promise.promisifyAll(require("less"));
+
+function writeFileData(data) {
+  return fs.writeFileAsync("/tmp/output.css", data);
+}
+// Bluebird 让这类操作变得异常简单且简洁，甚至让人感到有些“不适”：
+fs.readFileAsync("./style.less") // 调用 promisified 后的 readFile()
+  .then(less.renderAsync) // 移交给 less.render
+  .then(writeFileData); // 接收 CSS 内容的函数（第一个参数）
+```
+
+1.  虽然原生 ES6 Promise 已经很棒了，但我更倾向于功能稳健的 [Bluebird Promise 库](https://github.com/petkaantonov/bluebird/blob/master/API.md)。
+2.  无论用不用库，现代浏览器支持 Promise 已经很多年了。
+3.  使用 Promise 没必要搞那些花哨的模式 —— 隐式 `deferred` 更好。
+4.  **$q 烂透了**，直接用 bluebird，见上文。
+5.  值得一提：Bluebird 的基准测试（Benchmarks）是理想情况下的测试，如果你在搞那种极其复杂的 Promise 链，留意一下。
+
+## Java vs JavaScript
+
+### 频率限制 / 防抖 (Debouncing) / 节流 (Throttling)
+
+1.  在 JavaScript 中，[David Walsh 实现的 debounce](http://davidwalsh.name/essential-javascript-functions) 不到 20 行代码！
+2.  在 Java 中，JDebounce 库要复杂得多，大约有 500 多行。
+3.  *两者对比：*
+4.  JavaScript 运行迅速，并利用一等函数（first-class functions）实现了极简设计。
+5.  而 Java 则有太多的活动部件，使用注解在编译时应用行为，甚至还搞了一堆 XML，纯粹是自找麻烦！
+
+<!--
+## 控制反转 (IoC) 技术
+
+编写中
+-->
+
+[fuck_this]: https://res.cloudinary.com/ddd/image/upload/panda-rampage__tumblr_nq7srwTXqr1stn6klo1_500_gm2som.gif
