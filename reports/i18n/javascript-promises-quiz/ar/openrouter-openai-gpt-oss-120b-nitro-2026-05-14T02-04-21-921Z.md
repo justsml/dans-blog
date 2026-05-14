@@ -1,0 +1,381 @@
+# Translation Candidate
+- Slug: javascript-promises-quiz
+- Locale: ar
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2019-11-26--javascript-promises-quiz/ar/index.mdx
+- Validation: deferred
+- Runtime seconds: 17.94
+- Input tokens: 9578
+- Output tokens: 4900
+- Thinking tokens: unknown
+- Cached input tokens: 3328
+- Cache write tokens: 0
+- Estimated cost: $0.001439
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: 'اختبار: 9 أسئلة حول وعود JavaScript'
+subTitle: لن تُفقد أي وعد مرة أخرى!
+label: Promise Gotchas
+date: '2019-11-26'
+modified: '2024-11-28'
+tags:
+  - promises
+  - programming
+  - async
+  - javascript
+  - guides
+  - quiz
+  - intermediate
+related:
+  - intro-to-promises
+  - promise-gotchas
+  - visualizing-promises
+  - stop-trying-to-make-async-await-happen
+category: Quiz
+unlisted: false
+subCategory: JavaScript
+cover: ../olav-ahrens-rotne-jvBXiynINGE-resized.webp
+cover_mobile: ../w300_olav-ahrens-rotne-jvBXiynINGE-resized.webp
+cover_icon: ../icon_olav-ahrens-rotne-jvBXiynINGE-resized.webp
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+
+## هل تعرف الـ JavaScript Promises؟
+
+> * **أثبت مهاراتك في JavaScript!** 🚀
+
+1. **تحقق من التلميحات** (زر كبير، الزاوية السفلية).
+2. جرّب الشيفرة في وحدة التحكم بالمتصفح (استخدم الاختصار `F12` أو ابحث عنها) أو استعمل [repl.it](https://repl.it)*.
+3. لا تتردد في [التغريد لي @justsml](https://x.com/intent/tweet?text=Hey%20Dan%2C%20I%20was%20taking%20your%20promises%20quiz%2E%2E%2E&url=https://danlevy.net/). **أحب أن أسمع رأيك!**
+
+### 👇 أكمل 9 أسئلة أدناه👇
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="معالجة الأخطاء"
+  title="متعدد `.catch`'s #1"
+  options={[
+    {text: 'طباعة الرسالة مرة واحدة'},
+    {text: 'طباعة الرسالة مرتين', isAnswer: true},
+    {text: 'UnhandledPromiseRejectionWarning'},
+    {text: 'إنهاء العملية'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما هو الناتج لهذا الكود التالي؟
+    ```js
+        var p = new Promise((resolve, reject) => {
+          reject(Error('The Fails!'))
+        })
+        p.catch(error => console.log(error.message))
+        p.catch(error => console.log(error.message))
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    نقوم بإنشاء Promise باستخدام طريقة المُنشئ، مما يُسبب خطأً فورًا عبر استدعاء `reject`.
+
+    ثم تعمل معالجات `.catch` مثل `.addEventListener(event, callback)` في DOM أو `.on(event, callback)` في Event Emitter حيث **يمكن إضافة عدة ردود نداء للمعالج**. كل واحدة ستُستدعى بنفس الوسائط.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="معالجة الأخطاء"
+  title="متعدد `.catch`'s #2"
+  options={[
+    {text: 'طباعة الرسالة مرة واحدة'},
+    {text: 'طباعة الرسالة مرتين'},
+    {text: 'وعد مرفوض غير مُعالج', isAnswer: true},
+    {text: 'إنهاء العملية'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما هو الناتج المتوقع لهذا الكود؟
+    ```js
+        var p = new Promise((resolve, reject) => {
+          return Promise.reject(Error('The Fails!'))
+        })
+        p.catch(error => console.log(error.message))
+        p.catch(error => console.log(error.message))
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    عند استخدام مُنشئ الـ Promise يجب استدعاء إما دوال `resolve()` أو `reject()`. يتجاهل مُنشئ الـ Promise قيمة الإرجاع للمنفذ، لذا الـ Promise الإضافي الذي يُنشأ بـ `Promise.reject()` لا يُربط بـ `p`. المعالجان مرتبطان بـ `p` الذي يظل في حالة انتظار، بينما يُبلغ عن الـ Promise المرفوض المُرجع كغير مُعالج من قبل بيئة التشغيل.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:only="react"
+  index={2}
+  group="معالجة الأخطاء"
+  title="سلسلة `.then` و `.catch`"
+  client:only="react"
+  options={[
+    {text: 'طباعة الخطأ و `undefined`', isAnswer: true},
+    {text: 'طباعة الخطأ مرتين'},
+    {text: 'UnhandledPromiseRejectionWarning'},
+    {text: 'undefined'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما هو الناتج لهذا الكود؟
+    ```js
+        var p = new Promise((resolve, reject) => {
+          reject(Error('The Fails!'))
+        })
+        .catch(error => console.log(error))
+        .then(error => console.log(error))
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    عند ربط `.then` و `.catch` من المفيد التفكير فيها كسلسلة من الخطوات. كل `.then` يستقبل القيمة التي أرجعها الـ `.then` السابق (كوسيط له). ولكن إذا واجهت "الخطوة" خطأً، سيتم تخطي أي "خطوات" `.then` لاحقة حتى يُصادف `.catch`. إذا أردت تجاوز الخطأ، كل ما عليك هو إرجاع قيمة غير خطأ. يمكن الوصول إليها عبر أي `.then` يليه.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:only="react"
+  index={3}
+  group="معالجة الأخطاء"
+  title="سلسلة `.catch`'s"
+  client:only="react"
+  options={[
+    {text: 'طباعة رسالة الخطأ مرة واحدة', isAnswer: true},
+    {text: 'طباعة رسالة الخطأ مرتين'},
+    {text: 'UnhandledPromiseRejectionWarning'},
+    {text: 'إنهاء العملية'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما هو الناتج لهذا الكود؟
+    ```js
+        var p = new Promise((resolve, reject) => {
+          reject(Error('The Fails!'))
+        })
+        .catch(error => console.log(error.message))
+        .catch(error => console.log(error.message))
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    عند سلاسل `.catch`، كل واحدة تتعامل فقط مع الأخطاء التي تُرمى في `.then` أو `.catch` "الخطوات" السابقة. في هذا المثال، الـ `.catch` الأول يُعيد `console.log` الذي لا يمكن الوصول إليه إلا بإضافة `.then()` بعد كلا الـ `.catch`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="معالجة الأخطاء"
+  title="متعدد `.catch`'s"
+  options={[
+    {text: 'طباعة الرسالة مرة واحدة'},
+    {text: 'طباعة الرسالة مرتين'},
+    {text: 'UnhandledPromiseRejectionWarning'},
+    {text: 'لا شيء يُطبع', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما هو الناتج لهذا الكود التالي؟
+    ```js
+        new Promise((resolve, reject) => {
+            resolve('Success!')
+          })
+          .then(() => {
+            throw Error('Oh noes!')
+          })
+          .catch(error => {
+            return "actually, that worked"
+          })
+          .catch(error => console.log(error.message))
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    **Hint:** يمكن استخدام `.catch`'s لتجاهل (أو تجاوز) الأخطاء ببساطة عن طريق إرجاع قيمة عادية.
+
+    هذه الحيلة تعمل فقط عندما يكون هناك `.then` لاحق لاستقبال القيمة.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="معالجة البيانات"
+  title="تدفق بين `.then`'s"
+  options={[
+    {text: 'طباعة "Success!" و "SUCCESS!"'},
+    {text: 'طباعة "Success!"'},
+    {text: 'طباعة "SUCCESS!"', isAnswer: true},
+    {text: 'لا شيء يُطبع'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما هو الناتج لهذا الكود التالي؟
+    ```js
+        Promise.resolve('Success!')
+          .then(data => {
+            return data.toUpperCase()
+          })
+          .then(data => {
+            console.log(data)
+          })
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    **Hint:** `.then`'s تمرّر البيانات تسلسليًا، من `return value` إلى الـ `.then(value => /* handle value */)` التالي.
+
+    الـ `return` هو المفتاح لتمرير قيمة إلى الـ `.then` التالي.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="معالجة البيانات"
+  title="تدفق بين `.then`"
+  options={[
+    {text: 'طباعة "SUCCESS!"'},
+    {text: 'طباعة "Success!"'},
+    {text: 'طباعة "SUCCESS!" و "SUCCESS!"', isAnswer: true},
+    {text: 'لا شيء يُطبع'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما هو الناتج لهذا الكود؟
+    ```js
+        Promise.resolve('Success!')
+          .then(data => {
+            return data.toUpperCase()
+          })
+          .then(data => {
+            console.log(data)
+            return data
+          })
+          .then(console.log)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    هناك استدعاءان لـ `console.log` سيتم تنفيذهما.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="معالجة البيانات"
+  title="تدفق بين `.then`"
+  options={[
+    {text: 'طباعة "SUCCESS!"'},
+    {text: 'طباعة "Success!"'},
+    {text: 'طباعة "SUCCESS!" و "SUCCESS!"'},
+    {text: 'يطبع `undefined`', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما هو الناتج لهذا الكود؟
+    ```js
+        Promise.resolve('Success!')
+          .then(data => {
+            data.toUpperCase()
+          })
+          .then(data => {
+            console.log(data)
+          })
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    **Hint:** `.then`'s تمرّر البيانات بشكل تسلسلي، من `return value` إلى الـ `.then(value => /* handle value */)` التالي.
+
+    الـ `return` هو المفتاح لتمرير قيمة إلى الـ `.then` التالي.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="معالجة البيانات"
+  title="التدفق بين `.then` و `.catch`"
+  options={[
+    {text: 'طباعة "Oh noes!" و "The fails!"'},
+    {text: 'طباعة "Oh noes!"'},
+    {text: 'طباعة "The fails!"', isAnswer: true},
+    {text: 'طباعة "actually, that worked"'},
+    {text: 'لا شيء يُطبع'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما هو الناتج لهذا الكود التالي؟
+    ```js
+        Promise.resolve('Success!')
+          .then(() => {
+            throw Error('Oh noes!')
+          })
+          .catch(error => {
+            return 'actually, that worked'
+          })
+          .then(data => {
+            throw Error('The fails!')
+          })
+          .catch(error => console.log(error.message))
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    ![annotated-code/question-9-4.webp](annotated-code/question-9-4.webp)
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+````
