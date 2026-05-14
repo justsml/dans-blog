@@ -1,0 +1,53 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Replace Substring",
+  "translatedTitle": "替换子字符串",
+  "translation": {
+    "title": "替换子字符串",
+    "group": "子字符串替换",
+    "options": [
+      {
+        "text": "meow meow"
+      },
+      {
+        "text": "Meow meow"
+      },
+      {
+        "text": "Bark meow"
+      },
+      {
+        "text": "Bark bark"
+      },
+      {
+        "text": "Error"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "这段代码的输出结果是什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "`${var/pattern/replacement}` 语法会将第一个匹配到的 `pattern` 替换为 `replacement`。在这里，输出结果为：",
+      "这种替换是区分大小写的。如果要同时处理 `bark` 和 `Bark`，可以使用类似 `${var/[Bb]ark/Bark}` 的模式，或者在替换前先对字符串进行标准化处理。\n\n    若要替换所有匹配项，请使用 `${var//pattern/replacement}`。\n\n    若要从字符串开头开始匹配替换，请使用 `${var/#pattern/replacement}`。\n\n    若要从字符串末尾开始匹配替换，请使用 `${var/%pattern/replacement}`。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"替换子字符串\",\n  \"group\": \"子字符串替换\",\n  \"options\": [\n    {\n      \"text\": \"meow meow\"\n    },\n    {\n      \"text\": \"Meow meow\"\n    },\n    {\n      \"text\": \"Bark meow\"\n    },\n    {\n      \"text\": \"Bark bark\"\n    },\n    {\n      \"text\": \"Error\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"这段代码的输出结果是什么？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"`${var/pattern/replacement}` 语法会将第一个匹配到的 `pattern` 替换为 `replacement`。在这里，输出结果为：\",\n    \"这种替换是区分大小写的。如果要同时处理 `bark` 和 `Bark`，可以使用类似 `${var/[Bb]ark/Bark}` 的模式，或者在替换前先对字符串进行标准化处理。\\n\\n    若要替换所有匹配项，请使用 `${var//pattern/replacement}`。\\n\\n    若要从字符串开头开始匹配替换，请使用 `${var/#pattern/replacement}`。\\n\\n    若要从字符串末尾开始匹配替换，请使用 `${var/%pattern/replacement}`。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 932,
+    "outputTokens": 306,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 3606,
+    "providerCostUsd": 0.001384,
+    "providerUpstreamCostUsd": 0.001384,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000466,
+    "outputUsd": 0.000918,
+    "totalUsd": 0.001384,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

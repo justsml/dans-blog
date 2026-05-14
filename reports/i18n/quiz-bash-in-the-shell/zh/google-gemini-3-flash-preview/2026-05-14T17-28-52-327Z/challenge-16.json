@@ -1,0 +1,52 @@
+{
+  "index": 15,
+  "attempt": 1,
+  "originalTitle": "Default Values",
+  "translatedTitle": "默认值",
+  "translation": {
+    "title": "默认值",
+    "group": "标准输入/输出",
+    "options": [
+      {
+        "text": "1>&2"
+      },
+      {
+        "text": "&2>&1"
+      },
+      {
+        "text": "2>&1"
+      },
+      {
+        "text": "2>1"
+      },
+      {
+        "text": "&2>1"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "哪个操作符用于将错误输出合并到标准输出中？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "`2>&1` 操作符将标准错误（文件描述符 2）重定向到标准输出（文件描述符 1）。这在需要将错误消息与常规输出捕获到同一个输出流时非常有用。\n\n`1>&2` 操作符是将标准输出重定向到标准错误，但题目要求的是如何将标准错误重定向到标准输出。\n\n想要深入了解底层原理，请查看 [Greg 编写的优秀重定向 FAQ](https://mywiki.wooledge.org/BashFAQ/055)。\n\n另外，感谢 Reddit 用户 [u/OneTurnMore](https://www.reddit.com/user/OneTurnMore/) 提供的文案改进建议。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"默认值\",\n  \"group\": \"标准输入/输出\",\n  \"options\": [\n    {\n      \"text\": \"1>&2\"\n    },\n    {\n      \"text\": \"&2>&1\"\n    },\n    {\n      \"text\": \"2>&1\"\n    },\n    {\n      \"text\": \"2>1\"\n    },\n    {\n      \"text\": \"&2>1\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"哪个操作符用于将错误输出合并到标准输出中？\"\n  ],\n  \"questionCode\": [],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"`2>&1` 操作符将标准错误（文件描述符 2）重定向到标准输出（文件描述符 1）。这在需要将错误消息与常规输出捕获到同一个输出流时非常有用。\\n\\n`1>&2` 操作符是将标准输出重定向到标准错误，但题目要求的是如何将标准错误重定向到标准输出。\\n\\n想要深入了解底层原理，请查看 [Greg 编写的优秀重定向 FAQ](https://mywiki.wooledge.org/BashFAQ/055)。\\n\\n另外，感谢 Reddit 用户 [u/OneTurnMore](https://www.reddit.com/user/OneTurnMore/) 提供的文案改进建议。\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 905,
+    "outputTokens": 345,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 3513,
+    "providerCostUsd": 0.0014875,
+    "providerUpstreamCostUsd": 0.0014875,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.0004525,
+    "outputUsd": 0.001035,
+    "totalUsd": 0.0014874999999999999,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

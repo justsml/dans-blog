@@ -1,0 +1,53 @@
+{
+  "index": 6,
+  "attempt": 1,
+  "originalTitle": "Basic If-Else",
+  "translatedTitle": "基础 If-Else",
+  "translation": {
+    "title": "基础 If-Else",
+    "group": "条件判断",
+    "options": [
+      {
+        "text": "File exists"
+      },
+      {
+        "text": "File does not exist, 伴随一条测试诊断信息"
+      },
+      {
+        "text": "仅输出错误信息"
+      },
+      {
+        "text": "缺少双括号"
+      },
+      {
+        "text": "无输出"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "如果文件 `cats.txt` 确实存在，这段脚本会输出什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "你注意到闭合方括号前的空格缺失了吗？\n    \n    Bash 在这里非常挑剔：方括号表达式内部必须有空格。\n\n    由于缺少空格，导致 `[` 命令找不到对应的闭合 `]`，Bash 会打印一条诊断信息，将测试视为失败，并继续执行 `else` 分支。\n\n    正确的语法应该是：",
+      "注意：在进行条件表达式判断时，**推荐**使用双括号 `[[ ]]`。[参见 BashFAQ。](https://mywiki.wooledge.org/BashFAQ/031)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"基础 If-Else\",\n  \"group\": \"条件判断\",\n  \"options\": [\n    {\n      \"text\": \"File exists\"\n    },\n    {\n      \"text\": \"File does not exist, 伴随一条测试诊断信息\"\n    },\n    {\n      \"text\": \"仅输出错误信息\"\n    },\n    {\n      \"text\": \"缺少双括号\"\n    },\n    {\n      \"text\": \"无输出\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"如果文件 `cats.txt` 确实存在，这段脚本会输出什么？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"你注意到闭合方括号前的空格缺失了吗？\\n    \\n    Bash 在这里非常挑剔：方括号表达式内部必须有空格。\\n\\n    由于缺少空格，导致 `[` 命令找不到对应的闭合 `]`，Bash 会打印一条诊断信息，将测试视为失败，并继续执行 `else` 分支。\\n\\n    正确的语法应该是：\",\n    \"注意：在进行条件表达式判断时，**推荐**使用双括号 `[[ ]]`。[参见 BashFAQ。](https://mywiki.wooledge.org/BashFAQ/031)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 935,
+    "outputTokens": 307,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 3253,
+    "providerCostUsd": 0.0013885,
+    "providerUpstreamCostUsd": 0.0013885,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.0004675,
+    "outputUsd": 0.0009209999999999999,
+    "totalUsd": 0.0013885,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

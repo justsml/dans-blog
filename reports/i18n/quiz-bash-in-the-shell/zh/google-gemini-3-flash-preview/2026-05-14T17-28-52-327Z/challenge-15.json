@@ -1,0 +1,53 @@
+{
+  "index": 14,
+  "attempt": 1,
+  "originalTitle": "Command Substitution",
+  "translatedTitle": "命令替换",
+  "translation": {
+    "title": "命令替换",
+    "group": "易错点",
+    "options": [
+      {
+        "text": "'ls -l'"
+      },
+      {
+        "text": "% ls -l"
+      },
+      {
+        "text": "$ ls -l"
+      },
+      {
+        "text": "$(ls -l)"
+      },
+      {
+        "text": "${ls -l}"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "哪一个选项会执行 `ls -l` 命令并返回其输出结果？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "`$(ls -l)` 语法会执行 **括号** 内部的命令并替换为输出结果。例如：",
+      "第一个选项使用的是单引号 `'`，**而不是反引号**。这会阻止扩展，因此 `'$(date +%F)'` 只会简单地打印字面字符串 `$(date +%F)`。\n\n虽然目前仍然支持使用反引号 (`` `ls -l` ``) 来执行命令，但在某些语境下它已经变成了一种反模式。大多数情况下推荐使用 `$(command)`，因为它具有更好的可读性，并且在不同的 shell 类型和版本中保持了一致性。\n\n花括号 `${}` 用于变量扩展，而不是命令替换。\n\n`%` 字符不用于命令替换。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"命令替换\",\n  \"group\": \"易错点\",\n  \"options\": [\n    {\n      \"text\": \"'ls -l'\"\n    },\n    {\n      \"text\": \"% ls -l\"\n    },\n    {\n      \"text\": \"$ ls -l\"\n    },\n    {\n      \"text\": \"$(ls -l)\"\n    },\n    {\n      \"text\": \"${ls -l}\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"哪一个选项会执行 `ls -l` 命令并返回其输出结果？\"\n  ],\n  \"questionCode\": [],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"`$(ls -l)` 语法会执行 **括号** 内部的命令并替换为输出结果。例如：\",\n    \"第一个选项使用的是单引号 `'`，**而不是反引号**。这会阻止扩展，因此 `'$(date +%F)'` 只会简单地打印字面字符串 `$(date +%F)`。\\n\\n虽然目前仍然支持使用反引号 (`` `ls -l` ``) 来执行命令，但在某些语境下它已经变成了一种反模式。大多数情况下推荐使用 `$(command)`，因为它具有更好的可读性，并且在不同的 shell 类型和版本中保持了一致性。\\n\\n花括号 `${}` 用于变量扩展，而不是命令替换。\\n\\n`%` 字符不用于命令替换。\"\n  ],\n  \"explanationCode\": [\n    {\n      \"language\": \"bash\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 946,
+    "outputTokens": 388,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 3437,
+    "providerCostUsd": 0.001637,
+    "providerUpstreamCostUsd": 0.001637,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000473,
+    "outputUsd": 0.001164,
+    "totalUsd": 0.001637,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

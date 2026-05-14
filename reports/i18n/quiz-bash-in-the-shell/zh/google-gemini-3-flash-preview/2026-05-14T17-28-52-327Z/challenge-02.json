@@ -1,0 +1,53 @@
+{
+  "index": 1,
+  "attempt": 1,
+  "originalTitle": "Escaping Quotes",
+  "translatedTitle": "转义引号",
+  "translation": {
+    "title": "转义引号",
+    "group": "热身：转义",
+    "options": [
+      {
+        "text": "echo 'It's 🔨 Time!'"
+      },
+      {
+        "text": "echo 'It\\\\'s 🔨 Time!'"
+      },
+      {
+        "text": "echo 'It'\\\\''s 🔨 Time!'"
+      },
+      {
+        "text": "echo 'It''s 🔨 Time!'"
+      },
+      {
+        "text": "报错"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "_哪条命令会打印出 `It's 🔨 Time!`？_"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "我知道。转义会让字符串解析变得异常复杂，这确实很离谱。想象一下在 Bash 字符串中转义其他语言——那些引号、单引号和 `$` 符号能把你搞得晕头转向。🫠\n\n在单引号字符串内部，单引号本身需要转义。这种“闭合引号、转义引号、重新开启引号”的序列（`'\\''`）允许输出：",
+      "处理这个问题还有其他方法，但这是最常见的一种。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"转义引号\",\n  \"group\": \"热身：转义\",\n  \"options\": [\n    {\n      \"text\": \"echo 'It's 🔨 Time!'\"\n    },\n    {\n      \"text\": \"echo 'It\\\\\\\\'s 🔨 Time!'\"\n    },\n    {\n      \"text\": \"echo 'It'\\\\\\\\''s 🔨 Time!'\"\n    },\n    {\n      \"text\": \"echo 'It''s 🔨 Time!'\"\n    },\n    {\n      \"text\": \"报错\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"_哪条命令会打印出 `It's 🔨 Time!`？_\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"我知道。转义会让字符串解析变得异常复杂，这确实很离谱。想象一下在 Bash 字符串中转义其他语言——那些引号、单引号和 `$` 符号能把你搞得晕头转向。🫠\\n\\n在单引号字符串内部，单引号本身需要转义。这种“闭合引号、转义引号、重新开启引号”的序列（`'\\\\''`）允许输出：\",\n    \"处理这个问题还有其他方法，但这是最常见的一种。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 907,
+    "outputTokens": 1189,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 7470,
+    "providerCostUsd": 0.0040205,
+    "providerUpstreamCostUsd": 0.0040205,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.0004535,
+    "outputUsd": 0.003567,
+    "totalUsd": 0.0040205,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
