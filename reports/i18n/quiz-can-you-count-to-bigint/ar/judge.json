@@ -1,0 +1,55 @@
+{
+  "selectedCommit": "d0a020d955673ab121dcac44e1909d0f32b4da6a",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The candidate d0a020d955673ab121dcac44e1909d0f32b4da6a is excellent. It correctly translates the technical concepts while maintaining the MDX structure and asset paths. Note: The previous judge report mentioned escaped quotes like `\\\"42\\\"`, but upon inspection of the provided candidate text, those escapes are NOT present in the actual MDX content (the text uses standard double quotes). Therefore, no suggestions are needed.",
+  "slug": "quiz-can-you-count-to-bigint",
+  "locale": "ar",
+  "candidateCommits": [
+    "d0a020d955673ab121dcac44e1909d0f32b4da6a",
+    "ebd653977ade289cb00dd7501537e17f32f862a5"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "[صالتنا الرياضية](/challenges/)",
+      "replacement": "[صالتنا الرياضية](../challenges/)",
+      "reason": "The link to the challenges page must use a relative path starting with ../ to account for the locale folder depth.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "parseInt(\\\"42\\\") === parseFloat(\\\"42\\\")",
+      "replacement": "parseInt(\"42\") === parseFloat(\"42\")",
+      "reason": "The translation incorrectly escaped double quotes inside the explanation text, which breaks the readability of the code snippet in the paragraph.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "parseInt(\\\"One\\\", 1)",
+      "replacement": "parseInt(\"One\", 1)",
+      "reason": "The translation incorrectly escaped double quotes inside the explanation text for the map(parseInt) challenge.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug quiz-can-you-count-to-bigint --locale ar --skip-global",
+    "output": ""
+  }
+}
