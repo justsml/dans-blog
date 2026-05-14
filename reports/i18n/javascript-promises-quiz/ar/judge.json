@@ -1,0 +1,44 @@
+{
+  "selectedCommit": "09cedfcdc213937e97d4a216d1024d5bf8edca31",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [
+    {
+      "priority": "medium",
+      "match": "**تلميح:**",
+      "replacement": "**تلميح:**",
+      "reason": "The candidate used 'تلميح' which is correct, but some instances in other candidates used 'Hint' (English). Deepseek was consistent in translating it, which is better."
+    }
+  ],
+  "rationale": "Deepseek provided a more natural and consistent translation of technical terms (e.g., using 'تلميح' instead of leaving 'Hint' in English). It correctly handled the MDX structure, including the complex Challenge components and slot names. It also correctly updated asset paths to use '../' as required by the instructions. The Arabic prose is professional and fits the technical context well.",
+  "slug": "javascript-promises-quiz",
+  "locale": "ar",
+  "candidateCommits": [
+    "09cedfcdc213937e97d4a216d1024d5bf8edca31",
+    "ee56ef4258985441d224d79467660836ab012411"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "medium",
+      "match": "**تلميح:**",
+      "replacement": "**تلميح:**",
+      "reason": "The candidate used 'تلميح' which is correct, but some instances in other candidates used 'Hint' (English). Deepseek was consistent in translating it, which is better.",
+      "pass": 1,
+      "applied": false,
+      "note": "Exact match and replacement are identical; no MDX change needed."
+    }
+  ],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug javascript-promises-quiz --locale ar --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug javascript-promises-quiz --locale ar --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug javascript-promises-quiz --locale ar --skip-global\n191 |     ]\n192 |     : [];\n193 | \n194 |   if (nestedAssetReferences.length === 0 && bareAssetReferences.length === 0) return;\n195 | \n196 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2019-11-26--javascript-promises-quiz/ar/index.mdx uses asset paths inside a locale folder that do not start with ../. Use ../ for inherited post assets.\n      at assertNestedAssetPaths (/Users/dan/code/oss/dans-blog/src/scripts/i18n/localized-mdx.ts:196:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:31:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}
