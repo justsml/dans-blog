@@ -1,0 +1,169 @@
+# Translation Candidate
+- Slug: one-weird-trick-to-speed-up-feature-teams
+- Locale: zh
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2024-09-29--one-weird-trick-to-speed-up-feature-teams/zh/index.mdx
+- Validation: deferred
+- Runtime seconds: 5.31
+- Input tokens: 4815
+- Output tokens: 1958
+- Thinking tokens: unknown
+- Cached input tokens: 1280
+- Cache write tokens: 0
+- Estimated cost: $0.000540
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: 提升功能团队效率的奇招
+subTitle: 资深工程师讨厌这个！
+date: '2024-09-29'
+modified: '2024-09-30'
+tags:
+  - agile
+  - teams
+category: Engineering
+social_image: ../desktop-social.webp
+cover_full_width: ../wide_danny-howe-98KlbUsOO_w-unsplash.webp
+cover_mobile: ../danny-howe-98KlbUsOO_w-unsplash__w200.webp
+cover_icon: ../danny-howe-98KlbUsOO_w-unsplash__w200.webp
+cover_credit: >-
+  Photo by <a
+  href="https://unsplash.com/@dannyhowe?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Danny
+  Howe</a> on <a
+  href="https://unsplash.com/photos/red-and-white-neon-light-signage-98KlbUsOO_w?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
+---
+{/* Add html5 toggle element */}
+
+<details>
+<summary>目录</summary>
+
+- [思考键](#thinking-in-keys)
+  - [用键设计](#designing-with-keys)
+  - [键值存储能表示图和树吗？](#kvs-as-graphs--trees)
+  - [何时使用 KV 模式](#when-to-use-kv-patterns)
+  - [何时避免 KV 模式](#when-to-avoid-kv-patterns)
+  - [当你需要超出 KV 的功能时](#when-you-need-more-than-kv)
+- [后续步骤](#next-steps)
+  - [Fact Service - 参考项目](#fact-service---reference-project)
+- [结论](#conclusion)
+  - [进一步阅读](#further-reading)
+
+</details>
+
+在设计新系统或新功能时，往往会被模式设计的细节卡住。本文将分享一个在我的职业生涯中屡试不爽的技巧。
+
+<section class="breakout">
+  _尝试_ 在设计新系统或新功能时使用最简的数据持久化方案。
+</section>
+
+我经常看到团队把 SQL 或 MongoDB 当作唯一的数据存储选项。没错，选 SQL 没有人会被解雇。但如果我告诉你，有一种更简单、更快、更便宜的起步方式，你会怎么想？
+
+KV（键值）存储可能就是你所需要的。比如 Redis 或 S3。
+
+它并非总是最佳选择，但**比你想象的更常适用**。
+
+一个简易的存储层可以通过复用数据层代码、避免频繁的模式设计和迁移成本，显著加速*早期*开发。模式的 churn 迟早会发生，让代码尽可能长时间处理它，总比在两处同时处理改动要好。
+
+性能提升也很明显，因为 `key` 查找高度优化，写入还能受益于批量更新。
+
+{/* Avoid KV patterns if you need JOINs or to query by properties in your dataset. Or in cases where you have an unbounded/infinitely growing datasets. (`Logs`, `Signups`, etc.) */}
+
+## 思考键
+
+如果你习惯于用对象层次结构或实体关系图来设计系统，并直接在 SQL 中实现，它会让人感觉怪异——先用键值模式设计。
+
+你可能已经***使用***过键值模式！它们无处不在，从配置文件、URL 到 S3 风格的对象存储！每次通过唯一的 `ID` 处理数据时，实际上都是一次键值模式！（虽然不一定是 KV Store。）
+
+### 用键设计
+
+几乎所有数据都*可以*用 KV 模式表示。（事实上，许多高级数据库都是在更底层的 KV 模式之上构建的。）下面看几个例子：
+
+```markdown
+user/123          {id: 123, ...}
+user/123/block    ['user/456', 'user/789']
+user/123/groups   ['admin', 'staff']
+user/420/friends  ['user/456', 'user/789']
+
+group/admin       {user: '*:rw'}
+group/default     {user: '*:r'}
+
+product/42/discount/<UUID>	{percentOff: '10%'}
+product/42/discount/<UUID>	{percentOff: '20%', minTotal: 100.0}
+```
+
+你可能已经注意到，`ID` 本身往往就是键！这是 KV 存储中的常见模式。键通常是实体类型与唯一标识符的组合（例如 `user/123`、`user:456`）。
+
+### KV 能表示图和树吗？
+
+使用 KV 模式来表示图或树等复杂数据结构是很有帮助的。（再次强调，REST URL 本身就是一个很好的例子。）
+
+键层级（`user/420` → `user/420/friends`）自然地对 `user` 与其 `friends` 之间的图关系进行编码。
+
+这是一种快速且低成本的图数据结构序列化方式。尤其在你不需要图数据库（如 Neo4j）那样的复杂性时。
+
+<figure>
+![Graph of user/123](../KVsCanBeGraphs.webp)
+<figcaption>Graph of user/123</figcaption>
+</figure>
+
+### 何时使用 KV 模式
+
+- 需要极大规模时。（数十亿甚至数万亿 KV 对。）
+- 主要通过唯一键访问数据时。
+- 需要简单的数据结构时。
+- 数据本身具备层级、图或树结构时。
+
+### 何时避免 KV 模式
+
+不要把博客评论之类的内容放在 **单个** KV 对中。例如，`post/666 -> {comments: [...太多...]}`。可以改为 `post/666/comments/1`、`post/666/comments/<UUID>` 等，或者直接使用 SQL 表。
+
+- 需要按属性（非键或 ID）搜索数据时。
+- 需要在多个实体之间进行 JOIN 时。
+- 需要强制执行复杂约束或关系时。
+
+### 当 KV 不足以满足需求时
+
+随着项目需求的自然演进，你可能会需要 KV 存储无法提供的功能。此时就需要考虑迁移到更复杂的数据存储。
+
+{/* 好消息是，你通常可以先从 KV 模式起步，随后根据需要演进为更复杂的系统。S3 除了简单存储外，还提供 Athena 用于文件搜索、Glacier、以及过期策略等丰富功能。Redis 也加入了许多高级特性（如 Pub/Sub、地理空间、Streams、Sorted Sets），可以帮助满足部分需求。 */}
+
+好消息是，将单一 KV 存储迁移到 SQL 往往比把复杂的 SQL 架构迁移到 KV 更容易。（涉及多表、索引、约束等情况时）我已经用 50 行脚本完成过多次迁移。
+
+从经验来看，如果先从 KV 模式开始，后续的 SQL 设计质量往往更高。它迫使你以不同的视角审视数据，明确到底需要从 SQL 中获得什么。
+
+## 后续步骤
+
+最好的学习方式就是动手实践！如果你想进一步探索此模式，建议 **使用 Redis、DynamoDB 或 S3** 来构建实际项目。它们都是优秀的 KV 存储，只是各自的权衡点不同。
+
+### Fact Service - 参考项目
+
+查看我的开源项目 ["Fact Service"，GitHub 上的参考实现](https://github.com/justsml/fact-service)。
+
+它是一个独立的 RESTful API，演示了 KV 数据服务的实现方式。
+
+它包含了众多[数据适配器](https://github.com/justsml/fact-service/tree/main/lib/providers)，支持 Postgres、Redis、DynamoDB、Firestore 和 Cassandra！（并附带[Docker 命令](https://github.com/justsml/fact-service/tree/main/lib/providers)以便快速上手。）
+
+Fact Service 旨在作为入门和学习项目，直接 fork 并构建你自己的 KV 数据服务吧！
+
+## 结论
+
+希望本文对你有所帮助！如果有任何问题或反馈，欢迎在[Twitter](https://x.com/justsml)上留言或 `@` 我。
+
+### 致谢
+
+- [在 PostgreSQL 中建模层级树数据](https://leonardqmarcq.com/posts/modeling-hierarchical-tree-data)
+- [在 PostgreSQL 中存储大树的注意事项](https://leonardqmarcq.com/posts/dos-and-donts-of-modeling-hierarchical-trees-in-postgres)
+
+### 延伸阅读
+
+- [Fact Service](https://github.com/justsml/fact-service)
+- [Postgres](https://www.postgresql.org/)
+- [Redis](https://redis.io/)
+- [DynamoDB](https://aws.amazon.com/dynamodb/)
+- [S3](https://aws.amazon.com/s3/)
+- [Cassandra](https://cassandra.apache.org/)
+- [Firestore](https://firebase.google.com/docs/firestore)
+````
