@@ -1,0 +1,49 @@
+{
+  "index": 0,
+  "attempt": 1,
+  "originalTitle": "Multiple `.catch`'s #1",
+  "translatedTitle": "多个 `.catch` 的用法 #1",
+  "translation": {
+    "title": "多个 `.catch` 的用法 #1",
+    "group": "错误处理",
+    "options": [
+      {
+        "text": "打印一次消息"
+      },
+      {
+        "text": "打印两次消息"
+      },
+      {
+        "text": "未处理的 Promise 拒绝警告"
+      },
+      {
+        "text": "进程退出"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "以下代码的输出是什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "我们使用构造函数方法创建了一个 Promise，并通过 `reject` 回调立即触发了一个错误。\n\n    然后，`.catch` 处理程序的工作方式类似于 DOM 的 `.addEventListener(event, callback)` 或事件发射器的 `.on(event, callback)`，**可以添加多个处理程序回调。** 每个回调都会被调用，并传入相同的参数。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"多个 `.catch` 的用法 #1\",\n  \"group\": \"错误处理\",\n  \"options\": [\n    {\n      \"text\": \"打印一次消息\"\n    },\n    {\n      \"text\": \"打印两次消息\"\n    },\n    {\n      \"text\": \"未处理的 Promise 拒绝警告\"\n    },\n    {\n      \"text\": \"进程退出\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"以下代码的输出是什么？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"我们使用构造函数方法创建了一个 Promise，并通过 `reject` 回调立即触发了一个错误。\\n\\n    然后，`.catch` 处理程序的工作方式类似于 DOM 的 `.addEventListener(event, callback)` 或事件发射器的 `.on(event, callback)`，**可以添加多个处理程序回调。** 每个回调都会被调用，并传入相同的参数。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 805,
+    "outputTokens": 1134,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 7716,
+    "providerCostUsd": 0.0006146,
+    "providerUpstreamCostUsd": 0.0006146,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00011270000000000002,
+    "outputUsd": 0.00031752000000000006,
+    "totalUsd": 0.0004302200000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

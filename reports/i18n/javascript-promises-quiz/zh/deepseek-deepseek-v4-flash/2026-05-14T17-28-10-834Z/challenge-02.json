@@ -1,0 +1,49 @@
+{
+  "index": 1,
+  "attempt": 1,
+  "originalTitle": "Multiple `.catch`'s #2",
+  "translatedTitle": "多个 `.catch` #2",
+  "translation": {
+    "title": "多个 `.catch` #2",
+    "group": "错误处理",
+    "options": [
+      {
+        "text": "打印一次消息"
+      },
+      {
+        "text": "打印两次消息"
+      },
+      {
+        "text": "未处理的拒绝的 Promise"
+      },
+      {
+        "text": "进程退出"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "以下代码的输出是什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "使用 Promise 构造函数时，必须调用 `resolve()` 或 `reject()` 回调。Promise 构造函数会忽略执行器（executor）的返回值，因此通过 `Promise.reject()` 创建的额外 Promise 并未链接到 `p`。两个处理程序都附加到了 `p` 上，而 `p` 仍处于 pending 状态，同时返回的 rejected Promise 被宿主环境报告为未处理。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"多个 `.catch` #2\",\n  \"group\": \"错误处理\",\n  \"options\": [\n    {\n      \"text\": \"打印一次消息\"\n    },\n    {\n      \"text\": \"打印两次消息\"\n    },\n    {\n      \"text\": \"未处理的拒绝的 Promise\"\n    },\n    {\n      \"text\": \"进程退出\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"以下代码的输出是什么？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"使用 Promise 构造函数时，必须调用 `resolve()` 或 `reject()` 回调。Promise 构造函数会忽略执行器（executor）的返回值，因此通过 `Promise.reject()` 创建的额外 Promise 并未链接到 `p`。两个处理程序都附加到了 `p` 上，而 `p` 仍处于 pending 状态，同时返回的 rejected Promise 被宿主环境报告为未处理。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 809,
+    "outputTokens": 1679,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 10833,
+    "providerCostUsd": 0.0008334,
+    "providerUpstreamCostUsd": 0.0008334,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00011326000000000001,
+    "outputUsd": 0.00047012000000000003,
+    "totalUsd": 0.0005833800000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
