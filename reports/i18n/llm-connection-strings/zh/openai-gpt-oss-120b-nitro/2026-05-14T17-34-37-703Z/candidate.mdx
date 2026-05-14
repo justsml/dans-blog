@@ -1,0 +1,117 @@
+---
+title: '是时候使用 llm:// 连接字符串了'
+subTitle: '使用 `llm://` URL 简化模型和供应商配置'
+date: '2026-01-30'
+modified: '2026-02-26'
+tags:
+  - ai
+  - llm
+  - api
+  - developer-experience
+  - standards
+category: AI
+draft: false
+popularity: 1
+social_image: ../desktop-social.webp
+cover_full_width: ../hero-wide.webp
+cover_mobile: ../square-200.webp
+cover_icon: ../square-200.webp
+---
+<blockquote class="inset">
+**更新：** 这篇文章促成了一个针对 `llm://` URI 方案的 [Internet-Draft](https://datatracker.ietf.org/doc/draft-levy-llm-uri-scheme/)。
+</blockquote>
+
+还记得过去连接数据库时要 juggling 各种零散的环境变量的糟心日子吗？
+
+那是一座脆弱的配置塔。`DB_HOST`、`DB_PORT`、`DB_USER`、`DB_PASSWORD`、`DB_NAME`……等等，或者是 `DB_USERNAME`？是 `DB_PASS` 还是 `DB_PWD`？这次还需要 `PG_*` 前缀吗？超时设置到底放哪儿？
+
+这是一副随时会因大小写错误（比如忘了把 `HOST` 大写）而垮掉的纸牌屋。
+
+后来，有人灵机一动，直接用 URL¹：
+
+```bash
+postgres://user:pass@host:5432/dbname
+```
+
+一行字符串，所需信息全都有。通用可解析，跨平台。敢说……漂亮？
+
+那我们为什么还把 LLM 当成 1999 年的老古董来对待？
+
+## 环境变量的爆炸
+
+现在，我的 `.env` 文件看起来像是被废弃的 API 密钥墓地。`OPENAI_API_KEY`、`ANTHROPIC_API_KEY`、`MISTRAL_API_KEY`、`GROQ_API_KEY`。更别提 Azure 了——光是说声 “hello” 就得提供 endpoint、deployment name、API version 和 key。
+
+这不仅难看，更是摩擦点。每次想换模型或测试新供应商，我都得改写初始化代码，去翻特定参数名的文档，还要往环境配置里再添三行。
+
+要不我们直接…… ~~偷走~~ 借用一下 DB URL 的思路？
+
+## 引入 LLM 连接字符串
+
+想象一下，用一行就能配置整个模型接口：
+
+```bash
+llm://api.openai.com/gpt-5.2?reasoning_effort=none&temp=0.7&max_tokens=1500
+llm://api.z.ai/glm-4.7?top_p=0.9&cache=true
+```
+
+---
+
+<br />
+
+### LLM 连接字符串的结构
+
+![the parts of a LLM connection string](../inline-url-diagram-dark.svg)
+
+方案是 `llm://`。主机是供应商的 API 基础 URL。路径是模型名称。查询参数则处理所有通常会把代码搞得乱七八糟的运行时选项。
+
+## 需要认证？很好，直接加进去。
+
+就像 `postgres://` 那样，我们可以把认证信息直接写进 URL：
+
+```bash
+llm://app-name:sk-proj-123456@api.openai.com/gpt-5.2?reasoning_effort=none&temp=0.7
+```
+
+*注意：是的，把凭证写在 URL 中在粘贴到公共日志时会有安全风险。但现代日志服务已经相当擅长清除这些模式，老实说，你的 `.env` 文件真的管理得更好吗？请验证、清理，并谨慎使用。*
+
+## 弹性？为什么不。
+
+很多数据库库通过指定多个主机实现轮询容错。我们的 AI 代理为什么不能拥有同等可靠性？
+
+```bash
+llms://primary.gpt,backup.gpt/gpt-6?temp=0.9
+```
+
+`llms://` 里的那个 `s` 不是笔误，而是复数。如果 `primary.gpt` 卡住，客户端会自动重试 `backup.gpt`。无需复杂的路由逻辑。
+
+<blockquote class="inset">一个字符串就能囊括 **认证**、**端点** 以及 **超参数**。</blockquote>
+
+## 替代格式
+
+我并不执着于 `llm://`。具体的 scheme 并不重要，关键是标准本身。
+
+我可以想象一种使用供应商专属 scheme 来简化书写的世界，同时保持标准结构：
+
+```bash
+ollama://localhost:11434/llama3
+vercel://anthropic/sonnet-4.5?temp=0.8&web_search={"maxUses":3}
+bedrock://us-west-2.aws/anthropic/sonnet-4.5?temp=0.8&cacheControl=ephemeral
+```
+
+不论语法细节如何，核心收益都是显而易见的：
+
+1.  **可移植性：** 把完整配置从本地脚本复制粘贴到云函数。
+2.  **CLI 友好：** 给脚本传递单个参数。`my-agent --model "llm://..."` 胜过 `my-agent --model gpt-4 --temp 0.7 --key $KEY --host ...`。
+3.  **语言无关：** 每种编程语言都有成熟的 URL 解析器。我们免费获得验证、解析和清理。
+
+<blockquote class="ai-response inset">数据库领域花了数十年才弄清这件事。<br /><b>好消息是，在 AI 时间线里，这只相当于半个 vibe-year 前的事。</b></blockquote>
+
+## 结论
+
+我们不需要再引入另一套复杂的配置标准或全新的基于 YAML 的清单文件。我们只需要使用过去 30 年里整个互联网一直在用的那把钥匙。
+
+别再重复造轮子，给我们的 LLM 连接同等的尊重，就像对待数据库一样。你的 `.env` 文件（以及你的理智）会感谢你的。
+
+![一堆乱七八糟的环境变量抽屉](../hero-concept-8-drawers.webp)
+
+{/* ¹ 是的，我知道 `URI` 比 `URL` 更准确。如果你足够挑剔去在意这个区别，请去触摸一下草地。 */}
