@@ -1,0 +1,47 @@
+{
+  "index": 0,
+  "attempt": 1,
+  "originalTitle": "The Empty Object Mystery",
+  "translatedTitle": "空对象之谜",
+  "translation": {
+    "title": "空对象之谜",
+    "group": "序列化陷阱",
+    "options": [
+      {
+        "text": "{\"message\":\"Oops\",\"name\":\"Error\"}"
+      },
+      {
+        "text": "{}"
+      },
+      {
+        "text": "{\"error\":\"Oops\"}"
+      },
+      {
+        "text": "null"
+      }
+    ],
+    "questionProse": [
+      "`JSON.stringify(error)` 返回什么？"
+    ],
+    "explanationProse": [
+      "Error 对象拥有不可枚举的属性（`message`、`name`、`stack`），因此 `JSON.stringify()` 返回 `{}`。这是在 API 响应中发送错误时常见的陷阱。请改用 `JSON.stringify(error, Object.getOwnPropertyNames(error))` 或创建一个普通对象。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"空对象之谜\",\n  \"group\": \"序列化陷阱\",\n  \"options\": [\n    {\n      \"text\": \"{\\\"message\\\":\\\"Oops\\\",\\\"name\\\":\\\"Error\\\"}\"\n    },\n    {\n      \"text\": \"{}\"\n    },\n    {\n      \"text\": \"{\\\"error\\\":\\\"Oops\\\"}\"\n    },\n    {\n      \"text\": \"null\"\n    }\n  ],\n  \"questionProse\": [\n    \"`JSON.stringify(error)` 返回什么？\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"js\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"explanationProse\": [\n    \"Error 对象拥有不可枚举的属性（`message`、`name`、`stack`），因此 `JSON.stringify()` 返回 `{}`。这是在 API 响应中发送错误时常见的陷阱。请改用 `JSON.stringify(error, Object.getOwnPropertyNames(error))` 或创建一个普通对象。\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 746,
+    "outputTokens": 1519,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 9385,
+    "providerCostUsd": 0.0007568,
+    "providerUpstreamCostUsd": 0.0007568,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00010444000000000001,
+    "outputUsd": 0.00042532000000000003,
+    "totalUsd": 0.00052976,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
