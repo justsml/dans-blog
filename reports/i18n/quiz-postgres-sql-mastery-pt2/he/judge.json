@@ -1,0 +1,53 @@
+{
+  "selectedCommit": "c313b1e0b2bdb674425881ad469ede0cebcc34a9",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 10,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "{text: '\\'first.name\\''},,",
+      "replacement": "{text: '\\'first.name\\''},",
+      "reason": "The candidate has a double comma syntax error in the options list for Challenge 7."
+    }
+  ],
+  "rationale": "The DeepSeek candidate provides a very natural and technically accurate translation. It correctly handles the MDX structure and asset paths. It uses standard Hebrew technical terminology (e.g., 'מזהים' for identifiers, 'ליטרלים' for literals). There is a minor syntax error (double comma) in Challenge 7 which is easily fixed.",
+  "slug": "quiz-postgres-sql-mastery-pt2",
+  "locale": "he",
+  "candidateCommits": [
+    "c313b1e0b2bdb674425881ad469ede0cebcc34a9",
+    "d83c590db20e0c698fa8cf3b0d512a80cff8261d"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "{text: '\\'}",
+      "replacement": "{text: '\\'first.name\\''},",
+      "reason": "The candidate accidentally truncated the option text for the single-quote choice in Challenge 7.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "{text: '\\'first.name\\''},,",
+      "replacement": "{text: '\\'first.name\\''},",
+      "reason": "The candidate has a double comma syntax error in the options list for Challenge 7.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug quiz-postgres-sql-mastery-pt2 --locale he --skip-global",
+    "output": ""
+  }
+}
