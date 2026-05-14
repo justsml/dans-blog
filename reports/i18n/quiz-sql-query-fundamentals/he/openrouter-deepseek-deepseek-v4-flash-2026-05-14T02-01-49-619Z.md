@@ -1,0 +1,357 @@
+# Translation Candidate
+- Slug: quiz-sql-query-fundamentals
+- Locale: he
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2024-11-08--quiz-sql-query-fundamentals/he/index.mdx
+- Validation: deferred
+- Runtime seconds: 97.63
+- Input tokens: 10101
+- Output tokens: 11843
+- Thinking tokens: unknown
+- Cached input tokens: 1024
+- Cache write tokens: 0
+- Estimated cost: $0.004693
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+unlisted: false
+title: 'חידון: הוכיחו את כישורי ה-SQL שלכם!'
+subTitle: אתה בצד של SQL? או של noSQL?
+label: SQL 101
+social_image: ../desktop-social.webp
+category: Quiz
+subCategory: Database
+date: '2024-11-08'
+modified: '2024-11-08'
+tags:
+  - quiz
+  - intro
+  - sql
+  - core
+  - fundamentals
+  - beginner
+  - intermediate
+cover_full_width: ../peter-thomas-os14nsuXdI4-unsplash-wide.webp
+cover_mobile: ../peter-thomas-os14nsuXdI4-unsplash-square.webp
+cover_icon: ../peter-thomas-os14nsuXdI4-unsplash-square.webp
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+
+## בדוק את היסודות שלך בשאילתות SQL
+
+האם השימוש ב-ORM מרדד לך את הכישורים?  
+אל תדאג, זה קורה להמון מפתחים.  
+
+קפוץ פנימה ותוכיח את היסודות שלך בשאילתות SQL! 👇
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="יסודות SQL"
+  title="סעיף WHERE בסיסי"
+  options={[
+    {text: 'SELECT * FROM users WHERE name LIKE(John);'},
+    {text: 'SELECT * FROM users WHERE name = "', isAnswer: true},
+    {text: 'SELECT * FROM users WHERE name == "John";'},
+    {text: 'SELECT * FROM users WHERE name === "John";'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    איזו משאילתות ה-SQL הבאות מחזירה נכון שורות שבהן השם הוא "John"?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    ב-SQL, סימן שוויון יחיד (`=`) משמש לבדיקת שוויון בסעיף `WHERE`, לא `==` או `===`, שהם אופרטורים של JavaScript.
+
+    התחביר הנכון הוא `SELECT * FROM users WHERE name = 'John';`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="יסודות SQL"
+  title="פונקציית צבירה COUNT"
+  options={[
+    {text: 'סופר את כל השורות כולל ערכי NULL'},
+    {text: 'סופר רק ערכים שאינם NULL בעמודה', isAnswer: true},
+    {text: 'סופר ערכי NULL כערך ייחודי אחד'},
+    {text: 'מתייחס לכל ערך NULL כייחודי, בדומה ל- NaN !== NaN'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה עושה `COUNT(column_name)` ב-SQL?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `COUNT(column_name)` סופר את מספר הערכים שאינם NULL בעמודה שצוינה. כדי לספור את כל השורות, כולל NULL, השתמש ב- `COUNT(*)`.
+
+    ניתן גם להשתמש ב- `COALESCE` כדי לוודא ש- NULL יקבלו ערך ברירת מחדל שאינו NULL. לדוגמה: `COUNT(COALESCE(column_name, 0))`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="צירופי SQL"
+  title="יסודות LEFT JOIN"
+  options={[
+    {text: 'מחזיר שורה אחת עבור כל שורה תואמת, מתעלם משורות לא תואמות'},
+    {text: 'מחזיר את כל השורות מהטבלה השמאלית, בתוספת השורות התואמות מהימנית', isAnswer: true},
+    {text: 'מחזיר את כל השורות התואמות או הלא תואמות, כאשר NULL מציין חוסר התאמה'},
+    {text: 'מחזיר את כל השורות מהטבלה הימנית, עם כל שורות שמאל תואמות'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה עושה `LEFT JOIN` ב-SQL?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `LEFT JOIN` מחזיר את כל השורות מהטבלה השמאלית ואת השורות התואמות מהטבלה הימנית, עם NULL עבור שורות לא תואמות בטבלה הימנית.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="צירופי SQL"
+  title="שימוש ב-INNER JOIN"
+  options={[
+    {text: 'מחזיר שורות לא תואמות משתי הטבלאות'},
+    {text: 'מחזיר את כל השורות משתי הטבלאות, עם NULL עבור שורות לא תואמות'},
+    {text: 'מחזיר שורות שעומדות בתנאי הצירוף בשתי הטבלאות', isAnswer: true},
+    {text: 'מחזיר שורות לא תואמות מהטבלה הימנית'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה עושה `INNER JOIN` ב-SQL?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `INNER JOIN` מחזיר שורות שבהן תנאי הצירוף תואם שורות משתי הטבלאות. שורות לא תואמות אינן נכללות בקבוצת התוצאות.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="תת-שאילתות SQL"
+  title="תת-שאילתה מתואמת"
+  options={[
+    {text: 'תת-שאילתה שרצה פעם אחת בסך הכל'},
+    {text: 'תת-שאילתה המשמשת רק בהצהרות JOIN'},
+    {text: 'תת-שאילתה שמחזירה עמודות מרובות בלבד'},
+    {text: 'תת-שאילתה שרצה פעם אחת עבור כל שורה בשאילתה החיצונית', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מהי תת-שאילתה מתואמת ב-SQL?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    תת-שאילתה מתואמת מוערכת פעם אחת עבור כל שורה של השאילתה החיצונית. היא מתייחסת לעמודות מהשאילתה החיצונית, מה שהופך אותה לתלויה בכל שורה.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="CTEs ב-SQL"
+  title="תחביר סעיף WITH"
+  options={[
+    {text: 'מותר רק בהצהרות DELETE'},
+    {text: 'משמש לפונקציות צבירה'},
+    {text: 'משמש רק להגדרת תצוגות'},
+    {text: 'הגדרת קבוצת תוצאות זמנית לשימוש בהצהרת SQL גדולה יותר', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מהי מטרת סעיף `WITH` (Common Table Expression) ב-SQL?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    סעיף `WITH`, או Common Table Expression (CTE), משמש להגדרת קבוצת תוצאות זמנית שניתן להפנות אליה בתוך השאילתה הראשית. ב-PostgreSQL, ניתן לצרף את `WITH` להצהרות כמו `SELECT`, `INSERT`, `UPDATE`, `DELETE`, או `MERGE`.
+
+    זה יכול לעזור לשפר את הקריאות והתחזוקה של שאילתות מורכבות.
+
+    התחביר הוא:
+    ```sql
+        WITH cte_name AS (
+        SELECT column_name
+        FROM table_name
+        )
+        SELECT *
+        FROM cte_name;
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="יסודות SQL"
+  title="IS NULL לעומת IS NOT NULL"
+  options={[
+    {text: 'בודק אם ערך הוא NULL', isAnswer: true},
+    {text: 'בודק אם ערך ריק'},
+    {text: 'בודק אם ערך הוא מחרוזת'},
+    {text: 'בודק אם ערך הוא מספרי'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה עושה האופרטור `IS NULL` ב-SQL?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `IS NULL` בודק אם עמודה מסוימת מכילה ערך NULL. `IS NOT NULL` בודק את ההפך.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="אופרטורי SQL"
+  title="שימוש באופרטור IN"
+  options={[
+    {text: 'מחזיר שורות ייחודיות'},
+    {text: 'דורש עמודה עם אינדקס'},
+    {text: 'חל רק על עמודות מספריות'},
+    {text: 'מחזיר שורות התואמות ערכים ברשימה מוגדרת', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה עושה האופרטור `IN` ב-SQL?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    האופרטור `IN` מסנן שורות כך שיתאימו לכל ערך ברשימה מוגדרת, לעתים קרובות כחלופה למספר תנאי OR.
+
+    בעוד שהוא *עשוי* להחזיר "שורות ייחודיות" (ולעתים קרובות כן), זו לא המטרה העיקרית בהכרח.
+
+    אינדקס אינו נדרש כאן, אם כי בהחלט מומלץ להשתמש ב-`IN` על עמודה עם אינדקס, רצוי אינדקס `UNIQUE`, מכיוון שזה יכול לשפר ביצועים.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="פונקציות SQL"
+  title="שימוש בפונקציית COALESCE"
+  options={[
+    {text: 'סופר ערכי NULL'},
+    {text: 'מחזירה את הארגומנט האחרון שאינו NULL'},
+    {text: 'מחזירה את הארגומנט הראשון שאינו NULL', isAnswer: true},
+    {text: 'מוגבל לעמודות IDENTITY'},
+    {text: 'מקורו מ-Printer Coalation'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה עושה הפונקציה `COALESCE` ב-SQL?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    הפונקציה `COALESCE` מחזירה את הערך הראשון שאינו NULL ברשימה נתונה, שימושית להחלפת ערכי ברירת מחדל כאשר נתקלים ב-NULL.
+
+    לדוגמה, `COALESCE(column_name, 0)` תחזיר `0` אם `column_name` הוא `NULL`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="פונקציות צבירה ב-SQL"
+  title="שימוש ב-GROUP BY"
+  options={[
+    {text: 'מסתיר כפילויות'},
+    {text: 'משמש רק בצירופים (JOIN)'},
+    {text: 'ממיין שורות בסדר עולה'},
+    {text: 'מקבץ שורות לפי העמודה/ות שצוינו', isAnswer: true},
+    {text: 'התחביר צריך להיות GROUP WITH/USING'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מהי מטרת הפקודה `GROUP BY` ב-SQL?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    הפקודה `GROUP BY` מקבצת שורות בעלות אותם ערכים בעמודות שצוינו, ומאפשרת להפעיל פונקציות צבירה על כל קבוצה.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="צירופי SQL"
+  title="יסודות FULL OUTER JOIN"
+  options={[
+    {text: 'מחזיר רק שורות תואמות'},
+    {text: 'מחזיר רק שורות עם ערכים שאינם NULL'},
+    {text: 'מחזיר שורות לא תואמות מהטבלה השמאלית בלבד'},
+    {text: 'מחזיר שורות לא תואמות מהטבלה הימנית בלבד'},
+    {text: 'מחזיר את כל השורות משתי הטבלאות, עם NULL עבור שורות לא תואמות', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה עושה `FULL OUTER JOIN` ב-SQL?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `FULL OUTER JOIN` מחזיר את כל השורות משתי הטבלאות, וממלא שורות לא תואמות ב-NULL עבור ערכים חסרים.
+
+    זה שימושי להשוואה בין שתי טבלאות ומציאת הבדלים ביניהן.
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+````

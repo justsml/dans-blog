@@ -1,0 +1,49 @@
+{
+  "index": 1,
+  "attempt": 1,
+  "originalTitle": "Aggregate Function COUNT",
+  "translatedTitle": "פונקציית צבירה COUNT",
+  "translation": {
+    "title": "פונקציית צבירה COUNT",
+    "group": "יסודות SQL",
+    "options": [
+      {
+        "text": "סופר את כל השורות כולל ערכי NULL"
+      },
+      {
+        "text": "סופר רק ערכים שאינם NULL בעמודה"
+      },
+      {
+        "text": "סופר ערכי NULL כערך ייחודי אחד"
+      },
+      {
+        "text": "מתייחס לכל ערך NULL כייחודי, בדומה ל- NaN !== NaN"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "מה עושה `COUNT(column_name)` ב-SQL?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "`COUNT(column_name)` סופר את מספר הערכים שאינם NULL בעמודה שצוינה. כדי לספור את כל השורות, כולל NULL, השתמש ב- `COUNT(*)`.\n\n    ניתן גם להשתמש ב- `COALESCE` כדי לוודא ש- NULL יקבלו ערך ברירת מחדל שאינו NULL. לדוגמה: `COUNT(COALESCE(column_name, 0))`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"פונקציית צבירה COUNT\",\n  \"group\": \"יסודות SQL\",\n  \"options\": [\n    {\n      \"text\": \"סופר את כל השורות כולל ערכי NULL\"\n    },\n    {\n      \"text\": \"סופר רק ערכים שאינם NULL בעמודה\"\n    },\n    {\n      \"text\": \"סופר ערכי NULL כערך ייחודי אחד\"\n    },\n    {\n      \"text\": \"מתייחס לכל ערך NULL כייחודי, בדומה ל- NaN !== NaN\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"מה עושה `COUNT(column_name)` ב-SQL?\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"`COUNT(column_name)` סופר את מספר הערכים שאינם NULL בעמודה שצוינה. כדי לספור את כל השורות, כולל NULL, השתמש ב- `COUNT(*)`.\\n\\n    ניתן גם להשתמש ב- `COALESCE` כדי לוודא ש- NULL יקבלו ערך ברירת מחדל שאינו NULL. לדוגמה: `COUNT(COALESCE(column_name, 0))`.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 827,
+    "outputTokens": 1031,
+    "cacheReadTokens": 384,
+    "cacheWriteTokens": 0,
+    "durationMs": 10594,
+    "providerCostUsd": 0.00051636,
+    "providerUpstreamCostUsd": 0.00051636,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.0000630952,
+    "outputUsd": 0.00028868000000000003,
+    "totalUsd": 0.00035177520000000004,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
