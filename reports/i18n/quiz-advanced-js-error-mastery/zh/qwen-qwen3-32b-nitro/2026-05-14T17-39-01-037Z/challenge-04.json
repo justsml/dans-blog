@@ -1,0 +1,51 @@
+{
+  "index": 3,
+  "attempt": 1,
+  "originalTitle": "Cross-Frame instanceof",
+  "translatedTitle": "跨框架的instanceof",
+  "translation": {
+    "title": "跨框架的instanceof",
+    "group": "类型检查技巧",
+    "options": [
+      {
+        "text": "始终为真"
+      },
+      {
+        "text": "始终为假"
+      },
+      {
+        "text": "在不同框架中可能为假"
+      },
+      {
+        "text": "抛出错误"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "在iframe中使用`instanceof Error`会发生什么？"
+    ],
+    "hintsProse": [
+      "不同的上下文有不同的Error构造函数。"
+    ],
+    "explanationProse": [
+      "`instanceof`在不同执行上下文（iframe、worker线程）中可能返回`false`，因为每个上下文都有独立的`Error`构造函数。使用`Object.prototype.toString.call(obj) === '[object Error]'`可以跨上下文可靠检测错误类型。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"跨框架的instanceof\",\n  \"group\": \"类型检查技巧\",\n  \"options\": [\n    {\"text\": \"始终为真\"},\n    {\"text\": \"始终为假\"},\n    {\"text\": \"在不同框架中可能为假\"},\n    {\"text\": \"抛出错误\"}\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"在iframe中使用`instanceof Error`会发生什么？\"\n  ],\n  \"hintsProse\": [\n    \"不同的上下文有不同的Error构造函数。\"\n  ],\n  \"explanationProse\": [\n    \"`instanceof`在不同执行上下文（iframe、worker线程）中可能返回`false`，因为每个上下文都有独立的`Error`构造函数。使用`Object.prototype.toString.call(obj) === '[object Error]'`可以跨上下文可靠检测错误类型。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 780,
+    "outputTokens": 677,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 1658,
+    "providerCostUsd": 0.00055139,
+    "providerUpstreamCostUsd": 0.00055139,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.0000624,
+    "outputUsd": 0.00016247999999999998,
+    "totalUsd": 0.00022487999999999997,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

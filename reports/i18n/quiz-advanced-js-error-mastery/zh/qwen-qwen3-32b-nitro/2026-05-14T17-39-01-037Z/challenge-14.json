@@ -1,0 +1,51 @@
+{
+  "index": 13,
+  "attempt": 1,
+  "originalTitle": "Object vs Error Detection",
+  "translatedTitle": "对象与错误检测",
+  "translation": {
+    "title": "对象与错误检测",
+    "group": "错误边界",
+    "options": [
+      {
+        "text": "true, true"
+      },
+      {
+        "text": "false, false"
+      },
+      {
+        "text": "true, false"
+      },
+      {
+        "text": "false, true"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "这些检查返回什么？"
+    ],
+    "hintsProse": [
+      "一个检查原型链，另一个检查内部插槽"
+    ],
+    "explanationProse": [
+      "`instanceof Error`返回`false`因为该对象不是由Error构造函数创建的。`Object.prototype.toString.call()`也返回`false`（它返回`'[object Object]'`）因为它检查内部`[[Class]]`插槽。这两种方法都正确识别这是一个伪造的错误对象。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"对象与错误检测\",\n  \"group\": \"错误边界\",\n  \"options\": [\n    {\"text\": \"true, true\"},\n    {\"text\": \"false, false\"},\n    {\"text\": \"true, false\"},\n    {\"text\": \"false, true\"}\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\"这些检查返回什么？\"],\n  \"hintsProse\": [\"一个检查原型链，另一个检查内部插槽\"],\n  \"explanationProse\": [\"`instanceof Error`返回`false`因为该对象不是由Error构造函数创建的。`Object.prototype.toString.call()`也返回`false`（它返回`'[object Object]'`）因为它检查内部`[[Class]]`插槽。这两种方法都正确识别这是一个伪造的错误对象。\"]\n}",
+  "telemetry": {
+    "inputTokens": 793,
+    "outputTokens": 735,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2091,
+    "providerCostUsd": 0.00066362,
+    "providerUpstreamCostUsd": 0.00066362,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00006344,
+    "outputUsd": 0.00017639999999999998,
+    "totalUsd": 0.00023983999999999998,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

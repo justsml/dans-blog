@@ -1,0 +1,51 @@
+{
+  "index": 1,
+  "attempt": 1,
+  "originalTitle": "Console vs JSON",
+  "translatedTitle": "控制台与JSON",
+  "translation": {
+    "title": "控制台与JSON",
+    "group": "序列化陷阱",
+    "options": [
+      {
+        "text": "两者输出相同"
+      },
+      {
+        "text": "console.log显示更多信息"
+      },
+      {
+        "text": "JSON.stringify显示更多信息"
+      },
+      {
+        "text": "两者都显示空对象"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "这两者有什么区别？"
+    ],
+    "hintsProse": [
+      "考虑console.log如何处理对象与JSON序列化的区别。"
+    ],
+    "explanationProse": [
+      "`console.log(err)`会显示错误对象的message和stack trace，因为控制台对Error对象有特殊处理。`JSON.stringify(err)`返回`'{}'`，因为Error对象的属性不可枚举。这种差异让很多调试API的开发者踩坑。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"控制台与JSON\",\n  \"group\": \"序列化陷阱\",\n  \"options\": [\n    {\"text\": \"两者输出相同\"},\n    {\"text\": \"console.log显示更多信息\"},\n    {\"text\": \"JSON.stringify显示更多信息\"},\n    {\"text\": \"两者都显示空对象\"}\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"这两者有什么区别？\"\n  ],\n  \"hintsProse\": [\n    \"考虑console.log如何处理对象与JSON序列化的区别。\"\n  ],\n  \"explanationProse\": [\n    \"`console.log(err)`会显示错误对象的message和stack trace，因为控制台对Error对象有特殊处理。`JSON.stringify(err)`返回`'{}'`，因为Error对象的属性不可枚举。这种差异让很多调试API的开发者踩坑。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 784,
+    "outputTokens": 526,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 2712,
+    "providerCostUsd": 0.00046346,
+    "providerUpstreamCostUsd": 0.00046346,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00006272,
+    "outputUsd": 0.00012623999999999998,
+    "totalUsd": 0.00018895999999999998,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

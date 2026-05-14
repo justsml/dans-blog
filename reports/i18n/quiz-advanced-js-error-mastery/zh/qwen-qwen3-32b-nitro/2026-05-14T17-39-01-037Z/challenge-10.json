@@ -1,0 +1,51 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Template Literals in Errors",
+  "translatedTitle": "错误中的模板字面量",
+  "translation": {
+    "title": "错误中的模板字面量",
+    "group": "消息模板",
+    "options": [
+      {
+        "text": "\"Value ${value} is invalid\""
+      },
+      {
+        "text": "\"Value undefined is invalid\""
+      },
+      {
+        "text": "ReferenceError: value is not defined"
+      },
+      {
+        "text": "\"Value  is invalid\""
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "错误信息是什么？"
+    ],
+    "hintsProse": [
+      "模板字面量插值如何处理undefined？"
+    ],
+    "explanationProse": [
+      "模板字面量在插值时会将`undefined`转换为字符串`\"undefined\"`。最终错误信息会变成`\"Value undefined is invalid\"`。为了获得更清晰的提示，建议在插值前使用`value ?? 'null'`或类似检查进行预处理。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"错误中的模板字面量\",\n  \"group\": \"消息模板\",\n  \"options\": [\n    {\n      \"text\": \"\\\"Value ${value} is invalid\\\"\"\n    },\n    {\n      \"text\": \"\\\"Value undefined is invalid\\\"\"\n    },\n    {\n      \"text\": \"ReferenceError: value is not defined\"\n    },\n    {\n      \"text\": \"\\\"Value  is invalid\\\"\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"错误信息是什么？\"\n  ],\n  \"hintsProse\": [\n    \"模板字面量插值如何处理undefined？\"\n  ],\n  \"explanationProse\": [\n    \"模板字面量在插值时会将`undefined`转换为字符串`\\\"undefined\\\"`。最终错误信息会变成`\\\"Value undefined is invalid\\\"`。为了获得更清晰的提示，建议在插值前使用`value ?? 'null'`或类似检查进行预处理。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 785,
+    "outputTokens": 1235,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 2943,
+    "providerCostUsd": 0.00088206,
+    "providerUpstreamCostUsd": 0.00088206,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00006280000000000001,
+    "outputUsd": 0.0002964,
+    "totalUsd": 0.0003592,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

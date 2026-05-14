@@ -1,0 +1,51 @@
+{
+  "index": 12,
+  "attempt": 1,
+  "originalTitle": "Non-Standard Properties",
+  "translatedTitle": "非标准属性",
+  "translation": {
+    "title": "非标准属性",
+    "group": "错误属性",
+    "options": [
+      {
+        "text": "始终可用"
+      },
+      {
+        "text": "可能在所有环境中都不存在"
+      },
+      {
+        "text": "仅在 Node.js 中存在"
+      },
+      {
+        "text": "已弃用并移除"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "error.code 和 error.errno 的可靠性如何？"
+    ],
+    "hintsProse": [
+      "考虑不同的 JavaScript 环境和错误类型。"
+    ],
+    "explanationProse": [
+      "code 和 errno 属性是环境特定的（如 Node.js 中的情况），并非标准 Error 对象的一部分。浏览器错误不会包含这些属性。始终检查它们是否存在：if (err.code === 'ENOENT')，而不是假设它们一定存在。"
+    ]
+  },
+  "rawText": "```json\n{\n  \"title\": \"非标准属性\",\n  \"group\": \"错误属性\",\n  \"options\": [\n    {\n      \"text\": \"始终可用\"\n    },\n    {\n      \"text\": \"可能在所有环境中都不存在\"\n    },\n    {\n      \"text\": \"仅在 Node.js 中存在\"\n    },\n    {\n      \"text\": \"已弃用并移除\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"error.code 和 error.errno 的可靠性如何？\"\n  ],\n  \"hintsProse\": [\n    \"考虑不同的 JavaScript 环境和错误类型。\"\n  ],\n  \"explanationProse\": [\n    \"code 和 errno 属性是环境特定的（如 Node.js 中的情况），并非标准 Error 对象的一部分。浏览器错误不会包含这些属性。始终检查它们是否存在：if (err.code === 'ENOENT')，而不是假设它们一定存在。\"\n  ]\n}\n```",
+  "telemetry": {
+    "inputTokens": 795,
+    "outputTokens": 702,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 1897,
+    "providerCostUsd": 0.00057049,
+    "providerUpstreamCostUsd": 0.00057049,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.0000636,
+    "outputUsd": 0.00016848,
+    "totalUsd": 0.00023208000000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
