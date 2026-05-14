@@ -1,0 +1,432 @@
+---
+unlisted: false
+title: 'اختبار: هل يمكنك الاعتماد على JavaScript؟'
+subTitle: هل تعرف الفرق بين `parseInt` و `parseFloat`؟
+label: Numbers
+date: '2024-10-31'
+modified: '2024-11-09'
+social_image: ../desktop-social.webp
+category: Quiz
+subCategory: JavaScript
+tags:
+  - quiz
+  - data-structures
+  - algorithms
+cover: ../victor-freitas-hOuJYX2K5DA-unsplash-square.webp
+cover_full_width: ../victor-freitas-hOuJYX2K5DA-unsplash-wide.webp
+cover_mobile: ../victor-freitas-hOuJYX2K5DA-unsplash-square.webp
+cover_icon: ../victor-freitas-hOuJYX2K5DA-unsplash-square.webp
+---
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+---
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="إحماء"
+  title="التحليل باستخدام `parseInt`"
+  options={[
+    {text: '123456', isAnswer: true},
+    {text: '123'},
+    {text: '12345600'},
+    {text: '456.00'},
+    {text: 'Error'},
+    {text: 'NaN'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```tsx
+        parseInt(" 123456.00")
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    تتجاهل الدالة `parseInt` المسافات وتقوم بتحليل التسلسل الأولي من الأرقام كعدد صحيح. هنا، تتوقف عند النقطة العشرية، لذا يتم إرجاع `123456` فقط.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="التحليل"
+  title="التعامل مع الفاصلة"
+  options={[
+    {text: '123', isAnswer: true},
+    {text: '12345600'},
+    {text: '123456.00'},
+    {text: '456.00'},
+    {text: 'Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```tsx
+        parseInt("123,456.00")
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    بشكل عام، يتوقف `parseInt` عن التحليل عندما يواجه حرفًا غير رقمي. هنا، يتوقف عند الفاصلة، لذلك يتم إرجاع `123` فقط.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="الرياضيات"
+  title="الدقة مع النقاط العائمة"
+  options={[
+    {text: '0.1 + 0.2 === 0.3'},
+    {text: 'false', isAnswer: true},
+    {text: 'true'},
+    {text: 'NaN'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```tsx
+        0.1 + 0.2 === 0.3
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    بسبب أخطاء الدقة في النقاط العائمة، فإن `0.1 + 0.2` لا يساوي تمامًا `0.3`. نظرًا للطريقة التي تُخزَّن بها الأعداد العشرية العائمة في الذاكرة، تكون النتيجة `0.30000000000000004`. معيار IEEE 754 للتعامل مع الحسابات العشرية العائمة هو السبب، فهو لا يستطيع تمثيل بعض الأعداد بدقة. هذه مشكلة شائعة في جميع لغات البرمجة. في النهاية، ستصادف عددًا عشريًا لا نهائيًا، وبغض النظر عن اللغة، يجب على الكمبيوتر ببساطة التوقف عن مطاردة الأرقام اللانهائية.
+
+    بعض اللغات مثل Python وJava تحتوي على `Decimal` أو `BigDecimal` للتعامل مع هذا، لكنها غير مدمجة في JavaScript. يمكنك استخدام مكتبات مثل `big.js` أو `decimal.js` لمعالجة هذه الحالات.
+
+    (ملاحظة: بعض اللغات مصممة للتعامل مع الكسور والأعداد التخيلية وما إلى ذلك على مستوى منطقي أعلى، مع الحفاظ على التعبيرات الحرفية. لكنها لا تزال تواجه نفس مشكلات الدقة في النقاط العائمة على مستوى العتاد.)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="الأعداد الفائضة"
+  title="التعامل مع اللانهاية"
+  options={[
+    {text: 'Infinity', isAnswer: true},
+    {text: 'NaN'},
+    {text: 'Error'},
+    {text: 'undefined'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```tsx
+        Number.MAX_VALUE * 2
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    بما أن `Number.MAX_VALUE` هو أكبر رقم **قابل للتمثيل** عادي في JavaScript، فإن تجاوز حده سيؤدي إلى فيضان سريع - بشكل أساسي قد ترى نتائج غير ذات معنى. ضربه في `2` ينتج `Infinity`.
+
+    *أتعلم، JavaScript هكذا أحيانًا.*
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="تنسيق"
+  title="تحويل السلسلة باستخدام `.toFixed()`"
+  options={[
+    {text: 'TypeError'},
+    {text: 'SyntaxError'},
+    {text: '"5"'},
+    {text: '5'},
+    {text: '"5.00"', isAnswer: true},
+    {text: '5.0'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ماذا قد يفعل هذا؟
+    ```tsx
+        5..toFixed(2)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `.toFixed(2)` تُرجع تمثيلًا نصيًا للرقم `5` بمنزلتين عشريتين، لذا تكون النتيجة `"5.00"`.
+
+    النقطة المزدوجة (`5..toFixed(2)`) هي 'حيلة' للوصول إلى نموذج الكائن الخاص بـ Number Literals.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="مقارنة الأنواع"
+  title="مقارنة المساواة بين `parseInt` و `parseFloat`"
+  options={[
+    {text: 'true', isAnswer: true},
+    {text: 'false'},
+    {text: 'NaN'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```jsx
+        parseInt("42") === parseFloat("42")
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    في JavaScript، كل من `parseInt` و `parseFloat` سيفسران السلسلة `"42"` كالرقم `42`. لذلك، فإن المقارنة `parseInt(\"42\") === parseFloat(\"42\")` تُقيّم إلى `true`. بينما يتوقف `parseInt` عن التحليل عند أول حرف غير رقمي، يستمر `parseFloat` في التحليل حتى يواجه حرفًا ليس جزءًا من رقم عشري. ومع ذلك، نظرًا لعدم وجود نقاط عشرية أو أحرف غير رقمية أخرى في `"42"`، فإن كلا الدالتين تُرجعان نفس القيمة.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="المساواة"
+  title="مقارنة المساواة مع BigInt"
+  options={[
+    {text: 'TypeError'},
+    {text: 'true'},
+    {text: 'false', isAnswer: true},
+    {text: 'NaN'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```jsx
+        BigInt("42") === parseInt("42")
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    [`BigInt`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt) هو نوع مختلف عن `number`، لذا فإن `parseInt("42")` (رقم عادي) لا يساوي تمامًا `BigInt("42")`. للمقارنة، يجب تحويل كليهما إلى نفس النوع: `BigInt(parseInt("42")) === BigInt("42")`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="أساسي"
+  title="تحليل الأعداد الست عشرية"
+  options={[
+    {text: 'صحيح', isAnswer: true},
+    {text: 'خاطئ'},
+    {text: 'NaN'},
+    {text: 'يجب أن يكون بحروف كبيرة: 2A'},
+    {text: 'خطأ'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ماذا ستكون نتيجة هذا؟
+    ```jsx
+        parseInt("0x2A") === parseInt("2a", 16)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    أي سلسلة إدخال تبدأ بـ `0x` تُعامل تلقائيًا كعدد ست عشري (أساس `16`).
+    لذلك فهي مكافئة لتمرير أساس 16. لذا، `parseInt("0x2A")` هو نفسه `parseInt("2a", 16)`. (لا يفرق بين الأحرف الكبيرة والصغيرة.)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="الأساس"
+  title="التحليل باستخدام الأساس"
+  options={[
+    {text: '255', isAnswer: true},
+    {text: '0'},
+    {text: '16'},
+    {text: '0.16'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما الأمر هنا؟
+    ```jsx
+        parseInt('0xFF', 16)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    يقوم `parseInt` بقاعدة سداسية عشرية (`16`) بتحويل `"FF"` إلى `255` في النظام العشري. ربما رأيت هذا في رموز الألوان CSS RGB/Hex.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="Number[]"
+  title="استخدام `.map(parseInt)`"
+  options={[
+    {text: '[24, NaN, NaN]', isAnswer: true},
+    {text: '[24, NaN, 42]'},
+    {text: '[24, 42]'},
+    {text: 'NaN'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```jsx
+        [24, 'One', 42].map(parseInt)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    الوسيط الثاني لـ `parseInt` (الراديكس) يتوافق مع وسيط `index` في دوال المصفوفات. يؤدي هذا إلى نتائج غير متوقعة، حيث أن `parseInt(\"One\", 1)` يُرجع `NaN` بسبب الإدخال غير الصحيح.
+
+    العنصر الأول، `24`، يتم تحليله كـ `24` في الأساس 0 (اكتشاف تلقائي)، لذا يبقى `24`. العنصر الثاني، `'One'`، يتم تحليله كـ `NaN` في الأساس 1. العنصر الثالث، `42`، يتم تحليله باستخدام الأساس 2. في الأساس 2، `'42'` هو `NaN`، لذا تكون النتيجة `[24, NaN, NaN]`.
+
+    هذا خطأ شائع مع `parseInt` و `map`. إذا كنت تريد تحليل مصفوفة من السلاسل إلى أرقام، فإن الطريقة الآمنة الوحيدة "المضمنة" هي `.map(Number)` أو إضافة رد اتصال/إغلاق `.map(x => parseInt(x, 10))`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="Number[]"
+  title="استخدام `.map(Number)`"
+  options={[
+    {text: '[24, NaN, 34]', isAnswer: true},
+    {text: '[24, NaN, 42]'},
+    {text: '[24, 1, 42]'},
+    {text: '[24, 42]'},
+    {text: 'NaN'},
+    {text: 'TypeError'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```jsx
+        [24, 'Twenty1', 0o42].map(Number)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `Number` يقوم بتحويل القيم إلى نوع رقمي بشكل أكثر صرامة من `parseInt`. هنا، `'Twenty1'` يصبح `NaN`، بينما يتم التعرف على `0o42` كحرف ثماني وتحويله إلى `34`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="التحليل"
+  title="التعامل مع القيم الفارغة"
+  options={[
+    {text: '0 NaN'},
+    {text: '0 0'},
+    {text: 'NaN NaN'},
+    {text: 'NaN 0', isAnswer: true},
+    {text: 'null null'},
+    {text: 'TypeError'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما هي نتيجة هذا الكود؟
+    ```jsx
+        console.log(parseInt(null), Number(null))
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `parseInt` يحول الإدخال إلى سلسلة نصية، لذا يصبح `null` هو `"null"`. وبما أن `"null"` لا يحتوي على أرقام صالحة في الأساس 10 (الأرقام العادية)، فإنه سيعيد `NaN`.
+
+    `Number(null)` يعيد `0`. لأن JS تحب أن تبقيك في حالة تأهب.
+    لماذا؟ حسنًا، قد أتعمق أكثر إذا كان هناك اهتمام.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="التحليل"
+  title="التحليل حسب الأساس"
+  options={[
+    {text: 'NaN'},
+    {text: 'null'},
+    {text: 'undefined'},
+    {text: '36'},
+    {text: '1112745', isAnswer: true},
+    {text: '01001001'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما هي نتيجة هذه التعويذة؟
+    ```jsx
+        parseInt(null, 36)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    بما أن `parseInt` دائمًا يحول الإدخال إلى سلسلة نصية، فإن `null` يصبح السلسلة `"null"`.
+
+    في الأساس 36 (سداسي عشري ثلاثي، إذا كنت تتابع)، السلسلة `"null"` تمثل `1112745`.
+
+    القيم المتتالية لـ `nulk` و `null` و `nulm` هي على التوالي `1112744` و `1112745` و `1112746` في الأساس 36.
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+
+<section className="scroll-x">
+## جدول المقارنة
+
+| الدالة | `parseInt` | `parseFloat` | `Number` | `BigInt` |
+| --- | --- | --- | --- | --- |
+| يتجاهل المسافات البيضاء | ✅ | ✅ | ✅ | ✅ |
+| `.map(FN)`  | ❌ | ☑️ | ✅ | ✅ |
+| يدعم وسيط الأساس (radix) | ✅ | ❌ | ❌ | ❌ |
+| الترميز الثنائي/الثماني/السداسي عشري | ✅ | ❌ | ✅ | ✅ |
+| أحرف غير صالحة `42 oh no` | `42` | `42`  | `NaN` | `SyntaxError` |
+</section>
+
+<h2>كيف كانت نتيجتك؟ 🧐</h2>
+
+{/* <h4>Are you ok?</h4> */}
+
+<p class="inset">هل تبحث عن راحة بعد كل هذا الثنائي؟<br />تفو، تذكر: الاستراحة *بعد* المهارات! <br /><br />اضغط على [صالتنا الرياضية](/challenges/) لتحطيم المزيد من التحديات! 💪</p>

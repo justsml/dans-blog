@@ -1,0 +1,55 @@
+{
+  "index": 11,
+  "attempt": 1,
+  "originalTitle": "Handling nulls",
+  "translatedTitle": "التعامل مع القيم الفارغة",
+  "translation": {
+    "title": "التعامل مع القيم الفارغة",
+    "group": "التحليل",
+    "options": [
+      {
+        "text": "0 NaN"
+      },
+      {
+        "text": "0 0"
+      },
+      {
+        "text": "NaN NaN"
+      },
+      {
+        "text": "NaN 0"
+      },
+      {
+        "text": "null null"
+      },
+      {
+        "text": "TypeError"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "ما هي نتيجة هذا الكود؟"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "`parseInt` يحول الإدخال إلى سلسلة نصية، لذا يصبح `null` هو `\"null\"`. وبما أن `\"null\"` لا يحتوي على أرقام صالحة في الأساس 10 (الأرقام العادية)، فإنه سيعيد `NaN`.\n  \n    `Number(null)` يعيد `0`. لأن JS تحب أن تبقيك في حالة تأهب.\n    لماذا؟ حسنًا، قد أتعمق أكثر إذا كان هناك اهتمام."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"التعامل مع القيم الفارغة\",\n  \"group\": \"التحليل\",\n  \"options\": [\n    {\"text\": \"0 NaN\"},\n    {\"text\": \"0 0\"},\n    {\"text\": \"NaN NaN\"},\n    {\"text\": \"NaN 0\"},\n    {\"text\": \"null null\"},\n    {\"text\": \"TypeError\"}\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\"ما هي نتيجة هذا الكود؟\"],\n  \"hintsProse\": [],\n  \"explanationProse\": [\"`parseInt` يحول الإدخال إلى سلسلة نصية، لذا يصبح `null` هو `\\\"null\\\"`. وبما أن `\\\"null\\\"` لا يحتوي على أرقام صالحة في الأساس 10 (الأرقام العادية)، فإنه سيعيد `NaN`.\\n  \\n    `Number(null)` يعيد `0`. لأن JS تحب أن تبقيك في حالة تأهب.\\n    لماذا؟ حسنًا، قد أتعمق أكثر إذا كان هناك اهتمام.\"]\n}",
+  "telemetry": {
+    "inputTokens": 839,
+    "outputTokens": 1214,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 8808,
+    "providerCostUsd": 0.0006534,
+    "providerUpstreamCostUsd": 0.0006534,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00011746000000000002,
+    "outputUsd": 0.00033992,
+    "totalUsd": 0.00045738,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

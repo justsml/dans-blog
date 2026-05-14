@@ -1,0 +1,47 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Using `.map(parseInt)`",
+  "translatedTitle": "استخدام `.map(parseInt)`",
+  "translation": {
+    "title": "استخدام `.map(parseInt)`",
+    "group": "Number[]",
+    "options": [
+      {
+        "text": "[24, NaN, NaN]"
+      },
+      {
+        "text": "[24, NaN, 42]"
+      },
+      {
+        "text": "[24, 42]"
+      },
+      {
+        "text": "NaN"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [],
+    "hintsProse": [],
+    "explanationProse": [
+      "الوسيط الثاني لـ `parseInt` (الراديكس) يتوافق مع وسيط `index` في دوال المصفوفات. يؤدي هذا إلى نتائج غير متوقعة، حيث أن `parseInt(\\\"One\\\", 1)` يُرجع `NaN` بسبب الإدخال غير الصحيح.\n\n    العنصر الأول، `24`، يتم تحليله كـ `24` في الأساس 0 (اكتشاف تلقائي)، لذا يبقى `24`. العنصر الثاني، `'One'`، يتم تحليله كـ `NaN` في الأساس 1. العنصر الثالث، `42`، يتم تحليله باستخدام الأساس 2. في الأساس 2، `'42'` هو `NaN`، لذا تكون النتيجة `[24, NaN, NaN]`.\n\n    هذا خطأ شائع مع `parseInt` و `map`. إذا كنت تريد تحليل مصفوفة من السلاسل إلى أرقام، فإن الطريقة الآمنة الوحيدة \"المضمنة\" هي `.map(Number)` أو إضافة رد اتصال/إغلاق `.map(x => parseInt(x, 10))`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"استخدام `.map(parseInt)`\",\n  \"group\": \"Number[]\",\n  \"options\": [\n    {\"text\": \"[24, NaN, NaN]\"},\n    {\"text\": \"[24, NaN, 42]\"},\n    {\"text\": \"[24, 42]\"},\n    {\"text\": \"NaN\"}\n  ],\n  \"objectives\": [],\n  \"questionProse\": [],\n  \"questionCode\": [\n    {\n      \"language\": \"jsx\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"الوسيط الثاني لـ `parseInt` (الراديكس) يتوافق مع وسيط `index` في دوال المصفوفات. يؤدي هذا إلى نتائج غير متوقعة، حيث أن `parseInt(\\\\\\\"One\\\\\\\", 1)` يُرجع `NaN` بسبب الإدخال غير الصحيح.\\n\\n    العنصر الأول، `24`، يتم تحليله كـ `24` في الأساس 0 (اكتشاف تلقائي)، لذا يبقى `24`. العنصر الثاني، `'One'`، يتم تحليله كـ `NaN` في الأساس 1. العنصر الثالث، `42`، يتم تحليله باستخدام الأساس 2. في الأساس 2، `'42'` هو `NaN`، لذا تكون النتيجة `[24, NaN, NaN]`.\\n\\n    هذا خطأ شائع مع `parseInt` و `map`. إذا كنت تريد تحليل مصفوفة من السلاسل إلى أرقام، فإن الطريقة الآمنة الوحيدة \\\"المضمنة\\\" هي `.map(Number)` أو إضافة رد اتصال/إغلاق `.map(x => parseInt(x, 10))`.\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 936,
+    "outputTokens": 3242,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 18432,
+    "providerCostUsd": 0.001484,
+    "providerUpstreamCostUsd": 0.001484,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00013104000000000002,
+    "outputUsd": 0.0009077600000000001,
+    "totalUsd": 0.0010388,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
