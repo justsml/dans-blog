@@ -4,4 +4,4 @@
 - Selected model: openrouter/openai/gpt-oss-120b:nitro
 - Judge model: openrouter/deepseek/deepseek-v4-flash
 
-The gpt-oss candidate (f3056025) remains the best overall translation: it is accurate, natural, and maintains Dan's direct style. However, after pre-publish fixes pass 2, challenges 4 and 5 now have their options but are still missing objectives, and challenge 13 is missing both objectives and options. These are high-priority issues that must be fixed before publication.
+The selected translation is complete and accurate after applying pre-publish fixes. All missing objectives and options for Challenges 4, 5, and 13 have been restored. No further medium/high-priority fixes are needed.

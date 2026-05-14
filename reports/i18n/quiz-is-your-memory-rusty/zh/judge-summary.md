@@ -29,43 +29,32 @@ error: script "i18n:validate" exited with code 1
 
 
 ## Primary Judge Telemetry
-- Runtime seconds: 19.96
-- Input tokens: 45654
-- Output tokens: 2636
+- Runtime seconds: 29.67
+- Input tokens: 35192
+- Output tokens: 4119
 - Thinking tokens: unknown
 - Cached input tokens: 0
 - Cache write tokens: 0
-- OpenRouter cost credits: 0.010185
-- Estimated cost: $0.010185
+- OpenRouter cost credits: 0.008686
+- Estimated cost: $0.008686
 
 ## Pre-Publish Rescore Telemetry
 ### Pass 1
-- Runtime seconds: 8.61
-- Input tokens: 36613
-- Output tokens: 1310
+- Runtime seconds: 5.64
+- Input tokens: 37188
+- Output tokens: 582
 - Thinking tokens: unknown
 - Cached input tokens: 0
 - Cache write tokens: 0
-- OpenRouter cost credits: 0.007847
-- Estimated cost: $0.007847
-
-### Pass 2
-- Runtime seconds: 29.70
-- Input tokens: 36531
-- Output tokens: 5011
-- Thinking tokens: unknown
-- Cached input tokens: 0
-- Cache write tokens: 0
-- OpenRouter cost credits: 0.009311
-- Estimated cost: $0.009311
+- OpenRouter cost credits: 0.007670
+- Estimated cost: $0.007670
 
 ## Judge Suggestions
-1. Pass 1: applied high priority suggestion. Match: "options={[ ]}" Replacement: "options={[ {text: '5', hint: '代码无法编译，无法产生值'}, {text: 'null', hint: 'Rust 没有 null 值'}, {text: '编译错误', hint: '编译器无法确定此递归类型的有限大小。', isAnswer: true}, {text: '栈溢出'} ]}" Reason: Challenge 4 (Box Smart Pointer) is missing its options entirely. The English file has four options; they must be translated and included. Note: Applied exact replacement to selected MDX.
-2. Pass 1: applied high priority suggestion. Match: "options={[ ]}" Replacement: "options={[ {text: '引用计数：1', hint: '计算初始创建加上每次克隆'}, {text: '引用计数：2', hint: '不要忘记原始引用'}, {text: '引用计数：3', isAnswer: true}, {text: '编译错误', hint: 'Rc<T> 正是为此用例设计的'} ]}" Reason: Challenge 5 (Rc Smart Pointer) is missing its options entirely. The English file has four options; they must be translated and included. Note: Applied exact replacement to selected MDX.
-3. Pass 2: applied high priority suggestion. Match: "options={[ ]}" Replacement: "options={[ {text: '5', hint: '代码无法编译，无法产生值'}, {text: 'null', hint: 'Rust 没有 null 值'}, {text: '编译错误', hint: '编译器无法确定此递归类型的有限大小。', isAnswer: true}, {text: '栈溢出'} ]}" Reason: Challenge 4 (Box Smart Pointer) is missing its options entirely. The English file has four options; they must be translated and included. Note: Applied exact replacement to selected MDX.
-4. Pass 2: applied high priority suggestion. Match: "options={[ ]}" Replacement: "options={[ {text: '引用计数：1', hint: '计算初始创建加上每次克隆'}, {text: '引用计数：2', hint: '不要忘记原始引用'}, {text: '引用计数：3', isAnswer: true}, {text: '编译错误', hint: 'Rc<T> 正是为此用例设计的'} ]}" Reason: Challenge 5 (Rc Smart Pointer) is missing its options entirely. The English file has four options; they must be translated and included. Note: Applied exact replacement to selected MDX.
+1. Pass 1: applied high priority suggestion. Match: "difficulty={4} options={[ ]}" Replacement: "difficulty={4} objectives={[ \"理解递归类型定义及其内存影响\", \"识别需要 Box<T> 的情况\", \"应用 Box<T> 修复递归数据结构\" ]} options={[ {text: '5', hint: \"代码甚至无法编译产生值\"}, {text: 'null', hint: \"Rust 没有 null 值\"}, {t..." Reason: Challenge 4 (Box Smart Pointer) is missing both the objectives array and the options array. The English file includes these; they must be translated and added to preserve the quiz structure and content. Note: Applied exact replacement to selected MDX.
+2. Pass 1: applied high priority suggestion. Match: "difficulty={3} options={[ ]}" Replacement: "difficulty={3} objectives={[ \"理解引用计数在 Rust 中的工作方式\", \"在共享所有权场景中应用 Rc<T>\", \"分析代码中的引用计数行为\" ]} options={[ {text: '引用计数：1', hint: \"计算初始创建加上每次克隆\"}, {text: '引用计数：2', hint: \"不要忘记原始引用\"},..." Reason: Challenge 5 (Rc Smart Pointer) is missing both the objectives array and the options array. The English file includes these; they must be translated and added to preserve the quiz structure and content. Note: Applied exact replacement to selected MDX.
+3. Pass 1: applied high priority suggestion. Match: "difficulty={4} options={[ ]}" Replacement: "difficulty={4} objectives={[ \"理解弱引用的目的和行为\", \"识别弱引用防止内存泄漏的场景\", \"应用 Weak<T> 打破引用循环\" ]} options={[ {text: '打印: Some(\"Wisdom\")', hint: \"当所有强引用被丢弃时，数据会发生什么？\"}, {text: '打印: None', isA..." Reason: Challenge 13 (Weak References) is missing both the objectives array and the options array. The English file includes these; they must be translated and added to preserve the quiz structure and content. Note: Applied exact replacement to selected MDX.
 
 ## Candidates
-- current src/content/posts/2024-12-28--quiz-is-your-memory-rusty/zh/index.mdx
+- current not present
 - f68ed3f28383167090cbefa4d1cd57f48fbc9f5e i18n candidate(zh): quiz-is-your-memory-rusty via openrouter/deepseek/deepseek-v4-flash
 - f30560254a3f057d3bcc84862232d4935036be18 i18n candidate(zh): quiz-is-your-memory-rusty via openrouter/openai/gpt-oss-120b:nitro
