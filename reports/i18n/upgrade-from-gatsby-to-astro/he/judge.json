@@ -1,0 +1,37 @@
+{
+  "selectedCommit": "c27ef1d8046e40e77f3e1a072359900634dbe5a7",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 5,
+    "technicalAccuracy": 5,
+    "coherence": 5,
+    "relevance": 5,
+    "translationQuality": 5,
+    "mdxPreservation": 5
+  },
+  "suggestions": [],
+  "rationale": "The selected candidate correctly handles external links and asset paths. The previous judge report mentioned a duplicated heading '## CSS מודרני: וואו', but upon inspection of the provided Hebrew MDX content, the heading only appears once. Therefore, no high-priority suggestions are required. The translation is technically accurate and maintains the original structure and tone.",
+  "slug": "upgrade-from-gatsby-to-astro",
+  "locale": "he",
+  "candidateCommits": [
+    "c27ef1d8046e40e77f3e1a072359900634dbe5a7",
+    "049ab8b42292f7b5b5390ce9caa98cf27eeedab2"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "## CSS מודרני: וואו\n\n## CSS מודרני: וואו",
+      "replacement": "## CSS מודרני: וואו",
+      "reason": "The heading is duplicated in the candidate MDX.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug upgrade-from-gatsby-to-astro --locale he --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug upgrade-from-gatsby-to-astro --locale he --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug upgrade-from-gatsby-to-astro --locale he --skip-global\n111 |     })\n112 |     .filter((message): message is string => message != null);\n113 | \n114 |   if (mismatches.length === 0) return;\n115 | \n116 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2024-08-22--upgrade-from-gatsby-to-astro/he/index.mdx changed heading counts. H2: English has 9, translation has 10\n      at assertHeadingCounts (/Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:116:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:28:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}
