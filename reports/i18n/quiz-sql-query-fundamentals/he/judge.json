@@ -1,0 +1,37 @@
+{
+  "selectedCommit": "70a66815a6c8378588906f314ef96681b76ae41a",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 10,
+    "relevance": 10,
+    "translationQuality": 10,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The current Hebrew translation in the provided file is already correct and does not contain the truncation error mentioned in the previous judge report (the code snippet for the correct answer in index 0 is fully intact). The translation is technically accurate, maintains the MDX structure perfectly, and uses a natural, direct tone suitable for the content.",
+  "slug": "quiz-sql-query-fundamentals",
+  "locale": "he",
+  "candidateCommits": [
+    "70a66815a6c8378588906f314ef96681b76ae41a",
+    "e552e34a93c8d81365e1caed46b52d50d13554be"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "{text: 'SELECT * FROM users WHERE name = \"', isAnswer: true},",
+      "replacement": "{text: \"SELECT * FROM users WHERE name = 'John';\", isAnswer: true},",
+      "reason": "The candidate truncated the correct answer option, making the quiz broken.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug quiz-sql-query-fundamentals --locale he --skip-global",
+    "output": ""
+  }
+}
