@@ -1,6 +1,6 @@
 ---
-title: 你的 AI 助手给了我 Shell 访问权限
-subTitle: 如何保护本地或 VPS 上的 OpenClaw/Moltbot 环境
+title: 你的AI助手给了我shell访问权限
+subTitle: 如何安全加固你的本地或VPS的OpenClaw/Moltbot环境
 date: '2026-01-15'
 modified: '2026-01-28'
 tags:
@@ -19,81 +19,81 @@ cover_full_width: ../hero_wide.webp
 cover_mobile: ../icon_square_200.webp
 cover_icon: ../icon_square_200.webp
 ---
-OpenClaw（前身为 Clawdbot/Moltbot）为你提供一个跨 WhatsApp、Slack、Discord、iMessage 等渠道工作的个人 AI 助手。但如果把它的网关、节点控制或 SSH 暴露在公共互联网且没有强身份验证，你就在给陌生人提供一条直接访问你机器 shell 的路径。
+OpenClaw（原Clawdbot/Moltbot）为您提供一个跨WhatsApp、Slack、Discord、iMessage等渠道的个人AI助手。但如果未对它的网关、节点控制或SSH接口实施强认证就暴露在公网上，您就等于为陌生人打开了通向您机器的shell访问路径。
 
-本指南展示了最安全的默认做法：将 OpenClaw 的网关绑定在回环地址，仅通过 Tailscale Serve 向你的 tailnet 暴露，锁定 SSH，并从外部验证网关并未对外公开。
+本指南展示最安全的默认方案：将OpenClaw网关绑定在环回接口，仅通过Tailscale Serve向您的tailnet暴露，锁定SSH访问，并从外部验证网关是否未公开。
 
-项目的快速普及暴露了真实的安全风险：在最初几周内，[Shodan 扫描发现了 2,847 个暴露实例](https://socradar.io/blog/clawdbot-is-it-safe/)，而一次 [GitHub 安全审计 issue 报告了 512 条发现](https://github.com/moltbot/moltbot/issues/1796)。其中部分是自动化扫描器的输出，部分自 2026 年 1 月更名为 OpenClaw 后已有所变化，所以把这个数字当作警示信号，而不是精确的当前漏洞计数。你不需要成为安全专家——只要在部署前避免公开操作面即可。
-
----
-
-## 实际暴露了哪些内容
-
-根据你的安装方式和暴露方式，有三类表面需要检查：
-
-- **端口 22**：VPS 上的 SSH 访问  
-- **端口 18789**：网关控制 UI 与 WebSocket API  
-- **浏览器/节点控制**：通过网关/节点配对模型进行的远程节点执行和浏览器自动化  
-
-当前的 [OpenClaw 远程访问文档](https://docs.molt.bot/gateway/remote) 说明网关 WebSocket 默认绑定在回环地址，并建议除非你有意选择 LAN、tailnet 或自定义绑定，否则保持回环-only。这是正确的做法。风险出现在你覆盖默认设置、发布 Docker 端口、添加反向代理、开启 Funnel，或让 SSH 对全世界开放时。
-
-网关是最大的问题。它是你助手的操作面，包含工具调用路径。如果它可以被互联网访问且身份验证缺失、弱化、被绕过或泄露，攻击者可能利用你的用户权限驱动代理或调用工具。
-
-浏览器控制的敏感度几乎相当。当前的 OpenClaw 文档建议在浏览器机器上通过配对的节点主机运行浏览器控制，并将节点配对视为操作访问。如果网关能够在配对节点上调用 `system.run`，则相当于对该节点的远程代码执行，受网关的节点策略和节点自身的执行批准约束。
-
-SSH 就是 SSH。如果你开启了密码认证，在公共 VPS 上不可避免会遭遇暴力破解尝试。
+该项目的快速普及暴露了真实的安全隐患：[Shodan扫描在最初几周发现了2,847个暴露实例](https://socradar.io/blog/clawdbot-is-it-safe/)，GitHub安全审计报告在代码库中发现了[512个问题](https://github.com/moltbot/moltbot/issues/1796)。其中部分来自自动扫描器输出，部分在2026年1月项目更名为OpenClaw后已变更，因此请将这些数字视为警示而非精确的当前漏洞统计。您不需要成为安全专家——只需在部署前避免发布操作接口即可。
 
 ---
 
-## Tailscale 方案
+## 您实际暴露的内容
 
-对 OpenClaw 来说，Tailscale 能在不暴露运营服务的前提下提供远程访问：
+根据安装和暴露方式的不同，有三个接口需要检查：
 
-1. 你的 OpenClaw 实例运行在 VPS 或本地机器上  
-2. 网关保持绑定在回环地址，并通过 Tailscale Serve 访问，或直接绑定到 tailnet IP 并使用显式认证  
-3. 在服务器和个人设备上都安装 Tailscale  
-4. 通过其 Tailscale IP 或 MagicDNS 名称访问 OpenClaw  
-5. 互联网上的其他人看不到任何内容，除非你主动启用 Funnel 或其他公共代理  
+- **22端口**：VPS上的SSH访问
+- **18789端口**：网关控制UI和WebSocket API
+- **浏览器/节点控制**：通过网关/节点配对模型实现的远程节点执行和浏览器自动化
 
-### 是否让 OpenClaw 管理 Tailscale？
+当前[OpenClaw远程访问文档](https://docs.molt.bot/gateway/remote)指出网关WebSocket默认绑定环回接口，并建议除非有意选择LAN/tailnet/自定义绑定，否则保持环回绑定。这是合理的。风险出现在您覆盖默认配置、发布Docker端口、添加反向代理、启用Funnel或对SSH开放公网访问时。
 
-OpenClaw 提供了[内置的 Tailscale 集成](https://docs.molt.bot/gateway/tailscale)，可以为网关配置 `tailscale serve` 或 `tailscale funnel`。
+网关是最重要的暴露面。这是您助手的操作接口，包括工具调用路径。如果网关可从互联网访问且认证缺失、薄弱、被绕过或泄露，攻击者可能能够控制代理或以您的用户权限调用工具。
 
-**Serve 模式** 只在你的 tailnet 内部工作。网关仍绑定在 `127.0.0.1`，由 Tailscale 负责路由和 HTTPS。当 `gateway.auth.allowTailscale` 开启时，OpenClaw 能使用 Tailscale 身份头部对 Control UI/WebSocket 流量进行身份验证，并通过 `tailscale whois` 验证来源。这是大多数个人部署的正确选择。
+浏览器控制几乎同样敏感。当前OpenClaw文档建议通过浏览器机器上的配对节点主机运行浏览器控制，并将节点配对视为操作访问。如果网关可以在配对节点上执行`system.run`，这等同于在该节点上实现远程代码执行，受网关节点策略和节点自身执行审批的约束。
 
-**Funnel 模式** 通过 Tailscale 的公共端点功能将网关公开。Tailscale 官方文档将 Funnel 描述为将来自更广泛互联网的流量路由到本地服务。OpenClaw 在网关认证模式为 `password` 时才会启动 Funnel，但这仍然是对运营面进行公共暴露的选择。
-
-OpenClaw 的[安全文档](https://docs.molt.bot/gateway/security)明确指出，提示注入和工具访问是个人助理的核心风险。不要让代理悄悄把自己暴露到公网。请有意识地使用 Serve，除非确实需要公共访问，否则避免使用 Funnel，并对任何 `tailscale` 命令要求执行批准。
+SSH就是SSH。如果您启用了密码认证，在公网VPS上暴力破解尝试是不可避免的。
 
 ---
 
-## 安全配置 OpenClaw
+## Tailscale解决方案
 
-### 步骤 1：安装 Tailscale
+对于OpenClaw，Tailscale可让您在不发布操作服务的情况下实现远程访问：
 
-在你的 VPS 或本地服务器上：
+1. 您的OpenClaw实例运行在VPS或本地机器上
+2. 网关保持绑定环回接口并通过Tailscale Serve访问，或直接绑定tailnet IP并使用显式认证
+3. 在服务器和您的个人设备上安装Tailscale
+4. 通过Tailscale IP或MagicDNS名称访问OpenClaw
+5. 互联网上的其他人将看不到任何内容，除非您有意启用Funnel或其他公共代理
+
+### 是否应让OpenClaw管理Tailscale？
+
+OpenClaw提供了[内置的Tailscale集成](https://docs.molt.bot/gateway/tailscale)，可配置`tailscale serve`或`tailscale funnel`用于网关。
+
+**Serve模式**将流量限制在您的tailnet内。网关保持绑定在`127.0.0.1`，而Tailscale处理路由和HTTPS。当启用`gateway.auth.allowTailscale`时，OpenClaw可通过Tailscale身份验证头认证Control UI/WebSocket流量，并通过`tailscale whois`验证来源。这是大多数个人部署的正确模式。
+
+**Funnel模式** 通过Tailscale的公共端点功能将网关公开暴露。Tailscale官方文档描述Funnel为将互联网流量路由到本地服务。OpenClaw在网关认证模式不是`password`时会拒绝启动Funnel，但你仍然在选择为操作界面暴露公网。
+
+OpenClaw的[安全文档](https://docs.molt.bot/gateway/security)明确指出提示注入和工具访问是个人助理的核心风险。不要为代理提供静默公开的路径。应刻意使用Serve模式，除非确实需要公网访问才使用Funnel，并为任何`tailscale`命令要求执行审批。
+
+---
+
+## 安全配置OpenClaw
+
+### 步骤1：安装Tailscale
+
+在您的VPS或本地服务器上：
 
 ```bash
-# 安装 Tailscale
+# 安装Tailscale
 curl -fsSL https://tailscale.com/install.sh | sh
 
-# 认证（会打开浏览器登录）
+# 认证（打开浏览器登录）
 sudo tailscale up
 
-# 获取你的 Tailscale IP
+# 获取您的Tailscale IP
 tailscale ip -4
-# 输出示例：100.x.x.x
+# 输出：100.x.x.x
 ```
 
-在客户端机器上，从官方下载页面安装 Tailscale 并登录到同一个 tailnet。
+在客户端机器上，从官方下载页面安装Tailscale并登录到同一个tailnet。
 
-此时两台机器已处于同一私有网络。你可以使用 Tailscale IP ping 你的 VPS，流量会走加密隧道。
+现在两台机器处于同一私有网络。您可以使用Tailscale IP ping您的VPS，流量将通过加密隧道路由。
 
-### 步骤 2：配置 OpenClaw 使用 Tailscale
+### 步骤2：配置OpenClaw使用Tailscale
 
-当前最安全的做法是：让网关仅绑定在回环地址，并通过 Tailscale Serve 将其暴露给 tailnet。
+当前最安全的模式是：保持网关绑定在回环接口，并通过Tailscale Serve将其暴露到tailnet。
 
-在 OpenClaw 配置中：
+在OpenClaw配置中：
 
 ```js
 {
@@ -104,15 +104,15 @@ tailscale ip -4
 }
 ```
 
-随后使用 Serve 启动网关：
+然后以Serve模式启动网关：
 
 ```bash
 openclaw gateway --tailscale serve
 ```
 
-OpenClaw 文档说明，这会让网关仅监听 `127.0.0.1`，由 Tailscale 提供 HTTPS 与 tailnet 路由。访问地址为 `https://<magicdns-name>/`，而不是你的公共 VPS IP。
+OpenClaw文档说明这会将网关保持在`127.0.0.1`，同时Tailscale提供HTTPS和tailnet路由。您应通过`https://<magicdns-name>/`访问，而非公网VPS IP。
 
-如果更倾向于直接在 tailnet 上绑定而不是使用 Serve，可使用显式网关认证：
+如果更倾向直接绑定tailnet而非Serve模式，使用显式网关认证：
 
 ```js
 {
@@ -126,51 +126,49 @@ OpenClaw 文档说明，这会让网关仅监听 `127.0.0.1`，由 Tailscale 提
 }
 ```
 
-随后从另一台 tailnet 设备连接：
+然后从另一个tailnet设备连接：
 
 ```text
 http://<tailscale-ip>:18789/
 ws://<tailscale-ip>:18789
 ```
 
-在 Docker 或其他容器运行时，务必格外留意端口发布。`-p 18789:18789` 这种发布方式通常会绑定所有宿主机接口。推荐使用回环加 Tailscale Serve，或在确认容器仍能收到流量后，将宿主机侧显式绑定到 Tailscale IP：
+如果在Docker或其他容器运行时中运行，需特别注意端口发布。类似`-p 18789:18789`的发布通常会绑定到所有主机接口。建议使用回环加Tailscale Serve，或在确认容器仍能接收流量后，显式将主机端绑定到Tailscale IP：
 
 ```bash
 TAILSCALE_IP=$(tailscale ip -4)
 docker run ... -p "$TAILSCALE_IP:18789:18789" ...
 ```
 
-每次修改 Docker 配置后，使用 `nmap` 从外部检查，使用 `ss` 在本机检查。若未考虑容器的影响，Docker 可能会绕过或打乱宿主机防火墙的假设。
+每次修改Docker配置后，应使用`nmap`从外部检查，并使用`ss`本地检查。若未正确配置，Docker可能绕过或打乱主机防火墙规则。
 
-### Step 3: Lock Down SSH
-
-即使使用 Tailscale，也必须对 SSH 做好加固：
+即使启用了Tailscale，你也应正确配置SSH：
 
 ```bash
-# 在执行以下操作时保持当前 SSH 会话打开。
-# 首先，在客户端机器上确认可以通过 Tailscale SSH：
+# 在操作过程中保持当前SSH会话开启
+# 首先从客户端机器确认可通过Tailscale进行SSH连接：
 ssh your-user@SERVER_TAILSCALE_IP
 
-# 将加固规则写入 drop‑in 文件，而不是直接改动 sshd_config。
+# 将强化配置放入独立文件而非直接修改sshd_config
 sudo tee /etc/ssh/sshd_config.d/99-openclaw-hardening.conf >/dev/null <<'EOF'
 PasswordAuthentication no
 PermitRootLogin no
 KbdInteractiveAuthentication no
 EOF
 
-# 重新加载前先验证配置。不要跳过此步骤。
+# 在重新加载前验证配置。不要跳过此步骤
 sudo sshd -t
 sudo systemctl reload ssh || sudo systemctl reload sshd
 ```
 
-上述配置关闭密码登录和 root 登录。下一步使用 UFW 完全阻断公共 SSH，同时保留 `tailscale0` 接口上的 SSH 通道。
+此配置禁用了基于密码的登录和root登录。下一步将使用UFW完全阻止公网SSH访问，同时仍允许通过`tailscale0`接口的SSH连接。
 
-### Step 4: Firewall Rules
+### 步骤 4：防火墙规则
 
-将防火墙作为第二层防护进行配置：
+设置第二层防火墙防护：
 
 ```bash
-# 使用 UFW (Ubuntu/Debian)
+# 使用UFW（Ubuntu/Debian）
 sudo ufw allow in on tailscale0
 sudo ufw default deny incoming
 sudo ufw default allow outgoing
@@ -180,94 +178,95 @@ sudo ufw reload
 sudo ufw status verbose
 ```
 
-Tailscale 官方的 Ubuntu 加固指南也采用相同的思路：只放行 `tailscale0`，拒绝其它入站流量，然后验证公共 SSH 会超时，而对 `100.x.y.z` 地址的 SSH 仍然可用。如果在同一 VPS 上运行公共网站，只保留真正需要的公共规则，例如 `80/tcp` 和 `443/tcp`。
+Tailscale官方Ubuntu加固指南采用相同策略：允许`tailscale0`接口流量，拒绝其他所有入站流量，然后验证公网SSH是否超时而Tailscale私有地址`100.x.y.z`的SSH仍能正常工作。如果同一VPS运行公网网站，仅保留必要的规则如`80/tcp`和`443/tcp`。
 
-## 检查你的暴露面
+---
+
+## 检查暴露面
 
 ### 从外部检查开放端口
 
-在 **不在你的 Tailscale 网络** 的机器上运行：
+从**不在**你Tailscale网络的机器执行：
 
 ```bash
-# 检查常见公共端口是否被暴露
+# 检查常见公网端口是否暴露
 nmap -p 22,80,443,18789 YOUR_PUBLIC_IP
 
-# 安全实例的预期输出:
+# 安全实例的预期输出：
 # 22/tcp   filtered ssh
 # 18789/tcp filtered unknown
 ```
 
-如果 `22` 或 `18789` 显示为 `open` 而不是 `filtered` 或 `closed`，说明存在问题。若 `80` 或 `443` 为 open，请确认这仅是你有意公开的站点或 Tailscale Funnel 端点，而不是误将 OpenClaw 网关暴露。
+如果`22`或`18789`显示`open`而非`filtered`或`closed`，说明存在配置问题。若`80`或`443`开放，需确认这是你有意配置的公网网站或Tailscale Funnel端点，而非意外暴露的OpenClaw网关。
 
-### 检查本机监听情况
+### 检查本地监听端口
 
-在你的 OpenClaw 服务器上：
+在你的OpenClaw服务器上执行：
 
 ```bash
-# 列出所有监听端口及其绑定地址
+# 显示所有监听端口及其绑定地址
 sudo ss -tulpn | grep LISTEN
 
-# 应出现类似以下的行（Serve 模式下的理想情况）:
+# 查找类似以下行（Serve模式正常）：
 # tcp   LISTEN 0   128   127.0.0.1:18789   *:*
 #
-# 或者如下（直接 tailnet 绑定并带认证时可接受）:
+# 或以下行（经认证的tailnet直接绑定可接受）：
 # tcp   LISTEN 0   128   100.x.y.z:18789   *:*
 #
-# **不要**出现如下（不安全）:
+# 避免出现以下情况（危险）：
 # tcp   LISTEN 0   128   0.0.0.0:18789     *:*
 ```
 
-若看到 `0.0.0.0` 或 `:::`（IPv6 等价），说明该服务已对全网开放。
+若看到`0.0.0.0`或`:::`（IPv6等效地址），表示该服务已向公网暴露。
 
 ### 内置安全审计
 
-
-OpenClaw 包含一个[安全审计命令](https://docs.molt.bot/gateway/security)，可将你的配置与安全最佳实践进行对照：
+OpenClaw包含[安全审计命令](https://docs.molt.bot/gateway/security)，可检查配置是否符合安全最佳实践：
 
 ```bash
 openclaw security audit --deep
 openclaw security audit --deep --fix
 ```
 
-审计会检查网关暴露情况、Tailscale 模式、认证设置、通道访问、工具策略、插件清单以及文件权限。将 `--fix` 视为便利的助手，而不是阅读审计结果的替代方案。
+审计内容包括网关暴露、Tailscale模式、认证设置、频道访问、工具策略、插件清单和文件权限。`--fix`参数可作为辅助工具，但不能替代对审计结果的审阅。
 
 ---
 
-## 这并不能解决的问题
+## 本方案未解决的问题
 
-Tailscale 消除了最大的问题：公开的运营者暴露。但它并不能解决所有风险：
+Tailscale消除了最大的风险：公开的操作员暴露。但它并未解决所有问题：
 
-**凭证存储**：OpenClaw 会把会话记录、OAuth 令牌和 API 密钥写入磁盘。确保这些文件的权限设置得当（文件使用 `chmod 600`，私有配置目录使用 `chmod 700`），并且不要将其提交到版本控制。内置审计会检测此类问题。
+**凭证存储**：OpenClaw会将会话记录、OAuth令牌和API密钥存储在磁盘上。请确保这些文件具有正确的文件权限（文件使用`chmod 600`，私有配置目录使用`chmod 700`），并且不在版本控制中。内置的审计功能会检查这些配置。
 
-**插件沙箱**：插件在你的用户权限下运行。只安装可信来源的插件，并审查它们请求的能力。审计工具会列出已安装的插件清单。
+**插件沙箱**：插件以您的用户权限运行。仅从可信来源安装插件，并审查它们请求的权限。审计工具会列出已安装的插件。
 
-**设备安全**：如果有人入侵你的 Tailscale 账户或窃取了 tailnet 上的设备，他们就能访问你的 OpenClaw 实例。启用[Tailscale 设备授权](https://tailscale.com/kb/1099/device-authorization/)以强制对新设备进行批准。
+**设备安全**：如果有人入侵您的Tailscale账户或窃取了您tailnet中的设备，他们可以访问您的OpenClaw实例。启用[Tailscale设备授权](https://tailscale.com/kb/1099/device-authorization/)，要求新设备获得批准。
 
 ---
 
-## 部署清单
+## 部署检查清单
 
-在将 OpenClaw/Moltbot 实例视为可投入生产之前，请确保：
+在将您的OpenClaw/Moltbot实例视为生产就绪之前：
 
-- [ ] 在服务器和客户端上均已安装并完成 Tailscale 认证
-- [ ] 网关仅绑定在回环地址并使用 Tailscale Serve，或在 `tailnet` 上绑定并使用显式认证
-- [ ] SSH 已配置为禁用密码登录并禁止 root 登录
-- [ ] 防火墙（UFW 或 iptables/nftables）已配置仅允许 `tailscale0`，并阻止所有不必要的公共入口
-- [ ] 外部 nmap 扫描显示所有端口均为 `filtered` 或 `closed`
-- [ ] 内部 `ss -tulpn` 显示网关仅绑定在 `127.0.0.1`、`::1` 或 Tailscale IP 上
-- [ ] 凭证文件权限为 600，私有配置目录权限为 700
-- [ ] 运行 `openclaw security audit --deep` 并处理所有发现的问题
-- [ ] 若使用 OpenClaw 的 Tailscale 管理功能，已启用执行审批
-- [ ] 已配置定期备份（OpenClaw 数据 + 配置）
+- [ ] 服务器和客户端已安装并认证Tailscale
+- [ ] 网关通过Tailscale Serve绑定到环回接口，或通过显式认证绑定到`tailnet`
+- [ ] SSH配置为禁用密码认证和root登录
+- [ ] 防火墙（UFW或iptables/nftables）配置为允许`tailscale0`并拒绝不必要的公网入站
+- [ ] 外部nmap扫描显示所有端口为`filtered`或`closed`
+- [ ] 内部`ss -tulpn`显示网关仅绑定到`127.0.0.1`、`::1`或Tailscale IP
+- [ ] 凭证文件权限为600，私有配置目录权限为700
+- [ ] 运行`openclaw security audit --deep`并解决所有发现的问题
+- [ ] 如果使用OpenClaw Tailscale管理，已启用执行批准
+- [ ] 配置定期备份（OpenClaw数据+配置）
 
 ---
 
 ## 资源
 
-- [OpenClaw 安全指南](https://docs.molt.bot/gateway/security)
-- [OpenClaw Tailscale 集成](https://docs.molt.bot/gateway/tailscale)
-- [Tailscale Serve CLI 参考](https://tailscale.com/docs/reference/tailscale-cli/serve)
+- [OpenClaw安全指南](https://docs.molt.bot/gateway/security)
+- [OpenClaw Tailscale集成](https://docs.molt.bot/gateway/tailscale)
+- [Tailscale Serve CLI参考](https://tailscale.com/docs/reference/tailscale-cli/serve)
 - [Tailscale Funnel](https://tailscale.com/docs/features/tailscale-funnel)
-- [使用 UFW 锁定 Ubuntu 服务器](https://tailscale.com/docs/how-to/secure-ubuntu-server-with-ufw)
-- [安全审计：512 条发现（GitHub Issue）](https://github.com/moltbot/moltbot/issues/1796)
-- [Nmap 网络扫描指南](https://nmap.org/book/man.html)
+- [使用UFW锁定Ubuntu服务器](https://tailscale.com/docs/how-to/secure-ubuntu-server-with-ufw)
+- [安全审计：512个发现（GitHub问题）](https://github.com/moltbot/moltbot/issues/1796)
+- [Nmap网络扫描指南](https://nmap.org/book/man.html)

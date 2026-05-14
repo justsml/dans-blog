@@ -1,0 +1,28 @@
+{
+  "selectedCommit": "0ac6d96f6c3754c6eb0ef5dfa1b50b4339ef0dbb",
+  "selectedModel": "openrouter/qwen/qwen3-32b:nitro",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "This candidate provides the most natural and technically accurate translation while strictly adhering to MDX preservation rules. It correctly handles the technical terminology (loopback, tailnet, operator surface) and maintains Dan's direct, instructional tone. Unlike the current version, it translates the 'Step 3' heading into Chinese, ensuring consistency across the document. It also correctly maintains the relative paths for assets.",
+  "slug": "securing-clawdbot-tailscale",
+  "locale": "zh",
+  "candidateCommits": [
+    "0ac6d96f6c3754c6eb0ef5dfa1b50b4339ef0dbb",
+    "f6aac862112412d06e0c96517c961dc5421e47fd",
+    "b399e165e4f19d9607a5ecdfa29e7378e561a12d"
+  ],
+  "suggestionLog": [],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug securing-clawdbot-tailscale --locale zh --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug securing-clawdbot-tailscale --locale zh --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug securing-clawdbot-tailscale --locale zh --skip-global\n111 |     })\n112 |     .filter((message): message is string => message != null);\n113 | \n114 |   if (mismatches.length === 0) return;\n115 | \n116 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2026-01-26--securing-clawdbot-tailscale/zh/index.mdx changed heading counts. H3: English has 8, translation has 7\n      at assertHeadingCounts (/Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:116:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:28:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}
