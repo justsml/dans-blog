@@ -1,0 +1,528 @@
+# Translation Candidate
+- Slug: quiz-master-modern-html5
+- Locale: he
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2024-11-01--quiz-master-modern-html5/he/index.mdx
+- Validation: deferred
+- Runtime seconds: 27.79
+- Input tokens: 15331
+- Output tokens: 9121
+- Thinking tokens: unknown
+- Cached input tokens: 6400
+- Cache write tokens: 0
+- Estimated cost: $0.003104
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+unlisted: false
+title: 'חידון: האם HTML עדיין ראוי לקורות החיים שלך?'
+subTitle: הוכיחו את עצמכם!
+label: Semantic HTML5
+social_image: ../desktop-social.webp
+category: Quiz
+subCategory: HTML
+date: '2024-10-31'
+modified: '2024-11-06'
+tags:
+  - quiz
+  - web
+  - quiz
+  - semantic
+  - html5
+  - web
+  - beginner
+  - intermediate
+cover_full_width: ../jakob-owens-FBih1nqPi0w-unsplash-wide.webp
+cover_mobile: ../jakob-owens-FBih1nqPi0w-unsplash-square.webp
+cover_icon: ../jakob-owens-FBih1nqPi0w-unsplash-square.webp
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+
+## אז, אתה חושב שיש לך מיומנויות HTML5?
+
+> הערה: אם אתה לא מצליח לעבור את המבחן הזה, אתה חייב להסיר את `HTML Skills` מקורות החיים שלך.
+
+### התחלה!
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="חימום"
+  title="תפקיד של `<ul>`"
+  options={[
+    {text: 'רשימה לא מסודרת', isAnswer: true},
+    {text: 'רשימה ייחודית'},
+    {text: 'רשימה אוניברסלית'},
+    {text: 'רשימת משתמש'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה התפקיד הראשי של האלמנט `<ul>` ב‑HTML?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    התג `<ul>` יוצר רשימה לא מסודרת, כאשר הפריטים מסומנים בדרך כלל בעיטורים.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="HTML סמנטי מתקדם"
+  title="שימוש ב-`<dd>`"
+  options={[
+    {text: 'הגדרת תיאור'},
+    {text: 'מונח תיאור'},
+    {text: 'הצגת נתונים'},
+    {text: 'פרטי תיאור', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה מייצג האלמנט `<dd>` ב‑HTML?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    האלמנט [`<dd>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dd) מגדיר תיאור, הגדרה או ערך ברשימת תיאור, משמש בתוך תגיות `<dl>` כדי להתאים ל‑`<dt>` (מונח תיאור).
+
+    זה שימושי להצגת נתוני מפתח‑ערך. מידע פרופיל, הגדרות וסטטיסטיקות הם דוגמאות נפוצות.
+    ```html
+        <dl>
+        <dt>JS</dt>
+        <dd>Client-side</dd>
+        <dd>Server-side</dd>
+
+        <dt>HTML</dt>
+        <dd>Client-side</dd>
+        </dl>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="HTML סמנטי מתקדם"
+  title="שימוש ב-`<figure>/<figcaption>`"
+  options={[
+    {text: 'לתמונות עם מידע זכויות יוצרים שיוצג'},
+    {text: 'תיאור תמונות, גרפים, וכו\'.', isAnswer: true},
+    {text: 'להוספת הערות לטבלאות, חישובים, וכו\'.'},
+    {text: 'להוספת כיתוב לווידאו'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מתי יש להשתמש באלמנטים `<figure>` ו-`<figcaption>`?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    התג [`<figure>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/figure) משמש בדרך כלל לעטוף תוכן (מדיה) עצמאי, כמו תמונה או גרף, יחד עם [`<figcaption>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/figcaption) כדי לספק כיתוב.
+
+    זה שימושי לתמונות, דיאגרמות, קטעי קוד ועוד.
+    ```html
+        <figure>
+        <img src="image.jpg" alt="Description of image">
+        <figcaption>Image caption</figcaption>
+        </figure>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="HTML סמנטי מתקדם"
+  title="שימוש ב-`<article>`"
+  options={[
+    {text: 'לתוכן, סרגלי צד ומידע על זכויות יוצרים'},
+    {text: 'קטע תוכן עצמאי', isAnswer: true},
+    {text: 'חלק מ-<newsletter>'},
+    {text: 'מגדיר כתבת חדשות'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה המטרה של האלמנט `<article>` ב‑HTML?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    האלמנט [`<article>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/article) משמש להגדיר חלק תוכן עצמאי שניתן להפיץ או להשתמש בו באופן נפרד.
+
+    הוא נפוץ לפוסטים בבלוג, כתבות חדשות, פוסטים בפורומים או תגובות משתמשים.
+
+    ניתן להשתמש במספר אלמנטים `<article>` בדף (למשל בעמודים עם גלילה אינסופית). לחלופין, אפשר לקנן אותם זה בתוך זה כדי ליצור היררכיה של "תוכן עצמאי".
+    ```html
+        <article>
+        <h2>Article Title</h2>
+        <p>Article content...</p>
+        <article class="discussion">
+        <h3>Comment by User</h3>
+        <p>Comment content...</p>
+        </article>
+        </article>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="HTML סמנטי מתקדם"
+  title="שימוש ב‑`<fieldset>`/`<legend>`"
+  options={[
+    {text: 'קיבוץ רכיבי טופס תחת כותרת', isAnswer: true},
+    {text: 'הגדרת הוראות לשדות הטופס'},
+    {text: 'שימוש לא תקין ב‑`<legend>`'},
+    {text: 'מגדיר קטע שניתן להרחבה'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה המטרה של אלמנטים `<fieldset>` ו‑`<legend>` בטופס?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    [`<fieldset>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/fieldset) משמש לקיבוץ פקדי טופס קשורים, ו‑`<legend>` מספק כותרת/תווית לקבוצה, מה שמשפר את הנגישות.
+
+    זה שימושי לקיבוץ רכיבי טופס קשורים, כגון קטע לכתובת משלוח או פרטי תשלום.
+    ```html
+        <fieldset>
+        <legend>Shipping Address</legend>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name">
+        ...
+        </fieldset>
+        <fieldset>
+        <legend>Payment Details</legend>
+        <label for="card">Card Number:</label>
+        <input type="text" id="card" name="card">
+        ...
+        </fieldset>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="HTML סמנטי מתקדם"
+  title="מטרת `<meter>`"
+  options={[
+    {text: 'סרגל התקדמות ביחידות מטריות'},
+    {text: 'מתאר ערך מספרי בטווח', isAnswer: true},
+    {text: 'ממיר מרחק למטרים'},
+    {text: 'תג מיוחד הקשור לביצועים'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מהי המטרה של האלמנט `<meter>`?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    ה[`<meter>` element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meter) משמש לייצוג מדידה סקלרית (יחידה) בטווח מוגדר, כגון טמפרטורה, שימוש בדיסק או ספירת הצבעות.
+
+    זה עשוי להיראות דומה ל[`<progress>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/progress) bar, אך סרגלי התקדמות **תמיד** מתחילים מאפס. לכן אלמנטים `<progress>` מציגים `percent of completion`, בעוד `<meter>` מציג כל ערך בטווח שניתן להגדיר.
+    ```html
+        <meter min="-60" max="130" value="75" /> 75°F
+        <meter min="0" max="100" value="75" /> 75%
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="HTML סמנטי"
+  title="שימוש ב-`<source>`"
+  options={[
+    {text: 'משמש להגדרת מקור נתונים'},
+    {text: 'להצהיר על פורמט(ים) קבצי מדיה זמינים', isAnswer: true},
+    {text: 'לציין מקורות בפורמט APA או MLA'},
+    {text: 'להגדיר בלוק קוד מקור'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מדוע משתמשים באלמנט `<source>`?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    האלמנט [`<source>` משמש לציון פורמטים זמינים של מדיה](https://developer.mozilla.org/en-us/docs/web/html/element/source).
+
+    במיוחד משמש עם [`<video>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video), [`<audio>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/audio), ו-[`<picture>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/picture) ומאפשר לדפדפן לבחור את הפורמט המתאים ביותר.
+    ```html
+        <video controls>
+        <source src="movie.mp4" type="video/mp4">
+        <source src="movie.ogg" type="video/ogg">
+        </video>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="HTML סמנטי מתקדם"
+  title="שימוש ב-`<hgroup>`"
+  options={[
+    {text: 'אלמנט מיושן, אינו בשימוש עוד'},
+    {text: 'כדי לקבץ כותרות יחד'},
+    {text: 'להגדיר תוכן עניינים'},
+    {text: 'לקבץ כותרת עם תת‑כותרת', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    איך צריך להשתמש באלמנט `<hgroup>`?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    האלמנט `<hgroup>` מקבץ כותרת עם תוכן משני קשור, בדרך כלל אחד או יותר של אלמנטים `<p>`.
+
+    זה עשוי להיות שימושי כאשר לכותרת יש תת‑כותרת, סלוגן, או כותרת חלופית שלא אמורה להפוך לכותרת נוספת במבנה המסמך.
+    ```html
+        <article>
+        <hgroup>
+        <h1>Frankenstein</h1>
+        <p>Or: The Modern Prometheus</p>
+        </hgroup>
+        <section>
+        <h2>Chapter 1</h2>
+        <p>...</p>
+        </section>
+        </article>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="HTML סמנטי מתקדם"
+  title="שימוש ב‑`<menu>`"
+  options={[
+    {text: 'להגדיר רשימה ממוספרת'},
+    {text: 'לרשום פקודות או פקדי סרגל כלים', isAnswer: true},
+    {text: 'לייצג סרגל ניווט'},
+    {text: 'להגדיר קבוצת כפתורים'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    למה משמש אלמנט ה‑`<menu>` ב‑HTML?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    ה‑[`<menu>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/menu) מייצג רשימה של פקודות או פקדים אינטראקטיביים.
+
+    אם הרשימה שלך היא קישורי ניווט, השתמש ב‑`<nav>` עם `<ul>`. השתמש ב‑`<menu>` עבור פקדים בסגנון סרגל כלים או רשימות פקודות.
+    ```html
+        <menu>
+        <li><button type="button">Copy</button></li>
+        <li><button type="button">Paste</button></li>
+        </menu>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="HTML סמנטי מתקדם"
+  title="תפקיד של `<details>/<summary>`"
+  options={[
+    {text: 'תוכן מתכווץ באופן טבעי', isAnswer: true},
+    {text: 'טיפים (tooltips) מובנים'},
+    {text: 'הוספת הקשר ל-<section>'},
+    {text: 'להציג נתונים מובנים'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    איזה תפקיד ממלאים `<details>` ו‑`<summary>` ב‑HTML?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    [`<details>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details) מאפשר תוכן מתכווץ, ו‑[`<summary>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/summary) מציין כותרת גלויה לתוכן.
+
+    זה שימושי לשאלות נפוצות (FAQ), חלקים מתכווצים, או כל תוכן שניתן להחליף בין מצבים.
+    ```html
+        <details>
+        <summary>Click to expand 🤯</summary>
+        <p>Hidden content! 💥</p>
+        </details>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="HTML סמנטי מתקדם"
+  title="מטרת `<dialog>`"
+  options={[
+    {text: 'פורמט לתסריטאים'},
+    {text: 'להגדיר מודאל או פופ‑אפ', isAnswer: true},
+    {text: 'להגדיר דיון צ׳אט בסגנון ChatGPT'},
+    {text: 'הוצא משימוש לטובת <wizard>'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    למה כדאי להשתמש באלמנט `<dialog>`?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    האלמנט [`<dialog>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog) משמש לפופ‑אפים או מודאלים, והוא מספק סימון סמנטי, CSS מורחב, ו‑API מובנה לאינטראקציות אלו.
+
+    השתמשו ב‑JavaScript כדי לפתוח אותו עם `.showModal()` לדיאלוגים מודאליים או `.show()` לדיאלוגים לא‑מודאליים, וסגרו אותו עם `.close()` או שליחת טופס באמצעות `method="dialog"`.
+    ```html
+        <dialog>
+        <h2>Modal Title</h2>
+        <p>Modal content...</p>
+        <button>Close</button>
+        </dialog>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="HTML סמנטי מתקדם"
+  title="שימוש ב-`<time>`"
+  options={[
+    {text: 'לייצג תאריך ושעה', isAnswer: true},
+    {text: 'להגדיר חותמת זמן'},
+    {text: 'לעצב רק תאריכים'},
+    {text: 'להפוך קלטי תאריך לגרירים'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    איך משתמשים באלמנט `<time>` ב‑HTML?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    אלמנט `<time>` משמש לתאריכים, זמנים או משכים. הוא יכול לכלול תוכן קריא לבני אדם ותכונת `datetime` קריאה למכונה. ל‑HTML אין אלמנט `<date>`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="HTML סמנטי מתקדם"
+  title="מטרת תכונות ARIA"
+  options={[
+    {text: 'עוזרים למכשירי מגע'},
+    {text: 'שיפור נגישות', isAnswer: true},
+    {text: 'בקרת צלילים והשמעה'},
+    {text: 'להשתמש רק ב-<div>\'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מהי מטרת תכונות ARIA?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    תכונות ARIA (יישומים אינטרנטיים עשירים נגישים) משפרות את נגישות האינטרנט על‑ידי מתן הקשר נוסף לקוראי מסך וטכנולוגיות מסייעות אחרות.
+
+    קיימים תפקידים, מצבים ופרופרטיז שניתן להשתמש בהם לתיאור אלמנטים.
+    ```html
+        <button aria-label="Close" aria-expanded="true">X</button>
+        <main aria-live="polite">...</main>
+        <dialog
+        role="alertdialog"
+        aria-modal="true"
+        aria-labelledby="dialog_label"
+        aria-describedby="dialog_desc"
+        ></dialog>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={13}
+  group="HTML סמנטי מתקדם"
+  title="שימוש בתכונת `role`"
+  options={[
+    {text: 'להגדרת התנהגות רכיב'},
+    {text: 'לתיאור מטרת האלמנט', isAnswer: true},
+    {text: 'להגבלת גישה לאלמנטים'},
+    {text: 'רק עבור רכיבי Web'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה השימוש בתכונת `role` ב‑HTML?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    התכונה `role` מתארת
+
+    את מטרת האלמנט לטכנולוגיות מסייעות, ועוזרת לשפר את הנגישות.
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+
+אז איך היה? מתרגש להשתמש בעוד אלמנטים סמנטיים ב‑HTML בפרויקט הבא שלך? 🚀
+
+או שמא נכנעת ל‑`<div>` ו‑`<span>` לנצח? 😅
+
+ספר לי בתגובות למטה! 👇
+````
