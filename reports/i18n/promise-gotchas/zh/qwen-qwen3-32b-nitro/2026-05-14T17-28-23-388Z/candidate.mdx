@@ -1,0 +1,90 @@
+---
+social_image: ../desktop-social.webp
+title: Promise 陷阱
+subTitle: 避免常见错误
+date: '2018-09-26'
+modified: '2024-07-30'
+category: Code
+subCategory: promises
+tags:
+  - promises
+  - async
+  - debugging
+  - errors
+  - javascript
+  - composition
+related:
+  - intro-to-promises
+  - visualizing-promises
+  - are-promises-broken
+  - javascript-promises-quiz
+cover: ../michal-parzuchowski-224092-unsplash.webp
+cover_mobile: ../w300_michal-parzuchowski-224092-unsplash.webp
+cover_icon: ../icon_michal-parzuchowski-224092-unsplash.webp
+---
+### Promise 的行为与其他值不同
+
+你不能像大多数值那样直接打印它们的值：
+
+```js
+// 这在 Promise 中没有意义：
+console.log(Promise.resolve(42));
+
+// 我们必须使用 `.then` 接口：
+Promise.resolve(42).then(value => console.log(value));
+```
+
+### Promise 在出错时不会发出警告
+
+或者说，一个常见的错误。
+
+由于各种原因，TC39 决定 `.then` 和 `.catch` 可以传入 null。例如，`.then(null, null)` 是有效的，其要求的行为是跳过链中的这一步。
+
+不幸的后果是，这很容易导致错误。
+
+##### 示例说明
+
+让我们来看一个小挑战：以下哪些选项会 `console.log` 输出 42？
+
+```js
+// 选项 #1:
+Promise.resolve(42).then(console.log());
+
+// 选项 #2:
+Promise.resolve(42).then(console.log);
+
+// 选项 #3:
+Promise.resolve(42).then(value => console.log(value));
+
+// 选项 #4:
+Promise.resolve(42)
+  .then(console.log())
+  .then(console.log);
+```
+
+##### 正确答案
+
+答案是选项 #2、#3 和 #4。
+
+为什么？让我们看看传递给 `.then()` 的 **类型**：
+
+```js
+var arg1 = console.log();
+var arg2 = console.log;
+var arg3 = value => console.log(value);
+
+typeof arg1 === "undefined";
+typeof arg2 === "function";
+typeof arg3 === "function";
+```
+
+仍然不确定第四个选项是如何工作的？
+
+它实际上的运行方式如下：
+
+```js
+// 选项 #4 - 实际效果
+Promise.resolve(42)
+  .then(undefined) // 这不会影响值，后续的 `.then(fn)` 会接收到原始值
+  .then(console.log);
+```
