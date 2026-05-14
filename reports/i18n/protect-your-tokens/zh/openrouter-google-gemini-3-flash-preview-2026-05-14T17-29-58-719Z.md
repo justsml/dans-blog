@@ -1,0 +1,143 @@
+# Translation Candidate
+- Slug: protect-your-tokens
+- Locale: zh
+- Model: openrouter/google/gemini-3-flash-preview
+- Target: src/content/posts/2018-10-27--protect-your-tokens/zh/index.mdx
+- Validation: deferred
+- Runtime seconds: 11.23
+- Input tokens: 3568
+- Output tokens: 1176
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.005312
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: 保护 Token、API 密钥及机密信息
+subTitle: 公有？私有？啥？
+date: '2018-10-27'
+modified: '2024-07-30'
+tags:
+  - tokens
+  - api-keys
+  - secrets
+  - security
+  - nodejs
+  - json-web-tokens
+category: Guides
+subCategory: security
+cover: ../dayne-topkin-78982-unsplash.webp
+cover_mobile: ../w300_dayne-topkin-78982-unsplash.webp
+cover_icon: ../icon_dayne-topkin-78982-unsplash.webp
+---
+## 什么时候需要保护你的 Token？
+
+<!--  For the purpose of this article we'll treat the following terms as related: . **They are not interchangable** despite most documentation and [StackOverflow](https://stackoverflow.com/questions/51698672/how-to-secure-my-api-key) answers using them as such. -->
+
+<!-- (Google Maps Credentials, AWS S3 Keys, Geocoding Service, etc.)  -->
+
+> 保护 API Key 和 Token **至关重要**！
+
+一个疏忽就可能导致你的服务器控制权和数据落入黑客之手。
+
+判断某个特定的 Token 是否必须隐藏不该如此困难——哪怕是基于官方文档！
+
+各种术语的混杂往往让情况变得更糟：_tokens_、_keys_、_credentials_、_secrets_、_private_ 以及 _public_。
+
+让我们换个思路，将其简化为 `secret`（秘密）和 `non-secret`（非秘密）两类。
+
+* 🔒 [`Secret keys`](#-secret-keys) **必须**保持隐藏。通常情况下，它们**绝不能**离开你的私有服务器（或服务，如 Heroku、Netlify 或 Travis-CI）。
+* 🌍 [`Non-secret keys`](#-non-secret-keys) 指的是可以自由分享并包含在浏览器请求中的字符串。
+
+<br />
+
+---------------------------------------------
+
+## 🔒 `Secret keys`
+
+** ‼️ 重要提示：** `Secret keys` **必须**被 Git 忽略，**并且**在所有浏览器端代码中剔除。[《如何安全地处理 Secret》](#-how-to-handle-secrets-safely)
+
+<br />
+
+_如何判断你处理的是否为 `Secret key`？_
+
+<br />
+
+**👍 经验法则：** 返回 `CORS 错误` 的服务器通常缺乏浏览器支持。这强烈暗示你**必须**代理该服务，并将其视为 `secret`。
+
+**👍 经验法则：** 昂贵的服务（几乎）总是应该被代理或隐藏。
+
+**👍 经验法则：** 如果你正在执行写入操作（**文件上传、插入数据库行**），你处理的可能就是 `secret keys`。
+
+<br />
+
+**_用例与特性：_** `Secret` keys
+
+- 长期授权（凭据、访问令牌、JSON Web Tokens）
+- 短期授权（OAuth 令牌、会话存储）
+- 访问付费/高昂服务（用于身份验证、地理编码、文件存储等）
+- 公钥/私钥对中的私有部分（RECAPTCHA、Stripe、Auth0）
+- 服务凭据（Email/SMTP、LDAP/目录服务）
+- 数据加密与完整性校验
+
+### 核对清单：安全处理 Secret
+
+#### 快速概览
+
+完成以下步骤以**从代码中消除 secret：**
+
+- [ ] 用环境变量替换硬编码的密钥。例如：`process.env.API_SECRET`
+- [ ] 使用类似 [`dotenv`](https://github.com/motdotla/dotenv#dotenv) 的库配合 `.env` 文件。将之前硬编码的 secret 添加到 `.env` 文件中。
+- [ ] 在你的 `.gitignore` 文件中添加一行 `.env`！
+
+> **不要**在已部署的服务器上创建 `.env` 文件。请使用托管服务（如 [Heroku](https://devcenter.heroku.com/articles/config-vars)、Netlify、AWS EC2）提供的环境变量管理工具：例如**控制面板或命令行。**
+
+<blockquote><h2 style="margin: 0.125em 0; text-align: center;">相关文章：<a href="../securely-using-environment-variables-in-nodejs/">在 NodeJS 中安全地使用 dotenv</a></h2></blockquote>
+
+-----------------------------------
+
+## 🌍 `Non-secret keys`
+
+**👍 经验法则：** 每当一个密钥必须通过代码或内联方式发送到浏览器时（例如通过 `<script src="https://my-api/?apiKey=123-abc-456">` 标签），**它绝对是一个 `non-secret`**。一个常见的例子是 Google Maps。
+
+<br />
+
+**_用例与特性：_** `Non-secret` keys
+
+- 短期访问（用户会话 ID、JSON Web Tokens）
+- 按应用/开发者限制 API 访问（用于身份验证、地理编码等）
+- 公钥/私钥对中的公开部分（RECAPTCHA、Stripe、Auth0）
+- 分析统计 ID（Analytics IDs）
+
+#### ✅ 处理 Non-secrets：
+
+> **硬编码 non-secret（公开）密钥是安全的！**
+
+为了方便长期管理，建议在应用中使用共享的 `config.js`。
+
+**示例：**
+
+```js
+// config.js
+module.exports = {
+  googleMapsKey: '123-abc'
+};
+```
+
+```js
+// load-map.js
+const config = require('./config.js');
+const key = config.googleMapsKey;
+const src = `//maps.googleapis.com/maps/api/js?key=${key}`;
+// ...
+```
+
+-----------------------------------
+
+**注意：** 环境变量还有其他**用例**。本文未涵盖的部分包括：CI/CD/测试、特性开关（feature flags）以及针对特定环境的运行时配置！
+````
