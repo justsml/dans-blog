@@ -1,0 +1,228 @@
+# Translation Candidate
+- Slug: stop-trying-to-make-async-await-happen
+- Locale: he
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2018-10-03--stop-trying-to-make-async-await-happen/he/index.mdx
+- Validation: deferred
+- Runtime seconds: 40.81
+- Input tokens: 7687
+- Output tokens: 6934
+- Thinking tokens: unknown
+- Cached input tokens: 2304
+- Cache write tokens: 0
+- Estimated cost: $0.002702
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: תפסיקו לנסות להפוך את async/await לדבר
+subTitle: הבטחות זה כל כך טרנדי עכשיו
+date: '2018-10-03'
+modified: '2024-08-03'
+category: Guides
+subCategory: promises
+tags:
+  - promises
+  - async
+  - await
+  - async-await
+  - javascript
+  - composition
+related:
+  - intro-to-promises
+  - promise-gotchas
+  - visualizing-promises
+  - you-may-not-need-axios
+cover: ../matt-nelson-414464-unsplash.webp
+cover_mobile: ../w300_matt-nelson-414464-unsplash.webp
+cover_icon: ../icon_matt-nelson-414464-unsplash.webp
+---
+מאז ראשית הימים, מפתחים ניהלו מלחמות מטופשות רבות. מהוויכוח הקלאסי _"Tab לעומת Space"_ ועד לוויכוח הנצחי _"Mac לעומת PC"_, אנחנו טובים בלמצוא ויכוחים מסיחי דעת.
+
+<br />
+<small>_תשובות:_ לינוקס ו-Space.</small>
+
+<!-- We're going to look at 2 rules to improve your life with Promises. -->
+
+## הקרב...?
+
+### Promises לעומת Async/Await!
+
+רגע, זה קרב? זה חייב להיות קרב, נכון? נראה שכבר לא מדברים על callbacks?
+
+לא, זה לא קרב. בסופו של דבר זה עוד כלי פוטנציאלי בארגז הכלים שלך. עם זאת, מכיוון ש-`async`/`await` לא מחליף את כל הפונקציונליות של Promise (במיוחד `Promise.all`, `.race`) **זה מטעה להציג אותו כתחליף.**
+
+יש הרבה אנשים משפיעים שמקדמים את התפיסה המוטעית ש-`async`/`await` הוא ה[תחליף](https://developers.google.com/web/fundamentals/primers/async-functions) [שכולם](https://hackernoon.com/6-reasons-why-javascripts-async-await-blows-promises-away-tutorial-c7ec10518dd9) [חיכו](https://x.com/umaar/status/1045655069478334464) [לו](http://2ality.com/2017/08/promise-try.html#why-not-just-use-async-functions) [עבור Promises](https://dzone.com/articles/javascript-promises-and-why-asyncawait-wins-the-ba).
+
+> **רמז: לא, לא, ואפילו לא קצת.**
+
+תוספת אחרונה ל-VS Code מקדמת את ההטיה הזו. כפי ש-[@umaar](https://x.com/umaar) צייץ:
+
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Visual Studio Code יכול כעת להמיר את השרשראות הארוכות שלך של Promise.then() ל-async/await! 🎊 עובד מצוין גם בקבצי JavaScript וגם ב-TypeScript. .catch() מומר גם בצורה נכונה ל-try/catch ✅ <a href="https://t.co/xb39Lsp84V">pic.x.com/xb39Lsp84V</a></p>&mdash; Umar Hansa (@umaar) <a href="https://x.com/umaar/status/1045655069478334464?ref_src=twsrc%5Etfw">28 בספטמבר 2018</a></blockquote>
+
+<!-- בטח, זו תוספת מרשימה לרשימה כבר מדהימה של תכונות. -->
+
+אם אתה שונא Promises, ורוצה את תכונת הרפקטורינג הזו, אני לא מאשים אותך.
+
+<br />
+
+_אני מזדהה. אני מבין._
+
+<br />
+
+הייתי שם. 🤗
+
+<br />
+
+פעם שנאתי Promises. היום, חזרתי לגמרי. **Promises מדהימים.** הם יכולים לאפשר/לעודד אותך **לנצל קומפוזיציה של פונקציות.**
+
+יש 2 תחומים שאני ממליץ להתמקד בהם תחילה כדי לקדם את טכניקת ה-Promise שלך.
+
+1. [פונקציות בעלות שם (ללא אנונימיות)](#rule-1)
+1. [פונקציות בעלות מטרה יחידה](#rule-2)
+
+<h2 id="rule-1">#1: פונקציות בעלות שם!</h2>
+
+הרגו את המתודות האנונימיות שלכם. שימוש ב**פונקציות בעלות שם** הופך את הקוד לשירה של הדרישות שלכם.
+
+בואו נסתכל על דוגמה נפוצה:
+
+ביצוע בקשת HTTP GET באמצעות `fetch`:
+
+<!-- מפרט ה-fetch קובע שקודי סטטוס HTTP מעל 400 או 500 **אינם מפעילים שגיאה אוטומטית.** ברירת המחדל בספריות AJAX רבות (jQuery, axios). -->
+
+<!-- לפני שנראה את הפתרון, עיינו ביישום "מומלץ" נפוץ: -->
+
+### אנטי-דפוס
+
+```js
+// ❌ שימוש בפונקציות אנונימיות מוטבעות 💩
+fetch(url)
+  .then(response => response.status < 400
+    ? response
+    : Promise.reject(new Error('Request Failed: ' + response.ststus)))
+  .then(response => response.text())
+```
+
+### פתרון: מתודות בעלות שם
+
+```js
+// ✅ בהירות צצה: פונקציות בעלות שם
+fetch(url)
+  .then(checkResponse)
+  .then(getText)
+
+
+// פונקציות לשימוש חוזר ומטרה כללית
+function checkResponse(response) {
+  return response.status < 400
+    ? response
+    : Promise.reject(new Error('Request Failed: ' + response.ststus))
+}
+function getText(response) {
+  return response.text()
+}
+```
+
+> היתרונות של גישה זו הופכים ברורים יותר ככל שהקוד הופך יבש יותר (DRY).
+
+**משאבים נוספים:** כדאי לבדוק את **סרטוני הדקה** שלי על [רישום בסיסי](https://youtu.be/xR_MZE1SIkk) ו[ניפוי מתקדם](https://youtu.be/P_tghqWj72M) באמצעות טכניקה זו.
+
+<h2 id="rule-2">#2: מטרה יחידה (פונקציות)</h2>
+
+זה נשמע _מדויק בצורה מטעה_: מטרה יחידה.
+
+ועם זאת, זה כל כך סובייקטיבי, שרירותי, ולפעמים אפילו חסר משמעות.
+
+<!-- במקום להתווכח אם פונקציה נתונה ממוקדת מספיק.
+
+המצאתי מדד גס לזה: `עלות מטרה`. ככל שהציון גבוה יותר, כך גדל הסיכוי שהיא עושה יותר מדי.
+
+```js
+// נקודה 1: ההחזרה והטרנרי הם למעשה שורה אחת
+function checkResponse(response) {
+  return response.status < 400
+    ? response
+    : Promise.reject(new Error('Request Failed: ' + response.ststus))
+}
+// נקודה 1: ההחזרה והביטוי הם גם שורה אחת
+function getText(response) {
+  return response.text()
+}
+```
+
+בהינתן קוד של פונקציה, הוסף נקודה אחת עבור כל שורה המכילה אחד מ: `if`, `return`, טרנרי, `for`, `const`, `let`, `var`, `switch`, `while`, `[].map/filter/reduce` וכו'. הוסף נקודה אחת עבור כל הוראה (התעלם משורות ריקות נוספות). מספר ביטויים או מתודות משורשרות נספרים כנקודה אחת בלבד.
+
+אוף, זה היה קצת ז'רגון.
+ -->
+
+מעניין, רוב המפתחים מדווחים שהם _די טובים_ בלהקנות **מטרה יחידה** לקוד שלהם. לא בלי קשר: הם מדווחים שהם גם נהגים מעולים!
+
+<!-- זו **אינה בעיה ייחודית ל-Promises**, למתודות מערכים ולכל ממשקי API מבוססי HoF (Higher Order Function) יש את אותה הארגונומיה. -->
+
+בואו נסתכל על דוגמה שג'ייק ארצ'יבלד (המוכשר להפליא) מציג במאמרו על async/await באתר Google Developers (הערה: 2024, הקישור הוסר).
+
+<!--
+בואו נסתכל על אחת מהדוגמאות ה"❌ לא מומלץ" של Promises. (התיאור הוא "נניח שרצינו לטעון סדרת כתובות URL ולרשום אותן בהקדם האפשרי, בסדר הנכון".) -->
+
+```js
+// source: https://developers.google.com/web/fundamentals/primers/async-functions
+function logInOrder(urls) {
+  // fetch all the URLs
+  const textPromises = urls.map(url => {
+    return fetch(url).then(response => response.text());
+  });
+
+  // log them in order
+  textPromises.reduce((chain, textPromise) => {
+    return chain.then(() => textPromise)
+      .then(text => console.log(text));
+  }, Promise.resolve());
+}
+```
+
+### מטרה יחידה?
+
+הייתי אומר שלא. מה `logInOrder` עושה?
+
+1. עובר בלולאה על רשימת `urls`
+1. מפעיל עליהם בקשת HTTP מוטבעת:
+   1. `fetch` של HTTP
+   1. מחזיר את גוף התגובה כטקסט
+1. מצרף `.then(text => console.log(text))` אחרי כל promise ב-`textPromise`
+   1. מדפיס תוצאות בסדרתיות
+
+יש 5 מתודות אנונימיות המוגדרות בפונקציה היחידה הזו. כפי שג'ייק עצמו מציין, ה-`.reduce` מסובך מדי. אין טעם לכתוב מנגנונים מורכבים בעבודת יד בכל הקוד שלך. במילים אחרות, אנחנו לא כותבים קוד ליצירת DOM עם אינסוף `document.createElement()`, `element.setAttribute()` וכו'. במקום זאת, אנו בוחרים בכלי הטוב ביותר מתוך אפשרויות רבות: פונקציות עזר/שירות, ספריות או פריימוורקים.
+
+<!-- עלינו לבודד כל 'צעד' שמתרחש: יש בקשת HTTP, טרנספורמציה של רשימת כתובות URL לרשימת תוצאות. כמו כן, נדרש `console.log`. -->
+
+<!-- > 🤔 מדוע `Promises` גורמות למפתחים לנטוש פרקטיקות שאנו משתמשים בהן במקומות אחרים? -->
+
+<!-- **הערה:** אם הכוונה הייתה _ליזום בקשות_ ברצף, במקום רק להדפיס את התוצאות בסדר, הקוד הזה לא באמת עושה זאת. נשכתב בהתאם. -->
+
+#### פתרון: פונקציות בעלות מטרה יחידה
+
+### התחל ב**חילוץ מתודות**...
+
+![VS Code מחלץ מתודות אסינכרוניות מקוד Promise](async-refactor-google-extract-methods-resized-75.webp "חילוץ מתודות")
+
+### המשך בהחלפת ה-`.reduce()` ו-`logPromise()` ב-`Promise.all` ו-`..map()`...
+
+![שרשרת Promise שעברה רפקטורינג באמצעות Promise all ו-map לשיפור קריאות](async-refactor-google-chain-methods-resized-75.webp "שיפור קריאות")
+
+### סיכום
+
+נסה ליישם טכניקות אלה בקוד שלך! לאחר מכן [צייץ אליי](https://x.com/justsml) וספר לי איך הלך. או אם יש לך שאלות או הערות, גם פנה אליי!
+
+עזרו להפיץ את #PromiseTruth ושתפו את המאמר. ❤️
+
+![קרדיט: matt-nelson-414464-unsplash.webp](../matt-nelson-414464-unsplash.webp)
+
+#### קריאה נוספת
+
+* [דניאל בריין](https://medium.com/@bluepnume/even-with-async-await-you-probably-still-need-promises-9b259854c161)
+* [אריק אליוט](https://x.com/_ericelliott?lang=en)
+````
