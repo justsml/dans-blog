@@ -55,6 +55,7 @@ const secondJudgeModel = optionalString(options, "second-judge-model");
 const escalationJudgeModel = optionalString(options, "escalate-model") ?? ESCALATION_JUDGE_MODEL;
 const shouldDryRun = options["dry-run"] === true;
 const shouldPush = options["push"] === true;
+const shouldContinueOnError = options["continue-on-error"] === true;
 
 const tasks = getMissingTranslationTasks();
 const limitedTasks = limit == null ? tasks : tasks.slice(0, limit);
@@ -71,7 +72,15 @@ if (shouldDryRun) {
   process.exit(0);
 }
 
-await mapLimit(limitedTasks, shouldPush ? 1 : taskConcurrency, processTask);
+const failures = await mapLimit(limitedTasks, shouldPush ? 1 : taskConcurrency, processTask);
+
+if (failures.length > 0) {
+  console.error(`\n${failures.length} translation task(s) failed.`);
+  for (const failure of failures) {
+    console.error(`- ${failure.item.locale}/${failure.item.slug}: ${failure.error.message}`);
+  }
+  process.exitCode = 1;
+}
 
 async function processTask(task: Task, index: number) {
   console.log(`\n[${index + 1}/${limitedTasks.length}] ${task.locale}/${task.slug}`);
@@ -161,18 +170,29 @@ async function mapLimit<T>(
   worker: (item: T, index: number) => Promise<void>,
 ) {
   let nextIndex = 0;
+  const failures: Array<{ item: T; error: Error }> = [];
 
   async function runWorker() {
     while (nextIndex < items.length) {
       const index = nextIndex;
       nextIndex += 1;
-      await worker(items[index], index);
+      try {
+        await worker(items[index], index);
+      } catch (error) {
+        if (!shouldContinueOnError) throw error;
+        failures.push({
+          item: items[index],
+          error: error instanceof Error ? error : new Error(String(error)),
+        });
+      }
     }
   }
 
   await Promise.all(
     Array.from({ length: Math.min(limit, items.length) }, () => runWorker()),
   );
+
+  return failures;
 }
 
 function runInheritedAsync(command: string, args: string[]) {
