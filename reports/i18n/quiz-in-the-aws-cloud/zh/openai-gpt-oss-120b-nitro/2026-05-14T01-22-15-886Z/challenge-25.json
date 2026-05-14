@@ -1,0 +1,47 @@
+{
+  "index": 24,
+  "attempt": 1,
+  "originalTitle": "Time To Live (TTL)",
+  "translatedTitle": "生存时间 (TTL)",
+  "translation": {
+    "title": "生存时间 (TTL)",
+    "group": "DynamoDB 功能",
+    "options": [
+      {
+        "text": "在到期时立即删除项目"
+      },
+      {
+        "text": "需要手动触发删除"
+      },
+      {
+        "text": "后台删除，尽力而为的时间安排"
+      },
+      {
+        "text": "项目过期但仍保留存储"
+      }
+    ],
+    "questionProse": [
+      "DynamoDB 的 TTL 功能如何处理项目删除？"
+    ],
+    "explanationProse": [
+      "DynamoDB TTL 特性：\n- 后台进程监控 TTL 属性\n- 过期的项目会在尽力而为的调度下被删除，通常在几天内完成\n- TTL 不产生额外费用\n- 被删除的项目会出现在流中\n\n使用场景：\n- 会话管理\n- 日志过期\n- 临时数据清理\n- 合规性要求"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"生存时间 (TTL)\",\n  \"group\": \"DynamoDB 功能\",\n  \"options\": [\n    {\n      \"text\": \"在到期时立即删除项目\"\n    },\n    {\n      \"text\": \"需要手动触发删除\"\n    },\n    {\n      \"text\": \"后台删除，尽力而为的时间安排\"\n    },\n    {\n      \"text\": \"项目过期但仍保留存储\"\n    }\n  ],\n  \"questionProse\": [\n    \"DynamoDB 的 TTL 功能如何处理项目删除？\"\n  ],\n  \"explanationProse\": [\n    \"DynamoDB TTL 特性：\\n- 后台进程监控 TTL 属性\\n- 过期的项目会在尽力而为的调度下被删除，通常在几天内完成\\n- TTL 不产生额外费用\\n- 被删除的项目会出现在流中\\n\\n使用场景：\\n- 会话管理\\n- 日志过期\\n- 临时数据清理\\n- 合规性要求\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 837,
+    "outputTokens": 579,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 1390,
+    "providerCostUsd": 0.00043455,
+    "providerUpstreamCostUsd": 0.00043455,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000032643,
+    "outputUsd": 0.00010421999999999999,
+    "totalUsd": 0.00013686299999999998,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

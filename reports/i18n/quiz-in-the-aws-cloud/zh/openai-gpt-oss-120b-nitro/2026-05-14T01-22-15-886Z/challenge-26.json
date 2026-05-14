@@ -1,0 +1,47 @@
+{
+  "index": 25,
+  "attempt": 1,
+  "originalTitle": "Scaling Behavior",
+  "translatedTitle": "扩展行为",
+  "translation": {
+    "title": "扩展行为",
+    "group": "Aurora Serverless",
+    "options": [
+      {
+        "text": "扩展速度取决于当前和已配置的容量"
+      },
+      {
+        "text": "按需即时扩展"
+      },
+      {
+        "text": "仅在预设间隔时扩展"
+      },
+      {
+        "text": "仅手动扩展"
+      }
+    ],
+    "questionProse": [
+      "在依赖 Aurora Serverless 处理突发流量峰值时，关键的考虑因素是什么？"
+    ],
+    "explanationProse": [
+      "Aurora Serverless 扩展：\n      - Aurora Serverless v2 以细粒度的 ACU 增量扩展容量\n      - 扩展速度取决于当前容量以及最小/最大 ACU 设置\n      - 支持的版本在配置后可在 0 ACU 时自动暂停\n      - 按秒计费，基于 ACU\n\n      最佳实践：\n      - 为关键工作负载的突发峰值设置足够高的最小容量\n      - 监控扩展事件\n      - 注意连接管理"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"扩展行为\",\n  \"group\": \"Aurora Serverless\",\n  \"options\": [\n    {\n      \"text\": \"扩展速度取决于当前和已配置的容量\"\n    },\n    {\n      \"text\": \"按需即时扩展\"\n    },\n    {\n      \"text\": \"仅在预设间隔时扩展\"\n    },\n    {\n      \"text\": \"仅手动扩展\"\n    }\n  ],\n  \"questionProse\": [\n    \"在依赖 Aurora Serverless 处理突发流量峰值时，关键的考虑因素是什么？\"\n  ],\n  \"explanationProse\": [\n    \"Aurora Serverless 扩展：\\n      - Aurora Serverless v2 以细粒度的 ACU 增量扩展容量\\n      - 扩展速度取决于当前容量以及最小/最大 ACU 设置\\n      - 支持的版本在配置后可在 0 ACU 时自动暂停\\n      - 按秒计费，基于 ACU\\n\\n      最佳实践：\\n      - 为关键工作负载的突发峰值设置足够高的最小容量\\n      - 监控扩展事件\\n      - 注意连接管理\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 859,
+    "outputTokens": 743,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1887,
+    "providerCostUsd": 0.00057465,
+    "providerUpstreamCostUsd": 0.00057465,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000033500999999999997,
+    "outputUsd": 0.00013373999999999998,
+    "totalUsd": 0.00016724099999999997,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

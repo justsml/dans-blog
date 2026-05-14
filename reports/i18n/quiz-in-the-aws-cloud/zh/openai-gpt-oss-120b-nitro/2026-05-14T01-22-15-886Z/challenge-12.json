@@ -1,0 +1,47 @@
+{
+  "index": 11,
+  "attempt": 1,
+  "originalTitle": "S3 Performance Optimization",
+  "translatedTitle": "S3 性能优化",
+  "translation": {
+    "title": "S3 性能优化",
+    "group": "S3 性能",
+    "options": [
+      {
+        "text": "使用随机/哈希前缀"
+      },
+      {
+        "text": "使用逻辑前缀；不需要随机化"
+      },
+      {
+        "text": "始终使用最大对象"
+      },
+      {
+        "text": "最小化对象数量"
+      }
+    ],
+    "questionProse": [
+      "如何在高请求率下优化 S3 性能？"
+    ],
+    "explanationProse": [
+      "S3 性能技巧：\n    - 现代 S3 会自动按前缀扩展请求速率\n    - 性能上不需要随机/哈希前缀\n    - 使用符合访问模式的逻辑键名\n    - 如果请求率极高，监控 503 Slow Down 响应\n\n    旧指南建议通过随机化前缀来避免热点分区，但 AWS 已不再将其作为默认性能要求。\n\n    [S3 性能指南](https://aws.amazon.com/s3/performance/)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"S3 性能优化\",\n  \"group\": \"S3 性能\",\n  \"options\": [\n    {\n      \"text\": \"使用随机/哈希前缀\"\n    },\n    {\n      \"text\": \"使用逻辑前缀；不需要随机化\"\n    },\n    {\n      \"text\": \"始终使用最大对象\"\n    },\n    {\n      \"text\": \"最小化对象数量\"\n    }\n  ],\n  \"questionProse\": [\n    \"如何在高请求率下优化 S3 性能？\"\n  ],\n  \"explanationProse\": [\n    \"S3 性能技巧：\\n    - 现代 S3 会自动按前缀扩展请求速率\\n    - 性能上不需要随机/哈希前缀\\n    - 使用符合访问模式的逻辑键名\\n    - 如果请求率极高，监控 503 Slow Down 响应\\n\\n    旧指南建议通过随机化前缀来避免热点分区，但 AWS 已不再将其作为默认性能要求。\\n\\n    [S3 性能指南](https://aws.amazon.com/s3/performance/)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 859,
+    "outputTokens": 734,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2092,
+    "providerCostUsd": 0.00056925,
+    "providerUpstreamCostUsd": 0.00056925,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000033500999999999997,
+    "outputUsd": 0.00013211999999999998,
+    "totalUsd": 0.00016562099999999996,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "index": 22,
+  "attempt": 1,
+  "originalTitle": "Aurora Failover Mechanism",
+  "translatedTitle": "Aurora 故障转移机制",
+  "translation": {
+    "title": "Aurora 故障转移机制",
+    "group": "Aurora 高可用性",
+    "options": [
+      {
+        "text": "需要人工干预"
+      },
+      {
+        "text": "需要重新配置应用程序"
+      },
+      {
+        "text": "总是切换到最旧的副本"
+      },
+      {
+        "text": "基于故障转移优先级层自动提升"
+      }
+    ],
+    "questionProse": [
+      "在具有多个只读副本的 Aurora 集群中，当主实例故障时，自动故障转移会发生什么？"
+    ],
+    "explanationProse": [
+      "Aurora 故障转移过程：\n      1. 检测到主实例故障\n      2. 基于故障转移优先级层主要选择 Aurora 副本\n      3. 当优先级相同时使用实例特性作为平局决策因素\n      4. 自动更新集群终端节点\n\n      最佳实践：\n      - 在不同可用区保持多个副本\n      - 有意配置提升层级\n      - 在应用中使用集群终端节点\n      - 定期测试故障转移场景"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Aurora 故障转移机制\",\n  \"group\": \"Aurora 高可用性\",\n  \"options\": [\n    {\n      \"text\": \"需要人工干预\"\n    },\n    {\n      \"text\": \"需要重新配置应用程序\"\n    },\n    {\n      \"text\": \"总是切换到最旧的副本\"\n    },\n    {\n      \"text\": \"基于故障转移优先级层自动提升\"\n    }\n  ],\n  \"questionProse\": [\n    \"在具有多个只读副本的 Aurora 集群中，当主实例故障时，自动故障转移会发生什么？\"\n  ],\n  \"explanationProse\": [\n    \"Aurora 故障转移过程：\\n      1. 检测到主实例故障\\n      2. 基于故障转移优先级层主要选择 Aurora 副本\\n      3. 当优先级相同时使用实例特性作为平局决策因素\\n      4. 自动更新集群终端节点\\n\\n      最佳实践：\\n      - 在不同可用区保持多个副本\\n      - 有意配置提升层级\\n      - 在应用中使用集群终端节点\\n      - 定期测试故障转移场景\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 866,
+    "outputTokens": 692,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 1585,
+    "providerCostUsd": 0.0005067,
+    "providerUpstreamCostUsd": 0.0005067,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000033774,
+    "outputUsd": 0.00012456,
+    "totalUsd": 0.000158334,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "index": 8,
+  "attempt": 1,
+  "originalTitle": "BatchGetItem Limits",
+  "translatedTitle": "BatchGetItem 限制",
+  "translation": {
+    "title": "BatchGetItem 限制",
+    "group": "批处理，第 1 部分！",
+    "options": [
+      {
+        "text": "1",
+        "hint": "... 我坚持使用批处理。"
+      },
+      {
+        "text": "25",
+        "hint": "那是 `BatchWriteItem` 的限制。"
+      },
+      {
+        "text": "100"
+      },
+      {
+        "text": "75",
+        "hint": "接近了，但还有一个整数。"
+      },
+      {
+        "text": "50",
+        "hint": "`BatchGetItem` 稍高一些。"
+      },
+      {
+        "text": "200",
+        "hint": "有点太高了……"
+      },
+      {
+        "text": "Unlimited",
+        "hint": "`BatchGetItem` 有固定的限制。"
+      }
+    ],
+    "questionProse": [
+      "再来一个 DynamoDB 批处理问题！<br />\n      使用单个 DynamoDB `BatchGetItem` 请求，最多可以检索多少项？"
+    ],
+    "explanationProse": [
+      "DynamoDB SDK 允许您在单个 `BatchGetItem` 请求中检索最多 **100** 项。这比 `BatchWriteItem` 的限制（25 项）要高。\n      此外，还存在总负载大小、文档大小和请求速率的限制。\n\n      理解这些限制对于优化应用性能和确保高效的数据操作至关重要。\n\n      **注意：** 有时可以突破 _部分_ 限制——前提是你能说服你的 AWS 客户经理。 😎"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"BatchGetItem 限制\",\n  \"group\": \"批处理，第 1 部分！\",\n  \"options\": [\n    {\n      \"text\": \"1\",\n      \"hint\": \"... 我坚持使用批处理。\"\n    },\n    {\n      \"text\": \"25\",\n      \"hint\": \"那是 `BatchWriteItem` 的限制。\"\n    },\n    {\n      \"text\": \"100\"\n    },\n    {\n      \"text\": \"75\",\n      \"hint\": \"接近了，但还有一个整数。\"\n    },\n    {\n      \"text\": \"50\",\n      \"hint\": \"`BatchGetItem` 稍高一些。\"\n    },\n    {\n      \"text\": \"200\",\n      \"hint\": \"有点太高了……\"\n    },\n    {\n      \"text\": \"Unlimited\",\n      \"hint\": \"`BatchGetItem` 有固定的限制。\"\n    }\n  ],\n  \"questionProse\": [\n    \"再来一个 DynamoDB 批处理问题！<br />\\n      使用单个 DynamoDB `BatchGetItem` 请求，最多可以检索多少项？\"\n  ],\n  \"explanationProse\": [\n    \"DynamoDB SDK 允许您在单个 `BatchGetItem` 请求中检索最多 **100** 项。这比 `BatchWriteItem` 的限制（25 项）要高。\\n      此外，还存在总负载大小、文档大小和请求速率的限制。\\n\\n      理解这些限制对于优化应用性能和确保高效的数据操作至关重要。\\n\\n      **注意：** 有时可以突破 _部分_ 限制——前提是你能说服你的 AWS 客户经理。 😎\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 990,
+    "outputTokens": 938,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 2343,
+    "providerCostUsd": 0.0006921,
+    "providerUpstreamCostUsd": 0.0006921,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00003861,
+    "outputUsd": 0.00016884,
+    "totalUsd": 0.00020744999999999997,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

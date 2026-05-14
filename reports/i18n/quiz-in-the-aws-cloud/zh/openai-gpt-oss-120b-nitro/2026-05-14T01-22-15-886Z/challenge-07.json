@@ -1,0 +1,53 @@
+{
+  "index": 6,
+  "attempt": 1,
+  "originalTitle": "S3 Bucket Policy",
+  "translatedTitle": "S3 存储桶策略",
+  "translation": {
+    "title": "S3 存储桶策略",
+    "group": "S3 安全",
+    "options": [
+      {
+        "text": "将新存储桶设为公开",
+        "hint": "最小权限，优先考虑。"
+      },
+      {
+        "text": "将本地 S3 迁移以完全控制 ACL"
+      },
+      {
+        "text": "将数据迁移到私有区块链",
+        "hint": "开玩笑的吧？"
+      },
+      {
+        "text": "使用最小权限原则"
+      },
+      {
+        "text": "使用策略通配符确保必要访问",
+        "hint": "😯 不行！"
+      }
+    ],
+    "questionProse": [
+      "推荐的 S3 存储桶权限管理方式是什么？"
+    ],
+    "explanationProse": [
+      "在几乎所有系统中，采用“最小权限”设计是强化安全并面向未来的关键。想要给已有系统加锁，难度堪比把整栋办公楼搬到新地基。\n\nS3 存储桶也不例外。要落实最小权限原则，先从没有权限开始，只授予必要的访问。使用 IAM 角色和策略来控制访问，并定期审计存储桶权限。\n\n安全最佳实践：\n- 应用最小权限原则\n- 从无权限开始\n- 只授予必要访问\n- 使用 IAM 角色和策略\n- 定期审计存储桶权限\n\n避免过于宽松的设置，以免泄露敏感数据。\n\n[S3 安全最佳实践](https://aws.amazon.com/s3/security/)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"S3 存储桶策略\",\n  \"group\": \"S3 安全\",\n  \"options\": [\n    {\n      \"text\": \"将新存储桶设为公开\",\n      \"hint\": \"最小权限，优先考虑。\"\n    },\n    {\n      \"text\": \"将本地 S3 迁移以完全控制 ACL\"\n    },\n    {\n      \"text\": \"将数据迁移到私有区块链\",\n      \"hint\": \"开玩笑的吧？\"\n    },\n    {\n      \"text\": \"使用最小权限原则\"\n    },\n    {\n      \"text\": \"使用策略通配符确保必要访问\",\n      \"hint\": \"😯 不行！\"\n    }\n  ],\n  \"questionProse\": [\n    \"推荐的 S3 存储桶权限管理方式是什么？\"\n  ],\n  \"questionCode\": [],\n  \"explanationProse\": [\n    \"在几乎所有系统中，采用“最小权限”设计是强化安全并面向未来的关键。想要给已有系统加锁，难度堪比把整栋办公楼搬到新地基。\\n\\nS3 存储桶也不例外。要落实最小权限原则，先从没有权限开始，只授予必要的访问。使用 IAM 角色和策略来控制访问，并定期审计存储桶权限。\\n\\n安全最佳实践：\\n- 应用最小权限原则\\n- 从无权限开始\\n- 只授予必要访问\\n- 使用 IAM 角色和策略\\n- 定期审计存储桶权限\\n\\n避免过于宽松的设置，以免泄露敏感数据。\\n\\n[S3 安全最佳实践](https://aws.amazon.com/s3/security/)\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 971,
+    "outputTokens": 493,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1299,
+    "providerCostUsd": 0.00044145,
+    "providerUpstreamCostUsd": 0.00044145,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000037869,
+    "outputUsd": 0.00008874,
+    "totalUsd": 0.000126609,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "DynamoDB",
+  "translatedTitle": "DynamoDB",
+  "translation": {
+    "title": "DynamoDB",
+    "group": "无模式",
+    "options": [
+      {
+        "text": "PutItem",
+        "hint": "创建一个新项，或用新项替换旧项。"
+      },
+      {
+        "text": "BatchUpdateItem",
+        "hint": "不存在。"
+      },
+      {
+        "text": "BatchWriteItem",
+        "hint": "在一次调用中放入（插入）或删除多个项。"
+      },
+      {
+        "text": "UpdateItem"
+      },
+      {
+        "text": "BatchUpsertItem",
+        "hint": "在 DynamoDB 中？"
+      },
+      {
+        "text": "TransactWriteItems",
+        "hint": "将多个 PutItem、UpdateItem、DeleteItem 和 ConditionCheck 操作合并为一次调用。"
+      }
+    ],
+    "questionProse": [
+      "哪个 DynamoDB API 会更新单个已有项的属性？"
+    ],
+    "explanationProse": [
+      "关键在于 <b>updates</b>，而不是 inserts 或 PUTs。如果你要插入数据，可以使用 `BatchWriteItem` 或 `TransactWriteItems`。\n\n    虽然 `BatchWriteItem` 能处理多项操作，但它仅限于 PUT 和 DELETE。`TransactWriteItems` 更强大，但对简单更新来说有点大材小用。\n    对于简单更新，`UpdateItem` 是最佳选择。它允许你 UPDATE，即修改已有项中的一个或多个属性。\n\n    `UpdateItem` 操作每次请求只修改一个项。对于大规模回填或批量更新，通常会调度大量 `UpdateItem` 调用，或使用更大的工作流，如 PartiQL 批处理执行、Step Functions、Glue、EMR，或自定义工作进程。\n\n    `UpdateItem` 操作：\n    - 更新已有项的属性。\n    - 向已有项添加新属性。\n    - 从已有项删除属性。\n    - 在项存在或满足特定条件时有条件地执行更新。\n\n    [DynamoDB UpdateItem](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateItem.html)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"DynamoDB\",\n  \"group\": \"无模式\",\n  \"options\": [\n    {\n      \"text\": \"PutItem\",\n      \"hint\": \"创建一个新项，或用新项替换旧项。\"\n    },\n    {\n      \"text\": \"BatchUpdateItem\",\n      \"hint\": \"不存在。\"\n    },\n    {\n      \"text\": \"BatchWriteItem\",\n      \"hint\": \"在一次调用中放入（插入）或删除多个项。\"\n    },\n    {\n      \"text\": \"UpdateItem\"\n    },\n    {\n      \"text\": \"BatchUpsertItem\",\n      \"hint\": \"在 DynamoDB 中？\"\n    },\n    {\n      \"text\": \"TransactWriteItems\",\n      \"hint\": \"将多个 PutItem、UpdateItem、DeleteItem 和 ConditionCheck 操作合并为一次调用。\"\n    }\n  ],\n  \"questionProse\": [\n    \"哪个 DynamoDB API 会更新单个已有项的属性？\"\n  ],\n  \"questionCode\": [],\n  \"explanationProse\": [\n    \"关键在于 <b>updates</b>，而不是 inserts 或 PUTs。如果你要插入数据，可以使用 `BatchWriteItem` 或 `TransactWriteItems`。\\n\\n    虽然 `BatchWriteItem` 能处理多项操作，但它仅限于 PUT 和 DELETE。`TransactWriteItems` 更强大，但对简单更新来说有点大材小用。\\n    对于简单更新，`UpdateItem` 是最佳选择。它允许你 UPDATE，即修改已有项中的一个或多个属性。\\n\\n    `UpdateItem` 操作每次请求只修改一个项。对于大规模回填或批量更新，通常会调度大量 `UpdateItem` 调用，或使用更大的工作流，如 PartiQL 批处理执行、Step Functions、Glue、EMR，或自定义工作进程。\\n\\n    `UpdateItem` 操作：\\n    - 更新已有项的属性。\\n    - 向已有项添加新属性。\\n    - 从已有项删除属性。\\n    - 在项存在或满足特定条件时有条件地执行更新。\\n\\n    [DynamoDB UpdateItem](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateItem.html)\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 1116,
+    "outputTokens": 1075,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2446,
+    "providerCostUsd": 0.0008124,
+    "providerUpstreamCostUsd": 0.0008124,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000043524,
+    "outputUsd": 0.0001935,
+    "totalUsd": 0.00023702399999999999,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
