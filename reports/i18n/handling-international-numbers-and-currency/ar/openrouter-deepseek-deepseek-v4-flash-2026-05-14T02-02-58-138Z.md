@@ -1,0 +1,147 @@
+# Translation Candidate
+- Slug: handling-international-numbers-and-currency
+- Locale: ar
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2024-08-29--handling-international-numbers-and-currency/ar/index.mdx
+- Validation: deferred
+- Runtime seconds: 19.72
+- Input tokens: 4736
+- Output tokens: 3136
+- Thinking tokens: unknown
+- Cached input tokens: 1152
+- Cache write tokens: 0
+- Estimated cost: $0.001383
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: فهم الأرقام الدولية والعملات
+subTitle: شرح النقود المحلية!
+draft: false
+date: '2024-08-28'
+modified: '2024-09-03'
+tags:
+  - engineering
+  - internationalization
+  - localization
+  - currency
+  - numbers
+category: HowTo
+subCategory: Internationalization
+cover_full_width: ../currency-banner-wide.webp
+cover_mobile: ../currency-banner-pic__w200.webp
+cover_icon: ../currency-banner-pic__w200.webp
+---
+- [المال: التوطين (L10n) والتدويل (i18n)](#money-localization-l10n-and-internationalization-i18n)
+- [مفاهيم أساسية](#critical-concepts)
+  - [الأرقام محلية 🏘️](#numbers-are-local-️)
+  - [العملة عالمية 🌎](#currency-is-global-️)
+  - [متى يكون الإعداد المحلي مهمًا](#when-locale-matters)
+- [حل](#a-solution)
+- [الخطوات التالية](#next-steps)
+
+## المال: التوطين (L10n) والتدويل (i18n)
+
+ليست مجرد كلمات للتفوق في لعبة سكرابل، بل يشير _التوطين_ و _التدويل_ إلى عملية جعل المنتج **يشعر وكأنه في وطنه في بلد مختلف.**
+
+<p class="breakout quote">عرض عملة بتنسيق محلي خاطئ هو دليل قاطع: لم تبذل أي جهد.<br/>إذا كنت لا تستطيع تنسيق سعر، فكيف ستتعامل مع الشحن؟</p>
+
+التدويل موضوع كبير، يغطي كل شيء من ترجمة النصوص إلى تنسيق التواريخ. في هذه المقالة سنركز على موضوع فرعي معين، **تنسيق الأرقام والعملات.**
+
+دعنا نستكشف التنسيق بين 3 دول من منطقة اليورو، والولايات المتحدة والهند:
+
+- `€1,234,567.89` أيرلندا 🇮🇪
+- `1.234.567,89 €` ألمانيا 🇩🇪
+- `1 234 567,89 €` فرنسا 🇫🇷
+- `$1,234,567.89` الولايات المتحدة 🇺🇸
+- `₹12,34,567.89` الهند 🇮🇳
+
+فوضى! أليس كذلك؟ رموز ومسافات وعلامات ترقيم تتطاير في كل مكان! من المذهل أن يتمكن الاتحاد الأوروبي من الاتفاق على أي شيء! 😅
+
+## مفاهيم أساسية
+
+قبل أن نتعمق في الحلول، ماذا نعني بـ "الأرقام محلية"؟
+
+### الأرقام محلية 🏘️
+
+كل إعداد محلي ([الدولة حسب ISO 3166](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes)) يحدد قواعد تنسيق الأرقام.
+
+تتضمن قواعد تنسيق الأرقام:
+
+- الفاصل العشري: فاصلة، نقطة.
+- فاصل الآلاف: فاصلة، نقطة، مسافة.
+- موضع رمز العملة والتباعد.
+
+### العملة عالمية 🌎
+
+`العملة` تشير إلى وحدة نقدية محددة. (انظر [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217#Active_codes_(list_one)) للقائمة.)
+
+- تحدد رمزًا: `$`، `€`، `£`، `¥`. (غالبًا ما يُعاد استخدامه.)
+- دائمًا ما يكون لها رمز مكون من 3 أحرف: `USD`، `EUR`، `GBP`، `JPY`.
+- يمكن استخدامها/تبادلها في "أي" دولة. نظريًا.
+- التحويل بين العملات يتطلب بيانات سعر الصرف.
+- القيمة لا تتغير بناءً على الإعداد المحلي.
+
+### متى يكون الإعداد المحلي مهمًا
+
+معظم واجهات برمجة تطبيقات REST للتجارة الإلكترونية/الدفع تتعامل مع `price` + `currencyCode`. لماذا لا توجد إعدادات محلية؟
+
+الإعدادات المحلية تُضبط (عادةً) على مستوى نظام التشغيل/الجهاز، وتجعلها المتصفحات متاحة عبر `navigator.language`. نظرًا لأن كل مستخدم من مستخدميك قد يكون لديه إعداد محلي مختلف، فمن المنطقي فقط تنسيق الأرقام والعملة على جانب العميل.
+
+## حل
+
+حسنًا، أخبار سارة! لغات البرمجة الحديثة تدعم هذا بشكل مدمج. في جافا سكريبت، لدينا الفئة [`Intl`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl) و `Intl.NumberFormat`!
+
+لنلقِ نظرة على بعض الأكواد:
+
+```javascript
+const number = 1_234_567.89;
+
+/**
+ * Format a number in local currency.
+ * @param {number} amount - The amount to format.
+ * @param {string} currency - The 3-letter currency code.
+ * @param {string} [locale] - The users locale string.
+ */
+const formatMoney = (amount, currency, locale = navigator.language) =>
+  new Intl.NumberFormat(locale, { currency, style: 'currency' })
+    .format(amount);
+
+console.log('🇩🇪 ' + formatMoney(number, 'EUR', 'de-DE'));
+console.log('🇮🇪 ' + formatMoney(number, 'EUR', 'ga-IE'));
+console.log('🇫🇷 ' + formatMoney(number, 'EUR', 'fr-FR'));
+```
+
+إذا كنت بحاجة إلى إجراء عمليات أكثر تعقيدًا، مثل حساب الضرائب، أو تطبيق الخصومات، أو التحويل بين العملات، فستحتاج إلى استخدام مكتبة مثل [dinero.js](https://v2.dinerojs.com/).
+
+## الخطوات التالية
+
+اعتمادًا على احتياجاتك الخاصة، قد ترغب في استكشاف مفاهيم ذات صلة:
+
+- أفضل الممارسات مع الإعداد المحلي للمستخدم. الكشف + السماح بالتجاوزات. (مثل قائمة منسدلة للدولة.)
+- تخزين الأعداد الصحيحة كاملة (خزّن السنتات، وليس الدولارات.)
+- حسابات المال. (مثل تطبيق كوبون خصم `20%`، حساب `subTotal + الضرائب`، إلخ.)
+- أسعار الصرف الحية. (للمشتريات بالتجزئة، صرف العملات الأجنبية.)
+
+<p class="breakout quote">أخبرني إذا كنت ترغب في رؤية مقال مستقبلي حول هذه المواضيع!</p>
+
+{/* ## توصيات
+
+بعض المكتبات يمكنها المساعدة في هذه المهام: */}
+
+**جافا سكريبت / تايب سكريبت**
+
+- [dinero.js](https://v2.dinerojs.com/) تدعم العمليات الحسابية على المال، أسعار الصرف، التنسيق، والتحليل!
+
+**Rust**
+
+- [rusty_money](https://crates.io/crates/rusty_money) هي مكتبتي المفضلة في Rust.
+
+**Go**
+
+- [currency](https://github.com/bojanz/currency) هو اختياري الحالي في Golang.
+*/
+````
