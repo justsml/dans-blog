@@ -1,0 +1,52 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Partial Indexes",
+  "translatedTitle": "الفهارس الجزئية",
+  "translation": {
+    "title": "الفهارس الجزئية",
+    "group": "الفهرسة",
+    "options": [
+      {
+        "text": "صياغة غير صالحة"
+      },
+      {
+        "text": "ينشئ فهارس مكررة"
+      },
+      {
+        "text": "يفهرس الطلاب النشطين فقط"
+      },
+      {
+        "text": "يفهرس الطلاب النشطين أولاً"
+      },
+      {
+        "text": "يقدم تلميحًا لمخطط الاستعلام"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "ماذا تفعل هذه التعويذة؟"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "تُسمى هذه الحيلة `Partial Index`.\n\n    وهي مفيدة لتقليل استخدام القرص وتسريع الاستعلامات عندما يتم الاستعلام عادةً عن مجموعة فرعية فقط من الصفوف.\n\n    سيستخدم Postgres الفهرس فقط عندما يكون الشرط `status = 'active'` موجودًا في الاستعلام.\n\n    **تذكير:** لا يدعم Postgres 'تلميحات الاستعلام' مثل أنظمة RDBMS الأخرى. سيقرر مخطط الاستعلام متى يستخدم أي فهرس مناسب."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"الفهارس الجزئية\",\n  \"group\": \"الفهرسة\",\n  \"options\": [\n    {\"text\": \"صياغة غير صالحة\"},\n    {\"text\": \"ينشئ فهارس مكررة\"},\n    {\"text\": \"يفهرس الطلاب النشطين فقط\"},\n    {\"text\": \"يفهرس الطلاب النشطين أولاً\"},\n    {\"text\": \"يقدم تلميحًا لمخطط الاستعلام\"}\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\"ماذا تفعل هذه التعويذة؟\"],\n  \"hintsProse\": [],\n  \"explanationProse\": [\"تُسمى هذه الحيلة `Partial Index`.\\n\\n    وهي مفيدة لتقليل استخدام القرص وتسريع الاستعلامات عندما يتم الاستعلام عادةً عن مجموعة فرعية فقط من الصفوف.\\n\\n    سيستخدم Postgres الفهرس فقط عندما يكون الشرط `status = 'active'` موجودًا في الاستعلام.\\n\\n    **تذكير:** لا يدعم Postgres 'تلميحات الاستعلام' مثل أنظمة RDBMS الأخرى. سيقرر مخطط الاستعلام متى يستخدم أي فهرس مناسب.\"]\n}",
+  "telemetry": {
+    "inputTokens": 841,
+    "outputTokens": 1794,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 10181,
+    "providerCostUsd": 0.0008858,
+    "providerUpstreamCostUsd": 0.0008858,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00011774000000000001,
+    "outputUsd": 0.00050232,
+    "totalUsd": 0.00062006,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

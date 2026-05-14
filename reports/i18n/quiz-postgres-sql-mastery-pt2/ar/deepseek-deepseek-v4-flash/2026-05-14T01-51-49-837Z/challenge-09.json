@@ -1,0 +1,62 @@
+{
+  "index": 8,
+  "attempt": 1,
+  "originalTitle": "TABLESAMPLE Syntax",
+  "translatedTitle": "صيغة TABLESAMPLE",
+  "translation": {
+    "title": "صيغة TABLESAMPLE",
+    "group": "أخذ العينات من البيانات",
+    "options": [
+      {
+        "text": "...students SAMPLETABLE BERNOULLI (0.10)"
+      },
+      {
+        "text": "...students TABLESAMPLE USER (10)"
+      },
+      {
+        "text": "...students TABLESAMPLE RANDOM (10)"
+      },
+      {
+        "text": "...students SAMPLE 10 PERCENT"
+      },
+      {
+        "text": "ROW_NUMBER() OVER (ORDER BY RAND())"
+      },
+      {
+        "text": "ORDER BY RANDOM() >= 10"
+      },
+      {
+        "text": "WHERE RANDOM() >= 0.1"
+      },
+      {
+        "text": "WHERE RANDOM() >= 0.9"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "ما هي الصيغة الصحيحة **لأخذ عينة عشوائية بنسبة 10%** من students؟"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "هذا السؤال صعب! يحتوي على حوالي 6 فخاخ، بعضها يشمل:\n\n    1. وصف عالي المستوى + أجزاء من الصيغة. يختبر كيف تتكيف وتجمع المعلومات غير المكتملة.\n    2. يتطلب معرفة مسبقة بصيغة `TABLESAMPLE`، حيث لا تستخدم أي من خيارات `TABLESAMPLE` الصيغة الصحيحة! (شرير! أعلم! استمر، أنا أثق بك!!! ❤️)\n    3. `ROW_NUMBER() OVER (ORDER BY RAND())` و `ORDER BY RANDOM() > 10` هما مجرد تشويش. يبدوان صحيحين لكنهما ليسا كذلك. `RAND()` غير موجود. و `RANDOM() > 10` هو تعبير منطقي سيكون دائمًا خطأ لأن `RANDOM()` دائمًا في النطاق `0.0-1.0`.\n    مشكلة أخرى، `ORDER BY RANDOM() > 10` سيرتب أيضًا بناءً على قيمة منطقية، وليس رقمًا عشوائيًا. لكن `> 10` بدا وكأنه يمكن أن يكون نسبة مئوية، أليس كذلك؟\n    4. `BERNOULLI` صحيح، لكن `SAMPLETABLE` ليس كذلك.\n    5. `WHERE RANDOM() >= 0.1` هو فخ! `RANDOM()` تُرجع قيمة في النطاق `0.0 <= x < 1.0`، لذا `>= 0.1` سترجع حوالي 90% من الصفوف، وليس 10%.\n\n    بالنسبة لطريقة `TABLESAMPLE`، يدعم PostgreSQL طريقتين لأخذ العينات:\n    - `BERNOULLI`: كل صف له احتمال متساوٍ\n    - `SYSTEM`: أخذ عينات على مستوى الكتلة (أسرع لكن أقل عشوائية)\n\n    لمعرفة المزيد عن أخذ العينات، اطّلع على هذه المقالة من [Render](https://render.com/blog/postgresql-random-samples-big-tables).\n\n    مثال:",
+      "أيضًا جدير بالذكر، `TABLESAMPLE` [تم الإبلاغ](https://stackoverflow.com/questions/8674718/best-way-to-select-random-rows-postgresql) أنه ليس عشوائيًا جدًا. إذا كنت بحاجة إلى عينة بحجم ثابت _أكثر_ عشوائية، فكر في استخدام `ORDER BY RANDOM() LIMIT 10`. لكن كن على علم أن هذا يُرجع 10 صفوف، وليس 10%، ويمكن أن يكون بطيئًا على الجداول الكبيرة.\n\n    هناك أيضًا بعض الإضافات الخارجية التي توفر طرقًا أفضل لأخذ العينات العشوائية، لكن هذا خارج نطاق هذا السؤال! 😅"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"صيغة TABLESAMPLE\",\n  \"group\": \"أخذ العينات من البيانات\",\n  \"options\": [\n    {\n      \"text\": \"...students SAMPLETABLE BERNOULLI (0.10)\"\n    },\n    {\n      \"text\": \"...students TABLESAMPLE USER (10)\"\n    },\n    {\n      \"text\": \"...students TABLESAMPLE RANDOM (10)\"\n    },\n    {\n      \"text\": \"...students SAMPLE 10 PERCENT\"\n    },\n    {\n      \"text\": \"ROW_NUMBER() OVER (ORDER BY RAND())\"\n    },\n    {\n      \"text\": \"ORDER BY RANDOM() >= 10\"\n    },\n    {\n      \"text\": \"WHERE RANDOM() >= 0.1\"\n    },\n    {\n      \"text\": \"WHERE RANDOM() >= 0.9\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"ما هي الصيغة الصحيحة **لأخذ عينة عشوائية بنسبة 10%** من students؟\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"هذا السؤال صعب! يحتوي على حوالي 6 فخاخ، بعضها يشمل:\\n\\n    1. وصف عالي المستوى + أجزاء من الصيغة. يختبر كيف تتكيف وتجمع المعلومات غير المكتملة.\\n    2. يتطلب معرفة مسبقة بصيغة `TABLESAMPLE`، حيث لا تستخدم أي من خيارات `TABLESAMPLE` الصيغة الصحيحة! (شرير! أعلم! استمر، أنا أثق بك!!! ❤️)\\n    3. `ROW_NUMBER() OVER (ORDER BY RAND())` و `ORDER BY RANDOM() > 10` هما مجرد تشويش. يبدوان صحيحين لكنهما ليسا كذلك. `RAND()` غير موجود. و `RANDOM() > 10` هو تعبير منطقي سيكون دائمًا خطأ لأن `RANDOM()` دائمًا في النطاق `0.0-1.0`.\\n    مشكلة أخرى، `ORDER BY RANDOM() > 10` سيرتب أيضًا بناءً على قيمة منطقية، وليس رقمًا عشوائيًا. لكن `> 10` بدا وكأنه يمكن أن يكون نسبة مئوية، أليس كذلك؟\\n    4. `BERNOULLI` صحيح، لكن `SAMPLETABLE` ليس كذلك.\\n    5. `WHERE RANDOM() >= 0.1` هو فخ! `RANDOM()` تُرجع قيمة في النطاق `0.0 <= x < 1.0`، لذا `>= 0.1` سترجع حوالي 90% من الصفوف، وليس 10%.\\n\\n    بالنسبة لطريقة `TABLESAMPLE`، يدعم PostgreSQL طريقتين لأخذ العينات:\\n    - `BERNOULLI`: كل صف له احتمال متساوٍ\\n    - `SYSTEM`: أخذ عينات على مستوى الكتلة (أسرع لكن أقل عشوائية)\\n\\n    لمعرفة المزيد عن أخذ العينات، اطّلع على هذه المقالة من [Render](https://render.com/blog/postgresql-random-samples-big-tables).\\n\\n    مثال:\",\n    \"أيضًا جدير بالذكر، `TABLESAMPLE` [تم الإبلاغ](https://stackoverflow.com/questions/8674718/best-way-to-select-random-rows-postgresql) أنه ليس عشوائيًا جدًا. إذا كنت بحاجة إلى عينة بحجم ثابت _أكثر_ عشوائية، فكر في استخدام `ORDER BY RANDOM() LIMIT 10`. لكن كن على علم أن هذا يُرجع 10 صفوف، وليس 10%، ويمكن أن يكون بطيئًا على الجداول الكبيرة.\\n\\n    هناك أيضًا بعض الإضافات الخارجية التي توفر طرقًا أفضل لأخذ العينات العشوائية، لكن هذا خارج نطاق هذا السؤال! 😅\"\n  ],\n  \"explanationCode\": [\n    {\n      \"language\": \"sql\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1374,
+    "outputTokens": 2713,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 14030,
+    "providerCostUsd": 0.00136,
+    "providerUpstreamCostUsd": 0.00136,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00019236,
+    "outputUsd": 0.0007596400000000001,
+    "totalUsd": 0.0009520000000000002,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

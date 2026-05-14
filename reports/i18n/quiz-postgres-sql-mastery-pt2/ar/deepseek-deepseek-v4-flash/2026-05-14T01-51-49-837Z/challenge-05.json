@@ -1,0 +1,49 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Hash Join Eligibility",
+  "translatedTitle": "أهلية Hash Join",
+  "translation": {
+    "title": "أهلية Hash Join",
+    "group": "داخلية SQL",
+    "options": [
+      {
+        "text": "ON a.id = b.id"
+      },
+      {
+        "text": "ON a.id > b.id"
+      },
+      {
+        "text": "ON a.id >= b.id"
+      },
+      {
+        "text": "HASH JOIN ON a.id = b.id ..."
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "أي شرط `ON` يمكن لـ PostgreSQL استخدامه في `HASH JOIN`؟"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "يمكن استخدام hash join مع شرط المساواة (`=`) في جملة `ON`.\n\n    - `=` هو شكل المسند الأساسي لـ hash joins\n    - `>` و `>=` ليسا من مسندات hash join\n    - `HASH JOIN` ليس بناء جملة صالحًا في PostgreSQL\n\n    قد يختار planner still loop متداخل أو merge join اعتمادًا على حجم الجدول والإحصائيات والفهارس وإعدادات الذاكرة."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"أهلية Hash Join\",\n  \"group\": \"داخلية SQL\",\n  \"options\": [\n    {\n      \"text\": \"ON a.id = b.id\"\n    },\n    {\n      \"text\": \"ON a.id > b.id\"\n    },\n    {\n      \"text\": \"ON a.id >= b.id\"\n    },\n    {\n      \"text\": \"HASH JOIN ON a.id = b.id ...\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"أي شرط `ON` يمكن لـ PostgreSQL استخدامه في `HASH JOIN`؟\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"يمكن استخدام hash join مع شرط المساواة (`=`) في جملة `ON`.\\n\\n    - `=` هو شكل المسند الأساسي لـ hash joins\\n    - `>` و `>=` ليسا من مسندات hash join\\n    - `HASH JOIN` ليس بناء جملة صالحًا في PostgreSQL\\n\\n    قد يختار planner still loop متداخل أو merge join اعتمادًا على حجم الجدول والإحصائيات والفهارس وإعدادات الذاكرة.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 838,
+    "outputTokens": 1106,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 7293,
+    "providerCostUsd": 0.00061,
+    "providerUpstreamCostUsd": 0.00061,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00011732000000000001,
+    "outputUsd": 0.00030968,
+    "totalUsd": 0.000427,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

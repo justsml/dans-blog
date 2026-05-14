@@ -1,0 +1,49 @@
+{
+  "index": 11,
+  "attempt": 2,
+  "originalTitle": "EXPLAIN ANALYZE Gotcha",
+  "translatedTitle": "مأزق EXPLAIN ANALYZE",
+  "translation": {
+    "title": "مأزق EXPLAIN ANALYZE",
+    "group": "الأداء",
+    "options": [
+      {
+        "text": "تقدير خطة خفيف"
+      },
+      {
+        "text": "يعمل فقط على SELECT"
+      },
+      {
+        "text": "يعدل البيانات ويصدر الخطة"
+      },
+      {
+        "text": "يحاكي التنفيذ للحصول على خطة"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "ماذا يفعل `EXPLAIN ANALYZE` مع عبارات `UPDATE`؟"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "`EXPLAIN ANALYZE` ينفذ الاستعلام فعليًا! كن حذرًا عند تحليل عملية كتابة، خاصة عبارات `UPDATE` و`DELETE` و`INSERT`. قد تضطر إلى تشغيل عمليات التنظيف بعد كل `EXPLAIN ANALYZE` للحصول على نتائج قابلة للتكرار.\n\n    أفضل الممارسات:\n    - استخدم `EXPLAIN` (بدون ANALYZE) مع UPDATE/DELETE/INSERT\n    - لف التعديلات في معاملات:"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"مأزق EXPLAIN ANALYZE\",\n  \"group\": \"الأداء\",\n  \"options\": [\n    {\n      \"text\": \"تقدير خطة خفيف\"\n    },\n    {\n      \"text\": \"يعمل فقط على SELECT\"\n    },\n    {\n      \"text\": \"يعدل البيانات ويصدر الخطة\"\n    },\n    {\n      \"text\": \"يحاكي التنفيذ للحصول على خطة\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"ماذا يفعل `EXPLAIN ANALYZE` مع عبارات `UPDATE`؟\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"sql\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"`EXPLAIN ANALYZE` ينفذ الاستعلام فعليًا! كن حذرًا عند تحليل عملية كتابة، خاصة عبارات `UPDATE` و`DELETE` و`INSERT`. قد تضطر إلى تشغيل عمليات التنظيف بعد كل `EXPLAIN ANALYZE` للحصول على نتائج قابلة للتكرار.\\n\\n    أفضل الممارسات:\\n    - استخدم `EXPLAIN` (بدون ANALYZE) مع UPDATE/DELETE/INSERT\\n    - لف التعديلات في معاملات:\"\n  ],\n  \"explanationCode\": [\n    {\n      \"language\": \"sql\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 866,
+    "outputTokens": 2848,
+    "cacheReadTokens": 640,
+    "cacheWriteTokens": 0,
+    "durationMs": 14622,
+    "providerCostUsd": 0.00121,
+    "providerUpstreamCostUsd": 0.00121,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000033432,
+    "outputUsd": 0.0007974400000000001,
+    "totalUsd": 0.0008308720000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

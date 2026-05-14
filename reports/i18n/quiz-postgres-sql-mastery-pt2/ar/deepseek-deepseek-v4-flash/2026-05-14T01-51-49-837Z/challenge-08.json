@@ -1,0 +1,52 @@
+{
+  "index": 7,
+  "attempt": 1,
+  "originalTitle": "Column Name Quoting",
+  "translatedTitle": "اقتباس اسم العمود",
+  "translation": {
+    "title": "اقتباس اسم العمود",
+    "group": "الاقتباس 2",
+    "options": [
+      {
+        "text": "first.name"
+      },
+      {
+        "text": "\"first.name\""
+      },
+      {
+        "text": "\\"
+      },
+      {
+        "text": "[first.name]"
+      },
+      {
+        "text": "[first].[name]"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "كيف تحدد **اسم عمود يحتوي على نقطة؟**"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "يستخدم PostgreSQL علامات الاقتباس المزدوجة لاقتباس المعرفات:\n    - علامات الاقتباس المزدوجة `\"...\"` للمعرفات (أسماء الأعمدة، أسماء الجداول)\n    - علامات الاقتباس المفردة `'...'` للنصوص الحرفية\n    - الصيغة `first.name` تُفسر على أنها `table_name.column_name`\n\n    بدون علامات الاقتباس، سيتم تفسير النقطة في اسم العمود كفاصل بين المخطط/الجدول! بالإضافة إلى ذلك، جميع المعرفات غير المقتبسة تُحوّل إلى أحرف صغيرة افتراضيًا.\n\n    لتقليل المفاجآت، من الأفضل استخدام `snake_case` وتجنب استخدام الأحرف الخاصة."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"اقتباس اسم العمود\",\n  \"group\": \"الاقتباس 2\",\n  \"options\": [\n    {\n      \"text\": \"first.name\"\n    },\n    {\n      \"text\": \"\\\"first.name\\\"\"\n    },\n    {\n      \"text\": \"\\\\\"\n    },\n    {\n      \"text\": \"[first.name]\"\n    },\n    {\n      \"text\": \"[first].[name]\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"كيف تحدد **اسم عمود يحتوي على نقطة؟**\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"يستخدم PostgreSQL علامات الاقتباس المزدوجة لاقتباس المعرفات:\\n    - علامات الاقتباس المزدوجة `\\\"...\\\"` للمعرفات (أسماء الأعمدة، أسماء الجداول)\\n    - علامات الاقتباس المفردة `'...'` للنصوص الحرفية\\n    - الصيغة `first.name` تُفسر على أنها `table_name.column_name`\\n\\n    بدون علامات الاقتباس، سيتم تفسير النقطة في اسم العمود كفاصل بين المخطط/الجدول! بالإضافة إلى ذلك، جميع المعرفات غير المقتبسة تُحوّل إلى أحرف صغيرة افتراضيًا.\\n\\n    لتقليل المفاجآت، من الأفضل استخدام `snake_case` وتجنب استخدام الأحرف الخاصة.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 867,
+    "outputTokens": 1630,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 9421,
+    "providerCostUsd": 0.0008254,
+    "providerUpstreamCostUsd": 0.0008254,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00012138000000000002,
+    "outputUsd": 0.00045640000000000003,
+    "totalUsd": 0.0005777800000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

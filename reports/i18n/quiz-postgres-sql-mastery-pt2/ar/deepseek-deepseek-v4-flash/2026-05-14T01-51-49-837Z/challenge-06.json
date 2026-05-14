@@ -1,0 +1,49 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Multi-Column Index Order",
+  "translatedTitle": "ترتيب الفهرس متعدد الأعمدة",
+  "translation": {
+    "title": "ترتيب الفهرس متعدد الأعمدة",
+    "group": "الفهرسة",
+    "options": [
+      {
+        "text": "CREATE INDEX ON students(grade_level, last_name);"
+      },
+      {
+        "text": "CREATE INDEX ON students(grade_level);"
+      },
+      {
+        "text": "CREATE INDEX ON students(last_name, age);"
+      },
+      {
+        "text": "CREATE INDEX ON students(first_name, last_name, grade_level);"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "أي فهرس هو الأفضل لهذا الاستعلام؟"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "الشيء المدهش هنا هو أنه يمكن استخدام فهرس متعدد الأعمدة حتى عندما لا يتطابق ترتيب الأعمدة في نص الاستعلام مع تعريف الفهرس.\n\n    **ملاحظة:** مع فهارس B-tree، العمود الرئيسي هو المهم. نظرًا لأن هذا الاستعلام يقوم بالتصفية حسب `grade_level` و `last_name`، فإن الفهرس الذي يبدأ بـ `grade_level` ثم `last_name` هو مناسب.\n\n    كلما تمكنت SQL من تحديد أقل عدد من الصفوف بشكل أسرع، كان الأداء أفضل.\n\n    على سبيل المثال، إذا كان لديك جدول `task`، وتعرف أن `status` أكثر انتقائية من `created_at`، فقد تختار فهرسًا يبدأ بـ `status` لاستعلام مثل `status = 'done' AND created_at > '2024-01-01'`. ترتيب الشروط في نص جملة `WHERE` ليس هو المهم؛ ترتيب أعمدة الفهرس وأشكال المسندات هي المهمة.\n\n    يمكن استخدام فهرس B+Tree من أجل:\n    - العمود الرئيسي، أو بادئة يسرى من الأعمدة.\n    - عوامل تشغيل مثل `=`، `>`، `<`، `BETWEEN`، و `IN`، اعتمادًا على شكل الاستعلام.\n    - مطابقة البادئة، `LIKE 'prefix%'`.\n\n    بفضل [u/mwdb2](https://www.reddit.com/r/PostgreSQL/comments/1h6kw87/comment/m0fovn0/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button) للإشارة إلى خطأ سابق في هذا الشرح!"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"ترتيب الفهرس متعدد الأعمدة\",\n  \"group\": \"الفهرسة\",\n  \"options\": [\n    {\n      \"text\": \"CREATE INDEX ON students(grade_level, last_name);\"\n    },\n    {\n      \"text\": \"CREATE INDEX ON students(grade_level);\"\n    },\n    {\n      \"text\": \"CREATE INDEX ON students(last_name, age);\"\n    },\n    {\n      \"text\": \"CREATE INDEX ON students(first_name, last_name, grade_level);\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"أي فهرس هو الأفضل لهذا الاستعلام؟\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"sql\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"الشيء المدهش هنا هو أنه يمكن استخدام فهرس متعدد الأعمدة حتى عندما لا يتطابق ترتيب الأعمدة في نص الاستعلام مع تعريف الفهرس.\\n\\n    **ملاحظة:** مع فهارس B-tree، العمود الرئيسي هو المهم. نظرًا لأن هذا الاستعلام يقوم بالتصفية حسب `grade_level` و `last_name`، فإن الفهرس الذي يبدأ بـ `grade_level` ثم `last_name` هو مناسب.\\n\\n    كلما تمكنت SQL من تحديد أقل عدد من الصفوف بشكل أسرع، كان الأداء أفضل.\\n\\n    على سبيل المثال، إذا كان لديك جدول `task`، وتعرف أن `status` أكثر انتقائية من `created_at`، فقد تختار فهرسًا يبدأ بـ `status` لاستعلام مثل `status = 'done' AND created_at > '2024-01-01'`. ترتيب الشروط في نص جملة `WHERE` ليس هو المهم؛ ترتيب أعمدة الفهرس وأشكال المسندات هي المهمة.\\n\\n    يمكن استخدام فهرس B+Tree من أجل:\\n    - العمود الرئيسي، أو بادئة يسرى من الأعمدة.\\n    - عوامل تشغيل مثل `=`، `>`، `<`، `BETWEEN`، و `IN`، اعتمادًا على شكل الاستعلام.\\n    - مطابقة البادئة، `LIKE 'prefix%'`.\\n\\n    بفضل [u/mwdb2](https://www.reddit.com/r/PostgreSQL/comments/1h6kw87/comment/m0fovn0/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button) للإشارة إلى خطأ سابق في هذا الشرح!\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 1094,
+    "outputTokens": 810,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 4947,
+    "providerCostUsd": 0.0005428,
+    "providerUpstreamCostUsd": 0.0005428,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00015316,
+    "outputUsd": 0.0002268,
+    "totalUsd": 0.00037996000000000004,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
