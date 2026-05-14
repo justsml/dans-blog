@@ -1,0 +1,52 @@
+{
+  "index": 15,
+  "attempt": 1,
+  "originalTitle": "Default Values",
+  "translatedTitle": "默认值",
+  "translation": {
+    "title": "默认值",
+    "group": "标准输入/输出",
+    "options": [
+      {
+        "text": "1>&2"
+      },
+      {
+        "text": "&2>&1"
+      },
+      {
+        "text": "2>&1"
+      },
+      {
+        "text": "2>1"
+      },
+      {
+        "text": "&2>1"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "哪个操作符用于将错误输出合并到标准输出？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "`2>&1` 操作符将标准错误（文件描述符 2）重定向到标准输出（文件描述符 1）。这对于将错误消息与常规输出捕获到同一输出流中非常有用。\n\n    `1>&2` 操作符将标准输出重定向到标准错误，但问题问的是如何将标准错误重定向到标准输出。\n\n    要了解更多底层原理，请查看 [Greg 的出色重定向 FAQ](https://mywiki.wooledge.org/BashFAQ/055)。\n\n    此外，感谢 Reddit 用户 [u/OneTurnMore](https://www.reddit.com/user/OneTurnMore/) 提供的文案改进建议。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"默认值\",\n  \"group\": \"标准输入/输出\",\n  \"options\": [\n    {\n      \"text\": \"1>&2\"\n    },\n    {\n      \"text\": \"&2>&1\"\n    },\n    {\n      \"text\": \"2>&1\"\n    },\n    {\n      \"text\": \"2>1\"\n    },\n    {\n      \"text\": \"&2>1\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"哪个操作符用于将错误输出合并到标准输出？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"`2>&1` 操作符将标准错误（文件描述符 2）重定向到标准输出（文件描述符 1）。这对于将错误消息与常规输出捕获到同一输出流中非常有用。\\n\\n    `1>&2` 操作符将标准输出重定向到标准错误，但问题问的是如何将标准错误重定向到标准输出。\\n\\n    要了解更多底层原理，请查看 [Greg 的出色重定向 FAQ](https://mywiki.wooledge.org/BashFAQ/055)。\\n\\n    此外，感谢 Reddit 用户 [u/OneTurnMore](https://www.reddit.com/user/OneTurnMore/) 提供的文案改进建议。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 884,
+    "outputTokens": 845,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 5269,
+    "providerCostUsd": 0.0005148,
+    "providerUpstreamCostUsd": 0.0005148,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00012376000000000002,
+    "outputUsd": 0.00023660000000000003,
+    "totalUsd": 0.00036036000000000005,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

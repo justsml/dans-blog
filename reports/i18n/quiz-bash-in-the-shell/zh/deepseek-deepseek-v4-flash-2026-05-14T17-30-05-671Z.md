@@ -1,0 +1,651 @@
+# Translation Candidate
+- Slug: quiz-bash-in-the-shell
+- Locale: zh
+- Model: deepseek/deepseek-v4-flash
+- Target: src/content/posts/2024-11-20--quiz-bash-in-the-shell/zh/index.mdx
+- Validation: deferred
+- Runtime seconds: 173.78
+- Input tokens: 16493
+- Output tokens: 27171
+- Thinking tokens: unknown
+- Cached input tokens: 1664
+- Cache write tokens: 0
+- Estimated cost: $0.010029
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+unlisted: false
+title: 测验：Bash 与 Shell 精通
+subTitle: 你会和电脑对话吗？我是说，真正地对话？
+label: Bash
+category: Quiz
+subCategory: Bash
+date: '2024-11-20'
+modified: '2024-11-21'
+tags:
+  - quiz
+  - bash
+  - scripting
+  - shell
+  - linux
+  - beginner
+  - intermediate
+  - advanced
+social_image: ../desktop-social.webp
+cover_full_width: ../psychedelic-shell-wide.webp
+cover_mobile: ../psychedelic-shell-square-200.webp
+cover_icon: ../psychedelic-shell-square-200.webp
+---
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+<p class="inset">用这 16 道题测试你的 Bash 脚本技能！</p>
+
+涵盖变量、循环、条件判断、字符串操作、函数以及从基础到刁钻的语法陷阱。
+
+磨练（或证明）你的 Shell 脚本 **技能**！
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="热身"
+  title="变量声明"
+  options={[
+    {text: '$name=Dan'},
+    {text: 'name=Dan', isAnswer: true},
+    {text: 'name =Dan'},
+    {text: 'name == Dan'},
+    {text: 'name : Dan'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    如何在 Bash 中定义变量？
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    在 Bash 中，变量声明时 `=` 号周围不能有空格。例如：
+    ```bash
+        name=Alice
+    ```
+    这将值 `"Alice"` 赋给变量 `name`。
+
+    注意：`$name` 用于**引用**或读取变量的值。
+
+    添加空格会导致 shell 将命令解释为要运行的程序，这不是你在设置变量时想要的。
+
+    另外，Bash 是区分大小写的，所以 `name`、`NAME` 和 `Name` 是不同的变量。
+
+    最后，变量名不能包含空格或连字符（`-`）。请使用下划线（`_`）或驼峰命名法代替。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="热身：转义"
+  title="转义引号"
+  options={[
+    {text: 'echo \'It\'s 🔨 Time!\''},
+    {text: 'echo \'It\\\'s 🔨 Time!\''},
+    {text: 'echo \'It\'\\\'\'s 🔨 Time!\'', isAnswer: true},
+    {text: 'echo \'It\'\'s 🔨 Time!\''},
+    {text: 'Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    _哪个命令会输出 `It's 🔨 Time!`？_
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    我知道。转义字符让字符串解析变得棘手，真是令人抓狂。想象一下在 Bash 字符串中转义其他语言——那些引号、撇号和 `$` 符号足以让你崩溃。🫠
+
+    在单引号字符串中，单引号需要转义。关闭引号、转义引号、重新打开引号的序列（`'\''`）可以输出：
+    ```plaintext
+        It's 🔨 Time!
+    ```
+    还有其他方法可以处理这个问题，但这是最常见的一种。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="热身：展开"
+  title="echo 命令"
+  options={[
+    {text: 'cat cab'},
+    {text: 'cat cbt', isAnswer: true},
+    {text: 'ca bt'},
+    {text: 'cat'},
+    {text: 'cbd'},
+    {text: 'Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    这个命令会输出什么？
+    ```bash
+        echo c{a,b}t
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `{}` 花括号展开会生成字符串上下文的多个版本，每个逗号分隔的值或模式对应一个（或多个）版本。
+
+    这里，`c{a,b}t` 展开为：
+    ```plaintext
+        cat cbt
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="变量"
+  title="转义字符"
+  options={[
+    {text: '价格: $$100'},
+    {text: '价格: $100'},
+    {text: '价格: 100'},
+    {text: '价格: 00', isAnswer: true},
+    {text: '价格:'},
+    {text: '错误'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    现在，这段代码会打印什么？
+    ```bash
+        price="$100"
+        echo "Cost: $price"
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    数字变量有特殊含义。在这个例子中，`$1` 是一个特殊变量，保存传递给脚本或函数的第一个参数。
+
+    由于我们在 REPL 中运行脚本，没有传入参数，所以 `$1` 为空。剩余文本 `00` 会原样打印。
+
+    要打印字面量 `$` 字符，可以使用单引号，或者用反斜杠（`\`）进行转义：
+    ```bash
+        price="\$100"
+        echo "Cost: $price"
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="子字符串替换"
+  title="替换子字符串"
+  options={[
+    {text: 'meow meow'},
+    {text: 'Meow meow'},
+    {text: 'Bark meow', isAnswer: true},
+    {text: 'Bark bark'},
+    {text: 'Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    这里发生了什么？
+    ```bash
+        str="Bark bark"
+        echo ${str/bark/meow}
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `${var/pattern/replacement}` 语法将 `pattern` 的第一次出现替换为 `replacement`。这里，输出是：
+    ```plaintext
+        Bark meow
+    ```
+    它是区分大小写的。要同时处理 `bark` 和 `Bark`，可以使用诸如 `${var/[Bb]ark/Bark}` 的模式，或者在替换前规范化字符串。
+
+    要替换所有出现，使用 `${var//pattern/replacement}`。
+
+    要从字符串开头替换，使用 `${var/#pattern/replacement}`。
+
+    要从字符串结尾替换，使用 `${var/%pattern/replacement}`。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="字符串长度"
+  title="字符串长度"
+  options={[
+    {text: '$#username'},
+    {text: '#$username'},
+    {text: '${#username}', isAnswer: true},
+    {text: '${username#}'},
+    {text: 'echo $username | wc -c'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    如何在 Bash 中获取变量的长度？
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `${#username}` 语法返回 `username` 的长度。
+
+    例如：
+    ```bash
+        username="@justsml"
+        echo ${#username} # => 8
+    ```
+    虽然 `wc` 可以工作，但从技术上讲它并不是 Bash 的一部分。
+
+    `wc` 这个工具是一个老梗，指的是 "water closet"（厕所）。
+    开玩笑的！有人会读这些吗？
+
+    实际上，`wc` 是一个来自 Posix（以及 AT&T Unix 时代）的古老命令。它是 "word count" 的缩写，可以统计文件或输入流中的行数、单词数和字符数。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="条件判断"
+  title="基础 If-Else"
+  options={[
+    {text: '文件存在'},
+    {text: '文件不存在，但会输出诊断信息', isAnswer: true},
+    {text: '仅错误'},
+    {text: '缺少双括号'},
+    {text: '无输出'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    如果文件 `cats.txt` 存在，这个脚本会输出什么？
+    ```bash
+        if [ -e cats.txt]; then
+          echo "File exists"
+        else
+          echo "File does not exist"
+        fi
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    你是否注意到了右括号前缺少空格？
+
+    Bash 对此非常敏感：括号表达式内必须要有空格。
+
+    因为缺少空格导致 `[` 命令看不到闭合的 `]`，Bash 会输出诊断信息，将测试视为失败，然后继续执行 `else` 分支。
+
+    正确的语法是：
+    ```bash
+        if [ -e example.txt ]; then
+          echo "File exists"
+        else
+          echo "File does not exist"
+        fi
+    ```
+    注意：双括号 `[[ ]]` 是**推荐**用于条件表达式的。[参见 BashFAQ。](https://mywiki.wooledge.org/BashFAQ/031)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="条件判断"
+  title="字符串比较"
+  options={[
+    {text: '相同的猫'},
+    {text: '不同的猫，在测试语法错误之后', isAnswer: true},
+    {text: 'Zalgo'},
+    {text: '仅错误'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    如何在 Bash 中比较字符串？
+    ```bash
+        cat1="Rosie"
+        cat2="Sunflower"
+        if [ "$cat1" === "$cat2" ]; then
+          echo "Same cat"
+        else
+          echo "Different cats"
+        fi
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    又一个测试语法错误！
+
+    你注意到无效的 `===` 运算符了吗？
+
+    你可能想到了 JavaScript……
+
+    使用 `[ ... ]` 时，Bash 会报告诊断信息，条件为假，因此 `else` 分支输出 `Different cats`。在 Bash 中，应使用 `=` 或 `==` 进行相等比较。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="函数"
+  title="函数声明"
+  options={[
+    {text: 'Hi', isAnswer: true},
+    {text: 'Dan'},
+    {text: 'Hi Dan'},
+    {text: 'greet'},
+    {text: 'Error'},
+    {text: 'Syntax Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    这个脚本会输出什么？
+    ```bash
+        function greet () {
+          echo "$1"
+        }
+        greet Hi Dan
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    在 Bash 中，函数可以接受参数。`$1` 变量保存传递给函数的第一个参数。
+
+    记住，`$0` 是脚本名称，`$1` 是第一个参数，`$2` 是第二个，以此类推。**空格分隔参数。** 因此，`greet Hi Dan` 将 `"Hi"` 作为第一个参数传递。为了将 `"Hi Dan"` 作为单个参数传递，你需要用引号括起来：`greet "Hi Dan"`。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="组合"
+  title="使用管道"
+  options={[
+    {text: '>'},
+    {text: '>>'},
+    {text: '|', isAnswer: true},
+    {text: '||'},
+    {text: '|>'},
+    {text: 'Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    哪个运算符将一个命令的**输出**连接到下一个命令的**输入**？
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `|` 管道运算符将一个命令的输出连接到另一个命令的输入。例如：
+    ```bash
+        echo "Mr. Levy 👨🏻‍🔬" | wc -m
+        # => 14
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="算术"
+  title="基本算术"
+  options={[
+    {text: 'echo 2 + 2'},
+    {text: 'echo ${2 + 2}'},
+    {text: 'echo %(2 + 2)'},
+    {text: 'echo $(( 2 + 2 ))', isAnswer: true},
+    {text: 'Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Bash 中的数学运算如何工作？
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `(( ))` 语法在 Bash 中执行整数运算。
+
+    它可以用于简单计算：
+    ```bash
+        ((result = 2 + 2))
+        echo $result # => 4
+    ```
+    或者用于条件表达式：
+    ```bash
+        if (( 2 > 1 )); then
+          echo "2 is greater than 1"
+        fi
+    ```
+    对于浮点运算，可以考虑使用 [`bc`](https://www.gnu.org/software/bc/manual/html_mono/bc.html) 或 [`awk`](https://www.gnu.org/software/gawk/manual/gawk.html)。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="乘法"
+  title="基本算术"
+  options={[
+    {text: 'echo 10 * 0.5'},
+    {text: 'echo (10 * 0.5)'},
+    {text: 'echo ${ 10 * 0.5 }'},
+    {text: 'echo %( 10 * 0.5 )'},
+    {text: 'echo $(( 10 * 0.5 ))'},
+    {text: 'echo \'10 * 0.5\' | bc', isAnswer: true},
+    {text: 'Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    以下哪个命令能正确计算 10 乘以 0.5 并输出 5？
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `(( ))` 语法仅支持**整数**运算。你知道的，整数，没有浮点数！
+
+    Bash（也许令人惊讶）缺乏对浮点数运算的**内置**支持。
+
+    最常见的解决方案是使用 GNU 工具 [`bc`](https://www.gnu.org/software/bc/manual/html_mono/bc.html) 或 [`awk`](https://www.gnu.org/software/gawk/manual/gawk.html)。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="字符串操作"
+  title="子串提取"
+  options={[
+    {text: '坏猫'},
+    {text: '坏猫，好猫：9'},
+    {text: '好猫', isAnswer: true},
+    {text: '错误'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    在这个脚本中，`:` 的作用是什么？
+    ```bash
+        rosie="Bad cat, good cat"
+        echo ${rosie:9}
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `${var:offset}` 语法从 `offset` 开始提取子串。这里的输出是：
+    ```plaintext
+        good cat
+    ```
+    要提取指定长度的子串，使用 `${var:offset:length}`。
+
+    要从字符串末尾提取，使用 `${var: -offset}`。（注意 `-` 前的空格！）
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={13}
+  group="循环"
+  title="Bash中的循环"
+  options={[
+    {text: 'do'},
+    {text: 'each', isAnswer: true},
+    {text: 'for'},
+    {text: 'until'},
+    {text: 'while'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    以下哪个不是 Bash 中循环的关键字 ❌？
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `each` 不是 Bash 中的循环关键字。主要的循环关键字是 `for`、`while` 和 `until`。
+
+    虽然 `do` 在技术上不是循环关键字，但它是循环语法的重要组成部分。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={14}
+  group="陷阱"
+  title="命令替换"
+  options={[
+    {text: '\'ls -l\''},
+    {text: '% ls -l'},
+    {text: '$ ls -l'},
+    {text: '$(ls -l)', isAnswer: true},
+    {text: '${ls -l}'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    哪个选项会执行命令 `ls -l` 并返回输出？
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `$(ls -l)` 语法会执行**括号**内的命令并替换输出。例如：
+    ```bash
+        echo "Today is $(date +%F)"
+        # => Today is 2029-12-31
+    ```
+    第一个选项使用了单引号 `'`，**而不是反引号。**这会阻止扩展，因此 `'$(date +%F)'` 只会打印字面字符串 `$(date +%F)`。
+
+    虽然仍然支持使用反引号（`` `ls -l` ``）来执行命令，但最近在某些上下文中它已成为一种反模式。大多数人推荐使用 `$(command)` 以获得更好的可读性以及与不同 shell 和版本的一致性。
+
+    花括号 `${}` 用于变量扩展，而不是命令替换。
+
+    `%` 字符不用于命令替换。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={15}
+  group="标准输入/输出"
+  title="默认值"
+  options={[
+    {text: '1>&2'},
+    {text: '&2>&1'},
+    {text: '2>&1', isAnswer: true},
+    {text: '2>1'},
+    {text: '&2>1'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    哪个操作符用于将错误输出合并到标准输出？
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `2>&1` 操作符将标准错误（文件描述符 2）重定向到标准输出（文件描述符 1）。这对于将错误消息与常规输出捕获到同一输出流中非常有用。
+
+    `1>&2` 操作符将标准输出重定向到标准错误，但问题问的是如何将标准错误重定向到标准输出。
+
+    要了解更多底层原理，请查看 [Greg 的出色重定向 FAQ](https://mywiki.wooledge.org/BashFAQ/055)。
+
+    此外，感谢 Reddit 用户 [u/OneTurnMore](https://www.reddit.com/user/OneTurnMore/) 提供的文案改进建议。
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+
+<p className="inset">我的 Bash 测验把你搞得狼狈不堪了吗？</p>
+
+在下方评论区告诉我吧！
+
+### 延伸阅读
+
+通过以下资源巩固你的 Bash 技能：
+
+- [Bash 指南](https://www.gnu.org/software/bash/manual/bash.html)
+- [Bash 常见问题](http://mywiki.wooledge.org/BashFAQ)
+- [ShellCheck](https://www.shellcheck.net/)
+- [Bash 学院](https://guide.bash.academy/)
+- [Bash 脚本教程](https://ryanstutorials.net/bash-scripting-tutorial/)
+- [Bash 参考手册](https://www.gnu.org/software/bash/manual/bash.html)
+- [Bash 黑客维基](http://wiki.bash-hackers.org/)
+- [Bash 初学者指南](http://tldp.org/LDP/Bash-Beginners-Guide/html/index.html)
+- [Bash 参考卡片](http://www.tldp.org/LDP/Bash-Beginners-Guide/html/Bash-Beginners-Guide.html)
+````
