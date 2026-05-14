@@ -1,0 +1,144 @@
+---
+social_image: ../desktop-social.webp
+title: שימוש במשתני סביבה ב-Node.js
+subTitle: שימוש ב-`dotenv`
+date: '2018-11-13'
+modified: '2020-07-30'
+tags:
+  - dotenv
+  - api-keys
+  - secrets
+  - tokens
+  - security
+  - nodejs
+category: Code
+subCategory: howto
+cover: ../john-salvino-417565-unsplash.webp
+cover_mobile: ../w300_john-salvino-417565-unsplash.webp
+cover_icon: ../icon_john-salvino-417565-unsplash.webp
+---
+## טיפול בסודות ובאסימוני API בצורה בטוחה
+
+### מאמר קשור: [הגן על האסימונים שלך](../protect-your-tokens/)
+
+בואו נזכיר בקצרה את ההבדל בין `secret` ל-`non-secret`.
+
+* 🔒 `מפתחות סודיים` חייבים להשתמש בשרת מותאם אישית (למשל Node/Express/Heroku) כדי להסתיר (לתעל) בקשות לשירותי API של צד שלישי.
+* 🌍 `מפתחות לא סודיים` מתארים מפתחות שניתן לשלוח לדפדפן.
+
+<br />
+
+---------------------------------------------
+
+> נתמקד בטיפול ב-🔒 `מפתחות סודיים` באמצעות **משתני סביבה** במאמר זה.
+
+[דוגמאות קוד כלולות בהמשך.](#️-code-example)
+
+#### סקירה כללית
+
+כדי **לגשת בבטחה לסודות בקוד NodeJS שלך:**
+
+1. החלף מפתחות מקודדים-קשיחים במשתני סביבה. למשל: `process.env.API_SECRET`
+1. השתמש בספרייה כמו [`dotenv`](https://github.com/motdotla/dotenv) יחד עם קובץ `.env`. הוסף את הסודות שהיו מקודדים-קשיחים בעבר לקובץ `.env`.
+1. ודא שיש שורת `.env` בקובץ `.gitignore` שלך!
+
+> **אל** תיצור קובץ `.env` בשרתים פרוסים. השתמש בכלי ניהול משתני הסביבה של שירותי האירוח שלך (למשל [Heroku](https://devcenter.heroku.com/articles/config-vars), Netlify, AWS EC2): לדוגמה **לוח בקרה או שורת פקודה.**
+
+### דוגמת קוד
+
+אנחנו הולכים להגדיר מספר קבצים.
+
+1. `.env`
+1. `./db/connection.js`
+1. `./api/users.js`
+
+<!-- Example config object which uses `process.env.PG*`
+
+```js
+// ./db/config.js
+module.exports = {
+  postgres: {
+    host: process.env.PGHOST || 'localhost',
+    port: process.env.PGPORT || 5234,
+    user: process.env.PGUSER || 'postgres',
+    password: process.env.PGPASSWORD || 'password',
+    database: process.env.PGDATABASE || 'postgres',
+  }
+};
+```
+
+The `db/config.js` file is just an example of how your secrets should be stored for re-use in your code.
+-->
+
+ראשית, התקן את חבילת [`dotenv`](https://www.npmjs.com/package/dotenv).
+
+```bash
+npm install dotenv
+```
+
+לאחר מכן, צור קובץ `.env` בשורש הפרויקט שלך.
+
+```
+# .env
+PGDATABASE="postgres"
+PGHOST="localhost"
+PGPORT=5234
+PGUSER="postgres"
+PGPASSWORD="password"
+```
+
+❌ **לעולם אל** תבצע commit לקובץ `.env`.
+
+❌ הימנע מיצירת קובץ `.env` בשרתים.
+
+בדוק בתיעוד של ספק האירוח שלך כיצד להגדיר _משתני סביבה_.
+
+כדי לוודא בקלות שלקובץ `.gitignore` שלך יש שורה עבור `.env`.
+
+```bash
+# Automatically update .gitignore
+# Run in terminal:
+[ "$(grep '^.env' .gitignore)" == "" ] && echo '.env' >> .gitignore
+# note: no output will print
+```
+
+הקובץ `./db/connection.js` מספק מופע משותף של `pg.Pool`. הוא ישמש לשאילתות במסד הנתונים.
+
+```js
+// ./db/connection.js
+require('dotenv').config(); // ✅ Load .env file
+const pg = require('pg');
+const {PGUSER, PGHOST, PGPORT} = process.env;
+
+if (process.env.NODE_ENV === 'development')
+  console.log(`Connecting to ${PGUSER} @ ${PGHOST}:${PGHOST}`);
+// ^^ only for showing debug connection vars
+
+// pg automatically uses PG* env variables
+module.exports = new pg.Pool();
+```
+
+התיקייה `./api` מכילה ממשקים לטבלאות/תצוגות שלך.
+
+הנה דוגמה לקובץ `./api/users.js` עבור טבלת `users`.
+
+```js
+// ./api/users.js
+const db = require('../db/connection.js');
+
+module.exports = {
+  findUsername: function(username) {
+    return db.query('SELECT * FROM users WHERE username=$1', username);
+  }
+};
+```
+
+-  לעולם אל תבצע commit לסודות ה-`.env` שלך ל-git!
+-  אל תשתף קבצי `.env` בצוות. *
+
+\* כל מחשב פיתוח חדש (נייד או שולחני) צריך **ליצור מפתחות גישה ואסימונים חדשים.**
+אם זה לא אפשרי, השתמש בזהירות רבה בשיתוף קובץ `.env` (במקרים שבהם שירות עלול לבטל את כל המפתחות הישנים, או שיש לך אסימון גישה מוגבל של API בתשלום).
+
+#### ⚠️ חשוב: במידת הצורך, השתמש תמיד בשירות הודעות מאובטח (רצוי עם תמיכה בהודעות שפג תוקפן).
+
+בהצלחה וספר לי אם יש לך שאלות! 🎉

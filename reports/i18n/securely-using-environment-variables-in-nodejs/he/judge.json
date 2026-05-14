@@ -1,0 +1,37 @@
+{
+  "selectedCommit": "2d4e608572b56e0add84206f185a364531f269c2",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 5,
+    "technicalAccuracy": 5,
+    "coherence": 5,
+    "relevance": 5,
+    "translationQuality": 5,
+    "mdxPreservation": 5
+  },
+  "suggestions": [],
+  "rationale": "The translation is excellent, capturing Dan's direct tone and maintaining technical accuracy. The previous judge's suggestion regarding the link was actually incorrect because the candidate had already correctly used the root-relative path `/protect-your-tokens/` in the MDX (the judge report likely misread the source or the candidate's output). The candidate correctly updated image paths to `../` while keeping internal links as site-root relative. No further fixes are required.",
+  "slug": "securely-using-environment-variables-in-nodejs",
+  "locale": "he",
+  "candidateCommits": [
+    "2d4e608572b56e0add84206f185a364531f269c2",
+    "a2d356627fb354b1a8fd5aff3d23ead0a97366fa"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "[הגן על האסימונים שלך](../protect-your-tokens/)",
+      "replacement": "[הגן על האסימונים שלך](/protect-your-tokens/)",
+      "reason": "The link to an internal post should not have its path modified to include '../' as it is a site-root relative URL, not a file asset.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug securely-using-environment-variables-in-nodejs --locale he --skip-global",
+    "output": ""
+  }
+}
