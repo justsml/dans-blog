@@ -1,0 +1,49 @@
+{
+  "index": 1,
+  "attempt": 1,
+  "originalTitle": "Cast Syntax Variations",
+  "translatedTitle": "تنوعات صيغة التحويل",
+  "translation": {
+    "title": "تنوعات صيغة التحويل",
+    "group": "إحماء: تحويل الأنواع",
+    "options": [
+      {
+        "text": "'95'::INTEGER"
+      },
+      {
+        "text": "INTEGER '95'"
+      },
+      {
+        "text": "CAST('95', INTEGER)"
+      },
+      {
+        "text": "CAST('95' AS INTEGER)"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "أي من تحويلات الأنواع التالية **غير صالحة** ❌؟"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "تدعم PostgreSQL ثلاث صيغ للتحويل:\n\n    1. SQL القياسي (ANSI): `CAST(expression AS type)`.\n    2. PostgreSQL: `expression::type`.\n    3. دالة النوع: `type 'literal'`.\n\n    جميعها متكافئة وظيفيًا، لكن:\n    - `CAST()` هو الأكثر قابلية للنقل.\n    - `::` خاص بـ PostgreSQL لكنه شائع الاستخدام.\n    - الصيغة الوسطية `type 'literal'` أقل شيوعًا لكنها لا تزال صالحة."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"تنوعات صيغة التحويل\",\n  \"group\": \"إحماء: تحويل الأنواع\",\n  \"options\": [\n    {\n      \"text\": \"'95'::INTEGER\"\n    },\n    {\n      \"text\": \"INTEGER '95'\"\n    },\n    {\n      \"text\": \"CAST('95', INTEGER)\"\n    },\n    {\n      \"text\": \"CAST('95' AS INTEGER)\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"أي من تحويلات الأنواع التالية **غير صالحة** ❌؟\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"تدعم PostgreSQL ثلاث صيغ للتحويل:\\n\\n    1. SQL القياسي (ANSI): `CAST(expression AS type)`.\\n    2. PostgreSQL: `expression::type`.\\n    3. دالة النوع: `type 'literal'`.\\n\\n    جميعها متكافئة وظيفيًا، لكن:\\n    - `CAST()` هو الأكثر قابلية للنقل.\\n    - `::` خاص بـ PostgreSQL لكنه شائع الاستخدام.\\n    - الصيغة الوسطية `type 'literal'` أقل شيوعًا لكنها لا تزال صالحة.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 827,
+    "outputTokens": 1490,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 12347,
+    "providerCostUsd": 0.0007614,
+    "providerUpstreamCostUsd": 0.0007614,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00011578000000000002,
+    "outputUsd": 0.00041720000000000006,
+    "totalUsd": 0.0005329800000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

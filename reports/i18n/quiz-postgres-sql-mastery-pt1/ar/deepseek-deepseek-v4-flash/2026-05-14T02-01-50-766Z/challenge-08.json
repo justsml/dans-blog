@@ -1,0 +1,55 @@
+{
+  "index": 7,
+  "attempt": 1,
+  "originalTitle": "Identify Invalid Types",
+  "translatedTitle": "تحديد الأنواع غير الصالحة",
+  "translation": {
+    "title": "تحديد الأنواع غير الصالحة",
+    "group": "أنواع PostgreSQL",
+    "options": [
+      {
+        "text": "cidr"
+      },
+      {
+        "text": "inet"
+      },
+      {
+        "text": "ipv4"
+      },
+      {
+        "text": "macaddr"
+      },
+      {
+        "text": "macaddr8"
+      },
+      {
+        "text": "interval"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "أي من هذه الأنواع ليس ❌ نوعًا صالحًا في PostgreSQL؟"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "هل جعلك هذا محبطًا، بل _غاضبًا_؟ أنت لست وحدك! على حد قول أحد المساهمين المجهولين في \"core\"، \"what the hell, Dan?! I crashed on the type questions! Thats violent sir! Not sharing my score, hah.\" 😈 على الرحب والسعة.\n\n    مجموعة PostgreSQL الغنية من أنواع الشبكات لا تتضمن `ipv4`. في كل مرة أحاول استخدامه دون البحث، أخطئ فيه. ربما `macaddr8` يجعلني أشعر أنه _لا بد_ أن هناك أنواع `ipv4` و `ipv6`. لا، `inet` يغطي كليهما. أيضًا، `cidr` يغطي أقنعة الشبكة لكليهما.\n\n    أنواع الشبكات الصالحة تشمل:\n    - `cidr` (عنوان شبكة IPv4/IPv6)\n    - `inet` (عنوان مضيف IPv4/IPv6)\n    - `macaddr` (عنوان MAC)\n    - `macaddr8` (عنوان MAC EUI-64)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"تحديد الأنواع غير الصالحة\",\n  \"group\": \"أنواع PostgreSQL\",\n  \"options\": [\n    {\"text\": \"cidr\"},\n    {\"text\": \"inet\"},\n    {\"text\": \"ipv4\"},\n    {\"text\": \"macaddr\"},\n    {\"text\": \"macaddr8\"},\n    {\"text\": \"interval\"}\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\"أي من هذه الأنواع ليس ❌ نوعًا صالحًا في PostgreSQL؟\"],\n  \"hintsProse\": [],\n  \"explanationProse\": [\"هل جعلك هذا محبطًا، بل _غاضبًا_؟ أنت لست وحدك! على حد قول أحد المساهمين المجهولين في \\\"core\\\"، \\\"what the hell, Dan?! I crashed on the type questions! Thats violent sir! Not sharing my score, hah.\\\" 😈 على الرحب والسعة.\\n\\n    مجموعة PostgreSQL الغنية من أنواع الشبكات لا تتضمن `ipv4`. في كل مرة أحاول استخدامه دون البحث، أخطئ فيه. ربما `macaddr8` يجعلني أشعر أنه _لا بد_ أن هناك أنواع `ipv4` و `ipv6`. لا، `inet` يغطي كليهما. أيضًا، `cidr` يغطي أقنعة الشبكة لكليهما.\\n\\n    أنواع الشبكات الصالحة تشمل:\\n    - `cidr` (عنوان شبكة IPv4/IPv6)\\n    - `inet` (عنوان مضيف IPv4/IPv6)\\n    - `macaddr` (عنوان MAC)\\n    - `macaddr8` (عنوان MAC EUI-64)\"]\n}",
+  "telemetry": {
+    "inputTokens": 942,
+    "outputTokens": 3097,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 20360,
+    "providerCostUsd": 0.0014272,
+    "providerUpstreamCostUsd": 0.0014272,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00013188000000000002,
+    "outputUsd": 0.0008671600000000001,
+    "totalUsd": 0.00099904,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

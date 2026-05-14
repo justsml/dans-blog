@@ -1,0 +1,49 @@
+{
+  "index": 11,
+  "attempt": 1,
+  "originalTitle": "Timestamp Precision",
+  "translatedTitle": "دقة الطابع الزمني",
+  "translation": {
+    "title": "دقة الطابع الزمني",
+    "group": "التاريخ/الوقت",
+    "options": [
+      {
+        "text": "2024-01-08 13:30:00+00"
+      },
+      {
+        "text": "2024-01-08 13:30:00.123456+00"
+      },
+      {
+        "text": "2024-01-08 13:30:00.123456789+00"
+      },
+      {
+        "text": "2024-01-08 13:30:00.1234567"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "ما هو أصغر نص حرفي `timestamp` يتجاوز أقصى دقة `time` في Postgres؟"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "الطوابع الزمنية في PostgreSQL لها دقة ميكروثانية (6 منازل عشرية).\n\n    - الحد الأقصى: `.123456` (6 أرقام)\n    - يتم تقريب أو اقتطاع النانوثانية (9 أرقام) إلى الدقة المدعومة\n    - يتم قبول إزاحات المنطقة الزمنية لـ `timestamptz`، ولكنها غير مطلوبة\n\n    **مأزق غير شائع:** بعض اللغات/الأطر ترسل دقة نانوثانية، لكن PostgreSQL يخزن الطوابع الزمنية بدقة ميكروثانية."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"دقة الطابع الزمني\",\n  \"group\": \"التاريخ/الوقت\",\n  \"options\": [\n    {\n      \"text\": \"2024-01-08 13:30:00+00\"\n    },\n    {\n      \"text\": \"2024-01-08 13:30:00.123456+00\"\n    },\n    {\n      \"text\": \"2024-01-08 13:30:00.123456789+00\"\n    },\n    {\n      \"text\": \"2024-01-08 13:30:00.1234567\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"ما هو أصغر نص حرفي `timestamp` يتجاوز أقصى دقة `time` في Postgres؟\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"الطوابع الزمنية في PostgreSQL لها دقة ميكروثانية (6 منازل عشرية).\\n\\n    - الحد الأقصى: `.123456` (6 أرقام)\\n    - يتم تقريب أو اقتطاع النانوثانية (9 أرقام) إلى الدقة المدعومة\\n    - يتم قبول إزاحات المنطقة الزمنية لـ `timestamptz`، ولكنها غير مطلوبة\\n\\n    **مأزق غير شائع:** بعض اللغات/الأطر ترسل دقة نانوثانية، لكن PostgreSQL يخزن الطوابع الزمنية بدقة ميكروثانية.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 894,
+    "outputTokens": 1185,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 9001,
+    "providerCostUsd": 0.0006528,
+    "providerUpstreamCostUsd": 0.0006528,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00012516000000000003,
+    "outputUsd": 0.00033180000000000004,
+    "totalUsd": 0.00045696000000000007,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "index": 12,
+  "attempt": 1,
+  "originalTitle": "Identify Invalid Types",
+  "translatedTitle": "تحديد الأنواع غير الصالحة",
+  "translation": {
+    "title": "تحديد الأنواع غير الصالحة",
+    "group": "أنواع بوستجريس",
+    "options": [
+      {
+        "text": "lseg"
+      },
+      {
+        "text": "bytea"
+      },
+      {
+        "text": "tsquery"
+      },
+      {
+        "text": "tsvector"
+      },
+      {
+        "text": "tsrank"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "أي من هذه الأنواع ليس ❌ نوعًا صالحًا في PostgreSQL؟\n\n    (بجدية، هذه الأنواع (في الغالب) حقيقية.)"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "تحتوي PostgreSQL على عدة أنواع هندسية وأنواع بحث نصي مدمجة، لكن `tsrank` ليس واحدًا منها.\n\n    الأنواع الهندسية وأنواع البحث النصي الصحيحة تشمل:\n    - `lseg` (قطعة خطية)\n    - `bytea` (بيانات ثنائية)\n    - `tsquery` (استعلام بحث نصي)\n    - `tsvector` (مستند بحث نصي)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"تحديد الأنواع غير الصالحة\",\n  \"group\": \"أنواع بوستجريس\",\n  \"options\": [\n    {\n      \"text\": \"lseg\"\n    },\n    {\n      \"text\": \"bytea\"\n    },\n    {\n      \"text\": \"tsquery\"\n    },\n    {\n      \"text\": \"tsvector\"\n    },\n    {\n      \"text\": \"tsrank\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"أي من هذه الأنواع ليس ❌ نوعًا صالحًا في PostgreSQL؟\\n\\n    (بجدية، هذه الأنواع (في الغالب) حقيقية.)\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"تحتوي PostgreSQL على عدة أنواع هندسية وأنواع بحث نصي مدمجة، لكن `tsrank` ليس واحدًا منها.\\n\\n    الأنواع الهندسية وأنواع البحث النصي الصحيحة تشمل:\\n    - `lseg` (قطعة خطية)\\n    - `bytea` (بيانات ثنائية)\\n    - `tsquery` (استعلام بحث نصي)\\n    - `tsvector` (مستند بحث نصي)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 815,
+    "outputTokens": 722,
+    "cacheReadTokens": 384,
+    "cacheWriteTokens": 0,
+    "durationMs": 5328,
+    "providerCostUsd": 0.00039036,
+    "providerUpstreamCostUsd": 0.00039036,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00006141520000000001,
+    "outputUsd": 0.00020216,
+    "totalUsd": 0.0002635752,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

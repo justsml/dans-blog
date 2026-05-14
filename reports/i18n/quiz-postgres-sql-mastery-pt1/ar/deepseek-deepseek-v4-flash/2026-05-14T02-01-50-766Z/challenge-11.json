@@ -1,0 +1,49 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "Integer Overflow",
+  "translatedTitle": "تجاوز العدد الصحيح",
+  "translation": {
+    "title": "تجاوز العدد الصحيح",
+    "group": "العمليات الحسابية على الأعداد الصحيحة",
+    "options": [
+      {
+        "text": "4294967296"
+      },
+      {
+        "text": "خطأ: العدد الصحيح خارج النطاق"
+      },
+      {
+        "text": "0"
+      },
+      {
+        "text": "2147483647"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "ماذا يحدث عند حساب إجمالي أرقام الطلاب المحتملة؟"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "نوع `integer` في PostgreSQL هو عدد صحيح موقّع 32 بت، يتراوح من `-2,147,483,648` إلى `2,147,483,647`.\n\n    العملية الحسابية `256^4` = `4,294,967,296` تتجاوز هذا النطاق.\n\n    للتعامل مع الأعداد الأكبر:"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"تجاوز العدد الصحيح\",\n  \"group\": \"العمليات الحسابية على الأعداد الصحيحة\",\n  \"options\": [\n    {\n      \"text\": \"4294967296\"\n    },\n    {\n      \"text\": \"خطأ: العدد الصحيح خارج النطاق\"\n    },\n    {\n      \"text\": \"0\"\n    },\n    {\n      \"text\": \"2147483647\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"ماذا يحدث عند حساب إجمالي أرقام الطلاب المحتملة؟\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"نوع `integer` في PostgreSQL هو عدد صحيح موقّع 32 بت، يتراوح من `-2,147,483,648` إلى `2,147,483,647`.\\n\\n    العملية الحسابية `256^4` = `4,294,967,296` تتجاوز هذا النطاق.\\n\\n    للتعامل مع الأعداد الأكبر:\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 834,
+    "outputTokens": 957,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 7864,
+    "providerCostUsd": 0.0005496,
+    "providerUpstreamCostUsd": 0.0005496,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00011676000000000001,
+    "outputUsd": 0.00026796000000000003,
+    "totalUsd": 0.00038472000000000007,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

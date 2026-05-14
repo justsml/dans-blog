@@ -1,0 +1,49 @@
+{
+  "index": 13,
+  "attempt": 1,
+  "originalTitle": "Check Constraint Timing",
+  "translatedTitle": "توقيت التحقق من القيد",
+  "translation": {
+    "title": "توقيت التحقق من القيد",
+    "group": "القيود",
+    "options": [
+      {
+        "text": "فورًا للصفوف الجديدة أو المعدلة"
+      },
+      {
+        "text": "عند تنفيذ المعاملة (commit)"
+      },
+      {
+        "text": "في الاستعلام التالي"
+      },
+      {
+        "text": "أبدًا - يتم التحقق من القيود فقط عند INSERT"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "متى يتم التحقق من قيد grade؟"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "القيود `NOT VALID`:\n    - يتم التحقق منها فورًا للإضافات والتحديثات الجديدة\n    - لا تتحقق من الصفوف الموجودة\n    - يمكن التحقق من الصفوف الموجودة لاحقًا باستخدام `VALIDATE CONSTRAINT`\n    - مفيدة للجداول الكبيرة\n    \n    بدون `NOT VALID`:\n    - يتم التحقق من القيد فورًا\n    - يتم التحقق من جميع الصفوف الموجودة\n    - قد يكون بطيئًا على الجداول الكبيرة"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"توقيت التحقق من القيد\",\n  \"group\": \"القيود\",\n  \"options\": [\n    {\n      \"text\": \"فورًا للصفوف الجديدة أو المعدلة\"\n    },\n    {\n      \"text\": \"عند تنفيذ المعاملة (commit)\"\n    },\n    {\n      \"text\": \"في الاستعلام التالي\"\n    },\n    {\n      \"text\": \"أبدًا - يتم التحقق من القيود فقط عند INSERT\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"متى يتم التحقق من قيد grade؟\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"القيود `NOT VALID`:\\n    - يتم التحقق منها فورًا للإضافات والتحديثات الجديدة\\n    - لا تتحقق من الصفوف الموجودة\\n    - يمكن التحقق من الصفوف الموجودة لاحقًا باستخدام `VALIDATE CONSTRAINT`\\n    - مفيدة للجداول الكبيرة\\n    \\n    بدون `NOT VALID`:\\n    - يتم التحقق من القيد فورًا\\n    - يتم التحقق من جميع الصفوف الموجودة\\n    - قد يكون بطيئًا على الجداول الكبيرة\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 829,
+    "outputTokens": 921,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 7918,
+    "providerCostUsd": 0.0005342,
+    "providerUpstreamCostUsd": 0.0005342,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00011606000000000001,
+    "outputUsd": 0.00025788000000000004,
+    "totalUsd": 0.00037394000000000007,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

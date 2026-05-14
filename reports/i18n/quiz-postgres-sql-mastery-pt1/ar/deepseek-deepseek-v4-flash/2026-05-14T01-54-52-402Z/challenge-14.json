@@ -1,0 +1,49 @@
+{
+  "index": 13,
+  "attempt": 1,
+  "originalTitle": "Check Constraint Timing",
+  "translatedTitle": "توقيت التحقق من القيد",
+  "translation": {
+    "title": "توقيت التحقق من القيد",
+    "group": "القيود",
+    "options": [
+      {
+        "text": "فورًا للصفوف الجديدة أو المعدلة"
+      },
+      {
+        "text": "عند تأكيد المعاملة"
+      },
+      {
+        "text": "في الاستعلام التالي"
+      },
+      {
+        "text": "أبدًا - يتم التحقق من القيود فقط عند الإدراج"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "متى يتم التحقق من هذا القيد الخاص بالدرجة؟"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "القيود `NOT VALID`:\n    - يتم التحقق منها فورًا للإدراجات والتحديثات الجديدة\n    - لا تتحقق من الصفوف الموجودة\n    - يمكن التحقق من الصفوف الموجودة لاحقًا باستخدام `VALIDATE CONSTRAINT`\n    - مفيدة للجداول الكبيرة\n    \n    بدون `NOT VALID`:\n    - يتم التحقق من القيد فورًا\n    - يتم التحقق من جميع الصفوف الموجودة\n    - قد تكون بطيئة على الجداول الكبيرة"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"توقيت التحقق من القيد\",\n  \"group\": \"القيود\",\n  \"options\": [\n    {\n      \"text\": \"فورًا للصفوف الجديدة أو المعدلة\"\n    },\n    {\n      \"text\": \"عند تأكيد المعاملة\"\n    },\n    {\n      \"text\": \"في الاستعلام التالي\"\n    },\n    {\n      \"text\": \"أبدًا - يتم التحقق من القيود فقط عند الإدراج\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"متى يتم التحقق من هذا القيد الخاص بالدرجة؟\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"sql\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"القيود `NOT VALID`:\\n    - يتم التحقق منها فورًا للإدراجات والتحديثات الجديدة\\n    - لا تتحقق من الصفوف الموجودة\\n    - يمكن التحقق من الصفوف الموجودة لاحقًا باستخدام `VALIDATE CONSTRAINT`\\n    - مفيدة للجداول الكبيرة\\n    \\n    بدون `NOT VALID`:\\n    - يتم التحقق من القيد فورًا\\n    - يتم التحقق من جميع الصفوف الموجودة\\n    - قد تكون بطيئة على الجداول الكبيرة\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 828,
+    "outputTokens": 1343,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 7998,
+    "providerCostUsd": 0.0007028,
+    "providerUpstreamCostUsd": 0.0007028,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00011592,
+    "outputUsd": 0.00037604000000000007,
+    "totalUsd": 0.00049196,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

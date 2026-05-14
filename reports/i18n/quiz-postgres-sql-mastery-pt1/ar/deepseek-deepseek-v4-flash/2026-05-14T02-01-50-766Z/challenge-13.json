@@ -1,0 +1,52 @@
+{
+  "index": 12,
+  "attempt": 1,
+  "originalTitle": "Identify Invalid Types",
+  "translatedTitle": "تحديد الأنواع غير الصالحة",
+  "translation": {
+    "title": "تحديد الأنواع غير الصالحة",
+    "group": "أنواع PostgreSQL",
+    "options": [
+      {
+        "text": "lseg"
+      },
+      {
+        "text": "bytea"
+      },
+      {
+        "text": "tsquery"
+      },
+      {
+        "text": "tsvector"
+      },
+      {
+        "text": "tsrank"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "أي من هذه الأنواع ليس ❌ نوعًا صالحًا في PostgreSQL؟\n\n    (بجدية، هذه كلها أنواع حقيقية - في الغالب.)"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "يحتوي PostgreSQL على عدة أنواع هندسية وأنواع بحث نصي مدمجة، لكن `tsrank` ليس واحدًا منها.\n\n    الأنواع الهندسية وأنواع البحث النصي الصحيحة تشمل:\n    - `lseg` (قطعة خطية)\n    - `bytea` (بيانات ثنائية)\n    - `tsquery` (استعلام بحث نصي)\n    - `tsvector` (مستند بحث نصي)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"تحديد الأنواع غير الصالحة\",\n  \"group\": \"أنواع PostgreSQL\",\n  \"options\": [\n    { \"text\": \"lseg\" },\n    { \"text\": \"bytea\" },\n    { \"text\": \"tsquery\" },\n    { \"text\": \"tsvector\" },\n    { \"text\": \"tsrank\" }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"أي من هذه الأنواع ليس ❌ نوعًا صالحًا في PostgreSQL؟\\n\\n    (بجدية، هذه كلها أنواع حقيقية - في الغالب.)\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"يحتوي PostgreSQL على عدة أنواع هندسية وأنواع بحث نصي مدمجة، لكن `tsrank` ليس واحدًا منها.\\n\\n    الأنواع الهندسية وأنواع البحث النصي الصحيحة تشمل:\\n    - `lseg` (قطعة خطية)\\n    - `bytea` (بيانات ثنائية)\\n    - `tsquery` (استعلام بحث نصي)\\n    - `tsvector` (مستند بحث نصي)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 816,
+    "outputTokens": 622,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 5705,
+    "providerCostUsd": 0.000412,
+    "providerUpstreamCostUsd": 0.000412,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00011424,
+    "outputUsd": 0.00017416000000000003,
+    "totalUsd": 0.0002884,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
