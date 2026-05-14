@@ -1,0 +1,47 @@
+{
+  "index": 20,
+  "attempt": 1,
+  "originalTitle": "Storage Cost Analysis",
+  "translatedTitle": "存储成本分析",
+  "translation": {
+    "title": "存储成本分析",
+    "group": "成本优化",
+    "options": [
+      {
+        "text": "所有数据使用S3标准存储"
+      },
+      {
+        "text": "始终使用最便宜的存储"
+      },
+      {
+        "text": "根据访问模式混合存储类别"
+      },
+      {
+        "text": "将所有数据存储在Glacier中"
+      }
+    ],
+    "questionProse": [
+      "存储1PB数据，其中20%每天访问，30%每月访问，50%每年访问，最经济高效的方法是什么？"
+    ],
+    "explanationProse": [
+      "最佳存储策略：\n    - 20%的数据放在S3标准存储用于日常访问\n    - 30%的数据放在S3标准-IA存储用于每月访问\n    - 50%的数据放在Glacier存储用于年度访问\n\n    这种方法在保持适当访问模式的同时优化了成本。\n\n    成本考虑因素：\n    - 每GB的存储定价\n    - 检索成本\n    - 访问模式\n    - 转换成本"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"存储成本分析\",\n  \"group\": \"成本优化\",\n  \"options\": [\n    {\n      \"text\": \"所有数据使用S3标准存储\"\n    },\n    {\n      \"text\": \"始终使用最便宜的存储\"\n    },\n    {\n      \"text\": \"根据访问模式混合存储类别\"\n    },\n    {\n      \"text\": \"将所有数据存储在Glacier中\"\n    }\n  ],\n  \"questionProse\": [\n    \"存储1PB数据，其中20%每天访问，30%每月访问，50%每年访问，最经济高效的方法是什么？\"\n  ],\n  \"explanationProse\": [\n    \"最佳存储策略：\\n    - 20%的数据放在S3标准存储用于日常访问\\n    - 30%的数据放在S3标准-IA存储用于每月访问\\n    - 50%的数据放在Glacier存储用于年度访问\\n\\n    这种方法在保持适当访问模式的同时优化了成本。\\n\\n    成本考虑因素：\\n    - 每GB的存储定价\\n    - 检索成本\\n    - 访问模式\\n    - 转换成本\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 794,
+    "outputTokens": 634,
+    "cacheReadTokens": 384,
+    "cacheWriteTokens": 0,
+    "durationMs": 4463,
+    "providerCostUsd": 0.00035096,
+    "providerUpstreamCostUsd": 0.00035096,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000058475200000000006,
+    "outputUsd": 0.00017752000000000002,
+    "totalUsd": 0.00023599520000000003,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
