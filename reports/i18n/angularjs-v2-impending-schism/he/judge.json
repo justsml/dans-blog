@@ -1,0 +1,46 @@
+{
+  "selectedCommit": "0282cb7b6f6c94869824e132a6bae56303915571",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The current translation already incorporates the high-priority fixes suggested in the previous judge report (e.g., 'ולא פחות חשוב מכך' and 'הרשו לי לומר בבירור'). The translation is technically accurate, maintains Dan's informal yet professional tone, and correctly handles MDX components and asset paths. The Hebrew flow is natural for a technical blog post.",
+  "slug": "angularjs-v2-impending-schism",
+  "locale": "he",
+  "candidateCommits": [
+    "0282cb7b6f6c94869824e132a6bae56303915571",
+    "8d453041bd99c32290a1e6ef72dcb25f096b0c5e"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "לא הכי פחות מהם הוא TypeScript",
+      "replacement": "ולא פחות חשוב מכך, TypeScript",
+      "reason": "The literal translation of 'Not least of which' is awkward in Hebrew; the suggested replacement is more natural.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "תן לי לומר בבירור",
+      "replacement": "הרשו לי לומר בבירור",
+      "reason": "'תן לי' is a bit too informal/imperative for this context; 'הרשו לי' fits the tone better.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug angularjs-v2-impending-schism --locale he --skip-global",
+    "output": ""
+  }
+}
