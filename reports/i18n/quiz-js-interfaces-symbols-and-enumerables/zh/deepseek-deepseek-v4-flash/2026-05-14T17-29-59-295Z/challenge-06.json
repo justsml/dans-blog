@@ -1,0 +1,49 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Symbols as Non-Enumerable Keys",
+  "translatedTitle": "Symbol作为不可枚举键",
+  "translation": {
+    "title": "Symbol作为不可枚举键",
+    "group": "高级接口",
+    "options": [
+      {
+        "text": "不，它不会"
+      },
+      {
+        "text": "是的，它会被列出"
+      },
+      {
+        "text": "取决于迭代方法"
+      },
+      {
+        "text": "会抛出错误"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "在 `for...in` 迭代中，Symbol 键的属性会被列出吗？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "Symbol 键的属性可以有自己的 `enumerable` 标志，但 `for...in` 和 `Object.keys()` 只访问字符串键的可枚举属性。在这个例子中，只有 `regularKey` 会被列出，而不是 Symbol 键的属性。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Symbol作为不可枚举键\",\n  \"group\": \"高级接口\",\n  \"options\": [\n    {\n      \"text\": \"不，它不会\"\n    },\n    {\n      \"text\": \"是的，它会被列出\"\n    },\n    {\n      \"text\": \"取决于迭代方法\"\n    },\n    {\n      \"text\": \"会抛出错误\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"在 `for...in` 迭代中，Symbol 键的属性会被列出吗？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"Symbol 键的属性可以有自己的 `enumerable` 标志，但 `for...in` 和 `Object.keys()` 只访问字符串键的可枚举属性。在这个例子中，只有 `regularKey` 会被列出，而不是 Symbol 键的属性。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 795,
+    "outputTokens": 823,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 5340,
+    "providerCostUsd": 0.0004882,
+    "providerUpstreamCostUsd": 0.0004882,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00011130000000000001,
+    "outputUsd": 0.00023044,
+    "totalUsd": 0.00034174,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
