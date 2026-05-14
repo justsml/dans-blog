@@ -1,0 +1,51 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "instanceof Inheritance",
+  "translatedTitle": "instanceof 继承",
+  "translation": {
+    "title": "instanceof 继承",
+    "group": "类型检查技巧",
+    "options": [
+      {
+        "text": "true, true, true"
+      },
+      {
+        "text": "true, false, false"
+      },
+      {
+        "text": "false, true, true"
+      },
+      {
+        "text": "true, true, false"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "这些检查的结果是什么？"
+    ],
+    "hintsProse": [
+      "记住 JavaScript 继承中的原型链。"
+    ],
+    "explanationProse": [
+      "三者都返回 `true`。`CustomError` 继承自 `Error`，而 `Error` 继承自 `Object`。`instanceof` 运算符会检查整个原型链，因此 `CustomError` 的实例同时也是 `Error` 和 `Object` 的实例。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"instanceof 继承\",\n  \"group\": \"类型检查技巧\",\n  \"options\": [\n    {\n      \"text\": \"true, true, true\"\n    },\n    {\n      \"text\": \"true, false, false\"\n    },\n    {\n      \"text\": \"false, true, true\"\n    },\n    {\n      \"text\": \"true, true, false\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"这些检查的结果是什么？\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"js\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [\n    \"记住 JavaScript 继承中的原型链。\"\n  ],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"三者都返回 `true`。`CustomError` 继承自 `Error`，而 `Error` 继承自 `Object`。`instanceof` 运算符会检查整个原型链，因此 `CustomError` 的实例同时也是 `Error` 和 `Object` 的实例。\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 795,
+    "outputTokens": 867,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 5426,
+    "providerCostUsd": 0.0005058,
+    "providerUpstreamCostUsd": 0.0005058,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00011130000000000001,
+    "outputUsd": 0.00024276000000000004,
+    "totalUsd": 0.00035406000000000006,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

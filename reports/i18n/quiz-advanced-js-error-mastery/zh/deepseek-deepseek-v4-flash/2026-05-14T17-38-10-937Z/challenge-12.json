@@ -1,0 +1,51 @@
+{
+  "index": 11,
+  "attempt": 1,
+  "originalTitle": "Promise Rejection Values",
+  "translatedTitle": "Promise 拒绝值",
+  "translation": {
+    "title": "Promise 拒绝值",
+    "group": "异步错误",
+    "options": [
+      {
+        "text": "总是 Error 对象"
+      },
+      {
+        "text": "任何值都可以作为拒绝原因"
+      },
+      {
+        "text": "仅字符串和 Error 对象"
+      },
+      {
+        "text": "自动包装为 Error"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "`Promise.reject()` 可以接受什么？"
+    ],
+    "hintsProse": [
+      "Promise 拒绝与 throw 语句类似。"
+    ],
+    "explanationProse": [
+      "与 `throw` 类似，`Promise.reject()` 可以接受任何值——字符串、对象、数字等。这会打印 `\"string\"`、`404` 和 `42`。始终检查 Promise 链中捕获值的类型，尤其是在处理可能以非 Error 值拒绝的第三方代码时。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Promise 拒绝值\",\n  \"group\": \"异步错误\",\n  \"options\": [\n    {\n      \"text\": \"总是 Error 对象\"\n    },\n    {\n      \"text\": \"任何值都可以作为拒绝原因\"\n    },\n    {\n      \"text\": \"仅字符串和 Error 对象\"\n    },\n    {\n      \"text\": \"自动包装为 Error\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"`Promise.reject()` 可以接受什么？\"\n  ],\n  \"hintsProse\": [\n    \"Promise 拒绝与 throw 语句类似。\"\n  ],\n  \"explanationProse\": [\n    \"与 `throw` 类似，`Promise.reject()` 可以接受任何值——字符串、对象、数字等。这会打印 `\\\"string\\\"`、`404` 和 `42`。始终检查 Promise 链中捕获值的类型，尤其是在处理可能以非 Error 值拒绝的第三方代码时。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 807,
+    "outputTokens": 1012,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 6273,
+    "providerCostUsd": 0.0005662,
+    "providerUpstreamCostUsd": 0.0005662,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00011298,
+    "outputUsd": 0.0002833600000000001,
+    "totalUsd": 0.00039634000000000007,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

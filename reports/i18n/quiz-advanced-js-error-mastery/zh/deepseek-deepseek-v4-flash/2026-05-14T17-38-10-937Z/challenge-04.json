@@ -1,0 +1,51 @@
+{
+  "index": 3,
+  "attempt": 1,
+  "originalTitle": "Cross-Frame instanceof",
+  "translatedTitle": "跨框架的 instanceof",
+  "translation": {
+    "title": "跨框架的 instanceof",
+    "group": "类型检查技巧",
+    "options": [
+      {
+        "text": "始终为真"
+      },
+      {
+        "text": "始终为假"
+      },
+      {
+        "text": "跨框架时可能为假"
+      },
+      {
+        "text": "抛出错误"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "跨 iframe 使用 `instanceof Error` 会发生什么？"
+    ],
+    "hintsProse": [
+      "不同的上下文有不同的 Error 构造函数。"
+    ],
+    "explanationProse": [
+      "`instanceof` 在不同执行上下文（iframe、worker）中可能返回 `false`，因为每个上下文都有自己的 `Error` 构造函数。使用 `Object.prototype.toString.call(obj) === '[object Error]'` 可在跨上下文时可靠检测错误类型。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"跨框架的 instanceof\",\n  \"group\": \"类型检查技巧\",\n  \"options\": [\n    {\n      \"text\": \"始终为真\"\n    },\n    {\n      \"text\": \"始终为假\"\n    },\n    {\n      \"text\": \"跨框架时可能为假\"\n    },\n    {\n      \"text\": \"抛出错误\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"跨 iframe 使用 `instanceof Error` 会发生什么？\"\n  ],\n  \"hintsProse\": [\n    \"不同的上下文有不同的 Error 构造函数。\"\n  ],\n  \"explanationProse\": [\n    \"`instanceof` 在不同执行上下文（iframe、worker）中可能返回 `false`，因为每个上下文都有自己的 `Error` 构造函数。使用 `Object.prototype.toString.call(obj) === '[object Error]'` 可在跨上下文时可靠检测错误类型。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 794,
+    "outputTokens": 711,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 4942,
+    "providerCostUsd": 0.0004432,
+    "providerUpstreamCostUsd": 0.0004432,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00011116000000000001,
+    "outputUsd": 0.00019908000000000003,
+    "totalUsd": 0.00031024000000000004,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
