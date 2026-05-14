@@ -1,0 +1,147 @@
+# Translation Candidate
+- Slug: handling-international-numbers-and-currency
+- Locale: he
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2024-08-29--handling-international-numbers-and-currency/he/index.mdx
+- Validation: deferred
+- Runtime seconds: 5.21
+- Input tokens: 5249
+- Output tokens: 1922
+- Thinking tokens: unknown
+- Cached input tokens: 1024
+- Cache write tokens: 0
+- Estimated cost: $0.000551
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: הבנת מספרים ומטבעות בינלאומיים
+subTitle: הסבר על כסף מקומי!
+draft: false
+date: '2024-08-28'
+modified: '2024-09-03'
+tags:
+  - engineering
+  - internationalization
+  - localization
+  - currency
+  - numbers
+category: HowTo
+subCategory: Internationalization
+cover_full_width: ../currency-banner-wide.webp
+cover_mobile: ../currency-banner-pic__w200.webp
+cover_icon: ../currency-banner-pic__w200.webp
+---
+- [Money: Localization (L10n) and Internationalization (i18n)](#money-localization-l10n-and-internationalization-i18n)
+- [Critical Concepts](#critical-concepts)
+  - [Numbers are Local 🏘️](#numbers-are-local-️)
+  - [Currency is Global 🌎](#currency-is-global-️)
+  - [When Locale Matters](#when-locale-matters)
+- [A Solution](#a-solution)
+- [Next Steps](#next-steps)
+
+## Money: Localization (L10n) and Internationalization (i18n)
+
+הן אינן רק למטרות של שליטה במשחק סקרבל; _localization_ ו‑_internationalization_ מתייחסות לתהליך של הפיכת מוצר **למתאים לתרבות של מדינה אחרת**.
+
+<p class="breakout quote">הצגת מטבע בפורמט מקומי שגוי היא אינדיקציה ברורה: לא השקעת מאמץ.<br/>אם אינך מצליח לעצב מחיר, איך תוכל להתמודד עם עלויות משלוח?</p>
+
+ה‑internationalization הוא נושא רחב, הכולל הכל מתרגום טקסטים ועד עיצוב תאריכים. בפוסט הזה נתמקד בתת‑נושא ספציפי, **עיצוב מספרים ומטבע**.
+
+בואו נשווה עיצוב בין שלוש מדינות באיזור האירו, ארה״ב והודו:
+
+- `€1,234,567.89` אירלנד 🇮🇪
+- `1.234.567,89 €` גרמניה 🇩🇪
+- `1 234 567,89 €` צרפת 🇫🇷
+- `$1,234,567.89` ארה״ב 🇺🇸
+- `₹12,34,567.89` הודו 🇮🇳
+
+כאוס! נכון? יש סמלים, רווחים ופיסוק שמסתובבים בכל מקום! מדהים כמה האיחוד האירופי מצליח להסכים על משהו! 😅
+
+## Critical Concepts
+
+לפני שנצלול לפתרונות, מה הכוונה ב‑"Numbers are Local"?
+
+### מספרים הם מקומיים 🏘️
+
+כל אזור (‏[Country per ISO 3166](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes)‏) מגדיר כללים לעיצוב מספרים.
+
+הכללים לעיצוב מספרים כוללים:
+
+- עשרוני: פסיק, נקודה.
+- אלפים: פסיק, נקודה, רווח.
+- מיקום וסימן המטבע והמרווחים סביבו.
+
+### מטבע הוא גלובלי 🌎
+
+`currency` מתייחס ליחידת כסף ספציפית. (ראו [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217#Active_codes_(list_one)) לקבלת הרשימה.)
+
+- מציין סמל: `$`, `€`, `£`, `¥`. (לעיתים משמשים מחדש.)
+- תמיד יש קוד של שלוש אותיות: `USD`, `EUR`, `GBP`, `JPY`.
+- ניתן להשתמש/להחליף ב‑"כל" מדינה. בתיאוריה.
+- המרת מטבעות דורשת נתוני שער חליפין.
+- הערך אינו משתנה לפי האזור.
+
+### מתי האזור חשוב
+
+רוב ממשקי ה‑REST של מסחר אלקטרוני/תשלומים עובדים עם `price` + `currencyCode`. למה אין אזורים?
+
+האזורים (בדרך כלל) מוגדרים ברמת מערכת ההפעלה/המכשיר, והדפדפנים חושפים אותם דרך `navigator.language`. מכיוון שכל אחד מהמשתמשים שלך יכול להיות עם אזור שונה, הגיוני לעצב מספרים ומטבע בצד הלקוח.
+
+## פתרון
+
+טוב, יש חדשות משמחות! שפות תכנות מודרניות כוללות תמיכה מובנית בזה. ב‑JavaScript יש לנו את המחלקה [`Intl`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl) ואת `Intl.NumberFormat`!
+
+בואו נסתכל על קוד:
+
+```javascript
+const number = 1_234_567.89;
+
+/**
+ * Format a number in local currency.
+ * @param {number} amount - The amount to format.
+ * @param {string} currency - The 3-letter currency code.
+ * @param {string} [locale] - The users locale string.
+ */
+const formatMoney = (amount, currency, locale = navigator.language) =>
+  new Intl.NumberFormat(locale, { currency, style: 'currency' })
+    .format(amount);
+
+console.log('🇩🇪 ' + formatMoney(number, 'EUR', 'de-DE'));
+console.log('🇮🇪 ' + formatMoney(number, 'EUR', 'ga-IE'));
+console.log('🇫🇷 ' + formatMoney(number, 'EUR', 'fr-FR'));
+```
+
+אם אתם צריכים לבצע דברים מתוחכמים יותר, כמו חישוב מיסים, החלת הנחות, או המרת מטבעות, כדאי להשתמש בספרייה כמו [dinero.js](https://v2.dinerojs.com/).
+
+## צעדים הבאים
+
+בהתאם לצרכים הספציפיים שלכם, ייתכן שתרצו לחקור נושאים קשורים:
+
+- best practices עם אזור המשתמש. גילוי + אפשרות לעקוף (למשל תפריט נפתח של מדינות).
+- שמירת ערכים שלמים (אחסון סנטים, לא דולרים).
+- מתמטיקה של כסף (למשל החלת קופון “20% הנחה”, חישוב `subTotal + taxes` וכדומה).
+- שערי חליפין בזמן אמת (לרכישות קמעונאיות, פורקס/המרות מטבע).
+
+<p class="breakout quote">תודיעו לי אם תרצו לראות מאמר עתידי על נושאים אלו!</p>
+
+{/* ## Recommendations
+
+Some libraries can help with these tasks: */}
+
+**JavaScript / TypeScript**
+
+- [dinero.js](https://v2.dinerojs.com/) תומך בחישובי כסף, שערי חליפין, עיצוב וניתוח!
+
+**Rust**
+
+- [rusty_money](https://crates.io/crates/rusty_money) היא הספרייה המועדפת שלי ב‑Rust.
+
+**Go**
+
+- [currency](https://github.com/bojanz/currency) היא הבחירה הנוכחית שלי ב‑Golang.
+*/}
+````
