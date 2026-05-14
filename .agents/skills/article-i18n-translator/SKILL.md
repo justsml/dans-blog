@@ -11,13 +11,15 @@ Use this skill for DanLevy.net article translation work. The priority is not onl
 
 - Use Bun scripts only. Never use npm or yarn.
 - Keep English slugs permanently. English routes stay unprefixed, translated routes use `/{locale}/{base-slug}/`.
-- Store translated files next to the English post: `src/content/posts/YYYY-MM-DD--slug/{es,hi,ja,ru,de,fr,it}/index.mdx`.
+- Store translated files next to the English post: `src/content/posts/YYYY-MM-DD--slug/{ar,de,es,fr,he,hi,it,ja,ru,zh}/index.mdx`.
 - Preserve full Git history. Commit candidate outputs, rejected attempts, judge passes, and final fixes as normal commits. Do not squash.
 - For broad baseline coverage, run Qwen directly on `main` with `bun run i18n:qwen:baseline -- --push`. It is resumable and skips slug+locale pairs that already have a successful Qwen report.
 - Do not edit `public/_redirects` by hand. Let build-generated redirects update it.
 - Preserve MDX structure, imports, components, props, code blocks, URLs, anchors, and asset paths.
 - Translate reader-facing prose, frontmatter `title` and `subTitle`, image alt text, quiz text, options, and explanations.
 - Use parent-relative asset paths in nested locale folders, for example `../banner.webp`.
+- Arabic, Hebrew, and Chinese are active translation targets. Arabic and Hebrew are RTL locales; preserve the source MDX structure even when the translated prose reads right-to-left.
+- Do not optimize for pristine Git history during large translation sweeps when the user asks for throughput. Preserve messy candidate, rejection, accounting, judge, and cleanup commits.
 
 ## Model Set
 
@@ -51,6 +53,13 @@ Older candidates retained in history:
 Judge with Gemini Flash by default:
 
 - `openrouter/google/gemini-3-flash-preview`
+
+Recent high-throughput coverage runs used this focused cheap candidate pair:
+
+- `openrouter/openai/gpt-oss-120b:nitro`
+- `openrouter/deepseek/deepseek-v4-flash`
+
+Use `openrouter/google/gemini-3-flash-preview` as the current default merge/judge model unless the user asks otherwise. The Chinese unblock run used DeepSeek V4 Flash as a requested judge; the Arabic/Hebrew completion run used Gemini 3 Flash as the requested judge.
 
 For higher-risk batches, add a second cheap judge explicitly with `--second-model`. Escalate with `--escalate-model openrouter/anthropic/claude-sonnet-4.6` or `--escalate-model openrouter/google/gemini-3-pro-preview` only when the second judge disagrees or the cheap judge output is structurally suspect. Judge summaries should record runtime, tokens, thinking tokens, cached tokens, and estimated cost.
 
@@ -102,6 +111,36 @@ For higher-risk batches, add a second cheap judge explicitly with `--second-mode
 
    The candidate TUI can launch a parallel judge pass with `--judge`, or with `j` while the dashboard is open. It uses `--task-concurrency` to run separate slug/locale eval+fix loops in parallel.
 
+   For broad missing-translation sweeps, use `translate:all-missing`. Start with a dry run:
+
+   ```sh
+   bun run i18n:translate:all-missing -- \
+     --locales ar,he,zh \
+     --models openrouter/openai/gpt-oss-120b:nitro,openrouter/deepseek/deepseek-v4-flash \
+     --min-candidates 2 \
+     --judge-model openrouter/google/gemini-3-flash-preview \
+     --judge-timeout-seconds 300 \
+     --timeout-seconds 300 \
+     --task-concurrency 24 \
+     --candidate-task-concurrency 32 \
+     --quiz-concurrency 32 \
+     --continue-on-error \
+     --dry-run
+   ```
+
+   Then run the same command without `--dry-run`. These higher limits are appropriate when the user explicitly says to maximize throughput and the machine/API budget can handle it. `--continue-on-error` is important for large batches: it lets later tasks finish when one candidate, judge, or shortfall commit fails.
+
+   For stubborn cases where one model repeatedly fails validation and one good candidate exists, judge the single good candidate explicitly:
+
+   ```sh
+   bun run i18n:judge -- \
+     --slug from-zero-to-regex-hero-extract-url-like-strings \
+     --locale he \
+     --model openrouter/google/gemini-3-flash-preview \
+     --timeout-seconds 300 \
+     --allow-single-candidate
+   ```
+
 3. If a provider failed or left no target-file diff, make sure it is recorded as `i18n rejected(...)`, not a candidate.
 4. Judge only real candidate commits that changed the translated MDX:
 
@@ -112,9 +151,25 @@ For higher-risk batches, add a second cheap judge explicitly with `--second-mode
    Keep judge timeouts at 240 seconds for this translation pipeline unless there is a deliberate reason to shorten one.
 
 5. If the judge breaks inherited asset paths, fix them with parent-relative paths and commit as `i18n final(...)`.
-6. Validate:
+6. Check coverage:
 
    ```sh
+   bun run i18n:coverage -- --locales ar,he,zh
+   bun run i18n:translate:all-missing -- --locales ar,he,zh --dry-run
+   ```
+
+   `reports/i18n/coverage.md` is generated output and should be committed when it reflects the run.
+
+7. Validate:
+
+   ```sh
+   for f in src/content/posts/*/{ar,he,zh}/index.mdx; do
+     dir=${f%/*}
+     locale=${dir##*/}
+     post=${dir%/*}
+     slug=${post##*--}
+     bun run i18n:validate -- --slug "$slug" --locale "$locale" --skip-global
+   done
    bun run content:check
    bun run fix-quizzes
    bun run check
@@ -123,6 +178,20 @@ For higher-risk batches, add a second cheap judge explicitly with `--second-mode
    ```
 
    For non-quiz articles, `fix-quizzes` may be skipped when no quiz files changed.
+
+## High-Throughput Repair Notes
+
+- When `translate:all-missing` exits nonzero after a large run, first check whether any child translators or judges are still alive. Then run the missing dry-run again; often only a few true gaps remain.
+- Candidate shortfalls can happen when one model repeatedly fails validation. If the candidate artifact is malformed, fix the final localized MDX directly and commit it. If one candidate is good, use `--allow-single-candidate`.
+- Code-heavy, very short source posts can trigger length-ratio false positives when a model leaks command lines out of a fence. Inspect fences before loosening ratios. The Docker firewall post failure was a malformed fence, not genuinely overlong prose.
+- Locale length checks are ratio-based in `src/scripts/i18n/localized-mdx.ts`; do not reintroduce hardcoded absolute thresholds such as a 600-character cutoff.
+- Common mechanical validation repairs:
+  - inherited assets inside locale folders must start with `../`;
+  - quiz translations must preserve `hints` and `explanation` slot counts;
+  - protected MDX tokens/components such as `<Insert Dept. Name>` must remain present;
+  - fenced code block counts should match the source;
+  - heading-count mismatches should be reported separately from missing coverage, because they may require editorial repair rather than queue reruns.
+- A green coverage report only means files exist. Run the locale validator before declaring a translation sweep done.
 
 ## Commit Subjects
 
