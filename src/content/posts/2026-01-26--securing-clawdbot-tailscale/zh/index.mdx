@@ -142,6 +142,8 @@ docker run ... -p "$TAILSCALE_IP:18789:18789" ...
 
 每次修改Docker配置后，应使用`nmap`从外部检查，并使用`ss`本地检查。若未正确配置，Docker可能绕过或打乱主机防火墙规则。
 
+### 步骤3：锁定SSH
+
 即使启用了Tailscale，你也应正确配置SSH：
 
 ```bash

@@ -490,7 +490,6 @@ htpasswd -c /etc/nginx/.htpasswd admin
 通过基本认证代理，攻击者在访问内部服务前需要多一道障碍——用户名和密码。
 
 另一个选择是使用[Traefik](https://traefik.io/)或[Caddy](https://caddyserver.com/)等服务，它们可以自动处理HTTPS和基本认证。
-```
 
 如果你希望通过图形界面管理多个域名和服务，我推荐使用[Nginx Proxy Manager](https://nginxproxymanager.com/)。
 
@@ -595,7 +594,6 @@ Nmap done: 1 IP address (1 host up) scanned in 13.36 seconds
 ```bash title="lsof 命令"
 # 监控特定端口
 sudo lsof -i:80 -Pn
-```
 
 # 监控 ESTABLISHED 连接
 sudo lsof -i -Pn | grep ESTABLISHED
@@ -612,7 +610,7 @@ sudo watch -n1 "lsof -i -Pn"
 
 #### 示例输出
 
-![nmap扫描监听器](lsof-scan-listen.webp)
+![nmap扫描监听器](../lsof-scan-listen.webp)
 
 ### 文件监控
 
@@ -694,8 +692,6 @@ services:
 - [ ] **监控** 使用`nmap`、`lsof`、`inotifywait`、`glances`等了解你的系统。
 - [ ] **备份策略**：经过测试，最好自动化，并异地存储。
 - [ ] **最小权限**：非root容器用户，只读卷。
-
-## 📚 进一步阅读
 
 ## 📚 进一步阅读
 
