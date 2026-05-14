@@ -1,0 +1,52 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Positive Look-ahead",
+  "translatedTitle": "正向先行断言",
+  "translation": {
+    "title": "正向先行断言",
+    "group": "先行断言",
+    "options": [
+      {
+        "text": "[\"$100\", \"€50\"]"
+      },
+      {
+        "text": "[\"100\", \"50\"]"
+      },
+      {
+        "text": "[\"$\", \"€\"]"
+      },
+      {
+        "text": "[]"
+      },
+      {
+        "text": "null"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "这会匹配什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "这个模式不会匹配任何内容，因为你的先行断言方向反了！如果你想匹配被 `$` 或 `€` 前置的数字，应该使用反向先行断言：`/(?<=[\\$€])\\d+/g`。\n\n    先行断言会检查当前位之后的内容。原模式实际在寻找：\n    - 一个或多个数字 (`\\d+`)\n    - 后面跟着 (`(?=...)`) 货币符号 (`[\\$€]`)\n\n    因为没有数字后面跟着货币符号（实际是货币符号在前），所以没有匹配结果。\n\n    [了解更多关于先行断言的知识](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)"
+    ]
+  },
+  "rawText": "```json\n{\n  \"title\": \"正向先行断言\",\n  \"group\": \"先行断言\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"$100\\\", \\\"€50\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"100\\\", \\\"50\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"$\\\", \\\"€\\\"]\"\n    },\n    {\n      \"text\": \"[]\"\n    },\n    {\n      \"text\": \"null\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"这会匹配什么？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"这个模式不会匹配任何内容，因为你的先行断言方向反了！如果你想匹配被 `$` 或 `€` 前置的数字，应该使用反向先行断言：`/(?<=[\\\\$€])\\\\d+/g`。\\n\\n    先行断言会检查当前位之后的内容。原模式实际在寻找：\\n    - 一个或多个数字 (`\\\\d+`)\\n    - 后面跟着 (`(?=...)`) 货币符号 (`[\\\\$€]`)\\n\\n    因为没有数字后面跟着货币符号（实际是货币符号在前），所以没有匹配结果。\\n\\n    [了解更多关于先行断言的知识](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)\"\n  ]\n}\n```",
+  "telemetry": {
+    "inputTokens": 906,
+    "outputTokens": 907,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2736,
+    "providerCostUsd": 0.00079787,
+    "providerUpstreamCostUsd": 0.00079787,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00007248,
+    "outputUsd": 0.00021768,
+    "totalUsd": 0.00029016,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

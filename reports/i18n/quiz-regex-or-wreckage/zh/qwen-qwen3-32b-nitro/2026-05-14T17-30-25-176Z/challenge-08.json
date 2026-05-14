@@ -1,0 +1,52 @@
+{
+  "index": 7,
+  "attempt": 1,
+  "originalTitle": "Negative Look-behind",
+  "translatedTitle": "负向后查找",
+  "translation": {
+    "title": "负向后查找",
+    "group": "后查找",
+    "options": [
+      {
+        "text": "[\"123\"]"
+      },
+      {
+        "text": "[\"123\", \"456\"]"
+      },
+      {
+        "text": "[\"23\", \"456\"]"
+      },
+      {
+        "text": "[\"456\"]"
+      },
+      {
+        "text": "[]"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "此模式匹配什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "负向后查找 `(?<!abc)` 确保数字不以 \"abc\" 开头：\n    - ❌ \"123\"（前缀是 \"abc\"）\n    - ✅ \"23\"（前缀是 \"abc1\"）\n    - ✅ \"456\"（前缀是 \"def\"）\n\n    现代JavaScript引擎支持后查找断言。此示例使用固定长度后查找：`abc` 始终是三个字符。可变长度后查找是更复杂的引擎特定特性。\n\n    注意：JavaScript的后查找支持是相对较新的功能。如果需要兼容旧浏览器，请检查 [浏览器兼容性](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#browser_compatibility)。"
+    ]
+  },
+  "rawText": "```json\n{\n  \"title\": \"负向后查找\",\n  \"group\": \"后查找\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"123\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"123\\\", \\\"456\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"23\\\", \\\"456\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"456\\\"]\"\n    },\n    {\n      \"text\": \"[]\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"此模式匹配什么？\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"js\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"负向后查找 `(?<!abc)` 确保数字不以 \\\"abc\\\" 开头：\\n    - ❌ \\\"123\\\"（前缀是 \\\"abc\\\"）\\n    - ✅ \\\"23\\\"（前缀是 \\\"abc1\\\"）\\n    - ✅ \\\"456\\\"（前缀是 \\\"def\\\"）\\n\\n    现代JavaScript引擎支持后查找断言。此示例使用固定长度后查找：`abc` 始终是三个字符。可变长度后查找是更复杂的引擎特定特性。\\n\\n    注意：JavaScript的后查找支持是相对较新的功能。如果需要兼容旧浏览器，请检查 [浏览器兼容性](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#browser_compatibility)。\"\n  ],\n  \"explanationCode\": []\n}\n```",
+  "telemetry": {
+    "inputTokens": 920,
+    "outputTokens": 962,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 3048,
+    "providerCostUsd": 0.00076014,
+    "providerUpstreamCostUsd": 0.00076014,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.0000736,
+    "outputUsd": 0.00023087999999999998,
+    "totalUsd": 0.00030448,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

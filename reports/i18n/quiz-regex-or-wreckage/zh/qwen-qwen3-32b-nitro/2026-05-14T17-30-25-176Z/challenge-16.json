@@ -1,0 +1,49 @@
+{
+  "index": 15,
+  "attempt": 1,
+  "originalTitle": "Password Validation",
+  "translatedTitle": "密码验证",
+  "translation": {
+    "title": "密码验证",
+    "group": "直面地狱",
+    "options": [
+      {
+        "text": "\"sassword123\""
+      },
+      {
+        "text": "\"Sass123!\""
+      },
+      {
+        "text": "\"SASSWORD123\""
+      },
+      {
+        "text": "\"Sass word123\""
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "提前致歉！😈<br />\n    哪个密码符合此模式？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "千万别在生产环境中写这种代码！😅\n\n    该模式使用多个正向先行断言来强制要求：\n    - 至少一个大写字母：`(?=.*[A-Z])`\n    - 至少一个小写字母：`(?=.*[a-z])`\n    - 至少一个数字：`(?=.*\\d)`\n    - 至少一个特殊字符：`(?=.*[!@#$%^&*])`\n    - 最小长度8：`.{8,}`\n\n    先行断言非常适合密码验证，因为它们可以检查多个条件而不消耗字符。\n\n    [了解更多密码验证模式](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)"
+    ]
+  },
+  "rawText": "```json\n{\n  \"title\": \"密码验证\",\n  \"group\": \"直面地狱\",\n  \"options\": [\n    {\n      \"text\": \"\\\"sassword123\\\"\"\n    },\n    {\n      \"text\": \"\\\"Sass123!\\\"\"\n    },\n    {\n      \"text\": \"\\\"SASSWORD123\\\"\"\n    },\n    {\n      \"text\": \"\\\"Sass word123\\\"\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"提前致歉！😈<br />\\n    哪个密码符合此模式？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"千万别在生产环境中写这种代码！😅\\n\\n    该模式使用多个正向先行断言来强制要求：\\n    - 至少一个大写字母：`(?=.*[A-Z])`\\n    - 至少一个小写字母：`(?=.*[a-z])`\\n    - 至少一个数字：`(?=.*\\\\d)`\\n    - 至少一个特殊字符：`(?=.*[!@#$%^&*])`\\n    - 最小长度8：`.{8,}`\\n\\n    先行断言非常适合密码验证，因为它们可以检查多个条件而不消耗字符。\\n\\n    [了解更多密码验证模式](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)\"\n  ]\n}\n```",
+  "telemetry": {
+    "inputTokens": 919,
+    "outputTokens": 1256,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 3230,
+    "providerCostUsd": 0.00093331,
+    "providerUpstreamCostUsd": 0.00093331,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00007352,
+    "outputUsd": 0.00030144,
+    "totalUsd": 0.00037496,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

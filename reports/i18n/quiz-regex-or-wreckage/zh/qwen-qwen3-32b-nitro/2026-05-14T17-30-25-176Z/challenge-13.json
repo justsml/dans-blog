@@ -1,0 +1,49 @@
+{
+  "index": 12,
+  "attempt": 1,
+  "originalTitle": "Positive Look-behind",
+  "translatedTitle": "正向后顾",
+  "translation": {
+    "title": "正向后顾",
+    "group": "后顾",
+    "options": [
+      {
+        "text": "[\"$100\"]"
+      },
+      {
+        "text": "[\"100\"]"
+      },
+      {
+        "text": "[\"$\"]"
+      },
+      {
+        "text": "[]"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "匹配什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "正向后顾 `(?<=\\$)` 确保数字前有美元符号：\n    - `(?<=\\$)`：检查美元符号的后顾\n    - `\\d+`：匹配一个或多个数字\n\n    后顾断言不会消耗字符；它们仅检查前面的内容。\n    当你希望根据前面的内容进行匹配但不包含前置部分时，这个功能非常有用。\n\n    [了解更多关于后顾断言的内容](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)"
+    ]
+  },
+  "rawText": "```json\n{\n  \"title\": \"正向后顾\",\n  \"group\": \"后顾\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"$100\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"100\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"$\\\"]\"\n    },\n    {\n      \"text\": \"[]\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"匹配什么？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"正向后顾 `(?<=\\\\$)` 确保数字前有美元符号：\\n    - `(?<=\\\\$)`：检查美元符号的后顾\\n    - `\\\\d+`：匹配一个或多个数字\\n\\n    后顾断言不会消耗字符；它们仅检查前面的内容。\\n    当你希望根据前面的内容进行匹配但不包含前置部分时，这个功能非常有用。\\n\\n    [了解更多关于后顾断言的内容](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)\"\n  ]\n}\n```",
+  "telemetry": {
+    "inputTokens": 850,
+    "outputTokens": 779,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 2148,
+    "providerCostUsd": 0.00063187,
+    "providerUpstreamCostUsd": 0.00063187,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000068,
+    "outputUsd": 0.00018695999999999999,
+    "totalUsd": 0.00025496,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

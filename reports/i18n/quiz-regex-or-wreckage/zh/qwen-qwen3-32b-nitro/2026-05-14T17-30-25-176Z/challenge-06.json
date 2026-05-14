@@ -1,0 +1,49 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Word Boundaries",
+  "translatedTitle": "单词边界",
+  "translation": {
+    "title": "单词边界",
+    "group": "基础匹配",
+    "options": [
+      {
+        "text": "[\"cat\", \"cats\"]"
+      },
+      {
+        "text": "[\"cat\"]"
+      },
+      {
+        "text": "[\"cats\"]"
+      },
+      {
+        "text": "[]"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "什么会匹配？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "`\\b` 表示单词边界，匹配以下情况：\n    - 单词字符与非单词字符之间\n    - 字符串开头/结尾处存在单词字符时\n\n    所以 `/\\bcat\\b/` 仅匹配作为完整单词的 \"cat\"，不会匹配其他单词的组成部分。\n    - ✅ \"cat\"（被空格包围）\n    - ❌ \"cats\"（\"cat\" 后面没有边界）\n    - ❌ \"category\"（\"cat\" 后面没有边界）\n\n    [了解更多关于单词边界的内容](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions#other_assertions)"
+    ]
+  },
+  "rawText": "```json\n{\n  \"title\": \"单词边界\",\n  \"group\": \"基础匹配\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"cat\\\", \\\"cats\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"cat\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"cats\\\"]\"\n    },\n    {\n      \"text\": \"[]\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"什么会匹配？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"`\\\\b` 表示单词边界，匹配以下情况：\\n    - 单词字符与非单词字符之间\\n    - 字符串开头/结尾处存在单词字符时\\n\\n    所以 `/\\\\bcat\\\\b/` 仅匹配作为完整单词的 \\\"cat\\\"，不会匹配其他单词的组成部分。\\n    - ✅ \\\"cat\\\"（被空格包围）\\n    - ❌ \\\"cats\\\"（\\\"cat\\\" 后面没有边界）\\n    - ❌ \\\"category\\\"（\\\"cat\\\" 后面没有边界）\\n\\n    [了解更多关于单词边界的内容](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions#other_assertions)\"\n  ]\n}\n```",
+  "telemetry": {
+    "inputTokens": 872,
+    "outputTokens": 837,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 2367,
+    "providerCostUsd": 0.00067247,
+    "providerUpstreamCostUsd": 0.00067247,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00006976000000000001,
+    "outputUsd": 0.00020088,
+    "totalUsd": 0.00027064,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

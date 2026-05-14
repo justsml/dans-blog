@@ -1,0 +1,52 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "Greedy vs Non-Greedy",
+  "translatedTitle": "贪婪与非贪婪",
+  "translation": {
+    "title": "贪婪与非贪婪",
+    "group": "基础匹配",
+    "options": [
+      {
+        "text": "[\"<div>Hello</div>\"]"
+      },
+      {
+        "text": "[\"<div>\", \"</div>\"]"
+      },
+      {
+        "text": "[\"<div>Hello</div><div>World</div>\"]"
+      },
+      {
+        "text": "[\"<div>Hello</div>\", \"<div>World</div>\"]"
+      },
+      {
+        "text": "[\"Hello\", \"World\"]"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "这将匹配什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "模式`/<div>.*?<\\/div>/g`使用非贪婪匹配`*?`，其含义是：\n    - 匹配`<div>`\n    - 匹配任意字符(`.*`)但尽可能少(`?`)\n    - 直到找到`</div>`\n    - `g`标志表示匹配所有出现项\n\n    如果没有`?`，贪婪的`.*`会从第一个`<div>`匹配到最后一个`</div>`，形成一个大匹配。加上`?`后，会分别匹配每对标签。\n\n    [了解更多关于贪婪与懒惰匹配的内容](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)"
+    ]
+  },
+  "rawText": "```json\n{\n  \"title\": \"贪婪与非贪婪\",\n  \"group\": \"基础匹配\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"<div>Hello</div>\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"<div>\\\", \\\"</div>\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"<div>Hello</div><div>World</div>\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"<div>Hello</div>\\\", \\\"<div>World</div>\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"Hello\\\", \\\"World\\\"]\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"这将匹配什么？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"模式`/<div>.*?<\\\\/div>/g`使用非贪婪匹配`*?`，其含义是：\\n    - 匹配`<div>`\\n    - 匹配任意字符(`.*`)但尽可能少(`?`)\\n    - 直到找到`</div>`\\n    - `g`标志表示匹配所有出现项\\n\\n    如果没有`?`，贪婪的`.*`会从第一个`<div>`匹配到最后一个`</div>`，形成一个大匹配。加上`?`后，会分别匹配每对标签。\\n\\n    [了解更多关于贪婪与懒惰匹配的内容](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)\"\n  ]\n}\n```",
+  "telemetry": {
+    "inputTokens": 944,
+    "outputTokens": 1793,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 4714,
+    "providerCostUsd": 0.00125739,
+    "providerUpstreamCostUsd": 0.00125739,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00007552000000000001,
+    "outputUsd": 0.00043032,
+    "totalUsd": 0.00050584,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

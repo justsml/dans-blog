@@ -1,0 +1,49 @@
+{
+  "index": 0,
+  "attempt": 1,
+  "originalTitle": "Case-Sensitive Matching",
+  "translatedTitle": "大小写敏感匹配",
+  "translation": {
+    "title": "大小写敏感匹配",
+    "group": "热身",
+    "options": [
+      {
+        "text": "[\"Cat\"]"
+      },
+      {
+        "text": "[\"cat\", \"CAT\", \"Cat\"]"
+      },
+      {
+        "text": "[\"cat\"]"
+      },
+      {
+        "text": "[]"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "什么会匹配？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "此模式使用了`g`，但没有使用`i`：\n    - `g` 会查找所有匹配项\n    - 没有`i`时，匹配是大小写敏感的\n\n    没有`i`标志时，只有小写的\"cat\"会匹配。\n\n    在处理用户输入或HTML时（大小写可能变化），这一点特别有用。\n\n    [了解更多关于RegExp标志的内容](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#advanced_searching_with_flags)"
+    ]
+  },
+  "rawText": "```json\n{\n  \"title\": \"大小写敏感匹配\",\n  \"group\": \"热身\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"Cat\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"cat\\\", \\\"CAT\\\", \\\"Cat\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"cat\\\"]\"\n    },\n    {\n      \"text\": \"[]\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"什么会匹配？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"此模式使用了`g`，但没有使用`i`：\\n    - `g` 会查找所有匹配项\\n    - 没有`i`时，匹配是大小写敏感的\\n\\n    没有`i`标志时，只有小写的\\\"cat\\\"会匹配。\\n\\n    在处理用户输入或HTML时（大小写可能变化），这一点特别有用。\\n\\n    [了解更多关于RegExp标志的内容](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#advanced_searching_with_flags)\"\n  ]\n}\n```",
+  "telemetry": {
+    "inputTokens": 826,
+    "outputTokens": 805,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2790,
+    "providerCostUsd": 0.00071449,
+    "providerUpstreamCostUsd": 0.00071449,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00006608,
+    "outputUsd": 0.0001932,
+    "totalUsd": 0.00025928,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

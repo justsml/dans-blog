@@ -1,0 +1,49 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "Look-behind Split",
+  "translatedTitle": "后顾分割",
+  "translation": {
+    "title": "后顾分割",
+    "group": "后顾",
+    "options": [
+      {
+        "text": "[\"a,\", \"b,\", \"c\"]"
+      },
+      {
+        "text": "[\"a,b,c\"]"
+      },
+      {
+        "text": "[\"a\", \",\", \"b\", \",\", \"c\"]"
+      },
+      {
+        "text": "[\"a,b,c\", \"\"]"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "返回什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "模式`/(?<=,)/`是一个后顾，匹配逗号之后的位置：\n    - `a,`（逗号之后）\n    - `b,`（逗号之后）\n    - `c`（无后续逗号）\n\n    后顾不会消耗逗号，因此分割结果中逗号会保留在前一个分段中。\n\n    当你需要根据前置内容分割字符串**同时保留分割符**时，这种技术非常有用。\n\n    [了解更多关于后顾断言](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"后顾分割\",\n  \"group\": \"后顾\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"a,\\\", \\\"b,\\\", \\\"c\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"a,b,c\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"a\\\", \\\",\\\", \\\"b\\\", \\\",\\\", \\\"c\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"a,b,c\\\", \\\"\\\"]\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"返回什么？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"模式`/(?<=,)/`是一个后顾，匹配逗号之后的位置：\\n    - `a,`（逗号之后）\\n    - `b,`（逗号之后）\\n    - `c`（无后续逗号）\\n\\n    后顾不会消耗逗号，因此分割结果中逗号会保留在前一个分段中。\\n\\n    当你需要根据前置内容分割字符串**同时保留分割符**时，这种技术非常有用。\\n\\n    [了解更多关于后顾断言](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 889,
+    "outputTokens": 1184,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 3380,
+    "providerCostUsd": 0.00088213,
+    "providerUpstreamCostUsd": 0.00088213,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00007112,
+    "outputUsd": 0.00028416,
+    "totalUsd": 0.00035528,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

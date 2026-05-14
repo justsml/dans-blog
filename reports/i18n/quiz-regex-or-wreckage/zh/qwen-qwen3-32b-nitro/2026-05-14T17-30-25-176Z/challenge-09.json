@@ -1,0 +1,49 @@
+{
+  "index": 8,
+  "attempt": 1,
+  "originalTitle": "Capturing Groups",
+  "translatedTitle": "捕获组",
+  "translation": {
+    "title": "捕获组",
+    "group": "基本匹配",
+    "options": [
+      {
+        "text": "[\"2029-12-31\"]"
+      },
+      {
+        "text": "[\"2029\", \"12\", \"31\"]"
+      },
+      {
+        "text": "[\"20\", \"29\", \"12\", \"31\"]"
+      },
+      {
+        "text": "null"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "这将返回什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "该模式使用了三个捕获组：\n    1. `(\\d{4})` 捕获年份\n    2. `(\\d{2})` 捕获月份\n    3. `(\\d{2})` 捕获日期\n\n    不带 `g` 标志的 `match()` 返回：\n    - 索引 0：完整匹配\n    - 索引 1+：捕获组\n\n    `slice(1)` 是获取捕获组的常用技巧。\n\n    [了解更多关于分组和捕获的内容](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Groups_and_Backreferences)"
+    ]
+  },
+  "rawText": "```json\n{\n  \"title\": \"捕获组\",\n  \"group\": \"基本匹配\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"2029-12-31\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"2029\\\", \\\"12\\\", \\\"31\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"20\\\", \\\"29\\\", \\\"12\\\", \\\"31\\\"]\"\n    },\n    {\n      \"text\": \"null\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"这将返回什么？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"该模式使用了三个捕获组：\\n    1. `(\\\\d{4})` 捕获年份\\n    2. `(\\\\d{2})` 捕获月份\\n    3. `(\\\\d{2})` 捕获日期\\n\\n    不带 `g` 标志的 `match()` 返回：\\n    - 索引 0：完整匹配\\n    - 索引 1+：捕获组\\n\\n    `slice(1)` 是获取捕获组的常用技巧。\\n\\n    [了解更多关于分组和捕获的内容](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Groups_and_Backreferences)\"\n  ]\n}\n```",
+  "telemetry": {
+    "inputTokens": 889,
+    "outputTokens": 850,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 2355,
+    "providerCostUsd": 0.00068507,
+    "providerUpstreamCostUsd": 0.00068507,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00007112,
+    "outputUsd": 0.00020399999999999997,
+    "totalUsd": 0.00027511999999999995,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

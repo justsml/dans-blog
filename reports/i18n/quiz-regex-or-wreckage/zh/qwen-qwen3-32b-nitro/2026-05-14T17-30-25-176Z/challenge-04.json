@@ -1,0 +1,49 @@
+{
+  "index": 3,
+  "attempt": 1,
+  "originalTitle": "The Dot Metacharacter",
+  "translatedTitle": "点元字符",
+  "translation": {
+    "title": "点元字符",
+    "group": "常见陷阱",
+    "options": [
+      {
+        "text": "[\"hello\\nworld\"]"
+      },
+      {
+        "text": "[\"hello\", \"world\"]"
+      },
+      {
+        "text": "[\"hello\\n\", \"world\"]"
+      },
+      {
+        "text": "null"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "这将返回什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "`\\w+` 模式匹配一个或多个单词字符。尽管字符串中存在换行符，`\\w` 会匹配：\n    - 字母（a-z, A-Z）\n    - 数字（0-9）\n    - 下划线（_）\n\n    因此换行符充当单词边界，得到两个匹配项。如果使用 `.*`，默认情况下它不会匹配换行符（你需要使用 `s` 标志来实现）。\n\n    [了解更多元字符信息](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Character_Classes#types)"
+    ]
+  },
+  "rawText": "```json\n{\n  \"title\": \"点元字符\",\n  \"group\": \"常见陷阱\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"hello\\\\nworld\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"hello\\\", \\\"world\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"hello\\\\n\\\", \\\"world\\\"]\"\n    },\n    {\n      \"text\": \"null\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"这将返回什么？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"`\\\\w+` 模式匹配一个或多个单词字符。尽管字符串中存在换行符，`\\\\w` 会匹配：\\n    - 字母（a-z, A-Z）\\n    - 数字（0-9）\\n    - 下划线（_）\\n\\n    因此换行符充当单词边界，得到两个匹配项。如果使用 `.*`，默认情况下它不会匹配换行符（你需要使用 `s` 标志来实现）。\\n\\n    [了解更多元字符信息](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Character_Classes#types)\"\n  ]\n}\n```",
+  "telemetry": {
+    "inputTokens": 874,
+    "outputTokens": 898,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 2708,
+    "providerCostUsd": 0.00070904,
+    "providerUpstreamCostUsd": 0.00070904,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00006992000000000001,
+    "outputUsd": 0.00021552,
+    "totalUsd": 0.00028544,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

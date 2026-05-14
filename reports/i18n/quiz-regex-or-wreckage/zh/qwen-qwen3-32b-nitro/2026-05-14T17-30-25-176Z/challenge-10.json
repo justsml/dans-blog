@@ -1,0 +1,55 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Negative Look-ahead",
+  "translatedTitle": "否定型先行断言",
+  "translation": {
+    "title": "否定型先行断言",
+    "group": "先行断言",
+    "options": [
+      {
+        "text": "[\"password123\"]"
+      },
+      {
+        "text": "[\"abc123\"]"
+      },
+      {
+        "text": "[\"123aBc\"]"
+      },
+      {
+        "text": "[\"12\"]"
+      },
+      {
+        "text": "[\"abc\"]"
+      },
+      {
+        "text": "错误"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "这将产生什么结果？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "否定型先行断言`(?![a-z])`确保数字后没有小写字母。由于\"3aBc\"部分在数字后包含小写字母，这部分不匹配。因此只有开头的\"12\"匹配。\n\n    [了解更多关于否定型先行断言的内容](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"否定型先行断言\",\n  \"group\": \"先行断言\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"password123\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"abc123\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"123aBc\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"12\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"abc\\\"]\"\n    },\n    {\n      \"text\": \"错误\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"这将产生什么结果？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"否定型先行断言`(?![a-z])`确保数字后没有小写字母。由于\\\"3aBc\\\"部分在数字后包含小写字母，这部分不匹配。因此只有开头的\\\"12\\\"匹配。\\n\\n    [了解更多关于否定型先行断言的内容](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 845,
+    "outputTokens": 755,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 1955,
+    "providerCostUsd": 0.00061626,
+    "providerUpstreamCostUsd": 0.00061626,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.0000676,
+    "outputUsd": 0.0001812,
+    "totalUsd": 0.00024880000000000003,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
