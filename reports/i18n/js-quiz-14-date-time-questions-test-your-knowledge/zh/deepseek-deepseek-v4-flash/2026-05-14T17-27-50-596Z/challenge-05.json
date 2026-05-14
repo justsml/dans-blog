@@ -1,0 +1,49 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Date String Parsing",
+  "translatedTitle": "日期字符串解析",
+  "translation": {
+    "title": "日期字符串解析",
+    "group": "处理日期",
+    "options": [
+      {
+        "text": "2019 2020"
+      },
+      {
+        "text": "2020 2021"
+      },
+      {
+        "text": "2020 2020"
+      },
+      {
+        "text": "2020 2019"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "控制台会打印出什么值？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "没有 `T` 时间值的字符串可能看起来像是 2020 年 1 月 1 日 - 但仅包含日期的字符串会被解释为 UTC 时间，当调整到我们的本地时区（GMT-7）时，我们发现仍然处于 2019 年。\n\n      Date-time strings without an explicit timezone are interpreted in local time.\n  \n      `T00:00` 形式会导致第二个值被解释为本地午夜。\n\n      第一个日期被解释为 `Tue Dec 31 2019 17:00:00 GMT-0700 (Mountain Standard Time)`。\n      第二个日期被解释为 `Wed Jan 01 2020 00:00:00 GMT-0700 (Mountain Standard Time)`。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"日期字符串解析\",\n  \"group\": \"处理日期\",\n  \"options\": [\n    {\n      \"text\": \"2019 2020\"\n    },\n    {\n      \"text\": \"2020 2021\"\n    },\n    {\n      \"text\": \"2020 2020\"\n    },\n    {\n      \"text\": \"2020 2019\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"控制台会打印出什么值？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"没有 `T` 时间值的字符串可能看起来像是 2020 年 1 月 1 日 - 但仅包含日期的字符串会被解释为 UTC 时间，当调整到我们的本地时区（GMT-7）时，我们发现仍然处于 2019 年。\\n\\n      Date-time strings without an explicit timezone are interpreted in local time.\\n  \\n      `T00:00` 形式会导致第二个值被解释为本地午夜。\\n\\n      第一个日期被解释为 `Tue Dec 31 2019 17:00:00 GMT-0700 (Mountain Standard Time)`。\\n      第二个日期被解释为 `Wed Jan 01 2020 00:00:00 GMT-0700 (Mountain Standard Time)`。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 902,
+    "outputTokens": 1621,
+    "cacheReadTokens": 384,
+    "cacheWriteTokens": 0,
+    "durationMs": 11505,
+    "providerCostUsd": 0.00076736,
+    "providerUpstreamCostUsd": 0.00076736,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.0000735952,
+    "outputUsd": 0.00045388000000000004,
+    "totalUsd": 0.0005274752000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
