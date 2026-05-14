@@ -1,0 +1,47 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "Precision with Floating Points",
+  "translatedTitle": "浮点数的精度问题",
+  "translation": {
+    "title": "浮点数的精度问题",
+    "group": "数学",
+    "options": [
+      {
+        "text": "0.1 + 0.2 === 0.3"
+      },
+      {
+        "text": "false"
+      },
+      {
+        "text": "true"
+      },
+      {
+        "text": "NaN"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [],
+    "hintsProse": [],
+    "explanationProse": [
+      "由于浮点数精度误差，`0.1 + 0.2` 并不完全等于 `0.3`。受限于浮点数在内存中的存储方式，计算结果实际上是 `0.30000000000000004`。罪魁祸首是处理浮点运算的 IEEE 754 标准，它无法精确表示某些数字。这是所有编程语言中的常见问题。你最终会遇到无限循环小数，无论使用哪种语言，计算机都必须在某个点停止追踪无限循环的数字。\n\n某些语言（如 Python 和 Java）提供了 `Decimal` 或 `BigDecimal` 来处理这种情况，但 JavaScript 并没有内置此类功能。你可以使用 `big.js` 或 `decimal.js` 等库来处理这些场景。\n\n（注：某些语言在设计上可以在更高的逻辑层级处理分数、虚数等，从而保留字面量表达式。但在硬件层面，它们仍然需要面对同样的浮点数精度问题。）"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"浮点数的精度问题\",\n  \"group\": \"数学\",\n  \"options\": [\n    {\n      \"text\": \"0.1 + 0.2 === 0.3\"\n    },\n    {\n      \"text\": \"false\"\n    },\n    {\n      \"text\": \"true\"\n    },\n    {\n      \"text\": \"NaN\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"由于浮点数精度误差，`0.1 + 0.2` 并不完全等于 `0.3`。受限于浮点数在内存中的存储方式，计算结果实际上是 `0.30000000000000004`。罪魁祸首是处理浮点运算的 IEEE 754 标准，它无法精确表示某些数字。这是所有编程语言中的常见问题。你最终会遇到无限循环小数，无论使用哪种语言，计算机都必须在某个点停止追踪无限循环的数字。\\n\\n某些语言（如 Python 和 Java）提供了 `Decimal` 或 `BigDecimal` 来处理这种情况，但 JavaScript 并没有内置此类功能。你可以使用 `big.js` 或 `decimal.js` 等库来处理这些场景。\\n\\n（注：某些语言在设计上可以在更高的逻辑层级处理分数、虚数等，从而保留字面量表达式。但在硬件层面，它们仍然需要面对同样的浮点数精度问题。）\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 979,
+    "outputTokens": 357,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 10550,
+    "providerCostUsd": 0.0015605,
+    "providerUpstreamCostUsd": 0.0015605,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.0004895,
+    "outputUsd": 0.001071,
+    "totalUsd": 0.0015604999999999998,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

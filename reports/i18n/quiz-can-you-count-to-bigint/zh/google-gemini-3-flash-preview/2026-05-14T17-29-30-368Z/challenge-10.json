@@ -1,0 +1,47 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Using `.map(parseInt)`",
+  "translatedTitle": "使用 `.map(parseInt)`",
+  "translation": {
+    "title": "使用 `.map(parseInt)`",
+    "group": "Number[]",
+    "options": [
+      {
+        "text": "[24, NaN, NaN]"
+      },
+      {
+        "text": "[24, NaN, 42]"
+      },
+      {
+        "text": "[24, 42]"
+      },
+      {
+        "text": "NaN"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [],
+    "hintsProse": [],
+    "explanationProse": [
+      "`parseInt` 的第二个参数（基数 radix）恰好与数组方法的 `index` 参数对齐。这会导致意想不到的结果，例如 `parseInt(\"One\", 1)` 会因为无效输入而返回 `NaN`。\n\n第一个元素 `24` 在基数为 0（自动检测）时被解析为 `24`。第二个元素 `'One'` 在基数为 1 时被解析为 `NaN`。第三个元素 `42` 使用基数 2 进行解析。在二进制（基数 2）中，`'42'` 是无效的，因此结果是 `NaN`。最终结果为 `[24, NaN, NaN]`。\n\n这是 `parseInt` 和 `map` 结合使用时一个常见的坑。如果你想将字符串数组安全地转换为数字，唯一安全的“内置”方法是使用 `.map(Number)`，或者添加一个回调函数/闭包：`.map(x => parseInt(x, 10))`。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"使用 `.map(parseInt)`\",\n  \"group\": \"Number[]\",\n  \"options\": [\n    {\n      \"text\": \"[24, NaN, NaN]\"\n    },\n    {\n      \"text\": \"[24, NaN, 42]\"\n    },\n    {\n      \"text\": \"[24, 42]\"\n    },\n    {\n      \"text\": \"NaN\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"`parseInt` 的第二个参数（基数 radix）恰好与数组方法的 `index` 参数对齐。这会导致意想不到的结果，例如 `parseInt(\\\"One\\\", 1)` 会因为无效输入而返回 `NaN`。\\n\\n第一个元素 `24` 在基数为 0（自动检测）时被解析为 `24`。第二个元素 `'One'` 在基数为 1 时被解析为 `NaN`。第三个元素 `42` 使用基数 2 进行解析。在二进制（基数 2）中，`'42'` 是无效的，因此结果是 `NaN`。最终结果为 `[24, NaN, NaN]`。\\n\\n这是 `parseInt` 和 `map` 结合使用时一个常见的坑。如果你想将字符串数组安全地转换为数字，唯一安全的“内置”方法是使用 `.map(Number)`，或者添加一个回调函数/闭包：`.map(x => parseInt(x, 10))`。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 967,
+    "outputTokens": 357,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 9824,
+    "providerCostUsd": 0.0015545,
+    "providerUpstreamCostUsd": 0.0015545,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.0004835,
+    "outputUsd": 0.001071,
+    "totalUsd": 0.0015545,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

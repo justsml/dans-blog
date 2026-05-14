@@ -1,0 +1,55 @@
+{
+  "index": 11,
+  "attempt": 1,
+  "originalTitle": "Handling nulls",
+  "translatedTitle": "处理 null 值",
+  "translation": {
+    "title": "处理 null 值",
+    "group": "解析",
+    "options": [
+      {
+        "text": "0 NaN"
+      },
+      {
+        "text": "0 0"
+      },
+      {
+        "text": "NaN NaN"
+      },
+      {
+        "text": "NaN 0"
+      },
+      {
+        "text": "null null"
+      },
+      {
+        "text": "TypeError"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "这段代码的执行结果是什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "`parseInt` 会将输入强制转换为字符串，因此 `null` 变成了 `\"null\"`。由于 `\"null\"` 中不包含任何有效的 10 进制字符（常规数字），它将返回 `NaN`。\n  \n    `Number(null)` 则返回 `0`。没办法，JS 就喜欢让你捉摸不透。\n    至于为什么？如果大家感兴趣，我以后可能会深入讲解。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"处理 null 值\",\n  \"group\": \"解析\",\n  \"options\": [\n    {\n      \"text\": \"0 NaN\"\n    },\n    {\n      \"text\": \"0 0\"\n    },\n    {\n      \"text\": \"NaN NaN\"\n    },\n    {\n      \"text\": \"NaN 0\"\n    },\n    {\n      \"text\": \"null null\"\n    },\n    {\n      \"text\": \"TypeError\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"这段代码的执行结果是什么？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"`parseInt` 会将输入强制转换为字符串，因此 `null` 变成了 `\\\"null\\\"`。由于 `\\\"null\\\"` 中不包含任何有效的 10 进制字符（常规数字），它将返回 `NaN`。\\n  \\n    `Number(null)` 则返回 `0`。没办法，JS 就喜欢让你捉摸不透。\\n    至于为什么？如果大家感兴趣，我以后可能会深入讲解。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 873,
+    "outputTokens": 263,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 8820,
+    "providerCostUsd": 0.0012255,
+    "providerUpstreamCostUsd": 0.0012255,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.0004365,
+    "outputUsd": 0.000789,
+    "totalUsd": 0.0012255,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
