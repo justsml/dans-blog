@@ -1,0 +1,58 @@
+{
+  "index": 14,
+  "attempt": 1,
+  "originalTitle": "RAII Pattern",
+  "translatedTitle": "RAII 模式",
+  "translation": {
+    "title": "RAII 模式",
+    "group": "内存模式",
+    "options": [
+      {
+        "text": "资源在作用域结束后被释放",
+        "hint": "File 字段有自己的 Drop 实现。"
+      },
+      {
+        "text": "资源泄漏",
+        "hint": "包装器没有自定义 Drop，但其字段仍会被丢弃。"
+      },
+      {
+        "text": "编译错误",
+        "hint": "代码编译成功"
+      },
+      {
+        "text": "运行时错误",
+        "hint": "问题涉及资源清理"
+      }
+    ],
+    "objectives": [
+      "理解 Rust 中的 RAII（资源获取即初始化）",
+      "使用 Drop trait 实现正确的资源清理",
+      "应用 RAII 模式进行资源管理"
+    ],
+    "questionProse": [
+      "在这个 RAII 示例中，文件句柄会发生什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "Rust 中的 RAII 确保资源得到正确管理。在此示例中，`FileWrapper` 不需要自定义 `Drop` 实现来关闭文件句柄：当包装器离开作用域时，其 `File` 字段会自动丢弃。\n\n      只有当包装器本身有超出其字段丢弃的额外清理行为时，才需要实现 `Drop`：",
+      "RAII 模式：\n      1. 构造函数获取资源\n      2. 方法安全地使用资源\n      3. 当所有者离开作用域时，字段自动丢弃\n      4. 自定义 Drop 在需要时添加额外清理\n      5. 使用 `?` 进行错误传播\n\n      最佳实践：\n      1. 当标准库 Drop 实现已经模拟资源时，依赖它们\n      2. 保持资源管理简单明了\n      3. 尽可能使用标准库类型\n      4. 记录清理行为\n      5. 考虑使用守卫模式进行作用域操作"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"RAII 模式\",\n  \"group\": \"内存模式\",\n  \"options\": [\n    {\n      \"text\": \"资源在作用域结束后被释放\",\n      \"hint\": \"File 字段有自己的 Drop 实现。\"\n    },\n    {\n      \"text\": \"资源泄漏\",\n      \"hint\": \"包装器没有自定义 Drop，但其字段仍会被丢弃。\"\n    },\n    {\n      \"text\": \"编译错误\",\n      \"hint\": \"代码编译成功\"\n    },\n    {\n      \"text\": \"运行时错误\",\n      \"hint\": \"问题涉及资源清理\"\n    }\n  ],\n  \"objectives\": [\n    \"理解 Rust 中的 RAII（资源获取即初始化）\",\n    \"使用 Drop trait 实现正确的资源清理\",\n    \"应用 RAII 模式进行资源管理\"\n  ],\n  \"questionProse\": [\n    \"在这个 RAII 示例中，文件句柄会发生什么？\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"rust\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"Rust 中的 RAII 确保资源得到正确管理。在此示例中，`FileWrapper` 不需要自定义 `Drop` 实现来关闭文件句柄：当包装器离开作用域时，其 `File` 字段会自动丢弃。\\n\\n      只有当包装器本身有超出其字段丢弃的额外清理行为时，才需要实现 `Drop`：\",\n    \"RAII 模式：\\n      1. 构造函数获取资源\\n      2. 方法安全地使用资源\\n      3. 当所有者离开作用域时，字段自动丢弃\\n      4. 自定义 Drop 在需要时添加额外清理\\n      5. 使用 `?` 进行错误传播\\n\\n      最佳实践：\\n      1. 当标准库 Drop 实现已经模拟资源时，依赖它们\\n      2. 保持资源管理简单明了\\n      3. 尽可能使用标准库类型\\n      4. 记录清理行为\\n      5. 考虑使用守卫模式进行作用域操作\"\n  ],\n  \"explanationCode\": [\n    {\n      \"language\": \"rust\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1050,
+    "outputTokens": 2147,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 12681,
+    "providerCostUsd": 0.0010688,
+    "providerUpstreamCostUsd": 0.0010688,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000147,
+    "outputUsd": 0.0006011600000000001,
+    "totalUsd": 0.0007481600000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

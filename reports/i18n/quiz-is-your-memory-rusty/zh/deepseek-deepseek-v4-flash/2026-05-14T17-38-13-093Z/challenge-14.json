@@ -1,0 +1,61 @@
+{
+  "index": 13,
+  "attempt": 1,
+  "originalTitle": "Weak References",
+  "translatedTitle": "弱引用",
+  "translation": {
+    "title": "弱引用",
+    "group": "智能指针",
+    "options": [
+      {
+        "text": "输出: Some(\"Wisdom\")",
+        "hint": "当所有强引用被丢弃时，数据会发生什么？"
+      },
+      {
+        "text": "输出: None"
+      },
+      {
+        "text": "编译错误",
+        "hint": "代码语法正确"
+      },
+      {
+        "text": "运行时恐慌",
+        "hint": "弱引用优雅地处理已丢弃的值"
+      },
+      {
+        "text": "存在性恐慌",
+        "hint": "虽然富有哲学意味，但这不是真正的 Rust 错误！"
+      }
+    ],
+    "objectives": [
+      "理解弱引用的目的和行为",
+      "识别弱引用防止内存泄漏的场景",
+      "应用 Weak<T> 打破引用循环"
+    ],
+    "questionProse": [
+      "当你运行这段使用弱引用的代码时会发生什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "弱引用不会阻止其目标被释放。以下是一个详细示例：",
+      "常见用例：\n      1. 类似缓存的结构，条目可以被清除\n      2. 具有父引用的树结构\n      3. 观察者模式，主题可以被丢弃\n      4. 打破复杂数据结构中的引用循环\n\n      最佳实践：\n      1. 对可选关系使用弱引用\n      2. 在使用前检查 upgrade() 的结果\n      3. 清晰地记录所有权关系\n      4. 对于简单情况考虑使用索引等替代方案"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"弱引用\",\n  \"group\": \"智能指针\",\n  \"options\": [\n    {\n      \"text\": \"输出: Some(\\\"Wisdom\\\")\",\n      \"hint\": \"当所有强引用被丢弃时，数据会发生什么？\"\n    },\n    {\n      \"text\": \"输出: None\"\n    },\n    {\n      \"text\": \"编译错误\",\n      \"hint\": \"代码语法正确\"\n    },\n    {\n      \"text\": \"运行时恐慌\",\n      \"hint\": \"弱引用优雅地处理已丢弃的值\"\n    },\n    {\n      \"text\": \"存在性恐慌\",\n      \"hint\": \"虽然富有哲学意味，但这不是真正的 Rust 错误！\"\n    }\n  ],\n  \"objectives\": [\n    \"理解弱引用的目的和行为\",\n    \"识别弱引用防止内存泄漏的场景\",\n    \"应用 Weak<T> 打破引用循环\"\n  ],\n  \"questionProse\": [\n    \"当你运行这段使用弱引用的代码时会发生什么？\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"rust\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"弱引用不会阻止其目标被释放。以下是一个详细示例：\",\n    \"常见用例：\\n      1. 类似缓存的结构，条目可以被清除\\n      2. 具有父引用的树结构\\n      3. 观察者模式，主题可以被丢弃\\n      4. 打破复杂数据结构中的引用循环\\n\\n      最佳实践：\\n      1. 对可选关系使用弱引用\\n      2. 在使用前检查 upgrade() 的结果\\n      3. 清晰地记录所有权关系\\n      4. 对于简单情况考虑使用索引等替代方案\"\n  ],\n  \"explanationCode\": [\n    {\n      \"language\": \"rust\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 989,
+    "outputTokens": 2513,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 16132,
+    "providerCostUsd": 0.001203,
+    "providerUpstreamCostUsd": 0.001203,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00013846000000000003,
+    "outputUsd": 0.0007036400000000001,
+    "totalUsd": 0.0008421000000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

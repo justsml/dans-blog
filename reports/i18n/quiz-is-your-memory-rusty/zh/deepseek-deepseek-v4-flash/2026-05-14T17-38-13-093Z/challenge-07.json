@@ -1,0 +1,58 @@
+{
+  "index": 6,
+  "attempt": 1,
+  "originalTitle": "Struct Lifetimes",
+  "translatedTitle": "结构体生命周期",
+  "translation": {
+    "title": "结构体生命周期",
+    "group": "生命周期",
+    "options": [
+      {
+        "text": "编译成功",
+        "hint": "包含引用的结构体需要生命周期标注"
+      },
+      {
+        "text": "错误：缺少生命周期说明符"
+      },
+      {
+        "text": "错误：生命周期不匹配",
+        "hint": "我们还没有指定任何生命周期"
+      },
+      {
+        "text": "错误：无效引用",
+        "hint": "引用是有效的，但缺少了其他东西"
+      }
+    ],
+    "objectives": [
+      "理解结构体定义中的生命周期标注",
+      "识别结构体字段何时需要生命周期参数",
+      "在结构体实现中正确应用生命周期标注"
+    ],
+    "questionProse": [
+      "这个结构体定义能编译通过吗？为什么能或为什么不能？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "代码无法编译，因为包含引用的结构体必须指定生命周期。以下是修复方法：",
+      "常见模式：",
+      "最佳实践：\n      1. 当需要无限期存储数据时，使用所有权类型（如 String）\n      2. 当结构体的生命周期明显短于数据时，使用引用\n      3. 当引用可能具有不同生命周期时，考虑使用多个生命周期参数\n      4. 在复杂结构中记录生命周期关系"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"结构体生命周期\",\n  \"group\": \"生命周期\",\n  \"options\": [\n    {\n      \"text\": \"编译成功\",\n      \"hint\": \"包含引用的结构体需要生命周期标注\"\n    },\n    {\n      \"text\": \"错误：缺少生命周期说明符\"\n    },\n    {\n      \"text\": \"错误：生命周期不匹配\",\n      \"hint\": \"我们还没有指定任何生命周期\"\n    },\n    {\n      \"text\": \"错误：无效引用\",\n      \"hint\": \"引用是有效的，但缺少了其他东西\"\n    }\n  ],\n  \"objectives\": [\n    \"理解结构体定义中的生命周期标注\",\n    \"识别结构体字段何时需要生命周期参数\",\n    \"在结构体实现中正确应用生命周期标注\"\n  ],\n  \"questionProse\": [\n    \"这个结构体定义能编译通过吗？为什么能或为什么不能？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"代码无法编译，因为包含引用的结构体必须指定生命周期。以下是修复方法：\",\n    \"常见模式：\",\n    \"最佳实践：\\n      1. 当需要无限期存储数据时，使用所有权类型（如 String）\\n      2. 当结构体的生命周期明显短于数据时，使用引用\\n      3. 当引用可能具有不同生命周期时，考虑使用多个生命周期参数\\n      4. 在复杂结构中记录生命周期关系\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 956,
+    "outputTokens": 1305,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 8582,
+    "providerCostUsd": 0.0007132,
+    "providerUpstreamCostUsd": 0.0007132,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00013384,
+    "outputUsd": 0.00036540000000000005,
+    "totalUsd": 0.0004992400000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

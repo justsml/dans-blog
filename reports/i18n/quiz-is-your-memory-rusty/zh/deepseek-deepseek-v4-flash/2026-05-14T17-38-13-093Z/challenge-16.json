@@ -1,0 +1,57 @@
+{
+  "index": 15,
+  "attempt": 1,
+  "originalTitle": "Copy vs Clone",
+  "translatedTitle": "复制与克隆",
+  "translation": {
+    "title": "复制与克隆",
+    "group": "设计模式",
+    "options": [
+      {
+        "text": "编译错误",
+        "hint": "派生属性使用正确"
+      },
+      {
+        "text": "创建深拷贝"
+      },
+      {
+        "text": "创建浅拷贝",
+        "hint": "Clone 会创建 String 字段的深拷贝"
+      },
+      {
+        "text": "应用移动语义",
+        "hint": "Clone 显式创建新副本"
+      }
+    ],
+    "objectives": [
+      "区分 Copy 和 Clone 特质",
+      "理解何时实现每个特质",
+      "适当派生 Copy 和 Clone"
+    ],
+    "questionProse": [
+      "当我们克隆这个 Philosophy 结构体时会发生什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "让我们详细了解 Copy 与 Clone：",
+      "主要区别：\n      1. Copy：\n         - 隐式，按位复制\n         - 必须是 Copy 安全的（无堆分配）\n         - 通常用于小型、仅栈类型\n         \n      2. Clone：\n         - 显式，可能深拷贝\n         - 可以处理堆分配\n         - 更灵活但可能代价高昂\n\n      最佳实践：\n      1. 为小型、仅栈类型实现 Copy\n      2. 对拥有资源的类型使用 Clone\n      3. 记录 Clone 的性能影响\n      4. 考虑自定义 Clone 实现以优化\n      5. 谨慎使用自动派生"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"复制与克隆\",\n  \"group\": \"设计模式\",\n  \"options\": [\n    {\n      \"text\": \"编译错误\",\n      \"hint\": \"派生属性使用正确\"\n    },\n    {\n      \"text\": \"创建深拷贝\"\n    },\n    {\n      \"text\": \"创建浅拷贝\",\n      \"hint\": \"Clone 会创建 String 字段的深拷贝\"\n    },\n    {\n      \"text\": \"应用移动语义\",\n      \"hint\": \"Clone 显式创建新副本\"\n    }\n  ],\n  \"objectives\": [\n    \"区分 Copy 和 Clone 特质\",\n    \"理解何时实现每个特质\",\n    \"适当派生 Copy 和 Clone\"\n  ],\n  \"questionProse\": [\n    \"当我们克隆这个 Philosophy 结构体时会发生什么？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"让我们详细了解 Copy 与 Clone：\",\n    \"主要区别：\\n      1. Copy：\\n         - 隐式，按位复制\\n         - 必须是 Copy 安全的（无堆分配）\\n         - 通常用于小型、仅栈类型\\n         \\n      2. Clone：\\n         - 显式，可能深拷贝\\n         - 可以处理堆分配\\n         - 更灵活但可能代价高昂\\n\\n      最佳实践：\\n      1. 为小型、仅栈类型实现 Copy\\n      2. 对拥有资源的类型使用 Clone\\n      3. 记录 Clone 的性能影响\\n      4. 考虑自定义 Clone 实现以优化\\n      5. 谨慎使用自动派生\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 971,
+    "outputTokens": 1318,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 8165,
+    "providerCostUsd": 0.0007214,
+    "providerUpstreamCostUsd": 0.0007214,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00013594,
+    "outputUsd": 0.00036904,
+    "totalUsd": 0.00050498,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
