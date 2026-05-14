@@ -1,0 +1,46 @@
+{
+  "selectedCommit": "9e4969ba25f3495edc8e6ebbc7727e7f40fdd860",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 5,
+    "technicalAccuracy": 5,
+    "coherence": 5,
+    "relevance": 5,
+    "translationQuality": 5,
+    "mdxPreservation": 5
+  },
+  "suggestions": [],
+  "rationale": "The current translation in the MDX file already incorporates the fixes suggested in the previous judge report (e.g., 'בחנו את המצב הנוכחי' instead of 'קחו מלאי' and 'פגישת המצגת' instead of 'פגימת'). The translation is accurate, maintains Dan's direct style, and correctly handles technical aspects like MDX structure and asset paths. It correctly translates 'murder hornets' which the other candidate failed at.",
+  "slug": "creating-collaborative-culture",
+  "locale": "he",
+  "candidateCommits": [
+    "9e4969ba25f3495edc8e6ebbc7727e7f40fdd860",
+    "a9ca5bf9515c760079d7dde1f6af1d9ab2f8dc4d"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "פגימת המצגת",
+      "replacement": "פגישת המצגת",
+      "reason": "Typo in the candidate: 'פגימת' is not a word here; it should be 'פגישת' (meeting).",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "קחו מלאי של המצב הנוכחי",
+      "replacement": "בחנו את המצב הנוכחי",
+      "reason": "'Take stock' is an idiom; 'קחו מלאי' is a literal translation that sounds unnatural in Hebrew. 'בחנו' or 'עשו הערכת מצב' is better.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug creating-collaborative-culture --locale he --skip-global",
+    "output": ""
+  }
+}
