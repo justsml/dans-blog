@@ -1,0 +1,75 @@
+{
+  "runId": "deepseek-deepseek-v4-flash@2026-05-14T17-34-09-631Z",
+  "slug": "securing-clawdbot-tailscale",
+  "locale": "zh",
+  "model": "deepseek/deepseek-v4-flash",
+  "modelPath": "deepseek-deepseek-v4-flash",
+  "createdAt": "2026-05-14T17:34:47.172Z",
+  "sourcePath": "src/content/posts/2026-01-26--securing-clawdbot-tailscale/index.mdx",
+  "targetPath": "src/content/posts/2026-01-26--securing-clawdbot-tailscale/zh/index.mdx",
+  "candidatePath": "reports/i18n/securing-clawdbot-tailscale/zh/deepseek-deepseek-v4-flash/2026-05-14T17-34-09-631Z/candidate.mdx",
+  "sourceHash": "774feafac3dd3c408584db2b169a365e3f58a8b6a6d0541778aad55f122f5285",
+  "outputHash": "3916b366574ec09491980da50d10c6815dd0945af2fff8e76dd8a9681a0af1a8",
+  "reasoningEffort": "low",
+  "temperature": 0.3,
+  "maxTokens": 16000,
+  "timeoutMs": 200000,
+  "articleSummary": "This tutorial-style article warns that publicly exposing OpenClaw’s gateway, SSH, or node controls without strong authentication can give attackers shell access to the user’s machine. It identifies three critical surfaces—port 18789 (Gateway Control UI/WebSocket), port 22 (SSH), and browser/node pairing—and highlights that Shodan scans found thousands of exposed instances. The recommended solution is to bind the gateway to loopback and expose it only via Tailscale Serve, keeping it private on the tailnet while avoiding Funnel or public proxies. The guide provides step‑by‑step setup for Tailscale and OpenClaw configuration, targeting users who deploy personal AI assistants and want secure remote access without being security experts. Recurring metaphors like “operator surface” and “shell access” frame the risk as a direct path from public exposure to command execution.",
+  "totalInputTokens": 6800,
+  "totalOutputTokens": 4792,
+  "totalCacheReadTokens": 384,
+  "totalCacheWriteTokens": 0,
+  "totalDurationMs": 27895,
+  "totalCostUsd": 0.0022410752000000004,
+  "pricingSource": "local-openrouter-estimate",
+  "telemetry": {
+    "model": "deepseek/deepseek-v4-flash",
+    "chunkSize": "18p",
+    "totalChunks": 4,
+    "totalInputTokens": 6800,
+    "totalOutputTokens": 4792,
+    "totalCacheReadTokens": 384,
+    "totalCacheWriteTokens": 0,
+    "totalDurationMs": 27895,
+    "totalCostUsd": 0.0022410752000000004,
+    "pricingSource": "local-openrouter-estimate",
+    "chunks": [
+      {
+        "index": 0,
+        "inputTokens": 1688,
+        "outputTokens": 939,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 5795,
+        "costUsd": 0.0004992400000000001
+      },
+      {
+        "index": 1,
+        "inputTokens": 1748,
+        "outputTokens": 831,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 4969,
+        "costUsd": 0.00047740000000000006
+      },
+      {
+        "index": 2,
+        "inputTokens": 1797,
+        "outputTokens": 949,
+        "cacheReadTokens": 384,
+        "cacheWriteTokens": 0,
+        "durationMs": 5652,
+        "costUsd": 0.0004646152
+      },
+      {
+        "index": 3,
+        "inputTokens": 1567,
+        "outputTokens": 2073,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 11479,
+        "costUsd": 0.0007998200000000001
+      }
+    ]
+  }
+}
