@@ -1,0 +1,211 @@
+# Translation Candidate
+- Slug: amazing-resources
+- Locale: ar
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2015-02-26--amazing-resources/ar/index.mdx
+- Validation: deferred
+- Runtime seconds: 57.89
+- Input tokens: 7457
+- Output tokens: 8134
+- Thinking tokens: unknown
+- Cached input tokens: 1536
+- Cache write tokens: 0
+- Estimated cost: $0.003111
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: أفضل موارد تصميم واجهات المستخدم المجانية للمطورين
+subTitle: >-
+  قائمة منتقاة لعام 2026 لمجموعات واجهات المستخدم، وكتل Tailwind، والأيقونات،
+  والخطوط، والرسوم التوضيحية، والرسوم المتحركة، وأدوات التصميم لبناء مواقع ويب
+  مصقولة بشكل أسرع.
+date: '2015-02-26'
+modified: '2026-04-29'
+category: Code
+subCategory: design
+tags:
+  - development
+  - design
+  - resources
+  - ui
+  - tailwind
+  - icons
+  - patterns
+cover_full_width: ../carl-heyerdahl-181868-unsplash.webp
+cover_mobile: ../w300_carl-heyerdahl-181868-unsplash.webp
+cover_icon: ../icon_carl-heyerdahl-181868-unsplash.webp
+---
+إذا كنت تبني مواقع ويب أو تطبيقات وتريد أن تبدو أكثر احترافية دون قضاء أيام في إعادة اختراع الأنماط الشائعة، فهذه هي القائمة المختصرة التي سأقدمها لك.
+
+تركز هذه القائمة على موارد تصميم واجهات المستخدم المجانية للمطورين: مكتبات المكونات، كتل Tailwind، الأيقونات، الرسوم التوضيحية، أدوات الألوان، مصادر الخطوط، مكتبات الحركة، والأدوات العملية التي تساعدك على الإطلاق بشكل أسرع.
+
+معظم الروابط هنا مجانية، مفتوحة المصدر، أو تحتوي على طبقة مجانية مفيدة حقًا.
+
+> آخر تحديث: 2026-04-29
+
+## المحتويات
+
+1. [ابدأ من هنا](#start-here)
+2. [مكونات واجهة المستخدم، الكتل، والقوالب](#ui-components-blocks-and-templates)
+3. [أدوات التصميم وتحرير الصور](#design-and-image-editing-tools)
+4. [الخطوط وأدوات الألوان](#fonts-and-color-tools)
+5. [الرسوم المتحركة والتفاعل](#animation-and-interaction)
+6. [الأيقونات والرسوم التوضيحية](#icons-and-illustrations)
+7. [الصور واستضافة المواقع](#photos-and-website-hosting)
+8. [موارد مفيدة لـ CSS وتجربة المستخدم وسير العمل](#helpful-css-ux-and-workflow-resources)
+9. [نصائح الترخيص والاستخدام](#licensing-and-usage-tips)
+
+## ابدأ من هنا
+
+إذا كنت تحتاج فقط إلى بعض الخيارات الموثوقة، ابدأ بهذه:
+
+- للحصول على كتل واجهة مستخدم React أو Tailwind مصقولة: [Aceternity UI](https://ui.aceternity.com/components)، [Shadcnblocks](https://www.shadcnblocks.com/blocks)، و [Tailark](https://tailark.com/blocks?licences=free).
+- لواجهات منتجات الذكاء الاصطناعي وأنماط الدردشة: [Assistant UI](https://www.assistant-ui.com/) و [AI SDK Elements: Chain of Thought](https://elements.ai-sdk.dev/components/chain-of-thought).
+- للأيقونات: [Lucide](https://lucide.dev/)، [Iconoir](https://iconoir.com)، و [Simple Icons](https://simpleicons.org/).
+- للرسوم التوضيحية: [ManyPixels](https://www.manypixels.co/gallery/)، [DrawKit Free](https://www.drawkit.io/free)، و [Humaaans](https://www.humaaans.com/).
+- للخطوط: [Fontsource](https://fontsource.org) و [Google Fonts](https://fonts.google.com/).
+- للألوان وإمكانية الوصول: [Coolors](https://coolors.co/)، [Adobe Color](https://color.adobe.com/create/color-wheel/)، و [WebAIM Contrast Checker](https://webaim.org/resources/contrastchecker/).
+
+## مكونات واجهة المستخدم، الكتل، والقوالب
+
+هذا هو القسم الذي يريده معظم الناس فعليًا: قوالب مواقع، أقسام رئيسية (hero sections)، هياكل تطبيقات، كتل Tailwind، ومكونات واجهة مستخدم يمكنك تكييفها بدلاً من التصميم من صفحة بيضاء.
+
+### واجهات الدردشة والذكاء الاصطناعي
+
+- [Assistant UI](https://www.assistant-ui.com/) — مكونات واجهة دردشة ذكاء اصطناعي مفتوحة المصدر لتطبيقات React.
+- [AI SDK Elements: Chain of Thought](https://elements.ai-sdk.dev/components/chain-of-thought) — نمط واجهة دردشة نظيف بأسلوب التفكير المنطقي لمنتجات الذكاء الاصطناعي.
+
+### الكتل، الأقسام، والمكونات
+
+- [Aceternity UI](https://ui.aceternity.com/components) — مكونات React وTailwind عالية الصقل ذات شخصية بصرية قوية.
+- [reui Collapsible](https://reui.io/components/collapsible) — أنماط واجهة قابلة للطي وأكورديون نظيفة لواجهات React.
+- [Shadcnblocks](https://www.shadcnblocks.com/blocks) — أقسام وكتل جاهزة مبنية حول نظام shadcn البيئي.
+- [Tailark](https://tailark.com/blocks?licences=free) — كتل Tailwind مجانية للمواقع التسويقية وصفحات المنتجات.
+- [Tool UI](https://www.tool-ui.com/) — كتل ومكونات واجهة مستخدم حديثة للتطبيقات والصفحات المقصودة.
+- [CSS Layout](https://csslayout.io/patterns) — أنماط تخطيط قابلة للنسخ واللصق لهياكل المواقع الشائعة.
+
+### القوالب الكاملة والإلهام
+
+- [HTML5 UP](https://html5up.net) — قوالب HTML جميلة ومستجيبة.
+- [Creative Tim Free React Templates](https://www.creative-tim.com/templates/react-free) — لوحات تحكم React مجانية، مجموعات أدوات، وقوالب إدارية.
+- [Awesome Landing Page](https://github.com/nordicgiant2/awesome-landing-page) — قوالب وأمثلة منسقة للصفحات المقصودة.
+
+## أدوات التصميم وتحرير الصور
+
+للنماذج الأولية، الرسوميات، لقطات الشاشة، تحرير الصور الخفيف، أو أعمال التصميم السريعة في المتصفح.
+
+- [Photopea](https://www.photopea.com/) — تحرير شبيه بـ Photoshop مباشرة في المتصفح.
+- [Penpot](https://penpot.app/) — تصميم ونمذجة أولية مفتوح المصدر.
+- [Corel Vector / Gravit Designer](https://designer.gravit.io/) — تصميم متجهي في المتصفح مع طبقة مجانية.
+- [Boxy SVG](https://boxy-svg.com/) — محرر SVG مركّز لمتصفحات Chromium وWebKit.
+- [VectorInk](https://vectorink.io/app/) — رسم وتوضيح متجهي في المتصفح.
+- [SVGOMG](https://jakearchibald.github.io/svgomg/) — تحسين وتنظيف ملفات SVG قبل النشر.
+- [Pixlr X](https://pixlr.com/x/) — تحرير صور سريع عبر الإنترنت عندما لا تحتاج إلى تطبيق تصميم كامل.
+
+## الخطوط وأدوات الألوان
+
+لقرارات الطباعة والألوان تأثير كبير على ما إذا كانت واجهة المستخدم تبدو مدروسة أم عامة.
+
+### الخطوط
+
+- [Fontsource](https://fontsource.org) — استضافة ذاتية للخطوط مفتوحة المصدر مع تثبيت قائم على الحزم.
+- [Google Fonts](https://fonts.google.com/) — كتالوج الخطوط الكلاسيكي.
+- [Fontpair](https://fontpair.co/fonts/) — إلهام لاقتران الخطوط عندما تريد قرارًا أسرع.
+- [The Stocks](http://thestocks.im/) — يجمع الخطوط والأيقونات والصور والموارد الإبداعية الأخرى.
+
+### اللون والتباين
+
+- [Adobe Color](https://color.adobe.com/create/color-wheel/) — عجلة ألوان كلاسيكية وأدوات تناغم.
+- [Coolors](https://coolors.co/) — إنشاء لوحات الألوان وتثبيتها وتعديلها بسرعة.
+- [Color Hunt](https://colorhunt.co/) — إلهام لوحات ألوان منتقاة.
+- [Paletton](https://paletton.com/) — مولد مخططات ألوان مع معاينات.
+- [WebAIM Contrast Checker](https://webaim.org/resources/contrastchecker/) — التحقق من نسب التباين وفقًا لـ WCAG.
+- [Contrast Ratio](https://contrast-ratio.com/) — اختبار تباين سريع بواجهة أنظف.
+
+## الحركة والتفاعل
+
+استخدم هذه الأدوات عندما تبدو التخطيطات الثابتة مسطحة وتحتاج إلى حركة أفضل، أو حالات التمرير، أو تنقل أكثر حيوية.
+
+- [GSAP](https://greensock.com/gsap) — العمود الفقري الصناعي لتحريك واجهات المستخدم المعقدة.
+- [Anime.js](https://animejs.com/) — محرك تحريك جافاسكريبت قوي بمنحنى تعلم أسهل.
+- [Animate.css](https://animate.style/) — حركات مسبقة الإعداد للدخول البسيط والتغذية الراجعة.
+- [Hover.css](https://ianlunn.github.io/Hover/) — تفاعلات تمرير جاهزة وتأثيرات دقيقة.
+- [Magic Animations](https://www.minimamente.com/project/magic/) — حركات CSS مسبقة الإعداد.
+- [Bounce.js](https://bouncejs.com/) — توليد إطارات رئيسية بنابضية. مؤرشفة، لكنها لا تزال مفيدة للإلهام.
+- [Hamburgers](https://github.com/jonsuh/hamburgers) — حركات قائمة هامبورجر قابلة للوصول.
+- [Best Snip SVG Animator](https://bestsnip.com/svg_animation/) — أداة ويب بسيطة لتحريك ملفات SVG.
+- [KokonutUI: Flow Field](https://kokonutui.com/docs/backgrounds/flow-field) — وصفة خلفية متحركة بعائد بصري قوي.
+- [KokonutUI: Smooth Tab](https://kokonutui.com/docs/navigation/smooth-tab) — نمط تنقل سلس للتبويب يمكنك تكييفه لواجهة التطبيق.
+
+## الأيقونات والرسوم التوضيحية
+
+هذه أسهل الموارد التي يُساء استخدامها بشدة. فضّل عائلة بصرية متسقة على خلط خمسة أنماط في واجهة واحدة.
+
+### الأيقونات
+
+- [Lucide](https://lucide.dev/) — أيقونات نظيفة ومفتوحة المصدر، وخيار افتراضي ممتاز.
+- [Iconoir](https://iconoir.com) — مجموعة أيقونات SVG مجانية كبيرة بمظهر أكثر نعومة.
+- [Simple Icons](https://simpleicons.org/) — أيقونات العلامات التجارية للمنتجات وروابط التواصل الاجتماعي.
+- [Phosphor Icons](https://phosphoricons.com/) — عائلة أيقونات مرنة للواجهات والتطبيقات.
+- [IcoMoon App](https://icomoon.io/app/#/select) — أنشئ مجموعة أيقونات مخصصة وصدرها كحزم SVG أو PNG.
+- [Font Awesome Free Search](https://fontawesome.com/v6/search?o=r&m=free) — مفيد عندما تحتاج إلى اتساع أكثر من الشخصية.
+- [The Noun Project](https://thenounproject.com) — مكتبة أيقونات ضخمة تحتوي على الكثير من الكائنات والمفاهيم المتخصصة.
+- [SVG Repo](https://www.svgrepo.com/) — مكتبة SVG مجتمعية ضخمة. تتفاوت الجودة، لذا انتقِ بعناية.
+
+### الرسوم التوضيحية والشخصيات
+
+- [Humaaans](https://www.humaaans.com/) — رسوم توضيحية معيارية للأشخاص لصفحات المنتجات والتسويق.
+- [ManyPixels](https://www.manypixels.co/gallery/) — مكتبة رسوم توضيحية تُحدَّث باستمرار.
+- [DrawKit Free](https://www.drawkit.io/free) — حزم رسوم توضيحية مجانية عالية الجودة.
+- [Open Doodles Generator](https://generator.opendoodles.com/) — رسومات تلقائية بأسلوب مرسوم باليد مرح.
+- [Illlustrations](https://illlustrations.co/) — أسلوب رسم توضيحي يدوي بإحساس غير رسمي.
+- [Icons8 Illustrations](https://icons8.com/illustrations) — حزم رسوم توضيحية مجانية بأنماط متعددة.
+- [Isometric](https://isometric.online/) — رسوم توضيحية وأصول إيزومترية.
+- [React Kawaii](https://react-kawaii.vercel.app/#/Components) — مكونات شخصيات SVG لطيفة.
+
+## الصور واستضافة المواقع
+
+هذه الموارد أقل ارتباطًا بأنظمة الواجهات وأكثر ارتباطًا بإنجاز المشروع.
+
+### الصور
+
+- [Unsplash](https://unsplash.com/) — صور مخزنة عالية الجودة برخصة متساهلة.
+- [Pexels](https://www.pexels.com/) — صور وفيديوهات مخزنة مجانية.
+- [Women of Color in Tech](https://www.flickr.com/photos/wocintechchat/) — صور أكثر واقعية لمكان العمل والتقنية.
+- [The Stocks](http://thestocks.im/) — لا يزال مفيدًا كمجمع عندما تريد خيارات سريعة.
+
+### استضافة المواقع
+
+- [Netlify](https://www.netlify.com/) — تجربة مطور ممتازة للمواقع الثابتة والمشاريع كثيفة الواجهة الأمامية.
+- [Vercel](https://vercel.com/) — خيار افتراضي قوي لتطبيقات الواجهة الأمامية، والمعاينات، وميزات الحافة.
+- [GitHub Pages](https://pages.github.com/) — استضافة مجانية بسيطة للمواقع الثابتة.
+- [Render](https://render.com/) — مفيد عندما تحتاج إلى استضافة ثابتة بالإضافة إلى خدمات أو مهام مجدولة.
+- [Surge](https://surge.sh/) — استضافة ثابتة بسيطة للغاية من سطر الأوامر.
+
+## موارد مفيدة في CSS وتجربة المستخدم وسير العمل
+
+أدوات صغيرة لكنها عملية تحل مشاكل محددة في الواجهة الأمامية بسرعة.
+
+- [Shadow Designer](https://brumm.af/shadows) — إنشاء ظلال متعددة الطبقات تبدو أفضل من النهج الافتراضي للتمويه والأمل.
+- [Clippy](https://bennettfeely.com/clippy/) — مولد لخاصية `clip-path` في CSS.
+- [UX Design Glossary](https://www.qualtrics.com/blog/ux-design-glossary/) — مفيد عندما تريد لغة أفضل لشرح قرارات التصميم.
+- [Coding Heroes Resources](http://codingheroes.io/resources/) — تجميع أوسع للموارد الإبداعية.
+
+## نصائح حول الترخيص والاستخدام
+
+- لا تفترض أن "مجاني" يعني "بدون إسناد". تحقق من كل ترخيص قبل تسليم عمل العميل.
+- انتبه لقيود العلامات التجارية عند استخدام شعارات العلامات التجارية أو الشعارات أو أيقونات التطبيقات في القوالب.
+- قم بتصدير SVG كلما أمكن ذلك حتى تبقى الأيقونات والرسوم التوضيحية حادة وأسهل في التنسيق.
+- حافظ على تناسق عائلات الأيقونات. أيقونة Lucide نظيفة بجانب SVG سوقي كرتوني تبدو عادةً غير مقصودة.
+- اختبر دائمًا تباين النص. العديد من اللوحات "الجميلة" تنهار عند تطبيقها على نص حقيقي.
+- تعامل مع الرسوم التوضيحية المخزنة كمادة خام. القليل من التحرير يقطع شوطاً طويلاً لتجنب الشعور بالقوالب المنسوخة.
+
+---
+
+سجل التغييرات: 2026-04 — إعادة تنظيم الصفحة للبشر ومحركات البحث، تحسين العناوين والوصف، وإضافة Assistant UI، AI SDK Elements، Aceternity UI، Shadcnblocks، Tailark، KokonutUI patterns، و Tool UI.
+سجل التغييرات: 2025-09 — تحديث الروابط، تحديث الموارد القديمة، وإضافة أدوات حديثة للأيقونات والتباين والتصميم.
+````
