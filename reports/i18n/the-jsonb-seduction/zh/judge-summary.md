@@ -2,7 +2,7 @@
 
 - Slug: the-jsonb-seduction
 - Locale: zh
-- Judge model: openrouter/deepseek/deepseek-v4-flash
+- Judge model: openrouter/google/gemini-3-flash-preview
 - Second judge model: not run
 - Escalation judge model: not run
 - Max candidate commits per judge call: 3
@@ -12,16 +12,17 @@
 - Validation scope: local
 
 ## Primary Judge Telemetry
-- Runtime seconds: 43.07
-- Input tokens: 7578
-- Output tokens: 9417
+- Runtime seconds: 2.65
+- Input tokens: 13311
+- Output tokens: 154
 - Thinking tokens: unknown
 - Cached input tokens: 0
 - Cache write tokens: 0
-- OpenRouter cost credits: 0.005282
-- Estimated cost: $0.005282
+- OpenRouter cost credits: 0.007117
+- Estimated cost: $0.007117
 
 ## Candidates
-- current not present
-- 747a2c6e496da71720824543eb6a8e8b1369d617 i18n candidate(zh): the-jsonb-seduction via openrouter/openai/gpt-oss-120b:nitro
-- 1540c9733dd3d343179d266ebf87e814d35775e6 i18n candidate(zh): the-jsonb-seduction via openrouter/deepseek/deepseek-v4-flash
+- current src/content/posts/2025-12-29--the-jsonb-seduction/zh/index.mdx
+- 653ad13409c8890124a52f153364614f6814b173 i18n candidate(zh): the-jsonb-seduction via openrouter/qwen/qwen3-32b:nitro
+- 89b15e06fcf1225f1c8b4fa7ef5451521170210e i18n candidate(zh): the-jsonb-seduction via openrouter/openai/gpt-oss-120b:nitro
+- 13d3c538f794e3cec63d0232cc8bca06d4a6736b i18n candidate(zh): the-jsonb-seduction via deepseek/deepseek-v4-flash
