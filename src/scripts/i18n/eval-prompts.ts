@@ -21,7 +21,7 @@ import { appendFileSync, mkdirSync, readdirSync, readFileSync, writeFileSync } f
 import { basename, dirname, join, relative } from "node:path";
 import "dotenv/config";
 import matter from "gray-matter";
-import { generateText } from "./braintrust.ts";
+import { BRAINTRUST_PROJECT_NAME, braintrustEnabled, generateText, tracedEval } from "./braintrust.ts";
 import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 import { OPENROUTER_USAGE_ACCOUNTING, usageFromResult } from "./llm-telemetry.ts";
 import { buildSystemPrompt, buildUserPrompt } from "./prompts.ts";
@@ -450,11 +450,19 @@ console.log(`Models  : ${translationModels.map((m) => m.replace(/^openrouter\//,
 console.log(`Judge   : ${judgeModel}`);
 console.log(`Locales : ${locales.join(", ")}\n`);
 
+if (braintrustEnabled) {
+  console.log(`Braintrust: logging to project "${BRAINTRUST_PROJECT_NAME}"\n`);
+}
+
 const results = await Promise.all(
   pairs.map(async ({ input, model }) => {
     const shortModel = model.replace(/^openrouter\//, "");
     console.log(`  → ${input.id}  model=${shortModel}`);
-    const result = await runEval(input, model);
+    const result = await tracedEval(
+      `eval:${input.id}`,
+      { slug: input.slug, locale: input.locale, kind: input.kind, model: shortModel, judgeModel },
+      () => runEval(input, model),
+    );
     const score = (result.overallScore * 100).toFixed(1);
     console.log(`  ← ${result.passed ? "PASS" : "FAIL"}  score=${score}  ${result.durationMs}ms  model=${shortModel}`);
     if (!result.passed) {

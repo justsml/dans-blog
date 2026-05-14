@@ -1,7 +1,9 @@
 export const CHEAP_FAST_TRANSLATION_MODELS = [
   "openrouter/deepseek/deepseek-v4-flash",
-  "openrouter/google/gemma-4-31b-it",
-  "openrouter/google/gemma-4-26b-a4b-it",
+  "openrouter/moonshotai/kimi-k2.5",
+  "openrouter/moonshotai/kimi-k2.6",
+  "openrouter/google/gemma-4-26b-a4b-it:nitro",
+  "openrouter/google/gemma-4-31b-it:nitro",
   "openrouter/openai/gpt-oss-120b:nitro",
   "openrouter/qwen/qwen3-32b:nitro",
   "openrouter/z-ai/glm-4.7-flash",
