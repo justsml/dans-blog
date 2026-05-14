@@ -1,0 +1,58 @@
+{
+  "index": 6,
+  "attempt": 1,
+  "originalTitle": "Identify Invalid Types",
+  "translatedTitle": "تحديد الأنواع غير الصالحة",
+  "translation": {
+    "title": "تحديد الأنواع غير الصالحة",
+    "group": "أنواع Postgres",
+    "options": [
+      {
+        "text": "int"
+      },
+      {
+        "text": "real"
+      },
+      {
+        "text": "bigint"
+      },
+      {
+        "text": "bigserial"
+      },
+      {
+        "text": "smallserial"
+      },
+      {
+        "text": "decimal128"
+      },
+      {
+        "text": "double precision"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "أيّ من هذه ليس ❌ نوعًا صالحًا في PostgreSQL؟"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "قد يبدو مألوفًا لأن `decimal128` هو نوع في أماكن كثيرة (بما في ذلك Mongo و Java.) لكنه ليس نوعًا صالحًا في PostgreSQL، النوع الصحيح هو `decimal`.\n\n    الأنواع العددية الصحيحة تشمل:\n    - `int` (عدد صحيح 4 بايت)\n    - `bigint` (عدد صحيح 8 بايت)\n    - `real` (عدد عائم 4 بايت)\n    - `double precision` (عدد عائم 8 بايت)\n    - `bigserial` (عدد صحيح تلقائي الزيادة 8 بايت)\n    - `smallserial` (عدد صحيح تلقائي الزيادة 2 بايت)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"تحديد الأنواع غير الصالحة\",\n  \"group\": \"أنواع Postgres\",\n  \"options\": [\n    {\n      \"text\": \"int\"\n    },\n    {\n      \"text\": \"real\"\n    },\n    {\n      \"text\": \"bigint\"\n    },\n    {\n      \"text\": \"bigserial\"\n    },\n    {\n      \"text\": \"smallserial\"\n    },\n    {\n      \"text\": \"decimal128\"\n    },\n    {\n      \"text\": \"double precision\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"أيّ من هذه ليس ❌ نوعًا صالحًا في PostgreSQL؟\"\n  ],\n  \"questionCode\": [],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"قد يبدو مألوفًا لأن `decimal128` هو نوع في أماكن كثيرة (بما في ذلك Mongo و Java.) لكنه ليس نوعًا صالحًا في PostgreSQL، النوع الصحيح هو `decimal`.\\n\\n    الأنواع العددية الصحيحة تشمل:\\n    - `int` (عدد صحيح 4 بايت)\\n    - `bigint` (عدد صحيح 8 بايت)\\n    - `real` (عدد عائم 4 بايت)\\n    - `double precision` (عدد عائم 8 بايت)\\n    - `bigserial` (عدد صحيح تلقائي الزيادة 8 بايت)\\n    - `smallserial` (عدد صحيح تلقائي الزيادة 2 بايت)\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 941,
+    "outputTokens": 615,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 2311,
+    "providerCostUsd": 0.00047175,
+    "providerUpstreamCostUsd": 0.00047175,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000036698999999999995,
+    "outputUsd": 0.0001107,
+    "totalUsd": 0.000147399,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

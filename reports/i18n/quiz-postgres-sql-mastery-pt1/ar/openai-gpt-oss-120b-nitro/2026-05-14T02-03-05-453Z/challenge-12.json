@@ -1,0 +1,49 @@
+{
+  "index": 11,
+  "attempt": 1,
+  "originalTitle": "Timestamp Precision",
+  "translatedTitle": "دقة الطابع الزمني",
+  "translation": {
+    "title": "دقة الطابع الزمني",
+    "group": "التاريخ/الوقت",
+    "options": [
+      {
+        "text": "2024-01-08 13:30:00+00"
+      },
+      {
+        "text": "2024-01-08 13:30:00.123456+00"
+      },
+      {
+        "text": "2024-01-08 13:30:00.123456789+00"
+      },
+      {
+        "text": "2024-01-08 13:30:00.1234567"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "ما هو أصغر قيمة حرفية `timestamp` تتجاوز أقصى دقة `time` في Postgres؟"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "للطوابع الزمنية في PostgreSQL دقة ميكروثانية (6 منازل عشرية).\n\n    - الحد الأقصى: `.123456` (6 أرقام)\n    - النانوثانية (9 أرقام) تُقرب أو تُقطّع إلى الدقة المدعومة\n    - يتم قبول إزاحات المنطقة الزمنية لـ `timestamptz`، لكن ليست إلزامية\n\n    **ملاحظة غير شائعة:** بعض اللغات/الأطر ترسل دقة نانوثانية، لكن PostgreSQL يخزن الطوابع الزمنية بدقة ميكروثانية."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"دقة الطابع الزمني\",\n  \"group\": \"التاريخ/الوقت\",\n  \"options\": [\n    {\n      \"text\": \"2024-01-08 13:30:00+00\"\n    },\n    {\n      \"text\": \"2024-01-08 13:30:00.123456+00\"\n    },\n    {\n      \"text\": \"2024-01-08 13:30:00.123456789+00\"\n    },\n    {\n      \"text\": \"2024-01-08 13:30:00.1234567\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"ما هو أصغر قيمة حرفية `timestamp` تتجاوز أقصى دقة `time` في Postgres؟\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"sql\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"للطوابع الزمنية في PostgreSQL دقة ميكروثانية (6 منازل عشرية).\\n\\n    - الحد الأقصى: `.123456` (6 أرقام)\\n    - النانوثانية (9 أرقام) تُقرب أو تُقطّع إلى الدقة المدعومة\\n    - يتم قبول إزاحات المنطقة الزمنية لـ `timestamptz`، لكن ليست إلزامية\\n\\n    **ملاحظة غير شائعة:** بعض اللغات/الأطر ترسل دقة نانوثانية، لكن PostgreSQL يخزن الطوابع الزمنية بدقة ميكروثانية.\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 965,
+    "outputTokens": 447,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 1479,
+    "providerCostUsd": 0.00039375,
+    "providerUpstreamCostUsd": 0.00039375,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000037635,
+    "outputUsd": 0.00008046,
+    "totalUsd": 0.000118095,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

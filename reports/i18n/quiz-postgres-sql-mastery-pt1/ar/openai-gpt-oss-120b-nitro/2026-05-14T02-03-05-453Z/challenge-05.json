@@ -1,0 +1,55 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "timestamptz vs timestamp",
+  "translatedTitle": "timestamptz مقابل timestamp",
+  "translation": {
+    "title": "timestamptz مقابل timestamp",
+    "group": "الطوابع الزمنية",
+    "options": [
+      {
+        "text": "كلاهما يشغل 8 بايت، لكنهما يمثلان دلالات زمنية مختلفة"
+      },
+      {
+        "text": "They\""
+      },
+      {
+        "text": "timestamptz يحافظ على أي منطقة زمنية مدخلة"
+      },
+      {
+        "text": "timestamptz يخزن اسم المنطقة الزمنية الأصلي أو الإزاحة"
+      },
+      {
+        "text": "timestamptz يخزن قيمة بطول 2 بايت للمنطقة الزمنية"
+      },
+      {
+        "text": "timestamptz هو السليل لـ timestamp"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "ما هو البيان **الأدق** حول `timestamptz` و `timestamp`؟"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "كلاهما 8 بايت، لكنهما لا يخزنان نفس نوع القيمة.\n\n    إذن ما الفرق؟ يكمن في طريقة تحليل الإدخال.\n\n    **`timestamptz`**\n    - يطبع الإدخال إلى نقطة زمنية مطلقة.\n    - يأخذ في الاعتبار إعداد `TimeZone` الخاص بالخادم/الاتصال عند تحليل الإدخال بدون إزاحة صريحة وعند عرض النتيجة.\n\n    **`timestamp`**\n    - يخزن التاريخ والوقت دون تحويل المنطقة الزمنية.\n    - لا يحافظ على معلومات المنطقة الزمنية ولا يطبعها.\n    \n    \n    **`timestamp`**\n\n    - يخزن التاريخ والوقت دون معلومات عن المنطقة الزمنية.\n    - مفيد لتخزين تواريخ موحدة صراحةً، إما بتوقيت UTC أو بمنطقة زمنية محددة."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"timestamptz مقابل timestamp\",\n  \"group\": \"الطوابع الزمنية\",\n  \"options\": [\n    {\n      \"text\": \"كلاهما يشغل 8 بايت، لكنهما يمثلان دلالات زمنية مختلفة\"\n    },\n    {\n      \"text\": \"They\\\"\"\n    },\n    {\n      \"text\": \"timestamptz يحافظ على أي منطقة زمنية مدخلة\"\n    },\n    {\n      \"text\": \"timestamptz يخزن اسم المنطقة الزمنية الأصلي أو الإزاحة\"\n    },\n    {\n      \"text\": \"timestamptz يخزن قيمة بطول 2 بايت للمنطقة الزمنية\"\n    },\n    {\n      \"text\": \"timestamptz هو السليل لـ timestamp\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"ما هو البيان **الأدق** حول `timestamptz` و `timestamp`؟\"\n  ],\n  \"questionCode\": [],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"كلاهما 8 بايت، لكنهما لا يخزنان نفس نوع القيمة.\\n\\n    إذن ما الفرق؟ يكمن في طريقة تحليل الإدخال.\\n\\n    **`timestamptz`**\\n    - يطبع الإدخال إلى نقطة زمنية مطلقة.\\n    - يأخذ في الاعتبار إعداد `TimeZone` الخاص بالخادم/الاتصال عند تحليل الإدخال بدون إزاحة صريحة وعند عرض النتيجة.\\n\\n    **`timestamp`**\\n    - يخزن التاريخ والوقت دون تحويل المنطقة الزمنية.\\n    - لا يحافظ على معلومات المنطقة الزمنية ولا يطبعها.\\n    \\n    \\n    **`timestamp`**\\n\\n    - يخزن التاريخ والوقت دون معلومات عن المنطقة الزمنية.\\n    - مفيد لتخزين تواريخ موحدة صراحةً، إما بتوقيت UTC أو بمنطقة زمنية محددة.\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 1025,
+    "outputTokens": 633,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 2062,
+    "providerCostUsd": 0.00049515,
+    "providerUpstreamCostUsd": 0.00049515,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000039974999999999996,
+    "outputUsd": 0.00011394,
+    "totalUsd": 0.000153915,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "index": 13,
+  "attempt": 1,
+  "originalTitle": "Check Constraint Timing",
+  "translatedTitle": "توقيت فحص القيد",
+  "translation": {
+    "title": "توقيت فحص القيد",
+    "group": "القيود",
+    "options": [
+      {
+        "text": "فوريًا للصفوف الجديدة أو المعدلة"
+      },
+      {
+        "text": "عند إتمام المعاملة"
+      },
+      {
+        "text": "في الاستعلام التالي"
+      },
+      {
+        "text": "أبدًا - يتم فحص القيود فقط عند INSERT"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "متى يتم فحص قيد الدرجة هذا؟"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "`NOT VALID` constraints:\n    - يتم فحصها فورًا للإدخالات والتحديثات الجديدة\n    - لا تتحقق من الصفوف الموجودة\n    - يمكن التحقق من الصفوف الموجودة لاحقًا باستخدام `VALIDATE CONSTRAINT`\n    - مفيدة للجداول الكبيرة\n\nبدون `NOT VALID`:\n    - يتم فحص القيد فورًا\n    - يتم التحقق من جميع الصفوف الموجودة\n    - قد تكون بطيئة على الجداول الكبيرة"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"توقيت فحص القيد\",\n  \"group\": \"القيود\",\n  \"options\": [\n    {\n      \"text\": \"فوريًا للصفوف الجديدة أو المعدلة\"\n    },\n    {\n      \"text\": \"عند إتمام المعاملة\"\n    },\n    {\n      \"text\": \"في الاستعلام التالي\"\n    },\n    {\n      \"text\": \"أبدًا - يتم فحص القيود فقط عند INSERT\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"متى يتم فحص قيد الدرجة هذا؟\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"sql\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"`NOT VALID` constraints:\\n    - يتم فحصها فورًا للإدخالات والتحديثات الجديدة\\n    - لا تتحقق من الصفوف الموجودة\\n    - يمكن التحقق من الصفوف الموجودة لاحقًا باستخدام `VALIDATE CONSTRAINT`\\n    - مفيدة للجداول الكبيرة\\n\\nبدون `NOT VALID`:\\n    - يتم فحص القيد فورًا\\n    - يتم التحقق من جميع الصفوف الموجودة\\n    - قد تكون بطيئة على الجداول الكبيرة\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 894,
+    "outputTokens": 707,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 2857,
+    "providerCostUsd": 0.0005199,
+    "providerUpstreamCostUsd": 0.0005199,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000034866,
+    "outputUsd": 0.00012726,
+    "totalUsd": 0.000162126,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

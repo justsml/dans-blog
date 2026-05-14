@@ -1,0 +1,49 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "Integer Overflow",
+  "translatedTitle": "تجاوز السعة للعدد الصحيح",
+  "translation": {
+    "title": "تجاوز السعة للعدد الصحيح",
+    "group": "الرياضيات الصحيحة",
+    "options": [
+      {
+        "text": "4294967296"
+      },
+      {
+        "text": "Error: integer out of range"
+      },
+      {
+        "text": "0"
+      },
+      {
+        "text": "2147483647"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "ماذا يحدث عند حساب إجمالي معرفات الطلاب الممكنة؟"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "نوع `integer` في PostgreSQL هو 32‑بت موقّع، يتراوح من `-2,147,483,648` إلى `2,147,483,647`.\n\n    العملية `256^4` = `4,294,967,296` تتجاوز هذا النطاق.\n\n    للتعامل مع أعداد أكبر:"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"تجاوز السعة للعدد الصحيح\",\n  \"group\": \"الرياضيات الصحيحة\",\n  \"options\": [\n    {\n      \"text\": \"4294967296\"\n    },\n    {\n      \"text\": \"Error: integer out of range\"\n    },\n    {\n      \"text\": \"0\"\n    },\n    {\n      \"text\": \"2147483647\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"ماذا يحدث عند حساب إجمالي معرفات الطلاب الممكنة؟\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"sql\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"نوع `integer` في PostgreSQL هو 32‑بت موقّع، يتراوح من `-2,147,483,648` إلى `2,147,483,647`.\\n\\n    العملية `256^4` = `4,294,967,296` تتجاوز هذا النطاق.\\n\\n    للتعامل مع أعداد أكبر:\"\n  ],\n  \"explanationCode\": [\n    {\n      \"language\": \"sql\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 904,
+    "outputTokens": 525,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 1670,
+    "providerCostUsd": 0.0004314,
+    "providerUpstreamCostUsd": 0.0004314,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000035256,
+    "outputUsd": 0.00009449999999999999,
+    "totalUsd": 0.000129756,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
