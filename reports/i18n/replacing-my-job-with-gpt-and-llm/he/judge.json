@@ -1,0 +1,37 @@
+{
+  "selectedCommit": "586d8400cd75952dcafcd4490f3b44506e392181",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The translation is excellent and captures Dan's voice well. The judge report mentioned a suggestion for 'מתאר' to 'מתווה', but looking at the actual MDX content for the selected commit, the word 'מתווה' is already used consistently in the relevant section ('הפוך את ההערות האלה למתווה'). The translation is technically accurate, preserves MDX structure, and uses natural Hebrew phrasing for technical concepts.",
+  "slug": "replacing-my-job-with-gpt-and-llm",
+  "locale": "he",
+  "candidateCommits": [
+    "586d8400cd75952dcafcd4490f3b44506e392181",
+    "2597f7ad085d0f38bea42c99f875188b9727bc17"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "הפוך את ההערות האלה למתאר",
+      "replacement": "הפוך את ההערות האלה למתווה",
+      "reason": "'מתאר' is technically correct but 'מתווה' is the standard term for an outline in this context, consistent with the rest of the translation.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug replacing-my-job-with-gpt-and-llm --locale he --skip-global",
+    "output": ""
+  }
+}
