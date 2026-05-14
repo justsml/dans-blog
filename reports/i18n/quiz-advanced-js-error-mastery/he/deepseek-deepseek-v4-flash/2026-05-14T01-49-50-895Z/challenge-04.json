@@ -1,0 +1,51 @@
+{
+  "index": 3,
+  "attempt": 1,
+  "originalTitle": "Cross-Frame instanceof",
+  "translatedTitle": "instanceof בין מסגרות",
+  "translation": {
+    "title": "instanceof בין מסגרות",
+    "group": "טריקים בבדיקת טיפוסים",
+    "options": [
+      {
+        "text": "תמיד true"
+      },
+      {
+        "text": "תמיד false"
+      },
+      {
+        "text": "עלול להיות false בין מסגרות"
+      },
+      {
+        "text": "זורק שגיאה"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "מה קורה עם `instanceof Error` בין iframes?"
+    ],
+    "hintsProse": [
+      "להקשרים שונים יש בנאי Error שונים."
+    ],
+    "explanationProse": [
+      "`instanceof` יכול להחזיר `false` בין הקשרי הרצה שונים (iframes, workers) כי לכל הקשר יש בנאי `Error` משלו. השתמש ב-`Object.prototype.toString.call(obj) === '[object Error]'` לזיהוי שגיאות אמין בין הקשרים."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"instanceof בין מסגרות\",\n  \"group\": \"טריקים בבדיקת טיפוסים\",\n  \"options\": [\n    {\n      \"text\": \"תמיד true\"\n    },\n    {\n      \"text\": \"תמיד false\"\n    },\n    {\n      \"text\": \"עלול להיות false בין מסגרות\"\n    },\n    {\n      \"text\": \"זורק שגיאה\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"מה קורה עם `instanceof Error` בין iframes?\"\n  ],\n  \"hintsProse\": [\n    \"להקשרים שונים יש בנאי Error שונים.\"\n  ],\n  \"explanationProse\": [\n    \"`instanceof` יכול להחזיר `false` בין הקשרי הרצה שונים (iframes, workers) כי לכל הקשר יש בנאי `Error` משלו. השתמש ב-`Object.prototype.toString.call(obj) === '[object Error]'` לזיהוי שגיאות אמין בין הקשרים.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 814,
+    "outputTokens": 842,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 6035,
+    "providerCostUsd": 0.0004996,
+    "providerUpstreamCostUsd": 0.0004996,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00011396000000000001,
+    "outputUsd": 0.00023576,
+    "totalUsd": 0.00034972000000000003,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

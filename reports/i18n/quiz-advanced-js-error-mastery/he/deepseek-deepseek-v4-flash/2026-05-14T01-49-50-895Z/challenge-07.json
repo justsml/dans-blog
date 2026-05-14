@@ -1,0 +1,51 @@
+{
+  "index": 6,
+  "attempt": 1,
+  "originalTitle": "Constructor Name Gotcha",
+  "translatedTitle": "מלכודת שם הבנאי",
+  "translation": {
+    "title": "מלכודת שם הבנאי",
+    "group": "שגיאות מותאמות אישית",
+    "options": [
+      {
+        "text": "\"MyError\""
+      },
+      {
+        "text": "\"Error\""
+      },
+      {
+        "text": "undefined"
+      },
+      {
+        "text": "TypeError"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "מה הפלט מבלי להגדיר `name`?"
+    ],
+    "hintsProse": [
+      "מהו ערך ברירת המחדל של `name` במחלקת Error?"
+    ],
+    "explanationProse": [
+      "ללא הגדרה מפורשת של `this.name`, השגיאה יורשת את מאפיין ה-`name` המוגדר כברירת מחדל ממחלקת `Error`, שהוא `\"Error\"`. לכן מחלקות שגיאה מותאמות אישית צריכות תמיד להגדיר `this.name = this.constructor.name` בבנאי שלהן."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"מלכודת שם הבנאי\",\n  \"group\": \"שגיאות מותאמות אישית\",\n  \"options\": [\n    {\n      \"text\": \"\\\"MyError\\\"\"\n    },\n    {\n      \"text\": \"\\\"Error\\\"\"\n    },\n    {\n      \"text\": \"undefined\"\n    },\n    {\n      \"text\": \"TypeError\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"מה הפלט מבלי להגדיר `name`?\"\n  ],\n  \"hintsProse\": [\n    \"מהו ערך ברירת המחדל של `name` במחלקת Error?\"\n  ],\n  \"explanationProse\": [\n    \"ללא הגדרה מפורשת של `this.name`, השגיאה יורשת את מאפיין ה-`name` המוגדר כברירת מחדל ממחלקת `Error`, שהוא `\\\"Error\\\"`. לכן מחלקות שגיאה מותאמות אישית צריכות תמיד להגדיר `this.name = this.constructor.name` בבנאי שלהן.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 810,
+    "outputTokens": 1174,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 8017,
+    "providerCostUsd": 0.0006316,
+    "providerUpstreamCostUsd": 0.0006316,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.0001134,
+    "outputUsd": 0.00032872,
+    "totalUsd": 0.00044212,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "Express Response Error",
+  "translatedTitle": "שגיאת תגובת Express",
+  "translation": {
+    "title": "שגיאת תגובת Express",
+    "group": "מלכודות API",
+    "options": [
+      {
+        "text": "שולח את אובייקט השגיאה המלא"
+      },
+      {
+        "text": "שולח {\"error\":{}}"
+      },
+      {
+        "text": "זורק שגיאת שרת"
+      },
+      {
+        "text": "שולח רק את הודעת השגיאה"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "מה נשלח ללקוח?"
+    ],
+    "hintsProse": [
+      "זכור כיצד אובייקטי Error מסודרים על ידי JSON.stringify."
+    ],
+    "explanationProse": [
+      "`res.json()` משתמש ב-`JSON.stringify()` פנימית, כך שאובייקט השגיאה הופך ל-`{}`. הלקוח מקבל `{\"error\":{}}`. כדי לתקן זאת, השתמש ב-`res.json({ error: error.message })` או `res.json({ error: { message: error.message, name: error.name } })`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"שגיאת תגובת Express\",\n  \"group\": \"מלכודות API\",\n  \"options\": [\n    { \"text\": \"שולח את אובייקט השגיאה המלא\" },\n    { \"text\": \"שולח {\\\"error\\\":{}}\" },\n    { \"text\": \"זורק שגיאת שרת\" },\n    { \"text\": \"שולח רק את הודעת השגיאה\" }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\"מה נשלח ללקוח?\"],\n  \"hintsProse\": [\"זכור כיצד אובייקטי Error מסודרים על ידי JSON.stringify.\"],\n  \"explanationProse\": [\"`res.json()` משתמש ב-`JSON.stringify()` פנימית, כך שאובייקט השגיאה הופך ל-`{}`. הלקוח מקבל `{\\\"error\\\":{}}`. כדי לתקן זאת, השתמש ב-`res.json({ error: error.message })` או `res.json({ error: { message: error.message, name: error.name } })`.\"]\n}",
+  "telemetry": {
+    "inputTokens": 837,
+    "outputTokens": 1413,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 9425,
+    "providerCostUsd": 0.0007326,
+    "providerUpstreamCostUsd": 0.0007326,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00011718,
+    "outputUsd": 0.00039564000000000005,
+    "totalUsd": 0.0005128200000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

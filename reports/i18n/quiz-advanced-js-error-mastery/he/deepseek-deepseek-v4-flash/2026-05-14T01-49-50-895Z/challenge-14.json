@@ -1,0 +1,51 @@
+{
+  "index": 13,
+  "attempt": 1,
+  "originalTitle": "Object vs Error Detection",
+  "translatedTitle": "זיהוי אובייקט לעומת שגיאה",
+  "translation": {
+    "title": "זיהוי אובייקט לעומת שגיאה",
+    "group": "גבולות שגיאה",
+    "options": [
+      {
+        "text": "true, true"
+      },
+      {
+        "text": "false, false"
+      },
+      {
+        "text": "true, false"
+      },
+      {
+        "text": "false, true"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "מה מחזירות הבדיקות הללו?"
+    ],
+    "hintsProse": [
+      "בדיקה אחת בודקת את שרשרת האב-טיפוס, והשנייה בודקת חריצים פנימיים."
+    ],
+    "explanationProse": [
+      "`instanceof Error` מחזיר `false` כי האובייקט לא נוצר על ידי בנאי Error. `Object.prototype.toString.call()` גם מחזיר `false` (הוא מחזיר `'[object Object]'`) כי הוא בודק את החריץ הפנימי `[[Class]]`. שתי השיטות מזהות נכון את זה כאובייקט שגיאה מזויף."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"זיהוי אובייקט לעומת שגיאה\",\n  \"group\": \"גבולות שגיאה\",\n  \"options\": [\n    {\"text\": \"true, true\"},\n    {\"text\": \"false, false\"},\n    {\"text\": \"true, false\"},\n    {\"text\": \"false, true\"}\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\"מה מחזירות הבדיקות הללו?\"],\n  \"hintsProse\": [\"בדיקה אחת בודקת את שרשרת האב-טיפוס, והשנייה בודקת חריצים פנימיים.\"],\n  \"explanationProse\": [\"`instanceof Error` מחזיר `false` כי האובייקט לא נוצר על ידי בנאי Error. `Object.prototype.toString.call()` גם מחזיר `false` (הוא מחזיר `'[object Object]'`) כי הוא בודק את החריץ הפנימי `[[Class]]`. שתי השיטות מזהות נכון את זה כאובייקט שגיאה מזויף.\"]\n}",
+  "telemetry": {
+    "inputTokens": 824,
+    "outputTokens": 2554,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 14938,
+    "providerCostUsd": 0.0011864,
+    "providerUpstreamCostUsd": 0.0011864,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00011536000000000001,
+    "outputUsd": 0.0007151200000000001,
+    "totalUsd": 0.0008304800000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "index": 0,
+  "attempt": 1,
+  "originalTitle": "The Empty Object Mystery",
+  "translatedTitle": "תעלומת האובייקט הריק",
+  "translation": {
+    "title": "תעלומת האובייקט הריק",
+    "group": "הפתעות בסריאליזציה",
+    "options": [
+      {
+        "text": "{\"message\":\"Oops\",\"name\":\"Error\"}"
+      },
+      {
+        "text": "{}"
+      },
+      {
+        "text": "{\"error\":\"Oops\"}"
+      },
+      {
+        "text": "null"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "מה מחזירה `JSON.stringify(error)`?"
+    ],
+    "hintsProse": [
+      "חשוב על מאפיינים ניתנים למנייה באובייקטי Error."
+    ],
+    "explanationProse": [
+      "לאובייקטי שגיאה יש מאפיינים שאינם ניתנים למנייה (`message`, `name`, `stack`), לכן `JSON.stringify()` מחזירה `{}`. זוהי מלכודת נפוצה בעת שליחת שגיאות בתגובות API. השתמש ב-`JSON.stringify(error, Object.getOwnPropertyNames(error))` או צור אובייקט רגיל במקום."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"תעלומת האובייקט הריק\",\n  \"group\": \"הפתעות בסריאליזציה\",\n  \"options\": [\n    {\n      \"text\": \"{\\\"message\\\":\\\"Oops\\\",\\\"name\\\":\\\"Error\\\"}\"\n    },\n    {\n      \"text\": \"{}\"\n    },\n    {\n      \"text\": \"{\\\"error\\\":\\\"Oops\\\"}\"\n    },\n    {\n      \"text\": \"null\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"מה מחזירה `JSON.stringify(error)`?\"\n  ],\n  \"hintsProse\": [\n    \"חשוב על מאפיינים ניתנים למנייה באובייקטי Error.\"\n  ],\n  \"explanationProse\": [\n    \"לאובייקטי שגיאה יש מאפיינים שאינם ניתנים למנייה (`message`, `name`, `stack`), לכן `JSON.stringify()` מחזירה `{}`. זוהי מלכודת נפוצה בעת שליחת שגיאות בתגובות API. השתמש ב-`JSON.stringify(error, Object.getOwnPropertyNames(error))` או צור אובייקט רגיל במקום.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 830,
+    "outputTokens": 907,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 6621,
+    "providerCostUsd": 0.0005288,
+    "providerUpstreamCostUsd": 0.0005288,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.0001162,
+    "outputUsd": 0.00025396,
+    "totalUsd": 0.00037016,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
