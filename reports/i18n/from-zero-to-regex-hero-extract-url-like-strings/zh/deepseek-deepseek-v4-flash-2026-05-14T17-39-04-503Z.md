@@ -1,0 +1,287 @@
+# Translation Candidate
+- Slug: from-zero-to-regex-hero-extract-url-like-strings
+- Locale: zh
+- Model: deepseek/deepseek-v4-flash
+- Target: src/content/posts/2024-12-29--from-zero-to-regex-hero-extract-url-like-strings/zh/index.mdx
+- Validation: deferred
+- Runtime seconds: 26.52
+- Input tokens: 5515
+- Output tokens: 3884
+- Thinking tokens: unknown
+- Cached input tokens: 384
+- Cache write tokens: 0
+- Estimated cost: $0.001807
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: 从零到正则表达式高手
+subTitle: 使用单个正则表达式提取并解析类URL字符串
+category: Regex
+subCategory: Data Extraction
+date: '2024-12-29'
+modified: '2025-01-06'
+tags:
+  - regex
+  - url
+  - data-extraction
+  - data-processing
+social_image: ../desktop-social.webp
+cover_full_width: ../regex-url-parsing-wide.webp
+cover_mobile: ../regex-url-parsing-square-200.webp
+cover_icon: ../regex-url-parsing-square-200.webp
+---
+import { CodeTabs } from '../../../../components/CodeTabs';
+
+**目录**
+
+- 🚀 [引言](#-introduction)
+- 🔍 [从文本中提取 URL](#-extracting-urls-from-text)
+- 🛳️ [120+ 字节的正则表达式](#️-the-120-byte-regex)
+- 🧩 [逐步拆解](#-breaking-it-down-step-by-step)
+- 🛠️ [解析示例](#-pa)
+- ☑️ [下一步](#-next-steps)
+- 📝 [总结](#-summary)
+- 📚 [深入学习](#-further-learning)
+
+**TL;DR：** 直接跳到 [120+ 字节的正则表达式](#️-the-120-byte-regex)。
+
+## 🚀 引言
+
+从原始文本中提取 URL 有时就像玩一场乏味的打地鼠游戏。标点符号、括号包裹和模糊的格式都在合谋挫败你的努力。无论你是在构建网页爬虫、数据分析器还是聊天应用，准确提取 URL 都至关重要。
+
+在这篇文章中，我们将采用灵活的两步法直面问题。我们的目标是**首先捕获所有 _潜在的_ URL 类字符串**，然后在后续过程中处理验证。
+
+> 💡 **注意：** 此模式并非用于**_验证_** URL！它故意对标点符号和拼写错误保持宽松。
+
+## 🔍 目标：从文本中提取 URL
+
+从原始文本中提取 URL 时，两步法很有效：
+
+1. **捕获所有 URL 类内容**：撒大网，抓取所有*可能*是 URL 的字符串。这就是我们的“120+ 字节正则表达式”大显身手的地方。
+2. **验证**：捕获这些候选者后，使用二次检查（例如 DNS 解析、与已知域名对比）来剔除无效条目。
+
+### 可视化挑战
+
+像 `extract` 和 `parse` 这样的术语经常互换使用，但它们指的是不同的过程。提取 URL 涉及从更大的文本体中识别并捕获潜在的 URL。而解析则是将这些 URL 分解成其组成部分。
+
+当我提到解析或“URL 部分”时，我指的是以下组件：
+
+<figure>
+  <figcaption>所有 URL 的 5 个部分</figcaption>
+![URL 结构示意图](../WhatUrlsAreMadeOf-ColorMatched.svg "URL 结构示意图")
+</figure>
+
+<details class="inset breakout">
+  <summary>点击查看 RegEx101 的子串匹配截图。</summary>
+
+  在深入正则表达式之前，我们先使用一个可视化工具来看看我的模式能捕获多少匹配：
+
+  <figure>
+    <figcaption>使用 [RegEx101 网站](https://regex101.com/r/jO8bC4/69) 可视化多行匹配</figcaption>
+    ![预览“批量”多行匹配结果](../RegEx101-Matches-Screenshot.webp "预览“批量”多行匹配结果")
+  </figure>
+</details>
+
+## 120+ 字节的正则表达式
+
+下面是一个简洁的正则表达式，旨在一次性提取并解析 URL。它支持多种协议、域名、路径以及可选的查询/片段部分。
+
+别担心——我们一步步拆解！
+
+```js title="120+ 字节的 URL 正则表达式" frame="code"
+const urlRegex = /([-.a-z0-9]+:\/{1,3})([^-\/\.[\](|)\s?][^`\/\s\]?]+)([-_a-z0-9!@$%^&*()=+;/~\.]*)[?]?([^#\s`?]*)[#]?([^#\s'"`\.,!]*)/gi;
+// 兼容性：ES5+
+
+// 同样的模式，按换行符拆分以便阅读：
+([-.a-z0-9]+:\/{1,3})
+([^-\/\.[\](|)\s?][^`\/\s\]?]+)
+([-_a-z0-9!@$%^&*()=+;/~\.]*)
+[?]?([^#\s`?]*)
+[#]?([^#\s'"`\.,!]*)
+
+```
+
+<blockquote class="inset">在<a href="#post-comments">下方评论区</a>分享你见过（或写过）的最疯狂的正则表达式吧！🚀</blockquote>
+
+## 🧩 逐步拆解
+
+我们来剖析这个正则表达式，看看它的各个组成部分是如何工作的：
+
+<h3>1. 协议（第1组）：<code>{`([-.a-z0-9]+:\/{1,3})`}</code></h3>
+
+<ul>
+  <li>**目的：** 匹配 URL 的协议部分（例如 `http://`、`ftp://`、`custom-scheme://`）。</li>
+  <li>
+    **解释：**
+    <ul>
+      <li><code>[-.a-z0-9]+</code>：匹配一个或多个小写字母、数字、连字符或句点（协议方案中常见）。</li>
+      <li><code>{`:\/{1,3}`}</code>：匹配一个冒号后跟一到三个斜杠（<code>:/</code>、<code>://</code> 或 <code>:///</code>）。</li>
+    </ul>
+  </li>
+</ul>
+
+<h3>2. 域名（第2组）：<code>{`([^-\/\.[\](|)\s?][^\`\/\s\]?]+)`}</code></h3>
+
+<ul>
+  <li>**目的：** 捕获 URL 的域名或主机部分。</li>
+  <li>
+    **解释：**
+    <ul>
+      <li><code>[^-\/\.[\](|)\s?]</code>：匹配除指定特殊字符和空白字符之外的任意字符。</li>
+      <li><code>[^`\/\s\]?]+</code>：匹配一个或多个除反引号、斜杠、空白字符或右方括号之外的字符。</li>
+    </ul>
+  </li>
+</ul>
+
+<h3>3. 路径（第3组）：<code>{`([-_a-z0-9!@$%^&*()=+;/~\\.]*)`}</code></h3>
+
+<ul>
+  <li>**目的：** 匹配 URL 的路径部分。</li>
+  <li>
+    **解释：**
+    <ul>
+      <li><code>[-_a-z0-9!@$%^&*()=+;/~\.]*</code>：匹配零个或多个路径中常见的 URL 安全字符。</li>
+    </ul>
+  </li>
+</ul>
+
+<h3>4. 查询（第4组）：<code>[?]?([^#\s`?]*)</code></h3>
+
+<ul>
+  <li>**目的：** 可选地匹配查询字符串，以任意 <code>?</code> 字符开头。</li>
+  <li>
+    **解释：**
+    <ul>
+      <li><code>[?]?</code>：可选地匹配一个 <code>?</code>。（方括号并非严格必要，但比极简的双问号 <code>??</code> 更清晰。同时，它与下一个（类似的）匹配组 <code>[#]?</code> 在视觉上形成对应。）</li>
+      <li><code>([^#\s`?]*)</code>：匹配零个或多个不是井号、空白、反引号或问号的字符。</li>
+    </ul>
+  </li>
+</ul>
+
+<h3>5. 片段（第5组）：<code>[#]?([^#\s'"`\.,!]*)</code></h3>
+
+<ul>
+  <li>**目的：** 可选地匹配以 <code>#</code> 开头的片段标识符。</li>
+  <li>
+    **解释：**
+    <ul>
+      <li><code>[#]?</code>：可选地匹配一个 <code>#</code>。</li>
+      <li><code>([^#\s'"`\.,!]*)</code>：匹配零个或多个不是禁止标点或空白的字符。</li>
+    </ul>
+  </li>
+</ul>
+
+## 🛠️ 解析示例
+
+## 🛠️ 解析示例
+
+下面演示如何用 JavaScript 让这个巨型正则表达式发挥作用：
+
+<CodeTabs client:only
+ tabs={[
+    "代码：提取 URL",
+    "结果：提取的 URL",
+    "结果：URL 各部分",
+  ]} >
+```js title="extract-urls.js" frame="code"
+const text = `
+Check this out: https://example.com/path?query=123#section
+And also (ftp://files.server.org/index).
+Plus a weird one: custom-scheme://host/param;weird^stuff
+`;
+
+const urlRegex =
+  /([-.a-z0-9]+:\/{1,3})([^-\/\.[\](|)\s?][^`\/\s\]?]+)([-_a-z0-9!@$%^&*()=+;/~\.]*)[?]?([^#\s`?]*)[#]?([^#\s'"`\.,!]*)/gi;
+
+const matches = [
+  ...text.matchAll(urlRegex),
+].map((match) => match[0]);
+console.log("Extracted URLs:", matches);
+
+const parts = [
+  ...text.matchAll(urlRegex),
+].map((match) => match.slice(1));
+console.log("Extracted Parts:", parts);
+```
+
+```json title="extracted-urls.json"
+[
+  "https://example.com/path?query=123#section",
+  "ftp://files.server.org/index",
+  "custom-scheme://host/param;weird^stuff"
+]
+```
+
+```json title="urls-parts.json"
+[
+  [
+    "https://",    // Protocol
+    "example.com", // Domain
+    "/path",       // Path
+    "query=123",   // Query
+    "section"      // Fragment
+  ],
+  [
+    "ftp://",           // Protocol
+    "files.server.org", // Domain
+    "/index",           // Path
+    "",                 // Query
+    ""                  // Fragment
+  ],
+  [
+    "custom-scheme://",   // Protocol
+    "host",               // Domain
+    "/param;weird^stuff", // Path
+    "",                   // Query
+    ""                    // Fragment
+  ]
+]
+```
+
+</CodeTabs>
+
+## ☑️ 后续步骤
+
+根据你的使用场景，你可能需要优化这个正则表达式，或者添加更多的验证和后处理步骤。
+
+### 不同项目，不同需求
+
+不同项目有不同的需求和安全考量：
+
+1. **网页抓取**：验证 URL 以确保其可访问且可信。
+2. **数据处理**：从用户生成内容中提取 URL，同时确保安全性。
+3. **数据分析**：过滤重复或无关链接，用于研究或营销。
+4. **面向用户的应用程序**：在聊天应用或论坛中自动将 URL 转为超链接。
+
+### 后处理与验证
+
+收集到潜在的 URL 后，应用额外的检查：
+
+- **DNS 查询**：验证域名能否解析。
+- **安全检查**：使用服务检查恶意或钓鱼网站。
+- **自定义规则**：应用项目特定的过滤器（例如允许的 TLD、最大 URL 长度）。
+
+## 📝 总结
+
+从半结构化字符串中提取数据，或许正是正则表达式最令人满足的部分。
+
+以下是关键要点回顾：
+
+- **使用可视化工具编写、测试**并理解你的[正则表达式模式](https://regex101.com/r/jO8bC4/69)。
+- **将挑战分解为多个部分**，分别解决每个部分。从某种意义上说，捕获组为我们提供了正则表达式的“路径标记”。
+- **使用“宽松”的匹配表达式**，在数据摄取时避免严格的规范符合性。
+- **在初始提取后应用验证步骤**至关重要——始终考虑项目的安全性和特定需求。
+
+遵循这些步骤，你可以有效地提取任何半结构化字符串数据，为后续处理和验证奠定基础。
+
+## 📚 进一步学习
+
+- 记得在 [RegEx101.com 上体验在线演示](https://regex101.com/r/jO8bC4/69)！
+- 原始 StackOverflow 问题，以及[我的回答链接在此](https://stackoverflow.com/a/34669019/369727)。
+- [MDN 正则表达式文档](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions)
+- [高级正则表达式技巧](https://www.regular-expressions.info/)：探索前瞻、后顾及其他高级模式，实现更精确的匹配。
+- [RFC 3986 - URI 通用语法](https://datatracker.ietf.org/doc/html/rfc3986)
+````
