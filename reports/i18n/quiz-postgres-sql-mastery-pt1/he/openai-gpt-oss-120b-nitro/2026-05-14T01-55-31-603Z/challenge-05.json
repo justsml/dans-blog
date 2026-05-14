@@ -1,0 +1,55 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "timestamptz vs timestamp",
+  "translatedTitle": "timestamptz מול timestamp",
+  "translation": {
+    "title": "timestamptz מול timestamp",
+    "group": "זמנים",
+    "options": [
+      {
+        "text": "שניהם תופסים 8 בתים, אך מייצגים סמנטיקה שונה של חותמת זמן"
+      },
+      {
+        "text": "They\\"
+      },
+      {
+        "text": "timestamptz משמר כל אזור זמן שהוזן"
+      },
+      {
+        "text": "timestamptz שומר את שם אזור הזמן המקורי או את ההיסט offset"
+      },
+      {
+        "text": "timestamptz שומר ערך של 2 בתים לאזור זמן"
+      },
+      {
+        "text": "timestamptz הוא הצאצא של timestamp"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "מהי ההצהרה **המדויקת ביותר** לגבי `timestamptz` ו‑`timestamp`?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "שניהם בגודל של 8 בתים, אך אינם מאחסנים את אותו סוג ערך.\n\n    אז מה ההבדל? הוא בניתוח הקלט.\n\n    **`timestamptz`**\n    - מנרמל קלט לנקודה מוחלטת בזמן.\n    - מתחשב בהגדרת `TimeZone` של השרת/החיבור בעת ניתוח קלט ללא היסט מפורש וכאשר מציג פלט.\n\n    **`timestamp`**\n    - מאחסן תאריך ושעה ללא המרת אזור זמן.\n    - אינו משמר או מנרמל מידע על אזור זמן.\n    \n    \n    **`timestamp`**\n\n    - מאחסן את התאריך והשעה ללא מידע על אזור זמן.\n    - שימושי לאחסון מפורש של תאריכים סטנדרטיים, בין אם ב‑UTC או באיזור זמן ספציפי."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"timestamptz מול timestamp\",\n  \"group\": \"זמנים\",\n  \"options\": [\n    {\n      \"text\": \"שניהם תופסים 8 בתים, אך מייצגים סמנטיקה שונה של חותמת זמן\"\n    },\n    {\n      \"text\": \"They\\\\\"\n    },\n    {\n      \"text\": \"timestamptz משמר כל אזור זמן שהוזן\"\n    },\n    {\n      \"text\": \"timestamptz שומר את שם אזור הזמן המקורי או את ההיסט offset\"\n    },\n    {\n      \"text\": \"timestamptz שומר ערך של 2 בתים לאזור זמן\"\n    },\n    {\n      \"text\": \"timestamptz הוא הצאצא של timestamp\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"מהי ההצהרה **המדויקת ביותר** לגבי `timestamptz` ו‑`timestamp`?\"\n  ],\n  \"questionCode\": [],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"שניהם בגודל של 8 בתים, אך אינם מאחסנים את אותו סוג ערך.\\n\\n    אז מה ההבדל? הוא בניתוח הקלט.\\n\\n    **`timestamptz`**\\n    - מנרמל קלט לנקודה מוחלטת בזמן.\\n    - מתחשב בהגדרת `TimeZone` של השרת/החיבור בעת ניתוח קלט ללא היסט מפורש וכאשר מציג פלט.\\n\\n    **`timestamp`**\\n    - מאחסן תאריך ושעה ללא המרת אזור זמן.\\n    - אינו משמר או מנרמל מידע על אזור זמן.\\n    \\n    \\n    **`timestamp`**\\n\\n    - מאחסן את התאריך והשעה ללא מידע על אזור זמן.\\n    - שימושי לאחסון מפורש של תאריכים סטנדרטיים, בין אם ב‑UTC או באיזור זמן ספציפי.\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 1015,
+    "outputTokens": 535,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1424,
+    "providerCostUsd": 0.00047325,
+    "providerUpstreamCostUsd": 0.00047325,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000039585,
+    "outputUsd": 0.0000963,
+    "totalUsd": 0.000135885,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

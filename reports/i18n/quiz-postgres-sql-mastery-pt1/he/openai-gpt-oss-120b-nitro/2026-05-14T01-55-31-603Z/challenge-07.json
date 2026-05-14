@@ -1,0 +1,58 @@
+{
+  "index": 6,
+  "attempt": 1,
+  "originalTitle": "Identify Invalid Types",
+  "translatedTitle": "זיהוי סוגים לא תקינים",
+  "translation": {
+    "title": "זיהוי סוגים לא תקינים",
+    "group": "סוגי Postgres",
+    "options": [
+      {
+        "text": "int"
+      },
+      {
+        "text": "real"
+      },
+      {
+        "text": "bigint"
+      },
+      {
+        "text": "bigserial"
+      },
+      {
+        "text": "smallserial"
+      },
+      {
+        "text": "decimal128"
+      },
+      {
+        "text": "double precision"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "איזה מבין אלו ❌ אינו סוג PostgreSQL תקף?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "זה עשוי להיראות מוכר מכיוון ש-`decimal128` הוא סוג במקומות רבים (כולל Mongo ו‑Java). הוא אינו סוג PostgreSQL תקף, `decimal` הוא.\n\n    הסוגים המספריים התקינים כוללים:\n    - `int` (מספר שלם של 4 בתים)\n    - `bigint` (מספר שלם של 8 בתים)\n    - `real` (נקודה צפה של 4 בתים)\n    - `double precision` (נקודה צפה של 8 בתים)\n    - `bigserial` (מספר שלם אוטומטי של 8 בתים)\n    - `smallserial` (מספר שלם אוטומטי של 2 בתים)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"זיהוי סוגים לא תקינים\",\n  \"group\": \"סוגי Postgres\",\n  \"options\": [\n    {\n      \"text\": \"int\"\n    },\n    {\n      \"text\": \"real\"\n    },\n    {\n      \"text\": \"bigint\"\n    },\n    {\n      \"text\": \"bigserial\"\n    },\n    {\n      \"text\": \"smallserial\"\n    },\n    {\n      \"text\": \"decimal128\"\n    },\n    {\n      \"text\": \"double precision\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"איזה מבין אלו ❌ אינו סוג PostgreSQL תקף?\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"זה עשוי להיראות מוכר מכיוון ש-`decimal128` הוא סוג במקומות רבים (כולל Mongo ו‑Java). הוא אינו סוג PostgreSQL תקף, `decimal` הוא.\\n\\n    הסוגים המספריים התקינים כוללים:\\n    - `int` (מספר שלם של 4 בתים)\\n    - `bigint` (מספר שלם של 8 בתים)\\n    - `real` (נקודה צפה של 4 בתים)\\n    - `double precision` (נקודה צפה של 8 בתים)\\n    - `bigserial` (מספר שלם אוטומטי של 8 בתים)\\n    - `smallserial` (מספר שלם אוטומטי של 2 בתים)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 931,
+    "outputTokens": 769,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 2101,
+    "providerCostUsd": 0.00058185,
+    "providerUpstreamCostUsd": 0.00058185,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000036309,
+    "outputUsd": 0.00013842,
+    "totalUsd": 0.000174729,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

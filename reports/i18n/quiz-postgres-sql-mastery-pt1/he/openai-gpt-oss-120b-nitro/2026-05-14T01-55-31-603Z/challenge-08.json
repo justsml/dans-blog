@@ -1,0 +1,55 @@
+{
+  "index": 7,
+  "attempt": 1,
+  "originalTitle": "Identify Invalid Types",
+  "translatedTitle": "זיהוי סוגים לא חוקיים",
+  "translation": {
+    "title": "זיהוי סוגים לא חוקיים",
+    "group": "סוגי Postgres",
+    "options": [
+      {
+        "text": "cidr"
+      },
+      {
+        "text": "inet"
+      },
+      {
+        "text": "ipv4"
+      },
+      {
+        "text": "macaddr"
+      },
+      {
+        "text": "macaddr8"
+      },
+      {
+        "text": "interval"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "איזה מבין אלה ❌ אינו סוג PostgreSQL חוקי?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "האם זה גרם לך לתסכול, אפילו _כועס_? אתה לא לבד! לצטט תורם \"ליבה\" בלתי מזוהה, \"מה לעזאזל, דן?! נפלתי על שאלות הסוגים! זה אלים, אדוני! לא חולק את הציון שלי, חח.\" 😈 בבקשה.\n\n    סט הסוגים המתקדמים של PostgreSQL אינו כולל `ipv4`. בכל פעם שאני מנסה להשתמש בו בלי לחפש, אני טועה. אולי `macaddr8` גורם לי לחשוב שחייבים להיות סוגי `ipv4` ו-`ipv6`. לא, `inet` מכסה את שניהם. וגם `cidr` מכסה מסכות רשת לשניהם.\n\n    סוגי רשת חוקיים כוללים:\n    - `cidr` (כתובת רשת IPv4/IPv6)\n    - `inet` (כתובת מארח IPv4/IPv6)\n    - `macaddr` (כתובת MAC)\n    - `macaddr8` (כתובת MAC EUI-64)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"זיהוי סוגים לא חוקיים\",\n  \"group\": \"סוגי Postgres\",\n  \"options\": [\n    {\n      \"text\": \"cidr\"\n    },\n    {\n      \"text\": \"inet\"\n    },\n    {\n      \"text\": \"ipv4\"\n    },\n    {\n      \"text\": \"macaddr\"\n    },\n    {\n      \"text\": \"macaddr8\"\n    },\n    {\n      \"text\": \"interval\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"איזה מבין אלה ❌ אינו סוג PostgreSQL חוקי?\"\n  ],\n  \"questionCode\": [],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"האם זה גרם לך לתסכול, אפילו _כועס_? אתה לא לבד! לצטט תורם \\\"ליבה\\\" בלתי מזוהה, \\\"מה לעזאזל, דן?! נפלתי על שאלות הסוגים! זה אלים, אדוני! לא חולק את הציון שלי, חח.\\\" 😈 בבקשה.\\n\\n    סט הסוגים המתקדמים של PostgreSQL אינו כולל `ipv4`. בכל פעם שאני מנסה להשתמש בו בלי לחפש, אני טועה. אולי `macaddr8` גורם לי לחשוב שחייבים להיות סוגי `ipv4` ו-`ipv6`. לא, `inet` מכסה את שניהם. וגם `cidr` מכסה מסכות רשת לשניהם.\\n\\n    סוגי רשת חוקיים כוללים:\\n    - `cidr` (כתובת רשת IPv4/IPv6)\\n    - `inet` (כתובת מארח IPv4/IPv6)\\n    - `macaddr` (כתובת MAC)\\n    - `macaddr8` (כתובת MAC EUI-64)\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 997,
+    "outputTokens": 1007,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 2672,
+    "providerCostUsd": 0.00073455,
+    "providerUpstreamCostUsd": 0.00073455,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000038883,
+    "outputUsd": 0.00018126,
+    "totalUsd": 0.000220143,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

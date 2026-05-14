@@ -1,0 +1,49 @@
+{
+  "index": 1,
+  "attempt": 1,
+  "originalTitle": "Cast Syntax Variations",
+  "translatedTitle": "וריאציות תחביר המרה",
+  "translation": {
+    "title": "וריאציות תחביר המרה",
+    "group": "חימום: המרת סוגים",
+    "options": [
+      {
+        "text": "'95'::INTEGER"
+      },
+      {
+        "text": "INTEGER '95'"
+      },
+      {
+        "text": "CAST('95', INTEGER)"
+      },
+      {
+        "text": "CAST('95' AS INTEGER)"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "איזה מהמרי הסוגים האלה **לא תקין** ❌?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "PostgreSQL תומך בשלושה תחבירי המרה:\n\n    1. ANSI SQL: `CAST(expression AS type)`.\n    2. PostgreSQL: `expression::type`.\n    3. פונקציית סוג: `type 'literal'`.\n\n    כולם שווים מבחינה פונקציונלית, אך:\n    - `CAST()` הוא הנייד ביותר.\n    - `::` ספציפי ל‑PostgreSQL אך נפוץ.\n    - הסגנון אינפיקס `type 'literal'` פחות נפוץ אך עדיין תקף."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"וריאציות תחביר המרה\",\n  \"group\": \"חימום: המרת סוגים\",\n  \"options\": [\n    {\n      \"text\": \"'95'::INTEGER\"\n    },\n    {\n      \"text\": \"INTEGER '95'\"\n    },\n    {\n      \"text\": \"CAST('95', INTEGER)\"\n    },\n    {\n      \"text\": \"CAST('95' AS INTEGER)\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"איזה מהמרי הסוגים האלה **לא תקין** ❌?\"\n  ],\n  \"questionCode\": [],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"PostgreSQL תומך בשלושה תחבירי המרה:\\n\\n    1. ANSI SQL: `CAST(expression AS type)`.\\n    2. PostgreSQL: `expression::type`.\\n    3. פונקציית סוג: `type 'literal'`.\\n\\n    כולם שווים מבחינה פונקציונלית, אך:\\n    - `CAST()` הוא הנייד ביותר.\\n    - `::` ספציפי ל‑PostgreSQL אך נפוץ.\\n    - הסגנון אינפיקס `type 'literal'` פחות נפוץ אך עדיין תקף.\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 892,
+    "outputTokens": 657,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 2285,
+    "providerCostUsd": 0.0004896,
+    "providerUpstreamCostUsd": 0.0004896,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000034788,
+    "outputUsd": 0.00011826,
+    "totalUsd": 0.000153048,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

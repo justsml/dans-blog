@@ -1,0 +1,49 @@
+{
+  "index": 11,
+  "attempt": 1,
+  "originalTitle": "Timestamp Precision",
+  "translatedTitle": "דיוק חותמת זמן",
+  "translation": {
+    "title": "דיוק חותמת זמן",
+    "group": "תאריך/זמן",
+    "options": [
+      {
+        "text": "2024-01-08 13:30:00+00"
+      },
+      {
+        "text": "2024-01-08 13:30:00.123456+00"
+      },
+      {
+        "text": "2024-01-08 13:30:00.123456789+00"
+      },
+      {
+        "text": "2024-01-08 13:30:00.1234567"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "מהו הליטרל `timestamp` הקטן ביותר שמחוץ למקסימום הדיוק של `time` ב‑Postgres?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "לחותמות זמן ב‑PostgreSQL יש דיוק של מיקרו‑שנייה (6 ספרות אחרי הנקודה).\n\n    - מקסימום: `.123456` (6 ספרות)\n    - ננו‑שניות (9 ספרות) מעוגלות או נחתכות לדיוק הנתמך\n    - מקדמי אזור זמן מתקבלים עבור `timestamptz`, אך אינם חובה\n\n    **פיתוי לא נפוץ:** חלק מהשפות/מסגרות שולחות דיוק של ננו‑שניות, אך PostgreSQL שומרת חותמות זמן בדיוק של מיקרו‑שנייה."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"דיוק חותמת זמן\",\n  \"group\": \"תאריך/זמן\",\n  \"options\": [\n    {\n      \"text\": \"2024-01-08 13:30:00+00\"\n    },\n    {\n      \"text\": \"2024-01-08 13:30:00.123456+00\"\n    },\n    {\n      \"text\": \"2024-01-08 13:30:00.123456789+00\"\n    },\n    {\n      \"text\": \"2024-01-08 13:30:00.1234567\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"מהו הליטרל `timestamp` הקטן ביותר שמחוץ למקסימום הדיוק של `time` ב‑Postgres?\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"sql\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"לחותמות זמן ב‑PostgreSQL יש דיוק של מיקרו‑שנייה (6 ספרות אחרי הנקודה).\\n\\n    - מקסימום: `.123456` (6 ספרות)\\n    - ננו‑שניות (9 ספרות) מעוגלות או נחתכות לדיוק הנתמך\\n    - מקדמי אזור זמן מתקבלים עבור `timestamptz`, אך אינם חובה\\n\\n    **פיתוי לא נפוץ:** חלק מהשפות/מסגרות שולחות דיוק של ננו‑שניות, אך PostgreSQL שומרת חותמות זמן בדיוק של מיקרו‑שנייה.\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 955,
+    "outputTokens": 466,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1565,
+    "providerCostUsd": 0.00042285,
+    "providerUpstreamCostUsd": 0.00042285,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000037245,
+    "outputUsd": 0.00008387999999999999,
+    "totalUsd": 0.00012112499999999999,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

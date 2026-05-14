@@ -1,0 +1,49 @@
+{
+  "index": 13,
+  "attempt": 1,
+  "originalTitle": "Check Constraint Timing",
+  "translatedTitle": "תזמון מגבלת בדיקה",
+  "translation": {
+    "title": "תזמון מגבלת בדיקה",
+    "group": "הגבלות",
+    "options": [
+      {
+        "text": "מיידית עבור שורות חדשות או ששונו"
+      },
+      {
+        "text": "בביצוע ההתקשרות"
+      },
+      {
+        "text": "בבקשה הבאה"
+      },
+      {
+        "text": "אף פעם - המגבלות נבדקות רק ב‑INSERT"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "מתי נבדקת מגבלת הציון הזו?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "`NOT VALID` constraints:\n    - נבדקות מיידית עבור הוספות ועדכונים חדשים\n    - אינן מאמתות שורות קיימות\n    - ניתן לאמת שורות קיימות מאוחר יותר עם `VALIDATE CONSTRAINT`\n    - שימושיות בטבלאות גדולות\n    \n    ללא `NOT VALID`:\n    - המגבלה נבדקת מיידית\n    - כל השורות הקיימות מאומתות\n    - יכול להיות איטי בטבלאות גדולות"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"תזמון מגבלת בדיקה\",\n  \"group\": \"הגבלות\",\n  \"options\": [\n    {\n      \"text\": \"מיידית עבור שורות חדשות או ששונו\"\n    },\n    {\n      \"text\": \"בביצוע ההתקשרות\"\n    },\n    {\n      \"text\": \"בבקשה הבאה\"\n    },\n    {\n      \"text\": \"אף פעם - המגבלות נבדקות רק ב‑INSERT\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"מתי נבדקת מגבלת הציון הזו?\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"sql\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"`NOT VALID` constraints:\\n    - נבדקות מיידית עבור הוספות ועדכונים חדשים\\n    - אינן מאמתות שורות קיימות\\n    - ניתן לאמת שורות קיימות מאוחר יותר עם `VALIDATE CONSTRAINT`\\n    - שימושיות בטבלאות גדולות\\n    \\n    ללא `NOT VALID`:\\n    - המגבלה נבדקת מיידית\\n    - כל השורות הקיימות מאומתות\\n    - יכול להיות איטי בטבלאות גדולות\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 884,
+    "outputTokens": 751,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1906,
+    "providerCostUsd": 0.0005832,
+    "providerUpstreamCostUsd": 0.0005832,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000034476,
+    "outputUsd": 0.00013518,
+    "totalUsd": 0.000169656,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

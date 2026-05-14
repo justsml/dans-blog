@@ -1,0 +1,55 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Identify Invalid Types",
+  "translatedTitle": "זיהוי סוגים לא חוקיים",
+  "translation": {
+    "title": "זיהוי סוגים לא חוקיים",
+    "group": "סוגי Postgres",
+    "options": [
+      {
+        "text": "box"
+      },
+      {
+        "text": "line"
+      },
+      {
+        "text": "point"
+      },
+      {
+        "text": "circle"
+      },
+      {
+        "text": "polygon"
+      },
+      {
+        "text": "triangle"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "איזה מבין אלה ❌ אינו סוג תקף ב‑PostgreSQL?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "ל‑PostgreSQL יש מגוון עשיר של סוגים מיוחדים, אך `triangle` אינו אחד מהם.\n\n    אני מאמין שגרסאות עתידיות של [GEOS](https://libgeos.org/) יכללו תמיכה ב‑`Triangle` לפי תקן OGC/WKT, מה שיביא לכך שבסופו של דבר יתווסף ל‑PostGIS. (בפועל, ייתכן שהתשובה הזו תשתנה בעתיד.)\n\n    הסוגים המיוחדים הנכונים הם:\n    - `box` (תיבה מלבנית)\n    - `line` (קו אינסופי)\n    - `point` (נקודה דו‑ממדית)\n    - `circle` (מעגל דו‑ממדי)\n    - `polygon` (פוליגון דו‑ממדי)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"זיהוי סוגים לא חוקיים\",\n  \"group\": \"סוגי Postgres\",\n  \"options\": [\n    {\n      \"text\": \"box\"\n    },\n    {\n      \"text\": \"line\"\n    },\n    {\n      \"text\": \"point\"\n    },\n    {\n      \"text\": \"circle\"\n    },\n    {\n      \"text\": \"polygon\"\n    },\n    {\n      \"text\": \"triangle\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"איזה מבין אלה ❌ אינו סוג תקף ב‑PostgreSQL?\"\n  ],\n  \"questionCode\": [],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"ל‑PostgreSQL יש מגוון עשיר של סוגים מיוחדים, אך `triangle` אינו אחד מהם.\\n\\n    אני מאמין שגרסאות עתידיות של [GEOS](https://libgeos.org/) יכללו תמיכה ב‑`Triangle` לפי תקן OGC/WKT, מה שיביא לכך שבסופו של דבר יתווסף ל‑PostGIS. (בפועל, ייתכן שהתשובה הזו תשתנה בעתיד.)\\n\\n    הסוגים המיוחדים הנכונים הם:\\n    - `box` (תיבה מלבנית)\\n    - `line` (קו אינסופי)\\n    - `point` (נקודה דו‑ממדית)\\n    - `circle` (מעגל דו‑ממדי)\\n    - `polygon` (פוליגון דו‑ממדי)\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 929,
+    "outputTokens": 638,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 1554,
+    "providerCostUsd": 0.00050295,
+    "providerUpstreamCostUsd": 0.00050295,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000036231,
+    "outputUsd": 0.00011483999999999999,
+    "totalUsd": 0.000151071,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

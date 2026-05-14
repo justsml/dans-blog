@@ -1,0 +1,585 @@
+# Translation Candidate
+- Slug: quiz-postgres-sql-mastery-pt1
+- Locale: he
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2024-11-27--quiz-postgres-sql-mastery-pt1/he/index.mdx
+- Validation: deferred
+- Runtime seconds: 30.35
+- Input tokens: 15487
+- Output tokens: 10241
+- Thinking tokens: unknown
+- Cached input tokens: 4224
+- Cache write tokens: 0
+- Estimated cost: $0.003757
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+unlisted: false
+social_image: ../mobile.webp
+title: 'חידון: פוסטגרס עמוק – חלק 1'
+subTitle: האם SQL גורם לך לצרוח?
+label: 'Deep PostgreSQL #1'
+category: Quiz
+subCategory: Database
+date: '2024-11-27'
+modified: '2024-12-03'
+tags:
+  - quiz
+  - postgresql
+  - sql
+  - database
+  - intermediate
+  - advanced
+cover_full_width: ../elephant-synthwave-gym-wide.webp
+cover_mobile: ../elephant-synthwave-gym-square-200.webp
+cover_icon: ../elephant-synthwave-gym-square-200.webp
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+> **חלק 1 מתוך 2.** [מעבר לחלק 2](../quiz-postgres-sql-mastery-pt2/)
+
+<p class="inset">PostgreSQL 🐘 הוא ללא ספק מסד הנתונים המועדף עלי! אני תמיד לומד טריקים ותפניות חדשים, ולכן החלטתי לשים אותם במבחן חדש!</p>
+
+המבחן הזה משלב תכונות PostgreSQL מוכרות ופחות מוכרות, כולל תופעות קצה: מצבצרים מובנים, המרות סוגים, מגבלות ועוד.
+
+בהצלחה! 🍀
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="חימום: פונקציות"
+  title="אגרגטים מובנים"
+  options={[
+    {text: 'MIN'},
+    {text: 'MAX'},
+    {text: 'AVG'},
+    {text: 'MEDIAN', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    איזה אינו פונקציית אגרגט מובנית ב‑PostgreSQL?
+    ```sql
+        SELECT 
+          MIN(grade) as lowest,
+          MAX(grade) as highest,
+          AVG(grade) as average,
+          MEDIAN(grade) as middle
+        FROM grades;
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `MEDIAN` אינו מובנה! אתה צריך:
+    ```sql
+        PERCENTILE_CONT(0.5) 
+        WITHIN GROUP (ORDER BY grade)
+    ```
+    אגרגטים מובנים נפוצים:
+    - `MIN`, `MAX`, `COUNT`
+    - `AVG`, `SUM`
+    - `ARRAY_AGG`, `STRING_AGG`
+    - פונקציות סטטיסטיות שונות
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="חימום: המרת סוגים"
+  title="וריאציות תחביר המרה"
+  options={[
+    {text: '\'95\'::INTEGER'},
+    {text: 'INTEGER \'95\''},
+    {text: 'CAST(\'95\', INTEGER)', isAnswer: true},
+    {text: 'CAST(\'95\' AS INTEGER)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    איזה מהמרי הסוגים האלה **לא תקין** ❌?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    PostgreSQL תומך בשלושה תחבירי המרה:
+
+    1. ANSI SQL: `CAST(expression AS type)`.
+    2. PostgreSQL: `expression::type`.
+    3. פונקציית סוג: `type 'literal'`.
+
+    כולם שווים מבחינה פונקציונלית, אך:
+    - `CAST()` הוא הנייד ביותר.
+    - `::` ספציפי ל‑PostgreSQL אך נפוץ.
+    - הסגנון אינפיקס `type 'literal'` פחות נפוץ אך עדיין תקף.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="אילוצים"
+  title="אילוצים UNIQUE ו‑NULL"
+  options={[
+    {text: 'איסור על NULL'},
+    {text: 'מתאפשר NULL אחד'},
+    {text: 'מתאפשרים מספר ערכי NULL', isAnswer: true},
+    {text: 'תלוי בגרסת PostgreSQL'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    כמה ערכי NULL מותרים כאן?
+    ```sql
+        CREATE TABLE student_emails (
+          student_id INTEGER,
+          email VARCHAR(255),
+          UNIQUE(email)
+        );
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    אילוצי UNIQUE ב‑PostgreSQL:
+    - מאפשרים מספר ערכי NULL.
+    - `NULL` ≠ `NULL` בבדיקות ייחודיות.
+
+    כדי למנוע ערכי `NULL`, הוסיפו `NOT NULL`:
+    ```sql
+        CREATE TABLE student_emails (
+          student_id INTEGER,
+          email VARCHAR(255) NOT NULL,
+          UNIQUE(email)
+        );
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="תאריך/זמן"
+  title="אריתמטיקת תאריכים"
+  options={[
+    {text: '2024-11-27'},
+    {text: '2024-11-27 00:00:00'},
+    {text: '2024-11-28'},
+    {text: '2024-11-28 00:00:00', isAnswer: true},
+    {text: 'שגיאה: זמן לא חוקי'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה זה מחזיר?
+    ```sql
+        SELECT '2024-11-27'::date + interval '24 hours';
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    המרווחים (Intervals) הם כלי חזק לפישוט פעולות על טווחי תאריכים!
+
+    אריתמטיקת תאריכים ב‑PostgreSQL:
+    - `+ interval '24 hours'` מוסיף 24 שעות
+    - `+ interval '1 day'` מוסיף יום אחד
+    - `+ interval '1 month'` מוסיף חודש אחד
+    - `+ interval '1 year'` מוסיף שנה אחת
+
+    התוצאה היא `2024-11-28 00:00:00`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="זמנים"
+  title="timestamptz מול timestamp"
+  options={[
+    {text: 'שניהם תופסים 8 בתים, אך מייצגים סמנטיקה שונה של חותמת זמן', isAnswer: true},
+    {text: 'They\'},
+    {text: 'timestamptz משמר כל אזור זמן שהוזן'},
+    {text: 'timestamptz שומר את שם אזור הזמן המקורי או את ההיסט offset'},
+    {text: 'timestamptz שומר ערך של 2 בתים לאזור זמן'},
+    {text: 'timestamptz הוא הצאצא של timestamp'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מהי ההצהרה **המדויקת ביותר** לגבי `timestamptz` ו‑`timestamp`?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    שניהם בגודל של 8 בתים, אך אינם מאחסנים את אותו סוג ערך.
+
+    אז מה ההבדל? הוא בניתוח הקלט.
+
+    **`timestamptz`**
+    - מנרמל קלט לנקודה מוחלטת בזמן.
+    - מתחשב בהגדרת `TimeZone` של השרת/החיבור בעת ניתוח קלט ללא היסט מפורש וכאשר מציג פלט.
+
+    **`timestamp`**
+    - מאחסן תאריך ושעה ללא המרת אזור זמן.
+    - אינו משמר או מנרמל מידע על אזור זמן.
+
+
+    **`timestamp`**
+
+    - מאחסן את התאריך והשעה ללא מידע על אזור זמן.
+    - שימושי לאחסון מפורש של תאריכים סטנדרטיים, בין אם ב‑UTC או באיזור זמן ספציפי.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="סוגי Postgres"
+  title="זיהוי סוגים לא תקינים"
+  options={[
+    {text: 'VARCHAR(100)'},
+    {text: 'CHAR(100)'},
+    {text: 'TEXT'},
+    {text: 'STRING(100)', isAnswer: true},
+    {text: 'CHARACTER VARYING(100)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    איזה מבין אלו ❌ אינו סוג PostgreSQL תקף?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    ל-PostgreSQL יש מגוון עשיר של סוגי נתונים, אך `STRING(100)` אינו אחד מהם.
+
+    הסוגים המחרוזתיים הנכונים כוללים:
+    - `VARCHAR(100)` (מחרוזת באורך משתנה)
+    - `CHAR(100)` (מחרוזת באורך קבוע)
+    - `TEXT` (אורך בלתי מוגבל)
+    - `CHARACTER VARYING(100)` (זהה ל-`VARCHAR(100)`)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="סוגי Postgres"
+  title="זיהוי סוגים לא תקינים"
+  options={[
+    {text: 'int'},
+    {text: 'real'},
+    {text: 'bigint'},
+    {text: 'bigserial'},
+    {text: 'smallserial'},
+    {text: 'decimal128', isAnswer: true},
+    {text: 'double precision'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    איזה מבין אלו ❌ אינו סוג PostgreSQL תקף?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    זה עשוי להיראות מוכר מכיוון ש-`decimal128` הוא סוג במקומות רבים (כולל Mongo ו‑Java). הוא אינו סוג PostgreSQL תקף, `decimal` הוא.
+
+    הסוגים המספריים התקינים כוללים:
+    - `int` (מספר שלם של 4 בתים)
+    - `bigint` (מספר שלם של 8 בתים)
+    - `real` (נקודה צפה של 4 בתים)
+    - `double precision` (נקודה צפה של 8 בתים)
+    - `bigserial` (מספר שלם אוטומטי של 8 בתים)
+    - `smallserial` (מספר שלם אוטומטי של 2 בתים)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="סוגי Postgres"
+  title="זיהוי סוגים לא חוקיים"
+  options={[
+    {text: 'cidr'},
+    {text: 'inet'},
+    {text: 'ipv4', isAnswer: true},
+    {text: 'macaddr'},
+    {text: 'macaddr8'},
+    {text: 'interval'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    איזה מבין אלה ❌ אינו סוג PostgreSQL חוקי?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    האם זה גרם לך לתסכול, אפילו _כועס_? אתה לא לבד! לצטט תורם "ליבה" בלתי מזוהה, "מה לעזאזל, דן?! נפלתי על שאלות הסוגים! זה אלים, אדוני! לא חולק את הציון שלי, חח." 😈 בבקשה.
+
+    סט הסוגים המתקדמים של PostgreSQL אינו כולל `ipv4`. בכל פעם שאני מנסה להשתמש בו בלי לחפש, אני טועה. אולי `macaddr8` גורם לי לחשוב שחייבים להיות סוגי `ipv4` ו-`ipv6`. לא, `inet` מכסה את שניהם. וגם `cidr` מכסה מסכות רשת לשניהם.
+
+    סוגי רשת חוקיים כוללים:
+    - `cidr` (כתובת רשת IPv4/IPv6)
+    - `inet` (כתובת מארח IPv4/IPv6)
+    - `macaddr` (כתובת MAC)
+    - `macaddr8` (כתובת MAC EUI-64)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="סוגי Postgres"
+  title="זיהוי סוגים לא חוקיים"
+  options={[
+    {text: 'xml'},
+    {text: 'uuid'},
+    {text: 'money'},
+    {text: 'currency', isAnswer: true},
+    {text: 'interval'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    איזה מבין אלה אינו ❌ סוג PostgreSQL תקף?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    ל-PostgreSQL יש סט עשיר של סוגים מיוחדים, אבל `currency` אינו אחד מהם!
+
+    הסוגים התקפים כוללים:
+    - `xml` (נתוני XML)
+    - `uuid` (UUID)
+    - `money` (סכום במטבע)
+    - `interval` (מרווח זמן)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="סוגי Postgres"
+  title="זיהוי סוגים לא חוקיים"
+  options={[
+    {text: 'box'},
+    {text: 'line'},
+    {text: 'point'},
+    {text: 'circle'},
+    {text: 'polygon'},
+    {text: 'triangle', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    איזה מבין אלה ❌ אינו סוג תקף ב‑PostgreSQL?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    ל‑PostgreSQL יש מגוון עשיר של סוגים מיוחדים, אך `triangle` אינו אחד מהם.
+
+    אני מאמין שגרסאות עתידיות של [GEOS](https://libgeos.org/) יכללו תמיכה ב‑`Triangle` לפי תקן OGC/WKT, מה שיביא לכך שבסופו של דבר יתווסף ל‑PostGIS. (בפועל, ייתכן שהתשובה הזו תשתנה בעתיד.)
+
+    הסוגים המיוחדים הנכונים הם:
+    - `box` (תיבה מלבנית)
+    - `line` (קו אינסופי)
+    - `point` (נקודה דו‑ממדית)
+    - `circle` (מעגל דו‑ממדי)
+    - `polygon` (פוליגון דו‑ממדי)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="חשבון שלמים"
+  title="גלישת מספר שלם"
+  options={[
+    {text: '4294967296'},
+    {text: 'שגיאה: מספר שלם מחוץ לטווח', isAnswer: true},
+    {text: '0'},
+    {text: '2147483647'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה קורה כשמחושבים כל מזהי הסטודנטים האפשריים?
+    ```sql
+        SELECT 256 * 256 * 256 * 256;
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    סוג `integer` של PostgreSQL הוא 32‑ביט עם סימן, בטווח מ-`-2,147,483,648` עד `2,147,483,647`.
+
+    החישוב `256^4` = `4,294,967,296` חורג מהטווח.
+
+    כדי להתמודד עם מספרים גדולים יותר:
+    ```sql
+        -- Use BIGINT
+        SELECT 256::bigint * 256 * 256 * 256;
+
+        -- Or numeric for arbitrary precision
+        SELECT 256::numeric * 256 * 256 * 256;
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="תאריך/זמן"
+  title="דיוק חותמת זמן"
+  options={[
+    {text: '2024-01-08 13:30:00+00'},
+    {text: '2024-01-08 13:30:00.123456+00'},
+    {text: '2024-01-08 13:30:00.123456789+00'},
+    {text: '2024-01-08 13:30:00.1234567', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מהו הליטרל `timestamp` הקטן ביותר שמחוץ למקסימום הדיוק של `time` ב‑Postgres?
+    ```sql
+        CREATE TABLE class_sessions (
+          id INT GENERATED BY DEFAULT AS IDENTITY,
+          start_time timestamptz,
+          end_time timestamptz
+        );
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    לחותמות זמן ב‑PostgreSQL יש דיוק של מיקרו‑שנייה (6 ספרות אחרי הנקודה).
+
+    - מקסימום: `.123456` (6 ספרות)
+    - ננו‑שניות (9 ספרות) מעוגלות או נחתכות לדיוק הנתמך
+    - מקדמי אזור זמן מתקבלים עבור `timestamptz`, אך אינם חובה
+
+    **פיתוי לא נפוץ:** חלק מהשפות/מסגרות שולחות דיוק של ננו‑שניות, אך PostgreSQL שומרת חותמות זמן בדיוק של מיקרו‑שנייה.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="סוגי Postgres"
+  title="זיהוי סוגים לא חוקיים"
+  options={[
+    {text: 'lseg'},
+    {text: 'bytea'},
+    {text: 'tsquery'},
+    {text: 'tsvector'},
+    {text: 'tsrank', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    איזה מבין אלה ❌ אינו סוג PostgreSQL חוקי?
+
+    (ברצינות, אלו (בדרך כלל) סוגים אמיתיים.)
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    ל-PostgreSQL יש כמה סוגים גאומטריים וסוגי חיפוש טקסט מובנים, אך `tsrank` אינו אחד מהם.
+
+    הסוגים הגאומטריים וסוגי חיפוש הטקסט הנכונים כוללים:
+    - `lseg` (קטע קו)
+    - `bytea` (נתונים בינאריים)
+    - `tsquery` (שאילתת חיפוש טקסט)
+    - `tsvector` (מסמך חיפוש טקסט)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={13}
+  group="הגבלות"
+  title="תזמון מגבלת בדיקה"
+  options={[
+    {text: 'מיידית עבור שורות חדשות או ששונו', isAnswer: true},
+    {text: 'בביצוע ההתקשרות'},
+    {text: 'בבקשה הבאה'},
+    {text: 'אף פעם - המגבלות נבדקות רק ב‑INSERT'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מתי נבדקת מגבלת הציון הזו?
+    ```sql
+        ALTER TABLE students 
+        ADD CONSTRAINT valid_grade 
+        CHECK (
+          (grade >= 0 AND grade <= 100) OR 
+          grade IS NULL
+        ) NOT VALID;
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `NOT VALID` constraints:
+    - נבדקות מיידית עבור הוספות ועדכונים חדשים
+    - אינן מאמתות שורות קיימות
+    - ניתן לאמת שורות קיימות מאוחר יותר עם `VALIDATE CONSTRAINT`
+    - שימושיות בטבלאות גדולות
+
+    ללא `NOT VALID`:
+    - המגבלה נבדקת מיידית
+    - כל השורות הקיימות מאומתות
+    - יכול להיות איטי בטבלאות גדולות
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+
+כל הכבוד! חקרת לעומק כמה תחומים ב‑PostgreSQL! 🐘
+
+אני מקווה שלמדת משהו חדש, או לפחות קיבלת ציון להתגאות! 🏆
+
+<p class="inset">הסתכל על [Part 2](../quiz-postgres-sql-mastery-pt2/) לעוד כיף עם Postgres! 🚀</p>
+
+רוצה עוד ריגושים בחיים? הסתכל על האוסף שלי [אוסף חידונים](../challenges/) לכיף אינסופי*!
+````
