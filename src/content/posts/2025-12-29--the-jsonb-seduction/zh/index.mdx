@@ -1,0 +1,181 @@
+---
+title: JSONB：毁掉数据库的最佳方式
+subTitle: JSONB 强大、实用，且极易被误用——当你让一个 blob 成为你的实际模式时。
+date: '2025-12-29'
+modified: '2025-12-30'
+tags:
+  - postgres
+  - postgresql
+  - databases
+  - jsonb
+  - json
+  - schema-design
+  - technical-debt
+category: Code
+subCategory: Databases
+social_image: ../desktop-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+PostgreSQL 引入 JSONB 是为了让你在不预先定义严格模式的情况下存储半结构化数据。这个想法本身是合理的：有时你确实不知道数据会是什么样子，或者它变化得太频繁，传统列无法适应。
+
+这一点很重要，因为 JSONB 本身并不是一个错误。在很多系统中，它是对问题空间最清晰的表达。如果你要存储第三方 webhook 负载、带版本的事件体、功能开关，或者 LLM 配置对象——其中每个提供商和模型都暴露出一套略有不同且不断变化的选项集——那么把所有东西都强行塞进一等列可能比有帮助更尴尬。
+
+问题在于，JSONB 也是最容易推迟模式决策的方式，同时又不承认你在推迟。在意图和实现之间的某个地方，它变成了数据库版的“我待会儿再收拾房间”。你六个月前临时凑合的那个方案？它还在那里，而且现在生产环境依赖着它。
+
+我反复看到同样的模式。一个团队因为不确定需求而添加了一个 JSONB 列。他们向自己保证，等事情稳定下来就会把它规范化。三年后，那个列里包含了四十个不同版本的本应是用户配置文件的东西，被十五个服务查询，每个服务对里面的内容都做了不同的假设。
+
+技术债务本身不是 JSONB。它在于你告诉自己你在构建的东西和你实际构建的东西之间的差距：一个没有文档的读时模式系统。
+
+## 通常会发生什么
+
+你在添加一个功能，但不确定用户需要的是 `twitter_handle` 还是 `bluesky_handle` 还是别的什么。你没有仔细思考模式，而是这样做了：
+
+```sql
+CREATE TABLE users (
+  id SERIAL PRIMARY KEY,
+  profile JSONB
+);
+```
+
+它起作用了。你发布了功能，继续做下一个，然后再下一个。JSONB 列在后台悄悄增长。
+
+这就是分岔路口。如果 `profile` 只是一个通过 `user.id` 获取的不透明 blob，你可能没问题。但如果它开始成为业务数据的主要存放地，那么权衡就会迅速变化。
+
+产品问：*“有多少用户在纽约？”*
+
+你写道：
+
+```sql
+SELECT count(*) FROM users WHERE profile->>'location' = 'New York';
+```
+
+Postgres 执行了一次全表扫描。每一行都不放过。
+
+于是你加了一个 GIN 索引。也许这还能接受。有时候确实可以。但现在你为那些行为上像一等关系型数据、却从未成为一等列的数据，付出了实实在在的复杂性和存储成本。
+
+### 第一年：模式漂移
+
+同一列里出现了三个版本的数据。
+
+*   第 1 行：`{"city": "NYC"}`
+*   第 1000 行：`{"location": "NYC"}`
+*   第 5000 行：`{"address": {"city": "New York"}}`
+
+你的应用代码现在变成了这样：
+
+```javascript
+const city = user.location || user.city || user.address?.city || "Unknown";
+```
+
+你并没有移除模式。你只是把验证和一致性检查从数据库搬到了分散的应用代码里。
+
+---
+
+## 什么时候该用 JSONB
+
+JSONB 确实有合理的用例。很多时候它完全没问题，有时甚至是最优选择。
+
+关键区别不在于“结构化好，JSON 坏”，而更接近以下判断：
+
+- 数据是否主要通过稳定的主键整体获取？
+- 不同供应商、版本、租户或时间之间，键是否差异显著？
+- 你是在查询少数已知字段，还是每个迭代都在发明新的路径查询？
+- 应用是有意地拥有版本控制和验证，还是只是在应付了事？
+
+### 合法的 JSONB 用例
+
+1.  **Webhook 负载**：你从 Stripe、Slack 或 GitHub 接收数据。你对模式毫无控制权。你可能永远不会查询它。你只需要存储它以便调试或重放。**JSONB 非常适合。**
+
+2.  **日志与事件流**：应用日志、审计追踪、错误上下文。这些是写密集型的，很少按特定字段查询，通常批量分析或导出到分析平台。**JSONB 在这里没问题。**
+
+3.  **用户偏好与设置**：设置对象，有 100 多个布尔标志，大部分为 false，你总是通过用户 ID 获取整个 blob。你不会运行 `WHERE preferences->>'theme' = 'dark'`。**JSONB 可行。**
+
+4.  **LLM 提供商/模型配置**：这是最清晰的现代例子之一。OpenAI、Anthropic、Gemini、开源权重本地模型以及供应商特定网关都暴露了重叠但不同的参数。即使在同一提供商内，模型能力和选项名称也在演变。一个 JSONB 配置 blob 通常比假装 `temperature`、`top_p`、`reasoning_effort`、`json_schema`、`tool_choice` 以及其他二十个旋钮都应该是通用列要诚实得多。**JSONB 在这里通常是正确的抽象。**
+
+5.  **API 响应缓存**：你缓存整个 API 响应。数据库只是更快的 Redis。你按缓存键获取，从不按嵌套属性查询。**JSONB 是合适的。**
+
+6.  **事件溯源**：你存储不可变的事件负载。你的查询总是“给我聚合 X 的所有事件”，按时间排序。你从不对事件属性运行 `WHERE` 子句。**JSONB 符合要求。**
+
+7.  **可扩展性表面**：集成、插件设置、每租户覆盖、市场元数据、提供商能力，或你明确预期形状会随子类型变化的“额外”字段。**JSONB 可以是正确的契约，而不是妥协。**
+
+经验法则：如果应用程序通过已知键获取文档并知道如何验证/版本化它，JSONB 可以非常出色。如果业务不断询问关于嵌套键的关系型问题，那么这些字段正试图成为列。
+
+## 最佳模式通常是混合型
+
+许多成熟系统最终采用这种方式：
+
+```sql
+CREATE TABLE llm_requests (
+  id UUID PRIMARY KEY,
+  provider TEXT NOT NULL,
+  model TEXT NOT NULL,
+  status TEXT NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  config JSONB NOT NULL
+);
+```
+
+这通常比任何一种极端情况都要好。
+
+- `provider`、`model`、`status` 和 `created_at` 是一级列，因为你会对它们进行过滤、连接、聚合和索引。
+- `config` 保持为 JSONB，因为确切的选项表面是模型特定、提供商特定的，并且可能会演变。
+
+这不是“未能规范化”。这是在正确的位置划清界限。
+
+### 在规模上：对象版本化 > 规范化
+
+这里变得有趣了。在足够大的规模下，“正确”的解决方案不是规范化——而是对象版本化。
+
+如果你有数十亿行数据并且模式频繁演变，迁移列会变得昂贵。像 Stripe、GitHub 和 Netflix 这样的公司并不会规范化所有内容。相反：
+
+```sql
+CREATE TABLE entities (
+  id UUID PRIMARY KEY,
+  version INT NOT NULL,
+  data JSONB NOT NULL
+);
+```
+
+你的应用知道如何读取 `version: 1`、`version: 2`、`version: 3`。新字段无需数据库迁移。代码处理向后兼容。
+
+这是一个架构决策，而非懒惰。它用数据库复杂度换取了应用复杂度。有时这正是正确的权衡，尤其是当文档天然具有版本化，且应用是规范的解释器时。
+
+失败模式并非“使用 JSONB”。失败模式是在没有版本化、验证、提升规则或文档数据与关系数据之间明确边界的情况下使用 JSONB。
+
+## 真正重要的问题
+
+在添加 JSONB 列之前，请问：
+
+1.  我们是否会定期在 `WHERE`、`JOIN`、`GROUP BY` 或 `ORDER BY` 中查询嵌套字段？
+2.  我们控制这个模式，还是它由外部定义且易变？
+3.  各记录的形状是否故意异构？
+4.  我们是否有应用层验证和版本化？
+5.  哪些字段以后可能成为操作维度？
+
+如果问题 #1 的答案是“是，经常”，那强烈暗示应该用列。
+
+如果问题 #2 和 #3 的答案是“是”，那么 JSONB 很可能正在为你做真正的工作。
+
+---
+## 逃离陷阱
+
+如果你已经陷入这个坑，请停止继续挖。
+
+1.  **审计**：运行 `jsonb_object_keys` 检查实际形状漂移，而非你假设存在的形状。
+2.  **提升**：识别你最常过滤、连接、排序或报表的字段。将它们变成真正的列。
+3.  **验证**：为 JSONB 中剩余的内容添加应用层或数据库层验证。
+4.  **版本化**：如果 blob 是真正的领域数据，显式地对其进行版本化。
+5.  **精简**：一旦提升的列建立起来，就从 blob 中移除重复的键。
+
+不要告诉自己每个 blob 都必须规范化。也不要告诉自己一个带有永久业务语义的 blob 是“临时的”。
+
+当文档真正具有文档形状时，JSONB 很出色。当它只是一个戴着假胡子的关系模式时，它就变得危险。
+
+## 资源
+
+- [PostgreSQL JSONB 文档](https://www.postgresql.org/docs/current/datatype-json.html)
+- [JSONB 索引策略](https://www.postgresql.org/docs/current/datatype-json.html#JSON-INDEXING)
+- [何时使用 JSONB 与关系列](https://www.citusdata.com/blog/2016/07/14/choosing-nosql-hstore-json-jsonb/)
+- [PostgreSQL 模式设计最佳实践](https://www.postgresql.org/docs/current/ddl.html)
