@@ -1,0 +1,49 @@
+{
+  "index": 3,
+  "attempt": 1,
+  "originalTitle": "Chaining `.catch`'s",
+  "translatedTitle": "链式`.catch`",
+  "translation": {
+    "title": "链式`.catch`",
+    "group": "处理错误",
+    "options": [
+      {
+        "text": "打印错误信息一次"
+      },
+      {
+        "text": "打印错误信息两次"
+      },
+      {
+        "text": "UnhandledPromiseRejectionWarning"
+      },
+      {
+        "text": "进程退出"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "以下代码的输出是什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "当链式使用`.catch`时，每个`.catch`只会处理前一个`.then`或`.catch`步骤中抛出的错误。在这个例子中，第一个`.catch`返回了`console.log`，但必须通过在两个`.catch`之后添加`.then()`才能访问到它。"
+    ]
+  },
+  "rawText": "```json\n{\n  \"title\": \"链式`.catch`\",\n  \"group\": \"处理错误\",\n  \"options\": [\n    {\"text\": \"打印错误信息一次\"},\n    {\"text\": \"打印错误信息两次\"},\n    {\"text\": \"UnhandledPromiseRejectionWarning\"},\n    {\"text\": \"进程退出\"}\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"以下代码的输出是什么？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"当链式使用`.catch`时，每个`.catch`只会处理前一个`.then`或`.catch`步骤中抛出的错误。在这个例子中，第一个`.catch`返回了`console.log`，但必须通过在两个`.catch`之后添加`.then()`才能访问到它。\"\n  ]\n}\n```",
+  "telemetry": {
+    "inputTokens": 805,
+    "outputTokens": 773,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 2089,
+    "providerCostUsd": 0.00061528,
+    "providerUpstreamCostUsd": 0.00061528,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00006440000000000001,
+    "outputUsd": 0.00018552,
+    "totalUsd": 0.00024992,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

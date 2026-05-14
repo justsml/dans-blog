@@ -1,0 +1,49 @@
+{
+  "index": 0,
+  "attempt": 1,
+  "originalTitle": "Multiple `.catch`'s #1",
+  "translatedTitle": "多个 `.catch` #1",
+  "translation": {
+    "title": "多个 `.catch` #1",
+    "group": "处理错误",
+    "options": [
+      {
+        "text": "打印消息一次"
+      },
+      {
+        "text": "打印消息两次"
+      },
+      {
+        "text": "UnhandledPromiseRejectionWarning"
+      },
+      {
+        "text": "进程退出"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "以下代码的输出是什么？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "我们使用构造函数方法创建一个Promise，通过`reject`回调立即触发错误。\n\n    然后`.catch`处理器的工作方式类似于DOM的`.addEventListener(event, callback)`或Event Emitter的`.on(event, callback)`，**可以添加多个处理回调函数**。每个回调都会收到相同的参数。"
+    ]
+  },
+  "rawText": "```json\n{\n  \"title\": \"多个 `.catch` #1\",\n  \"group\": \"处理错误\",\n  \"options\": [\n    {\n      \"text\": \"打印消息一次\"\n    },\n    {\n      \"text\": \"打印消息两次\"\n    },\n    {\n      \"text\": \"UnhandledPromiseRejectionWarning\"\n    },\n    {\n      \"text\": \"进程退出\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"以下代码的输出是什么？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"我们使用构造函数方法创建一个Promise，通过`reject`回调立即触发错误。\\n\\n    然后`.catch`处理器的工作方式类似于DOM的`.addEventListener(event, callback)`或Event Emitter的`.on(event, callback)`，**可以添加多个处理回调函数**。每个回调都会收到相同的参数。\"\n  ]\n}\n```",
+  "telemetry": {
+    "inputTokens": 813,
+    "outputTokens": 727,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1897,
+    "providerCostUsd": 0.0006647,
+    "providerUpstreamCostUsd": 0.0006647,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00006504,
+    "outputUsd": 0.00017448,
+    "totalUsd": 0.00023952,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
