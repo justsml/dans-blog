@@ -1,0 +1,50 @@
+{
+  "index": 0,
+  "attempt": 1,
+  "originalTitle": "The Many JOINs of PostgreSQL",
+  "translatedTitle": "PostgreSQL の多様な JOIN",
+  "translation": {
+    "title": "PostgreSQL の多様な JOIN",
+    "group": "ウォームアップ: 結合",
+    "options": [
+      {
+        "text": "JOIN ALL"
+      },
+      {
+        "text": "INNER JOIN"
+      },
+      {
+        "text": "CROSS JOIN"
+      },
+      {
+        "text": "LEFT OUTER JOIN"
+      },
+      {
+        "text": "FULL OUTER JOIN"
+      }
+    ],
+    "questionProse": [
+      "どれが PostgreSQL の有効な JOIN 式ではないか ❌"
+    ],
+    "explanationProse": [
+      "`CROSS JOIN` は知ってるよね？\n\n`JOIN ALL` が別の操作 `UNION ALL` を連想させたかな？\n\n答えは `JOIN ALL` ❌。\n\n正しい JOIN の種類は:\n- `INNER JOIN`（デフォルトの JOIN）\n- `LEFT JOIN`（または `LEFT OUTER JOIN`）\n- `RIGHT JOIN`（または `RIGHT OUTER JOIN`）\n- `FULL JOIN`（または `FULL OUTER JOIN`）\n- `CROSS JOIN`（後の `WHERE` 句で絞り込まれない限り、デカルト積）"
+    ]
+  },
+  "rawText": "{\n \"title\": \"PostgreSQL の多様な JOIN\",\n  \"group\": \"ウォームアップ: 結合\",\n  \"options\": [\n    {\n      \"text\": \"JOIN ALL\"\n    },\n    {\n      \"text\": \"INNER JOIN\"\n    },\n    {\n      \"text\": \"CROSS JOIN\"\n    },\n    {\n      \"text\": \"LEFT OUTER JOIN\"\n    },\n    {\n      \"text\": \"FULL OUTER JOIN\"\n    }\n  ],\n  \"questionProse\": [\n    \"どれが PostgreSQL の有効な JOIN 式ではないか ❌\"\n  ],\n  \"questionCode\": [],\n  \"explanationProse\": [\n    \"`CROSS JOIN` は知ってるよね？\\n\\n`JOIN ALL` が別の操作 `UNION ALL` を連想させたかな？\\n\\n答えは `JOIN ALL` ❌。\\n\\n正しい JOIN の種類は:\\n- `INNER JOIN`（デフォルトの JOIN）\\n- `LEFT JOIN`（または `LEFT OUTER JOIN`）\\n- `RIGHT JOIN`（または `RIGHT OUTER JOIN`）\\n- `FULL JOIN`（または `FULL OUTER JOIN`）\\n- `CROSS JOIN`（後の `WHERE` 句で絞り込まれない限り、デカルト積）\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 904,
+    "outputTokens": 864,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 496,
+    "providerCostUsd": 0.0009644,
+    "providerUpstreamCostUsd": 0.0009644,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000035255999999999996,
+    "outputUsd": 0.00015552,
+    "totalUsd": 0.000190776,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

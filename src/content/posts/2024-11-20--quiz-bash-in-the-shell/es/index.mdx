@@ -373,6 +373,12 @@ Afila (o demuestra) tus **habilidades** de scripting en shell!
   group="Composición"
   title="Usando tuberías"
   options={[
+    { text: ">" },
+    { text: ">>" },
+    { text: "|", isAnswer: true },
+    { text: "||" },
+    { text: "|>" },
+    { text: "Error" },
   ]}
 >
   <slot name="question">
@@ -563,6 +569,11 @@ Afila (o demuestra) tus **habilidades** de scripting en shell!
   group="Entrada/Salida estándar"
   title="Valores predeterminados"
   options={[
+    { text: "1>&2" },
+    { text: "&2>&1" },
+    { text: "2>&1", isAnswer: true },
+    { text: "2>1" },
+    { text: "&2>1" },
   ]}
 >
   <slot name="question">

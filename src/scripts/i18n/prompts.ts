@@ -42,7 +42,7 @@ MDX & CODE PRESERVATION (critical):
 - Preserve ALL MDX component tags and their prop names. Only translate string prop VALUES that are reader-facing text (e.g., question text, labels, alt text).
 - Preserve ALL import statements and their relative module paths.
 - Preserve the exact markdown heading level structure. Translate heading text, but keep the same number of H1, H2, H3, H4, H5, and H6 headings.
-- Preserve roughly the same amount of prose. The translated body must be longer than 600 characters and comparable to the English prose length, using the target language's natural expansion or compression; CJK, Arabic, Hebrew, and Hindi may differ more from English. Do not summarize or pad.
+- Preserve roughly the same amount of prose. The translated body must be comparable to the English prose length, using the target language's natural expansion or compression; CJK, Arabic, Hebrew, and Hindi may differ more from English. Do not summarize or pad.
 - ALL relative URL paths for images, CSS, links, or other resources should prefix/prepend with a \`../\`.
 - Preserve ALL markdown link URLs except relative URLs that need the locale-folder \`../\` prefix. Only translate the link text.
 - Preserve ALL inline code spans (\`...\`).

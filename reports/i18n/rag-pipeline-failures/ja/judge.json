@@ -1,0 +1,45 @@
+{
+  "selectedCommit": "94c028588e4d37c6edeadcb4f6a91bfd119a76d8",
+  "selectedModel": "openrouter/google/gemini-3-flash-preview",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 9,
+    "relevance": 9,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [
+    {
+      "priority": "medium",
+      "match": "ベクターランクより遅い",
+      "replacement": "ベクトル類似度計算より低速",
+      "reason": "'Vector rank' is a bit of a literal translation; 'vector similarity calculation' is more standard in Japanese technical contexts."
+    }
+  ],
+  "rationale": "The current translation and the Qwen candidate both have severe structural issues, including duplicated sections (H2 headings repeated) and inconsistent formatting. The Gemini candidate (94c028) is the only one that correctly preserves the MDX structure while providing a high-quality, natural Japanese translation that captures the technical nuances and the author's direct tone. It correctly translates technical terms like 'precision' and 'recall' and maintains the code blocks and references perfectly.",
+  "slug": "rag-pipeline-failures",
+  "locale": "ja",
+  "candidateCommits": [
+    "94c028588e4d37c6edeadcb4f6a91bfd119a76d8",
+    "e5fcabf6ec299d63a3fa61bdb84b3e9a8590a850",
+    "bf40cc615a6d134c90d1286d1b145db4c0b15a0a"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "medium",
+      "match": "ベクターランクより遅い",
+      "replacement": "ベクトル類似度計算より低速",
+      "reason": "'Vector rank' is a bit of a literal translation; 'vector similarity calculation' is more standard in Japanese technical contexts.",
+      "pass": 1,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug rag-pipeline-failures --locale ja --skip-global",
+    "output": ""
+  }
+}

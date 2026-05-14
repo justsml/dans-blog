@@ -1,0 +1,28 @@
+{
+  "selectedCommit": "509025717919581bc0d2ff32d2327fb7965f265a",
+  "selectedModel": "openrouter/z-ai/glm-5.1",
+  "scores": {
+    "readability": 5,
+    "technicalAccuracy": 5,
+    "coherence": 5,
+    "relevance": 5,
+    "translationQuality": 5,
+    "mdxPreservation": 5
+  },
+  "suggestions": [],
+  "rationale": "The candidate 509025717919581bc0d2ff32d2327fb7965f265a (GLM-5.1) provided a complete and natural translation. The 'current' version and candidate 6abfd446afb591078ba949a6ef8569d30987539d both failed to translate several paragraphs in the middle of the document (leaving them in English). Candidate 304d00fc39aa42d10c041e7505991e74364eecbb had several typos (e.g., '聪明', '幻觉', 'orchestrate') and used an inconsistent tone. GLM-5.1 followed the direct, technical style of the original while maintaining all MDX structures and translating all content.",
+  "slug": "ai-sdk-math-tool",
+  "locale": "ja",
+  "candidateCommits": [
+    "509025717919581bc0d2ff32d2327fb7965f265a",
+    "304d00fc39aa42d10c041e7505991e74364eecbb",
+    "6abfd446afb591078ba949a6ef8569d30987539d"
+  ],
+  "suggestionLog": [],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug ai-sdk-math-tool --locale ja --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug ai-sdk-math-tool --locale ja --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug ai-sdk-math-tool --locale ja --skip-global\n191 |     ...targetContents.matchAll(/=[\"']\\.\\/(?!\\.)[^\"']+\\.(?:avif|gif|jpe?g|png|svg|webp)[\"']/g),\n192 |   ];\n193 | \n194 |   if (nestedAssetReferences.length === 0) return;\n195 | \n196 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2026-01-06--ai-sdk-math-tool/ja/index.mdx uses ./ asset paths inside a locale folder. Use ../ for inherited post assets.\n      at assertNestedAssetPaths (/Users/dan/code/oss/dans-blog/src/scripts/i18n/localized-mdx.ts:196:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:30:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}

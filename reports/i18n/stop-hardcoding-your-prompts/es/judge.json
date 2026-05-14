@@ -1,0 +1,27 @@
+{
+  "selectedCommit": "df79ccd895d286bd286b83f7c18eb544c57c84b6",
+  "selectedModel": "openrouter/google/gemini-3-flash-preview",
+  "scores": {
+    "readability": 5,
+    "technicalAccuracy": 5,
+    "coherence": 5,
+    "relevance": 5,
+    "translationQuality": 5,
+    "mdxPreservation": 5
+  },
+  "suggestions": [],
+  "rationale": "The candidate df79ccd895d286bd286b83f7c18eb544c57c84b6 is the only one that correctly preserves the MDX structure and metadata. The 'current' version and the other candidate (f5da03ac5bf11b47b5d67552adf7ee40ef332626) both have broken code blocks in Pattern 1 (the return statement is outside the code block) and duplicate H2 headers for Pattern 2. Gemini-3-flash-preview correctly translated the content while maintaining the integrity of the technical examples and the heading structure.",
+  "slug": "stop-hardcoding-your-prompts",
+  "locale": "es",
+  "candidateCommits": [
+    "df79ccd895d286bd286b83f7c18eb544c57c84b6",
+    "f5da03ac5bf11b47b5d67552adf7ee40ef332626"
+  ],
+  "suggestionLog": [],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug stop-hardcoding-your-prompts --locale es --skip-global",
+    "output": ""
+  }
+}

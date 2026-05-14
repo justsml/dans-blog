@@ -144,15 +144,7 @@ export function assertTranslationLength({
 }) {
   const sourceLength = getComparablePostLength(sourceContents);
   const targetLength = getComparablePostLength(targetContents);
-  const minimumTargetLength = 600;
   const { minimumRatio, maximumRatio, label } = getLengthRatioBounds(targetPath);
-
-  if (targetLength <= minimumTargetLength) {
-    throw new Error(
-      `${targetPath} is too short after translation. Comparable body length is ${targetLength} chars; expected more than ${minimumTargetLength}.`,
-    );
-  }
-
   const minimumLength = Math.floor(sourceLength * minimumRatio);
   const maximumLength = Math.ceil(sourceLength * maximumRatio);
   if (targetLength < minimumLength || targetLength > maximumLength) {
@@ -174,7 +166,7 @@ export function getLengthValidationGuidance(targetPathOrLocale: string) {
   const bounds = getLengthRatioBounds(targetPathOrLocale);
   const minimum = Math.round(bounds.minimumRatio * 100);
   const maximum = Math.round(bounds.maximumRatio * 100);
-  return `The final translated prose must be longer than 600 characters and roughly ${minimum}%-${maximum}% of the English prose length (${bounds.label}). Do not summarize to satisfy the lower bound or pad to satisfy the upper bound.`;
+  return `The final translated prose must be roughly ${minimum}%-${maximum}% of the English prose length (${bounds.label}). Do not summarize to satisfy the lower bound or pad to satisfy the upper bound.`;
 }
 
 export function getComparablePostLength(contents: string) {

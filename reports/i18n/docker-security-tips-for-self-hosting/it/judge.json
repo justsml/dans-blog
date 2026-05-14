@@ -28,28 +28,10 @@
   "suggestionLog": [
     {
       "priority": "high",
-      "match": "#Consenti gli IP di CloudFlare",
-      "replacement": "# Consenti gli IP di CloudFlare",
-      "reason": "Missing space after comment hash in bash script.",
-      "pass": 1,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
-    },
-    {
-      "priority": "medium",
-      "match": "lereti domestiche",
-      "replacement": "le reti domestiche",
-      "reason": "Typo: missing space between 'le' and 'reti'.",
-      "pass": 1,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
-    },
-    {
-      "priority": "high",
       "match": "exact translated text currently in the selected MDX",
       "replacement": "exact replacement text to write into the selected MDX",
       "reason": "English explanation of why this medium/high-priority change is needed",
-      "pass": 2,
+      "pass": 1,
       "applied": false,
       "note": "Exact match not found in selected MDX."
     }
@@ -58,6 +40,6 @@
     "ok": false,
     "scope": "local",
     "command": "bun run i18n:validate --slug docker-security-tips-for-self-hosting --locale it --skip-global",
-    "error": "Command failed: bun run i18n:validate --slug docker-security-tips-for-self-hosting --locale it --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug docker-security-tips-for-self-hosting --locale it --skip-global\n109 |     })\n110 |     .filter((message): message is string => message != null);\n111 | \n112 |   if (mismatches.length === 0) return;\n113 | \n114 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2025-01-05--docker-security-tips-for-self-hosting/it/index.mdx changed heading counts. H1: English has 0, translation has 15; H2: English has 10, translation has 6; H3: English has 17, translation has 14; H4: English has 11, translation has 8\n      at assertHeadingCounts (/Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:114:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:27:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+    "error": "Command failed: bun run i18n:validate --slug docker-security-tips-for-self-hosting --locale it --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug docker-security-tips-for-self-hosting --locale it --skip-global\n110 |     })\n111 |     .filter((message): message is string => message != null);\n112 | \n113 |   if (mismatches.length === 0) return;\n114 | \n115 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2025-01-05--docker-security-tips-for-self-hosting/it/index.mdx changed heading counts. H1: English has 0, translation has 15; H2: English has 10, translation has 6; H3: English has 17, translation has 14; H4: English has 11, translation has 8\n      at assertHeadingCounts (/Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:115:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:28:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
   }
 }

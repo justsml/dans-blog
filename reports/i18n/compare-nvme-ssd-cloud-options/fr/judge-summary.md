@@ -12,29 +12,29 @@
 - Validation scope: local
 
 ## Primary Judge Telemetry
-- Runtime seconds: 4.54
-- Input tokens: 5995
-- Output tokens: 468
+- Runtime seconds: 2.79
+- Input tokens: 6047
+- Output tokens: 297
 - Thinking tokens: unknown
 - Cached input tokens: 0
 - Cache write tokens: 0
-- OpenRouter cost credits: unknown
-- Estimated cost: $0.004402
+- OpenRouter cost credits: 0.003914
+- Estimated cost: $0.003914
 
 ## Pre-Publish Rescore Telemetry
 ### Pass 1
-- Runtime seconds: 2.15
-- Input tokens: 5237
-- Output tokens: 227
+- Runtime seconds: 2.08
+- Input tokens: 5062
+- Output tokens: 218
 - Thinking tokens: unknown
 - Cached input tokens: 0
 - Cache write tokens: 0
-- OpenRouter cost credits: unknown
-- Estimated cost: $0.003299
+- OpenRouter cost credits: 0.003185
+- Estimated cost: $0.003185
 
 ## Judge Suggestions
-1. Pass 1: applied high priority suggestion. Match: "## Boost Cloud Performance up to 70%" Replacement: "## Améliorez les performances du cloud jusqu'à 70 %" Reason: The H2 heading was left in English. Note: Applied exact replacement to selected MDX.
-2. Pass 1: applied high priority suggestion. Match: "Note that **i3.\\*xlarge** is the only hardware offering competitively priced NVMe storage (ultra‑rapide + 1 Go/s). The main limiting factor I observed was the actual network spe..." Replacement: "Notez que le **i3.*xlarge** est le seul matériel à proposer un stockage NVMe à un prix compétitif (vitesses ultra-rapides > 1 Go/s). Le principal facteur limitant que j'ai const..." Reason: A significant paragraph was left in English. Note: Applied exact replacement to selected MDX.
+1. Pass 1: applied high priority suggestion. Match: "title: ''" Replacement: "title: 'Comparer les options de cloud NVMe SSD'" Reason: The title was left empty in the frontmatter. Note: Applied exact replacement to selected MDX.
+2. Pass 1: applied high priority suggestion. Match: "subTitle: ''" Replacement: "subTitle: 'NVMe SSD Face à Face : AWS, DigitalOcean, Packet.net'" Reason: The subTitle was left empty in the frontmatter. Note: Applied exact replacement to selected MDX.
 
 ## Candidates
 - current src/content/posts/2017-04-15--compare-nvme-ssd-cloud-options/fr/index.mdx

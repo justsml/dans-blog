@@ -4,4 +4,4 @@
 - Selected model: openrouter/openai/gpt-oss-120b:nitro
 - Judge model: openrouter/google/gemini-3-flash-preview
 
-The candidate 'ebe219a' is significantly better than the current version which contains numerous typos and poor grammar. However, it introduced a critical error in Challenge 5 where the JavaScript code options were truncated, likely due to a regex or escaping error during generation. The suggestions restore the technical integrity of the quiz while keeping the superior Hindi prose.
+The current translation (ebe219a) has high-quality Hindi prose but contains broken code snippets in Question 5 where the strings were truncated. These suggestions restore the technical integrity of the quiz while keeping the superior natural language translation.

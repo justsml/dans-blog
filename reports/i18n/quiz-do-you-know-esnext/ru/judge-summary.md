@@ -12,28 +12,28 @@
 - Validation scope: local
 
 ## Primary Judge Telemetry
-- Runtime seconds: 2.51
-- Input tokens: 13907
-- Output tokens: 214
+- Runtime seconds: 3.05
+- Input tokens: 13879
+- Output tokens: 305
 - Thinking tokens: unknown
 - Cached input tokens: 0
 - Cache write tokens: 0
-- OpenRouter cost credits: unknown
-- Estimated cost: $0.007595
+- OpenRouter cost credits: 0.007855
+- Estimated cost: $0.007855
 
 ## Pre-Publish Rescore Telemetry
 ### Pass 1
-- Runtime seconds: 2.90
-- Input tokens: 11263
-- Output tokens: 320
+- Runtime seconds: 2.15
+- Input tokens: 11444
+- Output tokens: 211
 - Thinking tokens: unknown
 - Cached input tokens: 0
 - Cache write tokens: 0
-- OpenRouter cost credits: unknown
-- Estimated cost: $0.006592
+- OpenRouter cost credits: 0.006355
+- Estimated cost: $0.006355
 
 ## Judge Suggestions
-1. Pass 1: applied high priority suggestion. Match: "Знаетели вы" Replacement: "Знаете ли вы" Reason: Typo: missing space in the title. Note: Applied exact replacement to selected MDX.
+1. Pass 1: applied high priority suggestion. Match: "Знаетели" Replacement: "Знаете ли" Reason: Grammar error: 'ли' is a particle and should be written separately. Note: Applied exact replacement to selected MDX.
 
 ## Candidates
 - current src/content/posts/2024-10-31--quiz-do-you-know-esnext/ru/index.mdx

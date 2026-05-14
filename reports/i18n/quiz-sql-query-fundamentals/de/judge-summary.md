@@ -12,29 +12,28 @@
 - Validation scope: local
 
 ## Primary Judge Telemetry
-- Runtime seconds: 2.63
-- Input tokens: 14176
-- Output tokens: 258
+- Runtime seconds: 2.72
+- Input tokens: 14138
+- Output tokens: 232
 - Thinking tokens: unknown
 - Cached input tokens: 0
 - Cache write tokens: 0
-- OpenRouter cost credits: unknown
-- Estimated cost: $0.007862
+- OpenRouter cost credits: 0.007765
+- Estimated cost: $0.007765
 
 ## Pre-Publish Rescore Telemetry
 ### Pass 1
-- Runtime seconds: 2.95
-- Input tokens: 10573
-- Output tokens: 351
+- Runtime seconds: 2.09
+- Input tokens: 10521
+- Output tokens: 224
 - Thinking tokens: unknown
 - Cached input tokens: 0
 - Cache write tokens: 0
-- OpenRouter cost credits: unknown
-- Estimated cost: $0.006339
+- OpenRouter cost credits: 0.005933
+- Estimated cost: $0.005933
 
 ## Judge Suggestions
-1. Pass 1: applied high priority suggestion. Match: "{text: 'SELECT * FROM users WHERE name = \\', isAnswer: true}," Replacement: "{text: \"SELECT * FROM users WHERE name = 'John';\", isAnswer: true}," Reason: The SQL string in the second option was truncated/broken in the candidate, losing the actual answer text. Note: Applied exact replacement to selected MDX.
-2. Pass 2: logged high priority suggestion. Match: "{text: \"SELECT * FROM users WHERE name = 'John';\", isAnswer: true}," Replacement: "{text: \"SELECT * FROM users WHERE name = 'John';\", isAnswer: true}," Reason: The previous judge report claimed the string was broken, but checking the actual candidate source, it is correctly escaped as {text: "SELECT * FROM users WHERE name = 'John';", isAnswer: true}. No fix is actually required for the SQL string. Note: Exact match and replacement are identical; no MDX change needed.
+1. Pass 1: applied high priority suggestion. Match: "{text: 'SELECT * FROM users WHERE name = \\', isAnswer: true}," Replacement: "{text: 'SELECT * FROM users WHERE name = \\'John\\';', isAnswer: true }," Reason: The current translation has a broken SQL string in the first challenge options, missing the name and closing quote. Note: Applied exact replacement to selected MDX.
 
 ## Candidates
 - current src/content/posts/2024-11-08--quiz-sql-query-fundamentals/de/index.mdx

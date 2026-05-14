@@ -1,0 +1,64 @@
+{
+  "selectedCommit": "cabf121ac75d4b15cc2610c4d27a60b525b11eb0",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "scores": {
+    "readability": 95,
+    "technicalAccuracy": 100,
+    "coherence": 100,
+    "relevance": 100,
+    "translationQuality": 95,
+    "mdxPreservation": 100
+  },
+  "suggestions": [],
+  "rationale": "The current translation in the provided MDX already includes the fixes suggested in the previous judge report (translated title and corrected relative paths for images). Candidate cabf121ac75d4b15cc2610c4d27a60b525b11eb0 is the correct base as it was the only one to fully translate the prose, whereas other candidates left large sections in English. Since the 'current' state already reflects the necessary path and title adjustments, no further suggestions are needed.",
+  "slug": "promise-gotchas",
+  "locale": "ja",
+  "candidateCommits": [
+    "cabf121ac75d4b15cc2610c4d27a60b525b11eb0",
+    "ab8f0e0d53d3fb510b566a915d3ae2b365715f36"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "title: \"Promise Gotchas\"",
+      "replacement": "title: \"Promise の落とし穴\"",
+      "reason": "The title should be translated into Japanese as per the other candidates and general localization expectations.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "cover: michal-parzuchowski-224092-unsplash.webp",
+      "replacement": "cover: ../michal-parzuchowski-224092-unsplash.webp",
+      "reason": "The relative path for images in the ja/ subdirectory needs to point one level up to match the actual file structure.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "cover_mobile: w300_michal-parzuchowski-224092-unsplash.webp",
+      "replacement": "cover_mobile: ../w300_michal-parzuchowski-224092-unsplash.webp",
+      "reason": "The relative path for images in the ja/ subdirectory needs to point one level up.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "cover_icon: icon_michal-parzuchowski-224092-unsplash.webp",
+      "replacement": "cover_icon: ../icon_michal-parzuchowski-224092-unsplash.webp",
+      "reason": "The relative path for images in the ja/ subdirectory needs to point one level up.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug promise-gotchas --locale ja --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug promise-gotchas --locale ja --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug promise-gotchas --locale ja --skip-global\n146 |   const targetLength = getComparablePostLength(targetContents);\n147 |   const minimumTargetLength = 600;\n148 |   const { minimumRatio, maximumRatio, label } = getLengthRatioBounds(targetPath);\n149 | \n150 |   if (targetLength <= minimumTargetLength) {\n151 |     throw new Error(\n                    ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2018-09-26--promise-gotchas/ja/index.mdx is too short after translation. Comparable body length is 425 chars; expected more than 600.\n      at assertTranslationLength (/Users/dan/code/oss/dans-blog/src/scripts/i18n/localized-mdx.ts:151:15)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:27:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}

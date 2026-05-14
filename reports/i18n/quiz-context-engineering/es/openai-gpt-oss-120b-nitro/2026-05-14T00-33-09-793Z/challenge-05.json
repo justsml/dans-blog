@@ -1,0 +1,47 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Chunking Strategy",
+  "translatedTitle": "Estrategia de Fragmentación",
+  "translation": {
+    "title": "Estrategia de Fragmentación",
+    "group": "Recuperación",
+    "options": [
+      {
+        "text": "Usa el tamaño de fragmento más grande que permite tu ventana de contexto"
+      },
+      {
+        "text": "Siempre usa 512 tokens — it\\"
+      },
+      {
+        "text": "Usa fragmentos superpuestos dimensionados para coincidir con la estructura de tu contenido"
+      },
+      {
+        "text": "Chunk size doesn\\"
+      }
+    ],
+    "questionProse": [
+      "Al fragmentar documentos para RAG, ¿cuál es el principio más importante?"
+    ],
+    "explanationProse": [
+      "No existe un tamaño de fragmento universalmente correcto — depende de tu contenido. Los principios importantes son:\n\n    1. **Match your content structure.** Las páginas FAQ se fragmentan bien a nivel de Pregunta+Respuesta. Los documentos legales se fragmentan bien a nivel de cláusula. El código se fragmenta bien a nivel de función.\n    2. **Use overlap.** Un fragmento de 512 tokens con 64 tokens de superposición a cada lado significa que las respuestas que cruzan un límite aún se recuperan.\n    3. **Measure.** Construye un conjunto de evaluación y prueba varios tamaños de fragmento. El tamaño del fragmento importa más que el modelo de incrustación.\n\n    \"512 tokens\" es un punto de partida razonable, no una ley."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Estrategia de Fragmentación\",\n  \"group\": \"Recuperación\",\n  \"options\": [\n    {\n      \"text\": \"Usa el tamaño de fragmento más grande que permite tu ventana de contexto\"\n    },\n    {\n      \"text\": \"Siempre usa 512 tokens — it\\\\\"\n    },\n    {\n      \"text\": \"Usa fragmentos superpuestos dimensionados para coincidir con la estructura de tu contenido\"\n    },\n    {\n      \"text\": \"Chunk size doesn\\\\\"\n    }\n  ],\n  \"questionProse\": [\n    \"Al fragmentar documentos para RAG, ¿cuál es el principio más importante?\"\n  ],\n  \"questionCode\": [],\n  \"explanationProse\": [\n    \"No existe un tamaño de fragmento universalmente correcto — depende de tu contenido. Los principios importantes son:\\n\\n    1. **Match your content structure.** Las páginas FAQ se fragmentan bien a nivel de Pregunta+Respuesta. Los documentos legales se fragmentan bien a nivel de cláusula. El código se fragmenta bien a nivel de función.\\n    2. **Use overlap.** Un fragmento de 512 tokens con 64 tokens de superposición a cada lado significa que las respuestas que cruzan un límite aún se recuperan.\\n    3. **Measure.** Construye un conjunto de evaluación y prueba varios tamaños de fragmento. El tamaño del fragmento importa más que el modelo de incrustación.\\n\\n    \\\"512 tokens\\\" es un punto de partida razonable, no una ley.\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 895,
+    "outputTokens": 572,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1763,
+    "providerCostUsd": 0.00047745,
+    "providerUpstreamCostUsd": 0.00047745,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000034905,
+    "outputUsd": 0.00010296,
+    "totalUsd": 0.000137865,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

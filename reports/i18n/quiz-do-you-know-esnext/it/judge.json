@@ -1,0 +1,76 @@
+{
+  "selectedCommit": "83ab606f43f5363879a3ab67d87894ca3806a8ec",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 10,
+    "relevance": 10,
+    "translationQuality": 8,
+    "mdxPreservation": 7
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "  </slot>\n  <slot name='explanation'>",
+      "replacement": "  </slot>\n\n  <slot name='hints'>\n    Controlla l'esatta semantica degli operatori JavaScript. La risposta più allettante è spesso quella che avrebbe dato la vecchia sintassi, non quella fornita da questa funzionalità.\n  </slot>\n\n  <slot name='explanation'>",
+      "reason": "The translation omitted the 'hints' slot for challenges 1 through 10, which is present in the English source. This is a significant content omission."
+    },
+    {
+      "priority": "medium",
+      "match": "title: 'Quiz: Conosci ilJavaScript Moderno?'",
+      "replacement": "title: \"Quiz: Conosci il JavaScript Moderno?\"",
+      "reason": "Fixing a missing space between 'il' and 'JavaScript' and using standard double quotes for consistency."
+    }
+  ],
+  "rationale": "The translation is accurate and uses natural Italian, but it failed to include the 'hints' slot for most challenges (it only included it for the first one). This omission reduces the educational value of the quiz compared to the original. The suggestions restore these hints and fix a minor typo in the title.",
+  "slug": "quiz-do-you-know-esnext",
+  "locale": "it",
+  "candidateCommits": [
+    "83ab606f43f5363879a3ab67d87894ca3806a8ec"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "title: 'Quiz: Conosci ilJavaScript Moderno?'",
+      "replacement": "title: 'Quiz: Conosci il JavaScript Moderno?'",
+      "reason": "Missing space between 'il' and 'JavaScript'.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "group=\"Chaining Opzionale\"",
+      "replacement": "group=\"Optional Chaining\"",
+      "reason": "Technical terms in groups are often better left in English or kept consistent with the title, but 'Chaining Opzionale' is acceptable; however, the English version used 'Optional Chaining'.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "title: 'Quiz: Conosci il JavaScript Moderno?'",
+      "replacement": "title: \"Quiz: Conosci il JavaScript Moderno?\"",
+      "reason": "The current file actually has a space, but the judge report suggested a fix. Looking at the provided IT source, the space is present. However, the hints slots are missing in the translation compared to the English source.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "</slot>\n  <slot name='explanation'>",
+      "replacement": "</slot>\n\n  <slot name='hints'>\n    Controlla l'esatta semantica degli operatori JavaScript. La risposta più allettante è spesso quella che avrebbe dato la vecchia sintassi, non quella fornita da questa funzionalità.\n  </slot>\n\n  <slot name='explanation'>",
+      "reason": "The translation is missing the 'hints' slot for all challenges, which is present in the English source. This is a significant content omission.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug quiz-do-you-know-esnext --locale it --skip-global",
+    "output": ""
+  }
+}

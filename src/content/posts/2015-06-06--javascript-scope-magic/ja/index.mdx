@@ -1,27 +1,24 @@
 ---
-title: JavaScriptの魔法
-subTitle: 命令型 vs 再帰型 vs 関数型
-date: '2015-06-06'
-modified: '2024-07-30'
+title:  "JavaScriptの魔法"
+subTitle: "[下書き] 命令型 vs 再帰型 vs 関数型"
+date: 2015-06-06
+modified: 2024-07-30
 category: Code
 subCategory: javascript
 draft: true
 publish: true
-tags:
-  - javascript
-  - programming
-  - performance
-  - patterns
-cover: ../markus-spiske-197281-unsplash.webp
-cover_mobile: ../w300_markus-spiske-197281-unsplash.webp
-cover_icon: ../icon_markus-spiske-197281-unsplash.webp
+tags: [javascript, programming, performance, patterns]
+cover: markus-spiske-197281-unsplash.webp
+cover_mobile: w300_markus-spiske-197281-unsplash.webp
+cover_icon: icon_markus-spiske-197281-unsplash.webp
 ---
-## Imperative vs. Recursive vs. Functional
+
+## 命令型 vs 再帰型 vs 関数型
 
 > [ 作業中 ]
 
 ```javascript
-// Imperative: The Fastest ( + very simple, no new pointers or excess allocs ):
+// 命令型: 最速 (＋非常にシンプル、新しいポインタや過剰なアロケーションなし):
 function fib(n) {
   var a = 1,
     b = 1,
@@ -34,8 +31,8 @@ function fib(n) {
   return b;
 }
 
-// Recursive: (FIREFOX or BABELJS Only) ES6 function definition with
-//  parameter defaults used to set initial (internal/recursive) values
+// 再帰型: (FIREFOX または BABELJS のみ) ES6関数定義で
+//  パラメータデフォルト値を使用して初期値(内部/再帰用)を設定
 function fib(n, current = 0, a = 1, b = 1, c = 0) {
   current++;
   c = a + b;
@@ -44,12 +41,12 @@ function fib(n, current = 0, a = 1, b = 1, c = 0) {
   return current >= n ? b : fib(n, current, a, b, c);
 }
 
-// Text-book-Bad Example - poor function scope w/ multiple mutable external values
+// 教科書的な悪い例 - 複数の外部変数を持つ不適切な関数スコープ
 function fib(n) {
   if (!arr) {
     var arr = [1, 1];
     n = n - 2;
-  } // Bad
+  } // 悪い
   if (n === -1) {
     return [arr[0]];
   }
@@ -60,17 +57,17 @@ function fib(n) {
     --n;
     arr.push(arr[arr.length - 1] + arr[arr.length - 2]);
     return n === 0 ? arr : proc();
-    // Bad: inner recursive function not needed, hint: variables used are from parent function scope
+    // 悪い: 内部の再帰関数は不要。ヒント: 使用される変数は親関数のスコープから来ている
   };
   var ans = proc();
   return ans[ans.length - 1];
 }
 ```
 
-## Promises: Awesome!
+## Promise: 最高だ！
 
 ```js
-// Example Using bluebird Promises and it's
+// Bluebird Promiseとその使用例
 var Promise = require("bluebird"),
   fs = Promise.promisifyAll(require("fs")),
   less = Promise.promisifyAll(require("less"));
@@ -78,32 +75,32 @@ var Promise = require("bluebird"),
 function writeFileData(data) {
   return fs.writeFileAsync("/tmp/output.css", data);
 }
-// Bluebird makes something like this perhaps uncomfortably simple and succinct:
-fs.readFileAsync("./style.less") // Call promisified readFile()
-  .then(less.renderAsync) // Hand off to less.render
-  .then(writeFileData); // Function to recieve the css contents (1st parameter)
+// Bluebirdはこのようなコードを恐ろしくシンプルで簡潔にしてくれる:
+fs.readFileAsync("./style.less") // プロミス化したreadFile()を呼び出す
+  .then(less.renderAsync) // less.renderに処理を渡す
+  .then(writeFileData); // コンテンツ(最初の引数)を受け取る関数
 ```
 
-1.  While, native ES6 Promises are great, I prefer the robust [Bluebird Promise Library](https://github.com/petkaantonov/bluebird/blob/master/API.md).
-1.  Library or not, modern browsers have supported Promise for years.
-1.  Promises can be utilized without crazy patterns - implicit `deferred` is preferable.
-1.  **$q just sucks** just use bluebird, see above.
-1.  Worth mentioning: Bluebirds Benchmarks are best-case tests, so take note if doing crazy fancy promise chains
+1.  ネイティブのES6 Promiseは素晴らしいが、私は堅牢な [Bluebird Promise Library](https://github.com/petkaantonov/bluebird/blob/master/API.md) を好む。
+1.  ライブラリかどうかに関わらず、モダンブラウザは長年Promiseをサポートしてきた。
+1.  Promiseはクレイジーなパターンなしで利用できる。暗黙的な `deferred` の方が望ましい。
+1.  **$qはただただひどい**。bluebirdを使えばいい。上記参照。
+1.  言及しておく価値あり: Bluebirdのベンチマークはベストケースのテストなので、複雑なファンシーなPromiseチェーンを行う場合は注意すること
 
 ## Java vs JavaScript
 
-### Rate Limiting / Debouncing / Throttling
+### レート制限 / デバウンス / スロットリング
 
-1.  JavaScript では [David Walsh がデバウンスを実装した](http://davidwalsh.name/essential-javascript-functions) のが 20 行未満です！  
-1.  Java では JDebounce というライブラリがあり、約 500 行以上とかなり複雑です。  
-1.  _ 両者を比較すると： _  
-1.  JavaScript は高速で、ファーストクラス関数を利用して抜群のシンプルさを実現します。  
-1.  それに対し Java は多数の要素が絡み合い、コンパイル時に動作を付与するためにアノテーションが使用され、さらに XML が大量に必要です。  
+1.  JavaScriptでは、[David Walshがデバウンスを実装](http://davidwalsh.name/essential-javascript-functions)したのは20行未満だった！
+1.  Javaでは、JDebounceというライブラリがあり、はるかに複雑で、約500行以上ある。
+1.  _ 両者を比較すると: _
+1.  JavaScriptは高速で、第一級関数を使用して見事なシンプルさを実現している。
+1.  対照的にJavaは、多くの可動部分を持ち、注釈を使用してコンパイル時に動作を適用し、そして楽しみのために大量のXMLがある！
 
-{/*
-## Inversion of Control Techniques
+<!--
+## 制御の反転テクニック
 
-Work-in-progress
-*/}
+作業中
+-->
 
 [fuck_this]: https://res.cloudinary.com/ddd/image/upload/panda-rampage__tumblr_nq7srwTXqr1stn6klo1_500_gm2som.gif

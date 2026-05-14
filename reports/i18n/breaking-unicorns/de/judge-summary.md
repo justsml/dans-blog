@@ -12,16 +12,16 @@
 - Validation scope: local
 - Validation error: Command failed: bun run i18n:validate --slug breaking-unicorns --locale de --skip-global
 $ bun ./src/scripts/i18n/validate.ts --slug breaking-unicorns --locale de --skip-global
-12 |   const minimumTargetLength = 600;
-13 |   const minimumRatio = 0.65;
-14 |   const maximumRatio = 1.35;
-15 | 
-16 |   if (targetLength <= minimumTargetLength) {
-17 |     throw new Error(
-                   ^
+146 |   const targetLength = getComparablePostLength(targetContents);
+147 |   const minimumTargetLength = 600;
+148 |   const { minimumRatio, maximumRatio, label } = getLengthRatioBounds(targetPath);
+149 | 
+150 |   if (targetLength <= minimumTargetLength) {
+151 |     throw new Error(
+                    ^
 error: /Users/dan/code/oss/dans-blog/src/content/posts/2024-09-01--breaking-unicorns/de/index.mdx is too short after translation. Comparable body length is 0 chars; expected more than 600.
-      at assertTranslationLength (/Users/dan/code/oss/dans-blog/src/scripts/i18n/structural-validation.ts:17:15)
-      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:26:1
+      at assertTranslationLength (/Users/dan/code/oss/dans-blog/src/scripts/i18n/localized-mdx.ts:151:15)
+      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:27:1
       at loadAndEvaluateModule (2:1)
 
 Bun v1.3.1 (macOS arm64)
@@ -29,14 +29,14 @@ error: script "i18n:validate" exited with code 1
 
 
 ## Primary Judge Telemetry
-- Runtime seconds: 3.89
-- Input tokens: 8756
-- Output tokens: 499
+- Runtime seconds: 3.52
+- Input tokens: 8790
+- Output tokens: 384
 - Thinking tokens: unknown
 - Cached input tokens: 0
 - Cache write tokens: 0
-- OpenRouter cost credits: unknown
-- Estimated cost: $0.005875
+- OpenRouter cost credits: 0.005547
+- Estimated cost: $0.005547
 
 ## Judge Suggestions
 1. Pass 1: logged high priority suggestion. Match: "exact translated text currently in the selected MDX" Replacement: "exact replacement text to write into the selected MDX" Reason: English explanation of why this medium/high-priority change is needed Note: Exact match not found in selected MDX.

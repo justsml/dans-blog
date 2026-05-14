@@ -1,7 +1,7 @@
 # Translation Judge
 
 - Selected candidate: current
-- Selected model: openrouter/openai/gpt-oss-120b:nitro
+- Selected model: current
 - Judge model: openrouter/google/gemini-3-flash-preview
 
-The selected translation has high-quality prose but failed technically by leaving almost all 'options' arrays and 'title' attributes empty within the MDX components. This makes the quiz non-functional. I have provided the necessary replacements to restore the quiz data while maintaining the Spanish translation.
+The current translation is already fully populated and corrected. The previous judge report indicated missing fields, but the provided 'current' content for this re-scoring round is complete, accurate, and maintains Dan's direct style. The technical accuracy is high, and the MDX structure is perfectly preserved.

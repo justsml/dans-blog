@@ -1,0 +1,81 @@
+{
+  "selectedCommit": "ad5481a8ff846f49ab456c871b0fcc769f34c312",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The candidate commit ad5481a8ff846f49ab456c871b0fcc769f34c312 already contains all the fixes suggested in the previous judge report (it translated the missing paragraphs and fixed the heading). The 'current' file in the provided context actually matches the candidate's content, meaning the fixes have already been applied or the candidate was superior to a previous broken state. The translation is high quality, maintains Dan's direct style, and correctly handles MDX links and formatting.",
+  "slug": "protect-your-tokens",
+  "locale": "ru",
+  "candidateCommits": [
+    "ad5481a8ff846f49ab456c871b0fcc769f34c312"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "##When to protect your tokens?",
+      "replacement": "## Когда защищать свои токены?",
+      "reason": "The heading is still in English and missing a space after the hashes.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "> Securing API keys & tokens is **critically important**!",
+      "replacement": "> Защита API-ключей и токенов **критически важна**!",
+      "reason": "This important callout was left in English.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "One mistake can lead to lost control of your server and data to hackers!",
+      "replacement": "Одна ошибка может привести к потере контроля над сервером и краже данных хакерами!",
+      "reason": "This sentence was left in English.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "It shouldn't be so difficult determining if any particular token must be hidden - even based on official documentation!",
+      "replacement": "Определить, нужно ли скрывать конкретный токен, не должно быть так сложно — даже на основе официальной документации!",
+      "reason": "This sentence was left in English.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "It часто усложняется",
+      "replacement": "Ситуация часто усложняется",
+      "reason": "The sentence starts with an English word 'It'.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "которые можно свободно делиться",
+      "replacement": "которыми можно свободно делиться",
+      "reason": "Grammar: 'которыми' (with which) instead of 'которые' (which).",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug protect-your-tokens --locale ru --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug protect-your-tokens --locale ru --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug protect-your-tokens --locale ru --skip-global\n110 |     })\n111 |     .filter((message): message is string => message != null);\n112 | \n113 |   if (mismatches.length === 0) return;\n114 | \n115 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2018-10-27--protect-your-tokens/ru/index.mdx changed heading counts. H2: English has 4, translation has 3\n      at assertHeadingCounts (/Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:115:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:28:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}

@@ -8,38 +8,34 @@
 - Max candidate commits per judge call: 3
 - Fix pass limit: 2
 - Selected commit hint: judge selected
-- Validation: failed
+- Validation: passed
 - Validation scope: local
-- Validation error: Command failed: bun run i18n:validate --slug quiz-postgres-sql-mastery-pt2 --locale es --skip-global
-$ bun ./src/scripts/i18n/validate.ts --slug "quiz-postgres-sql-mastery-pt2" --locale es --skip-global
-80 |   }
-81 | 
-82 |   const sourceFences = sourceContents.match(/```/g)?.length ?? 0;
-83 |   const targetFences = targetContents.match(/```/g)?.length ?? 0;
-84 |   if (sourceFences !== targetFences) {
-85 |     throw new Error(
-                   ^
-error: /Users/dan/code/oss/dans-blog/src/content/posts/2024-11-28--quiz-postgres-sql-mastery-pt2/es/index.mdx changed fenced code block count from 26 to 28
-      at assertProtectedTokens (/Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:85:15)
-      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:28:1
-      at loadAndEvaluateModule (2:1)
-
-Bun v1.3.1 (macOS arm64)
-error: script "i18n:validate" exited with code 1
-
 
 ## Primary Judge Telemetry
-- Runtime seconds: 2.80
-- Input tokens: 21720
-- Output tokens: 268
+- Runtime seconds: 4.11
+- Input tokens: 21754
+- Output tokens: 577
 - Thinking tokens: unknown
 - Cached input tokens: 0
 - Cache write tokens: 0
-- OpenRouter cost credits: unknown
-- Estimated cost: $0.011664
+- OpenRouter cost credits: 0.012608
+- Estimated cost: $0.012608
+
+## Pre-Publish Rescore Telemetry
+### Pass 1
+- Runtime seconds: 2.07
+- Input tokens: 17190
+- Output tokens: 194
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- OpenRouter cost credits: 0.009177
+- Estimated cost: $0.009177
 
 ## Judge Suggestions
-1. Pass 1: logged high priority suggestion. Match: "exact translated text currently in the selected MDX" Replacement: "exact replacement text to write into the selected MDX" Reason: English explanation of why this medium/high-priority change is needed Note: Exact match not found in selected MDX.
+1. Pass 1: applied high priority suggestion. Match: "{text: '\\'}" Replacement: "{text: '\\'first.name\\''}" Reason: The candidate is missing the option text for the single-quoted identifier, which is a key part of the quiz question. Note: Applied exact replacement to selected MDX.
+2. Pass 1: applied high priority suggestion. Match: "options={[ ]}" Replacement: "options={[ {text: 'ON a.id = b.id', isAnswer: true}, {text: 'ON a.id > b.id'}, {text: 'ON a.id >= b.id'}, {text: 'HASH JOIN ON a.id = b.id ...'} ]}" Reason: The candidate left the options array empty for Challenge 4, making the question unanswerable. Note: Applied exact replacement to selected MDX.
+3. Pass 1: applied high priority suggestion. Match: "options={[ ]}" Replacement: "options={[ {text: '...students SAMPLETABLE BERNOULLI (0.10)'}, {text: '...students TABLESAMPLE USER (10)'}, {text: '...students TABLESAMPLE RANDOM (10)'}, {text: '...students SA..." Reason: The candidate left the options array empty for Challenge 8, making the question unanswerable. Note: Applied exact replacement to selected MDX.
 
 ## Candidates
 - current src/content/posts/2024-11-28--quiz-postgres-sql-mastery-pt2/es/index.mdx

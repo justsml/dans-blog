@@ -12,35 +12,45 @@
 - Validation scope: local
 
 ## Primary Judge Telemetry
-- Runtime seconds: 3.91
-- Input tokens: 23097
-- Output tokens: 476
+- Runtime seconds: 4.12
+- Input tokens: 23159
+- Output tokens: 533
 - Thinking tokens: unknown
 - Cached input tokens: 0
 - Cache write tokens: 0
-- OpenRouter cost credits: unknown
-- Estimated cost: $0.012977
+- OpenRouter cost credits: 0.013178
+- Estimated cost: $0.013178
 
 ## Pre-Publish Rescore Telemetry
 ### Pass 1
-- Runtime seconds: 3.71
-- Input tokens: 18311
-- Output tokens: 549
+- Runtime seconds: 3.85
+- Input tokens: 18429
+- Output tokens: 560
 - Thinking tokens: unknown
 - Cached input tokens: 0
 - Cache write tokens: 0
-- OpenRouter cost credits: unknown
-- Estimated cost: $0.010802
+- OpenRouter cost credits: 0.010894
+- Estimated cost: $0.010894
+
+### Pass 2
+- Runtime seconds: 3.74
+- Input tokens: 18264
+- Output tokens: 583
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- OpenRouter cost credits: 0.010881
+- Estimated cost: $0.010881
 
 ## Judge Suggestions
-1. Pass 1: logged high priority suggestion. Match: "{text: 'new Intl.DateTimeFormat(\\'," Replacement: "{text: 'new Intl.DateTimeFormat(\\'en-US\\').format(date)'}," Reason: The translation truncated the code snippet in the options array, making the quiz question broken. Note: Exact match not found in selected MDX.
-2. Pass 1: applied high priority suggestion. Match: "{text: 'date.toLocaleFormat(\\', isAnswer: true}," Replacement: "{text: 'date.toLocaleFormat(\\'en-US\\')', isAnswer: true}," Reason: The translation truncated the code snippet in the options array. Note: Applied exact replacement to selected MDX.
-3. Pass 1: logged high priority suggestion. Match: "{text: 'date.toLocaleString(\\'," Replacement: "{text: 'date.toLocaleString(\\'en-GB\\', { timeZone: \\'UTC\\' })'}," Reason: The translation truncated the code snippet in the options array. Note: Exact match not found in selected MDX.
-4. Pass 1: logged high priority suggestion. Match: "{text: 'date.toLocaleDateString(\\'," Replacement: "{text: 'date.toLocaleDateString(\\'en-US\\', { timeZone: \\'UTC\\', timeZoneName: \\'short\\' })'}," Reason: The translation truncated the code snippet in the options array. Note: Exact match not found in selected MDX.
-5. Pass 2: logged high priority suggestion. Match: "{text: 'new Intl.DateTimeFormat(\\'," Replacement: "{text: 'new Intl.DateTimeFormat(\\'en-US\\').format(date)'}," Reason: The translation truncated the code snippet in the options array, making the quiz question broken. Note: Exact match not found in selected MDX.
-6. Pass 2: logged high priority suggestion. Match: "{text: 'date.toLocaleFormat(\\'en-US\\')', isAnswer: true}," Replacement: "{text: 'date.toLocaleFormat(\\'en-US\\')', isAnswer: true }," Reason: Restoring original spacing for consistency with the source MDX. Note: Exact match not found in selected MDX.
-7. Pass 2: logged high priority suggestion. Match: "{text: 'date.toLocaleString(\\'," Replacement: "{text: 'date.toLocaleString(\\'en-GB\\', { timeZone: \\'UTC\\' })'}," Reason: The translation truncated the code snippet in the options array. Note: Exact match not found in selected MDX.
-8. Pass 2: logged high priority suggestion. Match: "{text: 'date.toLocaleDateString(\\'," Replacement: "{text: 'date.toLocaleDateString(\\'en-US\\', { timeZone: \\'UTC\\', timeZoneName: \\'short\\' })'}," Reason: The translation truncated the code snippet in the options array. Note: Exact match not found in selected MDX.
+1. Pass 1: logged high priority suggestion. Match: "{text: 'new Intl.DateTimeFormat(\\'," Replacement: "{text: 'new Intl.DateTimeFormat(\\'en-US\\').format(date)'}," Reason: The code snippet in the option was truncated, making the quiz question broken. Note: Exact match not found in selected MDX.
+2. Pass 1: applied high priority suggestion. Match: "{text: 'date.toLocaleFormat(\\', isAnswer: true}," Replacement: "{text: 'date.toLocaleFormat(\\'en-US\\')', isAnswer: true}," Reason: The code snippet in the option was truncated. Note: Applied exact replacement to selected MDX.
+3. Pass 1: logged high priority suggestion. Match: "{text: 'date.toLocaleString(\\'," Replacement: "{text: 'date.toLocaleString(\\'en-GB\\', { timeZone: \\'UTC\\' })'}," Reason: The code snippet in the option was truncated. Note: Exact match not found in selected MDX.
+4. Pass 1: logged high priority suggestion. Match: "{text: 'date.toLocaleDateString(\\'," Replacement: "{text: 'date.toLocaleDateString(\\'en-US\\', { timeZone: \\'UTC\\', timeZoneName: \\'short\\' })'}," Reason: The code snippet in the option was truncated. Note: Exact match not found in selected MDX.
+5. Pass 2: applied high priority suggestion. Match: "{text: 'new Intl.DateTimeFormat(\\'}," Replacement: "{text: 'new Intl.DateTimeFormat(\\'en-US\\').format(date)'}," Reason: The code snippet in the option was truncated, making the quiz question broken. Note: Applied exact replacement to selected MDX.
+6. Pass 2: logged high priority suggestion. Match: "{text: 'date.toLocaleFormat(\\'en-US\\')', isAnswer: true}," Replacement: "{text: 'date.toLocaleFormat(\\'en-US\\')', isAnswer: true }," Reason: Standardizing spacing for consistency with other options. Note: Exact match not found in selected MDX.
+7. Pass 2: applied high priority suggestion. Match: "{text: 'date.toLocaleString(\\'}," Replacement: "{text: 'date.toLocaleString(\\'en-GB\\', { timeZone: \\'UTC\\' })'}," Reason: The code snippet in the option was truncated. Note: Applied exact replacement to selected MDX.
+8. Pass 2: applied high priority suggestion. Match: "{text: 'date.toLocaleDateString(\\'}," Replacement: "{text: 'date.toLocaleDateString(\\'en-US\\', { timeZone: \\'UTC\\', timeZoneName: \\'short\\' })'}," Reason: The code snippet in the option was truncated. Note: Applied exact replacement to selected MDX.
 
 ## Candidates
 - current src/content/posts/2020-01-02--js-quiz-14-date-time-questions-test-your-knowledge/it/index.mdx

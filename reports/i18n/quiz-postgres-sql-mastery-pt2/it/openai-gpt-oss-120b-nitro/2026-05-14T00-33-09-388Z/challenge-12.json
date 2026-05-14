@@ -1,0 +1,47 @@
+{
+  "index": 11,
+  "attempt": 1,
+  "originalTitle": "EXPLAIN ANALYZE Gotcha",
+  "translatedTitle": "EXPLAIN ANALYZE Trucco",
+  "translation": {
+    "title": "EXPLAIN ANALYZE Trucco",
+    "group": "Prestazioni",
+    "options": [
+      {
+        "text": "Stima del piano leggera"
+      },
+      {
+        "text": "Funziona solo su SELECT"
+      },
+      {
+        "text": "Modifica i dati e genera il piano"
+      },
+      {
+        "text": "Simula l'esecuzione per ottenere un piano"
+      }
+    ],
+    "questionProse": [
+      "Cosa fa `EXPLAIN ANALYZE` per le istruzioni `UPDATE`?"
+    ],
+    "explanationProse": [
+      "`EXPLAIN ANALYZE` esegue realmente la query! Fai attenzione ad analizzare un'operazione di scrittura, in particolare le istruzioni `UPDATE`, `DELETE` e `INSERT`. Potrebbe essere necessario eseguire operazioni di pulizia dopo ogni `EXPLAIN ANALYZE` per ottenere risultati ripetibili.\n\n    Buone pratiche:\n    - Usa `EXPLAIN` (senza ANALYZE) per UPDATE/DELETE/INSERT\n    - Avvolgi le modifiche in transazioni:"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"EXPLAIN ANALYZE Trucco\",\n  \"group\": \"Prestazioni\",\n  \"options\": [\n    {\n      \"text\": \"Stima del piano leggera\"\n    },\n    {\n      \"text\": \"Funziona solo su SELECT\"\n    },\n    {\n      \"text\": \"Modifica i dati e genera il piano\"\n    },\n    {\n      \"text\": \"Simula l'esecuzione per ottenere un piano\"\n    }\n  ],\n  \"questionProse\": [\n    \"Cosa fa `EXPLAIN ANALYZE` per le istruzioni `UPDATE`?\"\n  ],\n  \"explanationProse\": [\n    \"`EXPLAIN ANALYZE` esegue realmente la query! Fai attenzione ad analizzare un'operazione di scrittura, in particolare le istruzioni `UPDATE`, `DELETE` e `INSERT`. Potrebbe essere necessario eseguire operazioni di pulizia dopo ogni `EXPLAIN ANALYZE` per ottenere risultati ripetibili.\\n\\n    Buone pratiche:\\n    - Usa `EXPLAIN` (senza ANALYZE) per UPDATE/DELETE/INSERT\\n    - Avvolgi le modifiche in transazioni:\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 906,
+    "outputTokens": 730,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1886,
+    "providerCostUsd": 0.0005739,
+    "providerUpstreamCostUsd": 0.0005739,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000035334,
+    "outputUsd": 0.0001314,
+    "totalUsd": 0.00016673399999999998,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

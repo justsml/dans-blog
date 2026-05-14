@@ -1,7 +1,7 @@
 ---
 unlisted: false
-title: 'クイズ: Bash とシェルの熟練'
-subTitle: コンピュータと話せますか？ まあ、上手くね。
+title: 'クイズ: Bash & Shell マスター'
+subTitle: コンピュータとちゃんと話せますか？
 label: Bash
 category: Quiz
 subCategory: Bash
@@ -24,11 +24,11 @@ cover_icon: ../psychedelic-shell-square-200.webp
 import Challenge from '../../../../../components/QuizUI/Challenge';
 import QuizUI from '../../../../../components/QuizUI/QuizUI';
 
-<p class="inset">この16問でBashスクリプトのスキルをテストしよう！</p>
+<p class="inset">この16問のクイズでBashスクリプトスキルをテストしてみましょう！</p>
 
-変数、ループ、条件分岐、文字列操作、関数、そして基本からトリッキーな構文の落とし穴まで網羅しています。
+変数、ループ、条件分岐、文字列操作、関数、そして基本からやや複雑な構文の落とし穴までをカバーします。
 
-シェルスクリプトの**スキル**を磨く（あるいは証明する）！
+シェルスクリプトの**スキル**を磨く（または証明する）！
 
 <QuizUI>
 
@@ -36,7 +36,7 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={0}
   group="ウォームアップ"
-  title="変数宣言"
+  title="変数の宣言"
   options={[
     {text: '$name=Dan'},
     {text: 'name=Dan', isAnswer: true},
@@ -47,24 +47,24 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    Bash で変数はどう定義しますか？
+    Bashで変数はどのように定義されますか？
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Bash の変数は `=` 記号の前後にスペースを入れずに宣言します。例:
+    Bashでの変数宣言は`=`の前後にスペースを付けません。例えば：
     ```bash
         name=Alice
     ```
-    これは変数 `name` に値 `"Alice"` を代入します。
+    これは`name`変数に`"Alice"`を代入します。
 
-    注: `$name` は変数の値を**参照**したり読むために使います。
+    注：`$name`は変数の**参照**や値の読み取りに使用されます。
 
-    スペースを入れるとシェルはコマンドを実行するプログラムとして解釈してしまい、変数設定時には望ましくありません。
+    スペースを追加するとシェルがコマンドとして解釈してしまい、変数設定の意図に反します。
 
-    また、Bash は大文字小文字を区別するので、`name`、`NAME`、`Name` は別々の変数です。
+    また、Bashは大文字小文字を区別するため、`name`、`NAME`、`Name`は別の変数になります。
 
-    最後に、変数名にスペースやハイフン（`-`）は使えません。アンダースコア（`_`）やキャメルケースを代わりに使用してください。
+    最後に、変数名にスペースやハイフン(`-`)は使用できません。アンダースコア(`_`)やcamelCaseを使用してください。
   </div>
   </slot>
 </Challenge>
@@ -73,7 +73,7 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={1}
   group="ウォームアップ: エスケープ"
-  title="クオートのエスケープ"
+  title="クォートのエスケープ"
   options={[
     {text: 'echo \'It\'s 🔨 Time!\''},
     {text: 'echo \'It\\\'s 🔨 Time!\''},
@@ -84,18 +84,18 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    _`It's 🔨 Time!` を出力するのはどれ？_
+    「It's 🔨 Time!」を出力するコマンドはどれですか？
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    わかります。エスケープがすぐに文字列の解析を難しくするのは本当に狂っています。他の言語を Bash の文字列でエスケープすることを想像してみてください—クオートやアポストロフィ、`$` 記号があなたを悩ませます。🫠
+    クォートのエスケープは本当にややこしいですよね。Bash文字列内で他の言語をエスケープする想像してみてください。クォートやアポストロフ、`$`記号が邪魔になります。🫠
 
-    シングルクオートはシングルクオート文字列内でエスケープが必要です。閉じクオート、エスケープされたクオート、再オープンのシーケンス（`'\''`）は次の出力を可能にします:
+    シングルクォート内ではシングルクォートをエスケープする必要があります。`'\''`というクォート→エスケープ→クォートのシーケンスで出力できます：
     ```plaintext
         It's 🔨 Time!
     ```
-    他にも対処方法はありますが、これが最も一般的です。
+    他の方法もありますが、これは最も一般的な方法です。
   </div>
   </slot>
 </Challenge>
@@ -103,8 +103,8 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={2}
-  group="ウォームアップ: 展開"
-  title="Echo コマンド"
+  group="ウォームアップ: 拡張"
+  title="echoコマンド"
   options={[
     {text: 'cat cab'},
     {text: 'cat cbt', isAnswer: true},
@@ -124,9 +124,9 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `{}` ブレース展開は文字列コンテキストの複数バージョンを生成し、カンマ区切りの各値またはパターンごとに1つ（または複数）作ります。
+    大括弧`{}`による拡張は、コンマ区切りの値やパターンごとに、文字列コンテキストの複数バージョンを生成します。
 
-    ここでは、`c{a,b}t` は次のように展開されます:
+    ここでは`c{a,b}t`は次のように展開されます：
     ```plaintext
         cat cbt
     ```
@@ -140,17 +140,17 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   group="変数"
   title="エスケープ文字"
   options={[
-    {text: '費用: $$100'},
-    {text: '費用: $100'},
-    {text: '費用: 100'},
-    {text: '費用: 00', isAnswer: true},
-    {text: '費用:'},
-    {text: 'エラー'},
+    {text: 'Cost: $$100'},
+    {text: 'Cost: $100'},
+    {text: 'Cost: 100'},
+    {text: 'Cost: 00', isAnswer: true},
+    {text: 'Cost:'},
+    {text: 'Error'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    さて、これが何を出力するでしょうか？
+    では、これは何を出力するでしょうか？
     ```bash
         price="$100"
         echo "Cost: $price"
@@ -159,11 +159,11 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    番号付き変数には特別な意味があります。この場合、`$1` はスクリプトや関数に渡された最初の引数を保持する特別な変数です。
+    番号付きの変数は特殊な意味を持ちます。このケースでは、`$1`はスクリプトまたは関数に渡された最初の引数を保持する特殊な変数です。
 
-    REPL でスクリプトを実行しているので引数はなく、`$1` は空です。残りのテキスト `00` がそのまま出力されます。
+    REPL環境でスクリプトを実行しているため、引数が存在しないため`$1`は空になります。残りの文字`00`はそのまま出力されます。
 
-    リテラルな `$` 文字を出力するには、シングルクォートを使うか、バックスラッシュでエスケープします（`\`）。
+    リテラルの`$`文字を出力するには、シングルクォートを使用するか、バックスラッシュでエスケープしてください（`\`）：
     ```bash
         price="\$100"
         echo "Cost: $price"
@@ -176,18 +176,18 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={4}
   group="部分文字列の置換"
-  title="部分文字列を置換"
+  title="部分文字列の置換"
   options={[
     {text: 'meow meow'},
     {text: 'Meow meow'},
     {text: 'Bark meow', isAnswer: true},
     {text: 'Bark bark'},
-    {text: 'エラー'},
+    {text: 'Error'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    ここで何が起きているの？
+    ここでは何が起こっている？
     ```bash
         str="Bark bark"
         echo ${str/bark/meow}
@@ -196,17 +196,15 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `${var/pattern/replacement}` 構文は `pattern` の最初の出現を `replacement` に置き換えます。ここでの出力は次の通りです:
+    `${var/pattern/replacement}` 構文は、`pattern` の最初の出現を `replacement` で置換します。ここでの出力は:
     ```plaintext
         Bark meow
     ```
-    大文字小文字は区別されます。`bark` と `Bark` の両方に対応するには、`${var/[Bb]ark/Bark}` のようなパターンを使うか、置換前に文字列を正規化します。
+    これは大文字小文字を区別します。`bark` と `Bark` の両方を処理するには、`${var/[Bb]ark/Bark}` のようなパターンを使用するか、置換前に文字列を正規化してください。
 
-    すべての出現を置換するには、`${var//pattern/replacement}` を使用します。
-
-    文字列の先頭から置換するには、`${var/#pattern/replacement}` を使用します。
-
-    文字列の末尾から置換するには、`${var/%pattern/replacement}` を使用します。
+    すべての出現を置換するには `${var//pattern/replacement}` を、
+    文字列の先頭から置換するには `${var/#pattern/replacement}` を、
+    文字列の末尾から置換するには `${var/%pattern/replacement}` を使用します。
   </div>
   </slot>
 </Challenge>
@@ -226,24 +224,24 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    Bashで変数の長さを取得するにはどうすればいいですか？
+    Bashで変数の長さを取得する方法は？
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `${#username}` 構文は `username` の長さを返します。
+    `${#username}`構文は`username`の長さを返します。
 
     例:
     ```bash
         username="@justsml"
         echo ${#username} # => 8
     ```
-    `wc` は動作しますが、技術的には Bash の一部ではありません。
+    `wc`は機能しますが、これは厳密にBashの一部ではありません。
 
-    ユーティリティ `wc` は "water closet"（トイレ）を指す古いジョークです。
-    冗談です！誰か読んでますか？
+    `wc`ユーティリティは古くからあるジョークで「water closet（トイレ）」を指していました。
+    ジョークです！誰かこれらを読んでいるのでしょうか？
 
-    実際には `wc` は POSIX（そして AT&T Unix 時代）からの古いコマンドで、"word count" の略です。ファイルや入力ストリームの行数、単語数、文字数を数えることができます。
+    実際には`wc`はPosix（およびAT&T Unix時代）からの古いコマンドで、ファイルや入力ストリームの行数・単語数・文字数をカウントします。
   </div>
   </slot>
 </Challenge>
@@ -252,18 +250,18 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={6}
   group="条件分岐"
-  title="基本的な if-else"
+  title="基本的なif-else"
   options={[
-    {text: 'ファイルが存在する'},
-    {text: 'テスト診断後にファイルが存在しない', isAnswer: true},
+    {text: 'ファイルが存在する場合'},
+    {text: 'ファイルが存在しないが、テスト診断後に処理される', isAnswer: true},
     {text: 'エラーのみ'},
-    {text: '二重角括弧が欠如'},
+    {text: '二重括弧が不足している'},
     {text: '何も出力しない'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    ファイル `cats.txt` が存在する場合、このスクリプトは何を出力しますか？
+    ファイル`cats.txt`が存在する場合、このスクリプトは何を出力しますか？
     ```bash
         if [ -e cats.txt]; then
           echo "File exists"
@@ -275,11 +273,11 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    閉じ括弧の前のスペースが抜けていることに気づきましたか？
+    閉じ括弧の前のスペースが不足していることに気づけましたか？
 
-    Bash はここでかなり敏感です：角括弧式の内部にはスペースが必要です。
+    Bashはここでは非常に敏感です: 括弧内にスペースが必要です。
 
-    スペースが欠けていると `[` コマンドが閉じ `]` を見つけられず、Bash は診断メッセージを出し、テストを失敗とみなして `else` ブランチへ進みます。
+    スペースの不足により`[`コマンドが閉じ` ]`を見逃し、Bashは診断メッセージを表示し、テストを失敗扱いにしてelseブランチに進みます。
 
     正しい構文は次の通りです:
     ```bash
@@ -289,7 +287,7 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
           echo "File does not exist"
         fi
     ```
-    注: 二重角括弧 `[[ ]]` は条件式に **推奨** されています。 [BashFAQ を参照してください。](https://mywiki.wooledge.org/BashFAQ/031)
+    注: 条件式には**二重括弧`[[ ]]`**の使用を推奨します。[BashFAQを参照してください。](https://mywiki.wooledge.org/BashFAQ/031)
   </div>
   </slot>
 </Challenge>
@@ -298,17 +296,17 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={7}
   group="条件分岐"
-  title="文字列比較"
+  title="文字列の比較"
   options={[
     {text: '同じ猫'},
     {text: 'テスト構文エラー後の異なる猫', isAnswer: true},
-    {text: 'Zalgo'},
+    {text: 'ザルゴ'},
     {text: 'エラーのみ'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Bashで文字列を比較するにはどうすればいいですか？
+    Bashで文字列を比較する方法は？
     ```bash
         cat1="Rosie"
         cat2="Sunflower"
@@ -324,11 +322,11 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     別のテスト構文エラー！
 
-    無効な `===` 演算子に気づきましたか？
+    無効な`===`演算子に気づきましたか？
 
-    JavaScript と思っていたかもしれませんね...
+    JavaScriptを思い出したかもしれませんね…
 
-    `[ ... ]` を使うと、Bash は診断を出し条件は偽になるので、`else` ブランチは `Different cats` を出力します。Bash では等価比較に `=` または `==` を使用します。
+    `[ ... ]`ではBashは診断情報を報告し、条件がfalseになるため`else`分岐で`Different cats`を出力します。Bashでは等価比較に`=`または`==`を使用してください。
   </div>
   </slot>
 </Challenge>
@@ -337,14 +335,14 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={8}
   group="関数"
-  title="関数宣言"
+  title="関数の宣言"
   options={[
-    {text: 'こんにちは', isAnswer: true},
-    {text: 'ダン'},
-    {text: 'こんにちは ダン'},
-    {text: '挨拶'},
-    {text: 'エラー'},
-    {text: '構文エラー'},
+    {text: 'Hi', isAnswer: true},
+    {text: 'Dan'},
+    {text: 'Hi Dan'},
+    {text: 'greet'},
+    {text: 'Error'},
+    {text: 'Syntax Error'},
   ]}
 >
   <slot name="question">
@@ -360,9 +358,9 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Bash の関数は引数を受け取れます。`$1` 変数は関数に渡された最初の引数を保持します。
+    Bashの関数は引数を受け取ることができます。`$1`変数は関数に渡された最初の引数を保持します。
 
-    覚えておいてください、`$0` はスクリプト名、`$1` は最初の引数、`$2` は二番目の引数、という具合です。**スペースが引数を区切ります。** したがって、`greet Hi Dan` は `"Hi"` を最初の引数として渡します。`"Hi Dan"` をひとつの引数として渡すには、引用符で囲む必要があります：`greet "Hi Dan"`.
+    覚えておきましょう。`$0`はスクリプト名、`$1`は最初の引数、`$2`は2番目の引数であり、スペースで引数が区切られます。したがって、`greet Hi Dan`は`"Hi"`を最初の引数として渡します。`"Hi Dan"`を単一の引数として渡すには、クォートが必要です：`greet "Hi Dan"`。
   </div>
   </slot>
 </Challenge>
@@ -371,18 +369,24 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={9}
   group="構成"
-  title="パイプの使用"
+  title="パイピングの使用"
   options={[
+    { text: ">" },
+    { text: ">>" },
+    { text: "|", isAnswer: true },
+    { text: "||" },
+    { text: "|>" },
+    { text: "Error" },
   ]}
 >
   <slot name="question">
   <div className="question">
-    次のコマンドの**入力**に接続する**出力**を持つ演算子は何ですか？
+    コマンドの**出力**を次のコマンドの**入力**に接続する演算子は何ですか？
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `|` パイプ演算子は、あるコマンドの出力を別のコマンドの入力に接続します。例:
+    パイプ演算子`|`は、1つのコマンドの出力を別のコマンドの入力に接続します。例えば:
     ```bash
         echo "Mr. Levy 👨🏻‍🔬" | wc -m
         # => 14
@@ -406,25 +410,25 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    Bash での数学はどう機能しますか？
+    Bashで算術はどのように扱いますか？
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `(( ))` 構文は Bash で整数計算を行います。
+    `(( ))`の構文はBashで整数算術を実行します。
 
     簡単な計算に使用できます:
     ```bash
         ((result = 2 + 2))
         echo $result # => 4
     ```
-    または条件式に使用できます:
+    条件式にも利用可能です:
     ```bash
         if (( 2 > 1 )); then
           echo "2 is greater than 1"
         fi
     ```
-    浮動小数点演算には、[`bc`](https://www.gnu.org/software/bc/manual/html_mono/bc.html) または [`awk`](https://www.gnu.org/software/gawk/manual/gawk.html) の使用を検討してください。
+    浮動小数点演算が必要な場合は、[`bc`](https://www.gnu.org/software/bc/manual/html_mono/bc.html)や[`awk`](https://www.gnu.org/software/gawk/manual/gawk.html)の利用を検討してください。
   </div>
   </slot>
 </Challenge>
@@ -432,7 +436,7 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={11}
-  group="掛け算"
+  group="乗算"
   title="基本的な算術"
   options={[
     {text: 'echo 10 * 0.5'},
@@ -446,16 +450,16 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    次のうち、10 と 0.5 を正しく掛け算し、5 を出力するものはどれですか？
+    これらのうち、10と0.5を掛けて5を出力するのはどれですか？
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `(( ))` 構文は**整数**演算しか行いません。つまり、小数点は扱えません！
+    `(( ))`の構文は**整数**算術のみを実行します。小数点を含む浮動小数点計算はサポートされていません！
 
-    Bash（意外かもしれませんが）**組み込み**で浮動小数点演算のサポートがありません。
+    Bashは（驚くべきことに）**組み込みの**浮動小数点算術サポートを持っていません。
 
-    最も一般的な解決策は GNU ユーティリティ [`bc`](https://www.gnu.org/software/bc/manual/html_mono/bc.html) または [`awk`](https://www.gnu.org/software/gawk/manual/gawk.html) を使用することです。
+    最も一般的な解決策は、GNUユーティリティ[`bc`](https://www.gnu.org/software/bc/manual/html_mono/bc.html)や[`awk`](https://www.gnu.org/software/gawk/manual/gawk.html)を使うことです。
   </div>
   </slot>
 </Challenge>
@@ -464,7 +468,7 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={12}
   group="文字列操作"
-  title="部分文字列抽出"
+  title="部分文字列の抽出"
   options={[
     {text: '悪い猫'},
     {text: '悪い猫、良い猫:9'},
@@ -474,7 +478,7 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    このスクリプトで `:` は何をしますか？
+    このスクリプトで`:`はどのような働きをするか？
     ```bash
         rosie="Bad cat, good cat"
         echo ${rosie:9}
@@ -483,13 +487,13 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `${var:offset}` 構文は `offset` から始まる部分文字列を抽出します。ここでの出力は次の通りです：
+    `${var:offset}`という構文は、`offset`から始まる部分文字列を抽出します。ここでは、出力は次のようになります：
     ```plaintext
         good cat
     ```
-    特定の長さの部分文字列を抽出するには `${var:offset:length}` を使用します。
+    特定の長さの部分文字列を抽出するには`${var:offset:length}`を使用します。
 
-    文字列の末尾から抽出するには `${var: -offset}` を使います。（`-` の前にスペースが必要です！）
+    文字列の末尾から抽出するには`${var: -offset}`を使います。（`-`の前にスペースがあることに注意！）
   </div>
   </slot>
 </Challenge>
@@ -498,7 +502,7 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={13}
   group="ループ"
-  title="Bash のループ"
+  title="Bashでのループ"
   options={[
     {text: 'do'},
     {text: 'each', isAnswer: true},
@@ -509,14 +513,14 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    Bash でループに使われるキーワードではないものはどれですか❌
+    Bashでルーピングのキーワードでないのはどれですか？❌
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `each` は Bash のループキーワードではありません。主なループキーワードは `for`、`while`、`until` です。
+    `each`はBashのループキーワードではありません。主なループキーワードは`for`、`while`、`until`です。
 
-    `do` は厳密にはループキーワードではありませんが、ループ構文の重要な部分です。
+    `do`は厳密にはループキーワードではありませんが、ループ構文の重要な一部です。
   </div>
   </slot>
 </Challenge>
@@ -536,23 +540,23 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    どの選択肢がコマンド `ls -l` を実行し、出力を返しますか？
+    どのオプションがコマンド `ls -l` を実行して出力を返しますか？
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `$(ls -l)` 構文は **丸括弧** の中のコマンドを実行し、出力を置換します。例として:
+    `$(ls -l)` の構文は**括弧内**のコマンドを実行し、出力を置換します。例えば：
     ```bash
         echo "Today is $(date +%F)"
         # => Today is 2029-12-31
     ```
-    1番目の選択肢はシングルクォート `'` を使用しており、**バッククォートではありません**。これにより展開が抑止されるので、`'$(date +%F)'` は文字列 `$(date +%F)` をそのまま出力します。
+    1番目のオプションは**シングルクォート** `'` を使用しています。これは展開を防ぎ、`'$(date +%F)'` は単に文字列 `$(date +%F)` を出力します。
 
-    バッククォート（`` `ls -l` ``）でもコマンド実行はサポートされていますが、最近では（特定の文脈で）アンチパターンとみなされることが増えています。多くは可読性とシェル・バージョン間の一貫性のために `$(command)` の使用を推奨します。
+    バッククォート（`` `ls -l` ``）によるコマンド実行は依然サポートされていますが、最近は一部の文脈では**アンチパターン**とされています。より読みやすく、シェルのバージョンや種類に一貫性を持たせるために `$(command)` の使用が推奨されます。
 
-    中括弧 `${}` は変数展開に使われ、コマンド置換には使用しません。
+    **中括弧** `${}` は変数展開用で、コマンド置換には使われません。
 
-    `%` 文字はコマンド置換に使われません。
+    `%` 文字はコマンド置換には使用されません。
   </div>
   </slot>
 </Challenge>
@@ -563,36 +567,41 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
   group="標準入出力"
   title="デフォルト値"
   options={[
+    { text: "1>&2" },
+    { text: "&2>&1" },
+    { text: "2>&1", isAnswer: true },
+    { text: "2>1" },
+    { text: "&2>1" },
   ]}
 >
   <slot name="question">
   <div className="question">
-    エラー出力を標準出力に結合するために使用される演算子はどれですか？
+    エラー出力を標準出力に結合するためには、どの演算子を使用しますか？
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `2>&1` 演算子は標準エラー（ファイルディスクリプタ 2）を標準出力（ファイルディスクリプタ 1）へリダイレクトします。これにより、エラーメッセージを通常の出力と同じストリームで取得できます。
+    `2>&1` 演算子は、標準エラー出力（ファイル記述子2）を標準出力（ファイル記述子1）にリダイレクトします。これは、通常の出力と同じストリームにエラーメッセージをキャプチャするのに役立ちます。
   </div>
   </slot>
 </Challenge>
 
 </QuizUI>
 
-<p className="inset">私の Bash クイズで手こずりましたか？</p>
+<p className="inset">私のBashクイズで混乱しましたか？</p>
 
-以下のコメントで教えてください！
+コメントで教えてください！
 
-### さらに読む
+### 補足資料
 
-以下のリソースで Bash スキルを復習しましょう:
+Bashスキルをブラッシュアップするための以下のリソースをご覧ください:
 
-- [Bash ガイド](https://www.gnu.org/software/bash/manual/bash.html)
-- [Bash FAQ](http://mywiki.wooledge.org/BashFAQ)
+- [Bashガイド](https://www.gnu.org/software/bash/manual/bash.html)
+- [BashFAQ](http://mywiki.wooledge.org/BashFAQ)
 - [ShellCheck](https://www.shellcheck.net/)
-- [Bash アカデミー](https://guide.bash.academy/)
-- [Bash スクリプトチュートリアル](https://ryanstutorials.net/bash-scripting-tutorial/)
-- [Bash リファレンスマニュアル](https://www.gnu.org/software/bash/manual/bash.html)
-- [Bash Hackers Wiki](http://wiki.bash-hackers.org/)
-- [初心者向け Bash ガイド](http://tldp.org/LDP/Bash-Beginners-Guide/html/index.html)
-- [Bash リファレンスカード](http://www.tldp.org/LDP/Bash-Beginners-Guide/html/Bash-Beginners-Guide.html)
+- [Bashアカデミー](https://guide.bash.academy/)
+- [Bashスクリプティングチュートリアル](https://ryanstutorials.net/bash-scripting-tutorial/)
+- [Bashリファレンスマニュアル](https://www.gnu.org/software/bash/manual/bash.html)
+- [Bashハッカーズウィキ](http://wiki.bash-hackers.org/)
+- [Bash初心者向けガイド](http://tldp.org/LDP/Bash-Beginners-Guide/html/index.html)
+- [Bashリファレンスカード](http://www.tldp.org/LDP/Bash-Beginners-Guide/html/Bash-Beginners-Guide.html)

@@ -1,7 +1,7 @@
 # Translation Judge
 
-- Selected candidate: 378e9792ed9fe5cd51f01f130f580b1c4a6661e0
-- Selected model: openrouter/qwen/qwen3-32b:nitro
+- Selected candidate: current
+- Selected model: manual
 - Judge model: openrouter/google/gemini-3-flash-preview
 
-Selected 378e9792ed9fe5cd51f01f130f580b1c4a6661e0.
+The 'current' translation is actually complete and technically accurate. The judge report claiming it had a 'broken MDX structure' or 'redundant code block wrapper' appears to be an error in the judge's assessment of the provided source, as the 'current' file provided in the prompt is well-structured, preserves all quiz options (unlike the candidates which stripped them), and maintains Dan's direct style. No high-priority fixes are required.

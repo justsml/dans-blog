@@ -1,0 +1,144 @@
+{
+  "selectedCommit": "6a169597d77ad968585f6d258ec10db7d78a4211",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 9,
+    "relevance": 9,
+    "translationQuality": 8,
+    "mdxPreservation": 7
+  },
+  "suggestions": [],
+  "rationale": "The current French translation already incorporates the high-priority fixes suggested in the previous judge report (restoring the missing 'title' and 'options' arrays for the quiz challenges). The prose is natural, maintains Dan's direct style, and correctly handles MDX components and technical terminology. No further high-priority suggestions are required.",
+  "slug": "quiz-master-modern-html5",
+  "locale": "fr",
+  "candidateCommits": [
+    "6a169597d77ad968585f6d258ec10db7d78a4211"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "group=\"Échauffement\"\n  title=\"\"\n  options={[\n  ]}",
+      "replacement": "group=\"Échauffement\"\n  title=\"Rôle de `<ul>`\"\n  options={[\n    {text: 'Liste non ordonnée', isAnswer: true },\n    {text: 'Liste unique'},\n    {text: 'Liste universelle'},\n    {text: 'Liste d\\'utilisateurs'},\n  ]}",
+      "reason": "The current translation is missing the quiz options and titles for most challenges, making the quiz non-functional.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "group=\"HTML sémantique avancé\"\n  title=\"\"\n  options={[\n  ]}",
+      "replacement": "group=\"HTML sémantique avancé\"\n  title=\"Usage de `<dd>`\"\n  options={[\n    {text: 'Définition de description'},\n    {text: 'Terme de description'},\n    {text: 'Affichage de données'},\n    {text: 'Détails de description', isAnswer: true },\n  ]}",
+      "reason": "Missing quiz options and title.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "index={2}\n  group=\"HTML sémantique avancé\"\n  title=\"\"\n  options={[\n  ]}",
+      "replacement": "index={2}\n  group=\"HTML sémantique avancé\"\n  title=\"Usage de `<figure>/<figcaption>`\"\n  options={[\n    {text: 'Pour les images avec infos de copyright à afficher'},\n    {text: 'Décrire des images, graphiques, etc.', isAnswer: true },\n    {text: 'Pour annoter des tableaux, calculs, etc.'},\n    {text: 'Utilisé pour le sous-titrage de vidéos'},\n  ]}",
+      "reason": "The translation is missing the title and options for this challenge, making the quiz unplayable.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "index={3}\n  group=\"HTML sémantique avancé\"\n  title=\"\"\n  options={[\n  ]}",
+      "replacement": "index={3}\n  group=\"HTML sémantique avancé\"\n  title=\"Usage de `<article>`\"\n  options={[\n    {text: 'Pour le contenu, les barres latérales et le copyright'},\n    {text: 'Une section de contenu autonome', isAnswer: true },\n    {text: 'Partie d\\'une <newsletter>'},\n    {text: 'Définit un article d\\'actualité'},\n  ]}",
+      "reason": "Missing title and options for the article element challenge.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "index={4}\n  group=\"HTML sémantique avancé\"\n  title=\"\"\n  options={[\n  ]}",
+      "replacement": "index={4}\n  group=\"HTML sémantique avancé\"\n  title=\"Usage de `<fieldset>/<legend>`\"\n  options={[\n    {text: 'Grouper des éléments de formulaire sous un titre', isAnswer: true },\n    {text: 'Définir des instructions pour les champs'},\n    {text: 'Pas un usage valide de <legend>'},\n    {text: 'Définit une section extensible'},\n  ]}",
+      "reason": "Missing title and options for the fieldset/legend challenge.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "index={5}\n  group=\"HTML sémantique avancé\"\n  title=\"\"\n  options={[\n  ]}",
+      "replacement": "index={5}\n  group=\"HTML sémantique avancé\"\n  title=\"Objectif de `<meter>`\"\n  options={[\n    {text: 'Une barre de progression en unités métriques'},\n    {text: 'Représenter une valeur numérique dans une plage', isAnswer: true },\n    {text: 'Convertit une distance en mètres'},\n    {text: 'Balise spéciale liée aux performances'},\n  ]}",
+      "reason": "Missing title and options for the meter element challenge.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "index={6}\n  group=\"HTML sémantique\"\n  title=\"\"\n  options={[\n  ]}",
+      "replacement": "index={6}\n  group=\"HTML sémantique\"\n  title=\"Usage de `<source>`\"\n  options={[ \n    {text: 'Utilisé pour définir une source de données'},\n    {text: 'Déclarer les formats de fichiers média disponibles', isAnswer: true },\n    {text: 'Citer des sources au format APA ou MLA'},\n    {text: 'Définir un bloc de code source'},\n  ]}",
+      "reason": "Missing title and options for the source element challenge.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "index={7}\n  group=\"HTML sémantique avancé\"\n  title=\"\"\n  options={[\n  ]}",
+      "replacement": "index={7}\n  group=\"HTML sémantique avancé\"\n  title=\"Usage de `<hgroup>`\"\n  options={[\n    {text: 'Élément obsolète, plus utilisé'},\n    {text: 'Pour grouper des titres ensemble'},\n    {text: 'Définir une table des matières'},\n    {text: 'Grouper un titre avec son sous-titre', isAnswer: true },\n  ]}",
+      "reason": "Missing title and options for the hgroup element challenge.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "index={8}\n  group=\"HTML sémantique avancé\"\n  title=\"\"\n  options={[\n  ]}",
+      "replacement": "index={8}\n  group=\"HTML sémantique avancé\"\n  title=\"Usage de `<menu>`\"\n  options={[\n    {text: 'Pour définir une liste ordonnée'},\n    {text: 'Lister des commandes ou contrôles de barre d\\'outils', isAnswer: true },\n    {text: 'Pour représenter une barre de navigation'},\n    {text: 'Pour définir un groupe de boutons'},\n  ]}",
+      "reason": "Missing title and options for the menu element challenge.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "index={9}\n  group=\"HTML sémantique avancé\"\n  title=\"\"\n  options={[\n  ]}",
+      "replacement": "index={9}\n  group=\"HTML sémantique avancé\"\n  title=\"Rôle de `<details>/<summary>`\"\n  options={[\n    {text: 'Contenu pliable natif', isAnswer: true },\n    {text: 'Infobulles natives'},\n    {text: 'Ajouter du contexte à <section>'},\n    {text: 'Pour afficher des données structurées'},\n  ]}",
+      "reason": "Missing title and options for the details/summary challenge.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "index={10}\n  group=\"HTML sémantique avancé\"\n  title=\"\"\n  options={[\n  ]}",
+      "replacement": "index={10}\n  group=\"HTML sémantique avancé\"\n  title=\"Objectif de `<dialog>`\"\n  options={[\n    {text: 'Format pour les scénaristes'},\n    {text: 'Déclarer une modale ou un popup', isAnswer: true },\n    {text: 'Déclarer une discussion de type ChatGPT'},\n    {text: 'Obsolète au profit de <wizard>'},\n  ]}",
+      "reason": "Missing title and options for the dialog element challenge.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "index={11}\n  group=\"HTML sémantique avancé\"\n  title=\"\"\n  options={[\n  ]}",
+      "replacement": "index={11}\n  group=\"HTML sémantique avancé\"\n  title=\"Usage de `<time>`\"\n  options={[\n    {text: 'Représenter une date et une heure', isAnswer: true },\n    {text: 'Définir un horodatage'},\n    {text: 'Formater uniquement les dates'},\n    {text: 'Rendre les entrées de date déplaçables'},\n  ]}",
+      "reason": "Missing title and options for the time element challenge.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "index={12}\n  group=\"HTML sémantique avancé\"\n  title=\"Objectif des attributs ARIA\"\n  options={[\n  ]}",
+      "replacement": "index={12}\n  group=\"HTML sémantique avancé\"\n  title=\"Objectif des attributs ARIA\"\n  options={[\n    {text: 'Aides pour les appareils tactiles'},\n    {text: 'Améliorer l\\'accessibilité', isAnswer: true },\n    {text: 'Contrôler les sons et la lecture'},\n    {text: 'Pour n\\'utiliser que des <div>'},\n  ]}",
+      "reason": "Missing options for the ARIA attributes challenge.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug quiz-master-modern-html5 --locale fr --skip-global",
+    "output": ""
+  }
+}

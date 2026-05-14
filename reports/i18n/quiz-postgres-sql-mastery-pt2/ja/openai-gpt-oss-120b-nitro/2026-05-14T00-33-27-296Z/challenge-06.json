@@ -1,0 +1,47 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Multi-Column Index Order",
+  "translatedTitle": "マルチカラムインデックスの順序",
+  "translation": {
+    "title": "マルチカラムインデックスの順序",
+    "group": "インデックス作成",
+    "options": [
+      {
+        "text": "CREATE INDEX ON students(grade_level, last_name);"
+      },
+      {
+        "text": "CREATE INDEX ON students(grade_level);"
+      },
+      {
+        "text": "CREATE INDEX ON students(last_name, age);"
+      },
+      {
+        "text": "CREATE INDEX ON students(first_name, last_name, grade_level);"
+      }
+    ],
+    "questionProse": [
+      "このクエリに最適なインデックスはどれですか？"
+    ],
+    "explanationProse": [
+      "驚くべきは、クエリ本文のカラム順序がインデックス定義と一致していなくても、マルチカラムインデックスが利用できることです。\n\n**注:** Bツリーインデックスでは先頭カラムが重要です。このクエリは `grade_level` と `last_name` で絞り込むので、`grade_level` に続いて `last_name` が並んだインデックスが適しています。\n\nSQL がより少ない行を選択できれば、パフォーマンスは向上します。\n\n例えば `task` テーブルがあり、`status` の方が `created_at` より選択性が高いと分かっている場合、`status = 'done' AND created_at > '2024-01-01'` のようなクエリに対して `status` から始まるインデックスを選択します。`WHERE` 句の条件順序は関係なく、重要なのはインデックスのカラム順序と述語の形です。\n\nB+Tree インデックスは次の場合に利用できます:\n- 先頭カラム、または左側から連続したプレフィックス。\n- クエリの形に応じて `=`, `>`, `<`, `BETWEEN`, `IN` などの演算子。\n- プレフィックスマッチング、`LIKE 'prefix%'`。\n\nこの説明の以前の誤りを指摘してくれた [u/mwdb2](https://www.reddit.com/r/PostgreSQL/comments/1h6kw87/comment/m0fovn0/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button) に感謝します！"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"マルチカラムインデックスの順序\",\n  \"group\": \"インデックス作成\",\n  \"options\": [\n    {\n      \"text\": \"CREATE INDEX ON students(grade_level, last_name);\"\n    },\n    {\n      \"text\": \"CREATE INDEX ON students(grade_level);\"\n    },\n    {\n      \"text\": \"CREATE INDEX ON students(last_name, age);\"\n    },\n    {\n      \"text\": \"CREATE INDEX ON students(first_name, last_name, grade_level);\"\n    }\n  ],\n  \"questionProse\": [\n    \"このクエリに最適なインデックスはどれですか？\"\n  ],\n  \"explanationProse\": [\n    \"驚くべきは、クエリ本文のカラム順序がインデックス定義と一致していなくても、マルチカラムインデックスが利用できることです。\\n\\n**注:** Bツリーインデックスでは先頭カラムが重要です。このクエリは `grade_level` と `last_name` で絞り込むので、`grade_level` に続いて `last_name` が並んだインデックスが適しています。\\n\\nSQL がより少ない行を選択できれば、パフォーマンスは向上します。\\n\\n例えば `task` テーブルがあり、`status` の方が `created_at` より選択性が高いと分かっている場合、`status = 'done' AND created_at > '2024-01-01'` のようなクエリに対して `status` から始まるインデックスを選択します。`WHERE` 句の条件順序は関係なく、重要なのはインデックスのカラム順序と述語の形です。\\n\\nB+Tree インデックスは次の場合に利用できます:\\n- 先頭カラム、または左側から連続したプレフィックス。\\n- クエリの形に応じて `=`, `>`, `<`, `BETWEEN`, `IN` などの演算子。\\n- プレフィックスマッチング、`LIKE 'prefix%'`。\\n\\nこの説明の以前の誤りを指摘してくれた [u/mwdb2](https://www.reddit.com/r/PostgreSQL/comments/1h6kw87/comment/m0fovn0/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button) に感謝します！\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1128,
+    "outputTokens": 1478,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 1083,
+    "providerCostUsd": 0.0015033,
+    "providerUpstreamCostUsd": 0.0015033,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000043992,
+    "outputUsd": 0.00026604,
+    "totalUsd": 0.000310032,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

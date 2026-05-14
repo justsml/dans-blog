@@ -4,4 +4,4 @@
 - Selected model: deepseek/deepseek-v4-flash
 - Judge model: openrouter/google/gemini-3-flash-preview
 
-This candidate provides a high-quality translation that captures the satirical tone of the original English text while maintaining perfect MDX structure. It correctly handles the complex Timeline component and nested sections. The Hindi used is natural and effectively conveys the humor (e.g., 'कोई फ़क़ नहीं बचा' for 'no fucks left'). It is identical to the current version but was evaluated against others that failed on MDX preservation (like Qwen adding code blocks) or left too much English (like GPT-OSS).
+This candidate provides a high-quality Hindi translation that captures the satirical tone of the original English text. It correctly handles the MDX structure, including the complex Timeline component and nested slots. It maintains the technical accuracy of the links and image paths while providing natural-sounding Hindi prose. It is identical to the 'current' version in this specific run, which was already of high quality.

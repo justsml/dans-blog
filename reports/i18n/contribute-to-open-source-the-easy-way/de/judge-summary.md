@@ -12,43 +12,42 @@
 - Validation scope: local
 
 ## Primary Judge Telemetry
-- Runtime seconds: 3.77
-- Input tokens: 6004
-- Output tokens: 501
+- Runtime seconds: 3.19
+- Input tokens: 6012
+- Output tokens: 340
 - Thinking tokens: unknown
 - Cached input tokens: 0
 - Cache write tokens: 0
-- OpenRouter cost credits: unknown
-- Estimated cost: $0.004505
+- OpenRouter cost credits: 0.004026
+- Estimated cost: $0.004026
 
 ## Pre-Publish Rescore Telemetry
 ### Pass 1
-- Runtime seconds: 3.56
-- Input tokens: 5198
-- Output tokens: 609
+- Runtime seconds: 3.54
+- Input tokens: 4995
+- Output tokens: 490
 - Thinking tokens: unknown
 - Cached input tokens: 0
 - Cache write tokens: 0
-- OpenRouter cost credits: unknown
-- Estimated cost: $0.004426
+- OpenRouter cost credits: 0.003967
+- Estimated cost: $0.003967
 
 ### Pass 2
-- Runtime seconds: 3.68
-- Input tokens: 5198
-- Output tokens: 609
+- Runtime seconds: 3.66
+- Input tokens: 4988
+- Output tokens: 553
 - Thinking tokens: unknown
 - Cached input tokens: 0
 - Cache write tokens: 0
-- OpenRouter cost credits: unknown
-- Estimated cost: $0.004426
+- OpenRouter cost credits: 0.004153
+- Estimated cost: $0.004153
 
 ## Judge Suggestions
-1. Pass 1: applied high priority suggestion. Match: "> Over my career, I've written many PR's for dozens of 10,000-Star repositories. My modest contributions have landed in Node.js, Docker, Lodash, Bluebird, Gatsby, Rancher, Angul..." Replacement: "> Im Laufe meiner Karriere habe ich viele PRs für Dutzende von 10.000-Sterne-Repositories geschrieben. Meine bescheidenen Beiträge haben Einzug in Node.js, Docker, Lodash, Blueb..." Reason: The candidate left a large block of text in English. This needs to be translated into German. Note: Applied exact replacement to selected MDX.
-2. Pass 1: applied medium priority suggestion. Match: "Es istzwar gut gemeint" Replacement: "Es ist zwar gut gemeint" Reason: Missing space between words. Note: Applied exact replacement to selected MDX.
-3. Pass 1: applied medium priority suggestion. Match: "Vielleicht reichtein Tweet" Replacement: "Vielleicht reicht ein Tweet" Reason: Missing space between words. Note: Applied exact replacement to selected MDX.
-4. Pass 2: applied high priority suggestion. Match: "> Over my career, I've written many PR's for dozens of 10,000-Star repositories. My modest contributions have landed in Node.js, Docker, Lodash, Bluebird, Gatsby, Rancher, Angul..." Replacement: "> Im Laufe meiner Karriere habe ich viele PRs für Dutzende von 10.000-Sterne-Repositories geschrieben. Meine bescheidenen Beiträge haben Einzug in Node.js, Docker, Lodash, Blueb..." Reason: The candidate left a large block of text in English. This needs to be translated into German. Note: Applied exact replacement to selected MDX.
-5. Pass 2: applied medium priority suggestion. Match: "Es istzwar gut gemeint" Replacement: "Es ist zwar gut gemeint" Reason: Missing space between words. Note: Applied exact replacement to selected MDX.
-6. Pass 2: applied medium priority suggestion. Match: "Vielleicht reichtein Tweet" Replacement: "Vielleicht reicht ein Tweet" Reason: Missing space between words. Note: Applied exact replacement to selected MDX.
+1. Pass 1: applied high priority suggestion. Match: "Es istzwar gut gemeint" Replacement: "Es ist zwar gut gemeint" Reason: Missing space between words. Note: Applied exact replacement to selected MDX.
+2. Pass 1: applied high priority suggestion. Match: "rebase nicht deine verzweifelten Hacks weg!" Replacement: "rebase deine verzweifelten Hacks nicht einfach weg!" Reason: The German sentence structure is slightly awkward; adding 'einfach' or reordering improves the flow of Dan's direct style. Note: Applied exact replacement to selected MDX.
+3. Pass 2: logged high priority suggestion. Match: "Es ist zwar gut gemeint, aber in der Praxis sind `GFI`‑Labels stark subjektiv und erfordern oft überraschend viel Aufwand." Replacement: "Es ist zwar gut gemeint, aber in der Praxis sind `GFI`‑Labels stark subjektiv und erfordern oft überraschend viel Aufwand." Reason: The previous judge report mentioned a typo 'istzwar', but the current file content already has 'ist zwar'. No fix needed for this specific point. Note: Exact match and replacement are identical; no MDX change needed.
+4. Pass 2: applied medium priority suggestion. Match: "Vielleicht reichtein Tweet" Replacement: "Vielleicht reicht ein Tweet" Reason: Missing space between 'reicht' and 'ein'. Note: Applied exact replacement to selected MDX.
+5. Pass 2: applied medium priority suggestion. Match: "Einfaches Fix: Fehlende Infos ergänzen!" Replacement: "Einfacher Fix: Fehlende Infos ergänzen!" Reason: Grammatical gender correction: 'Fix' (as in bugfix/solution) is masculine in this context ('Der Fix'). Note: Applied exact replacement to selected MDX.
 
 ## Candidates
 - current src/content/posts/2024-01-16--contribute-to-open-source-the-easy-way/de/index.mdx

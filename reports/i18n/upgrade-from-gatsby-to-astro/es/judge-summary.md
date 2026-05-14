@@ -12,16 +12,16 @@
 - Validation scope: local
 - Validation error: Command failed: bun run i18n:validate --slug upgrade-from-gatsby-to-astro --locale es --skip-global
 $ bun ./src/scripts/i18n/validate.ts --slug upgrade-from-gatsby-to-astro --locale es --skip-global
-109 |     })
-110 |     .filter((message): message is string => message != null);
-111 | 
-112 |   if (mismatches.length === 0) return;
-113 | 
-114 |   throw new Error(
+110 |     })
+111 |     .filter((message): message is string => message != null);
+112 | 
+113 |   if (mismatches.length === 0) return;
+114 | 
+115 |   throw new Error(
                   ^
 error: /Users/dan/code/oss/dans-blog/src/content/posts/2024-08-22--upgrade-from-gatsby-to-astro/es/index.mdx changed heading counts. H2: English has 9, translation has 10
-      at assertHeadingCounts (/Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:114:13)
-      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:27:1
+      at assertHeadingCounts (/Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:115:13)
+      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:28:1
       at loadAndEvaluateModule (2:1)
 
 Bun v1.3.1 (macOS arm64)
@@ -29,14 +29,14 @@ error: script "i18n:validate" exited with code 1
 
 
 ## Primary Judge Telemetry
-- Runtime seconds: 4.88
-- Input tokens: 14962
-- Output tokens: 390
+- Runtime seconds: 3.12
+- Input tokens: 14996
+- Output tokens: 332
 - Thinking tokens: unknown
 - Cached input tokens: 0
 - Cache write tokens: 0
-- OpenRouter cost credits: unknown
-- Estimated cost: $0.008651
+- OpenRouter cost credits: 0.008494
+- Estimated cost: $0.008494
 
 ## Judge Suggestions
 1. Pass 1: logged high priority suggestion. Match: "exact translated text currently in the selected MDX" Replacement: "exact replacement text to write into the selected MDX" Reason: English explanation of why this medium/high-priority change is needed Note: Exact match not found in selected MDX.

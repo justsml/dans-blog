@@ -197,6 +197,14 @@ describe("assertTranslationLength", () => {
       targetPath: "src/content/posts/example/zh/index.mdx",
     })).toThrow(/35%-125%/);
   });
+
+  test("allows tiny legacy posts when they satisfy the locale ratio", () => {
+    expect(() => assertTranslationLength({
+      sourceContents: ["---", "title: Source", "---", "a".repeat(450)].join("\n"),
+      targetContents: ["---", "title: Target", "---", "b".repeat(500)].join("\n"),
+      targetPath: "src/content/posts/example/de/index.mdx",
+    })).not.toThrow();
+  });
 });
 
 describe("i18n run lock", () => {

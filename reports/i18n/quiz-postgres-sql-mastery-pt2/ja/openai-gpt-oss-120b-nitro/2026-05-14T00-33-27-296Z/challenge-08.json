@@ -1,0 +1,50 @@
+{
+  "index": 7,
+  "attempt": 1,
+  "originalTitle": "Column Name Quoting",
+  "translatedTitle": "列名のクオート",
+  "translation": {
+    "title": "列名のクオート",
+    "group": "クオート 2",
+    "options": [
+      {
+        "text": "first.name"
+      },
+      {
+        "text": "\"first.name\""
+      },
+      {
+        "text": "\\"
+      },
+      {
+        "text": "[first.name]"
+      },
+      {
+        "text": "[first].[name]"
+      }
+    ],
+    "questionProse": [
+      "**ピリオドを含む列名**はどう指定しますか？"
+    ],
+    "explanationProse": [
+      "PostgreSQL は識別子のクオートに二重引用符を使用します：\n    - 二重引用符 `\"...\"` は識別子（列名、テーブル名）用\n    - 単一引用符 `'...'` は文字列リテラル用\n    - 形式 `first.name` は `table_name.column_name` と解釈されます\n\n    クオートしない場合、列名にピリオドがあるとスキーマ/テーブルの区切りとみなされます！さらに、クオートされていない識別子はデフォルトで小文字に変換されます。\n\n    予期せぬ動作を減らすには、`snake_case` を使い、特殊文字の使用は避けるのがベストです。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"列名のクオート\",\n  \"group\": \"クオート 2\",\n  \"options\": [\n    {\n      \"text\": \"first.name\"\n    },\n    {\n      \"text\": \"\\\"first.name\\\"\"\n    },\n    {\n      \"text\": \"\\\\\"\n    },\n    {\n      \"text\": \"[first.name]\"\n    },\n    {\n      \"text\": \"[first].[name]\"\n    }\n  ],\n  \"questionProse\": [\n    \"**ピリオドを含む列名**はどう指定しますか？\"\n  ],\n  \"explanationProse\": [\n    \"PostgreSQL は識別子のクオートに二重引用符を使用します：\\n    - 二重引用符 `\\\"...\\\"` は識別子（列名、テーブル名）用\\n    - 単一引用符 `'...'` は文字列リテラル用\\n    - 形式 `first.name` は `table_name.column_name` と解釈されます\\n\\n    クオートしない場合、列名にピリオドがあるとスキーマ/テーブルの区切りとみなされます！さらに、クオートされていない識別子はデフォルトで小文字に変換されます。\\n\\n    予期せぬ動作を減らすには、`snake_case` を使い、特殊文字の使用は避けるのがベストです。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 901,
+    "outputTokens": 1000,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 638,
+    "providerCostUsd": 0.00106535,
+    "providerUpstreamCostUsd": 0.00106535,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000035139000000000004,
+    "outputUsd": 0.00017999999999999998,
+    "totalUsd": 0.000215139,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -4,4 +4,4 @@
 - Selected model: openrouter/openai/gpt-oss-120b:nitro
 - Judge model: openrouter/google/gemini-3-flash-preview
 
-The candidate captures the tone well, but unfortunately has critical technical omissions where the 'options' arrays for two challenges (9 and 15) were left empty. These must be restored for the quiz to function. The translation of the 'wc' joke and the informal 'qui vous font chier' are excellent matches for the source style.
+The current translation in the provided `fr/index.mdx` already contains the options for challenges 9 and 15, contrary to what the previous judge report suggested. The translation is high quality, maintains Dan's direct and slightly informal style ('qui vous font chier'), and preserves all MDX structures and technical details correctly. No further high-priority fixes are required.

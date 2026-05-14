@@ -1,0 +1,50 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Partial Indexes",
+  "translatedTitle": "Indici Parziali",
+  "translation": {
+    "title": "Indici Parziali",
+    "group": "Indicizzazione",
+    "options": [
+      {
+        "text": "Sintassi non valida"
+      },
+      {
+        "text": "Crea indici duplicati"
+      },
+      {
+        "text": "Indicizza solo gli studenti attivi"
+      },
+      {
+        "text": "Indicizza per primi gli studenti attivi"
+      },
+      {
+        "text": "Fornisce un suggerimento al pianificatore di query"
+      }
+    ],
+    "questionProse": [
+      "Cosa fa questo incantesimo?"
+    ],
+    "explanationProse": [
+      "Questo trucco si chiama un `Partial Index`.\n\n    Sono utili per ridurre l'uso del disco e velocizzare le query quando di solito viene interrogato solo un sottoinsieme di righe.\n\n    Postgres utilizzerà l'indice solo quando nella query è presente la condizione `status = 'active'`.\n\n    **Promemoria:** Postgres non supporta i 'query hints' come altri RDBMS. Il pianificatore di query deciderà quando usare gli eventuali indici appropriati."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Indici Parziali\",\n  \"group\": \"Indicizzazione\",\n  \"options\": [\n    {\n      \"text\": \"Sintassi non valida\"\n    },\n    {\n      \"text\": \"Crea indici duplicati\"\n    },\n    {\n      \"text\": \"Indicizza solo gli studenti attivi\"\n    },\n    {\n      \"text\": \"Indicizza per primi gli studenti attivi\"\n    },\n    {\n      \"text\": \"Fornisce un suggerimento al pianificatore di query\"\n    }\n  ],\n  \"questionProse\": [\n    \"Cosa fa questo incantesimo?\"\n  ],\n  \"explanationProse\": [\n    \"Questo trucco si chiama un `Partial Index`.\\n\\n    Sono utili per ridurre l'uso del disco e velocizzare le query quando di solito viene interrogato solo un sottoinsieme di righe.\\n\\n    Postgres utilizzerà l'indice solo quando nella query è presente la condizione `status = 'active'`.\\n\\n    **Promemoria:** Postgres non supporta i 'query hints' come altri RDBMS. Il pianificatore di query deciderà quando usare gli eventuali indici appropriati.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 881,
+    "outputTokens": 724,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2179,
+    "providerCostUsd": 0.00056655,
+    "providerUpstreamCostUsd": 0.00056655,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000034359,
+    "outputUsd": 0.00013032,
+    "totalUsd": 0.000164679,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

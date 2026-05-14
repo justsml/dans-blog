@@ -1,0 +1,37 @@
+{
+  "selectedCommit": "19df4d1d471d84c376a46df8f5004332225cb58d",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "scores": {
+    "readability": 5,
+    "technicalAccuracy": 5,
+    "coherence": 5,
+    "relevance": 5,
+    "translationQuality": 5,
+    "mdxPreservation": 5
+  },
+  "suggestions": [],
+  "rationale": "The selected candidate is the only one that fully translated the document; the other candidate and the 'current' version left the introductory paragraphs in English. The translation is high quality, maintains the technical tone, and preserves all MDX structures and image paths correctly.",
+  "slug": "one-weird-trick-to-speed-up-feature-teams",
+  "locale": "it",
+  "candidateCommits": [
+    "19df4d1d471d84c376a46df8f5004332225cb58d",
+    "b52bdc492612f1c27df8fbb4e8927f5f0d5fbd90"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "### Letture Consigliate",
+      "replacement": "### Approfondimenti",
+      "reason": "Consistency with common technical translation for 'Further Reading' in this context, though 'Letture Consigliate' is acceptable, 'Approfondimenti' matches the existing style better.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug one-weird-trick-to-speed-up-feature-teams --locale it --skip-global",
+    "output": ""
+  }
+}

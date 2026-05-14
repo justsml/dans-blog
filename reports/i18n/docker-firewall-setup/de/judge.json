@@ -1,0 +1,28 @@
+{
+  "selectedCommit": "current",
+  "selectedModel": "current",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 10,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The current translation is the most stable and accurate. Candidate a4fb87a1d010ba51cf18e0e4b2f6e66a08a5c663 has broken code blocks (extra ~~~ and text outside blocks). Candidate 423226642ee0657b6c120ded6ce432d5a9f47ba7 leaves several headings in English. Candidate 08eed71b0bf566286622674c82c3aebd71ce4ccd also breaks a code block by inserting a heading-like comment outside the block. The 'current' version correctly translates the prose while keeping the technical commands intact and preserving the MDX structure.",
+  "slug": "docker-firewall-setup",
+  "locale": "de",
+  "candidateCommits": [
+    "a4fb87a1d010ba51cf18e0e4b2f6e66a08a5c663",
+    "423226642ee0657b6c120ded6ce432d5a9f47ba7",
+    "08eed71b0bf566286622674c82c3aebd71ce4ccd"
+  ],
+  "suggestionLog": [],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug docker-firewall-setup --locale de --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug docker-firewall-setup --locale de --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug docker-firewall-setup --locale de --skip-global\n146 |   const targetLength = getComparablePostLength(targetContents);\n147 |   const minimumTargetLength = 600;\n148 |   const { minimumRatio, maximumRatio, label } = getLengthRatioBounds(targetPath);\n149 | \n150 |   if (targetLength <= minimumTargetLength) {\n151 |     throw new Error(\n                    ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2015-06-06--docker-firewall-setup/de/index.mdx is too short after translation. Comparable body length is 555 chars; expected more than 600.\n      at assertTranslationLength (/Users/dan/code/oss/dans-blog/src/scripts/i18n/localized-mdx.ts:151:15)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:27:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "index": 11,
+  "attempt": 1,
+  "originalTitle": "EXPLAIN ANALYZE Gotcha",
+  "translatedTitle": "EXPLAIN ANALYZE の落とし穴",
+  "translation": {
+    "title": "EXPLAIN ANALYZE の落とし穴",
+    "group": "パフォーマンス",
+    "options": [
+      {
+        "text": "軽量プラン推定"
+      },
+      {
+        "text": "SELECT のみで機能する"
+      },
+      {
+        "text": "データを変更しプランを出力する"
+      },
+      {
+        "text": "実行をシミュレートしてプランを取得する"
+      }
+    ],
+    "questionProse": [
+      "`EXPLAIN ANALYZE` は `UPDATE` 文で何を行いますか？"
+    ],
+    "explanationProse": [
+      "`EXPLAIN ANALYZE` は実際にクエリを実行します！書き込み操作、特に `UPDATE`、`DELETE`、`INSERT` 文を分析する際は注意が必要です。再現性のある結果を得るために、各 `EXPLAIN ANALYZE` の後でクリーンアップを実行しなければならないことがあります。\n\n    ベストプラクティス:\n    - UPDATE/DELETE/INSERT には `EXPLAIN`（ANALYZE なし）を使用する\n    - 変更をトランザクションでラップする:"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"EXPLAIN ANALYZE の落とし穴\",\n  \"group\": \"パフォーマンス\",\n  \"options\": [\n    {\n      \"text\": \"軽量プラン推定\"\n    },\n    {\n      \"text\": \"SELECT のみで機能する\"\n    },\n    {\n      \"text\": \"データを変更しプランを出力する\"\n    },\n    {\n      \"text\": \"実行をシミュレートしてプランを取得する\"\n    }\n  ],\n  \"questionProse\": [\n    \"`EXPLAIN ANALYZE` は `UPDATE` 文で何を行いますか？\"\n  ],\n  \"explanationProse\": [\n    \"`EXPLAIN ANALYZE` は実際にクエリを実行します！書き込み操作、特に `UPDATE`、`DELETE`、`INSERT` 文を分析する際は注意が必要です。再現性のある結果を得るために、各 `EXPLAIN ANALYZE` の後でクリーンアップを実行しなければならないことがあります。\\n\\n    ベストプラクティス:\\n    - UPDATE/DELETE/INSERT には `EXPLAIN`（ANALYZE なし）を使用する\\n    - 変更をトランザクションでラップする:\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 906,
+    "outputTokens": 817,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 887,
+    "providerCostUsd": 0.00092985,
+    "providerUpstreamCostUsd": 0.00092985,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000035334,
+    "outputUsd": 0.00014706,
+    "totalUsd": 0.000182394,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

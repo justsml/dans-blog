@@ -1,0 +1,47 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "XML Tags for Structure",
+  "translatedTitle": "Etiquetas XML para la Estructura",
+  "translation": {
+    "title": "Etiquetas XML para la Estructura",
+    "group": "Estructura del Prompt",
+    "options": [
+      {
+        "text": "Las etiquetas XML solo son válidas en modelos de Anthropic"
+      },
+      {
+        "text": "Las etiquetas XML ayudan a los modelos a distinguir instrucciones de datos y mejoran la precisión del análisis"
+      },
+      {
+        "text": "Las etiquetas XML ralentizan la tokenización y deben evitarse"
+      },
+      {
+        "text": "Las etiquetas XML son equivalentes a los encabezados markdown"
+      }
+    ],
+    "questionProse": [
+      "¿Por qué muchos prompts de producción usan etiquetas estilo XML como `<document>`, `<context>`, `<instructions>`?"
+    ],
+    "explanationProse": [
+      "Las etiquetas estilo XML proporcionan **límites estructurales explícitos** que los modelos están entrenados para reconocer y respetar. Hacen dos cosas:\n\n    1. **Separación**: Señalan al modelo dónde terminan las instrucciones y comienzan los datos — crítico para RAG y para reducir el riesgo de inyección de prompts desde documentos recuperados.\n    2. **Analizabilidad**: Cuando le pides al modelo que responda en XML (p. ej., `<answer>...</answer>`), las etiquetas te dan puntos de extracción limpios sin trucos de regex.\n\n    No se trata de XML como lenguaje de marcado. Es XML como convención de delimitador que los modelos han visto en su entrenamiento. Funciona porque el modelo ha encontrado este patrón extensamente en los datos de entrenamiento, no porque valide esquemas.\n\n    Funciona en la mayoría de los modelos afinados para instrucciones con suficiente frecuencia como para ser útil — es una convención de datos de entrenamiento, no una característica del proveedor ni una garantía de seguridad."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Etiquetas XML para la Estructura\",\n  \"group\": \"Estructura del Prompt\",\n  \"options\": [\n    {\n      \"text\": \"Las etiquetas XML solo son válidas en modelos de Anthropic\"\n    },\n    {\n      \"text\": \"Las etiquetas XML ayudan a los modelos a distinguir instrucciones de datos y mejoran la precisión del análisis\"\n    },\n    {\n      \"text\": \"Las etiquetas XML ralentizan la tokenización y deben evitarse\"\n    },\n    {\n      \"text\": \"Las etiquetas XML son equivalentes a los encabezados markdown\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Por qué muchos prompts de producción usan etiquetas estilo XML como `<document>`, `<context>`, `<instructions>`?\"\n  ],\n  \"questionCode\": [],\n  \"explanationProse\": [\n    \"Las etiquetas estilo XML proporcionan **límites estructurales explícitos** que los modelos están entrenados para reconocer y respetar. Hacen dos cosas:\\n\\n    1. **Separación**: Señalan al modelo dónde terminan las instrucciones y comienzan los datos — crítico para RAG y para reducir el riesgo de inyección de prompts desde documentos recuperados.\\n    2. **Analizabilidad**: Cuando le pides al modelo que responda en XML (p. ej., `<answer>...</answer>`), las etiquetas te dan puntos de extracción limpios sin trucos de regex.\\n\\n    No se trata de XML como lenguaje de marcado. Es XML como convención de delimitador que los modelos han visto en su entrenamiento. Funciona porque el modelo ha encontrado este patrón extensamente en los datos de entrenamiento, no porque valide esquemas.\\n\\n    Funciona en la mayoría de los modelos afinados para instrucciones con suficiente frecuencia como para ser útil — es una convención de datos de entrenamiento, no una característica del proveedor ni una garantía de seguridad.\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 949,
+    "outputTokens": 1019,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2657,
+    "providerCostUsd": 0.00075375,
+    "providerUpstreamCostUsd": 0.00075375,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000037011,
+    "outputUsd": 0.00018341999999999998,
+    "totalUsd": 0.000220431,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

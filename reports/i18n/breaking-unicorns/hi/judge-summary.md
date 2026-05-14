@@ -12,14 +12,14 @@
 - Validation scope: local
 
 ## Primary Judge Telemetry
-- Runtime seconds: 2.33
-- Input tokens: 13129
-- Output tokens: 200
+- Runtime seconds: 2.25
+- Input tokens: 13163
+- Output tokens: 175
 - Thinking tokens: unknown
 - Cached input tokens: 0
 - Cache write tokens: 0
-- OpenRouter cost credits: unknown
-- Estimated cost: $0.007164
+- OpenRouter cost credits: 0.007106
+- Estimated cost: $0.007106
 
 ## Candidates
 - current src/content/posts/2024-09-01--breaking-unicorns/hi/index.mdx

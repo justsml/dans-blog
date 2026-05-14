@@ -1,7 +1,7 @@
 # Translation Judge
 
-- Selected candidate: 11817c21653ee9639a095a8d29b473f800461e10
-- Selected model: openrouter/openai/gpt-oss-120b:nitro
+- Selected candidate: 1a04ed3968f2edf3cfdd102d41c3e8f30d71f610
+- Selected model: openrouter/qwen/qwen3-32b:nitro
 - Judge model: openrouter/google/gemini-3-flash-preview
 
-The current MDX already contains the translated content including the H2 and the previously missing paragraph (likely applied via a previous fix pass or correctly present in the selected commit's actual file content). The translation is technically accurate, preserves MDX structure, and maintains Dan's direct style. No further high-priority suggestions are required as the text matches the intended French version.
+The selected candidate (1a04ed39) is the only one that correctly translated the entire body text, including the technical paragraph starting with 'Note the i3.*xlarge...', which was left in English by other candidates. The frontmatter title and subtitle are already correctly populated in the provided MDX file, so no further suggestions are required.

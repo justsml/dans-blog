@@ -1,23 +1,16 @@
 {
-  "selectedCommit": "b2bcbe3869612139128889a4f42adce932e6a744",
-  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "selectedCommit": "current",
+  "selectedModel": "current",
   "scores": {
     "readability": 9,
-    "technicalAccuracy": 9,
+    "technicalAccuracy": 10,
     "coherence": 10,
     "relevance": 10,
     "translationQuality": 9,
     "mdxPreservation": 10
   },
-  "suggestions": [
-    {
-      "priority": "high",
-      "match": "{text: \"SELECT * FROM users WHERE name = 'John';\", isAnswer: true},",
-      "replacement": "{text: \"SELECT * FROM users WHERE name = 'John';\", isAnswer: true},",
-      "reason": "The previous judge report claimed the string was broken, but checking the actual candidate source, it is correctly escaped as {text: \"SELECT * FROM users WHERE name = 'John';\", isAnswer: true}. No fix is actually required for the SQL string."
-    }
-  ],
-  "rationale": "The selected candidate provides a high-quality translation that maintains the technical terminology (SQL, ORM, CTE) while sounding natural in German. It correctly preserves the MDX structure and components. The previous judge's concern about a broken SQL string appears to be a misinterpretation of the escaping in the JSON-like options array; the candidate actually contains the correct string.",
+  "suggestions": [],
+  "rationale": "The previous judge report claimed the SQL string was broken in the 'current' version, but upon manual inspection of the provided source code for 'src/content/posts/2024-11-08--quiz-sql-query-fundamentals/de/index.mdx', the line is actually correct: `{text: 'SELECT * FROM users WHERE name = \\'John\\';', isAnswer: true }`. The judge likely misread the escaped single quotes. The translation is accurate, maintains MDX structure, and uses a natural German tone. No further fixes are required.",
   "slug": "quiz-sql-query-fundamentals",
   "locale": "de",
   "candidateCommits": [
@@ -28,20 +21,11 @@
     {
       "priority": "high",
       "match": "{text: 'SELECT * FROM users WHERE name = \\', isAnswer: true},",
-      "replacement": "{text: \"SELECT * FROM users WHERE name = 'John';\", isAnswer: true},",
-      "reason": "The SQL string in the second option was truncated/broken in the candidate, losing the actual answer text.",
+      "replacement": "{text: 'SELECT * FROM users WHERE name = \\'John\\';', isAnswer: true },",
+      "reason": "The current translation has a broken SQL string in the first challenge options, missing the name and closing quote.",
       "pass": 1,
       "applied": true,
       "note": "Applied exact replacement to selected MDX."
-    },
-    {
-      "priority": "high",
-      "match": "{text: \"SELECT * FROM users WHERE name = 'John';\", isAnswer: true},",
-      "replacement": "{text: \"SELECT * FROM users WHERE name = 'John';\", isAnswer: true},",
-      "reason": "The previous judge report claimed the string was broken, but checking the actual candidate source, it is correctly escaped as {text: \"SELECT * FROM users WHERE name = 'John';\", isAnswer: true}. No fix is actually required for the SQL string.",
-      "pass": 2,
-      "applied": false,
-      "note": "Exact match and replacement are identical; no MDX change needed."
     }
   ],
   "validation": {

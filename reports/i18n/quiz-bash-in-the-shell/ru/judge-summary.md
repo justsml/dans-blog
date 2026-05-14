@@ -12,43 +12,44 @@
 - Validation scope: local
 
 ## Primary Judge Telemetry
-- Runtime seconds: 4.05
-- Input tokens: 24136
-- Output tokens: 480
+- Runtime seconds: 4.68
+- Input tokens: 23793
+- Output tokens: 374
 - Thinking tokens: unknown
 - Cached input tokens: 0
 - Cache write tokens: 0
-- OpenRouter cost credits: unknown
-- Estimated cost: $0.013508
+- OpenRouter cost credits: 0.013019
+- Estimated cost: $0.013019
 
 ## Pre-Publish Rescore Telemetry
 ### Pass 1
-- Runtime seconds: 3.65
-- Input tokens: 18311
-- Output tokens: 473
+- Runtime seconds: 4.22
+- Input tokens: 18132
+- Output tokens: 656
 - Thinking tokens: unknown
 - Cached input tokens: 0
 - Cache write tokens: 0
-- OpenRouter cost credits: unknown
-- Estimated cost: $0.010575
+- OpenRouter cost credits: 0.011034
+- Estimated cost: $0.011034
 
 ### Pass 2
-- Runtime seconds: 3.44
-- Input tokens: 18030
-- Output tokens: 524
+- Runtime seconds: 5.16
+- Input tokens: 18308
+- Output tokens: 516
 - Thinking tokens: unknown
 - Cached input tokens: 0
 - Cache write tokens: 0
-- OpenRouter cost credits: unknown
-- Estimated cost: $0.010587
+- OpenRouter cost credits: 0.010702
+- Estimated cost: $0.010702
 
 ## Judge Suggestions
-1. Pass 1: applied high priority suggestion. Match: "Single quotes need escaping inside single-quoted strings." Replacement: "Одинарные кавычки требуют экранирования внутри строк, заключенных в одинарные кавычки." Reason: The candidate left a paragraph in English in the explanation for Challenge 1. Note: Applied exact replacement to selected MDX.
-2. Pass 1: applied high priority suggestion. Match: "options={[ ]}" Replacement: "options={[ { text: \">\" }, { text: \">>\" }, { text: \"|\", isAnswer: true }, { text: \"||\" }, { text: \"|>\" }, { text: \"Error\" }, ]}" Reason: The options for Challenge 9 are missing in the candidate. Note: Applied exact replacement to selected MDX.
-3. Pass 1: applied high priority suggestion. Match: "options={[ ]}" Replacement: "options={[ { text: \"1>&2\" }, { text: \"&2>&1\" }, { text: \"2>&1\", isAnswer: true }, { text: \"2>1\" }, { text: \"&2>1\" }, ]}" Reason: The options for Challenge 15 are missing in the candidate. Note: Applied exact replacement to selected MDX.
-4. Pass 2: applied high priority suggestion. Match: "The close-quote, escaped-quote, reopen-quote sequence (`'\\''`) allows output of:" Replacement: "Последовательность «закрывающая кавычка, экранированная кавычка, открывающая кавычка» (`'\\''`) позволяет вывести:" Reason: The candidate left a sentence in English in the explanation for Challenge 1. Note: Applied exact replacement to selected MDX.
-5. Pass 2: applied high priority suggestion. Match: "title=\"Заменитьподстроку\"" Replacement: "title=\"Замена подстроки\"" Reason: Typo: missing space in the title of Challenge 4. Note: Applied exact replacement to selected MDX.
-6. Pass 2: applied high priority suggestion. Match: "Оставил ли мой Bash‑квиз вас в полном разруше‑нном состоянии?" Replacement: "Мой Bash-тест оставил вас в руинах?" Reason: The translation of 'shambles' is awkward and contains unnecessary hyphens; using a more direct style consistent with Dan's voice. Note: Applied exact replacement to selected MDX.
+1. Pass 1: applied high priority suggestion. Match: "Single quotes need escaping inside single-quoted strings." Replacement: "Одинарные кавычки требуют экранирования внутри строк, заключенных в одинарные кавычки." Reason: The sentence was left in English in the candidate. Note: Applied exact replacement to selected MDX.
+2. Pass 1: applied high priority suggestion. Match: "Заменитьподстроку" Replacement: "Замена подстроки" Reason: Missing space in the title. Note: Applied exact replacement to selected MDX.
+3. Pass 1: applied high priority suggestion. Match: "разруше‑нном" Replacement: "разрушенном" Reason: Unnecessary hyphenation in the middle of the word. Note: Applied exact replacement to selected MDX.
+4. Pass 2: applied high priority suggestion. Match: "The close-quote, escaped-quote, reopen-quote sequence (`'\\''`) allows output of:" Replacement: "Последовательность «закрывающая кавычка, экранированная кавычка, открывающая кавычка» (`'\\''`) позволяет вывести:" Reason: This sentence was left in English in the translation. Note: Applied exact replacement to selected MDX.
+5. Pass 2: applied high priority suggestion. Match: "options={[ ]}" Replacement: "options={[ { text: \">\" }, { text: \">>\" }, { text: \"|\", isAnswer: true }, { text: \"||\" }, { text: \"|>\" }, { text: \"Ошибка\" }, ]}" Reason: The options for the 'Using Piping' challenge (index 9) are missing in the Russian translation. Note: Applied exact replacement to selected MDX.
+6. Pass 2: applied high priority suggestion. Match: "options={[ ]}" Replacement: "options={[ { text: \"1>&2\" }, { text: \"&2>&1\" }, { text: \"2>&1\", isAnswer: true }, { text: \"2>1\" }, { text: \"&2>1\" }, ]}" Reason: The options for the 'Default Values' challenge (index 15) are missing in the Russian translation. Note: Applied exact replacement to selected MDX.
+7. Pass 2: applied medium priority suggestion. Match: "Отточите (или докажите) свои навыки shell‑скриптинга **навыки**!" Replacement: "Отточите (или докажите) свои **навыки** shell‑скриптинга!" Reason: The word 'навыки' (skills) is duplicated awkwardly in the sentence. Note: Applied exact replacement to selected MDX.
 
 ## Candidates
 - current src/content/posts/2024-11-20--quiz-bash-in-the-shell/ru/index.mdx

@@ -4,4 +4,4 @@
 - Selected model: openrouter/openai/gpt-oss-120b:nitro
 - Judge model: openrouter/google/gemini-3-flash-preview
 
-The current translation already includes the fixes suggested in the previous judge report (the missing options for challenges 9 and 15 are present in the provided 'current' de/index.mdx). The translation is technically accurate, preserves MDX structure, and maintains Dan's direct, slightly informal style. The German phrasing is natural and correctly handles technical terms like 'Escaping' and 'Expansion'.
+The current translation (which matches the selected commit) already contains the fixes for the empty options arrays in challenges 9 and 15 that were identified in the previous judge report. The translation is technically accurate, preserves MDX structure, and maintains Dan's direct, slightly informal style (e.g., 'verarschen', 'SPASS BEISEITE'). No further high-priority suggestions are required.

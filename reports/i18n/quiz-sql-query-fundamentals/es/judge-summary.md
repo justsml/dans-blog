@@ -12,29 +12,28 @@
 - Validation scope: local
 
 ## Primary Judge Telemetry
-- Runtime seconds: 2.74
-- Input tokens: 13578
-- Output tokens: 312
+- Runtime seconds: 3.05
+- Input tokens: 13612
+- Output tokens: 269
 - Thinking tokens: unknown
 - Cached input tokens: 0
 - Cache write tokens: 0
-- OpenRouter cost credits: unknown
-- Estimated cost: $0.007725
+- OpenRouter cost credits: 0.007613
+- Estimated cost: $0.007613
 
 ## Pre-Publish Rescore Telemetry
 ### Pass 1
-- Runtime seconds: 3.05
-- Input tokens: 10529
-- Output tokens: 419
+- Runtime seconds: 2.21
+- Input tokens: 10449
+- Output tokens: 251
 - Thinking tokens: unknown
 - Cached input tokens: 0
 - Cache write tokens: 0
-- OpenRouter cost credits: unknown
-- Estimated cost: $0.006522
+- OpenRouter cost credits: 0.005978
+- Estimated cost: $0.005978
 
 ## Judge Suggestions
-1. Pass 1: applied high priority suggestion. Match: "{text: 'SELECT * FROM users WHERE name = \\', isAnswer: true}," Replacement: "{text: 'SELECT * FROM users WHERE name = \\'John\\';', isAnswer: true}," Reason: The SQL string in the second option is truncated and missing the closing quote and semicolon, making the answer technically incorrect. Note: Applied exact replacement to selected MDX.
-2. Pass 2: logged high priority suggestion. Match: "{text: 'SELECT * FROM users WHERE name = \\'John\\';', isAnswer: true}," Replacement: "{text: 'SELECT * FROM users WHERE name = \\'John\\';', isAnswer: true}," Reason: The previous judge report mentioned a truncation error in the first challenge's second option, but upon inspection of the provided candidate text, the string is actually correct: {text: 'SELECT * FROM users WHERE name = \'John\';', isAnswer: true}. No fix is required for truncation. Note: Exact match and replacement are identical; no MDX change needed.
+1. Pass 1: applied high priority suggestion. Match: "{text: 'SELECT * FROM users WHERE name = \\', isAnswer: true}," Replacement: "{text: 'SELECT * FROM users WHERE name = \\'John\\';', isAnswer: true}," Reason: The SQL string in the correct answer option was truncated, making the quiz question broken. Note: Applied exact replacement to selected MDX.
 
 ## Candidates
 - current src/content/posts/2024-11-08--quiz-sql-query-fundamentals/es/index.mdx

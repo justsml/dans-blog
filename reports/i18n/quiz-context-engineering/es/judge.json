@@ -1,0 +1,28 @@
+{
+  "selectedCommit": "d34eb0ee366d8d75fd4344c1b89da9c8e0f6715d",
+  "selectedModel": "openrouter/moonshotai/kimi-k2.6",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 10,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "This candidate provides the most natural and technically accurate translation. It correctly translates 'pager' as 'la guardia' (being on call), whereas other versions used 'buscador de emergencias' (emergency searcher/pager device), which misses the professional context. It also handles technical terms like 'chunks', 'embeddings', and 'greedy decoding' with appropriate Spanish equivalents or common industry terms. It preserves all MDX structures and heading levels perfectly.",
+  "slug": "quiz-context-engineering",
+  "locale": "es",
+  "candidateCommits": [
+    "d34eb0ee366d8d75fd4344c1b89da9c8e0f6715d",
+    "1a92f285925bb7cc3e1212f9be53d29e4edeff0e",
+    "761480a3646d9669c021a278f862d4e3bbe71a57"
+  ],
+  "suggestionLog": [],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug quiz-context-engineering --locale es --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug quiz-context-engineering --locale es --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug quiz-context-engineering --locale es --skip-global\n191 |     ...targetContents.matchAll(/=[\"']\\.\\/(?!\\.)[^\"']+\\.(?:avif|gif|jpe?g|png|svg|webp)[\"']/g),\n192 |   ];\n193 | \n194 |   if (nestedAssetReferences.length === 0) return;\n195 | \n196 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2026-05-09--quiz-context-engineering/es/index.mdx uses ./ asset paths inside a locale folder. Use ../ for inherited post assets.\n      at assertNestedAssetPaths (/Users/dan/code/oss/dans-blog/src/scripts/i18n/localized-mdx.ts:196:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:30:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}

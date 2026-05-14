@@ -1,35 +1,23 @@
 {
-  "selectedCommit": "233bfd5ceb3d3a6fd80ef520ddaf75c31234a658",
-  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "selectedCommit": "a5c19554d9a8b292f8a7129274bcd308745bab7b",
+  "selectedModel": "openrouter/qwen/qwen3-32b:nitro",
   "scores": {
-    "readability": 9,
-    "technicalAccuracy": 9,
-    "coherence": 9,
-    "relevance": 10,
-    "translationQuality": 9,
-    "mdxPreservation": 10
+    "readability": 0,
+    "technicalAccuracy": 0,
+    "coherence": 0,
+    "relevance": 0,
+    "translationQuality": 0,
+    "mdxPreservation": 0
   },
   "suggestions": [
     {
       "priority": "high",
-      "match": "- [Générer des secrets forts](#générer-des-secrets-forts)\n- [Jetons Canary](#jetons-canary)\n- [Passer de `.env` au trousseau macOS](#passer-de-env-à-la-trousseau-macos)",
-      "replacement": "- [Générer des secrets forts](#générer-des-secrets-forts)\n- [Jetons Canary](#jetons-canary)\n- [Passer de `.env` au trousseau macOS](#passer-de-env-à-la-trousseau-macos-1)",
-      "reason": "The internal link for the Keychain section needs to match the auto-generated ID for the second occurrence of a similar heading or the specific slug used by the MDX processor to avoid broken links."
-    },
-    {
-      "priority": "high",
-      "match": "### Passer de `.env` au trousseau macOS",
-      "replacement": "### Passer de `.env` au trousseau macOS {#passer-de-env-à-la-trousseau-macos}",
-      "reason": "Explicitly setting the ID ensures the internal links in the 'Secrets Management' list work correctly, as the automatic slugging of 'trousseau macOS' might differ from the manually translated link."
-    },
-    {
-      "priority": "medium",
-      "match": "Le crédit original revient à <cite> [Brian Hetfield]",
-      "replacement": "Le crédit revient à <cite> [Brian Hetfield]",
-      "reason": "Slightly more natural phrasing in French for attributing credit."
+      "match": "exact translated text currently in the selected MDX",
+      "replacement": "exact replacement text to write into the selected MDX",
+      "reason": "English explanation of why this medium/high-priority change is needed"
     }
   ],
-  "rationale": "The translation is technically sound and captures the author's tone well. The suggestions address internal link consistency which is a common issue when headings are translated, ensuring the table of contents and section lists remain functional.",
+  "rationale": "Selected a5c19554d9a8b292f8a7129274bcd308745bab7b.",
   "slug": "docker-security-tips-for-self-hosting",
   "locale": "fr",
   "candidateCommits": [
@@ -39,45 +27,27 @@
   "suggestionLog": [
     {
       "priority": "high",
-      "match": "Il existede nombreuses façons",
-      "replacement": "Il existe de nombreuses façons",
-      "reason": "Typo: missing space between 'existe' and 'de'.",
+      "match": "# Autoriser les IP de CloudFlare\ncurl -fsSL https://www.cloudflare.com/ips-v4 | \\\n  while read line; do ufw allow from $line to any port 443; done",
+      "replacement": "# Autoriser les IP de CloudFlare\ncurl -fsSL https://www.cloudflare.com/ips-v4 | \\\n  while read line; do ufw allow from $line to any port 443; done\n# Ajouter la prise en charge IPv6\n# curl -fsSL https://www.cloudflare.com/ips-v6 | \\\n#   while read line; do ufw allow from $line to any port 443; done",
+      "reason": "The candidate accidentally moved the CloudFlare IP loop outside of the code block, breaking the script's integrity and leaving it as plain text.",
       "pass": 1,
       "applied": true,
       "note": "Applied exact replacement to selected MDX."
     },
     {
       "priority": "high",
-      "match": "- [Générer des secrets forts](#generate-strong-secrets)\n- [Jetons Canary](#canary-tokens)\n- [Passer de `.env` au trousseau de clés macOS](#upgrade-from-env-to-macos-keychain)",
-      "replacement": "- [Générer des secrets forts](#générer-des-secrets-forts)\n- [Jetons Canary](#jetons-canary)\n- [Passer de `.env` au trousseau de clés macOS](#passer-de-env-à-la-trousseau-macos)",
-      "reason": "The internal links in the list do not match the translated heading IDs.",
-      "pass": 1,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
-    },
-    {
-      "priority": "high",
-      "match": "- [Générer des secrets forts](#generate-strong-secrets)\n- [Jetons Canary](#canary-tokens)\n- [Passer de `.env` au trousseau de clés macOS](#upgrade-from-env-to-macos-keychain)",
-      "replacement": "- [Générer des secrets forts](#générer-des-secrets-forts)\n- [Jetons Canary](#jetons-canary)\n- [Passer de `.env` au trousseau de clés macOS](#passer-de-env-à-la-trousseau-macos)",
-      "reason": "The internal links in the list do not match the translated heading IDs.",
+      "match": "exact translated text currently in the selected MDX",
+      "replacement": "exact replacement text to write into the selected MDX",
+      "reason": "English explanation of why this medium/high-priority change is needed",
       "pass": 2,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
-    },
-    {
-      "priority": "medium",
-      "match": "Passer de `.env` au trousseau de clés macOS",
-      "replacement": "Passer de `.env` au trousseau macOS",
-      "reason": "Consistency with the heading title used later in the document.",
-      "pass": 2,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
     }
   ],
   "validation": {
     "ok": false,
     "scope": "local",
     "command": "bun run i18n:validate --slug docker-security-tips-for-self-hosting --locale fr --skip-global",
-    "error": "Command failed: bun run i18n:validate --slug docker-security-tips-for-self-hosting --locale fr --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug docker-security-tips-for-self-hosting --locale fr --skip-global\n109 |     })\n110 |     .filter((message): message is string => message != null);\n111 | \n112 |   if (mismatches.length === 0) return;\n113 | \n114 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2025-01-05--docker-security-tips-for-self-hosting/fr/index.mdx changed heading counts. H1: English has 0, translation has 15; H2: English has 10, translation has 9; H3: English has 17, translation has 14; H4: English has 11, translation has 8\n      at assertHeadingCounts (/Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:114:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:27:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+    "error": "Command failed: bun run i18n:validate --slug docker-security-tips-for-self-hosting --locale fr --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug docker-security-tips-for-self-hosting --locale fr --skip-global\n154 |   }\n155 | \n156 |   const minimumLength = Math.floor(sourceLength * minimumRatio);\n157 |   const maximumLength = Math.ceil(sourceLength * maximumRatio);\n158 |   if (targetLength < minimumLength || targetLength > maximumLength) {\n159 |     throw new Error(\n                    ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2025-01-05--docker-security-tips-for-self-hosting/fr/index.mdx changed comparable body length from 19252 chars in English to 12199 chars. Expected 13476-30804 chars (French range: 70%-160% of English).\n      at assertTranslationLength (/Users/dan/code/oss/dans-blog/src/scripts/i18n/localized-mdx.ts:159:15)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:27:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
   }
 }

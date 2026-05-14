@@ -1,16 +1,47 @@
 {
-  "selectedCommit": "a89d3f009742a0f209f2f38b3265b6ef87ea08ab",
-  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "selectedCommit": "current",
+  "selectedModel": "current",
   "scores": {
-    "readability": 4,
+    "readability": 8,
     "technicalAccuracy": 5,
-    "coherence": 4,
-    "relevance": 5,
-    "translationQuality": 4,
-    "mdxPreservation": 5
+    "coherence": 7,
+    "relevance": 9,
+    "translationQuality": 5,
+    "mdxPreservation": 9
   },
-  "suggestions": [],
-  "rationale": "The current selected translation (a89d3f00) is the only candidate that correctly populated the quiz options and structure. The previous judge report noted some English 'The' prefixes and one untranslated block, but looking at the provided 'current' ja/index.mdx, those fixes have already been applied (the text is now in Japanese and the 'The' prefixes are gone). The translation is technically accurate and maintains the MDX structure perfectly.",
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "options={[\n  ]}",
+      "replacement": "options={[\n    {text: '説明の定義'},\n    {text: '説明用語'},\n    {text: 'データ表示'},\n    {text: '説明の詳細', isAnswer: true },\n  ]}",
+      "reason": "The current translation has empty options arrays for almost all challenges, making the quiz non-functional. This restores the options for the <dd> challenge."
+    },
+    {
+      "priority": "high",
+      "match": "title=\"\"",
+      "replacement": "title=\"<figure>/<figcaption>の使用\"",
+      "reason": "Several titles are empty strings in the current translation. This restores the title for the figure/figcaption challenge."
+    },
+    {
+      "priority": "high",
+      "match": "title=\"\"",
+      "replacement": "title=\"<article>の使用\"",
+      "reason": "Restoring missing title for the article challenge."
+    },
+    {
+      "priority": "high",
+      "match": "title=\"\"",
+      "replacement": "title=\"<fieldset>/<legend>の使用\"",
+      "reason": "Restoring missing title for the fieldset challenge."
+    },
+    {
+      "priority": "high",
+      "match": "title=\"\"",
+      "replacement": "title=\"<meter>の目的\"",
+      "reason": "Restoring missing title for the meter challenge."
+    }
+  ],
+  "rationale": "The current translation is severely broken as it contains empty 'options' arrays for 12 out of 14 quiz challenges, rendering the quiz unplayable. While the candidate commits also had issues, the 'current' selection is being re-scored here. The suggestions focus on restoring the missing interactive data (titles and options) which are essential for the technical accuracy of a quiz post.",
   "slug": "quiz-master-modern-html5",
   "locale": "ja",
   "candidateCommits": [
@@ -20,72 +51,36 @@
   "suggestionLog": [
     {
       "priority": "high",
-      "match": "The [`<dd>` element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dd) defines a description, definition, or value in a description list, used within `<dl>` tags to pair with `<dt>` (_Description Term_).\n\n    This is useful when showing key-value data. Profile information, Settings, and Stats are a common examples.",
-      "replacement": "[`<dd>` 要素](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dd)は、説明リスト内での説明、定義、または値を定義し、`<dl>` タグ内で `<dt>` (_Description Term_) とペアで使用されます。\n\n    これは、キーと値のデータを表示する際に便利です。プロフィール情報、設定、統計などが一般的な例です。",
-      "reason": "The candidate left a large block of explanation text in English for index 1.",
+      "match": "HTMLで`role`属性の使用はなにですか？",
+      "replacement": "HTMLにおける`role`属性の用途は何ですか？",
+      "reason": "The original translation is grammatically awkward ('is what?').",
       "pass": 1,
       "applied": true,
       "note": "Applied exact replacement to selected MDX."
     },
     {
       "priority": "high",
-      "match": "The [`<article>` element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/article) は、独立して配布または再利用できるスタンドアロンのコンテンツを定義するために使用されます。",
-      "replacement": "[`<article>` 要素](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/article) は、独立して配布または再利用できるスタンドアロンのコンテンツを定義するために使用されます。",
-      "reason": "Removed redundant 'The' at the start of the sentence.",
+      "match": "<div>と<span>の違いは理解しているかもしれないが、HTML5のより高度なセマンティック要素についてどの程度理解しているか？",
+      "replacement": "結局のところ、`<div>`と`<span>`の違いは分かっていますよね？では、HTML5のより高度なセマンティック要素についてはどうでしょうか？",
+      "reason": "The candidate missed the backticks for the first div/span tags and the tone was a bit too stiff compared to Dan's style.",
       "pass": 1,
       "applied": true,
       "note": "Applied exact replacement to selected MDX."
     },
     {
       "priority": "high",
-      "match": "The [`<menu>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/menu) はコマンドやインタラクティブコントロールのリストを表します。",
-      "replacement": "[`<menu>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/menu) はコマンドやインタラクティブコントロールのリストを表します。",
-      "reason": "Removed redundant 'The' at the start of the sentence.",
-      "pass": 1,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
-    },
-    {
-      "priority": "high",
-      "match": "The [`<dd>` element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dd) defines a description, definition, or value in a description list, used within `<dl>` tags to pair with `<dt>` (_Description Term_).\n\n    This is useful when showing key-value data. Profile information, Settings, and Stats are a common examples.",
-      "replacement": "[`<dd>` 要素](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dd)は、説明リスト内での説明、定義、または値を定義し、`<dl>` タグ内で `<dt>` (_Description Term_) とペアで使用されます。\n\n    これは、キーと値のデータを表示する際に便利です。プロフィール情報、設定、統計などが一般的な例です。",
-      "reason": "The candidate left a large block of explanation text in English for index 1.",
+      "match": "title=\"\"",
+      "replacement": "title=\"`<ul>`の役割\"",
+      "reason": "The candidate left several title attributes empty. This restores the title for the first challenge.",
       "pass": 2,
       "applied": true,
       "note": "Applied exact replacement to selected MDX."
     },
     {
       "priority": "high",
-      "match": "The [`<figure>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/figure) タグは通常",
-      "replacement": "[`<figure>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/figure) タグは通常",
-      "reason": "Removed redundant English 'The' at the start of the sentence in index 2.",
-      "pass": 2,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
-    },
-    {
-      "priority": "high",
-      "match": "The [`<article>` element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/article) は、独立して配布または再利用できるスタンドアロンのコンテンツを定義するために使用されます。",
-      "replacement": "[`<article>` 要素](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/article) は、独立して配布または再利用できるスタンドアロンのコンテンツを定義するために使用されます。",
-      "reason": "Removed redundant English 'The' at the start of the sentence in index 3.",
-      "pass": 2,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
-    },
-    {
-      "priority": "high",
-      "match": "The [`<menu>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/menu) はコマンドやインタラクティブコントロールのリストを表します。",
-      "replacement": "[`<menu>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/menu) はコマンドやインタラクティブコントロールのリストを表します。",
-      "reason": "Removed redundant English 'The' at the start of the sentence in index 8.",
-      "pass": 2,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
-    },
-    {
-      "priority": "high",
-      "match": "The [`<dialog>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog) 要素はポップアップやモーダルに使用され",
-      "replacement": "[`<dialog>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog) 要素はポップアップやモーダルに使用され",
-      "reason": "Removed redundant English 'The' at the start of the sentence in index 10.",
+      "match": "options={[\n  ]}",
+      "replacement": "options={[\n    {text: '順序なしリスト', isAnswer: true },\n    {text: 'ユニークリスト'},\n    {text: 'ユニバーサルリスト'},\n    {text: 'ユーザーリスト'},\n  ]}",
+      "reason": "The candidate left the options array empty for most challenges, making the quiz unplayable. This restores the options for the first challenge.",
       "pass": 2,
       "applied": true,
       "note": "Applied exact replacement to selected MDX."

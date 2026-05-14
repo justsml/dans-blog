@@ -198,6 +198,10 @@ Viel Glück! 🍀
   group="SQL-Interna"
   title="Hash-Join-Eignung"
   options={[
+    {text: 'ON a.id = b.id', isAnswer: true},
+    {text: 'ON a.id > b.id'},
+    {text: 'ON a.id >= b.id'},
+    {text: 'HASH JOIN ON a.id = b.id ...'}
   ]}
 >
   <slot name="question">
@@ -313,7 +317,7 @@ Viel Glück! 🍀
   options={[
     {text: 'first.name'},
     {text: '"first.name"', isAnswer: true},
-    {text: '\'},
+    {text: '\'first.name\''},
     {text: '[first.name]'},
     {text: '[first].[name]'},
   ]}
@@ -351,6 +355,14 @@ Viel Glück! 🍀
   group="Datenstichprobe"
   title="TABLESAMPLE‑Syntax"
   options={[
+    {text: '...students SAMPLETABLE BERNOULLI (0.10)'},
+    {text: '...students TABLESAMPLE USER (10)'},
+    {text: '...students TABLESAMPLE RANDOM (10)'},
+    {text: '...students SAMPLE 10 PERCENT'},
+    {text: 'ROW_NUMBER() OVER (ORDER BY RAND())'},
+    {text: 'ORDER BY RANDOM() >= 10'},
+    {text: 'WHERE RANDOM() >= 0.1'},
+    {text: 'WHERE RANDOM() >= 0.9', isAnswer: true},
   ]}
 >
   <slot name="question">

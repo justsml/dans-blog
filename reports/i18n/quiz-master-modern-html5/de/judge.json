@@ -1,0 +1,112 @@
+{
+  "selectedCommit": "f763aa9b48ecbaa711defedcc067dac9c2d32a5b",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 90,
+    "technicalAccuracy": 30,
+    "coherence": 90,
+    "relevance": 100,
+    "translationQuality": 80,
+    "mdxPreservation": 40
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "title=\"Role of `<ul>`\"\n  options={[\n    {text: 'Unordered List', isAnswer: true },\n    {text: 'Unique List'},\n    {text: 'Universal List'},\n    {text: 'User List'},\n  ]}",
+      "replacement": "title=\"Rolle von `<ul>`\"\n  options={[\n    {text: 'Ungeordnete Liste', isAnswer: true },\n    {text: 'Eindeutige Liste'},\n    {text: 'Universelle Liste'},\n    {text: 'Benutzerliste'},\n  ]}",
+      "reason": "The first challenge has untranslated options and title."
+    },
+    {
+      "priority": "high",
+      "match": "index={4}\n  group=\"Fortgeschrittenes semantisches HTML\"\n  title=\"\"\n  options={[\n  ]}",
+      "replacement": "index={4}\n  group=\"Fortgeschrittenes semantisches HTML\"\n  title=\"Verwendung von `<fieldset>/<legend>`\"\n  options={[\n    {text: 'Gruppierung von Formularelementen unter einem Titel', isAnswer: true },\n    {text: 'Definiert Anweisungen für die Formularfelder'},\n    {text: 'Keine gültige Verwendung von <legend>'},\n    {text: 'Definiert einen erweiterbaren Abschnitt'},\n  ]}",
+      "reason": "Restoring missing options and title for the fieldset/legend challenge which were left empty in the translation."
+    },
+    {
+      "priority": "high",
+      "match": "index={5}\n  group=\"Fortgeschrittenes semantisches HTML\"\n  title=\"\"\n  options={[\n  ]}",
+      "replacement": "index={5}\n  group=\"Fortgeschrittenes semantisches HTML\"\n  title=\"Zweck von `<meter>`\"\n  options={[\n    {text: 'Ein Fortschrittsbalken in metrischen Einheiten'},\n    {text: 'Darstellung eines numerischen Wertes innerhalb eines Bereichs', isAnswer: true },\n    {text: 'Konvertiert eine Entfernung in Meter'},\n    {text: 'Spezieller leistungsbezogener Tag'},\n  ]}",
+      "reason": "Restoring missing options and title for the meter challenge."
+    },
+    {
+      "priority": "high",
+      "match": "index={6}\n  group=\"Semantisches HTML\"\n  title=\"\"\n  options={[\n  ]}",
+      "replacement": "index={6}\n  group=\"Semantisches HTML\"\n  title=\"Verwendung von `<source>`\"\n  options={[\n    {text: 'Wird verwendet, um eine Datenquelle zu definieren'},\n    {text: 'Verfügbare Mediendateiformate deklarieren', isAnswer: true },\n    {text: 'Quellen im APA- oder MLA-Format zitieren'},\n    {text: 'Einen Quellcodeblock definieren'},\n  ]}",
+      "reason": "Restoring missing options and title for the source challenge."
+    },
+    {
+      "priority": "high",
+      "match": "index={12}\n  group=\"Fortgeschrittenes semantisches HTML\"\n  title=\"Zweck von ARIA-Attributen\"\n  options={[\n  ]}",
+      "replacement": "index={12}\n  group=\"Fortgeschrittenes semantisches HTML\"\n  title=\"Zweck von ARIA-Attributen\"\n  options={[\n    {text: 'Helfer für Touch-Geräte'},\n    {text: 'Verbesserung der Barrierefreiheit', isAnswer: true },\n    {text: 'Steuerung von Tönen und Wiedergabe'},\n    {text: 'Um nur <div>s zu verwenden'},\n  ]}",
+      "reason": "Restoring missing options for the ARIA challenge."
+    }
+  ],
+  "rationale": "The translation is severely incomplete. While the prose is translated well, the majority of the quiz logic (titles and options arrays) was left empty or untranslated, rendering the interactive component useless. I am providing high-priority fixes to restore the core functionality of the quiz.",
+  "slug": "quiz-master-modern-html5",
+  "locale": "de",
+  "candidateCommits": [
+    "f763aa9b48ecbaa711defedcc067dac9c2d32a5b"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "options={[\n  ]}",
+      "replacement": "options={[\n    {text: 'Ungeordnete Liste', isAnswer: true },\n    {text: 'Eindeutige Liste'},\n    {text: 'Universelle Liste'},\n    {text: 'Benutzerliste'},\n  ]}",
+      "reason": "The current translation is missing the quiz options for most challenges, making the quiz non-functional.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "title=\"\"",
+      "replacement": "title=\"Rolle von `<ul>`\"",
+      "reason": "The title attribute is empty in the current translation.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "title=\"\"\n  options={[\n  ]}",
+      "replacement": "title=\"Verwendung von `<dd>`\"\n  options={[\n    {text: 'Beschreibung Definition'},\n    {text: 'Beschreibung Begriff'},\n    {text: 'Datenanzeige'},\n    {text: 'Beschreibung Details', isAnswer: true },\n  ]}",
+      "reason": "The translation is missing the quiz options and titles for most challenges, making the quiz non-functional. This fix restores the data for the <dd> element challenge.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "title=\"\"\n  options={[\n  ]}",
+      "replacement": "title=\"Verwendung von `<figure>/<figcaption>`\"\n  options={[\n    {text: 'Für Bilder mit anzuzeigenden Urheberrechtsinfos'},\n    {text: 'Beschreibung von Bildern, Diagrammen usw.', isAnswer: true },\n    {text: 'Zum Kommentieren von Tabellen, Berechnungen usw.'},\n    {text: 'Wird für die Untertitelung von Videos verwendet'},\n  ]}",
+      "reason": "Restoring missing options and title for the figure/figcaption challenge.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "title=\"\"\n  options={[\n  ]}",
+      "replacement": "title=\"Verwendung von `<article>`\"\n  options={[\n    {text: 'Für Inhalte, Seitenleisten & Urheberrechtsinfos'},\n    {text: 'Ein eigenständiger Inhaltsabschnitt', isAnswer: true },\n    {text: 'Teil eines <newsletter>'},\n    {text: 'Definiert einen Zeitungsartikel'},\n  ]}",
+      "reason": "Restoring missing options and title for the article challenge.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "title=\"\"\n  options={[\n  ]}",
+      "replacement": "title=\"Verwendung von `<fieldset>/<legend>`\"\n  options={[\n    {text: 'Gruppierung von Formularelementen unter einem Titel', isAnswer: true },\n    {text: 'Definiert Anweisungen für die Formularfelder'},\n    {text: 'Keine gültige Verwendung von <legend>'},\n    {text: 'Definiert einen erweiterbaren Abschnitt'},\n  ]}",
+      "reason": "Restoring missing options and title for the fieldset/legend challenge.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug quiz-master-modern-html5 --locale de --skip-global",
+    "output": ""
+  }
+}

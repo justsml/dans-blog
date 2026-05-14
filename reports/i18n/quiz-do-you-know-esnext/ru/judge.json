@@ -2,15 +2,15 @@
   "selectedCommit": "bc63e65b2c437555b783cc0044ba518e2a198630",
   "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
   "scores": {
-    "readability": 9,
-    "technicalAccuracy": 10,
-    "coherence": 10,
-    "relevance": 10,
-    "translationQuality": 9,
-    "mdxPreservation": 10
+    "readability": 5,
+    "technicalAccuracy": 5,
+    "coherence": 5,
+    "relevance": 5,
+    "translationQuality": 5,
+    "mdxPreservation": 5
   },
   "suggestions": [],
-  "rationale": "The candidate bc63e65b2c437555b783cc0044ba518e2a198630 is selected as it correctly identifies that the 'hints' slots in the source were actually empty/generic placeholders that the 'current' version (likely from a previous pass) had omitted. However, the 'current' version in the provided text actually has the hints removed already. Comparing the provided 'current' ru text with the source, it is technically accurate and follows the MDX structure. The judge report mentioned a typo 'Знаетели вы' in the candidate, but looking at the provided ru index.mdx, it is already 'Знаете ли вы'. The translation is high quality and maintains the technical nuances of ESNext features.",
+  "rationale": "The current translation is technically accurate and uses standard Russian terminology for JavaScript features. The previous judge report mentioned a typo 'Знаетели', but the actual file content already has 'Знаете разницу', so that suggestion is no longer applicable. The translation correctly preserves MDX structure and maintains a professional yet direct tone.",
   "slug": "quiz-do-you-know-esnext",
   "locale": "ru",
   "candidateCommits": [
@@ -20,9 +20,9 @@
   "suggestionLog": [
     {
       "priority": "high",
-      "match": "Знаетели вы",
-      "replacement": "Знаете ли вы",
-      "reason": "Typo: missing space in the title.",
+      "match": "Знаетели",
+      "replacement": "Знаете ли",
+      "reason": "Grammar error: 'ли' is a particle and should be written separately.",
       "pass": 1,
       "applied": true,
       "note": "Applied exact replacement to selected MDX."
