@@ -1,0 +1,85 @@
+# Translation Candidate
+- Slug: compare-nvme-ssd-cloud-options
+- Locale: he
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2017-04-15--compare-nvme-ssd-cloud-options/he/index.mdx
+- Validation: deferred
+- Runtime seconds: 20.23
+- Input tokens: 2631
+- Output tokens: 3375
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.001313
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: השוואת אפשרויות NVMe SSD בענן
+subTitle: 'NVMe SSD ראש בראש: AWS, DigitalOcean, Packet.net'
+date: '2017-04-15'
+modified: '2020-01-30'
+category: DevOps
+subCategory: programming
+tags:
+  - cloud
+  - servers
+  - architecture
+  - scaling
+  - digital-ocean
+  - amazon-web-services
+  - google-cloud-engine
+  - azure
+  - packet
+  - ovh
+  - ssd
+  - io
+cover: ../solaiman-hossen-553024-unsplash.webp
+cover_mobile: ../w300_solaiman-hossen-553024-unsplash.webp
+cover_icon: ../icon_solaiman-hossen-553024-unsplash.webp
+---
+## שפר ביצועי ענן עד 70%
+
+> הערות כלליות וסעיפים לספקי אירוח נבחרים להלן (אמצע 2017).
+
+- [AWS (Amazon Web Services), EC2 (Elastic Compute Cloud), EBS (Elastic Block Storage) וכו'](#aws_tips)
+- [Digital Ocean](#do_tips)
+- [Packet.net](#packet_tips)
+
+<a id='aws_tips'></a>
+
+### Amazon Web Services / EC2 / EBS / S3
+
+> TLDR; בעוד AWS בדרך כלל מציעה חומרה מגבילה ודרגות תמחור מאיימות, החומרה **i3.large** (וגדולה יותר) היא היעילה ביותר מבחינת מחיר לעומת ביצועי I/O, והיא המהירה ביותר בביצועים הכוללים.
+
+> EC2 **i3.large** עם **475GB NVMe SSD** עולה בדרך כלל בסביבות **$110 לחודש!** > <br />
+> **i3.2xlarge עם 1.9TB NVMe** עולה בערך **$450 לחודש** * > <br /> > \_*ארה"ב/2018\_
+
+<br />
+<br />
+
+### ראש בראש
+
+\[[תצוגת נתונים במסך מלא](https://docs.google.com/spreadsheets/d/1qQ62m1RFj73YScdS77Q9R2GpRqJOk7JHuTEOFDR4jJE/pubchart?oid=116848524&format=interactive)\]
+
+<iframe style="position: relative; left: -150px; height: 650px; width: 990px; min-width: 100%;" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/1qQ62m1RFj73YScdS77Q9R2GpRqJOk7JHuTEOFDR4jJE/pubchart?oid=116848524&amp;format=interactive"></iframe>
+
+[צפייה במחירים ב-EC2](https://www.ec2instances.info/?filter=nvm&region=us-east-2&cost_duration=monthly&selected=c5d.large,i3.large,i3.xlarge,i3.2xlarge)
+
+![ec2instances.info](../ec2-updated-prices-2018.webp)
+
+שימו לב ש- **i3.\*xlarge** היא החומרה היחידה הכוללת אחסון NVMe במחיר תחרותי (מהירויות אולטרה-מהירות של +1GB/s). הגורם המגביל העיקרי שמצאתי היה מהירות הרשת בפועל. שרתים עם מהירויות מפורסמות של "עד 10/Gb/s" התקשו להתקרב ל-1/Gb/s (60-80MB/s).
+
+בדיקות הרשת השתמשו בעד 9 מופעים נוספים באותה זמינות אזור. כל נקודות נתונים שגויות הוחלפו ב-0. יש צורך בבדיקות נוספות מכיוון שנאספו רק 1-2 דגימות.
+
+\[[תצוגת נתונים במסך מלא](https://docs.google.com/spreadsheets/d/1qQ62m1RFj73YScdS77Q9R2GpRqJOk7JHuTEOFDR4jJE/pubchart?oid=13370750&format=interactive)\]
+
+<iframe style="position: relative; left: -150px; height: 790px; width: 950px; min-width: 100%;" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/1qQ62m1RFj73YScdS77Q9R2GpRqJOk7JHuTEOFDR4jJE/pubchart?oid=13370750&amp;format=interactive"></iframe>
+
+#### קרדיטים
+
+- [ec2instances.info](https://www.ec2instances.info/?filter=nvm&region=us-east-2&cost_duration=monthly&selected=c5d.large,i3.large,i3.xlarge,i3.2xlarge)
+````
