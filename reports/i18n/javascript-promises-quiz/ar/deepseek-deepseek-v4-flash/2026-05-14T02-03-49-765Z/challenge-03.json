@@ -1,0 +1,49 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "Chaining `.then` and `.catch`'s",
+  "translatedTitle": "ربط `.then` و `.catch`",
+  "translation": {
+    "title": "ربط `.then` و `.catch`",
+    "group": "معالجة الأخطاء",
+    "options": [
+      {
+        "text": "طباعة الخطأ و `undefined`"
+      },
+      {
+        "text": "طباعة الخطأ مرتين"
+      },
+      {
+        "text": "UnhandledPromiseRejectionWarning"
+      },
+      {
+        "text": "undefined"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "ماذا سيكون الناتج للكود التالي؟"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "عند ربط `.then` و `.catch`، من المفيد التفكير بهما كسلسلة من الخطوات. كل `.then` يستقبل القيمة التي أرجعها `.then` السابق (كوسيطة له). لكن، إذا واجهت \"الخطوة\" خطأ، سيتم تخطي أي `.then` لاحق حتى يتم الوصول إلى `.catch`. إذا أردت تجاوز الخطأ، كل ما عليك فعله هو إرجاع قيمة غير خطأ. يمكن الوصول إليها عبر أي `.then` لاحق."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"ربط `.then` و `.catch`\",\n  \"group\": \"معالجة الأخطاء\",\n  \"options\": [\n    {\n      \"text\": \"طباعة الخطأ و `undefined`\"\n    },\n    {\n      \"text\": \"طباعة الخطأ مرتين\"\n    },\n    {\n      \"text\": \"UnhandledPromiseRejectionWarning\"\n    },\n    {\n      \"text\": \"undefined\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"ماذا سيكون الناتج للكود التالي؟\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"عند ربط `.then` و `.catch`، من المفيد التفكير بهما كسلسلة من الخطوات. كل `.then` يستقبل القيمة التي أرجعها `.then` السابق (كوسيطة له). لكن، إذا واجهت \\\"الخطوة\\\" خطأ، سيتم تخطي أي `.then` لاحق حتى يتم الوصول إلى `.catch`. إذا أردت تجاوز الخطأ، كل ما عليك فعله هو إرجاع قيمة غير خطأ. يمكن الوصول إليها عبر أي `.then` لاحق.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 841,
+    "outputTokens": 2134,
+    "cacheReadTokens": 384,
+    "cacheWriteTokens": 0,
+    "durationMs": 12608,
+    "providerCostUsd": 0.00096036,
+    "providerUpstreamCostUsd": 0.00096036,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00006505520000000001,
+    "outputUsd": 0.00059752,
+    "totalUsd": 0.0006625752000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

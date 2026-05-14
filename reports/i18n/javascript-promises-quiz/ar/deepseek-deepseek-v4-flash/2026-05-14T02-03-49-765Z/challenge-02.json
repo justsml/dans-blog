@@ -1,0 +1,49 @@
+{
+  "index": 1,
+  "attempt": 1,
+  "originalTitle": "Multiple `.catch`'s #2",
+  "translatedTitle": "`.catch` المتعددة #2",
+  "translation": {
+    "title": "`.catch` المتعددة #2",
+    "group": "معالجة الأخطاء",
+    "options": [
+      {
+        "text": "طباعة الرسالة مرة واحدة"
+      },
+      {
+        "text": "طباعة الرسالة مرتين"
+      },
+      {
+        "text": "وعد مرفوض غير معالج"
+      },
+      {
+        "text": "خروج العملية"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "ماذا سيكون الناتج للكود التالي؟"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "عند استخدام مُنشئ Promise، يجب عليك استدعاء إما `resolve()` أو `reject()`. يتجاهل مُنشئ Promise القيمة المُرجعة من المُنفذ، لذا فإن الوعد الإضافي الذي تم إنشاؤه باستخدام `Promise.reject()` ليس متسلسلاً مع `p`. المُعالجان مُرفقان بـ `p`، الذي يظل معلقًا، بينما يتم الإبلاغ عن الوعد المرفوض المُعاد كوعد غير معالج من قبل البيئة المضيفة."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"`.catch` المتعددة #2\",\n  \"group\": \"معالجة الأخطاء\",\n  \"options\": [\n    {\n      \"text\": \"طباعة الرسالة مرة واحدة\"\n    },\n    {\n      \"text\": \"طباعة الرسالة مرتين\"\n    },\n    {\n      \"text\": \"وعد مرفوض غير معالج\"\n    },\n    {\n      \"text\": \"خروج العملية\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"ماذا سيكون الناتج للكود التالي؟\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"عند استخدام مُنشئ Promise، يجب عليك استدعاء إما `resolve()` أو `reject()`. يتجاهل مُنشئ Promise القيمة المُرجعة من المُنفذ، لذا فإن الوعد الإضافي الذي تم إنشاؤه باستخدام `Promise.reject()` ليس متسلسلاً مع `p`. المُعالجان مُرفقان بـ `p`، الذي يظل معلقًا، بينما يتم الإبلاغ عن الوعد المرفوض المُعاد كوعد غير معالج من قبل البيئة المضيفة.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 805,
+    "outputTokens": 1367,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 8633,
+    "providerCostUsd": 0.0007078,
+    "providerUpstreamCostUsd": 0.0007078,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00011270000000000002,
+    "outputUsd": 0.00038276,
+    "totalUsd": 0.00049546,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
