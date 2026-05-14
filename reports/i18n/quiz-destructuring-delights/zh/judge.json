@@ -1,0 +1,28 @@
+{
+  "selectedCommit": "02e9a3bf194af6e334a614d11d7f88d406e2746f",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 9,
+    "relevance": 9,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "This candidate provides the most natural and accurate translation while strictly adhering to MDX preservation rules (headings, asset paths). It correctly translates technical terms like 'destructuring' (解构) and 'tuple' (元组 - though it kept the English code context clear). It captures Dan's direct, slightly playful style ('破坏交响曲') better than the others. The code blocks are properly indented and the frontmatter is correctly handled.",
+  "slug": "quiz-destructuring-delights",
+  "locale": "zh",
+  "candidateCommits": [
+    "622ac19e6da54d0975705472d0331483581318ca",
+    "02e9a3bf194af6e334a614d11d7f88d406e2746f",
+    "f684185c2a1b0a3c21150bc37b2ee0f3f6c43668"
+  ],
+  "suggestionLog": [],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug quiz-destructuring-delights --locale zh --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug quiz-destructuring-delights --locale zh --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug quiz-destructuring-delights --locale zh --skip-global\n111 |     })\n112 |     .filter((message): message is string => message != null);\n113 | \n114 |   if (mismatches.length === 0) return;\n115 | \n116 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2024-11-12--quiz-destructuring-delights/zh/index.mdx changed heading counts. H2: English has 1, translation has 0\n      at assertHeadingCounts (/Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:116:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:28:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}
