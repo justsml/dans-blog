@@ -1,7 +1,7 @@
 # Translation Judge
 
-- Selected candidate: 2e4d54f08280afc4805f12b85bba14bab2f20237
-- Selected model: openrouter/deepseek/deepseek-v4-flash
-- Judge model: openrouter/deepseek/deepseek-v4-flash
+- Selected candidate: 77c565c63534e5dd3b59887c9c8930bf3b4826f3
+- Selected model: openrouter/qwen/qwen3-32b:nitro
+- Judge model: openrouter/google/gemini-3-flash-preview
 
-The deepseek candidate was selected and after pre-publish fixes pass 1, all suggested code string translations have been reverted to English, improving translation quality. No further medium/high-priority fixes remain.
+The candidate provides a high-quality, natural translation that captures Dan's direct style well. It correctly handles the MDX structure and asset paths. The suggested fix ensures the Table of Contents correctly links to the heading used in the body.
