@@ -1,0 +1,27 @@
+{
+  "selectedCommit": "b85e7bc502cac51c75579d547262b7c2d3ec6e97",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 9
+  },
+  "suggestions": [],
+  "rationale": "The gpt-oss-120b candidate provides accurate translation with correct regex, proper code block formatting, and natural Chinese. It preserves all headings and MDX structure. The deepseek candidate has a critical typo in the regex split pattern ('0x9' instead of '0-9') and the split pattern is not enclosed in a code block, deviating from the English structure.",
+  "slug": "from-zero-to-regex-hero-extract-url-like-strings",
+  "locale": "zh",
+  "candidateCommits": [
+    "bf510fbcfdb50dee8add65e953f56b355255fd72",
+    "b85e7bc502cac51c75579d547262b7c2d3ec6e97"
+  ],
+  "suggestionLog": [],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug from-zero-to-regex-hero-extract-url-like-strings --locale zh --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug from-zero-to-regex-hero-extract-url-like-strings --locale zh --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug from-zero-to-regex-hero-extract-url-like-strings --locale zh --skip-global\n81 |   }\n82 | \n83 |   const sourceFences = sourceContents.match(/```/g)?.length ?? 0;\n84 |   const targetFences = targetContents.match(/```/g)?.length ?? 0;\n85 |   if (sourceFences !== targetFences) {\n86 |     throw new Error(\n                   ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2024-12-29--from-zero-to-regex-hero-extract-url-like-strings/zh/index.mdx changed fenced code block count from 8 to 10\n      at assertProtectedTokens (/Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:86:15)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}
