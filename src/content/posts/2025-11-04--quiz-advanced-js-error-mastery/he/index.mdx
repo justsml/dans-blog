@@ -1,0 +1,594 @@
+---
+title: 'חידון: שליטה מתקדמת בשגיאות JS'
+subTitle: האם החריגות שלך באמת חריגות?
+label: Errors
+category: Quiz
+subCategory: JavaScript
+unlisted: false
+date: '2025-11-03'
+modified: '2025-11-04'
+tags:
+  - quiz
+  - javascript
+  - error-handling
+  - debugging
+  - advanced
+cover_full_width: ../ahmed-slimene-c09hZthLq_s-unsplash-wide.webp
+cover_mobile: ../ahmed-slimene-c09hZthLq_s-unsplash-square-300px.webp
+cover_icon: ../ahmed-slimene-c09hZthLq_s-unsplash-square-300px.webp
+cover_credit: >-
+  Photo by <a
+  href="https://unsplash.com/@assl?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Ahmed
+  Slimene</a> on <a
+  href="https://unsplash.com/photos/a-tall-white-building-with-balconies-on-top-of-it-c09hZthLq_s?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+---
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+
+### חושבים שאתם מכירים שגיאות JavaScript מבפנים ומבחוץ?
+
+* **בחנו את המומחיות שלכם בטיפול בשגיאות!** 💥
+* אין צורך בהתחברות או הרשמה. ✨
+* רב-ברירה. 🤖 ... _אלו לא שאלות try-catch טיפוסיות!_
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="הפתעות בסריאליזציה"
+  title="תעלומת האובייקט הריק"
+  options={[
+    {text: '{"message":"Oops","name":"Error"}'},
+    {text: '{}', isAnswer: true},
+    {text: '{"error":"Oops"}'},
+    {text: 'null'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה מחזירה `JSON.stringify(error)`?
+    ```js
+        const error = new Error('Oops');
+        console.log(JSON.stringify(error));
+    ```
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    חשוב על מאפיינים ניתנים למנייה באובייקטי Error.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    לאובייקטי שגיאה יש מאפיינים שאינם ניתנים למנייה (`message`, `name`, `stack`), לכן `JSON.stringify()` מחזירה `{}`. זוהי מלכודת נפוצה בעת שליחת שגיאות בתגובות API. השתמש ב-`JSON.stringify(error, Object.getOwnPropertyNames(error))` או צור אובייקט רגיל במקום.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="הפתעות בסריאליזציה"
+  title="קונסול מול JSON"
+  options={[
+    {text: 'שניהם מציגים אותו פלט'},
+    {text: 'console.log מציג מידע נוסף', isAnswer: true},
+    {text: 'JSON.stringify מציג מידע נוסף'},
+    {text: 'שניהם מציגים אובייקטים ריקים'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה ההבדל בין השניים?
+    ```js
+        const err = new Error('Test');
+        console.log(err);
+        console.log(JSON.stringify(err));
+    ```
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    חשוב על האופן שבו console.log מטפל באובייקטים לעומת סריאליזציה ב-JSON.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `console.log(err)` מציג את השגיאה עם ההודעה ומחסנית הקריאות כי לקונסול יש טיפול מיוחד באובייקטי Error. `JSON.stringify(err)` מחזיר `'{}'` כי מאפייני Error אינם ניתנים למנייה. ההבדל הזה מבלבל מפתחים רבים בעת ניפוי באגים ב-API.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="טריקים של בדיקת טיפוסים"
+  title="ירושת instanceof"
+  options={[
+    {text: 'אמת, אמת, אמת', isAnswer: true},
+    {text: 'אמת, שקר, שקר'},
+    {text: 'שקר, אמת, אמת'},
+    {text: 'אמת, אמת, שקר'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה התוצאות של בדיקות אלו?
+    ```js
+        class CustomError extends Error {}
+        const err = new CustomError('test');
+    
+        console.log(err instanceof CustomError);
+        console.log(err instanceof Error);
+        console.log(err instanceof Object);
+    ```
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    זכור את שרשרת האב-טיפוס בירושה של JavaScript.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    כל השלוש מחזירות `true`. `CustomError` מרחיב את `Error`, שמרחיב את `Object`. האופרטור `instanceof` בודק את כל שרשרת האב-טיפוס, כך שמופע של `CustomError` הוא גם מופע של `Error` ו-`Object`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="טריקים בבדיקת טיפוסים"
+  title="instanceof בין מסגרות"
+  options={[
+    {text: 'תמיד true'},
+    {text: 'תמיד false'},
+    {text: 'עלול להיות false בין מסגרות', isAnswer: true},
+    {text: 'זורק שגיאה'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה קורה עם `instanceof Error` בין iframes?
+    ```js
+        // In iframe:
+        const iframeError = new Error('test');
+        // In parent window:
+        console.log(iframeError instanceof Error);
+    ```
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    להקשרים שונים יש בנאי Error שונים.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `instanceof` יכול להחזיר `false` בין הקשרי הרצה שונים (iframes, workers) כי לכל הקשר יש בנאי `Error` משלו. השתמש ב-`Object.prototype.toString.call(obj) === '[object Error]'` לזיהוי שגיאות אמין בין הקשרים.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="זריקת אי-שגיאות"
+  title="זריקת מחרוזת"
+  options={[
+    {text: 'TypeError: מחרוזת אינה שגיאה'},
+    {text: 'false, "string"', isAnswer: true},
+    {text: 'יוצר אובייקט שגיאה אוטומטית'},
+    {text: 'התנהגות לא מוגדרת'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה קורה כשזורקים מחרוזת?
+    ```js
+        try {
+          throw "Oops!";
+        } catch (e) {
+          console.log(e instanceof Error);
+          console.log(typeof e);
+        }
+    ```
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    JavaScript מאפשרת לזרוק כל ערך, לא רק אובייקטי שגיאה.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    JavaScript מאפשרת לזרוק כל ערך. כאן, `e instanceof Error` הוא `false` ו-`typeof e` הוא `"string"`. זה יכול לשבור קוד טיפול בשגיאות שמניח שכל החריגות שנתפסו הן אובייקטי שגיאה. תמיד זרוק מופעי Error לצורך ניפוי טוב יותר.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="שגיאות מותאמות אישית"
+  title="מאפיין שם השגיאה"
+  options={[
+    {text: '"Error"'},
+    {text: '"CustomError"', isAnswer: true},
+    {text: 'undefined'},
+    {text: 'תלוי בדפדפן'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה הערך של `err.name`?
+    ```js
+        class CustomError extends Error {
+          constructor(message) {
+            super(message);
+            this.name = this.constructor.name;
+          }
+        }
+        const err = new CustomError('test');
+        console.log(err.name);
+    ```
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    תסתכל על מה ש-`this.constructor.name` מחזיר.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `err.name` הוא `"CustomError"` מכיוון ש-`this.constructor.name` מחזיר את שם המחלקה. הגדרת `this.name = this.constructor.name` היא תבנית נפוצה כדי להבטיח שמחלקות שגיאה מותאמות אישית יציגו את השם הנכון ב-stack traces ובהודעות שגיאה.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="שגיאות מותאמות אישית"
+  title="מלכודת שם הבנאי"
+  options={[
+    {text: '"MyError"'},
+    {text: '"Error"', isAnswer: true},
+    {text: 'undefined'},
+    {text: 'TypeError'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה הפלט מבלי להגדיר `name`?
+    ```js
+        class MyError extends Error {
+          // No constructor or name setting
+        }
+        const err = new MyError('test');
+        console.log(err.name);
+    ```
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    מהו ערך ברירת המחדל של `name` במחלקת Error?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    ללא הגדרה מפורשת של `this.name`, השגיאה יורשת את מאפיין ה-`name` המוגדר כברירת מחדל ממחלקת `Error`, שהוא `"Error"`. לכן מחלקות שגיאה מותאמות אישית צריכות תמיד להגדיר `this.name = this.constructor.name` בבנאי שלהן.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="גורם שגיאה"
+  title="Error.cause מודרני"
+  options={[
+    {text: '"Original error"', isAnswer: true},
+    {text: 'undefined'},
+    {text: 'The wrapping error'},
+    {text: 'SyntaxError'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה מחזירה `wrapper.cause.message`?
+    ```js
+        const original = new Error('Original error');
+        const wrapper = new Error('Wrapper', 
+          { cause: original }
+        );
+        console.log(wrapper.cause.message);
+    ```
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    Error.cause הוא תכונה מודרנית ב-JavaScript לשרשור שגיאות.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `Error.cause` (ES2022) מאפשר לשרשר שגיאות כדי לשמור על הקשר השגיאה המקורי. `wrapper.cause` מתייחס לשגיאה המקורית, ולכן `wrapper.cause.message` מחזירה `"Original error"`. זה שימושי לעטיפת שגיאות ברמה נמוכה עם הקשר ברמה גבוהה יותר.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="עקבות מחסנית"
+  title="מניפולציית מחסנית"
+  options={[
+    {text: 'מסיר את createError מהמחסנית', isAnswer: true},
+    {text: 'מנקה את כל המחסנית'},
+    {text: 'לא עושה כלום'},
+    {text: 'זורק TypeError'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה עושה `Error.captureStackTrace`?
+    ```js
+        function createError(msg) {
+          const err = new Error(msg);
+          Error.captureStackTrace(err, createError);
+          return err;
+        }
+        const error = createError('test');
+    ```
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    זו תכונה ספציפית ל-V8 ליצירת עקבות מחסנית נקיות יותר.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `Error.captureStackTrace` (V8/Node.js) מסיר את הפונקציה שצוינה (`createError`) מעקבות המחסנית, מה שהופך פונקציות יצירת שגיאות לבלתי נראות למשתמשי הקצה. זה יוצר עקבות מחסנית נקיות יותר שמצביעות על המקום שבו נקראה הפונקציה היוצרת, ולא על הפונקציה עצמה.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="תבניות הודעות"
+  title="תבניות מחרוזת בשגיאות"
+  options={[
+    {text: '"Value ${value} is invalid"'},
+    {text: '"Value undefined is invalid"', isAnswer: true},
+    {text: 'ReferenceError: value is not defined'},
+    {text: '"Value  is invalid"'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מהי הודעת השגיאה?
+    ```js
+        function validate(value) {
+          if (!value) {
+            throw new Error(
+              `Value ${value} is invalid`
+            );
+          }
+        }
+        try {
+          validate(undefined);
+        } catch (e) {
+          console.log(e.message);
+        }
+    ```
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    כיצד אינטרפולציה של תבניות מחרוזת מטפלת ב-undefined?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    תבניות מחרוזת ממירות את `undefined` למחרוזת `"undefined"` במהלך אינטרפולציה. הודעת השגיאה הופכת ל-`"Value undefined is invalid"`. להודעות נקיות יותר, שקול להשתמש ב-`value ?? 'null'` או בבדיקות דומות לפני האינטרפולציה.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="מלכודות API"
+  title="שגיאת תגובת Express"
+  options={[
+    {text: 'שולח את אובייקט השגיאה המלא'},
+    {text: 'שולח {"error":{}}', isAnswer: true},
+    {text: 'זורק שגיאת שרת'},
+    {text: 'שולח רק את הודעת השגיאה'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה נשלח ללקוח?
+    ```js
+        // Express.js route
+        app.get('/api/data', (req, res) => {
+          const error = new Error('Database failed');
+          res.json({ error });
+        });
+    ```
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    זכור כיצד אובייקטי Error מסודרים על ידי JSON.stringify.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `res.json()` משתמש ב-`JSON.stringify()` פנימית, כך שאובייקט השגיאה הופך ל-`{}`. הלקוח מקבל `{"error":{}}`. כדי לתקן זאת, השתמש ב-`res.json({ error: error.message })` או `res.json({ error: { message: error.message, name: error.name } })`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="שגיאות אסינכרוניות"
+  title="ערכי דחיית Promise"
+  options={[
+    {text: 'תמיד אובייקטי Error'},
+    {text: 'כל ערך יכול להיות דחייה', isAnswer: true},
+    {text: 'רק מחרוזות ואובייקטי Error'},
+    {text: 'נעטף אוטומטית ב-Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה יכול `Promise.reject()` לקבל?
+    ```js
+        Promise.reject('string').catch(e => 
+          console.log(typeof e)
+        );
+        Promise.reject({code: 404}).catch(e => 
+          console.log(e.code)
+        );
+        Promise.reject(42).catch(e => 
+          console.log(e)
+        );
+    ```
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    דחיות Promise פועלות בדומה להצהרות throw.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    בדומה ל-`throw`, `Promise.reject()` מקבל כל ערך - מחרוזות, אובייקטים, מספרים וכו'. זה מדפיס `"string"`, `404`, ו-`42`. תמיד בדוק את הסוג של ערכים שנתפסו בשרשראות Promise, במיוחד כשמתמודדים עם קוד צד שלישי שעלול לדחות עם ערכים שאינם Error.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="מאפייני שגיאה"
+  title="מאפיינים לא סטנדרטיים"
+  options={[
+    {text: 'זמין תמיד'},
+    {text: 'ייתכן שלא קיים בכל הסביבות', isAnswer: true},
+    {text: 'רק ב-Node.js'},
+    {text: 'הוצא משימוש והוסר'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    עד כמה אמינים `error.code` ו-`error.errno`?
+    ```js
+        const fs = require('fs');
+        fs.readFile('missing.txt', (err, data) => {
+          if (err) {
+            console.log(err.code);    // 'ENOENT'
+            console.log(err.errno);   // -2
+          }
+        });
+    ```
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    שקול סביבות JavaScript שונות וסוגי שגיאות.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    מאפיינים כמו `code` ו-`errno` תלויים בסביבה (Node.js במקרה זה) ואינם חלק מאובייקט השגיאה הסטנדרטי. שגיאות דפדפן לא יכילו מאפיינים אלה. תמיד בדוק את קיומם: `if (err.code === 'ENOENT')` במקום להניח שהם קיימים.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={13}
+  group="גבולות שגיאה"
+  title="זיהוי אובייקט לעומת שגיאה"
+  options={[
+    {text: 'true, true'},
+    {text: 'false, false', isAnswer: true},
+    {text: 'true, false'},
+    {text: 'false, true'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה מחזירות הבדיקות הללו?
+    ```js
+        const fakeError = {
+          name: 'Error',
+          message: 'Fake error',
+          stack: 'fake stack'
+        };
+    
+        console.log(fakeError instanceof Error);
+        console.log(Object.prototype.toString.call(
+          fakeError
+        ) === '[object Error]');
+    ```
+  </div>
+  </slot>
+
+  <slot name="hints">
+  <div className="hint">
+    בדיקה אחת בודקת את שרשרת האב-טיפוס, והשנייה בודקת חריצים פנימיים.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `instanceof Error` מחזיר `false` כי האובייקט לא נוצר על ידי בנאי Error. `Object.prototype.toString.call()` גם מחזיר `false` (הוא מחזיר `'[object Object]'`) כי הוא בודק את החריץ הפנימי `[[Class]]`. שתי השיטות מזהות נכון את זה כאובייקט שגיאה מזויף.
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+
+## שליטה באומנות טיפול השגיאות
+
+ממלכודות סריאליזציה ועד כשלי `instanceof` בין הקשרים שונים, המושגים המתקדמים האלה מפרידים בין מפתחים זוטרים לבין מקצוענים ~מנוסים~ שחוקים.
+
+מוכן לאתגרים נוספים? בדוק את [אוסף החידות המלא](../challenges/) לעוד תרגילי חשיבה על JavaScript, אלגוריתמים ועוד!
