@@ -1,0 +1,66 @@
+{
+  "runId": "deepseek-deepseek-v4-flash@2026-05-14T01-44-43-545Z",
+  "slug": "weakmap-the-javascript-feature-you-dont-use",
+  "locale": "ar",
+  "model": "deepseek/deepseek-v4-flash",
+  "modelPath": "deepseek-deepseek-v4-flash",
+  "createdAt": "2026-05-14T01:45:12.431Z",
+  "sourcePath": "src/content/posts/2025-12-29--weakmap-the-javascript-feature-you-dont-use/index.mdx",
+  "targetPath": "src/content/posts/2025-12-29--weakmap-the-javascript-feature-you-dont-use/ar/index.mdx",
+  "candidatePath": "reports/i18n/weakmap-the-javascript-feature-you-dont-use/ar/deepseek-deepseek-v4-flash/2026-05-14T01-44-43-545Z/candidate.mdx",
+  "sourceHash": "c757bb10827d0c5cfc47243d3ee9cb0d87b0232477fe589f26ec38cd0cf876c2",
+  "outputHash": "dd4f00a4da2998d2f427d7c562631ac96adcad15225cfb73a24ab95ceb050899",
+  "reasoningEffort": "low",
+  "temperature": 0.3,
+  "maxTokens": 16000,
+  "timeoutMs": 200000,
+  "articleSummary": "This tutorial argues that replacing `new Map()` with `new WeakMap()` can dramatically reduce memory leaks in long-running JavaScript applications by allowing garbage collection of keys when no other references exist. It explains that a regular Map holds strong references that prevent cleanup of objects like DOM nodes or component instances, while a WeakMap treats keys as \"temporary citizens\" that vanish automatically when the object is no longer needed. The article covers constraints (no iteration, object-only keys) and practical use cases such as private data storage and memoization, using metaphors like \"iron grip\" and \"hemorrhaging memory\" to frame the problem. The intended audience is JavaScript developers building SPAs, dashboards, or any app where stale references cause unbounded memory growth.",
+  "totalInputTokens": 4164,
+  "totalOutputTokens": 3860,
+  "totalCacheReadTokens": 768,
+  "totalCacheWriteTokens": 0,
+  "totalDurationMs": 20936,
+  "totalCostUsd": 0.0015583904000000001,
+  "pricingSource": "local-openrouter-estimate",
+  "telemetry": {
+    "model": "deepseek/deepseek-v4-flash",
+    "chunkSize": "10p",
+    "totalChunks": 3,
+    "totalInputTokens": 4164,
+    "totalOutputTokens": 3860,
+    "totalCacheReadTokens": 768,
+    "totalCacheWriteTokens": 0,
+    "totalDurationMs": 20936,
+    "totalCostUsd": 0.0015583904000000001,
+    "pricingSource": "local-openrouter-estimate",
+    "chunks": [
+      {
+        "index": 0,
+        "inputTokens": 1263,
+        "outputTokens": 964,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 5244,
+        "costUsd": 0.00044674000000000005
+      },
+      {
+        "index": 1,
+        "inputTokens": 1487,
+        "outputTokens": 789,
+        "cacheReadTokens": 384,
+        "cacheWriteTokens": 0,
+        "durationMs": 4710,
+        "costUsd": 0.0003764152
+      },
+      {
+        "index": 2,
+        "inputTokens": 1414,
+        "outputTokens": 2107,
+        "cacheReadTokens": 384,
+        "cacheWriteTokens": 0,
+        "durationMs": 10982,
+        "costUsd": 0.0007352352000000001
+      }
+    ]
+  }
+}
