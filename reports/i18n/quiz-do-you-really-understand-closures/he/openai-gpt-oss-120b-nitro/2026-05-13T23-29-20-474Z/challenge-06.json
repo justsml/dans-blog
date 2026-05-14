@@ -1,0 +1,47 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Stale Closure in React",
+  "translatedTitle": "סגירה ישנה ב-React",
+  "translation": {
+    "title": "סגירה ישנה ב-React",
+    "group": "מתקדם",
+    "options": [
+      {
+        "text": "מתעד את הספירה הנוכחית בכל לחיצה"
+      },
+      {
+        "text": "תמיד מתעד 0"
+      },
+      {
+        "text": "מתעד NaN"
+      },
+      {
+        "text": "זה לא יקומפל"
+      }
+    ],
+    "questionProse": [
+      "איזו התנהגות מציג הרכיב React הזה כאשר לוחצים על הכפתור מספר פעמים?"
+    ],
+    "explanationProse": [
+      "סגירה ישנה קלאסית. ה-`useEffect` רץ פעם אחת (מערך תלות ריק) ויוצר אינטרוול שסוגר על `count` כפי שהיה בזמן ההרצה: `0`. לא משנה כמה פעמים תלחץ, הסגירה של האינטרוול לעולם לא רואה את הערך המעודכן.\n\n    תווית הכפתור מתעדכנת נכון — זה רינדור חדש. אבל `console.log` נלכד לעד ב-`0`.\n\n    תקן זאת על‑ידי הוספת `count` למערך התלות (יוצר אינטרוול מחדש) או באמצעות ref:"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"סגירה ישנה ב-React\",\n  \"group\": \"מתקדם\",\n  \"options\": [\n    {\n      \"text\": \"מתעד את הספירה הנוכחית בכל לחיצה\"\n    },\n    {\n      \"text\": \"תמיד מתעד 0\"\n    },\n    {\n      \"text\": \"מתעד NaN\"\n    },\n    {\n      \"text\": \"זה לא יקומפל\"\n    }\n  ],\n  \"questionProse\": [\n    \"איזו התנהגות מציג הרכיב React הזה כאשר לוחצים על הכפתור מספר פעמים?\"\n  ],\n  \"explanationProse\": [\n    \"סגירה ישנה קלאסית. ה-`useEffect` רץ פעם אחת (מערך תלות ריק) ויוצר אינטרוול שסוגר על `count` כפי שהיה בזמן ההרצה: `0`. לא משנה כמה פעמים תלחץ, הסגירה של האינטרוול לעולם לא רואה את הערך המעודכן.\\n\\n    תווית הכפתור מתעדכנת נכון — זה רינדור חדש. אבל `console.log` נלכד לעד ב-`0`.\\n\\n    תקן זאת על‑ידי הוספת `count` למערך התלות (יוצר אינטרוול מחדש) או באמצעות ref:\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 890,
+    "outputTokens": 864,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 3819,
+    "providerCostUsd": 0.0006519,
+    "providerUpstreamCostUsd": 0.0006519,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00003471,
+    "outputUsd": 0.00015552,
+    "totalUsd": 0.00019023,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

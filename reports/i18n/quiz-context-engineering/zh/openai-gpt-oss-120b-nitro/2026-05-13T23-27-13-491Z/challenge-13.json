@@ -1,0 +1,48 @@
+{
+  "index": 12,
+  "attempt": 1,
+  "originalTitle": "Grounding vs. Hallucination",
+  "translatedTitle": "基于事实的定位 vs 幻觉",
+  "translation": {
+    "title": "基于事实的定位 vs 幻觉",
+    "group": "高级",
+    "options": [
+      {
+        "text": "在系统提示中告诉模型“不要幻觉”。"
+      },
+      {
+        "text": "使用更高的 temperature 来生成更自信的回复"
+      },
+      {
+        "text": "提供检索到的源文档，并指示模型引用它们"
+      },
+      {
+        "text": "使用更大的模型——幻觉只会在小模型中出现"
+      }
+    ],
+    "questionProse": [
+      "在生产 AI 系统中，降低幻觉的最有效技术是："
+    ],
+    "explanationProse": [
+      "指示模型不要幻觉并不能阻止幻觉——模型没有可靠的内部信号来判断“我在编造”。这只会导致模型自信地告诉你它没有编造，却实际上在编造。\n\n真正有效的办法是：**基于事实的定位**。给模型提供它正确回答所需的信息，并将其约束在这些信息范围内：",
+      "随后验证输出：检查响应中的断言是否出现在检索到的上下文中。这就是引用定位检查——实现细节请参阅 RAG 评估讨论。\n\n更大的模型平均幻觉更少，但所有模型都会幻觉。定位是缓解策略，而非模型规模。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"基于事实的定位 vs 幻觉\",\n  \"group\": \"高级\",\n  \"options\": [\n    {\n      \"text\": \"在系统提示中告诉模型“不要幻觉”。\"\n    },\n    {\n      \"text\": \"使用更高的 temperature 来生成更自信的回复\"\n    },\n    {\n      \"text\": \"提供检索到的源文档，并指示模型引用它们\"\n    },\n    {\n      \"text\": \"使用更大的模型——幻觉只会在小模型中出现\"\n    }\n  ],\n  \"questionProse\": [\n    \"在生产 AI 系统中，降低幻觉的最有效技术是：\"\n  ],\n  \"explanationProse\": [\n    \"指示模型不要幻觉并不能阻止幻觉——模型没有可靠的内部信号来判断“我在编造”。这只会导致模型自信地告诉你它没有编造，却实际上在编造。\\n\\n真正有效的办法是：**基于事实的定位**。给模型提供它正确回答所需的信息，并将其约束在这些信息范围内：\",\n    \"随后验证输出：检查响应中的断言是否出现在检索到的上下文中。这就是引用定位检查——实现细节请参阅 RAG 评估讨论。\\n\\n更大的模型平均幻觉更少，但所有模型都会幻觉。定位是缓解策略，而非模型规模。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 941,
+    "outputTokens": 1003,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 834,
+    "providerCostUsd": 0.0010816,
+    "providerUpstreamCostUsd": 0.0010816,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000036698999999999995,
+    "outputUsd": 0.00018054,
+    "totalUsd": 0.00021723899999999998,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

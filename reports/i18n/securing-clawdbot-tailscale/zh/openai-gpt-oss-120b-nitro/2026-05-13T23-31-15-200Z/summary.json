@@ -1,0 +1,102 @@
+{
+  "runId": "openai-gpt-oss-120b-nitro@2026-05-13T23-31-15-200Z",
+  "slug": "securing-clawdbot-tailscale",
+  "locale": "zh",
+  "model": "openai/gpt-oss-120b:nitro",
+  "modelPath": "openai-gpt-oss-120b-nitro",
+  "createdAt": "2026-05-13T23:31:27.424Z",
+  "sourcePath": "src/content/posts/2026-01-26--securing-clawdbot-tailscale/index.mdx",
+  "targetPath": "src/content/posts/2026-01-26--securing-clawdbot-tailscale/zh/index.mdx",
+  "candidatePath": "reports/i18n/securing-clawdbot-tailscale/zh/openai-gpt-oss-120b-nitro/2026-05-13T23-31-15-200Z/candidate.mdx",
+  "sourceHash": "774feafac3dd3c408584db2b169a365e3f58a8b6a6d0541778aad55f122f5285",
+  "outputHash": "c16abe1b921d78ac6367b20893eee4e8a273749e7cc631154e95ffcc60880e00",
+  "reasoningEffort": "low",
+  "temperature": 0.3,
+  "maxTokens": 16000,
+  "timeoutMs": 200000,
+  "articleSummary": "The articlewarns that exposing OpenClaw’s gateway, node controls, or SSH to the public internet creates a direct shell‑access vector, and it shows how to avoid that by keeping the gateway bound to 127.0.0.1 and routing it only through a private Tailscale tailnet. It outlines the three attack surfaces (SSH on port 22, the gateway UI/WebSocket on port 18789, and browser‑node control), cites real‑world scans that found thousands of exposed instances, and explains why the “Serve” mode of Tailscale is the safe default while “Funnel” should be used only with password auth and explicit intent. The guide provides step‑by‑step commands for installing Tailscale, configuring OpenClaw’s gateway for Serve or token‑based tailnet binding, and cautions against publishing Docker ports or enabling public proxies. Intended for developers and operators deploying OpenClaw, the tone is a practical security tutorial that mixes concrete code snippets with a recurring metaphor of “operator surfaces” that must be kept behind a private network.",
+  "totalInputTokens": 10559,
+  "totalOutputTokens": 3516,
+  "totalCacheReadTokens": 3328,
+  "totalCacheWriteTokens": 0,
+  "totalDurationMs": 10986,
+  "totalCostUsd": 0.001044681,
+  "pricingSource": "local-openrouter-estimate",
+  "telemetry": {
+    "model": "openai/gpt-oss-120b:nitro",
+    "chunkSize": "10p",
+    "totalChunks": 7,
+    "totalInputTokens": 10559,
+    "totalOutputTokens": 3516,
+    "totalCacheReadTokens": 3328,
+    "totalCacheWriteTokens": 0,
+    "totalDurationMs": 10986,
+    "totalCostUsd": 0.001044681,
+    "pricingSource": "local-openrouter-estimate",
+    "chunks": [
+      {
+        "index": 0,
+        "inputTokens": 1422,
+        "outputTokens": 661,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 1709,
+        "costUsd": 0.000174438
+      },
+      {
+        "index": 1,
+        "inputTokens": 1610,
+        "outputTokens": 544,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 1269,
+        "costUsd": 0.00016071
+      },
+      {
+        "index": 2,
+        "inputTokens": 1437,
+        "outputTokens": 268,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 1193,
+        "costUsd": 0.000104283
+      },
+      {
+        "index": 3,
+        "inputTokens": 1650,
+        "outputTokens": 580,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 1469,
+        "costUsd": 0.00016875
+      },
+      {
+        "index": 4,
+        "inputTokens": 1544,
+        "outputTokens": 560,
+        "cacheReadTokens": 768,
+        "cacheWriteTokens": 0,
+        "durationMs": 2573,
+        "costUsd": 0.000161016
+      },
+      {
+        "index": 5,
+        "inputTokens": 1411,
+        "outputTokens": 408,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 1102,
+        "costUsd": 0.00012846899999999998
+      },
+      {
+        "index": 6,
+        "inputTokens": 1485,
+        "outputTokens": 495,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 1671,
+        "costUsd": 0.00014701500000000001
+      }
+    ]
+  }
+}

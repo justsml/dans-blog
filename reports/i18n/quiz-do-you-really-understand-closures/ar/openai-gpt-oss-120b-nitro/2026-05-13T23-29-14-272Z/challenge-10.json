@@ -1,0 +1,47 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Memoization via Closure",
+  "translatedTitle": "التخزين المؤقت عبر الإغلاق",
+  "translation": {
+    "title": "التخزين المؤقت عبر الإغلاق",
+    "group": "مكافأة",
+    "options": [
+      {
+        "text": "ينادي expensive() 3 مرات"
+      },
+      {
+        "text": "ينادي expensive() مرة واحدة"
+      },
+      {
+        "text": "ينادي expensive() مرتين"
+      },
+      {
+        "text": "يرمي استثناء: تجاوز الحد الأقصى لسلسلة الاستدعاءات"
+      }
+    ],
+    "questionProse": [
+      "كم مرة يتم نداء `expensive()` فعليًا؟"
+    ],
+    "explanationProse": [
+      "الدالة المخزنة مؤقتًا تغلق على `cache`. الاستدعاء الأول (`fast(5)`) لا يجد القيمة في الذاكرة المؤقتة، ينادي `expensive`، ويخزن النتيجة. الاستدعاء الثاني والثالث يجدان القيمة في الذاكرة المؤقتة وتعيدان النتيجة فورًا.\n\n    `calls` هو `1`.\n\n    هذا مثال على عمل الإغلاقات. `cache` خاصة (لا يمكن الوصول إليها من خارج `memoize`)، مستمرة (تعيش طالما `fast` موجودة)، ومشتركة بين جميع استدعاءات `fast`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"التخزين المؤقت عبر الإغلاق\",\n  \"group\": \"مكافأة\",\n  \"options\": [\n    {\n      \"text\": \"ينادي expensive() 3 مرات\"\n    },\n    {\n      \"text\": \"ينادي expensive() مرة واحدة\"\n    },\n    {\n      \"text\": \"ينادي expensive() مرتين\"\n    },\n    {\n      \"text\": \"يرمي استثناء: تجاوز الحد الأقصى لسلسلة الاستدعاءات\"\n    }\n  ],\n  \"questionProse\": [\n    \"كم مرة يتم نداء `expensive()` فعليًا؟\"\n  ],\n  \"explanationProse\": [\n    \"الدالة المخزنة مؤقتًا تغلق على `cache`. الاستدعاء الأول (`fast(5)`) لا يجد القيمة في الذاكرة المؤقتة، ينادي `expensive`، ويخزن النتيجة. الاستدعاء الثاني والثالث يجدان القيمة في الذاكرة المؤقتة وتعيدان النتيجة فورًا.\\n\\n    `calls` هو `1`.\\n\\n    هذا مثال على عمل الإغلاقات. `cache` خاصة (لا يمكن الوصول إليها من خارج `memoize`)، مستمرة (تعيش طالما `fast` موجودة)، ومشتركة بين جميع استدعاءات `fast`.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 890,
+    "outputTokens": 805,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 2645,
+    "providerCostUsd": 0.0005781,
+    "providerUpstreamCostUsd": 0.0005781,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00003471,
+    "outputUsd": 0.0001449,
+    "totalUsd": 0.00017961,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

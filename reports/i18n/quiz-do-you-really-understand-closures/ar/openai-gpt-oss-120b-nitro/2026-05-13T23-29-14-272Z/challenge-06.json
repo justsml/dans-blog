@@ -1,0 +1,47 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Stale Closure in React",
+  "translatedTitle": "إغلاق قديم في React",
+  "translation": {
+    "title": "إغلاق قديم في React",
+    "group": "متقدم",
+    "options": [
+      {
+        "text": "يسجل العدد الحالي في كل نقرة"
+      },
+      {
+        "text": "دائمًا يسجل 0"
+      },
+      {
+        "text": "يسجل NaN"
+      },
+      {
+        "text": "هذا لن يُترجم"
+      }
+    ],
+    "questionProse": [
+      "ما السلوك الذي يظهره هذا المكوّن React عندما يتم النقر على الزر عدة مرات؟"
+    ],
+    "explanationProse": [
+      "إغلاق قديم كلاسيكي. الـ `useEffect` يُنفّذ مرة واحدة (مصفوفة الاعتماديات فارغة) وينشئ فاصلًا يلتقط `count` كما كان عند التركيب: `0`. بغض النظر عن عدد النقرات، لا يرى إغلاق الفاصل القيمة المحدثة.\n\n    تسمية الزر تُحدَّث بشكل صحيح — هذا إعادة تصيير جديدة. لكن `console.log` محبوس إلى الأبد على `0`.\n\n    أصلحه بإضافة `count` إلى مصفوفة الاعتماديات (يعيد إنشاء الفاصل) أو باستخدام مرجع (`ref`):"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"إغلاق قديم في React\",\n  \"group\": \"متقدم\",\n  \"options\": [\n    {\n      \"text\": \"يسجل العدد الحالي في كل نقرة\"\n    },\n    {\n      \"text\": \"دائمًا يسجل 0\"\n    },\n    {\n      \"text\": \"يسجل NaN\"\n    },\n    {\n      \"text\": \"هذا لن يُترجم\"\n    }\n  ],\n  \"questionProse\": [\n    \"ما السلوك الذي يظهره هذا المكوّن React عندما يتم النقر على الزر عدة مرات؟\"\n  ],\n  \"explanationProse\": [\n    \"إغلاق قديم كلاسيكي. الـ `useEffect` يُنفّذ مرة واحدة (مصفوفة الاعتماديات فارغة) وينشئ فاصلًا يلتقط `count` كما كان عند التركيب: `0`. بغض النظر عن عدد النقرات، لا يرى إغلاق الفاصل القيمة المحدثة.\\n\\n    تسمية الزر تُحدَّث بشكل صحيح — هذا إعادة تصيير جديدة. لكن `console.log` محبوس إلى الأبد على `0`.\\n\\n    أصلحه بإضافة `count` إلى مصفوفة الاعتماديات (يعيد إنشاء الفاصل) أو باستخدام مرجع (`ref`):\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 917,
+    "outputTokens": 812,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 2585,
+    "providerCostUsd": 0.00058635,
+    "providerUpstreamCostUsd": 0.00058635,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000035763,
+    "outputUsd": 0.00014616,
+    "totalUsd": 0.000181923,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Object Mutation",
+  "translatedTitle": "שינוי אובייקט",
+  "translation": {
+    "title": "שינוי אובייקט",
+    "group": "סגירות ואובייקטים",
+    "options": [
+      {
+        "text": "{ x: 1 }, { x: 1 }"
+      },
+      {
+        "text": "{ x: 1 }, { x: 99 }"
+      },
+      {
+        "text": "{ x: 99 }, { x: 99 }"
+      },
+      {
+        "text": "{ x: 99 }, { x: 1 }"
+      }
+    ],
+    "questionProse": [
+      "מה מודפס כאן?"
+    ],
+    "explanationProse": [
+      "הסגירה תופסת את ה**binding** `obj`, ולא צילום של האובייקט. האובייקט עצמו משתנה אחרי שהסגירה נוצרה — אבל `obj` עדיין מצביע לאותו רפרנס. שני הקריאות מחזירות את אותו האובייקט המושתת: `{ x: 99 }`.\n\n    זה מפתיע אנשים שמניחים שסגירות \"מקפיאות\" ערכים. הן לא. הן תופסות **references**."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"שינוי אובייקט\",\n  \"group\": \"סגירות ואובייקטים\",\n  \"options\": [\n    {\n      \"text\": \"{ x: 1 }, { x: 1 }\"\n    },\n    {\n      \"text\": \"{ x: 1 }, { x: 99 }\"\n    },\n    {\n      \"text\": \"{ x: 99 }, { x: 99 }\"\n    },\n    {\n      \"text\": \"{ x: 99 }, { x: 1 }\"\n    }\n  ],\n  \"questionProse\": [\n    \"מה מודפס כאן?\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"javascript\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"explanationProse\": [\n    \"הסגירה תופסת את ה**binding** `obj`, ולא צילום של האובייקט. האובייקט עצמו משתנה אחרי שהסגירה נוצרה — אבל `obj` עדיין מצביע לאותו רפרנס. שני הקריאות מחזירות את אותו האובייקט המושתת: `{ x: 99 }`.\\n\\n    זה מפתיע אנשים שמניחים שסגירות \\\"מקפיאות\\\" ערכים. הן לא. הן תופסות **references**.\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 853,
+    "outputTokens": 567,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1898,
+    "providerCostUsd": 0.00046815,
+    "providerUpstreamCostUsd": 0.00046815,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000033267,
+    "outputUsd": 0.00010206,
+    "totalUsd": 0.000135327,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "runId": "openai-gpt-oss-120b-nitro@2026-05-13T23-30-38-358Z",
+  "slug": "lancedb-wasm-browser-client",
+  "locale": "zh",
+  "model": "openai/gpt-oss-120b:nitro",
+  "modelPath": "openai-gpt-oss-120b-nitro",
+  "createdAt": "2026-05-13T23:30:47.753Z",
+  "sourcePath": "src/content/posts/2026-04-16--lancedb-wasm-browser-client/index.mdx",
+  "targetPath": "src/content/posts/2026-04-16--lancedb-wasm-browser-client/zh/index.mdx",
+  "candidatePath": "reports/i18n/lancedb-wasm-browser-client/zh/openai-gpt-oss-120b-nitro/2026-05-13T23-30-38-358Z/candidate.mdx",
+  "sourceHash": "ad7b42f8eccdbc71773708d5c94633585b0379f8093dbd1fcae9841e1bd03510",
+  "outputHash": "3e45f56a593e02cbfc8966c46431071b8e7a4ed752a620e2acd6f782d4d0e2e1",
+  "reasoningEffort": "low",
+  "temperature": 0.3,
+  "maxTokens": 16000,
+  "timeoutMs": 200000,
+  "articleSummary": "The articleexplains how the author enabled direct, read‑only vector search of LanceDB tables from a web browser by adding a lightweight, server‑less stack. It describes three layers: a Rust “publish” step that creates browser‑safe side‑car files (`_web.json`, `_snapshot.json`, etc.) describing which columns and index types can be used; a `lancedb-wasm` crate that implements a fetch‑based object store, a WASM‑compiled search engine, and strict capability checks; and a tiny TypeScript wrapper (`@lancedb/lancedb-web`) that runs the WASM module in a Web Worker and optionally generates query embeddings client‑side. The piece is written as a technical tutorial/analysis for developers familiar with Rust, WASM, and vector databases, using the metaphor of “publishing” a table to make it “browser‑safe” and emphasizing a “fail‑closed” design. It also discusses trade‑offs such as HTTP range‑request performance and whether side‑car files should be generated automatically or on demand.",
+  "totalInputTokens": 7469,
+  "totalOutputTokens": 2322,
+  "totalCacheReadTokens": 2560,
+  "totalCacheWriteTokens": 0,
+  "totalDurationMs": 7728,
+  "totalCostUsd": 0.0007092509999999999,
+  "pricingSource": "local-openrouter-estimate",
+  "telemetry": {
+    "model": "openai/gpt-oss-120b:nitro",
+    "chunkSize": "10p",
+    "totalChunks": 5,
+    "totalInputTokens": 7469,
+    "totalOutputTokens": 2322,
+    "totalCacheReadTokens": 2560,
+    "totalCacheWriteTokens": 0,
+    "totalDurationMs": 7728,
+    "totalCostUsd": 0.0007092509999999999,
+    "pricingSource": "local-openrouter-estimate",
+    "chunks": [
+      {
+        "index": 0,
+        "inputTokens": 1255,
+        "outputTokens": 411,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 1370,
+        "costUsd": 0.00012292500000000002
+      },
+      {
+        "index": 1,
+        "inputTokens": 1690,
+        "outputTokens": 626,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 2579,
+        "costUsd": 0.00017859
+      },
+      {
+        "index": 2,
+        "inputTokens": 1462,
+        "outputTokens": 440,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 1339,
+        "costUsd": 0.00013621800000000002
+      },
+      {
+        "index": 3,
+        "inputTokens": 1539,
+        "outputTokens": 371,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 1000,
+        "costUsd": 0.000126801
+      },
+      {
+        "index": 4,
+        "inputTokens": 1523,
+        "outputTokens": 474,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 1440,
+        "costUsd": 0.000144717
+      }
+    ]
+  }
+}

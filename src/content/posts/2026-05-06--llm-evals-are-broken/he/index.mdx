@@ -1,0 +1,269 @@
+---
+title: להתמודד עם הרשע בעזרת Evals!
+subTitle: מדדי ביצועים מודדים מדדים. המערכת שלך צריכה מדדים משלה.
+date: '2026-05-01'
+modified: '2026-05-06'
+tags:
+  - ai
+  - llm
+  - evals
+  - testing
+  - production
+  - quality
+  - observability
+category: AI
+subCategory: Engineering
+popularity: 0.85
+social_image: ../desktop-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+כל מודל חדש מגיע לבוש בטוקסדו של מדדי ביצועים.
+
+MMLU: 92.4%. HumanEval: 87.2%. LLeMU: 88.7%. MATH: 73.6%. AGI: 127%!
+
+ואולם, עבור 99% מהעסקים שבונים תהליכים ומוצרים עם AI, **שום דבר מזה לא רלוונטי.**
+
+מה שחשוב? איך עומדים העומסים שלך? משתפרים או מחמירים? הדרך ההגיונית היחידה לדעת זאת היא לכתוב Evals (בדיקות עבור LLM) המשקפות את המשימות, הנתונים ומצבי הכשל הספציפיים של המערכת שלך.
+
+<blockquote class="breakout">
+  <p>המדדים אינם משקרים. הם עונים על שאלה של מישהו אחר.</p>
+</blockquote>
+
+---
+
+## מה "הערכת ויבס" באמת עולה
+
+הגישה הסטנדרטית: לפרוס שינוי במודל, לעקוב אחרי ערוצי התלונות, ולחזור אחורה אם הרעש עולה.
+
+זה מפספס כמעט כל מה שמעניין:
+
+**אתה תופס רק כשלונות רועשים.** משתמשים שמקבלים תשובה בטוחה אך שגויה ולא מודעים לכך? שקט. משתמשים שמקבלים תשובה גרועה יותר ומוותרים על הפיצ'ר? שקט. כרטיסי תמיכה ושיעורי שגיאות תופסים רק חלק קטן מהירידה באיכות.
+
+**אתה לא יכול להבדיל בין רגרסיות לשיפורים.** אם המודל החדש טוב יותר במשימה A וגרוע יותר במשימה B, תלונות על B נראות זהות למשוב הכללי “ה‑AI החל להידרדר”. אתה לא יודע מה לתקן.
+
+**אתה משתמש במשתמשים שלך כמתשתית בדיקה.** הם לא נרשמו לכך.
+
+---
+
+## ספקטרום ההערכה (ואיפה רוב הצוותים טועים)
+
+גישות ההערכה יושבות על ספקטרום מ„מהיר אך חלש” עד „יקר אך תקף”.
+
+<figure class="breakout">
+
+![דיאגרמת ספקטרום המשווה בדיקות דטרמיניסטיות, LLM‑כמשפט וכדומה, והערכה אנושית לפי מהירות, עלות ותקפות.](../eval-spectrum.svg)
+
+<figcaption>השתמש בשיטת ההערכה הזולה ביותר שיכולה באמת לתפוס את הכשל.</figcaption>
+</figure>
+
+**LLM‑כמשפט** הוא האהוב הנוכחי: מבקשים ממודל חזק לדרג את הפלטים של מודל אחר. מהיר, מדרג, זול. הבעיה: הוא משקף את ההטיות של מודל השיפוט, ניתן לנצל אותו, ויוצר תלות מעגלית. אם אתה משתמש ב‑GPT‑5 כדי לדרג פלטים של GPT‑5, אתה מודד משהו כמו „כמה GPT‑5 מסכים ל‑GPT‑5”. זה לא חסר משמעות, אבל זה לא מה שאתה חושב.
+
+**הערכה אנושית** היא הסטנדרט הזהב שכל אחד מנסה לעקוף. קבלת בני אדם להעריך פלטים יקרה, איטית, לא עקבית בין מעריכים, ומטרידה לתזמן. אבל היא היחידה שמאמת שהמערכת שלך שימושית לבני אדם אמיתיים.
+
+**בדיקות אוטומטיות ספציפיות למשימה** הן המקום שבו רוב הצוותים צריכים להשקיע יותר זמן. הן אינן זוהרות, אך הן מהירות, דטרמיניסטיות, וקשורות למה שבאמת חשוב במערכת שלך.
+
+## מה באמת עובד
+
+### 1. הגדר כישלון לפני שאתה משחרר
+
+לפני שינוי מודל או פרומפט, רשום מה נראה רע. באופן ספציפי.
+
+לא “הפלט צריך להיות מדויק”. זה לא מבחן. יותר כמו:
+
+- פלט JSON מובנה חייב להיספר ללא שגיאות
+- כל הציטוטים בתשובה חייבים להופיע במדויק בהקשר שהושג
+- תשובות לא צריכות להזכיר שמות של מוצרי מתחרים
+- שאילתות SQL חייבות להיות תחבירית תקינות ולהתייחס רק לטבלאות הקיימות בסכימה
+- סיווג סנטימנט לא צריך להפוך מחיובי לשלילי ביותר מ‑3 % מהמבחן הקיים
+
+אתה יכול לבדוק את זה תכנותית. אין צורך במודל שופט.
+
+**תשתית Eval: בדיקות דטרמיניסטיות**
+
+```typescript
+type EvalResult = { passed: boolean; reason?: string };
+
+const evals: Record<string, (output: string, context: EvalContext) => EvalResult> = {
+  // JSON חייב להיספר
+  validJson: (output) => {
+    try {
+      JSON.parse(output);
+      return { passed: true };
+    } catch (e) {
+      return { passed: false, reason: `Invalid JSON: ${e.message}` };
+    }
+  },
+
+  // אין ציטוטים שהומצאו — כל טענה חייבת להופיע בהקשר
+  groundedCitations: (output, { retrievedChunks }) => {
+    const claims = extractCitations(output);
+    const ungrounded = claims.filter(
+      (claim) => !retrievedChunks.some((chunk) => chunk.includes(claim))
+    );
+    return ungrounded.length === 0
+      ? { passed: true }
+      : { passed: false, reason: `Ungrounded claims: ${ungrounded.join(', ')}` };
+  },
+
+  // בדיקת סבירות אורך תשובה — תופס קיצוץ או יצירת טקסט בריצה בלתי מבוקרת
+  reasonableLength: (output) => {
+    const words = output.split(/\s+/).length;
+    return words >= 10 && words <= 2000
+      ? { passed: true }
+      : { passed: false, reason: `Word count ${words} out of bounds` };
+  },
+};
+```
+
+### 2. בנה סט זהב מהימים הגרועים ביותר שלך
+
+הנתונים הטובים ביותר להערכה הם הדברים המביכים: הפלטים שגרמו למישהו לפתוח טיקט, לצלם הולוגנציה, או לשקול להפסיק להשתמש בתכונה.
+
+בכל פעם שמשתמש מדווח על פלט רע, מסמן הולוגנציה, או שאתה מבחין בכשל ידנית, הוסף זאת לסט הזהב: הקלט, ההקשר, וההתנהגות הנכונה. שמור על 50‑100 מקרים והרץ אותם על כל שינוי במודל.
+
+זה נראה ידני בתחילה. אחרי חצי שנה, יש לך חבילת מבחנים שאף בנצ'מרק ציבורי לא יכול לשחק איתה, מכיוון שכל מקרה הגיע מההיסטוריה של הכישלונות שלך.
+
+<figure class="breakout">
+
+![תרשים זרימת עבודה שמראה איך תקריות ייצור רעות הופכות למקרים זהב, ואז ריצות CI eval, ואז רגרסיות חסומות או שחרורים מאושרים.](../golden-set-lifecycle.svg)
+
+<figcaption>סט זהב הופך את הדברים המביכים לחבילת רגרסיה.</figcaption>
+</figure>
+
+**צורת מקרה זהב**
+
+```typescript
+interface GoldenCase {
+  id: string;
+  input: string;
+  context: Record<string, unknown>;
+  expectedBehavior: {
+    mustContain?: string[];
+    mustNotContain?: string[];
+    structureCheck?: (output: string) => boolean;
+    minSimilarityToReference?: number; // cosine similarity to a reference answer
+  };
+  sourceIncident?: string; // link back to the bug report or ticket
+}
+```
+
+### 3. בדיקות רגרסיה, לא רק בדיקות קבלה
+
+רוב הצוותים מריצים evals רק כששוקלים שינוי במודל. זהו מבחן קבלה: “האם הדבר החדש מספיק טוב?”
+
+אתה גם צריך בדיקות רגרסיה: “האם זה שבר משהו שהיה עובד?”
+
+הרץ את סט הזהב על כל שינוי בפרומפט, לא רק על שינויי מודל. פרומפט שעובד טוב יכול להידרדר בשקט כשמוסיפים כלי חדש, משנים אסטרטגיית אחזור RAG, או מעדכנים תבנית הקשר. לא תדע זאת בלי בסיס השוואתי. כלים כמו [Langfuse](https://langfuse.com/) מצמידים ציוני eval לעקבות ייצור כך שהרגרסיה מופיעה בלוחות מחוונים, ולא רק בדיווחי תקריות.
+
+<details>
+<summary>תשתית Eval: השוואת בסיס לעומת מועמד</summary>
+
+```typescript
+async function compareModelVersions(
+  goldenCases: GoldenCase[],
+  baselinePipeline: Pipeline,
+  candidatePipeline: Pipeline
+) {
+  const results = await Promise.all(
+    goldenCases.map(async (tc) => {
+      const [baseline, candidate] = await Promise.all([
+        baselinePipeline.run(tc.input, tc.context),
+        candidatePipeline.run(tc.input, tc.context),
+      ]);
+
+      return {
+        id: tc.id,
+        baselinePassed: runEvals(baseline, tc.expectedBehavior),
+        candidatePassed: runEvals(candidate, tc.expectedBehavior),
+        regression: /* baseline passed */ && /* candidate failed */,
+        improvement: /* baseline failed */ && /* candidate passed */,
+      };
+    })
+  );
+
+  const regressions = results.filter((r) => r.regression);
+  const improvements = results.filter((r) => r.improvement);
+
+  console.log(`Regressions: ${regressions.length} / ${goldenCases.length}`);
+  console.log(`Improvements: ${improvements.length} / ${goldenCases.length}`);
+
+  if (regressions.length > 0) {
+    console.error('Blocking regressions found:');
+    regressions.forEach((r) => console.error(` - ${r.id}`));
+  }
+
+  return { regressions, improvements };
+}
+```
+
+</details>
+
+אם מועמד רגרס על כישלונות מוכרים, השיחה על השדרוג נעשית מדויקת במיוחד: אילו מקרים השתפרו, אילו מקרים נשברו, והאם המסחר שווה את זה.
+
+### 4. השתמש ב‑LLM‑as‑Judge לדבר אחד בלבד
+
+LLM‑as‑judge שימושי לתשובות פתוחות שבהן אין תשובה נכונה דטרמיניסטית: “האם תגובה זו מועילה?”, “האם סיכום זה שומר על הנקודות המרכזיות?”, “האם ההסבר הזה נכון למתחיל?”
+
+השתמש בו במקרים כאלה. אל תשתמש בו לתשובות דטרמיניסטיות. כאשר אתה משתמש בו, הפוך את רובריקת ההערכה למפורשת:
+
+**Eval harness: שופט מבוסס רובריקה**
+
+```typescript
+async function judgeHelpfulness(
+  userQuery: string,
+  modelResponse: string
+): Promise<{ score: number; reasoning: string }> {
+  const judgePrompt = `
+You are evaluating a customer support response.
+
+User question: ${userQuery}
+Response: ${modelResponse}
+
+Rate the response on a scale of 1-5:
+5 = Directly answers the question with accurate, actionable information
+4 = Answers the question but could be more specific or actionable
+3 = Partially addresses the question; key information is missing
+2 = Tangentially related but doesn't answer the question
+1 = Off-topic, factually wrong, or harmful
+
+Respond with JSON: {"score": <number>, "reasoning": "<one sentence>"}
+`;
+
+  const result = await judgeModel.generate(judgePrompt);
+  return JSON.parse(result);
+}
+```
+
+רובריקה מפורשת מצמצמת שונות במעריך, מספקת פלט ניתן לפרשנות, ומקילה על ביקורת כאשר השופט טועה. ספריות כמו [Autoevals](https://github.com/braintrustdata/autoevals) ו‑[Braintrust](https://www.braintrust.dev/) מספקות רובריקות מוכנות למשימות נפוצות — כדאי לגנוב לפני שמבצעים כתיבה מאפס.
+
+---
+
+## כלים שכדאי לדעת
+
+אין צורך לבנות את כל זה מאפס. כמה כלים עשו התקדמות משמעותית בפתרון בעיית תשתית ההערכה:
+
+**[Braintrust](https://www.braintrust.dev/)** — פלטפורמת הערכה מלאה עם מעקב ניסויים, ניהול מערכי נתונים, ופונקציות דירוג. מארגנת הרצות הערכה לפי פרומפט, מודל ופריסה כך שניתן לראות שינוי באיכות לאורך זמן, ולא רק בין גרסאות. משתלבת היטב עם ספריית הקוד הפתוח **[Autoevals](https://github.com/braintrustdata/autoevals)** שלהם, שמספקת פונקציות דירוג מודל‑מדורג מוכנות למשימות נפוצות (דיוק עובדתיות, מועילות, רעילות, דמיון סמנטי).
+
+**[Langfuse](https://langfuse.com/)** — כלי קוד פתוח לצפייה במודלים LLM היושב בין האפליקציה שלך למודלים. מתעד כל קריאה, מצרף ציוני הערכה (אנושיים או אוטומטיים) לכל ספאן, ומציג מגמות איכות בתנועה של ייצור. בחירה טובה אם אתה רוצה צפייה והערכות באותו כלי ולא במערכת הערכה נפרדת.
+
+**[Evalite](https://www.evalite.dev/)** — מסגרת הערכה מקומית ב‑TypeScript מאת Matt Pocock. טקס מינימלי: מגדירים משימה, מגדירים מדורג, מריצים בתוך סביבת הבדיקות הקיימת שלך. מיועדת לצוותים שרוצים הערכות שמרגישות כמו בדיקות יחידה ולא פלטפורמת ניסוי ML נפרדת.
+
+**[promptfoo](https://www.promptfoo.dev/)** — כלי שורת פקודה שמריץ הערכות, מתמקד בהשוואת פרומפטים וב‑red‑teaming. קל לתצורה באמצעות YAML, משתלב עם רוב ספקי המודלים, ויש לו תמיכה מובנית בזיהוי הזרקת פרומפט וקלטים תוקפניים אחרים.
+
+**[deepeval](https://docs.confident-ai.com/)** — מסגרת הערכה ב‑Python עם ספרייה רחבה של מדדים מובנים (G‑Eval, אמינות RAG, רלוונטיות תשובה, גילוי הזיות). שימושית לצינוריות RAG שבהן נדרש דירוג ספציפי לאיכות האחזור, ולא רק לאיכות הייצור.
+
+הכלי המתאים תלוי בערימה שלך ובנקודת ההתחלה שלך. מה שחשוב יותר מבחירת המסגרת הוא המשמעת של הרצת הערכות בכלל — בעקביות, על כל שינוי משמעותי.
+
+---
+
+## החלק המטריד
+
+רוב הצוותים מדלגים על זה כי הוא שואל שאלה מעצבנת מוקדם: איך יראה “טוב” כאן?
+
+זו שאלה קשה באמת עבור תכונה AI חדשה. היא גם לא אופציונלית אם אתה מודאג מאמינות. צוותים שמשחררים AI אמין עושים בדיוק מה שהיו עושים עבור כל נתיב קוד קריטי: מגדירים התנהגות צפויה, בודקים אותה, ומריצים את הבדיקות באופן רציף.
+
+המדדים אינם משקרים. הם עונים על שאלה של מישהו אחר. הפסק לקרוא אותם כמפת דרכים למוצר והתחל לכתוב בדיקות שתואמות למערכת שלך.
+
+המשתמשים שלך יבחינו לפני שהדשבורדים שלך יעשו זאת. בנה את ערכת הבדיקות תחילה.

@@ -1,0 +1,462 @@
+---
+title: 'חידון: האם אתה באמת מבין סגירות ב‑JavaScript?'
+subTitle: רוב המפתחים חושבים שהם עושים זאת. רובם טועים.
+date: '2026-05-01'
+modified: '2026-05-05'
+tags:
+  - javascript
+  - closures
+  - quiz
+  - fundamentals
+  - scope
+  - advanced
+category: Quiz
+subCategory: JavaScript
+draft: true
+unlisted: true
+hidden: true
+publish: false
+popularity: 0.85
+social_image: ../desktop-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+<p class="inset">סגירות (Closures) הן אחד מהמושגים שכל מפתח JavaScript *חושב* שהוא מבין — עד לרגע שבו הוא מגלה שלא.</p>
+
+סגירות מופיעות במטפלים לאירועים, בפונקציות יצרן, ב‑React hooks, בתבניות מודול, ובכל מקום אחר כמעט. הן לא משהו נדיר. הן הבד של הקוד ב‑JavaScript.
+
+השאלות מתחילות ברמה סבירה ולאחר מכן מתחילות להסיר רצפות.
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="חימום"
+  title="מונה קלאסי"
+  options={[
+    {text: '0, 0, 0'},
+    {text: '0, 1, 2'},
+    {text: '1, 2, 3', isAnswer: true},
+    {text: 'ReferenceError'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה זה מדפיס?
+    ```javascript
+        function makeCounter() {
+          let count = 0;
+          return () => ++count;
+        }
+        const tick = makeCounter();
+        console.log(tick(), tick(), tick());
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `tick` סוגר על `count`. כל קריאה מגדילה ומחזירה את המשתנה *הזהה* `count`. שלוש הקריאות מפיקות `1, 2, 3`.
+
+    המילה החשובה: *זהה*. `count` לא מועתק לתוך הסגירה. הסגירה מחזיקה **התייחסות חיה** לקישור המשתנה. זה כל העניין.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="חימום"
+  title="סגירות נפרדות"
+  options={[
+    {text: '1, 1', isAnswer: true},
+    {text: '1, 2'},
+    {text: '2, 2'},
+    {text: '0, 0'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה זה מדפיס?
+    ```javascript
+        function makeCounter() {
+          let count = 0;
+          return () => ++count;
+        }
+        const a = makeCounter();
+        const b = makeCounter();
+        console.log(a(), b());
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    כל קריאה ל-`makeCounter()` יוצרת **הקשר ביצוע חדש** עם `count` טרי משלה. `a` ו-`b` סוגרים על *קישורים* שונים של `count`. הם לא חולקים מצב.
+
+    תוצאה: `1, 1`
+
+    זו הסיבה שסגירות משמשות לבניית מצב פרטי — כל "מופע" הוא עצמאי.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="המלכודת הקלאסית"
+  title="var בלולאה"
+  options={[
+    {text: '0, 1, 2, 3, 4'},
+    {text: '5, 5, 5, 5, 5', isAnswer: true},
+    {text: '1, 2, 3, 4, 5'},
+    {text: 'undefined x5'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה יודפס אחרי 100ms?
+    ```javascript
+        for (var i = 0; i < 5; i++) {
+          setTimeout(() => console.log(i), 100);
+        }
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `var` הוא בעל תחום פונקציונלי. יש בדיוק **אחד** `i` — כל חמשת הקולבקים סוגרים על אותה הצמדה. כאשר הטיימאוטים מתרחשים, הלולאה הסתיימה ו-`i` הוא `5`.
+
+    חמשה קולבקים. אחד `i`. ערך: `5`. מודפס חמש פעמים.
+
+    הפתרון הוא `let` (בעל תחום בלוק, צמד חדש בכל איטרציה) או עטיפה ב‑IIFE כדי ללכוד את הערך הנוכחי:
+    ```javascript
+        for (let i = 0; i < 5; i++) {
+          setTimeout(() => console.log(i), 100); // 0, 1, 2, 3, 4 ✓
+        }
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="המלכודת הקלאסית"
+  title="let פותר את זה (או לא?)"
+  options={[
+    {text: '0, 1, 2, 3, 4', isAnswer: true},
+    {text: '5, 5, 5, 5, 5'},
+    {text: '4, 4, 4, 4, 4'},
+    {text: 'ReferenceError: i is not defined'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    אותו לולאה, מילת מפתח שונה. מה יודפס?
+    ```javascript
+        for (let i = 0; i < 5; i++) {
+          setTimeout(() => console.log(i), 100);
+        }
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `let` בלולאת `for` הוא מיוחד. המפרט אומר: לכל איטרציה יש **קישור חדש** של `i`. זה כאילו שהלולאה עושה זאת בסתר:
+    ```javascript
+        { let i = 0; setTimeout(() => console.log(i), 100) }
+        { let i = 1; setTimeout(() => console.log(i), 100) }
+        // ...
+    ```
+    כך חמשת הקולבקים סוגרים על חמשת משתנים שונים. תוצאה: `0, 1, 2, 3, 4`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="סגירות ואובייקטים"
+  title="שינוי אובייקט"
+  options={[
+    {text: '{ x: 1 }, { x: 1 }'},
+    {text: '{ x: 1 }, { x: 99 }'},
+    {text: '{ x: 99 }, { x: 99 }', isAnswer: true},
+    {text: '{ x: 99 }, { x: 1 }'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה מודפס כאן?
+    ```javascript
+        function wrap() {
+          const obj = { x: 1 };
+          const getObj = () => obj;
+          obj.x = 99;
+          return getObj;
+        }
+        const get = wrap();
+        console.log(get(), get());
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    הסגירה תופסת את ה**binding** `obj`, ולא צילום של האובייקט. האובייקט עצמו משתנה אחרי שהסגירה נוצרה — אבל `obj` עדיין מצביע לאותו רפרנס. שני הקריאות מחזירות את אותו האובייקט המושתת: `{ x: 99 }`.
+
+    זה מפתיע אנשים שמניחים שסגירות "מקפיאות" ערכים. הן לא. הן תופסות **references**.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="מתקדם"
+  title="סגירה ישנה ב-React"
+  options={[
+    {text: 'מתעד את הספירה הנוכחית בכל לחיצה'},
+    {text: 'תמיד מתעד 0', isAnswer: true},
+    {text: 'מתעד NaN'},
+    {text: 'זה לא יקומפל'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    איזו התנהגות מציג הרכיב React הזה כאשר לוחצים על הכפתור מספר פעמים?
+    ```jsx
+        function Counter() {
+          const [count, setCount] = useState(0);
+
+          useEffect(() => {
+            const id = setInterval(() => {
+              console.log('count is', count);
+            }, 1000);
+            return () => clearInterval(id);
+          }, []); // empty deps
+
+          return <button onClick={() => setCount(c => c + 1)}>
+            Click ({count})
+          </button>;
+        }
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    סגירה ישנה קלאסית. ה-`useEffect` רץ פעם אחת (מערך תלות ריק) ויוצר אינטרוול שסוגר על `count` כפי שהיה בזמן ההרצה: `0`. לא משנה כמה פעמים תלחץ, הסגירה של האינטרוול לעולם לא רואה את הערך המעודכן.
+
+    תווית הכפתור מתעדכנת נכון — זה רינדור חדש. אבל `console.log` נלכד לעד ב-`0`.
+
+    תקן זאת על‑ידי הוספת `count` למערך התלות (יוצר אינטרוול מחדש) או באמצעות ref:
+    ```jsx
+        const countRef = useRef(count);
+        useEffect(() => { countRef.current = count; }, [count]);
+        // then use countRef.current inside the interval
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="מתקדם"
+  title="תבנית מודול"
+  options={[
+    {text: '60', isAnswer: true},
+    {text: 'TypeError: balance is not defined'},
+    {text: '-40'},
+    {text: '100'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    המתן — קרא בעיון. מה בעצם קורה?
+    ```javascript
+        const bank = (() => {
+          let balance = 0;
+          return {
+            deposit: (n) => (balance += n),
+            withdraw: (n) => (balance -= n),
+            getBalance: () => balance,
+          };
+        })();
+
+        bank.deposit(100);
+        bank.withdraw(40);
+        console.log(bank.getBalance());
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    התשובה היא `60`.
+
+    זו היא **תבנית מודול** — IIFE שמחזירה אובייקט של סגירות. כל שלוש השיטות סוגרות על אותה הצמדה של `balance`. היא באמת פרטית: אי אפשר לגשת ל-`balance` מבחוץ.
+    ```javascript
+        console.log(bank.balance); // undefined
+    ```
+    לפני מחלקות, זו הייתה *הדרך* לאגור מצב ב‑JavaScript. עדיין תראה זאת בקוד מורשת וספריות עזר.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="מומחה"
+  title="דליפת זיכרון בסגירה"
+  options={[
+    {text: 'הוא מדפיס את האורך של מערך הנתונים'},
+    {text: 'הוא יוצר דליפת זיכרון', isAnswer: true},
+    {text: 'הוא זורק RangeError'},
+    {text: 'שום דבר לא רגיל — זה בסדר'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה הבעיה בקוד הזה?
+    ```javascript
+        function attachHandler(element) {
+          const data = new Array(100_000).fill('🔥');
+          element.addEventListener('click', () => {
+            console.log('clicked!', data.length);
+          });
+        }
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    המאזין לאירוע סוגר על `data`, ולכן המערך נשאר נגיש כל עוד המאזין נגיש. אם `element` חי זמן רב והמאזין אף פעם לא מוסר, המערך הגדול נשמר גם הוא.
+
+    `element` נמצא ב‑DOM. המאזין מחזיק ב‑`data`. ה‑GC לא יכול לאסוף אותו.
+
+    פתרון: אל תתפס נתונים גדולים במאזינים ארוכי‑חיים אלא אם באמת צריך, והסר מאזינים כאשר ממשק המשתמש שבבעלותם מתפרק:
+    ```javascript
+        function attachHandler(element) {
+          const data = new Array(100_000).fill('🔥');
+          // do something with data...
+
+          const onClick = () => {
+            console.log('clicked!');
+          };
+
+          element.addEventListener('click', onClick);
+          return () => element.removeEventListener('click', onClick);
+        }
+    ```
+    V8 מודרני משפר את ההתמודדות עם זה לעומת בעבר. אבל באפליקציות SPA ארוכות‑חיים עם הרבה מאזיני אירועים, תבנית זו עדיין גורמת לבעיות.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="מומחה"
+  title="מלכודת ה‑this"
+  options={[
+    {text: 'Dan, Dan'},
+    {text: 'Dan, undefined'},
+    {text: 'undefined, Dan'},
+    {text: 'undefined, undefined', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה מודפס?
+    ```javascript
+        const user = {
+          name: 'Dan',
+          greetArrow: () => console.log(this?.name),
+          greetRegular() {
+            const inner = () => console.log(this?.name);
+            inner();
+          },
+        };
+
+        user.greetArrow();
+        const fn = user.greetRegular;
+        fn();
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    שתי מלכודות עדינות:
+
+    **`greetArrow`**: פונקציות חץ אין להן `this` משלהן. הן לוכדות את `this` מההקשר הלקסי הסביבתי — כאן זה תחום המודול/הגלובלי, ולא `user`. ולכן `this?.name` הוא `undefined`.
+
+    **`fn()`**: `greetRegular` נקראת ללא מקבל (`fn()` ולא `user.greetRegular()`). במצב strict, `this` הוא `undefined`. במצב sloppy, זה האובייקט הגלובלי. בכל מקרה, `this?.name` הוא `undefined`.
+
+    אם היית קורא ישירות `user.greetRegular()` היית מקבל `'Dan'` — כי אז `this` קשור ל‑`user`.
+
+    תוצאה: `undefined, undefined`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="בונוס"
+  title="זיכרון באמצעות סגירה"
+  options={[
+    {text: 'קורא ל‑`expensive()` 3 פעמים'},
+    {text: 'קורא ל‑`expensive()` פעם אחת', isAnswer: true},
+    {text: 'קורא ל‑`expensive()` 2 פעמים'},
+    {text: 'זורק: חריגה מרבית של ערימת קריאות'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    כמה פעמים בפועל נקראת הפונקציה `expensive()`?
+    ```javascript
+        function memoize(fn) {
+          const cache = new Map();
+          return (arg) => {
+            if (cache.has(arg)) return cache.get(arg);
+            const result = fn(arg);
+            cache.set(arg, result);
+            return result;
+          };
+        }
+
+        let calls = 0;
+        const expensive = (n) => { calls++; return n * 2; };
+        const fast = memoize(expensive);
+
+        fast(5);
+        fast(5);
+        fast(5);
+        console.log(calls);
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    הפונקציה הממוזגת סוגרת על `cache`. הקריאה הראשונה (`fast(5)`) מחמיצה את המטמון, קוראת ל‑`expensive` ושומרת את התוצאה. הקריאות השנייה והשלישית פוגעות במטמון ומחזירות מיד.
+
+    `calls` הוא `1`.
+
+    זה סגירות שעושות עבודה אמיתית. `cache` פרטית (לא ניתן לגשת אליה מחוץ ל‑`memoize`), מתמשכת (חיה כל עוד `fast` קיימת), ומשותפת לכל הקריאות ל‑`fast`.
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+
+איך הלך?
+
+- **9‑10**: אתה באמת מבין סגירות. כנראה מפחיד לשתף בתכנות זוגי.
+- **6‑8**: חזק. שאלות הסגירה ה„stale“ / `this` הקשו עליך, וזה לגמרי הגיוני.
+- **3‑5**: אתה יודע את הקונספט, אבל הקצוות מטושטשים. קרא את תיעוד שרשרת ההקשר (scope chain) ב‑MDN.
+- **0‑2**: חשבת שאתה יודע סגירות. עכשיו אתה באמת יודע. זה הכוונה.
+
+הסגירה ה‑stale ב‑React (שאלה #6) והמלכודת של `this` (שאלה #8) הן אלו שגורמות לבאגים אמיתיים במוצרים. אם הן הרגישו לך לא מוכרות, כדאי לחזור אליהן — הן מופיעות בביקורות קוד יותר מכל בעיית סגירה אחרת.

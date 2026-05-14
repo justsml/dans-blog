@@ -21,6 +21,7 @@ import {
   isOutOfCreditError,
   recordOutOfCreditIssue,
 } from "./out-of-credit.ts";
+import { getLengthValidationGuidance } from "./localized-mdx.ts";
 
 type JudgeSuggestion = {
   priority: "low" | "medium" | "high";
@@ -677,7 +678,7 @@ function getPrimaryJudgePrompt(candidateSummary: string, candidates: CandidateRe
       ? `Use ${selectedCommit} as the selected candidate unless it is structurally broken and it is selectable in this comparison.`
       : "Choose the best selectable candidate by technical accuracy, natural language quality, Dan's direct style, and MDX preservation.",
     `The final MDX must preserve the English file's per-level heading counts: same number of H1, H2, H3, H4, H5, and H6 headings. Translate heading text, but do not add, remove, promote, or demote headings.`,
-    `The final translated body must be longer than 600 characters and within 35% of the English body length.`,
+    getLengthValidationGuidance(locale),
     `Candidate MDX contents are attached below; do not ask to run git show.`,
     `Return the selected candidate id in selectedCommit. Use "current" only if the <current> pre-existing translation is best and selectable.`,
     `Return any exact medium/high-priority fixes as suggestions. The wrapper script writes ${targetRelPath} and judge reports.`,

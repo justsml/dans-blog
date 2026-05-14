@@ -1,0 +1,84 @@
+{
+  "runId": "openai-gpt-oss-120b-nitro@2026-05-13T23-28-10-717Z",
+  "slug": "stop-hardcoding-your-prompts",
+  "locale": "zh",
+  "model": "openai/gpt-oss-120b:nitro",
+  "modelPath": "openai-gpt-oss-120b-nitro",
+  "createdAt": "2026-05-13T23:28:19.704Z",
+  "sourcePath": "src/content/posts/2026-05-07--stop-hardcoding-your-prompts/index.mdx",
+  "targetPath": "src/content/posts/2026-05-07--stop-hardcoding-your-prompts/zh/index.mdx",
+  "candidatePath": "reports/i18n/stop-hardcoding-your-prompts/zh/openai-gpt-oss-120b-nitro/2026-05-13T23-28-10-717Z/candidate.mdx",
+  "sourceHash": "33ae6a35f2ff3387543fa0c1a51d8fcd437bb76314cd5422f314ec4f9632700e",
+  "outputHash": "b4a09548438608103195e8de5f239cf8619be1dbcd49e2781295fff3a0f7e9bb",
+  "reasoningEffort": "low",
+  "temperature": 0.3,
+  "maxTokens": 16000,
+  "timeoutMs": 200000,
+  "articleSummary": "**Summary**  \nThe article argues that embedding LLM prompts as raw string literals inside application code is a hidden, brittle form of configuration that leads to maintenance, testing, and security problems. It frames prompts as “system architecture” and warns that unchecked string interpolation creates prompt‑injection vulnerabilities analogous to SQL injection. To fix this, the author proposes three concrete patterns aimed at developers: (1) **Typed Prompt Templates** – define a schema (e.g., with Zod) for all prompt variables, validate them, and generate the prompt in a single, testable function; (2) **Composable Prompt Sections** – break a prompt into named, prioritized chunks that can be conditionally assembled, making each piece discoverable and unit‑testable; (3) **Separate Instructions From Data** – use the chat‑message format (system/user roles) instead of a monolithic string, keeping model instructions distinct from user‑supplied content to mitigate injection. The tone is a pragmatic, slightly rant‑like tutorial aimed at software engineers building LLM‑powered products, using the metaphor of “buried prompts” as invisible load‑bearing code.",
+  "totalInputTokens": 7595,
+  "totalOutputTokens": 2873,
+  "totalCacheReadTokens": 1536,
+  "totalCacheWriteTokens": 0,
+  "totalDurationMs": 7571,
+  "totalCostUsd": 0.000813345,
+  "pricingSource": "local-openrouter-estimate",
+  "telemetry": {
+    "model": "openai/gpt-oss-120b:nitro",
+    "chunkSize": "10p",
+    "totalChunks": 5,
+    "totalInputTokens": 7595,
+    "totalOutputTokens": 2873,
+    "totalCacheReadTokens": 1536,
+    "totalCacheWriteTokens": 0,
+    "totalDurationMs": 7571,
+    "totalCostUsd": 0.000813345,
+    "pricingSource": "local-openrouter-estimate",
+    "chunks": [
+      {
+        "index": 0,
+        "inputTokens": 1227,
+        "outputTokens": 378,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 1339,
+        "costUsd": 0.00011589300000000001
+      },
+      {
+        "index": 1,
+        "inputTokens": 1503,
+        "outputTokens": 475,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 1174,
+        "costUsd": 0.00014411699999999998
+      },
+      {
+        "index": 2,
+        "inputTokens": 1873,
+        "outputTokens": 1029,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 2465,
+        "costUsd": 0.000258267
+      },
+      {
+        "index": 3,
+        "inputTokens": 1572,
+        "outputTokens": 492,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 1345,
+        "costUsd": 0.000149868
+      },
+      {
+        "index": 4,
+        "inputTokens": 1420,
+        "outputTokens": 499,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 1248,
+        "costUsd": 0.0001452
+      }
+    ]
+  }
+}

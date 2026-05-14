@@ -1,0 +1,47 @@
+{
+  "index": 8,
+  "attempt": 1,
+  "originalTitle": "The this Trap",
+  "translatedTitle": "מלכודת ה‑this",
+  "translation": {
+    "title": "מלכודת ה‑this",
+    "group": "מומחה",
+    "options": [
+      {
+        "text": "Dan, Dan"
+      },
+      {
+        "text": "Dan, undefined"
+      },
+      {
+        "text": "undefined, Dan"
+      },
+      {
+        "text": "undefined, undefined"
+      }
+    ],
+    "questionProse": [
+      "מה מודפס?"
+    ],
+    "explanationProse": [
+      "שתי מלכודות עדינות:\n\n    **`greetArrow`**: פונקציות חץ אין להן `this` משלהן. הן לוכדות את `this` מההקשר הלקסי הסביבתי — כאן זה תחום המודול/הגלובלי, ולא `user`. ולכן `this?.name` הוא `undefined`.\n\n    **`fn()`**: `greetRegular` נקראת ללא מקבל (`fn()` ולא `user.greetRegular()`). במצב strict, `this` הוא `undefined`. במצב sloppy, זה האובייקט הגלובלי. בכל מקרה, `this?.name` הוא `undefined`.\n\n    אם היית קורא ישירות `user.greetRegular()` היית מקבל `'Dan'` — כי אז `this` קשור ל‑`user`.\n\n    תוצאה: `undefined, undefined`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"מלכודת ה‑this\",\n  \"group\": \"מומחה\",\n  \"options\": [\n    {\n      \"text\": \"Dan, Dan\"\n    },\n    {\n      \"text\": \"Dan, undefined\"\n    },\n    {\n      \"text\": \"undefined, Dan\"\n    },\n    {\n      \"text\": \"undefined, undefined\"\n    }\n  ],\n  \"questionProse\": [\n    \"מה מודפס?\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"javascript\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"explanationProse\": [\n    \"שתי מלכודות עדינות:\\n\\n    **`greetArrow`**: פונקציות חץ אין להן `this` משלהן. הן לוכדות את `this` מההקשר הלקסי הסביבתי — כאן זה תחום המודול/הגלובלי, ולא `user`. ולכן `this?.name` הוא `undefined`.\\n\\n    **`fn()`**: `greetRegular` נקראת ללא מקבל (`fn()` ולא `user.greetRegular()`). במצב strict, `this` הוא `undefined`. במצב sloppy, זה האובייקט הגלובלי. בכל מקרה, `this?.name` הוא `undefined`.\\n\\n    אם היית קורא ישירות `user.greetRegular()` היית מקבל `'Dan'` — כי אז `this` קשור ל‑`user`.\\n\\n    תוצאה: `undefined, undefined`.\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 906,
+    "outputTokens": 865,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 3817,
+    "providerCostUsd": 0.0006357,
+    "providerUpstreamCostUsd": 0.0006357,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000035334,
+    "outputUsd": 0.0001557,
+    "totalUsd": 0.00019103399999999997,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

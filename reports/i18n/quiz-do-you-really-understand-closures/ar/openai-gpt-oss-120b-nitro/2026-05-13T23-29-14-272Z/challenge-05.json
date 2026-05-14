@@ -1,0 +1,47 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Object Mutation",
+  "translatedTitle": "تعديل الكائن",
+  "translation": {
+    "title": "تعديل الكائن",
+    "group": "الإغلاقات والكائنات",
+    "options": [
+      {
+        "text": "{ x: 1 }, { x: 1 }"
+      },
+      {
+        "text": "{ x: 1 }, { x: 99 }"
+      },
+      {
+        "text": "{ x: 99 }, { x: 99 }"
+      },
+      {
+        "text": "{ x: 99 }, { x: 1 }"
+      }
+    ],
+    "questionProse": [
+      "ماذا يسجل هذا؟"
+    ],
+    "explanationProse": [
+      "الإغلاق يلتقط **الربط** `obj`، وليس نسخة ثابتة من الكائن. يتم تعديل الكائن نفسه بعد إنشاء الإغلاق — لكن `obj` لا يزال يشير إلى نفس المرجع. كلا الاستدعائين يعيدان نفس الكائن المعدل: `{ x: 99 }`.\n\n    هذا يُفاجئ الأشخاص الذين يظنون أن الإغلاقات \"تجمّد\" القيم. فهي لا تفعل ذلك. إنها تلتقط **المراجع**."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"تعديل الكائن\",\n  \"group\": \"الإغلاقات والكائنات\",\n  \"options\": [\n    {\n      \"text\": \"{ x: 1 }, { x: 1 }\"\n    },\n    {\n      \"text\": \"{ x: 1 }, { x: 99 }\"\n    },\n    {\n      \"text\": \"{ x: 99 }, { x: 99 }\"\n    },\n    {\n      \"text\": \"{ x: 99 }, { x: 1 }\"\n    }\n  ],\n  \"questionProse\": [\n    \"ماذا يسجل هذا؟\"\n  ],\n  \"explanationProse\": [\n    \"الإغلاق يلتقط **الربط** `obj`، وليس نسخة ثابتة من الكائن. يتم تعديل الكائن نفسه بعد إنشاء الإغلاق — لكن `obj` لا يزال يشير إلى نفس المرجع. كلا الاستدعائين يعيدان نفس الكائن المعدل: `{ x: 99 }`.\\n\\n    هذا يُفاجئ الأشخاص الذين يظنون أن الإغلاقات \\\"تجمّد\\\" القيم. فهي لا تفعل ذلك. إنها تلتقط **المراجع**.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 880,
+    "outputTokens": 623,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 1781,
+    "providerCostUsd": 0.0004866,
+    "providerUpstreamCostUsd": 0.0004866,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00003432,
+    "outputUsd": 0.00011214,
+    "totalUsd": 0.00014646,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

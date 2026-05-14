@@ -1,0 +1,186 @@
+---
+title: 在 Transformers.js 中实现束搜索
+subTitle: 千行代码、数月等待，深入文本生成内部实现
+date: '2026-04-16'
+modified: '2026-04-16'
+tags:
+  - ai
+  - transformers
+  - javascript
+  - open-source
+  - nlp
+  - beam-search
+  - machine-learning
+category: AI
+subCategory: Open Source
+draft: true
+hidden: true
+publish: false
+popularity: 0.7
+social_image: ../desktop-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+> CW: 本文包含技术术语。如果你一听到 `softmax` 或 `log probs` 就想让 Max 停止他的 `probs`，可以跳过此文。
+
+---
+
+## 问题：`num_beams` 是个假象
+
+在 `transformers.js` 的生成循环深处，长期存在这样一行注释：
+
+```js
+// TODO: Support beam search
+```
+
+紧接其下还有一个 `break` 语句，在第一个 token 后悄然退出循环。所有配置了 `num_beams > 1` 的模型——T5、BART、Whisper——实际上都在使用贪婪解码。没有警告，没有错误，只有……错误的输出。
+
+我在测试摘要管线时发现输出质量远低于 Python 参考实现，追踪到 `modeling_utils.js`，看到这条 TODO，误以为“这事儿应该不难”。  
+
+答案是：相当棘手，但也很有意思。
+
+---
+
+## 实际的 Beam Search 是什么
+
+谁没有…
+
+贪婪解码在每一步都选取概率最高的 token。简单、快速，但常常次优——你嘴里说出的第一个词未必是句子的最佳开头。
+
+束搜索（beam search）则同时保留 `num_beams` 条候选序列，在每一步用完整词表对每条序列进行扩展，然后根据累计对数概率剪枝回 `num_beams` 条最优序列。这相当于在 token 空间中进行一次受限的广度优先搜索。
+
+结果是全局更优的序列，代价是计算量提升到 `num_beams` 倍。
+
+束搜索有三种变体：
+
+- **标准束搜索** — 确定性，取 argmax 候选，得到整体最优序列  
+- **多样化束搜索** — 将束划分为若干组，对已被前组选中的 token 施加惩罚，防止所有输出候选都说同样的话  
+- **束采样** — 随机性，在束框架内使用 top‑k + softmax + 随机抽样
+
+这三种实现已经全部合入 PR。
+
+---
+
+## 我真正纠结的架构决策
+
+现有代码库中有一个 `BeamSearchSampler` 类，看起来很相关。但它隐藏着一个细微的陷阱：它只返回每个束的前 `num_beams` 个 token。表面上看似合理，却不足以支撑真正的束搜索。
+
+完整的束搜索必须在每个 batch 项上考虑 **所有 `num_beams × vocab_size` 候选**，才能找到全局最优的续写。不能仅在各束内部独立挑选前 few 个 token——必须在所有束之间统一排序。
+
+于是我直接绕过了现有的采样器。对处理后的 logits 直接计算 `log_softmax`，加入累计的束分数，然后在合并后的候选空间上进行两层排序。数学更简洁，语义也正确。
+
+`BeamSearchSampler` 类仍然保留，未动，仍然对它原本的用途有价值。这类情况常见：表面上“显而易见”的复用路径会把你带入错误的实现。
+
+---
+
+## 最让人头疼的 bug：KV 缓存重排
+
+在束搜索裁剪序列时，它不仅仅是截断 token——还会 **重排** 哪些束存活。比如束 3 产生了最佳续写并被克隆；而束 0 和束 2 可能被丢弃。
+
+问题在于，Transformer 注意力机制的键值缓存是按 batch 维度（即束）索引的。如果在重排输出序列时没有同步重排缓存，就会出现状态错位，模型会在错误的历史上进行注意。
+
+修复方法是实现 `_reorder_cache()` —— 该方法对每个过去的键值张量调用 `index_select`，按照新的束顺序重新索引，然后释放陈旧的张量。
+
+在 CPU 上这很直接：按行切片 TypedArray。GPU 张量则更麻烦——需要异步下载数据 (`ort_tensor.getData(true)`)，完成重排后再重新上传。我在 `tensor.js` 中同时加入了 `index_select`（同步、CPU）和 `index_select_async`（异步、GPU）以兼容两条路径。
+
+Encoder‑decoder 模型（如 T5、BART）拥有 **两个** 缓存：编码器和解码器。编码器的 PKV 在解码期间保持不变，直接透传即可。只有解码器的 PKV 需要重排。若把这一区别弄错，会产生非常糟糕且微妙的输出——看起来几乎正确，直到与参考结果对比才发现问题。
+
+## 多样化束搜索：好玩的一环
+
+多样化束搜索会加入 `diversity_penalty`，用来抑制后面的束组选择已经被前面组选过的 token。直观上讲：如果所有束都收敛到同一个输出，你根本没有真正探索假设空间。
+
+在实现上，必须在每个解码步 **顺序** 处理各个组，而不是并行，因为每个组在计算自身得分前，需要看到前面组已经选出的 token。
+
+我最终的代码结构是：
+
+```
+for each step:
+  token_counts = {}
+  for each group in groups:
+    extract this group's beams and logits
+    for each token selected by previous groups:
+      logits[token] -= diversity_penalty * token_counts[token]
+    score candidates, select top 2×group_size
+    group_scorer.process(...)
+    record newly selected tokens into token_counts
+```
+
+这里的顺序依赖是真实存在的。如果并行化，就会失去多样性保证。我曾一度想把它批处理，却是个错误的想法。
+
+---
+
+## `BeamHypotheses` 优先队列
+
+当某束在达到 `max_length` 前碰到 EOS token 时，它算是“完成”——但不能直接丢弃或立刻返回。需要把它加入一个有界的优先队列，称为 `BeamHypotheses`。
+
+队列会为每个 batch 项保留至多 `num_beams` 条已完成的序列，评分方式为：
+
+```
+score = sum_logprobs / (length ^ length_penalty)
+```
+
+`length_penalty > 1.0` 会奖励更长的输出，`< 1.0` 则奖励更短。`early_stopping` 标志决定何时认为束已完成：队列满时即结束 (`true`)、永不结束直至 `max_length` (`"never"`)，或在没有剩余束能够超越最差已完成假设时结束 (`false`)。
+
+`false` 情况是关键——它需要跟踪是否仍有任何活跃的束能够在考虑到最大可能剩余得分的情况下超越当前最差的假设。这是一种剪枝优化，能够在已经得到足够好的假设时避免继续跑到 `max_length`。
+
+相关实现位于 `beam_search.js`，新建文件，总计约 240 行。同时导出 `BeamSearchScorer`，该类在整个 batch 中管理 `BeamHypotheses` 实例并处理 `finalize()`。
+
+---
+
+## 对标 Python 参考实现的测试
+
+这里的每一项非平凡实现细节在 HuggingFace 的 `transformers` 库中都有对应的 Python 实现，我大量参考了它们。
+
+我新增的测试套件覆盖了：
+
+- 编码器‑解码器（T5）和仅解码器（类 LLaMA）上的标准束搜索
+- 使用 `num_beam_groups=2, diversity_penalty=0.5` 的多样化束搜索
+- 使用 `do_sample=true, top_k=10` 的束采样
+- `num_return_sequences > 1` —— 验证输出形状为 `[N, seq_len]`
+- 对不兼容组合的正确错误抛出：CFG + 束搜索、流式 + 束搜索、`num_return_sequences > num_beams`
+
+“正确错误抛出”的测试常被低估。它们记录了有意的限制，并防止在尝试组合不可共存的特性时悄然得到错误输出。（我在开发时曾尝试把 CFG 与束搜索混用，数学上行不通。现在会直接抛异常。）
+
+---
+
+## 仍未实现的内容
+
+我有意省略了一些内容，并用 `throws` 标记：
+
+- **多样化束采样**（`num_beam_groups > 1` + `do_sample`）：这里的数学真的相当复杂。标准的多样化束搜索在各组之间是顺序进行的；在此基础上加入采样，需要仔细考虑在随机模式下如何施加多样性惩罚。它是可实现的，只是我没有实现。
+- **流式 + 束搜索**：流式会在 token 生成时立即输出。束搜索本质上要等到多步后才能判断哪个序列最优。这两者在根本上存在冲突。可以实时输出当前最佳束，但那是另一个功能，涉及不同的设计问题。
+
+---
+
+## 没人提及的部分：开源延迟
+
+代码能跑，测试通过，现有测试套件保持干净。它已经在审查中搁置了数月。
+
+这正是大型、热门开源项目的常态。Hugging Face 团队迭代迅速，issue 队列庞大，而一个约 1,000 行、涉及核心生成循环的特性 PR 需要非 trivial 的审查投入。他们在评论中响应及时，真正投入精力审阅时也很积极。我并不是在抱怨——只是记录事实。
+
+如果你正在为大型 OSS 项目贡献代码并期待快速合并：请调整预期。几个月的等待对这种规模的改动来说是正常的。代码在你的 fork 上始终可以正常运行。
+
+---
+
+## 我真正收获的东西
+
+一些之前没有的收获：
+
+1. **对束搜索的真实心智模型**——不是教材上的理想化版本，而是包含边缘情况的实现。KV 缓存如何失效。两层排序为何重要。`length_penalty` 实际上对得分的影响到底是什么。
+
+2. **对 JavaScript 中 TypedArray 数学的更深体会**——在 CPU TypedArray 上实现 `index_select` 属于底层操作，这在日常 Web 开发中很少碰到。它能工作，但这并非 JavaScript 设计的初衷，使用时会有这种感受。
+
+3. **对 Python 参考实现的重新敬重**。HuggingFace 的 `transformers` 库庞大且有时相当复杂，但束搜索的逻辑注释完善，设计决策也十分明确。阅读源码是最快弄清我到底该实现什么的途径。
+
+4. **一个已在野外的补丁**——即使尚未合并，它已经存在、可用，且用户可以直接从 PR 分支获取使用。这已经足够。
+
+最初触发此事的 TODO 注释已经在我的 fork 中被移除。以一种安静、极客的方式，这让人感到满足。
+
+如果你在 JavaScript 中进行 seq2seq 开发并且想要现在就使用真正的束搜索，[该 PR 已公开](https://github.com/huggingface/transformers.js/pull/1539)。
+
+---
+
+¹ 是的，我知道 `num_beams=1` 只等同于贪婪搜索。退化情况是有明确定义的。
+
+² 仅编码器模型（如 BERT 等）根本不生成 token，因此上述内容不适用于它们。它们只是“氛围”。

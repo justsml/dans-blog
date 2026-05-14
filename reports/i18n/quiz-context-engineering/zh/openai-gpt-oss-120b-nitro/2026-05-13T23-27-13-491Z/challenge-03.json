@@ -1,0 +1,47 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "Role of the System Prompt",
+  "translatedTitle": "系统提示的作用",
+  "translation": {
+    "title": "系统提示的作用",
+    "group": "基础",
+    "options": [
+      {
+        "text": "它会先被处理，并且比用户消息权重更高"
+      },
+      {
+        "text": "它与用户消息相同，只是显示方式不同"
+      },
+      {
+        "text": "它仅用于 API 调用，而不适用于聊天界面"
+      },
+      {
+        "text": "它在会话之间持久存在，充当长期记忆"
+      }
+    ],
+    "questionProse": [
+      "在 messages 数组中使用 `system` 角色与 `user` 角色的实际效果是什么？"
+    ],
+    "explanationProse": [
+      "`system` 角色被视为更高优先级的指令。模型在训练时会赋予它比用户消息更大的权重——它是“开发者说了什么”和“用户说了什么”之间的架构边界。\n\n它并非魔法。它不能保证模型忽略冲突的用户指令（参见：prompt injection）。但它确实显著提升模型遵循你的指令的倾向，尤其是在指令遵循能力强的模型上。\n\n实践中：把你的角色设定、规则和行为约束放在 `system` 中。把检索到的上下文和用户数据放在 `user` 中。绝不要把用户可控的输入放进 `system`。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"系统提示的作用\",\n  \"group\": \"基础\",\n  \"options\": [\n    {\n      \"text\": \"它会先被处理，并且比用户消息权重更高\"\n    },\n    {\n      \"text\": \"它与用户消息相同，只是显示方式不同\"\n    },\n    {\n      \"text\": \"它仅用于 API 调用，而不适用于聊天界面\"\n    },\n    {\n      \"text\": \"它在会话之间持久存在，充当长期记忆\"\n    }\n  ],\n  \"questionProse\": [\n    \"在 messages 数组中使用 `system` 角色与 `user` 角色的实际效果是什么？\"\n  ],\n  \"explanationProse\": [\n    \"`system` 角色被视为更高优先级的指令。模型在训练时会赋予它比用户消息更大的权重——它是“开发者说了什么”和“用户说了什么”之间的架构边界。\\n\\n它并非魔法。它不能保证模型忽略冲突的用户指令（参见：prompt injection）。但它确实显著提升模型遵循你的指令的倾向，尤其是在指令遵循能力强的模型上。\\n\\n实践中：把你的角色设定、规则和行为约束放在 `system` 中。把检索到的上下文和用户数据放在 `user` 中。绝不要把用户可控的输入放进 `system`。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 906,
+    "outputTokens": 904,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 747,
+    "providerCostUsd": 0.0009951,
+    "providerUpstreamCostUsd": 0.0009951,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000035334,
+    "outputUsd": 0.00016272,
+    "totalUsd": 0.00019805399999999997,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

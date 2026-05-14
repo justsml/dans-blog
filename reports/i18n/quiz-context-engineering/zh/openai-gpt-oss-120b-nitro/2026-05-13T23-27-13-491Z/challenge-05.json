@@ -1,0 +1,47 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Chunking Strategy",
+  "translatedTitle": "分块策略",
+  "translation": {
+    "title": "分块策略",
+    "group": "检索",
+    "options": [
+      {
+        "text": "使用上下文窗口允许的最大块大小"
+      },
+      {
+        "text": "始终使用 512 token — 它\\"
+      },
+      {
+        "text": "使用与内容结构匹配的重叠块"
+      },
+      {
+        "text": "块大小不\\"
+      }
+    ],
+    "questionProse": [
+      "在对 RAG 文档进行分块时，最重要的原则是什么？"
+    ],
+    "explanationProse": [
+      "没有通用的正确块大小——它取决于你的内容。重要的原则是：\n\n    1. **匹配你的内容结构。** FAQ 页面在 Q&A 级别分块效果好。法律文档在条款级别分块效果好。代码在函数级别分块效果好。\n    2. **使用重叠。** 一个 512 token 的块，在每侧有 64 token 的重叠，意味着跨越边界的答案仍然会被检索到。\n    3. **进行测量。** 构建评估集并测试多种块大小。块大小比嵌入模型更重要。\n\n    \"512 tokens\" 是一个合理的起点，而不是法律。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"分块策略\",\n  \"group\": \"检索\",\n  \"options\": [\n    {\n      \"text\": \"使用上下文窗口允许的最大块大小\"\n    },\n    {\n      \"text\": \"始终使用 512 token — 它\\\\\"\n    },\n    {\n      \"text\": \"使用与内容结构匹配的重叠块\"\n    },\n    {\n      \"text\": \"块大小不\\\\\"\n    }\n  ],\n  \"questionProse\": [\n    \"在对 RAG 文档进行分块时，最重要的原则是什么？\"\n  ],\n  \"explanationProse\": [\n    \"没有通用的正确块大小——它取决于你的内容。重要的原则是：\\n\\n    1. **匹配你的内容结构。** FAQ 页面在 Q&A 级别分块效果好。法律文档在条款级别分块效果好。代码在函数级别分块效果好。\\n    2. **使用重叠。** 一个 512 token 的块，在每侧有 64 token 的重叠，意味着跨越边界的答案仍然会被检索到。\\n    3. **进行测量。** 构建评估集并测试多种块大小。块大小比嵌入模型更重要。\\n\\n    \\\"512 tokens\\\" 是一个合理的起点，而不是法律。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 895,
+    "outputTokens": 841,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 790,
+    "providerCostUsd": 0.000944,
+    "providerUpstreamCostUsd": 0.000944,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000034905,
+    "outputUsd": 0.00015137999999999998,
+    "totalUsd": 0.00018628499999999998,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "index": 6,
+  "attempt": 1,
+  "originalTitle": "Module Pattern",
+  "translatedTitle": "模块模式",
+  "translation": {
+    "title": "模块模式",
+    "group": "高级",
+    "options": [
+      {
+        "text": "60"
+      },
+      {
+        "text": "TypeError: balance is not defined"
+      },
+      {
+        "text": "-40"
+      },
+      {
+        "text": "100"
+      }
+    ],
+    "questionProse": [
+      "等等——仔细阅读。实际会发生什么？"
+    ],
+    "explanationProse": [
+      "答案是 `60`。\n\n    这就是 **模块模式** —— 一个返回闭包对象的 IIFE。所有三个方法都闭包了同一个 `balance` 绑定。它是真正私有的：你无法从外部访问 `balance`。",
+      "在 class 出现之前，这就是 *唯一* 在 JavaScript 中封装状态的方式。你仍然会在旧代码库和工具库中看到它。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"模块模式\",\n  \"group\": \"高级\",\n  \"options\": [\n    {\n      \"text\": \"60\"\n    },\n    {\n      \"text\": \"TypeError: balance is not defined\"\n    },\n    {\n      \"text\": \"-40\"\n    },\n    {\n      \"text\": \"100\"\n    }\n  ],\n  \"questionProse\": [\n    \"等等——仔细阅读。实际会发生什么？\"\n  ],\n  \"explanationProse\": [\n    \"答案是 `60`。\\n\\n    这就是 **模块模式** —— 一个返回闭包对象的 IIFE。所有三个方法都闭包了同一个 `balance` 绑定。它是真正私有的：你无法从外部访问 `balance`。\",\n    \"在 class 出现之前，这就是 *唯一* 在 JavaScript 中封装状态的方式。你仍然会在旧代码库和工具库中看到它。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 880,
+    "outputTokens": 561,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2201,
+    "providerCostUsd": 0.0004686,
+    "providerUpstreamCostUsd": 0.0004686,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000034320000000000003,
+    "outputUsd": 0.00010097999999999999,
+    "totalUsd": 0.00013529999999999998,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

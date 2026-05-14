@@ -1,0 +1,102 @@
+{
+  "runId": "openai-gpt-oss-120b-nitro@2026-05-13T23-30-50-358Z",
+  "slug": "beam-search-transformers-js",
+  "locale": "he",
+  "model": "openai/gpt-oss-120b:nitro",
+  "modelPath": "openai-gpt-oss-120b-nitro",
+  "createdAt": "2026-05-13T23:31:02.140Z",
+  "sourcePath": "src/content/posts/2026-04-16--beam-search-transformers-js/index.mdx",
+  "targetPath": "src/content/posts/2026-04-16--beam-search-transformers-js/he/index.mdx",
+  "candidatePath": "reports/i18n/beam-search-transformers-js/he/openai-gpt-oss-120b-nitro/2026-05-13T23-30-50-358Z/candidate.mdx",
+  "sourceHash": "f18620b582f1c2a340c4b7d98da5cb544cd646463534f4076975963727af3149",
+  "outputHash": "f250723c76c7f24772f1d1a906706fb2751dfbb3544898fcbdce34130ef9d58a",
+  "reasoningEffort": "low",
+  "temperature": 0.3,
+  "maxTokens": 16000,
+  "timeoutMs": 200000,
+  "articleSummary": "The article argues that `transformers.js` has been silently falling back to greedy decoding because its `num_beams` parameter was never actually supported, and it walks the reader through a full implementation of true beam search—including standard, diverse, and sampling variants—to bring the library in line with the Python reference. It details the core technical challenges: correctly handling the `num_beams × vocab_size` candidate space, reordering the transformer’s key‑value cache after each pruning step, and managing completed hypotheses with a priority queue and length penalty. The piece is written as a hands‑on tutorial, peppered with informal metaphors (e.g., “breadth‑first search through token space,” “the first word you say isn’t always the best start”) to keep the tone conversational while remaining technically rigorous. The intended audience is JavaScript developers familiar with transformer models who need to extend or debug generation code in `transformers.js`.",
+  "totalInputTokens": 9507,
+  "totalOutputTokens": 3360,
+  "totalCacheReadTokens": 3584,
+  "totalCacheWriteTokens": 0,
+  "totalDurationMs": 10224,
+  "totalCostUsd": 0.000975573,
+  "pricingSource": "local-openrouter-estimate",
+  "telemetry": {
+    "model": "openai/gpt-oss-120b:nitro",
+    "chunkSize": "10p",
+    "totalChunks": 7,
+    "totalInputTokens": 9507,
+    "totalOutputTokens": 3360,
+    "totalCacheReadTokens": 3584,
+    "totalCacheWriteTokens": 0,
+    "totalDurationMs": 10224,
+    "totalCostUsd": 0.000975573,
+    "pricingSource": "local-openrouter-estimate",
+    "chunks": [
+      {
+        "index": 0,
+        "inputTokens": 1121,
+        "outputTokens": 314,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 967,
+        "costUsd": 0.00010023899999999999
+      },
+      {
+        "index": 1,
+        "inputTokens": 1382,
+        "outputTokens": 532,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 1835,
+        "costUsd": 0.000149658
+      },
+      {
+        "index": 2,
+        "inputTokens": 1445,
+        "outputTokens": 592,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 1491,
+        "costUsd": 0.000162915
+      },
+      {
+        "index": 3,
+        "inputTokens": 1453,
+        "outputTokens": 530,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 1626,
+        "costUsd": 0.00015206699999999998
+      },
+      {
+        "index": 4,
+        "inputTokens": 1415,
+        "outputTokens": 489,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 1357,
+        "costUsd": 0.00014320499999999998
+      },
+      {
+        "index": 5,
+        "inputTokens": 1362,
+        "outputTokens": 465,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 1231,
+        "costUsd": 0.000136818
+      },
+      {
+        "index": 6,
+        "inputTokens": 1329,
+        "outputTokens": 438,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 1717,
+        "costUsd": 0.000130671
+      }
+    ]
+  }
+}

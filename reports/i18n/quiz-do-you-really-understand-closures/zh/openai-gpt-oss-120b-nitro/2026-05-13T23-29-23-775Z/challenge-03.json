@@ -1,0 +1,47 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "var in a Loop",
+  "translatedTitle": "循环中的 var",
+  "translation": {
+    "title": "循环中的 var",
+    "group": "经典陷阱",
+    "options": [
+      {
+        "text": "0, 1, 2, 3, 4"
+      },
+      {
+        "text": "5, 5, 5, 5, 5"
+      },
+      {
+        "text": "1, 2, 3, 4, 5"
+      },
+      {
+        "text": "undefined x5"
+      }
+    ],
+    "questionProse": [
+      "100 毫秒后会输出什么？"
+    ],
+    "explanationProse": [
+      "`var` 是函数作用域的。恰好只有 **一个** `i` —— 所有五个回调都闭包到同一个绑定。等定时器触发时，循环已经结束，`i` 为 `5`。\n\n    五个回调。一个 `i`。值：`5`。输出五次。\n\n    解决办法是使用 `let`（块作用域，每次迭代都有新绑定）或用 IIFE 包裹以捕获当前值："
+    ]
+  },
+  "rawText": "{\n  \"title\": \"循环中的 var\",\n  \"group\": \"经典陷阱\",\n  \"options\": [\n    {\n      \"text\": \"0, 1, 2, 3, 4\"\n    },\n    {\n      \"text\": \"5, 5, 5, 5, 5\"\n    },\n    {\n      \"text\": \"1, 2, 3, 4, 5\"\n    },\n    {\n      \"text\": \"undefined x5\"\n    }\n  ],\n  \"questionProse\": [\n    \"100 毫秒后会输出什么？\"\n  ],\n  \"explanationProse\": [\n    \"`var` 是函数作用域的。恰好只有 **一个** `i` —— 所有五个回调都闭包到同一个绑定。等定时器触发时，循环已经结束，`i` 为 `5`。\\n\\n    五个回调。一个 `i`。值：`5`。输出五次。\\n\\n    解决办法是使用 `let`（块作用域，每次迭代都有新绑定）或用 IIFE 包裹以捕获当前值：\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 928,
+    "outputTokens": 761,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1851,
+    "providerCostUsd": 0.0005958,
+    "providerUpstreamCostUsd": 0.0005958,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000036192,
+    "outputUsd": 0.00013697999999999998,
+    "totalUsd": 0.00017317199999999997,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

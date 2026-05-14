@@ -1,0 +1,47 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "XML Tags for Structure",
+  "translatedTitle": "XML 标签结构化",
+  "translation": {
+    "title": "XML 标签结构化",
+    "group": "提示结构",
+    "options": [
+      {
+        "text": "XML 标签仅在 Anthropic 模型中有效"
+      },
+      {
+        "text": "XML 标签帮助模型区分指令和数据，并提升解析准确性"
+      },
+      {
+        "text": "XML 标签会减慢分词速度，应该避免使用"
+      },
+      {
+        "text": "XML 标签等同于 markdown 标题"
+      }
+    ],
+    "questionProse": [
+      "为什么许多生产环境的提示会使用类似 `<document>`、`<context>`、`<instructions>` 的 XML 风格标签？"
+    ],
+    "explanationProse": [
+      "XML 风格标签提供 **明确的结构边界**，模型已被训练去识别并遵守。它们有两大作用：\n\n    1. **分离**：它们向模型指示指令何时结束、数据何时开始——这对 RAG 以及降低检索文档导致的提示注入风险至关重要。\n    2. **可解析性**：当你让模型以 XML 响应时（例如 `<answer>...</answer>`），标签为你提供了干净的提取点，无需正则 hack。\n\n    这并不是把 XML 当作标记语言使用，而是把 XML 作为模型已学习的分隔约定。它有效是因为模型在训练中大量见过这种模式，而不是因为它在验证 schema。\n\n    在大多数指令微调模型上都能工作得足够好——这是一种训练数据约定，而非供应商特性或安全保证。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"XML 标签结构化\",\n  \"group\": \"提示结构\",\n  \"options\": [\n    {\n      \"text\": \"XML 标签仅在 Anthropic 模型中有效\"\n    },\n    {\n      \"text\": \"XML 标签帮助模型区分指令和数据，并提升解析准确性\"\n    },\n    {\n      \"text\": \"XML 标签会减慢分词速度，应该避免使用\"\n    },\n    {\n      \"text\": \"XML 标签等同于 markdown 标题\"\n    }\n  ],\n  \"questionProse\": [\n    \"为什么许多生产环境的提示会使用类似 `<document>`、`<context>`、`<instructions>` 的 XML 风格标签？\"\n  ],\n  \"questionCode\": [],\n  \"explanationProse\": [\n    \"XML 风格标签提供 **明确的结构边界**，模型已被训练去识别并遵守。它们有两大作用：\\n\\n    1. **分离**：它们向模型指示指令何时结束、数据何时开始——这对 RAG 以及降低检索文档导致的提示注入风险至关重要。\\n    2. **可解析性**：当你让模型以 XML 响应时（例如 `<answer>...</answer>`），标签为你提供了干净的提取点，无需正则 hack。\\n\\n    这并不是把 XML 当作标记语言使用，而是把 XML 作为模型已学习的分隔约定。它有效是因为模型在训练中大量见过这种模式，而不是因为它在验证 schema。\\n\\n    在大多数指令微调模型上都能工作得足够好——这是一种训练数据约定，而非供应商特性或安全保证。\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 949,
+    "outputTokens": 1075,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2693,
+    "providerCostUsd": 0.00078735,
+    "providerUpstreamCostUsd": 0.00078735,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000037011,
+    "outputUsd": 0.0001935,
+    "totalUsd": 0.00023051099999999998,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

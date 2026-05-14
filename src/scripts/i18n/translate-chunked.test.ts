@@ -4,6 +4,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import {
   assertTranslationLength,
+  getComparablePostLength,
   normalizeFrontmatterAssetPaths,
   normalizeLocalizedAssetReferences,
   normalizeLocaleImportPaths,
@@ -145,6 +146,56 @@ describe("assertTranslationLength", () => {
       targetContents: ["---", "title: Target", "---", "import Demo from '../Demo';", body].join("\n"),
       targetPath: "target.mdx",
     })).not.toThrow();
+  });
+
+  test("allows denser Chinese translations without padding", () => {
+    const sourceBody = "a".repeat(2000);
+    const targetBody = "字".repeat(800);
+
+    expect(() => assertTranslationLength({
+      sourceContents: ["---", "title: Source", "---", sourceBody].join("\n"),
+      targetContents: ["---", "title: Target", "---", targetBody].join("\n"),
+      targetPath: "src/content/posts/example/zh/index.mdx",
+    })).not.toThrow();
+  });
+
+  test("uses prose length instead of letting code blocks dominate the ratio", () => {
+    const prose = "a".repeat(700);
+    const hugeCodeBlock = ["```ts", "const value = 1;".repeat(500), "```"].join("\n");
+
+    expect(getComparablePostLength([
+      "---",
+      "title: Source",
+      "---",
+      "import Demo from './Demo';",
+      prose,
+      hugeCodeBlock,
+      "{/* translator note */}",
+    ].join("\n"))).toBe(700);
+  });
+
+  test("allows natural expansion for German prose", () => {
+    expect(() => assertTranslationLength({
+      sourceContents: ["---", "title: Source", "---", "a".repeat(1000)].join("\n"),
+      targetContents: ["---", "title: Target", "---", "b".repeat(1600)].join("\n"),
+      targetPath: "src/content/posts/example/de/index.mdx",
+    })).not.toThrow();
+  });
+
+  test("allows compact Arabic prose without requiring padding", () => {
+    expect(() => assertTranslationLength({
+      sourceContents: ["---", "title: Source", "---", "a".repeat(2000)].join("\n"),
+      targetContents: ["---", "title: Target", "---", "ب".repeat(1050)].join("\n"),
+      targetPath: "src/content/posts/example/ar/index.mdx",
+    })).not.toThrow();
+  });
+
+  test("still rejects overly padded Chinese prose", () => {
+    expect(() => assertTranslationLength({
+      sourceContents: ["---", "title: Source", "---", "a".repeat(2000)].join("\n"),
+      targetContents: ["---", "title: Target", "---", "字".repeat(2600)].join("\n"),
+      targetPath: "src/content/posts/example/zh/index.mdx",
+    })).toThrow(/35%-125%/);
   });
 });
 

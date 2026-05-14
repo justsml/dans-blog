@@ -1,0 +1,334 @@
+---
+title: LLM 生成式 UI 生态图谱
+subTitle: 从工具到组件的渲染到开放式生成——每种方法的全景图及其适用复杂度。
+date: '2026-05-06'
+modified: '2026-05-06'
+tags:
+  - ai
+  - llm
+  - generative-ui
+  - agents
+  - frontend
+  - protocols
+  - react
+  - ag-ui
+  - a2ui
+  - copilotkit
+  - json-render
+  - mcp
+category: AI
+subCategory: Frontend
+draft: true
+unlisted: true
+hidden: true
+publish: false
+popularity: 0.9
+social_image: ../desktop-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+Chat 是训练轮。
+
+第一代 LLM 应用大多看起来像是一个贴在产品上的文本框。模型返回 prose（散文），前端渲染 markdown。如果用户需要采取行动，助手会描述用户应该去点击的按钮位置。
+
+这对于演示来说还算够用，但并不是未来的方向。
+
+接下来更有价值的一步是 **generative UI**：模型不再仅仅用文字回答，而是帮助决定用户此刻需要哪种界面。有时这意味着调用工具并渲染预制卡片；有时是把最新数据填入已知的工作流组件；还有时是组合一个临时的仪表盘、表单、对比表、图表或交互部件。
+
+不幸的是，“generative UI”已经成为那种在早餐前就能指代五种不同事物的词。
+
+人们用它来描述：
+
+- 模型从开发者预定义的 React 组件中挑选
+- 前端将 JSON 规范渲染为原生组件
+- 来自 MCP 工具的 iframe 应用
+- 支持工具调用的聊天 UI 库
+- 在后端与前端之间流式传递状态的代理协议
+- 类似 v0、Lovable、Bolt 或 Cursor 的设计时代码生成器
+- 模型在运行时直接写 HTML、SVG、Canvas 或 React
+
+这些概念相关，却不属于同一层。如果把它们混在一起，每一次架构讨论都会沦为一锅乱炖。
+
+这就是我在首次比较当前技术栈时本该拥有的地图。
+
+![LLM 生成式 UI 生态的分层地图](../landscape-map.webp)
+
+## 核心误解
+
+最大的问题在于把“generative UI”当作单一技术选项来对待。
+
+更好的做法是把问题拆分成四个层次：
+
+1. **产品外壳**：用户直接交互的部分。可能是聊天窗口、侧边栏 copilot、仪表盘、工作流构建器、IDE 面板、ChatGPT 应用、移动端界面或支持控制台。
+2. **UI 组合模型**：模型被允许使用的语法。可能是工具调用、JSON、A2UI、json‑render、OpenUI Lang、Hashbrown 组件选择，或受限的 HTML。
+3. **运行时与传输**：消息、工具调用、状态增量、用户操作以及 UI 产物在代理和前端之间的流动方式。AG‑UI、MCP Apps、Apps SDK、A2A、SSE、WebSockets 以及老式的 HTTP 都属于这一层。
+4. **代理与工具后端**：LangGraph、Google ADK、CrewAI、Mastra、LlamaIndex、Pydantic AI、Agno、OpenAI Agents SDK、自定义函数、数据库、检索以及所有仍需保持正确性的业务逻辑。
+
+把层次划分清楚后，整个生态就不再神秘。
+
+[AG-UI](https://github.com/ag-ui-protocol/ag-ui) 并不是 [A2UI](https://github.com/google/A2UI) 的竞争对手。AG-UI 是一种面向代理到应用交互的事件协议；A2UI 是代理可以发送的声明式 UI 格式。你可以在 AG-UI 上层叠加 A2UI，也可以在 AG-UI 上使用自定义的工具渲染组件。
+
+[json-render](https://github.com/vercel-labs/json-render) 不是聊天产品。它是一个组件目录与渲染器架构：定义模型可以使用的组件，让模型输出符合规范的 JSON 树，然后安全地渲染该树。
+
+[CopilotKit](https://github.com/CopilotKit/CopilotKit) 不仅仅是聊天气泡。它是面向代理原生应用的前端栈：聊天 UI、生成式 UI、共享状态、前端工具以及人机交互流程。
+
+[OpenAI Apps SDK](https://developers.openai.com/apps-sdk) 与 [MCP Apps](https://github.com/MCP-UI-Org/mcp-ui) 并非 “让我的 React 应用动态化” 的工具。它们是用于在 ChatGPT 或其他兼容 MCP 的宿主中渲染小部件的宿主集成模型。
+
+这些名称之所以让人困惑，是因为领域尚处于起步阶段。层次划分才是长期有用的框架。
+
+## 控制光谱
+
+生成式 UI 是 **开发者控制** 与 **代理自由** 之间的权衡。
+
+控制过多，助手就像穿着戏服的命令面板；自由过度，模型会凭空捏造奇怪的布局、模糊的按钮、破碎的视觉层级、不可实现的状态，以及带着自信笑容的安全问题。
+
+关键在于挑选能够解决用户需求的最小自由度。
+
+![从工具渲染组件到开放式生成 HTML 的光谱](../control-spectrum.webp)
+
+我把这条光谱想成如下几层：
+
+**工具到组件渲染** 是最安全的默认方案。模型调用 `get_weather`、`search_products`、`compare_plans` 或 `draft_invoice`。应用把这些工具返回的结果映射到你已经拥有的组件：`WeatherCard`、`ProductGrid`、`PlanComparison`、`InvoiceReview`。模型决定 *何时* 显示 UI。开发者仍然掌控布局、样式、可访问性、加载状态、空状态以及危险操作。
+
+这种模式在 [Vercel AI SDK 的生成式 UI 指南](https://ai-sdk.dev/docs/ai-sdk-ui/generative-user-interfaces) 中有文档说明：模型调用工具，工具返回数据，UI 根据结果渲染组件。这也是许多 CopilotKit 与 assistant‑ui 实现背后的思维模型。
+
+**声明式组件目录** 为模型提供更多空间。模型不再只能选一个组件，而是从允许的部件中组合成一棵树。目录可能包含 `Metric`、`Table`、`Chart`、`FilterBar`、`ApprovalPanel`、`Timeline` 等。模型可以组装仪表盘或工作流步骤，但仍无法执行任意代码。这正是 [A2UI](https://github.com/google/A2UI)、[json‑render](https://github.com/vercel-labs/json-render)、[Hashbrown](https://github.com/liveloveapp/hashbrown) 与 [OpenUI](https://github.com/thesysdev/openui) 所处的位置。
+
+**Iframe 小应用** 适用于 UI 需要比组件树更丰富，或远程工具提供商拥有完整体验的场景。MCP Apps 与 OpenAI Apps SDK 让工具返回结构化数据外加一个小部件资源，由宿主在 iframe 中渲染。这在地图、购物车、预订流程、图表以及外部产品界面上非常强大，同时也在宿主应用与小部件之间形成了更硬的边界。
+
+**开放式生成** 是最远端：代理在沙箱中输出 HTML、SVG、Canvas、WebGL 或其他类似代码的产物。[OpenGenerativeUI](https://github.com/CopilotKit/OpenGenerativeUI) 是目前最好的示例：代理可以在受限的 iframe 中生成算法可视化、3D 场景、图表和仿真。这对一次性视觉解释非常有用，但并不是我会在企业审批流程中首选的方案。
+
+这里需要明确的关键区分是：**iframe HTML**（模型向沙箱写代码） vs. **JSON 目录**（模型输出结构化规范，由渲染层映射到预构建组件）。两者听起来相似，却拥有截然不同的风险和复杂度特征。iframe HTML 表达力极强，安全边界由 iframe 本身承担；JSON 目录则不给模型可执行的自由度——它只能引用你事先定义好的组件类型。该领域的大多数框架显然属于这两类中的其一。
+
+**超出沙箱**：最新的演示表明正在形成第四种模式——LLM 通过直接控制视觉输出，驱动类似游戏或沉浸式体验，超出任何组件目录的能力。比如从提示生成可探索的 3D 世界、在运行时让 LLM 控制 NPC 行为、以及通过 WebGPU 在浏览器中进行模型推理的项目（[WebLLM](https://mlc.ai/web-llm/)）都是早期信号。目前尚无稳定的框架可以用于生产环境。等生态成熟后，我会在专门的文章中详细讨论这条路线。
+
+## 高层组件 vs 细粒度组件
+
+这是最关键的设计抉择。
+
+如果你的目录过于细粒度，模型就必须充当前端工程师：
+
+```tsx
+Container
+Row
+Column
+Text
+Button
+Icon
+Spacer
+Divider
+```
+
+看起来很灵活，但此时模型需要自行决定间距、层级、分组、空状态、按钮文案、错误处理以及响应式行为。与此同时，你也让提示变得更长，输出更容易出错。
+
+如果你的目录过于高层，模型会被限制住：
+
+```tsx
+WeatherCard
+StockCard
+HotelCard
+```
+
+安全性提升，但只能应对已知场景。模型无法生成对比矩阵、请求缺失输入，或在用户问题变化时调整信息架构。
+
+最实用的折中是 **领域级组件并配以受限插槽**：
+
+```tsx
+SearchResults
+ComparisonTable
+MetricGroup
+EditablePlan
+ApprovalRequest
+Timeline
+DataCollectionForm
+CheckoutReview
+```
+
+这些组件承载了产品口味和业务约束。模型可以决定 *展示什么*，但不需要控制每一个 CSS 细节。
+
+举例来说，旅行代理不需要 `div`、`span`、`button`，它需要：
+
+- `TripSummary`
+- `FlightOptionList`
+- `HotelComparison`
+- `TravelerForm`
+- `PolicyNotice`
+- `BookingConfirmation`
+
+金融代理不需要通用的图表 playground，它需要：
+
+- `PortfolioSnapshot`
+- `TransactionTable`
+- `RiskBreakdown`
+- `ScenarioComparison`
+- `ApprovalGate`
+
+目录的命名应当像你的产品，而不是 HTML。
+
+## 功能对照表
+
+此表刻意带有主观色彩。它把每个项目视作技术栈中的一个工具，而非“一统天下”的平台。
+
+| 技术 | 所属层 | 最佳适配 | UI 模型 | 流式 / 状态 | 备注与示例 |
+| --- | --- | --- | --- | --- | --- |
+| [AG-UI](https://github.com/ag-ui-protocol/ag-ui) | Runtime 协议 | 将代理后端连接到前端应用 | 消息、工具、状态、活动、打断的事件 | 支持；事件流加状态快照/增量 | 需要标准的代理‑到‑应用管道时使用。它是对 MCP 与 A2A 的补充，而非替代。 |
+| [A2UI](https://github.com/google/A2UI) | 声明式 UI 协议 | 跨平台、代理生成的原生 UI | 描述组件、数据模型和更新的 JSON 负载 | 为增量更新而设计 | 适合远程代理和信任边界的场景。仍处于公开预览阶段，但概念清晰。 |
+| [json-render](https://github.com/vercel-labs/json-render) | 组件目录与渲染器 | 让模型组合已批准的组件 | 受类型化目录约束的 JSON 树 | 支持渐进渲染 | 兼容 React、Vue、Svelte、Solid、React Native、邮件、PDF、Remotion、终端等。 |
+| [CopilotKit](https://github.com/CopilotKit/CopilotKit) | 产品壳与代理 UI 框架 | 应用内 copilots、共享状态、前端工具、HITL | 工具渲染、AG-UI、A2UI、MCP Apps 模式 | 支持 | 最全的 “构建代理原生应用” 堆栈之一。参见 [generative-ui 示例](https://github.com/CopilotKit/generative-ui)。 |
+| [OpenGenerativeUI](https://github.com/CopilotKit/OpenGenerativeUI) | 开放式 UI 生成展示 | 可视化解释、图表、仿真、可交互图形 | 代理向沙箱 iframe 输出 HTML / SVG / Canvas | 渐进可视化渲染 | 当固定组件目录过于局限时，用于动态产物。 |
+| [MCP Apps / mcp-ui](https://github.com/MCP-UI-Org/mcp-ui) | 主机/小部件标准 | 工具提供者通过 MCP 返回交互式 UI | 从工具元数据链接的 HTML 资源 | 主机桥接与小部件动作 | 当 UI 属于工具提供者或需要 iframe 隔离时最佳。 |
+| [OpenAI Apps SDK](https://developers.openai.com/apps-sdk) | ChatGPT 应用宿主集成 | 构建自定义 ChatGPT 小部件 | MCP 服务器工具 + iframe UI 组件 | 工具输入/结果、部件状态、后续消息 | 新的 ChatGPT 应用应优先使用 MCP Apps 字段和 `ui/*` 桥接，并通过 `window.openai` 保持兼容/扩展。 |
+| [Vercel AI SDK UI](https://ai-sdk.dev/docs/ai-sdk-ui/generative-user-interfaces) | 应用 SDK 与聊天状态 | 自定义应用聊天、工具调用、流式消息片段 | 将工具结果渲染为 React 组件 | 支持，通过 `useChat` 与 UI 消息流 | 若已有自建应用且需要更底层控制，可作为良好基线。配合 [AI Elements](https://elements.ai-sdk.dev/) 使用可获得 UI 基元。 |
+| [assistant-ui](https://github.com/assistant-ui/assistant-ui) | React 聊天基元 | 生产级聊天体验与自定义渲染 | 可组合的聊天基元、工具调用渲染、JSON 组件化 | 支持 | 若需要精致的聊天交互且自行提供后端，这是强力选项。 |
+| [LangGraph Generative UI](https://docs.langchain.com/langgraph-platform/generative-ui-react) | 代理平台集成 | 将 UI 组件与图谱代码同置 | 图谱发出命名 UI 消息，由 React 组件渲染 | 支持，包括自定义流事件 | 与 LangGraph 部署天然匹配，适合图谱拥有的 UI 组件。 |
+| [Hashbrown](https://github.com/liveloveapp/hashbrown) | 前端 GenUI 框架 | 在 React/Angular 应用中暴露组件与客户端工具 | LLM 选择并渲染允许的应用组件 | 支持流式模式 | 适合将智能直接嵌入产品表面，而不仅限于聊天。 |
+| [OpenUI](https://github.com/thesysdev/openui) | 紧凑 UI 语言与运行时 | 使用比 JSON 更少 token 的可流式模型生成 UI | OpenUI 语言 + React 运行时与组件库 | 为 token 流式设计 | 当 JSON 冗长成为瓶颈时可考虑。仍在早期阶段，但值得关注。 |
+| [Tambo](https://github.com/tambo-ai/tambo) | React 生成式 UI SDK | 组件选择、带状态的组件、客户端工具执行 | AI 选择组件并与客户端工具交互 | 面向状态 | 受欢迎的 OSS React 方案，专注自动化组件编排。 |
+| [llm-ui](https://llm-ui.com/) | 输出渲染器 | 使用自定义内联组件平滑 LLM 文本输出 | 将模型输出字符串解析为 React 渲染 | 平滑 token 渲染 | 适用于文本流中轻量级自定义组件；并非完整的代理 UI 协议。 |
+| AI SDK RSC / React Server Components | 旧模式 / 框架特性 | Next.js 中的服务器渲染组件流 | 模型/工具流返回服务器渲染的 UI | 支持，但仅限特定框架 | 2024 年 10 月已暂停开发（[讨论 #3251](https://github.com/vercel/ai/discussions/3251)），不推荐使用。请迁移至 `useObject` 或 json-render。 |
+
+## 各产品的选型建议
+
+以下是我实际在团队中使用的推荐矩阵。
+
+**你正在为已有的 SaaS 应用添加助手。**
+
+从 tool‑to‑component 渲染入手。根据所需的代理状态管理和前端工具集成程度，选择 [Vercel AI SDK UI](https://ai-sdk.dev/docs/ai-sdk-ui/generative-user-interfaces)、[assistant‑ui](https://github.com/assistant-ui/assistant-ui) 或 [CopilotKit](https://github.com/CopilotKit/CopilotKit)。一开始保持目录（catalog）极小，只渲染你已经信任的产品组件。
+
+**你在构建需要共享状态的正式应用内 copilot。**
+
+重点关注 CopilotKit 与 AG‑UI 的组合。关键特性不是“聊天”，而是共享状态和双向交互：代理可以请求输入、渲染 UI、更新状态，并在需要时暂停等待批准。
+
+**你有需要跨边界发送 UI 的远程代理。**
+
+使用 A2UI 或类似的声明式协议。核心在于远程代理可以把 UI 描述为数据，而宿主负责本地渲染、安全和样式的控制。如果还需要实时的代理/应用交互，则在其上层使用 AG‑UI 或你所在环境标准化的传输层。
+
+**你在 ChatGPT 或兼容 MCP 的宿主环境中构建。**
+
+走 MCP Apps 与 Apps SDK 路径。OpenAI 当前文档建议在新项目中使用 MCP Apps 的 `ui/*` 桥接，同时保留 `window.openai` 作为兼容层和可选的扩展入口。还要遵循它们在数据工具与渲染工具之间的划分：让模型先获取并推理数据，再决定渲染哪个部件。
+
+**你希望在自己的应用中实现自然语言仪表盘、报告或表单。**
+
+尝试使用 `json-render`、Hashbrown 或 OpenUI。关键在于目录。如果你公开 `LineChart`、`DataTable`、`MetricGroup`、`FilterControl` 和 `InsightCallout`，模型就能组装出有用的报告界面，而不必接触任意代码。
+
+**你想要教育类、可视化或高度定制的产物。**
+
+使用类似 OpenGenerativeUI 的开放式沙盒。让模型生成 SVG、Canvas、WebGL 或自包含的 HTML，但要把输出当作不可信的用户内容来处理。对其进行沙箱化、限制尺寸、剥离权限，并且远离特权应用状态。
+
+**你主要需要更美观的流式 Markdown，带少量内联交互。**
+
+不要过度构建。`llm-ui` 或 `assistant-ui` 的工具渲染可能已经足够。
+
+## 我会避免的错误
+
+**错误 1：让模型在运行时写生产级 React。**
+
+有例外情况，但对产品 UI 来说，这通常不是正确的默认选择。运行时代码生成难以保障安全、难以测试、难以统一主题、也难以保持可访问性。如果模型可以通过选择受信任的组件完成任务，就让它这么做。
+
+**错误 2：暴露设计基元而不是产品基元。**
+
+当你给模型 `Row`、`Column`、`Text` 和 `Button` 时，你实际上在让它充当你的设计系统。它最终只会成为一个平庸的系统。应该提供更高层次的产品级名词。
+
+**错误 3：认为有效的 JSON 就等同于安全的 UI。**
+
+即使负载通过了模式校验，它仍可能具有操纵性或危险性。标签可以写成 “查看发票”，而实际动作却是归档账户。要把 UI 规范视为行为，而非装饰。它们需要策略测试、语义检查以及对关键操作的人为确认。
+
+**错误 4：在渲染工具中嵌入业务逻辑。**
+
+渲染工具只负责渲染。数据工具负责获取、计算、变更和校验。OpenAI 的 Apps SDK 文档之所以强调这一划分，是因为如果每个数据工具都拖着一个 widget，模型在呈现之前就没有足够的推理空间。
+
+**错误 5：追求新奇而非任务完成。**
+
+目标不是让每个答案都变成雪花般的界面，而是降低摩擦。一个稳定、乏味的审批面板能为用户节省四分钟，胜过一次无法被信任两次的炫目生成仪表盘。
+
+## 实用架构
+
+如果我要今天启动一个新产品，我会采用分阶段的方式：
+
+1.  **先交付受控的工具 UI。** 将已知工具映射到已知组件。记录每一次工具调用、UI 渲染和用户操作。
+2.  **加入领域目录。** 当模式重复出现时，公开 `ComparisonTable`、`DecisionPanel`、`DataCollectionForm`、`Timeline` 等产品专属组件。
+3.  **仅在需要时标准化传输层。** 若前后端同属一体，普通流式传输即可。若使用多种代理框架，采用 AG-UI。若工具跨产品边界，使用 MCP。若代理跨组织边界，关注 A2A 与 A2UI。
+4.  **对外部或复杂表面使用 iframe 小部件。** 地图、购物车、预订流程以及第三方小程序都应置于边界之后。
+5.  **将开放式生成保留给产出物。** 图表、仿真、临时解释器和可视化草稿板非常适合。核心工作流则不宜如此。
+
+整体架构大致如下：
+
+```txt
+User intent
+  -> agent runtime
+  -> tool/data calls
+  -> structured result
+  -> UI decision
+  -> trusted component, declarative spec, or sandboxed widget
+  -> user action
+  -> state/event stream back to the agent
+```
+
+这条循环才是产品的核心。聊天框仅是可能的输入设备之一。
+
+## 评估必须覆盖 UI
+
+LLM 团队正在慢慢学会评估提示和模型输出。生成式 UI 又多了一层评估面：界面本身也可能出错。
+
+至少要为每一次生成的 UI 保存以下工件：
+
+- 提示词和工具上下文
+- 工具调用及其返回结果
+- 生成的 UI 规范或组件选择
+- 渲染的组件名称和属性
+- 面向用户的标签
+- 绑定在按钮/表单上的动作
+- 模型可见的 UI 状态更新
+- 用户操作历史
+
+随后编写检查规则，例如：
+
+- 每个破坏性操作必须配备确认组件
+- 按钮标签必须与动作语义保持一致
+- 渲染规范只能引用允许的组件
+- 面向用户的合计数必须与工具返回的合计数相匹配
+- 表单不得请求任务范围之外的字段
+- 小部件不得接收只有模型需要的机密信息
+- 隐藏的元数据不得与可见标签相冲突
+
+听起来很繁琐，但正是生产环境可信赖的来源。
+
+## 我会先看的链接
+
+如果你想从文章直接跳到代码实现，以下链接是我目前找到的最佳起点：
+
+- [AG-UI 仓库](https://github.com/ag-ui-protocol/ag-ui) 与 [AG-UI 文档](https://docs.ag-ui.com/introduction) 用于运行时事件模型。  
+- [A2UI 仓库](https://github.com/google/A2UI) 与 [A2UI 规范](https://a2ui.org/specification/v0.9-a2ui/) 用于声明式 agent‑to‑UI 负载。  
+- [json‑render 仓库](https://github.com/vercel-labs/json-render) 与 [json‑render 文档](https://json-render.dev/) 用于目录驱动的 JSON UI 生成。  
+- [CopilotKit 仓库](https://github.com/CopilotKit/CopilotKit) 与 [generative‑ui 示例](https://github.com/CopilotKit/generative-ui) 展示了 AG‑UI、A2UI、Open‑JSON‑UI 和 MCP Apps 模式。  
+- [OpenGenerativeUI](https://github.com/CopilotKit/OpenGenerativeUI) 提供沙箱化的 HTML/SVG/Canvas 可视化产物。  
+- [MCP‑UI / MCP Apps SDK](https://github.com/MCP-UI-Org/mcp-ui) 用于通过 MCP 提供 UI 资源。  
+- [OpenAI Apps SDK 文档](https://developers.openai.com/apps-sdk) 与 [Apps SDK 示例](https://github.com/openai/openai-apps-sdk-examples) 用于 ChatGPT 应用小部件。  
+- [Vercel AI SDK 生成式 UI 指南](https://ai-sdk.dev/docs/ai-sdk-ui/generative-user-interfaces) 与 [AI Elements](https://elements.ai-sdk.dev/) 用于应用自有的聊天/工具渲染。  
+- [assistant‑ui](https://github.com/assistant-ui/assistant-ui) 提供可组合的 React 聊天原语。  
+- [LangGraph 生成式 UI 文档](https://docs.langchain.com/langgraph-platform/generative-ui-react) 用于图谱发出的 UI 组件。  
+- [Hashbrown](https://github.com/liveloveapp/hashbrown) 用于 React/Angular 组件选择和客户端工具。  
+- [OpenUI](https://github.com/thesysdev/openui) 提供紧凑、流式优先的模型生成 UI。  
+- [Tambo](https://github.com/tambo-ai/tambo) 用于带状态组件的 React 生成式 UI。  
+- [llm‑ui](https://llm-ui.com/) 用于带自定义内联组件的平滑文本流。
+
+## 项目稳定性说明
+
+该领域的每个主要协议都尚未达到 1.0。最后一次验证时间为 2026 年 5 月 8 日；请预留变更空间并在做平台决策前检查最新文档。
+
+**Vercel AI SDK RSC** —— 最初的 “Generative UI” 头条特性 —— 已于 2024 年 10 月暂停开发（[Discussion #3251](https://github.com/vercel/ai/discussions/3251)），原因是架构限制且近期没有可行的修复方案。**json‑render**（Vercel Labs）随后成为替代方向：基于目录、框架无关、无 RSC 绑定。自 2026 年初发布以来，它迅速获得 Web 开发者关注。主要原因在于开发者体验：json‑render 能直接在标准 React 项目中使用；而 A2UI 的跨平台范围会带来额外的配置摩擦。
+
+**A2UI**（Google）仍处于 pre‑1.0 阶段，次版本之间会有破坏性改动，路线图沟通也不够统一。它的优势在于真正的跨平台覆盖（Web、Flutter、SwiftUI），这是 json‑render 所不具备的。对于纯 Web 场景，json‑render 的工具链更成熟；而在跨平台或远程 agent 场景下，A2UI 的设计更为合适。两者规范之间有可能收敛——Vercel 已尝试让 json‑render 输出兼容 A2UI。
+
+**AG‑UI**（CopilotKit）同样是 pre‑1.0。最常见的混淆在于名称：AG‑UI 是一种传输协议，而不是 UI 框架。它定义了 *事件* 在 agent 与前端之间的流动方式，具体渲染仍由开发者决定。概念扎实且被广泛采用，规范仍在演进中。
+
+## 我的观点
+
+生成式 UI 不会取代精心设计的产品界面。它会取代那种认为聊天记录是 AI 通用界面的懒惰假设。
+
+最好的系统不会让模型随意发挥一切，而是给它一小套锋利的、产品原生的构建块；一个可靠的运行时连接；明确的安全边界；以及足够的自由度去根据任务调整界面。
+
+未来不是 “模型直接写你的前端”。
+
+未来更像是：**你的前端成为代理可以演奏的乐器，但你仍然决定这件乐器可以发出什么声音。**

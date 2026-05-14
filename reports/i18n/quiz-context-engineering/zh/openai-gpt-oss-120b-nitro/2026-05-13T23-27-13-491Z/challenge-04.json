@@ -1,0 +1,47 @@
+{
+  "index": 3,
+  "attempt": 1,
+  "originalTitle": "Lost in the Middle",
+  "translatedTitle": "中间失效",
+  "translation": {
+    "title": "中间失效",
+    "group": "检索",
+    "options": [
+      {
+        "text": "模型在上下文放置位置上表现相同"
+      },
+      {
+        "text": "模型在上下文放在最末时表现最佳"
+      },
+      {
+        "text": "模型在上下文放在开头和结尾时表现最佳，而在中间时表现最差"
+      },
+      {
+        "text": "模型在上下文放在提示中间时表现最佳"
+      }
+    ],
+    "questionProse": [
+      "对“中间失效”问题的研究表明，大语言模型倾向于："
+    ],
+    "explanationProse": [
+      "该[中间失效论文 (Liu 等, 2023)](https://arxiv.org/abs/2307.03172)展示了大语言模型在长上下文中间放置信息时会可靠地出现困难。当相关信息出现在上下文窗口的**开头或结尾**时，性能显著提升。\n\n    实际意义：在向 RAG 提示插入检索到的片段时，别只按相关度顺序追加。将最高排名的结果放在最前，第二高的放在最后，其余较低排名的填充在中间。看似违背直觉，却有可观的提升。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"中间失效\",\n  \"group\": \"检索\",\n  \"options\": [\n    {\n      \"text\": \"模型在上下文放置位置上表现相同\"\n    },\n    {\n      \"text\": \"模型在上下文放在最末时表现最佳\"\n    },\n    {\n      \"text\": \"模型在上下文放在开头和结尾时表现最佳，而在中间时表现最差\"\n    },\n    {\n      \"text\": \"模型在上下文放在提示中间时表现最佳\"\n    }\n  ],\n  \"questionProse\": [\n    \"对“中间失效”问题的研究表明，大语言模型倾向于：\"\n  ],\n  \"explanationProse\": [\n    \"该[中间失效论文 (Liu 等, 2023)](https://arxiv.org/abs/2307.03172)展示了大语言模型在长上下文中间放置信息时会可靠地出现困难。当相关信息出现在上下文窗口的**开头或结尾**时，性能显著提升。\\n\\n    实际意义：在向 RAG 提示插入检索到的片段时，别只按相关度顺序追加。将最高排名的结果放在最前，第二高的放在最后，其余较低排名的填充在中间。看似违背直觉，却有可观的提升。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 902,
+    "outputTokens": 895,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2327,
+    "providerCostUsd": 0.0006723,
+    "providerUpstreamCostUsd": 0.0006723,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000035178,
+    "outputUsd": 0.00016109999999999999,
+    "totalUsd": 0.00019627799999999998,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

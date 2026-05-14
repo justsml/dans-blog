@@ -1,0 +1,47 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "Temperature and Determinism",
+  "translatedTitle": "温度与确定性",
+  "translation": {
+    "title": "温度与确定性",
+    "group": "高级",
+    "options": [
+      {
+        "text": "temperature=0 总是为相同输入产生完全相同的输出"
+      },
+      {
+        "text": "temperature=0 使输出更具确定性，但不保证完全相同"
+      },
+      {
+        "text": "temperature=0 禁用模型"
+      },
+      {
+        "text": "temperature 只影响响应的长度"
+      }
+    ],
+    "questionProse": [
+      "在你的 LLM 调用中设置 `temperature=0` 意味着："
+    ],
+    "explanationProse": [
+      "`temperature=0` 使模型在每一步选择概率最高的 token（贪婪解码），从而产生 **更一致** 的输出——但并不保证完全相同的输出。\n\n    temperature=0 时的变动来源：\n    - **浮点数非确定性** 在 GPU 计算中，尤其是在不同硬件或批大小之间\n    - **服务器端基础设施变化**（模型更新、服务架构）\n    - **长输出** 会累积微小差异\n\n    对于需要严格确定性的测试套件和评估，`temperature=0` 是正确的选择——只是不应该编写依赖字节级完全相同输出的断言。应当断言结构、关键内容和行为，而不是精确的字符串。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"温度与确定性\",\n  \"group\": \"高级\",\n  \"options\": [\n    {\n      \"text\": \"temperature=0 总是为相同输入产生完全相同的输出\"\n    },\n    {\n      \"text\": \"temperature=0 使输出更具确定性，但不保证完全相同\"\n    },\n    {\n      \"text\": \"temperature=0 禁用模型\"\n    },\n    {\n      \"text\": \"temperature 只影响响应的长度\"\n    }\n  ],\n  \"questionProse\": [\n    \"在你的 LLM 调用中设置 `temperature=0` 意味着：\"\n  ],\n  \"explanationProse\": [\n    \"`temperature=0` 使模型在每一步选择概率最高的 token（贪婪解码），从而产生 **更一致** 的输出——但并不保证完全相同的输出。\\n\\n    temperature=0 时的变动来源：\\n    - **浮点数非确定性** 在 GPU 计算中，尤其是在不同硬件或批大小之间\\n    - **服务器端基础设施变化**（模型更新、服务架构）\\n    - **长输出** 会累积微小差异\\n\\n    对于需要严格确定性的测试套件和评估，`temperature=0` 是正确的选择——只是不应该编写依赖字节级完全相同输出的断言。应当断言结构、关键内容和行为，而不是精确的字符串。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 911,
+    "outputTokens": 947,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2545,
+    "providerCostUsd": 0.00070485,
+    "providerUpstreamCostUsd": 0.00070485,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000035529,
+    "outputUsd": 0.00017046,
+    "totalUsd": 0.00020598899999999998,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

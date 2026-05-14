@@ -1,0 +1,47 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Memoization via Closure",
+  "translatedTitle": "זיכרון באמצעות סגירה",
+  "translation": {
+    "title": "זיכרון באמצעות סגירה",
+    "group": "בונוס",
+    "options": [
+      {
+        "text": "קורא ל‑`expensive()` 3 פעמים"
+      },
+      {
+        "text": "קורא ל‑`expensive()` פעם אחת"
+      },
+      {
+        "text": "קורא ל‑`expensive()` 2 פעמים"
+      },
+      {
+        "text": "זורק: חריגה מרבית של ערימת קריאות"
+      }
+    ],
+    "questionProse": [
+      "כמה פעמים בפועל נקראת הפונקציה `expensive()`?"
+    ],
+    "explanationProse": [
+      "הפונקציה הממוזגת סוגרת על `cache`. הקריאה הראשונה (`fast(5)`) מחמיצה את המטמון, קוראת ל‑`expensive` ושומרת את התוצאה. הקריאות השנייה והשלישית פוגעות במטמון ומחזירות מיד.\n\n    `calls` הוא `1`.\n\n    זה סגירות שעושות עבודה אמיתית. `cache` פרטית (לא ניתן לגשת אליה מחוץ ל‑`memoize`), מתמשכת (חיה כל עוד `fast` קיימת), ומשותפת לכל הקריאות ל‑`fast`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"זיכרון באמצעות סגירה\",\n  \"group\": \"בונוס\",\n  \"options\": [\n    {\n      \"text\": \"קורא ל‑`expensive()` 3 פעמים\"\n    },\n    {\n      \"text\": \"קורא ל‑`expensive()` פעם אחת\"\n    },\n    {\n      \"text\": \"קורא ל‑`expensive()` 2 פעמים\"\n    },\n    {\n      \"text\": \"זורק: חריגה מרבית של ערימת קריאות\"\n    }\n  ],\n  \"questionProse\": [\n    \"כמה פעמים בפועל נקראת הפונקציה `expensive()`?\"\n  ],\n  \"explanationProse\": [\n    \"הפונקציה הממוזגת סוגרת על `cache`. הקריאה הראשונה (`fast(5)`) מחמיצה את המטמון, קוראת ל‑`expensive` ושומרת את התוצאה. הקריאות השנייה והשלישית פוגעות במטמון ומחזירות מיד.\\n\\n    `calls` הוא `1`.\\n\\n    זה סגירות שעושות עבודה אמיתית. `cache` פרטית (לא ניתן לגשת אליה מחוץ ל‑`memoize`), מתמשכת (חיה כל עוד `fast` קיימת), ומשותפת לכל הקריאות ל‑`fast`.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 863,
+    "outputTokens": 790,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2505,
+    "providerCostUsd": 0.00060345,
+    "providerUpstreamCostUsd": 0.00060345,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000033657,
+    "outputUsd": 0.0001422,
+    "totalUsd": 0.000175857,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

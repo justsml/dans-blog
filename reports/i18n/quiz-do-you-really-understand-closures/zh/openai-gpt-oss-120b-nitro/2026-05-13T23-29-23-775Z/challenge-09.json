@@ -1,0 +1,47 @@
+{
+  "index": 8,
+  "attempt": 1,
+  "originalTitle": "The this Trap",
+  "translatedTitle": "this 陷阱",
+  "translation": {
+    "title": "this 陷阱",
+    "group": "专家",
+    "options": [
+      {
+        "text": "Dan, Dan"
+      },
+      {
+        "text": "Dan, undefined"
+      },
+      {
+        "text": "undefined, Dan"
+      },
+      {
+        "text": "undefined, undefined"
+      }
+    ],
+    "questionProse": [
+      "这会输出什么？"
+    ],
+    "explanationProse": [
+      "两个微妙的陷阱：\n\n    **`greetArrow`**：箭头函数没有自己的 `this`。它们捕获来自外层词法作用域的 `this`——这里是模块/全局作用域，而不是 `user`。所以 `this?.name` 为 `undefined`。\n\n    **`fn()`**：`greetRegular` 在没有接收者的情况下被调用（`fn()` 而不是 `user.greetRegular()`）。在严格模式下，`this` 为 `undefined`。在宽松模式下，它是全局对象。无论哪种情况，`this?.name` 都是 `undefined`。\n\n    如果直接调用 `user.greetRegular()`，会得到 `'Dan'`——因为此时 `this` 绑定到 `user`。\n\n    结果：`undefined, undefined`。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"this 陷阱\",\n  \"group\": \"专家\",\n  \"options\": [\n    {\n      \"text\": \"Dan, Dan\"\n    },\n    {\n      \"text\": \"Dan, undefined\"\n    },\n    {\n      \"text\": \"undefined, Dan\"\n    },\n    {\n      \"text\": \"undefined, undefined\"\n    }\n  ],\n  \"questionProse\": [\n    \"这会输出什么？\"\n  ],\n  \"explanationProse\": [\n    \"两个微妙的陷阱：\\n\\n    **`greetArrow`**：箭头函数没有自己的 `this`。它们捕获来自外层词法作用域的 `this`——这里是模块/全局作用域，而不是 `user`。所以 `this?.name` 为 `undefined`。\\n\\n    **`fn()`**：`greetRegular` 在没有接收者的情况下被调用（`fn()` 而不是 `user.greetRegular()`）。在严格模式下，`this` 为 `undefined`。在宽松模式下，它是全局对象。无论哪种情况，`this?.name` 都是 `undefined`。\\n\\n    如果直接调用 `user.greetRegular()`，会得到 `'Dan'`——因为此时 `this` 绑定到 `user`。\\n\\n    结果：`undefined, undefined`。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 934,
+    "outputTokens": 796,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 2335,
+    "providerCostUsd": 0.0005985,
+    "providerUpstreamCostUsd": 0.0005985,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000036426,
+    "outputUsd": 0.00014328,
+    "totalUsd": 0.000179706,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

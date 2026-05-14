@@ -1,0 +1,47 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "var in a Loop",
+  "translatedTitle": "var في حلقة",
+  "translation": {
+    "title": "var في حلقة",
+    "group": "الفخ الكلاسيكي",
+    "options": [
+      {
+        "text": "0, 1, 2, 3, 4"
+      },
+      {
+        "text": "5, 5, 5, 5, 5"
+      },
+      {
+        "text": "1, 2, 3, 4, 5"
+      },
+      {
+        "text": "undefined x5"
+      }
+    ],
+    "questionProse": [
+      "ما الذي يُسجَّل بعد 100 مللي ثانية؟"
+    ],
+    "explanationProse": [
+      "`var` لها نطاق على مستوى الدالة. هناك **متغيّر واحد** `i` — جميع الاستدعاءات الراجعة الخمسة تغلق على نفس الارتباط. بحلول الوقت الذي تُنفَّذ فيه الـtimeouts، تكون الحلقة قد انتهت ويصبح `i` يساوي `5`.\n\n    خمسة استدعاءات راجعة. متغيّر `i` واحد. القيمة: `5`. تُسجَّل خمس مرات.\n\n    الحل هو استخدام `let` (نطاق كتلي، ارتباط جديد في كل تكرار) أو تغليفها في IIFE لالتقاط القيمة الحالية:"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"var في حلقة\",\n  \"group\": \"الفخ الكلاسيكي\",\n  \"options\": [\n    {\n      \"text\": \"0, 1, 2, 3, 4\"\n    },\n    {\n      \"text\": \"5, 5, 5, 5, 5\"\n    },\n    {\n      \"text\": \"1, 2, 3, 4, 5\"\n    },\n    {\n      \"text\": \"undefined x5\"\n    }\n  ],\n  \"questionProse\": [\n    \"ما الذي يُسجَّل بعد 100 مللي ثانية؟\"\n  ],\n  \"explanationProse\": [\n    \"`var` لها نطاق على مستوى الدالة. هناك **متغيّر واحد** `i` — جميع الاستدعاءات الراجعة الخمسة تغلق على نفس الارتباط. بحلول الوقت الذي تُنفَّذ فيه الـtimeouts، تكون الحلقة قد انتهت ويصبح `i` يساوي `5`.\\n\\n    خمسة استدعاءات راجعة. متغيّر `i` واحد. القيمة: `5`. تُسجَّل خمس مرات.\\n\\n    الحل هو استخدام `let` (نطاق كتلي، ارتباط جديد في كل تكرار) أو تغليفها في IIFE لالتقاط القيمة الحالية:\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 927,
+    "outputTokens": 323,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1066,
+    "providerCostUsd": 0.00033285,
+    "providerUpstreamCostUsd": 0.00033285,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000036153,
+    "outputUsd": 0.000058139999999999996,
+    "totalUsd": 0.00009429299999999999,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

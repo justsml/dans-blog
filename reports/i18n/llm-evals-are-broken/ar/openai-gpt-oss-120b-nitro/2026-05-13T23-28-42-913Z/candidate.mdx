@@ -1,0 +1,267 @@
+---
+title: حارب الشر باستخدام التقييمات!
+subTitle: الاختبارات تقيس الاختبارات. نظامك يحتاج إلى مقاييسه الخاصة.
+date: '2026-05-01'
+modified: '2026-05-06'
+tags:
+  - ai
+  - llm
+  - evals
+  - testing
+  - production
+  - quality
+  - observability
+category: AI
+subCategory: Engineering
+popularity: 0.85
+social_image: ../desktop-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+كل نموذج جديد يأتي مرتديًا بدلة رسمية من المعايير.
+
+MMLU: 92.4٪. HumanEval: 87.2٪. LLeMU: 88.7٪. MATH: 73.6٪. AGI: 127٪!
+
+ومع ذلك، بالنسبة لـ 99٪ من الشركات التي تبني عمليات ومنتجات باستخدام الذكاء الاصطناعي، **لا شيء من هذا يهم.**
+
+ما هو المهم؟ كيف تؤدي أحمال عملك؟ هل تتحسن أم تتدهور؟ الطريقة العاقلة الوحيدة لمعرفة ذلك هي كتابة تقييمات (اختبارات للـ LLMs) تعكس المهام المحددة والبيانات وأنماط الفشل في نظامك.
+
+<blockquote class="breakout">
+  <p>المعايير لا تكذب. إنها تجيب على سؤال شخص آخر.</p>
+</blockquote>
+
+---
+
+## ما تكلفه "التقييم القائم على الأجواء" فعليًا
+
+النهج القياسي: نشر تغيير في النموذج، مراقبة قنوات الشكاوى، التراجع إذا ارتفعت الضوضاء.
+
+هذا يفوت تقريبًا كل ما هو مثير للاهتمام:
+
+**أنت تلتقط فقط الفشل الصاخب.** المستخدمون الذين يحصلون على إجابة خاطئة بثقة ولا يدركون ذلك؟ صامتون. المستخدمون الذين يحصلون على إجابة أسوأ ويتخلون عن الميزة؟ صامتون. تذاكر الدعم ومعدلات الأخطاء تلتقط فقط جزءًا من تراجع الجودة.
+
+**لا يمكنك التمييز بين الانحدارات والتحسينات.** إذا كان النموذج الجديد أفضل في المهمة أ وأسوأ في المهمة ب، فإن الشكاوى بشأن ب تبدو مماثلة لتغذية راجعة عامة من نوع "الذكاء الاصطناعي تدهور". لا تعرف ما الذي يجب إصلاحه.
+
+**أنت تستخدم مستخدميك كالبنية التحتية للاختبار.** لم يوقعوا على ذلك.
+
+## طيف التقييم (وأين تخطئ معظم الفرق)
+
+تقنيات التقييم تقع على طيف يمتد من "سريع لكن هش" إلى "مكلف لكن صالح".
+
+<figure class="breakout">
+
+![مخطط طيف يقارن الفحوصات الحتمية، LLM‑as‑judge، والتقييم البشري من حيث السرعة، التكلفة، والصلاحية.](../eval-spectrum.svg)
+
+<figcaption>استخدم أرخص طريقة تقييم يمكنها صراحةً اكتشاف الفشل.</figcaption>
+</figure>
+
+**LLM‑as‑judge** هو المفضل الحالي: اطلب من نموذج قوي تقييم مخرجات نموذج آخر. سريع، قابل للتوسع، ورخيص. المشكلة: يدمج تحيزات نموذج المُقَيِّم، يمكن التلاعب به، ويخلق اعتمادًا دائريًا. إذا استخدمت GPT‑5 لتقييم مخرجات GPT‑5، فأنت تقيس شيئًا مثل "إلى أي مدى يتفق GPT‑5 مع نفسه". هذا ليس لا شيء، لكنه ليس ما تتوقعه.
+
+**التقييم البشري** هو المعيار الذهبي الذي يحاول الجميع تجنبه. الحصول على بشر لتقييم المخرجات مكلف، بطيء، غير متسق بين المقيمين، ومزعج في الجدولة. لكنه الوحيد الذي يثبت ما إذا كان نظامك مفيدًا للبشر الحقيقيين.
+
+**الفحوصات الآلية المتخصصة بالمهمة** هي ما يجب أن تقضي فيه معظم الفرق وقتًا أكبر. ليست جذابة، لكنها سريعة، حتمية، ومربوطة بما يهم في نظامك.
+
+## ما ينجح فعليًا
+
+### 1. تعريف الفشل قبل النشر
+
+قبل تعديل نموذج أو موجه، دوّن ما يبدو عليه الفشل. بصورة محددة.
+
+ليس "يجب أن يكون الإخراج دقيقًا". هذا ليس اختبارًا. بل شيء مثل:
+
+- يجب أن يُ解析 إخراج JSON منظم دون أخطاء
+- يجب أن تظهر جميع الاستشهادات في الاستجابة حرفيًا في السياق المسترجع
+- يجب ألا تذكر الاستجابات أسماء منتجات المنافسين
+- يجب أن تكون استعلامات SQL صالحة نحويًا وتشير فقط إلى الجداول الموجودة في المخطط
+- لا يجب أن يتحول تصنيف المشاعر من إيجابي إلى سلبي بأكثر من 3 % من الوقت على مجموعة الاختبار الحالية
+
+يمكنك التحقق من هذه الشروط برمجيًا. لا حاجة لنموذج حكم.
+
+**إطار التقييم: فحوصات حتمية**
+
+```typescript
+type EvalResult = { passed: boolean; reason?: string };
+
+const evals: Record<string, (output: string, context: EvalContext) => EvalResult> = {
+  // يجب أن ينجح JSON في التحليل
+  validJson: (output) => {
+    try {
+      JSON.parse(output);
+      return { passed: true };
+    } catch (e) {
+      return { passed: false, reason: `Invalid JSON: ${e.message}` };
+    }
+  },
+
+  // لا استشهادات مُهَلَّة — كل ادعاء يجب أن يظهر في السياق
+  groundedCitations: (output, { retrievedChunks }) => {
+    const claims = extractCitations(output);
+    const ungrounded = claims.filter(
+      (claim) => !retrievedChunks.some((chunk) => chunk.includes(claim))
+    );
+    return ungrounded.length === 0
+      ? { passed: true }
+      : { passed: false, reason: `Ungrounded claims: ${ungrounded.join(', ')}` };
+  },
+
+  // فحص معقولية طول الاستجابة — اكتشاف القطع أو التوليد المفرط
+  reasonableLength: (output) => {
+    const words = output.split(/\s+/).length;
+    return words >= 10 && words <= 2000
+      ? { passed: true }
+      : { passed: false, reason: `Word count ${words} out of bounds` };
+  },
+};
+```
+
+### 2. بناء مجموعة ذهبية من أسوأ أيامك
+
+أفضل بيانات تقييم لديك هي تلك المحرجة: المخرجات التي جعلت أحدهم يفتح تذكرة، يلتقط لقطة شاشة لتوهُّم، أو يتوقف بهدوء عن استخدام الميزة.
+
+في كل مرة يُبلغ فيها مستخدم عن إخراج سيء، أو يُعلِّم عن توهّم، أو تلاحظ فشلًا يدويًا، أضفه إلى مجموعتك الذهبية: الإدخال، والسياق، والسلوك الصحيح. احتفظ بـ 50‑100 حالة وشغّلها على كل تعديل للنموذج.
+
+هذا يبدو يدوياً في البداية. بعد ستة أشهر، ستحصل على مجموعة اختبارات لا يستطيع أي معيار عام استغلالها، لأن كل حالة جاءت من سجل الأخطاء الخاص بك.
+
+<figure class="breakout">
+
+![مخطط تدفق يوضح كيف تتحول حوادث الإنتاج السيئة إلى حالات ذهبية، ثم تشغيل تقييم CI، ثم إما حجب الانحدارات أو إصدارات موافقة.](../golden-set-lifecycle.svg)
+
+<figcaption>المجموعة الذهبية تحول الأشياء المحرجة إلى مجموعة اختبارات انحدار.</figcaption>
+</figure>
+
+**شكل الحالة الذهبية**
+
+```typescript
+interface GoldenCase {
+  id: string;
+  input: string;
+  context: Record<string, unknown>;
+  expectedBehavior: {
+    mustContain?: string[];
+    mustNotContain?: string[];
+    structureCheck?: (output: string) => boolean;
+    minSimilarityToReference?: number; // cosine similarity to a reference answer
+  };
+  sourceIncident?: string; // link back to the bug report or ticket
+}
+```
+
+### 3. اختبار الانحدار، ليس فقط اختبار القبول
+
+معظم الفرق تجري التقييمات فقط عند التفكير في تغيير النموذج. هذا هو اختبار القبول: “هل هذا الجديد جيد بما فيه الكفاية؟”
+
+أنت بحاجة أيضاً إلى اختبار الانحدار: “هل كسر هذا شيئًا كان يعمل مسبقًا؟”
+
+شغّل مجموعتك الذهبية على كل تغيير في الـ prompt، وليس فقط على تغييرات النموذج. الـ prompt الذي كان يعمل بشكل جيد يمكن أن يتدهور بصمت عندما تضيف أداة جديدة، أو تغير استراتيجية استرجاع RAG، أو تُحدّث قالب السياق. لن تعرف ذلك بدون خط أساس. أدوات مثل [Langfuse](https://langfuse.com/) تُرفق درجات التقييم إلى سجلات الإنتاج بحيث يظهر الانحدار في لوحات التحكم، وليس فقط في تقارير الحوادث.
+
+<details>
+<summary>إطار التقييم: مقارنة الخط الأساس بالمرشح</summary>
+
+```typescript
+async function compareModelVersions(
+  goldenCases: GoldenCase[],
+  baselinePipeline: Pipeline,
+  candidatePipeline: Pipeline
+) {
+  const results = await Promise.all(
+    goldenCases.map(async (tc) => {
+      const [baseline, candidate] = await Promise.all([
+        baselinePipeline.run(tc.input, tc.context),
+        candidatePipeline.run(tc.input, tc.context),
+      ]);
+
+      return {
+        id: tc.id,
+        baselinePassed: runEvals(baseline, tc.expectedBehavior),
+        candidatePassed: runEvals(candidate, tc.expectedBehavior),
+        regression: /* baseline passed */ && /* candidate failed */,
+        improvement: /* baseline failed */ && /* candidate passed */,
+      };
+    })
+  );
+
+  const regressions = results.filter((r) => r.regression);
+  const improvements = results.filter((r) => r.improvement);
+
+  console.log(`Regressions: ${regressions.length} / ${goldenCases.length}`);
+  console.log(`Improvements: ${improvements.length} / ${goldenCases.length}`);
+
+  if (regressions.length > 0) {
+    console.error('Blocking regressions found:');
+    regressions.forEach((r) => console.error(` - ${r.id}`));
+  }
+
+  return { regressions, improvements };
+}
+```
+
+</details>
+
+إذا تراجع المرشح في حالات الفشل المعروفة، يصبح نقاش الترقية محددًا بشكل رائع: أي الحالات تحسّنت، أي الحالات انكسرت، وما إذا كان التبادل يستحق العناء.
+
+### 4. استخدم LLM‑as‑Judge لشيء واحد فقط
+
+LLM‑as‑judge مفيد للمخرجات المفتوحة حيث لا توجد إجابة صحيحة حتمية: "هل هذه الاستجابة مفيدة؟"، "هل يلخص هذا النص النقاط الرئيسية؟"، "هل هذا الشرح مناسب للمبتدئ؟"
+
+استخدمه في هذه الحالات. لا تستخدمه للإجابات الحتمية. عندما تستخدمه، اجعل معيار التقييم واضحًا:
+
+**آلية التقييم: حكم قائم على المعيار**
+
+```typescript
+async function judgeHelpfulness(
+  userQuery: string,
+  modelResponse: string
+): Promise<{ score: number; reasoning: string }> {
+  const judgePrompt = `
+You are evaluating a customer support response.
+
+User question: ${userQuery}
+Response: ${modelResponse}
+
+Rate the response on a scale of 1-5:
+5 = Directly answers the question with accurate, actionable information
+4 = Answers the question but could be more specific or actionable
+3 = Partially addresses the question; key information is missing
+2 = Tangentially related but doesn't answer the question
+1 = Off-topic, factually wrong, or harmful
+
+Respond with JSON: {"score": <number>, "reasoning": "<one sentence>"}
+`;
+
+  const result = await judgeModel.generate(judgePrompt);
+  return JSON.parse(result);
+}
+```
+
+معيار صريح يقلل من تباين المقيمين، يمنحك مخرجات قابلة للتفسير، ويسهّل تدقيق الأخطاء عندما يكون الحكم غير صحيح. مكتبات مثل [Autoevals](https://github.com/braintrustdata/autoevals) و[Braintrust](https://www.braintrust.dev/) توفر معايير جاهزة للمهام الشائعة — يستحق الاستفادة منها قبل كتابة معيارك من الصفر.
+
+---
+
+## أدوات تستحق المعرفة
+
+ليس عليك بناء كل هذا من الصفر. عدة أدوات حققت تقدمًا كبيرًا في مشكلة بنية التقييم:
+
+**[Braintrust](https://www.braintrust.dev/)** — منصة تقييم كاملة مع تتبع التجارب، إدارة مجموعات البيانات، ودوال التقييم. تنظم تشغيلات التقييم حسب المطالبة، النموذج، والنشر بحيث يمكنك مقارنة الجودة عبر الزمن، وليس فقط بين الإصدارات. تتكامل جيدًا مع مكتبتهم المفتوحة المصدر **[Autoevals](https://github.com/braintrustdata/autoevals)** التي توفر دوال تقييم نموذجية للمهام الشائعة (دقة الحقائق، الفائدة، السمية، التشابه الدلالي).
+
+**[Langfuse](https://langfuse.com/)** — مراقبة LLM مفتوحة المصدر تجلس بين تطبيقك والنماذج. تتبع كل استدعاء، وتربط درجات التقييم (بشرية أو آلية) بالسبانات الفردية، وتظهر اتجاهات الجودة عبر حركة الإنتاج. خيار جيد إذا أردت المراقبة والتقييم في أداة واحدة بدلاً من منصة تقييم منفصلة.
+
+**[Evalite](https://www.evalite.dev/)** — إطار تقييم أصلي لـ TypeScript من تأليف Matt Pocock. ceremony منخفضة: عرّف مهمة، عرّف مقيّمًا، شغّله ضمن إعداد الاختبارات الحالي. يستهدف الفرق التي تريد تقييمات تشبه اختبارات الوحدة بدلاً من منصة تجارب ML منفصلة.
+
+**[promptfoo](https://www.promptfoo.dev/)** — أداة تشغيل تقييمات سطر الأوامر تركّز على مقارنة الـ prompts واختبار الاختراق. سهل الإعداد عبر ملفات YAML، يتكامل مع معظم مزودي النماذج، ويحتوي على دعم مدمج لاكتشاف حقن الـ prompts وغيرها من المدخلات العدائية.
+
+**[deepeval](https://docs.confident-ai.com/)** — إطار تقييم بلغة Python يضم مكتبة ضخمة من المقاييس المدمجة (G‑Eval، موثوقية RAG، صلة الإجابة، كشف الهلوسة). مفيد لأنابيب RAG عندما تحتاج إلى تقييم دقيق لجودة الاسترجاع، وليس فقط جودة التوليد.
+
+الأداة المناسبة تعتمد على البنية التقنية التي تستخدمها وعلى نقطة الانطلاق. ما يهم أكثر من اختيار الإطار هو الانضباط في تشغيل التقييمات على الإطلاق — بشكل مستمر، وعلى كل تغيير مهم.
+
+---
+
+## الجزء المزعج
+
+معظم الفرق تتخطى هذا لأن السؤال يطرح إزعاجًا مبكرًا: كيف يبدو “الجيد” هنا؟
+
+هذا صعب حقًا عندما تكون الميزة AI جديدة. لكنه غير قابل للتفاوض إذا كنت تهتم بالموثوقية. الفرق التي تُطلق AI موثوق تتبع نفس النهج الذي تتبعه لأي مسار شفرة حرج: تعريف السلوك المتوقع، اختباره، وتشغيل تلك الاختبارات باستمرار.
+
+المقاييس العامة لا تكذب. إنها تجيب على سؤال شخص آخر. توقف عن قراءتها كخرائط طريق للمنتج وابدأ بكتابة اختبارات تتطابق مع نظامك.
+
+سيفتتح مستخدموك الملاحظة قبل أن تظهر على لوحات التحكم. لذا ابنِ مجموعة الاختبارات أولًا.

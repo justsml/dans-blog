@@ -1,0 +1,84 @@
+{
+  "runId": "openai-gpt-oss-120b-nitro@2026-05-13T23-28-07-267Z",
+  "slug": "stop-hardcoding-your-prompts",
+  "locale": "he",
+  "model": "openai/gpt-oss-120b:nitro",
+  "modelPath": "openai-gpt-oss-120b-nitro",
+  "createdAt": "2026-05-13T23:28:19.276Z",
+  "sourcePath": "src/content/posts/2026-05-07--stop-hardcoding-your-prompts/index.mdx",
+  "targetPath": "src/content/posts/2026-05-07--stop-hardcoding-your-prompts/he/index.mdx",
+  "candidatePath": "reports/i18n/stop-hardcoding-your-prompts/he/openai-gpt-oss-120b-nitro/2026-05-13T23-28-07-267Z/candidate.mdx",
+  "sourceHash": "33ae6a35f2ff3387543fa0c1a51d8fcd437bb76314cd5422f314ec4f9632700e",
+  "outputHash": "50416006d3b21c1f091253e1553c9059a06f75ebe96b14d610ca28463688bcde",
+  "reasoningEffort": "low",
+  "temperature": 0.3,
+  "maxTokens": 16000,
+  "timeoutMs": 200000,
+  "articleSummary": "**Summary**  \nThe article argues that embedding LLM prompts directly as raw strings in application code is a hidden, brittle form of configuration that leads to maintenance, testing, and security problems. It frames prompts as “system architecture” and warns that unchecked string interpolation creates prompt‑injection vulnerabilities much like SQL‑injection. To fix this, the author proposes three concrete patterns aimed at developers building AI‑enabled services: (1) **Typed Prompt Templates** – define a schema (e.g., with Zod) for all prompt variables, validate them, and generate the prompt in a single function; (2) **Composable Prompt Sections** – break a prompt into named, prioritized pieces that can be conditionally assembled, making each piece searchable, testable, and version‑controlled; (3) **Separate Instructions from Data** – use the chat‑message format (system/user roles) instead of a monolithic string, keeping model instructions distinct from user‑supplied content to mitigate injection. The tone is a pragmatic tutorial‑style rant, using the metaphor of “buried prompts” as invisible load‑bearing code, and it targets software engineers and product teams who integrate LLMs into production systems.",
+  "totalInputTokens": 7599,
+  "totalOutputTokens": 3193,
+  "totalCacheReadTokens": 2816,
+  "totalCacheWriteTokens": 0,
+  "totalDurationMs": 9415,
+  "totalCostUsd": 0.000871101,
+  "pricingSource": "local-openrouter-estimate",
+  "telemetry": {
+    "model": "openai/gpt-oss-120b:nitro",
+    "chunkSize": "10p",
+    "totalChunks": 5,
+    "totalInputTokens": 7599,
+    "totalOutputTokens": 3193,
+    "totalCacheReadTokens": 2816,
+    "totalCacheWriteTokens": 0,
+    "totalDurationMs": 9415,
+    "totalCostUsd": 0.000871101,
+    "pricingSource": "local-openrouter-estimate",
+    "chunks": [
+      {
+        "index": 0,
+        "inputTokens": 1241,
+        "outputTokens": 437,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 1978,
+        "costUsd": 0.000127059
+      },
+      {
+        "index": 1,
+        "inputTokens": 1473,
+        "outputTokens": 520,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 1388,
+        "costUsd": 0.000151047
+      },
+      {
+        "index": 2,
+        "inputTokens": 1887,
+        "outputTokens": 1099,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 2836,
+        "costUsd": 0.00027141299999999997
+      },
+      {
+        "index": 3,
+        "inputTokens": 1567,
+        "outputTokens": 598,
+        "cacheReadTokens": 768,
+        "cacheWriteTokens": 0,
+        "durationMs": 1881,
+        "costUsd": 0.000168753
+      },
+      {
+        "index": 4,
+        "inputTokens": 1431,
+        "outputTokens": 539,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 1332,
+        "costUsd": 0.000152829
+      }
+    ]
+  }
+}

@@ -8,6 +8,71 @@ const LOCALE_IMPORT_ROOTS = [
   "utils",
 ];
 
+type LengthRatioBounds = {
+  minimumRatio: number;
+  maximumRatio: number;
+  label: string;
+};
+
+const DEFAULT_LENGTH_RATIO_BOUNDS: LengthRatioBounds = {
+  minimumRatio: 0.65,
+  maximumRatio: 1.4,
+  label: "default prose range: 65%-140% of English",
+};
+
+const LOCALE_LENGTH_RATIO_BOUNDS: Record<string, LengthRatioBounds> = {
+  ar: {
+    minimumRatio: 0.5,
+    maximumRatio: 1.65,
+    label: "Arabic range: 50%-165% of English",
+  },
+  de: {
+    minimumRatio: 0.7,
+    maximumRatio: 1.65,
+    label: "German range: 70%-165% of English",
+  },
+  es: {
+    minimumRatio: 0.7,
+    maximumRatio: 1.55,
+    label: "Spanish range: 70%-155% of English",
+  },
+  fr: {
+    minimumRatio: 0.7,
+    maximumRatio: 1.6,
+    label: "French range: 70%-160% of English",
+  },
+  he: {
+    minimumRatio: 0.5,
+    maximumRatio: 1.55,
+    label: "Hebrew range: 50%-155% of English",
+  },
+  hi: {
+    minimumRatio: 0.45,
+    maximumRatio: 1.75,
+    label: "Hindi range: 45%-175% of English",
+  },
+  it: {
+    minimumRatio: 0.7,
+    maximumRatio: 1.55,
+    label: "Italian range: 70%-155% of English",
+  },
+  ja: {
+    minimumRatio: 0.35,
+    maximumRatio: 1.3,
+    label: "Japanese CJK-adjusted range: 35%-130% of English",
+  },
+  ru: {
+    minimumRatio: 0.6,
+    maximumRatio: 1.6,
+    label: "Russian range: 60%-160% of English",
+  },
+  zh: {
+    minimumRatio: 0.35,
+    maximumRatio: 1.25,
+    label: "Chinese CJK-adjusted range: 35%-125% of English",
+  },
+};
+
 const LOCALE_IMPORT_ROOT_PATTERN = LOCALE_IMPORT_ROOTS.join("|");
 const LOCALE_IMPORT_PREFIX_PATTERN = String.raw`(?:\.\.\/){3,}`;
 const LOCALE_IMPORT_FROM_PATTERN = new RegExp(
@@ -80,8 +145,7 @@ export function assertTranslationLength({
   const sourceLength = getComparablePostLength(sourceContents);
   const targetLength = getComparablePostLength(targetContents);
   const minimumTargetLength = 600;
-  const minimumRatio = 0.65;
-  const maximumRatio = 1.35;
+  const { minimumRatio, maximumRatio, label } = getLengthRatioBounds(targetPath);
 
   if (targetLength <= minimumTargetLength) {
     throw new Error(
@@ -93,13 +157,30 @@ export function assertTranslationLength({
   const maximumLength = Math.ceil(sourceLength * maximumRatio);
   if (targetLength < minimumLength || targetLength > maximumLength) {
     throw new Error(
-      `${targetPath} changed comparable body length from ${sourceLength} chars in English to ${targetLength} chars. Expected ${minimumLength}-${maximumLength} chars (within 35%).`,
+      `${targetPath} changed comparable body length from ${sourceLength} chars in English to ${targetLength} chars. Expected ${minimumLength}-${maximumLength} chars (${label}).`,
     );
   }
 }
 
+function getLengthRatioBounds(targetPath: string) {
+  const locale = targetPath.match(/^([a-z]{2})$/)?.[1] ?? targetPath.match(/\/([a-z]{2})\/index\.mdx?$/)?.[1];
+
+  return locale == null
+    ? DEFAULT_LENGTH_RATIO_BOUNDS
+    : LOCALE_LENGTH_RATIO_BOUNDS[locale] ?? DEFAULT_LENGTH_RATIO_BOUNDS;
+}
+
+export function getLengthValidationGuidance(targetPathOrLocale: string) {
+  const bounds = getLengthRatioBounds(targetPathOrLocale);
+  const minimum = Math.round(bounds.minimumRatio * 100);
+  const maximum = Math.round(bounds.maximumRatio * 100);
+  return `The final translated prose must be longer than 600 characters and roughly ${minimum}%-${maximum}% of the English prose length (${bounds.label}). Do not summarize to satisfy the lower bound or pad to satisfy the upper bound.`;
+}
+
 export function getComparablePostLength(contents: string) {
-  return stripImportLines(stripFrontmatter(contents)).trim().length;
+  return normalizeComparableWhitespace(
+    stripMdxComments(stripHtmlPreCodeBlocks(stripFencedCodeBlocks(stripImportLines(stripFrontmatter(contents))))),
+  ).length;
 }
 
 export function assertNestedAssetPaths(targetContents: string, targetPath: string) {
@@ -163,4 +244,43 @@ function stripImportLines(contents: string) {
     .split(/\r?\n/)
     .filter((line) => !line.trimStart().startsWith("import "))
     .join("\n");
+}
+
+function stripFencedCodeBlocks(contents: string) {
+  const lines = contents.split(/\r?\n/);
+  const result: string[] = [];
+  let fence: string | undefined;
+
+  for (const line of lines) {
+    const fenceMatch = line.match(/^\s*(```+|~~~+)/);
+    if (fenceMatch != null) {
+      const marker = fenceMatch[1].startsWith("`") ? "`" : "~";
+      if (fence == null) {
+        fence = marker;
+      } else if (fence === marker) {
+        fence = undefined;
+      }
+      continue;
+    }
+
+    if (fence == null) {
+      result.push(line);
+    }
+  }
+
+  return result.join("\n");
+}
+
+function stripHtmlPreCodeBlocks(contents: string) {
+  return contents.replace(/<pre\b[\s\S]*?<\/pre>/gi, "");
+}
+
+function stripMdxComments(contents: string) {
+  return contents
+    .replace(/\{\/\*[\s\S]*?\*\/}/g, "")
+    .replace(/<!--[\s\S]*?-->/g, "");
+}
+
+function normalizeComparableWhitespace(contents: string) {
+  return contents.replace(/\s+/g, " ").trim();
 }

@@ -1,0 +1,102 @@
+{
+  "runId": "openai-gpt-oss-120b-nitro@2026-05-13T23-31-10-275Z",
+  "slug": "securing-clawdbot-tailscale",
+  "locale": "ar",
+  "model": "openai/gpt-oss-120b:nitro",
+  "modelPath": "openai-gpt-oss-120b-nitro",
+  "createdAt": "2026-05-13T23:31:23.902Z",
+  "sourcePath": "src/content/posts/2026-01-26--securing-clawdbot-tailscale/index.mdx",
+  "targetPath": "src/content/posts/2026-01-26--securing-clawdbot-tailscale/ar/index.mdx",
+  "candidatePath": "reports/i18n/securing-clawdbot-tailscale/ar/openai-gpt-oss-120b-nitro/2026-05-13T23-31-10-275Z/candidate.mdx",
+  "sourceHash": "774feafac3dd3c408584db2b169a365e3f58a8b6a6d0541778aad55f122f5285",
+  "outputHash": "fd0c352b8f13c3bae62f42fa11c528b8162e28fe53ba0edf4088638623f75b5a",
+  "reasoningEffort": "low",
+  "temperature": 0.3,
+  "maxTokens": 16000,
+  "timeoutMs": 200000,
+  "articleSummary": "The article warns that exposing OpenClaw’s gateway, node controls, or SSH to the public internet gives attackers direct shell access, and it presents a concrete hardening workflow. It explains three attack surfaces—SSH (port 22), the gateway UI/WebSocket (port 18789), and remote‑node/browser control—and shows how mis‑configuring these (e.g., publishing Docker ports or enabling Tailscale Funnel) leads to remote code execution. The core solution is to keep the gateway bound to 127.0.0.1 and route traffic only through a private Tailscale tailnet using “Serve” mode, optionally securing the gateway with token‑based auth, while avoiding public Funnel exposure. The guide is written for developers and sysadmins deploying OpenClaw, using a practical tutorial tone with recurring metaphors of “operator surfaces” and “gateways” as doors that must stay closed to strangers.",
+  "totalInputTokens": 9904,
+  "totalOutputTokens": 3781,
+  "totalCacheReadTokens": 3328,
+  "totalCacheWriteTokens": 0,
+  "totalDurationMs": 12414,
+  "totalCostUsd": 0.001066836,
+  "pricingSource": "local-openrouter-estimate",
+  "telemetry": {
+    "model": "openai/gpt-oss-120b:nitro",
+    "chunkSize": "10p",
+    "totalChunks": 7,
+    "totalInputTokens": 9904,
+    "totalOutputTokens": 3781,
+    "totalCacheReadTokens": 3328,
+    "totalCacheWriteTokens": 0,
+    "totalDurationMs": 12414,
+    "totalCostUsd": 0.001066836,
+    "pricingSource": "local-openrouter-estimate",
+    "chunks": [
+      {
+        "index": 0,
+        "inputTokens": 1388,
+        "outputTokens": 789,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 1931,
+        "costUsd": 0.000196152
+      },
+      {
+        "index": 1,
+        "inputTokens": 1475,
+        "outputTokens": 569,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 1488,
+        "costUsd": 0.000159945
+      },
+      {
+        "index": 2,
+        "inputTokens": 1325,
+        "outputTokens": 283,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 1728,
+        "costUsd": 0.00010261499999999999
+      },
+      {
+        "index": 3,
+        "inputTokens": 1559,
+        "outputTokens": 631,
+        "cacheReadTokens": 768,
+        "cacheWriteTokens": 0,
+        "durationMs": 1526,
+        "costUsd": 0.000174381
+      },
+      {
+        "index": 4,
+        "inputTokens": 1479,
+        "outputTokens": 583,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 2955,
+        "costUsd": 0.000162621
+      },
+      {
+        "index": 5,
+        "inputTokens": 1326,
+        "outputTokens": 399,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 1167,
+        "costUsd": 0.00012353400000000001
+      },
+      {
+        "index": 6,
+        "inputTokens": 1352,
+        "outputTokens": 527,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 1619,
+        "costUsd": 0.00014758799999999998
+      }
+    ]
+  }
+}
