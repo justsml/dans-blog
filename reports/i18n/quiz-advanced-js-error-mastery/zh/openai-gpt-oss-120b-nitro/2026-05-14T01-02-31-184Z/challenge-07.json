@@ -1,0 +1,47 @@
+{
+  "index": 6,
+  "attempt": 1,
+  "originalTitle": "Constructor Name Gotcha",
+  "translatedTitle": "构造函数名称陷阱",
+  "translation": {
+    "title": "构造函数名称陷阱",
+    "group": "自定义错误",
+    "options": [
+      {
+        "text": "\"MyError\""
+      },
+      {
+        "text": "\"Error\""
+      },
+      {
+        "text": "undefined"
+      },
+      {
+        "text": "TypeError"
+      }
+    ],
+    "questionProse": [
+      "如果不设置 `name`，输出是什么？"
+    ],
+    "explanationProse": [
+      "如果没有显式设置 `this.name`，错误会继承 `Error` 类的默认 `name` 属性，即 `\"Error\"`。这就是为什么自定义错误类的构造函数里应该始终设置 `this.name = this.constructor.name` 的原因。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"构造函数名称陷阱\",\n  \"group\": \"自定义错误\",\n  \"options\": [\n    {\n      \"text\": \"\\\"MyError\\\"\"\n    },\n    {\n      \"text\": \"\\\"Error\\\"\"\n    },\n    {\n      \"text\": \"undefined\"\n    },\n    {\n      \"text\": \"TypeError\"\n    }\n  ],\n  \"questionProse\": [\n    \"如果不设置 `name`，输出是什么？\"\n  ],\n  \"explanationProse\": [\n    \"如果没有显式设置 `this.name`，错误会继承 `Error` 类的默认 `name` 属性，即 `\\\"Error\\\"`。这就是为什么自定义错误类的构造函数里应该始终设置 `this.name = this.constructor.name` 的原因。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 788,
+    "outputTokens": 502,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 444,
+    "providerCostUsd": 0.0006523,
+    "providerUpstreamCostUsd": 0.0006523,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000030731999999999996,
+    "outputUsd": 0.00009035999999999998,
+    "totalUsd": 0.00012109199999999997,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
