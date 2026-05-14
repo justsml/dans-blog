@@ -1,0 +1,471 @@
+---
+unlisted: false
+title: 测验：你了解 CSS基础吗？（2025）
+subTitle: 你足够前端吗？
+label: CSS Fundamentals
+social_image: ../desktop-social.webp
+category: Quiz
+subCategory: CSS
+date: '2024-11-08'
+modified: '2024-11-10'
+tags:
+  - quiz
+  - intro
+  - css
+  - styles
+  - beginner
+  - intermediate
+cover_full_width: ../yeshi-kangrang-Qq7A85iCzhQ-unsplash-wide.webp
+cover_mobile: ../yeshi-kangrang-Qq7A85iCzhQ-unsplash-square.webp
+cover_icon: ../yeshi-kangrang-Qq7A85iCzhQ-unsplash-square.webp
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+
+## 测验：你了解 CSS 吗？
+
+* 现代 CSS？  🤔
+* **CSS 应该写在 _你的_ 简历上吗???** 🚀
+* 多项选择。 🤖 ... _这能有多难呢？_
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="热身：字体"
+  title="无效的 CSS 字体大小单位"
+  options={[
+    {text: '10cx', isAnswer: true},
+    {text: '10mm'},
+    {text: '10pt'},
+    {text: '10px'},
+    {text: '10vmin'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    选择 <em class="highlight">唯一无效的</em> ❌ `font-size`：
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `10cx` 不正确，因为 `cx` 不是一个真实的 CSS 单位。（至少在撰写本文时是如此。）
+
+    常用单位包括熟悉的 `px`、`rem`、`em`。
+
+    较新的单位对动态、响应式布局很有用。
+
+    - `ch` - `0` 字符的宽度
+    - `vmin` - 视口最小值
+    - `vmax` - 视口最大值
+    - `vh` - 视口高度
+    - `vw` - 视口宽度
+
+    还有一些一直存在但很少使用的单位，例如表示厘米的 `cm`、`mm`、表示英寸的 `in`、以及表示点的 `pt`。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="热身：颜色"
+  title="十六进制代码"
+  options={[
+    {text: '#A'},
+    {text: '#AB'},
+    {text: '#ABCD', isAnswer: true},
+    {text: '#ABCDE'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    你能找出 <em class="highlight">ONE</em> 有效的 👍 十六进制代码吗？
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    十六进制代码可用于在 CSS 中表示颜色。它们以 `#` 开头，必须包含 3、4、6 或 8 位十六进制数字。
+
+    3 位十六进制代码是 6 位代码的简写形式，每个字符会重复一次。4 位代码则包含透明度的 alpha 通道。
+
+    例如 `#ABC` 等同于 `#AABBCC`，`#ABCD` 等同于 `#AABBCCDD`。想了解更多十六进制值的处理方式，请查看我的 [JavaScript 数字测验](/quiz-can-you-count-to-bigint/)。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="热身：单位"
+  title="哎呀，都是单位！"
+  options={[
+    {text: 'em'},
+    {text: 'rem'},
+    {text: 'cm'},
+    {text: 'mm'},
+    {text: 'in'},
+    {text: 'pt'},
+    {text: 'pc'},
+    {text: 'px'},
+    {text: 'ex'},
+    {text: 'ch'},
+    {text: 'vmin'},
+    {text: 'vmax'},
+    {text: 'vh'},
+    {text: 'rel', isAnswer: true},
+    {text: 'vw'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    以下哪个单位 <em class="highlight">不是</em> 有效的 ❌ CSS 单位？
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    像 `ch`、`vmin`、`vmax`、`vh`、`vw` 这样的新单位在动态/响应式布局中非常有用。
+
+    还有一些一直存在但很少使用的单位，例如表示厘米的 `cm`、`mm`、表示英寸的 `in`、表示点的 `pt`、`pc`、表示大写字母大小的 `cap`，以及等于字母 `x` 高度的 `ex`。
+
+    常用单位包括熟悉的像素单位 `px`、相对于元素字体大小的 `em`，以及 `rem`——它其实只是相对于根元素的 `em` 单位，别想太多，它并不是对已逝的 90 年代乐队 R.E.M. 的致敬。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="选择器：基础"
+  title="匹配选择器与 HTML 元素"
+  options={[
+    {text: '#Home'},
+    {text: 'a [id=\'home\']'},
+    {text: 'a:contains(home)'},
+    {text: 'a#home[name=\'home\']', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    以下 HTML 最匹配哪个选择器？
+    ```html
+          <a id="home" name="home" href="/home">Home</a>
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    正确答案是 `a#home[name='home']`，它同时匹配 `id` 和 `name` 属性。CSS 选择器区分大小写，所以 `#Home` 不起作用，且空格表示子元素，这里不适用。
+
+    `:contains()` 选择器不是标准的 CSS 选择器，但在某些 JS 库中可用。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="选择器：基础"
+  title="按钮的属性选择器"
+  options={[
+    {text: 'button:link'},
+    {text: 'button::click'},
+    {text: 'button:focus'},
+    {text: 'button[onclick]', isAnswer: true},
+    {text: 'button[on-click]'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    哪个选择器匹配下面的 HTML 按钮？
+    ```html
+          <button onclick="openModal()">Contact</button>
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    正确答案是 `button[onclick]`，它匹配属性 `onclick` 的存在。
+
+    请注意，`:link` 只针对未访问的 `href` 链接，`::click` 不是有效的伪元素，且 `:focus` 只针对获得焦点的元素。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="选择器：基础"
+  title="无效的 CSS 选择器"
+  options={[
+    {text: 'a {}'},
+    {text: 'b.b {}'},
+    {text: 'c > > d {}', isAnswer: true},
+    {text: '#d {}'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    以下哪个选择器是无效的？
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    选择器 `c > > d {}` 无效，因为子组合符 `>` 被重复使用且两者之间没有选择器。
+
+    其余选择器都是有效的。像 `c {}` 这样的类型选择器在语法上是合法的 CSS，即使 `c` 不是标准的 HTML 元素。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="选择器：基础"
+  title="选择最后一个链接"
+  options={[
+    {text: 'a :nth-child(3)'},
+    {text: 'a:last-item'},
+    {text: 'nav:last-of-type(a)'},
+    {text: 'nav:nth-child(3)'},
+    {text: 'a:last-child', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    以下 HTML 中，哪个选择器匹配最后一个链接？
+    ```html
+          <nav>
+            <a name="home" href="/home">Home</a>
+            <a name="login" href="/login">Login</a>
+            <a name="help" href="/help">Help</a>
+          </nav>
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    正确的选择器是 `a:last-child`，它匹配当 `<a>` 同时也是其父元素的最后一个子节点时的最后一个 `<a>`。`nav:nth-child(3)` 会匹配其父元素的第三个子元素 `<nav>`。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="选择器：特异性"
+  title="选择器优先级"
+  options={[
+    {text: 'main article section blockquote a'},
+    {text: 'blockquote a'},
+    {text: 'a#quote', isAnswer: true},
+    {text: 'a.quote'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    哪个选择器会拥有更高的优先级？
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `a#quote` 选择器因包含 ID 而拥有最高的特异性，优先级高于仅使用标签或类的选择器。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="布局：居中"
+  title="在块级元素中居中文本"
+  options={[
+    {text: 'align: center;'},
+    {text: 'margin: 0 auto;'},
+    {text: 'align-content: center;'},
+    {text: 'text-align: center;', isAnswer: true},
+    {text: 'text-content: center;'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    怎么在盒子里居中“shit”？
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    使用 `text-align: center;` 是在块级元素中居中文本的正确方法。`align` 属性用于 flexbox 布局，`margin: 0 auto;` 用于水平居中块级元素。
+
+    `align-content` 属性用于 grid 布局，而 `text-content` 不是有效的 CSS 属性。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="布局：居中"
+  title="垂直居中块级元素"
+  options={[
+    {text: 'align-items: center;'},
+    {text: 'justify-content: center;'},
+    {text: 'align-content: center;', isAnswer: true},
+    {text: 'margin: auto;'},
+    {text: 'margin: 0 auto;'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    如何在现代流式布局中垂直居中块容器内的内容？
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    使用 `align-content` 是在流式布局中垂直居中块容器内容的现代方法。
+
+    `align-items` 和 `justify-content` 属性用于 flexbox 和 grid 布局，而不是流式布局。
+
+    `margin: 0 auto;` 和 `margin: auto;` 都只能水平居中块级元素，无法垂直居中。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="布局：单位"
+  title="计算嵌套字体大小的像素尺寸"
+  options={[
+    {text: '!40px'},
+    {text: '5px', isAnswer: true},
+    {text: '20px'},
+    {text: '25px'},
+    {text: '40px'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    以下 HTML 中 `<a>` 链接文本的像素大小是多少？
+    ```html
+          <body style="font-size: 40px !important;">
+            <nav style="font-size: 50%;">
+              <a style="font-size: 25%;">HOME</a>
+            </nav>
+          </body>
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    对于 `<a>`，`font-size` 计算结果为 5px：40px（body） * 50%（nav） = 20px，然后 20px * 25% = 5px。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="单位：REM"
+  title="使用 REM 计算像素大小"
+  options={[
+    {text: '10px'},
+    {text: '12px', isAnswer: true},
+    {text: '14px'},
+    {text: '20px'},
+    {text: '24px'},
+    {text: '34px'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    下面 HTML 中的 "HOME" 链接，`1.2rem` 的像素大小是多少？
+    ```html
+          <html style="font-size: 10px;">
+            <body style="font-size: 20px;">
+              <a style="font-size: 1.2rem;">HOME</a>
+            </body>
+          </html>
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `1.2rem` 转换为 12px，因为 `rem` 单位引用根元素或 `<html>` 的字体大小，这里设为 10px。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="单位：EM"
+  title="使用 EM 计算像素大小"
+  options={[
+    {text: '10px'},
+    {text: '12px'},
+    {text: '14px'},
+    {text: '20px'},
+    {text: '24px', isAnswer: true},
+    {text: '34px'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    和前一道题类似，下面 HTML 中 "HOME" 链接的 `1.2em` 对应的像素大小是多少？
+    ```html
+          <html style="font-size: 10px;">
+            <body style="font-size: 20px;">
+              <a style="font-size: 1.2em;">HOME</a>
+            </body>
+          </html>
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `1.2em` 转换为 24px，因为 `em` 单位引用继承的字体大小，这里设置为 20px。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={13}
+  group="选择器：特异性"
+  title="零特异性选择器"
+  options={[
+    {text: ':where(.card) .title', isAnswer: true},
+    {text: '.card .title'},
+    {text: ':is(.card) .title'},
+    {text: '#card .title'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    哪个选择器的特异性最低？
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `:where(.card) .title` 的特异性最低。`:where()` 伪类及其内部内容的特异性为 `0-0-0`，因此仅计算 `.title`。而 `:is(.card) .title` 保留了 `.card` 的特异性，`.card .title` 包含两个类选择器，`#card .title` 则包含一个 ID 选择器。
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
