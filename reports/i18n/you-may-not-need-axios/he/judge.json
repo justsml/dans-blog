@@ -1,0 +1,83 @@
+{
+  "selectedCommit": "c9ea7d21ed2c9df737acf18053eecf9601972cd2",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 9
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "- [סקירה כללית](#overview)\n- [השוואת תכונות](#feature-comparison)\n- [מתכוני Fetch](#fetch-recipes)\n- [השוואת תכונות](#feature-comparison)\n- [מתכוני Fetch](#fetch-recipes)",
+      "replacement": "- [סקירה כללית](#overview)\n- [השוואת תכונות](#feature-comparison)\n- [מתכוני Fetch](#fetch-recipes)",
+      "reason": "The table of contents has duplicate entries for 'Feature Comparison' and 'Fetch Recipes' which is not present in the source."
+    },
+    {
+      "priority": "high",
+      "match": "| התקדמות                                         |✅        |✅         |✅       |\n| סטרימינג                       ...\n\n|                                                 | fetch    | axios    | request |\n|-------------------------------------------------|:--------:|:--------:|:-------:|\n| יירוט בקשות ותגובות                             |✅        |✅         |✅       |\n| שינוי נתוני בקשה ותגובה                         |✅        |✅         |✅       |\n| ביטול בקשות                                     |✅        |✅         |❌       |\n| המרות אוטומטיות לנתוני JSON                     |עזרים ידניים |✅         |✅       |\n| תמיכה בצד הלקוח להגנה מפני XSRF                 |✅        |✅         |✅       |\n| התקדמות                                         |✅        |✅         |✅       |\n| סטרימינג                                        |✅        |✅         |✅       |\n| הפניות                                          |✅        |✅         |✅       |",
+      "replacement": "|                                                 | fetch    | axios    | request |\n|-------------------------------------------------|:--------:|:--------:|:-------:|\n| יירוט בקשות ותגובות                             |✅        |✅         |✅       |\n| שינוי נתוני בקשה ותגובה                         |✅        |✅         |✅       |\n| ביטול בקשות                                     |✅        |✅         |❌       |\n| המרות אוטומטיות לנתוני JSON                     |עזרים ידניים |✅         |✅       |\n| תמיכה בצד הלקוח להגנה מפני XSRF                 |✅        |✅         |✅       |\n| התקדמות                                         |✅        |✅         |✅       |\n| סטרימינג                                        |✅        |✅         |✅       |\n| הפניות                                          |✅        |✅         |✅       |",
+      "reason": "The feature comparison table is corrupted with a partial duplicate and ellipsis in the middle of the markdown table structure."
+    },
+    {
+      "priority": "medium",
+      "match": "[יידע אותי ✉️](../contact/)",
+      "replacement": "[יידע אותי ✉️](/contact/)",
+      "reason": "The link should be root-relative '/contact/' as in the source to ensure it works correctly across different URL depths."
+    }
+  ],
+  "rationale": "The translation is high quality and captures the tone well, but the current MDX contains a corrupted table and a duplicated table of contents likely caused by a merge or generation error. These need to be cleaned up to match the source structure.",
+  "slug": "you-may-not-need-axios",
+  "locale": "he",
+  "candidateCommits": [
+    "c9ea7d21ed2c9df737acf18053eecf9601972cd2",
+    "c0f8706d3fa8819c93ca6807c0a2bbe6c9e916d0"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "title: אולי לא צריך Axios",
+      "replacement": "title: \"אולי לא צריך Axios\"",
+      "reason": "The English title is quoted; Hebrew should follow the same style for consistency.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "[יידע אותי ✉️](../contact/)",
+      "replacement": "[יידע אותי ✉️](/contact/)",
+      "reason": "The link to /contact/ is an absolute path from the root in the original; changing it to ../contact/ might break if the structure doesn't match, though the instructions mentioned assets, usually internal site links are kept as root-relative.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "[יידע אותי ✉️](/contact/)",
+      "replacement": "[יידע אותי ✉️](/contact/)",
+      "reason": "The previous judge suggested changing this to a relative path, but the original English uses a root-relative path '/contact/'. Keeping it root-relative is safer for site-wide navigation consistency.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match and replacement are identical; no MDX change needed."
+    },
+    {
+      "priority": "medium",
+      "match": "- [סקירה כללית](#overview)",
+      "replacement": "- [סקירה כללית](#overview)\n- [השוואת תכונות](#feature-comparison)\n- [מתכוני Fetch](#fetch-recipes)",
+      "reason": "Ensuring the TOC list formatting is clean and matches the English structure exactly.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug you-may-not-need-axios --locale he --skip-global",
+    "output": ""
+  }
+}
