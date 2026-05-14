@@ -1,0 +1,248 @@
+# Translation Candidate
+- Slug: are-promises-broken
+- Locale: he
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2018-10-06--are-promises-broken/he/index.mdx
+- Validation: deferred
+- Runtime seconds: 48.40
+- Input tokens: 7704
+- Output tokens: 7082
+- Thinking tokens: unknown
+- Cached input tokens: 2304
+- Cache write tokens: 0
+- Estimated cost: $0.002745
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: הבטחות שבורות?
+unlisted: true
+subTitle: 'משמיטים שגיאות, מאבדים תוצאות...'
+date: '2018-10-06'
+modified: '2024-12-11'
+tags:
+  - promises
+  - javascript
+  - errors
+  - programming
+category: Code
+subCategory: promises
+cover: ../lennart-heim-766366-unsplash.webp
+cover_mobile: ../w300_lennart-heim-766366-unsplash.webp
+cover_icon: ../icon_lennart-heim-766366-unsplash.webp
+---
+## האם הבטחות JavaScript שבורות?
+
+### בימי קדם
+
+אחד המיתוסים הנפוצים ביותר על הבטחות הוא **כביכול** חסרונות הטיפול בשגיאות.
+
+**לפני שנים רבות** הבטחות _היו_ באמת נוראיות עם שגיאות. **הרבה עבודה הושקעה בתיקון זה.**
+
+> והנה, **זה תוקן**, ואף **נפרס באופן נרחב**.
+
+#### אנשים שמחו
+
+ולצערנו, חלק לא שמו לב.
+
+### הזמנים הנוכחיים
+
+המיתוס עדיין נמשך, אני רואה אותו בכל מקום: [מאמרים פופולריים ב-medium](https://hackernoon.com/6-reasons-why-javascripts-async-await-blows-promises-away-tutorial-c7ec10518dd9), [ב-dzone](#redacted), ו[רבים](https://medium.com/@avaq/broken-promises-2ae92780f33) מקורות אחרים.
+
+אני מודה, אפילו משאבים ותיעוד "רשמיים" מציעים בעיקר [דוגמאות חלשות והרגלים רעים](../promise-gotchas/). אלה משמשים לעתים קרובות כדי "להוכיח" את הטענה נגד הבטחות. חלק אף מציעים "תרופות" שמחמירות את המצב הרבה יותר. (הערה: הקישור הוסר)
+
+<!-- One such tip I've seen multiple times: is to never use `.catch`, and instead use an `"unhandledRejection"` global event. **NEVER** do this. unhandledRejection is designed for cleanup of global references, like database connections, before an impending shutdown.) -->
+
+<br />
+<br />
+
+## כללים להימנעות מצרות
+
+1. [הבטחות צריכות משהו להיאחז בו](#1-promises-need-something-to-hang-on-to)
+    * **תמיד** החזר (`return`) מהפונקציות שלך.
+1. [השתמש במופעי `Error` אמיתיים](#2-use-real-error-instances)
+    * **תמיד** השתמש במופעי `Error`.
+1. [טפל בשגיאות היכן שזה הגיוני](#3-handle-errors-where-it-makes-sense)
+    * **תמיד** השתמש ב-`.catch()`, לפחות פעם אחת.
+1. [הוסף בהירות עם פונקציות בעלות שם 🦄✨](#4-add-clarity-with-named-functions-)
+    * __עדיף__ להשתמש בפונקציות בעלות שם.
+
+-------------------------------------------
+
+#### #1 הבטחות צריכות משהו להיאחז בו
+
+חשוב מאוד **תמיד להחזיר (`return`)** מהפונקציות שלך.
+
+פונקציות הקולבק של הבטחות פועלות לפי תבנית מסוימת ב-`.then(callback)` וב-`.catch(callback)`.
+
+כל ערך שמוחזר מועבר לקולבק של ה-`.then()` הבא.
+
+```js
+function addTen(number) {
+  return number + 10;
+}
+
+Promise.resolve(10)  // 10
+  .then(addTen)      // 20
+  .then(addTen)      // 30
+  .then(addTen)      // 40
+  .then(console.log) // logs "40"
+```
+
+> בונוס של "תמיד להחזיר": הקוד הרבה יותר קל לבדיקות יחידה.
+
+**שאלה:** כמה מצבי Promise נפרדים (resolved ו-rejected) נוצרו?
+
+**שאלה:** כמה promises נוצרו בדוגמה הקודמת?
+
+#### #2 השתמש במופעי `Error` אמיתיים
+
+ל-JavaScript יש התנהגות מעניינת סביב שגיאות (החלה על קוד אסינכרוני **ו**סינכרוני).
+
+<a href="https://repl.it/@justsml/throwing-errors-in-javascript" target="_blank">[<i>ראה דוגמה ב-repl.it: `throwing errors in javascript`</i>]</a>
+<img alt="זריקת שגיאות ב-JavaScript" src="../throwing-errors-in-javascript.webp" />
+
+כדי **לקבל פרטים שימושיים על מספר השורה** ו-call stack, עליך להשתמש במופעי `Error`. זריקת מחרוזות לא עובדת כמו ב-Python או Ruby.
+
+למרות ש-JavaScript **נראה** כמטפל ב-`throw "string"`, תראה את המחרוזת ב-handler של `catch`. עם זאת, הנתונים הם כל מה שתראה*. שום [stack frames](https://en.wikipedia.org/wiki/Call_stack#Stack_and_frame_pointers) קודמים לא ייכללו.
+
+דוגמאות נכונות של `new Error`:
+
+```js
+throw new Error('message')           // ✅
+Promise.reject(new Error('message')) // ✅
+throw Error('message')               // ✅
+Promise.reject(Error('message'))     // ✅
+```
+
+הבאים הם anti-patterns נפוצים:
+
+```js
+throw 'error message'  // ❌
+Promise.reject(-42)    // ❌
+```
+
+<iframe height="400px" width="100%" src="https://repl.it/@justsml/throwing-errors-in-javascript?lite=true" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals"></iframe>
+
+#### #3 טיפול בשגיאות במקום שבו זה הגיוני
+
+Promises מספקות דרך חלקה לטיפול בשגיאות באמצעות `.catch()`. זה בעצם סוג מיוחד של `.then()` – שבו כל שגיאה מ-`.then()` קודמים מטופלת. בואו נסתכל על דוגמה...
+
+```js
+Promise.resolve(42)
+  .then(() => 'hello')
+  .catch(() => console.log('will not get hit'))
+  .then(() => throw new Error('totes fail'))
+  .catch(() => console.log('WILL get hit'))
+```
+
+בעוד ש-`.catch()` עשוי להיראות כמו מאזין אירועי DOM (למשל `click`, `keypress`), המיקום שלו חשוב – הוא יכול "לתפוס" רק שגיאות שנזרקות **מעליו.**
+
+**דחיסת שגיאות היא יחסית טריוויאלית** – החזר ערך שאינו שגיאה ב-callback של `.catch()`, ושרשרת ה-Promise תעבור להרצת ה-callbacks של `.then()` ברצף. (למעשה.)
+
+נסו לעקוב אחר הרצף בדוגמה הבאה:
+
+```js
+Promise.resolve(42)
+  .then(() => 'hello')
+  .then(() => throw new Error('totes fail'))
+  .catch(() => {
+    return 99
+  })
+  .then(num => num + 1)
+  .then(console.log) // expected output: 100
+```
+
+**הרצף הוא מה שחשוב להבין.**
+
+למרות שמדובר בדוגמה מטופשת, היא נועדה **להמחיש כיצד שגיאות ונתונים זורמים** ב-Promises.
+
+הנה תיאור הרצף:
+
+1. 42 הוא הערך ההתחלתי.
+1. `hello` תמיד מוחזר על ידי המתודה הבאה.
+1. אנו מתעלמים מהערך הקודם וזורקים שגיאה עם ההודעה `'totes fail'`.
+1. `.catch()` מיירט את השגיאה, ובמקום זאת מחזיר `99` שיטופל על ידי כל `.then()` עוקב.
+1. מגדילים את `num`, ומחזירים `100`.
+1. המתודה `console.log` מקבלת `100` ומדפיסה אותו! :tada:
+
+**שאלה:** מה קורה כאשר יש שני `.catch()` ברצף? האם השני יכול אי פעם לרוץ? האם אתם יכולים לחשוב על מקרה שימוש?
+
+**שאלה:** איך `.catch()` יכול להתעלם משגיאות? איך תמנעו משגיאות לאלץ יציאה מוקדמת מ-`Promise.all`?
+
+#### #4 הוסיפו בהירות עם פונקציות בעלות שם 🦄✨
+
+השוו את **קריאות** 2 הדוגמאות הבאות:
+
+**אנונימיות:** ❌
+
+```js
+Promise.resolve(10)          // 10
+  .then(x => x * 2)          // 20
+  .then(x => x / 4)          // 5
+  .then(x => x * x)          // 25
+  .then(x => x.toFixed(2))   // "25.00"
+  .then(x => console.log(x)) // expected output: "25.00"
+```
+
+**בעלות שם:** ✅
+
+```js
+Promise.resolve(10) // 10
+  .then(double)     // 20
+  .then(quarter)    // 5
+  .then(square)     // 25
+  .then(format)     // "25.00"
+  .then(log)        // expected output: "25.00"
+
+const double = x => x * 2
+const quarter = x => x / 4
+const square = x => x * x
+const format = x => x.toFixed(2)
+const log = x => console.log(x)
+
+```
+
+**בונוס:** ✅
+
+> תואם למתודות מערך!!!
+
+אפשר לעשות שימוש חוזר בפונקציות בעלות השם שלכם עם החברים מ-`Array.prototype.` כולל `.map()`, `.filter()`, `.every()`, `.some()`, `.find()`!
+
+צינורות אוסף #מנצחים:
+
+```js
+// IT'S LIKE THE SAME THING :mindblown:
+
+[10, 20]           // [ 10, 20 ]
+  .map(double)     // [ 20, 40 ]
+  .map(quarter)    // [ 5, 10 ]
+  .map(square)     // [ 25, 100 ]
+  .map(format)     // [ "25.00", "100.00" ]
+  .map(log)        // expected 2 lines of output: "25.00", "100.00"
+
+```
+
+ואם אתם לא רוצים לכתוב קוד בסגנון ליניארי כזה... ובכן, יש לכם פונקציות פשוטות!
+
+אתם יכולים להשתמש בהן איך שתרצו:
+
+```js
+// Nesting patern
+// ❌ please don't do this, however
+
+const result = format(square(quarter(double(10))))
+
+log(result)
+// expected output: "25.00"
+```
+
+**למה קינון פונקציות הוא אנטי-דפוס?**
+
+1. לא קריא להרבה אנשים
+2. diffs של git לא חושפים בקלות מי שינה מה
+3. קשה לנפות באגים או לרשום לוג מאמצע הפונקציות המקוננות
+````
