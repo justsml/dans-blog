@@ -1,0 +1,491 @@
+# Translation Candidate
+- Slug: quiz-css-core-fundamentals
+- Locale: he
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2024-11-08--quiz-css-core-fundamentals/he/index.mdx
+- Validation: deferred
+- Runtime seconds: 150.13
+- Input tokens: 12545
+- Output tokens: 18027
+- Thinking tokens: unknown
+- Cached input tokens: 3712
+- Cache write tokens: 0
+- Estimated cost: $0.006419
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+unlisted: false
+title: 'חידון: האם אתה מכיר את יסודות CSS? (2025)'
+subTitle: האם אתה פרונט-אנד מספיק?
+label: CSS Fundamentals
+social_image: ../desktop-social.webp
+category: Quiz
+subCategory: CSS
+date: '2024-11-08'
+modified: '2024-11-10'
+tags:
+  - quiz
+  - intro
+  - css
+  - styles
+  - beginner
+  - intermediate
+cover_full_width: ../yeshi-kangrang-Qq7A85iCzhQ-unsplash-wide.webp
+cover_mobile: ../yeshi-kangrang-Qq7A85iCzhQ-unsplash-square.webp
+cover_icon: ../yeshi-kangrang-Qq7A85iCzhQ-unsplash-square.webp
+---
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+
+## חידון: האם אתה מכיר CSS?
+
+* CSS מודרני?  🤔
+* **האם CSS שייך _לקורות החיים_ שלך???** 🚀
+* רב-ברירה. 🤖 ... _כמה קשה זה יכול להיות, אה?_
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="חימום: גופנים"
+  title="יחידת CSS לא חוקית לגודל גופן"
+  options={[
+    {text: '10cx', isAnswer: true},
+    {text: '10mm'},
+    {text: '10pt'},
+    {text: '10px'},
+    {text: '10vmin'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    בחר את <em class="highlight">האחת הלא חוקית</em> ❌ `font-size`:
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `10cx` שגוי מכיוון ש-`cx` אינה יחידת CSS אמיתית. (לפחות בזמן כתיבת שורות אלה.)
+
+    יחידות פופולריות כוללות את `px`, `rem`, `em` המוכרות.
+
+    יחידות חדשות יותר שימושיות לפריסות דינמיות ורספונסיביות.
+
+    - `ch` - רוחב התו `0`
+    - `vmin` - מינימום תצוגה
+    - `vmax` - מקסימום תצוגה
+    - `vh` - גובה תצוגה
+    - `vw` - רוחב תצוגה
+
+    ישנן גם מספר יחידות שהיו קיימות תמיד אך כמעט ולא בשימוש, כמו `cm` לסנטימטרים, `mm`, `in` לאינצ'ים, `pt` לנקודות
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="חימום: צבעים"
+  title="קודי Hex"
+  options={[
+    {text: '#A'},
+    {text: '#AB'},
+    {text: '#ABCD', isAnswer: true},
+    {text: '#ABCDE'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    האם תוכל לזהות את <em class="highlight">היחיד</em> קוד הקס ✅ תקף?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    קודי הקס (Hex codes) יכולים לשמש לייצוג צבעים ב-CSS. הם מתחילים בסימן `#` וחייבים להכיל 3, 4, 6 או 8 ספרות הקסדצימליות.
+
+    קוד הקס בן 3 תווים הוא קיצור של קוד בן 6 תווים, כאשר כל תו מוכפל. קוד בן 4 תווים כולל ערוץ אלפא לשקיפות.
+
+    לדוגמה, `#ABC` זהה ל-`#AABBCC`, ו-`#ABCD` זהה ל-`#AABBCCDD`. למידע נוסף על טיפול בערכי הקס, בדוק את [חידון המספרים ב-JavaScript שלי.](/quiz-can-you-count-to-bigint/)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="חימום: יחידות"
+  title="אופס, הכל יחידות!"
+  options={[
+    {text: 'em'},
+    {text: 'rem'},
+    {text: 'cm'},
+    {text: 'mm'},
+    {text: 'in'},
+    {text: 'pt'},
+    {text: 'pc'},
+    {text: 'px'},
+    {text: 'ex'},
+    {text: 'ch'},
+    {text: 'vmin'},
+    {text: 'vmax'},
+    {text: 'vh'},
+    {text: 'rel', isAnswer: true},
+    {text: 'vw'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    איזו מהיחידות הבאות היא <em class="highlight">לא</em> יחידת CSS תקינה ❌?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    יחידות חדשות כמו `ch`, `vmin`, `vmax`, `vh`, `vw` שימושיות מאוד לעיצובים דינמיים/רספונסיביים.
+
+    יש גם כמה יחידות שהיו קיימות תמיד אבל כמעט לא משתמשים בהן, כמו `cm` לסנטימטרים, `mm`, `in` לאינצ'ים, `pt` לנקודות, `pc`, `cap` לגודל האותיות הגדולות, ו-`ex` ששווה לגובה האות `x`.
+
+    יחידות פופולריות כוללות את `px` המוכרת לפיקסלים, `em` יחסית לגודל הגופן של האלמנט, ו-`rem` שהיא בעצם מחווה סודית ללהקת R.E.M. הנשכחת משנות ה-90 (טוב, לא באמת, זו פשוט יחידת `em` יחסית שמתייחסת לאלמנט השורש).
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="סלקטורים: יסודות"
+  title="התאמת סלקטורים לאלמנטים HTML"
+  options={[
+    {text: '#Home'},
+    {text: 'a [id=\'home\']'},
+    {text: 'a:contains(home)'},
+    {text: 'a#home[name=\'home\']', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    איזה סלקטור מתאים ביותר ל-HTML הבא?
+    ```html
+          <a id="home" name="home" href="/home">Home</a>
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    התשובה הנכונה היא `a#home[name='home']`, שתואמת גם למאפיין `id` וגם למאפיין `name`. סלקטורים ב-CSS תלויים ברישיות, כך ש-`#Home` לא יעבוד, ורווחים מרמזים על אלמנטים ילדים, מה שלא רלוונטי כאן.
+
+    הסלקטור `:contains()` אינו סלקטור CSS סטנדרטי, אבל הוא זמין בחלק מספריות JS.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="בוררים: יסודות"
+  title="בורר תכונה לכפתור"
+  options={[
+    {text: 'button:link'},
+    {text: 'button::click'},
+    {text: 'button:focus'},
+    {text: 'button[onclick]', isAnswer: true},
+    {text: 'button[on-click]'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    איזה בורר מתאים לכפתור ה-HTML הבא?
+    ```html
+          <button onclick="openModal()">Contact</button>
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    התשובה הנכונה היא `button[onclick]`, המכוון לקיומה של התכונה `onclick`.
+
+    שים לב ש-`:link` מכוון רק לקישורי `href` שלא ביקרת בהם, `::click` אינו פסאודו-אלמנט חוקי, ו-`:focus` מכוון רק לאלמנט הממוקד.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="בוררים: יסודות"
+  title="בורר CSS לא חוקי"
+  options={[
+    {text: 'a {}'},
+    {text: 'b.b {}'},
+    {text: 'c > > d {}', isAnswer: true},
+    {text: '#d {}'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    איזה מהבוררים הבאים אינו חוקי?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    הבורר `c > > d {}` אינו חוקי מכיוון שהקומבינטור 'child' חוזר על עצמו ללא בורר בין שני התווים `>`.
+
+    הבוררים האחרים חוקיים. בורר מסוג כמו `c {}` הוא CSS תקין מבחינה תחבירית גם אם `c` אינו אלמנט HTML סטנדרטי.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="סלקטורים: יסודות"
+  title="בחירת הקישור האחרון"
+  options={[
+    {text: 'a :nth-child(3)'},
+    {text: 'a:last-item'},
+    {text: 'nav:last-of-type(a)'},
+    {text: 'nav:nth-child(3)'},
+    {text: 'a:last-child', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    איזה סלקטור תואם את הקישור האחרון ב-HTML הבא?
+    ```html
+          <nav>
+            <a name="home" href="/home">Home</a>
+            <a name="login" href="/login">Login</a>
+            <a name="help" href="/help">Help</a>
+          </nav>
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    הסלקטור הנכון הוא `a:last-child`, שתואם את ה-`<a>` האחרון כאשר הוא גם הילד האחרון של ההורה שלו. `nav:nth-child(3)` יתאים לאלמנט `<nav>` שהוא הילד השלישי של ההורה שלו.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="בורר: ספציפיות"
+  title="עדיפות בורר"
+  options={[
+    {text: 'main article section blockquote a'},
+    {text: 'blockquote a'},
+    {text: 'a#quote', isAnswer: true},
+    {text: 'a.quote'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    איזה בורר יקבל עדיפות?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    הבורר `a#quote` מקבל עדיפות בזכות ה-ID, שיש לו ספציפיות גבוהה יותר מאשר בוררים מבוססי תג או מחלקה.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="פריסות: מירכוז"
+  title="מרכז טקסט באלמנט בלוק"
+  options={[
+    {text: 'align: center;'},
+    {text: 'margin: 0 auto;'},
+    {text: 'align-content: center;'},
+    {text: 'text-align: center;', isAnswer: true},
+    {text: 'text-content: center;'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    איך אפשר למרכז "shit" בתוך קופסה?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    שימוש ב-`text-align: center;` הוא הדרך הנכונה למרכז טקסט באלמנט בלוק. המאפיינים `align` משמשים לפריסות flexbox, ו-`margin: 0 auto;` משמש למירכוז אלמנטים בלוק אופקית.
+
+    המאפיין `align-content` משמש לפריסות grid, ו-`text-content` אינו מאפיין CSS חוקי.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="פריסות: מירכוז"
+  title="מירכוז אנכי של אלמנט בלוק"
+  options={[
+    {text: 'align-items: center;'},
+    {text: 'justify-content: center;'},
+    {text: 'align-content: center;', isAnswer: true},
+    {text: 'margin: auto;'},
+    {text: 'margin: 0 auto;'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    איך ממרכזים תוכן אנכית בתוך מיכל בלוק בפריסת זרימה מודרנית?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    שימוש ב-`align-content` הוא הדרך המודרנית למרכז את התוכן של מיכל בלוק אנכית בפריסת זרימה.
+
+    המאפיינים `align-items` ו-`justify-content` משמשים לפריסות flexbox ו-grid, אך לא לזרימה.
+
+    גם `margin: 0 auto;` וגם `margin: auto;` ממרכזים אלמנט בלוק אופקית, אך לא אנכית.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="פריסות: יחידות"
+  title="חישוב גודל פיקסלים של גדלי גופנים מקוננים"
+  options={[
+    {text: '!40px'},
+    {text: '5px', isAnswer: true},
+    {text: '20px'},
+    {text: '25px'},
+    {text: '40px'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מהו גודל הפיקסלים של טקסט הקישור `<a>` ב-HTML הבא?
+    ```html
+          <body style="font-size: 40px !important;">
+            <nav style="font-size: 50%;">
+              <a style="font-size: 25%;">HOME</a>
+            </nav>
+          </body>
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    ה-`font-size` עבור `<a>` מחושב כ-5px: 40px (body) * 50% (nav) = 20px, ואז 20px * 25% = 5px.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="יחידות: REM"
+  title="חישוב גודל פיקסל באמצעות REM"
+  options={[
+    {text: '10px'},
+    {text: '12px', isAnswer: true},
+    {text: '14px'},
+    {text: '20px'},
+    {text: '24px'},
+    {text: '34px'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה יהיה גודל הפיקסל של `1.2rem` עבור הקישור "HOME" ב-HTML הבא?
+    ```html
+          <html style="font-size: 10px;">
+            <body style="font-size: 20px;">
+              <a style="font-size: 1.2rem;">HOME</a>
+            </body>
+          </html>
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `1.2rem` מתורגם ל-12px מכיוון שיחידות `rem` מתייחסות לגודל הגופן של השורש או `<html>`, המוגדר כאן ל-10px.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="יחידות: EM"
+  title="חישוב גודל פיקסלים באמצעות EMs"
+  options={[
+    {text: '10px'},
+    {text: '12px'},
+    {text: '14px'},
+    {text: '20px'},
+    {text: '24px', isAnswer: true},
+    {text: '34px'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    בדומה לשאלה הקודמת, מה יהיה גודל הפיקסלים של `1.2em` עבור הקישור "HOME" ב-HTML הבא?
+    ```html
+          <html style="font-size: 10px;">
+            <body style="font-size: 20px;">
+              <a style="font-size: 1.2em;">HOME</a>
+            </body>
+          </html>
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `1.2em` מתורגם ל-24px מכיוון שיחידות `em` מתייחסות לגודל הגופן שעבר בירושה, שנקבע כאן ל-20px.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={13}
+  group="סלקטור: ספציפיות"
+  title="סלקטורים עם ספציפיות אפס"
+  options={[
+    {text: ':where(.card) .title', isAnswer: true},
+    {text: '.card .title'},
+    {text: ':is(.card) .title'},
+    {text: '#card .title'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    איזה סלקטור הוא בעל הספציפיות הנמוכה ביותר?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    ל-`:where(.card) .title` יש את הספציפיות הנמוכה ביותר. ה-pseudo-class `:where()` וכל מה שבתוכו תורם `0-0-0`, אז רק `.title` נחשב. `:is(.card) .title` שומר על הספציפיות של `.card`, ל-`.card .title` יש שתי מחלקות, ו-`#card .title` כולל מזהה (ID).
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+````
