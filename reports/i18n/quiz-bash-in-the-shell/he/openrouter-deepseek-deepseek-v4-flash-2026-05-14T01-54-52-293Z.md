@@ -1,0 +1,650 @@
+# Translation Candidate
+- Slug: quiz-bash-in-the-shell
+- Locale: he
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2024-11-20--quiz-bash-in-the-shell/he/index.mdx
+- Validation: deferred
+- Runtime seconds: 206.55
+- Input tokens: 16709
+- Output tokens: 25972
+- Thinking tokens: unknown
+- Cached input tokens: 4096
+- Cache write tokens: 0
+- Estimated cost: $0.009463
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+unlisted: false
+title: 'חידון: שליטה ב-Bash וב-Shell'
+subTitle: אתה יודע לדבר עם מחשבים? באמת?
+label: Bash
+category: Quiz
+subCategory: Bash
+date: '2024-11-20'
+modified: '2024-11-21'
+tags:
+  - quiz
+  - bash
+  - scripting
+  - shell
+  - linux
+  - beginner
+  - intermediate
+  - advanced
+social_image: ../desktop-social.webp
+cover_full_width: ../psychedelic-shell-wide.webp
+cover_mobile: ../psychedelic-shell-square-200.webp
+cover_icon: ../psychedelic-shell-square-200.webp
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+<p class="inset">בחנו את כישורי כתיבת הסקריפטים ב‑Bash שלכם עם 16 השאלות האלה!</p>
+
+מכסה משתנים, לולאות, תנאים, מניפולציית מחרוזות, פונקציות ומלכודות תחביר מרמה בסיסית עד טריקית.
+
+חדדו (או הוכיחו) את **כישורי** כתיבת הסקריפטים ב‑shell שלכם!
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="חימום"
+  title="הצהרת משתנה"
+  options={[
+    {text: '$name=Dan'},
+    {text: 'name=Dan', isAnswer: true},
+    {text: 'name =Dan'},
+    {text: 'name == Dan'},
+    {text: 'name : Dan'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    איך מגדירים משתנים ב-Bash?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    משתנים ב-Bash מוצהרים ללא רווחים סביב סימן `=`. לדוגמה:
+    ```bash
+        name=Alice
+    ```
+    פעולה זו משייכת את הערך `"Alice"` למשתנה `name`.
+
+    הערה: `$name` משמש **להתייחסות** או לקריאת ערך המשתנה.
+
+    הוספת רווחים גורמת ל-shell לפרש את הפקודה כתוכנית להרצה, וזה לא מה שאתה רוצה כשאתה מגדיר משתנה.
+
+    כמו כן, Bash רגיש לאותיות רישיות, כך ש-`name`, `NAME` ו-`Name` הם משתנים שונים.
+
+    לבסוף, משתנים לא יכולים להכיל רווחים או מקפים (`-`) בשמותיהם. השתמש בקו תחתון (`_`) או ב-camelCase במקום.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="חימום: בריחה"
+  title="בריחה ממרכאות"
+  options={[
+    {text: 'echo \'It\'s 🔨 Time!\''},
+    {text: 'echo \'It\\\'s 🔨 Time!\''},
+    {text: 'echo \'It\'\\\'\'s 🔨 Time!\'', isAnswer: true},
+    {text: 'echo \'It\'\'s 🔨 Time!\''},
+    {text: 'Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    _מה ידפיס `It's 🔨 Time!`?_
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    אני יודע. זה מטורף כמה מהר בריחה הופכת מחרוזות לקשות לפענוח. דמיין בריחה משפות אחרות במחרוזות Bash - עם כל המרכאות, האפוסטרופים וסמלי `$` שמבלבלים אותך. 🫠
+
+    מרכאות בודדות דורשות בריחה בתוך מחרוזות עם מרכאות בודדות. הרצף של סגירת מרכאה, מרכאה מוברחת, פתיחת מרכאה (`'\''`) מאפשר פלט של:
+    ```plaintext
+        It's 🔨 Time!
+    ```
+    יש דרכים אחרות לטפל בזה, אבל זו הנפוצה ביותר.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="חימום: הרחבה"
+  title="פקודת echo"
+  options={[
+    {text: 'cat cab'},
+    {text: 'cat cbt', isAnswer: true},
+    {text: 'ca bt'},
+    {text: 'cat'},
+    {text: 'cbd'},
+    {text: 'Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה הפלט של הפקודה הזו?
+    ```bash
+        echo c{a,b}t
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    הרחבת הסוגריים `{}` יוצרת מספר גרסאות של ההקשר המחרוזתי, אחת (או יותר) עבור כל ערך או תבנית המופרדים בפסיק.
+
+    כאן, `c{a,b}t` מתרחבת ל:
+    ```plaintext
+        cat cbt
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="משתנים"
+  title="בריחת תווים"
+  options={[
+    {text: 'עלות: $$100'},
+    {text: 'עלות: $100'},
+    {text: 'עלות: 100'},
+    {text: 'עלות: 00', isAnswer: true},
+    {text: 'עלות:'},
+    {text: 'שגיאה'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    עכשיו, מה זה ידפיס?
+    ```bash
+        price="$100"
+        echo "Cost: $price"
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    למשתנים ממוספרים יש משמעות מיוחדת. במקרה זה, `$1` הוא משתנה מיוחד שמחזיק את הארגומנט הראשון שהועבר לסקריפט או לפונקציה.
+
+    מכיוון שאנחנו מריצים את הסקריפט ב-REPL, אין ארגומנטים, ולכן `$1` ריק. הטקסט הנותר `00` מודפס כפי שהוא.
+
+    כדי להדפיס תו `$` מילולי, השתמש בגרשיים בודדים, או ברוח ממנו עם לוכסן אחורי (`\`):
+    ```bash
+        price="\$100"
+        echo "Cost: $price"
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="החלפת תת-מחרוזות"
+  title="החלפת תת-מחרוזת"
+  options={[
+    {text: 'meow meow'},
+    {text: 'Meow meow'},
+    {text: 'Bark meow', isAnswer: true},
+    {text: 'Bark bark'},
+    {text: 'Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה קורה כאן?
+    ```bash
+        str="Bark bark"
+        echo ${str/bark/meow}
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    התחביר `${var/pattern/replacement}` מחליף את המופע הראשון של `pattern` ב-`replacement`. כאן, הפלט הוא:
+    ```plaintext
+        Bark meow
+    ```
+    זה תלוי רישיות. כדי לטפל גם ב-`bark` וגם ב-`Bark`, השתמש בתבנית כמו `${var/[Bb]ark/Bark}` או נרמל את המחרוזת לפני ההחלפה.
+
+    כדי להחליף את כל המופעים, השתמש ב-`${var//pattern/replacement}`.
+
+    כדי להחליף מתחילת המחרוזת, השתמש ב-`${var/#pattern/replacement}`.
+
+    כדי להחליף מסוף המחרוזת, השתמש ב-`${var/%pattern/replacement}`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="אורך מחרוזת"
+  title="אורך מחרוזת"
+  options={[
+    {text: '$#username'},
+    {text: '#$username'},
+    {text: '${#username}', isAnswer: true},
+    {text: '${username#}'},
+    {text: 'echo $username | wc -c'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    איך אפשר לקבל את האורך של משתנה ב-Bash?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    התחביר `${#username}` מחזיר את האורך של `username`.
+
+    לדוגמה:
+    ```bash
+        username="@justsml"
+        echo ${#username} # => 8
+    ```
+    למרות ש-`wc` יעבוד, מבחינה טכנית זה לא חלק מ-Bash.
+
+    הכלי `wc` הוא בדיחה פנימית ישנה שמתייחסת ל"ארון מים" או לשירותים.
+    צוחק! מישהו בכלל קורא את זה?
+
+    במציאות, `wc` היא פקודה עתיקה מ-Posix (ומימי AT&T Unix). זה קיצור של "word count" והיא יכולה לספור שורות, מילים ותווים בקובץ או בזרם קלט.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="תנאים"
+  title="If-Else בסיסי"
+  options={[
+    {text: 'הקובץ קיים'},
+    {text: 'הקובץ לא קיים, לאחר הודעת אבחון של הבדיקה', isAnswer: true},
+    {text: 'רק שגיאה'},
+    {text: 'חסרים סוגריים מרובעים כפולים'},
+    {text: 'כלום'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה הפלט של הסקריפט אם הקובץ `cats.txt` קיים?
+    ```bash
+        if [ -e cats.txt]; then
+          echo "File exists"
+        else
+          echo "File does not exist"
+        fi
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    האם שמת לב לרווח החסר לפני הסוגר הסוגר?
+
+    Bash רגיש מאוד כאן: נדרשים רווחים בתוך ביטויי סוגריים.
+
+    בגלל שהרווח החסר גורם לפקודת `[` לא לראות סוגר סוגר `]`, Bash מדפיס אבחון, מתייחס לבדיקה כנכשלת, וממשיך לענף `else`.
+
+    התחביר הנכון הוא:
+    ```bash
+        if [ -e example.txt ]; then
+          echo "File exists"
+        else
+          echo "File does not exist"
+        fi
+    ```
+    הערה: סוגריים כפולים `[[ ]]` **מומלצים** לביטויי תנאי. [ראה BashFAQ.](https://mywiki.wooledge.org/BashFAQ/031)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="תנאים"
+  title="השוואת מחרוזות"
+  options={[
+    {text: 'אותו חתול'},
+    {text: 'חתולים שונים, אחרי שגיאת תחביר של בדיקה', isAnswer: true},
+    {text: 'זלגו'},
+    {text: 'רק שגיאה'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    איך אפשר להשוות מחרוזות בבאש?
+    ```bash
+        cat1="Rosie"
+        cat2="Sunflower"
+        if [ "$cat1" === "$cat2" ]; then
+          echo "Same cat"
+        else
+          echo "Different cats"
+        fi
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    עוד שגיאת תחביר של בדיקה!
+
+    תפסת את האופרטור `===` הלא חוקי?
+
+    אולי חשבת על JavaScript...
+
+    עם `[ ... ]`, באש מדווחת על אבחון והתנאי הוא false, אז ענף `else` מדפיס `Different cats`. בבאש, השתמש ב-`=` או `==` להשוואות שוויון.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="פונקציות"
+  title="הגדרת פונקציה"
+  options={[
+    {text: 'Hi', isAnswer: true},
+    {text: 'Dan'},
+    {text: 'Hi Dan'},
+    {text: 'greet'},
+    {text: 'Error'},
+    {text: 'Syntax Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה הפלט של הסקריפט הזה?
+    ```bash
+        function greet () {
+          echo "$1"
+        }
+        greet Hi Dan
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    פונקציות ב-Bash יכולות לקבל ארגומנטים. המשתנה `$1` מכיל את הארגומנט הראשון שהועבר לפונקציה.
+
+    זכרו, `$0` הוא שם הסקריפט, `$1` הוא הארגומנט הראשון, `$2` הוא השני, וכן הלאה. **רווחים מפרידים בין ארגומנטים.** לכן, `greet Hi Dan` מעביר את `"Hi"` כארגומנט הראשון. כדי להעביר את `"Hi Dan"` כארגומנט יחיד, יש להקיף אותו במרכאות: `greet "Hi Dan"`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="הרכבה"
+  title="שימוש בצינוריות"
+  options={[
+    {text: '>'},
+    {text: '>>'},
+    {text: '|', isAnswer: true},
+    {text: '||'},
+    {text: '|>'},
+    {text: 'Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    איזה אופרטור מחבר את **הפלט** של פקודה אחת ל**קלט** של הפקודה הבאה?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    אופרטור הצינור `|` מחבר את הפלט של פקודה אחת לקלט של פקודה אחרת. לדוגמה:
+    ```bash
+        echo "Mr. Levy 👨🏻‍🔬" | wc -m
+        # => 14
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="חשבון"
+  title="חשבון בסיסי"
+  options={[
+    {text: 'echo 2 + 2'},
+    {text: 'echo ${2 + 2}'},
+    {text: 'echo %(2 + 2)'},
+    {text: 'echo $(( 2 + 2 ))', isAnswer: true},
+    {text: 'שגיאה'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    איך עובדת מתמטיקה בבאש?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    התחביר `(( ))` מבצע חישובי מספרים שלמים בבאש.
+
+    ניתן להשתמש בו לחישובים פשוטים:
+    ```bash
+        ((result = 2 + 2))
+        echo $result # => 4
+    ```
+    או לביטויים תנאיים:
+    ```bash
+        if (( 2 > 1 )); then
+          echo "2 is greater than 1"
+        fi
+    ```
+    לחישובי נקודה צפה, שקול להשתמש ב-[`bc`](https://www.gnu.org/software/bc/manual/html_mono/bc.html) או [`awk`](https://www.gnu.org/software/gawk/manual/gawk.html).
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="כפל"
+  title="חשבון בסיסי"
+  options={[
+    {text: 'echo 10 * 0.5'},
+    {text: 'echo (10 * 0.5)'},
+    {text: 'echo ${ 10 * 0.5 }'},
+    {text: 'echo %( 10 * 0.5 )'},
+    {text: 'echo $(( 10 * 0.5 ))'},
+    {text: 'echo \'10 * 0.5\' | bc', isAnswer: true},
+    {text: 'Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    איזו מהפקודות הבאות מכפילה נכון את 10 ב-0.5 ומדפיסה 5?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    התחביר `(( ))` מבצע **חישוב שלמים** בלבד. כן, מספרים שלמים, ללא נקודה צפה!
+
+    Bash (אולי באופן מפתיע) חסר תמיכה **מובנית** בחישוב נקודה צפה.
+
+    הפתרון הנפוץ ביותר הוא להשתמש בכלי GNU [`bc`](https://www.gnu.org/software/bc/manual/html_mono/bc.html) או [`awk`](https://www.gnu.org/software/gawk/manual/gawk.html).
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="מניפולציית מחרוזות"
+  title="חילוץ תת-מחרוזת"
+  options={[
+    {text: 'חתול רע'},
+    {text: 'חתול רע, חתול טוב:9'},
+    {text: 'חתול טוב', isAnswer: true},
+    {text: 'שגיאה'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה עושה ה-`:` בסקריפט הזה?
+    ```bash
+        rosie="Bad cat, good cat"
+        echo ${rosie:9}
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    התחביר `${var:offset}` מחלץ תת-מחרוזת החל מ-`offset`. כאן, הפלט הוא:
+    ```plaintext
+        good cat
+    ```
+    כדי לחלץ תת-מחרוזת באורך מסוים, השתמש ב-`${var:offset:length}`.
+
+    כדי לחלץ מסוף המחרוזת, השתמש ב-`${var: -offset}`. (שים לב לרווח לפני ה-`-`!)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={13}
+  group="לולאות"
+  title="לולאות בבאש"
+  options={[
+    {text: 'do'},
+    {text: 'each', isAnswer: true},
+    {text: 'for'},
+    {text: 'until'},
+    {text: 'while'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מהי מילת המפתח שאינה ❌ לולאה בבאש?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `each` אינה מילת מפתח ללולאה בבאש. מילות המפתח העיקריות ללולאות הן `for`, `while`, ו-`until`.
+
+    למרות ש-`do` אינה מילת מפתח ללולאה מבחינה טכנית, היא חלק מרכזי בתחביר הלולאה.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={14}
+  group="מלכודות"
+  title="החלפת פקודה"
+  options={[
+    {text: '\'ls -l\''},
+    {text: '% ls -l'},
+    {text: '$ ls -l'},
+    {text: '$(ls -l)', isAnswer: true},
+    {text: '${ls -l}'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    איזו אפשרות תבצע את הפקודה `ls -l` ותחזיר את הפלט?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    התחביר `$(ls -l)` מבצע את הפקודה בתוך **הסוגריים** ומחליף את הפלט. לדוגמה:
+    ```bash
+        echo "Today is $(date +%F)"
+        # => Today is 2029-12-31
+    ```
+    האפשרות הראשונה משתמשת בגרשיים בודדים `'`, **לא בגרשיים אחוריים.** זה מונע הרחבה, כך ש-`'$(date +%F)'` פשוט ידפיס את המחרוזת המילולית `$(date +%F)`.
+
+    בעוד שעדיין נתמך שימוש בגרשיים אחוריים (`` `ls -l` ``) לביצוע פקודות, לאחרונה זה הפך למעין אנטי-תבנית (בהקשרים מסוימים). רוב האנשים ממליצים להשתמש ב-`$(command)` לקריאות טובה יותר ועקביות עם מעטפות וגרסאות שונות.
+
+    סוגריים מסולסלים `${}` משמשים להרחבת משתנים, לא להחלפת פקודה.
+
+    התו `%` אינו משמש להחלפת פקודה.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={15}
+  group="קלט/פלט סטנדרטי"
+  title="ערכי ברירת מחדל"
+  options={[
+    {text: '1>&2'},
+    {text: '&2>&1'},
+    {text: '2>&1', isAnswer: true},
+    {text: '2>1'},
+    {text: '&2>1'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    איזה אופרטור משמש לשילוב פלט השגיאה לתוך הפלט הסטנדרטי?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    האופרטור `2>&1` מפנה את פלט השגיאה הסטנדרטי (תיאור קובץ 2) לפלט הסטנדרטי (תיאור קובץ 1). זה שימושי ללכידת הודעות שגיאה באותו זרם פלט כמו הפלט הרגיל.
+
+    האופרטור `1>&2` מפנה את הפלט הסטנדרטי לשגיאה הסטנדרטית, אך השאלה שאלה כיצד להפנות שגיאה סטנדרטית לפלט סטנדרטי.
+
+    למידע נוסף על מה שקורה מתחת למכסה המנוע, בדקו את [שאלות נפוצות מצוינות של גרג על הפנייה](https://mywiki.wooledge.org/BashFAQ/055).
+
+    כמו כן, תודה למשתמש Reddit [u/OneTurnMore](https://www.reddit.com/user/OneTurnMore/) על הצעות לשיפור הנוסח.
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+
+<p className="inset">האם החידון שלי על Bash הותיר אותך הרוס?</p>
+
+ספר לי בתגובות למטה!
+
+### קריאה נוספת
+
+רענן את כישורי ה-Bash שלך בעזרת המשאבים הבאים:
+
+- [מדריך Bash](https://www.gnu.org/software/bash/manual/bash.html)
+- [שאלות נפוצות על Bash](http://mywiki.wooledge.org/BashFAQ)
+- [ShellCheck](https://www.shellcheck.net/)
+- [אקדמיית Bash](https://guide.bash.academy/)
+- [מדריך תכנות Bash](https://ryanstutorials.net/bash-scripting-tutorial/)
+- [מדריך עזר של Bash](https://www.gnu.org/software/bash/manual/bash.html)
+- [ויקי של האקרים Bash](http://wiki.bash-hackers.org/)
+- [מדריך Bash למתחילים](http://tldp.org/LDP/Bash-Beginners-Guide/html/index.html)
+- [כרטיס עזר של Bash](http://www.tldp.org/LDP/Bash-Beginners-Guide/html/Bash-Beginners-Guide.html)
+````
