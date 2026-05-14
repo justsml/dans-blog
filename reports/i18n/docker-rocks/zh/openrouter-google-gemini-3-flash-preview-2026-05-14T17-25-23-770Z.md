@@ -1,0 +1,67 @@
+# Translation Candidate
+- Slug: docker-rocks
+- Locale: zh
+- Model: openrouter/google/gemini-3-flash-preview
+- Target: src/content/posts/2015-06-11--docker-rocks/zh/index.mdx
+- Validation: deferred
+- Runtime seconds: 3.88
+- Input tokens: 923
+- Output tokens: 318
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.001416
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: Docker 确实好用，现已支持 OSX
+subTitle: Docker 强大、快速、灵活
+date: '2015-06-11'
+modified: '2024-08-10'
+category: DevOps
+subCategory: docker
+tags:
+  - docker
+  - boot2docker
+  - devops
+related:
+  - docker-makes-everything-better
+  - docker-server-setup-notes
+  - docker-security-tips-for-self-hosting
+cover: ../guillaume-bolduc-259596-unsplash.webp
+cover_mobile: ../w300_guillaume-bolduc-259596-unsplash.webp
+cover_icon: ../icon_guillaume-bolduc-259596-unsplash.webp
+---
+## Docker 确实好用
+
+> 2016 年 9 月、2018 年更新
+> Boot2Docker 已被 Docker for Mac 取代
+
+> 历史注记：本文特意保留了 2015 年左右 Docker-for-Mac 时代的快照。文中的性能建议和工具名称反映了当时的状况；现在的 Docker Desktop 和 Compose 工作流已经演进。
+
+1. Docker 非常出色、快速且灵活。
+1. 之前的工具，特别是 boot2docker，运行缓慢且容易崩溃。
+
+Docker 目前可以原生运行在 Linux Kernel v3.4+ 上 —— 而当前的 boot2docker 虚拟机实际上运行的是 v4 版本。
+
+最能发挥硬件性能的方法：在你的 Mac/Windows 机器上安装最新的 Debian 或 Ubuntu。
+
+……别闹了，那些游戏对你写代码没好处……
+
+### 检查你的环境
+
+查看 `docker info` 命令的输出。
+
+1. 安全：检查服务器是否存在意外开放的端口（从远程网络使用 `nmap` 扫描）。
+1. DNS：使用本地缓存或低延迟的 DNS 服务器。
+1. 存储：使用正确的存储驱动（通常应该是 `overlay2`）。
+
+2024 年更新：
+
+- Docker Desktop 是私有软件，但个人使用免费。它是 Windows 或 OSX 用户开始使用 Docker 的绝佳方式。
+- 如果你在寻找更开源的解决方案，请查看 [Rancher Desktop](https://rancherdesktop.io/)。
+````
