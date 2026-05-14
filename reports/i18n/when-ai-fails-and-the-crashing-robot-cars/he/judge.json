@@ -1,0 +1,53 @@
+{
+  "selectedCommit": "29dd1be2102562bbea5e93519d18cfab03442019",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 5,
+    "technicalAccuracy": 5,
+    "coherence": 5,
+    "relevance": 5,
+    "translationQuality": 5,
+    "mdxPreservation": 5
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "נסיעה על השול או",
+      "replacement": "נסיעה על השול או...",
+      "reason": "The English source ends with 'driving on a shoulder or', implying an incomplete thought or list. The Hebrew translation should include the ellipsis to match the stylistic choice and indicate the sentence is intentionally unfinished."
+    }
+  ],
+  "rationale": "The translation is excellent, capturing Dan's direct and slightly informal tone. It correctly identifies 'מכוניות' (cars) over the archaic 'מרכבות' (chariots) suggested by other models. Technical terms like 'rear-end collision' and 'trolley problem' are translated accurately into their standard Hebrew equivalents. MDX structure and metadata are perfectly preserved.",
+  "slug": "when-ai-fails-and-the-crashing-robot-cars",
+  "locale": "he",
+  "candidateCommits": [
+    "29dd1be2102562bbea5e93519d18cfab03442019",
+    "9ed5e8a994a79a23c58d64ee71beab2d1adeefb0"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "נסיעה על השול או",
+      "replacement": "נסיעה על השול או...",
+      "reason": "The sentence ends abruptly in the source ('driving on a shoulder or'), but the Hebrew translation should at least maintain the trailing sense or ellipsis if it was intended as an incomplete thought.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "נסיעה על השול או",
+      "replacement": "נסיעה על השול או...",
+      "reason": "The English source ends with 'driving on a shoulder or', implying an incomplete thought or list. The Hebrew translation should include the ellipsis to match the stylistic choice and indicate the sentence is intentionally unfinished.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug when-ai-fails-and-the-crashing-robot-cars --locale he --skip-global",
+    "output": ""
+  }
+}
