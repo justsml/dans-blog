@@ -1,0 +1,52 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "Nested Destructuring",
+  "translatedTitle": "嵌套解构",
+  "translation": {
+    "title": "嵌套解构",
+    "group": "嵌套解构",
+    "options": [
+      {
+        "text": "First: Dan, City: Denver"
+      },
+      {
+        "text": "First: undefined, City: Denver"
+      },
+      {
+        "text": "Error: Cannot read property 'first'"
+      },
+      {
+        "text": "First: Dan, City: undefined"
+      },
+      {
+        "text": "Error"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "来点嵌套解构怎么样？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "`person` 对象上不存在 `birth: { place }` 属性，因此会抛出错误。\n    一种解决方案是为嵌套属性提供默认值。\n\n    访问嵌套属性时要小心，因为错误可能很难发现。而且不同浏览器和其他平台的错误信息各不相同，使得调试更具挑战性。\n\n    在最新版 Chrome 中：`TypeError: Cannot read properties of undefined (reading 'place')`\n\n    在 Node 中，这也是一个 `TypeError`，因为 JavaScript 在读取 `place` 之前就尝试从 `undefined` 解构 `place`。\n\n    具体措辞因浏览器和运行时而异。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"嵌套解构\",\n  \"group\": \"嵌套解构\",\n  \"options\": [\n    {\"text\": \"First: Dan, City: Denver\"},\n    {\"text\": \"First: undefined, City: Denver\"},\n    {\"text\": \"Error: Cannot read property 'first'\"},\n    {\"text\": \"First: Dan, City: undefined\"},\n    {\"text\": \"Error\"}\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\"来点嵌套解构怎么样？\"],\n  \"hintsProse\": [],\n  \"explanationProse\": [\"`person` 对象上不存在 `birth: { place }` 属性，因此会抛出错误。\\n    一种解决方案是为嵌套属性提供默认值。\\n\\n    访问嵌套属性时要小心，因为错误可能很难发现。而且不同浏览器和其他平台的错误信息各不相同，使得调试更具挑战性。\\n\\n    在最新版 Chrome 中：`TypeError: Cannot read properties of undefined (reading 'place')`\\n\\n    在 Node 中，这也是一个 `TypeError`，因为 JavaScript 在读取 `place` 之前就尝试从 `undefined` 解构 `place`。\\n\\n    具体措辞因浏览器和运行时而异。\"]\n}",
+  "telemetry": {
+    "inputTokens": 905,
+    "outputTokens": 2005,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 12764,
+    "providerCostUsd": 0.000983,
+    "providerUpstreamCostUsd": 0.000983,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00012670000000000002,
+    "outputUsd": 0.0005614,
+    "totalUsd": 0.0006881,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
