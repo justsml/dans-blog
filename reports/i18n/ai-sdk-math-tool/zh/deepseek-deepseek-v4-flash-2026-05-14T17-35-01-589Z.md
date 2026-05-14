@@ -1,0 +1,157 @@
+# Translation Candidate
+- Slug: ai-sdk-math-tool
+- Locale: zh
+- Model: deepseek/deepseek-v4-flash
+- Target: src/content/posts/2026-01-06--ai-sdk-math-tool/zh/index.mdx
+- Validation: deferred
+- Runtime seconds: 24.38
+- Input tokens: 3358
+- Output tokens: 3690
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.001503
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: 别再让LLM做数学了
+subTitle: 他们不擅长这个。以下是如何修复。
+date: '2026-01-06'
+modified: '2026-01-07'
+tags:
+  - ai
+  - ai-sdk
+  - typescript
+  - math
+  - tools
+  - patterns
+category: AI
+subCategory: Engineering
+social_image: ../desktop-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+你知道语言模型有什么奇怪的地方吗？它们能解释量子力学、写诗、调试你的 TypeScript……但让它们计算 18472 乘以 9347，它们很可能会自信地给出一个差了几千的结果。
+
+这曾经让我困惑，直到我意识到我们实际上在要求它们做什么。我们在要求一个模式匹配引擎充当计算器。这就像让一个体操运动员来核对你的支票簿，只因为他们理解“平衡”这个概念。
+
+问题是，LLM 并不进行计算。当你问 GPT 或 Claude 2 + 2 等于多少时，它们并没有做加法。它们是在预测“4”是最有可能出现在“2 + 2 =”之后的 token。大多数情况下，这很有效，因为这些模式存在于它们的训练数据中。但一旦超出简单算术，进入多步计算或涉及训练数据中不常见的数字时，你基本上就是在掷骰子。
+
+我最近在审查一段代码时正面撞上了这个问题，那段代码使用顶级模型来计算按揭付款。模型以完全自信的语气回答了。但结果每月差了 400 美元。这是那种会出事的错误。
+
+即使模型在推理方面变得更好（据说 GPT-5 有所改进），它们仍然在做复杂的模式匹配，而不是符号计算。对于创造性工作和自然语言任务，这种概率性本质正是它们神奇的原因。但对于数学？并非如此。
+
+## 真正解决这个问题的方法是什么？
+
+答案不是等待更智能的模型。而是给模型提供合适的工具。
+
+想想如果你在构建一个非 AI 系统，你会如何解决这个问题。你不会自己编写数学逻辑，而是会使用一个库。同样的原则在这里也适用，只不过我们现在要教 LLM 何时以及如何使用那个库。
+
+现代 AI SDK 中的工具调用让我们能够将结构化函数交给模型调用。我们不是强迫 LLM 假装懂数学，而是给它一个真正懂数学的东西：一个符号数学引擎。
+
+我一直在使用 [AI SDK v5 和 v6](https://ai-sdk.vercel.ai/) 来做这件事，配合 CortexJS Compute Engine。SDK 负责编排和工具路由，而 CortexJS 处理从基本算术到微积分的所有内容。这是一个令人惊讶的清晰关注点分离。
+
+```bash
+bun add ai @ai-sdk/anthropic @cortex-js/compute-engine zod
+```
+
+## 构建数学工具
+
+实现比你预期的更直接。我们正在构建的是 LLM 的自然语言理解与实际数学计算之间的桥梁。
+
+```typescript
+import { generateText, stepCountIs, tool } from 'ai';
+import { ComputeEngine } from '@cortex-js/compute-engine';
+import { z } from 'zod';
+
+// 初始化引擎一次
+const ce = new ComputeEngine();
+
+const mathTool = tool({
+  description: 'Evaluate mathematical expressions and solve equations with guaranteed accuracy. MUST be used for all mathematical operations to verify correctness - do not attempt mental math. Supports arithmetic, algebra, calculus, and complex operations. Can process multiple expressions at once.',
+  parameters: z.object({
+    expressions: z.array(z.string()).describe(
+      'Array of mathematical expressions in LaTeX or plain notation, e.g. ["2 + 2", "\\frac{x^2 + 1}{x - 1}", "\\int x^2 dx"]'
+    ),
+  }),
+  execute: async ({ expressions }) => {
+    // 并行处理所有表达式（或详细批处理）
+    return expressions.map(expression => {
+      try {
+        const result = ce.parse(expression).evaluate();
+        return {
+          expression,
+          result: result.toString(),
+          latex: result.latex,
+        };
+      } catch (error) {
+        return { 
+          expression,
+          error: (error as Error).message 
+        };
+      }
+    });
+  },
+});
+```
+
+关于这一点，有几件事值得注意：
+
+描述承担了繁重的工作。那个“MUST be used”的措辞可能看起来有点激进，但根据我的经验，明确告诉模型何时使用工具，是它有时工作与可靠工作之间的区别。可以将其视为工具级别的提示工程。
+
+通过 `expressions` 数组进行批处理比你想象的要重要得多。每次模型调用都有延迟。如果你在解方程组或做多步数学，逐个处理会产生糟糕的用户体验。批处理意味着一次往返解决十个问题。
+
+使用符号引擎而不是仅仅使用 `eval()`（请不要使用 `eval()`）给了我们真正的数学理解。引擎解析意图，处理 LaTeX 格式，并且可以处理导数和积分。我们不仅仅是在做计算，我们是在做数学。
+
+错误处理是针对每个表达式的作用域。如果一个计算失败，我们返回那个错误，但继续处理其余部分。这让模型看到哪些成功了哪些失败了，可能在下一步中自我纠正。
+
+## 让它工作起来
+
+让我们扔给它一个通常会让原始模型产生幻觉的问题：
+
+```typescript
+import { anthropic } from '@ai-sdk/anthropic';
+
+const { text } = await generateText({
+  model: anthropic('claude-sonnet-4-5'),
+  prompt: 'Calculate 18472 × 9347, divide by 127, then take the square root of the result.',
+  tools: { mathTool },
+  stopWhen: stepCountIs(5), // Allow up to five model/tool steps
+});
+
+console.log(text);
+```
+
+模型看到数学问题，识别出需要精度，调用工具，获得准确结果，然后用自然语言解释。每个组件各司其职。
+
+## 超越基本算术
+
+由于我们使用的是符号引擎，这种方法可以处理简单计算器工具无法触及的问题。
+
+想解代数方程？"解这些方程：3x + 7 = 22 和 2y - 5 = 13" 也能很好地工作。
+
+需要微积分？"求 x^3 + 2x^2 的导数并在 x=2 处求值" 只是另一个工具调用。
+
+LaTeX 支持在构建教育应用时特别有用。引擎天生理解 LaTeX 输入，并能返回适合渲染的结果。无需额外解析。
+
+## 更大的图景
+
+我认为这种模式的意义不仅限于数学。我们实际上是在承认 LLM 的局限性的同时利用它们的优势。它们在理解意图、解析自然语言和编排工作流方面非常出色。它们不是计算器、数据库或文件系统。
+
+每当我们试图让 LLM 做确定性的工作时，我们都在与它的本性作斗争。但当我们把那种自然语言理解与处理确定性部分的专用工具配对时？事情就变得有趣了。
+
+数学工具只是一个例子。同样的原则适用于日期操作、财务计算、图像处理、数据库查询……任何精度比创意更重要的地方。让模型理解用户想要什么，然后把实际工作交给为这项工作构建的工具。
+
+这是我们思考如何用 AI 构建的一种转变。不是“模型能做这个吗？”而是“模型能编排这个吗？”措辞上的微小差异，可靠性上的巨大差异。
+
+## 资源
+
+- [Vercel AI SDK 文档](https://sdk.vercel.ai/docs)
+- [CortexJS 计算引擎](https://cortexjs.io/compute-engine/)
+- [工具调用指南](https://sdk.vercel.ai/docs/ai-sdk-core/tools-and-tool-calling)
+- [AI SDK 示例仓库](https://github.com/vercel/ai/tree/main/examples)
+````
