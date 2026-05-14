@@ -1,0 +1,47 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "Precision with Floating Points",
+  "translatedTitle": "浮点数的精度",
+  "translation": {
+    "title": "浮点数的精度",
+    "group": "数学",
+    "options": [
+      {
+        "text": "0.1 + 0.2 === 0.3"
+      },
+      {
+        "text": "false"
+      },
+      {
+        "text": "true"
+      },
+      {
+        "text": "NaN"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [],
+    "hintsProse": [],
+    "explanationProse": [
+      "由于浮点数精度误差，`0.1 + 0.2` 并不完全等于 `0.3`。由于浮点数在内存中的存储方式，结果是 `0.30000000000000004`。处理浮点运算的 IEEE 754 标准是罪魁祸首，它无法精确表示某些数字。这是所有编程语言中的常见问题。最终你会遇到无限循环小数，无论哪种语言——计算机都只能停止追逐无限重复的数字。\n\n    一些语言如 Python 和 Java 提供了 `Decimal` 或 `BigDecimal` 来处理这个问题，但 JavaScript 没有内置这样的功能。你可以使用像 `big.js` 或 `decimal.js` 这样的库来处理这些情况。\n\n    （注意：有些语言被设计为在更高的逻辑层面上处理分数、虚数等，保留字面表达式。但它们仍然需要在硬件层面处理相同的浮点精度问题。）"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"浮点数的精度\",\n  \"group\": \"数学\",\n  \"options\": [\n    {\"text\": \"0.1 + 0.2 === 0.3\"},\n    {\"text\": \"false\"},\n    {\"text\": \"true\"},\n    {\"text\": \"NaN\"}\n  ],\n  \"objectives\": [],\n  \"questionProse\": [],\n  \"questionCode\": [{\"language\": \"tsx\", \"code\": \"[PRESERVED — do not translate]\"}],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\"由于浮点数精度误差，`0.1 + 0.2` 并不完全等于 `0.3`。由于浮点数在内存中的存储方式，结果是 `0.30000000000000004`。处理浮点运算的 IEEE 754 标准是罪魁祸首，它无法精确表示某些数字。这是所有编程语言中的常见问题。最终你会遇到无限循环小数，无论哪种语言——计算机都只能停止追逐无限重复的数字。\\n\\n    一些语言如 Python 和 Java 提供了 `Decimal` 或 `BigDecimal` 来处理这个问题，但 JavaScript 没有内置这样的功能。你可以使用像 `big.js` 或 `decimal.js` 这样的库来处理这些情况。\\n\\n    （注意：有些语言被设计为在更高的逻辑层面上处理分数、虚数等，保留字面表达式。但它们仍然需要在硬件层面处理相同的浮点精度问题。）\"],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 920,
+    "outputTokens": 2448,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 13383,
+    "providerCostUsd": 0.0011632,
+    "providerUpstreamCostUsd": 0.0011632,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00012880000000000001,
+    "outputUsd": 0.00068544,
+    "totalUsd": 0.00081424,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

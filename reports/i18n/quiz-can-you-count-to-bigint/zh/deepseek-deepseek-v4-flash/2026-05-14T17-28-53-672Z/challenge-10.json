@@ -1,0 +1,47 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Using `.map(parseInt)`",
+  "translatedTitle": "使用 `.map(parseInt)`",
+  "translation": {
+    "title": "使用 `.map(parseInt)`",
+    "group": "Number[]",
+    "options": [
+      {
+        "text": "[24, NaN, NaN]"
+      },
+      {
+        "text": "[24, NaN, 42]"
+      },
+      {
+        "text": "[24, 42]"
+      },
+      {
+        "text": "NaN"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [],
+    "hintsProse": [],
+    "explanationProse": [
+      "`parseInt` 的第二个参数（基数）与数组方法的 `index` 参数对齐。这会导致意外的结果，因为 `parseInt(\"One\", 1)` 由于输入无效而返回 `NaN`。\n\n    第一个元素 `24` 在基数为 0（自动检测）时被解析为 `24`，因此保持为 `24`。第二个元素 `'One'` 在基数为 1 时被解析为 `NaN`。第三个元素 `42` 使用基数 2 进行解析。在基数 2 中，`'42'` 是 `NaN`，因此结果是 `[24, NaN, NaN]`。\n\n    这是 `parseInt` 和 `map` 的一个常见陷阱。如果你想将字符串数组解析为数字，唯一安全的“内置”方法是 `.map(Number)` 或添加回调/闭包 `.map(x => parseInt(x, 10))`。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"使用 `.map(parseInt)`\",\n  \"group\": \"Number[]\",\n  \"options\": [\n    {\"text\": \"[24, NaN, NaN]\"},\n    {\"text\": \"[24, NaN, 42]\"},\n    {\"text\": \"[24, 42]\"},\n    {\"text\": \"NaN\"}\n  ],\n  \"objectives\": [],\n  \"questionProse\": [],\n  \"questionCode\": [\n    {\n      \"language\": \"jsx\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"`parseInt` 的第二个参数（基数）与数组方法的 `index` 参数对齐。这会导致意外的结果，因为 `parseInt(\\\"One\\\", 1)` 由于输入无效而返回 `NaN`。\\n\\n    第一个元素 `24` 在基数为 0（自动检测）时被解析为 `24`，因此保持为 `24`。第二个元素 `'One'` 在基数为 1 时被解析为 `NaN`。第三个元素 `42` 使用基数 2 进行解析。在基数 2 中，`'42'` 是 `NaN`，因此结果是 `[24, NaN, NaN]`。\\n\\n    这是 `parseInt` 和 `map` 的一个常见陷阱。如果你想将字符串数组解析为数字，唯一安全的“内置”方法是 `.map(Number)` 或添加回调/闭包 `.map(x => parseInt(x, 10))`。\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 926,
+    "outputTokens": 2445,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 15837,
+    "providerCostUsd": 0.0011632,
+    "providerUpstreamCostUsd": 0.0011632,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00012964,
+    "outputUsd": 0.0006846,
+    "totalUsd": 0.00081424,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
