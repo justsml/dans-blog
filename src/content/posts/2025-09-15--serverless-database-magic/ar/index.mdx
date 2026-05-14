@@ -1,0 +1,246 @@
+---
+title: موجة ابتكار قواعد البيانات في 2025
+subTitle: يمكنك شكر الذكاء الاصطناعي.
+date: '2025-09-10'
+modified: '2025-09-17'
+tags:
+  - serverless
+  - databases
+  - ai
+  - innovation
+  - chroma
+  - lancedb
+  - pagefind
+  - orama
+  - duckdb
+category: Search
+subCategory: Databases
+social_image: ../desktop-social.webp
+cover_full_width: ../data-city-wide.webp
+cover_mobile: ../data-city-square-200.webp
+cover_icon: ../data-city-square-200.webp
+cover_credit: ©️ 2025 Dan Levy
+---
+## ليست مقالة أخرى عن قواعد بيانات المتجهات
+
+إليك قاعدة القرار التي كنت أتمنى لو استخدمتها مبكرًا:
+
+<p class="inset">إذا كان يمكن إعادة بناء بياناتك من الملفات وكان المستخدمون يقرؤونها في الغالب، فجرّب قاعدة بيانات تخزين الكائنات أولاً. أما إذا كان المستخدمون يكتبون إليها طوال اليوم، فابدأ بقاعدة بيانات حقيقية وتوقف عن محاولة جعل S3 يتقمص دورها.</p>
+
+هذا هو الخط المفيد. ليس "الخادم اللامركزي هو المستقبل." وليس "قواعد بيانات المتجهات غيرت كل شيء." لقد طُبعت تلك الجمل بالفعل على ما يكفي من حبال المؤتمرات.
+
+لقد غيّر الذكاء الاصطناعي شكل الكثير من مشاكل البحث. فجأة، أرادت الفرق الصغيرة البحث الدلالي، التصنيف الهجين، الدردشة على المستندات، البحث متعدد الوسائط، والتحليلات على الملفات الموجودة في تخزين الكائنات. الإجابة القديمة كانت "تشغيل Postgres مع pgvector" أو "إدارة OpenSearch/Elasticsearch" أو "شراء خدمة بحث مُدارة." لا تزال تلك إجابات جيدة عندما يستحقها عبء العمل.
+
+لكن العديد من أعباء العمل ليست كذلك. فهي كثيفة القراءة، قابلة لإعادة البناء، وتتحمل تأخيرًا قصيرًا بين تغيير المحتوى ولحاق البحث به. التوثيق. لقطات الكتالوج. الصادرات الثابتة. قواعد المعرفة الداخلية. التحليلات المحلية. أنظمة RAG النموذجية. بالنسبة لهذه، جعلت فئة جديدة من الأدوات البنية المملة قوية بشكل غير عادي: بناء فهرس، تخزينه كملفات، تقديمه عبر HTTP.
+
+ملاحظة اللقطة: النظام البيئي يتحرك بسرعة. أعداد النجوم، تسميات الميزات، وأرقام الأداء أدناه هي لقطة لسبتمبر 2025، وليست لوحة نتائج خالدة. تعامل معها كتوجيه، ثم تحقق من الوثائق الحالية قبل المراهنة على ترحيل إنتاجي لأي خلية واحدة.
+
+## قاعدة بيانات بأي اسم آخر
+
+مخازن البيانات هذه القادرة على العمل بدون خادم ومع CDN مفيدة للحالات متوسطة الحجم، تقريبًا من 1,000 إلى 1,000,000 سجل أو بضعة غيغابايتات، حيث يمكن أن تكون البنية التحتية لقاعدة البيانات التقليدية أكثر احتفالية من القيمة:
+
+- **Pagefind** (2022، ~4.5K ⭐): نهج ثابت بحت - ترجمة مرة واحدة، بحث إلى الأبد، بدون متطلبات خلفية
+- **Orama** (2023، ~8K ⭐): حل عالمي يعمل في كل مكان من المتصفحات إلى وظائف الخادم اللامركزي
+- **Chroma** (2022، ~14K ⭐): أصلي للذكاء الاصطناعي، مبني خصيصًا لتطبيقات RAG
+- **LanceDB** (2023، ~4K ⭐): قدرات متعددة الوسائط للمؤسسات مع بنية قائمة على القرص
+- **DuckDB-WASM** (2019، ~23K ⭐): قاعدة بيانات تحليلات SQL كاملة تعمل في المتصفحات عبر WebAssembly
+
+الحركة الشائعة بسيطة: احتفظ بالبيانات الدائمة في ملفات أو تخزين كائنات، ثم استعلم عنها من متصفح أو دالة حافة أو عامل أو خدمة خفيفة. هذا لا يلغي التعقيد. إنه ينقل التعقيد إلى خطوط البناء، ونضارة الفهرس، وإبطال التخزين المؤقت، وقدرات العميل. وهي مقايضة جيدة تمامًا عندما تسود القراءات.
+
+### معركة خانات الاختيار
+
+| الميزة | [Pagefind](https://pagefind.app) | [Orama](https://orama.com) | [Chroma](https://www.trychroma.com/) | [LanceDB](https://lancedb.com) | [DuckDB-WASM](https://duckdb.org/docs/api/wasm) |
+|---------|----------|--------|---------|----------|----------|
+| **البحث النصي الكامل** | ✅ تشكيل متقدم | ✅ BM25، 30 لغة | ✅ SQLite FTS | ✅ Tantivy | ✅ SQL كامل |
+| **البحث المتجهي** | ❌ | ✅ تشابه جيب التمام | ✅ HNSW | ✅ IVF_PQ، HNSW، GPU | ⚠️ إضافات |
+| **تكاملات الذكاء الاصطناعي/RAG** | لا شيء | ✅ خط أنابيب مدمج | ✅ LangChain، LlamaIndex | ✅ إعادة ترتيب متقدمة | ⚠️ إعداد يدوي |
+| **التخزين** | JSON/WASM ثابت | ذاكرة + إضافات S3 | قائم على الخادم* | متوافق مع S3 Lance | WASM + S3/HTTP |
+| **دعم الكتابة** | وقت البناء فقط | CRUD كامل | CRUD كامل | CRUD كامل | CRUD SQL كامل |
+| **الأداء** | أقل من 100 مللي ثانية | 0.0001 مللي ثانية - 100 مللي ثانية | أقل من 100 مللي ثانية | 3-5 مللي ثانية للمتجهات، 50 مللي ثانية للبحث النصي | 10 مللي ثانية - 1 ثانية (SQL معقد) |
+
+*لقطة سبتمبر 2025: يتطلب Chroma بيئة تشغيل خادم ولا يدعم تخزين كائنات S3 المباشر بالطريقة التي تعمل بها أدوات ملفات الكائنات ([issue #1736](https://github.com/chroma-core/chroma/issues/1736)).
+
+### أمثلة التنفيذ
+
+تكشف الاختلافات في الصياغة عن الانقسام الحقيقي: البحث في وقت البناء، والبحث في الذاكرة، والتخزين المتجهي الأصلي، والجداول متعددة الوسائط، وSQL في المتصفح ليست نفس فئة المنتج لمجرد ظهورها جميعًا في عروض الذكاء الاصطناعي.
+
+#### بحث المواقع الثابتة باستخدام Pagefind
+
+```html
+
+<link href="/pagefind/pagefind-ui.css" rel="stylesheet">
+<script src="/pagefind/pagefind-ui.js"></script>
+<div id="search"></div>
+<script>new PagefindUI({ element: "#search" });</script>
+```
+
+#### متعدد الوسائط على مستوى المؤسسات باستخدام LanceDB
+
+**كود لإنشاء جدول LanceDB مع تضمينات OpenAI تلقائية:**
+```typescript
+import * as lancedb from "@lancedb/lancedb";
+import "@lancedb/lancedb/embedding/openai";
+import { LanceSchema, getRegistry } from "@lancedb/lancedb/embedding";
+import { Utf8 } from "apache-arrow";
+
+const db = await lancedb.connect("data/multimodal-db");
+const func = getRegistry()
+  .get("openai")
+  ?.create({ model: "text-embedding-ada-002" });
+
+// Schema with automatic embedding generation
+const documentsSchema = LanceSchema({
+  text: func.sourceField(new Utf8()),
+  vector: func.vectorField(),
+  category: new Utf8()
+});
+
+const table = await db.createEmptyTable("documents", documentsSchema);
+await table.add([
+  { text: "machine learning concepts", category: "research" },
+  { text: "deep learning fundamentals", category: "research" }
+]);
+```
+
+**مثال على الاستعلام عن جدول LanceDB:**
+```typescript
+import * as lancedb from "@lancedb/lancedb";
+import "@lancedb/lancedb/embedding/openai";
+// "Connect" to a URL path
+const db = await lancedb.connect("data/multimodal-db");
+const table = db.getTable("documents");
+
+// SQL + vector search combination
+const results = await table.search("machine learning concepts")
+  .where("category = 'research'")
+  .limit(10)
+  .toArray();
+
+console.log(results);
+```
+
+
+#### البحث الشامل باستخدام Orama
+```typescript
+import { create, insert, search } from '@orama/orama'
+
+const db = create({
+  schema: {
+    title: 'string',
+    content: 'string', 
+    embedding: 'vector[1536]'
+  }
+})
+
+await insert(db, { 
+  title: 'Getting Started',
+  content: 'Learn the basics',
+  embedding: await generateEmbedding('Learn the basics')
+})
+
+const results = await search(db, { 
+  term: 'basics',
+  mode: 'hybrid' // Combines text + vector search
+})
+```
+
+**DuckDB-WASM:**
+```typescript
+import * as duckdb from "https://cdn.jsdelivr.net/npm/@duckdb/duckdb-wasm@latest/dist/duckdb-browser.mjs";
+const bundle = await duckdb.selectBundle(duckdb.getJsDelivrBundles());
+const worker = new Worker(bundle.mainWorker);
+const db = new duckdb.AsyncDuckDB(new duckdb.ConsoleLogger(), worker);
+await db.instantiate(bundle.mainModule, bundle.pthreadWorker);
+
+const conn = await db.connect();
+await conn.query(`create table t as select * from (values (1,'hybrid search'),(2,'edge sql')) as v(id,txt);`);
+// Optional full-text:
+await conn.query(`install fts; load fts; select * from t where match_bm25(txt, 'hybrid');`);
+```
+
+#### البحث الأصلي للذكاء الاصطناعي باستخدام Chroma  
+```typescript
+import { ChromaClient } from "chromadb";
+
+const client = new ChromaClient();
+const collection = await client.createCollection({ name: "knowledge-base" });
+
+await collection.add({
+  documents: ["AI will transform software development"],
+  metadatas: [{ source: "tech-blog", category: "AI" }],
+  ids: ["doc1"]
+});
+
+const results = await collection.query({
+  queryTexts: ["future of programming"],
+  where: { category: "AI" },
+  nResults: 5
+});
+```
+
+## دليل حالات الاستخدام
+
+**اختر Pagefind عندما:**
+- تبني وثائق أو مدونات أو قواعد معرفة
+- تحديث المحتوى أسبوعيًا أو أقل
+- تحتاج إلى صفر أعباء تشغيلية وتخزين مؤقت مثالي لشبكة CDN
+- *مثال: وثائق شركة تحتوي على أكثر من 10 آلاف صفحة تُحدَّث شهريًا*
+
+**اختر Orama عندما:**
+- تبني لوحات معلومات أو تجارة إلكترونية أو تطبيقات ديناميكية
+- تحتاج إلى تحديثات فورية وأداء أقل من 100 مللي ثانية
+- تريد مرونة النشر من المتصفحات إلى دوال الحافة
+- *مثال: SaaS مع كتالوجات منتجات ديناميكية*
+
+**اختر Chroma عندما:**
+- تبني تطبيقات RAG أو قواعد معرفة للذكاء الاصطناعي
+- تحتاج إلى تكاملات LangChain/LlamaIndex
+- البحث الدلالي هو وظيفة أساسية
+- *مثال: روبوت دعم عملاء بالذكاء الاصطناعي*
+
+**اختر LanceDB عندما:**
+- تعمل مع بيانات متعددة الوسائط (صور، صوت، فيديو)
+- تحتاج إلى أداء مؤسسي على نطاق واسع
+- تحليلات معقدة وإعادة ترتيب مطلوبة
+- *مثال: منصة وسائط مع بحث دلالي بالفيديو*
+
+**اختر DuckDB-WASM عندما:**
+- تحتاج إلى قدرات SQL كاملة في المتصفحات أو دوال الحافة
+- تعمل مع أعباء عمل تحليلية واستعلامات معقدة
+- تريد معالجة ملفات CSV/Parquet مباشرة من S3
+- *مثال: لوحة معلومات ذكاء أعمال مع استعلامات SQL مخصصة*
+
+## قاعدة القرار
+
+السؤال العملي ليس "أي قاعدة بيانات هي الأفضل؟"
+
+السؤال العملي هو: أي نوع من التغيير يجب أن يستوعبه النظام؟
+
+- **محتوى قابل لإعادة البناء:** Pagefind، لقطات Orama، ملفات Lance، DuckDB فوق Parquet. أبقِه ثابتًا حتى يؤلم.
+- **كتابات متكررة:** Postgres، خادم Chroma، خدمة بحث مُدارة، أو خط أنابيب فهرسة مدعوم بقائمة انتظار. أنت بحاجة إلى تنسيق، وليس مشاعر.
+- **نتائج خاصة بالمستخدم:** استخدم خلفية حقيقية. تخزين الكائنات ليس نموذج تفويض.
+- **تحليلات فوق ملفات:** DuckDB مفيد بشكل سخيف. دع SQL يفعل أشياء SQL.
+- **بحث متعدد الوسائط أو ثقيل المتجهات:** LanceDB و Chroma يستحقان الاختبار على بياناتك الفعلية، وليس على معيار README.
+
+المسار السعيد رخيص. الحالات الحدودية هي التي تحدد البنية.
+
+## الصورة الأكبر
+
+هذه الأدوات تقلل من الحد الأدنى للبنية التحتية القابلة للتطبيق للبحث المفيد. هذا مهم. في عام 2020، كان "البحث الدلالي" يعني غالبًا كومة من الخدمات، والكثير من الكود اللاصق، وشخصًا يشرح فهارس المتجهات في اجتماع حيث أراد نصف الغرفة الغداء. في عام 2025، يمكن لفريق صغير بناء نموذج أولي لنفس فكرة المنتج باستخدام ملفات وتضمينات وعطلة نهاية أسبوع.
+
+هذا لا يعني أن كل مربع بحث يجب أن يصبح نظام RAG. إنه يعني أن الإصدار الأول لم يعد مضطرًا لوراثة البنية التحتية للإنتاج قبل أن يكون لديه دليل إنتاج.
+
+حتى AWS كانت تتحرك في هذا الاتجاه مع عمل بحث متجهي مجاور لـ S3، وهو إشارة مفيدة: تخزين الكائنات لم يعد مجرد العلية حيث تذهب الملفات القديمة. إنه يصبح سطح استعلام.
+
+## ابدأ بالتجربة
+
+1. **اختر نمط التحديث أولاً**: وقت البناء، دفعة كل ساعة، كتابات حية، أو نتائج لكل مستخدم.
+2. **قم بالنمذجة الأولية بأصغر أداة صادقة**: Pagefind لـ HTML الثابت، DuckDB للملفات التحليلية، Orama للبحث الخفيف في التطبيقات، LanceDB أو Chroma للعمل الثقيل بالمتجهات.
+3. **قس الجزء القبيح**: وقت الفهرسة، النضارة، حجم الحزمة، الأذونات، وأول استعلام بعد بدء بارد.
+4. **قم بالترقية فقط عندما يكون الألم حقيقيًا**: قاعدة بيانات مُدارة أسهل تبريرًا بعد أن يظهر الإصدار القائم على الملفات أين ينحني بالضبط.
+
+*اطلع على [دليلي العملي لـ Pagefind][1] للتنفيذ العملي، أو استكشف النظام البيئي المتنامي لقواعد البيانات الأصلية للحافة التي تعيد تشكيل البيانات على نطاق واسع.*
+
+> **إخلاء مسؤولية:** لقد استخدمت Pagefind لسنوات وأصبحت مساهمًا في 2025. لقد جربت Orama و Chroma لمشاريع أصغر وأستكشف LanceDB لتطبيقات الذكاء الاصطناعي الأكبر. لا توجد علاقات مالية مع هذه المشاريع — مجرد اهتمام شديد بمشهد قواعد البيانات المتطور.
+
+[1]: https://danlevy.net/you-might-not-need-algolia/
