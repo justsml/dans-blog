@@ -1,0 +1,49 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Hash Join Eligibility",
+  "translatedTitle": "哈希连接的条件",
+  "translation": {
+    "title": "哈希连接的条件",
+    "group": "SQL 内部机制",
+    "options": [
+      {
+        "text": "ON a.id = b.id"
+      },
+      {
+        "text": "ON a.id > b.id"
+      },
+      {
+        "text": "ON a.id >= b.id"
+      },
+      {
+        "text": "HASH JOIN ON a.id = b.id ..."
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "PostgreSQL 可以使用哪个 `ON` 条件进行 `HASH JOIN`？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "哈希连接可以使用 `ON` 子句中的等值（`=`）条件。\n\n    - `=` 是哈希连接的关键谓词形式\n    - `>` 和 `>=` 不是哈希连接的谓词\n    - `HASH JOIN` 在 PostgreSQL 中不是有效的语法\n\n    规划器仍可能根据表大小、统计信息、索引和内存设置选择嵌套循环连接或合并连接。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"哈希连接的条件\",\n  \"group\": \"SQL 内部机制\",\n  \"options\": [\n    {\n      \"text\": \"ON a.id = b.id\"\n    },\n    {\n      \"text\": \"ON a.id > b.id\"\n    },\n    {\n      \"text\": \"ON a.id >= b.id\"\n    },\n    {\n      \"text\": \"HASH JOIN ON a.id = b.id ...\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"PostgreSQL 可以使用哪个 `ON` 条件进行 `HASH JOIN`？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"哈希连接可以使用 `ON` 子句中的等值（`=`）条件。\\n\\n    - `=` 是哈希连接的关键谓词形式\\n    - `>` 和 `>=` 不是哈希连接的谓词\\n    - `HASH JOIN` 在 PostgreSQL 中不是有效的语法\\n\\n    规划器仍可能根据表大小、统计信息、索引和内存设置选择嵌套循环连接或合并连接。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 860,
+    "outputTokens": 1017,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 6566,
+    "providerCostUsd": 0.0005788,
+    "providerUpstreamCostUsd": 0.0005788,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00012040000000000001,
+    "outputUsd": 0.00028476,
+    "totalUsd": 0.00040516,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

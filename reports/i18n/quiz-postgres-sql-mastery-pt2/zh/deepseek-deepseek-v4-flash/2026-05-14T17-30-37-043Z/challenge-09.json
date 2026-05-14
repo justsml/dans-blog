@@ -1,0 +1,62 @@
+{
+  "index": 8,
+  "attempt": 1,
+  "originalTitle": "TABLESAMPLE Syntax",
+  "translatedTitle": "TABLESAMPLE 语法",
+  "translation": {
+    "title": "TABLESAMPLE 语法",
+    "group": "数据采样",
+    "options": [
+      {
+        "text": "...students SAMPLETABLE BERNOULLI (0.10)"
+      },
+      {
+        "text": "...students TABLESAMPLE USER (10)"
+      },
+      {
+        "text": "...students TABLESAMPLE RANDOM (10)"
+      },
+      {
+        "text": "...students SAMPLE 10 PERCENT"
+      },
+      {
+        "text": "ROW_NUMBER() OVER (ORDER BY RAND())"
+      },
+      {
+        "text": "ORDER BY RANDOM() >= 10"
+      },
+      {
+        "text": "WHERE RANDOM() >= 0.1"
+      },
+      {
+        "text": "WHERE RANDOM() >= 0.9"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "哪个是有效的语法，用于**随机采样 10%** 的学生？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "这道题有点狡猾！它大约设置了 6 个陷阱，包括：\n\n    1. 高级描述加语法片段。测试你如何适应并组装不完整的信息。\n    2. 需要熟悉 `TABLESAMPLE` 语法，因为所有 `TABLESAMPLE` 选项都没有使用正确的语法！（阴险！我知道！继续加油，我相信你！！！❤️）\n    3. `ROW_NUMBER() OVER (ORDER BY RAND())` 和 `ORDER BY RANDOM() > 10` 是更多的烟雾弹。它们看起来可能是正确的，但实际上不是。`RAND()` 并不存在。而 `RANDOM() > 10` 是一个布尔表达式，由于 `RANDOM()` 总是在 `0.0-1.0` 范围内，所以它永远为假。\n    还有一个问题，`ORDER BY RANDOM() > 10` 会按布尔值排序，而不是随机数。但那个 `> 10` 确实让人感觉它可能是一个百分比，对吧？\n    4. `BERNOULLI` 是有效的，但 `SAMPLETABLE` 不是。\n    5. `WHERE RANDOM() >= 0.1` 是个陷阱！`RANDOM()` 返回的值在 `0.0 <= x < 1.0` 范围内，所以 `>= 0.1` 会返回大约 90% 的行，而不是 10%。\n\n    至于 `TABLESAMPLE` 方法，PostgreSQL 支持两种采样方法：\n    - `BERNOULLI`：每行有相等的概率\n    - `SYSTEM`：块级采样（更快但随机性较差）\n\n    要了解更多关于采样的信息，请查看 [Render](https://render.com/blog/postgresql-random-samples-big-tables) 上的这篇文章。\n\n    示例：",
+      "另外值得一提的是，`TABLESAMPLE` [已被报告](https://stackoverflow.com/questions/8674718/best-way-to-select-random-rows-postgresql) 随机性不够好。如果你需要更随机的固定大小样本，可以考虑使用 `ORDER BY RANDOM() LIMIT 10`。但请注意，这会返回 10 行，而不是 10%，并且在大型表上可能会很慢。\n\n    还有一些第三方扩展提供了更好的随机采样方法，但这超出了本问题的范围！😅"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"TABLESAMPLE 语法\",\n  \"group\": \"数据采样\",\n  \"options\": [\n    {\n      \"text\": \"...students SAMPLETABLE BERNOULLI (0.10)\"\n    },\n    {\n      \"text\": \"...students TABLESAMPLE USER (10)\"\n    },\n    {\n      \"text\": \"...students TABLESAMPLE RANDOM (10)\"\n    },\n    {\n      \"text\": \"...students SAMPLE 10 PERCENT\"\n    },\n    {\n      \"text\": \"ROW_NUMBER() OVER (ORDER BY RAND())\"\n    },\n    {\n      \"text\": \"ORDER BY RANDOM() >= 10\"\n    },\n    {\n      \"text\": \"WHERE RANDOM() >= 0.1\"\n    },\n    {\n      \"text\": \"WHERE RANDOM() >= 0.9\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"哪个是有效的语法，用于**随机采样 10%** 的学生？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"这道题有点狡猾！它大约设置了 6 个陷阱，包括：\\n\\n    1. 高级描述加语法片段。测试你如何适应并组装不完整的信息。\\n    2. 需要熟悉 `TABLESAMPLE` 语法，因为所有 `TABLESAMPLE` 选项都没有使用正确的语法！（阴险！我知道！继续加油，我相信你！！！❤️）\\n    3. `ROW_NUMBER() OVER (ORDER BY RAND())` 和 `ORDER BY RANDOM() > 10` 是更多的烟雾弹。它们看起来可能是正确的，但实际上不是。`RAND()` 并不存在。而 `RANDOM() > 10` 是一个布尔表达式，由于 `RANDOM()` 总是在 `0.0-1.0` 范围内，所以它永远为假。\\n    还有一个问题，`ORDER BY RANDOM() > 10` 会按布尔值排序，而不是随机数。但那个 `> 10` 确实让人感觉它可能是一个百分比，对吧？\\n    4. `BERNOULLI` 是有效的，但 `SAMPLETABLE` 不是。\\n    5. `WHERE RANDOM() >= 0.1` 是个陷阱！`RANDOM()` 返回的值在 `0.0 <= x < 1.0` 范围内，所以 `>= 0.1` 会返回大约 90% 的行，而不是 10%。\\n\\n    至于 `TABLESAMPLE` 方法，PostgreSQL 支持两种采样方法：\\n    - `BERNOULLI`：每行有相等的概率\\n    - `SYSTEM`：块级采样（更快但随机性较差）\\n\\n    要了解更多关于采样的信息，请查看 [Render](https://render.com/blog/postgresql-random-samples-big-tables) 上的这篇文章。\\n\\n    示例：\",\n    \"另外值得一提的是，`TABLESAMPLE` [已被报告](https://stackoverflow.com/questions/8674718/best-way-to-select-random-rows-postgresql) 随机性不够好。如果你需要更随机的固定大小样本，可以考虑使用 `ORDER BY RANDOM() LIMIT 10`。但请注意，这会返回 10 行，而不是 10%，并且在大型表上可能会很慢。\\n\\n    还有一些第三方扩展提供了更好的随机采样方法，但这超出了本问题的范围！😅\"\n  ],\n  \"explanationCode\": [\n    {\n      \"language\": \"sql\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1396,
+    "outputTokens": 1684,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 9689,
+    "providerCostUsd": 0.0009528,
+    "providerUpstreamCostUsd": 0.0009528,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00019544000000000004,
+    "outputUsd": 0.00047152,
+    "totalUsd": 0.0006669600000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

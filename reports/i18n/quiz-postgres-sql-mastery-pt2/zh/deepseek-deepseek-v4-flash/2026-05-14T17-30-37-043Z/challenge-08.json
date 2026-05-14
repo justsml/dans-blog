@@ -1,0 +1,52 @@
+{
+  "index": 7,
+  "attempt": 1,
+  "originalTitle": "Column Name Quoting",
+  "translatedTitle": "列名引用",
+  "translation": {
+    "title": "列名引用",
+    "group": "引用 2",
+    "options": [
+      {
+        "text": "first.name"
+      },
+      {
+        "text": "\"first.name\""
+      },
+      {
+        "text": "\\"
+      },
+      {
+        "text": "[first.name]"
+      },
+      {
+        "text": "[first].[name]"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "如何指定一个**包含句点的列名？**"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "PostgreSQL 使用双引号进行标识符引用：\n    - 双引号 `\\\"...\\\"` 用于标识符（列名、表名）\n    - 单引号 `'...'` 用于字符串字面量\n    - 形式 `first.name` 被解释为 `table_name.column_name`\n\n    不加引号时，列名中的句点会被解释为模式/表分隔符！此外，所有未加引号的标识符默认会被转换为小写。\n\n    为了减少意外，最好使用 `snake_case` 并避免使用特殊字符。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"列名引用\",\n  \"group\": \"引用 2\",\n  \"options\": [\n    {\"text\": \"first.name\"},\n    {\"text\": \"\\\"first.name\\\"\"},\n    {\"text\": \"\\\\\"},\n    {\"text\": \"[first.name]\"},\n    {\"text\": \"[first].[name]\"}\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"如何指定一个**包含句点的列名？**\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"PostgreSQL 使用双引号进行标识符引用：\\n    - 双引号 `\\\\\\\"...\\\\\\\"` 用于标识符（列名、表名）\\n    - 单引号 `'...'` 用于字符串字面量\\n    - 形式 `first.name` 被解释为 `table_name.column_name`\\n\\n    不加引号时，列名中的句点会被解释为模式/表分隔符！此外，所有未加引号的标识符默认会被转换为小写。\\n\\n    为了减少意外，最好使用 `snake_case` 并避免使用特殊字符。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 889,
+    "outputTokens": 1278,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 8658,
+    "providerCostUsd": 0.000689,
+    "providerUpstreamCostUsd": 0.000689,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00012446,
+    "outputUsd": 0.00035784000000000006,
+    "totalUsd": 0.00048230000000000007,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

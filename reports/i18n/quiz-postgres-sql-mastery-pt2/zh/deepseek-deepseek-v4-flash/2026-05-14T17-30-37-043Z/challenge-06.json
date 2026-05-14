@@ -1,0 +1,49 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Multi-Column Index Order",
+  "translatedTitle": "多列索引的顺序",
+  "translation": {
+    "title": "多列索引的顺序",
+    "group": "索引",
+    "options": [
+      {
+        "text": "CREATE INDEX ON students(grade_level, last_name);"
+      },
+      {
+        "text": "CREATE INDEX ON students(grade_level);"
+      },
+      {
+        "text": "CREATE INDEX ON students(last_name, age);"
+      },
+      {
+        "text": "CREATE INDEX ON students(first_name, last_name, grade_level);"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "对于这个查询，哪个索引更合适？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "对我来说，令人惊讶的是，即使查询文本中的列顺序与索引定义不匹配，多列索引仍然可以被使用。\n\n    **注意：** 对于 B-tree 索引，前导列至关重要。由于此查询按 `grade_level` 和 `last_name` 过滤，因此以 `grade_level` 开头、后跟 `last_name` 的索引是一个很好的选择。\n\n    SQL 能越快选出最少的行，性能就越好。\n\n    例如，如果你有一个 `task` 表，并且你知道 `status` 比 `created_at` 更具选择性，那么对于像 `status = 'done' AND created_at > '2024-01-01'` 这样的查询，你可能会选择以 `status` 开头的索引。`WHERE` 子句文本中条件的顺序并不重要；重要的是索引列的顺序和谓词的形状。\n\n    B+Tree 索引可用于：\n    - 前导列，或列的最左前缀。\n    - 诸如 `=`、`>`、`<`、`BETWEEN` 和 `IN` 之类的运算符，具体取决于查询形状。\n    - 前缀匹配，如 `LIKE 'prefix%'`。\n\n    感谢 [u/mwdb2](https://www.reddit.com/r/PostgreSQL/comments/1h6kw87/comment/m0fovn0/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button) 指出了本解释中之前的一个错误！"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"多列索引的顺序\",\n  \"group\": \"索引\",\n  \"options\": [\n    {\n      \"text\": \"CREATE INDEX ON students(grade_level, last_name);\"\n    },\n    {\n      \"text\": \"CREATE INDEX ON students(grade_level);\"\n    },\n    {\n      \"text\": \"CREATE INDEX ON students(last_name, age);\"\n    },\n    {\n      \"text\": \"CREATE INDEX ON students(first_name, last_name, grade_level);\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"对于这个查询，哪个索引更合适？\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"sql\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"对我来说，令人惊讶的是，即使查询文本中的列顺序与索引定义不匹配，多列索引仍然可以被使用。\\n\\n    **注意：** 对于 B-tree 索引，前导列至关重要。由于此查询按 `grade_level` 和 `last_name` 过滤，因此以 `grade_level` 开头、后跟 `last_name` 的索引是一个很好的选择。\\n\\n    SQL 能越快选出最少的行，性能就越好。\\n\\n    例如，如果你有一个 `task` 表，并且你知道 `status` 比 `created_at` 更具选择性，那么对于像 `status = 'done' AND created_at > '2024-01-01'` 这样的查询，你可能会选择以 `status` 开头的索引。`WHERE` 子句文本中条件的顺序并不重要；重要的是索引列的顺序和谓词的形状。\\n\\n    B+Tree 索引可用于：\\n    - 前导列，或列的最左前缀。\\n    - 诸如 `=`、`>`、`<`、`BETWEEN` 和 `IN` 之类的运算符，具体取决于查询形状。\\n    - 前缀匹配，如 `LIKE 'prefix%'`。\\n\\n    感谢 [u/mwdb2](https://www.reddit.com/r/PostgreSQL/comments/1h6kw87/comment/m0fovn0/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button) 指出了本解释中之前的一个错误！\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 1116,
+    "outputTokens": 845,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 6128,
+    "providerCostUsd": 0.0005612,
+    "providerUpstreamCostUsd": 0.0005612,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00015624,
+    "outputUsd": 0.00023660000000000003,
+    "totalUsd": 0.00039284000000000004,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

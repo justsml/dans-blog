@@ -1,0 +1,52 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "COUNT and NULL",
+  "translatedTitle": "COUNT 与 NULL",
+  "translation": {
+    "title": "COUNT 与 NULL",
+    "group": "NULL 行为",
+    "options": [
+      {
+        "text": "100"
+      },
+      {
+        "text": "90"
+      },
+      {
+        "text": "10"
+      },
+      {
+        "text": "1"
+      },
+      {
+        "text": "0"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "这会返回多少 *行*？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "好吧，这有点棘手。陷阱在于 `x = NULL` 永远不会匹配任何行，并且它总是返回一行计数为 `0`。\n\n    由于 `NULL` 是未知值，它不能与任何东西比较，甚至不能与自己比较。\n    \n    检查 `NULL` 值的正确方法是使用 `IS NULL`。\n\n    示例："
+    ]
+  },
+  "rawText": "{\n  \"title\": \"COUNT 与 NULL\",\n  \"group\": \"NULL 行为\",\n  \"options\": [\n    {\"text\": \"100\"},\n    {\"text\": \"90\"},\n    {\"text\": \"10\"},\n    {\"text\": \"1\"},\n    {\"text\": \"0\"}\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"这会返回多少 *行*？\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"sql\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"好吧，这有点棘手。陷阱在于 `x = NULL` 永远不会匹配任何行，并且它总是返回一行计数为 `0`。\\n\\n    由于 `NULL` 是未知值，它不能与任何东西比较，甚至不能与自己比较。\\n    \\n    检查 `NULL` 值的正确方法是使用 `IS NULL`。\\n\\n    示例：\"\n  ],\n  \"explanationCode\": [\n    {\n      \"language\": \"sql\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 869,
+    "outputTokens": 1657,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 10689,
+    "providerCostUsd": 0.0008366,
+    "providerUpstreamCostUsd": 0.0008366,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00012166000000000001,
+    "outputUsd": 0.0004639600000000001,
+    "totalUsd": 0.0005856200000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
