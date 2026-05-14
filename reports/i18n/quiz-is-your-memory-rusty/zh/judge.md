@@ -1,7 +1,7 @@
 # Translation Judge
 
-- Selected candidate: 21c60bf86625294228d9061a3fa48e03af22a983
-- Selected model: openrouter/deepseek/deepseek-v4-flash
-- Judge model: openrouter/deepseek/deepseek-v4-flash
+- Selected candidate: 0dc74fc93ce319ccb3837af4dfc2225ae097352a
+- Selected model: deepseek/deepseek-v4-flash
+- Judge model: openrouter/google/gemini-3-flash-preview
 
-Candidate 21c60bf86625294228d9061a3fa48e03af22a983 is selected for its clever and natural translation of the subTitle pun ('（借用）先自查，别自毁！'), consistent translation of error messages into Chinese, accurate preservation of group names (e.g., 'RefCells' vs 'RefCell'), and overall polished, readable Chinese that matches Dan's direct style. Both candidates preserve MDX structure and asset paths correctly, but this one demonstrates slightly better attention to detail and natural language flow.
+The translation is technically accurate and maintains the direct, educational tone of the original. It correctly preserves MDX components and relative asset paths. The previous suggestion for '你好，！' has already been incorporated into the current version (it uses full-width punctuation which is correct for Chinese). The translation of technical terms like '所有权' (Ownership) and '借用' (Borrowing) is standard and consistent.
