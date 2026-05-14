@@ -1,0 +1,15 @@
+# Translation Candidate
+- Slug: docker-firewall-setup
+- Locale: he
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2015-06-06--docker-firewall-setup/he/index.mdx
+- Validation: rejected: direct AI SDK translation failed
+- Runtime seconds: 4.08
+- Input tokens: 3603
+- Output tokens: 1031
+- Thinking tokens: unknown
+- Cached input tokens: 1792
+- Cache write tokens: 0
+- Estimated cost: $0.000326
+- Pricing source: local-openrouter-estimate
+- Note: Command failed: bun run i18n:translate:chunked -- --slug docker-firewall-setup --locale he --model openrouter/openai/gpt-oss-120b:nitro --chunk 10p --run-id 2026-05-14T02-07-56-373Z-89964 --run-lock-path /Users/dan/code/oss/dans-blog/.git/i18n-all-missing-runlocks/docker-firewall-setup-he-openai-gpt-oss-120b-nitro.json --quiz-concurrency 32 (code 1)
