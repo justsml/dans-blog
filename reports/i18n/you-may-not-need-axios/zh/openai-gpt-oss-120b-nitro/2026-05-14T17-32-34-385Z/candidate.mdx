@@ -1,0 +1,203 @@
+---
+social_image: ../desktop-social.webp
+title: 你可能不需要 Axios
+subTitle: Fetch API 来拯救！
+date: '2018-11-14'
+modified: '2024-08-21'
+tags:
+  - programming
+  - patterns
+  - examples
+  - nodejs
+  - javascript
+  - promises
+  - axios
+  - fetch
+category: Guides
+subCategory: fetch
+cover: ../brock-dupont-575648-unsplash.webp
+cover_mobile: ../w300_brock-dupont-575648-unsplash.webp
+cover_icon: ../icon_brock-dupont-575648-unsplash.webp
+---
+import Gist from '../../../../components/Gist/index.astro'
+
+## 你可能不需要 Axios
+
+<p class="breakout call-to-action">这 **并不是对** [Axios](https://www.npmjs.com/package/axios) **的攻击**。<br />
+相反，这是 **对已经相当强大的 `fetch` API 的倡导**。🦄</p>
+
+### 概览
+
+本文收集了我希望更容易找到的 “缺失” `fetch` 代码片段和常见用例。
+
+- [概览](#overview)
+- [功能对比](#feature-comparison)
+- [Fetch 食谱](#fetch-recipes)
+  - [从 URL 获取 JSON](#get-json-from-a-url)
+  - [自定义请求头](#custom-headers)
+  - [HTTP 错误处理](#http-error-handling)
+  - [CORS 示例](#cors-example)
+  - [POST JSON](#posting-json)
+  - [POST HTML `<form>`](#posting-an-html-form)
+  - [表单编码数据](#form-encoded-data)
+  - [上传文件](#uploading-a-file)
+  - [上传多个文件](#uploading-multiple-files)
+  - [超时处理](#timeouts)
+  - [下载进度助手](#download-progress-helper)
+  - [递归重试助手](#recursive-retry-helper)
+  - [处理 HTTP 重定向](#handling-http-redirects)
+  - [取消 fetch 请求](#canceling-a-fetch-request) ✨new✨
+- [兼容性](#compatibility)
+
+> 你的使用场景没有列出？[告诉我 ✉️](/contact/)
+
+<br />
+
+### 功能对比
+
+|                                                 | fetch    | axios    | request |
+|-------------------------------------------------|:--------:|:--------:|:-------:|
+| 拦截请求和响应                                   |✅        |✅         |✅       |
+| 转换请求和响应数据                               |✅        |✅         |✅       |
+| 取消请求                                         |✅        |✅         |❌       |
+| 自动 JSON 数据转换                               |手动辅助 |✅         |✅       |
+| 客户端防 XSRF 支持                                |✅        |✅         |✅       |
+| 进度                                             |✅        |✅         |✅       |
+| 流式传输                                         |✅        |✅         |✅       |
+| 重定向                                           |✅        |✅         |✅       |
+
+<br /><br />
+
+在撰写本文时（2018 年底，2024 年更新），我本以为会得到一张混合勾选框的表格。肯定有一些特殊的 _使用场景_ 需要 [`axios`](https://www.npmjs.com/package/axios)、[`request`](https://www.npmjs.com/package/request)、[`r2`](https://www.npmjs.com/package/r2)、[`superagent`](https://www.npmjs.com/package/superagent)、[`got`](https://www.npmjs.com/package/got) 等库。
+
+事实证明，**我高估了第三方 HTTP 库的需求**。
+
+虽然我已经使用 `fetch` 好几年（包括文件上传、错误/重试等非平凡任务），但仍对 `fetch` 的能力和限制有误解。
+
+原生 `fetch` 不会自动解析 JSON 响应或序列化 JSON 请求体。需要在返回时调用 `response.json()`，在发送时使用 `JSON.stringify()`。在这点上 Axios 仍然更省事；`fetch` 的论点是，一个小辅助函数就能填补这个差距。
+
+好，来看看 `fetch` 能做到什么吧…
+
+## Fetch 食谱
+
+### 从 URL 获取 JSON
+
+<Gist path='justsml/de941bd61cc86e30beedbb8a3a646f81'></Gist>
+
+### 自定义请求头
+
+<Gist path='justsml/fca7cd72ec1ebc07d994eac13a665ddf' />
+
+### HTTP 错误处理
+
+<Gist path='justsml/81919a72897ebc503c6b34a556a9bde2' />
+
+### CORS 示例
+
+CORS 主要在服务器端进行检查——因此请确保服务器端的配置正确。
+
+`credentials` 选项决定是否自动包含 cookie。
+
+<Gist path='justsml/3ddd9ed8705f48cdf45d313d1e57aa2a' />
+
+### 发送 JSON
+
+<Gist path='justsml/13915347d6c8413c73f4bd7240c68e51' />
+
+### 提交 HTML `<form>`
+
+<Gist path='justsml/ef2e356bec0ef7c6e528d84a5f75ba7e' />
+
+### 表单编码数据
+
+要使用 `application/x-www-form-urlencoded` 的 Content-Type 发送数据，我们会使用 `URLSearchParams` 将数据编码成类似查询字符串的形式。
+
+例如，`new URLSearchParams({a: 1, b: 2})` 会得到 `a=1&b=2`。
+
+<Gist path='justsml/716c4534ef4afb22f65d4fc4367c7136' />
+
+### 上传文件
+
+<Gist path='justsml/301f22aa37df565ba3051bd5f95b4df1' />
+
+### 上传多个文件
+
+使用 `multiple` 属性设置文件上传元素：
+
+<Gist path='justsml/37836357041d8ca4d1b32e12638cb0ba' />
+
+然后可以这样使用：
+
+<Gist path='justsml/d17f50c36a5ddb70f584c0aa6de94237' />
+
+### 超时
+
+下面是一个通用的 Promise 超时实现，采用“部分应用”模式。它可以配合任何 Promise 接口使用。不要在提供的 promise 链中做太多工作，否则它会一直运行——任何错误都可能导致长期的内存泄漏。
+
+<Gist path='justsml/f93b2ef6457b3e52eb995831b67cab85' />
+
+还有一个更复杂的示例，使用跟踪标记 `__timeout`，以便 **拦截任何耗时的操作**。
+
+<Gist path='justsml/5e492db8997a4f7e22e61b7486cbf273' />
+
+### 下载进度助手
+
+上传进度在 Chrome 之外的浏览器中仍有些 bug。
+
+下面展示的进度处理技术 **避免了** 在闭包中包装 `fetch` 调用。 👍
+
+`progressHelper` 具有以下接口（源码见下）
+
+<Gist path='justsml/db5ccc55ffb93c75e04e014d1f553cfb' />
+
+下面来看一个使用示例：
+
+<Gist path='justsml/9bec219590ff50688972c1caff67c14b' />
+
+一个可复用的图片下载函数可以写成 `getBlob()`：
+
+<Gist path='justsml/bef2dd7e630eb7642beb3e2be29489b2' />
+
+顺便说下，`Blob` 是 Binary Large Object（二进制大对象）。
+
+下面的两种使用模式功能等价，务必只选其一：
+
+<Gist path='justsml/6ad9e37a96ad1f3a75ca509038510a5b' />
+
+我更倾向于 **Option #1**，但如果你的作用域设计迫使你使用 **Option #2**，也可以。
+
+最后，展示本教程的最后一块——我们的 `progressHelper`：
+
+##### 来源：进度助手
+
+<Gist path='justsml/a8ffd810fc7e5a5295dfc898302ddbfc' />
+
+_致谢：特别感谢 Anthum Chris 以及他在此处展示的[精彩 Progress+Fetch 示例](https://github.com/AnthumChris/fetch-progress-indicators)_
+
+### 递归重试助手
+
+<Gist path='justsml/7e52521a0af50fa590be57d5b4593120' />
+
+### 处理 HTTP 重定向
+
+<Gist path='justsml/3dd0a799ada8da7cd15943ff254266de' />
+
+### 取消 fetch 请求
+
+<Gist path='justsml/7f257ac3de3c7792db8485588c54e938' />
+
+### 兼容性
+
+截至 2022 年，`fetch` API 已在所有现代浏览器以及较新版本的 NodeJS v18+ 中[得到广泛支持](https://caniuse.com/#feat=fetch)。
+
+如果必须兼容 IE，可以使用 `github/fetch` 包进行[fetch polyfill](https://github.com/github/fetch#browser-support)（由 GitHub 的优秀团队维护）。甚至可以追溯到 [IE8](https://github.com/camsong/fetch-ie8)——_实际效果因环境而异_。
+
+较早的 NodeJS 版本可以通过[`node-fetch`](https://www.npmjs.com/package/node-fetch) 包来使用 `fetch` API：
+
+```sh
+npm install node-fetch
+```
+
+_使用 polyfill + node-fetch 后：兼容性达 99.99%_ ✅
+
+> 如有其他想看到的 _使用场景_，请[给我发推特](https://x.com/justsml) ❤️
