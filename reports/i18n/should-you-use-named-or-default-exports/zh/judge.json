@@ -1,0 +1,56 @@
+{
+  "selectedCommit": "1a3da4adb4882832b3910b9661264d5106620745",
+  "selectedModel": "deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The current translation already incorporates the high-priority fixes suggested in the previous judge report (translating code comments). It captures Dan's informal and direct tone perfectly ('弱爆的论点', '他妈的像你真心实意那样'). The MDX structure, table formatting, and asset paths are correctly preserved.",
+  "slug": "should-you-use-named-or-default-exports",
+  "locale": "zh",
+  "candidateCommits": [
+    "5a1bd36f0f858751ad4b6a63e9ef0c624a3738df",
+    "1a3da4adb4882832b3910b9661264d5106620745",
+    "db6ae830fab31fc0d6d1924171d3b1a3444df65e"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "// You can alias using both!",
+      "replacement": "// 两种方式都可以起别名！",
+      "reason": "The code comment was left in English.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "// However, once declared you can export a const var as the default.",
+      "replacement": "// 但是，一旦声明，你就可以将 const 变量作为默认导出。",
+      "reason": "The code comment was left in English.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "// For completeness:",
+      "replacement": "// 为了完整起见：",
+      "reason": "The code comment was left in English.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug should-you-use-named-or-default-exports --locale zh --skip-global",
+    "output": ""
+  }
+}
