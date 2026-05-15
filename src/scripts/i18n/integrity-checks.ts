@@ -823,7 +823,13 @@ function extractMarkdownReferenceDefinitions(contents: string) {
 }
 
 function isCodeLikeQuizOption(value: string) {
-  return /(?:\b[A-Za-z_$][\w$]*\s*\(|=>|[{}[\];]|\.\w+|\\'|\\"|\b(?:Date|Intl|Promise|Array|Object|Map|Set|NaN|null|undefined|TypeError|RangeError)\b)/.test(value);
+  const trimmed = value.trim();
+  return (
+    /(?:\b[A-Za-z_$][\w$]*\s*\(|=>|[{}[\];]|\\'|\\"|\b(?:NaN|null|undefined|TypeError|RangeError)\b)/.test(trimmed)
+    || /(?:^|\s)(?:\$\(|\$\{|[12]>&[12]|[|&<>])/.test(trimmed)
+    || /(?:^|\s)\.[A-Za-z][\w-]*\b/.test(trimmed)
+    || /^[A-Za-z][\w -]{0,24}:\s*[-#.$%()\w]+$/.test(trimmed)
+  );
 }
 
 function getComparableText(contents: string) {

@@ -619,9 +619,7 @@ async function scoreLlmJudge(
     const parsed = parseJudgeOutput(result.text);
     const judgeScores = normalizeJudgeScores(parsed.scores);
     if (judgeScores == null) return fail("Judge returned no parseable scores.");
-    const suggestions = readSuggestionsFromParsed(parsed).filter(
-      (suggestion) => !isIgnoredEvalJudgeSuggestion(input, output, suggestion),
-    );
+    const suggestions = readSuggestionsFromParsed(parsed);
     const highPrioritySuggestions = suggestions.filter(
       (suggestion) => suggestion.priority === "high",
     );
@@ -703,41 +701,6 @@ async function scoreLlmJudge(
       streamId == null ? message : `${message} (stream id: ${streamId})`,
     );
   }
-}
-
-function isIgnoredEvalJudgeSuggestion(
-  input: EvalInput,
-  output: EvalOutput,
-  suggestion: { match: string; replacement: string; reason: string },
-) {
-  const text = [
-    suggestion.match,
-    suggestion.replacement,
-    suggestion.reason,
-  ].join(" ").toLowerCase();
-
-  if (
-    /\bcode block\b/.test(text)
-    && /\bcomment/.test(text)
-    && /\btranslat/.test(text)
-  ) {
-    return true;
-  }
-
-  const mentionsComponentImport =
-    text.includes("component")
-    || text.includes("import path")
-    || text.includes("../../../../components");
-  if (!mentionsComponentImport) return false;
-
-  const hasDeterministicImportIssue = analyzeTranslationIntegrity({
-    sourceContents: input.source,
-    targetContents: output.translation,
-    targetPath: `/${input.slug}/${input.locale}/index.mdx`,
-    locale: input.locale,
-  }).some((issue) => issue.code === "invalid-localized-component-import");
-
-  return !hasDeterministicImportIssue;
 }
 
 // ---------------------------------------------------------------------------
