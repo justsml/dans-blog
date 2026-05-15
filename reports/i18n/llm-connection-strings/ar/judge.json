@@ -1,0 +1,38 @@
+{
+  "selectedCommit": "4dd576f5afbd132fcc67df574601e7475d98f69e",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 95,
+    "technicalAccuracy": 95,
+    "coherence": 95,
+    "relevance": 100,
+    "translationQuality": 95,
+    "mdxPreservation": 100,
+    "culturalAdaptation": 90,
+    "languagePurity": 95
+  },
+  "suggestions": [],
+  "rationale": "The candidate translation is excellent. It captures Dan's informal and direct style perfectly, including the strikethrough joke ('~~سرقنا~~ استعارنا') which is often lost in translations. It uses appropriate technical Arabic terminology while maintaining readability. The MDX structure, asset paths, and code blocks are correctly preserved. The footnote comment was already translated in the provided candidate text, contrary to the previous judge's suggestion, so no further fixes are required.",
+  "slug": "llm-connection-strings",
+  "locale": "ar",
+  "candidateCommits": [
+    "4dd576f5afbd132fcc67df574601e7475d98f69e"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "medium",
+      "match": "{/* ¹ Yes, I know that `URI` is more correct than `URL`. If you are pedantic enough to actually care about that distinction, please go touch grass. */}",
+      "replacement": "{/* ¹ نعم، أعلم أن `URI` أكثر صحة من `URL`. إذا كنت من المدققين الذين يهتمون فعلاً بهذا الفرق، فالرجاء الخروج للمشي في العشب. */}",
+      "reason": "The candidate left the final footnote comment in English. It should be translated to match the rest of the document.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug llm-connection-strings --locale ar --skip-global",
+    "output": ""
+  }
+}
