@@ -1,0 +1,267 @@
+# Translation Candidate
+- Slug: mastra-workflows-memory
+- Locale: ar
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-01-05--mastra-workflows-memory/ar/index.mdx
+- Validation: deferred
+- Runtime seconds: 7.55
+- Input tokens: 6198
+- Output tokens: 2924
+- Thinking tokens: unknown
+- Cached input tokens: 768
+- Cache write tokens: 0
+- Estimated cost: $0.000768
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: 'إيقاف إنشاء وكلاء غير ثابتين: استخدم سير العمل والذاكرة'
+subTitle: أنماط حتمية للنماذج غير الحتمية
+modified: '2026-01-08'
+tags:
+  - ai
+  - workflows
+  - memory
+  - mastra
+  - agent-networks
+  - orchestration
+category: AI
+subCategory: Architecture
+social_image: ../desktop-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+LLMs لديها خاصية غريبة: فهي بارعة في فهم الفروق الدقيقة لكن سيئة في اتباع الوصفات. أعطِ GPT‑4 مشكلة غامضة وسيتعامل مع الاحتمالات. أعطِه تسلسلًا دقيقًا من الخطوات، وقد يتخطى الخطوة 3 لأن الخطوة 5 "بدت أكثر صلة".
+
+هذا ليس عيبًا في النموذج. إنه سمة أساسية للأنظمة الاحتمالية التي تحاول حل مشاكل حتمية.
+
+لقد رأيت فرقًا تكافح مع هذا التناقض. يبنون وكيلًا للتعامل مع استرداد العملاء، يزودونه بعشرات الأدوات، ويتوقعون منه تنفيذ عملية تجارية بشكل موثوق. أحيانًا ينجح تمامًا. أحيانًا يختلق موافقات لم تحدث أبدًا. أحيانًا يعلق طالبًا نفس المعلومات ثلاث مرات.
+
+الحل ليس تحسين المطالبات. إنه معرفة متى نتوقف عن طلب "التفكير" من الـ LLM ونبدأ بإخباره "الطاعة".
+
+## عندما تكون الحتمية أفضل من الإبداع
+
+فكّر فيما يحدث عندما تحتاج إلى معالجة تذكرة دعم. منطق الأعمال الواقعي يبدو هكذا:
+
+1. جلب تفاصيل التذكرة من قاعدة البيانات  
+2. التحقق مما إذا كان المستخدم مؤهلاً لاسترداد (قواعد السياسة)  
+3. التحقق من وجود المعاملة ولم تُسترد مسبقًا  
+4. حساب مبلغ الاسترداد  
+5. معالجة عكس الدفع  
+6. تحديث حالة التذكرة  
+7. إرسال بريد تأكيد  
+
+يمكنك أن تسلم هذا للـ LLM كتمرين استدعاء أدوات. حسب تجربتي، هذا يطلب المتاعب. قد يقرر النموذج أن الخطوتين 2 و3 "تقريبًا نفس الشيء" ويتخطى إحداهما. أو قد يعالج الاسترداد قبل التحقق من الأهلية لأن المستخدم بدا غاضبًا.
+
+توجد سير عمل لهذا السيناريو بالضبط. ليست مثيرة، لكن هذه هي الفكرة.
+
+### بناء مخطط نشاط الطقس
+
+إليك مثالًا عمليًا يوضح النمط. نحتاج إلى بيانات طقس صلبة ومثبتة مقترنة باقتراحات نشاط إبداعية. يجب ألا يكون جلب الطقس إبداعيًا، لكن الاقتراحات يجب أن تكون.
+
+```typescript
+// src/mastra/workflows/activity-planner.ts
+import { createWorkflow, createStep } from '@mastra/core/workflows';
+import { Agent } from '@mastra/core/agent';
+import { openai } from '@ai-sdk/openai';
+import { z } from 'zod';
+
+// Step 1: Fetch weather data (Deterministic)
+const fetchWeather = createStep({
+  id: 'fetch-weather',
+  description: 'Fetches weather forecast for a given city',
+  inputSchema: z.object({
+    city: z.string(),
+  }),
+  outputSchema: z.object({
+    location: z.string(),
+    temperature: z.number(),
+    conditions: z.string(),
+    precipitationChance: z.number(),
+  }),
+  execute: async ({ inputData }) => {
+    // ... (fetch logic) ...
+    const weather = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&current=temperature_2m,weather_code&daily=precipitation_probability_mean`).then(r => r.json());
+    
+    return {
+      location: inputData.city,
+      temperature: weather.current.temperature_2m,
+      conditions: getWeatherCondition(weather.current.weather_code),
+      precipitationChance: weather.daily.precipitation_probability_mean[0],
+    };
+  },
+});
+
+// Step 2: Agent suggests activities (Creative)
+const activityPlanner = new Agent({
+  id: 'activity-planner-agent',
+  name: 'Activity Planner',
+  instructions: `You are a local activities expert. Based on weather conditions, suggest 3-5 appropriate activities.
+    - For rain (>50% precipitation), prioritize indoor activities
+    - For extreme temperatures, consider climate-appropriate options
+    - Always include one adventurous and one relaxing option`,
+  model: openai('gpt-5'),
+});
+
+const planActivities = createStep({
+  id: 'plan-activities',
+  description: 'Uses AI to suggest activities based on weather',
+  inputSchema: z.object({
+    location: z.string(),
+    temperature: z.number(),
+    conditions: z.string(),
+    precipitationChance: z.number(),
+  }),
+  outputSchema: z.object({
+    activities: z.string(),
+  }),
+  execute: async ({ inputData }) => {
+    const prompt = `Weather in ${inputData.location}: ${inputData.temperature}°C...`;
+    const response = await activityPlanner.generate(prompt);
+    return { activities: response.text };
+  },
+});
+
+// The Pipeline
+export const activityPlannerWorkflow = createWorkflow({
+  id: 'activity-planner',
+  inputSchema: z.object({ city: z.string() }),
+  outputSchema: z.object({ activities: z.string() }),
+})
+  .then(fetchWeather)
+  .then(planActivities);
+
+activityPlannerWorkflow.commit();
+```
+
+الـ LLM لا يتعامل أبدًا مع واجهة برمجة طقس. يحصل على بيانات صحيحة كمدخل، ثم يفعل ما هو جيد فيه فعلاً: تقديم اقتراحات سياقية. إذا قلبت ذلك وجعلت الوكيل يجلب بيانات الطقس، ستحصل في النهاية على توقع مشمس بينما تمطر فعليًا.
+
+**متى يجب التفكير في سير العمل:**
+- لديك تسلسل معروف من الخطوات يجب أن يحدث بترتيب محدد  
+- تحتاج إلى مراقبة في كل مرحلة (سجلات، مقاييس، توقيت)  
+- تحتاج إلى منطق إعادة محاولة للواجهات الخارجية غير المستقرة  
+- لا يمكن "تفسير" قواعد الأعمال – يجب اتباعها بدقة  
+
+## مشكلة نافذة السياق التي لا يتحدث عنها أحد
+
+هناك نمط ألاحظه باستمرار. شخص ما يبني روبوت محادثة. يعمل بشكل ممتاز أثناء الاختبار. ثم في الإنتاج، يصبح للمستخدمين محادثات أطول وفجأة يضيع الروبوت.
+
+ينظر المطور إلى السجلات ويدرك أنه يرسل تاريخ المحادثة بالكامل مع كل طلب. كل 47 رسالة. يستهلكون الرموز ومساحة السياق لمعلومات في الغالب غير ذات صلة.
+
+أسوأ من ذلك، هناك ظاهرة يسمّيها الباحثون بـ "الضياع في الوسط" حيث تتدهور أداء النماذج عندما تُدفن المعلومات ذات الصلة داخل سياق طويل. النموذج لا يستطيع رؤية الغابة بسبب الأشجار.
+
+إرسال تاريخ المحادثة بالكامل يبدو آمناً. أنت تُعطي النموذج "كل المعلومات". لكنك في الواقع تجعل من الصعب على النموذج التركيز على ما يهم.
+
+### الذاكرة العاملة مقابل التخزين طويل الأمد
+
+نظام الذاكرة في Mastra يوفّر لك كلاهما. الذاكرة العاملة تحتفظ بالرسائل الأخيرة داخل نافذة السياق. الاستدعاء الدلالي يبحث في الرسائل التاريخية عندما يبدو أن الاستعلام الحالي مرتبطاً بها.
+
+```typescript
+// src/mastra/agents/memory-agent.ts
+import { Agent } from '@mastra/core/agent';
+import { Memory } from '@mastra/memory';
+import { LibSQLStore } from '@mastra/libsql';
+
+export const memoryAgent = new Agent({
+  id: 'memory-agent',
+  name: 'Memory Agent',
+  instructions: 'You are a helpful assistant with perfect recall of our conversations.',
+  model: openai('gpt-5'),
+  memory: new Memory({
+    storage: new LibSQLStore({
+      id: 'memory-agent-store',
+      url: 'file:../mastra.db',
+    }),
+    options: {
+      lastMessages: 20,  // Keep last 20 messages in context
+      semanticRecall: {
+        enabled: true,  // Use embeddings to find old stuff
+        topK: 5,
+        threshold: 0.7,
+      },
+    },
+  }),
+});
+```
+
+هذا ما يحدث عملياً. يطرح المستخدم: "ما هو المطعم الإيطالي الذي أوصيت به الشهر الماضي؟"
+
+بدون الاستدعاء الدلالي، يرى الوكيل آخر 20 رسالة فقط. توصية المطعم كانت في الرسالة رقم 487 من 506. لذا اختفت. يرد الوكيل: "ليس لدي تلك المعلومة."
+
+مع الاستدعاء الدلالي:
+1. يُحوَّل الاستعلام إلى تمثيل متجه: `[0.234, -0.567, 0.891, ...]`
+2. يُقارن هذا المتجه مع الرسائل التاريخية
+3. الرسالة 487 ("أوصي بـ Trattoria Bella – الكاربونارا لديهم لا تُصدق") تحصل على تشابه 0.89
+4. تُحقن تلك الرسالة في السياق الحالي
+5. يرد الوكيل: "أوصيت بـ Trattoria Bella. الكاربونارا هي ما جذب انتباهي."
+
+يظهر الوكيل وكأنه يمتلك ذاكرةً مثالية بينما يستخدم جزءاً صغيراً فقط من نافذة السياق. هذا ليس مجرد هندسة ذكية – إنه ضروري عملياً عندما تتجاوز المحادثات بضعة عشرات الرسائل.
+
+---
+
+## التنسيق عبر شبكات الوكلاء
+
+أحياناً تحتاج إلى كل من الهيكلية والمرونة. سير العمل الصافي صلب جداً. الوكلاء الصرف غير قابلين للتنبؤ.
+
+شبكات الوكلاء توفر لك منسقاً يقرر أي وكيل متخصص أو سير عمل يستدعي بناءً على المهمة. فكر فيها كـ "موازن تحميل ذكي" لقدرات الذكاء الاصطناعي.
+
+```typescript
+export const coordinatorAgent = new Agent({
+  id: 'coordinator-agent',
+  name: 'Research Coordinator',
+  instructions: `You are a network of researchers and writers.
+    - Use researchAgent for gathering facts
+    - Use writingAgent for producing final content
+    - Use weatherTool for current weather data
+    - Use activityPlannerWorkflow for location-based planning
+    
+    Always produce comprehensive, well-structured responses.`,
+  model: openai('gpt-5'),
+  
+  // Available primitives
+  agents: { researchAgent, writingAgent },
+  workflows: { activityPlannerWorkflow },
+  tools: { weatherTool },
+  
+  // Network requires memory
+  memory: new Memory({
+    storage: new LibSQLStore({ id: 'network-store', url: 'file:../network.db' }),
+  }),
+});
+```
+
+عند استعلامك لهذه الشبكة، يحلل المنسق الطلب ويوجه التنفيذ وفقاً لذلك:
+- "أحتاج حقائق عن X" يُفعِّل وكيل البحث
+- "خطط لعطلة نهاية أسبوع في سياتل" يُشغِّل سير عمل مخطط النشاط
+- "اكتب تقريراً عن Y" يُستدعي وكيل الكتابة
+
+هذا النمط يتوسع أفضل من محاولة حزم كل شيء داخل وكيل واحد ضخم. الوكلاء المتخصصون يطوّرون خبرة مركّزة. المنسق يتولى التوجيه. كل جزء يقوم بما يجيده.
+
+---
+
+## تجميع المكوّنات
+
+أنظمة الذكاء الاصطناعي الإنتاجية تحتاج إلى بنية، لا إلى مجرد مطالبات. أنت تبني أنظمة موزَّعة حيث بعض العقد هي نماذج لغة كبيرة.
+
+سير العمل يمنحك ضمانات عندما تحتاج إلى تنفيذ الأمور بدقة. الذاكرة تزودك بالسياق دون استنزاف ميزانية الرموز. شبكات الوكلاء تسمح لك بتركيب التعقيد من أجزاء أبسط.
+
+لا شيء من هذا مبهر. لكن بعد مشاهدة ما يكفي من "الوكلاء المستقلين بالكامل" يفشلون في الإنتاج، بدأت أقدّر الاعتمادية المملة على عدم التنبؤ المثير.
+
+قد تختلف تجربتك، لكن وفقًا لتجربتي، الأنظمة التي تُشحن فعليًا وتستمر في العمل هي تلك التي تتعامل مع نماذج اللغة الكبيرة كعناصر ضمن بنية أوسع بدلاً من صناديق سحرية تحل كل شيء.
+
+### الموارد
+
+- [توثيق سير عمل Mastra](https://mastra.ai/docs/workflows/overview)
+- [توثيق الذاكرة في Mastra](https://mastra.ai/docs/memory/overview)
+- [الكود الكامل للعرض التوضيحي](https://github.com/justsml/mastra-examples)
+
+## اقرأ السلسلة
+
+1. [توجيه LLM](/../llm-routing-mastra-ai)
+2. [الأمان والقيود](/../mastra-security-guardrails)
+3. [MCP وتكامل الأدوات](/../mastra-mcp-tool-integrations)
+4. **سير العمل والذاكرة** (هذه المشاركة)
+````
