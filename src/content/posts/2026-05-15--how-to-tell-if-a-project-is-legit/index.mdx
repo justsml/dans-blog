@@ -25,11 +25,11 @@ The harder question is the one engineers actually face on a Tuesday afternoon: s
 
 So is it legit?
 
-That question is usually answered with vibes. Stars. Downloads. A familiar logo in the README. Maybe the last commit date. Maybe the issue count if someone is feeling investigative.
+That question is usually answered with vibes: stars, downloads, a familiar logo, the last commit date, maybe the issue count if someone is feeling investigative.
 
 Those are not useless signals. They are just too easy to misread.
 
-Downloads can be inflated by CI. Stars can be purchased, farmed, or dragged along by an old Hacker News moment. A "recent commit" can be a typo fix after three years of neglect. A low issue count can mean the project is clean, or it can mean nobody uses it, or it can mean maintainers closed everything with the warmth of a garage door.
+Downloads can be inflated by CI. Stars can be purchased, farmed, or dragged along by an old Hacker News moment. A "recent commit" can be a typo fix after three years of neglect. A low issue count can mean the project is clean, unused, or aggressively closed.
 
 The better question is:
 
@@ -43,7 +43,7 @@ That is harder to fake.
 
 Not every dependency deserves a courtroom drama.
 
-If the project is a dev-only color formatter used in a throwaway experiment, skim it and move on. If it runs in production, touches auth, parses untrusted input, executes shell commands, ships browser code to customers, or runs during `postinstall`, slow down.
+If it is a dev-only color formatter in a throwaway experiment, skim it and move on. If it runs in production, touches auth, parses untrusted input, executes shell commands, ships browser code to customers, or runs during `postinstall`, slow down.
 
 Use a rough trust ladder:
 
@@ -61,7 +61,7 @@ The problem is not that every unknown package is malicious. Most are not. The pr
 
 ## The Fast Checklist
 
-When I am deciding whether a project is credible enough to use, I look for these signals:
+Start with the shape:
 
 | Signal | Good shape | Bad smell |
 | --- | --- | --- |
@@ -90,24 +90,15 @@ Start on GitHub because the repo shows behavior. npm shows the package. You need
 
 ### 1. Look Past Stars
 
-Stars answer a popularity question badly.
+Stars answer a popularity question badly. They do not tell you who maintains the project, whether it still works, whether releases are reviewed, whether npm matches the repo, or whether ownership changed.
 
-They do not answer:
-
-- Who maintains this?
-- Does it still work?
-- Are releases reviewed?
-- Does the npm artifact match the source?
-- Did the project change ownership?
-- Are security reports handled?
-
-Stars are a weak first-pass filter. A project with 30 stars may be excellent and boring. A project with 30,000 stars may be abandoned, compromised, or solving a problem you do not have.
+A project with 30 stars may be excellent and boring. A project with 30,000 stars may be abandoned, compromised, or solving a problem you do not have.
 
 I care more about the shape of maintenance than the size of applause.
 
 ### 2. Open Insights, Not Just the README
 
-GitHub's [Pulse view](https://docs.github.com/en/repositories/viewing-activity-and-data-for-your-repository/using-pulse-to-view-a-summary-of-repository-activity) summarizes pull requests, issues, and commit activity over a selected period. The repository graphs and [statistics API](https://docs.github.com/en/rest/metrics/statistics) expose code frequency, commit activity, and contributor activity for public repos.
+GitHub's [Pulse view](https://docs.github.com/en/repositories/viewing-activity-and-data-for-your-repository/using-pulse-to-view-a-summary-of-repository-activity), graphs, and [statistics API](https://docs.github.com/en/rest/metrics/statistics) show pull requests, issues, commits, code frequency, and contributor activity.
 
 Good signs:
 
@@ -125,13 +116,11 @@ Bad smells:
 - no release tags even though npm has many versions
 - a long quiet period followed by a sudden publish-heavy burst
 
-The sudden burst matters. A compromised maintainer account, ownership transfer, or rushed rewrite often looks different from normal project work.
+A long quiet period followed by a publish-heavy burst deserves extra attention. Compromised accounts, ownership transfers, and rushed rewrites often look different from normal maintenance.
 
 ### 3. Count People, But Weight the Work
 
-"Number of contributors" is useful only after you subtract noise.
-
-Ten contributors who fixed typos in docs is not the same as three people who review code, cut releases, answer bugs, and touch the core implementation.
+Contributor count is useful only after you subtract noise. Ten people fixing typos is not the same as three people reviewing code, cutting releases, answering bugs, and touching the core implementation.
 
 Look for:
 
@@ -141,23 +130,17 @@ Look for:
 - who responds when users report breakage
 - whether contributors are independent or all tied to one company
 
-A single-maintainer project can be legit. Plenty of excellent open source is one person with taste and a calendar problem.
-
-The question is whether the project is honest about that shape. A small single-maintainer library should look small: narrow scope, conservative changes, few dependencies, no grand claims about enterprise destiny.
+A single-maintainer project can be legit. Plenty of excellent open source is one person with taste and a calendar problem. The question is whether the project is honest about that shape: narrow scope, conservative changes, few dependencies, no grand claims about enterprise destiny.
 
 ### 4. Measure PR Frequency, Size, and Variance
 
-PRs tell you how a project changes when nobody is writing marketing copy.
-
-I like a mix:
+PRs tell you how a project changes when nobody is writing marketing copy. I like a mix:
 
 - tiny PRs for bugs, docs, types, and dependency bumps
 - medium PRs for features
 - rare large PRs for architecture, generated files, migrations, or major releases
 
-That variance looks like normal software.
-
-Uniformity is suspicious in both directions.
+That variance looks like normal software. Uniformity is suspicious in both directions.
 
 If every PR changes 2,000 lines, the project may be hard to review. If every PR changes one sentence, the contributor graph may be inflated. If a risky runtime package has a stream of giant, unreviewed changes from new accounts, do not be the brave install.
 
@@ -168,15 +151,11 @@ gh pr list -R OWNER/REPO --state merged --limit 50 \
   --json number,title,createdAt,mergedAt,additions,deletions,changedFiles,author
 ```
 
-What I want from that output is not a perfect score. I want a believable distribution.
-
-Real maintenance has texture.
+The goal is not a perfect score. It is a believable distribution. Real maintenance has texture.
 
 ### 5. Watch the File Churn
 
-One of the most useful hard-to-fake signals is the ratio of new files, updated files, and deleted files over time.
-
-Healthy projects mostly update existing code. They add files when a feature needs structure. They delete code when removing dead paths, replacing implementations, or cleaning generated output.
+File churn is one of the best hard-to-fake signals. Healthy projects mostly update existing code. They add files when a feature needs structure. They delete code when removing dead paths, replacing implementations, or cleaning generated output.
 
 Riskier shapes:
 
@@ -186,7 +165,7 @@ Riskier shapes:
 - binary files or generated blobs that reviewers cannot inspect
 - dependency changes hidden inside a large formatting diff
 
-This is especially important for npm packages. Malicious behavior often arrives as *new surface area*: a new lifecycle script, a new dependency, a new binary, a new network call, a new obfuscated file.
+This matters for npm because malicious behavior often arrives as *new surface area*: a lifecycle script, dependency, binary, network call, or obfuscated file.
 
 Locally, the simple version is:
 
@@ -201,17 +180,11 @@ For a PR:
 gh pr diff 123 -R OWNER/REPO --name-only
 ```
 
-Do not only ask "how many lines changed?"
-
-Ask "what kind of surface area appeared?"
+Do not only ask "how many lines changed?" Ask "what kind of surface area appeared?"
 
 ### 6. Read the Negative Space
 
-Good projects say no.
-
-They close feature requests that do not fit. They remove old APIs carefully. They document breaking changes. They explain why a dependency was not added. They have boring conversations about compatibility.
-
-That is legitimacy.
+Good projects say no. They close feature requests that do not fit, remove old APIs carefully, document breaking changes, explain why a dependency was not added, and have boring compatibility conversations.
 
 The project that accepts every feature, supports every runtime, claims every use case, and has no visible tradeoffs is either very young or lying to itself.
 
@@ -219,9 +192,7 @@ The README should have limits. The issue tracker should have decisions. The chan
 
 ### 7. Look for Deleted Issues and PRs
 
-Deleted history is not automatically sinister. Maintainers may remove spam, abusive threads, leaked secrets, or duplicate noise. That is normal.
-
-But missing project history is still a signal.
+Deleted history is not automatically sinister. Maintainers remove spam, abusive threads, leaked secrets, and duplicates. That is normal. But missing project history is still a signal.
 
 GitHub issue and PR numbers are sequential within a repo. If the changelog says "fixes #418" and `#418` is gone, that deserves a look. If release notes reference PRs that return 404, commits mention issue numbers nobody can open, or old discussions quote replies that no longer exist, the public story has holes.
 
@@ -235,9 +206,7 @@ Look for:
 - a sudden switch from public review to direct pushes
 - old package versions tied to tags or PRs that disappeared
 
-A few missing numbers are boring. A pattern of missing numbers around a risky release is not.
-
-The useful question is not "did anyone ever delete anything?" The useful question is "did the project remove the evidence I would need to understand a risky change?"
+A few missing numbers are boring. A pattern around a risky release is not. The useful question is not "did anyone ever delete anything?" It is "did the project remove the evidence I need to understand this change?"
 
 Quick checks:
 
@@ -251,60 +220,55 @@ If the project has a polished changelog but the referenced review trail is gone,
 
 ### 8. Read the Public Discourse Shape
 
-There is another kind of evidence that is softer than a Git diff and still worth reading: the public conversation around the project.
+Public conversation is softer than a Git diff, but it is still evidence. Not follower counts. Not launch-day applause. Shape.
 
-Not follower counts. Not launch-day applause. The discourse shape.
+Real products leave messy trails. People use them, complain about them, recommend them, misunderstand them, defend them, and occasionally write a 1,400-word post about a settings screen.
 
-Real products leave messy trails because real people use them, complain about them, recommend them, misunderstand them, dunk on them, defend them, and occasionally write a 1,400-word post about why the settings screen has betrayed civilization.
+Think about products you know are real:
 
-Think about products you know are real.
-
-Zoom has support threads, workplace jokes, security debates, school stories, feature complaints, procurement posts, and people asking why their microphone has chosen violence. Stripe has developer praise, integration pain, startup advice, support complaints, pricing arguments, and engineers comparing API taste like sommeliers with laptops. Cinnabon has photos, cravings, airport takes, nutrition regret, mall nostalgia, and at least one person being theatrically angry about frosting.
+| Product | Normal discourse shape |
+| --- | --- |
+| Zoom | Support threads, workplace jokes, security debates, school stories, feature complaints, procurement posts |
+| Stripe | Developer praise, integration pain, pricing arguments, startup advice, support complaints, API taste debates |
+| Cinnabon | Photos, cravings, airport takes, mall nostalgia, nutrition regret, strong frosting opinions |
 
 The point is not that all attention is good. The point is that real things create platform-shaped attention.
 
-A developer library should show up on GitHub, npm, Stack Overflow, Hacker News, Reddit, blog posts, conference slides, company engineering posts, and maybe LinkedIn if it has crossed into procurement land. A beauty subscription box may have far more evidence on Instagram, TikTok, YouTube, and Reddit than GitHub, because nobody is filing a pull request against mascara.
+A developer library should leave traces on GitHub, npm, Stack Overflow, Hacker News, Reddit, blogs, conference slides, and company engineering posts. A beauty subscription box should leave more traces on Instagram, TikTok, YouTube, Reddit, reviews, and support threads. Nobody is filing a pull request against mascara.
 
-Match the platform to the thing.
+Match the platform to the thing. Then check the ratio:
 
-Then look at the ratio.
-
-Spicy posts get more attention than boring posts. Complaints travel. A single angry Reddit thread can outrank fifty normal experiences because normal experiences do not wake up and write paragraphs. So do not ask "are there negative posts?" Ask whether the negative posts are the whole public record, whether the same complaint appears across independent places, and whether praise sounds like users or like campaign copy that escaped the spreadsheet.
-
-Useful questions:
-
-- Do GitHub, npm, Reddit, Hacker News, Stack Overflow, LinkedIn, blog, and news mentions roughly make sense for the project type?
-- Does LinkedIn activity align with news, customers, conference talks, funding, hiring, or company adoption claims?
-- Are there zero hits where there should obviously be some?
-- Are there huge numbers on one or two platforms while every other surface is empty?
-- Do the posts contain specific nouns, versions, bugs, migrations, invoices, outages, support tickets, or code snippets?
-- Are the same accounts repeating the same phrasing across platforms?
-- Do negative posts cluster around a real event, like a breaking release, pricing change, outage, ownership transfer, or security issue?
+- Do the platforms match the kind of product?
+- Does LinkedIn activity line up with news, customers, hiring, funding, conference talks, or adoption claims?
+- Are there zeros where there should obviously be some signal?
+- Are one or two platforms inflated while every other surface is empty?
+- Do posts include specific nouns: versions, bugs, migrations, invoices, outages, support tickets, code snippets?
+- Do complaints cluster around a real event, like a breaking release, pricing change, outage, ownership transfer, or security issue?
 - Are people arguing about tradeoffs, or only repeating the tagline?
 
-Zeros matter.
+Spicy posts get more attention than boring posts. Do not panic because negative posts exist. Ask whether they are the whole public record.
 
-If a supposedly popular infrastructure project has npm downloads, GitHub stars, and no organic mentions from developers anywhere else, that is strange. If a company claims enterprise adoption but LinkedIn, job posts, conference talks, case studies, and news mentions are all empty, that is also strange. If a consumer product claims a huge community but only has inflated Instagram numbers and no Reddit threads, reviews, support questions, or annoyed customers, that is not a community. That is a billboard.
+Zeros are a red flag. So are huge numbers on one or two platforms paired with silence everywhere else.
 
-Inflation matters too.
+Slow down when:
 
-A project with 80,000 stars, two maintainers, no issue texture, no Stack Overflow questions, no blog posts, no package dependents you recognize, and a sudden wave of identical social posts has not earned 80,000 units of trust. It has earned a second tab.
+- an infrastructure project has npm downloads, GitHub stars, and no organic developer mentions anywhere else
+- a company claims enterprise adoption, but LinkedIn, job posts, conference talks, case studies, and news mentions are empty
+- a consumer product claims a huge community, but only has inflated Instagram numbers and no Reddit threads, reviews, support questions, or annoyed customers
+
+That last one is not a community. It is a billboard.
 
 Use social evidence the same way you use downloads: weak alone, useful in context.
 
-The public conversation should not be perfectly positive. Perfectly positive is often the smell. Real software has fans, skeptics, support requests, migrations, stale advice, and arguments about whether the new version made things better or merely more modern.
-
-That mess is part of the signal.
+The public conversation should not be perfectly positive. Real software has fans, skeptics, support requests, migrations, stale advice, and arguments about whether the new version made things better or merely more modern. That mess is part of the signal.
 
 ## Mini Guide: Reading an npm Package
 
-GitHub tells you how the project behaves. npm tells you what you are actually installing.
-
-Those are not the same thing.
+GitHub tells you how the project behaves. npm tells you what you are actually installing. Those are not the same thing.
 
 ### 1. Compare the npm Package to the Repo
 
-The npm registry exposes package metadata, commonly called the ["packument"](https://github.com/npm/registry/blob/main/docs/REGISTRY-API.md), including versions, timestamps, maintainers, dependencies, scripts, repository links, dist info, and more.
+The npm registry exposes package metadata, commonly called the ["packument"](https://github.com/npm/registry/blob/main/docs/REGISTRY-API.md): versions, timestamps, maintainers, dependencies, scripts, repository links, dist info, and more.
 
 Start with:
 
@@ -315,17 +279,17 @@ npm view PACKAGE \
   --json
 ```
 
-Check:
+Check whether:
 
-- Does the repository link point to the repo you inspected?
-- Does the latest version have a matching git tag?
-- Was the package created recently, but already has strange download numbers?
-- Did maintainers change recently?
-- Are there lifecycle scripts?
-- Did dependencies jump unexpectedly?
-- Are `latest`, `next`, and other dist-tags reasonable?
+- the repository link points to the repo you inspected
+- the latest version has a matching git tag
+- the package was created recently but already has strange download numbers
+- maintainers changed recently
+- lifecycle scripts exist
+- dependencies jumped unexpectedly
+- `latest`, `next`, and other dist-tags look reasonable
 
-The package page is not a notarized birth certificate. It is a clue board.
+The package page is not a birth certificate. It is a clue board.
 
 ### 2. Inspect the Tarball
 
@@ -337,7 +301,7 @@ Use:
 npm pack PACKAGE@latest --dry-run
 ```
 
-Then ask:
+Ask:
 
 - Are the files expected for this package?
 - Is the unpacked size reasonable?
@@ -368,17 +332,15 @@ Look for:
 - generated bundles with no source change
 - large new files in a patch release
 
-A patch release that fixes one TypeScript type should not introduce a downloader, a shell script, and a dependency graph shaped like a plumbing accident.
+A patch release that fixes one TypeScript type should not introduce a downloader, a shell script, and a new dependency graph.
 
 ### 4. Treat Downloads as Weak Evidence
 
-npm downloads are useful for rough popularity. They are not a user count, a quality score, or a safety guarantee.
+npm downloads are useful for rough popularity. They are not a user count, quality score, or safety guarantee.
 
-CI installs packages. Bots install packages. Mirrors and scanners install packages. Monorepos reinstall packages a lot. A tiny transitive dependency can have enormous downloads because it sits under popular tooling.
+CI installs packages. Bots install packages. Mirrors and scanners install packages. Monorepos reinstall packages a lot. Tiny transitive dependencies can have enormous downloads because they sit under popular tooling.
 
-Downloads are hard to ignore and easy to overvalue.
-
-Better use:
+Use downloads only in context:
 
 - compare downloads against dependents
 - compare downloads against GitHub activity
@@ -390,7 +352,9 @@ If a package has huge downloads, no issues, no repo activity, no dependents you 
 
 ### 5. Prefer Provenance, Signatures, and Boring Publishing
 
-npm provenance is one of the better modern signals because it connects a published package back to a source commit and build environment. npm's docs say provenance details can show the build environment, workflow run, source commit, build file, and public transparency-log entry for packages published with provenance.
+Last verified: May 15, 2026.
+
+npm provenance is useful because it connects a published package back to a source commit and build environment. npm's docs say provenance details can show the build environment, workflow run, source commit, build file, and public transparency-log entry for packages published with provenance.
 
 You can also verify registry signatures and provenance attestations with:
 
@@ -398,21 +362,17 @@ You can also verify registry signatures and provenance attestations with:
 npm audit signatures
 ```
 
-And npm [trusted publishing](https://docs.npmjs.com/trusted-publishers/) uses OIDC from supported CI providers so packages can be published with short-lived credentials instead of long-lived npm tokens. For public packages from public repos, trusted publishing can automatically generate provenance attestations.
+npm [trusted publishing](https://docs.npmjs.com/trusted-publishers/) uses OIDC from supported CI providers, so packages can be published with short-lived credentials instead of long-lived npm tokens. For public packages from public repos, it can also generate provenance attestations.
 
-This does not make a package safe.
-
-It makes one important question less hand-wavy:
+This does not make a package safe. It makes one important question less hand-wavy:
 
 > Did this npm artifact come from the public source and build path it claims to come from?
 
-That is a much stronger signal than "the README has badges."
+That is stronger than "the README has badges."
 
 ### 6. Read Scripts Like They Are Production Code
 
-In `package.json`, scripts are not decoration.
-
-Pay special attention to:
+In `package.json`, scripts are not decoration. Pay special attention to:
 
 - `preinstall`
 - `install`
@@ -421,9 +381,7 @@ Pay special attention to:
 - `prepublishOnly`
 - `bin`
 
-Install scripts can run on your machine during dependency installation. Sometimes that is legitimate: native modules, generated binaries, compatibility setup.
-
-Sometimes it is the whole attack.
+Install scripts can run on your machine during dependency installation. Sometimes that is legitimate: native modules, generated binaries, compatibility setup. Sometimes it is the whole attack.
 
 If a small utility package has an install script, it owes you an explanation. If the script reads environment variables, opens the network, shells out, downloads binaries, or behaves differently in CI, isolate it before installing.
 
@@ -440,27 +398,13 @@ Look for:
 - no sudden transfer to unknown accounts
 - no abandoned maintainer accounts with broad publish rights
 
-One maintainer is not automatically bad. One maintainer plus a critical runtime package plus no provenance plus install scripts plus sudden releases after years of quiet is a different conversation.
+One maintainer is not automatically bad. One maintainer plus a critical runtime package, no provenance, install scripts, and sudden releases after years of quiet is a different conversation.
 
 Security is often about combinations.
 
-## Signals That Are Expensive to Fake
+The best signals are not impossible to fake, just expensive: multi-year issue history, review texture, contributor continuity, normal file churn, source-to-package alignment, recognizable dependents, platform-shaped discourse, and narrow scope.
 
-The best signals are not impossible to fake. They are just expensive.
-
-| Signal | Why it helps |
-| --- | --- |
-| Multi-year issue history with real triage | Fake projects rarely maintain years of boring support behavior. |
-| PR review texture | Real review has disagreement, correction, tests, and occasionally restraint. |
-| Contributor continuity | Maintainers who stick around through releases are harder to counterfeit than star counts. |
-| Release-to-source alignment | Tags, changelog, GitHub release, npm version, and provenance should tell the same story. |
-| Normal file churn | Real projects mostly evolve existing files; attacks often add new execution paths. |
-| Dependents you recognize | A package used by serious projects has more eyes on breakage and compromise. |
-| Platform-shaped discourse | Real projects usually leave different kinds of traces in the places their users actually talk. |
-| Reverts and regression fixes | Real software breaks, admits it, and repairs the damage. |
-| Narrow scope | A small tool that stays small is often safer than a tiny package that wants to own your stack. |
-
-Hard-to-fake does not mean "safe." It means "less likely to be empty theater."
+Hard-to-fake does not mean safe. It means less likely to be empty theater.
 
 ## Red Flags That Deserve a Pause
 
