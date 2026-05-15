@@ -1,18 +1,22 @@
 export interface TranslationTelemetry {
   inputTokens: number;
   outputTokens: number;
+  totalTokens: number;
+  reasoningTokens: number;
   cacheReadTokens: number;
   cacheWriteTokens: number;
   durationMs: number;
   providerCostUsd?: number;
   providerUpstreamCostUsd?: number;
   pricingSource?: string;
+  openRouterUsage?: Record<string, unknown>;
 }
 
 export function usageFromResult(
   usage: {
     inputTokens?: number;
     outputTokens?: number;
+    totalTokens?: number;
     cachedInputTokens?: number;
     inputTokenDetails?: {
       cacheReadTokens?: number;
@@ -24,21 +28,48 @@ export function usageFromResult(
 ): TranslationTelemetry {
   const openRouterUsage = getOpenRouterUsage(providerMetadata);
   const promptTokensDetails = recordValue(openRouterUsage?.promptTokensDetails);
+  const snakePromptTokensDetails = recordValue(openRouterUsage?.prompt_tokens_details);
+  const completionTokensDetails = recordValue(openRouterUsage?.completionTokensDetails);
+  const snakeCompletionTokensDetails = recordValue(openRouterUsage?.completion_tokens_details);
   const providerCostUsd = numberValue(openRouterUsage?.cost);
-  const providerUpstreamCostUsd = numberValue(recordValue(openRouterUsage?.costDetails)?.upstreamInferenceCost);
+  const providerUpstreamCostUsd = numberValue(recordValue(openRouterUsage?.costDetails)?.upstreamInferenceCost)
+    ?? numberValue(recordValue(openRouterUsage?.cost_details)?.upstream_inference_cost);
+  const inputTokens = usage?.inputTokens
+    ?? numberValue(openRouterUsage?.promptTokens)
+    ?? numberValue(openRouterUsage?.prompt_tokens)
+    ?? 0;
+  const outputTokens = usage?.outputTokens
+    ?? numberValue(openRouterUsage?.completionTokens)
+    ?? numberValue(openRouterUsage?.completion_tokens)
+    ?? 0;
+  const cacheReadTokens = usage?.inputTokenDetails?.cacheReadTokens
+    ?? usage?.cachedInputTokens
+    ?? numberValue(promptTokensDetails?.cachedTokens)
+    ?? numberValue(snakePromptTokensDetails?.cached_tokens)
+    ?? 0;
+  const cacheWriteTokens = usage?.inputTokenDetails?.cacheWriteTokens
+    ?? numberValue(promptTokensDetails?.cacheWriteTokens)
+    ?? numberValue(snakePromptTokensDetails?.cache_write_tokens)
+    ?? 0;
+  const reasoningTokens = numberValue(completionTokensDetails?.reasoningTokens)
+    ?? numberValue(snakeCompletionTokensDetails?.reasoning_tokens)
+    ?? 0;
 
   return {
-    inputTokens: usage?.inputTokens ?? numberValue(openRouterUsage?.promptTokens) ?? 0,
-    outputTokens: usage?.outputTokens ?? numberValue(openRouterUsage?.completionTokens) ?? 0,
-    cacheReadTokens: usage?.inputTokenDetails?.cacheReadTokens
-      ?? usage?.cachedInputTokens
-      ?? numberValue(promptTokensDetails?.cachedTokens)
-      ?? 0,
-    cacheWriteTokens: usage?.inputTokenDetails?.cacheWriteTokens ?? 0,
+    inputTokens,
+    outputTokens,
+    totalTokens: usage?.totalTokens
+      ?? numberValue(openRouterUsage?.totalTokens)
+      ?? numberValue(openRouterUsage?.total_tokens)
+      ?? inputTokens + outputTokens,
+    reasoningTokens,
+    cacheReadTokens,
+    cacheWriteTokens,
     durationMs,
     providerCostUsd,
     providerUpstreamCostUsd,
     pricingSource: providerCostUsd == null ? undefined : "openrouter-usage-accounting",
+    openRouterUsage,
   };
 }
 

@@ -6,6 +6,7 @@ import {
   createTranslationAgentRuntime,
   DEFAULT_AGENT_MODEL,
   DEFAULT_JUDGE_MODEL,
+  DEFAULT_SECOND_JUDGE_MODEL,
   DEFAULT_TRANSLATION_MODEL,
 } from "./runtime.ts";
 
@@ -18,6 +19,8 @@ type CliArgs = {
   agentModel: string;
   translationModel: string;
   judgeModel: string;
+  judgeModels: string[];
+  escalationJudgeModels: string[];
 };
 
 async function main() {
@@ -31,6 +34,8 @@ async function main() {
     agentModel: args.agentModel,
     translationModel: args.translationModel,
     judgeModel: args.judgeModel,
+    judgeModels: args.judgeModels,
+    escalationJudgeModels: args.escalationJudgeModels,
   });
 
   console.log(`TranslationAgent run ${runId}`);
@@ -119,12 +124,35 @@ function parseCliArgs(argv: string[]): CliArgs {
       ?? process.env.I18N_TRANSLATION_MODEL
       ?? DEFAULT_TRANSLATION_MODEL,
     judgeModel: stringOption(options, "judge-model") ?? process.env.I18N_JUDGE_MODEL ?? DEFAULT_JUDGE_MODEL,
+    judgeModels: listOption(options, "judge-models")
+      ?? listEnv("I18N_JUDGE_MODELS")
+      ?? [
+        stringOption(options, "judge-model") ?? process.env.I18N_JUDGE_MODEL ?? DEFAULT_JUDGE_MODEL,
+        DEFAULT_SECOND_JUDGE_MODEL,
+      ],
+    escalationJudgeModels: listOption(options, "escalation-judge-models")
+      ?? listEnv("I18N_ESCALATION_JUDGE_MODELS")
+      ?? [],
   };
 }
 
 function stringOption(options: Map<string, string | true>, key: string) {
   const value = options.get(key);
   return typeof value === "string" && value.trim() !== "" ? value.trim() : undefined;
+}
+
+function listOption(options: Map<string, string | true>, key: string) {
+  const value = stringOption(options, key);
+  return value == null ? undefined : splitList(value);
+}
+
+function listEnv(key: string) {
+  const value = process.env[key];
+  return value == null || value.trim() === "" ? undefined : splitList(value);
+}
+
+function splitList(value: string) {
+  return value.split(",").map((item) => item.trim()).filter(Boolean);
 }
 
 function createRunId() {

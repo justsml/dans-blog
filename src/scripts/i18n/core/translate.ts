@@ -40,6 +40,7 @@ export type TranslationRunTelemetry = {
   totalChunks: number;
   totalInputTokens: number;
   totalOutputTokens: number;
+  totalReasoningTokens: number;
   totalCacheReadTokens: number;
   totalCacheWriteTokens: number;
   providerCostUsd?: number;
@@ -517,6 +518,7 @@ function createTelemetry(llmConfig: ResolvedLlmConfig, chunkSize: string, totalC
     totalChunks,
     totalInputTokens: 0,
     totalOutputTokens: 0,
+    totalReasoningTokens: 0,
     totalCacheReadTokens: 0,
     totalCacheWriteTokens: 0,
     totalDurationMs: 0,
@@ -533,12 +535,13 @@ function addTelemetry(
   const cost = estimateTokenCost(
     totals.model,
     chunk.inputTokens,
-    chunk.outputTokens,
+    chunk.outputTokens + chunk.reasoningTokens,
     chunk.cacheReadTokens,
     { providerCostUsd: chunk.providerCostUsd },
   );
   totals.totalInputTokens += chunk.inputTokens;
   totals.totalOutputTokens += chunk.outputTokens;
+  totals.totalReasoningTokens += chunk.reasoningTokens;
   totals.totalCacheReadTokens += chunk.cacheReadTokens;
   totals.totalCacheWriteTokens += chunk.cacheWriteTokens;
   totals.totalDurationMs += chunk.durationMs;

@@ -3,8 +3,9 @@ import { mkdtempSync, rmSync } from "node:fs";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
 import { resolveLlmConfig } from "../i18n/core/model-config.ts";
-import { scoreTranslation } from "../i18n/core/score.ts";
+import { scoreTranslation, scoreTranslationConsensus } from "../i18n/core/score.ts";
 import { translateWithModel, type GenerateTextLike } from "../i18n/core/translate.ts";
+import { usageFromResult } from "../i18n/llm-telemetry.ts";
 import { validateTranslation } from "../i18n/core/validate.ts";
 import {
   createPromptProfileVersion,
@@ -115,6 +116,141 @@ describe("scoreTranslation", () => {
     expect(result.scores.mdxPreservation).toBe(95);
     expect(result.scores.fidelity).toBe(88);
     expect(result.rationale).toBe("solid");
+  });
+
+  test("builds consensus through peer reconsideration", async () => {
+    const calls: string[] = [];
+    const fakeGenerateText = (async (settings: { messages?: Array<{ content: unknown }> }) => {
+      const serialized = JSON.stringify(settings);
+      calls.push(serialized);
+      const isReconsideration = serialized.includes("Critical reconsideration round");
+      const publishReady = isReconsideration;
+      return {
+        text: JSON.stringify({
+          scores: {
+            readability: publishReady ? 91 : 72,
+            technicalAccuracy: publishReady ? 90 : 70,
+            coherence: publishReady ? 90 : 72,
+            relevance: publishReady ? 92 : 70,
+            translationQuality: publishReady ? 91 : 68,
+            mdxPreservation: publishReady ? 96 : 80,
+            culturalAdaptation: publishReady ? 88 : 70,
+            languagePurity: publishReady ? 90 : 70,
+          },
+          publishReady,
+          suggestions: publishReady ? [] : [{
+            priority: "medium",
+            match: "Texto",
+            replacement: "Texto mejor",
+            reason: "Needs stronger Spanish.",
+          }],
+          rationale: publishReady ? "solid after reconsideration" : "maybe weak",
+        }),
+        usage: { inputTokens: 10, outputTokens: 20 },
+        providerMetadata: undefined,
+      };
+    }) as unknown as GenerateTextLike;
+
+    const result = await scoreTranslationConsensus({
+      sourceContents: "---\ntitle: Hello\n---\nText",
+      targetContents: "---\ntitle: Hola\n---\nTexto",
+      locale: "es",
+      models: [
+        "openrouter/google/gemini-3-flash-preview",
+        "openrouter/deepseek/deepseek-v4-flash",
+      ],
+      escalationModels: ["openrouter/anthropic/claude-haiku"],
+      generateText: fakeGenerateText,
+      reconsiderationRounds: 1,
+    });
+
+    expect(calls.some((call) => call.includes("Critical reconsideration round"))).toBe(true);
+    expect(result.escalated).toBe(false);
+    expect(result.assessments.length).toBe(4);
+    expect(result.totals.inputTokens).toBeGreaterThan(0);
+  });
+
+  test("escalates unresolved judge disagreement", async () => {
+    let calls = 0;
+    const fakeGenerateText = (async () => {
+      calls += 1;
+      const publishReady = calls !== 2;
+      return {
+        text: JSON.stringify({
+          scores: {
+            readability: publishReady ? 92 : 60,
+            technicalAccuracy: publishReady ? 92 : 58,
+            coherence: publishReady ? 92 : 60,
+            relevance: publishReady ? 92 : 58,
+            translationQuality: publishReady ? 92 : 60,
+            mdxPreservation: publishReady ? 98 : 80,
+            culturalAdaptation: publishReady ? 90 : 60,
+            languagePurity: publishReady ? 92 : 60,
+          },
+          publishReady,
+          suggestions: publishReady ? [] : [{
+            priority: "high",
+            match: "Texto",
+            replacement: "Texto corregido",
+            reason: "Major mistranslation.",
+          }],
+          rationale: publishReady ? "publishable" : "not publishable",
+        }),
+        usage: { inputTokens: 10, outputTokens: 20 },
+        providerMetadata: undefined,
+      };
+    }) as unknown as GenerateTextLike;
+
+    const result = await scoreTranslationConsensus({
+      sourceContents: "---\ntitle: Hello\n---\nText",
+      targetContents: "---\ntitle: Hola\n---\nTexto",
+      locale: "es",
+      models: [
+        "openrouter/google/gemini-3-flash-preview",
+        "openrouter/deepseek/deepseek-v4-flash",
+      ],
+      escalationModels: ["openrouter/anthropic/claude-haiku"],
+      generateText: fakeGenerateText,
+      reconsiderationRounds: 0,
+    });
+
+    expect(result.escalated).toBe(true);
+    expect(result.assessments.length).toBe(3);
+    expect(result.totals.inputTokens).toBeGreaterThan(0);
+  });
+});
+
+describe("usageFromResult", () => {
+  test("reads OpenRouter snake_case usage metadata including reasoning and cost", () => {
+    const telemetry = usageFromResult(undefined, 123, {
+      openrouter: {
+        usage: {
+          prompt_tokens: 100,
+          completion_tokens: 50,
+          total_tokens: 175,
+          cost: 0.0012,
+          prompt_tokens_details: {
+            cached_tokens: 25,
+            cache_write_tokens: 10,
+          },
+          completion_tokens_details: {
+            reasoning_tokens: 25,
+          },
+          cost_details: {
+            upstream_inference_cost: 0.0009,
+          },
+        },
+      },
+    });
+
+    expect(telemetry.inputTokens).toBe(100);
+    expect(telemetry.outputTokens).toBe(50);
+    expect(telemetry.totalTokens).toBe(175);
+    expect(telemetry.reasoningTokens).toBe(25);
+    expect(telemetry.cacheReadTokens).toBe(25);
+    expect(telemetry.cacheWriteTokens).toBe(10);
+    expect(telemetry.providerCostUsd).toBe(0.0012);
+    expect(telemetry.providerUpstreamCostUsd).toBe(0.0009);
   });
 });
 

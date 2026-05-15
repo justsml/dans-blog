@@ -1,3 +1,5 @@
+import { execFileSync } from "node:child_process";
+import { createHash } from "node:crypto";
 import { appendFileSync, existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 import { createTool } from "@mastra/core/tools";
@@ -8,7 +10,7 @@ import {
   getPostPaths,
 } from "../i18n/corpus-inventory.ts";
 import { translateWithModel } from "../i18n/core/translate.ts";
-import { scoreTranslation } from "../i18n/core/score.ts";
+import { scoreTranslation, scoreTranslationConsensus } from "../i18n/core/score.ts";
 import { validateTranslation } from "../i18n/core/validate.ts";
 import { safeModelPathName } from "../i18n/translation-costs.ts";
 import {
@@ -24,6 +26,8 @@ export type TranslationAgentToolContext = {
   dryRun: boolean;
   defaultTranslationModel: string;
   defaultJudgeModel: string;
+  defaultJudgeModels: string[];
+  defaultEscalationJudgeModels: string[];
 };
 
 const repoRoot = process.cwd();
@@ -184,7 +188,14 @@ export function createTranslationAgentTools(context: TranslationAgentToolContext
             : { id: promptProfile.id, version: promptProfile.version },
           inputTokens: result.telemetry.totalInputTokens,
           outputTokens: result.telemetry.totalOutputTokens,
+          reasoningTokens: result.telemetry.totalReasoningTokens,
+          cacheReadTokens: result.telemetry.totalCacheReadTokens,
+          cacheWriteTokens: result.telemetry.totalCacheWriteTokens,
+          durationMs: result.telemetry.totalDurationMs,
+          providerCostUsd: result.telemetry.providerCostUsd,
+          providerUpstreamCostUsd: result.telemetry.providerUpstreamCostUsd,
           costUsd: result.telemetry.totalCostUsd,
+          pricingSource: result.telemetry.pricingSource,
         });
         return {
           ...result,
@@ -286,14 +297,90 @@ export function createTranslationAgentTools(context: TranslationAgentToolContext
           targetRelPath: relative(repoRoot, paths.targetPath),
           candidateId: candidateId ?? scoredPath ?? "candidate",
         });
-        appendJsonl(join(candidateRunDir(context.runId), "scores.jsonl"), {
+        const record = {
           at: new Date().toISOString(),
+          runId: context.runId,
           slug,
           locale,
           scoredPath: scoredPath == null ? undefined : relative(repoRoot, resolve(repoRoot, scoredPath)),
+          provenance: buildScoreProvenance({
+            slug,
+            locale,
+            sourceContents,
+            targetContents: candidateContents,
+            scoredPath,
+            candidateId: candidateId ?? scoredPath ?? "candidate",
+          }),
           ...score,
-        });
+        };
+        appendJsonl(join(candidateRunDir(context.runId), "scores.jsonl"), record);
+        appendJsonl(agentEvalHistoryPath(), { event: "score", ...record });
         return score;
+      },
+    }),
+
+    scoreTranslationConsensus: createTool({
+      id: "scoreTranslationConsensus",
+      description: "Build judge consensus by sharing scores and suggestions between judge models, then escalate if disagreement remains.",
+      inputSchema: z.object({
+        slug: z.string(),
+        locale: z.enum(ACTIVE_LOCALES),
+        candidatePath: z.string().optional(),
+        targetContents: z.string().optional(),
+        models: z.array(z.string()).min(1).optional(),
+        escalationModels: z.array(z.string()).optional(),
+        candidateId: z.string().optional(),
+        reconsiderationRounds: z.number().int().min(0).max(3).optional(),
+        disagreementThreshold: z.number().int().min(1).max(50).optional(),
+      }),
+      outputSchema: z.unknown(),
+      execute: async ({
+        slug,
+        locale,
+        candidatePath,
+        targetContents,
+        models,
+        escalationModels,
+        candidateId,
+        reconsiderationRounds,
+        disagreementThreshold,
+      }) => {
+        const paths = getPostPaths(slug, locale);
+        const sourceContents = readFileSync(paths.sourcePath, "utf8");
+        const scoredPath = candidatePath ?? existingTranslationPath(slug, locale) ?? latestCandidatePath(context.runId);
+        const candidateContents = targetContents ?? readFileSync(assertReadablePath(scoredPath), "utf8");
+        const consensus = await scoreTranslationConsensus({
+          sourceContents,
+          targetContents: candidateContents,
+          locale,
+          slug,
+          targetRelPath: relative(repoRoot, paths.targetPath),
+          candidateId: candidateId ?? scoredPath ?? "candidate",
+          models: models ?? context.defaultJudgeModels,
+          escalationModels: escalationModels ?? context.defaultEscalationJudgeModels,
+          reconsiderationRounds,
+          disagreementThreshold,
+        });
+        const record = {
+          at: new Date().toISOString(),
+          runId: context.runId,
+          slug,
+          locale,
+          scoredPath: scoredPath == null ? undefined : relative(repoRoot, resolve(repoRoot, scoredPath)),
+          provenance: buildScoreProvenance({
+            slug,
+            locale,
+            sourceContents,
+            targetContents: candidateContents,
+            scoredPath,
+            candidateId: candidateId ?? scoredPath ?? "candidate",
+          }),
+          ...consensus,
+        };
+        appendJsonl(join(candidateRunDir(context.runId), "consensus-scores.jsonl"), record);
+        appendJsonl(agentEvalHistoryPath(), { event: "consensus_score", ...record });
+        appendConsensusMarkdown(context.runId, record);
+        return consensus;
       },
     }),
 
@@ -345,23 +432,36 @@ export function createTranslationAgentTools(context: TranslationAgentToolContext
             }
 
             const paths = getPostPaths(post.slug, locale);
+            const sourceContents = readFileSync(paths.sourcePath, "utf8");
+            const targetContents = readFileSync(targetPath, "utf8");
             const score = await scoreTranslation({
-              sourceContents: readFileSync(paths.sourcePath, "utf8"),
-              targetContents: readFileSync(targetPath, "utf8"),
+              sourceContents,
+              targetContents,
               locale,
               model: model ?? context.defaultJudgeModel,
               slug: post.slug,
               targetRelPath: relative(repoRoot, targetPath),
               candidateId: `current:${post.slug}:${locale}`,
             });
-            appendJsonl(join(candidateRunDir(context.runId), "scores.jsonl"), {
+            const record = {
               at: new Date().toISOString(),
+              runId: context.runId,
               slug: post.slug,
               locale,
               scoredPath: relative(repoRoot, targetPath),
               source: "current",
+              provenance: buildScoreProvenance({
+                slug: post.slug,
+                locale,
+                sourceContents,
+                targetContents,
+                scoredPath: targetPath,
+                candidateId: `current:${post.slug}:${locale}`,
+              }),
               ...score,
-            });
+            };
+            appendJsonl(join(candidateRunDir(context.runId), "scores.jsonl"), record);
+            appendJsonl(agentEvalHistoryPath(), { event: "score", ...record });
             results.push({
               slug: post.slug,
               locale,
@@ -562,6 +662,98 @@ function appendEvent(runId: string, event: Record<string, unknown>) {
     runId,
     ...event,
   });
+}
+
+function agentEvalHistoryPath() {
+  return join(agentReportsRoot, "eval-history.jsonl");
+}
+
+function buildScoreProvenance({
+  slug,
+  locale,
+  sourceContents,
+  targetContents,
+  scoredPath,
+  candidateId,
+}: {
+  slug: string;
+  locale: ActiveLocale;
+  sourceContents: string;
+  targetContents: string;
+  scoredPath?: string;
+  candidateId?: string;
+}) {
+  return {
+    slug,
+    locale,
+    candidateId,
+    repoHeadSha: gitOutput(["rev-parse", "HEAD"]),
+    repoShortSha: gitOutput(["rev-parse", "--short", "HEAD"]),
+    sourceSha256: sha256(sourceContents),
+    targetSha256: sha256(targetContents),
+    scoredPath: scoredPath == null ? undefined : relative(repoRoot, resolve(repoRoot, scoredPath)),
+  };
+}
+
+function appendConsensusMarkdown(runId: string, record: Record<string, unknown>) {
+  const consensus = record.consensus as {
+    overallScore?: number;
+    publishReady?: boolean;
+    confidence?: string;
+    rationale?: string;
+  } | undefined;
+  const totals = record.totals as {
+    inputTokens?: number;
+    outputTokens?: number;
+    reasoningTokens?: number;
+    cacheReadTokens?: number;
+    cacheWriteTokens?: number;
+    costUsd?: number;
+  } | undefined;
+  const disagreement = record.disagreement as {
+    scoreRange?: number;
+    publishReadyDisagreement?: boolean;
+    blockingSuggestionDisagreement?: boolean;
+    uncertaintyDetected?: boolean;
+  } | undefined;
+  const summaryPath = join(
+    candidateRunDir(runId),
+    `consensus-${safePathSegment(String(record.slug ?? "unknown"))}-${safePathSegment(String(record.locale ?? "unknown"))}.md`,
+  );
+  writeFileSync(summaryPath, [
+    "# Translation Judge Consensus",
+    "",
+    `- Slug: ${record.slug}`,
+    `- Locale: ${record.locale}`,
+    `- Overall score: ${consensus?.overallScore ?? "unknown"}`,
+    `- Publish ready: ${consensus?.publishReady ?? "unknown"}`,
+    `- Confidence: ${consensus?.confidence ?? "unknown"}`,
+    `- Escalated: ${record.escalated ?? false}`,
+    `- Score range: ${disagreement?.scoreRange ?? "unknown"}`,
+    `- Publish-ready disagreement: ${disagreement?.publishReadyDisagreement ?? "unknown"}`,
+    `- Blocking-suggestion disagreement: ${disagreement?.blockingSuggestionDisagreement ?? "unknown"}`,
+    `- Uncertainty detected: ${disagreement?.uncertaintyDetected ?? "unknown"}`,
+    `- Input tokens: ${totals?.inputTokens ?? 0}`,
+    `- Output tokens: ${totals?.outputTokens ?? 0}`,
+    `- Reasoning tokens: ${totals?.reasoningTokens ?? 0}`,
+    `- Cache read tokens: ${totals?.cacheReadTokens ?? 0}`,
+    `- Cache write tokens: ${totals?.cacheWriteTokens ?? 0}`,
+    `- Cost USD: ${typeof totals?.costUsd === "number" ? totals.costUsd.toFixed(6) : "unknown"}`,
+    "",
+    consensus?.rationale ?? "",
+  ].join("\n"));
+}
+
+function sha256(contents: string) {
+  return createHash("sha256").update(contents).digest("hex");
+}
+
+function gitOutput(args: string[]) {
+  try {
+    return execFileSync("git", args, { cwd: repoRoot, encoding: "utf8" }).trim();
+  } catch {
+    return undefined;
+  }
 }
 
 function safePathSegment(value: string) {
