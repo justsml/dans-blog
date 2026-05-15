@@ -48,6 +48,15 @@ export type LanguageOption = {
   isTranslated: boolean;
 };
 
+export function sortLanguageOptions<TOption extends Pick<LanguageOption, "locale" | "isCurrent">>(
+  options: readonly TOption[],
+): TOption[] {
+  return [...options].sort((a, b) => {
+    if (a.isCurrent !== b.isCurrent) return a.isCurrent ? -1 : 1;
+    return a.locale.localeCompare(b.locale);
+  });
+}
+
 export function isLocale(value: string | undefined): value is Locale {
   return SUPPORTED_LOCALES.includes(value as Locale);
 }
@@ -114,13 +123,15 @@ export function getPageLanguageOptions(
 ): LanguageOption[] {
   const basePath = getUnlocalizedPagePath(path);
 
-  return locales.map((locale) => ({
-    locale,
-    label: LOCALE_LABELS[locale],
-    href: getLocalizedPagePath(basePath, locale),
-    isCurrent: locale === currentLocale,
-    isTranslated: true,
-  }));
+  return sortLanguageOptions(
+    locales.map((locale) => ({
+      locale,
+      label: LOCALE_LABELS[locale],
+      href: getLocalizedPagePath(basePath, locale),
+      isCurrent: locale === currentLocale,
+      isTranslated: true,
+    })),
+  );
 }
 
 export function getLocaleFromRouteSlug(slug: string): Locale {

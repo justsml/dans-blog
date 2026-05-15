@@ -15,6 +15,7 @@ import {
   isActiveLocale,
   isLocale,
   normalizeRoutePath,
+  sortLanguageOptions,
 } from "./i18n";
 import { getSlugFromId, parsePostId } from "./pathHelpers";
 
@@ -77,17 +78,17 @@ describe("i18n post routing helpers", () => {
 
     expect(options).toEqual([
       {
-        locale: "en",
-        label: "English",
-        href: "/category/code/",
-        isCurrent: false,
-        isTranslated: true,
-      },
-      {
         locale: "es",
         label: "Español",
         href: "/es/category/code/",
         isCurrent: true,
+        isTranslated: true,
+      },
+      {
+        locale: "en",
+        label: "English",
+        href: "/category/code/",
+        isCurrent: false,
         isTranslated: true,
       },
       {
@@ -98,6 +99,17 @@ describe("i18n post routing helpers", () => {
         isTranslated: true,
       },
     ]);
+  });
+
+  test("sorts language options by locale while keeping current locale first", () => {
+    const options = sortLanguageOptions([
+      { locale: "zh", isCurrent: false },
+      { locale: "en", isCurrent: false },
+      { locale: "fr", isCurrent: true },
+      { locale: "ar", isCurrent: false },
+    ]);
+
+    expect(options.map((option) => option.locale)).toEqual(["fr", "ar", "en", "zh"]);
   });
 
   test("does not double-prefix page alternates", () => {
