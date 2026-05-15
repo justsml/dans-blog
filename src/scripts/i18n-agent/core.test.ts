@@ -11,6 +11,7 @@ import {
   createPromptProfileVersion,
   resolvePromptProfile,
 } from "./prompt-profiles.ts";
+import { parseCliArgs } from "./index.ts";
 
 describe("resolveLlmConfig", () => {
   test("maps llm-strings OpenRouter config into AI SDK settings", () => {
@@ -27,6 +28,18 @@ describe("resolveLlmConfig", () => {
     const config = resolveLlmConfig("openrouter/deepseek/deepseek-v4-flash");
     expect(config.modelId).toBe("deepseek/deepseek-v4-flash");
     expect(config.mastraModel).toBe("openrouter/deepseek/deepseek-v4-flash");
+  });
+});
+
+describe("i18n agent CLI", () => {
+  test("defaults to interactive thread mode without a prompt", () => {
+    expect(parseCliArgs([]).interactive).toBe(true);
+  });
+
+  test("keeps prompt runs one-shot unless thread mode is explicit", () => {
+    expect(parseCliArgs(["score", "the", "translation"]).interactive).toBe(false);
+    expect(parseCliArgs(["--thread-mode", "score", "the", "translation"]).interactive).toBe(true);
+    expect(parseCliArgs(["--once"]).interactive).toBe(false);
   });
 });
 
@@ -116,6 +129,67 @@ describe("scoreTranslation", () => {
     expect(result.scores.mdxPreservation).toBe(95);
     expect(result.scores.fidelity).toBe(88);
     expect(result.rationale).toBe("solid");
+  });
+
+  test("orders judge prompt messages for cache-friendly stable prefixes", async () => {
+    let capturedSettings: { messages?: Array<{ content: unknown }> } | undefined;
+    const fakeGenerateText = (async (settings: { messages?: Array<{ content: unknown }> }) => {
+      capturedSettings = settings;
+      return {
+        text: JSON.stringify({
+          scores: {
+            readability: 90,
+            technicalAccuracy: 88,
+            coherence: 91,
+            relevance: 89,
+            translationQuality: 87,
+            mdxPreservation: 95,
+            culturalAdaptation: 84,
+            languagePurity: 92,
+          },
+          publishReady: true,
+          suggestions: [],
+          rationale: "solid",
+        }),
+        usage: { inputTokens: 10, outputTokens: 20 },
+        providerMetadata: undefined,
+      };
+    }) as unknown as GenerateTextLike;
+
+    await scoreTranslation({
+      sourceContents: "---\ntitle: Hello\n---\nText",
+      targetContents: "---\ntitle: Hola\n---\nTexto",
+      locale: "es",
+      model: "openrouter/google/gemini-3-flash-preview",
+      slug: "hello",
+      targetRelPath: "src/content/posts/hello/es/index.mdx",
+      candidateId: "candidate-1",
+      priorAssessments: [{
+        model: "other-judge",
+        overallScore: 70,
+        publishReady: false,
+        scores: {
+          fidelity: 70,
+          mdxPreservation: 80,
+          localeQuality: 70,
+          tone: 70,
+          publishReadiness: 70,
+        },
+        suggestions: [],
+        rationale: "Critical note.",
+      }],
+      generateText: fakeGenerateText,
+    });
+
+    const messages = capturedSettings?.messages ?? [];
+    expect(messages.length).toBe(5);
+    expect(JSON.stringify(messages[1])).toContain("Score these dimensions");
+    expect(JSON.stringify(messages[1])).not.toContain("candidate-1");
+    expect(JSON.stringify(messages[2])).toContain("<english-source>");
+    expect(JSON.stringify(messages[3])).toContain("<candidate>");
+    expect(JSON.stringify(messages[4])).toContain("Candidate id: candidate-1");
+    expect(JSON.stringify(messages[4])).toContain("Critical reconsideration round");
+    expect(JSON.stringify(messages[4])).not.toContain("<english-source>");
   });
 
   test("builds consensus through peer reconsideration", async () => {
@@ -252,6 +326,23 @@ describe("usageFromResult", () => {
     expect(telemetry.providerCostUsd).toBe(0.0012);
     expect(telemetry.providerUpstreamCostUsd).toBe(0.0009);
   });
+
+  test("keeps finish diagnostics from the AI SDK result", () => {
+    const telemetry = usageFromResult(
+      { inputTokens: 10, outputTokens: 20 },
+      123,
+      undefined,
+      {
+        finishReason: "length",
+        rawFinishReason: "max_tokens",
+        warnings: [{ type: "unsupported-setting" }],
+      },
+    );
+
+    expect(telemetry.finishReason).toBe("length");
+    expect(telemetry.rawFinishReason).toBe("max_tokens");
+    expect(telemetry.warnings?.length).toBe(1);
+  });
 });
 
 describe("translateWithModel", () => {
@@ -336,6 +427,73 @@ describe("translateWithModel", () => {
     expect(serialized).toContain("CACHED_TUNE");
     expect(serialized).toContain("DYNAMIC_TUNE");
     expect(serialized).toContain("FRONTMATTER_TUNE");
+  });
+
+  test("puts cached translation context before dynamic chunk text", async () => {
+    const calls: Array<{ prompt?: string; messages?: Array<{ content: unknown }> }> = [];
+    const fakeGenerateText = (async (settings: { prompt?: string; messages?: Array<{ content: unknown }> }) => {
+      calls.push(settings);
+      const serialized = JSON.stringify(settings);
+      if (serialized.includes("Translate the following title")) {
+        return { text: "Titulo", usage: { inputTokens: 1, outputTokens: 1 }, providerMetadata: undefined };
+      }
+      return {
+        text: "Texto traducido.",
+        usage: { inputTokens: 2, outputTokens: 3 },
+        providerMetadata: undefined,
+      };
+    }) as unknown as GenerateTextLike;
+
+    await translateWithModel({
+      sourceContents: [
+        "---",
+        "title: Cache shape",
+        "category: Code",
+        "---",
+        "Original text.",
+      ].join("\n"),
+      locale: "es",
+      model: "openrouter/deepseek/deepseek-v4-flash",
+      skipSummary: true,
+      generateText: fakeGenerateText,
+    });
+
+    const chunkCall = calls.find((call) => JSON.stringify(call).includes("--- CHUNK START ---"));
+    const messages = chunkCall?.messages ?? [];
+    expect(messages.length).toBe(3);
+    expect(JSON.stringify(messages[1])).toContain("STABLE TRANSLATION CONTRACT");
+    expect(JSON.stringify(messages[1])).not.toContain("--- CHUNK START ---");
+    expect(JSON.stringify(messages[1])).toContain("cacheControl");
+    expect(JSON.stringify(messages[2])).toContain("--- CHUNK START ---");
+  });
+
+  test("fails fast when a translation chunk hits the output token limit", async () => {
+    const fakeGenerateText = (async () => ({
+      text: "partial translation",
+      finishReason: "length",
+      rawFinishReason: "max_tokens",
+      usage: { inputTokens: 2, outputTokens: 7 },
+      providerMetadata: undefined,
+    })) as unknown as GenerateTextLike;
+
+    try {
+      await translateWithModel({
+        sourceContents: [
+          "---",
+          "title: Token ceiling",
+          "category: Code",
+          "---",
+          "A paragraph that needs translation.",
+        ].join("\n"),
+        locale: "es",
+        model: "llm://openrouter/deepseek/deepseek-v4-flash?max=7",
+        skipSummary: true,
+        generateText: fakeGenerateText,
+      });
+      throw new Error("Expected translation to fail");
+    } catch (error) {
+      expect(error instanceof Error ? error.message : String(error)).toContain("hit maxOutputTokens=7");
+    }
   });
 });
 

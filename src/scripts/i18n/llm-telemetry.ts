@@ -6,11 +6,20 @@ export interface TranslationTelemetry {
   cacheReadTokens: number;
   cacheWriteTokens: number;
   durationMs: number;
+  finishReason?: string;
+  rawFinishReason?: string;
+  warnings?: unknown[];
   providerCostUsd?: number;
   providerUpstreamCostUsd?: number;
   pricingSource?: string;
   openRouterUsage?: Record<string, unknown>;
 }
+
+export type LlmGenerationResultDiagnostics = {
+  finishReason?: string;
+  rawFinishReason?: string;
+  warnings?: unknown[];
+};
 
 export function usageFromResult(
   usage: {
@@ -25,6 +34,7 @@ export function usageFromResult(
   } | undefined,
   durationMs: number,
   providerMetadata?: unknown,
+  diagnostics?: LlmGenerationResultDiagnostics,
 ): TranslationTelemetry {
   const openRouterUsage = getOpenRouterUsage(providerMetadata);
   const promptTokensDetails = recordValue(openRouterUsage?.promptTokensDetails);
@@ -66,11 +76,40 @@ export function usageFromResult(
     cacheReadTokens,
     cacheWriteTokens,
     durationMs,
+    finishReason: diagnostics?.finishReason,
+    rawFinishReason: diagnostics?.rawFinishReason,
+    warnings: diagnostics?.warnings,
     providerCostUsd,
     providerUpstreamCostUsd,
     pricingSource: providerCostUsd == null ? undefined : "openrouter-usage-accounting",
     openRouterUsage,
   };
+}
+
+export function diagnosticsFromResult(result: {
+  finishReason?: string;
+  rawFinishReason?: string;
+  warnings?: unknown[] | undefined;
+}): LlmGenerationResultDiagnostics {
+  return {
+    finishReason: result.finishReason,
+    rawFinishReason: result.rawFinishReason,
+    warnings: result.warnings,
+  };
+}
+
+export function assertGenerationNotTokenLimited(label: string, result: {
+  finishReason?: string;
+  rawFinishReason?: string;
+}, maxOutputTokens: number): void {
+  if (result.finishReason !== "length") return;
+  throw new Error(
+    [
+      `${label} stopped because it hit maxOutputTokens=${maxOutputTokens}.`,
+      "The output may be truncated; raise the model max= value or reduce the translation chunk size before trusting this candidate.",
+      result.rawFinishReason == null ? undefined : `Provider finish reason: ${result.rawFinishReason}`,
+    ].filter(Boolean).join(" "),
+  );
 }
 
 export const OPENROUTER_USAGE_ACCOUNTING = {
@@ -88,6 +127,29 @@ export function cachedText(text: string) {
         cacheControl: { type: "ephemeral" },
       },
     },
+  };
+}
+
+export function plainText(text: string) {
+  return {
+    type: "text" as const,
+    text,
+  };
+}
+
+// Keep cached material in its own first user message so OpenRouter sticky
+// routing and provider prompt caching see a stable prefix before dynamic tails.
+export function cachedUserMessage(text: string) {
+  return {
+    role: "user" as const,
+    content: [cachedText(text)],
+  };
+}
+
+export function plainUserMessage(text: string) {
+  return {
+    role: "user" as const,
+    content: [plainText(text)],
   };
 }
 

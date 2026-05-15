@@ -125,6 +125,7 @@ export async function createTranslationAgentRuntime(options: TranslationAgentRun
       "Treat consensus publishReady=false seriously when any judge keeps high/medium concrete fixes; do not average away blocking MDX, quiz-answer, or terminology issues.",
       "Use eval-history and consensus summaries as the durable record of scores, costs, token usage, repo SHAs, and content hashes over time.",
       "When asked to tune prompts, keep the legacy i18n prompt as the base and create small versioned overlays with tuneTranslationPrompt, scoped by locale and model pattern.",
+      "Keep prompt tuning cache-friendly: stable locale/model guidance belongs in cached prompt-profile fields; per-chunk text, current file paths, candidate ids, peer assessments, and one-off fixes belong in dynamic fields.",
       "Use getPromptProfile before changing prompt profiles when the user asks to inspect the effective prompt. Use listPromptProfiles to discover existing tuning.",
       "Never write final localized MDX with writeCandidate or readFile. promoteCandidate is the only final publish path.",
       "When dry-run is enabled, do not promote. Explain where candidate artifacts were written.",

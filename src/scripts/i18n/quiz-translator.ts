@@ -17,7 +17,15 @@ import type { QuizChallenge, ParsedQuiz } from "./quiz-parser.ts";
 import { normalizeMarkdownIndentation, slotToTranslatable, slotFromTranslatable } from "./quiz-parser.ts";
 import type { ActiveLocale } from "../../shared/i18n.ts";
 import { LOCALE_LABELS } from "../../shared/i18n.ts";
-import { OPENROUTER_USAGE_ACCOUNTING, cachedText, usageFromResult, type TranslationTelemetry } from "./llm-telemetry.ts";
+import {
+  OPENROUTER_USAGE_ACCOUNTING,
+  assertGenerationNotTokenLimited,
+  cachedUserMessage,
+  diagnosticsFromResult,
+  plainUserMessage,
+  usageFromResult,
+  type TranslationTelemetry,
+} from "./llm-telemetry.ts";
 import { assertNoOutOfCreditMarker } from "./out-of-credit.ts";
 
 const TranslationSchema = z.object({
@@ -181,23 +189,15 @@ export async function translateChallenge(
           promptTuning?.appendSystem,
         ),
       },
-      {
-        role: "user",
-        content: [
-          cachedText(joinPrompt(
-            buildCachedQuizPromptContext(locale, quizDescription, isQuiz),
-            promptTuning?.appendCachedContext,
-          )),
-          {
-            type: "text",
-            text: joinPrompt(
-              buildDynamicQuizPrompt(challenge),
-              promptTuning?.appendQuizProse ?? promptTuning?.appendDynamic,
-              "QUIZ CHALLENGE PROMPT PROFILE TUNING",
-            ),
-          },
-        ],
-      },
+      cachedUserMessage(joinPrompt(
+        buildCachedQuizPromptContext(locale, quizDescription, isQuiz),
+        promptTuning?.appendCachedContext,
+      )),
+      plainUserMessage(joinPrompt(
+        buildDynamicQuizPrompt(challenge),
+        promptTuning?.appendQuizProse ?? promptTuning?.appendDynamic,
+        "QUIZ CHALLENGE PROMPT PROFILE TUNING",
+      )),
     ],
     temperature: llmConfig.temperature,
     maxOutputTokens: llmConfig.maxTokens,
@@ -206,6 +206,7 @@ export async function translateChallenge(
   });
 
   const durationMs = Math.round(performance.now() - start);
+  assertGenerationNotTokenLimited(`Quiz challenge ${challenge.index} translation`, result, llmConfig.maxTokens);
 
   const parsed = parseLlmJson(result.text, "challenge translation");
 
@@ -228,7 +229,7 @@ export async function translateChallenge(
     challenge: merged,
     translation: translated,
     rawText: result.text,
-    telemetry: usageFromResult(result.usage, durationMs, result.providerMetadata),
+    telemetry: usageFromResult(result.usage, durationMs, result.providerMetadata, diagnosticsFromResult(result)),
   };
 }
 
@@ -324,29 +325,19 @@ export async function generateQuizDescription(
           promptTuning?.appendSystem,
         ),
       },
-      {
-        role: "user",
-        content: [
-          {
-            type: "text",
-            text: [
-              `Summarize this technical quiz in 2-3 sentences.`,
-              `Focus on: what skills it tests, the difficulty level, and the teaching tone.`,
-              `Also list the key topics and target audience.`,
-              ``,
-              `Respond with a JSON object having these fields: description, topics (array of strings), audience.`,
-              ``,
-              `Quiz excerpt:`,
-              `---`,
-            ].join("\n"),
-          },
-          cachedText(joinPrompt(context, promptTuning?.appendSummary, "QUIZ SUMMARY PROMPT PROFILE TUNING")),
-          {
-            type: "text",
-            text: `---`,
-          },
-        ],
-      },
+      cachedUserMessage([
+        `Summarize this technical quiz in 2-3 sentences.`,
+        `Focus on: what skills it tests, the difficulty level, and the teaching tone.`,
+        `Also list the key topics and target audience.`,
+        ``,
+        `Respond with a JSON object having these fields: description, topics (array of strings), audience.`,
+      ].join("\n")),
+      plainUserMessage([
+        `Quiz excerpt:`,
+        `---`,
+        joinPrompt(context, promptTuning?.appendSummary, "QUIZ SUMMARY PROMPT PROFILE TUNING"),
+        `---`,
+      ].join("\n")),
     ],
     temperature: 0.3,
     maxOutputTokens: 500,
@@ -354,6 +345,7 @@ export async function generateQuizDescription(
     providerOptions: llmConfig.providerOptions,
   });
   const durationMs = Math.round(performance.now() - start);
+  assertGenerationNotTokenLimited("Quiz description generation", result, 500);
 
   const parsed = parseLlmJson(result.text, "quiz description");
 
@@ -379,7 +371,7 @@ export async function generateQuizDescription(
   return {
     description,
     rawText: result.text,
-    telemetry: usageFromResult(result.usage, durationMs, result.providerMetadata),
+    telemetry: usageFromResult(result.usage, durationMs, result.providerMetadata, diagnosticsFromResult(result)),
   };
 }
 

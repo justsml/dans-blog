@@ -1,6 +1,13 @@
 import matter from "gray-matter";
 import { generateText as defaultGenerateText } from "../braintrust.ts";
-import { cachedText, usageFromResult, type TranslationTelemetry } from "../llm-telemetry.ts";
+import {
+  assertGenerationNotTokenLimited,
+  cachedUserMessage,
+  diagnosticsFromResult,
+  plainUserMessage,
+  usageFromResult,
+  type TranslationTelemetry,
+} from "../llm-telemetry.ts";
 import {
   buildCachedChunkContextPrompt,
   buildDynamicChunkPrompt,
@@ -261,23 +268,15 @@ async function translateChunk({
           promptTuning?.appendSystem,
         ),
       },
-      {
-        role: "user",
-        content: [
-          cachedText(joinPrompt(
-            buildCachedChunkContextPrompt(locale, context, isQuiz),
-            promptTuning?.appendCachedContext,
-          )),
-          {
-            type: "text",
-            text: joinPrompt(
-              buildDynamicChunkPrompt(chunk.text, locale, context, isQuiz),
-              promptTuning?.appendDynamic,
-              "DYNAMIC PROMPT PROFILE TUNING",
-            ),
-          },
-        ],
-      },
+      cachedUserMessage(joinPrompt(
+        buildCachedChunkContextPrompt(locale, context, isQuiz),
+        promptTuning?.appendCachedContext,
+      )),
+      plainUserMessage(joinPrompt(
+        buildDynamicChunkPrompt(chunk.text, locale, context, isQuiz),
+        promptTuning?.appendDynamic,
+        "DYNAMIC PROMPT PROFILE TUNING",
+      )),
     ],
     temperature: llmConfig.temperature,
     maxOutputTokens: llmConfig.maxTokens,
@@ -286,9 +285,10 @@ async function translateChunk({
   });
 
   const durationMs = Math.round(performance.now() - start);
+  assertGenerationNotTokenLimited(`Translation chunk ${chunk.index + 1}/${context.totalChunks}`, result, llmConfig.maxTokens);
   return {
     text: result.text,
-    telemetry: usageFromResult(result.usage, durationMs, result.providerMetadata),
+    telemetry: usageFromResult(result.usage, durationMs, result.providerMetadata, diagnosticsFromResult(result)),
   };
 }
 
@@ -322,6 +322,7 @@ async function generateSummary({
     timeout: { totalMs: llmConfig.timeoutMs },
     providerOptions: llmConfig.providerOptions,
   });
+  assertGenerationNotTokenLimited("Article summary generation", result, 500);
   return result.text.trim();
 }
 
@@ -407,39 +408,32 @@ async function translateProse(
           promptTuning?.appendSystem,
         ),
       },
-      {
-        role: "user",
-        content: [
-          cachedText([
-            "STABLE QUIZ PROSE TRANSLATION CONTRACT:",
-            buildSystemPrompt(locale, true),
-            promptTuning?.appendCachedContext
-              ? `\nQUIZ PROMPT PROFILE TUNING:\n${promptTuning.appendCachedContext}`
-              : "",
-            "",
-            "QUIZ SUMMARY:",
-            articleSummary,
-          ].join("\n")),
-          {
-            type: "text",
-            text: joinPrompt(
-              `Translate this quiz prose into ${LOCALE_LABELS[locale]}.\n\n--- START ---\n${text}\n--- END ---`,
-              promptTuning?.appendQuizProse ?? promptTuning?.appendDynamic,
-              "QUIZ PROSE PROMPT PROFILE TUNING",
-            ),
-          },
-        ],
-      },
+      cachedUserMessage([
+        "STABLE QUIZ PROSE TRANSLATION CONTRACT:",
+        buildSystemPrompt(locale, true),
+        promptTuning?.appendCachedContext
+          ? `\nQUIZ PROMPT PROFILE TUNING:\n${promptTuning.appendCachedContext}`
+          : "",
+        "",
+        "QUIZ SUMMARY:",
+        articleSummary,
+      ].join("\n")),
+      plainUserMessage(joinPrompt(
+        `Translate this quiz prose into ${LOCALE_LABELS[locale]}.\n\n--- START ---\n${text}\n--- END ---`,
+        promptTuning?.appendQuizProse ?? promptTuning?.appendDynamic,
+        "QUIZ PROSE PROMPT PROFILE TUNING",
+      )),
     ],
     temperature: llmConfig.temperature,
     maxOutputTokens: llmConfig.maxTokens,
     timeout: { totalMs: llmConfig.timeoutMs },
     providerOptions: llmConfig.providerOptions,
   });
+  assertGenerationNotTokenLimited("Quiz prose translation", result, llmConfig.maxTokens);
 
   return {
     text: result.text,
-    ...usageFromResult(result.usage, Math.round(performance.now() - start), result.providerMetadata),
+    ...usageFromResult(result.usage, Math.round(performance.now() - start), result.providerMetadata, diagnosticsFromResult(result)),
   };
 }
 
@@ -482,28 +476,21 @@ async function translateFrontmatter({
             promptTuning?.appendSystem,
           ),
         },
-        {
-          role: "user",
-          content: [
-            cachedText([
-              "STABLE FRONTMATTER TRANSLATION CONTRACT (cache this across frontmatter fields):",
-              buildSystemPrompt(locale, isQuiz),
-              promptTuning?.appendFrontmatter
-                ? `\nFRONTMATTER PROMPT PROFILE TUNING:\n${promptTuning.appendFrontmatter}`
-                : "",
-            ].join("\n")),
-            {
-              type: "text",
-              text: `Translate the following ${key} into ${LOCALE_LABELS[locale]}. Keep it concise and natural.\n\n${value}`,
-            },
-          ],
-        },
+        cachedUserMessage([
+          "STABLE FRONTMATTER TRANSLATION CONTRACT (cache this across frontmatter fields):",
+          buildSystemPrompt(locale, isQuiz),
+          promptTuning?.appendFrontmatter
+            ? `\nFRONTMATTER PROMPT PROFILE TUNING:\n${promptTuning.appendFrontmatter}`
+            : "",
+        ].join("\n")),
+        plainUserMessage(`Translate the following ${key} into ${LOCALE_LABELS[locale]}. Keep it concise and natural.\n\n${value}`),
       ],
       temperature: llmConfig.temperature,
       maxOutputTokens: 500,
       timeout: { totalMs: llmConfig.timeoutMs },
       providerOptions: llmConfig.providerOptions,
     });
+    assertGenerationNotTokenLimited(`Frontmatter ${key} translation`, translation, 500);
 
     result[key] = translation.text.trim();
   }

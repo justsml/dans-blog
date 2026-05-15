@@ -242,7 +242,7 @@ export function createTranslationAgentTools(context: TranslationAgentToolContext
 
     tuneTranslationPrompt: createTool({
       id: "tuneTranslationPrompt",
-      description: "Create a new versioned prompt tuning profile for a locale/model pattern. The base remains the legacy i18n prompt; fields are appended as overlays.",
+      description: "Create a new versioned prompt tuning profile for a locale/model pattern. Put stable reusable guidance in cached/frontmatter/summary fields and per-input instructions in dynamic/quiz-prose fields.",
       inputSchema: z.object({
         locale: z.union([z.enum(ACTIVE_LOCALES), z.literal("*")]),
         modelPattern: z.string(),

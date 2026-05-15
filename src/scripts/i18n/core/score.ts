@@ -9,7 +9,14 @@ import {
   type JudgeScoreMap,
   type JudgeSuggestion,
 } from "../judge-utils.ts";
-import { cachedText, usageFromResult, type TranslationTelemetry } from "../llm-telemetry.ts";
+import {
+  assertGenerationNotTokenLimited,
+  cachedUserMessage,
+  diagnosticsFromResult,
+  plainUserMessage,
+  usageFromResult,
+  type TranslationTelemetry,
+} from "../llm-telemetry.ts";
 import { getLengthValidationGuidance } from "../localized-mdx.ts";
 import { estimateTokenCost, type TokenCostEstimate } from "../translation-costs.ts";
 import { type ActiveLocale } from "../../../shared/i18n.ts";
@@ -124,24 +131,10 @@ export async function scoreTranslation(input: ScoreTranslationInput): Promise<Sc
         role: "system",
         content: "You are a constrained translation judge. Return strict JSON only.",
       },
-      {
-        role: "user",
-        content: [
-          cachedText(buildScoreTranslationPrompt(input)),
-          {
-            type: "text",
-            text: [
-              "<english-source>",
-              input.sourceContents,
-              "</english-source>",
-              "",
-              `<candidate id="${input.candidateId ?? "candidate"}">`,
-              input.targetContents,
-              "</candidate>",
-            ].join("\n"),
-          },
-        ],
-      },
+      cachedUserMessage(buildScoreTranslationContract(input)),
+      cachedUserMessage(buildScoreSourceBlock(input)),
+      cachedUserMessage(buildScoreCandidateBlock(input)),
+      plainUserMessage(buildScoreDynamicTask(input)),
     ],
     temperature: llmConfig.temperature,
     maxOutputTokens: llmConfig.maxTokens,
@@ -153,7 +146,9 @@ export async function scoreTranslation(input: ScoreTranslationInput): Promise<Sc
     result.usage,
     Math.round(performance.now() - startedAt),
     result.providerMetadata,
+    diagnosticsFromResult(result),
   );
+  assertGenerationNotTokenLimited(`Translation judge ${llmConfig.modelId}`, result, llmConfig.maxTokens);
   const cost = estimateTokenCost(
     llmConfig.modelId,
     telemetry.inputTokens,
@@ -246,17 +241,9 @@ export async function scoreTranslationConsensus(input: ScoreConsensusInput): Pro
   };
 }
 
-function buildScoreTranslationPrompt(input: ScoreTranslationInput) {
-  const jsonShape = {
-    ...getJudgeJsonShape(),
-    selectedCommit: input.candidateId ?? "candidate",
-    selectedModel: "model id if known",
-    publishReady: false,
-  };
-
+function buildScoreTranslationContract(input: ScoreTranslationInput) {
   return [
-    `Judge the ${input.locale} translation${input.slug ? ` for ${input.slug}` : ""}.`,
-    `Target path: ${input.targetRelPath ?? "unknown"}`,
+    `You are judging a ${input.locale} translation.`,
     "Compare the candidate against the English source.",
     "Score these dimensions from 0 to 100:",
     "- technicalAccuracy/fidelity: preserves meaning, technical claims, correct quiz answers, and code-adjacent facts.",
@@ -268,6 +255,37 @@ function buildScoreTranslationPrompt(input: ScoreTranslationInput) {
     "Do not require titles, subtitles, headings, or quiz title/group values to remain in English; they are reader-facing.",
     "Do preserve code, component names, prop names, imports, API names, URLs, and non-reader-facing metadata.",
     getLengthValidationGuidance(input.locale),
+  ].filter(Boolean).join("\n");
+}
+
+function buildScoreSourceBlock(input: ScoreTranslationInput) {
+  return [
+    "<english-source>",
+    input.sourceContents,
+    "</english-source>",
+  ].join("\n");
+}
+
+function buildScoreCandidateBlock(input: ScoreTranslationInput) {
+  return [
+    "<candidate>",
+    input.targetContents,
+    "</candidate>",
+  ].join("\n");
+}
+
+function buildScoreDynamicTask(input: ScoreTranslationInput) {
+  const jsonShape = {
+    ...getJudgeJsonShape(),
+    selectedCommit: input.candidateId ?? "candidate",
+    selectedModel: "model id if known",
+    publishReady: false,
+  };
+
+  return [
+    `Judge this candidate${input.slug ? ` for ${input.slug}` : ""}.`,
+    `Candidate id: ${input.candidateId ?? "candidate"}`,
+    `Target path: ${input.targetRelPath ?? "unknown"}`,
     buildPeerAssessmentPrompt(input),
     "Use this JSON shape:",
     JSON.stringify(jsonShape),
