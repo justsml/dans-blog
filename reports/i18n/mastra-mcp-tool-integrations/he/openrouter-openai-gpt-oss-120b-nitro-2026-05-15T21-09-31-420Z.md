@@ -1,0 +1,238 @@
+# Translation Candidate
+- Slug: mastra-mcp-tool-integrations
+- Locale: he
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-01-04--mastra-mcp-tool-integrations/he/index.mdx
+- Validation: deferred
+- Runtime seconds: 2.75
+- Input tokens: 5562
+- Output tokens: 2383
+- Thinking tokens: unknown
+- Cached input tokens: 2560
+- Cache write tokens: 0
+- Estimated cost: $0.000646
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: הסוכן AI שלך חסר ערך בלי זה
+subTitle: למה MCP הואה‑USB‑C של הבינה המלאכותית.
+modified: '2026-01-08'
+tags:
+  - ai
+  - mcp
+  - tools
+  - integrations
+  - mastra
+  - salesforce
+  - apis
+category: AI
+subCategory: Integration
+social_image: ../desktop-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+בניתם סוכן AI. אולי הוא אפילו טוב. הפרומפטים מדויקים, המודל מהיר, והתשובות מרגישות טבעיות.
+
+אבל אז מישהו מבקש ממנו לבדוק ב‑Salesforce רשומת לקוח. או למשוך את כרטיסי Jira העדכניים. או לחפש בתיעוד הפנימי שלכם.
+
+והסוכן היפה שלכם פשוט… לא מצליח.
+
+זו בעיית האינטגרציה שכל פלטפורמת AI נתקלת בה בסופו של דבר. הסוכן שלכם צריך ידיים. הוא צריך עיניים אל מערכות העסק האמיתיות שלכם. בלי זה, אתם רק מריצים צ'אטבוט יקר.
+
+הפתרון המסורתי? לכתוב עטיפה API מותאמת אישית לכל שירות שתרצו לחבר. לקרוא את התיעוד, לטפל באימות, להתמודד עם מגבלות הקצב, ולהתפלל שהם לא ישנו את הקצוות בחודש הבא. ואז לחזור על זה לשירות הבא. ולשירות הבא.
+
+פרוטוקול הקשר המודל (MCP) משנה את החישוב הזה לחלוטין.
+
+## מה MCP פותר בפועל
+
+תחשבו על USB לפני USB‑C. היה לכם Mini‑USB, Micro‑USB, מחברים קנייניים של Apple, ומגירה מלאה בכבלים שעבדו רק עם מכשירים ספציפיים. USB‑C לא רק הוסיף מחבר חדש – הוא ייסד תקן שמאפשר לכל כבל לעבוד עם כל מכשיר.
+
+MCP עושה את אותו הדבר עבור אינטגרציות כלי AI.
+
+במקום לכתוב קוד מותאם לחיבור הסוכן שלכם ל‑Salesforce, HubSpot, GitHub או כל שירות אחר, אתם מיישמים את הפרוטוקול פעם אחת (או מורידים שרת מוכן), וכל סוכן תואם MCP יכול לתקשר איתו מייד.
+
+הפרוטוקול מטפל בשכבת התקשורת. אתם רק מגדירים מה הכלים שלכם עושים ואילו נתונים הם צריכים.
+
+## הגדרת אינטגרציות מרובות
+
+ל‑Mastra יש תמיכה מובנית ב‑MCP דרך ה‑[`MCPClient`](https://mastra.ai/docs/mcp/overview). ניתן לחבר גם כלים מקומיים (פועלים כתהליכי‑ילד) וגם שירותים מרוחקים (פועלים בתשתית שלהם).
+
+הנה תצורת ייצור ריאלית שמחברת את Google Maps לניתוב, שירות מזג אוויר, וחיפוש מקומי ב‑Wikipedia:
+
+```typescript
+// src/mastra/mcp/index.ts
+import { MCPClient } from '@mastra/mcp';
+
+export const mcpClient = new MCPClient({
+  servers: {
+    // כלי מקומי (Stdio)
+    wikipedia: {
+      command: 'npx',
+      args: ['-y', 'wikipedia-mcp'],
+    },
+    // מפות וניווט (מרוחק/HTTP)
+    googleMaps: {
+      url: new URL(process.env.GOOGLE_MAPS_MCP_URL!),
+      requestInit: {
+        headers: {
+          Authorization: `Bearer ${process.env.GOOGLE_MAPS_API_KEY}`,
+        },
+      },
+    },
+    // אינטגרציית שירות מזג אוויר
+    weather: {
+      url: new URL('https://mcp.weatherapi.dev/v1'),
+      requestInit: {
+        headers: {
+          'X-API-Key': process.env.WEATHER_API_KEY!,
+        },
+      },
+    },
+  },
+});
+```
+
+הלקוח מנהל את מחזור חיי החיבור, מטפל ביצירת תהליכים לכלים מקומיים, ומשמר חיבורים HTTP לשירותים מרוחקים. אין צורך לגעת בסוקטים או ב‑stdio ישירות.
+
+## חיבור כלים לסוכנים
+
+לאחר שהגדרת את לקוח ה‑MCP שלך, אספקת הכלים לסוכן היא פשוטה:
+
+```typescript
+// src/mastra/agents/navigation-agent.ts
+import { Agent } from '@mastra/core/agent';
+import { openai } from '@ai-sdk/openai';
+import { mcpClient } from '../mcp';
+
+export const navigationDirectionsAgent = new Agent({
+  id: 'navigation-directions-agent',
+  name: 'Navigation & Directions Assistant',
+  instructions: `You are a helpful navigation assistant that provides route planning and travel advice.
+    - Always confirm the start and destination locations
+    - Use Google Maps tools to find optimal routes
+    - Check weather conditions along the route
+    - Provide estimated travel times and suggest alternatives if weather is poor
+    - Include relevant details like traffic, road conditions, and points of interest
+    - Keep responses clear and actionable`,
+  model: openai('gpt-5'),
+  tools: await mcpClient.getTools(), // <--- This is the magic line
+});
+```
+
+כאשר משתמש שואל: *"מה המסלול הטוב ביותר מסן פרנסיסקו לייק טאהו, והאם צריך לדאוג למזג האוויר?"*
+
+הסוכן קורא את הגדרות הכלים הזמינות, מזהה שיש לו גישה לכלי ניתוב של Google Maps ולכלי תחזית מזג אוויר, מריץ אותם עם הפרמטרים המתאימים, ומחזיר מסלול אופטימלי יחד עם תנאי מזג האוויר העדכניים לאורך הדרך.
+
+לא כתבת שורה אחת של קוד ל‑Google Maps API או אינטגרציית שירות מזג אוויר.
+
+---
+
+## אימות לפי‑משתמש
+
+טעות אבטחה נפוצה כאן היא קידוד קשיח של אישורים.
+
+אם תכניס מפתח API של Google Maps אחד למשתני הסביבה ותסיים שם, כל המשתמשים ישתפו את אותה מכסה וקצב הגבלה. יותר מכך, אם אתה משתמש בשירותים השומרים העדפות משתמש (כמו מיקומים שמורים או מסלולים מועדפים), כולם יראו את אותם הנתונים. זה מקובל לדמואים, אך בתפעול אמיתי זה מהווה סיכון.
+
+Mastra מטפל בכך על‑ידי יצירת לקוחות MCP דינמיים עם אישורים ספציפיים למשתמש:
+
+```typescript
+async function handleUserRequest(userPrompt: string, userCredentials: UserCreds) {
+  // Create a client for THIS specific user
+  const userMcp = new MCPClient({
+    servers: {
+      googleMaps: {
+        url: new URL(process.env.GOOGLE_MAPS_MCP_URL!),
+        requestInit: {
+          headers: {
+            // User's specific API key or token
+            Authorization: `Bearer ${userCredentials.mapsApiKey}`,
+            'X-User-ID': userCredentials.userId,
+          },
+        },
+      },
+    },
+  });
+
+  const agent = mastra.getAgent('navigationDirectionsAgent');
+  
+  // Inject tools at runtime
+  const response = await agent.generate(userPrompt, {
+    toolsets: await userMcp.getToolsets(),
+  });
+
+  return response;
+}
+```
+
+כל משתמש מקבל סט כלים מבודד עם מכסות API והעדפות משלו. המיקומים השמורים של משתמש A נשארים פרטיים, היסטוריית המסלולים של משתמש B מופרדת. כך סוכני SaaS מרובי‑שוכרים פועלים בפועל.
+
+---
+
+## בניית כלים מורכבים
+
+לפעמים יש צורך לשלב כמה כלים של MCP בפעולה אחת. אולי תרצה לתכנן מסלול שלוקח בחשבון גם תנועה בזמן אמת וגם תנאי מזג אוויר לאורך הדרך.
+
+אפשר לעטוף כלים של MCP בהגדרות כלי מותאמות:
+
+```typescript
+export const smartRouteTool = createTool({
+  id: 'smart-route-planner',
+  description: 'Plans optimal route considering traffic and weather conditions',
+  execute: async ({ context, mastra }) => {
+    // Get the raw tools
+    const tools = await mcpClient.getTools();
+    
+    // 1. Get base route from Google Maps
+    const routeData = await tools.googleMaps_getDirections.execute({ 
+      context: { 
+        origin: context.origin,
+        destination: context.destination 
+      } 
+    });
+    
+    // 2. Check weather along the route
+    const weatherData = await tools.weather_getForecast.execute({
+      context: { coordinates: routeData.waypoints }
+    });
+    
+    // 3. Return enhanced route with weather warnings
+    return { 
+      ...routeData, 
+      weatherAlerts: weatherData.alerts,
+      recommendation: weatherData.severe ? 'Consider delaying trip' : 'Safe to travel'
+    };
+  },
+});
+```
+
+זה נותן שליטה מדויקת על האופן שבו הכלים מתקשרים, תוך שמירה על פרוטוקול MCP לביצוע המשקל הכבד.
+
+---
+
+## לאן זה מוביל
+
+
+כתיבת לקוחות API מותאמים אישית לכל שירות שהסוכן ה‑AI שלך צריך לתקשר איתו מעולם לא הייתה ברת קיימא. זה מתרחב בצורה גרועה, מתפרק בתדירות גבוהה, וקושר את הפלטפורמה שלך למימושים ספציפיים.
+
+MCP לא פותר כל אתגר אינטגרציה — האימות עדיין מורכב, הגבלת קצב עדיין רלוונטית, ולא לכל שירות יש עדיין שרת MCP. אבל הוא יוצר בסיס שמקל משמעותית על בניית פלטפורמות סוכנים.
+
+אם אתה מתכנן מערכת AI שצריכה לתקשר עם שירותים חיצוניים, להבין את MCP כנראה שווה את הזמן שלך.
+
+### משאבים
+
+- [תיעוד Mastra MCP](https://mastra.ai/docs/mcp/overview)
+- [רשימת MCP](https://registry.modelcontextprotocol.io)
+- [Klavis AI (Enterprise MCP)](https://klavis.ai)
+- [מאגר GitHub של Mastra](https://github.com/mastra-ai/mastra)
+
+## קרא את הסדרה
+
+1. [LLM Routing](../llm-routing-mastra-ai)
+2. [Security & Guardrails](../mastra-security-guardrails)
+3. **MCP & Tool Integrations** (פוסט זה)
+4. [Workflows & Memory](../mastra-workflows-memory)
+````
