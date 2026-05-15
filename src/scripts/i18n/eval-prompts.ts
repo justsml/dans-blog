@@ -74,6 +74,12 @@ import {
   reassembleChunks,
   type Chunk,
 } from "./chunker.ts";
+import { assembleQuiz, parseQuiz } from "./quiz-parser.ts";
+import {
+  generateQuizDescription,
+  translateChallenge,
+  type LlmConfig as QuizLlmConfig,
+} from "./quiz-translator.ts";
 import { resolveCheapFastTranslationModels } from "./model-presets.ts";
 import { parseArgs, optionalString, parseList } from "./utils.ts";
 import {
@@ -123,7 +129,7 @@ const judgeModel = (
 const translationModels = resolveCheapFastTranslationModels(
   parseList(optionalString(args, "models"), DEFAULT_MODELS),
 );
-const requestedSlug = optionalString(args, "slug");
+const requestedSlugs = parseList(optionalString(args, "slug"), []);
 const requestedKind = optionalString(args, "kind") ?? "all";
 const isDryRun = args["dry-run"] === true;
 const printStreams = args["print-streams"] === true;
@@ -613,7 +619,9 @@ async function scoreLlmJudge(
     const parsed = parseJudgeOutput(result.text);
     const judgeScores = normalizeJudgeScores(parsed.scores);
     if (judgeScores == null) return fail("Judge returned no parseable scores.");
-    const suggestions = readSuggestionsFromParsed(parsed);
+    const suggestions = readSuggestionsFromParsed(parsed).filter(
+      (suggestion) => !isIgnoredEvalJudgeSuggestion(input, output, suggestion),
+    );
     const highPrioritySuggestions = suggestions.filter(
       (suggestion) => suggestion.priority === "high",
     );
@@ -697,11 +705,50 @@ async function scoreLlmJudge(
   }
 }
 
+function isIgnoredEvalJudgeSuggestion(
+  input: EvalInput,
+  output: EvalOutput,
+  suggestion: { match: string; replacement: string; reason: string },
+) {
+  const text = [
+    suggestion.match,
+    suggestion.replacement,
+    suggestion.reason,
+  ].join(" ").toLowerCase();
+
+  if (
+    /\bcode block\b/.test(text)
+    && /\bcomment/.test(text)
+    && /\btranslat/.test(text)
+  ) {
+    return true;
+  }
+
+  const mentionsComponentImport =
+    text.includes("component")
+    || text.includes("import path")
+    || text.includes("../../../../components");
+  if (!mentionsComponentImport) return false;
+
+  const hasDeterministicImportIssue = analyzeTranslationIntegrity({
+    sourceContents: input.source,
+    targetContents: output.translation,
+    targetPath: `/${input.slug}/${input.locale}/index.mdx`,
+    locale: input.locale,
+  }).some((issue) => issue.code === "invalid-localized-component-import");
+
+  return !hasDeterministicImportIssue;
+}
+
 // ---------------------------------------------------------------------------
 // Task  (input + model → output)
 // ---------------------------------------------------------------------------
 
 async function translate(input: EvalInput, model: string): Promise<EvalOutput> {
+  if (input.isQuiz) {
+    return translateStructuredQuiz(input, model);
+  }
+
   if (shouldUseChunkedEvalTranslation(input, model)) {
     return translateChunkedArticle(input, model);
   }
@@ -767,6 +814,140 @@ async function translate(input: EvalInput, model: string): Promise<EvalOutput> {
     providerCostUsd: result.providerCostUsd,
     streamId: result.streamId,
   };
+}
+
+async function translateStructuredQuiz(
+  input: EvalInput,
+  model: string,
+): Promise<EvalOutput> {
+  const parsed = matter(input.source);
+  const sourceBody = parsed.content;
+  const quiz = parseQuiz(sourceBody);
+  const llmConfig = getEvalQuizLlmConfig(model);
+  let durationMs = 0;
+  let inputTokens = 0;
+  let outputTokens = 0;
+  let providerCostUsd = 0;
+
+  const frontmatter = await translateEvalFrontmatter(input, model, parsed.data);
+  durationMs += frontmatter.durationMs;
+  inputTokens += frontmatter.inputTokens;
+  outputTokens += frontmatter.outputTokens;
+  providerCostUsd += frontmatter.providerCostUsd ?? 0;
+
+  const summary = await generateQuizDescription(quiz, llmConfig);
+  durationMs += summary.telemetry.durationMs;
+  inputTokens += summary.telemetry.inputTokens;
+  outputTokens += summary.telemetry.outputTokens;
+  providerCostUsd += summary.telemetry.providerCostUsd ?? 0;
+
+  const translatedIntro = quiz.intro.trim() === ""
+    ? quiz.intro
+    : (await translateEvalQuizProse(input, model, "intro", quiz.intro, summary.description));
+  if (typeof translatedIntro !== "string") {
+    durationMs += translatedIntro.durationMs;
+    inputTokens += translatedIntro.inputTokens;
+    outputTokens += translatedIntro.outputTokens;
+    providerCostUsd += translatedIntro.providerCostUsd ?? 0;
+  }
+
+  const translatedOutro = quiz.outro.trim() === ""
+    ? quiz.outro
+    : (await translateEvalQuizProse(input, model, "outro", quiz.outro, summary.description));
+  if (typeof translatedOutro !== "string") {
+    durationMs += translatedOutro.durationMs;
+    inputTokens += translatedOutro.inputTokens;
+    outputTokens += translatedOutro.outputTokens;
+    providerCostUsd += translatedOutro.providerCostUsd ?? 0;
+  }
+
+  const translatedChallenges = [];
+  for (const challenge of quiz.challenges) {
+    const translated = await translateChallenge(
+      challenge,
+      input.locale,
+      llmConfig,
+      summary.description,
+      true,
+    );
+    durationMs += translated.telemetry.durationMs;
+    inputTokens += translated.telemetry.inputTokens;
+    outputTokens += translated.telemetry.outputTokens;
+    providerCostUsd += translated.telemetry.providerCostUsd ?? 0;
+    translatedChallenges.push(translated.challenge);
+  }
+
+  const translatedBody = assembleQuiz({
+    intro: typeof translatedIntro === "string" ? translatedIntro : translatedIntro.text,
+    challenges: translatedChallenges,
+    outro: typeof translatedOutro === "string" ? translatedOutro : translatedOutro.text,
+  });
+  const assembled = matter.stringify(
+    translatedBody.trimStart(),
+    frontmatter.data,
+  ).trim();
+  const translation = normalizeEvalTranslation(input.source, assembled);
+  const streamId = recordAssembledTranslationStream(input, model, translation);
+
+  return {
+    translation,
+    model,
+    durationMs,
+    inputTokens,
+    outputTokens,
+    providerCostUsd: providerCostUsd === 0 ? undefined : providerCostUsd,
+    streamId,
+  };
+}
+
+async function translateEvalQuizProse(
+  input: EvalInput,
+  model: string,
+  label: "intro" | "outro",
+  prose: string,
+  quizDescription: string,
+): Promise<StreamedTextResult & { text: string }> {
+  const context = {
+    chunkIndex: 0,
+    totalChunks: 1,
+    articleSummary: quizDescription,
+  };
+  const result = await streamLlmText(
+    {
+      model: createOpenRouter({}).chat(
+        model.replace(/^openrouter\//, ""),
+        OPENROUTER_USAGE_ACCOUNTING,
+      ),
+      allowSystemInMessages: true,
+      messages: [
+        {
+          role: "system",
+          content: buildSystemPrompt(input.locale, true),
+        },
+        {
+          role: "user",
+          content: [
+            cachedText(buildCachedChunkContextPrompt(input.locale, context, true)),
+            {
+              type: "text",
+              text: buildDynamicChunkPrompt(prose, input.locale, context, true),
+            },
+          ],
+        },
+      ],
+      temperature: 0.1,
+      maxOutputTokens: getEvalChunkMaxOutputTokens(prose),
+      timeout: { totalMs: TIMEOUT_MS },
+      providerOptions: getEvalReasoningProviderOptions(model),
+    },
+    {
+      phase: "translation",
+      inputId: `${input.id}:${label}`,
+      model,
+    },
+  );
+
+  return { ...result, text: result.text.trim() };
 }
 
 async function translateChunkedArticle(
@@ -1068,22 +1249,22 @@ async function runEval(input: EvalInput, model: string): Promise<EvalResult> {
 function selectInputs(locale: ActiveLocale): EvalInput[] {
   const corpus = loadPublishedPosts();
 
-  if (requestedSlug != null) {
-    const normalizedSlug = normalizeSlug(requestedSlug).toLowerCase();
-    const post =
-      corpus.find((p) => p.slug.toLowerCase().includes(normalizedSlug)) ??
-      (() => {
-        throw new Error(`Slug "${requestedSlug}" not found in visible corpus.`);
-      })();
+  if (requestedSlugs.length > 0) {
+    return requestedSlugs.map((requestedSlug) => {
+      const normalizedSlug = normalizeSlug(requestedSlug).toLowerCase();
+      const post =
+        corpus.find((p) => p.slug.toLowerCase().includes(normalizedSlug)) ??
+        (() => {
+          throw new Error(`Slug "${requestedSlug}" not found in visible corpus.`);
+        })();
 
-    if (requestedKind !== "all" && post.kind !== requestedKind) {
-      throw new Error(
-        `Slug "${requestedSlug}" has kind "${post.kind}", not "${requestedKind}".`,
-      );
-    }
+      if (requestedKind !== "all" && post.kind !== requestedKind) {
+        throw new Error(
+          `Slug "${requestedSlug}" has kind "${post.kind}", not "${requestedKind}".`,
+        );
+      }
 
-    return [
-      {
+      return {
         id: `${post.kind}:${post.slug}:${locale}`,
         kind: post.kind,
         slug: post.slug,
@@ -1092,8 +1273,8 @@ function selectInputs(locale: ActiveLocale): EvalInput[] {
         isQuiz: post.kind === "quiz",
         title: post.title,
         source: post.source,
-      },
-    ];
+      };
+    });
   }
 
   const kinds =
@@ -1247,6 +1428,23 @@ function getEvalReasoningProviderOptions(
   }
 
   return undefined;
+}
+
+function getEvalQuizLlmConfig(model: string): QuizLlmConfig {
+  return {
+    modelId: model.replace(/^openrouter\//, ""),
+    providerSettings: {},
+    providerOptions: getEvalQuizReasoningProviderOptions(model),
+    temperature: 0.1,
+    maxTokens: 4000,
+    timeoutMs: TIMEOUT_MS,
+  };
+}
+
+function getEvalQuizReasoningProviderOptions(model: string): QuizLlmConfig["providerOptions"] {
+  const normalized = model.replace(/^openrouter\//, "");
+  const effort = normalized.includes("gemini-3") ? "minimal" : "low";
+  return { openrouter: { reasoning: { effort } } };
 }
 
 function edgeParagraphContext(chunk: Chunk | undefined, edge: "first" | "last") {

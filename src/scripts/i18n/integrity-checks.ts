@@ -90,7 +90,7 @@ export function assertTranslationIntegrity(input: IntegrityCheckInput) {
 
 function checkHtmlComments(contents: string, targetPath: string): IntegrityIssue[] {
   const issues: IntegrityIssue[] = [];
-  for (const { line, lineNumber } of iterNonFenceLines(contents)) {
+  for (const { line, lineNumber } of iterNonFenceLines(maskFrontmatter(contents))) {
     if (/<!--|-->/.test(line)) {
       issues.push({
         code: "html-comment-outside-code",
@@ -105,8 +105,9 @@ function checkHtmlComments(contents: string, targetPath: string): IntegrityIssue
 function checkHtmlMarkup(contents: string, targetPath: string): IntegrityIssue[] {
   const issues: IntegrityIssue[] = [];
   const stack: Array<{ tag: string; lineNumber: number }> = [];
+  const comparable = stripInlineCodeSpans(maskFrontmatter(contents));
 
-  for (const { line, lineNumber } of iterNonFenceLines(stripMdxComments(contents))) {
+  for (const { line, lineNumber } of iterNonFenceLines(stripMdxComments(comparable))) {
     for (const match of line.matchAll(/<\/?([a-z][a-z0-9:-]*)(?:\s[^<>]*)?>/gi)) {
       const raw = match[0];
       const rawTag = match[1];
@@ -495,7 +496,14 @@ function checkQuizSlots(
     }
 
     const longLine = targetCodeBlocks
-      .flatMap((codeBlock) => codeBlock.code.split("\n").map((line) => stripCommonCodeIndent(line).length))
+      .flatMap((targetCodeBlock, codeIndex) => {
+        const sourceCodeBlock = sourceCodeBlocks[codeIndex];
+        return targetCodeBlock.code.split("\n").map((line, lineIndex) => {
+          const length = stripCommonCodeIndent(line).length;
+          const sourceLine = sourceCodeBlock?.code.split("\n")[lineIndex];
+          return length > QUIZ_CODE_LINE_SOFT_LIMIT && line !== sourceLine ? length : 0;
+        });
+      })
       .find((length) => length > QUIZ_CODE_LINE_SOFT_LIMIT);
     if (longLine != null) {
       issues.push({
@@ -836,6 +844,14 @@ function stripFrontmatter(contents: string) {
   return contents.slice(frontmatterEnd + 4);
 }
 
+function maskFrontmatter(contents: string) {
+  if (!contents.startsWith("---")) return contents;
+  const frontmatterEnd = contents.indexOf("\n---", 3);
+  if (frontmatterEnd === -1) return contents;
+  const frontmatter = contents.slice(0, frontmatterEnd + 4);
+  return frontmatter.replace(/[^\n]/g, "") + contents.slice(frontmatterEnd + 4);
+}
+
 function stripFencedCodeBlocks(contents: string) {
   const lines = contents.split(/\r?\n/);
   const result: string[] = [];
@@ -856,6 +872,10 @@ function stripMdxComments(contents: string) {
   return contents
     .replace(/\{\/\*[\s\S]*?\*\/}/g, "")
     .replace(/<!--[\s\S]*?-->/g, "");
+}
+
+function stripInlineCodeSpans(contents: string) {
+  return contents.replace(/`(?:\\.|[^`])*`/g, (match) => " ".repeat(match.length));
 }
 
 function escapeRegExp(value: string) {

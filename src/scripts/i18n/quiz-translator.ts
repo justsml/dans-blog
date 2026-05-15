@@ -70,7 +70,7 @@ function buildQuizSystemPrompt(locale: ActiveLocale, isQuiz: boolean): string {
     `CRITICAL RULES:`,
     `1. Translate ONLY reader-facing prose. Do NOT translate code, variable names, or API names.`,
     `2. Preserve ALL inline code spans (backtick content) exactly — do not translate variable names, function names, or code syntax inside backticks.`,
-    `3. Answer options may contain code snippets (like \`'95'::INTEGER\`). Preserve the code exactly, only translate any descriptive text around it.`,
+    `3. Answer options may contain code snippets or validator-sensitive labels (like \`'95'::INTEGER\`, \`Width: 110px\`, \`Filename must end w/ .scss\`, or \`cat cbt\`). Preserve those code-like option strings exactly; only translate plainly descriptive options.`,
     `4. Hints should be short, helpful, and natural in ${language}.`,
     `5. Question text should read like a native speaker wrote it — direct, slightly irreverent, authoritative.`,
     `6. Explanation text should maintain the teaching tone: explain WHY, not just WHAT.`,
@@ -228,7 +228,7 @@ function mergeTranslation(
     const t = translated.options[i];
     if (!t) return opt;
     return {
-      text: t.text,
+      text: isCodeLikeOptionText(opt.text) ? opt.text : t.text,
       isAnswer: opt.isAnswer,
       hint: t.hint ?? opt.hint,
     };
@@ -244,6 +244,10 @@ function mergeTranslation(
   merged.explanation = slotFromTranslatable(original.explanation, translated.explanationProse);
 
   return merged;
+}
+
+function isCodeLikeOptionText(value: string) {
+  return /(?:\b[A-Za-z_$][\w$]*\s*:|\b[A-Za-z_$][\w$]*\s*\(|=>|[{}[\];]|\.\w+|\\'|\\"|\b(?:Date|Intl|Promise|Array|Object|Map|Set|NaN|null|undefined|TypeError|RangeError)\b|\b(?:px|rem|em|vh|vw|scss|css|bash|sh)\b|[`$|&<>/])/.test(value);
 }
 
 function assertTranslatedCounts(original: QuizChallenge, translated: TranslationResult) {

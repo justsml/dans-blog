@@ -430,7 +430,7 @@ function assembleChallenge(challenge: QuizChallenge): string {
   }
 
   lines.push(``);
-  lines.push(`  <slot name='explanation'>`);
+  lines.push(`  <slot name="explanation">`);
   lines.push(`  <div className="explanation">`);
   lines.push(...assembleSlotLines(challenge.explanation));
   lines.push(`  </div>`);

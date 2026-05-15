@@ -326,7 +326,7 @@ export function buildPrimaryJudgePrompt(
     `For quiz code blocks, preserve code exactly and keep code lines short enough for mobile reading; lines longer than about 63 characters should be treated as a medium-priority readability issue unless unavoidable.`,
     `Locale files live one folder deeper than English. Any inherited local image or asset path in frontmatter, Markdown, or JSX must start with ../, even if the English file uses a bare path or ./ path. Never suggest changing ../asset.webp to asset.webp or ./asset.webp.`,
     `Gist component paths must remain owner/id values such as justsml/abc123; never turn them into locale-relative paths like ../justsml/abc123.`,
-    `Component imports in locale files must resolve from the locale folder depth; imported components should use ../../../../components/... unless the source uses an alias.`,
+    `Component imports in locale files must resolve from the locale folder depth; imported components should use ../../../../components/... unless the source uses an alias. This is intentionally one ../ deeper than the English post file. Do not flag ../../../../components/... as wrong for src/content/posts/YYYY-MM-DD--slug/{locale}/index.mdx files.`,
     `Reject suspicious code fence languages such as shdocker or sqlWITH; they usually mean translated prose was glued to the opening fence marker.`,
     `Reject candidates with raw HTML comments outside code fences; MDX comments must use {/* ... */}.`,
     `Reject candidates with broken HTML/MDX markup such as unclosed <section>, <p>, or other non-void tags.`,

@@ -79,14 +79,14 @@ JAPANESE QUALITY NOTES:
 function mdxGuidance(): string {
   return `
 MDX & CODE PRESERVATION (critical):
-- Preserve ALL code blocks exactly. Do NOT translate code, variable names, file paths, or shell commands.
+- Preserve ALL code blocks exactly, byte-for-byte, including comments, spacing, line breaks, and fence languages. Do NOT translate code comments, variable names, file paths, or shell commands.
 - Preserve ALL MDX component tags and their prop names. Only translate string prop VALUES that are reader-facing text (e.g., question text, labels, alt text).
 - Preserve ALL import statements and their relative module paths.
 - Preserve the exact markdown heading level structure. Translate heading text, but keep the same number of H1, H2, H3, H4, H5, and H6 headings.
+- Preserve inline code spans exactly, including the surrounding backticks. HTML tag names like \`<div>\`, component names, selectors, filenames, paths, commands, API names, and CSS values must remain inside inline code when the source uses inline code.
 - Preserve roughly the same amount of prose. The translated body must be comparable to the English prose length, using the target language's natural expansion or compression; CJK, Arabic, Hebrew, and Hindi may differ more from English. Do not summarize or pad.
 - ALL relative URL paths for images, CSS, links, or other resources should prefix/prepend with a \`../\`.
 - Preserve ALL markdown link URLs except relative URLs that need the locale-folder \`../\` prefix. Only translate the link text.
-- Preserve ALL inline code spans (\`...\`).
 - Do not add or remove blank lines around code fences or components unless the original has them.
 `.trim();
 }
@@ -102,6 +102,7 @@ YAML FRONTMATTER RULES (critical):
 - Omit inherited metadata from translated files: date, draft, unlisted, hidden, publish, and popularity. Keep modified when present.
 - Preserve taxonomy and routing metadata exactly: category, subCategory, tags, related, redirects, commentsKeyOverride, label, modified, and minReleaseDate.
 - Preserve social_image, cover, cover_full_width, cover_mobile, and cover_icon filenames, but use ../ for inherited local asset paths inside locale folders.
+- For frontmatter values containing HTML, preserve every HTML tag, attribute, URL, opening tag, and closing tag exactly. Translate only the human-readable text around or between tags.
 `.trim();
 }
 
@@ -122,17 +123,19 @@ This is a technical quiz with interactive <Challenge> components. Follow these r
    - Translate the answer choice text
    - Preserve the exact string quoting (single quotes in source → single quotes in output)
    - Preserve isAnswer: true/false exactly
+   - Preserve code-like option text exactly when it contains code syntax, CSS declarations, selectors, filenames/extensions, API names, units, backticks, punctuation-heavy snippets, or key/value labels such as "Width: 50px".
+   - Do not translate field labels inside option strings when the source uses a key/value shape. For example, keep "Width: 110px" as "Width: 110px", not a localized label.
 
 4. <slot name="question">:
    - Translate the question prose (the text asking "What does this log?")
-   - PRESERVE all code blocks inside the slot EXACTLY
-   - Preserve all inline code spans (variable names in backticks)
+   - PRESERVE all code blocks inside the slot EXACTLY, including comments and fence languages
+   - Preserve all inline code spans exactly, including the surrounding backticks
    - The question text itself should feel like a native speaker wrote it
 
 5. <slot name="explanation">:
    - Translate the educational explanation prose
-   - PRESERVE all code blocks exactly
-   - Preserve all inline code spans and variable names in backticks
+   - PRESERVE all code blocks exactly, including comments and fence languages
+   - Preserve all inline code spans exactly, including the surrounding backticks
    - Preserve technical terms that shouldn't be translated (e.g., JavaScript API names)
    - Keep the teaching tone: direct, slightly irreverent, authoritative
 

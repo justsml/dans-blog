@@ -37,8 +37,9 @@ bun run i18n:eval -- --models openrouter/qwen/qwen3-32b:nitro,openrouter/deepsee
 # Full matrix: multiple locales × multiple models
 bun run i18n:eval -- --locales es,ja --models openrouter/qwen/qwen3-32b:nitro,openrouter/deepseek/deepseek-v4-flash
 
-# Pin to a specific slug
+# Pin to one or more specific slugs
 bun run i18n:eval -- --slug stop-hardcoding-your-prompts --locales es
+bun run i18n:eval -- --slug stop-hardcoding-your-prompts,quiz-modern-css-2025 --locales es,ja
 
 # One kind only
 bun run i18n:eval -- --kind article
@@ -59,7 +60,7 @@ bun run i18n:eval -- --print-streams
 | `--judge-model` | `gemini-3-flash-preview` | Model used to score translations |
 | `--locales` | all active locales | Comma-separated locales (`es,ja,zh`, …) — each is a separate eval axis |
 | `--kind` | `all` | `article`, `quiz`, or `all` |
-| `--slug` | — | Pin to a specific slug (auto-detects article vs quiz) |
+| `--slug` | — | Pin to one or more comma-separated slugs (auto-detects article vs quiz) |
 | `--dry-run` | false | Print all cases and exit without calling any model |
 | `--print-streams` | false | Mirror text deltas to stdout in addition to writing stream files |
 

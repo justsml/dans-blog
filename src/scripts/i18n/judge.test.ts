@@ -307,6 +307,23 @@ describe("analyzeTranslationIntegrity", () => {
     expect(issues.some((issue) => issue.code === "html-unclosed-tag")).toBe(true);
   });
 
+  test("ignores HTML-like text inside frontmatter and inline code spans", () => {
+    const target = [
+      "---",
+      'cover_credit: Photo by <a href="https://example.com">Dan</a>',
+      "---",
+      "",
+      "This mentions `<div>` as code, not body markup.",
+    ].join("\n");
+    const issues = analyzeTranslationIntegrity({
+      sourceContents: target,
+      targetContents: target,
+      targetPath: "/repo/src/content/posts/test/es/index.mdx",
+      locale: "es",
+    });
+    expect(issues.some((issue) => issue.code.startsWith("html-"))).toBe(false);
+  });
+
   test("flags invalid inherited asset paths in locale files", () => {
     const issues = analyzeTranslationIntegrity({
       sourceContents: source,
@@ -525,6 +542,33 @@ describe("analyzeTranslationIntegrity", () => {
     });
     expect(issues.some((issue) => issue.code === "quiz-code-block-preservation")).toBe(true);
     expect(issues.some((issue) => issue.code === "quiz-code-line-length")).toBe(true);
+  });
+
+  test("does not flag long quiz code lines that are unchanged from English", () => {
+    const sourceQuiz = [
+      "<Challenge",
+      "  index={0}",
+      "  options={[",
+      "    { text: 'ok', isAnswer: true },",
+      "  ]}",
+      ">",
+      "  <slot name=\"question\">",
+      "  <div className=\"question\">",
+      "    ```js",
+      "    console.log('this source line is intentionally too long for mobile quiz screenshots')",
+      "    ```",
+      "  </div>",
+      "  </slot>",
+      "  <slot name=\"explanation\">Done.</slot>",
+      "</Challenge>",
+    ].join("\n");
+    const issues = analyzeTranslationIntegrity({
+      sourceContents: sourceQuiz,
+      targetContents: sourceQuiz,
+      targetPath: "/repo/src/content/posts/test/es/index.mdx",
+      locale: "es",
+    });
+    expect(issues.some((issue) => issue.code === "quiz-code-line-length")).toBe(false);
   });
 
   test("flags LLM instruction leakage", () => {
