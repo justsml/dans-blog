@@ -102,6 +102,11 @@ Testen Sie Ihr RegEx‑Wissen mit Fragen zu Grundmustern, Quantifizierern, Grupp
   group="Grundlegende Übereinstimmung"
   title="Gierig vs Nicht-gierig"
   options={[
+    {text: '["<div>Hello</div>"]'},
+    {text: '["<div>", "</div>"]'},
+    {text: '["<div>Hello</div><div>World</div>"]'},
+    {text: '["<div>Hello</div>", "<div>World</div>"]', isAnswer: true},
+    {text: '["Hello", "World"]'}
   ]}
 >
   <slot name="question">
@@ -487,6 +492,10 @@ Testen Sie Ihr RegEx‑Wissen mit Fragen zu Grundmustern, Quantifizierern, Grupp
   group="Grundlegende Übereinstimmung"
   title="Lazy‑ vs Greedy‑Quantifier"
   options={[
+    {text: '["<b>bold</b>"]'},
+    {text: '["bold"]', isAnswer: true},
+    {text: '["<b>", "</b>"]'},
+    {text: '[]'}
   ]}
 >
   <slot name="question">

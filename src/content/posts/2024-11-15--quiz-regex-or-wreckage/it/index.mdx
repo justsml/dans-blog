@@ -102,6 +102,11 @@ Metti alla prova la tua conoscenza delle RegEx con domande che coprono pattern d
   group="Corrispondenza di base"
   title="Greedy vs Non-Greedy"
   options={[
+    {text: '["<div>Hello</div>"]'},
+    {text: '["<div>", "</div>"]'},
+    {text: '["<div>Hello</div><div>World</div>"]'},
+    {text: '["<div>Hello</div>", "<div>World</div>"]', isAnswer: true},
+    {text: '["Hello", "World"]'}
   ]}
 >
   <slot name="question">
@@ -487,6 +492,10 @@ Metti alla prova la tua conoscenza delle RegEx con domande che coprono pattern d
   group="Corrispondenza di base"
   title="Quantificatori lazy vs greedy"
   options={[
+    {text: '["<b>bold</b>"]'},
+    {text: '["bold"]', isAnswer: true},
+    {text: '["<b>", "</b>"]'},
+    {text: '[]'}
   ]}
 >
   <slot name="question">

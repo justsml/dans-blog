@@ -280,6 +280,22 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="スマートポインタ"
   title="Boxスマートポインタ"
   options={[
+    {
+      text: '5',
+      hint: "The code won't even compile to produce a value"
+    },
+    {
+      text: 'null',
+      hint: "Rust doesn't have null values"
+    },
+    {
+      text: 'Compilation Error',
+      hint: "The compiler can't determine a finite size for this recursive type.",
+      isAnswer: true
+    },
+    {
+      text: 'Stack overflow'
+    }
   ]}
 >
   <slot name="question">
@@ -344,6 +360,22 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="参照カウント"
   title="Rcスマートポインタ"
   options={[
+    {
+      text: 'Reference count: 1',
+      hint: "Count the initial creation plus each clone"
+    },
+    {
+      text: 'Reference count: 2',
+      hint: "Don't forget the original reference"
+    },
+    {
+      text: 'Reference count: 3',
+      isAnswer: true
+    },
+    {
+      text: 'Compilation Error',
+      hint: "Rc<T> is designed for exactly this use case"
+    }
   ]}
 >
   <slot name="question">
@@ -957,6 +989,26 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="スマートポインタ"
   title="弱参照"
   options={[
+    {
+      text: 'Prints: Some("Wisdom")',
+      hint: "What happens to the data when all strong references are dropped?"
+    },
+    {
+      text: 'Prints: None',
+      isAnswer: true
+    },
+    {
+      text: 'Compilation Error',
+      hint: "The code is syntactically correct"
+    },
+    {
+      text: 'Runtime Panic',
+      hint: "Weak references gracefully handle dropped values"
+    },
+    {
+      text: 'Existential Panic',
+      hint: "While philosophical, not a real Rust error!"
+    }
   ]}
 >
   <slot name="question">

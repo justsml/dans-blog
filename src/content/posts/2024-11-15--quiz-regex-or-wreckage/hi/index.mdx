@@ -102,6 +102,11 @@ RegEx ज्ञान को परखें उन प्रश्नों स
   group="बेसिक मैचिंग"
   title="ग्रीडी बनाम नॉन-ग्रीडी"
   options={[
+    {text: '["<div>Hello</div>"]'},
+    {text: '["<div>", "</div>"]'},
+    {text: '["<div>Hello</div><div>World</div>"]'},
+    {text: '["<div>Hello</div>", "<div>World</div>"]', isAnswer: true},
+    {text: '["Hello", "World"]'}
   ]}
 >
   <slot name="question">
@@ -487,6 +492,10 @@ RegEx ज्ञान को परखें उन प्रश्नों स
   group="बेसिक मिलान"
   title="आलसी बनाम लालची क्वांटिफ़ायर"
   options={[
+    {text: '["<b>bold</b>"]'},
+    {text: '["bold"]', isAnswer: true},
+    {text: '["<b>", "</b>"]'},
+    {text: '[]'}
   ]}
 >
   <slot name="question">

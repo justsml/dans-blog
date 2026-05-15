@@ -102,6 +102,11 @@ Testez vos connaissances en RegEx avec des questions portant sur les motifs de b
   group="Correspondance de base"
   title="Gourmand vs non-gourmand"
   options={[
+    {text: '["<div>Hello</div>"]'},
+    {text: '["<div>", "</div>"]'},
+    {text: '["<div>Hello</div><div>World</div>"]'},
+    {text: '["<div>Hello</div>", "<div>World</div>"]', isAnswer: true},
+    {text: '["Hello", "World"]'}
   ]}
 >
   <slot name="question">
@@ -487,6 +492,10 @@ Testez vos connaissances en RegEx avec des questions portant sur les motifs de b
   group="Correspondance de base"
   title="Quantificateurs paresseux vs gourmands"
   options={[
+    {text: '["<b>bold</b>"]'},
+    {text: '["bold"]', isAnswer: true},
+    {text: '["<b>", "</b>"]'},
+    {text: '[]'}
   ]}
 >
   <slot name="question">

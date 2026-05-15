@@ -200,6 +200,10 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="セレクタ: 基礎"
   title="無効な CSS セレクタ"
   options={[
+    { text: 'a {}' },
+    { text: 'b.b {}' },
+    { text: 'c > > d {}', isAnswer: true },
+    { text: '#d {}' },
   ]}
 >
   <slot name="question">
