@@ -1,0 +1,267 @@
+# Translation Candidate
+- Slug: mastra-workflows-memory
+- Locale: he
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-01-05--mastra-workflows-memory/he/index.mdx
+- Validation: deferred
+- Runtime seconds: 5.37
+- Input tokens: 6128
+- Output tokens: 3074
+- Thinking tokens: unknown
+- Cached input tokens: 1792
+- Cache write tokens: 0
+- Estimated cost: $0.000792
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: 'הפסקו לבנות סוכנים בלתי יציבים: השתמשו בתהליכים ובזיכרון'
+subTitle: תבניות דטרמיניסטיות למודלים לא‑דטרמיניסטיים.
+modified: '2026-01-08'
+tags:
+  - ai
+  - workflows
+  - memory
+  - mastra
+  - agent-networks
+  - orchestration
+category: AI
+subCategory: Architecture
+social_image: ../desktop-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+LLMs יש להם תכונה מוזרה: הם מצטיינים בהבנת דקויות אך גרועים במעקב אחרי מתכונים. תן ל‑GPT‑4 בעיה מעורפלת והוא ינתח אפשרויות. תן לו סדרת שלבים מדויקת, והוא עשוי לדלג על שלב 3 כי שלב 5 "הרגיש רלוונטי יותר".
+
+זה לא באג במודל. זו תכונה יסודית של מערכות הסתברותיות שמנסות לפתור בעיות דטרמיניסטיות.
+
+צפיתי בצוותים שמאבדים עם חוסר ההתאמה הזה. הם בונים סוכן שמטפל בהחזרים ללקוחות, נותנים לו עשר כלים, ומצפים ממנו לבצע תהליך עסקי באופן אמין. לפעמים זה עובד מושלם. לפעמים הוא מדמיין אישורים שמעולם לא קרו. לפעמים הוא נתקע ושואל את אותה המידע שלוש פעמים.
+
+הפתרון אינו פרומפטים משופרים. זה לדעת מתי להפסיק לבקש מה‑LLM "לחשוב" ולהתחיל לומר לו "להציית".
+
+## כאשר דטרמיניסטי מנצח יצירתי
+
+חשוב על מה שקורה כשצריך לעבד כרטיס תמיכה. הלוגיקה העסקית במציאות נראית כך:
+
+1. שלוף את פרטי הכרטיס מהמאגר
+2. בדוק אם המשתמש זכאי להחזר (כללי מדיניות)
+3. אמת שהעסקה קיימת ושלא הוחזר כבר
+4. חשב את סכום ההחזר
+5. הפוך את תשלום ההחזר
+6. עדכן את סטטוס הכרטיס
+7. שלח אימייל אישור
+
+אפשר להעביר זאת ל‑LLM כתרגיל קריאת כלים. מניסיוני, זה מזמין בעיות. המודל עשוי להחליט שהשלבים 2 ו‑3 "בסך הכל אותו דבר" ולדלג על אחד מהם. או שהוא עשוי לבצע את ההחזר לפני בדיקת הזכאות כי המשתמש נראה כועס.
+
+תהליכי עבודה קיימים בדיוק למצב זה. הם לא מרגשים, וזה בדיוק הכוונה.
+
+### בניית מתכנן פעילות מזג אוויר
+
+הנה דוגמה מעשית שממחישה את הדפוס. אנחנו צריכים נתוני מזג אוויר עובדתיים קשיחים יחד עם הצעות פעילות יצירתיות. שליפת מזג האוויר לעולם לא צריכה להיות יצירתית, אך ההצעות כן.
+
+```typescript
+// src/mastra/workflows/activity-planner.ts
+import { createWorkflow, createStep } from '@mastra/core/workflows';
+import { Agent } from '@mastra/core/agent';
+import { openai } from '@ai-sdk/openai';
+import { z } from 'zod';
+
+// Step 1: Fetch weather data (Deterministic)
+const fetchWeather = createStep({
+  id: 'fetch-weather',
+  description: 'Fetches weather forecast for a given city',
+  inputSchema: z.object({
+    city: z.string(),
+  }),
+  outputSchema: z.object({
+    location: z.string(),
+    temperature: z.number(),
+    conditions: z.string(),
+    precipitationChance: z.number(),
+  }),
+  execute: async ({ inputData }) => {
+    // ... (fetch logic) ...
+    const weather = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&current=temperature_2m,weather_code&daily=precipitation_probability_mean`).then(r => r.json());
+    
+    return {
+      location: inputData.city,
+      temperature: weather.current.temperature_2m,
+      conditions: getWeatherCondition(weather.current.weather_code),
+      precipitationChance: weather.daily.precipitation_probability_mean[0],
+    };
+  },
+});
+
+// Step 2: Agent suggests activities (Creative)
+const activityPlanner = new Agent({
+  id: 'activity-planner-agent',
+  name: 'Activity Planner',
+  instructions: `You are a local activities expert. Based on weather conditions, suggest 3-5 appropriate activities.
+    - For rain (>50% precipitation), prioritize indoor activities
+    - For extreme temperatures, consider climate-appropriate options
+    - Always include one adventurous and one relaxing option`,
+  model: openai('gpt-5'),
+});
+
+const planActivities = createStep({
+  id: 'plan-activities',
+  description: 'Uses AI to suggest activities based on weather',
+  inputSchema: z.object({
+    location: z.string(),
+    temperature: z.number(),
+    conditions: z.string(),
+    precipitationChance: z.number(),
+  }),
+  outputSchema: z.object({
+    activities: z.string(),
+  }),
+  execute: async ({ inputData }) => {
+    const prompt = `Weather in ${inputData.location}: ${inputData.temperature}°C...`;
+    const response = await activityPlanner.generate(prompt);
+    return { activities: response.text };
+  },
+});
+
+// The Pipeline
+export const activityPlannerWorkflow = createWorkflow({
+  id: 'activity-planner',
+  inputSchema: z.object({ city: z.string() }),
+  outputSchema: z.object({ activities: z.string() }),
+})
+  .then(fetchWeather)
+  .then(planActivities);
+
+activityPlannerWorkflow.commit();
+```
+
+ה‑LLM לעולם לא נוגע ב‑API של מזג האוויר. הוא מקבל נתונים מדויקים כקלט, ואז עושה מה שהוא באמת טוב בו: מציע הצעות קונטקסטואליות. אם תסובב את זה ותאפשר לסוכן לשאוב את נתוני מזג האוויר, בסופו של דבר הוא יחזיר תחזית שמשית כשבאמת יורד גשם.
+
+**מתי לשקול תהליכי עבודה:**
+- יש לך סדרת שלבים ידועה שחייבת להתבצע בסדר קבוע
+- אתה צריך נראות בכל שלב (לוגים, מדדים, תזמון)
+- אתה צריך לוגיקת נסיון חוזר עבור API חיצוניים בלתי יציבים
+- כללי העסק אינם "ניתנים לפרשנות" – הם חייבים להתבצע בדיוק
+
+## בעיית חלון ההקשר שמדברים עליה אף אחד
+
+יש תבנית שאני רואה לעיתים קרובות. מישהו בונה צ'אטבוט. הוא עובד מצוין בזמן בדיקות. ואז בייצור, המשתמשים מנהלים שיחות ארוכות והבוט פתאום מתבלבל.
+
+המפתח בודק את הלוגים ומבין שהם שולחים את כל היסטוריית השיחה עם כל בקשה. כל 47 ההודעות. הם שורפים טוקנים ומרחב הקשר עבור מידע שרובו אינו רלוונטי.
+
+החמרה, יש תופעה שחוקרים מכנים "אבודים באמצע" שבה המודלים מתפקדים פחות טוב כאשר מידע רלוונטי קבור בתוך הקשר ארוך. המודל פשוט לא רואה את היער בגלל העצים.
+
+שליחת כל היסטוריית השיחה מרגישה בטוחה. אתה נותן למודל "את כל המידע". אבל למעשה אתה מקשה על המודל להתמקד במה שחשוב.
+
+### זיכרון עבודה מול אחסון ארוך‑טווח
+
+מערכת הזיכרון של Mastra מספקת את שניהם. זיכרון עבודה שומר הודעות אחרונות בחלון ההקשר. שליפה סמנטית מחפשת הודעות היסטוריות כאשר השאילתה הנוכחית נראית קשורה.
+
+```typescript
+// src/mastra/agents/memory-agent.ts
+import { Agent } from '@mastra/core/agent';
+import { Memory } from '@mastra/memory';
+import { LibSQLStore } from '@mastra/libsql';
+
+export const memoryAgent = new Agent({
+  id: 'memory-agent',
+  name: 'Memory Agent',
+  instructions: 'You are a helpful assistant with perfect recall of our conversations.',
+  model: openai('gpt-5'),
+  memory: new Memory({
+    storage: new LibSQLStore({
+      id: 'memory-agent-store',
+      url: 'file:../mastra.db',
+    }),
+    options: {
+      lastMessages: 20,  // Keep last 20 messages in context
+      semanticRecall: {
+        enabled: true,  // Use embeddings to find old stuff
+        topK: 5,
+        threshold: 0.7,
+      },
+    },
+  }),
+});
+```
+
+כך זה מתרחש בפועל. משתמש שואל: “מה היה המסעדה האיטלקית שהמלצת עליה בחודש שעבר?”
+
+בלי שליפה סמנטית, הסוכן רואה רק את 20 ההודעות האחרונות. המלצת המסעדה הייתה הודעה 487 מתוך 506. היא נעלמת. הסוכן משיב “אין לי את המידע הזה.”
+
+עם שליפה סמנטית:
+1. השאילתה מוטבעת: `[0.234, -0.567, 0.891, ...]`
+2. ההטמעה מושווית מול הודעות היסטוריות
+3. הודעה 487 (“אני ממליץ על Trattoria Bella – הקארבונרה שלהם מדהימה”) מקבלת ציון דמיון 0.89
+4. הודעה זו מוזרקת להקשר הנוכחי
+5. הסוכן משיב: “המלצתי על Trattoria Bella. הקארבונרה שלהם הוא מה שתפס את תשומת ליבי.”
+
+הסוכן נראה כאילו יש לו זיכרון מושלם, תוך שימוש בחלק קטן בלבד מחלון ההקשר. זה לא רק תכנון חכם – זה צורך פונקציונלי ברגע שהשיחות חורגות כמה עשרות הודעות.
+
+---
+
+## תיאום דרך רשתות סוכנים
+
+לפעמים אתה צריך גם מבנה וגם גמישות. זרימות עבודה טהורות קשות מדי. סוכנים טהורים בלתי צפויים מדי.
+
+רשתות סוכנים נותנות לך מתאם שמחליט איזה סוכן או זרימת עבודה מיוחדת לקרוא בהתאם למשימה. אפשר לחשוב על זה כמפצל עומסים חכם ליכולות AI.
+
+```typescript
+export const coordinatorAgent = new Agent({
+  id: 'coordinator-agent',
+  name: 'Research Coordinator',
+  instructions: `You are a network of researchers and writers.
+    - Use researchAgent for gathering facts
+    - Use writingAgent for producing final content
+    - Use weatherTool for current weather data
+    - Use activityPlannerWorkflow for location-based planning
+    
+    Always produce comprehensive, well-structured responses.`,
+  model: openai('gpt-5'),
+  
+  // Available primitives
+  agents: { researchAgent, writingAgent },
+  workflows: { activityPlannerWorkflow },
+  tools: { weatherTool },
+  
+  // Network requires memory
+  memory: new Memory({
+    storage: new LibSQLStore({ id: 'network-store', url: 'file:../network.db' }),
+  }),
+});
+```
+
+כאשר אתה שואל את הרשת, המתאם מנתח את הבקשה ומנתב בהתאם:
+- “אני צריך עובדות על X” מפעיל את סוכן המחקר
+- “תכנן סופ"ש בסיאטל” מריץ את זרימת תכנון הפעילויות
+- “כתוב דו״ח על Y” מעורב את סוכן הכתיבה
+
+דפוס זה מתרחב טוב יותר מאשר לנסות לדחוס הכל לסוכן‑מגה יחיד. סוכנים מיוחדים מפתחים מומחיות ממוקדת. המתאם מטפל בניתוב. כל חלק עושה מה שהוא טוב בו.
+
+---
+
+## חיבור הכל יחד
+
+מערכות AI בתפעול אמיתי דורשות ארכיטקטורה, לא רק פרומפטים. אתה בונה מערכות מבוזרות שבהן חלק מהצמתים הם מודלים גדולים.
+
+זרימות עבודה נותנות לך הבטחות כשאתה צריך שהדברים יקרו בדיוק כפי שנדרש. זיכרון נותן הקשר בלי לשרוף את תקציב הטוקנים. רשתות סוכנים מאפשרות להרכיב מורכבות מחלקים פשוטים.
+
+זה לא מושך תשומת לב. אבל אחרי שראיתי מספיק “סוכנים אוטונומיים במלואם” נכשלים בייצור, למדתי להעריך אמינות משעממת יותר מאשר חוסר צפייה מרגש.
+
+החוויות שלך עשויות להשתנות, אבל מניסיוני, המערכות שמגיעות לשוק ונשארות פעילות הן אלו שמטפלות במודלים גדולים כמרכיבים בארכיטקטורה רחבה ולא כקופסאות קסם שמפתרות הכל.
+
+### משאבים
+
+- [תיעוד זרימות העבודה של Mastra](https://mastra.ai/docs/workflows/overview)
+- [תיעוד הזיכרון של Mastra](https://mastra.ai/docs/memory/overview)
+- [קוד הדגמה מלא](https://github.com/justsml/mastra-examples)
+
+## קראו את הסדרה
+
+1. [ניתוב LLM](../llm-routing-mastra-ai)
+2. [אבטחה וגבולות בטיחות](../mastra-security-guardrails)
+3. [MCP ואינטגרציות כלי](../mastra-mcp-tool-integrations)
+4. **זרימות עבודה וזיכרון** (פוסט זה)
+````
