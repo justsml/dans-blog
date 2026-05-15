@@ -1,6 +1,6 @@
 ---
 title: "Into the Breach"
-subTitle: "One bad click. Everything in play. Here's your last line of defense."
+subTitle: "Prevent AI powered attacks. Foil attackers with traps."
 date: 2026-05-13
 modified: 2026-05-16
 tags: [security, developer-experience, infostealers, credentials, devcontainers, supply-chain, ai-agents, canary-tokens, prompt-injection, github-actions, ci-cd]
@@ -13,9 +13,16 @@ cover_mobile: ./square.webp
 cover_icon: ./square.webp
 cover_alt: "A colorful toy-brick fortress labeled Endpoint Security in grass, with key tokens inside and blurred concrete fortifications behind it."
 related:
-  - docker-security-tips-for-self-hosting
   - mastra-security-guardrails
+  - patchy-with-a-chance-of-vulnerability
+  - docker-security-tips-for-self-hosting
 ---
+
+## Visual Table Of Contents
+
+![Blueprint for defending against supply chain attacks, with six steps: 1. Isolate (run inside DevContainers or cloud environments), 2. Limit Mounts (never mount Home, ~/.ssh, ~/.aws, etc.), 3. Scope Secrets (expose only necessary credentials), 4. Tripwire (seed canaries in .env files, ~/.aws/config, CI/CD, Password Managers), 5. Delay Risk (delay package updates 1+ day with pnpm's minPackageAge), and 6. Respond Fast (rotate keys, passwords, communicate, monitor).](./breach-infographic-blueprint.svg)
+
+## How to Get Hacked in 2026
 
 Somewhere in a README, a PDF, or a `SKILL.md` file, a message waits:
 

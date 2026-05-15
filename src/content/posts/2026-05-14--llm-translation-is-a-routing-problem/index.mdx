@@ -1,9 +1,9 @@
 ---
-title: "LLM Translation Is a Routing Problem"
-subTitle: "The cheap models won more often than they were supposed to."
+title: "Eval-Driven AI Development Is a Routing Problem"
+subTitle: "Translation only got good after the pipeline learned how to fail."
 date: 2026-05-14
-modified: 2026-05-14
-tags: [ai, llm, translation, localization, evals, model-routing, production, cost, openrouter]
+modified: 2026-05-15
+tags: [ai, llm, evals, ai-engineering, translation, localization, model-routing, production, cost, openrouter]
 category: AI
 subCategory: AI Infrastructure
 draft: true
@@ -13,27 +13,29 @@ publish: false
 popularity: 0.84
 ---
 
-I expected AI translation to be boring.
+I thought I was building a translation pipeline.
 
-Send English in. Get Spanish, Japanese, Arabic, Hebrew, Hindi, German, Italian, Russian, and Chinese out. Pay a translation API. Pretend the hard part is done. Move on to the next task.
+That was the cover story.
 
-That is not what happened.
+The real project was an eval-driven AI development loop hiding inside a localization project. Send English in. Get Spanish, Japanese, Arabic, Hebrew, Hindi, German, Italian, Russian, and Chinese out. Compare candidates. Reject fluent wrongness. Patch exact failures. Run validation again. Promote the version that survived both the judge and the boring checks.
 
-Once the source material included MDX, code blocks, old jokes, screenshots, frontmatter, internal links, and interactive quizzes, "translation" stopped being one task. It became a routing problem. Different models were good at different pieces. Some were fast and cheap but sloppy with structure. Some were slower but excellent for RTL languages. Some produced beautiful prose while quietly changing quiz answers, which is a polite way to commit educational vandalism.
+Once the source material included MDX, code blocks, old jokes, screenshots, frontmatter, internal links, and interactive quizzes, "translate this blog" stopped being a prompt. It became a system. Different models were good at different pieces. Some were fast and cheap but sloppy with structure. Some were slower but excellent for RTL languages. Some produced beautiful prose while quietly changing quiz answers, which is a polite way to commit educational vandalism.
 
 The useful lesson was not "use the smartest model."
 
 The useful lesson was: build the system so you can try several models, measure them against your content, promote the winner, and let deterministic checks veto anything the judge model found too charming.
 
 <p class="inset">
-The model leaderboard did not tell us which model should translate this blog. The translation pipeline did.
+The eval is not a report card you staple on at the end. It is the steering wheel.
 </p>
+
+Last verified: May 14, 2026. Cost and runtime numbers below come from this blog's local i18n report artifacts, not a universal model benchmark.
 
 ---
 
-## The Dataset
+## The Corpus Became The Test Suite
 
-The translation reports are now large enough to be more useful than anecdotes:
+The translation reports are now large enough to be more useful than anecdotes. More importantly, they are specific enough to be useful for development:
 
 - 95 posts with i18n report directories
 - 638 locale-level `judge.json` results
@@ -50,14 +52,62 @@ Good.
 
 That mess is the point. Public benchmarks measure tasks that fit neatly into someone else's spreadsheet. This dataset measures whether a model can translate *this* blog without breaking Astro, MDX, quizzes, code examples, links, tone, and my regrettable fondness for small knives in the prose.
 
+That is eval-driven development in the only form I trust: the test set is not aspirational. It is the product trying to break.
+
+## The First Win Was Knowing What Failed
+
+The recent eval runs were humbling in the correct way.
+
+One run had 0 passed and 16 failed. That sounds disastrous until you look at why. Many candidates had high judge scores, but deterministic integrity checks failed them:
+
+- missing quiz challenges
+- changed code-like answer options
+- unclosed HTML tags
+- wrong asset paths
+- headings or blockquotes with changed counts
+- untranslated frontmatter titles
+
+That is exactly what evals are for.
+
+An LLM judge is good at "does this read well?" It is weaker at "did this preserve every structural invariant in a long MDX document?" Deterministic checks are cheap, rude, and correct. They do not care that the Spanish was elegant if the quiz now has ten questions instead of fourteen.
+
+This is the broader lesson from [LLM evals](/llm-evals-are-broken/): use the cheapest evaluation method that can honestly catch the failure. For translation, that means:
+
+- schema checks for structured quiz JSON
+- count checks for `Challenge`, option, answer, hint, and explanation structures
+- code fence and inline-code preservation checks
+- image and internal-link path checks
+- language/locale checks
+- LLM judge scores for tone, fluency, cultural adaptation, and technical nuance
+
+The judge should evaluate the parts that need judgment. The validator should enforce the parts that are not negotiable.
+
+## The Eval Changed The Architecture
+
+The easiest AI system to build is a one-shot prompt with a bigger model at the end of it.
+
+The evals made that design look lazy fast.
+
+If a candidate failed because it changed quiz options, the answer was not "ask the model to be more careful." The answer was to preserve code-like options outside the model and test that preservation explicitly. If candidates disagreed by locale family, the answer was not "pick a global winner." The answer was to route by content shape and language. If the judge kept suggesting unsafe link fixes, the answer was not "trust the judge harder." The answer was exact replacements, validation, and false-positive tracking.
+
+That is the loop:
+
+1. Generate candidates.
+2. Judge what needs judgment.
+3. Validate what must be exact.
+4. Patch only concrete failures.
+5. Promote only the result that survives the next run.
+
+Eval-driven AI development is not a vibe check. It is a pressure system that changes the code.
+
 <figure class="breakout">
 
 ![Bar chart comparing translation candidate models by average cost, median runtime, and candidate success rate.](./candidate-economics.svg)
 
-<figcaption>GPT OSS 120B Nitro was the cheap speed demon. DeepSeek V4 Flash was slower but had the highest candidate-generation success rate among the current cheap pool. Qwen3 32B Nitro was a useful second opinion, not the main winner.</figcaption>
+<figcaption>The eval loop made the model economics visible. GPT OSS 120B Nitro was the cheap speed demon. DeepSeek V4 Flash was slower but had the highest candidate-generation success rate among the current cheap pool. Qwen3 32B Nitro was a useful second opinion, not the main winner.</figcaption>
 </figure>
 
-## The Cheapest Successful Candidates
+## Cheap Candidates Made The Eval Useful
 
 For candidate generation, the most interesting current cheap models were DeepSeek V4 Flash, GPT OSS 120B Nitro, and Qwen3 32B Nitro.
 
@@ -75,7 +125,7 @@ The second surprise: DeepSeek V4 Flash cost more per attempt and took longer, bu
 
 The third surprise: Qwen3 32B Nitro did not win as often as the other two, but it still mattered. Cheap second opinions are valuable when the judge needs contrast. A translation workflow with one model gives the judge nothing to compare. A translation workflow with two or three cheap candidates turns model selection into an actual decision.
 
-This is the important product-design shift: do not ask "which model translates best?" Ask "which portfolio of models gives me enough diversity that the judge can pick a good result without summoning the expensive cavalry?"
+This is the important product-design shift: do not ask "which model translates best?" Ask "which portfolio of models gives the eval loop enough diversity to find a good result without summoning the expensive cavalry?"
 
 ## The Expensive Tier Was Not The Default Escape Hatch
 
@@ -97,7 +147,7 @@ The clearest split was articles vs. quizzes.
 
 ![Grouped bar chart showing article and quiz wins by selected translation model.](./judge-winners.svg)
 
-<figcaption>The best model depended on the content shape. Qwen3.6 Plus and DeepSeek V4 Flash carried article wins. GPT OSS 120B Nitro led quiz wins.</figcaption>
+<figcaption>The eval winners depended on the content shape. Qwen3.6 Plus and DeepSeek V4 Flash carried article wins. GPT OSS 120B Nitro led quiz wins.</figcaption>
 </figure>
 
 From `judge.json` selections:
@@ -180,6 +230,8 @@ That is the tax.
 
 When the task is translation, more thinking can become over-editing. The model starts second-guessing phrasing, normalizing code-like text, or "improving" structure. For cheap models especially, more thought can mean more opportunity to drift.
 
+Without evals, that looks like model personality. With evals, it becomes a measurable tax.
+
 Thinking is not free. Worse, it can be confidently counterproductive. Very on-brand for thinking, honestly.
 
 ## The Judge Was Useful Because It Was Not Alone
@@ -224,41 +276,13 @@ Then the system re-ran validation.
 
 This is the boring part that makes the fancy part useful.
 
-## Evals Kept The Judge Honest
-
-The recent eval runs were humbling in the correct way.
-
-One run had 0 passed and 16 failed. That sounds disastrous until you look at why. Many candidates had high judge scores, but deterministic integrity checks failed them:
-
-- missing quiz challenges
-- changed code-like answer options
-- unclosed HTML tags
-- wrong asset paths
-- headings or blockquotes with changed counts
-- untranslated frontmatter titles
-
-That is exactly what evals are for.
-
-An LLM judge is good at "does this read well?" It is weaker at "did this preserve every structural invariant in a long MDX document?" Deterministic checks are cheap, rude, and correct. They do not care that the Spanish was elegant if the quiz now has ten questions instead of fourteen.
-
-This is the broader lesson from [LLM evals](/llm-evals-are-broken/): use the cheapest evaluation method that can honestly catch the failure. For translation, that means:
-
-- schema checks for structured quiz JSON
-- count checks for `Challenge`, option, answer, hint, and explanation structures
-- code fence and inline-code preservation checks
-- image and internal-link path checks
-- language/locale checks
-- LLM judge scores for tone, fluency, cultural adaptation, and technical nuance
-
-The judge should evaluate the parts that need judgment. The validator should enforce the parts that are not negotiable.
-
 ## What Worked
 
-The best strategy was a flexible pipeline, not a heroic model.
+The best strategy was an eval loop, not a heroic model.
 
 **Generate multiple cheap candidates.** GPT OSS 120B Nitro, DeepSeek V4 Flash, and Qwen3 32B Nitro were cheap enough to run as a pool. The judge needed contrast. The system needed cheap failure.
 
-**Use the model for the part it is good at.** DeepSeek V4 Flash became a strong choice for several locale families, especially Arabic, Hebrew, and Chinese coverage. GPT OSS 120B Nitro became a quiz workhorse. Qwen3 32B Nitro was a useful alternate candidate when the first two disagreed or had structural weirdness.
+**Route by observed failure, not model reputation.** DeepSeek V4 Flash became a strong choice for several locale families, especially Arabic, Hebrew, and Chinese coverage. GPT OSS 120B Nitro became a quiz workhorse. Qwen3 32B Nitro was a useful alternate candidate when the first two disagreed or had structural weirdness.
 
 **Preserve structure outside the model whenever possible.** The structured quiz translator was better than asking a model to rewrite a full MDX file. A model should translate reader-facing prose. It should not be responsible for remembering how many `Challenge` components exist.
 
@@ -266,11 +290,15 @@ The best strategy was a flexible pipeline, not a heroic model.
 
 **Let exact suggestions patch, then rescore.** A judge suggestion is useful when it can become a small deterministic replacement, not when it asks a human to "make this more natural" 400 times.
 
+**Treat failed evals as product feedback.** The failures were not only defects in generated content. They were design notes for the pipeline: parse quizzes, narrow payloads, preserve code, track model pairs, and stop trusting language fluency as a proxy for correctness.
+
 **Defer expensive models.** The expensive tier should be available for escalation, but not treated as the default. If cheap candidates plus a competent judge produce a validated result, the expensive call is just a very nicely formatted invoice.
 
 ## What Did Not Work
 
 **Single-model translation.** It is tempting because it is simple. It also gives you no comparison surface. If the output is bad in a subtle way, you have no second candidate exposing the weakness.
+
+**Treating evals as a dashboard instead of a development loop.** A score is useful only if it changes routing, prompts, parsers, validators, or escalation rules. Otherwise it is just telemetry with better posture.
 
 **Whole-document quiz translation.** It produced fluent disasters: missing challenges, mangled slots, changed code-like options, and malformed MDX.
 
@@ -282,7 +310,7 @@ The best strategy was a flexible pipeline, not a heroic model.
 
 ## What I Would Try Next
 
-The next version of this system should route more aggressively.
+The next version of this system should let eval results route more aggressively.
 
 For normal prose:
 
@@ -312,15 +340,16 @@ For reporting:
 - track reasoning tokens consistently when providers expose them
 - add charts for cost per accepted translation, not only cost per candidate attempt
 - compare model pairs, because the best unit may be "GPT OSS plus DeepSeek" rather than either model alone
+- track which eval failures changed the implementation, because that is where the useful learning lives
 
 That last one matters. AI applications are not going to be one model forever. They are going to be small routing systems with evals, fallbacks, typed payloads, cheap candidates, expensive escalation, and a lot of unglamorous validation.
 
 Translation made that obvious because the failures were so visible. A broken quiz does not merely sound awkward. It breaks the page, changes the answer, or teaches the wrong thing with confidence.
 
-That is the model-selection lesson hiding inside this project:
+That is the eval-driven development lesson hiding inside this project:
 
 Do not buy intelligence by the pound. Route the work, measure the output, and keep the parts of the system that must be exact out of the model's hands.
 
-The future is not one giant model thinking very deeply about your problem.
+The future is not one giant model thinking very deeply about your problem while a dashboard politely records the damage.
 
 The future is five cheaper models, three validators, a judge with a clipboard, and a build step that refuses to be impressed.
