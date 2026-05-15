@@ -1,0 +1,495 @@
+# Translation Candidate
+- Slug: postgres-text-search-guide
+- Locale: he
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-05-02--postgres-text-search-guide/he/index.mdx
+- Validation: deferred
+- Runtime seconds: 5.06
+- Input tokens: 11866
+- Output tokens: 7881
+- Thinking tokens: unknown
+- Cached input tokens: 3584
+- Cache write tokens: 0
+- Estimated cost: $0.001881
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: מדריך חיפוש טקסט ב‑Postgres 2026
+subTitle: 'כלי החיפוש שכבר קיימים במסד הנתונים שלך, ומתי כל אחד מהם מצדיק את קיומו.'
+modified: '2026-05-03'
+tags:
+  - postgres
+  - postgresql
+  - full-text-search
+  - trigrams
+  - pg_trgm
+  - databases
+  - search
+  - sql
+  - pg_search
+category: Code
+subCategory: Databases
+social_image: ../desktop-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+רוב הצוותים משתמשים בכלי חיפוש אחד של Postgres. צוותים שמכירים את שלושת האפשרויות משיגים חיפוש טוב יותר עם פחות מורכבות — ומתחמקים מהפנייה היקרה לשירות חיפוש ייעודי שהם עדיין לא זקוקים לו.
+
+המדריך הזה מכסה את כל האפשרויות הטבעיות של Postgres: מה כל אחת עושה, מתי היא מתאימה, ואיך לשלב אותן.
+
+---
+
+## שלוש הכלים
+
+**חיפוש טקסט מלא** (`tsvector` / אינדקס `GIN`) הוא לקסיקלי. הוא מחלק טקסט ללקסמות, מבצע סטימינג ומשווה שאילתות מול האינדקס. „Running“ ו‑„runs“ מתמזגים לאותה לקסמה. כך גם „dog“ ו‑„dogs“. פונקציית הדירוג (`ts_rank`) מתגמלת מסמכים שבהם מונחי השאילתה מופיעים בתדירות גבוהה או במקומות מרכזיים.
+
+**טריגרמים** (`pg_trgm`) מחלקים מחרוזות לחתיכות חופפות של 3 תווים ומודדים כמה חתיכות משותפות לשתי המחרוזות. „Dan“ → `" da"`, `"dan"`, `"an "`. „Micheal“ ו‑„Michael“ חולקים רוב ה‑trigrams שלהם, ולכן הדמיון גבוה. זה עושה את `pg_trgm` מצוין להתאמת שמות משועשעת, סובלנות לשגיאות כתיב והשלמת אוטומטית — התחום שבו FTS מתפקד פחות טוב.
+
+**אינדקסים של התאמה מדויקת** (B‑tree, hash) מטפלים במפתחות ראשיים, כתובות אימייל, מזהים, SKU, וכל דבר שבו התשובה בינארית: התאמה או לא התאמה. אלו לא מרגישים כמו „חיפוש“, אך הם שייכים לשיחה הזאת כי הדפוס הגרוע ביותר הוא להשתמש בחיפוש משועשעת או סמנטי עבור בעיות שיש להן תשובות נכונות.
+
+הבחירה איננה עניין של תחכום. היא עניין של התאמת הכלי לצורת השאילתה.
+
+<figure>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 720" role="img" aria-labelledby="stm-title stm-desc">
+  <title id="stm-title">Postgres search tool map</title>
+  <desc id="stm-desc">A comparison of pg_trgm, full-text search, pgvector, and hybrid search by input shape and query intent.</desc>
+  <defs>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#111827" flood-opacity="0.14"/>
+    </filter>
+    <linearGradient id="header" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#0f172a"/>
+      <stop offset="1" stop-color="#25324a"/>
+    </linearGradient>
+    <style>{`
+      .stm-bg { fill: #f7f3ea; }
+      .stm-card { fill: #fffdf8; stroke: #d9cdb6; stroke-width: 2; filter: url(#shadow); }
+      .stm-title-text { font: 800 34px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #111827; }
+      .stm-subtitle { font: 500 18px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #4b5563; }
+      .stm-label { font: 800 14px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; letter-spacing: .08em; text-transform: uppercase; fill: #ffffff; }
+      .stm-tool { font: 800 27px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #111827; }
+      .stm-body { font: 500 18px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #374151; }
+      .stm-small { font: 600 15px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #4b5563; }
+      .stm-axis { font: 800 15px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #111827; letter-spacing: .06em; text-transform: uppercase; }
+      .stm-chip { font: 800 14px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #ffffff; }
+      .stm-line { stroke: #9ca3af; stroke-width: 2; stroke-dasharray: 8 8; }
+    `}</style>
+  </defs>
+
+  <rect class="stm-bg" width="1120" height="720" rx="0"/>
+  <text class="stm-title-text" x="64" y="70">Pick the search primitive by input shape</text>
+  <text class="stm-subtitle" x="64" y="103">The same Postgres table can support all four. The trick is matching the query to the text.</text>
+
+  <line class="stm-line" x1="560" y1="150" x2="560" y2="640"/>
+  <line class="stm-line" x1="76" y1="395" x2="1044" y2="395"/>
+
+  <text class="stm-axis" x="360" y="142">Exact words matter</text>
+  <text class="stm-axis" x="650" y="142">Meaning matters</text>
+  <text class="stm-axis" x="78" y="388" transform="rotate(-90 78 388)">Short / structured text</text>
+  <text class="stm-axis" x="78" y="628" transform="rotate(-90 78 628)">Long prose / chunks</text>
+
+  <rect class="stm-card" x="112" y="168" width="408" height="186" rx="20"/>
+  <rect x="136" y="192" width="100" height="28" rx="14" fill="#f59e0b"/>
+  <text class="stm-label" x="154" y="212">fuzzy</text>
+  <text class="stm-tool" x="136" y="256">pg_trgm</text>
+  <text class="stm-body" x="136" y="294">Names, addresses, titles, typos,</text>
+  <text class="stm-body" x="136" y="320">autocomplete, partial strings.</text>
+  <text class="stm-small" x="136" y="344">Orthographic similarity: spelling distance.</text>
+
+  <rect class="stm-card" x="600" y="168" width="408" height="186" rx="20"/>
+  <rect x="624" y="192" width="116" height="28" rx="14" fill="#22c55e"/>
+  <text class="stm-label" x="644" y="212">similar</text>
+  <text class="stm-tool" x="624" y="256">pgvector</text>
+  <text class="stm-body" x="624" y="294">Related items, duplicate tickets,</text>
+  <text class="stm-body" x="624" y="320">recommendations from short descriptions.</text>
+  <text class="stm-small" x="624" y="344">Embedding similarity: meaning distance.</text>
+
+  <rect class="stm-card" x="112" y="436" width="408" height="186" rx="20"/>
+  <rect x="136" y="460" width="102" height="28" rx="14" fill="#38bdf8"/>
+  <text class="stm-label" x="158" y="480">lexical</text>
+  <text class="stm-tool" x="136" y="524">Full-text search</text>
+  <text class="stm-body" x="136" y="562">Articles, docs, logs, support content</text>
+  <text class="stm-body" x="136" y="588">where query words should appear.</text>
+  <text class="stm-small" x="136" y="612">Lexemes, stemming, ranking, boolean filters.</text>
+
+  <rect class="stm-card" x="600" y="436" width="408" height="186" rx="20"/>
+  <rect x="624" y="460" width="102" height="28" rx="14" fill="#f472b6"/>
+  <text class="stm-label" x="645" y="480">hybrid</text>
+  <text class="stm-tool" x="624" y="524">FTS + pgvector</text>
+  <text class="stm-body" x="624" y="562">Technical docs and RAG where users ask</text>
+  <text class="stm-body" x="624" y="588">conceptual questions plus exact symbols.</text>
+  <text class="stm-small" x="624" y="612">Run both, fuse ranks with RRF.</text>
+
+  <rect x="396" y="658" width="328" height="36" rx="18" fill="url(#header)"/>
+  <text class="stm-chip" x="429" y="681">Start with query intent, then check text shape</text>
+</svg>
+<figcaption>ארבעת הפרימיטיבים של חיפוש ב‑Postgres ממופים לפי כוונת השאילתה (מדויק מול סמנטי) וצורת הטקסט (מבנה מול פרוזה). אותה טבלה יכולה להכיל את כל ארבעת האינדקסים — הבחירה היא לכל שאילתה, לא לכל טבלה.</figcaption>
+</figure>
+
+---
+
+## מתי חיפוש טקסט מלא מנצח
+
+**חיפוש בפרוזה לפי מילות מפתח.** פוסטים בבלוג, תיעוד, תיאורי מוצר, כרטיסי תמיכה, מסמכים משפטיים. FTS נבנה עבור צורת תוכן זו: אחזור מדורג של טקסט טבעי.
+
+**שאילתות משתמש מבוססות מילות מפתח.** משתמשים מקלידים מונח חיפוש, מסננים לפי תג, או גולשים לפי מילה. FTS מטפל בכוונה הזאת באופן טבעי ללא צורך בתשתית של embeddings.
+
+**תוצאות מדורגות ללא תלות חיצונית.** אינדקסי FTS מהירים, דטרמיניסטיים, ואין צורך בקריאות API. אותות הרלוונטיות נובעים משכיחות המונחים ומשקל המיקום בשדה.
+
+**סינון בוליאני לצד חיפוש.** FTS משתלב באופן טבעי עם הלוגיקה הקיימת של השאילתה:
+
+```sql
+SELECT * FROM posts
+WHERE search_vector @@ to_tsquery('english', 'postgres & performance')
+  AND category = 'tutorial'
+  AND published_at > NOW() - INTERVAL '6 months';
+```
+
+### הגדרת FTS
+
+```sql
+-- Generated column keeps the index current automatically
+ALTER TABLE posts ADD COLUMN search_vector tsvector
+  GENERATED ALWAYS AS (
+    setweight(to_tsvector('english', coalesce(title, '')), 'A') ||
+    setweight(to_tsvector('english', coalesce(body,  '')), 'B')
+  ) STORED;
+
+CREATE INDEX posts_search_idx ON posts USING GIN (search_vector);
+
+-- Query
+SELECT title, ts_rank(search_vector, query) AS rank
+FROM posts, to_tsquery('english', 'postgres & performance') query
+WHERE search_vector @@ query
+ORDER BY rank DESC
+LIMIT 10;
+```
+
+`setweight` מקצה חשיבות: `A` (כותרת) עולה על `B` (גוף). זהו מודל הרלוונטיות המלא עבור רוב מקרי השימוש בחיפוש תוכן.
+
+### מה FTS לא מתמודד איתו היטב
+
+- שגיאות כתיב בשאילתות — „javascipt” לא יתאים ל‑„javascript”
+- שמות אנשים, כתובות, שמות עצמאיים שלא מתמתחים בצורה צפויה
+- חיפוש קידומת/השלמה אוטומטית ללא קונפיגורציה מיוחדת
+- שאילתות שבהן המשתמש מתאר מושג במקום לקרוא אותו במפורש
+
+---
+
+## מתי טריגרמים מנצחים (`pg_trgm`)
+
+`pg_trgm` ממלא את הפער המביך שבו FTS מתבלבל באופן קבוע.
+
+FTS מחלק טקסט ללקסמות ומבצע סטימינג. עבור פרוזה זה נכון. עבור שמות ומזהים קצרים זה לרוב לא:
+
+- שמות אנשים („Dan Levy” → סטימינג שונה בהתאם למילון והגדרות השפה)
+- שמות חברות, כתובות, כותרות מוצרים שבהם האיות המדויק חשוב
+- שאילתות עם שגיאות כתיב — „Micheal Jordan”, „Amaon”, „javascipt”
+- השלמה אוטומטית / חיפוש קידומת
+- התאמת מחרוזות חלקיות („son” תתאים ל‑„Johnson”, „Anderson”)
+
+`pg_trgm` הוא גם בלתי תלוי בשפה, מה שמסייע לשמות מרקע לשוני מגוון. FTS דורש קונפיגורציית מילון לכל שפה.
+
+### חיפוש שם בערפול
+
+```sql
+CREATE EXTENSION IF NOT EXISTS pg_trgm;
+
+CREATE INDEX users_name_trgm_idx ON users USING GIN (name gin_trgm_ops);
+
+-- מוצא את „Micheal Jordan” כשמחפשים „Michael Jordan”
+SELECT id, name, similarity(name, $1) AS score
+FROM users
+WHERE name % $1          -- אופרטור % = סף דמיון (ברירת מחדל 0.3)
+ORDER BY score DESC
+LIMIT 10;
+```
+
+האופרטור `%` משתמש ב‑`pg_trgm.similarity_threshold` (ברירת מחדל 0.3, טווח 0–1). עבור חיפוש שמות, 0.3–0.4 תופס שגיאות כתיב תוך שמירה על רעש נמוך.
+
+### השלמה אוטומטית, קידומת וחיפוש כולל
+
+```sql
+-- התאמת קידומת עבור השלמה אוטומטית. אינדקס GIN של טריגרמים יכול לעזור,
+-- אך אינדקס B‑tree לדפוסי קידומת טהורים עשוי להיות יעיל יותר.
+SELECT name FROM users
+WHERE name ILIKE $1 || '%'
+ORDER BY name
+LIMIT 10;
+
+-- word_similarity להתאמות חלקיות בתוך מחרוזות ארוכות יותר
+-- („Johnson” בתוך „Andrew Johnson III”)
+SELECT id, name, word_similarity($1, name) AS score
+FROM users
+WHERE $1 <% name
+ORDER BY score DESC
+LIMIT 10;
+```
+
+אינדקס ה‑GIN של טריגרמים שימושי במיוחד לשאילתות `ILIKE '%pattern%'` של חיפוש כולל ולתאימות עם שגיאות כתיב — דפוסים שבדרך כלל גורמים לסריקות של כל הטבלה ללא אינדקס טריגרמים.
+
+### מתי לבחור ב‑pg_trgm על פני FTS
+
+| תרחיש | שימוש |
+|---|---|
+| חיפוש שם אדם/חברה עם שגיאות כתיב | `pg_trgm` |
+| השלמה אוטומטית / חיפוש קידומת | `pg_trgm` (או FTS עם שאילתות קידומת) |
+| מחרוזות קצרות, מזהים, קודים | `pg_trgm` |
+| מאמרים בפרוזה, תיעוד, טיקטים | FTS |
+| הודעות יומן למילות מפתח | FTS |
+| חיפוש שם רב‑לשוני | `pg_trgm` (בלתי תלוי בשפה) |
+
+---
+
+## מתי חיפוש מדויק ב‑SQL מנצח
+
+חלק מבעיות ה‑„חיפוש” אינן חיפוש כלל.
+
+„מצא את המשתמש עם המייל `dan@example.com`” הוא בדיקת שוויון. „מצא הזמנה `ORD-12345`” הוא חיפוש מפתח ראשי. „הצג פוסטים בקטגוריית `tutorial` ממוינים לפי תאריך” הוא שאילתת סינון. בעיות אלו מתאימות לאינדקסים של B‑tree או hash.
+
+שימוש ב‑FTS או ב‑טריגרמים כאן מוסיף מורכבות ללא שיפור בדיוק — ובמקרים של מזהים מדויקים, התאמה חלקית היא גרועה יותר מאי‑התאמה.
+
+```sqlCREATE INDEX users_email_idx ON users (email);
+
+-- Exact lookup: fast and unambiguous
+SELECT id, name FROM users WHERE email = $1;
+```
+
+הלקח הרחב יותר: חיפוש משוער עבור בעיות עם תשובות נכונות הוא שגיאת קטגוריה. הוא מחזיר *משהו* — שעשוי להיות בטוח שגוי.
+
+---
+
+## שילוב הכלים האלה
+
+הכלים הללו מתמזגים בצורה נקייה. אינך בוחר בדיוק אחד.
+
+**FTS + pg_trgm לתיבת חיפוש שמסבילה שגיאות כתיב במילות מפתח:**
+
+```sql
+-- Trigram similarity on title catches typos; ts_rank handles body relevance
+SELECT id, title,
+  ts_rank(search_vector, to_tsquery('simple', $1)) AS fts_rank,
+  similarity(title, $1) AS trgm_score
+FROM posts
+WHERE search_vector @@ to_tsquery('simple', $1)
+   OR title % $1
+ORDER BY (ts_rank(search_vector, to_tsquery('simple', $1)) + similarity(title, $1)) DESC
+LIMIT 10;
+```
+
+**FTS + `unaccent` לתוכן בינלאומי:**
+
+```sql
+-- Strip diacritical marks so "José" matches "Jose"
+CREATE EXTENSION IF NOT EXISTS unaccent;
+
+CREATE TEXT SEARCH CONFIGURATION public.simple_unaccent (COPY = pg_catalog.simple);
+
+ALTER TEXT SEARCH CONFIGURATION public.simple_unaccent
+  ALTER MAPPING FOR hword, hword_part, word
+  WITH unaccent, simple;
+
+ALTER TABLE posts ADD COLUMN search_vector tsvector;
+
+CREATE TRIGGER posts_search_vector_refresh
+BEFORE INSERT OR UPDATE OF title, body ON posts
+FOR EACH ROW EXECUTE FUNCTION
+  tsvector_update_trigger(search_vector, 'public.simple_unaccent', title, body);
+```
+
+**`unaccent` + `pg_trgm` לחיפוש שמות בינלאומי:**
+
+```sql
+ALTER TABLE users ADD COLUMN name_search text;
+
+CREATE FUNCTION users_name_search_refresh()
+RETURNS trigger LANGUAGE plpgsql AS $$
+BEGIN
+  NEW.name_search := unaccent(coalesce(NEW.name, ''));
+  RETURN NEW;
+END;
+$$;
+
+CREATE TRIGGER users_name_search_refresh
+BEFORE INSERT OR UPDATE OF name ON users
+FOR EACH ROW EXECUTE FUNCTION users_name_search_refresh();
+
+CREATE INDEX users_name_search_trgm_idx
+  ON users USING GIN (name_search gin_trgm_ops);
+
+SELECT id, name
+FROM users
+WHERE name_search % unaccent($1)
+ORDER BY similarity(name_search, unaccent($1)) DESC
+LIMIT 10;
+```
+
+דוגמאות ה‑trigger נמנעות משימוש ב‑`unaccent()` בתוך עמודות מחושבות או ביטויי אינדקס, שבהם כללי ה‑immutability של PostgreSQL חשובים. אם תעטוף את `unaccent()` בפונקציה בלתי‑משתנה משלך, תעדכן שהקוד מקבל סיכון של שדרוג/קונפיגורציה.
+
+---
+
+## הרחבות ראויות לציון
+
+**`pg_trgm`** מגיע עם רוב הפצות PostgreSQL אך דורש הפעלה מפורשת. הוא היסוד להתאמת מחרוזות מעורפלות ב‑Postgres.
+
+**`unaccent`** מסיר סימני ניקוד לפני אינדוקס ושאילתות. מתיישב היטב עם `pg_trgm` ו‑FTS לתוכן בשפות אירופיות. מגיע עם PostgreSQL.
+
+**`pg_bigm`** מרחיב את גישת ה‑trigram לביגרמות (חלקים של 2 תווים), מה שמשפר משמעותית תוצאות עבור שפות CJK (סינית, יפנית, קוריאנית) שבהן `pg_trgm` מתפקד פחות טוב. חייב להיות מותקן בנפרד; אינו מובנה.
+
+**`pg_search`** (מ‑[ParadeDB](https://www.paradedb.com/)) מחליף את ערמת `GIN` / `tsvector` הסטנדרטית עם אינדקס BM25 מבוסס Tantivy. זה נותן דירוג BM25 (לעיתים טוב יותר מ‑`ts_rank`), התאמה מעורפלת בתוך שאילתות FTS, חיפוש מפולח, והאינדוקס מהיר משמעותית בטבלאות גדולות. זה נתיב שדרוג “drop‑in” כאשר FTS רגיל מתחיל להציג מגבלות דירוג או ביצועים.
+
+```sql
+-- pg_search: BM25 full-text search with fuzzy matching
+CREATE INDEX posts_bm25_idx ON posts
+  USING bm25 (id, title, body)
+  WITH (key_field = 'id', text_fields = '{"title": {}, "body": {}}');
+
+-- Query with BM25 scoring + fuzzy matching (catches "javascipt")
+SELECT id, title, paradedb.score(id) AS rank
+FROM posts
+WHERE posts @@@ paradedb.fuzzy_phrase(field => 'title', value => 'postgres performnce')
+ORDER BY rank DESC
+LIMIT 10;
+```
+
+**`pgvector`** מוסיף אחסון וקטורים צפופים וחיפוש דמיון. זה הכלי הנכון כאשר משתמשים מתארים מה הם רוצים במקום לקרוא שם — חיפוש סמנטי, RAG, המלצות תוכן קשור, שאילתות מרובות שפות. מכוסה לעומק ב‑[חיפוש וקטורי סמנטי ואסטרטגיות היברידיות](/semantic-vector-search-landscape).
+
+---
+
+## טבלת החלטות
+
+| מה אתה מחפש | מומלץ |
+|---|---|
+| מאמרים, תיעוד, טיקטים | FTS |
+| שמות אנשים/חברות עם שגיאות כתיב | `pg_trgm` |
+| השלמה אוטומטית, חיפוש קידומת | `pg_trgm` |
+| קודים קצרים, מזהים | `pg_trgm` |
+| הודעות יומן למילות מפתח | FTS |
+| שמות בינלאומיים | `pg_trgm` + `unaccent` |
+| תוכן גדול, דירוג משופר | `pg_search` (ParadeDB BM25) |
+| מפתחות ראשיים, אימיילים מדויקים, IDs | אינדקס B‑tree |
+| תאריכים, טווחים, רשימות ממוקדות | אינדקס B‑tree |
+| הרשאות, קטגוריות, מסננים | תנאי WHERE רגיל |
+| שאלות, פרפרזות, מושגים | pgvector (ראו מאמר הבא) |
+
+כאשר ישספק: מחרוזות קצרות עם וריאציות איות → `pg_trgm`. פרוז ארוך לשאילתות מילות‑מפתח → FTS. מזהים מובנים → אינדקסים רגילים. שאילתות קונספטואליות או בשפה טבעית → pgvector.
+
+---
+
+## חיפוש היברידי: שני אותות, דירוג אחד
+
+כאשר שאילתה כמו `"withRetry timeout errors"` מגיעה לתיבת חיפוש, היא נושאת שני סוגים של כוונה: שמות סימבוליים מדויקים שהמשתמש יודע (`withRetry`) ותיאור קונספטואלי (`timeout errors`). שום primitive יחיד לא מכסה את שניהם. הרצת FTS וחיפוש וקטורי במקביל — ואז מיזוג רשימות הדירוג שלהם עם Reciprocal Rank Fusion — עושה זאת.
+
+RRF מחשב לכל תוצאה `1 / (60 + rank)` בכל רשימה ומסכם את הסכומים בין הרשימות. הקבוע 60 מדכא את היתרון של דירוגים גבוהים, כך שתוצאה שמקבלת מקום שני בשתי הרשימות יכולה לנצח תוצאה שמנצחת ברשימה אחת ומפסידה לחלוטין באחרת. באופן קריטי, RRF אף פעם לא ממוצע ציונים גולמיים בין השיטות — דירוג FTS והמרחק הקוסיני הם מטבעות שונים ולא ניתנים לחיבור אריתמטי.
+
+<figure>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 660" role="img" aria-labelledby="rrf-title rrf-desc">
+  <title id="rrf-title">חיפוש היברידי עם Reciprocal Rank Fusion</title>
+  <desc id="rrf-desc">שאילתה מתפצלת לחיפוש טקסט מלא ולחיפוש וקטורי, כל אחד מייצר דירוגים, ו‑Reciprocal Rank Fusion משלב אותם לרשימת תוצאות אחת.</desc>
+  <defs>
+    <marker id="rrf-arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M2,2 L10,6 L2,10 Z" fill="#334155"/>
+    </marker>
+    <filter id="rrf-shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="11" flood-color="#0f172a" flood-opacity="0.13"/>
+    </filter>
+    <style>{`
+      .rrf-bg { fill: #f8fafc; }
+      .rrf-title-text { font: 800 34px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #0f172a; }
+      .rrf-subtitle { font: 500 18px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #475569; }
+      .rrf-box { fill: #ffffff; stroke: #cbd5e1; stroke-width: 2; filter: url(#rrf-shadow); }
+      .rrf-query { fill: #fff7ed; stroke: #fdba74; }
+      .rrf-fts { fill: #eff6ff; stroke: #60a5fa; }
+      .rrf-vector { fill: #f0fdf4; stroke: #86efac; }
+      .rrf-merge { fill: #fdf2f8; stroke: #f9a8d4; }
+      .rrf-result { fill: #ecfeff; stroke: #67e8f9; }
+      .rrf-head { font: 800 24px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #111827; }
+      .rrf-body { font: 550 17px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #334155; }
+      .rrf-mono { font: 800 17px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fill: #0f172a; }
+      .rrf-rank { font: 800 16px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #475569; }
+      .rrf-arrow-line { stroke: #334155; stroke-width: 3; fill: none; marker-end: url(#rrf-arrow); }
+      .rrf-thin { stroke: #94a3b8; stroke-width: 2; fill: none; marker-end: url(#rrf-arrow); }
+    `}</style>
+  </defs>
+
+  <rect class="rrf-bg" width="1120" height="660"/>
+  <text class="rrf-title-text" x="64" y="68">חיפוש היברידי הוא שני אותות כנים, ואז דירוג משולב</text>
+  <text class="rrf-subtitle" x="64" y="102">אל תתמוצו ציונים גולמיים. דירוג FTS והמרחק הקוסיני הם מטבעות שונים.</text>
+
+  <rect class="rrf-box rrf-query" x="72" y="238" width="214" height="132" rx="20"/>
+  <text class="rrf-head" x="104" y="288">שאילתת משתמש</text>
+  <text class="rrf-mono" x="104" y="324">"withRetry</text>
+  <text class="rrf-mono" x="104" y="350">timeout errors"</text>
+
+  <path class="rrf-arrow-line" d="M286 270 C350 270 350 188 418 188"/>
+  <path class="rrf-arrow-line" d="M286 338 C350 338 350 440 418 440"/>
+
+  <rect class="rrf-box rrf-fts" x="418" y="142" width="266" height="144" rx="20"/>
+  <text class="rrf-head" x="450" y="188">FTS / BM25</text>
+  <text class="rrf-body" x="450" y="224">סמלים ומילים מדויקים</text>
+  <text class="rrf-rank" x="450" y="256">1. תיעוד API</text>
+  <text class="rrf-rank" x="578" y="256">2. מדריך Retry</text>
+
+  <rect class="rrf-box rrf-vector" x="418" y="394" width="266" height="144" rx="20"/>
+  <text class="rrf-head" x="450" y="440">pgvector</text>
+  <text class="rrf-body" x="450" y="476">שכנים קונספטואליים</text>
+  <text class="rrf-rank" x="450" y="508">1. תקלות רשת</text>
+  <text class="rrf-rank" x="594" y="508">2. מדריך Retry</text>
+
+  <path class="rrf-thin" d="M684 214 C734 214 734 294 778 294"/>
+  <path class="rrf-thin" d="M684 466 C734 466 734 366 778 366"/>
+
+  <rect class="rrf-box rrf-merge" x="778" y="260" width="258" height="166" rx="22"/>
+  <text class="rrf-head" x="810" y="306">מיזוג RRF</text>
+  <text class="rrf-body" x="810" y="342">נותן לכל תוצאה קרדיט על</text>
+  <text class="rrf-body" x="810" y="368">המקום שבו היא דורגה בכל רשימה.</text>
+  <text class="rrf-mono" x="810" y="402">1 / (60 + rank)</text>
+
+  <path class="rrf-arrow-line" d="M907 426 L907 492"/>
+
+  <rect class="rrf-box rrf-result" x="736" y="492" width="342" height="110" rx="20"/>
+  <text class="rrf-head" x="768" y="538">תוצאות סופיות</text>
+  <text class="rrf-body" x="768" y="574">התוצאה המובילה היא שבה מונחים המונחים המדויקים</text>
+  <text class="rrf-body" x="768" y="598">והמשמעות הסמנטית יחד.</text>
+</svg>
+<figcaption>שאילתה מתפצלת ל‑FTS ול‑pgvector במקביל. כל אחד מייצר רשימת דירוג משלו. RRF מחשב לכל מסמך את המיקום שלו בכל רשימה ומסכם את הציונים — התוצאה מציגה מסמכים שהשניים מסכימים עליהם.</figcaption>
+</figure>
+
+```sql
+-- Hybrid search: FTS + pgvector merged with RRF
+WITH fts AS (
+  SELECT id, ts_rank(search_vector, query) AS score,
+         ROW_NUMBER() OVER (ORDER BY ts_rank(search_vector, query) DESC) AS rank
+  FROM docs, to_tsquery('english', 'withRetry & timeout') query
+  WHERE search_vector @@ query
+  LIMIT 60
+),
+vec AS (
+  SELECT id,
+         ROW_NUMBER() OVER (ORDER BY embedding <=> $embedding) AS rank
+  FROM docs
+  ORDER BY embedding <=> $embedding
+  LIMIT 60
+)
+SELECT COALESCE(fts.id, vec.id) AS id,
+       (COALESCE(1.0 / (60 + fts.rank), 0) +
+        COALESCE(1.0 / (60 + vec.rank), 0)) AS rrf_score
+FROM fts FULL JOIN vec ON fts.id = vec.id
+ORDER BY rrf_score DESC
+LIMIT 10;
+```
+
+המאגר של 60 מסמכים לכל ענף (`LIMIT 60`) הוא נקודת התחלה נפוצה. הרחיבו אותו אם הריקול נמוך; צמצמו אותו לשיפור המהירות.
+
+---
+
+## מה הלאה
+
+חיפוש טקסט ב‑Postgres מכסה הרבה, אך יש לו תקרה. כאשר משתמשים מתארים מה שהם רוצים במקום לשם זאת — "משהו שיעזור לי לישון בטיסה", "מאמרים על ניפוי באג עם ביטחון כמה מהנדס חדש" — חיפוש לקסיקלי ו‑trigram נכשלים.
+
+זהו תחום של הטמעות וקטוריות, חיפוש סמנטי, וארכיטקטורות היברידיות. מכוסה ב‑[חיפוש וקטורי סמנטי ואסטרטגיות היברידיות](/semantic-vector-search-landscape).
+````

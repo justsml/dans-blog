@@ -1,0 +1,75 @@
+{
+  "runId": "openai-gpt-oss-120b-nitro@2026-05-15T21-07-16-693Z",
+  "slug": "postgres-text-search-guide",
+  "locale": "he",
+  "model": "openai/gpt-oss-120b:nitro",
+  "modelPath": "openai-gpt-oss-120b-nitro",
+  "createdAt": "2026-05-15T21:07:23.108Z",
+  "sourcePath": "src/content/posts/2026-05-02--postgres-text-search-guide/index.mdx",
+  "targetPath": "src/content/posts/2026-05-02--postgres-text-search-guide/he/index.mdx",
+  "candidatePath": "reports/i18n/postgres-text-search-guide/he/openai-gpt-oss-120b-nitro/2026-05-15T21-07-16-693Z/candidate.mdx",
+  "sourceHash": "ab9fd0f63373897efcc3058111baccf4e43beb05838148b5824a0c7698c922d0",
+  "outputHash": "f1d7370e9d88eb39025970771ae2cb7321e50d585f8c090c1d6f9ee3191c1c0e",
+  "reasoningEffort": "low",
+  "temperature": 0.3,
+  "maxTokens": 16000,
+  "timeoutMs": 200000,
+  "articleSummary": "The article argues that modern PostgreSQL teams should deliberately combine the three native search primitives—full‑text search (`tsvector` + GIN), trigram indexes (`pg_trgm`), and exact‑match indexes (B‑tree/hash)—instead of defaulting to a single tool or an external search service. It explains each technology’s core mechanics (lexical tokenization and stemming for FTS, three‑character slice similarity for trigrams, binary matching for exact indexes) and maps them to concrete use‑cases such as fuzzy name lookup, typo‑tolerant autocomplete, semantic similarity via embeddings, and precise key lookups. The guide is written as a practical tutorial for developers and DBAs who design search features in PostgreSQL, using a recurring “tool‑by‑input‑shape” metaphor and visual map to reinforce the idea of matching the query shape to the appropriate primitive.",
+  "totalInputTokens": 11866,
+  "totalOutputTokens": 7881,
+  "totalCacheReadTokens": 3584,
+  "totalCacheWriteTokens": 0,
+  "totalDurationMs": 5059,
+  "totalCostUsd": 0.001881354,
+  "pricingSource": "local-openrouter-estimate",
+  "telemetry": {
+    "model": "openai/gpt-oss-120b:nitro",
+    "chunkSize": "18p",
+    "totalChunks": 4,
+    "totalInputTokens": 11866,
+    "totalOutputTokens": 7881,
+    "totalCacheReadTokens": 3584,
+    "totalCacheWriteTokens": 0,
+    "totalDurationMs": 5059,
+    "totalCostUsd": 0.001881354,
+    "pricingSource": "local-openrouter-estimate",
+    "chunks": [
+      {
+        "index": 0,
+        "inputTokens": 3642,
+        "outputTokens": 2811,
+        "cacheReadTokens": 768,
+        "cacheWriteTokens": 0,
+        "durationMs": 1481,
+        "costUsd": 0.000648018
+      },
+      {
+        "index": 1,
+        "inputTokens": 2051,
+        "outputTokens": 1070,
+        "cacheReadTokens": 1024,
+        "cacheWriteTokens": 0,
+        "durationMs": 1032,
+        "costUsd": 0.000272589
+      },
+      {
+        "index": 2,
+        "inputTokens": 2525,
+        "outputTokens": 1469,
+        "cacheReadTokens": 768,
+        "cacheWriteTokens": 0,
+        "durationMs": 1133,
+        "costUsd": 0.000362895
+      },
+      {
+        "index": 3,
+        "inputTokens": 3648,
+        "outputTokens": 2531,
+        "cacheReadTokens": 1024,
+        "cacheWriteTokens": 0,
+        "durationMs": 1413,
+        "costUsd": 0.000597852
+      }
+    ]
+  }
+}
