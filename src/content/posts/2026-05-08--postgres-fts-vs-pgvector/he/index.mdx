@@ -332,8 +332,6 @@ results = mq.index("products").search(q="lightweight shoes for summer")
 
 **מימדים מרביים** הם הגירה של מחרת המוסתרת בבחירה של היום. `text-embedding-3-large` משתמש ב‑3072 ממדים, Jina v3 יכולה להפיק וקטורים גדולים יותר, ומודלים מחקריים ממשיכים לדחוף גבוה יותר. חלק משירותים מנוהלים מפרסמים תקרות קשות למימדים; אחרים מתעדים תקרות גבוהות או אין תקרת פרקטית למודלים טיפוסיים. בדוק את התיעוד העדכני לפני שמתחייבים. בחרו משהו עם מרווח ראש; מעבר לאינדקס וקטורים בגלל פגיעה בתקרת מימדים הוא ריצה בלתי‑סבירה.
 
-_Last verified against public project docs and product pages on May 8, 2026. Treat the matrix as a snapshot: managed‑service limits, pricing, hybrid‑search features, and disk‑index options change quickly._
-
 | מסד נתונים | פריסה | רישיון | חיפוש היברידי | וקטורים מדוללים | SQL / דמוי‑SQL | מולטימודלי | אינדקס דיסק | מימדים מרביים | נקודת מתיחה |
 |---|---|---|---|---|---|---|---|---|---|
 | **[pgvector](https://github.com/pgvector/pgvector)** | אירוח עצמי / מנוהל (Supabase, Neon, RDS) | קוד פתוח (PostgreSQL) | ידני (RRF דרך SQL) | ❌ | ✅ SQL מלא | ❌ | ✅ HNSW על דיסק | 16,000 אחסון; 2,000 `vector` ממודלים | כבר ב‑Postgres; ספירות וקטורים מתונות |

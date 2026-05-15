@@ -294,8 +294,6 @@ results = mq.index("products").search(q="lightweight shoes for summer")
 
 **Max dimensions** is a migration hiding in your architecture. `text-embedding-3-large` uses 3072 dims, Jina v3 can emit larger embeddings, and research models keep pushing higher. Some managed services publish hard dimension caps; others document high caps or no practical cap for typical embedding models. Check current docs before committing. Pick something with headroom; migrating a vector index because you hit a dimension ceiling is a painful sprint.
 
-_Last verified against public project docs and product pages on May 8, 2026. Treat the table below as a decision aid, not a substitute for checking current limits, pricing, and managed-service feature flags._
-
 ### The Landscape
 
 | Database | Deployment | License | Hybrid Search | Sparse Vectors | SQL / SQL-like | Multimodal | Disk Index | Max Dims | Sweet Spot |

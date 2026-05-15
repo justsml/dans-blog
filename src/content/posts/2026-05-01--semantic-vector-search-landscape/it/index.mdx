@@ -298,8 +298,6 @@ results = mq.index("products").search(q="lightweight shoes for summer")
 
 **Max dimensions** è una limitazione di migrazione nella tua architettura. `text-embedding-3-large` usa 3072 dimensioni, Jina v3 può emettere embedding più grandi, e i modelli di ricerca continuano a spingere verso valori più alti. Alcuni servizi gestiti pubblicano limiti rigidi di dimensione; altri documentano limiti alti o nessun limite pratico per i modelli di embedding tipici. Controlla la documentazione corrente prima di impegnarti. Scegli qualcosa con margine di crescita; migrare un indice vettoriale perché hai raggiunto un tetto di dimensioni è una sprint dolorosa.
 
-_Last verified against public project docs and product pages on May 8, 2026. Treat the table below as a decision aid, not a substitute for checking current limits, pricing, and managed-service feature flags._
-
 ### Il panorama
 
 | Database | Deployment | License | Hybrid Search | Sparse Vectors | SQL / SQL-like | Multimodal | Disk Index | Max Dims | Sweet Spot |

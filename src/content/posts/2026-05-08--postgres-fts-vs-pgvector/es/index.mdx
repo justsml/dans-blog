@@ -334,8 +334,6 @@ results = mq.index("products").search(q="lightweight shoes for summer")
 
 **Max dimensions** es la migración del mañana oculta en la elección de hoy. `text-embedding-3-large` usa 3072 dimensiones, Jina v3 puede emitir embeddings más grandes, y los modelos de investigación siguen empujando a más. Algunos servicios gestionados publican límites duros de dimensión; otros documentan límites altos o ninguna restricción práctica para los modelos de embedding típicos. Revisa la documentación actual antes de comprometerte. Elige algo con margen de crecimiento; migrar un índice vectorial porque alcanzaste un techo de dimensiones es un sprint miserable.
 
-_Last verifiedagainst public project docs and product pages on May 8, 2026. Treat the matrix as a snapshot: managed‑service limits, pricing, hybrid‑search features, and disk‑index options change quickly._
-
 | Base de datos | Despliegue | Licencia | Búsqueda híbrida | Vectores dispersos | SQL / SQL‑like | Multimodal | Índice en disco | Dimensiones máx. | Punto óptimo |
 |---|---|---|---|---|---|---|---|---|---|
 | **[pgvector](https://github.com/pgvector/pgvector)** | Auto‑hosteado / gestionado (Supabase, Neon, RDS) | OSS (PostgreSQL) | Manual (RRF vía SQL) | ❌ | ✅ Full SQL | ❌ | ✅ HNSW en disco | 16 000 almacenamiento; 2 000 `vector` indexados | Ya en Postgres; recuentos de vectores moderados |
