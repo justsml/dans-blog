@@ -1,0 +1,102 @@
+{
+  "selectedCommit": "708c7d7891594e8aa7c6bfe6a21db611d08eec48",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 95,
+    "technicalAccuracy": 98,
+    "coherence": 95,
+    "relevance": 100,
+    "translationQuality": 92,
+    "mdxPreservation": 90,
+    "culturalAdaptation": 90,
+    "languagePurity": 95
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "(../llm-routing-mastra-ai)",
+      "replacement": "(/llm-routing-mastra-ai)",
+      "reason": "The English source uses root-relative paths (/llm-routing-mastra-ai). The translation changed them to relative parent paths (../) which will break links if the site structure expects root-relative URLs as per the source."
+    },
+    {
+      "priority": "high",
+      "match": "(../mastra-security-guardrails)",
+      "replacement": "(/mastra-security-guardrails)",
+      "reason": "Restoring root-relative path to match English source."
+    },
+    {
+      "priority": "high",
+      "match": "(../mastra-mcp-tool-integrations)",
+      "replacement": "(/mastra-mcp-tool-integrations)",
+      "reason": "Restoring root-relative path to match English source."
+    }
+  ],
+  "rationale": "The candidate provides a superior translation of technical idioms like 'flaky' and 'lost in the middle' compared to the current version. It maintains Dan's direct, slightly informal tone well. The only significant issue is the modification of internal link paths in the 'Read the Series' section, which I have corrected to match the English source's root-relative structure.",
+  "slug": "mastra-workflows-memory",
+  "locale": "ar",
+  "candidateCommits": [
+    "708c7d7891594e8aa7c6bfe6a21db611d08eec48"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "/../llm-routing-mastra-ai",
+      "replacement": "../llm-routing-mastra-ai",
+      "reason": "The candidate added an extra leading slash to relative paths, which breaks navigation in the MDX structure.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "/../mastra-security-guardrails",
+      "replacement": "../mastra-security-guardrails",
+      "reason": "The candidate added an extra leading slash to relative paths, which breaks navigation in the MDX structure.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "/../mastra-mcp-tool-integrations",
+      "replacement": "../mastra-mcp-tool-integrations",
+      "reason": "The candidate added an extra leading slash to relative paths, which breaks navigation in the MDX structure.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "(../llm-routing-mastra-ai)",
+      "replacement": "(/llm-routing-mastra-ai)",
+      "reason": "The English source uses root-relative paths (/llm-routing-mastra-ai). The translation changed them to relative parent paths (../) which will break links if the site structure expects root-relative URLs as per the source.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "(../mastra-security-guardrails)",
+      "replacement": "(/mastra-security-guardrails)",
+      "reason": "Restoring root-relative path to match English source.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "(../mastra-mcp-tool-integrations)",
+      "replacement": "(/mastra-mcp-tool-integrations)",
+      "reason": "Restoring root-relative path to match English source.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug mastra-workflows-memory --locale ar --skip-global",
+    "output": ""
+  }
+}
