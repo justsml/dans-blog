@@ -1,0 +1,270 @@
+---
+title: העוזר AI שלי נתן לי גישה לשורת פקודה
+subTitle: איך לאבטח את ההתקנה המקומית או ב‑VPS של OpenClaw/Moltbot
+modified: '2026-01-28'
+tags:
+  - security
+  - moltbot
+  - clawdbot
+  - tailscale
+  - ai
+  - vpn
+  - devops
+  - ssh
+category: Security
+subCategory: AI Infrastructure
+cover_full_width: ../hero_wide.webp
+cover_mobile: ../icon_square_200.webp
+cover_icon: ../icon_square_200.webp
+---
+OpenClaw (לשעבר Clawdbot/Moltbot) מספק לך עוזר AI אישי שעובד ב‑WhatsApp, Slack, Discord, iMessage ובערוצים נוספים. אבל אם אתה מציב את שערו, שליטת הצמתים או SSH באינטרנט הציבורי ללא אימות חזק, אתה פותח בפני זרים נתיב לגישה לשורת הפקודה במכונה שלך.
+
+המדריך הזה מציג את ברירת המחדל הבטוחה ביותר: לשמור את שער OpenClaw על לופבק, לחשוף אותו רק לתורן שלך באמצעות Tailscale Serve, לחסום את SSH, ולוודא מבחוץ שהשער אינו ציבורי.
+
+הקבלה המהירה של הפרויקט חשפה חששות אבטחה אמיתיים: [סריקות Shodan מצאו 2,847 מופעים חשופים](https://socradar.io/blog/clawdbot-is-it-safe/) בשבועות הראשונים, ו[דוח ביקורת אבטחה ב‑GitHub דיווח על 512 ממצאים](https://github.com/moltbot/moltbot/issues/1796) בקוד. חלק מהדברים נוצרו על‑ידי סורקים אוטומטיים וחלק השתנו מאז שינוי השם בינואר 2026 ל‑OpenClaw, ולכן יש להתייחס למספר הזה כסימן אזהרה ולא כמספר מדויק של פגיעויות נוכחיות. אינך צריך להיות מומחה אבטחה — רק להימנע מפרסום משטחי פעולה לפני הפריסה.
+
+---
+
+## מה בעצם אתה חושף
+
+בהתאם לאופן ההתקנה והחשיפה, יש שלושה משטחים שכדאי לבדוק:
+
+- **פורט 22**: גישה SSH על VPS
+- **פורט 18789**: ממשק ניהול השער ו‑WebSocket API
+- **בקרת דפדפן/צומת**: הרצת קוד מרחוק ואוטומציה של דפדפן דרך מודל הצימוד שער/צומת
+
+ה‑[תיעוד הגישה מרחוק של OpenClaw הנוכחי](https://docs.molt.bot/gateway/remote) מציין שה‑WebSocket של השער נקשר ללופבק כברירת מחדל וממליץ לשמור אותו רק על לופבק אלא אם אתה בוחר במכוון LAN/תורן/קישור מותאם. זה טוב. הסיכון מתגלה כשאתה מתעלם מהגדרה זו, מפרסם פורטים של Docker, מוסיף פרוקסי הפוך, מפעיל Funnel, או משאיר SSH פתוח לעולם.
+
+השער הוא המשטח המרכזי. הוא משטח הפעולה של העוזר שלך, כולל נתיבי קריאת כלים. אם הוא נגיש מהאינטרנט והאימות חסר, חלש, נעקף או דולף, תוקף עשוי להיות מסוגל להניע את הסוכן או להפעיל כלים עם הרשאות המשתמש שלך.
+
+בקרת הדפדפן כמעט ברמת רגישות זהה. תיעוד OpenClaw הנוכחי ממליץ להריץ בקרת דפדפן דרך צומת משותף על מכשיר הדפדפן ולטפל בצימוד הצמתים כגישה של מפעיל. אם שער יכול לקרוא `system.run` על צומת משותף, זה הרצת קוד מרחוק על הצומת, בכפוף למדיניות הצומת של השער ולאישורי ההפעלה של הצומת עצמו.
+
+SSH הוא SSH. אם אתה מריץ עם אימות סיסמה מופעל, ניסיונות כוח גס בלתי נמנעים על VPS ציבורי.
+
+---
+
+## פתרון Tailscale
+
+ל‑OpenClaw, Tailscale מספק גישה מרחוק ללא פרסום שירותי פעולה:
+
+1. מופע OpenClaw שלך רץ על VPS או מכונה מקומית
+2. השער נשאר קשור ללופבק ונגיש דרך Tailscale Serve, או שהוא קשור ישירות ל‑IP של התורן עם אימות מפורש
+3. אתה מתקין Tailscale על השרת ועל המכשירים האישיים שלך
+4. אתה ניגש ל‑OpenClaw דרך ה‑IP של Tailscale או שם MagicDNS
+5. כל השאר באינטרנט רואים שום דבר, אלא אם אתה בוחר במכוון להפעיל Funnel או פרוקסי ציבורי אחר
+
+### האם צריך לתת ל‑OpenClaw לנהל את Tailscale?
+
+ל‑OpenClaw יש [אינטגרציה מובנית עם Tailscale](https://docs.molt.bot/gateway/tailscale) שיכולה להגדיר `tailscale serve` או `tailscale funnel` עבור השער.
+
+**מצב Serve** משאיר את הדברים רק בתורן שלך. השער נשאר קשור ל‑`127.0.0.1` בעוד Tailscale מטפל בנתב וב‑HTTPS. כאשר `gateway.auth.allowTailscale` מופעל, OpenClaw יכול לאמת תעבורת ממשק ניהול/​WebSocket באמצעות כותרות זהות של Tailscale ולאמת את המקור עם `tailscale whois`. זה המצב הנכון לרוב הפריסות האישיות.
+
+**Funnel mode** חושף את השער לציבור דרך תכונת הקצה הציבורי של Tailscale. התיעוד של Tailscale מתאר את Funnel כניתוב תעבורה מהאינטרנט הרחב אל שירות מקומי. OpenClaw מסרב להפעיל Funnel אלא אם מצב אימות השער הוא `password`, אך אתם עדיין בוחרים לחשוף את משטח המפעיל לציבור.
+
+תיעוד **הביטחון** של OpenClaw ([security documentation](https://docs.molt.bot/gateway/security)) מבהיר שהזרקת פקודות וגישה לכלים הן סיכונים מרכזיים בעוזר אישי. אל תתנו לסוכן דרך לשגר את עצמו לציבור בשקט. השתמשו ב‑Serve במודע, הימנעו מ‑Funnel אלא אם באמת נדרש גישה ציבורית, ודרשו אישור ביצוע לכל פקודת `tailscale`.
+
+## הגדרת OpenClaw בצורה מאובטחת
+
+### שלב 1: התקנת Tailscale
+
+ב‑VPS או בשרת המקומי שלכם:
+
+```bash
+# Install Tailscale
+curl -fsSL https://tailscale.com/install.sh | sh
+
+# Authenticate (opens a browser to log in)
+sudo tailscale up
+
+# Get your Tailscale IP
+tailscale ip -4
+# Output: 100.x.x.x
+```
+
+במכונת ה‑client שלכם, התקינו את Tailscale מדף ההורדה הרשמי והתחברו לאותו tailnet.
+
+כעת שני המחשבים נמצאים באותו רשת פרטית. תוכלו לבצע ping ל‑VPS בעזרת כתובת ה‑Tailscale שלו, והיא תנותב דרך המנהרה המוצפנת.
+
+### שלב 2: קונפיגורציית OpenClaw לשימוש ב‑Tailscale
+
+התבנית הבטוחה ביותר כיום היא: להשאיר את השער על לופבק ולחשוף אותו ל‑tailnet באמצעות Tailscale Serve.
+
+בקובץ הקונפיג של OpenClaw:
+
+```js
+{
+  gateway: {
+    bind: "loopback",
+    tailscale: { mode: "serve" },
+  },
+}
+```
+
+לאחר מכן הפעלו את השער עם Serve:
+
+```bash
+openclaw gateway --tailscale serve
+```
+
+התיעוד של OpenClaw אומר שזה משאיר את השער על `127.0.0.1` בעוד Tailscale מספק HTTPS וניתוב tailnet. אתם ניגשים אליו ב‑`https://<magicdns-name>/`, ולא בכתובת ה‑IP הציבורית של ה‑VPS.
+
+אם אתם מעדיפים קישור ישיר ל‑tailnet במקום Serve, השתמשו באימות שער מפורש:
+
+```js
+{
+  gateway: {
+    bind: "tailnet",
+    auth: {
+      mode: "token",
+      token: "replace-with-a-long-random-token",
+    },
+  },
+}
+```
+
+לאחר מכן התחברו ממכשיר tailnet אחר:
+
+```text
+http://<tailscale-ip>:18789/
+ws://<tailscale-ip>:18789
+```
+
+אם אתם מריצים ב‑Docker או בסביבת קונטיינרים אחרת, היו זהירים במיוחד עם פרסום פורטים. פקודת `-p 18789:18789` בדרך כלל משייכת את כל הממשקים של המארח. עדיפו לופבק יחד עם Tailscale Serve, או קבעו במפורש את צד המארח לכתובת ה‑Tailscale אחרי שאמתתם שהקונטיינר עדיין מקבל תעבורה:
+
+```bash
+TAILSCALE_IP=$(tailscale ip -4)
+docker run ... -p "$TAILSCALE_IP:18789:18789" ...
+```
+
+לאחר כל שינוי ב‑Docker, בדקו מבחוץ עם `nmap` ומקומית עם `ss`. Docker יכול לעקוף או לשנות את הנחות חומת האש של המארח אם לא מתחשבים בזה.
+
+### שלב 3: חיזוק SSH
+
+גם עם Tailscale, יש לאבטח את SSH כראוי:
+
+```bash
+# שמרו על סשן ה‑SSH הנוכחי פתוח בזמן ביצוע הפעולות.
+# ראשית, ממחשב ה‑client שלכם, ודאו שניתן להתחבר ב‑SSH דרך Tailscale:
+ssh your-user@SERVER_TAILSCALE_IP
+
+# הציבו חיזוק בקובץ drop‑in במקום לשכתב את sshd_config.
+sudo tee /etc/ssh/sshd_config.d/99-openclaw-hardening.conf >/dev/null <<'EOF'
+PasswordAuthentication no
+PermitRootLogin no
+KbdInteractiveAuthentication no
+EOF
+
+# אמת לפני הרענון. אל דלגו על שלב זה.
+sudo sshd -t
+sudo systemctl reload ssh || sudo systemctl reload sshd
+```
+
+זה משבית כניסה באמצעות סיסמה וכניסה כ‑root. הצעד הבא משתמש ב‑UFW כדי למנוע SSH ציבורי לחלוטין תוך שמירה על אפשרות SSH דרך `tailscale0`.
+
+### שלב 4: כללי חומת אש
+
+הקימו חומת אש כשכבה שנייה:
+
+```bash
+# שימוש ב‑UFW (Ubuntu/Debian)
+sudo ufw allow in on tailscale0
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+sudo ufw enable
+sudo ufw delete allow 22/tcp || true
+sudo ufw reload
+sudo ufw status verbose
+```
+
+מדריך החיזוק של Tailscale ל‑Ubuntu משתמש באותו תבנית: לאפשר `tailscale0`, לדחות תעבורה נכנסת אחרת, ואז לאמת ש‑SSH ציבורי מתנתק בעוד ש‑SSH לכתובת `100.x.y.z` עדיין עובד. אם מריצים אתר ציבורי על אותו VPS, שמרו רק על כללי החיבור הציבוריים שאתם באמת צריכים, כגון `80/tcp` ו‑`443/tcp`.
+
+---
+
+## בדיקת החשיפה שלכם
+
+### בדיקת פתיחת פורטים מבחוץ
+
+ממכונה שאינה ברשת ה‑Tailscale שלכם:
+
+```bash
+# בדקו אם פורטים ציבוריים נפוצים חשופים
+nmap -p 22,80,443,18789 YOUR_PUBLIC_IP
+
+# פלט צפוי למכונה מאובטחת:
+# 22/tcp   filtered ssh
+# 18789/tcp filtered unknown
+```
+
+אם `22` או `18789` מוצגים כ‑`open` במקום `filtered` או `closed`, יש בעיה. אם `80` או `443` פתוחים, ודאו שזהו רק האתר הציבורי המכוון שלכם או קצה Tailscale Funnel, ולא שער OpenClaw בטעות.
+
+### בדיקת מה שמקשיב מקומית
+
+בשרת OpenClaw שלכם:
+
+```bash
+# הצגת כל הפורטים המקשיבים ומה הם קשורים אליהם
+sudo ss -tulpn | grep LISTEN
+
+# חפשו שורות כמו זו (טוב עבור Serve):
+# tcp   LISTEN 0   128   127.0.0.1:18789   *:*
+#
+# או זו (קביל עבור קישור tailnet ישיר עם אימות):
+# tcp   LISTEN 0   128   100.x.y.z:18789   *:*
+#
+# לא כמו זו (רע):
+# tcp   LISTEN 0   128   0.0.0.0:18789     *:*
+```
+
+אם אתם רואים `0.0.0.0` או `:::` (הקבילה של IPv6), השירות חשוף לעולם.
+
+### ביקורת אבטחה מובנית
+
+OpenClaw כולל [פקודת ביקורת אבטחה](https://docs.molt.bot/gateway/security) שבודקת את ההגדרות שלכם מול מיטב הפרקטיקות:
+
+```bash
+openclaw security audit --deep
+openclaw security audit --deep --fix
+```
+
+הביקורת בודקת חשיפת שער, מצב Tailscale, הגדרות אימות, גישה לערוצים, מדיניות כלי, אינבנטוריית תוספים והרשאות קבצים. התייחסו ל‑`--fix` ככלי עזר מועיל, לא כתחליף לקריאת הממצאים.
+
+---
+
+## מה שהכלי הזה לא פותר
+
+Tailscale מסיר את הטעות הגדולה ביותר: חשיפה של מפעילים לציבור. הוא לא פותר את כל הבעיות:
+
+**אחסון אישורים**: OpenClaw שומר תמלילי סשן, אסימוני OAuth ומפתחות API על הדיסק. ודאו שלקבצים אלה יש הרשאות קבצים נכונות (`chmod 600` לקבצים, `chmod 700` לתיקיות תצורה פרטיות) והם לא נמצאים בבקרת גרסאות. הבדיקה המובנית בודקת זאת.
+
+**בידוד תוספים**: תוספים פועלים עם כל ההרשאות של המשתמש שלכם. התקינו תוספים רק ממקורות שאתם סומכים עליהם, ובדקו אילו יכולות הם דורשים. כלי הבדיקה מייצר אינבנטוריית של תוספים מותקנים.
+
+**אבטחת מכשירים**: אם מישהו מצליח לפרוץ לחשבון Tailscale שלכם או לגנוב מכשיר ברשת ה‑tailnet, הוא יוכל לגשת למופע OpenClaw שלכם. הפעילו [אישור מכשיר של Tailscale](https://tailscale.com/kb/1099/device-authorization/) כדי לדרוש אישור למכשירים חדשים.
+
+---
+
+## רשימת בדיקות לפני פריסה
+
+לפני שאתם מחשיבים את מופע OpenClaw/Moltbot שלכם כמוכן לייצור:
+
+- [ ] Tailscale מותקן ומאומת הן על השרת והן על הלקוח
+- [ ] שער (gateway) נשמר על הלולבק עם Tailscale Serve, או קשור ל‑`tailnet` עם אימות מפורש
+- [ ] SSH מוגדר לביטול אימות בסיסי והתחברות כ‑root
+- [ ] חומת אש (UFW או iptables/nftables) מוגדרת לאפשר `tailscale0` ולדחות כניסה ציבורית מיותרת
+- [ ] סריקת nmap חיצונית מציגה את כל הפורטים כ‑`filtered` או `closed`
+- [ ] `ss -tulpn` פנימי מציג שער קשור ל‑`127.0.0.1`, `::1`, או רק לכתובת IP של Tailscale
+- [ ] קבצי אישורים בעלי הרשאות 600 ותיקיות תצורה פרטיות בעלות הרשאות 700
+- [ ] הריצו `openclaw security audit --deep` וטפלו בכל הממצאים
+- [ ] אם משתמשים בניהול Tailscale של OpenClaw, אישורי exec מופעלים
+- [ ] גיבויים קבועים מוגדרים (נתוני OpenClaw + תצורות)
+
+---
+
+## משאבים
+
+- [מדריך אבטחה של OpenClaw](https://docs.molt.bot/gateway/security)
+- [אינטגרציית Tailscale של OpenClaw](https://docs.molt.bot/gateway/tailscale)
+- [התייחסות ל‑CLI של Tailscale Serve](https://tailscale.com/docs/reference/tailscale-cli/serve)
+- [Tailscale Funnel](https://tailscale.com/docs/features/tailscale-funnel)
+- [שימוש ב‑UFW לנעילת שרת Ubuntu](https://tailscale.com/docs/how-to/secure-ubuntu-server-with-ufw)
+- [Security Audit: 512 Findings (GitHub Issue)](https://github.com/moltbot/moltbot/issues/1796)
+- [מדריך סריקת רשת עם Nmap](https://nmap.org/book/man.html)
