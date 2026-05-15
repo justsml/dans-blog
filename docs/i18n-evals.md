@@ -81,24 +81,20 @@ Posts marked `draft: true`, `hidden: true`, `publish: false`, or `unlisted: true
 
 ## Outputs
 
-Each run writes summary files plus live stream artifacts under `reports/i18n/evals/`:
+Each run writes a summary plus one append-only JSONL log under `reports/i18n/evals/`:
 
 ```text
 reports/i18n/evals/
 └── eval-run-<ISO-timestamp>/       # folder per run
     ├── summary.md                  # human-readable markdown report with tables and graphs
-    ├── run.jsonl                   # all stream lifecycle events, errors, and case results
-    ├── translation-<case>.txt      # full/partial translation text as it arrives
-    └── judge-<case>.txt            # raw judge JSON/prose as it arrives
+    └── run.jsonl                   # stream events, raw text, errors, and case results
 ```
 
-Translation and judge calls stream by default into the run-local
-`reports/i18n/evals/eval-run-<ISO-timestamp>/` directory. These files are
-intentionally useful when a provider returns malformed
-MDX, invalid JSON, or dies halfway through a response: the `.txt` file preserves
-whatever arrived, and `run.jsonl` records stream errors with the
-partial text length and error message. Use `tail -f reports/i18n/evals/eval-run-…/*.txt`
-while a run is active, or add `--print-streams` when stdout interleaving is acceptable.
+Translation and judge calls stream into `run.jsonl`. `stream_finished` rows
+include the full raw text, while `stream_error` rows include partial text,
+partial text length, and the error message. Use `tail -f
+reports/i18n/evals/eval-run-…/run.jsonl` while a run is active, or add
+`--print-streams` when stdout interleaving is acceptable.
 
 Case result rows in `run.jsonl` use `event: "case_finished"` and include fields like:
 
@@ -133,7 +129,7 @@ Case result rows in `run.jsonl` use `event: "case_finished"` and include fields 
   "inputTokens": 1100,
   "outputTokens": 680,
   "providerCostUsd": 0.00004,
-  "streamTextPath": "reports/i18n/evals/eval-run-…/translation-article-stop-hardcoding-your-prompts-es-openrouter-openai-gpt-oss-120b-nitro.txt"
+  "streamId": "translation-article-stop-hardcoding-your-prompts-es-openai-gpt-oss-120b-nitro"
 }
 ```
 
@@ -203,4 +199,4 @@ Covered areas:
 | `src/scripts/i18n/judge.ts` | Production judge script |
 | `src/scripts/i18n/prompts.ts` | Translation prompt builders (`buildSystemPrompt`, `buildUserPrompt`) |
 | `src/scripts/i18n/judge.test.ts` | Offline unit tests for judge scoring loop |
-| `reports/i18n/evals/` | Eval run folders with `summary.md`, `run.jsonl`, and streamed raw response artifacts |
+| `reports/i18n/evals/` | Eval run folders with `summary.md` and `run.jsonl` |

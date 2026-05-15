@@ -151,7 +151,7 @@ type EvalOutput = {
   inputTokens: number;
   outputTokens: number;
   providerCostUsd?: number;
-  streamTextPath: string;
+  streamId: string;
 };
 
 /** One scorer result (Braintrust convention: name + score 0–1). */
@@ -179,7 +179,7 @@ type EvalResult = {
   inputTokens: number;
   outputTokens: number;
   providerCostUsd?: number;
-  streamTextPath?: string;
+  streamId?: string;
 };
 
 type StreamedTextResult = {
@@ -188,7 +188,7 @@ type StreamedTextResult = {
   inputTokens: number;
   outputTokens: number;
   providerCostUsd?: number;
-  streamTextPath: string;
+  streamId: string;
 };
 
 type StreamContext = {
@@ -210,21 +210,21 @@ type OpenRouterReasoningProviderOptions = {
 
 class StreamedTextError extends Error {
   partialText: string;
-  streamTextPath: string;
+  streamId: string;
   durationMs: number;
 
   constructor(
     message: string,
     options: {
       partialText: string;
-      streamTextPath: string;
+      streamId: string;
       durationMs: number;
     },
   ) {
     super(message);
     this.name = "StreamedTextError";
     this.partialText = options.partialText;
-    this.streamTextPath = options.streamTextPath;
+    this.streamId = options.streamId;
     this.durationMs = options.durationMs;
   }
 }
@@ -237,23 +237,21 @@ async function streamLlmText(
   const stem = safeFileName(
     `${context.phase}-${context.inputId}-${context.model.replace(/^openrouter\//, "")}`,
   );
-  const textPath = join(streamDir, `${stem}.txt`);
-  const relTextPath = relative(process.cwd(), textPath);
+  const streamId = stem;
   let text = "";
   let chunkCount = 0;
 
-  mkdirSync(streamDir, { recursive: true });
-  writeFileSync(textPath, "", "utf8");
+  mkdirSync(runDir, { recursive: true });
   appendRunRecord({
     at: new Date().toISOString(),
     event: "stream_started",
+    streamId,
     phase: context.phase,
     inputId: context.inputId,
     model: context.model,
-    textPath: relTextPath,
   });
   console.log(
-    ui.dim(`      stream ${context.phase.padEnd(11)} ${relTextPath}`),
+    ui.dim(`      stream ${context.phase.padEnd(11)} ${streamId}`),
   );
 
   try {
@@ -261,26 +259,32 @@ async function streamLlmText(
     for await (const delta of result.textStream) {
       chunkCount += 1;
       text += delta;
-      appendFileSync(textPath, delta, "utf8");
       if (printStreams) process.stdout.write(delta);
     }
     if (printStreams && text.length > 0) process.stdout.write("\n");
 
     const durationMs = Date.now() - startedAt;
-    const [usage, providerMetadata] = await Promise.all([
+    const [finalText, usage, providerMetadata] = await Promise.all([
+      result.text,
       result.usage,
       result.providerMetadata,
     ]);
+    if (finalText.length > text.length) {
+      text = finalText;
+    }
     const telemetry = usageFromResult(usage, durationMs, providerMetadata);
     appendRunRecord({
       at: new Date().toISOString(),
       event: "stream_finished",
+      streamId,
       phase: context.phase,
       inputId: context.inputId,
       model: context.model,
       durationMs,
       chunkCount,
       textLength: text.length,
+      finalTextLength: finalText.length,
+      text,
       usage,
       providerMetadata,
     });
@@ -291,7 +295,7 @@ async function streamLlmText(
       inputTokens: telemetry.inputTokens,
       outputTokens: telemetry.outputTokens,
       providerCostUsd: telemetry.providerCostUsd,
-      streamTextPath: relTextPath,
+      streamId,
     };
   } catch (error) {
     const durationMs = Date.now() - startedAt;
@@ -299,6 +303,7 @@ async function streamLlmText(
     appendRunRecord({
       at: new Date().toISOString(),
       event: "stream_error",
+      streamId,
       phase: context.phase,
       inputId: context.inputId,
       model: context.model,
@@ -308,9 +313,9 @@ async function streamLlmText(
       errorMessage: message,
       partialText: text,
     });
-    throw new StreamedTextError(`${message} (partial stream: ${relTextPath})`, {
+    throw new StreamedTextError(`${message} (partial stream id: ${streamId})`, {
       partialText: text,
-      streamTextPath: relTextPath,
+      streamId,
       durationMs,
     });
   }
@@ -521,7 +526,7 @@ async function scoreLlmJudge(
     ],
   });
 
-  let judgeStreamPath: string | undefined;
+  let judgeStreamId: string | undefined;
   try {
     const sha = "eval000000000000000000000000000000000000";
     const candidates: CandidateRef[] = [
@@ -571,7 +576,7 @@ async function scoreLlmJudge(
         model: `openrouter/${judgeModel}-for-${output.model}`,
       },
     );
-    judgeStreamPath = result.streamTextPath;
+    judgeStreamId = result.streamId;
 
     const parsed = parseJudgeOutput(result.text);
     const judgeScores = normalizeJudgeScores(parsed.scores);
@@ -650,12 +655,12 @@ async function scoreLlmJudge(
     };
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
-    const streamPath =
+    const streamId =
       error instanceof StreamedTextError
-        ? error.streamTextPath
-        : judgeStreamPath;
+        ? error.streamId
+        : judgeStreamId;
     return fail(
-      streamPath == null ? message : `${message} (stream: ${streamPath})`,
+      streamId == null ? message : `${message} (stream id: ${streamId})`,
     );
   }
 }
@@ -728,7 +733,7 @@ async function translate(input: EvalInput, model: string): Promise<EvalOutput> {
     inputTokens: result.inputTokens,
     outputTokens: result.outputTokens,
     providerCostUsd: result.providerCostUsd,
-    streamTextPath: result.streamTextPath,
+    streamId: result.streamId,
   };
 }
 
@@ -788,7 +793,7 @@ async function translateChunkedArticle(
     frontmatter.data,
   ).trim();
   const translation = normalizeEvalTranslation(input.source, assembled);
-  const streamTextPath = writeAssembledTranslationStream(input, model, translation);
+  const streamId = recordAssembledTranslationStream(input, model, translation);
 
   return {
     translation,
@@ -797,7 +802,7 @@ async function translateChunkedArticle(
     inputTokens,
     outputTokens,
     providerCostUsd: providerCostUsd === 0 ? undefined : providerCostUsd,
-    streamTextPath,
+    streamId,
   };
 }
 
@@ -967,7 +972,7 @@ async function runEval(input: EvalInput, model: string): Promise<EvalResult> {
       durationMs: streamError?.durationMs ?? 0,
       inputTokens: 0,
       outputTokens: 0,
-      streamTextPath: streamError?.streamTextPath,
+      streamId: streamError?.streamId,
     };
   }
 
@@ -1017,7 +1022,7 @@ async function runEval(input: EvalInput, model: string): Promise<EvalResult> {
     inputTokens: output.inputTokens,
     outputTokens: output.outputTokens,
     providerCostUsd: output.providerCostUsd,
-    streamTextPath: output.streamTextPath,
+    streamId: output.streamId,
   };
 }
 
@@ -1152,6 +1157,9 @@ function normalizeEvalTranslation(source: string, translation: string) {
 
 function normalizeFrontmatterValue(value: unknown): string {
   if (value instanceof Date) return value.toISOString().slice(0, 10);
+  if (typeof value === "string" && /^\d{4}-\d{2}-\d{2}$/.test(value)) {
+    return value;
+  }
   if (Array.isArray(value))
     return JSON.stringify(value.map(normalizeFrontmatterValue));
   if (value != null && typeof value === "object") {
@@ -1215,17 +1223,28 @@ function edgeParagraphContext(chunk: Chunk | undefined, edge: "first" | "last") 
   return edge === "first" ? textSegments[0] : textSegments.at(-1);
 }
 
-function writeAssembledTranslationStream(
+function recordAssembledTranslationStream(
   input: EvalInput,
   model: string,
   translation: string,
 ) {
-  const stem = safeFileName(
+  const streamId = safeFileName(
     `translation-${input.id}-${model.replace(/^openrouter\//, "")}-assembled`,
   );
-  const path = join(streamDir, `${stem}.txt`);
-  writeFileSync(path, translation, "utf8");
-  return relative(process.cwd(), path);
+  appendRunRecord({
+    at: new Date().toISOString(),
+    event: "stream_finished",
+    streamId,
+    phase: "translation",
+    inputId: input.id,
+    model,
+    durationMs: 0,
+    chunkCount: 0,
+    textLength: translation.length,
+    text: translation,
+    assembled: true,
+  });
+  return streamId;
 }
 
 function cleanFrontmatterScalarTranslation(translated: string, fallback: string) {
@@ -1275,7 +1294,6 @@ const runId = new Date().toISOString().replace(/[:.]/g, "-");
 const runDir = join(EVAL_REPORT_DIR, `eval-run-${runId}`);
 const runLogPath = join(runDir, "run.jsonl");
 const summaryPath = join(runDir, "summary.md");
-const streamDir = runDir;
 
 // inputs = unique articles × locales; pairs = inputs × models
 const inputs = locales.flatMap((loc) => selectInputs(loc));
@@ -1325,7 +1343,7 @@ console.log(`${ui.title("Judge")}   ${ui.model(judgeModel)}`);
 console.log(`${ui.title("Locales")} ${locales.map(ui.info).join(", ")}`);
 console.log(`${ui.title("Output")}  ${ui.path(relative(process.cwd(), runDir))}`);
 console.log(
-  `${ui.title("Streams")} ${ui.path(relative(process.cwd(), streamDir))}${printStreams ? ui.warn(" (+stdout)") : ""}\n`,
+  `${ui.title("Run log")} ${ui.path(relative(process.cwd(), runLogPath))}${printStreams ? ui.warn(" (+stdout)") : ""}\n`,
 );
 
 if (braintrustEnabled) {
@@ -1364,9 +1382,9 @@ const results = await Promise.all(
           `   ${ui.bad("•")} ${ui.warn(s.name)}${s.details ? ui.dim(`: ${s.details}`) : ""}`,
         );
       }
-      if (result.streamTextPath != null)
+      if (result.streamId != null)
         console.log(
-          `   ${ui.dim("raw translation stream:")} ${ui.path(result.streamTextPath)}`,
+          `   ${ui.dim("raw translation stream id:")} ${ui.path(result.streamId)}`,
         );
     }
     appendRunRecord({
@@ -1578,11 +1596,10 @@ function writeSummary(results: EvalResult[]) {
     `Models: ${translationModels.map((m) => m.replace(/^openrouter\//, "")).join(", ")}`,
     `Judge: ${judgeModel}`,
     `Run log: ${relative(process.cwd(), runLogPath)}`,
-    `Streams: ${relative(process.cwd(), streamDir)}`,
     ``,
     `## Results`,
     ``,
-    `| Kind | Slug | Locale | Model | Pass | Overall | Judge | ${judgeKeys.map((k) => k.replace("judge:", "")).join(" | ")} | Cost | Stream |`,
+    `| Kind | Slug | Locale | Model | Pass | Overall | Judge | ${judgeKeys.map((k) => k.replace("judge:", "")).join(" | ")} | Cost | Stream Id |`,
     `| --- | --- | --- | --- | --- | --- | --- | ${judgeKeys.map(() => "---").join(" | ")} | --- | --- |`,
     ...results.map((r) => {
       const scoreMap = Object.fromEntries(r.scores.map((s) => [s.name, s]));
@@ -1606,9 +1623,7 @@ function writeSummary(results: EvalResult[]) {
             : "—",
           ...dimCells,
           r.providerCostUsd != null ? `$${r.providerCostUsd.toFixed(5)}` : "—",
-          r.streamTextPath != null
-            ? `[txt](${relative(dirname(summaryPath), join(process.cwd(), r.streamTextPath))})`
-            : "—",
+          r.streamId ?? "—",
         ].join(" | ") + " |"
       );
     }),
