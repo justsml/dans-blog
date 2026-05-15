@@ -1,0 +1,325 @@
+---
+title: 'Docker Security: Утерянное руководство для разработчиков'
+subTitle: 'Узнайте, как защитить свою сеть от угроз и опасных конфигураций!'
+modified: '2025-01-13'
+tags:
+  - local development
+  - security
+  - devops
+  - best-practices
+category: Security
+cover_full_width: ../flame-whale-wide.webp
+cover_mobile: ../flame-whale-head-square-200.webp
+cover_icon: ../flame-whale-head-square-200.webp
+cover_credit: ©️ 2025 Dan Levy
+---
+import {CodeTabs} from '../../../components/CodeTabs';
+
+## В разработке
+
+**Содержание**
+
+1. [⚠️ Локальные сети под угрозой](#-local-networks-at-risk)
+2. [🛡️ Настройка брандмауэра](#-firewall-configuration)
+3. [🔐 Управление секретами для локальной разработки](#-secrets-management-for-local-development)
+4. [🕵️‍ Утечки учётных данных и атаки по побочным каналам](#-credential-leaks-and-side-channel-attacks)
+5. [🔍 Мониторинг и канареечные токены](#-monitoring--canary-tokens)
+6. [❌ Распространённые заблуждения](#-common-misconceptions)
+
+<p class="inset"></p>
+
+## ⚠️ Локальные сети под угрозой
+
+Давайте честно: все мы так делали. Вы подключались к случайному Wi-Fi в кофейне или пускали кого-то в свою домашнюю сеть без лишних раздумий. Может, вы даже доверяете своему умному холодильнику, что он не скомпрометирует сеть. Реальность? Такие небрежные решения могут подставить вашу локальную среду разработки под ненужные риски. Атакующие не только нацеливаются на продакшн — локальные окружения часто оказываются более лёгкой добычей, открывая доступ к чувствительным проектам.
+
+### Сценарии атак
+
+1. **Перехват трафика:** Незашифрованный трафик легко перехватить и прочитать.
+2. **Незащищённые сервисы:** Локальные базы данных или API, открытые на `0.0.0.0`.
+3. **Подмена сети:** Перенаправление трафика на устройство атакующего.
+
+### Быстрые исправления
+
+- Предпочитайте частные сети Docker межсетевым экранам, чтобы ограничить сетевое воздействие.
+- Избегайте публичных или общих Wi-Fi; лучше используйте хот-спот телефона.
+- Мониторьте локальную сеть на предмет неизвестных устройств с помощью `arp-scan` и `nmap`.
+
+## 🛡️ Настройка межсетевого экрана
+
+### UFW с Docker (Ubuntu)
+
+> ⚠️ **Предупреждение:** По умолчанию Docker на Ubuntu/Debian обходит правила UFW/iptables, потенциально подвергая вашу систему атакам. Не имеет значения, привязываете ли вы порты к локальным IP-адресам (например, `-p 127.0.0.1:8080:80`).
+
+Это удивляет меня каждый раз, когда я об этом узнаю! [Docker по умолчанию обходит правила UFW](https://github.com/moby/moby/issues/4737), позволяя контейнерам свободно взаимодействовать с хостом и другими контейнерами.
+
+### Лучшая практика
+
+1. 🥇 **Используйте сети Docker** для изоляции и контроля того, что может подключаться к каждому контейнеру или сети.
+
+###
+2. 🥉 **Обновите iptables** если вы вынуждены использовать сеть `host` или не можете использовать пользовательские сети, вы можете снизить риск, настроив iptables. Не для слабонервных, [посмотрите утилиту ниже.](#uf)
+
+#### Изоляция сети Docker
+
+```bash
+# Create a new Docker network
+docker network create my-network
+
+# Run your container with the new network
+docker run --network my-network my-container
+```
+
+#### Настройка UFW (для сетей `host`)
+
+В сети много плохих советов по исправлению этой ситуации. Настройте UFW для работы с Docker, используя UFW в основном так, как вы ожидаете.
+
+Я использовал `ufw-docker` для настройки self-hosted системы, и, похоже, он работает хорошо.
+
+```bash title="install-ufw-docker.sh"
+# Установка бинарника от root (все равно нужны права root)
+sudo wget -O /usr/local/bin/ufw-docker \
+   https://github.com/chaifeng/ufw-docker/raw/master/ufw-docker
+sudo chmod +x /usr/local/bin/ufw-docker
+# Установка и изменение файла `after.rules` в `ufw`
+ufw-docker install
+
+ufw-docker help
+
+```
+
+Эта команда выполняет следующее:
+
+- Создаёт резервную копию файла `/etc/ufw/after.rules`.
+- Добавляет правила, связанные с Docker, в конец файла для корректной интеграции с UFW.
+
+**Источник:** [ufw-docker GitHub](https://github.com/chaifeng/ufw-docker/tree/master#install)
+
+**Пример использования:**
+
+```bash
+
+# Разрешить Docker-контейнер на порту 8080
+ufw-docker allow <container_name> 8080/tcp
+
+# Управление правилами безопасно вместе с вашей конфигурацией UFW
+ufw-docker status
+
+```
+
+**Примечание:** Большинство «исправлений» конфликтов Docker и UFW сводятся к ручным правилам iptables, что чревато ошибками и хрупкостью при обновлениях.
+
+### Брандмауэр macOS
+
+1. Перейдите в **Системные настройки > Безопасность и конфиденциальность > Брандмауэр**.
+2. Включите брандмауэр и нажмите «Параметры брандмауэра».
+3. Заблокируйте все входящие соединения, кроме критически важных служб.
+
+**Примечание:** Возможно, потребуется настроить брандмауэр для разрешения определённых умных устройств, которыми вы пользуетесь, например Google Cast/AirPlay и других служб.
+
+### Команды для продвинутых пользователей (macOS и Linux)
+
+#### macOS:
+
+```bash
+
+sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setblockall on  # Заблокировать всё
+sudo /usr/libexec/ApplicationFirewall/socketfilterfw --add /path/to/app  # Разрешить конкретное приложение
+
+```
+
+#### Linux (ufw):
+
+```bash
+
+ufw default deny incoming  # Заблокировать все входящие
+ufw allow ssh  # Разрешить SSH
+# разрешить 443 и 80 для веб-трафика
+ufw allow 80/tcp
+ufw allow 443/tcp
+ufw enable  # Включить брандмауэр
+
+```
+
+**Совет профи:** Используйте такие инструменты, как [Little Snitch](https://www.obdev.at/products/littlesnitch/index.html) на macOS и [ufw](https://help.ubuntu.com/community/UFW) на Linux для более удобной настройки.
+
+## 🔐 Управление секретами для локальной разработки
+
+### Проактивная валидация плейсхолдеров
+
+<p>💡 Убедитесь, что секреты настроены с реальными значениями перед запуском приложения.</p>
+
+Если вы используете плейсхолдеры вроде `__WARNING_REPLACE_ME__` в своих секретах, отлично — возможно, кто-то заметит. Но на всякий случай можно добавить небольшую валидацию для защиты на этапе выполнения.
+
+Вы не поверите, как легко полностью взломать (изменить и переподписать) JWT-токен, когда атакующий может угадать секрет!
+
+<CodeTabs client:load tabs={["JavaScript", "Rust", "Go"]}>
+
+```javascript
+// validateSecrets.js
+const validateSecrets = () => {
+  const unsafePlaceholder = /__WARNING_REPLACE_ME__/;
+  const missingSecrets = Object.entries(process.env).filter(
+    ([key, value]) => unsafePlaceholder.test(value)
+  );
+
+  if (missingSecrets.length) {
+    console.error("Unsafe secrets detected:", missingSecrets);
+    process.exit(1);
+  }
+};
+
+validateSecrets();
+```
+
+```rust
+// validate_secrets.rs
+use std::env;
+
+fn validate_secrets() {
+    let unsafe_placeholder = "__WARNING_REPLACE_ME__";
+    for (key, value) in env::vars() {
+        if value.contains(unsafe_placeholder) {
+            panic!("Unsafe secret in {}", key);
+        }
+    }
+}
+
+fn main() {
+    validate_secrets();
+}
+```
+
+```go
+// validate_secrets.go
+package main
+
+import (
+	"fmt"
+	"os"
+	"strings"
+)
+
+func validateSecrets() {
+	placeholder := "__WARNING_REPLACE_ME__"
+	for _, env := range os.Environ() {
+		pair := strings.SplitN(env, "=", 2)
+		if len(pair) == 2 && strings.Contains(pair[1], placeholder) {
+			panic(fmt.Sprintf("Unsafe secret in %s", pair[0]))
+		}
+	}
+}
+
+func main() {
+	validateSecrets()
+}
+```
+
+</CodeTabs>
+
+### Генерация и хранение секретов
+
+<p class="inset">Никогда не хардкодьте секреты в кодовой базе. Используйте переменные окружения и защищённые хранилища.</p>
+
+Вместо `.env.example` используйте `.env.generate.sh`, чтобы пользователям было легко получить `.env`-файл с безопасными «значениями по умолчанию».
+
+#### Пример `.env.generate.sh`
+
+```bash title=".env.generate.sh" frame="code"
+#!/bin/bash
+# Generates a secure .env file for local development
+
+generate_secret() {
+    local length=${1:-30}
+    # add 4 bytes to account for padding
+    local generate_length=$((length + 4))
+    openssl rand -base64 "$generate_length" | tr -d '+=/\n' | cut -c1-"$length"
+}
+# Bail out if .env file already exists
+[ -f .env ] && { echo ".env file already exists!"; exit 1; }
+
+cat <<EOL > .env
+# Database settings & secrets
+DB_USER=app_user
+DB_PASSWORD=$(generate_secret 30)
+REDIS_PASSWORD=$(generate_secret 20)
+# Session secrets
+SESSION_KEY=$(generate_secret 32)
+JWT_SECRET=$(generate_secret 64)
+EOL
+
+echo "New .env file generated!"
+```
+
+{/*
+
+```zig
+// validate_secrets.zig
+const std = @import("std");
+
+pub fn main() void {
+    var env = std.os.getenv_map();
+    const placeholder = "__WARNING_REPLACE_ME__";
+
+    for (env.items()) |entry| {
+        if (std.mem.contains(u8, entry.value, placeholder)) {
+            std.debug.panic("Unsafe secret in {}", .{entry.key});
+        }
+    }
+}
+``` */}
+
+## 🕵️‍ Мониторинг и перепроверка
+
+### Примеры `nmap`
+
+#### Тестирование внутри вашей сети
+
+```bash
+
+# Scan your localhost for all open ports
+nmap -sT localhost
+
+# Scan your machine’s private IP for services
+nmap -sV 192.168.1.10
+
+# Detect devices on your network
+nmap -sn 192.168.0.0/24
+nmap -sn 10.0.0.0/24
+
+```
+
+#### Тестирование за пределами вашей сети
+
+Вы можете легко узнать ваш текущий (публичный) IP с помощью сервисов вроде `ifconfig.me`: `curl https://ifconfig.me`.
+
+Используйте внешнюю сеть или удаленный сервер для тестирования ваших публичных IP:
+
+```bash
+
+print_current_ip() {
+  curl https://ifconfig.me
+}
+
+print_current_ip
+# --> 123.456.789.012
+
+# Change target_host to your public ip or hostname
+# Check host using advanced techniques
+nmap -A --open --reason $target_host
+nmap -A -F --open --reason $target_host
+nmap -A -p1-65535 --open --reason $target_host
+
+```
+
+**Зачем тестировать и то, и другое?**
+Тестирование изнутри выявляет внутреннюю экспозицию, а внешние тесты определяют сервисы, доступные атакующим.
+
+## 🛡️ Распространенные заблуждения
+```
+
+1. **Моё локальное окружение не является целью.**
+   - Факт: Атакующие могут перейти с вашей машины на ваши продакшн-системы.
+2. **Файрволы блокируют всё.**
+   - Факт: Они блокируют только то, что вы настроили.
+3. **Частные IP-адреса безопасны.**
+   - Факт: Эксплойты вроде обхода NAT всё ещё могут затронуть вашу сеть.

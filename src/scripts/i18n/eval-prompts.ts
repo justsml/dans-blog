@@ -79,7 +79,6 @@ import {
 
 const POSTS_DIR = join(process.cwd(), "src/content/posts");
 const EVAL_REPORT_DIR = join(process.cwd(), "reports/i18n/evals");
-const DEFAULT_LOCALE: ActiveLocale = "es";
 const DEFAULT_MIN_SCORE = 72;
 const DEFAULT_MODELS = [
   "openrouter/openai/gpt-oss-120b:nitro",
@@ -907,7 +906,7 @@ function appendJsonl(path: string, value: unknown) {
 }
 
 function parseLocales(value: string | undefined): ActiveLocale[] {
-  if (value == null) return [DEFAULT_LOCALE];
+  if (value == null) return [...ACTIVE_LOCALES];
   return value.split(",").map((v) => {
     const trimmed = v.trim();
     if (isActiveLocale(trimmed)) return trimmed;
