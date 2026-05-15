@@ -30,7 +30,6 @@ import {
   averageJudgeScore,
   buildPrimaryJudgePrompt,
   getJudgeJsonShape,
-  isBlockingSuggestion,
   normalizeJudgeScores,
   parseJudgeOutput,
   readSuggestionsFromParsed,
@@ -38,7 +37,7 @@ import {
   type JudgeScoreMap,
 } from "./judge-utils.ts";
 import { analyzeTranslationIntegrity } from "./integrity-checks.ts";
-import { normalizeLocalizedCandidateFile } from "./localized-mdx.ts";
+import { normalizeFrontmatterAssetPaths, normalizeLocalizedCandidateFile } from "./localized-mdx.ts";
 import { resolveCheapFastTranslationModels } from "./model-presets.ts";
 import { parseArgs, optionalString, parseList } from "./utils.ts";
 import { ACTIVE_LOCALES, isActiveLocale, type ActiveLocale } from "../../shared/i18n.ts";
@@ -438,7 +437,9 @@ async function scoreLlmJudge(input: EvalInput, output: EvalOutput): Promise<Judg
     const parsed = parseJudgeOutput(result.text);
     const judgeScores = normalizeJudgeScores(parsed.scores);
     if (judgeScores == null) return fail("Judge returned no parseable scores.");
-    const blockingSuggestions = readSuggestionsFromParsed(parsed).filter(isBlockingSuggestion);
+    const suggestions = readSuggestionsFromParsed(parsed);
+    const highPrioritySuggestions = suggestions.filter((suggestion) => suggestion.priority === "high");
+    const mediumPrioritySuggestions = suggestions.filter((suggestion) => suggestion.priority === "medium");
 
     const rationale = typeof parsed.rationale === "string" ? parsed.rationale.slice(0, 200) : undefined;
     const avg = averageJudgeScore(judgeScores) / 100; // normalize to 0–1
@@ -463,18 +464,30 @@ async function scoreLlmJudge(input: EvalInput, output: EvalOutput): Promise<Judg
 
     const suggestionScore: Score = {
       name: "judge:blocking-suggestions",
-      score: blockingSuggestions.length === 0 ? 1 : 0,
-      passed: blockingSuggestions.length === 0,
+      score: highPrioritySuggestions.length === 0 ? 1 : 0,
+      passed: highPrioritySuggestions.length === 0,
       severity: "medium",
-      details: blockingSuggestions.length === 0
+      details: highPrioritySuggestions.length === 0
         ? undefined
-        : blockingSuggestions
+        : highPrioritySuggestions
+          .map((suggestion) => `${suggestion.priority}: ${suggestion.reason}`)
+          .join(" | ")
+          .slice(0, 400),
+    };
+    const mediumSuggestionScore: Score = {
+      name: "judge:medium-suggestions",
+      score: mediumPrioritySuggestions.length === 0 ? 1 : 0.75,
+      passed: mediumPrioritySuggestions.length === 0,
+      severity: "low",
+      details: mediumPrioritySuggestions.length === 0
+        ? undefined
+        : mediumPrioritySuggestions
           .map((suggestion) => `${suggestion.priority}: ${suggestion.reason}`)
           .join(" | ")
           .slice(0, 400),
     };
 
-    return { scores: [...dimensionScores, overall, suggestionScore], judgeScores };
+    return { scores: [...dimensionScores, overall, suggestionScore, mediumSuggestionScore], judgeScores };
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
     const streamPath = error instanceof StreamedTextError ? error.streamTextPath : judgeStreamPath;
@@ -505,7 +518,7 @@ async function translate(input: EvalInput, model: string): Promise<EvalOutput> {
   });
 
   return {
-    translation: normalizeLocalizedCandidateFile(input.source, result.text.trim()),
+    translation: normalizeEvalTranslation(input.source, result.text.trim()),
     model,
     durationMs: result.durationMs,
     inputTokens: result.inputTokens,
@@ -680,6 +693,17 @@ function stripFrontmatter(contents: string) {
   const frontmatterEnd = contents.indexOf("\n---", 3);
   if (frontmatterEnd === -1) return contents;
   return contents.slice(frontmatterEnd + 4);
+}
+
+function normalizeEvalTranslation(source: string, translation: string) {
+  const normalized = normalizeLocalizedCandidateFile(source, translation);
+  try {
+    const parsed = matter(normalized);
+    const frontmatter = normalizeFrontmatterAssetPaths(parsed.data);
+    return matter.stringify(parsed.content.trimStart(), frontmatter).trim();
+  } catch {
+    return normalized;
+  }
 }
 
 function normalizeFrontmatterValue(value: unknown): string {

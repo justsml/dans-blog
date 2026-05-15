@@ -66,7 +66,9 @@ SPANISH QUALITY NOTES:
     return `
 JAPANESE QUALITY NOTES:
 - Prefer natural Japanese essay rhythm over English-shaped sentence order.
-- Keep technical terms and product names stable, but avoid over-translating taxonomy, brands, and code-adjacent labels.
+- Keep technical terms and product names stable, but translate ordinary reader-facing prose concepts. Do not leave English phrases like "juvenile delinquency" untranslated unless they are code, commands, proper nouns, product names, or deliberate English terminology.
+- Avoid literal English idioms: "historical receipts" should read like historical evidence/context, not purchase receipts; "set your watch by" should convey predictable timing, not setting a timer.
+- Avoid over-translating taxonomy, brands, and code-adjacent labels.
 - Carry jokes and metaphors by effect; if a literal creature or idiom sounds childish, use a sharper native phrase.
 `.trim();
   }
