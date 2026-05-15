@@ -1,0 +1,65 @@
+{
+  "selectedCommit": "ac208c5c1804bad0e7aa3098d6f09450f9982d4e",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 95,
+    "technicalAccuracy": 98,
+    "coherence": 95,
+    "relevance": 100,
+    "translationQuality": 92,
+    "mdxPreservation": 100,
+    "culturalAdaptation": 90,
+    "languagePurity": 95
+  },
+  "suggestions": [],
+  "rationale": "The candidate translation is excellent and already incorporates the fixes mentioned in the previous judge report (the 'Rule of Thumb' list is already translated in the provided MDX content). It maintains technical accuracy, preserves MDX structure, and captures the author's direct style effectively. No further high-priority suggestions are needed.",
+  "slug": "semantic-vector-search-landscape",
+  "locale": "ar",
+  "candidateCommits": [
+    "ac208c5c1804bad0e7aa3098d6f09450f9982d4e"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "- Users complain about typos not matching → add `pg_trgm`",
+      "replacement": "- يشتكي المستخدمون من عدم مطابقة الأخطاء الإملائية ← أضف `pg_trgm`",
+      "reason": "This list item was left in English in the candidate.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "- Users search by concept and miss relevant results → add pgvector",
+      "replacement": "- يبحث المستخدمون بالمفهوم ويفوتهم النتائج ذات الصلة ← أضف pgvector",
+      "reason": "This list item was left in English in the candidate.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "- Users search for exact symbols or codes and get conceptual results instead → add FTS or check if you're over-relying on vector search",
+      "replacement": "- يبحث المستخدمون عن رموز أو أكواد دقيقة ويحصلون على نتائج مفهومية بدلاً من ذلك ← أضف FTS أو تحقق مما إذا كنت تعتمد بشكل مفرط على البحث المتجهي",
+      "reason": "This list item was left in English in the candidate.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "- Latency becomes a problem → evaluate pre-filtering, approximate indexes, or a dedicated store",
+      "replacement": "- يصبح زمن الاستجابة مشكلة ← قيم ما قبل الترشيح، الفهارس التقريبية، أو مخزن مخصص",
+      "reason": "This list item was left in English in the candidate.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug semantic-vector-search-landscape --locale ar --skip-global",
+    "output": ""
+  }
+}
