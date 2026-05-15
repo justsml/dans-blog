@@ -99,7 +99,8 @@ YAML FRONTMATTER RULES (critical):
 - Preserve the YAML frontmatter block, key order, and all non-reader-facing metadata keys.
 - Translate only reader-facing frontmatter values: language, title, subTitle, cover_alt, and cover_credit.
 - If a language field exists, set it exactly to "${language}".
-- Preserve taxonomy and routing metadata exactly: category, subCategory, tags, publish, draft, unlisted, hidden, popularity, related, redirects, commentsKeyOverride, label, date, modified, and minReleaseDate.
+- Omit inherited metadata from translated files: date, draft, unlisted, hidden, publish, and popularity. Keep modified when present.
+- Preserve taxonomy and routing metadata exactly: category, subCategory, tags, related, redirects, commentsKeyOverride, label, modified, and minReleaseDate.
 - Preserve social_image, cover, cover_full_width, cover_mobile, and cover_icon filenames, but use ../ for inherited local asset paths inside locale folders.
 `.trim();
 }

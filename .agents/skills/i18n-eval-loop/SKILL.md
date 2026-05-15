@@ -28,7 +28,7 @@ Use this when asked to improve translation quality with `bun run i18n:eval` or s
 - Mirror production postprocessing in eval scoring when production already normalizes the issue, especially inherited locale asset paths. Keep raw stream files for debugging.
 - Treat high-priority judge suggestions as eval blockers. Treat medium suggestions as score penalties and visible polish notes unless the user explicitly wants zero medium suggestions; otherwise the loop becomes overly sensitive to stylistic quibbles.
 - Prompt tweaks should be short and locale-specific when a model repeatedly makes the same language error. Avoid global prompt bulk unless multiple locales show the same failure.
-- Preserve controlled frontmatter metadata exactly: `category`, `subCategory`, `tags`, dates, routing/visibility fields, and asset filenames. Translate only reader-facing frontmatter values such as `language`, `title`, `subTitle`, `cover_alt`, and `cover_credit`.
+- Preserve controlled frontmatter metadata exactly when it remains in localized files: `category`, `subCategory`, `tags`, `modified`, `minReleaseDate`, routing keys, and asset filenames. Omit inherited localized metadata so English remains authoritative: `date`, `draft`, `unlisted`, `hidden`, `publish`, and `popularity`. Translate only reader-facing frontmatter values such as `language`, `title`, `subTitle`, `cover_alt`, and `cover_credit`.
 
 ## Lessons From `the-last-to-think`
 

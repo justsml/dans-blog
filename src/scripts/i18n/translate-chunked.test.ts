@@ -6,6 +6,7 @@ import {
   assertNestedAssetPaths,
   assertTranslationLength,
   getComparablePostLength,
+  omitInheritedTranslatedFrontmatter,
   normalizeFrontmatterAssetPaths,
   normalizeLocalizedAssetReferences,
   normalizeLocaleImportPaths,
@@ -38,6 +39,26 @@ describe("normalizeFrontmatterAssetPaths", () => {
       og_image: "/absolute.webp",
       remote_image: "https://example.com/image.webp",
       document: "./not-an-image.txt",
+    });
+  });
+});
+
+describe("omitInheritedTranslatedFrontmatter", () => {
+  test("removes translated frontmatter keys that should inherit from English", () => {
+    expect(omitInheritedTranslatedFrontmatter({
+      title: "Translated",
+      date: "2026-01-01",
+      modified: "2026-02-01",
+      draft: true,
+      unlisted: true,
+      hidden: true,
+      publish: false,
+      popularity: 0.7,
+      category: "AI",
+    })).toEqual({
+      title: "Translated",
+      modified: "2026-02-01",
+      category: "AI",
     });
   });
 });

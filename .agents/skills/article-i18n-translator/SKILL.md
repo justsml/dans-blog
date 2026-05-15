@@ -18,6 +18,7 @@ Use this skill for DanLevy.net article translation work. The priority is not onl
 - Do not edit `public/_redirects` by hand. Let build-generated redirects update it.
 - Preserve MDX structure, imports, components, props, code blocks, URLs, anchors, and asset paths.
 - Translate reader-facing prose, frontmatter `title` and `subTitle`, image alt text, quiz text, options, and explanations.
+- Localized frontmatter inherits English-only publishing metadata. Omit `date`, `draft`, `unlisted`, `hidden`, `publish`, and `popularity` in translated docs; keep `modified` and preserve other metadata such as `category`, `subCategory`, `tags`, `related`, `redirects`, and `commentsKeyOverride`.
 - Use parent-relative asset paths in nested locale folders, for example `../banner.webp`.
 - Arabic, Hebrew, and Chinese are active translation targets. Arabic and Hebrew are RTL locales; preserve the source MDX structure even when the translated prose reads right-to-left.
 - Do not optimize for pristine Git history during large translation sweeps when the user asks for throughput. Preserve messy candidate, rejection, accounting, judge, and cleanup commits.

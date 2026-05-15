@@ -17,15 +17,33 @@
  *   bun run i18n:eval -- --kind quiz --locale zh
  */
 
-import { appendFileSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
+import {
+  appendFileSync,
+  mkdirSync,
+  readdirSync,
+  readFileSync,
+  writeFileSync,
+} from "node:fs";
 import { basename, dirname, join, relative } from "node:path";
 import "dotenv/config";
 import matter from "gray-matter";
 import { compile } from "@mdx-js/mdx";
-import { BRAINTRUST_PROJECT_NAME, braintrustEnabled, streamText, tracedEval } from "./braintrust.ts";
+import {
+  BRAINTRUST_PROJECT_NAME,
+  braintrustEnabled,
+  streamText,
+  tracedEval,
+} from "./braintrust.ts";
 import { createOpenRouter } from "@openrouter/ai-sdk-provider";
-import { OPENROUTER_USAGE_ACCOUNTING, usageFromResult } from "./llm-telemetry.ts";
-import { buildSystemPrompt, buildUserPrompt, FRONTMATTER_LANGUAGE_LABELS } from "./prompts.ts";
+import {
+  OPENROUTER_USAGE_ACCOUNTING,
+  usageFromResult,
+} from "./llm-telemetry.ts";
+import {
+  buildSystemPrompt,
+  buildUserPrompt,
+  FRONTMATTER_LANGUAGE_LABELS,
+} from "./prompts.ts";
 import {
   averageJudgeScore,
   buildPrimaryJudgePrompt,
@@ -37,11 +55,23 @@ import {
   type JudgeScoreMap,
 } from "./judge-utils.ts";
 import { analyzeTranslationIntegrity } from "./integrity-checks.ts";
-import { normalizeFrontmatterAssetPaths, normalizeLocalizedCandidateFile } from "./localized-mdx.ts";
+import {
+  INHERITED_TRANSLATED_FRONTMATTER_KEYS,
+  omitInheritedTranslatedFrontmatter,
+  normalizeFrontmatterAssetPaths,
+  normalizeLocalizedCandidateFile,
+} from "./localized-mdx.ts";
 import { resolveCheapFastTranslationModels } from "./model-presets.ts";
 import { parseArgs, optionalString, parseList } from "./utils.ts";
-import { ACTIVE_LOCALES, isActiveLocale, type ActiveLocale } from "../../shared/i18n.ts";
-import { isVisiblePostData, type PostVisibilityData } from "../../shared/postVisibility.ts";
+import {
+  ACTIVE_LOCALES,
+  isActiveLocale,
+  type ActiveLocale,
+} from "../../shared/i18n.ts";
+import {
+  isVisiblePostData,
+  type PostVisibilityData,
+} from "../../shared/postVisibility.ts";
 
 // ---------------------------------------------------------------------------
 // Config
@@ -59,8 +89,12 @@ const DEFAULT_JUDGE_MODEL = "openrouter/google/gemini-3-flash-preview";
 const TIMEOUT_MS = 90_000;
 
 const args = parseArgs();
-const locales = parseLocales(optionalString(args, "locales") ?? optionalString(args, "locale"));
-const judgeModel = (optionalString(args, "judge-model") ?? DEFAULT_JUDGE_MODEL).replace(/^openrouter\//, "");
+const locales = parseLocales(
+  optionalString(args, "locales") ?? optionalString(args, "locale"),
+);
+const judgeModel = (
+  optionalString(args, "judge-model") ?? DEFAULT_JUDGE_MODEL
+).replace(/^openrouter\//, "");
 const translationModels = resolveCheapFastTranslationModels(
   parseList(optionalString(args, "models"), DEFAULT_MODELS),
 );
@@ -148,7 +182,14 @@ class StreamedTextError extends Error {
   streamTextPath: string;
   durationMs: number;
 
-  constructor(message: string, options: { partialText: string; streamTextPath: string; durationMs: number }) {
+  constructor(
+    message: string,
+    options: {
+      partialText: string;
+      streamTextPath: string;
+      durationMs: number;
+    },
+  ) {
     super(message);
     this.name = "StreamedTextError";
     this.partialText = options.partialText;
@@ -157,9 +198,14 @@ class StreamedTextError extends Error {
   }
 }
 
-async function streamLlmText(settings: StreamTextSettings, context: StreamContext): Promise<StreamedTextResult> {
+async function streamLlmText(
+  settings: StreamTextSettings,
+  context: StreamContext,
+): Promise<StreamedTextResult> {
   const startedAt = Date.now();
-  const stem = safeFileName(`${context.phase}-${context.inputId}-${context.model.replace(/^openrouter\//, "")}`);
+  const stem = safeFileName(
+    `${context.phase}-${context.inputId}-${context.model.replace(/^openrouter\//, "")}`,
+  );
   const textPath = join(streamDir, `${stem}.txt`);
   const eventsPath = join(streamDir, `${stem}.jsonl`);
   const relTextPath = relative(process.cwd(), textPath);
@@ -189,7 +235,10 @@ async function streamLlmText(settings: StreamTextSettings, context: StreamContex
     if (printStreams && text.length > 0) process.stdout.write("\n");
 
     const durationMs = Date.now() - startedAt;
-    const [usage, providerMetadata] = await Promise.all([result.usage, result.providerMetadata]);
+    const [usage, providerMetadata] = await Promise.all([
+      result.usage,
+      result.providerMetadata,
+    ]);
     const telemetry = usageFromResult(usage, durationMs, providerMetadata);
     appendJsonl(eventsPath, {
       at: new Date().toISOString(),
@@ -263,11 +312,16 @@ function scoreFrontmatter(_input: EvalInput, output: EvalOutput): Score {
     score: passed ? 1 : 0,
     passed,
     severity: "high",
-    details: passed ? undefined : "Output must retain YAML frontmatter delimiters.",
+    details: passed
+      ? undefined
+      : "Output must retain YAML frontmatter delimiters.",
   };
 }
 
-function scoreFrontmatterMetadata(input: EvalInput, output: EvalOutput): Score[] {
+function scoreFrontmatterMetadata(
+  input: EvalInput,
+  output: EvalOutput,
+): Score[] {
   let sourceData: Record<string, unknown>;
   let outputData: Record<string, unknown>;
 
@@ -275,16 +329,31 @@ function scoreFrontmatterMetadata(input: EvalInput, output: EvalOutput): Score[]
     sourceData = matter(input.source).data;
     outputData = matter(output.translation).data;
   } catch (error) {
-    return [{
-      name: "frontmatter-parse",
-      score: 0,
-      passed: false,
-      severity: "high",
-      details: `Could not parse output frontmatter: ${error instanceof Error ? error.message : String(error)}`,
-    }];
+    return [
+      {
+        name: "frontmatter-parse",
+        score: 0,
+        passed: false,
+        severity: "high",
+        details: `Could not parse output frontmatter: ${error instanceof Error ? error.message : String(error)}`,
+      },
+    ];
   }
 
   const scores: Score[] = [];
+  for (const key of INHERITED_TRANSLATED_FRONTMATTER_KEYS) {
+    const passed = !(key in outputData);
+    scores.push({
+      name: `frontmatter-omitted:${key}`,
+      score: passed ? 1 : 0,
+      passed,
+      severity: "medium",
+      details: passed
+        ? undefined
+        : `${key} should be omitted from translated frontmatter so it inherits from English.`,
+    });
+  }
+
   const sourceLanguage = sourceData.language;
   if (typeof sourceLanguage === "string") {
     const expected = FRONTMATTER_LANGUAGE_LABELS[input.locale];
@@ -295,7 +364,9 @@ function scoreFrontmatterMetadata(input: EvalInput, output: EvalOutput): Score[]
       score: passed ? 1 : 0,
       passed,
       severity: "medium",
-      details: passed ? undefined : `Expected language: ${expected}; got ${JSON.stringify(actual)}.`,
+      details: passed
+        ? undefined
+        : `Expected language: ${expected}; got ${JSON.stringify(actual)}.`,
     });
   }
 
@@ -303,16 +374,10 @@ function scoreFrontmatterMetadata(input: EvalInput, output: EvalOutput): Score[]
     "category",
     "subCategory",
     "tags",
-    "publish",
-    "draft",
-    "unlisted",
-    "hidden",
-    "popularity",
     "related",
     "redirects",
     "commentsKeyOverride",
     "label",
-    "date",
     "modified",
     "minReleaseDate",
   ];
@@ -327,7 +392,9 @@ function scoreFrontmatterMetadata(input: EvalInput, output: EvalOutput): Score[]
       score: passed ? 1 : 0,
       passed,
       severity: "medium",
-      details: passed ? undefined : `Expected ${key} to stay ${sourceValue}; got ${outputValue}.`,
+      details: passed
+        ? undefined
+        : `Expected ${key} to stay ${sourceValue}; got ${outputValue}.`,
     });
   }
 
@@ -337,31 +404,47 @@ function scoreFrontmatterMetadata(input: EvalInput, output: EvalOutput): Score[]
 function scoreTitleTranslated(input: EvalInput, output: EvalOutput): Score {
   const title = input.title.trim();
   if (title.length < 8 || /^[A-Z0-9 _-]{1,20}$/.test(title)) {
-    return { name: "title-translated", score: 1, passed: true, severity: "medium" };
+    return {
+      name: "title-translated",
+      score: 1,
+      passed: true,
+      severity: "medium",
+    };
   }
-  const passed = !output.translation.includes(`title: ${title}`) &&
+  const passed =
+    !output.translation.includes(`title: ${title}`) &&
     !output.translation.includes(`title: "${title}"`);
   return {
     name: "title-translated",
     score: passed ? 1 : 0,
     passed,
     severity: "medium",
-    details: passed ? undefined : "Frontmatter title is still the English source title.",
+    details: passed
+      ? undefined
+      : "Frontmatter title is still the English source title.",
   };
 }
 
 function scoreNoWrapperText(_input: EvalInput, output: EvalOutput): Score {
-  const passed = !/^\s*(?:here is|here's|sure[,!]?|of course[,!]?|```(?:mdx|markdown)?)/i.test(output.translation);
+  const passed =
+    !/^\s*(?:here is|here's|sure[,!]?|of course[,!]?|```(?:mdx|markdown)?)/i.test(
+      output.translation,
+    );
   return {
     name: "no-wrapper-text",
     score: passed ? 1 : 0,
     passed,
     severity: "high",
-    details: passed ? undefined : "Output starts with wrapper prose or an unwrapped code fence.",
+    details: passed
+      ? undefined
+      : "Output starts with wrapper prose or an unwrapped code fence.",
   };
 }
 
-async function scoreMdxSyntax(input: EvalInput, output: EvalOutput): Promise<Score> {
+async function scoreMdxSyntax(
+  input: EvalInput,
+  output: EvalOutput,
+): Promise<Score> {
   try {
     await compile(stripFrontmatter(output.translation), {
       development: false,
@@ -390,16 +473,32 @@ type JudgeResult = {
   judgeScores?: JudgeScoreMap;
 };
 
-async function scoreLlmJudge(input: EvalInput, output: EvalOutput): Promise<JudgeResult> {
+async function scoreLlmJudge(
+  input: EvalInput,
+  output: EvalOutput,
+): Promise<JudgeResult> {
   const fail = (details: string): JudgeResult => ({
-    scores: [{ name: "judge:overall", score: 0, passed: false, severity: "medium", details }],
+    scores: [
+      {
+        name: "judge:overall",
+        score: 0,
+        passed: false,
+        severity: "medium",
+        details,
+      },
+    ],
   });
 
   let judgeStreamPath: string | undefined;
   try {
     const sha = "eval000000000000000000000000000000000000";
     const candidates: CandidateRef[] = [
-      { id: sha, label: `<candidate id="${sha}">`, source: "commit", model: output.model },
+      {
+        id: sha,
+        label: `<candidate id="${sha}">`,
+        source: "commit",
+        model: output.model,
+      },
     ];
     const targetRelPath = `src/content/posts/${basename(dirname(input.sourcePath))}/${input.locale}/index.mdx`;
     const prompt = [
@@ -420,39 +519,53 @@ async function scoreLlmJudge(input: EvalInput, output: EvalOutput): Promise<Judg
       `Use this JSON shape: ${JSON.stringify(getJudgeJsonShape())}`,
     ].join("\n");
 
-    const result = await streamLlmText({
-      model: createOpenRouter({}).chat(judgeModel, OPENROUTER_USAGE_ACCOUNTING),
-      system: "You are a constrained translation judge. Return strict JSON only. No markdown fences.",
-      prompt,
-      temperature: 0.1,
-      maxOutputTokens: 2000,
-      timeout: { totalMs: TIMEOUT_MS },
-    }, {
-      phase: "judge",
-      inputId: input.id,
-      model: `openrouter/${judgeModel}-for-${output.model}`,
-    });
+    const result = await streamLlmText(
+      {
+        model: createOpenRouter({}).chat(
+          judgeModel,
+          OPENROUTER_USAGE_ACCOUNTING,
+        ),
+        system:
+          "You are a constrained translation judge. Return strict JSON only. No markdown fences.",
+        prompt,
+        temperature: 0.1,
+        maxOutputTokens: 2000,
+        timeout: { totalMs: TIMEOUT_MS },
+      },
+      {
+        phase: "judge",
+        inputId: input.id,
+        model: `openrouter/${judgeModel}-for-${output.model}`,
+      },
+    );
     judgeStreamPath = result.streamTextPath;
 
     const parsed = parseJudgeOutput(result.text);
     const judgeScores = normalizeJudgeScores(parsed.scores);
     if (judgeScores == null) return fail("Judge returned no parseable scores.");
     const suggestions = readSuggestionsFromParsed(parsed);
-    const highPrioritySuggestions = suggestions.filter((suggestion) => suggestion.priority === "high");
-    const mediumPrioritySuggestions = suggestions.filter((suggestion) => suggestion.priority === "medium");
+    const highPrioritySuggestions = suggestions.filter(
+      (suggestion) => suggestion.priority === "high",
+    );
+    const mediumPrioritySuggestions = suggestions.filter(
+      (suggestion) => suggestion.priority === "medium",
+    );
 
-    const rationale = typeof parsed.rationale === "string" ? parsed.rationale.slice(0, 200) : undefined;
+    const rationale =
+      typeof parsed.rationale === "string"
+        ? parsed.rationale.slice(0, 200)
+        : undefined;
     const avg = averageJudgeScore(judgeScores) / 100; // normalize to 0–1
 
     // One Score per judge dimension + a summary entry
-    const dimensionScores: Score[] = (Object.entries(judgeScores) as [keyof JudgeScoreMap, number][]).map(
-      ([dim, raw]) => ({
-        name: `judge:${dim}`,
-        score: raw / 100,
-        passed: raw >= DEFAULT_MIN_SCORE,
-        severity: "low" as const, // dimensions don't block individually; overall does
-      }),
-    );
+    const dimensionScores: Score[] = (
+      Object.entries(judgeScores) as [keyof JudgeScoreMap, number][]
+    ).map(([dim, raw]) => ({
+      name: `judge:${dim}`,
+      score: raw / 100,
+      passed: raw >= DEFAULT_MIN_SCORE,
+      severity: "low" as const, // dimensions don't block individually; overall does
+    }));
 
     const overall: Score = {
       name: "judge:overall",
@@ -467,31 +580,50 @@ async function scoreLlmJudge(input: EvalInput, output: EvalOutput): Promise<Judg
       score: highPrioritySuggestions.length === 0 ? 1 : 0,
       passed: highPrioritySuggestions.length === 0,
       severity: "medium",
-      details: highPrioritySuggestions.length === 0
-        ? undefined
-        : highPrioritySuggestions
-          .map((suggestion) => `${suggestion.priority}: ${suggestion.reason}`)
-          .join(" | ")
-          .slice(0, 400),
+      details:
+        highPrioritySuggestions.length === 0
+          ? undefined
+          : highPrioritySuggestions
+              .map(
+                (suggestion) => `${suggestion.priority}: ${suggestion.reason}`,
+              )
+              .join(" | ")
+              .slice(0, 400),
     };
     const mediumSuggestionScore: Score = {
       name: "judge:medium-suggestions",
       score: mediumPrioritySuggestions.length === 0 ? 1 : 0.75,
       passed: mediumPrioritySuggestions.length === 0,
       severity: "low",
-      details: mediumPrioritySuggestions.length === 0
-        ? undefined
-        : mediumPrioritySuggestions
-          .map((suggestion) => `${suggestion.priority}: ${suggestion.reason}`)
-          .join(" | ")
-          .slice(0, 400),
+      details:
+        mediumPrioritySuggestions.length === 0
+          ? undefined
+          : mediumPrioritySuggestions
+              .map(
+                (suggestion) => `${suggestion.priority}: ${suggestion.reason}`,
+              )
+              .join(" | ")
+              .slice(0, 400),
     };
 
-    return { scores: [...dimensionScores, overall, suggestionScore, mediumSuggestionScore], judgeScores };
+    return {
+      scores: [
+        ...dimensionScores,
+        overall,
+        suggestionScore,
+        mediumSuggestionScore,
+      ],
+      judgeScores,
+    };
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
-    const streamPath = error instanceof StreamedTextError ? error.streamTextPath : judgeStreamPath;
-    return fail(streamPath == null ? message : `${message} (stream: ${streamPath})`);
+    const streamPath =
+      error instanceof StreamedTextError
+        ? error.streamTextPath
+        : judgeStreamPath;
+    return fail(
+      streamPath == null ? message : `${message} (stream: ${streamPath})`,
+    );
   }
 }
 
@@ -500,22 +632,36 @@ async function scoreLlmJudge(input: EvalInput, output: EvalOutput): Promise<Judg
 // ---------------------------------------------------------------------------
 
 async function translate(input: EvalInput, model: string): Promise<EvalOutput> {
-  const result = await streamLlmText({
-    model: createOpenRouter({}).chat(model.replace(/^openrouter\//, ""), OPENROUTER_USAGE_ACCOUNTING),
-    system: buildSystemPrompt(input.locale, input.isQuiz),
-    prompt: buildUserPrompt(input.source, input.locale, {
-      chunkIndex: 0,
-      totalChunks: 1,
-      articleSummary: `${input.kind === "quiz" ? "Quiz" : "Technical article"}: "${input.title}" (${input.slug}).`,
-    }, input.isQuiz),
-    temperature: 0.1,
-    maxOutputTokens: Math.min(16_000, Math.max(4_000, Math.ceil(input.source.length / 2))),
-    timeout: { totalMs: TIMEOUT_MS },
-  }, {
-    phase: "translation",
-    inputId: input.id,
-    model,
-  });
+  const result = await streamLlmText(
+    {
+      model: createOpenRouter({}).chat(
+        model.replace(/^openrouter\//, ""),
+        OPENROUTER_USAGE_ACCOUNTING,
+      ),
+      system: buildSystemPrompt(input.locale, input.isQuiz),
+      prompt: buildUserPrompt(
+        input.source,
+        input.locale,
+        {
+          chunkIndex: 0,
+          totalChunks: 1,
+          articleSummary: `${input.kind === "quiz" ? "Quiz" : "Technical article"}: "${input.title}" (${input.slug}).`,
+        },
+        input.isQuiz,
+      ),
+      temperature: 0.1,
+      maxOutputTokens: Math.min(
+        16_000,
+        Math.max(4_000, Math.ceil(input.source.length / 2)),
+      ),
+      timeout: { totalMs: TIMEOUT_MS },
+    },
+    {
+      phase: "translation",
+      inputId: input.id,
+      model,
+    },
+  );
 
   return {
     translation: normalizeEvalTranslation(input.source, result.text.trim()),
@@ -556,7 +702,15 @@ async function runEval(input: EvalInput, model: string): Promise<EvalResult> {
   }
 
   // Run all scorers — deterministic ones sync, LLM judge async
-  const [integrityScores, frontmatter, frontmatterMetadata, title, wrapper, mdxSyntax, judgeResult] = await Promise.all([
+  const [
+    integrityScores,
+    frontmatter,
+    frontmatterMetadata,
+    title,
+    wrapper,
+    mdxSyntax,
+    judgeResult,
+  ] = await Promise.all([
     Promise.resolve(scoreIntegrity(input, output)),
     Promise.resolve(scoreFrontmatter(input, output)),
     Promise.resolve(scoreFrontmatterMetadata(input, output)),
@@ -575,7 +729,8 @@ async function runEval(input: EvalInput, model: string): Promise<EvalResult> {
     mdxSyntax,
     ...judgeResult.scores,
   ];
-  const overallScore = scores.reduce((sum, s) => sum + s.score, 0) / scores.length;
+  const overallScore =
+    scores.reduce((sum, s) => sum + s.score, 0) / scores.length;
   const passed = scores.every((s) => s.passed || s.severity === "low");
 
   return {
@@ -604,31 +759,44 @@ function selectInputs(locale: ActiveLocale): EvalInput[] {
   const corpus = loadPublishedPosts();
 
   if (requestedSlug != null) {
-    const normalizedSlug = normalizeSlug(requestedSlug);
-    const post = corpus.find((p) => p.slug === normalizedSlug)
-      ?? (() => { throw new Error(`Slug "${requestedSlug}" not found in visible corpus.`); })();
+    const normalizedSlug = normalizeSlug(requestedSlug).toLowerCase();
+    const post =
+      corpus.find((p) => p.slug.toLowerCase().includes(normalizedSlug)) ??
+      (() => {
+        throw new Error(`Slug "${requestedSlug}" not found in visible corpus.`);
+      })();
 
     if (requestedKind !== "all" && post.kind !== requestedKind) {
-      throw new Error(`Slug "${requestedSlug}" has kind "${post.kind}", not "${requestedKind}".`);
+      throw new Error(
+        `Slug "${requestedSlug}" has kind "${post.kind}", not "${requestedKind}".`,
+      );
     }
 
-    return [{
-      id: `${post.kind}:${post.slug}:${locale}`,
-      kind: post.kind,
-      slug: post.slug,
-      sourcePath: post.sourcePath,
-      locale,
-      isQuiz: post.kind === "quiz",
-      title: post.title,
-      source: post.source,
-    }];
+    return [
+      {
+        id: `${post.kind}:${post.slug}:${locale}`,
+        kind: post.kind,
+        slug: post.slug,
+        sourcePath: post.sourcePath,
+        locale,
+        isQuiz: post.kind === "quiz",
+        title: post.title,
+        source: post.source,
+      },
+    ];
   }
 
-  const kinds = requestedKind === "all" ? (["article", "quiz"] as ArticleKind[]) : [requestedKind as ArticleKind];
+  const kinds =
+    requestedKind === "all"
+      ? (["article", "quiz"] as ArticleKind[])
+      : [requestedKind as ArticleKind];
 
   return kinds.map((kind) => {
-    const post = corpus.find((p) => p.kind === kind)
-      ?? (() => { throw new Error(`No visible published ${kind} found.`); })();
+    const post =
+      corpus.find((p) => p.kind === kind) ??
+      (() => {
+        throw new Error(`No visible published ${kind} found.`);
+      })();
 
     return {
       id: `${kind}:${post.slug}:${locale}`,
@@ -655,14 +823,18 @@ function loadPublishedPosts() {
         if (data.unlisted === true) return [];
         const dateMs = parsePostDateMs(data, join(POSTS_DIR, e.name));
         if (!Number.isFinite(dateMs) || dateMs > Date.now()) return [];
-        return [{
-          kind: (data.category === "Quiz" ? "quiz" : "article") as ArticleKind,
-          slug: e.name.replace(/^\d{4}-\d{2}-\d{2}--/, ""),
-          sourcePath,
-          source,
-          title: typeof data.title === "string" ? data.title : e.name,
-          dateMs,
-        }];
+        return [
+          {
+            kind: (data.category === "Quiz"
+              ? "quiz"
+              : "article") as ArticleKind,
+            slug: e.name.replace(/^\d{4}-\d{2}-\d{2}--/, ""),
+            sourcePath,
+            source,
+            title: typeof data.title === "string" ? data.title : e.name,
+            dateMs,
+          },
+        ];
       } catch {
         return [];
       }
@@ -699,7 +871,9 @@ function normalizeEvalTranslation(source: string, translation: string) {
   const normalized = normalizeLocalizedCandidateFile(source, translation);
   try {
     const parsed = matter(normalized);
-    const frontmatter = normalizeFrontmatterAssetPaths(parsed.data);
+    const frontmatter = omitInheritedTranslatedFrontmatter(
+      normalizeFrontmatterAssetPaths(parsed.data),
+    );
     return matter.stringify(parsed.content.trimStart(), frontmatter).trim();
   } catch {
     return normalized;
@@ -708,9 +882,12 @@ function normalizeEvalTranslation(source: string, translation: string) {
 
 function normalizeFrontmatterValue(value: unknown): string {
   if (value instanceof Date) return value.toISOString().slice(0, 10);
-  if (Array.isArray(value)) return JSON.stringify(value.map(normalizeFrontmatterValue));
+  if (Array.isArray(value))
+    return JSON.stringify(value.map(normalizeFrontmatterValue));
   if (value != null && typeof value === "object") {
-    const entries: Array<[string, string]> = Object.entries(value as Record<string, unknown>)
+    const entries: Array<[string, string]> = Object.entries(
+      value as Record<string, unknown>,
+    )
       .sort(([a], [b]) => a.localeCompare(b))
       .map(([key, item]) => [key, normalizeFrontmatterValue(item)]);
     return JSON.stringify(Object.fromEntries(entries));
@@ -719,7 +896,10 @@ function normalizeFrontmatterValue(value: unknown): string {
 }
 
 function safeFileName(value: string) {
-  return value.replace(/[^a-z0-9._-]+/gi, "-").replace(/^-+|-+$/g, "").slice(0, 180);
+  return value
+    .replace(/[^a-z0-9._-]+/gi, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 180);
 }
 
 function appendJsonl(path: string, value: unknown) {
@@ -731,7 +911,9 @@ function parseLocales(value: string | undefined): ActiveLocale[] {
   return value.split(",").map((v) => {
     const trimmed = v.trim();
     if (isActiveLocale(trimmed)) return trimmed;
-    throw new Error(`--locales must be active locales (${ACTIVE_LOCALES.join(", ")}). Got "${trimmed}".`);
+    throw new Error(
+      `--locales must be active locales (${ACTIVE_LOCALES.join(", ")}). Got "${trimmed}".`,
+    );
   });
 }
 
@@ -748,12 +930,16 @@ const streamDir = runDir;
 
 // inputs = unique articles × locales; pairs = inputs × models
 const inputs = locales.flatMap((loc) => selectInputs(loc));
-const pairs = inputs.flatMap((input) => translationModels.map((model) => ({ input, model })));
+const pairs = inputs.flatMap((input) =>
+  translationModels.map((model) => ({ input, model })),
+);
 
 if (isDryRun) {
   console.log(`\nEval cases (dry run):`);
   for (const { input, model } of pairs) {
-    console.log(`  [${input.kind}] ${input.slug}  locale=${input.locale}  model=${model.replace(/^openrouter\//, "")}`);
+    console.log(
+      `  [${input.kind}] ${input.slug}  locale=${input.locale}  model=${model.replace(/^openrouter\//, "")}`,
+    );
     console.log(`  source: ${relative(process.cwd(), input.sourcePath)}`);
   }
   console.log(`\nJudge model: ${judgeModel}`);
@@ -763,12 +949,18 @@ if (isDryRun) {
 
 mkdirSync(runDir, { recursive: true });
 
-console.log(`\n${inputs.length} input(s) × ${translationModels.length} model(s) = ${pairs.length} eval(s) running in parallel`);
-console.log(`Models  : ${translationModels.map((m) => m.replace(/^openrouter\//, "")).join(", ")}`);
+console.log(
+  `\n${inputs.length} input(s) × ${translationModels.length} model(s) = ${pairs.length} eval(s) running in parallel`,
+);
+console.log(
+  `Models  : ${translationModels.map((m) => m.replace(/^openrouter\//, "")).join(", ")}`,
+);
 console.log(`Judge   : ${judgeModel}`);
 console.log(`Locales : ${locales.join(", ")}\n`);
 console.log(`Output  : ${relative(process.cwd(), runDir)}`);
-console.log(`Streams : ${relative(process.cwd(), streamDir)}${printStreams ? " (+stdout)" : ""}\n`);
+console.log(
+  `Streams : ${relative(process.cwd(), streamDir)}${printStreams ? " (+stdout)" : ""}\n`,
+);
 
 if (braintrustEnabled) {
   console.log(`Braintrust: logging to project "${BRAINTRUST_PROJECT_NAME}"\n`);
@@ -780,18 +972,33 @@ const results = await Promise.all(
     console.log(`  → ${input.id}  model=${shortModel}`);
     const result = await tracedEval(
       `eval:${input.id}`,
-      { slug: input.slug, locale: input.locale, kind: input.kind, model: shortModel, judgeModel },
+      {
+        slug: input.slug,
+        locale: input.locale,
+        kind: input.kind,
+        model: shortModel,
+        judgeModel,
+      },
       () => runEval(input, model),
     );
     const score = (result.overallScore * 100).toFixed(1);
-    console.log(`  ← ${result.passed ? "PASS" : "FAIL"}  score=${score}  ${result.durationMs}ms  model=${shortModel}`);
+    console.log(
+      `  ← ${result.passed ? "PASS" : "FAIL"}  score=${score}  ${result.durationMs}ms  model=${shortModel}`,
+    );
     if (!result.passed) {
-      for (const s of result.scores.filter((s) => !s.passed && s.severity !== "low")) {
+      for (const s of result.scores.filter(
+        (s) => !s.passed && s.severity !== "low",
+      )) {
         console.log(`      ✗ ${s.name}${s.details ? `: ${s.details}` : ""}`);
       }
-      if (result.streamTextPath != null) console.log(`      raw translation stream: ${result.streamTextPath}`);
+      if (result.streamTextPath != null)
+        console.log(`      raw translation stream: ${result.streamTextPath}`);
     }
-    appendFileSync(outputPath, JSON.stringify({ at: new Date().toISOString(), ...result }) + "\n", "utf8");
+    appendFileSync(
+      outputPath,
+      JSON.stringify({ at: new Date().toISOString(), ...result }) + "\n",
+      "utf8",
+    );
     return result;
   }),
 );
@@ -813,12 +1020,23 @@ console.log(`All ${results.length} eval(s) passed.`);
 function writeSummary(results: EvalResult[]) {
   const passCount = results.filter((r) => r.passed).length;
   const failCount = results.length - passCount;
-  const totalCost = results.reduce((sum, r) => sum + (r.providerCostUsd ?? 0), 0);
+  const totalCost = results.reduce(
+    (sum, r) => sum + (r.providerCostUsd ?? 0),
+    0,
+  );
 
   // Collect all judge dimension names seen across results for column headers
-  const judgeKeys = [...new Set(
-    results.flatMap((r) => r.scores.filter((s) => s.name.startsWith("judge:") && s.name !== "judge:overall").map((s) => s.name)),
-  )].sort();
+  const judgeKeys = [
+    ...new Set(
+      results.flatMap((r) =>
+        r.scores
+          .filter(
+            (s) => s.name.startsWith("judge:") && s.name !== "judge:overall",
+          )
+          .map((s) => s.name),
+      ),
+    ),
+  ].sort();
 
   const lines: string[] = [
     `# Translation Eval Run — ${runId}`,
@@ -837,20 +1055,28 @@ function writeSummary(results: EvalResult[]) {
       const judgeOverall = scoreMap["judge:overall"];
       const dimCells = judgeKeys.map((k) => {
         const s = scoreMap[k];
-        return s != null ? `${(s.score * 100).toFixed(0)}${s.passed ? "" : "✗"}` : "—";
+        return s != null
+          ? `${(s.score * 100).toFixed(0)}${s.passed ? "" : "✗"}`
+          : "—";
       });
-      return [
-        `| ${r.kind}`,
-        r.slug,
-        r.locale,
-        r.model.replace(/^openrouter\//, ""),
-        r.passed ? "✓" : "✗",
-        (r.overallScore * 100).toFixed(1),
-        judgeOverall != null ? `${(judgeOverall.score * 100).toFixed(1)}${judgeOverall.passed ? "" : "✗"}` : "—",
-        ...dimCells,
-        r.providerCostUsd != null ? `$${r.providerCostUsd.toFixed(5)}` : "—",
-        r.streamTextPath != null ? `[txt](${relative(dirname(summaryPath), join(process.cwd(), r.streamTextPath))})` : "—",
-      ].join(" | ") + " |";
+      return (
+        [
+          `| ${r.kind}`,
+          r.slug,
+          r.locale,
+          r.model.replace(/^openrouter\//, ""),
+          r.passed ? "✓" : "✗",
+          (r.overallScore * 100).toFixed(1),
+          judgeOverall != null
+            ? `${(judgeOverall.score * 100).toFixed(1)}${judgeOverall.passed ? "" : "✗"}`
+            : "—",
+          ...dimCells,
+          r.providerCostUsd != null ? `$${r.providerCostUsd.toFixed(5)}` : "—",
+          r.streamTextPath != null
+            ? `[txt](${relative(dirname(summaryPath), join(process.cwd(), r.streamTextPath))})`
+            : "—",
+        ].join(" | ") + " |"
+      );
     }),
     ``,
     `## Score Details`,
@@ -860,10 +1086,16 @@ function writeSummary(results: EvalResult[]) {
       const header = `### ${r.kind}:${r.slug} · ${r.locale} · ${shortModel} ${r.passed ? "✓" : "✗"}`;
       const deterministicRows = r.scores
         .filter((s) => !s.name.startsWith("judge:"))
-        .map((s) => `| ${s.name} | ${(s.score * 100).toFixed(0)} | ${s.passed ? "✓" : `✗ ${s.severity}`}${s.details ? ` | ${s.details}` : " |"} |`);
+        .map(
+          (s) =>
+            `| ${s.name} | ${(s.score * 100).toFixed(0)} | ${s.passed ? "✓" : `✗ ${s.severity}`}${s.details ? ` | ${s.details}` : " |"} |`,
+        );
       const judgeRows = r.scores
         .filter((s) => s.name.startsWith("judge:"))
-        .map((s) => `| ${s.name} | ${(s.score * 100).toFixed(0)} | ${s.passed ? "✓" : `✗ ${s.severity}`}${s.details ? ` | ${s.details.slice(0, 120)}` : " |"} |`);
+        .map(
+          (s) =>
+            `| ${s.name} | ${(s.score * 100).toFixed(0)} | ${s.passed ? "✓" : `✗ ${s.severity}`}${s.details ? ` | ${s.details.slice(0, 120)}` : " |"} |`,
+        );
       return [
         header,
         ``,

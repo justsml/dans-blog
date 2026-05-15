@@ -31,6 +31,7 @@ import {
   relativeToRepo,
 } from "./utils.ts";
 import {
+  omitInheritedTranslatedFrontmatter,
   normalizeFrontmatterAssetPaths,
   normalizeLocalizedCandidateBody,
 } from "./localized-mdx.ts";
@@ -1184,7 +1185,7 @@ async function translateFrontmatter(
   llmConfig: LlmConfig,
   isQuiz: boolean,
 ): Promise<Record<string, unknown>> {
-  const result = normalizeFrontmatterAssetPaths(frontmatter);
+  const result = omitInheritedTranslatedFrontmatter(normalizeFrontmatterAssetPaths(frontmatter));
 
   for (const key of ["date", "modified", "minReleaseDate"]) {
     const value = result[key];

@@ -8,6 +8,15 @@ const LOCALE_IMPORT_ROOTS = [
   "utils",
 ];
 
+export const INHERITED_TRANSLATED_FRONTMATTER_KEYS = [
+  "date",
+  "draft",
+  "unlisted",
+  "hidden",
+  "publish",
+  "popularity",
+] as const;
+
 type LengthRatioBounds = {
   minimumRatio: number;
   maximumRatio: number;
@@ -130,6 +139,16 @@ export function normalizeFrontmatterAssetPaths(
     }
   }
 
+  return result;
+}
+
+export function omitInheritedTranslatedFrontmatter(
+  frontmatter: Record<string, unknown>,
+): Record<string, unknown> {
+  const result = { ...frontmatter };
+  for (const key of INHERITED_TRANSLATED_FRONTMATTER_KEYS) {
+    delete result[key];
+  }
   return result;
 }
 
