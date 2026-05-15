@@ -75,6 +75,7 @@ When I am deciding whether a project is credible enough to use, I look for these
 | Artifact shape | `npm pack` output is boring and expected | Tarball includes tests? fine. Includes minified mystery blobs? pause |
 | Maintainer identity | Maintainers have history across issues, releases, and other projects | Fresh accounts control publish rights |
 | Security posture | 2FA/provenance/signatures/advisories are visible where supported | Long-lived publish tokens, no provenance, no explanation |
+| Public conversation | Mentions appear in places that match the project and include real opinions | Zero conversation, or giant numbers on only one or two platforms |
 | Issue handling | Bugs get triaged, reproduced, fixed, or honestly declined | Maintainer only says "works for me" and closes |
 | Missing history | Old issues and PRs remain linkable, even when closed | Changelog, commits, or comments reference issues/PRs that now 404 |
 | Docs honesty | README names limits and non-goals | README promises magic and hides tradeoffs |
@@ -248,6 +249,53 @@ git log --oneline --grep '#[0-9]\\+' --all
 
 If the project has a polished changelog but the referenced review trail is gone, trust the gap more than the polish.
 
+### 8. Read the Public Discourse Shape
+
+There is another kind of evidence that is softer than a Git diff and still worth reading: the public conversation around the project.
+
+Not follower counts. Not launch-day applause. The discourse shape.
+
+Real products leave messy trails because real people use them, complain about them, recommend them, misunderstand them, dunk on them, defend them, and occasionally write a 1,400-word post about why the settings screen has betrayed civilization.
+
+Think about products you know are real.
+
+Zoom has support threads, workplace jokes, security debates, school stories, feature complaints, procurement posts, and people asking why their microphone has chosen violence. Stripe has developer praise, integration pain, startup advice, support complaints, pricing arguments, and engineers comparing API taste like sommeliers with laptops. Cinnabon has photos, cravings, airport takes, nutrition regret, mall nostalgia, and at least one person being theatrically angry about frosting.
+
+The point is not that all attention is good. The point is that real things create platform-shaped attention.
+
+A developer library should show up on GitHub, npm, Stack Overflow, Hacker News, Reddit, blog posts, conference slides, company engineering posts, and maybe LinkedIn if it has crossed into procurement land. A beauty subscription box may have far more evidence on Instagram, TikTok, YouTube, and Reddit than GitHub, because nobody is filing a pull request against mascara.
+
+Match the platform to the thing.
+
+Then look at the ratio.
+
+Spicy posts get more attention than boring posts. Complaints travel. A single angry Reddit thread can outrank fifty normal experiences because normal experiences do not wake up and write paragraphs. So do not ask "are there negative posts?" Ask whether the negative posts are the whole public record, whether the same complaint appears across independent places, and whether praise sounds like users or like campaign copy that escaped the spreadsheet.
+
+Useful questions:
+
+- Do GitHub, npm, Reddit, Hacker News, Stack Overflow, LinkedIn, blog, and news mentions roughly make sense for the project type?
+- Does LinkedIn activity align with news, customers, conference talks, funding, hiring, or company adoption claims?
+- Are there zero hits where there should obviously be some?
+- Are there huge numbers on one or two platforms while every other surface is empty?
+- Do the posts contain specific nouns, versions, bugs, migrations, invoices, outages, support tickets, or code snippets?
+- Are the same accounts repeating the same phrasing across platforms?
+- Do negative posts cluster around a real event, like a breaking release, pricing change, outage, ownership transfer, or security issue?
+- Are people arguing about tradeoffs, or only repeating the tagline?
+
+Zeros matter.
+
+If a supposedly popular infrastructure project has npm downloads, GitHub stars, and no organic mentions from developers anywhere else, that is strange. If a company claims enterprise adoption but LinkedIn, job posts, conference talks, case studies, and news mentions are all empty, that is also strange. If a consumer product claims a huge community but only has inflated Instagram numbers and no Reddit threads, reviews, support questions, or annoyed customers, that is not a community. That is a billboard.
+
+Inflation matters too.
+
+A project with 80,000 stars, two maintainers, no issue texture, no Stack Overflow questions, no blog posts, no package dependents you recognize, and a sudden wave of identical social posts has not earned 80,000 units of trust. It has earned a second tab.
+
+Use social evidence the same way you use downloads: weak alone, useful in context.
+
+The public conversation should not be perfectly positive. Perfectly positive is often the smell. Real software has fans, skeptics, support requests, migrations, stale advice, and arguments about whether the new version made things better or merely more modern.
+
+That mess is part of the signal.
+
 ## Mini Guide: Reading an npm Package
 
 GitHub tells you how the project behaves. npm tells you what you are actually installing.
@@ -408,6 +456,7 @@ The best signals are not impossible to fake. They are just expensive.
 | Release-to-source alignment | Tags, changelog, GitHub release, npm version, and provenance should tell the same story. |
 | Normal file churn | Real projects mostly evolve existing files; attacks often add new execution paths. |
 | Dependents you recognize | A package used by serious projects has more eyes on breakage and compromise. |
+| Platform-shaped discourse | Real projects usually leave different kinds of traces in the places their users actually talk. |
 | Reverts and regression fixes | Real software breaks, admits it, and repairs the damage. |
 | Narrow scope | A small tool that stays small is often safer than a tiny package that wants to own your stack. |
 
@@ -426,6 +475,9 @@ I would slow down if I saw:
 - changelog, commits, or release notes reference issues/PRs that now 404
 - public review history disappears around a sensitive release
 - contributor graph is inflated by trivial changes
+- zero public conversation where the project's claimed adoption should leave some
+- social numbers are huge on one or two platforms and empty everywhere else
+- praise repeats the same phrasing across unrelated accounts
 - generated bundles are checked in with no reproducible build story
 - package requests broad permissions for a narrow job
 - README has badges but no operational detail
@@ -448,7 +500,8 @@ For a GitHub repo:
 5. Check contributors by meaningful work, not raw count.
 6. Compare tags, releases, changelog, and referenced issue/PR links.
 7. Search for deleted or missing review history around risky releases.
-8. Search for security issues, ownership transfers, and suspicious workflow changes.
+8. Search for public discussion in the places this kind of project should naturally appear.
+9. Search for security issues, ownership transfers, and suspicious workflow changes.
 
 For an npm package:
 
