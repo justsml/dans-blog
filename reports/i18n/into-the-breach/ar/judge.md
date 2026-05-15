@@ -1,7 +1,7 @@
 # Translation Judge
 
-- Selected candidate: 2bbb418a0cd9a42036c55d36840f30a55581e92b
+- Selected candidate: 6615ac0cd23c9a6267cce6649d82d8b564d4393f
 - Selected model: openrouter/deepseek/deepseek-v4-flash
 - Judge model: openrouter/google/gemini-3-flash-preview
 
-DeepSeek provided a high-quality translation that maintains the direct, technical tone of the original. It correctly handled the MDX structure, including the table and code blocks. It also correctly updated the asset paths to use the '../' prefix as required by the instructions. The Arabic prose is natural and technically accurate, using appropriate terminology for security concepts like 'infostealer' and 'canary tokens'.
+This candidate is the only one that correctly preserved the structural integrity of the MDX file, specifically the 'Visual Table Of Contents' section with its H2 heading and infographic image, which were missing or significantly altered in other candidates. It maintains Dan's direct, technical tone while providing a natural Arabic translation. It also correctly handles the relative asset paths (../) and preserves technical terms like 'DevContainers' and 'CLI' appropriately.
