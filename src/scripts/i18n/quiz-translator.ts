@@ -60,6 +60,14 @@ export interface LlmConfig {
   timeoutMs: number;
 }
 
+export interface QuizPromptTuning {
+  appendSystem?: string;
+  appendCachedContext?: string;
+  appendDynamic?: string;
+  appendQuizProse?: string;
+  appendSummary?: string;
+}
+
 function buildQuizSystemPrompt(locale: ActiveLocale, isQuiz: boolean): string {
   const language = LOCALE_LABELS[locale];
 
@@ -149,6 +157,7 @@ export async function translateChallenge(
   llmConfig: LlmConfig,
   quizDescription: string,
   isQuiz: boolean,
+  promptTuning?: QuizPromptTuning,
 ): Promise<{
   challenge: QuizChallenge;
   translation: TranslationResult;
@@ -167,15 +176,25 @@ export async function translateChallenge(
     messages: [
       {
         role: "system",
-        content: "You are a technical quiz translator. Follow the stable quiz translation contract in the user message. Respond with valid JSON only.",
+        content: joinPrompt(
+          "You are a technical quiz translator. Follow the stable quiz translation contract in the user message. Respond with valid JSON only.",
+          promptTuning?.appendSystem,
+        ),
       },
       {
         role: "user",
         content: [
-          cachedText(buildCachedQuizPromptContext(locale, quizDescription, isQuiz)),
+          cachedText(joinPrompt(
+            buildCachedQuizPromptContext(locale, quizDescription, isQuiz),
+            promptTuning?.appendCachedContext,
+          )),
           {
             type: "text",
-            text: buildDynamicQuizPrompt(challenge),
+            text: joinPrompt(
+              buildDynamicQuizPrompt(challenge),
+              promptTuning?.appendQuizProse ?? promptTuning?.appendDynamic,
+              "QUIZ CHALLENGE PROMPT PROFILE TUNING",
+            ),
           },
         ],
       },
@@ -281,6 +300,7 @@ function assertTranslatedCounts(original: QuizChallenge, translated: Translation
 export async function generateQuizDescription(
   quiz: ParsedQuiz,
   llmConfig: LlmConfig,
+  promptTuning?: QuizPromptTuning,
 ): Promise<{ description: string; telemetry: TranslationTelemetry; rawText: string }> {
   const start = performance.now();
   const context = [
@@ -299,7 +319,10 @@ export async function generateQuizDescription(
     messages: [
       {
         role: "system",
-        content: `You are a technical editor. Summarize quiz content concisely. You must respond with valid JSON only. Do not wrap in markdown code fences.`,
+        content: joinPrompt(
+          `You are a technical editor. Summarize quiz content concisely. You must respond with valid JSON only. Do not wrap in markdown code fences.`,
+          promptTuning?.appendSystem,
+        ),
       },
       {
         role: "user",
@@ -317,7 +340,7 @@ export async function generateQuizDescription(
               `---`,
             ].join("\n"),
           },
-          cachedText(context),
+          cachedText(joinPrompt(context, promptTuning?.appendSummary, "QUIZ SUMMARY PROMPT PROFILE TUNING")),
           {
             type: "text",
             text: `---`,
@@ -386,4 +409,9 @@ function stripJsonFences(text: string) {
     .replace(/^```(?:json)?\s*/i, "")
     .replace(/```\s*$/i, "")
     .trim();
+}
+
+function joinPrompt(base: string, append: string | undefined, label = "PROMPT PROFILE TUNING") {
+  if (append == null || append.trim() === "") return base;
+  return [base.trim(), "", `${label}:`, append.trim()].join("\n");
 }
