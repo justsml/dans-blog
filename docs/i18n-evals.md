@@ -143,7 +143,8 @@ Run by `runDeterministicScorers` in `eval-prompts.ts`, powered by `analyzeTransl
 
 | Scorer | Severity | What it checks |
 | --- | --- | --- |
-| `integrity:*` | high/medium/low | Structural issues from `analyzeTranslationIntegrity`: heading count drift, malformed locale asset paths, broken Gist paths, wrong locale component import depth, suspicious code-fence languages, quiz option/answer drift, LLM instruction leakage, code fence count, etc. |
+| `integrity:*` | high/medium/low | Structural issues from `analyzeTranslationIntegrity`: malformed locale asset paths, broken Gist paths, wrong locale component import depth, suspicious code-fence languages, quiz option/answer drift, LLM instruction leakage, code fence count, etc. |
+| `heading-counts-by-level` | high | Counts H1-H6 headings in the English source post and compares each level against the generated translation |
 | `frontmatter-preserved` | high | Output must start with `---` frontmatter delimiters |
 | `title-translated` | medium | Frontmatter `title:` must not be identical to the English source title |
 | `no-wrapper-text` | high | Output must not start with wrapper prose (`"Here is…"`, `"Sure!"`) or a raw fence |

@@ -19,7 +19,10 @@ import {
   type CandidateRef,
   type JudgeSuggestion,
 } from "./judge-utils.ts";
-import { analyzeTranslationIntegrity } from "./integrity-checks.ts";
+import {
+  analyzeTranslationIntegrity,
+  countHeadingsByLevel,
+} from "./integrity-checks.ts";
 import { resolveCheapFastTranslationModel } from "./model-presets.ts";
 
 const SHA_A = "a".repeat(40);
@@ -386,6 +389,37 @@ describe("analyzeTranslationIntegrity", () => {
       locale: "de",
     });
     expect(issues.some((issue) => issue.code === "blockquote-count")).toBe(true);
+  });
+
+  test("counts headings by level against the English source", () => {
+    const target = source.replace("## Heading", "### Heading");
+    const issues = analyzeTranslationIntegrity({
+      sourceContents: source,
+      targetContents: target,
+      targetPath: "/repo/src/content/posts/test/es/index.mdx",
+      locale: "es",
+    });
+
+    expect(countHeadingsByLevel(source)).toEqual([0, 1, 0, 0, 0, 0]);
+    expect(countHeadingsByLevel(target)).toEqual([0, 0, 1, 0, 0, 0]);
+    expect(issues.some((issue) => issue.code === "heading-h2-count")).toBe(true);
+    expect(issues.some((issue) => issue.code === "heading-h3-count")).toBe(true);
+  });
+
+  test("does not count headings inside frontmatter or code fences", () => {
+    const sourceWithNonBodyHashes = [
+      "---",
+      "title: '# Not a body heading'",
+      "---",
+      "",
+      "## Real heading",
+      "",
+      "```md",
+      "# Example fence heading",
+      "```",
+    ].join("\n");
+
+    expect(countHeadingsByLevel(sourceWithNonBodyHashes)).toEqual([0, 1, 0, 0, 0, 0]);
   });
 
   test("flags changed code-like quiz options and answer counts", () => {

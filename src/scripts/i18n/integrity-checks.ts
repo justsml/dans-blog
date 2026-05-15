@@ -15,6 +15,8 @@ export type IntegrityCheckInput = {
   locale: ActiveLocale;
 };
 
+export type HeadingCountsByLevel = [number, number, number, number, number, number];
+
 const VOID_HTML_TAGS = new Set([
   "area",
   "base",
@@ -241,6 +243,8 @@ function checkLocalizedComponentImports(contents: string, targetPath: string): I
 }
 
 function checkStructuralCounts(sourceContents: string, targetContents: string, targetPath: string): IntegrityIssue[] {
+  const sourceHeadingCounts = countHeadingsByLevel(sourceContents);
+  const targetHeadingCounts = countHeadingsByLevel(targetContents);
   const checks: Array<{ code: string; label: string; source: number; target: number; severity: IntegritySeverity }> = [
     { code: "fenced-code-count", label: "fenced code block markers", source: countFenceMarkers(sourceContents), target: countFenceMarkers(targetContents), severity: "high" },
     { code: "markdown-image-count", label: "Markdown images", source: countMarkdownImages(sourceContents), target: countMarkdownImages(targetContents), severity: "high" },
@@ -253,8 +257,8 @@ function checkStructuralCounts(sourceContents: string, targetContents: string, t
     checks.push({
       code: `heading-h${level}-count`,
       label: `H${level} headings`,
-      source: countHeadings(sourceContents)[level - 1],
-      target: countHeadings(targetContents)[level - 1],
+      source: sourceHeadingCounts[level - 1],
+      target: targetHeadingCounts[level - 1],
       severity: "high",
     });
   }
@@ -635,7 +639,7 @@ function countMarkdownTables(contents: string) {
   return [...stripFencedCodeBlocks(stripFrontmatter(contents)).matchAll(/^\s*\|?\s*:?-{3,}:?\s*\|/gm)].length;
 }
 
-function countHeadings(contents: string) {
+export function countHeadingsByLevel(contents: string): HeadingCountsByLevel {
   const counts = [0, 0, 0, 0, 0, 0];
   for (const { line } of iterNonFenceLines(stripFrontmatter(contents))) {
     const markdownHeading = line.match(/^\s{0,3}(#{1,6})(?:\s|$)/);
@@ -647,7 +651,7 @@ function countHeadings(contents: string) {
       counts[Number(htmlHeading[1]) - 1] += 1;
     }
   }
-  return counts;
+  return counts as HeadingCountsByLevel;
 }
 
 function extractChallengeBlocks(contents: string) {

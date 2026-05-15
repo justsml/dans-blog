@@ -56,7 +56,10 @@ import {
   type CandidateRef,
   type JudgeScoreMap,
 } from "./judge-utils.ts";
-import { analyzeTranslationIntegrity } from "./integrity-checks.ts";
+import {
+  analyzeTranslationIntegrity,
+  countHeadingsByLevel,
+} from "./integrity-checks.ts";
 import {
   INHERITED_TRANSLATED_FRONTMATTER_KEYS,
   normalizeFrontmatterAssetPaths,
@@ -331,7 +334,7 @@ function scoreIntegrity(input: EvalInput, output: EvalOutput): Score[] {
     targetContents: output.translation,
     targetPath: `/${input.slug}/${input.locale}/index.mdx`,
     locale: input.locale,
-  });
+  }).filter((issue) => !/^heading-h[1-6]-count$/.test(issue.code));
 
   return issues.map((issue) => ({
     name: `integrity:${issue.code}`,
@@ -340,6 +343,35 @@ function scoreIntegrity(input: EvalInput, output: EvalOutput): Score[] {
     severity: issue.severity,
     details: issue.message,
   }));
+}
+
+function scoreHeadingCounts(input: EvalInput, output: EvalOutput): Score {
+  const sourceCounts = countHeadingsByLevel(input.source);
+  const targetCounts = countHeadingsByLevel(output.translation);
+  const mismatches = sourceCounts
+    .map((sourceCount, index) => {
+      const level = index + 1;
+      const targetCount = targetCounts[index];
+      return sourceCount === targetCount
+        ? undefined
+        : `H${level}: English has ${sourceCount}, translation has ${targetCount}`;
+    })
+    .filter((message): message is string => message != null);
+  const passed = mismatches.length === 0;
+
+  return {
+    name: "heading-counts-by-level",
+    score: passed ? 1 : 0,
+    passed,
+    severity: "high",
+    details: passed
+      ? `English and translation heading counts match by level (${formatHeadingCounts(sourceCounts)}).`
+      : mismatches.join("; "),
+  };
+}
+
+function formatHeadingCounts(counts: readonly number[]) {
+  return counts.map((count, index) => `H${index + 1}=${count}`).join(", ");
 }
 
 function scoreFrontmatter(_input: EvalInput, output: EvalOutput): Score {
@@ -979,6 +1011,7 @@ async function runEval(input: EvalInput, model: string): Promise<EvalResult> {
   // Run all scorers — deterministic ones sync, LLM judge async
   const [
     integrityScores,
+    headingCounts,
     frontmatter,
     frontmatterMetadata,
     title,
@@ -987,6 +1020,7 @@ async function runEval(input: EvalInput, model: string): Promise<EvalResult> {
     judgeResult,
   ] = await Promise.all([
     Promise.resolve(scoreIntegrity(input, output)),
+    Promise.resolve(scoreHeadingCounts(input, output)),
     Promise.resolve(scoreFrontmatter(input, output)),
     Promise.resolve(scoreFrontmatterMetadata(input, output)),
     Promise.resolve(scoreTitleTranslated(input, output)),
@@ -997,6 +1031,7 @@ async function runEval(input: EvalInput, model: string): Promise<EvalResult> {
 
   const scores: Score[] = [
     ...integrityScores,
+    headingCounts,
     frontmatter,
     ...frontmatterMetadata,
     title,
