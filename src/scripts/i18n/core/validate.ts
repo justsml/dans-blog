@@ -2,6 +2,7 @@ import { assertTranslationLength } from "../structural-validation.ts";
 import { assertNestedAssetPaths } from "../localized-mdx.ts";
 import { analyzeTranslationIntegrity } from "../integrity-checks.ts";
 import type { ActiveLocale } from "../../../shared/i18n.ts";
+import matter from "gray-matter";
 
 export type TranslationValidationSeverity = "high" | "medium" | "low";
 
@@ -26,7 +27,11 @@ export type ValidateTranslationOutput = {
 export function validateTranslation(input: ValidateTranslationInput): ValidateTranslationOutput {
   const issues: TranslationValidationIssue[] = [];
 
-  collectIssue(issues, "frontmatter", "high", () => assertFrontmatter(input.targetContents, input.targetPath));
+  collectIssue(issues, "frontmatter", "high", () => assertFrontmatter(
+    input.sourceContents,
+    input.targetContents,
+    input.targetPath,
+  ));
   collectIssue(issues, "length-ratio", "medium", () => assertTranslationLength({
     sourceContents: input.sourceContents,
     targetContents: input.targetContents,
@@ -88,20 +93,53 @@ function collectIssue(
   }
 }
 
-function assertFrontmatter(contents: string, targetPath: string) {
-  if (!contents.startsWith("---")) {
+function assertFrontmatter(sourceContents: string, targetContents: string, targetPath: string) {
+  if (!targetContents.startsWith("---")) {
     throw new Error(`${targetPath} must start with frontmatter`);
   }
 
-  const frontmatterEnd = contents.indexOf("\n---", 3);
+  const frontmatterEnd = targetContents.indexOf("\n---", 3);
   if (frontmatterEnd === -1) {
     throw new Error(`${targetPath} has unterminated frontmatter`);
   }
 
-  const frontmatter = contents.slice(3, frontmatterEnd);
+  const frontmatter = targetContents.slice(3, frontmatterEnd);
   if (!/^title:\s+/m.test(frontmatter)) {
     throw new Error(`${targetPath} must include localized title frontmatter`);
   }
+
+  const sourceFrontmatter = matter(sourceContents).data;
+  const targetFrontmatter = matter(targetContents).data;
+  assertTranslatedFrontmatterValue("title", sourceFrontmatter.title, targetFrontmatter.title, targetPath);
+  if (sourceFrontmatter.subTitle != null) {
+    assertTranslatedFrontmatterValue("subTitle", sourceFrontmatter.subTitle, targetFrontmatter.subTitle, targetPath);
+  }
+}
+
+function assertTranslatedFrontmatterValue(
+  key: "title" | "subTitle",
+  sourceValue: unknown,
+  targetValue: unknown,
+  targetPath: string,
+) {
+  const sourceText = frontmatterString(sourceValue);
+  const targetText = frontmatterString(targetValue);
+  if (targetText == null || targetText === "") {
+    throw new Error(`${targetPath} must include localized ${key} frontmatter`);
+  }
+  if (sourceText != null && normalizeFrontmatterText(sourceText) === normalizeFrontmatterText(targetText)) {
+    throw new Error(`${targetPath} must translate frontmatter ${key}; it still matches the English source`);
+  }
+}
+
+function frontmatterString(value: unknown) {
+  if (typeof value === "string") return value;
+  if (value == null) return undefined;
+  return String(value);
+}
+
+function normalizeFrontmatterText(value: string) {
+  return value.trim().replace(/\s+/g, " ").toLocaleLowerCase();
 }
 
 function assertProtectedTokens(sourceContents: string, targetContents: string, targetPath: string) {

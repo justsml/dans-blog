@@ -34,6 +34,164 @@ const repoRoot = process.cwd();
 const agentReportsRoot = join(repoRoot, "reports/i18n-agent");
 const candidateRunsRoot = join(agentReportsRoot, "runs");
 
+const optionalNumber = z.number().optional();
+const telemetrySchema = z.object({
+  inputTokens: z.number(),
+  outputTokens: z.number(),
+  totalTokens: z.number(),
+  reasoningTokens: z.number(),
+  cacheReadTokens: z.number(),
+  cacheWriteTokens: z.number(),
+  durationMs: z.number(),
+  finishReason: z.string().optional(),
+  rawFinishReason: z.string().optional(),
+  warnings: z.array(z.unknown()).optional(),
+  providerCostUsd: optionalNumber,
+  providerUpstreamCostUsd: optionalNumber,
+  pricingSource: z.string().optional(),
+  openRouterUsage: z.record(z.string(), z.unknown()).optional(),
+});
+const translationRunTelemetrySchema = z.object({
+  model: z.string(),
+  chunkSize: z.string(),
+  totalChunks: z.number(),
+  totalInputTokens: z.number(),
+  totalOutputTokens: z.number(),
+  totalReasoningTokens: z.number(),
+  totalCacheReadTokens: z.number(),
+  totalCacheWriteTokens: z.number(),
+  providerCostUsd: optionalNumber,
+  providerUpstreamCostUsd: optionalNumber,
+  totalDurationMs: z.number(),
+  totalCostUsd: z.number(),
+  pricingSource: z.string(),
+  chunks: z.array(telemetrySchema.extend({
+    index: z.number(),
+    label: z.string().optional(),
+    costUsd: z.number(),
+  })),
+});
+const tokenCostSchema = z.object({
+  inputUsd: z.number(),
+  outputUsd: z.number(),
+  totalUsd: z.number(),
+  pricingSource: z.string(),
+  providerCostUsd: optionalNumber,
+});
+const promptProfileSchema = z.object({
+  id: z.string(),
+  locale: z.union([z.enum(ACTIVE_LOCALES), z.literal("*")]),
+  modelPattern: z.string(),
+  version: z.number().int(),
+  status: z.enum(["active", "archived"]),
+  basedOn: z.literal("legacy-i18n-prompts"),
+  notes: z.string().optional(),
+  appendSystem: z.string().optional(),
+  appendCachedContext: z.string().optional(),
+  appendDynamic: z.string().optional(),
+  appendFrontmatter: z.string().optional(),
+  appendSummary: z.string().optional(),
+  appendQuizProse: z.string().optional(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
+});
+const promptProfilePreviewSchema = z.object({
+  profile: promptProfileSchema.optional(),
+  base: z.object({
+    basedOn: z.literal("legacy-i18n-prompts"),
+    systemPrompt: z.string(),
+  }),
+  effective: z.object({
+    systemPrompt: z.string(),
+    cachedContextAppend: z.string().optional(),
+    dynamicAppend: z.string().optional(),
+    frontmatterAppend: z.string().optional(),
+    summaryAppend: z.string().optional(),
+    quizProseAppend: z.string().optional(),
+  }),
+});
+const translationScoreSchema = z.object({
+  fidelity: z.number(),
+  mdxPreservation: z.number(),
+  localeQuality: z.number(),
+  tone: z.number(),
+  publishReadiness: z.number(),
+});
+const judgeScoreSchema = z.object({
+  readability: z.number(),
+  technicalAccuracy: z.number(),
+  coherence: z.number(),
+  relevance: z.number(),
+  translationQuality: z.number(),
+  mdxPreservation: z.number(),
+  culturalAdaptation: z.number(),
+  languagePurity: z.number(),
+});
+const judgeSuggestionSchema = z.object({
+  priority: z.enum(["low", "medium", "high"]),
+  match: z.string(),
+  replacement: z.string(),
+  reason: z.string(),
+});
+const scoreTranslationOutputSchema = z.object({
+  candidateId: z.string(),
+  model: z.string(),
+  scores: translationScoreSchema,
+  judgeScores: judgeScoreSchema.optional(),
+  overallScore: z.number(),
+  publishReady: z.boolean(),
+  suggestions: z.array(judgeSuggestionSchema),
+  rationale: z.string(),
+  rawText: z.string(),
+  telemetry: telemetrySchema,
+  cost: tokenCostSchema,
+  roundLabel: z.string().optional(),
+});
+const consensusOutputSchema = z.object({
+  candidateId: z.string(),
+  models: z.array(z.string()),
+  escalationModels: z.array(z.string()),
+  consensus: z.object({
+    overallScore: z.number(),
+    scores: translationScoreSchema,
+    publishReady: z.boolean(),
+    confidence: z.enum(["low", "medium", "high"]),
+    rationale: z.string(),
+    suggestions: z.array(judgeSuggestionSchema.extend({
+      supportingModels: z.array(z.string()),
+    })),
+  }),
+  escalated: z.boolean(),
+  disagreement: z.object({
+    scoreRange: z.number(),
+    publishReadyDisagreement: z.boolean(),
+    blockingSuggestionDisagreement: z.boolean(),
+    uncertaintyDetected: z.boolean(),
+    shouldEscalate: z.boolean(),
+  }),
+  assessments: z.array(scoreTranslationOutputSchema),
+  totals: z.object({
+    inputTokens: z.number(),
+    outputTokens: z.number(),
+    reasoningTokens: z.number(),
+    totalTokens: z.number(),
+    cacheReadTokens: z.number(),
+    cacheWriteTokens: z.number(),
+    durationMs: z.number(),
+    costUsd: z.number(),
+    providerCostUsd: optionalNumber,
+    providerUpstreamCostUsd: optionalNumber,
+  }),
+});
+const validationOutputSchema = z.object({
+  passed: z.boolean(),
+  issues: z.array(z.object({
+    code: z.string(),
+    severity: z.enum(["high", "medium", "low"]),
+    message: z.string(),
+  })),
+});
+
 export function createTranslationAgentTools(context: TranslationAgentToolContext) {
   return {
     listPosts: createTool({
@@ -156,12 +314,18 @@ export function createTranslationAgentTools(context: TranslationAgentToolContext
       }),
       outputSchema: z.object({
         contents: z.string(),
+        body: z.string(),
+        frontmatter: z.record(z.string(), z.unknown()),
         model: z.string(),
         locale: z.string(),
         isQuiz: z.boolean(),
         articleSummary: z.string(),
-        telemetry: z.unknown(),
-        promptProfile: z.unknown().optional(),
+        telemetry: translationRunTelemetrySchema,
+        promptProfile: z.object({
+          id: z.string(),
+          version: z.number().int(),
+          notes: z.string().optional(),
+        }).optional(),
       }),
       execute: async ({ slug, sourceContents, locale, model, chunkSize, skipSummary, promptProfileId, usePromptProfile }) => {
         const source = sourceContents ?? readSourceBySlug(slug);
@@ -215,7 +379,7 @@ export function createTranslationAgentTools(context: TranslationAgentToolContext
         includeArchived: z.boolean().optional(),
       }),
       outputSchema: z.object({
-        profiles: z.array(z.unknown()),
+        profiles: z.array(promptProfileSchema),
       }),
       execute: async ({ locale, model, includeArchived }) => ({
         profiles: listPromptProfiles({ locale, model, includeArchived }),
@@ -231,7 +395,7 @@ export function createTranslationAgentTools(context: TranslationAgentToolContext
         profileId: z.string().optional(),
         isQuiz: z.boolean().optional(),
       }),
-      outputSchema: z.unknown(),
+      outputSchema: promptProfilePreviewSchema,
       execute: async ({ locale, model, profileId, isQuiz }) => renderPromptProfilePreview({
         locale,
         model: model ?? context.defaultTranslationModel,
@@ -255,7 +419,7 @@ export function createTranslationAgentTools(context: TranslationAgentToolContext
         appendQuizProse: z.string().optional(),
         activate: z.boolean().optional(),
       }),
-      outputSchema: z.unknown(),
+      outputSchema: promptProfileSchema,
       execute: async (input) => {
         const profile = createPromptProfileVersion(input);
         appendEvent(context.runId, {
@@ -282,7 +446,7 @@ export function createTranslationAgentTools(context: TranslationAgentToolContext
         candidateId: z.string().optional(),
         current: z.boolean().optional(),
       }),
-      outputSchema: z.unknown(),
+      outputSchema: scoreTranslationOutputSchema,
       execute: async ({ slug, locale, candidatePath, targetContents, model, candidateId }) => {
         const paths = getPostPaths(slug, locale);
         const sourceContents = readFileSync(paths.sourcePath, "utf8");
@@ -333,7 +497,7 @@ export function createTranslationAgentTools(context: TranslationAgentToolContext
         reconsiderationRounds: z.number().int().min(0).max(3).optional(),
         disagreementThreshold: z.number().int().min(1).max(50).optional(),
       }),
-      outputSchema: z.unknown(),
+      outputSchema: consensusOutputSchema,
       execute: async ({
         slug,
         locale,
@@ -490,7 +654,7 @@ export function createTranslationAgentTools(context: TranslationAgentToolContext
         candidatePath: z.string().optional(),
         targetContents: z.string().optional(),
       }),
-      outputSchema: z.unknown(),
+      outputSchema: validationOutputSchema,
       execute: async ({ slug, locale, candidatePath, targetContents }) => {
         const paths = getPostPaths(slug, locale);
         const sourceContents = readFileSync(paths.sourcePath, "utf8");

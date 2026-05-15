@@ -47,6 +47,7 @@ describe("validateTranslation", () => {
   const source = [
     "---",
     "title: Hello",
+    "subTitle: A small test",
     "category: Code",
     "---",
     "import Thing from '../../../components/Thing.astro'",
@@ -63,6 +64,7 @@ describe("validateTranslation", () => {
   test("passes a structurally preserved translation", () => {
     const target = source
       .replace("title: Hello", "title: Hola")
+      .replace("subTitle: A small test", "subTitle: Una prueba pequena")
       .replace("## Heading", "## Encabezado")
       .replace("../../../components/Thing.astro", "../../../../components/Thing.astro");
     const result = validateTranslation({
@@ -78,6 +80,7 @@ describe("validateTranslation", () => {
     const target = [
       "---",
       "title: Hola",
+      "subTitle: Una prueba pequena",
       "category: Code",
       "---",
       "## Encabezado",
@@ -92,6 +95,42 @@ describe("validateTranslation", () => {
     });
     expect(result.passed).toBe(false);
     expect(result.issues.map((issue) => issue.code)).toContain("protected-tokens");
+  });
+
+  test("requires reader-facing frontmatter title and subTitle to be translated", () => {
+    const target = source
+      .replace("## Heading", "## Encabezado")
+      .replace("../../../components/Thing.astro", "../../../../components/Thing.astro");
+    const result = validateTranslation({
+      sourceContents: source,
+      targetContents: target,
+      targetPath: "src/content/posts/2026-01-01--hello/es/index.mdx",
+      locale: "es",
+    });
+    expect(result.passed).toBe(false);
+    expect(result.issues).toContainEqual(expect.objectContaining({
+      code: "frontmatter",
+      severity: "high",
+    }));
+    expect(result.issues.find((issue) => issue.code === "frontmatter")?.message)
+      .toContain("must translate frontmatter title");
+  });
+
+  test("requires subTitle when the English source has one", () => {
+    const target = source
+      .replace("title: Hello", "title: Hola")
+      .replace("subTitle: A small test\n", "")
+      .replace("## Heading", "## Encabezado")
+      .replace("../../../components/Thing.astro", "../../../../components/Thing.astro");
+    const result = validateTranslation({
+      sourceContents: source,
+      targetContents: target,
+      targetPath: "src/content/posts/2026-01-01--hello/es/index.mdx",
+      locale: "es",
+    });
+    expect(result.passed).toBe(false);
+    expect(result.issues.find((issue) => issue.code === "frontmatter")?.message)
+      .toContain("must include localized subTitle frontmatter");
   });
 });
 
