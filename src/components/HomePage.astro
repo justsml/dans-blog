@@ -3,6 +3,7 @@ import Page from "../layouts/Page.astro";
 
 import { PostCollections } from "../shared/postsCache.ts";
 import { ArticleCard } from "./ArticleCard";
+import ArticleListSkeleton from "./ArticleListSkeleton.astro";
 import ArticleListConsultingCTA from "./ArticleListConsultingCTA.astro";
 // import FloatingLines from "./FloatingLines";
 import type { ArticlePost } from "../types";
@@ -32,17 +33,13 @@ let posts = PostCollections.getPostsForLocale(locale).map((p) =>
 )
 .filter((p) => !p.data?.unlisted && !p.data?.hidden) as ArticlePost[];
 
-const defaultNextUrl =
-  locale === DEFAULT_LOCALE ? "/pages/2-date-desc.html" : `/${locale}/pages/2-date-desc.html`;
+const hasMorePosts = posts.length > pageSize - 1;
+const defaultNextUrl = hasMorePosts
+  ? locale === DEFAULT_LOCALE
+    ? "/pages/2-date-desc.html"
+    : `/${locale}/pages/2-date-desc.html`
+  : null;
 
-const nextPageAttrs = defaultNextUrl
-  ? {
-      "hx-get": defaultNextUrl,
-      "hx-trigger": "revealed",
-      "hx-swap": "afterend",
-    }
-  : {};
-// 
 posts = posts.slice(0, pageSize - 1);
 
 const defaultFullTitle = copy.home.title || `${SITE_TITLE} | ${SITE_SEO_DESCRIPTION}`;
@@ -122,16 +119,7 @@ const defaultFullTitle = copy.home.title || `${SITE_TITLE} | ${SITE_SEO_DESCRIPT
 
           return (
           <>
-            {index === posts.length - 1 ? (
-              <ArticleCard
-                article={props as ArticlePost}
-                width={200}
-                locale={locale}
-                {...nextPageAttrs}
-              />
-            ) : (
-              <ArticleCard article={props as ArticlePost} width={200} locale={locale} />
-            )}
+            <ArticleCard article={props as ArticlePost} width={200} locale={locale} />
             {ctaOccurrence !== null && (
               <ArticleListConsultingCTA
                 category={ctaOccurrence === 1 ? undefined : (props as ArticlePost).data.category}
@@ -143,7 +131,7 @@ const defaultFullTitle = copy.home.title || `${SITE_TITLE} | ${SITE_SEO_DESCRIPT
           );
         })
     }
-    <!-- {nextPageAttrs && <a hx-get={defaultNextUrl} hx-swap="afterend">Next</a>} -->
+    <ArticleListSkeleton nextUrl={defaultNextUrl} />
   </div>
 </Page>
 
@@ -170,6 +158,12 @@ const defaultFullTitle = copy.home.title || `${SITE_TITLE} | ${SITE_SEO_DESCRIPT
     const target = document.querySelector("[hx-get][hx-trigger='revealed']");
     if (!target) return;
 
+    if ("requestIdleCallback" in globalThis) {
+      globalThis.requestIdleCallback(loadHtmx, { timeout: 1800 });
+    } else {
+      globalThis.setTimeout(loadHtmx, 900);
+    }
+
     if ("IntersectionObserver" in window) {
       const observer = new IntersectionObserver(
         (entries) => {
@@ -177,16 +171,9 @@ const defaultFullTitle = copy.home.title || `${SITE_TITLE} | ${SITE_SEO_DESCRIPT
           observer.disconnect();
           loadHtmx();
         },
-        { rootMargin: "0px 0px" },
+        { rootMargin: "1200px 0px" },
       );
       observer.observe(target);
-      return;
-    }
-
-    if ("requestIdleCallback" in globalThis) {
-      globalThis.requestIdleCallback(loadHtmx, { timeout: 1800 });
-    } else {
-      globalThis.setTimeout(loadHtmx, 900);
     }
   }
 

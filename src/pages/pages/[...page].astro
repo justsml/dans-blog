@@ -8,6 +8,7 @@ import {
   getArticleListCtaOccurrence,
 } from "../../shared/articleListCta";
 import { ArticleCard } from "../../components/ArticleCard";
+import ArticleListSkeleton from "../../components/ArticleListSkeleton.astro";
 import ArticleListConsultingCTA from "../../components/ArticleListConsultingCTA.astro";
 import { PaginateFunction } from "astro";
 import { DEFAULT_LOCALE, type Locale } from "../../shared/i18n";
@@ -95,14 +96,6 @@ if (!isLast) {
   // prevUrl = `${url.prev ? url.prev + pageUrlSuffix : url.prev}`;
 }
 
-const nextPageAttrs = nextUrl
-  ? {
-      "hx-get": nextUrl,
-      "hx-trigger": "revealed",
-      "hx-swap": "afterend",
-    }
-  : {};
-
 const articleListOffset = (currentPage - 1) * (pageSize - 1);
 
 ---
@@ -118,16 +111,7 @@ const articleListOffset = (currentPage - 1) * (pageSize - 1);
 
     return (
     <>
-      {index === data.length - 1 ? (
-        <ArticleCard
-          article={props as ArticlePost}
-          width={200}
-          locale={locale}
-          {...nextPageAttrs}
-        />
-      ) : (
-        <ArticleCard article={props as ArticlePost} width={200} locale={locale} />
-      )}
+      <ArticleCard article={props as ArticlePost} width={200} locale={locale} />
       {ctaOccurrence !== null && (
         <ArticleListConsultingCTA
           category={ctaOccurrence === 1 ? undefined : (props as ArticlePost).data.category}
@@ -141,50 +125,4 @@ const articleListOffset = (currentPage - 1) * (pageSize - 1);
   })
 }
 
-{
-  /*
-{nextUrl && (
-  <div class="pagination load-more">
-    <div class="spinner"><RefreshCw /></div>
-    <a {...nextPageAttrs} hx-trigger="click" hx-swap="beforebegin" class="button">Load More</a>
-  </div>
-)}
-
-
-<style>
-  .spinner {
-    display: none;
-  }
-  .load-more.loading {
-    .spinner {
-      display: block;
-    }
-    a {
-      display: none;
-    }
-  }
-</style>
-<script>
-
-  const getLastArticleCard = () => document.querySelector(".article-card:last-of-type");
-  const isNextPageAvailable = () => {
-    const lastArticleCard = getLastArticleCard();
-    return lastArticleCard && lastArticleCard.getAttribute("hx-get") != null;
-  };
-  document.addEventListener("astro:page-load", function () {
-    const loadMore = document.querySelector(".pagination.load-more");
-
-    if (loadMore) {
-      loadMore.addEventListener("click", () => {
-        if (!isNextPageAvailable()) return;
-        loadMore.classList.add("loading");
-        console.info(`Last article card's next page:`, getLastArticleCard()?.getAttribute("hx-get"));
-        setTimeout(() => {
-          loadMore.classList.remove("loading");
-        }, 2000);
-      });
-    }
-  });
-</script>
-*/
-}
+<ArticleListSkeleton nextUrl={nextUrl} />
