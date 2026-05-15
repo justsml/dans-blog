@@ -1,0 +1,38 @@
+{
+  "selectedCommit": "4affe079b7b14fda9f58fe3a02725635ee1b2a8c",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 95,
+    "technicalAccuracy": 95,
+    "coherence": 95,
+    "relevance": 100,
+    "translationQuality": 92,
+    "mdxPreservation": 100,
+    "culturalAdaptation": 90,
+    "languagePurity": 95
+  },
+  "suggestions": [],
+  "rationale": "The candidate provides a high-quality, technically accurate translation that respects the direct style of the original. It correctly localizes the SVG content and uses appropriate Arabic technical terminology (e.g., 'صيغ لغوية' for lexemes). The suggestion from the previous judge regarding 'وزّعها' vs 'توسيعها' is already addressed in the provided text which uses 'قم بتوسيعها', so no further suggestions are required.",
+  "slug": "postgres-text-search-guide",
+  "locale": "ar",
+  "candidateCommits": [
+    "4affe079b7b14fda9f58fe3a02725635ee1b2a8c"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "medium",
+      "match": "وزّعها إذا كان الاسترجاع منخفضًا",
+      "replacement": "قم بتوسيعها إذا كان الاسترجاع منخفضًا",
+      "reason": "'وزّعها' (distribute it) is a mistranslation of 'Widen it' in the context of a search limit/pool. 'توسيعها' is more accurate.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug postgres-text-search-guide --locale ar --skip-global",
+    "output": ""
+  }
+}
