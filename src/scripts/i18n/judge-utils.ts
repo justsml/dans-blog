@@ -321,6 +321,9 @@ export function buildPrimaryJudgePrompt(
       : "Choose the best selectable candidate by technical accuracy, natural language quality, Dan's direct style, and MDX preservation.",
     `The final MDX must preserve the English file's per-level heading counts: same number of H1, H2, H3, H4, H5, and H6 headings. Translate heading text, but do not add, remove, promote, or demote headings.`,
     `Also preserve structural counts for fenced code blocks, Markdown/HTML images, blockquotes, tables, imports, MDX components, and quiz Challenge blocks/options/answer flags. Treat mismatches as high-priority unless the English source itself is malformed.`,
+    `For quizzes, inspect every <Challenge> against the English source by index. The translated Challenge must keep the same prop names, option count, option field schema, objective count, hint presence, question/hints/explanation slots, code block counts, and isAnswer positions. No surprise props, option fields, arrays, hints, or changed non-reader-facing values.`,
+    `For quizzes, judge answer faithfulness semantically: the option(s) marked isAnswer in the translation must correspond to the same correct answer and expected output as English. Reject candidates where the correct answer moved, the marked answer meaning changed, or an answer choice was translated in a way that makes the original answer wrong.`,
+    `For quiz code blocks, preserve code exactly and keep code lines short enough for mobile reading; lines longer than about 63 characters should be treated as a medium-priority readability issue unless unavoidable.`,
     `Locale files live one folder deeper than English. Any inherited local image or asset path in frontmatter, Markdown, or JSX must start with ../, even if the English file uses a bare path or ./ path. Never suggest changing ../asset.webp to asset.webp or ./asset.webp.`,
     `Gist component paths must remain owner/id values such as justsml/abc123; never turn them into locale-relative paths like ../justsml/abc123.`,
     `Component imports in locale files must resolve from the locale folder depth; imported components should use ../../../../components/... unless the source uses an alias.`,
@@ -358,6 +361,8 @@ export function buildPrePublishRescorePrompt(
     ``,
     `Check ${ctx.targetRelPath} against ${ctx.sourcePath ?? "the English source"} for technical accuracy, natural language quality, Dan's direct style, cultural adaptation, language purity, MDX preservation, per-level heading count preservation, structural count preservation, and comparable body length.`,
     `Look specifically for bad HTML comments, unclosed HTML/MDX tags, invalid inherited asset paths, broken Gist paths, wrong locale component import depth, suspicious code fence languages, changed code block/image/blockquote/table counts, changed quiz options or answer flags, mixed-language prose, and leaked LLM instructions.`,
+    `For quiz posts, compare every Challenge against English by index. Verify the same prop names, option counts, option field schema, objective counts, hint presence, slot presence, code block counts, isAnswer positions, and no surprise props/fields/arrays/non-reader-facing values. Also verify the marked answer remains semantically faithful to the English correct answer.`,
+    `For quiz code blocks, preserve code exactly and flag lines longer than about 63 characters unless unavoidable.`,
     `Return refreshed scoring and pre-publish status as strict JSON. The wrapper script writes reports and applies exact medium/high-priority replacements.`,
     `Use this JSON shape:`,
     JSON.stringify(getJudgeJsonShape()),
@@ -381,6 +386,7 @@ export function buildSecondJudgePrompt(
     candidateSummary,
     ``,
     `Check for MDX/frontmatter breakage, raw HTML comments, invalid inherited asset paths, broken Gist paths, wrong locale component import depth, suspicious code fence languages, unclosed HTML tags, code block/image/blockquote/table count mismatches, heading count mismatches by level, changed quiz options or answer flags, untranslated or mixed-language reader-facing prose, leaked LLM instructions, major terminology errors, weak cultural adaptation, and obvious tone regressions.`,
+    `For quiz posts, also verify Challenge prop names, option field schemas, objective counts, hints, slots, code block counts, code preservation, isAnswer positions, and semantic answer faithfulness against English. A translated correct answer must still be the same correct answer.`,
     `Return your agreement or disagreement as strict JSON. If acceptable, put the exact phrase "No escalation required" in rationale.`,
     `Do not edit ${ctx.targetRelPath}. If you disagree, state the exact candidate SHA or issue that requires escalation.`,
   ].join("\n");
@@ -399,6 +405,7 @@ export function buildEscalationPrompt(
     `Candidate MDX contents are attached below; do not ask to run git show.`,
     `The final MDX must preserve the English file's per-level heading counts: same number of H1, H2, H3, H4, H5, and H6 headings.`,
     `Also preserve code block, image, blockquote, table, Challenge, quiz option, and answer-flag counts; reject leaked LLM instructions, raw HTML comments, invalid asset paths, broken Gist paths, wrong locale component import depth, suspicious code fence languages, mixed-language prose, and broken HTML/MDX markup.`,
+    `For quiz posts, resolve answer faithfulness explicitly: the candidate must keep the same correct answer meaning, isAnswer positions, option field schema, hints, slots, and code blocks as English, with no surprise fields or non-reader-facing value changes.`,
     `Return the final selected candidate SHA and rationale as strict JSON. The wrapper script writes ${ctx.targetRelPath} and judge reports.`,
   ].join("\n");
 }

@@ -17,6 +17,19 @@ describe("Pagefind index contract", () => {
 
     expect(postLayout).toContain("data-pagefind-body");
     expect(postLayout).toContain('data-pagefind-meta="title"');
+    expect(postLayout).toContain('data-pagefind-meta="image[content]"');
+    expect(postLayout).toContain('data-pagefind-meta="section[content]"');
+  });
+
+  test("keeps search result rendering image and section aware", () => {
+    const searchBar = readProjectFile("src/components/SearchUI/SearchBar.astro");
+    const pagefindLoader = readProjectFile("src/components/SearchUI/pagefindLoader.ts");
+    const searchStyles = readProjectFile("src/components/SearchUI/search.css");
+
+    expect(searchBar).toContain('data-show-images={showImages ? "true" : "false"}');
+    expect(pagefindLoader).toContain("processResult: rememberResultSection");
+    expect(searchStyles).toContain(".pagefind-ui__result-section");
+    expect(searchStyles).toContain("aspect-ratio: 1");
   });
 
   test("opts new non-post editorial pages into the Pagefind index", () => {

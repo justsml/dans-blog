@@ -8,6 +8,22 @@ declare global {
 
 const SEARCH_SELECTOR = "#search.pagefind-init, #search.pagefind-ui";
 const SEARCH_ERROR_CLASS = "search-fallback";
+const RESULT_SELECTOR = ".pagefind-ui__result";
+const RESULT_LINK_SELECTOR = ".pagefind-ui__result-link";
+const RESULT_INNER_SELECTOR = ".pagefind-ui__result-inner";
+const RESULT_SECTION_CLASS = "pagefind-ui__result-section";
+
+type PagefindResult = {
+  url?: string;
+  meta?: {
+    section?: string;
+    url?: string;
+    [key: string]: unknown;
+  };
+  [key: string]: unknown;
+};
+
+const resultSectionsByPath = new Map<string, string>();
 
 function loadStyleOnce(href: string) {
   if (document.querySelector(`link[data-search-style="${href}"]`)) return;
@@ -81,12 +97,14 @@ export async function ensurePagefindInitialized() {
           bundlePath: searchRoot.dataset.bundlePath || "/pagefind/",
           showImages,
           pageSize,
+          processResult: rememberResultSection,
         });
 
         searchRoot.dataset.pagefindReady = "true";
         delete searchRoot.dataset.pagefindError;
         searchRoot.classList.remove("pagefind-init");
         searchRoot.querySelector(`.${SEARCH_ERROR_CLASS}`)?.remove();
+        installSearchResultSectionDecorator(searchRoot);
       } catch (error) {
         window.__pagefindAssetsPromise = undefined;
         renderSearchLoadError(searchRoot, error);
@@ -124,4 +142,105 @@ function renderSearchLoadError(searchRoot: HTMLElement, error: unknown) {
 
   wrapper.append(title, body);
   searchRoot.append(wrapper);
+}
+
+function rememberResultSection(result: PagefindResult) {
+  const section = sanitizeSection(result.meta?.section);
+  const path = normalizeResultPath(result.meta?.url ?? result.url);
+  if (section && path) {
+    resultSectionsByPath.set(path, section);
+  }
+  return result;
+}
+
+function installSearchResultSectionDecorator(searchRoot: HTMLElement) {
+  if (searchRoot.dataset.resultSectionsReady === "true") return;
+
+  const decorate = () => decorateSearchResults(searchRoot);
+  const observer = new MutationObserver(decorate);
+  observer.observe(searchRoot, { childList: true, subtree: true });
+  decorate();
+
+  searchRoot.dataset.resultSectionsReady = "true";
+}
+
+function decorateSearchResults(searchRoot: HTMLElement) {
+  searchRoot.querySelectorAll<HTMLElement>(RESULT_SELECTOR).forEach((result) => {
+    const link = result.querySelector<HTMLAnchorElement>(RESULT_LINK_SELECTOR);
+    const path = normalizeResultPath(link?.href);
+    const section = sanitizeSection(
+      (path && resultSectionsByPath.get(path)) || inferSectionFromPath(path),
+    );
+    if (!section) return;
+
+    const sectionSlug = slugifySection(section);
+    result.dataset.searchSection = sectionSlug;
+
+    const inner = result.querySelector<HTMLElement>(RESULT_INNER_SELECTOR);
+    if (!inner) return;
+
+    const title = inner.querySelector<HTMLElement>(".pagefind-ui__result-title");
+    const existingBadge = inner.querySelector<HTMLElement>(
+      `.${RESULT_SECTION_CLASS}`,
+    );
+    if (existingBadge) {
+      if (existingBadge.textContent !== section) {
+        existingBadge.textContent = section;
+      }
+      if (title && title.nextElementSibling !== existingBadge) {
+        title.after(existingBadge);
+      }
+      return;
+    }
+
+    const badge = document.createElement("span");
+    badge.className = RESULT_SECTION_CLASS;
+    badge.textContent = section;
+    if (title) {
+      title.after(badge);
+    } else {
+      inner.prepend(badge);
+    }
+  });
+}
+
+function normalizeResultPath(value: unknown) {
+  if (typeof value !== "string" || !value.trim()) return "";
+
+  try {
+    const url = new URL(value, window.location.href);
+    return url.pathname.replace(/\/+$/, "") || "/";
+  } catch {
+    return value.split("#")[0]?.split("?")[0]?.replace(/\/+$/, "") || "/";
+  }
+}
+
+function sanitizeSection(value: unknown) {
+  if (typeof value !== "string") return "";
+  return value.trim().replace(/\s+/g, " ");
+}
+
+function slugifySection(section: string) {
+  return section
+    .toLowerCase()
+    .replace(/&/g, "and")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "") || "pages";
+}
+
+function inferSectionFromPath(path: string) {
+  const unlocalizedPath = path.replace(
+    /^\/(?:ar|de|es|fr|he|hi|it|ja|ru|zh)(?=\/)/,
+    "",
+  );
+
+  if (unlocalizedPath.startsWith("/consulting")) return "Consulting";
+  if (unlocalizedPath.startsWith("/open-source-journal")) return "Open Source";
+  if (unlocalizedPath.startsWith("/challenges")) return "Challenges";
+  if (unlocalizedPath.startsWith("/category")) return "Categories";
+  if (unlocalizedPath.startsWith("/pages")) return "Archive";
+  if (unlocalizedPath.startsWith("/about")) return "About";
+  if (unlocalizedPath.startsWith("/contact")) return "Contact";
+  if (unlocalizedPath === "/") return "Home";
+  return "Article";
 }

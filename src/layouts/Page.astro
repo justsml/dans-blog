@@ -6,6 +6,7 @@ import AnalyticsTag from "../components/AnalyticsTag.astro";
 import { default as defaultSocialBanner } from "../assets/social-banner.webp";
 import clsx from "clsx";
 import SiteLinkedData from "../components/Seo/SiteLinkedData.astro";
+import type { ImageMetadata } from "astro";
 import {
   DEFAULT_LOCALE,
   getHtmlLang,
@@ -28,6 +29,7 @@ type Props = {
   socialImage?: string | ImageMetadata;
   className?: string;
   pagefindBody?: boolean;
+  pagefindSection?: string;
   locale?: Locale;
   canonicalPath?: string;
   alternates?: Array<{ locale: string; href: string }>;
@@ -39,17 +41,38 @@ const locale = Astro.props.locale ?? DEFAULT_LOCALE;
 const basePagePath = getUnlocalizedPagePath(Astro.url.pathname);
 const canonicalPath = Astro.props.canonicalPath ?? getLocalizedPagePath(basePagePath, locale);
 const alternates = Astro.props.alternates ?? getPageAlternates(basePagePath);
+
+const pagefindImageSrc =
+  typeof socialBanner === "string"
+    ? socialBanner
+    : (socialBanner as ImageMetadata).src;
+const pagefindSection =
+  Astro.props.pagefindSection ?? getPagefindSection(basePagePath);
+
+function getPagefindSection(path: string) {
+  if (path.startsWith("/consulting")) return "Consulting";
+  if (path.startsWith("/open-source-journal")) return "Open Source";
+  if (path.startsWith("/challenges")) return "Challenges";
+  if (path.startsWith("/category")) return "Categories";
+  if (path.startsWith("/pages")) return "Archive";
+  if (path.startsWith("/about")) return "About";
+  if (path.startsWith("/contact")) return "Contact";
+  return "Pages";
+}
 ---
 
 <html lang={getHtmlLang(locale)} dir={getTextDirection(locale)}>
   <head>
-    <BaseHead
-      title={title}
-      description={`${subTitle}`}
-      image={socialBanner}
-      canonicalPath={canonicalPath}
-      alternates={alternates}
-    />
+      <BaseHead
+        title={title}
+        description={`${subTitle}`}
+        image={socialBanner}
+        canonicalPath={canonicalPath}
+        alternates={alternates}
+      />
+      {pagefindBody && <meta data-pagefind-meta="image[content]" content={pagefindImageSrc} />}
+      {pagefindBody && <meta data-pagefind-meta="image_alt[content]" content={title} />}
+      {pagefindBody && <meta data-pagefind-meta="section[content]" content={pagefindSection} />}
   </head>
   <body>
     <Header className="content-grid" locale={locale} />

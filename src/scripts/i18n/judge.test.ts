@@ -413,6 +413,86 @@ describe("analyzeTranslationIntegrity", () => {
     expect(issues.some((issue) => issue.code === "quiz-missing-answer")).toBe(true);
   });
 
+  test("flags quiz prop, option field, hint, and answer-position drift", () => {
+    const sourceQuiz = [
+      "---",
+      "title: Quiz",
+      "---",
+      "",
+      "<Challenge",
+      "  client:visible={{rootMargin: \"150px\"}}",
+      "  index={0}",
+      "  group=\"Warmup\"",
+      "  title=\"Question\"",
+      "  difficulty={QuizDifficulty.BEGINNER}",
+      "  objectives={[",
+      "    \"Read output\",",
+      "  ]}",
+      "  options={[",
+      "    { text: 'A', isAnswer: true, hint: 'Correct path' },",
+      "    { text: 'B' },",
+      "  ]}",
+      ">",
+      "  <slot name=\"question\">Question?</slot>",
+      "  <slot name=\"hints\">Think about it.</slot>",
+      "  <slot name=\"explanation\">Because A.</slot>",
+      "</Challenge>",
+    ].join("\n");
+    const targetQuiz = sourceQuiz
+      .replace("difficulty={QuizDifficulty.BEGINNER}\n", "")
+      .replace("    { text: 'A', isAnswer: true, hint: 'Correct path' },", "    { text: 'A' },")
+      .replace("    { text: 'B' },", "    { text: 'B', isAnswer: true, extra: 'surprise' },")
+      .replace("  <slot name=\"hints\">Think about it.</slot>\n", "");
+
+    const issues = analyzeTranslationIntegrity({
+      sourceContents: sourceQuiz,
+      targetContents: targetQuiz,
+      targetPath: "/repo/src/content/posts/test/de/index.mdx",
+      locale: "de",
+    });
+    expect(issues.some((issue) => issue.code === "quiz-missing-prop")).toBe(true);
+    expect(issues.some((issue) => issue.code === "quiz-option-missing-hint")).toBe(true);
+    expect(issues.some((issue) => issue.code === "quiz-option-unexpected-field")).toBe(true);
+    expect(issues.some((issue) => issue.code === "quiz-answer-position")).toBe(true);
+    expect(issues.some((issue) => issue.code === "quiz-missing-hints-slot")).toBe(true);
+  });
+
+  test("flags quiz slot code block drift and long code lines", () => {
+    const sourceQuiz = [
+      "---",
+      "title: Quiz",
+      "---",
+      "",
+      "<Challenge",
+      "  index={0}",
+      "  options={[",
+      "    { text: 'ok', isAnswer: true },",
+      "  ]}",
+      ">",
+      "  <slot name=\"question\">",
+      "  <div className=\"question\">",
+      "    ```js",
+      "    console.log('ok')",
+      "    ```",
+      "  </div>",
+      "  </slot>",
+      "  <slot name=\"explanation\">Done.</slot>",
+      "</Challenge>",
+    ].join("\n");
+    const targetQuiz = sourceQuiz.replace(
+      "    console.log('ok')",
+      "    console.log('this line is intentionally too long for mobile quiz screenshots')",
+    );
+    const issues = analyzeTranslationIntegrity({
+      sourceContents: sourceQuiz,
+      targetContents: targetQuiz,
+      targetPath: "/repo/src/content/posts/test/es/index.mdx",
+      locale: "es",
+    });
+    expect(issues.some((issue) => issue.code === "quiz-code-block-preservation")).toBe(true);
+    expect(issues.some((issue) => issue.code === "quiz-code-line-length")).toBe(true);
+  });
+
   test("flags LLM instruction leakage", () => {
     const target = `${source}\n\nHere is the translation you requested.`;
     const issues = analyzeTranslationIntegrity({
@@ -650,6 +730,12 @@ describe("buildPrimaryJudgePrompt", () => {
     expect(prompt).toContain("suspicious code fence languages");
   });
 
+  test("includes quiz answer faithfulness rules", () => {
+    expect(prompt).toContain("answer faithfulness");
+    expect(prompt).toContain("isAnswer positions");
+    expect(prompt).toContain("same correct answer");
+  });
+
   test("includes JSON shape", () => {
     expect(prompt).toContain("selectedCommit");
     expect(prompt).toContain("suggestions");
@@ -688,6 +774,11 @@ describe("buildPrePublishRescorePrompt", () => {
   test("mentions target path", () => {
     expect(prompt).toContain(ctx.targetRelPath);
   });
+
+  test("includes quiz rescore contract", () => {
+    expect(prompt).toContain("marked answer remains semantically faithful");
+    expect(prompt).toContain("option field schema");
+  });
 });
 
 describe("buildSecondJudgePrompt", () => {
@@ -703,6 +794,10 @@ describe("buildSecondJudgePrompt", () => {
 
   test("mentions heading count checks", () => {
     expect(prompt).toContain("heading count");
+  });
+
+  test("checks quiz semantic answer faithfulness", () => {
+    expect(prompt).toContain("semantic answer faithfulness");
   });
 });
 

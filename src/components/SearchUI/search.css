@@ -1,5 +1,17 @@
 /* Pagefind search panel. Imported by SearchBar.astro only. */
 
+body.search-panel-open::before {
+  background: rgba(5, 9, 12, 0.25);
+  backdrop-filter: blur(2.5px);
+  -webkit-backdrop-filter: blur(2.5px);
+  content: "";
+  inset: 0;
+  opacity: 1;
+  pointer-events: none;
+  position: fixed;
+  z-index: 130;
+}
+
 .searchBar {
   --pagefind-ui-primary: #eeeeee;
   --pagefind-ui-text: #eeeeee;
@@ -36,7 +48,9 @@
       rgba(5, 9, 12, 0.985);
     border: 1px solid var(--nav-tile-border);
     border-radius: 0;
-    box-shadow: 0 24px 58px rgba(0, 8, 12, 0.36), 0 0 42px rgba(0, 245, 238, 0.08);
+    box-shadow:
+      0 14px 28px rgba(0, 8, 12, 0.46),
+      0 3px 10px rgba(0, 8, 12, 0.32);
     cursor: default;
     display: block !important;
     isolation: isolate;
@@ -273,16 +287,22 @@
   }
 
   .pagefind-ui__result {
+    --search-section-accent: hsl(var(--neon-cyan));
+    --search-section-tint: rgba(0, 245, 238, 0.12);
+
     animation: searchResultIn 220ms ease backwards !important;
     background:
-      radial-gradient(circle at 12% 0%, var(--nav-tile-dim), transparent 34%),
+      radial-gradient(circle at 12% 0%, var(--search-section-tint), transparent 38%),
       var(--nav-tile-bg) !important;
-    border: 1px solid var(--nav-tile-border) !important;
+    border: 1px solid color-mix(in srgb, var(--search-section-accent) 26%, var(--nav-tile-border)) !important;
     border-radius: 0 !important;
-    box-shadow: 0 12px 30px rgba(0, 8, 12, 0.16);
+    box-shadow:
+      inset 0.24rem 0 0 color-mix(in srgb, var(--search-section-accent) 72%, transparent),
+      0 8px 18px rgba(0, 8, 12, 0.34),
+      0 2px 5px rgba(0, 8, 12, 0.26);
     column-gap: 1rem;
     display: grid !important;
-    grid-template-columns: 6rem minmax(0, 1fr);
+    grid-template-columns: 5.75rem minmax(0, 1fr);
     list-style: none !important;
     margin: 0 !important;
     overflow: hidden;
@@ -295,7 +315,7 @@
   }
 
   .pagefind-ui__result::before {
-    background: linear-gradient(90deg, var(--nav-tile-accent), rgba(255, 255, 255, 0.18), transparent);
+    background: linear-gradient(90deg, var(--search-section-accent), rgba(255, 255, 255, 0.18), transparent);
     content: "";
     height: 1px;
     inset: 0 0 auto;
@@ -305,9 +325,67 @@
 
   .pagefind-ui__result:hover,
   .pagefind-ui__result:focus-within {
-    border-color: color-mix(in srgb, var(--nav-tile-accent) 36%, transparent) !important;
-    box-shadow: 0 18px 42px rgba(0, 8, 12, 0.26), 0 0 22px var(--nav-tile-glow);
+    border-color: color-mix(in srgb, var(--search-section-accent) 46%, transparent) !important;
+    box-shadow:
+      inset 0.24rem 0 0 var(--search-section-accent),
+      0 10px 22px rgba(0, 8, 12, 0.42),
+      0 3px 7px rgba(0, 8, 12, 0.3);
     transform: translateY(-1px) !important;
+  }
+
+  .pagefind-ui__result[data-search-section="ai"] {
+    --search-section-accent: #41d6b4;
+    --search-section-tint: rgba(65, 214, 180, 0.13);
+  }
+
+  .pagefind-ui__result[data-search-section="code"],
+  .pagefind-ui__result[data-search-section="engineering"],
+  .pagefind-ui__result[data-search-section="guides"],
+  .pagefind-ui__result[data-search-section="howto"] {
+    --search-section-accent: #73b9ff;
+    --search-section-tint: rgba(115, 185, 255, 0.13);
+  }
+
+  .pagefind-ui__result[data-search-section="security"],
+  .pagefind-ui__result[data-search-section="devops"] {
+    --search-section-accent: #ff8a70;
+    --search-section-tint: rgba(255, 138, 112, 0.13);
+  }
+
+  .pagefind-ui__result[data-search-section="quiz"] {
+    --search-section-accent: #d8f26a;
+    --search-section-tint: rgba(216, 242, 106, 0.13);
+  }
+
+  .pagefind-ui__result[data-search-section="regex"],
+  .pagefind-ui__result[data-search-section="search"] {
+    --search-section-accent: #b6a8ff;
+    --search-section-tint: rgba(182, 168, 255, 0.13);
+  }
+
+  .pagefind-ui__result[data-search-section="thoughts"],
+  .pagefind-ui__result[data-search-section="leadership"],
+  .pagefind-ui__result[data-search-section="instructional-design"],
+  .pagefind-ui__result[data-search-section="lulz"] {
+    --search-section-accent: #ffb86b;
+    --search-section-tint: rgba(255, 184, 107, 0.13);
+  }
+
+  .pagefind-ui__result[data-search-section="consulting"] {
+    --search-section-accent: #ff6f9f;
+    --search-section-tint: rgba(255, 111, 159, 0.13);
+  }
+
+  .pagefind-ui__result[data-search-section="open-source"],
+  .pagefind-ui__result[data-search-section="challenges"],
+  .pagefind-ui__result[data-search-section="categories"],
+  .pagefind-ui__result[data-search-section="archive"],
+  .pagefind-ui__result[data-search-section="about"],
+  .pagefind-ui__result[data-search-section="contact"],
+  .pagefind-ui__result[data-search-section="pages"],
+  .pagefind-ui__result[data-search-section="home"] {
+    --search-section-accent: #a8d3d0;
+    --search-section-tint: rgba(168, 211, 208, 0.12);
   }
 
   .pagefind-ui__result:nth-child(1) {
@@ -327,20 +405,23 @@
   }
 
   .pagefind-ui__result-link {
-    color: hsl(var(--neon-cyan)) !important;
+    color: inherit !important;
     text-decoration: none !important;
   }
 
   .pagefind-ui__result-thumb {
-    align-self: start;
-    aspect-ratio: 4 / 3;
+    align-self: start !important;
+    aspect-ratio: 1 !important;
     background:
-      radial-gradient(circle at 30% 0%, rgba(0, 245, 238, 0.13), transparent 42%),
-      rgba(255, 255, 255, 0.035);
-    border: 1px solid rgba(218, 246, 243, 0.12);
+      radial-gradient(circle at 30% 0%, var(--search-section-tint), transparent 42%),
+      rgba(255, 255, 255, 0.035) !important;
+    border: 1px solid color-mix(in srgb, var(--search-section-accent) 28%, rgba(218, 246, 243, 0.12)) !important;
+    box-sizing: border-box !important;
     display: block !important;
-    overflow: hidden;
-    width: 100%;
+    max-width: none !important;
+    min-width: 0 !important;
+    overflow: hidden !important;
+    width: 100% !important;
   }
 
   .pagefind-ui__result-image {
@@ -354,13 +435,39 @@
     min-width: 0;
   }
 
+  .pagefind-ui__result-tags {
+    display: none !important;
+  }
+
+  .pagefind-ui__result-section {
+    background: transparent;
+    border: 0;
+    color: color-mix(in srgb, var(--search-section-accent) 64%, rgba(221, 232, 233, 0.72));
+    display: block;
+    font-size: 0.68rem;
+    font-weight: 680;
+    line-height: 1;
+    margin: -0.22rem 0 0.56rem 0.7rem;
+    max-width: 100%;
+    overflow: hidden;
+    padding: 0;
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
   .pagefind-ui__result-title {
     color: var(--clr-muted-100, #f4fbfb) !important;
-    font-size: 1.02rem !important;
-    font-weight: 640 !important;
-    line-height: 1.25 !important;
-    margin: 0 0 0.45rem !important;
+    font-size: 1.1rem !important;
+    font-weight: 760 !important;
+    line-height: 1.18 !important;
+    margin: 0 0 0.48rem !important;
     text-wrap: pretty;
+  }
+
+  .pagefind-ui__result-title:hover,
+  .pagefind-ui__result-title:focus-within {
+    color: color-mix(in srgb, var(--search-section-accent) 72%, white) !important;
   }
 
   .pagefind-ui__result-excerpt {
@@ -455,7 +562,7 @@
     }
 
     .pagefind-ui__result {
-      grid-template-columns: 4.5rem minmax(0, 1fr);
+      grid-template-columns: 4.25rem minmax(0, 1fr);
       padding: 0.88rem !important;
     }
   }
