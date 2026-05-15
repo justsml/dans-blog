@@ -1,28 +1,39 @@
 {
-  "selectedCommit": "282dd917495d3cfb2378e984366e4e60ea061e18",
-  "selectedModel": "deepseek/deepseek-v4-flash",
+  "selectedCommit": "78734fe52a3af7c057b252263aec6fefad9102b2",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
   "scores": {
-    "readability": 9,
-    "technicalAccuracy": 9,
-    "coherence": 9,
-    "relevance": 9,
-    "translationQuality": 9,
-    "mdxPreservation": 10
+    "readability": 95,
+    "technicalAccuracy": 95,
+    "coherence": 95,
+    "relevance": 100,
+    "translationQuality": 95,
+    "mdxPreservation": 100,
+    "culturalAdaptation": 90,
+    "languagePurity": 100
   },
   "suggestions": [],
-  "rationale": "DeepSeek's translation is the most natural and technically precise. It correctly handles technical terms like 'infostealer' (信息窃取器) and 'canary tokens' (金丝雀令牌) while maintaining a direct, punchy style that matches the original English. It also correctly preserves all MDX structures and heading levels. The use of '战利品' for 'Prize' in the heading is a particularly good stylistic choice for the context.",
+  "rationale": "The candidate 78734fe52a3af7c057b252263aec6fefad9102b2 is the best choice. It maintains the technical accuracy of the security concepts (infostealers, canary tokens, prompt injection) while adopting a direct, professional tone that matches the source. It correctly handles MDX structure, including the complex table and code blocks. Compared to the 'current' version, it is more concise and avoids some of the slightly awkward phrasing found in the pre-existing translation. It also correctly preserves the frontmatter and heading structure.",
   "slug": "into-the-breach",
   "locale": "zh",
   "candidateCommits": [
+    "78734fe52a3af7c057b252263aec6fefad9102b2",
+    "b80f4df226292c8678b7a8ece9232bcc6a77359b",
+    "2bdd012a810ae8066923e974a645c9aaefa2bc24",
+    "d4de6a7102cdc27d837793d0edb1b7573e97fea3",
+    "aeba88f9359c59766a116e64b1db6b57aa4bbd83",
+    "f1fa2ba7679b74a49bb08ae85677d683c1c8c1a7",
+    "e5cec1b7d0b0e960f76e091d8c584bffb8936c46",
     "282dd917495d3cfb2378e984366e4e60ea061e18",
     "4394dd0bfb746ce796ce0ae8024bafa765e57c50",
-    "7085623492d11c6aee1398b2071671b1c1b8ecae"
+    "7085623492d11c6aee1398b2071671b1c1b8ecae",
+    "b952daa5f33cda185cbd7ff3a212988446eb46bc",
+    "37096a632c547555306e230d328054f560a30a44"
   ],
   "suggestionLog": [],
   "validation": {
-    "ok": true,
+    "ok": false,
     "scope": "local",
     "command": "bun run i18n:validate --slug into-the-breach --locale zh --skip-global",
-    "output": ""
+    "error": "Command failed: bun run i18n:validate --slug into-the-breach --locale zh --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug into-the-breach --locale zh --skip-global\n118 |     })\n119 |     .filter((message): message is string => message != null);\n120 | \n121 |   if (mismatches.length === 0) return;\n122 | \n123 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2026-05-13--into-the-breach/zh/index.mdx changed heading counts. H2: English has 9, translation has 12; H3: English has 5, translation has 7; H4: English has 0, translation has 2\n      at assertHeadingCounts (/Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:123:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
   }
 }
