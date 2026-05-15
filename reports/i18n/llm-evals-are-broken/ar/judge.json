@@ -1,0 +1,28 @@
+{
+  "selectedCommit": "current",
+  "selectedModel": "current",
+  "scores": {
+    "readability": 95,
+    "technicalAccuracy": 100,
+    "coherence": 95,
+    "relevance": 100,
+    "translationQuality": 95,
+    "mdxPreservation": 100,
+    "culturalAdaptation": 90,
+    "languagePurity": 95
+  },
+  "suggestions": [],
+  "rationale": "The current translation is superior in its flow and technical terminology. It correctly uses 'توهّم' for 'hallucination' and 'حتمية' for 'deterministic'. The candidate version has a few minor issues: it translates 'Golden Set' as 'مجموعة الذهب' (literal/awkward) whereas 'current' uses 'مجموعة ذهبية' (natural). The candidate also has a spacing error in the final heading 'الجزءالمزعج' (missing space). Both preserve MDX structure perfectly, but 'current' feels more like a professional technical blog post in Arabic.",
+  "slug": "llm-evals-are-broken",
+  "locale": "ar",
+  "candidateCommits": [
+    "58c8500ea0173857e900b689289220ab0c7f0ed5"
+  ],
+  "suggestionLog": [],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug llm-evals-are-broken --locale ar --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug llm-evals-are-broken --locale ar --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug llm-evals-are-broken --locale ar --skip-global\n78 | \n79 | export function assertTranslationIntegrity(input: IntegrityCheckInput) {\n80 |   const issues = analyzeTranslationIntegrity(input).filter((issue) => issue.severity !== \"low\");\n81 |   if (issues.length === 0) return;\n82 | \n83 |   throw new Error(\n                 ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2026-05-06--llm-evals-are-broken/ar/index.mdx failed translation integrity checks:\n- [high] html-unclosed-tag: /Users/dan/code/oss/dans-blog/src/content/posts/2026-05-06--llm-evals-are-broken/ar/index.mdx:140 opens <number> without a closing tag.\n- [high] html-unclosed-tag: /Users/dan/code/oss/dans-blog/src/content/posts/2026-05-06--llm-evals-are-broken/ar/index.mdx:140 opens <one> without a closing tag.\n      at assertTranslationIntegrity (/Users/dan/code/oss/dans-blog/src/scripts/i18n/integrity-checks.ts:83:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:33:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}
