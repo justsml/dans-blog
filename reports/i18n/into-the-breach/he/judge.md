@@ -1,7 +1,7 @@
 # Translation Judge
 
-- Selected candidate: 122428714965e04b7c5fecd1d64107f8dea8cd42
+- Selected candidate: 4a4c3c595818c7c8279f5ec150b69636396851fc
 - Selected model: openrouter/deepseek/deepseek-v4-flash
 - Judge model: openrouter/google/gemini-3-flash-preview
 
-DeepSeek provided a complete and technically accurate translation. Gemini's translation had a truncated subtitle ('הנה ק' instead of the full sentence), which is a significant quality issue. DeepSeek correctly handled all MDX requirements, including asset path adjustments and heading preservation, while maintaining a professional and direct tone suitable for the security context.
+This candidate is the only one that correctly preserves the structural integrity of the MDX file, specifically the infographic blueprint section and the visual table of contents which were missing or heavily altered in the 'current' version and other candidates. It maintains Dan's direct, technical voice while providing a natural Hebrew translation. It also correctly handles the relative asset paths (../) and preserves all technical metadata and frontmatter correctly.
