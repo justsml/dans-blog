@@ -1,0 +1,56 @@
+{
+  "selectedCommit": "23f247bd75256e19461bba38dc223183c01ae830",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 92,
+    "technicalAccuracy": 95,
+    "coherence": 92,
+    "relevance": 100,
+    "translationQuality": 92,
+    "mdxPreservation": 100,
+    "culturalAdaptation": 88,
+    "languagePurity": 95
+  },
+  "suggestions": [],
+  "rationale": "The candidate translation is technically accurate and captures the author's direct, slightly informal tone well. It correctly preserves MDX structures, code blocks, and asset paths. The suggestions from the previous judge report (like 'החדר נהיה רועש' and 'קו בסיס') are already present in the provided Hebrew text for this candidate, meaning the fixes have been applied or the candidate was already superior. The translation of 'Golden Set' as 'סט זהב' and 'Evals' as 'Evals' is appropriate for a technical Hebrew audience.",
+  "slug": "llm-evals-are-broken",
+  "locale": "he",
+  "candidateCommits": [
+    "23f247bd75256e19461bba38dc223183c01ae830"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "medium",
+      "match": "החדר מתרועע",
+      "replacement": "החדר נהיה רועש",
+      "reason": "'מתרועע' means socializing/mingling, which is a mistranslation of 'the room gets loud' (meaning complaints increase).",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "הלוצינציות",
+      "replacement": "הזיות",
+      "reason": "Consistency: the text uses both 'הזיה' and 'הלוצינציות'. 'הזיות' is the standard Hebrew term for AI hallucinations.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "בסיס קו",
+      "replacement": "קו בסיס",
+      "reason": "'Baseline' should be translated as 'קו בסיס', not 'בסיס קו'.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug llm-evals-are-broken --locale he --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug llm-evals-are-broken --locale he --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug llm-evals-are-broken --locale he --skip-global\n78 | \n79 | export function assertTranslationIntegrity(input: IntegrityCheckInput) {\n80 |   const issues = analyzeTranslationIntegrity(input).filter((issue) => issue.severity !== \"low\");\n81 |   if (issues.length === 0) return;\n82 | \n83 |   throw new Error(\n                 ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2026-05-06--llm-evals-are-broken/he/index.mdx failed translation integrity checks:\n- [high] html-unclosed-tag: /Users/dan/code/oss/dans-blog/src/content/posts/2026-05-06--llm-evals-are-broken/he/index.mdx:144 opens <number> without a closing tag.\n- [high] html-unclosed-tag: /Users/dan/code/oss/dans-blog/src/content/posts/2026-05-06--llm-evals-are-broken/he/index.mdx:144 opens <one> without a closing tag.\n      at assertTranslationIntegrity (/Users/dan/code/oss/dans-blog/src/scripts/i18n/integrity-checks.ts:83:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:33:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}
