@@ -1,0 +1,71 @@
+---
+title: "It's Time for llm:// Connection Strings"
+subTitle: "Simplify Model & Provider Config with `llm://` URLs"
+date: 2026-01-30
+modified: 2026-02-26
+tags: [ai, llm, api, developer-experience, standards]
+category: AI
+draft: false
+popularity: 1
+social_image: desktop-social.webp
+cover_full_width: ../hero-wide.webp
+cover_mobile: ../square-200.webp
+cover_icon: ../square-200.webp
+---
+
+<blockquote class="inset">
+**更新:** 本記事は `llm://` URI スキームの <a href="https://datatracker.ietf.org/doc/draft-levy-llm-uri-scheme/">Internet-Draft</a> に繋がっています。
+</blockquote>
+
+
+データベース接続の際に、環境変数の寄せ集めをいちいち扱わなければならなかったあの暗い時代を覚えていますか？
+
+それは繊細な設定の塔でした。`DB_HOST`、`DB_PORT`、`DB_USER`、`DB_PASSWORD`、`DB_NAME`…いや、`DB_USERNAME`だったかな？`DB_PASS`か`DB_PWD`か？今回は`PG_*`プレフィックスが必要か？そしてタイムアウト設定はどこに入れるんだ？
+
+それは脆いカードの塔で、`HOST`の大文字化を忘れただけで本番ビルドが崩壊しかねませんでした。
+
+そこで、誰かが「URLだけで済ませよう」という brilliant なアイデアを思いつきました¹：
+
+```bash
+postgres://user:pass@host:5432/dbname
+```
+
+1 本の文字列で、必要なものはすべて。汎用的にパース可能で、ポータブル。敢えて言うなら…美しい。
+
+それなのに、なぜ LLM を 1999 年のまま扱っているのでしょうか？
+
+## 環境変数の爆発
+
+現在、私の `.env` ファイルは放棄された API キーの墓場のようです。`OPENAI_API_KEY`、`ANTHROPIC_API_KEY`、`MISTRAL_API_KEY`、`GROQ_API_KEY`。Azure については語りません—「こんにちは」と言うだけでもエンドポイント、デプロイ名、API バージョン、キーが必要です。
+
+見た目が悪いだけでなく、摩擦が増えます。モデルを切り替えたり新しいプロバイダーをテストしたりするたびに、初期化コードを書き直し、パラメータ名のドキュメントを探し、環境設定にさらに数行足さなければなりません。
+
+もし私たちが… ~~盗む~~ DB URL の考え方を借りたらどうでしょうか？
+
+## LLM 接続文字列の導入
+
+モデルインターフェース全体を 1 行で設定できると想像してみてください：
+
+```bash
+llm://api.openai.com/gpt-5.2?reasoning_effort=none&temp=0.7&max_tokens=1500
+llm://api.z.ai/glm-4.7?top_p=0.9&cache=true
+```
+
+---
+<br />
+
+### LLM 接続文字列の構成要素
+
+![LLM 接続文字列の構成要素](../inline-url-diagram-dark.svg)
+
+スキームは `llm://` です。ホストはプロバイダーの API ベース URL。パスはモデル名です。クエリパラメータは、通常コードを散らかすすべてのランタイムオプションを処理します。
+
+## 認証が必要ですか？ では追加しましょう。
+
+`postgres://` と同様に、認証情報を URL に埋め込むことができます：
+
+```bash
+llm://app-name:sk-proj-123456@api.openai.com/gpt-5.2?reasoning_effort=none&temp=0.7
+```
+
+*注:

@@ -1,0 +1,110 @@
+---
+title: "llm:// Connection Strings का समय आ गया है"
+subTitle: "`llm://` URLs के साथ Model & Provider Config को सरल बनाएं"
+language: "Hindi"
+tags: [ai, llm, api, developer-experience, standards]
+category: AI
+social_image: ../desktop-social.webp
+cover_full_width: ../hero-wide.webp
+cover_mobile: ../square-200.webp
+cover_icon: ../square-200.webp
+---
+
+<blockquote class="inset">
+**Update:** इस लेख के परिणामस्वरूप [`llm://` URI scheme के लिए एक Internet-Draft](https://datatracker.ietf.org/doc/draft-levy-llm-uri-scheme/) तैयार हुआ है।
+</blockquote>
+
+
+उन पुराने बुरे दिनों को याद करें जब डेटाबेस से कनेक्ट करने का मतलब environment variables का एक ढेर संभालना होता था?
+
+वह कॉन्फ़िगरेशन का एक बेहद नाजुक ढांचा था। `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASSWORD`, `DB_NAME`... या रुकिए, क्या वह `DB_USERNAME` था? क्या यह `DB_PASS` है या `DB_PWD`? क्या इस बार मुझे `PG_*` prefixes की ज़रूरत है? और आखिर timeout setting कहाँ डालनी है?
+
+यह ताश के पत्तों के घर जैसा था, जो सिर्फ इसलिए आपके production build को गिरा सकता था क्योंकि आप `HOST` को capitalize करना भूल गए।
+
+फिर, किसी को बस एक URL¹ इस्तेमाल करने का शानदार विचार आया:
+
+```bash
+postgres://user:pass@host:5432/dbname
+```
+
+एक स्ट्रिंग। सब कुछ जो आपको चाहिए। Universally parseable। Portable। क्या मैं कहूँ... सुंदर?
+
+तो फिर हम LLMs के साथ ऐसा व्यवहार क्यों कर रहे हैं जैसे अभी 1999 चल रहा हो?
+
+## Env Var का विस्फोट
+
+अभी, मेरी `.env` फाइल छोड़े हुए API keys के कब्रिस्तान जैसी दिखती है। `OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, `MISTRAL_API_KEY`, `GROQ_API_KEY`| और Azure के बारे में तो पूछिए ही मत—सिर्फ "hello" कहने के लिए भी आपको एक endpoint, एक deployment name, एक API version और एक key चाहिए।
+
+यह सिर्फ बदसूरत नहीं है; यह काम में रुकावट (friction) पैदा करता है। हर बार जब मैं कोई मॉडल बदलना चाहता हूँ या किसी नए provider को टेस्ट करना चाहता हूँ, तो मुझे initialization code फिर से लिखना पड़ता है, विशिष्ट parameter names के लिए documentation ढूंढना पड़ता है, और अपने environment config में तीन और लाइनें जोड़नी पड़ती हैं।
+
+क्या होगा अगर हम बस... ~~चुरा~~ उधार ले लें DB URL वाला आइडिया?
+
+## Introducing LLM Connection Strings
+
+कल्पना कीजिए कि आप अपने पूरे model interface को एक सिंगल लाइन के साथ कॉन्फ़िगर कर रहे हैं:
+
+```bash
+llm://api.openai.com/gpt-5.2?reasoning_effort=none&temp=0.7&max_tokens=1500
+llm://api.z.ai/glm-4.7?top_p=0.9&cache=true
+```
+
+---
+<br />
+
+### Anatomy of an LLM Connection String
+
+![the parts of a LLM connection string](../inline-url-diagram-dark.svg)
+
+Scheme `llm://` है। Host provider का API base URL है। Path मॉडल का नाम है। और query parameters उन सभी runtime options को संभालते हैं जो आमतौर पर आपके कोड को गंदा करते हैं।
+
+## Auth चाहिए? बहुत बढ़िया, इसे जोड़ दें।
+
+ठीक `postgres://` की तरह, हम authentication को सीधे इसके अंदर डाल सकते हैं:
+
+```bash
+llm://app-name:sk-proj-123456@api.openai.com/gpt-5.2?reasoning_effort=none&temp=0.7
+```
+
+*Note: हाँ, URLs में credentials डालना एक security risk हो सकता है अगर आप उन्हें public logs में paste कर रहे हैं। लेकिन आधुनिक logging services इन patterns को scrub करने में काफी अच्छी हैं, और सच कहें तो, क्या आप अपनी `.env` file के साथ इससे बेहतर व्यवहार कर रहे हैं? Verify करें, sanitize करें, और सावधानी से उपयोग करें।*
+
+## Resiliency? क्यों नहीं।
+
+कई database libraries multiple hosts निर्दिष्ट करके round-robin failover का समर्थन करती हैं। हमारे AI agents में वही reliability क्यों नहीं होनी चाहिए?
+
+```bash
+llms://primary.gpt,backup.gpt/gpt-6?temp=0.9
+```
+
+`llms://` में वह `s` कोई typo नहीं है। यह plural है। अगर `primary.gpt` हैंग हो जाता है, तो client अपने आप `backup.gpt` को retry करेगा। किसी जटिल router logic की ज़रूरत नहीं है।
+
+<blockquote class="inset">एक स्ट्रिंग जिसमें आपकी **auth** से लेकर आपके **endpoint** और आपके **hyperparameters** तक सब कुछ शामिल है।</blockquote>
+
+## Alternative Formats
+
+मैं `llm://` के प्रति कट्टर नहीं हूँ। विशिष्ट scheme से ज़्यादा महत्वपूर्ण मानक (standard) खुद है।
+
+मैं एक ऐसी दुनिया की कल्पना कर सकता हूँ जहाँ हम संक्षिप्तता के लिए provider-specific schemes का उपयोग करें, जबकि मानक संरचना को बनाए रखें:
+
+```bash
+ollama://localhost:11434/llama3
+vercel://anthropic/sonnet-4.5?temp=0.8&web_search={"maxUses":3}
+bedrock://us-west-2.aws/anthropic/sonnet-4.5?temp=0.8&cacheControl=ephemeral
+```
+
+सटीक syntax चाहे जो भी हो, इसके मुख्य लाभ निर्विवाद हैं:
+
+1.  **Portability:** अपने पूरे config को एक local script से cloud worker में copy & paste करें।
+2.  **CLI Friendly:** अपने scripts को एक single argument पास करें। `my-agent --model "llm://..."` बेहतर है `my-agent --model gpt-4 --temp 0.7 --key $KEY --host ...` के मुकाबले।
+3.  **Language Agnostic:** हर programming language में एक robust URL parser होता है। हमें validation, parsing, और sanitization मुफ्त में मिल जाता है।
+
+<blockquote class="ai-response inset">डेटाबेस की दुनिया को इसे समझने में दशकों लग गए।<br /><b>अच्छी खबर यह है कि AI timelines में, यह केवल आधा 'vibe-year' पहले की बात है।</b></blockquote>
+
+## Verdict
+
+हमें किसी और जटिल configuration standard या नए YAML-आधारित manifest file की ज़रूरत नहीं है। हमें बस उस एक टूल का उपयोग करने की आवश्यकता है जो पिछले 30 वर्षों से इंटरनेट के बाकी हिस्सों के लिए काम कर रहा है।
+
+चलिए पहिये का पुनरुद्धार (reinventing the wheel) करना बंद करें और अपने LLM connections के साथ वही सम्मान करना शुरू करें जो हम अपने databases को देते हैं। आपकी `.env` file (और आपकी मानसिक शांति) आपको धन्यवाद देगी।
+
+![a messy env var drawer](../hero-concept-8-drawers.webp)
+
+{/* ¹ हाँ, मुझे पता है कि `URI` शब्द `URL` से अधिक सही है। यदि आप इतने pedantic हैं कि वास्तव में इस अंतर की परवाह करते हैं, तो कृपया बाहर जाकर ताजी हवा लें। */}

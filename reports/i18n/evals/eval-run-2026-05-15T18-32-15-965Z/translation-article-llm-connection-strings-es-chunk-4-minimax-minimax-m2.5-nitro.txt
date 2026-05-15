@@ -1,0 +1,19 @@
+## ¿Necesitas autenticación? Genial, agrégala.
+
+Al igual que `postgres://`, podemos incorporar la autenticación directamente:
+
+```bash
+llm://app-name:sk-proj-123456@api.openai.com/gpt-5.2?reasoning_effort=none&temp=0.7
+```
+
+*Nota: Sí, colocar credenciales en URLs puede ser un riesgo de seguridad si las pegas en logs públicos. Pero los servicios de logging modernos son bastante buenos filtrando estos patrones, y honestamente, ¿acaso tratas mejor tu archivo `.env`? Verifica, sanitiza y usa con precaución.*
+
+## ¿Resiliencia? ¿Por qué demonios no?
+
+Muchas bibliotecas de bases de datos soportan failover round-robin especificando múltiples hosts. ¿Por qué no tendrían nuestros agentes de IA la misma confiabilidad?
+
+```bash
+llms://primary.gpt,backup.gpt/gpt-6?temp=0.9
+```
+
+Esa `s` en `llms://` no es un typo. Es plural. Si `primary.gpt` se cuelga, el cliente automáticamente reintenta con `backup.gpt`. No se necesita lógica de router compleja.

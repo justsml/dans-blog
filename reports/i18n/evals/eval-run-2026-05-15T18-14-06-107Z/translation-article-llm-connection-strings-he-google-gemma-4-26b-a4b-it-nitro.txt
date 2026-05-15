@@ -1,0 +1,111 @@
+---
+title: "הגיע הזמן ל-llm:// Connection Strings"
+subTitle: "פישוט קונפיגורציה של מודלים וספקים באמצעות כתובות `llm://`"
+language: "Hebrew"
+modified: 2026-02-26
+tags: [ai, llm, api, developer-experience, standards]
+category: AI
+social_image: ../desktop-social.webp
+cover_full_width: ../hero-wide.webp
+cover_mobile: ../square-200.webp
+cover_icon: ../square-200.webp
+---
+
+<blockquote class="inset">
+**עדכון:** מאמר זה הוביל ל-[Internet-Draft עבור סכימת ה-URI של `llm://`](https://datatracker.ietf.org/doc/draft-levy-llm-uri-scheme/).
+</blockquote>
+
+
+זוכרים את הימים הישנים והרעים, כשחיבור לבסיס נתונים דרש התעסקות עם ערמה של משתני סביבה (env vars) מכל הב種類?
+
+זה היה מגדל של קונפיגורציה שברירית. `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASSWORD`, `DB_NAME`... או רגע, זה היה `DB_USERNAME`? זה `DB_PASS` או `DB_PWD`? אני צריך את הקידומות של `PG_*` הפעם? ואיפה לעזאזל נכנסת הגדרת ה-timeout?
+
+זה היה בית קלפים שעלול היה להפיל את ה-production build שלכם רק כי שכחתם להשתמש ב-Capitalization הנכון ב-`HOST`.
+
+ואז, למישהו עלתה הרעיון המבריק פשוט להשתמש ב-URL¹:
+
+```bash
+postgres://user:pass@host:5432/dbname
+```
+
+מחרוזת אחת. כל מה שצריך. ניתנת לפענוח (parse) באופן אוניברסלי. ניידת. ואם אני מעז לומר... יפהפייה?
+
+אז למה אנחנו מתייחסים ל-LLMs כאילו אנחנו בשנת 1999?
+
+## פיצוץ משתני הסביבה
+
+כרגע, קובץ ה-`.env` שלי נראה כמו בית קברות של מפתחות API נטושים. `OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, `MISTRAL_API_KEY`, `GROQ_API_KEY`. ואל תתחילו איתי לגבי Azure—אתם צריכים endpoint, שם deployment, גרסת API ומפתח רק כדי להגיד "שלום".
+
+זה לא רק מכוער; זה חיכוך (friction). בכל פעם שאני רוצה להחליף מודל או לבדוק ספק חדש, אני כותב מחדש קוד אתחול, מחפש בתיעוד שמות של פרמטרים ספציפיים, ומוסיף עוד שלושה שורות לקונפיגורציה של הסביבה.
+
+מה אם פשוט... ~~נגנוב~~ נשאיל את הרעיון של ה-DB URL?
+
+## הכירו את LLM Connection Strings
+
+תארו לעצמכם שאתם מגדירים את כל ממשק המודל שלכם בשורה אחת:
+
+```bash
+llm://api.openai.com/gpt-5.2?reasoning_effort=none&temp=0.7&max_tokens=1500
+llm://api.z.ai/glm-4.7?top_p=0.9&cache=true
+```
+
+---
+<br />
+
+### האנטומיה של LLM Connection String
+
+![the parts of a LLM connection string](../inline-url-diagram-dark.svg)
+
+הסכימה היא `llm://`. ה-host הוא ה-API base URL של הספק. ה-path הוא שם המודל. ופרמטרי השאילתה (query parameters) מטפלים בכל אפשרויות ה-runtime שבדרך כלל מלכלכות את הקוד שלכם.
+
+## צריכים אימות (auth)? מעולה, תוסיפו אותו.
+
+בדיוק כמו `postgres://`, אנחנו יכולים להטמיע אימות ישירות בפנים:
+
+```bash
+llm://app-name:sk-proj-123456@api.openai.com/gpt-5.2?reasoning_effort=none&temp=0.7
+```
+
+*הערה: כן, הכנסת פרטי גישה לתוך URLs יכולה להוות סיכון אבטחה אם אתם מדביקים אותם ללוגים ציבוריים. אבל שירותי לוג מודרניים די טובים בניקוי התבניות האלה, ובכנות, האם אתם מתייחסים לקובץ ה-`.env` שלכם הרבה יותר טוב? ודאו, סננו, והשתמשו בזה בזהירות.*
+
+## עמידות (Resiliency)? למה לא.
+
+ספריות רבות של בסיסי נתונים תומכות ב-round-robin failover על ידי ציון מספר hosts. למה שלא לסוכני ה-AI שלנו תהיה אותה רמת אמינות?
+
+```bash
+llms://primary.gpt,backup.gpt/gpt-6?temp=0.9
+```
+
+ה-`s` ב-`llms://` היא לא טעות הקלדה. זה ברבים. אם `primary.gpt` נתקע, הלקוח ינסה אוטומטית את `backup.gpt`. אין צורך בלוגיקת router מורכבת.
+
+<blockquote class="inset">מחרוזת אחת עם הכל: מה-**auth** שלכם ועד ל-**endpoint** ול-**hyperparameters**.</blockquote>
+
+## פורמטים חלופיים
+
+אני לא "נשוי" ל-`llm://`. הסכימה הספציפית חשובה פחות מהסטנדרט עצמו.
+
+אני יכול לדמיין עולם שבו אנחנו משתמשים בסכימות ספציפיות לספקים כדי לקצר, תוך שמירה על המבנה הסטנדרטי:
+
+```bash
+ollama://localhost:11434/llama3
+vercel://anthropic/sonnet-4.5?temp=0.8&web_search={"maxUses":3}
+bedrock://us-west-2.aws/anthropic/sonnet-4.5?temp=0.8&cacheControl=ephemeral
+```
+
+ללא קשר לתחביר המדויק, היתרונות המרכזיים הם בלתי ניתנים להכחשה:
+
+1.  **ניידות (Portability):** העתק והדבק את כל הקונפיגורציה שלך מסקריפט מקומי ל-cloud worker.
+2.  **ידידותי ל-CLI:** העבר ארגומנט בודד לסקריפטים שלך. `my-agent --model "llm://..."` מנצח את `my-agent --model gpt-4 --temp 0.7 --key $KEY --host ...`.
+3.  **אגנוסטיות לשפה (Language Agnostic):** לכל שפת תכנות יש URL parser חזק. אנחנו מקבלים ולידציה, parsing וסניטציה בחינם.
+
+<blockquote class="ai-response inset">עולם בסיסי הנתונים נזקק לעשורים כדי להבין את זה.<br /><b>חדשות טובות, בלוחות הזמנים של AI, זה היה רק לפני בערך חצי "שנת-vibe".</b></blockquote>
+
+## השורה התחתונה
+
+אנחנו לא צריכים עוד סטנדרט קונפיגורציה מורכב או קובץ manifest חדש מבוסס YAML. אנחנו פשוט צריכים להשתמש בכלי היחיד שעובד עבור שאר האינטרנט ב-30 השנים האחרונות.
+
+בואו נפסיק להמציא את הגלגל ונתחיל להתייחס לחיבורי ה-LLM שלנו עם אותה רצינות שאנו מעניקים לבסיסי הנתונים שלנו. קובץ ה-`.env` שלכם (והשפיות שלכם) יודו לכם.
+
+![a messy env var drawer](../hero-concept-8-drawers.webp)
+
+{/* ¹ כן, אני יודע ש-`URI` היא המונח הנכון יותר מ-`URL`. אם אתם פדנטים מספיק כדי באמת להתעניין בהבחנה הזו, בבקשה צאו קצת לטבע. */}

@@ -200,7 +200,7 @@ For higher-risk batches, add a second cheap judge explicitly with `--second-mode
 
 - Run prompt/inference evals with `bun run i18n:eval`; see `docs/i18n-evals.md` before changing eval output paths or report formats.
 - Eval runs write one folder per run: `reports/i18n/evals/eval-run-<ISO-timestamp>/`.
-- Inside each eval run folder, `summary.md` is the human-readable report, `cases.jsonl` is the append-only case log, and `translation-<case>.txt` / `judge-<case>.txt` preserve full or partial streamed model output as it arrives. Matching `.jsonl` stream files record lifecycle events and errors.
+- Inside each eval run folder, `summary.md` is the human-readable report, `run.jsonl` is the append-only log for stream lifecycle events, errors, and completed case results, and `translation-<case>.txt` / `judge-<case>.txt` preserve full or partial streamed model output as it arrives.
 - Use `--print-streams` only when stdout interleaving is acceptable; otherwise inspect live partial output with `tail -f reports/i18n/evals/eval-run-.../*.txt`.
 
 ## Commit Subjects

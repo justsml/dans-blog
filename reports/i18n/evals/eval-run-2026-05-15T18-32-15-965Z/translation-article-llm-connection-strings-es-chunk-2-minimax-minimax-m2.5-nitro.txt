@@ -1,0 +1,9 @@
+## La Explosión de Variables de Entorno
+
+Ahora mismo, mi archivo `.env` parece un cementerio de claves API abandonadas. `OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, `MISTRAL_API_KEY`, `GROQ_API_KEY`. Y no me hagáis empezar con Azure—necesitas un endpoint, un nombre de deployment, una versión de API y una clave solo para decir "hola".
+
+No solo es feo; es fricción. Cada vez que quiero cambiar de modelo o probar un proveedor nuevo, estoy reescribiendo código de inicialización, buscando en la documentación los nombres de parámetros específicos, y añadiendo tres líneas más a mi configuración de entorno.
+
+¿Qué tal si simplemente... ~~copiamos~~ adoptamos la idea de las URLs de base de datos?
+
+## Presentando las Cadenas de Conexión para LLMs

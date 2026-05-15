@@ -37,11 +37,13 @@ import {
 import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 import {
   OPENROUTER_USAGE_ACCOUNTING,
+  cachedText,
   usageFromResult,
 } from "./llm-telemetry.ts";
 import {
+  buildCachedChunkContextPrompt,
+  buildDynamicChunkPrompt,
   buildSystemPrompt,
-  buildUserPrompt,
   FRONTMATTER_LANGUAGE_LABELS,
 } from "./prompts.ts";
 import {
@@ -57,10 +59,18 @@ import {
 import { analyzeTranslationIntegrity } from "./integrity-checks.ts";
 import {
   INHERITED_TRANSLATED_FRONTMATTER_KEYS,
-  omitInheritedTranslatedFrontmatter,
   normalizeFrontmatterAssetPaths,
+  normalizeLocalizedCandidateBody,
+  omitInheritedTranslatedFrontmatter,
   normalizeLocalizedCandidateFile,
 } from "./localized-mdx.ts";
+import {
+  chunkSegments,
+  extractSegments,
+  parseChunkSize,
+  reassembleChunks,
+  type Chunk,
+} from "./chunker.ts";
 import { resolveCheapFastTranslationModels } from "./model-presets.ts";
 import { parseArgs, optionalString, parseList } from "./utils.ts";
 import {
@@ -72,6 +82,16 @@ import {
   isVisiblePostData,
   type PostVisibilityData,
 } from "../../shared/postVisibility.ts";
+import {
+  formatCost,
+  formatDuration,
+  scoreCell,
+  shortModel,
+  statusIcon,
+  table,
+  truncate,
+  ui,
+} from "./terminal-ui.ts";
 
 // ---------------------------------------------------------------------------
 // Config
@@ -86,6 +106,9 @@ const DEFAULT_MODELS = [
 ];
 const DEFAULT_JUDGE_MODEL = "openrouter/google/gemini-3-flash-preview";
 const TIMEOUT_MS = 90_000;
+const MIN_OUTPUT_TOKENS = 6_000;
+const MAX_OUTPUT_TOKENS = 16_000;
+const MINIMAX_EVAL_CHUNK_SIZE = "6p";
 
 const args = parseArgs();
 const locales = parseLocales(
@@ -175,6 +198,15 @@ type StreamContext = {
 };
 
 type StreamTextSettings = Parameters<typeof streamText>[0];
+type OpenRouterReasoningProviderOptions = {
+  openrouter: {
+    reasoning: {
+      effort?: "low" | "minimal";
+      max_tokens?: number;
+      exclude?: boolean;
+    };
+  };
+};
 
 class StreamedTextError extends Error {
   partialText: string;
@@ -206,14 +238,13 @@ async function streamLlmText(
     `${context.phase}-${context.inputId}-${context.model.replace(/^openrouter\//, "")}`,
   );
   const textPath = join(streamDir, `${stem}.txt`);
-  const eventsPath = join(streamDir, `${stem}.jsonl`);
   const relTextPath = relative(process.cwd(), textPath);
   let text = "";
   let chunkCount = 0;
 
   mkdirSync(streamDir, { recursive: true });
   writeFileSync(textPath, "", "utf8");
-  appendJsonl(eventsPath, {
+  appendRunRecord({
     at: new Date().toISOString(),
     event: "stream_started",
     phase: context.phase,
@@ -221,7 +252,9 @@ async function streamLlmText(
     model: context.model,
     textPath: relTextPath,
   });
-  console.log(`      stream ${context.phase} → ${relTextPath}`);
+  console.log(
+    ui.dim(`      stream ${context.phase.padEnd(11)} ${relTextPath}`),
+  );
 
   try {
     const result = streamText(settings);
@@ -239,7 +272,7 @@ async function streamLlmText(
       result.providerMetadata,
     ]);
     const telemetry = usageFromResult(usage, durationMs, providerMetadata);
-    appendJsonl(eventsPath, {
+    appendRunRecord({
       at: new Date().toISOString(),
       event: "stream_finished",
       phase: context.phase,
@@ -263,7 +296,7 @@ async function streamLlmText(
   } catch (error) {
     const durationMs = Date.now() - startedAt;
     const message = error instanceof Error ? error.message : String(error);
-    appendJsonl(eventsPath, {
+    appendRunRecord({
       at: new Date().toISOString(),
       event: "stream_error",
       phase: context.phase,
@@ -530,6 +563,7 @@ async function scoreLlmJudge(
         temperature: 0.1,
         maxOutputTokens: 2000,
         timeout: { totalMs: TIMEOUT_MS },
+        providerOptions: getEvalReasoningProviderOptions(judgeModel),
       },
       {
         phase: "judge",
@@ -631,29 +665,54 @@ async function scoreLlmJudge(
 // ---------------------------------------------------------------------------
 
 async function translate(input: EvalInput, model: string): Promise<EvalOutput> {
+  if (shouldUseChunkedEvalTranslation(input, model)) {
+    return translateChunkedArticle(input, model);
+  }
+
+  const context = {
+    chunkIndex: 0,
+    totalChunks: 1,
+    articleSummary: `${input.kind === "quiz" ? "Quiz" : "Technical article"}: "${input.title}" (${input.slug}).`,
+  };
+  const cachedContext = buildCachedChunkContextPrompt(
+    input.locale,
+    context,
+    input.isQuiz,
+  );
+  const dynamicPrompt = buildDynamicChunkPrompt(
+    input.source,
+    input.locale,
+    context,
+    input.isQuiz,
+  );
+
   const result = await streamLlmText(
     {
       model: createOpenRouter({}).chat(
         model.replace(/^openrouter\//, ""),
         OPENROUTER_USAGE_ACCOUNTING,
       ),
-      system: buildSystemPrompt(input.locale, input.isQuiz),
-      prompt: buildUserPrompt(
-        input.source,
-        input.locale,
+      allowSystemInMessages: true,
+      messages: [
         {
-          chunkIndex: 0,
-          totalChunks: 1,
-          articleSummary: `${input.kind === "quiz" ? "Quiz" : "Technical article"}: "${input.title}" (${input.slug}).`,
+          role: "system",
+          content: buildSystemPrompt(input.locale, input.isQuiz),
         },
-        input.isQuiz,
-      ),
+        {
+          role: "user",
+          content: [
+            cachedText(cachedContext),
+            {
+              type: "text",
+              text: dynamicPrompt,
+            },
+          ],
+        },
+      ],
       temperature: 0.1,
-      maxOutputTokens: Math.min(
-        16_000,
-        Math.max(4_000, Math.ceil(input.source.length / 2)),
-      ),
+      maxOutputTokens: getEvalMaxOutputTokens(input.source),
       timeout: { totalMs: TIMEOUT_MS },
+      providerOptions: getEvalReasoningProviderOptions(model),
     },
     {
       phase: "translation",
@@ -670,6 +729,218 @@ async function translate(input: EvalInput, model: string): Promise<EvalOutput> {
     outputTokens: result.outputTokens,
     providerCostUsd: result.providerCostUsd,
     streamTextPath: result.streamTextPath,
+  };
+}
+
+async function translateChunkedArticle(
+  input: EvalInput,
+  model: string,
+): Promise<EvalOutput> {
+  const parsed = matter(input.source);
+  const sourceBody = parsed.content;
+  const articleSummary = `Technical article: "${input.title}" (${input.slug}).`;
+  const strategy = parseChunkSize(MINIMAX_EVAL_CHUNK_SIZE);
+  const chunks = chunkSegments(extractSegments(sourceBody), strategy);
+  const translatedChunks: Chunk[] = [];
+  let previousTranslation: string | undefined;
+  let durationMs = 0;
+  let inputTokens = 0;
+  let outputTokens = 0;
+  let providerCostUsd = 0;
+
+  const frontmatter = await translateEvalFrontmatter(input, model, parsed.data);
+  durationMs += frontmatter.durationMs;
+  inputTokens += frontmatter.inputTokens;
+  outputTokens += frontmatter.outputTokens;
+  providerCostUsd += frontmatter.providerCostUsd ?? 0;
+
+  for (let index = 0; index < chunks.length; index += 1) {
+    const chunk = chunks[index];
+    chunk.totalChunks = chunks.length;
+    const result = await translateEvalChunk({
+      input,
+      model,
+      chunk,
+      articleSummary,
+      previousTranslation,
+      previousSourceContext: edgeParagraphContext(chunks[index - 1], "last"),
+      nextSourceContext: edgeParagraphContext(chunks[index + 1], "first"),
+    });
+
+    durationMs += result.durationMs;
+    inputTokens += result.inputTokens;
+    outputTokens += result.outputTokens;
+    providerCostUsd += result.providerCostUsd ?? 0;
+    translatedChunks.push({
+      index,
+      segments: [{ type: "text", content: result.text.trim() }],
+      text: result.text.trim(),
+    });
+    previousTranslation = result.text;
+  }
+
+  const translatedBody = normalizeLocalizedCandidateBody(
+    input.source,
+    reassembleChunks(translatedChunks),
+  );
+  const assembled = matter.stringify(
+    translatedBody.trimStart(),
+    frontmatter.data,
+  ).trim();
+  const translation = normalizeEvalTranslation(input.source, assembled);
+  const streamTextPath = writeAssembledTranslationStream(input, model, translation);
+
+  return {
+    translation,
+    model,
+    durationMs,
+    inputTokens,
+    outputTokens,
+    providerCostUsd: providerCostUsd === 0 ? undefined : providerCostUsd,
+    streamTextPath,
+  };
+}
+
+async function translateEvalChunk({
+  input,
+  model,
+  chunk,
+  articleSummary,
+  previousTranslation,
+  previousSourceContext,
+  nextSourceContext,
+}: {
+  input: EvalInput;
+  model: string;
+  chunk: Chunk;
+  articleSummary: string;
+  previousTranslation?: string;
+  previousSourceContext?: string;
+  nextSourceContext?: string;
+}): Promise<StreamedTextResult> {
+  const context = {
+    chunkIndex: chunk.index,
+    totalChunks: chunk.totalChunks ?? chunk.index + 1,
+    previousTranslation,
+    previousSourceContext,
+    nextSourceContext,
+    articleSummary,
+  };
+  const cachedContext = buildCachedChunkContextPrompt(input.locale, context, false);
+  const dynamicPrompt = buildDynamicChunkPrompt(chunk.text, input.locale, context, false);
+
+  return streamLlmText(
+    {
+      model: createOpenRouter({}).chat(
+        model.replace(/^openrouter\//, ""),
+        OPENROUTER_USAGE_ACCOUNTING,
+      ),
+      allowSystemInMessages: true,
+      messages: [
+        {
+          role: "system",
+          content: buildSystemPrompt(input.locale, false),
+        },
+        {
+          role: "user",
+          content: [
+            cachedText(cachedContext),
+            {
+              type: "text",
+              text: dynamicPrompt,
+            },
+          ],
+        },
+      ],
+      temperature: 0.1,
+      maxOutputTokens: getEvalChunkMaxOutputTokens(chunk.text),
+      timeout: { totalMs: TIMEOUT_MS },
+      providerOptions: getEvalReasoningProviderOptions(model),
+    },
+    {
+      phase: "translation",
+      inputId: `${input.id}:chunk-${chunk.index + 1}`,
+      model,
+    },
+  );
+}
+
+async function translateEvalFrontmatter(
+  input: EvalInput,
+  model: string,
+  sourceFrontmatter: Record<string, unknown>,
+) {
+  const data = omitInheritedTranslatedFrontmatter(
+    normalizeFrontmatterAssetPaths(sourceFrontmatter),
+  );
+  let durationMs = 0;
+  let inputTokens = 0;
+  let outputTokens = 0;
+  let providerCostUsd = 0;
+
+  for (const key of ["date", "modified", "minReleaseDate"]) {
+    const value = data[key];
+    if (value instanceof Date) data[key] = value.toISOString().slice(0, 10);
+  }
+
+  for (const key of ["title", "subTitle", "cover_alt", "cover_credit"]) {
+    const value = data[key];
+    if (typeof value !== "string" || value.trim() === "") continue;
+
+    const result = await streamLlmText(
+      {
+        model: createOpenRouter({}).chat(
+          model.replace(/^openrouter\//, ""),
+          OPENROUTER_USAGE_ACCOUNTING,
+        ),
+        allowSystemInMessages: true,
+        messages: [
+          {
+            role: "system",
+            content:
+              "You are a technical translator. Output only the requested translated frontmatter value.",
+          },
+          {
+            role: "user",
+            content: [
+              cachedText(
+                [
+                  "STABLE FRONTMATTER TRANSLATION CONTRACT:",
+                  buildSystemPrompt(input.locale, input.isQuiz),
+                ].join("\n"),
+              ),
+              {
+                type: "text",
+                text: `Translate this ${key} into ${FRONTMATTER_LANGUAGE_LABELS[input.locale]}. Preserve inline code spans exactly. Return one plain string, not YAML.\n\n${value}`,
+              },
+            ],
+          },
+        ],
+        temperature: 0.1,
+        maxOutputTokens: 500,
+        timeout: { totalMs: TIMEOUT_MS },
+        providerOptions: getEvalReasoningProviderOptions(model),
+      },
+      {
+        phase: "translation",
+        inputId: `${input.id}:frontmatter-${key}`,
+        model,
+      },
+    );
+
+    durationMs += result.durationMs;
+    inputTokens += result.inputTokens;
+    outputTokens += result.outputTokens;
+    providerCostUsd += result.providerCostUsd ?? 0;
+    data[key] = cleanFrontmatterScalarTranslation(result.text, value);
+  }
+
+  return {
+    data,
+    durationMs,
+    inputTokens,
+    outputTokens,
+    providerCostUsd: providerCostUsd === 0 ? undefined : providerCostUsd,
   };
 }
 
@@ -894,6 +1165,81 @@ function normalizeFrontmatterValue(value: unknown): string {
   return JSON.stringify(value);
 }
 
+function getEvalMaxOutputTokens(source: string) {
+  return Math.min(
+    MAX_OUTPUT_TOKENS,
+    Math.max(MIN_OUTPUT_TOKENS, Math.ceil(source.length * 1.4)),
+  );
+}
+
+function getEvalChunkMaxOutputTokens(source: string) {
+  return Math.min(6_000, Math.max(1_500, Math.ceil(source.length * 1.8)));
+}
+
+function shouldUseChunkedEvalTranslation(input: EvalInput, model: string) {
+  return input.kind === "article" && model.replace(/^openrouter\//, "").includes("minimax/");
+}
+
+function getEvalReasoningProviderOptions(
+  model: string,
+): OpenRouterReasoningProviderOptions | undefined {
+  const normalized = model.replace(/^openrouter\//, "");
+
+  if (normalized.includes("minimax/")) {
+    return { openrouter: { reasoning: { max_tokens: 512, exclude: true } } };
+  }
+
+  if (
+    normalized.includes("gpt-5")
+    || normalized.includes("gpt-oss")
+    || normalized.includes("qwen")
+    || normalized.includes("glm")
+    || normalized.includes("deepseek")
+  ) {
+    return { openrouter: { reasoning: { effort: "low", exclude: true } } };
+  }
+
+  if (normalized.includes("gemini-3")) {
+    return { openrouter: { reasoning: { effort: "minimal", exclude: true } } };
+  }
+
+  return undefined;
+}
+
+function edgeParagraphContext(chunk: Chunk | undefined, edge: "first" | "last") {
+  if (chunk == null) return undefined;
+  const textSegments = chunk.segments
+    .filter((segment) => segment.type === "text")
+    .map((segment) => segment.content.trim())
+    .filter(Boolean);
+  return edge === "first" ? textSegments[0] : textSegments.at(-1);
+}
+
+function writeAssembledTranslationStream(
+  input: EvalInput,
+  model: string,
+  translation: string,
+) {
+  const stem = safeFileName(
+    `translation-${input.id}-${model.replace(/^openrouter\//, "")}-assembled`,
+  );
+  const path = join(streamDir, `${stem}.txt`);
+  writeFileSync(path, translation, "utf8");
+  return relative(process.cwd(), path);
+}
+
+function cleanFrontmatterScalarTranslation(translated: string, fallback: string) {
+  const cleaned = translated
+    .trim()
+    .replace(/^```(?:\w+)?\s*/, "")
+    .replace(/\s*```$/, "")
+    .trim();
+  if (cleaned === "") return fallback;
+  const firstLine = cleaned.split(/\r?\n/).find((line) => line.trim() !== "");
+  if (firstLine == null) return fallback;
+  return firstLine.trim().replace(/^["'](.+)["']$/, "$1");
+}
+
 function safeFileName(value: string) {
   return value
     .replace(/[^a-z0-9._-]+/gi, "-")
@@ -903,6 +1249,10 @@ function safeFileName(value: string) {
 
 function appendJsonl(path: string, value: unknown) {
   appendFileSync(path, JSON.stringify(value) + "\n", "utf8");
+}
+
+function appendRunRecord(value: Record<string, unknown>) {
+  appendJsonl(runLogPath, value);
 }
 
 function parseLocales(value: string | undefined): ActiveLocale[] {
@@ -923,7 +1273,7 @@ function parseLocales(value: string | undefined): ActiveLocale[] {
 mkdirSync(EVAL_REPORT_DIR, { recursive: true });
 const runId = new Date().toISOString().replace(/[:.]/g, "-");
 const runDir = join(EVAL_REPORT_DIR, `eval-run-${runId}`);
-const outputPath = join(runDir, "cases.jsonl");
+const runLogPath = join(runDir, "run.jsonl");
 const summaryPath = join(runDir, "summary.md");
 const streamDir = runDir;
 
@@ -934,87 +1284,271 @@ const pairs = inputs.flatMap((input) =>
 );
 
 if (isDryRun) {
-  console.log(`\nEval cases (dry run):`);
-  for (const { input, model } of pairs) {
-    console.log(
-      `  [${input.kind}] ${input.slug}  locale=${input.locale}  model=${model.replace(/^openrouter\//, "")}`,
-    );
-    console.log(`  source: ${relative(process.cwd(), input.sourcePath)}`);
-  }
-  console.log(`\nJudge model: ${judgeModel}`);
-  console.log(`Output: ${runDir}`);
+  console.log(`\n${ui.title("i18n eval dry run")}`);
+  console.log(
+    ui.dim(
+      `${inputs.length} input(s) × ${translationModels.length} model(s) = ${pairs.length} eval case(s)`,
+    ),
+  );
+  console.log(`${ui.title("Judge")}   ${ui.model(judgeModel)}`);
+  console.log(`${ui.title("Locales")} ${locales.map(ui.info).join(", ")}`);
+  console.log(`${ui.title("Output")}  ${ui.path(runDir)}\n`);
+  console.log(
+    table(
+      ["#", "Kind", "Locale", "Slug", "Model", "Source"],
+      pairs.map(({ input, model }, index) => [
+        String(index + 1),
+        input.kind,
+        ui.info(input.locale),
+        truncate(input.slug, 36),
+        ui.model(truncate(shortModel(model), 40)),
+        ui.path(relative(process.cwd(), input.sourcePath)),
+      ]),
+    ),
+  );
   process.exit(0);
 }
 
 mkdirSync(runDir, { recursive: true });
+writeFileSync(runLogPath, "", "utf8");
 
+console.log(`\n${ui.title("i18n eval run")}`);
 console.log(
-  `\n${inputs.length} input(s) × ${translationModels.length} model(s) = ${pairs.length} eval(s) running in parallel`,
+  ui.dim(
+    `${inputs.length} input(s) × ${translationModels.length} model(s) = ${pairs.length} eval(s) running in parallel`,
+  ),
 );
 console.log(
-  `Models  : ${translationModels.map((m) => m.replace(/^openrouter\//, "")).join(", ")}`,
+  `${ui.title("Models")}  ${translationModels.map((m) => ui.model(shortModel(m))).join(", ")}`,
 );
-console.log(`Judge   : ${judgeModel}`);
-console.log(`Locales : ${locales.join(", ")}\n`);
-console.log(`Output  : ${relative(process.cwd(), runDir)}`);
+console.log(`${ui.title("Judge")}   ${ui.model(judgeModel)}`);
+console.log(`${ui.title("Locales")} ${locales.map(ui.info).join(", ")}`);
+console.log(`${ui.title("Output")}  ${ui.path(relative(process.cwd(), runDir))}`);
 console.log(
-  `Streams : ${relative(process.cwd(), streamDir)}${printStreams ? " (+stdout)" : ""}\n`,
+  `${ui.title("Streams")} ${ui.path(relative(process.cwd(), streamDir))}${printStreams ? ui.warn(" (+stdout)") : ""}\n`,
 );
 
 if (braintrustEnabled) {
-  console.log(`Braintrust: logging to project "${BRAINTRUST_PROJECT_NAME}"\n`);
+  console.log(
+    `${ui.title("Braintrust")} logging to project ${ui.info(`"${BRAINTRUST_PROJECT_NAME}"`)}\n`,
+  );
 }
 
 const results = await Promise.all(
-  pairs.map(async ({ input, model }) => {
-    const shortModel = model.replace(/^openrouter\//, "");
-    console.log(`  → ${input.id}  model=${shortModel}`);
+  pairs.map(async ({ input, model }, index) => {
+    const modelLabel = shortModel(model);
+    const caseLabel = `${input.kind}:${input.slug}:${input.locale}`;
+    console.log(
+      `${ui.info("▶")} ${ui.dim(`[${index + 1}/${pairs.length}]`)} ${caseLabel} ${ui.model(modelLabel)}`,
+    );
     const result = await tracedEval(
       `eval:${input.id}`,
       {
         slug: input.slug,
         locale: input.locale,
         kind: input.kind,
-        model: shortModel,
+        model: modelLabel,
         judgeModel,
       },
       () => runEval(input, model),
     );
-    const score = (result.overallScore * 100).toFixed(1);
+    const score = scoreCell(result.overallScore);
     console.log(
-      `  ← ${result.passed ? "PASS" : "FAIL"}  score=${score}  ${result.durationMs}ms  model=${shortModel}`,
+      `${statusIcon(result.passed)} ${ui.dim(`[${index + 1}/${pairs.length}]`)} ${caseLabel} score=${score} time=${formatDuration(result.durationMs)} cost=${formatCost(result.providerCostUsd)} ${ui.model(modelLabel)}`,
     );
     if (!result.passed) {
       for (const s of result.scores.filter(
         (s) => !s.passed && s.severity !== "low",
       )) {
-        console.log(`      ✗ ${s.name}${s.details ? `: ${s.details}` : ""}`);
+        console.log(
+          `   ${ui.bad("•")} ${ui.warn(s.name)}${s.details ? ui.dim(`: ${s.details}`) : ""}`,
+        );
       }
       if (result.streamTextPath != null)
-        console.log(`      raw translation stream: ${result.streamTextPath}`);
+        console.log(
+          `   ${ui.dim("raw translation stream:")} ${ui.path(result.streamTextPath)}`,
+        );
     }
-    appendFileSync(
-      outputPath,
-      JSON.stringify({ at: new Date().toISOString(), ...result }) + "\n",
-      "utf8",
-    );
+    appendRunRecord({
+      at: new Date().toISOString(),
+      event: "case_finished",
+      ...result,
+    });
     return result;
   }),
 );
 
 writeSummary(results);
+writeConsoleSummary(results);
 
 const failCount = results.filter((r) => !r.passed).length;
-console.log(`\nSummary: ${summaryPath}`);
+console.log(`\n${ui.title("Markdown summary")} ${ui.path(summaryPath)}`);
 if (failCount > 0) {
-  console.error(`\n${failCount} eval(s) failed.`);
+  console.error(ui.bad(`\n❌ ${failCount} eval(s) failed.`));
   process.exit(1);
 }
-console.log(`All ${results.length} eval(s) passed.`);
+console.log(ui.good(`✅ All ${results.length} eval(s) passed.`));
 
 // ---------------------------------------------------------------------------
 // Summary report
 // ---------------------------------------------------------------------------
+
+function writeConsoleSummary(results: EvalResult[]) {
+  const passCount = results.filter((r) => r.passed).length;
+  const failCount = results.length - passCount;
+  const totalCost = results.reduce(
+    (sum, r) => sum + (r.providerCostUsd ?? 0),
+    0,
+  );
+  const totalTokens = results.reduce(
+    (sum, r) => sum + r.inputTokens + r.outputTokens,
+    0,
+  );
+  const totalMs = results.reduce((sum, r) => sum + r.durationMs, 0);
+
+  console.log(`\n${ui.title("Run summary")}`);
+  console.log(
+    table(
+      ["Total", "Passed", "Failed", "Pass rate", "Tokens", "Cost", "Model time"],
+      [
+        [
+          String(results.length),
+          ui.good(`✅ ${passCount}`),
+          failCount === 0 ? ui.good("0") : ui.bad(`❌ ${failCount}`),
+          scoreCell(results.length === 0 ? 0 : passCount / results.length),
+          totalTokens.toLocaleString(),
+          formatCost(totalCost),
+          formatDuration(totalMs),
+        ],
+      ],
+    ),
+  );
+
+  console.log(`\n${ui.title("Results")}`);
+  console.log(
+    table(
+      ["", "Kind", "Locale", "Slug", "Model", "Score", "Judge", "Time", "Cost"],
+      results
+        .slice()
+        .sort(
+          (a, b) =>
+            Number(a.passed) - Number(b.passed) ||
+            a.locale.localeCompare(b.locale) ||
+            a.slug.localeCompare(b.slug) ||
+            shortModel(a.model).localeCompare(shortModel(b.model)),
+        )
+        .map((result) => {
+          const judge = result.scores.find((s) => s.name === "judge:overall");
+          return [
+            statusIcon(result.passed),
+            result.kind,
+            ui.info(result.locale),
+            truncate(result.slug, 34),
+            ui.model(truncate(shortModel(result.model), 34)),
+            scoreCell(result.overallScore),
+            judge == null ? "-" : scoreCell(judge.score),
+            formatDuration(result.durationMs),
+            formatCost(result.providerCostUsd),
+          ];
+        }),
+    ),
+  );
+
+  const byLocale = [...groupResults(results, (result) => result.locale).entries()]
+    .sort(([a], [b]) => a.localeCompare(b));
+  if (byLocale.length > 1) {
+    console.log(`\n${ui.title("By locale")}`);
+    console.log(
+      table(
+        ["Locale", "Pass", "Fail", "Avg score", "Cost"],
+        byLocale.map(([locale, localeResults]) => [
+          ui.info(locale),
+          ui.good(String(localeResults.filter((r) => r.passed).length)),
+          localeResults.some((r) => !r.passed)
+            ? ui.bad(String(localeResults.filter((r) => !r.passed).length))
+            : ui.good("0"),
+          scoreCell(averageScore(localeResults)),
+          formatCost(
+            localeResults.reduce(
+              (sum, result) => sum + (result.providerCostUsd ?? 0),
+              0,
+            ),
+          ),
+        ]),
+      ),
+    );
+  }
+
+  const byModel = [...groupResults(results, (result) => shortModel(result.model)).entries()]
+    .sort(([a], [b]) => a.localeCompare(b));
+  if (byModel.length > 1) {
+    console.log(`\n${ui.title("By model")}`);
+    console.log(
+      table(
+        ["Model", "Pass", "Fail", "Avg score", "Cost"],
+        byModel.map(([model, modelResults]) => [
+          ui.model(truncate(model, 42)),
+          ui.good(String(modelResults.filter((r) => r.passed).length)),
+          modelResults.some((r) => !r.passed)
+            ? ui.bad(String(modelResults.filter((r) => !r.passed).length))
+            : ui.good("0"),
+          scoreCell(averageScore(modelResults)),
+          formatCost(
+            modelResults.reduce(
+              (sum, result) => sum + (result.providerCostUsd ?? 0),
+              0,
+            ),
+          ),
+        ]),
+      ),
+    );
+  }
+
+  const failures = results.filter((result) => !result.passed);
+  if (failures.length > 0) {
+    console.log(`\n${ui.bad("Failures")}`);
+    console.log(
+      table(
+        ["Case", "Model", "Blocking reason"],
+        failures.map((result) => [
+          `${result.kind}:${result.slug}:${result.locale}`,
+          ui.model(truncate(shortModel(result.model), 34)),
+          truncate(firstBlockingReason(result), 90),
+        ]),
+      ),
+    );
+  }
+}
+
+function groupResults<TKey extends string>(
+  results: EvalResult[],
+  keyFor: (result: EvalResult) => TKey,
+) {
+  const groups = new Map<TKey, EvalResult[]>();
+  for (const result of results) {
+    const key = keyFor(result);
+    groups.set(key, [...(groups.get(key) ?? []), result]);
+  }
+  return groups;
+}
+
+function averageScore(results: EvalResult[]) {
+  if (results.length === 0) return 0;
+  return (
+    results.reduce((sum, result) => sum + result.overallScore, 0) /
+    results.length
+  );
+}
+
+function firstBlockingReason(result: EvalResult) {
+  if (result.errorMessage != null) return result.errorMessage;
+  const blocker = result.scores.find(
+    (score) => !score.passed && score.severity !== "low",
+  );
+  return blocker == null
+    ? "No blocking scorer details recorded."
+    : `${blocker.name}${blocker.details ? `: ${blocker.details}` : ""}`;
+}
 
 function writeSummary(results: EvalResult[]) {
   const passCount = results.filter((r) => r.passed).length;
@@ -1043,6 +1577,7 @@ function writeSummary(results: EvalResult[]) {
     `**${passCount} passed, ${failCount} failed** | total cost $${totalCost.toFixed(5)}`,
     `Models: ${translationModels.map((m) => m.replace(/^openrouter\//, "")).join(", ")}`,
     `Judge: ${judgeModel}`,
+    `Run log: ${relative(process.cwd(), runLogPath)}`,
     `Streams: ${relative(process.cwd(), streamDir)}`,
     ``,
     `## Results`,
@@ -1081,8 +1616,8 @@ function writeSummary(results: EvalResult[]) {
     `## Score Details`,
     ``,
     ...results.flatMap((r) => {
-      const shortModel = r.model.replace(/^openrouter\//, "");
-      const header = `### ${r.kind}:${r.slug} · ${r.locale} · ${shortModel} ${r.passed ? "✓" : "✗"}`;
+      const modelLabel = shortModel(r.model);
+      const header = `### ${r.kind}:${r.slug} · ${r.locale} · ${modelLabel} ${r.passed ? "✓" : "✗"}`;
       const deterministicRows = r.scores
         .filter((s) => !s.name.startsWith("judge:"))
         .map(

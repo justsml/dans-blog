@@ -1,0 +1,113 @@
+---
+title: "llm:// 接続文字列の時代へ"
+subTitle: "モデルとプロバイダーの設定を`llm://` URLで簡素化する"
+date: 2026-01-30
+modified: 2026-02-26
+tags: [ai, llm, api, developer-experience, standards]
+category: AI
+draft: false
+popularity: 1
+social_image: desktop-social.webp
+cover_full_width: ./hero-wide.webp
+cover_mobile: ./square-200.webp
+cover_icon: ./square-200.webp
+language: Japanese
+---
+
+<blockquote class="inset">
+**更新:** この記事は[IETFの`llm://` URIスキームに関するドラフト](https://datatracker.ietf.org/doc/draft-levy-llm-uri-scheme/)の作成につながりました。
+</blockquote>
+
+データベースに接続する際、環境変数の寄せ集めを扱っていた時代を覚えていますか？
+
+それは繊細な設定の塔でした。`DB_HOST`、`DB_PORT`、`DB_USER`、`DB_PASSWORD`、`DB_NAME`... いや、`DB_USERNAME`でしたっけ？ `DB_PASS`か`DB_PWD`か？ 今回は`PG_*`のプレフィックスが必要でしたっけ？ そしてタイムアウト設定はどこに設定すればいいんだ？
+
+`HOST`を大文字に忘れたためにプロダクションビルドが崩壊するという、デリケートなカードハウスでした。
+
+その後、誰かが素晴らしいアイデアを思いつきました。URL¹を使うのです：
+
+```bash
+postgres://user:pass@host:5432/dbname
+```
+
+1つの文字列。必要なすべてが含まれています。普遍的に解析可能。移植性がある。恐れを知らないとしか言いようがない...美しさではありませんか？
+
+ではなぜ、LLMに対して1999年のように扱っているのでしょうか？
+
+## 環境変数の爆発
+
+現在、私の`.env`ファイルは放棄されたAPIキーの墓場のように見えます。`OPENAI_API_KEY`、`ANTHROPIC_API_KEY`、`MISTRAL_API_KEY`、`GROQ_API_KEY`。Azureについては言わずもがなです。挨拶するだけでもエンドポイント、デプロイメント名、APIバージョン、キーが必要です。
+
+これは単に醜いだけでなく、摩擦です。モデルを切り替えるたびに、または新しいプロバイダーをテストするたびに、初期化コードを書き直し、特定のパラメータ名のドキュメントを探し出し、環境設定に3行追加しています。
+
+では、なぜ... ~~盗む~~ 借りてきたデータベースURLのアイデアを使わないのか？
+
+## LLM接続文字列の紹介
+
+モデルインターフェース全体を1行で構成できる想像をしてみましょう：
+
+```bash
+llm://api.openai.com/gpt-5.2?reasoning_effort=none&temp=0.7&max_tokens=1500
+llm://api.z.ai/glm-4.7?top_p=0.9&cache=true
+```
+
+---
+<br />
+
+### LLM接続文字列の構造
+
+![LLM接続文字列の構成要素](./inline-url-diagram-dark.svg)
+
+スキームは`llm://`です。ホストはプロバイダーのAPIベースURLです。パスはモデル名です。クエリパラメータは通常コードを汚すランタイムオプションを処理します。
+
+## 認証が必要？素晴らしい、追加しましょう。
+
+`postgres://`と同じように、認証を直接組み込むことができます：
+
+```bash
+llm://app-name:sk-proj-123456@api.openai.com/gpt-5.2?reasoning_effort=none&temp=0.7
+```
+
+*注：はい、URLに資格情報を含めることは、公開ログに貼り付けるとセキュリティリスクがあります。しかし現代のログサービスはこれらのパターンをきれいに除去するのが得意です。正直に言って、`.env`ファイルをどのくらい安全に扱っていますか？検証し、サニタイズし、注意して使用してください。*
+
+## 信頼性？なぜそうしないと？
+
+多くのデータベースライブラリは複数のホストを指定することでロードバランシングをサポートしています。なぜAIエージェントにも同じ信頼性を期待しないのでしょうか？
+
+```bash
+llms://primary.gpt,backup.gpt/gpt-6?temp=0.9
+```
+
+`llms://`の`s`はタイプミスではありません。複数形です。`primary.gpt`が応答しない場合、クライアントは自動的に`backup.gpt`を再試行します。複雑なルーター論理は必要ありません。
+
+<blockquote class="inset">**認証**から**エンドポイント**、**ハイパーパラメータ**まで、すべてが1つの文字列に。</blockquote>
+
+## 代替形式
+
+`llm://`に固執しているわけではありません。特定のスキームよりも標準自体が重要です。
+
+プロバイダー固有のスキームを簡潔に使用しながら標準構造を維持する世界を想像できますか？
+
+```bash
+ollama://localhost:11434/llama3
+vercel://anthropic/sonnet-4.5?temp=0.8&web_search={"maxUses":3}
+bedrock://us-west-2.aws/anthropic/sonnet-4.5?temp=0.8&cacheControl=ephemeral
+```
+
+正確な構文に関係なく、コアの利点は明らかです：
+
+1.  **移植性:** ローカルスクリプトからクラウドワーカーまで、設定をコピー＆ペーストできます。
+2.  **CLIに最適:** スクリプトに単一の引数を渡します。`my-agent --model "llm://..."`は`my-agent --model gpt-4 --temp 0.7 --key $KEY --host ...`よりも優れています。
+3.  **言語非依存:** すべてのプログラミング言語には強力なURLパーサーがあります。検証、解析、サニタイズが無料で得られます。
+
+<blockquote class="ai-response inset">データベースの世界は数十年かけてこれを理解しました。<br /><b>良いニュース、AIのタイムラインでは、それはたったの半分のバイブ年ほど前のことです。</b></blockquote>
+
+## 結論
+
+複雑な設定標準や新しいYAMLベースのマニフェストファイルは必要ありません。30年間インターネットで機能してきたツールを使えばいいのです。
+
+LLM接続をデータベースと同じ尊重で扱い始めましょう。あなたの`.env`ファイル（そして理性）は感謝するでしょう。
+
+![散らかった環境変数の引き出しが並ぶ](./hero-concept-8-drawers.webp)
+
+{/* ¹ はい、`URI`が`URL`よりも正確だことは知っています。この区別を気にするほど педantic な方は、実際に草を踏んでください。 */}

@@ -25,7 +25,7 @@ BRAINTRUST_API_KEY=sk-... bun run i18n:eval
 # Dry-run: list cases without spending tokens
 bun run i18n:eval -- --dry-run
 
-# Run defaults (newest article + newest quiz, locale=es, two models)
+# Run defaults (newest article + newest quiz, all active locales, two models)
 bun run i18n:eval
 
 # Multiple locales — each becomes its own set of eval cases
@@ -57,7 +57,7 @@ bun run i18n:eval -- --print-streams
 | --- | --- | --- |
 | `--models` | two cheap defaults | Comma-separated translation models to compare in parallel |
 | `--judge-model` | `gemini-3-flash-preview` | Model used to score translations |
-| `--locales` | `es` | Comma-separated locales (`es,ja,zh`, …) — each is a separate eval axis |
+| `--locales` | all active locales | Comma-separated locales (`es,ja,zh`, …) — each is a separate eval axis |
 | `--kind` | `all` | `article`, `quiz`, or `all` |
 | `--slug` | — | Pin to a specific slug (auto-detects article vs quiz) |
 | `--dry-run` | false | Print all cases and exit without calling any model |
@@ -87,26 +87,25 @@ Each run writes summary files plus live stream artifacts under `reports/i18n/eva
 reports/i18n/evals/
 └── eval-run-<ISO-timestamp>/       # folder per run
     ├── summary.md                  # human-readable markdown report with tables and graphs
-    ├── cases.jsonl                 # all cases with metadata, scores, and stream paths
+    ├── run.jsonl                   # all stream lifecycle events, errors, and case results
     ├── translation-<case>.txt      # full/partial translation text as it arrives
-    ├── translation-<case>.jsonl    # stream lifecycle + errors
-    ├── judge-<case>.txt            # raw judge JSON/prose as it arrives
-    └── judge-<case>.jsonl          # stream lifecycle + errors
+    └── judge-<case>.txt            # raw judge JSON/prose as it arrives
 ```
 
 Translation and judge calls stream by default into the run-local
 `reports/i18n/evals/eval-run-<ISO-timestamp>/` directory. These files are
 intentionally useful when a provider returns malformed
 MDX, invalid JSON, or dies halfway through a response: the `.txt` file preserves
-whatever arrived, and the `.jsonl` event log records stream errors with the
+whatever arrived, and `run.jsonl` records stream errors with the
 partial text length and error message. Use `tail -f reports/i18n/evals/eval-run-…/*.txt`
 while a run is active, or add `--print-streams` when stdout interleaving is acceptable.
 
-JSONL fields per row:
+Case result rows in `run.jsonl` use `event: "case_finished"` and include fields like:
 
 ```json
 {
   "at": "2026-05-14T…",
+  "event": "case_finished",
   "inputId": "article:stop-hardcoding-your-prompts:es",
   "kind": "article",
   "locale": "es",
@@ -204,4 +203,4 @@ Covered areas:
 | `src/scripts/i18n/judge.ts` | Production judge script |
 | `src/scripts/i18n/prompts.ts` | Translation prompt builders (`buildSystemPrompt`, `buildUserPrompt`) |
 | `src/scripts/i18n/judge.test.ts` | Offline unit tests for judge scoring loop |
-| `reports/i18n/evals/` | Eval run folders with `summary.md`, `cases.jsonl`, and streamed raw response artifacts |
+| `reports/i18n/evals/` | Eval run folders with `summary.md`, `run.jsonl`, and streamed raw response artifacts |
