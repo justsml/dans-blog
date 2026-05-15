@@ -1,70 +1,15 @@
 ---
-import { ArticleCard } from "../../components/ArticleCard";
-import ArticleListConsultingCTA from "../../components/ArticleListConsultingCTA.astro";
-import Page from "../../layouts/Page.astro";
+import CategoryPage from "./_CategoryPage.astro";
 import { PostCollections } from "../../shared/postsCache";
-import { getArticleListCtaOccurrence } from "../../shared/articleListCta";
-import type { ArticlePost } from "../../types";
-import { DEFAULT_LOCALE, getLocalizedPagePath, type Locale } from "../../shared/i18n";
-import { getUiCopy } from "../../shared/uiTranslations";
 
 export async function getStaticPaths() {
   return PostCollections.getStaticPathsCategoryList();
 }
 
-type Props = {
+const { category, count } = Astro.props as {
   category: string;
   count: number;
-  locale?: Locale;
 };
-
-const { category, count } = Astro.props as Props;
-const locale = (Astro.props.locale ?? DEFAULT_LOCALE) as Locale;
-const copy = getUiCopy(locale);
-const posts: ArticlePost[] = PostCollections.getPostsByCategory(category, locale) as unknown as ArticlePost[];
-
-// console.log("category.astro.props", Astro.props);
 ---
 
-<style>
-  .path-display {
-    display: grid;
-    align-items: baseline;
-    grid-template-columns: auto 1fr;
-
-    h1 {
-      font-size: 1.75rem;
-      margin: 1.5rem 0 1rem;
-    }
-  }
-</style>
-
-<Page title={copy.category.pageTitle(category)} locale={locale}>
-  <div class="path-display">
-    <h3>
-      <a style="color: #c4c4c4; font-weight: 100; text-wrap: nowrap;" href={getLocalizedPagePath("/category/", locale)}>{copy.category.breadcrumb}</a>
-    </h3>
-    <h1>{category}</h1>
-  </div>
-  <p style="margin: .2rem .75rem">{copy.category.found(count)}</p>
-  <div class:list={["article-list"]}>
-    {
-      posts.map((post, index) => {
-        const ctaOccurrence = getArticleListCtaOccurrence(index);
-
-        return (
-        <>
-          <ArticleCard article={post} locale={locale} />
-          {ctaOccurrence !== null && (
-            <ArticleListConsultingCTA
-              category={ctaOccurrence === 1 ? undefined : category}
-              compact={count < 6}
-              pageCount={ctaOccurrence}
-            />
-          )}
-        </>
-        );
-      })
-    }
-  </div>
-</Page>
+<CategoryPage category={category} count={count} />

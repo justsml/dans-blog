@@ -1,0 +1,52 @@
+---
+import Page from "../../layouts/Page.astro";
+
+import { PostCollections } from "../../shared/postsCache";
+import { QuizGrid } from "../../components/QuizUI/QuizGrid";
+
+import "@/styles/nav.css";
+import "@/styles/global.css";
+import "../../components/QuizUI/challenges.css";
+import "../../components/QuizUI/icons.css";
+import { DEFAULT_LOCALE, type Locale } from "../../shared/i18n";
+import { getUiCopy } from "../../shared/uiTranslations";
+
+// import ArticleFilterLinks from "../../components/ArticleFilterLinks.astro";
+
+const quizList = PostCollections.getQuizList();
+const totalQuizzes = quizList.length;
+const totalQuestionCount = quizList.reduce(
+  (sum, quiz) => sum + quiz.data.questionCount,
+  0,
+);
+const locale = (Astro.props.locale ?? DEFAULT_LOCALE) as Locale;
+const copy = getUiCopy(locale);
+
+---
+
+<Page
+  locale={locale}
+  frontmatter={{
+    title: copy.challenges.title,
+    subTitle: copy.challenges.subTitle(totalQuizzes, totalQuestionCount),
+  }}>
+<section class="full-width">
+  <h1>{copy.challenges.heading}</h1>
+</section>
+<!-- <div class="inset"><div class="top-text">A carefully curated collection of tech questions (+ explainers & notes) I've acquired from around the world.</div></div> -->
+<div class="two-col"><p class="top-text">{copy.challenges.introOne}</p><p class="top-text">{copy.challenges.introTwo}</p></div>
+
+<section class="full-width">
+  <!-- Use client:idle for better performance - loads after page is interactive -->
+  <QuizGrid
+    client:idle
+    quizList={quizList}
+  />
+</section>
+
+<section class="fun-facts">
+  <div class="fun-fact"><div class="top-text">{copy.challenges.factOne}</div></div>
+  <div class="fun-fact"><div class="top-text">{copy.challenges.factTwo}</div></div>
+  <div class="fun-fact"><div class="top-text">{copy.challenges.factThree}</div></div>
+</section>
+</Page>

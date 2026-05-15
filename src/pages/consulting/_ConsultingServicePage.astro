@@ -1,0 +1,690 @@
+---
+import Layout from "../../layouts/Page.astro";
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+import {
+  INTRO_CALL_LINK,
+  type ConsultingService,
+  consultingServices,
+  consultingServicesBySlug,
+} from "../../data/consultingServices";
+import serviceAiConsultingImage from "../../assets/consulting/service-ai-consulting-v2.webp";
+import serviceAiGuardrailsImage from "../../assets/consulting/service-ai-guardrails-v2.webp";
+import serviceCodingSecurityImage from "../../assets/consulting/service-coding-security-v2.webp";
+import serviceEnterpriseSecurityImage from "../../assets/consulting/service-enterprise-security-v2.webp";
+import serviceRagImage from "../../assets/consulting/service-rag-v2.webp";
+import serviceSupabaseImage from "../../assets/consulting/service-supabase-v2.webp";
+import { DEFAULT_LOCALE, getLocalizedPagePath, type Locale } from "../../shared/i18n";
+
+interface Props {
+  service?: ConsultingService;
+  locale?: Locale;
+}
+
+const props = Astro.props as Props;
+const service = props.service ??
+  consultingServicesBySlug.get(Astro.params.service ?? "");
+const locale = (props.locale ?? DEFAULT_LOCALE) as Locale;
+const pagePath = (path: string) => getLocalizedPagePath(path, locale);
+
+if (!service) {
+  throw new Error(`Unknown consulting service: ${Astro.params.service}`);
+}
+
+const relatedServices = consultingServices.filter(
+  (entry) => entry.slug !== service.slug,
+).slice(0, 3);
+
+const heroPanelImageSizes = "(max-width: 900px) calc(100vw - 3rem), 500px";
+
+const serviceVisuals: Record<string, { accent: string; image: ImageMetadata }> = {
+  "ai-consulting": {
+    accent: "cyan",
+    image: serviceAiConsultingImage,
+  },
+  "ai-guardrails": {
+    accent: "coral",
+    image: serviceAiGuardrailsImage,
+  },
+  "supabase-scaling-migration": {
+    accent: "amber",
+    image: serviceSupabaseImage,
+  },
+  "rag-rescue": {
+    accent: "cyan",
+    image: serviceRagImage,
+  },
+  "developer-ai-coding-security": {
+    accent: "coral",
+    image: serviceCodingSecurityImage,
+  },
+  "enterprise-security-assessment": {
+    accent: "amber",
+    image: serviceEnterpriseSecurityImage,
+  },
+};
+
+const serviceVisual = serviceVisuals[service.slug] ?? serviceVisuals["ai-consulting"];
+---
+
+<Layout
+  frontmatter={{
+    title: service.metaTitle,
+    subTitle: service.description,
+  }}
+  locale={locale}
+  pagefindBody
+>
+  <section class="service-hero full-section">
+    <div class="service-shell">
+      <div class="hero-copy">
+        <p class="eyebrow">{service.kicker}</p>
+        <h1>{service.heroTitle}</h1>
+        <p class="hero-body">{service.heroBody}</p>
+        <div class="hero-actions">
+          <a href={INTRO_CALL_LINK} class="btn btn-primary" target="_blank" rel="noopener">
+            {service.primaryCta} →
+          </a>
+          <a href={pagePath("/consulting/")} class="btn btn-secondary">
+            {service.secondaryCta}
+          </a>
+        </div>
+      </div>
+      <div class={`hero-panel ${serviceVisual.accent}`}>
+        <div class="hero-panel-image" aria-hidden="true">
+          <Image
+            src={serviceVisual.image}
+            alt={`${service.navTitle} consulting visual`}
+            widths={[480, 720, 960, 1280, 1586]}
+            sizes={heroPanelImageSizes}
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
+          />
+        </div>
+        <p class="panel-kicker">Best fit</p>
+        <h2>{service.title}</h2>
+        <ul class="panel-list">
+          {service.deliverables.map((item) => <li>{item}</li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="service-stats full-section">
+    <div class="service-shell">
+      <div class="stats-grid">
+        {service.stats.map((stat) => (
+          <div class="stat-card">
+            <div class="stat-value">{stat.value}</div>
+            <p>{stat.label}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="service-section full-section">
+    <div class="service-shell two-col">
+      <div>
+        <p class="section-label">Why teams call</p>
+        <h2>The pattern I keep seeing.</h2>
+      </div>
+      <div class="stack-list">
+        {service.whyNow.map((item) => (
+          <article class="info-card">
+            <p>{item}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="service-section full-section">
+    <div class="service-shell two-col">
+      <div>
+        <p class="section-label">What changes</p>
+        <h2>What actually gets better.</h2>
+      </div>
+      <div class="stack-list">
+        {service.outcomes.map((item) => (
+          <article class="info-card outcome-card">
+            <span class="check">✓</span>
+            <p>{item}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {service.caseStudy && (
+    <section class="service-section full-section">
+      <div class="service-shell">
+        <div class="case-study">
+          <p class="section-label">{service.caseStudy.label}</p>
+          <h2>{service.caseStudy.title}</h2>
+          <p class="case-body">{service.caseStudy.body}</p>
+          <p class="case-highlight">{service.caseStudy.highlight}</p>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section class="service-section full-section">
+    <div class="service-shell">
+      <p class="section-label">How I work</p>
+      <h2>No mystery, no handoff decks.</h2>
+      <div class="approach-grid">
+        {service.approach.map((step, index) => (
+          <article class="approach-card">
+            <div class="step-num">0{index + 1}</div>
+            <h3>{step.title}</h3>
+            <p>{step.body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="service-section full-section">
+    <div class="service-shell">
+      <div class="final-cta">
+        <div>
+          <p class="section-label">Next step</p>
+          <h2>Ready to stop circling it?</h2>
+          <p class="cta-copy">
+            Bring whatever your team keeps putting off — the scary migration,
+            the expensive AI bill, the app that misbehaves in production.
+            We'll figure out what's actually blocking it.
+          </p>
+        </div>
+        <a href={INTRO_CALL_LINK} class="btn btn-primary btn-large" target="_blank" rel="noopener">
+          {service.primaryCta} →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="service-section full-section related-section">
+    <div class="service-shell">
+      <p class="section-label">Related services</p>
+      <div class="related-grid">
+        {relatedServices.map((entry) => (
+          <a class="related-card" href={pagePath(`/consulting/${entry.slug}/`)}>
+            <span class="related-kicker">{entry.kicker}</span>
+            <h3>{entry.navTitle}</h3>
+            <p>{entry.description}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  :root {
+    --service-bg: #05070a;
+    --service-surface: rgba(255, 255, 255, 0.04);
+    --service-surface-strong: rgba(255, 255, 255, 0.07);
+    --service-border: rgba(255, 255, 255, 0.09);
+    --service-border-strong: rgba(255, 255, 255, 0.16);
+    --service-text: #f5f7fb;
+    --service-muted: rgba(245, 247, 251, 0.7);
+    --service-soft: rgba(245, 247, 251, 0.48);
+    --service-accent: #00d4aa;
+    --service-accent-2: #2cb2ff;
+    --service-accent-3: #ff7aa2;
+    --service-gradient: linear-gradient(135deg, #00d4aa 0%, #2cb2ff 45%, #ff7aa2 100%);
+    --service-radius: 24px;
+    --service-shadow: 0 22px 80px rgba(0, 0, 0, 0.38);
+  }
+
+  .full-section {
+    grid-column: full-width;
+    width: 100%;
+  }
+
+  .service-hero,
+  .service-stats,
+  .service-section {
+    background: transparent;
+  }
+
+  .service-shell {
+    max-width: min(1160px, 100% - 3rem);
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  .service-hero {
+    padding: 5.5rem 0 3rem;
+  }
+
+  :global(.top-header .header-nav > h2) {
+    text-shadow: none !important;
+  }
+
+  :global(.top-header .header-nav > h2 .title) {
+    animation: service-site-title-drift 7s ease-in-out infinite alternate !important;
+    background:
+      linear-gradient(105deg, #f6fbff 0%, #c8d6e5 28%, #7fd7c9 56%, #9fb8ff 78%, #f6fbff 100%) !important;
+    background-clip: text !important;
+    background-size: 230% 100% !important;
+    color: transparent !important;
+    filter: drop-shadow(0 16px 24px rgba(1, 18, 22, 0.42)) !important;
+    text-shadow: none !important;
+    -webkit-text-stroke: 0.55px rgba(246, 251, 255, 0.26) !important;
+  }
+
+  :global(.top-header .header-nav > h2:hover) {
+    text-shadow: none !important;
+    transform: translateY(-1px);
+  }
+
+  :global(.top-header .header-nav > h2 a img) {
+    border-color: rgba(246, 251, 255, 0.72) !important;
+    box-shadow:
+      0 12px 28px rgba(0, 18, 28, 0.32),
+      0 0 0 1px rgba(127, 215, 201, 0.18) !important;
+  }
+
+  :global(.top-header .header-nav > h2:hover a img) {
+    border-color: rgba(246, 251, 255, 0.86) !important;
+    box-shadow:
+      0 14px 32px rgba(0, 18, 28, 0.36),
+      0 0 0 1px rgba(240, 161, 180, 0.24) !important;
+  }
+
+  .service-stats,
+  .service-section {
+    padding: 0 0 4.5rem;
+  }
+
+  .service-section {
+    border-top: 1px solid var(--service-border);
+    padding-top: 4.5rem;
+  }
+
+  .service-shell.two-col {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    align-items: start;
+  }
+
+  .service-hero .service-shell {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
+    align-items: end;
+  }
+
+  .eyebrow,
+  .section-label,
+  .panel-kicker,
+  .related-kicker {
+    color: var(--service-accent);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    margin: 0 0 0.9rem;
+    text-transform: uppercase;
+  }
+
+  h1,
+  h2,
+  h3,
+  p,
+  li,
+  a {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+
+  h1 {
+    animation: service-title-drift 8s ease-in-out infinite alternate;
+    background:
+      linear-gradient(105deg, #f6fbff 0%, #c8d6e5 24%, #7fd7c9 52%, #9fb8ff 76%, #f6fbff 100%);
+    background-clip: text;
+    background-size: 220% 100%;
+    color: transparent;
+    font-size: clamp(2.9rem, 5vw, 5.3rem);
+    letter-spacing: -0.055em;
+    line-height: 0.95;
+    margin: 0 0 1.35rem;
+    max-width: 11ch;
+    text-shadow:
+      0 1px 0 rgba(246, 251, 255, 0.18),
+      0 18px 48px rgba(2, 16, 25, 0.56),
+      0 0 42px rgba(127, 215, 201, 0.14);
+    text-wrap: balance;
+    -webkit-text-stroke: 1px rgba(246, 251, 255, 0.2);
+  }
+
+  h2 {
+    color: var(--service-text);
+    font-size: clamp(2rem, 3vw, 3.15rem);
+    letter-spacing: -0.04em;
+    line-height: 1.03;
+    margin: 0 0 1rem;
+    max-width: 14ch;
+  }
+
+  h3 {
+    color: var(--service-text);
+    font-size: 1.15rem;
+    letter-spacing: -0.02em;
+    margin: 0 0 0.6rem;
+  }
+
+  .hero-body,
+  .case-body,
+  .cta-copy,
+  .info-card p,
+  .related-card p,
+  .approach-card p,
+  .stat-card p,
+  .hero-panel li {
+    color: var(--service-muted);
+    font-size: 1rem;
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  .hero-body {
+    font-size: clamp(1.08rem, 1.4vw, 1.25rem);
+    max-width: 56ch;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+  }
+
+  .btn {
+    align-items: center;
+    border-radius: 999px;
+    display: inline-flex;
+    font-size: 0.95rem;
+    font-weight: 650;
+    gap: 0.5rem;
+    justify-content: center;
+    padding: 0.95rem 1.5rem;
+    text-decoration: none;
+    transition: transform 0.22s ease, border-color 0.22s ease, background 0.22s ease;
+    white-space: nowrap;
+  }
+
+  .btn:hover {
+    transform: translateY(-2px);
+  }
+
+  .btn-primary {
+    background: var(--service-gradient);
+    color: #031019;
+    box-shadow: 0 8px 30px rgba(0, 212, 170, 0.22);
+  }
+
+  .btn-secondary {
+    background: var(--service-surface);
+    border: 1px solid var(--service-border);
+    color: var(--service-text);
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--service-border-strong);
+  }
+
+  .btn-large {
+    padding-inline: 1.9rem;
+  }
+
+  .hero-panel,
+  .stat-card,
+  .info-card,
+  .case-study,
+  .approach-card,
+  .final-cta,
+  .related-card {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.03));
+    border: 1px solid var(--service-border);
+    border-radius: var(--service-radius);
+    box-shadow: var(--service-shadow);
+  }
+
+  .hero-panel {
+    padding: 1.6rem;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .hero-panel::after {
+    background: linear-gradient(135deg, rgba(0, 212, 170, 0.14), transparent 38%, rgba(255, 122, 162, 0.1));
+    content: "";
+    inset: 0;
+    pointer-events: none;
+    position: absolute;
+  }
+
+  .hero-panel.coral::after {
+    background: linear-gradient(135deg, rgba(255, 122, 162, 0.18), transparent 42%, rgba(0, 212, 170, 0.08));
+  }
+
+  .hero-panel.amber::after {
+    background: linear-gradient(135deg, rgba(230, 180, 86, 0.18), transparent 42%, rgba(0, 212, 170, 0.08));
+  }
+
+  .hero-panel > :not(.hero-panel-image) {
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-panel-image {
+    aspect-ratio: 16 / 10;
+    border: 1px solid var(--service-border);
+    border-radius: 18px;
+    margin: -0.55rem -0.55rem 1.35rem;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .hero-panel-image img {
+    display: block;
+    height: 100%;
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .panel-list {
+    display: grid;
+    gap: 0.95rem;
+    list-style: none;
+    margin: 1.2rem 0 0;
+    padding: 0;
+  }
+
+  .panel-list li {
+    border-top: 1px solid var(--service-border);
+    padding-top: 0.95rem;
+  }
+
+  .panel-list li::marker {
+    content: "";
+  }
+
+  .stats-grid,
+  .approach-grid,
+  .related-grid {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .stat-card {
+    padding: 1.4rem;
+  }
+
+  .stat-value {
+    background: var(--service-gradient);
+    background-clip: text;
+    color: transparent;
+    font-size: clamp(1.8rem, 2.8vw, 2.8rem);
+    font-weight: 750;
+    letter-spacing: -0.05em;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .stack-list {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .info-card,
+  .approach-card,
+  .related-card {
+    padding: 1.4rem;
+  }
+
+  .outcome-card {
+    align-items: start;
+    display: grid;
+    gap: 0.9rem;
+    grid-template-columns: auto 1fr;
+  }
+
+  .check {
+    align-items: center;
+    background: rgba(0, 212, 170, 0.14);
+    border-radius: 999px;
+    color: var(--service-accent);
+    display: inline-flex;
+    font-size: 0.95rem;
+    font-weight: 700;
+    height: 2rem;
+    justify-content: center;
+    width: 2rem;
+  }
+
+  .case-study {
+    padding: 2rem;
+  }
+
+  .case-highlight {
+    color: var(--service-text);
+    font-size: 1.05rem;
+    font-weight: 600;
+    line-height: 1.6;
+    margin-top: 1rem;
+  }
+
+  .approach-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin-top: 2rem;
+  }
+
+  .step-num {
+    color: var(--service-soft);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    margin-bottom: 1rem;
+  }
+
+  .final-cta {
+    align-items: center;
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: minmax(0, 1fr) auto;
+    padding: 2rem;
+  }
+
+  .related-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .related-card {
+    display: block;
+    text-decoration: none;
+    transition: transform 0.22s ease, border-color 0.22s ease, background 0.22s ease;
+  }
+
+  .related-card:hover {
+    background: var(--service-surface-strong);
+    border-color: var(--service-border-strong);
+    transform: translateY(-3px);
+  }
+
+  @media (max-width: 980px) {
+    .service-hero .service-shell,
+    .service-shell.two-col,
+    .final-cta,
+    .stats-grid,
+    .approach-grid,
+    .related-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .service-hero {
+      padding-top: 4.5rem;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .service-shell {
+      max-width: min(100% - 1.5rem, 1160px);
+      padding: 0 0.75rem;
+    }
+
+    h1 {
+      max-width: none;
+    }
+
+    .hero-actions {
+      flex-direction: column;
+    }
+
+    .btn {
+      width: 100%;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    h1 {
+      animation: none;
+      background-position: 50% 50%;
+      filter: none;
+    }
+
+    :global(.top-header .header-nav > h2 .title) {
+      animation: none !important;
+      background-position: 50% 50% !important;
+    }
+  }
+
+  @keyframes service-title-drift {
+    0% {
+      background-position: 0% 50%;
+      filter: drop-shadow(0 0 0 rgba(240, 161, 180, 0));
+    }
+
+    100% {
+      background-position: 100% 50%;
+      filter: drop-shadow(0 18px 34px rgba(127, 215, 201, 0.14));
+    }
+  }
+
+  @keyframes service-site-title-drift {
+    0% {
+      background-position: 0% 50%;
+    }
+
+    100% {
+      background-position: 100% 50%;
+    }
+  }
+</style>

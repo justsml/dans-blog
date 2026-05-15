@@ -1,28 +1,5 @@
 ---
-import Page from "../layouts/Page.astro";
-import RepoList from "../components/GitRepoCard/RepoList.astro";
-import { DEFAULT_LOCALE, type Locale } from "../shared/i18n";
-import { getUiCopy } from "../shared/uiTranslations";
-
-const locale = (Astro.props.locale ?? DEFAULT_LOCALE) as Locale;
-const copy = getUiCopy(locale);
+import OpenSourceJournalPage from "./_OpenSourceJournalPage.astro";
 ---
 
-<Page
-  frontmatter={{
-    title: copy.openSource.title,
-    subTitle: copy.openSource.subTitle,
-    // cover: "../../previews/open-source-journal/desktop-social.webp",
-  }}
-  locale={locale}
-  socialImage={"../../previews/open-source-journal/desktop-social.webp"}
-  pagefindBody
->
-  <h1>{copy.openSource.heading}</h1>
-
-  <blockquote class="inset">
-    {copy.openSource.quote}
-  </blockquote>
-
-  <RepoList className="h-resume" />
-</Page>
+<OpenSourceJournalPage />
