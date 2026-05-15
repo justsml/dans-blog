@@ -1,0 +1,28 @@
+{
+  "selectedCommit": "current",
+  "selectedModel": "current",
+  "scores": {
+    "readability": 95,
+    "technicalAccuracy": 98,
+    "coherence": 95,
+    "relevance": 100,
+    "translationQuality": 95,
+    "mdxPreservation": 100,
+    "culturalAdaptation": 90,
+    "languagePurity": 95
+  },
+  "suggestions": [],
+  "rationale": "The current translation is superior in its handling of technical terminology and Hebrew grammar. The candidate (12aefcf) has several typos and grammatical issues: 'שלוש הכלים' (should be שלושת), 'סטימינג' (transliteration of stemming, whereas current uses the more common 'סטמינג'), and 'ישספק' (typo for 'יש ספק'). The current version also correctly uses relative paths for internal links (e.g., ../semantic-vector-search-landscape) which is required by the instructions for locale files, whereas the candidate uses absolute-style paths (/semantic-vector-search-landscape).",
+  "slug": "postgres-text-search-guide",
+  "locale": "he",
+  "candidateCommits": [
+    "12aefcfebf393cb70151f9b54a368295cb9a4db5"
+  ],
+  "suggestionLog": [],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug postgres-text-search-guide --locale he --skip-global",
+    "output": ""
+  }
+}
