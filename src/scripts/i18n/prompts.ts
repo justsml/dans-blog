@@ -13,6 +13,20 @@
 import type { ActiveLocale, Locale } from "../../shared/i18n.ts";
 import { LOCALE_LABELS } from "../../shared/i18n.ts";
 
+export const FRONTMATTER_LANGUAGE_LABELS: Record<Locale, string> = {
+  en: "English",
+  es: "Spanish",
+  hi: "Hindi",
+  ja: "Japanese",
+  ru: "Russian",
+  de: "German",
+  fr: "French",
+  it: "Italian",
+  ar: "Arabic",
+  he: "Hebrew",
+  zh: "Chinese",
+};
+
 export interface ChunkContext {
   chunkIndex: number;
   totalChunks: number;
@@ -32,7 +46,32 @@ VOICE & STYLE (critical — do not soften):
 - For fast-moving AI/search/database content, distinguish measured facts from current impressions.
 - For security prose, avoid absolute guarantees. Prefer defense-in-depth wording: "reduces risk", "makes exploitation harder", "limits blast radius".
 - Preserve the original sentence rhythm and paragraph structure where possible.
+- Translate figurative English by intent, not by word-for-word mimicry. If a metaphor, joke, or verb phrase becomes ungrammatical or awkward in the target language, use a native idiom or a clear technical paraphrase that preserves the bite.
 `.trim();
+}
+
+function localeQualityGuidance(locale: Locale): string {
+  if (locale === "es") {
+    return `
+SPANISH QUALITY NOTES:
+- Avoid English calques and false friends. Check verb valency: transitive English verbs should not become intransitive Spanish phrases.
+- For metaphors like "crutches that will hobble a generation", preserve the meaning of impeding or crippling a generation; do not use "cojear" as if it were transitive.
+- For "set your watch by", use the predictability/punctuality idiom ("poner en hora" or "sincronizar"), not "marcar".
+- For "historical receipts", use evidence/context language such as "antecedentes históricos" or "pruebas históricas", not literal purchase receipts.
+- Keep Dan's dry directness, but prefer natural Spanish punctuation and idioms over literal em-dash-heavy English rhythm when needed.
+`.trim();
+  }
+
+  if (locale === "ja") {
+    return `
+JAPANESE QUALITY NOTES:
+- Prefer natural Japanese essay rhythm over English-shaped sentence order.
+- Keep technical terms and product names stable, but avoid over-translating taxonomy, brands, and code-adjacent labels.
+- Carry jokes and metaphors by effect; if a literal creature or idiom sounds childish, use a sharper native phrase.
+`.trim();
+  }
+
+  return "";
 }
 
 function mdxGuidance(): string {
@@ -47,6 +86,19 @@ MDX & CODE PRESERVATION (critical):
 - Preserve ALL markdown link URLs except relative URLs that need the locale-folder \`../\` prefix. Only translate the link text.
 - Preserve ALL inline code spans (\`...\`).
 - Do not add or remove blank lines around code fences or components unless the original has them.
+`.trim();
+}
+
+function frontmatterGuidance(locale: Locale): string {
+  const language = FRONTMATTER_LANGUAGE_LABELS[locale];
+
+  return `
+YAML FRONTMATTER RULES (critical):
+- Preserve the YAML frontmatter block, key order, and all non-reader-facing metadata keys.
+- Translate only reader-facing frontmatter values: language, title, subTitle, cover_alt, and cover_credit.
+- If a language field exists, set it exactly to "${language}".
+- Preserve taxonomy and routing metadata exactly: category, subCategory, tags, publish, draft, unlisted, hidden, popularity, related, redirects, commentsKeyOverride, label, date, modified, and minReleaseDate.
+- Preserve social_image, cover, cover_full_width, cover_mobile, and cover_icon filenames, but use ../ for inherited local asset paths inside locale folders.
 `.trim();
 }
 
@@ -96,8 +148,10 @@ export function buildSystemPrompt(locale: Locale, isQuiz: boolean = false): stri
     `You are an expert technical translator translating into ${language}.`,
     `Your job is to produce a translation that reads like it was originally written by a senior engineer — not like a translation.`,
     voiceGuidance(),
+    localeQualityGuidance(locale),
     mdxGuidance(),
-  ];
+    frontmatterGuidance(locale),
+  ].filter(Boolean);
 
   if (isQuiz) {
     parts.push(quizGuidance());

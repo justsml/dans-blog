@@ -25,17 +25,20 @@ import { compile } from "@mdx-js/mdx";
 import { BRAINTRUST_PROJECT_NAME, braintrustEnabled, streamText, tracedEval } from "./braintrust.ts";
 import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 import { OPENROUTER_USAGE_ACCOUNTING, usageFromResult } from "./llm-telemetry.ts";
-import { buildSystemPrompt, buildUserPrompt } from "./prompts.ts";
+import { buildSystemPrompt, buildUserPrompt, FRONTMATTER_LANGUAGE_LABELS } from "./prompts.ts";
 import {
   averageJudgeScore,
   buildPrimaryJudgePrompt,
   getJudgeJsonShape,
+  isBlockingSuggestion,
   normalizeJudgeScores,
   parseJudgeOutput,
+  readSuggestionsFromParsed,
   type CandidateRef,
   type JudgeScoreMap,
 } from "./judge-utils.ts";
 import { analyzeTranslationIntegrity } from "./integrity-checks.ts";
+import { normalizeLocalizedCandidateFile } from "./localized-mdx.ts";
 import { resolveCheapFastTranslationModels } from "./model-presets.ts";
 import { parseArgs, optionalString, parseList } from "./utils.ts";
 import { ACTIVE_LOCALES, isActiveLocale, type ActiveLocale } from "../../shared/i18n.ts";
@@ -265,6 +268,73 @@ function scoreFrontmatter(_input: EvalInput, output: EvalOutput): Score {
   };
 }
 
+function scoreFrontmatterMetadata(input: EvalInput, output: EvalOutput): Score[] {
+  let sourceData: Record<string, unknown>;
+  let outputData: Record<string, unknown>;
+
+  try {
+    sourceData = matter(input.source).data;
+    outputData = matter(output.translation).data;
+  } catch (error) {
+    return [{
+      name: "frontmatter-parse",
+      score: 0,
+      passed: false,
+      severity: "high",
+      details: `Could not parse output frontmatter: ${error instanceof Error ? error.message : String(error)}`,
+    }];
+  }
+
+  const scores: Score[] = [];
+  const sourceLanguage = sourceData.language;
+  if (typeof sourceLanguage === "string") {
+    const expected = FRONTMATTER_LANGUAGE_LABELS[input.locale];
+    const actual = outputData.language;
+    const passed = actual === expected;
+    scores.push({
+      name: "frontmatter-language",
+      score: passed ? 1 : 0,
+      passed,
+      severity: "medium",
+      details: passed ? undefined : `Expected language: ${expected}; got ${JSON.stringify(actual)}.`,
+    });
+  }
+
+  const preservedKeys = [
+    "category",
+    "subCategory",
+    "tags",
+    "publish",
+    "draft",
+    "unlisted",
+    "hidden",
+    "popularity",
+    "related",
+    "redirects",
+    "commentsKeyOverride",
+    "label",
+    "date",
+    "modified",
+    "minReleaseDate",
+  ];
+
+  for (const key of preservedKeys) {
+    if (!(key in sourceData)) continue;
+    const sourceValue = normalizeFrontmatterValue(sourceData[key]);
+    const outputValue = normalizeFrontmatterValue(outputData[key]);
+    const passed = sourceValue === outputValue;
+    scores.push({
+      name: `frontmatter-preserve:${key}`,
+      score: passed ? 1 : 0,
+      passed,
+      severity: "medium",
+      details: passed ? undefined : `Expected ${key} to stay ${sourceValue}; got ${outputValue}.`,
+    });
+  }
+
+  return scores;
+}
+
 function scoreTitleTranslated(input: EvalInput, output: EvalOutput): Score {
   const title = input.title.trim();
   if (title.length < 8 || /^[A-Z0-9 _-]{1,20}$/.test(title)) {
@@ -368,6 +438,7 @@ async function scoreLlmJudge(input: EvalInput, output: EvalOutput): Promise<Judg
     const parsed = parseJudgeOutput(result.text);
     const judgeScores = normalizeJudgeScores(parsed.scores);
     if (judgeScores == null) return fail("Judge returned no parseable scores.");
+    const blockingSuggestions = readSuggestionsFromParsed(parsed).filter(isBlockingSuggestion);
 
     const rationale = typeof parsed.rationale === "string" ? parsed.rationale.slice(0, 200) : undefined;
     const avg = averageJudgeScore(judgeScores) / 100; // normalize to 0–1
@@ -390,7 +461,20 @@ async function scoreLlmJudge(input: EvalInput, output: EvalOutput): Promise<Judg
       details: rationale,
     };
 
-    return { scores: [...dimensionScores, overall], judgeScores };
+    const suggestionScore: Score = {
+      name: "judge:blocking-suggestions",
+      score: blockingSuggestions.length === 0 ? 1 : 0,
+      passed: blockingSuggestions.length === 0,
+      severity: "medium",
+      details: blockingSuggestions.length === 0
+        ? undefined
+        : blockingSuggestions
+          .map((suggestion) => `${suggestion.priority}: ${suggestion.reason}`)
+          .join(" | ")
+          .slice(0, 400),
+    };
+
+    return { scores: [...dimensionScores, overall, suggestionScore], judgeScores };
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
     const streamPath = error instanceof StreamedTextError ? error.streamTextPath : judgeStreamPath;
@@ -421,7 +505,7 @@ async function translate(input: EvalInput, model: string): Promise<EvalOutput> {
   });
 
   return {
-    translation: result.text.trim(),
+    translation: normalizeLocalizedCandidateFile(input.source, result.text.trim()),
     model,
     durationMs: result.durationMs,
     inputTokens: result.inputTokens,
@@ -459,16 +543,25 @@ async function runEval(input: EvalInput, model: string): Promise<EvalResult> {
   }
 
   // Run all scorers — deterministic ones sync, LLM judge async
-  const [integrityScores, frontmatter, title, wrapper, mdxSyntax, judgeResult] = await Promise.all([
+  const [integrityScores, frontmatter, frontmatterMetadata, title, wrapper, mdxSyntax, judgeResult] = await Promise.all([
     Promise.resolve(scoreIntegrity(input, output)),
     Promise.resolve(scoreFrontmatter(input, output)),
+    Promise.resolve(scoreFrontmatterMetadata(input, output)),
     Promise.resolve(scoreTitleTranslated(input, output)),
     Promise.resolve(scoreNoWrapperText(input, output)),
     scoreMdxSyntax(input, output),
     scoreLlmJudge(input, output),
   ]);
 
-  const scores: Score[] = [...integrityScores, frontmatter, title, wrapper, mdxSyntax, ...judgeResult.scores];
+  const scores: Score[] = [
+    ...integrityScores,
+    frontmatter,
+    ...frontmatterMetadata,
+    title,
+    wrapper,
+    mdxSyntax,
+    ...judgeResult.scores,
+  ];
   const overallScore = scores.reduce((sum, s) => sum + s.score, 0) / scores.length;
   const passed = scores.every((s) => s.passed || s.severity === "low");
 
@@ -587,6 +680,18 @@ function stripFrontmatter(contents: string) {
   const frontmatterEnd = contents.indexOf("\n---", 3);
   if (frontmatterEnd === -1) return contents;
   return contents.slice(frontmatterEnd + 4);
+}
+
+function normalizeFrontmatterValue(value: unknown): string {
+  if (value instanceof Date) return value.toISOString().slice(0, 10);
+  if (Array.isArray(value)) return JSON.stringify(value.map(normalizeFrontmatterValue));
+  if (value != null && typeof value === "object") {
+    const entries: Array<[string, string]> = Object.entries(value as Record<string, unknown>)
+      .sort(([a], [b]) => a.localeCompare(b))
+      .map(([key, item]) => [key, normalizeFrontmatterValue(item)]);
+    return JSON.stringify(Object.fromEntries(entries));
+  }
+  return JSON.stringify(value);
 }
 
 function safeFileName(value: string) {
