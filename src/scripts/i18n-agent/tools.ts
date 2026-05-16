@@ -1,16 +1,20 @@
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { appendFileSync, existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
-import { dirname, join, relative, resolve } from "node:path";
+import { basename, dirname, join, relative, resolve } from "node:path";
 import { createTool } from "@mastra/core/tools";
 import { z } from "zod";
-import { ACTIVE_LOCALES, isActiveLocale, type ActiveLocale } from "../../shared/i18n.ts";
+import { ACTIVE_LOCALES, isActiveLocale, LOCALE_LABELS, type ActiveLocale } from "../../shared/i18n.ts";
 import {
   collectSourcePosts,
   getPostPaths,
 } from "../i18n/corpus-inventory.ts";
+import { generateText } from "../i18n/braintrust.ts";
+import { buildSystemPrompt } from "../i18n/prompts.ts";
+import { usageFromResult } from "../i18n/llm-telemetry.ts";
+import { createOpenRouterChatModel, resolveLlmConfig } from "../i18n/core/model-config.ts";
 import { translateWithModel } from "../i18n/core/translate.ts";
-import { scoreTranslation, scoreTranslationConsensus } from "../i18n/core/score.ts";
+import { scoreTranslation, scoreTranslationConsensus, type ScoreConsensusOutput } from "../i18n/core/score.ts";
 import { validateTranslation } from "../i18n/core/validate.ts";
 import { safeModelPathName } from "../i18n/translation-costs.ts";
 import {
@@ -191,6 +195,38 @@ const validationOutputSchema = z.object({
     message: z.string(),
   })),
 });
+const consensusIterationSchema = z.object({
+  iteration: z.number(),
+  candidatePath: z.string(),
+  overallScore: z.number(),
+  publishReady: z.boolean(),
+  appliedSuggestions: z.number(),
+  skippedSuggestions: z.number(),
+});
+const refineConsensusOutputSchema = z.object({
+  bestCandidatePath: z.string(),
+  bestIteration: z.number(),
+  bestOverallScore: z.number(),
+  publishReady: z.boolean(),
+  iterations: z.array(consensusIterationSchema),
+});
+const pathAdjustmentOutputSchema = z.object({
+  contents: z.string(),
+  adjusted: z.number(),
+  references: z.array(z.object({
+    from: z.string(),
+    to: z.string(),
+  })),
+});
+const svgTranslationOutputSchema = z.object({
+  sourcePath: z.string(),
+  targetPath: z.string(),
+  written: z.boolean(),
+  textNodes: z.number(),
+  translatedTextNodes: z.number(),
+  contents: z.string(),
+  telemetry: telemetrySchema.optional(),
+});
 
 export function createTranslationAgentTools(context: TranslationAgentToolContext) {
   return {
@@ -272,8 +308,13 @@ export function createTranslationAgentTools(context: TranslationAgentToolContext
         const paths = getPostPaths(slug, locale);
         const candidatePath = candidateFilePath(context.runId, locale, model);
         const manifestPath = join(candidateRunDir(context.runId), "manifest.json");
+        const adjusted = preAdjustRelativeAssetPaths({
+          sourcePath: paths.sourcePath,
+          targetPath: paths.targetPath,
+          contents,
+        });
         mkdirSync(dirname(candidatePath), { recursive: true });
-        writeFileSync(candidatePath, contents, "utf8");
+        writeFileSync(candidatePath, adjusted.contents, "utf8");
         writeJson(manifestPath, {
           runId: context.runId,
           slug,
@@ -282,7 +323,10 @@ export function createTranslationAgentTools(context: TranslationAgentToolContext
           sourcePath: sourcePath ?? relative(repoRoot, paths.sourcePath),
           targetPath: relative(repoRoot, paths.targetPath),
           latestCandidatePath: relative(repoRoot, candidatePath),
-          notes,
+          notes: [
+            notes,
+            adjusted.adjusted > 0 ? `Pre-adjusted ${adjusted.adjusted} relative asset path(s).` : undefined,
+          ].filter(Boolean).join(" "),
           updatedAt: new Date().toISOString(),
         });
         appendEvent(context.runId, {
@@ -291,6 +335,7 @@ export function createTranslationAgentTools(context: TranslationAgentToolContext
           locale,
           model,
           candidatePath: relative(repoRoot, candidatePath),
+          adjustedRelativePaths: adjusted.adjusted,
         });
         return {
           candidatePath: relative(repoRoot, candidatePath),
@@ -431,6 +476,139 @@ export function createTranslationAgentTools(context: TranslationAgentToolContext
           status: profile.status,
         });
         return profile;
+      },
+    }),
+
+    preAdjustRelativePaths: createTool({
+      id: "preAdjustRelativePaths",
+      description: "Deterministically rewrite local asset references for a localized MDX file before validation or scoring.",
+      inputSchema: z.object({
+        slug: z.string(),
+        locale: z.enum(ACTIVE_LOCALES),
+        candidatePath: z.string().optional(),
+        targetContents: z.string().optional(),
+      }),
+      outputSchema: pathAdjustmentOutputSchema,
+      execute: async ({ slug, locale, candidatePath, targetContents }) => {
+        const paths = getPostPaths(slug, locale);
+        const contents = targetContents ?? readFileSync(assertReadablePath(candidatePath ?? latestCandidatePath(context.runId)), "utf8");
+        const adjusted = preAdjustRelativeAssetPaths({
+          sourcePath: paths.sourcePath,
+          targetPath: paths.targetPath,
+          contents,
+        });
+        appendEvent(context.runId, {
+          event: "relative_paths_pre_adjusted",
+          slug,
+          locale,
+          candidatePath,
+          adjusted: adjusted.adjusted,
+          references: adjusted.references,
+        });
+        return adjusted;
+      },
+    }),
+
+    translateSvgText: createTool({
+      id: "translateSvgText",
+      description: "Translate reader-facing SVG text nodes using the source article as context and optionally write a localized SVG asset.",
+      inputSchema: z.object({
+        slug: z.string(),
+        locale: z.enum(ACTIVE_LOCALES),
+        svgPath: z.string(),
+        model: z.string().optional(),
+        articleSummary: z.string().optional(),
+        writeToLocale: z.boolean().optional(),
+      }),
+      outputSchema: svgTranslationOutputSchema,
+      execute: async ({ slug, locale, svgPath, model, articleSummary, writeToLocale = true }) => {
+        const paths = getPostPaths(slug, locale);
+        const absoluteSvgPath = assertReadablePath(svgPath);
+        const sourceContents = readFileSync(paths.sourcePath, "utf8");
+        const svgContents = readFileSync(absoluteSvgPath, "utf8");
+        const textNodes = extractSvgTextNodes(svgContents);
+        if (textNodes.length === 0) {
+          return {
+            sourcePath: relative(repoRoot, absoluteSvgPath),
+            targetPath: "",
+            written: false,
+            textNodes: 0,
+            translatedTextNodes: 0,
+            contents: svgContents,
+          };
+        }
+
+        const selectedModel = model ?? context.defaultTranslationModel;
+        const llmConfig = resolveLlmConfig(selectedModel, {
+          temperature: 0.1,
+          maxTokens: 4_000,
+        });
+        const startedAt = performance.now();
+        const result = await generateText({
+          model: createOpenRouterChatModel(llmConfig),
+          allowSystemInMessages: true,
+          messages: [
+            {
+              role: "system",
+              content: "You translate short SVG labels for technical article graphics. Return strict JSON only.",
+            },
+            {
+              role: "user",
+              content: [
+                "Stable SVG translation contract:",
+                buildSystemPrompt(locale, false),
+                "Translate only reader-facing SVG text node values.",
+                "Preserve product names, code identifiers, filenames, shell paths, URLs, and API names unless they are ordinary prose.",
+                "Keep labels compact enough to fit in roughly the same SVG layout.",
+                `Target language: ${LOCALE_LABELS[locale]}.`,
+              ].join("\n"),
+            },
+            {
+              role: "user",
+              content: [
+                `Article slug: ${slug}`,
+                articleSummary ? `Article summary: ${articleSummary}` : `Article context excerpt:\n${articleContextExcerpt(sourceContents)}`,
+                "Return JSON in this shape:",
+                JSON.stringify({ translations: [{ index: 0, text: "translated text" }] }),
+                "SVG text nodes:",
+                JSON.stringify(textNodes.map((node) => ({ index: node.index, text: node.text })), null, 2),
+              ].join("\n\n"),
+            },
+          ],
+          temperature: llmConfig.temperature,
+          maxOutputTokens: llmConfig.maxTokens,
+          timeout: { totalMs: llmConfig.timeoutMs },
+          providerOptions: llmConfig.providerOptions,
+        });
+        const telemetry = usageFromResult(result.usage, Math.round(performance.now() - startedAt), result.providerMetadata);
+        const translations = parseSvgTranslationOutput(result.text);
+        const translatedSvg = applySvgTextTranslations(svgContents, textNodes, translations);
+        const targetPath = join(dirname(paths.targetPath), basename(absoluteSvgPath));
+        const shouldWrite = writeToLocale && !context.dryRun;
+        if (shouldWrite) {
+          mkdirSync(dirname(targetPath), { recursive: true });
+          writeFileSync(targetPath, translatedSvg, "utf8");
+        }
+        appendEvent(context.runId, {
+          event: "svg_text_translated",
+          slug,
+          locale,
+          model: llmConfig.modelId,
+          sourcePath: relative(repoRoot, absoluteSvgPath),
+          targetPath: relative(repoRoot, targetPath),
+          written: shouldWrite,
+          textNodes: textNodes.length,
+          translatedTextNodes: translations.size,
+        });
+        return {
+          sourcePath: relative(repoRoot, absoluteSvgPath),
+          targetPath: relative(repoRoot, targetPath),
+          written: shouldWrite,
+          textNodes: textNodes.length,
+          translatedTextNodes: translations.size,
+          contents: translatedSvg,
+          telemetry,
+        };
       },
     }),
 
@@ -676,6 +854,146 @@ export function createTranslationAgentTools(context: TranslationAgentToolContext
       },
     }),
 
+    refineCandidateWithConsensus: createTool({
+      id: "refineCandidateWithConsensus",
+      description: "Apply judge-consensus suggestions first, iterate scoring and exact suggestion replacements three times, and keep the highest averaged scoring candidate.",
+      inputSchema: z.object({
+        slug: z.string(),
+        locale: z.enum(ACTIVE_LOCALES),
+        candidatePath: z.string().optional(),
+        targetContents: z.string().optional(),
+        models: z.array(z.string()).min(1).optional(),
+        escalationModels: z.array(z.string()).optional(),
+        iterations: z.number().int().min(1).max(3).optional(),
+        reconsiderationRounds: z.number().int().min(0).max(3).optional(),
+        disagreementThreshold: z.number().int().min(1).max(50).optional(),
+      }),
+      outputSchema: refineConsensusOutputSchema,
+      execute: async ({
+        slug,
+        locale,
+        candidatePath,
+        targetContents,
+        models,
+        escalationModels,
+        iterations = 3,
+        reconsiderationRounds,
+        disagreementThreshold,
+      }) => {
+        const paths = getPostPaths(slug, locale);
+        const sourceContents = readFileSync(paths.sourcePath, "utf8");
+        let currentContents = targetContents
+          ?? readFileSync(assertReadablePath(candidatePath ?? latestCandidatePath(context.runId)), "utf8");
+        const judgeModels = models ?? context.defaultJudgeModels;
+        const escalationJudgeModels = escalationModels ?? context.defaultEscalationJudgeModels;
+        const iterationSummaries: z.infer<typeof consensusIterationSchema>[] = [];
+        let best: {
+          iteration: number;
+          candidatePath: string;
+          consensus: ScoreConsensusOutput;
+        } | undefined;
+
+        for (let iteration = 1; iteration <= iterations; iteration += 1) {
+          const candidateId = `${slug}:${locale}:consensus-iteration-${iteration}`;
+          const consensus = await scoreTranslationConsensus({
+            sourceContents,
+            targetContents: currentContents,
+            locale,
+            slug,
+            targetRelPath: relative(repoRoot, paths.targetPath),
+            candidateId,
+            models: judgeModels,
+            escalationModels: escalationJudgeModels,
+            reconsiderationRounds,
+            disagreementThreshold,
+          });
+          const candidatePathForIteration = consensusCandidateFilePath(context.runId, locale, iteration);
+          mkdirSync(dirname(candidatePathForIteration), { recursive: true });
+          writeFileSync(candidatePathForIteration, currentContents, "utf8");
+          const relativeCandidatePath = relative(repoRoot, candidatePathForIteration);
+          const record = {
+            at: new Date().toISOString(),
+            runId: context.runId,
+            slug,
+            locale,
+            iteration,
+            scoredPath: relativeCandidatePath,
+            provenance: buildScoreProvenance({
+              slug,
+              locale,
+              sourceContents,
+              targetContents: currentContents,
+              scoredPath: relativeCandidatePath,
+              candidateId,
+            }),
+            ...consensus,
+          };
+          appendJsonl(join(candidateRunDir(context.runId), "consensus-scores.jsonl"), record);
+          appendJsonl(agentEvalHistoryPath(), { event: "consensus_refinement_score", ...record });
+          appendConsensusMarkdown(context.runId, record);
+
+          const applied = applyConsensusSuggestions(currentContents, consensus, judgeModels.length);
+          iterationSummaries.push({
+            iteration,
+            candidatePath: relativeCandidatePath,
+            overallScore: consensus.consensus.overallScore,
+            publishReady: consensus.consensus.publishReady,
+            appliedSuggestions: applied.applied,
+            skippedSuggestions: applied.skipped,
+          });
+          if (best == null || consensus.consensus.overallScore > best.consensus.consensus.overallScore) {
+            best = {
+              iteration,
+              candidatePath: relativeCandidatePath,
+              consensus,
+            };
+          }
+
+          appendEvent(context.runId, {
+            event: "consensus_refinement_iteration",
+            slug,
+            locale,
+            iteration,
+            candidatePath: relativeCandidatePath,
+            overallScore: consensus.consensus.overallScore,
+            publishReady: consensus.consensus.publishReady,
+            appliedSuggestions: applied.applied,
+            skippedSuggestions: applied.skipped,
+          });
+          currentContents = applied.contents;
+        }
+
+        if (best == null) throw new Error("Consensus refinement did not produce a candidate.");
+        writeJson(join(candidateRunDir(context.runId), "manifest.json"), {
+          runId: context.runId,
+          slug,
+          locale,
+          model: "consensus-refinement",
+          sourcePath: relative(repoRoot, paths.sourcePath),
+          targetPath: relative(repoRoot, paths.targetPath),
+          latestCandidatePath: best.candidatePath,
+          notes: `Best of ${iterationSummaries.length} consensus refinement iteration(s) by averaged judge score.`,
+          updatedAt: new Date().toISOString(),
+        });
+        appendEvent(context.runId, {
+          event: "consensus_refinement_selected",
+          slug,
+          locale,
+          candidatePath: best.candidatePath,
+          iteration: best.iteration,
+          overallScore: best.consensus.consensus.overallScore,
+          publishReady: best.consensus.consensus.publishReady,
+        });
+        return {
+          bestCandidatePath: best.candidatePath,
+          bestIteration: best.iteration,
+          bestOverallScore: best.consensus.consensus.overallScore,
+          publishReady: best.consensus.consensus.publishReady,
+          iterations: iterationSummaries,
+        };
+      },
+    }),
+
     promoteCandidate: createTool({
       id: "promoteCandidate",
       description: "Publish a candidate artifact to the final localized MDX path. Disabled when --dry-run is set.",
@@ -769,12 +1087,76 @@ function existingTranslationPath(slug: string, locale: ActiveLocale) {
   return undefined;
 }
 
+function preAdjustRelativeAssetPaths({
+  sourcePath,
+  targetPath,
+  contents,
+}: {
+  sourcePath: string;
+  targetPath: string;
+  contents: string;
+}) {
+  const sourceDir = dirname(sourcePath);
+  const targetDir = dirname(targetPath);
+  const postAssets = new Map(
+    readdirSync(sourceDir, { withFileTypes: true })
+      .filter((entry) => entry.isFile() && isAssetFilename(entry.name))
+      .map((entry) => [entry.name, join(sourceDir, entry.name)]),
+  );
+  const localLocaleAssets = new Map(
+    existsSync(targetDir)
+      ? readdirSync(targetDir, { withFileTypes: true })
+        .filter((entry) => entry.isFile() && isAssetFilename(entry.name))
+        .map((entry) => [entry.name, join(targetDir, entry.name)])
+      : [],
+  );
+  const references: Array<{ from: string; to: string }> = [];
+  const adjustedContents = contents.replace(
+    /(?<prefix>]\(|src=["']|href=["']|:\s*|=["'])(?<url>(?:\.\.?\/)?[^"')\s]+?\.(?:avif|gif|jpe?g|png|svg|webp))(?<suffix>(?:\s+["'][^)]+)?\)|["']|(?=\s|$))/gim,
+    (match, prefix: string, url: string, suffix: string) => {
+      if (isExternalOrAbsoluteUrl(url)) return match;
+      const filename = basename(url);
+      const resolvedAsset = localLocaleAssets.get(filename) ?? postAssets.get(filename);
+      if (resolvedAsset == null) return match;
+      const nextUrl = toMdxRelativePath(relative(targetDir, resolvedAsset));
+      if (url === nextUrl) return match;
+      references.push({ from: url, to: nextUrl });
+      return `${prefix}${nextUrl}${suffix}`;
+    },
+  );
+
+  return {
+    contents: adjustedContents,
+    adjusted: references.length,
+    references,
+  };
+}
+
+function isAssetFilename(value: string) {
+  return /\.(?:avif|gif|jpe?g|png|svg|webp)$/i.test(value);
+}
+
+function isExternalOrAbsoluteUrl(value: string) {
+  return value.startsWith("/")
+    || value.startsWith("#")
+    || /^[a-z][a-z0-9+.-]*:/i.test(value);
+}
+
+function toMdxRelativePath(value: string) {
+  const normalized = value.split(/[\\/]+/).join("/");
+  return normalized.startsWith(".") ? normalized : `./${normalized}`;
+}
+
 function candidateRunDir(runId: string) {
   return join(candidateRunsRoot, safePathSegment(runId));
 }
 
 function candidateFilePath(runId: string, locale: ActiveLocale, model: string) {
   return join(candidateRunDir(runId), "candidates", locale, `${safeModelPathName(model)}.mdx`);
+}
+
+function consensusCandidateFilePath(runId: string, locale: ActiveLocale, iteration: number) {
+  return join(candidateRunDir(runId), "candidates", locale, `consensus-iteration-${iteration}.mdx`);
 }
 
 function latestCandidatePath(runId: string) {
@@ -906,6 +1288,145 @@ function appendConsensusMarkdown(runId: string, record: Record<string, unknown>)
     "",
     consensus?.rationale ?? "",
   ].join("\n"));
+}
+
+function applyConsensusSuggestions(
+  contents: string,
+  consensus: ScoreConsensusOutput,
+  judgeModelCount: number,
+) {
+  const orderedSuggestions = [...consensus.consensus.suggestions]
+    .filter((suggestion) => suggestion.priority === "high" || suggestion.priority === "medium")
+    .sort((a, b) =>
+      suggestionAgreementRank(b, judgeModelCount) - suggestionAgreementRank(a, judgeModelCount)
+      || priorityRank(b.priority) - priorityRank(a.priority)
+    );
+  let nextContents = contents;
+  let applied = 0;
+  let skipped = 0;
+  for (const suggestion of orderedSuggestions) {
+    if (!nextContents.includes(suggestion.match)) {
+      skipped += 1;
+      continue;
+    }
+    nextContents = nextContents.replace(suggestion.match, suggestion.replacement);
+    applied += 1;
+  }
+  return {
+    contents: nextContents,
+    applied,
+    skipped,
+  };
+}
+
+function suggestionAgreementRank(
+  suggestion: ScoreConsensusOutput["consensus"]["suggestions"][number],
+  judgeModelCount: number,
+) {
+  const supportingModels = suggestion.supportingModels.length;
+  const requiredAgreement = judgeModelCount > 1 ? 2 : 1;
+  return supportingModels >= requiredAgreement ? 100 + supportingModels : supportingModels;
+}
+
+function priorityRank(priority: "low" | "medium" | "high") {
+  if (priority === "high") return 3;
+  if (priority === "medium") return 2;
+  return 1;
+}
+
+type SvgTextNode = {
+  index: number;
+  raw: string;
+  inner: string;
+  text: string;
+};
+
+function extractSvgTextNodes(svgContents: string): SvgTextNode[] {
+  return [...svgContents.matchAll(/<text\b[^>]*>([\s\S]*?)<\/text>/gi)]
+    .map((match, index) => {
+      const raw = match[0];
+      const inner = match[1];
+      const text = decodeXmlEntities(stripSvgInlineTags(inner).replace(/\s+/g, " ").trim());
+      return { index, raw, inner, text };
+    })
+    .filter((node) => node.text !== "" && /[A-Za-z0-9\u00C0-\uFFFF]/.test(node.text));
+}
+
+function stripSvgInlineTags(value: string) {
+  return value.replace(/<[^>]+>/g, "");
+}
+
+function parseSvgTranslationOutput(rawText: string) {
+  const parsed = parseJsonObject(rawText) as { translations?: Array<{ index?: unknown; text?: unknown }> };
+  const translations = new Map<number, string>();
+  for (const item of parsed.translations ?? []) {
+    if (typeof item.index !== "number" || typeof item.text !== "string") continue;
+    const text = item.text.trim();
+    if (text === "") continue;
+    translations.set(item.index, text);
+  }
+  return translations;
+}
+
+function parseJsonObject(rawText: string) {
+  try {
+    return JSON.parse(rawText);
+  } catch {
+    const fenced = rawText.match(/```(?:json)?\s*([\s\S]*?)```/i)?.[1];
+    if (fenced != null) return JSON.parse(fenced);
+    const start = rawText.indexOf("{");
+    const end = rawText.lastIndexOf("}");
+    if (start !== -1 && end > start) return JSON.parse(rawText.slice(start, end + 1));
+    throw new Error("Model did not return a JSON object.");
+  }
+}
+
+function applySvgTextTranslations(
+  svgContents: string,
+  textNodes: SvgTextNode[],
+  translations: Map<number, string>,
+) {
+  let result = svgContents;
+  for (const node of [...textNodes].reverse()) {
+    const translation = translations.get(node.index);
+    if (translation == null) continue;
+    const translatedNode = node.raw.replace(node.inner, escapeXmlText(translation));
+    result = replaceLast(result, node.raw, translatedNode);
+  }
+  return result;
+}
+
+function replaceLast(contents: string, search: string, replacement: string) {
+  const index = contents.lastIndexOf(search);
+  if (index === -1) return contents;
+  return `${contents.slice(0, index)}${replacement}${contents.slice(index + search.length)}`;
+}
+
+function articleContextExcerpt(sourceContents: string) {
+  return sourceContents
+    .replace(/^---[\s\S]*?\n---/, "")
+    .replace(/^import\s.+$/gm, "")
+    .replace(/```[\s\S]*?```/g, "")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .slice(0, 2_500);
+}
+
+function decodeXmlEntities(value: string) {
+  return value
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&amp;/g, "&")
+    .replace(/&quot;/g, "\"")
+    .replace(/&apos;/g, "'");
+}
+
+function escapeXmlText(value: string) {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
 }
 
 function sha256(contents: string) {

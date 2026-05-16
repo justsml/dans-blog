@@ -146,7 +146,21 @@ export function renderPromptProfilePreview(input: {
   model: string;
   profileId?: string;
   isQuiz?: boolean;
-}) {
+}): {
+  profile: TranslationPromptProfile | undefined;
+  base: {
+    basedOn: "legacy-i18n-prompts";
+    systemPrompt: string;
+  };
+  effective: {
+    systemPrompt: string;
+    cachedContextAppend?: string;
+    dynamicAppend?: string;
+    frontmatterAppend?: string;
+    summaryAppend?: string;
+    quizProseAppend?: string;
+  };
+} {
   const profile = resolvePromptProfile(input);
   const legacySystemPrompt = buildSystemPrompt(input.locale, input.isQuiz ?? false);
   return {

@@ -438,7 +438,10 @@ function mergeSuggestions(outputs: ScoreTranslationOutput[]) {
     }
   }
 
-  return [...merged.values()].sort((a, b) => priorityRank(b.priority) - priorityRank(a.priority));
+  return [...merged.values()].sort((a, b) =>
+    b.supportingModels.length - a.supportingModels.length
+    || priorityRank(b.priority) - priorityRank(a.priority)
+  );
 }
 
 function priorityRank(priority: JudgeSuggestion["priority"]) {

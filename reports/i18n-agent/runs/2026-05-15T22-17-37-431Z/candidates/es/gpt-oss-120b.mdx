@@ -1,0 +1,56 @@
+---
+title: "En la brecha"
+subTitle: "Prevenga ataques de IA con señuelos y subterfugio"
+date: "2026-05-13"
+popularity: 10
+---
+
+import { Image } from 'astro:assets';
+import infographic from './infographic.png';
+import comparisonTable from './comparison.png';
+
+# En la brecha
+
+Las computadoras portátiles de los desarrolladores son almacenes de credenciales. Si una se ve comprometida, toda la cadena de suministro está en riesgo.
+
+## El problema: Humanos como tráfico
+
+Los humanos no son límites. Los humanos son tráfico. En un mundo de IA, el atacante ya está dentro.
+
+<Image src={infographic} alt="Infografía de seguridad" />
+
+### Tabla de contenidos visual
+- [Contenedores de desarrollo](#contenedores-de-desarrollo)
+- [Canarytokens](#canarytokens)
+- [pnpm minPackageAge](#pnpm-minpackageage)
+
+## Contenedores de desarrollo
+
+Aísle sus secretos. No deje claves de AWS en su máquina local.
+
+```json
+{
+  "name": "Node.js",
+  "build": { "dockerfile": "Dockerfile" },
+  "remoteUser": "node"
+}
+```
+
+## Canarytokens
+
+Use señuelos. Si alguien toca este archivo, usted recibe una alerta.
+
+| Tipo | Uso |
+| :--- | :--- |
+| AWS | Credenciales falsas |
+| Archivo | Documentos sensibles |
+
+## pnpm minPackageAge
+
+No instale paquetes nuevos de inmediato. Espere a que la comunidad los valide.
+
+> "La seguridad no es un producto, es un proceso."
+
+## Conclusión
+
+Actúe ahora antes de que sea tarde.
