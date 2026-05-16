@@ -167,6 +167,9 @@ describe("scoreTranslation", () => {
     expect(result.publishReady).toBe(true);
     expect(result.scores.mdxPreservation).toBe(95);
     expect(result.scores.fidelity).toBe(88);
+    expect(result.confidence).toBe("high");
+    expect(result.confidenceScore).toBeGreaterThan(0.75);
+    expect(result.issueCounts.high).toBe(0);
     expect(result.rationale).toBe("solid");
   });
 
@@ -229,6 +232,50 @@ describe("scoreTranslation", () => {
     expect(JSON.stringify(messages[4])).toContain("Candidate id: candidate-1");
     expect(JSON.stringify(messages[4])).toContain("Critical reconsideration round");
     expect(JSON.stringify(messages[4])).not.toContain("<english-source>");
+  });
+
+  test("injects judge prompt tuning overlays into scoring calls", async () => {
+    let capturedSettings: { messages?: Array<{ content: unknown }> } | undefined;
+    const fakeGenerateText = (async (settings: { messages?: Array<{ content: unknown }> }) => {
+      capturedSettings = settings;
+      return {
+        text: JSON.stringify({
+          scores: {
+            readability: 90,
+            technicalAccuracy: 90,
+            coherence: 90,
+            relevance: 90,
+            translationQuality: 90,
+            mdxPreservation: 95,
+            culturalAdaptation: 90,
+            languagePurity: 90,
+          },
+          publishReady: true,
+          suggestions: [],
+          rationale: "solid",
+        }),
+        usage: { inputTokens: 10, outputTokens: 20 },
+        providerMetadata: undefined,
+      };
+    }) as unknown as GenerateTextLike;
+
+    await scoreTranslation({
+      sourceContents: "---\ntitle: Hello\n---\nText",
+      targetContents: "---\ntitle: Hola\n---\nTexto",
+      locale: "es",
+      model: "openrouter/google/gemini-3-flash-preview",
+      promptTuning: {
+        appendSystem: "JUDGE_SYSTEM_TUNE",
+        appendCachedContext: "JUDGE_CACHED_TUNE",
+        appendDynamic: "JUDGE_DYNAMIC_TUNE",
+      },
+      generateText: fakeGenerateText,
+    });
+
+    const serialized = JSON.stringify(capturedSettings);
+    expect(serialized).toContain("JUDGE_SYSTEM_TUNE");
+    expect(serialized).toContain("JUDGE_CACHED_TUNE");
+    expect(serialized).toContain("JUDGE_DYNAMIC_TUNE");
   });
 
   test("builds consensus through peer reconsideration", async () => {
@@ -553,16 +600,29 @@ describe("prompt profiles", () => {
         modelPattern: "openrouter/deepseek/deepseek-v4-flash",
         appendDynamic: "Prefer concise Japanese phrasing and preserve technical loanwords.",
       });
+      const judge = createPromptProfileVersion({
+        kind: "judge",
+        locale: "ja",
+        modelPattern: "openrouter/google/gemini-3-flash-preview",
+        appendCachedContext: "Be extra strict about Japanese loanword drift.",
+      });
 
       const resolved = resolvePromptProfile({
         locale: "ja",
         model: "llm://openrouter/deepseek/deepseek-v4-flash",
       });
+      const resolvedJudge = resolvePromptProfile({
+        kind: "judge",
+        locale: "ja",
+        model: "openrouter/google/gemini-3-flash-preview",
+      });
 
       expect(first.version).toBe(1);
       expect(second.version).toBe(2);
+      expect(judge.kind).toBe("judge");
       expect(resolved?.version).toBe(2);
       expect(resolved?.appendDynamic).toContain("technical loanwords");
+      expect(resolvedJudge?.appendCachedContext).toContain("loanword drift");
     } finally {
       if (originalPath == null) {
         delete process.env.I18N_AGENT_PROMPT_PROFILES_PATH;

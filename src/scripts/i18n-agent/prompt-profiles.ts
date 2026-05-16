@@ -6,6 +6,8 @@ import { ACTIVE_LOCALES, type ActiveLocale } from "../../shared/i18n.ts";
 import { safeModelPathName } from "../i18n/translation-costs.ts";
 
 export type PromptProfileStatus = "active" | "archived";
+export type PromptProfileKind = "translation" | "judge";
+export type PromptProfileContentKind = "*" | "article" | "quiz";
 
 export type TranslationPromptTuning = {
   profileId?: string;
@@ -20,8 +22,10 @@ export type TranslationPromptTuning = {
 
 export type TranslationPromptProfile = TranslationPromptTuning & {
   id: string;
+  kind: PromptProfileKind;
   locale: ActiveLocale | "*";
   modelPattern: string;
+  contentKind: PromptProfileContentKind;
   version: number;
   status: PromptProfileStatus;
   basedOn: "legacy-i18n-prompts";
@@ -32,8 +36,10 @@ export type TranslationPromptProfile = TranslationPromptTuning & {
 
 const PromptProfileSchema = z.object({
   id: z.string().min(1),
+  kind: z.enum(["translation", "judge"]).default("translation"),
   locale: z.union([z.enum(ACTIVE_LOCALES), z.literal("*")]),
   modelPattern: z.string().min(1),
+  contentKind: z.enum(["*", "article", "quiz"]).default("*"),
   version: z.number().int().min(1),
   status: z.enum(["active", "archived"]),
   basedOn: z.literal("legacy-i18n-prompts"),
@@ -55,45 +61,57 @@ const PromptProfilesFileSchema = z.object({
 const defaultProfilesPath = join(process.cwd(), "src/scripts/i18n-agent/prompt-profiles.json");
 
 export function listPromptProfiles(filters: {
+  kind?: PromptProfileKind;
   locale?: ActiveLocale | "*";
   model?: string;
+  contentKind?: PromptProfileContentKind;
   includeArchived?: boolean;
 } = {}) {
   const registry = readPromptProfileRegistry();
   return registry.profiles.filter((profile) => {
     if (filters.includeArchived !== true && profile.status !== "active") return false;
+    if (filters.kind != null && profile.kind !== filters.kind) return false;
     if (filters.locale != null && profile.locale !== "*" && profile.locale !== filters.locale) return false;
     if (filters.model != null && !modelMatches(profile.modelPattern, filters.model)) return false;
+    if (filters.contentKind != null && profile.contentKind !== "*" && profile.contentKind !== filters.contentKind) return false;
     return true;
   });
 }
 
 export function resolvePromptProfile({
+  kind = "translation",
   locale,
   model,
   profileId,
+  contentKind = "*",
 }: {
+  kind?: PromptProfileKind;
   locale: ActiveLocale;
   model: string;
   profileId?: string;
+  contentKind?: PromptProfileContentKind;
 }): TranslationPromptProfile | undefined {
   const profiles = readPromptProfileRegistry().profiles;
   if (profileId != null && profileId.trim() !== "") {
     return profiles
-      .filter((profile) => profile.id === profileId && profile.status === "active")
+      .filter((profile) => profile.id === profileId && profile.kind === kind && profile.status === "active")
       .sort((a, b) => b.version - a.version)[0];
   }
 
   return profiles
     .filter((profile) => profile.status === "active")
+    .filter((profile) => profile.kind === kind)
     .filter((profile) => profile.locale === locale || profile.locale === "*")
+    .filter((profile) => profile.contentKind === contentKind || profile.contentKind === "*")
     .filter((profile) => modelMatches(profile.modelPattern, model))
-    .sort((a, b) => profileSpecificity(b, locale, model) - profileSpecificity(a, locale, model) || b.version - a.version)[0];
+    .sort((a, b) => profileSpecificity(b, locale, model, contentKind) - profileSpecificity(a, locale, model, contentKind) || b.version - a.version)[0];
 }
 
 export function createPromptProfileVersion(input: {
+  kind?: PromptProfileKind;
   locale: ActiveLocale | "*";
   modelPattern: string;
+  contentKind?: PromptProfileContentKind;
   notes?: string;
   appendSystem?: string;
   appendCachedContext?: string;
@@ -104,11 +122,13 @@ export function createPromptProfileVersion(input: {
   activate?: boolean;
 }) {
   const registry = readPromptProfileRegistry();
+  const kind = input.kind ?? "translation";
   const locale = input.locale;
+  const contentKind = input.contentKind ?? "*";
   const modelPattern = input.modelPattern.trim();
   if (modelPattern === "") throw new Error("modelPattern is required.");
 
-  const id = promptProfileId(locale, modelPattern);
+  const id = promptProfileId(kind, locale, modelPattern, contentKind);
   const previous = registry.profiles
     .filter((profile) => profile.id === id)
     .sort((a, b) => b.version - a.version)[0];
@@ -116,8 +136,10 @@ export function createPromptProfileVersion(input: {
   const activate = input.activate !== false;
   const profile: TranslationPromptProfile = {
     id,
+    kind,
     locale,
     modelPattern,
+    contentKind,
     version: (previous?.version ?? 0) + 1,
     status: activate ? "active" : "archived",
     basedOn: "legacy-i18n-prompts",
@@ -142,9 +164,11 @@ export function createPromptProfileVersion(input: {
 }
 
 export function renderPromptProfilePreview(input: {
+  kind?: PromptProfileKind;
   locale: ActiveLocale;
   model: string;
   profileId?: string;
+  contentKind?: PromptProfileContentKind;
   isQuiz?: boolean;
 }): {
   profile: TranslationPromptProfile | undefined;
@@ -161,8 +185,18 @@ export function renderPromptProfilePreview(input: {
     quizProseAppend?: string;
   };
 } {
-  const profile = resolvePromptProfile(input);
-  const legacySystemPrompt = buildSystemPrompt(input.locale, input.isQuiz ?? false);
+  const kind = input.kind ?? "translation";
+  const contentKind = input.contentKind ?? (input.isQuiz ? "quiz" : "*");
+  const profile = resolvePromptProfile({
+    kind,
+    locale: input.locale,
+    model: input.model,
+    profileId: input.profileId,
+    contentKind,
+  });
+  const legacySystemPrompt = kind === "judge"
+    ? buildJudgeSystemPrompt(input.locale)
+    : buildSystemPrompt(input.locale, input.isQuiz ?? contentKind === "quiz");
   return {
     profile,
     base: {
@@ -216,8 +250,15 @@ function promptProfilesPath() {
   return process.env.I18N_AGENT_PROMPT_PROFILES_PATH ?? defaultProfilesPath;
 }
 
-function promptProfileId(locale: ActiveLocale | "*", modelPattern: string) {
-  return `${locale}-${safeModelPathName(modelPattern)}`;
+function promptProfileId(
+  kind: PromptProfileKind,
+  locale: ActiveLocale | "*",
+  modelPattern: string,
+  contentKind: PromptProfileContentKind,
+) {
+  const base = `${locale}-${safeModelPathName(modelPattern)}`;
+  if (kind === "translation" && contentKind === "*") return base;
+  return `${kind}-${contentKind}-${base}`;
 }
 
 function modelMatches(pattern: string, model: string) {
@@ -229,9 +270,15 @@ function modelMatches(pattern: string, model: string) {
     || normalizedModel.endsWith(`/${normalizedPattern}`);
 }
 
-function profileSpecificity(profile: TranslationPromptProfile, locale: ActiveLocale, model: string) {
+function profileSpecificity(
+  profile: TranslationPromptProfile,
+  locale: ActiveLocale,
+  model: string,
+  contentKind: PromptProfileContentKind,
+) {
   let score = 0;
   if (profile.locale === locale) score += 100;
+  if (profile.contentKind === contentKind && contentKind !== "*") score += 25;
   if (profile.modelPattern !== "*" && profile.modelPattern !== "default") score += 10;
   if (normalizeModelText(profile.modelPattern) === normalizeModelText(model)) score += 10;
   return score;
@@ -243,4 +290,13 @@ function normalizeModelText(value: string) {
 
 function emptyToUndefined(value: string | undefined) {
   return value == null || value.trim() === "" ? undefined : value.trim();
+}
+
+function buildJudgeSystemPrompt(locale: ActiveLocale) {
+  return [
+    `You are a constrained technical translation judge for ${locale} localized MDX.`,
+    "Return strict JSON only. Do not use markdown fences.",
+    "Judge natural target-language quality, technical fidelity, Dan's direct style, and MDX preservation.",
+    "Use exact medium/high-priority suggestions only when the replacement is concrete and currently present in the candidate.",
+  ].join("\n");
 }

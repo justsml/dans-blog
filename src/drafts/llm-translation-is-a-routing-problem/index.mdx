@@ -50,7 +50,7 @@ Those attempt records are operational records. They are not a clean academic ben
 
 Good.
 
-That mess is the point. Public benchmarks measure tasks that fit neatly into someone else's spreadsheet. This dataset measures whether a model can translate *this* blog without breaking Astro, MDX, quizzes, code examples, links, tone, and my regrettable fondness for small knives in the prose.
+That mess is the point. Public benchmarks measure tasks that fit neatly into someone else's spreadsheet. This dataset measures whether a model can translate *this* blog without breaking Astro, MDX, quizzes, code examples, links, tone, and my regrettable fondness for obscure cultural references.
 
 That is eval-driven development in the only form I trust: the test set is not aspirational. It is the product trying to break.
 
@@ -64,12 +64,12 @@ One run had 0 passed and 16 failed. That sounds disastrous until you look at why
 - changed code-like answer options
 - unclosed HTML tags
 - wrong asset paths
-- headings or blockquotes with changed counts
-- untranslated frontmatter titles
+- changed number of headings or blockquotes
+- untranslated metadata
 
 That is exactly what evals are for.
 
-An LLM judge is good at "does this read well?" It is weaker at "did this preserve every structural invariant in a long MDX document?" Deterministic checks are cheap, rude, and correct. They do not care that the Spanish was elegant if the quiz now has ten questions instead of fourteen.
+An LLM judge is good at "does this read well?" It is weaker at "did this preserve every structural invariant in a long MDX document?" Deterministic checks are cheap, rude, and correct. They do not care that the Spanish was elegant if the quiz is missing any questions.
 
 This is the broader lesson from [LLM evals](/llm-evals-are-broken/): use the cheapest evaluation method that can honestly catch the failure. For translation, that means:
 

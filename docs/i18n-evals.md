@@ -16,6 +16,7 @@ BRAINTRUST_API_KEY=sk-... bun run i18n:eval
 
 - After editing any prompt in `src/scripts/i18n/prompts.ts`
 - After editing judge prompt builders in `src/scripts/i18n/judge-utils.ts`
+- After creating or changing translation-agent prompt profiles for translation or judging
 - Before merging changes to translation or judge logic
 - Periodically to catch prompt quality drift across model upgrades
 
@@ -48,6 +49,13 @@ bun run i18n:eval -- --kind quiz --locales zh
 # Override judge model
 bun run i18n:eval -- --judge-model openrouter/google/gemini-3-flash-preview
 
+# Test a specific translation or judge prompt profile
+bun run i18n:eval -- --translation-prompt-profile-id ja-deepseek-deepseek-v4-flash
+bun run i18n:eval -- --judge-prompt-profile-id judge-quiz-ja-google-gemini-3-flash-preview
+
+# Disable translation-agent prompt profiles for a clean legacy-prompt baseline
+bun run i18n:eval -- --no-prompt-profile
+
 # Also mirror streamed model chunks to stdout while writing stream artifacts
 bun run i18n:eval -- --print-streams
 ```
@@ -61,6 +69,9 @@ bun run i18n:eval -- --print-streams
 | `--locales` | all active locales | Comma-separated locales (`es,ja,zh`, …) — each is a separate eval axis |
 | `--kind` | `all` | `article`, `quiz`, or `all` |
 | `--slug` | — | Pin to one or more comma-separated slugs (auto-detects article vs quiz) |
+| `--translation-prompt-profile-id` / `--prompt-profile-id` | active profile lookup | Force a specific translation prompt profile version |
+| `--judge-prompt-profile-id` | active profile lookup | Force a specific judge/scoring prompt profile version |
+| `--no-prompt-profile` | false | Disable translation-agent prompt profiles for this eval run |
 | `--dry-run` | false | Print all cases and exit without calling any model |
 | `--print-streams` | false | Mirror text deltas to stdout in addition to writing stream files |
 

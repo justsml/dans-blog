@@ -21,8 +21,10 @@ import {
   createPromptProfileVersion,
   listPromptProfiles,
   promptProfileToTuning,
+  type PromptProfileContentKind,
   renderPromptProfilePreview,
   resolvePromptProfile,
+  type TranslationPromptProfile,
 } from "./prompt-profiles.ts";
 
 export type TranslationAgentToolContext = {
@@ -82,10 +84,14 @@ const tokenCostSchema = z.object({
   pricingSource: z.string(),
   providerCostUsd: optionalNumber,
 });
+const promptProfileKindSchema = z.enum(["translation", "judge"]);
+const promptProfileContentKindSchema = z.enum(["*", "article", "quiz"]);
 const promptProfileSchema = z.object({
   id: z.string(),
+  kind: promptProfileKindSchema,
   locale: z.union([z.enum(ACTIVE_LOCALES), z.literal("*")]),
   modelPattern: z.string(),
+  contentKind: promptProfileContentKindSchema,
   version: z.number().int(),
   status: z.enum(["active", "archived"]),
   basedOn: z.literal("legacy-i18n-prompts"),
@@ -144,12 +150,25 @@ const scoreTranslationOutputSchema = z.object({
   judgeScores: judgeScoreSchema.optional(),
   overallScore: z.number(),
   publishReady: z.boolean(),
+  confidence: z.enum(["low", "medium", "high"]),
+  confidenceScore: z.number(),
+  confidenceSignals: z.array(z.string()),
+  issueCounts: z.object({
+    high: z.number(),
+    medium: z.number(),
+    low: z.number(),
+  }),
   suggestions: z.array(judgeSuggestionSchema),
   rationale: z.string(),
   rawText: z.string(),
   telemetry: telemetrySchema,
   cost: tokenCostSchema,
   roundLabel: z.string().optional(),
+  promptProfile: z.object({
+    id: z.string(),
+    version: z.number().int(),
+    notes: z.string().optional(),
+  }).optional(),
 });
 const consensusOutputSchema = z.object({
   candidateId: z.string(),
@@ -160,6 +179,13 @@ const consensusOutputSchema = z.object({
     scores: translationScoreSchema,
     publishReady: z.boolean(),
     confidence: z.enum(["low", "medium", "high"]),
+    confidenceScore: z.number(),
+    confidenceSignals: z.array(z.string()),
+    issueCounts: z.object({
+      high: z.number(),
+      medium: z.number(),
+      low: z.number(),
+    }),
     rationale: z.string(),
     suggestions: z.array(judgeSuggestionSchema.extend({
       supportingModels: z.array(z.string()),
@@ -186,6 +212,12 @@ const consensusOutputSchema = z.object({
     providerCostUsd: optionalNumber,
     providerUpstreamCostUsd: optionalNumber,
   }),
+  promptProfiles: z.array(z.object({
+    model: z.string(),
+    id: z.string(),
+    version: z.number().int(),
+    notes: z.string().optional(),
+  })).optional(),
 });
 const validationOutputSchema = z.object({
   passed: z.boolean(),
@@ -424,34 +456,40 @@ export function createTranslationAgentTools(context: TranslationAgentToolContext
 
     listPromptProfiles: createTool({
       id: "listPromptProfiles",
-      description: "List active or archived translation prompt profiles by locale/model.",
+      description: "List active or archived translation or judge prompt profiles by locale/model/content kind.",
       inputSchema: z.object({
+        kind: promptProfileKindSchema.optional(),
         locale: z.union([z.enum(ACTIVE_LOCALES), z.literal("*")]).optional(),
         model: z.string().optional(),
+        contentKind: promptProfileContentKindSchema.optional(),
         includeArchived: z.boolean().optional(),
       }),
       outputSchema: z.object({
         profiles: z.array(promptProfileSchema),
       }),
-      execute: async ({ locale, model, includeArchived }) => ({
-        profiles: listPromptProfiles({ locale, model, includeArchived }),
+      execute: async ({ kind, locale, model, contentKind, includeArchived }) => ({
+        profiles: listPromptProfiles({ kind, locale, model, contentKind, includeArchived }),
       }),
     }),
 
     getPromptProfile: createTool({
       id: "getPromptProfile",
-      description: "Preview the legacy base translation prompt plus the active model/locale prompt tuning overlay.",
+      description: "Preview the legacy base translation or judge prompt plus the active model/locale prompt tuning overlay.",
       inputSchema: z.object({
+        kind: promptProfileKindSchema.optional(),
         locale: z.enum(ACTIVE_LOCALES),
         model: z.string().optional(),
         profileId: z.string().optional(),
+        contentKind: promptProfileContentKindSchema.optional(),
         isQuiz: z.boolean().optional(),
       }),
       outputSchema: promptProfilePreviewSchema,
-      execute: async ({ locale, model, profileId, isQuiz }) => renderPromptProfilePreview({
+      execute: async ({ kind, locale, model, profileId, contentKind, isQuiz }) => renderPromptProfilePreview({
+        kind,
         locale,
         model: model ?? context.defaultTranslationModel,
         profileId,
+        contentKind,
         isQuiz,
       }),
     }),
@@ -462,6 +500,7 @@ export function createTranslationAgentTools(context: TranslationAgentToolContext
       inputSchema: z.object({
         locale: z.union([z.enum(ACTIVE_LOCALES), z.literal("*")]),
         modelPattern: z.string(),
+        contentKind: promptProfileContentKindSchema.optional(),
         notes: z.string().optional(),
         appendSystem: z.string().optional(),
         appendCachedContext: z.string().optional(),
@@ -473,13 +512,45 @@ export function createTranslationAgentTools(context: TranslationAgentToolContext
       }),
       outputSchema: promptProfileSchema,
       execute: async (input) => {
-        const profile = createPromptProfileVersion(input);
+        const profile = createPromptProfileVersion({ ...input, kind: "translation" });
         appendEvent(context.runId, {
           event: "prompt_profile_version_created",
           profileId: profile.id,
+          kind: profile.kind,
           version: profile.version,
           locale: profile.locale,
           modelPattern: profile.modelPattern,
+          contentKind: profile.contentKind,
+          status: profile.status,
+        });
+        return profile;
+      },
+    }),
+
+    tuneJudgePrompt: createTool({
+      id: "tuneJudgePrompt",
+      description: "Create a new versioned judge/scoring prompt profile for a locale/model pattern. Put stable rubric and output-format guidance in cached fields and case-specific tactics in dynamic fields.",
+      inputSchema: z.object({
+        locale: z.union([z.enum(ACTIVE_LOCALES), z.literal("*")]),
+        modelPattern: z.string(),
+        contentKind: promptProfileContentKindSchema.optional(),
+        notes: z.string().optional(),
+        appendSystem: z.string().optional(),
+        appendCachedContext: z.string().optional(),
+        appendDynamic: z.string().optional(),
+        activate: z.boolean().optional(),
+      }),
+      outputSchema: promptProfileSchema,
+      execute: async (input) => {
+        const profile = createPromptProfileVersion({ ...input, kind: "judge" });
+        appendEvent(context.runId, {
+          event: "prompt_profile_version_created",
+          profileId: profile.id,
+          kind: profile.kind,
+          version: profile.version,
+          locale: profile.locale,
+          modelPattern: profile.modelPattern,
+          contentKind: profile.contentKind,
           status: profile.status,
         });
         return profile;
@@ -655,7 +726,7 @@ export function createTranslationAgentTools(context: TranslationAgentToolContext
 
     scoreTranslation: createTool({
       id: "scoreTranslation",
-      description: "Score a translation candidate or the current localized MDX file with the judge model.",
+      description: "Score a translation candidate or the current localized MDX file with the judge model. Uses active judge prompt profiles by locale/model unless disabled.",
       inputSchema: z.object({
         slug: z.string(),
         locale: z.enum(ACTIVE_LOCALES),
@@ -664,21 +735,35 @@ export function createTranslationAgentTools(context: TranslationAgentToolContext
         model: z.string().optional(),
         candidateId: z.string().optional(),
         current: z.boolean().optional(),
+        promptProfileId: z.string().optional(),
+        usePromptProfile: z.boolean().optional(),
+        contentKind: promptProfileContentKindSchema.optional(),
       }),
       outputSchema: scoreTranslationOutputSchema,
-      execute: async ({ slug, locale, candidatePath, targetContents, model, candidateId }) => {
+      execute: async ({ slug, locale, candidatePath, targetContents, model, candidateId, promptProfileId, usePromptProfile, contentKind }) => {
         const paths = getPostPaths(slug, locale);
         const sourceContents = readFileSync(paths.sourcePath, "utf8");
         const scoredPath = candidatePath ?? existingTranslationPath(slug, locale) ?? latestCandidatePath(context.runId);
         const candidateContents = targetContents ?? readFileSync(assertReadablePath(scoredPath), "utf8");
+        const selectedModel = model ?? context.defaultJudgeModel;
+        const promptProfile = usePromptProfile === false
+          ? undefined
+          : resolvePromptProfile({
+            kind: "judge",
+            locale,
+            model: selectedModel,
+            profileId: promptProfileId,
+            contentKind: contentKind ?? inferContentKind(sourceContents),
+          });
         const score = await scoreTranslation({
           sourceContents,
           targetContents: candidateContents,
           locale,
-          model: model ?? context.defaultJudgeModel,
+          model: selectedModel,
           slug,
           targetRelPath: relative(repoRoot, paths.targetPath),
           candidateId: candidateId ?? scoredPath ?? "candidate",
+          promptTuning: promptProfileToTuning(promptProfile),
         });
         const record = {
           at: new Date().toISOString(),
@@ -694,17 +779,23 @@ export function createTranslationAgentTools(context: TranslationAgentToolContext
             scoredPath,
             candidateId: candidateId ?? scoredPath ?? "candidate",
           }),
+          promptProfile: promptProfile == null ? undefined : promptProfileSummary(promptProfile, selectedModel),
           ...score,
         };
         appendJsonl(join(candidateRunDir(context.runId), "scores.jsonl"), record);
         appendJsonl(agentEvalHistoryPath(), { event: "score", ...record });
-        return score;
+        return {
+          ...score,
+          promptProfile: promptProfile == null
+            ? undefined
+            : { id: promptProfile.id, version: promptProfile.version, notes: promptProfile.notes },
+        };
       },
     }),
 
     scoreTranslationConsensus: createTool({
       id: "scoreTranslationConsensus",
-      description: "Build judge consensus by sharing scores and suggestions between judge models, then escalate if disagreement remains.",
+      description: "Build judge consensus by sharing scores and suggestions between judge models, then escalate if disagreement remains. Uses per-model judge prompt profiles unless disabled.",
       inputSchema: z.object({
         slug: z.string(),
         locale: z.enum(ACTIVE_LOCALES),
@@ -715,6 +806,9 @@ export function createTranslationAgentTools(context: TranslationAgentToolContext
         candidateId: z.string().optional(),
         reconsiderationRounds: z.number().int().min(0).max(3).optional(),
         disagreementThreshold: z.number().int().min(1).max(50).optional(),
+        promptProfileId: z.string().optional(),
+        usePromptProfile: z.boolean().optional(),
+        contentKind: promptProfileContentKindSchema.optional(),
       }),
       outputSchema: consensusOutputSchema,
       execute: async ({
@@ -727,11 +821,24 @@ export function createTranslationAgentTools(context: TranslationAgentToolContext
         candidateId,
         reconsiderationRounds,
         disagreementThreshold,
+        promptProfileId,
+        usePromptProfile,
+        contentKind,
       }) => {
         const paths = getPostPaths(slug, locale);
         const sourceContents = readFileSync(paths.sourcePath, "utf8");
         const scoredPath = candidatePath ?? existingTranslationPath(slug, locale) ?? latestCandidatePath(context.runId);
         const candidateContents = targetContents ?? readFileSync(assertReadablePath(scoredPath), "utf8");
+        const judgeModels = models ?? context.defaultJudgeModels;
+        const escalationJudgeModels = escalationModels ?? context.defaultEscalationJudgeModels;
+        const promptProfiles = usePromptProfile === false
+          ? []
+          : resolveJudgePromptProfiles({
+            locale,
+            models: [...judgeModels, ...escalationJudgeModels],
+            profileId: promptProfileId,
+            contentKind: contentKind ?? inferContentKind(sourceContents),
+          });
         const consensus = await scoreTranslationConsensus({
           sourceContents,
           targetContents: candidateContents,
@@ -739,10 +846,11 @@ export function createTranslationAgentTools(context: TranslationAgentToolContext
           slug,
           targetRelPath: relative(repoRoot, paths.targetPath),
           candidateId: candidateId ?? scoredPath ?? "candidate",
-          models: models ?? context.defaultJudgeModels,
-          escalationModels: escalationModels ?? context.defaultEscalationJudgeModels,
+          models: judgeModels,
+          escalationModels: escalationJudgeModels,
           reconsiderationRounds,
           disagreementThreshold,
+          promptTuningByModel: promptTuningMap(promptProfiles),
         });
         const record = {
           at: new Date().toISOString(),
@@ -758,23 +866,34 @@ export function createTranslationAgentTools(context: TranslationAgentToolContext
             scoredPath,
             candidateId: candidateId ?? scoredPath ?? "candidate",
           }),
+          promptProfiles: promptProfiles.map(({ model, profile }) => promptProfileSummary(profile, model)),
           ...consensus,
         };
         appendJsonl(join(candidateRunDir(context.runId), "consensus-scores.jsonl"), record);
         appendJsonl(agentEvalHistoryPath(), { event: "consensus_score", ...record });
         appendConsensusMarkdown(context.runId, record);
-        return consensus;
+        return {
+          ...consensus,
+          promptProfiles: promptProfiles.map(({ model, profile }) => ({
+            model,
+            id: profile.id,
+            version: profile.version,
+            notes: profile.notes,
+          })),
+        };
       },
     }),
 
     scoreCurrentTranslations: createTool({
       id: "scoreCurrentTranslations",
-      description: "Score one or more existing localized MDX files already present in src/content/posts.",
+      description: "Score one or more existing localized MDX files already present in src/content/posts. Uses active judge prompt profiles unless disabled.",
       inputSchema: z.object({
         slug: z.string().optional(),
         locales: z.array(z.enum(ACTIVE_LOCALES)).optional(),
         model: z.string().optional(),
         limit: z.number().int().min(1).max(50).optional(),
+        promptProfileId: z.string().optional(),
+        usePromptProfile: z.boolean().optional(),
       }),
       outputSchema: z.object({
         results: z.array(z.object({
@@ -791,7 +910,7 @@ export function createTranslationAgentTools(context: TranslationAgentToolContext
           reason: z.string(),
         })),
       }),
-      execute: async ({ slug, locales, model, limit = 10 }) => {
+      execute: async ({ slug, locales, model, limit = 10, promptProfileId, usePromptProfile }) => {
         const requestedLocales = locales ?? [...ACTIVE_LOCALES];
         const posts = collectSourcePosts()
           .filter((post) => slug == null || post.slug === slug || post.directory === slug)
@@ -817,14 +936,25 @@ export function createTranslationAgentTools(context: TranslationAgentToolContext
             const paths = getPostPaths(post.slug, locale);
             const sourceContents = readFileSync(paths.sourcePath, "utf8");
             const targetContents = readFileSync(targetPath, "utf8");
+            const selectedModel = model ?? context.defaultJudgeModel;
+            const promptProfile = usePromptProfile === false
+              ? undefined
+              : resolvePromptProfile({
+                kind: "judge",
+                locale,
+                model: selectedModel,
+                profileId: promptProfileId,
+                contentKind: inferContentKind(sourceContents),
+              });
             const score = await scoreTranslation({
               sourceContents,
               targetContents,
               locale,
-              model: model ?? context.defaultJudgeModel,
+              model: selectedModel,
               slug: post.slug,
               targetRelPath: relative(repoRoot, targetPath),
               candidateId: `current:${post.slug}:${locale}`,
+              promptTuning: promptProfileToTuning(promptProfile),
             });
             const record = {
               at: new Date().toISOString(),
@@ -841,6 +971,7 @@ export function createTranslationAgentTools(context: TranslationAgentToolContext
                 scoredPath: targetPath,
                 candidateId: `current:${post.slug}:${locale}`,
               }),
+              promptProfile: promptProfile == null ? undefined : promptProfileSummary(promptProfile, selectedModel),
               ...score,
             };
             appendJsonl(join(candidateRunDir(context.runId), "scores.jsonl"), record);
@@ -897,7 +1028,7 @@ export function createTranslationAgentTools(context: TranslationAgentToolContext
 
     refineCandidateWithConsensus: createTool({
       id: "refineCandidateWithConsensus",
-      description: "Apply judge-consensus suggestions first, iterate scoring and exact suggestion replacements three times, and keep the highest averaged scoring candidate.",
+      description: "Apply judge-consensus suggestions first, iterate scoring and exact suggestion replacements three times, and keep the highest averaged scoring candidate. Uses per-model judge prompt profiles unless disabled.",
       inputSchema: z.object({
         slug: z.string(),
         locale: z.enum(ACTIVE_LOCALES),
@@ -908,6 +1039,9 @@ export function createTranslationAgentTools(context: TranslationAgentToolContext
         iterations: z.number().int().min(1).max(3).optional(),
         reconsiderationRounds: z.number().int().min(0).max(3).optional(),
         disagreementThreshold: z.number().int().min(1).max(50).optional(),
+        promptProfileId: z.string().optional(),
+        usePromptProfile: z.boolean().optional(),
+        contentKind: promptProfileContentKindSchema.optional(),
       }),
       outputSchema: refineConsensusOutputSchema,
       execute: async ({
@@ -920,6 +1054,9 @@ export function createTranslationAgentTools(context: TranslationAgentToolContext
         iterations = 3,
         reconsiderationRounds,
         disagreementThreshold,
+        promptProfileId,
+        usePromptProfile,
+        contentKind,
       }) => {
         const paths = getPostPaths(slug, locale);
         const sourceContents = readFileSync(paths.sourcePath, "utf8");
@@ -927,6 +1064,14 @@ export function createTranslationAgentTools(context: TranslationAgentToolContext
           ?? readFileSync(assertReadablePath(candidatePath ?? latestCandidatePath(context.runId)), "utf8");
         const judgeModels = models ?? context.defaultJudgeModels;
         const escalationJudgeModels = escalationModels ?? context.defaultEscalationJudgeModels;
+        const promptProfiles = usePromptProfile === false
+          ? []
+          : resolveJudgePromptProfiles({
+            locale,
+            models: [...judgeModels, ...escalationJudgeModels],
+            profileId: promptProfileId,
+            contentKind: contentKind ?? inferContentKind(sourceContents),
+          });
         const iterationSummaries: z.infer<typeof consensusIterationSchema>[] = [];
         let best: {
           iteration: number;
@@ -947,6 +1092,7 @@ export function createTranslationAgentTools(context: TranslationAgentToolContext
             escalationModels: escalationJudgeModels,
             reconsiderationRounds,
             disagreementThreshold,
+            promptTuningByModel: promptTuningMap(promptProfiles),
           });
           const candidatePathForIteration = consensusCandidateFilePath(context.runId, locale, iteration);
           mkdirSync(dirname(candidatePathForIteration), { recursive: true });
@@ -967,6 +1113,7 @@ export function createTranslationAgentTools(context: TranslationAgentToolContext
               scoredPath: relativeCandidatePath,
               candidateId,
             }),
+            promptProfiles: promptProfiles.map(({ model, profile }) => promptProfileSummary(profile, model)),
             ...consensus,
           };
           appendJsonl(join(candidateRunDir(context.runId), "consensus-scores.jsonl"), record);
@@ -1128,6 +1275,71 @@ function existingTranslationPath(slug: string, locale: ActiveLocale) {
   return undefined;
 }
 
+function inferContentKind(sourceContents: string): Exclude<PromptProfileContentKind, "*"> {
+  try {
+    const frontmatter = sourceContents.startsWith("---")
+      ? sourceContents.slice(0, sourceContents.indexOf("\n---", 3) + 4)
+      : "";
+    if (/^category:\s*["']?Quiz["']?\s*$/m.test(frontmatter)) return "quiz";
+  } catch {
+    // Fall back to body sniffing below.
+  }
+  return sourceContents.includes("<Challenge") ? "quiz" : "article";
+}
+
+function resolveJudgePromptProfiles({
+  locale,
+  models,
+  profileId,
+  contentKind,
+}: {
+  locale: ActiveLocale;
+  models: string[];
+  profileId?: string;
+  contentKind: PromptProfileContentKind;
+}) {
+  return models.flatMap((model) => {
+    const profile = resolvePromptProfile({
+      kind: "judge",
+      locale,
+      model,
+      profileId,
+      contentKind,
+    });
+    return profile == null ? [] : [{ model, profile }];
+  });
+}
+
+function promptTuningMap(profiles: Array<{ model: string; profile: TranslationPromptProfile }>) {
+  const map: Record<string, ReturnType<typeof promptProfileToTuning>> = {};
+  for (const { model, profile } of profiles) {
+    const tuning = promptProfileToTuning(profile);
+    map[model] = tuning;
+    try {
+      const llmConfig = resolveLlmConfig(model);
+      map[llmConfig.modelId] = tuning;
+      map[llmConfig.mastraModel] = tuning;
+      map[`openrouter/${llmConfig.modelId}`] = tuning;
+    } catch {
+      // Keep the caller-provided key; malformed model strings will fail in the scorer.
+    }
+  }
+  return map;
+}
+
+function promptProfileSummary(profile: TranslationPromptProfile, model: string) {
+  return {
+    model,
+    id: profile.id,
+    kind: profile.kind,
+    version: profile.version,
+    locale: profile.locale,
+    modelPattern: profile.modelPattern,
+    contentKind: profile.contentKind,
+    notes: profile.notes,
+  };
+}
+
 function preAdjustRelativeAssetPaths({
   sourcePath,
   targetPath,
@@ -1287,6 +1499,13 @@ function appendConsensusMarkdown(runId: string, record: Record<string, unknown>)
     overallScore?: number;
     publishReady?: boolean;
     confidence?: string;
+    confidenceScore?: number;
+    confidenceSignals?: string[];
+    issueCounts?: {
+      high?: number;
+      medium?: number;
+      low?: number;
+    };
     rationale?: string;
   } | undefined;
   const totals = record.totals as {
@@ -1315,6 +1534,11 @@ function appendConsensusMarkdown(runId: string, record: Record<string, unknown>)
     `- Overall score: ${consensus?.overallScore ?? "unknown"}`,
     `- Publish ready: ${consensus?.publishReady ?? "unknown"}`,
     `- Confidence: ${consensus?.confidence ?? "unknown"}`,
+    `- Confidence score: ${typeof consensus?.confidenceScore === "number" ? consensus.confidenceScore.toFixed(3) : "unknown"}`,
+    `- Confidence signals: ${consensus?.confidenceSignals?.join("; ") ?? "unknown"}`,
+    `- High/medium/low issue counts: ${consensus?.issueCounts == null
+      ? "unknown"
+      : `${consensus.issueCounts.high ?? 0}/${consensus.issueCounts.medium ?? 0}/${consensus.issueCounts.low ?? 0}`}`,
     `- Escalated: ${record.escalated ?? false}`,
     `- Score range: ${disagreement?.scoreRange ?? "unknown"}`,
     `- Publish-ready disagreement: ${disagreement?.publishReadyDisagreement ?? "unknown"}`,

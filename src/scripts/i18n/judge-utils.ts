@@ -25,6 +25,20 @@ export type JudgeScoreKey =
   | "languagePurity";
 
 export type JudgeScoreMap = Record<JudgeScoreKey, number>;
+export type JudgeConfidenceLevel = "low" | "medium" | "high";
+
+export type JudgeIssueCounts = {
+  high: number;
+  medium: number;
+  low: number;
+};
+
+export type JudgeConfidence = {
+  level: JudgeConfidenceLevel;
+  score: number;
+  signals: string[];
+  issueCounts: JudgeIssueCounts;
+};
 
 export type CandidateRef = {
   id: string;
@@ -201,6 +215,124 @@ export function readSuggestionsFromParsed(parsed: Record<string, unknown>): Judg
   const suggestions = normalizeSuggestions(parsed.suggestions);
   if (suggestions.length > 0) return suggestions;
   return normalizeLegacySuggestedChanges(parsed.suggestedChanges);
+}
+
+export function countJudgeSuggestionPriorities(suggestions: Array<Pick<JudgeSuggestion, "priority">>): JudgeIssueCounts {
+  return {
+    high: suggestions.filter((suggestion) => suggestion.priority === "high").length,
+    medium: suggestions.filter((suggestion) => suggestion.priority === "medium").length,
+    low: suggestions.filter((suggestion) => suggestion.priority === "low").length,
+  };
+}
+
+export function deriveJudgeConfidence(input: {
+  overallScore?: number;
+  scores?: JudgeScoreMap;
+  suggestions?: Array<Pick<JudgeSuggestion, "priority">>;
+  highIssueCount?: number;
+  mediumIssueCount?: number;
+  lowIssueCount?: number;
+  judgeCount?: number;
+  scoreRange?: number;
+  publishReady?: boolean;
+  publishReadyDisagreement?: boolean;
+  blockingSuggestionDisagreement?: boolean;
+  uncertaintyDetected?: boolean;
+  frontierScores?: number[];
+  judgeModel?: string;
+}): JudgeConfidence {
+  const derivedOverall = input.overallScore ?? (input.scores == null ? 0 : averageJudgeScore(input.scores));
+  const issueCounts = input.suggestions == null
+    ? {
+      high: input.highIssueCount ?? 0,
+      medium: input.mediumIssueCount ?? 0,
+      low: input.lowIssueCount ?? 0,
+    }
+    : countJudgeSuggestionPriorities(input.suggestions);
+  const signals: string[] = [];
+  let confidenceScore = 0.2 + clamp01(derivedOverall / 100) * 0.45;
+
+  if (issueCounts.high === 0 && issueCounts.medium === 0) {
+    confidenceScore += 0.2;
+    signals.push("no high/medium issues");
+  } else if (issueCounts.high === 0 && issueCounts.medium <= 1) {
+    confidenceScore += 0.08;
+    signals.push("low blocking-issue rate");
+  } else {
+    signals.push(`${issueCounts.high} high and ${issueCounts.medium} medium issues`);
+  }
+
+  if (issueCounts.high > 0) confidenceScore -= 0.25;
+  if (issueCounts.medium > 1) confidenceScore -= Math.min(0.18, issueCounts.medium * 0.05);
+
+  const judgeCount = input.judgeCount ?? 1;
+  const scoreRange = input.scoreRange ?? 0;
+  const hasDisagreement = input.publishReadyDisagreement === true
+    || input.blockingSuggestionDisagreement === true
+    || input.uncertaintyDetected === true;
+  if (judgeCount > 1) {
+    if (!hasDisagreement && scoreRange <= 6) {
+      confidenceScore += 0.2;
+      signals.push(`judges agree within ${scoreRange.toFixed(1)} points`);
+    } else if (!hasDisagreement && scoreRange <= 12) {
+      confidenceScore += 0.1;
+      signals.push(`judges broadly agree within ${scoreRange.toFixed(1)} points`);
+    } else {
+      confidenceScore -= 0.18;
+      signals.push(`judge disagreement detected (range ${scoreRange.toFixed(1)})`);
+    }
+  } else {
+    signals.push("single judge");
+  }
+
+  const frontierScores = [
+    ...(input.frontierScores ?? []),
+    ...(input.judgeModel != null && isFrontierJudgeModel(input.judgeModel) ? [derivedOverall] : []),
+  ].filter((score) => Number.isFinite(score));
+  const bestFrontierScore = frontierScores.length === 0 ? undefined : Math.max(...frontierScores);
+  if (bestFrontierScore != null && bestFrontierScore >= 90 && issueCounts.high === 0) {
+    confidenceScore += 0.15;
+    signals.push(`frontier judge scored ${bestFrontierScore.toFixed(1)}`);
+  } else if (bestFrontierScore != null && bestFrontierScore >= 85 && issueCounts.high === 0) {
+    confidenceScore += 0.08;
+    signals.push(`frontier judge scored ${bestFrontierScore.toFixed(1)}`);
+  }
+
+  if (input.uncertaintyDetected === true) confidenceScore -= 0.15;
+  if (input.publishReady === true) confidenceScore += 0.05;
+  if (input.publishReady === false) confidenceScore -= 0.05;
+
+  const normalizedScore = Number(clamp01(confidenceScore).toFixed(3));
+  const frontierBoost = bestFrontierScore != null && bestFrontierScore >= 90;
+  const lowIssueBurden = issueCounts.high === 0 && (issueCounts.medium === 0 || frontierBoost);
+  const level: JudgeConfidenceLevel =
+    normalizedScore >= 0.78 && lowIssueBurden && !hasDisagreement
+      ? "high"
+      : normalizedScore >= 0.55 && issueCounts.high === 0
+        ? "medium"
+        : "low";
+
+  return {
+    level,
+    score: normalizedScore,
+    signals,
+    issueCounts,
+  };
+}
+
+export function isFrontierJudgeModel(model: string) {
+  const normalized = model.toLowerCase().replace(/^llm:\/\/openrouter\//, "").replace(/^openrouter\//, "");
+  return normalized.includes("gpt-5")
+    || normalized.includes("claude")
+    || normalized.includes("sonnet")
+    || normalized.includes("opus")
+    || normalized.includes("gemini-3-pro")
+    || normalized.includes("grok-4");
+}
+
+function clamp01(value: number) {
+  if (!Number.isFinite(value)) return 0;
+  return Math.max(0, Math.min(1, value));
 }
 
 // ---------------------------------------------------------------------------

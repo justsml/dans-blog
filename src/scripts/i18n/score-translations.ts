@@ -21,6 +21,7 @@ import {
 } from "./utils.ts";
 import { OPENROUTER_USAGE_ACCOUNTING, usageFromResult } from "./llm-telemetry.ts";
 import { estimateTokenCost } from "./translation-costs.ts";
+import { deriveJudgeConfidence, type JudgeConfidenceLevel, type JudgeIssueCounts } from "./judge-utils.ts";
 
 type ScoreKey =
   | "readability"
@@ -66,6 +67,10 @@ type ScoredTranslationRecord = {
   scores: ScoreMap;
   overallScore: number;
   recommendation: ScoreResponse["recommendation"];
+  confidence: JudgeConfidenceLevel;
+  confidenceScore: number;
+  confidenceSignals: string[];
+  issueCounts: JudgeIssueCounts;
   stats: {
     source: ReturnType<typeof collectStats>;
     translation: ReturnType<typeof collectStats>;
@@ -201,6 +206,17 @@ async function processTask(task: TranslationTask) {
   const cost = estimateTokenCost(model, telemetry.inputTokens, telemetry.outputTokens, telemetry.cacheReadTokens, {
     providerCostUsd: telemetry.providerCostUsd,
   });
+  const overallScore = averageScore(response.parsed.scores);
+  const issueCounts = countScoreIssues(response.parsed.issues);
+  const confidence = deriveJudgeConfidence({
+    overallScore,
+    highIssueCount: issueCounts.high,
+    mediumIssueCount: issueCounts.medium,
+    lowIssueCount: issueCounts.low,
+    judgeCount: 1,
+    publishReady: response.parsed.recommendation === "accept",
+    judgeModel: model,
+  });
   const generatedAt = new Date();
   const record: ScoredTranslationRecord = {
     event: "translation_scored",
@@ -216,8 +232,12 @@ async function processTask(task: TranslationTask) {
     sourceHash,
     translationHash,
     scores: response.parsed.scores,
-    overallScore: averageScore(response.parsed.scores),
+    overallScore,
     recommendation: response.parsed.recommendation,
+    confidence: confidence.level,
+    confidenceScore: confidence.score,
+    confidenceSignals: confidence.signals,
+    issueCounts: confidence.issueCounts,
     stats: {
       source: sourceStats,
       translation: translationStats,
@@ -248,7 +268,7 @@ async function processTask(task: TranslationTask) {
   appendJsonl(join(dirname(reportDir), "judgements.jsonl"), toJudgementScoreRecord(record, response.parsed));
 
   console.log([
-    `Scored ${task.locale}/${task.slug}: ${averageScore(response.parsed.scores).toFixed(1)}/100 (${response.parsed.recommendation})`,
+    `Scored ${task.locale}/${task.slug}: ${overallScore.toFixed(1)}/100 (${response.parsed.recommendation}, ${confidence.level} confidence)`,
     `- Log: ${relativeToRepo(outputLogPath)}`,
   ].join("\n"));
 }
@@ -546,6 +566,14 @@ function normalizeRecommendation(value: unknown): ScoreResponse["recommendation"
   return value === "accept" || value === "polish" || value === "retranslate" ? value : "polish";
 }
 
+function countScoreIssues(issues: ScoreResponse["issues"]): JudgeIssueCounts {
+  return {
+    high: issues.filter((issue) => issue.severity === "high").length,
+    medium: issues.filter((issue) => issue.severity === "medium").length,
+    low: issues.filter((issue) => issue.severity === "low").length,
+  };
+}
+
 function collectStats(text: string) {
   const parsed = safeMatter(text);
   const body = parsed.content;
@@ -674,6 +702,12 @@ function toTranslationLogRecord(record: ScoredTranslationRecord) {
     translationQuality: record.scores.translationQuality,
     overallScore: record.overallScore,
     recommendation: record.recommendation,
+    confidence: record.confidence,
+    confidenceScore: record.confidenceScore,
+    confidenceSignals: record.confidenceSignals,
+    highIssueCount: record.issueCounts.high,
+    mediumIssueCount: record.issueCounts.medium,
+    lowIssueCount: record.issueCounts.low,
     sourceChars: record.stats.source.chars,
     translationChars: record.stats.translation.chars,
     sourceWords: record.stats.source.words,
@@ -720,6 +754,10 @@ function toJudgementScoreRecord(record: ScoredTranslationRecord, response: Score
     scores: record.scores,
     overallScore: record.overallScore,
     recommendation: record.recommendation,
+    confidence: record.confidence,
+    confidenceScore: record.confidenceScore,
+    confidenceSignals: record.confidenceSignals,
+    issueCounts: record.issueCounts,
     analysis: response.analysis,
     strengths: response.strengths,
     issues: response.issues,

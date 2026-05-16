@@ -47,6 +47,11 @@ import {
   FRONTMATTER_LANGUAGE_LABELS,
 } from "./prompts.ts";
 import {
+  promptProfileToTuning,
+  resolvePromptProfile,
+  type TranslationPromptTuning,
+} from "../i18n-agent/prompt-profiles.ts";
+import {
   averageJudgeScore,
   buildPrimaryJudgePrompt,
   getJudgeJsonShape,
@@ -133,6 +138,10 @@ const requestedSlugs = parseList(optionalString(args, "slug"), []);
 const requestedKind = optionalString(args, "kind") ?? "all";
 const isDryRun = args["dry-run"] === true;
 const printStreams = args["print-streams"] === true;
+const usePromptProfiles = args["no-prompt-profile"] !== true;
+const translationPromptProfileId =
+  optionalString(args, "translation-prompt-profile-id") ?? optionalString(args, "prompt-profile-id");
+const judgePromptProfileId = optionalString(args, "judge-prompt-profile-id");
 
 // ---------------------------------------------------------------------------
 // Data types  (mirroring Braintrust shape: input → output → scores)
@@ -566,6 +575,7 @@ async function scoreLlmJudge(
 
   let judgeStreamId: string | undefined;
   try {
+    const promptTuning = getEvalJudgePromptTuning(input, output.model);
     const sha = "eval000000000000000000000000000000000000";
     const candidates: CandidateRef[] = [
       {
@@ -576,12 +586,17 @@ async function scoreLlmJudge(
       },
     ];
     const targetRelPath = `src/content/posts/${basename(dirname(input.sourcePath))}/${input.locale}/index.mdx`;
+    const baseJudgePrompt = buildPrimaryJudgePrompt(`- ${sha} ${output.model}`, candidates, "eval", {
+      slug: input.slug,
+      locale: input.locale,
+      targetRelPath,
+    });
     const prompt = [
-      buildPrimaryJudgePrompt(`- ${sha} ${output.model}`, candidates, "eval", {
-        slug: input.slug,
-        locale: input.locale,
-        targetRelPath,
-      }),
+      appendPromptProfile(
+        baseJudgePrompt,
+        promptTuning?.appendCachedContext,
+        "JUDGE PROMPT PROFILE STABLE TUNING",
+      ),
       "",
       "--- BEGIN English source ---",
       input.source,
@@ -591,7 +606,11 @@ async function scoreLlmJudge(
       output.translation,
       `--- END <candidate id="${sha}"> ---`,
       "",
-      `Use this JSON shape: ${JSON.stringify(getJudgeJsonShape())}`,
+      appendPromptProfile(
+        `Use this JSON shape: ${JSON.stringify(getJudgeJsonShape())}`,
+        promptTuning?.appendDynamic,
+        "JUDGE PROMPT PROFILE DYNAMIC TUNING",
+      ),
     ].join("\n");
 
     const result = await streamLlmText(
@@ -600,8 +619,11 @@ async function scoreLlmJudge(
           judgeModel,
           OPENROUTER_USAGE_ACCOUNTING,
         ),
-        system:
+        system: appendPromptProfile(
           "You are a constrained translation judge. Return strict JSON only. No markdown fences.",
+          promptTuning?.appendSystem,
+          "JUDGE PROMPT PROFILE SYSTEM TUNING",
+        ),
         prompt,
         temperature: 0.1,
         maxOutputTokens: 2000,
@@ -708,12 +730,13 @@ async function scoreLlmJudge(
 // ---------------------------------------------------------------------------
 
 async function translate(input: EvalInput, model: string): Promise<EvalOutput> {
+  const promptTuning = getEvalTranslationPromptTuning(input, model);
   if (input.isQuiz) {
-    return translateStructuredQuiz(input, model);
+    return translateStructuredQuiz(input, model, promptTuning);
   }
 
   if (shouldUseChunkedEvalTranslation(input, model)) {
-    return translateChunkedArticle(input, model);
+    return translateChunkedArticle(input, model, promptTuning);
   }
 
   const context = {
@@ -743,15 +766,27 @@ async function translate(input: EvalInput, model: string): Promise<EvalOutput> {
       messages: [
         {
           role: "system",
-          content: buildSystemPrompt(input.locale, input.isQuiz),
+          content: appendPromptProfile(
+            buildSystemPrompt(input.locale, input.isQuiz),
+            promptTuning?.appendSystem,
+            "TRANSLATION PROMPT PROFILE SYSTEM TUNING",
+          ),
         },
         {
           role: "user",
           content: [
-            cachedText(cachedContext),
+            cachedText(appendPromptProfile(
+              cachedContext,
+              promptTuning?.appendCachedContext,
+              "TRANSLATION PROMPT PROFILE STABLE TUNING",
+            )),
             {
               type: "text",
-              text: dynamicPrompt,
+              text: appendPromptProfile(
+                dynamicPrompt,
+                promptTuning?.appendDynamic,
+                "TRANSLATION PROMPT PROFILE DYNAMIC TUNING",
+              ),
             },
           ],
         },
@@ -782,6 +817,7 @@ async function translate(input: EvalInput, model: string): Promise<EvalOutput> {
 async function translateStructuredQuiz(
   input: EvalInput,
   model: string,
+  promptTuning: TranslationPromptTuning | undefined,
 ): Promise<EvalOutput> {
   const parsed = matter(input.source);
   const sourceBody = parsed.content;
@@ -792,13 +828,13 @@ async function translateStructuredQuiz(
   let outputTokens = 0;
   let providerCostUsd = 0;
 
-  const frontmatter = await translateEvalFrontmatter(input, model, parsed.data);
+  const frontmatter = await translateEvalFrontmatter(input, model, parsed.data, promptTuning);
   durationMs += frontmatter.durationMs;
   inputTokens += frontmatter.inputTokens;
   outputTokens += frontmatter.outputTokens;
   providerCostUsd += frontmatter.providerCostUsd ?? 0;
 
-  const summary = await generateQuizDescription(quiz, llmConfig);
+  const summary = await generateQuizDescription(quiz, llmConfig, promptTuning);
   durationMs += summary.telemetry.durationMs;
   inputTokens += summary.telemetry.inputTokens;
   outputTokens += summary.telemetry.outputTokens;
@@ -806,7 +842,7 @@ async function translateStructuredQuiz(
 
   const translatedIntro = quiz.intro.trim() === ""
     ? quiz.intro
-    : (await translateEvalQuizProse(input, model, "intro", quiz.intro, summary.description));
+    : (await translateEvalQuizProse(input, model, "intro", quiz.intro, summary.description, promptTuning));
   if (typeof translatedIntro !== "string") {
     durationMs += translatedIntro.durationMs;
     inputTokens += translatedIntro.inputTokens;
@@ -816,7 +852,7 @@ async function translateStructuredQuiz(
 
   const translatedOutro = quiz.outro.trim() === ""
     ? quiz.outro
-    : (await translateEvalQuizProse(input, model, "outro", quiz.outro, summary.description));
+    : (await translateEvalQuizProse(input, model, "outro", quiz.outro, summary.description, promptTuning));
   if (typeof translatedOutro !== "string") {
     durationMs += translatedOutro.durationMs;
     inputTokens += translatedOutro.inputTokens;
@@ -832,6 +868,7 @@ async function translateStructuredQuiz(
       llmConfig,
       summary.description,
       true,
+      promptTuning,
     );
     durationMs += translated.telemetry.durationMs;
     inputTokens += translated.telemetry.inputTokens;
@@ -869,6 +906,7 @@ async function translateEvalQuizProse(
   label: "intro" | "outro",
   prose: string,
   quizDescription: string,
+  promptTuning: TranslationPromptTuning | undefined,
 ): Promise<StreamedTextResult & { text: string }> {
   const context = {
     chunkIndex: 0,
@@ -885,15 +923,27 @@ async function translateEvalQuizProse(
       messages: [
         {
           role: "system",
-          content: buildSystemPrompt(input.locale, true),
+          content: appendPromptProfile(
+            buildSystemPrompt(input.locale, true),
+            promptTuning?.appendSystem,
+            "TRANSLATION PROMPT PROFILE SYSTEM TUNING",
+          ),
         },
         {
           role: "user",
           content: [
-            cachedText(buildCachedChunkContextPrompt(input.locale, context, true)),
+            cachedText(appendPromptProfile(
+              buildCachedChunkContextPrompt(input.locale, context, true),
+              promptTuning?.appendCachedContext,
+              "TRANSLATION PROMPT PROFILE STABLE TUNING",
+            )),
             {
               type: "text",
-              text: buildDynamicChunkPrompt(prose, input.locale, context, true),
+              text: appendPromptProfile(
+                buildDynamicChunkPrompt(prose, input.locale, context, true),
+                promptTuning?.appendQuizProse ?? promptTuning?.appendDynamic,
+                "TRANSLATION PROMPT PROFILE QUIZ PROSE TUNING",
+              ),
             },
           ],
         },
@@ -916,6 +966,7 @@ async function translateEvalQuizProse(
 async function translateChunkedArticle(
   input: EvalInput,
   model: string,
+  promptTuning: TranslationPromptTuning | undefined,
 ): Promise<EvalOutput> {
   const parsed = matter(input.source);
   const sourceBody = parsed.content;
@@ -929,7 +980,7 @@ async function translateChunkedArticle(
   let outputTokens = 0;
   let providerCostUsd = 0;
 
-  const frontmatter = await translateEvalFrontmatter(input, model, parsed.data);
+  const frontmatter = await translateEvalFrontmatter(input, model, parsed.data, promptTuning);
   durationMs += frontmatter.durationMs;
   inputTokens += frontmatter.inputTokens;
   outputTokens += frontmatter.outputTokens;
@@ -946,6 +997,7 @@ async function translateChunkedArticle(
       previousTranslation,
       previousSourceContext: edgeParagraphContext(chunks[index - 1], "last"),
       nextSourceContext: edgeParagraphContext(chunks[index + 1], "first"),
+      promptTuning,
     });
 
     durationMs += result.durationMs;
@@ -990,6 +1042,7 @@ async function translateEvalChunk({
   previousTranslation,
   previousSourceContext,
   nextSourceContext,
+  promptTuning,
 }: {
   input: EvalInput;
   model: string;
@@ -998,6 +1051,7 @@ async function translateEvalChunk({
   previousTranslation?: string;
   previousSourceContext?: string;
   nextSourceContext?: string;
+  promptTuning?: TranslationPromptTuning;
 }): Promise<StreamedTextResult> {
   const context = {
     chunkIndex: chunk.index,
@@ -1020,15 +1074,27 @@ async function translateEvalChunk({
       messages: [
         {
           role: "system",
-          content: buildSystemPrompt(input.locale, false),
+          content: appendPromptProfile(
+            buildSystemPrompt(input.locale, false),
+            promptTuning?.appendSystem,
+            "TRANSLATION PROMPT PROFILE SYSTEM TUNING",
+          ),
         },
         {
           role: "user",
           content: [
-            cachedText(cachedContext),
+            cachedText(appendPromptProfile(
+              cachedContext,
+              promptTuning?.appendCachedContext,
+              "TRANSLATION PROMPT PROFILE STABLE TUNING",
+            )),
             {
               type: "text",
-              text: dynamicPrompt,
+              text: appendPromptProfile(
+                dynamicPrompt,
+                promptTuning?.appendDynamic,
+                "TRANSLATION PROMPT PROFILE DYNAMIC TUNING",
+              ),
             },
           ],
         },
@@ -1050,6 +1116,7 @@ async function translateEvalFrontmatter(
   input: EvalInput,
   model: string,
   sourceFrontmatter: Record<string, unknown>,
+  promptTuning: TranslationPromptTuning | undefined,
 ) {
   const data = omitInheritedTranslatedFrontmatter(
     normalizeFrontmatterAssetPaths(sourceFrontmatter),
@@ -1078,17 +1145,24 @@ async function translateEvalFrontmatter(
         messages: [
           {
             role: "system",
-            content:
+            content: appendPromptProfile(
               "You are a technical translator. Output only the requested translated frontmatter value.",
+              promptTuning?.appendSystem,
+              "TRANSLATION PROMPT PROFILE SYSTEM TUNING",
+            ),
           },
           {
             role: "user",
             content: [
               cachedText(
-                [
-                  "STABLE FRONTMATTER TRANSLATION CONTRACT:",
-                  buildSystemPrompt(input.locale, input.isQuiz),
-                ].join("\n"),
+                appendPromptProfile(
+                  [
+                    "STABLE FRONTMATTER TRANSLATION CONTRACT:",
+                    buildSystemPrompt(input.locale, input.isQuiz),
+                  ].join("\n"),
+                  promptTuning?.appendFrontmatter ?? promptTuning?.appendCachedContext,
+                  "TRANSLATION PROMPT PROFILE FRONTMATTER TUNING",
+                ),
               ),
               {
                 type: "text",
@@ -1443,6 +1517,65 @@ function recordAssembledTranslationStream(
   return streamId;
 }
 
+function getEvalTranslationPromptTuning(input: EvalInput, model: string): TranslationPromptTuning | undefined {
+  if (!usePromptProfiles) return undefined;
+  return promptProfileToTuning(resolvePromptProfile({
+    kind: "translation",
+    locale: input.locale,
+    model,
+    profileId: translationPromptProfileId,
+    contentKind: input.kind,
+  }));
+}
+
+function getEvalJudgePromptTuning(input: EvalInput, model: string): TranslationPromptTuning | undefined {
+  if (!usePromptProfiles) return undefined;
+  return promptProfileToTuning(resolvePromptProfile({
+    kind: "judge",
+    locale: input.locale,
+    model,
+    profileId: judgePromptProfileId,
+    contentKind: input.kind,
+  }));
+}
+
+function describeEvalPromptProfiles(input: EvalInput, model: string) {
+  if (!usePromptProfiles) return { translation: undefined, judge: undefined };
+  const translation = resolvePromptProfile({
+    kind: "translation",
+    locale: input.locale,
+    model,
+    profileId: translationPromptProfileId,
+    contentKind: input.kind,
+  });
+  const judge = resolvePromptProfile({
+    kind: "judge",
+    locale: input.locale,
+    model,
+    profileId: judgePromptProfileId,
+    contentKind: input.kind,
+  });
+  return {
+    translation: translation == null ? undefined : {
+      id: translation.id,
+      version: translation.version,
+      modelPattern: translation.modelPattern,
+      contentKind: translation.contentKind,
+    },
+    judge: judge == null ? undefined : {
+      id: judge.id,
+      version: judge.version,
+      modelPattern: judge.modelPattern,
+      contentKind: judge.contentKind,
+    },
+  };
+}
+
+function appendPromptProfile(base: string, append: string | undefined, label: string) {
+  if (append == null || append.trim() === "") return base;
+  return [base.trim(), "", `${label}:`, append.trim()].join("\n");
+}
+
 function cleanFrontmatterScalarTranslation(translated: string, fallback: string) {
   const cleaned = translated
     .trim()
@@ -1506,6 +1639,7 @@ if (isDryRun) {
   );
   console.log(`${ui.title("Judge")}   ${ui.model(judgeModel)}`);
   console.log(`${ui.title("Locales")} ${locales.map(ui.info).join(", ")}`);
+  console.log(`${ui.title("Prompt profiles")} ${usePromptProfiles ? ui.good("enabled") : ui.dim("disabled")}`);
   console.log(`${ui.title("Output")}  ${ui.path(runDir)}\n`);
   console.log(
     table(
@@ -1537,6 +1671,7 @@ console.log(
 );
 console.log(`${ui.title("Judge")}   ${ui.model(judgeModel)}`);
 console.log(`${ui.title("Locales")} ${locales.map(ui.info).join(", ")}`);
+console.log(`${ui.title("Prompt profiles")} ${usePromptProfiles ? ui.good("enabled") : ui.dim("disabled")}`);
 console.log(`${ui.title("Output")}  ${ui.path(relative(process.cwd(), runDir))}`);
 console.log(
   `${ui.title("Run log")} ${ui.path(relative(process.cwd(), runLogPath))}${printStreams ? ui.warn(" (+stdout)") : ""}\n`,
@@ -1552,6 +1687,7 @@ const results = await Promise.all(
   pairs.map(async ({ input, model }, index) => {
     const modelLabel = shortModel(model);
     const caseLabel = `${input.kind}:${input.slug}:${input.locale}`;
+    const promptProfiles = describeEvalPromptProfiles(input, model);
     console.log(
       `${ui.info("▶")} ${ui.dim(`[${index + 1}/${pairs.length}]`)} ${caseLabel} ${ui.model(modelLabel)}`,
     );
@@ -1563,8 +1699,22 @@ const results = await Promise.all(
         kind: input.kind,
         model: modelLabel,
         judgeModel,
+        promptProfiles,
       },
       () => runEval(input, model),
+      {
+        llmString: model,
+        inputOverride: {
+          id: input.id,
+          slug: input.slug,
+          locale: input.locale,
+          kind: input.kind,
+          sourcePath: relative(process.cwd(), input.sourcePath),
+          model,
+          judgeModel: `openrouter/${judgeModel}`,
+          promptProfiles,
+        },
+      },
     );
     const score = scoreCell(result.overallScore);
     console.log(

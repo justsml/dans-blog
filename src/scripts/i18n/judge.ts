@@ -23,6 +23,7 @@ import {
 } from "./out-of-credit.ts";
 import {
   averageJudgeScore,
+  deriveJudgeConfidence,
   buildEscalationPrompt,
   buildPrePublishRescorePrompt,
   buildPrimaryJudgePrompt,
@@ -30,19 +31,16 @@ import {
   getJudgeJsonShape,
   isBlockingSuggestion,
   normalizeLegacySuggestedChanges,
-  normalizeJudgeScore,
   normalizeJudgeScores,
-  normalizePriority,
   normalizeSuggestions,
-  normalizeSuggestionString,
   normalizeSelectedCandidate,
   parseJudgeOutput,
   parseSelectedCommit,
+  readSuggestionsFromParsed,
   shouldEscalateSecondJudge,
   type CandidateRef,
+  type JudgeConfidence,
   type JudgeSuggestion,
-  type JudgeScoreKey,
-  type JudgeScoreMap,
 } from "./judge-utils.ts";
 
 type SuggestionLogEntry = JudgeSuggestion & {
@@ -162,6 +160,32 @@ try {
 
   const validation = runJudgeValidation();
   writeJudgeJsonValidation(validation, primaryJudge, candidateCommits, suggestionLog.entries);
+  const judgeRunConfidence = deriveJudgeRunConfidence({
+    primaryJudge,
+    primaryJudgeModel: judgeModel,
+    secondJudge,
+    secondJudgeModel,
+    escalationJudge,
+    escalationJudgeModel,
+    shouldEscalate,
+  });
+  appendJudgement({
+    event: "confidence",
+    scoreSource: "judge",
+    operation: "final-run",
+    slug,
+    locale,
+    judgeModel,
+    confidence: judgeRunConfidence.level,
+    confidenceScore: judgeRunConfidence.score,
+    confidenceSignals: judgeRunConfidence.signals,
+    issueCounts: judgeRunConfidence.issueCounts,
+    validationOk: validation.ok,
+    secondJudgeModel,
+    escalationJudgeModel: escalationJudge == null ? undefined : escalationJudgeModel,
+    escalated: escalationJudge != null,
+    shouldEscalate,
+  });
 
   const suggestionLogPath = `${reportDir}/judge-suggestions.jsonl`;
   if (suggestionLog.entries.length > 0) {
@@ -187,6 +211,9 @@ try {
       `- Selected commit hint: ${selectedCommit ?? "judge selected"}`,
       `- Validation: ${validation.ok ? "passed" : "failed"}`,
       `- Validation scope: ${validation.scope}`,
+      `- Confidence: ${judgeRunConfidence.level} (${judgeRunConfidence.score.toFixed(3)})`,
+      `- Confidence signals: ${judgeRunConfidence.signals.join("; ") || "none"}`,
+      `- High/medium/low issue counts: ${judgeRunConfidence.issueCounts.high}/${judgeRunConfidence.issueCounts.medium}/${judgeRunConfidence.issueCounts.low}`,
       validation.ok ? undefined : `- Validation error: ${validation.error}`,
       ``,
       tournament.telemetries.length === 0 ? undefined : `## Batch Judge Telemetry`,
@@ -458,6 +485,7 @@ function writeJudgeJsonValidation(
       parsed = fallback;
     }
   }
+  const confidence = deriveJudgeOutputConfidence(parsed, judgeModel);
 
   writeTextFile(judgeJsonPath, JSON.stringify({
     ...parsed,
@@ -466,6 +494,10 @@ function writeJudgeJsonValidation(
     candidateCommits,
     suggestionLog: suggestionLogEntries,
     validation,
+    confidence: confidence.level,
+    confidenceScore: confidence.score,
+    confidenceSignals: confidence.signals,
+    issueCounts: confidence.issueCounts,
   }, null, 2));
 }
 
@@ -613,6 +645,7 @@ async function runJudgeOperation(
   const parsed = result.ok ? parseJudgeOutput(result.output) : {};
   const selected = parsed.selectedCommit;
   const translationModel = getSelectedTranslationModel(parsed, selected, contextItems);
+  const confidence = result.ok ? deriveJudgeOutputConfidence(parsed, model) : undefined;
   appendJudgement({
     event: kind,
     slug,
@@ -624,6 +657,7 @@ async function runJudgeOperation(
     selected,
     context: contextItems.map(describeJudgeContextItem),
     errorMessage: result.errorMessage,
+    ...confidenceLogFields(confidence),
     ...extra,
   });
   const scores = normalizeJudgeScores(parsed.scores);
@@ -639,6 +673,7 @@ async function runJudgeOperation(
       translationModel,
       scores,
       overallScore: averageJudgeScore(scores),
+      ...confidenceLogFields(confidence ?? deriveJudgeOutputConfidence(parsed, model)),
       rationale: typeof parsed.rationale === "string" ? parsed.rationale : undefined,
       runtimeMs: result.runtimeMs,
       context: contextItems.map(describeJudgeContextItem),
@@ -674,6 +709,94 @@ function appendJudgement(data: Record<string, unknown>) {
     at: new Date().toISOString(),
     ...data,
   })}\n`, "utf8");
+}
+
+function deriveJudgeOutputConfidence(parsed: Record<string, unknown>, model: string) {
+  const scores = normalizeJudgeScores(parsed.scores);
+  const suggestions = readSuggestionsFromParsed(parsed);
+  const overallScore = scores == null ? undefined : averageJudgeScore(scores);
+  const publishReady = suggestions.some((suggestion) => isBlockingSuggestion(suggestion))
+    ? false
+    : overallScore == null ? undefined : overallScore >= 82;
+  return deriveJudgeConfidence({
+    scores,
+    overallScore,
+    suggestions,
+    publishReady,
+    judgeModel: model,
+  });
+}
+
+function deriveJudgeRunConfidence({
+  primaryJudge,
+  primaryJudgeModel,
+  secondJudge,
+  secondJudgeModel,
+  escalationJudge,
+  escalationJudgeModel,
+  shouldEscalate,
+}: {
+  primaryJudge: JudgeCommandResult;
+  primaryJudgeModel: string;
+  secondJudge?: JudgeCommandResult;
+  secondJudgeModel?: string;
+  escalationJudge?: JudgeCommandResult;
+  escalationJudgeModel?: string;
+  shouldEscalate: boolean;
+}) {
+  const outputs = [
+    { result: primaryJudge, model: primaryJudgeModel },
+    ...(secondJudge == null || secondJudgeModel == null ? [] : [{ result: secondJudge, model: secondJudgeModel }]),
+    ...(escalationJudge == null || escalationJudgeModel == null ? [] : [{ result: escalationJudge, model: escalationJudgeModel }]),
+  ]
+    .filter(({ result }) => result.ok)
+    .map(({ result, model }) => {
+      const parsed = parseJudgeOutput(result.output);
+      const scores = normalizeJudgeScores(parsed.scores);
+      return {
+        model,
+        parsed,
+        scores,
+        overallScore: scores == null ? undefined : averageJudgeScore(scores),
+      };
+    });
+  const scoredOutputs = outputs.filter((output) =>
+    typeof output.overallScore === "number"
+  ) as Array<(typeof outputs)[number] & { overallScore: number }>;
+  const scoreRange = scoredOutputs.length <= 1
+    ? 0
+    : Math.max(...scoredOutputs.map((output) => output.overallScore))
+      - Math.min(...scoredOutputs.map((output) => output.overallScore));
+  const finalParsed = outputs.at(-1)?.parsed ?? parseJudgeOutput(primaryJudge.output);
+  const suggestions = readSuggestionsFromParsed(finalParsed);
+  const finalScores = normalizeJudgeScores(finalParsed.scores);
+  const finalOverallScore = finalScores == null ? scoredOutputs.at(-1)?.overallScore : averageJudgeScore(finalScores);
+
+  return deriveJudgeConfidence({
+    scores: finalScores,
+    overallScore: finalOverallScore,
+    suggestions,
+    judgeCount: outputs.length,
+    scoreRange,
+    blockingSuggestionDisagreement: shouldEscalate,
+    uncertaintyDetected: shouldEscalate && escalationJudge == null,
+    publishReady: !suggestions.some((suggestion) => isBlockingSuggestion(suggestion))
+      && finalOverallScore != null
+      && finalOverallScore >= 82,
+    frontierScores: scoredOutputs
+      .filter((output) => /(?:gpt-5|claude|sonnet|opus|gemini-3-pro|grok-4)/i.test(output.model))
+      .map((output) => output.overallScore),
+  });
+}
+
+function confidenceLogFields(confidence: JudgeConfidence | undefined) {
+  if (confidence == null) return {};
+  return {
+    confidence: confidence.level,
+    confidenceScore: confidence.score,
+    confidenceSignals: confidence.signals,
+    issueCounts: confidence.issueCounts,
+  };
 }
 
 
@@ -846,6 +969,7 @@ function materializePrimaryJudgeResult(
   const rationale = typeof parsed.rationale === "string"
     ? parsed.rationale
     : `Selected ${selected.id}.`;
+  const confidence = deriveJudgeOutputConfidence(parsed, reportJudgeModel);
 
   writeTextFile(targetPath, selectedBody);
   writeTextFile(`${reportDir}/${judgeReportName}`, [
@@ -854,6 +978,7 @@ function materializePrimaryJudgeResult(
     `- Selected candidate: ${selected.id}`,
     `- Selected model: ${parsed.selectedModel ?? selected.model}`,
     `- Judge model: ${reportJudgeModel}`,
+    `- Confidence: ${confidence.level} (${confidence.score.toFixed(3)})`,
     ``,
     rationale,
   ].join("\n"));
@@ -862,6 +987,10 @@ function materializePrimaryJudgeResult(
     ...parsed,
     selectedCommit: selected.id,
     selectedModel: parsed.selectedModel ?? selected.model,
+    confidence: confidence.level,
+    confidenceScore: confidence.score,
+    confidenceSignals: confidence.signals,
+    issueCounts: confidence.issueCounts,
     rationale,
   }, null, 2));
 }

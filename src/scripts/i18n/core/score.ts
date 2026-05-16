@@ -1,11 +1,16 @@
 import { generateText as defaultGenerateText } from "../braintrust.ts";
 import {
   averageJudgeScore,
+  countJudgeSuggestionPriorities,
+  deriveJudgeConfidence,
   getJudgeJsonShape,
+  isFrontierJudgeModel,
   isBlockingSuggestion,
   normalizeJudgeScores,
   parseJudgeOutput,
   readSuggestionsFromParsed,
+  type JudgeConfidenceLevel,
+  type JudgeIssueCounts,
   type JudgeScoreMap,
   type JudgeSuggestion,
 } from "../judge-utils.ts";
@@ -35,6 +40,7 @@ export type ScoreTranslationInput = {
   generateText?: GenerateTextLike;
   priorAssessments?: JudgeAssessmentSummary[];
   roundLabel?: string;
+  promptTuning?: JudgePromptTuning;
 };
 
 export type ScoreTranslationOutput = {
@@ -44,12 +50,24 @@ export type ScoreTranslationOutput = {
   judgeScores?: JudgeScoreMap;
   overallScore: number;
   publishReady: boolean;
+  confidence: JudgeConfidenceLevel;
+  confidenceScore: number;
+  confidenceSignals: string[];
+  issueCounts: JudgeIssueCounts;
   suggestions: JudgeSuggestion[];
   rationale: string;
   rawText: string;
   telemetry: TranslationTelemetry;
   cost: TokenCostEstimate;
   roundLabel?: string;
+};
+
+export type JudgePromptTuning = {
+  profileId?: string;
+  version?: number;
+  appendSystem?: string;
+  appendCachedContext?: string;
+  appendDynamic?: string;
 };
 
 export type JudgeAssessmentSummary = {
@@ -68,6 +86,7 @@ export type ScoreConsensusInput = Omit<ScoreTranslationInput, "model" | "priorAs
   reconsiderationRounds?: number;
   disagreementThreshold?: number;
   generateText?: GenerateTextLike;
+  promptTuningByModel?: Record<string, JudgePromptTuning | undefined>;
 };
 
 export type ScoreConsensusOutput = {
@@ -79,6 +98,9 @@ export type ScoreConsensusOutput = {
     scores: TranslationScoreMap;
     publishReady: boolean;
     confidence: "low" | "medium" | "high";
+    confidenceScore: number;
+    confidenceSignals: string[];
+    issueCounts: JudgeIssueCounts;
     rationale: string;
     suggestions: Array<JudgeSuggestion & { supportingModels: string[] }>;
   };
@@ -129,12 +151,24 @@ export async function scoreTranslation(input: ScoreTranslationInput): Promise<Sc
     messages: [
       {
         role: "system",
-        content: "You are a constrained translation judge. Return strict JSON only.",
+        content: joinPrompt(
+          "You are a constrained translation judge. Return strict JSON only.",
+          input.promptTuning?.appendSystem,
+          "JUDGE PROMPT PROFILE TUNING",
+        ),
       },
-      cachedUserMessage(buildScoreTranslationContract(input)),
+      cachedUserMessage(joinPrompt(
+        buildScoreTranslationContract(input),
+        input.promptTuning?.appendCachedContext,
+        "JUDGE PROMPT PROFILE STABLE TUNING",
+      )),
       cachedUserMessage(buildScoreSourceBlock(input)),
       cachedUserMessage(buildScoreCandidateBlock(input)),
-      plainUserMessage(buildScoreDynamicTask(input)),
+      plainUserMessage(joinPrompt(
+        buildScoreDynamicTask(input),
+        input.promptTuning?.appendDynamic,
+        "JUDGE PROMPT PROFILE DYNAMIC TUNING",
+      )),
     ],
     temperature: llmConfig.temperature,
     maxOutputTokens: llmConfig.maxTokens,
@@ -165,6 +199,13 @@ export async function scoreTranslation(input: ScoreTranslationInput): Promise<Sc
     : Math.round(averageJudgeScore(judgeScores));
   const publishReady = booleanValue(parsed.publishReady)
     ?? (overallScore >= 82 && suggestions.every((suggestion) => suggestion.priority === "low"));
+  const confidence = deriveJudgeConfidence({
+    overallScore,
+    scores: judgeScores,
+    suggestions,
+    publishReady,
+    judgeModel: llmConfig.mastraModel,
+  });
 
   return {
     candidateId: input.candidateId ?? "candidate",
@@ -173,6 +214,10 @@ export async function scoreTranslation(input: ScoreTranslationInput): Promise<Sc
     judgeScores,
     overallScore,
     publishReady,
+    confidence: confidence.level,
+    confidenceScore: confidence.score,
+    confidenceSignals: confidence.signals,
+    issueCounts: confidence.issueCounts,
     suggestions,
     rationale: typeof parsed.rationale === "string" ? parsed.rationale : "",
     rawText: result.text,
@@ -192,6 +237,7 @@ export async function scoreTranslationConsensus(input: ScoreConsensusInput): Pro
       ...input,
       model,
       roundLabel: "initial",
+      promptTuning: promptTuningForModel(input, model),
     })
   ));
   assessments.push(...initialAssessments);
@@ -206,6 +252,7 @@ export async function scoreTranslationConsensus(input: ScoreConsensusInput): Pro
         model,
         priorAssessments: summaries.filter((assessment) => assessment.model !== resolveLlmConfig(model).modelId),
         roundLabel: `reconsideration-${round}`,
+        promptTuning: promptTuningForModel(input, model),
       })
     ));
     assessments.push(...latest);
@@ -222,6 +269,7 @@ export async function scoreTranslationConsensus(input: ScoreConsensusInput): Pro
         model,
         priorAssessments: summaries,
         roundLabel: "escalation",
+        promptTuning: promptTuningForModel(input, model),
       })
     ));
     assessments.push(...escalationAssessments);
@@ -384,17 +432,32 @@ function buildConsensus(
   const publishReadyVotes = outputs.filter((output) => output.publishReady).length;
   const blockingSuggestions = outputs.flatMap((output) => output.suggestions).filter(isBlockingSuggestion);
   const publishReady = publishReadyVotes > outputs.length / 2 && overallScore >= 82 && blockingSuggestions.length === 0;
-  const confidence = disagreement.shouldEscalate
-    ? "low"
-    : disagreement.scoreRange <= 6 && (publishReadyVotes === outputs.length || publishReadyVotes === 0)
-      ? "high"
-      : "medium";
+  const suggestions = mergeSuggestions(outputs);
+  const issueCounts = countJudgeSuggestionPriorities(suggestions);
+  const confidence = deriveJudgeConfidence({
+    overallScore,
+    highIssueCount: issueCounts.high,
+    mediumIssueCount: issueCounts.medium,
+    lowIssueCount: issueCounts.low,
+    judgeCount: outputs.length,
+    scoreRange: disagreement.scoreRange,
+    publishReady,
+    publishReadyDisagreement: disagreement.publishReadyDisagreement,
+    blockingSuggestionDisagreement: disagreement.blockingSuggestionDisagreement,
+    uncertaintyDetected: disagreement.uncertaintyDetected,
+    frontierScores: outputs
+      .filter((output) => isFrontierJudgeModel(output.model))
+      .map((output) => output.overallScore),
+  });
 
   return {
     overallScore,
     scores,
     publishReady,
-    confidence,
+    confidence: confidence.level,
+    confidenceScore: confidence.score,
+    confidenceSignals: confidence.signals,
+    issueCounts: confidence.issueCounts,
     rationale: [
       `Consensus from ${outputs.length} judge assessment${outputs.length === 1 ? "" : "s"}.`,
       `Score range ${disagreement.scoreRange}; publish-ready votes ${publishReadyVotes}/${outputs.length}.`,
@@ -402,7 +465,7 @@ function buildConsensus(
         ? `${blockingSuggestions.length} blocking suggestion${blockingSuggestions.length === 1 ? "" : "s"} kept the candidate out of publish-ready status.`
         : "No blocking suggestions reached the consensus set.",
     ].join(" "),
-    suggestions: mergeSuggestions(outputs),
+    suggestions,
   };
 }
 
@@ -481,6 +544,17 @@ function totalAssessmentUsage(outputs: ScoreTranslationOutput[]): ScoreConsensus
   return totals;
 }
 
+function promptTuningForModel(input: ScoreConsensusInput, model: string) {
+  const explicit = input.promptTuningByModel?.[model];
+  if (explicit != null) return explicit;
+
+  const resolved = resolveLlmConfig(model);
+  return input.promptTuningByModel?.[resolved.modelId]
+    ?? input.promptTuningByModel?.[resolved.mastraModel]
+    ?? input.promptTuningByModel?.[`openrouter/${resolved.modelId}`]
+    ?? input.promptTuning;
+}
+
 function uniqueNonEmpty(values: string[]) {
   return [...new Set(values.map((value) => value.trim()).filter(Boolean))];
 }
@@ -488,4 +562,9 @@ function uniqueNonEmpty(values: string[]) {
 function addOptionalNumber(current: number | undefined, value: number | undefined) {
   if (value == null) return current;
   return (current ?? 0) + value;
+}
+
+function joinPrompt(base: string, append: string | undefined, label: string) {
+  if (append == null || append.trim() === "") return base;
+  return [base.trim(), "", `${label}:`, append.trim()].join("\n");
 }

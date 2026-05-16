@@ -29,6 +29,10 @@ export async function tracedEval<T extends { scores?: Array<{ name: string; scor
   name: string,
   metadata: Record<string, unknown>,
   fn: () => Promise<T>,
+  options: {
+    llmString?: string;
+    inputOverride?: unknown;
+  } = {},
 ): Promise<T> {
   if (!braintrustEnabled) return fn();
 
@@ -38,10 +42,26 @@ export async function tracedEval<T extends { scores?: Array<{ name: string; scor
       if (Array.isArray(result.scores)) {
         const scoreMap: Record<string, number> = {};
         for (const s of result.scores) scoreMap[s.name] = s.score;
-        span.log({ scores: scoreMap, output: result });
+        span.log({
+          scores: scoreMap,
+          output: result,
+          metadata: {
+            ...metadata,
+            llmString: options.llmString,
+          },
+        });
       }
       return result;
     },
-    { name, event: { input: metadata } },
+    {
+      name,
+      event: {
+        input: options.inputOverride ?? metadata,
+        metadata: {
+          ...metadata,
+          llmString: options.llmString,
+        },
+      },
+    },
   );
 }
