@@ -14,7 +14,12 @@ import { buildSystemPrompt } from "../i18n/prompts.ts";
 import { usageFromResult } from "../i18n/llm-telemetry.ts";
 import { createOpenRouterChatModel, resolveLlmConfig } from "../i18n/core/model-config.ts";
 import { translateWithModel } from "../i18n/core/translate.ts";
-import { scoreTranslation, scoreTranslationConsensus, type ScoreConsensusOutput } from "../i18n/core/score.ts";
+import {
+  reverseTranslation,
+  scoreTranslation,
+  scoreTranslationConsensus,
+  type ScoreConsensusOutput,
+} from "../i18n/core/score.ts";
 import { validateTranslation } from "../i18n/core/validate.ts";
 import { safeModelPathName } from "../i18n/translation-costs.ts";
 import {
@@ -218,6 +223,51 @@ const consensusOutputSchema = z.object({
     version: z.number().int(),
     notes: z.string().optional(),
   })).optional(),
+});
+const reverseTranslationIssueSchema = z.object({
+  severity: z.enum(["low", "medium", "high"]),
+  category: z.string(),
+  message: z.string(),
+  referenceExcerpt: z.string().optional(),
+  reverseExcerpt: z.string().optional(),
+  translatedExcerpt: z.string().optional(),
+});
+const reverseTranslationErrorSchema = z.object({
+  code: z.string(),
+  message: z.string(),
+});
+const reverseTranslationScoresSchema = z.object({
+  similarity: z.number(),
+  faithfulness: z.number(),
+  coverage: z.number(),
+  technicalFidelity: z.number(),
+  structuralCorrespondence: z.number(),
+});
+const reverseTranslationOutputSchema = z.object({
+  locale: z.enum(ACTIVE_LOCALES),
+  model: z.string(),
+  referenceCompared: z.boolean(),
+  reverseTranslation: z.string(),
+  similarityScore: z.number().nullable(),
+  faithfulness: z.number().nullable(),
+  scores: reverseTranslationScoresSchema.nullable(),
+  issues: z.array(reverseTranslationIssueSchema),
+  errors: z.array(reverseTranslationErrorSchema),
+  confidence: z.enum(["low", "medium", "high"]),
+  confidenceScore: z.number(),
+  convergence: z.object({
+    modelCount: z.number(),
+    converged: z.boolean().nullable(),
+    note: z.string(),
+  }),
+  interpretationNotes: z.array(z.string()),
+  rationale: z.string(),
+  rawText: z.object({
+    reverse: z.string(),
+    comparison: z.string().optional(),
+  }),
+  telemetry: telemetrySchema,
+  cost: tokenCostSchema,
 });
 const validationOutputSchema = z.object({
   passed: z.boolean(),
@@ -884,6 +934,87 @@ export function createTranslationAgentTools(context: TranslationAgentToolContext
       },
     }),
 
+    reverseTranslation: createTool({
+      id: "reverseTranslation",
+      description: "Reverse-translate localized MDX back into English and compare it with an English reference to diagnose possible fidelity loss. Low scores are diagnostic, not automatic failure; confirm low or surprising results with other models and prompt variants.",
+      inputSchema: z.object({
+        slug: z.string().optional(),
+        locale: z.enum(ACTIVE_LOCALES),
+        translatedPath: z.string().optional(),
+        translatedContents: z.string().optional(),
+        candidatePath: z.string().optional(),
+        referencePath: z.string().optional(),
+        referenceContents: z.string().optional(),
+        model: z.string().optional(),
+      }),
+      outputSchema: reverseTranslationOutputSchema,
+      execute: async ({
+        slug,
+        locale,
+        translatedPath,
+        translatedContents,
+        candidatePath,
+        referencePath,
+        referenceContents,
+        model,
+      }) => {
+        const translated = resolveReverseTranslatedInput({
+          runId: context.runId,
+          slug,
+          locale,
+          translatedPath,
+          translatedContents,
+          candidatePath,
+        });
+        const reference = resolveReverseReferenceInput({
+          slug,
+          locale,
+          referencePath,
+          referenceContents,
+        });
+        const selectedModel = model ?? context.defaultJudgeModel;
+        const check = await reverseTranslation({
+          locale,
+          translatedInput: translated.input,
+          referenceInput: reference?.input,
+          model: selectedModel,
+          translatedLabel: translated.label,
+          referenceLabel: reference?.label,
+        });
+        const record = {
+          at: new Date().toISOString(),
+          runId: context.runId,
+          slug,
+          translatedPath: translated.path,
+          referencePath: reference?.path,
+          provenance: buildReverseTranslationProvenance({
+            slug,
+            locale,
+            translatedContents: translated.contents,
+            referenceContents: reference?.contents,
+            translatedPath: translated.path,
+            referencePath: reference?.path,
+            reverseTranslation: check.reverseTranslation,
+          }),
+          ...check,
+        };
+        appendJsonl(join(candidateRunDir(context.runId), "reverse-translations.jsonl"), record);
+        appendJsonl(agentEvalHistoryPath(), { event: "reverse_translation", ...record });
+        appendEvent(context.runId, {
+          event: "reverse_translation_check",
+          slug,
+          locale,
+          model: check.model,
+          translatedPath: translated.path,
+          referencePath: reference?.path,
+          similarityScore: check.similarityScore,
+          faithfulness: check.faithfulness,
+          issues: check.issues.length,
+        });
+        return check;
+      },
+    }),
+
     scoreCurrentTranslations: createTool({
       id: "scoreCurrentTranslations",
       description: "Score one or more existing localized MDX files already present in src/content/posts. Uses active judge prompt profiles unless disabled.",
@@ -1491,6 +1622,108 @@ function buildScoreProvenance({
     sourceSha256: sha256(sourceContents),
     targetSha256: sha256(targetContents),
     scoredPath: scoredPath == null ? undefined : relative(repoRoot, resolve(repoRoot, scoredPath)),
+  };
+}
+
+function resolveReverseTranslatedInput({
+  runId,
+  slug,
+  locale,
+  translatedPath,
+  translatedContents,
+  candidatePath,
+}: {
+  runId: string;
+  slug?: string;
+  locale: ActiveLocale;
+  translatedPath?: string;
+  translatedContents?: string;
+  candidatePath?: string;
+}) {
+  if (translatedContents != null) {
+    return {
+      input: Buffer.from(translatedContents),
+      contents: translatedContents,
+      path: undefined,
+      label: "provided translatedContents",
+    };
+  }
+
+  const path = translatedPath
+    ?? candidatePath
+    ?? (slug == null ? undefined : existingTranslationPath(slug, locale))
+    ?? latestCandidatePath(runId);
+  const absolutePath = assertReadablePath(path);
+  const contents = readFileSync(absolutePath, "utf8");
+  const relativePath = relative(repoRoot, absolutePath);
+  return {
+    input: absolutePath,
+    contents,
+    path: relativePath,
+    label: relativePath,
+  };
+}
+
+function resolveReverseReferenceInput({
+  slug,
+  locale,
+  referencePath,
+  referenceContents,
+}: {
+  slug?: string;
+  locale: ActiveLocale;
+  referencePath?: string;
+  referenceContents?: string;
+}) {
+  if (referenceContents != null) {
+    return {
+      input: Buffer.from(referenceContents),
+      contents: referenceContents,
+      path: undefined,
+      label: "provided referenceContents",
+    };
+  }
+
+  const path = referencePath ?? (slug == null ? undefined : getPostPaths(slug, locale).sourcePath);
+  if (path == null) return undefined;
+  const absolutePath = assertReadablePath(path);
+  const contents = readFileSync(absolutePath, "utf8");
+  const relativePath = relative(repoRoot, absolutePath);
+  return {
+    input: absolutePath,
+    contents,
+    path: relativePath,
+    label: relativePath,
+  };
+}
+
+function buildReverseTranslationProvenance({
+  slug,
+  locale,
+  translatedContents,
+  referenceContents,
+  translatedPath,
+  referencePath,
+  reverseTranslation,
+}: {
+  slug?: string;
+  locale: ActiveLocale;
+  translatedContents: string;
+  referenceContents?: string;
+  translatedPath?: string;
+  referencePath?: string;
+  reverseTranslation: string;
+}) {
+  return {
+    slug,
+    locale,
+    repoHeadSha: gitOutput(["rev-parse", "HEAD"]),
+    repoShortSha: gitOutput(["rev-parse", "--short", "HEAD"]),
+    translatedSha256: sha256(translatedContents),
+    referenceSha256: referenceContents == null ? undefined : sha256(referenceContents),
+    reverseTranslationSha256: sha256(reverseTranslation),
+    translatedPath,
+    referencePath,
   };
 }
 

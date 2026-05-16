@@ -3,7 +3,7 @@ import { mkdtempSync, rmSync } from "node:fs";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
 import { resolveLlmConfig } from "../i18n/core/model-config.ts";
-import { scoreTranslation, scoreTranslationConsensus } from "../i18n/core/score.ts";
+import { reverseTranslation, scoreTranslation, scoreTranslationConsensus } from "../i18n/core/score.ts";
 import { translateWithModel, type GenerateTextLike } from "../i18n/core/translate.ts";
 import { usageFromResult } from "../i18n/llm-telemetry.ts";
 import { validateTranslation } from "../i18n/core/validate.ts";
@@ -377,6 +377,94 @@ describe("scoreTranslation", () => {
     expect(result.escalated).toBe(true);
     expect(result.assessments.length).toBe(3);
     expect(result.totals.inputTokens).toBeGreaterThan(0);
+  });
+});
+
+describe("reverseTranslation", () => {
+  test("back-translates before comparing against the English reference", async () => {
+    const calls: Array<{ messages?: Array<{ content: unknown }> }> = [];
+    const fakeGenerateText = (async (settings: { messages?: Array<{ content: unknown }> }) => {
+      calls.push(settings);
+      if (calls.length === 1) {
+        return {
+          text: JSON.stringify({
+            reverseTranslation: "Hello, this keeps the API claim.",
+            errors: [],
+          }),
+          usage: { inputTokens: 5, outputTokens: 7 },
+          providerMetadata: undefined,
+        };
+      }
+      return {
+        text: JSON.stringify({
+          scores: {
+            similarity: 91,
+            faithfulness: 88,
+            coverage: 90,
+            technicalFidelity: 95,
+            structuralCorrespondence: 84,
+          },
+          issues: [{
+            severity: "medium",
+            category: "meaning",
+            referenceExcerpt: "keeps the API claim and caveat",
+            reverseExcerpt: "keeps the API claim",
+            message: "The caveat is weaker in the reverse translation.",
+          }],
+          errors: [],
+          confidence: "medium",
+          confidenceScore: 72,
+          rationale: "Mostly equivalent with one softened caveat.",
+        }),
+        usage: { inputTokens: 11, outputTokens: 13 },
+        providerMetadata: undefined,
+      };
+    }) as unknown as GenerateTextLike;
+
+    const result = await reverseTranslation({
+      locale: "es",
+      translatedInput: Buffer.from("Hola, esto conserva la afirmacion de la API."),
+      referenceInput: Buffer.from("Hello, this keeps the API claim and caveat."),
+      model: "openrouter/google/gemini-3-flash-preview",
+      generateText: fakeGenerateText,
+    });
+
+    expect(calls.length).toBe(2);
+    expect(JSON.stringify(calls[0])).toContain("<translated-input>");
+    expect(JSON.stringify(calls[0])).not.toContain("<english-reference>");
+    expect(JSON.stringify(calls[1])).toContain("<english-reference>");
+    expect(result.referenceCompared).toBe(true);
+    expect(result.reverseTranslation).toBe("Hello, this keeps the API claim.");
+    expect(result.similarityScore).toBe(91);
+    expect(result.faithfulness).toBe(88);
+    expect(result.scores?.technicalFidelity).toBe(95);
+    expect(result.issues[0]?.severity).toBe("medium");
+    expect(result.convergence.converged).toBeNull();
+    expect(result.interpretationNotes.join(" ")).toContain("diagnostic");
+    expect(result.telemetry.inputTokens).toBe(16);
+  });
+
+  test("returns reverse text with null scores when no reference is supplied", async () => {
+    const fakeGenerateText = (async () => ({
+      text: JSON.stringify({
+        reverseTranslation: "A reverse-only English draft.",
+        errors: [],
+      }),
+      usage: { inputTokens: 3, outputTokens: 4 },
+      providerMetadata: undefined,
+    })) as unknown as GenerateTextLike;
+
+    const result = await reverseTranslation({
+      locale: "ja",
+      translatedInput: Buffer.from("逆翻訳だけの本文。"),
+      model: "openrouter/deepseek/deepseek-v4-flash",
+      generateText: fakeGenerateText,
+    });
+
+    expect(result.referenceCompared).toBe(false);
+    expect(result.similarityScore).toBeNull();
+    expect(result.faithfulness).toBeNull();
+    expect(result.errors.map((error) => error.code)).toContain("missing-reference");
   });
 });
 
