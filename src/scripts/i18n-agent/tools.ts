@@ -227,6 +227,13 @@ const svgTranslationOutputSchema = z.object({
   contents: z.string(),
   telemetry: telemetrySchema.optional(),
 });
+const mdxSvgTranslationOutputSchema = z.object({
+  contents: z.string(),
+  inlineSvgs: z.number(),
+  fileSvgs: z.number(),
+  translatedTextNodes: z.number(),
+  writtenFiles: z.array(z.string()),
+});
 
 export function createTranslationAgentTools(context: TranslationAgentToolContext) {
   return {
@@ -511,103 +518,137 @@ export function createTranslationAgentTools(context: TranslationAgentToolContext
 
     translateSvgText: createTool({
       id: "translateSvgText",
-      description: "Translate reader-facing SVG text nodes using the source article as context and optionally write a localized SVG asset.",
+      description: "Translate reader-facing SVG text nodes from an SVG file or inline SVG contents using the source article as context. File SVGs keep the original filename when written to the locale folder.",
       inputSchema: z.object({
         slug: z.string(),
         locale: z.enum(ACTIVE_LOCALES),
-        svgPath: z.string(),
+        svgPath: z.string().optional(),
+        svgContents: z.string().optional(),
         model: z.string().optional(),
         articleSummary: z.string().optional(),
         writeToLocale: z.boolean().optional(),
       }),
       outputSchema: svgTranslationOutputSchema,
-      execute: async ({ slug, locale, svgPath, model, articleSummary, writeToLocale = true }) => {
+      execute: async ({ slug, locale, svgPath, svgContents, model, articleSummary, writeToLocale = true }) => {
         const paths = getPostPaths(slug, locale);
-        const absoluteSvgPath = assertReadablePath(svgPath);
-        const sourceContents = readFileSync(paths.sourcePath, "utf8");
-        const svgContents = readFileSync(absoluteSvgPath, "utf8");
-        const textNodes = extractSvgTextNodes(svgContents);
-        if (textNodes.length === 0) {
-          return {
-            sourcePath: relative(repoRoot, absoluteSvgPath),
-            targetPath: "",
-            written: false,
-            textNodes: 0,
-            translatedTextNodes: 0,
-            contents: svgContents,
-          };
+        if (svgPath == null && svgContents == null) {
+          throw new Error("Either svgPath or svgContents is required.");
         }
-
-        const selectedModel = model ?? context.defaultTranslationModel;
-        const llmConfig = resolveLlmConfig(selectedModel, {
-          temperature: 0.1,
-          maxTokens: 4_000,
+        const absoluteSvgPath = svgPath == null ? undefined : assertReadablePath(svgPath);
+        const sourceContents = readFileSync(paths.sourcePath, "utf8");
+        const sourceSvgContents = svgContents ?? readFileSync(absoluteSvgPath!, "utf8");
+        const translated = await translateSvgContents({
+          svgContents: sourceSvgContents,
+          sourceContents,
+          slug,
+          locale,
+          model: model ?? context.defaultTranslationModel,
+          articleSummary,
         });
-        const startedAt = performance.now();
-        const result = await generateText({
-          model: createOpenRouterChatModel(llmConfig),
-          allowSystemInMessages: true,
-          messages: [
-            {
-              role: "system",
-              content: "You translate short SVG labels for technical article graphics. Return strict JSON only.",
-            },
-            {
-              role: "user",
-              content: [
-                "Stable SVG translation contract:",
-                buildSystemPrompt(locale, false),
-                "Translate only reader-facing SVG text node values.",
-                "Preserve product names, code identifiers, filenames, shell paths, URLs, and API names unless they are ordinary prose.",
-                "Keep labels compact enough to fit in roughly the same SVG layout.",
-                `Target language: ${LOCALE_LABELS[locale]}.`,
-              ].join("\n"),
-            },
-            {
-              role: "user",
-              content: [
-                `Article slug: ${slug}`,
-                articleSummary ? `Article summary: ${articleSummary}` : `Article context excerpt:\n${articleContextExcerpt(sourceContents)}`,
-                "Return JSON in this shape:",
-                JSON.stringify({ translations: [{ index: 0, text: "translated text" }] }),
-                "SVG text nodes:",
-                JSON.stringify(textNodes.map((node) => ({ index: node.index, text: node.text })), null, 2),
-              ].join("\n\n"),
-            },
-          ],
-          temperature: llmConfig.temperature,
-          maxOutputTokens: llmConfig.maxTokens,
-          timeout: { totalMs: llmConfig.timeoutMs },
-          providerOptions: llmConfig.providerOptions,
-        });
-        const telemetry = usageFromResult(result.usage, Math.round(performance.now() - startedAt), result.providerMetadata);
-        const translations = parseSvgTranslationOutput(result.text);
-        const translatedSvg = applySvgTextTranslations(svgContents, textNodes, translations);
-        const targetPath = join(dirname(paths.targetPath), basename(absoluteSvgPath));
+        const targetPath = absoluteSvgPath == null ? "" : join(dirname(paths.targetPath), basename(absoluteSvgPath));
         const shouldWrite = writeToLocale && !context.dryRun;
-        if (shouldWrite) {
+        if (shouldWrite && targetPath !== "") {
           mkdirSync(dirname(targetPath), { recursive: true });
-          writeFileSync(targetPath, translatedSvg, "utf8");
+          writeFileSync(targetPath, translated.contents, "utf8");
         }
         appendEvent(context.runId, {
           event: "svg_text_translated",
           slug,
           locale,
-          model: llmConfig.modelId,
-          sourcePath: relative(repoRoot, absoluteSvgPath),
-          targetPath: relative(repoRoot, targetPath),
-          written: shouldWrite,
-          textNodes: textNodes.length,
-          translatedTextNodes: translations.size,
+          model: translated.model,
+          sourcePath: absoluteSvgPath == null ? "inline" : relative(repoRoot, absoluteSvgPath),
+          targetPath: targetPath === "" ? "" : relative(repoRoot, targetPath),
+          written: shouldWrite && targetPath !== "",
+          textNodes: translated.textNodes,
+          translatedTextNodes: translated.translatedTextNodes,
         });
         return {
-          sourcePath: relative(repoRoot, absoluteSvgPath),
-          targetPath: relative(repoRoot, targetPath),
-          written: shouldWrite,
-          textNodes: textNodes.length,
-          translatedTextNodes: translations.size,
-          contents: translatedSvg,
-          telemetry,
+          sourcePath: absoluteSvgPath == null ? "inline" : relative(repoRoot, absoluteSvgPath),
+          targetPath: targetPath === "" ? "" : relative(repoRoot, targetPath),
+          written: shouldWrite && targetPath !== "",
+          textNodes: translated.textNodes,
+          translatedTextNodes: translated.translatedTextNodes,
+          contents: translated.contents,
+          telemetry: translated.telemetry,
+        };
+      },
+    }),
+
+    translateMdxSvgs: createTool({
+      id: "translateMdxSvgs",
+      description: "Translate inline SVG blocks and referenced SVG image files in MDX; writes file SVGs to the locale folder with the original English filename and rewrites references to ./same-name.svg.",
+      inputSchema: z.object({
+        slug: z.string(),
+        locale: z.enum(ACTIVE_LOCALES),
+        candidatePath: z.string().optional(),
+        targetContents: z.string().optional(),
+        model: z.string().optional(),
+        articleSummary: z.string().optional(),
+        writeFiles: z.boolean().optional(),
+      }),
+      outputSchema: mdxSvgTranslationOutputSchema,
+      execute: async ({ slug, locale, candidatePath, targetContents, model, articleSummary, writeFiles = true }) => {
+        const paths = getPostPaths(slug, locale);
+        const sourceContents = readFileSync(paths.sourcePath, "utf8");
+        let contents = targetContents ?? readFileSync(assertReadablePath(candidatePath ?? latestCandidatePath(context.runId)), "utf8");
+        let inlineSvgs = 0;
+        let fileSvgs = 0;
+        let translatedTextNodes = 0;
+        const writtenFiles: string[] = [];
+
+        for (const svgBlock of [...contents.matchAll(/<svg\b[\s\S]*?<\/svg>/gi)].map((match) => match[0])) {
+          const translated = await translateSvgContents({
+            svgContents: svgBlock,
+            sourceContents,
+            slug,
+            locale,
+            model: model ?? context.defaultTranslationModel,
+            articleSummary,
+          });
+          if (translated.translatedTextNodes === 0) continue;
+          contents = contents.replace(svgBlock, translated.contents);
+          inlineSvgs += 1;
+          translatedTextNodes += translated.translatedTextNodes;
+        }
+
+        for (const reference of findSvgFileReferences(contents)) {
+          const svgPath = resolveReferencedPostAsset(paths.sourcePath, paths.targetPath, reference.url);
+          if (svgPath == null) continue;
+          const translated = await translateSvgContents({
+            svgContents: readFileSync(svgPath, "utf8"),
+            sourceContents,
+            slug,
+            locale,
+            model: model ?? context.defaultTranslationModel,
+            articleSummary,
+          });
+          if (translated.translatedTextNodes === 0) continue;
+          const targetSvgPath = join(dirname(paths.targetPath), basename(svgPath));
+          if (writeFiles && !context.dryRun) {
+            mkdirSync(dirname(targetSvgPath), { recursive: true });
+            writeFileSync(targetSvgPath, translated.contents, "utf8");
+          }
+          contents = contents.replace(reference.url, `./${basename(targetSvgPath)}`);
+          fileSvgs += 1;
+          translatedTextNodes += translated.translatedTextNodes;
+          writtenFiles.push(relative(repoRoot, targetSvgPath));
+        }
+
+        appendEvent(context.runId, {
+          event: "mdx_svgs_translated",
+          slug,
+          locale,
+          inlineSvgs,
+          fileSvgs,
+          translatedTextNodes,
+          writtenFiles,
+        });
+        return {
+          contents,
+          inlineSvgs,
+          fileSvgs,
+          translatedTextNodes,
+          writtenFiles,
         };
       },
     }),
@@ -1366,6 +1407,110 @@ function parseSvgTranslationOutput(rawText: string) {
     translations.set(item.index, text);
   }
   return translations;
+}
+
+async function translateSvgContents({
+  svgContents,
+  sourceContents,
+  slug,
+  locale,
+  model,
+  articleSummary,
+}: {
+  svgContents: string;
+  sourceContents: string;
+  slug: string;
+  locale: ActiveLocale;
+  model: string;
+  articleSummary?: string;
+}) {
+  const textNodes = extractSvgTextNodes(svgContents);
+  if (textNodes.length === 0) {
+    return {
+      contents: svgContents,
+      textNodes: 0,
+      translatedTextNodes: 0,
+      model,
+      telemetry: undefined,
+    };
+  }
+
+  const llmConfig = resolveLlmConfig(model, {
+    temperature: 0.1,
+    maxTokens: 4_000,
+  });
+  const startedAt = performance.now();
+  const result = await generateText({
+    model: createOpenRouterChatModel(llmConfig),
+    allowSystemInMessages: true,
+    messages: [
+      {
+        role: "system",
+        content: "You translate short SVG labels for technical article graphics. Return strict JSON only.",
+      },
+      {
+        role: "user",
+        content: [
+          "Stable SVG translation contract:",
+          buildSystemPrompt(locale, false),
+          "Translate only reader-facing SVG text node values.",
+          "Preserve product names, code identifiers, filenames, shell paths, URLs, and API names unless they are ordinary prose.",
+          "Keep labels compact enough to fit in roughly the same SVG layout.",
+          `Target language: ${LOCALE_LABELS[locale]}.`,
+        ].join("\n"),
+      },
+      {
+        role: "user",
+        content: [
+          `Article slug: ${slug}`,
+          articleSummary ? `Article summary: ${articleSummary}` : `Article context excerpt:\n${articleContextExcerpt(sourceContents)}`,
+          "Return JSON in this shape:",
+          JSON.stringify({ translations: [{ index: 0, text: "translated text" }] }),
+          "SVG text nodes:",
+          JSON.stringify(textNodes.map((node) => ({ index: node.index, text: node.text })), null, 2),
+        ].join("\n\n"),
+      },
+    ],
+    temperature: llmConfig.temperature,
+    maxOutputTokens: llmConfig.maxTokens,
+    timeout: { totalMs: llmConfig.timeoutMs },
+    providerOptions: llmConfig.providerOptions,
+  });
+  const telemetry = usageFromResult(result.usage, Math.round(performance.now() - startedAt), result.providerMetadata);
+  const translations = parseSvgTranslationOutput(result.text);
+  return {
+    contents: applySvgTextTranslations(svgContents, textNodes, translations),
+    textNodes: textNodes.length,
+    translatedTextNodes: translations.size,
+    model: llmConfig.modelId,
+    telemetry,
+  };
+}
+
+function findSvgFileReferences(contents: string) {
+  const references: Array<{ url: string }> = [];
+  for (const match of contents.matchAll(/!\[[^\]]*]\((?<url>[^)\s]+?\.svg)(?:\s+["'][^)]+)?\)/gi)) {
+    if (match.groups?.url != null && !isExternalOrAbsoluteUrl(match.groups.url)) {
+      references.push({ url: match.groups.url });
+    }
+  }
+  for (const match of contents.matchAll(/\b(?:src|href)=["'](?<url>[^"']+?\.svg)["']/gi)) {
+    if (match.groups?.url != null && !isExternalOrAbsoluteUrl(match.groups.url)) {
+      references.push({ url: match.groups.url });
+    }
+  }
+  return references;
+}
+
+function resolveReferencedPostAsset(sourcePath: string, targetPath: string, url: string) {
+  const sourceDir = dirname(sourcePath);
+  const targetDir = dirname(targetPath);
+  const candidates = [
+    resolve(targetDir, url),
+    resolve(sourceDir, url.replace(/^(\.\.\/)+/, "")),
+    join(sourceDir, basename(url)),
+  ];
+  return candidates.find((candidate) => existsSync(candidate) && isInside(candidate, sourceDir));
 }
 
 function parseJsonObject(rawText: string) {
