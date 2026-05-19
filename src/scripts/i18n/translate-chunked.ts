@@ -100,7 +100,7 @@ function resolveLlmConfig(modelInput: string): LlmConfig {
       modelId: parsed.model,
       providerSettings: {
         apiKey: parsed.apiKey,
-        baseURL: parsed.host ? `https://${parsed.host}` : undefined,
+        baseURL: openRouterBaseUrl(parsed.host),
       },
       providerOptions: {
         openrouter: {
@@ -134,6 +134,12 @@ function resolveLlmConfig(modelInput: string): LlmConfig {
     maxTokens: 16000,
     timeoutMs: DEFAULT_LLM_TIMEOUT_MS,
   };
+}
+
+function openRouterBaseUrl(host: string | undefined) {
+  if (host == null || host === "" || host === "openrouter.ai") return undefined;
+  if (host === "openrouter.ai/api/v1") return undefined;
+  return `https://${host}`;
 }
 
 interface Telemetry {

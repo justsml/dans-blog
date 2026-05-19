@@ -42,6 +42,11 @@ import {
   type JudgeConfidence,
   type JudgeSuggestion,
 } from "./judge-utils.ts";
+import {
+  hasSourceModifiedDate,
+  isTranslationFreshForSourceContents,
+  isTranslationOlderThanSourceContents,
+} from "./corpus-inventory.ts";
 
 type SuggestionLogEntry = JudgeSuggestion & {
   pass: number;
@@ -75,6 +80,8 @@ const shouldRunFullValidation = options["full-validation"] === true;
 const timeoutSeconds = getTimeoutSeconds();
 const { sourcePath, targetPath, reportDir } = getPostPaths(slug, locale);
 assertNoOutOfCreditMarker();
+const sourceContents = readFileSync(sourcePath, "utf8");
+const shouldRequireFreshCandidates = hasSourceModifiedDate(sourceContents);
 const sourceRelPath = relativeToRepo(sourcePath);
 const targetRelPath = relativeToRepo(targetPath);
 const articleReportDir = join(process.cwd(), "reports/i18n", slug);
@@ -888,7 +895,7 @@ async function runJudgeCommand(
 
 function buildJudgeContext(contextItems: Array<CandidateRef | string>) {
   const sections = [
-    renderContextSection(sourceRelPath, readFileSync(sourcePath, "utf8")),
+    renderContextSection(sourceRelPath, sourceContents),
   ];
 
   for (const item of contextItems) {
@@ -1077,6 +1084,7 @@ function getCandidateCommits() {
     .split(/\r?\n/)
     .filter(Boolean)
     .filter((commit) => commitChangesTarget(commit) || getCandidatePathFromCommit(commit) != null)
+    .filter(candidateIsFreshEnoughForSource)
     .filter((commit) => candidateModels.length === 0 || candidateModels.includes(getCandidateModel(commit)))
     .reverse();
 
@@ -1091,7 +1099,7 @@ function getInitialCandidateRefs(candidateCommits: string[]): CandidateRef[] {
     model: getCandidateModel(commit),
   }));
 
-  if (!existsSync(targetPath)) return refs;
+  if (!shouldIncludeCurrentTranslation()) return refs;
 
   return [
     {
@@ -1102,6 +1110,19 @@ function getInitialCandidateRefs(candidateCommits: string[]): CandidateRef[] {
     },
     ...refs,
   ];
+}
+
+function shouldIncludeCurrentTranslation() {
+  return existsSync(targetPath) && !isTranslationOlderThanSourceContents(sourceContents, readFileSync(targetPath, "utf8"));
+}
+
+function candidateIsFreshEnoughForSource(commit: string) {
+  if (!shouldRequireFreshCandidates) return true;
+  try {
+    return isTranslationFreshForSourceContents(sourceContents, readCandidateCommitContents(commit));
+  } catch {
+    return false;
+  }
 }
 
 function chunkArray<T>(items: T[], size: number) {

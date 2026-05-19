@@ -4,6 +4,7 @@ import { spawn, type ChildProcess } from "node:child_process";
 import { ACTIVE_LOCALES, type ActiveLocale } from "../../shared/i18n.ts";
 import {
   collectSourcePostSlugs,
+  isTranslationFreshForSourceContents,
   isTranslationOlderThanSource,
   parseActiveLocales,
 } from "./corpus-inventory.ts";
@@ -574,13 +575,27 @@ function getCandidateTasks(): CandidateTask[] {
 }
 
 function getCandidateTaskStats(currentSlug: string, currentLocale: ActiveLocale): CandidateTaskStats {
-  const rows = readCandidateOutputRows(currentSlug, currentLocale);
+  const paths = getPostPaths(currentSlug, currentLocale);
+  const sourceContents = shouldOnlyModified ? readFileSync(paths.sourcePath, "utf8") : undefined;
+  const rows = readCandidateOutputRows(currentSlug, currentLocale)
+    .filter((row) => sourceContents == null || candidateRowIsFreshForSource(row, sourceContents));
   return {
     slug: currentSlug,
     locale: currentLocale,
-    candidateCount: rows.length > 0 ? rows.length : countCandidateReportFiles(join(REPORT_ROOT, currentSlug, currentLocale)),
+    candidateCount: rows.length > 0 || shouldOnlyModified
+      ? rows.length
+      : countCandidateReportFiles(join(REPORT_ROOT, currentSlug, currentLocale)),
     newestCandidateMs: getNewestCandidateMs(rows),
   };
+}
+
+function candidateRowIsFreshForSource(row: Record<string, unknown>, sourceContents: string) {
+  const candidatePath = typeof row.candidatePath === "string" ? row.candidatePath : undefined;
+  if (candidatePath == null) return false;
+
+  const absolutePath = join(process.cwd(), candidatePath);
+  if (!existsSync(absolutePath)) return false;
+  return isTranslationFreshForSourceContents(sourceContents, readFileSync(absolutePath, "utf8"));
 }
 
 function readCandidateOutputRows(currentSlug: string, currentLocale: ActiveLocale) {

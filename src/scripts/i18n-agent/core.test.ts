@@ -16,6 +16,7 @@ import {
   DEFAULT_AGENT_LOCALES,
   DEFAULT_AGENT_MODEL,
   DEFAULT_MAX_AGENT_STEPS,
+  DEFAULT_TRANSLATION_MODEL,
 } from "./runtime.ts";
 import { ACTIVE_LOCALES } from "../../shared/i18n.ts";
 
@@ -28,6 +29,7 @@ describe("resolveLlmConfig", () => {
     expect(config.temperature).toBe(0.2);
     expect(config.maxTokens).toBe(1234);
     expect(config.reasoningEffort).toBe("minimal");
+    expect(config.providerSettings.baseURL).toBeUndefined();
   });
 
   test("normalizes bare OpenRouter model ids", () => {
@@ -55,6 +57,30 @@ describe("i18n agent CLI", () => {
   test("accepts --models as judge consensus model shorthand", () => {
     expect(parseCliArgs(["--models", "a,b"]).judgeModels).toEqual(["a", "b"]);
     expect(parseCliArgs(["--judge-models", "c,d", "--models", "a,b"]).judgeModels).toEqual(["c", "d"]);
+  });
+
+  test("accepts multiple configured translation models", () => {
+    const args = parseCliArgs(["--translation-models", "model-a,model-b"]);
+    expect(args.translationModel).toBe("model-a");
+    expect(args.translationModels).toEqual(["model-a", "model-b"]);
+  });
+
+  test("keeps --translation-model as primary when combined with --translation-models", () => {
+    const args = parseCliArgs(["--translation-model", "primary", "--translation-models", "model-a,model-b"]);
+    expect(args.translationModel).toBe("primary");
+    expect(args.translationModels).toEqual(["primary", "model-a", "model-b"]);
+  });
+
+  test("preserves inline llm URL query strings while parsing options", () => {
+    const model = "llm://openrouter/google/gemini-3-flash-preview?temp=0&max=32000&cache=true";
+    const args = parseCliArgs([`--translation-models=${model},plain-model`]);
+    expect(args.translationModels).toEqual([model, "plain-model"]);
+  });
+
+  test("defaults translation model pool to the single configured translation model", () => {
+    const args = parseCliArgs([]);
+    expect(args.translationModel).toBe(DEFAULT_TRANSLATION_MODEL);
+    expect(args.translationModels).toEqual([DEFAULT_TRANSLATION_MODEL]);
   });
 
   test("defaults broad agent locale work to all active locales", () => {

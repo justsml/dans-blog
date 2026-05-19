@@ -255,6 +255,10 @@ export function isTranslationFreshForSourceContents(sourceContents: string, tran
   return translationModifiedMs != null && translationModifiedMs >= sourceModifiedMs;
 }
 
+export function hasSourceModifiedDate(sourceContents: string) {
+  return frontmatterModifiedMs(sourceContents) != null;
+}
+
 function existingTranslationPath(paths: Pick<PostPaths, "targetPath" | "fallbackTargetPath">) {
   if (existsSync(paths.targetPath)) return paths.targetPath;
   if (existsSync(paths.fallbackTargetPath)) return paths.fallbackTargetPath;

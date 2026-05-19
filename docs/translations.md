@@ -99,7 +99,7 @@ bun run i18n:translate:candidates -- \
   --models openrouter/qwen/qwen3.6-plus
 ```
 
-Use `--only-modified` for refresh passes that should only re-translate existing locale files whose English `modified` frontmatter date is newer than the localized file's `modified` date. Locale files with no `modified` are treated as stale when English has one; missing locale files are not included by this flag. The flag is supported by the candidate, all-missing, Qwen baseline, chunked translator, and candidate TUI wrappers.
+Use `--only-modified` for refresh passes that should only re-translate existing locale files whose English `modified` frontmatter date is newer than the localized file's `modified` date. Locale files with no `modified` are treated as stale when English has one; missing locale files are not included by this flag. Fresh candidate and judge rounds ignore stale candidate artifacts whose translated `modified` date is older than English, and the stale live translation is kept out of judge comparisons. The flag is supported by the candidate, all-missing, Qwen baseline, chunked translator, and candidate TUI wrappers.
 
 ```sh
 bun run i18n:translate:candidates -- \

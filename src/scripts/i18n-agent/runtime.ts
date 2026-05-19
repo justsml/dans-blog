@@ -16,6 +16,7 @@ export type TranslationAgentRuntimeOptions = {
   maxSteps: number;
   agentModel: string;
   translationModel: string;
+  translationModels: string[];
   judgeModel: string;
   judgeModels: string[];
   escalationJudgeModels: string[];
@@ -50,7 +51,9 @@ export async function createTranslationAgentRuntime(options: TranslationAgentRun
   const toolContext: TranslationAgentToolContext = {
     runId: options.runId,
     dryRun: options.dryRun,
+    defaultAgentModel: options.agentModel,
     defaultTranslationModel: options.translationModel,
+    defaultTranslationModels: options.translationModels.length > 0 ? options.translationModels : [options.translationModel],
     defaultJudgeModel: options.judgeModel,
     defaultJudgeModels: options.judgeModels.length > 0 ? options.judgeModels : [options.judgeModel],
     defaultEscalationJudgeModels: options.escalationJudgeModels,
@@ -96,9 +99,9 @@ export async function createTranslationAgentRuntime(options: TranslationAgentRun
           "- Known Pitfalls:",
           "",
           "## Model Notes",
-          "- Agent Model:",
-          "- Translation Model:",
-          "- Judge Model:",
+          `- Agent Model: ${options.agentModel}`,
+          `- Translation Models: ${(options.translationModels.length > 0 ? options.translationModels : [options.translationModel]).join(", ")}`,
+          `- Judge Models: ${(options.judgeModels.length > 0 ? options.judgeModels : [options.judgeModel]).join(", ")}`,
         ].join("\n"),
       },
       observationalMemory: {
@@ -140,10 +143,13 @@ export async function createTranslationAgentRuntime(options: TranslationAgentRun
       "As work advances, updateWorkingMemory after each major phase or tool batch so Progress shows completed, active, blocked, and remaining work. Keep updates concise and specific to the current slug/locale/model state.",
       "Use tools instead of guessing file contents. Prefer listPosts before translating if the slug is ambiguous.",
       "All final translations must go through the candidate workflow: read source, translateWithModel, writeCandidate, validateTranslation, scoreTranslation, then promoteCandidate only when appropriate.",
+      "When more than one translation model is configured, treat them as the candidate generation pool. Prefer generateTranslationCandidates for multi-model runs, then validate and judge the resulting candidates before promotion.",
+      "Use listConfiguredModels when choosing models or provider settings. Prefer the configured translation model pool for translation/SVG generation, the configured judge models for consensus, and explicit llm:// overrides only when the user asks for a different provider setting or the configured models are unsuitable.",
       "For publish decisions, prefer scoreTranslationConsensus over a single scoreTranslation call. The consensus tool shares judge scores/suggestions across models, asks for critical reconsideration, and escalates unresolved disagreement when configured.",
       "When improving a judged candidate, use refineCandidateWithConsensus: it applies judge-agreed suggestions first, iterates up to three score/fix passes, and selects the highest averaged consensus score as the latest candidate.",
       "Before validation, scoring, or promotion, make local asset paths deterministic with writeCandidate's built-in pre-adjustment or the preAdjustRelativePaths tool; it resolves assets against the English post and locale target folder instead of trusting model-written ../ guesses.",
       "When an article graphic is an SVG with reader-facing text, use translateSvgText or translateMdxSvgs to localize labels with article context. Keep the original English SVG filename, write that same filename into the locale folder, and point localized MDX at ./same-name.svg.",
+      "For SVG-only requests such as updating/creating translated SVGs, use updateTranslatedSvgFiles directly, even when localized SVG files already exist. Existing SVGs may need refreshed translations, model settings, or wrapping fixes; do not treat file existence as completion. Do not run generateTranslationCandidates, validateTranslation, scoreTranslation, promoteCandidate, or full article translation unless the user explicitly asks to change translated MDX prose.",
       "When asked to score current translations, use scoreCurrentTranslations or scoreTranslation against the existing localized MDX file; do not create a candidate first.",
       "When asked to check lost fidelity, use reverseTranslation to back-translate localized MDX to English and compare it with the English reference. Treat low similarity/faithfulness as a diagnostic signal, not proof of failure; confirm surprising results with other models or prompt tuning and value issues more when models converge.",
       "Treat consensus publishReady=false seriously when any judge keeps high/medium concrete fixes; do not average away blocking MDX, quiz-answer, or terminology issues.",

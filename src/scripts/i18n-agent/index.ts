@@ -23,6 +23,7 @@ type CliArgs = {
   agentTimeoutSeconds: number;
   agentModel: string;
   translationModel: string;
+  translationModels: string[];
   judgeModel: string;
   judgeModels: string[];
   escalationJudgeModels: string[];
@@ -39,6 +40,7 @@ async function main() {
     maxSteps: args.maxSteps,
     agentModel: args.agentModel,
     translationModel: args.translationModel,
+    translationModels: args.translationModels,
     judgeModel: args.judgeModel,
     judgeModels: args.judgeModels,
     escalationJudgeModels: args.escalationJudgeModels,
@@ -108,7 +110,9 @@ export function parseCliArgs(argv: string[]): CliArgs {
       continue;
     }
 
-    const [key, inlineValue] = arg.slice(2).split("=", 2);
+    const equalsIndex = arg.indexOf("=");
+    const key = equalsIndex === -1 ? arg.slice(2) : arg.slice(2, equalsIndex);
+    const inlineValue = equalsIndex === -1 ? undefined : arg.slice(equalsIndex + 1);
     const next = argv[i + 1];
     if (booleanOptions.has(key)) {
       options.set(key, true);
@@ -129,6 +133,18 @@ export function parseCliArgs(argv: string[]): CliArgs {
     || options.get("repl") === true
     || options.get("interactive") === true;
 
+  const explicitTranslationModel = stringOption(options, "translation-model") ?? process.env.I18N_TRANSLATION_MODEL;
+  const parsedTranslationModels = listOption(options, "translation-models")
+    ?? listEnv("I18N_TRANSLATION_MODELS");
+  const translationModel = explicitTranslationModel
+    ?? parsedTranslationModels?.[0]
+    ?? DEFAULT_TRANSLATION_MODEL;
+  const translationModels = parsedTranslationModels == null
+    ? [translationModel]
+    : uniqueNonEmpty(explicitTranslationModel == null
+      ? parsedTranslationModels
+      : [explicitTranslationModel, ...parsedTranslationModels]);
+
   return {
     prompt,
     interactive: explicitInteractive || (prompt == null && !once),
@@ -146,9 +162,8 @@ export function parseCliArgs(argv: string[]): CliArgs {
       "agent-timeout-seconds",
     ),
     agentModel: stringOption(options, "agent-model") ?? process.env.I18N_AGENT_MODEL ?? DEFAULT_AGENT_MODEL,
-    translationModel: stringOption(options, "translation-model")
-      ?? process.env.I18N_TRANSLATION_MODEL
-      ?? DEFAULT_TRANSLATION_MODEL,
+    translationModel,
+    translationModels,
     judgeModel: stringOption(options, "judge-model") ?? process.env.I18N_JUDGE_MODEL ?? DEFAULT_JUDGE_MODEL,
     judgeModels: listOption(options, "judge-models")
       ?? listOption(options, "models")
@@ -190,6 +205,7 @@ function printHeader(args: CliArgs, runId: string) {
     ["Agent timeout", `${args.agentTimeoutSeconds}s`],
     ["Agent model", ui.model(args.agentModel)],
     ["Translation model", ui.model(args.translationModel)],
+    ["Translation models", args.translationModels.map(ui.model).join(", ")],
     ["Judge models", args.judgeModels.map(ui.model).join(", ")],
     ["Escalation judges", args.escalationJudgeModels.length === 0
       ? ui.dim("none")
@@ -290,6 +306,10 @@ function withTimeout<T>(promise: Promise<T>, timeoutMs: number, message: string)
 
 function splitList(value: string) {
   return value.split(",").map((item) => item.trim()).filter(Boolean);
+}
+
+function uniqueNonEmpty(values: string[]) {
+  return [...new Set(values.map((value) => value.trim()).filter(Boolean))];
 }
 
 function createRunId() {

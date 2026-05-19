@@ -104,7 +104,7 @@ export function resolveLlmConfig(
     mastraModel: provider === "openrouter" ? `openrouter/${modelId}` : `${provider ?? "openrouter"}/${modelId}`,
     providerSettings: {
       apiKey: normalized.config.apiKey,
-      baseURL: host ? `https://${host}` : undefined,
+      baseURL: openRouterBaseUrl(host),
     },
     providerOptions,
     reasoningEffort,
@@ -116,6 +116,12 @@ export function resolveLlmConfig(
     ),
     timeoutMs: numberParam(params, ["timeout_ms", "timeoutMs", "timeout"], defaults.timeoutMs ?? DEFAULT_TIMEOUT_MS),
   };
+}
+
+function openRouterBaseUrl(host: string | undefined) {
+  if (host == null || host === "" || host === "openrouter.ai") return undefined;
+  if (host === "openrouter.ai/api/v1") return undefined;
+  return `https://${host}`;
 }
 
 export function createOpenRouterChatModel(config: ResolvedLlmConfig): LanguageModel {
