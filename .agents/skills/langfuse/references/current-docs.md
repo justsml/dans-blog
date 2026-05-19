@@ -130,24 +130,29 @@ curl -X POST "https://cloud.langfuse.com/api/public/v2/prompts" \
 Common public API paths to verify against the live API reference before implementation:
 
 - `POST /api/public/v2/prompts` for prompt versions.
-- `GET /api/public/datasets` and `POST /api/public/datasets` for datasets.
+- `GET /api/public/v2/datasets` and `POST /api/public/v2/datasets` for datasets.
 - `POST /api/public/dataset-items` for dataset items/upserts.
 - `POST /api/public/scores` for numeric/boolean/categorical eval scores attached to traces or observations.
 - `GET /api/public/traces` and `GET /api/public/traces/:traceId` for trace inspection/export.
 - `GET /api/public/observations/:observationId` for observation inspection.
 - `GET /api/public/annotation-queues` and `POST /api/public/annotation-queues` for human review queues.
 
-Score creation currently includes fields like:
+The main skill file includes a full endpoint catalog generated from the official OpenAPI `paths` list.
 
-```json
-{
-  "traceId": "trace_id_here",
-  "observationId": "observation_id_here",
-  "name": "correctness",
-  "value": 0.9,
-  "dataType": "NUMERIC",
-  "comment": "Factually correct"
-}
+Score creation currently uses `POST /api/public/scores` with fields like:
+
+```bash
+curl -X POST "https://cloud.langfuse.com/api/public/scores" \
+  -u "your-public-key:your-secret-key" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "traceId": "trace_id_here",
+    "observationId": "observation_id_here",
+    "name": "correctness",
+    "value": 0.9,
+    "dataType": "NUMERIC",
+    "comment": "Factually correct"
+  }'
 ```
 
 List endpoints usually paginate with `page` and `limit`, returning `data` and `meta`. Do not assume an endpoint returns all rows in one response.

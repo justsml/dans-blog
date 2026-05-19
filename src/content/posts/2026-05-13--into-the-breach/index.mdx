@@ -1,6 +1,6 @@
 ---
 title: "Into the Breach"
-subTitle: "Prevent AI powered attacks with decoys & subterfuge"
+subTitle: "Reduce risk from AI-powered attacks with decoys & subterfuge"
 date: 2026-05-13
 modified: 2026-05-16
 tags: [security, developer-experience, infostealers, credentials, devcontainers, supply-chain, ai-agents, canary-tokens, prompt-injection, github-actions, ci-cd]
@@ -20,7 +20,7 @@ related:
 
 ## Visual Table Of Contents
 
-![Blueprint for defending against supply chain attacks, with six steps: 1. Isolate (run inside DevContainers or cloud environments), 2. Limit Mounts (never mount Home, ~/.ssh, ~/.aws, etc.), 3. Scope Secrets (expose only necessary credentials), 4. Tripwire (seed canaries in .env files, ~/.aws/config, CI/CD, Password Managers), 5. Delay Risk (delay package updates 1+ day with pnpm's minPackageAge), and 6. Respond Fast (rotate keys, passwords, communicate, monitor).](./breach-infographic-blueprint.svg)
+![Blueprint for defending against supply chain attacks, with six steps: 1. Isolate (run inside DevContainers or cloud environments), 2. Limit Mounts (never mount Home, ~/.ssh, ~/.aws, etc.), 3. Scope Secrets (expose only necessary credentials), 4. Tripwire (seed canaries in .env files, ~/.aws/config, CI/CD, Password Managers), 5. Delay Risk (delay package updates 1+ day with pnpm's minimumReleaseAge), and 6. Respond Fast (rotate keys, passwords, communicate, monitor).](./breach-infographic-blueprint.svg)
 
 ## How to Get Hacked in 2026
 
@@ -128,7 +128,17 @@ Tools like [Socket.dev](https://socket.dev), [Snyk](https://snyk.io), and [Wiz](
 
 ### PNPM Minimum Age Settings
 
-If you use PNPM, set a minimum package age. Newly published packages are the highest-risk window for supply chain attacks — a package that has existed for less than 24 hours has had essentially zero community scrutiny. Set `minPackageAge` to at least `1440` (one day) or ideally `2880` (two days). This one config line eliminates an entire class of zero-day supply chain attack.
+If you use PNPM, set a minimum release age. Newly published packages are the highest-risk window for supply chain attacks — a package that has existed for less than 24 hours has had essentially zero community scrutiny. Set `minimumReleaseAge` in minutes: at least `1440` (one day), and ideally `2880` (two days).
+
+```yaml
+minimumReleaseAge: 2880
+minimumReleaseAgeStrict: true
+minimumReleaseAgeIgnoreMissingTime: false
+minimumReleaseAgeExclude:
+  - 'typescript'
+```
+
+That configuration blocks many newly-published-package attacks, especially the ones that get discovered and pulled before your next install. Use `minimumReleaseAgeExclude` sparingly for packages where immediate updates matter more than the delay, such as a compiler or runtime dependency you actively track.
 
 ### For the Most Security-Critical Environments
 

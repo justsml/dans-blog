@@ -253,7 +253,6 @@ playwright.config.ts         # E2E tests
 - **Hero media** - Add useful `cover_credit` when a post has credited hero imagery
 - **Subtitles** - Post subtitles render as paragraph/dek text, not heading levels
 - **Lists** - Preserve native ordered-list semantics in markdown and CSS; do not restyle `ol` into generic block/list-item wrappers
-- **Fast-moving claims** - Add a short "Last verified" note for claims about prices, limits, model capabilities, vendors, benchmarks, or tool availability
 - **Security prose** - Avoid absolute guarantees. Prefer defense-in-depth wording: "reduces risk", "makes exploitation harder", "limits blast radius"
 - **Legacy posts** - Do not hide old routable posts just because they are dated. Add historical framing and keep redirects/routes stable
 

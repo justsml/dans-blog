@@ -185,13 +185,135 @@ Always verify request/response shapes in the current API reference before implem
 | Task | Method/path | Notes |
 | --- | --- | --- |
 | Create prompt version | `POST /api/public/v2/prompts` | Supports text and chat prompts; prompt variables use `{{variable}}` templates. |
-| List/fetch datasets | `GET /api/public/datasets` | Paginated list of dataset metadata. |
-| Create/update dataset | `POST /api/public/datasets` | Use stable names and metadata for eval suites. |
+| List/fetch datasets | `GET /api/public/v2/datasets` | Paginated list of dataset metadata. |
+| Create dataset | `POST /api/public/v2/datasets` | Use stable names and metadata for eval suites. |
 | Create/upsert item | `POST /api/public/dataset-items` | Include dataset name, input, expected output, metadata, and optional source trace/observation IDs. |
 | Record score/eval result | `POST /api/public/scores` | Attach `NUMERIC`, `BOOLEAN`, `CATEGORICAL`, or text-like scores to traces/observations when supported by current API. |
 | Inspect traces | `GET /api/public/traces`, `GET /api/public/traces/:traceId` | Use for exports, regression triage, or eval dataset mining. |
 | Inspect observations | `GET /api/public/observations/:observationId` | Use for detailed generation/tool-call debugging. |
 | Manage annotation queues | `GET/POST /api/public/annotation-queues` | Useful for human review workflows tied to score configs. |
+
+Endpoint catalog from the official OpenAPI spec, last checked 2026-05-19:
+
+```text
+Annotation queues
+GET    /api/public/annotation-queues
+POST   /api/public/annotation-queues
+GET    /api/public/annotation-queues/{queueId}
+POST   /api/public/annotation-queues/{queueId}/assignments
+DELETE /api/public/annotation-queues/{queueId}/assignments
+GET    /api/public/annotation-queues/{queueId}/items
+POST   /api/public/annotation-queues/{queueId}/items
+GET    /api/public/annotation-queues/{queueId}/items/{itemId}
+PATCH  /api/public/annotation-queues/{queueId}/items/{itemId}
+DELETE /api/public/annotation-queues/{queueId}/items/{itemId}
+
+Comments
+GET    /api/public/comments
+POST   /api/public/comments
+GET    /api/public/comments/{commentId}
+
+Datasets
+GET    /api/public/v2/datasets
+POST   /api/public/v2/datasets
+GET    /api/public/v2/datasets/{datasetName}
+GET    /api/public/dataset-items
+POST   /api/public/dataset-items
+GET    /api/public/dataset-items/{id}
+DELETE /api/public/dataset-items/{id}
+GET    /api/public/dataset-run-items
+POST   /api/public/dataset-run-items
+GET    /api/public/datasets/{datasetName}/runs
+GET    /api/public/datasets/{datasetName}/runs/{runName}
+DELETE /api/public/datasets/{datasetName}/runs/{runName}
+
+Health and ingestion
+GET    /api/public/health
+POST   /api/public/ingestion
+POST   /api/public/otel/v1/traces
+
+Integrations and media
+GET    /api/public/integrations/blob-storage
+PUT    /api/public/integrations/blob-storage
+GET    /api/public/integrations/blob-storage/{id}
+DELETE /api/public/integrations/blob-storage/{id}
+GET    /api/public/llm-connections
+PUT    /api/public/llm-connections
+DELETE /api/public/llm-connections/{id}
+POST   /api/public/media
+GET    /api/public/media/{mediaId}
+PATCH  /api/public/media/{mediaId}
+
+Metrics, observations, traces, and sessions
+GET    /api/public/metrics
+GET    /api/public/v2/metrics
+GET    /api/public/observations
+GET    /api/public/observations/{observationId}
+GET    /api/public/v2/observations
+GET    /api/public/traces
+DELETE /api/public/traces
+GET    /api/public/traces/{traceId}
+DELETE /api/public/traces/{traceId}
+GET    /api/public/sessions
+GET    /api/public/sessions/{sessionId}
+
+Models
+GET    /api/public/models
+POST   /api/public/models
+GET    /api/public/models/{id}
+DELETE /api/public/models/{id}
+
+Organization, project, and SCIM APIs
+GET    /api/public/organizations/apiKeys
+GET    /api/public/organizations/memberships
+PUT    /api/public/organizations/memberships
+DELETE /api/public/organizations/memberships
+GET    /api/public/organizations/projects
+GET    /api/public/projects
+POST   /api/public/projects
+PUT    /api/public/projects/{projectId}
+DELETE /api/public/projects/{projectId}
+GET    /api/public/projects/{projectId}/apiKeys
+POST   /api/public/projects/{projectId}/apiKeys
+DELETE /api/public/projects/{projectId}/apiKeys/{apiKeyId}
+GET    /api/public/projects/{projectId}/memberships
+PUT    /api/public/projects/{projectId}/memberships
+DELETE /api/public/projects/{projectId}/memberships
+GET    /api/public/scim/ResourceTypes
+GET    /api/public/scim/Schemas
+GET    /api/public/scim/ServiceProviderConfig
+GET    /api/public/scim/Users
+POST   /api/public/scim/Users
+GET    /api/public/scim/Users/{userId}
+DELETE /api/public/scim/Users/{userId}
+
+Prompts
+GET    /api/public/v2/prompts
+POST   /api/public/v2/prompts
+GET    /api/public/v2/prompts/{promptName}
+DELETE /api/public/v2/prompts/{promptName}
+PATCH  /api/public/v2/prompts/{name}/versions/{version}
+
+Scores and score configs
+POST   /api/public/scores
+DELETE /api/public/scores/{scoreId}
+GET    /api/public/v2/scores
+GET    /api/public/v2/scores/{scoreId}
+GET    /api/public/score-configs
+POST   /api/public/score-configs
+GET    /api/public/score-configs/{configId}
+PATCH  /api/public/score-configs/{configId}
+
+Unstable evaluators and evaluation rules
+GET    /api/public/unstable/evaluators
+POST   /api/public/unstable/evaluators
+GET    /api/public/unstable/evaluators/{evaluatorId}
+GET    /api/public/unstable/evaluation-rules
+POST   /api/public/unstable/evaluation-rules
+GET    /api/public/unstable/evaluation-rules/{evaluationRuleId}
+PATCH  /api/public/unstable/evaluation-rules/{evaluationRuleId}
+DELETE /api/public/unstable/evaluation-rules/{evaluationRuleId}
+```
 
 Minimal REST helper pattern:
 
@@ -220,7 +342,26 @@ export async function langfuseApi<T>(path: string, init: RequestInit = {}): Prom
 }
 ```
 
-Prompt creation example:
+Prompt creation cURL example:
+
+```bash
+curl -X POST "${LANGFUSE_BASE_URL:-https://cloud.langfuse.com}/api/public/v2/prompts" \
+  -u "$LANGFUSE_PUBLIC_KEY:$LANGFUSE_SECRET_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "type": "chat",
+    "name": "translation-candidate",
+    "prompt": [
+      { "role": "system", "content": "Translate to {{locale}} while preserving MDX." },
+      { "role": "user", "content": "{{source}}" }
+    ],
+    "labels": ["staging"],
+    "tags": ["i18n"],
+    "commitMessage": "Add staging translation candidate prompt"
+  }'
+```
+
+Prompt creation TypeScript example:
 
 ```ts
 await langfuseApi("/api/public/v2/prompts", {
@@ -239,7 +380,22 @@ await langfuseApi("/api/public/v2/prompts", {
 });
 ```
 
-Score creation example:
+Score creation cURL example:
+
+```bash
+curl -X POST "${LANGFUSE_BASE_URL:-https://cloud.langfuse.com}/api/public/scores" \
+  -u "$LANGFUSE_PUBLIC_KEY:$LANGFUSE_SECRET_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "traceId": "trace_id_here",
+    "name": "mdx-valid",
+    "value": 1,
+    "dataType": "NUMERIC",
+    "comment": "MDX parsed successfully"
+  }'
+```
+
+Score creation TypeScript example:
 
 ```ts
 await langfuseApi("/api/public/scores", {
