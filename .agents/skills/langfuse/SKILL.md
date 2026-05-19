@@ -1,27 +1,60 @@
 ---
 name: langfuse
-description: Use Langfuse for LLM observability, tracing, prompt management, datasets, experiments, evals, and debugging. Trigger when Codex needs to instrument JavaScript/TypeScript or Python LLM apps with Langfuse, add OpenAI/LangChain tracing, wire prompt versions to generations, inspect or design Langfuse-backed evaluation workflows, configure Langfuse Cloud or self-hosted credentials, or verify traces without exposing secrets.
+description: Use Langfuse with TypeScript LLM apps, especially Vercel AI SDK, Mastra, and REST API integrations. Trigger when Codex needs to add or debug Langfuse observability for AI SDK generateText/streamText telemetry, OpenTelemetry setup with @ai-sdk/otel and @langfuse/otel, Mastra observability with @mastra/langfuse, Mastra-to-AI-SDK streaming via @mastra/ai-sdk, RESTful management of prompts/datasets/scores/annotation queues, prompt/version metadata, datasets/evals, trace verification, or safe Langfuse environment configuration.
 ---
 
 # Langfuse
 
-Use this skill to add or maintain Langfuse in LLM applications. Prefer the app's existing telemetry patterns, package manager, runtime, and deployment conventions.
+Use this skill to add Langfuse observability and management automation to TypeScript AI applications. Bias toward AI SDK, Mastra, and Langfuse Public API integrations; use raw OpenAI wrappers only when the app is not built on AI SDK or Mastra.
 
 ## First Pass
 
-1. Identify the runtime and integration path:
-   - JS/TS OpenAI SDK: use `@langfuse/openai` and wrap the OpenAI client with `observeOpenAI`.
-   - JS/TS custom spans or agents: use `@langfuse/client` plus `@langfuse/tracing` primitives.
-   - Python functions or agents: use `langfuse`, `@observe`, and `get_client()`.
-   - Python LangChain: use `langfuse.langchain.CallbackHandler`.
-2. Read current official docs before changing SDK APIs. Use Context7 for `Langfuse`, `/langfuse/langfuse-js`, or `/langfuse/langfuse-python`; fall back to official `langfuse.com/docs` only when Context7 lacks the needed detail.
-3. Check the repo's package manager and lockfile. Keep Bun/pnpm/npm/uv/poetry choices consistent with the project.
-4. Check existing environment/config patterns. Never print, hard-code, or commit Langfuse keys.
-5. Make one narrow instrumentation change, then run the smallest local verification that exercises a trace or prompt path.
+1. Identify the integration path:
+   - AI SDK call sites: `generateText`, `streamText`, tool calls, or provider models from `ai` and `@ai-sdk/*`.
+   - Mastra app: `Mastra`, `Agent`, workflows, model router strings, or `@mastra/*` packages.
+   - Hybrid Mastra + AI SDK UI: Mastra streams converted for AI SDK consumers.
+   - Management automation: prompts, datasets, dataset items/runs, scores, annotation queues, traces, or observations via `/api/public/*`.
+2. Verify current APIs before editing:
+   - AI SDK: use Context7 for `/websites/ai-sdk_dev_v7` or the installed package docs/types.
+   - Mastra: follow the `mastra` skill; prefer embedded docs in `node_modules/@mastra/*/dist/docs/` when installed.
+   - Langfuse: use Context7 for `/langfuse/langfuse-docs` and `/langfuse/langfuse-js`.
+3. Check installed versions and package manager. In Bun repos, use `bun add`; otherwise preserve the repo's existing manager.
+4. Add the narrowest telemetry wiring that matches the runtime.
+5. Run type checks and one trace-producing path when credentials are available.
+
+## Packages
+
+AI SDK + Langfuse OpenTelemetry:
+
+```bash
+bun add ai @ai-sdk/otel @langfuse/otel @opentelemetry/sdk-node
+```
+
+Add the provider package already used by the app, for example:
+
+```bash
+bun add @ai-sdk/openai
+```
+
+Mastra + Langfuse:
+
+```bash
+bun add @mastra/langfuse
+```
+
+Mastra streams or API routes consumed by AI SDK UIs:
+
+```bash
+bun add @mastra/ai-sdk
+```
+
+Only add `@langfuse/openai` for direct OpenAI SDK call sites that are not going through AI SDK or Mastra.
+
+REST-only automation does not require an SDK package. Use `fetch`, the repo's existing HTTP client, or generated API clients if already present.
 
 ## Environment
 
-Use environment variables unless the host app already centralizes secrets differently:
+Use environment variables unless the app already has a typed config layer:
 
 ```bash
 LANGFUSE_PUBLIC_KEY=pk-lf-...
@@ -29,155 +62,235 @@ LANGFUSE_SECRET_KEY=sk-lf-...
 LANGFUSE_BASE_URL=https://cloud.langfuse.com
 ```
 
-For EU Cloud or self-hosted instances, set `LANGFUSE_BASE_URL` to that instance's URL. Add non-secret examples to `.env.example` or deployment docs when the repo has that convention; do not add real keys.
+Set `LANGFUSE_BASE_URL` for non-default regions or self-hosted instances. Add non-secret examples to `.env.example` when that convention exists; never print or commit real keys.
 
-Useful optional metadata:
+Useful trace attributes:
 
+- `serviceName`: stable app or worker name
 - `environment`: `development`, `staging`, or `production`
 - `release`: git SHA, app version, or deployment id
-- `sample_rate`: reduce volume for high-throughput paths
-- `userId`, `sessionId`, `tags`, and `metadata`: add only values that are safe under the app's privacy policy
+- `functionId`: stable AI SDK operation name
+- `userId`, `sessionId`, `tags`, `metadata`: safe identifiers only
 
-## JavaScript/TypeScript
+For REST calls, authenticate with HTTP Basic Auth using `LANGFUSE_PUBLIC_KEY` as the username and `LANGFUSE_SECRET_KEY` as the password. Never assemble a Basic Auth header in logged strings.
 
-Install only the packages needed by the integration path. Examples:
+## AI SDK
 
-```bash
-bun add langfuse @langfuse/openai
-bun add @langfuse/client @langfuse/tracing @langfuse/openai
-```
+For AI SDK v7-style telemetry, wire OpenTelemetry once near app startup, then attach per-call metadata with `telemetry`.
 
-Use the repo's package manager equivalent if it is not Bun.
-
-OpenAI tracing pattern:
+Node script or worker pattern:
 
 ```ts
-import OpenAI from "openai";
-import { observeOpenAI } from "@langfuse/openai";
+import { openai } from "@ai-sdk/openai";
+import { LegacyOpenTelemetry } from "@ai-sdk/otel";
+import { LangfuseSpanProcessor } from "@langfuse/otel";
+import { NodeSDK } from "@opentelemetry/sdk-node";
+import { generateText, registerTelemetry } from "ai";
 
-const openai = observeOpenAI(new OpenAI({ apiKey: process.env.OPENAI_API_KEY }), {
-  traceName: "answer-question",
-  environment: process.env.NODE_ENV,
-  tags: ["llm"],
+const sdk = new NodeSDK({
+  spanProcessors: [new LangfuseSpanProcessor()],
 });
 
-const response = await openai.chat.completions.create({
-  model: "gpt-4o-mini",
-  messages: [{ role: "user", content: input }],
-});
+sdk.start();
+registerTelemetry(new LegacyOpenTelemetry());
+
+try {
+  const result = await generateText({
+    model: openai("gpt-4o-mini"),
+    prompt,
+    telemetry: {
+      functionId: "translate-candidate",
+      metadata: {
+        release: process.env.GIT_SHA,
+        tags: ["i18n", "eval"],
+      },
+    },
+  });
+
+  return result.text;
+} finally {
+  await sdk.shutdown();
+}
 ```
 
-Custom span pattern:
+Next.js or long-running server pattern:
 
 ```ts
-import { startActiveObservation } from "@langfuse/tracing";
+import { LegacyOpenTelemetry } from "@ai-sdk/otel";
+import { LangfuseSpanProcessor } from "@langfuse/otel";
+import { NodeTracerProvider } from "@opentelemetry/sdk-trace-node";
+import { registerTelemetry } from "ai";
 
-await startActiveObservation("answer-question", async (span) => {
-  span.update({ input });
-  const output = await answerQuestion(input);
-  span.update({ output });
-  return output;
+registerTelemetry(new LegacyOpenTelemetry());
+
+const tracerProvider = new NodeTracerProvider({
+  spanProcessors: [new LangfuseSpanProcessor()],
+});
+
+tracerProvider.register();
+```
+
+Older examples may use `experimental_telemetry`; check the installed AI SDK major before copying them. Prefer `telemetry` for current AI SDK v7 code.
+
+## Mastra
+
+When the app is Mastra-based, prefer Mastra's Langfuse exporter instead of manually wrapping model calls.
+
+```ts
+import { LangfuseExporter } from "@mastra/langfuse";
+import { Mastra } from "@mastra/core";
+
+export const mastra = new Mastra({
+  // agents, workflows, storage, logger, etc.
+  observability: {
+    configs: {
+      langfuse: {
+        serviceName: "my-service",
+        exporters: [new LangfuseExporter()],
+      },
+    },
+  },
 });
 ```
 
-For scripts, queues, tests, and serverless handlers, flush or shut down before process exit if the SDK exposes a lifecycle method in the installed version. Verify the current method name from docs or local types.
+Follow the `mastra` skill before writing Mastra code:
 
-## Python
+- Check `node_modules/@mastra/` and read embedded docs for the installed version.
+- Verify provider/model names with the Mastra provider registry before changing models.
+- Use Mastra Studio or `mastra api` when a human-visible or machine-readable trace/debug loop helps.
 
-Install with the repo's Python package manager:
+## Mastra + AI SDK UI
 
-```bash
-pip install langfuse
+Use `@mastra/ai-sdk` when a Mastra agent stream needs to feed an AI SDK v5+ compatible consumer.
+
+```ts
+import { toAISdkV5Stream } from "@mastra/ai-sdk";
+
+const agent = mastra.getAgent("supportAgent");
+const stream = await agent.stream([
+  { role: "user", content: message },
+]);
+
+return toAISdkV5Stream(stream, { from: "agent" });
 ```
 
-Decorator tracing pattern:
+Keep Langfuse at the Mastra observability layer for these paths unless the AI SDK edge route also makes independent model calls.
 
-```py
-from langfuse import Langfuse, observe, get_client
+## REST API
 
-langfuse = Langfuse()
+Use the Langfuse Public API when Codex needs to manage prompt versions, datasets, dataset items, scores, annotation queues, traces, or observations from scripts, CLIs, CI jobs, admin tools, or backend routes.
 
-@observe(as_type="agent", name="answer-question")
-def answer_question(question: str) -> str:
-    answer = call_model(question)
-    get_client().update_current_trace(
-        tags=["llm"],
-        metadata={"component": "qa"},
-    )
-    return answer
+Always verify request/response shapes in the current API reference before implementation. Common current paths:
 
-try:
-    answer_question("What is Langfuse?")
-finally:
-    langfuse.shutdown()
+| Task | Method/path | Notes |
+| --- | --- | --- |
+| Create prompt version | `POST /api/public/v2/prompts` | Supports text and chat prompts; prompt variables use `{{variable}}` templates. |
+| List/fetch datasets | `GET /api/public/datasets` | Paginated list of dataset metadata. |
+| Create/update dataset | `POST /api/public/datasets` | Use stable names and metadata for eval suites. |
+| Create/upsert item | `POST /api/public/dataset-items` | Include dataset name, input, expected output, metadata, and optional source trace/observation IDs. |
+| Record score/eval result | `POST /api/public/scores` | Attach `NUMERIC`, `BOOLEAN`, `CATEGORICAL`, or text-like scores to traces/observations when supported by current API. |
+| Inspect traces | `GET /api/public/traces`, `GET /api/public/traces/:traceId` | Use for exports, regression triage, or eval dataset mining. |
+| Inspect observations | `GET /api/public/observations/:observationId` | Use for detailed generation/tool-call debugging. |
+| Manage annotation queues | `GET/POST /api/public/annotation-queues` | Useful for human review workflows tied to score configs. |
+
+Minimal REST helper pattern:
+
+```ts
+const langfuseBaseUrl = process.env.LANGFUSE_BASE_URL ?? "https://cloud.langfuse.com";
+const auth = Buffer.from(
+  `${process.env.LANGFUSE_PUBLIC_KEY}:${process.env.LANGFUSE_SECRET_KEY}`,
+).toString("base64");
+
+export async function langfuseApi<T>(path: string, init: RequestInit = {}): Promise<T> {
+  const response = await fetch(`${langfuseBaseUrl}${path}`, {
+    ...init,
+    headers: {
+      "content-type": "application/json",
+      authorization: `Basic ${auth}`,
+      ...init.headers,
+    },
+  });
+
+  if (!response.ok) {
+    const body = await response.text();
+    throw new Error(`Langfuse API ${response.status} ${response.statusText}: ${body}`);
+  }
+
+  return response.json() as Promise<T>;
+}
 ```
 
-Use `langfuse.auth_check()` when validating credentials, and `flush()` or `shutdown()` for short-lived processes.
+Prompt creation example:
 
-LangChain pattern:
-
-```py
-from langfuse.langchain import CallbackHandler
-
-handler = CallbackHandler()
-response = chain.invoke(
-    {"question": question},
-    config={"callbacks": [handler]},
-)
+```ts
+await langfuseApi("/api/public/v2/prompts", {
+  method: "POST",
+  body: JSON.stringify({
+    type: "chat",
+    name: "translation-candidate",
+    prompt: [
+      { role: "system", content: "Translate to {{locale}} while preserving MDX." },
+      { role: "user", content: "{{source}}" },
+    ],
+    labels: ["staging"],
+    tags: ["i18n"],
+    commitMessage: "Add staging translation candidate prompt",
+  }),
+});
 ```
 
-## Prompt Management
+Score creation example:
 
-When prompts belong in Langfuse instead of source code:
-
-1. Fetch by stable prompt name and label.
-2. Provide a safe fallback only when the app should keep running if Langfuse is unavailable.
-3. Compile variables explicitly.
-4. Link the prompt object/version to the generation so traces explain which prompt produced the output.
-
-Python pattern:
-
-```py
-prompt = langfuse.get_prompt(
-    "summarize-article",
-    type="text",
-    label="production",
-    fallback="Summarize: {{article}}",
-)
-rendered = prompt.compile(article=article)
+```ts
+await langfuseApi("/api/public/scores", {
+  method: "POST",
+  body: JSON.stringify({
+    traceId,
+    name: "mdx-valid",
+    value: 1,
+    dataType: "NUMERIC",
+    comment: "MDX parsed successfully",
+  }),
+});
 ```
 
-Prefer source-controlled prompt fixtures for tests even when production prompts live in Langfuse.
+REST automation rules:
 
-## Evals And Datasets
+- Make create/upsert scripts idempotent with stable names, ids, labels, and metadata.
+- Include pagination handling for list endpoints; do not assume the first page is complete.
+- Keep eval run names deterministic enough to compare, but unique enough to avoid overwriting history.
+- Prefer SDK helpers when the repo already uses Langfuse SDKs for the same operation; use REST when SDK coverage is missing, CLI scripts need a tiny dependency footprint, or an admin route needs explicit HTTP behavior.
+- Do not send broad production exports to Langfuse or pull broad trace data without stating scope.
 
-Use Langfuse datasets/experiments when the task needs reproducible comparisons across prompts, models, or agent versions.
+## Prompts, Evals, And Datasets
 
-- Keep dataset item inputs, expected outputs, metadata, and run names deterministic.
-- Record model, prompt version, release, environment, and code version on every run.
-- Treat evaluator code as production logic: test pure scorers locally and version changes.
+- Put prompt name, prompt version or label, model, locale, eval slug, and release in trace metadata when they explain a run.
+- Keep source-controlled prompt fixtures for tests even if production prompts are managed in Langfuse.
+- Use Langfuse datasets/experiments for repeatable comparisons across prompts, models, agents, or Mastra workflow versions.
 - Separate deterministic checks from LLM-as-judge checks. Deterministic failures should block; judge findings should include examples.
-- When adding CI gates, make the upload scope explicit because Langfuse may receive prompts, outputs, metadata, and eval results.
+- For API-managed evals, persist score names, data types, scorer versions, and source trace/dataset item IDs so results can be audited later.
+- State upload scope before running broad evals because Langfuse may receive prompts, outputs, metadata, and scores.
 
 ## Verification
 
 Before finishing:
 
-1. Run type checks or targeted tests for touched code.
-2. Exercise one local path that creates a trace, unless credentials are unavailable.
-3. For unavailable credentials, verify env validation and SDK imports without sending data.
-4. Confirm buffered events are flushed for scripts/serverless paths.
-5. Check logs for authentication, network, or exporter errors.
-6. State what was verified and whether a trace was actually sent.
+1. Run the repo's type check or the smallest targeted test for touched files.
+2. Confirm env validation works without exposing keys.
+3. Exercise one `generateText`, `streamText`, Mastra agent, or Mastra workflow path that emits a trace when credentials are available.
+4. For REST work, exercise a harmless read endpoint or a scoped test write, then verify the returned id/status.
+5. Shut down or flush OpenTelemetry exporters in scripts, workers, tests, and one-shot CLIs.
+6. Check logs for authentication, exporter, network, pagination, or rate-limit errors.
+7. Report whether a real Langfuse trace/API write was sent, which command/path produced it, and what sensitive data is excluded or redacted.
 
-## Privacy And Safety
+## Privacy
 
-- Do not log secrets, raw auth headers, API keys, private documents, or full user records into trace metadata.
+- Do not send secrets, auth headers, private documents, or full user records into metadata.
 - Redact or disable input/output capture for sensitive payloads.
-- Use stable internal IDs instead of emails or names when possible.
-- Add sampling before high-volume instrumentation.
-- Avoid claiming Langfuse proves correctness; say it improves observability, debugging, and evaluation evidence.
+- Prefer stable internal IDs over emails or names.
+- Add sampling before instrumenting high-volume paths.
+- Say Langfuse improves observability and evaluation evidence; do not claim it proves correctness.
 
 ## References
 
-Read `references/current-docs.md` for current package names, API reminders, and doc lookup hints before making SDK-specific edits.
+Read `references/current-docs.md` before SDK- or API-specific edits. It records the current AI SDK, Mastra, Langfuse package, and REST API touchpoints and which docs to re-check.
