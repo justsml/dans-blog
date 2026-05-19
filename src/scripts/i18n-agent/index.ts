@@ -7,6 +7,7 @@ import {
   createTranslationAgentRuntime,
   DEFAULT_AGENT_MODEL,
   DEFAULT_JUDGE_MODEL,
+  DEFAULT_MAX_AGENT_STEPS,
   DEFAULT_SECOND_JUDGE_MODEL,
   DEFAULT_TRANSLATION_MODEL,
 } from "./runtime.ts";
@@ -17,6 +18,7 @@ type CliArgs = {
   thread: string;
   resource: string;
   dryRun: boolean;
+  maxSteps: number;
   agentModel: string;
   translationModel: string;
   judgeModel: string;
@@ -32,6 +34,7 @@ async function main() {
     resourceId: args.resource,
     runId,
     dryRun: args.dryRun,
+    maxSteps: args.maxSteps,
     agentModel: args.agentModel,
     translationModel: args.translationModel,
     judgeModel: args.judgeModel,
@@ -81,7 +84,7 @@ async function generate(
       thread: args.thread,
       resource: args.resource,
     },
-    maxSteps: 12,
+    maxSteps: args.maxSteps,
     onIterationComplete: ({ iteration, toolCalls, isFinal }) => {
       if (toolCalls.length > 0) {
         printToolStep(iteration, toolCalls);
@@ -130,6 +133,11 @@ export function parseCliArgs(argv: string[]): CliArgs {
     thread: stringOption(options, "thread") ?? "default",
     resource: stringOption(options, "resource") ?? "dan-blog-i18n",
     dryRun: options.get("dry-run") === true,
+    maxSteps: parsePositiveInteger(
+      stringOption(options, "max-steps") ?? process.env.I18N_AGENT_MAX_STEPS,
+      DEFAULT_MAX_AGENT_STEPS,
+      "max-steps",
+    ),
     agentModel: stringOption(options, "agent-model") ?? process.env.I18N_AGENT_MODEL ?? DEFAULT_AGENT_MODEL,
     translationModel: stringOption(options, "translation-model")
       ?? process.env.I18N_TRANSLATION_MODEL
@@ -170,6 +178,7 @@ function printHeader(args: CliArgs, runId: string) {
     ["Thread", args.thread],
     ["Resource", args.resource],
     ["Dry run", args.dryRun ? ui.warn("yes") : "no"],
+    ["Max steps", String(args.maxSteps)],
     ["Agent model", ui.model(args.agentModel)],
     ["Translation model", ui.model(args.translationModel)],
     ["Judge models", args.judgeModels.map(ui.model).join(", ")],
@@ -249,6 +258,15 @@ function listOption(options: Map<string, string | true>, key: string) {
 function listEnv(key: string) {
   const value = process.env[key];
   return value == null || value.trim() === "" ? undefined : splitList(value);
+}
+
+function parsePositiveInteger(value: string | undefined, fallback: number, label: string) {
+  if (value == null) return fallback;
+  const parsed = Number(value);
+  if (!Number.isInteger(parsed) || parsed < 1) {
+    throw new Error(`--${label} must be a positive integer. Received: ${value}`);
+  }
+  return parsed;
 }
 
 function splitList(value: string) {

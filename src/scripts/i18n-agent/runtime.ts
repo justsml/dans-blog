@@ -12,6 +12,7 @@ export type TranslationAgentRuntimeOptions = {
   resourceId: string;
   runId: string;
   dryRun: boolean;
+  maxSteps: number;
   agentModel: string;
   translationModel: string;
   judgeModel: string;
@@ -20,13 +21,14 @@ export type TranslationAgentRuntimeOptions = {
 };
 
 export const DEFAULT_AGENT_MODEL =
-  "llm://openrouter/google/gemini-3-flash-preview?temp=0.2&max=42000&cache=true";
+  "llm://openrouter/deepseek/deepseek-v4-flash:nitro?temp=0.2&max=42000&cache=true";
 export const DEFAULT_TRANSLATION_MODEL =
   "llm://openrouter/deepseek/deepseek-v4-flash?temp=0.15&max=26000&cache=true";
 export const DEFAULT_JUDGE_MODEL =
   "llm://openrouter/google/gemini-3-flash-preview?temp=0&max=12000&cache=true";
 export const DEFAULT_SECOND_JUDGE_MODEL =
   "llm://openrouter/deepseek/deepseek-v4-flash:nitro?temp=0&max=12000&cache=true";
+export const DEFAULT_MAX_AGENT_STEPS = 80;
 
 export async function createTranslationAgentRuntime(options: TranslationAgentRuntimeOptions) {
   mkdirSync(join(process.cwd(), ".cache/i18n-agent"), { recursive: true });
@@ -67,6 +69,16 @@ export async function createTranslationAgentRuntime(options: TranslationAgentRun
           "- Candidate Run:",
           "- Current Candidate:",
           "- Open Questions:",
+          "",
+          "## Plan",
+          "- [ ] Identify source/locales and existing translation state",
+          "- [ ] Generate or inspect candidate work",
+          "- [ ] Validate structure and assets",
+          "- [ ] Score/judge with configured models",
+          "- [ ] Promote or summarize why promotion is blocked",
+          "",
+          "## Progress",
+          "- Not started",
           "",
           "## Prompt Strategy",
           "- Translation Prompt Notes:",
@@ -118,6 +130,8 @@ export async function createTranslationAgentRuntime(options: TranslationAgentRun
     tools,
     instructions: [
       "You are TranslationAgent, a local CLI agent for translating DanLevy.net MDX posts.",
+      "At the start of every user request, create a short plan before other translation, scoring, validation, promotion, or file-writing tools. Use updateWorkingMemory to write the plan into the Plan section with unchecked checklist items and a Progress section showing the current status.",
+      "As work advances, updateWorkingMemory after each major phase or tool batch so Progress shows completed, active, blocked, and remaining work. Keep updates concise and specific to the current slug/locale/model state.",
       "Use tools instead of guessing file contents. Prefer listPosts before translating if the slug is ambiguous.",
       "All final translations must go through the candidate workflow: read source, translateWithModel, writeCandidate, validateTranslation, scoreTranslation, then promoteCandidate only when appropriate.",
       "For publish decisions, prefer scoreTranslationConsensus over a single scoreTranslation call. The consensus tool shares judge scores/suggestions across models, asks for critical reconsideration, and escalates unresolved disagreement when configured.",
@@ -139,7 +153,7 @@ export async function createTranslationAgentRuntime(options: TranslationAgentRun
       "Use recordNote when you learn a recurring locale/model/prompt/validation lesson.",
     ].join("\n"),
     defaultOptions: {
-      maxSteps: 12,
+      maxSteps: options.maxSteps,
       modelSettings: {
         temperature: agentModel.temperature,
         maxOutputTokens: agentModel.maxTokens,

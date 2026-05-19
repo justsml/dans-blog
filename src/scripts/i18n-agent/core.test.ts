@@ -12,6 +12,10 @@ import {
   resolvePromptProfile,
 } from "./prompt-profiles.ts";
 import { parseCliArgs } from "./index.ts";
+import {
+  DEFAULT_AGENT_MODEL,
+  DEFAULT_MAX_AGENT_STEPS,
+} from "./runtime.ts";
 
 describe("resolveLlmConfig", () => {
   test("maps llm-strings OpenRouter config into AI SDK settings", () => {
@@ -34,6 +38,16 @@ describe("resolveLlmConfig", () => {
 describe("i18n agent CLI", () => {
   test("defaults to interactive thread mode without a prompt", () => {
     expect(parseCliArgs([]).interactive).toBe(true);
+  });
+
+  test("uses DeepSeek Nitro as the default agent model", () => {
+    expect(parseCliArgs([]).agentModel).toBe(DEFAULT_AGENT_MODEL);
+    expect(DEFAULT_AGENT_MODEL).toContain("openrouter/deepseek/deepseek-v4-flash:nitro");
+  });
+
+  test("uses a high configurable max step budget", () => {
+    expect(parseCliArgs([]).maxSteps).toBe(DEFAULT_MAX_AGENT_STEPS);
+    expect(parseCliArgs(["--max-steps", "123"]).maxSteps).toBe(123);
   });
 
   test("keeps prompt runs one-shot unless thread mode is explicit", () => {
