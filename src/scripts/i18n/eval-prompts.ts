@@ -120,8 +120,8 @@ const DEFAULT_MODELS = [
 ];
 const DEFAULT_JUDGE_MODEL = "openrouter/google/gemini-3-flash-preview";
 const TIMEOUT_MS = 90_000;
-const MIN_OUTPUT_TOKENS = 6_000;
-const MAX_OUTPUT_TOKENS = 16_000;
+const MIN_OUTPUT_TOKENS = 28_000;
+const MAX_OUTPUT_TOKENS = 48_000;
 const MINIMAX_EVAL_CHUNK_SIZE = "6p";
 
 const args = parseArgs();

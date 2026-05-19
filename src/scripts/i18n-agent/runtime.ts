@@ -20,13 +20,13 @@ export type TranslationAgentRuntimeOptions = {
 };
 
 export const DEFAULT_AGENT_MODEL =
-  "llm://openrouter/google/gemini-3-flash-preview?temp=0.2&max=12000&cache=true";
+  "llm://openrouter/google/gemini-3-flash-preview?temp=0.2&max=42000&cache=true";
 export const DEFAULT_TRANSLATION_MODEL =
-  "llm://openrouter/deepseek/deepseek-v4-flash?temp=0.15&max=16000&cache=true";
+  "llm://openrouter/deepseek/deepseek-v4-flash?temp=0.15&max=26000&cache=true";
 export const DEFAULT_JUDGE_MODEL =
-  "llm://openrouter/google/gemini-3-flash-preview?temp=0&max=8000&cache=true";
+  "llm://openrouter/google/gemini-3-flash-preview?temp=0&max=12000&cache=true";
 export const DEFAULT_SECOND_JUDGE_MODEL =
-  "llm://openrouter/deepseek/deepseek-v4-flash?temp=0&max=8000&cache=true";
+  "llm://openrouter/deepseek/deepseek-v4-flash:nitro?temp=0&max=12000&cache=true";
 
 export async function createTranslationAgentRuntime(options: TranslationAgentRuntimeOptions) {
   mkdirSync(join(process.cwd(), ".cache/i18n-agent"), { recursive: true });

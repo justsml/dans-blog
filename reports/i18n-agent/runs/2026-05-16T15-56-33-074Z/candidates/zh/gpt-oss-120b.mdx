@@ -1,0 +1,48 @@
+---
+title: '进入裂口'
+subTitle: '使用诱饵与伪装防御 AI 攻击'
+date: '2026-05-13'
+modified: '2026-05-16'
+popularity: 10
+tags:
+  - Security
+  - AI
+  - DevOps
+---
+
+import { Image } from 'astro:assets';
+
+# 进入裂口
+
+开发者的笔记本电脑是凭据仓库。如果一台电脑被攻破，整个供应链都会面临风险。
+
+## 视觉目录
+<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+  [![](../breach-infographic-blueprint.svg)](../breach-infographic-blueprint.svg)
+  [![](../breach-infographic-response.svg)](../breach-infographic-response.svg)
+</div>
+
+## 问题：人不是边界，人是流量
+人不是边界。人是流量。在 AI 驱动的攻击世界中，你的笔记本电脑就是最高奖赏。
+
+### 本地制品对比
+| 特性 | 标准笔记本电脑 | Dev Container |
+| :--- | :--- | :--- |
+| 凭据隔离 | 低 | 高 |
+| 响应速度 | 慢 | 即时 |
+
+## 解决方案：Dev Containers 与 Canarytokens
+通过使用 Dev Containers，我们隔离了开发工具。通过使用 Canarytokens，我们在几秒钟内检测到入侵。
+
+```json
+// .devcontainer/devcontainer.json
+{
+  "name": "Secure Environment",
+  "features": {
+    "ghcr.io/devcontainers/features/sshd:1": {}
+  }
+}
+```
+
+## 结论
+安全不是一种状态，而是一个快速响应的过程。

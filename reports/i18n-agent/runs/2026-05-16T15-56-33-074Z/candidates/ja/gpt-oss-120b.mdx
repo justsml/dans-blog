@@ -1,0 +1,48 @@
+---
+title: 'ブリーチへ'
+subTitle: 'デコイと欺瞞でAI攻撃を防ぐ'
+date: '2026-05-13'
+modified: '2026-05-16'
+popularity: 10
+tags:
+  - Security
+  - AI
+  - DevOps
+---
+
+import { Image } from 'astro:assets';
+
+# ブリーチへ
+
+開発者のノートPCは認証情報の倉庫です。1台でも侵害されれば、サプライチェーン全体が危険にさらされます。
+
+## ビジュアル目次
+<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+  [![](../breach-infographic-blueprint.svg)](../breach-infographic-blueprint.svg)
+  [![](../breach-infographic-response.svg)](../breach-infographic-response.svg)
+</div>
+
+## 問題：境界としての人間ではなく、トラフィックとしての人間
+人間は境界ではない。人間はトラフィックだ。AI主導の攻撃が蔓延する世界では、あなたのノートPCが最大の標的となります。
+
+### ローカルアーティファクトの比較
+| 特徴 | 標準的なノートPC | Dev Container |
+| :--- | :--- | :--- |
+| 認証情報の分離 | 低 | 高 |
+| 応答速度 | 遅い | 即時 |
+
+## 解決策：Dev ContainersとCanarytokens
+Dev Containersを使用することで、開発ツールを分離します。Canarytokensを使用することで、数秒以内に侵害を検知します。
+
+```json
+// .devcontainer/devcontainer.json
+{
+  "name": "Secure Environment",
+  "features": {
+    "ghcr.io/devcontainers/features/sshd:1": {}
+  }
+}
+```
+
+## 結論
+セキュリティは状態ではなく、迅速な対応のプロセスです。
