@@ -1,0 +1,167 @@
+# Translation Candidate
+- Slug: into-the-breach
+- Locale: ar
+- Model: openrouter/google/gemma-4-26b-a4b-it:nitro
+- Target: src/content/posts/2026-05-13--into-the-breach/ar/index.mdx
+- Validation: deferred
+- Runtime seconds: 187.43
+- Input tokens: 7791
+- Output tokens: 38346
+- Thinking tokens: unknown
+- Cached input tokens: 12
+- Cache write tokens: 0
+- Estimated cost: $0.000000
+- Pricing source: unknown
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: ''
+subTitle: ''
+modified: '2026-05-16'
+tags:
+  - security
+  - developer-experience
+  - infostealers
+  - credentials
+  - devcontainers
+  - supply-chain
+  - ai-agents
+  - canary-tokens
+  - prompt-injection
+  - github-actions
+  - ci-cd
+category: Security
+subCategory: Security
+social_image: ../desktop-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+cover_alt: ''
+related:
+  - mastra-security-guardrails
+  - patchy-with-a-chance-of-vulnerability
+  - docker-security-tips-for-self-hosting
+---
+
+
+لم يقتحم المهاجم المستودع. بل وجد مفاتيح قديمة في درج مكتب.
+
+بالنسبة للمطورين، يبدو ذلك "الدرج" كالتالي:
+
+| الأثر المحلي | لماذا يهم المهاجمين |
+| --- | --- |
+| ملفات تعريف الارتباط (Cookies) في المتصفح | يمكنها تجاوز تسجيل الدخول وتخطي MFA أحيانًا. |
+| ملفات `.env` | مفاتيح API، وروابط قواعد البيانات، وأسرار JWT. |
+| إعدادات Cloud CLI | تحول اختراق المحمول إلى وصول كامل للبنية التحتية. |
+| مفاتيح SSH | لا تزال منتشرة في كل مكان، ولا تزال قوية، ولا تزال تُنسخ بين الأجهزة. |
+| رموز مدير الحزم (Package manager tokens) | رمز النشر الخاص بك في npm أو PyPI هو بمثابة وصول لسلسلة التوريد (supply chain). |
+| نسخ قواعد البيانات (Database dumps) | حمايتها أقل من بيئة الإنتاج، وغالبًا ما تكون أكثر اكتمالاً. |
+| سياق البرمجة للذكاء الاصطناعي (AI coding context) | قد يكون قد تم تزويد المساعد بملفات حساسة "من أجل السياق". |
+
+ثم هناك النسخ الاحتياطية — تصديرات من بيئة الإنتاج تركها شخص ما في `~/Downloads` ونساها. النسخة الاحتياطية ليست أكثر أمانًا لمجرد أنها "خاملة"؛ هي ببساطة بيئة إنتاج تفتقر إلى نظام إنذار.
+
+## حل "كن حذرًا" غير المجدي
+
+"كن حذرًا" نصيحة ضعيفة؛ فهي تطلب من الإنسان أن يكون هو الحد الفاصل.
+
+البشر ليسوا حدودًا. البشر هم حركة مرور (traffic).
+
+الحدود يجب أن تكون مملة: عزل نظام الملفات، تشفير الأسرار أثناء السكون (encrypted-at-rest)، بيانات اعتماد قصيرة العمر، مصادقة مدعومة بالأجهزة (hardware-backed auth)، وتنبيهات تنطلق فور لمس أي سر وهمي.
+
+إذا بدأت عملية خبيثة بالعمل، فإن الأسئلة التي ستحدد ما إذا كنت ستواجه "مساءً سيئًا" أو "حادثًا على مستوى الشركة" هي:
+1. ما الذي يمكن لهذه العملية **قراءته**؟
+2. ما هي بيانات الاعتماد التي يمكنها **استخدامها**؟
+3. إلى أين يمكنها **إرسال البيانات**؟
+
+## الخطوات الأكثر تأثيرًا في الوقت الحالي
+
+### حاويات التطوير (Dev Containers) — كخيار افتراضي
+
+تُعد [Development Containers](https://github.com/devcontainers/spec) التغيير الأكثر تأثيرًا الذي لا تقوم به معظم الفرق. تعمل حاوية التطوير (Dev Container) على تشغيل مهام المشروع داخل حاوية Docker معزولة. عمليات مثل `npm install` و `pip install` وسكربتات `postinstall` وأوامر shell الخاصة بالذكاء الاصطناعي وإضافات VS Code — كل هذا يحدث داخل "مساحة عمل" أو حاوية لا يمكنها رؤية بقية جهازك.
+
+<p class="inset">اطلب من Claude Code إعداد DevContainers في أي مشروع.</p>
+
+قم بعمل mount للمستودع. قم بتضمين الأسرار اللازمة لهذا المشروع فقط. لا تقم بعمل mount لـ `~/.ssh` أو `~/.aws` أو دليل المنزل (home directory) لمجرد الراحة. التعليمات المحقونة عبر الـ prompt لا يمكنها الوصول إلا لما يمكن للوكيل (agent) الوصول إليه — اجعل ذلك الأمر مملًا.
+
+```jsonc
+// .devcontainer/devcontainer.json
+{
+  "name": "app",
+  "image": "mcr.microsoft.com/devcontainers/typescript-node:1-22",
+  "mounts": [
+    "source=${localWorkspaceFolder},target=/workspaces/app,type=bind,consistency=cached"
+  ]
+}
+```
+
+### رموز الكناري (Canary Tokens) — النشر المكثف
+
+تُعد [Canarytokens](https://canarytokens.org) بمثابة أسلاك فخ رقمية مجانية. ازرع سرًا وهميًا ولكنه مقنع في مكان قد يبحث فيه المهاجم. في اللحظة التي يتم فيها لمسه، ستتلقى تنبيهًا — غالبًا في غضون ثوانٍ. فكر في الأمر كأنك تترك عبوة صبغة داخل رزمة أموال مزيفة.
+
+يقوم المهاجمون بعملية جرد قبل السرقة. مرحلة الاستطلاع تلك هي نافذتك.
+
+ضع الكناري في ملفاتك التي تبدو الأكثر إغراءً:
+
+```text
+~/.aws/credentials          ← add a fake [billing-prod-legacy] profile with a canary key
+~/backups/customer-export-2024.sql   ← canary URL inside
+~/.env.canary               ← fake credentials in every repo
+```
+
+رموز الكناري مجانية عبر [canarytokens.org](https://canarytokens.org)، ويمكن استضافتها ذاتيًا، كما تتوفر كخدمة SaaS مدفوعة عبر [Thinkst Canary](https://canary.tools). لا يوجد سبب وجيه يمنع نشرها في كل مكان قد يبحث فيه السارق.
+
+### أدوات أمن الحزم
+
+أدوات مثل [Socket.dev](https://socket.dev) و [Snyk](https://snyk.io) و [Wiz](https://wiz.io) غالبًا ما تكون الأولى في اكتشاف وصد هجمات سلاسل التوريد (supply chain attacks) أثناء حدوثها. فهي تراقب سجلات الحزم (package registries) التي لا يمكنك مراقبتها بنفسك. بالنسبة للفرق التي لا تستطيع تحمل تكلفة برنامج أمني بدوام كامل، تُعد هذه الأدوات أنظمة إنذار مبكر عالية الفعالية.
+
+### إعدادات الحد الأدنى لعمر الحزمة في PNPM
+
+إذا كنت تستخدم PNPM، فقم بتعيين حد أدنى لعمر الإصدار. الحزم المنشورة حديثًا هي النافذة الأكثر خطورة لهجمات سلاسل التوريد — فالحزمة التي لم يمضِ على وجودها سوى أقل من 24 ساعة لم تخضع فعليًا لأي تدقيق من المجتمع. اضبط `minimumReleaseAge` بالدقائق: على الأقل `1440` (يوم واحد)، ومن الأفضل `2880` (يومان).
+
+```yaml
+minimumReleaseAge: 2880
+minimumReleaseAgeStrict: true
+minimumReleaseAgeIgnoreMissingTime: false
+minimumReleaseAgeExclude:
+  - 'typescript'
+```
+
+هذا الإعداد يصد العديد من هجمات الحزم المنشورة حديثًا، خاصة تلك التي يتم اكتشافها وسحبها قبل عملية التثبيت التالية لديك. استخدم `minimumReleaseAgeExclude` بحذر للحزم التي تهم فيها التحديثات الفورية أكثر من التأخير، مثل المترجمات (compilers) أو تبعيات وقت التشغيل (runtime dependencies) التي تتابعها بنشاط.
+
+### للبيئات الأكثر حساسية أمنيًا
+
+وكالات الاستخبارات، جهات إنفاذ القانون، البنية التحتية للتداول المالي، السجلات الصحية — تتبنى هذه البيئات أحيانًا عملية صارمة لتقييم واعتماد الحزم. قد يبدو هذا آمنًا، لكن المقايضة قاسية: شجرة التبعيات (dependency tree) الخاصة بك ستتحول ببطء إلى برمجيات قديمة ومتصلبة.
+
+الوقت ليس عاملًا محايدًا هنا. الإصدارات القديمة تتراكم فيها ثغرات CVE المعروفة. يدرس المهاجمون الإصدارات التي تم إصلاحها للعثور على حالات لم تُعالج بعد. ومبدأ "العدو الذي تعرفه أفضل من الذي لا تعرفه" ليس هو الخلاص الذي كنت تأمله — بل يخبرك فقط عن الثغرات التي أتيح للمهاجم أطول وقت لإتقانها.
+
+تعمل القوائم البيضاء (allowlists) الصارمة إذا كان لديك الموظفون اللازمون لصيانتها، ومعظم الفرق لا تملك ذلك. بالنسبة للجميع، يوفر النهج متعدد الطبقات — Dev Containers، وcanary tokens، وأدوات أمن الحزم، وcredentials قصيرة العمر — دفاعًا أكثر واقعية من التظاهر بقدرتك على مراجعة كل تبعية يدويًا.
+
+## لديك دقائق معدودة
+
+عندما ينطلق تنبيه الكناري — أو عندما ينبهك GitHub إلى استخدام رمز (token) من عنوان IP غير متوقع — فلديك نافذة زمنية. دقائق، ربما بضع ساعات. وليس أسبوعًا.
+
+- **قم بالتدوير أولاً، والتحقيق لا
+
+يتحسن الأمن عندما نتوقف عن مطالبة البشر بالكمال، ونبدأ في جعل عملية الاختراق أقل ربحية.
+
+جهاز المحمول الخاص بك أصبح جزءًا من بيئة الإنتاج (production) الآن. ضع له تلك القيود "المملة" التي تكتشف المهاجم الذي اقتحم النظام، وكذلك المهاجم الذي سمحت له بالدخول عن طريق الخطأ.
+
+## المصادر وقراءات مفيدة
+
+- [نظرة عامة على تقرير Verizon 2026 DBIR](https://www.verizon.com/business/resources/reports/dbir/)
+- [Mandiant: مجموعة UNC5537 تستهدف مثيلات عملاء Snowflake](https://cloud.google.com/blog/topics/threat-intelligence/unc5537-snowflake-data-theft-extortion)
+- [Microsoft: تقنيات وآليات تسليم Lumma Stealer وقدراته](https://www.microsoft.com/en-us/security/blog/2025/05/21/lumma-stealer-breaking-down-the-delivery-techniques-and-capabilities-of-a-prolific-infostealer/)
+- [Microsoft DCU: تعطيل Lumma Stealer](https://blogs.microsoft.com/on-the-issues/2025/05/21/microsoft-leads-global-action-against-favored-cybercrime-tool/)
+- [GitHub: تحصين أمن GitHub Actions](https://docs.github.com/en/actions/security-for-github-actions/security-guides/security-hardening-for-github-actions)
+- [مواصفات Development Containers](https://github.com/devcontainers/spec)
+- [نظرة عامة على Thinkst Canarytokens](https://help.canary.tools/hc/en-gb/articles/10905485310109-Canarytoken-Overview-and-Use-Cases)
+- [Canarytokens.org (مجاني، مفتوح المصدر)](https://canarytokens.org)
+- [أمن سلاسل التوريد من Socket.dev](https://socket.dev)
+- [Snyk](https://snyk.io)
+- [Wiz](https://wiz.io)
+- [Objective-See LuLu](https://objective-see.org/products/lulu.html)
+- [Little Snitch](https://obdev.at/products/littlesnitch/)
+- [أذونات Claude Code](https://code.claude.com/docs/en/permissions)
+````
