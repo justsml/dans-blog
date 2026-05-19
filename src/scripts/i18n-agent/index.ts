@@ -6,6 +6,7 @@ import { table, truncate, ui } from "../i18n/terminal-ui.ts";
 import {
   createTranslationAgentRuntime,
   DEFAULT_AGENT_MODEL,
+  DEFAULT_AGENT_TIMEOUT_SECONDS,
   DEFAULT_JUDGE_MODEL,
   DEFAULT_MAX_AGENT_STEPS,
   DEFAULT_SECOND_JUDGE_MODEL,
@@ -19,6 +20,7 @@ type CliArgs = {
   resource: string;
   dryRun: boolean;
   maxSteps: number;
+  agentTimeoutSeconds: number;
   agentModel: string;
   translationModel: string;
   judgeModel: string;
@@ -79,7 +81,7 @@ async function generate(
   prompt: string,
   args: CliArgs,
 ) {
-  return agent.generate(prompt, {
+  return withTimeout(agent.generate(prompt, {
     memory: {
       thread: args.thread,
       resource: args.resource,
@@ -92,7 +94,7 @@ async function generate(
         console.log(`${ui.good("step")} ${ui.title(String(iteration))} ${ui.dim("final response")}`);
       }
     },
-  });
+  }), args.agentTimeoutSeconds * 1000, `Agent turn timed out after ${args.agentTimeoutSeconds}s. The last printed step may be a completed tool call; the wait is usually the next model response.`);
 }
 
 export function parseCliArgs(argv: string[]): CliArgs {
@@ -138,12 +140,18 @@ export function parseCliArgs(argv: string[]): CliArgs {
       DEFAULT_MAX_AGENT_STEPS,
       "max-steps",
     ),
+    agentTimeoutSeconds: parsePositiveInteger(
+      stringOption(options, "agent-timeout-seconds") ?? process.env.I18N_AGENT_TIMEOUT_SECONDS,
+      DEFAULT_AGENT_TIMEOUT_SECONDS,
+      "agent-timeout-seconds",
+    ),
     agentModel: stringOption(options, "agent-model") ?? process.env.I18N_AGENT_MODEL ?? DEFAULT_AGENT_MODEL,
     translationModel: stringOption(options, "translation-model")
       ?? process.env.I18N_TRANSLATION_MODEL
       ?? DEFAULT_TRANSLATION_MODEL,
     judgeModel: stringOption(options, "judge-model") ?? process.env.I18N_JUDGE_MODEL ?? DEFAULT_JUDGE_MODEL,
     judgeModels: listOption(options, "judge-models")
+      ?? listOption(options, "models")
       ?? listEnv("I18N_JUDGE_MODELS")
       ?? [
         stringOption(options, "judge-model") ?? process.env.I18N_JUDGE_MODEL ?? DEFAULT_JUDGE_MODEL,
@@ -179,6 +187,7 @@ function printHeader(args: CliArgs, runId: string) {
     ["Resource", args.resource],
     ["Dry run", args.dryRun ? ui.warn("yes") : "no"],
     ["Max steps", String(args.maxSteps)],
+    ["Agent timeout", `${args.agentTimeoutSeconds}s`],
     ["Agent model", ui.model(args.agentModel)],
     ["Translation model", ui.model(args.translationModel)],
     ["Judge models", args.judgeModels.map(ui.model).join(", ")],
@@ -267,6 +276,16 @@ function parsePositiveInteger(value: string | undefined, fallback: number, label
     throw new Error(`--${label} must be a positive integer. Received: ${value}`);
   }
   return parsed;
+}
+
+function withTimeout<T>(promise: Promise<T>, timeoutMs: number, message: string): Promise<T> {
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  const timeout = new Promise<never>((_, reject) => {
+    timer = setTimeout(() => reject(new Error(message)), timeoutMs);
+  });
+  return Promise.race([promise, timeout]).finally(() => {
+    if (timer != null) clearTimeout(timer);
+  });
 }
 
 function splitList(value: string) {

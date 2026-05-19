@@ -13,9 +13,11 @@ import {
 } from "./prompt-profiles.ts";
 import { parseCliArgs } from "./index.ts";
 import {
+  DEFAULT_AGENT_LOCALES,
   DEFAULT_AGENT_MODEL,
   DEFAULT_MAX_AGENT_STEPS,
 } from "./runtime.ts";
+import { ACTIVE_LOCALES } from "../../shared/i18n.ts";
 
 describe("resolveLlmConfig", () => {
   test("maps llm-strings OpenRouter config into AI SDK settings", () => {
@@ -48,6 +50,16 @@ describe("i18n agent CLI", () => {
   test("uses a high configurable max step budget", () => {
     expect(parseCliArgs([]).maxSteps).toBe(DEFAULT_MAX_AGENT_STEPS);
     expect(parseCliArgs(["--max-steps", "123"]).maxSteps).toBe(123);
+  });
+
+  test("accepts --models as judge consensus model shorthand", () => {
+    expect(parseCliArgs(["--models", "a,b"]).judgeModels).toEqual(["a", "b"]);
+    expect(parseCliArgs(["--judge-models", "c,d", "--models", "a,b"]).judgeModels).toEqual(["c", "d"]);
+  });
+
+  test("defaults broad agent locale work to all active locales", () => {
+    expect(DEFAULT_AGENT_LOCALES).toEqual([...ACTIVE_LOCALES]);
+    expect(DEFAULT_AGENT_LOCALES).toEqual(["es", "hi", "ja", "ru", "de", "fr", "it", "ar", "he", "zh"]);
   });
 
   test("keeps prompt runs one-shot unless thread mode is explicit", () => {

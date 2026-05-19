@@ -103,7 +103,7 @@ Use `--only-modified` for refresh passes that should only re-translate existing 
 
 ```sh
 bun run i18n:translate:candidates -- \
-  --locales es,ja,zh \
+  --locales es,hi,ja,ru,de,fr,it,ar,he,zh \
   --only-modified \
   --task-concurrency 12 \
   --quiz-concurrency 24

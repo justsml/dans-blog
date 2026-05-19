@@ -20,7 +20,7 @@ Use this skill for DanLevy.net article translation work. The priority is not onl
 - Translate reader-facing prose, frontmatter `title` and `subTitle`, image alt text, quiz text, options, and explanations.
 - Localized frontmatter inherits English-only publishing metadata. Omit `date`, `draft`, `unlisted`, `hidden`, `publish`, and `popularity` in translated docs; keep `modified` and preserve other metadata such as `category`, `subCategory`, `tags`, `related`, `redirects`, and `commentsKeyOverride`.
 - Use parent-relative asset paths in nested locale folders, for example `../banner.webp`.
-- Arabic, Hebrew, and Chinese are active translation targets. Arabic and Hebrew are RTL locales; preserve the source MDX structure even when the translated prose reads right-to-left.
+- All active translation targets come from `src/shared/i18n.ts`: `es`, `hi`, `ja`, `ru`, `de`, `fr`, `it`, `ar`, `he`, and `zh`. When the user asks for broad/missing/current locale work and does not specify locales, default to all active locales. Arabic and Hebrew are RTL locales; preserve the source MDX structure even when the translated prose reads right-to-left.
 - Do not optimize for pristine Git history during large translation sweeps when the user asks for throughput. Preserve messy candidate, rejection, accounting, judge, and cleanup commits.
 
 ## Model Set
@@ -118,7 +118,6 @@ For higher-risk batches, add a second cheap judge explicitly with `--second-mode
 
    ```sh
    bun run i18n:translate:all-missing -- \
-     --locales ar,he,zh \
      --models openrouter/openai/gpt-oss-120b:nitro,openrouter/deepseek/deepseek-v4-flash \
      --min-candidates 2 \
      --judge-model openrouter/google/gemini-3-flash-preview \
@@ -157,8 +156,8 @@ For higher-risk batches, add a second cheap judge explicitly with `--second-mode
 6. Check coverage:
 
    ```sh
-   bun run i18n:coverage -- --locales ar,he,zh
-   bun run i18n:translate:all-missing -- --locales ar,he,zh --dry-run
+   bun run i18n:coverage
+   bun run i18n:translate:all-missing -- --dry-run
    ```
 
    `reports/i18n/coverage.md` is generated output and should be committed when it reflects the run.
@@ -166,7 +165,7 @@ For higher-risk batches, add a second cheap judge explicitly with `--second-mode
 7. Validate:
 
    ```sh
-   for f in src/content/posts/*/{ar,he,zh}/index.mdx; do
+   for f in src/content/posts/*/{es,hi,ja,ru,de,fr,it,ar,he,zh}/index.mdx; do
      dir=${f%/*}
      locale=${dir##*/}
      post=${dir%/*}

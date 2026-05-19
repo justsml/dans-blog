@@ -4,6 +4,7 @@ import { Agent } from "@mastra/core/agent";
 import { Mastra } from "@mastra/core";
 import { Memory } from "@mastra/memory";
 import { LibSQLStore } from "@mastra/libsql";
+import { ACTIVE_LOCALES } from "../../shared/i18n.ts";
 import { resolveLlmConfig } from "../i18n/core/model-config.ts";
 import { createTranslationAgentTools, type TranslationAgentToolContext } from "./tools.ts";
 
@@ -29,6 +30,8 @@ export const DEFAULT_JUDGE_MODEL =
 export const DEFAULT_SECOND_JUDGE_MODEL =
   "llm://openrouter/deepseek/deepseek-v4-flash:nitro?temp=0&max=12000&cache=true";
 export const DEFAULT_MAX_AGENT_STEPS = 80;
+export const DEFAULT_AGENT_TIMEOUT_SECONDS = 300;
+export const DEFAULT_AGENT_LOCALES = [...ACTIVE_LOCALES];
 
 export async function createTranslationAgentRuntime(options: TranslationAgentRuntimeOptions) {
   mkdirSync(join(process.cwd(), ".cache/i18n-agent"), { recursive: true });
@@ -62,6 +65,8 @@ export async function createTranslationAgentRuntime(options: TranslationAgentRun
         scope: "thread",
         template: [
           "# Translation Working Memory",
+          "",
+          `Default locales: ${DEFAULT_AGENT_LOCALES.join(", ")}`,
           "",
           "## Active Task",
           "- Slug:",
@@ -130,6 +135,7 @@ export async function createTranslationAgentRuntime(options: TranslationAgentRun
     tools,
     instructions: [
       "You are TranslationAgent, a local CLI agent for translating DanLevy.net MDX posts.",
+      `When the user does not specify locales, default to every active locale: ${DEFAULT_AGENT_LOCALES.join(", ")}. Do not silently narrow broad translation, scoring, SVG localization, coverage, or validation tasks to a pilot subset such as es/ja/zh or ar/he/zh.`,
       "At the start of every user request, create a short plan before other translation, scoring, validation, promotion, or file-writing tools. Use updateWorkingMemory to write the plan into the Plan section with unchecked checklist items and a Progress section showing the current status.",
       "As work advances, updateWorkingMemory after each major phase or tool batch so Progress shows completed, active, blocked, and remaining work. Keep updates concise and specific to the current slug/locale/model state.",
       "Use tools instead of guessing file contents. Prefer listPosts before translating if the slug is ambiguous.",
@@ -145,7 +151,8 @@ export async function createTranslationAgentRuntime(options: TranslationAgentRun
       "When asked to tune prompts, keep the legacy i18n prompt as the base and create small versioned overlays with tuneTranslationPrompt, scoped by locale and model pattern.",
       "When asked to tune judging or scoring, use tuneJudgePrompt with the same locale/model-pattern discipline; judge prompt profiles should be small, measurable overlays on the legacy scoring rubric.",
       "Keep prompt tuning cache-friendly: stable locale/model guidance belongs in cached prompt-profile fields; per-chunk text, current file paths, candidate ids, peer assessments, and one-off fixes belong in dynamic fields.",
-      "Use getPromptProfile before changing prompt profiles when the user asks to inspect the effective prompt. Set kind=translation or kind=judge intentionally. Use listPromptProfiles to discover existing tuning.",
+      "Prompt-profile lookup is already automatic inside translation and judge tools. Do not call listPromptProfiles during normal translation, SVG, validation, scoring, consensus, or promotion work. Use listPromptProfiles only when the user explicitly asks to inspect, tune, list, or debug prompt profiles.",
+      "Use getPromptProfile before changing prompt profiles when the user asks to inspect the effective prompt. Set kind=translation or kind=judge intentionally.",
       "Treat confidence as a decision signal, not decoration: high confidence needs low-to-zero high/medium issues plus judge agreement or strong frontier-model scoring; low confidence should trigger another judge, prompt experiment, or manual review.",
       "Never write final localized MDX with writeCandidate or readFile. promoteCandidate is the only final publish path.",
       "When dry-run is enabled, do not promote. Explain where candidate artifacts were written.",

@@ -30,7 +30,7 @@ bun run i18n:eval -- --dry-run
 bun run i18n:eval
 
 # Multiple locales — each becomes its own set of eval cases
-bun run i18n:eval -- --locales es,ja,zh
+bun run i18n:eval -- --locales es,hi,ja,ru,de,fr,it,ar,he,zh
 
 # Compare multiple models in parallel against the same inputs
 bun run i18n:eval -- --models openrouter/qwen/qwen3-32b:nitro,openrouter/deepseek/deepseek-v4-flash
@@ -66,7 +66,7 @@ bun run i18n:eval -- --print-streams
 | --- | --- | --- |
 | `--models` | two cheap defaults | Comma-separated translation models to compare in parallel |
 | `--judge-model` | `gemini-3-flash-preview` | Model used to score translations |
-| `--locales` | all active locales | Comma-separated locales (`es,ja,zh`, …) — each is a separate eval axis |
+| `--locales` | all active locales | Comma-separated locales (`es,hi,ja,ru,de,fr,it,ar,he,zh`, …) — each is a separate eval axis |
 | `--kind` | `all` | `article`, `quiz`, or `all` |
 | `--slug` | — | Pin to one or more comma-separated slugs (auto-detects article vs quiz) |
 | `--translation-prompt-profile-id` / `--prompt-profile-id` | active profile lookup | Force a specific translation prompt profile version |
