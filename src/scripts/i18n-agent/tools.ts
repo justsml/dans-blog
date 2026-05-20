@@ -21,6 +21,7 @@ import {
   type ScoreConsensusOutput,
 } from "../i18n/core/score.ts";
 import { validateTranslation } from "../i18n/core/validate.ts";
+import { compareMdxStructure } from "../i18n/structural-validation.ts";
 import { safeModelPathName } from "../i18n/translation-costs.ts";
 import {
   createPromptProfileVersion,
@@ -271,6 +272,54 @@ const reverseTranslationOutputSchema = z.object({
   telemetry: telemetrySchema,
   cost: tokenCostSchema,
 });
+const structureCountsSchema = z.object({
+  h1: z.number(),
+  h2: z.number(),
+  h3: z.number(),
+  h4: z.number(),
+  h5: z.number(),
+  h6: z.number(),
+  links: z.number(),
+  blockquotes: z.number(),
+  codeFences: z.number(),
+  tables: z.number(),
+  tableRows: z.number(),
+  tableColumns: z.number(),
+  images: z.number(),
+  altTexts: z.number(),
+  emptyAltTexts: z.number(),
+  components: z.number(),
+});
+const tableShapeSchema = z.object({
+  kind: z.enum(["markdown", "html"]),
+  rows: z.number(),
+  columns: z.number(),
+});
+const structureSnapshotSchema = z.object({
+  counts: structureCountsSchema,
+  headingSequence: z.array(z.string()),
+  codeFenceLanguages: z.array(z.string()),
+  linkTargets: z.array(z.string()),
+  imageTargets: z.array(z.string()),
+  tableShapes: z.array(tableShapeSchema),
+  altTextLengths: z.array(z.number()),
+  componentSequence: z.array(z.string()),
+});
+const structureComparisonSchema = z.object({
+  score: z.number(),
+  valid: z.boolean(),
+  minimumScore: z.number(),
+  differences: z.record(z.string(), z.number()),
+  summary: z.string(),
+  issues: z.array(z.object({
+    code: z.string(),
+    severity: z.enum(["high", "medium", "low"]),
+    blocking: z.boolean(),
+    message: z.string(),
+  })),
+  source: structureSnapshotSchema,
+  target: structureSnapshotSchema,
+});
 const validationOutputSchema = z.object({
   passed: z.boolean(),
   issues: z.array(z.object({
@@ -278,6 +327,7 @@ const validationOutputSchema = z.object({
     severity: z.enum(["high", "medium", "low"]),
     message: z.string(),
   })),
+  structure: structureComparisonSchema,
 });
 const consensusIterationSchema = z.object({
   iteration: z.number(),
@@ -1396,6 +1446,61 @@ export function createTranslationAgentTools(context: TranslationAgentToolContext
         }
 
         return { results, skipped };
+      },
+    }),
+
+    compareStructure: createTool({
+      id: "compareStructure",
+      description: "Deterministically compare English source MDX against a translated candidate/current MDX file for structural parity. Counts Markdown and HTML-equivalent links, tables, blockquotes, headings, code fence languages, images, alt text slots, and MDX component order. This is strict for publish readiness but does not write or discard candidates.",
+      inputSchema: z.object({
+        slug: z.string().optional(),
+        locale: z.enum(ACTIVE_LOCALES).optional(),
+        candidatePath: z.string().optional(),
+        targetContents: z.string().optional(),
+        sourceContents: z.string().optional(),
+        targetPath: z.string().optional(),
+        minimumScore: z.number().min(0).max(1).optional(),
+      }),
+      outputSchema: structureComparisonSchema,
+      execute: async ({ slug, locale, candidatePath, targetContents, sourceContents, targetPath, minimumScore }) => {
+        const paths = slug != null && locale != null ? getPostPaths(slug, locale) : undefined;
+        if (sourceContents == null && paths == null) {
+          throw new Error("Provide sourceContents, or provide both slug and locale so the English source can be read.");
+        }
+        const source = sourceContents ?? readFileSync(paths!.sourcePath, "utf8");
+        const comparedPath = candidatePath
+          ?? (slug != null && locale != null ? existingTranslationPath(slug, locale) : undefined)
+          ?? (targetContents == null ? latestCandidatePath(context.runId) : undefined);
+        if (targetContents == null && comparedPath == null) {
+          throw new Error("Provide targetContents, candidatePath, or a slug/locale with a current translation or latest candidate.");
+        }
+        const target = targetContents ?? readFileSync(assertReadablePath(comparedPath!), "utf8");
+        const comparison = compareMdxStructure({
+          sourceContents: source,
+          targetContents: target,
+          targetPath: targetPath ?? (paths == null ? comparedPath : relative(repoRoot, paths.targetPath)),
+          minimumScore,
+        });
+        appendJsonl(join(candidateRunDir(context.runId), "structure-comparisons.jsonl"), {
+          at: new Date().toISOString(),
+          runId: context.runId,
+          slug,
+          locale,
+          comparedPath: comparedPath == null ? undefined : relative(repoRoot, resolve(repoRoot, comparedPath)),
+          sourceSha256: sha256(source),
+          targetSha256: sha256(target),
+          ...comparison,
+        });
+        appendEvent(context.runId, {
+          event: "structure_compared",
+          slug,
+          locale,
+          comparedPath,
+          score: comparison.score,
+          valid: comparison.valid,
+          differences: comparison.differences,
+        });
+        return comparison;
       },
     }),
 

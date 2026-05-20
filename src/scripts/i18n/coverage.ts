@@ -1,4 +1,4 @@
-import { existsSync, mkdirSync, readdirSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { ACTIVE_LOCALES, type ActiveLocale } from "../../shared/i18n.ts";
 import {
@@ -7,7 +7,19 @@ import {
   getTranslationSlot,
   type SourcePost,
 } from "./corpus-inventory.ts";
+import { compareMdxStructure, type MdxStructureCounts } from "./structural-validation.ts";
 import { optionalString, parseArgs, parseList, relativeToRepo } from "./utils.ts";
+
+type StructuralCoverage = {
+  score: number;
+  valid: boolean;
+  issueCount: number;
+  blockingIssueCount: number;
+  differences: Record<string, number>;
+  summary: string;
+  sourceCounts: MdxStructureCounts;
+  targetCounts: MdxStructureCounts;
+};
 
 type LocaleCoverage = {
   candidateReports: number;
@@ -16,7 +28,9 @@ type LocaleCoverage = {
   hasTranslation: boolean;
   locale: ActiveLocale;
   reportPath: string;
+  structure?: StructuralCoverage;
   targetPath: string;
+  translationPath?: string;
 };
 
 type PostCoverage = SourcePost & {
@@ -89,6 +103,10 @@ function getLocaleCoverage(post: SourcePost, locale: ActiveLocale): LocaleCovera
   const reports = existsSync(reportPath)
     ? readdirSync(reportPath, { withFileTypes: true }).filter((entry) => entry.isFile())
     : [];
+  const translationPath = existingTranslationPath(targetPath, fallbackTargetPath);
+  const structure = translationPath == null
+    ? undefined
+    : getStructuralCoverage(paths.sourcePath, translationPath);
 
   return {
     candidateReports: reports.filter((entry) =>
@@ -98,10 +116,37 @@ function getLocaleCoverage(post: SourcePost, locale: ActiveLocale): LocaleCovera
     ).length,
     hasJudge: existsSync(join(reportPath, "judge-summary.md")) || existsSync(join(reportPath, "judge.md")),
     hasQwenBaseline: existsSync(join(reportPath, "openrouter-qwen-qwen3.6-plus.md")),
-    hasTranslation: existsSync(targetPath) || existsSync(fallbackTargetPath),
+    hasTranslation: translationPath != null,
     locale,
     reportPath,
+    structure,
     targetPath,
+    translationPath,
+  };
+}
+
+function existingTranslationPath(targetPath: string, fallbackTargetPath: string) {
+  if (existsSync(targetPath)) return targetPath;
+  if (existsSync(fallbackTargetPath)) return fallbackTargetPath;
+  return undefined;
+}
+
+function getStructuralCoverage(sourcePath: string, translationPath: string): StructuralCoverage {
+  const comparison = compareMdxStructure({
+    sourceContents: readFileSync(sourcePath, "utf8"),
+    targetContents: readFileSync(translationPath, "utf8"),
+    targetPath: relativeToRepo(translationPath),
+  });
+
+  return {
+    score: comparison.score,
+    valid: comparison.valid,
+    issueCount: comparison.issues.length,
+    blockingIssueCount: comparison.issues.filter((issue) => issue.blocking).length,
+    differences: comparison.differences,
+    summary: comparison.summary,
+    sourceCounts: comparison.source.counts,
+    targetCounts: comparison.target.counts,
   };
 }
 
@@ -109,25 +154,52 @@ function summarize(posts: PostCoverage[]) {
   const totalSlots = posts.length * selectedLocales.length;
   const filledSlots = posts.reduce((sum, post) => sum + post.filledCount, 0);
   const missingSlots = totalSlots - filledSlots;
+  const structuralSlots = posts.flatMap((post) =>
+    post.coverage.filter((item) => item.structure != null),
+  );
+  const structuralValidSlots = structuralSlots.filter((item) => item.structure?.valid === true).length;
+  const structuralInvalidSlots = structuralSlots.length - structuralValidSlots;
+  const averageStructureScore = average(
+    structuralSlots.map((item) => item.structure?.score).filter((score): score is number => score != null),
+  );
+  const minimumStructureScore = minimum(
+    structuralSlots.map((item) => item.structure?.score).filter((score): score is number => score != null),
+  );
   const localeRows = selectedLocales.map((locale) => {
     const filled = posts.filter((post) =>
       post.coverage.some((item) => item.locale === locale && item.hasTranslation),
     ).length;
+    const structureSlots = posts
+      .flatMap((post) => post.coverage)
+      .filter((item) => item.locale === locale && item.structure != null);
+    const validStructure = structureSlots.filter((item) => item.structure?.valid === true).length;
+    const structureScores = structureSlots
+      .map((item) => item.structure?.score)
+      .filter((score): score is number => score != null);
 
     return {
+      averageStructureScore: average(structureScores),
       filled,
       locale,
+      minimumStructureScore: minimum(structureScores),
       missing: posts.length - filled,
       percent: posts.length === 0 ? 0 : filled / posts.length,
+      structuralInvalid: structureSlots.length - validStructure,
+      structuralValid: validStructure,
     };
   });
 
   return {
+    averageStructureScore,
     completePosts: posts.filter((post) => post.missingLocales.length === 0).length,
     filledSlots,
     localeRows,
+    minimumStructureScore,
     missingSlots,
     posts: posts.length,
+    structuralInvalidSlots,
+    structuralSlots: structuralSlots.length,
+    structuralValidSlots,
     totalSlots,
   };
 }
@@ -137,9 +209,10 @@ function renderConsoleSummary(summary: ReturnType<typeof summarize>) {
     `English posts: ${summary.posts}`,
     `Translation slots: ${summary.filledSlots}/${summary.totalSlots} filled (${formatPercent(summary.filledSlots / summary.totalSlots)}), ${summary.missingSlots} missing`,
     `Complete posts: ${summary.completePosts}/${summary.posts}`,
+    `Structure valid: ${summary.structuralValidSlots}/${summary.structuralSlots} (${formatPercent(summary.structuralValidSlots / summary.structuralSlots)}), avg score ${formatScore(summary.averageStructureScore)}, min ${formatScore(summary.minimumStructureScore)}`,
     "",
     ...summary.localeRows.map((row) =>
-      `${row.locale}: ${row.filled}/${summary.posts} (${formatPercent(row.percent)}) missing ${row.missing}`,
+      `${row.locale}: ${row.filled}/${summary.posts} (${formatPercent(row.percent)}) missing ${row.missing}; structure ${row.structuralValid}/${row.structuralValid + row.structuralInvalid} valid, avg ${formatScore(row.averageStructureScore)}`,
     ),
   ].join("\n");
 }
@@ -157,6 +230,18 @@ function renderMarkdown(posts: PostCoverage[], summary: ReturnType<typeof summar
       .filter((item) => item.hasTranslation && !item.hasJudge)
       .map((item) => [post.slug, item.locale, item.hasQwenBaseline ? "yes" : "no"]),
   );
+  const structuralIssueRows = posts.flatMap((post) =>
+    post.coverage
+      .filter((item) => item.hasTranslation && item.structure != null && !item.structure.valid)
+      .map((item) => [
+        post.slug,
+        item.locale,
+        formatScore(item.structure?.score),
+        item.structure?.blockingIssueCount ?? 0,
+        summarizeDifferences(item.structure?.differences ?? {}),
+        compactStructuralSummary(item.structure?.summary ?? ""),
+      ]),
+  ).sort((a, b) => Number(a[2]) - Number(b[2]) || String(a[0]).localeCompare(String(b[0])));
 
   return [
     "# I18n Coverage",
@@ -169,15 +254,37 @@ function renderMarkdown(posts: PostCoverage[], summary: ReturnType<typeof summar
     `- Translation slots: ${summary.filledSlots}/${summary.totalSlots} filled (${formatPercent(summary.filledSlots / summary.totalSlots)})`,
     `- Missing slots: ${summary.missingSlots}`,
     `- Fully translated posts: ${summary.completePosts}/${summary.posts}`,
+    `- Structure-valid translations: ${summary.structuralValidSlots}/${summary.structuralSlots} (${formatPercent(summary.structuralValidSlots / summary.structuralSlots)})`,
+    `- Average structure score: ${formatScore(summary.averageStructureScore)}`,
+    `- Minimum structure score: ${formatScore(summary.minimumStructureScore)}`,
     `- Locales: ${selectedLocales.join(", ")}`,
     "",
     "## Locale Coverage",
     "",
-    markdownRow(["Locale", "Filled", "Missing", "Coverage"]),
-    markdownRow(["---", "---:", "---:", "---:"]),
+    markdownRow(["Locale", "Filled", "Missing", "Coverage", "Structure valid", "Avg structure", "Min structure"]),
+    markdownRow(["---", "---:", "---:", "---:", "---:", "---:", "---:"]),
     ...summary.localeRows.map((row) =>
-      markdownRow([row.locale, row.filled, row.missing, formatPercent(row.percent)]),
+      markdownRow([
+        row.locale,
+        row.filled,
+        row.missing,
+        formatPercent(row.percent),
+        `${row.structuralValid}/${row.structuralValid + row.structuralInvalid}`,
+        formatScore(row.averageStructureScore),
+        formatScore(row.minimumStructureScore),
+      ]),
     ),
+    "",
+    "## Structural Health",
+    "",
+    `- Translated slots analyzed: ${summary.structuralSlots}`,
+    `- Structurally invalid translated slots: ${summary.structuralInvalidSlots}`,
+    `- Average structure score: ${formatScore(summary.averageStructureScore)}`,
+    `- Minimum structure score: ${formatScore(summary.minimumStructureScore)}`,
+    "",
+    "### Structural Issues",
+    "",
+    ...renderStructuralIssueRows(structuralIssueRows),
     "",
     "## Zero Coverage Posts",
     "",
@@ -187,6 +294,7 @@ function renderMarkdown(posts: PostCoverage[], summary: ReturnType<typeof summar
     "",
     `- Missing locale slots with candidate reports waiting: ${waitingCandidateRows.length}`,
     `- Existing translations without judge summaries: ${translationWithoutJudgeRows.length}`,
+    `- Existing translations with structural parity failures: ${structuralIssueRows.length}`,
     "",
     "### Candidate Reports Without Translation Files",
     "",
@@ -242,6 +350,15 @@ function renderTranslationWithoutJudgeRows(rows: Array<Array<string>>) {
   ];
 }
 
+function renderStructuralIssueRows(rows: Array<Array<string | number>>) {
+  if (rows.length === 0) return ["No structural parity failures found."];
+  return [
+    markdownRow(["Post", "Locale", "Score", "Blocking issues", "Differences", "Summary"]),
+    markdownRow(["---", "---", "---:", "---:", "---", "---"]),
+    ...rows.map((row) => markdownRow(row)),
+  ];
+}
+
 function renderPostList(posts: PostCoverage[]) {
   if (posts.length === 0) return ["No zero-coverage posts."];
   return posts.map((post) => `- \`${post.slug}\` (${post.category}, ${post.date ?? "undated"})`);
@@ -276,6 +393,43 @@ function sortByPriority(a: PostCoverage, b: PostCoverage) {
 function formatPercent(value: number) {
   if (!Number.isFinite(value)) return "0.0%";
   return `${(value * 100).toFixed(1)}%`;
+}
+
+function formatScore(value: number | undefined) {
+  if (value == null || !Number.isFinite(value)) return "n/a";
+  return value.toFixed(3);
+}
+
+function average(values: number[]) {
+  if (values.length === 0) return undefined;
+  return values.reduce((sum, value) => sum + value, 0) / values.length;
+}
+
+function minimum(values: number[]) {
+  if (values.length === 0) return undefined;
+  return Math.min(...values);
+}
+
+function summarizeDifferences(differences: Record<string, number>) {
+  const entries = Object.entries(differences);
+  if (entries.length === 0) return "-";
+  return entries
+    .slice(0, 6)
+    .map(([key, value]) => `${key}:${formatSignedNumber(value)}`)
+    .join(", ");
+}
+
+function compactStructuralSummary(summary: string) {
+  const compact = summary
+    .replace(/^[^:]+index\.mdx?:\s*/, "")
+    .replace(/\s*Differences:\s*\{[\s\S]*$/, "")
+    .replace(/\s+/g, " ")
+    .trim();
+  return compact.length <= 220 ? compact : `${compact.slice(0, 217)}...`;
+}
+
+function formatSignedNumber(value: number) {
+  return value > 0 ? `+${value}` : String(value);
 }
 
 function markdownRow(values: Array<string | number>) {

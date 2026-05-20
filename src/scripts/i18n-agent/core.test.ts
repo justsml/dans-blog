@@ -88,9 +88,15 @@ describe("i18n agent CLI", () => {
     expect(DEFAULT_AGENT_LOCALES).toEqual(["es", "hi", "ja", "ru", "de", "fr", "it", "ar", "he", "zh"]);
   });
 
-  test("keeps prompt runs one-shot unless thread mode is explicit", () => {
-    expect(parseCliArgs(["score", "the", "translation"]).interactive).toBe(false);
+  test("uses a positional prompt as the first interactive turn by default", () => {
+    const args = parseCliArgs(["score", "the", "translation"]);
+    expect(args.prompt).toBe("score the translation");
+    expect(args.interactive).toBe(true);
     expect(parseCliArgs(["--thread-mode", "score", "the", "translation"]).interactive).toBe(true);
+  });
+
+  test("keeps --once prompt runs one-shot", () => {
+    expect(parseCliArgs(["--once", "score", "the", "translation"]).interactive).toBe(false);
     expect(parseCliArgs(["--once"]).interactive).toBe(false);
   });
 });

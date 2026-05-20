@@ -7,7 +7,7 @@ import {
   requireString,
   runInherited,
 } from "./utils.ts";
-import { assertTranslationLength } from "./structural-validation.ts";
+import { assertStructuralParity, assertTranslationLength } from "./structural-validation.ts";
 import { assertNestedAssetPaths } from "./localized-mdx.ts";
 import { assertTranslationIntegrity } from "./integrity-checks.ts";
 
@@ -26,6 +26,7 @@ const target = readFileSync(targetPath, "utf8");
 
 assertFrontmatter(target);
 assertTranslationLength({ sourceContents: source, targetContents: target, targetPath });
+assertStructuralParity({ sourceContents: source, targetContents: target, targetPath });
 assertHeadingCounts(source, target);
 assertProtectedTokens(source, target);
 assertQuizStructure(source, target);

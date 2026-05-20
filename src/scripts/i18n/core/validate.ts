@@ -1,4 +1,8 @@
-import { assertTranslationLength } from "../structural-validation.ts";
+import {
+  assertTranslationLength,
+  compareMdxStructure,
+  type MdxStructureComparison,
+} from "../structural-validation.ts";
 import { assertNestedAssetPaths } from "../localized-mdx.ts";
 import { analyzeTranslationIntegrity } from "../integrity-checks.ts";
 import type { ActiveLocale } from "../../../shared/i18n.ts";
@@ -22,10 +26,16 @@ export type ValidateTranslationInput = {
 export type ValidateTranslationOutput = {
   passed: boolean;
   issues: TranslationValidationIssue[];
+  structure: MdxStructureComparison;
 };
 
 export function validateTranslation(input: ValidateTranslationInput): ValidateTranslationOutput {
   const issues: TranslationValidationIssue[] = [];
+  const structure = compareMdxStructure({
+    sourceContents: input.sourceContents,
+    targetContents: input.targetContents,
+    targetPath: input.targetPath,
+  });
 
   collectIssue(issues, "frontmatter", "high", () => assertFrontmatter(
     input.sourceContents,
@@ -42,6 +52,13 @@ export function validateTranslation(input: ValidateTranslationInput): ValidateTr
     input.targetContents,
     input.targetPath,
   ));
+  collectIssue(issues, "structural-parity", "high", () => {
+    if (structure.valid) return;
+    throw new Error(
+      `${input.targetPath} failed structural parity with score ${structure.score.toFixed(3)} `
+        + `(minimum ${structure.minimumScore.toFixed(3)}). ${structure.summary}`,
+    );
+  });
   collectIssue(issues, "protected-tokens", "high", () => assertProtectedTokens(
     input.sourceContents,
     input.targetContents,
@@ -62,6 +79,7 @@ export function validateTranslation(input: ValidateTranslationInput): ValidateTr
   return {
     passed: !issues.some((issue) => issue.severity === "high" || issue.severity === "medium"),
     issues,
+    structure,
   };
 }
 

@@ -63,19 +63,70 @@ async function main() {
 
 async function runThread(agent: Awaited<ReturnType<typeof createTranslationAgentRuntime>>["translationAgent"], args: CliArgs) {
   const rl = createInterface({ input, output });
+  let closing = false;
+  const closeRepl = () => {
+    closing = true;
+    rl.close();
+  };
+  rl.on("SIGINT", closeRepl);
+  process.once("SIGINT", closeRepl);
   try {
     console.log("");
     console.log(ui.info("Interactive thread is ready."));
-    console.log(ui.dim("Commands: /exit or /quit to leave. Memory is scoped to the thread/resource shown above."));
-    while (true) {
-      const prompt = (await rl.question(`\n${ui.title("i18n-agent")} ${ui.dim(args.thread)}> `)).trim();
-      if (prompt === "" || prompt === "/exit" || prompt === "/quit") break;
-      const response = await generate(agent, prompt, args);
-      printAgentResponse(response.text);
+    console.log(ui.dim("Exit with Ctrl-C or Ctrl-D. Memory is scoped to the thread/resource shown above."));
+    if (args.prompt != null && args.prompt.trim() !== "") {
+      await runPromptTurn(agent, args.prompt, args);
+    }
+    while (!closing) {
+      const answer = await questionUntilClosed(rl, `\n${ui.title("i18n-agent")} ${ui.dim(args.thread)}> `);
+      if (answer == null) break;
+      const prompt = answer.trim();
+      if (prompt === "") continue;
+      if (prompt === "/exit" || prompt === "/quit") break;
+      await runPromptTurn(agent, prompt, args);
     }
   } finally {
-    rl.close();
+    process.off("SIGINT", closeRepl);
+    rl.off("SIGINT", closeRepl);
+    if (!closing) {
+      rl.close();
+    }
   }
+}
+
+async function runPromptTurn(
+  agent: Awaited<ReturnType<typeof createTranslationAgentRuntime>>["translationAgent"],
+  prompt: string,
+  args: CliArgs,
+) {
+  const response = await generate(agent, prompt, args);
+  printAgentResponse(response.text);
+}
+
+function questionUntilClosed(rl: ReturnType<typeof createInterface>, query: string): Promise<string | undefined> {
+  return new Promise((resolve, reject) => {
+    const onClose = () => resolve(undefined);
+    rl.once("close", onClose);
+    rl.question(query).then((answer) => {
+      rl.off("close", onClose);
+      resolve(answer);
+    }, (error) => {
+      rl.off("close", onClose);
+      if (isReadlineClosedError(error)) {
+        resolve(undefined);
+        return;
+      }
+      reject(error);
+    });
+  });
+}
+
+function isReadlineClosedError(error: unknown) {
+  return error instanceof Error && (
+    error.message.includes("readline was closed")
+    || error.message.includes("closed")
+    || error.name === "AbortError"
+  );
 }
 
 async function generate(
@@ -147,7 +198,7 @@ export function parseCliArgs(argv: string[]): CliArgs {
 
   return {
     prompt,
-    interactive: explicitInteractive || (prompt == null && !once),
+    interactive: explicitInteractive || !once,
     thread: stringOption(options, "thread") ?? "default",
     resource: stringOption(options, "resource") ?? "dan-blog-i18n",
     dryRun: options.get("dry-run") === true,
