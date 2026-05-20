@@ -1,7 +1,8 @@
 # Translation Judge
 
-- Selected candidate: 6615ac0cd23c9a6267cce6649d82d8b564d4393f
-- Selected model: openrouter/deepseek/deepseek-v4-flash
+- Selected candidate: b64537f4046ea73daaf4fb65ebe2f7306a256300
+- Selected model: openrouter/openai/gpt-oss-120b:nitro
 - Judge model: openrouter/google/gemini-3-flash-preview
+- Confidence: high (0.884)
 
-This candidate is the only one that correctly preserved the structural integrity of the MDX file, specifically the 'Visual Table Of Contents' section with its H2 heading and infographic image, which were missing or significantly altered in other candidates. It maintains Dan's direct, technical tone while providing a natural Arabic translation. It also correctly handles the relative asset paths (../) and preserves technical terms like 'DevContainers' and 'CLI' appropriately.
+This candidate provided the most natural and technically accurate translation while strictly adhering to all MDX preservation rules. It correctly handled the asset paths (using ../), preserved the heading structure, and translated the frontmatter and infographic text effectively. The Arabic prose is professional and maintains the direct, urgent tone of the original English text. Other candidates had minor issues like awkward phrasing (e.g., 'سُبات التطوير' for Dev Containers in Qwen) or less precise technical terminology.
