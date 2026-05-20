@@ -4,7 +4,10 @@ import { spawn, type ChildProcess } from "node:child_process";
 import { ACTIVE_LOCALES, type ActiveLocale } from "../../shared/i18n.ts";
 import {
   collectSourcePosts as collectInventorySourcePosts,
+  getPostPaths,
   getTranslationSlot,
+  hasSourceModifiedDate,
+  isTranslationFreshForSourceContents,
   isTranslationOlderThanSource,
   parseActiveLocales,
   type SourcePost,
@@ -142,6 +145,7 @@ const workerState: WorkerState = {
   recentOutput: [],
 };
 let workerProcess: ChildProcess | undefined;
+let candidateAccountingStartedAt: Date | undefined;
 const activeJudgeChildren = new Set<ChildProcess>();
 let outOfCreditJudgeShutdownPromise: Promise<void> | undefined;
 
@@ -640,7 +644,9 @@ function collectSourcePosts(): SourcePost[] {
 
 function readCandidateSummary(slug: string, locale: ActiveLocale): CandidateSummary {
   const reportDir = join(REPORT_ROOT, slug, locale);
-  const fallbackReports = countCandidateReportFiles(reportDir);
+  const sourceContents = readFileSync(getPostPaths(slug, locale).sourcePath, "utf8");
+  const shouldRequireFreshCandidates = hasSourceModifiedDate(sourceContents);
+  const fallbackReports = shouldRequireFreshCandidates ? 0 : countCandidateReportFiles(reportDir);
   const rowsOrReports = readCandidateCount(slug, locale);
   const accounting = readAccountingTotals(reportDir);
 
@@ -667,8 +673,11 @@ function readCandidateSummary(slug: string, locale: ActiveLocale): CandidateSumm
 
 function readCandidateCount(slug: string, locale: ActiveLocale) {
   const reportDir = join(REPORT_ROOT, slug, locale);
-  const candidateRows = readCandidateRowsForLocale(slug, locale);
-  const fallbackReports = countCandidateReportFiles(reportDir);
+  const sourceContents = readFileSync(getPostPaths(slug, locale).sourcePath, "utf8");
+  const shouldRequireFreshCandidates = hasSourceModifiedDate(sourceContents);
+  const candidateRows = readCandidateRowsForLocale(slug, locale)
+    .filter((row) => !shouldRequireFreshCandidates || candidateRowIsFreshForSource(row, sourceContents));
+  const fallbackReports = shouldRequireFreshCandidates ? 0 : countCandidateReportFiles(reportDir);
   return candidateRows.length > 0 ? candidateRows.length : fallbackReports;
 }
 
@@ -829,6 +838,15 @@ function readCandidateRowsForLocale(slug: string, locale: ActiveLocale) {
   return [...rowsById.values()];
 }
 
+function candidateRowIsFreshForSource(row: Record<string, unknown>, sourceContents: string) {
+  const candidatePath = typeof row.candidatePath === "string" ? row.candidatePath : undefined;
+  if (candidatePath == null) return false;
+
+  const absolutePath = join(process.cwd(), candidatePath);
+  if (!existsSync(absolutePath)) return false;
+  return isTranslationFreshForSourceContents(sourceContents, readFileSync(absolutePath, "utf8"));
+}
+
 function candidateRowId(row: Record<string, unknown>) {
   return typeof row.runId === "string"
     ? row.runId
@@ -879,13 +897,13 @@ function readLatestRunHistorySummary(reportDir: string): Record<string, unknown>
 }
 
 function isCurrentWorkerRunSummary(summary: Record<string, unknown>) {
-  if (!shouldRunWorker || workerState.startedAt == null) return false;
+  if (!shouldRunWorker || candidateAccountingStartedAt == null) return false;
   if (!FINALIZED_CANDIDATE_RUN_STATUSES.has(String(summary.runStatus))) return false;
 
   const startedAt = typeof summary.startedAt === "string" ? Date.parse(summary.startedAt) : Number.NaN;
   if (!Number.isFinite(startedAt)) return false;
 
-  return startedAt >= Number(workerState.startedAt) - CURRENT_RUN_STARTED_AT_GRACE_MS;
+  return startedAt >= Number(candidateAccountingStartedAt) - CURRENT_RUN_STARTED_AT_GRACE_MS;
 }
 
 function accountingSourceForRunSummary(summary: Record<string, unknown>) {
@@ -1152,6 +1170,9 @@ function startWorker(mode: "candidates" | "judge") {
   workerState.progress = undefined;
   workerState.recentOutput = [];
   workerState.status = "running";
+  if (mode === "candidates") {
+    candidateAccountingStartedAt = workerState.startedAt;
+  }
   appendWorkerOutput(`$ bun ${formatCommandArgs(args)}`);
 
   const child = spawn("bun", args, {

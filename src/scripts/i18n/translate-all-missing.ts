@@ -6,6 +6,7 @@ import {
   filterActiveLocales,
   getMissingTranslationSlots,
   getModifiedTranslationSlots,
+  hasSourceModifiedDate,
   isTranslationFreshForSourceContents,
 } from "./corpus-inventory.ts";
 import {
@@ -243,7 +244,8 @@ function getCandidateCommits(task: Task) {
   const grep = `i18n candidate(${task.locale}): ${task.slug} via`;
   const output = run("git", ["log", "--format=%H", "--grep", grep]);
   const targetRelPath = relativeToRepo(task.targetPath);
-  const sourceContents = shouldOnlyModified ? readFileSync(task.sourcePath, "utf8") : undefined;
+  const sourceContents = readFileSync(task.sourcePath, "utf8");
+  const shouldRequireFreshCandidates = hasSourceModifiedDate(sourceContents);
 
   return output
     .split(/\r?\n/)
@@ -251,7 +253,7 @@ function getCandidateCommits(task: Task) {
     .filter((commit) => {
       const candidateContents = getCandidateContentsFromCommit(commit, task, targetRelPath);
       if (candidateContents == null) return false;
-      if (sourceContents == null) return true;
+      if (!shouldRequireFreshCandidates) return true;
       return isTranslationFreshForSourceContents(sourceContents, candidateContents);
     })
     .reverse();

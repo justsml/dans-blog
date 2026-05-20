@@ -4,6 +4,7 @@ import { spawn, type ChildProcess } from "node:child_process";
 import { ACTIVE_LOCALES, type ActiveLocale } from "../../shared/i18n.ts";
 import {
   collectSourcePostSlugs,
+  hasSourceModifiedDate,
   isTranslationFreshForSourceContents,
   isTranslationOlderThanSource,
   parseActiveLocales,
@@ -576,15 +577,19 @@ function getCandidateTasks(): CandidateTask[] {
 
 function getCandidateTaskStats(currentSlug: string, currentLocale: ActiveLocale): CandidateTaskStats {
   const paths = getPostPaths(currentSlug, currentLocale);
-  const sourceContents = shouldOnlyModified ? readFileSync(paths.sourcePath, "utf8") : undefined;
+  const sourceContents = readFileSync(paths.sourcePath, "utf8");
+  const shouldRequireFreshRows = hasSourceModifiedDate(sourceContents);
   const rows = readCandidateOutputRows(currentSlug, currentLocale)
-    .filter((row) => sourceContents == null || candidateRowIsFreshForSource(row, sourceContents));
+    .filter((row) => !shouldRequireFreshRows || candidateRowIsFreshForSource(row, sourceContents));
+  const fallbackReports = shouldRequireFreshRows
+    ? 0
+    : countCandidateReportFiles(join(REPORT_ROOT, currentSlug, currentLocale));
   return {
     slug: currentSlug,
     locale: currentLocale,
-    candidateCount: rows.length > 0 || shouldOnlyModified
+    candidateCount: rows.length > 0 || shouldRequireFreshRows
       ? rows.length
-      : countCandidateReportFiles(join(REPORT_ROOT, currentSlug, currentLocale)),
+      : fallbackReports,
     newestCandidateMs: getNewestCandidateMs(rows),
   };
 }

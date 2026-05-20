@@ -9,6 +9,7 @@ import {
   getMissingTranslationSlots,
   getModifiedTranslationSlots,
   getPostPaths,
+  hasSourceModifiedDate,
   isTranslationFreshForSourceContents,
   isTranslationOlderThanSourceContents,
   parseActiveLocales,
@@ -174,6 +175,8 @@ test("treats existing translations without modified as stale but skips sources w
     ["---", "title: Source", "---", "", "Source"].join("\n"),
     ["---", "modified: '2026-05-12'", "---", "", "Translation"].join("\n"),
   )).toBe(false);
+  expect(hasSourceModifiedDate(["---", "modified: 2026-05-13", "---", "", "Source"].join("\n"))).toBe(true);
+  expect(hasSourceModifiedDate(["---", "title: Source", "---", "", "Source"].join("\n"))).toBe(false);
 });
 
 test("validates active locales with a stable error message", () => {
