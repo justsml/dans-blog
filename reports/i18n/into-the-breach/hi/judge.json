@@ -1,67 +1,37 @@
 {
-  "selectedCommit": "faa818a8c977f92a0ed2fc30313239b28921a49b",
-  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "selectedCommit": "f502735ff0f140023ebd1425e2ee291ddb8b9a92",
+  "selectedModel": "deepseek/deepseek-v4-flash:nitro",
   "scores": {
-    "readability": 9,
-    "technicalAccuracy": 9,
-    "coherence": 9,
-    "relevance": 10,
-    "translationQuality": 8,
-    "mdxPreservation": 10
+    "readability": 95,
+    "technicalAccuracy": 98,
+    "coherence": 95,
+    "relevance": 100,
+    "translationQuality": 96,
+    "mdxPreservation": 100,
+    "culturalAdaptation": 92,
+    "languagePurity": 95
   },
-  "suggestions": [
-    {
-      "priority": "high",
-      "match": "The standard should not be \"never click anything weird.\" That is advice for a poster, not a system.",
-      "replacement": "मानक यह नहीं होना चाहिए कि \"कभी भी किसी अजीब चीज़ पर क्लिक न करें।\" यह एक पोस्टर के लिए सलाह है, सिस्टम के लिए नहीं।",
-      "reason": "This sentence was left in English in the 'Practical Standard' section."
-    },
-    {
-      "priority": "high",
-      "match": "Security gets better when we stop asking humans to be perfect and start making compromise less profitable.",
-      "replacement": "सुरक्षा तब बेहतर होती है जब हम इंसानों से परिपूर्ण होने की उम्मीद करना बंद कर देते हैं और समझौते (compromise) को कम लाभदायक बनाना शुरू करते हैं।",
-      "reason": "This sentence was left in English in the concluding section."
-    },
-    {
-      "priority": "high",
-      "match": "Your laptop is part of production now. The attacker does not always break in — sometimes you let them in without knowing.",
-      "replacement": "आपका लैपटॉप अब प्रोडक्शन का हिस्सा है। हमलावर हमेशा सेंध नहीं लगाता — कभी-कभी आप अनजाने में उन्हें अंदर आने देते हैं।",
-      "reason": "This sentence was left in English in the concluding section."
-    },
-    {
-      "priority": "high",
-      "match": "Give your systems the kind of boundaries that catch both.",
-      "replacement": "अपने सिस्टम को ऐसी सीमाएँ दें जो दोनों को पकड़ सकें।",
-      "reason": "This sentence was left in English in the concluding section."
-    }
+  "suggestions": [],
+  "rationale": "DeepSeek provided the most consistent and natural Hindi translation while strictly adhering to all MDX structural requirements. It correctly handled the image paths (using ../), preserved all headings and code blocks, and translated the technical concepts with appropriate Hindi terminology without losing the direct, authoritative tone of the original. Qwen had some awkward phrasing ('कुतिहाड़' for subterfuge is very obscure), and GPT-OSS left significant portions of the prose in English.",
+  "confidence": "high",
+  "confidenceScore": 0.884,
+  "confidenceSignals": [
+    "no high/medium issues",
+    "single judge"
   ],
-  "rationale": "The DeepSeek translation is high quality and technically sound, but it missed translating several key sentences in the final two sections ('Practical Standard' and the conclusion). These suggestions complete the translation while maintaining the established tone.",
+  "issueCounts": {
+    "high": 0,
+    "medium": 0,
+    "low": 0
+  },
   "slug": "into-the-breach",
   "locale": "hi",
   "candidateCommits": [
-    "faa818a8c977f92a0ed2fc30313239b28921a49b",
-    "4b9f6f6848e46061b50f5e6fd23486ea3c6bca9e"
+    "114cb025e4ec18c12c2420c2bd9f04b293e51d23",
+    "04a8b910ae9f450026bf9e4fa205f8f984db238b",
+    "f502735ff0f140023ebd1425e2ee291ddb8b9a92"
   ],
-  "suggestionLog": [
-    {
-      "priority": "high",
-      "match": "The standard should not be \"never click anything weird.\" That is advice for a poster, not a system.",
-      "replacement": "मानक यह नहीं होना चाहिए कि \"कभी भी किसी अजीब चीज़ पर क्लिक न करें।\" यह एक पोस्टर के लिए सलाह है, सिस्टम के लिए नहीं।",
-      "reason": "This paragraph was left in English in the candidate MDX.",
-      "pass": 1,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
-    },
-    {
-      "priority": "high",
-      "match": "The practical standard:\n\n- a bad PDF should not be able to read all project secrets\n- a malicious dependency should not see cloud credentials from other projects\n- a prompt-injected document should not redirect an agent into your home directory\n- a poisoned GitHub Action should not be able to steal your deploy token\n- an infostealer should not find plaintext backups and long-lived tokens without triggering an alarm\n- an unknown process should not be able to send data out without a local alert\n- a stolen credential should expire, fail MFA, fail device checks, or hit a canary before it becomes a full takeover",
-      "replacement": "व्यावहारिक मानक:\n\n- एक खराब PDF सभी प्रोजेक्ट सीक्रेट्स को पढ़ने में सक्षम नहीं होनी चाहिए\n- एक दुर्भावनापूर्ण डिपेंडेंसी को अन्य प्रोजेक्ट्स के क्लाउड क्रेडेंशियल्स नहीं दिखने चाहिए\n- एक प्रॉम्प्ट-इंजेक्टेड दस्तावेज़ को एजेंट को आपकी होम डायरेक्टरी में रीडायरेक्ट नहीं करना चाहिए\n- एक दूषित GitHub Action आपके डिप्लॉय टोकन को चुराने में सक्षम नहीं होना चाहिए\n- एक इन्फोस्टीलर को अलार्म ट्रिगर किए बिना प्लेनटेक्स्ट बैकअप और लंबे समय तक चलने वाले टोकन नहीं मिलने चाहिए\n- एक अज्ञात प्रक्रिया स्थानीय अलर्ट के बिना डेटा बाहर भेजने में सक्षम नहीं होनी चाहिए\n- एक चोरी किए गए क्रेडेंशियल को पूर्ण अधिग्रहण बनने से पहले समाप्त होना चाहिए, MFA में विफल होना चाहिए, डिवाइस जांच में विफल होना चाहिए, या कैनरी को हिट करना चाहिए",
-      "reason": "A significant section of the 'Practical Standard' section was left in English in the candidate translation.",
-      "pass": 2,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
-    }
-  ],
+  "suggestionLog": [],
   "validation": {
     "ok": true,
     "scope": "local",

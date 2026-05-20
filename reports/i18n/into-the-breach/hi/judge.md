@@ -1,7 +1,8 @@
 # Translation Judge
 
-- Selected candidate: faa818a8c977f92a0ed2fc30313239b28921a49b
-- Selected model: openrouter/deepseek/deepseek-v4-flash
+- Selected candidate: f502735ff0f140023ebd1425e2ee291ddb8b9a92
+- Selected model: deepseek/deepseek-v4-flash:nitro
 - Judge model: openrouter/google/gemini-3-flash-preview
+- Confidence: high (0.884)
 
-The DeepSeek translation is high quality and technically sound, but it missed translating several key sentences in the final two sections ('Practical Standard' and the conclusion). These suggestions complete the translation while maintaining the established tone.
+DeepSeek provided the most consistent and natural Hindi translation while strictly adhering to all MDX structural requirements. It correctly handled the image paths (using ../), preserved all headings and code blocks, and translated the technical concepts with appropriate Hindi terminology without losing the direct, authoritative tone of the original. Qwen had some awkward phrasing ('कुतिहाड़' for subterfuge is very obscure), and GPT-OSS left significant portions of the prose in English.
