@@ -10,18 +10,25 @@
 - Selected commit hint: judge selected
 - Validation: passed
 - Validation scope: local
+- Confidence: low (0.350)
+- Confidence signals: no high/medium issues; single judge
+- High/medium/low issue counts: 0/0/0
 
 ## Primary Judge Telemetry
-- Runtime seconds: 2.69
-- Input tokens: 21871
-- Output tokens: 192
+- Runtime seconds: 4.55
+- Input tokens: 16432
+- Output tokens: 272
 - Thinking tokens: unknown
 - Cached input tokens: 0
 - Cache write tokens: 0
-- OpenRouter cost credits: 0.011511
-- Estimated cost: $0.011511
+- OpenRouter cost credits: 0.009032
+- Estimated cost: $0.009032
+
+## Judge Suggestions
+1. Pass 1: logged high priority suggestion. Match: "exact translated text currently in the selected MDX" Replacement: "exact replacement text to write into the selected MDX" Reason: English explanation of why this medium/high-priority change is needed Note: Exact match not found in selected MDX.
 
 ## Candidates
-- current not present
-- 7e56b010c4f93c486c96385e05a4a20169d03e98 i18n candidate(it): into-the-breach via openrouter/deepseek/deepseek-v4-flash
-- 90810bde1b4c9314aa7c98b4069d325e8caaa215 i18n candidate(it): into-the-breach via openrouter/google/gemini-3-flash-preview
+- current src/content/posts/2026-05-13--into-the-breach/it/index.mdx
+- c1c6c7e49b44cf5ac0ed4a9848cf704515a09a7a i18n candidate(it): into-the-breach via deepseek/deepseek-v4-flash:nitro
+- 87302e62d669ecd9ea970530a8bfd7f75b57fea7 i18n candidate(it): into-the-breach via openrouter/qwen/qwen3-32b:nitro
+- cbc1d1a8ba8da178dbb7c4cc1abf03d3fea0af82 i18n candidate(it): into-the-breach via openrouter/openai/gpt-oss-120b:nitro
