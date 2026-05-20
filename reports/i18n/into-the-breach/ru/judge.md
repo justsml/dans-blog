@@ -1,7 +1,8 @@
 # Translation Judge
 
-- Selected candidate: 0c8a2a923ef23c0741a1e700174b7291a8fb73ac
-- Selected model: openrouter/deepseek/deepseek-v4-flash
+- Selected candidate: 07215e8bc6dbd2d68c561ee2f1695321437a6681
+- Selected model: openrouter/openai/gpt-oss-120b:nitro
 - Judge model: openrouter/google/gemini-3-flash-preview
+- Confidence: high (0.872)
 
-DeepSeek provided a very natural and technically accurate translation. It correctly handled the MDX requirements, including the relative paths for assets. The translation of 'Into the Breach' as 'В пролом' is a good literal choice, and the prose maintains the direct, urgent tone of the original. Gemini's translation was also good but slightly more verbose in some technical explanations.
+The current selected translation already incorporates the high-priority fixes suggested in the previous pass, resulting in a complete and high-quality Russian translation that maintains Dan's direct style and technical accuracy. No further high-priority corrections are required.
