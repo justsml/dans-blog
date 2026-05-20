@@ -1,7 +1,8 @@
 # Translation Judge
 
-- Selected candidate: a89fd24c39b027354549e0e7157b3acfa65bcc7a
-- Selected model: openrouter/deepseek/deepseek-v4-flash
+- Selected candidate: ff9f73561fe705e2ac382b2505dd34bddf1a9270
+- Selected model: deepseek/deepseek-v4-flash:nitro
 - Judge model: openrouter/google/gemini-3-flash-preview
+- Confidence: high (0.885)
 
-DeepSeek provided a very natural translation that captures the technical nuances well. It correctly handled the asset paths (../) and preserved the MDX structure perfectly. The tone is consistent with the original English text. Gemini's translation was also good but slightly less natural in some phrasing (e.g., 'buen rollo' for 'vibes' is a bit too informal/regional compared to DeepSeek's 'buena vibra'). DeepSeek also correctly translated 'canary tokens' as 'tokens canary' or 'canarios' consistently.
+DeepSeek provided the most natural and technically accurate translation while perfectly preserving the MDX structure and asset paths. It correctly translated 'Canary Tokens' as 'Tokens Canario' and 'tripwires' as 'alfombras digitales' (though 'trampas' or 'hilos' might be more literal, the context of 'tripwire' as a trap is well-maintained). It also handled the technical terminology (Dev Containers, infostealer, prompt injection) with the appropriate balance of localization and industry-standard English terms. The formatting of the table and code blocks is flawless.

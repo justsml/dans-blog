@@ -10,18 +10,22 @@
 - Selected commit hint: judge selected
 - Validation: passed
 - Validation scope: local
+- Confidence: high (0.885)
+- Confidence signals: no high/medium issues; single judge
+- High/medium/low issue counts: 0/0/0
 
 ## Primary Judge Telemetry
-- Runtime seconds: 2.50
-- Input tokens: 21214
-- Output tokens: 210
+- Runtime seconds: 3.45
+- Input tokens: 15904
+- Output tokens: 237
 - Thinking tokens: unknown
 - Cached input tokens: 0
 - Cache write tokens: 0
-- OpenRouter cost credits: 0.011237
-- Estimated cost: $0.011237
+- OpenRouter cost credits: 0.008663
+- Estimated cost: $0.008663
 
 ## Candidates
-- current not present
-- a89fd24c39b027354549e0e7157b3acfa65bcc7a i18n candidate(es): into-the-breach via openrouter/deepseek/deepseek-v4-flash
-- ef61d128a3ff5ee86e62a728c949e2b4dac349c0 i18n candidate(es): into-the-breach via openrouter/google/gemini-3-flash-preview
+- current src/content/posts/2026-05-13--into-the-breach/es/index.mdx
+- ff9f73561fe705e2ac382b2505dd34bddf1a9270 i18n candidate(es): into-the-breach via deepseek/deepseek-v4-flash:nitro
+- 9fb70ddb4558d20b6ebef7ccd702180473f6514a i18n candidate(es): into-the-breach via openrouter/openai/gpt-oss-120b:nitro
+- aa9dd2b0f205c64293bb118074befc948b27ed90 i18n candidate(es): into-the-breach via openrouter/qwen/qwen3-32b:nitro
