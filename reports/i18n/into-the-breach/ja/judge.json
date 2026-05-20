@@ -1,37 +1,41 @@
 {
-  "selectedCommit": "044ba354aba738dc5ccaabd177c7562349e52e60",
-  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "selectedCommit": "1fb2c3fb0faafd136be20177d90865814cfec124",
+  "selectedModel": "deepseek/deepseek-v4-flash:nitro",
   "scores": {
-    "readability": 5,
-    "technicalAccuracy": 5,
-    "coherence": 5,
-    "relevance": 5,
-    "translationQuality": 5,
-    "mdxPreservation": 5
+    "readability": 95,
+    "technicalAccuracy": 98,
+    "coherence": 95,
+    "relevance": 100,
+    "translationQuality": 95,
+    "mdxPreservation": 100,
+    "culturalAdaptation": 90,
+    "languagePurity": 98
   },
   "suggestions": [],
-  "rationale": "The current translation is excellent. It captures Dan's direct, punchy style perfectly in Japanese. Technical terms are handled correctly, and the MDX structure is preserved. The previously reported duplicate heading '## 実用的な基準' is not actually present in the provided ja/index.mdx file (it only appears once), so no high-priority fixes are required.",
+  "rationale": "This candidate provided the most natural and technically accurate translation. It correctly handled the MDX structure, including the relative paths for images. It avoided the awkward 'Canary' translations found in other candidates (like 'キャンセティー' or 'キャンベリートークン' which are incorrect or phonetic hallucinations). The tone is direct and professional, matching the source's style. It also correctly translated the table and infographic text while maintaining the technical meaning of terms like 'infostealer' and 'supply chain'.",
+  "confidence": "high",
+  "confidenceScore": 0.884,
+  "confidenceSignals": [
+    "no high/medium issues",
+    "single judge"
+  ],
+  "issueCounts": {
+    "high": 0,
+    "medium": 0,
+    "low": 0
+  },
   "slug": "into-the-breach",
   "locale": "ja",
   "candidateCommits": [
-    "044ba354aba738dc5ccaabd177c7562349e52e60",
-    "a3f0115a87fcbf359fe0c334098a7873720f8593"
+    "1fb2c3fb0faafd136be20177d90865814cfec124",
+    "07ab94dd295ff8e1e787b286277a45226e81b701",
+    "01df784d378e2781541367c60726c65070c6c1ae"
   ],
-  "suggestionLog": [
-    {
-      "priority": "high",
-      "match": "## 実用的な基準\n\n## 実用的な基準",
-      "replacement": "## 実用的な基準",
-      "reason": "The candidate accidentally duplicated the H2 heading '実用的な基準'.",
-      "pass": 1,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
-    }
-  ],
+  "suggestionLog": [],
   "validation": {
-    "ok": false,
+    "ok": true,
     "scope": "local",
     "command": "bun run i18n:validate --slug into-the-breach --locale ja --skip-global",
-    "error": "Command failed: bun run i18n:validate --slug into-the-breach --locale ja --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug into-the-breach --locale ja --skip-global\n111 |     })\n112 |     .filter((message): message is string => message != null);\n113 | \n114 |   if (mismatches.length === 0) return;\n115 | \n116 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2026-05-13--into-the-breach/ja/index.mdx changed heading counts. H2: English has 12, translation has 13\n      at assertHeadingCounts (/Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:116:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:28:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+    "output": ""
   }
 }

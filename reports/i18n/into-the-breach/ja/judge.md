@@ -1,7 +1,8 @@
 # Translation Judge
 
-- Selected candidate: 044ba354aba738dc5ccaabd177c7562349e52e60
-- Selected model: openrouter/deepseek/deepseek-v4-flash
+- Selected candidate: 1fb2c3fb0faafd136be20177d90865814cfec124
+- Selected model: deepseek/deepseek-v4-flash:nitro
 - Judge model: openrouter/google/gemini-3-flash-preview
+- Confidence: high (0.884)
 
-The current translation is excellent. It captures Dan's direct, punchy style perfectly in Japanese. Technical terms are handled correctly, and the MDX structure is preserved. The previously reported duplicate heading '## 実用的な基準' is not actually present in the provided ja/index.mdx file (it only appears once), so no high-priority fixes are required.
+This candidate provided the most natural and technically accurate translation. It correctly handled the MDX structure, including the relative paths for images. It avoided the awkward 'Canary' translations found in other candidates (like 'キャンセティー' or 'キャンベリートークン' which are incorrect or phonetic hallucinations). The tone is direct and professional, matching the source's style. It also correctly translated the table and infographic text while maintaining the technical meaning of terms like 'infostealer' and 'supply chain'.
