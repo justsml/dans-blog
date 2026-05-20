@@ -1,7 +1,8 @@
 # Translation Judge
 
-- Selected candidate: 4a4c3c595818c7c8279f5ec150b69636396851fc
-- Selected model: openrouter/deepseek/deepseek-v4-flash
+- Selected candidate: cb796c5b78b14b2fadad407528f5baba661e1235
+- Selected model: deepseek/deepseek-v4-flash:nitro
 - Judge model: openrouter/google/gemini-3-flash-preview
+- Confidence: low (0.316)
 
-This candidate is the only one that correctly preserves the structural integrity of the MDX file, specifically the infographic blueprint section and the visual table of contents which were missing or heavily altered in the 'current' version and other candidates. It maintains Dan's direct, technical voice while providing a natural Hebrew translation. It also correctly handles the relative asset paths (../) and preserves all technical metadata and frontmatter correctly.
+The DeepSeek translation is the most fluid and captures the author's direct tone well. The previous judge report mentioned Chinese character leaks and duplicated cells, but looking at the provided Hebrew MDX, those specific issues (like '几乎没有') are not present in the text provided to me. However, there is a broken table row starting with a hyphen instead of a pipe which needs fixing to preserve MDX structure.

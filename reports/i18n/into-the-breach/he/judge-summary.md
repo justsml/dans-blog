@@ -10,55 +10,48 @@
 - Selected commit hint: judge selected
 - Validation: passed
 - Validation scope: local
-
-## Batch Judge Telemetry
-### Round 1, Batch 1
-- Runtime seconds: 3.26
-- Input tokens: 43384
-- Output tokens: 268
-- Thinking tokens: unknown
-- Cached input tokens: 0
-- Cache write tokens: 0
-- OpenRouter cost credits: 0.022496
-- Estimated cost: $0.022496
-
-### Round 1, Batch 2
-- Runtime seconds: 3.17
-- Input tokens: 43583
-- Output tokens: 248
-- Thinking tokens: unknown
-- Cached input tokens: 0
-- Cache write tokens: 0
-- OpenRouter cost credits: 0.022535
-- Estimated cost: $0.022535
-
-### Round 1, Batch 3
-- Runtime seconds: 2.84
-- Input tokens: 23482
-- Output tokens: 269
-- Thinking tokens: unknown
-- Cached input tokens: 0
-- Cache write tokens: 0
-- OpenRouter cost credits: 0.012548
-- Estimated cost: $0.012548
+- Confidence: low (0.316)
+- Confidence signals: 1 high and 0 medium issues; single judge
+- High/medium/low issue counts: 1/0/0
 
 ## Primary Judge Telemetry
-- Runtime seconds: 2.55
-- Input tokens: 38029
-- Output tokens: 205
+- Runtime seconds: 3.94
+- Input tokens: 18023
+- Output tokens: 266
 - Thinking tokens: unknown
 - Cached input tokens: 0
 - Cache write tokens: 0
-- OpenRouter cost credits: 0.019630
-- Estimated cost: $0.019630
+- OpenRouter cost credits: 0.009810
+- Estimated cost: $0.009810
+
+## Pre-Publish Rescore Telemetry
+### Pass 1
+- Runtime seconds: 3.28
+- Input tokens: 12465
+- Output tokens: 478
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- OpenRouter cost credits: 0.007666
+- Estimated cost: $0.007666
+
+### Pass 2
+- Runtime seconds: 3.02
+- Input tokens: 12565
+- Output tokens: 381
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- OpenRouter cost credits: 0.007425
+- Estimated cost: $0.007425
+
+## Judge Suggestions
+1. Pass 1: applied medium priority suggestion. Match: "- הקשר קידוד AI" Replacement: "| הקשר קידוד AI | העוזר עלול לקבל \"לשם הקשר\" קבצים רגישים. |" Reason: The table row for 'AI coding context' was broken into a list item, disrupting the table structure. Note: Applied exact replacement to selected MDX.
+2. Pass 2: logged high priority suggestion. Match: "| הקשר קידוד AI | העוזר עלול לקבל \"לשם הקשר\" קבצים רגישים. | | העוזר עלול לקבל \"לשם הקשר\" קבצים רגישים. |" Replacement: "| הקשר קידוד AI | העוזר עלול לקבל \"לשם הקשר\" קבצים רגישים. |" Reason: The table row for 'AI coding context' contains a duplicated cell and broken formatting, which disrupts the Markdown table structure. Note: Exact match not found in selected MDX.
+3. Pass 2: applied high priority suggestion. Match: "פחות מ-24 שעות几乎没有, בעצם אפס בדיקה קהילתית." Replacement: "פחות מ-24 שעות, עבר בעצם אפס בדיקה קהילתית." Reason: Leaked Chinese characters '几乎没有' (meaning 'almost none') found in the middle of a Hebrew sentence. Note: Applied exact replacement to selected MDX.
 
 ## Candidates
 - current src/content/posts/2026-05-13--into-the-breach/he/index.mdx
-- 122428714965e04b7c5fecd1d64107f8dea8cd42 i18n candidate(he): into-the-breach via openrouter/deepseek/deepseek-v4-flash
-- d44b49460e054b712ea80dffeec53ca10c8bdb05 i18n candidate(he): into-the-breach via openrouter/google/gemini-3-flash-preview
-- 0789c402566805fdab3926c525f6df5ab10d90b5 i18n candidate(he): into-the-breach via openrouter/qwen/qwen3-32b:nitro
-- 6491e3150c56c934c024397c3b9bad9909d8b6ab i18n candidate(he): into-the-breach via openrouter/openai/gpt-oss-120b:nitro
-- cd75ec75bcf9005e7a52b0429444506bf25b57fd i18n candidate(he): into-the-breach via deepseek/deepseek-v4-flash
-- 4ec8f839baa02ee8d4f62ba56c1896d868545dca i18n candidate(he): into-the-breach via openrouter/google/gemini-3-flash-preview
-- 810b55dbbefc38bf647d899fa269aaed7476d909 i18n candidate(he): into-the-breach via openrouter/openai/gpt-oss-120b:nitro
-- 4a4c3c595818c7c8279f5ec150b69636396851fc i18n candidate(he): into-the-breach via openrouter/deepseek/deepseek-v4-flash
+- e632dc503f7add7ba4718fb37c19e1b48b470c37 i18n candidate(he): into-the-breach via openrouter/openai/gpt-oss-120b:nitro
+- b9d43aef106a0c7c52147aef268f467a2f36d2db i18n candidate(he): into-the-breach via openrouter/qwen/qwen3-32b:nitro
+- cb796c5b78b14b2fadad407528f5baba661e1235 i18n candidate(he): into-the-breach via deepseek/deepseek-v4-flash:nitro

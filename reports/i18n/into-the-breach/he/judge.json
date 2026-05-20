@@ -1,31 +1,72 @@
 {
-  "selectedCommit": "4a4c3c595818c7c8279f5ec150b69636396851fc",
-  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "selectedCommit": "cb796c5b78b14b2fadad407528f5baba661e1235",
+  "selectedModel": "deepseek/deepseek-v4-flash:nitro",
   "scores": {
-    "readability": 95,
-    "technicalAccuracy": 98,
+    "readability": 90,
+    "technicalAccuracy": 95,
     "coherence": 95,
     "relevance": 100,
     "translationQuality": 92,
-    "mdxPreservation": 100,
-    "culturalAdaptation": 90,
-    "languagePurity": 95
+    "mdxPreservation": 90,
+    "culturalAdaptation": 92,
+    "languagePurity": 85
   },
-  "suggestions": [],
-  "rationale": "This candidate is the only one that correctly preserves the structural integrity of the MDX file, specifically the infographic blueprint section and the visual table of contents which were missing or heavily altered in the 'current' version and other candidates. It maintains Dan's direct, technical voice while providing a natural Hebrew translation. It also correctly handles the relative asset paths (../) and preserves all technical metadata and frontmatter correctly.",
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "- הקשר קידוד AI | העוזר עלול לקבל \"לשם הקשר\" קבצים רגישים. |",
+      "replacement": "| הקשר קידוד AI | העוזר עלול לקבל \"לשם הקשר\" קבצים רגישים. |",
+      "reason": "The table row for 'AI coding context' starts with a hyphen instead of a pipe, breaking the Markdown table structure."
+    }
+  ],
+  "rationale": "The DeepSeek translation is the most fluid and captures the author's direct tone well. The previous judge report mentioned Chinese character leaks and duplicated cells, but looking at the provided Hebrew MDX, those specific issues (like '几乎没有') are not present in the text provided to me. However, there is a broken table row starting with a hyphen instead of a pipe which needs fixing to preserve MDX structure.",
+  "confidence": "low",
+  "confidenceScore": 0.316,
+  "confidenceSignals": [
+    "1 high and 0 medium issues",
+    "single judge"
+  ],
+  "issueCounts": {
+    "high": 1,
+    "medium": 0,
+    "low": 0
+  },
   "slug": "into-the-breach",
   "locale": "he",
   "candidateCommits": [
-    "122428714965e04b7c5fecd1d64107f8dea8cd42",
-    "d44b49460e054b712ea80dffeec53ca10c8bdb05",
-    "0789c402566805fdab3926c525f6df5ab10d90b5",
-    "6491e3150c56c934c024397c3b9bad9909d8b6ab",
-    "cd75ec75bcf9005e7a52b0429444506bf25b57fd",
-    "4ec8f839baa02ee8d4f62ba56c1896d868545dca",
-    "810b55dbbefc38bf647d899fa269aaed7476d909",
-    "4a4c3c595818c7c8279f5ec150b69636396851fc"
+    "e632dc503f7add7ba4718fb37c19e1b48b470c37",
+    "b9d43aef106a0c7c52147aef268f467a2f36d2db",
+    "cb796c5b78b14b2fadad407528f5baba661e1235"
   ],
-  "suggestionLog": [],
+  "suggestionLog": [
+    {
+      "priority": "medium",
+      "match": "- הקשר קידוד AI",
+      "replacement": "| הקשר קידוד AI | העוזר עלול לקבל \"לשם הקשר\" קבצים רגישים. |",
+      "reason": "The table row for 'AI coding context' was broken into a list item, disrupting the table structure.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "| הקשר קידוד AI | העוזר עלול לקבל \"לשם הקשר\" קבצים רגישים. | | העוזר עלול לקבל \"לשם הקשר\" קבצים רגישים. |",
+      "replacement": "| הקשר קידוד AI | העוזר עלול לקבל \"לשם הקשר\" קבצים רגישים. |",
+      "reason": "The table row for 'AI coding context' contains a duplicated cell and broken formatting, which disrupts the Markdown table structure.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "פחות מ-24 שעות几乎没有, בעצם אפס בדיקה קהילתית.",
+      "replacement": "פחות מ-24 שעות, עבר בעצם אפס בדיקה קהילתית.",
+      "reason": "Leaked Chinese characters '几乎没有' (meaning 'almost none') found in the middle of a Hebrew sentence.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
   "validation": {
     "ok": true,
     "scope": "local",
