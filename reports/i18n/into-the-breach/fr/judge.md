@@ -1,7 +1,8 @@
 # Translation Judge
 
-- Selected candidate: ad08637c7c9ea49b965d786b66c6bd27a3573d8a
-- Selected model: openrouter/deepseek/deepseek-v4-flash
+- Selected candidate: 243388ac58b94c41a6e72a898723e2df03109226
+- Selected model: deepseek/deepseek-v4-flash:nitro
 - Judge model: openrouter/google/gemini-3-flash-preview
+- Confidence: high (0.885)
 
-DeepSeek provided a very natural translation that captures the direct, slightly punchy tone of the original English text. It correctly handled all technical terms (infostealer, prompt injection, canary tokens) and preserved the MDX structure perfectly, including the relative asset paths. Gemini's translation was also good but felt slightly more formal/stiff in certain sections (e.g., 'rempart' vs 'ligne de défense'). DeepSeek's choice of 'vibe' and 'laptop' feels more authentic to modern French developer speak.
+The translation is excellent, capturing Dan's direct and punchy style while maintaining technical accuracy. It correctly handles MDX asset paths and preserves the structure of the original document. The choice of 'entrepôt d'identifiants' for 'credential warehouse' is particularly strong. The suggestion from the previous judge to change 'Sommaire visuel' was already incorporated into the current version.

@@ -1,23 +1,47 @@
 {
-  "selectedCommit": "ad08637c7c9ea49b965d786b66c6bd27a3573d8a",
-  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "selectedCommit": "243388ac58b94c41a6e72a898723e2df03109226",
+  "selectedModel": "deepseek/deepseek-v4-flash:nitro",
   "scores": {
-    "readability": 5,
-    "technicalAccuracy": 5,
-    "coherence": 5,
-    "relevance": 5,
-    "translationQuality": 5,
-    "mdxPreservation": 5
+    "readability": 95,
+    "technicalAccuracy": 98,
+    "coherence": 95,
+    "relevance": 100,
+    "translationQuality": 95,
+    "mdxPreservation": 100,
+    "culturalAdaptation": 92,
+    "languagePurity": 98
   },
   "suggestions": [],
-  "rationale": "DeepSeek provided a very natural translation that captures the direct, slightly punchy tone of the original English text. It correctly handled all technical terms (infostealer, prompt injection, canary tokens) and preserved the MDX structure perfectly, including the relative asset paths. Gemini's translation was also good but felt slightly more formal/stiff in certain sections (e.g., 'rempart' vs 'ligne de défense'). DeepSeek's choice of 'vibe' and 'laptop' feels more authentic to modern French developer speak.",
+  "rationale": "The translation is excellent, capturing Dan's direct and punchy style while maintaining technical accuracy. It correctly handles MDX asset paths and preserves the structure of the original document. The choice of 'entrepôt d'identifiants' for 'credential warehouse' is particularly strong. The suggestion from the previous judge to change 'Sommaire visuel' was already incorporated into the current version.",
+  "confidence": "high",
+  "confidenceScore": 0.885,
+  "confidenceSignals": [
+    "no high/medium issues",
+    "single judge"
+  ],
+  "issueCounts": {
+    "high": 0,
+    "medium": 0,
+    "low": 0
+  },
   "slug": "into-the-breach",
   "locale": "fr",
   "candidateCommits": [
-    "ad08637c7c9ea49b965d786b66c6bd27a3573d8a",
-    "34870f4a97af4a18aff70a6036a62a2951e2b723"
+    "243388ac58b94c41a6e72a898723e2df03109226",
+    "db4fa81c99468b12d51e5bc9316e8b5eaa1e7472",
+    "07baa35afbf7e96cce319b43bfb81097d15c57ce"
   ],
-  "suggestionLog": [],
+  "suggestionLog": [
+    {
+      "priority": "medium",
+      "match": "Table des matières visuelle",
+      "replacement": "Sommaire visuel",
+      "reason": "'Sommaire' is more natural for a visual overview in French than the literal 'Table des matières'.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
   "validation": {
     "ok": true,
     "scope": "local",
