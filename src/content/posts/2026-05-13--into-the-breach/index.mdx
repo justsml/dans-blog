@@ -34,15 +34,11 @@ That's an attack. In 2026.
 
 ![File footage of 90's hackers in the wild](https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExaTAza2FhaG91Y2J4cnhxZDIwZmpqemU1eHN2cHpxendrcnQ4cHVjcyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l2R04wcEprpUFvrC8/giphy.gif)
 
-## Your Dev Machine Is a Credential Cruise Ship
+## Credential Cruise Ship
 
-Your laptop is not a laptop. It is a credential cruise ship — email sessions, admin panels, SSH keys, `.env` files, GitHub tokens, cloud CLI configs, AI coding tools with shell access, database exports you forgot existed. Every tool you've ever authenticated is a stateroom, and they are all booked.
+Your laptop is not a laptop. It is a credential cruise ship — email sessions, admin panels, SSH keys, `.env` files, GitHub tokens, cloud CLI configs, AI coding tools with shell access, database exports you forgot existed. Every tool you've ever authenticated is aboard, and they're all unlocked.
 
-Modern cruise ships are engineering marvels. Compartmentalized hulls, automated damage-control sensors, redundant navigation, lifeboats for every passenger. Naval architects have spent decades making them hard to sink. The question worth asking about your workstation is: has the same rigor gone into making it hard to breach?
-
-The tools exist. Containers and sandboxes isolate processes the way watertight bulkheads contain flooding. Behavioral endpoint security watches for anomalies the way onboard sensors detect a breach before the passengers do. Offsite backups are your lifeboat — the thing that still works after everything else has gone wrong.
-
-Local has always been a risky stew of credentials, accounts, and systems access. What's changed: attacks are more common, more effective, and more damaging.
+Local has always been a risky mix of credentials and systems access. What's changed: attacks are more common, more automated, and more damaging.
 
 <p class="inset">
 The question is not whether you can avoid every bad click. The question is whether one bad click can read everything, use everything, and leave before you notice.
@@ -60,7 +56,7 @@ Shouldn't take more than 29 hours a day.
 
 This is exactly how supply chain attacks work: they exploit only one weak link in a vast chain of trust. The attacker succeeds once. You have to maintain perfect defense every time.
 
-Lumma Stealer — a widely-used infostealer that silently collects passwords, browser cookies, API keys, and cloud credentials — spread through fake CAPTCHAs, poisoned search ads, and trojanized apps. Mandiant's Snowflake investigation traced a cascade of enterprise breaches back to credentials stolen by infostealers, some going back to 2020. At least 79.7% of the accounts involved had known prior exposure.
+The [Shai-Hulud supply chain attack](https://www.ox.security/blog/shai-hulud-here-we-go-again-170-packages-hit-across-npm-pypi/) hit 170+ npm and PyPI packages — including ones published by Mistral AI, OpenSearch, and Guardrails AI — harvesting developer credentials, cloud secrets, and SSH keys. The [TanStack variant](https://www.bleepingcomputer.com/news/security/openai-confirms-security-breach-in-tanstack-supply-chain-attack/) compromised 84 package versions and reached two OpenAI employee devices. [Mandiant's Snowflake investigation](https://cloud.google.com/blog/topics/threat-intelligence/unc5537-snowflake-data-theft-extortion) traced a cascade of enterprise breaches to credentials stolen by infostealers years earlier — 79.7% of accounts had known prior exposure.
 
 The locks were never changed.
 
@@ -82,9 +78,7 @@ And then there are backups — production exports someone dropped in `~/Download
 
 "Be careful" is weak advice. It asks the human to be the boundary.
 
-Humans are not boundaries. Humans are traffic.
-
-The real boundaries are structural: filesystem isolation, encrypted-at-rest secrets, short-lived credentials, hardware-backed auth, and alerts that fire the moment a fake secret gets touched.
+Humans are not boundaries. Even the best humans make mistakes. You have to plan for the worst.
 
 If a malicious process runs, the questions that decide whether you have a bad afternoon or a company-wide incident are:
 1. What can this process **read**?
@@ -93,14 +87,16 @@ If a malicious process runs, the questions that decide whether you have a bad af
 
 ## High-Leverage Defenses
 
+Let's get into 4 real defenses.
+
 1. [Dev Containers](#dev-containers)
-2. [Canary Tokens — Aggressively Deployed](#canary-tokens)
+2. [Canary Tokens](#canary-tokens)
 3. [Package Security Tools](#package-security-tools)
-4
+4. [PNPM Minimum Age Settings](#pnpm-minimum-age-settings)
 
 ### Dev Containers
 
-[Dev Containers](https://github.com/devcontainers/spec) are the single highest-leverage change most teams aren't doing. A Dev Container runs project work inside an isolated Docker container. `npm install`, `pip install`, `postinstall` scripts, AI shell commands, VS Code extensions — all of it happens in a 'workspace' or container that cannot see the rest of your machine. The container can be configured to have zero access to your home directory, no SSH keys, no cloud CLI credentials, and only the secrets relevant to that project. **If an attacker compromises a project, they get the keys to that project — not your entire machine.**
+[Dev Containers](https://github.com/devcontainers/spec) are the single highest-leverage change most teams aren't doing. A Dev Container runs project work inside an isolated Docker container. `npm install`, `pip install`, `postinstall` scripts, AI shell commands, VS Code extensions — all of it happens in a container that cannot see the rest of your machine. The container can be configured to have zero access to your home directory, no SSH keys, no cloud CLI credentials, and only the secrets relevant to that project. **If an attacker compromises a project, they get the keys to that project — not your entire machine.**
 
 <p class="inset">Ask Claude Code, `yo, setup DevContainers in this project`</p>
 
@@ -121,11 +117,11 @@ Whenever messing with random GitHub projects, opening interview take-home assign
 
 ### Canary Tokens
 
-Aggressively deploy canary tokens everywhere you have secrets. In .aws/credentials files, in .env files, in CI/CD variables, in password managers, in database dumps, in AI coding context. Anywhere an attacker would look for secrets, plant a canary token that alerts you the moment it gets touched.
-
 [Canarytokens](https://canarytokens.org) are free digital tripwires. Plant a fake-but-convincing secret somewhere an attacker would look. The moment it gets touched, you get an alert — often within seconds.
 
-Think of them as the emergency flare on a ship: they don't stop the attack, but they fire the instant it starts. If the attacker finds your fake AWS credentials appealing enough to try, you get a window to respond before they can do more damage. They're reliable, hard to counter*, and flexible — [canarytokens.org](https://canarytokens.org) is free, [Thinkst Canary](https://canary.tools) is the paid SaaS option, or you can self-host if you'd rather keep the alert infrastructure entirely in-house.
+Deploy them everywhere you have secrets: `.aws/credentials`, `.env` files, CI/CD variables, password managers, database dumps, AI coding context. Anywhere an attacker would inventory, plant a canary.
+
+If the attacker finds your fake AWS credentials appealing enough to try, you get a window to respond before they can do more damage. They're reliable and flexible — [canarytokens.org](https://canarytokens.org) is free, [Thinkst Canary](https://canary.tools) is the paid SaaS option, or you can self-host if you'd rather keep the alert infrastructure entirely in-house.
 
 <p class="inset">Attackers inventory before they steal. That reconnaissance pass is your window.</p>
 
@@ -137,22 +133,21 @@ Drop canaries in your most tempting-looking files:
 ~/.env.wallet-infra ← disguise fake credentials in every repo
 ```
 
-Canary tokens are free at [canarytokens.org](https://canarytokens.org), self-hostable, and available as a paid SaaS via [Thinkst Canary](https://canary.tools). There is no good reason not to deploy them everywhere a thief would look.
-
-| * A sophisticated attacker could wire a reverse kill switch. So that when you revoke and rotate secrets, it will trigger a wipe of all laptop data before you can investigate. It's already happened in the wild.
+> **⚠️ One caveat:** A sophisticated attacker can wire a [reverse kill switch](https://www.ox.security/blog/shai-hulud-here-we-go-again-170-packages-hit-across-npm-pypi/) — malware that polls for token revocation and wipes your machine the moment you rotate credentials. [It's happened in the wild](https://www.bleepingcomputer.com/news/security/openai-confirms-security-breach-in-tanstack-supply-chain-attack/). If you suspect active compromise, **isolate the machine from the network before revoking anything**, then rotate from a clean device.
 
 #### You Have Minutes
 
-When a canary fires — or you get an alert (email or webhook) that a token was used from an unexpected location — you have a window. Minutes, maybe a few hours. Not a week.
+When a canary fires — or you get an alert that a token was used from an unexpected location — you have a window. Minutes, maybe a few hours. Not a week.
 
-- **Rotate first, investigate later.** Revoke tokens before you understand what happened.
+- **Isolate first.** If you suspect active malware, disconnect from the network before revoking tokens.
+- **Rotate from a clean device.** Revoke and reissue credentials before you fully understand what happened.
 - **Check for attacker persistence.** New OAuth apps, IAM users, deploy keys, API tokens created before they left.
 - **Kill active browser sessions.** Force logout on everything you care about.
 - **Tell someone.** Security incidents get better with witnesses and timestamps. They get worse in silence.
 
 The security industry talks a lot about detection. It talks less about the twenty minutes after detection — when you are alone at your desk, trying to remember which services you have tokens for.
 
-<p class="inset">ProTip: create a shared doc: "Incident response runbook," just start with links to all systems, dependencies & services, who owns this, contact information, and steps to take ("rotate keys," "disable remote access," etc.).</p>
+<p class="inset">ProTip: create a shared doc: "Incident response runbook" — start with links to all systems, dependencies & services, who owns what, contact information, and steps to take ("rotate keys," "disable remote access," etc.).</p>
 
 ### Package Security Tools
 
@@ -160,7 +155,7 @@ Tools like [Socket.dev](https://socket.dev), [Snyk](https://snyk.io), and [Wiz](
 
 ### PNPM Minimum Age Settings
 
-You should use PNPM over `npm`. Then set a minimum release age. Newly published packages are the highest-risk window for supply chain attacks — a package that has existed for less than 24 hours has had essentially zero community scrutiny. Set `minimumReleaseAge` in minutes: at least `1440` (one day), and if you really want to throw attackers off `2880` (two days).
+Prefer PNPM over `npm`, then set a minimum release age. Newly published packages are the highest-risk window for supply chain attacks — a package that has existed for less than 24 hours has had essentially zero community scrutiny. Set `minimumReleaseAge` in minutes: at least `1440` (one day), or `2880` (two days) if you want a stronger buffer.
 
 ```yaml
 minimumReleaseAge: 2880
@@ -170,20 +165,20 @@ minimumReleaseAgeExclude:
   - 'typescript'
 ```
 
-That configuration blocks many newly-published-package attacks, especially the ones that get discovered and pulled before your next install. Use `minimumReleaseAgeExclude` sparingly for packages where immediate updates matter more than the delay, such as a compiler or runtime dependency you actively track.
+That configuration blocks many newly-published-package attacks, especially the ones that get discovered and pulled before your next install. Use `minimumReleaseAgeExclude` sparingly for packages where immediate updates matter more than the delay.
 
 ## The Standard Worth Having
 
 The standard is not "never click anything weird." That is advice for a poster, not a system.
 
-A bad dependency should not be able to reach every cloud credentials for every project on your laptop. A prompt-injected document should not trick an agent into exfiltrating data from your home directory. An infostealer should not find plaintext backups and long-lived tokens without triggering an alarm. Harden your posture, run local dev from inside containers, ensure credentials expire, rely on easy to use MFA (touch ID, face ID, FIDO/USB Key), sprinkle canary tokens everywhere. Before you wish you had done it.
+A bad dependency should not be able to reach cloud credentials for every project on your laptop. A prompt-injected document should not trick an agent into exfiltrating your home directory. An infostealer should not find plaintext backups and long-lived tokens without triggering an alarm. Harden your posture, run local dev from inside containers, ensure credentials expire, rely on easy-to-use MFA (Touch ID, Face ID, FIDO/USB key), and sprinkle canary tokens everywhere — before you wish you had.
 
 ## Sources and Useful Reading
 
 - [Verizon 2026 DBIR overview](https://www.verizon.com/business/resources/reports/dbir/)
 - [Mandiant: UNC5537 Targets Snowflake Customer Instances](https://cloud.google.com/blog/topics/threat-intelligence/unc5537-snowflake-data-theft-extortion)
-- [Microsoft: Lumma Stealer delivery techniques and capabilities](https://www.microsoft.com/en-us/security/blog/2025/05/21/lumma-stealer-breaking-down-the-delivery-techniques-and-capabilities-of-a-prolific-infostealer/)
-- [Microsoft DCU: Disrupting Lumma Stealer](https://blogs.microsoft.com/on-the-issues/2025/05/21/microsoft-leads-global-action-against-favored-cybercrime-tool/)
+- [Ox Security: Shai-Hulud malware — reverse kill switch in supply chain attacks](https://www.ox.security/blog/shai-hulud-here-we-go-again-170-packages-hit-across-npm-pypi/)
+- [BleepingComputer: OpenAI confirms breach in TanStack supply chain attack](https://www.bleepingcomputer.com/news/security/openai-confirms-security-breach-in-tanstack-supply-chain-attack/)
 - [GitHub: Security hardening for GitHub Actions](https://docs.github.com/en/actions/security-for-github-actions/security-guides/security-hardening-for-github-actions)
 - [Development Containers specification](https://github.com/devcontainers/spec)
 - [Thinkst Canarytokens overview](https://help.canary.tools/hc/en-gb/articles/10905485310109-Canarytoken-Overview-and-Use-Cases)
