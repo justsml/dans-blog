@@ -1,8 +1,8 @@
 # Translation Judge
 
-- Selected candidate: ff9f73561fe705e2ac382b2505dd34bddf1a9270
-- Selected model: deepseek/deepseek-v4-flash:nitro
+- Selected candidate: 04c2be24c9e6ecf83d1fa12479d8f5f588821a4c
+- Selected model: openrouter/deepseek/deepseek-v4-flash
 - Judge model: openrouter/google/gemini-3-flash-preview
-- Confidence: high (0.885)
+- Confidence: high (0.889)
 
-DeepSeek provided the most natural and technically accurate translation while perfectly preserving the MDX structure and asset paths. It correctly translated 'Canary Tokens' as 'Tokens Canario' and 'tripwires' as 'alfombras digitales' (though 'trampas' or 'hilos' might be more literal, the context of 'tripwire' as a trap is well-maintained). It also handled the technical terminology (Dev Containers, infostealer, prompt injection) with the appropriate balance of localization and industry-standard English terms. The formatting of the table and code blocks is flawless.
+The candidate 04c2be24c9e6ecf83d1fa12479d8f5f588821a4c is superior because it translates all headings and the infographic text, whereas the other candidate left several headings and the infographic description in English. It also correctly handled the asset paths (../) and preserved the MDX structure perfectly. The translation is natural and maintains the author's direct tone.
