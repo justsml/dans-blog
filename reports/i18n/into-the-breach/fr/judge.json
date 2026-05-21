@@ -1,20 +1,20 @@
 {
-  "selectedCommit": "243388ac58b94c41a6e72a898723e2df03109226",
-  "selectedModel": "deepseek/deepseek-v4-flash:nitro",
+  "selectedCommit": "25296225cc97c0378ea8e1cddf227d0c5b01590a",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
   "scores": {
     "readability": 95,
-    "technicalAccuracy": 98,
+    "technicalAccuracy": 100,
     "coherence": 95,
     "relevance": 100,
     "translationQuality": 95,
     "mdxPreservation": 100,
-    "culturalAdaptation": 92,
-    "languagePurity": 98
+    "culturalAdaptation": 90,
+    "languagePurity": 100
   },
   "suggestions": [],
-  "rationale": "The translation is excellent, capturing Dan's direct and punchy style while maintaining technical accuracy. It correctly handles MDX asset paths and preserves the structure of the original document. The choice of 'entrepôt d'identifiants' for 'credential warehouse' is particularly strong. The suggestion from the previous judge to change 'Sommaire visuel' was already incorporated into the current version.",
+  "rationale": "The DeepSeek candidate is excellent. It correctly translates all prose into natural French while maintaining the technical context. It avoids the major error found in the GPT-OSS candidate, which left a whole paragraph in English under section 4 ('Long-lived, broad credentials...'). DeepSeek also correctly handled the image paths and MDX structure.",
   "confidence": "high",
-  "confidenceScore": 0.885,
+  "confidenceScore": 0.886,
   "confidenceSignals": [
     "no high/medium issues",
     "single judge"
@@ -27,21 +27,10 @@
   "slug": "into-the-breach",
   "locale": "fr",
   "candidateCommits": [
-    "243388ac58b94c41a6e72a898723e2df03109226",
-    "db4fa81c99468b12d51e5bc9316e8b5eaa1e7472",
-    "07baa35afbf7e96cce319b43bfb81097d15c57ce"
+    "25296225cc97c0378ea8e1cddf227d0c5b01590a",
+    "3cb2caab6f074d29ac2cc55620a869c2c63e62fd"
   ],
-  "suggestionLog": [
-    {
-      "priority": "medium",
-      "match": "Table des matières visuelle",
-      "replacement": "Sommaire visuel",
-      "reason": "'Sommaire' is more natural for a visual overview in French than the literal 'Table des matières'.",
-      "pass": 1,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
-    }
-  ],
+  "suggestionLog": [],
   "validation": {
     "ok": true,
     "scope": "local",

@@ -1,8 +1,8 @@
 # Translation Judge
 
-- Selected candidate: 243388ac58b94c41a6e72a898723e2df03109226
-- Selected model: deepseek/deepseek-v4-flash:nitro
+- Selected candidate: 25296225cc97c0378ea8e1cddf227d0c5b01590a
+- Selected model: openrouter/deepseek/deepseek-v4-flash
 - Judge model: openrouter/google/gemini-3-flash-preview
-- Confidence: high (0.885)
+- Confidence: high (0.886)
 
-The translation is excellent, capturing Dan's direct and punchy style while maintaining technical accuracy. It correctly handles MDX asset paths and preserves the structure of the original document. The choice of 'entrepôt d'identifiants' for 'credential warehouse' is particularly strong. The suggestion from the previous judge to change 'Sommaire visuel' was already incorporated into the current version.
+The DeepSeek candidate is excellent. It correctly translates all prose into natural French while maintaining the technical context. It avoids the major error found in the GPT-OSS candidate, which left a whole paragraph in English under section 4 ('Long-lived, broad credentials...'). DeepSeek also correctly handled the image paths and MDX structure.
