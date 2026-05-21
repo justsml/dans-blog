@@ -1,20 +1,20 @@
 {
-  "selectedCommit": "1fb2c3fb0faafd136be20177d90865814cfec124",
-  "selectedModel": "deepseek/deepseek-v4-flash:nitro",
+  "selectedCommit": "e101e6034bf2786fbf0a1fdc248fc009b83f7eef",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
   "scores": {
     "readability": 95,
-    "technicalAccuracy": 98,
+    "technicalAccuracy": 100,
     "coherence": 95,
     "relevance": 100,
     "translationQuality": 95,
     "mdxPreservation": 100,
     "culturalAdaptation": 90,
-    "languagePurity": 98
+    "languagePurity": 100
   },
   "suggestions": [],
-  "rationale": "This candidate provided the most natural and technically accurate translation. It correctly handled the MDX structure, including the relative paths for images. It avoided the awkward 'Canary' translations found in other candidates (like 'キャンセティー' or 'キャンベリートークン' which are incorrect or phonetic hallucinations). The tone is direct and professional, matching the source's style. It also correctly translated the table and infographic text while maintaining the technical meaning of terms like 'infostealer' and 'supply chain'.",
+  "rationale": "The translation is technically accurate and captures the author's direct tone perfectly. It correctly handles the MDX structure and asset paths. Note: The previous judge report mentioned a mismatch in 'cover_full_width', but upon inspection of the provided candidate text, it already correctly uses 'wide-2.webp', so no suggestion is required.",
   "confidence": "high",
-  "confidenceScore": 0.884,
+  "confidenceScore": 0.886,
   "confidenceSignals": [
     "no high/medium issues",
     "single judge"
@@ -27,15 +27,24 @@
   "slug": "into-the-breach",
   "locale": "ja",
   "candidateCommits": [
-    "1fb2c3fb0faafd136be20177d90865814cfec124",
-    "07ab94dd295ff8e1e787b286277a45226e81b701",
-    "01df784d378e2781541367c60726c65070c6c1ae"
+    "e101e6034bf2786fbf0a1fdc248fc009b83f7eef",
+    "bb3fec45a11fb1e8227325352f62bc8b52d7b207"
   ],
-  "suggestionLog": [],
+  "suggestionLog": [
+    {
+      "priority": "medium",
+      "match": "cover_full_width: ../wide.webp",
+      "replacement": "cover_full_width: ../wide-2.webp",
+      "reason": "The English source uses wide-2.webp. This ensures the correct asset is referenced.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
   "validation": {
-    "ok": true,
+    "ok": false,
     "scope": "local",
     "command": "bun run i18n:validate --slug into-the-breach --locale ja --skip-global",
-    "output": ""
+    "error": "Command failed: bun run i18n:validate --slug into-the-breach --locale ja --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug into-the-breach --locale ja --skip-global\n222 | export function assertStructuralParity(input: CompareMdxStructureInput) {\n223 |   const comparison = compareMdxStructure(input);\n224 |   if (comparison.valid) return;\n225 | \n226 |   const targetLabel = input.targetPath ?? \"translation\";\n227 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2026-05-13--into-the-breach/ja/index.mdx failed structural parity with score 0.946 (minimum 0.980). /Users/dan/code/oss/dans-blog/src/content/posts/2026-05-13--into-the-breach/ja/index.mdx: Link count or href sequence changed across Markdown/HTML link formats. Differences: {\"links\":-1,\"linkTargets\":17}. Differences: {\"links\":-1,\"linkTargets\":17}\n      at assertStructuralParity (/Users/dan/code/oss/dans-blog/src/scripts/i18n/structural-validation.ts:227:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
   }
 }
