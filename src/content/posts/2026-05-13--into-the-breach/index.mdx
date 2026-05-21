@@ -34,9 +34,13 @@ That's an attack. In 2026.
 
 ![File footage of 90's hackers in the wild](https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExaTAza2FhaG91Y2J4cnhxZDIwZmpqemU1eHN2cHpxendrcnQ4cHVjcyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l2R04wcEprpUFvrC8/giphy.gif)
 
-## You Are the Credential Warehouse
+## Your Dev Machine Is a Credential Cruise Ship
 
-Your laptop is not a laptop. It is a credential warehouse with a keyboard — browser sessions, SSH keys, `.env` files, GitHub tokens, cloud CLIs, AI coding tools with shell access, database exports you forgot existed.
+Your laptop is not a laptop. It is a credential cruise ship — email sessions, admin panels, SSH keys, `.env` files, GitHub tokens, cloud CLI configs, AI coding tools with shell access, database exports you forgot existed. Every tool you've ever authenticated is a stateroom, and they are all booked.
+
+Modern cruise ships are engineering marvels. Compartmentalized hulls, automated damage-control sensors, redundant navigation, lifeboats for every passenger. Naval architects have spent decades making them hard to sink. The question worth asking about your workstation is: has the same rigor gone into making it hard to breach?
+
+The tools exist. Containers and sandboxes isolate processes the way watertight bulkheads contain flooding. Behavioral endpoint security watches for anomalies the way onboard sensors detect a breach before the passengers do. Offsite backups are your lifeboat — the thing that still works after everything else has gone wrong.
 
 The old model was: production is dangerous, local is convenient. That model is finished.
 
@@ -50,17 +54,17 @@ This is the modern attack surface. Sometimes you are the breach.
 
 ## The Supply Chain Problem Is Impossibly Large
 
-Here is the fun part. To be completely safe, all you need to do is perform a deep, multi-platform security evaluation of every dependency you rely on — their maintainers, their history, their transitive dependencies — across every package registry. Then repeat the evaluation every time your dependency tree changes or gets an update, because that is precisely how supply chain attacks work: they exploit a chain of trust.
+To be completely safe, all you need to do is perform a deep, multi-platform security evaluation of every dependency you rely on — their maintainers, their history, their transitive dependencies — across every package registry. Then repeat that evaluation every time your dependency tree changes or gets an update.
 
-Easy.
+Shouldn't take more than 29 hours a day.
 
-Oh, and the attacker only has to succeed once. You have to maintain perfect defense every time.
+This is exactly how supply chain attacks work: they exploit only one weak link in a vast chain of trust. The attacker succeeds once. You have to maintain perfect defense every time.
 
-Lumma Stealer — a widely-used infostealer that silently collects passwords, browser cookies, API keys, and cloud credentials — reached victims through fake CAPTCHAs, poisoned search ads, and trojanized apps. Mandiant's Snowflake investigation traced a cascade of enterprise breaches back to credentials stolen by infostealers, some as far back as 2020. At least 79.7% of the accounts used in the attack had known prior exposure. The locks were never changed.
+Lumma Stealer — a widely-used infostealer that silently collects passwords, browser cookies, API keys, and cloud credentials — spread through fake CAPTCHAs, poisoned search ads, and trojanized apps. Mandiant's Snowflake investigation traced a cascade of enterprise breaches back to credentials stolen by infostealers, some going back to 2020. At least 79.7% of the accounts involved had known prior exposure.
 
-The attacker did not break the warehouse. They found old keys in a desk drawer.
+The locks were never changed.
 
-For developers, that desk drawer looks like this:
+For developers, the target surface is uniquely rich. Every project carries secrets — API keys, database URLs, cloud access — and the attacker does not care which category they land in. They only need one.
 
 | Local artifact | Why attackers care |
 | --- | --- |
@@ -80,7 +84,7 @@ And then there are backups — production exports someone dropped in `~/Download
 
 Humans are not boundaries. Humans are traffic.
 
-Boundaries are boring: filesystem isolation, encrypted-at-rest secrets, short-lived credentials, hardware-backed auth, and alerts that fire the moment a fake secret gets touched.
+The real boundaries are structural: filesystem isolation, encrypted-at-rest secrets, short-lived credentials, hardware-backed auth, and alerts that fire the moment a fake secret gets touched.
 
 If a malicious process runs, the questions that decide whether you have a bad afternoon or a company-wide incident are:
 1. What can this process **read**?
@@ -152,12 +156,12 @@ Strict allowlists work if you have the staffing to maintain them. Most teams do 
 
 ## You Have Minutes
 
-When a canary fires — or GitHub alerts you that a token was used from an unexpected IP — you have a window. Minutes, maybe a few hours. Not a week.
+When a canary fires — or you get an alert that a token was used from an unexpected location — you have a window. Minutes, maybe a few hours. Not a week.
 
 - **Rotate first, investigate later.** Revoke tokens before you understand what happened.
 - **Check for attacker persistence.** New OAuth apps, IAM users, deploy keys, API tokens created before they left.
 - **Kill active browser sessions.** Force logout on everything you care about.
-- **Tell someone.** Security incidents improve with witnesses and timestamps.
+- **Tell someone.** Security incidents get better with witnesses and timestamps. They get worse in silence.
 
 The security industry talks a lot about detection. It talks less about what happens in the twenty minutes after detection when you are alone at your desk trying to remember which services you have tokens for.
 
