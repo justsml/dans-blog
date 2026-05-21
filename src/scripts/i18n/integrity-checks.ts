@@ -1,4 +1,5 @@
 import type { ActiveLocale } from "../../shared/i18n.ts";
+import { analyzeHeadingAnchorLinks } from "./heading-link-validation.ts";
 
 export type IntegritySeverity = "high" | "medium" | "low";
 
@@ -66,6 +67,7 @@ export function analyzeTranslationIntegrity({
   issues.push(...checkHtmlMarkup(targetContents, targetPath));
   issues.push(...checkFenceLanguages(targetContents, targetPath));
   issues.push(...checkAssetPaths(sourceContents, targetContents, targetPath));
+  issues.push(...checkHeadingAnchorLinks(sourceContents, targetContents, targetPath));
   issues.push(...checkGistPaths(targetContents, targetPath));
   issues.push(...checkLocalizedComponentImports(targetContents, targetPath));
   issues.push(...checkStructuralCounts(sourceContents, targetContents, targetPath));
@@ -74,6 +76,29 @@ export function analyzeTranslationIntegrity({
   issues.push(...checkMixedLanguage(targetContents, targetPath, locale));
 
   return issues;
+}
+
+function checkHeadingAnchorLinks(
+  sourceContents: string,
+  targetContents: string,
+  targetPath: string,
+): IntegrityIssue[] {
+  const report = analyzeHeadingAnchorLinks({ sourceContents, targetContents });
+  if (report.failedLinks === 0) return [];
+
+  const examples = report.failures.slice(0, 5).map((failure) =>
+    `line ${failure.lineNumber}: #${failure.targetFragment || "(missing)"} should be #${failure.expectedFragment}`,
+  );
+
+  return [{
+    code: "heading-anchor-link-target",
+    severity: "high",
+    message: [
+      `${targetPath} has ${report.failedLinks}/${report.checkedLinks} same-page heading anchor link(s) pointing at stale or missing translated heading IDs.`,
+      `Stale source anchors: ${report.staleSourceAnchorLinks}; unresolved target anchors: ${report.unresolvedTargetLinks}.`,
+      `Examples: ${examples.join("; ")}`,
+    ].join(" "),
+  }];
 }
 
 export function assertTranslationIntegrity(input: IntegrityCheckInput) {

@@ -43,7 +43,7 @@ describe("resolveCheapFastTranslationModel", () => {
   });
 
   test("resolves loose substrings to the first cheap/fast model match", () => {
-    expect(resolveCheapFastTranslationModel("nitro")).toBe("openrouter/google/gemma-4-26b-a4b-it:nitro");
+    expect(resolveCheapFastTranslationModel("nitro")).toBe("openrouter/openai/gpt-oss-120b:nitro");
     expect(resolveCheapFastTranslationModel("32b")).toBe("openrouter/qwen/qwen3-32b:nitro");
     expect(resolveCheapFastTranslationModel("deepseek")).toBe("openrouter/deepseek/deepseek-v4-flash");
   });
@@ -437,6 +437,68 @@ describe("analyzeTranslationIntegrity", () => {
     ].join("\n");
 
     expect(countHeadingsByLevel(sourceWithNonBodyHashes)).toEqual([0, 1, 0, 0, 0, 0]);
+  });
+
+  test("flags same-page heading links that still point at English heading IDs", () => {
+    const sourceWithHeadingLinks = [
+      "---",
+      "title: Source",
+      "---",
+      "",
+      "- [Install guide](#install-guide)",
+      "",
+      "## Install guide",
+    ].join("\n");
+    const targetWithStaleHeadingLinks = [
+      "---",
+      "title: Target",
+      "---",
+      "",
+      "- [Guide d'installation](#install-guide)",
+      "",
+      "## Guide d'installation",
+    ].join("\n");
+
+    const issues = analyzeTranslationIntegrity({
+      sourceContents: sourceWithHeadingLinks,
+      targetContents: targetWithStaleHeadingLinks,
+      targetPath: "/repo/src/content/posts/test/fr/index.mdx",
+      locale: "fr",
+    });
+
+    const issue = issues.find((item) => item.code === "heading-anchor-link-target");
+    expect(issue?.message).toContain("1/1");
+    expect(issue?.message).toContain("#guide-dinstallation");
+  });
+
+  test("accepts same-page heading links updated to translated heading IDs", () => {
+    const sourceWithHeadingLinks = [
+      "---",
+      "title: Source",
+      "---",
+      "",
+      "- [Install guide](#install-guide)",
+      "",
+      "## Install guide",
+    ].join("\n");
+    const targetWithTranslatedHeadingLinks = [
+      "---",
+      "title: Target",
+      "---",
+      "",
+      "- [Guide d'installation](#guide-dinstallation)",
+      "",
+      "## Guide d'installation",
+    ].join("\n");
+
+    const issues = analyzeTranslationIntegrity({
+      sourceContents: sourceWithHeadingLinks,
+      targetContents: targetWithTranslatedHeadingLinks,
+      targetPath: "/repo/src/content/posts/test/fr/index.mdx",
+      locale: "fr",
+    });
+
+    expect(issues.some((issue) => issue.code === "heading-anchor-link-target")).toBe(false);
   });
 
   test("flags changed code-like quiz options and answer counts", () => {

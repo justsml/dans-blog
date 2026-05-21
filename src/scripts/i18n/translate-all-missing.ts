@@ -24,6 +24,7 @@ import {
   CHEAP_FAST_TRANSLATION_MODELS,
   resolveCheapFastTranslationModels,
 } from "./model-presets.ts";
+import { modelIdsMatch, normalizeModelId } from "./model-id.ts";
 
 const JUDGE_MODEL = "openrouter/google/gemini-3-flash-preview";
 const ESCALATION_JUDGE_MODEL = "openrouter/anthropic/claude-sonnet-4.6";
@@ -98,7 +99,7 @@ async function translateAndJudgeTask(task: Task) {
   for (const model of candidateModels) {
     const candidates = getCandidateCommits(task);
     if (candidates.length >= minCandidates) break;
-    if (candidates.some((commit) => normalizeModelId(getCandidateModel(commit)) === normalizeModelId(model))) {
+    if (candidates.some((commit) => modelIdsMatch(getCandidateModel(commit), model))) {
       continue;
     }
 
@@ -308,7 +309,7 @@ function getCandidatePathFromCommit(commit: string, task: Task) {
       }
     })
     .filter((row) => row.locale === task.locale)
-    .filter((row) => normalizeModelId(String(row.model ?? "")) === normalizeModelId(model))
+    .filter((row) => modelIdsMatch(String(row.model ?? ""), model))
     .toReversed();
 
   for (const row of rows) {
@@ -328,10 +329,6 @@ function getCandidatePathFromCommit(commit: string, task: Task) {
 function getCandidateModel(commit: string) {
   const subject = run("git", ["show", "-s", "--format=%s", commit]);
   return subject.match(/ via (.+)$/)?.[1] ?? "";
-}
-
-function normalizeModelId(model: string) {
-  return model.replace(/^openrouter\//, "");
 }
 
 function getTaskRunLockPath(task: Task, model: string) {

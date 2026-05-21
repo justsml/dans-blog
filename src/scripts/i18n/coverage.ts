@@ -7,6 +7,7 @@ import {
   getTranslationSlot,
   type SourcePost,
 } from "./corpus-inventory.ts";
+import { analyzeHeadingAnchorLinks } from "./heading-link-validation.ts";
 import { compareMdxStructure, type MdxStructureCounts } from "./structural-validation.ts";
 import { optionalString, parseArgs, parseList, relativeToRepo } from "./utils.ts";
 
@@ -21,6 +22,14 @@ type StructuralCoverage = {
   targetCounts: MdxStructureCounts;
 };
 
+type HeadingLinkCoverage = {
+  checkedLinks: number;
+  failedLinks: number;
+  staleSourceAnchorLinks: number;
+  unresolvedTargetLinks: number;
+  examples: string[];
+};
+
 type LocaleCoverage = {
   candidateReports: number;
   hasJudge: boolean;
@@ -28,6 +37,7 @@ type LocaleCoverage = {
   hasTranslation: boolean;
   locale: ActiveLocale;
   reportPath: string;
+  headingLinks?: HeadingLinkCoverage;
   structure?: StructuralCoverage;
   targetPath: string;
   translationPath?: string;
@@ -107,6 +117,9 @@ function getLocaleCoverage(post: SourcePost, locale: ActiveLocale): LocaleCovera
   const structure = translationPath == null
     ? undefined
     : getStructuralCoverage(paths.sourcePath, translationPath);
+  const headingLinks = translationPath == null
+    ? undefined
+    : getHeadingLinkCoverage(paths.sourcePath, translationPath);
 
   return {
     candidateReports: reports.filter((entry) =>
@@ -117,6 +130,7 @@ function getLocaleCoverage(post: SourcePost, locale: ActiveLocale): LocaleCovera
     hasJudge: existsSync(join(reportPath, "judge-summary.md")) || existsSync(join(reportPath, "judge.md")),
     hasQwenBaseline: existsSync(join(reportPath, "openrouter-qwen-qwen3.6-plus.md")),
     hasTranslation: translationPath != null,
+    headingLinks,
     locale,
     reportPath,
     structure,
@@ -150,6 +164,23 @@ function getStructuralCoverage(sourcePath: string, translationPath: string): Str
   };
 }
 
+function getHeadingLinkCoverage(sourcePath: string, translationPath: string): HeadingLinkCoverage {
+  const report = analyzeHeadingAnchorLinks({
+    sourceContents: readFileSync(sourcePath, "utf8"),
+    targetContents: readFileSync(translationPath, "utf8"),
+  });
+
+  return {
+    checkedLinks: report.checkedLinks,
+    failedLinks: report.failedLinks,
+    staleSourceAnchorLinks: report.staleSourceAnchorLinks,
+    unresolvedTargetLinks: report.unresolvedTargetLinks,
+    examples: report.failures.slice(0, 3).map((failure) =>
+      `line ${failure.lineNumber}: #${failure.targetFragment || "(missing)"} -> #${failure.expectedFragment}`,
+    ),
+  };
+}
+
 function summarize(posts: PostCoverage[]) {
   const totalSlots = posts.length * selectedLocales.length;
   const filledSlots = posts.reduce((sum, post) => sum + post.filledCount, 0);
@@ -159,6 +190,11 @@ function summarize(posts: PostCoverage[]) {
   );
   const structuralValidSlots = structuralSlots.filter((item) => item.structure?.valid === true).length;
   const structuralInvalidSlots = structuralSlots.length - structuralValidSlots;
+  const headingLinkSlots = posts.flatMap((post) =>
+    post.coverage.filter((item) => (item.headingLinks?.checkedLinks ?? 0) > 0),
+  );
+  const headingLinkFailureSlots = headingLinkSlots.filter((item) => (item.headingLinks?.failedLinks ?? 0) > 0);
+  const headingLinkFailures = headingLinkSlots.reduce((sum, item) => sum + (item.headingLinks?.failedLinks ?? 0), 0);
   const averageStructureScore = average(
     structuralSlots.map((item) => item.structure?.score).filter((score): score is number => score != null),
   );
@@ -176,10 +212,18 @@ function summarize(posts: PostCoverage[]) {
     const structureScores = structureSlots
       .map((item) => item.structure?.score)
       .filter((score): score is number => score != null);
+    const localeHeadingLinkSlots = posts
+      .flatMap((post) => post.coverage)
+      .filter((item) => item.locale === locale && (item.headingLinks?.checkedLinks ?? 0) > 0);
+    const localeHeadingLinkFailureSlots = localeHeadingLinkSlots
+      .filter((item) => (item.headingLinks?.failedLinks ?? 0) > 0);
 
     return {
       averageStructureScore: average(structureScores),
       filled,
+      headingLinkFailureSlots: localeHeadingLinkFailureSlots.length,
+      headingLinkFailures: localeHeadingLinkSlots.reduce((sum, item) => sum + (item.headingLinks?.failedLinks ?? 0), 0),
+      headingLinkSlots: localeHeadingLinkSlots.length,
       locale,
       minimumStructureScore: minimum(structureScores),
       missing: posts.length - filled,
@@ -193,6 +237,9 @@ function summarize(posts: PostCoverage[]) {
     averageStructureScore,
     completePosts: posts.filter((post) => post.missingLocales.length === 0).length,
     filledSlots,
+    headingLinkFailureSlots: headingLinkFailureSlots.length,
+    headingLinkFailures,
+    headingLinkSlots: headingLinkSlots.length,
     localeRows,
     minimumStructureScore,
     missingSlots,
@@ -210,9 +257,10 @@ function renderConsoleSummary(summary: ReturnType<typeof summarize>) {
     `Translation slots: ${summary.filledSlots}/${summary.totalSlots} filled (${formatPercent(summary.filledSlots / summary.totalSlots)}), ${summary.missingSlots} missing`,
     `Complete posts: ${summary.completePosts}/${summary.posts}`,
     `Structure valid: ${summary.structuralValidSlots}/${summary.structuralSlots} (${formatPercent(summary.structuralValidSlots / summary.structuralSlots)}), avg score ${formatScore(summary.averageStructureScore)}, min ${formatScore(summary.minimumStructureScore)}`,
+    `Heading anchor links: ${summary.headingLinkFailureSlots}/${summary.headingLinkSlots} translation(s) with failures, ${summary.headingLinkFailures} failing link(s)`,
     "",
     ...summary.localeRows.map((row) =>
-      `${row.locale}: ${row.filled}/${summary.posts} (${formatPercent(row.percent)}) missing ${row.missing}; structure ${row.structuralValid}/${row.structuralValid + row.structuralInvalid} valid, avg ${formatScore(row.averageStructureScore)}`,
+      `${row.locale}: ${row.filled}/${summary.posts} (${formatPercent(row.percent)}) missing ${row.missing}; structure ${row.structuralValid}/${row.structuralValid + row.structuralInvalid} valid, avg ${formatScore(row.averageStructureScore)}; heading links ${row.headingLinkFailureSlots}/${row.headingLinkSlots} files, ${row.headingLinkFailures} links`,
     ),
   ].join("\n");
 }
@@ -242,6 +290,19 @@ function renderMarkdown(posts: PostCoverage[], summary: ReturnType<typeof summar
         compactStructuralSummary(item.structure?.summary ?? ""),
       ]),
   ).sort((a, b) => Number(a[2]) - Number(b[2]) || String(a[0]).localeCompare(String(b[0])));
+  const headingLinkIssueRows = posts.flatMap((post) =>
+    post.coverage
+      .filter((item) => item.hasTranslation && (item.headingLinks?.failedLinks ?? 0) > 0)
+      .map((item) => [
+        post.slug,
+        item.locale,
+        item.headingLinks?.checkedLinks ?? 0,
+        item.headingLinks?.failedLinks ?? 0,
+        item.headingLinks?.staleSourceAnchorLinks ?? 0,
+        item.headingLinks?.unresolvedTargetLinks ?? 0,
+        item.headingLinks?.examples.join("; ") || "-",
+      ]),
+  ).sort((a, b) => Number(b[3]) - Number(a[3]) || String(a[0]).localeCompare(String(b[0])));
 
   return [
     "# I18n Coverage",
@@ -255,14 +316,15 @@ function renderMarkdown(posts: PostCoverage[], summary: ReturnType<typeof summar
     `- Missing slots: ${summary.missingSlots}`,
     `- Fully translated posts: ${summary.completePosts}/${summary.posts}`,
     `- Structure-valid translations: ${summary.structuralValidSlots}/${summary.structuralSlots} (${formatPercent(summary.structuralValidSlots / summary.structuralSlots)})`,
+    `- Heading anchor link failures: ${summary.headingLinkFailures} failing link(s) across ${summary.headingLinkFailureSlots}/${summary.headingLinkSlots} translation(s) with same-page heading links`,
     `- Average structure score: ${formatScore(summary.averageStructureScore)}`,
     `- Minimum structure score: ${formatScore(summary.minimumStructureScore)}`,
     `- Locales: ${selectedLocales.join(", ")}`,
     "",
     "## Locale Coverage",
     "",
-    markdownRow(["Locale", "Filled", "Missing", "Coverage", "Structure valid", "Avg structure", "Min structure"]),
-    markdownRow(["---", "---:", "---:", "---:", "---:", "---:", "---:"]),
+    markdownRow(["Locale", "Filled", "Missing", "Coverage", "Structure valid", "Heading link files", "Heading link fails", "Avg structure", "Min structure"]),
+    markdownRow(["---", "---:", "---:", "---:", "---:", "---:", "---:", "---:", "---:"]),
     ...summary.localeRows.map((row) =>
       markdownRow([
         row.locale,
@@ -270,6 +332,8 @@ function renderMarkdown(posts: PostCoverage[], summary: ReturnType<typeof summar
         row.missing,
         formatPercent(row.percent),
         `${row.structuralValid}/${row.structuralValid + row.structuralInvalid}`,
+        `${row.headingLinkFailureSlots}/${row.headingLinkSlots}`,
+        row.headingLinkFailures,
         formatScore(row.averageStructureScore),
         formatScore(row.minimumStructureScore),
       ]),
@@ -286,6 +350,16 @@ function renderMarkdown(posts: PostCoverage[], summary: ReturnType<typeof summar
     "",
     ...renderStructuralIssueRows(structuralIssueRows),
     "",
+    "## Heading Anchor Link Health",
+    "",
+    `- Translations with same-page heading links: ${summary.headingLinkSlots}`,
+    `- Translations with heading link failures: ${summary.headingLinkFailureSlots}`,
+    `- Failing heading links: ${summary.headingLinkFailures}`,
+    "",
+    "### Heading Anchor Link Failures",
+    "",
+    ...renderHeadingLinkIssueRows(headingLinkIssueRows),
+    "",
     "## Zero Coverage Posts",
     "",
     ...renderPostList(zeroCoveragePosts),
@@ -295,6 +369,7 @@ function renderMarkdown(posts: PostCoverage[], summary: ReturnType<typeof summar
     `- Missing locale slots with candidate reports waiting: ${waitingCandidateRows.length}`,
     `- Existing translations without judge summaries: ${translationWithoutJudgeRows.length}`,
     `- Existing translations with structural parity failures: ${structuralIssueRows.length}`,
+    `- Existing translations with heading anchor link failures: ${headingLinkIssueRows.length}`,
     "",
     "### Candidate Reports Without Translation Files",
     "",
@@ -355,6 +430,15 @@ function renderStructuralIssueRows(rows: Array<Array<string | number>>) {
   return [
     markdownRow(["Post", "Locale", "Score", "Blocking issues", "Differences", "Summary"]),
     markdownRow(["---", "---", "---:", "---:", "---", "---"]),
+    ...rows.map((row) => markdownRow(row)),
+  ];
+}
+
+function renderHeadingLinkIssueRows(rows: Array<Array<string | number>>) {
+  if (rows.length === 0) return ["No heading anchor link failures found."];
+  return [
+    markdownRow(["Post", "Locale", "Checked", "Failures", "Stale source", "Unresolved", "Examples"]),
+    markdownRow(["---", "---", "---:", "---:", "---:", "---:", "---"]),
     ...rows.map((row) => markdownRow(row)),
   ];
 }

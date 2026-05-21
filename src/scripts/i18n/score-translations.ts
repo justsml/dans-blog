@@ -22,6 +22,7 @@ import {
 import { OPENROUTER_USAGE_ACCOUNTING, usageFromResult } from "./llm-telemetry.ts";
 import { estimateTokenCost } from "./translation-costs.ts";
 import { deriveJudgeConfidence, type JudgeConfidenceLevel, type JudgeIssueCounts } from "./judge-utils.ts";
+import { normalizeModelId } from "./model-id.ts";
 
 type ScoreKey =
   | "readability"
@@ -648,21 +649,6 @@ function readSelectedJudgeModel(reportDir: string) {
   } catch {
     return undefined;
   }
-}
-
-function normalizeModelId(modelId: string) {
-  if (
-    modelId === "unknown"
-    || modelId === "manual"
-    || modelId.startsWith("openrouter/")
-    || modelId.startsWith("current/")
-  ) {
-    return modelId;
-  }
-
-  return modelId.includes("/")
-    ? `openrouter/${modelId}`
-    : modelId;
 }
 
 function readJsonlRows(path: string) {

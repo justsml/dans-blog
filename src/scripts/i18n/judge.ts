@@ -47,6 +47,7 @@ import {
   isTranslationFreshForSourceContents,
   isTranslationOlderThanSourceContents,
 } from "./corpus-inventory.ts";
+import { modelIdsMatch } from "./model-id.ts";
 
 type SuggestionLogEntry = JudgeSuggestion & {
   pass: number;
@@ -1173,7 +1174,7 @@ function getCandidatePathFromCommit(commit: string) {
       }
     })
     .filter((row) => row.locale === locale)
-    .filter((row) => normalizeModelId(String(row.model ?? "")) === normalizeModelId(model))
+    .filter((row) => modelIdsMatch(String(row.model ?? ""), model))
     .toReversed();
 
   for (const row of rows) {
@@ -1189,10 +1190,6 @@ function getCandidatePathFromCommit(commit: string) {
   }
 
   return undefined;
-}
-
-function normalizeModelId(model: string) {
-  return model.replace(/^openrouter\//, "");
 }
 
 function commitChangesTarget(commit: string) {
