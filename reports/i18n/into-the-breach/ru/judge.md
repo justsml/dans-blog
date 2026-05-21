@@ -1,8 +1,8 @@
 # Translation Judge
 
-- Selected candidate: 07215e8bc6dbd2d68c561ee2f1695321437a6681
-- Selected model: openrouter/openai/gpt-oss-120b:nitro
+- Selected candidate: 1a2696ab1bf6da629317da8fa0c9f99934be0a73
+- Selected model: openrouter/deepseek/deepseek-v4-flash
 - Judge model: openrouter/google/gemini-3-flash-preview
-- Confidence: high (0.872)
+- Confidence: high (0.886)
 
-The current selected translation already incorporates the high-priority fixes suggested in the previous pass, resulting in a complete and high-quality Russian translation that maintains Dan's direct style and technical accuracy. No further high-priority corrections are required.
+The current translation already includes the correct asset path 'cover_full_width: ../wide-2.webp' (the judge report's suggestion was based on an older state or misread the file). The translation is high quality, capturing Dan's direct style and the 'boring' metaphor correctly. MDX structure and technical terms are well-preserved.
