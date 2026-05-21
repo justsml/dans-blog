@@ -1,8 +1,8 @@
 # Translation Judge
 
-- Selected candidate: f502735ff0f140023ebd1425e2ee291ddb8b9a92
-- Selected model: deepseek/deepseek-v4-flash:nitro
+- Selected candidate: 97473b6075ebadec469330256076e4e106aac09b
+- Selected model: openrouter/deepseek/deepseek-v4-flash
 - Judge model: openrouter/google/gemini-3-flash-preview
-- Confidence: high (0.884)
+- Confidence: high (0.882)
 
-DeepSeek provided the most consistent and natural Hindi translation while strictly adhering to all MDX structural requirements. It correctly handled the image paths (using ../), preserved all headings and code blocks, and translated the technical concepts with appropriate Hindi terminology without losing the direct, authoritative tone of the original. Qwen had some awkward phrasing ('कुतिहाड़' for subterfuge is very obscure), and GPT-OSS left significant portions of the prose in English.
+The translation is technically accurate and maintains the direct, punchy style of the original. It correctly preserves MDX structures, code blocks, and asset paths. The previous judge's suggestion regarding 'wide-2.webp' is already reflected in the current file content, so no further high-priority fixes are required.
