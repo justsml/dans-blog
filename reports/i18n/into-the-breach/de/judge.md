@@ -1,8 +1,8 @@
 # Translation Judge
 
-- Selected candidate: ab76f1571f8bec45ac19d9677adfbd94e86a12d9
-- Selected model: openrouter/openai/gpt-oss-120b:nitro
+- Selected candidate: 6fd8d26f21d11af1d84d3b063e2f5c3df9443745
+- Selected model: openrouter/deepseek/deepseek-v4-flash
 - Judge model: openrouter/google/gemini-3-flash-preview
-- Confidence: high (0.880)
+- Confidence: low (0.182)
 
-The current translation already includes the fix suggested in the judge report (the inset paragraph is already translated in the provided 'de/index.mdx' content). The translation is technically accurate, maintains the direct style of the author, and correctly handles MDX components and asset paths. It uses appropriate German technical terminology while keeping the prose natural.
+The translation is high quality and captures the idiomatic tone of the original. The title 'In die Bresche' is an excellent localization. I am correcting a small typo ('pnoms' -> 'pnpms') in the visual map alt text and ensuring the code block comments are fully localized as per the judge's intent, although the candidate had already translated most of them.

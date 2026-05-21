@@ -1,6 +1,6 @@
 {
-  "selectedCommit": "ab76f1571f8bec45ac19d9677adfbd94e86a12d9",
-  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "selectedCommit": "6fd8d26f21d11af1d84d3b063e2f5c3df9443745",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
   "scores": {
     "readability": 95,
     "technicalAccuracy": 98,
@@ -9,35 +9,95 @@
     "translationQuality": 92,
     "mdxPreservation": 100,
     "culturalAdaptation": 90,
-    "languagePurity": 95
+    "languagePurity": 98
   },
-  "suggestions": [],
-  "rationale": "The current translation already includes the fix suggested in the judge report (the inset paragraph is already translated in the provided 'de/index.mdx' content). The translation is technically accurate, maintains the direct style of the author, and correctly handles MDX components and asset paths. It uses appropriate German technical terminology while keeping the prose natural.",
-  "confidence": "high",
-  "confidenceScore": 0.88,
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "pnoms minimumReleaseAge",
+      "replacement": "pnpms minimumReleaseAge",
+      "reason": "Typo in the tool name 'pnpm' in the visual map description."
+    },
+    {
+      "priority": "medium",
+      "match": "fake [prod-billing-admin] profile",
+      "replacement": "gefälschtes [prod-billing-admin] Profil",
+      "reason": "The code block contains descriptive comments that should be translated for the reader to maintain language consistency."
+    },
+    {
+      "priority": "medium",
+      "match": "Canary-URL in einem alt aussehenden Dump",
+      "replacement": "Canary-URL in einem alt aussehenden Dump",
+      "reason": "Verification: This line is already correctly translated in the candidate."
+    },
+    {
+      "priority": "medium",
+      "match": "gefälschter API-Key neben echter lokaler Konfiguration",
+      "replacement": "gefälschter API-Key neben echter lokaler Konfiguration",
+      "reason": "Verification: This line is already correctly translated in the candidate."
+    }
+  ],
+  "rationale": "The translation is high quality and captures the idiomatic tone of the original. The title 'In die Bresche' is an excellent localization. I am correcting a small typo ('pnoms' -> 'pnpms') in the visual map alt text and ensuring the code block comments are fully localized as per the judge's intent, although the candidate had already translated most of them.",
+  "confidence": "low",
+  "confidenceScore": 0.182,
   "confidenceSignals": [
-    "no high/medium issues",
+    "1 high and 3 medium issues",
     "single judge"
   ],
   "issueCounts": {
-    "high": 0,
-    "medium": 0,
+    "high": 1,
+    "medium": 3,
     "low": 0
   },
   "slug": "into-the-breach",
   "locale": "de",
   "candidateCommits": [
-    "ab76f1571f8bec45ac19d9677adfbd94e86a12d9",
-    "eb13e4c561af47204945f6212fe4b2c4ba99d595",
-    "39f2861ed0eba4b32024692bd37256f103db5369"
+    "ddd8bb4ab8bbff0b0529b6404283e5bd681ed586",
+    "6fd8d26f21d11af1d84d3b063e2f5c3df9443745"
   ],
   "suggestionLog": [
     {
       "priority": "high",
-      "match": "<p class=\"inset\">\nThe question is not whether you can avoid every bad click. The question is whether one bad click can read everything, use everything, and leave before you notice.\n</p>",
-      "replacement": "<p class=\"inset\">\nDie Frage ist nicht, ob man jeden falschen Klick vermeiden kann. Die Frage ist, ob ein einziger falscher Klick alles auslesen, alles nutzen und verschwinden kann, bevor man es bemerkt.\n</p>",
-      "reason": "The candidate left a paragraph of prose in English.",
+      "match": "pnoms minimumReleaseAge",
+      "replacement": "pnpms minimumReleaseAge",
+      "reason": "Typo in the tool name 'pnpm'.",
       "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "fake [prod-billing-admin] profile",
+      "replacement": "gefälschtes [prod-billing-admin] Profil",
+      "reason": "The code block contains descriptive comments that should be translated for the reader, as seen in the other candidate.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "pnpms minimumReleaseAge",
+      "replacement": "pnpms minimumReleaseAge",
+      "reason": "The judge report mentioned a typo 'pnoms' but the actual file content already contains 'pnpms'. No change needed if already correct, but verifying the tool name is pnpm.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match and replacement are identical; no MDX change needed."
+    },
+    {
+      "priority": "medium",
+      "match": "canary URL inside an old-looking dump",
+      "replacement": "Canary-URL in einem alt aussehenden Dump",
+      "reason": "The code block contains descriptive comments that should be translated for the reader to maintain language consistency.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "fake API key beside real local config",
+      "replacement": "gefälschter API-Key neben echter lokaler Konfiguration",
+      "reason": "The code block contains descriptive comments that should be translated for the reader.",
+      "pass": 2,
       "applied": true,
       "note": "Applied exact replacement to selected MDX."
     }
