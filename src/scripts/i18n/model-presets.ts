@@ -1,19 +1,19 @@
 export const CHEAP_FAST_TRANSLATION_MODELS = [
+  "openrouter/qwen/qwen3.6-plus",
   "openrouter/deepseek/deepseek-v4-flash",
+  "openrouter/openai/gpt-oss-120b:nitro",
+  "openrouter/google/gemini-3-flash-preview",
+  "openrouter/deepseek/deepseek-v3.2",
+  "openrouter/qwen/qwen3-32b:nitro",
   "openrouter/moonshotai/kimi-k2.5",
   "openrouter/moonshotai/kimi-k2.6",
   "openrouter/google/gemma-4-26b-a4b-it:nitro",
   "openrouter/google/gemma-4-31b-it:nitro",
-  "openrouter/openai/gpt-oss-120b:nitro",
-  "openrouter/qwen/qwen3-32b:nitro",
   "openrouter/z-ai/glm-4.7-flash",
   "openrouter/minimax/minimax-m2.5:nitro",
   "openrouter/minimax/minimax-m2.7",
   "openrouter/minimax/minimax-m2.5",
-  "openrouter/google/gemini-3-flash-preview",
-  "openrouter/deepseek/deepseek-v3.2",
   "openrouter/z-ai/glm-5-turbo",
-  "openrouter/qwen/qwen3.6-plus",
 ] as const;
 
 export function resolveCheapFastTranslationModel(input: string) {

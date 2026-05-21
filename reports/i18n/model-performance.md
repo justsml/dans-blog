@@ -1,40 +1,146 @@
 # I18n Model Performance
 
-Generated from `reports/i18n` and Git history at `2026-05-14T13:53:12-06:00`.
+Generated from `reports/i18n` and Git history at `2026-05-21T10:51:23-06:00`.
 
 ## Model Stats
 
 | Model | Attempts | Passed | Rejected | Judged candidates | Wins | Win rate | ES wins | HI wins | JA wins | RU wins | DE wins | FR wins | IT wins | AR wins | HE wins | ZH wins |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| openrouter/qwen/qwen3.6-plus | 388 | 292 | 96 | 232 | 187 | 81% | 32 | 21 | 24 | 27 | 28 | 28 | 27 | 0 | 0 | 0 |
-| openrouter/deepseek/deepseek-v4-flash | 307 | 75 | 44 | 228 | 160 | 70% | 1 | 1 | 3 | 3 | 6 | 5 | 5 | 69 | 67 | 0 |
-| openrouter/openai/gpt-oss-120b:nitro | 1062 | 335 | 135 | 583 | 153 | 26% | 22 | 14 | 14 | 20 | 25 | 24 | 8 | 5 | 7 | 14 |
-| deepseek/deepseek-v4-flash | 315 | 0 | 52 | 126 | 50 | 40% | 5 | 2 | 4 | 0 | 2 | 2 | 1 | 0 | 0 | 34 |
-| openrouter/google/gemini-3-flash-preview | 242 | 66 | 71 | 131 | 48 | 37% | 1 | 3 | 2 | 2 | 1 | 0 | 3 | 0 | 0 | 36 |
-| openrouter/qwen/qwen3-32b:nitro | 859 | 283 | 194 | 425 | 35 | 8% | 2 | 1 | 5 | 4 | 3 | 8 | 2 | 0 | 0 | 10 |
-| openrouter/moonshotai/kimi-k2.6 | 80 | 51 | 29 | 50 | 10 | 20% | 3 | 4 | 2 | 0 | 0 | 0 | 1 | 0 | 0 | 0 |
+| openrouter/qwen/qwen3.6-plus | 398 | 292 | 106 | 232 | 187 | 81% | 32 | 21 | 24 | 27 | 28 | 28 | 27 | 0 | 0 | 0 |
+| openrouter/openai/gpt-oss-120b:nitro | 1111 | 335 | 135 | 608 | 162 | 27% | 22 | 14 | 14 | 20 | 25 | 24 | 9 | 11 | 9 | 14 |
+| openrouter/deepseek/deepseek-v4-flash | 330 | 75 | 44 | 229 | 160 | 70% | 1 | 1 | 3 | 3 | 6 | 5 | 5 | 68 | 67 | 1 |
+| deepseek/deepseek-v4-flash | 315 | 0 | 52 | 125 | 49 | 39% | 5 | 2 | 4 | 0 | 2 | 2 | 1 | 0 | 0 | 33 |
+| openrouter/google/gemini-3-flash-preview | 252 | 66 | 72 | 121 | 47 | 39% | 1 | 3 | 2 | 2 | 1 | 0 | 2 | 0 | 0 | 36 |
+| openrouter/qwen/qwen3-32b:nitro | 879 | 283 | 194 | 425 | 35 | 8% | 2 | 1 | 5 | 4 | 3 | 8 | 2 | 0 | 0 | 10 |
+| openrouter/moonshotai/kimi-k2.6 | 90 | 51 | 38 | 50 | 10 | 20% | 3 | 4 | 2 | 0 | 0 | 0 | 1 | 0 | 0 | 0 |
 | openrouter/google/gemini-3.1-flash-lite-preview | 32 | 16 | 16 | 15 | 9 | 60% | 1 | 1 | 3 | 1 | 0 | 2 | 1 | 0 | 0 | 0 |
 | openrouter/z-ai/glm-5.1 | 60 | 49 | 11 | 49 | 8 | 16% | 1 | 3 | 4 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| openrouter/z-ai/glm-5-turbo | 58 | 32 | 26 | 30 | 4 | 13% | 0 | 1 | 0 | 1 | 1 | 0 | 1 | 0 | 0 | 0 |
+| openrouter/z-ai/glm-5-turbo | 68 | 32 | 31 | 30 | 4 | 13% | 0 | 1 | 0 | 1 | 1 | 0 | 1 | 0 | 0 | 0 |
 | openrouter/qwen/qwen3.5-flash-02-23 | 30 | 28 | 2 | 24 | 3 | 13% | 0 | 0 | 0 | 0 | 1 | 1 | 1 | 0 | 0 | 0 |
 | openai/gpt-5.4-mini | 3 | 2 | 1 | 2 | 2 | 100% | 0 | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 |
-| openrouter/deepseek/deepseek-v3.2 | 11 | 6 | 5 | 6 | 2 | 33% | 0 | 0 | 0 | 1 | 0 | 1 | 0 | 0 | 0 | 0 |
+| openrouter/deepseek/deepseek-v3.2 | 21 | 6 | 5 | 6 | 2 | 33% | 0 | 0 | 0 | 1 | 0 | 1 | 0 | 0 | 0 | 0 |
 | openrouter/anthropic/claude-haiku-4.5 | 29 | 10 | 19 | 9 | 2 | 22% | 0 | 0 | 0 | 0 | 1 | 0 | 1 | 0 | 0 | 0 |
 | qwen/qwen3.6-35b-a3b | 187 | 0 | 68 | 27 | 2 | 7% | 0 | 0 | 0 | 0 | 1 | 1 | 0 | 0 | 0 | 0 |
-| openrouter/minimax/minimax-m2.7 | 129 | 91 | 38 | 90 | 2 | 2% | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| openrouter/minimax/minimax-m2.7 | 139 | 91 | 41 | 90 | 2 | 2% | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | openrouter/deepseek/deepseek-v4-pro | 2 | 1 | 1 | 1 | 1 | 100% | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| openrouter/z-ai/glm-4.7-flash | 25 | 9 | 15 | 8 | 1 | 13% | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| candidate/run/events.jsonl | 527 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| candidate/run/history.jsonl | 862 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| openrouter/z-ai/glm-4.7-flash | 35 | 9 | 23 | 8 | 1 | 13% | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| candidate/run/events.jsonl | 543 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| candidate/run/history.jsonl | 878 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | candidate/shortfall | 18 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | candidates.jsonl | 583 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| cases.jsonl | 21 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| deepseek/deepseek-v4-flash:nitro | 10 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | final | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | final/polish | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | final/quality/score | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| judge.json | 638 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge.json | 654 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/ar/google/gemini/3/flash/preview/for/openrouter/deepseek/deepseek/v4/flash.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/ar/google/gemini/3/flash/preview/for/openrouter/deepseek/deepseek/v4/flash.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/ar/google/gemini/3/flash/preview/for/openrouter/google/gemma/4/26b/a4b/it/nitro.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/ar/google/gemini/3/flash/preview/for/openrouter/google/gemma/4/26b/a4b/it/nitro.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/ar/google/gemini/3/flash/preview/for/openrouter/minimax/minimax/m2.5/nitro.jsonl | 3 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/ar/google/gemini/3/flash/preview/for/openrouter/minimax/minimax/m2.5/nitro.txt | 3 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/ar/google/gemini/3/flash/preview/for/openrouter/openai/gpt/oss/120b/nitro.jsonl | 2 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/ar/google/gemini/3/flash/preview/for/openrouter/openai/gpt/oss/120b/nitro.txt | 2 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/ar/google/gemini/3/flash/preview/for/openrouter/qwen/qwen3/32b/nitro.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/ar/google/gemini/3/flash/preview/for/openrouter/qwen/qwen3/32b/nitro.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/de/google/gemini/3/flash/preview/for/openrouter/deepseek/deepseek/v4/flash.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/de/google/gemini/3/flash/preview/for/openrouter/deepseek/deepseek/v4/flash.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/de/google/gemini/3/flash/preview/for/openrouter/google/gemma/4/26b/a4b/it/nitro.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/de/google/gemini/3/flash/preview/for/openrouter/google/gemma/4/26b/a4b/it/nitro.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/de/google/gemini/3/flash/preview/for/openrouter/minimax/minimax/m2.5/nitro.jsonl | 3 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/de/google/gemini/3/flash/preview/for/openrouter/minimax/minimax/m2.5/nitro.txt | 3 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/de/google/gemini/3/flash/preview/for/openrouter/openai/gpt/oss/120b/nitro.jsonl | 2 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/de/google/gemini/3/flash/preview/for/openrouter/openai/gpt/oss/120b/nitro.txt | 2 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/de/google/gemini/3/flash/preview/for/openrouter/qwen/qwen3/32b/nitro.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/de/google/gemini/3/flash/preview/for/openrouter/qwen/qwen3/32b/nitro.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/es/google/gemini/3/flash/preview/for/openrouter/deepseek/deepseek/v4/flash.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/es/google/gemini/3/flash/preview/for/openrouter/deepseek/deepseek/v4/flash.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/es/google/gemini/3/flash/preview/for/openrouter/google/gemma/4/26b/a4b/it/nitro.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/es/google/gemini/3/flash/preview/for/openrouter/google/gemma/4/26b/a4b/it/nitro.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/es/google/gemini/3/flash/preview/for/openrouter/minimax/minimax/m2.5/nitro.jsonl | 3 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/es/google/gemini/3/flash/preview/for/openrouter/minimax/minimax/m2.5/nitro.txt | 4 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/es/google/gemini/3/flash/preview/for/openrouter/openai/gpt/oss/120b/nitro.jsonl | 3 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/es/google/gemini/3/flash/preview/for/openrouter/openai/gpt/oss/120b/nitro.txt | 3 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/es/google/gemini/3/flash/preview/for/openrouter/qwen/qwen3/32b/nitro.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/es/google/gemini/3/flash/preview/for/openrouter/qwen/qwen3/32b/nitro.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/fr/google/gemini/3/flash/preview/for/openrouter/deepseek/deepseek/v4/flash.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/fr/google/gemini/3/flash/preview/for/openrouter/deepseek/deepseek/v4/flash.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/fr/google/gemini/3/flash/preview/for/openrouter/google/gemma/4/26b/a4b/it/nitro.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/fr/google/gemini/3/flash/preview/for/openrouter/google/gemma/4/26b/a4b/it/nitro.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/fr/google/gemini/3/flash/preview/for/openrouter/minimax/minimax/m2.5/nitro.jsonl | 3 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/fr/google/gemini/3/flash/preview/for/openrouter/minimax/minimax/m2.5/nitro.txt | 3 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/fr/google/gemini/3/flash/preview/for/openrouter/openai/gpt/oss/120b/nitro.jsonl | 3 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/fr/google/gemini/3/flash/preview/for/openrouter/openai/gpt/oss/120b/nitro.txt | 3 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/fr/google/gemini/3/flash/preview/for/openrouter/qwen/qwen3/32b/nitro.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/fr/google/gemini/3/flash/preview/for/openrouter/qwen/qwen3/32b/nitro.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/he/google/gemini/3/flash/preview/for/openrouter/deepseek/deepseek/v4/flash.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/he/google/gemini/3/flash/preview/for/openrouter/deepseek/deepseek/v4/flash.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/he/google/gemini/3/flash/preview/for/openrouter/google/gemma/4/26b/a4b/it/nitro.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/he/google/gemini/3/flash/preview/for/openrouter/google/gemma/4/26b/a4b/it/nitro.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/he/google/gemini/3/flash/preview/for/openrouter/minimax/minimax/m2.5/nitro.jsonl | 3 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/he/google/gemini/3/flash/preview/for/openrouter/minimax/minimax/m2.5/nitro.txt | 3 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/he/google/gemini/3/flash/preview/for/openrouter/openai/gpt/oss/120b/nitro.jsonl | 2 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/he/google/gemini/3/flash/preview/for/openrouter/openai/gpt/oss/120b/nitro.txt | 2 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/he/google/gemini/3/flash/preview/for/openrouter/qwen/qwen3/32b/nitro.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/he/google/gemini/3/flash/preview/for/openrouter/qwen/qwen3/32b/nitro.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/hi/google/gemini/3/flash/preview/for/openrouter/deepseek/deepseek/v4/flash.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/hi/google/gemini/3/flash/preview/for/openrouter/deepseek/deepseek/v4/flash.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/hi/google/gemini/3/flash/preview/for/openrouter/google/gemma/4/26b/a4b/it/nitro.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/hi/google/gemini/3/flash/preview/for/openrouter/google/gemma/4/26b/a4b/it/nitro.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/hi/google/gemini/3/flash/preview/for/openrouter/minimax/minimax/m2.5/nitro.jsonl | 3 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/hi/google/gemini/3/flash/preview/for/openrouter/minimax/minimax/m2.5/nitro.txt | 3 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/hi/google/gemini/3/flash/preview/for/openrouter/openai/gpt/oss/120b/nitro.jsonl | 2 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/hi/google/gemini/3/flash/preview/for/openrouter/openai/gpt/oss/120b/nitro.txt | 2 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/hi/google/gemini/3/flash/preview/for/openrouter/qwen/qwen3/32b/nitro.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/hi/google/gemini/3/flash/preview/for/openrouter/qwen/qwen3/32b/nitro.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/it/google/gemini/3/flash/preview/for/openrouter/deepseek/deepseek/v4/flash.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/it/google/gemini/3/flash/preview/for/openrouter/deepseek/deepseek/v4/flash.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/it/google/gemini/3/flash/preview/for/openrouter/google/gemma/4/26b/a4b/it/nitro.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/it/google/gemini/3/flash/preview/for/openrouter/google/gemma/4/26b/a4b/it/nitro.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/it/google/gemini/3/flash/preview/for/openrouter/minimax/minimax/m2.5/nitro.jsonl | 3 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/it/google/gemini/3/flash/preview/for/openrouter/minimax/minimax/m2.5/nitro.txt | 3 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/it/google/gemini/3/flash/preview/for/openrouter/openai/gpt/oss/120b/nitro.jsonl | 2 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/it/google/gemini/3/flash/preview/for/openrouter/openai/gpt/oss/120b/nitro.txt | 2 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/it/google/gemini/3/flash/preview/for/openrouter/qwen/qwen3/32b/nitro.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/it/google/gemini/3/flash/preview/for/openrouter/qwen/qwen3/32b/nitro.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/ja/google/gemini/3/flash/preview/for/openrouter/deepseek/deepseek/v4/flash.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/ja/google/gemini/3/flash/preview/for/openrouter/deepseek/deepseek/v4/flash.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/ja/google/gemini/3/flash/preview/for/openrouter/google/gemma/4/26b/a4b/it/nitro.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/ja/google/gemini/3/flash/preview/for/openrouter/google/gemma/4/26b/a4b/it/nitro.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/ja/google/gemini/3/flash/preview/for/openrouter/minimax/minimax/m2.5/nitro.jsonl | 3 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/ja/google/gemini/3/flash/preview/for/openrouter/minimax/minimax/m2.5/nitro.txt | 3 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/ja/google/gemini/3/flash/preview/for/openrouter/openai/gpt/oss/120b/nitro.jsonl | 2 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/ja/google/gemini/3/flash/preview/for/openrouter/openai/gpt/oss/120b/nitro.txt | 2 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/ja/google/gemini/3/flash/preview/for/openrouter/qwen/qwen3/32b/nitro.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/ja/google/gemini/3/flash/preview/for/openrouter/qwen/qwen3/32b/nitro.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/ru/google/gemini/3/flash/preview/for/openrouter/deepseek/deepseek/v4/flash.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/ru/google/gemini/3/flash/preview/for/openrouter/deepseek/deepseek/v4/flash.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/ru/google/gemini/3/flash/preview/for/openrouter/google/gemma/4/26b/a4b/it/nitro.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/ru/google/gemini/3/flash/preview/for/openrouter/google/gemma/4/26b/a4b/it/nitro.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/ru/google/gemini/3/flash/preview/for/openrouter/minimax/minimax/m2.5/nitro.jsonl | 3 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/ru/google/gemini/3/flash/preview/for/openrouter/minimax/minimax/m2.5/nitro.txt | 3 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/ru/google/gemini/3/flash/preview/for/openrouter/openai/gpt/oss/120b/nitro.jsonl | 2 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/ru/google/gemini/3/flash/preview/for/openrouter/openai/gpt/oss/120b/nitro.txt | 2 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/ru/google/gemini/3/flash/preview/for/openrouter/qwen/qwen3/32b/nitro.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/ru/google/gemini/3/flash/preview/for/openrouter/qwen/qwen3/32b/nitro.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/zh/google/gemini/3/flash/preview/for/openrouter/deepseek/deepseek/v4/flash.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/zh/google/gemini/3/flash/preview/for/openrouter/deepseek/deepseek/v4/flash.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/zh/google/gemini/3/flash/preview/for/openrouter/google/gemma/4/26b/a4b/it/nitro.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/zh/google/gemini/3/flash/preview/for/openrouter/google/gemma/4/26b/a4b/it/nitro.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/zh/google/gemini/3/flash/preview/for/openrouter/minimax/minimax/m2.5/nitro.jsonl | 3 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/zh/google/gemini/3/flash/preview/for/openrouter/minimax/minimax/m2.5/nitro.txt | 3 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/zh/google/gemini/3/flash/preview/for/openrouter/openai/gpt/oss/120b/nitro.jsonl | 2 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/zh/google/gemini/3/flash/preview/for/openrouter/openai/gpt/oss/120b/nitro.txt | 2 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/zh/google/gemini/3/flash/preview/for/openrouter/qwen/qwen3/32b/nitro.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/llm/connection/strings/zh/google/gemini/3/flash/preview/for/openrouter/qwen/qwen3/32b/nitro.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/the/last/to/think/es/google/gemini/3/flash/preview/for/openrouter/openai/gpt/oss/120b/nitro.jsonl | 6 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/the/last/to/think/es/google/gemini/3/flash/preview/for/openrouter/openai/gpt/oss/120b/nitro.txt | 6 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/the/last/to/think/ja/google/gemini/3/flash/preview/for/openrouter/deepseek/deepseek/v4/flash.jsonl | 3 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/article/the/last/to/think/ja/google/gemini/3/flash/preview/for/openrouter/deepseek/deepseek/v4/flash.txt | 3 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | judge/escalation | 28 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | judge/second | 104 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| judge/suggestions.jsonl | 325 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| judge/suggestions.jsonl | 337 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | llm://openrouter/openai/gpt-oss-120b:nitro?max_tokens=8000 | 10 | 0 | 10 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | N/A (human review) | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | openai/gpt-4.1-mini | 3 | 2 | 1 | 2 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
@@ -49,9 +155,13 @@ Generated from `reports/i18n` and Git history at `2026-05-14T13:53:12-06:00`.
 | openrouter/google/gemini-2.5-flash-lite | 25 | 5 | 20 | 4 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | openrouter/google/gemma-4-26b-a4b-it | 1 | 0 | 1 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | openrouter/google/gemma-4-26b-a4b-it:free | 1 | 0 | 1 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| openrouter/google/gemma-4-26b-a4b-it:nitro | 10 | 0 | 9 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | openrouter/google/gemma-4-31b-it | 2 | 0 | 2 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| openrouter/google/gemma-4-31b-it:nitro | 10 | 0 | 10 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | openrouter/minimax/minimax-m2.5 | 24 | 8 | 16 | 8 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | openrouter/minimax/minimax-m2.5:free | 2 | 0 | 2 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| openrouter/minimax/minimax-m2.5:nitro | 20 | 0 | 4 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| openrouter/moonshotai/kimi-k2.5 | 10 | 0 | 9 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | openrouter/openai/gpt-5-nano | 1 | 0 | 1 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | openrouter/openai/gpt-5.4-nano | 1 | 0 | 1 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | openrouter/qwen/qwen-3.6-27b | 1 | 0 | 1 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
@@ -62,7 +172,192 @@ Generated from `reports/i18n` and Git history at `2026-05-14T13:53:12-06:00`.
 | openrouter/qwen/qwen3.6-flash | 1 | 0 | 1 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | qwen/qwen3.5-9b | 85 | 0 | 82 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | qwen/qwen3.6-plus | 85 | 0 | 84 | 1 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| run.jsonl | 23 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | shortfall | 2 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| summary | 42 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/ar/deepseek/deepseek/v4/flash.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/ar/deepseek/deepseek/v4/flash.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/ar/google/gemma/4/26b/a4b/it/nitro.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/ar/google/gemma/4/26b/a4b/it/nitro.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/ar/minimax/minimax/m2.5.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/ar/minimax/minimax/m2.5.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/ar/minimax/minimax/m2.5/nitro.jsonl | 3 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/ar/minimax/minimax/m2.5/nitro.txt | 3 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/ar/moonshotai/kimi/k2.5.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/ar/moonshotai/kimi/k2.5.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/ar/moonshotai/kimi/k2.6.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/ar/openai/gpt/oss/120b/nitro.jsonl | 2 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/ar/openai/gpt/oss/120b/nitro.txt | 2 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/ar/qwen/3.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/ar/qwen/3.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/ar/qwen/qwen3/32b/nitro.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/ar/qwen/qwen3/32b/nitro.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/de/deepseek/deepseek/v4/flash.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/de/deepseek/deepseek/v4/flash.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/de/google/gemma/4/26b/a4b/it/nitro.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/de/google/gemma/4/26b/a4b/it/nitro.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/de/minimax/minimax/m2.5.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/de/minimax/minimax/m2.5.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/de/minimax/minimax/m2.5/nitro.jsonl | 3 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/de/minimax/minimax/m2.5/nitro.txt | 3 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/de/moonshotai/kimi/k2.5.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/de/moonshotai/kimi/k2.5.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/de/moonshotai/kimi/k2.6.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/de/openai/gpt/oss/120b/nitro.jsonl | 2 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/de/openai/gpt/oss/120b/nitro.txt | 2 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/de/qwen/3.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/de/qwen/3.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/de/qwen/qwen3/32b/nitro.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/de/qwen/qwen3/32b/nitro.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/es/chunk/1/minimax/minimax/m2.5/nitro.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/es/chunk/2/minimax/minimax/m2.5/nitro.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/es/chunk/3/minimax/minimax/m2.5/nitro.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/es/chunk/4/minimax/minimax/m2.5/nitro.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/es/chunk/5/minimax/minimax/m2.5/nitro.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/es/chunk/6/minimax/minimax/m2.5/nitro.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/es/deepseek/deepseek/v4/flash.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/es/deepseek/deepseek/v4/flash.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/es/frontmatter/subTitle/minimax/minimax/m2.5/nitro.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/es/frontmatter/title/minimax/minimax/m2.5/nitro.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/es/google/gemma/4/26b/a4b/it/nitro.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/es/google/gemma/4/26b/a4b/it/nitro.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/es/minimax/minimax/m2.5.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/es/minimax/minimax/m2.5.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/es/minimax/minimax/m2.5/nitro.jsonl | 3 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/es/minimax/minimax/m2.5/nitro.txt | 3 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/es/minimax/minimax/m2.5/nitro/assembled.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/es/moonshotai/kimi/k2.5.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/es/moonshotai/kimi/k2.5.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/es/moonshotai/kimi/k2.6.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/es/openai/gpt/oss/120b/nitro.jsonl | 3 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/es/openai/gpt/oss/120b/nitro.txt | 3 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/es/qwen/3.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/es/qwen/3.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/es/qwen/qwen3/32b/nitro.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/es/qwen/qwen3/32b/nitro.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/fr/deepseek/deepseek/v4/flash.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/fr/deepseek/deepseek/v4/flash.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/fr/google/gemma/4/26b/a4b/it/nitro.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/fr/google/gemma/4/26b/a4b/it/nitro.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/fr/minimax/minimax/m2.5.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/fr/minimax/minimax/m2.5.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/fr/minimax/minimax/m2.5/nitro.jsonl | 3 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/fr/minimax/minimax/m2.5/nitro.txt | 3 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/fr/moonshotai/kimi/k2.5.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/fr/moonshotai/kimi/k2.5.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/fr/moonshotai/kimi/k2.6.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/fr/openai/gpt/oss/120b/nitro.jsonl | 3 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/fr/openai/gpt/oss/120b/nitro.txt | 3 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/fr/qwen/3.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/fr/qwen/3.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/fr/qwen/qwen3/32b/nitro.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/fr/qwen/qwen3/32b/nitro.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/he/deepseek/deepseek/v4/flash.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/he/deepseek/deepseek/v4/flash.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/he/google/gemma/4/26b/a4b/it/nitro.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/he/google/gemma/4/26b/a4b/it/nitro.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/he/minimax/minimax/m2.5.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/he/minimax/minimax/m2.5.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/he/minimax/minimax/m2.5/nitro.jsonl | 3 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/he/minimax/minimax/m2.5/nitro.txt | 3 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/he/moonshotai/kimi/k2.5.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/he/moonshotai/kimi/k2.5.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/he/moonshotai/kimi/k2.6.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/he/openai/gpt/oss/120b/nitro.jsonl | 2 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/he/openai/gpt/oss/120b/nitro.txt | 2 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/he/qwen/3.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/he/qwen/3.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/he/qwen/qwen3/32b/nitro.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/he/qwen/qwen3/32b/nitro.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/hi/deepseek/deepseek/v4/flash.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/hi/deepseek/deepseek/v4/flash.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/hi/google/gemma/4/26b/a4b/it/nitro.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/hi/google/gemma/4/26b/a4b/it/nitro.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/hi/minimax/minimax/m2.5.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/hi/minimax/minimax/m2.5.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/hi/minimax/minimax/m2.5/nitro.jsonl | 3 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/hi/minimax/minimax/m2.5/nitro.txt | 3 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/hi/moonshotai/kimi/k2.5.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/hi/moonshotai/kimi/k2.5.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/hi/moonshotai/kimi/k2.6.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/hi/openai/gpt/oss/120b/nitro.jsonl | 2 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/hi/openai/gpt/oss/120b/nitro.txt | 2 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/hi/qwen/3.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/hi/qwen/3.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/hi/qwen/qwen3/32b/nitro.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/hi/qwen/qwen3/32b/nitro.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/it/deepseek/deepseek/v4/flash.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/it/deepseek/deepseek/v4/flash.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/it/google/gemma/4/26b/a4b/it/nitro.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/it/google/gemma/4/26b/a4b/it/nitro.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/it/minimax/minimax/m2.5.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/it/minimax/minimax/m2.5.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/it/minimax/minimax/m2.5/nitro.jsonl | 3 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/it/minimax/minimax/m2.5/nitro.txt | 3 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/it/moonshotai/kimi/k2.5.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/it/moonshotai/kimi/k2.5.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/it/moonshotai/kimi/k2.6.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/it/openai/gpt/oss/120b/nitro.jsonl | 2 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/it/openai/gpt/oss/120b/nitro.txt | 2 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/it/qwen/3.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/it/qwen/3.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/it/qwen/qwen3/32b/nitro.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/it/qwen/qwen3/32b/nitro.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/ja/deepseek/deepseek/v4/flash.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/ja/deepseek/deepseek/v4/flash.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/ja/google/gemma/4/26b/a4b/it/nitro.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/ja/google/gemma/4/26b/a4b/it/nitro.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/ja/minimax/minimax/m2.5.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/ja/minimax/minimax/m2.5.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/ja/minimax/minimax/m2.5/nitro.jsonl | 3 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/ja/minimax/minimax/m2.5/nitro.txt | 3 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/ja/moonshotai/kimi/k2.5.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/ja/moonshotai/kimi/k2.5.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/ja/moonshotai/kimi/k2.6.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/ja/openai/gpt/oss/120b/nitro.jsonl | 2 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/ja/openai/gpt/oss/120b/nitro.txt | 2 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/ja/qwen/3.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/ja/qwen/3.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/ja/qwen/qwen3/32b/nitro.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/ja/qwen/qwen3/32b/nitro.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/ru/deepseek/deepseek/v4/flash.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/ru/deepseek/deepseek/v4/flash.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/ru/google/gemma/4/26b/a4b/it/nitro.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/ru/google/gemma/4/26b/a4b/it/nitro.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/ru/minimax/minimax/m2.5.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/ru/minimax/minimax/m2.5.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/ru/minimax/minimax/m2.5/nitro.jsonl | 3 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/ru/minimax/minimax/m2.5/nitro.txt | 3 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/ru/moonshotai/kimi/k2.5.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/ru/moonshotai/kimi/k2.5.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/ru/moonshotai/kimi/k2.6.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/ru/openai/gpt/oss/120b/nitro.jsonl | 2 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/ru/openai/gpt/oss/120b/nitro.txt | 2 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/ru/qwen/3.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/ru/qwen/3.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/ru/qwen/qwen3/32b/nitro.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/ru/qwen/qwen3/32b/nitro.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/zh/deepseek/deepseek/v4/flash.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/zh/deepseek/deepseek/v4/flash.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/zh/google/gemma/4/26b/a4b/it/nitro.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/zh/google/gemma/4/26b/a4b/it/nitro.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/zh/minimax/minimax/m2.5.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/zh/minimax/minimax/m2.5.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/zh/minimax/minimax/m2.5/nitro.jsonl | 3 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/zh/minimax/minimax/m2.5/nitro.txt | 3 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/zh/moonshotai/kimi/k2.5.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/zh/moonshotai/kimi/k2.5.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/zh/moonshotai/kimi/k2.6.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/zh/openai/gpt/oss/120b/nitro.jsonl | 2 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/zh/openai/gpt/oss/120b/nitro.txt | 2 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/zh/qwen/3.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/zh/qwen/3.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/zh/qwen/qwen3/32b/nitro.jsonl | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/llm/connection/strings/zh/qwen/qwen3/32b/nitro.txt | 1 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/the/last/to/think/es/openai/gpt/oss/120b/nitro.jsonl | 6 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/the/last/to/think/es/openai/gpt/oss/120b/nitro.txt | 6 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/the/last/to/think/ja/deepseek/deepseek/v4/flash.jsonl | 3 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| translation/article/the/last/to/think/ja/deepseek/deepseek/v4/flash.txt | 3 | 0 | 0 | 0 | 0 | 0% | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 
 ## Winners By Article
 
@@ -88,12 +383,13 @@ Generated from `reports/i18n` and Git history at `2026-05-14T13:53:12-06:00`.
 | docker-security-for-admins-and-maintainers | unjudged | unjudged | unjudged | unjudged | unjudged | unjudged | unjudged | deepseek/deepseek-v4-flash (b56bfddf) | deepseek/deepseek-v4-flash (e6188d4c) | qwen/qwen3-32b:nitro (77c565c6) | 3 | de: no judged winner; es: no judged winner; fr: no judged winner; hi: no judged winner; it: no judged winner; ja: no judged winner; ru: no judged winner |
 | docker-security-tips-for-self-hosting | openai/gpt-oss-120b:nitro (db01637a) | openai/gpt-oss-120b:nitro (6e71ade2) | qwen/qwen3-32b:nitro (73da8dab) | openai/gpt-oss-120b:nitro (13c5f36b) | qwen/qwen3-32b:nitro (1f4c701d) | qwen/qwen3-32b:nitro (a5c19554) | deepseek/deepseek-v4-flash (177d7fe6) | openai/gpt-oss-120b:nitro (0e425f58) | openai/gpt-oss-120b:nitro (ac5fac46) | qwen/qwen3-32b:nitro (bea9c67f) | 10 |  |
 | docker-server-setup-notes | qwen/qwen3.6-plus (c79ec869) | unjudged | unjudged | openai/gpt-oss-120b:nitro (f488266b) | unjudged | unjudged | unjudged | deepseek/deepseek-v4-flash (45bd975c) | openai/gpt-oss-120b:nitro (d1306b2c) | deepseek/deepseek-v4-flash (378507e5) | 5 | de: no judged winner; fr: no judged winner; hi: no judged winner; it: no judged winner; ja: no judged winner |
+| evals |  |  |  |  |  |  |  |  |  |  | 0 | eval-run-2026-05-15T17-38-22-644Z: no judged winner; eval-run-2026-05-15T17-41-31-414Z: no judged winner; eval-run-2026-05-15T17-42-24-698Z: no judged winner; eval-run-2026-05-15T17-44-07-924Z: no judged winner; eval-run-2026-05-15T17-44-47-554Z: no judged winner; eval-run-2026-05-15T17-45-35-738Z: no judged winner; eval-run-2026-05-15T17-45-44-518Z: no judged winner; eval-run-2026-05-15T17-46-46-280Z: no judged winner; eval-run-2026-05-15T18-03-29-930Z: no judged winner; eval-run-2026-05-15T18-06-29-993Z: no judged winner; eval-run-2026-05-15T18-10-58-308Z: no judged winner; eval-run-2026-05-15T18-11-17-630Z: no judged winner; eval-run-2026-05-15T18-14-06-107Z: no judged winner; eval-run-2026-05-15T18-16-13-969Z: no judged winner; eval-run-2026-05-15T18-17-31-782Z: no judged winner; eval-run-2026-05-15T18-17-50-381Z: no judged winner; eval-run-2026-05-15T18-18-18-837Z: no judged winner; eval-run-2026-05-15T18-21-07-814Z: no judged winner; eval-run-2026-05-15T18-27-23-970Z: no judged winner; eval-run-2026-05-15T18-28-07-404Z: no judged winner; eval-run-2026-05-15T18-29-34-052Z: no judged winner; eval-run-2026-05-15T18-32-15-965Z: no judged winner; eval-run-2026-05-15T18-32-29-902Z: no judged winner; eval-run-2026-05-15T18-34-47-135Z: no judged winner; eval-run-2026-05-15T18-35-48-721Z: no judged winner; eval-run-2026-05-15T18-37-05-094Z: no judged winner; eval-run-2026-05-15T18-52-10-097Z: no judged winner; eval-run-2026-05-15T18-55-10-091Z: no judged winner; eval-run-2026-05-15T19-02-12-770Z: no judged winner; eval-run-2026-05-15T19-05-27-292Z: no judged winner; eval-run-2026-05-15T19-09-22-510Z: no judged winner; eval-run-2026-05-15T19-21-50-626Z: no judged winner; eval-run-2026-05-15T19-25-18-467Z: no judged winner; eval-run-2026-05-15T19-27-29-483Z: no judged winner; eval-run-2026-05-15T19-30-04-739Z: no judged winner; eval-run-2026-05-15T19-32-18-455Z: no judged winner; eval-run-2026-05-15T19-33-05-875Z: no judged winner; eval-run-2026-05-15T19-35-01-032Z: no judged winner; eval-run-2026-05-15T19-36-38-577Z: no judged winner; eval-run-2026-05-15T19-38-33-387Z: no judged winner; eval-run-2026-05-15T19-41-20-819Z: no judged winner; eval-run-2026-05-15T19-44-17-828Z: no judged winner; eval-run-2026-05-15T19-49-59-607Z: no judged winner; eval-run-2026-05-15T19-53-23-765Z: no judged winner |
 | from-zero-to-regex-hero-extract-url-like-strings | unjudged | openai/gpt-oss-120b:nitro (d1c2ee1c) | openai/gpt-oss-120b:nitro (c50658df) | unjudged | unjudged | qwen/qwen3.6-35b-a3b (d79bb329) | unjudged | openai/gpt-oss-120b:nitro (3a69376c) | openai/gpt-oss-120b:nitro (043afad6) | google/gemini-3-flash-preview (310118b5) | 6 | de: no judged winner; es: no judged winner; it: no judged winner; ru: no judged winner |
 | guerrilla-types-in-typescript | openai/gpt-oss-120b:nitro (9618346b) | unjudged | qwen/qwen3.6-plus (c3ebd00a) | qwen/qwen3.6-plus (85e0456a) | qwen/qwen3.6-plus (94ed6dea) | openai/gpt-oss-120b:nitro (0d8f4efd) | unjudged | deepseek/deepseek-v4-flash (02b6b889) | deepseek/deepseek-v4-flash (6ab4aa14) | deepseek/deepseek-v4-flash (6ef6b592) | 8 | hi: no judged winner; it: no judged winner |
 | handling-international-numbers-and-currency | deepseek/deepseek-v4-flash (d0b181b8) | qwen/qwen3.6-plus (9f47447d) | deepseek/deepseek-v4-flash (7ba16f31) | qwen/qwen3-32b:nitro (0196fbf7) | unjudged | openai/gpt-oss-120b:nitro (28fcf72b) | unjudged | deepseek/deepseek-v4-flash (95a383ec) | deepseek/deepseek-v4-flash (3a20e55b) | google/gemini-3-flash-preview (7e6f1a23) | 8 | de: no judged winner; it: no judged winner |
 | higher-order-programming | qwen/qwen3.6-plus (2a1989cc) | qwen/qwen3.6-plus (e1a951de) | qwen/qwen3-32b:nitro (20e7df95) | unjudged | qwen/qwen3-32b:nitro (cb907602) | qwen/qwen3-32b:nitro (56c10ea1) | unjudged | deepseek/deepseek-v4-flash (7f66630d) | deepseek/deepseek-v4-flash (a14b5e06) | qwen/qwen3-32b:nitro (2c9610ac) | 8 | it: no judged winner; ru: no judged winner |
 | honest-priorities | unjudged | unjudged | qwen/qwen3.6-plus (d48b6a4c) | unjudged | qwen/qwen3.6-plus (b0a98d6a) | openai/gpt-oss-120b:nitro (89853fcf) | unjudged | deepseek/deepseek-v4-flash (1ba770ca) | deepseek/deepseek-v4-flash (5fa45cdb) | google/gemini-3-flash-preview (538ecd45) | 6 | es: no judged winner; hi: no judged winner; it: no judged winner; ru: no judged winner |
-| into-the-breach | deepseek/deepseek-v4-flash (a89fd24c) | deepseek/deepseek-v4-flash (faa818a8) | deepseek/deepseek-v4-flash (044ba354) | deepseek/deepseek-v4-flash (0c8a2a92) | deepseek/deepseek-v4-flash (c8502a02) | deepseek/deepseek-v4-flash (ad08637c) | google/gemini-3-flash-preview (90810bde) | deepseek/deepseek-v4-flash (2bbb418a) | deepseek/deepseek-v4-flash (12242871) | deepseek/deepseek-v4-flash (282dd917) | 10 |  |
+| into-the-breach | deepseek/deepseek-v4-flash (04c2be24) | deepseek/deepseek-v4-flash (97473b60) | deepseek/deepseek-v4-flash (e101e603) | deepseek/deepseek-v4-flash (1a2696ab) | deepseek/deepseek-v4-flash (6fd8d26f) | deepseek/deepseek-v4-flash (25296225) | openai/gpt-oss-120b:nitro (00caeb05) | openai/gpt-oss-120b:nitro (c13b3c24) | deepseek/deepseek-v4-flash (fc4e410f) | deepseek/deepseek-v4-flash (d5ea8444) | 10 |  |
 | intro-to-promises | deepseek/deepseek-v4-flash (b725c146) | unjudged | deepseek/deepseek-v4-flash (f5136d5f) | qwen/qwen3.6-plus (ce505539) | deepseek/deepseek-v4-flash (4a2cf2bb) | deepseek/deepseek-v4-flash (73494c3e) | openai/gpt-oss-120b:nitro (2b3b739d) | deepseek/deepseek-v4-flash (af77694f) | deepseek/deepseek-v4-flash (1b587736) | google/gemini-3-flash-preview (8b3fdc72) | 9 | hi: no judged winner |
 | javascript-promises-quiz | openai/gpt-oss-120b:nitro (cab01dca) | unjudged | qwen/qwen3-32b:nitro (607af81e) | openai/gpt-oss-120b:nitro (5ad43732) | openai/gpt-oss-120b:nitro (90a35d5c) | openai/gpt-oss-120b:nitro (f0ebcc7d) | unjudged | deepseek/deepseek-v4-flash (09cedfcd) | deepseek/deepseek-v4-flash (cde65ba5) | google/gemini-3-flash-preview (cc8104d5) | 8 | hi: no judged winner; it: no judged winner |
 | javascript-scope-magic | unjudged | unjudged | qwen/qwen3.6-plus (0b2e8418) | unjudged | unjudged | unjudged | unjudged | deepseek/deepseek-v4-flash (3b4325a2) | deepseek/deepseek-v4-flash (d0f5dcfc) | deepseek/deepseek-v4-flash (588eb7b5) | 4 | de: no judged winner; es: no judged winner; fr: no judged winner; hi: no judged winner; it: no judged winner; ru: no judged winner |
@@ -101,8 +397,8 @@ Generated from `reports/i18n` and Git history at `2026-05-14T13:53:12-06:00`.
 | just-add-more-engineers-fallacy | unjudged | unjudged | unjudged | unjudged | unjudged | unjudged | unjudged | deepseek/deepseek-v4-flash (b321c950) | deepseek/deepseek-v4-flash (f12fbdea) | openai/gpt-oss-120b:nitro (72fad3f5) | 3 | de: no judged winner; es: no judged winner; fr: no judged winner; hi: no judged winner; it: no judged winner; ja: no judged winner; ru: no judged winner |
 | lancedb-wasm-browser-client | qwen/qwen3.6-plus (efc838ff) | qwen/qwen3.6-plus (2bd552d1) | deepseek/deepseek-v4-flash (4450adc4) | unjudged | qwen/qwen3.6-plus (ecf6694f) | deepseek/deepseek-v4-flash (e2dfaf83) | deepseek/deepseek-v4-flash | unjudged | unjudged | google/gemini-3-flash-preview (e499f039) | 7 | ar: no judged winner; he: no judged winner; ru: no judged winner |
 | linux-system-benchmark-scripts | unjudged | unjudged | unjudged | unjudged | unjudged | unjudged | unjudged | openai/gpt-oss-120b:nitro (21411eb3) | deepseek/deepseek-v4-flash (acec0f55) | google/gemini-3-flash-preview (14fd070a) | 3 | de: no judged winner; es: no judged winner; fr: no judged winner; hi: no judged winner; it: no judged winner; ja: no judged winner; ru: no judged winner |
-| llm-connection-strings | moonshotai/kimi-k2.6 (d00d4148) | qwen/qwen3.6-plus (30b0bf3c) | qwen/qwen3.6-plus (a4343c45) | qwen/qwen3.6-plus (27395c6a) | qwen/qwen3.6-plus (fb200df1) | qwen/qwen3.6-plus (ac2d8bbc) | qwen/qwen3.6-plus (6a263ba6) | unjudged | unjudged | google/gemini-3-flash-preview | 8 | ar: no judged winner; he: no judged winner |
-| llm-evals-are-broken | qwen/qwen3.6-plus (cbb0b09b) | google/gemini-3-flash-preview (bd86578b) | deepseek/deepseek-v4-flash (cfc27fa4) | qwen/qwen3.6-plus (048aa8b8) | qwen/qwen3.6-plus (c1dec108) | qwen/qwen3.6-plus (f68d539f) | qwen/qwen3.6-plus (e864bc89) | unjudged | unjudged | deepseek/deepseek-v4-flash (2c7bb099) | 8 | ar: no judged winner; he: no judged winner |
+| llm-connection-strings | moonshotai/kimi-k2.6 (d00d4148) | qwen/qwen3.6-plus (30b0bf3c) | qwen/qwen3.6-plus (a4343c45) | qwen/qwen3.6-plus (27395c6a) | qwen/qwen3.6-plus (fb200df1) | qwen/qwen3.6-plus (ac2d8bbc) | qwen/qwen3.6-plus (6a263ba6) | openai/gpt-oss-120b:nitro (4dd576f5) | unjudged | google/gemini-3-flash-preview | 9 | he: no judged winner |
+| llm-evals-are-broken | qwen/qwen3.6-plus (cbb0b09b) | google/gemini-3-flash-preview (bd86578b) | deepseek/deepseek-v4-flash (cfc27fa4) | qwen/qwen3.6-plus (048aa8b8) | qwen/qwen3.6-plus (c1dec108) | qwen/qwen3.6-plus (f68d539f) | qwen/qwen3.6-plus (e864bc89) | unjudged | openai/gpt-oss-120b:nitro (23f247bd) | deepseek/deepseek-v4-flash (2c7bb099) | 9 | ar: no judged winner |
 | llm-generative-ui-landscape | moonshotai/kimi-k2.6 (1a8d701e) | qwen/qwen3.6-plus (ffa24b36) | qwen/qwen3.6-plus (2de44191) | qwen/qwen3.6-plus (39e5ccd0) | qwen/qwen3.6-plus (5930ab92) | qwen/qwen3.6-plus (0ef43525) | unjudged | unjudged | unjudged | deepseek/deepseek-v4-flash (4a191840) | 7 | ar: no judged winner; he: no judged winner; it: no judged winner |
 | llm-generative-ui-landscape-2026 | qwen/qwen3.6-plus (fae479cd) | moonshotai/kimi-k2.6 (9f8e8a1b) | z-ai/glm-5.1 | z-ai/glm-5-turbo (4976bf5c) | z-ai/glm-5-turbo (55377887) | deepseek/deepseek-v4-flash (af74e580) | google/gemini-3.1-flash-lite-preview (d9ff52e4) | unjudged | unjudged | openai/gpt-oss-120b:nitro (c464bb69) | 8 | ar: no judged winner; he: no judged winner |
 | llm-routing-mastra-ai | qwen/qwen3.6-plus (3e1478bf) | z-ai/glm-5.1 (c4ea4d56) | moonshotai/kimi-k2.6 (a0d37ceb) | qwen/qwen3.6-plus (2c96b1e4) | deepseek/deepseek-v4-flash (ebb5087c) | deepseek/deepseek-v4-flash (55ea8957) | deepseek/deepseek-v4-flash (8cb83b6b) | deepseek/deepseek-v4-flash (071449f2) | deepseek/deepseek-v4-flash (cbf28fc7) | google/gemini-3-flash-preview (69ccf9d3) | 10 |  |
@@ -110,13 +406,13 @@ Generated from `reports/i18n` and Git history at `2026-05-14T13:53:12-06:00`.
 | mastering-functional-pipelines-passing-state | openai/gpt-oss-120b:nitro (b48dc308) | qwen/qwen3.6-plus (378a699f) | openai/gpt-oss-120b:nitro (a4a2b96c) | qwen/qwen3.6-plus (24487f78) | qwen/qwen3.6-plus (32fea135) | qwen/qwen3.6-plus (b2514b0c) | unjudged | deepseek/deepseek-v4-flash (8ade3444) | deepseek/deepseek-v4-flash (d27886e2) | google/gemini-3-flash-preview (d8b7013f) | 9 | it: no judged winner |
 | mastra-mcp-tool-integrations | qwen/qwen3.6-plus (34773b65) | qwen/qwen3.6-plus (d8f2f28a) | z-ai/glm-5.1 (61ec25db) | deepseek/deepseek-v3.2 (1b359da1) | qwen/qwen3.6-plus (5239bc6d) | qwen/qwen3.6-plus (4891fba6) | deepseek/deepseek-v4-flash (3fdb695c) | unjudged | unjudged | openai/gpt-oss-120b:nitro (c3d5fbcb) | 8 | ar: no judged winner; he: no judged winner |
 | mastra-security-guardrails | qwen/qwen3.6-plus (7528cbad) | qwen/qwen3.6-plus (3eb5577b) | qwen/qwen3.6-plus (fb162823) | qwen/qwen3.6-plus (3ffeef6e) | deepseek/deepseek-v4-flash (c89e6030) | qwen/qwen3.6-plus (32171c10) | qwen/qwen3.6-plus (1548ce08) | deepseek/deepseek-v4-flash (82cb00af) | deepseek/deepseek-v4-flash (f54c754d) | deepseek/deepseek-v4-flash (64674dd1) | 10 |  |
-| mastra-workflows-memory | qwen/qwen3.6-plus (033a3be9) | qwen/qwen3.6-plus (1e22fa84) | qwen/qwen3.6-plus (4bf40b82) | qwen/qwen3.6-plus (bd55e7d3) | qwen/qwen3.6-plus (be00f560) | qwen/qwen3.6-plus (b128f75c) | qwen/qwen3.6-plus (d7044512) | unjudged | unjudged | openai/gpt-oss-120b:nitro (450a6638) | 8 | ar: no judged winner; he: no judged winner |
+| mastra-workflows-memory | qwen/qwen3.6-plus (033a3be9) | qwen/qwen3.6-plus (1e22fa84) | qwen/qwen3.6-plus (4bf40b82) | qwen/qwen3.6-plus (bd55e7d3) | qwen/qwen3.6-plus (be00f560) | qwen/qwen3.6-plus (b128f75c) | qwen/qwen3.6-plus (d7044512) | openai/gpt-oss-120b:nitro (708c7d78) | unjudged | openai/gpt-oss-120b:nitro (450a6638) | 9 | he: no judged winner |
 | naming-things-real-good | qwen/qwen3.6-plus (6b102486) | openai/gpt-oss-120b:nitro (2fdcf544) | qwen/qwen3-32b:nitro (5acf6186) | qwen/qwen3.6-plus (c0eb2acd) | qwen/qwen3.6-plus (7453fb34) | qwen/qwen3-32b:nitro (7af3fc52) | qwen/qwen3.6-plus (287c0ba8) | deepseek/deepseek-v4-flash (891f9e6a) | deepseek/deepseek-v4-flash (577dc926) | deepseek/deepseek-v4-flash (834c2c38) | 10 |  |
 | one-weird-trick-to-speed-up-feature-teams | qwen/qwen3.6-plus (585f2d8a) | unjudged | unjudged | unjudged | qwen/qwen3.6-plus (57a9540e) | qwen/qwen3-32b:nitro (714afad4) | qwen/qwen3.6-plus (19df4d1d) | deepseek/deepseek-v4-flash (07f71ca3) | deepseek/deepseek-v4-flash (98b7f668) | qwen/qwen3-32b:nitro (32bc89a9) | 7 | hi: no judged winner; ja: no judged winner; ru: no judged winner |
 | patchy-with-a-chance-of-vulnerability | qwen/qwen3.6-plus (70427da7) | unjudged | openai/gpt-oss-120b:nitro (1ede202a) | qwen/qwen3.6-plus (cc964dc8) | qwen/qwen3.6-plus (c7814bc0) | qwen/qwen3.6-plus (5bd537b7) | qwen/qwen3.6-plus (455cb20e) | deepseek/deepseek-v4-flash (3cc5a5da) | deepseek/deepseek-v4-flash (c39d2183) | google/gemini-3-flash-preview (ea9f4515) | 9 | hi: no judged winner |
 | pitfalls-in-promise-docs | openai/gpt-oss-120b:nitro (75d6f3c1) | qwen/qwen3.6-plus (2ad5773e) | unjudged | openai/gpt-oss-120b:nitro (4091fae5) | openai/gpt-oss-120b:nitro (cf3b6e45) | qwen/qwen3-32b:nitro (40759a00) | unjudged | deepseek/deepseek-v4-flash (52816157) | deepseek/deepseek-v4-flash (d0989930) | google/gemini-3-flash-preview (e96df00a) | 8 | it: no judged winner; ja: no judged winner |
 | postgres-fts-vs-pgvector | unjudged | qwen/qwen3.6-plus (08ed9d2a) | unjudged | qwen/qwen3.6-plus (52160618) | unjudged | deepseek/deepseek-v4-flash (af5dcba3) | unjudged | unjudged | unjudged | deepseek/deepseek-v4-flash (e930a12c) | 4 | ar: no judged winner; de: no judged winner; es: no judged winner; he: no judged winner; it: no judged winner; ja: no judged winner |
-| postgres-text-search-guide | qwen/qwen3.6-plus (b515ea61) | qwen/qwen3.6-plus (b70c847c) | qwen/qwen3.6-plus (55f12900) | qwen/qwen3.6-plus (b801db95) | deepseek/deepseek-v4-flash (9ca379df) | qwen/qwen3.6-plus (04de9a7a) | qwen/qwen3.6-plus (6f3ea908) | unjudged | unjudged | deepseek/deepseek-v4-flash (d9a404ee) | 8 | ar: no judged winner; he: no judged winner |
+| postgres-text-search-guide | qwen/qwen3.6-plus (b515ea61) | qwen/qwen3.6-plus (b70c847c) | qwen/qwen3.6-plus (55f12900) | qwen/qwen3.6-plus (b801db95) | deepseek/deepseek-v4-flash (9ca379df) | qwen/qwen3.6-plus (04de9a7a) | qwen/qwen3.6-plus (6f3ea908) | openai/gpt-oss-120b:nitro (4affe079) | unjudged | deepseek/deepseek-v4-flash (d9a404ee) | 9 | he: no judged winner |
 | promise-gotchas | qwen/qwen3.6-plus (72ca539a) | unjudged | qwen/qwen3.6-plus (cabf121a) | openai/gpt-oss-120b:nitro (54fe13b3) | openai/gpt-oss-120b:nitro (9a572d24) | qwen/qwen3.6-plus (e753a15e) | unjudged | deepseek/deepseek-v4-flash (35fd6dc0) | openai/gpt-oss-120b:nitro (d0761b8a) | openai/gpt-oss-120b:nitro (c6a66745) | 8 | hi: no judged winner; it: no judged winner |
 | prompt-injection-new-sql-injection | minimax/minimax-m2.7 (b31ff955) | qwen/qwen3.6-plus (fc6d16e4) | qwen/qwen3.6-plus (b7ba0dd7) | qwen/qwen3.6-plus (6b033655) | qwen/qwen3.6-plus (965ec095) | qwen/qwen3.5-flash-02-23 | deepseek/deepseek-v4-flash (e9c79f18) | unjudged | unjudged | deepseek/deepseek-v4-flash (7ab674ef) | 8 | ar: no judged winner; he: no judged winner |
 | protect-your-tokens | qwen/qwen3.6-plus (215f9126) | qwen/qwen3.6-plus (c2c3535b) | openai/gpt-oss-120b:nitro (f52f2a4b) | openai/gpt-oss-120b:nitro (ad5481a8) | unjudged | qwen/qwen3-32b:nitro (578c5279) | qwen/qwen3.6-plus (05ce900a) | deepseek/deepseek-v4-flash (a9dd956d) | deepseek/deepseek-v4-flash (5bddd04f) | google/gemini-3-flash-preview (1a00d1e5) | 9 | de: no judged winner |
@@ -142,9 +438,9 @@ Generated from `reports/i18n` and Git history at `2026-05-14T13:53:12-06:00`.
 | rag-pipeline-failures | deepseek/deepseek-v4-pro (bb802ee8) | google/gemini-3-flash-preview (47bd782c) | google/gemini-3-flash-preview (94c02858) | unjudged | qwen/qwen3.5-flash-02-23 | unjudged | qwen/qwen3.6-plus (470291d6) | unjudged | unjudged | openai/gpt-oss-120b:nitro (d16d2a2f) | 6 | ar: no judged winner; fr: no judged winner; he: no judged winner; ru: no judged winner |
 | replacing-my-job-with-gpt-and-llm | qwen/qwen3.6-plus (efe0466e) | qwen/qwen3.6-plus (e08ada4b) | unjudged | qwen/qwen3.6-plus (97ee4eed) | qwen/qwen3.6-plus (d5504113) | qwen/qwen3.6-plus (6f24bbb6) | unjudged | deepseek/deepseek-v4-flash (2aac3299) | deepseek/deepseek-v4-flash (586d8400) | deepseek/deepseek-v4-flash (c1e5251c) | 8 | it: no judged winner; ja: no judged winner |
 | securely-using-environment-variables-in-nodejs | openai/gpt-oss-120b:nitro (84c0e001) | unjudged | unjudged | unjudged | qwen/qwen3.6-plus (f3fc2471) | qwen/qwen3.6-plus (9c10efa0) | unjudged | deepseek/deepseek-v4-flash (532a7ec8) | deepseek/deepseek-v4-flash (2d4e6085) | qwen/qwen3-32b:nitro (008c125e) | 6 | hi: no judged winner; it: no judged winner; ja: no judged winner; ru: no judged winner |
-| securing-clawdbot-tailscale | qwen/qwen3.6-plus (243137a0) | qwen/qwen3.6-plus (e8c037ce) | qwen/qwen3.6-plus (6e3019e2) | qwen/qwen3.6-plus (6a059c3f) | qwen/qwen3.6-plus (91c1fb30) | qwen/qwen3.6-plus (2b48ceb3) | qwen/qwen3.6-plus (dc786ce6) | unjudged | unjudged | qwen/qwen3-32b:nitro (0ac6d96f) | 8 | ar: no judged winner; he: no judged winner |
+| securing-clawdbot-tailscale | qwen/qwen3.6-plus (243137a0) | qwen/qwen3.6-plus (e8c037ce) | qwen/qwen3.6-plus (6e3019e2) | qwen/qwen3.6-plus (6a059c3f) | qwen/qwen3.6-plus (91c1fb30) | qwen/qwen3.6-plus (2b48ceb3) | qwen/qwen3.6-plus (dc786ce6) | openai/gpt-oss-120b:nitro (6be8aa2a) | unjudged | qwen/qwen3-32b:nitro (0ac6d96f) | 9 | he: no judged winner |
 | security-notes-regex | openai/gpt-oss-120b:nitro (725fbf15) | unjudged | qwen/qwen3.6-plus (7064caaf) | openai/gpt-oss-120b:nitro (d104ed6d) | unjudged | unjudged | openai/gpt-oss-120b:nitro (1b68b1df) | deepseek/deepseek-v4-flash (72bd20dc) | deepseek/deepseek-v4-flash (bf844ebf) | google/gemini-3-flash-preview (b36b166f) | 7 | de: no judged winner; fr: no judged winner; hi: no judged winner |
-| semantic-vector-search-landscape | qwen/qwen3.6-plus (8e35a85c) | moonshotai/kimi-k2.6 (af140620) | moonshotai/kimi-k2.6 (4fd17cca) | qwen/qwen3.6-plus (5232ea30) | qwen/qwen3.6-plus (a5cf7f8a) | qwen/qwen3.6-plus (c0358d6f) | qwen/qwen3.6-plus (b0955313) | unjudged | unjudged | deepseek/deepseek-v4-flash (1c941f8b) | 8 | ar: no judged winner; he: no judged winner |
+| semantic-vector-search-landscape | qwen/qwen3.6-plus (8e35a85c) | moonshotai/kimi-k2.6 (af140620) | moonshotai/kimi-k2.6 (4fd17cca) | qwen/qwen3.6-plus (5232ea30) | qwen/qwen3.6-plus (a5cf7f8a) | qwen/qwen3.6-plus (c0358d6f) | qwen/qwen3.6-plus (b0955313) | openai/gpt-oss-120b:nitro (ac208c5c) | openai/gpt-oss-120b:nitro (659128a9) | deepseek/deepseek-v4-flash (1c941f8b) | 10 |  |
 | serverless-database-magic | unjudged | unjudged | qwen/qwen3.6-plus (316d8e0c) | qwen/qwen3.6-plus (0909ad08) | qwen/qwen3.6-plus (bea0508e) | qwen/qwen3.6-plus (6855fd28) | qwen/qwen3.6-plus (a50cf703) | deepseek/deepseek-v4-flash (e43a0fa4) | deepseek/deepseek-v4-flash (cbb8e195) | google/gemini-3-flash-preview (7e42e9c1) | 8 | es: no judged winner; hi: no judged winner |
 | should-you-use-named-or-default-exports | qwen/qwen3.6-plus (b9cf7fb1) | openai/gpt-oss-120b:nitro (8eb6bfb3) | qwen/qwen3.6-plus (a8bd65ac) | openai/gpt-oss-120b:nitro (68a859f1) | openai/gpt-oss-120b:nitro (56a2636a) | qwen/qwen3.6-plus (b50f9656) | unjudged | deepseek/deepseek-v4-flash (ab7375f7) | deepseek/deepseek-v4-flash (f32a880f) | deepseek/deepseek-v4-flash (1a3da4ad) | 9 | it: no judged winner |
 | stop-hardcoding-your-prompts | google/gemini-3-flash-preview (df79ccd8) | minimax/minimax-m2.7 (b5c0acea) | unjudged | google/gemini-3-flash-preview | google/gemini-3-flash-preview (e84807f7) | unjudged | google/gemini-3-flash-preview (295d7384) | unjudged | unjudged | google/gemini-3-flash-preview (ff9c88ff) | 6 | ar: no judged winner; fr: no judged winner; he: no judged winner; ja: no judged winner |
@@ -168,11 +464,11 @@ Generated from `reports/i18n` and Git history at `2026-05-14T13:53:12-06:00`.
 
 | Article | Locale | Winner | Winner commit | Candidate commits | Attempts | Rejected | Judge |
 | --- | --- | --- | --- | ---: | ---: | ---: | --- |
-| ai-sdk-math-tool | ar |  |  | 0 | 0 | 0 |  |
+| ai-sdk-math-tool | ar |  |  | 1 | 4 | 0 | openrouter/google/gemini-3-flash-preview |
 | ai-sdk-math-tool | de |  |  | 3 | 14 | 2 | openrouter/google/gemini-3-flash-preview |
 | ai-sdk-math-tool | es | openrouter/qwen/qwen3.6-plus | `7988f7b0` | 7 | 13 | 1 | openrouter/google/gemini-3-flash-preview |
 | ai-sdk-math-tool | fr | openrouter/qwen/qwen3.6-plus | `0cd00d8f` | 5 | 13 | 1 | openrouter/google/gemini-3-flash-preview |
-| ai-sdk-math-tool | he |  |  | 0 | 0 | 0 |  |
+| ai-sdk-math-tool | he |  |  | 1 | 4 | 0 | openrouter/google/gemini-3-flash-preview |
 | ai-sdk-math-tool | hi | openrouter/qwen/qwen3.6-plus | `87c627ed` | 7 | 11 | 0 | openrouter/google/gemini-3-flash-preview |
 | ai-sdk-math-tool | it | openrouter/qwen/qwen3.6-plus | `c32aa1b9` | 5 | 9 | 0 | openrouter/google/gemini-3-flash-preview |
 | ai-sdk-math-tool | ja | openrouter/z-ai/glm-5.1 | `50902571` | 3 | 15 | 5 | openrouter/google/gemini-3-flash-preview |
@@ -368,6 +664,50 @@ Generated from `reports/i18n` and Git history at `2026-05-14T13:53:12-06:00`.
 | docker-server-setup-notes | ja |  |  | 0 | 11 | 4 |  |
 | docker-server-setup-notes | ru | openrouter/openai/gpt-oss-120b:nitro | `f488266b` | 2 | 5 | 0 | openrouter/google/gemini-3-flash-preview |
 | docker-server-setup-notes | zh | deepseek/deepseek-v4-flash | `378507e5` | 3 | 7 | 1 | openrouter/google/gemini-3-flash-preview |
+| evals | eval-run-2026-05-15T17-38-22-644Z |  |  | 0 | 10 | 0 |  |
+| evals | eval-run-2026-05-15T17-41-31-414Z |  |  | 0 | 6 | 0 |  |
+| evals | eval-run-2026-05-15T17-42-24-698Z |  |  | 0 | 6 | 0 |  |
+| evals | eval-run-2026-05-15T17-44-07-924Z |  |  | 0 | 6 | 0 |  |
+| evals | eval-run-2026-05-15T17-44-47-554Z |  |  | 0 | 6 | 0 |  |
+| evals | eval-run-2026-05-15T17-45-35-738Z |  |  | 0 | 6 | 0 |  |
+| evals | eval-run-2026-05-15T17-45-44-518Z |  |  | 0 | 6 | 0 |  |
+| evals | eval-run-2026-05-15T17-46-46-280Z |  |  | 0 | 6 | 0 |  |
+| evals | eval-run-2026-05-15T18-03-29-930Z |  |  | 0 | 6 | 0 |  |
+| evals | eval-run-2026-05-15T18-06-29-993Z |  |  | 0 | 42 | 0 |  |
+| evals | eval-run-2026-05-15T18-10-58-308Z |  |  | 0 | 6 | 0 |  |
+| evals | eval-run-2026-05-15T18-11-17-630Z |  |  | 0 | 42 | 0 |  |
+| evals | eval-run-2026-05-15T18-14-06-107Z |  |  | 0 | 42 | 0 |  |
+| evals | eval-run-2026-05-15T18-16-13-969Z |  |  | 0 | 42 | 0 |  |
+| evals | eval-run-2026-05-15T18-17-31-782Z |  |  | 0 | 22 | 0 |  |
+| evals | eval-run-2026-05-15T18-17-50-381Z |  |  | 0 | 42 | 0 |  |
+| evals | eval-run-2026-05-15T18-18-18-837Z |  |  | 0 | 22 | 0 |  |
+| evals | eval-run-2026-05-15T18-21-07-814Z |  |  | 0 | 42 | 0 |  |
+| evals | eval-run-2026-05-15T18-27-23-970Z |  |  | 0 | 22 | 0 |  |
+| evals | eval-run-2026-05-15T18-28-07-404Z |  |  | 0 | 42 | 0 |  |
+| evals | eval-run-2026-05-15T18-29-34-052Z |  |  | 0 | 42 | 0 |  |
+| evals | eval-run-2026-05-15T18-32-15-965Z |  |  | 0 | 12 | 0 |  |
+| evals | eval-run-2026-05-15T18-32-29-902Z |  |  | 0 | 11 | 0 |  |
+| evals | eval-run-2026-05-15T18-34-47-135Z |  |  | 0 | 2 | 0 |  |
+| evals | eval-run-2026-05-15T18-35-48-721Z |  |  | 0 | 2 | 0 |  |
+| evals | eval-run-2026-05-15T18-37-05-094Z |  |  | 0 | 2 | 0 |  |
+| evals | eval-run-2026-05-15T18-52-10-097Z |  |  | 0 | 2 | 0 |  |
+| evals | eval-run-2026-05-15T18-55-10-091Z |  |  | 0 | 2 | 0 |  |
+| evals | eval-run-2026-05-15T19-02-12-770Z |  |  | 0 | 2 | 0 |  |
+| evals | eval-run-2026-05-15T19-05-27-292Z |  |  | 0 | 2 | 0 |  |
+| evals | eval-run-2026-05-15T19-09-22-510Z |  |  | 0 | 2 | 0 |  |
+| evals | eval-run-2026-05-15T19-21-50-626Z |  |  | 0 | 2 | 0 |  |
+| evals | eval-run-2026-05-15T19-25-18-467Z |  |  | 0 | 2 | 0 |  |
+| evals | eval-run-2026-05-15T19-27-29-483Z |  |  | 0 | 2 | 0 |  |
+| evals | eval-run-2026-05-15T19-30-04-739Z |  |  | 0 | 2 | 0 |  |
+| evals | eval-run-2026-05-15T19-32-18-455Z |  |  | 0 | 1 | 0 |  |
+| evals | eval-run-2026-05-15T19-33-05-875Z |  |  | 0 | 2 | 0 |  |
+| evals | eval-run-2026-05-15T19-35-01-032Z |  |  | 0 | 2 | 0 |  |
+| evals | eval-run-2026-05-15T19-36-38-577Z |  |  | 0 | 2 | 0 |  |
+| evals | eval-run-2026-05-15T19-38-33-387Z |  |  | 0 | 2 | 0 |  |
+| evals | eval-run-2026-05-15T19-41-20-819Z |  |  | 0 | 2 | 0 |  |
+| evals | eval-run-2026-05-15T19-44-17-828Z |  |  | 0 | 2 | 0 |  |
+| evals | eval-run-2026-05-15T19-49-59-607Z |  |  | 0 | 2 | 0 |  |
+| evals | eval-run-2026-05-15T19-53-23-765Z |  |  | 0 | 2 | 0 |  |
 | from-zero-to-regex-hero-extract-url-like-strings | ar | openrouter/openai/gpt-oss-120b:nitro | `3a69376c` | 2 | 6 | 0 | openrouter/google/gemini-3-flash-preview |
 | from-zero-to-regex-hero-extract-url-like-strings | de |  |  | 4 | 9 | 2 | openrouter/google/gemini-3-flash-preview |
 | from-zero-to-regex-hero-extract-url-like-strings | es |  |  | 4 | 9 | 2 | openrouter/google/gemini-3-flash-preview |
@@ -418,16 +758,16 @@ Generated from `reports/i18n` and Git history at `2026-05-14T13:53:12-06:00`.
 | honest-priorities | ja | openrouter/qwen/qwen3.6-plus | `d48b6a4c` | 3 | 7 | 0 | openrouter/google/gemini-3-flash-preview |
 | honest-priorities | ru |  |  | 0 | 8 | 1 |  |
 | honest-priorities | zh | openrouter/google/gemini-3-flash-preview | `538ecd45` | 3 | 7 | 0 | openrouter/google/gemini-3-flash-preview |
-| into-the-breach | ar | openrouter/deepseek/deepseek-v4-flash | `2bbb418a` | 2 | 10 | 1 | openrouter/google/gemini-3-flash-preview |
-| into-the-breach | de | openrouter/deepseek/deepseek-v4-flash | `c8502a02` | 2 | 10 | 1 | openrouter/google/gemini-3-flash-preview |
-| into-the-breach | es | openrouter/deepseek/deepseek-v4-flash | `a89fd24c` | 2 | 10 | 1 | openrouter/google/gemini-3-flash-preview |
-| into-the-breach | fr | openrouter/deepseek/deepseek-v4-flash | `ad08637c` | 2 | 10 | 1 | openrouter/google/gemini-3-flash-preview |
-| into-the-breach | he | openrouter/deepseek/deepseek-v4-flash | `12242871` | 2 | 10 | 1 | openrouter/google/gemini-3-flash-preview |
-| into-the-breach | hi | openrouter/deepseek/deepseek-v4-flash | `faa818a8` | 2 | 11 | 1 | openrouter/google/gemini-3-flash-preview |
-| into-the-breach | it | openrouter/google/gemini-3-flash-preview | `90810bde` | 2 | 10 | 1 | openrouter/google/gemini-3-flash-preview |
-| into-the-breach | ja | openrouter/deepseek/deepseek-v4-flash | `044ba354` | 2 | 11 | 1 | openrouter/google/gemini-3-flash-preview |
-| into-the-breach | ru | openrouter/deepseek/deepseek-v4-flash | `0c8a2a92` | 2 | 11 | 2 | openrouter/google/gemini-3-flash-preview |
-| into-the-breach | zh | deepseek/deepseek-v4-flash | `282dd917` | 3 | 15 | 2 | openrouter/google/gemini-3-flash-preview |
+| into-the-breach | ar | openrouter/openai/gpt-oss-120b:nitro | `c13b3c24` | 2 | 33 | 9 | openrouter/google/gemini-3-flash-preview |
+| into-the-breach | de | openrouter/deepseek/deepseek-v4-flash | `6fd8d26f` | 2 | 31 | 9 | openrouter/google/gemini-3-flash-preview |
+| into-the-breach | es | openrouter/deepseek/deepseek-v4-flash | `04c2be24` | 2 | 30 | 8 | openrouter/google/gemini-3-flash-preview |
+| into-the-breach | fr | openrouter/deepseek/deepseek-v4-flash | `25296225` | 2 | 31 | 6 | openrouter/google/gemini-3-flash-preview |
+| into-the-breach | he | openrouter/deepseek/deepseek-v4-flash | `fc4e410f` | 2 | 33 | 8 | openrouter/google/gemini-3-flash-preview |
+| into-the-breach | hi | openrouter/deepseek/deepseek-v4-flash | `97473b60` | 2 | 31 | 9 | openrouter/google/gemini-3-flash-preview |
+| into-the-breach | it | openrouter/openai/gpt-oss-120b:nitro | `00caeb05` | 2 | 31 | 8 | openrouter/google/gemini-3-flash-preview |
+| into-the-breach | ja | openrouter/deepseek/deepseek-v4-flash | `e101e603` | 2 | 31 | 9 | openrouter/google/gemini-3-flash-preview |
+| into-the-breach | ru | openrouter/deepseek/deepseek-v4-flash | `1a2696ab` | 2 | 32 | 9 | openrouter/google/gemini-3-flash-preview |
+| into-the-breach | zh | openrouter/deepseek/deepseek-v4-flash | `d5ea8444` | 2 | 38 | 5 | openrouter/google/gemini-3-flash-preview |
 | intro-to-promises | ar | openrouter/deepseek/deepseek-v4-flash | `af77694f` | 2 | 5 | 0 | openrouter/google/gemini-3-flash-preview |
 | intro-to-promises | de | deepseek/deepseek-v4-flash | `4a2cf2bb` | 5 | 9 | 1 | openrouter/google/gemini-3-flash-preview |
 | intro-to-promises | es | deepseek/deepseek-v4-flash | `b725c146` | 4 | 9 | 2 | openrouter/google/gemini-3-flash-preview |
@@ -498,21 +838,21 @@ Generated from `reports/i18n` and Git history at `2026-05-14T13:53:12-06:00`.
 | linux-system-benchmark-scripts | ja |  |  | 0 | 10 | 1 |  |
 | linux-system-benchmark-scripts | ru |  |  | 0 | 9 | 3 |  |
 | linux-system-benchmark-scripts | zh | openrouter/google/gemini-3-flash-preview | `14fd070a` | 3 | 7 | 0 | openrouter/google/gemini-3-flash-preview |
-| llm-connection-strings | ar |  |  | 0 | 0 | 0 |  |
+| llm-connection-strings | ar | openrouter/openai/gpt-oss-120b:nitro | `4dd576f5` | 1 | 5 | 0 | openrouter/google/gemini-3-flash-preview |
 | llm-connection-strings | de | openrouter/qwen/qwen3.6-plus | `fb200df1` | 5 | 11 | 1 | openrouter/google/gemini-3-flash-preview |
 | llm-connection-strings | es | openrouter/moonshotai/kimi-k2.6 | `d00d4148` | 7 | 13 | 1 | openrouter/google/gemini-3-flash-preview |
 | llm-connection-strings | fr | openrouter/qwen/qwen3.6-plus | `ac2d8bbc` | 5 | 12 | 1 | openrouter/google/gemini-3-flash-preview |
-| llm-connection-strings | he |  |  | 0 | 0 | 0 |  |
+| llm-connection-strings | he |  |  | 1 | 4 | 0 | openrouter/google/gemini-3-flash-preview |
 | llm-connection-strings | hi | openrouter/qwen/qwen3.6-plus | `30b0bf3c` | 7 | 11 | 0 | openrouter/google/gemini-3-flash-preview |
 | llm-connection-strings | it | openrouter/qwen/qwen3.6-plus | `6a263ba6` | 5 | 9 | 0 | openrouter/google/gemini-3-flash-preview |
 | llm-connection-strings | ja | openrouter/qwen/qwen3.6-plus | `a4343c45` | 6 | 10 | 1 | openrouter/google/gemini-3-flash-preview |
 | llm-connection-strings | ru | openrouter/qwen/qwen3.6-plus | `27395c6a` | 5 | 9 | 0 | openrouter/google/gemini-3-flash-preview |
 | llm-connection-strings | zh | openrouter/google/gemini-3-flash-preview |  | 3 | 7 | 1 | openrouter/google/gemini-3-flash-preview |
-| llm-evals-are-broken | ar |  |  | 0 | 0 | 0 |  |
+| llm-evals-are-broken | ar |  |  | 1 | 4 | 0 | openrouter/google/gemini-3-flash-preview |
 | llm-evals-are-broken | de | openrouter/qwen/qwen3.6-plus | `c1dec108` | 5 | 12 | 1 | openrouter/google/gemini-3-flash-preview |
 | llm-evals-are-broken | es | openrouter/qwen/qwen3.6-plus | `cbb0b09b` | 7 | 12 | 1 | openrouter/google/gemini-3-flash-preview |
 | llm-evals-are-broken | fr | openrouter/qwen/qwen3.6-plus | `f68d539f` | 5 | 12 | 2 | openrouter/google/gemini-3-flash-preview |
-| llm-evals-are-broken | he |  |  | 0 | 0 | 0 |  |
+| llm-evals-are-broken | he | openrouter/openai/gpt-oss-120b:nitro | `23f247bd` | 1 | 5 | 0 | openrouter/google/gemini-3-flash-preview |
 | llm-evals-are-broken | hi | openrouter/google/gemini-3-flash-preview | `bd86578b` | 3 | 6 | 2 | openrouter/google/gemini-3-flash-preview |
 | llm-evals-are-broken | it | openrouter/qwen/qwen3.6-plus | `e864bc89` | 3 | 5 | 0 | openrouter/google/gemini-3-flash-preview |
 | llm-evals-are-broken | ja | openrouter/deepseek/deepseek-v4-flash | `cfc27fa4` | 3 | 11 | 5 | openrouter/google/gemini-3-flash-preview |
@@ -568,11 +908,11 @@ Generated from `reports/i18n` and Git history at `2026-05-14T13:53:12-06:00`.
 | mastering-functional-pipelines-passing-state | ja | openrouter/openai/gpt-oss-120b:nitro | `a4a2b96c` | 2 | 9 | 2 | openrouter/google/gemini-3-flash-preview |
 | mastering-functional-pipelines-passing-state | ru | openrouter/qwen/qwen3.6-plus | `24487f78` | 4 | 9 | 1 | openrouter/google/gemini-3-flash-preview |
 | mastering-functional-pipelines-passing-state | zh | openrouter/google/gemini-3-flash-preview | `d8b7013f` | 3 | 7 | 0 | openrouter/google/gemini-3-flash-preview |
-| mastra-mcp-tool-integrations | ar |  |  | 0 | 0 | 0 |  |
+| mastra-mcp-tool-integrations | ar |  |  | 1 | 4 | 0 | openrouter/google/gemini-3-flash-preview |
 | mastra-mcp-tool-integrations | de | openrouter/qwen/qwen3.6-plus | `5239bc6d` | 5 | 11 | 1 | openrouter/google/gemini-3-flash-preview |
 | mastra-mcp-tool-integrations | es | openrouter/qwen/qwen3.6-plus | `34773b65` | 6 | 13 | 2 | openrouter/google/gemini-3-flash-preview |
 | mastra-mcp-tool-integrations | fr | openrouter/qwen/qwen3.6-plus | `4891fba6` | 5 | 11 | 1 | openrouter/google/gemini-3-flash-preview |
-| mastra-mcp-tool-integrations | he |  |  | 0 | 0 | 0 |  |
+| mastra-mcp-tool-integrations | he |  |  | 1 | 4 | 0 | openrouter/google/gemini-3-flash-preview |
 | mastra-mcp-tool-integrations | hi | openrouter/qwen/qwen3.6-plus | `d8f2f28a` | 5 | 6 | 0 | openrouter/google/gemini-3-flash-preview |
 | mastra-mcp-tool-integrations | it | openrouter/deepseek/deepseek-v4-flash | `3fdb695c` | 3 | 6 | 0 | openrouter/google/gemini-3-flash-preview |
 | mastra-mcp-tool-integrations | ja | openrouter/z-ai/glm-5.1 | `61ec25db` | 5 | 6 | 0 | openrouter/google/gemini-3-flash-preview |
@@ -588,11 +928,11 @@ Generated from `reports/i18n` and Git history at `2026-05-14T13:53:12-06:00`.
 | mastra-security-guardrails | ja | openrouter/qwen/qwen3.6-plus | `fb162823` | 7 | 10 | 0 | openrouter/google/gemini-3-flash-preview |
 | mastra-security-guardrails | ru | openrouter/qwen/qwen3.6-plus | `3ffeef6e` | 5 | 9 | 0 | openrouter/google/gemini-3-flash-preview |
 | mastra-security-guardrails | zh | deepseek/deepseek-v4-flash | `64674dd1` | 3 | 10 | 0 | openrouter/google/gemini-3-flash-preview |
-| mastra-workflows-memory | ar |  |  | 0 | 0 | 0 |  |
+| mastra-workflows-memory | ar | openrouter/openai/gpt-oss-120b:nitro | `708c7d78` | 1 | 5 | 0 | openrouter/google/gemini-3-flash-preview |
 | mastra-workflows-memory | de | openrouter/qwen/qwen3.6-plus | `be00f560` | 5 | 9 | 0 | openrouter/google/gemini-3-flash-preview |
 | mastra-workflows-memory | es | openrouter/qwen/qwen3.6-plus | `033a3be9` | 7 | 13 | 1 | openrouter/google/gemini-3-flash-preview |
 | mastra-workflows-memory | fr | openrouter/qwen/qwen3.6-plus | `b128f75c` | 5 | 12 | 1 | openrouter/google/gemini-3-flash-preview |
-| mastra-workflows-memory | he |  |  | 0 | 0 | 0 |  |
+| mastra-workflows-memory | he |  |  | 1 | 4 | 0 | openrouter/google/gemini-3-flash-preview |
 | mastra-workflows-memory | hi | openrouter/qwen/qwen3.6-plus | `1e22fa84` | 7 | 10 | 0 | openrouter/google/gemini-3-flash-preview |
 | mastra-workflows-memory | it | openrouter/qwen/qwen3.6-plus | `d7044512` | 5 | 10 | 0 | openrouter/google/gemini-3-flash-preview |
 | mastra-workflows-memory | ja | openrouter/qwen/qwen3.6-plus | `4bf40b82` | 7 | 10 | 0 | openrouter/google/gemini-3-flash-preview |
@@ -648,11 +988,11 @@ Generated from `reports/i18n` and Git history at `2026-05-14T13:53:12-06:00`.
 | postgres-fts-vs-pgvector | ja |  |  | 0 | 25 | 14 |  |
 | postgres-fts-vs-pgvector | ru | openrouter/qwen/qwen3.6-plus | `52160618` | 0 | 19 | 12 |  |
 | postgres-fts-vs-pgvector | zh | deepseek/deepseek-v4-flash | `e930a12c` | 3 | 7 | 0 | openrouter/google/gemini-3-flash-preview |
-| postgres-text-search-guide | ar |  |  | 0 | 0 | 0 |  |
+| postgres-text-search-guide | ar | openrouter/openai/gpt-oss-120b:nitro | `4affe079` | 1 | 5 | 0 | openrouter/google/gemini-3-flash-preview |
 | postgres-text-search-guide | de | openrouter/deepseek/deepseek-v4-flash | `9ca379df` | 5 | 12 | 2 | openrouter/google/gemini-3-flash-preview |
 | postgres-text-search-guide | es | openrouter/qwen/qwen3.6-plus | `b515ea61` | 7 | 13 | 1 | openrouter/google/gemini-3-flash-preview |
 | postgres-text-search-guide | fr | openrouter/qwen/qwen3.6-plus | `04de9a7a` | 5 | 11 | 1 | openrouter/google/gemini-3-flash-preview |
-| postgres-text-search-guide | he |  |  | 0 | 0 | 0 |  |
+| postgres-text-search-guide | he |  |  | 1 | 4 | 0 | openrouter/google/gemini-3-flash-preview |
 | postgres-text-search-guide | hi | openrouter/qwen/qwen3.6-plus | `b70c847c` | 6 | 9 | 1 | openrouter/google/gemini-3-flash-preview |
 | postgres-text-search-guide | it | openrouter/qwen/qwen3.6-plus | `6f3ea908` | 5 | 9 | 0 | openrouter/google/gemini-3-flash-preview |
 | postgres-text-search-guide | ja | openrouter/qwen/qwen3.6-plus | `55f12900` | 7 | 11 | 0 | openrouter/google/gemini-3-flash-preview |
@@ -908,11 +1248,11 @@ Generated from `reports/i18n` and Git history at `2026-05-14T13:53:12-06:00`.
 | securely-using-environment-variables-in-nodejs | ja |  |  | 2 | 5 | 0 | openrouter/google/gemini-3-flash-preview |
 | securely-using-environment-variables-in-nodejs | ru |  |  | 0 | 4 | 2 |  |
 | securely-using-environment-variables-in-nodejs | zh | openrouter/qwen/qwen3-32b:nitro | `008c125e` | 3 | 7 | 0 | openrouter/google/gemini-3-flash-preview |
-| securing-clawdbot-tailscale | ar |  |  | 0 | 0 | 0 |  |
+| securing-clawdbot-tailscale | ar | openrouter/openai/gpt-oss-120b:nitro | `6be8aa2a` | 1 | 4 | 0 | openrouter/google/gemini-3-flash-preview |
 | securing-clawdbot-tailscale | de | openrouter/qwen/qwen3.6-plus | `91c1fb30` | 5 | 11 | 1 | openrouter/google/gemini-3-flash-preview |
 | securing-clawdbot-tailscale | es | openrouter/qwen/qwen3.6-plus | `243137a0` | 7 | 12 | 1 | openrouter/google/gemini-3-flash-preview |
 | securing-clawdbot-tailscale | fr | openrouter/qwen/qwen3.6-plus | `2b48ceb3` | 5 | 12 | 1 | openrouter/google/gemini-3-flash-preview |
-| securing-clawdbot-tailscale | he |  |  | 0 | 0 | 0 |  |
+| securing-clawdbot-tailscale | he |  |  | 1 | 4 | 0 | openrouter/google/gemini-3-flash-preview |
 | securing-clawdbot-tailscale | hi | openrouter/qwen/qwen3.6-plus | `e8c037ce` | 7 | 10 | 0 | openrouter/google/gemini-3-flash-preview |
 | securing-clawdbot-tailscale | it | openrouter/qwen/qwen3.6-plus | `dc786ce6` | 5 | 10 | 0 | openrouter/google/gemini-3-flash-preview |
 | securing-clawdbot-tailscale | ja | openrouter/qwen/qwen3.6-plus | `6e3019e2` | 5 | 14 | 1 | openrouter/openai/gpt-5.4-mini |
@@ -928,11 +1268,11 @@ Generated from `reports/i18n` and Git history at `2026-05-14T13:53:12-06:00`.
 | security-notes-regex | ja | openrouter/qwen/qwen3.6-plus | `7064caaf` | 3 | 7 | 0 | openrouter/google/gemini-3-flash-preview |
 | security-notes-regex | ru | openrouter/openai/gpt-oss-120b:nitro | `d104ed6d` | 2 | 6 | 1 | openrouter/google/gemini-3-flash-preview |
 | security-notes-regex | zh | openrouter/google/gemini-3-flash-preview | `b36b166f` | 3 | 7 | 0 | openrouter/google/gemini-3-flash-preview |
-| semantic-vector-search-landscape | ar |  |  | 0 | 0 | 0 |  |
+| semantic-vector-search-landscape | ar | openrouter/openai/gpt-oss-120b:nitro | `ac208c5c` | 1 | 5 | 0 | openrouter/google/gemini-3-flash-preview |
 | semantic-vector-search-landscape | de | openrouter/qwen/qwen3.6-plus | `a5cf7f8a` | 5 | 12 | 1 | openrouter/google/gemini-3-flash-preview |
 | semantic-vector-search-landscape | es | openrouter/qwen/qwen3.6-plus | `8e35a85c` | 5 | 12 | 3 | openrouter/google/gemini-3-flash-preview |
 | semantic-vector-search-landscape | fr | openrouter/qwen/qwen3.6-plus | `c0358d6f` | 5 | 13 | 1 | openrouter/google/gemini-3-flash-preview |
-| semantic-vector-search-landscape | he |  |  | 0 | 0 | 0 |  |
+| semantic-vector-search-landscape | he | openrouter/openai/gpt-oss-120b:nitro | `659128a9` | 1 | 4 | 0 | openrouter/google/gemini-3-flash-preview |
 | semantic-vector-search-landscape | hi | openrouter/moonshotai/kimi-k2.6 | `af140620` | 4 | 13 | 3 | openrouter/openai/gpt-5.4-mini |
 | semantic-vector-search-landscape | it | openrouter/qwen/qwen3.6-plus | `b0955313` | 3 | 15 | 4 | openrouter/google/gemini-3-flash-preview |
 | semantic-vector-search-landscape | ja | openrouter/moonshotai/kimi-k2.6 | `4fd17cca` | 2 | 7 | 5 | openrouter/google/gemini-3-flash-preview |
