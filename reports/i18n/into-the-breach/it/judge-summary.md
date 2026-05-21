@@ -10,25 +10,35 @@
 - Selected commit hint: judge selected
 - Validation: passed
 - Validation scope: local
-- Confidence: low (0.350)
+- Confidence: high (0.886)
 - Confidence signals: no high/medium issues; single judge
 - High/medium/low issue counts: 0/0/0
 
 ## Primary Judge Telemetry
-- Runtime seconds: 4.55
-- Input tokens: 16432
-- Output tokens: 272
+- Runtime seconds: 3.80
+- Input tokens: 9481
+- Output tokens: 317
 - Thinking tokens: unknown
 - Cached input tokens: 0
 - Cache write tokens: 0
-- OpenRouter cost credits: 0.009032
-- Estimated cost: $0.009032
+- OpenRouter cost credits: 0.005692
+- Estimated cost: $0.005692
+
+## Pre-Publish Rescore Telemetry
+### Pass 1
+- Runtime seconds: 2.24
+- Input tokens: 8995
+- Output tokens: 261
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- OpenRouter cost credits: 0.005280
+- Estimated cost: $0.005280
 
 ## Judge Suggestions
-1. Pass 1: logged high priority suggestion. Match: "exact translated text currently in the selected MDX" Replacement: "exact replacement text to write into the selected MDX" Reason: English explanation of why this medium/high-priority change is needed Note: Exact match not found in selected MDX.
+1. Pass 1: applied medium priority suggestion. Match: "cover_full_width: ../wide.webp" Replacement: "cover_full_width: ../wide-2.webp" Reason: The English source uses wide-2.webp, but the translation used wide.webp. Note: Applied exact replacement to selected MDX.
 
 ## Candidates
 - current src/content/posts/2026-05-13--into-the-breach/it/index.mdx
-- c1c6c7e49b44cf5ac0ed4a9848cf704515a09a7a i18n candidate(it): into-the-breach via deepseek/deepseek-v4-flash:nitro
-- 87302e62d669ecd9ea970530a8bfd7f75b57fea7 i18n candidate(it): into-the-breach via openrouter/qwen/qwen3-32b:nitro
-- cbc1d1a8ba8da178dbb7c4cc1abf03d3fea0af82 i18n candidate(it): into-the-breach via openrouter/openai/gpt-oss-120b:nitro
+- 00caeb05fc4d556962422369d96d499b77c32a5b i18n candidate(it): into-the-breach via openrouter/openai/gpt-oss-120b:nitro
+- b978d2e5f3d5b6427451a0c279ee6b8e160e0dcc i18n candidate(it): into-the-breach via openrouter/deepseek/deepseek-v4-flash
