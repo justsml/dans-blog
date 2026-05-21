@@ -1,8 +1,8 @@
 # Translation Judge
 
-- Selected candidate: 378e0f57f1ff0e8578be19ea2d37d36c0deb4074
-- Selected model: deepseek/deepseek-v4-flash:nitro
+- Selected candidate: d5ea8444bd4c5d985cb34fc11122f882753e2b51
+- Selected model: openrouter/deepseek/deepseek-v4-flash
 - Judge model: openrouter/google/gemini-3-flash-preview
-- Confidence: high (0.887)
+- Confidence: high (0.888)
 
-DeepSeek provided the most natural and technically accurate translation. It correctly localized the title to '陷阵之志' (a classic idiom fitting the 'Into the Breach' theme) and maintained a professional yet direct tone. It handled the MDX structure perfectly, including the complex infographic description and code blocks. Other candidates were slightly more literal or used less natural phrasing for technical concepts like 'canary tokens' (DeepSeek used '金丝雀令牌' and '蜜标' appropriately).
+The translation is excellent, capturing Dan's direct and slightly cynical tone perfectly (e.g., translating 'boring' as '平淡无奇' in the context of security). It maintains all technical structures, code blocks, and metadata correctly. The previous judge's suggestion regarding 'wide-2.webp' is already reflected in the current file content, so no further suggestions are needed.

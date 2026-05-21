@@ -1,6 +1,6 @@
 {
-  "selectedCommit": "378e0f57f1ff0e8578be19ea2d37d36c0deb4074",
-  "selectedModel": "deepseek/deepseek-v4-flash:nitro",
+  "selectedCommit": "d5ea8444bd4c5d985cb34fc11122f882753e2b51",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
   "scores": {
     "readability": 95,
     "technicalAccuracy": 98,
@@ -8,13 +8,13 @@
     "relevance": 100,
     "translationQuality": 96,
     "mdxPreservation": 100,
-    "culturalAdaptation": 92,
+    "culturalAdaptation": 95,
     "languagePurity": 100
   },
   "suggestions": [],
-  "rationale": "DeepSeek provided the most natural and technically accurate translation. It correctly localized the title to '陷阵之志' (a classic idiom fitting the 'Into the Breach' theme) and maintained a professional yet direct tone. It handled the MDX structure perfectly, including the complex infographic description and code blocks. Other candidates were slightly more literal or used less natural phrasing for technical concepts like 'canary tokens' (DeepSeek used '金丝雀令牌' and '蜜标' appropriately).",
+  "rationale": "The translation is excellent, capturing Dan's direct and slightly cynical tone perfectly (e.g., translating 'boring' as '平淡无奇' in the context of security). It maintains all technical structures, code blocks, and metadata correctly. The previous judge's suggestion regarding 'wide-2.webp' is already reflected in the current file content, so no further suggestions are needed.",
   "confidence": "high",
-  "confidenceScore": 0.887,
+  "confidenceScore": 0.888,
   "confidenceSignals": [
     "no high/medium issues",
     "single judge"
@@ -27,15 +27,24 @@
   "slug": "into-the-breach",
   "locale": "zh",
   "candidateCommits": [
-    "378e0f57f1ff0e8578be19ea2d37d36c0deb4074",
-    "f496e772cddad1f7730415a6101072f0e3da7924",
-    "63b61591e70d6fc8dc9e18ff664624935031f986"
+    "d5ea8444bd4c5d985cb34fc11122f882753e2b51",
+    "5bad4e1a6aeeef2ea4a049f2749615f8034d1ac2"
   ],
-  "suggestionLog": [],
+  "suggestionLog": [
+    {
+      "priority": "medium",
+      "match": "cover_full_width: ../wide.webp",
+      "replacement": "cover_full_width: ../wide-2.webp",
+      "reason": "The English source uses wide-2.webp; the candidate used wide.webp.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
   "validation": {
-    "ok": true,
+    "ok": false,
     "scope": "local",
     "command": "bun run i18n:validate --slug into-the-breach --locale zh --skip-global",
-    "output": ""
+    "error": "Command failed: bun run i18n:validate --slug into-the-breach --locale zh --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug into-the-breach --locale zh --skip-global\n222 | export function assertStructuralParity(input: CompareMdxStructureInput) {\n223 |   const comparison = compareMdxStructure(input);\n224 |   if (comparison.valid) return;\n225 | \n226 |   const targetLabel = input.targetPath ?? \"translation\";\n227 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2026-05-13--into-the-breach/zh/index.mdx failed structural parity with score 0.970 (minimum 0.980). /Users/dan/code/oss/dans-blog/src/content/posts/2026-05-13--into-the-breach/zh/index.mdx: Link count or href sequence changed across Markdown/HTML link formats. Differences: {\"links\":-1,\"linkTargets\":9}. Differences: {\"links\":-1,\"linkTargets\":9}\n      at assertStructuralParity (/Users/dan/code/oss/dans-blog/src/scripts/i18n/structural-validation.ts:227:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
   }
 }
