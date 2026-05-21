@@ -42,7 +42,7 @@ Modern cruise ships are engineering marvels. Compartmentalized hulls, automated 
 
 The tools exist. Containers and sandboxes isolate processes the way watertight bulkheads contain flooding. Behavioral endpoint security watches for anomalies the way onboard sensors detect a breach before the passengers do. Offsite backups are your lifeboat — the thing that still works after everything else has gone wrong.
 
-The old model was: production is dangerous, local is convenient. That model is finished.
+Local has always been a risky stew of credentials, accounts, and systems access. What's changed: attacks are more common, more effective, and more damaging.
 
 <p class="inset">
 The question is not whether you can avoid every bad click. The question is whether one bad click can read everything, use everything, and leave before you notice.
@@ -91,15 +91,22 @@ If a malicious process runs, the questions that decide whether you have a bad af
 2. What credentials can it **use**?
 3. Where can it **send data**?
 
-## The Highest-Leverage Moves Right Now
+## High-Leverage Defenses
 
-### Dev Containers — By Default
+1. [Dev Containers](#dev-containers)
+2. [Canary Tokens — Aggressively Deployed](#canary-tokens)
+3. [Package Security Tools](#package-security-tools)
+4
 
-[Development Containers](https://github.com/devcontainers/spec) are the single highest-leverage change most teams aren't doing. A Dev Container runs project work inside an isolated Docker container. `npm install`, `pip install`, `postinstall` scripts, AI shell commands, VS Code extensions — all of it happens in a 'workspace' or container that cannot see the rest of your machine.
+### Dev Containers
 
-<p class="inset">Ask Claude Code to setup DevContainers in any project.</p>
+[Dev Containers](https://github.com/devcontainers/spec) are the single highest-leverage change most teams aren't doing. A Dev Container runs project work inside an isolated Docker container. `npm install`, `pip install`, `postinstall` scripts, AI shell commands, VS Code extensions — all of it happens in a 'workspace' or container that cannot see the rest of your machine. The container can be configured to have zero access to your home directory, no SSH keys, no cloud CLI credentials, and only the secrets relevant to that project. **If an attacker compromises a project, they get the keys to that project — not your entire machine.**
 
-Mount the repo. Include only the secrets needed for that project. Do not mount `~/.ssh`, `~/.aws`, or your home directory out of convenience. A prompt-injected instruction can only reach what the agent can reach — make that boring.
+<p class="inset">Ask Claude Code, `yo, setup DevContainers in this project`</p>
+
+Mount the repo. Include only the secrets needed for that project. Do not mount `~/.ssh`, `~/.aws`, or your home directory out of convenience. Mount specific secrets as needed, `$HOME/.ssh/id_ed25519_dev_cluster:/home/user/.ssh/id_ed25519_dev_cluster:ro`. A prompt-injected instruction can only reach what the agent can reach — make that limited & boring.
+
+Whenever messing with random GitHub projects, opening interview take-home assignments, or experimenting with new AI tooling/extensions, we should be using containers in some way. The barrier to entry is low, and the security benefits are huge. If you use VS Code or Zed, Remote Containers/DevContainers can even protect you from bad extensions, and are sometimes easy-ish. For vim users, those Arch/Omarchy sorts, they can use a hand-rolled, analog `Dockerfile`. But won't because they will "never follow."
 
 ```jsonc
 // .devcontainer/devcontainer.json
@@ -112,29 +119,48 @@ Mount the repo. Include only the secrets needed for that project. Do not mount `
 }
 ```
 
-### Canary Tokens — Aggressively Deployed
+### Canary Tokens
 
-[Canarytokens](https://canarytokens.org) are free digital tripwires. Plant a fake-but-convincing secret somewhere an attacker would look. The moment it gets touched, you get an alert — often within seconds. Think of it as leaving a dye pack in a fake stack of bills.
+Aggressively deploy canary tokens everywhere you have secrets. In .aws/credentials files, in .env files, in CI/CD variables, in password managers, in database dumps, in AI coding context. Anywhere an attacker would look for secrets, plant a canary token that alerts you the moment it gets touched.
 
-Attackers inventory before they steal. That reconnaissance pass is your window.
+[Canarytokens](https://canarytokens.org) are free digital tripwires. Plant a fake-but-convincing secret somewhere an attacker would look. The moment it gets touched, you get an alert — often within seconds.
+
+Think of them as the emergency flare on a ship: they don't stop the attack, but they fire the instant it starts. If the attacker finds your fake AWS credentials appealing enough to try, you get a window to respond before they can do more damage. They're reliable, hard to counter*, and flexible — [canarytokens.org](https://canarytokens.org) is free, [Thinkst Canary](https://canary.tools) is the paid SaaS option, or you can self-host if you'd rather keep the alert infrastructure entirely in-house.
+
+<p class="inset">Attackers inventory before they steal. That reconnaissance pass is your window.</p>
 
 Drop canaries in your most tempting-looking files:
 
 ```text
-~/.aws/credentials          ← add a fake [billing-prod-legacy] profile with a canary key
-~/backups/customer-export-2024.sql   ← canary URL inside
-~/.env.canary               ← fake credentials in every repo
+~/.aws/credentials ← add a fake `[health-records-svc-prod]` profile with a canary key
+~/backups/customer-export-2024.sql.bak ← canary URL inside
+~/.env.wallet-infra ← disguise fake credentials in every repo
 ```
 
 Canary tokens are free at [canarytokens.org](https://canarytokens.org), self-hostable, and available as a paid SaaS via [Thinkst Canary](https://canary.tools). There is no good reason not to deploy them everywhere a thief would look.
 
+| * A sophisticated attacker could wire a reverse kill switch. So that when you revoke and rotate secrets, it will trigger a wipe of all laptop data before you can investigate. It's already happened in the wild.
+
+#### You Have Minutes
+
+When a canary fires — or you get an alert (email or webhook) that a token was used from an unexpected location — you have a window. Minutes, maybe a few hours. Not a week.
+
+- **Rotate first, investigate later.** Revoke tokens before you understand what happened.
+- **Check for attacker persistence.** New OAuth apps, IAM users, deploy keys, API tokens created before they left.
+- **Kill active browser sessions.** Force logout on everything you care about.
+- **Tell someone.** Security incidents get better with witnesses and timestamps. They get worse in silence.
+
+The security industry talks a lot about detection. It talks less about the twenty minutes after detection — when you are alone at your desk, trying to remember which services you have tokens for.
+
+<p class="inset">ProTip: create a shared doc: "Incident response runbook," just start with links to all systems, dependencies & services, who owns this, contact information, and steps to take ("rotate keys," "disable remote access," etc.).</p>
+
 ### Package Security Tools
 
-Tools like [Socket.dev](https://socket.dev), [Snyk](https://snyk.io), and [Wiz](https://wiz.io) are often the first to discover and block supply chain attacks in progress. They monitor the package registries you cannot watch yourself. For teams that cannot afford a full-time security program, these are high-leverage early-warning systems.
+Tools like [Socket.dev](https://socket.dev), [Snyk](https://snyk.io), and [Wiz](https://wiz.io) are often the first to discover and block supply chain attacks in progress. They monitor the package registries you cannot watch yourself. For teams that cannot afford a full-time security program, these are high-leverage early-warning systems. They have some free features, but the real value is in the paid plans that integrate with your CI/CD and package management.
 
 ### PNPM Minimum Age Settings
 
-If you use PNPM, set a minimum release age. Newly published packages are the highest-risk window for supply chain attacks — a package that has existed for less than 24 hours has had essentially zero community scrutiny. Set `minimumReleaseAge` in minutes: at least `1440` (one day), and ideally `2880` (two days).
+You should use PNPM over `npm`. Then set a minimum release age. Newly published packages are the highest-risk window for supply chain attacks — a package that has existed for less than 24 hours has had essentially zero community scrutiny. Set `minimumReleaseAge` in minutes: at least `1440` (one day), and if you really want to throw attackers off `2880` (two days).
 
 ```yaml
 minimumReleaseAge: 2880
@@ -146,36 +172,11 @@ minimumReleaseAgeExclude:
 
 That configuration blocks many newly-published-package attacks, especially the ones that get discovered and pulled before your next install. Use `minimumReleaseAgeExclude` sparingly for packages where immediate updates matter more than the delay, such as a compiler or runtime dependency you actively track.
 
-### For the Most Security-Critical Environments
-
-Intelligence agencies, law enforcement, financial trading infrastructure, health records — these environments sometimes adopt a strict package evaluation and approval process. That sounds safe. The tradeoff is severe: your dependency tree slowly calcifies into outdated software.
-
-Time is not neutral here. Older versions accumulate known CVEs. Attackers study fixed versions to find unpatched instances. And "better the devil you know" is not the salvation you hoped — it just tells you which vulnerabilities the attacker has had the longest to master.
-
-Strict allowlists work if you have the staffing to maintain them. Most teams do not. For everyone else, the layered approach — Dev Containers, canary tokens, package security tooling, short-lived credentials — provides a more realistic defense than pretending you can audit every dependency by hand.
-
-## You Have Minutes
-
-When a canary fires — or you get an alert that a token was used from an unexpected location — you have a window. Minutes, maybe a few hours. Not a week.
-
-- **Rotate first, investigate later.** Revoke tokens before you understand what happened.
-- **Check for attacker persistence.** New OAuth apps, IAM users, deploy keys, API tokens created before they left.
-- **Kill active browser sessions.** Force logout on everything you care about.
-- **Tell someone.** Security incidents get better with witnesses and timestamps. They get worse in silence.
-
-The security industry talks a lot about detection. It talks less about what happens in the twenty minutes after detection when you are alone at your desk trying to remember which services you have tokens for.
-
-That list should exist before the alert fires.
-
 ## The Standard Worth Having
 
 The standard is not "never click anything weird." That is advice for a poster, not a system.
 
-A bad dependency should not be able to reach cloud credentials from other projects. A prompt-injected document should not redirect an agent into your home directory. An infostealer should not find plaintext backups and long-lived tokens without triggering an alarm. A stolen credential should expire, fail MFA, or hit a canary before it becomes a full takeover.
-
-Security improves when we stop asking humans to be perfect and start making compromise less profitable.
-
-Your laptop is part of production now. Give it the boring boundaries that catch both the attacker who broke in — and the one you accidentally let in yourself.
+A bad dependency should not be able to reach every cloud credentials for every project on your laptop. A prompt-injected document should not trick an agent into exfiltrating data from your home directory. An infostealer should not find plaintext backups and long-lived tokens without triggering an alarm. Harden your posture, run local dev from inside containers, ensure credentials expire, rely on easy to use MFA (touch ID, face ID, FIDO/USB Key), sprinkle canary tokens everywhere. Before you wish you had done it.
 
 ## Sources and Useful Reading
 
