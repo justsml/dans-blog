@@ -1,8 +1,8 @@
 # Translation Judge
 
-- Selected candidate: cb796c5b78b14b2fadad407528f5baba661e1235
-- Selected model: deepseek/deepseek-v4-flash:nitro
+- Selected candidate: fc4e410f7851a27afd7673ff9af86aa6c20ffcac
+- Selected model: openrouter/deepseek/deepseek-v4-flash
 - Judge model: openrouter/google/gemini-3-flash-preview
-- Confidence: low (0.316)
+- Confidence: high (0.874)
 
-The DeepSeek translation is the most fluid and captures the author's direct tone well. The previous judge report mentioned Chinese character leaks and duplicated cells, but looking at the provided Hebrew MDX, those specific issues (like '几乎没有') are not present in the text provided to me. However, there is a broken table row starting with a hyphen instead of a pipe which needs fixing to preserve MDX structure.
+The candidate fc4e410f7851a27afd7673ff9af86aa6c20ffcac is the only one that provided a complete translation. The previous judge report mentioned a duplicated heading and artifacts in the infographic text, but upon manual inspection of the provided Hebrew MDX content for this specific commit, those issues (the duplicated '## 1' and the emoji/niqqud in the infographic alt text) are not actually present in the text provided in the prompt. The translation is high quality, maintains technical terms correctly, and follows the direct style of the original.

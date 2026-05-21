@@ -1,76 +1,59 @@
 {
-  "selectedCommit": "cb796c5b78b14b2fadad407528f5baba661e1235",
-  "selectedModel": "deepseek/deepseek-v4-flash:nitro",
+  "selectedCommit": "fc4e410f7851a27afd7673ff9af86aa6c20ffcac",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
   "scores": {
-    "readability": 90,
+    "readability": 92,
     "technicalAccuracy": 95,
     "coherence": 95,
     "relevance": 100,
     "translationQuality": 92,
-    "mdxPreservation": 90,
-    "culturalAdaptation": 92,
-    "languagePurity": 85
+    "mdxPreservation": 95,
+    "culturalAdaptation": 90,
+    "languagePurity": 95
   },
-  "suggestions": [
-    {
-      "priority": "high",
-      "match": "- הקשר קידוד AI | העוזר עלול לקבל \"לשם הקשר\" קבצים רגישים. |",
-      "replacement": "| הקשר קידוד AI | העוזר עלול לקבל \"לשם הקשר\" קבצים רגישים. |",
-      "reason": "The table row for 'AI coding context' starts with a hyphen instead of a pipe, breaking the Markdown table structure."
-    }
-  ],
-  "rationale": "The DeepSeek translation is the most fluid and captures the author's direct tone well. The previous judge report mentioned Chinese character leaks and duplicated cells, but looking at the provided Hebrew MDX, those specific issues (like '几乎没有') are not present in the text provided to me. However, there is a broken table row starting with a hyphen instead of a pipe which needs fixing to preserve MDX structure.",
-  "confidence": "low",
-  "confidenceScore": 0.316,
+  "suggestions": [],
+  "rationale": "The candidate fc4e410f7851a27afd7673ff9af86aa6c20ffcac is the only one that provided a complete translation. The previous judge report mentioned a duplicated heading and artifacts in the infographic text, but upon manual inspection of the provided Hebrew MDX content for this specific commit, those issues (the duplicated '## 1' and the emoji/niqqud in the infographic alt text) are not actually present in the text provided in the prompt. The translation is high quality, maintains technical terms correctly, and follows the direct style of the original.",
+  "confidence": "high",
+  "confidenceScore": 0.874,
   "confidenceSignals": [
-    "1 high and 0 medium issues",
+    "no high/medium issues",
     "single judge"
   ],
   "issueCounts": {
-    "high": 1,
+    "high": 0,
     "medium": 0,
     "low": 0
   },
   "slug": "into-the-breach",
   "locale": "he",
   "candidateCommits": [
-    "e632dc503f7add7ba4718fb37c19e1b48b470c37",
-    "b9d43aef106a0c7c52147aef268f467a2f36d2db",
-    "cb796c5b78b14b2fadad407528f5baba661e1235"
+    "82877f08779dad9014256e7b08296f092a974692",
+    "fc4e410f7851a27afd7673ff9af86aa6c20ffcac"
   ],
   "suggestionLog": [
     {
-      "priority": "medium",
-      "match": "- הקשר קידוד AI",
-      "replacement": "| הקשר קידוד AI | העוזר עלול לקבל \"לשם הקשר\" קבצים רגישים. |",
-      "reason": "The table row for 'AI coding context' was broken into a list item, disrupting the table structure.",
+      "priority": "high",
+      "match": "## 1. שים עבודה מסוכנת בקופסה\n\n## 1. שים עבודה מסוכנת בקופסה",
+      "replacement": "## 1. שים עבודה מסוכנת בקופסה",
+      "reason": "The heading is duplicated in the candidate text.",
       "pass": 1,
       "applied": true,
       "note": "Applied exact replacement to selected MDX."
     },
     {
-      "priority": "high",
-      "match": "| הקשר קידוד AI | העוזר עלול לקבל \"לשם הקשר\" קבצים רגישים. | | העוזר עלול לקבל \"לשם הקשר\" קבצים רגישים. |",
-      "replacement": "| הקשר קידוד AI | העוזר עלול לקבל \"לשם הקשר\" קבצים רגישים. |",
-      "reason": "The table row for 'AI coding context' contains a duplicated cell and broken formatting, which disrupts the Markdown table structure.",
-      "pass": 2,
-      "applied": false,
-      "note": "Exact match not found in selected MDX."
-    },
-    {
-      "priority": "high",
-      "match": "פחות מ-24 שעות几乎没有, בעצם אפס בדיקה קהילתית.",
-      "replacement": "פחות מ-24 שעות, עבר בעצם אפס בדיקה קהילתית.",
-      "reason": "Leaked Chinese characters '几乎没有' (meaning 'almost none') found in the middle of a Hebrew sentence.",
-      "pass": 2,
+      "priority": "medium",
+      "match": "minimumReleaseAge🧪 שֶׁל pnpm",
+      "replacement": "minimumReleaseAge של pnpm",
+      "reason": "Stray emoji and vowel points (niqqud) in the infographic description are inconsistent with the rest of the text.",
+      "pass": 1,
       "applied": true,
       "note": "Applied exact replacement to selected MDX."
     }
   ],
   "validation": {
-    "ok": true,
+    "ok": false,
     "scope": "local",
     "command": "bun run i18n:validate --slug into-the-breach --locale he --skip-global",
-    "output": ""
+    "error": "Command failed: bun run i18n:validate --slug into-the-breach --locale he --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug into-the-breach --locale he --skip-global\n222 | export function assertStructuralParity(input: CompareMdxStructureInput) {\n223 |   const comparison = compareMdxStructure(input);\n224 |   if (comparison.valid) return;\n225 | \n226 |   const targetLabel = input.targetPath ?? \"translation\";\n227 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2026-05-13--into-the-breach/he/index.mdx failed structural parity with score 0.936 (minimum 0.980). /Users/dan/code/oss/dans-blog/src/content/posts/2026-05-13--into-the-breach/he/index.mdx: Headings changed or moved. Link count or href sequence changed across Markdown/HTML link formats. Differences: {\"h2\":1,\"links\":-3,\"headingSequence\":1,\"linkTargets\":15}. Differences: {\"h2\":1,\"links\":-3,\"headingSequence\":1,\"linkTargets\":15}\n      at assertStructuralParity (/Users/dan/code/oss/dans-blog/src/scripts/i18n/structural-validation.ts:227:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
   }
 }
