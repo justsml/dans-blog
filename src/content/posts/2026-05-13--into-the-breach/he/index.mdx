@@ -17,7 +17,7 @@ tags:
 category: Security
 subCategory: Security
 social_image: ../desktop-social.webp
-cover_full_width: ../wide.webp
+cover_full_width: ../wide-2.webp
 cover_mobile: ../square.webp
 cover_icon: ../square.webp
 cover_alt: >-
@@ -30,7 +30,7 @@ related:
 ---
 ## מפה ויזואלית
 
-![תרשים זרימה להגנה מפני התקפות על שרשרת האספקה, עם שישה שלבים: 1. בידוד (הרצה בתוך DevContainers או סביבות ענן), 2. הגבלת הרכבות (לעולם אל תרכיב Home, ~/.ssh, ~/.aws וכו'), 3. הקטנת היקף הסודות (חשוף רק אישורי גישה הכרחיים), 4. מוקש (הטמעת קנריים בקבצי .env, ~/.aws/config, CI/CD, מנהלי סיסמאות), 5. דחיית סיכון (דחיית עדכוני חבילות ביום+ עם minimumReleaseAge🧪 שֶׁל pnpm), 6. תגובה מהירה (סובב מפתחות, סיסמאות, תעדכן, עקוב).](../breach-infographic-blueprint.svg)
+![תרשים זרימה להגנה מפני התקפות על שרשרת האספקה, עם שישה שלבים: 1. בידוד (הרצה בתוך DevContainers או סביבות ענן), 2. הגבלת הרכבות (לעולם אל תרכיב Home, ~/.ssh, ~/.aws וכו'), 3. הקטנת היקף הסודות (חשוף רק אישורי גישה הכרחיים), 4. מוקש (הטמעת קנריים בקבצי .env, ~/.aws/config, CI/CD, מנהלי סיסמאות), 5. דחיית סיכון (דחיית עדכוני חבילות ביום+ עם minimumReleaseAge של pnpm), 6. תגובה מהירה (סובב מפתחות, סיסמאות, תעדכן, עקוב).](../breach-infographic-blueprint.svg)
 
 ## איך נפרצים ב-2026
 
@@ -65,8 +65,6 @@ CAPTCHA מזויף, PDF של קבלן, חבילה מפוקפקת, תוסף VS Co
 הסטנדרט הוא לא "לעולם אל תלחץ על שום דבר מוזר". זו עצה לפוסטר, לא למערכת.
 
 הסטנדרט הוא "לקליק מוזר אחד צריך להיות רדיוס פיצוץ קטן."
-
-## 1. שים עבודה מסוכנת בקופסה
 
 ## 1. שים עבודה מסוכנת בקופסה
 
@@ -117,7 +115,7 @@ CAPTCHA מזויף, PDF של קבלן, חבילה מפוקפקת, תוסף VS Co
 
 אתה לא יכול באופן אישי לבקר כל מתחזק, תלות טרנזיטיבית, registry של חבילות, workflow, והרחבה לפני ההתקנה. התוקף צריך חוליה חלשה אחת. אתה צריך בקרות שמניחות שאחת בסופו של דבר תחליק.
 
-תקריות שרשרת אספקה וגנבי מידע (infostealer) ממשיכות להוכיח את הנקודה המשעממת: אישורי גישה חיים זמן רב מדי ויושבים קרוב מדי לכלים שמבצעים קוד. חקירת Snowflake של Mandiant ייחסה פריצות רבות לאישורי גישה ישנים של גנבי מידע. מסעות הפרסום Shai-Hulud ו-Mini Shai-Hulud/TanStack כוונו לאישורי גישה של מפתחים וענן דרך חבילות ו-CI.
+תקריות שרשרת אספקה וגנבי מידע (infostealer) ממשיכות להוכיח את הנקודה המשעממת: אישורי גישה חיים זמן רב מדי ויושבים קרוב מדי לכלים שמבצעים קוד. [חקירת Snowflake של Mandiant](https://cloud.google.com/blog/topics/threat-intelligence/unc5537-snowflake-data-theft-extortion) ייחסה פריצות רבות לאישורי גישה ישנים של גנבי מידע. מסעות הפרסום [Shai-Hulud](https://www.ox.security/blog/shai-hulud-here-we-go-again-170-packages-hit-across-npm-pypi/) ו-[Mini Shai-Hulud/TanStack](https://www.bleepingcomputer.com/news/security/openai-confirms-security-breach-in-tanstack-supply-chain-attack/) כוונו לאישורי גישה של מפתחים וענן דרך חבילות ו-CI.
 
 השתמש בכלי אבטחת חבילות היכן שאתה יכול. [Socket.dev](https://socket.dev), [Snyk](https://snyk.io), ו-[Wiz](https://wiz.io) יכולים לעזור לתפוס סימנים שלא תבחין בהם ידנית.
 
