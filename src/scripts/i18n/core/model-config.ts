@@ -9,6 +9,8 @@ export type OpenRouterProviderOptions = ProviderOptions & {
   openrouter: {
     reasoning: {
       effort: string;
+      max_tokens?: number;
+      exclude?: boolean;
     };
   };
 };
@@ -54,11 +56,12 @@ export function resolveLlmConfig(
         openrouter: {
           reasoning: {
             effort: reasoningEffort,
+            exclude: shouldExcludeReasoning(modelId),
           },
         },
       } as OpenRouterProviderOptions,
       reasoningEffort,
-      temperature: defaults.temperature ?? 0.3,
+      temperature: defaults.temperature ?? defaultTemperatureForModel(modelId),
       maxTokens: defaults.maxTokens ?? 16_000,
       timeoutMs: defaults.timeoutMs ?? DEFAULT_TIMEOUT_MS,
     };
@@ -93,6 +96,7 @@ export function resolveLlmConfig(
       reasoning: {
         ...((aiSdkOptions.providerOptions.openrouter?.reasoning as Record<string, unknown> | undefined) ?? {}),
         effort: reasoningEffort,
+        exclude: booleanParam(params, ["reasoning_exclude", "reasoningExclude"], shouldExcludeReasoning(modelId)),
       },
     },
   } as OpenRouterProviderOptions;
@@ -108,7 +112,7 @@ export function resolveLlmConfig(
     },
     providerOptions,
     reasoningEffort,
-    temperature: numberParam(params, ["temperature", "temp"], defaults.temperature ?? 0.3),
+    temperature: numberParam(params, ["temperature", "temp"], defaults.temperature ?? defaultTemperatureForModel(modelId)),
     maxTokens: numberParam(
       params,
       ["max_tokens", "maxOutputTokens", "maxTokens", "max_completion_tokens", "max"],
@@ -116,6 +120,22 @@ export function resolveLlmConfig(
     ),
     timeoutMs: numberParam(params, ["timeout_ms", "timeoutMs", "timeout"], defaults.timeoutMs ?? DEFAULT_TIMEOUT_MS),
   };
+}
+
+function defaultTemperatureForModel(modelId: string) {
+  const normalized = modelId.replace(/^openrouter\//, "");
+  return normalized.includes("gpt-oss") ? 0.1 : 0.3;
+}
+
+function shouldExcludeReasoning(modelId: string) {
+  const normalized = modelId.replace(/^openrouter\//, "");
+  return (
+    normalized.includes("gpt-oss")
+    || normalized.includes("qwen")
+    || normalized.includes("deepseek")
+    || normalized.includes("glm")
+    || normalized.includes("gemini-3")
+  );
 }
 
 function openRouterBaseUrl(host: string | undefined) {
@@ -143,6 +163,17 @@ function numberParam(params: Record<string, string>, keys: string[], fallback: n
     if (value == null) continue;
     const parsed = Number(value);
     if (Number.isFinite(parsed)) return parsed;
+  }
+  return fallback;
+}
+
+function booleanParam(params: Record<string, string>, keys: string[], fallback: boolean) {
+  for (const key of keys) {
+    const value = params[key];
+    if (value == null) continue;
+    const normalized = value.trim().toLowerCase();
+    if (["true", "1", "yes"].includes(normalized)) return true;
+    if (["false", "0", "no"].includes(normalized)) return false;
   }
   return fallback;
 }

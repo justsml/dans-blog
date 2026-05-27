@@ -141,6 +141,7 @@ function buildDynamicQuizPrompt(challenge: QuizChallenge): string {
     options: challenge.options.map((o) => ({
       text: o.text,
       hint: o.hint,
+      preserveText: isCodeLikeOptionText(o.text),
     })),
     objectives: challenge.objectives,
     questionProse,
@@ -153,6 +154,7 @@ function buildDynamicQuizPrompt(challenge: QuizChallenge): string {
 
   return [
     `Translate this Challenge (index ${challenge.index}).`,
+    `If an option has preserveText: true, return its text unchanged. The pipeline will keep the source text exactly.`,
     ``,
     `INPUT JSON:`,
     JSON.stringify(payload, null, 2),
@@ -224,6 +226,7 @@ export async function translateChallenge(
 
   // Merge translation back into challenge
   const merged = mergeTranslation(challenge, translated);
+  assertMergedChallengeIntegrity(challenge, merged);
 
   return {
     challenge: merged,
@@ -266,14 +269,46 @@ function mergeTranslation(
   return merged;
 }
 
-function isCodeLikeOptionText(value: string) {
+export function isCodeLikeOptionText(value: string) {
   const trimmed = value.trim();
   return (
-    /(?:\b[A-Za-z_$][\w$]*\s*\(|=>|[{}[\];]|\\'|\\"|\b(?:NaN|null|undefined|TypeError|RangeError)\b)/.test(trimmed)
-    || /(?:^|\s)(?:\$\(|\$\{|[12]>&[12]|[|&<>])/.test(trimmed)
+    /^(?:NaN|null|undefined|TypeError|RangeError|ReferenceError|SyntaxError)(?::|$)/.test(trimmed)
+    || /(?:\b[A-Za-z_$][\w$]*\s*\(|=>|::|[;]|\\|\\'|\\")/.test(trimmed)
+    || /(?:^|\s)(?:\$\(|\$\{|[12]>&[12]|[|&<>!=]=?|&&|\|\|)/.test(trimmed)
     || /(?:^|\s)\.[A-Za-z][\w-]*\b/.test(trimmed)
+    || /<\/?[A-Za-z][^>]*>/.test(trimmed)
+    || /^(?:cat|grep|sed|awk|curl|bun|npm|node|git|docker|pnpm)\s+\S+/.test(trimmed)
+    || /(?:^|[\s/])[-a-z0-9_]+\.(?:js|jsx|ts|tsx|mjs|cjs|css|scss|html|json|mdx?|ya?ml|sql)\b/.test(trimmed)
+    || /(?:^|[\s])\/[^/\n]+\/[a-z]*\b/i.test(trimmed)
+    || /['"`][^'"`]*(?:\(|\)|::|\\|[{}[\];]|=>)[^'"`]*['"`]/.test(trimmed)
     || /^[A-Za-z][\w -]{0,24}:\s*[-#.$%()\w]+$/.test(trimmed)
   );
+}
+
+function assertMergedChallengeIntegrity(original: QuizChallenge, merged: QuizChallenge) {
+  if (original.options.length !== merged.options.length) {
+    throw new Error(`Challenge ${original.index} option count changed after merge.`);
+  }
+
+  for (let index = 0; index < original.options.length; index += 1) {
+    const source = original.options[index];
+    const output = merged.options[index];
+    if (output == null) {
+      throw new Error(`Challenge ${original.index} option ${index + 1} is missing after merge.`);
+    }
+    if (output.text.trim() === "") {
+      throw new Error(`Challenge ${original.index} option ${index + 1} is empty after translation.`);
+    }
+    if (source.isAnswer !== output.isAnswer) {
+      throw new Error(`Challenge ${original.index} option ${index + 1} changed isAnswer.`);
+    }
+    if (source.hint != null && output.hint == null) {
+      throw new Error(`Challenge ${original.index} option ${index + 1} dropped its hint.`);
+    }
+    if (isCodeLikeOptionText(source.text) && output.text !== source.text) {
+      throw new Error(`Challenge ${original.index} option ${index + 1} changed preserved code-like text.`);
+    }
+  }
 }
 
 function assertTranslatedCounts(original: QuizChallenge, translated: TranslationResult) {

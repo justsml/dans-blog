@@ -175,7 +175,7 @@ export function buildUserPrompt(
   isQuiz: boolean = false,
 ): string {
   return [
-    buildCachedChunkContextPrompt(locale, context),
+    buildCachedChunkContextPrompt(locale, context, isQuiz),
     buildDynamicChunkPrompt(chunkText, locale, context, isQuiz),
   ].filter(Boolean).join("\n\n");
 }

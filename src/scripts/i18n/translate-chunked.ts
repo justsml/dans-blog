@@ -25,6 +25,7 @@ import { parse as parseLlmString } from "llm-strings";
 import {
   assertRunLock,
   parseArgs,
+  optionalString,
   requireString,
   requireActiveLocale,
   getPostPaths,
@@ -49,6 +50,11 @@ import {
   buildDynamicChunkPrompt,
   buildSummaryPrompt,
 } from "./prompts.ts";
+import {
+  promptProfileToTuning,
+  resolvePromptProfile,
+  type TranslationPromptTuning,
+} from "../i18n-agent/prompt-profiles.ts";
 import type { ActiveLocale } from "../../shared/i18n.ts";
 import { LOCALE_LABELS } from "../../shared/i18n.ts";
 import { parseQuiz, assembleQuiz } from "./quiz-parser.ts";
@@ -69,6 +75,8 @@ interface LlmConfig {
     openrouter: {
       reasoning: {
         effort: string;
+        max_tokens?: number;
+        exclude?: boolean;
       };
     };
   };
@@ -89,15 +97,18 @@ const MAX_CHALLENGE_RETRIES = 5;
 function resolveLlmConfig(modelInput: string): LlmConfig {
   if (modelInput.startsWith("llm://")) {
     const parsed = parseLlmString(modelInput);
+    const normalizedModelId = parsed.model.replace(/^openrouter\//, "");
     const reasoningEffort = String(
       parsed.params.reasoning_effort
         ?? parsed.params.reasoningEffort
         ?? parsed.params.effort
         ?? DEFAULT_REASONING_EFFORT,
     );
+    const reasoningMaxTokens = optionalNumberParam(parsed.params.reasoning_max_tokens ?? parsed.params.reasoningMaxTokens);
+    const reasoningExclude = optionalBooleanParam(parsed.params.reasoning_exclude ?? parsed.params.reasoningExclude);
 
     return {
-      modelId: parsed.model,
+      modelId: normalizedModelId,
       providerSettings: {
         apiKey: parsed.apiKey,
         baseURL: openRouterBaseUrl(parsed.host),
@@ -106,11 +117,13 @@ function resolveLlmConfig(modelInput: string): LlmConfig {
         openrouter: {
           reasoning: {
             effort: reasoningEffort,
+            ...(reasoningMaxTokens == null ? {} : { max_tokens: reasoningMaxTokens }),
+            exclude: reasoningExclude ?? shouldExcludeReasoning(normalizedModelId),
           },
         },
       },
       reasoningEffort,
-      temperature: Number(parsed.params.temperature ?? parsed.params.temp ?? 0.3),
+      temperature: Number(parsed.params.temperature ?? parsed.params.temp ?? defaultTemperatureForModel(normalizedModelId)),
       maxTokens: Number(parsed.params.max_tokens ?? parsed.params.maxTokens ?? 16000),
       timeoutMs: Number(parsed.params.timeout_ms ?? parsed.params.timeoutMs ?? DEFAULT_LLM_TIMEOUT_MS),
     };
@@ -126,14 +139,46 @@ function resolveLlmConfig(modelInput: string): LlmConfig {
       openrouter: {
         reasoning: {
           effort: DEFAULT_REASONING_EFFORT,
+          exclude: shouldExcludeReasoning(modelId),
         },
       },
     },
     reasoningEffort: DEFAULT_REASONING_EFFORT,
-    temperature: 0.3,
+    temperature: defaultTemperatureForModel(modelId),
     maxTokens: 16000,
     timeoutMs: DEFAULT_LLM_TIMEOUT_MS,
   };
+}
+
+function defaultTemperatureForModel(modelId: string) {
+  const normalized = modelId.replace(/^openrouter\//, "");
+  return normalized.includes("gpt-oss") ? 0.1 : 0.3;
+}
+
+function shouldExcludeReasoning(modelId: string) {
+  const normalized = modelId.replace(/^openrouter\//, "");
+  return (
+    normalized.includes("gpt-oss")
+    || normalized.includes("qwen")
+    || normalized.includes("deepseek")
+    || normalized.includes("glm")
+    || normalized.includes("gemini-3")
+  );
+}
+
+function optionalNumberParam(value: unknown) {
+  if (value == null) return undefined;
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? parsed : undefined;
+}
+
+function optionalBooleanParam(value: unknown) {
+  if (value == null) return undefined;
+  if (typeof value === "boolean") return value;
+  const normalized = String(value).trim().toLowerCase();
+  if (["true", "1", "yes"].includes(normalized)) return true;
+  if (["false", "0", "no"].includes(normalized)) return false;
+  return undefined;
 }
 
 function openRouterBaseUrl(host: string | undefined) {
@@ -324,6 +369,28 @@ function addOptionalNumber(current: number | undefined, value: number | undefine
 
 function createRunTimestamp() {
   return new Date().toISOString().replace(/[:.]/g, "-");
+}
+
+function resolveTranslationPromptTuning(
+  locale: ActiveLocale,
+  modelId: string,
+  isQuiz: boolean,
+  profileId: string | undefined,
+  usePromptProfile: boolean,
+) {
+  if (!usePromptProfile) return undefined;
+  return promptProfileToTuning(resolvePromptProfile({
+    kind: "translation",
+    locale,
+    model: modelId,
+    profileId,
+    contentKind: isQuiz ? "quiz" : "article",
+  }));
+}
+
+function appendPromptProfile(base: string, append: string | undefined, label: string) {
+  if (append == null || append.trim() === "") return base;
+  return [base.trim(), "", `${label}:`, append.trim()].join("\n");
 }
 
 function hashText(text: string) {
@@ -520,6 +587,7 @@ async function translateChunk(
   previousSourceContext: string | undefined,
   nextSourceContext: string | undefined,
   isQuiz: boolean,
+  promptTuning?: TranslationPromptTuning,
 ): Promise<{
   text: string;
   inputTokens: number;
@@ -552,15 +620,27 @@ async function translateChunk(
     messages: [
       {
         role: "system",
-        content: system,
+        content: appendPromptProfile(
+          system,
+          promptTuning?.appendSystem,
+          "TRANSLATION PROMPT PROFILE SYSTEM TUNING",
+        ),
       },
       {
         role: "user",
         content: [
-          cachedText(cachedContext),
+          cachedText(appendPromptProfile(
+            cachedContext,
+            promptTuning?.appendCachedContext,
+            "TRANSLATION PROMPT PROFILE STABLE TUNING",
+          )),
           {
             type: "text",
-            text: dynamicPrompt,
+            text: appendPromptProfile(
+              dynamicPrompt,
+              promptTuning?.appendDynamic,
+              "TRANSLATION PROMPT PROFILE DYNAMIC TUNING",
+            ),
           },
         ],
       },
@@ -585,6 +665,7 @@ async function generateSummary(
   body: string,
   llmConfig: LlmConfig,
   isQuiz: boolean,
+  promptTuning?: TranslationPromptTuning,
 ): Promise<string> {
   const provider = createOpenRouter(llmConfig.providerSettings);
   const model = provider.chat(llmConfig.modelId, OPENROUTER_USAGE_ACCOUNTING);
@@ -593,7 +674,11 @@ async function generateSummary(
     model,
     system:
       "You are a technical editor. Write concise, accurate summaries of technical articles.",
-    prompt: buildSummaryPrompt(title, body, isQuiz),
+    prompt: appendPromptProfile(
+      buildSummaryPrompt(title, body, isQuiz),
+      promptTuning?.appendSummary,
+      "TRANSLATION PROMPT PROFILE SUMMARY TUNING",
+    ),
     temperature: llmConfig.temperature,
     maxOutputTokens: 500,
     timeout: { totalMs: llmConfig.timeoutMs },
@@ -609,6 +694,7 @@ async function translateQuiz(
   skipSummary: boolean,
   dryRun: boolean,
   reportOptions: QuizReportOptions,
+  promptTuning?: TranslationPromptTuning,
 ): Promise<{ body: string; telemetry: Telemetry; articleSummary: string }> {
   console.log("🧩 Parsing quiz structure...");
   const quiz = parseQuiz(sourceBody);
@@ -647,7 +733,7 @@ async function translateQuiz(
   if (!skipSummary) {
     reportOptions.assertActiveRun();
     console.log("📝 Generating quiz description...");
-    const summary = await generateQuizDescription(quiz, llmConfig);
+    const summary = await generateQuizDescription(quiz, llmConfig, promptTuning);
     reportOptions.assertActiveRun();
     quizDescription = summary.description;
     const cost = addTelemetry(telemetry, {
@@ -698,7 +784,7 @@ async function translateQuiz(
   if (quiz.intro) {
     console.log("🔄 Translating quiz intro...");
     reporter?.append("intro_started", {});
-    const intro = await translateProse(quiz.intro, locale, llmConfig, quizDescription);
+    const intro = await translateProse(quiz.intro, locale, llmConfig, quizDescription, promptTuning);
     reportOptions.assertActiveRun();
     translatedIntro = intro.text;
     const cost = addTelemetry(telemetry, { index: -2, label: "intro", ...intro });
@@ -730,6 +816,7 @@ async function translateQuiz(
             llmConfig,
             quizDescription,
             true,
+            promptTuning,
           );
           reportOptions.assertActiveRun();
 
@@ -804,7 +891,7 @@ async function translateQuiz(
   if (quiz.outro) {
     console.log("\n🔄 Translating quiz outro...");
     reporter?.append("outro_started", {});
-    const outro = await translateProse(quiz.outro, locale, llmConfig, quizDescription);
+    const outro = await translateProse(quiz.outro, locale, llmConfig, quizDescription, promptTuning);
     reportOptions.assertActiveRun();
     translatedOutro = outro.text;
     const cost = addTelemetry(telemetry, { index: -3, label: "outro", ...outro });
@@ -854,6 +941,7 @@ async function translateProse(
   locale: ActiveLocale,
   llmConfig: LlmConfig,
   context: string,
+  promptTuning?: TranslationPromptTuning,
 ): Promise<{
   text: string;
   inputTokens: number;
@@ -873,26 +961,30 @@ async function translateProse(
     messages: [
       {
         role: "system",
-        content: "You are a technical translator. Follow the stable quiz prose translation contract in the user message. Output only the requested translated text.",
+        content: appendPromptProfile(
+          "You are a technical translator. Follow the stable quiz prose translation contract in the user message. Output only the requested translated text.",
+          promptTuning?.appendSystem,
+          "TRANSLATION PROMPT PROFILE SYSTEM TUNING",
+        ),
       },
       {
         role: "user",
         content: [
-          cachedText([
+          cachedText(appendPromptProfile([
             `STABLE QUIZ PROSE TRANSLATION CONTRACT (cache this across intro/outro):`,
             buildSystemPrompt(locale, true),
             ``,
             `QUIZ CONTEXT:`,
             context,
-          ].join("\n")),
+          ].join("\n"), promptTuning?.appendCachedContext, "TRANSLATION PROMPT PROFILE STABLE TUNING")),
           {
             type: "text",
-            text: [
+            text: appendPromptProfile([
               `Translate the following prose into ${LOCALE_LABELS[locale]}:`,
               `---`,
               text,
               `---`,
-            ].join("\n"),
+            ].join("\n"), promptTuning?.appendQuizProse ?? promptTuning?.appendDynamic, "TRANSLATION PROMPT PROFILE QUIZ PROSE TUNING"),
           },
         ],
       },
@@ -959,6 +1051,8 @@ async function main() {
   const shouldOnlyModified = options["only-modified"] === true;
   const quizConcurrency = parseQuizConcurrency(options["quiz-concurrency"]);
   const challengeRetries = parseChallengeRetries(options["challenge-retries"]);
+  const promptProfileId = optionalString(options, "prompt-profile-id") ?? optionalString(options, "translation-prompt-profile-id");
+  const usePromptProfile = options["no-prompt-profile"] !== true;
   const runLockPath = typeof options["run-lock-path"] === "string" ? options["run-lock-path"] : undefined;
   const expectedRunId = typeof options["run-id"] === "string" ? options["run-id"] : undefined;
   const assertActiveRun = () => assertRunLock(runLockPath, expectedRunId);
@@ -984,6 +1078,13 @@ async function main() {
   const parsed = matter(sourceRaw);
   const sourceBody = parsed.content;
   const isQuiz = parsed.data.category === "Quiz";
+  const promptTuning = resolveTranslationPromptTuning(
+    locale,
+    llmConfig.modelId,
+    isQuiz,
+    promptProfileId,
+    usePromptProfile,
+  );
 
   console.log(`\n📄 Source: ${relativeToRepo(sourcePath)}`);
   console.log(`🎯 Target: ${relativeToRepo(targetPath)}`);
@@ -995,6 +1096,9 @@ async function main() {
     console.log(`✂️  Chunk strategy: ${chunkSizeInput}`);
   }
   console.log(`🤖 Model: ${llmConfig.modelId} (temp=${llmConfig.temperature}, maxTokens=${llmConfig.maxTokens}, effort=${llmConfig.reasoningEffort}, timeout=${llmConfig.timeoutMs}ms)\n`);
+  if (promptTuning != null) {
+    console.log(`🧪 Prompt profile: ${promptTuning.profileId} v${promptTuning.version}\n`);
+  }
 
   let translatedBody: string;
   let telemetry: Telemetry;
@@ -1012,7 +1116,7 @@ async function main() {
       runDir: runPaths.runDir,
       timestamp: runTimestamp,
       assertActiveRun,
-    });
+    }, promptTuning);
     if (dryRun) return;
     translatedBody = result.body;
     telemetry = result.telemetry;
@@ -1025,7 +1129,7 @@ async function main() {
     if (!skipSummary) {
       assertActiveRun();
       console.log("📝 Generating article summary...");
-      articleSummary = await generateSummary(parsed.data.title ?? slug, sourceBody, llmConfig, false);
+      articleSummary = await generateSummary(parsed.data.title ?? slug, sourceBody, llmConfig, false, promptTuning);
       assertActiveRun();
       console.log(`   Summary: ${articleSummary.slice(0, 120)}...\n`);
     } else {
@@ -1047,7 +1151,7 @@ async function main() {
     }
 
     assertActiveRun();
-    const result = await translateArticleChunks(chunks, locale, llmConfig, articleSummary, chunkSizeInput, assertActiveRun);
+    const result = await translateArticleChunks(chunks, locale, llmConfig, articleSummary, chunkSizeInput, assertActiveRun, promptTuning);
     assertActiveRun();
     translatedBody = reassembleChunks(result.translatedChunks);
     telemetry = result.telemetry;
@@ -1058,7 +1162,7 @@ async function main() {
 
   // Build frontmatter
   const frontmatter: Record<string, unknown> = { ...parsed.data };
-  const translatedFrontmatter = await translateFrontmatter(frontmatter, locale, llmConfig, isQuiz);
+  const translatedFrontmatter = await translateFrontmatter(frontmatter, locale, llmConfig, isQuiz, promptTuning);
   assertActiveRun();
   const frontmatterYaml = matter.stringify("", translatedFrontmatter).trim();
 
@@ -1115,6 +1219,7 @@ async function translateArticleChunks(
   articleSummary: string,
   chunkSize: string,
   assertActiveRun: () => void,
+  promptTuning?: TranslationPromptTuning,
 ): Promise<{ translatedChunks: Chunk[]; telemetry: Telemetry }> {
   const translatedChunks: Chunk[] = [];
   const telemetry = createTelemetry(llmConfig, chunkSize, chunks.length);
@@ -1138,6 +1243,7 @@ async function translateArticleChunks(
       previousParagraphContext(chunks, i),
       nextParagraphContext(chunks, i),
       false,
+      promptTuning,
     );
     assertActiveRun();
 
@@ -1190,6 +1296,7 @@ async function translateFrontmatter(
   locale: ActiveLocale,
   llmConfig: LlmConfig,
   isQuiz: boolean,
+  promptTuning?: TranslationPromptTuning,
 ): Promise<Record<string, unknown>> {
   const result = omitInheritedTranslatedFrontmatter(normalizeFrontmatterAssetPaths(frontmatter));
 
@@ -1216,18 +1323,22 @@ async function translateFrontmatter(
       messages: [
         {
           role: "system",
-          content: "You are a technical translator. Follow the stable frontmatter translation contract in the user message. Output only the requested translated text.",
+          content: appendPromptProfile(
+            "You are a technical translator. Follow the stable frontmatter translation contract in the user message. Output only the requested translated text.",
+            promptTuning?.appendSystem,
+            "TRANSLATION PROMPT PROFILE SYSTEM TUNING",
+          ),
         },
         {
           role: "user",
           content: [
-            cachedText([
+            cachedText(appendPromptProfile([
               `STABLE FRONTMATTER TRANSLATION CONTRACT (cache this across frontmatter fields):`,
               buildSystemPrompt(locale, isQuiz),
-            ].join("\n")),
+            ].join("\n"), promptTuning?.appendFrontmatter ?? promptTuning?.appendCachedContext, "TRANSLATION PROMPT PROFILE FRONTMATTER TUNING")),
             {
               type: "text",
-              text: `Translate the following ${key} into ${LOCALE_LABELS[locale]}. Keep it concise and natural.\n\n${value}`,
+              text: `Translate the following ${key} into ${LOCALE_LABELS[locale]}. Keep it concise and natural. Use normal word spacing; do not concatenate adjacent words.\n\n${value}`,
             },
           ],
         },

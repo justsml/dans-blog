@@ -850,9 +850,15 @@ function extractMarkdownReferenceDefinitions(contents: string) {
 function isCodeLikeQuizOption(value: string) {
   const trimmed = value.trim();
   return (
-    /(?:\b[A-Za-z_$][\w$]*\s*\(|=>|[{}[\];]|\\'|\\"|\b(?:NaN|null|undefined|TypeError|RangeError)\b)/.test(trimmed)
-    || /(?:^|\s)(?:\$\(|\$\{|[12]>&[12]|[|&<>])/.test(trimmed)
+    /^(?:NaN|null|undefined|TypeError|RangeError|ReferenceError|SyntaxError)(?::|$)/.test(trimmed)
+    || /(?:\b[A-Za-z_$][\w$]*\s*\(|=>|::|[;]|\\|\\'|\\")/.test(trimmed)
+    || /(?:^|\s)(?:\$\(|\$\{|[12]>&[12]|[|&<>!=]=?|&&|\|\|)/.test(trimmed)
     || /(?:^|\s)\.[A-Za-z][\w-]*\b/.test(trimmed)
+    || /<\/?[A-Za-z][^>]*>/.test(trimmed)
+    || /^(?:cat|grep|sed|awk|curl|bun|npm|node|git|docker|pnpm)\s+\S+/.test(trimmed)
+    || /(?:^|[\s/])[-a-z0-9_]+\.(?:js|jsx|ts|tsx|mjs|cjs|css|scss|html|json|mdx?|ya?ml|sql)\b/.test(trimmed)
+    || /(?:^|[\s])\/[^/\n]+\/[a-z]*\b/i.test(trimmed)
+    || /['"`][^'"`]*(?:\(|\)|::|\\|[{}[\];]|=>)[^'"`]*['"`]/.test(trimmed)
     || /^[A-Za-z][\w -]{0,24}:\s*[-#.$%()\w]+$/.test(trimmed)
   );
 }

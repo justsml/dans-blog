@@ -24,6 +24,8 @@ import {
   countHeadingsByLevel,
 } from "./integrity-checks.ts";
 import { resolveCheapFastTranslationModel } from "./model-presets.ts";
+import { buildUserPrompt } from "./prompts.ts";
+import { isCodeLikeOptionText } from "./quiz-translator.ts";
 
 const SHA_A = "a".repeat(40);
 const SHA_B = "b".repeat(40);
@@ -50,6 +52,50 @@ describe("resolveCheapFastTranslationModel", () => {
 
   test("returns unmatched input unchanged for custom or downstream handling", () => {
     expect(resolveCheapFastTranslationModel("not-a-real-model")).toBe("not-a-real-model");
+  });
+});
+
+describe("translation prompt builders", () => {
+  test("include stable quiz rules in the cached section for quiz prompts", () => {
+    const prompt = buildUserPrompt(
+      "<Challenge index={0} />",
+      "ja",
+      {
+        chunkIndex: 0,
+        totalChunks: 1,
+        articleSummary: "A technical quiz.",
+      },
+      true,
+    );
+
+    expect(prompt).toContain("QUIZ TRANSLATION RULES");
+    expect(prompt).toContain("STABLE TRANSLATION CONTRACT");
+  });
+});
+
+describe("quiz option preservation heuristics", () => {
+  test("treats SQL, regex, date constructor, file, shell, and key-value options as code-like", () => {
+    const codeLike = [
+      "'95'::INTEGER",
+      "new Intl.DateTimeFormat('en-US').format(date)",
+      String.raw`/\bword\b/g`,
+      "Filename must end w/ .scss",
+      "cat cbt",
+      "Width: 110px",
+      "<div class=\"box\">",
+      "value !== undefined",
+    ];
+
+    for (const option of codeLike) {
+      expect(isCodeLikeOptionText(option)).toBe(true);
+    }
+  });
+
+  test("allows ordinary prose options to be translated", () => {
+    expect(isCodeLikeOptionText("The request should be retried later")).toBe(false);
+    expect(isCodeLikeOptionText("Throws a TypeError")).toBe(false);
+    expect(isCodeLikeOptionText("Only in Node.js")).toBe(false);
+    expect(isCodeLikeOptionText("Sends {\"error\":{}}")).toBe(false);
   });
 });
 

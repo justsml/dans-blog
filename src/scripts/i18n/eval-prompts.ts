@@ -142,6 +142,8 @@ const usePromptProfiles = args["no-prompt-profile"] !== true;
 const translationPromptProfileId =
   optionalString(args, "translation-prompt-profile-id") ?? optionalString(args, "prompt-profile-id");
 const judgePromptProfileId = optionalString(args, "judge-prompt-profile-id");
+const experimentId = optionalString(args, "experiment-id");
+const variantId = optionalString(args, "variant-id");
 
 // ---------------------------------------------------------------------------
 // Data types  (mirroring Braintrust shape: input → output → scores)
@@ -1166,7 +1168,7 @@ async function translateEvalFrontmatter(
               ),
               {
                 type: "text",
-                text: `Translate this ${key} into ${FRONTMATTER_LANGUAGE_LABELS[input.locale]}. Preserve inline code spans exactly. Return one plain string, not YAML.\n\n${value}`,
+                text: `Translate this ${key} into ${FRONTMATTER_LANGUAGE_LABELS[input.locale]}. Preserve inline code spans exactly. Use normal word spacing; do not concatenate adjacent words. Return one plain string, not YAML.\n\n${value}`,
               },
             ],
           },
@@ -1659,6 +1661,21 @@ if (isDryRun) {
 
 mkdirSync(runDir, { recursive: true });
 writeFileSync(runLogPath, "", "utf8");
+appendRunRecord({
+  at: new Date().toISOString(),
+  event: "run_started",
+  runId,
+  experimentId,
+  variantId,
+  models: translationModels,
+  locales,
+  slugs: requestedSlugs,
+  requestedKind,
+  judgeModel: `openrouter/${judgeModel}`,
+  usePromptProfiles,
+  translationPromptProfileId,
+  judgePromptProfileId,
+});
 
 console.log(`\n${ui.title("i18n eval run")}`);
 console.log(
@@ -1736,6 +1753,9 @@ const results = await Promise.all(
     appendRunRecord({
       at: new Date().toISOString(),
       event: "case_finished",
+      experimentId,
+      variantId,
+      promptProfiles,
       ...result,
     });
     return result;
@@ -1939,8 +1959,13 @@ function writeSummary(results: EvalResult[]) {
     `# Translation Eval Run — ${runId}`,
     ``,
     `**${passCount} passed, ${failCount} failed** | total cost $${totalCost.toFixed(5)}`,
+    experimentId == null ? "" : `Experiment: ${experimentId}`,
+    variantId == null ? "" : `Variant: ${variantId}`,
     `Models: ${translationModels.map((m) => m.replace(/^openrouter\//, "")).join(", ")}`,
     `Judge: ${judgeModel}`,
+    `Prompt profiles: ${usePromptProfiles ? "enabled" : "disabled"}`,
+    translationPromptProfileId == null ? "" : `Translation profile override: ${translationPromptProfileId}`,
+    judgePromptProfileId == null ? "" : `Judge profile override: ${judgePromptProfileId}`,
     `Run log: ${relative(process.cwd(), runLogPath)}`,
     ``,
     `## Results`,
