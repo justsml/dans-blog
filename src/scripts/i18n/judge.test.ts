@@ -71,6 +71,23 @@ describe("translation prompt builders", () => {
     expect(prompt).toContain("QUIZ TRANSLATION RULES");
     expect(prompt).toContain("STABLE TRANSLATION CONTRACT");
   });
+
+  test("tell translators to localize same-page heading fragments", () => {
+    const prompt = buildUserPrompt(
+      "[Jump there](#install-guide)\n\n## Install guide",
+      "fr",
+      {
+        chunkIndex: 0,
+        totalChunks: 1,
+        articleSummary: "A technical article.",
+      },
+      false,
+    );
+
+    expect(prompt).toContain("Same-page heading links");
+    expect(prompt).toContain("translated heading slug");
+    expect(prompt).toContain("not the English heading slug");
+  });
 });
 
 describe("quiz option preservation heuristics", () => {
@@ -547,6 +564,42 @@ describe("analyzeTranslationIntegrity", () => {
     expect(issues.some((issue) => issue.code === "heading-anchor-link-target")).toBe(false);
   });
 
+  test("flags same-page heading links that point at the wrong translated heading", () => {
+    const sourceWithHeadingLinks = [
+      "---",
+      "title: Source",
+      "---",
+      "",
+      "- [Install guide](#install-guide)",
+      "",
+      "## Install guide",
+      "",
+      "## Troubleshooting",
+    ].join("\n");
+    const targetWithWrongHeadingLink = [
+      "---",
+      "title: Target",
+      "---",
+      "",
+      "- [Guide d'installation](#depannage)",
+      "",
+      "## Guide d'installation",
+      "",
+      "## Depannage",
+    ].join("\n");
+
+    const issues = analyzeTranslationIntegrity({
+      sourceContents: sourceWithHeadingLinks,
+      targetContents: targetWithWrongHeadingLink,
+      targetPath: "/repo/src/content/posts/test/fr/index.mdx",
+      locale: "fr",
+    });
+
+    const issue = issues.find((item) => item.code === "heading-anchor-link-target");
+    expect(issue?.message).toContain("wrong translated heading IDs");
+    expect(issue?.message).toContain("#guide-dinstallation");
+  });
+
   test("flags changed code-like quiz options and answer counts", () => {
     const target = source
       .replace("date.toLocaleFormat(\\'en-US\\')", "date.toLocaleFormat(\\'")
@@ -906,6 +959,12 @@ describe("buildPrimaryJudgePrompt", () => {
     expect(prompt).toContain("per-level heading count");
   });
 
+  test("includes localized heading-anchor rule", () => {
+    expect(prompt).toContain("Same-page heading links");
+    expect(prompt).toContain("localized heading IDs");
+    expect(prompt).toContain("stale English heading fragments");
+  });
+
   test("includes asset path rule", () => {
     expect(prompt).toContain("../");
   });
@@ -961,6 +1020,11 @@ describe("buildPrePublishRescorePrompt", () => {
     expect(prompt).toContain(ctx.targetRelPath);
   });
 
+  test("checks localized heading anchors during rescore", () => {
+    expect(prompt).toContain("localized same-page heading anchor targets");
+    expect(prompt).toContain("stale English heading fragments");
+  });
+
   test("includes quiz rescore contract", () => {
     expect(prompt).toContain("marked answer remains semantically faithful");
     expect(prompt).toContain("option field schema");
@@ -982,6 +1046,10 @@ describe("buildSecondJudgePrompt", () => {
     expect(prompt).toContain("heading count");
   });
 
+  test("checks stale English heading IDs", () => {
+    expect(prompt).toContain("same-page heading links that still point at English heading IDs");
+  });
+
   test("checks quiz semantic answer faithfulness", () => {
     expect(prompt).toContain("semantic answer faithfulness");
   });
@@ -996,6 +1064,11 @@ describe("buildEscalationPrompt", () => {
 
   test("includes heading-preservation rule", () => {
     expect(prompt).toContain("per-level heading counts");
+  });
+
+  test("includes localized heading-anchor rule", () => {
+    expect(prompt).toContain("localized heading IDs");
+    expect(prompt).toContain("stale English heading fragments");
   });
 
   test("mentions target path for output", () => {

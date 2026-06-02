@@ -1,6 +1,6 @@
 # I18n Coverage
 
-Generated at `2026-05-21T18:41:25.135Z`.
+Generated at `2026-05-27T20:46:59.792Z`.
 
 ## Summary
 

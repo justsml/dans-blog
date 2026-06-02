@@ -433,6 +433,10 @@ export function getJudgeJsonShape() {
   };
 }
 
+function getHeadingAnchorGuidance() {
+  return `Same-page heading links must resolve to the localized heading IDs generated from translated heading text. If English has [text](#install-guide) and the translation heading is "Guide d'installation", the translated link must use the translated slug such as #guide-dinstallation, not the stale English #install-guide. Treat stale English heading fragments as high-priority MDX preservation issues.`;
+}
+
 export function buildPrimaryJudgePrompt(
   candidateSummary: string,
   candidates: CandidateRef[],
@@ -452,6 +456,7 @@ export function buildPrimaryJudgePrompt(
       ? `Use ${ctx.selectedCommit} as the selected candidate unless it is structurally broken and it is selectable in this comparison.`
       : "Choose the best selectable candidate by technical accuracy, natural language quality, Dan's direct style, and MDX preservation.",
     `The final MDX must preserve the English file's per-level heading counts: same number of H1, H2, H3, H4, H5, and H6 headings. Heading text should be translated or naturally localized; do not require literal English heading text. Only the count and level are structural.`,
+    getHeadingAnchorGuidance(),
     `Frontmatter title and subTitle are reader-facing and should be translated/localized. Do not suggest preserving the English title or subtitle unless it is a proper noun, code token, or deliberately untranslatable product name.`,
     `Also preserve structural counts for fenced code blocks, Markdown/HTML images, blockquotes, tables, imports, MDX components, and quiz Challenge blocks/options/answer flags. Treat mismatches as high-priority unless the English source itself is malformed.`,
     `For quizzes, inspect every <Challenge> against the English source by index. The translated Challenge must keep the same prop names, option count, option field schema, objective count, hint presence, question/hints/explanation slots, code block counts, and isAnswer positions. Challenge title and group prop values are reader-facing and may be translated/localized; prop names and structure must be preserved. No surprise props, option fields, arrays, hints, or changed non-reader-facing values.`,
@@ -492,7 +497,8 @@ export function buildPrePublishRescorePrompt(
     `Candidate commits for context:`,
     candidateSummary,
     ``,
-    `Check ${ctx.targetRelPath} against ${ctx.sourcePath ?? "the English source"} for technical accuracy, natural language quality, Dan's direct style, cultural adaptation, language purity, MDX preservation, per-level heading count preservation, structural count preservation, and comparable body length. Title, subTitle, headings, and quiz title/group values are reader-facing and may be translated/localized; preserve heading levels/counts and prop names, not English wording.`,
+    `Check ${ctx.targetRelPath} against ${ctx.sourcePath ?? "the English source"} for technical accuracy, natural language quality, Dan's direct style, cultural adaptation, language purity, MDX preservation, per-level heading count preservation, localized same-page heading anchor targets, structural count preservation, and comparable body length. Title, subTitle, headings, and quiz title/group values are reader-facing and may be translated/localized; preserve heading levels/counts and prop names, not English wording.`,
+    getHeadingAnchorGuidance(),
     `Look specifically for bad HTML comments, unclosed HTML/MDX tags, invalid inherited asset paths, broken Gist paths, wrong locale component import depth, suspicious code fence languages, changed code block/image/blockquote/table counts, changed quiz options or answer flags, mixed-language prose, and leaked LLM instructions.`,
     `For quiz posts, compare every Challenge against English by index. Verify the same prop names, option counts, option field schema, objective counts, hint presence, slot presence, code block counts, isAnswer positions, and no surprise props/fields/arrays/non-reader-facing values. Challenge title and group values are reader-facing and may be translated/localized. Also verify the marked answer remains semantically faithful to the English correct answer.`,
     `For quiz code blocks, preserve code exactly and flag lines longer than about 63 characters unless unavoidable.`,
@@ -518,7 +524,8 @@ export function buildSecondJudgePrompt(
     `Candidate commits:`,
     candidateSummary,
     ``,
-    `Check for MDX/frontmatter breakage, raw HTML comments, invalid inherited asset paths, broken Gist paths, wrong locale component import depth, suspicious code fence languages, unclosed HTML tags, code block/image/blockquote/table count mismatches, heading count mismatches by level, untranslated or mixed-language reader-facing prose, leaked LLM instructions, major terminology errors, weak cultural adaptation, and obvious tone regressions. Title, subTitle, and heading text should be translated/localized; preserve heading levels/counts, not English wording.`,
+    `Check for MDX/frontmatter breakage, raw HTML comments, invalid inherited asset paths, broken Gist paths, wrong locale component import depth, suspicious code fence languages, unclosed HTML tags, code block/image/blockquote/table count mismatches, heading count mismatches by level, same-page heading links that still point at English heading IDs, untranslated or mixed-language reader-facing prose, leaked LLM instructions, major terminology errors, weak cultural adaptation, and obvious tone regressions. Title, subTitle, and heading text should be translated/localized; preserve heading levels/counts, not English wording.`,
+    getHeadingAnchorGuidance(),
     `For quiz posts, also verify Challenge prop names, option field schemas, objective counts, hints, slots, code block counts, code preservation, isAnswer positions, and semantic answer faithfulness against English. Challenge title and group values are reader-facing and may be translated/localized. A translated correct answer must still be the same correct answer.`,
     `Return your agreement or disagreement as strict JSON. If acceptable, put the exact phrase "No escalation required" in rationale.`,
     `Do not edit ${ctx.targetRelPath}. If you disagree, state the exact candidate SHA or issue that requires escalation.`,
@@ -537,6 +544,7 @@ export function buildEscalationPrompt(
     `Read the attached primary and second judge reports.`,
     `Candidate MDX contents are attached below; do not ask to run git show.`,
     `The final MDX must preserve the English file's per-level heading counts: same number of H1, H2, H3, H4, H5, and H6 headings. Title, subTitle, heading text, and quiz title/group values are reader-facing and may be translated/localized; preserve structure, not English wording.`,
+    getHeadingAnchorGuidance(),
     `Also preserve code block, image, blockquote, table, Challenge, quiz option, and answer-flag counts; reject leaked LLM instructions, raw HTML comments, invalid asset paths, broken Gist paths, wrong locale component import depth, suspicious code fence languages, mixed-language prose, and broken HTML/MDX markup.`,
     `For quiz posts, resolve answer faithfulness explicitly: the candidate must keep the same correct answer meaning, isAnswer positions, option field schema, hints, slots, and code blocks as English, with no surprise fields or non-reader-facing value changes. Challenge title and group values are reader-facing and may be translated/localized.`,
     `Return the final selected candidate SHA and rationale as strict JSON. The wrapper script writes ${ctx.targetRelPath} and judge reports.`,

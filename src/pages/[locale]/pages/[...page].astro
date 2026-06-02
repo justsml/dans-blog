@@ -1,12 +1,13 @@
 ---
-import type { Page, PagePath, ArticlePost } from "../../../types";
-import { PostCollections, getArticleSortFn } from "../../../shared/postsCache";
-import { pageSize } from "../../../shared/pagination";
+import type { PagePath, ArticlePost } from "../../../types";
+import { PostCollections } from "../../../shared/postsCache";
 import {
-  HOME_ARTICLE_LIST_CTA_INTERVALS,
-  HOME_ARTICLE_LIST_CTA_LIMIT,
-  getArticleListCtaOccurrence,
-} from "../../../shared/articleListCta";
+  buildArchivePagePaths,
+  getArchiveArticleListCtaOccurrence,
+  getArchiveNextUrl,
+  type ArchiveStaticPath,
+  type ArchiveRouteProps,
+} from "../../../shared/archivePagination";
 import { ArticleCard } from "../../../components/ArticleCard";
 import ArticleListSkeleton from "../../../components/ArticleListSkeleton.astro";
 import ArticleListConsultingCTA from "../../../components/ArticleListConsultingCTA.astro";
@@ -15,64 +16,26 @@ import { ACTIVE_LOCALES, type ActiveLocale } from "../../../shared/i18n";
 
 export const partial = true;
 
-type Props = {
-  page: Page<ArticlePost>;
-  pageUrlSuffix: string;
-  sortKey: string;
-  field: string;
-  direction: "asc" | "desc";
-  locale: ActiveLocale;
-};
+type Props = ArchiveRouteProps<ActiveLocale> & { locale: ActiveLocale };
 
 export async function getStaticPaths({
   paginate,
 }: {
   paginate: PaginateFunction;
 }) {
-  const sortKeys = [
-    ["date", "asc"],
-    ["date", "desc"],
-    ["modified", "asc"],
-    ["modified", "desc"],
-  ] as const;
-
   const pages = ACTIVE_LOCALES.flatMap((locale) =>
-    sortKeys.flatMap(([field, direction]) => {
-      const posts = (PostCollections.getPostsForLocale(locale) as ArticlePost[]).filter(
-        (post) => !post.data.unlisted,
-      );
-      const sortFn = getArticleSortFn(field, direction);
-      const sortedPosts = posts.concat().sort(sortFn);
-
-      const pageData = paginate(PostCollections.getStaticPaths(sortedPosts), {
-        pageSize,
-        params: { locale },
-      });
-
-      return pageData.flatMap((p: any) => ({
-        ...p,
-        props: {
-          ...p.props,
-          sortKey: `${field}-${direction}`,
-          pageUrlSuffix: `-${field}${direction === "asc" ? "" : "-desc"}.html`,
-          field,
-          direction,
-          locale,
-        },
-        params: {
-          ...p.params,
-          locale,
-          pageUrlSuffix: `-${field}${direction === "asc" ? "" : "-desc"}.html`,
-          page: `${p.params.page ?? "1"}-${field}${direction === "asc" ? "" : "-desc"}`,
-          sortKey: `${field}-${direction}`,
-          field,
-          direction,
-        },
-      }));
+    buildArchivePagePaths({
+      posts: PostCollections.getPostsForLocale(locale) as ArticlePost[],
+      paginate,
+      toStaticPaths: PostCollections.getStaticPaths as (
+        posts: ArticlePost[],
+      ) => ArchiveStaticPath<ArticlePost>[],
+      params: { locale },
+      props: { locale },
     }),
   );
 
-  return pages as PagePath[];
+  return pages as unknown as PagePath[];
 }
 
 const {
@@ -81,24 +44,17 @@ const {
   locale,
 } = Astro.props as Props;
 
-let nextUrl: string | null = null;
-
-const isLast = currentPage === lastPage;
-if (!isLast) {
-  nextUrl = `${url.next ? url.next + pageUrlSuffix : url.next}`;
-}
-
-const articleListOffset = (currentPage - 1) * (pageSize - 1);
+const nextUrl = getArchiveNextUrl({
+  currentPage,
+  lastPage,
+  next: url.next,
+  pageUrlSuffix,
+});
 ---
 
 {
   data.map(({ props }: any, index) => {
-    const ctaOccurrence = getArticleListCtaOccurrence(
-      index,
-      articleListOffset,
-      HOME_ARTICLE_LIST_CTA_LIMIT,
-      HOME_ARTICLE_LIST_CTA_INTERVALS,
-    );
+    const ctaOccurrence = getArchiveArticleListCtaOccurrence(index, currentPage);
 
     return (
     <>

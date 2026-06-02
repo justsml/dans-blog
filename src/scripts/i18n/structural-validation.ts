@@ -1,3 +1,5 @@
+import { extractHeadingAnchors } from "./heading-link-validation.ts";
+
 export {
   assertTranslationLength,
   getComparablePostLength,
@@ -236,7 +238,8 @@ export function extractMdxStructure(contents: string): MdxStructureSnapshot {
   const codeFenceLanguages = extractCodeFenceLanguages(body);
   const comparableBody = stripInlineCodeSpans(stripMdxComments(stripFencedCodeBlocks(body)));
   const headingSequence = extractHeadingSequence(comparableBody);
-  const linkTargets = extractLinks(comparableBody).map((link) => link.target);
+  const headingAnchorIndexes = getHeadingAnchorIndexes(contents);
+  const linkTargets = extractLinks(comparableBody, headingAnchorIndexes).map((link) => link.target);
   const images = extractImages(comparableBody);
   const tableShapes = [
     ...extractMarkdownTables(comparableBody),
@@ -477,26 +480,32 @@ function extractHeadingSequence(contents: string) {
   return headings;
 }
 
-function extractLinks(contents: string): LinkReference[] {
+function getHeadingAnchorIndexes(contents: string) {
+  return new Map(
+    extractHeadingAnchors(contents).map((heading, index) => [heading.fragment, index]),
+  );
+}
+
+function extractLinks(contents: string, headingAnchorIndexes = new Map<string, number>()): LinkReference[] {
   const links: LinkReference[] = [];
   const referenceDefinitions = extractMarkdownReferenceDefinitions(contents);
 
   for (const match of contents.matchAll(/(^|[^!])\[([^\]\n]+)]\(([^)\s]+)(?:\s+["'][^)]*["'])?\)/g)) {
     const index = (match.index ?? 0) + match[1].length;
-    links.push({ index, target: normalizeLinkTarget(match[3]) });
+    links.push({ index, target: normalizeLinkTarget(match[3], headingAnchorIndexes) });
   }
 
   for (const match of contents.matchAll(/(^|[^!])\[([^\]\n]+)]\[([^\]\n]*)]/g)) {
     const index = (match.index ?? 0) + match[1].length;
     const id = (match[3] === "" ? match[2] : match[3]).trim().toLowerCase();
     const target = referenceDefinitions.get(id) ?? id;
-    links.push({ index, target: normalizeLinkTarget(target) });
+    links.push({ index, target: normalizeLinkTarget(target, headingAnchorIndexes) });
   }
 
   for (const match of contents.matchAll(/<a\b[^>]*>/gi)) {
     const href = extractAttributeValue(match[0], "href");
     if (href != null) {
-      links.push({ index: match.index ?? 0, target: normalizeLinkTarget(href) });
+      links.push({ index: match.index ?? 0, target: normalizeLinkTarget(href, headingAnchorIndexes) });
     }
   }
 
@@ -733,8 +742,24 @@ function stripInlineCodeSpans(contents: string) {
   return contents.replace(/`(?:\\.|[^`])*`/g, (match) => " ".repeat(match.length));
 }
 
-function normalizeLinkTarget(value: string) {
-  return decodeHtmlEntities(value).trim();
+function normalizeLinkTarget(value: string, headingAnchorIndexes = new Map<string, number>()) {
+  const decoded = decodeHtmlEntities(value).trim();
+  const samePageFragment = extractSamePageFragment(decoded);
+  if (samePageFragment != null) {
+    const headingIndex = headingAnchorIndexes.get(samePageFragment);
+    if (headingIndex != null) return `#heading:${headingIndex}`;
+  }
+  return decoded;
+}
+
+function extractSamePageFragment(value: string) {
+  if (!value.startsWith("#")) return undefined;
+  const fragment = value.slice(1);
+  try {
+    return decodeURIComponent(fragment);
+  } catch {
+    return fragment;
+  }
 }
 
 function normalizeAssetTarget(value: string) {

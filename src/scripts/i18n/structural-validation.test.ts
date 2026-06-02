@@ -60,6 +60,37 @@ describe("compareMdxStructure", () => {
     expect(comparison.differences).toEqual({});
   });
 
+  test("treats localized same-page heading fragments as matching structure", () => {
+    const source = [
+      "---",
+      "title: Source",
+      "---",
+      "",
+      "## Install guide",
+      "",
+      "[Jump there](#install-guide)",
+    ].join("\n");
+    const translated = [
+      "---",
+      "title: Cible",
+      "---",
+      "",
+      "## Guide d'installation",
+      "",
+      "[Y aller](#guide-dinstallation)",
+    ].join("\n");
+    const stale = translated.replace("#guide-dinstallation", "#install-guide");
+
+    const localized = compareMdxStructure({ sourceContents: source, targetContents: translated });
+    const staleComparison = compareMdxStructure({ sourceContents: source, targetContents: stale });
+
+    expect(localized.valid).toBe(true);
+    expect(localized.differences).toEqual({});
+    expect(extractMdxStructure(translated).linkTargets).toEqual(["#heading:0"]);
+    expect(staleComparison.valid).toBe(false);
+    expect(staleComparison.issues.some((issue) => issue.code === "linkTargets-mismatch")).toBe(true);
+  });
+
   test("reports count differences in target-minus-source direction", () => {
     const source = [
       "---",

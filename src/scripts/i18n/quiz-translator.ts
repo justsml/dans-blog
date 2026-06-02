@@ -91,7 +91,7 @@ function buildQuizSystemPrompt(locale: ActiveLocale, isQuiz: boolean): string {
     `5. Question text should read like a native speaker wrote it — direct, slightly irreverent, authoritative.`,
     `6. Explanation text should maintain the teaching tone: explain WHY, not just WHAT.`,
     `7. Preserve markdown formatting (bold, italic, lists) in the translated text.`,
-    `8. Preserve all markdown link URLs — only translate link text if there is any.`,
+    `8. Preserve markdown link URLs except same-page heading links; for heading links, update the #fragment to the translated heading slug. Translate link text if there is any.`,
   ];
 
   if (isQuiz) {

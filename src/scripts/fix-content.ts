@@ -1,45 +1,12 @@
 import { existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join, relative } from "node:path";
+import {
+  getMechanicalTagFix,
+  getPreferredCategory,
+} from "../shared/editorialRules.ts";
 
 const postsDir = join(process.cwd(), "src/content/posts");
 const shouldWrite = process.argv.includes("--write");
-
-const preferredCategoryByAlias = new Map([
-  ["howto", "HowTo"],
-  ["how-to", "HowTo"],
-  ["regular expressions", "Regex"],
-  ["reg-ex", "Regex"],
-  ["software engineering", "Engineering"],
-]);
-
-const canonicalTagByAlias = new Map([
-  ["AI", "ai"],
-  ["AI SDK", "ai-sdk"],
-  ["Agent Networks", "agent-networks"],
-  ["Agent Orchestration", "agent-orchestration"],
-  ["Guardrails", "guardrails"],
-  ["Integrations", "integrations"],
-  ["LLM", "llm"],
-  ["MCP", "mcp"],
-  ["Mastra", "mastra"],
-  ["Math", "math"],
-  ["PII", "pii"],
-  ["Privacy", "privacy"],
-  ["Salesforce", "salesforce"],
-  ["Security", "security"],
-  ["Tools", "tools"],
-  ["TypeScript", "typescript"],
-  ["Workflows", "workflows"],
-  ["lanceDB", "lancedb"],
-  ["date class", "date"],
-  ["functional river", "functional-programming"],
-  ["open source", "open-source"],
-  ["packet.net", "packet"],
-  ["ovh.net", "ovh"],
-  ["shell script", "shell-script"],
-  ["site-search", "search"],
-  ["source code", "source-code"],
-]);
 
 type FixResult = {
   relPath: string;
@@ -115,7 +82,7 @@ function fixFrontmatter(frontmatter: string, changes: string[]) {
   let result = frontmatter;
 
   result = replaceScalar(result, "category", (value) => {
-    const preferred = preferredCategoryByAlias.get(value.toLowerCase());
+    const preferred = getPreferredCategory(value);
     if (preferred == null || preferred === value) return value;
     changes.push(`category "${value}" -> "${preferred}"`);
     return preferred;
@@ -192,7 +159,7 @@ function fixTags(frontmatter: string) {
 }
 
 function fixTagValue(value: string, changes: string[]) {
-  const fixed = canonicalTagByAlias.get(value) ?? kebabCaseTag(value);
+  const fixed = getMechanicalTagFix(value);
   if (fixed !== value) {
     changes.push(`tag "${value}" -> "${fixed}"`);
   }
@@ -202,13 +169,6 @@ function fixTagValue(value: string, changes: string[]) {
 function hasBoolean(frontmatter: string, key: string, value: boolean) {
   const expected = value ? "true" : "false";
   return new RegExp(`^${escapeRegExp(key)}:\\s*${expected}\\s*$`, "m").test(frontmatter);
-}
-
-function kebabCaseTag(value: string) {
-  return value
-    .trim()
-    .toLowerCase()
-    .replace(/\s+/g, "-");
 }
 
 function parseQuotedValue(rawValue: string) {

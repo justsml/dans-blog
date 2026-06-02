@@ -86,7 +86,8 @@ MDX & CODE PRESERVATION (critical):
 - Preserve inline code spans exactly, including the surrounding backticks. HTML tag names like \`<div>\`, component names, selectors, filenames, paths, commands, API names, and CSS values must remain inside inline code when the source uses inline code.
 - Preserve roughly the same amount of prose. The translated body must be comparable to the English prose length, using the target language's natural expansion or compression; CJK, Arabic, Hebrew, and Hindi may differ more from English. Do not summarize or pad.
 - ALL relative URL paths for images, CSS, links, or other resources should prefix/prepend with a \`../\`.
-- Preserve ALL markdown link URLs except relative URLs that need the locale-folder \`../\` prefix. Only translate the link text.
+- Preserve external URLs, absolute URLs, route paths, and non-heading link targets except relative URLs that need the locale-folder \`../\` prefix. Only translate the link text.
+- For same-page heading links such as \`[text](#some-heading)\` or \`<a href="#some-heading">\`, update the \`#fragment\` to the slug generated from the translated heading text. Do not keep an English heading fragment after translating that heading.
 - Do not add or remove blank lines around code fences or components unless the original has them.
 `.trim();
 }
@@ -199,7 +200,7 @@ export function buildCachedChunkContextPrompt(
   parts.push(context.articleSummary);
   parts.push("");
 
-  parts.push("Remember: preserve all code, MDX components, imports, markdown heading levels, and roughly the same content length. For images, CSS, links, or other resources, prefix/prepend ALL relative URL paths with `../`. Translate only reader-facing prose.");
+  parts.push("Remember: preserve all code, MDX components, imports, markdown heading levels, and roughly the same content length. For inherited local images, CSS, links, or other resources, prefix/prepend relative URL paths with `../`. Same-page heading links must point at the translated heading slug, not the English heading slug. Translate only reader-facing prose.");
 
   return parts.join("\n");
 }

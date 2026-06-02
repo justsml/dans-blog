@@ -17,15 +17,11 @@ import ConsultingCTA from "../components/ConsultingCTA.astro";
 import "@/styles/banner-webgl.css";
 import { PostCollections } from "../shared/postsCache";
 import {
-  ACTIVE_LOCALES,
   DEFAULT_LOCALE,
   LOCALE_DISCLOSURE,
-  LOCALE_LABELS,
   getHtmlLang,
-  getLocalizedPostPath,
   getTextDirection,
   isActiveLocale,
-  sortLanguageOptions,
   type Locale,
 } from "../shared/i18n";
 
@@ -81,38 +77,10 @@ const baseSlug = Astro.props.baseSlug ?? slug.replace(/^[a-z]{2}\//, "");
 const locale = Astro.props.locale ?? DEFAULT_LOCALE;
 const isTranslation = Astro.props.isTranslation === true;
 const htmlLang = getHtmlLang(locale);
-const canonicalPath = getLocalizedPostPath(baseSlug, locale);
-const englishPath = getLocalizedPostPath(baseSlug, DEFAULT_LOCALE);
-const translatedLocales = ACTIVE_LOCALES.filter((candidateLocale) =>
-  Boolean(PostCollections._postsBySlug[`${candidateLocale}/${baseSlug}`]),
-);
-const alternates = [
-  { locale: DEFAULT_LOCALE, href: englishPath },
-  ...translatedLocales.map((candidateLocale) => ({
-    locale: candidateLocale,
-    href: getLocalizedPostPath(baseSlug, candidateLocale),
-  })),
-];
-const languageOptions = sortLanguageOptions([
-  {
-    locale: DEFAULT_LOCALE,
-    label: LOCALE_LABELS[DEFAULT_LOCALE],
-    href: englishPath,
-    isCurrent: locale === DEFAULT_LOCALE,
-    isTranslated: true,
-  },
-  ...ACTIVE_LOCALES.map((candidateLocale) => {
-    const translatedSlug = `${candidateLocale}/${baseSlug}`;
-    const isTranslated = Boolean(PostCollections._postsBySlug[translatedSlug]);
-    return {
-      locale: candidateLocale,
-      label: LOCALE_LABELS[candidateLocale],
-      href: isTranslated ? getLocalizedPostPath(baseSlug, candidateLocale) : englishPath,
-      isCurrent: locale === candidateLocale,
-      isTranslated,
-    };
-  }),
-]);
+const canonicalPath = PostCollections.getLocalizedPostHref(baseSlug, locale);
+const englishPath = PostCollections.getLocalizedPostHref(baseSlug, DEFAULT_LOCALE);
+const alternates = PostCollections.getPostAlternates(baseSlug);
+const languageOptions = PostCollections.getPostLanguageOptions(baseSlug, locale);
 const availableAlternateLanguageOptions = languageOptions.filter(
   (option) => option.isTranslated && !option.isCurrent,
 );

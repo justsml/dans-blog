@@ -179,7 +179,8 @@ async function judgeCandidates({
   const prompt = [
     "You are a constrained translation judge for DanLevy.net.",
     `Choose the best ${locale} translation candidate for ${slug}.`,
-    "Prioritize technical accuracy, natural language quality, preserved MDX/frontmatter/imports, preserved code, matching per-level heading counts, and Dan's direct technical style.",
+    "Prioritize technical accuracy, natural language quality, preserved MDX/frontmatter/imports, preserved code, matching per-level heading counts, localized same-page heading link fragments, and Dan's direct technical style.",
+    "Same-page heading links must point at translated heading slugs, not stale English heading IDs. Other URLs and non-heading links should remain preserved except for locale-folder asset path fixes.",
     "Return JSON only with this shape: {\"selectedRunId\":\"...\",\"reason\":\"...\",\"risks\":[\"...\"]}.",
     "",
     "# English Source",

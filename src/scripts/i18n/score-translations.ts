@@ -303,6 +303,7 @@ async function scoreTranslation({
     "- translationQuality: natural target-language translation while preserving Dan's direct technical voice",
     "",
     "Be strict. Penalize untranslated reader-facing prose, broken MDX, mistranslated technical terms, and softened security/AI claims.",
+    "Penalize same-page heading links whose #fragment still points at an English heading ID after the heading text was translated; correct localized heading links should target the translated heading slug.",
     "Do not penalize preserved code blocks, file paths, URLs, import paths, API names, or inline code.",
     "If the source/translation was truncated in the prompt, score only the visible material and mention that limitation.",
     "",

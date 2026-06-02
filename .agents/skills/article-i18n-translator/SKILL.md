@@ -16,7 +16,7 @@ Use this skill for DanLevy.net article translation work. The priority is not onl
 - Preserve full Git history. Commit candidate outputs, rejected attempts, judge passes, and final fixes as normal commits. Do not squash.
 - For broad baseline coverage, run Qwen directly on `main` with `bun run i18n:qwen:baseline -- --push`. It is resumable and skips slug+locale pairs that already have a successful Qwen report.
 - Do not edit `public/_redirects` by hand. Let build-generated redirects update it.
-- Preserve MDX structure, imports, components, props, code blocks, URLs, anchors, and asset paths.
+- Preserve MDX structure, imports, components, props, code blocks, URLs, anchors, and asset paths. Same-page heading anchors are the exception to literal preservation: when heading text is translated, update `#fragment` links to the translated heading slug rather than keeping the English heading slug.
 - Translate reader-facing prose, frontmatter `title` and `subTitle`, image alt text, quiz text, options, and explanations.
 - Localized frontmatter inherits English-only publishing metadata. Omit `date`, `draft`, `unlisted`, `hidden`, `publish`, and `popularity` in translated docs; keep `modified` and preserve other metadata such as `category`, `subCategory`, `tags`, `related`, `redirects`, and `commentsKeyOverride`.
 - Use parent-relative asset paths in nested locale folders, for example `../banner.webp`.

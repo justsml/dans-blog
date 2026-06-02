@@ -94,8 +94,8 @@ function checkHeadingAnchorLinks(
     code: "heading-anchor-link-target",
     severity: "high",
     message: [
-      `${targetPath} has ${report.failedLinks}/${report.checkedLinks} same-page heading anchor link(s) pointing at stale or missing translated heading IDs.`,
-      `Stale source anchors: ${report.staleSourceAnchorLinks}; unresolved target anchors: ${report.unresolvedTargetLinks}.`,
+      `${targetPath} has ${report.failedLinks}/${report.checkedLinks} same-page heading anchor link(s) pointing at stale, missing, or wrong translated heading IDs.`,
+      `Stale source anchors: ${report.staleSourceAnchorLinks}; unresolved target anchors: ${report.unresolvedTargetLinks}; wrong localized heading anchors: ${report.wrongHeadingAnchorLinks}.`,
       `Examples: ${examples.join("; ")}`,
     ].join(" "),
   }];

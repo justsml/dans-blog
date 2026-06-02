@@ -1,5 +1,12 @@
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join, relative } from "node:path";
+import {
+  getCanonicalTag,
+  getPreferredCategory,
+  getVisibilityWarnings,
+  isEditorialCategory,
+  isKebabCaseTag,
+} from "../shared/editorialRules.ts";
 import { ACTIVE_LOCALES, FUTURE_LOCALES, DEFAULT_LOCALE, isLocale } from "../shared/i18n.ts";
 import { parsePostId } from "../shared/pathHelpers.ts";
 
@@ -27,60 +34,6 @@ const assetRoutePrefixes = [
   "/previews/",
   "/styles/",
 ];
-
-const allowedCategories = new Set([
-  "AI",
-  "Code",
-  "DevOps",
-  "Engineering",
-  "Guides",
-  "HowTo",
-  "Instructional Design",
-  "Leadership",
-  "Lulz",
-  "Quiz",
-  "Regex",
-  "Search",
-  "Security",
-  "Thoughts",
-]);
-
-const preferredCategoryByAlias = new Map([
-  ["howto", "HowTo"],
-  ["how-to", "HowTo"],
-  ["regular expressions", "Regex"],
-  ["reg-ex", "Regex"],
-  ["software engineering", "Engineering"],
-]);
-
-const canonicalTagByAlias = new Map([
-  ["AI", "ai"],
-  ["AI SDK", "ai-sdk"],
-  ["Agent Networks", "agent-networks"],
-  ["Agent Orchestration", "agent-orchestration"],
-  ["Guardrails", "guardrails"],
-  ["Integrations", "integrations"],
-  ["LLM", "llm"],
-  ["MCP", "mcp"],
-  ["Mastra", "mastra"],
-  ["Math", "math"],
-  ["PII", "pii"],
-  ["Privacy", "privacy"],
-  ["Salesforce", "salesforce"],
-  ["Security", "security"],
-  ["Tools", "tools"],
-  ["TypeScript", "typescript"],
-  ["Workflows", "workflows"],
-  ["lanceDB", "lancedb"],
-  ["date class", "date"],
-  ["functional river", "functional-programming"],
-  ["open source", "open-source"],
-  ["packet.net", "packet"],
-  ["ovh.net", "ovh"],
-  ["shell script", "shell-script"],
-  ["site-search", "search"],
-  ["source code", "source-code"],
-]);
 
 type FrontmatterValue = string | boolean | string[] | number | undefined;
 
@@ -252,35 +205,27 @@ function checkTaxonomy(post: PostFile) {
     return;
   }
 
-  const preferredCategory = preferredCategoryByAlias.get(category.toLowerCase());
+  const preferredCategory = getPreferredCategory(category);
   if (preferredCategory && category !== preferredCategory) {
     add("warning", post, `category "${category}" should be "${preferredCategory}"`);
-  } else if (!allowedCategories.has(category)) {
+  } else if (!isEditorialCategory(category)) {
     add("warning", post, `category "${category}" is outside the controlled taxonomy`);
   }
 
   const tags = arrayValue(post.frontmatter.tags);
   for (const tag of tags) {
-    const canonicalTag = canonicalTagByAlias.get(tag);
+    const canonicalTag = getCanonicalTag(tag);
     if (canonicalTag) {
       add("warning", post, `tag "${tag}" should be "${canonicalTag}"`);
-    } else if (/[A-Z]/.test(tag) || /\s/.test(tag)) {
+    } else if (!isKebabCaseTag(tag)) {
       add("warning", post, `tag "${tag}" should be lowercase kebab-case`);
     }
   }
 }
 
 function checkVisibility(post: PostFile) {
-  const publish = flagValue(post.frontmatter.publish);
-  const draft = flagValue(post.frontmatter.draft);
-  const hidden = flagValue(post.frontmatter.hidden);
-
-  if (publish === true && hidden === true) {
-    add("warning", post, "publish:true is paired with hidden:true");
-  }
-
-  if (publish === false && draft !== true && hidden !== true) {
-    add("warning", post, "publish:false should usually be paired with draft:true or hidden:true");
+  for (const warning of getVisibilityWarnings(post.frontmatter)) {
+    add("warning", post, warning);
   }
 }
 
@@ -428,17 +373,6 @@ function stringValue(value: FrontmatterValue) {
 
 function arrayValue(value: FrontmatterValue) {
   return Array.isArray(value) ? value : [];
-}
-
-function flagValue(value: FrontmatterValue) {
-  if (typeof value === "boolean") return value;
-  if (typeof value === "number") return value !== 0;
-  if (typeof value === "string") {
-    const normalized = value.trim().toLowerCase();
-    if (["true", "1", "yes", "on"].includes(normalized)) return true;
-    if (["false", "0", "no", "off", ""].includes(normalized)) return false;
-  }
-  return undefined;
 }
 
 function add(level: Finding["level"], post: PostFile, message: string) {

@@ -27,6 +27,7 @@ type HeadingLinkCoverage = {
   failedLinks: number;
   staleSourceAnchorLinks: number;
   unresolvedTargetLinks: number;
+  wrongHeadingAnchorLinks: number;
   examples: string[];
 };
 
@@ -175,6 +176,7 @@ function getHeadingLinkCoverage(sourcePath: string, translationPath: string): He
     failedLinks: report.failedLinks,
     staleSourceAnchorLinks: report.staleSourceAnchorLinks,
     unresolvedTargetLinks: report.unresolvedTargetLinks,
+    wrongHeadingAnchorLinks: report.wrongHeadingAnchorLinks,
     examples: report.failures.slice(0, 3).map((failure) =>
       `line ${failure.lineNumber}: #${failure.targetFragment || "(missing)"} -> #${failure.expectedFragment}`,
     ),
@@ -300,6 +302,7 @@ function renderMarkdown(posts: PostCoverage[], summary: ReturnType<typeof summar
         item.headingLinks?.failedLinks ?? 0,
         item.headingLinks?.staleSourceAnchorLinks ?? 0,
         item.headingLinks?.unresolvedTargetLinks ?? 0,
+        item.headingLinks?.wrongHeadingAnchorLinks ?? 0,
         item.headingLinks?.examples.join("; ") || "-",
       ]),
   ).sort((a, b) => Number(b[3]) - Number(a[3]) || String(a[0]).localeCompare(String(b[0])));
@@ -437,8 +440,8 @@ function renderStructuralIssueRows(rows: Array<Array<string | number>>) {
 function renderHeadingLinkIssueRows(rows: Array<Array<string | number>>) {
   if (rows.length === 0) return ["No heading anchor link failures found."];
   return [
-    markdownRow(["Post", "Locale", "Checked", "Failures", "Stale source", "Unresolved", "Examples"]),
-    markdownRow(["---", "---", "---:", "---:", "---:", "---:", "---"]),
+    markdownRow(["Post", "Locale", "Checked", "Failures", "Stale source", "Unresolved", "Wrong heading", "Examples"]),
+    markdownRow(["---", "---", "---:", "---:", "---:", "---:", "---:", "---"]),
     ...rows.map((row) => markdownRow(row)),
   ];
 }

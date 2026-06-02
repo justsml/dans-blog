@@ -284,6 +284,8 @@ describe("scoreTranslation", () => {
     const messages = capturedSettings?.messages ?? [];
     expect(messages.length).toBe(5);
     expect(JSON.stringify(messages[1])).toContain("Score these dimensions");
+    expect(JSON.stringify(messages[1])).toContain("Same-page heading links must target the localized heading IDs");
+    expect(JSON.stringify(messages[1])).toContain("rather than link drift");
     expect(JSON.stringify(messages[1])).not.toContain("candidate-1");
     expect(JSON.stringify(messages[2])).toContain("<english-source>");
     expect(JSON.stringify(messages[3])).toContain("<candidate>");

@@ -1,22 +1,6 @@
 import { defineCollection, z } from "astro:content";
 import { glob } from "astro/loaders";
-
-const editorialCategories = [
-  "AI",
-  "Code",
-  "DevOps",
-  "Engineering",
-  "Guides",
-  "HowTo",
-  "Instructional Design",
-  "Leadership",
-  "Lulz",
-  "Quiz",
-  "Regex",
-  "Search",
-  "Security",
-  "Thoughts",
-] as const;
+import { EDITORIAL_CATEGORIES } from "./shared/editorialRules";
 
 export const posts = defineCollection({
   loader: glob({ pattern: "**/index.{md,mdx}", base: "./src/content/posts" }),
@@ -55,7 +39,7 @@ export const posts = defineCollection({
        * Keep top-level taxonomy controlled. Run `bun run content:check`
        * after adding a new category or changing visibility fields.
        */
-      category: z.enum(editorialCategories).optional(),
+      category: z.enum(EDITORIAL_CATEGORIES).optional(),
       subCategory: z.string().optional(),
       tags: z.array(z.string()).optional(),
 

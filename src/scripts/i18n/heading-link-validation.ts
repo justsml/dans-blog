@@ -1,6 +1,6 @@
 import GithubSlugger from "github-slugger";
 
-export type HeadingAnchorLinkFailureKind = "missing-target" | "stale-source-anchor";
+export type HeadingAnchorLinkFailureKind = "missing-target" | "stale-source-anchor" | "wrong-heading-anchor";
 
 export type HeadingAnchorLinkFailure = {
   expectedFragment: string;
@@ -17,9 +17,10 @@ export type HeadingAnchorLinkReport = {
   failures: HeadingAnchorLinkFailure[];
   staleSourceAnchorLinks: number;
   unresolvedTargetLinks: number;
+  wrongHeadingAnchorLinks: number;
 };
 
-type Heading = {
+export type HeadingAnchor = {
   fragment: string;
   level: number;
   text: string;
@@ -40,10 +41,10 @@ export function analyzeHeadingAnchorLinks({
   sourceContents: string;
   targetContents: string;
 }): HeadingAnchorLinkReport {
-  const sourceHeadings = extractHeadings(sourceContents);
-  const targetHeadings = extractHeadings(targetContents);
+  const sourceHeadings = extractHeadingAnchors(sourceContents);
+  const targetHeadings = extractHeadingAnchors(targetContents);
   const sourceHeadingByFragment = new Map(sourceHeadings.map((heading, index) => [heading.fragment, { heading, index }]));
-  const targetFragments = new Set(targetHeadings.map((heading) => heading.fragment));
+  const targetHeadingByFragment = new Map(targetHeadings.map((heading, index) => [heading.fragment, { heading, index }]));
   const sourceLinks = extractLinks(sourceContents);
   const targetLinks = extractLinks(targetContents);
   const failures: HeadingAnchorLinkFailure[] = [];
@@ -52,25 +53,36 @@ export function analyzeHeadingAnchorLinks({
   for (const targetLink of targetLinks) {
     const targetFragment = targetLink.fragment;
     if (targetFragment == null) continue;
-    if (targetFragments.has(targetFragment)) {
-      checkedLinks += 1;
-      continue;
-    }
-
-    const staleSourceHeading = sourceHeadingByFragment.get(targetFragment);
     const pairedSourceLink = sourceLinks[targetLink.ordinal];
     const pairedSourceFragment = pairedSourceLink?.fragment;
     const pairedSourceHeading = pairedSourceFragment == null
       ? undefined
       : sourceHeadingByFragment.get(pairedSourceFragment);
+    const existingTargetHeading = targetHeadingByFragment.get(targetFragment);
+    if (existingTargetHeading != null) {
+      checkedLinks += 1;
+      if (pairedSourceHeading != null && existingTargetHeading.index !== pairedSourceHeading.index) {
+        failures.push({
+          expectedFragment: targetHeadings[pairedSourceHeading.index]?.fragment ?? "",
+          kind: "wrong-heading-anchor",
+          lineNumber: targetLink.lineNumber,
+          linkText: targetLink.text,
+          sourceFragment: pairedSourceFragment ?? "",
+          targetFragment,
+        });
+      }
+      continue;
+    }
+
+    const staleSourceHeading = sourceHeadingByFragment.get(targetFragment);
     const sourceHeading = staleSourceHeading ?? pairedSourceHeading;
     if (sourceHeading == null) continue;
 
     checkedLinks += 1;
-    const targetHeading = targetHeadings[sourceHeading.index];
+    const expectedTargetHeading = targetHeadings[sourceHeading.index];
     failures.push({
-      expectedFragment: targetHeading?.fragment ?? "",
-      kind: staleSourceHeading != null && targetFragment !== targetHeading?.fragment
+      expectedFragment: expectedTargetHeading?.fragment ?? "",
+      kind: staleSourceHeading != null && targetFragment !== expectedTargetHeading?.fragment
         ? "stale-source-anchor"
         : "missing-target",
       lineNumber: targetLink.lineNumber,
@@ -86,10 +98,11 @@ export function analyzeHeadingAnchorLinks({
     failures,
     staleSourceAnchorLinks: failures.filter((failure) => failure.kind === "stale-source-anchor").length,
     unresolvedTargetLinks: failures.filter((failure) => failure.kind === "missing-target").length,
+    wrongHeadingAnchorLinks: failures.filter((failure) => failure.kind === "wrong-heading-anchor").length,
   };
 }
 
-function extractHeadings(contents: string): Heading[] {
+export function extractHeadingAnchors(contents: string): HeadingAnchor[] {
   const headings: Array<{ explicitId?: string; level: number; text: string }> = [];
   const comparable = stripInlineCodeSpans(stripMdxComments(stripFencedCodeBlocks(stripFrontmatter(contents))));
 

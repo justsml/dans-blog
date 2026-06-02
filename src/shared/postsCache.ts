@@ -8,7 +8,20 @@ import {
 import { fixSlugPrefix, getSlugFromId, parsePostId, slugify } from "./pathHelpers.ts";
 import type { ArticlePost, QuizPost } from "../types.ts";
 import { toDate } from "./dateUtils.ts";
-import { isRoutablePost, isVisiblePost } from "./postVisibility.ts";
+import {
+  isFeedPost,
+  isListedPost,
+  isRoutablePost,
+  isVisiblePost,
+  shouldCountPostCategory,
+} from "./editorialRules.ts";
+import {
+  getLocalizedPostHref,
+  getPostAlternates,
+  getPostLanguageOptions,
+  hasPostForLocale,
+  hasPostTranslation,
+} from "./postLocalization.ts";
 
 const _rawPostsCollection: ArticlePost[] = (
   (await getCollection("posts")) as unknown as ArticlePost[]
@@ -28,8 +41,7 @@ const _allPosts = buildLocalizedPosts(_rawPostsCollection)
 
 const _posts = _allPosts.filter((post) => post.locale === DEFAULT_LOCALE);
 const _visiblePosts = _posts.filter(isVisiblePost);
-
-const ignoredCategories = ["Quiz", "Snippet", "Draft"];
+const _feedPosts = _posts.filter(isFeedPost);
 
 export type PostFeedItem = {
   sourcePath: string;
@@ -92,8 +104,7 @@ export const PostCollections = {
   _categories: _posts.reduce(
     (acc, post) => {
       const { category } = post.data;
-      if (ignoredCategories.includes(category)) return acc;
-      if (post.data.unlisted || post.data.draft) return acc;
+      if (!shouldCountPostCategory(post.data)) return acc;
       acc[category] = acc[category] == null ? 1 : acc[category] + 1;
       return acc;
     },
@@ -138,11 +149,60 @@ export const PostCollections = {
     return posts;
   },
 
+  hasPostForLocale(baseSlug: string, locale: Locale = DEFAULT_LOCALE) {
+    return hasPostForLocale(
+      baseSlug,
+      locale,
+      (routeSlug) => PostCollections._postsBySlug[routeSlug] != null,
+    );
+  },
+
+  hasTranslation(baseSlug: string, locale: Locale) {
+    return hasPostTranslation(
+      baseSlug,
+      locale,
+      (routeSlug) => PostCollections._postsBySlug[routeSlug] != null,
+    );
+  },
+
+  getLocalizedPostHref(
+    postOrBaseSlug: ArticlePost | string,
+    locale: Locale = DEFAULT_LOCALE,
+  ) {
+    const baseSlug =
+      typeof postOrBaseSlug === "string"
+        ? postOrBaseSlug
+        : postOrBaseSlug.baseSlug ?? postOrBaseSlug.slug;
+
+    return getLocalizedPostHref(
+      baseSlug,
+      locale,
+      (routeSlug) => PostCollections._postsBySlug[routeSlug] != null,
+    );
+  },
+
+  getPostAlternates(baseSlug: string) {
+    return getPostAlternates(
+      baseSlug,
+      (routeSlug) => PostCollections._postsBySlug[routeSlug] != null,
+    );
+  },
+
+  getPostLanguageOptions(baseSlug: string, currentLocale: Locale = DEFAULT_LOCALE) {
+    return getPostLanguageOptions(
+      baseSlug,
+      currentLocale,
+      (routeSlug) => PostCollections._postsBySlug[routeSlug] != null,
+    );
+  },
+
   getPostForLocale(post: ArticlePost, locale: Locale = DEFAULT_LOCALE) {
     if (locale === DEFAULT_LOCALE) return post;
 
     const baseSlug = post.baseSlug ?? post.slug;
-    return PostCollections._postsBySlug[getLocalizedPostSlug(baseSlug, locale)] ?? post;
+    return PostCollections.hasPostForLocale(baseSlug, locale)
+      ? PostCollections._postsBySlug[getLocalizedPostSlug(baseSlug, locale)]
+      : post;
   },
 
   getPostsForLocale(locale: Locale = DEFAULT_LOCALE) {
@@ -195,7 +255,7 @@ export const PostCollections = {
       const baseSlug = post.baseSlug ?? post.slug;
       return ACTIVE_LOCALES.flatMap((locale) => {
         const localizedSlug = getLocalizedPostSlug(baseSlug, locale);
-        if (PostCollections._postsBySlug[localizedSlug]) return [];
+        if (PostCollections.hasPostForLocale(baseSlug, locale)) return [];
 
         return [{
           slug: baseSlug,
@@ -208,7 +268,7 @@ export const PostCollections = {
   },
 
   getFeedPosts() {
-    return [openSourceJournalPost, ..._visiblePosts];
+    return [openSourceJournalPost, ..._feedPosts];
   },
 
   getFeedItems({ includeSubCategory = true } = {}): PostFeedItem[] {
@@ -252,8 +312,7 @@ export const PostCollections = {
     return PostCollections.getPostsForLocale(locale).filter(
       (post) =>
         post.data.category === category &&
-        !post.data.unlisted &&
-        !post.data.draft,
+        isListedPost(post),
     );
   },
 
