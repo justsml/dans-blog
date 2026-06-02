@@ -20,16 +20,16 @@ cover_icon: ../icon_gorilla-types_dall-e.webp
 
 الهدف الرئيسي هو واجهات **متسقة** و**قابلة للتنبؤ** للنماذج/الكيانات/الفئات.
 
-- [طرق تصميم الأنواع](#approaches-to-designing-types)
-  - [كائن واحد كبير](#single-large-object)
-  - [أنواع متعددة مسماة](#multiple-named-types)
-- [التقنية #1: لماذا لا الكل](#technique-1-why-not-all)
-- [التقنية #2: المزج](#technique-2-mix-ins)
-  - [أمثلة على المزج](#mix-in-examples)
+- [طرق تصميم الأنواع](#طرق-تصميم-الأنواع)
+  - [كائن واحد كبير](#كائن-واحد-كبير)
+  - [أنواع متعددة مسماة](#أنواع-متعددة-مسماة)
+- [التقنية #1: لماذا لا الكل](#الأسلوب-1-لماذا-لا-يكون-الكل)
+- [التقنية #2: المزج](#التقنية-2-المزج-mix-ins)
+  - [أمثلة على المزج](#أمثلة-على-المزج)
   - [مثال `User`](#example-user)
-- [التقنية #3: التنظيم باستخدام مساحات الأسماء](#technique-3-organizing-with-namespaces)
-  - [الاستخدام في العالم الحقيقي](#real-world-usage)
-- [الملخص](#summary)
+- [التقنية #3: التنظيم باستخدام مساحات الأسماء](#التقنية-3-التنظيم-باستخدام-namespaces)
+  - [الاستخدام في العالم الحقيقي](#استخدام-واقعي)
+- [الملخص](#ملخص)
 
 {/*
 1.  High-level logical representation of types - in a way meaningful to both devs and business stakeholders.
@@ -48,8 +48,6 @@ cover_icon: ../icon_gorilla-types_dall-e.webp
 **ملاحظة:** أتجاهل عمدًا العمليات "التقليدية" لبناء مخططات علاقات الكيانات (ERD) أو تسلسلات الوراثة في البرمجة كائنية التوجه (OOP). هنا، نبني أنواعًا لتمثيل بيانات API شبه المنظمة.
 
 دعنا نستكشف طريقتين عاليتي المستوى: **كائن واحد كبير** (من الأعلى إلى الأسفل) مقابل **أنواع متعددة مسماة** (من الأسفل إلى الأعلى).
-
-#### كائن واحد كبير
 
 #### كائن واحد كبير
 
@@ -86,7 +84,7 @@ interface ProductDetails {
 interface Seller { name: string; }
 interface Availability { warehouseId: string; quantity: number; }
 interface Reviews { authorId: number; stars: number; }
-}
+```
 
 بشكل عام، هذا النهج رائع. لكنه لا يخلو من العيوب.
 

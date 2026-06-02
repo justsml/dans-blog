@@ -50,14 +50,14 @@ Avant de décider comment améliorer ce code, identifions quelques avantages et 
 #### Inconvénients
 
 - Transmettre `userId` de manière répétitive est fastidieux.
-- Les fonctions n'acceptent pas un seul paramètre (unaire). _Cela affecte la composabilité. Voir l'[exemple final](#checkout-with-further-improvements) pour comprendre pourquoi ?_
+- Les fonctions n'acceptent pas un seul paramètre (unaire). _Cela affecte la composabilité. Voir l'[exemple final](#checkout-avec-améliorations-supplémentaires) pour comprendre pourquoi ?_
 - Pas toujours évident de savoir ce que chaque fonction retourne. (Est-ce le résultat de l'envoi d'email, ou cette variable `result` ? Ou ?)
 - Pas évident de savoir comment ajouter des fonctionnalités (par exemple : disons que nous devons charger la réduction/crédit/points du client, etc.)
 - Les noms de paramètres « temporaires » (comme dans chaque `.then(param => {})`) ajoutent parfois du contexte. Cependant, avec le temps, ils deviendront probablement des nids à noms obsolètes.
 
 ### Solution, partie 1 : Créez un module !
 
-Cette technique consiste à organiser des fonctions liées dans un seul module (par exemple `CartHelpers`). Elle n'impose pas un motif spécifique. Explorez les [fonctions factory](#carthelpers-factory), les [Classes](#carthelpers-class), les Closures, les Mixins, etc. Trouvez ce qui a du sens pour votre projet et votre équipe.
+Cette technique consiste à organiser des fonctions liées dans un seul module (par exemple `CartHelpers`). Elle n'impose pas un motif spécifique. Explorez les [fonctions factory](#factory-carthelpers), les [Classes](#classe-carthelpers), les Closures, les Mixins, etc. Trouvez ce qui a du sens pour votre projet et votre équipe.
 
 #### Factory CartHelpers
 

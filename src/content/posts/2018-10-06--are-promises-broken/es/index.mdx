@@ -41,20 +41,20 @@ Admito que incluso los recursos y documentación "oficiales" ofrecen principalme
 
 ## Reglas para evitar problemas
 
-1. [Las Promesas necesitan algo en lo que agarrarse](#1-promises-need-something-to-hang-on-to)  
-    * **Siempre** `return` desde tus funciones.  
-1. [Usa instancias reales de `Error`](#2-use-real-error-instances)  
-    * **Siempre** usa instancias de `Error`.  
-1. [Maneja errores donde tenga sentido](#3-handle-errors-where-it-makes-sense)  
-    * **Siempre** usa `.catch()`, al menos una vez.  
-1. [Agrega claridad con funciones nombradas 🦄✨](#4-add-clarity-with-named-functions-)  
-    * __Prefiere__ funciones nombradas.  
+1. [Las Promesas necesitan algo en lo que agarrarse](#1-las-promesas-necesitan-algo-en-lo-que-agarrarse)
+    * **Siempre** `return` desde tus funciones.
+1. [Usa instancias reales de `Error`](#2-use-real-error-instances)
+    * **Siempre** usa instancias de `Error`.
+1. [Maneja errores donde tenga sentido](#3-manejar-errores-donde-tenga-sentido)
+    * **Siempre** usa `.catch()`, al menos una vez.
+1. [Agrega claridad con funciones nombradas 🦄✨](#4-añadir-claridad-con-funciones-nombradas-)
+    * __Prefiere__ funciones nombradas.
 
--------------------------------------------  
+-------------------------------------------
 
-#### #1 Las Promesas necesitan algo en lo que agarrarse  
+#### #1 Las Promesas necesitan algo en lo que agarrarse
 
-Es crucial que **siempre devuelvas** desde tus funciones.  
+Es crucial que **siempre devuelvas** desde tus funciones.
 
 Las funciones de callback de las Promesas siguen un patrón específico en `.then(callback)` y `.catch(callback)`.
 

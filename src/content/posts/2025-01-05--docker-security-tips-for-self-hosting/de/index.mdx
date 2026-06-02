@@ -19,11 +19,11 @@ import {CodeTabs} from '../../../../components/CodeTabs';
 
 **Inhalt**
 
-- 🧗‍♀️ [Für die Mutigen](#für-die-mutigen)
+- 🧗‍♀️ [Für die Mutigen](#️-für-die-mutigen)
 - 🔄 [Der `:latest`-Tanz](#der-latest-tanz)
-- 🔐 [Geheimnisverwaltung: Die richtige Art](#geheimnisverwaltung)
-- 🌐 [Netzwerkgefahr](#netzwerkgefahr)
-- 🛡️ [Zugriffssteuerung](#zugriffssteuerung)
+- 🔐 [Geheimnisverwaltung: Die richtige Art](#-geheimnisanwaltung)
+- 🌐 [Netzwerkgefahr](#best-practices-zu-fähigkeiten)
+- 🛡️ [Zugriffssteuerung](#sicherheit-für-cloudflare-proxy-host-stärken)
 - 🔍 [Überwachung & Verifikation](#überwachung--verifikation)
 - ⏰ [Oft übersehene Tipps](#oft-übersehene-tipps)
 - 🚀 [Produktionscheckliste](#produktionscheckliste)
@@ -80,8 +80,8 @@ _Teilen Sie mir Ihre Lieblingstools für die Aufrechterhaltung aktueller Docker-
 
 ## 🔐 Geheimnisanwaltung
 
-- [Starke Geheimnisse generieren](#generate-strong-secrets)
-- [Canary Tokens](#canary-tokens)
+- [Starke Geheimnisse generieren](#beispiel-docker-compose)
+- [Canary Tokens](#netzwerk-best-practices)
 - [Von `.env` auf MacOS Keychain aufrüsten](#upgrade-from-env-to-macos-keychain)
 {/* - [Placeholder Validation](#placeholder-validation) */}
 
@@ -412,7 +412,7 @@ curl -fsSL https://www.ipdeny.com/ipblocks/data/countries/us.zone | \
 
 Wenn Ihr Heimserver hinter einer CloudFlare-IP (Proxy) geschützt ist, können Sie den Zugriff auf nur CloudFlare-IPs und Ihr lokales Netzwerk beschränken.
 
-Dies ist etwas ähnlich wie die [Länderblockierung](#blocking-country) weiter oben, bietet aber eine viel engere Kontrolle.
+Dies ist etwas ähnlich wie die [Länderblockierung](#erlaube-cloudflare-ips) weiter oben, bietet aber eine viel engere Kontrolle.
 
 ```bash title="whitelist-ingress-from-cloudflare.sh"
 ufw default deny incoming # Alle eingehenden Verbindungen sperren!!!

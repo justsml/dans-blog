@@ -40,7 +40,7 @@ Espera un momento, ¡este código está bastante decente, considerando los pipel
 
 Presenta algunos problemas sutiles que pueden combinarse y convertirse en fallos más graves.
 
-Un inconveniente es que seguimos pasando `userId` a cada función (lógicamente relacionada).  
+Un inconveniente es que seguimos pasando `userId` a cada función (lógicamente relacionada).
 A eso se suma otro detalle que los desarrolladores y TypeScript pasan por alto con facilidad: invertir el orden de los argumentos numéricos genera un error silencioso. (Véanse `applyTaxes` y `purchaseProducts`. _¿Era `userId` o `amount` lo que debía ir primero?_)
 
 Antes de decidir cómo mejorar este código, identifiquemos algunos pros y contras.
@@ -56,15 +56,15 @@ Antes de decidir cómo mejorar este código, identifiquemos algunos pros y contr
 
 #### Contras
 
-- Pasar `userId` repetidamente es tedioso.  
-- Las funciones no son de un solo parámetro (unarias). _Esto afecta la composibilidad. Consulta el [ejemplo final](#checkout-with-further-improvements) para ver por qué._  
-- Puede no ser evidente qué devuelve cada función. (¿Es el resultado del envío de email, o la variable `result`? ¿O qué?)  
-- No está claro cómo añadir funcionalidad (p. ej., si necesitáramos cargar descuento/crédito/puntos del cliente, etc.)  
+- Pasar `userId` repetidamente es tedioso.
+- Las funciones no son de un solo parámetro (unarias). _Esto afecta la composibilidad. Consulta el [ejemplo final](#checkout-con-mejoras-adicionales) para ver por qué._
+- Puede no ser evidente qué devuelve cada función. (¿Es el resultado del envío de email, o la variable `result`? ¿O qué?)
+- No está claro cómo añadir funcionalidad (p. ej., si necesitáramos cargar descuento/crédito/puntos del cliente, etc.)
 - A veces los nombres de parámetros “temporales” (como en cada `.then(param => {})`) aportan contexto. Sin embargo, con el tiempo, suelen convertirse en basura de nombres.
 
 ### Solución, Parte 1: ¡Crear un módulo!
 
-Esta técnica consiste en organizar funciones relacionadas en un único módulo (p. ej., `CartHelpers`). No obliga a un patrón específico. Explora [funciones fábrica](#carthelpers-factory), [Clases](#carthelpers-class), cierres, mixins, etc. Encuentra lo que tenga sentido para tu proyecto y tu equipo.
+Esta técnica consiste en organizar funciones relacionadas en un único módulo (p. ej., `CartHelpers`). No obliga a un patrón específico. Explora [funciones fábrica](#fábrica-carthelpers), [Clases](#clase-carthelpers), cierres, mixins, etc. Encuentra lo que tenga sentido para tu proyecto y tu equipo.
 
 #### Fábrica CartHelpers
 
@@ -106,7 +106,7 @@ Algunos beneficios inmediatos:
 
 Al agrupar funciones relacionadas, creamos la oportunidad de reducir la superficie expuesta (p. ej., `checkout()`, métodos “públicos” de `CartHelpers`).
 
-> Menos superficie === menos carga cognitiva, mejores pruebas y mantenibilidad.  
+> Menos superficie === menos carga cognitiva, mejores pruebas y mantenibilidad.
 > _Diseña sistemas con intención y foco. ✨_
 
 #### Checkout y Uso de CartHelpers

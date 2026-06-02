@@ -31,21 +31,21 @@ Questo articolo è una raccolta di snippets di codice `fetch` e casi d'uso comun
 
 - [Panoramica](#panoramica)
 - [Confronto delle funzionalità](#confronto-delle-funzionalità)
-- [Ricette con `fetch`](#ricette-con-fetch)
+- [Ricette con `fetch`](#ricette-con)
   - [Ottenere JSON da un URL](#ottenere-json-da-un-url)
   - [Intestazioni personalizzate](#intestazioni-personalizzate)
   - [Gestione degli errori HTTP](#gestione-degli-errori-http)
   - [Esempio CORS](#esempio-cors)
-  - [Inviare JSON](#inviare-json)
+  - [Inviare JSON](#invio-di-json)
   - [Inviare un HTML `<form>`](#inviare-un-html-form)
-  - [Dati codificati in formato form](#dati-codificati-in-formato-form)
-  - [Caricare un file](#caricare-un-file)
-  - [Caricare più file](#caricare-più-file)
+  - [Dati codificati in formato form](#dati-codificati-in-form)
+  - [Caricare un file](#caricamento-di-un-file)
+  - [Caricare più file](#caricamento-di-più-file)
   - [Timeout](#timeout)
   - [Helper per il progresso del download](#helper-per-il-progresso-del-download)
-  - [Helper per il riprova ricorsivo](#helper-per-il-riprova-ricorsivo)
-  - [Gestione dei redirect HTTP](#gestione-dei-redirect-http)
-  - [Annullare una richiesta `fetch`](#annullare-una-richiesta-fetch) ✨nuovo✨
+  - [Helper per il riprova ricorsivo](#helper-di-riprova-ricorsivo)
+  - [Gestione dei redirect HTTP](#gestione-delle-reindirizzazioni-http)
+  - [Annullare una richiesta `fetch`](#annullamento-di-una-richiesta-fetch) ✨nuovo✨
 - [Compatibilità](#compatibilità)
 
 > Il tuo caso d'uso non è elencato? [Fammi sapere ✉️](../contact/)
@@ -76,6 +76,8 @@ Nonostante l'uso di `fetch` per diversi anni (inclusi compiti non banali: carica
 Il `fetch` nativo non analizza automaticamente le risposte JSON né converte in stringa i corpi delle richieste JSON. Devi chiamare `response.json()` al ritorno e `JSON.stringify()` in uscita. Axios mantiene comunque queste comodità; l'argomento a favore di `fetch` è che un piccolo helper copre spesso il divario.
 
 Beh, vediamo cosa può fare `fetch`...
+
+## Ricette con `fetch`
 
 ### Ottenere JSON da un URL
 
@@ -141,7 +143,7 @@ E un esempio più complesso, con un flag di tracciamento `__timeout` per **inter
 
 Il progresso di upload è attualmente un po' instabile al di fuori di Chrome.
 
-La tecnica del gestore di progresso [mostrata di seguito evita di avvolgere](#source-progress-helper) la chiamata `fetch` in una closure. 👍
+La tecnica del gestore di progresso [mostrata di seguito evita di avvolgere](#fonte-helper-di-progresso) la chiamata `fetch` in una closure. 👍
 
 `progressHelper` ha l'interfaccia seguente (sorgente disponibile qui sotto)
 

@@ -56,14 +56,14 @@ Prima di decidere come migliorare questo codice, identifichiamo alcuni pro e con
 #### Contro
 
 - Passare ripetutamente `userId` è noioso.
-- Le funzioni non sono a parametro singolo (unarie). _Questo influisce sulla componibilità. Vedi [esempio finale](#checkout-with-further-improvements) per il perché?_
+- Le funzioni non sono a parametro singolo (unarie). _Questo influisce sulla componibilità. Vedi [esempio finale](#checkout-con-ulteriori-miglioramenti) per il perché?_
 - Spesso non è ovvio cosa restituisca ogni funzione. (Il risultato dell'invio email, o quella variabile `result`? O altro?)
 - Non è chiaro come aggiungere funzionalità (es. se dovessimo caricare sconti/crediti/punti cliente, ecc.)
 - A volte i nomi di parametri “temporanei” (come in ogni `.then(param => {})`) aggiungono contesto. Tuttavia, col tempo, diventano probabilmente ricettacolo di cruft nei nomi.
 
 ### Soluzione, Parte 1: Crea un modulo!
 
-Questa tecnica consiste nell'organizzare funzioni correlate in un unico modulo (es. `CartHelpers`). Non richiede un pattern specifico. Esplora [factory functions](#carthelpers-factory), [Classi](#carthelpers-class), Closure, Mixin, ecc. Trova ciò che ha senso per il tuo progetto e team.
+Questa tecnica consiste nell'organizzare funzioni correlate in un unico modulo (es. `CartHelpers`). Non richiede un pattern specifico. Esplora [factory functions](#carthelpers-factory), [Classi](#classe-carthelpers), Closure, Mixin, ecc. Trova ciò che ha senso per il tuo progetto e team.
 
 #### CartHelpers Factory
 

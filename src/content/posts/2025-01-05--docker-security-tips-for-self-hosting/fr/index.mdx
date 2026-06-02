@@ -19,11 +19,11 @@ import {CodeTabs} from '../../../../components/CodeTabs';
 
 **Table of Contents**
 
-- 🧗‍♀️ [Pour les courageux](#️-for-the-brave)
+- 🧗‍♀️ [Pour les courageux](#️-pour-les-courageux)
 - 🔄 [La danse du `:latest`](#-the-latest-dance)
-- 🔐 [Gestion des secrets : la bonne façon](#-secrets-management)
-- 🌐 [Danger réseau](#-network-hazard)
-- 🛡️ [Contrôles d’accès](#️-access-controls)
+- 🔐 [Gestion des secrets : la bonne façon](#-gestion-des-secrets)
+- 🌐 [Danger réseau](#-risque-réseau)
+- 🛡️ [Contrôles d’accès](#️-contrôles-daccès)
 - 🔍 [Surveillance & vérification](#-monitoring--verification)
 - ⏰ [Astuces souvent négligées](#-often-overlooked-tips)
 - 🚀 [Checklist de production](#-production-checklist)
@@ -80,8 +80,8 @@ _​Faites‑moi part de vos outils préférés pour garder les images Docker à
 
 ## 🔐 Gestion des secrets
 
-- [Générer des secrets forts](#generate-strong-secrets)
-- [Jetons Canary](#canary-tokens)
+- [Générer des secrets forts](#générer-des-secrets-forts)
+- [Jetons Canary](#jetons-canary)
 - [Passer de `.env` au trousseau macOS](#upgrade-from-env-to-macos-keychain)
 {/* - [Validation de placeholder](#placeholder-validation) */}
 
@@ -347,9 +347,9 @@ Comme pour toute mesure de sécurité, il est crucial de **tester et vérifier**
 
 Les contrôles d’accès sont une partie critique de la sécurisation de vos services Docker. Cela inclut la limitation des capacités et permissions des conteneurs, la restriction d’accès au socket Docker, etc.
 
-- [Limitation des capacités des conteneurs](#limiting-container-capabilities)
-- [Accès au socket Docker](#docker-socket-access)
-- [Blocage par pays !](#blocking-country)
+- [Limitation des capacités des conteneurs](#limitation-des-capacités-des-conteneurs)
+- [Accès au socket Docker](#limitation-des-capacités-des-conteneurs)
+- [Blocage par pays !](#accès-au-socket-docker)
 - [Renforcement de l’hôte proxy CloudFlare](#hardening-cloudflare-proxy-host)
 
 ### Limitation des capacités des conteneurs
@@ -463,7 +463,7 @@ Pour tester les changements basés sur la géolocalisation, un VPN disposant de 
 
 ### Sécurité au niveau de l’application
 
-Une fois que votre [réseau et votre hôte sont renforcés,](#-network-hazard) vous constaterez qu’il reste encore du travail à faire.
+Une fois que votre [réseau et votre hôte sont renforcés,](#-risque-réseau) vous constaterez qu’il reste encore du travail à faire.
 
 Il faut maintenant envisager la couche « application » de vos services eux‑mêmes.
 

@@ -57,14 +57,14 @@ const checkout = (userId: number, products: number[]) => {
 #### 缺点
 
 - 重复传递 `userId` 非常繁琐。
-- 函数不是单参数（即一元函数）。*这会影响可组合性。至于原因，请参考[最终示例](#checkout-with-further-improvements)。*
+- 函数不是单参数（即一元函数）。*这会影响可组合性。至于原因，请参考[最终示例](#进一步优化-checkout)。*
 - 每个函数的返回值并不直观。（返回的是邮件发送结果，还是那个 `result` 变量？或者是别的？）
 - 扩展功能不方便（例如：如果我们需要加载客户折扣/积分/点数等）。
 - 有时“临时”参数名（如每个 `.then(param => {})` 中的参数）能提供上下文。但随着时间的推移，它们很可能变成命名垃圾的温床。
 
 ### 解决方案第一部分：构建模块！
 
-这种技术的核心是将相关的函数组织到一个模块中（例如 `CartHelpers`）。它不强制要求特定的模式。你可以尝试 [工厂函数](#carthelpers-factory)、[类（Classes）](#carthelpers-class)、闭包、混入（Mixins）等。选择最适合你的项目和团队的方式。
+这种技术的核心是将相关的函数组织到一个模块中（例如 `CartHelpers`）。它不强制要求特定的模式。你可以尝试 [工厂函数](#carthelpers-工厂函数)、[类（Classes）](#carthelpers-类)、闭包、混入（Mixins）等。选择最适合你的项目和团队的方式。
 
 #### CartHelpers 工厂函数
 
