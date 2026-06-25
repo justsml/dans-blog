@@ -13,6 +13,23 @@ Astro 5 static blog with MDX content, interactive React quizzes, and Bun as the 
 
 The server is probably running already. Never just assume you need to run `bun run dev` - always check the http localhost port (and response) first to see if it's already running. If you run `bun run dev` while it's already running, you'll get a confused around different ports or errors about the port being in use. If that happens, just stop the new process and check the existing one. Or stop and ask the user to start it again.
 
+## Collaboration Model
+
+Multiple agents and a human may be editing this repository at the same time. Treat the working tree as shared space:
+
+- Avoid deleting, reverting, or overwriting changes you did not make unless the user explicitly asks for it.
+- If nearby files change while you are working, inspect the new state and make a best-effort merge around it instead of trying to restore your earlier snapshot.
+- Defer expensive type checks, builds, screenshot runs, and other broad validation until the pace of git changes has settled enough that the result is meaningful.
+- Commit history does not need to be pristine. Prefer saving working progress once a feature is mostly functional, then patch forward as conflicts or integration issues appear.
+
+It is fine for history to look like:
+
+```text
+11111: initial feature1 functionality
+22222: patched bad merge while working on feature1
+33333: corrected conflicts between feature1 and feature2, checks passing
+```
+
 ## Commands
 
 ```bash
