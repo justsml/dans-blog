@@ -59,9 +59,11 @@ export default defineConfig({
   },
   vite: {
     optimizeDeps: {
-      esbuildOptions: {
-        define: {
-          "process.env.NODE_ENV": '"development"',
+      rolldownOptions: {
+        transform: {
+          define: {
+            "process.env.NODE_ENV": '"development"',
+          },
         },
       },
     },
