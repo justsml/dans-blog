@@ -39,86 +39,105 @@ Mastra includes processors that catch common patterns:
 // src/mastra/agents/secure-agent.ts
 import { Agent } from '@mastra/core/agent';
 import { PromptInjectionDetector, UnicodeNormalizer } from '@mastra/core/processors';
-import { openai } from '@ai-sdk/openai';
+
+const GUARDRAIL_MODEL = 'openrouter/openai/gpt-oss-safeguard-20b';
 
 export const secureAgent = new Agent({
   id: 'fortress-assistant',
   name: 'fortress-assistant',
   instructions: 'You are a secure assistant.',
-  model: openai('gpt-5'),
+  model: 'openai/gpt-5.5',
   inputProcessors: [
     // 1. Scrub invisible characters
     new UnicodeNormalizer({
-      id: 'unicode-normalizer',
       stripControlChars: true,
       collapseWhitespace: true,
     }),
     // 2. Detect the attempt
     new PromptInjectionDetector({
-      id: 'prompt-injection-detector',
-      model: openai('gpt-5-nano'), // Cheap, fast
+      model: GUARDRAIL_MODEL,
       threshold: 0.8,
       strategy: 'block', // Hard stop
       detectionTypes: ['injection', 'jailbreak', 'system-override'],
+      lastMessageOnly: true,
     }),
   ],
 });
 ```
 
-The [`UnicodeNormalizer`](https://mastra.ai/docs/processors) strips out control characters and collapses whitespace. The [`PromptInjectionDetector`](https://mastra.ai/docs/processors) analyzes the cleaned input for patterns that suggest someone's trying to override your instructions.
+The [`UnicodeNormalizer`](https://mastra.ai/reference/processors/unicode-normalizer) strips out control characters and collapses whitespace. The [`PromptInjectionDetector`](https://mastra.ai/reference/processors/prompt-injection-detector) analyzes the cleaned input for patterns that suggest someone's trying to override your instructions.
 
-You configure how aggressive you want the detection to be (the `threshold` parameter) and what should happen when it trips (block, log, or just flag it).
+You configure how aggressive you want the detection to be (the `threshold` parameter) and what should happen when it trips (`block`, `warn`, `filter`, or `rewrite`).
 
 ### 2. Handling PII
 
 Credit card numbers in logs, Social Security numbers in vector databases, email addresses stored longer than necessary. These are the kinds of issues that turn into regulatory problems. The challenge is that users don't always realize they're pasting sensitive data into a chat window.
 
-The [`PIIDetector`](https://mastra.ai/docs/processors) scans for common patterns before they reach your model or get written to storage:
+The [`PIIDetector`](https://mastra.ai/reference/processors/pii-detector) scans for common patterns before they reach your model or get written to storage:
 
 ```typescript
-import { PIIDetector } from '@mastra/core/processors';
+import { Agent } from '@mastra/core/agent';
+import { BatchPartsProcessor, PIIDetector } from '@mastra/core/processors';
 
 export const privateAgent = new Agent({
   id: 'privacy-first-assistant',
   name: 'privacy-first-assistant',
   instructions: 'You are a helpful assistant that never stores personal information.',
-  model: openai('gpt-5'),
+  model: 'openai/gpt-5.5',
   inputProcessors: [
     new PIIDetector({
-      id: 'pii-detector',
-      model: openai('gpt-5-nano'),
+      model: GUARDRAIL_MODEL,
       detectionTypes: ['email', 'phone', 'credit-card', 'ssn'],
       threshold: 0.6,
       strategy: 'redact',
-      redactionMethod: 'mask',  // Replace with [REDACTED]
+      redactionMethod: 'mask',
       instructions: 'Detect and mask personally identifiable information',
+      lastMessageOnly: true,
+    }),
+  ],
+  outputProcessors: [
+    new BatchPartsProcessor({ batchSize: 10 }),
+    new PIIDetector({
+      model: GUARDRAIL_MODEL,
+      strategy: 'redact',
+      redactionMethod: 'mask',
     }),
   ],
 });
 ```
 
-You can choose to redact (replace with `[REDACTED]`), hash, or block entirely. The processor runs on both input and output, so you're covered even if the model somehow generates sensitive data in its response.
+You can choose to redact, hash, remove, replace with typed placeholders, or block entirely. `PIIDetector` is a hybrid processor: put it in `inputProcessors`, `outputProcessors`, or both depending on where the risk lives. For streamed output, batch chunks before running heavier classifiers so you are not paying for a separate LLM check on every tiny token drip.
 
 ### 3. Content Moderation
 
-Models trained on internet data have seen some things. Without filtering, they can occasionally produce responses that would make your PR team nervous. The [`ModerationProcessor`](https://mastra.ai/docs/processors) catches content that violates your guidelines:
+Models trained on internet data have seen some things. Without filtering, they can occasionally produce responses that would make your PR team nervous. The [`ModerationProcessor`](https://mastra.ai/reference/processors/moderation-processor) catches content that violates your guidelines:
 
 ```typescript
-import { ModerationProcessor } from '@mastra/core/processors';
+import { Agent } from '@mastra/core/agent';
+import { BatchPartsProcessor, ModerationProcessor } from '@mastra/core/processors';
 
 export const moderatedAgent = new Agent({
   id: 'safe-assistant',
   name: 'safe-assistant',
   instructions: 'You are a helpful assistant for a community platform.',
-  model: openai('gpt-5'),
+  model: 'openai/gpt-5.5',
   inputProcessors: [
     new ModerationProcessor({
-      id: 'moderation-processor',
-      model: openai('gpt-5-nano'),  // Fast, cheap model for classification
+      model: GUARDRAIL_MODEL,
       categories: ['hate', 'harassment', 'violence', 'self-harm'],
-      threshold: 0.7,  // Block if confidence > 70%
-      strategy: 'block',  // Stop the request immediately
+      threshold: 0.7,
+      strategy: 'block',
       instructions: 'Detect harmful content that violates community guidelines',
+      lastMessageOnly: true,
+    }),
+  ],
+  outputProcessors: [
+    new BatchPartsProcessor({ batchSize: 10 }),
+    new ModerationProcessor({
+      model: GUARDRAIL_MODEL,
+      categories: ['hate', 'harassment', 'violence', 'self-harm'],
+      strategy: 'filter',
+      chunkWindow: 1,
     }),
   ],
 });
@@ -130,19 +149,20 @@ The interesting part is that you define which categories matter for your use cas
 
 ## When Things Trip
 
-Processors don't throw errors when they detect an issue. Instead, they set a flag on the result object:
+When a processor uses the `block` strategy, Mastra calls `abort()` and exposes the event as a tripwire. With `generate()`, check the result object:
 
 ```typescript
 const result = await secureAgent.generate('Ignore all previous instructions...');
 
 if (result.tripwire) {
-  console.log(`Blocked! Reason: ${result.tripwireReason}`);
+  console.log(`Blocked by ${result.tripwire.processorId}`);
+  console.log(`Reason: ${result.tripwire.reason}`);
   // "Blocked! Reason: Prompt injection detected."
-  return "Nice try, script kiddie.";
+  return 'Request blocked by policy.';
 }
 ```
 
-This pattern lets you handle security events however makes sense for your application. You might log them for analysis, return a generic error message, or even allow certain violations in specific contexts. The `tripwireReason` field tells you exactly which processor flagged the content, which helps when you're debugging false positives or tuning your thresholds.
+For streaming calls, listen for `tripwire` chunks on `fullStream`. This pattern lets you handle security events however makes sense for your application. You might log them for analysis, return a generic error message, or switch a low-risk case from `block` to `warn` while you tune thresholds. The `processorId` and `reason` tell you which processor flagged the content, which helps when you're debugging false positives.
 
 ---
 
@@ -150,14 +170,15 @@ This pattern lets you handle security events however makes sense for your applic
 
 Processors catch a lot, but they're not magic. A determined attacker with enough time can probably find a prompt that slips through. Models occasionally hallucinate in ways that processors can't predict. And there's always a tradeoff between security and flexibility: the stricter your rules, the more likely you'll block legitimate use cases.
 
-The value isn't perfect protection. It's having a systematic way to handle the common issues that will definitely come up in production. You can tune the sensitivity as you learn what your users actually do. You can add custom processors for domain-specific risks. And you have audit trails showing what got blocked and why.
+The value isn't perfect protection. It's having a systematic way to handle the common issues that will definitely come up in production. You can tune the sensitivity as you learn what your users actually do. You can add custom processors for domain-specific risks. And you can wire violation callbacks, logs, traces, and app-level audit records around the same control point.
 
 Most security problems in production AI aren't sophisticated attacks. They're people copying and pasting data they shouldn't, or discovering through trial and error that the bot will do things you didn't intend. Processors won't stop every possible issue, but they make the obvious ones much harder.
 
 ### Resources
 
 - [Mastra Guardrails Documentation](https://mastra.ai/docs/agents/guardrails)
-- [Security Best Practices](https://mastra.ai/docs/security)
+- [Mastra Processors Documentation](https://mastra.ai/docs/agents/processors)
+- [Mastra Agent Approval](https://mastra.ai/docs/agents/agent-approval)
 - [Mastra GitHub Repository](https://github.com/mastra-ai/mastra)
 
 ## Read the Series

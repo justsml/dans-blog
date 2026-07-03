@@ -42,13 +42,14 @@ The protocol handles the communication layer. You just define what your tools do
 
 Mastra has native MCP support through its [`MCPClient`](https://mastra.ai/docs/mcp/overview). You can connect both local tools (running as child processes) and remote services (running on their own infrastructure).
 
-Here's a realistic production setup connecting Google Maps for routing, a weather service, and local Wikipedia search:
+Here's a representative setup connecting maps, weather, and local Wikipedia search:
 
 ```typescript
 // src/mastra/mcp/index.ts
 import { MCPClient } from '@mastra/mcp';
 
 export const mcpClient = new MCPClient({
+  id: 'navigation-mcp',
   servers: {
     // Local tool (Stdio)
     wikipedia: {
@@ -66,7 +67,7 @@ export const mcpClient = new MCPClient({
     },
     // Weather Service Integration
     weather: {
-      url: new URL('https://mcp.weatherapi.dev/v1'),
+      url: new URL(process.env.WEATHER_MCP_URL!),
       requestInit: {
         headers: {
           'X-API-Key': process.env.WEATHER_API_KEY!,
@@ -88,7 +89,6 @@ Once you have your MCP client configured, giving those tools to an agent is stra
 ```typescript
 // src/mastra/agents/navigation-agent.ts
 import { Agent } from '@mastra/core/agent';
-import { openai } from '@ai-sdk/openai';
 import { mcpClient } from '../mcp';
 
 export const navigationDirectionsAgent = new Agent({
@@ -101,8 +101,8 @@ export const navigationDirectionsAgent = new Agent({
     - Provide estimated travel times and suggest alternatives if weather is poor
     - Include relevant details like traffic, road conditions, and points of interest
     - Keep responses clear and actionable`,
-  model: openai('gpt-5'),
-  tools: await mcpClient.getTools(), // <--- This is the magic line
+  model: 'openai/gpt-5.5',
+  tools: await mcpClient.listTools(), // <--- This is the magic line
 });
 ```
 
@@ -120,12 +120,13 @@ There's a security mistake that's easy to make here: hardcoding credentials.
 
 If you put one Google Maps API key in your environment variables and call it a day, every user shares the same quota and rate limits. More importantly, if you're using services that store user preferences (like saved locations or favorite routes), everyone would see the same data. This works fine for demos. It's a liability in production.
 
-Mastra handles this by letting you create MCP clients dynamically with user-specific credentials:
+Mastra supports this by letting you create MCP clients dynamically with user-specific credentials and pass their toolsets at request time. You still own the usual SaaS plumbing: storing tokens safely, refreshing them, and deciding which users can connect which services.
 
 ```typescript
 async function handleUserRequest(userPrompt: string, userCredentials: UserCreds) {
   // Create a client for THIS specific user
   const userMcp = new MCPClient({
+    id: `maps-${userCredentials.userId}`,
     servers: {
       googleMaps: {
         url: new URL(process.env.GOOGLE_MAPS_MCP_URL!),
@@ -140,14 +141,18 @@ async function handleUserRequest(userPrompt: string, userCredentials: UserCreds)
     },
   });
 
-  const agent = mastra.getAgent('navigationDirectionsAgent');
-  
-  // Inject tools at runtime
-  const response = await agent.generate(userPrompt, {
-    toolsets: await userMcp.getToolsets(),
-  });
+  try {
+    const agent = mastra.getAgent('navigationDirectionsAgent');
+    
+    // Inject tools at runtime
+    const response = await agent.generate(userPrompt, {
+      toolsets: await userMcp.listToolsets(),
+    });
 
-  return response;
+    return response;
+  } finally {
+    await userMcp.disconnect();
+  }
 }
 ```
 
@@ -167,7 +172,7 @@ export const smartRouteTool = createTool({
   description: 'Plans optimal route considering traffic and weather conditions',
   execute: async ({ context, mastra }) => {
     // Get the raw tools
-    const tools = await mcpClient.getTools();
+    const tools = await mcpClient.listTools();
     
     // 1. Get base route from Google Maps
     const routeData = await tools.googleMaps_getDirections.execute({ 
@@ -193,6 +198,32 @@ export const smartRouteTool = createTool({
 ```
 
 This gives you fine-grained control over exactly how tools interact while still leveraging the MCP protocol for the heavy lifting.
+
+---
+
+## Approval Belongs at the Tool Boundary
+
+MCP makes tools easier to connect. That does not mean every tool should run without friction.
+
+Mastra's `MCPClient` can require approval at the server level, either for every tool on that server or dynamically per call:
+
+```typescript
+export const githubMcp = new MCPClient({
+  id: 'github-mcp',
+  servers: {
+    github: {
+      url: new URL(process.env.GITHUB_MCP_URL!),
+      requireToolApproval: ({ toolName, annotations }) => {
+        if (annotations?.readOnlyHint) return false;
+        if (toolName.includes('delete_')) return true;
+        return annotations?.destructiveHint ?? true;
+      },
+    },
+  },
+});
+```
+
+That approval should still be treated as application policy, not a magic spell. MCP tool annotations are useful hints from trusted servers; they are not a security boundary by themselves. For third-party servers, make the default boring and ask before the agent mutates anything important.
 
 ---
 

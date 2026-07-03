@@ -24,65 +24,69 @@ There's a better way, and it's not particularly complicated.
 
 What if you could route requests to the model that's actually best suited for that specific task? Use your expensive powerhouse for the hard stuff, but drop the simple parsing and formatting down to something cheaper. Get the benefits of multiple providers without having to manually juggle them in your codebase.
 
-Mastra lets you build exactly this kind of system. You set up specialist agents for different types of work, then create a router agent that figures out which specialist should handle each request. The model IDs below are examples, not a leaderboard. Swap them for the current models that win your evals and fit your budget.
+Mastra lets you build exactly this kind of system. You set up specialist agents for different types of work, then create a supervisor agent that figures out which specialist should handle each request. The model IDs below use Mastra's current `provider/model` string format; they are examples, not a leaderboard. Swap them for the current models that win your evals and fit your budget.
 
 Think of it like this: you have three specialists on your team.
 
 ```typescript
 // ./src/mastra/index.ts
-import { Mastra } from '@mastra/core';
+import { Mastra } from '@mastra/core/mastra';
 import { Agent } from '@mastra/core/agent';
-import { openai } from '@ai-sdk/openai';
-import { anthropic } from '@ai-sdk/anthropic';
-import { google } from '@ai-sdk/google';
+import { Memory } from '@mastra/memory';
+import { LibSQLStore } from '@mastra/libsql';
 
 export const claudeAgent = new Agent({
   id: 'claude-agent',
+  description: 'Handles implementation, refactoring, and code review tasks.',
   instructions: 'You are an expert engineer. Write bugs? You are fired.',
-  model: anthropic(process.env.CODE_MODEL ?? 'claude-sonnet-4-5'),
+  model: process.env.CODE_MODEL ?? 'anthropic/claude-sonnet-4-6',
 });
 
 export const geminiAgent = new Agent({
   id: 'gemini-agent',
+  description: 'Handles long-context synthesis and messy document analysis.',
   instructions: 'You are a creative writer. Be weird.',
-  model: google(process.env.LONG_CONTEXT_MODEL ?? 'gemini-3-pro-preview'),
+  model: process.env.LONG_CONTEXT_MODEL ?? 'google/gemini-2.5-pro',
 });
 
 export const gptAgent = new Agent({
   id: 'gpt-agent',
+  description: 'Handles routine classification, formatting, and general Q&A.',
   instructions: 'You are a helpful assistant. Be boring.',
-  model: openai(process.env.GENERAL_MODEL ?? 'gpt-5.2'),
+  model: process.env.GENERAL_MODEL ?? 'openai/gpt-5-mini',
 });
 ```
 
-Each one has a job. Your code agent should be the model that passes your repo-specific coding evals. Your long-context agent should be the one that survives your actual documents without turning the middle into soup. Your general agent should be cheap, reliable, and boring in the best possible way.
+Each one has a job, and the `description` field is part of the routing surface. Your code agent should be the model that passes your repo-specific coding evals. Your long-context agent should be the one that survives your actual documents without turning the middle into soup. Your general agent should be cheap, reliable, and boring in the best possible way.
 
-Here's where it gets interesting. You add a router that acts as an intelligent proxy:
+Here's where it gets interesting. You add a lightweight supervisor that acts as an intelligent proxy:
 
 ```typescript
-export const routerAgent = new Agent({
-  id: 'router-agent',
+export const supervisorAgent = new Agent({
+  id: 'supervisor-agent',
   name: 'The Boss',
-  instructions: `You are an intelligent router.
-  - Coding -> Claude
-  - Poetry -> Gemini
-  - Facts -> GPT
-
-  Do not do the work yourself. Delegate.`,
-  model: openai(process.env.ROUTER_MODEL ?? 'gpt-5-mini'), // Use a cheap model for routing!
+  instructions: `You route work to the right specialist.
+  Delegate coding work to claude-agent.
+  Delegate long-context document work to gemini-agent.
+  Delegate routine classification and formatting to gpt-agent.
+  Do not do specialist work yourself unless delegation is unnecessary.`,
+  model: process.env.ROUTER_MODEL ?? 'openai/gpt-5-mini',
   agents: {
     claudeAgent,
     geminiAgent,
     gptAgent,
   },
+  memory: new Memory({
+    storage: new LibSQLStore({ id: 'router-memory', url: 'file:mastra.db' }),
+  }),
 });
 
 export const mastra = new Mastra({
-  agents: { routerAgent, claudeAgent, geminiAgent, gptAgent },
+  agents: { supervisorAgent, claudeAgent, geminiAgent, gptAgent },
 });
 ```
 
-The router itself runs on a lightweight model because it's just making decisions about where to send traffic. You're not paying premium rates to figure out which other premium model to use. Measure this too; a bad router quietly turns savings into misroutes.
+The supervisor itself can run on a lightweight model because it is mostly deciding where to send traffic. You're not paying premium rates to figure out which other premium model to use. Measure this too; a bad routing layer quietly turns savings into misroutes.
 
 When someone asks for a bubble sort implementation, the router recognizes it as code work and hands it to your code specialist. Creative writing prompt? That goes to the model you've chosen for voice and range. Factual question about historical events? Route it to the general agent, ideally with retrieval when freshness or citation matters.
 
@@ -96,7 +100,7 @@ When someone asks for a bubble sort implementation, the router recognizes it as 
 
 This isn't about being clever for the sake of it. It's about building systems that make sense both financially and technically. You wouldn't use the same hammer for every construction task, and you probably shouldn't use the same language model for every AI task either.
 
-The beauty of this approach is that your application code doesn't change. You still just call your router agent. The complexity of deciding which model to use for which task lives in one place, configured once, rather than scattered throughout your codebase in a bunch of conditional logic.
+The beauty of this approach is that your application code doesn't need a branching maze. You still call one agent. The complexity of deciding which model to use for which task lives in one place, configured once, rather than scattered throughout your codebase in a bunch of conditional logic.
 
 ### Resources
 

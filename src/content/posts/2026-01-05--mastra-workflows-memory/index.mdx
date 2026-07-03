@@ -3,7 +3,7 @@ title: "Stop Building Flaky Agents: Use Workflows & Memory"
 subTitle: "Deterministic patterns for non-deterministic models."
 date: 2026-01-05
 modified: 2026-01-08
-tags: [ai, workflows, memory, mastra, agent-networks, orchestration]
+tags: [ai, workflows, memory, mastra, supervisor-agents, orchestration]
 category: AI
 subCategory: Architecture
 social_image: desktop-social.webp
@@ -12,7 +12,7 @@ cover_mobile: ./square.webp
 cover_icon: ./square.webp
 ---
 
-LLMs have this weird property: they're brilliant at understanding nuance but terrible at following recipes. Give GPT-4 a vague problem and it'll reason through possibilities. Give it a precise sequence of steps, and it might skip step 3 because step 5 "felt more relevant."
+LLMs have this weird property: they're brilliant at understanding nuance but terrible at following recipes. Give a strong model a vague problem and it'll reason through possibilities. Give it a precise sequence of steps, and it might skip step 3 because step 5 "felt more relevant."
 
 This isn't a bug in the model. It's a fundamental characteristic of probabilistic systems trying to solve deterministic problems.
 
@@ -46,7 +46,6 @@ Here's a practical example that shows the pattern. We need hard, factual weather
 // src/mastra/workflows/activity-planner.ts
 import { createWorkflow, createStep } from '@mastra/core/workflows';
 import { Agent } from '@mastra/core/agent';
-import { openai } from '@ai-sdk/openai';
 import { z } from 'zod';
 
 // Step 1: Fetch weather data (Deterministic)
@@ -63,8 +62,17 @@ const fetchWeather = createStep({
     precipitationChance: z.number(),
   }),
   execute: async ({ inputData }) => {
-    // ... (fetch logic) ...
-    const weather = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&current=temperature_2m,weather_code&daily=precipitation_probability_mean`).then(r => r.json());
+    const coordinates = await geocodeCity(inputData.city);
+    const params = new URLSearchParams({
+      latitude: String(coordinates.latitude),
+      longitude: String(coordinates.longitude),
+      current: 'temperature_2m,weather_code',
+      daily: 'precipitation_probability_mean',
+      timezone: 'auto',
+    });
+
+    const weather = await fetch(`https://api.open-meteo.com/v1/forecast?${params}`)
+      .then(r => r.json());
     
     return {
       location: inputData.city,
@@ -83,7 +91,7 @@ const activityPlanner = new Agent({
     - For rain (>50% precipitation), prioritize indoor activities
     - For extreme temperatures, consider climate-appropriate options
     - Always include one adventurous and one relaxing option`,
-  model: openai('gpt-5'),
+  model: 'openai/gpt-5.5',
 });
 
 const planActivities = createStep({
@@ -112,12 +120,11 @@ export const activityPlannerWorkflow = createWorkflow({
   outputSchema: z.object({ activities: z.string() }),
 })
   .then(fetchWeather)
-  .then(planActivities);
-
-activityPlannerWorkflow.commit();
+  .then(planActivities)
+  .commit();
 ```
 
-The LLM never touches the weather API. It gets ground-truth data as input, then does what it's actually good at: making contextual suggestions. If you flip this around and let the agent fetch weather data, you'll eventually get a sunny forecast when it's actually raining.
+`geocodeCity()` is ordinary application code or a Maps API call; it is not a model decision. The LLM never touches the weather API. It gets ground-truth data as input, then does what it's actually good at: making contextual suggestions. If you flip this around and let the agent fetch weather data, you'll eventually get a sunny forecast when it's actually raining.
 
 **When to consider workflows:**
 - You have a known sequence of steps that must happen in order
@@ -137,33 +144,43 @@ Worse, there's a phenomenon researchers call "lost in the middle" where models p
 
 Sending full conversation history feels safe. You're giving the model "all the information." But you're actually making it harder for the model to focus on what matters.
 
-### Working Memory vs. Long-Term Storage
+### Recent Messages, Working Memory, and Recall
 
-Mastra's memory system gives you both. Working memory keeps recent messages in the context window. Semantic recall searches historical messages when the current query seems related.
+Mastra's memory system separates a few jobs that teams often mash together. Recent message history keeps the last turns available with `lastMessages`. Working memory stores persistent structured facts like user preferences, goals, and project state. Semantic recall searches older messages by meaning when the current query seems related. Observational memory goes one step further for long-running conversations by compressing old raw history into dense observations.
 
 ```typescript
 // src/mastra/agents/memory-agent.ts
 import { Agent } from '@mastra/core/agent';
+import { ModelRouterEmbeddingModel } from '@mastra/core/llm';
 import { Memory } from '@mastra/memory';
-import { LibSQLStore } from '@mastra/libsql';
+import { LibSQLStore, LibSQLVector } from '@mastra/libsql';
 
 export const memoryAgent = new Agent({
   id: 'memory-agent',
   name: 'Memory Agent',
   instructions: 'You are a helpful assistant with perfect recall of our conversations.',
-  model: openai('gpt-5'),
+  model: 'openai/gpt-5.5',
   memory: new Memory({
     storage: new LibSQLStore({
       id: 'memory-agent-store',
-      url: 'file:../mastra.db',
+      url: 'file:./mastra.db',
     }),
+    vector: new LibSQLVector({
+      id: 'memory-agent-vector',
+      url: 'file:./mastra.db',
+    }),
+    embedder: new ModelRouterEmbeddingModel('openai/text-embedding-3-small'),
     options: {
-      lastMessages: 20,  // Keep last 20 messages in context
-      semanticRecall: {
-        enabled: true,  // Use embeddings to find old stuff
-        topK: 5,
-        threshold: 0.7,
+      lastMessages: 20,
+      workingMemory: {
+        enabled: true,
       },
+      semanticRecall: {
+        topK: 5,
+        messageRange: 2,
+        scope: 'resource',
+      },
+      observationalMemory: true,
     },
   }),
 });
@@ -171,7 +188,7 @@ export const memoryAgent = new Agent({
 
 Here's how this plays out in practice. A user asks: "What was that Italian restaurant you recommended last month?"
 
-Without semantic recall, the agent sees the last 20 messages. The restaurant recommendation was message 487 of 506. It's gone. The agent says "I don't have that information."
+Without semantic recall or observations, the agent sees the last 20 messages. The restaurant recommendation was message 487 of 506. It's gone. The agent says "I don't have that information."
 
 With semantic recall:
 1. The query gets embedded: `[0.234, -0.567, 0.891, ...]`
@@ -184,38 +201,50 @@ The agent appears to have perfect memory while only using a fraction of the cont
 
 ---
 
-## Coordination Through Agent Networks
+## Coordination Through Supervisor Agents
 
 Sometimes you need both structure and flexibility. Pure workflows are too rigid. Pure agents are too unpredictable.
 
-Agent networks give you a coordinator that decides which specialized agent or workflow to invoke based on the task. Think of it as a smart load balancer for AI capabilities.
+Supervisor agents give you a coordinator that decides which specialized agent, workflow, or tool should own the next move. Think of it as a smart load balancer for AI capabilities.
 
 ```typescript
+const researchAgent = new Agent({
+  id: 'research-agent',
+  description: 'Gathers facts and returns sourced research notes.',
+  model: 'openai/gpt-5-mini',
+});
+
+const writingAgent = new Agent({
+  id: 'writing-agent',
+  description: 'Turns research notes into clear, structured prose.',
+  model: 'openai/gpt-5-mini',
+});
+
 export const coordinatorAgent = new Agent({
   id: 'coordinator-agent',
   name: 'Research Coordinator',
-  instructions: `You are a network of researchers and writers.
-    - Use researchAgent for gathering facts
-    - Use writingAgent for producing final content
+  instructions: `You coordinate researchers, writers, tools, and workflows.
+    - Delegate fact gathering to research-agent
+    - Delegate final prose to writing-agent
     - Use weatherTool for current weather data
     - Use activityPlannerWorkflow for location-based planning
     
     Always produce comprehensive, well-structured responses.`,
-  model: openai('gpt-5'),
+  model: 'openai/gpt-5.5',
   
   // Available primitives
   agents: { researchAgent, writingAgent },
   workflows: { activityPlannerWorkflow },
   tools: { weatherTool },
   
-  // Network requires memory
+  // Supervisor state and delegation traces need somewhere durable to land.
   memory: new Memory({
-    storage: new LibSQLStore({ id: 'network-store', url: 'file:../network.db' }),
+    storage: new LibSQLStore({ id: 'supervisor-store', url: 'file:./supervisor.db' }),
   }),
 });
 ```
 
-When you query this network, the coordinator analyzes the request and routes accordingly:
+When you query this supervisor, it analyzes the request and routes accordingly:
 - "I need facts about X" triggers the research agent
 - "Plan a weekend in Seattle" runs the activity planner workflow
 - "Write a report on Y" engages the writing agent
@@ -228,7 +257,7 @@ This pattern scales better than trying to cram everything into a single mega-age
 
 Real production AI systems need architecture, not just prompts. You're building distributed systems where some nodes happen to be LLMs.
 
-Workflows give you guarantees when you need things to happen exactly right. Memory gives you context without burning through your token budget. Agent networks let you compose complexity from simpler parts.
+Workflows give you guarantees when you need things to happen exactly right. Memory gives you context without burning through your token budget. Supervisor agents let you compose complexity from simpler parts.
 
 None of this is glamorous. But after watching enough "fully autonomous agents" fail in production, I've come to appreciate boring reliability over exciting unpredictability.
 
@@ -238,7 +267,8 @@ Your mileage may vary, but in my experience, the systems that actually ship and 
 
 - [Mastra Workflows Documentation](https://mastra.ai/docs/workflows/overview)
 - [Mastra Memory Documentation](https://mastra.ai/docs/memory/overview)
-- [Full Demo Code](https://github.com/justsml/mastra-examples)
+- [Mastra Supervisor Agents](https://mastra.ai/docs/agents/supervisor-agents)
+- [Mastra Semantic Recall](https://mastra.ai/docs/memory/semantic-recall)
 
 ## Read the Series
 
