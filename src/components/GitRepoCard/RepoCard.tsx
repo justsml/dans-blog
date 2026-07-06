@@ -111,18 +111,6 @@ export const RepoCard = ({
           <aside title="Last PR date" className="stat last-pr-stat">
             {latestPullDate}
           </aside>
-          <aside title="Changed files" className="stat">
-            {pr?.pullStats.changedFiles}
-            <span className="gh-icon icon-github-file"></span>
-          </aside>
-          <aside title="Comments" className="stat">
-            {pr?.pullStats.comments}
-            <span className="gh-icon icon-github-comment"></span>
-          </aside>
-          <aside title="Reviews" className="stat">
-            {pr?.pullStats.reviews}
-            <span className="gh-icon icon-github-reviews"></span>
-          </aside>
         </section>
       </div>
 
@@ -205,27 +193,6 @@ const styles = {
     fontWeight: "300",
     margin: "0",
   },
-  // link: {
-  //   textDecoration: "none",
-  //   color: "#0366d6",
-  // },
-  // description: {
-  //   fontSize: "14px",
-  //   color: "#586069",
-  //   margin: "0 0 16px",
-  // },
-  // stats: {
-  //   display: "flex",
-  //   alignItems: "center",
-  //   justifyContent: "space-between",
-  // },
-  // stat: {
-  //   display: "flex",
-  //   alignItems: "center",
-  //   marginRight: "16px",
-  //   fontSize: "12px",
-  //   color: "#586069",
-  // },
   icon: {
     marginRight: "4px",
     width: "16px",

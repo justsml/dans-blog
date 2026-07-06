@@ -29,51 +29,11 @@
   }
 }
 
-@keyframes stretch {
-  0% {
-    transform: scaleY(0%);
-    /* border-radius: 20%; */
-  }
-  25% {
-    transform: scaleY(50%);
-    background-color: white;
-    border-radius: 20%;
-    /* background-color: orange; */
-    transform: scale(1.25);
-  }
-  50% {
-    background-color: wheat;
-    border-radius: 40%;
-    transform: scale(1);
-    background-color: #a6a6a6;
-  }
-  100% {
-    transform: scaleY(1) translateY(0);
-    height: auto;
-    overflow: auto;
-    opacity: 1;
-    /* border-radius: 0%; */
-  }
-}
-
-.animate-card-stretch {
-  /* transition-behavior: allow-discrete; */
-  animation-name: stretch;
-  animation-duration: 0.5s;
-  animation-timing-function: ease-in-out;
-  animation-delay: 0s;
-  animation-direction: f;
-  /* animation-iteration-count: infinite; */
-  animation-fill-mode: none;
-  animation-play-state: running;
-  animation-composition: add;
-}
-
 .repo-card {
   position: relative;
   display: grid;
   grid-template-rows: auto auto auto auto;
-  gap: 0.9rem;
+  gap: 0.75rem;
   min-height: 100%;
   padding: clamp(0.75rem, 1.6vw, 1rem);
   border: 1px solid var(--oss-line);
@@ -243,19 +203,13 @@
   color: var(--clr-muted-500, #a6a6a6);
 }
 .corner-stats {
-  width: min(100%, 100%);
-  /* position: absolute; */
-  /* right: .125rem;
-  top: .25rem; */
   display: flex;
   flex-wrap: wrap;
-  /* grid-column: 1 / -1; */
   align-items: center;
   justify-content: flex-start;
   gap: 0.45rem 0.85rem;
   color: #57606a;
   font-size: 0.9rem;
-
   cursor: default;
 
   .gh-icon {
@@ -328,23 +282,7 @@
   filter: invert(1);
   opacity: 0.68;
 }
-/* .pull-stats {
-  display: grid;
-  width: 100%;
-  grid-template-columns: auto auto auto auto;
-  align-items: center;
-  justify-content: space-evenly;
-  grid-gap: 0.5rem;
-  font-size: 0.85rem;
-  .stat {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.85rem;
-    color: var(--clr-muted-500, #a6a6a6);
-  }
-}
- */
+
 .icon-github-reviews {
   background-image: url('data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-pen"><path d="M12.5 22H18a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2v9.5"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M13.378 15.626a1 1 0 1 0-3.004-3.004l-5.01 5.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z"/></svg>');
 }
@@ -367,24 +305,20 @@
   background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-issue-opened UnderlineNav-octicon d-none d-sm-inline"><path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z"></path><path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0Z"></path></svg>');
 }
 
-/* .icon-github-fork {
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-repo-forked mr-2"><path d="M5 5.372v.878c0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75v-.878a2.25 2.25 0 1 1 1.5 0v.878a2.25 2.25 0 0 1-2.25 2.25h-1.5v2.128a2.251 2.251 0 1 1-1.5 0V8.5h-1.5A2.25 2.25 0 0 1 3.5 6.25v-.878a2.25 2.25 0 1 1 1.5 0ZM5 3.25a.75.75 0 1 0-1.5 0 .75.75 0 0 0 1.5 0Zm6.75.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm-3 8.75a.75.75 0 1 0-1.5 0 .75.75 0 0 0 1.5 0Z"></path></svg>');
-} */
-
 .icon-github-pull-request {
   background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-git-pull-request UnderlineNav-octicon d-none d-sm-inline"><path d="M1.5 3.25a2.25 2.25 0 1 1 3 2.122v5.256a2.251 2.251 0 1 1-1.5 0V5.372A2.25 2.25 0 0 1 1.5 3.25Zm5.677-.177L9.573.677A.25.25 0 0 1 10 .854V2.5h1A2.5 2.5 0 0 1 13.5 5v5.628a2.251 2.251 0 1 1-1.5 0V5a1 1 0 0 0-1-1h-1v1.646a.25.25 0 0 1-.427.177L7.177 3.427a.25.25 0 0 1 0-.354ZM3.75 2.5a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5Zm0 9.5a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5Zm8.25.75a.75.75 0 1 0 1.5 0 .75.75 0 0 0-1.5 0Z"></path></svg>');
 }
 
 /* ── Controls ── */
 .oss-controls {
-  display: grid;
-  gap: 0.9rem;
-  margin-block: 1.2rem 1rem;
-  padding: clamp(0.8rem, 2vw, 1.05rem);
-  border: 1px solid rgba(246, 251, 255, 0.12);
-  border-radius: 0.35rem;
-  background: rgba(4, 12, 17, 0.52);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1rem;
+  margin-block: 1rem 1.25rem;
+  padding-block: 0.5rem 0.75rem;
+  border-top: 1px solid rgba(246, 251, 255, 0.08);
+  border-bottom: 1px solid rgba(246, 251, 255, 0.08);
 }
 
 .oss-control-group,
@@ -392,14 +326,14 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 8px;
+  gap: 0.4rem;
 }
 
 .oss-control-label {
-  color: rgba(255, 255, 255, 0.68);
-  font-size: 0.74rem;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.7rem;
   font-weight: 900;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   line-height: 1;
   text-transform: uppercase;
 }

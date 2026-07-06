@@ -137,12 +137,18 @@ const copy = getUiCopy(locale);
     color: rgba(246, 251, 255, 0.24);
   }
 
-  .oss-updated {
-    width: var(--oss-shell);
-    margin: 0 auto 1rem;
-    color: rgba(246, 251, 255, 0.55);
-    font-size: 0.86rem;
-    font-variant-numeric: tabular-nums;
+  .oss-ledger span:has(+ .oss-ledger-updated)::after {
+    content: none;
+  }
+
+  .oss-ledger-updated {
+    margin-left: auto;
+    color: rgba(246, 251, 255, 0.45);
+    font-size: 0.82rem;
+  }
+
+  .oss-ledger-updated::after {
+    content: none;
   }
 
   @media (max-width: 920px) {
@@ -164,6 +170,11 @@ const copy = getUiCopy(locale);
 
     .oss-ledger span:not(:last-child)::after {
       content: none;
+    }
+
+    .oss-ledger-updated {
+      grid-column: 1 / -1;
+      margin-left: 0;
     }
   }
 </style>
