@@ -8,7 +8,7 @@
   },
   "scripts": {
     "deploy": "netlify build && netlify deploy --prod",
-    "webp-images": "sh -c 'source ./src/scripts/webp-image-conversion-cmds.sh && convert_and_cleanup_images'",
+    "webp-images": "bash -c 'source ./src/scripts/webp-image-conversion-cmds.sh && convert_and_cleanup_images'",
     "fix-quizzes": "bun ./src/scripts/quiz-utils/update-quizzes.ts",
     "i18n:translate:candidates": "bun ./src/scripts/i18n/translate-candidates.ts",
     "i18n:judge": "bun ./src/scripts/i18n/judge.ts",

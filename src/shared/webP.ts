@@ -1,14 +1,14 @@
 // Module to support running cwebp to convert images to webP format
 // cwebp -q 90 "$file" -o "${file%.*}.webp"
 
-import { exec } from "child_process";
+import { execFile } from "child_process";
 import { rm } from "fs/promises";
 import { promisify } from "util";
 
-const execAsync = promisify(exec);
+const execFileAsync = promisify(execFile);
 
 export async function convertToWebP(file: string) {
-  if (file.endsWith(".gif"))
+  if (/\.gif$/i.test(file))
     throw new Error(
       "Cannot convert GIFs to webP (todo: add support for `gif2webp`)",
     );
@@ -17,7 +17,7 @@ export async function convertToWebP(file: string) {
 
     await rm(newFileName, { force: true }).catch(() => {});
 
-    await execAsync(`cwebp -q 90 "${file}" -o "${newFileName}"`);
+    await execFileAsync("cwebp", ["-q", "90", file, "-o", newFileName]);
     return newFileName;
   } catch (error) {
     // @ts-ignore
@@ -27,4 +27,4 @@ export async function convertToWebP(file: string) {
   }
 }
 
-export const isFileSupported = (file: string) => /\.(jpe?g|png)$/gi.test(file);
+export const isFileSupported = (file: string) => /\.(jpe?g|png)$/i.test(file);

@@ -1,0 +1,566 @@
+---
+title: "Don't Fear the Model Router"
+subTitle: "Route to the best model with confidence."
+date: 2026-07-02
+modified: 2026-07-03
+tags: [ai, llm, agents, mastra, evals, model-routing, testing, observability, production]
+category: AI
+subCategory: AI Infrastructure
+popularity: 0.84
+cover_full_width: ./wide.webp
+cover_mobile: ./square.webp
+cover_icon: ./square.webp
+related:
+  - llm-routing-mastra-ai
+  - llm-evals-are-broken
+  - security-agent-model-router
+  - mastra-workflows-memory
+---
+
+The first version of [Don't Marry Your Model](/llm-routing-mastra-ai) made the easy argument: stop sending every task to the same model just because it won the last bake-off.
+
+Use a cheap model for cheap work. Use a stronger model where the work is actually hard. Keep the routing layer flexible enough that you can swap providers without turning your codebase into a shrine.
+
+That was right.
+
+It was also incomplete.
+
+Because once you add a router, you have a new system behavior to test. The question is no longer "which model is best?" The question is "did the system choose the right route, use the right tools, preserve the right evidence, and stop at the right time?"
+
+If you do not measure that, your model router is just vibes with a dispatch table.
+
+<p class="inset">
+The router is not the answer. The router is a hypothesis about how your system should behave.
+</p>
+
+Mastra gives us useful surfaces for turning that hypothesis into something testable: [scorers](https://mastra.ai/docs/evals/overview), [`runEvals`](https://mastra.ai/reference/evals/run-evals), [datasets](https://mastra.ai/docs/evals/datasets/overview), and [experiments](https://mastra.ai/docs/evals/datasets/running-experiments). The API names sound like evaluation infrastructure, which they are, but the real value is simpler:
+
+They make agent behavior visible enough to argue with.
+
+## What Are We Testing?
+
+The model router from the earlier post has three obvious specialist routes:
+
+| Route | What should go there | What would be a bad route |
+|---|---|---|
+| `code` | implementation, refactoring, debugging, code review | long-context summarization, simple classification |
+| `long-context` | messy documents, transcripts, policy synthesis, many files | short mechanical formatting |
+| `general` | classification, formatting, simple Q&A, boring extraction | hard code or evidence-heavy analysis |
+
+That table is a start, but it is not an eval.
+
+An eval needs examples and scorers:
+
+| Piece | Job |
+|---|---|
+| Dataset item | "Here is a representative request." |
+| Ground truth | "Here is the route or behavior we expected." |
+| Scorer | "Here is how we decide whether the output passed." |
+| Experiment | "Here is the run we can compare against future runs." |
+
+The important move is to test behavior, not just prose quality.
+
+A model can write a beautiful answer after choosing the wrong specialist. A security agent can produce a plausible report without preserving evidence. A support agent can sound empathetic while skipping the refund policy check. The paragraph is the visible part. The trajectory is where the bugs live.
+
+For a router, I usually start with four axes:
+
+| Axis | Question | Example scorer |
+|---|---|---|
+| Quality | Did it choose the right route and produce a useful result? | route accuracy, answer completeness, faithfulness |
+| Cost | Did it avoid premium models for boring work? | selected route cost class, token budget |
+| Speed | Did it finish inside the product's latency budget? | runtime or timeout scorer |
+| Other | Did it obey safety, privacy, and observability constraints? | tool allowlist, evidence-preservation, refusal behavior |
+
+That last column matters. "Other" is where the production scar tissue lives.
+
+## Make the Router Decision Scorable
+
+If the router only produces a final answer, it is hard to know why it behaved the way it did. You can still score the output, but you are guessing about the decision.
+
+For evals, give the routing step a small structured contract:
+
+```typescript
+type RouterDecision = {
+  route: "code" | "long-context" | "general";
+  confidence: number;
+  reason: string;
+};
+```
+
+The production system does not need to show this JSON to users. It can be an internal step, a workflow handoff, or a trace span. The scorer just needs a surface.
+
+Here is a deliberately small Mastra agent that chooses a route:
+
+```typescript
+// src/mastra/agents/router-decision-agent.ts
+import { Agent } from "@mastra/core/agent";
+
+export const routerDecisionAgent = new Agent({
+  id: "router-decision-agent",
+  name: "Router Decision Agent",
+  instructions: `Choose the best specialist route for the user request.
+
+Return ONLY JSON:
+{
+  "route": "code" | "long-context" | "general",
+  "confidence": number,
+  "reason": string
+}
+
+Routing rules:
+- code: implementation, refactoring, debugging, code review, APIs, tests
+- long-context: large documents, transcripts, policy synthesis, many files
+- general: classification, formatting, extraction, simple Q&A
+
+Do not answer the user request. Only choose the route.`,
+  model: process.env.ROUTER_MODEL ?? "openai/gpt-5-mini",
+});
+```
+
+Yes, this is a little artificial. Good. Evals reward boring seams.
+
+When the router decision is explicit, you can test the route before you test the downstream specialist. That is how you find out whether the problem is the router, the selected model, the prompt, the tool surface, or the final answer scorer.
+
+## Write a Scorer That Catches the Boring Failure
+
+Mastra's [`createScorer`](https://mastra.ai/reference/evals/create-scorer) can use JavaScript functions, LLM judge prompts, or both. Start with functions whenever the failure is deterministic. They are cheaper, faster, and less mysterious.
+
+For route accuracy, we do not need a judge model. We need to parse JSON and compare one field.
+
+```typescript
+// src/mastra/scorers/route-accuracy.ts
+import { createScorer } from "@mastra/core/evals";
+
+type Route = "code" | "long-context" | "general";
+type RouteGroundTruth = {
+  route: Route;
+  mustMention?: string[];
+};
+
+function textFromAgentOutput(output: Array<{ content?: unknown }>) {
+  const content = output[0]?.content;
+  return typeof content === "string" ? content : JSON.stringify(content ?? "");
+}
+
+function parseDecision(output: Array<{ content?: unknown }>) {
+  try {
+    return JSON.parse(textFromAgentOutput(output)) as {
+      route?: string;
+      confidence?: number;
+      reason?: string;
+    };
+  } catch {
+    return {};
+  }
+}
+
+export const validRouterJsonScorer = createScorer({
+  id: "valid-router-json",
+  description: "Checks that the router emits a valid decision object.",
+  type: "agent",
+})
+  .generateScore(({ run }) => {
+    const decision = parseDecision(run.output);
+    const validRoute = ["code", "long-context", "general"].includes(
+      decision.route ?? "",
+    );
+    const validConfidence =
+      typeof decision.confidence === "number" &&
+      decision.confidence >= 0 &&
+      decision.confidence <= 1;
+
+    return validRoute && validConfidence && decision.reason ? 1 : 0;
+  })
+  .generateReason(({ score }) =>
+    score === 1 ? "Valid router decision." : "Router output was not valid JSON.",
+  );
+
+export const routeAccuracyScorer = createScorer({
+  id: "route-accuracy",
+  description: "Checks whether the selected route matches ground truth.",
+  type: "agent",
+})
+  .generateScore(({ run }) => {
+    const expected = run.groundTruth as RouteGroundTruth;
+    const decision = parseDecision(run.output);
+    return decision.route === expected.route ? 1 : 0;
+  })
+  .generateReason(({ run, score }) => {
+    const expected = run.groundTruth as RouteGroundTruth;
+    const decision = parseDecision(run.output);
+
+    return score === 1
+      ? `Selected expected route: ${expected.route}.`
+      : `Expected ${expected.route}, got ${decision.route ?? "nothing"}.`;
+  });
+```
+
+That scorer is not glamorous. That is the point.
+
+If the router cannot consistently produce valid JSON and pick the obvious specialist on a tiny test set, there is no reason to trust it with production traffic. You do not need a philosopher-model grading ontology. You need the equivalent of a smoke alarm with a battery in it.
+
+## Run the Small Eval Loop First
+
+Mastra's [`runEvals`](https://mastra.ai/reference/evals/run-evals) is the fast loop. Give it a target, test cases, scorers, and a concurrency limit. It runs the target against the data and returns aggregate scores.
+
+```typescript
+// src/mastra/evals/router.eval.ts
+import { runEvals } from "@mastra/core/evals";
+import { routerDecisionAgent } from "../agents/router-decision-agent";
+import {
+  routeAccuracyScorer,
+  validRouterJsonScorer,
+} from "../scorers/route-accuracy";
+
+const routingCases = [
+  {
+    input: "Refactor this React component to remove duplicated state.",
+    groundTruth: { route: "code" },
+  },
+  {
+    input: "Summarize these 14 interview transcripts and find recurring objections.",
+    groundTruth: { route: "long-context" },
+  },
+  {
+    input: "Classify this ticket as billing, technical, account, or other.",
+    groundTruth: { route: "general" },
+  },
+  {
+    input: "Debug a failing Playwright test that only breaks in CI.",
+    groundTruth: { route: "code" },
+  },
+  {
+    input: "Extract the renewal date and contract value from this short paragraph.",
+    groundTruth: { route: "general" },
+  },
+];
+
+const result = await runEvals({
+  target: routerDecisionAgent,
+  data: routingCases,
+  scorers: [validRouterJsonScorer, routeAccuracyScorer],
+  targetOptions: {
+    modelSettings: { temperature: 0 },
+  },
+  concurrency: 3,
+});
+
+console.log(result.scores);
+console.log(result.summary.totalItems);
+
+if (result.scores["valid-router-json"] < 1) {
+  throw new Error("Router emitted invalid decision JSON.");
+}
+
+if (result.scores["route-accuracy"] < 0.9) {
+  throw new Error("Router route accuracy fell below 90%.");
+}
+```
+
+This is the loop you run while changing the prompt, adding a new route, or trying a cheaper router model.
+
+It is not enough for a mature system, but it is enough to prevent the most embarrassing regression: "we changed the router prompt and it started sending classification tasks to the premium code model."
+
+Cost, speed, quality, and other all show up here:
+
+- Cost: the router model can stay cheap if accuracy holds.
+- Speed: the eval can enforce timeouts or record latency in the harness.
+- Quality: route accuracy and final answer quality are separate scores.
+- Other: JSON validity, allowed tools, safety, and traceability get their own checks.
+
+Do not roll all of that into one "quality" score. Averages are where useful failures go to retire.
+
+## Add an LLM Judge Only Where It Earns Its Keep
+
+Some router behavior is subjective. A request can be legitimately ambiguous:
+
+```text
+Read these logs and tell me why the deploy failed.
+```
+
+Is that `code` because debugging? `long-context` because logs? `general` because summary? The right route depends on the tool surface and your product promise.
+
+This is where an LLM judge can help, but only with a tight rubric. Mastra scorers can mix function steps and prompt-object steps. Use functions for structure, then use a judge for the part that actually needs judgment.
+
+```typescript
+// src/mastra/scorers/route-reasonableness.ts
+import { createScorer } from "@mastra/core/evals";
+import { z } from "zod";
+
+export const routeReasonablenessScorer = createScorer({
+  id: "route-reasonableness",
+  description: "Judges whether the route explanation matches the request.",
+  type: "agent",
+  judge: {
+    model: process.env.JUDGE_MODEL ?? "openai/gpt-5-mini",
+    instructions: "You are a strict evaluator for model-routing decisions.",
+  },
+})
+  .analyze({
+    description: "Evaluate the router's decision rationale.",
+    outputSchema: z.object({
+      score: z.number().min(0).max(1),
+      rationale: z.string(),
+    }),
+    createPrompt: ({ run }) => `
+User request:
+${JSON.stringify(run.input)}
+
+Router output:
+${JSON.stringify(run.output)}
+
+Score from 0 to 1.
+
+1.0 = route is clearly appropriate and the reason cites the right task signals
+0.5 = route is defensible but underspecified or ambiguous
+0.0 = route is wrong, unsupported, or the reason is unrelated
+
+Return JSON with { "score": number, "rationale": string }.
+`,
+  })
+  .generateScore(({ results }) => results.analyzeStepResult.score)
+  .generateReason(({ results }) => results.analyzeStepResult.rationale);
+```
+
+This scorer costs money because it calls a judge model. That is fine when the judgment is worth it.
+
+Do not use it to check if JSON parses.
+
+## Promote Good Cases Into a Dataset
+
+Hard-coded eval arrays are fine at the beginning. Eventually, your examples become product assets. The failed customer ticket, the weird support conversation, the prompt injection attempt, the request that used to route correctly before last Thursday.
+
+That belongs in a dataset.
+
+Mastra datasets are versioned collections of test cases. Each mutation creates a new version, which means you can rerun an experiment against the exact case set that existed when you made a model decision.
+
+First configure storage, because datasets need persistence:
+
+```typescript
+// src/mastra/index.ts
+import { Mastra } from "@mastra/core";
+import { LibSQLStore } from "@mastra/libsql";
+import { routerDecisionAgent } from "./agents/router-decision-agent";
+import {
+  routeAccuracyScorer,
+  validRouterJsonScorer,
+} from "./scorers/route-accuracy";
+
+export const mastra = new Mastra({
+  storage: new LibSQLStore({
+    id: "router-evals",
+    url: "file:./mastra.db",
+  }),
+  agents: {
+    routerDecisionAgent,
+  },
+  scorers: {
+    validRouterJson: validRouterJsonScorer,
+    routeAccuracy: routeAccuracyScorer,
+  },
+});
+```
+
+Then create a dataset and add cases:
+
+```typescript
+// src/mastra/evals/create-router-dataset.ts
+import { z } from "zod";
+import { mastra } from "../index";
+
+const dataset = await mastra.datasets.create({
+  name: "router-decisions-v1",
+  description: "Representative model-router decisions for CI and experiments.",
+  inputSchema: z.string(),
+  groundTruthSchema: z.object({
+    route: z.enum(["code", "long-context", "general"]),
+    source: z.string().optional(),
+  }),
+});
+
+await dataset.addItems({
+  items: [
+    {
+      input: "Refactor this React component to remove duplicated state.",
+      groundTruth: { route: "code", source: "synthetic:happy-path" },
+    },
+    {
+      input: "Summarize these 14 interview transcripts and find recurring objections.",
+      groundTruth: { route: "long-context", source: "synthetic:happy-path" },
+    },
+    {
+      input: "Classify this ticket as billing, technical, account, or other.",
+      groundTruth: { route: "general", source: "synthetic:happy-path" },
+    },
+  ],
+});
+```
+
+The moment you have a dataset, you can stop treating eval cases as throwaway script data. They now have IDs, versions, history, and experiment results.
+
+That is when evals start feeling less like "test files for prompts" and more like product memory.
+
+## Run Experiments Against the Router
+
+Once the dataset exists, use [`dataset.startExperiment()`](https://mastra.ai/reference/datasets/startExperiment) to run it against a registered agent, workflow, or scorer.
+
+```typescript
+// src/mastra/evals/run-router-experiment.ts
+import { mastra } from "../index";
+
+const dataset = await mastra.datasets.get({ id: process.env.ROUTER_DATASET_ID! });
+
+const summary = await dataset.startExperiment({
+  name: "router-gpt-5-mini-baseline",
+  description: "Baseline router decision run before adding security route.",
+  targetType: "agent",
+  targetId: "router-decision-agent",
+  scorers: ["validRouterJson", "routeAccuracy"],
+  metadata: {
+    routerModel: process.env.ROUTER_MODEL ?? "openai/gpt-5-mini",
+    promptVersion: "router-2026-07-03",
+  },
+  maxConcurrency: 5,
+  itemTimeout: 30_000,
+  maxRetries: 1,
+});
+
+console.log(`${summary.succeededCount}/${summary.totalItems} items succeeded`);
+
+for (const item of summary.results) {
+  const scores = Object.fromEntries(
+    item.scores.map((score) => [score.scorerId, score.score]),
+  );
+
+  console.log(item.itemId, item.output, scores);
+}
+```
+
+Now the conversation changes.
+
+Instead of "the new router seems better," you can say:
+
+- The old router scored `0.94` on route accuracy.
+- The new router scored `0.98` overall.
+- It improved long-context routing.
+- It regressed two code-review cases.
+- It reduced premium-model handoffs by 18%.
+- It added 300ms of router latency.
+
+That is an engineering conversation. There are tradeoffs. You can decide whether the trade is worth it.
+
+## Score Live Behavior, But Do Not Confuse It With Ground Truth
+
+Mastra can also attach scorers directly to agents and workflow steps. Live scorers run asynchronously and store score results in your configured database, with sampling controls so you do not score every production response unless you mean to.
+
+That is useful, but it is a different job.
+
+```typescript
+import { Agent } from "@mastra/core/agent";
+import { validRouterJsonScorer } from "../scorers/route-accuracy";
+
+export const routerDecisionAgent = new Agent({
+  id: "router-decision-agent",
+  instructions: "Choose the best specialist route...",
+  model: process.env.ROUTER_MODEL ?? "openai/gpt-5-mini",
+  scorers: {
+    validRouterJson: {
+      scorer: validRouterJsonScorer,
+      sampling: { type: "ratio", rate: 1 },
+    },
+  },
+});
+```
+
+Live scoring can tell you the router is still emitting valid decisions. It can catch malformed output, toxic content, forbidden tool calls, missing evidence markers, or suspiciously low confidence.
+
+It usually cannot tell you route accuracy, because production traffic does not arrive with ground truth stapled to it.
+
+That distinction matters. Live scoring is monitoring. Dataset experiments are controlled tests. You want both, but they answer different questions.
+
+## What to Measure After Route Accuracy
+
+Route accuracy is the first rung. It tells you whether the request went to the expected specialist. It does not tell you whether the specialist did good work.
+
+After the router passes the basics, score the system in layers:
+
+| Layer | What to score | Why it matters |
+|---|---|---|
+| Router decision | selected route, confidence, reason | Catches misclassification and bad escalation rules |
+| Trajectory | expected tool or agent sequence | Catches "right answer, wrong path" behavior |
+| Specialist output | correctness, faithfulness, usefulness | Catches low-quality work after correct routing |
+| Cost and latency | model choice, tokens, runtime | Catches expensive or slow wins |
+| Safety and scope | allowed tools, refusal boundaries, evidence | Catches product-risk failures |
+
+Mastra's `runEvals` API supports agent-level, workflow-level, step-level, and trajectory scorer configurations. That means you do not have to pretend the final answer is the only artifact.
+
+For a workflow, the shape can look like this:
+
+```typescript
+const result = await runEvals({
+  target: supportWorkflow,
+  data: supportCases,
+  scorers: {
+    workflow: [finalAnswerQualityScorer],
+    steps: {
+      "route-request": [routeAccuracyScorer],
+      "check-policy": [policyGroundingScorer],
+    },
+    trajectory: [expectedPathScorer],
+  },
+});
+```
+
+That is the mental model I want for agents in production:
+
+Score the decision. Score the path. Score the answer.
+
+If you only score the answer, the model can pass by accident.
+
+## The Router Should Get More Boring Over Time
+
+The first routing prompt is usually a paragraph of judgment calls. That is fine for a prototype.
+
+As you learn from evals, parts of the router should become less magical:
+
+- Clear lexical cases can become deterministic rules.
+- Risky tasks can require explicit approval or a workflow branch.
+- Ambiguous tasks can ask a clarifying question instead of guessing.
+- Expensive routes can require higher confidence or a second signal.
+- Known failure cases can become dataset items.
+
+The goal is not to make the router "smarter" forever. The goal is to make the system easier to reason about.
+
+Sometimes that means a better model. Sometimes it means a tighter prompt. Sometimes it means a workflow step, a scorer, a hard cap, or a boring `if` statement that saves you four figures a month.
+
+That is the whole point of measuring behavior. You stop arguing from taste and start arguing from evidence.
+
+## A Practical Starting Checklist
+
+If you are building a Mastra router today, I would start here:
+
+1. Make the routing decision structured, even if users never see it.
+2. Write deterministic scorers for valid JSON, expected route, and forbidden routes.
+3. Use `runEvals` with 10-20 cases before changing router prompts or models.
+4. Promote real failures into a versioned dataset.
+5. Run dataset experiments for meaningful prompt, model, route, or workflow changes.
+6. Add live scorers for cheap production invariants.
+7. Compare experiments by route, not only by average score.
+
+The average matters less than the failure cluster.
+
+If every regression is in long-context policy synthesis, you do not have "a worse router." You have a route boundary problem. If every failed case uses a specific tool, you have a tool contract problem. If every cheap model fails the same two ambiguous cases, you may need escalation logic instead of a more expensive default.
+
+This is where evals become useful. Not as a ceremony. Not as a dashboard that makes everyone feel temporarily adult.
+
+As a way to find the shape of the system.
+
+## Resources
+
+- [Mastra scorers overview](https://mastra.ai/docs/evals/overview)
+- [Mastra `createScorer` reference](https://mastra.ai/reference/evals/create-scorer)
+- [Mastra `runEvals` reference](https://mastra.ai/reference/evals/run-evals)
+- [Mastra datasets overview](https://mastra.ai/docs/evals/datasets/overview)
+- [Mastra dataset experiments](https://mastra.ai/docs/evals/datasets/running-experiments)
+- [Don't Marry Your Model](/llm-routing-mastra-ai)
+- [Fight Evils with Evals!](/llm-evals-are-broken)
