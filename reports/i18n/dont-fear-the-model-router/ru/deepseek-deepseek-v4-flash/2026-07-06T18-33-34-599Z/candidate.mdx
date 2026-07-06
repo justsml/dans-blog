@@ -1,0 +1,571 @@
+---
+title: Не бойтесь маршрутизатора моделей
+subTitle: Направляйтесь к лучшей модели с уверенностью.
+modified: '2026-07-03'
+tags:
+  - ai
+  - llm
+  - agents
+  - mastra
+  - evals
+  - model-routing
+  - testing
+  - observability
+  - production
+category: AI
+subCategory: AI Infrastructure
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+related:
+  - llm-routing-mastra-ai
+  - llm-evals-are-broken
+  - mastra-workflows-memory
+---
+Первая версия статьи [Не женитесь на своей модели](/llm-routing-mastra-ai) привела простой аргумент: перестаньте отправлять каждую задачу одной и той же модели только потому, что она выиграла последний конкурс.
+
+Используйте дешёвую модель для дешёвой работы. Используйте более сильную модель там, где работа действительно сложная. Держите слой маршрутизации достаточно гибким, чтобы можно было менять провайдеров, не превращая кодовую базу в храм.
+
+Это было верно.
+
+Но также неполно.
+
+Потому что как только вы добавляете маршрутизатор, появляется новое поведение системы, которое нужно тестировать. Вопрос больше не в том, «какая модель лучше?». Вопрос в том, «выбрала ли система правильный маршрут, использовала ли правильные инструменты, сохранила ли правильные доказательства и остановилась ли в нужный момент?»
+
+Если вы это не измеряете, ваш модель-маршрутизатор — просто вибрации с таблицей диспетчеризации.
+
+<p class="inset">
+Маршрутизатор — это не ответ. Маршрутизатор — это гипотеза о том, как должна вести себя ваша система.
+</p>
+
+Mastra предоставляет нам полезные поверхности для превращения этой гипотезы в нечто тестируемое: [scorers](https://mastra.ai/docs/evals/overview), [`runEvals`](https://mastra.ai/reference/evals/run-evals), [datasets](https://mastra.ai/docs/evals/datasets/overview) и [experiments](https://mastra.ai/docs/evals/datasets/running-experiments). Названия API звучат как инфраструктура для оценки, чем они и являются, но реальная ценность проще:
+
+Они делают поведение агента достаточно видимым, чтобы с ним можно было спорить.
+
+## Что мы тестируем?
+
+Модель-маршрутизатор из предыдущей статьи имеет три очевидных специализированных маршрута:
+
+| Маршрут | Что должно туда идти | Что было бы плохим маршрутом |
+|---|---|---|
+| `code` | реализация, рефакторинг, отладка, ревью кода | суммаризация длинного контекста, простая классификация |
+| `long-context` | запутанные документы, транскрипты, синтез политик, много файлов | короткое механическое форматирование |
+| `general` | классификация, форматирование, простые вопросы-ответы, скучное извлечение | сложный код или анализ, требующий доказательств |
+
+Эта таблица — начало, но это не eval.
+
+Для eval нужны примеры и scorer'ы:
+
+| Элемент | Задача |
+|---|---|
+| Элемент набора данных | «Вот репрезентативный запрос.» |
+| Эталонный ответ | «Вот маршрут или поведение, которое мы ожидали.» |
+| Scorer | «Вот как мы решаем, прошёл ли вывод проверку.» |
+| Эксперимент | «Вот запуск, с которым мы можем сравнить будущие запуски.» |
+
+Важный шаг — тестировать поведение, а не только качество текста.
+
+Модель может написать красивый ответ после выбора неправильного специалиста. Агент безопасности может составить правдоподобный отчёт, не сохранив доказательства. Агент поддержки может звучать эмпатично, пропустив проверку политики возврата. Абзац — это видимая часть. Траектория — вот где живут баги.
+
+Для маршрутизатора я обычно начинаю с четырёх осей:
+
+| Ось | Вопрос | Пример скора |
+|---|---|---|
+| Качество | Правильный ли выбран маршрут и получен ли полезный результат? | route accuracy, answer completeness, faithfulness |
+| Стоимость | Удалось ли избежать премиум-моделей для рутинной работы? | selected route cost class, token budget |
+| Скорость | Уложился ли ответ в продуктовый лимит задержки? | runtime or timeout scorer |
+| Прочее | Соблюдены ли ограничения безопасности, приватности и наблюдаемости? | tool allowlist, evidence-preservation, refusal behavior |
+
+Последний столбец важен. «Прочее» — это то самое место, где живёт производственный шрам.
+
+## Сделать решение маршрутизатора оцениваемым
+
+Если маршрутизатор выдаёт только финальный ответ, трудно понять, почему он повёл себя именно так. Вы всё ещё можете оценить вывод, но о решении остаётся лишь гадать.
+
+Для eval’ов дайте этапу маршрутизации небольшой структурированный контракт:
+
+```typescript
+type RouterDecision = {
+  route: "code" | "long-context" | "general";
+  confidence: number;
+  reason: string;
+};
+```
+
+Продуктовая система не обязана показывать этот JSON пользователям. Это может быть внутренний шаг, передача воркфлоу или трейс-спан. Скору нужна лишь поверхность.
+
+Вот намеренно маленький Mastra-агент, выбирающий маршрут:
+
+```typescript
+// src/mastra/agents/router-decision-agent.ts
+import { Agent } from "@mastra/core/agent";
+
+export const routerDecisionAgent = new Agent({
+  id: "router-decision-agent",
+  name: "Router Decision Agent",
+  instructions: `Choose the best specialist route for the user request.
+
+Return ONLY JSON:
+{
+  "route": "code" | "long-context" | "general",
+  "confidence": number,
+  "reason": string
+}
+
+Routing rules:
+- code: implementation, refactoring, debugging, code review, APIs, tests
+- long-context: large documents, transcripts, policy synthesis, many files
+- general: classification, formatting, extraction, simple Q&A
+
+Do not answer the user request. Only choose the route.`,
+  model: process.env.ROUTER_MODEL ?? "openai/gpt-5-mini",
+});
+```
+
+Да, это немного искусственно. Хорошо. Эвалы поощряют скучные стыки.
+
+Когда решение маршрутизатора явно, вы можете протестировать маршрут до того, как тестировать downstream-специалиста. Именно так вы выясняете, где проблема: в маршрутизаторе, выбранной модели, промпте, инструментах или в скоре финального ответа.
+
+## Написать скор, который ловит скучную ошибку
+
+[`createScorer`](https://mastra.ai/reference/evals/create-scorer) из Mastra может использовать JavaScript-функции, LLM-судью или и то, и другое. Начинайте с функций всегда, когда отказ детерминирован. Они дешевле, быстрее и менее загадочны.
+
+Для точности маршрута нам не нужна модель-судья. Нам нужно распарсить JSON и сравнить одно поле.
+
+```typescript
+// src/mastra/scorers/route-accuracy.ts
+import { createScorer } from "@mastra/core/evals";
+
+type Route = "code" | "long-context" | "general";
+type RouteGroundTruth = {
+  route: Route;
+  mustMention?: string[];
+};
+
+function textFromAgentOutput(output: Array<{ content?: unknown }>) {
+  const content = output[0]?.content;
+  return typeof content === "string" ? content : JSON.stringify(content ?? "");
+}
+
+function parseDecision(output: Array<{ content?: unknown }>) {
+  try {
+    return JSON.parse(textFromAgentOutput(output)) as {
+      route?: string;
+      confidence?: number;
+      reason?: string;
+    };
+  } catch {
+    return {};
+  }
+}
+
+export const validRouterJsonScorer = createScorer({
+  id: "valid-router-json",
+  description: "Checks that the router emits a valid decision object.",
+  type: "agent",
+})
+  .generateScore(({ run }) => {
+    const decision = parseDecision(run.output);
+    const validRoute = ["code", "long-context", "general"].includes(
+      decision.route ?? "",
+    );
+    const validConfidence =
+      typeof decision.confidence === "number" &&
+      decision.confidence >= 0 &&
+      decision.confidence <= 1;
+
+    return validRoute && validConfidence && decision.reason ? 1 : 0;
+  })
+  .generateReason(({ score }) =>
+    score === 1 ? "Valid router decision." : "Router output was not valid JSON.",
+  );
+
+export const routeAccuracyScorer = createScorer({
+  id: "route-accuracy",
+  description: "Checks whether the selected route matches ground truth.",
+  type: "agent",
+})
+  .generateScore(({ run }) => {
+    const expected = run.groundTruth as RouteGroundTruth;
+    const decision = parseDecision(run.output);
+    return decision.route === expected.route ? 1 : 0;
+  })
+  .generateReason(({ run, score }) => {
+    const expected = run.groundTruth as RouteGroundTruth;
+    const decision = parseDecision(run.output);
+
+    return score === 1
+      ? `Selected expected route: ${expected.route}.`
+      : `Expected ${expected.route}, got ${decision.route ?? "nothing"}.`;
+  });
+```
+
+Этот скор не эффектен. В этом суть.
+
+Если маршрутизатор неспособен стабильно выдавать валидный JSON и выбирать очевидного специалиста на маленьком тестовом наборе, нет причин доверять ему продуктивный трафик. Вам не нужна философская модель, оценивающая онтологию. Вам нужен эквивалент дымового извещателя с батарейкой внутри.
+
+## Сначала запустить малый цикл оценки
+
+[`runEvals`](https://mastra.ai/reference/evals/run-evals) из Mastra — это быстрый цикл. Передайте ему цель, тестовые случаи, скоры и лимит конкурентности. Он запускает цель на данных и возвращает агрегированные scores.
+
+```typescript
+// src/mastra/evals/router.eval.ts
+import { runEvals } from "@mastra/core/evals";
+import { routerDecisionAgent } from "../agents/router-decision-agent";
+import {
+  routeAccuracyScorer,
+  validRouterJsonScorer,
+} from "../scorers/route-accuracy";
+
+const routingCases = [
+  {
+    input: "Refactor this React component to remove duplicated state.",
+    groundTruth: { route: "code" },
+  },
+  {
+    input: "Summarize these 14 interview transcripts and find recurring objections.",
+    groundTruth: { route: "long-context" },
+  },
+  {
+    input: "Classify this ticket as billing, technical, account, or other.",
+    groundTruth: { route: "general" },
+  },
+  {
+    input: "Debug a failing Playwright test that only breaks in CI.",
+    groundTruth: { route: "code" },
+  },
+  {
+    input: "Extract the renewal date and contract value from this short paragraph.",
+    groundTruth: { route: "general" },
+  },
+];
+
+const result = await runEvals({
+  target: routerDecisionAgent,
+  data: routingCases,
+  scorers: [validRouterJsonScorer, routeAccuracyScorer],
+  targetOptions: {
+    modelSettings: { temperature: 0 },
+  },
+  concurrency: 3,
+});
+
+console.log(result.scores);
+console.log(result.summary.totalItems);
+
+if (result.scores["valid-router-json"] < 1) {
+  throw new Error("Router emitted invalid decision JSON.");
+}
+
+if (result.scores["route-accuracy"] < 0.9) {
+  throw new Error("Router route accuracy fell below 90%.");
+}
+```
+
+Это тот цикл, который вы запускаете, меняя промпт, добавляя новый маршрут или пробуя более дешёвую модель-маршрутизатор.
+
+Этого недостаточно для зрелой системы, но достаточно, чтобы предотвратить самую неловкую регрессию: «мы изменили промпт маршрутизатора, и он начал отправлять задачи классификации в премиум-модель для кода».
+
+Стоимость, скорость, качество и прочее — всё отражается здесь:
+
+- Стоимость: модель-маршрутизатор может оставаться дешёвой, если точность держится.
+- Скорость: оценка может контролировать таймауты или записывать задержки в обвязке.
+- Качество: точность маршрута и качество итогового ответа — это отдельные показатели.
+- Прочее: валидность JSON, разрешённые инструменты, безопасность и прослеживаемость получают собственные проверки.
+
+Не смешивайте всё это в одну оценку «качество». Усреднение — это место, где полезные сбои уходят на покой.
+
+## Добавляйте LLM-судью только там, где это оправдано
+
+Некоторые решения маршрутизатора субъективны. Запрос может быть законно неоднозначным:
+
+```text
+Прочитай эти логи и скажи, почему деплой упал.
+```
+
+Это `code`, потому что отладка? `long-context`, потому что логи? `general`, потому что сводка? Правильный маршрут зависит от поверхности инструментов и ваших продуктовых обещаний.
+
+Вот где может помочь LLM-судья, но только с чёткой рубрикой. Скореры Mastra могут смешивать шаги-функции и шаги-промпт-объекты. Используйте функции для структуры, а судью — для той части, где действительно нужно суждение.
+
+```typescript
+// src/mastra/scorers/route-reasonableness.ts
+import { createScorer } from "@mastra/core/evals";
+import { z } from "zod";
+
+export const routeReasonablenessScorer = createScorer({
+  id: "route-reasonableness",
+  description: "Judges whether the route explanation matches the request.",
+  type: "agent",
+  judge: {
+    model: process.env.JUDGE_MODEL ?? "openai/gpt-5-mini",
+    instructions: "You are a strict evaluator for model-routing decisions.",
+  },
+})
+  .analyze({
+    description: "Evaluate the router's decision rationale.",
+    outputSchema: z.object({
+      score: z.number().min(0).max(1),
+      rationale: z.string(),
+    }),
+    createPrompt: ({ run }) => `
+User request:
+${JSON.stringify(run.input)}
+
+Router output:
+${JSON.stringify(run.output)}
+
+Score from 0 to 1.
+
+1.0 = route is clearly appropriate and the reason cites the right task signals
+0.5 = route is defensible but underspecified or ambiguous
+0.0 = route is wrong, unsupported, or the reason is unrelated
+
+Return JSON with { "score": number, "rationale": string }.
+`,
+  })
+  .generateScore(({ results }) => results.analyzeStepResult.score)
+  .generateReason(({ results }) => results.analyzeStepResult.rationale);
+```
+
+Этот скоринг стоит денег, потому что вызывает модель-судью. Это нормально, когда суждение того стоит.
+
+Не используйте его для проверки, парсится ли JSON.
+
+## Продвигайте удачные кейсы в датасет
+
+Жёстко заданные массивы оценок — это нормально в начале. Со временем ваши примеры становятся продуктовыми активами. Неудачный тикет клиента, странный разговор в поддержке, попытка инъекции в промпт, запрос, который раньше маршрутизировался правильно до прошлого четверга.
+
+Это место в датасете.
+
+Датасеты Mastra — это версионированные коллекции тестовых кейсов. Каждая мутация создаёт новую версию, что означает возможность повторного запуска эксперимента с тем точным набором кейсов, который существовал при принятии модельного решения.
+
+Сначала настройте хранилище, потому что датасетам нужна персистентность:
+
+```typescript
+// src/mastra/index.ts
+import { Mastra } from "@mastra/core";
+import { LibSQLStore } from "@mastra/libsql";
+import { routerDecisionAgent } from "./agents/router-decision-agent";
+import {
+  routeAccuracyScorer,
+  validRouterJsonScorer,
+} from "./scorers/route-accuracy";
+
+export const mastra = new Mastra({
+  storage: new LibSQLStore({
+    id: "router-evals",
+    url: "file:./mastra.db",
+  }),
+  agents: {
+    routerDecisionAgent,
+  },
+  scorers: {
+    validRouterJson: validRouterJsonScorer,
+    routeAccuracy: routeAccuracyScorer,
+  },
+});
+```
+
+Затем создайте датасет и добавьте кейсы:
+
+```typescript
+// src/mastra/evals/create-router-dataset.ts
+import { z } from "zod";
+import { mastra } from "../index";
+
+const dataset = await mastra.datasets.create({
+  name: "router-decisions-v1",
+  description: "Representative model-router decisions for CI and experiments.",
+  inputSchema: z.string(),
+  groundTruthSchema: z.object({
+    route: z.enum(["code", "long-context", "general"]),
+    source: z.string().optional(),
+  }),
+});
+
+await dataset.addItems({
+  items: [
+    {
+      input: "Refactor this React component to remove duplicated state.",
+      groundTruth: { route: "code", source: "synthetic:happy-path" },
+    },
+    {
+      input: "Summarize these 14 interview transcripts and find recurring objections.",
+      groundTruth: { route: "long-context", source: "synthetic:happy-path" },
+    },
+    {
+      input: "Classify this ticket as billing, technical, account, or other.",
+      groundTruth: { route: "general", source: "synthetic:happy-path" },
+    },
+  ],
+});
+```
+
+Как только у вас есть датасет, вы перестаёте относиться к оценочным кейсам как к одноразовым скриптовым данным. Теперь у них есть идентификаторы, версии, история и результаты экспериментов.
+
+Именно тогда оценки начинают ощущаться не как «тестовые файлы для промптов», а как продуктовая память.
+
+## Запускайте эксперименты против маршрутизатора
+
+Как только у вас есть датасет, используйте [`dataset.startExperiment()`](https://mastra.ai/reference/datasets/startExperiment) для запуска на зарегистрированном агенте, workflow или скорере.
+
+```typescript
+// src/mastra/evals/run-router-experiment.ts
+import { mastra } from "../index";
+
+const dataset = await mastra.datasets.get({ id: process.env.ROUTER_DATASET_ID! });
+
+const summary = await dataset.startExperiment({
+  name: "router-gpt-5-mini-baseline",
+  description: "Baseline router decision run before adding security route.",
+  targetType: "agent",
+  targetId: "router-decision-agent",
+  scorers: ["validRouterJson", "routeAccuracy"],
+  metadata: {
+    routerModel: process.env.ROUTER_MODEL ?? "openai/gpt-5-mini",
+    promptVersion: "router-2026-07-03",
+  },
+  maxConcurrency: 5,
+  itemTimeout: 30_000,
+  maxRetries: 1,
+});
+
+console.log(`${summary.succeededCount}/${summary.totalItems} items succeeded`);
+
+for (const item of summary.results) {
+  const scores = Object.fromEntries(
+    item.scores.map((score) => [score.scorerId, score.score]),
+  );
+
+  console.log(item.itemId, item.output, scores);
+}
+```
+
+Теперь разговор меняется.
+
+Вместо «новый маршрутизатор вроде бы лучше» вы можете сказать:
+
+- Старый маршрутизатор набрал `0.94` по точности маршрутизации.
+- Новый маршрутизатор набрал `0.98` в целом.
+- Он улучшил маршрутизацию длинных контекстов.
+- Он ухудшил два кейса code-review.
+- Он сократил передачу премиальным моделям на 18%.
+- Он добавил 300 мс задержки маршрутизатора.
+
+Это инженерный разговор. Есть компромиссы. Вы можете решить, стоит ли овчинка выделки.
+
+## Оценивайте поведение в реальном времени, но не путайте его с истиной
+
+Mastra также может подключать скореры напрямую к агентам и шагам workflow. Живые скореры работают асинхронно и сохраняют результаты оценок в настроенную базу данных с возможностью сэмплирования, чтобы не оценивать каждый продакшн-ответ, если вы этого не хотите.
+
+Это полезно, но это другая задача.
+
+```typescript
+import { Agent } from "@mastra/core/agent";
+import { validRouterJsonScorer } from "../scorers/route-accuracy";
+
+export const routerDecisionAgent = new Agent({
+  id: "router-decision-agent",
+  instructions: "Choose the best specialist route...",
+  model: process.env.ROUTER_MODEL ?? "openai/gpt-5-mini",
+  scorers: {
+    validRouterJson: {
+      scorer: validRouterJsonScorer,
+      sampling: { type: "ratio", rate: 1 },
+    },
+  },
+});
+```
+
+Живая оценка может сказать, что маршрутизатор всё ещё выдаёт корректные решения. Она может отлавливать некорректный вывод, токсичный контент, запрещённые вызовы инструментов, пропущенные маркеры доказательств или подозрительно низкую уверенность.
+
+Но она обычно не может сказать о точности маршрутизации, потому что продакшн-трафик не приходит с прикреплённой истиной.
+
+Это различие важно. Живая оценка — это мониторинг. Эксперименты с датасетами — это контролируемые тесты. Нужны оба, но они отвечают на разные вопросы.
+
+## Что измерять после точности маршрутизации
+
+Точность маршрутизации — первая ступень. Она говорит, попал ли запрос к нужному специалисту. Она не говорит, сделал ли специалист хорошую работу.
+
+После того как маршрутизатор прошёл базу, оценивайте систему по слоям:
+
+| Слой | Что оценивать | Почему это важно |
+|---|---|---|
+| Решение маршрутизатора | выбранный маршрут, уверенность, причина | Отлавливает неверную классификацию и плохие правила эскалации |
+| Траектория | ожидаемая последовательность инструментов или агентов | Отлавливает поведение «правильный ответ, неправильный путь» |
+| Вывод специалиста | корректность, точность, полезность | Отлавливает низкое качество работы после правильной маршрутизации |
+| Стоимость и задержка | выбор модели, токены, время выполнения | Отлавливает дорогие или медленные победы |
+| Безопасность и область | разрешённые инструменты, границы отказа, доказательства | Отлавливает отказы, угрожающие продукту |
+
+API `runEvals` в Mastra поддерживает конфигурации скореров на уровне агента, workflow, шага и траектории. Это значит, что вам не нужно притворяться, что единственный артефакт — это финальный ответ.
+
+Для workflow структура может выглядеть так:
+
+```typescript
+const result = await runEvals({
+  target: supportWorkflow,
+  data: supportCases,
+  scorers: {
+    workflow: [finalAnswerQualityScorer],
+    steps: {
+      "route-request": [routeAccuracyScorer],
+      "check-policy": [policyGroundingScorer],
+    },
+    trajectory: [expectedPathScorer],
+  },
+});
+```
+
+Вот ментальная модель, которую я хочу для агентов в продакшне:
+
+Оценивайте решение. Оценивайте путь. Оценивайте ответ.
+
+Если вы оцениваете только ответ, модель может пройти случайно.
+
+## Маршрутизатор должен становиться скучнее со временем
+
+Первый промпт маршрутизации обычно представляет собой абзац экспертных решений. Для прототипа это нормально.
+
+По мере накопления знаний из eval'ов части маршрутизатора должны становиться менее магическими:
+
+- Четкие лексические случаи могут стать детерминированными правилами.
+- Рискованные задачи могут требовать явного одобрения или ветви workflow.
+- Неоднозначные задачи могут задавать уточняющий вопрос вместо угадывания.
+- Дорогие маршруты могут требовать большей уверенности или второго сигнала.
+- Известные случаи неудач могут стать элементами набора данных.
+
+Цель не в том, чтобы сделать маршрутизатор «умнее» навсегда. Цель — сделать систему более понятной для анализа.
+
+Иногда это означает лучшую модель. Иногда — более плотный промпт. Иногда — шаг workflow, скоррер, жесткое ограничение или скучный оператор `if`, который экономит вам четырехзначные суммы в месяц.
+
+В этом и заключается смысл измерения поведения. Вы перестаете спорить на основе вкусовых предпочтений и начинаете спорить на основе доказательств.
+
+## Практический начальный чеклист
+
+Если вы сегодня создаете маршрутизатор Mastra, я бы начал с этого:
+
+1. Сделайте решение о маршрутизации структурированным, даже если пользователи его никогда не увидят.
+2. Напишите детерминированные скорреры для валидного JSON, ожидаемого маршрута и запрещенных маршрутов.
+3. Используйте `runEvals` с 10–20 кейсами перед изменением промптов или моделей маршрутизатора.
+4. Превращайте реальные сбои в версионированный набор данных.
+5. Запускайте эксперименты с набором данных для значимых изменений промптов, моделей, маршрутов или workflow.
+6. Добавьте живые скорреры для дешевых инвариантов продакшна.
+7. Сравнивайте эксперименты по маршрутам, а не только по среднему баллу.
+
+Среднее значение значит меньше, чем кластер неудач.
+
+Если каждая регрессия происходит в синтезе политик с длинным контекстом, у вас не «худший маршрутизатор». У вас проблема границ маршрутов. Если каждый неудачный кейс использует определенный инструмент, у вас проблема контракта инструмента. Если каждая дешевая модель проваливает одни и те же два неоднозначных кейса, вам может понадобиться логика эскалации вместо более дорогого варианта по умолчанию.
+
+Вот где eval'ы становятся полезными. Не как церемония. Не как дашборд, который заставляет всех чувствовать себя временно взрослыми.
+
+Как способ найти форму системы.
+
+## Ресурсы
+
+- [Обзор скорреров Mastra](https://mastra.ai/docs/evals/overview)
+- [Справочник `createScorer` Mastra](https://mastra.ai/reference/evals/create-scorer)
+- [Справочник `runEvals` Mastra](https://mastra.ai/reference/evals/run-evals)
+- [Обзор наборов данных Mastra](https://mastra.ai/docs/evals/datasets/overview)
+- [Эксперименты с наборами данных Mastra](https://mastra.ai/docs/evals/datasets/running-experiments)
+- [Не женитесь на своей модели](../llm-routing-mastra-ai)
+- [Боритесь со злом с помощью Eval'ов!](../llm-evals-are-broken)
