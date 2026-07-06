@@ -1,0 +1,84 @@
+{
+  "runId": "openai-gpt-oss-120b-nitro@2026-07-06T18-36-04-099Z",
+  "slug": "dont-fear-the-model-router",
+  "locale": "de",
+  "model": "openai/gpt-oss-120b:nitro",
+  "modelPath": "openai-gpt-oss-120b-nitro",
+  "createdAt": "2026-07-06T18:36:14.284Z",
+  "sourcePath": "src/content/posts/2026-07-03--dont-fear-the-model-router/index.mdx",
+  "targetPath": "src/content/posts/2026-07-03--dont-fear-the-model-router/de/index.mdx",
+  "candidatePath": "reports/i18n/dont-fear-the-model-router/de/openai-gpt-oss-120b-nitro/2026-07-06T18-36-04-099Z/candidate.mdx",
+  "sourceHash": "6bae85783680a3433fbaa0d18b8a1b1ba2a5d26007cfe97c467c377f2553c2fe",
+  "outputHash": "c73a1243f8c52127fa260f80d590b4a11e98e6011b65318e67b0869d96f0bfb8",
+  "reasoningEffort": "low",
+  "temperature": 0.1,
+  "maxTokens": 16000,
+  "timeoutMs": 200000,
+  "articleSummary": "The article argues that adding a model‑router is not a cure‑all; it creates a new system behavior that must be rigorously evaluated. It proposes treating the router as a testable hypothesis and using Mastra’s evaluation tools—scorers, datasets, experiments, and the `runEvals` API—to measure whether the router selects the correct specialist (code, long‑context, or general), respects cost, latency, and safety constraints, and preserves evidence. The author demonstrates a concrete pattern: have the router emit a structured JSON decision (route, confidence, reason) and write lightweight function‑based scorers to verify route accuracy before downstream model performance. The piece is a tutorial‑style guide aimed at engineers building LLM‑routing pipelines who need practical, observable metrics rather than “vibes” to ensure reliable production behavior.",
+  "totalInputTokens": 11652,
+  "totalOutputTokens": 6293,
+  "totalCacheReadTokens": 3456,
+  "totalCacheWriteTokens": 0,
+  "totalDurationMs": 8900,
+  "totalCostUsd": 0.001587168,
+  "pricingSource": "local-openrouter-estimate",
+  "telemetry": {
+    "model": "openai/gpt-oss-120b:nitro",
+    "chunkSize": "18p",
+    "totalChunks": 5,
+    "totalInputTokens": 11652,
+    "totalOutputTokens": 6293,
+    "totalCacheReadTokens": 3456,
+    "totalCacheWriteTokens": 0,
+    "totalDurationMs": 8900,
+    "totalCostUsd": 0.001587168,
+    "pricingSource": "local-openrouter-estimate",
+    "chunks": [
+      {
+        "index": 0,
+        "inputTokens": 1895,
+        "outputTokens": 849,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 3987,
+        "costUsd": 0.000226725
+      },
+      {
+        "index": 1,
+        "inputTokens": 2984,
+        "outputTokens": 1903,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 1740,
+        "costUsd": 0.00045891599999999997
+      },
+      {
+        "index": 2,
+        "inputTokens": 2522,
+        "outputTokens": 1372,
+        "cacheReadTokens": 1152,
+        "cacheWriteTokens": 0,
+        "durationMs": 1149,
+        "costUsd": 0.000345318
+      },
+      {
+        "index": 3,
+        "inputTokens": 2316,
+        "outputTokens": 1340,
+        "cacheReadTokens": 1152,
+        "cacheWriteTokens": 0,
+        "durationMs": 1124,
+        "costUsd": 0.00033152400000000003
+      },
+      {
+        "index": 4,
+        "inputTokens": 1935,
+        "outputTokens": 829,
+        "cacheReadTokens": 1152,
+        "cacheWriteTokens": 0,
+        "durationMs": 900,
+        "costUsd": 0.00022468499999999997
+      }
+    ]
+  }
+}
