@@ -3,7 +3,7 @@
 - Locale: es
 - Model: openrouter/openai/gpt-oss-120b:nitro
 - Target: src/content/posts/2015-04-06--docker-server-setup-notes/es/index.mdx
-- Validation: deferred
+- Validation: rejected: direct AI SDK translation failed
 - Runtime seconds: 4.15
 - Input tokens: 14354
 - Output tokens: 9518
@@ -12,7 +12,7 @@
 - Cache write tokens: 0
 - Estimated cost: $0.002273
 - Pricing source: local-openrouter-estimate
-- Note: Generated through the direct AI SDK chunked translator.
+- Note: Command failed: git commit --only -m i18n candidate(es): docker-server-setup-notes via openrouter/openai/gpt-oss-120b:nitro -- reports/i18n/docker-server-setup-notes/es reports/i18n/docker-server-setup-notes/candidates.jsonl
 ## Raw Output
 
 ````mdx
@@ -20,7 +20,7 @@
 social_image: ../desktop-social.webp
 title: Configuración del servidor Docker
 modified: '2022-07-30'
-subTitle: Inicia servidores de bases de datos con comandos únicos
+subTitle: Iniciaservidores de base de datos con un solo comando
 category: DevOps
 subCategory: docker
 tags:
@@ -43,20 +43,20 @@ cover_icon: ../icon_markus-spiske-193031-unsplash.webp
 ---
 ## Configuración del Servidor Docker
 
-> Nota histórica: esta es una referencia de desarrollo local de 2015. Es útil para entender el flujo de trabajo antiguo, pero no trate estos fragmentos como consejo de producción actual. Hoy en día, los archivos Docker Compose, redes personalizadas, versiones de imágenes fijadas, autenticación, secretos y automatización de actualizaciones revisadas son valores predeterminados más seguros.
+> Nota histórica: esta es una referencia de desarrollo local de 2015. Es útil para comprender el flujo de trabajo antiguo, pero no trate estos fragmentos como consejo de producción actual. Los archivos modernos de Docker Compose, redes personalizadas, versiones de imágenes fijadas, autenticación, secretos y automatización de actualizaciones revisada son valores predeterminados más seguros hoy en día.
 
 ### ¿Para quién es esta guía?
 
-- ¿Alguna vez quiso probar una aplicación con una base de datos “descartable”?
-- ¿Heredó un código sospechoso? ¿Prefiere no compartir acceso a su base de datos existente?
+- ¿Alguna vez quiso probar una aplicación con una base de datos “desechable”?
+- ¿Heredó una base de código sospechosa? ¿Prefiere no compartir acceso a su base de datos existente?
 - ¿Trabaja con clientes sensibles a la seguridad? ¡No arriesgue la contaminación cruzada! Use contenedores y controle la persistencia de datos.
 - ¿No puede actualizar su entorno de desarrollo a la última versión de la base de datos porque sus aplicaciones heredadas dependen de una versión de MySQL de hace 12 años?
 
-> ¡Nunca deje que esas razones le vuelvan a interponerse!
+> ¡Nunca deje que esas razones le vuelvan a bloquear el camino!
 
-### Enlaces rápidos a comandos de una línea
+### Enlaces rápidos a los comandos de una línea
 
-Este artículo muestra comandos de una línea para iniciar algunas de las bases de datos más populares, entre ellas:
+Esta artículo presenta comandos de una sola línea para iniciar algunas de las bases de datos más populares, incluyendo:
 
 <section class="font-lg">
 
@@ -66,7 +66,56 @@ Este artículo muestra comandos de una línea para iniciar algunas de las bases 
 
 <p><a href="#servidor-mysql"><svg style={{display: 'inline-block', margin: '0 0.5rem'}} role="img" viewBox="0 0 24 24" width="36" height="36" xmlns="http://www.w3.org/2000/svg"><title>MySQL icon</title><path fill='currentColor' d="M16.405 5.676c-.115 0-.193.014-.274.033v.013h.014c.054.104.146.18.214.273.054.107.1.214.154.32l.014-.015c.094-.066.14-.172.14-.333-.04-.047-.046-.094-.08-.14-.04-.067-.126-.1-.18-.153zM5.77 18.87h-.927c-.03-1.562-.123-3.03-.27-4.41h-.008l-1.41 4.41H2.45l-1.4-4.41h-.01c-.103 1.323-.168 2.793-.195 4.41H0c.055-1.966.192-3.81.41-5.53h1.15l1.335 4.064h.008L4.25 13.34h1.095c.242 2.015.384 3.86.428 5.53zm4.017-4.08c-.378 2.045-.876 3.533-1.492 4.46-.482.716-1.01 1.073-1.583 1.073-.153 0-.34-.046-.566-.138v-.494c.11.017.24.026.386.026.268 0 .483-.075.647-.222.197-.18.295-.382.295-.605 0-.155-.077-.47-.23-.944L6.23 14.79h.91l.727 2.36c.164.536.233.91.205 1.123.4-1.064.678-2.227.835-3.483h.88zM22.112 18.87h-2.63v-5.53h.885v4.85h1.745zM18.792 19.005l-1.016-.5c.09-.076.177-.158.255-.25.433-.506.648-1.258.648-2.253 0-1.83-.718-2.746-2.155-2.746-.704 0-1.254.232-1.65.697-.43.508-.646 1.256-.646 2.245 0 .972.19 1.686.574 2.14.35.41.877.615 1.583.615.264 0 .506-.033.725-.098l1.325.772.36-.622zM15.5 17.763c-.225-.36-.337-.94-.337-1.736 0-1.393.424-2.09 1.27-2.09.443 0 .77.167.977.5.224.362.336.936.336 1.723 0 1.404-.424 2.108-1.27 2.108-.445 0-.77-.167-.978-.5zM13.842 17.338c0 .47-.172.856-.516 1.156s-.803.45-1.384.45c-.543 0-1.064-.172-1.573-.515l.237-.476c.438.22.833.328 1.19.328.332 0 .593-.073.783-.22.188-.147.3-.354.3-.615 0-.33-.23-.61-.648-.845-.388-.213-1.163-.657-1.163-.657-.422-.307-.632-.636-.632-1.177 0-.45.157-.81.47-1.085.315-.278.72-.415 1.22-.415.512 0 .98.136 1.4.41l-.213.476c-.36-.152-.715-.23-1.064-.23-.283 0-.502.068-.654.206-.153.136-.248.31-.248.524 0 .328.234.61.666.85.393.215 1.187.67 1.187.67.433.305.648.63.648 1.168zM23.224 11.486c-.535-.014-.95.04-1.297.188-.1.04-.26.04-.274.167.055.053.063.14.11.214.08.134.218.313.346.407.14.11.28.216.427.31.26.16.555.255.81.416.145.094.293.213.44.313.073.05.12.14.214.172v-.02c-.046-.06-.06-.147-.105-.214-.067-.067-.134-.127-.2-.193-.194-.26-.435-.487-.695-.675-.214-.146-.682-.35-.77-.595l-.013-.014c.146-.013.32-.066.46-.106.227-.06.435-.047.67-.106.106-.027.213-.06.32-.094v-.06c-.12-.12-.21-.283-.334-.395-.34-.295-.717-.582-1.104-.823-.21-.134-.476-.22-.697-.334-.08-.04-.214-.06-.26-.127-.12-.146-.19-.34-.275-.514-.192-.368-.38-.775-.547-1.163-.12-.262-.193-.523-.34-.763-.69-1.137-1.437-1.826-2.586-2.5-.247-.14-.543-.2-.856-.274-.167-.008-.334-.02-.5-.027-.11-.047-.216-.174-.31-.235-.38-.24-1.364-.76-1.644-.072-.18.434.267.862.422 1.082.115.153.26.328.34.5.047.116.06.235.107.356.106.294.207.622.347.897.073.14.153.287.247.413.054.073.146.107.167.227-.094.136-.1.334-.154.5-.24.757-.146 1.693.194 2.25.107.166.362.534.703.393.3-.12.234-.5.32-.835.02-.08.007-.133.048-.187v.015c.094.188.188.367.274.555.206.328.566.668.867.895.16.12.287.328.487.402v-.02h-.015c-.043-.058-.1-.086-.154-.133-.12-.12-.255-.267-.35-.4-.28-.377-.527-.79-.747-1.218-.11-.21-.202-.436-.29-.643-.04-.08-.04-.2-.107-.24-.1.146-.247.273-.32.453-.127.288-.14.642-.188 1.01-.027.007-.014 0-.027.014-.214-.052-.287-.274-.367-.46-.2-.475-.233-1.238-.06-1.785.047-.14.247-.582.167-.716-.042-.127-.174-.2-.247-.303-.087-.124-.18-.285-.24-.427-.16-.374-.24-.788-.414-1.162-.08-.173-.22-.354-.334-.513-.127-.18-.267-.307-.368-.52-.033-.073-.08-.194-.027-.274.014-.054.042-.075.094-.09.088-.072.335.022.422.062.247.1.455.194.662.334.094.066.195.193.315.226h.14c.214.047.455.014.655.073.355.114.675.28.962.46.876.556 1.596 1.345 2.085 2.286.08.154.115.295.188.455.14.33.313.663.455.982.14.315.275.636.476.897.1.14.502.213.682.286.133.06.34.115.46.188.23.14.454.3.67.454.11.076.443.243.463.378z"/></svg> MySQL</a></p>
 
-<p><a href="#servidor-elasticsearch"><svg style={{display: 'inline-block', margin: '0 0.5rem'}} role="img" viewBox="0 0 24 24" width="36" height="36" xmlns="http://www.w3.org/2000/svg"><title>Elastic icon</title><path fill='currentColor' d="M20.32 16.3152l-3.9463-.923-1.048-2.0031 5.1615-4.522c1.5305.5798 2.551 2.0476 2.551 3.6903 0 1.6906-1.1146 3.2278-2.7182 3.7578m-2.9667 4.666c-.6147 0-1.217-.2062-1.709-.5845l.7801-4.0648 3.5847.8388c.1139.3094.1714.6396.1714.9835 0 1.559-1.268 2.827-2.8272 2.827m-2.6292-.5844a5.902 5.902 0 0 1-4.8925 2.593c-3.2651 0-5.9215-2.6564-5.9215-5.921 0-.4008.039-.7966.1156-1.1785l5.1509-4.6553 5.2557 2.3956 1.1637 2.2235zM.9636 11.443c0-1.69 1.1145-3.2266 2.7175-3.7577l3.9374.93.9242 1.9747-5.0336 4.5498C1.9815 14.558.9636 13.0885.9636 11.4429m5.6847-8.424a2.8325 2.8325 0 0 1 1.718.5798l-.7861 4.079-3.5876-.847c-.114-.3095-.1714-.6397-.1714-.984 0-1.5592 1.268-2.8278 2.8271-2.8278m2.653.5875c1.1044-1.6082 2.9212-2.5674 4.8692-2.5674 3.2562 0 5.9049 2.6492 5.9049 5.9055 0 .3983-.0373.7789-.1139 1.1607l-5.2819 4.628-5.235-2.3865-1.022-2.1822zm14.662 8.9622c0-2.0052-1.2432-3.7582-3.114-4.4403a6.6742 6.6742 0 0 0 .125-1.2855c0-3.7274-3.0325-6.76-6.7605-6.76-2.1775 0-4.2033 1.0443
+<p><a href="#servidor-elasticsearch"><svg style={{display: 'inline-block', margin: '0 0.5rem'}} role="img" viewBox="0 0 24 24" width="36" height="36" xmlns="http://www.w3.org/2000/svg"><title>Elastic icon</title><path fill='currentColor' d="M20.32 16.3152l-3.9463-.923-1.048-2.0031 5.1615-4.522c1.5305.5798 2.551 2.0476 2.551 3.6903 0 1.6906-1.1146 3.2278-2.7182 3.7578m-2.9667 4.666c-.6147 0-1.217-.2062-1.709-.5845l.7801-4.0648 3.5847.8388c.1139.3094.1714.6396.1714.9835 0 1.559-1.268 2.827-2.8272 2.827m-2.6292-.5844a5.902 5.902 0 0 1-4.8925 2.593c-3.2651 0-5.9215-2.6564-5.9215-5.921 0-.4008.039-.7966.1156-1.1785l5.1509-4.6553 5.2557 2.3956 1.1637 2.2235zM.9636 11.443c0-1.69 1.1145-3.2266 2.7175-3.7577l3.9374.93.9242 1.9747-5.0336 4.5498C1.9815 14.558.9636 13.0885.9636 11.4429m5.6847-8.424a2.8325 2.8325 0 0 1 1.718.5798l-.7861 4.079-3.5876-.847c-.114-.3095-.1714-.6397-.1714-.984 0-1.5592 1.268-2.8278 2.8271-2.8278m2.653.5875c1.1044-1.6082 2.9212-2.5674 4.8692-2.5674 3.2562 0 5.9049 2.6492 5.9049 5.9055 0 .3983-.0373.7789-.1139 1.1607l-5.2819 4.628-5.235-2.3865-1.022-2.1822zm14.662 8.9622c0-2.0052-1.2432-3.7582-3.114-4.4403a6.6742 6.6742 0 0 0 .125-1.2855c0-3.7274-3.0325-6.76-6.7605-6.76-2.1775 0-4.2033 1.0443-5.4761 2.804a3.575 3.575 0 0 0-2.1963-.7516c-1.9786 0-3.5883 1.6097-3.5883 3.5882 0 .4373.078.8557.2244 1.2505-1.86.6712-3.139 2.4653-3.139 4.4579 0 2.0155 1.2493 3.7763 3.1287 4.4536a6.8545 6.8545 0 0 0-.1233 1.285c0 3.7189 3.0252 6.7441 6.7441 6.7441 2.183 0 4.2075-1.0485 5.4732-2.8155.63.4947 1.4004.7662 2.1994.7662 1.9784 0 3.5881-1.609 3.5881-3.5876 0-.4373-.078-.8562-.2243-1.2512 1.86-.6706 3.139-2.4652 3.139-4.4578"/></svg> ElasticSearch</a></p>
+
+</section>
+
+**Nota:** Estos comandos fueron escritos como atajos para desarrollo local. Si los adapta para producción, añada autenticación, gestión de secretos, copias de seguridad, políticas de red, imágenes con versiones fijas y un plan de actualizaciones primero.
+
+> **Usuarios avanzados de Docker:** Si está familiarizado con `docker-compose` puede que quiera convertir los comandos de shell a su archivo `docker-compose.yml`.
+
+### Servidor Postgres
+
+> Inicie un contenedor, nombrándolo `pg-localhost`
+
+```sh
+# Almacene los archivos de la base de datos en una ruta local, fuera del contenedor
+mkdir -p $HOME/.postgres-data
+
+docker run \
+  --name pg-localhost \
+  -p 127.0.0.1:5432:5432 \
+  -e POSTGRES_PASSWORD=password \
+  --restart unless-stopped \
+  -it \
+  --shm-size=256mb \
+  postgres:16-alpine \
+  postgres -c 'listen_addresses=*' \
+    -c 'password_encryption=scram-sha-256' \
+    -c 'shared_memory_type=sysv' \
+    -c 'shared_buffers=256MB' \
+    -c 'max_connections=200'
+```
+
+> Ajuste las opciones de la línea de comandos según sea necesario. (Los argumentos del demonio de postgres comienzan después del nombre de la imagen Docker `postgres:16-alpine`. Véase `postgres -c 'listen_addresses=*'...`)
+
+> Acceda al prompt de `psql` como usuario postgres
+
+```sh
+docker exec --user postgres -it pg-localhost psql
+```
+
+> Acceda al shell del contenedor como root
+
+```sh
+docker exec -it pg-localhost bash
+```
+
+**Nota:** El comando anterior usa las imágenes base oficiales de Alpine Linux. _No es el típico entorno Debian._
+
+> Para usar la imagen base debian/ubuntu, cambie `postgres:12-alpine` por `postgres:12`.
+
+### Servidor MongoDB
 
 ```sh
 mkdir -p $HOME/.mongodb/data
@@ -80,26 +129,26 @@ docker run -d \
   bash -c 'mongod --bind_ip 0.0.0.0'
 ```
 
-Ahora que tu servidor está configurado, verifica que tus datos estén en `$HOME/.mongodb` con:
+Una vez que el servidor esté listo, verifica que los datos estén en `$HOME/.mongodb` con:
 
 ```sh
 ls -lach $HOME/.mongodb
 ```
 
-Conectémonos al servidor con la herramienta CLI `mongosh`. (Si no la tienes instalada, consulta más abajo.)
+Conectémonos al servidor usando la herramienta de línea de comandos `mongosh`. (Si no la tienes instalada, consulta más abajo.)
 
 ```sh
-#> Usando los argumentos predeterminados:
+#> Usando los argumentos por defecto:
 mongosh
 ```
 
 Y deberías ver algo similar a esto:
 
-![Preview of mongo shell output](mongo-shell-screenshot.webp)
+![Vista previa de la salida del shell de mongo](../mongo-shell-screenshot.webp)
 
 #### Configurar herramientas CLI de Mongo
 
-##### Usando brew & OSX
+##### Usando brew y macOS
 
 ```sh
 brew tap mongodb/brew
@@ -108,7 +157,7 @@ brew install mongodb-community-shell
 
 ### Servidor MySQL
 
-> **ADVERTENCIA:** CAMBIA LA CONTRASEÑA EN `MYSQL_ROOT_PASSWORD` A CONTINUACIÓN.
+> **ADVERTENCIA:** MODIFICA LA CONTRASEÑA EN `MYSQL_ROOT_PASSWORD` A CONTINUACIÓN.
 
 ```sh
 mkdir -p $HOME/.mysql
@@ -138,22 +187,22 @@ docker run -d \
 
 ##### Notas de seguridad
 
-> **NOTA:** la opción de puerto `-p 127.0.0.1:27017:27017` impide el acceso a tu instancia salvo desde la red localhost del servidor Docker.  
-> Para “publicar” los puertos expuestos, elimina el prefijo de IP local y permite el acceso externo: `-p 27017:27017`. **Asegúrate de haber tomado las precauciones de seguridad necesarias.**
+> **NOTA:** la opción de puerto del tipo `-p 127.0.0.1:27017:27017` impide el acceso a tu instancia salvo desde la red localhost del servidor Docker.  
+> Para “publicar” los puertos expuestos, elimina el prefijo de dirección IP local y permite el acceso externo: `-p 27017:27017`. **Asegúrate de haber tomado las precauciones de seguridad necesarias.**
 
-**Recomendado:** Usa siempre una herramienta de escaneo de puertos (como nmap o masscan) para verificar tu configuración de red (desde un sistema separado en otra red).
+**Recomendado:** Usa siempre una herramienta de escaneo de puertos (como nmap/masscan) para verificar tu configuración de red (desde un sistema separado en otra red).
 
 > Ahora que tienes los comandos para iniciar tus servidores de bases de datos, el siguiente paso es empaquetar tu aplicación como una imagen Docker. La Parte 2 continúa a continuación:
 
-## Empaquetar una aplicación web NodeJS
+## Empaquetando una aplicación web NodeJS
 
 1.  Añade un archivo vacío llamado `Dockerfile` en la raíz de tu proyecto.  
-1.  _(Opcional, recomendado)_ Añade un `.dockerignore` usando reglas de `.gitignore` para excluir rutas grandes y no esenciales. Por defecto se incluyen todos los archivos del proyecto.
+1.  _(Opcional, recomendado)_ Añade un `.dockerignore` usando las reglas de `.gitignore` para excluir rutas grandes y no esenciales. Por defecto se incluyen todos los archivos del proyecto.
 
 #### Crear un `Dockerfile` en la raíz de tu aplicación
 
 ```dockerfile
-# Ejemplo para NodeJS
+# Example for NodeJS
 FROM node:22
 EXPOSE 3000
 COPY . /app/
@@ -161,15 +210,16 @@ WORKDIR /app
 RUN apt-get update && apt-get dist-upgrade -yqq
 RUN ["npm", "install"]
 
-# Comando sobrescribible
+# Overridable Command
 CMD ["npm", "start"]
 ```
 
-Es más sencillo mostrar cómo iniciar usando el Dockerfile y demostrar los resultados vía consola (ver comandos más abajo).
+Resulta más sencillo mostrar cómo iniciar usando el Dockerfile y demostrar los resultados mediante la consola (ver comandos más abajo).
 
 En la terminal, `cd` a la carpeta de tu proyecto y ejecuta el siguiente comando `build` **cada vez** que despliegues cambios — o quieras cambiar/actualizar el SO o la configuración del entorno.
 
-```shdocker build -t app-name-here .
+```sh
+docker build -t app-name-here .
 ```
 
 {/*
@@ -202,7 +252,7 @@ docker run -d --name webapp01 --network app-local -p 3000:3000 app-name-here
 
 ```
 
-#### Ejecutar de forma interactiva (no daemon, en terminal)
+#### Ejecutar de forma interactiva (no daemon, en la terminal)
 
 ```sh
 
@@ -220,8 +270,7 @@ docker run -it --name webapp01 --network app-local -p 3000:3000 app-name-here ba
 docker rmi -f app-name-here
 docker rm -f webapp01
 # ahora vuelve a ejecutar tu `docker run...` desde ^^^
-# Por ejemplo, para eliminar tus instancias de base de datos anteriores, ejecuta: (comienza con algo como `docker stop {mongo,elastic}`)
+# Por ejemplo, para terminar tus instancias de base de datos anteriores, ejecuta: (comienza con algo como `docker stop {mongo,elastic}`)
 docker rm -f mongo elastic
-
 ```
 ````
