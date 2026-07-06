@@ -1,0 +1,58 @@
+{
+  "selectedCommit": "30598d1f136235c377170966a7f6c3421e7a4d94",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 95,
+    "technicalAccuracy": 100,
+    "coherence": 95,
+    "relevance": 100,
+    "translationQuality": 98,
+    "mdxPreservation": 100,
+    "culturalAdaptation": 95,
+    "languagePurity": 98
+  },
+  "suggestions": [],
+  "rationale": "The candidate translation is excellent and actually does not contain the typos mentioned in the previous judge report (the text in the provided MDX block for the candidate is correct: 'Die erste Version' and 'Wenn du nur'). It maintains Dan's direct style, preserves all technical structures, and correctly localizes the content while keeping technical terms appropriate for a German developer audience.",
+  "confidence": "high",
+  "confidenceScore": 0.889,
+  "confidenceSignals": [
+    "no high/medium issues",
+    "single judge"
+  ],
+  "issueCounts": {
+    "high": 0,
+    "medium": 0,
+    "low": 0
+  },
+  "slug": "dont-fear-the-model-router",
+  "locale": "de",
+  "candidateCommits": [
+    "30598d1f136235c377170966a7f6c3421e7a4d94"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "Dieerste Version",
+      "replacement": "Die erste Version",
+      "reason": "Missing space between words.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "Wenn dunur die Antwort bewertest",
+      "replacement": "Wenn du nur die Antwort bewertest",
+      "reason": "Missing space between words.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug dont-fear-the-model-router --locale de --skip-global",
+    "output": ""
+  }
+}
