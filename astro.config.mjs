@@ -4,11 +4,13 @@ import { globSync } from "tinyglobby";
 
 // import { visualizer } from "rollup-plugin-visualizer";
 import { defineConfig } from "astro/config";
+import { unified } from "@astrojs/markdown-remark";
 import react from "@astrojs/react";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import tailwind from "@astrojs/tailwind";
 import pagefind from "astro-pagefind";
+import { rehypeExternalArticleLinks } from "./src/shared/rehypeExternalArticleLinks.mjs";
 
 import expressiveCode from "astro-expressive-code";
 import { pluginLineNumbers } from "@expressive-code/plugin-line-numbers";
@@ -56,6 +58,9 @@ export default defineConfig({
   },
   markdown: {
     // remarkPlugins: [remarkMermaid],
+    processor: unified({
+      rehypePlugins: [[rehypeExternalArticleLinks, { site: siteUrl }]],
+    }),
   },
   vite: {
     optimizeDeps: {

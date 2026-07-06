@@ -20,9 +20,26 @@ export function installPostEnhancementLifecycle() {
 }
 
 export function bootPostEnhancements() {
+  ensureArticleExternalLinksOpenInNewWindow();
   checkForEmptyShareCounts();
   deferUntilAfterStartup(bootBannerEffects);
   bootQuizEnhancements();
+}
+
+export function ensureArticleExternalLinksOpenInNewWindow() {
+  const internalOrigins = getInternalOrigins();
+  const articleLinks = document.querySelectorAll<HTMLAnchorElement>(
+    "main.article a[href]",
+  );
+
+  articleLinks.forEach((link) => {
+    const href = link.getAttribute("href");
+
+    if (!isExternalHttpHref(href, internalOrigins)) return;
+
+    link.target = "_blank";
+    link.rel = mergeRelTokens(link.rel, ["noopener", "noreferrer"]);
+  });
 }
 
 async function bootBannerEffects() {
@@ -111,4 +128,63 @@ function checkForEmptyShareCounts() {
     shareCounters,
     emptySpans,
   };
+}
+
+function getInternalOrigins() {
+  const origins = new Set<string>();
+
+  if (typeof window !== "undefined") {
+    origins.add(window.location.origin);
+  }
+
+  const canonicalHref = document
+    .querySelector<HTMLLinkElement>('link[rel="canonical"]')
+    ?.getAttribute("href");
+
+  if (canonicalHref) {
+    try {
+      origins.add(new URL(canonicalHref, window.location.href).origin);
+    } catch {
+      // Ignore malformed canonical URLs; relative links are still treated as internal.
+    }
+  }
+
+  return origins;
+}
+
+function isExternalHttpHref(
+  href: string | null,
+  internalOrigins: Set<string>,
+) {
+  const value = href?.trim();
+
+  if (!value || !isExplicitNetworkHref(value)) return false;
+
+  try {
+    const url = new URL(value, window.location.href);
+
+    return (
+      (url.protocol === "http:" || url.protocol === "https:") &&
+      !internalOrigins.has(url.origin)
+    );
+  } catch {
+    return false;
+  }
+}
+
+function isExplicitNetworkHref(value: string) {
+  return value.startsWith("//") || /^[a-z][a-z0-9+.-]*:/i.test(value);
+}
+
+function mergeRelTokens(current: string, requiredTokens: string[]) {
+  const tokens = new Set(
+    current
+      .split(/\s+/)
+      .map((token) => token.toLowerCase())
+      .filter(Boolean),
+  );
+
+  requiredTokens.forEach((token) => tokens.add(token));
+
+  return Array.from(tokens).join(" ");
 }
