@@ -1,0 +1,590 @@
+# Translation Candidate
+- Slug: dont-fear-the-model-router
+- Locale: hi
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2026-07-03--dont-fear-the-model-router/hi/index.mdx
+- Validation: passed: local checks only
+- Runtime seconds: 122.64
+- Input tokens: 11903
+- Output tokens: 13276
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.005384
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: मॉडल राउटर से डरो मत
+subTitle: आत्मविश्वास से सर्वश्रेष्ठ मॉडल तक पहुँचें।
+modified: '2026-07-03'
+tags:
+  - ai
+  - llm
+  - agents
+  - mastra
+  - evals
+  - model-routing
+  - testing
+  - observability
+  - production
+category: AI
+subCategory: AI Infrastructure
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+related:
+  - llm-routing-mastra-ai
+  - llm-evals-are-broken
+  - mastra-workflows-memory
+---
+[डॉन्ट मैरी योर मॉडल](/llm-routing-mastra-ai) का पहला संस्करण एक आसान तर्क देता था: हर काम को उसी मॉडल पर न भेजें क्योंकि वह पिछली बेक-ऑफ में जीता था।
+
+सस्ते काम के लिए सस्ता मॉडल इस्तेमाल करें। जहाँ काम वाकई मुश्किल है, वहाँ मज़बूत मॉडल का उपयोग करें। रूटिंग लेयर को इतना लचीला रखें कि आप बिना अपने कोडबेस को एक मंदिर में बदले प्रोवाइडर बदल सकें।
+
+वह सही था।
+
+वह अधूरा भी था।
+
+क्योंकि एक बार जब आप एक रूटर जोड़ते हैं, तो आपके पास एक नया सिस्टम व्यवहार होता है जिसे जाँचना होता है। सवाल अब "कौन सा मॉडल सबसे अच्छा है?" नहीं है। सवाल है "क्या सिस्टम ने सही रूट चुना, सही टूल का इस्तेमाल किया, सही सबूत संरक्षित किया, और सही समय पर रुक गया?"
+
+यदि आप उसे नहीं मापते, तो आपका मॉडल रूटर सिर्फ़ डिस्पैच टेबल के साथ एक वाइब है।
+
+<p class="inset">
+रूटर जवाब नहीं है। रूटर एक परिकल्पना है कि आपके सिस्टम को कैसा व्यवहार करना चाहिए।
+</p>
+
+Mastra हमें उस परिकल्पना को परीक्षण योग्य बनाने के लिए उपयोगी सतहें देता है: [स्कोरर्स](https://mastra.ai/docs/evals/overview), [`runEvals`](https://mastra.ai/reference/evals/run-evals), [डेटासेट्स](https://mastra.ai/docs/evals/datasets/overview), और [एक्सपेरिमेंट्स](https://mastra.ai/docs/evals/datasets/running-experiments)। API नाम मूल्यांकन बुनियादी ढाँचे की तरह लगते हैं, जो वे हैं, लेकिन असली मूल्य सरल है:
+
+वे एजेंट के व्यवहार को इतना दृश्यमान बनाते हैं कि उस पर बहस की जा सके।
+
+## हम क्या जाँच रहे हैं?
+
+पिछले पोस्ट का मॉडल रूटर तीन स्पष्ट विशेषज्ञ रूट रखता है:
+
+| रूट | वहाँ क्या जाना चाहिए | क्या खराब रूट होगा |
+|---|---|---|
+| `code` | कार्यान्वयन, रीफैक्टरिंग, डिबगिंग, कोड समीक्षा | लंबे-संदर्भ का सारांश, सरल वर्गीकरण |
+| `long-context` | गंदे दस्तावेज़, ट्रांसक्रिप्ट, नीति संश्लेषण, कई फ़ाइलें | छोटी यांत्रिक फ़ॉर्मेटिंग |
+| `general` | वर्गीकरण, फ़ॉर्मेटिंग, सरल Q&A, उबाऊ निष्कर्षण | कठिन कोड या सबूत-भारी विश्लेषण |
+
+वह तालिका एक शुरुआत है, लेकिन यह एक eval नहीं है।
+
+एक eval के लिए उदाहरण और स्कोरर्स चाहिए:
+
+| टुकड़ा | काम |
+|---|---|
+| डेटासेट आइटम | "यहाँ एक प्रतिनिधि अनुरोध है।" |
+| ग्राउंड ट्रुथ | "यहाँ वह रूट या व्यवहार है जिसकी हमें उम्मीद थी।" |
+| स्कोरर | "यहाँ हम तय करते हैं कि आउटपुट पास हुआ या नहीं।" |
+| एक्सपेरिमेंट | "यहाँ वह रन है जिसकी हम भविष्य के रनों से तुलना कर सकते हैं।" |
+
+महत्वपूर्ण कदम व्यवहार की जाँच करना है, न कि केवल गद्य की गुणवत्ता।
+
+एक मॉडल गलत विशेषज्ञ चुनने के बाद भी सुंदर जवाब लिख सकता है। एक सुरक्षा एजेंट बिना सबूत संरक्षित किए प्रशंसनीय रिपोर्ट दे सकता है। एक सपोर्ट एजेंट रिफंड पॉलिसी चेक छोड़ते हुए सहानुभूतिपूर्ण लग सकता है। पैराग्राफ़ दिखाई देने वाला हिस्सा है। ट्रेजेक्टरी वह जगह है जहाँ बग रहते हैं।
+
+एक रूटर के लिए, मैं आमतौर पर चार अक्षों से शुरू करता हूँ:
+
+| अक्ष | प्रश्न | उदाहरण स्कोरर |
+|---|---|---|
+| गुणवत्ता | क्या इसने सही रूट चुना और उपयोगी परिणाम दिया? | रूट सटीकता, उत्तर पूर्णता, विश्वसनीयता |
+| लागत | क्या इसने उबाऊ काम के लिए प्रीमियम मॉडल का उपयोग करने से बचा? | चयनित रूट लागत वर्ग, टोकन बजट |
+| गति | क्या यह उत्पाद के विलंबता बजट के अंदर समाप्त हुआ? | रनटाइम या टाइमआउट स्कोरर |
+| अन्य | क्या इसने सुरक्षा, गोपनीयता और अवलोकनीयता बाधाओं का पालन किया? | टूल अनुमति सूची, साक्ष्य-संरक्षण, इनकार व्यवहार |
+
+अंतिम कॉलम मायने रखता है। "अन्य" वह जगह है जहाँ प्रोडक्शन के निशान रहते हैं।
+
+## रूटर निर्णय को स्कोरेबल बनाएं
+
+यदि रूटर केवल अंतिम उत्तर देता है, तो यह जानना कठिन है कि उसने ऐसा व्यवहार क्यों किया। आप अभी भी आउटपुट को स्कोर कर सकते हैं, लेकिन आप निर्णय के बारे में अनुमान लगा रहे हैं।
+
+मूल्यांकन के लिए, रूटिंग चरण को एक छोटा संरचित अनुबंध दें:
+
+```typescript
+type RouterDecision = {
+  route: "code" | "long-context" | "general";
+  confidence: number;
+  reason: string;
+};
+```
+
+प्रोडक्शन सिस्टम को यह JSON उपयोगकर्ताओं को दिखाने की आवश्यकता नहीं है। यह एक आंतरिक चरण, एक वर्कफ़्लो हैंडऑफ़, या एक ट्रेस स्पैन हो सकता है। स्कोरर को बस एक सतह चाहिए।
+
+यहाँ एक जानबूझकर छोटा Mastra एजेंट है जो एक रूट चुनता है:
+
+```typescript
+// src/mastra/agents/router-decision-agent.ts
+import { Agent } from "@mastra/core/agent";
+
+export const routerDecisionAgent = new Agent({
+  id: "router-decision-agent",
+  name: "Router Decision Agent",
+  instructions: `Choose the best specialist route for the user request.
+
+Return ONLY JSON:
+{
+  "route": "code" | "long-context" | "general",
+  "confidence": number,
+  "reason": string
+}
+
+Routing rules:
+- code: implementation, refactoring, debugging, code review, APIs, tests
+- long-context: large documents, transcripts, policy synthesis, many files
+- general: classification, formatting, extraction, simple Q&A
+
+Do not answer the user request. Only choose the route.`,
+  model: process.env.ROUTER_MODEL ?? "openai/gpt-5-mini",
+});
+```
+
+हाँ, यह थोड़ा कृत्रिम है। अच्छा है। मूल्यांकन उबाऊ सीमों को पुरस्कृत करते हैं।
+
+जब रूटर निर्णय स्पष्ट होता है, तो आप डाउनस्ट्रीम विशेषज्ञ का परीक्षण करने से पहले रूट का परीक्षण कर सकते हैं। इस तरह आप पता लगाते हैं कि समस्या रूटर में है, चयनित मॉडल में, प्रॉम्प्ट में, टूल सतह में, या अंतिम उत्तर स्कोरर में।
+
+## एक स्कोरर लिखें जो उबाऊ विफलता को पकड़ता है
+
+Mastra का [`createScorer`](https://mastra.ai/reference/evals/create-scorer) जावास्क्रिप्ट फ़ंक्शन, LLM जज प्रॉम्प्ट, या दोनों का उपयोग कर सकता है। जब विफलता नियतात्मक हो, तो फ़ंक्शन से शुरू करें। वे सस्ते, तेज़ और कम रहस्यमय होते हैं।
+
+रूट सटीकता के लिए, हमें जज मॉडल की आवश्यकता नहीं है। हमें JSON को पार्स करने और एक फ़ील्ड की तुलना करने की आवश्यकता है।
+
+```typescript
+// src/mastra/scorers/route-accuracy.ts
+import { createScorer } from "@mastra/core/evals";
+
+type Route = "code" | "long-context" | "general";
+type RouteGroundTruth = {
+  route: Route;
+  mustMention?: string[];
+};
+
+function textFromAgentOutput(output: Array<{ content?: unknown }>) {
+  const content = output[0]?.content;
+  return typeof content === "string" ? content : JSON.stringify(content ?? "");
+}
+
+function parseDecision(output: Array<{ content?: unknown }>) {
+  try {
+    return JSON.parse(textFromAgentOutput(output)) as {
+      route?: string;
+      confidence?: number;
+      reason?: string;
+    };
+  } catch {
+    return {};
+  }
+}
+
+export const validRouterJsonScorer = createScorer({
+  id: "valid-router-json",
+  description: "Checks that the router emits a valid decision object.",
+  type: "agent",
+})
+  .generateScore(({ run }) => {
+    const decision = parseDecision(run.output);
+    const validRoute = ["code", "long-context", "general"].includes(
+      decision.route ?? "",
+    );
+    const validConfidence =
+      typeof decision.confidence === "number" &&
+      decision.confidence >= 0 &&
+      decision.confidence <= 1;
+
+    return validRoute && validConfidence && decision.reason ? 1 : 0;
+  })
+  .generateReason(({ score }) =>
+    score === 1 ? "Valid router decision." : "Router output was not valid JSON.",
+  );
+
+export const routeAccuracyScorer = createScorer({
+  id: "route-accuracy",
+  description: "Checks whether the selected route matches ground truth.",
+  type: "agent",
+})
+  .generateScore(({ run }) => {
+    const expected = run.groundTruth as RouteGroundTruth;
+    const decision = parseDecision(run.output);
+    return decision.route === expected.route ? 1 : 0;
+  })
+  .generateReason(({ run, score }) => {
+    const expected = run.groundTruth as RouteGroundTruth;
+    const decision = parseDecision(run.output);
+
+    return score === 1
+      ? `Selected expected route: ${expected.route}.`
+      : `Expected ${expected.route}, got ${decision.route ?? "nothing"}.`;
+  });
+```
+
+वह स्कोरर ग्लैमरस नहीं है। यही बात है।
+
+यदि रूटर एक छोटे परीक्षण सेट पर लगातार मान्य JSON उत्पन्न नहीं कर सकता और स्पष्ट विशेषज्ञ नहीं चुन सकता, तो उस पर प्रोडक्शन ट्रैफ़िक के लिए भरोसा करने का कोई कारण नहीं है। आपको एक दार्शनिक-मॉडल ऑन्टोलॉजी ग्रेडिंग की आवश्यकता नहीं है। आपको एक स्मोक डिटेक्टर के समतुल्य चाहिए जिसमें बैटरी हो।
+
+## पहले छोटा मूल्यांकन लूप चलाएं
+
+Mastra का [`runEvals`](https://mastra.ai/reference/evals/run-evals) तेज़ लूप है। इसे एक लक्ष्य, परीक्षण मामले, स्कोरर और एक समवर्ती सीमा दें। यह डेटा के विरुद्ध लक्ष्य चलाता है और कुल स्कोर लौटाता है।
+
+```typescript
+// src/mastra/evals/router.eval.ts
+import { runEvals } from "@mastra/core/evals";
+import { routerDecisionAgent } from "../agents/router-decision-agent";
+import {
+  routeAccuracyScorer,
+  validRouterJsonScorer,
+} from "../scorers/route-accuracy";
+
+const routingCases = [
+  {
+    input: "Refactor this React component to remove duplicated state.",
+    groundTruth: { route: "code" },
+  },
+  {
+    input: "Summarize these 14 interview transcripts and find recurring objections.",
+    groundTruth: { route: "long-context" },
+  },
+  {
+    input: "Classify this ticket as billing, technical, account, or other.",
+    groundTruth: { route: "general" },
+  },
+  {
+    input: "Debug a failing Playwright test that only breaks in CI.",
+    groundTruth: { route: "code" },
+  },
+  {
+    input: "Extract the renewal date and contract value from this short paragraph.",
+    groundTruth: { route: "general" },
+  },
+];
+
+const result = await runEvals({
+  target: routerDecisionAgent,
+  data: routingCases,
+  scorers: [validRouterJsonScorer, routeAccuracyScorer],
+  targetOptions: {
+    modelSettings: { temperature: 0 },
+  },
+  concurrency: 3,
+});
+
+console.log(result.scores);
+console.log(result.summary.totalItems);
+
+if (result.scores["valid-router-json"] < 1) {
+  throw new Error("Router emitted invalid decision JSON.");
+}
+
+if (result.scores["route-accuracy"] < 0.9) {
+  throw new Error("Router route accuracy fell below 90%.");
+}
+```
+
+यह वह लूप है जिसे आप प्रॉम्प्ट बदलते समय, एक नया रूट जोड़ते समय, या एक सस्ता रूटर मॉडल आज़माते समय चलाते हैं।
+
+यह एक परिपक्व सिस्टम के लिए पर्याप्त नहीं है, लेकिन यह सबसे शर्मनाक प्रतिगमन को रोकने के लिए पर्याप्त है: "हमने रूटर प्रॉम्प्ट बदल दिया और इसने क्लासिफिकेशन कार्यों को प्रीमियम कोड मॉडल पर भेजना शुरू कर दिया।"
+
+लागत, गति, गुणवत्ता और बाकी सब यहाँ दिखाई देते हैं:
+
+- लागत: रूटर मॉडल सस्ता रह सकता है, अगर सटीकता बनी रहे।
+- गति: eval हार्नेस में टाइमआउट लागू कर सकता है या विलंबता रिकॉर्ड कर सकता है।
+- गुणवत्ता: रूट सटीकता और अंतिम उत्तर गुणवत्ता अलग-अलग स्कोर हैं।
+- अन्य: JSON वैधता, अनुमत टूल्स, सुरक्षा और ट्रेसेबिलिटी को अपनी अलग जाँच मिलती है।
+
+इन सबको एक "गुणवत्ता" स्कोर में न घुसेड़ें। औसत वह जगह है जहाँ उपयोगी विफलताएँ सेवानिवृत्त होने के लिए आती हैं।
+
+## एलएलएम जज को वहीं जोड़ें जहाँ वह अपनी उपयोगिता साबित करे
+
+कुछ रूटर व्यवहार व्यक्तिपरक होता है। कोई अनुरोध वैध रूप से अस्पष्ट हो सकता है:
+
+```text
+ये लॉग पढ़ो और बताओ कि डिप्लॉय क्यों फेल हुआ।
+```
+
+क्या यह `code` है क्योंकि डीबगिंग? `long-context` है क्योंकि लॉग? `general` है क्योंकि सारांश? सही रूट टूल सतह और आपके उत्पाद वादे पर निर्भर करता है।
+
+यहाँ एक एलएलएम जज मदद कर सकता है, लेकिन केवल एक सख्त रूब्रिक के साथ। मास्ट्रा स्कोरर फ़ंक्शन स्टेप्स और प्रॉम्प्ट-ऑब्जेक्ट स्टेप्स को मिला सकते हैं। संरचना के लिए फ़ंक्शंस का उपयोग करें, फिर उस हिस्से के लिए जज का उपयोग करें जिसे वास्तव में निर्णय की आवश्यकता है।
+
+```typescript
+// src/mastra/scorers/route-reasonableness.ts
+import { createScorer } from "@mastra/core/evals";
+import { z } from "zod";
+
+export const routeReasonablenessScorer = createScorer({
+  id: "route-reasonableness",
+  description: "Judges whether the route explanation matches the request.",
+  type: "agent",
+  judge: {
+    model: process.env.JUDGE_MODEL ?? "openai/gpt-5-mini",
+    instructions: "You are a strict evaluator for model-routing decisions.",
+  },
+})
+  .analyze({
+    description: "Evaluate the router's decision rationale.",
+    outputSchema: z.object({
+      score: z.number().min(0).max(1),
+      rationale: z.string(),
+    }),
+    createPrompt: ({ run }) => `
+User request:
+${JSON.stringify(run.input)}
+
+Router output:
+${JSON.stringify(run.output)}
+
+Score from 0 to 1.
+
+1.0 = route is clearly appropriate and the reason cites the right task signals
+0.5 = route is defensible but underspecified or ambiguous
+0.0 = route is wrong, unsupported, or the reason is unrelated
+
+Return JSON with { "score": number, "rationale": string }.
+`,
+  })
+  .generateScore(({ results }) => results.analyzeStepResult.score)
+  .generateReason(({ results }) => results.analyzeStepResult.rationale);
+```
+
+यह स्कोरर पैसे खर्च करता है क्योंकि यह जज मॉडल को कॉल करता है। यह ठीक है जब निर्णय इसके लायक हो।
+
+इसे यह जाँचने के लिए उपयोग न करें कि JSON पार्स होता है या नहीं।
+
+## अच्छे केसों को डेटासेट में प्रमोट करें
+
+हार्ड-कोडेड eval सरणियाँ शुरुआत में ठीक होती हैं। अंततः, आपके उदाहरण उत्पाद संपत्ति बन जाते हैं। असफल ग्राहक टिकट, अजीब सहायता वार्तालाप, प्रॉम्प्ट इंजेक्शन का प्रयास, वह अनुरोध जो पिछले गुरुवार से पहले सही ढंग से रूट होता था।
+
+वह डेटासेट में आता है।
+
+मास्ट्रा डेटासेट परीक्षण मामलों के वर्जन किए गए संग्रह हैं। प्रत्येक उत्परिवर्तन एक नया वर्जन बनाता है, जिसका अर्थ है कि आप उस सटीक केस सेट के विरुद्ध एक प्रयोग पुनः चला सकते हैं जो उस समय मौजूद था जब आपने मॉडल निर्णय लिया था।
+
+पहले स्टोरेज कॉन्फ़िगर करें, क्योंकि डेटासेट को स्थायित्व की आवश्यकता होती है:
+
+```typescript
+// src/mastra/index.ts
+import { Mastra } from "@mastra/core";
+import { LibSQLStore } from "@mastra/libsql";
+import { routerDecisionAgent } from "./agents/router-decision-agent";
+import {
+  routeAccuracyScorer,
+  validRouterJsonScorer,
+} from "./scorers/route-accuracy";
+
+export const mastra = new Mastra({
+  storage: new LibSQLStore({
+    id: "router-evals",
+    url: "file:./mastra.db",
+  }),
+  agents: {
+    routerDecisionAgent,
+  },
+  scorers: {
+    validRouterJson: validRouterJsonScorer,
+    routeAccuracy: routeAccuracyScorer,
+  },
+});
+```
+
+फिर एक डेटासेट बनाएँ और केस जोड़ें:
+
+```typescript
+// src/mastra/evals/create-router-dataset.ts
+import { z } from "zod";
+import { mastra } from "../index";
+
+const dataset = await mastra.datasets.create({
+  name: "router-decisions-v1",
+  description: "Representative model-router decisions for CI and experiments.",
+  inputSchema: z.string(),
+  groundTruthSchema: z.object({
+    route: z.enum(["code", "long-context", "general"]),
+    source: z.string().optional(),
+  }),
+});
+
+await dataset.addItems({
+  items: [
+    {
+      input: "Refactor this React component to remove duplicated state.",
+      groundTruth: { route: "code", source: "synthetic:happy-path" },
+    },
+    {
+      input: "Summarize these 14 interview transcripts and find recurring objections.",
+      groundTruth: { route: "long-context", source: "synthetic:happy-path" },
+    },
+    {
+      input: "Classify this ticket as billing, technical, account, or other.",
+      groundTruth: { route: "general", source: "synthetic:happy-path" },
+    },
+  ],
+});
+```
+
+जैसे ही आपके पास डेटासेट हो, आप eval मामलों को डिस्पोजेबल स्क्रिप्ट डेटा के रूप में मानना बंद कर सकते हैं। अब उनके पास आईडी, वर्जन, इतिहास और प्रयोग परिणाम होते हैं।
+
+तब evals "प्रॉम्प्ट के लिए टेस्ट फ़ाइलें" जैसा कम और उत्पाद मेमोरी जैसा अधिक लगने लगते हैं।
+
+## रूटर के विरुद्ध प्रयोग चलाएँ
+
+एक बार डेटासेट मौजूद हो जाए, तो पंजीकृत एजेंट, वर्कफ़्लो या स्कोरर के विरुद्ध चलाने के लिए [`dataset.startExperiment()`](https://mastra.ai/reference/datasets/startExperiment) का उपयोग करें।
+
+```typescript
+// src/mastra/evals/run-router-experiment.ts
+import { mastra } from "../index";
+
+const dataset = await mastra.datasets.get({ id: process.env.ROUTER_DATASET_ID! });
+
+const summary = await dataset.startExperiment({
+  name: "router-gpt-5-mini-baseline",
+  description: "Baseline router decision run before adding security route.",
+  targetType: "agent",
+  targetId: "router-decision-agent",
+  scorers: ["validRouterJson", "routeAccuracy"],
+  metadata: {
+    routerModel: process.env.ROUTER_MODEL ?? "openai/gpt-5-mini",
+    promptVersion: "router-2026-07-03",
+  },
+  maxConcurrency: 5,
+  itemTimeout: 30_000,
+  maxRetries: 1,
+});
+
+console.log(`${summary.succeededCount}/${summary.totalItems} items succeeded`);
+
+for (const item of summary.results) {
+  const scores = Object.fromEntries(
+    item.scores.map((score) => [score.scorerId, score.score]),
+  );
+
+  console.log(item.itemId, item.output, scores);
+}
+```
+
+अब बातचीत बदल जाती है।
+
+"नया राउटर बेहतर लगता है" कहने के बजाय, आप कह सकते हैं:
+
+- पुराने राउटर ने रूट सटीकता पर `0.94` स्कोर किया।
+- नए राउटर ने कुल मिलाकर `0.98` स्कोर किया।
+- इसने लंबे-संदर्भ रूटिंग में सुधार किया।
+- इसने दो कोड-रिव्यू मामलों में गिरावट लाई।
+- इसने प्रीमियम-मॉडल हैंडऑफ़ में 18% की कमी की।
+- इसने राउटर विलंबता में 300ms जोड़ा।
+
+यह एक इंजीनियरिंग संवाद है। इसमें व्यापार-कुर्बानियाँ हैं। आप तय कर सकते हैं कि यह व्यापार इसके लायक है या नहीं।
+
+## लाइव व्यवहार को स्कोर करें, लेकिन इसे ग्राउंड ट्रूथ से भ्रमित न करें
+
+Mastra एजेंटों और वर्कफ़्लो चरणों में सीधे स्कोरर संलग्न कर सकता है। लाइव स्कोरर अतुल्यकालिक रूप से चलते हैं और आपके कॉन्फ़िगर किए गए डेटाबेस में स्कोर परिणाम संग्रहीत करते हैं, जिसमें सैंपलिंग नियंत्रण होता है ताकि आप प्रत्येक प्रोडक्शन प्रतिक्रिया को स्कोर न करें जब तक कि आप ऐसा करने का इरादा न रखें।
+
+यह उपयोगी है, लेकिन यह एक अलग काम है।
+
+```typescript
+import { Agent } from "@mastra/core/agent";
+import { validRouterJsonScorer } from "../scorers/route-accuracy";
+
+export const routerDecisionAgent = new Agent({
+  id: "router-decision-agent",
+  instructions: "Choose the best specialist route...",
+  model: process.env.ROUTER_MODEL ?? "openai/gpt-5-mini",
+  scorers: {
+    validRouterJson: {
+      scorer: validRouterJsonScorer,
+      sampling: { type: "ratio", rate: 1 },
+    },
+  },
+});
+```
+
+लाइव स्कोरिंग आपको बता सकती है कि राउटर अभी भी मान्य निर्णय जारी कर रहा है। यह दोषपूर्ण आउटपुट, विषाक्त सामग्री, निषिद्ध टूल कॉल, गायब प्रमाण चिह्नक, या संदिग्ध रूप से कम आत्मविश्वास को पकड़ सकता है।
+
+यह आमतौर पर रूट सटीकता नहीं बता सकता, क्योंकि प्रोडक्शन ट्रैफ़िक उसके साथ ग्राउंड ट्रूथ जुड़ा नहीं आता है।
+
+यह अंतर मायने रखता है। लाइव स्कोरिंग निगरानी है। डेटासेट प्रयोग नियंत्रित परीक्षण हैं। आप दोनों चाहते हैं, लेकिन वे अलग-अलग सवालों के जवाब देते हैं।
+
+## रूट सटीकता के बाद क्या मापें
+
+रूट सटीकता पहली सीढ़ी है। यह बताती है कि अनुरोध अपेक्षित विशेषज्ञ तक पहुँचा या नहीं। यह नहीं बताती कि विशेषज्ञ ने अच्छा काम किया या नहीं।
+
+राउटर बुनियादी बातें पास करने के बाद, सिस्टम को स्तरों में स्कोर करें:
+
+| स्तर | क्या स्कोर करें | क्यों महत्वपूर्ण है |
+|---|---|---|
+| राउटर निर्णय | चयनित रूट, आत्मविश्वास, कारण | गलत वर्गीकरण और खराब एस्केलेशन नियमों को पकड़ता है |
+| प्रक्षेपवक्र | अपेक्षित टूल या एजेंट अनुक्रम | "सही उत्तर, गलत पथ" व्यवहार को पकड़ता है |
+| विशेषज्ञ आउटपुट | शुद्धता, निष्ठा, उपयोगिता | सही रूटिंग के बाद निम्न-गुणवत्ता वाले कार्य को पकड़ता है |
+| लागत और विलंबता | मॉडल विकल्प, टोकन, रनटाइम | महंगी या धीमी जीत को पकड़ता है |
+| सुरक्षा और दायरा | अनुमत टूल, अस्वीकार सीमाएँ, प्रमाण | उत्पाद-जोखिम विफलताओं को पकड़ता है |
+
+Mastra का `runEvals` API एजेंट-स्तर, वर्कफ़्लो-स्तर, चरण-स्तर और प्रक्षेपवक्र स्कोरर कॉन्फ़िगरेशन का समर्थन करता है। इसका मतलब है कि आपको यह दिखावा नहीं करना होगा कि अंतिम उत्तर ही एकमात्र आर्टिफैक्ट है।
+
+एक वर्कफ़्लो के लिए, आकार कुछ इस तरह दिख सकता है:
+
+```typescript
+const result = await runEvals({
+  target: supportWorkflow,
+  data: supportCases,
+  scorers: {
+    workflow: [finalAnswerQualityScorer],
+    steps: {
+      "route-request": [routeAccuracyScorer],
+      "check-policy": [policyGroundingScorer],
+    },
+    trajectory: [expectedPathScorer],
+  },
+});
+```
+
+यही वह मानसिक मॉडल है जो मैं प्रोडक्शन में एजेंटों के लिए चाहता हूँ:
+
+निर्णय को स्कोर करें। पथ को स्कोर करें। उत्तर को स्कोर करें।
+
+अगर आप सिर्फ उत्तर को स्कोर करते हैं, तो मॉडल संयोग से पास हो सकता है।
+
+## राउटर को समय के साथ और अधिक उबाऊ होना चाहिए
+
+पहला रूटिंग प्रॉम्प्ट आमतौर पर निर्णयात्मक कॉल का एक पैराग्राफ होता है। प्रोटोटाइप के लिए यह ठीक है।
+
+जैसे-जैसे आप इवैल से सीखते हैं, राउटर के कुछ हिस्से कम जादुई होने चाहिए:
+
+- स्पष्ट शाब्दिक मामले निर्धारित नियम बन सकते हैं।
+- जोखिम भरे कार्यों के लिए स्पष्ट अनुमोदन या वर्कफ़्लो शाखा की आवश्यकता हो सकती है।
+- अस्पष्ट कार्य अनुमान लगाने के बजाय एक स्पष्ट प्रश्न पूछ सकते हैं।
+- महंगे रूट्स के लिए उच्च आत्मविश्वास या दूसरे सिग्नल की आवश्यकता हो सकती है।
+- ज्ञात विफलता मामले डेटासेट आइटम बन सकते हैं।
+
+लक्ष्य राउटर को हमेशा के लिए "स्मार्ट" बनाना नहीं है। लक्ष्य सिस्टम को तर्क करने में आसान बनाना है।
+
+कभी-कभी इसका मतलब बेहतर मॉडल होता है। कभी-कभी इसका मतलब टाइट प्रॉम्प्ट होता है। कभी-कभी इसका मतलब वर्कफ़्लो चरण, स्कोरर, हार्ड कैप, या एक उबाऊ `if` स्टेटमेंट होता है जो आपको हर महीने चार अंक बचाता है।
+
+व्यवहार को मापने का यही पूरा मतलब है। आप स्वाद से बहस करना बंद करते हैं और सबूत से बहस करना शुरू करते हैं।
+
+## एक व्यावहारिक शुरुआती चेकलिस्ट
+
+यदि आप आज एक मास्ट्रा राउटर बना रहे हैं, तो मैं यहाँ से शुरू करूँगा:
+
+1. रूटिंग निर्णय को संरचित बनाएं, भले ही उपयोगकर्ता इसे कभी न देखें।
+2. वैध JSON, अपेक्षित रूट, और निषिद्ध रूट के लिए निर्धारित स्कोरर लिखें।
+3. राउटर प्रॉम्प्ट या मॉडल बदलने से पहले 10-20 मामलों के साथ `runEvals` का उपयोग करें।
+4. वास्तविक विफलताओं को एक संस्करणित डेटासेट में बढ़ावा दें।
+5. सार्थक प्रॉम्प्ट, मॉडल, रूट, या वर्कफ़्लो परिवर्तनों के लिए डेटासेट प्रयोग चलाएं।
+6. सस्ते प्रोडक्शन इन्वेरिएंट के लिए लाइव स्कोरर जोड़ें।
+7. प्रयोगों की तुलना केवल औसत स्कोर से नहीं, बल्कि रूट के अनुसार करें।
+
+औसत विफलता क्लस्टर से कम मायने रखता है।
+
+यदि हर प्रतिगमन लंबे-संदर्भ नीति संश्लेषण में है, तो आपके पास "एक बदतर राउटर" नहीं है। आपके पास एक रूट सीमा समस्या है। यदि हर असफल मामला एक विशिष्ट टूल का उपयोग करता है, तो आपके पास एक टूल अनुबंध समस्या है। यदि हर सस्ता मॉडल समान दो अस्पष्ट मामलों में विफल होता है, तो आपको अधिक महंगे डिफ़ॉल्ट के बजाय एस्केलेशन लॉजिक की आवश्यकता हो सकती है।
+
+यह वह जगह है जहाँ इवैल उपयोगी हो जाते हैं। एक समारोह के रूप में नहीं। एक डैशबोर्ड के रूप में नहीं जो सभी को अस्थायी रूप से वयस्क महसूस कराता है।
+
+सिस्टम के आकार को खोजने के एक तरीके के रूप में।
+
+## संसाधन
+
+- [Mastra स्कोरर अवलोकन](https://mastra.ai/docs/evals/overview)
+- [Mastra `createScorer` संदर्भ](https://mastra.ai/reference/evals/create-scorer)
+- [Mastra `runEvals` संदर्भ](https://mastra.ai/reference/evals/run-evals)
+- [Mastra डेटासेट अवलोकन](https://mastra.ai/docs/evals/datasets/overview)
+- [Mastra डेटासेट प्रयोग](https://mastra.ai/docs/evals/datasets/running-experiments)
+- [अपने मॉडल से शादी न करें](/llm-routing-mastra-ai)
+- [बुराइयों से लड़ें इवैल से!](/llm-evals-are-broken)
+````
