@@ -47,6 +47,20 @@ loadedRepos = loadedRepos.sort(
 );
 log("loadedRepos %o", loadedRepos);
 
+const repoCount = loadedRepos.length;
+const pullRequestCount = loadedRepos.reduce(
+  (total, { pr }) => total + (pr.pullRequests?.length ?? 0),
+  0,
+);
+const totalStars = loadedRepos.reduce(
+  (total, { pr }) => total + (pr.repository.stars ?? 0),
+  0,
+);
+const changedFileCount = loadedRepos.reduce(
+  (total, { pr }) => total + (pr.pullStats.changedFiles ?? 0),
+  0,
+);
+
 // Collect unique tags with counts, sorted by count desc
 const tagCounts = new Map<string, number>();
 for (const { contrib } of loadedRepos) {
@@ -55,9 +69,21 @@ for (const { contrib } of loadedRepos) {
   }
 }
 const allTags = Array.from(tagCounts.entries()).sort((a, b) => b[1] - a[1]);
+const updatedDate = new Date().toLocaleDateString("en-US", {
+  month: "short",
+  day: "numeric",
+  year: "numeric",
+});
 ---
 
-<p class="text-muted-foreground">This page was last updated {new Date().toLocaleDateString()}</p>
+<p class="oss-ledger" aria-label="Open source contribution summary">
+  <span>{repoCount.toLocaleString()} repos</span>
+  <span>{pullRequestCount.toLocaleString()} pull requests</span>
+  <span>{totalStars.toLocaleString()} stars represented</span>
+  <span>{changedFileCount.toLocaleString()} files touched</span>
+</p>
+
+<p class="oss-updated">GitHub data refreshed {updatedDate}</p>
 
 <div class="oss-controls">
   <div class="oss-control-group" role="group" aria-label="Sort contributions">

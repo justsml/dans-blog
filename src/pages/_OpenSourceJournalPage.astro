@@ -16,13 +16,154 @@ const copy = getUiCopy(locale);
   }}
   locale={locale}
   socialImage={"../../previews/open-source-journal/desktop-social.webp"}
+  className="open-source-journal-page"
   pagefindBody
 >
-  <h1>{copy.openSource.heading}</h1>
+  <section class="oss-hero full-width">
+    <div class="oss-hero-inner">
+      <div class="oss-hero-main">
+        <p class="oss-eyebrow">Open source journal</p>
+        <h1>{copy.openSource.heading}</h1>
+        <p class="oss-subtitle">{copy.openSource.subTitle}</p>
+      </div>
 
-  <blockquote class="inset">
-    {copy.openSource.quote}
-  </blockquote>
+      <blockquote class="oss-quote">
+        {copy.openSource.quote}
+      </blockquote>
+    </div>
+  </section>
 
   <RepoList className="h-resume" />
 </Page>
+
+<style is:global>
+  main.open-source-journal-page {
+    --oss-shell: min(1180px, calc(100vw - 2rem));
+    --oss-ink: #f6fbff;
+    --oss-muted-copy: rgba(246, 251, 255, 0.68);
+    --oss-rule: rgba(246, 251, 255, 0.12);
+    --oss-rust: rgba(255, 184, 107, 0.86);
+    position: relative;
+    padding-bottom: clamp(4rem, 8vw, 7rem);
+  }
+
+  main.open-source-journal-page::before {
+    content: none;
+  }
+
+  .oss-hero {
+    margin-top: clamp(1rem, 4vw, 2.5rem);
+    margin-bottom: clamp(1rem, 3vw, 2rem);
+  }
+
+  .oss-hero-inner {
+    width: var(--oss-shell);
+    margin-inline: auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(1.25rem, 3vw, 2rem);
+    padding-block: clamp(2rem, 6vw, 4.25rem) clamp(1rem, 3vw, 2rem);
+  }
+
+  .oss-eyebrow,
+  .oss-kicker {
+    margin: 0 0 0.85rem;
+    color: var(--oss-rust);
+    font-size: 0.78rem;
+    font-weight: 850;
+    letter-spacing: 0.12em;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  main.open-source-journal-page .oss-hero h1 {
+    max-width: 12ch;
+    margin: 0;
+    color: var(--oss-ink);
+    font-size: clamp(2.8rem, 8vw, 5.8rem);
+    font-weight: 720;
+    line-height: 0.98;
+    text-shadow: none;
+    text-wrap: balance;
+  }
+
+  main.open-source-journal-page .oss-hero h1::after {
+    display: none;
+  }
+
+  .oss-subtitle {
+    max-width: 42rem;
+    margin: clamp(1.1rem, 3vw, 1.7rem) 0 0;
+    color: var(--oss-muted-copy);
+    font-size: clamp(1rem, 2vw, 1.28rem);
+    line-height: 1.55;
+  }
+
+  .oss-quote {
+    margin: 0;
+    max-width: 52rem;
+    padding: 0 0 0 clamp(0.9rem, 2vw, 1.25rem);
+    border: 0;
+    border-left: 2px solid rgba(255, 184, 107, 0.58);
+    background: transparent;
+    color: rgba(246, 251, 255, 0.72);
+    font-size: clamp(1rem, 1.7vw, 1.18rem);
+    line-height: 1.6;
+  }
+
+  .oss-ledger,
+  .oss-controls,
+  .contrib-grid {
+    width: var(--oss-shell);
+    margin-inline: auto;
+  }
+
+  .oss-ledger {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem 1rem;
+    margin-block: 0 0.75rem;
+    padding-block: 0 1rem;
+    border-bottom: 1px solid var(--oss-rule);
+    color: var(--oss-muted-copy);
+    font-size: 0.88rem;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.4;
+  }
+
+  .oss-ledger span:not(:last-child)::after {
+    content: "/";
+    margin-left: 1rem;
+    color: rgba(246, 251, 255, 0.24);
+  }
+
+  .oss-updated {
+    width: var(--oss-shell);
+    margin: 0 auto 1rem;
+    color: rgba(246, 251, 255, 0.55);
+    font-size: 0.86rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  @media (max-width: 920px) {
+    .oss-hero-inner {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 560px) {
+    main.open-source-journal-page {
+      --oss-shell: min(100% - 1rem, 1180px);
+    }
+
+    .oss-ledger {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.25rem 0.75rem;
+    }
+
+    .oss-ledger span:not(:last-child)::after {
+      content: none;
+    }
+  }
+</style>
