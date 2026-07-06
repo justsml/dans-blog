@@ -1,13 +1,9 @@
 ---
-import { pageSize } from "../shared/pagination";
-
 type Props = {
   nextUrl?: string | null;
-  pages?: number;
 };
 
-const { nextUrl, pages = 3 } = Astro.props as Props;
-const skeletonCount = Math.max(pageSize, pageSize * pages);
+const { nextUrl } = Astro.props as Props;
 ---
 
 {
@@ -20,17 +16,7 @@ const skeletonCount = Math.max(pageSize, pageSize * pages);
       role="status"
       aria-label="Loading more posts"
     >
-      <div class="article-list-loader__grid" aria-hidden="true">
-        {Array.from({ length: skeletonCount }).map((_, index) => (
-          <div class="article-card-skeleton" style={`--skeleton-index: ${index % pageSize}`}>
-            <span class="article-card-skeleton__label"></span>
-            <span class="article-card-skeleton__title"></span>
-            <span class="article-card-skeleton__summary"></span>
-            <span class="article-card-skeleton__media"></span>
-            <span class="article-card-skeleton__meta"></span>
-          </div>
-        ))}
-      </div>
+      <span class="article-list-loader__indicator" aria-hidden="true"></span>
     </div>
   )
 }

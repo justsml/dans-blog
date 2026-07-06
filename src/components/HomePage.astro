@@ -1,6 +1,7 @@
 ---
 import Page from "../layouts/Page.astro";
 
+import { getImage } from "astro:assets";
 import { PostCollections } from "../shared/postsCache.ts";
 import { ArticleCard } from "./ArticleCard";
 import ArticleListSkeleton from "./ArticleListSkeleton.astro";
@@ -19,6 +20,7 @@ import "@/styles/global.css";
 import { SITE_SEO_DESCRIPTION, SITE_TITLE } from "../consts.ts";
 import { DEFAULT_LOCALE, getLocalizedPagePath, type Locale } from "../shared/i18n";
 import { getUiCopy } from "../shared/uiTranslations";
+import type { ImageMetadata } from "astro";
 // import ArticleFilterLinks from "../components/ArticleFilterLinks.astro";
 
 const locale = (Astro.props.locale ?? DEFAULT_LOCALE) as Locale;
@@ -41,8 +43,40 @@ const defaultNextUrl = hasMorePosts
   : null;
 
 posts = posts.slice(0, pageSize - 1);
+posts = await Promise.all(posts.map(withOptimizedCardImage));
 
 const defaultFullTitle = copy.home.title || `${SITE_TITLE} | ${SITE_SEO_DESCRIPTION}`;
+
+async function withOptimizedCardImage(post: ArticlePost): Promise<ArticlePost> {
+  const coverMobile = post.data.cover_mobile;
+
+  if (!isImageMetadata(coverMobile)) return post;
+
+  const optimizedCover = await getImage({
+    src: coverMobile,
+    width: Math.min(coverMobile.width, 360),
+    format: "webp",
+    quality: 62,
+  }).catch(() => coverMobile);
+
+  return {
+    ...post,
+    data: {
+      ...post.data,
+      cover_mobile: optimizedCover as ImageMetadata,
+    },
+  };
+}
+
+function isImageMetadata(value: unknown): value is ImageMetadata {
+  return (
+    typeof value === "object" &&
+    value !== null &&
+    "src" in value &&
+    "width" in value &&
+    "height" in value
+  );
+}
 ---
 
 <Page title={defaultFullTitle} subTitle={copy.site.seoDescription} className="home-page" locale={locale}>
@@ -158,12 +192,6 @@ const defaultFullTitle = copy.home.title || `${SITE_TITLE} | ${SITE_SEO_DESCRIPT
     const target = document.querySelector("[hx-get][hx-trigger='revealed']");
     if (!target) return;
 
-    if ("requestIdleCallback" in globalThis) {
-      globalThis.requestIdleCallback(loadHtmx, { timeout: 1800 });
-    } else {
-      globalThis.setTimeout(loadHtmx, 900);
-    }
-
     if ("IntersectionObserver" in window) {
       const observer = new IntersectionObserver(
         (entries) => {
@@ -171,10 +199,14 @@ const defaultFullTitle = copy.home.title || `${SITE_TITLE} | ${SITE_SEO_DESCRIPT
           observer.disconnect();
           loadHtmx();
         },
-        { rootMargin: "1200px 0px" },
+        { rootMargin: "0px 0px 320px" },
       );
       observer.observe(target);
+      return;
     }
+
+    target.addEventListener("pointerenter", loadHtmx, { once: true, passive: true });
+    target.addEventListener("focusin", loadHtmx, { once: true });
   }
 
   document.addEventListener("astro:page-load", scheduleHtmxLoad);
