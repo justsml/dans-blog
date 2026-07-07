@@ -35,6 +35,19 @@ runtime environment. The runner records those as source failures and keeps polli
 other sources. For reliable Reddit coverage, add a credentialed Reddit API adapter
 instead of trying to disguise browser or HTTP automation.
 
+The Reddit adapter now tries credentialed OAuth first when these environment
+variables are present:
+
+```bash
+REDDIT_CLIENT_ID=...
+REDDIT_CLIENT_SECRET=...
+```
+
+Create a Reddit app for this workflow, keep the secret out of git, and use a clear
+`NEWS_WATCH_USER_AGENT` that identifies the project/contact. Without credentials,
+the adapter falls back to public JSON and then Reddit's Atom/RSS listing URL, but
+those may be blocked or rate-limited from some networks.
+
 ## Trend Signals
 
 Every poll records a metric observation. A signal is inserted when a relevant item is:
@@ -47,12 +60,8 @@ When a source emits a signal, its next poll switches to the configured rapid int
 for an hour. For Reddit sources this is currently one to two minutes. Sources without
 signals back off to their normal poll interval. Failed sources use exponential backoff.
 
-## X, LinkedIn, Apple News, And Browser Automation
+## X, LinkedIn, Apple News
 
 The placeholders in `config.ts` are there so the storage and scheduler are ready, but
 they are disabled by default. Use approved APIs, partner access, RSS feeds, owned
 exports, or manually supplied JSONL for those surfaces.
-
-Do not build stealth browser scraping around authenticated social feeds. A browser
-collector can still be added for pages you are allowed to access and archive, but it
-should use normal rate limits and human-readable audit trails rather than evasion.

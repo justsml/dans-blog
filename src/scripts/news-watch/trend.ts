@@ -110,7 +110,7 @@ export function detectTrendSignal(input: {
     ((current.comments ?? 0) - (previous.comments ?? 0)) / elapsedHours;
 
   const isRunaway =
-    velocityPerHour >= 30 ||
+    (delta >= 10 && velocityPerHour >= 30) ||
     growthRatio >= 1.6 ||
     lowBaselineJump ||
     commentVelocity >= 10 ||

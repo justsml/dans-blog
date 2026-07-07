@@ -76,6 +76,9 @@ async function fetchRss(source: SourceSpec, capturedAt: string): Promise<Capture
 }
 
 async function fetchReddit(source: SourceSpec, capturedAt: string): Promise<CapturedItem[]> {
+  const oauthItems = await fetchRedditWithOAuth(source, capturedAt);
+  if (oauthItems != null) return oauthItems;
+
   const url = requireUrl(source);
   const response = await fetch(url, {
     headers: {
@@ -84,7 +87,11 @@ async function fetchReddit(source: SourceSpec, capturedAt: string): Promise<Capt
       ...source.headers,
     },
   });
-  assertOk(response, source);
+  if (!response.ok) {
+    const rssItems = await fetchRedditRssFallback(source, capturedAt);
+    if (rssItems != null) return rssItems;
+    assertOk(response, source);
+  }
 
   const payload = await response.json() as {
     data?: {
@@ -97,6 +104,110 @@ async function fetchReddit(source: SourceSpec, capturedAt: string): Promise<Capt
   return (payload.data?.children ?? [])
     .map((child, index) => normalizeRedditPost(source, child.data, index, capturedAt))
     .filter((item): item is CapturedItem => item != null);
+}
+
+async function fetchRedditWithOAuth(source: SourceSpec, capturedAt: string): Promise<CapturedItem[] | undefined> {
+  const clientId = process.env.REDDIT_CLIENT_ID;
+  const clientSecret = process.env.REDDIT_CLIENT_SECRET;
+  if (!clientId || !clientSecret) return undefined;
+
+  const listing = getRedditListingParts(source);
+  const tokenResponse = await fetch("https://www.reddit.com/api/v1/access_token", {
+    method: "POST",
+    headers: {
+      "Authorization": `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString("base64")}`,
+      "Content-Type": "application/x-www-form-urlencoded",
+      "User-Agent": DEFAULT_USER_AGENT,
+    },
+    body: new URLSearchParams({ grant_type: "client_credentials" }),
+  });
+  assertOk(tokenResponse, { ...source, key: `${source.key}:oauth-token` });
+
+  const tokenPayload = await tokenResponse.json() as { access_token?: string };
+  if (!tokenPayload.access_token) {
+    throw new Error(`${source.key}:oauth-token did not return access_token`);
+  }
+
+  const params = new URLSearchParams({ limit: "50" });
+  const apiUrl = `https://oauth.reddit.com/r/${listing.subreddit}/${listing.listing}?${params.toString()}`;
+  const response = await fetch(apiUrl, {
+    headers: {
+      "Authorization": `Bearer ${tokenPayload.access_token}`,
+      "User-Agent": DEFAULT_USER_AGENT,
+      "Accept": "application/json",
+    },
+  });
+  assertOk(response, { ...source, key: `${source.key}:oauth-listing` });
+
+  const payload = await response.json() as {
+    data?: {
+      children?: Array<{
+        data?: Record<string, unknown>;
+      }>;
+    };
+  };
+
+  return (payload.data?.children ?? [])
+    .map((child, index) => normalizeRedditPost(source, child.data, index, capturedAt))
+    .filter((item): item is CapturedItem => item != null);
+}
+
+async function fetchRedditRssFallback(source: SourceSpec, capturedAt: string): Promise<CapturedItem[] | undefined> {
+  const listing = getRedditListingParts(source);
+  const rssUrl = `https://www.reddit.com/r/${listing.subreddit}/${listing.listing}/.rss?limit=50`;
+  const response = await fetch(rssUrl, {
+    headers: {
+      "User-Agent": DEFAULT_USER_AGENT,
+      "Accept": "application/atom+xml, application/rss+xml, application/xml;q=0.9, text/xml;q=0.8",
+      ...source.headers,
+    },
+  });
+
+  if (!response.ok) return undefined;
+
+  const xml = await response.text();
+  const $ = cheerio.load(xml, { xmlMode: true });
+  const items: CapturedItem[] = [];
+
+  $("entry").each((index, element) => {
+    const entry = $(element);
+    const title = cleanText(entry.find("title").first().text());
+    const id = cleanText(entry.find("id").first().text());
+    const href = entry.find("link").first().attr("href") ?? "";
+    if (!title || !href) return;
+
+    const content = cleanText(entry.find("content").first().text());
+    const author = cleanText(entry.find("author name").first().text());
+    const publishedAt = parseDate(cleanText(entry.find("published").first().text()));
+
+    items.push({
+      sourceKey: source.key,
+      sourceType: source.type,
+      sourceName: source.name,
+      externalId: id || href,
+      canonicalUrl: href,
+      title,
+      summary: content || undefined,
+      author: author || undefined,
+      publishedAt,
+      capturedAt,
+      metrics: {
+        rank: index + 1,
+      },
+      raw: {
+        title,
+        href,
+        id,
+        content,
+        author,
+        publishedAt,
+        rank: index + 1,
+        adapter: "reddit-rss-fallback",
+      },
+    });
+  });
+
+  return items.length > 0 ? items : undefined;
 }
 
 function normalizeRedditPost(
@@ -135,6 +246,19 @@ function normalizeRedditPost(
     },
     raw: post,
   } satisfies CapturedItem;
+}
+
+export function getRedditListingParts(source: SourceSpec) {
+  const url = requireUrl(source);
+  const match = /\/r\/([^/]+)\/([^/.?]+)/.exec(url);
+  if (!match) {
+    throw new Error(`Could not derive subreddit/listing from ${source.key}: ${url}`);
+  }
+
+  return {
+    subreddit: match[1],
+    listing: match[2],
+  };
 }
 
 function requireUrl(source: SourceSpec) {

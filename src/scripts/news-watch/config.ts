@@ -101,7 +101,7 @@ export const DEFAULT_SOURCES: SourceSpec[] = [
     enabled: false,
     pollIntervalSeconds: 10 * 60,
     rapidIntervalSeconds: 60,
-    notes: "Wire this to an approved X API plan or owned account export. Do not use stealth browser scraping.",
+    notes: "Wire this to an approved X API plan or owned account export.",
   },
   {
     key: "linkedin-api-placeholder",
@@ -110,7 +110,7 @@ export const DEFAULT_SOURCES: SourceSpec[] = [
     enabled: false,
     pollIntervalSeconds: 30 * 60,
     rapidIntervalSeconds: 5 * 60,
-    notes: "Use approved LinkedIn APIs, partner access, or manually exported URLs. Do not automate authenticated feed scraping.",
+    notes: "Use approved LinkedIn APIs, partner access, or manually exported URLs.",
   },
   {
     key: "apple-news-placeholder",

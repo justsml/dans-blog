@@ -1,4 +1,5 @@
 import { describe, expect, test } from "bun:test";
+import { getRedditListingParts } from "./sources.ts";
 import { detectTrendSignal, engagementScore, makeItemId, makeTopicKey } from "./trend.ts";
 import type { CapturedItem } from "./types.ts";
 
@@ -50,5 +51,20 @@ describe("news-watch trend detection", () => {
 
     expect(signal?.signalType).toBe("runaway-growth");
     expect(signal?.recommendedPollSeconds).toBe(60);
+  });
+
+  test("derives reddit listing parts from source urls", () => {
+    expect(getRedditListingParts({
+      key: "reddit-local-llama",
+      type: "reddit",
+      name: "Reddit r/LocalLLaMA hot",
+      url: "https://www.reddit.com/r/LocalLLaMA/hot.json?limit=50",
+      enabled: true,
+      pollIntervalSeconds: 600,
+      rapidIntervalSeconds: 60,
+    })).toEqual({
+      subreddit: "LocalLLaMA",
+      listing: "hot",
+    });
   });
 });
