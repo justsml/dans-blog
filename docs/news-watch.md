@@ -65,3 +65,42 @@ signals back off to their normal poll interval. Failed sources use exponential b
 The placeholders in `config.ts` are there so the storage and scheduler are ready, but
 they are disabled by default. Use approved APIs, partner access, RSS feeds, owned
 exports, or manually supplied JSONL for those surfaces.
+
+## Browser TLS Impersonation (Audit)
+
+Reddit and similar surfaces frequently serve the unauthenticated public JSON listing
+through Cloudflare or equivalent bot-detection layers. To capture what an actual
+browser session would see, sources can opt in to a TLS/JA3 impersonation profile:
+
+```ts
+{
+  key: "reddit-local-llama",
+  type: "reddit",
+  url: redditListingUrl("LocalLLaMA"),
+  impersonate: "chrome124",
+  auditLabel: "anon-browser-impersonation",
+  ...
+}
+```
+
+Implementation: `src/scripts/news-watch/fingerprint-fetch.ts` (Bun-side orchestrator)
+delegates to `src/scripts/news-watch/impersonated-fetch-node.mjs` (Node subprocess
+that uses the official `impers` package, a Node binding for `lexiforest/curl-impersonate`).
+
+The Bun side cannot import `impers` directly: Bun's NAPI shim is missing
+`uv_handle_size` (oven-sh/bun#18546), and koffi (impers' FFI layer) needs it. The
+subprocess runs under system Node and the result is JSON-returned over stdout. Set
+`NEWS_WATCH_NODE_BINARY=/path/to/node` to override the auto-detected binary.
+
+Supported profiles: `chrome99` through `chrome146` (incl. `chrome133a` A/B variant and
+`chrome99_android` / `chrome131_android`), `safari153` through `safari2601` (incl.
+iOS variants), `firefox133` through `firefox147`, `tor145`, `edge99`, `edge101`.
+Default is `chrome146` (newest stable Chrome fingerprint the bundled
+`libcurl-impersonate v1.5.6` supports).
+
+Audit results so far (2026-07-07): Reddit's Cloudflare-fronted `.json` listings
+return HTTP 403 for every browser profile tested (`chrome124`–`chrome146`,
+`firefox147`) from a fresh, cookie-less session, with identical 189908-byte
+block-page bodies. The pipeline records the block, the profile used, and the
+response duration so the operator can compare profiles, header sets, and proxy
+egress.

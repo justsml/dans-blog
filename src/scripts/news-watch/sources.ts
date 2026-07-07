@@ -1,5 +1,6 @@
 import * as cheerio from "cheerio";
 import { DEFAULT_USER_AGENT } from "./config.ts";
+import { fingerprintFetch } from "./fingerprint-fetch.ts";
 import type { CapturedItem, SourceSpec } from "./types.ts";
 
 export async function fetchSource(source: SourceSpec, capturedAt = new Date().toISOString()) {
@@ -21,18 +22,74 @@ export async function fetchSource(source: SourceSpec, capturedAt = new Date().to
   }
 }
 
-async function fetchRss(source: SourceSpec, capturedAt: string): Promise<CapturedItem[]> {
-  const url = requireUrl(source);
-  const response = await fetch(url, {
+interface TextFetchInput {
+  url: string;
+  sourceKey: string;
+  accept: string;
+  headers?: Record<string, string>;
+  impersonate?: SourceSpec["impersonate"];
+  proxy?: string;
+  timeoutSeconds?: number;
+}
+
+interface TextFetchResult {
+  status: number;
+  body: string;
+  impersonated: boolean;
+  finalUrl: string;
+}
+
+async function fetchAsText(input: TextFetchInput): Promise<TextFetchResult> {
+  if (input.impersonate) {
+    const result = await fingerprintFetch({
+      url: input.url,
+      method: "GET",
+      headers: {
+        Accept: input.accept,
+        ...(input.headers ?? {}),
+      },
+      impersonate: input.impersonate,
+      proxy: input.proxy,
+      timeoutSeconds: input.timeoutSeconds,
+    });
+    return {
+      status: result.status,
+      body: result.body,
+      impersonated: true,
+      finalUrl: result.finalUrl,
+    };
+  }
+
+  const response = await fetch(input.url, {
     headers: {
       "User-Agent": DEFAULT_USER_AGENT,
-      "Accept": "application/rss+xml, application/xml;q=0.9, text/xml;q=0.8",
-      ...source.headers,
+      Accept: input.accept,
+      ...(input.headers ?? {}),
     },
   });
-  assertOk(response, source);
+  return {
+    status: response.status,
+    body: await response.text(),
+    impersonated: false,
+    finalUrl: response.url,
+  };
+}
 
-  const xml = await response.text();
+async function fetchRss(source: SourceSpec, capturedAt: string): Promise<CapturedItem[]> {
+  const url = requireUrl(source);
+  const result = await fetchAsText({
+    url,
+    sourceKey: source.key,
+    accept: "application/rss+xml, application/xml;q=0.9, text/xml;q=0.8",
+    headers: source.headers,
+    impersonate: source.impersonate,
+    proxy: source.proxy,
+  });
+  if (result.status < 200 || result.status >= 300) {
+    throw new Error(`${source.key} returned HTTP ${result.status}`);
+  }
+
+  const xml = result.body;
   const $ = cheerio.load(xml, { xmlMode: true });
   const items: CapturedItem[] = [];
 
@@ -68,6 +125,7 @@ async function fetchRss(source: SourceSpec, capturedAt: string): Promise<Capture
         sourceName,
         publishedAt,
         rank: index + 1,
+        impersonated: result.impersonated,
       },
     });
   });
@@ -80,20 +138,21 @@ async function fetchReddit(source: SourceSpec, capturedAt: string): Promise<Capt
   if (oauthItems != null) return oauthItems;
 
   const url = requireUrl(source);
-  const response = await fetch(url, {
-    headers: {
-      "User-Agent": DEFAULT_USER_AGENT,
-      "Accept": "application/json",
-      ...source.headers,
-    },
+  const result = await fetchAsText({
+    url,
+    sourceKey: source.key,
+    accept: "application/json",
+    headers: source.headers,
+    impersonate: source.impersonate,
+    proxy: source.proxy,
   });
-  if (!response.ok) {
+  if (result.status < 200 || result.status >= 300) {
     const rssItems = await fetchRedditRssFallback(source, capturedAt);
     if (rssItems != null) return rssItems;
-    assertOk(response, source);
+    throw new Error(`${source.key} returned HTTP ${result.status}`);
   }
 
-  const payload = await response.json() as {
+  const payload = JSON.parse(result.body) as {
     data?: {
       children?: Array<{
         data?: Record<string, unknown>;
@@ -155,17 +214,18 @@ async function fetchRedditWithOAuth(source: SourceSpec, capturedAt: string): Pro
 async function fetchRedditRssFallback(source: SourceSpec, capturedAt: string): Promise<CapturedItem[] | undefined> {
   const listing = getRedditListingParts(source);
   const rssUrl = `https://www.reddit.com/r/${listing.subreddit}/${listing.listing}/.rss?limit=50`;
-  const response = await fetch(rssUrl, {
-    headers: {
-      "User-Agent": DEFAULT_USER_AGENT,
-      "Accept": "application/atom+xml, application/rss+xml, application/xml;q=0.9, text/xml;q=0.8",
-      ...source.headers,
-    },
+  const result = await fetchAsText({
+    url: rssUrl,
+    sourceKey: source.key,
+    accept: "application/atom+xml, application/rss+xml, application/xml;q=0.9, text/xml;q=0.8",
+    headers: source.headers,
+    impersonate: source.impersonate,
+    proxy: source.proxy,
   });
 
-  if (!response.ok) return undefined;
+  if (result.status < 200 || result.status >= 300) return undefined;
 
-  const xml = await response.text();
+  const xml = result.body;
   const $ = cheerio.load(xml, { xmlMode: true });
   const items: CapturedItem[] = [];
 
@@ -203,6 +263,7 @@ async function fetchRedditRssFallback(source: SourceSpec, capturedAt: string): P
         publishedAt,
         rank: index + 1,
         adapter: "reddit-rss-fallback",
+        impersonated: result.impersonated,
       },
     });
   });

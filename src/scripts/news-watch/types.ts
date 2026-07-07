@@ -1,3 +1,5 @@
+import type { BrowserProfile } from "./fingerprint-fetch.ts";
+
 export type SourceType =
   | "rss"
   | "reddit"
@@ -16,6 +18,9 @@ export type SourceSpec = {
   rapidIntervalSeconds: number;
   headers?: Record<string, string>;
   notes?: string;
+  impersonate?: BrowserProfile;
+  proxy?: string;
+  auditLabel?: string;
 };
 
 export type EngagementMetrics = {

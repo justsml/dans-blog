@@ -66,6 +66,8 @@ export const DEFAULT_SOURCES: SourceSpec[] = [
     enabled: true,
     pollIntervalSeconds: 10 * 60,
     rapidIntervalSeconds: 60,
+    impersonate: "chrome146",
+    auditLabel: "anon-browser-impersonation",
   },
   {
     key: "reddit-machine-learning",
@@ -75,6 +77,8 @@ export const DEFAULT_SOURCES: SourceSpec[] = [
     enabled: true,
     pollIntervalSeconds: 15 * 60,
     rapidIntervalSeconds: 2 * 60,
+    impersonate: "chrome146",
+    auditLabel: "anon-browser-impersonation",
   },
   {
     key: "reddit-openai",
@@ -84,6 +88,8 @@ export const DEFAULT_SOURCES: SourceSpec[] = [
     enabled: true,
     pollIntervalSeconds: 10 * 60,
     rapidIntervalSeconds: 60,
+    impersonate: "chrome146",
+    auditLabel: "anon-browser-impersonation",
   },
   {
     key: "reddit-artificial",
@@ -93,6 +99,8 @@ export const DEFAULT_SOURCES: SourceSpec[] = [
     enabled: true,
     pollIntervalSeconds: 15 * 60,
     rapidIntervalSeconds: 2 * 60,
+    impersonate: "chrome146",
+    auditLabel: "anon-browser-impersonation",
   },
   {
     key: "x-api-placeholder",
