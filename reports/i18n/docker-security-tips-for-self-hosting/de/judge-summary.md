@@ -10,18 +10,21 @@
 - Selected commit hint: judge selected
 - Validation: failed
 - Validation scope: local
+- Confidence: low (0.313)
+- Confidence signals: 9 high and 1 medium issues; single judge
+- High/medium/low issue counts: 9/1/0
 - Validation error: Command failed: bun run i18n:validate --slug docker-security-tips-for-self-hosting --locale de --skip-global
 $ bun ./src/scripts/i18n/validate.ts --slug docker-security-tips-for-self-hosting --locale de --skip-global
-109 |     })
-110 |     .filter((message): message is string => message != null);
-111 | 
-112 |   if (mismatches.length === 0) return;
-113 | 
-114 |   throw new Error(
+224 | export function assertStructuralParity(input: CompareMdxStructureInput) {
+225 |   const comparison = compareMdxStructure(input);
+226 |   if (comparison.valid) return;
+227 | 
+228 |   const targetLabel = input.targetPath ?? "translation";
+229 |   throw new Error(
                   ^
-error: /Users/dan/code/oss/dans-blog/src/content/posts/2025-01-05--docker-security-tips-for-self-hosting/de/index.mdx changed heading counts. H1: English has 0, translation has 19; H2: English has 10, translation has 5; H3: English has 17, translation has 12; H4: English has 11, translation has 7
-      at assertHeadingCounts (/Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:114:13)
-      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:27:1
+error: /Users/dan/code/oss/dans-blog/src/content/posts/2025-01-05--docker-security-tips-for-self-hosting/de/index.mdx failed structural parity with score 0.762 (minimum 0.980). /Users/dan/code/oss/dans-blog/src/content/posts/2025-01-05--docker-security-tips-for-self-hosting/de/index.mdx: Headings changed or moved. Link count or href sequence changed across Markdown/HTML link formats. Code fence count or language order changed. MDX component order changed. Differences: {"h1":15,"h2":4,"h3":2,"h4":5,"links":12,"codeFences":3,"components":1,"headingSequence":26,"codeFenceLanguages":12,"linkTargets":22,"componentSequence":1}. Differences: {"h1":15,"h2":4,"h3":2,"h4":5,"links":12,"codeFences":3,"components":1,"headingSequence":26,"codeFenceLanguages":12,"linkTargets":22,"componentSequence":1}
+      at assertStructuralParity (/Users/dan/code/oss/dans-blog/src/scripts/i18n/structural-validation.ts:229:13)
+      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1
       at loadAndEvaluateModule (2:1)
 
 Bun v1.3.1 (macOS arm64)
@@ -29,30 +32,57 @@ error: script "i18n:validate" exited with code 1
 
 
 ## Primary Judge Telemetry
-- Runtime seconds: 3.46
-- Input tokens: 38383
-- Output tokens: 296
+- Runtime seconds: 5.83
+- Input tokens: 39308
+- Output tokens: 841
 - Thinking tokens: unknown
 - Cached input tokens: 0
 - Cache write tokens: 0
-- OpenRouter cost credits: unknown
-- Estimated cost: $0.020080
+- OpenRouter cost credits: 0.022177
+- Estimated cost: $0.022177
 
 ## Pre-Publish Rescore Telemetry
 ### Pass 1
-- Runtime seconds: 3.45
-- Input tokens: 28021
-- Output tokens: 502
+- Runtime seconds: 6.00
+- Input tokens: 29200
+- Output tokens: 1057
 - Thinking tokens: unknown
 - Cached input tokens: 0
 - Cache write tokens: 0
-- OpenRouter cost credits: unknown
-- Estimated cost: $0.015517
+- OpenRouter cost credits: 0.017771
+- Estimated cost: $0.017771
+
+### Pass 2
+- Runtime seconds: 6.57
+- Input tokens: 29174
+- Output tokens: 1057
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- OpenRouter cost credits: 0.017758
+- Estimated cost: $0.017758
 
 ## Judge Suggestions
-1. Pass 1: applied high priority suggestion. Match: "<pclassName='inset'>" Replacement: "<p className='inset'>" Reason: Missing space in JSX tag will cause a build error. Note: Applied exact replacement to selected MDX.
-2. Pass 1: applied high priority suggestion. Match: "# CloudFlare‑IPs zulassen" Replacement: "```bash # CloudFlare‑IPs zulassen" Reason: Broken code block fence in the CloudFlare hardening section. Note: Applied exact replacement to selected MDX.
-3. Pass 2: logged high priority suggestion. Match: "exact translated text currently in the selected MDX" Replacement: "exact replacement text to write into the selected MDX" Reason: English explanation of why this medium/high-priority change is needed Note: Exact match not found in selected MDX.
+1. Pass 1: applied high priority suggestion. Match: "- 🧗‍♀️ [Für die Mutigen](#️-for-the-brave)" Replacement: "- 🧗‍♀️ [Für die Mutigen](#-für-die-mutigen)" Reason: The link fragment must match the localized heading ID generated from 'Für die Mutigen'. Note: Applied exact replacement to selected MDX.
+2. Pass 1: applied high priority suggestion. Match: "- 🔄 [Der `:latest` Tanz](#-the-latest-dance)" Replacement: "- 🔄 [Der `:latest` Tanz](#-der-latest-tanz)" Reason: The link fragment must match the localized heading ID generated from 'Der :latest Tanz'. Note: Applied exact replacement to selected MDX.
+3. Pass 1: applied high priority suggestion. Match: "- 🔐 [Geheimnisverwaltung: Der Richtige Weg](#-secrets-management)" Replacement: "- 🔐 [Geheimnisverwaltung: Der Richtige Weg](#-geheimnisverwaltung-der-richtige-weg)" Reason: The link fragment must match the localized heading ID. Note: Applied exact replacement to selected MDX.
+4. Pass 1: applied high priority suggestion. Match: "- 🌐 [Netzwerkgefahr](#-network-hazard)" Replacement: "- 🌐 [Netzwerkgefahr](#-netzwerkgefahr)" Reason: The link fragment must match the localized heading ID. Note: Applied exact replacement to selected MDX.
+5. Pass 1: applied high priority suggestion. Match: "- 🛡️ [Zugriffskontrollen](#️-access-controls)" Replacement: "- 🛡️ [Zugriffskontrollen](#-zugriffskontrollen)" Reason: The link fragment must match the localized heading ID. Note: Applied exact replacement to selected MDX.
+6. Pass 1: applied high priority suggestion. Match: "- 🔍 [Monitoring & Verifikation](#-monitoring--verification)" Replacement: "- 🔍 [Monitoring & Verifikation](#-monitoring--verifikation)" Reason: The link fragment must match the localized heading ID. Note: Applied exact replacement to selected MDX.
+7. Pass 1: applied high priority suggestion. Match: "- ⏰ [Häufig Übersehene Tipps](#-often-overlooked-tips)" Replacement: "- ⏰ [Häufig Übersehene Tipps](#-häufig-übersehene-tipps)" Reason: The link fragment must match the localized heading ID. Note: Applied exact replacement to selected MDX.
+8. Pass 1: applied high priority suggestion. Match: "- 🚀 [Produktions‑Checkliste](#-production-checklist)" Replacement: "- 🚀 [Produktions‑Checkliste](#-produktions-checkliste)" Reason: The link fragment must match the localized heading ID. Note: Applied exact replacement to selected MDX.
+9. Pass 1: applied high priority suggestion. Match: "- 📚 [Weiterführende Literatur](#-further-reading)" Replacement: "- 📚 [Weiterführende Literatur](#-weiterführende-literatur)" Reason: The link fragment must match the localized heading ID. Note: Applied exact replacement to selected MDX.
+10. Pass 1: applied medium priority suggestion. Match: "import {CodeTabs} from '../../../../../components/CodeTabs';" Replacement: "import {CodeTabs} from '../../../../components/CodeTabs';" Reason: The import path should be one level deeper than English (../../../../) but this candidate used 5 levels (../../../../../). Note: Applied exact replacement to selected MDX.
+11. Pass 2: applied high priority suggestion. Match: "- 🧗‍♀️ [Für die Mutigen](#️-for-the-brave)" Replacement: "- 🧗‍♀️ [Für die Mutigen](#-für-die-mutigen)" Reason: The link fragment must match the localized heading ID generated from 'Für die Mutigen'. Note: Applied exact replacement to selected MDX.
+12. Pass 2: applied high priority suggestion. Match: "- 🔄 [Der `:latest` Tanz](#-the-latest-dance)" Replacement: "- 🔄 [Der `:latest` Tanz](#-der-latest-tanz)" Reason: The link fragment must match the localized heading ID generated from 'Der :latest Tanz'. Note: Applied exact replacement to selected MDX.
+13. Pass 2: applied high priority suggestion. Match: "- 🔐 [Geheimnisverwaltung: Der Richtige Weg](#-secrets-management)" Replacement: "- 🔐 [Geheimnisverwaltung: Der Richtige Weg](#-geheimnisverwaltung-der-richtige-weg)" Reason: The link fragment must match the localized heading ID. Note: Applied exact replacement to selected MDX.
+14. Pass 2: applied high priority suggestion. Match: "- 🌐 [Netzwerkgefahr](#-network-hazard)" Replacement: "- 🌐 [Netzwerkgefahr](#-netzwerkgefahr)" Reason: The link fragment must match the localized heading ID. Note: Applied exact replacement to selected MDX.
+15. Pass 2: applied high priority suggestion. Match: "- 🛡️ [Zugriffskontrollen](#️-access-controls)" Replacement: "- 🛡️ [Zugriffskontrollen](#-zugriffskontrollen)" Reason: The link fragment must match the localized heading ID. Note: Applied exact replacement to selected MDX.
+16. Pass 2: applied high priority suggestion. Match: "- 🔍 [Monitoring & Verifikation](#-monitoring--verification)" Replacement: "- 🔍 [Monitoring & Verifikation](#-monitoring--verifikation)" Reason: The link fragment must match the localized heading ID. Note: Applied exact replacement to selected MDX.
+17. Pass 2: applied high priority suggestion. Match: "- ⏰ [Häufig Übersehene Tipps](#-often-overlooked-tips)" Replacement: "- ⏰ [Häufig Übersehene Tipps](#-häufig-übersehene-tipps)" Reason: The link fragment must match the localized heading ID. Note: Applied exact replacement to selected MDX.
+18. Pass 2: applied high priority suggestion. Match: "- 🚀 [Produktions‑Checkliste](#-production-checklist)" Replacement: "- 🚀 [Produktions‑Checkliste](#-produktions-checkliste)" Reason: The link fragment must match the localized heading ID. Note: Applied exact replacement to selected MDX.
+19. Pass 2: applied high priority suggestion. Match: "- 📚 [Weiterführende Literatur](#-further-reading)" Replacement: "- 📚 [Weiterführende Literatur](#-weiterführende-literatur)" Reason: The link fragment must match the localized heading ID. Note: Applied exact replacement to selected MDX.
+20. Pass 2: applied medium priority suggestion. Match: "import {CodeTabs} from '../../../../../components/CodeTabs';" Replacement: "import {CodeTabs} from '../../../../components/CodeTabs';" Reason: The import path should be one level deeper than English (../../../../) but this candidate used 5 levels (../../../../../). Note: Applied exact replacement to selected MDX.
 
 ## Candidates
 - current src/content/posts/2025-01-05--docker-security-tips-for-self-hosting/de/index.mdx
