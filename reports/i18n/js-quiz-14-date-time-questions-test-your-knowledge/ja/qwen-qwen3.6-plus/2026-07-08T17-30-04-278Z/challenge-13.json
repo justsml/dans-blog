@@ -1,0 +1,72 @@
+{
+  "index": 12,
+  "attempt": 1,
+  "originalTitle": "Date Setters Part 4",
+  "translatedTitle": "Date セッター Part 4",
+  "translation": {
+    "title": "Date セッター Part 4",
+    "group": "日付の操作",
+    "options": [
+      {
+        "text": "2020年1月1日"
+      },
+      {
+        "text": "2020年2月1日"
+      },
+      {
+        "text": "2021年1月1日"
+      },
+      {
+        "text": "2021年2月1日"
+      },
+      {
+        "text": "RangeError: Invalid argument."
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "出力結果として表示されるのはどれでしょうか？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "[`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) メソッドは、指定された Date インスタンスの月を設定します。\n  \n      月の引数は 0 から始まるゼロベースで、0〜11 の範囲を取ります（西暦カレンダーの場合）。\n\n      ここでは、`setMonth(13)` が 11（12月）より 2 大きいため、月と年が 2021年2月 に調整されているのがわかります。\n\n      <aside class=\"hint\">`setMonth` はインデックスで月を設定します。12ヶ月は 0〜11 でインデックス付けされます。</aside>\n      <aside class=\"hint\">\n        0〜11 の範囲外の数値を指定すると、年がオーバーフローまたはアンダーフローします。例えば、`setMonth(13)` は年を 2021年 に調整します（13 は 11 より 2 大きいため、2月になります）。\n      </aside>"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Date セッター Part 4\",\n  \"group\": \"日付の操作\",\n  \"options\": [\n    {\n      \"text\": \"2020年1月1日\"\n    },\n    {\n      \"text\": \"2020年2月1日\"\n    },\n    {\n      \"text\": \"2021年1月1日\"\n    },\n    {\n      \"text\": \"2021年2月1日\"\n    },\n    {\n      \"text\": \"RangeError: Invalid argument.\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"出力結果として表示されるのはどれでしょうか？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"[`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) メソッドは、指定された Date インスタンスの月を設定します。\\n  \\n      月の引数は 0 から始まるゼロベースで、0〜11 の範囲を取ります（西暦カレンダーの場合）。\\n\\n      ここでは、`setMonth(13)` が 11（12月）より 2 大きいため、月と年が 2021年2月 に調整されているのがわかります。\\n\\n      <aside class=\\\"hint\\\">`setMonth` はインデックスで月を設定します。12ヶ月は 0〜11 でインデックス付けされます。</aside>\\n      <aside class=\\\"hint\\\">\\n        0〜11 の範囲外の数値を指定すると、年がオーバーフローまたはアンダーフローします。例えば、`setMonth(13)` は年を 2021年 に調整します（13 は 11 より 2 大きいため、2月になります）。\\n      </aside>\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1184,
+    "outputTokens": 6973,
+    "totalTokens": 8157,
+    "reasoningTokens": 6530,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 646,
+    "durationMs": 129717,
+    "finishReason": "stop",
+    "rawFinishReason": "stop",
+    "warnings": [],
+    "providerCostUsd": 0.0140346375,
+    "providerUpstreamCostUsd": 0.0140346375,
+    "pricingSource": "openrouter-usage-accounting",
+    "openRouterUsage": {
+      "promptTokens": 1184,
+      "promptTokensDetails": {
+        "cachedTokens": 0
+      },
+      "completionTokens": 6973,
+      "completionTokensDetails": {
+        "reasoningTokens": 6530
+      },
+      "totalTokens": 8157,
+      "cost": 0.0140346375,
+      "costDetails": {
+        "upstreamInferenceCost": 0.0140346375
+      }
+    }
+  },
+  "cost": {
+    "inputUsd": 0.0003848,
+    "outputUsd": 0.01359735,
+    "totalUsd": 0.013982149999999999,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

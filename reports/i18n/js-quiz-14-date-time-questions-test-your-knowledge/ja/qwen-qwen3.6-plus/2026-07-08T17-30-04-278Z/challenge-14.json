@@ -1,0 +1,74 @@
+{
+  "index": 13,
+  "attempt": 1,
+  "originalTitle": "Date Setters Part 5",
+  "translatedTitle": "日付セッター Part 5",
+  "translation": {
+    "title": "日付セッター Part 5",
+    "group": "日付操作",
+    "options": [
+      {
+        "text": "Jan 01 2020"
+      },
+      {
+        "text": "Feb 01 2020"
+      },
+      {
+        "text": "Jan 01 2019"
+      },
+      {
+        "text": "Dec 01 2019"
+      },
+      {
+        "text": "RangeError: Invalid argument."
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "出力結果はどうなる？"
+    ],
+    "hintsProse": [
+      "<aside class=\"hint\">月の日数は均一ではなく、28〜31日の間で変動します。</aside>\n      <aside class=\"hint\">`setDate`は月の日付を設定します（通常は1〜31）。負の数や`31`を超える数値を指定すると、日付と月が自動的に補正され、予想外の結果になることがあります。</aside>"
+    ],
+    "explanationProse": [
+      "[`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth)メソッドは、指定されたDateインスタンスの月を設定します。\n\n      月の引数は0始まりで、0〜11の範囲を取ります（西暦カレンダー基準）。\n\n      ここでは、`setMonth(-1)`が0（1月）より小さい値であるため、月と年が自動的に前月に調整され、2019年12月に巻き戻されます。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"日付セッター Part 5\",\n  \"group\": \"日付操作\",\n  \"options\": [\n    {\n      \"text\": \"Jan 01 2020\"\n    },\n    {\n      \"text\": \"Feb 01 2020\"\n    },\n    {\n      \"text\": \"Jan 01 2019\"\n    },\n    {\n      \"text\": \"Dec 01 2019\"\n    },\n    {\n      \"text\": \"RangeError: Invalid argument.\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"出力結果はどうなる？\"\n  ],\n  \"hintsProse\": [\n    \"<aside class=\\\"hint\\\">月の日数は均一ではなく、28〜31日の間で変動します。</aside>\\n      <aside class=\\\"hint\\\">`setDate`は月の日付を設定します（通常は1〜31）。負の数や`31`を超える数値を指定すると、日付と月が自動的に補正され、予想外の結果になることがあります。</aside>\"\n  ],\n  \"explanationProse\": [\n    \"[`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth)メソッドは、指定されたDateインスタンスの月を設定します。\\n\\n      月の引数は0始まりで、0〜11の範囲を取ります（西暦カレンダー基準）。\\n\\n      ここでは、`setMonth(-1)`が0（1月）より小さい値であるため、月と年が自動的に前月に調整され、2019年12月に巻き戻されます。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1158,
+    "outputTokens": 4978,
+    "totalTokens": 6136,
+    "reasoningTokens": 4578,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 646,
+    "durationMs": 107146,
+    "finishReason": "stop",
+    "rawFinishReason": "stop",
+    "warnings": [],
+    "providerCostUsd": 0.0101359375,
+    "providerUpstreamCostUsd": 0.0101359375,
+    "pricingSource": "openrouter-usage-accounting",
+    "openRouterUsage": {
+      "promptTokens": 1158,
+      "promptTokensDetails": {
+        "cachedTokens": 0
+      },
+      "completionTokens": 4978,
+      "completionTokensDetails": {
+        "reasoningTokens": 4578
+      },
+      "totalTokens": 6136,
+      "cost": 0.0101359375,
+      "costDetails": {
+        "upstreamInferenceCost": 0.0101359375
+      }
+    }
+  },
+  "cost": {
+    "inputUsd": 0.00037635,
+    "outputUsd": 0.0097071,
+    "totalUsd": 0.010083449999999999,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "index": 12,
+  "attempt": 1,
+  "originalTitle": "Date Setters Part 4",
+  "translatedTitle": "日付セッター パート4",
+  "translation": {
+    "title": "日付セッター パート4",
+    "group": "日付の取り扱い",
+    "options": [
+      {
+        "text": "Jan 01 2020"
+      },
+      {
+        "text": "Feb 01 2020"
+      },
+      {
+        "text": "Jan 01 2021"
+      },
+      {
+        "text": "Feb 01 2021"
+      },
+      {
+        "text": "RangeError: Invalid argument."
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "出力には何が含まれますか？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "The [`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) method sets the month of the given date instance.\n  \n      The month argument is zero-based, with a range of 0-11 (using western calendars.)\n\n      Here we see the month and year is adjusted to February 2021, because `setMonth(13)` is 2 more than 11 (December).\n\n      <aside class=\"hint\">`setMonth` sets the month by index, 12 months are indexed from 0-11. </aside>\n      <aside class=\"hint\">\n        Numbers outside the range of 0-11 will cause the year to over- or under-flow. For example, `setMonth(13)` will adjust the year to 2021 (in February because 13 is 2 more than 11).\n      </aside>"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"日付セッター パート4\",\n  \"group\": \"日付の取り扱い\",\n  \"options\": [\n    { \"text\": \"Jan 01 2020\" },\n    { \"text\": \"Feb 01 2020\" },\n    { \"text\": \"Jan 01 2021\" },\n    { \"text\": \"Feb 01 2021\" },\n    { \"text\": \"RangeError: Invalid argument.\" }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"出力には何が含まれますか？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"The [`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) method sets the month of the given date instance.\\n  \\n      The month argument is zero-based, with a range of 0-11 (using western calendars.)\\n\\n      Here we see the month and year is adjusted to February 2021, because `setMonth(13)` is 2 more than 11 (December).\\n\\n      <aside class=\\\"hint\\\">`setMonth` sets the month by index, 12 months are indexed from 0-11. </aside>\\n      <aside class=\\\"hint\\\">\\n        Numbers outside the range of 0-11 will cause the year to over- or under-flow. For example, `setMonth(13)` will adjust the year to 2021 (in February because 13 is 2 more than 11).\\n      </aside>\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1086,
+    "outputTokens": 3470,
+    "totalTokens": 4556,
+    "reasoningTokens": 3107,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 43788,
+    "finishReason": "stop",
+    "rawFinishReason": "stop",
+    "warnings": [],
+    "providerCostUsd": 0.00112364,
+    "providerUpstreamCostUsd": 0.00112364,
+    "pricingSource": "openrouter-usage-accounting",
+    "openRouterUsage": {
+      "promptTokens": 1086,
+      "promptTokensDetails": {
+        "cachedTokens": 0
+      },
+      "completionTokens": 3470,
+      "completionTokensDetails": {
+        "reasoningTokens": 3107
+      },
+      "totalTokens": 4556,
+      "cost": 0.00112364,
+      "costDetails": {
+        "upstreamInferenceCost": 0.00112364
+      }
+    }
+  },
+  "cost": {
+    "inputUsd": 0.00015204000000000001,
+    "outputUsd": 0.0009716000000000001,
+    "totalUsd": 0.0011236400000000002,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

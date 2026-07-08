@@ -1,0 +1,69 @@
+{
+  "index": 6,
+  "attempt": 1,
+  "originalTitle": "UTC Dates Part 1",
+  "translatedTitle": "UTC日付 パート1",
+  "translation": {
+    "title": "UTC日付 パート1",
+    "group": "日付の扱い",
+    "options": [
+      {
+        "text": "Wed, 01 Jan 2020 00:00:00 GMT"
+      },
+      {
+        "text": "Thu, 02 Jan 2020 00:00:00 GMT"
+      },
+      {
+        "text": "TypeError"
+      },
+      {
+        "text": "NaN"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "出力には何が含まれるか？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "`TypeError: date.toUTCString is not a function` がスローされます。[`Date.UTC()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/UTC) は Date インスタンスではなく、ミリ秒単位の整数を返すためです。\n\n      {/* [`getFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getFullYear) メソッドはローカルタイムゾーンのオフセットを適用します（本クイズでは GMT-07:00 を想定）。つまり、前年の値が返されます（大晦日から7時間巻き戻るため）。\n      一方、[`getUTCFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getUTCFullYear) メソッドは、`Date.UTC()` に指定した通りの年、つまり 2020 を返します。\n      */}"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"UTC日付 パート1\",\n  \"group\": \"日付の扱い\",\n  \"options\": [\n    {\n      \"text\": \"Wed, 01 Jan 2020 00:00:00 GMT\"\n    },\n    {\n      \"text\": \"Thu, 02 Jan 2020 00:00:00 GMT\"\n    },\n    {\n      \"text\": \"TypeError\"\n    },\n    {\n      \"text\": \"NaN\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"出力には何が含まれるか？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"`TypeError: date.toUTCString is not a function` がスローされます。[`Date.UTC()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/UTC) は Date インスタンスではなく、ミリ秒単位の整数を返すためです。\\n\\n      {/* [`getFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getFullYear) メソッドはローカルタイムゾーンのオフセットを適用します（本クイズでは GMT-07:00 を想定）。つまり、前年の値が返されます（大晦日から7時間巻き戻るため）。\\n      一方、[`getUTCFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getUTCFullYear) メソッドは、`Date.UTC()` に指定した通りの年、つまり 2020 を返します。\\n      */}\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1130,
+    "outputTokens": 3131,
+    "totalTokens": 4261,
+    "reasoningTokens": 2740,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 646,
+    "durationMs": 62533,
+    "finishReason": "stop",
+    "rawFinishReason": "stop",
+    "warnings": [],
+    "providerCostUsd": 0.0065251875,
+    "providerUpstreamCostUsd": 0.0065251875,
+    "pricingSource": "openrouter-usage-accounting",
+    "openRouterUsage": {
+      "promptTokens": 1130,
+      "promptTokensDetails": {
+        "cachedTokens": 0
+      },
+      "completionTokens": 3131,
+      "completionTokensDetails": {
+        "reasoningTokens": 2740
+      },
+      "totalTokens": 4261,
+      "cost": 0.0065251875,
+      "costDetails": {
+        "upstreamInferenceCost": 0.0065251875
+      }
+    }
+  },
+  "cost": {
+    "inputUsd": 0.00036725,
+    "outputUsd": 0.00610545,
+    "totalUsd": 0.0064727000000000005,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
