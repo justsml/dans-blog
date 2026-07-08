@@ -1,7 +1,8 @@
 # Translation Judge
 
-- Selected candidate: a59be6644861f75769295fa28290899d71c59d0b
-- Selected model: deepseek/deepseek-v4-flash
+- Selected candidate: current
+- Selected model: current
 - Judge model: openrouter/google/gemini-3-flash-preview
+- Confidence: low (0.327)
 
-Selected a59be6644861f75769295fa28290899d71c59d0b.
+The current translation is the only viable option as all other candidates have critical technical failures (untranslated content, invalid MDX wrapping, or truncation). The current version captures Dan's satirical tone well but requires fixes for the internal heading links to ensure they resolve to the translated heading IDs.

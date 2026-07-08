@@ -1,23 +1,54 @@
 {
-  "selectedCommit": "a59be6644861f75769295fa28290899d71c59d0b",
-  "selectedModel": "deepseek/deepseek-v4-flash",
+  "selectedCommit": "current",
+  "selectedModel": "current",
   "scores": {
-    "readability": 0,
-    "technicalAccuracy": 0,
-    "coherence": 0,
-    "relevance": 0,
-    "translationQuality": 0,
-    "mdxPreservation": 0
+    "readability": 95,
+    "technicalAccuracy": 95,
+    "coherence": 100,
+    "relevance": 100,
+    "translationQuality": 90,
+    "mdxPreservation": 95,
+    "culturalAdaptation": 90,
+    "languagePurity": 95
   },
   "suggestions": [
     {
       "priority": "high",
-      "match": "exact translated text currently in the selected MDX",
-      "replacement": "exact replacement text to write into the selected MDX",
-      "reason": "English explanation of why this medium/high-priority change is needed"
+      "match": "[Unternehmenstheater 🎭](#enterprise-theater-)",
+      "replacement": "[Unternehmenstheater 🎭](#unternehmenstheater-)",
+      "reason": "The link fragment must match the localized heading slug."
+    },
+    {
+      "priority": "high",
+      "match": "[Die Bar höher legen 💪](#raising-the-bar-)",
+      "replacement": "[Die Bar höher legen 💪](#die-bar-höher-legen-)",
+      "reason": "The link fragment must match the localized heading slug."
+    },
+    {
+      "priority": "high",
+      "match": "[Bist du disruptiv? 🚀](#are-you-disrupted-)",
+      "replacement": "[Bist du disruptiv? 🚀](#bist-du-disruptiv-)",
+      "reason": "The link fragment must match the localized heading slug."
+    },
+    {
+      "priority": "high",
+      "match": "[Von Buchclubs erdrosselt 📚](#book-clubbed-to-death-)",
+      "replacement": "[Von Buchclubs erdrosselt 📚](#von-buchclubs-erdrosselt-)",
+      "reason": "The link fragment must match the localized heading slug."
     }
   ],
-  "rationale": "Selected a59be6644861f75769295fa28290899d71c59d0b.",
+  "rationale": "The current translation is the only viable option as all other candidates have critical technical failures (untranslated content, invalid MDX wrapping, or truncation). The current version captures Dan's satirical tone well but requires fixes for the internal heading links to ensure they resolve to the translated heading IDs.",
+  "confidence": "low",
+  "confidenceScore": 0.327,
+  "confidenceSignals": [
+    "4 high and 0 medium issues",
+    "single judge"
+  ],
+  "issueCounts": {
+    "high": 4,
+    "medium": 0,
+    "low": 0
+  },
   "slug": "breaking-unicorns",
   "locale": "de",
   "candidateCommits": [
@@ -28,10 +59,73 @@
   "suggestionLog": [
     {
       "priority": "high",
-      "match": "exact translated text currently in the selected MDX",
-      "replacement": "exact replacement text to write into the selected MDX",
-      "reason": "English explanation of why this medium/high-priority change is needed",
+      "match": "[Unternehmenstheater 🎭](#enterprise-theater-)",
+      "replacement": "[Unternehmenstheater 🎭](#unternehmenstheater-)",
+      "reason": "The link fragment must match the localized heading slug.",
       "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "[Die Bar höher legen 💪](#raising-the-bar-)",
+      "replacement": "[Die Bar höher legen 💪](#die-bar-höher-legen-)",
+      "reason": "The link fragment must match the localized heading slug.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "[Bist du disruptiv? 🚀](#are-you-disrupted-)",
+      "replacement": "[Bist du disruptiv? 🚀](#bist-du-disruptiv-)",
+      "reason": "The link fragment must match the localized heading slug.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "[Von Buchclubs erdrosselt 📚](#book-clubbed-to-death-)",
+      "replacement": "[Von Buchclubs erdrosselt 📚](#von-buchclubs-erdrosselt-)",
+      "reason": "The link fragment must match the localized heading slug.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "[Unternehmenstheater 🎭](#enterprise-theater-)",
+      "replacement": "[Unternehmenstheater 🎭](#unternehmenstheater-)",
+      "reason": "The link fragment must match the localized heading slug.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "[Die Bar höher legen 💪](#raising-the-bar-)",
+      "replacement": "[Die Bar höher legen 💪](#die-bar-höher-legen-)",
+      "reason": "The link fragment must match the localized heading slug.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "[Bist du disruptiv? 🚀](#are-you-disrupted-)",
+      "replacement": "[Bist du disruptiv? 🚀](#bist-du-disruptiv-)",
+      "reason": "The link fragment must match the localized heading slug.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "[Von Buchclubs erdrosselt 📚](#book-clubbed-to-death-)",
+      "replacement": "[Von Buchclubs erdrosselt 📚](#von-buchclubs-erdrosselt-)",
+      "reason": "The link fragment must match the localized heading slug.",
+      "pass": 2,
       "applied": false,
       "note": "Exact match not found in selected MDX."
     }
@@ -40,6 +134,6 @@
     "ok": false,
     "scope": "local",
     "command": "bun run i18n:validate --slug breaking-unicorns --locale de --skip-global",
-    "error": "Command failed: bun run i18n:validate --slug breaking-unicorns --locale de --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug breaking-unicorns --locale de --skip-global\n146 |   const targetLength = getComparablePostLength(targetContents);\n147 |   const minimumTargetLength = 600;\n148 |   const { minimumRatio, maximumRatio, label } = getLengthRatioBounds(targetPath);\n149 | \n150 |   if (targetLength <= minimumTargetLength) {\n151 |     throw new Error(\n                    ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2024-09-01--breaking-unicorns/de/index.mdx is too short after translation. Comparable body length is 0 chars; expected more than 600.\n      at assertTranslationLength (/Users/dan/code/oss/dans-blog/src/scripts/i18n/localized-mdx.ts:151:15)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:27:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+    "error": "Command failed: bun run i18n:validate --slug breaking-unicorns --locale de --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug breaking-unicorns --locale de --skip-global\n224 | export function assertStructuralParity(input: CompareMdxStructureInput) {\n225 |   const comparison = compareMdxStructure(input);\n226 |   if (comparison.valid) return;\n227 | \n228 |   const targetLabel = input.targetPath ?? \"translation\";\n229 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2024-09-01--breaking-unicorns/de/index.mdx failed structural parity with score 0.965 (minimum 0.980). /Users/dan/code/oss/dans-blog/src/content/posts/2024-09-01--breaking-unicorns/de/index.mdx: Link count or href sequence changed across Markdown/HTML link formats. Differences: {\"linkTargets\":4}. Differences: {\"linkTargets\":4}\n      at assertStructuralParity (/Users/dan/code/oss/dans-blog/src/scripts/i18n/structural-validation.ts:229:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
   }
 }
