@@ -1,0 +1,40 @@
+{
+  "selectedCommit": "current",
+  "selectedModel": "current",
+  "scores": {
+    "readability": 90,
+    "technicalAccuracy": 95,
+    "coherence": 95,
+    "relevance": 100,
+    "translationQuality": 92,
+    "mdxPreservation": 100,
+    "culturalAdaptation": 85,
+    "languagePurity": 90
+  },
+  "suggestions": [],
+  "rationale": "The 'current' translation is the most complete and accurate. It correctly translates the headings and prose into Hindi while maintaining the technical context. Candidate 75148d707ec20a241b12b0af8b9b0ee8caacc1e8 failed to translate the main headings (Imperative vs. Recursive vs. Functional) and the code comments, which are translated in the 'current' version. Candidate 2114fc9f6509814aa3eced7e60521c378a877289 is almost identical to 'current' but stripped the subTitle in the frontmatter and used HTML comments instead of MDX comments for the hidden section. The 'current' version correctly uses MDX comment syntax `{/* ... */}`.",
+  "confidence": "high",
+  "confidenceScore": 0.87,
+  "confidenceSignals": [
+    "no high/medium issues",
+    "single judge"
+  ],
+  "issueCounts": {
+    "high": 0,
+    "medium": 0,
+    "low": 0
+  },
+  "slug": "javascript-scope-magic",
+  "locale": "hi",
+  "candidateCommits": [
+    "75148d707ec20a241b12b0af8b9b0ee8caacc1e8",
+    "2114fc9f6509814aa3eced7e60521c378a877289"
+  ],
+  "suggestionLog": [],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug javascript-scope-magic --locale hi --skip-global",
+    "output": ""
+  }
+}
