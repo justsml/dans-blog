@@ -10,43 +10,46 @@
 - Selected commit hint: judge selected
 - Validation: passed
 - Validation scope: local
+- Confidence: high (0.866)
+- Confidence signals: no high/medium issues; single judge
+- High/medium/low issue counts: 0/0/0
 
 ## Primary Judge Telemetry
-- Runtime seconds: 2.98
-- Input tokens: 7868
-- Output tokens: 337
+- Runtime seconds: 3.09
+- Input tokens: 8680
+- Output tokens: 314
 - Thinking tokens: unknown
 - Cached input tokens: 0
 - Cache write tokens: 0
-- OpenRouter cost credits: unknown
-- Estimated cost: $0.004945
+- OpenRouter cost credits: 0.005282
+- Estimated cost: $0.005282
 
 ## Pre-Publish Rescore Telemetry
 ### Pass 1
-- Runtime seconds: 3.15
-- Input tokens: 5159
-- Output tokens: 418
+- Runtime seconds: 2.88
+- Input tokens: 5561
+- Output tokens: 358
 - Thinking tokens: unknown
 - Cached input tokens: 0
 - Cache write tokens: 0
-- OpenRouter cost credits: unknown
-- Estimated cost: $0.003834
+- OpenRouter cost credits: 0.003854
+- Estimated cost: $0.003854
 
 ### Pass 2
-- Runtime seconds: 4.14
-- Input tokens: 5106
-- Output tokens: 468
+- Runtime seconds: 2.78
+- Input tokens: 5454
+- Output tokens: 250
 - Thinking tokens: unknown
 - Cached input tokens: 0
 - Cache write tokens: 0
-- OpenRouter cost credits: unknown
-- Estimated cost: $0.003957
+- OpenRouter cost credits: 0.003477
+- Estimated cost: $0.003477
 
 ## Judge Suggestions
-1. Pass 1: applied high priority suggestion. Match: "शिक्षक केवल एक विकल्प का चयन नहीं कर रहा है।" Replacement: "शिक्षार्थी केवल एक विकल्प का चयन नहीं कर रहा है।" Reason: The original English says 'The learner is not merely selecting an option.' The translation used 'शिक्षक' (teacher) instead of 'शिक्षार्थी' (learner). Note: Applied exact replacement to selected MDX.
-2. Pass 1: applied medium priority suggestion. Match: "व्याख्या appearing से पहले ही" Replacement: "व्याख्या सामने आने से पहले ही" Reason: Avoid mixing English 'appearing' in the middle of a Hindi sentence when a natural Hindi equivalent exists. Note: Applied exact replacement to selected MDX.
-3. Pass 2: applied high priority suggestion. Match: "यह विचार कैसे गलत हो जाती है" Replacement: "यह विचार कैसे गलत हो जाता है" Reason: Grammar fix: 'विचार' (thought/idea) is masculine in Hindi, so the verb should be 'हो जाता है' instead of 'हो जाती है'. Note: Applied exact replacement to selected MDX.
-4. Pass 2: applied medium priority suggestion. Match: "समान सिंटैक्स के बीच सूक्ष्म अंतरों नेविगेट करते हैं" Replacement: "समान सिंटैक्स के बीच सूक्ष्म अंतरों को समझते हैं" Reason: The word 'navigate' used as 'अंतरों नेविगेट' is grammatically incomplete in Hindi; 'को समझते हैं' (understand) or 'के बीच रास्ता निकालते हैं' is more natural. Note: Applied exact replacement to selected MDX.
+1. Pass 1: applied high priority suggestion. Match: "Consider thisPostgreSQL question as an example:" Replacement: "उदाहरण के लिए इस PostgreSQL प्रश्न पर विचार करें:" Reason: The candidate left a sentence partially in English with a missing space. Note: Applied exact replacement to selected MDX.
+2. Pass 1: applied medium priority suggestion. Match: "(Correct)" Replacement: "(सही)" Reason: Consistency with the rest of the translated labels. Note: Applied exact replacement to selected MDX.
+3. Pass 2: applied high priority suggestion. Match: "Consider thisPostgreSQL question as an example:" Replacement: "उदाहरण के लिए इस PostgreSQL प्रश्न पर विचार करें:" Reason: The candidate left a sentence partially in English with a missing space ('thisPostgreSQL'). Note: Applied exact replacement to selected MDX.
+4. Pass 2: applied medium priority suggestion. Match: "(Correct)" Replacement: "(सही)" Reason: Consistency with the rest of the translated labels in the quiz section. Note: Applied exact replacement to selected MDX.
 
 ## Candidates
 - current src/content/posts/2025-01-01--the-unassuming-power-of-multiple-choice-questions/hi/index.mdx
