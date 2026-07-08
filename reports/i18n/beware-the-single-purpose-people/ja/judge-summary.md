@@ -15,14 +15,14 @@
 - High/medium/low issue counts: 0/0/0
 
 ## Primary Judge Telemetry
-- Runtime seconds: 2.37
+- Runtime seconds: 2.41
 - Input tokens: 8927
 - Output tokens: 206
 - Thinking tokens: unknown
-- Cached input tokens: 0
+- Cached input tokens: 8159
 - Cache write tokens: 0
-- OpenRouter cost credits: 0.005082
-- Estimated cost: $0.005082
+- OpenRouter cost credits: 0.001410
+- Estimated cost: $0.001410
 
 ## Candidates
 - current src/content/posts/2025-04-03--beware-the-single-purpose-people/ja/index.mdx
