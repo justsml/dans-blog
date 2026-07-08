@@ -1,0 +1,57 @@
+{
+  "runId": "openai-gpt-oss-120b-nitro@2026-07-08T16-49-23-122Z",
+  "slug": "async-stack-traces-why-error-stack-lies-in-production",
+  "locale": "hi",
+  "model": "openai/gpt-oss-120b:nitro",
+  "modelPath": "openai-gpt-oss-120b-nitro",
+  "createdAt": "2026-07-08T16:49:27.137Z",
+  "sourcePath": "src/content/posts/2025-12-29--async-stack-traces-why-error-stack-lies-in-production/index.mdx",
+  "targetPath": "src/content/posts/2025-12-29--async-stack-traces-why-error-stack-lies-in-production/hi/index.mdx",
+  "candidatePath": "reports/i18n/async-stack-traces-why-error-stack-lies-in-production/hi/openai-gpt-oss-120b-nitro/2026-07-08T16-49-23-122Z/candidate.mdx",
+  "sourceHash": "bda8adb66cf30fc89c91baea70bf6d81ae97177b838379f1fd437c2da47c9917",
+  "outputHash": "7a775b947bd2f80697ed616412326ff7a4bc2c78641bc6cbb49c4c024d6a460f",
+  "reasoningEffort": "low",
+  "temperature": 0.1,
+  "maxTokens": 16000,
+  "timeoutMs": 200000,
+  "articleSummary": "The article argues that JavaScript’s `Error.stack` is fundamentally unreliable for async code because `await` detaches execution from the call stack, leaving only generic entries like `processTicksAndRejections`. It explains V8’s partial fixes—`Error.captureStackTrace` and the `--async-stack-traces` flag—but notes their performance cost and limited usefulness. The author proposes using `AsyncLocalStorage` (via Node’s `async_hooks`) to preserve request‑level context across async boundaries, and recommends structured logging and OpenTelemetry for production debugging. The piece is a pragmatic, slightly rant‑tone guide aimed at Node.js developers and SREs who need reliable observability in asynchronous systems.",
+  "totalInputTokens": 3202,
+  "totalOutputTokens": 1039,
+  "totalCacheReadTokens": 1024,
+  "totalCacheWriteTokens": 0,
+  "totalDurationMs": 1537,
+  "totalCostUsd": 0.00031189799999999996,
+  "pricingSource": "local-openrouter-estimate",
+  "telemetry": {
+    "model": "openai/gpt-oss-120b:nitro",
+    "chunkSize": "18p",
+    "totalChunks": 2,
+    "totalInputTokens": 3202,
+    "totalOutputTokens": 1039,
+    "totalCacheReadTokens": 1024,
+    "totalCacheWriteTokens": 0,
+    "totalDurationMs": 1537,
+    "totalCostUsd": 0.00031189799999999996,
+    "pricingSource": "local-openrouter-estimate",
+    "chunks": [
+      {
+        "index": 0,
+        "inputTokens": 1590,
+        "outputTokens": 609,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 875,
+        "costUsd": 0.00017162999999999998
+      },
+      {
+        "index": 1,
+        "inputTokens": 1612,
+        "outputTokens": 430,
+        "cacheReadTokens": 1024,
+        "cacheWriteTokens": 0,
+        "durationMs": 662,
+        "costUsd": 0.00014026799999999998
+      }
+    ]
+  }
+}
