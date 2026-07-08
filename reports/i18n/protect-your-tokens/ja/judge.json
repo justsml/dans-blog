@@ -2,15 +2,47 @@
   "selectedCommit": "f52f2a4b676f394f554309e65984734be23e1e18",
   "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
   "scores": {
-    "readability": 9,
-    "technicalAccuracy": 9,
-    "coherence": 9,
-    "relevance": 10,
-    "translationQuality": 9,
-    "mdxPreservation": 10
+    "readability": 90,
+    "technicalAccuracy": 95,
+    "coherence": 95,
+    "relevance": 100,
+    "translationQuality": 90,
+    "mdxPreservation": 85,
+    "culturalAdaptation": 85,
+    "languagePurity": 90
   },
-  "suggestions": [],
-  "rationale": "The current translation (based on the GPT-OSS candidate) is excellent. It correctly translates the frontmatter, handles relative paths for MDX, and maintains Dan's direct style. The high-priority suggestions from the previous judge report have already been applied to the current file, so no further fixes are required.",
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "[`Secret keys`](#-secret-keys)",
+      "replacement": "[`Secret keys`](#secret-keys)",
+      "reason": "The heading ID for '## 🔒 `Secret keys`' is #secret-keys. The extra dash in the fragment prevents the link from working."
+    },
+    {
+      "priority": "high",
+      "match": "[`Non-secret keys`](#-non-secret-keys)",
+      "replacement": "[`Non-secret keys`](#non-secret-keys)",
+      "reason": "The heading ID for '## 🌍 `Non-secret keys`' is #non-secret-keys. The extra dash in the fragment prevents the link from working."
+    },
+    {
+      "priority": "high",
+      "match": "[_How to use dotenv_](../#-how-to-handle-secrets-safely)",
+      "replacement": "[_dotenv の使い方_](#checklist-handling-secrets-safely)",
+      "reason": "The link text should be translated. The anchor must point to the localized heading ID '#checklist-handling-secrets-safely' and the '../' prefix is an invalid path for a same-page anchor."
+    }
+  ],
+  "rationale": "The translation is high quality but contains broken internal anchor links. The heading IDs in MDX are generated from the text; the candidate included extra dashes and incorrect relative paths (../) for same-page fragments. Fixing these ensures the table-of-contents style links function correctly.",
+  "confidence": "low",
+  "confidenceScore": 0.311,
+  "confidenceSignals": [
+    "3 high and 0 medium issues",
+    "single judge"
+  ],
+  "issueCounts": {
+    "high": 3,
+    "medium": 0,
+    "low": 0
+  },
   "slug": "protect-your-tokens",
   "locale": "ja",
   "candidateCommits": [
@@ -20,36 +52,45 @@
   "suggestionLog": [
     {
       "priority": "high",
-      "match": "** ‼️ Important:** `Secret keys` **MUST** be ignored by Git _AND_ omitted in all browser code. [_How to use dotenv_](../#-how-to-handle-secrets-safely)",
-      "replacement": "** ‼️ 重要:** `シークレットキー`は **Gitで無視し**、かつすべてのブラウザコードから**除外しなければなりません**。 [_dotenvの使用方法_](../#-how-to-handle-secrets-safely)",
-      "reason": "The candidate left a critical warning paragraph in English.",
+      "match": "[_How to use dotenv_](../#-how-to-handle-secrets-safely)",
+      "replacement": "[_How to use dotenv_](#checklist-handling-secrets-safely)",
+      "reason": "The link fragment #-how-to-handle-secrets-safely does not exist in the translated document. It should point to the translated heading slug #checklist-handling-secrets-safely.",
       "pass": 1,
       "applied": true,
       "note": "Applied exact replacement to selected MDX."
     },
     {
       "priority": "high",
-      "match": "### Checklist: Handling Secrets Safely",
-      "replacement": "### チェックリスト：シークレットを安全に扱うために",
-      "reason": "Heading was left in English.",
-      "pass": 1,
+      "match": "[`Secret keys`](#-secret-keys)",
+      "replacement": "[`Secret keys`](#secret-keys)",
+      "reason": "The heading ID for '## 🔒 `Secret keys`' is #secret-keys. The extra dash in the fragment prevents the link from working.",
+      "pass": 2,
       "applied": true,
       "note": "Applied exact replacement to selected MDX."
     },
     {
-      "priority": "medium",
-      "match": "#### Quick Overview",
-      "replacement": "#### クイック概要",
-      "reason": "Heading was left in English.",
-      "pass": 1,
+      "priority": "high",
+      "match": "[`Non-secret keys`](#-non-secret-keys)",
+      "replacement": "[`Non-secret keys`](#non-secret-keys)",
+      "reason": "The heading ID for '## 🌍 `Non-secret keys`' is #non-secret-keys. The extra dash in the fragment prevents the link from working.",
+      "pass": 2,
       "applied": true,
       "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "[_How to use dotenv_](#checklist-handling-secrets-safely)",
+      "replacement": "[_dotenv の使い方_](#checklist-handling-secrets-safely)",
+      "reason": "The link text should be translated for the reader, while the fragment correctly points to the localized heading ID.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
     }
   ],
   "validation": {
-    "ok": true,
+    "ok": false,
     "scope": "local",
     "command": "bun run i18n:validate --slug protect-your-tokens --locale ja --skip-global",
-    "output": ""
+    "error": "Command failed: bun run i18n:validate --slug protect-your-tokens --locale ja --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug protect-your-tokens --locale ja --skip-global\n224 | export function assertStructuralParity(input: CompareMdxStructureInput) {\n225 |   const comparison = compareMdxStructure(input);\n226 |   if (comparison.valid) return;\n227 | \n228 |   const targetLabel = input.targetPath ?? \"translation\";\n229 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2018-10-27--protect-your-tokens/ja/index.mdx failed structural parity with score 0.983 (minimum 0.980). /Users/dan/code/oss/dans-blog/src/content/posts/2018-10-27--protect-your-tokens/ja/index.mdx: Link count or href sequence changed across Markdown/HTML link formats. Differences: {\"linkTargets\":2}. Differences: {\"linkTargets\":2}\n      at assertStructuralParity (/Users/dan/code/oss/dans-blog/src/scripts/i18n/structural-validation.ts:229:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
   }
 }
