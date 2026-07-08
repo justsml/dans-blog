@@ -15,14 +15,14 @@
 - High/medium/low issue counts: 0/0/0
 
 ## Primary Judge Telemetry
-- Runtime seconds: 2.63
+- Runtime seconds: 2.68
 - Input tokens: 6643
-- Output tokens: 252
+- Output tokens: 254
 - Thinking tokens: unknown
 - Cached input tokens: 0
 - Cache write tokens: 0
-- OpenRouter cost credits: 0.004078
-- Estimated cost: $0.004078
+- OpenRouter cost credits: 0.004084
+- Estimated cost: $0.004084
 
 ## Candidates
 - current src/content/posts/2015-06-06--javascript-scope-magic/hi/index.mdx
