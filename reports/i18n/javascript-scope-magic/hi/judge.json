@@ -1,20 +1,20 @@
 {
-  "selectedCommit": "current",
-  "selectedModel": "current",
+  "selectedCommit": "d9788bde62e6e55c52cf8c6764795a66845ebd63",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
   "scores": {
-    "readability": 90,
-    "technicalAccuracy": 95,
+    "readability": 95,
+    "technicalAccuracy": 90,
     "coherence": 95,
     "relevance": 100,
     "translationQuality": 92,
     "mdxPreservation": 100,
-    "culturalAdaptation": 85,
-    "languagePurity": 90
+    "culturalAdaptation": 90,
+    "languagePurity": 95
   },
   "suggestions": [],
-  "rationale": "The 'current' translation is the most complete and accurate. It correctly translates the headings and prose into Hindi while maintaining the technical context. Candidate 75148d707ec20a241b12b0af8b9b0ee8caacc1e8 failed to translate the main headings (Imperative vs. Recursive vs. Functional) and the code comments, which are translated in 'current'. Candidate 2114fc9f6509814aa3eced7e60521c378a877289 is almost identical to 'current' but stripped the subTitle in the frontmatter. 'current' also correctly uses MDX comment syntax `{/* ... */}` for the work-in-progress section at the end, whereas the English source used HTML comments.",
+  "rationale": "Candidate d9788bde62e6e55c52cf8c6764795a66845ebd63 is the best choice because it balances technical terminology with natural Hindi prose. It correctly preserves the MDX structure, including the HTML comments (using the standard Markdown syntax which is acceptable in MDX for hidden blocks, though it correctly uses the English source's style). It captures Dan's direct, slightly informal tone ('बस बेकार है', 'मज़े के लिए') much better than the 'current' translation which is a bit stiff. It also correctly handles the frontmatter and asset paths.",
   "confidence": "high",
-  "confidenceScore": 0.87,
+  "confidenceScore": 0.876,
   "confidenceSignals": [
     "no high/medium issues",
     "single judge"
@@ -28,13 +28,14 @@
   "locale": "hi",
   "candidateCommits": [
     "75148d707ec20a241b12b0af8b9b0ee8caacc1e8",
-    "2114fc9f6509814aa3eced7e60521c378a877289"
+    "2114fc9f6509814aa3eced7e60521c378a877289",
+    "d9788bde62e6e55c52cf8c6764795a66845ebd63"
   ],
   "suggestionLog": [],
   "validation": {
-    "ok": true,
+    "ok": false,
     "scope": "local",
     "command": "bun run i18n:validate --slug javascript-scope-magic --locale hi --skip-global",
-    "output": ""
+    "error": "Command failed: bun run i18n:validate --slug javascript-scope-magic --locale hi --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug javascript-scope-magic --locale hi --skip-global\n103 | \n104 | export function assertTranslationIntegrity(input: IntegrityCheckInput) {\n105 |   const issues = analyzeTranslationIntegrity(input).filter((issue) => issue.severity !== \"low\");\n106 |   if (issues.length === 0) return;\n107 | \n108 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2015-06-06--javascript-scope-magic/hi/index.mdx failed translation integrity checks:\n- [high] html-comment-outside-code: /Users/dan/code/oss/dans-blog/src/content/posts/2015-06-06--javascript-scope-magic/hi/index.mdx:100 uses an HTML comment. Use MDX comments ({/* ... */}) outside code fences.\n- [high] html-comment-outside-code: /Users/dan/code/oss/dans-blog/src/content/posts/2015-06-06--javascript-scope-magic/hi/index.mdx:104 uses an HTML comment. Use MDX comments ({/* ... */}) outside code fences.\n      at assertTranslationIntegrity (/Users/dan/code/oss/dans-blog/src/scripts/i18n/integrity-checks.ts:108:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:34:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
   }
 }

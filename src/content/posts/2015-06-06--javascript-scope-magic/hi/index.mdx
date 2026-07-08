@@ -1,6 +1,6 @@
 ---
-title: जावास्क्रिप्ट जादू
-subTitle: "[ड्राफ्ट] इम्परेटिव बनाम रिकर्सिव बनाम फंक्शनल"
+title: JavaScript का जादू
+subTitle: '[draft] इम्पेरटिव बनाम रिकर्सिव बनाम फंक्शनल'
 modified: '2024-07-30'
 category: Code
 subCategory: javascript
@@ -13,12 +13,12 @@ cover: ../markus-spiske-197281-unsplash.webp
 cover_mobile: ../w300_markus-spiske-197281-unsplash.webp
 cover_icon: ../icon_markus-spiske-197281-unsplash.webp
 ---
-## आज्ञातमक vs. पुनरावर्ती vs. कार्यात्मक
+## इम्परेटिव बनाम रिकर्सिव बनाम फंक्शनल
 
-> [ कार्यरत विकास ]
+> [ कार्य प्रगति पर है ]
 
 ```javascript
-// आज्ञातमक: सबसे तेज़ ( + बहुत सरल, कोई नए पॉइंटर या अतिरिक्त आवंटन नहीं ):
+// Imperative: The Fastest ( + very simple, no new pointers or excess allocs ):
 function fib(n) {
   var a = 1,
     b = 1,
@@ -31,8 +31,8 @@ function fib(n) {
   return b;
 }
 
-// पुनरावर्ती: (केवल FIREFOX या BABELJS में) ES6 फ़ंक्शन परिभाषा जिसमें
-//  पैरामीटर डिफ़ॉल्ट का उपयोग आंतरिक (पुनरावर्ती) मानों को सेट करने के लिए किया गया है
+// Recursive: (FIREFOX or BABELJS Only) ES6 function definition with
+//  parameter defaults used to set initial (internal/recursive) values
 function fib(n, current = 0, a = 1, b = 1, c = 0) {
   current++;
   c = a + b;
@@ -41,12 +41,12 @@ function fib(n, current = 0, a = 1, b = 1, c = 0) {
   return current >= n ? b : fib(n, current, a, b, c);
 }
 
-// पाठ्यक्रम-बुरा उदाहरण - खराब फ़ंक्शन स्कोप और कई परिवर्तनीय बाहरी मानों के साथ
+// Text-book-Bad Example - poor function scope w/ multiple mutable external values
 function fib(n) {
   if (!arr) {
     var arr = [1, 1];
     n = n - 2;
-  } // खराब
+  } // Bad
   if (n === -1) {
     return [arr[0]];
   }
@@ -57,17 +57,17 @@ function fib(n) {
     --n;
     arr.push(arr[arr.length - 1] + arr[arr.length - 2]);
     return n === 0 ? arr : proc();
-    // खराब: आंतरिक पुनरावर्ती फ़ंक्शन की आवश्यकता नहीं है, संकेत: उपयोग किए गए चर अपने अभिभावक फ़ंक्शन स्कोप से हैं
+    // Bad: inner recursive function not needed, hint: variables used are from parent function scope
   };
   var ans = proc();
   return ans[ans.length - 1];
 }
 ```
 
-## प्रमिसें: शानदार!
+## प्रॉमिसेस: शानदार!
 
 ```js
-// उदाहरण Bluebird प्रमिसें का उपयोग करके और इसका
+// Example Using bluebird Promises and it's
 var Promise = require("bluebird"),
   fs = Promise.promisifyAll(require("fs")),
   less = Promise.promisifyAll(require("less"));
@@ -75,32 +75,32 @@ var Promise = require("bluebird"),
 function writeFileData(data) {
   return fs.writeFileAsync("/tmp/output.css", data);
 }
-// Bluebird ऐसा कुछ शायद असहज रूप से सरल और संक्षिप्त बनाता है:
-fs.readFileAsync("./style.less") // promisified readFile() को कॉल करें
-  .then(less.renderAsync) // less.render को हैंड ऑफ़ करें
-  .then(writeFileData); // CSS सामग्रि प्राप्त करने वाला फ़ंक्शन (पहला पैरामीटर)
+// Bluebird makes something like this perhaps uncomfortably simple and succinct:
+fs.readFileAsync("./style.less") // Call promisified readFile()
+  .then(less.renderAsync) // Hand off to less.render
+  .then(writeFileData); // Function to recieve the css contents (1st parameter)
 ```
 
-1.  जबकि, प्राकृतिक ES6 प्रमिसें शानदार हैं, मैं [Bluebird Promise Library](https://github.com/petkaantonov/bluebird/blob/master/API.md) का उपयोग करना पसंद करता हूँ।
-1.  लाइब्रेरी के साथ या बिना, आधुनिक ब्राउज़रों में प्रमिसें वर्षों से समर्थित हैं।
-1.  प्रमिसें बिना बेतुके पैटर्न के उपयोग किए जा सकती हैं - अनिवार्य `deferred` अधिक उपयुक्त है।
-1.  **$q बिल्कुल खराब है**, बस bluebird का उपयोग करें, ऊपर देखें।
-1.  ध्यान देने योग्य: Bluebirds के बेंचमार्क उत्कृष्ट मामले के परीक्षण हैं, इसलिए अगर आप बेतुके प्रमिस चेन कर रहे हैं तो ध्यान दें
+1. हालाँकि नेटिव ES6 प्रॉमिसेस बढ़िया हैं, मैं मजबूत [Bluebird Promise Library](https://github.com/petkaantonov/bluebird/blob/master/API.md) को प्राथमिकता देता हूँ।
+1. लाइब्रेरी हो या न हो, मॉडर्न ब्राउज़र सालों से प्रॉमिस को सपोर्ट कर रहे हैं।
+1. प्रॉमिसेस को बिना किसी जटिल पैटर्न के इस्तेमाल किया जा सकता है - इम्प्लिसिट `deferred` बेहतर विकल्प है।
+1. **$q बस बेकार है** बस bluebird इस्तेमाल करो, ऊपर देखो।
+1. उल्लेखनीय बात: Bluebird के बेंचमार्क बेस्ट-केस टेस्ट हैं, इसलिए अगर तुम जटिल और फैंसी प्रॉमिस चेन बना रहे हो तो इसका ध्यान रखना।
 
-## जावा vs जावास्क्रिप्ट
+## Java बनाम JavaScript
 
-### रेट लिमिटिंग / डीबाउंसिंग / थ्रॉटलिंग
+### रेट लिमिटिंग / डिबाउंसिंग / थ्रॉटलिंग
 
-1.  जावास्क्रिप्ट में [डेविड वॉल्श ने डीबाउंस को](http://davidwalsh.name/essential-javascript-functions) 20 लाइनों से कम में लागू किया है!
-1.  जावा में, JDebounce, एक लाइब्रेरी जो बहुत अधिक जटिल है, लगभग 500+ लाइनों में है।
-1.  _ दोनों की तुलना: _
-1.  जावास्क्रिप्ट तेज़ है और प्रथम श्रेणी के फ़ंक्शन का उपयोग करके उत्कृष्ट सरलता प्राप्त करता है।
-1.  जबकि जावा में कई अधिक चल भाग हैं, एनोटेशन का उपयोग कम्पाइल-टाइम पर व्यवहार लागू करने के लिए किया जाता है, और बिना किसी विशेष कारण के बस मज़ा के लिए एक बड़ी मात्रा में XML है!
+1. JavaScript में [David Walsh ने 20 लाइन से कम में डिबाउंस इम्प्लीमेंट किया](http://davidwalsh.name/essential-javascript-functions)!
+1. Java में, JDebounce नामक लाइब्रेरी काफी जटिल है और ~500+ लाइनों की है।
+1. _ दोनों की तुलना करने पर: _
+1. JavaScript वाला तरीका तेज़ है और शानदार सरलता हासिल करने के लिए फर्स्ट-क्लास फंक्शंस का उपयोग करता है।
+1. वहीं Java में मूविंग पार्ट्स काफी ज़्यादा हैं, कॉम्पाइल-टाइम पर व्यवहार लागू करने के लिए एनोटेशन्स का इस्तेमाल होता है, और मज़े के लिए ढेर सारा XML भी है!
 
-{/*
-## नियंत्रण की उलटी तकनीकें
+<!--
+## इनवर्जन ऑफ कंट्रोल तकनीकें
 
-कार्यरत अवस्था में
-*/}
+कार्य प्रगति पर है
+-->
 
 [fuck_this]: https://res.cloudinary.com/ddd/image/upload/panda-rampage__tumblr_nq7srwTXqr1stn6klo1_500_gm2som.gif
