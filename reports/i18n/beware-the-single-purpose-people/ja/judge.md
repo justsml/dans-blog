@@ -1,8 +1,8 @@
 # Translation Judge
 
-- Selected candidate: 74720cb1af70e71860bf70055ed076d322bd7e44
-- Selected model: openrouter/qwen/qwen3.6-plus
+- Selected candidate: 020135caa299aa46de7e65060dc28a8fdc429918
+- Selected model: openrouter/deepseek/deepseek-v4-flash
 - Judge model: openrouter/google/gemini-3-flash-preview
-- Confidence: high (0.876)
+- Confidence: high (0.877)
 
-Candidate 74720cb1af70e71860bf70055ed076d322bd7e44 is the best choice. It maintains Dan's direct, slightly informal tone while ensuring high technical accuracy. It correctly handles MDX asset paths (using ../ for images) which is a critical requirement. Candidate a70476e5a9137c5d82769dc9d5bb4db2c22992c8 failed to translate the frontmatter 'language' field to 'Japanese' and used a more formal 'desu/masu' style which is less consistent with the original author's voice. The selected candidate also preserves the specific nuance of technical terms like 'Single Responsibility Principle' and 'Single-Purpose People' effectively.
+The candidate 020135caa299aa46de7e65060dc28a8fdc429918 is the best choice. It captures Dan's direct, slightly cynical, and pragmatic tone perfectly. It correctly handles the MDX structure, including the image paths (using ../ as required for locale files) and the heading counts. The translation of 'Single-Purpose People' as '単一目的の人々' or '単一目的主義者' is natural. It avoids the awkwardness found in the current translation (which left words like 'ideally', 'insisting', 'clueless' in English). It also correctly translates the frontmatter and maintains the integrity of the footnotes.

@@ -1,20 +1,20 @@
 {
-  "selectedCommit": "74720cb1af70e71860bf70055ed076d322bd7e44",
-  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "selectedCommit": "020135caa299aa46de7e65060dc28a8fdc429918",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
   "scores": {
     "readability": 95,
     "technicalAccuracy": 95,
     "coherence": 95,
     "relevance": 95,
-    "translationQuality": 92,
+    "translationQuality": 95,
     "mdxPreservation": 100,
     "culturalAdaptation": 90,
     "languagePurity": 95
   },
   "suggestions": [],
-  "rationale": "Candidate 74720cb1af70e71860bf70055ed076d322bd7e44 is the best choice. It maintains Dan's direct, slightly informal tone while ensuring high technical accuracy. It correctly handles MDX asset paths (using ../ for images) which is a critical requirement. Candidate a70476e5a9137c5d82769dc9d5bb4db2c22992c8 failed to translate the frontmatter 'language' field to 'Japanese' and used a more formal 'desu/masu' style which is less consistent with the original author's voice. The selected candidate also preserves the specific nuance of technical terms like 'Single Responsibility Principle' and 'Single-Purpose People' effectively.",
+  "rationale": "The candidate 020135caa299aa46de7e65060dc28a8fdc429918 is the best choice. It captures Dan's direct, slightly cynical, and pragmatic tone perfectly. It correctly handles the MDX structure, including the image paths (using ../ as required for locale files) and the heading counts. The translation of 'Single-Purpose People' as '単一目的の人々' or '単一目的主義者' is natural. It avoids the awkwardness found in the current translation (which left words like 'ideally', 'insisting', 'clueless' in English). It also correctly translates the frontmatter and maintains the integrity of the footnotes.",
   "confidence": "high",
-  "confidenceScore": 0.876,
+  "confidenceScore": 0.877,
   "confidenceSignals": [
     "no high/medium issues",
     "single judge"
@@ -27,14 +27,15 @@
   "slug": "beware-the-single-purpose-people",
   "locale": "ja",
   "candidateCommits": [
-    "74720cb1af70e71860bf70055ed076d322bd7e44",
-    "a70476e5a9137c5d82769dc9d5bb4db2c22992c8"
+    "020135caa299aa46de7e65060dc28a8fdc429918",
+    "7c47b1673f94a99fb414f0056a152934704e69f5",
+    "363cca65873a2e937d5a941482046cc1d98f6f02"
   ],
   "suggestionLog": [],
   "validation": {
-    "ok": false,
+    "ok": true,
     "scope": "local",
     "command": "bun run i18n:validate --slug beware-the-single-purpose-people --locale ja --skip-global",
-    "error": "Command failed: bun run i18n:validate --slug beware-the-single-purpose-people --locale ja --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug beware-the-single-purpose-people --locale ja --skip-global\n210 |     ]\n211 |     : [];\n212 | \n213 |   if (nestedAssetReferences.length === 0 && bareAssetReferences.length === 0) return;\n214 | \n215 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2025-04-03--beware-the-single-purpose-people/ja/index.mdx uses asset paths inside a locale folder that do not start with ../. Use ../ for inherited post assets.\n      at assertNestedAssetPaths (/Users/dan/code/oss/dans-blog/src/scripts/i18n/localized-mdx.ts:215:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:33:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+    "output": ""
   }
 }
