@@ -1,0 +1,72 @@
+{
+  "index": 12,
+  "attempt": 1,
+  "originalTitle": "Date Setters Part 4",
+  "translatedTitle": "Date Setters パート4",
+  "translation": {
+    "title": "Date Setters パート4",
+    "group": "日付の取り扱い",
+    "options": [
+      {
+        "text": "2020年1月01日"
+      },
+      {
+        "text": "2020年2月01日"
+      },
+      {
+        "text": "2021年1月01日"
+      },
+      {
+        "text": "2021年2月01日"
+      },
+      {
+        "text": "RangeError: Invalid argument."
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "出力には何が含まれますか？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "`.setMonth()` メソッドは、対象の Date インスタンスの月を設定します。\n\n月の引数は 0 から始まるインデックスで、範囲は 0‑11（西暦カレンダー使用）です。\n\nここでは `setMonth(13)` が 11（12月）を超えて 2 つ進むため、月と年が 2021 年 2 月に調整されます。\n\n<aside class=\"hint\">`setMonth` はインデックスで月を設定し、12 か月は 0‑11 の範囲でインデックス付けされます。</aside>\n<aside class=\"hint\">\n  0‑11 の範囲外の数値を渡すと、年がオーバーフローまたはアンダーフローします。たとえば `setMonth(13)` は 11（12月）を超える 2 か月分として、年が 2021 年に、月が 2 月に調整されます。\n</aside>"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Date Setters パート4\",\n  \"group\": \"日付の取り扱い\",\n  \"options\": [\n    {\n      \"text\": \"2020年1月01日\",\n      \"preserveText\": false\n    },\n    {\n      \"text\": \"2020年2月01日\",\n      \"preserveText\": false\n    },\n    {\n      \"text\": \"2021年1月01日\",\n      \"preserveText\": false\n    },\n    {\n      \"text\": \"2021年2月01日\",\n      \"preserveText\": false\n    },\n    {\n      \"text\": \"RangeError: Invalid argument.\",\n      \"preserveText\": true\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"出力には何が含まれますか？\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"js\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"`.setMonth()` メソッドは、対象の Date インスタンスの月を設定します。\\n\\n月の引数は 0 から始まるインデックスで、範囲は 0‑11（西暦カレンダー使用）です。\\n\\nここでは `setMonth(13)` が 11（12月）を超えて 2 つ進むため、月と年が 2021 年 2 月に調整されます。\\n\\n<aside class=\\\"hint\\\">`setMonth` はインデックスで月を設定し、12 か月は 0‑11 の範囲でインデックス付けされます。</aside>\\n<aside class=\\\"hint\\\">\\n  0‑11 の範囲外の数値を渡すと、年がオーバーフローまたはアンダーフローします。たとえば `setMonth(13)` は 11（12月）を超える 2 か月分として、年が 2021 年に、月が 2 月に調整されます。\\n</aside>\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 1160,
+    "outputTokens": 602,
+    "totalTokens": 1762,
+    "reasoningTokens": 102,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1746,
+    "finishReason": "stop",
+    "rawFinishReason": "stop",
+    "warnings": [],
+    "providerCostUsd": 0.0005352,
+    "providerUpstreamCostUsd": 0.0005352,
+    "pricingSource": "openrouter-usage-accounting",
+    "openRouterUsage": {
+      "promptTokens": 1160,
+      "promptTokensDetails": {
+        "cachedTokens": 0
+      },
+      "completionTokens": 602,
+      "completionTokensDetails": {
+        "reasoningTokens": 102
+      },
+      "totalTokens": 1762,
+      "cost": 0.0005352,
+      "costDetails": {
+        "upstreamInferenceCost": 0.0005352
+      }
+    }
+  },
+  "cost": {
+    "inputUsd": 0.00004524,
+    "outputUsd": 0.00010836,
+    "totalUsd": 0.0001536,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

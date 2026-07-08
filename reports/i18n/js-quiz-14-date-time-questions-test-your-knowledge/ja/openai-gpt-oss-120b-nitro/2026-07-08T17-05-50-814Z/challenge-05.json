@@ -1,0 +1,69 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Date String Parsing",
+  "translatedTitle": "日付文字列の解析",
+  "translation": {
+    "title": "日付文字列の解析",
+    "group": "日付の取り扱い",
+    "options": [
+      {
+        "text": "2019 2020"
+      },
+      {
+        "text": "2020 2021"
+      },
+      {
+        "text": "2020 2020"
+      },
+      {
+        "text": "2020 2019"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "コンソールに出力される値は何ですか？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "The string without a `T` time value may appear to be Jan 1st, 2020 - but date-only strings are interpreted as UTC, and when adjusted to our local timezone (GMT-7) we find we're still in 2019.\n\n      Date-time strings without an explicit timezone are interpreted in local time.\n  \n      The `T00:00` form causes the second value to be interpreted as local midnight.\n\n      The first date is interpreted as `Tue Dec 31 2019 17:00:00 GMT-0700 (Mountain Standard Time)`.\n      The second date is interpreted as `Wed Jan 01 2020 00:00:00 GMT-0700 (Mountain Standard Time)`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"日付文字列の解析\",\n  \"group\": \"日付の取り扱い\",\n  \"options\": [\n    {\n      \"text\": \"2019 2020\",\n      \"preserveText\": false\n    },\n    {\n      \"text\": \"2020 2021\",\n      \"preserveText\": false\n    },\n    {\n      \"text\": \"2020 2020\",\n      \"preserveText\": false\n    },\n    {\n      \"text\": \"2020 2019\",\n      \"preserveText\": false\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"コンソールに出力される値は何ですか？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"The string without a `T` time value may appear to be Jan 1st, 2020 - but date-only strings are interpreted as UTC, and when adjusted to our local timezone (GMT-7) we find we're still in 2019.\\n\\n      Date-time strings without an explicit timezone are interpreted in local time.\\n  \\n      The `T00:00` form causes the second value to be interpreted as local midnight.\\n\\n      The first date is interpreted as `Tue Dec 31 2019 17:00:00 GMT-0700 (Mountain Standard Time)`.\\n      The second date is interpreted as `Wed Jan 01 2020 00:00:00 GMT-0700 (Mountain Standard Time)`.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1089,
+    "outputTokens": 910,
+    "totalTokens": 1999,
+    "reasoningTokens": 561,
+    "cacheReadTokens": 128,
+    "cacheWriteTokens": 0,
+    "durationMs": 946,
+    "finishReason": "stop",
+    "rawFinishReason": "stop",
+    "warnings": [],
+    "providerCostUsd": 0.00106365,
+    "providerUpstreamCostUsd": 0.00106365,
+    "pricingSource": "openrouter-usage-accounting",
+    "openRouterUsage": {
+      "promptTokens": 1089,
+      "promptTokensDetails": {
+        "cachedTokens": 128
+      },
+      "completionTokens": 910,
+      "completionTokensDetails": {
+        "reasoningTokens": 561
+      },
+      "totalTokens": 1999,
+      "cost": 0.00106365,
+      "costDetails": {
+        "upstreamInferenceCost": 0.00106365
+      }
+    }
+  },
+  "cost": {
+    "inputUsd": 0.00004247100000000001,
+    "outputUsd": 0.0001638,
+    "totalUsd": 0.000206271,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

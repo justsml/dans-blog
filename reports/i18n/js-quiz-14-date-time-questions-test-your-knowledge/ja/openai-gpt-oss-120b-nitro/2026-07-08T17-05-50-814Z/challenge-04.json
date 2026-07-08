@@ -1,0 +1,75 @@
+{
+  "index": 3,
+  "attempt": 1,
+  "originalTitle": "Date Constructor Part 4",
+  "translatedTitle": "Date コンストラクタ パート 4",
+  "translation": {
+    "title": "Date コンストラクタ パート 4",
+    "group": "日付の取り扱い",
+    "options": [
+      {
+        "text": "1969"
+      },
+      {
+        "text": "1970"
+      },
+      {
+        "text": "2019"
+      },
+      {
+        "text": "2020"
+      },
+      {
+        "text": "2021"
+      },
+      {
+        "text": "RangeError: Invalid argument."
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "出力には何が含まれますか？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "単一の整数引数で作成された Date インスタンスは、Unix `Epoch` 値として解釈されます。`Epoch` は 1970年1月1日からのミリ秒数です。\n\n`2020` の値（ミリ秒）は、1970年1月1日から 2 秒後に相当します。\n\nさらにローカルタイムゾーンが -7 時間の負のオフセットであるため、`Wed Dec 31 1969 17:00:02 GMT-0700 (Mountain Standard Time)` となります。\n\nローカルタイムゾーンのオフセットを回避するには、[`.getUTCFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getUTCFullYear) を使用できます。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Date コンストラクタ パート 4\",\n  \"group\": \"日付の取り扱い\",\n  \"options\": [\n    {\n      \"text\": \"1969\"\n    },\n    {\n      \"text\": \"1970\"\n    },\n    {\n      \"text\": \"2019\"\n    },\n    {\n      \"text\": \"2020\"\n    },\n    {\n      \"text\": \"2021\"\n    },\n    {\n      \"text\": \"RangeError: Invalid argument.\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"出力には何が含まれますか？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"単一の整数引数で作成された Date インスタンスは、Unix `Epoch` 値として解釈されます。`Epoch` は 1970年1月1日からのミリ秒数です。\\n\\n`2020` の値（ミリ秒）は、1970年1月1日から 2 秒後に相当します。\\n\\nさらにローカルタイムゾーンが -7 時間の負のオフセットであるため、`Wed Dec 31 1969 17:00:02 GMT-0700 (Mountain Standard Time)` となります。\\n\\nローカルタイムゾーンのオフセットを回避するには、[`.getUTCFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getUTCFullYear) を使用できます。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1125,
+    "outputTokens": 949,
+    "totalTokens": 2074,
+    "reasoningTokens": 588,
+    "cacheReadTokens": 640,
+    "cacheWriteTokens": 0,
+    "durationMs": 943,
+    "finishReason": "stop",
+    "rawFinishReason": "stop",
+    "warnings": [],
+    "providerCostUsd": 0.0011055,
+    "providerUpstreamCostUsd": 0.0011055,
+    "pricingSource": "openrouter-usage-accounting",
+    "openRouterUsage": {
+      "promptTokens": 1125,
+      "promptTokensDetails": {
+        "cachedTokens": 640
+      },
+      "completionTokens": 949,
+      "completionTokensDetails": {
+        "reasoningTokens": 588
+      },
+      "totalTokens": 2074,
+      "cost": 0.0011055,
+      "costDetails": {
+        "upstreamInferenceCost": 0.0011055
+      }
+    }
+  },
+  "cost": {
+    "inputUsd": 0.000043875,
+    "outputUsd": 0.00017082,
+    "totalUsd": 0.000214695,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "index": 13,
+  "attempt": 1,
+  "originalTitle": "Date Setters Part 5",
+  "translatedTitle": "Date Setters Part 5",
+  "translation": {
+    "title": "Date Setters Part 5",
+    "group": "Handling Dates",
+    "options": [
+      {
+        "text": "2020年1月1日"
+      },
+      {
+        "text": "2020年2月1日"
+      },
+      {
+        "text": "2019年1月1日"
+      },
+      {
+        "text": "2019年12月1日"
+      },
+      {
+        "text": "RangeError: Invalid argument."
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "出力には何が含まれますか？"
+    ],
+    "hintsProse": [
+      "<aside class=\"hint\">月は均一ではなく、28〜31日です。</aside>\n      <aside class=\"hint\">`setDate` は月の日を設定します。通常は 1〜31 の範囲です。負の数や `31` を超える数は、日や月が調整され、時に驚くような結果になります。</aside>"
+    ],
+    "explanationProse": [
+      "The [`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) メソッドは、指定された Date インスタンスの月を設定します。\n\n月の引数は0から始まり、範囲は0-11です（西暦カレンダー使用）。\n\nここでは `setMonth(-1)` が 0 未満（January）になるため、月と年が 2019年12月に戻ります。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Date Setters Part 5\",\n  \"group\": \"Handling Dates\",\n  \"options\": [\n    {\n      \"text\": \"2020年1月1日\",\n      \"preserveText\": false\n    },\n    {\n      \"text\": \"2020年2月1日\",\n      \"preserveText\": false\n    },\n    {\n      \"text\": \"2019年1月1日\",\n      \"preserveText\": false\n    },\n    {\n      \"text\": \"2019年12月1日\",\n      \"preserveText\": false\n    },\n    {\n      \"text\": \"RangeError: Invalid argument.\",\n      \"preserveText\": true\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"出力には何が含まれますか？\"\n  ],\n  \"hintsProse\": [\n    \"<aside class=\\\"hint\\\">月は均一ではなく、28〜31日です。</aside>\\n      <aside class=\\\"hint\\\">`setDate` は月の日を設定します。通常は 1〜31 の範囲です。負の数や `31` を超える数は、日や月が調整され、時に驚くような結果になります。</aside>\"\n  ],\n  \"explanationProse\": [\n    \"The [`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) メソッドは、指定された Date インスタンスの月を設定します。\\n\\n月の引数は0から始まり、範囲は0-11です（西暦カレンダー使用）。\\n\\nここでは `setMonth(-1)` が 0 未満（January）になるため、月と年が 2019年12月に戻ります。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1139,
+    "outputTokens": 1034,
+    "totalTokens": 2173,
+    "reasoningTokens": 618,
+    "cacheReadTokens": 640,
+    "cacheWriteTokens": 0,
+    "durationMs": 5169,
+    "finishReason": "stop",
+    "rawFinishReason": "stop",
+    "warnings": [],
+    "providerCostUsd": 0.00117415,
+    "providerUpstreamCostUsd": 0.00117415,
+    "pricingSource": "openrouter-usage-accounting",
+    "openRouterUsage": {
+      "promptTokens": 1139,
+      "promptTokensDetails": {
+        "cachedTokens": 640
+      },
+      "completionTokens": 1034,
+      "completionTokensDetails": {
+        "reasoningTokens": 618
+      },
+      "totalTokens": 2173,
+      "cost": 0.00117415,
+      "costDetails": {
+        "upstreamInferenceCost": 0.00117415
+      }
+    }
+  },
+  "cost": {
+    "inputUsd": 0.000044421,
+    "outputUsd": 0.00018612,
+    "totalUsd": 0.000230541,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

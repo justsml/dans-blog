@@ -1,0 +1,69 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Date String Parsing",
+  "translatedTitle": "日付文字列のパース",
+  "translation": {
+    "title": "日付文字列のパース",
+    "group": "日付処理",
+    "options": [
+      {
+        "text": "2019 2020"
+      },
+      {
+        "text": "2020 2021"
+      },
+      {
+        "text": "2020 2020"
+      },
+      {
+        "text": "2020 2019"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "コンソールに出力される値はどれでしょうか？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "`T` を含まない文字列は一見すると 2020年1月1日 のように見えますが、日付のみの文字列は UTC として解釈されます。ローカルタイムゾーン（GMT-7）に調整すると、まだ 2019年 であることがわかります。\n\n      明示的なタイムゾーンが指定されていない日時文字列は、ローカル時間として解釈されます。\n  \n      `T00:00` の形式により、2番目の値はローカルの深夜 0 時として解釈されます。\n\n      1番目の日付は `Tue Dec 31 2019 17:00:00 GMT-0700 (Mountain Standard Time)` として解釈されます。\n      2番目の日付は `Wed Jan 01 2020 00:00:00 GMT-0700 (Mountain Standard Time)` として解釈されます。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"日付文字列のパース\",\n  \"group\": \"日付処理\",\n  \"options\": [\n    {\n      \"text\": \"2019 2020\"\n    },\n    {\n      \"text\": \"2020 2021\"\n    },\n    {\n      \"text\": \"2020 2020\"\n    },\n    {\n      \"text\": \"2020 2019\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"コンソールに出力される値はどれでしょうか？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"`T` を含まない文字列は一見すると 2020年1月1日 のように見えますが、日付のみの文字列は UTC として解釈されます。ローカルタイムゾーン（GMT-7）に調整すると、まだ 2019年 であることがわかります。\\n\\n      明示的なタイムゾーンが指定されていない日時文字列は、ローカル時間として解釈されます。\\n  \\n      `T00:00` の形式により、2番目の値はローカルの深夜 0 時として解釈されます。\\n\\n      1番目の日付は `Tue Dec 31 2019 17:00:00 GMT-0700 (Mountain Standard Time)` として解釈されます。\\n      2番目の日付は `Wed Jan 01 2020 00:00:00 GMT-0700 (Mountain Standard Time)` として解釈されます。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1088,
+    "outputTokens": 5009,
+    "totalTokens": 6097,
+    "reasoningTokens": 4612,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 609,
+    "durationMs": 91197,
+    "finishReason": "stop",
+    "rawFinishReason": "stop",
+    "warnings": [],
+    "providerCostUsd": 0.01017063125,
+    "providerUpstreamCostUsd": 0.01017063125,
+    "pricingSource": "openrouter-usage-accounting",
+    "openRouterUsage": {
+      "promptTokens": 1088,
+      "promptTokensDetails": {
+        "cachedTokens": 0
+      },
+      "completionTokens": 5009,
+      "completionTokensDetails": {
+        "reasoningTokens": 4612
+      },
+      "totalTokens": 6097,
+      "cost": 0.01017063125,
+      "costDetails": {
+        "upstreamInferenceCost": 0.01017063125
+      }
+    }
+  },
+  "cost": {
+    "inputUsd": 0.00035360000000000003,
+    "outputUsd": 0.00976755,
+    "totalUsd": 0.01012115,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

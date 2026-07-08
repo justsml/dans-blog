@@ -1,0 +1,72 @@
+{
+  "index": 12,
+  "attempt": 1,
+  "originalTitle": "Date Setters Part 4",
+  "translatedTitle": "Dateセッター Part 4",
+  "translation": {
+    "title": "Dateセッター Part 4",
+    "group": "日付の操作",
+    "options": [
+      {
+        "text": "2020年1月1日"
+      },
+      {
+        "text": "2020年2月1日"
+      },
+      {
+        "text": "2021年1月1日"
+      },
+      {
+        "text": "2021年2月1日"
+      },
+      {
+        "text": "RangeError: Invalid argument."
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "このコードを実行すると、出力には何が含まれる？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "[`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth)メソッドは、指定された日付インスタンスの月を設定します。\n  \n      月の引数は0始まりで、0〜11の範囲を取ります（西暦カレンダーを使用）。\n\n      ここでは、月と年が2021年2月に調整されています。これは、`setMonth(13)`が11（12月）より2大きい値だからです。\n\n      <aside class=\"hint\">`setMonth`はインデックスで月を設定します。12ヶ月は0〜11でインデックス付けされます。</aside>\n      <aside class=\"hint\">\n        0〜11の範囲外の数値を指定すると、年がオーバーフローまたはアンダーフローします。例えば、`setMonth(13)`は年を2021年に調整します（13は11より2大きいため、2月になります）。\n      </aside>"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Dateセッター Part 4\",\n  \"group\": \"日付の操作\",\n  \"options\": [\n    {\"text\": \"2020年1月1日\"},\n    {\"text\": \"2020年2月1日\"},\n    {\"text\": \"2021年1月1日\"},\n    {\"text\": \"2021年2月1日\"},\n    {\"text\": \"RangeError: Invalid argument.\", \"preserveText\": true}\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"このコードを実行すると、出力には何が含まれる？\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"[`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth)メソッドは、指定された日付インスタンスの月を設定します。\\n  \\n      月の引数は0始まりで、0〜11の範囲を取ります（西暦カレンダーを使用）。\\n\\n      ここでは、月と年が2021年2月に調整されています。これは、`setMonth(13)`が11（12月）より2大きい値だからです。\\n\\n      <aside class=\\\"hint\\\">`setMonth`はインデックスで月を設定します。12ヶ月は0〜11でインデックス付けされます。</aside>\\n      <aside class=\\\"hint\\\">\\n        0〜11の範囲外の数値を指定すると、年がオーバーフローまたはアンダーフローします。例えば、`setMonth(13)`は年を2021年に調整します（13は11より2大きいため、2月になります）。\\n      </aside>\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1147,
+    "outputTokens": 5281,
+    "totalTokens": 6428,
+    "reasoningTokens": 4873,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 609,
+    "durationMs": 96950,
+    "finishReason": "stop",
+    "rawFinishReason": "stop",
+    "warnings": [],
+    "providerCostUsd": 0.01072020625,
+    "providerUpstreamCostUsd": 0.01072020625,
+    "pricingSource": "openrouter-usage-accounting",
+    "openRouterUsage": {
+      "promptTokens": 1147,
+      "promptTokensDetails": {
+        "cachedTokens": 0
+      },
+      "completionTokens": 5281,
+      "completionTokensDetails": {
+        "reasoningTokens": 4873
+      },
+      "totalTokens": 6428,
+      "cost": 0.01072020625,
+      "costDetails": {
+        "upstreamInferenceCost": 0.01072020625
+      }
+    }
+  },
+  "cost": {
+    "inputUsd": 0.000372775,
+    "outputUsd": 0.01029795,
+    "totalUsd": 0.010670725,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

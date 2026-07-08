@@ -1,0 +1,74 @@
+{
+  "index": 13,
+  "attempt": 1,
+  "originalTitle": "Date Setters Part 5",
+  "translatedTitle": "Date セッター Part 5",
+  "translation": {
+    "title": "Date セッター Part 5",
+    "group": "日付の処理",
+    "options": [
+      {
+        "text": "2020年1月1日"
+      },
+      {
+        "text": "2020年2月1日"
+      },
+      {
+        "text": "2019年1月1日"
+      },
+      {
+        "text": "2019年12月1日"
+      },
+      {
+        "text": "RangeError: Invalid argument."
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "出力結果には何が含まれるでしょうか？"
+    ],
+    "hintsProse": [
+      "<aside class=\"hint\">月の日数は均一ではなく、28〜31日の間で変動します。</aside>\n      <aside class=\"hint\">`setDate` は月の日付を設定するメソッドで、通常は 1〜31 の範囲を指定します。負の数や `31` を超える値を指定すると、日付と月が自動調整され、予想外の結果になることがあります。</aside>"
+    ],
+    "explanationProse": [
+      "[`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) メソッドは、指定された Date インスタンスの月を設定します。\n  \n      月の引数は 0 から始まるゼロベースで、0〜11 の範囲を取ります（西暦カレンダー基準）。\n\n      ここでは、`setMonth(-1)` が 0（1月）より小さい値であるため、月と年が 2019年12月 に巻き戻されているのがわかります。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Date セッター Part 5\",\n  \"group\": \"日付の処理\",\n  \"options\": [\n    {\"text\": \"2020年1月1日\"},\n    {\"text\": \"2020年2月1日\"},\n    {\"text\": \"2019年1月1日\"},\n    {\"text\": \"2019年12月1日\"},\n    {\"text\": \"RangeError: Invalid argument.\"}\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"出力結果には何が含まれるでしょうか？\"\n  ],\n  \"hintsProse\": [\n    \"<aside class=\\\"hint\\\">月の日数は均一ではなく、28〜31日の間で変動します。</aside>\\n      <aside class=\\\"hint\\\">`setDate` は月の日付を設定するメソッドで、通常は 1〜31 の範囲を指定します。負の数や `31` を超える値を指定すると、日付と月が自動調整され、予想外の結果になることがあります。</aside>\"\n  ],\n  \"explanationProse\": [\n    \"[`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) メソッドは、指定された Date インスタンスの月を設定します。\\n  \\n      月の引数は 0 から始まるゼロベースで、0〜11 の範囲を取ります（西暦カレンダー基準）。\\n\\n      ここでは、`setMonth(-1)` が 0（1月）より小さい値であるため、月と年が 2019年12月 に巻き戻されているのがわかります。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1121,
+    "outputTokens": 5259,
+    "totalTokens": 6380,
+    "reasoningTokens": 4867,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 609,
+    "durationMs": 95880,
+    "finishReason": "stop",
+    "rawFinishReason": "stop",
+    "warnings": [],
+    "providerCostUsd": 0.01066885625,
+    "providerUpstreamCostUsd": 0.01066885625,
+    "pricingSource": "openrouter-usage-accounting",
+    "openRouterUsage": {
+      "promptTokens": 1121,
+      "promptTokensDetails": {
+        "cachedTokens": 0
+      },
+      "completionTokens": 5259,
+      "completionTokensDetails": {
+        "reasoningTokens": 4867
+      },
+      "totalTokens": 6380,
+      "cost": 0.01066885625,
+      "costDetails": {
+        "upstreamInferenceCost": 0.01066885625
+      }
+    }
+  },
+  "cost": {
+    "inputUsd": 0.00036432500000000003,
+    "outputUsd": 0.01025505,
+    "totalUsd": 0.010619375,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
