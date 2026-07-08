@@ -1,0 +1,40 @@
+{
+  "selectedCommit": "4e21d024e947ecff5f3826de4d8f169ae738e20f",
+  "selectedModel": "qwen/qwen3.6-35b-a3b",
+  "scores": {
+    "readability": 95,
+    "technicalAccuracy": 100,
+    "coherence": 95,
+    "relevance": 100,
+    "translationQuality": 90,
+    "mdxPreservation": 100,
+    "culturalAdaptation": 90,
+    "languagePurity": 95
+  },
+  "suggestions": [],
+  "rationale": "Candidate 4e21d024e947ecff5f3826de4d8f169ae738e20f is the best choice. It correctly translates the frontmatter title and subTitle (which the other candidate left blank). It uses more natural technical Hindi (e.g., using 'पर्यावरण चर' or 'Environment Variables' consistently) and avoids the awkward 'अच्छा लक अउ' (which sounds like a mix of English and a regional dialect) found in the current translation and the other candidate. It also correctly handles the MDX comment/hidden block structure and preserves all links and code blocks accurately.",
+  "confidence": "high",
+  "confidenceScore": 0.88,
+  "confidenceSignals": [
+    "no high/medium issues",
+    "single judge"
+  ],
+  "issueCounts": {
+    "high": 0,
+    "medium": 0,
+    "low": 0
+  },
+  "slug": "securely-using-environment-variables-in-nodejs",
+  "locale": "hi",
+  "candidateCommits": [
+    "40b596b70f1020a772bd9b4ba069b2aafd1b6adc",
+    "4e21d024e947ecff5f3826de4d8f169ae738e20f"
+  ],
+  "suggestionLog": [],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug securely-using-environment-variables-in-nodejs --locale hi --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug securely-using-environment-variables-in-nodejs --locale hi --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug securely-using-environment-variables-in-nodejs --locale hi --skip-global\n224 | export function assertStructuralParity(input: CompareMdxStructureInput) {\n225 |   const comparison = compareMdxStructure(input);\n226 |   if (comparison.valid) return;\n227 | \n228 |   const targetLabel = input.targetPath ?? \"translation\";\n229 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2018-11-14--securely-using-environment-variables-in-nodejs/hi/index.mdx failed structural parity with score 0.990 (minimum 0.980). /Users/dan/code/oss/dans-blog/src/content/posts/2018-11-14--securely-using-environment-variables-in-nodejs/hi/index.mdx: Link count or href sequence changed across Markdown/HTML link formats. Differences: {\"linkTargets\":1}. Differences: {\"linkTargets\":1}\n      at assertStructuralParity (/Users/dan/code/oss/dans-blog/src/scripts/i18n/structural-validation.ts:229:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}
