@@ -1,12 +1,12 @@
 {
-  "selectedCommit": "5f7fcc6153c55cf63abf36594478c66758e76603",
+  "selectedCommit": "2c5d0c69cd08d9c0aaf980502884aef87c984402",
   "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
   "scores": {
-    "readability": 90,
+    "readability": 92,
     "technicalAccuracy": 95,
-    "coherence": 92,
+    "coherence": 95,
     "relevance": 100,
-    "translationQuality": 88,
+    "translationQuality": 90,
     "mdxPreservation": 85,
     "culturalAdaptation": 90,
     "languagePurity": 95
@@ -14,74 +14,38 @@
   "suggestions": [
     {
       "priority": "high",
-      "match": "- 🧗‍♀️ [Für die Mutigen](#️-for-the-brave)",
+      "match": "import {CodeTabs} from '../../../../components/CodeTabs';",
+      "replacement": "import {CodeTabs} from '../../../components/CodeTabs';",
+      "reason": "The import path is too deep. The file is at src/content/posts/[slug]/de/index.mdx, so it needs three levels (../../../) to reach src/components/."
+    },
+    {
+      "priority": "high",
+      "match": "- 🧗‍♀️ [Für die Mutigen](#️-für-die-mutigen)",
       "replacement": "- 🧗‍♀️ [Für die Mutigen](#-für-die-mutigen)",
-      "reason": "The link fragment must match the localized heading ID generated from the translated text."
+      "reason": "The anchor link contains an invisible character or incorrect emoji handling that will break the link to the heading '## 🧗‍♀️ Für die Mutigen'."
     },
     {
       "priority": "high",
-      "match": "- 🔄 [Der `:latest` Tanz](#-the-latest-dance)",
-      "replacement": "- 🔄 [Der `:latest` Tanz](#-der-latest-tanz)",
-      "reason": "The link fragment must match the localized heading ID generated from the translated text."
+      "match": "- [Starke Secrets erzeugen](#generate-strong-secrets)\n- [Canary Tokens](#canary-tokens)\n- [Upgrade von `.env` zum macOS‑Schlüsselbund](#upgrade-from-env-to-macos-keychain)",
+      "replacement": "- [Starke Secrets erzeugen](#starke-secrets-erzeugen)\n- [Canary Tokens](#canary-tokens)\n- [Upgrade von `.env` zum macOS‑Schlüsselbund](#upgrade-von-env-zu-macos-schlüsselbund)",
+      "reason": "Same-page heading links must use localized slugs derived from the translated heading text to function correctly."
     },
     {
       "priority": "high",
-      "match": "- 🔐 [Geheimnisverwaltung: Der Richtige Weg](#-secrets-management)",
-      "replacement": "- 🔐 [Geheimnisverwaltung: Der Richtige Weg](#-geheimnisverwaltung-der-richtige-weg)",
-      "reason": "The link fragment must match the localized heading ID generated from the translated text."
-    },
-    {
-      "priority": "high",
-      "match": "- 🌐 [Netzwerkgefahr](#-network-hazard)",
-      "replacement": "- 🌐 [Netzwerkgefahr](#-netzwerkgefahr)",
-      "reason": "The link fragment must match the localized heading ID generated from the translated text."
-    },
-    {
-      "priority": "high",
-      "match": "- 🛡️ [Zugriffskontrollen](#️-access-controls)",
-      "replacement": "- 🛡️ [Zugriffskontrollen](#-zugriffskontrollen)",
-      "reason": "The link fragment must match the localized heading ID generated from the translated text."
-    },
-    {
-      "priority": "high",
-      "match": "- 🔍 [Monitoring & Verifikation](#-monitoring--verification)",
-      "replacement": "- 🔍 [Monitoring & Verifikation](#-monitoring--verifikation)",
-      "reason": "The link fragment must match the localized heading ID generated from the translated text."
-    },
-    {
-      "priority": "high",
-      "match": "- ⏰ [Häufig Übersehene Tipps](#-often-overlooked-tips)",
-      "replacement": "- ⏰ [Häufig Übersehene Tipps](#-häufig-übersehene-tipps)",
-      "reason": "The link fragment must match the localized heading ID generated from the translated text."
-    },
-    {
-      "priority": "high",
-      "match": "- 🚀 [Produktions‑Checkliste](#-production-checklist)",
-      "replacement": "- 🚀 [Produktions‑Checkliste](#-produktionscheckliste)",
-      "reason": "The link fragment must match the localized heading ID generated from the translated text."
-    },
-    {
-      "priority": "high",
-      "match": "- 📚 [Weiterführende Literatur](#-further-reading)",
-      "replacement": "- 📚 [Weiterführende Literatur](#-weiterführende-literatur)",
-      "reason": "The link fragment must match the localized heading ID generated from the translated text."
-    },
-    {
-      "priority": "high",
-      "match": "<pclassName='inset'>",
-      "replacement": "<p className='inset'>",
-      "reason": "Broken HTML/JSX tag: missing space between tag name and attribute."
+      "match": "Stellen Sie einfach sicher, dass Sie Ihre Konfiguration **[prüfen Sie Ihre Konfiguration.](#uberwachung-verifikation)**.",
+      "replacement": "Stellen Sie einfach sicher, dass Sie Ihre Konfiguration **[prüfen Sie Ihre Konfiguration.](#-überwachung--verifikation)**.",
+      "reason": "The link fragment must match the generated ID of the Monitoring section."
     }
   ],
-  "rationale": "The candidate provides a high-quality translation that captures Dan's direct tone well. It correctly handles the complex MDX structure, including nested components and frontmatter. While it failed to update the internal TOC links to match the translated heading IDs (a common issue across candidates), it is technically superior in its prose and terminology. The 'current' and 'qwen' candidates had significant formatting issues (broken code blocks, missing sections, or raw markdown leaks).",
+  "rationale": "Candidate 2c5d0c69cd08d9c0aaf980502884aef87c984402 has the best prose quality but suffers from several MDX technical issues: incorrect import depth for the locale and stale English heading fragments in the TOC. These are corrected via suggestions.",
   "confidence": "low",
-  "confidenceScore": 0.313,
+  "confidenceScore": 0.317,
   "confidenceSignals": [
-    "10 high and 0 medium issues",
+    "4 high and 0 medium issues",
     "single judge"
   ],
   "issueCounts": {
-    "high": 10,
+    "high": 4,
     "medium": 0,
     "low": 0
   },
@@ -89,194 +53,114 @@
   "locale": "de",
   "candidateCommits": [
     "5f7fcc6153c55cf63abf36594478c66758e76603",
-    "1f4c701d50299fa90b814367ee24b3abff368161"
+    "1f4c701d50299fa90b814367ee24b3abff368161",
+    "2c5d0c69cd08d9c0aaf980502884aef87c984402"
   ],
   "suggestionLog": [
     {
       "priority": "high",
-      "match": "- 🧗‍♀️ [Für die Mutigen](#️-for-the-brave)",
+      "match": "import {CodeTabs} from '../../../../components/CodeTabs';",
+      "replacement": "import {CodeTabs} from '../../../../../components/CodeTabs';",
+      "reason": "The locale file is one folder deeper than the English source; it needs an additional ../ to reach the components directory.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "- [Upgrade von `.env` zum macOS‑Schlüsselbund](#upgrade-from-env-to-macos-keychain)",
+      "replacement": "- [Upgrade von `.env` zum macOS‑Schlüsselbund](#upgrade-from-env-to-macos-keychain)",
+      "reason": "The link fragment must match the generated ID from the heading 'Upgrade von .env zu macOS-Schlüsselbund', which would be #upgrade-von-env-zu-macos-schlüsselbund.",
+      "pass": 1,
+      "applied": false,
+      "note": "Exact match and replacement are identical; no MDX change needed."
+    },
+    {
+      "priority": "high",
+      "match": "import {CodeTabs} from '../../../../../components/CodeTabs';",
+      "replacement": "import {CodeTabs} from '../../../components/CodeTabs';",
+      "reason": "The import path in the candidate is too deep. The file is at src/content/posts/[slug]/de/index.mdx, so it needs three levels (../../../) to reach src/components/.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "- 🧗‍♀️ [Für die Mutigen](#️-für-die-mutigen)",
       "replacement": "- 🧗‍♀️ [Für die Mutigen](#-für-die-mutigen)",
-      "reason": "The link fragment must match the localized heading ID generated from the translated text.",
-      "pass": 1,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
-    },
-    {
-      "priority": "high",
-      "match": "- 🔄 [Der `:latest` Tanz](#-the-latest-dance)",
-      "replacement": "- 🔄 [Der `:latest` Tanz](#-der-latest-tanz)",
-      "reason": "The link fragment must match the localized heading ID generated from the translated text.",
-      "pass": 1,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
-    },
-    {
-      "priority": "high",
-      "match": "- 🔐 [Geheimnisverwaltung: Der Richtige Weg](#-secrets-management)",
-      "replacement": "- 🔐 [Geheimnisverwaltung: Der Richtige Weg](#-geheimnisverwaltung-der-richtige-weg)",
-      "reason": "The link fragment must match the localized heading ID generated from the translated text.",
-      "pass": 1,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
-    },
-    {
-      "priority": "high",
-      "match": "- 🌐 [Netzwerkgefahr](#-network-hazard)",
-      "replacement": "- 🌐 [Netzwerkgefahr](#-netzwerkgefahr)",
-      "reason": "The link fragment must match the localized heading ID generated from the translated text.",
-      "pass": 1,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
-    },
-    {
-      "priority": "high",
-      "match": "- 🛡️ [Zugriffskontrollen](#️-access-controls)",
-      "replacement": "- 🛡️ [Zugriffskontrollen](#-zugriffskontrollen)",
-      "reason": "The link fragment must match the localized heading ID generated from the translated text.",
-      "pass": 1,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
-    },
-    {
-      "priority": "high",
-      "match": "- 🔍 [Monitoring & Verifikation](#-monitoring--verification)",
-      "replacement": "- 🔍 [Monitoring & Verifikation](#-monitoring--verifikation)",
-      "reason": "The link fragment must match the localized heading ID generated from the translated text.",
-      "pass": 1,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
-    },
-    {
-      "priority": "high",
-      "match": "- ⏰ [Häufig Übersehene Tipps](#-often-overlooked-tips)",
-      "replacement": "- ⏰ [Häufig Übersehene Tipps](#-häufig-übersehene-tipps)",
-      "reason": "The link fragment must match the localized heading ID generated from the translated text.",
-      "pass": 1,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
-    },
-    {
-      "priority": "high",
-      "match": "- 🚀 [Produktions‑Checkliste](#-production-checklist)",
-      "replacement": "- 🚀 [Produktions‑Checkliste](#-produktionscheckliste)",
-      "reason": "The link fragment must match the localized heading ID generated from the translated text.",
-      "pass": 1,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
-    },
-    {
-      "priority": "high",
-      "match": "- 📚 [Weiterführende Literatur](#-further-reading)",
-      "replacement": "- 📚 [Weiterführende Literatur](#-weiterführende-literatur)",
-      "reason": "The link fragment must match the localized heading ID generated from the translated text.",
-      "pass": 1,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
-    },
-    {
-      "priority": "high",
-      "match": "<pclassName='inset'>",
-      "replacement": "<p className='inset'>",
-      "reason": "Broken HTML/JSX tag: missing space between tag name and attribute.",
-      "pass": 1,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
-    },
-    {
-      "priority": "high",
-      "match": "- 🧗‍♀️ [Für die Mutigen](#️-for-the-brave)",
-      "replacement": "- 🧗‍♀️ [Für die Mutigen](#-für-die-mutigen)",
-      "reason": "The link fragment must match the localized heading ID generated from the translated text.",
+      "reason": "The anchor link contains an invisible character or incorrect emoji handling that will break the link to the heading '## 🧗‍♀️ Für die Mutigen'.",
       "pass": 2,
       "applied": true,
       "note": "Applied exact replacement to selected MDX."
     },
     {
       "priority": "high",
-      "match": "- 🔄 [Der `:latest` Tanz](#-the-latest-dance)",
-      "replacement": "- 🔄 [Der `:latest` Tanz](#-der-latest-tanz)",
-      "reason": "The link fragment must match the localized heading ID generated from the translated text.",
+      "match": "- [Starke Secrets erzeugen](#generate-strong-secrets)\n- [Canary Tokens](#canary-tokens)\n- [Upgrade von `.env` zum macOS‑Schlüsselbund](#upgrade-from-env-to-macos-keychain)",
+      "replacement": "- [Starke Secrets erzeugen](#starke-secrets-erzeugen)\n- [Canary Tokens](#canary-tokens)\n- [Upgrade von `.env` zum macOS‑Schlüsselbund](#upgrade-von-env-zu-macos-schlüsselbund)",
+      "reason": "Same-page heading links must use localized slugs derived from the translated heading text to function correctly.",
       "pass": 2,
       "applied": true,
       "note": "Applied exact replacement to selected MDX."
     },
     {
       "priority": "high",
-      "match": "- 🔐 [Geheimnisverwaltung: Der Richtige Weg](#-secrets-management)",
-      "replacement": "- 🔐 [Geheimnisverwaltung: Der Richtige Weg](#-geheimnisverwaltung-der-richtige-weg)",
-      "reason": "The link fragment must match the localized heading ID generated from the translated text.",
+      "match": "Stellen Sie einfach sicher, dass Sie Ihre Konfiguration **[prüfen Sie Ihre Konfiguration.](#uberwachung-verifikation)**.",
+      "replacement": "Stellen Sie einfach sicher, dass Sie Ihre Konfiguration **[verifizieren](#-überwachung--verifikation)**.",
+      "reason": "The link fragment #uberwachung-verifikation is stale/incorrect and the phrasing is redundant. It should point to the localized ID of the Monitoring section.",
       "pass": 2,
       "applied": true,
       "note": "Applied exact replacement to selected MDX."
     },
     {
       "priority": "high",
-      "match": "- 🌐 [Netzwerkgefahr](#-network-hazard)",
-      "replacement": "- 🌐 [Netzwerkgefahr](#-netzwerkgefahr)",
-      "reason": "The link fragment must match the localized heading ID generated from the translated text.",
+      "match": "sudo lsof -i:80 -Pn\n```\n\n# ESTABLISHED‑Verbindungen überwachen",
+      "replacement": "sudo lsof -i:80 -Pn\n\n# ESTABLISHED‑Verbindungen überwachen",
+      "reason": "Broken code block. The closing fence was placed prematurely, leaving the rest of the shell commands as raw text.",
       "pass": 2,
       "applied": true,
       "note": "Applied exact replacement to selected MDX."
     },
     {
       "priority": "high",
-      "match": "- 🛡️ [Zugriffskontrollen](#️-access-controls)",
-      "replacement": "- 🛡️ [Zugriffskontrollen](#-zugriffskontrollen)",
-      "reason": "The link fragment must match the localized heading ID generated from the translated text.",
-      "pass": 2,
+      "match": "import {CodeTabs} from '../../../../components/CodeTabs';",
+      "replacement": "import {CodeTabs} from '../../../components/CodeTabs';",
+      "reason": "The import path is too deep. The file is at src/content/posts/[slug]/de/index.mdx, so it needs three levels (../../../) to reach src/components/.",
+      "pass": 3,
       "applied": true,
       "note": "Applied exact replacement to selected MDX."
     },
     {
       "priority": "high",
-      "match": "- 🔍 [Monitoring & Verifikation](#-monitoring--verification)",
-      "replacement": "- 🔍 [Monitoring & Verifikation](#-monitoring--verifikation)",
-      "reason": "The link fragment must match the localized heading ID generated from the translated text.",
-      "pass": 2,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
+      "match": "- 🧗‍♀️ [Für die Mutigen](#-für-die-mutigen)",
+      "replacement": "- 🧗‍♀️ [Für die Mutigen](#für-die-mutigen)",
+      "reason": "The anchor link contains an invisible character or incorrect emoji handling that will break the link to the heading '## 🧗‍♀️ Für die Mutigen'.",
+      "pass": 3,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
     },
     {
       "priority": "high",
-      "match": "- ⏰ [Häufig Übersehene Tipps](#-often-overlooked-tips)",
-      "replacement": "- ⏰ [Häufig Übersehene Tipps](#-häufig-übersehene-tipps)",
-      "reason": "The link fragment must match the localized heading ID generated from the translated text.",
-      "pass": 2,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
+      "match": "- [Starke Secrets erzeugen](#starke-secrets-erzeugen)\n- [Canary Tokens](#canary-tokens)\n- [Upgrade von `.env` zum macOS‑Schlüsselbund](#upgrade-von-env-zu-macos-schlüsselbund)",
+      "replacement": "- [Starke Secrets erzeugen](#starke-secrets-erzeugen)\n- [Canary Tokens](#canary-tokens)\n- [Upgrade von `.env` zum macOS‑Schlüsselbund](#upgrade-von-env-zu-macos-schlüsselbund)",
+      "reason": "Same-page heading links must use localized slugs derived from the translated heading text to function correctly.",
+      "pass": 3,
+      "applied": false,
+      "note": "Exact match and replacement are identical; no MDX change needed."
     },
     {
       "priority": "high",
-      "match": "- 🚀 [Produktions‑Checkliste](#-production-checklist)",
-      "replacement": "- 🚀 [Produktions‑Checkliste](#-produktionscheckliste)",
-      "reason": "The link fragment must match the localized heading ID generated from the translated text.",
-      "pass": 2,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
-    },
-    {
-      "priority": "high",
-      "match": "- 📚 [Weiterführende Literatur](#-further-reading)",
-      "replacement": "- 📚 [Weiterführende Literatur](#-weiterführende-literatur)",
-      "reason": "The link fragment must match the localized heading ID generated from the translated text.",
-      "pass": 2,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
-    },
-    {
-      "priority": "high",
-      "match": "<pclassName='inset'>",
-      "replacement": "<p className='inset'>",
-      "reason": "Broken HTML/JSX tag: missing space between tag name and attribute.",
-      "pass": 2,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
+      "match": "Stellen Sie einfach sicher, dass Sie Ihre Konfiguration **[verifizieren](#-überwachung--verifikation)**.",
+      "replacement": "Stellen Sie einfach sicher, dass Sie Ihre Konfiguration **[verifizieren](#-überwachung--verifikation)**.",
+      "reason": "The link fragment must match the generated ID of the Monitoring section.",
+      "pass": 3,
+      "applied": false,
+      "note": "Exact match and replacement are identical; no MDX change needed."
     }
   ],
   "validation": {
     "ok": false,
     "scope": "local",
     "command": "bun run i18n:validate --slug docker-security-tips-for-self-hosting --locale de --skip-global",
-    "error": "Command failed: bun run i18n:validate --slug docker-security-tips-for-self-hosting --locale de --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug docker-security-tips-for-self-hosting --locale de --skip-global\n224 | export function assertStructuralParity(input: CompareMdxStructureInput) {\n225 |   const comparison = compareMdxStructure(input);\n226 |   if (comparison.valid) return;\n227 | \n228 |   const targetLabel = input.targetPath ?? \"translation\";\n229 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2025-01-05--docker-security-tips-for-self-hosting/de/index.mdx failed structural parity with score 0.762 (minimum 0.980). /Users/dan/code/oss/dans-blog/src/content/posts/2025-01-05--docker-security-tips-for-self-hosting/de/index.mdx: Headings changed or moved. Link count or href sequence changed across Markdown/HTML link formats. Code fence count or language order changed. MDX component order changed. Differences: {\"h1\":15,\"h2\":4,\"h3\":2,\"h4\":5,\"links\":12,\"codeFences\":3,\"components\":1,\"headingSequence\":26,\"codeFenceLanguages\":12,\"linkTargets\":22,\"componentSequence\":1}. Differences: {\"h1\":15,\"h2\":4,\"h3\":2,\"h4\":5,\"links\":12,\"codeFences\":3,\"components\":1,\"headingSequence\":26,\"codeFenceLanguages\":12,\"linkTargets\":22,\"componentSequence\":1}\n      at assertStructuralParity (/Users/dan/code/oss/dans-blog/src/scripts/i18n/structural-validation.ts:229:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+    "error": "Command failed: bun run i18n:validate --slug docker-security-tips-for-self-hosting --locale de --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug docker-security-tips-for-self-hosting --locale de --skip-global\n224 | export function assertStructuralParity(input: CompareMdxStructureInput) {\n225 |   const comparison = compareMdxStructure(input);\n226 |   if (comparison.valid) return;\n227 | \n228 |   const targetLabel = input.targetPath ?? \"translation\";\n229 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2025-01-05--docker-security-tips-for-self-hosting/de/index.mdx failed structural parity with score 0.848 (minimum 0.980). /Users/dan/code/oss/dans-blog/src/content/posts/2025-01-05--docker-security-tips-for-self-hosting/de/index.mdx: Headings changed or moved. Link count or href sequence changed across Markdown/HTML link formats. Code fence count or language order changed. Differences: {\"h1\":5,\"h2\":1,\"h3\":3,\"h4\":7,\"links\":11,\"codeFences\":1,\"headingSequence\":16,\"codeFenceLanguages\":5,\"linkTargets\":24}. Differences: {\"h1\":5,\"h2\":1,\"h3\":3,\"h4\":7,\"links\":11,\"codeFences\":1,\"headingSequence\":16,\"codeFenceLanguages\":5,\"linkTargets\":24}\n      at assertStructuralParity (/Users/dan/code/oss/dans-blog/src/scripts/i18n/structural-validation.ts:229:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
   }
 }
