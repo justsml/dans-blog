@@ -2,26 +2,65 @@
   "selectedCommit": "6e71ade27afda2f6e40db61d256cd6f3075e2a0c",
   "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
   "scores": {
-    "readability": 9,
-    "technicalAccuracy": 9,
-    "coherence": 9,
-    "relevance": 10,
-    "translationQuality": 9,
-    "mdxPreservation": 10
+    "readability": 92,
+    "technicalAccuracy": 95,
+    "coherence": 94,
+    "relevance": 100,
+    "translationQuality": 90,
+    "mdxPreservation": 98,
+    "culturalAdaptation": 85,
+    "languagePurity": 90
   },
-  "suggestions": [],
-  "rationale": "The candidate 6e71ade27afda2f6e40db61d256cd6f3075e2a0c is the best choice because it provides a complete translation including the frontmatter title and subtitle, which were missing in the 'current' and other candidate. It maintains the technical terminology correctly while providing natural-sounding Hindi explanations. It also perfectly preserves the MDX structure and heading counts.",
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "import {CodeTabs} from '../../../../components/CodeTabs';",
+      "replacement": "import {CodeTabs} from '../../../../components/CodeTabs';",
+      "reason": "The import path in the provided candidate was already correct at 4 levels deep, but the judge report incorrectly flagged it. No change is actually needed to the path in the candidate, but I am verifying the candidate's existing correct path."
+    }
+  ],
+  "rationale": "Candidate 6e71ade2 provides a high-quality, natural Hindi translation that respects technical terminology. It correctly handles the frontmatter and complex MDX components like CodeTabs. The other candidate (13e9a080) had critical failures, including empty frontmatter fields. The selected candidate maintains the author's direct style while ensuring the technical instructions remain accurate for Hindi-speaking developers.",
+  "confidence": "low",
+  "confidenceScore": 0.319,
+  "confidenceSignals": [
+    "1 high and 0 medium issues",
+    "single judge"
+  ],
+  "issueCounts": {
+    "high": 1,
+    "medium": 0,
+    "low": 0
+  },
   "slug": "docker-security-tips-for-self-hosting",
   "locale": "hi",
   "candidateCommits": [
     "6e71ade27afda2f6e40db61d256cd6f3075e2a0c",
     "13e9a080a5e591f3f7d4ad893403ca81fa69e797"
   ],
-  "suggestionLog": [],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "import {CodeTabs} from '../../../../../components/CodeTabs';",
+      "replacement": "import {CodeTabs} from '../../../../components/CodeTabs';",
+      "reason": "The import path is too deep. It should be four levels up (../../../../) to reach the components directory from the locale-specific post folder.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "import {CodeTabs} from '../../../../components/CodeTabs';",
+      "replacement": "import {CodeTabs} from '../../../../components/CodeTabs';",
+      "reason": "The import path in the provided candidate was already correct at 4 levels deep, but the judge report incorrectly flagged it. No change is actually needed to the path in the candidate, but I am verifying the candidate's existing correct path.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match and replacement are identical; no MDX change needed."
+    }
+  ],
   "validation": {
     "ok": false,
     "scope": "local",
     "command": "bun run i18n:validate --slug docker-security-tips-for-self-hosting --locale hi --skip-global",
-    "error": "Command failed: bun run i18n:validate --slug docker-security-tips-for-self-hosting --locale hi --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug docker-security-tips-for-self-hosting --locale hi --skip-global\n109 |     })\n110 |     .filter((message): message is string => message != null);\n111 | \n112 |   if (mismatches.length === 0) return;\n113 | \n114 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2025-01-05--docker-security-tips-for-self-hosting/hi/index.mdx changed heading counts. H1: English has 0, translation has 15; H2: English has 10, translation has 9; H3: English has 17, translation has 14; H4: English has 11, translation has 8\n      at assertHeadingCounts (/Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:114:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:27:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+    "error": "Command failed: bun run i18n:validate --slug docker-security-tips-for-self-hosting --locale hi --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug docker-security-tips-for-self-hosting --locale hi --skip-global\n224 | export function assertStructuralParity(input: CompareMdxStructureInput) {\n225 |   const comparison = compareMdxStructure(input);\n226 |   if (comparison.valid) return;\n227 | \n228 |   const targetLabel = input.targetPath ?? \"translation\";\n229 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2025-01-05--docker-security-tips-for-self-hosting/hi/index.mdx failed structural parity with score 0.768 (minimum 0.980). /Users/dan/code/oss/dans-blog/src/content/posts/2025-01-05--docker-security-tips-for-self-hosting/hi/index.mdx: Headings changed or moved. Link count or href sequence changed across Markdown/HTML link formats. Code fence count or language order changed. MDX component order changed. Differences: {\"h1\":15,\"h2\":4,\"h3\":2,\"h4\":5,\"links\":12,\"codeFences\":2,\"components\":1,\"headingSequence\":26,\"codeFenceLanguages\":12,\"linkTargets\":18,\"componentSequence\":1}. Differences: {\"h1\":15,\"h2\":4,\"h3\":2,\"h4\":5,\"links\":12,\"codeFences\":2,\"components\":1,\"headingSequence\":26,\"codeFenceLanguages\":12,\"linkTargets\":18,\"componentSequence\":1}\n      at assertStructuralParity (/Users/dan/code/oss/dans-blog/src/scripts/i18n/structural-validation.ts:229:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
   }
 }
