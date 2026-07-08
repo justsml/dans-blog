@@ -1,7 +1,8 @@
 # Translation Judge
 
-- Selected candidate: 215f9126f49f4d71a2d25be7dbcf6a5070968bc5
-- Selected model: openrouter/qwen/qwen3.6-plus
+- Selected candidate: c321baa20c00cca54bc4f76a678c6adf7a347dcb
+- Selected model: openrouter/openai/gpt-oss-120b:nitro
 - Judge model: openrouter/google/gemini-3-flash-preview
+- Confidence: high (0.880)
 
-The current translation in the MDX file already includes the frontmatter fixes and asset path updates suggested in the previous judge report. The translation is high quality, maintains Dan's direct style, and preserves all technical terms and MDX structures correctly. No further high-priority fixes are required.
+The current translation already includes the fix for the broken anchor link fragment (#lista-de-verificación-manejo-seguro-de-secretos) that was identified in the previous judge report. The translation is technically accurate, preserves MDX structure, and uses natural Spanish terminology for technical concepts like 'codificado en duro' (hard-coded) and 'proxyar'. Frontmatter and internal links are correctly handled.

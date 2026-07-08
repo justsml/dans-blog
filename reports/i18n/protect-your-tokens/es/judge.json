@@ -1,47 +1,50 @@
 {
-  "selectedCommit": "215f9126f49f4d71a2d25be7dbcf6a5070968bc5",
-  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "selectedCommit": "c321baa20c00cca54bc4f76a678c6adf7a347dcb",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
   "scores": {
-    "readability": 5,
-    "technicalAccuracy": 5,
-    "coherence": 5,
-    "relevance": 5,
-    "translationQuality": 5,
-    "mdxPreservation": 5
+    "readability": 95,
+    "technicalAccuracy": 95,
+    "coherence": 95,
+    "relevance": 100,
+    "translationQuality": 95,
+    "mdxPreservation": 90,
+    "culturalAdaptation": 95,
+    "languagePurity": 100
   },
   "suggestions": [],
-  "rationale": "The current translation in the MDX file already includes the frontmatter fixes and asset path updates suggested in the previous judge report. The translation is high quality, maintains Dan's direct style, and preserves all technical terms and MDX structures correctly. No further high-priority fixes are required.",
+  "rationale": "The current translation already includes the fix for the broken anchor link fragment (#lista-de-verificación-manejo-seguro-de-secretos) that was identified in the previous judge report. The translation is technically accurate, preserves MDX structure, and uses natural Spanish terminology for technical concepts like 'codificado en duro' (hard-coded) and 'proxyar'. Frontmatter and internal links are correctly handled.",
+  "confidence": "high",
+  "confidenceScore": 0.88,
+  "confidenceSignals": [
+    "no high/medium issues",
+    "single judge"
+  ],
+  "issueCounts": {
+    "high": 0,
+    "medium": 0,
+    "low": 0
+  },
   "slug": "protect-your-tokens",
   "locale": "es",
   "candidateCommits": [
-    "215f9126f49f4d71a2d25be7dbcf6a5070968bc5",
     "c321baa20c00cca54bc4f76a678c6adf7a347dcb",
     "54d13bc03bd0455dea7cbebf9af82e5f6c90769f"
   ],
   "suggestionLog": [
     {
       "priority": "high",
-      "match": "title: \"Protegiendo tus Tokens, Claves de API y Secretos\"",
-      "replacement": "social_image: ../desktop-social.webp\ntitle: \"Protegiendo tus Tokens, Claves de API y Secretos\"",
-      "reason": "The candidate is missing the social_image frontmatter field present in the English source.",
-      "pass": 1,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
-    },
-    {
-      "priority": "high",
-      "match": "subTitle: ¿Público? ¿Privado? ¿Qué?\n---",
-      "replacement": "subTitle: ¿Público? ¿Privado? ¿Qué?\ndate: 2018-10-27\nmodified: 2024-07-30\ntags: [tokens, api-keys, secrets, security, nodejs, json-web-tokens]\ncategory: Guides\nsubCategory: security\ncover: ../dayne-topkin-78982-unsplash.webp\ncover_mobile: ../w300_dayne-topkin-78982-unsplash.webp\ncover_icon: ../icon_dayne-topkin-78982-unsplash.webp\n---",
-      "reason": "The candidate is missing several frontmatter fields (date, modified, tags, category, subCategory, cover) and the asset paths must be updated to use ../ as per instructions.",
+      "match": "[_Cómo usar dotenv_](#-how-to-handle-secrets-safely)",
+      "replacement": "[_Cómo usar dotenv_](#lista-de-verificación-manejo-seguro-de-secretos)",
+      "reason": "The link fragment must match the localized heading slug to avoid a broken link.",
       "pass": 1,
       "applied": true,
       "note": "Applied exact replacement to selected MDX."
     }
   ],
   "validation": {
-    "ok": true,
+    "ok": false,
     "scope": "local",
     "command": "bun run i18n:validate --slug protect-your-tokens --locale es --skip-global",
-    "output": ""
+    "error": "Command failed: bun run i18n:validate --slug protect-your-tokens --locale es --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug protect-your-tokens --locale es --skip-global\n224 | export function assertStructuralParity(input: CompareMdxStructureInput) {\n225 |   const comparison = compareMdxStructure(input);\n226 |   if (comparison.valid) return;\n227 | \n228 |   const targetLabel = input.targetPath ?? \"translation\";\n229 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2018-10-27--protect-your-tokens/es/index.mdx failed structural parity with score 0.991 (minimum 0.980). /Users/dan/code/oss/dans-blog/src/content/posts/2018-10-27--protect-your-tokens/es/index.mdx: Link count or href sequence changed across Markdown/HTML link formats. Differences: {\"linkTargets\":1}. Differences: {\"linkTargets\":1}\n      at assertStructuralParity (/Users/dan/code/oss/dans-blog/src/scripts/i18n/structural-validation.ts:229:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
   }
 }
