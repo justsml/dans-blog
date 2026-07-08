@@ -10,31 +10,34 @@
 - Selected commit hint: judge selected
 - Validation: passed
 - Validation scope: local
+- Confidence: high (0.880)
+- Confidence signals: no high/medium issues; single judge
+- High/medium/low issue counts: 0/0/0
 
 ## Primary Judge Telemetry
-- Runtime seconds: 3.19
-- Input tokens: 5419
-- Output tokens: 341
+- Runtime seconds: 3.39
+- Input tokens: 6273
+- Output tokens: 383
 - Thinking tokens: unknown
 - Cached input tokens: 0
 - Cache write tokens: 0
-- OpenRouter cost credits: unknown
-- Estimated cost: $0.003733
+- OpenRouter cost credits: 0.004286
+- Estimated cost: $0.004286
 
 ## Pre-Publish Rescore Telemetry
 ### Pass 1
-- Runtime seconds: 2.30
-- Input tokens: 4618
-- Output tokens: 224
+- Runtime seconds: 2.20
+- Input tokens: 5114
+- Output tokens: 235
 - Thinking tokens: unknown
 - Cached input tokens: 0
 - Cache write tokens: 0
-- OpenRouter cost credits: unknown
-- Estimated cost: $0.002981
+- OpenRouter cost credits: 0.003262
+- Estimated cost: $0.003262
 
 ## Judge Suggestions
-1. Pass 1: applied high priority suggestion. Match: "WennKI versagt" Replacement: "Wenn KI versagt" Reason: Missing space between 'Wenn' and 'KI' in the title. Note: Applied exact replacement to selected MDX.
-2. Pass 1: applied medium priority suggestion. Match: "## Robotic Cars: More or Less Crashes?" Replacement: "## Roboterautos: Mehr oder weniger Unfälle?" Reason: The heading was left in English. Note: Applied exact replacement to selected MDX.
+1. Pass 1: applied high priority suggestion. Match: "title: WennKI versagt" Replacement: "title: Wenn KI versagt" Reason: Missing space between 'Wenn' and 'KI'. Note: Applied exact replacement to selected MDX.
+2. Pass 1: applied medium priority suggestion. Match: "## Robotic Cars: More or Less Crashes?" Replacement: "## Roboterautos: Mehr oder weniger Unfälle?" Reason: The heading was left in English in the selected candidate. Note: Applied exact replacement to selected MDX.
 
 ## Candidates
 - current src/content/posts/2015-12-18--when-ai-fails-and-the-crashing-robot-cars/de/index.mdx

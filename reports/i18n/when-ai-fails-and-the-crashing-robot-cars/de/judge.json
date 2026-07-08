@@ -2,15 +2,28 @@
   "selectedCommit": "0d29bac3761e22b92828c7d48e44646d2bd985f9",
   "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
   "scores": {
-    "readability": 9,
-    "technicalAccuracy": 9,
-    "coherence": 10,
-    "relevance": 10,
-    "translationQuality": 9,
-    "mdxPreservation": 10
+    "readability": 95,
+    "technicalAccuracy": 95,
+    "coherence": 95,
+    "relevance": 100,
+    "translationQuality": 95,
+    "mdxPreservation": 100,
+    "culturalAdaptation": 90,
+    "languagePurity": 95
   },
   "suggestions": [],
-  "rationale": "The current translation is excellent and already incorporates the fixes suggested in the previous judge report (the title spacing and the H2 translation are already correct in the provided MDX). It maintains Dan's direct style, uses the correct terminology for the 'trolley problem', and preserves all MDX structures and frontmatter correctly. The prose is natural and technically accurate.",
+  "rationale": "The current translation already incorporates the fixes suggested in the previous judge report (the heading is translated and the title spacing is correct). It maintains the Dan-like direct tone, correctly handles MDX asset paths, and provides a natural German flow while preserving the technical context of the AI discussion.",
+  "confidence": "high",
+  "confidenceScore": 0.88,
+  "confidenceSignals": [
+    "no high/medium issues",
+    "single judge"
+  ],
+  "issueCounts": {
+    "high": 0,
+    "medium": 0,
+    "low": 0
+  },
   "slug": "when-ai-fails-and-the-crashing-robot-cars",
   "locale": "de",
   "candidateCommits": [
@@ -20,9 +33,9 @@
   "suggestionLog": [
     {
       "priority": "high",
-      "match": "WennKI versagt",
-      "replacement": "Wenn KI versagt",
-      "reason": "Missing space between 'Wenn' and 'KI' in the title.",
+      "match": "title: WennKI versagt",
+      "replacement": "title: Wenn KI versagt",
+      "reason": "Missing space between 'Wenn' and 'KI'.",
       "pass": 1,
       "applied": true,
       "note": "Applied exact replacement to selected MDX."
@@ -31,7 +44,7 @@
       "priority": "medium",
       "match": "## Robotic Cars: More or Less Crashes?",
       "replacement": "## Roboterautos: Mehr oder weniger Unfälle?",
-      "reason": "The heading was left in English.",
+      "reason": "The heading was left in English in the selected candidate.",
       "pass": 1,
       "applied": true,
       "note": "Applied exact replacement to selected MDX."
