@@ -1,8 +1,8 @@
 # Translation Judge
 
-- Selected candidate: 803b157880eab551ea3346ff40f8897ac9903366
-- Selected model: openrouter/qwen/qwen3-32b:nitro
+- Selected candidate: f52f2a4b676f394f554309e65984734be23e1e18
+- Selected model: openrouter/openai/gpt-oss-120b:nitro
 - Judge model: openrouter/google/gemini-3-flash-preview
-- Confidence: high (0.855)
+- Confidence: low (0.302)
 
-The current ja/index.mdx already contains the fixes suggested in the previous judge report (translated title/subTitle, relative internal link, and localized anchor). It is a high-quality translation that maintains MDX structure and Dan's direct style while ensuring all technical terms are handled correctly. No further high or medium priority fixes are required.
+Candidate f52f2a4b correctly localized the frontmatter (title/subtitle) which is essential for the Japanese audience. While it missed translating one critical warning block and introduced a slightly broken relative path for an internal link, these are easily corrected. The overall prose is natural and maintains the technical nuance of the original.
