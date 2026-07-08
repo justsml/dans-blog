@@ -3,6 +3,8 @@ import { DEFAULT_USER_AGENT } from "./config.ts";
 import { fingerprintFetch } from "./fingerprint-fetch.ts";
 import type { CapturedItem, SourceSpec } from "./types.ts";
 
+const RATE_LIMIT_STATUSES = new Set([403, 429, 503]);
+
 export async function fetchSource(source: SourceSpec, capturedAt = new Date().toISOString()) {
   if (!source.enabled) return [];
 
@@ -11,6 +13,12 @@ export async function fetchSource(source: SourceSpec, capturedAt = new Date().to
       return fetchRss(source, capturedAt);
     case "reddit":
       return fetchReddit(source, capturedAt);
+    case "hackernews":
+      return fetchHackerNews(source, capturedAt);
+    case "lobsters":
+      return fetchLobsters(source, capturedAt);
+    case "github-trending":
+      return fetchGithubTrending(source, capturedAt);
     case "manual-jsonl":
     case "x-api":
     case "linkedin-api":
@@ -163,6 +171,142 @@ async function fetchReddit(source: SourceSpec, capturedAt: string): Promise<Capt
   return (payload.data?.children ?? [])
     .map((child, index) => normalizeRedditPost(source, child.data, index, capturedAt))
     .filter((item): item is CapturedItem => item != null);
+}
+
+export type RedditPage = {
+  items: CapturedItem[];
+  nextCursor: string | null;
+  rateLimited: boolean;
+  httpStatus: number;
+};
+
+const REDDIT_FULLNAME_PATTERN = /^[t][0-9a-z]+_[a-z0-9]+$/i;
+
+export async function fetchRedditPage(
+  source: SourceSpec,
+  cursor: string | null,
+  itemsPerPage: number,
+  capturedAt: string,
+): Promise<RedditPage> {
+  if (!Number.isInteger(itemsPerPage) || itemsPerPage < 1 || itemsPerPage > 100) {
+    throw new Error(`Reddit itemsPerPage must be 1..100, got ${itemsPerPage}`);
+  }
+
+  const oauthAttempt = await fetchRedditWithOAuthPage(source, cursor, itemsPerPage, capturedAt);
+  if (oauthAttempt != null) return oauthAttempt;
+
+  const baseUrl = requireUrl(source);
+  const url = new URL(baseUrl);
+  url.searchParams.set("limit", String(itemsPerPage));
+  if (cursor && REDDIT_FULLNAME_PATTERN.test(cursor)) {
+    url.searchParams.set("after", cursor);
+  }
+  url.searchParams.delete("count");
+
+  const result = await fetchAsText({
+    url: url.toString(),
+    sourceKey: source.key,
+    accept: "application/json",
+    headers: source.headers,
+    impersonate: source.impersonate,
+    proxy: source.proxy,
+  });
+
+  if (result.status < 200 || result.status >= 300) {
+    return {
+      items: [],
+      nextCursor: cursor,
+      rateLimited: RATE_LIMIT_STATUSES.has(result.status),
+      httpStatus: result.status,
+    };
+  }
+
+  const payload = JSON.parse(result.body) as {
+    data?: {
+      children?: Array<{ data?: Record<string, unknown> }>;
+      after?: string | null;
+    };
+  };
+  const children = payload.data?.children ?? [];
+  const items = children
+    .map((child, index) => normalizeRedditPost(source, child.data, index, capturedAt))
+    .filter((item): item is CapturedItem => item != null);
+  const after = payload.data?.after ?? null;
+  return {
+    items,
+    nextCursor: after && REDDIT_FULLNAME_PATTERN.test(after) ? after : null,
+    rateLimited: false,
+    httpStatus: result.status,
+  };
+}
+
+async function fetchRedditWithOAuthPage(
+  source: SourceSpec,
+  cursor: string | null,
+  itemsPerPage: number,
+  capturedAt: string,
+): Promise<RedditPage | undefined> {
+  const clientId = process.env.REDDIT_CLIENT_ID;
+  const clientSecret = process.env.REDDIT_CLIENT_SECRET;
+  if (!clientId || !clientSecret) return undefined;
+
+  const listing = getRedditListingParts(source);
+  const tokenResponse = await fetch("https://www.reddit.com/api/v1/access_token", {
+    method: "POST",
+    headers: {
+      "Authorization": `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString("base64")}`,
+      "Content-Type": "application/x-www-form-urlencoded",
+      "User-Agent": DEFAULT_USER_AGENT,
+    },
+    body: new URLSearchParams({ grant_type: "client_credentials" }),
+  });
+  if (!tokenResponse.ok) {
+    return {
+      items: [],
+      nextCursor: cursor,
+      rateLimited: RATE_LIMIT_STATUSES.has(tokenResponse.status),
+      httpStatus: tokenResponse.status,
+    };
+  }
+  const tokenPayload = (await tokenResponse.json()) as { access_token?: string };
+  if (!tokenPayload.access_token) {
+    return { items: [], nextCursor: cursor, rateLimited: false, httpStatus: 0 };
+  }
+
+  const params = new URLSearchParams({ limit: String(itemsPerPage) });
+  if (cursor && REDDIT_FULLNAME_PATTERN.test(cursor)) params.set("after", cursor);
+  const apiUrl = `https://oauth.reddit.com/r/${listing.subreddit}/${listing.listing}?${params.toString()}`;
+  const response = await fetch(apiUrl, {
+    headers: {
+      "Authorization": `Bearer ${tokenPayload.access_token}`,
+      "User-Agent": DEFAULT_USER_AGENT,
+      "Accept": "application/json",
+    },
+  });
+  if (!response.ok) {
+    return {
+      items: [],
+      nextCursor: cursor,
+      rateLimited: RATE_LIMIT_STATUSES.has(response.status),
+      httpStatus: response.status,
+    };
+  }
+  const payload = (await response.json()) as {
+    data?: {
+      children?: Array<{ data?: Record<string, unknown> }>;
+      after?: string | null;
+    };
+  };
+  const items = (payload.data?.children ?? [])
+    .map((child, index) => normalizeRedditPost(source, child.data, index, capturedAt))
+    .filter((item): item is CapturedItem => item != null);
+  const after = payload.data?.after ?? null;
+  return {
+    items,
+    nextCursor: after && REDDIT_FULLNAME_PATTERN.test(after) ? after : null,
+    rateLimited: false,
+    httpStatus: response.status,
+  };
 }
 
 async function fetchRedditWithOAuth(source: SourceSpec, capturedAt: string): Promise<CapturedItem[] | undefined> {
@@ -320,6 +464,216 @@ export function getRedditListingParts(source: SourceSpec) {
     subreddit: match[1],
     listing: match[2],
   };
+}
+
+type HnAlgoliaHit = {
+  objectID: string;
+  title?: string;
+  story_title?: string;
+  url?: string;
+  story_url?: string;
+  author?: string;
+  points?: number;
+  num_comments?: number;
+  created_at_i?: number;
+  _tags?: string[];
+};
+
+async function fetchHackerNews(source: SourceSpec, capturedAt: string): Promise<CapturedItem[]> {
+  const url = requireUrl(source);
+  const result = await fetchAsText({
+    url,
+    sourceKey: source.key,
+    accept: "application/json",
+    headers: source.headers,
+    impersonate: source.impersonate,
+    proxy: source.proxy,
+  });
+  if (result.status < 200 || result.status >= 300) {
+    throw new Error(`${source.key} (HackerNews) returned HTTP ${result.status}`);
+  }
+  const payload = JSON.parse(result.body) as { hits?: HnAlgoliaHit[] };
+  const items: CapturedItem[] = [];
+  let index = 0;
+  for (const hit of payload.hits ?? []) {
+    if (!hit) continue;
+    const title = (hit.title ?? hit.story_title ?? "").trim();
+    const link = (hit.url ?? hit.story_url ?? `https://news.ycombinator.com/item?id=${hit.objectID}`).trim();
+    if (!title || !link) continue;
+    items.push({
+      sourceKey: source.key,
+      sourceType: source.type,
+      sourceName: source.name,
+      externalId: String(hit.objectID),
+      canonicalUrl: link,
+      title,
+      summary: undefined,
+      author: hit.author,
+      publishedAt: typeof hit.created_at_i === "number" ? new Date(hit.created_at_i * 1000).toISOString() : undefined,
+      capturedAt,
+      metrics: {
+        score: typeof hit.points === "number" ? hit.points : undefined,
+        upvotes: typeof hit.points === "number" ? hit.points : undefined,
+        comments: typeof hit.num_comments === "number" ? hit.num_comments : undefined,
+        rank: index + 1,
+      },
+      raw: {
+        objectID: hit.objectID,
+        title,
+        url: link,
+        author: hit.author,
+        points: hit.points,
+        num_comments: hit.num_comments,
+        created_at: typeof hit.created_at_i === "number" ? new Date(hit.created_at_i * 1000).toISOString() : null,
+        tags: hit._tags,
+      },
+    });
+    index += 1;
+  }
+  return items;
+}
+
+type LobstersPost = {
+  short_id: string;
+  title: string;
+  url?: string;
+  comments_url: string;
+  score: number;
+  comment_count: number;
+  created_at: string;
+  submitter_user?: { username: string };
+  tags?: string[];
+  description?: string;
+};
+
+async function fetchLobsters(source: SourceSpec, capturedAt: string): Promise<CapturedItem[]> {
+  const url = requireUrl(source);
+  const result = await fetchAsText({
+    url,
+    sourceKey: source.key,
+    accept: "application/json",
+    headers: source.headers,
+    impersonate: source.impersonate,
+    proxy: source.proxy,
+  });
+  if (result.status < 200 || result.status >= 300) {
+    throw new Error(`${source.key} (Lobsters) returned HTTP ${result.status}`);
+  }
+  const payload = JSON.parse(result.body) as LobstersPost[];
+  if (!Array.isArray(payload)) {
+    throw new Error(`${source.key} (Lobsters) did not return an array`);
+  }
+  return payload.map((post, index) => ({
+    sourceKey: source.key,
+    sourceType: source.type,
+    sourceName: source.name,
+    externalId: post.short_id,
+    canonicalUrl: post.url ?? post.comments_url,
+    title: post.title,
+    summary: post.description ? cleanText(post.description) : undefined,
+    author: post.submitter_user?.username,
+    publishedAt: post.created_at,
+    capturedAt,
+    metrics: {
+      score: post.score,
+      comments: post.comment_count,
+      rank: index + 1,
+    },
+    raw: post,
+  }));
+}
+
+type GithubTrendingEntry = {
+  rank: number;
+  repo: string;
+  url: string;
+  description: string;
+  language: string | null;
+  totalStars: number;
+  starsToday: number;
+  forks: number;
+};
+
+async function fetchGithubTrending(source: SourceSpec, capturedAt: string): Promise<CapturedItem[]> {
+  const url = requireUrl(source);
+  const result = await fetchAsText({
+    url,
+    sourceKey: source.key,
+    accept: "text/html, application/xhtml+xml",
+    headers: source.headers,
+    impersonate: source.impersonate,
+    proxy: source.proxy,
+  });
+  if (result.status < 200 || result.status >= 300) {
+    throw new Error(`${source.key} (GitHub Trending) returned HTTP ${result.status}`);
+  }
+  const entries = parseGithubTrendingHtml(result.body, result.finalUrl);
+  return entries.map((entry) => ({
+    sourceKey: source.key,
+    sourceType: source.type,
+    sourceName: source.name,
+    externalId: entry.repo,
+    canonicalUrl: entry.url,
+    title: entry.repo,
+    summary: entry.description,
+    publishedAt: undefined,
+    capturedAt,
+    metrics: {
+      rank: entry.rank,
+      score: entry.starsToday,
+      upvotes: entry.starsToday,
+      views: entry.totalStars,
+    },
+    raw: {
+      ...entry,
+      language: entry.language,
+    },
+  }));
+}
+
+function parseGithubTrendingHtml(html: string, baseUrl: string): GithubTrendingEntry[] {
+  const $ = cheerio.load(html);
+  const entries: GithubTrendingEntry[] = [];
+  const base = new URL(baseUrl);
+
+  $("article.Box-row").each((index, element) => {
+    const row = $(element);
+    const repoAnchor = row.find("h2 a").first();
+    const repoPath = repoAnchor.attr("href")?.trim().replace(/^\/+/, "");
+    if (!repoPath) return;
+    const description = cleanText(row.find("p.col-9").first().text());
+    const language = cleanText(row.find("span[itemprop='programmingLanguage']").first().text()) || null;
+    const totalStars = parseCompactNumber(row.find("a[href$='/stargazers']").first().text());
+    const forks = parseCompactNumber(row.find("a[href$='/forks']").first().text());
+    const starsTodayMatch = row.find("span.d-inline-block.float-sm-right").first().text().match(/([\d,]+)\s+stars today/i);
+    const starsToday = starsTodayMatch ? parseInt(starsTodayMatch[1].replace(/,/g, ""), 10) : 0;
+    const url = new URL(repoPath, base).toString();
+    entries.push({
+      rank: index + 1,
+      repo: repoPath,
+      url,
+      description,
+      language,
+      totalStars: Number.isFinite(totalStars) ? totalStars : 0,
+      starsToday: Number.isFinite(starsToday) ? starsToday : 0,
+      forks: Number.isFinite(forks) ? forks : 0,
+    });
+  });
+
+  return entries;
+}
+
+function parseCompactNumber(text: string | undefined): number {
+  if (!text) return 0;
+  const trimmed = text.trim();
+  if (!trimmed) return 0;
+  const match = /^([\d,.]+)\s*([kKmMbB]?)/.exec(trimmed);
+  if (!match) return 0;
+  const base = parseFloat(match[1].replace(/,/g, ""));
+  if (!Number.isFinite(base)) return 0;
+  const suffix = match[2].toLowerCase();
+  const multiplier = suffix === "k" ? 1_000 : suffix === "m" ? 1_000_000 : suffix === "b" ? 1_000_000_000 : 1;
+  return Math.round(base * multiplier);
 }
 
 function requireUrl(source: SourceSpec) {

@@ -23,8 +23,31 @@ function googleNewsSearchUrl(query: string) {
 }
 
 function redditListingUrl(subreddit: string, listing: "hot" | "rising" | "top" = "hot") {
-  return `https://www.reddit.com/r/${subreddit}/${listing}.json?limit=50`;
+  return `https://www.reddit.com/r/${subreddit}/${listing}.json?limit=100`;
 }
+
+function hnAlgoliaSearchUrl(query: string, pointsFloor = 15, hitsPerPage = 50) {
+  const params = new URLSearchParams({
+    query,
+    tags: "story",
+    numericFilters: `points>${pointsFloor}`,
+    hitsPerPage: String(hitsPerPage),
+  });
+  return `https://hn.algolia.com/api/v1/search?${params.toString()}`;
+}
+
+function hnAlgoliaDateUrl(query: string, daysBack = 7, hitsPerPage = 50) {
+  const sinceSeconds = Math.floor(Date.now() / 1000) - daysBack * 24 * 60 * 60;
+  const params = new URLSearchParams({
+    query,
+    tags: "story",
+    numericFilters: `created_at_i>${sinceSeconds}`,
+    hitsPerPage: String(hitsPerPage),
+  });
+  return `https://hn.algolia.com/api/v1/search_by_date?${params.toString()}`;
+}
+
+const REDDIT_PAGINATION = { enabled: true, itemsPerPage: 100, maxItems: 1000 } as const;
 
 export const NEWS_WATCH_DB_PATH =
   process.env.NEWS_WATCH_DB ?? join(process.cwd(), "data/news-watch/news-watch.sqlite");
@@ -68,6 +91,7 @@ export const DEFAULT_SOURCES: SourceSpec[] = [
     rapidIntervalSeconds: 60,
     impersonate: "chrome146",
     auditLabel: "anon-browser-impersonation",
+    pagination: REDDIT_PAGINATION,
   },
   {
     key: "reddit-machine-learning",
@@ -79,6 +103,7 @@ export const DEFAULT_SOURCES: SourceSpec[] = [
     rapidIntervalSeconds: 2 * 60,
     impersonate: "chrome146",
     auditLabel: "anon-browser-impersonation",
+    pagination: REDDIT_PAGINATION,
   },
   {
     key: "reddit-openai",
@@ -90,6 +115,7 @@ export const DEFAULT_SOURCES: SourceSpec[] = [
     rapidIntervalSeconds: 60,
     impersonate: "chrome146",
     auditLabel: "anon-browser-impersonation",
+    pagination: REDDIT_PAGINATION,
   },
   {
     key: "reddit-artificial",
@@ -101,6 +127,115 @@ export const DEFAULT_SOURCES: SourceSpec[] = [
     rapidIntervalSeconds: 2 * 60,
     impersonate: "chrome146",
     auditLabel: "anon-browser-impersonation",
+    pagination: REDDIT_PAGINATION,
+  },
+  {
+    key: "reddit-anthropic",
+    type: "reddit",
+    name: "Reddit r/Anthropic hot",
+    url: redditListingUrl("Anthropic"),
+    enabled: true,
+    pollIntervalSeconds: 10 * 60,
+    rapidIntervalSeconds: 60,
+    impersonate: "chrome146",
+    auditLabel: "anon-browser-impersonation",
+    pagination: REDDIT_PAGINATION,
+  },
+  {
+    key: "reddit-claudeai",
+    type: "reddit",
+    name: "Reddit r/ClaudeAI hot",
+    url: redditListingUrl("ClaudeAI"),
+    enabled: true,
+    pollIntervalSeconds: 10 * 60,
+    rapidIntervalSeconds: 60,
+    impersonate: "chrome146",
+    auditLabel: "anon-browser-impersonation",
+    pagination: REDDIT_PAGINATION,
+  },
+  {
+    key: "reddit-machinelearningnews",
+    type: "reddit",
+    name: "Reddit r/singularity hot",
+    url: redditListingUrl("singularity"),
+    enabled: true,
+    pollIntervalSeconds: 15 * 60,
+    rapidIntervalSeconds: 2 * 60,
+    impersonate: "chrome146",
+    auditLabel: "anon-browser-impersonation",
+    pagination: REDDIT_PAGINATION,
+  },
+  {
+    key: "hn-ai-agents",
+    type: "hackernews",
+    name: "Hacker News: AI agent stories",
+    url: hnAlgoliaSearchUrl("AI agent", 20, 50),
+    enabled: true,
+    pollIntervalSeconds: 30 * 60,
+    rapidIntervalSeconds: 5 * 60,
+  },
+  {
+    key: "hn-mcp",
+    type: "hackernews",
+    name: "Hacker News: Model Context Protocol",
+    url: hnAlgoliaSearchUrl("MCP OR \"model context protocol\"", 10, 50),
+    enabled: true,
+    pollIntervalSeconds: 30 * 60,
+    rapidIntervalSeconds: 5 * 60,
+  },
+  {
+    key: "hn-llm-providers",
+    type: "hackernews",
+    name: "Hacker News: Claude/Anthropic/OpenAI",
+    url: hnAlgoliaSearchUrl("Claude OR Anthropic OR Mistral OR DeepSeek", 25, 50),
+    enabled: true,
+    pollIntervalSeconds: 30 * 60,
+    rapidIntervalSeconds: 5 * 60,
+  },
+  {
+    key: "hn-llm-recent",
+    type: "hackernews",
+    name: "Hacker News: LLM stories (last 7 days)",
+    url: hnAlgoliaDateUrl("LLM OR GPT OR Claude OR inference", 7, 50),
+    enabled: true,
+    pollIntervalSeconds: 30 * 60,
+    rapidIntervalSeconds: 5 * 60,
+  },
+  {
+    key: "lobsters-hottest",
+    type: "lobsters",
+    name: "Lobsters: hottest",
+    url: "https://lobste.rs/hottest.json",
+    enabled: true,
+    pollIntervalSeconds: 20 * 60,
+    rapidIntervalSeconds: 5 * 60,
+  },
+  {
+    key: "github-trending-daily",
+    type: "github-trending",
+    name: "GitHub Trending: daily (all languages)",
+    url: "https://github.com/trending?since=daily",
+    enabled: true,
+    pollIntervalSeconds: 60 * 60,
+    rapidIntervalSeconds: 10 * 60,
+  },
+  {
+    key: "github-trending-python-weekly",
+    type: "github-trending",
+    name: "GitHub Trending: Python weekly",
+    url: "https://github.com/trending/python?since=weekly",
+    enabled: true,
+    pollIntervalSeconds: 60 * 60,
+    rapidIntervalSeconds: 10 * 60,
+  },
+  {
+    key: "github-trending-typescript-weekly",
+    type: "github-trending",
+    name: "GitHub Trending: TypeScript weekly",
+    url: "https://github.com/trending/typescript?since=weekly",
+    enabled: true,
+    pollIntervalSeconds: 60 * 60,
+    rapidIntervalSeconds: 10 * 60,
   },
   {
     key: "x-api-placeholder",
