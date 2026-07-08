@@ -1,5 +1,6 @@
 import { NEWS_WATCH_DB_PATH } from "./config.ts";
 import { openNewsWatchDb } from "./db.ts";
+import { fmtTime, pct, printTable, truncate } from "./format.ts";
 import type { EntityType } from "./types.ts";
 
 type CliArgs = {
@@ -44,11 +45,18 @@ function renderEntities(db: ReturnType<typeof openNewsWatchDb>, args: CliArgs) {
     console.log(JSON.stringify(rows, null, 2));
     return;
   }
-  console.log(`Top ${rows.length} ${type} entities:`);
-  for (const row of rows) {
-    const aliases = row.aliases.length > 0 ? ` (${row.aliases.slice(0, 3).join(", ")})` : "";
-    console.log(`  ${row.mentionCount.toString().padStart(5)}  ${row.name}${aliases}`);
+  if (rows.length === 0) {
+    console.log(`No ${type} entities found.`);
+    return;
   }
+  console.log(`## Top ${rows.length} ${type} entities`);
+  const tableRows: string[][] = rows.map((r) => [
+    String(r.mentionCount),
+    truncate(r.name, 40),
+    r.aliases.slice(0, 3).join(", "),
+    fmtTime(r.lastSeenAt),
+  ]);
+  console.log(printTable(["MENTIONS", "NAME", "ALIASES", "LAST_SEEN"], tableRows).join("\n"));
 }
 
 function renderCooccurrences(db: ReturnType<typeof openNewsWatchDb>, args: CliArgs) {
@@ -57,10 +65,19 @@ function renderCooccurrences(db: ReturnType<typeof openNewsWatchDb>, args: CliAr
     console.log(JSON.stringify(rows, null, 2));
     return;
   }
-  console.log(`Top ${rows.length} entity co-occurrences${args.since ? ` (since ${args.since})` : ""}:`);
-  for (const row of rows) {
-    console.log(`  ${row.count.toString().padStart(5)}  ${row.entityAId}  ↔  ${row.entityBId}`);
+  if (rows.length === 0) {
+    console.log("No co-occurrences found.");
+    return;
   }
+  console.log(`## Top ${rows.length} entity co-occurrences${args.since ? ` (since ${args.since})` : ""}`);
+  const tableRows: string[][] = rows.map((r) => [
+    String(r.count),
+    truncate(r.entityAId, 36),
+    "↔",
+    truncate(r.entityBId, 36),
+    fmtTime(r.lastSeenAt),
+  ]);
+  console.log(printTable(["COUNT", "ENTITY_A", "", "ENTITY_B", "LAST_SEEN"], tableRows).join("\n"));
 }
 
 function renderCategories(db: ReturnType<typeof openNewsWatchDb>, args: CliArgs) {
@@ -77,11 +94,17 @@ function renderCategories(db: ReturnType<typeof openNewsWatchDb>, args: CliArgs)
     console.log(JSON.stringify(rows, null, 2));
     return;
   }
-  console.log(`Top ${rows.length} categories:`);
-  for (const row of rows) {
-    const score = row.avg_score != null ? row.avg_score.toFixed(2) : "-";
-    console.log(`  ${row.item_count.toString().padStart(5)} items  ${score} avg  ${row.category}`);
+  if (rows.length === 0) {
+    console.log("No categories found.");
+    return;
   }
+  console.log(`## Top ${rows.length} categories`);
+  const tableRows: string[][] = rows.map((r) => [
+    String(r.item_count),
+    r.avg_score != null ? r.avg_score.toFixed(2) : "-",
+    r.category,
+  ]);
+  console.log(printTable(["ITEMS", "AVG_SCORE", "CATEGORY"], tableRows).join("\n"));
 }
 
 function renderAuthors(db: ReturnType<typeof openNewsWatchDb>, args: CliArgs) {
@@ -97,10 +120,18 @@ function renderAuthors(db: ReturnType<typeof openNewsWatchDb>, args: CliArgs) {
     console.log(JSON.stringify(rows, null, 2));
     return;
   }
-  console.log(`Top ${rows.length} authors:`);
-  for (const row of rows) {
-    console.log(`  ${row.item_count.toString().padStart(5)}  ${row.source_key.padEnd(20)}  ${row.display_name}`);
+  if (rows.length === 0) {
+    console.log("No authors found.");
+    return;
   }
+  console.log(`## Top ${rows.length} authors`);
+  const tableRows: string[][] = rows.map((r) => [
+    String(r.item_count),
+    truncate(r.source_key, 22),
+    truncate(r.display_name, 40),
+    fmtTime(r.last_seen_at),
+  ]);
+  console.log(printTable(["ITEMS", "SOURCE", "NAME", "LAST_SEEN"], tableRows).join("\n"));
 }
 
 function renderItem(db: ReturnType<typeof openNewsWatchDb>, args: CliArgs) {
@@ -142,18 +173,27 @@ function renderStats(db: ReturnType<typeof openNewsWatchDb>, _args: CliArgs) {
   const authors = (db.db.prepare("SELECT COUNT(*) AS n FROM news_authors").get() as { n: number }).n;
   const cooccurrences = (db.db.prepare("SELECT COUNT(*) AS n FROM news_entity_cooccurrences").get() as { n: number }).n;
   const categories = (db.db.prepare("SELECT COUNT(DISTINCT category) AS n FROM news_item_categories").get() as { n: number }).n;
-  console.log(`News graph stats:`);
-  console.log(`  items:             ${items.toLocaleString()}`);
-  console.log(`  items w/ extraction: ${extracted.toLocaleString()} (${pct(extracted, items)})`);
-  console.log(`  entities:          ${entities.toLocaleString()}`);
-  console.log(`  authors:           ${authors.toLocaleString()}`);
-  console.log(`  co-occurrence edges: ${cooccurrences.toLocaleString()}`);
-  console.log(`  distinct categories: ${categories.toLocaleString()}`);
-}
+  const signals = (db.db.prepare("SELECT COUNT(*) AS n FROM news_trend_signals").get() as { n: number }).n;
+  const metrics = (db.db.prepare("SELECT COUNT(*) AS n FROM news_item_metrics").get() as { n: number }).n;
+  const sources = (db.db.prepare("SELECT COUNT(*) AS n FROM news_sources").get() as { n: number }).n;
+  const enabledSources = (db.db.prepare("SELECT COUNT(*) AS n FROM news_sources WHERE enabled = 1").get() as { n: number }).n;
 
-function pct(part: number, total: number): string {
-  if (total === 0) return "0%";
-  return `${((part / total) * 100).toFixed(1)}%`;
+  console.log("=== News Graph Stats ===");
+  const rows: Array<[string, string]> = [
+    ["sources", `${sources.toLocaleString()} (${enabledSources.toLocaleString()} enabled)`],
+    ["items", items.toLocaleString()],
+    ["items w/ extraction", `${extracted.toLocaleString()} (${pct(extracted, items)})`],
+    ["signals", signals.toLocaleString()],
+    ["metrics observations", metrics.toLocaleString()],
+    ["entities", entities.toLocaleString()],
+    ["authors", authors.toLocaleString()],
+    ["co-occurrence edges", cooccurrences.toLocaleString()],
+    ["distinct categories", categories.toLocaleString()],
+  ];
+  const labelWidth = Math.max(...rows.map((r) => r[0].length));
+  for (const [label, value] of rows) {
+    console.log(`  ${label.padEnd(labelWidth)}  ${value}`);
+  }
 }
 
 function parseArgs(argv: string[]): CliArgs {

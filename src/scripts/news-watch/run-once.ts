@@ -1,6 +1,7 @@
 import { NEWS_WATCH_DB_PATH, NEWS_WATCH_ITEM_DIR, getSources } from "./config.ts";
 import { openNewsWatchDb, type UnextractedItemRow } from "./db.ts";
 import { extractEntitiesForPendingItems, isExtractionConfigured } from "./extract.ts";
+import { fmtDuration, printTable, truncate } from "./format.ts";
 import { writeItemMarkdown } from "./markdown.ts";
 import { scoreRelevance } from "./relevance.ts";
 import { fetchRedditPage, fetchSource } from "./sources.ts";
@@ -234,42 +235,66 @@ function makeAuthorId(sourceKey: string, author: string) {
 }
 
 function renderRunSummary(summary: RunSummary) {
-  const lines = [
-    `Checked ${summary.checkedSources} source(s), skipped ${summary.skippedSources}, captured ${summary.capturedItems} item(s).`,
-  ];
+  const out: string[] = [];
+  out.push("=== News Watch Run ===");
+  out.push(`Captured ${summary.capturedItems} item(s) from ${summary.checkedSources} source(s), skipped ${summary.skippedSources}.`);
+  out.push("");
 
   if (summary.pagination.length > 0) {
-    lines.push(`Pagination:`);
-    for (const p of summary.pagination) {
-      const rateFlag = p.rateLimited ? " (rate-limited, backing off)" : "";
-      lines.push(`- ${p.source}: ${p.pages} page(s), ${p.items} items, cursor=${p.cursor ?? "null"}${rateFlag}`);
-    }
+    out.push("## Pagination");
+    const rows: string[][] = summary.pagination.map((p) => [
+      p.source,
+      String(p.pages),
+      String(p.items),
+      p.cursor ?? "null",
+      p.rateLimited ? "yes" : "no",
+    ]);
+    out.push(...printTable(["SOURCE", "PAGES", "ITEMS", "CURSOR", "RATE_LIMITED"], rows));
+    out.push("");
   }
 
   if (summary.extraction) {
     const e = summary.extraction;
-    lines.push(
-      `Extraction: ${e.processed} items → ${e.entitiesCreated} entities, ${e.mentionsCreated} mentions, ${e.categoriesAssigned} categories, ${e.cooccurrencesBumped} co-occurrence edges (${e.durationMs}ms, ${e.errors} error${e.errors === 1 ? "" : "s"})`,
-    );
+    out.push("## Extraction");
+    out.push(`  model run in ${fmtDuration(e.durationMs)} (${e.errors} error${e.errors === 1 ? "" : "s"})`);
+    const rows: string[][] = [
+      ["processed", String(e.processed)],
+      ["entities created", String(e.entitiesCreated)],
+      ["mentions created", String(e.mentionsCreated)],
+      ["categories assigned", String(e.categoriesAssigned)],
+      ["co-occurrence edges", String(e.cooccurrencesBumped)],
+    ];
+    const labelWidth = Math.max(...rows.map((r) => r[0].length));
+    for (const [label, value] of rows) {
+      out.push(`  ${label.padEnd(labelWidth)}  ${value}`);
+    }
+    out.push("");
   }
 
+  out.push(`## Signals (${summary.signals.length})`);
   if (summary.signals.length > 0) {
-    lines.push(`Signals: ${summary.signals.length}`);
-    for (const signal of summary.signals.slice(0, 10)) {
-      lines.push(`- ${signal.signalScore.toFixed(2)} ${signal.signalType}: ${signal.reason}`);
-    }
+    const rows: string[][] = summary.signals.slice(0, 10).map((s) => [
+      s.signalScore.toFixed(2),
+      s.signalType,
+      truncate(s.reason, 80),
+    ]);
+    out.push(...printTable(["SCORE", "TYPE", "REASON"], rows));
   } else {
-    lines.push("Signals: 0");
+    out.push("(none)");
   }
+  out.push("");
 
   if (summary.failures.length > 0) {
-    lines.push(`Failures: ${summary.failures.length}`);
-    for (const failure of summary.failures) {
-      lines.push(`- ${failure.source}: ${failure.error}`);
-    }
+    out.push(`## Failures (${summary.failures.length})`);
+    const rows: string[][] = summary.failures.map((f) => [
+      f.source,
+      truncate(f.error, 80),
+    ]);
+    out.push(...printTable(["SOURCE", "ERROR"], rows));
+    out.push("");
   }
 
-  return lines.join("\n");
+  return out.join("\n");
 }
 
 function parseArgs(argv = process.argv.slice(2)): RunOptions {

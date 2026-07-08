@@ -1,16 +1,23 @@
 import "dotenv/config";
 import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 import { generateText } from "../i18n/braintrust.ts";
+import { NEWS_WATCH_DB_PATH } from "./config.ts";
+import { runWithConcurrency } from "./concurrency.ts";
 import type { NewsWatchDb, UnextractedItemRow } from "./db.ts";
+import { openNewsWatchDb } from "./db.ts";
+import { fmtDuration, printTable, truncate } from "./format.ts";
 import type { Entity, EntityMention, EntityType, ItemExtraction } from "./types.ts";
 
-const EXTRACTION_MODEL = process.env.NEWS_WATCH_EXTRACTION_MODEL ?? "qwen/qwen3-32b";
+// Default to DeepSeek V4 Flash (fast + cheap for bulk entity extraction).
+// Swap to GPT-OSS 120B via NEWS_WATCH_EXTRACTION_MODEL=openai/gpt-oss-120b for higher-quality runs.
+const EXTRACTION_MODEL = process.env.NEWS_WATCH_EXTRACTION_MODEL ?? "deepseek/deepseek-v4-flash:nitro";
 const EXTRACTION_MIN_RELEVANCE = Number.parseFloat(process.env.NEWS_WATCH_EXTRACTION_MIN_RELEVANCE ?? "0.2");
 const EXTRACTION_BATCH_SIZE = Number.parseInt(process.env.NEWS_WATCH_EXTRACTION_BATCH_SIZE ?? "20", 10);
 const EXTRACTION_MAX_BATCHES = Number.parseInt(process.env.NEWS_WATCH_EXTRACTION_MAX_BATCHES ?? "25", 10);
 const EXTRACTION_TEMPERATURE = Number.parseFloat(process.env.NEWS_WATCH_EXTRACTION_TEMPERATURE ?? "0.0");
 const EXTRACTION_MAX_TOKENS = Number.parseInt(process.env.NEWS_WATCH_EXTRACTION_MAX_TOKENS ?? "1200", 10);
 const EXTRACTION_TIMEOUT_MS = Number.parseInt(process.env.NEWS_WATCH_EXTRACTION_TIMEOUT_MS ?? "45000", 10);
+const EXTRACTION_CONCURRENCY = Math.max(1, Number.parseInt(process.env.NEWS_WATCH_CONCURRENCY ?? "4", 10));
 
 const SYSTEM_PROMPT = [
   "You are an entity extractor for a tech/AI news index.",
@@ -45,6 +52,17 @@ const ALLOWED_CATEGORIES = new Set([
   "funding",
 ]);
 
+export type ExtractionBatchResult = {
+  batch: number;
+  items: number;
+  entities: number;
+  mentions: number;
+  categories: number;
+  cooccurrences: number;
+  failed: boolean;
+  error?: string;
+};
+
 export type ExtractionStats = {
   processed: number;
   entitiesCreated: number;
@@ -54,6 +72,7 @@ export type ExtractionStats = {
   model: string;
   durationMs: number;
   errors: Array<{ itemId: string; error: string }>;
+  batches: ExtractionBatchResult[];
 };
 
 export type ExtractionOptions = {
@@ -115,6 +134,7 @@ export async function extractEntitiesForPendingItems(
       model: EXTRACTION_MODEL,
       durationMs: 0,
       errors: [{ itemId: "-", error: "OPENROUTER_API_KEY not set" }],
+      batches: [],
     };
   }
 
@@ -127,35 +147,63 @@ export async function extractEntitiesForPendingItems(
     model: EXTRACTION_MODEL,
     durationMs: 0,
     errors: [],
+    batches: [],
   };
   const now = options.now ?? new Date();
+  const totalTarget = batchSize * maxBatches;
 
-  for (let batch = 0; batch < maxBatches; batch += 1) {
-    const pending = includeAll
-      ? db.listAllItemsWithoutExtraction(batchSize)
-      : db.listItemsWithoutExtraction(batchSize);
-    if (pending.length === 0) break;
-    const usable = pending.filter((row) => row.relevance_score >= minRelevance);
-    if (usable.length === 0) break;
+  // Bulk-fetch pending items upfront so concurrent workers extract disjoint sets
+  // (avoids double-incrementing entity mention_count from overlapping reads).
+  const pool = includeAll
+    ? db.listAllItemsWithoutExtraction(totalTarget)
+    : db.listItemsWithoutExtraction(totalTarget);
+  const usablePool = pool.filter((row) => row.relevance_score >= minRelevance);
+  const chunks: UnextractedItemRow[][] = [];
+  for (let i = 0; i < usablePool.length; i += batchSize) {
+    chunks.push(usablePool.slice(i, i + batchSize));
+  }
+
+  const tasks = chunks.map((chunk, batchIndex) => async () => {
     try {
-      const result = await runExtractionBatch(usable);
-      const persisted = persistBatchResults(db, usable, result, now.toISOString(), stats);
-      stats.processed += usable.length;
+      const result = await runExtractionBatch(chunk);
+      const persisted = persistBatchResults(db, chunk, result, now.toISOString(), stats);
+      stats.processed += chunk.length;
       stats.entitiesCreated += persisted.entities;
       stats.mentionsCreated += persisted.mentions;
       stats.categoriesAssigned += persisted.categories;
       stats.cooccurrencesBumped += persisted.cooccurrences;
+      stats.batches.push({
+        batch: batchIndex + 1,
+        items: chunk.length,
+        entities: persisted.entities,
+        mentions: persisted.mentions,
+        categories: persisted.categories,
+        cooccurrences: persisted.cooccurrences,
+        failed: false,
+      });
       if (options.verbose) {
-        console.log(`extraction batch ${batch + 1}: ${usable.length} items, ${persisted.entities} entities, ${persisted.mentions} mentions`);
+        console.log(`extraction batch ${batchIndex + 1}: ${chunk.length} items, ${persisted.entities} entities, ${persisted.mentions} mentions`);
       }
     } catch (err) {
       const message = err instanceof Error ? err.message : String(err);
-      for (const row of usable) stats.errors.push({ itemId: row.item_id, error: message });
+      for (const row of chunk) stats.errors.push({ itemId: row.item_id, error: message });
+      stats.batches.push({
+        batch: batchIndex + 1,
+        items: chunk.length,
+        entities: 0,
+        mentions: 0,
+        categories: 0,
+        cooccurrences: 0,
+        failed: true,
+        error: message,
+      });
       if (options.verbose) {
-        console.log(`extraction batch ${batch + 1} failed: ${message}`);
+        console.log(`extraction batch ${batchIndex + 1} failed: ${message}`);
       }
     }
-  }
+  });
+
+  await runWithConcurrency(tasks, EXTRACTION_CONCURRENCY);
 
   stats.durationMs = Date.now() - startedAt;
   return stats;
@@ -338,4 +386,140 @@ function clamp01(value: number): number {
 
 function pairCount(n: number): number {
   return (n * (n - 1)) / 2;
+}
+
+type CliArgs = {
+  all: boolean;
+  minRelevance?: number;
+  batchSize?: number;
+  maxBatches?: number;
+  quiet: boolean;
+  json: boolean;
+};
+
+function parseCliArgs(argv: string[]): CliArgs {
+  const args: CliArgs = { all: false, quiet: false, json: false };
+  for (let i = 0; i < argv.length; i += 1) {
+    const arg = argv[i];
+    if (arg === "--all") args.all = true;
+    else if (arg === "--quiet") args.quiet = true;
+    else if (arg === "--json") args.json = true;
+    else if (arg === "--min-relevance") {
+      const v = argv[i + 1];
+      if (v == null) throw new Error("Missing value for --min-relevance");
+      args.minRelevance = Number.parseFloat(v);
+      i += 1;
+    } else if (arg === "--batch-size") {
+      const v = argv[i + 1];
+      if (v == null) throw new Error("Missing value for --batch-size");
+      args.batchSize = Number.parseInt(v, 10);
+      i += 1;
+    } else if (arg === "--max-batches") {
+      const v = argv[i + 1];
+      if (v == null) throw new Error("Missing value for --max-batches");
+      args.maxBatches = Number.parseInt(v, 10);
+      i += 1;
+    }
+  }
+  return args;
+}
+
+function renderExtractionSummary(stats: ExtractionStats): string {
+  const out: string[] = [];
+  out.push("=== News Watch Extraction ===");
+  out.push(`Model: ${stats.model}`);
+  out.push(`Concurrency: ${EXTRACTION_CONCURRENCY}`);
+  out.push(`Duration: ${fmtDuration(stats.durationMs)}`);
+  out.push("");
+
+  out.push("## Summary");
+  const rows: Array<[string, string]> = [
+    ["processed", stats.processed.toLocaleString()],
+    ["entities created", stats.entitiesCreated.toLocaleString()],
+    ["mentions created", stats.mentionsCreated.toLocaleString()],
+    ["categories assigned", stats.categoriesAssigned.toLocaleString()],
+    ["co-occurrence edges", stats.cooccurrencesBumped.toLocaleString()],
+    ["batches run", String(stats.batches.length)],
+    ["batches failed", String(stats.batches.filter((b) => b.failed).length)],
+    ["item errors", String(stats.errors.length)],
+  ];
+  const labelWidth = Math.max(...rows.map((r) => r[0].length));
+  for (const [label, value] of rows) {
+    out.push(`  ${label.padEnd(labelWidth)}  ${value}`);
+  }
+  out.push("");
+
+  if (stats.batches.length > 0) {
+    out.push("## Batches");
+    const tableRows: string[][] = stats.batches.map((b) => [
+      String(b.batch),
+      String(b.items),
+      String(b.entities),
+      String(b.mentions),
+      String(b.categories),
+      String(b.cooccurrences),
+      b.failed ? "FAIL" : "ok",
+      b.failed ? truncate(b.error ?? "", 40) : "",
+    ]);
+    out.push(...printTable(["BATCH", "ITEMS", "ENTITIES", "MENTIONS", "CATS", "COOCUR", "STATUS", "ERROR"], tableRows));
+    out.push("");
+  }
+
+  if (stats.errors.length > 0) {
+    out.push(`## Errors (${stats.errors.length})`);
+    const errorRows: string[][] = stats.errors.slice(0, 20).map((e) => [
+      truncate(e.itemId, 36),
+      truncate(e.error, 70),
+    ]);
+    out.push(...printTable(["ITEM_ID", "ERROR"], errorRows));
+    if (stats.errors.length > 20) {
+      out.push(`... and ${stats.errors.length - 20} more`);
+    }
+    out.push("");
+  }
+
+  if (!isExtractionConfigured()) {
+    out.push("NOTE: OPENROUTER_API_KEY not set — extraction skipped. Set it in .env to enable.");
+  }
+
+  return out.join("\n");
+}
+
+if (import.meta.main) {
+  const args = parseCliArgs(process.argv.slice(2));
+  if (!isExtractionConfigured() && !args.quiet) {
+    console.log(renderExtractionSummary({
+      processed: 0,
+      entitiesCreated: 0,
+      mentionsCreated: 0,
+      categoriesAssigned: 0,
+      cooccurrencesBumped: 0,
+      model: EXTRACTION_MODEL,
+      durationMs: 0,
+      errors: [{ itemId: "-", error: "OPENROUTER_API_KEY not set" }],
+      batches: [],
+    }));
+    process.exitCode = 0;
+    process.exit(0);
+  }
+  const db = openNewsWatchDb(NEWS_WATCH_DB_PATH);
+  try {
+    const stats = await extractEntitiesForPendingItems(db, {
+      includeAllItems: args.all,
+      minRelevance: args.minRelevance,
+      batchSize: args.batchSize,
+      maxBatches: args.maxBatches,
+      verbose: !args.quiet,
+    });
+    if (args.json) {
+      console.log(JSON.stringify(stats, null, 2));
+    } else if (!args.quiet) {
+      console.log(renderExtractionSummary(stats));
+    }
+  } catch (err) {
+    console.error(err);
+    process.exitCode = 1;
+  } finally {
+    db.close();
+  }
 }
