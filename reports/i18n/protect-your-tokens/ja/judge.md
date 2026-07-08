@@ -1,8 +1,8 @@
 # Translation Judge
 
-- Selected candidate: f52f2a4b676f394f554309e65984734be23e1e18
-- Selected model: openrouter/openai/gpt-oss-120b:nitro
+- Selected candidate: 803b157880eab551ea3346ff40f8897ac9903366
+- Selected model: openrouter/qwen/qwen3-32b:nitro
 - Judge model: openrouter/google/gemini-3-flash-preview
-- Confidence: low (0.311)
+- Confidence: high (0.855)
 
-The translation is high quality but contains broken internal anchor links. The heading IDs in MDX are generated from the text; the candidate included extra dashes and incorrect relative paths (../) for same-page fragments. Fixing these ensures the table-of-contents style links function correctly.
+The current ja/index.mdx already contains the fixes suggested in the previous judge report (translated title/subTitle, relative internal link, and localized anchor). It is a high-quality translation that maintains MDX structure and Dan's direct style while ensuring all technical terms are handled correctly. No further high or medium priority fixes are required.

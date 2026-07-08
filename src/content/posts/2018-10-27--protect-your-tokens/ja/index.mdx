@@ -1,7 +1,7 @@
 ---
 social_image: ../desktop-social.webp
-title: トークン・APIキー・シークレットの保護
-subTitle: 公開？非公開？何？
+title: ''
+subTitle: ''
 date: '2018-10-27'
 modified: '2024-07-30'
 tags:
@@ -17,86 +17,90 @@ cover: ../dayne-topkin-78982-unsplash.webp
 cover_mobile: ../w300_dayne-topkin-78982-unsplash.webp
 cover_icon: ../icon_dayne-topkin-78982-unsplash.webp
 ---
-## トークンを保護すべきタイミングは？
+## トークンを保護するタイミング
 
-> API キーとトークンの保護は **極めて重要** です！
+<!--  For the purpose of this article we'll treat the following terms as related: . **They are not interchangable** despite most documentation and [StackOverflow](https://stackoverflow.com/questions/51698672/how-to-secure-my-api-key) answers using them as such. -->
 
-1 つのミスでサーバーとデータの制御がハッカーに奪われる可能性があります！
+<!-- (Google Maps Credentials, AWS S3 Keys, Geocoding Service, etc.)  -->
 
-公式ドキュメントを参照すれば、特定のトークンを隠すべきかどうかを判断するのはそれほど難しくありません。
+> APIキーとトークンの保護は**極めて重要**です！
 
-しばしば、目にするさまざまな用語――`tokens`、`keys`、`credentials`、`secrets`、`private`、`public`――が混乱を招きます。
+1つのミスで、サーバーやデータの制御をハッカーに奪われてしまう可能性があります！
 
-これらを **`secret`** と **`non‑secret`** の二分に置き換えて考えましょう。
+公式ドキュメントを見ても、特定のトークンを隠す必要があるかどうかを判断するのがなぜこれほど難しくなければいけないのかわかりません！
 
-* 🔒 [`Secret keys`](#-secret-keys) は必ず隠す必要があります。基本的に、プライベートサーバー（または Heroku、Netlify、Travis‑CI などのサービス）から決して外部に出してはいけません。
-* 🌍 [`Non-secret keys`](#-non-secret-keys) は、自由に共有でき、ブラウザからのリクエストに組み込んでも問題ない文字列を指します。
+関連する用語（_トークン_、_キー_、_資格情報_、_シークレット_、_プライベート_、_パブリック_）の混乱がさらに状況を悪化させます。
+
+この問題を「シークレット」と「ノンシークレット」の2分法で再定義しましょう。
+
+* 🔒 [`シークレットキー`](#-secret-keys) は**絶対に隠す必要があります**。通常、これらはプライベートサーバー（またはHeroku、Netlify、Travis CIなどのサービス）の外に出るべきではありません。
+* 🌍 [`ノンシークレットキー`](#-non-secret-keys) は、自由に共有可能でブラウザリクエストに含めても問題ない文字列を指します。
 
 <br />
 
 ---------------------------------------------
 
-## 🔒 `Secret keys`
+## 🔒 `シークレットキー`
 
-** ‼️ Important:** `Secret keys` **MUST** be ignored by Git _AND_ omitted in all browser code. [_How to use dotenv_](../#-how-to-handle-secrets-safely)
-
-<br />
-
-_Secret key を扱っているかどうかは、どうやって判断しますか？_
+**‼️ 重要:** `シークレットキー` は **Gitで無視する必要があります** _かつ_ ブラウザコードから**絶対に除外する必要があります**。[dotenvの使用方法](#-how-to-handle-secrets-safely)
 
 <br />
 
-**👍 Rule-of-thumb:** `CORS errors` を返すサーバーはブラウザから直接呼び出せません。これは **MUST** プロキシを経由させ、`secret` と同様に扱うべきであることを強く示しています。
-
-**👍 Rule-of-thumb:** コストがかかるサービスは (ほぼ) 常にプロキシ経由または隠蔽すべきです。
-
-**👍 Rule-of-thumb:** 書き込み操作（**ファイルアップロード、DB 行の挿入**）を行う場合、`secret keys` を扱っている可能性があります。
+`Secret key`を扱っているかを判断するには？
 
 <br />
 
-**_使用例と機能:_** `Secret` キー
+**👍 覚え方:** CORSエラーを返すサーバーはブラウザサポートがない。これはサービスを**必ず**プロキシとして扱い、シークレットとして扱うことを強く示唆します。
 
-- 長期的な認可（認証情報、アクセストークン、JSON Web Token）
-- 短期的な認可（OAuth トークン、セッションストア）
-- 有料／高コストサービスへのアクセス（認証、ジオコーディング、ファイルストレージなど）
-- 公開/非公開ペアのプライベート側（RECAPTCHA、Stripe、Auth0）
-- サービス認証情報（Email/SMTP、LDAP/ディレクトリサービス）
-- データ暗号化および整合性チェック
+**👍 覚え方:** 高額なサービスは（ほぼ）常にプロキシ化または隠蔽する必要があります。
 
-### Checklist: Handling Secrets Safely
+**👍 覚え方:** 書き込み操作（**ファイルアップロード、DB行挿入**）を行う場合、`シークレットキー`を扱っている可能性があります。
 
-#### Quick Overview
+<br />
 
-以下の手順で **コードからシークレットを排除** してください。
+**_使用ケースと機能:_** `シークレットキー`
 
-- [ ] ハードコードされたキーを環境変数に置き換える。例: `process.env.API_SECRET`
-- [ ] [`dotenv`](https://github.com/motdotla/dotenv#dotenv) のようなライブラリと `.env` ファイルを併用し、以前ハードコードしていたシークレットを `.env` に移す。
-- [ ] `.gitignore` に `.env` 行を追加する！
+- 長期認可（資格情報、アクセストークン、JSON Web トークン）
+- 短期認可（OAuth トークン、セッションストア）
+- 有料/高コストサービスへのアクセス（認証、ジオコーディング、ファイルストレージなど）
+- 公開/秘密鍵ペアの秘密部分（RECAPTCHA、Stripe、Auth0）
+- サービス資格情報（メール/SMTP、LDAP/ディレクトリサービス）
+- データ暗号化と整合性チェック
 
-> **DON'T** デプロイ先サーバーで `.env` ファイルを作成しないこと。ホスティングサービス（例: [Heroku](https://devcenter.heroku.com/articles/config-vars)、Netlify、AWS EC2）が提供する環境変数管理ツール（ダッシュボードまたは CLI）を利用する。
+### チェックリスト: シークレットの安全な取り扱い
 
-<blockquote><h2 style="margin: 0.125em 0; text-align: center;">Related Article: <a href="../securely-using-environment-variables-in-nodejs/">Using dotenv securely in NodeJS</a></h2></blockquote>
+#### クイック概要
+
+コードから**シークレットを完全に排除**するには、以下の手順を完了してください:
+
+- [ ] 固定されたキーを環境変数に置き換える。例: `process.env.API_SECRET`
+- [ ] [`dotenv`](https://github.com/motdotla/dotenv#dotenv)のようなライブラリと`.env`ファイルを併用する。以前はハードコードしていたシークレットを`.env`ファイルに追加する。
+- [ ] `.gitignore`ファイルに`.env`行を追加する！
+
+> **やってはいけないこと**: 配置済みサーバーで`.env`ファイルを作成しないこと。ホスティングサービス（例: [Heroku](https://devcenter.heroku.com/articles/config-vars)、Netlify、AWS EC2）が提供する環境変数管理ツール（例: **ダッシュボードまたはコマンドライン**）を使用すること。
+
+<blockquote><h2 style="margin: 0.125em 0; text-align: center;">関連記事: <a href="/securely-using-environment-variables-in-nodejs/">NodeJSでdotenvを安全に使用する方法</a></h2></blockquote>
 
 -----------------------------------
 
-## 🌍 `Non-secret keys`
+## 🌍 `非シークレットキー`
 
-**👍 目安:** キーをブラウザ側のコードやインラインで送る必要がある場合（例: `<script src="https://my-api/?apiKey=123-abc-456">` タグで埋め込む）**、それは確実に `non-secret` です。典型的な例として Google Maps が挙げられます。
+**👍 考え方ルール:** キーがブラウザにコードまたはインラインで送信される必要がある場合（例: `<script src="https://my-api/?apiKey=123-abc-456">` タグ経由）、**それは間違いなく `非シークレット` です**。一般的な例は Google Maps です。
 
 <br />
 
-**_利用ケースと特徴:_** `Non-secret` キー
+**_使用ケースと特徴:_** `非シークレット` キー
 
-- 短期的なアクセス（ユーザーセッション ID、JSON Web Token）
-- アプリ／開発者単位で API アクセスを制限（認証、ジオコーディングなど）
-- 公開/非公開ペアの公開側（RECAPTCHA、Stripe、Auth0 など）
-- アナリティクス ID
+- 短期間のアクセス（ユーザーセッションID、JSON Web Token）
+- アプリ/開発者ごとのAPIアクセス制限（認証、ジオコーディングなど）
+- 公開鍵/秘密鍵ペアの公開部分（RECAPTCHA、Stripe、Auth0）
+- 分析用ID
 
 #### ✅ 非シークレットの取り扱い:
 
-> **非シークレット（公開）キーはハードコードしても安全です！**
+> **非シークレット（公開用）キーはハードコードしても安全です！**
 
-長期的に管理しやすくするには、アプリ全体で共有する `config.js` を用意します。
+長期的に管理しやすくするために、アプリケーショントップで共有する`config.js`ファイルを活用しましょう。
 
 **例:**
 
@@ -117,4 +121,4 @@ const src = `//maps.googleapis.com/maps/api/js?key=${key}`;
 
 -----------------------------------
 
-**注:** 環境変数には他にも _ユースケース_ があります。ここで触れなかった例としては、CI/CD/テスト、機能フラグ、特定環境向けのランタイム設定などがあります。
+**注意:** 環境変数の_使用ケース_は他にもあります。今回は取り上げていないケースがいくつかあります: CI/CD/テスト、機能フラグ、特殊環境用のランタイム設定！
