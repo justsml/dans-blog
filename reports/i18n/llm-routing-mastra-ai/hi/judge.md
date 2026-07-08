@@ -1,7 +1,8 @@
 # Translation Judge
 
-- Selected candidate: c4ea4d56ea6648e50c0119d71a1ab8130255822e
-- Selected model: openrouter/z-ai/glm-5.1
+- Selected candidate: 7ebd4dc068c963334a5a083cf63c236a06e290fe
+- Selected model: openrouter/openai/gpt-oss-120b:nitro
 - Judge model: openrouter/google/gemini-3-flash-preview
+- Confidence: low (0.316)
 
-The current translation already incorporates the high-priority fixes suggested in the previous judge report (e.g., fixing the 'soup' logic and the 'budget/instead' typo). It maintains the full frontmatter, preserves MDX structure, and captures the author's informal technical tone effectively. No further high-priority changes are required.
+The translation is high quality and maintains the technical context and tone. However, the internal links in the 'Read the Series' section use relative paths (../) which break the site's routing convention for localized content. They should be absolute paths starting with /hi/ to match the English source's absolute path style.

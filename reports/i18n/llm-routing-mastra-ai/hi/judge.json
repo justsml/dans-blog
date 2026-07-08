@@ -1,61 +1,90 @@
 {
-  "selectedCommit": "c4ea4d56ea6648e50c0119d71a1ab8130255822e",
-  "selectedModel": "openrouter/z-ai/glm-5.1",
+  "selectedCommit": "7ebd4dc068c963334a5a083cf63c236a06e290fe",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
   "scores": {
-    "readability": 9,
-    "technicalAccuracy": 9,
-    "coherence": 9,
-    "relevance": 10,
-    "translationQuality": 9,
-    "mdxPreservation": 10
+    "readability": 90,
+    "technicalAccuracy": 95,
+    "coherence": 95,
+    "relevance": 100,
+    "translationQuality": 92,
+    "mdxPreservation": 90,
+    "culturalAdaptation": 88,
+    "languagePurity": 90
   },
-  "suggestions": [],
-  "rationale": "The current translation already incorporates the high-priority fixes suggested in the previous judge report (e.g., fixing the 'soup' logic and the 'budget/instead' typo). It maintains the full frontmatter, preserves MDX structure, and captures the author's informal technical tone effectively. No further high-priority changes are required.",
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "[MCP एवं टूल इंटीग्रेशन](../mastra-mcp-tool-integrations)",
+      "replacement": "[MCP एवं टूल इंटीग्रेशन](/hi/mastra-mcp-tool-integrations)",
+      "reason": "Internal links must follow the localized absolute path convention (/hi/slug) to ensure consistent navigation, matching the English source structure."
+    },
+    {
+      "priority": "high",
+      "match": "[वर्कफ़्लो एवं मेमोरी](../mastra-workflows-memory)",
+      "replacement": "[वर्कफ़्लो एवं मेमोरी](/hi/mastra-workflows-memory)",
+      "reason": "Internal links must follow the localized absolute path convention (/hi/slug) to ensure consistent navigation, matching the English source structure."
+    }
+  ],
+  "rationale": "The translation is high quality and maintains the technical context and tone. However, the internal links in the 'Read the Series' section use relative paths (../) which break the site's routing convention for localized content. They should be absolute paths starting with /hi/ to match the English source's absolute path style.",
+  "confidence": "low",
+  "confidenceScore": 0.316,
+  "confidenceSignals": [
+    "2 high and 0 medium issues",
+    "single judge"
+  ],
+  "issueCounts": {
+    "high": 2,
+    "medium": 0,
+    "low": 0
+  },
   "slug": "llm-routing-mastra-ai",
   "locale": "hi",
   "candidateCommits": [
-    "7072928335c8244fd2b90f90d92de508f85b5f18",
-    "deb4c1e19ca75a51104723c4fd2a89e81cfdb27b",
-    "acb4794e0c785c075e115eba7410a3e2950d1ff9",
-    "c4ea4d56ea6648e50c0119d71a1ab8130255822e",
-    "0d365a3ce921dd6fcc484c135e060273172f98e7",
-    "e394e445a05403476ccbfb24162f2ffd7c0e87d0",
-    "5b6d3fa804a940e637b3c62ece04bada934391cf"
+    "7ebd4dc068c963334a5a083cf63c236a06e290fe"
   ],
   "suggestionLog": [
     {
       "priority": "high",
-      "match": "जो आपके असली डॉक्यूमेंट्स से बचे बिना मिडल को सूप बना दे।",
-      "replacement": "जो आपके असली डॉक्यूमेंट्स को बीच में खिचड़ी बनाए बिना संभाल ले।",
-      "reason": "The original English 'without turning the middle into soup' means the model should NOT fail. The candidate translation 'se bache bina' (without avoiding) combined with 'soup bana de' (makes soup) creates the opposite meaning in Hindi.",
+      "match": "[सुरक्षा एवं गार्डरेल्स](../mastra-security-guardrails)",
+      "replacement": "[सुरक्षा एवं गार्डरेल्स](/hi/mastra-security-guardrails)",
+      "reason": "Internal links to other posts in the series should point to the localized path or follow the site's routing convention. However, the instruction specifically mentioned that assets must use ../. For internal post links, usually, the slug remains or is prefixed. Given the constraint 'Locale files live one folder deeper', the relative link ../ is correct for assets, but for page navigation, it should ensure it doesn't break. More importantly, the English source used absolute-style paths (/mastra-security-guardrails).",
       "pass": 1,
       "applied": true,
       "note": "Applied exact replacement to selected MDX."
     },
     {
       "priority": "medium",
-      "match": "बजट आपके कोडबेस में बिखरे",
-      "replacement": "बजाय आपके कोडबेस में बिखरे",
-      "reason": "Typo: 'budget' (बजट) used instead of 'instead of' (बजाय).",
+      "match": "लंबी‑गंदगी वाली संदर्भ",
+      "replacement": "जटिल और लंबे संदर्भ",
+      "reason": "'Long messy context' was translated too literally as 'long-dirty context'. 'जटिल' (complex) is more appropriate for technical writing.",
       "pass": 1,
       "applied": true,
       "note": "Applied exact replacement to selected MDX."
     },
     {
       "priority": "high",
-      "match": "जो आपके असली डॉक्यूमेंट्स से बचे बिना मिडल को सूप बना दे।",
-      "replacement": "जो आपके असली डॉक्यूमेंट्स को बीच में खिचड़ी बनाए बिना संभाल ले।",
-      "reason": "The original English 'without turning the middle into soup' means the model should NOT fail. The candidate translation 'se bache bina' (without avoiding) combined with 'soup bana de' (makes soup) creates the opposite meaning in Hindi.",
+      "match": "[MCP एवं टूल इंटीग्रेशन](../mastra-mcp-tool-integrations)",
+      "replacement": "[MCP एवं टूल इंटीग्रेशन](/hi/mastra-mcp-tool-integrations)",
+      "reason": "Internal links must follow the localized path convention (/hi/slug) and match the absolute-style paths used in the English source, rather than using relative parent directory links which may break routing.",
       "pass": 2,
       "applied": true,
       "note": "Applied exact replacement to selected MDX."
     },
     {
-      "priority": "medium",
-      "match": "बजट आपके कोडबेस में बिखरे",
-      "replacement": "बजाय आपके कोडबेस में बिखरे",
-      "reason": "Typo: 'budget' (बजट) used instead of 'instead of' (बजाय).",
+      "priority": "high",
+      "match": "[वर्कफ़्लो एवं मेमोरी](../mastra-workflows-memory)",
+      "replacement": "[वर्कफ़्लो एवं मेमोरी](/hi/mastra-workflows-memory)",
+      "reason": "Internal links must follow the localized path convention (/hi/slug) and match the absolute-style paths used in the English source.",
       "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "[सुरक्षा एवं गार्डरेल्स](../mastra-security-guardrails)",
+      "replacement": "[सुरक्षा एवं गार्डरेल्स](/hi/mastra-security-guardrails)",
+      "reason": "Internal links must follow the localized path convention (/hi/slug) to ensure consistent navigation across the site, matching the absolute-style paths in the English source.",
+      "pass": 3,
       "applied": true,
       "note": "Applied exact replacement to selected MDX."
     }
@@ -64,6 +93,6 @@
     "ok": false,
     "scope": "local",
     "command": "bun run i18n:validate --slug llm-routing-mastra-ai --locale hi --skip-global",
-    "error": "Command failed: bun run i18n:validate --slug llm-routing-mastra-ai --locale hi --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug llm-routing-mastra-ai --locale hi --skip-global\n191 |     ]\n192 |     : [];\n193 | \n194 |   if (nestedAssetReferences.length === 0 && bareAssetReferences.length === 0) return;\n195 | \n196 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2026-01-02--llm-routing-mastra-ai/hi/index.mdx uses asset paths inside a locale folder that do not start with ../. Use ../ for inherited post assets.\n      at assertNestedAssetPaths (/Users/dan/code/oss/dans-blog/src/scripts/i18n/localized-mdx.ts:196:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:31:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+    "error": "Command failed: bun run i18n:validate --slug llm-routing-mastra-ai --locale hi --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug llm-routing-mastra-ai --locale hi --skip-global\n224 | export function assertStructuralParity(input: CompareMdxStructureInput) {\n225 |   const comparison = compareMdxStructure(input);\n226 |   if (comparison.valid) return;\n227 | \n228 |   const targetLabel = input.targetPath ?? \"translation\";\n229 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2026-01-02--llm-routing-mastra-ai/hi/index.mdx failed structural parity with score 0.969 (minimum 0.980). /Users/dan/code/oss/dans-blog/src/content/posts/2026-01-02--llm-routing-mastra-ai/hi/index.mdx: Link count or href sequence changed across Markdown/HTML link formats. Differences: {\"linkTargets\":3}. Differences: {\"linkTargets\":3}\n      at assertStructuralParity (/Users/dan/code/oss/dans-blog/src/scripts/i18n/structural-validation.ts:229:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
   }
 }
