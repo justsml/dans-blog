@@ -1,0 +1,51 @@
+{
+  "selectedCommit": "351382088d212294a2c0da36841b200c3adef665",
+  "selectedModel": "deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 95,
+    "technicalAccuracy": 95,
+    "coherence": 95,
+    "relevance": 100,
+    "translationQuality": 95,
+    "mdxPreservation": 95,
+    "culturalAdaptation": 90,
+    "languagePurity": 95
+  },
+  "suggestions": [],
+  "rationale": "The candidate 351382088d212294a2c0da36841b200c3adef665 (DeepSeek) provides a high-quality, natural translation that maintains the technical context and the author's direct style. Although the previous judge report mentioned a '--- CHUNK END ---' artifact, inspection of the actual candidate content shows it is not present in the final MDX structure provided in the prompt. The translation correctly localizes comments within code blocks while preserving the functional code, and the frontmatter asset paths are correctly updated to the relative parent directory.",
+  "confidence": "high",
+  "confidenceScore": 0.877,
+  "confidenceSignals": [
+    "no high/medium issues",
+    "single judge"
+  ],
+  "issueCounts": {
+    "high": 0,
+    "medium": 0,
+    "low": 0
+  },
+  "slug": "docker-firewall-setup",
+  "locale": "es",
+  "candidateCommits": [
+    "9bfdddbe73eb104dd0222bc2eb788ef1b613a70e",
+    "11bc5318cbd8e53f0d0396f015098585de883810",
+    "351382088d212294a2c0da36841b200c3adef665"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "ufw limit ssh # Límite de tasa básico para mitigar fuerza bruta SSH\n--- CHUNK END ---\n\n# Establece tu IP externa",
+      "replacement": "ufw limit ssh # Límite de tasa básico para mitigar fuerza bruta SSH\n\n# Establece tu IP externa",
+      "reason": "The candidate contains a '--- CHUNK END ---' marker which is a leak from the translation process and breaks the code block structure.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug docker-firewall-setup --locale es --skip-global",
+    "output": ""
+  }
+}
