@@ -1,0 +1,72 @@
+{
+  "index": 12,
+  "attempt": 1,
+  "originalTitle": "Date Setters Part 4",
+  "translatedTitle": "Date Setters Part 4",
+  "translation": {
+    "title": "Date Setters Part 4",
+    "group": "Handling Dates",
+    "options": [
+      {
+        "text": "2020年1月01日"
+      },
+      {
+        "text": "2020年2月01日"
+      },
+      {
+        "text": "2021年1月01日"
+      },
+      {
+        "text": "2021年2月01日"
+      },
+      {
+        "text": "RangeError: Invalid argument."
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "出力には何が含まれますか？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "The [.setMonth()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) method sets the month of the given date instance.\n\nThe month argument is zero-based, with a range of 0-11 (using western calendars.)\n\nHere we see the month and year is adjusted to February 2021, because `setMonth(13)` is 2 more than 11 (December).\n\n<aside class=\"hint\">`setMonth` sets the month by index, 12 months are indexed from 0-11. </aside>\n<aside class=\"hint\">\nNumbers outside the range of 0-11 will cause the year to over- or under-flow. For example, `setMonth(13)` will adjust the year to 2021 (in February because 13 is 2 more than 11).\n</aside>"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Date Setters Part 4\",\n  \"group\": \"Handling Dates\",\n  \"options\": [\n    {\n      \"text\": \"2020年1月01日\",\n      \"preserveText\": false\n    },\n    {\n      \"text\": \"2020年2月01日\",\n      \"preserveText\": false\n    },\n    {\n      \"text\": \"2021年1月01日\",\n      \"preserveText\": false\n    },\n    {\n      \"text\": \"2021年2月01日\",\n      \"preserveText\": false\n    },\n    {\n      \"text\": \"RangeError: Invalid argument.\",\n      \"preserveText\": true\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"出力には何が含まれますか？\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"js\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"The [.setMonth()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) method sets the month of the given date instance.\\n\\nThe month argument is zero-based, with a range of 0-11 (using western calendars.)\\n\\nHere we see the month and year is adjusted to February 2021, because `setMonth(13)` is 2 more than 11 (December).\\n\\n<aside class=\\\"hint\\\">`setMonth` sets the month by index, 12 months are indexed from 0-11. </aside>\\n<aside class=\\\"hint\\\">\\nNumbers outside the range of 0-11 will cause the year to over- or under-flow. For example, `setMonth(13)` will adjust the year to 2021 (in February because 13 is 2 more than 11).\\n</aside>\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 1159,
+    "outputTokens": 1287,
+    "totalTokens": 2446,
+    "reasoningTokens": 835,
+    "cacheReadTokens": 640,
+    "cacheWriteTokens": 0,
+    "durationMs": 1913,
+    "finishReason": "stop",
+    "rawFinishReason": "stop",
+    "warnings": [],
+    "providerCostUsd": 0.0013709,
+    "providerUpstreamCostUsd": 0.0013709,
+    "pricingSource": "openrouter-usage-accounting",
+    "openRouterUsage": {
+      "promptTokens": 1159,
+      "promptTokensDetails": {
+        "cachedTokens": 640
+      },
+      "completionTokens": 1287,
+      "completionTokensDetails": {
+        "reasoningTokens": 835
+      },
+      "totalTokens": 2446,
+      "cost": 0.0013709,
+      "costDetails": {
+        "upstreamInferenceCost": 0.0013709
+      }
+    }
+  },
+  "cost": {
+    "inputUsd": 0.000045201,
+    "outputUsd": 0.00023166,
+    "totalUsd": 0.000276861,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Date String Parsing",
+  "translatedTitle": "日付文字列の解析",
+  "translation": {
+    "title": "日付文字列の解析",
+    "group": "日付の取り扱い",
+    "options": [
+      {
+        "text": "2019 2020"
+      },
+      {
+        "text": "2020 2021"
+      },
+      {
+        "text": "2020 2020"
+      },
+      {
+        "text": "2020 2019"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "コンソールに何が出力されるでしょうか？"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "`T` が付いていない文字列は Jan 1st, 2020 のように見えるかもしれませんが、日付だけの文字列は UTC として解釈され、ローカルタイムゾーン (GMT-7) に変換するとまだ 2019 年です。\n\n      明示的なタイムゾーンが無い Date‑time 文字列はローカル時間として解釈されます。\n  \n      `T00:00` 形式にすると、2 番目の値はローカルの真夜中として解釈されます。\n\n      最初の日付は `Tue Dec 31 2019 17:00:00 GMT-0700 (Mountain Standard Time)` と解釈されます。\n      2 番目の日付は `Wed Jan 01 2020 00:00:00 GMT-0700 (Mountain Standard Time)` と解釈されます。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"日付文字列の解析\",\n  \"group\": \"日付の取り扱い\",\n  \"options\": [\n    {\n      \"text\": \"2019 2020\",\n      \"preserveText\": false\n    },\n    {\n      \"text\": \"2020 2021\",\n      \"preserveText\": false\n    },\n    {\n      \"text\": \"2020 2020\",\n      \"preserveText\": false\n    },\n    {\n      \"text\": \"2020 2019\",\n      \"preserveText\": false\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"コンソールに何が出力されるでしょうか？\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"js\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"`T` が付いていない文字列は Jan 1st, 2020 のように見えるかもしれませんが、日付だけの文字列は UTC として解釈され、ローカルタイムゾーン (GMT-7) に変換するとまだ 2019 年です。\\n\\n      明示的なタイムゾーンが無い Date‑time 文字列はローカル時間として解釈されます。\\n  \\n      `T00:00` 形式にすると、2 番目の値はローカルの真夜中として解釈されます。\\n\\n      最初の日付は `Tue Dec 31 2019 17:00:00 GMT-0700 (Mountain Standard Time)` と解釈されます。\\n      2 番目の日付は `Wed Jan 01 2020 00:00:00 GMT-0700 (Mountain Standard Time)` と解釈されます。\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 1088,
+    "outputTokens": 526,
+    "totalTokens": 1614,
+    "reasoningTokens": 78,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 766,
+    "finishReason": "stop",
+    "rawFinishReason": "stop",
+    "warnings": [],
+    "providerCostUsd": 0.0007753,
+    "providerUpstreamCostUsd": 0.0007753,
+    "pricingSource": "openrouter-usage-accounting",
+    "openRouterUsage": {
+      "promptTokens": 1088,
+      "promptTokensDetails": {
+        "cachedTokens": 0
+      },
+      "completionTokens": 526,
+      "completionTokensDetails": {
+        "reasoningTokens": 78
+      },
+      "totalTokens": 1614,
+      "cost": 0.0007753,
+      "costDetails": {
+        "upstreamInferenceCost": 0.0007753
+      }
+    }
+  },
+  "cost": {
+    "inputUsd": 0.000042431999999999996,
+    "outputUsd": 0.00009468,
+    "totalUsd": 0.000137112,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
