@@ -10,7 +10,7 @@
 - Selected commit hint: judge selected
 - Validation: failed
 - Validation scope: local
-- Confidence: high (0.886)
+- Confidence: high (0.872)
 - Confidence signals: no high/medium issues; single judge
 - High/medium/low issue counts: 0/0/0
 - Validation error: Command failed: bun run i18n:validate --slug js-quiz-14-date-time-questions-test-your-knowledge --locale ja --skip-global
@@ -32,14 +32,14 @@ error: script "i18n:validate" exited with code 1
 
 
 ## Primary Judge Telemetry
-- Runtime seconds: 2.47
+- Runtime seconds: 2.45
 - Input tokens: 17977
-- Output tokens: 175
+- Output tokens: 185
 - Thinking tokens: unknown
 - Cached input tokens: 0
 - Cache write tokens: 0
-- OpenRouter cost credits: 0.009513
-- Estimated cost: $0.009513
+- OpenRouter cost credits: 0.009543
+- Estimated cost: $0.009543
 
 ## Candidates
 - current src/content/posts/2020-01-02--js-quiz-14-date-time-questions-test-your-knowledge/ja/index.mdx
