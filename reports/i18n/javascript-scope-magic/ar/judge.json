@@ -2,26 +2,56 @@
   "selectedCommit": "3b4325a26167e9e485e6caac229d9304a40303ab",
   "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
   "scores": {
-    "readability": 90,
+    "readability": 95,
     "technicalAccuracy": 95,
     "coherence": 90,
     "relevance": 100,
-    "translationQuality": 90,
-    "mdxPreservation": 100
+    "translationQuality": 92,
+    "mdxPreservation": 95,
+    "culturalAdaptation": 85,
+    "languagePurity": 95
   },
-  "suggestions": [],
-  "rationale": "The DeepSeek candidate provides a more natural translation of technical terms. For example, it uses 'أمرّي' (Imperative) and 'عودي' (Recursive) which are standard in Arabic computer science contexts, whereas the GPT candidate uses 'الإمبراطورية' (Empire/Imperial) which is a common mistranslation of 'Imperative' in this context. Both candidates correctly handled the MDX requirements and asset path adjustments.",
+  "suggestions": [
+    {
+      "priority": "medium",
+      "match": "<!--\n## تقنيات عكس التحكم\n\nقيد الإعداد\n-->",
+      "replacement": "{/*\n## تقنيات عكس التحكم\n\nقيد الإعداد\n*/}",
+      "reason": "MDX files should use curly brace comments instead of HTML comments to avoid potential rendering issues or leakage."
+    }
+  ],
+  "rationale": "Candidate 3b4325a26167e9e485e6caac229d9304a40303ab is selected because it provides a natural and technically accurate translation while maintaining the frontmatter structure and MDX requirements. It correctly handles the relative paths for images (../). Compared to the other candidate, it uses more standard Arabic technical terminology (e.g., 'أمرّي مقابل عودي' for 'Imperative vs Recursive'). It also preserves the draft/publish status from the source. One minor suggestion is made to convert the HTML comment to an MDX comment for better consistency with the format.",
+  "confidence": "medium",
+  "confidenceScore": 0.65,
+  "confidenceSignals": [
+    "low blocking-issue rate",
+    "single judge"
+  ],
+  "issueCounts": {
+    "high": 0,
+    "medium": 1,
+    "low": 0
+  },
   "slug": "javascript-scope-magic",
   "locale": "ar",
   "candidateCommits": [
     "3b4325a26167e9e485e6caac229d9304a40303ab",
     "d93c5c2b6703597c88ea7cffeb6cd8555252c617"
   ],
-  "suggestionLog": [],
+  "suggestionLog": [
+    {
+      "priority": "medium",
+      "match": "<!--\n## تقنيات عكس التحكم\n\nقيد الإعداد\n-->",
+      "replacement": "{/*\n## تقنيات عكس التحكم\n\nقيد الإعداد\n*/}",
+      "reason": "MDX files should use curly brace comments instead of HTML comments to avoid potential rendering issues or leakage.",
+      "pass": 1,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    }
+  ],
   "validation": {
-    "ok": true,
+    "ok": false,
     "scope": "local",
     "command": "bun run i18n:validate --slug javascript-scope-magic --locale ar --skip-global",
-    "output": ""
+    "error": "Command failed: bun run i18n:validate --slug javascript-scope-magic --locale ar --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug javascript-scope-magic --locale ar --skip-global\n103 | \n104 | export function assertTranslationIntegrity(input: IntegrityCheckInput) {\n105 |   const issues = analyzeTranslationIntegrity(input).filter((issue) => issue.severity !== \"low\");\n106 |   if (issues.length === 0) return;\n107 | \n108 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2015-06-06--javascript-scope-magic/ar/index.mdx failed translation integrity checks:\n- [high] html-comment-outside-code: /Users/dan/code/oss/dans-blog/src/content/posts/2015-06-06--javascript-scope-magic/ar/index.mdx:103 uses an HTML comment. Use MDX comments ({/* ... */}) outside code fences.\n- [high] html-comment-outside-code: /Users/dan/code/oss/dans-blog/src/content/posts/2015-06-06--javascript-scope-magic/ar/index.mdx:107 uses an HTML comment. Use MDX comments ({/* ... */}) outside code fences.\n      at assertTranslationIntegrity (/Users/dan/code/oss/dans-blog/src/scripts/i18n/integrity-checks.ts:108:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:34:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
   }
 }
