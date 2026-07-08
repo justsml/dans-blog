@@ -1,27 +1,258 @@
 {
-  "selectedCommit": "current",
-  "selectedModel": "current",
+  "selectedCommit": "84d37ea4004a2a6114aa909b0e6b6f352ef36aba",
+  "selectedModel": "openrouter/qwen/qwen3-32b:nitro",
   "scores": {
-    "readability": 9,
-    "technicalAccuracy": 9,
-    "coherence": 9,
-    "relevance": 10,
-    "translationQuality": 9,
-    "mdxPreservation": 10
+    "readability": 92,
+    "technicalAccuracy": 95,
+    "coherence": 90,
+    "relevance": 100,
+    "translationQuality": 90,
+    "mdxPreservation": 85,
+    "culturalAdaptation": 90,
+    "languagePurity": 95
   },
-  "suggestions": [],
-  "rationale": "The current translation is excellent and superior to the candidates. Candidate b566b4f broke several Gist paths by adding '../' prefixes which would break the component functionality. Candidate 84d37ea is nearly identical to the current version but adds a redundant 'Aperçu' heading. The current version maintains the correct heading structure, technical terminology (like 'téléverser' vs 'télécharger'), and tone.",
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "import Gist from '../../../../../components/Gist/index.astro'",
+      "replacement": "import Gist from '../../../../components/Gist/index.astro'",
+      "reason": "The import path is too deep. In src/content/posts/YYYY-MM-DD--slug/fr/index.mdx, it should be 4 levels up to reach src/components."
+    },
+    {
+      "priority": "high",
+      "match": "- [Aperçu](#apercu)",
+      "replacement": "- [Aperçu](#aperçu)",
+      "reason": "The slug for 'Aperçu' is #aperçu, not #apercu. The link is broken."
+    },
+    {
+      "priority": "high",
+      "match": "- [En-têtes personnalisés](#en-tetes-personnalises)",
+      "replacement": "- [En-têtes personnalisés](#en-têtes-personnalisées)",
+      "reason": "The heading is 'En-têtes personnalisées', so the link must match the slug."
+    },
+    {
+      "priority": "high",
+      "match": "- [Données encodées en formulaire](#donnees-encodees-en-formulaire)",
+      "replacement": "- [Données encodées en formulaire](#données-encodées-en-formulaire)",
+      "reason": "Slug mismatch due to missing accents in the fragment."
+    },
+    {
+      "priority": "high",
+      "match": "- [Téléverser un fichier](#televerser-un-fichier)",
+      "replacement": "- [Téléverser un fichier](#téléchargement-dun-fichier)",
+      "reason": "The heading text is 'Téléchargement d'un fichier', not 'Téléverser'."
+    },
+    {
+      "priority": "high",
+      "match": "- [Téléverser plusieurs fichiers](#televerser-plusieurs-fichiers)",
+      "replacement": "- [Téléverser plusieurs fichiers](#téléchargement-de-plusieurs-fichiers)",
+      "reason": "Heading text mismatch."
+    },
+    {
+      "priority": "high",
+      "match": "- [Délais d'attente](#delais-dattente)",
+      "replacement": "- [Délais d'attente](#délais-dexpiration-timeouts)",
+      "reason": "Heading text mismatch."
+    },
+    {
+      "priority": "high",
+      "match": "- [Annulation d'une requête fetch](#annulation-dune-requete-fetch)",
+      "replacement": "- [Annulation d'une requête fetch](#annulation-dune-requête-fetch)",
+      "reason": "Slug mismatch."
+    },
+    {
+      "priority": "high",
+      "match": "- [Compatibilité](#compatibilite)",
+      "replacement": "- [Compatibilité](#compatibilité)",
+      "reason": "Slug mismatch."
+    }
+  ],
+  "rationale": "Candidate 84d37ea4004a2a6114aa909b0e6b6f352ef36aba is selected because it provides a high-quality translation that respects the technical tone. While it has several broken internal links in the TOC (due to slugification differences with accents), it is structurally more sound than the 'current' version which had duplicate 'Aperçu' headings and broken links. Candidate b566b4f6175aeffa8433c0165a2ca94be21c5e40 incorrectly modified the Gist paths to include '../' which breaks the component's logic (Gist paths should be owner/id).",
+  "confidence": "low",
+  "confidenceScore": 0.315,
+  "confidenceSignals": [
+    "9 high and 0 medium issues",
+    "single judge"
+  ],
+  "issueCounts": {
+    "high": 9,
+    "medium": 0,
+    "low": 0
+  },
   "slug": "you-may-not-need-axios",
   "locale": "fr",
   "candidateCommits": [
     "b566b4f6175aeffa8433c0165a2ca94be21c5e40",
     "84d37ea4004a2a6114aa909b0e6b6f352ef36aba"
   ],
-  "suggestionLog": [],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "import Gist from '../../../../../components/Gist/index.astro'",
+      "replacement": "import Gist from '../../../../components/Gist/index.astro'",
+      "reason": "The import path is too deep. In src/content/posts/YYYY-MM-DD--slug/fr/index.mdx, it should be 4 levels up to reach src/components.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "- [Aperçu](#apercu)",
+      "replacement": "- [Aperçu](#aperçu)",
+      "reason": "The slug for 'Aperçu' is #aperçu, not #apercu. The link is broken.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "- [En-têtes personnalisés](#en-tetes-personnalises)",
+      "replacement": "- [En-têtes personnalisés](#en-têtes-personnalisées)",
+      "reason": "The heading is 'En-têtes personnalisées', so the link must match the slug.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "- [Données encodées en formulaire](#donnees-encodees-en-formulaire)",
+      "replacement": "- [Données encodées en formulaire](#données-encodées-en-formulaire)",
+      "reason": "Slug mismatch.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "- [Téléverser un fichier](#televerser-un-fichier)",
+      "replacement": "- [Téléverser un fichier](#téléchargement-dun-fichier)",
+      "reason": "The heading text is 'Téléchargement d'un fichier', not 'Téléverser'.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "- [Téléverser plusieurs fichiers](#televerser-plusieurs-fichiers)",
+      "replacement": "- [Téléverser plusieurs fichiers](#téléchargement-de-plusieurs-fichiers)",
+      "reason": "Heading text mismatch.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "- [Délais d'attente](#delais-dattente)",
+      "replacement": "- [Délais d'attente](#délais-dexpiration-timeouts)",
+      "reason": "Heading text mismatch.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "- [Annulation d'une requête fetch](#annulation-dune-requete-fetch)",
+      "replacement": "- [Annulation d'une requête fetch](#annulation-dune-requête-fetch)",
+      "reason": "Slug mismatch.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "- [Compatibilité](#compatibilite)",
+      "replacement": "- [Compatibilité](#compatibilité)",
+      "reason": "Slug mismatch.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "import Gist from '../../../../../components/Gist/index.astro'",
+      "replacement": "import Gist from '../../../../components/Gist/index.astro'",
+      "reason": "The import path is too deep. In src/content/posts/YYYY-MM-DD--slug/fr/index.mdx, it should be 4 levels up to reach src/components.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "- [Aperçu](#apercu)",
+      "replacement": "- [Aperçu](#aperçu)",
+      "reason": "The slug for 'Aperçu' is #aperçu, not #apercu. The link is broken.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "- [En-têtes personnalisés](#en-tetes-personnalises)",
+      "replacement": "- [En-têtes personnalisés](#en-têtes-personnalisées)",
+      "reason": "The heading is 'En-têtes personnalisées', so the link must match the slug.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "- [Données encodées en formulaire](#donnees-encodees-en-formulaire)",
+      "replacement": "- [Données encodées en formulaire](#données-encodées-en-formulaire)",
+      "reason": "Slug mismatch due to missing accents in the fragment.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "- [Téléverser un fichier](#televerser-un-fichier)",
+      "replacement": "- [Téléverser un fichier](#téléchargement-dun-fichier)",
+      "reason": "The heading text is 'Téléchargement d'un fichier', not 'Téléverser'.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "- [Téléverser plusieurs fichiers](#televerser-plusieurs-fichiers)",
+      "replacement": "- [Téléverser plusieurs fichiers](#téléchargement-de-plusieurs-fichiers)",
+      "reason": "Heading text mismatch.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "- [Délais d'attente](#delais-dattente)",
+      "replacement": "- [Délais d'attente](#délais-dexpiration-timeouts)",
+      "reason": "Heading text mismatch.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "- [Annulation d'une requête fetch](#annulation-dune-requete-fetch)",
+      "replacement": "- [Annulation d'une requête fetch](#annulation-dune-requête-fetch)",
+      "reason": "Slug mismatch.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "- [Compatibilité](#compatibilite)",
+      "replacement": "- [Compatibilité](#compatibilité)",
+      "reason": "Slug mismatch.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
   "validation": {
     "ok": false,
     "scope": "local",
     "command": "bun run i18n:validate --slug you-may-not-need-axios --locale fr --skip-global",
-    "error": "Command failed: bun run i18n:validate --slug you-may-not-need-axios --locale fr --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug you-may-not-need-axios --locale fr --skip-global\n109 |     })\n110 |     .filter((message): message is string => message != null);\n111 | \n112 |   if (mismatches.length === 0) return;\n113 | \n114 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2018-11-15--you-may-not-need-axios/fr/index.mdx changed heading counts. H3: English has 17, translation has 18\n      at assertHeadingCounts (/Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:114:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:27:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+    "error": "Command failed: bun run i18n:validate --slug you-may-not-need-axios --locale fr --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug you-may-not-need-axios --locale fr --skip-global\n224 | export function assertStructuralParity(input: CompareMdxStructureInput) {\n225 |   const comparison = compareMdxStructure(input);\n226 |   if (comparison.valid) return;\n227 | \n228 |   const targetLabel = input.targetPath ?? \"translation\";\n229 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2018-11-15--you-may-not-need-axios/fr/index.mdx failed structural parity with score 0.953 (minimum 0.980). /Users/dan/code/oss/dans-blog/src/content/posts/2018-11-15--you-may-not-need-axios/fr/index.mdx: Headings changed or moved. Link count or href sequence changed across Markdown/HTML link formats. Differences: {\"h3\":1,\"headingSequence\":5,\"linkTargets\":19}. Differences: {\"h3\":1,\"headingSequence\":5,\"linkTargets\":19}\n      at assertStructuralParity (/Users/dan/code/oss/dans-blog/src/scripts/i18n/structural-validation.ts:229:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
   }
 }

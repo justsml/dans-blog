@@ -2,6 +2,7 @@
 social_image: ../desktop-social.webp
 title: Vous n'avez pas besoin d'Axios
 subTitle: La Fetch API vient à la rescousse !
+date: '2018-11-14'
 modified: '2024-08-21'
 tags:
   - programming
@@ -18,11 +19,12 @@ cover: ../brock-dupont-575648-unsplash.webp
 cover_mobile: ../w300_brock-dupont-575648-unsplash.webp
 cover_icon: ../icon_brock-dupont-575648-unsplash.webp
 ---
-import Gist from '../../../../components/Gist/index.astro'
+import Gist from '../../../../../components/Gist/index.astro'
 
 ## Vous n'avez peut-être pas besoin d'Axios
 
 <p class="breakout call-to-action">Ce **n'est pas une attaque** contre [Axios](https://www.npmjs.com/package/axios). <br />
+
 C'est plutôt **un plaidoyer en faveur de l'API `fetch` qui est désormais très performante.** 🦄</p>
 
 ### Aperçu
@@ -31,24 +33,24 @@ Cet article rassemble les extraits de code `fetch` "manquants" et les cas d'util
 
 ### Aperçu
 
-- [Aperçu](#aperçu)
-- [Comparaison des fonctionnalités](#aperçu-1)
-- [Recettes avec `fetch`](#comparaison-des-fonctionnalités)
-  - [Obtenir du JSON depuis une URL](#recettes-avec-fetch)
-  - [En-têtes personnalisés](#récupérer-du-json-depuis-une-url)
-  - [Gestion des erreurs HTTP](#en-têtes-personnalisées)
-  - [Exemple CORS](#gestion-des-erreurs-http)
-  - [Soumettre du JSON](#exemple-de-cors)
+- [Aperçu](#apercu)
+- [Comparaison des fonctionnalités](#comparaison-des-fonctionnalités)
+- [Recettes avec `fetch`](#recettes-avec-fetch)
+  - [Obtenir du JSON depuis une URL](#obtenir-du-json-depuis-une-url)
+  - [En-têtes personnalisés](#en-tetes-personnalises)
+  - [Gestion des erreurs HTTP](#gestion-des-erreurs-http)
+  - [Exemple CORS](#exemple-cors)
+  - [Soumettre du JSON](#soumettre-du-json)
   - [Soumettre un formulaire HTML `<form>`](#soumettre-un-formulaire-html-form)
-  - [Données encodées en formulaire](#soumettre-un-formulaire-html)
-  - [Téléverser un fichier](#données-encodées-en-formulaire)
-  - [Téléverser plusieurs fichiers](#téléchargement-dun-fichier)
-  - [Délais d'attente](#téléchargement-de-plusieurs-fichiers)
-  - [Aide pour le suivi de progression de téléchargement](#délais-dexpiration-timeouts)
-  - [Aide pour les tentatives récursives](#source--progress-helper)
-  - [Gestion des redirections HTTP](#helper-de-réessai-récursif)
-  - [Annulation d'une requête fetch](#gestion-des-redirections-http) ✨nouveau✨
-- [Compatibilité](#annulation-dune-requête-fetch)
+  - [Données encodées en formulaire](#donnees-encodees-en-formulaire)
+  - [Téléverser un fichier](#televerser-un-fichier)
+  - [Téléverser plusieurs fichiers](#televerser-plusieurs-fichiers)
+  - [Délais d'attente](#delais-dattente)
+  - [Aide pour le suivi de progression de téléchargement](#aide-pour-le-suivi-de-progression-de-téléchargement)
+  - [Aide pour les tentatives récursives](#aide-pour-les-tentatives-récursives)
+  - [Gestion des redirections HTTP](#gestion-des-redirections-http)
+  - [Annulation d'une requête fetch](#annulation-dune-requete-fetch) ✨nouveau✨
+- [Compatibilité](#compatibilite)
 
 > Votre cas d'utilisation n'est pas listé ? [Faites-le-moi savoir ✉️](/contact/)
 
@@ -145,7 +147,7 @@ Et un exemple plus complexe, avec un indicateur de suivi `__timeout` pour **inte
 
 La progression du téléversement est actuellement un peu bugguée en dehors de Chrome.
 
-Le gestionnaire de progression [la technique montrée ci-dessous évite d'encapsuler](#assistant-de-progression-de-téléchargement) l'appel `fetch` dans une fermeture. 👍
+Le gestionnaire de progression [la technique montrée ci-dessous évite d'encapsuler](#source-progress-helper) l'appel `fetch` dans une fermeture. 👍
 
 `progressHelper` a l'interface suivante (source disponible ci-dessous)
 
