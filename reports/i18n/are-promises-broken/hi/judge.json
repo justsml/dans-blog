@@ -1,0 +1,49 @@
+{
+  "selectedCommit": "66c242ed261b5c6f20185db7019aa6e097407711",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 90,
+    "technicalAccuracy": 95,
+    "coherence": 92,
+    "relevance": 100,
+    "translationQuality": 90,
+    "mdxPreservation": 95,
+    "culturalAdaptation": 85,
+    "languagePurity": 90
+  },
+  "suggestions": [],
+  "rationale": "The candidate translation is technically sound and uses natural Hindi phrasing for a developer audience. The previous judge report suggested a fix for a heading link, but upon inspection of the candidate MDX, the link `[Promises को कुछ न कुछ पकड़ना चाहिए](#1-promises-को-कुछ-न-कुछ-पकड़ना-चाहिए)` already correctly matches the localized heading `#### #1 Promises को कुछ न कुछ पकड़ना चाहिए`. The translation maintains the unlisted flag and correctly localizes image paths and internal links.",
+  "confidence": "high",
+  "confidenceScore": 0.865,
+  "confidenceSignals": [
+    "no high/medium issues",
+    "single judge"
+  ],
+  "issueCounts": {
+    "high": 0,
+    "medium": 0,
+    "low": 0
+  },
+  "slug": "are-promises-broken",
+  "locale": "hi",
+  "candidateCommits": [
+    "66c242ed261b5c6f20185db7019aa6e097407711"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "[Promises को कुछ न कुछ पकड़ना चाहिए](#1-promises-need-something-to-hang-on-to)",
+      "replacement": "[Promises को कुछ न कुछ पकड़ना चाहिए](#1-promises-को-कुछ-न-कुछ-पकड़ना-चाहिए)",
+      "reason": "The heading link fragment must match the localized heading slug to avoid broken links.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug are-promises-broken --locale hi --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug are-promises-broken --locale hi --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug are-promises-broken --locale hi --skip-global\n224 | export function assertStructuralParity(input: CompareMdxStructureInput) {\n225 |   const comparison = compareMdxStructure(input);\n226 |   if (comparison.valid) return;\n227 | \n228 |   const targetLabel = input.targetPath ?? \"translation\";\n229 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2018-10-06--are-promises-broken/hi/index.mdx failed structural parity with score 0.984 (minimum 0.980). /Users/dan/code/oss/dans-blog/src/content/posts/2018-10-06--are-promises-broken/hi/index.mdx: Link count or href sequence changed across Markdown/HTML link formats. Differences: {\"linkTargets\":3}. Differences: {\"linkTargets\":3}\n      at assertStructuralParity (/Users/dan/code/oss/dans-blog/src/scripts/i18n/structural-validation.ts:229:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}
