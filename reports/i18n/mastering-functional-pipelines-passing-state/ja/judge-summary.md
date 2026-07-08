@@ -10,18 +10,21 @@
 - Selected commit hint: judge selected
 - Validation: failed
 - Validation scope: local
+- Confidence: high (0.886)
+- Confidence signals: no high/medium issues; single judge
+- High/medium/low issue counts: 0/0/0
 - Validation error: Command failed: bun run i18n:validate --slug mastering-functional-pipelines-passing-state --locale ja --skip-global
 $ bun ./src/scripts/i18n/validate.ts --slug mastering-functional-pipelines-passing-state --locale ja --skip-global
-20 |   }
-21 | 
-22 |   const minimumLength = Math.floor(sourceLength * minimumRatio);
-23 |   const maximumLength = Math.ceil(sourceLength * maximumRatio);
-24 |   if (targetLength < minimumLength || targetLength > maximumLength) {
-25 |     throw new Error(
-                   ^
-error: /Users/dan/code/oss/dans-blog/src/content/posts/2023-08-13--mastering-functional-pipelines-passing-state/ja/index.mdx changed comparable body length from 8431 chars in English to 5479 chars. Expected 5480-11382 chars (within 35%).
-      at assertTranslationLength (/Users/dan/code/oss/dans-blog/src/scripts/i18n/structural-validation.ts:25:15)
-      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:26:1
+224 | export function assertStructuralParity(input: CompareMdxStructureInput) {
+225 |   const comparison = compareMdxStructure(input);
+226 |   if (comparison.valid) return;
+227 | 
+228 |   const targetLabel = input.targetPath ?? "translation";
+229 |   throw new Error(
+                  ^
+error: /Users/dan/code/oss/dans-blog/src/content/posts/2023-08-13--mastering-functional-pipelines-passing-state/ja/index.mdx failed structural parity with score 0.935 (minimum 0.980). /Users/dan/code/oss/dans-blog/src/content/posts/2023-08-13--mastering-functional-pipelines-passing-state/ja/index.mdx: Headings changed or moved. Link count or href sequence changed across Markdown/HTML link formats. Differences: {"h4":-1,"headingSequence":9,"linkTargets":3}. Differences: {"h4":-1,"headingSequence":9,"linkTargets":3}
+      at assertStructuralParity (/Users/dan/code/oss/dans-blog/src/scripts/i18n/structural-validation.ts:229:13)
+      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1
       at loadAndEvaluateModule (2:1)
 
 Bun v1.3.1 (macOS arm64)
@@ -29,28 +32,14 @@ error: script "i18n:validate" exited with code 1
 
 
 ## Primary Judge Telemetry
-- Runtime seconds: 2.57
-- Input tokens: 11174
-- Output tokens: 229
+- Runtime seconds: 2.84
+- Input tokens: 11989
+- Output tokens: 270
 - Thinking tokens: unknown
 - Cached input tokens: 0
 - Cache write tokens: 0
-- OpenRouter cost credits: unknown
-- Estimated cost: $0.006274
-
-## Pre-Publish Rescore Telemetry
-### Pass 1
-- Runtime seconds: 2.31
-- Input tokens: 8534
-- Output tokens: 247
-- Thinking tokens: unknown
-- Cached input tokens: 0
-- Cache write tokens: 0
-- OpenRouter cost credits: unknown
-- Estimated cost: $0.005008
-
-## Judge Suggestions
-1. Pass 1: applied high priority suggestion. Match: "####欠点" Replacement: "#### 短所" Reason: Missing space after heading markers and inconsistent terminology with the 'Pros' section. Note: Applied exact replacement to selected MDX.
+- OpenRouter cost credits: 0.006804
+- Estimated cost: $0.006804
 
 ## Candidates
 - current src/content/posts/2023-08-13--mastering-functional-pipelines-passing-state/ja/index.mdx

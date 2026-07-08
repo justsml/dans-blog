@@ -2,36 +2,39 @@
   "selectedCommit": "a4a2b96c84bf334de567c5c21ee895bc87711791",
   "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
   "scores": {
-    "readability": 5,
-    "technicalAccuracy": 5,
-    "coherence": 5,
-    "relevance": 5,
-    "translationQuality": 5,
-    "mdxPreservation": 5
+    "readability": 95,
+    "technicalAccuracy": 100,
+    "coherence": 95,
+    "relevance": 100,
+    "translationQuality": 95,
+    "mdxPreservation": 100,
+    "culturalAdaptation": 90,
+    "languagePurity": 100
   },
   "suggestions": [],
-  "rationale": "The selected commit provides a high-quality translation that captures Dan's direct and instructional style. It correctly preserves the MDX structure, including frontmatter and code blocks. The previous judge's suggestion regarding '####欠点' was actually already addressed in this candidate (it uses '#### 短所' with correct spacing), so no further high-priority fixes are required. The translation of technical terms like 'unary' as '単一パラメータ（ユニary）' is helpful for Japanese developers.",
+  "rationale": "The candidate a4a2b96c84bf334de567c5c21ee895bc87711791 is the best choice. It preserves all MDX structures, including frontmatter dates and asset paths. It correctly translates the content while maintaining Dan's direct and technical tone. Compared to the 'current' version, it fixes the broken anchor link in the 'Cons' section (changing #どこから始める to #checkout-with-further-improvements to match the English source's logic). Compared to the deepseek candidate, it avoids adding extra unnecessary code blocks and maintains better frontmatter consistency (deepseek left the title empty).",
+  "confidence": "high",
+  "confidenceScore": 0.886,
+  "confidenceSignals": [
+    "no high/medium issues",
+    "single judge"
+  ],
+  "issueCounts": {
+    "high": 0,
+    "medium": 0,
+    "low": 0
+  },
   "slug": "mastering-functional-pipelines-passing-state",
   "locale": "ja",
   "candidateCommits": [
     "a4a2b96c84bf334de567c5c21ee895bc87711791",
     "7367f219117b2082dea98c129b9be2a74fd8adcb"
   ],
-  "suggestionLog": [
-    {
-      "priority": "high",
-      "match": "####欠点",
-      "replacement": "#### 短所",
-      "reason": "Missing space after heading markers and inconsistent terminology with the 'Pros' section.",
-      "pass": 1,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
-    }
-  ],
+  "suggestionLog": [],
   "validation": {
     "ok": false,
     "scope": "local",
     "command": "bun run i18n:validate --slug mastering-functional-pipelines-passing-state --locale ja --skip-global",
-    "error": "Command failed: bun run i18n:validate --slug mastering-functional-pipelines-passing-state --locale ja --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug mastering-functional-pipelines-passing-state --locale ja --skip-global\n20 |   }\n21 | \n22 |   const minimumLength = Math.floor(sourceLength * minimumRatio);\n23 |   const maximumLength = Math.ceil(sourceLength * maximumRatio);\n24 |   if (targetLength < minimumLength || targetLength > maximumLength) {\n25 |     throw new Error(\n                   ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2023-08-13--mastering-functional-pipelines-passing-state/ja/index.mdx changed comparable body length from 8431 chars in English to 5479 chars. Expected 5480-11382 chars (within 35%).\n      at assertTranslationLength (/Users/dan/code/oss/dans-blog/src/scripts/i18n/structural-validation.ts:25:15)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:26:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+    "error": "Command failed: bun run i18n:validate --slug mastering-functional-pipelines-passing-state --locale ja --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug mastering-functional-pipelines-passing-state --locale ja --skip-global\n224 | export function assertStructuralParity(input: CompareMdxStructureInput) {\n225 |   const comparison = compareMdxStructure(input);\n226 |   if (comparison.valid) return;\n227 | \n228 |   const targetLabel = input.targetPath ?? \"translation\";\n229 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2023-08-13--mastering-functional-pipelines-passing-state/ja/index.mdx failed structural parity with score 0.935 (minimum 0.980). /Users/dan/code/oss/dans-blog/src/content/posts/2023-08-13--mastering-functional-pipelines-passing-state/ja/index.mdx: Headings changed or moved. Link count or href sequence changed across Markdown/HTML link formats. Differences: {\"h4\":-1,\"headingSequence\":9,\"linkTargets\":3}. Differences: {\"h4\":-1,\"headingSequence\":9,\"linkTargets\":3}\n      at assertStructuralParity (/Users/dan/code/oss/dans-blog/src/scripts/i18n/structural-validation.ts:229:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
   }
 }
