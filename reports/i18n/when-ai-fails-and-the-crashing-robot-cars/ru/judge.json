@@ -1,0 +1,98 @@
+{
+  "selectedCommit": "eba622e999885d50c4f00dfc2c7d4c1faf7fc0a9",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 90,
+    "technicalAccuracy": 95,
+    "coherence": 92,
+    "relevance": 100,
+    "translationQuality": 88,
+    "mdxPreservation": 100,
+    "culturalAdaptation": 90,
+    "languagePurity": 90
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "трудно сливается в плотный или быстрым потоком на шоссе",
+      "replacement": "трудности при слиянии с плотным или быстрым потоком на шоссе",
+      "reason": "The original Russian sentence is ungrammatical ('трудно сливается в... быстрым потоком'). It needs to be restructured to correctly use the instrumental case and convey the difficulty of merging."
+    },
+    {
+      "priority": "medium",
+      "match": "как управляются людьми",
+      "replacement": "как водят люди",
+      "reason": "The phrase 'управляются людьми' sounds like the humans are being controlled. 'Как водят люди' (how humans drive) is the correct natural expression."
+    }
+  ],
+  "rationale": "The translation is generally good and preserves the technical structure and tone. However, there is a significant grammatical breakdown in the sentence describing merging into traffic, where cases are mixed incorrectly. The suggestions fix this and a slightly awkward phrasing regarding human driving style.",
+  "confidence": "low",
+  "confidenceScore": 0.319,
+  "confidenceSignals": [
+    "1 high and 1 medium issues",
+    "single judge"
+  ],
+  "issueCounts": {
+    "high": 1,
+    "medium": 1,
+    "low": 0
+  },
+  "slug": "when-ai-fails-and-the-crashing-robot-cars",
+  "locale": "ru",
+  "candidateCommits": [
+    "eba622e999885d50c4f00dfc2c7d4c1faf7fc0a9"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "References",
+      "replacement": "Ссылки",
+      "reason": "The heading 'References' should be translated to 'Ссылки' for consistency with the rest of the Russian content.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "трудно сливается в плотный",
+      "replacement": "испытывать трудности при слиянии с плотным",
+      "reason": "Grammatical correction: the original phrasing was awkward.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "быстрый поток на шоссе",
+      "replacement": "быстрым потоком на шоссе",
+      "reason": "Grammatical case mismatch: 'слиянии с' requires the instrumental case ('потоком'), not nominative ('поток').",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "проблема трамвайного переключателя",
+      "replacement": "проблема вагонетки",
+      "reason": "The standard, universally recognized Russian term for 'the trolley problem' is 'проблема вагонетки'. 'Трамвайный переключатель' is a literal and non-standard translation.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "безвиновного робота",
+      "replacement": "ни в чем не повинного робота",
+      "reason": "The word 'безвиновного' is archaic/unnatural in modern Russian. 'Ни в чем не повинного' is the idiomatic way to say 'innocent' in this context.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug when-ai-fails-and-the-crashing-robot-cars --locale ru --skip-global",
+    "output": ""
+  }
+}
