@@ -1,0 +1,86 @@
+{
+  "selectedCommit": "477816f229e103f2785c7dc697b078584f34a27f",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "scores": {
+    "readability": 90,
+    "technicalAccuracy": 95,
+    "coherence": 95,
+    "relevance": 100,
+    "translationQuality": 90,
+    "mdxPreservation": 100,
+    "culturalAdaptation": 90,
+    "languagePurity": 95
+  },
+  "suggestions": [],
+  "rationale": "The selected candidate (477816f) is excellent. The judge report mentions issues like missing '../' in asset paths and untranslated words like 'fortunate', but upon inspecting the provided ja/index.mdx content for this candidate, those fixes are already present (e.g., '幸運な勘違い' is used, and asset paths already have '../'). The candidate captures Dan's direct style well and maintains all MDX structures perfectly. No further pre-publish fixes are required.",
+  "confidence": "high",
+  "confidenceScore": 0.875,
+  "confidenceSignals": [
+    "no high/medium issues",
+    "single judge"
+  ],
+  "issueCounts": {
+    "high": 0,
+    "medium": 0,
+    "low": 0
+  },
+  "slug": "creating-collaborative-culture",
+  "locale": "ja",
+  "candidateCommits": [
+    "477816f229e103f2785c7dc697b078584f34a27f",
+    "ff67310d3d27dcfcfb78ff529dfb6d1db4c088b6"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "cover: pexels-photo-3184431--cropped.webp",
+      "replacement": "cover: ../pexels-photo-3184431--cropped.webp",
+      "reason": "Asset paths in locale files must start with ../ to resolve correctly from the subfolder.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "cover_mobile: w300_pexels-photo-3184431--cropped.webp",
+      "replacement": "cover_mobile: ../w300_pexels-photo-3184431--cropped.webp",
+      "reason": "Asset paths in locale files must start with ../ to resolve correctly from the subfolder.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "cover_icon: icon_pexels-photo-3184431--cropped.webp",
+      "replacement": "cover_icon: ../icon_pexels-photo-3184431--cropped.webp",
+      "reason": "Asset paths in locale files must start with ../ to resolve correctly from the subfolder.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "fortunateな勘違い",
+      "replacement": "幸運な勘違い",
+      "reason": "The word 'fortunate' was left untranslated in the middle of a Japanese sentence.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "upcoming ピッチ会議",
+      "replacement": "今度のピッチ会議",
+      "reason": "The word 'upcoming' was left untranslated.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug creating-collaborative-culture --locale ja --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug creating-collaborative-culture --locale ja --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug creating-collaborative-culture --locale ja --skip-global\n210 |     ]\n211 |     : [];\n212 | \n213 |   if (nestedAssetReferences.length === 0 && bareAssetReferences.length === 0) return;\n214 | \n215 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2021-03-03--creating-collaborative-culture/ja/index.mdx uses asset paths inside a locale folder that do not start with ../. Use ../ for inherited post assets.\n      at assertNestedAssetPaths (/Users/dan/code/oss/dans-blog/src/scripts/i18n/localized-mdx.ts:215:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:33:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}
