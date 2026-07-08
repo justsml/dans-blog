@@ -2,34 +2,28 @@
   "selectedCommit": "2b671ba952f8561d60c6066131dee002bba121df",
   "selectedModel": "openrouter/qwen/qwen3-32b:nitro",
   "scores": {
-    "readability": 9,
-    "technicalAccuracy": 9,
-    "coherence": 9,
-    "relevance": 9,
-    "translationQuality": 9,
-    "mdxPreservation": 10
+    "readability": 95,
+    "technicalAccuracy": 95,
+    "coherence": 95,
+    "relevance": 95,
+    "translationQuality": 92,
+    "mdxPreservation": 95,
+    "culturalAdaptation": 90,
+    "languagePurity": 95
   },
-  "suggestions": [
-    {
-      "priority": "high",
-      "match": "Alza la Sfida 💪",
-      "replacement": "Alzare l'asticella 💪",
-      "reason": "'Alzare l'asticella' is the standard Italian idiom for 'Raising the bar', matching the context of corporate performance."
-    },
-    {
-      "priority": "medium",
-      "match": "Alza la Posta",
-      "replacement": "Alzare l'asticella",
-      "reason": "Consistency with the section heading and the specific 'Raising the Bar' satire theme."
-    },
-    {
-      "priority": "medium",
-      "match": "Con ogni rispetto, cazzo.",
-      "replacement": "Con tutto il dovuto rispetto, vaffanculo.",
-      "reason": "The original 'With all due respect, fuck you' is a specific dismissive phrase; 'vaffanculo' is the direct equivalent for 'fuck you' in this context, and 'tutto il dovuto rispetto' is the standard formula."
-    }
+  "suggestions": [],
+  "rationale": "The current translation already incorporates the high-priority fixes suggested in the previous judge report (localized subTitle and corrected heading anchor fragments). It maintains Dan's satirical tone effectively while preserving the complex MDX structure and Timeline component data. The translation of 'Raising the Bar' as 'Alza la Sfida' and 'Enterprise Theater' as 'Teatro d'Impresa' is culturally appropriate for the Italian tech context.",
+  "confidence": "high",
+  "confidenceScore": 0.873,
+  "confidenceSignals": [
+    "no high/medium issues",
+    "single judge"
   ],
-  "rationale": "The Qwen translation is excellent, capturing the snarky, satirical tone of the original. It handles the 'low-F' joke well. The suggestions align the 'Raising the Bar' idiom with the standard Italian corporate equivalent and refine the punchline of the first book review to better match the English intensity.",
+  "issueCounts": {
+    "high": 0,
+    "medium": 0,
+    "low": 0
+  },
   "slug": "breaking-unicorns",
   "locale": "it",
   "candidateCommits": [
@@ -40,45 +34,54 @@
   "suggestionLog": [
     {
       "priority": "high",
-      "match": "Alza la Sfida 💪",
-      "replacement": "Alzare l'asticella 💪",
-      "reason": "'Alzare l'asticella' is the standard Italian idiom for 'Raising the bar', matching the context of corporate performance.",
+      "match": "subTitle: ''",
+      "replacement": "subTitle: \"Rompere gli unicorni\"",
+      "reason": "The subTitle was left empty in this candidate but is present in the English source and other candidates.",
       "pass": 1,
       "applied": true,
       "note": "Applied exact replacement to selected MDX."
-    },
-    {
-      "priority": "medium",
-      "match": "Alza la posta",
-      "replacement": "Alzare l'asticella",
-      "reason": "Consistency with the section heading and the specific 'Raising the Bar' satire theme.",
-      "pass": 1,
-      "applied": false,
-      "note": "Exact match not found in selected MDX."
     },
     {
       "priority": "high",
-      "match": "Alza la Sfida 💪",
-      "replacement": "Alzare l'asticella 💪",
-      "reason": "'Alzare l'asticella' is the standard Italian idiom for 'Raising the bar', matching the context of corporate performance.",
+      "match": "subTitle: ''",
+      "replacement": "subTitle: \"Rompere gli unicorni\"",
+      "reason": "The subTitle was left empty in this candidate but is present in the English source and other candidates.",
       "pass": 2,
       "applied": true,
       "note": "Applied exact replacement to selected MDX."
     },
     {
-      "priority": "medium",
-      "match": "alzare la posta",
-      "replacement": "alzare l'asticella",
-      "reason": "Consistency with the section heading and the specific 'Raising the Bar' satire theme.",
+      "priority": "high",
+      "match": "<li>[Teatro d'Impresa 🎭](#enterprise-theater-)</li>",
+      "replacement": "<li>[Teatro d'Impresa 🎭](#teatro-dimpresa-)</li>",
+      "reason": "Same-page heading links must resolve to the localized heading IDs generated from translated heading text.",
       "pass": 2,
       "applied": true,
       "note": "Applied exact replacement to selected MDX."
     },
     {
-      "priority": "medium",
-      "match": "Alza la Posta",
-      "replacement": "Alzare l'asticella",
-      "reason": "Consistency with the section heading and the specific 'Raising the Bar' satire theme.",
+      "priority": "high",
+      "match": "<li>[Alza la Sfida 💪](#raising-the-bar-)</li>",
+      "replacement": "<li>[Alza la Sfida 💪](#alza-la-sfida-)</li>",
+      "reason": "Same-page heading links must resolve to the localized heading IDs generated from translated heading text.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "<li>[Sei Disruptivo? 🚀](#are-you-disrupted-)</li>",
+      "replacement": "<li>[Sei Disruptivo? 🚀](#sei-disruptivo-)</li>",
+      "reason": "Same-page heading links must resolve to the localized heading IDs generated from translated heading text.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "<li>[Ucciso dal Book Club 📚](#book-clubbed-to-death-)</li>",
+      "replacement": "<li>[Ucciso dal Book Club 📚](#ucciso-dal-book-club-)</li>",
+      "reason": "Same-page heading links must resolve to the localized heading IDs generated from translated heading text.",
       "pass": 2,
       "applied": true,
       "note": "Applied exact replacement to selected MDX."
@@ -88,6 +91,6 @@
     "ok": false,
     "scope": "local",
     "command": "bun run i18n:validate --slug breaking-unicorns --locale it --skip-global",
-    "error": "Command failed: bun run i18n:validate --slug breaking-unicorns --locale it --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug breaking-unicorns --locale it --skip-global\n73 |   const sourceComponents = new Set(\n74 |     [...sourceContents.matchAll(/<\\/?([A-Z][A-Za-z0-9_.]*)\\b/g)].map((match) => match[1]),\n75 |   );\n76 |   for (const component of sourceComponents) {\n77 |     if (!new RegExp(`</?${escapeRegExp(component)}\\\\b`).test(targetContents)) {\n78 |       throw new Error(`Missing preserved MDX component in ${targetPath}: ${component}`);\n                     ^\nerror: Missing preserved MDX component in /Users/dan/code/oss/dans-blog/src/content/posts/2024-09-01--breaking-unicorns/it/index.mdx: Insert\n      at assertProtectedTokens (/Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:78:17)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:28:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+    "error": "Command failed: bun run i18n:validate --slug breaking-unicorns --locale it --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug breaking-unicorns --locale it --skip-global\n224 | export function assertStructuralParity(input: CompareMdxStructureInput) {\n225 |   const comparison = compareMdxStructure(input);\n226 |   if (comparison.valid) return;\n227 | \n228 |   const targetLabel = input.targetPath ?? \"translation\";\n229 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2024-09-01--breaking-unicorns/it/index.mdx failed structural parity with score 0.991 (minimum 0.980). /Users/dan/code/oss/dans-blog/src/content/posts/2024-09-01--breaking-unicorns/it/index.mdx: Link count or href sequence changed across Markdown/HTML link formats. Differences: {\"linkTargets\":1}. Differences: {\"linkTargets\":1}\n      at assertStructuralParity (/Users/dan/code/oss/dans-blog/src/scripts/i18n/structural-validation.ts:229:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
   }
 }
