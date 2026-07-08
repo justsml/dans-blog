@@ -1,4 +1,5 @@
 import { NEWS_WATCH_DB_PATH, NEWS_WATCH_ITEM_DIR, getSources } from "./config.ts";
+import { runWithConcurrency } from "./concurrency.ts";
 import { openNewsWatchDb, type UnextractedItemRow } from "./db.ts";
 import { extractEntitiesForPendingItems, isExtractionConfigured } from "./extract.ts";
 import { fmtDuration, printTable, truncate } from "./format.ts";
@@ -9,6 +10,7 @@ import { detectTrendSignal, engagementScore, makeItemId, makeTopicKey } from "./
 import type { CapturedItem, SourceSpec, TrendSignal } from "./types.ts";
 
 const RATE_LIMIT_BACKOFF_MINUTES = 15;
+const SOURCE_FETCH_CONCURRENCY = Math.max(1, Number.parseInt(process.env.NEWS_WATCH_CONCURRENCY ?? "4", 10));
 
 type RunOptions = {
   all?: boolean;
@@ -54,12 +56,11 @@ export async function runNewsWatchOnce(options: RunOptions = {}) {
   };
 
   try {
-    for (const source of sources) {
-      if (!options.all && !db.isSourceDue(source, now)) {
-        summary.skippedSources += 1;
-        continue;
-      }
+    const dueSources = sources.filter((source) => options.all || db.isSourceDue(source, now));
+    const skipped = sources.length - dueSources.length;
+    summary.skippedSources = skipped;
 
+    const tasks = dueSources.map((source) => async () => {
       summary.checkedSources += 1;
       try {
         const sourceResult = await captureSource(source, now, db);
@@ -72,7 +73,9 @@ export async function runNewsWatchOnce(options: RunOptions = {}) {
         summary.failures.push({ source: source.key, error: message });
         db.recordSourceFailure(source, now, error);
       }
-    }
+    });
+
+    await runWithConcurrency(tasks, SOURCE_FETCH_CONCURRENCY);
 
     if (options.extract !== false && isExtractionConfigured()) {
       try {

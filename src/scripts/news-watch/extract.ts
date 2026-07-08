@@ -6,7 +6,7 @@ import { runWithConcurrency } from "./concurrency.ts";
 import type { NewsWatchDb, UnextractedItemRow } from "./db.ts";
 import { openNewsWatchDb } from "./db.ts";
 import { fmtDuration, printTable, truncate } from "./format.ts";
-import type { Entity, EntityMention, EntityType, ItemExtraction } from "./types.ts";
+import type { Entity, EntityMention, EntityType } from "./types.ts";
 
 // Default to DeepSeek V4 Flash (fast + cheap for bulk entity extraction).
 // Swap to GPT-OSS 120B via NEWS_WATCH_EXTRACTION_MODEL=openai/gpt-oss-120b for higher-quality runs.
@@ -15,9 +15,10 @@ const EXTRACTION_MIN_RELEVANCE = Number.parseFloat(process.env.NEWS_WATCH_EXTRAC
 const EXTRACTION_BATCH_SIZE = Number.parseInt(process.env.NEWS_WATCH_EXTRACTION_BATCH_SIZE ?? "20", 10);
 const EXTRACTION_MAX_BATCHES = Number.parseInt(process.env.NEWS_WATCH_EXTRACTION_MAX_BATCHES ?? "25", 10);
 const EXTRACTION_TEMPERATURE = Number.parseFloat(process.env.NEWS_WATCH_EXTRACTION_TEMPERATURE ?? "0.0");
-const EXTRACTION_MAX_TOKENS = Number.parseInt(process.env.NEWS_WATCH_EXTRACTION_MAX_TOKENS ?? "1200", 10);
+const EXTRACTION_MAX_TOKENS = Number.parseInt(process.env.NEWS_WATCH_EXTRACTION_MAX_TOKENS ?? "4000", 10);
 const EXTRACTION_TIMEOUT_MS = Number.parseInt(process.env.NEWS_WATCH_EXTRACTION_TIMEOUT_MS ?? "45000", 10);
 const EXTRACTION_CONCURRENCY = Math.max(1, Number.parseInt(process.env.NEWS_WATCH_CONCURRENCY ?? "4", 10));
+const EXTRACTION_REASONING_EFFORT = process.env.NEWS_WATCH_EXTRACTION_REASONING_EFFORT ?? "none";
 
 const SYSTEM_PROMPT = [
   "You are an entity extractor for a tech/AI news index.",
@@ -33,7 +34,6 @@ const SYSTEM_PROMPT = [
 
 const USER_TEMPLATE = `Extract entities and categories from these news items:\n\n`;
 
-const ALLOWED_TYPES: readonly EntityType[] = ["person", "org", "product", "topic"];
 const ALLOWED_CATEGORIES = new Set([
   "ai-models",
   "ai-agents",
@@ -166,7 +166,7 @@ export async function extractEntitiesForPendingItems(
   const tasks = chunks.map((chunk, batchIndex) => async () => {
     try {
       const result = await runExtractionBatch(chunk);
-      const persisted = persistBatchResults(db, chunk, result, now.toISOString(), stats);
+      const persisted = persistBatchResults(db, chunk, result, now.toISOString());
       stats.processed += chunk.length;
       stats.entitiesCreated += persisted.entities;
       stats.mentionsCreated += persisted.mentions;
@@ -232,11 +232,14 @@ async function runExtractionBatch(rows: UnextractedItemRow[]): Promise<LlmOutput
     timeout: { totalMs: EXTRACTION_TIMEOUT_MS },
     providerOptions: {
       openrouter: {
-        reasoning: { effort: "low" },
+        reasoning: { effort: EXTRACTION_REASONING_EFFORT, exclude: true },
       },
     },
   });
   const text = result.text.trim();
+  if (!text) {
+    throw new Error(`model returned no text (finishReason=${result.finishReason ?? "unknown"})`);
+  }
   return parseLlmJson(text);
 }
 
@@ -249,11 +252,15 @@ function parseLlmJson(text: string): LlmOutput {
   try {
     const parsed = JSON.parse(jsonText) as LlmOutput;
     if (!parsed || !Array.isArray(parsed.items)) {
-      return { items: [] };
+      throw new Error("model JSON did not include an items array");
+    }
+    if (parsed.items.length === 0) {
+      throw new Error("model JSON included an empty items array");
     }
     return parsed;
-  } catch {
-    return { items: [] };
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    throw new Error(`failed to parse model JSON: ${message}`);
   }
 }
 
@@ -262,7 +269,6 @@ function persistBatchResults(
   rows: UnextractedItemRow[],
   output: LlmOutput,
   capturedAt: string,
-  stats: ExtractionStats,
 ) {
   const byId = new Map(rows.map((row) => [row.item_id, row]));
   let entities = 0;
@@ -319,7 +325,8 @@ function persistBatchResults(
     const validCategories = (llmItem.categories ?? [])
       .map((c) => (typeof c === "string" ? { name: c, score: 0.5 } : { name: c.name ?? "", score: c.score ?? 0.5 }))
       .filter((c) => c.name && c.name.length > 0)
-      .map((c) => ({ name: c.name.toLowerCase(), score: clamp01(c.score) }));
+      .map((c) => ({ name: c.name.toLowerCase(), score: clamp01(c.score) }))
+      .filter((c) => ALLOWED_CATEGORIES.has(c.name));
     if (validCategories.length > 0) {
       db.upsertItemCategories(row.item_id, validCategories);
       categories += validCategories.length;
