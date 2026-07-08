@@ -32,7 +32,7 @@ error: script "i18n:validate" exited with code 1
 
 
 ## Primary Judge Telemetry
-- Runtime seconds: 3.35
+- Runtime seconds: 2.47
 - Input tokens: 17977
 - Output tokens: 175
 - Thinking tokens: unknown
