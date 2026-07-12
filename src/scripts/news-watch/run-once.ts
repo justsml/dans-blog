@@ -11,21 +11,35 @@ import type { CapturedItem, SourceSpec, TrendSignal } from "./types.ts";
 
 const RATE_LIMIT_BACKOFF_MINUTES = 15;
 const SOURCE_FETCH_CONCURRENCY = Math.max(1, Number.parseInt(process.env.NEWS_WATCH_CONCURRENCY ?? "4", 10));
+const DEFAULT_ITEM_OUTPUT_LIMIT = parsePositiveInt(process.env.NEWS_WATCH_ITEM_OUTPUT_LIMIT, 20);
 
 type RunOptions = {
   all?: boolean;
   sourceKeys?: string[];
   now?: Date;
   quiet?: boolean;
+  itemLimit?: number;
   extract?: boolean;
   extractAll?: boolean;
   extractMinRelevance?: number;
+};
+
+type CapturedItemPreview = {
+  source: string;
+  title: string;
+  summary: string | null;
+  snippet: string;
+  url: string;
+  relevanceScore: number;
+  engagementScore: number;
+  capturedAt: string;
 };
 
 type RunSummary = {
   checkedSources: number;
   skippedSources: number;
   capturedItems: number;
+  itemPreviews: CapturedItemPreview[];
   signals: TrendSignal[];
   failures: Array<{ source: string; error: string }>;
   pagination: Array<{ source: string; pages: number; items: number; cursor: string | null; rateLimited: boolean }>;
@@ -50,6 +64,7 @@ export async function runNewsWatchOnce(options: RunOptions = {}) {
     checkedSources: 0,
     skippedSources: 0,
     capturedItems: 0,
+    itemPreviews: [],
     signals: [],
     failures: [],
     pagination: [],
@@ -65,6 +80,7 @@ export async function runNewsWatchOnce(options: RunOptions = {}) {
       try {
         const sourceResult = await captureSource(source, now, db);
         summary.capturedItems += sourceResult.capturedItems;
+        summary.itemPreviews.push(...sourceResult.itemPreviews);
         summary.signals.push(...sourceResult.signals);
         if (sourceResult.pagination) summary.pagination.push(sourceResult.pagination);
         db.recordSourceSuccess(source, now, sourceResult.signals.length);
@@ -103,7 +119,7 @@ export async function runNewsWatchOnce(options: RunOptions = {}) {
   }
 
   if (!options.quiet) {
-    console.log(renderRunSummary(summary));
+    console.log(renderRunSummary(summary, { itemLimit: options.itemLimit }));
   }
 
   return summary;
@@ -111,6 +127,7 @@ export async function runNewsWatchOnce(options: RunOptions = {}) {
 
 type CaptureResult = {
   capturedItems: number;
+  itemPreviews: CapturedItemPreview[];
   signals: TrendSignal[];
   pagination?: RunSummary["pagination"][number];
 };
@@ -128,6 +145,7 @@ async function captureSource(source: SourceSpec, now: Date, db: ReturnType<typeo
   }
 
   const signals: TrendSignal[] = [];
+  const itemPreviews: CapturedItemPreview[] = [];
   for (const item of items) {
     const itemId = makeItemId(item);
     const topicKey = makeTopicKey(item);
@@ -142,6 +160,16 @@ async function captureSource(source: SourceSpec, now: Date, db: ReturnType<typeo
     const previous = db.getLatestMetric(itemId);
     db.upsertItem(itemId, topicKey, item, relevance, markdownPath);
     const current = db.insertMetric(itemId, item, engagementScore(item.metrics));
+    itemPreviews.push({
+      source: item.sourceName,
+      title: item.title,
+      summary: item.summary ? normalizePreviewText(item.summary) : null,
+      snippet: buildSnippet(item),
+      url: item.canonicalUrl,
+      relevanceScore: relevance.score,
+      engagementScore: current.engagementScore,
+      capturedAt: item.capturedAt,
+    });
 
     if (item.author && item.author.trim().length > 0) {
       const authorId = makeAuthorId(source.key, item.author);
@@ -174,6 +202,7 @@ async function captureSource(source: SourceSpec, now: Date, db: ReturnType<typeo
 
   return {
     capturedItems: items.length,
+    itemPreviews,
     signals,
     pagination: paginationResult,
   };
@@ -237,8 +266,9 @@ function makeAuthorId(sourceKey: string, author: string) {
   return `${sourceKey}::${author.toLowerCase().replace(/[^a-z0-9_-]+/gi, "_").slice(0, 80) || "anon"}`;
 }
 
-function renderRunSummary(summary: RunSummary) {
+function renderRunSummary(summary: RunSummary, options: { itemLimit?: number } = {}) {
   const out: string[] = [];
+  const itemLimit = options.itemLimit ?? DEFAULT_ITEM_OUTPUT_LIMIT;
   out.push("=== News Watch Run ===");
   out.push(`Captured ${summary.capturedItems} item(s) from ${summary.checkedSources} source(s), skipped ${summary.skippedSources}.`);
   out.push("");
@@ -274,6 +304,8 @@ function renderRunSummary(summary: RunSummary) {
     out.push("");
   }
 
+  renderItemPreviews(out, summary.itemPreviews, itemLimit);
+
   out.push(`## Signals (${summary.signals.length})`);
   if (summary.signals.length > 0) {
     const rows: string[][] = summary.signals.slice(0, 10).map((s) => [
@@ -300,10 +332,56 @@ function renderRunSummary(summary: RunSummary) {
   return out.join("\n");
 }
 
+function renderItemPreviews(out: string[], previews: CapturedItemPreview[], limit: number) {
+  if (previews.length === 0) {
+    out.push("## Captured item previews");
+    out.push("(none)");
+    out.push("");
+    return;
+  }
+
+  const visible = previews
+    .slice()
+    .sort((a, b) =>
+      b.relevanceScore - a.relevanceScore ||
+      b.engagementScore - a.engagementScore ||
+      Date.parse(b.capturedAt) - Date.parse(a.capturedAt),
+    )
+    .slice(0, Math.max(1, limit));
+
+  out.push(`## Captured item previews (${visible.length} of ${previews.length})`);
+  for (const item of visible) {
+    out.push(`- [${item.relevanceScore.toFixed(2)} rel, ${item.engagementScore.toFixed(1)} eng] ${item.title}`);
+    out.push(`  Source: ${item.source}`);
+    out.push(`  Summary: ${item.summary ? truncate(item.summary, 220) : "(none captured)"}`);
+    out.push(`  Snippet: ${truncate(item.snippet, 180)}`);
+    out.push(`  URL: ${item.url}`);
+  }
+  out.push("");
+}
+
+function buildSnippet(item: CapturedItem) {
+  const text = normalizePreviewText(item.summary ?? "");
+  if (text) {
+    const sentenceMatch = /^(.{40,}?[.!?])\s/.exec(text);
+    return sentenceMatch?.[1] ?? text;
+  }
+  return normalizePreviewText(item.title);
+}
+
+function normalizePreviewText(value: string) {
+  return value
+    .replace(/<[^>]+>/g, " ")
+    .replace(/&nbsp;/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
 function parseArgs(argv = process.argv.slice(2)): RunOptions {
   const sourceKeys: string[] = [];
   let all = false;
   let quiet = false;
+  let itemLimit: number | undefined;
   let extract: boolean | undefined;
   let extractAll = false;
   let extractMinRelevance: number | undefined;
@@ -313,6 +391,12 @@ function parseArgs(argv = process.argv.slice(2)): RunOptions {
     if (arg === "--all") all = true;
     if (arg === "--quiet") quiet = true;
     if (arg === "--no-extract") extract = false;
+    if (arg === "--item-limit") {
+      const value = argv[index + 1];
+      if (value == null) throw new Error("Missing value for --item-limit");
+      itemLimit = parsePositiveInt(value, DEFAULT_ITEM_OUTPUT_LIMIT);
+      index += 1;
+    }
     if (arg === "--extract-all") extractAll = true;
     if (arg === "--extract-min-relevance") {
       const value = argv[index + 1];
@@ -331,11 +415,17 @@ function parseArgs(argv = process.argv.slice(2)): RunOptions {
   return {
     all,
     quiet,
+    itemLimit,
     extract,
     extractAll,
     extractMinRelevance,
     sourceKeys: sourceKeys.length > 0 ? sourceKeys : undefined,
   };
+}
+
+function parsePositiveInt(value: string | undefined, fallback: number) {
+  const parsed = Number.parseInt(value ?? "", 10);
+  return Number.isFinite(parsed) && parsed > 0 ? parsed : fallback;
 }
 
 if (import.meta.main) {

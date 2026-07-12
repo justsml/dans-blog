@@ -8,12 +8,16 @@ It stores source items, markdown snapshots, observations, and trend signals in S
 ```bash
 bun run news:watch -- --all
 bun run news:watch
+bun run news:watch -- --all --item-limit 50
 bun run news:watch:daemon
 bun run news:watch:report
 ```
 
 `--all` ignores the per-source schedule and polls every enabled source once. Without it,
 the script only polls sources whose `next_poll_after` has passed.
+Run output includes a bounded preview of captured titles, summaries, and snippets;
+use `--item-limit` or `NEWS_WATCH_ITEM_OUTPUT_LIMIT` to change the default preview
+count.
 
 Generated data lives under `data/news-watch/` and is gitignored:
 
