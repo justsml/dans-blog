@@ -1,128 +1,70 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 760" role="img" aria-labelledby="title desc">
-  <title id="title">Docker lab score matrix for security agent models</title>
-  <desc id="desc">A heatmap of best normalized scores by scenario and model for six Docker lab security evals run on June 30, 2026.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 860" role="img" aria-labelledby="title desc">
+  <title id="title">Docker network-lab score matrix across five model routes</title>
+  <desc id="desc">A dark neon heatmap comparing normalized scores for IDOR report access, SSRF URL preview, and archive extraction preview. GPT-5.5 Low has the highest composite score. GPT OSS 120B is the lowest-cost route.</desc>
   <defs>
+    <linearGradient id="topRule" x1="0" x2="1"><stop stop-color="#00f5ee"/><stop offset=".5" stop-color="#b8ff5f"/><stop offset="1" stop-color="#ff6b9d"/></linearGradient>
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
     <style>
-      .bg { fill: #f8fafc; }
-      .title { font: 800 34px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #0f172a; }
-      .subtitle { font: 500 17px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #475569; }
-      .axis { font: 800 13px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #334155; letter-spacing: .03em; }
-      .row { font: 750 16px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #0f172a; }
-      .cell-text-dark { font: 800 16px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #0f172a; }
-      .cell-text-light { font: 800 16px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #ffffff; }
-      .note { font: 600 14px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #64748b; }
-      .grid { stroke: #e2e8f0; stroke-width: 1; }
-      .na { fill: #e5e7eb; }
-      .zero { fill: #f1f5f9; }
-      .low { fill: #fef3c7; }
-      .mid { fill: #fde68a; }
-      .good { fill: #86efac; }
-      .great { fill: #16a34a; }
-      .perfect { fill: #065f46; }
+      text{font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#f7fbff}.title{font-size:34px;font-weight:800}.sub{font-size:17px;fill:#a7bbc6}.head{font-size:15px;font-weight:750;fill:#dce9ee}.row{font-size:18px;font-weight:720}.value{font-size:22px;font-weight:820;font-variant-numeric:tabular-nums}.minor{font-size:13px;fill:#91a7b2}.note{font-size:13px;fill:#91a7b2}.cell{stroke-width:1.25}.perfect{fill:#b8ff5f;fill-opacity:.16;stroke:#b8ff5f}.high{fill:#00f5ee;fill-opacity:.14;stroke:#00f5ee}.mid{fill:#ad4dff;fill-opacity:.15;stroke:#ad4dff}.low{fill:#ff6b9d;fill-opacity:.13;stroke:#ff6b9d}.zero{fill:#18232b;stroke:#3a4a54}.lime{fill:#d9ffad}.cyan{fill:#9cfff9}.purple{fill:#d9b3ff}.pink{fill:#ffb1ca}.dim{fill:#71858f}.chip{fill:#0f171d;stroke:#263640;stroke-width:1}.grid{stroke:#25333c;stroke-width:.75;shape-rendering:crispEdges}
     </style>
   </defs>
-  <rect class="bg" width="1280" height="760" />
-  <text class="title" x="54" y="58">Security-agent Docker lab matrix</text>
-  <text class="subtitle" x="54" y="88">Best normalized score per model and scenario. Higher is better. Gray means the model was not run for that scenario.</text>
+  <rect width="1440" height="860" rx="24" fill="#05080b"/>
+  <rect x="32" y="28" width="1376" height="804" rx="20" fill="#0a1015" stroke="#20303a"/>
+  <rect x="32" y="28" width="1376" height="4" rx="2" fill="url(#topRule)"/>
+  <text class="title" x="72" y="82">Docker network-lab matrix</text>
+  <text class="sub" x="72" y="112">Three comparable scenarios · normalized score inside each cell · higher is better</text>
 
-  <g transform="translate(236 130)">
-    <text class="axis" x="30" y="-18" text-anchor="middle">GPT OSS</text>
-    <text class="axis" x="140" y="-18" text-anchor="middle">Qwen</text>
-    <text class="axis" x="250" y="-18" text-anchor="middle">DeepSeek</text>
-    <text class="axis" x="360" y="-18" text-anchor="middle">GLM</text>
-    <text class="axis" x="470" y="-18" text-anchor="middle">Gemma</text>
-    <text class="axis" x="580" y="-18" text-anchor="middle">Kimi</text>
-    <text class="axis" x="690" y="-18" text-anchor="middle">GPT-5.5</text>
-    <text class="axis" x="800" y="-18" text-anchor="middle">Claude</text>
-    <text class="axis" x="910" y="-18" text-anchor="middle">Gemini</text>
-
-    <text class="row" x="-24" y="37" text-anchor="end">Archive extraction</text>
-    <text class="row" x="-24" y="117" text-anchor="end">Backup/config</text>
-    <text class="row" x="-24" y="197" text-anchor="end">Command wrapper</text>
-    <text class="row" x="-24" y="277" text-anchor="end">IDOR/report access</text>
-    <text class="row" x="-24" y="357" text-anchor="end">Redis exposure</text>
-    <text class="row" x="-24" y="437" text-anchor="end">SSRF preview</text>
-
-    <g>
-      <rect class="perfect" x="0" y="0" width="88" height="58" rx="8" /><text class="cell-text-light" x="44" y="36" text-anchor="middle">1.00</text>
-      <rect class="mid" x="110" y="0" width="88" height="58" rx="8" /><text class="cell-text-dark" x="154" y="36" text-anchor="middle">0.43</text>
-      <rect class="mid" x="220" y="0" width="88" height="58" rx="8" /><text class="cell-text-dark" x="264" y="36" text-anchor="middle">0.52</text>
-      <rect class="low" x="330" y="0" width="88" height="58" rx="8" /><text class="cell-text-dark" x="374" y="36" text-anchor="middle">0.19</text>
-      <rect class="zero" x="440" y="0" width="88" height="58" rx="8" /><text class="cell-text-dark" x="484" y="36" text-anchor="middle">0.00</text>
-      <rect class="low" x="550" y="0" width="88" height="58" rx="8" /><text class="cell-text-dark" x="594" y="36" text-anchor="middle">0.24</text>
-      <rect class="good" x="660" y="0" width="88" height="58" rx="8" /><text class="cell-text-dark" x="704" y="36" text-anchor="middle">0.76</text>
-      <rect class="low" x="770" y="0" width="88" height="58" rx="8" /><text class="cell-text-dark" x="814" y="36" text-anchor="middle">0.19</text>
-      <rect class="zero" x="880" y="0" width="88" height="58" rx="8" /><text class="cell-text-dark" x="924" y="36" text-anchor="middle">0.00</text>
+  <g transform="translate(390 174)">
+    <line class="grid" x1="0" y1="58.5" x2="966" y2="58.5"/>
+    <g class="head" text-anchor="middle">
+      <text x="86" y="0"><tspan x="86">GPT-5.5</tspan><tspan x="86" dy="21">Low</tspan></text>
+      <text x="282" y="0"><tspan x="282">Claude Opus</tspan><tspan x="282" dy="21">4.8 Low</tspan></text>
+      <text x="478" y="0"><tspan x="478">GPT-5.5</tspan><tspan x="478" dy="21">XHigh</tspan></text>
+      <text x="674" y="0"><tspan x="674">Claude Sonnet</tspan><tspan x="674" dy="21">5 Low</tspan></text>
+      <text x="870" y="0"><tspan x="870">GPT OSS</tspan><tspan x="870" dy="21">120B</tspan></text>
     </g>
 
-    <g transform="translate(0 80)">
-      <rect class="great" x="0" y="0" width="88" height="58" rx="8" /><text class="cell-text-light" x="44" y="36" text-anchor="middle">0.90</text>
-      <rect class="good" x="110" y="0" width="88" height="58" rx="8" /><text class="cell-text-dark" x="154" y="36" text-anchor="middle">0.76</text>
-      <rect class="perfect" x="220" y="0" width="88" height="58" rx="8" /><text class="cell-text-light" x="264" y="36" text-anchor="middle">1.00</text>
-      <rect class="great" x="330" y="0" width="88" height="58" rx="8" /><text class="cell-text-light" x="374" y="36" text-anchor="middle">0.90</text>
-      <rect class="great" x="440" y="0" width="88" height="58" rx="8" /><text class="cell-text-light" x="484" y="36" text-anchor="middle">0.90</text>
-      <rect class="na" x="550" y="0" width="88" height="58" rx="8" /><text class="cell-text-dark" x="594" y="36" text-anchor="middle">n/a</text>
-      <rect class="na" x="660" y="0" width="88" height="58" rx="8" /><text class="cell-text-dark" x="704" y="36" text-anchor="middle">n/a</text>
-      <rect class="na" x="770" y="0" width="88" height="58" rx="8" /><text class="cell-text-dark" x="814" y="36" text-anchor="middle">n/a</text>
-      <rect class="zero" x="880" y="0" width="88" height="58" rx="8" /><text class="cell-text-dark" x="924" y="36" text-anchor="middle">0.00</text>
+    <g transform="translate(0 92)">
+      <text class="row" x="-34" y="38" text-anchor="end"><tspan x="-34">IDOR / report</tspan><tspan x="-34" dy="23">access</tspan></text>
+      <rect class="cell perfect" x="0" width="172" height="94" rx="12" filter="url(#glow)"/><text class="value lime" x="86" y="56" text-anchor="middle">1.00</text>
+      <rect class="cell high" x="196" width="172" height="94" rx="12"/><text class="value cyan" x="282" y="56" text-anchor="middle">0.86</text>
+      <rect class="cell perfect" x="392" width="172" height="94" rx="12"/><text class="value lime" x="478" y="56" text-anchor="middle">1.00</text>
+      <rect class="cell perfect" x="588" width="172" height="94" rx="12"/><text class="value lime" x="674" y="56" text-anchor="middle">1.00</text>
+      <rect class="cell high" x="784" width="172" height="94" rx="12"/><text class="value cyan" x="870" y="56" text-anchor="middle">0.90</text>
+    </g>
+    <g transform="translate(0 218)">
+      <text class="row" x="-34" y="49" text-anchor="end">SSRF URL preview</text>
+      <rect class="cell perfect" x="0" width="172" height="94" rx="12"/><text class="value lime" x="86" y="56" text-anchor="middle">1.00</text>
+      <rect class="cell high" x="196" width="172" height="94" rx="12"/><text class="value cyan" x="282" y="56" text-anchor="middle">0.86</text>
+      <rect class="cell perfect" x="392" width="172" height="94" rx="12"/><text class="value lime" x="478" y="56" text-anchor="middle">1.00</text>
+      <rect class="cell low" x="588" width="172" height="94" rx="12"/><text class="value pink" x="674" y="56" text-anchor="middle">0.19</text>
+      <rect class="cell mid" x="784" width="172" height="94" rx="12"/><text class="value purple" x="870" y="56" text-anchor="middle">0.76</text>
+    </g>
+    <g transform="translate(0 344)">
+      <text class="row" x="-34" y="38" text-anchor="end"><tspan x="-34">Archive</tspan><tspan x="-34" dy="23">extraction</tspan></text>
+      <rect class="cell mid" x="0" width="172" height="94" rx="12"/><text class="value purple" x="86" y="56" text-anchor="middle">0.76</text>
+      <rect class="cell mid" x="196" width="172" height="94" rx="12"/><text class="value purple" x="282" y="56" text-anchor="middle">0.76</text>
+      <rect class="cell zero" x="392" width="172" height="94" rx="12"/><text class="value dim" x="478" y="56" text-anchor="middle">0.00</text>
+      <rect class="cell high" x="588" width="172" height="94" rx="12"/><text class="value cyan" x="674" y="56" text-anchor="middle">0.90</text>
+      <rect class="cell mid" x="784" width="172" height="94" rx="12"/><text class="value purple" x="870" y="56" text-anchor="middle">0.52</text>
     </g>
 
-    <g transform="translate(0 160)">
-      <rect class="good" x="0" y="0" width="88" height="58" rx="8" /><text class="cell-text-dark" x="44" y="36" text-anchor="middle">0.67</text>
-      <rect class="great" x="110" y="0" width="88" height="58" rx="8" /><text class="cell-text-light" x="154" y="36" text-anchor="middle">0.90</text>
-      <rect class="great" x="220" y="0" width="88" height="58" rx="8" /><text class="cell-text-light" x="264" y="36" text-anchor="middle">0.90</text>
-      <rect class="great" x="330" y="0" width="88" height="58" rx="8" /><text class="cell-text-light" x="374" y="36" text-anchor="middle">0.90</text>
-      <rect class="good" x="440" y="0" width="88" height="58" rx="8" /><text class="cell-text-dark" x="484" y="36" text-anchor="middle">0.67</text>
-      <rect class="na" x="550" y="0" width="88" height="58" rx="8" /><text class="cell-text-dark" x="594" y="36" text-anchor="middle">n/a</text>
-      <rect class="na" x="660" y="0" width="88" height="58" rx="8" /><text class="cell-text-dark" x="704" y="36" text-anchor="middle">n/a</text>
-      <rect class="na" x="770" y="0" width="88" height="58" rx="8" /><text class="cell-text-dark" x="814" y="36" text-anchor="middle">n/a</text>
-      <rect class="zero" x="880" y="0" width="88" height="58" rx="8" /><text class="cell-text-dark" x="924" y="36" text-anchor="middle">0.00</text>
-    </g>
-
-    <g transform="translate(0 240)">
-      <rect class="mid" x="0" y="0" width="88" height="58" rx="8" /><text class="cell-text-dark" x="44" y="36" text-anchor="middle">0.62</text>
-      <rect class="mid" x="110" y="0" width="88" height="58" rx="8" /><text class="cell-text-dark" x="154" y="36" text-anchor="middle">0.62</text>
-      <rect class="low" x="220" y="0" width="88" height="58" rx="8" /><text class="cell-text-dark" x="264" y="36" text-anchor="middle">0.38</text>
-      <rect class="zero" x="330" y="0" width="88" height="58" rx="8" /><text class="cell-text-dark" x="374" y="36" text-anchor="middle">0.00</text>
-      <rect class="zero" x="440" y="0" width="88" height="58" rx="8" /><text class="cell-text-dark" x="484" y="36" text-anchor="middle">0.00</text>
-      <rect class="perfect" x="550" y="0" width="88" height="58" rx="8" /><text class="cell-text-light" x="594" y="36" text-anchor="middle">1.00</text>
-      <rect class="perfect" x="660" y="0" width="88" height="58" rx="8" /><text class="cell-text-light" x="704" y="36" text-anchor="middle">1.00</text>
-      <rect class="low" x="770" y="0" width="88" height="58" rx="8" /><text class="cell-text-dark" x="814" y="36" text-anchor="middle">0.38</text>
-      <rect class="zero" x="880" y="0" width="88" height="58" rx="8" /><text class="cell-text-dark" x="924" y="36" text-anchor="middle">0.00</text>
-    </g>
-
-    <g transform="translate(0 320)">
-      <rect class="great" x="0" y="0" width="88" height="58" rx="8" /><text class="cell-text-light" x="44" y="36" text-anchor="middle">0.90</text>
-      <rect class="mid" x="110" y="0" width="88" height="58" rx="8" /><text class="cell-text-dark" x="154" y="36" text-anchor="middle">0.52</text>
-      <rect class="good" x="220" y="0" width="88" height="58" rx="8" /><text class="cell-text-dark" x="264" y="36" text-anchor="middle">0.76</text>
-      <rect class="mid" x="330" y="0" width="88" height="58" rx="8" /><text class="cell-text-dark" x="374" y="36" text-anchor="middle">0.43</text>
-      <rect class="perfect" x="440" y="0" width="88" height="58" rx="8" /><text class="cell-text-light" x="484" y="36" text-anchor="middle">1.00</text>
-      <rect class="na" x="550" y="0" width="88" height="58" rx="8" /><text class="cell-text-dark" x="594" y="36" text-anchor="middle">n/a</text>
-      <rect class="na" x="660" y="0" width="88" height="58" rx="8" /><text class="cell-text-dark" x="704" y="36" text-anchor="middle">n/a</text>
-      <rect class="na" x="770" y="0" width="88" height="58" rx="8" /><text class="cell-text-dark" x="814" y="36" text-anchor="middle">n/a</text>
-      <rect class="zero" x="880" y="0" width="88" height="58" rx="8" /><text class="cell-text-dark" x="924" y="36" text-anchor="middle">0.00</text>
-    </g>
-
-    <g transform="translate(0 400)">
-      <rect class="good" x="0" y="0" width="88" height="58" rx="8" /><text class="cell-text-dark" x="44" y="36" text-anchor="middle">0.76</text>
-      <rect class="good" x="110" y="0" width="88" height="58" rx="8" /><text class="cell-text-dark" x="154" y="36" text-anchor="middle">0.76</text>
-      <rect class="low" x="220" y="0" width="88" height="58" rx="8" /><text class="cell-text-dark" x="264" y="36" text-anchor="middle">0.38</text>
-      <rect class="great" x="330" y="0" width="88" height="58" rx="8" /><text class="cell-text-light" x="374" y="36" text-anchor="middle">0.90</text>
-      <rect class="zero" x="440" y="0" width="88" height="58" rx="8" /><text class="cell-text-dark" x="484" y="36" text-anchor="middle">0.00</text>
-      <rect class="good" x="550" y="0" width="88" height="58" rx="8" /><text class="cell-text-dark" x="594" y="36" text-anchor="middle">0.76</text>
-      <rect class="great" x="660" y="0" width="88" height="58" rx="8" /><text class="cell-text-light" x="704" y="36" text-anchor="middle">0.90</text>
-      <rect class="great" x="770" y="0" width="88" height="58" rx="8" /><text class="cell-text-light" x="814" y="36" text-anchor="middle">0.90</text>
-      <rect class="zero" x="880" y="0" width="88" height="58" rx="8" /><text class="cell-text-dark" x="924" y="36" text-anchor="middle">0.00</text>
+    <g transform="translate(0 478)">
+      <text class="minor" x="-34" y="25" text-anchor="end">Composite</text>
+      <g transform="translate(0)"><rect class="chip" width="172" height="48" rx="10"/><text class="value cyan" x="86" y="31" text-anchor="middle" font-size="18">58 / 63</text></g>
+      <g transform="translate(196)"><rect class="chip" width="172" height="48" rx="10"/><text class="value" x="86" y="31" text-anchor="middle" font-size="18">52 / 63</text></g>
+      <g transform="translate(392)"><rect class="chip" width="172" height="48" rx="10"/><text class="value" x="86" y="31" text-anchor="middle" font-size="18">42 / 63</text></g>
+      <g transform="translate(588)"><rect class="chip" width="172" height="48" rx="10"/><text class="value" x="86" y="31" text-anchor="middle" font-size="18">44 / 63</text></g>
+      <g transform="translate(784)"><rect class="chip" width="172" height="48" rx="10"/><text class="value lime" x="86" y="31" text-anchor="middle" font-size="18">46 / 63</text></g>
     </g>
   </g>
 
-  <g transform="translate(236 640)">
-    <rect class="zero" x="0" y="0" width="64" height="22" rx="5" /><text class="note" x="74" y="16">0.00</text>
-    <rect class="low" x="146" y="0" width="64" height="22" rx="5" /><text class="note" x="220" y="16">0.01-0.39</text>
-    <rect class="mid" x="330" y="0" width="64" height="22" rx="5" /><text class="note" x="404" y="16">0.40-0.64</text>
-    <rect class="good" x="514" y="0" width="64" height="22" rx="5" /><text class="note" x="588" y="16">0.65-0.84</text>
-    <rect class="great" x="700" y="0" width="64" height="22" rx="5" /><text class="note" x="774" y="16">0.85-0.99</text>
-    <rect class="perfect" x="886" y="0" width="64" height="22" rx="5" /><text class="note" x="960" y="16">1.00</text>
+  <g transform="translate(72 752)">
+    <rect class="perfect cell" width="28" height="18" rx="4"/><text class="note" x="40" y="14">1.00</text>
+    <rect class="high cell" x="118" width="28" height="18" rx="4"/><text class="note" x="158" y="14">0.85–0.99</text>
+    <rect class="mid cell" x="296" width="28" height="18" rx="4"/><text class="note" x="336" y="14">0.40–0.84</text>
+    <rect class="low cell" x="474" width="28" height="18" rx="4"/><text class="note" x="514" y="14">0.01–0.39</text>
+    <rect class="zero cell" x="652" width="28" height="18" rx="4"/><text class="note" x="692" y="14">0.00</text>
   </g>
-  <text class="note" x="54" y="710">Source: local Docker lab evals, best run per model/scenario, generated June 30, 2026. Scores are harness-specific and include evidence, scope, and tool-discipline checks.</text>
+  <text class="note" x="72" y="810">ExploitHunter Docker-network composite · July 2026 · cells include scenario-specific evidence and behavior checks</text>
 </svg>

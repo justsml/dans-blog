@@ -1,92 +1,48 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
-  <title id="title">Cost quality frontier for security agent Docker lab evals</title>
-  <desc id="desc">A scatter plot comparing average best score and average run cost across security agent models on Docker lab evals.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 880" role="img" aria-labelledby="title desc">
+  <title id="title">Docker network-lab score versus total run cost</title>
+  <desc id="desc">A neon scatter plot with a logarithmic cost axis. GPT-5.5 Low scores highest at 58 of 63 and costs 10.979 dollars. GPT OSS 120B scores 46 of 63 and costs 0.049 dollars.</desc>
   <defs>
+    <linearGradient id="topRule" x1="0" x2="1"><stop stop-color="#00f5ee"/><stop offset=".5" stop-color="#b8ff5f"/><stop offset="1" stop-color="#ff6b9d"/></linearGradient>
+    <filter id="dotGlow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
     <style>
-      .bg { fill: #f8fafc; }
-      .title { font: 800 34px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #0f172a; }
-      .subtitle { font: 500 17px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #475569; }
-      .axis { stroke: #334155; stroke-width: 2; }
-      .grid { stroke: #cbd5e1; stroke-width: 1; stroke-dasharray: 4 8; }
-      .tick { font: 700 14px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #475569; }
-      .label { font: 800 15px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #0f172a; }
-      .small { font: 650 13px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #64748b; }
-      .cheap { fill: #0ea5e9; stroke: #075985; stroke-width: 2; }
-      .premium { fill: #f97316; stroke: #9a3412; stroke-width: 2; }
-      .local { fill: #22c55e; stroke: #166534; stroke-width: 2; }
-      .weak { fill: #94a3b8; stroke: #475569; stroke-width: 2; }
-      .frontier { stroke: #0f172a; stroke-width: 3; fill: none; stroke-dasharray: 8 8; }
+      text{font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#f7fbff}.title{font-size:34px;font-weight:800}.sub{font-size:17px;fill:#a7bbc6}.axisLabel{font-size:14px;font-weight:720;fill:#c8d7de}.tick{font-size:12px;fill:#8196a1;font-variant-numeric:tabular-nums}.model{font-size:15px;font-weight:780}.metric{font-size:13px;fill:#a7bbc6;font-variant-numeric:tabular-nums}.note{font-size:13px;fill:#91a7b2}.grid{stroke:#26353e;stroke-width:.75;stroke-dasharray:3 8;shape-rendering:crispEdges}.axis{stroke:#607580;stroke-width:1;shape-rendering:crispEdges}.cheap{fill:#b8ff5f;stroke:#e1ffbd}.premium{fill:#ff6b9d;stroke:#ffc0d4}.mid{fill:#00f5ee;stroke:#a8fffb}.rail{fill:#0e171d;stroke:#263842;stroke-width:1}.frontier{fill:none;stroke:#b8ff5f;stroke-width:2;stroke-dasharray:7 8;opacity:.75}
     </style>
   </defs>
-  <rect class="bg" width="1280" height="720" />
-  <text class="title" x="64" y="58">The cost-quality frontier is not where the leaderboard says it is</text>
-  <text class="subtitle" x="64" y="88">Average best score by model across Docker lab scenarios. X-axis uses a log-like cost scale.</text>
+  <rect width="1440" height="880" rx="24" fill="#05080b"/>
+  <rect x="32" y="28" width="1376" height="824" rx="20" fill="#0a1015" stroke="#20303a"/>
+  <rect x="32" y="28" width="1376" height="4" rx="2" fill="url(#topRule)"/>
+  <text class="title" x="72" y="82">Cost changes the winner</text>
+  <text class="sub" x="72" y="112">Three-scenario Docker composite · logarithmic cost axis · exact values remain visible in the label rail</text>
 
-  <g transform="translate(110 120)">
-    <line class="grid" x1="0" y1="420" x2="1000" y2="420" />
-    <line class="grid" x1="0" y1="210" x2="1000" y2="210" />
-    <line class="grid" x1="0" y1="0" x2="1000" y2="0" />
-    <line class="grid" x1="0" y1="0" x2="0" y2="420" />
-    <line class="grid" x1="370" y1="0" x2="370" y2="420" />
-    <line class="grid" x1="740" y1="0" x2="740" y2="420" />
-    <line class="grid" x1="1000" y1="0" x2="1000" y2="420" />
-
-    <line class="axis" x1="0" y1="420" x2="1000" y2="420" />
-    <line class="axis" x1="0" y1="0" x2="0" y2="420" />
-
-    <text class="tick" x="-18" y="424" text-anchor="end">0.0</text>
-    <text class="tick" x="-18" y="214" text-anchor="end">0.5</text>
-    <text class="tick" x="-18" y="6" text-anchor="end">1.0</text>
-    <text class="tick" x="0" y="454" text-anchor="middle">$0.01</text>
-    <text class="tick" x="370" y="454" text-anchor="middle">$0.10</text>
-    <text class="tick" x="740" y="454" text-anchor="middle">$1.00</text>
-    <text class="tick" x="1000" y="454" text-anchor="middle">$5.00</text>
-    <text class="label" x="500" y="498" text-anchor="middle">Average run cost, best row per scenario</text>
-    <text class="label" x="-62" y="210" text-anchor="middle" transform="rotate(-90 -62 210)">Average normalized score</text>
-
-    <path class="frontier" d="M190 360 L197 200 L959 167" />
-
-    <circle class="cheap" cx="197" cy="200" r="11" />
-    <text class="label" x="214" y="194">GPT OSS 120B</text>
-    <text class="small" x="214" y="213">0.81 avg, $0.021</text>
-
-    <circle class="cheap" cx="320" cy="260" r="10" />
-    <text class="label" x="336" y="257">Qwen 3.6 Flash</text>
-    <text class="small" x="336" y="276">0.67 avg, $0.049</text>
-
-    <circle class="cheap" cx="320" cy="263" r="10" />
-    <text class="label" x="336" y="315">DeepSeek V4 Flash</text>
-    <text class="small" x="336" y="334">0.66 avg, $0.049</text>
-
-    <circle class="cheap" cx="395" cy="306" r="10" />
-    <text class="label" x="412" y="306">GLM 4.7 Flash</text>
-    <text class="small" x="412" y="325">0.56 avg, $0.082</text>
-
-    <circle class="local" cx="190" cy="360" r="10" />
-    <text class="label" x="207" y="374">Gemma 4 26B</text>
-    <text class="small" x="207" y="393">0.43 avg, $0.020</text>
-
-    <circle class="premium" cx="695" cy="260" r="11" />
-    <text class="label" x="712" y="255">Kimi K2.7</text>
-    <text class="small" x="712" y="274">0.67 avg, $0.650, 3 tasks</text>
-
-    <circle class="premium" cx="762" cy="333" r="10" />
-    <text class="label" x="779" y="335">Claude Sonnet 4.6</text>
-    <text class="small" x="779" y="354">0.49 avg, $1.034, 3 tasks</text>
-
-    <circle class="premium" cx="959" cy="167" r="12" />
-    <text class="label" x="782" y="145">GPT-5.5 Low</text>
-    <text class="small" x="782" y="164">0.89 avg, $4.007, 3 tasks</text>
-
-    <circle class="weak" cx="0" cy="420" r="9" />
-    <text class="label" x="18" y="410">Gemini Flash Lite</text>
-    <text class="small" x="18" y="429">provider/harness failures in this setup</text>
+  <g transform="translate(150 174)">
+    <g>
+      <line class="grid" x1="0" y1="456" x2="760" y2="456"/><line class="grid" x1="0" y1="342" x2="760" y2="342"/><line class="grid" x1="0" y1="228" x2="760" y2="228"/><line class="grid" x1="0" y1="114" x2="760" y2="114"/><line class="grid" x1="0" y1="0" x2="760" y2="0"/>
+      <line class="grid" x1="0" y1="0" x2="0" y2="456"/><line class="grid" x1="190" y1="0" x2="190" y2="456"/><line class="grid" x1="380" y1="0" x2="380" y2="456"/><line class="grid" x1="570" y1="0" x2="570" y2="456"/><line class="grid" x1="760" y1="0" x2="760" y2="456"/>
+      <line class="axis" x1="0" y1="456.5" x2="760" y2="456.5"/><line class="axis" x1=".5" y1="0" x2=".5" y2="456"/>
+      <g class="tick" text-anchor="end"><text x="-18" y="460">0.60</text><text x="-18" y="346">0.70</text><text x="-18" y="232">0.80</text><text x="-18" y="118">0.90</text><text x="-18" y="4">1.00</text></g>
+      <g class="tick" text-anchor="middle"><text x="0" y="486">$0.05</text><text x="190" y="486">$0.20</text><text x="380" y="486">$1</text><text x="570" y="486">$5</text><text x="760" y="486">$11</text></g>
+      <text class="axisLabel" x="380" y="528" text-anchor="middle">Total run cost · logarithmic scale</text>
+      <text class="axisLabel" x="-92" y="228" text-anchor="middle" transform="rotate(-90 -92 228)">Composite score · normalized</text>
+    </g>
+    <path class="frontier" d="M0 308 L760 89"/>
+    <circle class="cheap" cx="0" cy="308" r="13" filter="url(#dotGlow)"/>
+    <circle class="premium" cx="681" cy="344" r="11"/>
+    <circle class="premium" cx="724" cy="380" r="11"/>
+    <circle class="premium" cx="739" cy="196" r="12"/>
+    <circle class="mid" cx="760" cy="89" r="14" filter="url(#dotGlow)"/>
+    <g transform="translate(26 270)"><rect width="252" height="66" rx="10" fill="#101c18" stroke="#b8ff5f" stroke-opacity=".55"/><text class="model" x="14" y="25" fill="#dfffc0">GPT OSS 120B</text><text class="metric" x="14" y="48">46/63 · $0.049 · 7 evidence</text></g>
   </g>
 
-  <g transform="translate(920 610)">
-    <circle class="cheap" cx="0" cy="0" r="8" /><text class="small" x="16" y="5">cheap hosted</text>
-    <circle class="premium" cx="130" cy="0" r="8" /><text class="small" x="146" y="5">premium</text>
-    <circle class="local" cx="242" cy="0" r="8" /><text class="small" x="258" y="5">local/open</text>
+  <g transform="translate(982 174)">
+    <rect class="rail" width="378" height="486" rx="16"/>
+    <text class="axisLabel" x="24" y="36">DIRECT LABELS</text>
+    <g transform="translate(24 68)"><circle class="mid" cx="8" cy="8" r="7"/><text class="model" x="28" y="13">GPT-5.5 Low</text><text class="metric" x="28" y="36">58/63 · $10.979 · 13 evidence</text></g>
+    <g transform="translate(24 146)"><circle class="premium" cx="8" cy="8" r="7"/><text class="model" x="28" y="13">Claude Opus 4.8 Low</text><text class="metric" x="28" y="36">52/63 · $8.938 · 3 evidence</text></g>
+    <g transform="translate(24 224)"><circle class="premium" cx="8" cy="8" r="7"/><text class="model" x="28" y="13">GPT-5.5 XHigh</text><text class="metric" x="28" y="36">42/63 · $7.999 · 11 evidence</text></g>
+    <g transform="translate(24 302)"><circle class="premium" cx="8" cy="8" r="7"/><text class="model" x="28" y="13">Claude Sonnet 5 Low</text><text class="metric" x="28" y="36">44/63 · $5.055 · 3 evidence</text></g>
+    <g transform="translate(24 380)"><circle class="cheap" cx="8" cy="8" r="7"/><text class="model" x="28" y="13">GPT OSS 120B</text><text class="metric" x="28" y="36">46/63 · $0.049 · 7 evidence</text></g>
   </g>
-  <text class="small" x="64" y="670">Caveat: GPT-5.5, Kimi, and Claude were run on only three of the six Docker lab scenarios. This chart compares observed rows, not universal model capability.</text>
+
+  <g transform="translate(72 744)"><rect width="1296" height="62" rx="14" fill="#0c1718" stroke="#b8ff5f" stroke-opacity=".35"/><text x="22" y="26" font-size="15" font-weight="780" fill="#dfffc0">224× cheaper does not mean “equally capable.”</text><text class="note" x="22" y="48">It means GPT OSS is an unusually strong first-pass route before a selective premium escalation.</text></g>
+  <text class="note" x="72" y="834">ExploitHunter Docker-network composite · July 2026 · total cost includes the complete three-scenario route</text>
 </svg>

@@ -2,10 +2,10 @@
 title: "Security Agents Need Model Routers, Not Model Rankings"
 subTitle: "Fresh local evals show where models actually help with planning, tool use, and evidence-backed security work."
 date: 2026-06-30
-modified: 2026-06-30
+modified: 2026-07-17
 tags: [ai, llm, agents, security, evals, model-routing, computer-use, prompt-engineering, evidence]
 category: AI
-subCategory: AI Infrastructure
+subCategory: Security
 draft: true
 unlisted: true
 hidden: true
@@ -64,61 +64,49 @@ That is where the interesting differences show up.
 
 ## The Docker Lab Matrix
 
-The cleanest new data came from six Docker lab scenarios on June 30, 2026:
+The original June 30 matrix covered six exploratory Docker labs. The latest comparable data is a tighter three-scenario Docker-network composite:
 
 - `ssrf-url-preview`
 - `idor-report-access`
 - `archive-extraction-preview`
-- `backup-config-exposure`
-- `command-wrapper-input`
-- `redis-unauthenticated-exposure`
 
 The scenarios are deliberately small. That is the point. A tiny lab makes it possible to see whether a model can map the target, use read-only tools, preserve evidence, and stop with a useful finding instead of narrating around the target.
 
 <figure class="breakout">
-  <img src="./docker-lab-score-matrix.svg" alt="Heatmap of security-agent model scores across Docker lab scenarios." />
-  <figcaption>The result is not a single best model. It is a patchwork. GPT OSS is broadly useful and cheap. Qwen hunts aggressively. DeepSeek is strong on backup/config and recall. Kimi and GPT-5.5 shine on IDOR. Gemma 4 26B unexpectedly wins Redis exposure.</figcaption>
+  <img src="./docker-lab-score-matrix.svg" alt="Heatmap of the latest comparable Docker network-lab scores across five model routes and three scenarios." />
+  <figcaption>The latest composite retains the useful shape: premium routes score highest, while GPT OSS 120B stays competitive at a radically lower cost.</figcaption>
 </figure>
 
 The task winners tell the story better than an average:
 
 | Scenario | Strongest observed route | Score | Cost | Tool calls | What it means |
 |---|---:|---:|---:|---:|---|
-| Archive extraction preview | GPT OSS 120B | `1.00` | `$0.044` | `45/96` | Strong cheap route when deeper artifact/tool use is allowed |
-| Backup/config exposure | DeepSeek V4 Flash | `1.00` | `$0.039` | `29/96` | Excellent at config/listing-style exposure work |
-| Command-wrapper input | GLM / Qwen / DeepSeek | `0.905` | `$0.027-$0.046` | `20-28/96` | Several cheap models can handle command-construction risk |
-| IDOR/report access | Kimi K2.7 / GPT-5.5 | `1.00` | `$1.038 / $3.926` | `75/96 / 42/96` | Premium escalation helped on authorization/business-logic flow |
-| Redis unauthenticated exposure | Gemma 4 26B | `1.00` | `$0.030` | `18/96` | A narrow, local-ish service task can flip the ranking |
-| SSRF URL preview | GLM / Claude / GPT-5.5 | `0.905` | `$0.042-$4.616` | `39-59/96` | SSRF rewards exploration, but costs and tool use vary wildly |
+| IDOR/report access | GPT-5.5 Low / GPT-5.5 XHigh / Claude Sonnet 5 | `21/21` | `$3.51-$2.51` | `27-41/96` | Authorization flow justified premium reasoning in these runs. |
+| SSRF URL preview | GPT-5.5 Low / GPT-5.5 XHigh | `21/21` | `$3.94-$4.06` | `51-56/96` | A hard, exploratory lane that rewarded longer investigations. |
+| Archive extraction preview | Claude Sonnet 5 | `19/21` | `$2.13` | `29/96` | The winner changes by scenario; no route gets to keep the crown. |
 
 Two caveats matter.
 
-First, not every model ran on every scenario. GPT-5.5, Kimi, and Claude only appear in three of the six Docker lab rows. Their averages are useful, but they are not comparable to the six-scenario cheap-model group without that footnote.
-
-Second, the scorer currently exposes a mismatch I would fix before making any public "best model" claim: some rows have high total signal counts but only a small number of preserved evidence artifacts. That is a product finding, not just an eval footnote. If the finding cannot point back to the artifact, the chart should be suspicious of itself.
+The model-level composite is useful precisely because it keeps evidence counts beside score. A high score with thin evidence is a different operational result from a high score with receipts.
 
 ## The Cost-Quality Frontier
 
 The cost picture is where the story gets spicy.
 
 <figure class="breakout">
-  <img src="./cost-quality-frontier.svg" alt="Scatter chart comparing average Docker lab score and average run cost by model." />
-  <figcaption>GPT OSS sits in the most interesting part of the chart: high enough quality for many first-pass security tasks, with a much lower observed cost than premium escalation models. The frontier is conditional, but it is real enough to change routing.</figcaption>
+  <img src="./cost-quality-frontier.svg" alt="Scatter chart comparing latest Docker network composite score and cost by model route." />
+  <figcaption>GPT OSS sits in the interesting part of the latest chart: lower absolute score than premium escalation routes, but a dramatically lower bill and seven evidence-backed findings.</figcaption>
 </figure>
 
 On the Docker labs, using each model's best row per scenario:
 
 | Model | Scenarios | Avg score | High-score rows `>= .90` | Avg cost | Avg calls |
 |---|---:|---:|---:|---:|---:|
-| GPT-5.5 Low | 3 | `0.889` | 2 | `$4.007` | `43.3` |
-| GPT OSS 120B | 6 | `0.810` | 3 | `$0.021` | `18.8` |
-| Qwen 3.6 Flash | 6 | `0.667` | 1 | `$0.049` | `26.3` |
-| Kimi K2.7 Code Low | 3 | `0.667` | 1 | `$0.650` | `53.3` |
-| DeepSeek V4 Flash | 6 | `0.659` | 2 | `$0.049` | `30.0` |
-| GLM 4.7 Flash | 6 | `0.556` | 3 | `$0.082` | `43.3` |
-| Claude Sonnet 4.6 Low | 3 | `0.492` | 1 | `$1.034` | `21.7` |
-| Gemma 4 26B | 6 | `0.429` | 2 | `$0.020` | `12.3` |
-| Gemini Flash Lite | 6 | `0.000` | 0 | `$0.000` | `0.0` |
+| GPT-5.5 Low | 3 | `0.921` | 3 | `$10.979` | `40.0` |
+| Claude Opus 4.8 Low | 3 | `0.825` | 1 | `$8.938` | `25.7` |
+| GPT OSS 120B | 3 | `0.730` | 2 | `$0.049` | `25.0` |
+| Claude Sonnet 5 Low | 3 | `0.698` | 1 | `$5.055` | `28.7` |
+| GPT-5.5 XHigh | 3 | `0.667` | 2 | `$7.999` | `33.3` |
 
 The lesson is not "always use GPT OSS." It is sharper than that:
 
@@ -170,12 +158,34 @@ In this harness, "using the computer" meant a small set of product tools:
 
 A model can be good at one part and bad at another. It can call tools successfully but never stop. It can stop early but fail to preserve artifacts. It can reason well from a transcript but never produce scorer-visible evidence. It can use a tool only after being boxed into a smaller surface.
 
-The latest command-tool evals make that split much clearer.
+The newest shared hosted suite makes that split much clearer—and it gives us a real leaderboard before we turn it into a router.
 
 <figure class="breakout">
-  <img src="./command-tool-pass-rates.svg" alt="Bar chart showing command-tool eval pass rates by scenario." />
-  <figcaption>Basic tool calling is not the bottleneck anymore. The harder failures show up when the model has to choose shell commands, interpret mocked command output, report the recovered value, and stop before it turns a small task into a tour of every network utility it has ever heard of.</figcaption>
+  <img src="./frontier-tool-behavior.svg" alt="Two-panel chart comparing deterministic tool-behavior scores and candidate costs for DeepSeek V4 Flash, GLM 5.2, DeepSeek V4 Pro, and Kimi K3 Low across the same 14 security scenarios." />
+  <figcaption>Flash leads the deterministic score by two points over GLM while costing about 21× less. Kimi is capable, but this lane is expensive for it.</figcaption>
 </figure>
+
+| Hosted route | Deterministic score | Passed | Candidate cost | Judge score |
+|---|---:|---:|---:|---:|
+| DeepSeek V4 Flash | **404/425 (95.06%)** | 10/14 | **$0.002551 exact** | **296/308 (96.10%)** |
+| GLM 5.2 | 402/425 (94.59%) | 10/14 | $0.053724 exact | 294/308 (95.45%) |
+| DeepSeek V4 Pro | 401/425 (94.35%) | **11/14** | $0.011827 exact | 283/308 (91.88%) |
+| Kimi K3 Low | 384/425 (90.35%) | 10/14 | $0.215106 estimated | 250/272 (91.91%)* |
+
+The deterministic scorer is the clean comparison because all four routes faced the same 425 available points. Kimi's judge denominator is smaller: one judge failed and one candidate row was skipped after provider overload, so its judge percentage is shown for completeness rather than treated as a perfect apples-to-apples rank.
+
+There is still no single winner hiding in the footnotes. Flash wins total score and cost. Pro wins scenario pass count. Kimi and GLM both pass 10/14, but GLM scores 18 points higher and costs roughly one quarter as much. Every route generated, attempted, and ran zero dangerous commands.
+
+Now compare that with one real offline browser task. Both Kimi K3 and GLM 5.2 recovered the correct archive password and passed independent host-side verification. Kimi scored a corrected 10/10 with 11 tool calls for $0.007856; GLM scored 9/10 with 24 calls for $0.009488. On that task, Kimi is the better route. On the broader tool suite, GLM is. This is what routing evidence looks like.
+
+The newest local baselines add the offline side of the same picture.
+
+<figure class="breakout">
+  <img src="./command-tool-pass-rates.svg" alt="Bar chart comparing latest local model tool-behavior scores." />
+  <figcaption>Devstral, Gemma, and GPT OSS all show useful local tool discipline, but the failures still matter: syntax recovery, evidence breadth, and stopping behavior distinguish a passing tool call from a useful investigation.</figcaption>
+</figure>
+
+The chart uses the latest local baseline rows. The following command-wide breakdown is retained as the original June 30 diagnostic: it explains the failure modes the newer scores are designed to expose.
 
 The old smoke test said "can this model use tools at all?" Across 30 models and 4 simple scenarios, the answer was basically yes: `120/120` passed, with `150/150` expected tool calls.
 
